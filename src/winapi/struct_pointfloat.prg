@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -81,9 +81,9 @@ HB_FUNC_STATIC(WAS_POINTFLOAT_NEW)
 
 HB_FUNC_STATIC(WAS_POINTFLOAT_DELETE)
 {
-  auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<POINTFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -96,9 +96,9 @@ HB_FUNC_STATIC(WAS_POINTFLOAT_DELETE)
 
 HB_FUNC_STATIC(WAS_POINTFLOAT_SETX)
 {
-  auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<POINTFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->x = wa_par_FLOAT(1);
   }
@@ -106,9 +106,9 @@ HB_FUNC_STATIC(WAS_POINTFLOAT_SETX)
 
 HB_FUNC_STATIC(WAS_POINTFLOAT_GETX)
 {
-  auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<POINTFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_FLOAT(obj->x);
   }
@@ -118,9 +118,9 @@ HB_FUNC_STATIC(WAS_POINTFLOAT_GETX)
 
 HB_FUNC_STATIC(WAS_POINTFLOAT_SETY)
 {
-  auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<POINTFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->y = wa_par_FLOAT(1);
   }
@@ -128,9 +128,9 @@ HB_FUNC_STATIC(WAS_POINTFLOAT_SETY)
 
 HB_FUNC_STATIC(WAS_POINTFLOAT_GETY)
 {
-  auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<POINTFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_FLOAT(obj->y);
   }

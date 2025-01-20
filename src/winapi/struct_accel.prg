@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -87,9 +87,9 @@ HB_FUNC_STATIC(WAS_ACCEL_NEW)
 
 HB_FUNC_STATIC(WAS_ACCEL_DELETE)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -102,9 +102,9 @@ HB_FUNC_STATIC(WAS_ACCEL_DELETE)
 
 HB_FUNC_STATIC(WAS_ACCEL_SETFVIRT)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fVirt = wa_par_BYTE(1);
   }
@@ -112,9 +112,9 @@ HB_FUNC_STATIC(WAS_ACCEL_SETFVIRT)
 
 HB_FUNC_STATIC(WAS_ACCEL_GETFVIRT)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->fVirt);
   }
@@ -124,9 +124,9 @@ HB_FUNC_STATIC(WAS_ACCEL_GETFVIRT)
 
 HB_FUNC_STATIC(WAS_ACCEL_SETKEY)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->key = wa_par_WORD(1);
   }
@@ -134,9 +134,9 @@ HB_FUNC_STATIC(WAS_ACCEL_SETKEY)
 
 HB_FUNC_STATIC(WAS_ACCEL_GETKEY)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->key);
   }
@@ -146,9 +146,9 @@ HB_FUNC_STATIC(WAS_ACCEL_GETKEY)
 
 HB_FUNC_STATIC(WAS_ACCEL_SETCMD)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cmd = wa_par_WORD(1);
   }
@@ -156,9 +156,9 @@ HB_FUNC_STATIC(WAS_ACCEL_SETCMD)
 
 HB_FUNC_STATIC(WAS_ACCEL_GETCMD)
 {
-  auto obj = static_cast<ACCEL*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->cmd);
   }

@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -87,9 +87,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_NEW)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_DELETE)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -102,9 +102,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_DELETE)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWFIRST)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->wFirst = wa_par_WORD(1);
   }
@@ -112,9 +112,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWFIRST)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWFIRST)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->wFirst);
   }
@@ -124,9 +124,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWFIRST)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWSECOND)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->wSecond = wa_par_WORD(1);
   }
@@ -134,9 +134,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWSECOND)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWSECOND)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->wSecond);
   }
@@ -146,9 +146,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWSECOND)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_SETIKERNAMOUNT)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->iKernAmount = wa_par_int(1);
   }
@@ -156,9 +156,9 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETIKERNAMOUNT)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_GETIKERNAMOUNT)
 {
-  auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->iKernAmount);
   }

@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -101,9 +101,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_NEW)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_DELETE)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -114,11 +114,11 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_DELETE)
 
 // UINT cbSize
 
-// HB_FUNC_STATIC(WAS_FLASHWINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_FLASHWINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_UINT(1);
 //   }
@@ -126,9 +126,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETCBSIZE)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->cbSize);
   }
@@ -138,9 +138,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETHWND)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwnd = wa_par_HWND(1);
   }
@@ -148,9 +148,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETHWND)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETHWND)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwnd);
   }
@@ -160,9 +160,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETHWND)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWFLAGS)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwFlags = wa_par_DWORD(1);
   }
@@ -170,9 +170,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETDWFLAGS)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwFlags);
   }
@@ -182,9 +182,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETUCOUNT)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->uCount = wa_par_UINT(1);
   }
@@ -192,9 +192,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETUCOUNT)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETUCOUNT)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->uCount);
   }
@@ -204,9 +204,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETUCOUNT)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWTIMEOUT)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwTimeout = wa_par_DWORD(1);
   }
@@ -214,9 +214,9 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWTIMEOUT)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETDWTIMEOUT)
 {
-  auto obj = static_cast<FLASHWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwTimeout);
   }

@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -88,9 +88,9 @@ HB_FUNC_STATIC(WAS_MONITORINFO_NEW)
 
 HB_FUNC_STATIC(WAS_MONITORINFO_DELETE)
 {
-  auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -101,11 +101,11 @@ HB_FUNC_STATIC(WAS_MONITORINFO_DELETE)
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC(WAS_MONITORINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_MONITORINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_UINT(1);
 //   }
@@ -113,9 +113,9 @@ HB_FUNC_STATIC(WAS_MONITORINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_MONITORINFO_GETCBSIZE)
 {
-  auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->cbSize);
   }
@@ -129,9 +129,9 @@ HB_FUNC_STATIC(WAS_MONITORINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_MONITORINFO_SETDWFLAGS)
 {
-  auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwFlags = wa_par_DWORD(1);
   }
@@ -139,9 +139,9 @@ HB_FUNC_STATIC(WAS_MONITORINFO_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_MONITORINFO_GETDWFLAGS)
 {
-  auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwFlags);
   }

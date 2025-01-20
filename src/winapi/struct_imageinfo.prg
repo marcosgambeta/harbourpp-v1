@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -96,9 +96,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_NEW)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_DELETE)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -111,9 +111,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMIMAGE)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hbmImage = wa_par_HBITMAP(1);
   }
@@ -121,9 +121,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMIMAGE)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMIMAGE)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HBITMAP(obj->hbmImage);
   }
@@ -133,9 +133,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMIMAGE)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMMASK)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hbmMask = wa_par_HBITMAP(1);
   }
@@ -143,9 +143,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMMASK)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMMASK)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HBITMAP(obj->hbmMask);
   }
@@ -155,9 +155,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMMASK)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED1)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Unused1 = wa_par_int(1);
   }
@@ -165,9 +165,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED1)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETUNUSED1)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->Unused1);
   }
@@ -177,9 +177,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_GETUNUSED1)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED2)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Unused2 = wa_par_int(1);
   }
@@ -187,9 +187,9 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED2)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETUNUSED2)
 {
-  auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->Unused2);
   }

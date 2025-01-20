@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -74,7 +74,7 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC(WAGPPOINT_NEW)
 {
-  if( hb_pcount() == 0 )
+  if (hb_pcount() == 0)
   {
     // Point()
     auto self = hb_stackSelfItem();
@@ -82,7 +82,7 @@ HB_FUNC_STATIC(WAGPPOINT_NEW)
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
   }
-  else if( hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2) )
+  else if (hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2))
   {
     // Point(INT x, INT y)
     auto self = hb_stackSelfItem();
@@ -91,7 +91,7 @@ HB_FUNC_STATIC(WAGPPOINT_NEW)
     hb_itemReturn(self);
   }
 #if 0
-  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* Point */ )
+  else if (hb_pcount() == 1 && HB_ISOBJECT(1) /* Point */)
   {
     // Point(const Point& point)
     auto self = hb_stackSelfItem();
@@ -99,7 +99,7 @@ HB_FUNC_STATIC(WAGPPOINT_NEW)
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
   }
-  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* Size */ )
+  else if (hb_pcount() == 1 && HB_ISOBJECT(1) /* Size */)
   {
     // Point(const Size& size)
     auto self = hb_stackSelfItem();
@@ -116,9 +116,9 @@ HB_FUNC_STATIC(WAGPPOINT_NEW)
 
 HB_FUNC_STATIC(WAGPPOINT_DELETE)
 {
-  auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -131,9 +131,9 @@ HB_FUNC_STATIC(WAGPPOINT_DELETE)
 
 HB_FUNC_STATIC(WAGPPOINT_SETX)
 {
-  auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->X = wa_par_INT(1);
   }
@@ -141,9 +141,9 @@ HB_FUNC_STATIC(WAGPPOINT_SETX)
 
 HB_FUNC_STATIC(WAGPPOINT_GETX)
 {
-  auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_INT(obj->X);
   }
@@ -153,9 +153,9 @@ HB_FUNC_STATIC(WAGPPOINT_GETX)
 
 HB_FUNC_STATIC(WAGPPOINT_SETY)
 {
-  auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Y = wa_par_INT(1);
   }
@@ -163,9 +163,9 @@ HB_FUNC_STATIC(WAGPPOINT_SETY)
 
 HB_FUNC_STATIC(WAGPPOINT_GETY)
 {
-  auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_INT(obj->Y);
   }

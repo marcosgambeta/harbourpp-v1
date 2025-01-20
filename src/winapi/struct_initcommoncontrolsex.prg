@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -82,9 +82,9 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_NEW)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_DELETE)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -97,9 +97,9 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_DELETE)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWSIZE)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwSize = wa_par_DWORD(1);
   }
@@ -107,9 +107,9 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWSIZE)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWSIZE)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwSize);
   }
@@ -119,9 +119,9 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWSIZE)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWICC)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwICC = wa_par_DWORD(1);
   }
@@ -129,9 +129,9 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWICC)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWICC)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwICC);
   }

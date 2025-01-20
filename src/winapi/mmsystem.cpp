@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -142,15 +142,15 @@ HB_FUNC(WAWAVEOUTSETVOLUME)
 }
 
 // WINMMAPI MMRESULT WINAPI waveOutGetErrorTextA(MMRESULT mmrError,LPSTR pszText,UINT cchText)
-HB_FUNC(WAWAVEOUTGETERRORTEXTA ) // TODO: fix
+HB_FUNC(WAWAVEOUTGETERRORTEXTA) // TODO: fix
 {
   wa_ret_MMRESULT(waveOutGetErrorTextA(wa_par_MMRESULT(1), const_cast<LPSTR>(hb_parc(2)), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI waveOutGetErrorTextW(MMRESULT mmrError,LPWSTR pszText,UINT cchText)
-HB_FUNC(WAWAVEOUTGETERRORTEXTW ) // TODO: fix
+HB_FUNC(WAWAVEOUTGETERRORTEXTW) // TODO: fix
 {
-  wa_ret_MMRESULT(waveOutGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3)));
+  wa_ret_MMRESULT(waveOutGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI waveOutOpen(LPHWAVEOUT phwo,UINT uDeviceID,LPCWAVEFORMATEX pwfx,DWORD_PTR dwCallback,DWORD_PTR dwInstance,DWORD fdwOpen)
@@ -236,15 +236,15 @@ HB_FUNC(WAWAVEINGETNUMDEVS)
 // WINMMAPI MMRESULT WINAPI waveInGetDevCapsW(UINT_PTR uDeviceID,LPWAVEINCAPSW pwic,UINT cbwic)
 
 // WINMMAPI MMRESULT WINAPI waveInGetErrorTextA(MMRESULT mmrError,LPSTR pszText,UINT cchText)
-HB_FUNC(WAWAVEINGETERRORTEXTA ) // TODO: fix
+HB_FUNC(WAWAVEINGETERRORTEXTA) // TODO: fix
 {
   wa_ret_MMRESULT(waveInGetErrorTextA(wa_par_MMRESULT(1), const_cast<LPSTR>(hb_parc(2)), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI waveInGetErrorTextW(MMRESULT mmrError,LPWSTR pszText,UINT cchText)
-HB_FUNC(WAWAVEINGETERRORTEXTW ) // TODO: fix
+HB_FUNC(WAWAVEINGETERRORTEXTW) // TODO: fix
 {
-  wa_ret_MMRESULT(waveInGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3)));
+  wa_ret_MMRESULT(waveInGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI waveInOpen(LPHWAVEIN phwi,UINT uDeviceID,LPCWAVEFORMATEX pwfx,DWORD_PTR dwCallback,DWORD_PTR dwInstance,DWORD fdwOpen)
@@ -360,15 +360,15 @@ HB_FUNC(WAMIDIOUTSETVOLUME)
 }
 
 // WINMMAPI MMRESULT WINAPI midiOutGetErrorTextA(MMRESULT mmrError,LPSTR pszText,UINT cchText)
-HB_FUNC(WAMIDIOUTGETERRORTEXTA ) // TODO: fix
+HB_FUNC(WAMIDIOUTGETERRORTEXTA) // TODO: fix
 {
   wa_ret_MMRESULT(midiOutGetErrorTextA(wa_par_MMRESULT(1), const_cast<LPSTR>(hb_parc(2)), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI midiOutGetErrorTextW(MMRESULT mmrError,LPWSTR pszText,UINT cchText)
-HB_FUNC(WAMIDIOUTGETERRORTEXTW ) // TODO: fix
+HB_FUNC(WAMIDIOUTGETERRORTEXTW) // TODO: fix
 {
-  wa_ret_MMRESULT(midiOutGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3)));
+  wa_ret_MMRESULT(midiOutGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI midiOutOpen(LPHMIDIOUT phmo,UINT uDeviceID,DWORD_PTR dwCallback,DWORD_PTR dwInstance,DWORD fdwOpen)
@@ -416,15 +416,15 @@ HB_FUNC(WAMIDIINGETNUMDEVS)
 // WINMMAPI MMRESULT WINAPI midiInGetDevCapsW(UINT_PTR uDeviceID,LPMIDIINCAPSW pmic,UINT cbmic)
 
 // WINMMAPI MMRESULT WINAPI midiInGetErrorTextA(MMRESULT mmrError,LPSTR pszText,UINT cchText)
-HB_FUNC(WAMIDIINGETERRORTEXTA ) // TODO: fix
+HB_FUNC(WAMIDIINGETERRORTEXTA) // TODO: fix
 {
   wa_ret_MMRESULT(midiInGetErrorTextA(wa_par_MMRESULT(1), const_cast<LPSTR>(hb_parc(2)), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI midiInGetErrorTextW(MMRESULT mmrError,LPWSTR pszText,UINT cchText)
-HB_FUNC(WAMIDIINGETERRORTEXTW ) // TODO: fix
+HB_FUNC(WAMIDIINGETERRORTEXTW) // TODO: fix
 {
-  wa_ret_MMRESULT(midiInGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3)));
+  wa_ret_MMRESULT(midiInGetErrorTextW(wa_par_MMRESULT(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_UINT(3)));
 }
 
 // WINMMAPI MMRESULT WINAPI midiInOpen(LPHMIDIIN phmi,UINT uDeviceID,DWORD_PTR dwCallback,DWORD_PTR dwInstance,DWORD fdwOpen)
@@ -678,15 +678,15 @@ HB_FUNC(WAMMIOSENDMESSAGE)
 // WINMMAPI MCIERROR WINAPI mciSendCommandW(MCIDEVICEID mciId,UINT uMsg,DWORD_PTR dwParam1,DWORD_PTR dwParam2)
 
 // WINMMAPI MCIERROR WINAPI mciSendStringA(LPCSTR lpstrCommand,LPSTR lpstrReturnString,UINT uReturnLength,HWND hwndCallback)
-HB_FUNC(WAMCISENDSTRINGA ) // TODO: fix
+HB_FUNC(WAMCISENDSTRINGA) // TODO: fix
 {
   wa_ret_MCIERROR(mciSendStringA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), wa_par_UINT(3), wa_par_HWND(4)));
 }
 
 // WINMMAPI MCIERROR WINAPI mciSendStringW(LPCWSTR lpstrCommand,LPWSTR lpstrReturnString,UINT uReturnLength,HWND hwndCallback)
-HB_FUNC(WAMCISENDSTRINGW ) // TODO: fix
+HB_FUNC(WAMCISENDSTRINGW) // TODO: fix
 {
-  wa_ret_MCIERROR(mciSendStringW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3), wa_par_HWND(4)));
+  wa_ret_MCIERROR(mciSendStringW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_UINT(3), wa_par_HWND(4)));
 }
 
 // WINMMAPI MCIDEVICEID WINAPI mciGetDeviceIDA(LPCSTR pszDevice)
@@ -736,15 +736,15 @@ HB_FUNC(WAMCIGETDEVICEIDFROMELEMENTID)
 }
 
 // WINMMAPI WINBOOL WINAPI mciGetErrorStringA(MCIERROR mcierr,LPSTR pszText,UINT cchText)
-HB_FUNC(WAMCIGETERRORSTRINGA ) // TODO: fix
+HB_FUNC(WAMCIGETERRORSTRINGA) // TODO: fix
 {
   wa_ret_BOOL(mciGetErrorStringA(wa_par_MCIERROR(1), const_cast<LPSTR>(hb_parc(2)), wa_par_UINT(3)));
 }
 
 // WINMMAPI WINBOOL WINAPI mciGetErrorStringW(MCIERROR mcierr,LPWSTR pszText,UINT cchText)
-HB_FUNC(WAMCIGETERRORSTRINGW ) // TODO: fix
+HB_FUNC(WAMCIGETERRORSTRINGW) // TODO: fix
 {
-  wa_ret_BOOL(mciGetErrorStringW(wa_par_MCIERROR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3)));
+  wa_ret_BOOL(mciGetErrorStringW(wa_par_MCIERROR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_UINT(3)));
 }
 
 // WINMMAPI WINBOOL WINAPI mciSetYieldProc(MCIDEVICEID mciId,YIELDPROC fpYieldProc,DWORD dwYieldData)

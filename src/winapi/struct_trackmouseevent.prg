@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -95,9 +95,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_NEW)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_DELETE)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -108,11 +108,11 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_DELETE)
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETCBSIZE)
 // {
-//   auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 // 
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_DWORD(1);
 //   }
@@ -120,9 +120,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_DELETE)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETCBSIZE)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbSize);
   }
@@ -132,9 +132,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWFLAGS)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwFlags = wa_par_DWORD(1);
   }
@@ -142,9 +142,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETDWFLAGS)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwFlags);
   }
@@ -154,9 +154,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETHWNDTRACK)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndTrack = wa_par_HWND(1);
   }
@@ -164,9 +164,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETHWNDTRACK)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETHWNDTRACK)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndTrack);
   }
@@ -176,9 +176,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETHWNDTRACK)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWHOVERTIME)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwHoverTime = wa_par_DWORD(1);
   }
@@ -186,9 +186,9 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWHOVERTIME)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETDWHOVERTIME)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwHoverTime);
   }

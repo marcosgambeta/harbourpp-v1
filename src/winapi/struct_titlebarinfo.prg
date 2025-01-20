@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -86,9 +86,9 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_NEW)
 
 HB_FUNC_STATIC(WAS_TITLEBARINFO_DELETE)
 {
-  auto obj = static_cast<TITLEBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -99,11 +99,11 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_DELETE)
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC(WAS_TITLEBARINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_TITLEBARINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<TITLEBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_DWORD(1);
 //   }
@@ -111,9 +111,9 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_TITLEBARINFO_GETCBSIZE)
 {
-  auto obj = static_cast<TITLEBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbSize);
   }
@@ -126,9 +126,9 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_TITLEBARINFO_GETRGSTATE)
 {
-  auto obj = static_cast<TITLEBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     hb_reta(6);
     hb_storvnl(obj->rgstate[0], -1, 1);

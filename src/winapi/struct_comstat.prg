@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -129,9 +129,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_NEW)
 
 HB_FUNC_STATIC(WAS_COMSTAT_DELETE)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -144,9 +144,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_DELETE)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFCTSHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fCtsHold = wa_par_DWORD(1);
   }
@@ -154,9 +154,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFCTSHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFCTSHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fCtsHold);
   }
@@ -166,9 +166,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFCTSHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFDSRHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fDsrHold = wa_par_DWORD(1);
   }
@@ -176,9 +176,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFDSRHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFDSRHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fDsrHold);
   }
@@ -188,9 +188,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFDSRHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFRLSDHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fRlsdHold = wa_par_DWORD(1);
   }
@@ -198,9 +198,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFRLSDHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFRLSDHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fRlsdHold);
   }
@@ -210,9 +210,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFRLSDHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFXOFFHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fXoffHold = wa_par_DWORD(1);
   }
@@ -220,9 +220,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFXOFFHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFXOFFHOLD)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fXoffHold);
   }
@@ -232,9 +232,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFXOFFHOLD)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFXOFFSENT)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fXoffSent = wa_par_DWORD(1);
   }
@@ -242,9 +242,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFXOFFSENT)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFXOFFSENT)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fXoffSent);
   }
@@ -254,9 +254,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFXOFFSENT)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFEOF)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fEof = wa_par_DWORD(1);
   }
@@ -264,9 +264,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFEOF)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFEOF)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fEof);
   }
@@ -276,9 +276,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFEOF)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFTXIM)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fTxim = wa_par_DWORD(1);
   }
@@ -286,9 +286,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFTXIM)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFTXIM)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fTxim);
   }
@@ -298,9 +298,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFTXIM)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETFRESERVED)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fReserved = wa_par_DWORD(1);
   }
@@ -308,9 +308,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETFRESERVED)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETFRESERVED)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fReserved);
   }
@@ -320,9 +320,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETFRESERVED)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETCBINQUE)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cbInQue = wa_par_DWORD(1);
   }
@@ -330,9 +330,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETCBINQUE)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETCBINQUE)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbInQue);
   }
@@ -342,9 +342,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_GETCBINQUE)
 
 HB_FUNC_STATIC(WAS_COMSTAT_SETCBOUTQUE)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cbOutQue = wa_par_DWORD(1);
   }
@@ -352,9 +352,9 @@ HB_FUNC_STATIC(WAS_COMSTAT_SETCBOUTQUE)
 
 HB_FUNC_STATIC(WAS_COMSTAT_GETCBOUTQUE)
 {
-  auto obj = static_cast<COMSTAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMSTAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbOutQue);
   }

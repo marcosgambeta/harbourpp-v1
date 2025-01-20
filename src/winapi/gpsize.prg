@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -74,7 +74,7 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC(WAGPSIZE_NEW)
 {
-  if( hb_pcount() == 0 )
+  if (hb_pcount() == 0)
   {
     // Size()
     auto self = hb_stackSelfItem();
@@ -82,7 +82,7 @@ HB_FUNC_STATIC(WAGPSIZE_NEW)
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
   }
-  else if( hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2) )
+  else if (hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2))
   {
     // Size(INT width, INT height)
     auto self = hb_stackSelfItem();
@@ -91,7 +91,7 @@ HB_FUNC_STATIC(WAGPSIZE_NEW)
     hb_itemReturn(self);
   }
 #if 0
-  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* Size */ )
+  else if (hb_pcount() == 1 && HB_ISOBJECT(1) /* Size */)
   {
     // Size(const Size& size)
     auto self = hb_stackSelfItem();
@@ -108,9 +108,9 @@ HB_FUNC_STATIC(WAGPSIZE_NEW)
 
 HB_FUNC_STATIC(WAGPSIZE_DELETE)
 {
-  auto obj = static_cast<Size*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<Size *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -123,9 +123,9 @@ HB_FUNC_STATIC(WAGPSIZE_DELETE)
 
 HB_FUNC_STATIC(WAGPSIZE_SETWIDTH)
 {
-  auto obj = static_cast<Size*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<Size *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Width = wa_par_INT(1);
   }
@@ -133,9 +133,9 @@ HB_FUNC_STATIC(WAGPSIZE_SETWIDTH)
 
 HB_FUNC_STATIC(WAGPSIZE_GETWIDTH)
 {
-  auto obj = static_cast<Size*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<Size *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_INT(obj->Width);
   }
@@ -145,9 +145,9 @@ HB_FUNC_STATIC(WAGPSIZE_GETWIDTH)
 
 HB_FUNC_STATIC(WAGPSIZE_SETHEIGHT)
 {
-  auto obj = static_cast<Size*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<Size *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Height = wa_par_INT(1);
   }
@@ -155,9 +155,9 @@ HB_FUNC_STATIC(WAGPSIZE_SETHEIGHT)
 
 HB_FUNC_STATIC(WAGPSIZE_GETHEIGHT)
 {
-  auto obj = static_cast<Size*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<Size *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_INT(obj->Height);
   }

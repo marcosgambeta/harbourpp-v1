@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -97,9 +97,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_NEW)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_DELETE)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -112,9 +112,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_DELETE)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPERED)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->peRed = wa_par_BYTE(1);
   }
@@ -122,9 +122,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPERED)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPERED)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->peRed);
   }
@@ -134,9 +134,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPERED)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEGREEN)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->peGreen = wa_par_BYTE(1);
   }
@@ -144,9 +144,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEGREEN)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEGREEN)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->peGreen);
   }
@@ -156,9 +156,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEGREEN)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEBLUE)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->peBlue = wa_par_BYTE(1);
   }
@@ -166,9 +166,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEBLUE)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEBLUE)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->peBlue);
   }
@@ -178,9 +178,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEBLUE)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEFLAGS)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->peFlags = wa_par_BYTE(1);
   }
@@ -188,9 +188,9 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEFLAGS)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEFLAGS)
 {
-  auto obj = static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->peFlags);
   }

@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -174,7 +174,7 @@ HB_FUNC(WAWNETGETCONNECTIONA)
 HB_FUNC(WAWNETGETCONNECTIONW)
 {
   DWORD nLength{};
-  wa_ret_DWORD(WNetGetConnectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
+  wa_ret_DWORD(WNetGetConnectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), &nLength));
   wa_stor_DWORD(nLength, 3);
 }
 #endif
@@ -183,7 +183,7 @@ HB_FUNC(WAWNETGETCONNECTION)
 {
   void *str1{};
   DWORD nLength{};
-  wa_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str1, nullptr), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
+  wa_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str1, nullptr), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), &nLength));
   wa_stor_DWORD(nLength, 3);
   hb_strfree(str1);
 }
@@ -206,7 +206,7 @@ HB_FUNC(WAWNETUSECONNECTIONW)
 {
   DWORD BufferSize{};
   DWORD Result{};
-  wa_ret_DWORD(WNetUseConnectionW(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), wa_par_LPCWSTR(3), wa_par_LPCWSTR(4), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));
+  wa_ret_DWORD(WNetUseConnectionW(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), wa_par_LPCWSTR(3), wa_par_LPCWSTR(4), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(6))), &BufferSize, &Result));
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
 }
@@ -218,7 +218,7 @@ HB_FUNC(WAWNETUSECONNECTION)
   void *str4{};
   DWORD BufferSize{};
   DWORD Result{};
-  wa_ret_DWORD(WNetUseConnection(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));
+  wa_ret_DWORD(WNetUseConnection(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(6))), &BufferSize, &Result));
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
   hb_strfree(str3);
@@ -355,7 +355,7 @@ HB_FUNC(WAWNETGETUSERA)
 // DWORD WINAPI WNetGetUserW(LPCWSTR lpName,LPWSTR lpUserName,LPDWORD lpnLength)
 HB_FUNC(WAWNETGETUSERW)
 {
-  wa_ret_DWORD(WNetGetUserW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), static_cast<LPDWORD>(hb_parptr(3))));
+  wa_ret_DWORD(WNetGetUserW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), static_cast<LPDWORD>(hb_parptr(3))));
 }
 
 // DWORD WINAPI WNetGetProviderNameA(DWORD dwNetType,LPSTR lpProviderName,LPDWORD lpBufferSize)
@@ -367,7 +367,7 @@ HB_FUNC(WAWNETGETPROVIDERNAMEA)
 // DWORD WINAPI WNetGetProviderNameW(DWORD dwNetType,LPWSTR lpProviderName,LPDWORD lpBufferSize)
 HB_FUNC(WAWNETGETPROVIDERNAMEW)
 {
-  wa_ret_DWORD(WNetGetProviderNameW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), static_cast<LPDWORD>(hb_parptr(3))));
+  wa_ret_DWORD(WNetGetProviderNameW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), static_cast<LPDWORD>(hb_parptr(3))));
 }
 
 // DWORD WINAPI WNetGetNetworkInformationA(LPCSTR lpProvider,LPNETINFOSTRUCT lpNetInfoStruct)
@@ -391,7 +391,7 @@ HB_FUNC(WAWNETGETLASTERRORA)
 // DWORD WINAPI WNetGetLastErrorW(LPDWORD lpError,LPWSTR lpErrorBuf,DWORD nErrorBufSize,LPWSTR lpNameBuf,DWORD nNameBufSize)
 HB_FUNC(WAWNETGETLASTERRORW)
 {
-  wa_ret_DWORD(WNetGetLastErrorW(static_cast<LPDWORD>(hb_parptr(1)), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(4))), wa_par_DWORD(5)));
+  wa_ret_DWORD(WNetGetLastErrorW(static_cast<LPDWORD>(hb_parptr(1)), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(4))), wa_par_DWORD(5)));
 }
 
 // DWORD WINAPI MultinetGetConnectionPerformanceA(LPNETRESOURCEA lpNetResource,LPNETCONNECTINFOSTRUCT lpNetConnectInfoStruct)

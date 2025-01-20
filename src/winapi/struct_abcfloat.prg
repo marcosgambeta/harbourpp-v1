@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -87,9 +87,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_NEW)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_DELETE)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -102,9 +102,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_DELETE)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFA)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->abcfA = wa_par_FLOAT(1);
   }
@@ -112,9 +112,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFA)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFA)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_FLOAT(obj->abcfA);
   }
@@ -124,9 +124,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFA)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFB)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->abcfB = wa_par_FLOAT(1);
   }
@@ -134,9 +134,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFB)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFB)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_FLOAT(obj->abcfB);
   }
@@ -146,9 +146,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFB)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFC)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->abcfC = wa_par_FLOAT(1);
   }
@@ -156,9 +156,9 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFC)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFC)
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_FLOAT(obj->abcfC);
   }

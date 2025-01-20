@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -165,7 +165,7 @@ HB_FUNC(WABCRYPTDECRYPT)
 HB_FUNC(WABCRYPTEXPORTKEY)
 {
   void *str3{};
-  wa_ret_NTSTATUS(BCryptExportKey( ###, ###, HB_PARSTR(3, &str3, nullptr), ###, wa_par_ULONG(5), ###, wa_par_ULONG(7) ));
+  wa_ret_NTSTATUS(BCryptExportKey(###, ###, HB_PARSTR(3, &str3, nullptr), ###, wa_par_ULONG(5), ###, wa_par_ULONG(7)));
   hb_strfree(str3);
 }
 #endif
@@ -175,7 +175,7 @@ HB_FUNC(WABCRYPTEXPORTKEY)
 HB_FUNC(WABCRYPTIMPORTKEY)
 {
   void *str3{};
-  wa_ret_NTSTATUS(BCryptImportKey( ###, ###, HB_PARSTR(3, &str3, nullptr), ###, ###, wa_par_ULONG(6), ###, wa_par_ULONG(8), wa_par_ULONG(9) ));
+  wa_ret_NTSTATUS(BCryptImportKey(###, ###, HB_PARSTR(3, &str3, nullptr), ###, ###, wa_par_ULONG(6), ###, wa_par_ULONG(8), wa_par_ULONG(9)));
   hb_strfree(str3);
 }
 #endif
@@ -185,7 +185,7 @@ HB_FUNC(WABCRYPTIMPORTKEY)
 HB_FUNC(WABCRYPTIMPORTKEYPAIR)
 {
   void *str3{};
-  wa_ret_NTSTATUS(BCryptImportKeyPair( ###, ###, HB_PARSTR(3, &str3, nullptr), ###, ###, wa_par_ULONG(6), wa_par_ULONG(7) ));
+  wa_ret_NTSTATUS(BCryptImportKeyPair(###, ###, HB_PARSTR(3, &str3, nullptr), ###, ###, wa_par_ULONG(6), wa_par_ULONG(7)));
   hb_strfree(str3);
 }
 #endif
@@ -194,7 +194,7 @@ HB_FUNC(WABCRYPTIMPORTKEYPAIR)
 #if 0
 HB_FUNC(WABCRYPTDUPLICATEKEY)
 {
-  wa_ret_NTSTATUS(BCryptDuplicateKey( ###, ###, ###, wa_par_ULONG(4), wa_par_ULONG(5) ));
+  wa_ret_NTSTATUS(BCryptDuplicateKey(###, ###, ###, wa_par_ULONG(4), wa_par_ULONG(5)));
 }
 #endif
 
@@ -202,7 +202,7 @@ HB_FUNC(WABCRYPTDUPLICATEKEY)
 #if 0
 HB_FUNC(WABCRYPTFINALIZEKEYPAIR)
 {
-  wa_ret_NTSTATUS(BCryptFinalizeKeyPair( ###, wa_par_ULONG(2) ));
+  wa_ret_NTSTATUS(BCryptFinalizeKeyPair(###, wa_par_ULONG(2)));
 }
 #endif
 
@@ -210,7 +210,7 @@ HB_FUNC(WABCRYPTFINALIZEKEYPAIR)
 #if 0
 HB_FUNC(WABCRYPTDESTROYKEY)
 {
-  wa_ret_NTSTATUS(BCryptDestroyKey( ### ));
+  wa_ret_NTSTATUS(BCryptDestroyKey(###));
 }
 #endif
 
@@ -218,7 +218,7 @@ HB_FUNC(WABCRYPTDESTROYKEY)
 #if 0
 HB_FUNC(WABCRYPTDESTROYSECRET)
 {
-  wa_ret_NTSTATUS(BCryptDestroySecret( ### ));
+  wa_ret_NTSTATUS(BCryptDestroySecret(###));
 }
 #endif
 
@@ -226,7 +226,7 @@ HB_FUNC(WABCRYPTDESTROYSECRET)
 #if 0
 HB_FUNC(WABCRYPTSIGNHASH)
 {
-  wa_ret_NTSTATUS(BCryptSignHash( ###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6), ###, wa_par_ULONG(8) ));
+  wa_ret_NTSTATUS(BCryptSignHash(###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6), ###, wa_par_ULONG(8)));
 }
 #endif
 
@@ -234,7 +234,7 @@ HB_FUNC(WABCRYPTSIGNHASH)
 #if 0
 HB_FUNC(WABCRYPTVERIFYSIGNATURE)
 {
-  wa_ret_NTSTATUS(BCryptVerifySignature( ###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6), wa_par_ULONG(7) ));
+  wa_ret_NTSTATUS(BCryptVerifySignature(###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6), wa_par_ULONG(7)));
 }
 #endif
 
@@ -242,7 +242,7 @@ HB_FUNC(WABCRYPTVERIFYSIGNATURE)
 #if 0
 HB_FUNC(WABCRYPTSECRETAGREEMENT)
 {
-  wa_ret_NTSTATUS(BCryptSecretAgreement( ###, ###, ###, wa_par_ULONG(4) ));
+  wa_ret_NTSTATUS(BCryptSecretAgreement(###, ###, ###, wa_par_ULONG(4)));
 }
 #endif
 
@@ -251,7 +251,7 @@ HB_FUNC(WABCRYPTSECRETAGREEMENT)
 HB_FUNC(WABCRYPTDERIVEKEY)
 {
   void *str2{};
-  wa_ret_NTSTATUS(BCryptDeriveKey( ###, HB_PARSTR(2, &str2, nullptr), ###, ###, wa_par_ULONG(5), ###, wa_par_ULONG(7) ));
+  wa_ret_NTSTATUS(BCryptDeriveKey(###, HB_PARSTR(2, &str2, nullptr), ###, ###, wa_par_ULONG(5), ###, wa_par_ULONG(7)));
   hb_strfree(str2);
 }
 #endif
@@ -260,7 +260,7 @@ HB_FUNC(WABCRYPTDERIVEKEY)
 #if 0
 HB_FUNC(WABCRYPTKEYDERIVATION)
 {
-  wa_ret_NTSTATUS(BCryptKeyDerivation( ###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6) ));
+  wa_ret_NTSTATUS(BCryptKeyDerivation(###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6)));
 }
 #endif
 
@@ -268,7 +268,7 @@ HB_FUNC(WABCRYPTKEYDERIVATION)
 #if 0
 HB_FUNC(WABCRYPTCREATEHASH)
 {
-  wa_ret_NTSTATUS(BCryptCreateHash( ###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6), wa_par_ULONG(7) ));
+  wa_ret_NTSTATUS(BCryptCreateHash(###, ###, ###, wa_par_ULONG(4), ###, wa_par_ULONG(6), wa_par_ULONG(7)));
 }
 #endif
 
@@ -276,7 +276,7 @@ HB_FUNC(WABCRYPTCREATEHASH)
 #if 0
 HB_FUNC(WABCRYPTHASHDATA)
 {
-  wa_ret_NTSTATUS(BCryptHashData( ###, ###, wa_par_ULONG(3), wa_par_ULONG(4) ));
+  wa_ret_NTSTATUS(BCryptHashData(###, ###, wa_par_ULONG(3), wa_par_ULONG(4)));
 }
 #endif
 
@@ -284,7 +284,7 @@ HB_FUNC(WABCRYPTHASHDATA)
 #if 0
 HB_FUNC(WABCRYPTFINISHHASH)
 {
-  wa_ret_NTSTATUS(BCryptFinishHash( ###, ###, wa_par_ULONG(3), wa_par_ULONG(4) ));
+  wa_ret_NTSTATUS(BCryptFinishHash(###, ###, wa_par_ULONG(3), wa_par_ULONG(4)));
 }
 #endif
 
@@ -292,7 +292,7 @@ HB_FUNC(WABCRYPTFINISHHASH)
 #if 0
 HB_FUNC(WABCRYPTDUPLICATEHASH)
 {
-  wa_ret_NTSTATUS(BCryptDuplicateHash( ###, ###, ###, wa_par_ULONG(4), wa_par_ULONG(5) ));
+  wa_ret_NTSTATUS(BCryptDuplicateHash(###, ###, ###, wa_par_ULONG(4), wa_par_ULONG(5)));
 }
 #endif
 
@@ -300,7 +300,7 @@ HB_FUNC(WABCRYPTDUPLICATEHASH)
 #if 0
 HB_FUNC(WABCRYPTDESTROYHASH)
 {
-  wa_ret_NTSTATUS(BCryptDestroyHash( ### ));
+  wa_ret_NTSTATUS(BCryptDestroyHash(###));
 }
 #endif
 
@@ -308,7 +308,7 @@ HB_FUNC(WABCRYPTDESTROYHASH)
 #if 0
 HB_FUNC(WABCRYPTGENRANDOM)
 {
-  wa_ret_NTSTATUS(BCryptGenRandom( ###, ###, wa_par_ULONG(3), wa_par_ULONG(4) ));
+  wa_ret_NTSTATUS(BCryptGenRandom(###, ###, wa_par_ULONG(3), wa_par_ULONG(4)));
 }
 #endif
 
@@ -316,7 +316,7 @@ HB_FUNC(WABCRYPTGENRANDOM)
 #if 0
 HB_FUNC(WABCRYPTDERIVEKEYCAPI)
 {
-  wa_ret_NTSTATUS(BCryptDeriveKeyCapi( ###, ###, ###, wa_par_ULONG(4), wa_par_ULONG(5) ));
+  wa_ret_NTSTATUS(BCryptDeriveKeyCapi(###, ###, ###, wa_par_ULONG(4), wa_par_ULONG(5)));
 }
 #endif
 
@@ -324,7 +324,7 @@ HB_FUNC(WABCRYPTDERIVEKEYCAPI)
 #if 0
 HB_FUNC(WABCRYPTDERIVEKEYPBKDF2)
 {
-  wa_ret_NTSTATUS(BCryptDeriveKeyPBKDF2( ###, ###, wa_par_ULONG(3), ###, wa_par_ULONG(5), ###, ###, wa_par_ULONG(8), wa_par_ULONG(9) ));
+  wa_ret_NTSTATUS(BCryptDeriveKeyPBKDF2(###, ###, wa_par_ULONG(3), ###, wa_par_ULONG(5), ###, ###, wa_par_ULONG(8), wa_par_ULONG(9)));
 }
 #endif
 
@@ -335,7 +335,7 @@ HB_FUNC(WABCRYPTRESOLVEPROVIDERS)
   void *str1{};
   void *str3{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptResolveProviders( HB_PARSTR(1, &str1, nullptr), wa_par_ULONG(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_ULONG(5), wa_par_ULONG(6), ###, ### ));
+  wa_ret_NTSTATUS(BCryptResolveProviders(HB_PARSTR(1, &str1, nullptr), wa_par_ULONG(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_ULONG(5), wa_par_ULONG(6), ###, ###));
   hb_strfree(str1);
   hb_strfree(str2);
   hb_strfree(str3);
@@ -346,7 +346,7 @@ HB_FUNC(WABCRYPTRESOLVEPROVIDERS)
 #if 0
 HB_FUNC(WABCRYPTGETFIPSALGORITHMMODE)
 {
-  wa_ret_NTSTATUS(BCryptGetFipsAlgorithmMode( ### ));
+  wa_ret_NTSTATUS(BCryptGetFipsAlgorithmMode(###));
 }
 #endif
 
@@ -355,7 +355,7 @@ HB_FUNC(WABCRYPTGETFIPSALGORITHMMODE)
 HB_FUNC(WABCRYPTQUERYPROVIDERREGISTRATION)
 {
   void *str1{};
-  wa_ret_NTSTATUS(BCryptQueryProviderRegistration( HB_PARSTR(1, &str1, nullptr), wa_par_ULONG(2), wa_par_ULONG(3), ###, ### ));
+  wa_ret_NTSTATUS(BCryptQueryProviderRegistration(HB_PARSTR(1, &str1, nullptr), wa_par_ULONG(2), wa_par_ULONG(3), ###, ###));
   hb_strfree(str1);
 }
 #endif
@@ -364,7 +364,7 @@ HB_FUNC(WABCRYPTQUERYPROVIDERREGISTRATION)
 #if 0
 HB_FUNC(WABCRYPTENUMREGISTEREDPROVIDERS)
 {
-  wa_ret_NTSTATUS(BCryptEnumRegisteredProviders( ###, ### ));
+  wa_ret_NTSTATUS(BCryptEnumRegisteredProviders(###, ###));
 }
 #endif
 
@@ -373,7 +373,7 @@ HB_FUNC(WABCRYPTENUMREGISTEREDPROVIDERS)
 HB_FUNC(WABCRYPTCREATECONTEXT)
 {
   void *str2{};
-  wa_ret_NTSTATUS(BCryptCreateContext( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ### ));
+  wa_ret_NTSTATUS(BCryptCreateContext(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ###));
   hb_strfree(str2);
 }
 #endif
@@ -383,7 +383,7 @@ HB_FUNC(WABCRYPTCREATECONTEXT)
 HB_FUNC(WABCRYPTDELETECONTEXT)
 {
   void *str2{};
-  wa_ret_NTSTATUS(BCryptDeleteContext( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr) ));
+  wa_ret_NTSTATUS(BCryptDeleteContext(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
 #endif
@@ -392,7 +392,7 @@ HB_FUNC(WABCRYPTDELETECONTEXT)
 #if 0
 HB_FUNC(WABCRYPTENUMCONTEXTS)
 {
-  wa_ret_NTSTATUS(BCryptEnumContexts( wa_par_ULONG(1), ###, ### ));
+  wa_ret_NTSTATUS(BCryptEnumContexts(wa_par_ULONG(1), ###, ###));
 }
 #endif
 
@@ -401,7 +401,7 @@ HB_FUNC(WABCRYPTENUMCONTEXTS)
 HB_FUNC(WABCRYPTCONFIGURECONTEXT)
 {
   void *str2{};
-  wa_ret_NTSTATUS(BCryptConfigureContext( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ### ));
+  wa_ret_NTSTATUS(BCryptConfigureContext(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ###));
   hb_strfree(str2);
 }
 #endif
@@ -411,7 +411,7 @@ HB_FUNC(WABCRYPTCONFIGURECONTEXT)
 HB_FUNC(WABCRYPTQUERYCONTEXTCONFIGURATION)
 {
   void *str2{};
-  wa_ret_NTSTATUS(BCryptQueryContextConfiguration( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ###, ### ));
+  wa_ret_NTSTATUS(BCryptQueryContextConfiguration(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ###, ###));
   hb_strfree(str2);
 }
 #endif
@@ -422,7 +422,7 @@ HB_FUNC(WABCRYPTADDCONTEXTFUNCTION)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptAddContextFunction( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), wa_par_ULONG(5) ));
+  wa_ret_NTSTATUS(BCryptAddContextFunction(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), wa_par_ULONG(5)));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -434,7 +434,7 @@ HB_FUNC(WABCRYPTREMOVECONTEXTFUNCTION)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptRemoveContextFunction( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr) ));
+  wa_ret_NTSTATUS(BCryptRemoveContextFunction(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -445,7 +445,7 @@ HB_FUNC(WABCRYPTREMOVECONTEXTFUNCTION)
 HB_FUNC(WABCRYPTENUMCONTEXTFUNCTIONS)
 {
   void *str2{};
-  wa_ret_NTSTATUS(BCryptEnumContextFunctions( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), ###, ### ));
+  wa_ret_NTSTATUS(BCryptEnumContextFunctions(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), ###, ###));
   hb_strfree(str2);
 }
 #endif
@@ -456,7 +456,7 @@ HB_FUNC(WABCRYPTCONFIGURECONTEXTFUNCTION)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptConfigureContextFunction( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ### ));
+  wa_ret_NTSTATUS(BCryptConfigureContextFunction(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -468,7 +468,7 @@ HB_FUNC(WABCRYPTQUERYCONTEXTFUNCTIONCONFIGURATION)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptQueryContextFunctionConfiguration( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###, ### ));
+  wa_ret_NTSTATUS(BCryptQueryContextFunctionConfiguration(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###, ###));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -480,7 +480,7 @@ HB_FUNC(WABCRYPTENUMCONTEXTFUNCTIONPROVIDERS)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptEnumContextFunctionProviders( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###, ### ));
+  wa_ret_NTSTATUS(BCryptEnumContextFunctionProviders(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###, ###));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -492,7 +492,7 @@ HB_FUNC(WABCRYPTSETCONTEXTFUNCTIONPROPERTY)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptSetContextFunctionProperty( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), wa_par_ULONG(6), ### ));
+  wa_ret_NTSTATUS(BCryptSetContextFunctionProperty(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), wa_par_ULONG(6), ###));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -504,7 +504,7 @@ HB_FUNC(WABCRYPTQUERYCONTEXTFUNCTIONPROPERTY)
 {
   void *str2{};
   void *str4{};
-  wa_ret_NTSTATUS(BCryptQueryContextFunctionProperty( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), ###, ### ));
+  wa_ret_NTSTATUS(BCryptQueryContextFunctionProperty(wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), ###, ###));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -514,7 +514,7 @@ HB_FUNC(WABCRYPTQUERYCONTEXTFUNCTIONPROPERTY)
 #if 0
 HB_FUNC(WABCRYPTREGISTERCONFIGCHANGENOTIFY)
 {
-  wa_ret_NTSTATUS(BCryptRegisterConfigChangeNotify( ### ));
+  wa_ret_NTSTATUS(BCryptRegisterConfigChangeNotify(###));
 }
 #endif
 
@@ -522,7 +522,7 @@ HB_FUNC(WABCRYPTREGISTERCONFIGCHANGENOTIFY)
 #if 0
 HB_FUNC(WABCRYPTREGISTERCONFIGCHANGENOTIFY)
 {
-  wa_ret_NTSTATUS(BCryptRegisterConfigChangeNotify( ### ));
+  wa_ret_NTSTATUS(BCryptRegisterConfigChangeNotify(###));
 }
 #endif
 
@@ -530,7 +530,7 @@ HB_FUNC(WABCRYPTREGISTERCONFIGCHANGENOTIFY)
 #if 0
 HB_FUNC(WABCRYPTUNREGISTERCONFIGCHANGENOTIFY)
 {
-  wa_ret_NTSTATUS(BCryptUnregisterConfigChangeNotify( ### ));
+  wa_ret_NTSTATUS(BCryptUnregisterConfigChangeNotify(###));
 }
 #endif
 

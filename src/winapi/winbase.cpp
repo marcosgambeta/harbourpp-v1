@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -900,7 +900,7 @@ HB_FUNC(WALSTRCMPI)
 // WINBASEAPI LPSTR WINAPI lstrcpynA(LPSTR lpString1, LPCSTR lpString2, int iMaxLength)
 HB_FUNC(WALSTRCPYNA)
 {
-  hb_retc(( LPSTR ) lstrcpynA(const_cast<LPSTR>(hb_parc(1)), wa_par_LPCSTR(2), wa_par_int(3)));
+  hb_retc((LPSTR)lstrcpynA(const_cast<LPSTR>(hb_parc(1)), wa_par_LPCSTR(2), wa_par_int(3)));
 }
 
 // WINBASEAPI LPWSTR WINAPI lstrcpynW(LPWSTR lpString1, LPCWSTR lpString2, int iMaxLength)
@@ -908,7 +908,7 @@ HB_FUNC(WALSTRCPYNA)
 // WINBASEAPI LPSTR WINAPI lstrcpyA(LPSTR lpString1, LPCSTR lpString2)
 HB_FUNC(WALSTRCPYA)
 {
-  hb_retc(( LPSTR ) lstrcpyA(const_cast<LPSTR>(hb_parc(1)), wa_par_LPCSTR(2)));
+  hb_retc((LPSTR)lstrcpyA(const_cast<LPSTR>(hb_parc(1)), wa_par_LPCSTR(2)));
 }
 
 // WINBASEAPI LPWSTR WINAPI lstrcpyW(LPWSTR lpString1, LPCWSTR lpString2)
@@ -916,7 +916,7 @@ HB_FUNC(WALSTRCPYA)
 // WINBASEAPI LPSTR WINAPI lstrcatA(LPSTR lpString1, LPCSTR lpString2)
 HB_FUNC(WALSTRCATA)
 {
-  hb_retc(( LPSTR ) lstrcatA(const_cast<LPSTR>(hb_parc(1)), wa_par_LPCSTR(2)));
+  hb_retc((LPSTR)lstrcatA(const_cast<LPSTR>(hb_parc(1)), wa_par_LPCSTR(2)));
 }
 
 // WINBASEAPI LPWSTR WINAPI lstrcatW(LPWSTR lpString1, LPCWSTR lpString2)
@@ -986,7 +986,7 @@ HB_FUNC(WA_LLSEEK)
 HB_FUNC(WAISTEXTUNICODE)
 {
   INT iResult{};
-  wa_ret_BOOL(IsTextUnicode(static_cast<CONST VOID*>(hb_parptr(1)), wa_par_int(2), &iResult));
+  wa_ret_BOOL(IsTextUnicode(static_cast<CONST VOID *>(hb_parptr(1)), wa_par_int(2), &iResult));
   wa_stor_INT(iResult, 3);
 }
 
@@ -1406,7 +1406,7 @@ HB_FUNC(WAGLOBALGETATOMNAMEA)
 #if 0
 HB_FUNC(WAGLOBALGETATOMNAMEW)
 {
-  wa_ret_UINT(GlobalGetAtomNameW(wa_par_ATOM(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_int(3)));
+  wa_ret_UINT(GlobalGetAtomNameW(wa_par_ATOM(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_int(3)));
 }
 #endif
 
@@ -1457,15 +1457,15 @@ HB_FUNC(WAFINDATOM)
 }
 
 // WINBASEAPI UINT WINAPI GetAtomNameA(ATOM nAtom, LPSTR lpBuffer, int nSize)
-HB_FUNC(WAGETATOMNAMEA ) // TODO: fix
+HB_FUNC(WAGETATOMNAMEA) // TODO: fix
 {
   wa_ret_UINT(GetAtomNameA(wa_par_ATOM(1), const_cast<LPSTR>(hb_parc(2)), wa_par_int(3)));
 }
 
 // WINBASEAPI UINT WINAPI GetAtomNameW(ATOM nAtom, LPWSTR lpBuffer, int nSize)
-HB_FUNC(WAGETATOMNAMEW ) // TODO: fix
+HB_FUNC(WAGETATOMNAMEW) // TODO: fix
 {
-  wa_ret_UINT(GetAtomNameW(wa_par_ATOM(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_int(3)));
+  wa_ret_UINT(GetAtomNameW(wa_par_ATOM(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_int(3)));
 }
 
 // WINBASEAPI UINT WINAPI GetProfileIntA(LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault)
@@ -1494,15 +1494,15 @@ HB_FUNC(WAGETPROFILEINT)
 }
 
 // WINBASEAPI DWORD WINAPI GetProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefault, LPSTR lpReturnedString, DWORD nSize)
-HB_FUNC(WAGETPROFILESTRINGA ) // TODO: fix
+HB_FUNC(WAGETPROFILESTRINGA) // TODO: fix
 {
   wa_ret_DWORD(GetProfileStringA(wa_par_LPCSTR(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3), const_cast<LPSTR>(hb_parc(4)), wa_par_DWORD(5)));
 }
 
 // WINBASEAPI DWORD WINAPI GetProfileStringW(LPCWSTR lpAppName, LPCWSTR lpKeyName, LPCWSTR lpDefault, LPWSTR lpReturnedString, DWORD nSize)
-HB_FUNC(WAGETPROFILESTRINGW ) // TODO: fix
+HB_FUNC(WAGETPROFILESTRINGW) // TODO: fix
 {
-  wa_ret_DWORD(GetProfileStringW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(4))), wa_par_DWORD(5)));
+  wa_ret_DWORD(GetProfileStringW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(4))), wa_par_DWORD(5)));
 }
 
 // WINBASEAPI WINBOOL WINAPI WriteProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpString)
@@ -1533,15 +1533,15 @@ HB_FUNC(WAWRITEPROFILESTRING)
 }
 
 // WINBASEAPI DWORD WINAPI GetProfileSectionA(LPCSTR lpAppName, LPSTR lpReturnedString, DWORD nSize)
-HB_FUNC(WAGETPROFILESECTIONA ) // TODO: fix
+HB_FUNC(WAGETPROFILESECTIONA) // TODO: fix
 {
   wa_ret_DWORD(GetProfileSectionA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), wa_par_DWORD(3)));
 }
 
 // WINBASEAPI DWORD WINAPI GetProfileSectionW(LPCWSTR lpAppName, LPWSTR lpReturnedString, DWORD nSize)
-HB_FUNC(WAGETPROFILESECTIONW ) // TODO: fix
+HB_FUNC(WAGETPROFILESECTIONW) // TODO: fix
 {
-  wa_ret_DWORD(GetProfileSectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3)));
+  wa_ret_DWORD(GetProfileSectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3)));
 }
 
 // WINBASEAPI WINBOOL WINAPI WriteProfileSectionA(LPCSTR lpAppName, LPCSTR lpString)
@@ -1605,7 +1605,7 @@ HB_FUNC(WAGETPRIVATEPROFILESTRINGA)
 // WINBASEAPI DWORD WINAPI GetPrivateProfileStringW(LPCWSTR lpAppName, LPCWSTR lpKeyName, LPCWSTR lpDefault, LPWSTR lpReturnedString, DWORD nSize, LPCWSTR lpFileName)
 HB_FUNC(WAGETPRIVATEPROFILESTRINGW)
 {
-  wa_ret_DWORD(GetPrivateProfileStringW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(4))), wa_par_DWORD(5), wa_par_LPCWSTR(6)));
+  wa_ret_DWORD(GetPrivateProfileStringW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(4))), wa_par_DWORD(5), wa_par_LPCWSTR(6)));
 }
 
 // WINBASEAPI WINBOOL WINAPI WritePrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpString, LPCSTR lpFileName)
@@ -1646,7 +1646,7 @@ HB_FUNC(WAGETPRIVATEPROFILESECTIONA)
 // WINBASEAPI DWORD WINAPI GetPrivateProfileSectionW(LPCWSTR lpAppName, LPWSTR lpReturnedString, DWORD nSize, LPCWSTR lpFileName)
 HB_FUNC(WAGETPRIVATEPROFILESECTIONW)
 {
-  wa_ret_DWORD(GetPrivateProfileSectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3), wa_par_LPCWSTR(4)));
+  wa_ret_DWORD(GetPrivateProfileSectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), wa_par_LPCWSTR(4)));
 }
 
 // WINBASEAPI WINBOOL WINAPI WritePrivateProfileSectionA(LPCSTR lpAppName, LPCSTR lpString, LPCSTR lpFileName)
@@ -1685,7 +1685,7 @@ HB_FUNC(WAGETPRIVATEPROFILESECTIONNAMESA)
 // WINBASEAPI DWORD WINAPI GetPrivateProfileSectionNamesW(LPWSTR lpszReturnBuffer, DWORD nSize, LPCWSTR lpFileName)
 HB_FUNC(WAGETPRIVATEPROFILESECTIONNAMESW)
 {
-  wa_ret_DWORD(GetPrivateProfileSectionNamesW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_DWORD(2), wa_par_LPCWSTR(3)));
+  wa_ret_DWORD(GetPrivateProfileSectionNamesW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), wa_par_DWORD(2), wa_par_LPCWSTR(3)));
 }
 
 // WINBASEAPI WINBOOL WINAPI GetPrivateProfileStructA(LPCSTR lpszSection, LPCSTR lpszKey, LPVOID lpStruct, UINT uSizeStruct, LPCSTR szFile)
@@ -1748,7 +1748,7 @@ HB_FUNC(WAGETSYSTEMWOW64DIRECTORYA)
 // WINBASEAPI UINT WINAPI GetSystemWow64DirectoryW(LPWSTR lpBuffer, UINT uSize)
 HB_FUNC(WAGETSYSTEMWOW64DIRECTORYW)
 {
-  wa_ret_UINT(GetSystemWow64DirectoryW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_UINT(2)));
+  wa_ret_UINT(GetSystemWow64DirectoryW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), wa_par_UINT(2)));
 }
 
 // WINBASEAPI BOOLEAN WINAPI Wow64EnableWow64FsRedirection(BOOLEAN Wow64FsEnableRedirection)
@@ -1789,7 +1789,7 @@ HB_FUNC(WAGETDLLDIRECTORYA)
 // WINBASEAPI DWORD WINAPI GetDllDirectoryW(DWORD nBufferLength, LPWSTR lpBuffer)
 HB_FUNC(WAGETDLLDIRECTORYW)
 {
-  wa_ret_DWORD(GetDllDirectoryW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2)))));
+  wa_ret_DWORD(GetDllDirectoryW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2)))));
 }
 
 // WINBASEAPI WINBOOL WINAPI SetSearchPathMode(DWORD Flags)
@@ -2160,7 +2160,7 @@ HB_FUNC(WAGETNAMEDPIPEHANDLESTATEW)
   DWORD CurInstances{};
   DWORD MaxCollectionCount{};
   DWORD CollectDataTimeout{};
-  wa_ret_BOOL(GetNamedPipeHandleStateW(wa_par_HANDLE(1), &State, &CurInstances, &MaxCollectionCount, &CollectDataTimeout, reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), wa_par_DWORD(7)));
+  wa_ret_BOOL(GetNamedPipeHandleStateW(wa_par_HANDLE(1), &State, &CurInstances, &MaxCollectionCount, &CollectDataTimeout, reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(6))), wa_par_DWORD(7)));
   wa_stor_DWORD(State, 2);
   wa_stor_DWORD(CurInstances, 3);
   wa_stor_DWORD(MaxCollectionCount, 4);
@@ -2454,7 +2454,7 @@ HB_FUNC(WAOBJECTDELETEAUDITALARMA)
 // WINBASEAPI WINBOOL WINAPI IsBadReadPtr(CONST VOID *lp, UINT_PTR ucb)
 HB_FUNC(WAISBADREADPTR)
 {
-  wa_ret_BOOL(IsBadReadPtr(static_cast<CONST VOID*>(hb_parptr(1)), wa_par_UINT_PTR(2)));
+  wa_ret_BOOL(IsBadReadPtr(static_cast<CONST VOID *>(hb_parptr(1)), wa_par_UINT_PTR(2)));
 }
 
 // WINBASEAPI WINBOOL WINAPI IsBadWritePtr(LPVOID lp, UINT_PTR ucb)
@@ -2466,7 +2466,7 @@ HB_FUNC(WAISBADWRITEPTR)
 // WINBASEAPI WINBOOL WINAPI IsBadHugeReadPtr(CONST VOID *lp, UINT_PTR ucb)
 HB_FUNC(WAISBADHUGEREADPTR)
 {
-  wa_ret_BOOL(IsBadHugeReadPtr(static_cast<CONST VOID*>(hb_parptr(1)), wa_par_UINT_PTR(2)));
+  wa_ret_BOOL(IsBadHugeReadPtr(static_cast<CONST VOID *>(hb_parptr(1)), wa_par_UINT_PTR(2)));
 }
 
 // WINBASEAPI WINBOOL WINAPI IsBadHugeWritePtr(LPVOID lp, UINT_PTR ucb)
@@ -2529,7 +2529,7 @@ HB_FUNC(WAISBADSTRINGPTR)
 // WINADVAPI WINBOOL WINAPI LookupPrivilegeNameW(LPCWSTR lpSystemName, PLUID lpLuid, LPWSTR lpName, LPDWORD cchName)
 
 // WINADVAPI WINBOOL WINAPI LookupPrivilegeDisplayNameA(LPCSTR lpSystemName, LPCSTR lpName, LPSTR lpDisplayName, LPDWORD cchDisplayName, LPDWORD lpLanguageId)
-HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAMEA ) // TODO: corrigir parametro 3
+HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAMEA) // TODO: corrigir parametro 3
 {
   DWORD cchDisplayName{};
   DWORD LanguageId{};
@@ -2539,17 +2539,17 @@ HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAMEA ) // TODO: corrigir parametro 3
 }
 
 // WINADVAPI WINBOOL WINAPI LookupPrivilegeDisplayNameW(LPCWSTR lpSystemName, LPCWSTR lpName, LPWSTR lpDisplayName, LPDWORD cchDisplayName, LPDWORD lpLanguageId)
-HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAMEW ) // TODO: corrigir parametro 3
+HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAMEW) // TODO: corrigir parametro 3
 {
   DWORD cchDisplayName{};
   DWORD LanguageId{};
-  wa_ret_BOOL(LookupPrivilegeDisplayNameW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), &cchDisplayName, &LanguageId));
+  wa_ret_BOOL(LookupPrivilegeDisplayNameW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), &cchDisplayName, &LanguageId));
   wa_stor_DWORD(cchDisplayName, 4);
   wa_stor_DWORD(LanguageId, 5);
 }
 
 #if 0
-HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAME ) // TODO: corrigir parametro 3
+HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAME) // TODO: corrigir parametro 3
 {
   void *str1{};
   void *str2{};
@@ -2587,7 +2587,7 @@ HB_FUNC(WALOOKUPPRIVILEGEDISPLAYNAME ) // TODO: corrigir parametro 3
 
 // WINBASEAPI WINBOOL WINAPI GetComputerNameA(LPSTR lpBuffer, LPDWORD nSize)
 #if 0
-HB_FUNC(WAGETCOMPUTERNAMEA ) // TODO: corrigir parametro 1
+HB_FUNC(WAGETCOMPUTERNAMEA) // TODO: corrigir parametro 1
 {
   DWORD nSize{};
   wa_ret_BOOL(GetComputerNameA(const_cast<LPSTR>(hb_parc(1)), &nSize));
@@ -2597,10 +2597,10 @@ HB_FUNC(WAGETCOMPUTERNAMEA ) // TODO: corrigir parametro 1
 
 // WINBASEAPI WINBOOL WINAPI GetComputerNameW(LPWSTR lpBuffer, LPDWORD nSize)
 #if 0
-HB_FUNC(WAGETCOMPUTERNAMEW ) // TODO: corrigir parametro 1
+HB_FUNC(WAGETCOMPUTERNAMEW) // TODO: corrigir parametro 1
 {
   DWORD nSize{};
-  wa_ret_BOOL(GetComputerNameW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), &nSize));
+  wa_ret_BOOL(GetComputerNameW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), &nSize));
   wa_stor_DWORD(nSize, 2);
 }
 #endif
@@ -2652,12 +2652,12 @@ HB_FUNC(WADNSHOSTNAMETOCOMPUTERNAMEA)
 HB_FUNC(WADNSHOSTNAMETOCOMPUTERNAMEW)
 {
   DWORD nSize{};
-  wa_ret_BOOL(DnsHostnameToComputerNameW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nSize));
+  wa_ret_BOOL(DnsHostnameToComputerNameW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), &nSize));
   wa_stor_DWORD(nSize, 3);
 }
 
 // WINADVAPI WINBOOL WINAPI GetUserNameA(LPSTR lpBuffer, LPDWORD pcbBuffer)
-HB_FUNC(WAGETUSERNAMEA ) // TODO: corrigir parametro 1
+HB_FUNC(WAGETUSERNAMEA) // TODO: corrigir parametro 1
 {
   DWORD pcbBuffer{};
   wa_ret_BOOL(GetUserNameA(const_cast<LPSTR>(hb_parc(1)), &pcbBuffer));
@@ -2665,10 +2665,10 @@ HB_FUNC(WAGETUSERNAMEA ) // TODO: corrigir parametro 1
 }
 
 // WINADVAPI WINBOOL WINAPI GetUserNameW(LPWSTR lpBuffer, LPDWORD pcbBuffer)
-HB_FUNC(WAGETUSERNAMEW ) // TODO: corrigir parametro 1
+HB_FUNC(WAGETUSERNAMEW) // TODO: corrigir parametro 1
 {
   DWORD pcbBuffer{};
-  wa_ret_BOOL(GetUserNameW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), &pcbBuffer));
+  wa_ret_BOOL(GetUserNameW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), &pcbBuffer));
   wa_stor_DWORD(pcbBuffer, 2);
 }
 
@@ -2836,7 +2836,7 @@ HB_FUNC(WAFINDFIRSTVOLUMEMOUNTPOINTA)
 // WINBASEAPI HANDLE WINAPI FindFirstVolumeMountPointW(LPCWSTR lpszRootPathName, LPWSTR lpszVolumeMountPoint, DWORD cchBufferLength)
 HB_FUNC(WAFINDFIRSTVOLUMEMOUNTPOINTW)
 {
-  wa_ret_HANDLE(FindFirstVolumeMountPointW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3)));
+  wa_ret_HANDLE(FindFirstVolumeMountPointW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3)));
 }
 
 // WINBASEAPI WINBOOL WINAPI FindNextVolumeMountPointA(HANDLE hFindVolumeMountPoint, LPSTR lpszVolumeMountPoint, DWORD cchBufferLength)
@@ -2848,7 +2848,7 @@ HB_FUNC(WAFINDNEXTVOLUMEMOUNTPOINTA)
 // WINBASEAPI WINBOOL WINAPI FindNextVolumeMountPointW(HANDLE hFindVolumeMountPoint, LPWSTR lpszVolumeMountPoint, DWORD cchBufferLength)
 HB_FUNC(WAFINDNEXTVOLUMEMOUNTPOINTW)
 {
-  wa_ret_BOOL(FindNextVolumeMountPointW(wa_par_HANDLE(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3)));
+  wa_ret_BOOL(FindNextVolumeMountPointW(wa_par_HANDLE(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3)));
 }
 
 // WINBASEAPI WINBOOL WINAPI FindVolumeMountPointClose(HANDLE hFindVolumeMountPoint)

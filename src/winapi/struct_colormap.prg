@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -82,9 +82,9 @@ HB_FUNC_STATIC(WAS_COLORMAP_NEW)
 
 HB_FUNC_STATIC(WAS_COLORMAP_DELETE)
 {
-  auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -97,9 +97,9 @@ HB_FUNC_STATIC(WAS_COLORMAP_DELETE)
 
 HB_FUNC_STATIC(WAS_COLORMAP_SETFROM)
 {
-  auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->from = wa_par_COLORREF(1);
   }
@@ -107,9 +107,9 @@ HB_FUNC_STATIC(WAS_COLORMAP_SETFROM)
 
 HB_FUNC_STATIC(WAS_COLORMAP_GETFROM)
 {
-  auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_COLORREF(obj->from);
   }
@@ -119,9 +119,9 @@ HB_FUNC_STATIC(WAS_COLORMAP_GETFROM)
 
 HB_FUNC_STATIC(WAS_COLORMAP_SETTO)
 {
-  auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->to = wa_par_COLORREF(1);
   }
@@ -129,9 +129,9 @@ HB_FUNC_STATIC(WAS_COLORMAP_SETTO)
 
 HB_FUNC_STATIC(WAS_COLORMAP_GETTO)
 {
-  auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_COLORREF(obj->to);
   }

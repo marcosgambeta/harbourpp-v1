@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,15 +37,15 @@ HB_FUNC(WAPTON)
 
 HB_FUNC(WANTOP)
 {
-  hb_retptr(reinterpret_cast<void*>(hb_parnint(1)));
+  hb_retptr(reinterpret_cast<void *>(hb_parnint(1)));
 }
 
-HB_FUNC(WALOWORD ) // macro TODO: move to correct file
+HB_FUNC(WALOWORD) // macro TODO: move to correct file
 {
   wa_ret_int(LOWORD(wa_par_DWORD(1)));
 }
 
-HB_FUNC(WAHIWORD ) // macro TODO: move to correct file
+HB_FUNC(WAHIWORD) // macro TODO: move to correct file
 {
   wa_ret_int(HIWORD(wa_par_DWORD(1)));
 }

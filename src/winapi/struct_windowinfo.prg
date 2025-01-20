@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -131,9 +131,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_NEW)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_DELETE)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -144,11 +144,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_DELETE)
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_DWORD(1);
 //   }
@@ -156,9 +156,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETCBSIZE)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbSize);
   }
@@ -174,11 +174,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCBSIZE)
 
 // DWORD dwStyle
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETDWSTYLE )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETDWSTYLE)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->dwStyle = wa_par_DWORD(1);
 //   }
@@ -186,9 +186,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWSTYLE)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwStyle);
   }
@@ -196,11 +196,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWSTYLE)
 
 // DWORD dwExStyle
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETDWEXSTYLE )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETDWEXSTYLE)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->dwExStyle = wa_par_DWORD(1);
 //   }
@@ -208,9 +208,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWSTYLE)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWEXSTYLE)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwExStyle);
   }
@@ -218,11 +218,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWEXSTYLE)
 
 // DWORD dwWindowStatus
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETDWWINDOWSTATUS )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETDWWINDOWSTATUS)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->dwWindowStatus = wa_par_DWORD(1);
 //   }
@@ -230,9 +230,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWEXSTYLE)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWWINDOWSTATUS)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwWindowStatus);
   }
@@ -240,11 +240,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWWINDOWSTATUS)
 
 // UINT cxWindowBorders
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETCXWINDOWBORDERS )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETCXWINDOWBORDERS)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cxWindowBorders = wa_par_UINT(1);
 //   }
@@ -252,9 +252,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWWINDOWSTATUS)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETCXWINDOWBORDERS)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->cxWindowBorders);
   }
@@ -262,11 +262,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCXWINDOWBORDERS)
 
 // UINT cyWindowBorders
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETCYWINDOWBORDERS )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETCYWINDOWBORDERS)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cyWindowBorders = wa_par_UINT(1);
 //   }
@@ -274,9 +274,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCXWINDOWBORDERS)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETCYWINDOWBORDERS)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->cyWindowBorders);
   }
@@ -284,11 +284,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCYWINDOWBORDERS)
 
 // ATOM atomWindowType
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETATOMWINDOWTYPE )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETATOMWINDOWTYPE)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->atomWindowType = wa_par_ATOM(1);
 //   }
@@ -296,9 +296,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCYWINDOWBORDERS)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETATOMWINDOWTYPE)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_ATOM(obj->atomWindowType);
   }
@@ -306,11 +306,11 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETATOMWINDOWTYPE)
 
 // WORD wCreatorVersion
 
-// HB_FUNC_STATIC(WAS_WINDOWINFO_SETWCREATORVERSION )
+// HB_FUNC_STATIC(WAS_WINDOWINFO_SETWCREATORVERSION)
 // {
-//   auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->wCreatorVersion = wa_par_WORD(1);
 //   }
@@ -318,9 +318,9 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETATOMWINDOWTYPE)
 
 HB_FUNC_STATIC(WAS_WINDOWINFO_GETWCREATORVERSION)
 {
-  auto obj = static_cast<WINDOWINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->wCreatorVersion);
   }

@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -107,9 +107,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_NEW)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_DELETE)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -120,11 +120,11 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_DELETE)
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_DWORD(1);
 //   }
@@ -132,9 +132,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETCBSIZE)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbSize);
   }
@@ -150,9 +150,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETSTATEBUTTON)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->stateButton = wa_par_DWORD(1);
   }
@@ -160,9 +160,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETSTATEBUTTON)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETSTATEBUTTON)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->stateButton);
   }
@@ -172,9 +172,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETSTATEBUTTON)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETHWNDCOMBO)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndCombo = wa_par_HWND(1);
   }
@@ -182,9 +182,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETHWNDCOMBO)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETHWNDCOMBO)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndCombo);
   }
@@ -194,9 +194,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETHWNDCOMBO)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETHWNDITEM)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndItem = wa_par_HWND(1);
   }
@@ -204,9 +204,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETHWNDITEM)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndItem);
   }
@@ -216,9 +216,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETHWNDLIST)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndList = wa_par_HWND(1);
   }
@@ -226,9 +226,9 @@ HB_FUNC_STATIC(WAS_COMBOBOXINFO_SETHWNDLIST)
 
 HB_FUNC_STATIC(WAS_COMBOBOXINFO_GETHWNDLIST)
 {
-  auto obj = static_cast<COMBOBOXINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<COMBOBOXINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndList);
   }

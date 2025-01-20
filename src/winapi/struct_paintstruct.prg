@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -97,9 +97,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_NEW)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_DELETE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -112,9 +112,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_DELETE)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETHDC)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hdc = wa_par_HDC(1);
   }
@@ -122,9 +122,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETHDC)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETHDC)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HDC(obj->hdc);
   }
@@ -134,9 +134,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETHDC)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFERASE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fErase = wa_par_BOOL(1);
   }
@@ -144,9 +144,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFERASE)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFERASE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fErase);
   }
@@ -158,9 +158,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFERASE)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFRESTORE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fRestore = wa_par_BOOL(1);
   }
@@ -168,9 +168,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFRESTORE)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFRESTORE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fRestore);
   }
@@ -180,9 +180,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFRESTORE)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFINCUPDATE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fIncUpdate = wa_par_BOOL(1);
   }
@@ -190,9 +190,9 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFINCUPDATE)
 
 HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFINCUPDATE)
 {
-  auto obj = static_cast<PAINTSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fIncUpdate);
   }

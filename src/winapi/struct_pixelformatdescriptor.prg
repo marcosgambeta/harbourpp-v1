@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -225,9 +225,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_NEW)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_DELETE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -240,9 +240,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_DELETE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETNSIZE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->nSize = wa_par_WORD(1);
   }
@@ -250,9 +250,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETNSIZE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETNSIZE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->nSize);
   }
@@ -262,9 +262,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETNSIZE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETNVERSION)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->nVersion = wa_par_WORD(1);
   }
@@ -272,9 +272,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETNVERSION)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETNVERSION)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_WORD(obj->nVersion);
   }
@@ -284,9 +284,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETNVERSION)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWFLAGS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwFlags = wa_par_DWORD(1);
   }
@@ -294,9 +294,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWFLAGS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwFlags);
   }
@@ -306,9 +306,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETIPIXELTYPE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->iPixelType = wa_par_BYTE(1);
   }
@@ -316,9 +316,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETIPIXELTYPE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETIPIXELTYPE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->iPixelType);
   }
@@ -328,9 +328,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETIPIXELTYPE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCCOLORBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cColorBits = wa_par_BYTE(1);
   }
@@ -338,9 +338,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCCOLORBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCCOLORBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cColorBits);
   }
@@ -350,9 +350,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCCOLORBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCREDBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cRedBits = wa_par_BYTE(1);
   }
@@ -360,9 +360,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCREDBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCREDBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cRedBits);
   }
@@ -372,9 +372,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCREDBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCREDSHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cRedShift = wa_par_BYTE(1);
   }
@@ -382,9 +382,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCREDSHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCREDSHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cRedShift);
   }
@@ -394,9 +394,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCREDSHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCGREENBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cGreenBits = wa_par_BYTE(1);
   }
@@ -404,9 +404,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCGREENBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCGREENBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cGreenBits);
   }
@@ -416,9 +416,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCGREENBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCGREENSHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cGreenShift = wa_par_BYTE(1);
   }
@@ -426,9 +426,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCGREENSHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCGREENSHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cGreenShift);
   }
@@ -438,9 +438,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCGREENSHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCBLUEBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cBlueBits = wa_par_BYTE(1);
   }
@@ -448,9 +448,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCBLUEBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCBLUEBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cBlueBits);
   }
@@ -460,9 +460,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCBLUEBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCBLUESHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cBlueShift = wa_par_BYTE(1);
   }
@@ -470,9 +470,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCBLUESHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCBLUESHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cBlueShift);
   }
@@ -482,9 +482,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCBLUESHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCALPHABITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAlphaBits = wa_par_BYTE(1);
   }
@@ -492,9 +492,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCALPHABITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCALPHABITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAlphaBits);
   }
@@ -504,9 +504,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCALPHABITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCALPHASHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAlphaShift = wa_par_BYTE(1);
   }
@@ -514,9 +514,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCALPHASHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCALPHASHIFT)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAlphaShift);
   }
@@ -526,9 +526,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCALPHASHIFT)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAccumBits = wa_par_BYTE(1);
   }
@@ -536,9 +536,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAccumBits);
   }
@@ -548,9 +548,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMREDBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAccumRedBits = wa_par_BYTE(1);
   }
@@ -558,9 +558,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMREDBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMREDBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAccumRedBits);
   }
@@ -570,9 +570,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMREDBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMGREENBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAccumGreenBits = wa_par_BYTE(1);
   }
@@ -580,9 +580,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMGREENBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMGREENBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAccumGreenBits);
   }
@@ -592,9 +592,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMGREENBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMBLUEBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAccumBlueBits = wa_par_BYTE(1);
   }
@@ -602,9 +602,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMBLUEBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMBLUEBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAccumBlueBits);
   }
@@ -614,9 +614,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMBLUEBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMALPHABITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAccumAlphaBits = wa_par_BYTE(1);
   }
@@ -624,9 +624,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCACCUMALPHABITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMALPHABITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAccumAlphaBits);
   }
@@ -636,9 +636,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCACCUMALPHABITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCDEPTHBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cDepthBits = wa_par_BYTE(1);
   }
@@ -646,9 +646,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCDEPTHBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCDEPTHBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cDepthBits);
   }
@@ -658,9 +658,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCDEPTHBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCSTENCILBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cStencilBits = wa_par_BYTE(1);
   }
@@ -668,9 +668,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCSTENCILBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCSTENCILBITS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cStencilBits);
   }
@@ -680,9 +680,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCSTENCILBITS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCAUXBUFFERS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cAuxBuffers = wa_par_BYTE(1);
   }
@@ -690,9 +690,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETCAUXBUFFERS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCAUXBUFFERS)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->cAuxBuffers);
   }
@@ -702,9 +702,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETCAUXBUFFERS)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETILAYERTYPE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->iLayerType = wa_par_BYTE(1);
   }
@@ -712,9 +712,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETILAYERTYPE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETILAYERTYPE)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->iLayerType);
   }
@@ -724,9 +724,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETILAYERTYPE)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETBRESERVED)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->bReserved = wa_par_BYTE(1);
   }
@@ -734,9 +734,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETBRESERVED)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETBRESERVED)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BYTE(obj->bReserved);
   }
@@ -746,9 +746,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETBRESERVED)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWLAYERMASK)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwLayerMask = wa_par_DWORD(1);
   }
@@ -756,9 +756,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWLAYERMASK)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWLAYERMASK)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwLayerMask);
   }
@@ -768,9 +768,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWLAYERMASK)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWVISIBLEMASK)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwVisibleMask = wa_par_DWORD(1);
   }
@@ -778,9 +778,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWVISIBLEMASK)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWVISIBLEMASK)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwVisibleMask);
   }
@@ -790,9 +790,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWVISIBLEMASK)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWDAMAGEMASK)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwDamageMask = wa_par_DWORD(1);
   }
@@ -800,9 +800,9 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETDWDAMAGEMASK)
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETDWDAMAGEMASK)
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwDamageMask);
   }

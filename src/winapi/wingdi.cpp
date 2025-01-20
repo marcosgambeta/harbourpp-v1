@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -64,12 +64,12 @@ HB_FUNC(WAANIMATEPALETTE)
 {
   std::vector<PALETTEENTRY> vec{};
   auto pArray = hb_param(4, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   wa_ret_BOOL(AnimatePalette(wa_par_HPALETTE(1), wa_par_UINT(2), wa_par_UINT(3), vec.data()));
@@ -285,20 +285,20 @@ HB_FUNC(WACREATEPOLYPOLYGONRGN)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
+  if (pArray1 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+      vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<INT> vec2{};
   auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
+  if (pArray2 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
     }
@@ -672,7 +672,7 @@ HB_FUNC(WAGETCHARABCWIDTHSW)
 }
 #endif
 
-HB_FUNC(WAGETCHARABCWIDTHS ) // TODO: parameter 4 is a array
+HB_FUNC(WAGETCHARABCWIDTHS) // TODO: parameter 4 is a array
 {
   wa_ret_BOOL(GetCharABCWidths(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABC(4)));
 }
@@ -693,7 +693,7 @@ HB_FUNC(WAGETCHARABCWIDTHSFLOATW)
 }
 #endif
 
-HB_FUNC(WAGETCHARABCWIDTHSFLOAT ) // TODO: parameter 4 is a array
+HB_FUNC(WAGETCHARABCWIDTHSFLOAT) // TODO: parameter 4 is a array
 {
   wa_ret_BOOL(GetCharABCWidthsFloat(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABCFLOAT(4)));
 }
@@ -1158,12 +1158,12 @@ HB_FUNC(WAPLGBLT)
 {
   std::vector<POINT> vec{};
   auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   wa_ret_BOOL(PlgBlt(wa_par_HDC(1), vec.data(), wa_par_HDC(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_HBITMAP(8), wa_par_int(9), wa_par_int(10)));
@@ -1210,20 +1210,20 @@ HB_FUNC(WAPOLYPOLYGON)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
+  if (pArray1 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+      vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<INT> vec2{};
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
+  if (pArray2 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
     }
@@ -1437,12 +1437,12 @@ HB_FUNC(WASETPALETTEENTRIES)
 {
   std::vector<PALETTEENTRY> vec{};
   auto pArray = hb_param(4, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   wa_ret_UINT(SetPaletteEntries(wa_par_HPALETTE(1), wa_par_UINT(2), wa_par_UINT(3), vec.data()));
@@ -1581,40 +1581,40 @@ HB_FUNC(WAGRADIENTFILL)
 {
   std::vector<TRIVERTEX> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
+  if (pArray1 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec1.push_back(*static_cast<TRIVERTEX*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+      vec1.push_back(*static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<GRADIENT_RECT> vec2gr{};
   std::vector<GRADIENT_TRIANGLE> vec2gt{};
   auto type = 0; // 1=gradient_rect 2=gradient_triangle
   auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
+  if (pArray2 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
-      if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT") )
+      if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT"))
       {
         type = 1;
-        vec2gr.push_back(*static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
-      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE") )
+        vec2gr.push_back(*static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+      } else if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE"))
       {
         type = 2;
-        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
       }
     }
   }
-  if( type == 1 )
+  if (type == 1)
   {
     wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
   }
-  else if( type == 2 )
+  else if (type == 2)
   {
     wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
   }
@@ -1629,40 +1629,40 @@ HB_FUNC(WAGDIGRADIENTFILL)
 {
   std::vector<TRIVERTEX> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
+  if (pArray1 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec1.push_back(*static_cast<TRIVERTEX*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+      vec1.push_back(*static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<GRADIENT_RECT> vec2gr{};
   std::vector<GRADIENT_TRIANGLE> vec2gt{};
   auto type = 0; // 1=gradient_rect 2=gradient_triangle
   auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
+  if (pArray2 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
-      if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT") )
+      if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT"))
       {
         type = 1;
-        vec2gr.push_back(*static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
-      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE") )
+        vec2gr.push_back(*static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+      } else if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE"))
       {
         type = 2;
-        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
       }
     }
   }
-  if( type == 1 )
+  if (type == 1)
   {
     wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
   }
-  else if( type == 2 )
+  else if (type == 2)
   {
     wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
   }
@@ -1787,7 +1787,7 @@ HB_FUNC(WAGETENHMETAFILEDESCRIPTIONA)
 #if 0
 HB_FUNC(WAGETENHMETAFILEDESCRIPTIONW)
 {
-  wa_ret_UINT(GetEnhMetaFileDescriptionW(wa_par_HENHMETAFILE(1), wa_par_UINT(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_UINT(GetEnhMetaFileDescriptionW(wa_par_HENHMETAFILE(1), wa_par_UINT(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3)))));
 }
 #endif
 
@@ -1860,20 +1860,20 @@ HB_FUNC(WAPOLYPOLYLINE)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
+  if (pArray1 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+      vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<DWORD> vec2{};
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
+  if (pArray2 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec2.push_back(static_cast<DWORD>(hb_arrayGetND(pArray2, i + 1)));
     }
@@ -2014,20 +2014,20 @@ HB_FUNC(WAPOLYDRAW)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
+  if (pArray1 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+      vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<BYTE> vec2{};
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
+  if (pArray2 != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec2.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray2, i + 1)));
     }
@@ -2090,13 +2090,13 @@ HB_FUNC(WAGETARCDIRECTION)
 }
 
 // WINGDIAPI int WINAPI GetObjectA(HANDLE h,int c,LPVOID pv)
-HB_FUNC(WAGETOBJECTA ) // TODO: fix
+HB_FUNC(WAGETOBJECTA) // TODO: fix
 {
   wa_ret_int(GetObjectA(wa_par_HANDLE(1), wa_par_int(2), static_cast<LPVOID>(hb_parptr(3))));
 }
 
 // WINGDIAPI int WINAPI GetObjectW(HANDLE h,int c,LPVOID pv)
-HB_FUNC(WAGETOBJECTW ) // TODO: fix
+HB_FUNC(WAGETOBJECTW) // TODO: fix
 {
   wa_ret_int(GetObjectW(wa_par_HANDLE(1), wa_par_int(2), static_cast<LPVOID>(hb_parptr(3))));
 }
@@ -2247,15 +2247,15 @@ HB_FUNC(WASETBRUSHORGEX)
 }
 
 // WINGDIAPI int WINAPI GetTextFaceA(HDC hdc,int c,LPSTR lpName)
-HB_FUNC(WAGETTEXTFACEA ) // TODO: fix
+HB_FUNC(WAGETTEXTFACEA) // TODO: fix
 {
   wa_ret_int(GetTextFaceA(wa_par_HDC(1), wa_par_int(2), const_cast<LPSTR>(hb_parc(3))));
 }
 
 // WINGDIAPI int WINAPI GetTextFaceW(HDC hdc,int c,LPWSTR lpName)
-HB_FUNC(WAGETTEXTFACEW ) // TODO: fix
+HB_FUNC(WAGETTEXTFACEW) // TODO: fix
 {
-  wa_ret_int(GetTextFaceW(wa_par_HDC(1), wa_par_int(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_int(GetTextFaceW(wa_par_HDC(1), wa_par_int(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3)))));
 }
 
 // WINGDIAPI DWORD WINAPI GetKerningPairsA(HDC hdc,DWORD nPairs,LPKERNINGPAIR lpKernPair)
@@ -2350,7 +2350,7 @@ HB_FUNC(WADELETECOLORSPACE)
 }
 
 // WINGDIAPI WINBOOL WINAPI GetICMProfileA(HDC hdc,LPDWORD pBufSize,LPSTR pszFilename)
-HB_FUNC(WAGETICMPROFILEA ) // TODO: fix
+HB_FUNC(WAGETICMPROFILEA) // TODO: fix
 {
   DWORD BufSize{};
   wa_ret_BOOL(GetICMProfileA(wa_par_HDC(1), &BufSize, const_cast<LPSTR>(hb_parc(3))));
@@ -2358,10 +2358,10 @@ HB_FUNC(WAGETICMPROFILEA ) // TODO: fix
 }
 
 // WINGDIAPI WINBOOL WINAPI GetICMProfileW(HDC hdc,LPDWORD pBufSize,LPWSTR pszFilename)
-HB_FUNC(WAGETICMPROFILEW ) // TODO: fix
+HB_FUNC(WAGETICMPROFILEW) // TODO: fix
 {
   DWORD BufSize{};
-  wa_ret_BOOL(GetICMProfileW(wa_par_HDC(1), &BufSize, reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(GetICMProfileW(wa_par_HDC(1), &BufSize, reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3)))));
   wa_stor_DWORD(BufSize, 2);
 }
 
@@ -2374,7 +2374,7 @@ HB_FUNC(WASETICMPROFILEA)
 // WINGDIAPI WINBOOL WINAPI SetICMProfileW(HDC hdc,LPWSTR lpFileName)
 HB_FUNC(WASETICMPROFILEW)
 {
-  wa_ret_BOOL(SetICMProfileW(wa_par_HDC(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2)))));
+  wa_ret_BOOL(SetICMProfileW(wa_par_HDC(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2)))));
 }
 
 // WINGDIAPI WINBOOL WINAPI GetDeviceGammaRamp(HDC hdc,LPVOID lpRamp)
@@ -2408,7 +2408,7 @@ HB_FUNC(WAUPDATEICMREGKEYA)
 // WINGDIAPI WINBOOL WINAPI UpdateICMRegKeyW(DWORD reserved,LPWSTR lpszCMID,LPWSTR lpszFileName,UINT command)
 HB_FUNC(WAUPDATEICMREGKEYW)
 {
-  wa_ret_BOOL(UpdateICMRegKeyW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), wa_par_UINT(4)));
+  wa_ret_BOOL(UpdateICMRegKeyW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), wa_par_UINT(4)));
 }
 
 // WINGDIAPI WINBOOL WINAPI ColorCorrectPalette(HDC hdc,HPALETTE hPal,DWORD deFirst,DWORD num)

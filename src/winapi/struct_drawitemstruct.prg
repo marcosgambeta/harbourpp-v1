@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -120,9 +120,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_NEW)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_DELETE)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -135,9 +135,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_DELETE)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETCTLTYPE)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->CtlType = wa_par_UINT(1);
   }
@@ -145,9 +145,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETCTLTYPE)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->CtlType);
   }
@@ -157,9 +157,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETCTLID)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->CtlID = wa_par_UINT(1);
   }
@@ -167,9 +167,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETCTLID)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETCTLID)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->CtlID);
   }
@@ -179,9 +179,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETCTLID)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMID)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemID = wa_par_UINT(1);
   }
@@ -189,9 +189,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMID)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMID)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemID);
   }
@@ -201,9 +201,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMID)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMACTION)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemAction = wa_par_UINT(1);
   }
@@ -211,9 +211,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMACTION)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMACTION)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemAction);
   }
@@ -223,9 +223,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMACTION)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMSTATE)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemState = wa_par_UINT(1);
   }
@@ -233,9 +233,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMSTATE)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMSTATE)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemState);
   }
@@ -245,9 +245,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMSTATE)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETHWNDITEM)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndItem = wa_par_HWND(1);
   }
@@ -255,9 +255,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETHWNDITEM)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndItem);
   }
@@ -267,9 +267,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETHDC)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hDC = wa_par_HDC(1);
   }
@@ -277,9 +277,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETHDC)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETHDC)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HDC(obj->hDC);
   }
@@ -292,9 +292,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETHDC)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMDATA)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemData = wa_par_ULONG_PTR(1);
   }
@@ -302,9 +302,9 @@ HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_SETITEMDATA)
 
 HB_FUNC_STATIC(WAS_DRAWITEMSTRUCT_GETITEMDATA)
 {
-  auto obj = static_cast<DRAWITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DRAWITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_ULONG_PTR(obj->itemData);
   }

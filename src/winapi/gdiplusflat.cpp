@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,39 +45,39 @@
 #define wa_par_ARGB(n) hb_parnl(n) // TODO: check type
 #define wa_stor_ARGB(x, n) hb_stornl(x, n); // TODO: check type
 
-#define wa_par_GpAdjustableArrowCap(n)            static_cast<GpAdjustableArrowCap*>(hb_parptr(n))
-#define wa_par_GpBitmap(n)                        static_cast<GpBitmap*>(hb_parptr(n))
-#define wa_par_GpBrush(n)                         static_cast<GpBrush*>(hb_parptr(n))
-#define wa_par_GpCachedBitmap(n)                  static_cast<GpCachedBitmap*>(hb_parptr(n))
-#define wa_par_GpColorMatrix(n)                   static_cast<ColorMatrix*>(hb_parptr(n))
-#define wa_par_GpColorPalette(n)                  static_cast<ColorPalette*>(hb_parptr(n))
-#define wa_par_GpCustomLineCap(n)                 static_cast<GpCustomLineCap*>(hb_parptr(n))
-#define wa_par_GpEncoderParameters(n)             static_cast<EncoderParameters*>(hb_parptr(n))
-#define wa_par_GpFont(n)                          static_cast<GpFont*>(hb_parptr(n))
-#define wa_par_GpFontCollection(n)                static_cast<GpFontCollection*>(hb_parptr(n))
-#define wa_par_GpFontFamily(n)                    static_cast<GpFontFamily*>(hb_parptr(n))
-#define wa_par_GpGraphics(n)                      static_cast<GpGraphics*>(hb_parptr(n))
-#define wa_par_GpHatch(n)                         static_cast<GpHatch*>(hb_parptr(n))
-#define wa_par_GpImage(n)                         static_cast<GpImage*>(hb_parptr(n))
-#define wa_par_GpImageAttributes(n)               static_cast<GpImageAttributes*>(hb_parptr(n))
-#define wa_par_GpLineGradient(n)                  static_cast<GpLineGradient*>(hb_parptr(n))
-#define wa_par_GpMatrix(n)                        static_cast<GpMatrix*>(hb_parptr(n))
-#define wa_par_GpMetafile(n)                      static_cast<GpMetafile*>(hb_parptr(n))
-#define wa_par_GpPath(n)                          static_cast<GpPath*>(hb_parptr(n))
-#define wa_par_GpPathGradient(n)                  static_cast<GpPathGradient*>(hb_parptr(n))
-#define wa_par_GpPathIterator(n)                  static_cast<GpPathIterator*>(hb_parptr(n))
-#define wa_par_GpPen(n)                           static_cast<GpPen*>(hb_parptr(n))
-#define wa_par_GpPoint(n)                         static_cast<GpPoint*>(wa_get_ptr(n))
-#define wa_par_GpPointF(n)                        static_cast<GpPointF*>(wa_get_ptr(n))
-#define wa_par_GpPropertyItem(n)                  static_cast<PropertyItem*>(hb_parptr(n))
-#define wa_par_GpRect(n)                          static_cast<GpRect*>(wa_get_ptr(n))
-#define wa_par_GpRectF(n)                         static_cast<GpRectF*>(wa_get_ptr(n))
-#define wa_par_GpRegion(n)                        static_cast<GpRegion*>(hb_parptr(n))
-#define wa_par_GpSolidFill(n)                     static_cast<GpSolidFill*>(hb_parptr(n))
-#define wa_par_GpStringFormat(n)                  static_cast<GpStringFormat*>(hb_parptr(n))
-#define wa_par_GpTexture(n)                       static_cast<GpTexture*>(hb_parptr(n))
-#define wa_par_IStream(n)                         static_cast<IStream*>(hb_parptr(n))
-#define wa_par_WmfPlaceableFileHeader(n)          static_cast<WmfPlaceableFileHeader*>(hb_parptr(n))
+#define wa_par_GpAdjustableArrowCap(n)            static_cast<GpAdjustableArrowCap *>(hb_parptr(n))
+#define wa_par_GpBitmap(n)                        static_cast<GpBitmap *>(hb_parptr(n))
+#define wa_par_GpBrush(n)                         static_cast<GpBrush *>(hb_parptr(n))
+#define wa_par_GpCachedBitmap(n)                  static_cast<GpCachedBitmap *>(hb_parptr(n))
+#define wa_par_GpColorMatrix(n)                   static_cast<ColorMatrix *>(hb_parptr(n))
+#define wa_par_GpColorPalette(n)                  static_cast<ColorPalette *>(hb_parptr(n))
+#define wa_par_GpCustomLineCap(n)                 static_cast<GpCustomLineCap *>(hb_parptr(n))
+#define wa_par_GpEncoderParameters(n)             static_cast<EncoderParameters *>(hb_parptr(n))
+#define wa_par_GpFont(n)                          static_cast<GpFont *>(hb_parptr(n))
+#define wa_par_GpFontCollection(n)                static_cast<GpFontCollection *>(hb_parptr(n))
+#define wa_par_GpFontFamily(n)                    static_cast<GpFontFamily *>(hb_parptr(n))
+#define wa_par_GpGraphics(n)                      static_cast<GpGraphics *>(hb_parptr(n))
+#define wa_par_GpHatch(n)                         static_cast<GpHatch *>(hb_parptr(n))
+#define wa_par_GpImage(n)                         static_cast<GpImage *>(hb_parptr(n))
+#define wa_par_GpImageAttributes(n)               static_cast<GpImageAttributes *>(hb_parptr(n))
+#define wa_par_GpLineGradient(n)                  static_cast<GpLineGradient *>(hb_parptr(n))
+#define wa_par_GpMatrix(n)                        static_cast<GpMatrix *>(hb_parptr(n))
+#define wa_par_GpMetafile(n)                      static_cast<GpMetafile *>(hb_parptr(n))
+#define wa_par_GpPath(n)                          static_cast<GpPath *>(hb_parptr(n))
+#define wa_par_GpPathGradient(n)                  static_cast<GpPathGradient *>(hb_parptr(n))
+#define wa_par_GpPathIterator(n)                  static_cast<GpPathIterator *>(hb_parptr(n))
+#define wa_par_GpPen(n)                           static_cast<GpPen *>(hb_parptr(n))
+#define wa_par_GpPoint(n)                         static_cast<GpPoint *>(wa_get_ptr(n))
+#define wa_par_GpPointF(n)                        static_cast<GpPointF *>(wa_get_ptr(n))
+#define wa_par_GpPropertyItem(n)                  static_cast<PropertyItem *>(hb_parptr(n))
+#define wa_par_GpRect(n)                          static_cast<GpRect *>(wa_get_ptr(n))
+#define wa_par_GpRectF(n)                         static_cast<GpRectF *>(wa_get_ptr(n))
+#define wa_par_GpRegion(n)                        static_cast<GpRegion *>(hb_parptr(n))
+#define wa_par_GpSolidFill(n)                     static_cast<GpSolidFill *>(hb_parptr(n))
+#define wa_par_GpStringFormat(n)                  static_cast<GpStringFormat *>(hb_parptr(n))
+#define wa_par_GpTexture(n)                       static_cast<GpTexture *>(hb_parptr(n))
+#define wa_par_IStream(n)                         static_cast<IStream *>(hb_parptr(n))
+#define wa_par_WmfPlaceableFileHeader(n)          static_cast<WmfPlaceableFileHeader *>(hb_parptr(n))
 
 #define wa_par_GpColorAdjustType(n)               static_cast<ColorAdjustType>(hb_parni(n))
 #define wa_par_GpColorChannelFlags(n)             static_cast<ColorChannelFlags>(hb_parni(n))
@@ -241,7 +241,7 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMFILEICM)
 HB_FUNC(WAGDIPCREATEBITMAPFROMSCAN0)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromScan0(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPixelFormat(4), static_cast<BYTE*>(hb_parptr(5)), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromScan0(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPixelFormat(4), static_cast<BYTE *>(hb_parptr(5)), &p));
   hb_storptr(p, 6);
 }
 
@@ -265,7 +265,7 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMDIRECTDRAWSURFACE)
 HB_FUNC(WAGDIPCREATEBITMAPFROMGDIDIB)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromGdiDib((GDIPCONST BITMAPINFO*) hb_parptr(1), static_cast<VOID*>(hb_parptr(2)), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromGdiDib((GDIPCONST BITMAPINFO*) hb_parptr(1), static_cast<VOID *>(hb_parptr(2)), &p));
   hb_storptr(p, 3);
 }
 
@@ -330,13 +330,13 @@ HB_FUNC(WAGDIPCLONEBITMAPAREAI)
 // GpStatus WINGDIPAPI GdipBitmapLockBits(GpBitmap*,GDIPCONST GpRect*,UINT,PixelFormat,BitmapData*)
 HB_FUNC(WAGDIPBITMAPLOCKBITS)
 {
-  wa_ret_GpStatus(GdipBitmapLockBits(wa_par_GpBitmap(1), wa_par_GpRect(2), wa_par_UINT(3), wa_par_GpPixelFormat(4), static_cast<BitmapData*>(hb_parptr(5))));
+  wa_ret_GpStatus(GdipBitmapLockBits(wa_par_GpBitmap(1), wa_par_GpRect(2), wa_par_UINT(3), wa_par_GpPixelFormat(4), static_cast<BitmapData *>(hb_parptr(5))));
 }
 
 // GpStatus WINGDIPAPI GdipBitmapUnlockBits(GpBitmap*,BitmapData*)
 HB_FUNC(WAGDIPBITMAPUNLOCKBITS)
 {
-  wa_ret_GpStatus(GdipBitmapUnlockBits(wa_par_GpBitmap(1), static_cast<BitmapData*>(hb_parptr(2))));
+  wa_ret_GpStatus(GdipBitmapUnlockBits(wa_par_GpBitmap(1), static_cast<BitmapData *>(hb_parptr(2))));
 }
 
 // GpStatus WINGDIPAPI GdipBitmapGetPixel(GpBitmap*,INT,INT,ARGB*)
@@ -381,7 +381,7 @@ HB_FUNC(WAGDIPBITMAPAPPLYEFFECT)
 {
   VOID *p{};
   INT i{};
-  wa_ret_GpStatus(GdipBitmapApplyEffect(wa_par_GpBitmap(1), static_cast<CGpEffect*>(hb_parptr(2)), static_cast<RECT*>(wa_get_ptr(3)), wa_par_BOOL(4), &p, &i));
+  wa_ret_GpStatus(GdipBitmapApplyEffect(wa_par_GpBitmap(1), static_cast<CGpEffect *>(hb_parptr(2)), static_cast<RECT *>(wa_get_ptr(3)), wa_par_BOOL(4), &p, &i));
   hb_storptr(p, 5);
   hb_storni(i, 6);
 }
@@ -391,11 +391,11 @@ HB_FUNC(WAGDIPBITMAPAPPLYEFFECT)
 #if 0
 HB_FUNC(WAGDIPBITMAPCREATEAPPLYEFFECT)
 {
-  GpBitmap *b1 = static_cast<GpBitmap*>(hb_parptr(1));
+  GpBitmap *b1 = static_cast<GpBitmap *>(hb_parptr(1));
   GpBitmap *b2{};
   VOID *p{};
   INT i{};
-  wa_ret_GpStatus(GdipBitmapCreateApplyEffect(&b1, wa_par_INT(2), static_cast<CGpEffect*>(hb_parptr(3)), static_cast<RECT*>(wa_get_ptr(4)), static_cast<RECT*>(wa_get_ptr(5)), &b2, wa_par_BOOL(7), &p, &i));
+  wa_ret_GpStatus(GdipBitmapCreateApplyEffect(&b1, wa_par_INT(2), static_cast<CGpEffect *>(hb_parptr(3)), static_cast<RECT *>(wa_get_ptr(4)), static_cast<RECT *>(wa_get_ptr(5)), &b2, wa_par_BOOL(7), &p, &i));
   hb_storptr(p, 8);
   hb_storni(i, 9);
 }
@@ -403,7 +403,7 @@ HB_FUNC(WAGDIPBITMAPCREATEAPPLYEFFECT)
 
 // GpStatus WINGDIPAPI GdipBitmapGetHistogram(GpBitmap*,HistogramFormat,UINT,UINT*,UINT*,UINT*,UINT*)
 #if 0
-HB_FUNC(WAGDIPBITMAPGETHISTOGRAM ) // TODO:
+HB_FUNC(WAGDIPBITMAPGETHISTOGRAM) // TODO:
 {
   wa_ret_GpStatus(GdipBitmapGetHistogram(wa_par_GpBitmap(1), wa_par_GpHistogramFormat(2), wa_par_UINT(3), UINT*, UINT*, UINT*, UINT*));
 }
@@ -581,7 +581,7 @@ HB_FUNC(WAGDIPGETCUSTOMLINECAPWIDTHSCALE)
 
 // GpStatus WINGDIPAPI GdipCreateEffect(GDIPCONST GUID,CGpEffect**)
 #if 0
-HB_FUNC(WAGDIPCREATEEFFECT ) // TODO:
+HB_FUNC(WAGDIPCREATEEFFECT) // TODO:
 {
   CGpEffect *p{};
   wa_ret_GpStatus(GdipCreateEffect(GDIPCONST GUID, &p));
@@ -611,13 +611,13 @@ HB_FUNC(WAGDIPGETEFFECTPARAMETERSIZE)
 #if 0
 HB_FUNC(WAGDIPSETEFFECTPARAMETERS)
 {
-  wa_ret_GpStatus(GdipSetEffectParameters((CGpEffect*) hb_parptr(1), static_cast<GDIPCONST VOID*>(hb_parptr(2)), wa_par_UINT(3)));
+  wa_ret_GpStatus(GdipSetEffectParameters((CGpEffect*) hb_parptr(1), static_cast<GDIPCONST VOID *>(hb_parptr(2)), wa_par_UINT(3)));
 }
 #endif
 
 // GpStatus WINGDIPAPI GdipGetEffectParameters(CGpEffect*,UINT*,VOID*)
 #if 0
-HB_FUNC(WAGDIPGETEFFECTPARAMETERS ) // TODO:
+HB_FUNC(WAGDIPGETEFFECTPARAMETERS) // TODO:
 {
   wa_ret_GpStatus(GdipGetEffectParameters(CGpEffect*,UINT*,VOID*));
 }
@@ -639,7 +639,7 @@ HB_FUNC(WAGDIPCREATEFONTFROMDC)
 HB_FUNC(WAGDIPCREATEFONTFROMLOGFONTA)
 {
   GpFont *p{};
-  wa_ret_GpStatus(GdipCreateFontFromLogfontA(wa_par_HDC(1), static_cast<GDIPCONST LOGFONTA*>(wa_get_ptr(2)), &p));
+  wa_ret_GpStatus(GdipCreateFontFromLogfontA(wa_par_HDC(1), static_cast<GDIPCONST LOGFONTA *>(wa_get_ptr(2)), &p));
   hb_storptr(p, 3);
 }
 
@@ -647,7 +647,7 @@ HB_FUNC(WAGDIPCREATEFONTFROMLOGFONTA)
 HB_FUNC(WAGDIPCREATEFONTFROMLOGFONTW)
 {
   GpFont *p{};
-  wa_ret_GpStatus(GdipCreateFontFromLogfontW(wa_par_HDC(1), static_cast<GDIPCONST LOGFONTW*>(wa_get_ptr(2)), &p));
+  wa_ret_GpStatus(GdipCreateFontFromLogfontW(wa_par_HDC(1), static_cast<GDIPCONST LOGFONTW *>(wa_get_ptr(2)), &p));
   hb_storptr(p, 3);
 }
 
@@ -724,13 +724,13 @@ HB_FUNC(WAGDIPGETFONTHEIGHTGIVENDPI)
 // GpStatus WINGDIPAPI GdipGetLogFontA(GpFont*,GpGraphics*,LOGFONTA*)
 HB_FUNC(WAGDIPGETLOGFONTA)
 {
-  wa_ret_GpStatus(GdipGetLogFontA(wa_par_GpFont(1), wa_par_GpGraphics(2), static_cast<LOGFONTA*>(wa_get_ptr(3))));
+  wa_ret_GpStatus(GdipGetLogFontA(wa_par_GpFont(1), wa_par_GpGraphics(2), static_cast<LOGFONTA *>(wa_get_ptr(3))));
 }
 
 // GpStatus WINGDIPAPI GdipGetLogFontW(GpFont*,GpGraphics*,LOGFONTW*)
 HB_FUNC(WAGDIPGETLOGFONTW)
 {
-  wa_ret_GpStatus(GdipGetLogFontW(wa_par_GpFont(1), wa_par_GpGraphics(2), static_cast<LOGFONTW*>(wa_get_ptr(3))));
+  wa_ret_GpStatus(GdipGetLogFontW(wa_par_GpFont(1), wa_par_GpGraphics(2), static_cast<LOGFONTW *>(wa_get_ptr(3))));
 }
 
 // GpStatus WINGDIPAPI GdipNewInstalledFontCollection(GpFontCollection**)
@@ -766,7 +766,7 @@ HB_FUNC(WAGDIPGETFONTCOLLECTIONFAMILYCOUNT)
 
 // GpStatus WINGDIPAPI GdipGetFontCollectionFamilyList(GpFontCollection*,INT,GpFontFamily**,INT*)
 #if 0
-HB_FUNC(WAGDIPGETFONTCOLLECTIONFAMILYLIST ) // TODO:
+HB_FUNC(WAGDIPGETFONTCOLLECTIONFAMILYLIST) // TODO:
 {
   wa_ret_GpStatus(GdipGetFontCollectionFamilyList(wa_par_GpFontCollection(1), wa_par_INT(2), GpFontFamily**, INT*));
 }
@@ -782,7 +782,7 @@ HB_FUNC(WAGDIPPRIVATEADDFONTFILE)
 
 // GpStatus WINGDIPAPI GdipPrivateAddMemoryFont(GpFontCollection*,GDIPCONST void*,INT)
 #if 0
-HB_FUNC(WAGDIPPRIVATEADDMEMORYFONT ) // TODO:
+HB_FUNC(WAGDIPPRIVATEADDMEMORYFONT) // TODO:
 {
   wa_ret_GpStatus(GdipPrivateAddMemoryFont(wa_par_GpFontCollection(1), GDIPCONST void*, wa_par_INT(3)));
 }
@@ -1074,7 +1074,7 @@ HB_FUNC(WAGDIPGETINTERPOLATIONMODE)
 #if 0
 HB_FUNC(WAGDIPGRAPHICSSETABORT)
 {
-  wa_ret_GpStatus(GdipGraphicsSetAbort(wa_par_GpGraphics(1), static_cast<GdiplusAbort*>(hb_parptr(2))));
+  wa_ret_GpStatus(GdipGraphicsSetAbort(wa_par_GpGraphics(1), static_cast<GdiplusAbort *>(hb_parptr(2))));
 }
 #endif
 
@@ -1579,26 +1579,26 @@ HB_FUNC(WAGDIPDRAWIMAGEPOINTRECTI)
 }
 
 // GpStatus WINGDIPAPI GdipDrawImageRectRect(GpGraphics*,GpImage*,REAL,REAL,REAL,REAL,REAL,REAL,REAL,REAL,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
-HB_FUNC(WAGDIPDRAWIMAGERECTRECT ) // TODO: parameters 13 and 14
+HB_FUNC(WAGDIPDRAWIMAGERECTRECT) // TODO: parameters 13 and 14
 {
   wa_ret_GpStatus(GdipDrawImageRectRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9), wa_par_REAL(10), wa_par_GpUnit(11), wa_par_GpImageAttributes(12), nullptr, nullptr));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImageRectRectI(GpGraphics*,GpImage*,INT,INT,INT,INT,INT,INT,INT,INT,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
-HB_FUNC(WAGDIPDRAWIMAGERECTRECTI ) // TODO: parameters 13 and 14
+HB_FUNC(WAGDIPDRAWIMAGERECTRECTI) // TODO: parameters 13 and 14
 {
   wa_ret_GpStatus(GdipDrawImageRectRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9), wa_par_INT(10), wa_par_GpUnit(11), wa_par_GpImageAttributes(12), nullptr, nullptr));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImagePointsRect(GpGraphics*,GpImage*,GDIPCONST GpPointF*,INT,REAL,REAL,REAL,REAL,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
-HB_FUNC(WAGDIPDRAWIMAGEPOINTSRECT ) // TODO: parameters 11 and 12
+HB_FUNC(WAGDIPDRAWIMAGEPOINTSRECT) // TODO: parameters 11 and 12
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawImagePointsRect(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpUnit(9), wa_par_GpImageAttributes(10), nullptr, nullptr));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImagePointsRectI(GpGraphics*,GpImage*,GDIPCONST GpPoint*,INT,INT,INT,INT,INT,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
-HB_FUNC(WAGDIPDRAWIMAGEPOINTSRECTI ) // TODO: parameters 10 and 11
+HB_FUNC(WAGDIPDRAWIMAGEPOINTSRECTI) // TODO: parameters 10 and 11
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawImagePointsRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_GpUnit(8), wa_par_GpImageAttributes(9), nullptr, nullptr));
@@ -2436,7 +2436,7 @@ HB_FUNC(WAGDIPGETIMAGEPIXELFORMAT)
 }
 
 // GpStatus WINGDIPAPI GdipGetImageThumbnail(GpImage*,UINT,UINT,GpImage**,GetThumbnailImageAbort,VOID*)
-HB_FUNC(WAGDIPGETIMAGETHUMBNAIL ) // TODO: parameters 5 and 6
+HB_FUNC(WAGDIPGETIMAGETHUMBNAIL) // TODO: parameters 5 and 6
 {
   GpImage *p{};
   wa_ret_GpStatus(GdipGetImageThumbnail(wa_par_GpImage(1), wa_par_UINT(2), wa_par_UINT(3), &p, nullptr, nullptr));
@@ -2654,12 +2654,12 @@ HB_FUNC(WAGDIPSETIMAGEATTRIBUTESREMAPTABLE)
 {
   std::vector<ColorMap> vec{};
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<ColorMap*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<ColorMap *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   wa_ret_GpStatus(GdipSetImageAttributesRemapTable(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_UINT(4), vec.data()));
@@ -2751,7 +2751,7 @@ HB_FUNC(WAGDIPSETLINECOLORS)
 
 // GpStatus WINGDIPAPI GdipGetLineColors(GpLineGradient*,ARGB*)
 #if 0
-HB_FUNC(WAGDIPGETLINECOLORS ) // TODO: parameter 2 is a array
+HB_FUNC(WAGDIPGETLINECOLORS) // TODO: parameter 2 is a array
 {
   ARGB argb{};
   wa_ret_GpStatus(GdipGetLineColors(wa_par_GpLineGradient(1), &argb));
@@ -2795,7 +2795,7 @@ HB_FUNC(WAGDIPGETLINEBLENDCOUNT)
 
 // GpStatus WINGDIPAPI GdipGetLineBlend(GpLineGradient*,REAL*,REAL*,INT)
 #if 0
-HB_FUNC(WAGDIPGETLINEBLEND ) // TODO: parameters 2 and 3 are array
+HB_FUNC(WAGDIPGETLINEBLEND) // TODO: parameters 2 and 3 are array
 {
   REAL r1{};
   REAL r2{};
@@ -4338,12 +4338,12 @@ HB_FUNC(WAGDIPSETSTRINGFORMATMEASURABLECHARACTERRANGES)
 {
   std::vector<CharacterRange> vec{};
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<CharacterRange*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<CharacterRange *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   wa_ret_GpStatus(GdipSetStringFormatMeasurableCharacterRanges(wa_par_GpStringFormat(1), wa_par_INT(2), vec.data()));
@@ -4504,12 +4504,12 @@ HB_FUNC(WAGDIPGETTEXTUREIMAGE)
 static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpPoint> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpPoint *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   return vec;
@@ -4518,12 +4518,12 @@ static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray)
 static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpPointF> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpPointF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   return vec;
@@ -4532,12 +4532,12 @@ static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray)
 static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpRect> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<GpRect*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpRect *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   return vec;
@@ -4546,12 +4546,12 @@ static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray)
 static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpRectF> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(*static_cast<GpRectF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpRectF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
   return vec;
@@ -4560,10 +4560,10 @@ static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray)
 static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<REAL> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
     }
@@ -4574,10 +4574,10 @@ static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray)
 static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<ARGB> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray, i + 1)));
     }
@@ -4588,10 +4588,10 @@ static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray)
 static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<BYTE> vec{};
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray, i + 1)));
     }

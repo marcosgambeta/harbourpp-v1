@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -105,9 +105,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_NEW)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_DELETE)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -120,9 +120,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_DELETE)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETCTLTYPE)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->CtlType = wa_par_UINT(1);
   }
@@ -130,9 +130,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETCTLTYPE)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->CtlType);
   }
@@ -142,9 +142,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETCTLID)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->CtlID = wa_par_UINT(1);
   }
@@ -152,9 +152,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETCTLID)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETCTLID)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->CtlID);
   }
@@ -164,9 +164,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETCTLID)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMID)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemID = wa_par_UINT(1);
   }
@@ -174,9 +174,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMID)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMID)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemID);
   }
@@ -186,9 +186,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMID)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMWIDTH)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemWidth = wa_par_UINT(1);
   }
@@ -196,9 +196,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMWIDTH)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMWIDTH)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemWidth);
   }
@@ -208,9 +208,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMWIDTH)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMHEIGHT)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemHeight = wa_par_UINT(1);
   }
@@ -218,9 +218,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMHEIGHT)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMHEIGHT)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemHeight);
   }
@@ -230,9 +230,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMHEIGHT)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMDATA)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemData = wa_par_ULONG_PTR(1);
   }
@@ -240,9 +240,9 @@ HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_SETITEMDATA)
 
 HB_FUNC_STATIC(WAS_MEASUREITEMSTRUCT_GETITEMDATA)
 {
-  auto obj = static_cast<MEASUREITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<MEASUREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_ULONG_PTR(obj->itemData);
   }

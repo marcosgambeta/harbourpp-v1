@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -105,9 +105,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_NEW)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_DELETE)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -118,11 +118,11 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_DELETE)
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
-//   if( obj != nullptr )
+//   if (obj != nullptr)
 //   {
 //     obj->cbSize = wa_par_DWORD(1);
 //   }
@@ -130,9 +130,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETCBSIZE)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbSize);
   }
@@ -145,9 +145,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETDXYLINEBUTTON)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dxyLineButton = wa_par_int(1);
   }
@@ -155,9 +155,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETDXYLINEBUTTON)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETDXYLINEBUTTON)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->dxyLineButton);
   }
@@ -167,9 +167,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETDXYLINEBUTTON)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBTOP)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->xyThumbTop = wa_par_int(1);
   }
@@ -177,9 +177,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBTOP)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBTOP)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->xyThumbTop);
   }
@@ -189,9 +189,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBTOP)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBBOTTOM)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->xyThumbBottom = wa_par_int(1);
   }
@@ -199,9 +199,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBBOTTOM)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBBOTTOM)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->xyThumbBottom);
   }
@@ -213,9 +213,9 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBBOTTOM)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETRGSTATE)
 {
-  auto obj = static_cast<SCROLLBARINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     hb_reta(6);
     hb_storvnl(obj->rgstate[0], -1, 1);

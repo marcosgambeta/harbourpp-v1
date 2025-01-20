@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC(WAGPRECTF_NEW)
 {
-  if( hb_pcount() == 0 )
+  if (hb_pcount() == 0)
   {
     // RectF()
     auto self = hb_stackSelfItem();
@@ -95,7 +95,7 @@ HB_FUNC_STATIC(WAGPRECTF_NEW)
     hb_itemReturn(self);
   }
 #if 0
-  else if( hb_pcount() == 2 ) // TODO:
+  else if (hb_pcount() == 2) // TODO:
   {
     // RectF(const PointF& location, const SizeF& size)
     auto self = hb_stackSelfItem();
@@ -104,7 +104,7 @@ HB_FUNC_STATIC(WAGPRECTF_NEW)
     hb_itemReturn(self);
   }
 #endif
-  else if( hb_pcount() == 4 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) )
+  else if (hb_pcount() == 4 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
   {
     // RectF(REAL x, REAL y, REAL width, REAL height)
     auto self = hb_stackSelfItem();
@@ -120,9 +120,9 @@ HB_FUNC_STATIC(WAGPRECTF_NEW)
 
 HB_FUNC_STATIC(WAGPRECTF_DELETE)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -135,9 +135,9 @@ HB_FUNC_STATIC(WAGPRECTF_DELETE)
 
 HB_FUNC_STATIC(WAGPRECTF_SETX)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->X = wa_par_REAL(1);
   }
@@ -145,9 +145,9 @@ HB_FUNC_STATIC(WAGPRECTF_SETX)
 
 HB_FUNC_STATIC(WAGPRECTF_GETX)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_REAL(obj->X);
   }
@@ -157,9 +157,9 @@ HB_FUNC_STATIC(WAGPRECTF_GETX)
 
 HB_FUNC_STATIC(WAGPRECTF_SETY)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Y = wa_par_REAL(1);
   }
@@ -167,9 +167,9 @@ HB_FUNC_STATIC(WAGPRECTF_SETY)
 
 HB_FUNC_STATIC(WAGPRECTF_GETY)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_REAL(obj->Y);
   }
@@ -179,9 +179,9 @@ HB_FUNC_STATIC(WAGPRECTF_GETY)
 
 HB_FUNC_STATIC(WAGPRECTF_SETWIDTH)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Width = wa_par_REAL(1);
   }
@@ -189,9 +189,9 @@ HB_FUNC_STATIC(WAGPRECTF_SETWIDTH)
 
 HB_FUNC_STATIC(WAGPRECTF_GETWIDTH)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_REAL(obj->Width);
   }
@@ -201,9 +201,9 @@ HB_FUNC_STATIC(WAGPRECTF_GETWIDTH)
 
 HB_FUNC_STATIC(WAGPRECTF_SETHEIGHT)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Height = wa_par_REAL(1);
   }
@@ -211,9 +211,9 @@ HB_FUNC_STATIC(WAGPRECTF_SETHEIGHT)
 
 HB_FUNC_STATIC(WAGPRECTF_GETHEIGHT)
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<GpRectF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_REAL(obj->Height);
   }

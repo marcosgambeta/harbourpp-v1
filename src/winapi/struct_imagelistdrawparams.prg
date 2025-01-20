@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -172,9 +172,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_NEW)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_DELETE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -187,9 +187,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_DELETE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCBSIZE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cbSize = wa_par_DWORD(1);
   }
@@ -197,9 +197,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCBSIZE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCBSIZE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->cbSize);
   }
@@ -209,9 +209,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETHIML)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->himl = wa_par_HIMAGELIST(1);
   }
@@ -219,9 +219,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETHIML)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETHIML)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HIMAGELIST(obj->himl);
   }
@@ -231,9 +231,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETHIML)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETI)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->i = wa_par_int(1);
   }
@@ -241,9 +241,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETI)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETI)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->i);
   }
@@ -253,9 +253,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETI)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETHDCDST)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hdcDst = wa_par_HDC(1);
   }
@@ -263,9 +263,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETHDCDST)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETHDCDST)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HDC(obj->hdcDst);
   }
@@ -275,9 +275,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETHDCDST)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETX)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->x = wa_par_int(1);
   }
@@ -285,9 +285,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETX)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETX)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->x);
   }
@@ -297,9 +297,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETX)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETY)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->y = wa_par_int(1);
   }
@@ -307,9 +307,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETY)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETY)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->y);
   }
@@ -319,9 +319,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETY)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCX)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cx = wa_par_int(1);
   }
@@ -329,9 +329,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCX)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCX)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->cx);
   }
@@ -341,9 +341,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCX)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCY)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cy = wa_par_int(1);
   }
@@ -351,9 +351,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCY)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCY)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->cy);
   }
@@ -363,9 +363,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCY)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETXBITMAP)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->xBitmap = wa_par_int(1);
   }
@@ -373,9 +373,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETXBITMAP)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETXBITMAP)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->xBitmap);
   }
@@ -385,9 +385,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETXBITMAP)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETYBITMAP)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->yBitmap = wa_par_int(1);
   }
@@ -395,9 +395,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETYBITMAP)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETYBITMAP)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->yBitmap);
   }
@@ -407,9 +407,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETYBITMAP)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETRGBBK)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->rgbBk = wa_par_COLORREF(1);
   }
@@ -417,9 +417,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETRGBBK)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETRGBBK)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_COLORREF(obj->rgbBk);
   }
@@ -429,9 +429,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETRGBBK)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETRGBFG)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->rgbFg = wa_par_COLORREF(1);
   }
@@ -439,9 +439,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETRGBFG)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETRGBFG)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_COLORREF(obj->rgbFg);
   }
@@ -451,9 +451,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETRGBFG)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETFSTYLE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fStyle = wa_par_UINT(1);
   }
@@ -461,9 +461,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETFSTYLE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETFSTYLE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->fStyle);
   }
@@ -473,9 +473,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETFSTYLE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETDWROP)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->dwRop = wa_par_DWORD(1);
   }
@@ -483,9 +483,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETDWROP)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETDWROP)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->dwRop);
   }
@@ -495,9 +495,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETDWROP)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETFSTATE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fState = wa_par_DWORD(1);
   }
@@ -505,9 +505,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETFSTATE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETFSTATE)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->fState);
   }
@@ -517,9 +517,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETFSTATE)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETFRAME)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->Frame = wa_par_DWORD(1);
   }
@@ -527,9 +527,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETFRAME)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETFRAME)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_DWORD(obj->Frame);
   }
@@ -539,9 +539,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETFRAME)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCREFFECT)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->crEffect = wa_par_COLORREF(1);
   }
@@ -549,9 +549,9 @@ HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_SETCREFFECT)
 
 HB_FUNC_STATIC(WAS_IMAGELISTDRAWPARAMS_GETCREFFECT)
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_COLORREF(obj->crEffect);
   }

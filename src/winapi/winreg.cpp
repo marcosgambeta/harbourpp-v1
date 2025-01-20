@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -256,7 +256,7 @@ HB_FUNC(WAREGDELETEVALUE)
 
 // WINADVAPI LONG WINAPI RegEnumKeyA(HKEY hKey,DWORD dwIndex,LPSTR lpName,DWORD cchName)
 #if 0
-HB_FUNC(WAREGENUMKEYA ) // TODO: fix
+HB_FUNC(WAREGENUMKEYA) // TODO: fix
 {
   wa_ret_LONG(RegEnumKeyA(wa_par_HKEY(1), wa_par_DWORD(2), const_cast<LPSTR>(hb_parc(3)), wa_par_DWORD(4)));
 }
@@ -264,15 +264,15 @@ HB_FUNC(WAREGENUMKEYA ) // TODO: fix
 
 // WINADVAPI LONG WINAPI RegEnumKeyW(HKEY hKey,DWORD dwIndex,LPWSTR lpName,DWORD cchName)
 #if 0
-HB_FUNC(WAREGENUMKEYW ) // TODO: fix
+HB_FUNC(WAREGENUMKEYW) // TODO: fix
 {
-  wa_ret_LONG(RegEnumKeyW(wa_par_HKEY(1), wa_par_DWORD(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), wa_par_DWORD(4)));
+  wa_ret_LONG(RegEnumKeyW(wa_par_HKEY(1), wa_par_DWORD(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), wa_par_DWORD(4)));
 }
 #endif
 
-HB_FUNC(WAREGENUMKEY ) // TODO: fix
+HB_FUNC(WAREGENUMKEY) // TODO: fix
 {
-  wa_ret_LONG(RegEnumKey(wa_par_HKEY(1), wa_par_DWORD(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), wa_par_DWORD(4)));
+  wa_ret_LONG(RegEnumKey(wa_par_HKEY(1), wa_par_DWORD(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), wa_par_DWORD(4)));
 }
 
 // WINADVAPI LONG WINAPI RegEnumKeyExA(HKEY hKey,DWORD dwIndex,LPSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPSTR lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime)
@@ -543,7 +543,7 @@ HB_FUNC(WAREGGETVALUE)
 
 // WINADVAPI WINBOOL WINAPI InitiateSystemShutdownA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown)
 #if 0
-HB_FUNC(WAINITIATESYSTEMSHUTDOWNA ) // TODO: fix
+HB_FUNC(WAINITIATESYSTEMSHUTDOWNA) // TODO: fix
 {
   wa_ret_BOOL(InitiateSystemShutdownA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), wa_par_DWORD(3), hb_parl(4), hb_parl(5)));
 }
@@ -551,20 +551,20 @@ HB_FUNC(WAINITIATESYSTEMSHUTDOWNA ) // TODO: fix
 
 // WINADVAPI WINBOOL WINAPI InitiateSystemShutdownW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown)
 #if 0
-HB_FUNC(WAINITIATESYSTEMSHUTDOWNW ) // TODO: fix
+HB_FUNC(WAINITIATESYSTEMSHUTDOWNW) // TODO: fix
 {
-  wa_ret_BOOL(InitiateSystemShutdownW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5)));
+  wa_ret_BOOL(InitiateSystemShutdownW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5)));
 }
 #endif
 
-HB_FUNC(WAINITIATESYSTEMSHUTDOWN ) // TODO: fix
+HB_FUNC(WAINITIATESYSTEMSHUTDOWN) // TODO: fix
 {
-  wa_ret_BOOL(InitiateSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5)));
+  wa_ret_BOOL(InitiateSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5)));
 }
 
 // WINADVAPI WINBOOL WINAPI AbortSystemShutdownA(LPSTR lpMachineName)
 #if 0
-HB_FUNC(WAABORTSYSTEMSHUTDOWNA ) // TODO: fix
+HB_FUNC(WAABORTSYSTEMSHUTDOWNA) // TODO: fix
 {
   wa_ret_BOOL(AbortSystemShutdownA(const_cast<LPSTR>(hb_parc(1))));
 }
@@ -572,20 +572,20 @@ HB_FUNC(WAABORTSYSTEMSHUTDOWNA ) // TODO: fix
 
 // WINADVAPI WINBOOL WINAPI AbortSystemShutdownW(LPWSTR lpMachineName)
 #if 0
-HB_FUNC(WAABORTSYSTEMSHUTDOWNW ) // TODO: fix
+HB_FUNC(WAABORTSYSTEMSHUTDOWNW) // TODO: fix
 {
-  wa_ret_BOOL(AbortSystemShutdownW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1)))));
+  wa_ret_BOOL(AbortSystemShutdownW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1)))));
 }
 #endif
 
-HB_FUNC(WAABORTSYSTEMSHUTDOWN ) // TODO: fix
+HB_FUNC(WAABORTSYSTEMSHUTDOWN) // TODO: fix
 {
-  wa_ret_BOOL(AbortSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1)))));
+  wa_ret_BOOL(AbortSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1)))));
 }
 
 // WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
 #if 0
-HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXA ) // TODO: fix
+HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXA) // TODO: fix
 {
   wa_ret_BOOL(InitiateSystemShutdownExA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), wa_par_DWORD(3), hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
 }
@@ -593,15 +593,15 @@ HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXA ) // TODO: fix
 
 // WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
 #if 0
-HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXW ) // TODO: fix
+HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXW) // TODO: fix
 {
-  wa_ret_BOOL(InitiateSystemShutdownExW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
+  wa_ret_BOOL(InitiateSystemShutdownExW(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
 }
 #endif
 
-HB_FUNC(WAINITIATESYSTEMSHUTDOWNEX ) // TODO: fix
+HB_FUNC(WAINITIATESYSTEMSHUTDOWNEX) // TODO: fix
 {
-  wa_ret_BOOL(InitiateSystemShutdownEx(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
+  wa_ret_BOOL(InitiateSystemShutdownEx(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
 }
 
 // WINADVAPI LONG WINAPI RegSaveKeyExA(HKEY hKey,LPCSTR lpFile,LPSECURITY_ATTRIBUTES lpSecurityAttributes,DWORD Flags)

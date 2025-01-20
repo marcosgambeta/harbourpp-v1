@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -93,9 +93,9 @@ HB_FUNC_STATIC(WAS_RECT_NEW)
 
 HB_FUNC_STATIC(WAS_RECT_DELETE)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -108,9 +108,9 @@ HB_FUNC_STATIC(WAS_RECT_DELETE)
 
 HB_FUNC_STATIC(WAS_RECT_SETLEFT)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->left = wa_par_LONG(1);
   }
@@ -118,9 +118,9 @@ HB_FUNC_STATIC(WAS_RECT_SETLEFT)
 
 HB_FUNC_STATIC(WAS_RECT_GETLEFT)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_LONG(obj->left);
   }
@@ -130,9 +130,9 @@ HB_FUNC_STATIC(WAS_RECT_GETLEFT)
 
 HB_FUNC_STATIC(WAS_RECT_SETTOP)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->top = wa_par_LONG(1);
   }
@@ -140,9 +140,9 @@ HB_FUNC_STATIC(WAS_RECT_SETTOP)
 
 HB_FUNC_STATIC(WAS_RECT_GETTOP)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_LONG(obj->top);
   }
@@ -152,9 +152,9 @@ HB_FUNC_STATIC(WAS_RECT_GETTOP)
 
 HB_FUNC_STATIC(WAS_RECT_SETRIGHT)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->right = wa_par_LONG(1);
   }
@@ -162,9 +162,9 @@ HB_FUNC_STATIC(WAS_RECT_SETRIGHT)
 
 HB_FUNC_STATIC(WAS_RECT_GETRIGHT)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_LONG(obj->right);
   }
@@ -174,9 +174,9 @@ HB_FUNC_STATIC(WAS_RECT_GETRIGHT)
 
 HB_FUNC_STATIC(WAS_RECT_SETBOTTOM)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->bottom = wa_par_LONG(1);
   }
@@ -184,9 +184,9 @@ HB_FUNC_STATIC(WAS_RECT_SETBOTTOM)
 
 HB_FUNC_STATIC(WAS_RECT_GETBOTTOM)
 {
-  auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_LONG(obj->bottom);
   }

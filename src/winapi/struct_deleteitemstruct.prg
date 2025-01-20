@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -99,9 +99,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_NEW)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_DELETE)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -114,9 +114,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_DELETE)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLTYPE)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->CtlType = wa_par_UINT(1);
   }
@@ -124,9 +124,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLTYPE)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->CtlType);
   }
@@ -136,9 +136,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->CtlID = wa_par_UINT(1);
   }
@@ -146,9 +146,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->CtlID);
   }
@@ -158,9 +158,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemID = wa_par_UINT(1);
   }
@@ -168,9 +168,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETITEMID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->itemID);
   }
@@ -180,9 +180,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETITEMID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETHWNDITEM)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndItem = wa_par_HWND(1);
   }
@@ -190,9 +190,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETHWNDITEM)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndItem);
   }
@@ -202,9 +202,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMDATA)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->itemData = wa_par_ULONG_PTR(1);
   }
@@ -212,9 +212,9 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMDATA)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETITEMDATA)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_ULONG_PTR(obj->itemData);
   }

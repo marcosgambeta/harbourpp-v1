@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -141,9 +141,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_NEW)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_DELETE)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -156,9 +156,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_DELETE)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETWDEVICEINDEX)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->wDeviceIndex = wa_par_UINT(1);
   }
@@ -166,9 +166,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETWDEVICEINDEX)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETWDEVICEINDEX)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->wDeviceIndex);
   }
@@ -178,9 +178,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETWDEVICEINDEX)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASOVERLAY)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fHasOverlay = wa_par_BOOL(1);
   }
@@ -188,9 +188,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASOVERLAY)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASOVERLAY)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fHasOverlay);
   }
@@ -200,9 +200,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASOVERLAY)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASDLGVIDEOSOURCE)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fHasDlgVideoSource = wa_par_BOOL(1);
   }
@@ -210,9 +210,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASDLGVIDEOSOURCE)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASDLGVIDEOSOURCE)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fHasDlgVideoSource);
   }
@@ -222,9 +222,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASDLGVIDEOSOURCE)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASDLGVIDEOFORMAT)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fHasDlgVideoFormat = wa_par_BOOL(1);
   }
@@ -232,9 +232,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASDLGVIDEOFORMAT)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASDLGVIDEOFORMAT)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fHasDlgVideoFormat);
   }
@@ -244,9 +244,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASDLGVIDEOFORMAT)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASDLGVIDEODISPLAY)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fHasDlgVideoDisplay = wa_par_BOOL(1);
   }
@@ -254,9 +254,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFHASDLGVIDEODISPLAY)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASDLGVIDEODISPLAY)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fHasDlgVideoDisplay);
   }
@@ -266,9 +266,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFHASDLGVIDEODISPLAY)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFCAPTUREINITIALIZED)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fCaptureInitialized = wa_par_BOOL(1);
   }
@@ -276,9 +276,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFCAPTUREINITIALIZED)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFCAPTUREINITIALIZED)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fCaptureInitialized);
   }
@@ -288,9 +288,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFCAPTUREINITIALIZED)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFDRIVERSUPPLIESPALETTES)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->fDriverSuppliesPalettes = wa_par_BOOL(1);
   }
@@ -298,9 +298,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETFDRIVERSUPPLIESPALETTES)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFDRIVERSUPPLIESPALETTES)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_BOOL(obj->fDriverSuppliesPalettes);
   }
@@ -310,9 +310,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETFDRIVERSUPPLIESPALETTES)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOIN)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hVideoIn = wa_par_HANDLE(1);
   }
@@ -320,9 +320,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOIN)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOIN)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HANDLE(obj->hVideoIn);
   }
@@ -332,9 +332,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOIN)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOOUT)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hVideoOut = wa_par_HANDLE(1);
   }
@@ -342,9 +342,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOOUT)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOOUT)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HANDLE(obj->hVideoOut);
   }
@@ -354,9 +354,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOOUT)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOEXTIN)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hVideoExtIn = wa_par_HANDLE(1);
   }
@@ -364,9 +364,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOEXTIN)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOEXTIN)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HANDLE(obj->hVideoExtIn);
   }
@@ -376,9 +376,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOEXTIN)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOEXTOUT)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hVideoExtOut = wa_par_HANDLE(1);
   }
@@ -386,9 +386,9 @@ HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_SETHVIDEOEXTOUT)
 
 HB_FUNC_STATIC(WAS_CAPDRIVERCAPS_GETHVIDEOEXTOUT)
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<CAPDRIVERCAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HANDLE(obj->hVideoExtOut);
   }

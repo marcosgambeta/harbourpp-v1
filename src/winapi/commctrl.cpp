@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -351,10 +351,10 @@ HB_FUNC(WAMENUHELP)
 {
   std::vector<UINT> vec{};
   auto pArray = hb_param(7, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec.push_back(static_cast<UINT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -367,10 +367,10 @@ HB_FUNC(WASHOWHIDEMENUCTL)
 {
   std::vector<INT> vec{};
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -383,10 +383,10 @@ HB_FUNC(WAGETEFFECTIVECLIENTRECT)
 {
   std::vector<INT> vec{};
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
+  if (pArray != nullptr)
   {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for( std::size_t i = 0; i < nLen; i++ )
+    for (std::size_t i = 0; i < nLen; i++)
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }

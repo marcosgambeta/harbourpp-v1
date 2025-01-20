@@ -1,12 +1,12 @@
 //
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -111,9 +111,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_NEW)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_DELETE)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
@@ -126,9 +126,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_DELETE)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETHWND)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwnd = wa_par_HWND(1);
   }
@@ -136,9 +136,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETHWND)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETHWND)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwnd);
   }
@@ -148,9 +148,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_GETHWND)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETHWNDINSERTAFTER)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->hwndInsertAfter = wa_par_HWND(1);
   }
@@ -158,9 +158,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETHWNDINSERTAFTER)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETHWNDINSERTAFTER)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_HWND(obj->hwndInsertAfter);
   }
@@ -170,9 +170,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_GETHWNDINSERTAFTER)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETX)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->x = wa_par_int(1);
   }
@@ -180,9 +180,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETX)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETX)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->x);
   }
@@ -192,9 +192,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_GETX)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETY)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->y = wa_par_int(1);
   }
@@ -202,9 +202,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETY)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETY)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->y);
   }
@@ -214,9 +214,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_GETY)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETCX)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cx = wa_par_int(1);
   }
@@ -224,9 +224,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETCX)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETCX)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->cx);
   }
@@ -236,9 +236,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_GETCX)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETCY)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->cy = wa_par_int(1);
   }
@@ -246,9 +246,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETCY)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETCY)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_int(obj->cy);
   }
@@ -258,9 +258,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_GETCY)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_SETFLAGS)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     obj->flags = wa_par_UINT(1);
   }
@@ -268,9 +268,9 @@ HB_FUNC_STATIC(WAS_WINDOWPOS_SETFLAGS)
 
 HB_FUNC_STATIC(WAS_WINDOWPOS_GETFLAGS)
 {
-  auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<WINDOWPOS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if( obj != nullptr )
+  if (obj != nullptr)
   {
     wa_ret_UINT(obj->flags);
   }
