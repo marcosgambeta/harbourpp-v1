@@ -1687,9 +1687,9 @@ HB_FUNC( ADSISEMPTY )
       UNSIGNED16 pbEmpty = 0;
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea && AdsIsEmpty( pArea->hTable,
-                               ( HB_ISCHAR(1) ? reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
-                               &pbEmpty ) == AE_SUCCESS ) {
+      if( pArea && AdsIsEmpty(pArea->hTable,
+                              ( HB_ISCHAR(1) ? reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
+                              &pbEmpty) == AE_SUCCESS ) {
          hb_retl(pbEmpty != 0);
       } else {
          hb_errRT_DBCMD(EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME);
@@ -1711,9 +1711,9 @@ HB_FUNC( ADSISNULL )
                     ( HB_ISCHAR(1) ? reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
                     &u16Null );
 #else
-         AdsIsEmpty( pArea->hTable,
-                     ( HB_ISCHAR(1) ? static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
-                     &u16Null );
+         AdsIsEmpty(pArea->hTable,
+                    ( HB_ISCHAR(1) ? static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
+                    &u16Null);
 #endif
          hb_retl(u16Null != 0);
       } else {

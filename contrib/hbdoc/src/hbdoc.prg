@@ -506,7 +506,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
    LOCAL idxSubCategory := -1
    LOCAL item
 
-   LOCAL cSourceFile := StrTran( ".." + hb_ps() + cFile, iif(hb_ps() == "\", "/", "\"), hb_ps() )
+   LOCAL cSourceFile := StrTran(".." + hb_ps() + cFile, iif(hb_ps() == "\", "/", "\"), hb_ps())
 
    LOCAL o
 
@@ -554,14 +554,14 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
    FOR EACH item IN hEntry
 
       cSectionName := item:__enumKey()
-      cSection := StrTran( item, Chr(13) + Chr(10), hb_eol() )
+      cSection := StrTran(item, Chr(13) + Chr(10), hb_eol())
 
       IF !( cSectionName == "EXAMPLES" ) .AND. ;
          !( cSectionName == "TESTS" )
          cSection := NewLineVoodoo( cSection )  /* Decides which EOLs to keep and which to drop */
       ENDIF
 
-      cSection := StrTran( cSection, hb_eol(), Chr(10) )
+      cSection := StrTran(cSection, hb_eol(), Chr(10))
 
       IF hb_LeftEq( cSectionName, "_" ) .OR. ;
          cSectionName == "TEMPLATE"
@@ -603,7 +603,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
          CASE ! o:IsConstraint( cSectionName, cSection )
 
-            cSource := cSectionName + " is '" + iif(Len(cSection) <= 20, cSection, Left(StrTran( cSection, hb_eol() ), 20) + "...") + "', should be one of: "
+            cSource := cSectionName + " is '" + iif(Len(cSection) <= 20, cSection, Left(StrTran(cSection, hb_eol()), 20) + "...") + "', should be one of: "
 #if 0
             cSource := hb_HKeyAt( hsTemplate, idx ) + " should be one of: "
 #endif
@@ -757,7 +757,7 @@ STATIC FUNCTION HBRawVersion()
       hb_Version( HB_VERSION_RELEASE ), ;
       hb_Version( HB_VERSION_STATUS ), ;
       hb_Version( HB_VERSION_ID ), ;
-      "20" + Transform( hb_Version( HB_VERSION_REVISION ), "99-99-99 99:99" ) )
+      "20" + Transform(hb_Version( HB_VERSION_REVISION ), "99-99-99 99:99") )
 
 STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
 
@@ -1302,7 +1302,7 @@ STATIC PROCEDURE DirLoadHBX( cDir, hAll )
 
 STATIC FUNCTION LoadHBX( cFileName, hAll )
 
-   LOCAL cName := StrTran( cFileName, "\", "/" )
+   LOCAL cName := StrTran(cFileName, "\", "/")
 
    LOCAL cFile
    LOCAL pRegex
@@ -1317,7 +1317,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
          "ANNOUNCE ([a-zA-Z0-9_]*)$" }
 
          IF !Empty(pRegex := hb_regexComp( cFilter, .T., .T. ))
-            FOR EACH tmp IN hb_regexAll( pRegex, StrTran( cFile, Chr(13) ),,,,, .T. )
+            FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
                IF tmp[ 2 ] $ hAll
                   hAll[ tmp[ 2 ] ] += "," + cName
                ELSE

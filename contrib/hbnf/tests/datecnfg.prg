@@ -151,7 +151,7 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
    aTemp     := ft_DateCnfg()
    cFY_Start := aTemp[ 1 ]
 
-   IF dGivenDate == NIL .OR. !( ValType( dGivenDate ) $ "NDT" )
+   IF dGivenDate == NIL .OR. !( ValType(dGivenDate) $ "NDT" )
       dGivenDate := Date()
    ELSEIF HB_IsNumeric(dGivenDate)
       nType := dGivenDate

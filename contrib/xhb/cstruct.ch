@@ -52,7 +52,7 @@
 
    // Exclude from C compilation
    #ifdef _SET_CH
-      #xtranslate __ClsSetModule( <x> ) => Empty( <x> )
+      #xtranslate __ClsSetModule( <x> ) => Empty(<x>)
       #xcommand C STRUCTURE <!stru!> [ALIGN <align> ] => ;
                INIT PROCEDURE __INIT_<stru>; ;
                   __ActiveStructure( #<stru>, <align> ) ; ;

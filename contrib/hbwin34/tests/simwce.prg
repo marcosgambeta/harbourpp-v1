@@ -37,7 +37,7 @@ PROCEDURE Main()
 #endif
 
    IF o:lGetSimPhoneEntry( 1, SIM_PBSTORAGE_SIM, @a )
-      hb_Alert( { "ValType() -> " + ValType( a ) + " Len() -> " + hb_ntos( Len(a) ), a[ 1 ][ 1 ] } )
+      hb_Alert( { "ValType() -> " + ValType(a) + " Len() -> " + hb_ntos( Len(a) ), a[ 1 ][ 1 ] } )
       AEval( a, {| n | hb_Alert( { ;
          "Phone: " + n[ 1 ], ;
          "Name: " + n[ 2 ], ;

@@ -156,7 +156,7 @@ PROCEDURE Main()
    ? bmpinfo:SayMembers( " ", .T., .T. )
    ? "-----------------------------------------------------"
 
-   ? ValType( bmpinfo:Devalue() )
+   ? ValType(bmpinfo:Devalue())
    hb_traceLog( "bmpinfoheader", hb_ValToExp( bmpinfoheader ), ;
       infoheader:SayMembers(, .T. ), bmpinfoheader:Value(), bmpinfoheader:DeValue(), hb_DumpVar( bmpinfoheader:Array() ), hb_DumpVar( bmpinfoheader:acMembers ) )
 

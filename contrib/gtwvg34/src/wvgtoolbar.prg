@@ -274,7 +274,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
    oBtn:index   := ::numItems + 1
    oBtn:command := 100 + oBtn:index
 
-   SWITCH ValType( xImage )
+   SWITCH ValType(xImage)
    CASE "C"
       IF "." $ xImage .OR. ;
          "/" $ xImage .OR. ;

@@ -78,7 +78,7 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
    hb_default( @cSeparator, " " )
    hb_default( @lDebug, .F. )
 
-   SWITCH ValType( xTxt )
+   SWITCH ValType(xTxt)
    CASE "C"
    CASE "M" ; RETURN iif(lDebug, '"' + xTxt + '"', xTxt)
    CASE "N" ; RETURN hb_ntos( xTxt )

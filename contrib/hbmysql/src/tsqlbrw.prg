@@ -114,7 +114,7 @@ METHOD TBColumnSQL:Block()
       // That is: if there is a double quote inside text substitute it with a string
       // which gets converted back to a double quote by macro operator. If not it would
       // give an error because of unbalanced double quotes.
-      xValue := '"' + StrTran( xValue, '"', e"\" + '\"' + \"" ) + '"'
+      xValue := '"' + StrTran(xValue, '"', e"\" + '\"' + \"") + '"'
 
    CASE xType == "M"
       xValue := "' <MEMO> '"

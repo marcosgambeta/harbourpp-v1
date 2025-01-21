@@ -1414,7 +1414,7 @@ HB_FUNC( ED_GOTO )
 }
 
 /* Move the cursor to the previous character */
-static void Left( PHB_EDITOR pEd )
+static void Left(PHB_EDITOR pEd)
 {
    if( pEd->cursor_col > 0 )
       pEd->cursor_col--;  /* inside the window - decrement current column number */
@@ -1446,7 +1446,7 @@ HB_FUNC( ED_LEFT )
 }
 
 /* Move the cursor to the next character */
-static void Right( PHB_EDITOR pEd )
+static void Right(PHB_EDITOR pEd)
 {
    if( pEd->cursor_col < ( pEd->right - pEd->left ) )  /* inside the window */
    {

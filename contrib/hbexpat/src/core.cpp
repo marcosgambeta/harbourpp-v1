@@ -197,7 +197,7 @@ static void hb_expat_hnd_C( int nHnd, void * userdata, const XML_Char * par1 )
    }
 }
 
-static void hb_expat_hnd_CLen( int nHnd, void * userdata, const XML_Char * par1, int par1len )
+static void hb_expat_hnd_CLen(int nHnd, void * userdata, const XML_Char * par1, int par1len)
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 

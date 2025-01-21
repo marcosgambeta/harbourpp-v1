@@ -67,7 +67,7 @@ void hb_bitbuffer_destroy( PHB_BITBUFFER pBitBuffer )
    hb_xfree(pBitBuffer);
 }
 
-HB_SIZE hb_bitbuffer_len( PHB_BITBUFFER pBitBuffer )
+HB_SIZE hb_bitbuffer_len(PHB_BITBUFFER pBitBuffer)
 {
    return pBitBuffer->nLen;
 }

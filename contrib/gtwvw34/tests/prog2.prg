@@ -69,7 +69,7 @@ STATIC PROCEDURE xGet1()
 
    MEMVAR __temp__
 
-   AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
+   AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
 
    DO WHILE .T.
       @ 12, 22 SAY "Name    :" GET cName  PICTURE "@!K" WHEN lMessage( "Please enter your name" )

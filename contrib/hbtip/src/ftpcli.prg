@@ -461,7 +461,7 @@ METHOD TIPClientFTP:SendPort()
    LOCAL nPort := hb_inetPort( ::SocketPortServer )
 
    ::inetSendAll( ::SocketCon, "PORT " + ;
-      StrTran( hb_inetGetHosts( NetName() )[ 1 ], ".", "," ) + "," + ;
+      StrTran(hb_inetGetHosts( NetName() )[ 1 ], ".", ",") + "," + ;
       hb_ntos( Int( nPort / 256 ) ) + "," + hb_ntos( Int( nPort % 256 ) ) + ;
       ::cCRLF )
 
@@ -697,7 +697,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
          aFile[ F_ATTR ] := SubStr(cEntry, nStart, nEnd - nStart)
          nStart          := nEnd
 
-         IF Val( StrTran( aFile[ F_ATTR ], "-" ) ) == 0
+         IF Val( StrTran(aFile[ F_ATTR ], "-") ) == 0
 
             // continue with Unix format
 

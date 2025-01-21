@@ -359,7 +359,7 @@ PROCEDURE Demo_Get()
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, "vouch1.bmp" ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
 
@@ -812,7 +812,7 @@ FUNCTION WVW_SetFocus( hWnd, nWinNum )
    s_nGotFocus++
    @ 0, 0 SAY s_nGotFocus
    IF s_nGotFocus % 3 == 0
-      Alert( "Got focus " + Transform( s_nGotFocus, "9999" ) + "th times" )
+      Alert( "Got focus " + Transform(s_nGotFocus, "9999") + "th times" )
    ENDIF
 
    RETURN NIL

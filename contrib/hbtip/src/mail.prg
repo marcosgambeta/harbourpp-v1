@@ -591,7 +591,7 @@ METHOD TIPMail:detachFile( cPath )
    RETURN hb_MemoWrit( cFileName, cContent )
 
 METHOD TIPMail:getFileName()
-   RETURN StrTran( ::getFieldOption( "Content-Type", "name" ), '"' )
+   RETURN StrTran(::getFieldOption( "Content-Type", "name" ), '"')
 
 METHOD TIPMail:isMultiPart()
    RETURN "multipart/" $ Lower(::GetFieldPart( "Content-Type" ))

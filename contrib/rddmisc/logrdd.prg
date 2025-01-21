@@ -338,7 +338,7 @@ FUNCTION hb_LogRddValueToText( uValue )
    LOCAL cType
    LOCAL cText
 
-   SWITCH cType := ValType( uValue )
+   SWITCH cType := ValType(uValue)
    CASE "C"  ; cText := hb_StrToExp( uValue ) ; EXIT
    CASE "N"  ; cText := hb_ntos( uValue ) ; EXIT
    CASE "D"  ; cText := DToS( uValue ) ; cText := "0d" + iif(Empty(cText), "00000000", cText) ; EXIT

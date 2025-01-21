@@ -32,7 +32,7 @@ PROCEDURE Main( cFileName )
 
    ? XML_GetUserData(p)
    XML_SetUserData(p, aUserData)
-   ? ValType( XML_GetUserData(p) )
+   ? ValType(XML_GetUserData(p))
    XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x, e | cb_end( x, e ) } )
    XML_SetCharacterDataHandler( p, {| x, d | cb_data(x, d) } )
 

@@ -57,8 +57,8 @@ FUNCTION hbmk_plugin_qt( hbmk )
       hbmk[ "vars" ][ "aMOC_Src" ] := {}
 
       FOR EACH cSrc IN hbmk[ "params" ]
-         IF ! Left( cSrc, 1 ) == "-" .AND. ;
-            Lower( hb_FNameExt( cSrc ) ) == ".h"
+         IF ! Left(cSrc, 1) == "-" .AND. ;
+            Lower(hb_FNameExt( cSrc )) == ".h"
 
             AAdd( hbmk[ "vars" ][ "aMOC_Src" ], cSrc )
          ENDIF
@@ -76,9 +76,9 @@ FUNCTION hbmk_plugin_qt( hbmk )
       /* Detect tool locations */
 
       IF ! hbmk[ "lCLEAN" ]
-         IF ! Empty( hbmk[ "vars" ][ "aMOC_Src" ] )
+         IF ! Empty(hbmk[ "vars" ][ "aMOC_Src" ])
             hbmk[ "vars" ][ "cMOC_BIN" ] := qt_tool_detect( hbmk, "moc", "MOC_BIN", .T. )
-            IF Empty( hbmk[ "vars" ][ "cMOC_BIN" ] )
+            IF Empty(hbmk[ "vars" ][ "cMOC_BIN" ])
                cRetVal := I_( "Required QT tool not found" )
             ENDIF
          ENDIF
@@ -89,9 +89,9 @@ FUNCTION hbmk_plugin_qt( hbmk )
    CASE "pre_c"
 
       IF ! hbmk[ "lCLEAN" ] .AND. ;
-         ! Empty( hbmk[ "vars" ][ "aMOC_Src" ] )
+         ! Empty(hbmk[ "vars" ][ "aMOC_Src" ])
 
-         IF ! Empty( hbmk[ "vars" ][ "cMOC_BIN" ] )
+         IF ! Empty(hbmk[ "vars" ][ "cMOC_BIN" ])
 
             /* Execute 'moc' commands on input files */
 
@@ -153,28 +153,28 @@ STATIC FUNCTION qt_tool_detect( hbmk, cName, cEnvQT, lSuffix )
    LOCAL aEnvList
    LOCAL cStdErr
 
-   cBIN := GetEnv( cEnvQT )
-   IF Empty( cBIN )
+   cBIN := GetEnv(cEnvQT)
+   IF Empty(cBIN)
 
       IF lSuffix
-         IF ! ( cEnv := GetEnv( "HB_QTPOSTFIX" ) ) == ""  /* Compatibility */
+         IF ! ( cEnv := GetEnv("HB_QTPOSTFIX") ) == ""  /* Compatibility */
             hb_SetEnv( "HB_QTSUFFIX", cEnv )
          ENDIF
-         cName += GetEnv( "HB_QTSUFFIX" )
+         cName += GetEnv("HB_QTSUFFIX")
          aEnvList := { "HB_QTPATH", "HB_QTSUFFIX" }
       ELSE
          aEnvList := { "HB_QTPATH" }
       ENDIF
       cName += hbmk[ "cCCEXT" ]
 
-      IF Empty( cEnv := GetEnv( "HB_QTPATH" ) ) .OR. ;
+      IF Empty(cEnv := GetEnv("HB_QTPATH")) .OR. ;
          ! hb_FileExists( cBIN := hb_DirSepAdd( cEnv ) + cName )
 
          #if ! defined( __PLATFORM__UNIX )
 
             hb_AIns( aEnvList, 1, "HB_WITH_QT", .T. )
 
-            IF ! Empty( cEnv := GetEnv( "HB_WITH_QT" ) )
+            IF ! Empty(cEnv := GetEnv("HB_WITH_QT"))
 
                IF cEnv == "no"
                   /* Return silently. It shall fail at dependency detection inside hbmk2 */
@@ -195,9 +195,9 @@ STATIC FUNCTION qt_tool_detect( hbmk, cName, cEnvQT, lSuffix )
             cBIN := ""
          #endif
 
-         IF Empty( cBIN )
-            cBIN := hbmk_FindInPath( cName, GetEnv( "PATH" ) + hb_osPathListSeparator() + "/opt/qtsdk/qt/bin" )
-            IF Empty( cBIN )
+         IF Empty(cBIN)
+            cBIN := hbmk_FindInPath( cName, GetEnv("PATH") + hb_osPathListSeparator() + "/opt/qtsdk/qt/bin" )
+            IF Empty(cBIN)
                hbmk_OutErr( hbmk, hb_StrFormat( "%1$s not set, could not autodetect '%2$s' executable", hbmk_ArrayToList( aEnvList, ", " ), cName ) )
                RETURN NIL
             ENDIF
@@ -207,8 +207,8 @@ STATIC FUNCTION qt_tool_detect( hbmk, cName, cEnvQT, lSuffix )
          cStdErr := ""
          IF ! hbmk[ "lDONTEXEC" ]
             hb_processRun( cBIN + " -v",,, @cStdErr )
-            IF ! Empty( cStdErr )
-               cStdErr := " [" + StrTran( StrTran( cStdErr, Chr( 13 ) ), Chr( 10 ) ) + "]"
+            IF ! Empty(cStdErr)
+               cStdErr := " [" + StrTran(StrTran(cStdErr, Chr( 13 )), Chr( 10 )) + "]"
             ENDIF
          ENDIF
          hbmk_OutStd( hbmk, hb_StrFormat( "Using QT '%1$s' executable: %2$s%3$s (autodetected)", cName, cBIN, cStdErr ) )

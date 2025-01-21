@@ -40,7 +40,7 @@ STATIC FUNCTION MyMemoEdit( cText, nTop, nLeft, nBottom, nRight, lEdit )
    RETURN cText
 
 STATIC FUNCTION Example_Text()
-   RETURN StrTran( Example_Text_Raw(), "~", hb_BChar( 168 ) )
+   RETURN StrTran(Example_Text_Raw(), "~", hb_BChar( 168 ))
 
 STATIC FUNCTION Example_Text_Raw()
 #pragma __cstream | RETURN %s

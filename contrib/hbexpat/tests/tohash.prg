@@ -51,7 +51,7 @@ PROCEDURE Main( cFileName )
 
    ? XML_GetUserData(p)
    XML_SetUserData(p, aUserData)
-   ? ValType( XML_GetUserData(p) )
+   ? ValType(XML_GetUserData(p))
    XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x | cb_end( x ) } )
    XML_SetCharacterDataHandler( p, {| x, d | cb_data(x, d) } )
    XML_SetUnknownEncodingHandler( p, {| x, e, i | cb_unknownencoding( x, e, i ) } )

@@ -102,15 +102,15 @@ PROCEDURE Main()
       @ 0, 0 SAY "FileName  :" GET cpict PICT "@K" VALID hb_FileExists( AllTrim(cpict) )
       @ 1, 0 SAY "Transpar? :" GET ltransp PICT "Y"
       @ 2, 0 SAY "Max Cache :" GET nMaxCache PICT "999"
-      @ 3, 0 SAY "NumOfCache=" + Transform( wvw_NumBMCache(), "999" ) + ;
-         ", Max NumOfCache=" + Transform( wvw_SetMaxBMCache(), "999" )
+      @ 3, 0 SAY "NumOfCache=" + Transform(wvw_NumBMCache(), "999") + ;
+         ", Max NumOfCache=" + Transform(wvw_SetMaxBMCache(), "999")
       READ
       IF LastKey() == K_ESC
          EXIT
       ENDIF
       wvw_SetMaxBMCache( nMaxCache )
-      @ 3, 0 SAY "NumOfCache=" + Transform( wvw_NumBMCache(), "999" ) + ;
-         ", Max NumOfCache=" + Transform( wvw_SetMaxBMCache(), "999" )
+      @ 3, 0 SAY "NumOfCache=" + Transform(wvw_NumBMCache(), "999") + ;
+         ", Max NumOfCache=" + Transform(wvw_SetMaxBMCache(), "999")
 
       @ 5, 0 SAY "TOPLEFT: stretched image                 TOPRIGHT: fit vertically (proportional)"
       @ 6, 0 SAY "BOTLEFT: fit horizontally (proportional) BOTRIGHT: actual image size"

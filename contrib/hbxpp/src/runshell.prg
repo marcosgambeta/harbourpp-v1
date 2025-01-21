@@ -53,11 +53,11 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
 
    IF !HB_IsString( cProgram )
 #if defined( __PLATFORM__UNIX )
-      cProgram := GetEnv( "SHELL" )
+      cProgram := GetEnv("SHELL")
 #elif defined( __PLATFORM__OS2 )
-      cProgram := GetEnv( "OS2_SHELL" )
+      cProgram := GetEnv("OS2_SHELL")
 #else
-      cProgram := GetEnv( "COMSPEC" )
+      cProgram := GetEnv("COMSPEC")
 #endif
       IF Empty(cProgram)
 #if defined( __PLATFORM__WINDOWS )
@@ -78,7 +78,7 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
 
    IF HB_IsString( cCommand )
 #if defined( __PLATFORM__UNIX )
-      cProgram += " -c " + "'" + StrTran( cCommand, "'", "'\''" ) + "'"
+      cProgram += " -c " + "'" + StrTran(cCommand, "'", "'\''") + "'"
 #else
       cProgram += " /c " + cCommand
 #endif

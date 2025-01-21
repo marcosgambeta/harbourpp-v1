@@ -145,7 +145,7 @@ STATIC PROCEDURE GetSession()
       "cName:" + cName + hb_eol() + ;
       "cNickName:" + cNickName + hb_eol() + ;
       "dBirthDate:" + DToC(dBirthDate) + hb_eol() + ;
-      "nBudget:" + Transform( nBudget, "999,999.99" ) + hb_eol() + ;
+      "nBudget:" + Transform(nBudget, "999,999.99") + hb_eol() + ;
       "cRemark:" + cRemark )
 
    wvw_lCloseWindow()
@@ -194,14 +194,14 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
 
    LOCAL mcVarType, mbText
 
-   SWITCH mcVarType := ValType( mxValue )
+   SWITCH mcVarType := ValType(mxValue)
    CASE "C"
       mcPict := hb_defaultValue( mcPict, Replicate( "X", Len(mxValue) ) )
       mbText := {|| mxValue }
       EXIT
    CASE "N"
       mcPict := hb_defaultValue( mcPict, "999,999,999.99" )
-      mbText := {|| Transform( mxValue, mcPict ) }
+      mbText := {|| Transform(mxValue, mcPict) }
       EXIT
    CASE "D"
       mcPict := hb_defaultValue( mcPict, "9999-99-99" )
@@ -269,7 +269,7 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
       @ nrow1, ncol1 - Len(clabel) - 1 SAY clabel
 
       aGet[ __GET_NEBID ] := wvw_ebCreate( nwinnum, nrow1, ncol1, nrow2, ncol2, ;
-         Transform( aGet[ __GET_XINIT ], aGet[ __GET_CPICT ] ), ;
+         Transform(aGet[ __GET_XINIT ], aGet[ __GET_CPICT ]), ;
          {| nWinNum, nId, nEvent | MaskEditBox( nWinNum, nId, nEvent, @aEBGets ) }, ;
          aGet[ __GET_LMULTILINE ], ;  // EBtype
       0, ;  // nmorestyle
@@ -512,13 +512,13 @@ STATIC PROCEDURE MaskEditBox( nWinNum, nId, nEvent, aEBGets )
             // don't leave it in an invalid state
             wvw_ebSetFocus( nwinnum, nid )
          ELSE
-            wvw_ebSetText( nwinnum, nId, Transform( GetValFromText( ctext, mcvaltype ), mcpict ) )
+            wvw_ebSetText( nwinnum, nId, Transform(GetValFromText( ctext, mcvaltype ), mcpict) )
          ENDIF
       ENDIF
    CASE nEvent == EN_SETFOCUS
       IF !mlmultiline .AND. mcvaltype == "N"
          ctext := wvw_ebGetText( nwinnum, nid )
-         wvw_ebSetText( nwinnum, nId, Transform( GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype ) ) )
+         wvw_ebSetText( nwinnum, nId, Transform(GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype )) )
       ENDIF
       wvw_ebSetSel( nwinnum, nid, 0, -1 )
       nwasFocus := nFocused( aEBGets )
@@ -698,7 +698,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
       // RL 104
       IF NegativeZero
-         Output := Transform( GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask )
+         Output := Transform(GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask)
 
          // better:
          ol := Len(Output)
@@ -708,7 +708,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
          wvw_ebSetText( mnwinnum, mnebid, Output )
          wvw_ebSetSel( mnwinnum, mnebid, At( ".", OutBuffer ) + dc, At( ".", OutBuffer ) + dc )
       ELSE
-         wvw_ebSetText( mnwinnum, mnebid, Transform( GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask ) )
+         wvw_ebSetText( mnwinnum, mnebid, Transform(GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask) )
          wvw_ebSetSel( mnwinnum, mnebid, At( ".", OutBuffer ) + dc, At( ".", OutBuffer ) + dc )
       ENDIF
 
@@ -831,7 +831,7 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
    ENDIF
 
    // useless!
-   // s := Transform( Val( s ), Getnummask( s_cmask, mcvaltype ) )
+   // s := Transform(Val( s ), Getnummask( s_cmask, mcvaltype ))
 
    RETURN Val( s )
 

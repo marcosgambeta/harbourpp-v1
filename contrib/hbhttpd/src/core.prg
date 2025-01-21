@@ -88,7 +88,7 @@ METHOD UHttpd:Run( hConfig )
       "FirewallFilter"       => "0.0.0.0/0" }
 
    FOR EACH xValue IN hConfig
-      IF !hb_HHasKey( ::hConfig, xValue:__enumKey ) .OR. !( ValType( xValue ) == ValType( ::hConfig[ xValue:__enumKey ] ) )
+      IF !hb_HHasKey( ::hConfig, xValue:__enumKey ) .OR. !( ValType(xValue) == ValType(::hConfig[ xValue:__enumKey ]) )
          ::cError := "Invalid config option '" + xValue:__enumKey + "'"
          RETURN .F.
       ENDIF
@@ -794,7 +794,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
             server[ "CONTENT_TYPE" ] := cI
             EXIT
          OTHERWISE
-            server[ "HTTP_" + StrTran( Upper(Left(aRequest[ nI ], nJ - 1)), "-", "_" ) ] := cI
+            server[ "HTTP_" + StrTran(Upper(Left(aRequest[ nI ], nJ - 1)), "-", "_") ] := cI
             EXIT
          ENDSWITCH
       ENDIF
@@ -928,7 +928,7 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
       nMonth := AScan( { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", ;
          "Oct", "Nov", "Dec" }, SubStr(cDate, 9, 3) )
       IF nMonth > 0
-         tI := hb_SToT( SubStr(cDate, 13, 4) + PadL( nMonth, 2, "0" ) + SubStr(cDate, 6, 2) + StrTran( SubStr(cDate, 18, 8), ":" ) )
+         tI := hb_SToT( SubStr(cDate, 13, 4) + PadL( nMonth, 2, "0" ) + SubStr(cDate, 6, 2) + StrTran(SubStr(cDate, 18, 8), ":") )
          IF !Empty(tI)
             tDate := tI + hb_UTCOffset() / ( 3600 * 24 )
             RETURN .T.
@@ -1075,7 +1075,7 @@ STATIC FUNCTION cvt2str( xI, lLong )
 
    LOCAL cValtype, cI, xJ
 
-   cValtype := ValType( xI )
+   cValtype := ValType(xI)
    lLong := ! Empty(lLong)
    IF cValtype == "U"
       RETURN iif(lLong, "[U]:NIL", "NIL")
@@ -1267,7 +1267,7 @@ PROCEDURE USessionDestroy()
 FUNCTION UOsFileName( cFileName )
 
    IF !hb_ps() == "/"
-      RETURN StrTran( cFileName, "/", hb_ps() )
+      RETURN StrTran(cFileName, "/", hb_ps())
    ENDIF
 
    RETURN cFileName
@@ -1314,7 +1314,7 @@ FUNCTION UUrlDecode( cString )
 
    LOCAL nI
 
-   cString := StrTran( cString, "+", " " )
+   cString := StrTran(cString, "+", " ")
    nI := 1
    DO WHILE nI <= Len(cString)
       nI := hb_At( "%", cString, nI )
@@ -1359,7 +1359,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       lIndex := .F.
    ENDIF
 
-   cFileName := StrTran( cFileName, "//", "/" )
+   cFileName := StrTran(cFileName, "//", "/")
 
    // Security
    IF "/../" $ cFileName
@@ -1557,7 +1557,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                ELSEIF HB_IsObject( xValue )
                   cRet += UHtmlEncode( xValue:Output() )
                ELSE
-                  Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType( xValue ) ) )
+                  Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ) )
                ENDIF
             ELSE
                Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[ 2 ] ) )
@@ -1578,7 +1578,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                ELSEIF HB_IsObject( xValue )
                   cRet += xValue:Output()
                ELSE
-                  Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType( xValue ) ) )
+                  Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ) )
                ENDIF
             ELSE
                Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[ 2 ] ) )

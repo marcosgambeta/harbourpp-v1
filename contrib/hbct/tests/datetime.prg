@@ -472,7 +472,7 @@ FUNCTION dInMonthtest()
       nMonth := Val( cMonth )
 
       DO CASE
-      CASE ValType( cMonth ) == "C" .AND. nmonth == 0
+      CASE ValType(cMonth) == "C" .AND. nmonth == 0
          nMonth := CToMonth( cMonth )
 
       CASE nMonth == 0  .OR. ;

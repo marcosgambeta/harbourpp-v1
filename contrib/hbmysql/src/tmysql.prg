@@ -122,7 +122,7 @@ METHOD TMySQLRow:FieldPut( cnField, Value )
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
-      IF ValType( Value ) == ValType( ::aRow[ nNum ] ) .OR. ::aRow[ nNum ] == NIL
+      IF ValType(Value) == ValType(::aRow[ nNum ]) .OR. ::aRow[ nNum ] == NIL
 
          // if it is a char field remove trailing spaces
          IF HB_IsString( Value )
@@ -1092,7 +1092,7 @@ METHOD TMySQLTable:FieldPut( cnField, Value )
 
    IF nNum > 0 .AND. nNum <= ::nNumFields
 
-      IF ValType( Value ) == ValType( ::aRow[ nNum ] ) .OR. ::aRow[ nNum ] == NIL
+      IF ValType(Value) == ValType(::aRow[ nNum ]) .OR. ::aRow[ nNum ] == NIL
 
          // if it is a char field remove trailing spaces
          IF HB_IsString( Value )
@@ -1561,7 +1561,7 @@ METHOD TMySQLServer:TableStruct( cTable )
 // Returns an SQL string with clipper value converted ie. Date() -> "'YYYY-MM-DD'"
 STATIC FUNCTION ClipValue2SQL( Value )
 
-   SWITCH ValType( Value )
+   SWITCH ValType(Value)
    CASE "N"
       RETURN hb_ntos( Value )
 

@@ -937,9 +937,9 @@ STATIC FUNCTION KeyField( aTables, db, dialect )
 
 STATIC FUNCTION DataToSql( xField )
 
-   SWITCH ValType( xField )
+   SWITCH ValType(xField)
    CASE "C"
-      RETURN '"' + StrTran( xField, '"', ' ' ) + '"'
+      RETURN '"' + StrTran(xField, '"', ' ') + '"'
    CASE "D"
       RETURN '"' + StrZero( Month( xField ), 2 ) + "/" + StrZero( Day( xField ), 2 ) + "/" + StrZero( Year( xField ), 4 ) + '"'
    CASE "N"
@@ -1082,7 +1082,7 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 STATIC FUNCTION RemoveSpaces( cQuery )
 
    DO WHILE At( "  ", cQuery ) != 0
-      cQuery := StrTran( cQuery, "  ", " " )
+      cQuery := StrTran(cQuery, "  ", " ")
    ENDDO
 
    RETURN cQuery

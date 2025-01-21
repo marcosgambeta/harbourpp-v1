@@ -13,7 +13,7 @@ PROCEDURE Main(...)
 
    LOCAL cPar
    LOCAL aParams := hb_AParams()
-   LOCAL cQuery  := GetEnv( "QUERY_STRING" )
+   LOCAL cQuery  := GetEnv("QUERY_STRING")
    LOCAL hParams := { => }
 
    LOCAL cImg, nPt, nWidth, nHeight, cPhoto

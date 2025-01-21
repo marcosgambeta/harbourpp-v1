@@ -95,7 +95,7 @@ METHOD GenerateHTML:NewFile()
 
    ::cFile += "<!DOCTYPE html>" + hb_eol()
 
-   ::OpenTag( "html", "lang", StrTran( ::cLang, "_", "-" ) )
+   ::OpenTag( "html", "lang", StrTran(::cLang, "_", "-") )
    ::Spacer()
 
    ::OpenTag( "meta", "charset", "utf-8" )
@@ -370,13 +370,13 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
                ::Append( tmp1,, .T. )
             CASE lTable
                ::OpenTagInline( "div" )
-               ::AppendInline( iif(lTable, StrTran( tmp1, " ", hb_UChar( 160 ) ), tmp1),, .T. )
+               ::AppendInline( iif(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .T. )
             OTHERWISE
                ::OpenTagInline( "div" )
                IF cField $ "DESCRIPTION|"
                   ::OpenTagInline( "p" )
                ENDIF
-               ::AppendInline( iif(lTable, StrTran( tmp1, " ", hb_UChar( 160 ) ), tmp1),, .F. )
+               ::AppendInline( iif(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .F. )
             ENDCASE
             IF lCode
                ::CloseTag( "pre" )

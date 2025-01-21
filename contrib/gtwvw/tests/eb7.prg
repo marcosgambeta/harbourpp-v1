@@ -139,7 +139,7 @@ PROCEDURE GetSession()
    cdebugreport += "cName:" + cName + hb_eol()
    cdebugreport += "cNickName:" + cNickName + hb_eol()
    cdebugreport += "dBirthDate:" + DToC(dBirthDate) + hb_eol()
-   cdebugreport += "nBudget:" + Transform( nBudget, "999,999.99" ) + hb_eol()
+   cdebugreport += "nBudget:" + Transform(nBudget, "999,999.99") + hb_eol()
    cdebugreport += "cRemark:" + cRemark
    MyMessageBox( nwinnum, cdebugreport )
 
@@ -191,14 +191,14 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
 
    LOCAL mcVarType, mbText
 
-   mcVarType := ValType( mxValue )
+   mcVarType := ValType(mxValue)
    DO CASE
    CASE mcVarType == "C"
       mcPict := iif(HB_IsString( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
       mcPict := iif(HB_IsString( mcPict ), mcPict, "999,999,999.99")
-      mbText := {|| Transform( mxValue, mcPict ) }
+      mbText := {|| Transform(mxValue, mcPict) }
    CASE mcVarType == "D"
       mcPict := iif(HB_IsString( mcPict ), mcPict, "9999-99-99")
       mbText := {|| DToC(mxValue) }
@@ -265,7 +265,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
       @ nrow1, ncol1 - Len(clabel) - 1 SAY clabel
 
       aEBGets[ i ][ __GET_NEBID ] := wvw_ebCreate( nwinnum, nrow1, ncol1, nrow2, ncol2, ;
-         Transform( aEBGets[ i ][ __GET_XINIT ], aEBGets[ i ][ __GET_CPICT ] ), ;
+         Transform(aEBGets[ i ][ __GET_XINIT ], aEBGets[ i ][ __GET_CPICT ]), ;
          {| nWinNum, nId, nEvent | MaskEditBox( nWinNum, nId, nEvent, @aEBGets ) }, ;
          aEBGets[ i ][ __GET_LMULTILINE ], ;  // EBtype
       0, ;  // nmorestyle
@@ -506,13 +506,13 @@ STATIC FUNCTION MaskEditBox( nWinNum, nId, nEvent, aEBGets )
             // don't leave it in an invalid state
             wvw_ebSetFocus( nwinnum, nid )
          ELSE
-            wvw_ebSetText( nwinnum, nId, Transform( GetValFromText( ctext, mcvaltype ), mcpict ) )
+            wvw_ebSetText( nwinnum, nId, Transform(GetValFromText( ctext, mcvaltype ), mcpict) )
          ENDIF
       ENDIF
    CASE nEvent == EN_SETFOCUS
       IF !mlmultiline .AND. mcvaltype == "N"
          ctext := wvw_ebGetText( nwinnum, nid )
-         wvw_ebSetText( nwinnum, nId, Transform( GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype ) ) )
+         wvw_ebSetText( nwinnum, nId, Transform(GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype )) )
       ENDIF
       wvw_ebSetSel( nwinnum, nid, 0, -1 )
       nwasFocus := nFocused( aEBGets )
@@ -690,7 +690,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
       // RL 104
       IF NegativeZero
-         Output := Transform( GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask )
+         Output := Transform(GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask)
 
          // x better:
          ol := Len(Output)
@@ -700,7 +700,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
          wvw_ebSetText( mnwinnum, mnebid, Output )
          wvw_ebSetSel( mnwinnum, mnebid, At( ".", OutBuffer ) + dc, At( ".", OutBuffer ) + dc )
       ELSE
-         wvw_ebSetText( mnwinnum, mnebid, Transform( GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask ) )
+         wvw_ebSetText( mnwinnum, mnebid, Transform(GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask) )
          wvw_ebSetSel( mnwinnum, mnebid, At( ".", OutBuffer ) + dc, At( ".", OutBuffer ) + dc )
       ENDIF
 
@@ -818,7 +818,7 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
    ENDIF
 
    // useless!
-   // s := Transform( Val( s ), Getnummask( s_cmask, mcvaltype ) )
+   // s := Transform(Val( s ), Getnummask( s_cmask, mcvaltype ))
 
    RETURN Val( s )
 
@@ -863,9 +863,9 @@ STATIC FUNCTION IsBadDate( cBuffer ) // , cPicFunc )
    ENDIF
 #endif
 
-   cBuffer2 := StrTran( cBuffer, "/" )
-   cBuffer2 := StrTran( cBuffer2, "-" )
-   cBuffer2 := StrTran( cBuffer2, "." )
+   cBuffer2 := StrTran(cBuffer, "/")
+   cBuffer2 := StrTran(cBuffer2, "-")
+   cBuffer2 := StrTran(cBuffer2, ".")
 
    IF Empty(cBuffer2)
       RETURN .F.

@@ -70,7 +70,7 @@ FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
 
    IF hb_mtvm()
 
-      SWITCH ValType( xRPC )
+      SWITCH ValType(xRPC)
       CASE "S"
       CASE "H"
          lRPC := .T.

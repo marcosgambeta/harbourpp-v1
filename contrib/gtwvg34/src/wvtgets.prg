@@ -131,7 +131,7 @@ METHOD WvtGets:PaintBlock( nIndex )
 
    LOCAL nLen, bPaint
 
-   nLen   := Len(Transform( ::aGetList[ nIndex ][ 3 ], ::aGetList[ nIndex ][ 4 ] ))
+   nLen   := Len(Transform(::aGetList[ nIndex ][ 3 ], ::aGetList[ nIndex ][ 4 ]))
 
    bPaint := {|| wvt_DrawBoxGet( ::aGetList[ nIndex ][ 1 ], ::aGetList[ nIndex ][ 2 ], nLen ) }
 

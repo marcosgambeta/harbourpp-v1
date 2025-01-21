@@ -79,7 +79,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
       nDX := nX
       FOR nI := 1 TO Len(aCol)
          xValue := FieldGet( FieldPos( aCol[ nI, 2 ] ) )
-         SWITCH ValType( xValue )
+         SWITCH ValType(xValue)
          CASE "C"
             cairo_move_to( hCairo, nDX + 10, nY + 10 )
             cairo_show_text( hCairo, xValue )

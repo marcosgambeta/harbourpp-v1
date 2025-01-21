@@ -383,9 +383,9 @@ FUNCTION SwpRunCmd( cCommand, nMem, cRunPath, cTempPath )
 
    IF !HB_IsString( cCommand ) .OR. Empty(cCommand)
 #if defined( __PLATFORM__UNIX )
-      cCommand := GetEnv( "SHELL" )
+      cCommand := GetEnv("SHELL")
 #else
-      cCommand := GetEnv( "COMSPEC" )
+      cCommand := GetEnv("COMSPEC")
 #endif
    ENDIF
 

@@ -92,7 +92,7 @@ PROCEDURE Main( cURL, cFile )
    ENDIF
    oClient:nConnTimeout := 2000 /* 20000 */
 
-   oURL:cUserid := StrTran( oURL:cUserid, "&at;", "@" )
+   oURL:cUserid := StrTran(oURL:cUserid, "&at;", "@")
 
    ? "Connecting to", oURL:cProto + "://" + oURL:cServer
    IF oClient:Open()

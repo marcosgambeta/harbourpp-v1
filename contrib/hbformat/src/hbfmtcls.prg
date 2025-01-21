@@ -218,7 +218,7 @@ METHOD HBFormatCode:Reformat( aFile )
       nPosComment := 0
       lSpaceFirst := hb_LeftEq( aFile[ i ], " " )
       IF ::lIndent
-         aFile[ i ] := StrTran( aFile[ i ], Chr(9), " " )
+         aFile[ i ] := StrTran(aFile[ i ], Chr(9), " ")
       ENDIF
       aFile[ i ] := RTrim(aFile[ i ])
 
@@ -821,7 +821,7 @@ METHOD HBFormatCode:SetOption( cLine, i, aIni )
                ENDIF
             ENDIF
          ENDIF
-         IF ::nErr == 0 .AND. !( ValType( xRes ) == Left(cToken1, 1) )
+         IF ::nErr == 0 .AND. !( ValType(xRes) == Left(cToken1, 1) )
             ::nErr := 4
          ENDIF
       ELSE

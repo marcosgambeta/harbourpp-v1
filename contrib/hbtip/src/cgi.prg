@@ -103,8 +103,8 @@ METHOD TIPCgi:New()
    ::cCgiHeader := ""
    ::cHtmlPage := ""
 
-   IF "POST" $ Upper(GetEnv( "REQUEST_METHOD" ))
-      nLen := Val( GetEnv( "CONTENT_LENGTH" ) )
+   IF "POST" $ Upper(GetEnv("REQUEST_METHOD"))
+      nLen := Val( GetEnv("CONTENT_LENGTH") )
       cTemp := Space( nLen )
       IF ( nRead := FRead( hb_GetStdIn(), @cTemp, nLen ) ) != nLen
          ::ErrHandler( "post error read " + hb_ntos( nRead ) + " instead of " + hb_ntos( nLen ) )
@@ -116,7 +116,7 @@ METHOD TIPCgi:New()
             ENDIF
          NEXT
       ENDIF
-   ELSEIF ! Empty(cTemp := GetEnv( "QUERY_STRING" ))
+   ELSEIF ! Empty(cTemp := GetEnv("QUERY_STRING"))
       FOR EACH item IN hb_ATokens( cTemp, "&" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
             ::hGets[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
@@ -124,7 +124,7 @@ METHOD TIPCgi:New()
       NEXT
    ENDIF
 
-   IF !Empty(cTemp := GetEnv( "HTTP_COOKIE" ))
+   IF !Empty(cTemp := GetEnv("HTTP_COOKIE"))
       FOR EACH item IN hb_ATokens( cTemp, ";" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
             ::hCookies[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
@@ -288,7 +288,7 @@ METHOD PROCEDURE TIPCgi:ErrHandler( xError )
 
    LOCAL cErrMsg := ;
       '<table border="1">' + ;
-      "<tr><td>SCRIPT NAME:</td><td>" + GetEnv( "SCRIPT_NAME" ) + "</td></tr>"
+      "<tr><td>SCRIPT NAME:</td><td>" + GetEnv("SCRIPT_NAME") + "</td></tr>"
 
    DO CASE
    CASE HB_IsObject( xError )

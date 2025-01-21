@@ -102,7 +102,7 @@ PROCEDURE Main()
    RETURN
 
 STATIC FUNCTION TypeAndValue( x )
-   RETURN ValType( x ) + " : " + hb_ValToExp( x )
+   RETURN ValType(x) + " : " + hb_ValToExp( x )
 
 STATIC FUNCTION WMI_Bios_BiosCharacteristics( nValue )
 

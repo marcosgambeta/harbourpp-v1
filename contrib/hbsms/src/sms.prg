@@ -204,7 +204,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
 
             port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CMGS="' + cPhoneNo + '"' + Chr(13) )
             IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "> "
-               port_send( smsctx[ _SMSCTX_xHnd ], StrTran( cText, Chr(13) ) + Chr(26) )
+               port_send( smsctx[ _SMSCTX_xHnd ], StrTran(cText, Chr(13)) + Chr(26) )
                tmp := StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
                IF Left(tmp, Len("+CMGS: ")) == "+CMGS: "
                   RETURN 0
@@ -253,11 +253,11 @@ FUNCTION smsctx_PIN( smsctx, cPIN )
 
 #if 0
 STATIC FUNCTION StripCR( cString )
-   RETURN StrTran( cString, Chr(13) )
+   RETURN StrTran(cString, Chr(13))
 #endif
 
 STATIC FUNCTION StripCRLF( cString )
-   RETURN StrTran( cString, Chr(13) + Chr(10) )
+   RETURN StrTran(cString, Chr(13) + Chr(10))
 
 STATIC FUNCTION IsOK( cString )
 
@@ -277,7 +277,7 @@ STATIC FUNCTION GetLines( cString )
       cString := hb_StrShrink( cString, Len(Chr(13) + Chr(10)) )
    ENDIF
 
-   FOR EACH tmp IN hb_ATokens( StrTran( cString, Chr(13) ), Chr(10) )
+   FOR EACH tmp IN hb_ATokens( StrTran(cString, Chr(13)), Chr(10) )
       AAdd( aLine, tmp )
    NEXT
 

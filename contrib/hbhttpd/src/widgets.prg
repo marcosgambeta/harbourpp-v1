@@ -372,11 +372,11 @@ METHOD UWBrowse:Output()
          CASE HB_IsEvalItem( xField )
             xI := Eval( xField )
          ENDCASE
-         SWITCH ValType( xI )
+         SWITCH ValType(xI)
          CASE "C"  ; xI := RTrim(xI); EXIT
          CASE "N"  ; xI := Str( xI ); EXIT
          CASE "D"  ; xI := DToC(xI); EXIT
-         OTHERWISE ; xI := "ValType()==" + ValType( xI )
+         OTHERWISE ; xI := "ValType()==" + ValType(xI)
          ENDSWITCH
          IF !::aColumns[ nI ][ 4 ]
             xI := UHtmlEncode( xI )
@@ -571,7 +571,7 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
          cRet += cSeparator
       ENDIF
 
-      SWITCH ValType( aData[ nI ] )
+      SWITCH ValType(aData[ nI ])
       CASE "C"
       CASE "M" ; cRet += aData[ nI ]; EXIT
       CASE "N" ; cRet += hb_ntos( aData[ nI ] ); EXIT

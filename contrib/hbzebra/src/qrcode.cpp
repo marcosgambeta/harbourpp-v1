@@ -594,7 +594,7 @@ static int _qr_alphanumeric_no( char ch )
    return -1;
 }
 
-static int _qr_cci_len( int iVersion, int iMode ) /* Character Count Indicator */
+static int _qr_cci_len(int iVersion, int iMode) /* Character Count Indicator */
 {
    if( iMode == 1 ) {
       return iVersion <= 9 ? 10 : (iVersion <= 26 ? 12 : 14);
@@ -643,7 +643,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    iVersion = 0; /* to pacify warning */
    for( i = 1; i <= 40; i++ ) {
       iDataLen = static_cast<int>(s_version[i - 1].uiTotal - s_version[i - 1].level[iLevel].uiECC);
-      if( iDataLen * 8 >= iLen + _qr_cci_len( i, iMode ) ) {
+      if( iDataLen * 8 >= iLen + _qr_cci_len(i, iMode) ) {
          iVersion = i;
          break;
       }
@@ -692,11 +692,11 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    }
 
    /* Padding */
-   if( hb_bitbuffer_len( pData ) & 7 ) {
+   if( hb_bitbuffer_len(pData) & 7 ) {
       hb_bitbuffer_cat_int_rev(pData, 0, 8 - (hb_bitbuffer_len(pData) & 7));
    }
 
-   iLen = iDataLen - hb_bitbuffer_len( pData ) / 8;
+   iLen = iDataLen - hb_bitbuffer_len(pData) / 8;
    for( m = 0; m < iLen; m++ ) {
       hb_bitbuffer_cat_int_rev(pData, (m & 1) ? 0x11 : 0xEC, 8);
    }

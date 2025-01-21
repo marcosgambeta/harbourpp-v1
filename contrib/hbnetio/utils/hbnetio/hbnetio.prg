@@ -834,7 +834,7 @@ STATIC PROCEDURE ShowConfig( netiosrv, netiomgm )
 STATIC PROCEDURE HB_Logo()
 
    OutStd( ;
-      "Harbour NETIO Server " + StrTran( Version(), "Harbour " ) + hb_eol() + ;
+      "Harbour NETIO Server " + StrTran(Version(), "Harbour ") + hb_eol() + ;
       "Copyright (c) 2009-" + ;
          "2020" + ", " + ;
          "Przemyslaw Czerpak, Viktor Szakats" + hb_eol() + ;

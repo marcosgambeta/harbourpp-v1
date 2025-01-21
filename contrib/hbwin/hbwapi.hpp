@@ -131,7 +131,7 @@ HB_EXTERN_BEGIN
    meant to use only by the library itself. [vszakats] */
 extern TCHAR *   hbwapi_tstrdup( const TCHAR * pszText );
 extern TCHAR *   hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen );
-extern HB_SIZE   hbwapi_tstrlen( const TCHAR * pText );
+extern HB_SIZE   hbwapi_tstrlen(const TCHAR * pText);
 extern HMODULE   hbwapi_LoadLibrarySystem( LPCTSTR pFileName );
 
 extern HB_EXPORT void      hbwapi_SetLastError( DWORD dwLastError );

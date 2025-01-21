@@ -324,7 +324,7 @@ static void mixQSort( PMIXKEY * pKeys, HB_ULONG left, HB_ULONG right, HB_USHORT 
    }
 }
 
-static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_ULONG * ulKeyPos )
+static PMIXKEY mixFindKeyLen(PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_ULONG * ulKeyPos)
 {
    HB_ULONG l, r;
    int      i = 1;
@@ -367,7 +367,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
 
 static PMIXKEY mixFindKey( PMIXTAG pTag, PMIXKEY pKey, HB_ULONG * ulKeyPos )
 {
-  return mixFindKeyLen( pTag, pKey, pTag->uiLen, ulKeyPos );
+  return mixFindKeyLen(pTag, pKey, pTag->uiLen, ulKeyPos);
 }
 
 static int mixCompareKey( PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, HB_USHORT uiLen )
@@ -736,7 +736,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
       reported in GOTO() does not exist here */
    SELF_RESETREL(&pArea->adsarea);
 
-   mixFindKeyLen( pArea->pTagCurrent, pMixKey, uiLen, &ulKeyPos );
+   mixFindKeyLen(pArea->pTagCurrent, pMixKey, uiLen, &ulKeyPos);
 
    ulRecNo = 0;
    if( bFindLast ) {

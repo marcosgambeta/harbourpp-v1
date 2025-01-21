@@ -111,7 +111,7 @@ STATIC PROCEDURE Exm_MSExcel()
       oAS:Cells( 1, 1 ):Font:Size := 16
 
       // oAS:Cells( 1, 1 ) is object, but oAS:Cells( 1, 1 ):Value has value of the cell
-      ? "Object valtype:", ValType( oAS:Cells( 1, 1 ) ), "Value:", oAS:Cells( 1, 1 ):Value
+      ? "Object valtype:", ValType(oAS:Cells( 1, 1 )), "Value:", oAS:Cells( 1, 1 ):Value
 
       oAS:Cells( 3, 1 ):Value := "String:"
       oAS:Cells( 3, 2 ):Value := "Hello, World!"
@@ -376,12 +376,12 @@ STATIC FUNCTION OO_ConvertToURL( cString )
 
    // ; Handle UNC paths
    IF !( Left(cString, 2) == "\\" )
-      cString := StrTran( cString, ":", "|" )
+      cString := StrTran(cString, ":", "|")
       cString := "///" + cString
    ENDIF
 
-   cString := StrTran( cString, "\", "/" )
-   cString := StrTran( cString, " ", "%20" )
+   cString := StrTran(cString, "\", "/")
+   cString := StrTran(cString, " ", "%20")
 
    RETURN "file:" + cString
 

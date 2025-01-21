@@ -8,7 +8,7 @@ PROCEDURE Main()
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
 
-   IF Empty( tTime := hb_ntp_GetTimeUTC("0.europe.pool.ntp.org") )
+   IF Empty(tTime := hb_ntp_GetTimeUTC("0.europe.pool.ntp.org"))
       ? "Network not available"
    ENDIF
    ? "UTC    time:", tTime

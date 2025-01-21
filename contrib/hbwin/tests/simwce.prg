@@ -35,7 +35,7 @@ PROCEDURE Main()
    IF !o:lGetSimPhoneEntry( 1, SIM_PBSTORAGE_SIM, @a )
       Alert( "Pos 1 error" )
    ELSE
-      Alert( "VALTYPE-> " + ValType( a ) + " LEN -> " + Str( Len(a) ), a[ 1 ][ 1 ] )
+      Alert( "VALTYPE-> " + ValType(a) + " LEN -> " + Str( Len(a) ), a[ 1 ][ 1 ] )
       AEval( a, {| n | Alert( "Phone: " + n[ 1 ] + hb_eol() + "Name: " + n[ 2 ] + hb_eol() + "Adr. Type: " + Str( n[ 3 ] ) + hb_eol() + "Plan Type: " + Str( n[ 4 ] ), "pos 1" ) } )
    ENDIF
 

@@ -252,7 +252,7 @@ METHOD TIPClientSMTP:Auth( cUser, cPass )
 
    ::inetSendAll( ::SocketCon, "AUTH LOGIN" + ::cCRLF )
    IF ::GetOk()
-      ::inetSendAll( ::SocketCon, hb_base64Encode( StrTran( cUser, "&at;", "@" ) ) + ::cCRLF  )
+      ::inetSendAll( ::SocketCon, hb_base64Encode( StrTran(cUser, "&at;", "@") ) + ::cCRLF  )
       IF ::GetOk()
          ::inetSendAll( ::SocketCon, hb_base64Encode( cPass ) + ::cCRLF )
          IF ::GetOk()

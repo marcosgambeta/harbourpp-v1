@@ -174,4 +174,4 @@ STATIC PROCEDURE About()
    RETURN
 
 STATIC FUNCTION HBRawVersion()
-   RETURN StrTran( Version(), "Harbour " )
+   RETURN StrTran(Version(), "Harbour ")

@@ -281,21 +281,21 @@
 /* Commands */
 
 #command SET FILETYPE TO <x:NTX,CDX,ADT,VFP>                              ;
-      => AdsSetFileType( iif( Upper( <(x)> ) == "NTX", ADS_NTX,           ;
-                         iif( Upper( <(x)> ) == "CDX", ADS_CDX,           ;
-                         iif( Upper( <(x)> ) == "VFP", ADS_VFP, ADS_ADT ) ) ) )
+      => AdsSetFileType( iif( Upper(<(x)>) == "NTX", ADS_NTX,           ;
+                         iif( Upper(<(x)>) == "CDX", ADS_CDX,           ;
+                         iif( Upper(<(x)>) == "VFP", ADS_VFP, ADS_ADT ) ) ) )
 
 #command SET SERVER LOCAL   => AdsSetServerType( ADS_LOCAL_SERVER )
 #command SET SERVER REMOTE  => AdsSetServerType( ADS_REMOTE_SERVER )
 
 #command SET AXS LOCKING <x:ON,OFF>                                   ;
-      => AdsLocking( Upper( <(x)> ) == "ON" )
+      => AdsLocking( Upper(<(x)>) == "ON" )
 
 #command SET RIGHTS CHECKING <x:ON,OFF>                               ;
-      => AdsRightsCheck( Upper( <(x)> ) == "ON" )
+      => AdsRightsCheck( Upper(<(x)>) == "ON" )
 
 #command SET CHARTYPE TO <x:ANSI,OEM>                                 ;
-      => AdsSetCharType( iif( Upper( <(x)> ) == "OEM", ADS_OEM, ADS_ANSI ) )
+      => AdsSetCharType( iif( Upper(<(x)>) == "OEM", ADS_OEM, ADS_ANSI ) )
 
 #command BEGIN TRANSACTION      => AdsBeginTransaction()
 #command COMMIT TRANSACTION     => AdsCommitTransaction()

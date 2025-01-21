@@ -609,7 +609,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
 
    IF HB_IsString( oParent )
       // a HTML string is passed -> build new tree of objects
-      oParent := StrTran( oParent, Chr(9), " " )
+      oParent := StrTran(oParent, Chr(9), " ")
       ::root           := Self
       ::htmlTagName    := "_root_"
       ::htmlTagType    := THtmlTagType( "_root_" )
@@ -726,7 +726,7 @@ METHOD THtmlNode:parseHtml( parser )
          cAttr    := LTrim(cAttr)
          cTagName += CutStr( " ", @cAttr )
       ENDIF
-      cTagName := StrTran( cTagName, ">" )
+      cTagName := StrTran(cTagName, ">")
       cTagName := AllTrim(SubStr(cTagName, 2))
 
       SWITCH Left(cTagName, 1)
@@ -1473,11 +1473,11 @@ METHOD THtmlNode:_setTextNode( cText )
    cText := LTrim(hb_ValToStr( cText ))
 
    DO WHILE "<" $ cText
-      cText := StrTran( cText, "<", "&lt;" )
+      cText := StrTran(cText, "<", "&lt;")
    ENDDO
 
    DO WHILE ">" $ cText
-      cText := StrTran( cText, ">", "&gt;" )
+      cText := StrTran(cText, ">", "&gt;")
    ENDDO
 
    ::_getTextNode():htmlContent := iif(cText == "", "&nbsp;", cText)
@@ -4213,7 +4213,7 @@ FUNCTION HtmlToANSI( cHtmlText )
       _Init_Html_AnsiCharacterEntities()
    ENDIF
 
-   RETURN StrTran( hb_StrReplace( cHtmlText, t_aHtmlAnsiEntities, t_cHtmlAnsiChars ), "&nbsp;", " " )
+   RETURN StrTran(hb_StrReplace( cHtmlText, t_aHtmlAnsiEntities, t_cHtmlAnsiChars ), "&nbsp;", " ")
 
 // Converts an HTML formatted text string to the OEM character set
 FUNCTION HtmlToOEM( cHtmlText )
@@ -4363,7 +4363,7 @@ FUNCTION tip_HtmlToStr( cHtmlText )
 
    _Init_Html_CharacterEntities()
 
-   RETURN StrTran( hb_StrReplace( cHtmlText, t_aHtmlUnicEntities, t_cHtmlUnicChars ), "&nbsp;", " " )
+   RETURN StrTran(hb_StrReplace( cHtmlText, t_aHtmlUnicEntities, t_cHtmlUnicChars ), "&nbsp;", " ")
 
 // Inserts HTML character entities into a text string
 FUNCTION tip_StrToHtml( cAnsiText )

@@ -101,8 +101,8 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
    IF lRTE
       lFailed := !( XToStr( xResult, .F. ) == XToStr( xResultExpected, .F. ) )
    ELSE
-      IF !( ValType( xResult ) == ValType( xResultExpected ) )
-         IF HB_IsString( xResultExpected ) .AND. ValType( xResult ) $ "ABOHPS"
+      IF !( ValType(xResult) == ValType(xResultExpected) )
+         IF HB_IsString( xResultExpected ) .AND. ValType(xResult) $ "ABOHPS"
             lFailed := !( XToStr( xResult, .F. ) == xResultExpected )
          ELSE
             lFailed := .T.
@@ -178,7 +178,7 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_IsArray( oError:Args )
       cMessage += "A:" + hb_ntos( Len(oError:Args) ) + ":"
       FOR tmp := 1 TO Len(oError:Args)
-         cMessage += ValType( oError:Args[ tmp ] ) + ":" + XToStr( oError:Args[ tmp ], .T. )
+         cMessage += ValType(oError:Args[ tmp ]) + ":" + XToStr( oError:Args[ tmp ], .T. )
          IF tmp < Len(oError:Args)
             cMessage += ";"
          ENDIF
@@ -206,7 +206,7 @@ STATIC FUNCTION ErrorMessage( oError )
 
 STATIC FUNCTION XToStr( xValue, lInString )
 
-   SWITCH ValType( xValue )
+   SWITCH ValType(xValue)
    CASE "N" ; RETURN hb_ntos( xValue )
    CASE "D" ; RETURN iif(lInString, "0d" + iif(Empty(xValue), "00000000", DToS( xValue )), 'hb_SToD( "' + DToS( xValue ) + '" )')
    CASE "U" ; RETURN "NIL"

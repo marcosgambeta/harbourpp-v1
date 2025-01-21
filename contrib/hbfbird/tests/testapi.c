@@ -42,13 +42,13 @@ int main()
    dpb[ i++ ] = isc_dpb_version1;
 
    dpb[ i++ ] = isc_dpb_user_name;
-   len        = strlen( USER );
+   len        = strlen(USER);
    dpb[ i++ ] = ( char ) len;
    strncpy( &( dpb[ i ] ), USER, len );
    i += len;
 
    dpb[ i++ ] = isc_dpb_password;
-   len        = strlen( PASSWORD );
+   len        = strlen(PASSWORD);
    dpb[ i++ ] = len;
    strncpy( &( dpb[ i ] ), PASSWORD, len );
    i += len;

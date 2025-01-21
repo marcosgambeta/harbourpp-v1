@@ -75,7 +75,7 @@
    #xtranslate hb_dbZap()                      => __dbZap()
    #xtranslate hb_dbDrop( [<x,...>] )          => dbDrop( <x> )
    #xtranslate hb_dbExists( [<x,...>] )        => dbExists( <x> )
-   #xtranslate hb_FieldLen( [<x>] )            => FieldLen( <x> )
+   #xtranslate hb_FieldLen([<x>])              => FieldLen(<x>)
    #xtranslate hb_FieldDec( [<x>] )            => FieldDec( <x> )
    #xtranslate hb_FieldType( [<x>] )           => FieldType( <x> )
 
@@ -117,7 +117,7 @@
    #xtranslate hb_TToC( [<x,...>] )            => TToC( <x> )
    #xtranslate hb_CToT( [<x,...>] )            => CToT( <x> )
 
-   #xtranslate hb_GetEnv( [<x,...>] )          => GetEnv( <x> )
+   #xtranslate hb_GetEnv([<x,...>])            => GetEnv(<x>)
    #xtranslate hb_SetKey( [<x,...>] )          => SetKey( <x> )
 
    #xtranslate hb_i18n_gettext( <x> )          => i18n( <x> )
@@ -294,7 +294,7 @@
    #xtranslate AScan(<a>,<b>,[<c>],[<d>],<e>)  => hb_AScan( <a>, <b>, <c>, <d>, <e> )
    #xtranslate At( <a>, <b>, [<x,...>] )       => hb_At( <a>, <b>, <x> )
 
-   #xtranslate GetEnv( [<x,...>] )             => hb_GetEnv( <x> )
+   #xtranslate GetEnv([<x,...>])               => hb_GetEnv(<x>)
    #xtranslate SetKey( [<x,...>] )             => hb_SetKey( <x> )
 
    /* TEXT INTO <varname> */
@@ -344,7 +344,7 @@
 
    #xtranslate gtSetClipboard( <x> )           => hb_gtInfo( HB_GTI_CLIPBOARDDATA, <x> )
    #xtranslate gtGetClipboard()                => hb_gtInfo( HB_GTI_CLIPBOARDDATA )
-   #xtranslate gtGetClipboardSize()            => Len( hb_gtInfo( HB_GTI_CLIPBOARDDATA ) )
+   #xtranslate gtGetClipboardSize()            => Len(hb_gtInfo( HB_GTI_CLIPBOARDDATA ))
    #xtranslate gtPasteClipboard()              => hb_gtInfo( HB_GTI_CLIPBOARDPASTE )
    #xtranslate gtProcessMessages()             => NextKey()
    #xtranslate SetInkeyBeforeBlock( [<x>] )    => hb_gtInfo( HB_GTI_INKEYREAD [, <x>] ) <-x->
@@ -392,7 +392,7 @@
    #xtranslate RAScan( [<x,...>] )             => hb_RAScan( <x> )
 
    #xtranslate ASizeAlloc( <a> [, <n,...>] )   => AFill( <a> )
-   #xtranslate ALenAlloc( <a> [, <n,...>] )    => Len( <a> )
+   #xtranslate ALenAlloc( <a> [, <n,...>] )    => Len(<a>)
 
    #xtranslate DateTime( [<x,...>] )           => hb_DateTime( <x> )
    #xtranslate Hour( [<x>] )                   => hb_Hour( <x> )
@@ -505,9 +505,9 @@
    #xtranslate haADelAt( [<x,...>] )       => hb_HDelAt( <x> )
    #xtranslate haAGetPos( [<x,...>] )      => hb_HPos( <x> )
    #xtranslate haAGetRealPos( <x>, <y> )   => iif( HB_ISNUMERIC( <y> ) .AND. <y> >= 1 .AND. ;
-                                                   Int( <y> ) <= Len( <x> ), Int( <y> ), 0 )
+                                                   Int( <y> ) <= Len(<x>), Int( <y> ), 0 )
    #xtranslate HGetVAAPos( <x> )           => {| h | ;;
-                                                LOCAL a := Array( Len( h ), v ;;
+                                                LOCAL a := Array( Len(h), v ;;
                                                 FOR EACH v IN a ;;
                                                    v := v:__enumIndex() ;;
                                                 NEXT ;;
