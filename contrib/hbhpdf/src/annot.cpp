@@ -82,7 +82,7 @@ HB_FUNC(HPDF_TEXTANNOT_SETICON)
       HPDF_TextAnnot_SetIcon(static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_AnnotIcon>(hb_parni(2)))));
 }
 
-/* HPDF_TextAnnot_SetOpened( hAnnot, lOpened ) --> hStatus */
+/* HPDF_TextAnnot_SetOpened(hAnnot, lOpened) --> hStatus */
 HB_FUNC(HPDF_TEXTANNOT_SETOPENED)
 {
   hb_retnl(static_cast<long>(

@@ -43,7 +43,7 @@
 #define ARRAYTYPE     2
 #define CRLF          "\x0D\x0A"
 
-HB_FUNC( FT_GETE )
+HB_FUNC(FT_GETE)
 {
 #if (defined(HB_OS_UNIX) && !defined(HB_OS_IOS))
    {

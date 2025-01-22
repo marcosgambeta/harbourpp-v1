@@ -55,12 +55,12 @@
 
 #include "minilzo.h"
 
-static lzo_uint hb_lzo_compressbound( lzo_uint nLen )
+static lzo_uint hb_lzo_compressbound(lzo_uint nLen)
 {
    return static_cast<lzo_uint>(nLen + (nLen / 16) + 64 + 3);
 }
 
-HB_FUNC( HB_LZO_COMPRESSBOUND )
+HB_FUNC(HB_LZO_COMPRESSBOUND)
 {
    if( HB_ISCHAR(1) || HB_ISNUM(1) )
    {
@@ -84,12 +84,12 @@ static void hb_mlzo_init( void * cargo )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_mlzo_init_ )
 hb_vmAtInit(hb_mlzo_init, nullptr);
-HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
+HB_CALL_ON_STARTUP_END(_hb_mlzo_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_mlzo_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_mlzo_init_ )
+   #define HB_DATASEG_BODY  HB_DATASEG_FUNC(_hb_mlzo_init_)
    #include "hbiniseg.hpp"
 #endif
 
@@ -108,7 +108,7 @@ HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
  *    Always returns LZO_E_OK (this function can never fail).
  */
 
-HB_FUNC( HB_LZO1X_1_COMPRESS )
+HB_FUNC(HB_LZO1X_1_COMPRESS)
 {
    auto src = hb_parcx(1);
 
@@ -167,7 +167,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
    lzo1x_decompress_safe()
  */
 
-HB_FUNC( HB_LZO1X_DECOMPRESS )
+HB_FUNC(HB_LZO1X_DECOMPRESS)
 {
    auto src = hb_parcx(1);
 
@@ -202,7 +202,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
+HB_FUNC(HB_LZO1X_DECOMPRESS_SAFE)
 {
    auto src = hb_parcx(1);
 
@@ -239,24 +239,24 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
 
 /* Version functions */
 
-HB_FUNC( LZO_VERSION )
+HB_FUNC(LZO_VERSION)
 {
    hb_retni(lzo_version());
 }
 
-HB_FUNC( LZO_VERSION_STRING )
+HB_FUNC(LZO_VERSION_STRING)
 {
    hb_retc(lzo_version_string());
 }
 
-HB_FUNC( LZO_VERSION_DATE )
+HB_FUNC(LZO_VERSION_DATE)
 {
    hb_retc(lzo_version_date());
 }
 
 /* Checksum functions */
 
-HB_FUNC( LZO_ADLER32 )
+HB_FUNC(LZO_ADLER32)
 {
    auto src = hb_parc(1);
 

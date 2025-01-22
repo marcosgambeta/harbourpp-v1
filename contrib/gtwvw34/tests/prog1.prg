@@ -30,7 +30,7 @@ STATIC s_zwin := {}
 
 PROCEDURE Main()
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -128,7 +128,7 @@ STATIC PROCEDURE xBrowse1()
 
       lMessage( "Record #" + hb_ntos( RecNo() ) )
 
-      nKey := hb_keyStd( Inkey(0) )
+      nKey := hb_keyStd(Inkey(0))
 
       DO CASE
       CASE nKey == K_ESC .OR. nKey == K_ENTER
@@ -324,7 +324,7 @@ STATIC FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 
    wvw_nOpenWindow( ctitle, r1, c1, r2, c2 )
 
-   AAdd( s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor } )
+   AAdd(s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor })
 
    SetColor( ccolor )
 

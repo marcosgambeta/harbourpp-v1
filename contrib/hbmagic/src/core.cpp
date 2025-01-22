@@ -51,7 +51,7 @@
 #include <hbapi.hpp>
 #include <hbapierr.hpp>
 
-static HB_GARBAGE_FUNC( magic_gc_close )
+static HB_GARBAGE_FUNC(magic_gc_close)
 {
    auto ph = static_cast<void**>(Cargo);
 
@@ -74,7 +74,7 @@ static magic_t magic_par( int iParam )
    return ph ? ( magic_t ) *ph : nullptr;
 }
 
-HB_FUNC( MAGIC_OPEN )
+HB_FUNC(MAGIC_OPEN)
 {
    auto ph = static_cast<void**>(hb_gcAllocate(sizeof(magic_t), &s_gcmagic_gcfuncs));
 
@@ -82,7 +82,7 @@ HB_FUNC( MAGIC_OPEN )
    hb_retptrGC(ph);
 }
 
-HB_FUNC( MAGIC_ERROR )
+HB_FUNC(MAGIC_ERROR)
 {
    magic_t m = magic_par(1);
 
@@ -92,7 +92,7 @@ HB_FUNC( MAGIC_ERROR )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_ERRNO )
+HB_FUNC(MAGIC_ERRNO)
 {
    magic_t m = magic_par(1);
 
@@ -102,7 +102,7 @@ HB_FUNC( MAGIC_ERRNO )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_FILE )
+HB_FUNC(MAGIC_FILE)
 {
    magic_t m = magic_par(1);
 
@@ -112,7 +112,7 @@ HB_FUNC( MAGIC_FILE )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_BUFFER )
+HB_FUNC(MAGIC_BUFFER)
 {
    magic_t m = magic_par(1);
 
@@ -122,7 +122,7 @@ HB_FUNC( MAGIC_BUFFER )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_SETFLAGS )
+HB_FUNC(MAGIC_SETFLAGS)
 {
    magic_t m = magic_par(1);
 
@@ -132,7 +132,7 @@ HB_FUNC( MAGIC_SETFLAGS )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_CHECK )
+HB_FUNC(MAGIC_CHECK)
 {
    magic_t m = magic_par(1);
 
@@ -142,7 +142,7 @@ HB_FUNC( MAGIC_CHECK )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_COMPILE )
+HB_FUNC(MAGIC_COMPILE)
 {
    magic_t m = magic_par(1);
 
@@ -152,7 +152,7 @@ HB_FUNC( MAGIC_COMPILE )
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( MAGIC_LOAD )
+HB_FUNC(MAGIC_LOAD)
 {
    magic_t m = magic_par(1);
 

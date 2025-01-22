@@ -72,7 +72,7 @@ PROCEDURE Main()
    LOCAL i, j, oWPaint
    LOCAL GetList := {}
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -273,7 +273,7 @@ METHOD PROCEDURE wPaintObj:Show()
 STATIC PROCEDURE wg_ResetWPaintObj( nWinNum, nObjNum )
 
    DO WHILE Len(s_aPObjList) < nWinNum + 1
-      AAdd( s_aPObjList, {} )
+      AAdd(s_aPObjList, {})
    ENDDO
 
    ASize( s_aPObjList[ nWinNum + 1 ], hb_defaultValue( nObjNum, 0 ) )
@@ -298,7 +298,7 @@ STATIC PROCEDURE wg_AddWPaintObj( nWinNum, oWPaint, lStrict )
       ENDIF
       s_aPObjList[ nWinNum + 1 ][ i ] := oWPaint
    ELSE
-      AAdd( s_aPObjList[ nWinNum + 1 ], oWPaint )
+      AAdd(s_aPObjList[ nWinNum + 1 ], oWPaint)
    ENDIF
 
    // if it is visible, draw it now!

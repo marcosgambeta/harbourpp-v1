@@ -23,7 +23,7 @@ PROCEDURE Main()
 
    LOCAL ch
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -212,11 +212,11 @@ STATIC FUNCTION typing( ch )
 
 FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
 
-   LOCAL wParamLow := wvw_LOWORD( wParam )
+   LOCAL wParamLow := wvw_LOWORD(wParam)
    LOCAL nCommand, ch
 
-   HB_SYMBOL_UNUSED( hWnd )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(hWnd)
+   HB_SYMBOL_UNUSED(lParam)
 
 #if 0
    LOCAL cdebug

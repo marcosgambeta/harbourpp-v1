@@ -50,7 +50,7 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 
-HB_FUNC( TIP_URLENCODE )
+HB_FUNC(TIP_URLENCODE)
 {
    auto pszData = hb_parc(1);
 
@@ -109,7 +109,7 @@ HB_FUNC( TIP_URLENCODE )
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
 }
 
-HB_FUNC( TIP_URLDECODE )
+HB_FUNC(TIP_URLDECODE)
 {
    auto pszData = hb_parc(1);
 

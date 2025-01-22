@@ -103,7 +103,7 @@ CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
    ACCESS vScroll                               INLINE ::sl_vScroll
    ASSIGN vScroll( bBlock )                     INLINE ::sl_vScroll := bBlock
 
-   METHOD changed( lChanged )                   SETGET
+   METHOD changed(lChanged)                     SETGET
 
 ENDCLASS
 
@@ -144,7 +144,7 @@ METHOD WvgMLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::style += ES_AUTOVSCROLL
    ENDIF
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 
@@ -243,7 +243,7 @@ METHOD PROCEDURE WvgMLE:destroy()
 
    RETURN
 
-METHOD WvgMLE:changed( lChanged )
+METHOD WvgMLE:changed(lChanged)
 
    LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
 
@@ -266,8 +266,8 @@ METHOD WvgMLE:copyMarked()
    LOCAL n, nB, nE
 
    n := ::sendMessage( EM_GETSEL )
-   nB := wapi_LOWORD( n )
-   nE := wapi_HIWORD( n )
+   nB := wapi_LOWORD(n)
+   nE := wapi_HIWORD(n)
 
    IF ( n := nE - nB ) > 0
       hb_gtInfo( HB_GTI_CLIPBOARDDATA, SubStr(::getData(), nB, n) )
@@ -280,8 +280,8 @@ METHOD WvgMLE:cutMarked()
    LOCAL n, nB, nE, cText
 
    n := ::sendMessage( EM_GETSEL )
-   nB := wapi_LOWORD( n )
-   nE := wapi_HIWORD( n )
+   nB := wapi_LOWORD(n)
+   nE := wapi_HIWORD(n)
 
    IF ( n := nE - nB ) > 0
       cText := ::getData()

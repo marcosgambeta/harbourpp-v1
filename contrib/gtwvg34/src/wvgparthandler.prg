@@ -67,11 +67,11 @@ CREATE CLASS WvgPartHandler
    METHOD handleEvent( hEvent, mp1, mp2 )
    METHOD status()
 
-   METHOD removeChild( oChild )
-   METHOD addChild( oWvg )
+   METHOD removeChild(oChild)
+   METHOD addChild(oWvg)
    METHOD childFromName( nNameId )
    METHOD childList()
-   METHOD delChild( oWvg )
+   METHOD delChild(oWvg)
    METHOD setName( nNameId )
    METHOD setOwner( oWvg )
    METHOD setParent( oWvg )
@@ -129,19 +129,19 @@ METHOD WvgPartHandler:destroy()
 
 METHOD WvgPartHandler:handleEvent( hEvent, mp1, mp2 )
 
-   HB_SYMBOL_UNUSED( hEvent )
-   HB_SYMBOL_UNUSED( mp1 )
-   HB_SYMBOL_UNUSED( mp2 )
+   HB_SYMBOL_UNUSED(hEvent)
+   HB_SYMBOL_UNUSED(mp1)
+   HB_SYMBOL_UNUSED(mp2)
 
    RETURN Self
 
 METHOD WvgPartHandler:status()
    RETURN ::nStatus
 
-METHOD WvgPartHandler:addChild( oWvg )
+METHOD WvgPartHandler:addChild(oWvg)
 
    oWvg:nNameID := oWvg:nID
-   AAdd( ::aChildren, oWvg )
+   AAdd(::aChildren, oWvg)
 
    RETURN Self
 
@@ -160,7 +160,7 @@ METHOD WvgPartHandler:childFromName( nNameId )
 METHOD WvgPartHandler:childList()
    RETURN ::aChildren
 
-METHOD WvgPartHandler:removeChild( oChild )
+METHOD WvgPartHandler:removeChild(oChild)
 
    LOCAL n
 
@@ -170,7 +170,7 @@ METHOD WvgPartHandler:removeChild( oChild )
 
    RETURN Self
 
-METHOD WvgPartHandler:delChild( oWvg )
+METHOD WvgPartHandler:delChild(oWvg)
 
    LOCAL n
 
@@ -353,7 +353,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       DO CASE
       CASE xParams[ 1 ] == 0                             // menu selected
          IF HB_IsObject( ::oMenu )
-            IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ))
+            IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(xParams[ 2 ]))
                DO CASE
                CASE HB_IsEvalItem( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
@@ -452,13 +452,13 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       EXIT
 
    CASE WIN_WM_COMMAND
-      nCtrlID   := wapi_LOWORD( nwParam )
-      nNotifctn := wapi_HIWORD( nwParam )
+      nCtrlID   := wapi_LOWORD(nwParam)
+      nNotifctn := wapi_HIWORD(nwParam)
       hWndCtrl  := wvg_n2p( nlParam )
 
       IF Empty(hWndCtrl)                   // It is menu
          IF HB_IsObject( ::oMenu )
-            IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ))
+            IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nCtrlID))
                DO CASE
                CASE HB_IsEvalItem( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
@@ -509,11 +509,11 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       EXIT
 
    CASE WIN_WM_HSCROLL
-      ::handleEvent( HB_GTE_HSCROLL, { wapi_LOWORD( nwParam ), wapi_HIWORD( nwParam ), wvg_n2p( nlParam ) } )
+      ::handleEvent( HB_GTE_HSCROLL, { wapi_LOWORD(nwParam), wapi_HIWORD(nwParam), wvg_n2p( nlParam ) } )
       RETURN EVENT_HANDLED
 
    CASE WIN_WM_VSCROLL
-      IF ::handleEvent( HB_GTE_VSCROLL, { wapi_LOWORD( nwParam ), wapi_HIWORD( nwParam ), wvg_n2p( nlParam ) } ) == EVENT_HANDLED
+      IF ::handleEvent( HB_GTE_VSCROLL, { wapi_LOWORD(nwParam), wapi_HIWORD(nwParam), wvg_n2p( nlParam ) } ) == EVENT_HANDLED
          RETURN EVENT_HANDLED
       ENDIF
       EXIT

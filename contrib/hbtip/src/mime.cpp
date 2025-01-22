@@ -696,7 +696,7 @@ static const char * s_findFileMimeType( PHB_FILE fileIn )
    return nullptr;
 }
 
-HB_FUNC( TIP_MIMETYPE )
+HB_FUNC(TIP_MIMETYPE)
 {
    auto pData = hb_param(1, Harbour::Item::STRING);
 
@@ -715,7 +715,7 @@ HB_FUNC( TIP_MIMETYPE )
       hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( TIP_FILENAMEMIMETYPE )
+HB_FUNC(TIP_FILENAMEMIMETYPE)
 {
    auto fname = hb_parc(1);
 
@@ -736,7 +736,7 @@ HB_FUNC( TIP_FILENAMEMIMETYPE )
       hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( TIP_FILEMIMETYPE )
+HB_FUNC(TIP_FILEMIMETYPE)
 {
    auto pFile = hb_param(1, Harbour::Item::STRING | Harbour::Item::POINTER | Harbour::Item::NUMERIC);
 

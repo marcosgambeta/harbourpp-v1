@@ -62,7 +62,7 @@ PROCEDURE __hbformat_BuildListOfFunctions( /* @ */ cFunctions, cHBXList )
       IF hb_FileMatch( hb_FNameName( aFile[ F_NAME ] ), "contrib" )
          lContribHBR := .T.
       ENDIF
-      FOR EACH cName IN hb_Deserialize( hb_ZUncompress( hb_MemoRead( hb_DirBase() + aFile[ F_NAME ] ) ) )
+      FOR EACH cName IN hb_Deserialize( hb_ZUncompress( hb_MemoRead(hb_DirBase() + aFile[ F_NAME ]) ) )
          cFunctions += "," + cName:__enumKey()
       NEXT
    NEXT
@@ -76,7 +76,7 @@ PROCEDURE __hbformat_BuildListOfFunctions( /* @ */ cFunctions, cHBXList )
    /* from specified list of .hbx files */
 
    FOR EACH cName IN hb_ATokens( cHBXList )
-      HBXToFuncList( @cFunctions, hb_MemoRead( hb_PathJoin( hb_DirBase(), cName ) ) )
+      HBXToFuncList( @cFunctions, hb_MemoRead(hb_PathJoin( hb_DirBase(), cName )) )
    NEXT
 
    RETURN
@@ -85,10 +85,10 @@ STATIC PROCEDURE WalkDir( cDir, /* @ */ cFunctions )
 
    LOCAL aFile
 
-   cDir := hb_DirSepAdd( cDir )
+   cDir := hb_DirSepAdd(cDir)
 
    FOR EACH aFile IN hb_DirScan( cDir, "*.hbx" )
-      HBXToFuncList( @cFunctions, hb_MemoRead( cDir + aFile[ F_NAME ] ) )
+      HBXToFuncList( @cFunctions, hb_MemoRead(cDir + aFile[ F_NAME ]) )
    NEXT
 
    RETURN

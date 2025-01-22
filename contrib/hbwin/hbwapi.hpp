@@ -52,16 +52,16 @@
 #include "hbapi.hpp"
 #include <hbwinuni.hpp>
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include <windows.h>
 
 #define hbwapi_par_WPARAM( n )              ( static_cast< WPARAM           >( hb_parptr( n ) ) )
 #define hbwapi_par_LPARAM( n )              ( static_cast< LPARAM           >( hb_parptr( n ) ) )
 
-#define hbwapi_par_raw_WNDPROC( n )         ( static_cast< WNDPROC          >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_WNDPROC(n)           ( static_cast< WNDPROC          >( hb_parptr( n ) ) )
 #define hbwapi_par_raw_HWND( n )            ( static_cast< HWND             >( hb_parptr( n ) ) )
-#define hbwapi_par_raw_HDC( n )             ( static_cast< HDC              >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HDC(n)               ( static_cast< HDC              >( hb_parptr( n ) ) )
 #define hbwapi_par_raw_HANDLE( n )          ( static_cast< HANDLE           >( hb_parptr( n ) ) )
 #define hbwapi_par_raw_HGDIOBJ( n )         ( static_cast< HGDIOBJ          >( hb_parptr( n ) ) )
 #define hbwapi_par_raw_HBRUSH( n )          ( static_cast< HBRUSH           >( hb_parptr( n ) ) )
@@ -78,7 +78,7 @@
 #define hbwapi_par_raw_TVINSERTSTRUCT( n )  ( static_cast< TVINSERTSTRUCT * >( hb_parptr( n ) ) )
 #define hbwapi_par_raw_TVITEM( n )          ( static_cast< TVITEM *         >( hb_parptr( n ) ) )
 
-#define hbwapi_par_raw_STRUCT( n )          ( hb_parc( n ) )
+#define hbwapi_par_raw_STRUCT( n )          ( hb_parc(n) )
 
 #define hbwapi_par_COLORREF( n )            ( static_cast< COLORREF >( hb_parnint( n ) ) )
 
@@ -107,7 +107,7 @@
 #define hbwapi_ret_LRESULT( hr )            ( hb_retnint( hr ) )
 #define hbwapi_ret_COLORREF( cr )           ( hb_retnint( cr ) )
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( ( defined(_MSC_VER) && ( _MSC_VER <= 1200 ) ) ) && ! defined(HB_ARCH_64BIT)
 #  ifndef GetWindowLongPtr
 #     define GetWindowLongPtr  GetWindowLong
 #  endif
@@ -119,7 +119,7 @@
 #  endif
 #endif
 
-#if defined( __BORLANDC__ )
+#if defined(__BORLANDC__)
 #  define HBWAPI_GET_LARGEUINT( v )  ( ( HB_MAXUINT ) ( v ).u.LowPart | ( ( HB_MAXUINT ) ( v ).u.HighPart << 32 ) )
 #else
 #  define HBWAPI_GET_LARGEUINT( v )  ( ( HB_MAXUINT ) ( v ).LowPart | ( ( HB_MAXUINT ) ( v ).HighPart << 32 ) )
@@ -144,13 +144,13 @@ extern HB_EXPORT DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL 
 extern HB_EXPORT void      hbwapi_stor_POINT( POINT * p, int iParam );
 extern HB_EXPORT void      hbwapi_stor_RECT( RECT * p, int iParam );
 
-extern HB_EXPORT HDC       hbwapi_par_HDC( int iParam );
+extern HB_EXPORT HDC       hbwapi_par_HDC(int iParam);
 extern HB_EXPORT HPEN      hbwapi_par_HPEN( int iParam );
 extern HB_EXPORT HBRUSH    hbwapi_par_HBRUSH( int iParam );
 extern HB_EXPORT HFONT     hbwapi_par_HFONT( int iParam );
 extern HB_EXPORT PDEVMODE  hbwapi_par_PDEVMODE( int iParam );
 
-extern HB_EXPORT void      hbwapi_ret_HDC( HDC p );
+extern HB_EXPORT void      hbwapi_ret_HDC(HDC p);
 extern HB_EXPORT void      hbwapi_ret_HPEN( HPEN p );
 extern HB_EXPORT void      hbwapi_ret_HBRUSH( HBRUSH p );
 extern HB_EXPORT void      hbwapi_ret_HFONT( HFONT p );

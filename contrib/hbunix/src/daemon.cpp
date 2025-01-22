@@ -31,7 +31,7 @@
 #include "hbposix.hpp"
 #include <hbvm.hpp>
 
-HB_FUNC( UNIX_DAEMON )
+HB_FUNC(UNIX_DAEMON)
 {
    int fd;
 

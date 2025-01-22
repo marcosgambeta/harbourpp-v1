@@ -99,7 +99,7 @@ FUNCTION DesignHaruPDF( cFileToSave )
    /*
    // Passwords and Permissions
    //
-   HPDF_SetPassword( pdf, "owner", "user" )
+   HPDF_SetPassword(pdf, "owner", "user")
    HPDF_SetPermission( pdf, HPDF_ENABLE_READ )  // cannot print
    HPDF_SetEncryptionMode( pdf, HPDF_ENCRYPT_R3, 16 )
    */
@@ -476,7 +476,7 @@ STATIC PROCEDURE Page_Text( pdf )
    HPDF_Page_SetSize( page, HPDF_PAGE_SIZE_A5, HPDF_PAGE_PORTRAIT )
 
 #if 0
-   print_grid( pdf, page )
+   print_grid(pdf, page)
 
    page_height := HPDF_Page_GetHeight( page )
 #endif
@@ -682,7 +682,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
 
    /* draw grid to the page */
 #if 0
-   print_grid( pdf, page )
+   print_grid(pdf, page)
 #endif
 
    /* print the lines of the page */
@@ -982,7 +982,7 @@ STATIC FUNCTION Page_CodePages( pdf )
 
    /* create outline root. */
    root := HPDF_CreateOutline( pdf, NIL, "Encoding list", NIL )
-   HPDF_Outline_SetOpened( root, .T. )
+   HPDF_Outline_SetOpened(root, .T.)
 
    FOR i := 1 TO Len(encodings)
       page := HPDF_AddPage( pdf )
@@ -1103,7 +1103,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
 
    /* draw grid to the page */
 #if 0
-   print_grid( pdf, page )
+   print_grid(pdf, page)
 #endif
 
    /* draw pie chart
@@ -1194,7 +1194,7 @@ STATIC PROCEDURE Page_Annotation( pdf )
       NIL )
 
    HPDF_TextAnnot_SetIcon( annot, HPDF_ANNOT_ICON_COMMENT )
-   HPDF_TextAnnot_SetOpened( annot, HPDF_TRUE )
+   HPDF_TextAnnot_SetOpened(annot, HPDF_TRUE)
 
    annot := HPDF_Page_CreateTextAnnot( page, rect2, "Annotation with Key Icon", NIL )
    HPDF_TextAnnot_SetIcon( annot, HPDF_ANNOT_ICON_PARAGRAPH )

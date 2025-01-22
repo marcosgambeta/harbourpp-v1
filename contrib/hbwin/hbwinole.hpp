@@ -57,14 +57,14 @@
 #include <hbstack.hpp>
 #include <hbdate.hpp>
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 /* This option can resolve compilation problems in C++ mode for some
  * compilers like OpenWatcom but not for all, f.e. it will not help
  * BCC when used with -P (C++ mode) switch.
  */
 #if 0
-#if defined( __cplusplus ) && ! defined( CINTERFACE )
+#if defined(__cplusplus) && ! defined(CINTERFACE)
    #define CINTERFACE 1
 #endif
 #endif
@@ -72,8 +72,8 @@
 /* This code uses named union so this declaration is necessary for
  * compilers where nameless unions are default
  */
-#if defined( __BORLANDC__ )
-#     if ! defined( NONAMELESSUNION )
+#if defined(__BORLANDC__)
+#     if ! defined(NONAMELESSUNION)
 #        define NONAMELESSUNION
 #     endif
 #endif
@@ -83,28 +83,28 @@
 #include <ocidl.h>
 
 /* MinGW is lacking a number of variant accessors */
-#if defined( __MINGW32__ )
-#  if ! defined( V_I1REF )
+#if defined(__MINGW32__)
+#  if ! defined(V_I1REF)
 #     define V_I1REF( x )    V_UNION( x, pcVal )
 #  endif
-#  if ! defined( V_UI2REF )
+#  if ! defined(V_UI2REF)
 #     define V_UI2REF( x )   V_UNION( x, puiVal )
 #  endif
-#  if ! defined( V_INT )
+#  if ! defined(V_INT)
 #     define V_INT( x )      V_UNION( x, intVal )
 #  endif
-#  if ! defined( V_INTREF )
+#  if ! defined(V_INTREF)
 #     define V_INTREF( x )   V_UNION( x, pintVal )
 #  endif
-#  if ! defined( V_UINT )
+#  if ! defined(V_UINT)
 #     define V_UINT( x )     V_UNION( x, uintVal )
 #  endif
-#  if ! defined( V_UINTREF )
+#  if ! defined(V_UINTREF)
 #     define V_UINTREF( x )  V_UNION( x, puintVal )
 #  endif
 #endif
 
-#if defined( NONAMELESSUNION )
+#if defined(NONAMELESSUNION)
 #  define HB_WIN_U1( x, y )  ( x )->n1.y
 #  define HB_WIN_U2( x, y )  ( x )->n1.n2.y
 #  define HB_WIN_U3( x, y )  ( x )->n1.n2.n3.y
@@ -115,7 +115,7 @@
 #endif
 
 /* macros used to hide type of interface: C or C++ */
-#if defined( __cplusplus ) && ! defined( CINTERFACE ) && ( defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( __MINGW32__ ) )
+#if defined(__cplusplus) && ! defined(CINTERFACE) && ( defined(__BORLANDC__) || defined(_MSC_VER) || defined(__MINGW32__) )
 #  define HB_ID_REF( id )     ( id )
 #  define HB_VTBL( pSelf )    ( pSelf )
 #  define HB_THIS( pSelf )

@@ -97,7 +97,7 @@ struct HB_GTWGU
 
    PHB_CODEPAGE hostCDP;                    // Host/HVM CodePage for unicode output translations
    PHB_CODEPAGE inCDP;                      // Host/HVM CodePage for unicode input translations
-#if ! defined( UNICODE )
+#if ! defined(UNICODE)
    BYTE     keyTransTbl[ 256 ];
    BYTE     chrTransTbl[ 256 ];
 #endif

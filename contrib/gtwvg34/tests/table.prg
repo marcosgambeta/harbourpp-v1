@@ -46,7 +46,7 @@
 // Run this source file as script to regenerate the codes from Windows SDK:
 //    hbrun <this_source>.prg [<dbf-filename>]
 
-#if defined( __HBSCRIPT__HBSHELL )
+#if defined(__HBSCRIPT__HBSHELL)
 
 #include "dbstruct.ch"
 
@@ -67,7 +67,7 @@ PROCEDURE Main( cInputFile )
 
    IF Used()
 
-      cOutput := hb_MemoRead( __FILE__ )
+      cOutput := hb_MemoRead(__FILE__)
       IF ( tmp := RAt( "<<< */", cOutput ) ) > 0
          cOutput := Left(cOutput, tmp - 1) + "<<< */" + hb_eol() + hb_eol()
       ENDIF

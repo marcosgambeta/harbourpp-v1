@@ -61,7 +61,7 @@ HB_FUNC(ASIZEALLOC)
   }
 }
 
-/* ALenAlloc( <array> ) --> <num> - Get the pre-alloc step. */
+/* ALenAlloc(<array>) --> <num> - Get the pre-alloc step. */
 HB_FUNC(ALENALLOC)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);

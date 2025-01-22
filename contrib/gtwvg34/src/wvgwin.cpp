@@ -187,9 +187,9 @@ HB_FUNC(WVG_TREEVIEW_EXPAND)
 }
 
 #if 0
-HB_FUNC( WVG_TREEVIEW_ISEXPANDED )
+HB_FUNC(WVG_TREEVIEW_ISEXPANDED)
 {
-   hb_retl( TreeView_GetItemState( hbwapi_par_raw_HWND( 1 ), hbwapi_par_raw_HTREEITEM( 2 ), ( UINT ) TVIS_EXPANDED ) );
+   hb_retl(TreeView_GetItemState(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HTREEITEM(2), (UINT)TVIS_EXPANDED));
 }
 #endif
 

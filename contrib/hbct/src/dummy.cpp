@@ -323,9 +323,9 @@ HB_FUNC(VIDEOSETUP)
 }
 // Disk Utilities
 #if 0
-HB_FUNC( DIRCHANGE )  { ; } // Implemented in Harbour core as C5.3 function.
-HB_FUNC( DIRREMOVE )  { ; } // Implemented in Harbour core as C5.3 function.
-HB_FUNC( DISKCHANGE ) { ; } // Implemented in Harbour core as C5.3 function.
+HB_FUNC(DIRCHANGE)  { ; } // Implemented in Harbour core as C5.3 function.
+HB_FUNC(DIRREMOVE)  { ; } // Implemented in Harbour core as C5.3 function.
+HB_FUNC(DISKCHANGE) { ; } // Implemented in Harbour core as C5.3 function.
 #endif
 HB_FUNC(DISKCHECK)
 {

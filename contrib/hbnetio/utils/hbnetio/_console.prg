@@ -105,7 +105,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
                   ManageCursor( cCommand ) } )
       bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
 
-      bKeyTab   := SetKey( K_TAB, {|| CompleteCmd( @cCommand, hCommands ) } )
+      bKeyTab   := SetKey( K_TAB, {|| CompleteCmd(@cCommand, hCommands) } )
 
       READ
 
@@ -128,7 +128,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       IF Empty(aHistory) .OR. ! ATail( aHistory ) == cCommand
          IF Len(aHistory) < 64
-            AAdd( aHistory, cCommand )
+            AAdd(aHistory, cCommand)
          ELSE
             ADel( aHistory, 1 )
             aHistory[ Len(aHistory) ] := cCommand
@@ -169,7 +169,7 @@ STATIC PROCEDURE ManageCursor( cCommand )
    RETURN
 
 /* Complete the command-line, based on the first characters that the user typed. [vailtom] */
-STATIC PROCEDURE CompleteCmd( cCommand, hCommands )
+STATIC PROCEDURE CompleteCmd(cCommand, hCommands)
 
    LOCAL s := Lower(AllTrim(cCommand))
    LOCAL n
@@ -195,20 +195,20 @@ STATIC PROCEDURE ShowHelp( hCommands )
    m := 8
    hb_HEval( hCommands, {| k, l | m := Max( m, Len(k + iif(Empty(l[ 1 ]), "", " " + l[ 1 ])) ) } )
 
-   AAdd( aTexts, "Commands:" )
+   AAdd(aTexts, "Commands:")
 
    /* Processing commands */
    FOR EACH n IN hCommands
-      AAdd( aTexts, " " + PadR( n:__enumKey() + iif(Empty(n[ 1 ]), "", " " + n[ 1 ]), m ) + " - " + n[ 2 ] )
+      AAdd(aTexts, " " + PadR( n:__enumKey() + iif(Empty(n[ 1 ]), "", " " + n[ 1 ]), m ) + " - " + n[ 2 ])
    NEXT
-   AAdd( aTexts, "" )
+   AAdd(aTexts, "")
 
-   AAdd( aTexts, "Keyboard shortcuts:" )
-   AAdd( aTexts, PadR( " <Up>", m )    + "  - Move up on historic list." )
-   AAdd( aTexts, PadR( " <Down>", m )  + "  - Move down on historic list." )
-   AAdd( aTexts, PadR( " <Tab>", m )   + "  - Complete command." )
-   AAdd( aTexts, PadR( " <Alt+V>", m ) + "  - Paste from clipboard." )
-   AAdd( aTexts, "" )
+   AAdd(aTexts, "Keyboard shortcuts:")
+   AAdd(aTexts, PadR( " <Up>", m )    + "  - Move up on historic list.")
+   AAdd(aTexts, PadR( " <Down>", m )  + "  - Move down on historic list.")
+   AAdd(aTexts, PadR( " <Tab>", m )   + "  - Complete command.")
+   AAdd(aTexts, PadR( " <Alt+V>", m ) + "  - Paste from clipboard.")
+   AAdd(aTexts, "")
 
    c := 0
    m := MaxRow()
@@ -245,7 +245,7 @@ STATIC FUNCTION hbnetiocon_GetHidden()
 
    nSavedRow := Row()
 
-   AAdd( GetList, hb_Get():New( Row(), Col(), {| v | iif(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ) )
+   AAdd(GetList, hb_Get():New( Row(), Col(), {| v | iif(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ))
    ATail( GetList ):hideInput(.T.)
    ATail( GetList ):postBlock := {|| ! Empty(cPassword) }
    ATail( GetList ):display()

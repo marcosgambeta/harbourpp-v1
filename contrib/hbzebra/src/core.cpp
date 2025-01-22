@@ -156,7 +156,7 @@ void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
 
 /* --- GC pointer --- */
 
-static HB_GARBAGE_FUNC( hb_zebra_destructor )
+static HB_GARBAGE_FUNC(hb_zebra_destructor)
 {
    auto ppZebra = static_cast<PHB_ZEBRA*>(Cargo);
 
@@ -234,7 +234,7 @@ void hb_zebra_destroy( PHB_ZEBRA pZebra )
    hb_xfree(pZebra);
 }
 
-HB_FUNC( HB_ZEBRA_DESTROY )
+HB_FUNC(HB_ZEBRA_DESTROY)
 {
    auto pZebra = hb_zebra_param(1);
 
@@ -244,7 +244,7 @@ HB_FUNC( HB_ZEBRA_DESTROY )
    }
 }
 
-HB_FUNC( HB_ZEBRA_GETERROR )
+HB_FUNC(HB_ZEBRA_GETERROR)
 {
    auto pZebra = hb_zebra_param(1);
 
@@ -253,7 +253,7 @@ HB_FUNC( HB_ZEBRA_GETERROR )
    }
 }
 
-HB_FUNC( HB_ZEBRA_GETCODE )
+HB_FUNC(HB_ZEBRA_GETCODE)
 {
    auto pZebra = hb_zebra_param(1);
 

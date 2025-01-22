@@ -50,7 +50,7 @@
 #include <hbapifs.hpp>
 #include <hbapierr.hpp>
 
-HB_FUNC( CURDRIVE )
+HB_FUNC(CURDRIVE)
 {
 #if defined(HB_OS_HAS_DRIVE_LETTER)
    char szCurDrive[1];

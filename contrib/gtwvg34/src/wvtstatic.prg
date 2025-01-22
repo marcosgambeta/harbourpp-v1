@@ -105,11 +105,11 @@ METHOD WvtStatic:Create()
       EXIT
 
    CASE WVT_STATIC_BOXRAISED
-      ::bPaint := {|| wvt_DrawBoxRaised( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxRaised(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_BOXRECESSED
-      ::bPaint := {|| wvt_DrawBoxRecessed( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxRecessed(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_BOXGROUP
@@ -117,7 +117,7 @@ METHOD WvtStatic:Create()
       EXIT
 
    CASE WVT_STATIC_BOXGROUPRAISED
-      ::bPaint := {|| wvt_DrawBoxGroupRaised( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxGroupRaised(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_OUTLINE
@@ -164,8 +164,8 @@ METHOD WvtStatic:Create()
       ::nfRight  := ::nRight  + 1
    ENDIF
 
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_STATIC, ::nfTop, ::nfLeft, ::nfBottom, ::nfRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_STATIC, ::nfTop, ::nfLeft, ::nfBottom, ::nfRight } })
 
    ::Super:Create()
 

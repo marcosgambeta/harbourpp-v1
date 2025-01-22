@@ -94,10 +94,10 @@ CREATE CLASS WvgSLE INHERIT WvgWindow, WvgDataRef
    ACCESS typeOut                               INLINE ::sl_typeOut
    ASSIGN typeOut( bBlock )                     INLINE ::sl_typeOut := bBlock
 
-   METHOD changed( lChanged )                   SETGET
+   METHOD changed(lChanged)                     SETGET
 
    VAR    sl_returnPressed
-   METHOD returnPressed( bReturnPressed )       SETGET
+   METHOD returnPressed(bReturnPressed)         SETGET
 
 ENDCLASS
 
@@ -136,7 +136,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::style += WIN_WS_BORDER
    ENDIF
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 
@@ -239,7 +239,7 @@ METHOD PROCEDURE WvgSLE:destroy()
 
    RETURN
 
-METHOD WvgSLE:changed( lChanged )
+METHOD WvgSLE:changed(lChanged)
 
    LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
 
@@ -260,8 +260,8 @@ METHOD WvgSLE:clear()
 METHOD WvgSLE:copyMarked()
 
    LOCAL n := ::sendMessage( EM_GETSEL )
-   LOCAL nB := wapi_LOWORD( n )
-   LOCAL nE := wapi_HIWORD( n )
+   LOCAL nB := wapi_LOWORD(n)
+   LOCAL nE := wapi_HIWORD(n)
 
    IF ( n := nE - nB ) > 0
       hb_gtInfo( HB_GTI_CLIPBOARDDATA, SubStr(::getData(), nB, n) )
@@ -272,8 +272,8 @@ METHOD WvgSLE:copyMarked()
 METHOD WvgSLE:cutMarked()
 
    LOCAL n := ::sendMessage( EM_GETSEL )
-   LOCAL nB := wapi_LOWORD( n )
-   LOCAL nE := wapi_HIWORD( n )
+   LOCAL nB := wapi_LOWORD(n)
+   LOCAL nE := wapi_HIWORD(n)
 
    LOCAL cText
 
@@ -284,7 +284,7 @@ METHOD WvgSLE:cutMarked()
 
    RETURN n
 
-METHOD WvgSLE:returnPressed( bReturnPressed )
+METHOD WvgSLE:returnPressed(bReturnPressed)
 
    IF HB_IsEvalItem( bReturnPressed )
       ::sl_returnPressed := bReturnPressed

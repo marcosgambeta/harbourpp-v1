@@ -32,7 +32,7 @@
 #include <hbapigt.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( FT_ALT )
+HB_FUNC(FT_ALT)
 {
    HB_GT_INFO gtInfo;
 

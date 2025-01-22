@@ -60,7 +60,7 @@ static const char * hb_strtoken( const char * szText,
 }
 
 /* returns the nth occurrence of a substring within a token-delimited string */
-HB_FUNC( STRTOKEN )
+HB_FUNC(STRTOKEN)
 {
    const char * szText;
    HB_ISIZ      nIndex     = hb_parns(2);
@@ -77,7 +77,7 @@ HB_FUNC( STRTOKEN )
 }
 
 /* debug function to dump the ASCII values of an entire string */
-HB_FUNC( STRDUMP )
+HB_FUNC(STRDUMP)
 {
    auto szText = hb_parc(1);
    HB_ISIZ      i, nLength = hb_parclen(1);
@@ -87,7 +87,7 @@ HB_FUNC( STRDUMP )
    printf("\n");
 }
 
-HB_FUNC( ROT13 )
+HB_FUNC(ROT13)
 {
    if( HB_ISCHAR(1) )
    {

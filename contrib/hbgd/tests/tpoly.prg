@@ -85,10 +85,10 @@ PROCEDURE DrawFlake( lOpenPoly )
 PROCEDURE KochFlake( nOrder, nSideLen, lLeftFirst )
 
    IF nOrder == 0
-      AAdd( s_aCoords, { ;
+      AAdd(s_aCoords, { ;
          s_nCoordX += Cos( s_nAngle ) * nSideLen, ;
          s_nCoordY += Sin( s_nAngle ) * nSideLen;
-         } )
+         })
    ELSE
       KochFlake( nOrder - 1, nSideLen  / 3, lLeftFirst )
 

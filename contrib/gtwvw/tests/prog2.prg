@@ -32,7 +32,7 @@ PROCEDURE Main()
    LOCAL nMaxCol
 #endif
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -162,7 +162,7 @@ FUNCTION xBrowse1()
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
    FOR i := 1 TO Len(info_)
-      bBlock := VouBlockField( i )
+      bBlock := VouBlockField(i)
       oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
    NEXT
 
@@ -178,7 +178,7 @@ FUNCTION xBrowse1()
       tmp := oBrowse:getColumn( tmp:__enumIndex() ):colSep
    NEXT
 
-   AddMiscObjects( nWin, {| nWindow | wvw_DrawBoxRecessed( nWindow, nTop + 1, nLeft + 1, nBottom - 1, nRight - 1 ) } )
+   AddMiscObjects( nWin, {| nWindow | wvw_DrawBoxRecessed(nWindow, nTop + 1, nLeft + 1, nBottom - 1, nRight - 1) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 #endif
@@ -291,7 +291,7 @@ STATIC FUNCTION TBPrev( oTbr )
 
 //
 
-STATIC FUNCTION VouBlockField( i )
+STATIC FUNCTION VouBlockField(i)
 
    RETURN {|| FieldGet( i ) }
 
@@ -421,7 +421,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
    ResetMiscObjects(NIL)   // make sure we start with no GUI objects
 #endif
 
-   AAdd( s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor } )
+   AAdd(s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor })
 
    SetColor( ccolor )
 
@@ -499,7 +499,7 @@ FUNCTION ResetMiscObjects( nWinNum )
    hb_default( @nWinNum, wvw_nNumWindows() - 1 )
 
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
-      AAdd( s_amiscobjlist, {} )
+      AAdd(s_amiscobjlist, {})
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}
 
@@ -507,7 +507,7 @@ FUNCTION ResetMiscObjects( nWinNum )
 
 FUNCTION AddMiscObjects( nWinNum, bAction )
 
-   AAdd( s_amiscobjlist[ nWinNum + 1 ], bAction )
+   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
 
    RETURN .T.
 

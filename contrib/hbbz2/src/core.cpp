@@ -200,13 +200,13 @@ static int hb_bz2Uncompress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_S
 }
 
 /* hb_bz2_Version() --> <cBZlibVersion> */
-HB_FUNC( HB_BZ2_VERSION )
+HB_FUNC(HB_BZ2_VERSION)
 {
    hb_retc(BZ2_bzlibVersion());
 }
 
 /* hb_bz2_CompressBound(<cData> | <nDataLen>) --> <nMaxCompressLen> */
-HB_FUNC( HB_BZ2_COMPRESSBOUND )
+HB_FUNC(HB_BZ2_COMPRESSBOUND)
 {
    if( HB_ISCHAR(1) ) {
       hb_retnint(hb_bz2CompressBound(hb_parclen(1)));
@@ -219,7 +219,7 @@ HB_FUNC( HB_BZ2_COMPRESSBOUND )
 
 /* hb_bz2_UncompressLen(<cCompressedData>, [<@nResult>])
       --> <nUnCompressedDataLen> or -1 on error */
-HB_FUNC( HB_BZ2_UNCOMPRESSLEN )
+HB_FUNC(HB_BZ2_UNCOMPRESSLEN)
 {
    auto szData = hb_parc(1);
 
@@ -245,7 +245,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESSLEN )
 
 /* hb_bz2_Compress(<cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>])
       --> <cCompressedData> or NIL on Error */
-HB_FUNC( HB_BZ2_COMPRESS )
+HB_FUNC(HB_BZ2_COMPRESS)
 {
    auto szData = hb_parc(1);
 
@@ -294,7 +294,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
 
 /* hb_bz2_Uncompress(<cCompressedData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>])
       --> <cUnCompressedData> or NIL on Error */
-HB_FUNC( HB_BZ2_UNCOMPRESS )
+HB_FUNC(HB_BZ2_UNCOMPRESS)
 {
    PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
    auto szData = hb_parc(1);

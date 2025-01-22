@@ -90,7 +90,7 @@ void hb_posix_result( int iResult )
 }
 
 
-HB_FUNC( POSIX_ERRNO )
+HB_FUNC(POSIX_ERRNO)
 {
    hb_retni(HB_POSIX_ERRNO->iErrNo);
 }

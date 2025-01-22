@@ -68,7 +68,7 @@ extern HB_EXPORT HB_BOOL hb_ctwInit( void );
 extern HB_EXPORT int     hb_ctwSetShadowAttr( int iAttr );
 extern HB_EXPORT int     hb_ctwSetMoveMode( int iMode );
 extern HB_EXPORT int     hb_ctwSetMoveStep( int iVertical, int iHorizontal );
-extern HB_EXPORT int     hb_ctwSetWindowBoard( int iTop, int iLeft, int iBottom, int iRight );
+extern HB_EXPORT int     hb_ctwSetWindowBoard(int iTop, int iLeft, int iBottom, int iRight);
 extern HB_EXPORT int     hb_ctwSetBorderMode( int iTop, int iLeft, int iBottom, int iRight );
 extern HB_EXPORT int     hb_ctwCreateWindow( int iTop, int iLeft, int iBottom, int iRight, HB_BOOL fClear, int iColor, HB_BOOL fVisible );
 extern HB_EXPORT int     hb_ctwCloseAllWindows( void );

@@ -386,7 +386,7 @@ static PHB_FILE hb_fileFromSocket( PHB_SOCKEX sock, HB_MAXINT timeout )
    return sock && hb_sockexGetHandle(sock) != HB_NO_SOCKET ? s_fileNew( sock, timeout ) : nullptr;
 }
 
-HB_FUNC( HB_VFFROMSOCKET )
+HB_FUNC(HB_VFFROMSOCKET)
 {
    PHB_SOCKEX sock = hb_sockexParam(1);
    PHB_FILE pFile = hb_fileFromSocket(sock, hb_parnintdef(2, -1));
@@ -398,7 +398,7 @@ HB_FUNC( HB_VFFROMSOCKET )
    }
 }
 
-HB_FUNC( HB_TCPIO ) {}
+HB_FUNC(HB_TCPIO) {}
 
 
 HB_CALL_ON_STARTUP_BEGIN(_hb_file_tcpio_init_)
@@ -408,6 +408,6 @@ HB_CALL_ON_STARTUP_END(_hb_file_tcpio_init_)
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_tcpio_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_file_tcpio_init_ )
+   #define HB_DATASEG_BODY  HB_DATASEG_FUNC(_hb_file_tcpio_init_)
    #include "hbiniseg.hpp"
 #endif

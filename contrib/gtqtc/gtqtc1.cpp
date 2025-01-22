@@ -1631,9 +1631,9 @@ static void hb_gt_qtc_initWindow(PHB_GTQTC pQTC, HB_BOOL fCenter)
 #else
       //QRect rc(QApplication::desktop()->availableGeometry());
 #if QT_VERSION >= 0x050E00
-      QRect rc( pQTC->qWnd->screen()->availableGeometry() );
+      QRect rc(pQTC->qWnd->screen()->availableGeometry());
 #else
-      QRect rc( QApplication::desktop()->availableGeometry( pQTC->qWnd ) );
+      QRect rc(QApplication::desktop()->availableGeometry( pQTC->qWnd ));
 #endif
 #endif
       pQTC->iNewPosX = rc.left() + ((rc.width() - pQTC->qWnd->width()) >> 1);

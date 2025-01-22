@@ -63,7 +63,7 @@ PROCEDURE Main( ... )
       s_cRoot := "../"
    ENDIF
 
-#if defined( __HBSCRIPT__HBSHELL )
+#if defined(__HBSCRIPT__HBSHELL)
    s_cBinDir := hbshell_DirBase()
 #else
    s_cBinDir := hb_DirBase()
@@ -165,7 +165,7 @@ STATIC PROCEDURE Standalone( aParams, hProjectList )
    hProjectReqList := { => }
 
    IF hb_DirExists( AllTrim( cOptionsUser ) )
-      cCustomDir := hb_cwd( AllTrim( cOptionsUser ) )
+      cCustomDir := hb_cwd(AllTrim(cOptionsUser))
       cOptionsUser := ""
       lCustom := .F.
       s_cHome += "../"
@@ -185,7 +185,7 @@ STATIC PROCEDURE Standalone( aParams, hProjectList )
       IF Empty(hProjectReqList)
          lCustom := .T.
       ELSE
-         OutStd( hb_StrFormat( "! Package %1$s... %2$d project(s)", sc_hActions[ nAction ], Len(hProjectReqList) ) + hb_eol() )
+         OutStd(hb_StrFormat("! Package %1$s... %2$d project(s)", sc_hActions[nAction], Len(hProjectReqList)) + hb_eol())
       ENDIF
    ENDIF
 
@@ -199,7 +199,7 @@ STATIC PROCEDURE Standalone( aParams, hProjectList )
    build_projects( nAction, hProjectList, hProjectReqList, cOptionsUser, .T. )
 
    IF ! Empty(cCustomDir)
-      hb_cwd( cCustomDir )
+      hb_cwd(cCustomDir)
    ENDIF
 
    RETURN
@@ -284,7 +284,7 @@ STATIC PROCEDURE GNUMake( aParams, hProjectList )
    cFilter := GetEnv("HB_BUILD_CONTRIBS")
 
    IF ! Empty(cFilter)
-      OutStd( "! HB_BUILD_CONTRIBS: " + cFilter + hb_eol() )
+      OutStd("! HB_BUILD_CONTRIBS: " + cFilter + hb_eol())
    ENDIF
 
    IF cFilter == "no"
@@ -349,11 +349,11 @@ STATIC PROCEDURE GNUMake( aParams, hProjectList )
 
    /* Start building */
 
-   OutStd( hb_StrFormat( "! Started package %1$s...", sc_hActions[ nAction ] ) + hb_eol() )
+   OutStd(hb_StrFormat("! Started package %1$s...", sc_hActions[nAction]) + hb_eol())
 
    build_projects( nAction, hProjectList, hProjectReqList, "", .F. )
 
-   OutStd( hb_StrFormat( "! Finished package %1$s...", sc_hActions[ nAction ] ) + hb_eol() )
+   OutStd(hb_StrFormat("! Finished package %1$s...", sc_hActions[nAction]) + hb_eol())
 
    RETURN
 
@@ -381,7 +381,7 @@ STATIC PROCEDURE build_projects( nAction, hProjectList, hProjectReqList, cOption
    /* Preprocessing */
 
    IF Len(hProjectReqList) > 1
-      OutStd( hb_StrFormat( "! Calculating build order for %1$d projects...", Len(hProjectReqList) ) + hb_eol() )
+      OutStd(hb_StrFormat("! Calculating build order for %1$d projects...", Len(hProjectReqList)) + hb_eol())
    ENDIF
 
    aPairList := {}
@@ -472,7 +472,7 @@ STATIC PROCEDURE build_projects( nAction, hProjectList, hProjectReqList, cOption
 
                /* Compile documentation */
                IF lInstall
-                  mk_hbd( hb_FNameDir( hb_DirSepToOS( cProjectPath ) ) )
+                  mk_hbd(hb_FNameDir(hb_DirSepToOS(cProjectPath)))
                ENDIF
             ENDIF
          ELSE
@@ -506,7 +506,7 @@ STATIC PROCEDURE call_hbmk2_hbinfo( cProjectPath, hProject )
    IF ( nErrorLevel := call_hbmk2( cProjectPath, " --hbinfo", NIL,, @cStdOut ) ) == 0
 
       IF hb_jsonDecode( cStdOut, @hInfo ) == 0
-         OutStd( "! Warning: Received invalid result from 'hbmk2 --hbinfo'" + hb_eol() )
+         OutStd("! Warning: Received invalid result from 'hbmk2 --hbinfo'" + hb_eol())
       ENDIF
 
       hProject[ "cType" ] := hbmk2_hbinfo_getitem( hInfo, "targettype" )
@@ -528,7 +528,7 @@ STATIC PROCEDURE call_hbmk2_hbinfo( cProjectPath, hProject )
          ENDIF
       NEXT
    ELSE
-      OutStd( hb_StrFormat( "! Warning: 'hbmk2 --hbinfo' failed with exit code %1$d", nErrorLevel ) + hb_eol() )
+      OutStd(hb_StrFormat("! Warning: 'hbmk2 --hbinfo' failed with exit code %1$d", nErrorLevel) + hb_eol())
    ENDIF
 
    RETURN
@@ -581,11 +581,11 @@ STATIC FUNCTION call_hbmk2( cProjectPath, cOptionsPre, cDynSuffix, cStdErr, cStd
 
 STATIC FUNCTION mk_hb_processRun( cCommand, ... )
 
-   OutStd( cCommand + hb_eol() )
+   OutStd(cCommand + hb_eol())
 
    RETURN hb_processRun( cCommand, ... )
 
-STATIC FUNCTION mk_hbd( cDir )
+STATIC FUNCTION mk_hbd(cDir)
 
    LOCAL cName
    LOCAL cDocDir
@@ -610,8 +610,8 @@ STATIC FUNCTION mk_hbd( cDir )
 
       IF ! Empty(aEntry)
          cName := hb_DirSepToOS( cDocDir ) + hb_ps() + cName + ".hbd"
-         IF __hbdoc_SaveHBD( cName, aEntry )
-            OutStd( "! Compiled documentation: " + cName + " <= " + cDir + hb_eol() )
+         IF __hbdoc_SaveHBD(cName, aEntry)
+            OutStd("! Compiled documentation: " + cName + " <= " + cDir + hb_eol())
             RETURN .T.
          ELSE
             OutErr( hb_StrFormat( "! Error: Saving '%1$s'", cName ) + hb_eol() )
@@ -661,7 +661,7 @@ STATIC PROCEDURE DeptLinesToDeptPairList( aPairList, cParent, aFlatTree )
          NEXT
       ENDIF
       hNewNode[ "parent" ] := hNode
-      AAdd( hNode[ "child" ], hNewNode )
+      AAdd(hNode["child"], hNewNode)
       nLevel := nDepth
       AddDeptPair( aPairList, hNewNode[ "parent" ][ "name" ], hNewNode[ "name" ] )
    NEXT
@@ -672,7 +672,7 @@ STATIC PROCEDURE DeptLinesToDeptPairList( aPairList, cParent, aFlatTree )
 STATIC PROCEDURE AddDeptPair( aPairList, cParent, cChild )
 
    IF AScan( aPairList, {| tmp | tmp[ 1 ] == cParent .AND. tmp[ 2 ] == cChild } ) == 0
-      AAdd( aPairList, { cParent, cChild } )
+      AAdd(aPairList, {cParent, cChild})
    ENDIF
 
    RETURN
@@ -697,7 +697,7 @@ STATIC FUNCTION TopoSort( aEdgeList )
       hb_HDelAt( hTopNodes, 1 )
 
       IF ! Empty(n)
-         AAdd( aList, n )
+         AAdd(aList, n)
       ENDIF
 
       FOR EACH tmp IN aEdgeList
@@ -713,7 +713,7 @@ STATIC FUNCTION TopoSort( aEdgeList )
 
    FOR EACH tmp IN aEdgeList
       IF !( tmp[ 1 ] == NIL .AND. tmp[ 2 ] == NIL )
-         OutStd( hb_StrFormat( "! Warning: Circular reference in dependency tree (%1$s - %2$s)", tmp[ 1 ], tmp[ 2 ] ) + hb_eol() )
+         OutStd(hb_StrFormat("! Warning: Circular reference in dependency tree (%1$s - %2$s)", tmp[1], tmp[2]) + hb_eol())
       ENDIF
    NEXT
 

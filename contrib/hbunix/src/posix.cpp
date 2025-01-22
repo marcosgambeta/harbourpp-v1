@@ -48,7 +48,7 @@
 
 #include "hbposix.hpp"
 
-HB_FUNC( POSIX_GETPID )
+HB_FUNC(POSIX_GETPID)
 {
    hb_retnint(getpid());
 }

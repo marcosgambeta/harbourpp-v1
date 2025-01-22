@@ -98,7 +98,7 @@ static void hb_firebirddd_init(void * cargo)
    }
 }
 
-HB_FUNC( HB_SDDFB_REGISTER )
+HB_FUNC(HB_SDDFB_REGISTER)
 {
    hb_firebirddd_init(nullptr);
 }

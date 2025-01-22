@@ -883,7 +883,7 @@ static HB_ERRCODE adsxCreate( ADSXAREAP pArea, LPDBOPENINFO pCreateInfo )
    return Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsxNewArea( ADSXAREAP pArea )
+static HB_ERRCODE adsxNewArea(ADSXAREAP pArea)
 {
    HB_ERRCODE errCode;
 
@@ -1647,38 +1647,38 @@ static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
    }
 }
 
-HB_FUNC_STATIC( ADSX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSX_GETFUNCTABLE)
 {
    adsxRegisterRDD( &s_uiRddIdADSX, "ADS" );
 }
 
-HB_FUNC_STATIC( ADSNTXX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSNTXX_GETFUNCTABLE)
 {
    adsxRegisterRDD( &s_uiRddIdADSNTXX, "ADSNTX" );
 }
 
-HB_FUNC_STATIC( ADSCDXX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSCDXX_GETFUNCTABLE)
 {
    adsxRegisterRDD( &s_uiRddIdADSCDXX, "ADSCDX" );
 }
 
 #if ADS_LIB_VERSION >= 900
-HB_FUNC_STATIC( ADSVFPX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSVFPX_GETFUNCTABLE)
 {
    adsxRegisterRDD( &s_uiRddIdADSVFPX, "ADSVFP" );
 }
 #endif
 
-HB_FUNC_STATIC( ADSADTX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSADTX_GETFUNCTABLE)
 {
    adsxRegisterRDD( &s_uiRddIdADSADTX, "ADSADT" );
 }
 
-HB_FUNC( ADSX ) { ; }
-HB_FUNC( ADSNTXX ) { ; }
-HB_FUNC( ADSCDXX ) { ; }
-HB_FUNC( ADSVFPX ) { ; }
-HB_FUNC( ADSADTX ) { ; }
+HB_FUNC(ADSX) { ; }
+HB_FUNC(ADSNTXX) { ; }
+HB_FUNC(ADSCDXX) { ; }
+HB_FUNC(ADSVFPX) { ; }
+HB_FUNC(ADSADTX) { ; }
 
 HB_FUNC_EXTERN( ADSCDX );
 
@@ -1711,7 +1711,7 @@ static void hb_adsxRddInit( void * cargo )
           hb_rddRegister("ADSADTX", RDT_FULL) > 1 ) {
          hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
          /* not executed, only to force linking ADS RDD */
-         HB_FUNC_EXEC( ADSCDX );
+         HB_FUNC_EXEC(ADSCDX);
       }
    }
 }
@@ -1739,7 +1739,7 @@ HB_CALL_ON_STARTUP_END( _hb_adsx_rdd_init_ )
    #pragma startup adsx1__InitSymbols
    #pragma startup _hb_adsx_rdd_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( adsx1__InitSymbols ) \
-                              HB_DATASEG_FUNC( _hb_adsx_rdd_init_ )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC(adsx1__InitSymbols) \
+                              HB_DATASEG_FUNC(_hb_adsx_rdd_init_)
    #include "hbiniseg.hpp"
 #endif

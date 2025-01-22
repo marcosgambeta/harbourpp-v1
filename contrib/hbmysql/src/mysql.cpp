@@ -268,7 +268,7 @@ HB_FUNC(MYSQL_ROLLBACK)
 }
 
 /*
-int mysql_select_db( MYSQL *, char * )
+int mysql_select_db(MYSQL *, char *)
 */
 HB_FUNC(MYSQL_SELECT_DB)
 {
@@ -395,7 +395,7 @@ HB_FUNC(MYSQL_NUM_ROWS)
   }
 }
 
-HB_FUNC(MYSQL_FETCH_FIELD) /* MYSQL_FIELD * mysql_fetch_field( MYSQL_RES * ) */
+HB_FUNC(MYSQL_FETCH_FIELD) /* MYSQL_FIELD * mysql_fetch_field(MYSQL_RES *) */
 {
   auto mresult = hb_MYSQL_RES_par(1);
 

@@ -33,14 +33,14 @@ MEMVAR __nCBid__, __temp__
       __nCBid__ := wvw_cbCreate( NIL, <row>, <col>, <nWidth>, ;
       <aOptions>, ;
       {| nWinNum, nId, nEvent, nIndex, temp |     ;
-      CBhandler( nWinNum, nId, nEvent, nIndex, <"var">, GetList ), HB_SYMBOL_UNUSED( temp );
+      CBhandler( nWinNum, nId, nEvent, nIndex, <"var">, GetList ), HB_SYMBOL_UNUSED(temp);
       },                                          ;
       NIL, NIL, s_nCB_Kbd, NIL );                     ;
-      AAdd( s_aComboList, { __nCBid__, <"var"> } );                        ;
+      AAdd(s_aComboList, { __nCBid__, <"var"> });                        ;
       __temp__ := wvw_cbFindString( NIL, __nCBid__, <var> );             ;
       iif(__temp__ >= 0, wvw_cbSetIndex( NIL, __nCBid__, __temp__ ), NIL);   ;
       SetPos( <row>, <col> );                                              ;
-      AAdd( GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, ) ) ;   ;
+      AAdd(GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, )) ;   ;
       ATail( GetList ):cargo := __nCBid__;                                ;
       ATail( GetList ):reader := {| get | CBreader( get ) }
 
@@ -50,7 +50,7 @@ PROCEDURE Main()
    LOCAL mname := PadR( "Budyanto Dj.", 30 ), msex := "MALE", mage := 17, mstat := "married"
    LOCAL __nCBid__, __temp__  // these two are temporary var required by CB get creation
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -124,7 +124,7 @@ FUNCTION CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
    LOCAL i, ccursel
    LOCAL oGet := GetActive()
 
-   HB_SYMBOL_UNUSED( nIndex )
+   HB_SYMBOL_UNUSED(nIndex)
 
    /* if GetList is empty, then READ session is already ended
     * this should not be happenning!
@@ -201,7 +201,7 @@ FUNCTION CBreader( oGet )
    LOCAL nKey, bKeyBlock
    LOCAL oGetList := __GetListActive()
 
-   IF !wvw_cbIsFocused( NIL, oGet:cargo )
+   IF !wvw_cbIsFocused(NIL, oGet:cargo)
       wvw_cbSetFocus( NIL, oGet:cargo )
    ENDIF
 

@@ -115,7 +115,7 @@ FUNCTION BliDemMin( nValue )
 
 PROCEDURE BliDisFrg( fhnd )
 
-   HB_SYMBOL_UNUSED( fhnd )
+   HB_SYMBOL_UNUSED(fhnd)
 
    RETURN
 
@@ -130,7 +130,7 @@ FUNCTION BliErrPrmBas()
 
 /* INCOMPATIBLE: Will return pointer instead of numeric. */
 FUNCTION BliLibLib(cLib)
-   RETURN iif(s_lLibOverrides, hb_hrbLoad( HB_HRB_BIND_OVERLOAD, cLib ), hb_hrbLoad( cLib ))
+   RETURN iif(s_lLibOverrides, hb_hrbLoad(HB_HRB_BIND_OVERLOAD, cLib), hb_hrbLoad(cLib))
 
 /* INCOMPATIBLE: Will return array instead of numeric. */
 FUNCTION BliFunHan( pLib, cFunction )
@@ -151,7 +151,7 @@ FUNCTION BliFunCal(...)
 
 PROCEDURE BliLibFre( pLib )
 
-   hb_hrbUnload( pLib )
+   hb_hrbUnload(pLib)
 
    RETURN
 
@@ -165,7 +165,7 @@ PROCEDURE BliLibOvr( lValue )
 
 PROCEDURE BliLstFrg( fhnd )
 
-   HB_SYMBOL_UNUSED( fhnd )
+   HB_SYMBOL_UNUSED(fhnd)
 
    RETURN
 
@@ -177,7 +177,7 @@ FUNCTION BliMemSiz()
 
 FUNCTION BliMemBlk( nBlockSize )
 
-   HB_SYMBOL_UNUSED( nBlockSize )
+   HB_SYMBOL_UNUSED(nBlockSize)
 
    RETURN Memory( HB_MEM_CHAR )
 
@@ -209,7 +209,7 @@ FUNCTION BliOvlSiz()
 
 PROCEDURE BliOvlSus( nValue )
 
-   HB_SYMBOL_UNUSED( nValue )
+   HB_SYMBOL_UNUSED(nValue)
 
    RETURN
 
@@ -227,7 +227,7 @@ FUNCTION BliSerNumBas()
 
 FUNCTION BliStrFrg( cString )
 
-   HB_SYMBOL_UNUSED( cString )
+   HB_SYMBOL_UNUSED(cString)
 
    RETURN ""
 
@@ -255,39 +255,39 @@ FUNCTION BliMgrSts( nParam )
 
 FUNCTION SwpAddEnv( nBytes )
 
-   HB_SYMBOL_UNUSED( nBytes )
+   HB_SYMBOL_UNUSED(nBytes)
 
    RETURN 32768
 
 FUNCTION SwpAddStr( cPID, cString )
 
-   HB_SYMBOL_UNUSED( cPID )
-   HB_SYMBOL_UNUSED( cString )
+   HB_SYMBOL_UNUSED(cPID)
+   HB_SYMBOL_UNUSED(cString)
 
    RETURN 1
 
 FUNCTION SwpAddStrBas( cPID, cString )
 
-   HB_SYMBOL_UNUSED( cPID )
-   HB_SYMBOL_UNUSED( cString )
+   HB_SYMBOL_UNUSED(cPID)
+   HB_SYMBOL_UNUSED(cString)
 
    RETURN 1
 
 FUNCTION SwpCurDir( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .T.
 
 FUNCTION SwpDisMsg( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
 FUNCTION SwpEms320( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
@@ -302,87 +302,87 @@ FUNCTION SwpErrMin()
 
 FUNCTION SwpFreEms( nLimitKB )
 
-   HB_SYMBOL_UNUSED( nLimitKB )
+   HB_SYMBOL_UNUSED(nLimitKB)
 
    RETURN 0
 
 FUNCTION SwpUseEms( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
 FUNCTION SwpFreXms( nLimitKB )
 
-   HB_SYMBOL_UNUSED( nLimitKB )
+   HB_SYMBOL_UNUSED(nLimitKB)
 
    RETURN 0
 
 FUNCTION SwpUseXms( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
 FUNCTION SwpUseUmb(lValue)
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
 FUNCTION SwpGetKey( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
-FUNCTION SwpGetPid( cIDString )
+FUNCTION SwpGetPid(cIDString)
 
-   HB_SYMBOL_UNUSED( cIDString )
+   HB_SYMBOL_UNUSED(cIDString)
 
    RETURN .F.
 
 FUNCTION SwpVidMde( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
 FUNCTION SwpGetStr()
    RETURN ""
 
-FUNCTION SwpKeyBrd( cKeyString )
+FUNCTION SwpKeyBrd(cKeyString)
 
-   HB_SYMBOL_UNUSED( cKeyString )
+   HB_SYMBOL_UNUSED(cKeyString)
 
    RETURN 0
 
 FUNCTION SwpKeyBrdBas( cKeyString )
 
-   HB_SYMBOL_UNUSED( cKeyString )
+   HB_SYMBOL_UNUSED(cKeyString)
 
    RETURN 0
 
 FUNCTION SwpKeyClr( nValue )
 
-   HB_SYMBOL_UNUSED( nValue )
+   HB_SYMBOL_UNUSED(nValue)
 
    RETURN 0
 
 FUNCTION SwpNobOot( lValue )
 
-   HB_SYMBOL_UNUSED( lValue )
+   HB_SYMBOL_UNUSED(lValue)
 
    RETURN .F.
 
-FUNCTION SwpRunCmd( cCommand, nMem, cRunPath, cTempPath )
+FUNCTION SwpRunCmd(cCommand, nMem, cRunPath, cTempPath)
 
-   HB_SYMBOL_UNUSED( nMem )
-   HB_SYMBOL_UNUSED( cRunPath )
-   HB_SYMBOL_UNUSED( cTempPath )
+   HB_SYMBOL_UNUSED(nMem)
+   HB_SYMBOL_UNUSED(cRunPath)
+   HB_SYMBOL_UNUSED(cTempPath)
 
    IF !HB_IsString( cCommand ) .OR. Empty(cCommand)
-#if defined( __PLATFORM__UNIX )
+#if defined(__PLATFORM__UNIX)
       cCommand := GetEnv("SHELL")
 #else
       cCommand := GetEnv("COMSPEC")
@@ -404,26 +404,26 @@ FUNCTION SwpSetEnv( cString )
 
    RETURN .T.
 
-FUNCTION SwpSetPid( cIDString )
+FUNCTION SwpSetPid(cIDString)
 
-   HB_SYMBOL_UNUSED( cIDString )
+   HB_SYMBOL_UNUSED(cIDString)
 
    RETURN .T.
 
 FUNCTION SwpSetPidBas( cIDString )
 
-   HB_SYMBOL_UNUSED( cIDString )
+   HB_SYMBOL_UNUSED(cIDString)
 
    RETURN .T.
 
 FUNCTION SwpSetStr( cString )
 
-   HB_SYMBOL_UNUSED( cString )
+   HB_SYMBOL_UNUSED(cString)
 
    RETURN .T.
 
 FUNCTION SwpSetStrBas( cString )
 
-   HB_SYMBOL_UNUSED( cString )
+   HB_SYMBOL_UNUSED(cString)
 
    RETURN .T.

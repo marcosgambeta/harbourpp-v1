@@ -48,7 +48,7 @@
 
 #include <hbapifs.hpp>
 
-static HB_GARBAGE_FUNC( PHB_FFIND_release )
+static HB_GARBAGE_FUNC(PHB_FFIND_release)
 {
    auto ph = static_cast<void**>(Cargo);
 
@@ -76,7 +76,7 @@ static PHB_FFIND PHB_FFIND_par( int iParam )
    return ph ? static_cast<PHB_FFIND>(*ph) : nullptr;
 }
 
-HB_FUNC( FILEFINDFIRST )
+HB_FUNC(FILEFINDFIRST)
 {
    auto pszFileName = hb_parc(1);
 
@@ -96,42 +96,42 @@ HB_FUNC( FILEFINDFIRST )
       hb_retl(false);
 }
 
-HB_FUNC( FILEFINDNEXT )
+HB_FUNC(FILEFINDNEXT)
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 
    hb_retl(ffind && hb_fsFindNext(ffind));
 }
 
-HB_FUNC( FILEFINDNAME )
+HB_FUNC(FILEFINDNAME)
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 
    hb_retc(ffind ? ffind->szName : nullptr);
 }
 
-HB_FUNC( FILEFINDATTR )
+HB_FUNC(FILEFINDATTR)
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 
    hb_retnl(ffind ? ffind->attr : 0);
 }
 
-HB_FUNC( FILEFINDSIZE )
+HB_FUNC(FILEFINDSIZE)
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 
    hb_retnint(ffind ? ffind->size : 0);
 }
 
-HB_FUNC( FILEFINDDATE )
+HB_FUNC(FILEFINDDATE)
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 
    hb_retds(ffind ? ffind->szDate : nullptr);
 }
 
-HB_FUNC( FILEFINDTIME )
+HB_FUNC(FILEFINDTIME)
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 

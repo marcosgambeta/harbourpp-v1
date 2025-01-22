@@ -137,7 +137,7 @@ typedef struct _HB_CURL
 #define HB_CURL_HASH_TABLE_SIZE 509UL
 
 // returns a hash key
-static HB_HASH_FUNC(hb_curl_HashKey) // HB_SIZE func( const void * Value, const void * Cargo )
+static HB_HASH_FUNC(hb_curl_HashKey) // HB_SIZE func(const void * Value, const void * Cargo)
 {
   HB_SIZE ulSum = 0;
   auto szName = static_cast<const char *>(Value);
@@ -916,7 +916,7 @@ HB_FUNC(CURL_EASY_PERFORM)
   }
 }
 
-// NOTE: curl_easy_send( curl, cBuffer, @nSentBytes ) -> nResult
+// NOTE: curl_easy_send(curl, cBuffer, @nSentBytes) -> nResult
 HB_FUNC(CURL_EASY_SEND)
 {
   if (PHB_CURL_is(1))

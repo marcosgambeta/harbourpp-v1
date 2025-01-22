@@ -50,7 +50,7 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( BIN2U )
+HB_FUNC(BIN2U)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
    HB_U32   uiResult = 0;
@@ -70,7 +70,7 @@ HB_FUNC( BIN2U )
    hb_retnint(uiResult);
 }
 
-HB_FUNC( U2BIN )
+HB_FUNC(U2BIN)
 {
    char szResult[4];
    auto uiValue = static_cast<HB_U32>(hb_parnint(1));
@@ -79,7 +79,7 @@ HB_FUNC( U2BIN )
    hb_retclen(szResult, 4);
 }
 
-HB_FUNC( W2BIN )
+HB_FUNC(W2BIN)
 {
    char szResult[2];
    auto uiValue = static_cast<HB_U16>(hb_parni(1));
@@ -88,7 +88,7 @@ HB_FUNC( W2BIN )
    hb_retclen(szResult, 2);
 }
 
-HB_FUNC( F2BIN )
+HB_FUNC(F2BIN)
 {
    char   buf[sizeof(double)];
    auto d = hb_parnd(1);
@@ -97,7 +97,7 @@ HB_FUNC( F2BIN )
    hb_retclen(buf, sizeof(buf));
 }
 
-HB_FUNC( BIN2F )
+HB_FUNC(BIN2F)
 {
    if( hb_parclen(1) >= sizeof(double) )
    {

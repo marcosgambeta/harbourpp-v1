@@ -704,7 +704,7 @@
           [URL <Url> ];
           OF <ohtm> ;
           =>;
-          <ohtm>:MapArea( <(Shape)>, <Alt>, <coord>, <Url> )
+          <ohtm>:MapArea(<(Shape)>, <Alt>, <coord>, <Url>)
 
 #xtranslate __HTML_SCROLL__                   => "auto"
 #xtranslate __HTML_SCROLL__ <scrl:NO>         => "no"

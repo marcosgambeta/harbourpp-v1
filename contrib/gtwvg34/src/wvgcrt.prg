@@ -221,7 +221,7 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    METHOD wheel( xParam )                       SETGET
    METHOD close( xParam )                       SETGET
    METHOD helpRequest( xParam )                 SETGET
-   METHOD keyboard( xParam )                    SETGET
+   METHOD keyboard(xParam)                      SETGET
    METHOD killDisplayFocus( xParam )            SETGET
    METHOD killInputFocus( xParam )              SETGET
    METHOD move( xParam )                        SETGET
@@ -286,7 +286,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::pGT  := hb_gtCreate( "WVG" )
       ::pGTp := hb_gtSelect( ::pGT )
    ELSE
-      hb_gtReload( "WVG" )
+      hb_gtReload("WVG")
       ::pGT := hb_gtSelect()
    ENDIF
 
@@ -401,7 +401,7 @@ METHOD WvgCrt:getFrameState()
 
    DO CASE
    CASE wapi_IsIconic(::hWnd) ; RETURN WVGDLG_FRAMESTAT_MINIMIZED
-   CASE wapi_IsZoomed( ::hWnd ) ; RETURN WVGDLG_FRAMESTAT_MAXIMIZED
+   CASE wapi_IsZoomed(::hWnd) ; RETURN WVGDLG_FRAMESTAT_MAXIMIZED
    ENDCASE
 
    RETURN WVGDLG_FRAMESTAT_NORMALIZED
@@ -782,7 +782,7 @@ METHOD WvgCrt:helpRequest( xParam )
 
    RETURN Self
 
-METHOD WvgCrt:keyboard( xParam )
+METHOD WvgCrt:keyboard(xParam)
 
    IF HB_IsNumeric(xParam) .AND. HB_IsEvalItem( ::sl_keyboard )
       Eval( ::sl_keyboard, xParam, , Self )

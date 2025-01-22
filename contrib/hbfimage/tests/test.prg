@@ -47,12 +47,12 @@ PROCEDURE Main()
    ? "File type        :", fi_GetFileType( IMAGES_IN + "sample1.jpg" )
 
    ? "Set Error Message (symbol):", fi_SetOutputMessage( @fi_Error() )
-   im := fi_Load( FIF_JPEG, IMAGES_IN + "nothere.jpg", JPEG_DEFAULT )
+   im := fi_Load(FIF_JPEG, IMAGES_IN + "nothere.jpg", JPEG_DEFAULT)
    ? "Set Error Message (block):", fi_SetOutputMessage( {| cFormat, cMessage | fi_Error( cFormat, cMessage ) } )
-   im := fi_Load( FIF_JPEG, IMAGES_IN + "nothere.jpg", JPEG_DEFAULT )
+   im := fi_Load(FIF_JPEG, IMAGES_IN + "nothere.jpg", JPEG_DEFAULT)
 
    ? "Load JPEG directly from file"
-   im := fi_Load( FIF_JPEG, IMAGES_IN + "sample1.jpg", JPEG_DEFAULT )
+   im := fi_Load(FIF_JPEG, IMAGES_IN + "sample1.jpg", JPEG_DEFAULT)
 
    ? "Clone image"
    clone := fi_Clone( im )
@@ -60,7 +60,7 @@ PROCEDURE Main()
    ? "Pointer          :", hb_ValToExp( im )
 
    ? "Image Type       :", fi_GetImageType( im )
-   ? "Color Used       :", fi_GetColorsUsed( im )
+   ? "Color Used       :", fi_GetColorsUsed(im)
    ? "Pixel size       :", fi_GetBPP( im )
    ? "Width            :", fi_GetWidth( im )
    ? "Height           :", fi_GetHeight( im )
@@ -179,7 +179,7 @@ PROCEDURE Main()
       nLen := FSeek( nH, 0, FS_END )
       FSeek( nH, 0, FS_SET )
       cStr := Space( nLen )
-      FRead( nH, @cStr, nLen )
+      FRead(nH, @cStr, nLen)
       FClose( nH )
 
       ? "Load JPEG from memory"

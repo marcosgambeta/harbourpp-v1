@@ -179,11 +179,11 @@ PROCEDURE netiosrv_Main(lUI, ...)
             cFile := hb_compileBuf( hb_argv(0), "-n2", "-w", "-es2", "-q0", ;
                "-D" + "__HBSCRIPT__HBNETIOSRV", netiosrv[ _NETIOSRV_cRPCFFileName ] )
             IF cFile != NIL
-               netiosrv[ _NETIOSRV_hRPCFHRB ] := hb_hrbLoad( HB_HRB_BIND_FORCELOCAL, cFile )
+               netiosrv[ _NETIOSRV_hRPCFHRB ] := hb_hrbLoad(HB_HRB_BIND_FORCELOCAL, cFile)
             ENDIF
             EXIT
          OTHERWISE
-            netiosrv[ _NETIOSRV_hRPCFHRB ] := hb_hrbLoad( HB_HRB_BIND_FORCELOCAL, netiosrv[ _NETIOSRV_cRPCFFileName ] )
+            netiosrv[ _NETIOSRV_hRPCFHRB ] := hb_hrbLoad(HB_HRB_BIND_FORCELOCAL, netiosrv[ _NETIOSRV_cRPCFFileName ])
             EXIT
          ENDSWITCH
 
@@ -207,11 +207,11 @@ PROCEDURE netiosrv_Main(lUI, ...)
       ENDCASE
    NEXT
 
-   IF netiosrv_ConfLoad( netiosrv, netiomgm )
+   IF netiosrv_ConfLoad(netiosrv, netiomgm)
       netiosrv_LogEvent( hb_StrFormat( "Configuration loaded: %1$s", netiosrv_ConfName() ) )
    ENDIF
 
-   hb_DirBuild( netiosrv[ _NETIOSRV_cRootDir ] )
+   hb_DirBuild(netiosrv[ _NETIOSRV_cRootDir ])
 
    netiosrv[ _NETIOSRV_pListenSocket ] := netio_MTServer( ;
       netiosrv[ _NETIOSRV_nPort ], ;
@@ -329,9 +329,9 @@ STATIC FUNCTION netiosrv_ConfSave( netiosrv, netiomgm )
 
    RETURN hb_MemoWrit( netiosrv_ConfName(), hb_Serialize( hConf ) )
 
-STATIC FUNCTION netiosrv_ConfLoad( netiosrv, netiomgm )
+STATIC FUNCTION netiosrv_ConfLoad(netiosrv, netiomgm)
 
-   LOCAL hConf := hb_Deserialize( hb_MemoRead( netiosrv_ConfName() ) )
+   LOCAL hConf := hb_Deserialize( hb_MemoRead(netiosrv_ConfName()) )
 
    IF HB_IsHash( hConf ) .AND. ;
       "__signature" $ hConf .AND. ;
@@ -370,7 +370,7 @@ STATIC FUNCTION netiosrv_config( netiosrv, netiomgm )
       hb_StrFormat( "RPC filter module: %1$s", iif(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), iif(netiosrv[ _NETIOSRV_lRPC ], "not set (WARNING: unsafe open server)", "not set"), netiosrv[ _NETIOSRV_cRPCFFileName ] )) }
 
    IF !Empty(netiomgm[ _NETIOSRV_pListenSocket ])
-      AAdd( aArray, hb_StrFormat( "Management iface: %1$s:%2$d", netiomgm[ _NETIOSRV_cIFAddr ], netiomgm[ _NETIOSRV_nPort ] ) )
+      AAdd(aArray, hb_StrFormat( "Management iface: %1$s:%2$d", netiomgm[ _NETIOSRV_cIFAddr ], netiomgm[ _NETIOSRV_nPort ] ))
    ENDIF
 
    RETURN aArray
@@ -713,7 +713,7 @@ STATIC FUNCTION netiomgm_rpc_conninfo( netiosrv )
       netio_SrvStatus( nconn[ _NETIOSRV_CONN_pConnection ], NETIO_SRVINFO_BYTESRECEIVED, @nBytesReceived )
       netio_SrvStatus( nconn[ _NETIOSRV_CONN_pConnection ], NETIO_SRVINFO_PEERADDRESS, @aAddressPeer )
 
-      AAdd( aArray, { ;
+      AAdd(aArray, { ;
          "nThreadID"      => nconn[ _NETIOSRV_CONN_nThreadID ], ;
          "tStart"         => nconn[ _NETIOSRV_CONN_tStart ], ;
          "cStatus"        => ConnStatusStr( nStatus ), ;
@@ -721,14 +721,14 @@ STATIC FUNCTION netiomgm_rpc_conninfo( netiosrv )
          "nBytesSent"     => nBytesSent, ;
          "nBytesReceived" => nBytesReceived, ;
          "cAddressPeer"   => AddrToIPPort( aAddressPeer ), ;
-         "xCargo"         => nconn[ _NETIOSRV_CONN_hInfo ] } )
+         "xCargo"         => nconn[ _NETIOSRV_CONN_hInfo ] })
    NEXT
 
    hb_mutexUnlock( netiosrv[ _NETIOSRV_mtxConnection ] )
 
    RETURN aArray
 
-STATIC FUNCTION netiomgm_rpc_filtermod( netiosrv, hList, lAdd, cAddress )
+STATIC FUNCTION netiomgm_rpc_filtermod(netiosrv, hList, lAdd, cAddress)
 
    LOCAL lSuccess := .T.
 
@@ -764,9 +764,9 @@ STATIC FUNCTION netiomgm_rpc_filters( netiosrv )
 
    FOR EACH cType, hFilter IN { "allow", "block" }, { netiosrv[ _NETIOSRV_hAllow ], netiosrv[ _NETIOSRV_hBlock ] }
       FOR EACH cAddress IN hFilter
-         AAdd( aArray, { ;
+         AAdd(aArray, { ;
             "cType"    => cType, ;
-            "cAddress" => cAddress:__enumKey() } )
+            "cAddress" => cAddress:__enumKey() })
       NEXT
    NEXT
 
@@ -816,7 +816,7 @@ STATIC FUNCTION FileSig( cFile )
    IF hFile != F_ERROR
       cSig := hb_hrbSignature()
       cBuff := Space( hb_BLen(cSig) )
-      FRead( hFile, @cBuff, hb_BLen(cBuff) )
+      FRead(hFile, @cBuff, hb_BLen(cBuff))
       FClose( hFile )
       IF cBuff == cSig
          cExt := ".hrb"
@@ -833,13 +833,9 @@ STATIC PROCEDURE ShowConfig( netiosrv, netiomgm )
 
 STATIC PROCEDURE HB_Logo()
 
-   OutStd( ;
-      "Harbour NETIO Server " + StrTran(Version(), "Harbour ") + hb_eol() + ;
-      "Copyright (c) 2009-" + ;
-         "2020" + ", " + ;
-         "Przemyslaw Czerpak, Viktor Szakats" + hb_eol() + ;
-      hb_Version( HB_VERSION_URL_BASE ) + hb_eol() + ;
-      hb_eol() )
+   OutStd("Harbour NETIO Server " + StrTran(Version(), "Harbour ") + hb_eol() + ;
+          "Copyright (c) 2009-2020, Przemyslaw Czerpak, Viktor Szakats" + hb_eol() + ;
+          hb_Version( HB_VERSION_URL_BASE ) + hb_eol() + hb_eol())
 
    RETURN
 
@@ -870,7 +866,7 @@ STATIC PROCEDURE HB_Usage()
    OutStd(                                                                                                               hb_eol() )
    OutStd(               "  -noui                 don't open interactive console"                                      , hb_eol() )
    OutStd(                                                                                                               hb_eol() )
-   #if ! defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+   #if ! defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    OutStd(               "  -i                    install as service (requires admin rights)"                          , hb_eol() )
    OutStd(               "  -u                    uninstall service (requires admin rights)"                           , hb_eol() )
    OutStd(                                                                                                               hb_eol() )
@@ -880,7 +876,7 @@ STATIC PROCEDURE HB_Usage()
 
    RETURN
 
-#if defined( __HBSCRIPT__HBSHELL )
+#if defined(__HBSCRIPT__HBSHELL)
 SET PROCEDURE TO "_console.prg"
 SET PROCEDURE TO "netiomgm.hb"
 #endif

@@ -96,13 +96,13 @@ HB_FUNC(HPDF_FREE)
   }
 }
 
-/* HPDF_NewDoc( hDoc ) --> hStatus */
+/* HPDF_NewDoc(hDoc) --> hStatus */
 HB_FUNC(HPDF_NEWDOC)
 {
   hb_retnl(static_cast<long>(HPDF_NewDoc(hb_HPDF_Doc_par(1))));
 }
 
-/* HPDF_FreeDoc( hNewDoc ) --> NIL */
+/* HPDF_FreeDoc(hNewDoc) --> NIL */
 HB_FUNC(HPDF_FREEDOC)
 {
   HPDF_FreeDoc(hb_HPDF_Doc_par(1));
@@ -167,7 +167,7 @@ HB_FUNC(HPDF_RESETSTREAM)
   hb_retnl(static_cast<long>(HPDF_ResetStream(hb_HPDF_Doc_par(1))));
 }
 
-/* HPDF_HasDoc( hDoc ) --> lHasDoc */
+/* HPDF_HasDoc(hDoc) --> lHasDoc */
 HB_FUNC(HPDF_HASDOC)
 {
   hb_retl(HPDF_HasDoc(hb_HPDF_Doc_par(1)));
@@ -360,7 +360,7 @@ HB_FUNC(HPDF_SETINFODATEATTR)
   hb_retnl(static_cast<long>(HPDF_SetInfoDateAttr(hb_HPDF_Doc_par(1), static_cast<HPDF_InfoType>(hb_parni(2)), date)));
 }
 
-/* HPDF_SetPassword( hDoc, cOwnerPassword = NO NIL, cUserPassword = CANBE NIL ) --> hStatus */
+/* HPDF_SetPassword(hDoc, cOwnerPassword = NO NIL, cUserPassword = CANBE NIL) --> hStatus */
 HB_FUNC(HPDF_SETPASSWORD)
 {
   hb_retnl(static_cast<long>(HPDF_SetPassword(hb_HPDF_Doc_par(1), hb_parc(2), hb_parc(3))));
@@ -1192,7 +1192,7 @@ HB_FUNC(HPDF_PAGE_CIRCLE)
                                          static_cast<HPDF_REAL>(hb_parnd(3)), static_cast<HPDF_REAL>(hb_parnd(4)))));
 }
 
-/* HPDF_Page_Arc( hPage, nX, nY, nRay, nAngle1, nAngle2 ) --> hStatus */
+/* HPDF_Page_Arc(hPage, nX, nY, nRay, nAngle1, nAngle2) --> hStatus */
 HB_FUNC(HPDF_PAGE_ARC)
 {
   hb_retnl(static_cast<long>(HPDF_Page_Arc(static_cast<HPDF_Page>(hb_parptr(1)), static_cast<HPDF_REAL>(hb_parnd(2)),
@@ -1351,7 +1351,7 @@ HB_FUNC(HPDF_ENCODER_GETWRITINGMODE)
 
 /* --- OUTLINE --- */
 
-/* HPDF_Outline_SetOpened( hOutline, lShowOpened ) --> hStatus */
+/* HPDF_Outline_SetOpened(hOutline, lShowOpened) --> hStatus */
 HB_FUNC(HPDF_OUTLINE_SETOPENED)
 {
   hb_retnl(static_cast<long>(
@@ -1403,7 +1403,7 @@ HB_FUNC(HPDF_DESTINATION_SETFITR)
       static_cast<HPDF_REAL>(hb_parnd(3)), static_cast<HPDF_REAL>(hb_parnd(4)), static_cast<HPDF_REAL>(hb_parnd(5)))));
 }
 
-/* HPDF_Destination_SetFitB( hDestn ) --> hStatus */
+/* HPDF_Destination_SetFitB(hDestn) --> hStatus */
 HB_FUNC(HPDF_DESTINATION_SETFITB)
 {
   hb_retnl(static_cast<long>(HPDF_Destination_SetFitB(static_cast<HPDF_Destination>(hb_parptr(1)))));

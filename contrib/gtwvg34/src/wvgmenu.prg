@@ -108,12 +108,12 @@ METHOD WvgMenu:Popup( oXbp, aPos, nDefaultItem, nControl )
 
    LOCAL nCmd, aMenuItem
 
-   HB_SYMBOL_UNUSED( nDefaultItem )
-   HB_SYMBOL_UNUSED( nControl )
+   HB_SYMBOL_UNUSED(nDefaultItem)
+   HB_SYMBOL_UNUSED(nControl)
 
    nCmd := wvg_TrackPopupMenu( ::hMenu, WIN_TPM_LEFTALIGN + WIN_TPM_TOPALIGN + WIN_TPM_RETURNCMD, aPos[ 1 ], aPos[ 2 ], oXbp:hWnd )
 
-   aMenuItem := ::findMenuItemById( nCmd )
+   aMenuItem := ::findMenuItemById(nCmd)
    IF HB_IsArray( aMenuItem ) .AND. HB_IsEvalItem( aMenuItem[ 2 ] )
       Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
    ENDIF

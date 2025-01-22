@@ -214,7 +214,7 @@ static HB_FATTR hb_translateExtAttr(const char * szFileName, HB_FATTR ulExtAttr)
 }
 
 /* hb_zipOpen(cFileName, [iMode = HB_ZIP_CREATE], [@cGlobalComment]) --> hZip */
-HB_FUNC( HB_ZIPOPEN )
+HB_FUNC(HB_ZIPOPEN)
 {
    auto szFileName = hb_parc(1);
 
@@ -243,7 +243,7 @@ HB_FUNC( HB_ZIPOPEN )
 }
 
 /* hb_zipClose(hZip, [cGlobalComment]) --> nError */
-HB_FUNC( HB_ZIPCLOSE )
+HB_FUNC(HB_ZIPCLOSE)
 {
    auto phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, 1));
 
@@ -261,7 +261,7 @@ HB_FUNC( HB_ZIPCLOSE )
                     [nMethod = HB_ZLIB_METHOD_DEFLATE],
                     [nLevel = HB_ZLIB_COMPRESSION_DEFAULT],
                     [cPassword, ulFileCRC32], [cComment], [lUnicode]) --> nError */
-HB_FUNC( HB_ZIPFILECREATE )
+HB_FUNC(HB_ZIPFILECREATE)
 {
    auto szZipName = hb_parc(2);
 
@@ -332,7 +332,7 @@ HB_FUNC( HB_ZIPFILECREATE )
 }
 
 /* hb_zipFileWrite(hZip, cData [, nLen ]) --> nError */
-HB_FUNC( HB_ZIPFILEWRITE )
+HB_FUNC(HB_ZIPFILEWRITE)
 {
    auto pData = hb_parc(2);
 
@@ -356,7 +356,7 @@ HB_FUNC( HB_ZIPFILEWRITE )
 }
 
 /* hb_zipFileClose(hZip) --> nError */
-HB_FUNC( HB_ZIPFILECLOSE )
+HB_FUNC(HB_ZIPFILECLOSE)
 {
    auto hZip = hb_zipfileParam(1);
 
@@ -366,7 +366,7 @@ HB_FUNC( HB_ZIPFILECLOSE )
 }
 
 /* hb_unzipOpen(cFileName) --> hUnzip */
-HB_FUNC( HB_UNZIPOPEN )
+HB_FUNC(HB_UNZIPOPEN)
 {
    auto szFileName = hb_parc(1);
 
@@ -390,7 +390,7 @@ HB_FUNC( HB_UNZIPOPEN )
 }
 
 /* hb_unzipClose(hUnzip) --> nError */
-HB_FUNC( HB_UNZIPCLOSE )
+HB_FUNC(HB_UNZIPCLOSE)
 {
    auto phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, 1));
 
@@ -405,7 +405,7 @@ HB_FUNC( HB_UNZIPCLOSE )
 }
 
 /* hb_unzipGlobalInfo(hUnzip, @nEntries, @cGlobalComment) --> nError */
-HB_FUNC( HB_UNZIPGLOBALINFO )
+HB_FUNC(HB_UNZIPGLOBALINFO)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -444,7 +444,7 @@ HB_FUNC( HB_UNZIPGLOBALINFO )
 }
 
 /* hb_unzipFileFirst(hUnzip) --> nError */
-HB_FUNC( HB_UNZIPFILEFIRST )
+HB_FUNC(HB_UNZIPFILEFIRST)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -454,7 +454,7 @@ HB_FUNC( HB_UNZIPFILEFIRST )
 }
 
 /* hb_unzipFileNext(hUnzip) --> nError */
-HB_FUNC( HB_UNZIPFILENEXT )
+HB_FUNC(HB_UNZIPFILENEXT)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -464,7 +464,7 @@ HB_FUNC( HB_UNZIPFILENEXT )
 }
 
 /* hb_unzipFilePos(hUnzip) --> nPosition */
-HB_FUNC( HB_UNZIPFILEPOS )
+HB_FUNC(HB_UNZIPFILEPOS)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -474,7 +474,7 @@ HB_FUNC( HB_UNZIPFILEPOS )
 }
 
 /* hb_unzipFileGoto(hUnzip, nPosition) --> nError */
-HB_FUNC( HB_UNZIPFILEGOTO )
+HB_FUNC(HB_UNZIPFILEGOTO)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -487,7 +487,7 @@ HB_FUNC( HB_UNZIPFILEGOTO )
                     @nInternalAttr, @nExternalAttr,
                     @nMethod, @nSize, @nCompressedSize,
                     @lCrypted, @cComment, @nCRC) --> nError */
-HB_FUNC( HB_UNZIPFILEINFO )
+HB_FUNC(HB_UNZIPFILEINFO)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -560,7 +560,7 @@ HB_FUNC( HB_UNZIPFILEINFO )
 }
 
 /* hb_unzipFileOpen(hUnzip, [cPassword]) --> nError */
-HB_FUNC( HB_UNZIPFILEOPEN )
+HB_FUNC(HB_UNZIPFILEOPEN)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -570,7 +570,7 @@ HB_FUNC( HB_UNZIPFILEOPEN )
 }
 
 /* hb_unzipFileRead(hUnzip, @cBuf [, nLen ]) --> nRead */
-HB_FUNC( HB_UNZIPFILEREAD )
+HB_FUNC(HB_UNZIPFILEREAD)
 {
    auto pBuffer = hb_param(2, Harbour::Item::STRING);
    char *   buffer;
@@ -595,7 +595,7 @@ HB_FUNC( HB_UNZIPFILEREAD )
 }
 
 /* hb_unzipFileClose(hUnzip) --> nError */
-HB_FUNC( HB_UNZIPFILECLOSE )
+HB_FUNC(HB_UNZIPFILECLOSE)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -670,7 +670,7 @@ static HB_BOOL hb_zipGetFileInfo(const char * pszFileName, HB_U32 * pulCRC, HB_B
 }
 
 /* hb_zipFileCRC32(cFileName) --> nCRC */
-HB_FUNC( HB_ZIPFILECRC32 )
+HB_FUNC(HB_ZIPFILECRC32)
 {
    auto szFileName = hb_parc(1);
 
@@ -925,7 +925,7 @@ static int hb_zipStoreFile(zipFile hZip, int iParamFileName, int iParamZipName, 
 }
 
 /* hb_zipStoreFile(hZip, cFileName, [cZipName], [cPassword], [cComment], [lUnicode]) --> nError */
-HB_FUNC( HB_ZIPSTOREFILE )
+HB_FUNC(HB_ZIPSTOREFILE)
 {
    if( hb_parc(2) ) {
       auto hZip = hb_zipfileParam(1);
@@ -1021,7 +1021,7 @@ static int hb_zipStoreFileHandle(zipFile hZip, PHB_FILE pFile, int iParamZipName
 }
 
 /* hb_zipStoreFileHandle(hZip, fhnd, cZipName, [cPassword], [cComment], [lUnicode]) --> nError */
-HB_FUNC( HB_ZIPSTOREFILEHANDLE )
+HB_FUNC(HB_ZIPSTOREFILEHANDLE)
 {
    if( HB_ISCHAR(3) ) {
       auto hZip = hb_zipfileParam(1);
@@ -1217,7 +1217,7 @@ static int hb_unzipExtractCurrentFile(unzFile hUnzip, const char * szFileName, c
 }
 
 /* hb_unzipExtractCurrentFile(hZip, [cFileName], [cPassword]) --> nError */
-HB_FUNC( HB_UNZIPEXTRACTCURRENTFILE )
+HB_FUNC(HB_UNZIPEXTRACTCURRENTFILE)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -1281,7 +1281,7 @@ static int hb_unzipExtractCurrentFileToHandle(unzFile hUnzip, PHB_FILE pFile, co
 }
 
 /* hb_unzipExtractCurrentFileToHandle(hZip, fhnd, [cPassword]) --> nError */
-HB_FUNC( HB_UNZIPEXTRACTCURRENTFILETOHANDLE )
+HB_FUNC(HB_UNZIPEXTRACTCURRENTFILETOHANDLE)
 {
    auto hUnzip = hb_unzipfileParam(1);
 
@@ -1510,7 +1510,7 @@ static int hb_zipDeleteFile(const char * szZipFile, const char * szFileMask)
 }
 
 /* hb_zipDeleteFile(cZipFile, cFileMask) --> nError */
-HB_FUNC( HB_ZIPDELETEFILE )
+HB_FUNC(HB_ZIPDELETEFILE)
 {
    auto szZipFile = hb_parc(1);
    auto szFileMask = hb_parc(2);

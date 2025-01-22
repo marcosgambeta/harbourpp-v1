@@ -12,7 +12,7 @@ STATIC s_lSizeReady := .F.
 
 PROCEDURE Main()
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -30,7 +30,7 @@ PROCEDURE Main()
    wvw_Maximize(0)
 
    updatescr()
-   DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
+   DO WHILE hb_keyStd(Inkey(0)) != K_ESC
       // refresh screen, probably in a new dimension
       // (You may alternatively call updatescr() from WVW_SIZE() instead)
       updatescr()
@@ -80,9 +80,9 @@ PROCEDURE WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )  /* must be a publi
    LOCAL lNeedReset
    LOCAL maxsavedscrrow, maxsavedscrcol
 
-   HB_SYMBOL_UNUSED( message )
-   HB_SYMBOL_UNUSED( hWnd )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(message)
+   HB_SYMBOL_UNUSED(hWnd)
+   HB_SYMBOL_UNUSED(lParam)
 
    IF !s_lSizeReady
       // program is not ready to handle window resizing

@@ -338,10 +338,10 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    IF lPressed // ::lPressed
       IF ::nType != _BUTTON_HARD
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cPressedColor ) ), ::lTight )
-         wvw_DrawBoxRecessed( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight )  // wvw
+         wvw_DrawBoxRecessed(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)  // wvw
       ELSE
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
-         wvw_DrawBoxRaised(   nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight )
+         wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ENDIF
 
       IF lUseImage .AND. ::nType != _BUTTON_NONE
@@ -356,7 +356,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
-         wvw_DrawBoxRaised( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight )
+         wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ELSE
          // must undraw the box. ideally GTWVW has this function
          wvw_DrawBoxGroup( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2 )
@@ -399,7 +399,7 @@ FUNCTION wvwm_paint( nWinNum )
 FUNCTION wvwm_ResetMouseObjects( nWinNum )
 
    DO WHILE Len(s_amouseobjlist) < nWinNum + 1
-      AAdd( s_amouseobjlist, {} )
+      AAdd(s_amouseobjlist, {})
    ENDDO
    s_amouseobjlist[ nWinNum + 1 ] := {}
 
@@ -409,7 +409,7 @@ FUNCTION wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 
    // adds a mouse object oMouse into window nWinNum
    hb_default( @nObjType, _MOBJECT_BUTTON )
-   AAdd( s_amouseobjlist[ nWinNum + 1 ], { nObjType, oMouse } )
+   AAdd(s_amouseobjlist[ nWinNum + 1 ], { nObjType, oMouse })
 
    RETURN .T.
 
@@ -431,7 +431,7 @@ FUNCTION wvwm_SetKeyRepeater( lSet )
    IF lSet != NIL
       IF lSet
          IF !lWasSet
-            s_nkeyrepeater := hb_idleAdd( {|| xKeyRepeater() } )
+            s_nkeyrepeater := hb_idleAdd({|| xKeyRepeater() })
          ENDIF
       ELSE
          IF lWasSet
@@ -491,7 +491,7 @@ STATIC FUNCTION nScrollChecker( nKey, cType, oMouseObj )
 
    // cType == "H" or "V"
 
-   HB_SYMBOL_UNUSED( cType )
+   HB_SYMBOL_UNUSED(cType)
 
    nButtonChecker( nkey, oMouseObj:oFirstButton )
    nButtonChecker( nkey, oMouseObj:oRail1Button )

@@ -74,7 +74,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_ISPRINT )
+HB_FUNC(FT_ISPRINT)
 {
    const char * pszPort;
 

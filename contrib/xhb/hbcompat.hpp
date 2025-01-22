@@ -57,7 +57,7 @@
 
    #define hb_retc_buffer( szText )            hb_retcAdopt( ( szText ) )
    #define hb_retclen_buffer( szText, nLen )   hb_retclenAdopt( ( szText ), ( nLen ) )
-   #define hb_retc_const( szText )             hb_retcStatic( ( szText ) )
+   #define hb_retc_const( szText )             hb_retcStatic((szText))
 
    #define hb_storclen_buffer                  hb_storclenAdopt
    #define hb_itemPutCLConst                   hb_itemPutCRawStatic
@@ -102,7 +102,7 @@
 
    #define hb_retcAdopt( szText )              hb_retc_buffer( ( szText ) )
    #define hb_retclenAdopt( szText, nLen )     hb_retclen_buffer( ( szText ), ( nLen ) )
-   #define hb_retcStatic( szText )             hb_retc_const( ( szText ) )
+   #define hb_retcStatic(szText)               hb_retc_const((szText))
 
    #define hb_storclenAdopt                    hb_storclen_buffer
    #define hb_itemPutCRawStatic                hb_itemPutCLConst

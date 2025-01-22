@@ -149,7 +149,7 @@ METHOD WvgToolBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 #endif
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -257,9 +257,9 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 
    LOCAL oBtn, pBitmap, nBtn
 
-   HB_SYMBOL_UNUSED( xDisabledImage )
-   HB_SYMBOL_UNUSED( xHotImage )
-   HB_SYMBOL_UNUSED( cDLL )
+   HB_SYMBOL_UNUSED(xDisabledImage)
+   HB_SYMBOL_UNUSED(xHotImage)
+   HB_SYMBOL_UNUSED(cDLL)
 
    // Issue this at the beginning of first item
    IF !::lSized
@@ -301,9 +301,9 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
       // oBtn:image := pBitmap
 
       IF HB_IsNumeric(nMapRGB)
-         nBtn := wapi_ImageList_AddMasked( ::hImageList, pBitmap, nMapRGB )
+         nBtn := wapi_ImageList_AddMasked(::hImageList, pBitmap, nMapRGB)
       ELSE
-         nBtn := wapi_ImageList_Add( ::hImageList, pBitmap )
+         nBtn := wapi_ImageList_Add(::hImageList, pBitmap)
       ENDIF
       IF !HB_IsPointer( xImage )
          wvg_DeleteObject( pBitmap )
@@ -323,7 +323,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 
    ENDIF
 
-   AAdd( ::aItems, { oBtn:command, oBtn } )
+   AAdd(::aItems, { oBtn:command, oBtn })
 
    RETURN oBtn
 

@@ -8,7 +8,7 @@
 
 PROCEDURE Main()
 
-#if defined( __PLATFORM__WINDOWS )
+#if defined(__PLATFORM__WINDOWS)
 
    LOCAL nFlags
 

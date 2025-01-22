@@ -75,7 +75,7 @@ CREATE CLASS Wvg3State INHERIT WvgWindow, WvgDataRef
    METHOD setCaption( xCaption )
 
    ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected( bBlock )                    INLINE ::sl_lbClick := bBlock
+   ASSIGN selected(bBlock)                    INLINE ::sl_lbClick := bBlock
 
    METHOD handleEvent( nMessage, aNM )
 
@@ -95,7 +95,7 @@ METHOD Wvg3State:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 

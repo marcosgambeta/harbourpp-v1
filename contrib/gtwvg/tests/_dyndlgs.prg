@@ -129,7 +129,7 @@ FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       DO CASE
 
       CASE wParam == ID_CHK_SATIS
-         lClicked := ( wvg_IsDlgButtonChecked( hDlg, ID_CHK_SATIS ) == 1 )
+         lClicked := ( wvg_IsDlgButtonChecked(hDlg, ID_CHK_SATIS) == 1 )
          wvg_MessageBox( hDlg, iif(lClicked, "Satisfied", "UnSatisfied"), "CheckBoxStatus" )
 
       CASE wParam == ID_RDO_XH
@@ -147,16 +147,16 @@ FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       CASE wParam == ID_MNU_CONTROL
          wvg_MessageBox( hDlg, "Controls are from Windows!", "Controls" )
 
-      CASE wvg_LOWORD( wParam ) == ID_LST_LIST
-         IF wvg_HIWORD( wParam ) == LBN_SELCHANGE
+      CASE wvg_LOWORD(wParam) == ID_LST_LIST
+         IF wvg_HIWORD(wParam) == LBN_SELCHANGE
             nIndex  := wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_LST_LIST ), LB_GETCURSEL, 0, 0 )
             cPrompt := Space( 20 )
             wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_LST_LIST ), LB_GETTEXT, nIndex, @cPrompt )
             wvg_MessageBox( hDlg, cPrompt, "ListBox" )
          ENDIF
 
-      CASE wvg_LOWORD( wParam ) == ID_CMB_COMBO
-         IF wvg_HIWORD( wParam ) == CBN_SELCHANGE
+      CASE wvg_LOWORD(wParam) == ID_CMB_COMBO
+         IF wvg_HIWORD(wParam) == CBN_SELCHANGE
             nIndex  := wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_CMB_COMBO ), CB_GETCURSEL, 0, 0 )
             cPrompt := Space( 20 )
             wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_CMB_COMBO ), CB_GETLBTEXT, nIndex, @cPrompt )
@@ -296,8 +296,8 @@ FUNCTION DlgSlideShowProc(hDlg, nMsg, wParam, lParam)
 
    THREAD STATIC t_nSlide := 1
 
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
 
    SWITCH nMsg
 

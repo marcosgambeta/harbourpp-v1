@@ -63,7 +63,7 @@ static HB_ERRCODE s_waList(AREAP pArea, void * Cargo)
    return Harbour::SUCCESS;
 }
 
-HB_FUNC( WORKSPACELIST )
+HB_FUNC(WORKSPACELIST)
 {
    PHB_ITEM pArray;
 

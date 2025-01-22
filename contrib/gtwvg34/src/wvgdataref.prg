@@ -108,7 +108,7 @@ METHOD WvgDataRef:getData()
       IF ::oParent:className() == "COMBOBOX"
          ::sl_editBuffer := {}
          FOR i := 1 TO ::numItems()
-            AAdd( ::sl_editBuffer, ::getItem( i ) )
+            AAdd(::sl_editBuffer, ::getItem( i ))
          NEXT
       ELSE
          ::sl_editBuffer := wvg_lbGetCurSel( ::hWnd ) + 1
@@ -127,7 +127,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
 
    LOCAL s
 
-   HB_SYMBOL_UNUSED( mp2 )
+   HB_SYMBOL_UNUSED(mp2)
 
    IF HB_IsEvalItem( ::dataLink )
       ::sl_editBuffer := Eval( ::dataLink  )

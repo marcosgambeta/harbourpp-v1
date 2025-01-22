@@ -22,7 +22,7 @@
 #include <hbapi.hpp>
 #include <hbapigt.hpp>
 
-HB_FUNC( FT_SAVEATT )
+HB_FUNC(FT_SAVEATT)
 {
    auto iTop    = hb_parni(1);        /* Defaults to zero on bad type */
    auto iLeft   = hb_parni(2);        /* Defaults to zero on bad type */
@@ -100,7 +100,7 @@ HB_FUNC( FT_SAVEATT )
  *
  */
 
-HB_FUNC( FT_RESTATT )
+HB_FUNC(FT_RESTATT)
 {
    auto nLen = hb_parclen(5);
 

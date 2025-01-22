@@ -84,7 +84,7 @@ HB_FUNC(WVT_CORE)
 void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE *sBuffer, HB_BYTE *sAttrib)
 {
 #if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_wvt_GetStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right, (void *)sBuffer,
+  HB_TRACE(HB_TR_DEBUG, ("hb_wvt_GetStringAttrib(%d, %d, %d, %d, %p, %p)", top, left, bottom, right, (void *)sBuffer,
                          (void *)sAttrib));
 #endif
 
@@ -113,7 +113,7 @@ void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE *s
 void hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE *sBuffer, HB_BYTE *sAttrib)
 {
 #if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_wvt_PutStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right, (void *)sBuffer,
+  HB_TRACE(HB_TR_DEBUG, ("hb_wvt_PutStringAttrib(%d, %d, %d, %d, %p, %p)", top, left, bottom, right, (void *)sBuffer,
                          (void *)sAttrib));
 #endif
 
@@ -947,7 +947,7 @@ HB_FUNC(WVT_DRAWBOXGET)
 #endif
 }
 
-// wvt_DrawBoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff )
+// wvt_DrawBoxRaised(nTop, nLeft, nBottom, nRight, aPxlOff)
 HB_FUNC(WVT_DRAWBOXRAISED)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -966,7 +966,7 @@ HB_FUNC(WVT_DRAWBOXRAISED)
 #endif
 }
 
-// wvt_DrawBoxRecessed( nTop, nLeft, nBottom, nRight, aPxlOff )
+// wvt_DrawBoxRecessed(nTop, nLeft, nBottom, nRight, aPxlOff)
 HB_FUNC(WVT_DRAWBOXRECESSED)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -1004,7 +1004,7 @@ HB_FUNC(WVT_DRAWBOXGROUP)
 #endif
 }
 
-// wvt_DrawBoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff )
+// wvt_DrawBoxRaised(nTop, nLeft, nBottom, nRight, aPxlOff)
 HB_FUNC(WVT_DRAWBOXGROUPRAISED)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();

@@ -411,7 +411,7 @@ STATIC FUNCTION ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
       RETURN Alias() + "->RecNo() == " + hb_ntos( RecNo() )
    CASE "PUTVALUE"
       // Parameters received: xPar1: nField, xPar2: xValue, xPar3: xOldValue
-      HB_SYMBOL_UNUSED( xPar3 ) // Here don't log previous value
+      HB_SYMBOL_UNUSED(xPar3) // Here don't log previous value
       RETURN Alias() + "(" + hb_ntos( RecNo() ) + ")->" + PadR( FieldName( xPar1 ), 10 ) + " := " + hb_LogRddValueToText( xPar2 )
    CASE "ZAP"
       // Parameters received: none

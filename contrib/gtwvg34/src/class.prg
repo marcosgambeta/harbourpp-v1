@@ -123,7 +123,7 @@ METHOD TBrowseWvg:SetVisible()
                nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
             ENDIF
 
-            AAdd( ::aColumnsSep, nColPos )
+            AAdd(::aColumnsSep, nColPos)
          ENDIF
       ENDIF
    NEXT

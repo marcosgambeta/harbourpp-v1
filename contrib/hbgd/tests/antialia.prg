@@ -51,7 +51,7 @@ PROCEDURE Main()
    gdImageLine( im, 0, 0, 99, 40, blue )
 
    /* Then we set anti-alias color */
-   gdImageSetAntiAliased( im, blue )
+   gdImageSetAntiAliased(im, blue)
 
    /* and re-draw the line in antialiased mode */
    gdImageLine( im, 0, 40, 99, 80, gdAntiAliased )
@@ -75,7 +75,7 @@ PROCEDURE Main()
    gdImageLine( im, 0, 0, 99, 40, blue )
 
    /* Then we set anti-alias color */
-   gdImageSetAntiAliased( im, blue )
+   gdImageSetAntiAliased(im, blue)
 
    /* and re-draw the line in antialiased mode */
    gdImageLine( im, 0, 40, 99, 80, gdAntiAliased )

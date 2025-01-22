@@ -52,7 +52,7 @@
 #include <hbapiitm.hpp>
 #include <hbapirdd.hpp>
 
-HB_FUNC( INDEXCOUNT )
+HB_FUNC(INDEXCOUNT)
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -68,7 +68,7 @@ HB_FUNC( INDEXCOUNT )
       hb_retni(0);
 }
 
-HB_FUNC( INDEXNAMES )
+HB_FUNC(INDEXNAMES)
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 

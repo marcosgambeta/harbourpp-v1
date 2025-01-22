@@ -216,8 +216,8 @@ METHOD TMySQLRow:MakePrimaryKeyWhere()
    FOR nI := 1 TO Len(::aFieldStruct)
 
       // search for fields part of a primary key
-      IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
-         hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG ) == MULTIPLE_KEY_FLAG
+      IF hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG) == PRI_KEY_FLAG .OR. ;
+         hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG) == MULTIPLE_KEY_FLAG
 
          IF !Empty(cWhere)
             cWhere += " AND "
@@ -328,8 +328,8 @@ METHOD TMySQLQuery:New( nSocket, cQuery )
          ::aRow := Array( ::nNumFields )
 
          FOR nI := 1 TO ::nNumFields
-            aField := mysql_fetch_field( ::nResultHandle )
-            AAdd( ::aFieldStruct, aField )
+            aField := mysql_fetch_field(::nResultHandle)
+            AAdd(::aFieldStruct, aField)
             IF ::lFieldAsData
                __objAddData(Self, ::aFieldStruct[ nI ][ MYSQL_FS_NAME ])
             ENDIF
@@ -493,7 +493,7 @@ METHOD TMySQLQuery:GetRow( nRow )
                   ::aRow[ i ] := hb_SToD()
                ELSE
                   // Date format YYYY-MM-DD
-                  ::aRow[ i ] := hb_SToD( Left(::aRow[ i ], 4) + SubStr(::aRow[ i ], 6, 2) + Right(::aRow[ i ], 2) )
+                  ::aRow[ i ] := hb_SToD(Left(::aRow[ i ], 4) + SubStr(::aRow[ i ], 6, 2) + Right(::aRow[ i ], 2))
                ENDIF
                EXIT
 
@@ -679,7 +679,7 @@ CREATE CLASS TMySQLTable INHERIT TMySQLQuery
    METHOD Save() INLINE ::Update()
 
    METHOD Delete( oRow, lOldRecord, lRefresh )      // Deletes passed row from table
-   METHOD Append( oRow, lRefresh )                  // Inserts passed row into table
+   METHOD Append(oRow, lRefresh)                  // Inserts passed row into table
    METHOD GetBlankRow( lSetValues )                 // Returns an empty row with all available fields empty
    METHOD SetBlankRow() INLINE ::GetBlankRow(.T.)   // Compatibility
 
@@ -701,7 +701,7 @@ METHOD TMySQLTable:New( nSocket, cQuery, cTableName )
    ::aOldValue := {}
 
    FOR i := 1 TO ::nNumFields
-      AAdd( ::aOldValue, ::FieldGet( i ) )
+      AAdd(::aOldValue, ::FieldGet( i ))
    NEXT
 
    RETURN Self
@@ -717,7 +717,7 @@ METHOD TMySQLTable:GetRow( nRow )
    ::aOldvalue := {}
    FOR i := 1 TO ::nNumFields
       // ::aOldValue[ i ] := ::FieldGet( i )
-      AAdd( ::aOldvalue, ::FieldGet( i ) )
+      AAdd(::aOldvalue, ::FieldGet( i ))
    NEXT
 
    RETURN oRow
@@ -929,7 +929,7 @@ METHOD TMySQLTable:Delete( oRow, lOldRecord, lRefresh )
    RETURN ! ::lError
 
 // Adds a row with values passed into oRow
-METHOD TMySQLTable:Append( oRow, lRefresh )
+METHOD TMySQLTable:Append(oRow, lRefresh)
 
    LOCAL cInsertQuery := "INSERT INTO " + ::cTable + " ("
    LOCAL i
@@ -1155,8 +1155,8 @@ METHOD TMySQLTable:MakePrimaryKeyWhere()
    FOR nI := 1 TO Len(::aFieldStruct)
 
       // search for fields part of a primary key
-      IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
-         hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG ) == MULTIPLE_KEY_FLAG
+      IF hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG) == PRI_KEY_FLAG .OR. ;
+         hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG) == MULTIPLE_KEY_FLAG
 
          IF !Empty(cWhere)
             cWhere += " AND "
@@ -1488,7 +1488,7 @@ METHOD TMySQLServer:TableStruct( cTable )
 
    LOCAL aStruct := {}
 
-   HB_SYMBOL_UNUSED( cTable )
+   HB_SYMBOL_UNUSED(cTable)
 
 #if 0
    /* TODO: rewrite for MySQL */
@@ -1500,7 +1500,7 @@ METHOD TMySQLServer:TableStruct( cTable )
    IF !Empty(nRes)
       FOR i := 1 TO mysql_num_fields( nRes )
 
-         aField := mysql_fetch_field( nRes )
+         aField := mysql_fetch_field(nRes)
          aSField := Array( DBS_DEC )
 
          // don't count indexes as real fields
@@ -1549,7 +1549,7 @@ METHOD TMySQLServer:TableStruct( cTable )
 
             ENDSWITCH
 
-            AAdd( aStruct, aSField )
+            AAdd(aStruct, aSField)
          ENDIF
       NEXT
    ENDIF

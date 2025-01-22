@@ -56,7 +56,7 @@ HB_EXTERN_BEGIN
 extern int cSend(const char * szCmd);
 HB_EXTERN_END
 
-HB_FUNC( HB_BLATSEND )
+HB_FUNC(HB_BLATSEND)
 {
    if( HB_ISCHAR(1) )
       hb_retni(cSend(hb_parc(1)));

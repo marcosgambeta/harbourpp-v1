@@ -126,7 +126,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
 
       DO CASE
       CASE wParam == ID_CHK_SATIS
-         lClicked := ( wapi_IsDlgButtonChecked( hDlg, ID_CHK_SATIS ) == 1 )
+         lClicked := ( wapi_IsDlgButtonChecked(hDlg, ID_CHK_SATIS) == 1 )
          wapi_MessageBox( hDlg, iif(lClicked, "Satisfied", "UnSatisfied"), "CheckBoxStatus" )
 
       CASE wParam == ID_RDO_XH
@@ -144,16 +144,16 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       CASE wParam == ID_MNU_CONTROL
          wapi_MessageBox( hDlg, "Controls are from Windows!", "Controls" )
 
-      CASE wapi_LOWORD( wParam ) == ID_LST_LIST
-         IF wapi_HIWORD( wParam ) == LBN_SELCHANGE
+      CASE wapi_LOWORD(wParam) == ID_LST_LIST
+         IF wapi_HIWORD(wParam) == LBN_SELCHANGE
             nIndex  := wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_LST_LIST ), LB_GETCURSEL, 0, 0 )
             cPrompt := Space( 20 )
             wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_LST_LIST ), LB_GETTEXT, nIndex, @cPrompt )
             wapi_MessageBox( hDlg, cPrompt, "ListBox" )
          ENDIF
 
-      CASE wapi_LOWORD( wParam ) == ID_CMB_COMBO
-         IF wapi_HIWORD( wParam ) == CBN_SELCHANGE
+      CASE wapi_LOWORD(wParam) == ID_CMB_COMBO
+         IF wapi_HIWORD(wParam) == CBN_SELCHANGE
             nIndex  := wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_CMB_COMBO ), CB_GETCURSEL, 0, 0 )
             cPrompt := Space( 20 )
             wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_CMB_COMBO ), CB_GETLBTEXT, nIndex, @cPrompt )
@@ -297,8 +297,8 @@ STATIC FUNCTION DlgSlideShowProc(hDlg, nMsg, wParam, lParam)
 
    THREAD STATIC t_nSlide := 1
 
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
 
    SWITCH nMsg
 

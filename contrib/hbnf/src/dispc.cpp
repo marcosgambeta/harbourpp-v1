@@ -539,7 +539,7 @@ static void filebot( PFT_DISPC dispc )
    win_align(dispc);
 }
 
-HB_FUNC( _FT_DFINIT )
+HB_FUNC(_FT_DFINIT)
 {
    auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
@@ -677,7 +677,7 @@ HB_FUNC( _FT_DFINIT )
    hb_retni(rval);
 }
 
-HB_FUNC( _FT_DFCLOS )
+HB_FUNC(_FT_DFCLOS)
 {
    auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
@@ -698,7 +698,7 @@ HB_FUNC( _FT_DFCLOS )
    }
 }
 
-HB_FUNC( FT_DISPFILE )
+HB_FUNC(FT_DISPFILE)
 {
    auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 

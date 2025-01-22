@@ -307,7 +307,7 @@ HB_FUNC(WIN_GETCLIENTRECT)
  */
 
 /* sorry, not supported in GTWVW
-   HB_FUNC( WIN_DRAWIMAGE )
+   HB_FUNC(WIN_DRAWIMAGE)
    {
    hb_retl(hb_wvt_DrawImage( ( HDC ) hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parc(6) ));
    }
@@ -1038,7 +1038,7 @@ HB_FUNC(RGB)
 }
 
 #if 0
-HB_FUNC( GETSYSCOLOR ) // TODO: deprecated (using waGetSysColor from WinApi library)
+HB_FUNC(GETSYSCOLOR) // TODO: deprecated (using waGetSysColor from WinApi library)
 {
    hb_retnl(static_cast<LONG>(GetSysColor(hb_parni(1))));
 }
@@ -1758,7 +1758,7 @@ HB_FUNC(WVW_CHOOSECOLOR)
 }
 
 /*wvw_SetMousePos( nWinNum, nRow, nCol ) nWinNum is 0 based        */
-/*WHAT'S the difference with GT_FUNC( mouse_SetPos ) ???           */
+/*WHAT'S the difference with GT_FUNC(mouse_SetPos) ???           */
 /*this func is able to position cursor on any window               */
 
 /*NOTE: consider using 'standard' SetMouse() instead:     */
@@ -2515,7 +2515,7 @@ HB_FUNC(WVW_CREATEFONT)
 }
 
 #if 0
-HB_FUNC( WVW_GETKEYSTATE ) // TODO: deprecated (using waGetKeyState from WinApi library)
+HB_FUNC(WVW_GETKEYSTATE) // TODO: deprecated (using waGetKeyState from WinApi library)
 {
    hb_retni(GetKeyState(hb_parni(1)));
 }

@@ -341,7 +341,7 @@ static PHB_FILE hb_fileFromPipeHandle( HB_FHANDLE hProcess, HB_FHANDLE hPipeRD, 
 
 /* hb_vfFromPipes( [<hReads>], [<hWrite>], [<hProcess>], [<nTimeout>] )
          --> <pHandle> | NIL */
-HB_FUNC( HB_VFFROMPIPES )
+HB_FUNC(HB_VFFROMPIPES)
 {
    HB_FHANDLE hPipeRD = hb_numToHandle(hb_parnintdef(1, FS_ERROR));
    HB_FHANDLE hPipeWR = hb_numToHandle(hb_parnintdef(2, FS_ERROR));
@@ -353,7 +353,7 @@ HB_FUNC( HB_VFFROMPIPES )
 
 /* hb_vfOpenProcess( <cCommand>, [<nMode>=FO_READ], [<nTimeout>], [<lDetach>] )
          --> <pHandle> | NIL */
-HB_FUNC( HB_VFOPENPROCESS )
+HB_FUNC(HB_VFOPENPROCESS)
 {
    auto pszCommand = hb_parc(1);
    HB_FATTR nMode = hb_parnldef(2, FO_READ);
@@ -368,7 +368,7 @@ HB_FUNC( HB_VFOPENPROCESS )
       hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
 }
 
-HB_FUNC( HB_PIPEIO ) { ; }
+HB_FUNC(HB_PIPEIO) { ; }
 
 HB_CALL_ON_STARTUP_BEGIN(_hb_file_pipeio_init_)
    hb_fileRegisterPart(&s_fileFuncs);
@@ -377,6 +377,6 @@ HB_CALL_ON_STARTUP_END(_hb_file_pipeio_init_)
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_pipeio_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_file_pipeio_init_ )
+   #define HB_DATASEG_BODY  HB_DATASEG_FUNC(_hb_file_pipeio_init_)
    #include "hbiniseg.hpp"
 #endif

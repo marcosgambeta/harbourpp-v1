@@ -59,7 +59,7 @@ PROCEDURE Main()
       ? "Try with -? option"
    ELSE
       ? "Sending parameters to blat"
-      nRet := hb_blatSend( cCmd )
+      nRet := hb_blatSend(cCmd)
       ? nRet
    ENDIF
 

@@ -112,7 +112,7 @@ PROCEDURE Main()
 
    color := oI:GetPixel( oI:Width() / 2, oI:Height() / 2 )
    ? "Pixel Color is: ", color
-   ? "RGB Values: ", oI:Red( color ), oI:Green( color ), oI:Blue( color )
+   ? "RGB Values: ", oI:Red(color), oI:Green( color ), oI:Blue( color )
    ? "Alpha Value: ",  oI:Alpha(color)
 
    /* Write Images on files */
@@ -125,13 +125,13 @@ PROCEDURE Main()
    /* test copy functions */
 
    // oI3 := GDImage():CreateTrueColor( oI2:Width * 2, oI2:Height * 2 )
-   // oI2:CopyResampled( 0, 0, oI2:Width, oI2:Height, 0, 0, oI3:Width, oI3:Height, oI3 )
+   // oI2:CopyResampled(0, 0, oI2:Width, oI2:Height, 0, 0, oI3:Width, oI3:Height, oI3)
    // oI3:SaveJpeg("vale2.jpg")
 
 
    nSecs := Seconds()
    ? "start copy zoomed"
-   oI3 := oI2:CopyZoomed( 150 )
+   oI3 := oI2:CopyZoomed(150)
    ? "end", Seconds() - nSecs
    nSecs := Seconds()
    ? "start save"
@@ -160,7 +160,7 @@ PROCEDURE Main()
 
    // oI4:SetColor( black )
    // oI4:Say( 100, 10, "Valentina" )
-#if defined( __PLATFORM__UNIX )
+#if defined(__PLATFORM__UNIX)
    oI4:SayFreeType( oI4:CenterWidth(), oI4:CenterHeight(), "GD power", "arib____", 40, 45 )
 #else
    nSecs := Seconds()
@@ -189,7 +189,7 @@ PROCEDURE Main()
    ? "start rotate inside"
    oI4:RotateInside( 45 )
    ? "end", Seconds() - nSecs
-   // oI2:CopyRotated( , , , , , , 90, oI4 )
+   // oI2:CopyRotated(, , , , , , 90, oI4)
    oI4:SaveJpeg( IMAGES_OUT + "rotatein.jpg" )
 
 
@@ -288,8 +288,8 @@ PROCEDURE Main()
    oI5:SaveJpeg( IMAGES_OUT + "hystogrm.jpg" )
 
    // oI4 := GDImage():CreateTrueColor( oI2:Width * 2, oI2:Height * 2 )
-   // oI2:CopyResampled( 0, 0, oI2:Width, oI2:Height, 0, 0, oI2:Width, oI2:Height, oI4 )
-   // oI2:CopyResampled( 0, 0, oI2:Width, oI2:Height, oI4:CenterWidth(), oI4:CenterHeight(), oI2:Width, oI2:Height, oI4 )
+   // oI2:CopyResampled(0, 0, oI2:Width, oI2:Height, 0, 0, oI2:Width, oI2:Height, oI4)
+   // oI2:CopyResampled(0, 0, oI2:Width, oI2:Height, oI4:CenterWidth(), oI4:CenterHeight(), oI2:Width, oI2:Height, oI4)
    // oI4:SaveJpeg("vale3.jpg")
 
    /* Destroy images in memory */

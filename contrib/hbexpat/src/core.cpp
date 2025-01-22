@@ -118,7 +118,7 @@ using PHB_EXPAT = _HB_EXPAT *;
 
 /* Skeleton wrapper for all single handler setters */
 #define HB_EXPAT_SETHANDLER( _nameu_, _name_ ) \
-   HB_FUNC( XML_SET##_nameu_ ) \
+   HB_FUNC(XML_SET##_nameu_) \
    { \
       PHB_EXPAT hb_expat = PHB_EXPAT_par(1); \
          \
@@ -136,7 +136,7 @@ using PHB_EXPAT = _HB_EXPAT *;
 
 /* --- Global initialization/de-initialization --- */
 
-static void * XMLCALL hb_expat_xgrab( size_t size )
+static void * XMLCALL hb_expat_xgrab(size_t size)
 {
    return size > 0 ? hb_xgrab(size) : nullptr;
 }
@@ -149,16 +149,16 @@ static void XMLCALL hb_expat_xfree( void * p )
    }
 }
 
-static void * XMLCALL hb_expat_xrealloc( void * p, size_t size )
+static void * XMLCALL hb_expat_xrealloc(void * p, size_t size)
 {
-   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab(size) ) : nullptr;
+   return size > 0 ? ( p ? hb_xrealloc(p, size) : hb_xgrab(size) ) : nullptr;
 }
 
 /* --- Callbacks --- */
 
 /* Common */
 
-static void hb_expat_hnd_void( int nHnd, void * userdata )
+static void hb_expat_hnd_void(int nHnd, void * userdata)
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -176,7 +176,7 @@ static void hb_expat_hnd_void( int nHnd, void * userdata )
    }
 }
 
-static void hb_expat_hnd_C( int nHnd, void * userdata, const XML_Char * par1 )
+static void hb_expat_hnd_C(int nHnd, void * userdata, const XML_Char * par1)
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -326,7 +326,7 @@ static void XMLCALL hb_expat_DefaultHandler( void * userdata, const XML_Char * s
    hb_expat_hnd_CLen(_VAR_bDefaultHandler, userdata, s, len);
 }
 
-static void XMLCALL hb_expat_DefaultHandlerExpand( void * userdata, const XML_Char * s, int len )
+static void XMLCALL hb_expat_DefaultHandlerExpand(void * userdata, const XML_Char * s, int len)
 {
    hb_expat_hnd_CLen(_VAR_bDefaultHandlerExpand, userdata, s, len);
 }
@@ -647,7 +647,7 @@ static void PHB_EXPAT_free( PHB_EXPAT hb_expat, HB_BOOL bFree )
    }
 }
 
-static HB_GARBAGE_FUNC( PHB_EXPAT_release )
+static HB_GARBAGE_FUNC(PHB_EXPAT_release)
 {
    auto hb_expat_ptr = static_cast<PHB_EXPAT*>(Cargo);
 
@@ -660,7 +660,7 @@ static HB_GARBAGE_FUNC( PHB_EXPAT_release )
    }
 }
 
-static HB_GARBAGE_FUNC( PHB_EXPAT_mark )
+static HB_GARBAGE_FUNC(PHB_EXPAT_mark)
 {
    auto hb_expat_ptr = static_cast<PHB_EXPAT*>(Cargo);
 
@@ -709,7 +709,7 @@ static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, PHB_ITEM pBlock )
 
 /* --- Harbour interface --- */
 
-HB_FUNC( XML_PARSERCREATE )
+HB_FUNC(XML_PARSERCREATE)
 {
    auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_EXPAT), &s_gcEXPATFuncs));
 
@@ -746,7 +746,7 @@ HB_FUNC( XML_PARSERCREATE )
    hb_retptrGC(ph);
 }
 
-HB_FUNC( XML_PARSERRESET )
+HB_FUNC(XML_PARSERRESET)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -767,12 +767,12 @@ HB_FUNC( XML_PARSERRESET )
 }
 
 #if defined(HB_LEGACY_LEVEL5)
-HB_FUNC( XML_PARSERFREE )
+HB_FUNC(XML_PARSERFREE)
 {
 }
 #endif
 
-HB_FUNC( XML_SETUSERDATA )
+HB_FUNC(XML_SETUSERDATA)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -788,7 +788,7 @@ HB_FUNC( XML_SETUSERDATA )
    }
 }
 
-HB_FUNC( XML_GETUSERDATA )
+HB_FUNC(XML_GETUSERDATA)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -802,7 +802,7 @@ HB_FUNC( XML_GETUSERDATA )
    }
 }
 
-HB_FUNC( XML_SETELEMENTHANDLER )
+HB_FUNC(XML_SETELEMENTHANDLER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -823,7 +823,7 @@ HB_FUNC( XML_SETELEMENTHANDLER )
    }
 }
 
-HB_FUNC( XML_SETCDATASECTIONHANDLER )
+HB_FUNC(XML_SETCDATASECTIONHANDLER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -844,7 +844,7 @@ HB_FUNC( XML_SETCDATASECTIONHANDLER )
    }
 }
 
-HB_FUNC( XML_SETNAMESPACEDECLHANDLER )
+HB_FUNC(XML_SETNAMESPACEDECLHANDLER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -865,7 +865,7 @@ HB_FUNC( XML_SETNAMESPACEDECLHANDLER )
    }
 }
 
-HB_FUNC( XML_SETUNKNOWNENCODINGHANDLER )
+HB_FUNC(XML_SETUNKNOWNENCODINGHANDLER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -884,7 +884,7 @@ HB_FUNC( XML_SETUNKNOWNENCODINGHANDLER )
    }
 }
 
-HB_FUNC( XML_PARSE )
+HB_FUNC(XML_PARSE)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -898,7 +898,7 @@ HB_FUNC( XML_PARSE )
    }
 }
 
-HB_FUNC( XML_GETERRORCODE )
+HB_FUNC(XML_GETERRORCODE)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -912,12 +912,12 @@ HB_FUNC( XML_GETERRORCODE )
    }
 }
 
-HB_FUNC( XML_ERRORSTRING )
+HB_FUNC(XML_ERRORSTRING)
 {
    hb_retc(XML_ErrorString(static_cast<enum XML_Error>(hb_parni(1))));
 }
 
-HB_FUNC( XML_GETCURRENTBYTEINDEX )
+HB_FUNC(XML_GETCURRENTBYTEINDEX)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -931,7 +931,7 @@ HB_FUNC( XML_GETCURRENTBYTEINDEX )
    }
 }
 
-HB_FUNC( XML_GETCURRENTLINENUMBER )
+HB_FUNC(XML_GETCURRENTLINENUMBER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -945,7 +945,7 @@ HB_FUNC( XML_GETCURRENTLINENUMBER )
    }
 }
 
-HB_FUNC( XML_GETCURRENTCOLUMNNUMBER )
+HB_FUNC(XML_GETCURRENTCOLUMNNUMBER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -959,7 +959,7 @@ HB_FUNC( XML_GETCURRENTCOLUMNNUMBER )
    }
 }
 
-HB_FUNC( XML_GETCURRENTBYTECOUNT )
+HB_FUNC(XML_GETCURRENTBYTECOUNT)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -973,7 +973,7 @@ HB_FUNC( XML_GETCURRENTBYTECOUNT )
    }
 }
 
-HB_FUNC( XML_SETBASE )
+HB_FUNC(XML_SETBASE)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -991,7 +991,7 @@ HB_FUNC( XML_SETBASE )
    }
 }
 
-HB_FUNC( XML_GETBASE )
+HB_FUNC(XML_GETBASE)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1005,7 +1005,7 @@ HB_FUNC( XML_GETBASE )
    }
 }
 
-HB_FUNC( XML_GETSPECIFIEDATTRIBUTECOUNT )
+HB_FUNC(XML_GETSPECIFIEDATTRIBUTECOUNT)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1019,7 +1019,7 @@ HB_FUNC( XML_GETSPECIFIEDATTRIBUTECOUNT )
    }
 }
 
-HB_FUNC( XML_GETIDATTRIBUTEINDEX )
+HB_FUNC(XML_GETIDATTRIBUTEINDEX)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1033,7 +1033,7 @@ HB_FUNC( XML_GETIDATTRIBUTEINDEX )
    }
 }
 
-HB_FUNC( XML_SETENCODING )
+HB_FUNC(XML_SETENCODING)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1051,7 +1051,7 @@ HB_FUNC( XML_SETENCODING )
    }
 }
 
-HB_FUNC( XML_SETPARAMENTITYPARSING )
+HB_FUNC(XML_SETPARAMENTITYPARSING)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1065,7 +1065,7 @@ HB_FUNC( XML_SETPARAMENTITYPARSING )
    }
 }
 
-HB_FUNC( XML_USEFOREIGNDTD )
+HB_FUNC(XML_USEFOREIGNDTD)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1079,7 +1079,7 @@ HB_FUNC( XML_USEFOREIGNDTD )
    }
 }
 
-HB_FUNC( XML_SETRETURNNSTRIPLET )
+HB_FUNC(XML_SETRETURNNSTRIPLET)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1095,7 +1095,7 @@ HB_FUNC( XML_SETRETURNNSTRIPLET )
    }
 }
 
-HB_FUNC( XML_DEFAULTCURRENT )
+HB_FUNC(XML_DEFAULTCURRENT)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1111,7 +1111,7 @@ HB_FUNC( XML_DEFAULTCURRENT )
    }
 }
 
-HB_FUNC( XML_STOPPARSER )
+HB_FUNC(XML_STOPPARSER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1129,7 +1129,7 @@ HB_FUNC( XML_STOPPARSER )
    }
 }
 
-HB_FUNC( XML_RESUMEPARSER )
+HB_FUNC(XML_RESUMEPARSER)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1147,7 +1147,7 @@ HB_FUNC( XML_RESUMEPARSER )
    }
 }
 
-HB_FUNC( XML_GETPARSINGSTATUS )
+HB_FUNC(XML_GETPARSINGSTATUS)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1171,7 +1171,7 @@ HB_FUNC( XML_GETPARSINGSTATUS )
    }
 }
 
-HB_FUNC( XML_SETHASHSALT )
+HB_FUNC(XML_SETHASHSALT)
 {
    PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
@@ -1189,12 +1189,12 @@ HB_FUNC( XML_SETHASHSALT )
    }
 }
 
-HB_FUNC( XML_EXPATVERSION )
+HB_FUNC(XML_EXPATVERSION)
 {
    hb_retc(XML_ExpatVersion());
 }
 
-HB_FUNC( XML_EXPATVERSIONINFO )
+HB_FUNC(XML_EXPATVERSIONINFO)
 {
    XML_Expat_Version var = XML_ExpatVersionInfo();
 
@@ -1203,7 +1203,7 @@ HB_FUNC( XML_EXPATVERSIONINFO )
    hb_storni(var.micro, 3);
 }
 
-HB_FUNC( HB_XML_EXPATVERSIONINFO )
+HB_FUNC(HB_XML_EXPATVERSIONINFO)
 {
    hb_storni(XML_MAJOR_VERSION, 1);
    hb_storni(XML_MINOR_VERSION, 2);

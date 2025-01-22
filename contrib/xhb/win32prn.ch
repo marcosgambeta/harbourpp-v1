@@ -101,7 +101,7 @@
 
 #define PS_SOLID                    WIN_PS_SOLID
 
-#define RGB( nR, nG, nB )           WIN_RGB( nR, nG, nB )
+#define RGB(nR, nG, nB)             WIN_RGB(nR, nG, nB)
 
 #define RGB_BLACK                   HB_WIN_RGB_BLACK
 #define RGB_BLUE                    HB_WIN_RGB_BLUE

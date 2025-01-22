@@ -150,10 +150,10 @@ METHOD WvgHTMLViewer:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
 METHOD WvgHTMLViewer:xBeforeNavigate( cURL, Flags, TFName, PData, Headers )
 
-   HB_SYMBOL_UNUSED( Flags   )
-   HB_SYMBOL_UNUSED( TFName  )
-   HB_SYMBOL_UNUSED( PData   )
-   HB_SYMBOL_UNUSED( Headers )
+   HB_SYMBOL_UNUSED(Flags)
+   HB_SYMBOL_UNUSED(TFName)
+   HB_SYMBOL_UNUSED(PData)
+   HB_SYMBOL_UNUSED(Headers)
 
    IF PCount() >= 1 .AND. HB_IsEvalItem( ::sl_beforeNavigate )
       Eval( ::sl_beforeNavigate, cURL, , Self )

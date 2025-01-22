@@ -109,11 +109,11 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    SWITCH ::type
    CASE WVGSTATIC_TYPE_TEXT
       DO CASE
-      CASE hb_bitAnd( ::options, WVGSTATIC_TEXT_WORDBREAK ) != 0
+      CASE hb_bitAnd(::options, WVGSTATIC_TEXT_WORDBREAK) != 0
          ::style -= SS_LEFTNOWORDWRAP
-      CASE hb_bitAnd( ::options, WVGSTATIC_TEXT_CENTER ) != 0
+      CASE hb_bitAnd(::options, WVGSTATIC_TEXT_CENTER) != 0
          ::style += SS_CENTER
-      CASE hb_bitAnd( ::options, WVGSTATIC_TEXT_RIGHT ) != 0
+      CASE hb_bitAnd(::options, WVGSTATIC_TEXT_RIGHT) != 0
          ::style += SS_RIGHT
       OTHERWISE
          ::style += SS_LEFT
@@ -179,9 +179,9 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    // Options
    IF AScan( { WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME }, ::type ) > 0
       DO CASE
-      CASE hb_bitAnd( ::options, WVGSTATIC_FRAMETHIN ) != 0
+      CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHIN) != 0
          ::style += WIN_WS_BORDER
-      CASE hb_bitAnd( ::options, WVGSTATIC_FRAMETHICK ) != 0
+      CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHICK) != 0
          ::style += WIN_WS_DLGFRAME
       ENDCASE
    ENDIF
@@ -197,7 +197,7 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 #endif
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 
@@ -263,7 +263,7 @@ METHOD WvgStatic:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 
 METHOD WvgStatic:setCaption( xCaption, cDll )
 
-   HB_SYMBOL_UNUSED( cDll )
+   HB_SYMBOL_UNUSED(cDll)
 
    __defaultNIL( @xCaption, ::caption )
    ::caption := xCaption

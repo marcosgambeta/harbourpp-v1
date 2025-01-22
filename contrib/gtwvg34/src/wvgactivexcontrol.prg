@@ -161,7 +161,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
    ::SetWindowProcCallback()  // Is this needed to catch windowing events ? - NO
 #endif
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
    IF ::visible
       ::show()
    ELSE
@@ -194,7 +194,7 @@ METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
 
    LOCAL nHandled := 0
 
-   HB_SYMBOL_UNUSED( aNM )
+   HB_SYMBOL_UNUSED(aNM)
 
    SWITCH nEvent
 

@@ -387,13 +387,13 @@ static int _qr_check_version_table(void)
    return 0;
 }
 
-HB_FUNC( _QR_CHECK_VERSION_TABLE )
+HB_FUNC(_QR_CHECK_VERSION_TABLE)
 {
    hb_retni(_qr_check_version_table());
 }
 #endif
 
-static int _qr_version_crc( int iVersion )
+static int _qr_version_crc(int iVersion)
 {
    int i, iValue, iVersionRev;
 
@@ -418,7 +418,7 @@ static int _qr_version_crc( int iVersion )
    return iValue; /* 18-bit return value */
 }
 
-static int _qr_format_crc( int iLevel, int iMask )
+static int _qr_format_crc(int iLevel, int iMask)
 {
    int iValue, iRev;
 
@@ -438,12 +438,12 @@ static int _qr_format_crc( int iLevel, int iMask )
 }
 
 #ifdef DEBUG_CODE
-HB_FUNC( _QR_VERSION_CRC )
+HB_FUNC(_QR_VERSION_CRC)
 {
    hb_retni(_qr_version_crc(hb_parni(1)));
 }
 
-HB_FUNC( _QR_FORMAT_CRC )
+HB_FUNC(_QR_FORMAT_CRC)
 {
    hb_retni(_qr_format_crc(hb_parni(1), hb_parni(2)));
 }
@@ -1247,7 +1247,7 @@ PHB_ZEBRA hb_zebra_create_qrcode( const char * szCode, HB_SIZE nLen, int iFlags 
    return pZebra;
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_QRCODE )
+HB_FUNC(HB_ZEBRA_CREATE_QRCODE)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 

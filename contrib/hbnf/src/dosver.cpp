@@ -48,7 +48,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_DOSVER )
+HB_FUNC(FT_DOSVER)
 {
    hb_retc_null();
 }

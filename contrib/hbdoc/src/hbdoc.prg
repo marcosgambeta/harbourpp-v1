@@ -166,7 +166,7 @@ PROCEDURE Main(...)
          ENDIF
 
          DO CASE
-         CASE cArgName == "-source" ; s_hSwitches[ "basedir" ] := hb_DirSepAdd( arg )
+         CASE cArgName == "-source" ; s_hSwitches[ "basedir" ] := hb_DirSepAdd(arg)
          CASE cArgName == "-lang" ; s_hSwitches[ "lang" ] := Lower(arg)
          CASE cArgName == "-format"
             IF arg == "" .OR. ! arg $ s_generators
@@ -175,7 +175,7 @@ PROCEDURE Main(...)
             ELSEIF arg == "all"
                s_hSwitches[ "format" ] := hb_HKeys( s_generators )
             ELSE
-               AAdd( s_hSwitches[ "format" ], arg )
+               AAdd(s_hSwitches[ "format" ], arg)
             ENDIF
          CASE hb_LeftEq( cArgName, "-output-" )
             s_hSwitches[ "output" ] := SubStr(cArgName, Len("-output-") + 1)
@@ -185,7 +185,7 @@ PROCEDURE Main(...)
                IF SubStr(cArgName, 2) == "all"
                   s_hSwitches[ "format" ] := hb_HKeys( s_generators )
                ELSE
-                  AAdd( s_hSwitches[ "format" ], SubStr(cArgName, 2) )
+                  AAdd(s_hSwitches[ "format" ], SubStr(cArgName, 2))
                ENDIF
             ELSE
                ShowHelp( "Unrecognized option:" + cArgName + iif(Len(arg) > 0, "=" + arg, "") )
@@ -204,8 +204,8 @@ PROCEDURE Main(...)
    hb_MemoWrit( "cats.json", hb_jsonencode( sc_hConstraint[ "categories" ], .T. ) )
 #endif
 
-   OutStd( hb_ntos( Len(aContent) ), "items found" + hb_eol() )
-   OutStd( hb_eol() )
+   OutStd(hb_ntos( Len(aContent) ), "items found" + hb_eol())
+   OutStd(hb_eol())
 
    ASort( aContent,,, {| oL, oR | ;
          PadR( SortWeight( oL:fld[ "CATEGORY" ] ), 20 ) + ;
@@ -221,7 +221,7 @@ PROCEDURE Main(...)
 
       IF HB_IsEvalItem( generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ) )
 
-         OutStd( "Output as", cFormat + hb_eol() )
+         OutStd("Output as", cFormat + hb_eol())
 
          DO CASE
          CASE s_hSwitches[ "output" ] == "single"
@@ -363,7 +363,7 @@ PROCEDURE Main(...)
       ENDIF
    NEXT
 
-   OutStd( hb_eol() )
+   OutStd(hb_eol())
 
    RETURN
 
@@ -435,7 +435,7 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
       NEXT
 
       IF Len(aContent) > nOldContentLen
-         OutStd( ">", cDir, "(" + hb_ntos( Len(aContent) - nOldContentLen ), "items)" + hb_eol() )
+         OutStd(">", cDir, "(" + hb_ntos( Len(aContent) - nOldContentLen ), "items)" + hb_eol())
       ENDIF
    ENDIF
 
@@ -568,16 +568,16 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
          /* do nothing */
 
-      ELSEIF o:IsField( cSectionName )
+      ELSEIF o:IsField(cSectionName)
 
          DO CASE
-         CASE o:IsField( cSectionName, TPL_START )
+         CASE o:IsField(cSectionName, TPL_START)
 
             AddErrorCondition( cFile, "Encountered another section '" + cSection, .T. )
             lAccepted := .F.
             EXIT
 
-         CASE o:IsField( cSectionName, TPL_END )
+         CASE o:IsField(cSectionName, TPL_END)
 
             EXIT
 
@@ -586,14 +586,14 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
             AddErrorCondition( cFile, "Duplicate " + cSectionName, .T. )
             lAccepted := .F.
 
-         CASE cSectionName == "SUBCATEGORY" .AND. o:IsField( "SUBCATEGORY" )
+         CASE cSectionName == "SUBCATEGORY" .AND. o:IsField("SUBCATEGORY")
 
             IF idxCategory != NIL .AND. ;
                ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif(HB_IsString( c ), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
-         CASE o:IsField( "RETURNS" ) .AND. cSectionName == "RETURNS" .AND. ( ;
+         CASE o:IsField("RETURNS") .AND. cSectionName == "RETURNS" .AND. ( ;
                Empty(cSection) .OR. ;
                Lower(cSection) == "nil" .OR. ;
                Lower(cSection) == "none" .OR. ;
@@ -658,18 +658,18 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
       o:_filename := Filename( o:fld[ "NAME" ] )
 
-      AAdd( aContent, o )
+      AAdd(aContent, o)
 
       IF !cComponent $ s_hComponent
          s_hComponent[ cComponent ] := NIL
       ENDIF
 
       IF idxCategory != NIL
-         IF idxSubCategory == -1 .AND. ( ! o:IsField( "SUBCATEGORY" ) .OR. ! o:IsRequired( "SUBCATEGORY" ) )
+         IF idxSubCategory == -1 .AND. ( ! o:IsField("SUBCATEGORY") .OR. ! o:IsRequired("SUBCATEGORY") )
             idxSubCategory := o:SubcategoryIndex( o:fld[ "CATEGORY" ], "" )
          ENDIF
          IF idxSubCategory > 0
-            AAdd( sc_hConstraint[ "categories" ][ idxCategory ][ 2 ][ idxSubCategory ], o )
+            AAdd(sc_hConstraint[ "categories" ][ idxCategory ][ 2 ][ idxSubCategory ], o)
          ENDIF
       ENDIF
    ENDIF
@@ -734,17 +734,17 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
       Eval( xLine )
    CASE HB_IsArray( xLine )
       IF nMode == 2
-         OutStd( Space( nIndent ) + Space(2) )
+         OutStd(Space( nIndent ) + Space(2))
       ENDIF
       AEval( xLine, {| x, n | ShowSubHelp( x, @nMode, nIndent + 2, n ) } )
       IF nMode == 2
-         OutStd( hb_eol() )
+         OutStd(hb_eol())
       ENDIF
    OTHERWISE
       DO CASE
-      CASE nMode == 1 ; OutStd( Space( nIndent ) + xLine + hb_eol() )
-      CASE nMode == 2 ; OutStd( iif(n > 1, ", ", "") + xLine )
-      OTHERWISE       ; OutStd( "(" + hb_ntos( nMode ) + ") " + xLine + hb_eol() )
+      CASE nMode == 1 ; OutStd(Space( nIndent ) + xLine + hb_eol())
+      CASE nMode == 2 ; OutStd(iif(n > 1, ", ", "") + xLine)
+      OTHERWISE       ; OutStd("(" + hb_ntos( nMode ) + ") " + xLine + hb_eol())
       ENDCASE
    ENDCASE
 
@@ -855,7 +855,7 @@ STATIC FUNCTION Join( aVar, cDelimiter )
 STATIC PROCEDURE AddErrorCondition( cFile, cMessage, lFatal )
 
    IF s_hSwitches[ "immediate-errors" ] .OR. hb_defaultValue( lFatal, .F. )
-      OutStd( cFile + ":", cMessage + hb_eol() )
+      OutStd(cFile + ":", cMessage + hb_eol())
    ENDIF
 
    RETURN
@@ -969,11 +969,11 @@ STATIC FUNCTION Filename( cFile )
 CREATE CLASS Entry
 
    METHOD New( cTemplate )
-   METHOD IsField( cField, nType )
+   METHOD IsField(cField, nType)
    METHOD IsConstraint( cField, cSection )
    METHOD IsComplete( cIncompleteFieldsList )
-   METHOD IsPreformatted( cField )
-   METHOD IsRequired( cField )
+   METHOD IsPreformatted(cField)
+   METHOD IsRequired(cField)
    METHOD IsOptional( cField )
    METHOD IsOutput( cField )
    METHOD SubcategoryIndex( cCategory, cSubcategory )
@@ -1006,13 +1006,13 @@ METHOD Entry:New( cTemplate )
 
    RETURN self
 
-METHOD Entry:IsField( cField, nType )
+METHOD Entry:IsField(cField, nType)
 
    LOCAL idx
 
    IF ( idx := hb_HPos( sc_hFields, cField ) ) > 0
       IF ::_group[ idx ] == 0
-      ELSEIF HB_IsNumeric(nType) .AND. hb_bitAnd( ::_group[ idx ], nType ) != nType
+      ELSEIF HB_IsNumeric(nType) .AND. hb_bitAnd(::_group[ idx ], nType) != nType
       ELSE
          RETURN .T.
       ENDIF
@@ -1022,7 +1022,7 @@ METHOD Entry:IsField( cField, nType )
 
 METHOD Entry:IsConstraint( cField, cSection )
 
-   IF hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], hb_bitAnd( TPL_REQUIRED, TPL_OPTIONAL ) ) == 0
+   IF hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], hb_bitAnd(TPL_REQUIRED, TPL_OPTIONAL)) == 0
       RETURN .T.
    ELSEIF cField $ sc_hConstraint
       RETURN ;
@@ -1041,7 +1041,7 @@ METHOD Entry:IsComplete( cIncompleteFieldsList )
 
    FOR idx := 1 TO Len(sc_hFields)
       key := hb_HKeyAt( sc_hFields, idx )
-      IF hb_bitAnd( ::_group[ idx ], TPL_REQUIRED ) != 0 .AND. Empty(::fld[ key ])
+      IF hb_bitAnd(::_group[ idx ], TPL_REQUIRED) != 0 .AND. Empty(::fld[ key ])
          cIncompleteFieldsList += "," + key
          lResult := .F.
       ENDIF
@@ -1051,18 +1051,18 @@ METHOD Entry:IsComplete( cIncompleteFieldsList )
 
    RETURN lResult
 
-METHOD Entry:IsPreformatted( cField )
+METHOD Entry:IsPreformatted(cField)
    LOCAL nGroup := hb_HPos( sc_hFields, cField )
-   RETURN nGroup > 0 .AND. hb_bitAnd( ::_group[ nGroup ], TPL_PREFORMATTED ) != 0
+   RETURN nGroup > 0 .AND. hb_bitAnd(::_group[ nGroup ], TPL_PREFORMATTED) != 0
 
-METHOD Entry:IsRequired( cField )
-   RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_REQUIRED ) != 0
+METHOD Entry:IsRequired(cField)
+   RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_REQUIRED) != 0
 
 METHOD Entry:IsOptional( cField )
-   RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OPTIONAL ) != 0
+   RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OPTIONAL) != 0
 
 METHOD Entry:IsOutput( cField )
-   RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OUTPUT ) != 0
+   RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OUTPUT) != 0
 
 METHOD Entry:SubcategoryIndex( cCategory, cSubcategory )
    RETURN iif(cCategory $ sc_hConstraint[ "categories" ], ;
@@ -1138,11 +1138,11 @@ STATIC PROCEDURE init_Templates()
    hb_HCaseMatch( sc_hConstraint[ "categories" ], .F. )
 
    FOR EACH item IN sc_hConstraint[ "categories" ]
-      AAdd( item, Array( Len(item[ 1 ]) ) )  /* holder array of sub-category entries */
+      AAdd(item, Array(Len(item[1])))  /* holder array of sub-category entries */
       FOR EACH tmp IN ATail( item )
          tmp := {}
       NEXT
-      AAdd( item, "" )  /* holder for sub-category file name */
+      AAdd(item, "")  /* holder for sub-category file name */
    NEXT
 
    sc_hConstraint[ "compliance" ] := { ;
@@ -1250,7 +1250,7 @@ STATIC PROCEDURE ShowTemplatesHelp( cTemplate, cDelimiter )
                IF fldkey == "TEMPLATE"
                   ShowSubHelp( " *      " + o:fld[ "TEMPLATE" ], 1, 0 )
                ELSEIF o:_group[ idx ] != TPL_START .AND. o:_group[ idx ] != TPL_END .AND. .T.
-                  ShowSubHelp( " *      " + iif(o:IsRequired( fldkey ), "<required>", "<optional>"), 1, 0 )
+                  ShowSubHelp( " *      " + iif(o:IsRequired(fldkey), "<required>", "<optional>"), 1, 0 )
                ENDIF
             ENDIF
          NEXT
@@ -1290,7 +1290,7 @@ STATIC PROCEDURE DirLoadHBX( cDir, hAll )
    LOCAL aFile
    LOCAL cFileName
 
-   cDir := hb_DirSepAdd( cDir )
+   cDir := hb_DirSepAdd(cDir)
 
    FOR EACH aFile IN hb_vfDirectory( cDir + "*.hbx" )
       IF hb_vfExists( cFileName := cDir + aFile[ F_NAME ] )
@@ -1310,7 +1310,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
    LOCAL aDynamic := {}
    LOCAL cFilter
 
-   IF !HB_IsNull( cFile := hb_MemoRead( cFileName ) )
+   IF !HB_IsNull( cFile := hb_MemoRead(cFileName) )
 
       FOR EACH cFilter IN { ;
          "^DYNAMIC ([a-zA-Z0-9_]*)$", ;
@@ -1330,7 +1330,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
 
    RETURN aDynamic
 
-#if defined( __HBSCRIPT__HBSHELL )
+#if defined(__HBSCRIPT__HBSHELL)
 SET PROCEDURE TO "_base.prg"
 SET PROCEDURE TO "_txt.prg"
 SET PROCEDURE TO "_html.prg"

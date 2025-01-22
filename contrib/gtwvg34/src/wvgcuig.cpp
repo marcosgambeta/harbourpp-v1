@@ -183,7 +183,7 @@ HB_FUNC(WVG_SETGOBJSTATE)
   hb_retni(iOState);
 }
 
-/* wvg_SetGObjData( hObj, nGobjDataType, xData, xData1 ) --> lSuccess */
+/* wvg_SetGObjData(hObj, nGobjDataType, xData, xData1) --> lSuccess */
 HB_FUNC(WVG_SETGOBJDATA)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -319,7 +319,7 @@ HB_FUNC(WVG_SETGOBJDATA)
   hb_retl(bSuccess);
 }
 
-/* wvg_BoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff ) */
+/* wvg_BoxRaised(nTop, nLeft, nBottom, nRight, aPxlOff) */
 HB_FUNC(WVG_BOXRAISED)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -374,7 +374,7 @@ static void hb_wvg_BoxRaised(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, in
   LineTo(hdc, iRight + 1, iBottom + 1);
 }
 
-/* wvg_BoxRecessed( nTop, nLeft, nBottom, nRight, aPxlOff ) --> NIL */
+/* wvg_BoxRecessed(nTop, nLeft, nBottom, nRight, aPxlOff) --> NIL */
 HB_FUNC(WVG_BOXRECESSED)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -532,7 +532,7 @@ static void hb_wvg_BoxGroup(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, int
   LineTo(hdc, iRight, iTop);
 }
 
-/* wvg_BoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff ) --> NIL */
+/* wvg_BoxRaised(nTop, nLeft, nBottom, nRight, aPxlOff) --> NIL */
 HB_FUNC(WVG_BOXGROUPRAISED)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();

@@ -156,13 +156,13 @@ PROCEDURE Main()
    ? '    TokenInit( @cStr5, "+", 1, @cTE2 ) == .T. ? -> ' + LToC(TokenInit( @cStr5, "+", 1, @cTE2 ))
    ? '    TokenNum( @cTE1 ) == 5 ? --------------------> ' + Str( TokenNum( @cTE1 ) )
    ? '    TokenNum( @cTE2 ) == 4 ? --------------------> ' + Str( TokenNum( @cTE2 ) )
-   ? '        TokenEnd( @cTE1 ) ? ---------------------> ' + LToC(TokenEnd( @cTE1 ))
-   ? '        TokenEnd( @cTE2 ) ? ---------------------> ' + LToC(TokenEnd( @cTE2 ))
-   DO WHILE ! TokenEnd( @cTE1 ) .AND. ! TokenEnd( @cTE2 )
+   ? '        TokenEnd(@cTE1) ? ---------------------> ' + LToC(TokenEnd(@cTE1))
+   ? '        TokenEnd(@cTE2) ? ---------------------> ' + LToC(TokenEnd(@cTE2))
+   DO WHILE ! TokenEnd(@cTE1) .AND. ! TokenEnd(@cTE2)
       ? '      next train at ' + TokenNext( cStr4,, @cTE1 ) + ":" + TokenNext( cStr5,, @cTE2 )
       ? '          compiled with TokenNext( cStr4,, @cTE1 ) + ":" + TokenNext( cStr5,, @cTE2 )'
-      ? '        TokenEnd( @cTE1 ) ? ---------------------> ' + LToC(TokenEnd( @cTE1 ))
-      ? '        TokenEnd( @cTE2 ) ? ---------------------> ' + LToC(TokenEnd( @cTE2 ))
+      ? '        TokenEnd(@cTE1) ? ---------------------> ' + LToC(TokenEnd(@cTE1))
+      ? '        TokenEnd(@cTE2) ? ---------------------> ' + LToC(TokenEnd(@cTE2))
    ENDDO
 
    ?

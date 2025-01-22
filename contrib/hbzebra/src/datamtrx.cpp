@@ -263,7 +263,7 @@ static void _datamatrix_place( int * pArr, int iPRow, int iPCol, int iR, int iC,
    _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 0, iC - 0, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_a( int * pArr, int iPRow, int iPCol, int iIndex )
+static void _datamatrix_place_a(int * pArr, int iPRow, int iPCol, int iIndex)
 {
    _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         0, (iIndex << 3) + 7);
    _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         1, (iIndex << 3) + 6);
@@ -275,7 +275,7 @@ static void _datamatrix_place_a( int * pArr, int iPRow, int iPCol, int iIndex )
    _datamatrix_place_bit(pArr, iPRow, iPCol,         3, iPCol - 1, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_b( int * pArr, int iPRow, int iPCol, int iIndex )
+static void _datamatrix_place_b(int * pArr, int iPRow, int iPCol, int iIndex)
 {
    _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 3,         0, (iIndex << 3) + 7);
    _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 2,         0, (iIndex << 3) + 6);
@@ -287,7 +287,7 @@ static void _datamatrix_place_b( int * pArr, int iPRow, int iPCol, int iIndex )
    _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 1, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_c( int * pArr, int iPRow, int iPCol, int iIndex )
+static void _datamatrix_place_c(int * pArr, int iPRow, int iPCol, int iIndex)
 {
    _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 3,         0, (iIndex << 3) + 7);
    _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 2,         0, (iIndex << 3) + 6);
@@ -471,7 +471,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    return pZebra;
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_DATAMATRIX )
+HB_FUNC(HB_ZEBRA_CREATE_DATAMATRIX)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 

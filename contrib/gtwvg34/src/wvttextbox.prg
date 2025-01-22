@@ -90,7 +90,7 @@ METHOD WvtTextBox:Create()
          ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ;
          ::nTextColor, ::nBackColor, ::nBackMode, ::hFont ) }
 
-      AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+      AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
    ENDIF
 
    ::Super:Create()

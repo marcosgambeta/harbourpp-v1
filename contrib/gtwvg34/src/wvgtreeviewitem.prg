@@ -77,7 +77,7 @@ CREATE CLASS WvgTreeViewItem
    METHOD configure()
    METHOD destroy()
 
-   METHOD Expand( lExpand ) INLINE wvg_TreeView_Expand( ::hTree, ::hItem, hb_defaultValue( lExpand, .T. ) )
+   METHOD Expand(lExpand) INLINE wvg_TreeView_Expand(::hTree, ::hItem, hb_defaultValue(lExpand, .T.))
    METHOD isExpanded()
    METHOD setCaption( cCaption )
    METHOD setExpandedImage( nResIdoBitmap )
@@ -109,25 +109,25 @@ METHOD PROCEDURE WvgTreeViewItem:isExpanded()
 
 METHOD PROCEDURE WvgTreeViewItem:setCaption( cCaption )
 
-   HB_SYMBOL_UNUSED( cCaption )
+   HB_SYMBOL_UNUSED(cCaption)
 
    RETURN
 
 METHOD PROCEDURE WvgTreeViewItem:setExpandedImage( nResIdoBitmap )
 
-   HB_SYMBOL_UNUSED( nResIdoBitmap )
+   HB_SYMBOL_UNUSED(nResIdoBitmap)
 
    RETURN
 
 METHOD PROCEDURE WvgTreeViewItem:setImage( nResIdoBitmap )
 
-   HB_SYMBOL_UNUSED( nResIdoBitmap )
+   HB_SYMBOL_UNUSED(nResIdoBitmap)
 
    RETURN
 
 METHOD PROCEDURE WvgTreeViewItem:setMarkedImage( nResIdoBitmap )
 
-   HB_SYMBOL_UNUSED( nResIdoBitmap )
+   HB_SYMBOL_UNUSED(nResIdoBitmap)
 
    RETURN
 
@@ -142,7 +142,7 @@ METHOD WvgTreeViewItem:addItem( cCaption )
 
    oItem:hItem := wvg_TreeView_AddItem( oItem:hTree, iif(HB_IsObject( oItem:oParent ), oItem:oParent:hItem, NIL), oItem:caption )
 
-   AAdd( oItem:oWnd:aItems, oItem )
+   AAdd(oItem:oWnd:aItems, oItem)
 
    RETURN oItem
 

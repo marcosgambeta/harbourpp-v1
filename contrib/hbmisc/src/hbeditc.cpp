@@ -71,7 +71,7 @@ static HB_BOOL format_line(PHB_EDITOR pEd, char Karetka, HB_ISIZ LineDl);
 static void MoveText(PHB_EDITOR pEd, HB_ISIZ source, HB_ISIZ dest, HB_ISIZ ilb);
 static HB_ISIZ GetLineLength(PHB_EDITOR pEd, HB_ISIZ off, HB_ISIZ * wsk);
 
-static HB_GARBAGE_FUNC( PHB_EDITOR_release )
+static HB_GARBAGE_FUNC(PHB_EDITOR_release)
 {
    auto ph = static_cast<void**>(Cargo);
 
@@ -177,7 +177,7 @@ static void New( PHB_EDITOR pEd, int tab, HB_ISIZ ll, HB_ISIZ bufferSize )
 }
 
 /* Creates new editor and returns index into internal editors table */
-HB_FUNC( ED_NEW )
+HB_FUNC(ED_NEW)
 {
    auto pEd = static_cast<PHB_EDITOR>(hb_xgrab(sizeof(HB_EDITOR)));
 
@@ -303,7 +303,7 @@ static void AddText( PHB_EDITOR pEd, const char * adres )
 }
 
 /* Appends passed text at the end of existing one */
-HB_FUNC( ED_ADDTEXT )
+HB_FUNC(ED_ADDTEXT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -473,7 +473,7 @@ static HB_ISIZ InsText( PHB_EDITOR pEd, char * adres, HB_ISIZ line )
 }
 
 /* Inserts passed text into text buffer */
-HB_FUNC( ED_INSTEXT )
+HB_FUNC(ED_INSTEXT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -497,7 +497,7 @@ HB_FUNC( ED_INSTEXT )
 
 /* Selects the editor as active - all next ED_*() calls will be send
    to this editor. */
-HB_FUNC( ED_CONFIG )
+HB_FUNC(ED_CONFIG)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -662,7 +662,7 @@ HB_FUNC( ED_CONFIG )
 }
 
 /* Returns current text buffer */
-HB_FUNC( ED_GETTEXT )
+HB_FUNC(ED_GETTEXT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -697,7 +697,7 @@ HB_FUNC( ED_GETTEXT )
 }
 
 /* Returns given line of text and positions caret at the beginning of next line */
-HB_FUNC( ED_GETLINE )
+HB_FUNC(ED_GETLINE)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -740,7 +740,7 @@ HB_FUNC( ED_GETLINE )
 }
 
 /* Returns current line pointed by caret position and advances it to the beginning of next line */
-HB_FUNC( ED_GETNEXT )
+HB_FUNC(ED_GETNEXT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -772,7 +772,7 @@ static void KillText( PHB_EDITOR pEd )
 }
 
 /* Stores new text into editor */
-HB_FUNC( ED_SETTEXT )
+HB_FUNC(ED_SETTEXT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -789,7 +789,7 @@ HB_FUNC( ED_SETTEXT )
 }
 
 /* Reads a text from the file */
-HB_FUNC( ED_READTEXT )
+HB_FUNC(ED_READTEXT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -835,7 +835,7 @@ HB_FUNC( ED_READTEXT )
    Redisplays all requested lines
    It is similar to TBrowse:forceStable()
    Incremental stabilization was too slow */
-HB_FUNC( ED_STABILIZE )
+HB_FUNC(ED_STABILIZE)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1064,7 +1064,7 @@ static void Down( PHB_EDITOR pEd )
 }
 
 /* Moves cursor to the next line of text */
-HB_FUNC( ED_DOWN )
+HB_FUNC(ED_DOWN)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1133,7 +1133,7 @@ static void Up( PHB_EDITOR pEd )
 }
 
 /* Moves the cursor to the previous line */
-HB_FUNC( ED_UP )
+HB_FUNC(ED_UP)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1148,7 +1148,7 @@ HB_FUNC( ED_UP )
 }
 
 /* Moves the cursor to the next page of text */
-HB_FUNC( ED_PGDOWN )
+HB_FUNC(ED_PGDOWN)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1220,7 +1220,7 @@ HB_FUNC( ED_PGDOWN )
 }
 
 /* Moves the cursor to the previous page of text */
-HB_FUNC( ED_PGUP )
+HB_FUNC(ED_PGUP)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1285,7 +1285,7 @@ HB_FUNC( ED_PGUP )
 }
 
 /* Move the cursor to the beginning of the text */
-HB_FUNC( ED_TOP )
+HB_FUNC(ED_TOP)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1320,7 +1320,7 @@ HB_FUNC( ED_TOP )
 }
 
 /* Move the cursor to the last line of text */
-HB_FUNC( ED_BOTTOM )
+HB_FUNC(ED_BOTTOM)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1403,7 +1403,7 @@ static void GoTo( PHB_EDITOR pEd, HB_ISIZ line )
 }
 
 /* Move the cursor to the given line using line number */
-HB_FUNC( ED_GOTO )
+HB_FUNC(ED_GOTO)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1435,7 +1435,7 @@ static void Left(PHB_EDITOR pEd)
 }
 
 /* Move the cursor to the previous character */
-HB_FUNC( ED_LEFT )
+HB_FUNC(ED_LEFT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1469,7 +1469,7 @@ static void Right(PHB_EDITOR pEd)
 }
 
 /* Move the cursor to the next character */
-HB_FUNC( ED_RIGHT )
+HB_FUNC(ED_RIGHT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1501,7 +1501,7 @@ static void Home( PHB_EDITOR pEd )
 }
 
 /* Move the cursor to the beginning of the line */
-HB_FUNC( ED_HOME )
+HB_FUNC(ED_HOME)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1512,7 +1512,7 @@ HB_FUNC( ED_HOME )
 }
 
 /* Move the cursor to the end of line */
-static void End( PHB_EDITOR pEd )
+static void End(PHB_EDITOR pEd)
 {
    HB_ISIZ ll;
    HB_ISIZ nEsc;
@@ -1546,7 +1546,7 @@ static void End( PHB_EDITOR pEd )
 }
 
 /* Move the cursor the the end of line (after the last non-space character) */
-HB_FUNC( ED_END )
+HB_FUNC(ED_END)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1680,7 +1680,7 @@ static void DelChar( PHB_EDITOR pEd )
 }
 
 /* Delete the character at current cursor position */
-HB_FUNC( ED_DELCHAR )
+HB_FUNC(ED_DELCHAR)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1849,7 +1849,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
 }
 
 /* Delete a character on the left side of the cursor */
-HB_FUNC( ED_BSPACE )
+HB_FUNC(ED_BSPACE)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1877,7 +1877,7 @@ static void GotoNextNonEmptyLine( PHB_EDITOR pEd )
 }
 
 /* Move the cursor to the next word */
-static void NextWord( PHB_EDITOR pEd )
+static void NextWord(PHB_EDITOR pEd)
 {
    char *  adr;
    char    tmp[_MAX_LINE_LEN + 2];
@@ -1927,7 +1927,7 @@ static void NextWord( PHB_EDITOR pEd )
 }
 
 /* Move the cursor to the next word */
-HB_FUNC( ED_NWORD )
+HB_FUNC(ED_NWORD)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -1938,7 +1938,7 @@ HB_FUNC( ED_NWORD )
 }
 
 /* Move the cursor to the previous word */
-static void PreviousWord( PHB_EDITOR pEd )
+static void PreviousWord(PHB_EDITOR pEd)
 {
    HB_ISIZ pom;
    HB_ISIZ i;
@@ -2009,7 +2009,7 @@ static void PreviousWord( PHB_EDITOR pEd )
 }
 
 /* Move the cursor to the previous word */
-HB_FUNC( ED_PWORD )
+HB_FUNC(ED_PWORD)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2234,7 +2234,7 @@ static void PutChar( PHB_EDITOR pEd, HB_BOOL fInsert, char znak )
 }
 
 /* Insert or replace the character into the text buffer */
-HB_FUNC( ED_PUTCHAR )
+HB_FUNC(ED_PUTCHAR)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2247,7 +2247,7 @@ HB_FUNC( ED_PUTCHAR )
 }
 
 #if 0
-static void Tab( PHB_EDITOR pEd, HB_BOOL fInsert )
+static void Tab(PHB_EDITOR pEd, HB_BOOL fInsert)
 {
    if( fInsert )
    {
@@ -2265,7 +2265,7 @@ static void Tab( PHB_EDITOR pEd, HB_BOOL fInsert )
 /* --- */
 
 #if 0
-HB_FUNC( ED_TAB )
+HB_FUNC(ED_TAB)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2325,7 +2325,7 @@ static void DelLine( PHB_EDITOR pEd )
 }
 
 /* Delete the current line */
-HB_FUNC( ED_DELLINE )
+HB_FUNC(ED_DELLINE)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2336,7 +2336,7 @@ HB_FUNC( ED_DELLINE )
 }
 
 /* Delete the word on the right side of the cursor */
-HB_FUNC( ED_DELWORD )
+HB_FUNC(ED_DELWORD)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2491,7 +2491,7 @@ static void Return( PHB_EDITOR pEd, HB_BOOL fInsert )
 }
 
 /* Insert the CRLF characters */
-HB_FUNC( ED_RETURN )
+HB_FUNC(ED_RETURN)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2502,7 +2502,7 @@ HB_FUNC( ED_RETURN )
 }
 
 /* Returns the current cursor row inside the editor's window */
-HB_FUNC( ED_WINROW )
+HB_FUNC(ED_WINROW)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2513,7 +2513,7 @@ HB_FUNC( ED_WINROW )
 }
 
 /* Returns the line number where the cursor is positioned */
-HB_FUNC( ED_ROW )
+HB_FUNC(ED_ROW)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2524,7 +2524,7 @@ HB_FUNC( ED_ROW )
 }
 
 /* Return the current cursor column inside the editor's window */
-HB_FUNC( ED_WINCOL )
+HB_FUNC(ED_WINCOL)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2535,7 +2535,7 @@ HB_FUNC( ED_WINCOL )
 }
 
 /* Returns the current cursor position inside the line */
-HB_FUNC( ED_COL )
+HB_FUNC(ED_COL)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2546,7 +2546,7 @@ HB_FUNC( ED_COL )
 }
 
 /* Returns the total number of lines */
-HB_FUNC( ED_MAXLINE )
+HB_FUNC(ED_MAXLINE)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2557,7 +2557,7 @@ HB_FUNC( ED_MAXLINE )
 }
 
 /* Counts the total number of lines in passed editor */
-HB_FUNC( ED_LCOUNT )
+HB_FUNC(ED_LCOUNT)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2568,7 +2568,7 @@ HB_FUNC( ED_LCOUNT )
 }
 
 /* Returns if the editor is correctly displayed */
-HB_FUNC( ED_STABLE )
+HB_FUNC(ED_STABLE)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 
@@ -2579,7 +2579,7 @@ HB_FUNC( ED_STABLE )
 }
 
 /* Returns the number of bytes stored in the text buffer */
-HB_FUNC( ED_LENGTH )
+HB_FUNC(ED_LENGTH)
 {
    PHB_EDITOR pEd = PHB_EDITOR_par(1);
 

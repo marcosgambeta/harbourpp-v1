@@ -63,7 +63,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_IAMIDLE )
+HB_FUNC(FT_IAMIDLE)
 {
    hb_releaseCPU();
 }

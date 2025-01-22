@@ -56,10 +56,10 @@ CREATE CLASS TPLGenerate
 
    METHOD NewIndex( cDir, cFilename, cTitle, cExtension, cLang )
    METHOD NewDocument( cDir, cFilename, cTitle, cExtension, cLang )
-   METHOD AddEntry( oEntry ) INLINE HB_SYMBOL_UNUSED( oEntry ), NIL
-   METHOD AddReference( oEntry ) INLINE HB_SYMBOL_UNUSED( oEntry ), NIL
-   METHOD BeginSection( cSection, cFilename ) INLINE HB_SYMBOL_UNUSED( cSection ), HB_SYMBOL_UNUSED( cFilename ), ::Depth++
-   METHOD EndSection( cSection, cFilename ) INLINE HB_SYMBOL_UNUSED( cSection ), HB_SYMBOL_UNUSED( cFilename ), ::Depth--
+   METHOD AddEntry( oEntry ) INLINE HB_SYMBOL_UNUSED(oEntry), NIL
+   METHOD AddReference( oEntry ) INLINE HB_SYMBOL_UNUSED(oEntry), NIL
+   METHOD BeginSection( cSection, cFilename ) INLINE HB_SYMBOL_UNUSED(cSection), HB_SYMBOL_UNUSED(cFilename), ::Depth++
+   METHOD EndSection( cSection, cFilename ) INLINE HB_SYMBOL_UNUSED(cSection), HB_SYMBOL_UNUSED(cFilename), ::Depth--
    METHOD Generate()
    METHOD IsIndex() INLINE ::nType == INDEX_
 
@@ -117,7 +117,7 @@ METHOD TPLGenerate:Generate()
    LOCAL cDir := hb_FNameDir( ::cOutFileName )
 
    IF !hb_vfDirExists( cDir )
-      OutStd( hb_eol() + "Creating directory", "'" + cDir + "'" )
+      OutStd(hb_eol() + "Creating directory", "'" + cDir + "'")
       hb_vfDirMake( cDir )
    ENDIF
 

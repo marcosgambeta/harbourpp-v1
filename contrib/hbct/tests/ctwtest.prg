@@ -15,7 +15,7 @@ PROCEDURE Main()
    LOCAL aWin := Array(9), y, x, i, k, lFlag := .F., lBoard := .T.
 
    SetBlink(.F.)
-   WBoard( 5, 5, 20, 75 )
+   WBoard(5, 5, 20, 75)
    WMode( .T., .T., .T., .T. )
    WSetShadow(7)
    SetClearA(10 * 16 + 14)
@@ -72,9 +72,9 @@ PROCEDURE Main()
          CLS
       ELSEIF k == hb_keyCode( "B" ) .OR. k == hb_keyCode( "b" )
          IF lBoard
-            WBoard( 0, 0, MaxRow(.T.) - 1, MaxCol(.T.) )
+            WBoard(0, 0, MaxRow(.T.) - 1, MaxCol(.T.))
          ELSE
-            WBoard( 5, 5, 20, 75 )
+            WBoard(5, 5, 20, 75)
          ENDIF
          lBoard := ! lBoard
       ELSEIF k == hb_keyCode( "P" ) .OR. k == hb_keyCode( "P" )

@@ -48,7 +48,7 @@ PROCEDURE Main()
    LOCAL hDLL
    LOCAL cData
 
-#if defined( __PLATFORM__WINDOWS )
+#if defined(__PLATFORM__WINDOWS)
 
    IF hb_FileExists( "pscript.dll" )
       hDLL := DllLoad( "pscript.dll" )

@@ -133,8 +133,8 @@ METHOD GenerateText:AddEntry( oEntry )
       ::AddIndex( oEntry )
    ELSE
       FOR EACH item IN FieldIDList()
-         IF oEntry:IsField( item ) .AND. oEntry:IsOutput( item ) .AND. Len(oEntry:fld[ item ]) > 0
-            ::WriteEntry( FieldCaption( item ), oEntry:fld[ item ], oEntry:IsPreformatted( item ) )
+         IF oEntry:IsField(item) .AND. oEntry:IsOutput( item ) .AND. Len(oEntry:fld[ item ]) > 0
+            ::WriteEntry( FieldCaption( item ), oEntry:fld[ item ], oEntry:IsPreformatted(item) )
          ENDIF
       NEXT
 

@@ -5654,7 +5654,7 @@ static void hb_gt_wvwInputNotAllowed(UINT usWinNum, UINT message, WPARAM wParam,
    uses coordinate relative to the physical screen area.
 
    This mode can be set and reset during runtime,eg.
-   oldCoordMode := wvw_SetMainCoord( .t. )
+   oldCoordMode := wvw_SetMainCoord(.t.)
 
    Illustration:
  *+------
@@ -5686,18 +5686,18 @@ static void hb_gt_wvwInputNotAllowed(UINT usWinNum, UINT message, WPARAM wParam,
    to accept user input, still.
 
    GTWVW parts that needs to be modified:
-   HB_GT_FUNC( ... ) should NOT call another HB_GT_FUNC() to avoid
+   HB_GT_FUNC(...) should NOT call another HB_GT_FUNC() to avoid
    double translation of coordinates.
 
    Then all output oriented HB_GT_FUNC() needs to translate coord:
-   - HB_GT_FUNC( hb_gt_wvw_PutText() )         c
-   - HB_GT_FUNC( hb_gt_wvw_SetPos() )          c
-   - HB_GT_FUNC( hb_gt_wvw_SetAttribute() )    c
-   - HB_GT_FUNC( gt_xPutch() )          c
+   - HB_GT_FUNC(hb_gt_wvw_PutText())         c
+   - HB_GT_FUNC(hb_gt_wvw_SetPos())          c
+   - HB_GT_FUNC(hb_gt_wvw_SetAttribute())    c
+   - HB_GT_FUNC(gt_xPutch())          c
    - etc.
 
    Higher level functions uses coord as passed by user, eg.:
-   - HB_FUNC( WVW_NOPENWINDOW )
+   - HB_FUNC(WVW_NOPENWINDOW)
    - etc.
 
    Lower level functions (both static and exported ones) use coord relative
@@ -7719,7 +7719,7 @@ HB_FUNC(WVW_UNREACHEDBR)
   }
 }
 
-/*wvw_SetMainCoord( [lMainCoord] )
+/*wvw_SetMainCoord([lMainCoord])
  * returns old setting of s_pWvwData->s_bMainCoordMode,
  * then assigns s_pWvwData->s_bMainCoordMode := lMainCoord (if supplied)
  */
@@ -8738,7 +8738,7 @@ HB_FUNC(WVW_RESTORE)
 
 /* NOTE: this is not supported in GTWVW */
 #if 0
-HB_FUNC( WVW_SETGUI )
+HB_FUNC(WVW_SETGUI)
 {
    BOOL bGui = s_pWvwData->s_sApp->bGui;
 

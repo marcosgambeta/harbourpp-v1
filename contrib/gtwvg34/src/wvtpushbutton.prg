@@ -83,8 +83,8 @@ METHOD WvtPushButton:Create()
 
    ::bPaint := {|| ::PaintButton() }
 
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 

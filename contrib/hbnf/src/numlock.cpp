@@ -27,7 +27,7 @@
 #include <hbapigt.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( FT_NUMLOCK )
+HB_FUNC(FT_NUMLOCK)
 {
    int        iState = 0;
    HB_GT_INFO gtInfo;

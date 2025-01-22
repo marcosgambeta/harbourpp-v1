@@ -15,9 +15,9 @@
  *                  [@<cPasswd>], [@<nCompressionLevel>], [@<nStrategy>])
  *          --> <lDecoded>
  *    netio_ProcExists( <cProcName> ) --> <lExists>
- *    netio_ProcExec( <cProcName> [, <params,...>] ) --> <lSent>
+ *    netio_ProcExec(<cProcName> [, <params,...>]) --> <lSent>
  *    netio_ProcExecW( <cProcName> [, <params,...>] ) --> <lExecuted>
- *    netio_FuncExec( <cFuncName> [, <params,...>] ) --> <xFuncRetVal>
+ *    netio_FuncExec(<cFuncName> [, <params,...>]) --> <xFuncRetVal>
  *
  *    netio_OpenDataStream( <cStreamFuncName> [, <params,...>] )
  *          --> <nStreamID>
@@ -25,7 +25,7 @@
  *          --> <nStreamID>
  *    netio_CloseStream( <nStreamID>, [<cServer>], [<nPort>] )
  *          --> <lOK>
- *    netio_GetData( <nStreamID>, [<cServer>], [<nPort>] )
+ *    netio_GetData(<nStreamID>, [<cServer>], [<nPort>])
  *          --> <aData> | <cData> | NIL
  *
  * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
@@ -1172,7 +1172,7 @@ static void s_netio_init(void * cargo)
 /* netio_Decode([@]<cFullName>, [@<cServer>], [@<nPort>], [@<nTimeOut>], ;
  *              [@<cPasswd>], [@<nCompressionLevel>], [@<nStrategy>]) --> <lOK>
  */
-HB_FUNC( NETIO_DECODE )
+HB_FUNC(NETIO_DECODE)
 {
    char server[NETIO_SERVERNAME_MAX];
    auto pszFullName = hb_parc(1);
@@ -1225,7 +1225,7 @@ HB_FUNC( NETIO_DECODE )
 /* netio_Connect([<cServer>], [<nPort>], [<nTimeOut>], ;
  *               [<cPasswd>], [<nCompressionLevel>], [<nStrategy>]) --> <lOK>
  */
-HB_FUNC( NETIO_CONNECT )
+HB_FUNC(NETIO_CONNECT)
 {
    auto pszServer = hb_parc(1);
    auto pszPasswd = hb_parc(4);
@@ -1301,7 +1301,7 @@ static PHB_CONCLI s_connParam(int iParam)
  *                     [<cPasswd>], [<nCompressionLevel>], [<nStrategy>])
  *       --> <pConnection> | NIL
  */
-HB_FUNC( NETIO_GETCONNECTION )
+HB_FUNC(NETIO_GETCONNECTION)
 {
    auto pszServer = hb_parc(1);
    auto pszPasswd = hb_parc(4);
@@ -1329,7 +1329,7 @@ HB_FUNC( NETIO_GETCONNECTION )
 
 /* netio_Disconnect([<cServer>], [<nPort>]) --> <lOK>
  */
-HB_FUNC( NETIO_DISCONNECT )
+HB_FUNC(NETIO_DISCONNECT)
 {
    auto pszServer = hb_parc(1);
    char * pszIpAddres;
@@ -1348,7 +1348,7 @@ HB_FUNC( NETIO_DISCONNECT )
 
 /* netio_TimeOut(<pConnection> [, <nTimeOut>]) --> [<nTimeOut>]
  */
-HB_FUNC( NETIO_TIMEOUT )
+HB_FUNC(NETIO_TIMEOUT)
 {
    PHB_CONCLI conn = s_connParam(1);
 
@@ -1371,7 +1371,7 @@ HB_FUNC( NETIO_TIMEOUT )
    }
 }
 
-HB_FUNC( NETIO_SETPATH )
+HB_FUNC(NETIO_SETPATH)
 {
    PHB_CONCLI conn = s_connParam(1);
 
@@ -1570,7 +1570,7 @@ static HB_BOOL s_netio_procexec(int iMsg, int iType)
  *
  * netio_ProcExists( <cProcName> ) --> <lExists>
  */
-HB_FUNC( NETIO_PROCEXISTS )
+HB_FUNC(NETIO_PROCEXISTS)
 {
    hb_retl(s_netio_procexec(NETIO_PROCIS, 0));
 }
@@ -1578,9 +1578,9 @@ HB_FUNC( NETIO_PROCEXISTS )
 /* execute function/procedure on server the side,
  * do not wait for confirmation:
  *
- * netio_ProcExec( <cProcName> [, <params,...>] ) --> <lSent>
+ * netio_ProcExec(<cProcName> [, <params,...>]) --> <lSent>
  */
-HB_FUNC( NETIO_PROCEXEC )
+HB_FUNC(NETIO_PROCEXEC)
 {
    hb_retl(s_netio_procexec(NETIO_PROC, 0));
 }
@@ -1590,16 +1590,16 @@ HB_FUNC( NETIO_PROCEXEC )
  *
  * netio_ProcExecW( <cProcName> [, <params,...>] ) --> <lExecuted>
  */
-HB_FUNC( NETIO_PROCEXECW )
+HB_FUNC(NETIO_PROCEXECW)
 {
    hb_retl(s_netio_procexec(NETIO_PROCW, 0));
 }
 
 /* execute function on the server side and wait for its return value:
  *
- * netio_FuncExec( <cFuncName> [, <params,...>] ) --> <xFuncRetVal>
+ * netio_FuncExec(<cFuncName> [, <params,...>]) --> <xFuncRetVal>
  */
-HB_FUNC( NETIO_FUNCEXEC )
+HB_FUNC(NETIO_FUNCEXEC)
 {
    s_netio_procexec(NETIO_FUNC, 0);
 }
@@ -1617,7 +1617,7 @@ HB_FUNC( NETIO_FUNCEXEC )
  * The function returns new stream ID or -1 if the communication stream
  * cannot be set.
  */
-HB_FUNC( NETIO_OPENDATASTREAM )
+HB_FUNC(NETIO_OPENDATASTREAM)
 {
    s_netio_procexec(NETIO_FUNCCTRL, NETIO_SRVDATA);
 }
@@ -1635,7 +1635,7 @@ HB_FUNC( NETIO_OPENDATASTREAM )
  * The function returns new stream ID or -1 if the communication stream
  * cannot be set.
  */
-HB_FUNC( NETIO_OPENITEMSTREAM )
+HB_FUNC(NETIO_OPENITEMSTREAM)
 {
    s_netio_procexec(NETIO_FUNCCTRL, NETIO_SRVITEM);
 }
@@ -1666,7 +1666,7 @@ static PHB_CONCLI s_netio_getConn(void)
  * netio_CloseStream( <nStreamID>, [<pConnection>] | [[<cServer>], [<nPort>]] )
  *    --> <lOK>
  */
-HB_FUNC( NETIO_CLOSESTREAM )
+HB_FUNC(NETIO_CLOSESTREAM)
 {
    auto iStreamID = hb_parni(1);
    bool fResult = false;
@@ -1699,10 +1699,10 @@ HB_FUNC( NETIO_CLOSESTREAM )
 
 /* retrieve data sent from the server by cominication stream
  *
- * netio_GetData( <nStreamID>, [<pConnection>] | [[<cServer>], [<nPort>]] )
+ * netio_GetData(<nStreamID>, [<pConnection>] | [[<cServer>], [<nPort>]])
  *    --> <aData> | <cData> | NIL
  */
-HB_FUNC( NETIO_GETDATA )
+HB_FUNC(NETIO_GETDATA)
 {
    auto iStreamID = hb_parni(1);
 

@@ -60,28 +60,28 @@ PROCEDURE demoxbp()
    oListBox:setColorBG( WIN_RGB(250, 244, 182) )
 #endif
 
-   AAdd( aParts, "XbpDialog"         )
-   AAdd( aParts, "XbpMenuBar"        )
-   AAdd( aParts, "XbpToolBar"        )
-   AAdd( aParts, "XbpToolBarButton"  )
-   AAdd( aParts, "XbpStatusBar"      )
-   AAdd( aParts, "XbpStatic"         )
-   AAdd( aParts, "XbpTreeView"       )
-   AAdd( aParts, "XbpTreeViewItem"   )
-   AAdd( aParts, "XbpActiveXControl" )
-   AAdd( aParts, "XbpListBox"        )
-   AAdd( aParts, "XbpPushButton"     )
-   AAdd( aParts, "XbpCheckBox"       )
-   AAdd( aParts, "XbpRadioButton"    )
-   AAdd( aParts, "Xbp3State"         )
-   AAdd( aParts, "XbpSLE"            )
-   AAdd( aParts, "XbpMLE"            )
-   AAdd( aParts, "XbpHTMLViewer"     )
-   AAdd( aParts, "XbpSysWindow"      )
-   AAdd( aParts, "XbpFontDialog"     )
-   AAdd( aParts, "XbpFont"           )
-   AAdd( aParts, "-------------"     )
-   AAdd( aParts, "DataRef"           )
+   AAdd(aParts, "XbpDialog")
+   AAdd(aParts, "XbpMenuBar")
+   AAdd(aParts, "XbpToolBar")
+   AAdd(aParts, "XbpToolBarButton")
+   AAdd(aParts, "XbpStatusBar")
+   AAdd(aParts, "XbpStatic")
+   AAdd(aParts, "XbpTreeView")
+   AAdd(aParts, "XbpTreeViewItem")
+   AAdd(aParts, "XbpActiveXControl")
+   AAdd(aParts, "XbpListBox")
+   AAdd(aParts, "XbpPushButton")
+   AAdd(aParts, "XbpCheckBox")
+   AAdd(aParts, "XbpRadioButton")
+   AAdd(aParts, "Xbp3State")
+   AAdd(aParts, "XbpSLE")
+   AAdd(aParts, "XbpMLE")
+   AAdd(aParts, "XbpHTMLViewer")
+   AAdd(aParts, "XbpSysWindow")
+   AAdd(aParts, "XbpFontDialog")
+   AAdd(aParts, "XbpFont")
+   AAdd(aParts, "-------------")
+   AAdd(aParts, "DataRef")
 
    AEval( aParts, {| e | oListBox:addItem( e ) } )
    oListBox:itemSelected := {|| wapi_MessageBox( , oListBox:getCurItem() ) }
@@ -120,7 +120,7 @@ PROCEDURE demoxbp()
 #if 0
    oItem1:expand(.T.)
 #else
-   oTree:showExpanded( .T., 2 )
+   oTree:showExpanded(.T., 2)
 #endif
 
    oTree:setData(oItem2)
@@ -220,7 +220,7 @@ PROCEDURE demoxbp()
    oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB }
 
    // Read file into LOCAL variable
-   cText   := hb_MemoRead( GetResource( __FILE__ ) )
+   cText   := hb_MemoRead(GetResource(__FILE__))
    // Create MLE, specify position using :create() and
    // assign data code block accessing LOCAL variable
    oMLE    := WvgMLE():new()
@@ -245,7 +245,7 @@ PROCEDURE demoxbp()
    oCrt:sendMessage( WIN_WM_SIZE, 0, 0 )
    oCrt:show()
 
-   DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
+   DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
 
    oCrt:Destroy()

@@ -83,11 +83,11 @@ METHOD WvgDrawingArea:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 METHOD WvgDrawingArea:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   HB_SYMBOL_UNUSED( lVisible )
+   HB_SYMBOL_UNUSED(lVisible)
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, .T. )
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    wvg_RegisterClass_ByName( ::className() )
 

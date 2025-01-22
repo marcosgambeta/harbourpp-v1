@@ -50,9 +50,9 @@
 
 #xcommand T( <(title)>, <(subject)> ) => ;
    magic_setflags( hMagic, MAGIC_NONE ) ;;
-   OutStd( hb_StrFormat( <title> + ": t: [%s] ", magic_buffer( hMagic, <subject> ) ) ) ;;
+   OutStd(hb_StrFormat( <title> + ": t: [%s] ", magic_buffer( hMagic, <subject> ) )) ;;
    magic_setflags( hMagic, MAGIC_MIME_TYPE ) ;;
-   OutStd( hb_StrFormat( "m: [%s]", magic_buffer( hMagic, <subject> ) ) + hb_eol() )
+   OutStd(hb_StrFormat( "m: [%s]", magic_buffer( hMagic, <subject> ) ) + hb_eol())
 
 PROCEDURE Main()
 
@@ -98,8 +98,8 @@ PROCEDURE Main()
       "/vwKgNl52nW6CC3Xn2+zVY5GaInRGo2mCI07D1+jMUJYczdtU72rb3wD2wEd8GQCAAA=" )
 
    hMagic := magic_open()
-   IF Empty(hMagic) .OR. magic_load( hMagic ) != 0
-      OutStd( "magic_open()/magic_load() failed" + hb_eol() )
+   IF Empty(hMagic) .OR. magic_load(hMagic) != 0
+      OutStd("magic_open()/magic_load() failed" + hb_eol())
       QUIT
    ENDIF
 
@@ -116,7 +116,7 @@ PROCEDURE Main()
    cText := hb_ZUncompress( cText )
    T( "Plain text", cText )
 
-   OutStd( "hb_magic_simple(): t: [" + hb_magic_simple( hb_argv(0), MAGIC_NONE ) + "] " + ;
-      "m: [" + hb_magic_simple( hb_argv(0), MAGIC_MIME_TYPE ) + "]" + hb_eol() )
+   OutStd("hb_magic_simple(): t: [" + hb_magic_simple( hb_argv(0), MAGIC_NONE ) + "] " + ;
+      "m: [" + hb_magic_simple( hb_argv(0), MAGIC_MIME_TYPE ) + "]" + hb_eol())
 
    RETURN

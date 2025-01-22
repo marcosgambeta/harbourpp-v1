@@ -115,7 +115,7 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    DO CASE
    CASE ::type == WVGCOMBO_DROPDOWNLIST
@@ -280,8 +280,8 @@ METHOD WvgComboBox:listBoxSize()
 
 METHOD WvgComboBox:setIcon( nItem, cIcon )
 
-   HB_SYMBOL_UNUSED( nItem )
-   HB_SYMBOL_UNUSED( cIcon )
+   HB_SYMBOL_UNUSED(nItem)
+   HB_SYMBOL_UNUSED(cIcon)
 
    RETURN Self
 

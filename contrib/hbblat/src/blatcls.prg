@@ -190,7 +190,7 @@ CREATE CLASS HBBlat
 
    // Methods
    METHOD Send()
-   METHOD Command( cCommand )  VIRTUAL
+   METHOD Command(cCommand)  VIRTUAL
    METHOD Error()
    METHOD ErrorString()
    METHOD GetErrors()
@@ -209,7 +209,7 @@ METHOD HBBlat:Send()
    ::Check()
 
    IF ::nError == BLAT_SUCCESS
-      ::nBlatError := hb_blatSend( ::cCommand )
+      ::nBlatError := hb_blatSend(::cCommand)
       IF ::nBlatError != 0
          ::nError     := ::nBlatError
          ::cError     := BLAT_TEXT_ERROR
@@ -236,7 +236,7 @@ METHOD PROCEDURE HBBlat:Check()
       IF !HB_IsString( ::cTO ) .AND. ! HB_IsString( ::cTOFile ) .AND. ! ::lToUndiscloseRecipients
          ::nError := BLAT_ERR_MISSING_TO
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TO )
-         AAdd( ::aErrors, { ::nError, ::cError } )
+         AAdd(::aErrors, { ::nError, ::cError })
          IF !::lIgnoreErrors
             RETURN
          ENDIF
@@ -251,7 +251,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cTOFile )
             ::nError := BLAT_ERR_MISSING_TOFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TOFILE ) + ": " + ::cToFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -270,7 +270,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cCCFile )
             ::nError := BLAT_ERR_MISSING_CCFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_CCFILE ) + ": " + ::cCCFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -289,7 +289,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cBCCFile )
             ::nError := BLAT_ERR_MISSING_BCCFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BCCFILE ) + ": " + ::cBCCFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -323,7 +323,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cSubjectFile )
             ::nError := BLAT_ERR_MISSING_SUBJECTFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_SUBJECTFILE ) + ": " + ::cSubjectFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -337,7 +337,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cBodyFile )
             ::nError := BLAT_ERR_MISSING_BODYFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BODYFILE ) + ": " + ::cBodyFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -350,7 +350,7 @@ METHOD PROCEDURE HBBlat:Check()
       IF !HB_IsString( ::cBody ) .AND. ! HB_IsString( ::cBodyFile )
          ::nError := BLAT_ERR_MISSING_BODY
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BODY )
-         AAdd( ::aErrors, { ::nError, ::cError } )
+         AAdd(::aErrors, { ::nError, ::cError })
          IF !::lIgnoreErrors
             RETURN
          ENDIF
@@ -361,7 +361,7 @@ METHOD PROCEDURE HBBlat:Check()
             IF !hb_FileExists( ::cBodyFile )
                ::nError := BLAT_ERR_MISSING_BODYFILE
                ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BODYFILE ) + ": " + ::cBodyFile
-               AAdd( ::aErrors, { ::nError, ::cError } )
+               AAdd(::aErrors, { ::nError, ::cError })
                IF !::lIgnoreErrors
                   RETURN
                ENDIF
@@ -376,7 +376,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cSignatureFile )
             ::nError := BLAT_ERR_MISSING_SIGNATUREFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_SIGNATUREFILE ) + ": " + ::cSignatureFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -390,7 +390,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cTagFile )
             ::nError := BLAT_ERR_MISSING_TAGFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TAGFILE ) + ": " + ::cTagFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -404,7 +404,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cPostScriptumFile )
             ::nError := BLAT_ERR_MISSING_PSFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_PSFILE ) + ": " + ::cPostScriptumFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -429,7 +429,7 @@ METHOD PROCEDURE HBBlat:Check()
       IF !HB_IsString( ::cServerSMTP )
          ::nError := BLAT_ERR_MISSING_SERVERSMTP
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_SERVERSMTP )
-         AAdd( ::aErrors, { ::nError, ::cError } )
+         AAdd(::aErrors, { ::nError, ::cError })
          IF !::lIgnoreErrors
             RETURN
          ENDIF
@@ -461,7 +461,7 @@ METHOD PROCEDURE HBBlat:Check()
       IF !HB_IsString( ::cFrom )
          ::nError := BLAT_ERR_MISSING_FROM
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_FROM )
-         AAdd( ::aErrors, { ::nError, ::cError } )
+         AAdd(::aErrors, { ::nError, ::cError })
          IF !::lIgnoreErrors
             RETURN
          ENDIF
@@ -607,7 +607,7 @@ METHOD PROCEDURE HBBlat:Check()
          ELSE
             ::nError := BLAT_ERR_WRONG_DSN
             ::cError := ::TranslateBlatError( BLAT_ERR_WRONG_DSN ) + ": " + ::cDSN
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -695,7 +695,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cAttachListBinFile )
             ::nError := BLAT_ERR_MISSING_ATTACHLISTBINFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ATTACHLISTBINFILE ) + ": " + ::cAttachListBinFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -709,7 +709,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cAttachListTextFile )
             ::nError := BLAT_ERR_MISSING_ATTACHLISTTEXTFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ATTACHLISTTEXTFILE ) + ": " + ::cAttachListTextFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -723,7 +723,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cAttachListEmbeddedFile )
             ::nError := BLAT_ERR_MISSING_ATTACHLISTEMBEDDEDFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ATTACHLISTEMBEDDEDFILE ) + ": " + ::cAttachListEmbeddedFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF
@@ -767,7 +767,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF !hb_FileExists( ::cAlternateTextFile )
             ::nError := BLAT_ERR_MISSING_ALTERNATETEXTFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ALTERNATETEXTFILE ) + ": " + ::cAlternateTextFile
-            AAdd( ::aErrors, { ::nError, ::cError } )
+            AAdd(::aErrors, { ::nError, ::cError })
             IF !::lIgnoreErrors
                RETURN
             ENDIF

@@ -697,7 +697,7 @@ static PHB_FILE s_filebz2New(PHB_FILE pFile, int iMode, int iBlockSize)
    return pFile;
 }
 
-HB_FUNC( HB_BZ2IO )
+HB_FUNC(HB_BZ2IO)
 {
 ;
 }

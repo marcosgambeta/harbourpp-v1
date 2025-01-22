@@ -108,7 +108,7 @@ static void hb_mysqldd_init(void * cargo)
    }
 }
 
-HB_FUNC( HB_SDDMY_REGISTER )
+HB_FUNC(HB_SDDMY_REGISTER)
 {
    hb_mysqldd_init(nullptr);
 }

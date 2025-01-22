@@ -100,22 +100,22 @@ HB_EXTERN_BEGIN
 #define WVT_DEFAULT_FONT_WIDTH       10
 #define WVT_DEFAULT_FONT_NAME       TEXT( "Courier New" )
 
-#define BLACK          RGB( 0x0 ,0x0 ,0x0  )
-#define BLUE           RGB( 0x0 ,0x0 ,0x85 )
-#define GREEN          RGB( 0x0 ,0x85,0x0  )
-#define CYAN           RGB( 0x0 ,0x85,0x85 )
-#define RED            RGB( 0x85,0x0 ,0x0  )
-#define MAGENTA        RGB( 0x85,0x0 ,0x85 )
-#define BROWN          RGB( 0x85,0x85,0x0  )
-#define LIGHT_GRAY     RGB( 0xC6,0xC6,0xC6 )
-#define GRAY           RGB( 0x60,0x60,0x60 )
-#define BRIGHT_BLUE    RGB( 0x00,0x00,0xFF )
-#define BRIGHT_GREEN   RGB( 0x60,0xFF,0x60 )
-#define BRIGHT_CYAN    RGB( 0x60,0xFF,0xFF )
-#define BRIGHT_RED     RGB( 0xF8,0x00,0x26 )
-#define BRIGHT_MAGENTA RGB( 0xFF,0x60,0xFF )
-#define YELLOW         RGB( 0xFF,0xFF,0x00 )
-#define WHITE          RGB( 0xFF,0xFF,0xFF )
+#define BLACK          RGB(0x00, 0x00, 0x00)
+#define BLUE           RGB(0x00, 0x00, 0x85)
+#define GREEN          RGB(0x00, 0x85, 0x00)
+#define CYAN           RGB(0x00, 0x85, 0x85)
+#define RED            RGB(0x85, 0x00, 0x00)
+#define MAGENTA        RGB(0x85, 0x00, 0x85)
+#define BROWN          RGB(0x85, 0x85, 0x00)
+#define LIGHT_GRAY     RGB(0xC6, 0xC6, 0xC6)
+#define GRAY           RGB(0x60, 0x60, 0x60)
+#define BRIGHT_BLUE    RGB(0x00, 0x00, 0xFF)
+#define BRIGHT_GREEN   RGB(0x60, 0xFF, 0x60)
+#define BRIGHT_CYAN    RGB(0x60, 0xFF, 0xFF)
+#define BRIGHT_RED     RGB(0xF8, 0x00, 0x26)
+#define BRIGHT_MAGENTA RGB(0xFF, 0x60, 0xFF)
+#define YELLOW         RGB(0xFF, 0xFF, 0x00)
+#define WHITE          RGB(0xFF, 0xFF, 0xFF)
 
 #define WM_MY_UPDATE_CARET          ( WM_USER + 0x0101 )
 
@@ -131,7 +131,7 @@ HB_EXTERN_BEGIN
 #define WVT_DLGMD_MAX               50
 /*-*/
 
-#if defined( __BORLANDC__ ) && ( __BORLANDC__ == 0x0550 )
+#if defined(__BORLANDC__) && ( __BORLANDC__ == 0x0550 )
    #ifdef __cplusplus
       extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
    #else
@@ -274,7 +274,7 @@ typedef struct
    int      fontQuality;                    /* requested font quality */
    TCHAR    fontFace[ LF_FACESIZE ];        /* requested font face name LF_FACESIZE #defined in wingdi.h */
    HFONT    hFont;                          /* current font handle */
-#if ! defined( UNICODE )
+#if ! defined(UNICODE)
    HFONT    hFontBox;                       /* current font handle to draw lines */
 #endif
 
@@ -288,7 +288,7 @@ typedef struct
    LPCTSTR  lpWindowTitle;
 
    int      CodePage;                       /* Code page to use for display characters */
-#if ! defined( UNICODE )
+#if ! defined(UNICODE)
    int      boxCodePage;                    /* Code page to use for display draw line characters */
 #endif
    HB_BOOL  Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
@@ -450,7 +450,7 @@ typedef enum
 /*-*/
 
 /* xHarbour compatible definitions */
-#if ! defined( K_SH_LEFT )
+#if ! defined(K_SH_LEFT)
 #define K_SH_LEFT           K_LEFT   /* Shift-Left  == Left  */
 #define K_SH_UP             K_UP     /* Shift-Up    == Up    */
 #define K_SH_RIGHT          K_RIGHT  /* Shift-Right == Right */
@@ -491,8 +491,8 @@ extern HB_EXPORT IPicture *    hb_wvt_gtLoadPictureFromResource( LPCTSTR resourc
 extern HB_EXPORT HB_BOOL       hb_wvt_gtRenderPicture( int x1, int y1, int wd, int ht, IPicture * iPicture, HB_BOOL bDoNotScale );
 extern HB_EXPORT HB_BOOL       hb_wvt_gtDestroyPicture( IPicture * iPicture );
 extern HB_EXPORT HB_BOOL       hb_wvt_DrawImage( HDC hdc, int x1, int y1, int wd, int ht, LPCTSTR image, HB_BOOL bDoNotScale );
-extern HB_EXPORT void          hb_wvt_GetStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib );
-extern HB_EXPORT void          hb_wvt_PutStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib );
+extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib);
+extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib);
 
 extern HB_EXPORT LPWORD        lpwAlign( LPWORD lpIn );
 extern HB_EXPORT int           nCopyAnsiToWideChar( LPWORD lpWCStr, LPCSTR lpAnsiIn );

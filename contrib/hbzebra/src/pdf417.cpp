@@ -578,7 +578,7 @@ static int _pdf417_isdigit( char ch  )
    return '0' <= ch && ch <= '9';
 }
 
-static int _pdf417_isalpha( char ch  )
+static int _pdf417_isalpha(char ch)
 {
    return ( ' ' <= ch && static_cast<unsigned char>(ch) <= 127 ) || ch == '\t' || ch == '\n' || ch == '\r';
 }
@@ -1000,7 +1000,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
    return iPos;
 }
 
-static int _pdf417_encode_numeric( const char * szCode, int iLen, int * pCW, int iPos )
+static int _pdf417_encode_numeric(const char * szCode, int iLen, int * pCW, int iPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("encode numeric len=%d", iLen));
@@ -1076,7 +1076,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                iMode = LATCH_NUMERIC;
                iStart = i;
             }
-         } else if( !_pdf417_isalpha( szCode[i] ) ) {
+         } else if( !_pdf417_isalpha(szCode[i]) ) {
             iPos = _pdf417_encode_text(szCode + iStart, i - iStart, pCW, iPos);
             if( iPos == -1 || iPos >= MAX_CODEWORD_COUNT - 2 ) {
                return -1;
@@ -1108,7 +1108,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                iStart = i;
             }
          }
-         if( iMode == LATCH_BYTE && _pdf417_isalpha( szCode[i] ) ) {
+         if( iMode == LATCH_BYTE && _pdf417_isalpha(szCode[i]) ) {
             for( j = i + 1; j < iLen && _pdf417_isdigit(szCode[i]); j++ ) {
                ;
             }
@@ -1123,7 +1123,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
          }
       } else /* if( iMode == LATCH_NUMERIC ) */ {
          if( _pdf417_isdigit( szCode[i] ) ) {
-         } else if( !_pdf417_isalpha( szCode[i] ) ) {
+         } else if( !_pdf417_isalpha(szCode[i]) ) {
             iPos = _pdf417_encode_numeric(szCode + iStart, i - iStart, pCW, iPos);
             if( iPos == -1 || iPos >= MAX_CODEWORD_COUNT - 2 ) {
                return -1;
@@ -1147,7 +1147,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                   iStart = i;
                }
             }
-         } else /* if( _pdf417_isalpha( szCode[i] ) ) */ {
+         } else /* if( _pdf417_isalpha(szCode[i]) ) */ {
             iPos = _pdf417_encode_numeric(szCode + iStart, i - iStart, pCW, iPos);
             if( iPos == -1 || iPos >= MAX_CODEWORD_COUNT - 2 ) {
                return -1;
@@ -1355,7 +1355,7 @@ PHB_ZEBRA hb_zebra_create_pdf417(const char * szCode, HB_SIZE nLen, int iFlags, 
    return pZebra;
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_PDF417 )
+HB_FUNC(HB_ZEBRA_CREATE_PDF417)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 

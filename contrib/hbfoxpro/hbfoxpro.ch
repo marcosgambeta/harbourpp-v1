@@ -107,7 +107,7 @@
 #xtranslate RECNO( <wa> )     => (<wa>)->( RecNo() )
 #xtranslate RLOCK( <wa> )     => (<wa>)->( RLock() )
 
-#xtranslate USED( <wa> )    => __fox_Used( <wa> )
+#xtranslate USED(<wa>)    => __fox_Used(<wa>)
 
 #xtranslate At( <sub>, <str>, <occur> )   => fox_At( <sub>, <str>, <occur> )
 
@@ -121,6 +121,6 @@
 #command EJECT PAGE => __Eject()
 #command FLUSH      => dbCommitAll()
 #command REGIONAL [<defs,...>] => LOCAL <defs>
-#command CD <(path)> => hb_cwd( <(path)> )
+#command CD <(path)> => hb_cwd(<(path)>)
 
 #endif /* HBFOXPRO_CH_ */

@@ -150,11 +150,11 @@ FUNCTION wvg_SetPaint( cID, nAction, xData, aAttr )
             t_paint_[ n ][ 2 ][ n1 ][ 2 ] := xData
             t_paint_[ n ][ 2 ][ n1 ][ 3 ] := aAttr
          ELSE
-            AAdd( t_paint_[ n ][ 2 ], { nAction, xData, aAttr } )
+            AAdd(t_paint_[ n ][ 2 ], { nAction, xData, aAttr })
          ENDIF
       ELSE
-         AAdd( t_paint_, { cID, {} } )
-         AAdd( ATail( t_paint_ )[ 2 ], { nAction, xData, aAttr } )
+         AAdd(t_paint_, { cID, {} })
+         AAdd(ATail( t_paint_ )[ 2 ], { nAction, xData, aAttr })
       ENDIF
    ENDIF
 
@@ -205,7 +205,7 @@ PROCEDURE wvg_InsertPaint( cID, aPaint, lSet )
    IF ( n := AScan( t_paint_, {| e_ | e_[ 1 ] == cID } ) ) > 0
       t_paint_[ n ] := aPaint
    ELSE
-      AAdd( t_paint_, aPaint )
+      AAdd(t_paint_, aPaint)
    ENDIF
 
    IF hb_defaultValue( lSet, .F. )
@@ -248,8 +248,8 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
       hb_default( @aOffSet[ 4 ], 0 )
 
       nBaseUnits  := wapi_GetDialogBaseUnits()
-      nBaseUnitsX := wapi_LOWORD( nBaseUnits )
-      nBaseUnitsY := wapi_HIWORD( nBaseUnits )
+      nBaseUnitsX := wapi_LOWORD(nBaseUnits)
+      nBaseUnitsY := wapi_HIWORD(nBaseUnits)
 
       nW := aFont[ 7 ] * nCols + aOffSet[ 4 ]
       nH := aFont[ 6 ] * nRows + aOffSet[ 3 ]
@@ -280,23 +280,23 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
 
    hb_default( @nStyle, WIN_WS_CAPTION + WIN_WS_SYSMENU + WIN_WS_GROUP + WIN_WS_TABSTOP + DS_SETFONT + WIN_WS_THICKFRAME + WIN_WS_VISIBLE + WIN_WS_POPUP + DS_3DLOOK )
 
-   AAdd( aDlg[ 1 ], hb_defaultValue( nHelpId, 0 ) )
-   AAdd( aDlg[ 1 ], hb_defaultValue( nExStyle, 0 ) )
-   AAdd( aDlg[ 1 ], nStyle )
-   AAdd( aDlg[ 1 ], 0 )
-   AAdd( aDlg[ 1 ], nX )
-   AAdd( aDlg[ 1 ], nY )
-   AAdd( aDlg[ 1 ], nW )
-   AAdd( aDlg[ 1 ], nH )
-   AAdd( aDlg[ 1 ], 0 )
-   AAdd( aDlg[ 1 ], 0 )
-   AAdd( aDlg[ 1 ], hb_defaultValue( cTitle, "" ) )
+   AAdd(aDlg[ 1 ], hb_defaultValue( nHelpId, 0 ))
+   AAdd(aDlg[ 1 ], hb_defaultValue( nExStyle, 0 ))
+   AAdd(aDlg[ 1 ], nStyle)
+   AAdd(aDlg[ 1 ], 0)
+   AAdd(aDlg[ 1 ], nX)
+   AAdd(aDlg[ 1 ], nY)
+   AAdd(aDlg[ 1 ], nW)
+   AAdd(aDlg[ 1 ], nH)
+   AAdd(aDlg[ 1 ], 0)
+   AAdd(aDlg[ 1 ], 0)
+   AAdd(aDlg[ 1 ], hb_defaultValue( cTitle, "" ))
 
-   IF hb_bitAnd( nStyle, DS_SETFONT ) != 0
-      AAdd( aDlg[ 1 ], hb_defaultValue( nPointSize, 8 ) )
-      AAdd( aDlg[ 1 ], hb_defaultValue( nWeight, 400 ) )
-      AAdd( aDlg[ 1 ], hb_defaultValue( lItalic, .F. ) )
-      AAdd( aDlg[ 1 ], hb_defaultValue( cFaceName, "MS Sans Serif" ) )
+   IF hb_bitAnd(nStyle, DS_SETFONT) != 0
+      AAdd(aDlg[ 1 ], hb_defaultValue( nPointSize, 8 ))
+      AAdd(aDlg[ 1 ], hb_defaultValue( nWeight, 400 ))
+      AAdd(aDlg[ 1 ], hb_defaultValue( lItalic, .F. ))
+      AAdd(aDlg[ 1 ], hb_defaultValue( cFaceName, "MS Sans Serif" ))
    ENDIF
 
    RETURN aDlg
@@ -323,8 +323,8 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
       hb_default( @aOffSet[ 4 ], 0 )
 
       nBaseUnits  := wapi_GetDialogBaseUnits()
-      nBaseUnitsX := wapi_LOWORD( nBaseUnits )
-      nBaseUnitsY := wapi_HIWORD( nBaseUnits )
+      nBaseUnitsX := wapi_LOWORD(nBaseUnits)
+      nBaseUnitsY := wapi_HIWORD(nBaseUnits)
 
       aXY := wvt_GetXYFromRowCol( nTop, nLeft )
       nX  := aXY[ 1 ] + aOffSet[ 2 ]
@@ -350,17 +350,17 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
 
    aDlg[ 1 ][ 4 ]++  // item count
 
-   AAdd( aDlg[  2 ], hb_defaultValue( nHelpId, 0 ) )
-   AAdd( aDlg[  3 ], hb_defaultValue( nExStyle, 0 ) )
-   AAdd( aDlg[  4 ], hb_defaultValue( nStyle, WIN_WS_CHILD + WIN_WS_VISIBLE ) )
-   AAdd( aDlg[  5 ], nX )
-   AAdd( aDlg[  6 ], nY )
-   AAdd( aDlg[  7 ], nW )
-   AAdd( aDlg[  8 ], nH )
-   AAdd( aDlg[  9 ], cnId )
-   AAdd( aDlg[ 10 ], cnDlgClass )
-   AAdd( aDlg[ 11 ], iif(HB_IsString( cText ) .OR. HB_IsNumeric(cText), cText, "") )
-   AAdd( aDlg[ 12 ], 0 )
+   AAdd(aDlg[  2 ], hb_defaultValue( nHelpId, 0 ))
+   AAdd(aDlg[  3 ], hb_defaultValue( nExStyle, 0 ))
+   AAdd(aDlg[  4 ], hb_defaultValue( nStyle, WIN_WS_CHILD + WIN_WS_VISIBLE ))
+   AAdd(aDlg[  5 ], nX)
+   AAdd(aDlg[  6 ], nY)
+   AAdd(aDlg[  7 ], nW)
+   AAdd(aDlg[  8 ], nH)
+   AAdd(aDlg[  9 ], cnId)
+   AAdd(aDlg[ 10 ], cnDlgClass)
+   AAdd(aDlg[ 11 ], iif(HB_IsString( cText ) .OR. HB_IsNumeric(cText), cText, ""))
+   AAdd(aDlg[ 12 ], 0)
 
    RETURN aDlg
 
@@ -437,7 +437,7 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    LOCAL cRet, aTmp, xRet, i
 
-   HB_SYMBOL_UNUSED( hWnd )
+   HB_SYMBOL_UNUSED(hWnd)
 
    hb_default( @cPath, "" )
    hb_default( @nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR )
@@ -447,12 +447,12 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 //    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
    cRet := win_GetOpenFileName( @nFlags, cTitle, cInitDir, cDefExt, acFilter, @nFilterIndex, /* nBufferSize */, cDefName )
 
-   IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
+   IF hb_bitAnd(nFlags, WIN_OFN_ALLOWMULTISELECT) != 0
       xRet := {}
       IF !Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len(aTmp)
-            AAdd( xRet, cPath + "\" + aTmp[ i ] )
+            AAdd(xRet, cPath + "\" + aTmp[ i ])
          NEXT
       ENDIF
    ELSE
@@ -477,7 +477,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    LOCAL cRet, aTmp, xRet, i, cPath
 
-   HB_SYMBOL_UNUSED( hWnd )
+   HB_SYMBOL_UNUSED(hWnd)
 
    hb_default( @nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR )
 
@@ -486,12 +486,12 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 //    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
    cRet := win_GetSaveFileName( @nFlags, cTitle, cInitDir, cDefExt, acFilter, @nFilterIndex, /*nBufferSize*/, cDefName )
 
-   IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
+   IF hb_bitAnd(nFlags, WIN_OFN_ALLOWMULTISELECT) != 0
       xRet := {}
       IF !Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len(aTmp)
-            AAdd( xRet, cPath + "\" + aTmp[ i ] )
+            AAdd(xRet, cPath + "\" + aTmp[ i ])
          NEXT
       ENDIF
    ELSE
@@ -628,7 +628,7 @@ FUNCTION wvt_ProcessMessages()
 
    RETURN .T.
 
-PROCEDURE wvt_Keyboard( nKey )
+PROCEDURE wvt_Keyboard(nKey)
 
    hb_gtInfo( HB_GTI_SPEC, HB_GTS_KEYBOARD, nKey )
 
@@ -639,7 +639,7 @@ PROCEDURE wvt_Keyboard( nKey )
 FUNCTION wvt_GetClipboard()
    RETURN hb_gtInfo( HB_GTI_CLIPBOARDDATA )
 
-FUNCTION wvt_SetClipboard( cText )
+FUNCTION wvt_SetClipboard(cText)
    RETURN hb_gtInfo( HB_GTI_CLIPBOARDDATA, cText )
 
 #endif
@@ -651,7 +651,7 @@ PROCEDURE wvt_PasteFromClipboard()
    LOCAL i
 
    FOR i := 1 TO nLen
-      wvt_Keyboard( hb_keyCode( SubStr(cText, i, 1) ) )
+      wvt_Keyboard(hb_keyCode( SubStr(cText, i, 1) ))
    NEXT
 
    RETURN
@@ -745,7 +745,7 @@ FUNCTION wvg_GetMessageText( w, p1, p2 )
    RETURN Left(cText, At( Chr(0), cText + Chr(0) ) - 1)
 
 FUNCTION wvt_IsLButtonPressed()
-   RETURN hb_bitAnd( waGetKeyState(WIN_VK_LBUTTON), 0x8000 ) != 0
+   RETURN hb_bitAnd(waGetKeyState(WIN_VK_LBUTTON), 0x8000) != 0
 
 FUNCTION wvg_FindWindow( cTitle )
    RETURN wapi_FindWindow( , cTitle )
@@ -910,7 +910,7 @@ FUNCTION wvg_PrepareBitmapFromResource( xNameOrID, nExpWidth, nExpHeight, lMap3D
 
 #ifdef HB_LEGACY_LEVEL5
 
-FUNCTION wvg_PrepareBitmapFromResourceId( nID, nExpWidth, nExpHeight, lMap3Dcolors )
+FUNCTION wvg_PrepareBitmapFromResourceId(nID, nExpWidth, nExpHeight, lMap3Dcolors)
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), nID, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
       iif(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )

@@ -20,7 +20,7 @@
 #include <hbapi.hpp>
 #include <hbapigt.hpp>
 
-HB_FUNC( FT_COLOR2N )
+HB_FUNC(FT_COLOR2N)
 {
    int iRet = 0;
 

@@ -82,7 +82,7 @@ FUNCTION hb_DynaCall1(cFunction, cLibrary, nCount, ...)
       hb_mutexLock( s_mutex )
 
       IF !cLibrary $ s_hDLL
-         s_hDLL[ cLibrary ] := hb_libLoad( cLibrary )
+         s_hDLL[ cLibrary ] := hb_libLoad(cLibrary)
       ENDIF
 
       hHandle := s_hDLL[ cLibrary ]

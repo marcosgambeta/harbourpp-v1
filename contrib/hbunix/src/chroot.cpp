@@ -48,7 +48,7 @@
 
 #include "hbposix.hpp"
 
-HB_FUNC( UNIX_CHROOT )
+HB_FUNC(UNIX_CHROOT)
 {
    if( chroot( hb_parcx(1) ) == -1 )
    {

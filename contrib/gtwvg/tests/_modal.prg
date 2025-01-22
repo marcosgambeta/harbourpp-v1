@@ -155,7 +155,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    DispBegin()
    SetColor( pal_[DLG_CLR_TEXT] )
 
-   wvg_BoxRaised( nTop, nLeft, nBottom, nRight )
+   wvg_BoxRaised(nTop, nLeft, nBottom, nRight)
 
    SetColor( pal_[DLG_CLR_TEXT] )
    IF !Empty(aText_)
@@ -171,7 +171,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
       SetColor( pal_[DLG_CLR_TRG] )
       @ nBtnRow, nBtnCol_[i] + 2 SAY SubStr(aButtons_[i], 1, 1)
 
-      AAdd( x_, { nBtnRow, nBtnCol_[i], nBtnRow, nBtnCol_[i] + Len(aButtons_[i]) + 3 } )
+      AAdd(x_, { nBtnRow, nBtnCol_[i], nBtnRow, nBtnCol_[i] + Len(aButtons_[i]) + 3 })
    NEXT
 
    SetColor( pal_[DLG_CLR_HILITE] )
@@ -180,7 +180,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    SetColor( pal_[DLG_CLR_HISEL] )
    @ nBtnRow, nBtnCol_[sel] + 2 SAY SubStr(aButtons_[sel], 1, 1)
 
-   AEval( x_, {| e_ | wvg_BoxRaised( e_[1], e_[2], e_[3], e_[4] ) } )
+   AEval(x_, {|e_|wvg_BoxRaised(e_[1], e_[2], e_[3], e_[4])})
 
    DispEnd()
 

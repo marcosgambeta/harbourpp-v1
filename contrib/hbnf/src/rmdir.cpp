@@ -22,7 +22,7 @@
 #include <hbapi.hpp>
 #include <hbapifs.hpp>
 
-HB_FUNC( FT_RMDIR )
+HB_FUNC(FT_RMDIR)
 {
    hb_retl(HB_ISCHAR(1) && hb_fsRmDir(hb_parc(1)));
 }

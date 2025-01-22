@@ -127,7 +127,7 @@ int hb_zebra_draw_codeblock( PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, d
    return hb_zebra_draw(pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags);
 }
 
-HB_FUNC( HB_ZEBRA_DRAW )
+HB_FUNC(HB_ZEBRA_DRAW)
 {
    auto pZebra = hb_zebra_param(1);
 

@@ -30,7 +30,7 @@ PROCEDURE Main()
 
    LOCAL ch
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -46,7 +46,7 @@ PROCEDURE Main()
    CreateToolbar(0)
    CreateStatusbar(0)
 
-   DO WHILE ( ch := hb_keyStd( Inkey(0) ) ) != K_ESC
+   DO WHILE ( ch := hb_keyStd(Inkey(0)) ) != K_ESC
       IF ch == wvw_SetMenuKeyEvent(0)
          MenuAction( 0, wvw_GetLastMenuEvent(0) )
       ENDIF
@@ -142,7 +142,7 @@ STATIC FUNCTION OpenNewWindow()
 
    // then echoing user input, until user press ESC
    SetCursor( SC_NORMAL )
-   DO WHILE ( ch := hb_keyStd( Inkey(0) ) ) != K_ESC
+   DO WHILE ( ch := hb_keyStd(Inkey(0)) ) != K_ESC
       typing( ch )
    ENDDO
 
@@ -207,11 +207,11 @@ STATIC PROCEDURE typing( ch )
  */
 FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a public function */
 
-   LOCAL wParamLow := wapi_LOWORD( wParam )
+   LOCAL wParamLow := wapi_LOWORD(wParam)
    LOCAL nCommand, ch
 
-   HB_SYMBOL_UNUSED( hWnd )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(hWnd)
+   HB_SYMBOL_UNUSED(lParam)
 
    // did user perform a menu/toolbar action on Main Window?
    IF message == WIN_WM_COMMAND .AND. nWinNum == 0  // menu,toolbar,pushbutton

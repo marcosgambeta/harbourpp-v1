@@ -65,7 +65,7 @@
 
 /* NOTE: Dangerous functions, commented out. Harbour doesn't implement hb_retclen_const() */
 
-HB_FUNC( HB_POINTER2STRING )
+HB_FUNC(HB_POINTER2STRING)
 {
    auto pPointer = hb_param(1, Harbour::Item::ANY);
    auto pLen = hb_param(2, Harbour::Item::NUMERIC);
@@ -81,7 +81,7 @@ HB_FUNC( HB_POINTER2STRING )
    }   
 }
 
-HB_FUNC( HB_STRING2POINTER )
+HB_FUNC(HB_STRING2POINTER)
 {
    auto pString = hb_param(1, Harbour::Item::STRING);
 
@@ -351,7 +351,7 @@ HB_FUNC(HB_OSPATHSEPARATOR)
 
 #if 0
 
-HB_FUNC( HB_ISBYREF )
+HB_FUNC(HB_ISBYREF)
 {
    if( hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(1);

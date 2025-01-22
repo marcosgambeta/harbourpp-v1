@@ -81,7 +81,7 @@ PROCEDURE Main()
 
    oLogAccess := UHttpdLog():New( "eshop_access.log" )
 
-   IF !oLogAccess:Add( "" )
+   IF !oLogAccess:Add("")
       oLogAccess:Close()
       ? "Access log file open error " + hb_ntos( FError() )
       RETURN
@@ -89,7 +89,7 @@ PROCEDURE Main()
 
    oLogError := UHttpdLog():New( "eshop_error.log" )
 
-   IF !oLogError:Add( "" )
+   IF !oLogError:Add("")
       oLogError:Close()
       oLogAccess:Close()
       ? "Error log file open error " + hb_ntos( FError() )
@@ -102,8 +102,8 @@ PROCEDURE Main()
 
    IF !oServer:Run( { ;
          "FirewallFilter"      => "", ;
-         "LogAccess"           => {| m | oLogAccess:Add( m + hb_eol() ) }, ;
-         "LogError"            => {| m | oLogError:Add( m + hb_eol() ) }, ;
+         "LogAccess"           => {| m | oLogAccess:Add(m + hb_eol()) }, ;
+         "LogError"            => {| m | oLogError:Add(m + hb_eol()) }, ;
          "Trace"               => {| ... | QOut(...) }, ;
          "Port"                => nPort, ;
          "Idle"                => {| o | iif(hb_FileExists( ".uhttpd.stop" ), ( FErase( ".uhttpd.stop" ), o:Stop() ), NIL) }, ;

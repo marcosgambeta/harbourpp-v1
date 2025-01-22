@@ -117,7 +117,7 @@ PROCEDURE Main( cArg )
          oRow:FieldPut( oRow:FieldPos( "ACQGR" ), wn->ACQGR )
          oRow:FieldPut( oRow:FieldPos( "ACQDI" ), wn->ACQDI )
 
-         IF !oQuery:Append( oRow )
+         IF !oQuery:Append(oRow)
             Alert( oQuery:Error() )
          ENDIF
       ENDIF

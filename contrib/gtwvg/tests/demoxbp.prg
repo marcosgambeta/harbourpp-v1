@@ -20,7 +20,7 @@ PROCEDURE Main()
    LOCAL aState := { "not selected", "selected", "undefined" }
    LOCAL aParts := {}
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVG" )
 #endif
 
@@ -67,28 +67,28 @@ PROCEDURE Main()
    oListBox:setColorFG( RGB(218, 61, 34) )
 // oListBox:setColorBG( RGB(250, 244, 182) )
 
-   AAdd( aParts, "XbpDialog"        )
-   AAdd( aParts, "XbpMenuBar"       )
-   AAdd( aParts, "XbpToolBar"       )
-   AAdd( aParts, "XbpToolBarButton" )
-   AAdd( aParts, "XbpStatusBar"     )
-   AAdd( aParts, "XbpStatic"        )
-   AAdd( aParts, "XbpTreeView"      )
-   AAdd( aParts, "XbpTreeViewItem"  )
-   AAdd( aParts, "XbpActiveXControl" )
-   AAdd( aParts, "XbpListBox"       )
-   AAdd( aParts, "XbpPushButton"    )
-   AAdd( aParts, "XbpCheckBox"      )
-   AAdd( aParts, "XbpRadioButton"   )
-   AAdd( aParts, "Xbp3State"        )
-   AAdd( aParts, "XbpSLE"           )
-   AAdd( aParts, "XbpMLE"           )
-   AAdd( aParts, "XbpHTMLViewer"    )
-   AAdd( aParts, "XbpSysWindow"     )
-   AAdd( aParts, "XbpFontDialog"    )
-   AAdd( aParts, "XbpFont"          )
-   AAdd( aParts, "-------------"    )
-   AAdd( aParts, "DataRef"          )
+   AAdd(aParts, "XbpDialog")
+   AAdd(aParts, "XbpMenuBar")
+   AAdd(aParts, "XbpToolBar")
+   AAdd(aParts, "XbpToolBarButton")
+   AAdd(aParts, "XbpStatusBar")
+   AAdd(aParts, "XbpStatic")
+   AAdd(aParts, "XbpTreeView")
+   AAdd(aParts, "XbpTreeViewItem")
+   AAdd(aParts, "XbpActiveXControl")
+   AAdd(aParts, "XbpListBox")
+   AAdd(aParts, "XbpPushButton")
+   AAdd(aParts, "XbpCheckBox")
+   AAdd(aParts, "XbpRadioButton")
+   AAdd(aParts, "Xbp3State")
+   AAdd(aParts, "XbpSLE")
+   AAdd(aParts, "XbpMLE")
+   AAdd(aParts, "XbpHTMLViewer")
+   AAdd(aParts, "XbpSysWindow")
+   AAdd(aParts, "XbpFontDialog")
+   AAdd(aParts, "XbpFont")
+   AAdd(aParts, "-------------")
+   AAdd(aParts, "DataRef")
 
    AEval( aParts, {| e | oListBox:addItem( e ) } )
    oListBox:itemSelected := {|| wvg_MessageBox( , oListBox:getCurItem() ) }
@@ -127,7 +127,7 @@ PROCEDURE Main()
 #if 0
    oItem1:expand(.T.)
 #else
-   oTree:showExpanded( .T., 2 )
+   oTree:showExpanded(.T., 2)
 #endif
 
    oTree:setData(oItem2)
@@ -222,7 +222,7 @@ PROCEDURE Main()
    oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB }
 
    // Read file into LOCAL variable
-   cText   := MemoRead( "gtwvg.hbc" )
+   cText   := MemoRead("gtwvg.hbc")
    // Create MLE, specify position using :create() and
    // assign data code block accessing LOCAL variable
    oMLE    := WvgMLE():new()
@@ -411,13 +411,13 @@ STATIC FUNCTION ExeFontDialog( oCrt )
    // Every 2nd FontDialog will be MODAL
    oWvgFont := oFontDlg:display( ++s_nMode % 2 )
 
-   HB_SYMBOL_UNUSED( oWvgFont )
+   HB_SYMBOL_UNUSED(oWvgFont)
 
    oFontDlg:destroy()
 
    RETURN NIL
 
-#if ! defined( __HBSCRIPT__HBSHELL )
+#if ! defined(__HBSCRIPT__HBSHELL)
 
 FUNCTION hb_GTSYS()
 

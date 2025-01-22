@@ -49,7 +49,7 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( _FT_NWKSTAT )
+HB_FUNC(_FT_NWKSTAT)
 {
    int iConnect;
 

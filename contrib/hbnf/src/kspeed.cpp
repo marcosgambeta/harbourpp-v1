@@ -21,6 +21,6 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_SETRATE )
+HB_FUNC(FT_SETRATE)
 {
 }

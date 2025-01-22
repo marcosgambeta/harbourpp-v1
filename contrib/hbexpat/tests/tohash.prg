@@ -52,12 +52,12 @@ PROCEDURE Main( cFileName )
    ? XML_GetUserData(p)
    XML_SetUserData(p, aUserData)
    ? ValType(XML_GetUserData(p))
-   XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x | cb_end( x ) } )
+   XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x | cb_end(x) } )
    XML_SetCharacterDataHandler( p, {| x, d | cb_data(x, d) } )
    XML_SetUnknownEncodingHandler( p, {| x, e, i | cb_unknownencoding( x, e, i ) } )
    XML_SetEndDoctypeDeclHandler( p, @cb_enddoctype() )
 
-   IF XML_Parse( p, MemoRead( hb_defaultValue( cFileName, hb_DirBase() + "test.xml" ) ), .T. ) == HB_XML_STATUS_ERROR
+   IF XML_Parse( p, MemoRead(hb_defaultValue( cFileName, hb_DirBase() + "test.xml" )), .T. ) == HB_XML_STATUS_ERROR
       ? hb_StrFormat( e"Parse error at line %1$d:\n%2$s", ;
          XML_GetCurrentLineNumber( p ), ;
          XML_ErrorString( XML_GetErrorCode( p ) ) )
@@ -107,7 +107,7 @@ STATIC FUNCTION cb_unknownencoding( xEData, cEncoding, aMap )
 
    LOCAL aMyMap
 
-   HB_SYMBOL_UNUSED( xEData )
+   HB_SYMBOL_UNUSED(xEData)
 
    IF !Empty(aMyMap := hb_XML_get_unicode_table( cEncoding ))
       ACopy( aMyMap, aMap )
@@ -131,7 +131,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttrList )
    aNewNode[ _N_hAttr ] := { => }
 
    IF cElement $ aNode[ _N_hChild ]
-      AAdd( aNode[ _N_hChild ][ cElement ], aNewNode )
+      AAdd(aNode[ _N_hChild ][ cElement ], aNewNode)
    ELSE
       aNode[ _N_hChild ][ cElement ] := { aNewNode }
    ENDIF
@@ -144,7 +144,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttrList )
 
    RETURN
 
-STATIC PROCEDURE cb_end( aUserData )
+STATIC PROCEDURE cb_end(aUserData)
 
    aUserData[ _D_aNode ] := aUserData[ _D_aNode ][ _N_aParent ]
 

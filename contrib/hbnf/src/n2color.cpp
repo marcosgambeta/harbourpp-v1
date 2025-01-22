@@ -24,7 +24,7 @@
 #include <hbapi.hpp>
 #include <hbapigt.hpp>
 
-HB_FUNC( FT_N2COLOR )
+HB_FUNC(FT_N2COLOR)
 {
    auto iColor = hb_parnidef(1, -1);
 

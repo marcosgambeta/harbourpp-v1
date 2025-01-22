@@ -55,7 +55,7 @@
 /* Internet timestamp based on:
    https://tools.ietf.org/html/rfc822
    https://tools.ietf.org/html/rfc2822 */
-HB_FUNC( TIP_TIMESTAMP )
+HB_FUNC(TIP_TIMESTAMP)
 {
    static const char * s_days[]   = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
    static const char * s_months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -93,7 +93,7 @@ HB_FUNC( TIP_TIMESTAMP )
    hb_retc(szRet);
 }
 
-HB_FUNC( TIP_HTMLSPECIALCHARS )
+HB_FUNC(TIP_HTMLSPECIALCHARS)
 {
    if( HB_ISCHAR(1) )
    {
@@ -192,12 +192,12 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( TIP_CRLF )
+HB_FUNC(TIP_CRLF)
 {
    hb_retc_const("\r\n");
 }
 
-HB_FUNC( TIP_JSONSPECIALCHARS )
+HB_FUNC(TIP_JSONSPECIALCHARS)
 {
    if( HB_ISCHAR(1) )
    {

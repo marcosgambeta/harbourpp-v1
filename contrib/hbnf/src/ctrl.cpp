@@ -29,7 +29,7 @@
 #include <hbapigt.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( FT_CTRL )
+HB_FUNC(FT_CTRL)
 {
    HB_GT_INFO gtInfo;
 

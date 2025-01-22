@@ -16,7 +16,7 @@ PROCEDURE Main()
    ENDIF
 
    IF !s_mxml_error
-      OutStd( asXML( xml ), hb_eol() )
+      OutStd(asXML( xml ), hb_eol())
    ENDIF
 
    mxmlDelete( xml )
@@ -27,7 +27,7 @@ PROCEDURE Main()
       IF s_mxml_error
          OutErr( "hbmxml:", s_mxml_error_msg, hb_eol() )
       ELSE
-         OutStd( asXML( xml ), hb_eol() )
+         OutStd(asXML( xml ), hb_eol())
       ENDIF
    ENDIF
 
@@ -42,7 +42,7 @@ PROCEDURE my_mxmlError( cErrorMsg )
 
 STATIC FUNCTION simplexml_load_file( file )
 
-   RETURN mxmlLoadString( NIL, hb_MemoRead( file ), @type_cb() )
+   RETURN mxmlLoadString( NIL, hb_MemoRead(file), @type_cb() )
 
 STATIC FUNCTION asXML( xml )
 
@@ -55,7 +55,7 @@ STATIC FUNCTION asXML( xml )
       RETURN ""
    ENDIF
 
-   subnode := mxmlGetFirstChild( node )
+   subnode := mxmlGetFirstChild(node)
    DO WHILE ! Empty(subnode := mxmlGetNextSibling( subnode ))
       IF mxmlGetType( subnode ) == MXML_ELEMENT
          IF mxmlGetElement( subnode ) == "body"

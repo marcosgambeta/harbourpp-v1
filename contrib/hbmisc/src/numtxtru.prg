@@ -458,8 +458,8 @@ FUNCTION MnyToTxtRU( nValue, cLang, nMode1, nMode2 )
    LOCAL aMsg := GetLangMsg( cLang )
    LOCAL nCent
 
-   nValue := Round( nValue, 2 )
-   nCent  := Round( ( nValue - Int( nValue ) ) * 100, 0 )
+   nValue := Round(nValue, 2)
+   nCent  := Round(( nValue - Int( nValue ) ) * 100, 0)
    nValue := Int( nValue )
 
    cRetVal := MnyToStrRaw( nValue, aMsg, aMsg[ NTSR_CURR ], nMode1 ) + " " + ;

@@ -54,7 +54,7 @@
       [LOST LINK] www.nitrxgen.net/source/bubblebabble.txt
  */
 
-HB_FUNC( BUBBLEBABBLEENCODE )
+HB_FUNC(BUBBLEBABBLEENCODE)
 {
    static const char * s_szConsonants = "bcdfghklmnprstvzx";
    static const char * s_szVowels     = "aeiouy";

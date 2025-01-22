@@ -58,7 +58,7 @@
 #  include <windows.h>
 #endif
 
-HB_FUNC( EXECNAME )
+HB_FUNC(EXECNAME)
 {
    char * pszBaseName = hb_cmdargProgName();
 
@@ -82,7 +82,7 @@ HB_FUNC( EXECNAME )
       hb_retc_null();
 }
 
-HB_FUNC( EXECPIDNUM )
+HB_FUNC(EXECPIDNUM)
 {
 #if defined(HB_OS_WIN)
    hb_retnint(GetCurrentProcessId());

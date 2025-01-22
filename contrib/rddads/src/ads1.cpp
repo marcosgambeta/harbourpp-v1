@@ -5524,7 +5524,7 @@ static void adsRegisterRDD(HB_USHORT * pusRddId)
    }
 }
 
-HB_FUNC_STATIC( ADS_GETFUNCTABLE )
+HB_FUNC_STATIC(ADS_GETFUNCTABLE)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ADS_GETFUNCTABLE()"));
@@ -5533,7 +5533,7 @@ HB_FUNC_STATIC( ADS_GETFUNCTABLE )
    adsRegisterRDD(&s_uiRddIdADS);
 }
 
-HB_FUNC_STATIC( ADSADT_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSADT_GETFUNCTABLE)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ADSADT_GETFUNCTABLE()"));
@@ -5542,7 +5542,7 @@ HB_FUNC_STATIC( ADSADT_GETFUNCTABLE )
    adsRegisterRDD(&s_uiRddIdADSADT);
 }
 
-HB_FUNC_STATIC( ADSNTX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSNTX_GETFUNCTABLE)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ADSNTX_GETFUNCTABLE()"));
@@ -5551,7 +5551,7 @@ HB_FUNC_STATIC( ADSNTX_GETFUNCTABLE )
    adsRegisterRDD(&s_uiRddIdADSNTX);
 }
 
-HB_FUNC_STATIC( ADSCDX_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSCDX_GETFUNCTABLE)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ADSCDX_GETFUNCTABLE()"));
@@ -5562,7 +5562,7 @@ HB_FUNC_STATIC( ADSCDX_GETFUNCTABLE )
 
 #if ADS_LIB_VERSION >= 900
 
-HB_FUNC_STATIC( ADSVFP_GETFUNCTABLE )
+HB_FUNC_STATIC(ADSVFP_GETFUNCTABLE)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ADSVFP_GETFUNCTABLE()"));
@@ -5573,11 +5573,11 @@ HB_FUNC_STATIC( ADSVFP_GETFUNCTABLE )
 
 #endif
 
-HB_FUNC( ADS ) { ; }
-HB_FUNC( ADSADT ) { ; }
-HB_FUNC( ADSNTX ) { ; }
-HB_FUNC( ADSCDX ) { ; }
-HB_FUNC( ADSVFP ) { ; }
+HB_FUNC(ADS) { ; }
+HB_FUNC(ADSADT) { ; }
+HB_FUNC(ADSNTX) { ; }
+HB_FUNC(ADSCDX) { ; }
+HB_FUNC(ADSVFP) { ; }
 
 static void hb_adsRddInit(void * cargo)
 {
@@ -5594,7 +5594,7 @@ static void hb_adsRddInit(void * cargo)
    }
 }
 
-HB_FUNC( HB_RDDADSREGISTER )
+HB_FUNC(HB_RDDADSREGISTER)
 {
    hb_adsRddInit(nullptr);
 }
@@ -5622,8 +5622,8 @@ HB_CALL_ON_STARTUP_END(_hb_ads_rdd_init_)
    #pragma startup ads1__InitSymbols
    #pragma startup _hb_ads_rdd_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( ads1__InitSymbols ) \
-                              HB_DATASEG_FUNC( _hb_ads_rdd_init_ )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC(ads1__InitSymbols) \
+                              HB_DATASEG_FUNC(_hb_ads_rdd_init_)
    #include "hbiniseg.hpp"
 #endif
 
@@ -5639,7 +5639,7 @@ ADSAREAP hb_adsGetWorkAreaPointer(void)
    return nullptr;
 }
 
-HB_FUNC( ADSGETRELKEYPOS )
+HB_FUNC(ADSGETRELKEYPOS)
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
@@ -5650,7 +5650,7 @@ HB_FUNC( ADSGETRELKEYPOS )
    }
 }
 
-HB_FUNC( ADSSETRELKEYPOS )
+HB_FUNC(ADSSETRELKEYPOS)
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
@@ -5661,7 +5661,7 @@ HB_FUNC( ADSSETRELKEYPOS )
    }
 }
 
-HB_FUNC( ADSCUSTOMIZEAOF )
+HB_FUNC(ADSCUSTOMIZEAOF)
 {
    ADSAREAP   pArea;
    HB_ULONG   ulRecord = 0;

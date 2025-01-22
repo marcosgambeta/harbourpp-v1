@@ -58,12 +58,12 @@
 #include "hbwapi.hpp"
 #include "hbwinole.hpp"
 
-#if defined( _MSC_VER )
+#if defined(_MSC_VER)
 #   pragma warning(push)
 #   pragma warning(disable:4201)  // warning C4201: nonstandard extension used: nameless struct/union
 #endif
 #include <olectl.h>
-#if defined( _MSC_VER )
+#if defined(_MSC_VER)
 #   pragma warning(pop)
 #endif
 
@@ -91,22 +91,22 @@ HB_EXTERN_BEGIN
 
 // -
 
-#define BLACK                       RGB( 0x00, 0x00, 0x00 )
-#define BLUE                        RGB( 0x00, 0x00, 0x85 )
-#define GREEN                       RGB( 0x00, 0x85, 0x00 )
-#define CYAN                        RGB( 0x00, 0x85, 0x85 )
-#define RED                         RGB( 0x85, 0x00, 0x00 )
-#define MAGENTA                     RGB( 0x85, 0x00, 0x85 )
-#define BROWN                       RGB( 0x85, 0x85, 0x00 )
-#define LIGHT_GRAY                  RGB( 0xC6, 0xC6, 0xC6 )
-#define GRAY                        RGB( 0x60, 0x60, 0x60 )
-#define BRIGHT_BLUE                 RGB( 0x00, 0x00, 0xFF )
-#define BRIGHT_GREEN                RGB( 0x60, 0xFF, 0x60 )
-#define BRIGHT_CYAN                 RGB( 0x60, 0xFF, 0xFF )
-#define BRIGHT_RED                  RGB( 0xF8, 0x00, 0x26 )
-#define BRIGHT_MAGENTA              RGB( 0xFF, 0x60, 0xFF )
-#define YELLOW                      RGB( 0xFF, 0xFF, 0x00 )
-#define WHITE                       RGB( 0xFF, 0xFF, 0xFF )
+#define BLACK                       RGB(0x00, 0x00, 0x00)
+#define BLUE                        RGB(0x00, 0x00, 0x85)
+#define GREEN                       RGB(0x00, 0x85, 0x00)
+#define CYAN                        RGB(0x00, 0x85, 0x85)
+#define RED                         RGB(0x85, 0x00, 0x00)
+#define MAGENTA                     RGB(0x85, 0x00, 0x85)
+#define BROWN                       RGB(0x85, 0x85, 0x00)
+#define LIGHT_GRAY                  RGB(0xC6, 0xC6, 0xC6)
+#define GRAY                        RGB(0x60, 0x60, 0x60)
+#define BRIGHT_BLUE                 RGB(0x00, 0x00, 0xFF)
+#define BRIGHT_GREEN                RGB(0x60, 0xFF, 0x60)
+#define BRIGHT_CYAN                 RGB(0x60, 0xFF, 0xFF)
+#define BRIGHT_RED                  RGB(0xF8, 0x00, 0x26)
+#define BRIGHT_MAGENTA              RGB(0xFF, 0x60, 0xFF)
+#define YELLOW                      RGB(0xFF, 0xFF, 0x00)
+#define WHITE                       RGB(0xFF, 0xFF, 0xFF)
 
 #define WM_MY_UPDATE_CARET          ( WM_USER + 0x0101 )
 
@@ -114,7 +114,7 @@ HB_EXTERN_BEGIN
 #define HB_MSG_NOTIFYICON           ( WM_USER + 1399 )
 #define HB_ID_NOTIFYICON            99
 
-#if defined( __BORLANDC__ ) && ( __BORLANDC__ == 0x0550 )
+#if defined(__BORLANDC__) && ( __BORLANDC__ == 0x0550 )
    #ifdef __cplusplus
       extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
    #else
@@ -169,7 +169,7 @@ enum HB_gt_event_enum
 // -
 
 // xHarbour compatible definitions
-#if ! defined( K_SH_LEFT )
+#if ! defined(K_SH_LEFT)
 #define K_SH_LEFT           K_LEFT   // Shift-Left  == Left
 #define K_SH_UP             K_UP     // Shift-Up    == Up
 #define K_SH_RIGHT          K_RIGHT  // Shift-Right == Right

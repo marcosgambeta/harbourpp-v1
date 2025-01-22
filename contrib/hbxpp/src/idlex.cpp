@@ -51,7 +51,7 @@
 /* NOTE: Sleep() may collide with other implementations with the
          same name (in FlagsShip, CLIP) which also expects parameter
          differently. [vszakats] */
-HB_FUNC( SLEEP )
+HB_FUNC(SLEEP)
 {
    hb_idleSleep((static_cast<double>(hb_parnl(1))) / 100);
 }

@@ -63,12 +63,12 @@ PROCEDURE Main()
    ?
 
    ? "Simple tests:"
-   ? '  TabExpand( "-" + Chr(9) + "!" )            == "-       !" ? -> "' + TabExpand( "-" + Chr(9) + "!" )            + '"'
-   ? '  TabExpand( "----" + Chr(9) + "!" )         == "----    !" ? -> "' + TabExpand( "----" + Chr(9) + "!" )         + '"'
-   ? '  TabExpand( "-" + Chr(9) + "!",, "+" )      == "-+++++++!" ? -> "' + TabExpand( "-" + Chr(9) + "!",, "+" )      + '"'
-   ? '  TabExpand( "-" + Chr(9) + "!", 4 )         == "-   !"     ? -> "' + TabExpand( "-" + Chr(9) + "!", 4 )         + '"'
-   ? '  TabExpand( "----" + Chr(9) + "!", 8 )      == "----    !" ? -> "' + TabExpand( "----" + Chr(9) + "!", 8 )      + '"'
-   ? '  TabExpand( "----" + Chr(9) + "!", 8, "+" ) == "----++++!" ? -> "' + TabExpand( "----" + Chr(9) + "!", 8, "+" ) + '"'
+   ? '  TabExpand("-" + Chr(9) + "!")            == "-       !" ? -> "' + TabExpand("-" + Chr(9) + "!")            + '"'
+   ? '  TabExpand("----" + Chr(9) + "!")         == "----    !" ? -> "' + TabExpand("----" + Chr(9) + "!")         + '"'
+   ? '  TabExpand("-" + Chr(9) + "!",, "+")      == "-+++++++!" ? -> "' + TabExpand("-" + Chr(9) + "!",, "+")      + '"'
+   ? '  TabExpand("-" + Chr(9) + "!", 4)         == "-   !"     ? -> "' + TabExpand("-" + Chr(9) + "!", 4)         + '"'
+   ? '  TabExpand("----" + Chr(9) + "!", 8)      == "----    !" ? -> "' + TabExpand("----" + Chr(9) + "!", 8)      + '"'
+   ? '  TabExpand("----" + Chr(9) + "!", 8, "+") == "----++++!" ? -> "' + TabExpand("----" + Chr(9) + "!", 8, "+") + '"'
    ?
 
    ? "Tests with newline characters: ^J == LF, ^M == CR"
@@ -76,23 +76,23 @@ PROCEDURE Main()
    cStr := StrTran(cStr, Chr(10), "^J")
    cStr := StrTran(cStr, Chr(13), "^M")
    ? '  hb_eol() = "' + cStr + '"'
-   cStr := TabExpand( "-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9) + "!", , "+" )
+   cStr := TabExpand("-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9) + "!", , "+")
    cStr := StrTran(cStr, Chr(10), "^J")
    cStr := StrTran(cStr, Chr(13), "^M")
-   ? '  TabExpand( "-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9)+ "!",, "+" )'
+   ? '  TabExpand("-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9)+ "!",, "+")'
    ? '     == "-+++++++!"+hb_eol()+"----++++!"  ? -> "' + cStr + '"'
-   cStr := TabExpand( "-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!", , "+", "$" )
+   cStr := TabExpand("-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!", , "+", "$")
    cStr := StrTran(cStr, Chr(10), "^J")
    cStr := StrTran(cStr, Chr(13), "^M")
-   ? '  TabExpand( "-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!",, "+", "$" )'
+   ? '  TabExpand("-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!",, "+", "$")'
    nLen := Len(hb_eol())
    ? '     == "-+++++++!$$--"+hb_eol()+"' + Replicate( "-", 4 - nLen ) + '++!"  ? -> "' + cStr + '"'
    ?
 
    ? "Tests with tab characters:"
-   ? '  TabExpand( "-" + Chr(9) + "-",, "+" ) == "-+++++++-" ? -> "' + TabExpand( "-" + Chr(9) + "-",, "+" ) + '"'
-   ? '  TabExpand( "-" + Chr(9) + "-",, "+",, "-" )'
-   ? '                                          == "++++++++^I+++++++" ? -> "' + StrTran(TabExpand( "-" + Chr(9) + "-",, "+",, "-" ), Chr(9), "^I") + '"'
+   ? '  TabExpand("-" + Chr(9) + "-",, "+") == "-+++++++-" ? -> "' + TabExpand("-" + Chr(9) + "-",, "+") + '"'
+   ? '  TabExpand("-" + Chr(9) + "-",, "+",, "-")'
+   ? '                                          == "++++++++^I+++++++" ? -> "' + StrTran(TabExpand("-" + Chr(9) + "-",, "+",, "-"), Chr(9), "^I") + '"'
    ?
 
    ? "End test of TabExpand()"
@@ -139,7 +139,7 @@ PROCEDURE Main()
    cStr := MemoEdit( , 1, 1, 9, 59,,, 59 )
    CLS
    ? "  Now printing the expanded text using a tab length of 4 and soft CRs"
-   cStr1 := TabExpand( cStr, 4, "+",,, .F. )
+   cStr1 := TabExpand(cStr, 4, "+",,, .F.)
    cStr1 := StrTran(cStr, hb_BChar( 141 ), hb_eol())
 
    FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
@@ -147,7 +147,7 @@ PROCEDURE Main()
    NEXT
 
    QOut( "  Now printing the expanded text using a tab length of 4 but without soft CRs" )
-   cStr1 := TabExpand( cStr, 4, "+",,, .T. )
+   cStr1 := TabExpand(cStr, 4, "+",,, .T.)
 
    FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
       ? "  " + Str( ni ) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )

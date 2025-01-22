@@ -48,7 +48,7 @@
 
 #include "hbposix.hpp"
 
-HB_FUNC( POSIX_CHDIR )
+HB_FUNC(POSIX_CHDIR)
 {
    if( chdir( hb_parcx(1) ) == -1 )
    {

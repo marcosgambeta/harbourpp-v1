@@ -454,7 +454,7 @@ METHOD THtmlIteratorScan:MatchCriteria(oFound)
 
    IF ::cValue != NIL
       xData := oFound:getAttributes()
-      IF hb_HScan( xData, {| xKey, cValue | HB_SYMBOL_UNUSED( xKey ), Lower(::cValue) == Lower(cValue) } ) == 0
+      IF hb_HScan( xData, {| xKey, cValue | HB_SYMBOL_UNUSED(xKey), Lower(::cValue) == Lower(cValue) } ) == 0
          RETURN .F.
       ENDIF
    ENDIF
@@ -499,7 +499,7 @@ METHOD THtmlIteratorRegex:MatchCriteria(oFound)
    ENDIF
 
    IF ::cValue != NIL .AND. ;
-      hb_HScan( oFound:getAttributes(), {| xKey, cValue | HB_SYMBOL_UNUSED( xKey ), hb_regexLike( ::cValue, cValue ) } ) == 0
+      hb_HScan( oFound:getAttributes(), {| xKey, cValue | HB_SYMBOL_UNUSED(xKey), hb_regexLike( ::cValue, cValue ) } ) == 0
       RETURN .F.
    ENDIF
 

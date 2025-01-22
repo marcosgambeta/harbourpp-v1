@@ -66,7 +66,7 @@ FUNCTION OL_IsNT()
 
 FUNCTION OL_IsOS2()
 
-#if defined( __PLATFORM__OS2 )
+#if defined(__PLATFORM__OS2)
    RETURN .T.
 #else
 

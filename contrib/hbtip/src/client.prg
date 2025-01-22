@@ -56,7 +56,7 @@
 #include "error.ch"
 #include "fileio.ch"
 
-#if defined( _SSL_DEBUG_TEMP )
+#if defined(_SSL_DEBUG_TEMP)
    #include "simpleio.ch"
 #endif
 
@@ -578,7 +578,7 @@ METHOD TIPClient:inetSendAll( SocketCon, cData, nLen )
 
    IF ::lSSL .AND. ( ::cProxyHost == "" .OR. ::lProxyXferSSL )
       IF ::lHasSSL
-#if defined( _SSL_DEBUG_TEMP )
+#if defined(_SSL_DEBUG_TEMP)
          ? "SSL_write()", cData
 #endif
          nRet := SSL_write( ::ssl, cData, nLen )
@@ -612,7 +612,7 @@ METHOD TIPClient:inetRecv( SocketCon, cStr1, len )
 
    IF ::lSSL .AND. ( ::cProxyHost == "" .OR. ::lProxyXferSSL )
       IF ::lHasSSL
-#if defined( _SSL_DEBUG_TEMP )
+#if defined(_SSL_DEBUG_TEMP)
          ? "SSL_read()"
 #endif
          nRet := SSL_read( ::ssl, @cStr1, len )
@@ -637,7 +637,7 @@ METHOD TIPClient:inetRecvLine( SocketCon, nRet, size )
    IF ::lSSL
       IF ::lHasSSL
          nRet := hb_SSL_read_line( ::ssl, @cRet, size, ::nConnTimeout )
-#if defined( _SSL_DEBUG_TEMP )
+#if defined(_SSL_DEBUG_TEMP)
          ? "hb_SSL_read_line()", cRet
 #endif
          IF nRet == 0 .OR. cRet == ""
@@ -665,7 +665,7 @@ METHOD TIPClient:inetRecvAll( SocketCon, cRet, size )
    IF ::lSSL
       IF ::lHasSSL
          nRet := hb_SSL_read_all( ::ssl, @cRet, size, ::nConnTimeout )
-#if defined( _SSL_DEBUG_TEMP )
+#if defined(_SSL_DEBUG_TEMP)
          ? "hb_SSL_read_all()", cRet
 #endif
          IF nRet == 0 .OR. cRet == ""

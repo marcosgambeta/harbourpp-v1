@@ -139,7 +139,7 @@ static void hb_ocidd_exit(void * cargo)
    OCI_Cleanup();
 }
 
-HB_FUNC( HB_SDDOCI_REGISTER )
+HB_FUNC(HB_SDDOCI_REGISTER)
 {
    hb_ocidd_init(nullptr);
 }

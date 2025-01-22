@@ -255,7 +255,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 //    (NOTE: it was used to allow display characters with ASCII code 27 and 26)
 //
 
-FUNCTION EditorRead( oEditor, nHandle, nOffset, nLen, lConv )
+FUNCTION EditorRead(oEditor, nHandle, nOffset, nLen, lConv)
 
    RETURN ed_ReadText( oEditor[ E_EDIT ], nHandle, nOffset, nLen, ;
       iif(lConv == NIL, .T., lConv) )
@@ -386,7 +386,7 @@ STATIC PROCEDURE EditorKeys( oEdit, nKey )
       ed_DelLine( oEdit[ E_EDIT ] )
 
    CASE nKey == K_CTRL_T
-      ed_DelWord( oEdit[ E_EDIT ] )
+      ed_DelWord(oEdit[ E_EDIT ])
 
    CASE nKey == K_DEL
       ed_DelChar( oEdit[ E_EDIT ] )
@@ -430,10 +430,10 @@ STATIC FUNCTION EditorMove( pEdit, nKey )
    CASE nKey == K_LEFT       ; ed_Left(pEdit)
    CASE nKey == K_HOME       ; ed_Home( pEdit )
    CASE nKey == K_CTRL_HOME  ; ed_Home( pEdit )
-   CASE nKey == K_END        ; ed_End( pEdit )
-   CASE nKey == K_CTRL_END   ; ed_End( pEdit )
-   CASE nKey == K_CTRL_RIGHT // ; ed_NWord( pEdit )   // there are some problems with it
-   CASE nKey == K_CTRL_LEFT  ; ed_PWord( pEdit )
+   CASE nKey == K_END        ; ed_End(pEdit)
+   CASE nKey == K_CTRL_END   ; ed_End(pEdit)
+   CASE nKey == K_CTRL_RIGHT // ; ed_NWord(pEdit)   // there are some problems with it
+   CASE nKey == K_CTRL_LEFT  ; ed_PWord(pEdit)
    OTHERWISE                 ; lMoved := .F.
    ENDCASE
 

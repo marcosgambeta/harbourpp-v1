@@ -53,7 +53,7 @@
 CREATE CLASS UHttpdLog
 
    METHOD New( cFileName )
-   METHOD Add( cMsg )
+   METHOD Add(cMsg)
    METHOD Close()
    METHOD IsOpen()
 
@@ -80,7 +80,7 @@ METHOD UHttpdLog:New( cFileName )
 METHOD UHttpdLog:IsOpen()
    RETURN ::fhnd != F_ERROR
 
-METHOD UHttpdLog:Add( cMsg )
+METHOD UHttpdLog:Add(cMsg)
 
    IF !HB_IsString( cMsg )
       RETURN .F.

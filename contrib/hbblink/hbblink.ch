@@ -50,7 +50,7 @@
 #define BLINKER_CH_
 
 #xtranslate BLINKER EXECUTABLE SERIAL <cString>  => INIT PROCEDURE _init_hb_blivernum() ; hb_BliVerNum( <cString> ) ; RETURN
-#xtranslate BLINKER DEMONSTRATION DATE <cDate>   => INIT PROCEDURE _init_hb_blidemdte() ; hb_BliDemDte( hb_SToD( <cDate> ) ) ; RETURN
+#xtranslate BLINKER DEMONSTRATION DATE <cDate>   => INIT PROCEDURE _init_hb_blidemdte() ; hb_BliDemDte( hb_SToD(<cDate>) ) ; RETURN
 #xtranslate BLINKER DEMONSTRATION MINUTES <nMin> => INIT PROCEDURE _init_hb_blidemmin() ; hb_BliDemMin( <nMin> ) ; RETURN
 
 /* BliMgrSts() parameters */

@@ -467,7 +467,7 @@ HB_FUNC(WVW_DRAWSCROLLTHUMBHORZ)
 /*    wvw_DrawShadedRect( [nWinNum], nTop, nLeft, nBottom, nRight, aPxlOffSet, nHorVert, aRGBb, aRGBe  )*/
 /*                                                                                                      */
 #if 0
-HB_FUNC( WVW_DRAWSHADEDRECT )
+HB_FUNC(WVW_DRAWSHADEDRECT)
 {
    auto usWinNum = WVW_WHICH_WINDOW;
    auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
@@ -915,11 +915,11 @@ HB_FUNC(WVW_DRAWBOXGET_XP)
   hb_retl(true);
 }
 
-/*                                                                   */
-/*   wvw_DrawBoxRaised( nWinNum,                                     */
-/*                   nTop, nLeft, nBottom, nRight,                   */
-/*                   lTight/aOffset)                                 */
-/*                                                                   */
+/*                                                                  */
+/*   wvw_DrawBoxRaised(nWinNum,                                     */
+/*                     nTop, nLeft, nBottom, nRight,                */
+/*                     lTight/aOffset)                              */
+/*                                                                  */
 /*   if lTight, box is drawn inside the character region                               */
 /*   AND top and left lines are lower two pixel down to make room for above/left object*/
 /*   WARNING: gui object of this type subject to be overwritten by chars               */
@@ -990,7 +990,7 @@ HB_FUNC(WVW_DRAWBOXRAISED)
 }
 
 /*                                                                                         */
-/*    wvw_DrawBoxRecessed( nWinNum, ;                                                      */
+/*    wvw_DrawBoxRecessed(nWinNum, ;                                                      */
 /*                   nTop, nLeft, nBottom, nRight,                                         */
 /*                   lTight/aOffset) <--none in gtwvt                                              */
 /*                                                                                         */
@@ -1138,8 +1138,8 @@ HB_FUNC(WVW_DRAWBOXGROUP)
 }
 
 /*                                                                   */
-/*    wvw_DrawBoxRaised( nWinNum, ;                                  */
-/*                   nTop, nLeft, nBottom, nRight )                  */
+/*    wvw_DrawBoxRaised(nWinNum, ;                                  */
+/*                   nTop, nLeft, nBottom, nRight)                  */
 /*                                                                   */
 
 HB_FUNC(WVW_DRAWBOXGROUPRAISED)

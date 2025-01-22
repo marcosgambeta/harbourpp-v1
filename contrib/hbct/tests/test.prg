@@ -48,8 +48,8 @@ PROCEDURE Main()
    HBTEST CharEven( " 1 2 3 4 " )  IS "1234"
    HBTEST CharEven( " " )          IS ""
 
-   HBTEST CharOdd( "1A2B3C4D5E" )  IS "12345"
-   HBTEST CharOdd( "1A2B3C4D5" )   IS "12345"
+   HBTEST CharOdd("1A2B3C4D5E")  IS "12345"
+   HBTEST CharOdd("1A2B3C4D5")   IS "12345"
 
    HBTEST CharSList( "Hello World !" ) IS " !HWdelor"
    HBTEST CharSList( "Hello World !" ) IS CharSort( CharList( "Hello World !" ) )
@@ -95,12 +95,12 @@ PROCEDURE Main()
    HBTEST WordRem( "abcd", "0ab1cd" ) IS "0ab1"
    HBTEST WordRem( "abcd", "ab0cd1" ) IS "0cd1"
 
-   HBTEST CharAdd( "012345678", hb_BChar(1) )                       IS "123456789"
-   HBTEST CharAdd( "012345678", hb_BChar(1) + hb_BChar(2) )         IS "133557799"
-   HBTEST CharAdd( "123456789", hb_BChar( 255 ) )                   IS "012345678"
-   HBTEST CharAdd( "123456789", hb_BChar( 255 ) + hb_BChar( 254 ) ) IS "002244668"
-   HBTEST CharAnd( "012345678", hb_BChar( 254 ) )                   IS "002244668"
-   HBTEST CharAnd( "012345678", hb_BChar( 254 ) + hb_BChar( 252 ) ) IS "002044648"
+   HBTEST CharAdd("012345678", hb_BChar(1))                       IS "123456789"
+   HBTEST CharAdd("012345678", hb_BChar(1) + hb_BChar(2))         IS "133557799"
+   HBTEST CharAdd("123456789", hb_BChar( 255 ))                   IS "012345678"
+   HBTEST CharAdd("123456789", hb_BChar( 255 ) + hb_BChar( 254 )) IS "002244668"
+   HBTEST CharAnd("012345678", hb_BChar( 254 ))                   IS "002244668"
+   HBTEST CharAnd("012345678", hb_BChar( 254 ) + hb_BChar( 252 )) IS "002044648"
 
    HBTEST CharNot( hb_BChar( 85 ) + hb_BChar( 128 ) + hb_BChar( 170 ) + hb_BChar(1) ) IS hb_BChar( 170 ) + hb_BChar( 127 ) + hb_BChar( 85 ) + hb_BChar( 254 )
    HBTEST CharNot( CharNot( "This is a test!" ) ) IS "This is a test!"
@@ -152,21 +152,21 @@ PROCEDURE Main()
    HBTEST Fact(0) IS 1
    HBTEST Fact(1) IS 1
    HBTEST Fact(4) IS 24
-   HBTEST Round( FV( 1000, 0.00, 10 ), 1 ) IS 10000.0
-   HBTEST Round( FV( 1000, 0.05, 10 ), 3 ) IS 12577.893
-   HBTEST Round( PV( 100, 0.0, 60 ), 1 )   IS 6000.0
-   HBTEST Round( PV( 100, 0.005, 60 ), 2 ) IS 5172.56
-   HBTEST Round( Payment( 5172.56, 0.0, 60 ), 2 )   IS 86.21
-   HBTEST Round( Payment( 5172.56, 0.005, 60 ), 2 ) IS 100.00
-   HBTEST Round( Periods( 5172.56, 100, 0.005 ), 1 ) IS 60.0
-   HBTEST Round( Periods( 5172.56, 100, 0.0 ), 4 ) IS 51.7256
-   HBTEST Round( Rate( 5172.56, 100, 60.0 ), 3 ) IS 0.005
-   HBTEST Round( Rate( 6000.0, 100, 60.0 ), 1 ) IS 0.0
+   HBTEST Round(FV( 1000, 0.00, 10 ), 1) IS 10000.0
+   HBTEST Round(FV( 1000, 0.05, 10 ), 3) IS 12577.893
+   HBTEST Round(PV( 100, 0.0, 60 ), 1)   IS 6000.0
+   HBTEST Round(PV( 100, 0.005, 60 ), 2) IS 5172.56
+   HBTEST Round(Payment( 5172.56, 0.0, 60 ), 2)   IS 86.21
+   HBTEST Round(Payment( 5172.56, 0.005, 60 ), 2) IS 100.00
+   HBTEST Round(Periods( 5172.56, 100, 0.005 ), 1) IS 60.0
+   HBTEST Round(Periods( 5172.56, 100, 0.0 ), 4) IS 51.7256
+   HBTEST Round(Rate( 5172.56, 100, 60.0 ), 3) IS 0.005
+   HBTEST Round(Rate( 6000.0, 100, 60.0 ), 1) IS 0.0
 
-   HBTEST Round( Celsius( 32.0 ), 1 )  IS 0.0
-   HBTEST Round( Celsius( 212.0 ), 1 ) IS 100.0
-   HBTEST Round( Fahrenheit( 0.0 ), 1 ) IS 32.0
-   HBTEST Round( Celsius( 100.0 ), 2 ) IS 37.78
+   HBTEST Round(Celsius( 32.0 ), 1)  IS 0.0
+   HBTEST Round(Celsius( 212.0 ), 1) IS 100.0
+   HBTEST Round(Fahrenheit( 0.0 ), 1) IS 32.0
+   HBTEST Round(Celsius( 100.0 ), 2) IS 37.78
 
    HBTEST RangeRem( "0", "9", "year2002.dbf" ) IS "year.dbf"
    HBTEST RangeRem( "9", "0", "year2002.dbf" ) IS "22"
@@ -183,13 +183,13 @@ PROCEDURE Main()
    HBTEST StrDiff( "AXBC", "ABC" ) IS 6
    HBTEST StrDiff( "AXBC", "ADC" ) IS 9
 
-   HBTEST TabExpand( "-" + Chr(9) + "!" )            IS "-       !"
-   HBTEST TabExpand( "----" + Chr(9) + "!" )         IS "----    !"
-   HBTEST TabExpand( "-" + Chr(9) + "!", , "+" )     IS "-+++++++!"
-   HBTEST TabExpand( "-" + Chr(9) + "!", 4 )         IS "-   !"
-   HBTEST TabExpand( "----" + Chr(9) + "!", 8 )      IS "----    !"
-   HBTEST TabExpand( "----" + Chr(9) + "!", 8, "+" ) IS "----++++!"
-   HBTEST TabExpand( "-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9) + "!", , "+" ) IS "-+++++++!" + hb_eol() + "----++++!"
+   HBTEST TabExpand("-" + Chr(9) + "!")            IS "-       !"
+   HBTEST TabExpand("----" + Chr(9) + "!")         IS "----    !"
+   HBTEST TabExpand("-" + Chr(9) + "!", , "+")     IS "-+++++++!"
+   HBTEST TabExpand("-" + Chr(9) + "!", 4)         IS "-   !"
+   HBTEST TabExpand("----" + Chr(9) + "!", 8)      IS "----    !"
+   HBTEST TabExpand("----" + Chr(9) + "!", 8, "+") IS "----++++!"
+   HBTEST TabExpand("-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9) + "!", , "+") IS "-+++++++!" + hb_eol() + "----++++!"
 
    HBTEST AtToken( "Hello, World!" )            IS 8
    HBTEST AtToken( "Hello, World!",, 2 )        IS 8
@@ -215,20 +215,20 @@ PROCEDURE Main()
    HBTEST TokenUpper("Hello, world, here I am!", " w")   IS "Hello, wOrld, Here I Am!"
 
    HBTEST Sin( 0.0 ) IS 0.0
-   HBTEST Round( Sin( Pi() / 4 ), 4 ) IS Round( Sqrt( 1 / 2 ), 4 )
+   HBTEST Round(Sin( Pi() / 4 ), 4) IS Round(Sqrt( 1 / 2 ), 4)
    HBTEST Sin( Pi() / 2 ) IS 1.0
-   HBTEST Round( Sin( Pi() ), 1 ) IS 0.0
+   HBTEST Round(Sin( Pi() ), 1) IS 0.0
    HBTEST Cos( 0.0 ) IS 1.0
-   HBTEST Round( Cos( Pi() / 4 ), 4 ) IS Round( Sqrt( 1 / 2 ), 4 )
-   HBTEST Round( Cos( Pi() / 2 ), 1 ) IS 0.0
+   HBTEST Round(Cos( Pi() / 4 ), 4) IS Round(Sqrt( 1 / 2 ), 4)
+   HBTEST Round(Cos( Pi() / 2 ), 1) IS 0.0
    HBTEST Cos( Pi() ) IS -1.0
    HBTEST Tan( 0.0 ) IS 0.0
-   HBTEST Round( Tan( Pi() / 4 ), 0 ) IS 1
-   HBTEST Round( Tan( Pi() ), 1 ) IS 0.0
+   HBTEST Round(Tan( Pi() / 4 ), 0) IS 1
+   HBTEST Round(Tan( Pi() ), 1) IS 0.0
    HBTEST Cot( Pi() / 4 ) IS 1
-   HBTEST Round( Cot( Pi() / 2 ), 0 ) IS 0
+   HBTEST Round(Cot( Pi() / 2 ), 0) IS 0
    HBTEST Asin( 0.0 ) IS 0.0
-   HBTEST Round( Asin( Sqrt( 1 / 2 ) ), 4 ) IS Round( Pi() / 4, 4 )
+   HBTEST Round(Asin( Sqrt( 1 / 2 ) ), 4) IS Round(Pi() / 4, 4)
    HBTEST Asin( 1.0 ) IS Pi() / 2
    HBTEST Asin( 0.0 ) IS 0.0  // and not Pi(), since the smallest angle is returned !
    HBTEST Acos( 0.0 ) IS Pi() / 2
@@ -248,8 +248,8 @@ PROCEDURE Main()
    HBTEST Cosh( -0.5 ) IS Cosh( 0.5 )
    HBTEST Tanh( 0.0 ) IS 0.0
    HBTEST Tanh( -0.5 ) IS -Tanh( 0.5 )
-   HBTEST RToD( 0.0 ) IS 0.0
-   HBTEST RToD( Pi() ) IS 180.0
+   HBTEST RToD(0.0) IS 0.0
+   HBTEST RToD(Pi()) IS 180.0
    HBTEST DToR( 0.0 ) IS 0.0
    HBTEST DToR( 180.0 ) IS Pi()
 

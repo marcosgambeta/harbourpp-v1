@@ -215,17 +215,17 @@ PROCEDURE Main()
 
    ? "Testing Radian TO Degree..."
    ?
-   ? "RToD( Pi() ) = 180             // CT3  "
-   ? Space(7), RToD( Pi() ), " <-- CT for Harbour "
+   ? "RToD(Pi()) = 180             // CT3  "
+   ? Space(7), RToD(Pi()), " <-- CT for Harbour "
 
-   ? "RToD( 2 * Pi() ) = 360             // CT3  "
-   ? Space( 11 ), RToD( 2 * Pi() ), " <-- CT for Harbour "
+   ? "RToD(2 * Pi()) = 360             // CT3  "
+   ? Space( 11 ), RToD(2 * Pi()), " <-- CT for Harbour "
 
-   ? "RToD( 4 * Pi() ) = 720             // CT3  "
-   ? Space( 11 ), RToD( 4 * Pi() ), " <-- CT for Harbour "
+   ? "RToD(4 * Pi()) = 720             // CT3  "
+   ? Space( 11 ), RToD(4 * Pi()), " <-- CT for Harbour "
 
-   ? "RToD( -Pi() ) = -180             // CT3"
-   ? Space(9), RToD( -Pi() ), " <-- CT for Harbour "
+   ? "RToD(-Pi()) = -180             // CT3"
+   ? Space(9), RToD(-Pi()), " <-- CT for Harbour "
    ?
 
    WAIT4()
@@ -246,7 +246,7 @@ PROCEDURE Main()
    ? "Str( Atn2( x, y ), 18, 15 ) =  0.523598775598299   // CT3"
    ? Space( 30 ) + Str( Atn2( x, y ), 18, 15 ) + "  <-- CT for Harbour"
    ?
-   ? "RToD( Atn2( x, y ) ) =" + Str( RToD( Atn2( x, y ) ), 18, 4 ) + "  <-- CT for Harbour"
+   ? "RToD(Atn2( x, y )) =" + Str( RToD(Atn2( x, y )), 18, 4 ) + "  <-- CT for Harbour"
    ?
 
    WAIT4()

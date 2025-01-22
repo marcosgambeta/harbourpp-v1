@@ -188,7 +188,7 @@ HB_FUNC(WVW_PBSETFOCUS)
   }
 }
 
-/*wvw_pbIsFocused( [nWinNum], nPBid )
+/*wvw_pbIsFocused([nWinNum], nPBid)
  * returns .t. if the focus is on button nPBid in window nWinNum
  */
 HB_FUNC(WVW_PBISFOCUSED)
@@ -641,7 +641,7 @@ HB_FUNC(WVW_CBSETFOCUS)
   }
 }
 
-/*wvw_cbIsFocused( [nWinNum], nComboId )
+/*wvw_cbIsFocused([nWinNum], nComboId)
  * returns .t. if the focus is on combobox nComboId in window nWinNum
  */
 HB_FUNC(WVW_CBISFOCUSED)
@@ -909,7 +909,7 @@ HB_FUNC(WVW_CBGETCURTEXT)
   hb_xfree(lptstr);
 }
 
-/*wvw_cbIsDropped( [nWinNum], nCBid )
+/*wvw_cbIsDropped([nWinNum], nCBid)
  * get current dropped state of combobox nCBid in window nWinNum
  * returns .t. if listbox is being shown, otherwise .f.
  * Also returns .f. if nCBid not valid

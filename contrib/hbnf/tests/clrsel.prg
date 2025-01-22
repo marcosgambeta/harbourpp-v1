@@ -44,7 +44,7 @@ PROCEDURE Main( cVidMode )
 
    aClrs := ft_ClrSel( aClrs, lColour )
 
-   HB_SYMBOL_UNUSED( aClrs )
+   HB_SYMBOL_UNUSED(aClrs)
 
    // .... restore the original environment
    ft_RestSets( aEnvOri )

@@ -52,7 +52,7 @@
 
 REQUEST ADS
 
-#if defined( __HBDYNLOAD__RDDADS__ )
+#if defined(__HBDYNLOAD__RDDADS__)
 #include "rddads.hbx"
 #endif
 
@@ -61,13 +61,13 @@ PROCEDURE Main()
    LOCAL i
    LOCAL aRay
 
-#if defined( __HBDYNLOAD__RDDADS__ )
+#if defined(__HBDYNLOAD__RDDADS__)
    LOCAL l := hb_libLoad( hb_libName( "rddads" + hb_libPostfix() ) )
 
    hb_rddADSRegister()
 
-   HB_SYMBOL_UNUSED( l )
-#elif defined( __HBSCRIPT__HBSHELL )
+   HB_SYMBOL_UNUSED(l)
+#elif defined(__HBSCRIPT__HBSHELL)
    hb_rddADSRegister()
 #endif
 

@@ -51,7 +51,7 @@
 
 static ADSHANDLE s_hMgmtHandle = 0;
 
-HB_FUNC( ADSMGCONNECT )
+HB_FUNC(ADSMGCONNECT)
 {
    hb_retnl(AdsMgConnect(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerName */,
                          reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucUserName */,
@@ -59,25 +59,25 @@ HB_FUNC( ADSMGCONNECT )
                          &s_hMgmtHandle));
 }
 
-HB_FUNC( ADSMGDISCONNECT )
+HB_FUNC(ADSMGDISCONNECT)
 {
    hb_retnl(AdsMgDisconnect(s_hMgmtHandle));
 
    s_hMgmtHandle = 0;
 }
 
-HB_FUNC( ADSMGGETHANDLE )
+HB_FUNC(ADSMGGETHANDLE)
 {
    hb_retnl(static_cast<long>(s_hMgmtHandle));
 }
 
-HB_FUNC( ADSMGSETHANDLE )
+HB_FUNC(ADSMGSETHANDLE)
 {
    s_hMgmtHandle = hb_parnl(1);
    hb_retl(true);
 }
 
-HB_FUNC( ADSMGKILLUSER )
+HB_FUNC(ADSMGKILLUSER)
 {
    hb_retnl(static_cast<UNSIGNED16>(AdsMgKillUser(s_hMgmtHandle,
                                     reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))),
@@ -85,14 +85,14 @@ HB_FUNC( ADSMGKILLUSER )
 }
 
 /* Determine OS ADS is running on; see ADS_MGMT_* constants */
-HB_FUNC( ADSMGGETSERVERTYPE )
+HB_FUNC(ADSMGGETSERVERTYPE)
 {
    UNSIGNED16 usServerType = 0;
 
    hb_retnl(AdsMgGetServerType(s_hMgmtHandle, &usServerType) == AE_SUCCESS ? usServerType : 0);
 }
 
-HB_FUNC( ADSMGGETINSTALLINFO )
+HB_FUNC(ADSMGGETINSTALLINFO)
 {
    ADS_MGMT_INSTALL_INFO stInstallInfo;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_INSTALL_INFO);
@@ -120,7 +120,7 @@ HB_FUNC( ADSMGGETINSTALLINFO )
 #endif
 }
 
-HB_FUNC( ADSMGGETACTIVITYINFO )
+HB_FUNC(ADSMGGETACTIVITYINFO)
 {
    ADS_MGMT_ACTIVITY_INFO stActivityInfo;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_ACTIVITY_INFO);
@@ -229,7 +229,7 @@ HB_FUNC( ADSMGGETACTIVITYINFO )
 #endif
 }
 
-HB_FUNC( ADSMGGETCOMMSTATS )
+HB_FUNC(ADSMGGETCOMMSTATS)
 {
    ADS_MGMT_COMM_STATS stCommStats;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_COMM_STATS);
@@ -260,12 +260,12 @@ HB_FUNC( ADSMGGETCOMMSTATS )
 #endif
 }
 
-HB_FUNC( ADSMGRESETCOMMSTATS )
+HB_FUNC(ADSMGRESETCOMMSTATS)
 {
    hb_retnl(s_hMgmtHandle ? static_cast<long>(AdsMgResetCommStats(s_hMgmtHandle)) : -1);
 }
 
-HB_FUNC( ADSMGGETCONFIGINFO )
+HB_FUNC(ADSMGGETCONFIGINFO)
 {
    ADS_MGMT_CONFIG_PARAMS stConfigValues;
    ADS_MGMT_CONFIG_MEMORY stConfigMemory;
@@ -359,7 +359,7 @@ HB_FUNC( ADSMGGETCONFIGINFO )
  */
 
 /* Return array of connected users */
-HB_FUNC( ADSMGGETUSERNAMES )
+HB_FUNC(ADSMGGETUSERNAMES)
 {
    auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(2, 2000)); /* needed for array memory allocation; caller can set with 2nd arg */
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_USER_INFO);
@@ -423,7 +423,7 @@ HB_FUNC( ADSMGGETUSERNAMES )
  *
  *       returns the advantage error code if it fails.
  */
-HB_FUNC( ADSMGGETLOCKOWNER )
+HB_FUNC(ADSMGGETLOCKOWNER)
 {
    UNSIGNED16 pusLockType = 0;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_USER_INFO);
@@ -463,7 +463,7 @@ HB_FUNC( ADSMGGETLOCKOWNER )
 
 /* NOTE: For a newer edition of this function, which also returns lock type
          info, see AdsMgGetOpenTables2(). */
-HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
+HB_FUNC(ADSMGGETOPENTABLES) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
 {
    auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_TABLE_INFO);
@@ -478,7 +478,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
       auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
-         hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenTableInfo[ulCount - 1].aucTableName) );
+         hb_arraySetC(pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenTableInfo[ulCount - 1].aucTableName));
       }
 
       hb_itemReturnRelease(pArray);
@@ -497,7 +497,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
 #endif
 }
 
-HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
+HB_FUNC(ADSMGGETOPENTABLES2) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
 {
    auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_TABLE_INFO);
@@ -535,7 +535,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
 #endif
 }
 
-HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserName, nConnection */
+HB_FUNC(ADSMGGETOPENINDEXES) /* nMaxNumberOfFilesToReturn, cTableName, cUserName, nConnection */
 {
    auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_INDEX_INFO);
@@ -551,7 +551,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
       auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
-         hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenIndexInfo[ulCount - 1].aucIndexName) );
+         hb_arraySetC(pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenIndexInfo[ulCount - 1].aucIndexName));
       }
 
       hb_itemReturnRelease(pArray);
@@ -570,7 +570,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
 #endif
 }
 
-HB_FUNC( ADSMGGETLOCKS )
+HB_FUNC(ADSMGGETLOCKS)
 {
    auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_RECORD_INFO);
@@ -605,7 +605,7 @@ HB_FUNC( ADSMGGETLOCKS )
 #endif
 }
 
-HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
+HB_FUNC(ADSMGGETWORKERTHREADACTIVITY)
 {
    auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_THREAD_ACTIVITY);

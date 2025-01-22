@@ -24,7 +24,7 @@ PROCEDURE Main()
    LOCAL nMaxRow
    LOCAL nMaxCol
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -134,7 +134,7 @@ STATIC PROCEDURE xBrowse1()
       tmp := oBrowse:getColumn( tmp:__enumIndex() ):colSep
    NEXT
 
-   AddMiscObjects( nWin, {| nWindow | wvw_DrawBoxRecessed( nWindow, nTop + 1, nLeft + 1, nBottom - 1, nRight - 1 ) } )
+   AddMiscObjects( nWin, {| nWindow | wvw_DrawBoxRecessed(nWindow, nTop + 1, nLeft + 1, nBottom - 1, nRight - 1) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
@@ -143,7 +143,7 @@ STATIC PROCEDURE xBrowse1()
 
       lMessage( "Record #" + hb_ntos( RecNo() ) )
 
-      nKey := hb_keyStd( Inkey(0) )
+      nKey := hb_keyStd(Inkey(0))
 
       DO CASE
       CASE nKey == K_ESC .OR. nKey == K_ENTER
@@ -338,13 +338,13 @@ STATIC FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
    wvw_nOpenWindow( ctitle, r1, c1, r2, c2 )
    ResetMiscObjects()   // make sure we start with no GUI objects
 
-   AAdd( s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor } )
+   AAdd(s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor })
 
    SetColor( ccolor )
 
    Scroll( r1, c1, r2, c2 )
 
-   HB_SYMBOL_UNUSED( wtype )
+   HB_SYMBOL_UNUSED(wtype)
 
    SetColor( cOldColor )
 
@@ -389,7 +389,7 @@ STATIC PROCEDURE ResetMiscObjects( nWinNum )
    hb_default( @nWinNum, wvw_nNumWindows() - 1 )
 
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
-      AAdd( s_amiscobjlist, {} )
+      AAdd(s_amiscobjlist, {})
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}
 
@@ -397,7 +397,7 @@ STATIC PROCEDURE ResetMiscObjects( nWinNum )
 
 STATIC PROCEDURE AddMiscObjects( nWinNum, bAction )
 
-   AAdd( s_amiscobjlist[ nWinNum + 1 ], bAction )
+   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
 
    RETURN
 

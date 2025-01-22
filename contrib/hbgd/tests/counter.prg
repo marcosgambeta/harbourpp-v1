@@ -83,7 +83,7 @@ PROCEDURE Main( cValue, cBaseImage )
       oTemp:SaveGif( IMAGES_OUT + StrZero( n - 1, 2 ) + ".gif" )
       // Here I have to clone the image, otherwise on var destruction I loose
       // the image in memory
-      AAdd( aNumberImages, oTemp:Clone() )
+      AAdd(aNumberImages, oTemp:Clone())
    NEXT
 
    /* Create counter image in memory */

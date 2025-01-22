@@ -49,7 +49,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( USERSMAX )
+HB_FUNC(USERSMAX)
 {
    hb_retni(1024);
 }

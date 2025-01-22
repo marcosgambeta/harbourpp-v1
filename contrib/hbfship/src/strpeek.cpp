@@ -52,7 +52,7 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 
-HB_FUNC( STRPEEK )
+HB_FUNC(STRPEEK)
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
 
@@ -70,7 +70,7 @@ HB_FUNC( STRPEEK )
 }
 
 
-HB_FUNC( STRPOKE )
+HB_FUNC(STRPOKE)
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
 

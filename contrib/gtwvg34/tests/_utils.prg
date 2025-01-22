@@ -38,7 +38,7 @@ PROCEDURE WvtSetKeys( lSet )
    IF lSet
       t_keys_[  2 ] := SetKey( K_F2, {|| WvtNextGets()         } )
       t_keys_[  3 ] := SetKey( K_F3, {|| WvtWindowExpand(1)    } )
-      t_keys_[  4 ] := SetKey( K_F4, {|| WvtWindowExpand( -1 ) } )
+      t_keys_[  4 ] := SetKey( K_F4, {|| WvtWindowExpand(-1) } )
       t_keys_[  5 ] := SetKey( K_F5, {|| WvtMyBrowse()         } )
       t_keys_[  6 ] := SetKey( K_F6, {|| wvt_Minimize()        } )
       t_keys_[  7 ] := SetKey( K_F7, {|| WvtPartialScreen()    } )
@@ -223,13 +223,13 @@ FUNCTION WvtSetObjects( aObject )
          t_aObjects := {}
       ELSE
          IF HB_IsArray( aObject[ 1 ] )
-            AEval( aObject, {| e_ | AAdd( t_aObjects, e_ ) } )
+            AEval( aObject, {| e_ | AAdd(t_aObjects, e_) } )
          ELSE
             ASize( aObject, WVT_OBJ_VRBLS )
 
             hb_default( @aObject[ WVT_OBJ_STATE ], OBJ_STATE_DISP )
 
-            AAdd( t_aObjects, aObject )
+            AAdd(t_aObjects, aObject)
          ENDIF
       ENDIF
    ENDIF
@@ -248,7 +248,7 @@ FUNCTION SetMouseCheck( lYes )
 
    RETURN lOYes
 
-FUNCTION WvtWindowExpand( nUnits )
+FUNCTION WvtWindowExpand(nUnits)
 
    STATIC s_nUnits := 18
 
@@ -334,7 +334,7 @@ FUNCTION SetFonts( hFont )
    THREAD STATIC t_ahFonts := {}
 
    IF !Empty(hFont)
-      AAdd( t_ahFonts, hFont )
+      AAdd(t_ahFonts, hFont)
    ENDIF
 
    RETURN t_ahFonts
@@ -344,7 +344,7 @@ FUNCTION SetIcons( hIcon )
    THREAD STATIC t_ahIcons := {}
 
    IF !Empty(hIcon)
-      AAdd( t_ahIcons, hIcon )
+      AAdd(t_ahIcons, hIcon)
    ENDIF
 
    RETURN t_ahIcons
@@ -480,7 +480,7 @@ PROCEDURE MyError( oError )
    ? ProcName(2), ProcLine(2)
    ? ProcName(3), ProcLine(3)
    ? ProcName(4), ProcLine(4)
-   DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
+   DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
 
    RETURN

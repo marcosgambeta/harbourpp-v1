@@ -6,7 +6,7 @@ PROCEDURE Main()
 
    LOCAL xy, i, ii
 
-#if defined( __HBSCRIPT__HBSHELL )
+#if defined(__HBSCRIPT__HBSHELL)
    hbshell_gtSelect( "GTWVT" )
 #endif
 

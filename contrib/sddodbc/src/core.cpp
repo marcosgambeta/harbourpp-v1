@@ -145,7 +145,7 @@ static void hb_odbcdd_init(void * cargo)
    }
 }
 
-HB_FUNC( HB_SDDODBC_REGISTER )
+HB_FUNC(HB_SDDODBC_REGISTER)
 {
    hb_odbcdd_init(nullptr);
 }

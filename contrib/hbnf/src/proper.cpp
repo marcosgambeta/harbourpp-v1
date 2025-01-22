@@ -54,7 +54,7 @@ static HB_BOOL _ftIsAlpha(char c)
    return _ftIsUpper(c) || _ftIsLower(c);
 }
 
-HB_FUNC( FT_PROPER )
+HB_FUNC(FT_PROPER)
 {
    HB_ISIZ      iLen = hb_parclen(1);
    auto cStr = hb_parc(1);

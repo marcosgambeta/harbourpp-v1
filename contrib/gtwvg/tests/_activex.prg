@@ -20,8 +20,8 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
 #endif
    LOCAL aParts := {}
 
-   HB_SYMBOL_UNUSED( xParam )
-   HB_SYMBOL_UNUSED( oCom )
+   HB_SYMBOL_UNUSED(xParam)
+   HB_SYMBOL_UNUSED(oCom)
 
    // --- Dialog ---
 #if 1
@@ -128,7 +128,7 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
    oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB }
 
    // Read file into LOCAL variable
-   cText   := MemoRead( "hbmk.hbm" )
+   cText   := MemoRead("hbmk.hbm")
    // Create MLE, specify position using :create() and
    // assign data code block accessing LOCAL variable
    oMLE    := WvgMLE():new( oStatic2 )
@@ -146,21 +146,21 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
 
    oListBox:setColorFG( RGB(218, 61, 34) )
 
-   AAdd( aParts, "XbpDialog"      )
-   AAdd( aParts, "XbpMenuBar"     )
-   AAdd( aParts, "XbpToolBar"     )
-   AAdd( aParts, "XbpStatusBar"   )
-   AAdd( aParts, "XbpStatic"      )
-   AAdd( aParts, "XbpTreeView"    )
-   AAdd( aParts, "XbpActiveX"     )
-   AAdd( aParts, "XbpListBox"     )
-   AAdd( aParts, "XbpPushButton"  )
-   AAdd( aParts, "XbpCheckBox"    )
-   AAdd( aParts, "XbpRadioButton" )
-   AAdd( aParts, "Xbp3State"      )
-   AAdd( aParts, "XbpSLE"         )
-   AAdd( aParts, "XbpMLE"         )
-   AAdd( aParts, "DataRef"        )
+   AAdd(aParts, "XbpDialog")
+   AAdd(aParts, "XbpMenuBar")
+   AAdd(aParts, "XbpToolBar")
+   AAdd(aParts, "XbpStatusBar")
+   AAdd(aParts, "XbpStatic")
+   AAdd(aParts, "XbpTreeView")
+   AAdd(aParts, "XbpActiveX")
+   AAdd(aParts, "XbpListBox")
+   AAdd(aParts, "XbpPushButton")
+   AAdd(aParts, "XbpCheckBox")
+   AAdd(aParts, "XbpRadioButton")
+   AAdd(aParts, "Xbp3State")
+   AAdd(aParts, "XbpSLE")
+   AAdd(aParts, "XbpMLE")
+   AAdd(aParts, "DataRef")
 
    AEval( aParts, {| e | oListBox:addItem( e ) } )
    oListBox:itemSelected := {|| Wvg_MessageBox( , oListBox:getCurItem() ) }
@@ -198,7 +198,7 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
 #if 0
    oItem1:expand(.T.)
 #else
-   oTree:showExpanded( .T., 2 )
+   oTree:showExpanded(.T., 2)
 #endif
 
    oTree:setData(oItem2)

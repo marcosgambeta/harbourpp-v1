@@ -8,7 +8,7 @@
 
 PROCEDURE Main()
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -38,7 +38,7 @@ STATIC PROCEDURE fillscreen()
       NEXT
    NEXT
    ?? "Done. Press ESC to exit."
-   DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
+   DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
    wvw_lCloseWindow()
    wvw_lCloseWindow()

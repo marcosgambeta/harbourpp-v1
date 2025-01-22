@@ -60,7 +60,7 @@ FUNCTION hb_XML_get_unicode_table( cCP )
       /* Gather full list of unicode tables supported by codepage modules. */
       t_uni := { => }
       FOR EACH cdp IN hb_cdpList()
-         t_uni[ _UNI_NAME_NORM( hb_cdpUniID( cdp ) ) ] := cdp
+         t_uni[ _UNI_NAME_NORM( hb_cdpUniID(cdp) ) ] := cdp
       NEXT
    ENDIF
 

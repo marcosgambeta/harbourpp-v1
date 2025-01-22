@@ -82,21 +82,21 @@ CREATE CLASS GDImage
    METHOD LoadFromPng( cFile )             INLINE ::pImage := gdImageCreateFromPng( cFile )          , iif(::pImage != NIL, Self, NIL)
    METHOD LoadFromJpeg( cFile )            INLINE ::pImage := gdImageCreateFromJpeg( cFile )         , iif(::pImage != NIL, Self, NIL)
    METHOD LoadFromWBmp( cFile )            INLINE ::pImage := gdImageCreateFromWBmp( cFile )         , iif(::pImage != NIL, Self, NIL)
-   METHOD LoadFromGd( cFile )              INLINE ::pImage := gdImageCreateFromGD( cFile )           , iif(::pImage != NIL, Self, NIL)
+   METHOD LoadFromGd(cFile)                INLINE ::pImage := gdImageCreateFromGD(cFile)           , iif(::pImage != NIL, Self, NIL)
    METHOD LoadFromGif( cFile )             INLINE ::pImage := gdImageCreateFromGif( cFile )          , iif(::pImage != NIL, Self, NIL)
 
    // Load From a specific File handle
    METHOD InputPng( nHandle, nSize )       INLINE ::pImage := gdImageCreateFromPng( nHandle, nSize ) , iif(::pImage != NIL, Self, NIL)
    METHOD InputJpeg( nHandle, nSize )      INLINE ::pImage := gdImageCreateFromJpeg( nHandle, nSize ), iif(::pImage != NIL, Self, NIL)
    METHOD InputWBmp( nHandle, nSize )      INLINE ::pImage := gdImageCreateFromWBmp( nHandle, nSize ), iif(::pImage != NIL, Self, NIL)
-   METHOD InputGd( nHandle, nSize )        INLINE ::pImage := gdImageCreateFromGD( nHandle, nSize )  , iif(::pImage != NIL, Self, NIL)
+   METHOD InputGd(nHandle, nSize)          INLINE ::pImage := gdImageCreateFromGD(nHandle, nSize)  , iif(::pImage != NIL, Self, NIL)
    METHOD InputGif( nHandle, nSize )       INLINE ::pImage := gdImageCreateFromGif( nHandle, nSize ) , iif(::pImage != NIL, Self, NIL)
 
    // Create from an image pointer in memory
    METHOD CreateFromPng( pImage, nSize )   INLINE ::pImage := gdImageCreateFromPng( pImage, nSize )  , iif(::pImage != NIL, Self, NIL)
    METHOD CreateFromJpeg( pImage, nSize )  INLINE ::pImage := gdImageCreateFromJpeg( pImage, nSize ) , iif(::pImage != NIL, Self, NIL)
    METHOD CreateFromWBmp( pImage, nSize )  INLINE ::pImage := gdImageCreateFromWBmp( pImage, nSize ) , iif(::pImage != NIL, Self, NIL)
-   METHOD CreateFromGd( pImage, nSize )    INLINE ::pImage := gdImageCreateFromGD( pImage, nSize )   , iif(::pImage != NIL, Self, NIL)
+   METHOD CreateFromGd(pImage, nSize)      INLINE ::pImage := gdImageCreateFromGD(pImage, nSize)   , iif(::pImage != NIL, Self, NIL)
    METHOD CreateFromGif( pImage, nSize )   INLINE ::pImage := gdImageCreateFromGif( pImage, nSize )  , iif(::pImage != NIL, Self, NIL)
 
    METHOD LoadFromFile( cFile )
@@ -105,7 +105,7 @@ CREATE CLASS GDImage
    METHOD SavePng( cFile, nLevel )         INLINE gdImagePng( ::pImage, cFile, nLevel )
    METHOD SaveJpeg( cFile, nLevel )        INLINE gdImageJpeg( ::pImage, cFile, nLevel )
    METHOD SaveWBmp( cFile, nFG )           INLINE gdImageWBmp( ::pImage, cFile, nFG )
-   METHOD SaveGd( cFile )                  INLINE gdImageGD( ::pImage, cFile )
+   METHOD SaveGd(cFile)                    INLINE gdImageGD(::pImage, cFile)
    METHOD SaveGif( cFile )                 INLINE gdImageGif( ::pImage, cFile )
 
    METHOD SaveToFile( cFile )              INLINE gdImageToFile( Self, cFile )
@@ -114,7 +114,7 @@ CREATE CLASS GDImage
    METHOD OutputPng( nHandle, nLevel )     INLINE iif(nHandle == NIL, nHandle := 1, NIL), gdImagePng( ::pImage, nHandle, nLevel )
    METHOD OutputJpeg( nHandle, nLevel )    INLINE iif(nHandle == NIL, nHandle := 1, NIL), gdImageJpeg( ::pImage, nHandle, nLevel )
    METHOD OutputWBmp( nHandle, nFG )       INLINE iif(nHandle == NIL, nHandle := 1, NIL), gdImageWBmp( ::pImage, nHandle, nFG )
-   METHOD OutputGd( nHandle )              INLINE iif(nHandle == NIL, nHandle := 1, NIL), gdImageGD( ::pImage, nHandle )
+   METHOD OutputGd(nHandle)                INLINE iif(nHandle == NIL, nHandle := 1, NIL), gdImageGD(::pImage, nHandle)
    METHOD OutputGif( nHandle )             INLINE iif(nHandle == NIL, nHandle := 1, NIL), gdImageGif( ::pImage, nHandle )
 
    METHOD Output( nHandle )                INLINE gdImageToHandle( ::pImage, nHandle )
@@ -123,12 +123,12 @@ CREATE CLASS GDImage
    METHOD ToStringPng( nLevel )            INLINE gdImagePng( ::pImage, NIL, nLevel )
    METHOD ToStringJpeg( nLevel )           INLINE gdImageJpeg( ::pImage, NIL, nLevel )
    METHOD ToStringWBmp( nFG )              INLINE gdImageWBmp( ::pImage, NIL, nFG )
-   METHOD ToStringGd()                     INLINE gdImageGD( ::pImage, NIL )
+   METHOD ToStringGd()                     INLINE gdImageGD(::pImage, NIL)
    METHOD ToStringGif()                    INLINE gdImageGif( ::pImage, NIL )
 
    METHOD ToString()                       INLINE gdImageToString( Self )
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
    // Destructor
    METHOD Destroy()
    DESTRUCTOR Destruct()
@@ -143,7 +143,7 @@ CREATE CLASS GDImage
    // Functions useful for polygons
    METHOD Polygon( aPoints, lFilled, color )
    METHOD OpenPolygon( aPoints, color )
-   METHOD AddPoint( x, y )                 INLINE AAdd( ::aPoints, { x, y } )
+   METHOD AddPoint( x, y )                 INLINE AAdd(::aPoints, { x, y })
    METHOD ResetPoints()                    INLINE ::aPoints := {}
    METHOD Points()                         INLINE Len(::aPoints)
 
@@ -157,16 +157,16 @@ CREATE CLASS GDImage
    METHOD Fill( x, y, color )              INLINE hb_default( @color, ::pColor ), gdImageFill( ::pImage, x, y, color )
    METHOD FillToBorder( x, y, border, color ) ;
                                            INLINE hb_default( @color, ::pColor ), gdImageFillToBorder( ::pImage, x, y, border, color )
-   METHOD SetAntiAliased( color )          INLINE hb_default( @color, ::pColor ), gdImageSetAntiAliased( ::pImage, color )
-   METHOD SetAntiAliasedDontBlend( lDontBlend, color ) ;
-                                           INLINE hb_default( @color, ::pColor ), gdImageSetAntiAliasedDontBlend( ::pImage, color, lDontBlend )
+   METHOD SetAntiAliased(color)            INLINE hb_default( @color, ::pColor ), gdImageSetAntiAliased(::pImage, color)
+   METHOD SetAntiAliasedDontBlend(lDontBlend, color) ;
+                                           INLINE hb_default( @color, ::pColor ), gdImageSetAntiAliasedDontBlend(::pImage, color, lDontBlend)
 
    METHOD SetBrush( pBrush )               INLINE gdImageSetBrush( ::pImage, pBrush:pImage ), ::pBrush := pBrush
    METHOD SetTile( pTile )                 INLINE gdImageSetTile( ::pImage, pTile:pImage ), ::pTile := pTile
 
    // Functions usefull for style
    METHOD SetStyle( aStyle )               INLINE hb_default( @aStyle, ::aStyles ), gdImageSetStyle( ::pImage, aStyle )
-   METHOD AddStyle( pColor )               INLINE AAdd( ::aStyles, pColor )
+   METHOD AddStyle( pColor )               INLINE AAdd(::aStyles, pColor)
    METHOD ResetStyles()                    INLINE ::aStyles := {}
    METHOD StyleLenght()                    INLINE Len(::aStyles)
 
@@ -179,7 +179,7 @@ CREATE CLASS GDImage
 
    METHOD ColorsTotal()                    INLINE gdImageColorsTotal( ::pImage )
    METHOD Alpha(color)                     INLINE hb_default( @color, ::pColor ), gdImageAlpha(::pImage, color)
-   METHOD Red( color )                     INLINE hb_default( @color, ::pColor ), gdImageRed( ::pImage, color )
+   METHOD Red(color)                       INLINE hb_default( @color, ::pColor ), gdImageRed(::pImage, color)
    METHOD Green( color )                   INLINE hb_default( @color, ::pColor ), gdImageGreen( ::pImage, color )
    METHOD Blue( color )                    INLINE hb_default( @color, ::pColor ), gdImageBlue( ::pImage, color )
    METHOD Width()                          INLINE gdImageSX( ::pImage )
@@ -191,7 +191,7 @@ CREATE CLASS GDImage
    METHOD GetImagePtr()                    INLINE ::pImage
    METHOD GetClippingArea()                INLINE gdImageGetClip( ::pImage )
    METHOD IsBoundsSafe( x, y )             INLINE gdImageBoundsSafe( ::pImage, x, y )
-   METHOD IsInterlaced()                   INLINE gdImageGetInterlaced( ::pImage )
+   METHOD IsInterlaced()                   INLINE gdImageGetInterlaced(::pImage)
    METHOD GetTransparent()                 INLINE gdImageGetTransparent( ::pImage )
    METHOD IsTransparent()                  INLINE ::GetTransparent() > 0
    METHOD IsTrueColor()                    INLINE gdImageTrueColor( ::pImage )
@@ -259,15 +259,15 @@ CREATE CLASS GDImage
    /* COPY AND RESIZING FUNCTIONS */
 
    METHOD Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage )
-   METHOD CopyResized( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage )
-   METHOD CopyResampled( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage )
-   METHOD CopyRotated( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage )
+   METHOD CopyResized(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage)
+   METHOD CopyResampled(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage)
+   METHOD CopyRotated(nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage)
    METHOD CopyMerge( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage )
    METHOD CopyMergeGray( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage )
 
    /* New implemented */
    METHOD Clone()
-   METHOD CopyZoomed( nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight )
+   METHOD CopyZoomed(nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight)
    METHOD Crop( nX, nY, nWidth, nHeight )
    METHOD Zoom( nPerc )
    METHOD Resize( nWidth, nHeight )
@@ -296,7 +296,7 @@ METHOD GDImage:New( sx, sy )
 
    RETURN Self
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 METHOD PROCEDURE GDImage:Destruct()
    RETURN
@@ -382,7 +382,7 @@ METHOD GDImage:LoadFromFile( cFile )
 
    RETURN Self
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 /* dummy. no longer needed */
 METHOD GDImage:Destroy()
@@ -411,7 +411,7 @@ METHOD GDImage:Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage )
 
    RETURN oDestImage
 
-METHOD GDImage:CopyResized( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage )
+METHOD GDImage:CopyResized(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage)
 
    hb_default( @nSrcX     , 0 )
    hb_default( @nSrcY     , 0 )
@@ -430,11 +430,11 @@ METHOD GDImage:CopyResized( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, n
       ENDIF
    ENDIF
 
-   gdImageCopyResized( oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nDstWidth, nDstHeight, nSrcWidth, nSrcHeight )
+   gdImageCopyResized(oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nDstWidth, nDstHeight, nSrcWidth, nSrcHeight)
 
    RETURN oDestImage
 
-METHOD GDImage:CopyResampled( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage )
+METHOD GDImage:CopyResampled(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage)
 
    hb_default( @nSrcX      , 0 )
    hb_default( @nSrcY      , 0 )
@@ -453,11 +453,11 @@ METHOD GDImage:CopyResampled( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY,
       ENDIF
    ENDIF
 
-   gdImageCopyResampled( oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nDstWidth, nDstHeight, nSrcWidth, nSrcHeight )
+   gdImageCopyResampled(oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nDstWidth, nDstHeight, nSrcWidth, nSrcHeight)
 
    RETURN oDestImage
 
-METHOD GDImage:CopyRotated( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage )
+METHOD GDImage:CopyRotated(nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage)
 
    hb_default( @nSrcX      , 0 )
    hb_default( @nSrcY      , 0 )
@@ -475,7 +475,7 @@ METHOD GDImage:CopyRotated( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle,
       ENDIF
    ENDIF
 
-   gdImageCopyRotated( oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nWidth, nHeight, nAngle )
+   gdImageCopyRotated(oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nWidth, nHeight, nAngle)
 
    RETURN oDestImage
 
@@ -523,7 +523,7 @@ METHOD GDImage:CopyMergeGray( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc
 
    RETURN oDestImage
 
-METHOD GDImage:CopyZoomed( nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight )
+METHOD GDImage:CopyZoomed(nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight)
 
    LOCAL oDestImage
    LOCAL nDstX, nDstY, nDstWidth, nDstHeight
@@ -549,7 +549,7 @@ METHOD GDImage:CopyZoomed( nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight )
       oDestImage := GDImage():Create( nDstWidth, nDstHeight )
    ENDIF
 
-   gdImageCopyResampled( oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nDstWidth, nDstHeight, nSrcWidth, nSrcHeight )
+   gdImageCopyResampled(oDestImage:pImage, ::pImage, nDstX, nDstY, nSrcX, nSrcY, nDstWidth, nDstHeight, nSrcWidth, nSrcHeight)
 
    RETURN oDestImage
 
@@ -575,9 +575,9 @@ METHOD GDImage:Rotate( nAngle, lInside )
       oDestImage := GDImage():Create( nWidth, nHeight )
    ENDIF
    IF !lInside
-      ::CopyRotated( ,,,, nWidth - nWidth / 2, nHeight - nHeight / 2, nAngle, oDestImage )
+      ::CopyRotated(,,,, nWidth - nWidth / 2, nHeight - nHeight / 2, nAngle, oDestImage)
    ELSE
-      ::CopyRotated( ,,,,,, nAngle, oDestImage )
+      ::CopyRotated(,,,,,, nAngle, oDestImage)
    ENDIF
    Self := ::CloneDataFrom( oDestImage )
    // Self := __objClone( oDestImage ) // non funziona
@@ -591,7 +591,7 @@ METHOD GDImage:Crop( nX, nY, nWidth, nHeight )
 
    LOCAL oDestImage
 
-   oDestImage := ::CopyResized( nX, nY, nWidth, nHeight, 0, 0, nWidth, nHeight )
+   oDestImage := ::CopyResized(nX, nY, nWidth, nHeight, 0, 0, nWidth, nHeight)
    Self := ::CloneDataFrom( oDestImage )
    // Self := __objClone( oDestImage ) // non funziona
 
@@ -604,7 +604,7 @@ METHOD GDImage:Resize( nWidth, nHeight )
 
    LOCAL oDestImage
 
-   oDestImage := ::CopyResampled( 0, 0, NIL, NIL, 0, 0, nWidth, nHeight )
+   oDestImage := ::CopyResampled(0, 0, NIL, NIL, 0, 0, nWidth, nHeight)
    Self := ::CloneDataFrom( oDestImage )
    // Self := __objClone( oDestImage ) // non funziona
 
@@ -617,7 +617,7 @@ METHOD GDImage:Zoom( nPerc )
 
    LOCAL oDestImage
 
-   oDestImage := ::CopyZoomed( nPerc )
+   oDestImage := ::CopyZoomed(nPerc)
    Self := ::CloneDataFrom( oDestImage )
    // Self := __objClone( oDestImage ) // non funziona
 

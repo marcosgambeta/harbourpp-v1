@@ -55,12 +55,12 @@
 
 #include <cups/cups.h>
 
-HB_FUNC( CUPSGETDEFAULT )
+HB_FUNC(CUPSGETDEFAULT)
 {
    hb_retc(cupsGetDefault());
 }
 
-HB_FUNC( CUPSGETDESTS )
+HB_FUNC(CUPSGETDESTS)
 {
    cups_dest_t * dest_list;
    int      num_dests = cupsGetDests(&dest_list);
@@ -80,7 +80,7 @@ HB_FUNC( CUPSGETDESTS )
    hb_itemReturnRelease(pArray);
 }
 
-HB_FUNC( CUPSPRINTFILE )
+HB_FUNC(CUPSPRINTFILE)
 {
    auto pOptions = hb_param(4, Harbour::Item::HASH | Harbour::Item::ARRAY);
 

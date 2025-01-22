@@ -153,7 +153,7 @@ STATIC FUNC path_lengths( hPath )
             aPoints[ 2, 1 ], aPoints[ 2, 2 ], aPoints[ 3, 1 ], aPoints[ 3, 2 ] )
          aLast := aPoints[ 3 ]
       ENDIF
-      AAdd( aRet, nLen )
+      AAdd(aRet, nLen)
    ENDDO
    cairo_path_iterator_destroy( hIterator )
 

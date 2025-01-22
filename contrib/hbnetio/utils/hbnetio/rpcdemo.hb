@@ -8,6 +8,6 @@
 
 STATIC FUNCTION HBNETIOSRV_RPCMAIN( sFunc, ... )
 
-   OutStd( "DO", sFunc:name, "WITH", ..., hb_eol() )
+   OutStd("DO", sFunc:name, "WITH", ..., hb_eol())
 
-   RETURN sFunc:exec( ... )
+   RETURN sFunc:exec(...)

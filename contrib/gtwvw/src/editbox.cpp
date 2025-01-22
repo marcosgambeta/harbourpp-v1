@@ -303,7 +303,7 @@ HB_FUNC(WVW_EBSETFOCUS)
   }
 }
 
-/*wvw_ebIsFocused( [nWinNum], nEditId )
+/*wvw_ebIsFocused([nWinNum], nEditId)
  * returns .t. if the focus is on editbox nEditId in window nWinNum
  */
 HB_FUNC(WVW_EBISFOCUSED)

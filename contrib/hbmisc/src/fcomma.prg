@@ -129,7 +129,7 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       iif(aOpenInfo[ UR_OI_SHARED ], FO_SHARED, FO_EXCLUSIVE) + ;
       iif(aOpenInfo[ UR_OI_READONLY ], FO_READ, FO_READWRITE)
 
-   aRData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
+   aRData := USRRDD_RDDDATA(USRRDD_ID(nWA))
    aWData := USRRDD_AREADATA(nWA)
    nSlot := AScan( aRData, F_ERROR )
 
@@ -170,7 +170,7 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
    aField[ UR_FI_TYPEEXT ] := 0
    aField[ UR_FI_LEN ]     := 80   // set any arbitrary length - the real size will be differ
    aField[ UR_FI_DEC ]     := 0
-   UR_SUPER_ADDFIELD( nWA, aField )
+   UR_SUPER_ADDFIELD(nWA, aField)
 
    /* Call SUPER OPEN to finish allocating work area (f.e.: alias settings) */
    nResult := UR_SUPER_OPEN( nWA, aOpenInfo )
@@ -188,7 +188,7 @@ STATIC FUNCTION FCM_CLOSE( nWA )
    IF nSlot >= 0
       hb_FSelect( nSlot )
       hb_FUse()
-      aRData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
+      aRData := USRRDD_RDDDATA(USRRDD_ID(nWA))
       aRData[ nSlot ] := F_ERROR
    ENDIF
 
@@ -231,7 +231,7 @@ STATIC FUNCTION FCM_GOTO( nWA, nRecord )
 
    RETURN HB_SUCCESS
 
-STATIC FUNCTION FCM_GOTOID( nWA, nRecord )
+STATIC FUNCTION FCM_GOTOID(nWA, nRecord)
    RETURN FCM_GOTO( nWA, nRecord )
 
 STATIC FUNCTION FCM_GOTOP( nWA )
@@ -303,14 +303,14 @@ STATIC FUNCTION FCM_EOF( nWA, lEof )
 
    RETURN HB_SUCCESS
 
-STATIC FUNCTION FCM_DELETED( nWA, lDeleted )
+STATIC FUNCTION FCM_DELETED(nWA, lDeleted)
 
-   HB_SYMBOL_UNUSED( nWA )
+   HB_SYMBOL_UNUSED(nWA)
    lDeleted := .F.
 
    RETURN HB_SUCCESS
 
-STATIC FUNCTION FCM_RECID( nWA, nRecNo )
+STATIC FUNCTION FCM_RECID(nWA, nRecNo)
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 

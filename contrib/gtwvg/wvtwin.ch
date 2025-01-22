@@ -191,7 +191,7 @@
 
 /*-*/
 #ifndef RGB
-#define RGB( nR, nG, nB )   ( nR + ( nG * 256 ) + ( nB * 256 * 256 ) )
+#define RGB(nR, nG, nB)   (nR + (nG * 256) + (nB * 256 * 256))
 #endif
 //
 //                          Windows Specific

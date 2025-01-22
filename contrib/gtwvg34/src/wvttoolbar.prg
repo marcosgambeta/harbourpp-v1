@@ -107,8 +107,8 @@ METHOD WvtToolBar:Create()
    AEval( ::aObjects, {| o | o:lActive := ::lActive } )
 
    ::bPaint := {|| ::PaintToolBar() }
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_TOOLBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_TOOLBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 
@@ -156,7 +156,7 @@ METHOD WvtToolBar:AddButton( cFileImage, bBlock, cTooltip )
       oObj:nRight     := oObj:nLeft
    ENDIF
 
-   AAdd( ::aObjects, oObj )
+   AAdd(::aObjects, oObj)
 
    ::nBtnLeft         := oObj:nRight + 1
    ::nCurButton++

@@ -628,14 +628,14 @@ static HB_BOOL _writeLine( PFT_TEXT ft_text, const char * theData, HB_SIZE iData
    return fSuccess;
 }
 
-HB_FUNC( FT_FOFFSET )
+HB_FUNC(FT_FOFFSET)
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD(&s_ft_text);
 
    hb_retnint(ft_text->offset[ft_text->area]);
 }
 
-HB_FUNC( FT_FUSE )
+HB_FUNC(FT_FUSE)
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD(&s_ft_text);
    auto pszFileName = hb_parc(1);
@@ -674,7 +674,7 @@ HB_FUNC( FT_FUSE )
    }
 }
 
-HB_FUNC( FT_FSELECT )
+HB_FUNC(FT_FSELECT)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -706,7 +706,7 @@ HB_FUNC( FT_FSELECT )
    hb_retni(oldarea);
 }
 
-HB_FUNC( FT_FGOTOP )
+HB_FUNC(FT_FGOTOP)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -717,21 +717,21 @@ HB_FUNC( FT_FGOTOP )
    ft_text->isEof[ft_text->area] = false;
 }
 
-HB_FUNC( FT_FERROR )
+HB_FUNC(FT_FERROR)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
    hb_retni(ft_text->error[ft_text->area]);
 }
 
-HB_FUNC( FT_FRECNO )
+HB_FUNC(FT_FRECNO)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
    hb_retnl(ft_text->recno[ft_text->area]);
 }
 
-HB_FUNC( FT_FGOBOT )
+HB_FUNC(FT_FGOBOT)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -750,7 +750,7 @@ HB_FUNC( FT_FGOBOT )
 
 HB_FUNC_TRANSLATE( FT_FGOBOTTOM, FT_FGOBOT )  /* HB_EXTENSION */
 
-HB_FUNC( FT_FSKIP )
+HB_FUNC(FT_FSKIP)
 {
    if( HB_ISNUM(1) )
    {
@@ -769,7 +769,7 @@ HB_FUNC( FT_FSKIP )
    }
 }
 
-HB_FUNC( FT_FREADLN )
+HB_FUNC(FT_FREADLN)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -806,7 +806,7 @@ HB_FUNC( FT_FREADLN )
    }
 }
 
-HB_FUNC( FT_FDELETE )
+HB_FUNC(FT_FDELETE)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -864,7 +864,7 @@ HB_FUNC( FT_FDELETE )
    hb_retl(ft_text->error[ft_text->area] == 0);
 }
 
-HB_FUNC( FT_FINSERT )
+HB_FUNC(FT_FINSERT)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -893,7 +893,7 @@ HB_FUNC( FT_FINSERT )
    hb_retl(fSuccess);
 }
 
-HB_FUNC( FT_FAPPEND )
+HB_FUNC(FT_FAPPEND)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -957,7 +957,7 @@ HB_FUNC( FT_FAPPEND )
    hb_retl(ft_text->error[ft_text->area] == 0);
 }
 
-HB_FUNC( FT_FWRITELN )
+HB_FUNC(FT_FWRITELN)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -1037,7 +1037,7 @@ HB_FUNC( FT_FWRITELN )
 
 HB_FUNC_TRANSLATE( FT_FWRITEL, FT_FWRITELN )
 
-HB_FUNC( FT_FLASTRE )
+HB_FUNC(FT_FLASTRE)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
@@ -1060,21 +1060,21 @@ HB_FUNC( FT_FLASTRE )
 
 HB_FUNC_TRANSLATE( FT_FLASTREC, FT_FLASTRE )
 
-HB_FUNC( FT_FEOF )
+HB_FUNC(FT_FEOF)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
    hb_retl(ft_text->isEof[ft_text->area]);
 }
 
-HB_FUNC( FT_FBOF )
+HB_FUNC(FT_FBOF)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
    hb_retl(ft_text->isBof[ft_text->area]);
 }
 
-HB_FUNC( FT_FGOTO )
+HB_FUNC(FT_FGOTO)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 

@@ -32,9 +32,9 @@ FUNCTION DialogFunc(hWnd, nMessage, wParam, lParam, wPHigh, wPLow)
 
    LOCAL cText
 
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
-   HB_SYMBOL_UNUSED( wPHigh )
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
+   HB_SYMBOL_UNUSED(wPHigh)
 
    SWITCH nMessage
    CASE WM_INITDIALOG

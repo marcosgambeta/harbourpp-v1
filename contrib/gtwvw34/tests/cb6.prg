@@ -28,14 +28,14 @@ STATIC s_aComboList := {}
       __nCBid__ := wvw_cbCreate( , <row>, <col>, <nWidth>, ;
       <aOptions>, ;
       {| nWinNum, nId, nEvent, nIndex, temp | ;
-      CBhandler( nWinNum, nId, nEvent, nIndex, <"var">, GetList ), HB_SYMBOL_UNUSED( temp ) ;
+      CBhandler( nWinNum, nId, nEvent, nIndex, <"var">, GetList ), HB_SYMBOL_UNUSED(temp) ;
       }, ;
       , , s_nCB_Kbd ); ;
-      AAdd( s_aComboList, { __nCBid__, <"var"> } ); ;
+      AAdd(s_aComboList, { __nCBid__, <"var"> }); ;
       __temp__ := wvw_cbFindString( , __nCBid__, <var> ); ;
       iif(__temp__ >= 0, wvw_cbSetIndex( , __nCBid__, __temp__ ), NIL); ;
       SetPos( <row>, <col> ); ;
-      AAdd( GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, ) ) ; ;
+      AAdd(GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, )) ; ;
       ATail( GetList ):cargo := __nCBid__; ;
       ATail( GetList ):reader := {| get | CBreader( get ) }
 
@@ -45,7 +45,7 @@ PROCEDURE Main()
    LOCAL mname := PadR( "Budyanto Dj.", 30 ), msex := "MALE", mage := 17, mstat := "married"
    LOCAL __nCBid__, __temp__  // these two are temporary var required by CB get creation
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -91,7 +91,7 @@ PROCEDURE Main()
    ? "Comboboxes have now been removed"
    ? "Now press ESC to exit"
 
-   DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
+   DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
 
    RETURN
@@ -119,7 +119,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
    LOCAL i
    LOCAL oGet := GetActive()
 
-   HB_SYMBOL_UNUSED( nIndex )
+   HB_SYMBOL_UNUSED(nIndex)
 
    /* if GetList is empty, then READ session is already ended
       this should not be happening! */
@@ -195,12 +195,12 @@ STATIC PROCEDURE CBreader( oGet )
    LOCAL nKey, nKeyStd, bKeyBlock
    LOCAL oGetList := __GetListActive()
 
-   IF !wvw_cbIsFocused( , oGet:cargo )
+   IF !wvw_cbIsFocused(, oGet:cargo)
       wvw_cbSetFocus( , oGet:cargo )
    ENDIF
 
    oGet:setfocus()
-   nKeyStd := hb_keyStd( nKey := Inkey(0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )) )
+   nKeyStd := hb_keyStd(nKey := Inkey(0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )))
 
    DO CASE
    CASE nKeyStd == K_ENTER

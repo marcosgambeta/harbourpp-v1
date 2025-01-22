@@ -30,7 +30,7 @@
 #include <hbapigt.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( FT_CAPLOCK )
+HB_FUNC(FT_CAPLOCK)
 {
    int        iState = 0;
    HB_GT_INFO gtInfo;

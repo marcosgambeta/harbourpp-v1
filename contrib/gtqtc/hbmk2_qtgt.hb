@@ -60,7 +60,7 @@ FUNCTION hbmk_plugin_qt( hbmk )
          IF ! Left(cSrc, 1) == "-" .AND. ;
             Lower(hb_FNameExt( cSrc )) == ".h"
 
-            AAdd( hbmk[ "vars" ][ "aMOC_Src" ], cSrc )
+            AAdd(hbmk[ "vars" ][ "aMOC_Src" ], cSrc)
          ENDIF
       NEXT
 
@@ -69,7 +69,7 @@ FUNCTION hbmk_plugin_qt( hbmk )
       hbmk[ "vars" ][ "aMOC_Dst" ] := {}
       FOR EACH cSrc IN hbmk[ "vars" ][ "aMOC_Src" ]
          cDst := hbmk_FNameDirExtSet( "moc_" + hb_FNameName( cSrc ), hbmk[ "cWorkDir" ], ".cpp" )
-         AAdd( hbmk[ "vars" ][ "aMOC_Dst" ], cDst )
+         AAdd(hbmk[ "vars" ][ "aMOC_Dst" ], cDst)
          hbmk_AddInput_CPP( hbmk, cDst )
       NEXT
 
@@ -113,7 +113,7 @@ FUNCTION hbmk_plugin_qt( hbmk )
 
                   IF hbmk[ "lTRACE" ]
                      IF ! hbmk[ "lQUIET" ]
-                        hbmk_OutStd( hbmk, I_( "'moc' command:" ) )
+                        hbmk_OutStd(hbmk, I_( "'moc' command:" ))
                      ENDIF
                      hbmk_OutStdRaw( hbmk, cCommand )
                   ENDIF
@@ -168,9 +168,9 @@ STATIC FUNCTION qt_tool_detect( hbmk, cName, cEnvQT, lSuffix )
       cName += hbmk[ "cCCEXT" ]
 
       IF Empty(cEnv := GetEnv("HB_QTPATH")) .OR. ;
-         ! hb_FileExists( cBIN := hb_DirSepAdd( cEnv ) + cName )
+         ! hb_FileExists( cBIN := hb_DirSepAdd(cEnv) + cName )
 
-         #if ! defined( __PLATFORM__UNIX )
+         #if ! defined(__PLATFORM__UNIX)
 
             hb_AIns( aEnvList, 1, "HB_WITH_QT", .T. )
 
@@ -180,13 +180,13 @@ STATIC FUNCTION qt_tool_detect( hbmk, cName, cEnvQT, lSuffix )
                   /* Return silently. It shall fail at dependency detection inside hbmk2 */
                   RETURN NIL
                ELSE
-                  IF ! hb_FileExists( cBIN := hb_PathNormalize( hb_DirSepAdd( cEnv ) + "..\bin\" + cName ) )
+                  IF ! hb_FileExists( cBIN := hb_PathNormalize( hb_DirSepAdd(cEnv) + "..\bin\" + cName ) )
                      hbmk_OutErr( hbmk, hb_StrFormat( "Warning: HB_WITH_QT points to incomplete QT installation. '%1$s' executable not found.", cName ) )
                      cBIN := ""
                   ENDIF
                ENDIF
             ELSE
-               cBIN := hb_DirSepAdd( hb_DirBase() ) + cName
+               cBIN := hb_DirSepAdd(hb_DirBase()) + cName
                IF ! hb_FileExists( cBIN )
                   cBIN := ""
                ENDIF
@@ -211,7 +211,7 @@ STATIC FUNCTION qt_tool_detect( hbmk, cName, cEnvQT, lSuffix )
                cStdErr := " [" + StrTran(StrTran(cStdErr, Chr( 13 )), Chr( 10 )) + "]"
             ENDIF
          ENDIF
-         hbmk_OutStd( hbmk, hb_StrFormat( "Using QT '%1$s' executable: %2$s%3$s (autodetected)", cName, cBIN, cStdErr ) )
+         hbmk_OutStd(hbmk, hb_StrFormat( "Using QT '%1$s' executable: %2$s%3$s (autodetected)", cName, cBIN, cStdErr ))
       ENDIF
    ENDIF
 

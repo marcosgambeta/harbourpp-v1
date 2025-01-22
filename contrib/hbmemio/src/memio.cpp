@@ -1205,7 +1205,7 @@ static PHB_FILE s_fileNew(HB_FHANDLE hFile)
    return pFile;
 }
 
-HB_FUNC( HB_MEMIO )
+HB_FUNC(HB_MEMIO)
 {
    ;
 }

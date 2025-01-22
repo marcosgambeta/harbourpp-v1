@@ -15,7 +15,7 @@
  *   hb_udpds_Stop( hServer )
  *
  * Client function:
- *   hb_udpds_Find( nPort, cName ) --> { { "ip_addr_1", "version_1" }, ... }
+ *   hb_udpds_Find(nPort, cName ) --> { { "ip_addr_1", "version_1" }, ...}
  *
  */
 
@@ -23,7 +23,7 @@
 
 /* Client */
 
-FUNCTION hb_udpds_Find( nPort, cName )
+FUNCTION hb_udpds_Find(nPort, cName)
 
    LOCAL hSocket, aRet, nEnd, nTime, cBuffer, nLen, aAddr
 
@@ -39,7 +39,7 @@ FUNCTION hb_udpds_Find( nPort, cName )
             nLen := hb_socketRecvFrom( hSocket, @cBuffer, , , @aAddr, nEnd - nTime )
             IF hb_BLeft(cBuffer, hb_BLen(cName) + 2) == hb_BChar(6) + cName + hb_BChar(0) .AND. ;
                AScan( aRet, {| x | x[ 1 ] == aAddr[ 2 ] } ) == 0
-               AAdd( aRet, { aAddr[ 2 ], hb_BSubStr(cBuffer, hb_BLen(cName) + 3, nLen - hb_BLen(cName) - 2) } )
+               AAdd(aRet, { aAddr[ 2 ], hb_BSubStr(cBuffer, hb_BLen(cName) + 3, nLen - hb_BLen(cName) - 2) })
             ENDIF
             nTime := hb_MilliSeconds()
          ENDDO
@@ -76,11 +76,11 @@ STATIC FUNCTION s_getBroadcastAddresses()
             lLo := .T.
          ENDIF
       ELSEIF hb_AScan( aAddrs, cAddr,,, .T. ) == 0
-         AAdd( aAddrs, cAddr )
+         AAdd(aAddrs, cAddr)
       ENDIF
    NEXT
    IF Empty(aAddrs)
-      AAdd( aAddrs, "255.255.255.255" )
+      AAdd(aAddrs, "255.255.255.255")
    ENDIF
    IF lLo
       hb_AIns( aAddrs, 1, "127.0.0.1", .T. )
@@ -95,7 +95,7 @@ FUNCTION hb_udpds_Start( nPort, cName, cVersion )
    LOCAL hSocket
 
    IF !Empty(hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ))
-      IF hb_socketBind( hSocket, { HB_SOCKET_AF_INET, "0.0.0.0", nPort } )
+      IF hb_socketBind(hSocket, { HB_SOCKET_AF_INET, "0.0.0.0", nPort })
          hb_threadDetach( hb_threadStart( @UDPDS(), hSocket, cName, cVersion ) )
          RETURN hSocket
       ENDIF

@@ -73,7 +73,7 @@ PROCEDURE Main()
       oRow:FieldPut( 5, 3000 + i )
       oRow:FieldPut( 6, Date() )
 
-      oServer:Append( oRow )
+      oServer:Append(oRow)
 
       IF i % 100 == 0
          oServer:Commit()

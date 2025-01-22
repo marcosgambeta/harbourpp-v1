@@ -117,7 +117,7 @@ METHOD WvgProgressBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 

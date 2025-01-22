@@ -24,7 +24,7 @@ typedef struct
 } HB_IRMMAP, * PHB_IRMMAP;
 
 
-PHB_IRMMAP hb_irmMapAlloc( HB_ULONG ulSize )
+PHB_IRMMAP hb_irmMapAlloc(HB_ULONG ulSize)
 {
    auto pMap = static_cast<PHB_IRMMAP>(hb_xgrab(sizeof(HB_IRMMAP)));
 
@@ -138,7 +138,7 @@ HB_ULONG hb_irmMapCount( PHB_IRMMAP pMap )
 }
 
 
-static HB_GARBAGE_FUNC( hb_irmMapDestroy )
+static HB_GARBAGE_FUNC(hb_irmMapDestroy)
 {
    auto ppMap = static_cast<PHB_IRMMAP*>(Cargo);
 
@@ -281,7 +281,7 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
 
 
 /* irmExecute( aFilterTree ) --> pMap */
-HB_FUNC( IRMEXECUTE )
+HB_FUNC(IRMEXECUTE)
 {
    PHB_IRMMAP pMap = hb_irmExecute(hb_param(1, Harbour::Item::ANY));
 
@@ -300,7 +300,7 @@ HB_FUNC( IRMEXECUTE )
  *    ...
  * ENDDO
  */
-HB_FUNC( IRMMAPNEXT )
+HB_FUNC(IRMMAPNEXT)
 {
    PHB_IRMMAP pMap = hb_irmMapParam(1);
 
@@ -320,7 +320,7 @@ HB_FUNC( IRMMAPNEXT )
  *    ...
  * ENDDO
  */
-HB_FUNC( IRMMAPSKIP )
+HB_FUNC(IRMMAPSKIP)
 {
    PHB_IRMMAP pMap = hb_irmMapParam(1);
 
@@ -338,7 +338,7 @@ HB_FUNC( IRMMAPSKIP )
 
 
 /* irmMapCount( pMap ) --> nRecCount */
-HB_FUNC( IRMMAPCOUNT )
+HB_FUNC(IRMMAPCOUNT)
 {
    PHB_IRMMAP pMap = hb_irmMapParam(1);
 

@@ -151,7 +151,7 @@ PROCEDURE Main(...)
          oRecord:FieldPut( i, dbffile->( FieldGet( i ) ) )
       NEXT
 
-      oTable:Append( oRecord )
+      oTable:Append(oRecord)
       IF oTable:NetErr()
          Alert( oTable:Error() )
       ENDIF

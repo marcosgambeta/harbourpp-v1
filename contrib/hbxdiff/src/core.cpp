@@ -87,7 +87,7 @@ typedef struct
    HB_MMF * hb_mmf;
 } HB_MMF_HOLDER, * PHB_MMF_HOLDER;
 
-static HB_GARBAGE_FUNC( hb_mmf_destructor )
+static HB_GARBAGE_FUNC(hb_mmf_destructor)
 {
    auto pStructHolder = static_cast<PHB_MMF_HOLDER>(Cargo);
 
@@ -162,7 +162,7 @@ static void * hb_mmf_param( int iParam, int iType, HB_BOOL fError )
 
 /* int xdl_init_mmfile(mmfile_t *mmf, long bsize, unsigned long flags) */
 
-HB_FUNC( XDL_INIT_MMFILE )
+HB_FUNC(XDL_INIT_MMFILE)
 {
    auto mmf = static_cast<mmfile_t*>(hb_xgrab(sizeof(mmfile_t)));
 
@@ -178,7 +178,7 @@ HB_FUNC( XDL_INIT_MMFILE )
 }
 
 #if 0
-HB_FUNC( XDL_FREE_MMFILE )
+HB_FUNC(XDL_FREE_MMFILE)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -194,7 +194,7 @@ HB_FUNC( XDL_FREE_MMFILE )
 
 /* int xdl_mmfile_iscompact(mmfile_t *mmf) */
 
-HB_FUNC( XDL_MMFILE_ISCOMPACT )
+HB_FUNC(XDL_MMFILE_ISCOMPACT)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -206,7 +206,7 @@ HB_FUNC( XDL_MMFILE_ISCOMPACT )
 
 /* int xdl_seek_mmfile(mmfile_t *mmf, long off) */
 
-HB_FUNC( XDL_SEEK_MMFILE )
+HB_FUNC(XDL_SEEK_MMFILE)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -218,7 +218,7 @@ HB_FUNC( XDL_SEEK_MMFILE )
 
 /* long xdl_read_mmfile(mmfile_t *mmf, void *data, long size) */
 
-HB_FUNC( XDL_READ_MMFILE )
+HB_FUNC(XDL_READ_MMFILE)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -271,7 +271,7 @@ HB_FUNC( XDL_READ_MMFILE )
 
 /* long xdl_write_mmfile(mmfile_t *mmf, void const *data, long size) */
 
-HB_FUNC( XDL_WRITE_MMFILE )
+HB_FUNC(XDL_WRITE_MMFILE)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -303,7 +303,7 @@ HB_FUNC( XDL_WRITE_MMFILE )
 
 /* long xdl_mmfile_size(mmfile_t *mmf) */
 
-HB_FUNC( XDL_MMFILE_SIZE )
+HB_FUNC(XDL_MMFILE_SIZE)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -315,7 +315,7 @@ HB_FUNC( XDL_MMFILE_SIZE )
 
 /* int xdl_mmfile_cmp(mmfile_t *mmf1, mmfile_t *mmf2) */
 
-HB_FUNC( XDL_MMFILE_CMP )
+HB_FUNC(XDL_MMFILE_CMP)
 {
    HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
@@ -330,7 +330,7 @@ HB_FUNC( XDL_MMFILE_CMP )
    int xdl_mmfile_compact(mmfile_t *mmfo, mmfile_t *mmfc, long bsize, unsigned long flags);
  */
 
-HB_FUNC( XDL_MMFILE_COMPACT )
+HB_FUNC(XDL_MMFILE_COMPACT)
 {
    HB_MMF *   phb_mmfo = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    auto mmfc = static_cast<mmfile_t*>(hb_xgrab(sizeof(mmfile_t)));
@@ -370,7 +370,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
    return 0;
 }
 
-static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
+static int xdlt_outb(void * priv, mmbuffer_t * mb, int nbuf)
 {
    auto pCallback = static_cast<PHB_ITEM>(priv);
 
@@ -395,7 +395,7 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
 
 /* int xdl_diff(mmfile_t *mmf1, mmfile_t *mmf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb) */
 
-HB_FUNC( XDL_DIFF )
+HB_FUNC(XDL_DIFF)
 {
    HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
@@ -434,7 +434,7 @@ HB_FUNC( XDL_DIFF )
 
 /* int xdl_patch(mmfile_t *mmf, mmfile_t *mmfp, int mode, xdemitcb_t *ecb, xdemitcb_t *rjecb) */
 
-HB_FUNC( XDL_PATCH )
+HB_FUNC(XDL_PATCH)
 {
    HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
@@ -469,7 +469,7 @@ HB_FUNC( XDL_PATCH )
 
 /* int xdl_bdiff(mmfile_t *mmf1, mmfile_t *mmf2, bdiffparam_t const *bdp, xdemitcb_t *ecb) */
 
-HB_FUNC( XDL_BDIFF )
+HB_FUNC(XDL_BDIFF)
 {
    HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
@@ -510,7 +510,7 @@ HB_FUNC( XDL_BDIFF )
 
 /* int xdl_rabdiff(mmfile_t *mmf1, mmfile_t *mmf2, xdemitcb_t *ecb) */
 
-HB_FUNC( XDL_RABDIFF )
+HB_FUNC(XDL_RABDIFF)
 {
    HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
@@ -544,7 +544,7 @@ HB_FUNC( XDL_RABDIFF )
 
 /* int xdl_bpatch(mmfile_t *mmf, mmfile_t *mmfp, xdemitcb_t *ecb) */
 
-HB_FUNC( XDL_BPATCH )
+HB_FUNC(XDL_BPATCH)
 {
    HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
@@ -578,7 +578,7 @@ HB_FUNC( XDL_BPATCH )
 
 /* long xdl_bdiff_tgsize(mmfile_t *mmfp) */
 
-HB_FUNC( XDL_BDIFF_TGSIZE )
+HB_FUNC(XDL_BDIFF_TGSIZE)
 {
    HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
@@ -588,7 +588,7 @@ HB_FUNC( XDL_BDIFF_TGSIZE )
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-static void * wf_malloc( void * priv, unsigned int size )
+static void * wf_malloc(void * priv, unsigned int size)
 {
    HB_SYMBOL_UNUSED(priv);
 
@@ -602,7 +602,7 @@ static void wf_free( void * priv, void * ptr )
    hb_xfree(ptr);
 }
 
-static void * wf_realloc( void * priv, void * ptr, unsigned int size )
+static void * wf_realloc(void * priv, void * ptr, unsigned int size)
 {
    HB_SYMBOL_UNUSED(priv);
 
@@ -627,6 +627,6 @@ HB_CALL_ON_STARTUP_END( _xdiff_init_ )
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _xdiff_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _xdiff_init_ )
+   #define HB_DATASEG_BODY  HB_DATASEG_FUNC(_xdiff_init_)
    #include "hbiniseg.hpp"
 #endif

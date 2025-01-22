@@ -50,7 +50,7 @@
 #include <hbapi.hpp>
 #include <hbapirdd.hpp>
 
-HB_FUNC( DBSETLOCATE )
+HB_FUNC(DBSETLOCATE)
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fSet  = false;

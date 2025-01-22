@@ -49,7 +49,7 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( BETWEEN )
+HB_FUNC(BETWEEN)
 {
    HB_BOOL fResult = false;
    if( hb_pcount() == 3 )
@@ -64,7 +64,7 @@ HB_FUNC( BETWEEN )
    hb_retl(fResult);
 }
 
-HB_FUNC( INLIST )
+HB_FUNC(INLIST)
 {
    HB_BOOL fResult = false;
    auto iPCount = hb_pcount();

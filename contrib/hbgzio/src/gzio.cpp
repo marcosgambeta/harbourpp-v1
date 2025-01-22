@@ -91,7 +91,7 @@ HB_FILE;
 
 static PHB_FILE s_filegzipNew(PHB_FILE pFile, int iMode, int iLevel);
 
-static voidpf s_gzip_zalloc( voidpf opaque, uInt items, uInt size )
+static voidpf s_gzip_zalloc(voidpf opaque, uInt items, uInt size)
 {
    HB_SYMBOL_UNUSED(opaque);
    return hb_xalloc(static_cast<HB_SIZE>(items) * size);
@@ -313,7 +313,7 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
    return hb_fileLinkSym(s_gzio_name(pszTarget, nullptr), s_gzio_name(pszNewName, nullptr));
 }
 
-static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -697,7 +697,7 @@ static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel )
    return pFile;
 }
 
-HB_FUNC( HB_GZIO ) { ; }
+HB_FUNC(HB_GZIO) { ; }
 
 HB_CALL_ON_STARTUP_BEGIN(_hb_file_gzio_init_)
    hb_fileRegisterFull(&s_fileFuncs);
@@ -706,6 +706,6 @@ HB_CALL_ON_STARTUP_END(_hb_file_gzio_init_)
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_gzio_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_file_gzio_init_ )
+   #define HB_DATASEG_BODY  HB_DATASEG_FUNC(_hb_file_gzio_init_)
    #include "hbiniseg.hpp"
 #endif

@@ -48,7 +48,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_GETVPG )
+HB_FUNC(FT_GETVPG)
 {
    int iPage;
 
@@ -57,6 +57,6 @@ HB_FUNC( FT_GETVPG )
    hb_retni(iPage);
 }
 
-HB_FUNC( FT_SETVPG )
+HB_FUNC(FT_SETVPG)
 {
 }

@@ -15,7 +15,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_IDLE )
+HB_FUNC(FT_IDLE)
 {
    hb_idleState();
 }

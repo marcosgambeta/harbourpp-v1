@@ -102,7 +102,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::pGT  := hb_gtCreate( "WGU" )
       ::pGTp := hb_gtSelect( ::pGT )
    ELSE
-      hb_gtReload( "WGU" )
+      hb_gtReload("WGU")
       ::pGT := hb_gtSelect()
    ENDIF
 
@@ -189,7 +189,7 @@ METHOD WvgDialog:getFrameState()
 
    DO CASE
    CASE wapi_IsIconic(::hWnd) ; RETURN WVGDLG_FRAMESTAT_MINIMIZED
-   CASE wapi_IsZoomed( ::hWnd ) ; RETURN WVGDLG_FRAMESTAT_MAXIMIZED
+   CASE wapi_IsZoomed(::hWnd) ; RETURN WVGDLG_FRAMESTAT_MAXIMIZED
    ENDCASE
 
    RETURN WVGDLG_FRAMESTAT_NORMALIZED

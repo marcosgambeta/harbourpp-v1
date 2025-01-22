@@ -81,7 +81,7 @@ PROCEDURE Main( cLang )
       "NToCDoW( nDay )     Returns name of day       ", ;
       "NToCMonth( nMth )   Returns name of month     ", ;
       "Quarter(date)       Returns qtr number of date", ;
-      "SToD( ansi date)    Returns Clipper date      ", ;
+      "SToD(ansi date)     Returns Clipper date      ", ;
       "Week( dDate, lSWN ) Returns numbef of week    ", }
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
@@ -1134,7 +1134,7 @@ FUNCTION qtrtest()
 FUNCTION stodtest()
 
    //
-   // hb_SToD( ansi-date)
+   // hb_SToD(ansi-date)
    // ================
    // Returns a Clipper format date. If Ansi date is invalid, a
    // null date is returned.
@@ -1146,7 +1146,7 @@ FUNCTION stodtest()
    LOCAL nKey
 
    DO WHILE c
-      @  5, 10 SAY "SToD( ansi-date ) receives an ANSI date string and"
+      @  5, 10 SAY "SToD(ansi-date) receives an ANSI date string and"
       @  6, 10 SAY "returns a Clipper format date"
       @  8, 10 SAY "Enter an ANSI date string in the form YYYYMMDD"
       @  8, 57 GET cAnsidate PICTURE "999999999" VALID chkansi( cAnsidate )
@@ -1163,7 +1163,7 @@ FUNCTION stodtest()
          c := .F.
       ELSE
 
-         dDate := hb_SToD( cAnsidate )
+         dDate := hb_SToD(cAnsidate)
 
          @ 10, 10 SAY "The Clipper format date is " + ;
             PadR( LTrim(DToC(dDate)), 10 )

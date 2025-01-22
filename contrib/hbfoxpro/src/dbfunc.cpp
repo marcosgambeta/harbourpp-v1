@@ -76,7 +76,7 @@ static AREAP s_foxAreaPointer(int iParam)
    }
 }
 
-HB_FUNC( FILTER )
+HB_FUNC(FILTER)
 {
    AREAP pArea = s_foxAreaPointer(1);
 
@@ -92,7 +92,7 @@ HB_FUNC( FILTER )
    }
 }
 
-HB_FUNC( NDX )
+HB_FUNC(NDX)
 {
    AREAP pArea = s_foxAreaPointer(2);
 
@@ -115,7 +115,7 @@ HB_FUNC( NDX )
    }
 }
 
-HB_FUNC( RELATION )
+HB_FUNC(RELATION)
 {
    AREAP pArea = s_foxAreaPointer(2);
 
@@ -132,7 +132,7 @@ HB_FUNC( RELATION )
    }
 }
 
-HB_FUNC( FSIZE )
+HB_FUNC(FSIZE)
 {
    AREAP pArea = s_foxAreaPointer(2);
 
@@ -170,12 +170,12 @@ HB_FUNC( FSIZE )
    hb_retni(0);
 }
 
-HB_FUNC( __FOX_USED )
+HB_FUNC(__FOX_USED)
 {
    hb_retl(s_foxAreaPointer(1) != nullptr);
 }
 
-HB_FUNC( __FOX_SEEK )
+HB_FUNC(__FOX_SEEK)
 {
    AREAP pArea = s_foxAreaPointer(4);
 

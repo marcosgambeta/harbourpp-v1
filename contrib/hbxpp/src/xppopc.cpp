@@ -62,7 +62,7 @@
  */
 #define XHB_IS_VALID_INDEX( idx, max )  ( ( static_cast<HB_ISIZ>(idx) < 0 ? ( idx ) += ( max ) + 1 : ( idx ) ) > 0 && static_cast<HB_SIZE>(idx) <= ( max ) )
 
-HB_FUNC( XPP_INDEX )
+HB_FUNC(XPP_INDEX)
 {
    auto pSelf = hb_stackSelfItem();
    auto pIndex = hb_param(1, Harbour::Item::ANY);
@@ -141,7 +141,7 @@ HB_FUNC( XPP_INDEX )
    }
 }
 
-HB_FUNC( XPP_INCLUDE )
+HB_FUNC(XPP_INCLUDE)
 {
    auto pSelf = hb_stackSelfItem();
    auto pKey = hb_param(1, Harbour::Item::ANY);

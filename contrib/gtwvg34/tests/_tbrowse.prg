@@ -113,10 +113,10 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    wvt_SetPen( s_nStyle++, 0, WIN_RGB(210, 210, 210) )
    hb_gtInfo( HB_GTI_WINTITLE, "WVT GUI TBrowse()" )
 
-   AAdd( aBlocks, {|| wvt_DrawBoxRaised( oBrowse:nTop - 2, oBrowse:nLeft - 2, oBrowse:nBottom + 1, oBrowse:nRight + 2 ) } )
-   AAdd( aBlocks, {|| wvt_DrawBoxRecessed( oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight ) } )
-   AAdd( aBlocks, {|| wvt_DrawGridHorz( oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
-   AAdd( aBlocks, {|| wvt_DrawGridVert( oBrowse:nTop, oBrowse:nBottom, oBrowse:aColumnsSep, Len(oBrowse:aColumnsSep) ) } )
+   AAdd(aBlocks, {|| wvt_DrawBoxRaised(oBrowse:nTop - 2, oBrowse:nLeft - 2, oBrowse:nBottom + 1, oBrowse:nRight + 2) })
+   AAdd(aBlocks, {|| wvt_DrawBoxRecessed(oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight) })
+   AAdd(aBlocks, {|| wvt_DrawGridHorz( oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) })
+   AAdd(aBlocks, {|| wvt_DrawGridVert( oBrowse:nTop, oBrowse:nBottom, oBrowse:aColumnsSep, Len(oBrowse:aColumnsSep) ) })
 
    Vou_BrwAddScrollBars( oCrt, oBrowse, @oVBar, @oHBar )
 
@@ -134,7 +134,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    BrwBuildButtons( oCrt, oBrowse )
    oTre := BrwBuildTree( oCrt, oBrowse )
 
-   wvt_Keyboard( HB_K_RESIZE ) // Refresh All GUI Controls
+   wvt_Keyboard(HB_K_RESIZE) // Refresh All GUI Controls
 
    DO WHILE ! lEnd
       DispBegin()
@@ -208,10 +208,10 @@ STATIC PROCEDURE ExecBrowser( oCrt )
 
 STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTre, oChk, aNvg, oIdx, lActiveX )
 
-   HB_SYMBOL_UNUSED( oSle )
-   HB_SYMBOL_UNUSED( oLBx )
-   HB_SYMBOL_UNUSED( oChk )
-   HB_SYMBOL_UNUSED( oIdx )
+   HB_SYMBOL_UNUSED(oSle)
+   HB_SYMBOL_UNUSED(oLBx)
+   HB_SYMBOL_UNUSED(oChk)
+   HB_SYMBOL_UNUSED(oIdx)
 
    oCrt:setFocus()
 
@@ -302,7 +302,7 @@ STATIC FUNCTION BrwBuildTree( oCrt /*, oBrw*/ )
    oItem2:addItem( "Third level y" )
    oItem2:addItem( "Third level z" )
 
-   oTree:showExpanded( .T., 2 )
+   oTree:showExpanded(.T., 2)
    oTree:setData(oItem2)
 
    oTree:tooltipText := "Treeview embedded onto CUI window"
@@ -313,7 +313,7 @@ STATIC FUNCTION BrwBuildActiveX( oCrt, oBrw )
 
    LOCAL oCom
 
-   HB_SYMBOL_UNUSED( oBrw )
+   HB_SYMBOL_UNUSED(oBrw)
 
    oCom := WvgActiveXControl():new( oCrt, , { -24, -13 }, { {|| -( MaxRow() - 1 - 24 ) }, {|| -( MaxCol() - 1 - 13 ) } }, , .F. )
    oCom:CLSID := "Shell.Explorer.2"
@@ -321,7 +321,7 @@ STATIC FUNCTION BrwBuildActiveX( oCrt, oBrw )
    oCom:mapEvent( 269, {|| uiDebug( "EXPLORER-269" ) } )
 #endif
    oCom:create()
-#if ! defined( __HBSCRIPT__HBSHELL )  // FIXME: disabled in hbrun due to OLE bugs
+#if ! defined(__HBSCRIPT__HBSHELL)  // FIXME: disabled in hbrun due to OLE bugs
    oCom:navigate( hb_Version( HB_VERSION_URL_BASE ) )
 #endif
 
@@ -360,7 +360,7 @@ STATIC FUNCTION BrwBuildListBoxIdx( oCrt, oBrw )
       IF ( cKey := IndexKey( i ) ) == ""
          EXIT
       ENDIF
-      AAdd( aIdx, ordName( i ) + ": " + cKey )
+      AAdd(aIdx, ordName( i ) + ": " + cKey)
    NEXT
 
    oXbp := WvgComboBox():new( oCrt )
@@ -402,7 +402,7 @@ STATIC FUNCTION BrwBuildNvg( oCrt, oBrw, oCom )
 
    LOCAL oLbl, oXbp
 
-   HB_SYMBOL_UNUSED( oBrw )
+   HB_SYMBOL_UNUSED(oBrw)
 
    oLbl := WvgStatic():new( oCrt )
    oLbl:type    := WVGSTATIC_TYPE_TEXT
@@ -427,12 +427,12 @@ STATIC FUNCTION BrwBuildCheckBox( oCrt, oBrw, lActiveX )
 
    LOCAL oXbp
 
-   HB_SYMBOL_UNUSED( oBrw )
+   HB_SYMBOL_UNUSED(oBrw)
 
    oXbp := WvgCheckBox():new( oCrt )
    oXbp:pointerFocus := .F.
    oXbp:caption      := "ActiveX"
-   oXbp:selected     := {| x, y, o | x := y, lActiveX := o:getData(), wvt_Keyboard( HB_K_RESIZE ) }
+   oXbp:selected     := {| x, y, o | x := y, lActiveX := o:getData(), wvt_Keyboard(HB_K_RESIZE) }
    oXbp:selection    := .F.
    oXbp:create( , , { -23, -1 }, { -1, -10 } )
    oXbp:setColorFG( "R+" )
@@ -473,8 +473,8 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
       "Go Bottom", ;
       "Rightmost" }
    LOCAL aAct := { ;
-      {|| wvt_Keyboard( K_F3 ) }, ;
-      {|| wvt_Keyboard( K_F4 ) }, ;
+      {|| wvt_Keyboard(K_F3) }, ;
+      {|| wvt_Keyboard(K_F4) }, ;
       {|| oBrw:goTop(), oBrw:forceStable() }, ;
       {|| oBrw:goBottom(), oBrw:forceStable() }, ;
       {|| oBrw:panEnd(), oBrw:forceStable() } }
@@ -775,19 +775,26 @@ STATIC PROCEDURE Vou_ExecTBarAction( oBtn )
 
    SWITCH oBtn:caption
    CASE "New"
-      wvt_Keyboard( K_DOWN      ); EXIT
+      wvt_Keyboard(K_DOWN)
+      EXIT
    CASE "Select"
-      wvt_Keyboard( K_UP        ); EXIT
+      wvt_Keyboard(K_UP)
+      EXIT
    CASE "Calendar"
-      wvt_Keyboard( K_RIGHT     ); EXIT
+      wvt_Keyboard(K_RIGHT)
+      EXIT
    CASE "Tools"
-      wvt_Keyboard( K_LEFT      ); EXIT
+      wvt_Keyboard(K_LEFT)
+      EXIT
    CASE "Index"
-      wvt_Keyboard( K_PGDN      ); EXIT
+      wvt_Keyboard(K_PGDN)
+      EXIT
    CASE "Show"
-      wvt_Keyboard( K_PGUP      ); EXIT
+      wvt_Keyboard(K_PGUP)
+      EXIT
    CASE "Hide"
-      wvt_Keyboard( K_CTRL_HOME ); EXIT
+      wvt_Keyboard(K_CTRL_HOME)
+      EXIT
    ENDSWITCH
 
    RETURN
@@ -839,7 +846,7 @@ STATIC FUNCTION BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey )
 
    LOCAL lRet := .T., lRefAll := .F.
 
-   HB_SYMBOL_UNUSED( cPaintID )
+   HB_SYMBOL_UNUSED(cPaintID)
 
    DO CASE
    CASE nKey == K_DOWN
@@ -947,12 +954,12 @@ FUNCTION ConfigBrowser( aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, n
    LOCAL info_, oWvtBrw, oBrowse, i
    LOCAL aPopup := {}
 
-   AAdd( aPopup, { "Down"     , {|| oBrowse:Down()    , oBrowse:ForceStable() } } )
-   AAdd( aPopup, { "Up"       , {|| oBrowse:Up()      , oBrowse:ForceStable() } } )
-   AAdd( aPopup, { "Page Down", {|| oBrowse:PageDown(), oBrowse:ForceStable() } } )
-   AAdd( aPopup, { "Page Up"  , {|| oBrowse:PageUp()  , oBrowse:ForceStable() } } )
-   AAdd( aPopup, { "Top"      , {|| oBrowse:GoTop()   , oBrowse:ForceStable() } } )
-   AAdd( aPopup, { "Bottom"   , {|| oBrowse:GoBottom(), oBrowse:ForceStable() } } )
+   AAdd(aPopup, { "Down"     , {|| oBrowse:Down()    , oBrowse:ForceStable() } })
+   AAdd(aPopup, { "Up"       , {|| oBrowse:Up()      , oBrowse:ForceStable() } })
+   AAdd(aPopup, { "Page Down", {|| oBrowse:PageDown(), oBrowse:ForceStable() } })
+   AAdd(aPopup, { "Page Up"  , {|| oBrowse:PageUp()  , oBrowse:ForceStable() } })
+   AAdd(aPopup, { "Top"      , {|| oBrowse:GoTop()   , oBrowse:ForceStable() } })
+   AAdd(aPopup, { "Bottom"   , {|| oBrowse:GoBottom(), oBrowse:ForceStable() } })
 
    dbSelectArea(cUseAlias)
 

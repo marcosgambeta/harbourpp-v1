@@ -117,7 +117,7 @@ static void hb_pgsqldd_init(void * cargo)
    }
 }
 
-HB_FUNC( HB_SDDPG_REGISTER )
+HB_FUNC(HB_SDDPG_REGISTER)
 {
    hb_pgsqldd_init(nullptr);
 }

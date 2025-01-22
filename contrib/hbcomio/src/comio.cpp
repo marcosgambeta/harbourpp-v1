@@ -439,7 +439,7 @@ static PHB_FILE s_fileNew(int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fW
    return pFile;
 }
 
-HB_FUNC( HB_COMIO )
+HB_FUNC(HB_COMIO)
 {
    ;
 }

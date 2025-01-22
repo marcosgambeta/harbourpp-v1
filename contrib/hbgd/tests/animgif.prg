@@ -45,8 +45,8 @@ PROCEDURE Main()
    gdImageGifAnimBegin( im, hFile, 1, 3 )
    gdImageGifAnimBegin( im, IMAGES_OUT + "anim2.gif", 1, 3 )
    /* Write the first frame.  No local color map.  Delay = 1s */
-   gdImageGifAnimAdd( im, hFile, 0, 0, 0, 100, 1, NIL )
-   gdImageGifAnimAdd( im, IMAGES_OUT + "anim2.gif", 0, 0, 0, 100, 1, NIL )
+   gdImageGifAnimAdd(im, hFile, 0, 0, 0, 100, 1, NIL)
+   gdImageGifAnimAdd(im, IMAGES_OUT + "anim2.gif", 0, 0, 0, 100, 1, NIL)
    /* construct the second frame */
    im2 := gdImageCreate( 100, 100 )
    /* Allocate background to make it white */
@@ -58,8 +58,8 @@ PROCEDURE Main()
    /* Allow animation compression with transparent pixels */
    gdImageColorTransparent ( im2, trans )
    /* Add the second frame */
-   gdImageGifAnimAdd( im2, hFile, 0, 0, 0, 100, 1, im )
-   gdImageGifAnimAdd( im2, IMAGES_OUT + "anim2.gif", 0, 0, 0, 100, 1, im )
+   gdImageGifAnimAdd(im2, hFile, 0, 0, 0, 100, 1, im)
+   gdImageGifAnimAdd(im2, IMAGES_OUT + "anim2.gif", 0, 0, 0, 100, 1, im)
    /* construct the second frame */
    im3 := gdImageCreate( 100, 100 )
    /* Allocate background to make it white */
@@ -71,13 +71,13 @@ PROCEDURE Main()
    /* Allow animation compression with transparent pixels */
    gdImageColorTransparent ( im3, trans )
    /* Add the third frame, compressing against the second one */
-   gdImageGifAnimAdd( im3, hFile, 0, 0, 0, 100, 1, im2 )
-   gdImageGifAnimAdd( im3, IMAGES_OUT + "anim2.gif", 0, 0, 0, 100, 1, im2 )
+   gdImageGifAnimAdd(im3, hFile, 0, 0, 0, 100, 1, im2)
+   gdImageGifAnimAdd(im3, IMAGES_OUT + "anim2.gif", 0, 0, 0, 100, 1, im2)
    /* Write the end marker */
    /* gdImageGifAnimEnd(out); is the same as the following: */
    // putc (";", out);
-   gdImageGifAnimEnd( hFile )
-   gdImageGifAnimEnd( IMAGES_OUT + "anim2.gif" )
+   gdImageGifAnimEnd(hFile)
+   gdImageGifAnimEnd(IMAGES_OUT + "anim2.gif")
    /* Close file */
    FClose( hFile )
 

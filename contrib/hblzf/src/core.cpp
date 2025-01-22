@@ -59,14 +59,14 @@
 
 #include "hblzf.ch"
 
-static HB_SIZE hb_lzf_compressbound( HB_SIZE nLen )
+static HB_SIZE hb_lzf_compressbound(HB_SIZE nLen)
 {
    auto nBuffSize = static_cast<HB_SIZE>(nLen * 1.04 + 1);
 
    return ( nBuffSize >= 32 ) ? nBuffSize : 32;
 }
 
-HB_FUNC( HB_LZF_COMPRESSBOUND )
+HB_FUNC(HB_LZF_COMPRESSBOUND)
 {
    if( HB_ISCHAR(1) || HB_ISNUM(1) )
    {
@@ -78,13 +78,13 @@ HB_FUNC( HB_LZF_COMPRESSBOUND )
 }
 
 /* Return a LZF_VERSION, API version */
-HB_FUNC( HB_LZF_VERSION )
+HB_FUNC(HB_LZF_VERSION)
 {
    hb_retni(LZF_VERSION);
 }
 
 /* Return if LZF was optimized for speed (or for compression) */
-HB_FUNC( HB_LZF_OPTIMIZED_FOR_SPEED )
+HB_FUNC(HB_LZF_OPTIMIZED_FOR_SPEED)
 {
 #if ULTRA_FAST
    hb_retl(true);
@@ -94,7 +94,7 @@ HB_FUNC( HB_LZF_OPTIMIZED_FOR_SPEED )
 }
 
 /* Return a string compressed with LZF */
-HB_FUNC( HB_LZF_COMPRESS )
+HB_FUNC(HB_LZF_COMPRESS)
 {
    auto pArg = hb_param(1, Harbour::Item::STRING);
 
@@ -156,7 +156,7 @@ HB_FUNC( HB_LZF_COMPRESS )
 }
 
 /* Return a string decompressed with LZF */
-HB_FUNC( HB_LZF_DECOMPRESS )
+HB_FUNC(HB_LZF_DECOMPRESS)
 {
    auto pArg = hb_param(1, Harbour::Item::STRING);
 

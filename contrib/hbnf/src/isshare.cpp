@@ -48,7 +48,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_ISSHARE )
+HB_FUNC(FT_ISSHARE)
 {
    int iShare;
 

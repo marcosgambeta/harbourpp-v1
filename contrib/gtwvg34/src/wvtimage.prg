@@ -81,8 +81,8 @@ METHOD WvtImage:Create()
    ::bPaint := {|| iif(hb_vfExists( ::cImage ), ;
       wvt_DrawImage( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cImage ), "") }
 
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_IMAGE, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_IMAGE, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 

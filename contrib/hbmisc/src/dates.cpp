@@ -108,7 +108,7 @@ static int hb_woy( long lDate, HB_BOOL fISO )
    return ( hb_doy( iYear, iMonth, iDay ) - 1 ) / 7 + 1;
 }
 
-HB_FUNC( AMONTHS )
+HB_FUNC(AMONTHS)
 {
    auto pReturn = hb_itemArrayNew(12);  /* Create array */
    int      i;
@@ -119,7 +119,7 @@ HB_FUNC( AMONTHS )
    hb_itemReturnRelease(pReturn);
 }
 
-HB_FUNC( ADAYS )
+HB_FUNC(ADAYS)
 {
    auto pReturn = hb_itemArrayNew(7);  /* Create array */
    int      i;
@@ -130,7 +130,7 @@ HB_FUNC( ADAYS )
    hb_itemReturnRelease(pReturn);
 }
 
-HB_FUNC( ISLEAPYEAR )
+HB_FUNC(ISLEAPYEAR)
 {
    auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
@@ -145,7 +145,7 @@ HB_FUNC( ISLEAPYEAR )
       hb_retl(false);
 }
 
-HB_FUNC( HBMISC_DAYSINMONTH )
+HB_FUNC(HBMISC_DAYSINMONTH)
 {
    auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
@@ -160,7 +160,7 @@ HB_FUNC( HBMISC_DAYSINMONTH )
       hb_retni(0);
 }
 
-HB_FUNC( WOY )
+HB_FUNC(WOY)
 {
    auto pDate = hb_param(1, Harbour::Item::DATETIME);
 

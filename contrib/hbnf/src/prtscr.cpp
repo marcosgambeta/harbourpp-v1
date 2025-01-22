@@ -24,7 +24,7 @@
 
 #include <hbapi.hpp>
 
-HB_FUNC( FT_PRTSCR )
+HB_FUNC(FT_PRTSCR)
 {
    hb_retl(false);
 }

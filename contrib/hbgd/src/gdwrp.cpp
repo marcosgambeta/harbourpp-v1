@@ -882,7 +882,7 @@ HB_FUNC(GDIMAGEFILLTOBORDER) /* void gdImageFillToBorder(gdImagePtr im, int x, i
 /* Disabled, because there is a .prg implementation which
    works with all gd lib versions. [vszakats] */
 #if 0
-HB_FUNC( GDIMAGEELLIPSE ) /* void gdImageEllipse(gdImagePtr im, int cx, int cy, int w, int h, int color) */
+HB_FUNC(GDIMAGEELLIPSE) /* void gdImageEllipse(gdImagePtr im, int cx, int cy, int w, int h, int color) */
 {
 #if HB_GD_VERS(2, 0, 35)
    if( hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) )
@@ -2108,7 +2108,7 @@ HB_FUNC(GDIMAGEGIFANIMBEGIN)
 
 /*BGD_DECLARE(void *) gdImageGifAnimAddPtr(gdImagePtr im, int *size, int LocalCM, int LeftOfs, int TopOfs, int Delay,
  * int Disposal, gdImagePtr previm); */
-/* implementation: (void *) gdImageGifAnimAdd( gdImagePtr im, cFile | nHandle, int LocalCM, int LeftOfs, int TopOfs, int
+/* implementation: (void *) gdImageGifAnimAdd(gdImagePtr im, cFile | nHandle, int LocalCM, int LeftOfs, int TopOfs, int
  * Delay, int Disposal, gdImagePtr previm); */
 HB_FUNC(GDIMAGEGIFANIMADD)
 {

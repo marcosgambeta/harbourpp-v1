@@ -87,7 +87,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
 
       hb_default( @nStop, 1 )
 
-      HB_SYMBOL_UNUSED( nBufferSize )
+      HB_SYMBOL_UNUSED(nBufferSize)
 
       IF hb_comInit( nPort, nBaud, cParity, nData, nStop )
          s_hPort[ nPort ] := cOldPortName
@@ -133,7 +133,7 @@ FUNCTION OUTCHR(nPort, cData)
    DO WHILE hb_BLen(cData) > 0
 
       /* I expect at least some data to be sent in a second */
-      nLen := hb_comSend( nPort, cData,, 1000 )
+      nLen := hb_comSend(nPort, cData,, 1000)
 
       IF nLen <= 0
          RETURN .F.

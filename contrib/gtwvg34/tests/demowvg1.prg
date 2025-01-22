@@ -22,7 +22,7 @@ PROCEDURE Main()
 
    LOCAL aPaint
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVG" )
 #endif
 
@@ -44,15 +44,15 @@ PROCEDURE Main()
 
    aPaint := {}
 
-   AAdd( aPaint, { "Label", {|| wvt_DrawLabel( 1, 40, "Harbour Console GUI Demo", 6, , WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) }, { WVT_BLOCK_LABEL, 1, 10, 3, 50 } } )
-   AAdd( aPaint, { "Box_1", {|| wvt_DrawBoxRaised( 4, 4, 20, 75 ) }, { WVT_BLOCK_BOX, 4, 4, 20, 75 } } )
-   AAdd( aPaint, { "Box_2", {|| wvt_DrawBoxRecessed( 7, 61, 13, 70 ) }, { WVT_BLOCK_BOX, 7, 61, 13, 70 } } )
-   AAdd( aPaint, { "Box_3", {|| wvt_DrawBoxGroup( 15, 59, 18, 72 ) }, { WVT_BLOCK_BOX, 15, 59, 18, 72 } } )
-   AAdd( aPaint, { "Box_4", {|| wvt_DrawBoxGroup( 5, 6, 19, 44 ) }, { WVT_BLOCK_BOX, 5, 6, 19, 44 } } )
-   AAdd( aPaint, { "Image", {|| wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH ) }, { WVT_BLOCK_IMAGE, 8, 62, 12, 69 } } )
-   AAdd( aPaint, { "Box_5", {|| wvt_DrawBoxRecessed( 7, 48, 13, 55 ) }, { WVT_BLOCK_BOX, 7, 48, 13, 55 } } )
-   AAdd( aPaint, { "Line_1", {|| wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) }, NIL } )
-   AAdd( aPaint, { "Gets", {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) }, NIL } )
+   AAdd(aPaint, { "Label", {|| wvt_DrawLabel( 1, 40, "Harbour Console GUI Demo", 6, , WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) }, { WVT_BLOCK_LABEL, 1, 10, 3, 50 } })
+   AAdd(aPaint, { "Box_1", {|| wvt_DrawBoxRaised(4, 4, 20, 75) }, { WVT_BLOCK_BOX, 4, 4, 20, 75 } })
+   AAdd(aPaint, { "Box_2", {|| wvt_DrawBoxRecessed(7, 61, 13, 70) }, { WVT_BLOCK_BOX, 7, 61, 13, 70 } })
+   AAdd(aPaint, { "Box_3", {|| wvt_DrawBoxGroup( 15, 59, 18, 72 ) }, { WVT_BLOCK_BOX, 15, 59, 18, 72 } })
+   AAdd(aPaint, { "Box_4", {|| wvt_DrawBoxGroup( 5, 6, 19, 44 ) }, { WVT_BLOCK_BOX, 5, 6, 19, 44 } })
+   AAdd(aPaint, { "Image", {|| wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH ) }, { WVT_BLOCK_IMAGE, 8, 62, 12, 69 } })
+   AAdd(aPaint, { "Box_5", {|| wvt_DrawBoxRecessed(7, 48, 13, 55) }, { WVT_BLOCK_BOX, 7, 48, 13, 55 } })
+   AAdd(aPaint, { "Line_1", {|| wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) }, NIL })
+   AAdd(aPaint, { "Gets", {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) }, NIL })
 
    ExecForm( aPaint )
 
@@ -165,7 +165,7 @@ STATIC PROCEDURE DoModalDialog()
    oCrt:Create()
    oCrt:show()
 
-   AAdd( aPaint, { "Box_V", {|| wvt_DrawBoxRaised( 1, 2, 11, 47 ) }, NIL, { WVT_BLOCK_BOX, 0, 0, MaxRow(), MaxCol() } } )
+   AAdd(aPaint, { "Box_V", {|| wvt_DrawBoxRaised(1, 2, 11, 47) }, NIL, { WVT_BLOCK_BOX, 0, 0, MaxRow(), MaxCol() } })
    WvtSetPaint( aPaint )
 
    SetColor( "N/W" )
@@ -183,7 +183,7 @@ STATIC PROCEDURE DoModalDialog()
 
    RETURN
 
-#if ! defined( __HBSCRIPT__HBSHELL )
+#if ! defined(__HBSCRIPT__HBSHELL)
 
 PROCEDURE hb_GTSYS()  // must be a public function
 

@@ -75,7 +75,7 @@ static void s_fttext_init_init( void * cargo )
 
 static HB_TSD_NEW(s_fttext, sizeof(FT_TEXT), s_fttext_init_init, nullptr);
 
-HB_FUNC( HB_FUSE )
+HB_FUNC(HB_FUSE)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -102,7 +102,7 @@ HB_FUNC( HB_FUSE )
    }
 }
 
-HB_FUNC( HB_FRECNO )
+HB_FUNC(HB_FRECNO)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -190,7 +190,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
    return ft_text->recno[ft_text->area];
 }
 
-HB_FUNC( HB_FSKIP )
+HB_FUNC(HB_FSKIP)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -201,7 +201,7 @@ HB_FUNC( HB_FSKIP )
    hb_xfree(buffer);
 }
 
-HB_FUNC( HB_FREADLN )
+HB_FUNC(HB_FREADLN)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -227,7 +227,7 @@ HB_FUNC( HB_FREADLN )
    hb_xfree(buffer);
 }
 
-HB_FUNC( HB_FATEOF )
+HB_FUNC(HB_FATEOF)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -238,7 +238,7 @@ HB_FUNC( HB_FATEOF )
 HB_FUNC_TRANSLATE( HB_FEOF, HB_FATEOF )
 #endif
 
-HB_FUNC( HB_FGOTO )
+HB_FUNC(HB_FGOTO)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -270,7 +270,7 @@ HB_FUNC( HB_FGOTO )
    hb_xfree(buffer);
 }
 
-HB_FUNC( HB_FGOBOTTOM )
+HB_FUNC(HB_FGOBOTTOM)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -318,7 +318,7 @@ HB_FUNC( HB_FGOBOTTOM )
    }
 }
 
-HB_FUNC( HB_FGOTOP )
+HB_FUNC(HB_FGOTOP)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -327,7 +327,7 @@ HB_FUNC( HB_FGOTOP )
    ft_text->isEof[ft_text->area] = (ft_text->lastbyte[ft_text->area] == 0);
 }
 
-HB_FUNC( HB_FLASTREC )
+HB_FUNC(HB_FLASTREC)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -347,7 +347,7 @@ HB_FUNC( HB_FLASTREC )
    ft_text->isEof[ft_text->area]  = bIsEof;
 }
 
-HB_FUNC( HB_FSELECT )
+HB_FUNC(HB_FSELECT)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -362,7 +362,7 @@ HB_FUNC( HB_FSELECT )
    }
 }
 
-HB_FUNC( HB_FINFO )  /* used for debugging */
+HB_FUNC(HB_FINFO)  /* used for debugging */
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
@@ -390,7 +390,7 @@ HB_FUNC( HB_FINFO )  /* used for debugging */
    sequentially with just this function.
    -BH
  */
-HB_FUNC( HB_FREADANDSKIP )
+HB_FUNC(HB_FREADANDSKIP)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 

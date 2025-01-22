@@ -72,7 +72,7 @@ CREATE CLASS WvgRadioButton INHERIT WvgWindow, WvgDataRef
    METHOD setCaption( xCaption )
 
    ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected( bBlock )                    INLINE ::sl_lbClick := bBlock
+   ASSIGN selected(bBlock)                      INLINE ::sl_lbClick := bBlock
 
 ENDCLASS
 
@@ -90,7 +90,7 @@ METHOD WvgRadioButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 

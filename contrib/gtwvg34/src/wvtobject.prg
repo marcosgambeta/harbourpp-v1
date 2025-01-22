@@ -150,8 +150,8 @@ CREATE CLASS WvtObject
    METHOD SetToolTip()                            INLINE wvt_SetToolTip( ::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip )
    METHOD Refresh()                               INLINE wvt_InvalidateRect( ::nTop, ::nLeft, ::nTop, ::nLeft )
    METHOD Eval( bBlock )                          INLINE iif(HB_IsEvalItem( bBlock ), Eval( bBlock, Self ), NIL)
-   METHOD AddChild( aChild )                      INLINE AAdd( ::aChildren, aChild )
-   METHOD AddParent( aParent )                    INLINE AAdd( ::aParent, aParent )
+   METHOD AddChild(aChild)                        INLINE AAdd(::aChildren, aChild)
+   METHOD AddParent( aParent )                    INLINE AAdd(::aParent, aParent)
 
    METHOD PaintBlock()                            INLINE NIL
    METHOD Hilite()                                INLINE NIL
@@ -168,7 +168,7 @@ CREATE CLASS WvtObject
    METHOD RestSettings()                          INLINE NIL
    METHOD Activate()                              INLINE NIL
    METHOD DeActivate()                            INLINE NIL
-   METHOD NotifyChild( /* nChild */ )             INLINE NIL
+   METHOD NotifyChild(/* nChild */)               INLINE NIL
 
 ENDCLASS
 

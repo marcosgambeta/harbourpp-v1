@@ -29,7 +29,7 @@
 #include <hbapi.hpp>
 #include <hbapigt.hpp>
 
-HB_FUNC( FT_PUTKEY )
+HB_FUNC(FT_PUTKEY)
 {
    HB_BOOL lSuccess = false;
 

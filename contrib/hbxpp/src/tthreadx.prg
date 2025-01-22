@@ -150,7 +150,7 @@ METHOD Thread:new(...)
 
 METHOD PROCEDURE Thread:execute()
 
-   HB_SYMBOL_UNUSED( Self )
+   HB_SYMBOL_UNUSED(Self)
 
    RETURN
 

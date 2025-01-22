@@ -83,9 +83,9 @@ PROCEDURE Main(...)
 
    oRef := HBFormatCode():New( aParams, hb_FNameMerge( hb_DirBase(), "hbformat.ini" ) )
    IF oRef:nErr > 0
-      OutStd( hb_StrFormat( iif(oRef:nLineErr == 0, ;
+      OutStd(hb_StrFormat( iif(oRef:nLineErr == 0, ;
          I_( "Initialization error %1$d in parameter: %2$s" ), ;
-         I_( "Initialization error %1$d on line %3$d: %2$s" )), oRef:nErr, oRef:cLineErr, oRef:nLineErr ) + hb_eol() )
+         I_( "Initialization error %1$d on line %3$d: %2$s" )), oRef:nErr, oRef:cLineErr, oRef:nLineErr ) + hb_eol())
    ENDIF
 
    oRef:bCallBack := {| a, i | FCallBack( a, i ) }
@@ -111,7 +111,7 @@ PROCEDURE Main(...)
 STATIC PROCEDURE FCallBack( aFile, nItem )
 
    IF nItem % Int( Len(aFile) / 40 ) == 1
-      OutStd( "." )
+      OutStd(".")
    ENDIF
 
    RETURN
@@ -121,11 +121,11 @@ STATIC PROCEDURE Reformat( oRef, cFileName )
    LOCAL aFile
 
    IF !Empty(aFile := oRef:File2Array( cFileName ))
-      OutStd( hb_StrFormat( I_( "Reformatting %1$s (%2$d lines)" ), cFileName, Len(aFile) ) + hb_eol() )
-      OutStd( "<" )
+      OutStd(hb_StrFormat( I_( "Reformatting %1$s (%2$d lines)" ), cFileName, Len(aFile) ) + hb_eol())
+      OutStd("<")
       IF oRef:Reformat( aFile )
          oRef:Array2File( cFileName, aFile )
-         OutStd( ">" + hb_eol() )
+         OutStd(">" + hb_eol())
       ELSE
          OutErr( hb_StrFormat( I_( "Error %1$d on line %2$d: %3$s" ), oRef:nErr, oRef:nLineErr, oRef:cLineErr ) + hb_eol() )
       ENDIF
@@ -139,7 +139,7 @@ STATIC PROCEDURE DirEval( cInitDir, cMask, lRecur, bCode )
 
    LOCAL file
 
-   cInitDir := hb_DirSepAdd( cInitDir )
+   cInitDir := hb_DirSepAdd(cInitDir)
    cMask := iif(cMask == NIL, hb_osFileMask(), cMask)
 
    FOR EACH file IN hb_vfDirectory( cInitDir + cMask, "HSD" )
@@ -159,17 +159,11 @@ STATIC PROCEDURE DirEval( cInitDir, cMask, lRecur, bCode )
 
 STATIC PROCEDURE About()
 
-   OutStd( ;
-      "Harbour++ Source Formatter " + HBRawVersion() + hb_eol() + ;
-      "Copyright (c) 2010-" + ;
-         "2023" + ", " + ;
-         hb_Version( HB_VERSION_URL_BASE ) + hb_eol() + ;
-      "Copyright (c) 2009, Alexander S.Kresin" + hb_eol() + ;
-      hb_eol() )
+   OutStd("Harbour++ Source Formatter " + HBRawVersion() + hb_eol() + ;
+          "Copyright (c) 2010-2023, " + hb_Version(HB_VERSION_URL_BASE) + hb_eol() + ;
+          "Copyright (c) 2009, Alexander S.Kresin" + hb_eol() + hb_eol())
 
-   OutStd( ;
-      I_( "Syntax:  hbformat [options] [@config] <file[s]>" ) + hb_eol() + ;
-      hb_eol() )
+   OutStd(I_( "Syntax:  hbformat [options] [@config] <file[s]>") + hb_eol() + hb_eol())
 
    RETURN
 

@@ -81,7 +81,7 @@ PROCEDURE Main()
    /* Query functions */
    color := gdImageGetPixel( im, gdImageSX( im ) / 2, gdImageSY( im ) / 2 )
    ? "Pixel Color is: ", color
-   ? "RGB Values: ", gdImageRed( im, color ), gdImageGreen( im, color ), gdImageBlue( im, color )
+   ? "RGB Values: ", gdImageRed(im, color), gdImageGreen( im, color ), gdImageBlue( im, color )
    ? "Alpha Value: ",  gdImageAlpha(im, color)
 
    /* Write Images on files */

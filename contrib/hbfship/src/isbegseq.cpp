@@ -54,7 +54,7 @@
 #include <hbapi.hpp>
 #include <hbstack.hpp>
 
-HB_FUNC( ISBEGSEQ )
+HB_FUNC(ISBEGSEQ)
 {
    hb_retl(hb_stackGetRecoverBase() != 0);
 }

@@ -100,11 +100,11 @@ CREATE CLASS WvgListBox INHERIT WvgWindow, WvgDataRef
 
    VAR    sl_itemMarked
    ACCESS itemMarked                            INLINE ::sl_itemMarked
-   ASSIGN itemMarked( bBlock )                  INLINE ::sl_itemMarked := bBlock
+   ASSIGN itemMarked(bBlock)                    INLINE ::sl_itemMarked := bBlock
 
    VAR    sl_itemSelected
    ACCESS itemSelected                          INLINE ::sl_itemSelected
-   ASSIGN itemSelected( bBlock )                INLINE ::sl_itemSelected := bBlock
+   ASSIGN itemSelected(bBlock)                  INLINE ::sl_itemSelected := bBlock
 
    VAR    sl_drawItem
    ACCESS drawItem                              INLINE ::sl_drawItem
@@ -145,7 +145,7 @@ METHOD WvgListBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::style += LBS_NOTIFY
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 #if 0

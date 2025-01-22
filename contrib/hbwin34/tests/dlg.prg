@@ -24,7 +24,7 @@ PROCEDURE Main()
 // Main function to control the user interaction
 STATIC FUNCTION DialogFunc(hWnd, nMessage, wParam, lParam)
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    SWITCH nMessage
    CASE WIN_WM_INITDIALOG

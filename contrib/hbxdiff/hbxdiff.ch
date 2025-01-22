@@ -54,8 +54,8 @@
 
 #define XDF_NEED_MINIMAL        hb_bitShift( 1, 1 )
 
-#define XDL_PATCH_NORMAL        Asc( "-" )
-#define XDL_PATCH_REVERSE       Asc( "+" )
+#define XDL_PATCH_NORMAL        Asc("-")
+#define XDL_PATCH_REVERSE       Asc("+")
 #define XDL_PATCH_MODEMASK      ( hb_bitShift( 1, 8 ) - 1 )
 #define XDL_PATCH_IGNOREBSPACE  hb_bitShift( 1, 8 )
 

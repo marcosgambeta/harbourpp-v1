@@ -148,7 +148,7 @@ PHB_ZEBRA hb_zebra_create_code11(const char * szCode, HB_SIZE nLen, int iFlags)
    return pZebra;
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_CODE11 )
+HB_FUNC(HB_ZEBRA_CREATE_CODE11)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 

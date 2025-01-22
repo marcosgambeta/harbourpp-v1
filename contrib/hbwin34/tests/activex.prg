@@ -3,7 +3,7 @@
 #include "hbgtinfo.ch"
 #include "hbclass.ch"
 
-#if ! defined( __HBSCRIPT__HBSHELL )
+#if ! defined(__HBSCRIPT__HBSHELL)
 REQUEST HB_GT_WVT_DEFAULT
 #endif
 
@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    LOCAL oMSCAL
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVT" )
 #endif
 
@@ -19,7 +19,7 @@ PROCEDURE Main()
    oMSCAL := HActiveX():Init( hb_gtInfo( HB_GTI_WINHANDLE ), "MSCAL.Calendar", 0, 0, 300, 300 )
    WAIT "Press any key to exit"
 
-   HB_SYMBOL_UNUSED( oMSCAL )
+   HB_SYMBOL_UNUSED(oMSCAL)
 
    RETURN
 

@@ -56,7 +56,7 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 0
       RETURN Id()
    CASE 1
-      RETURN hb_ntos( Date() - CToD( "" ) )
+      RETURN hb_ntos( Date() - CToD("") )
    CASE 2
       RETURN hb_ntos( Seconds() )
    CASE 5
@@ -64,11 +64,11 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 6
       RETURN Set( _SET_PRINTFILE )
    CASE 10
-      RETURN DToC(CToD( "" ) + hb_defaultValue( xPar1, 0 ))
+      RETURN DToC(CToD("") + hb_defaultValue( xPar1, 0 ))
    CASE 11
       RETURN hb_ntos( iif(HB_IsDateTime( xPar1 ), xPar1, ;
-                           iif(HB_IsString( xPar1 ), CToD( xPar1 ), ;
-                           Date())) - CToD( "" ) )
+                           iif(HB_IsString( xPar1 ), CToD(xPar1), ;
+                           Date())) - CToD("") )
    CASE 100
       RETURN iif(Set( _SET_CONSOLE ), "ON", "OFF")
    CASE 101
@@ -95,13 +95,13 @@ FUNCTION Sys( nValue, xPar1 )
 FUNCTION Id()
    RETURN NetName() + " # " + hb_UserName()
 
-STATIC FUNCTION AFillNested( aValue, xVal )
+STATIC FUNCTION AFillNested(aValue, xVal)
 
    LOCAL item
 
    FOR EACH item IN aValue
       IF HB_IsArray( item )
-         AFillNested( item, xVal )
+         AFillNested(item, xVal)
       ELSE
          item := xVal
       ENDIF
@@ -110,7 +110,7 @@ STATIC FUNCTION AFillNested( aValue, xVal )
    RETURN aValue
 
 FUNCTION __fox_Array(...)
-   RETURN AFillNested( Array(...), .F. )
+   RETURN AFillNested(Array(...), .F.)
 
 FUNCTION AElement(aValue, ...)
    RETURN aValue[...]

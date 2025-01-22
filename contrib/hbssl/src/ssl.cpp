@@ -1155,7 +1155,7 @@ HB_FUNC(SSL_STATE_STRING_LONG)
 
 #if 0
 
-HB_FUNC( SSL_GET_PSK_IDENTITY_HINT )
+HB_FUNC(SSL_GET_PSK_IDENTITY_HINT)
 {
    if( hb_SSL_is(1) ) {
       auto ssl = hb_SSL_par(1);
@@ -1168,7 +1168,7 @@ HB_FUNC( SSL_GET_PSK_IDENTITY_HINT )
    }
 }
 
-HB_FUNC( SSL_GET_PSK_IDENTITY )
+HB_FUNC(SSL_GET_PSK_IDENTITY)
 {
    if( hb_SSL_is(1) ) {
       auto ssl = hb_SSL_par(1);

@@ -72,7 +72,7 @@ HB_FUNC(WAPI_IMAGELIST_BEGINDRAG)
 
 /* HRESULT ImageList_CoCreateInstance(REFCLSID rclsid, const IUnknown *punkOuter, REFIID riid, void **ppv); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_COCREATEINSTANCE )
+HB_FUNC(WAPI_IMAGELIST_COCREATEINSTANCE)
 {
 }
 #endif
@@ -143,7 +143,7 @@ HB_FUNC(WAPI_IMAGELIST_DRAWEX)
 
 /* BOOL ImageList_DrawIndirect(IMAGELISTDRAWPARAMS *pimldp); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_DRAWINDIRECT )
+HB_FUNC(WAPI_IMAGELIST_DRAWINDIRECT)
 {
 }
 #endif
@@ -160,7 +160,7 @@ HB_FUNC(WAPI_IMAGELIST_DUPLICATE)
 
 /* VOID ImageList_EndDrag(VOID); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_ENDDRAG )
+HB_FUNC(WAPI_IMAGELIST_ENDDRAG)
 {
    ImageList_EndDrag();
 }
@@ -174,7 +174,7 @@ HB_FUNC(WAPI_IMAGELIST_GETBKCOLOR)
 
 /* HIMAGELIST ImageList_GetDragImage(POINT *ppt, POINT *pptHotspot); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_GETDRAGIMAGE )
+HB_FUNC(WAPI_IMAGELIST_GETDRAGIMAGE)
 {
 }
 #endif
@@ -257,14 +257,14 @@ HB_FUNC(WAPI_IMAGELIST_MERGE)
 
 /* HIMAGELIST ImageList_Read(LPSTREAM pstm); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_READ )
+HB_FUNC(WAPI_IMAGELIST_READ)
 {
 }
 #endif
 
 /* HRESULT ImageList_ReadEx(DWORD dwFlags, LPSTREAM pstm, REFIID riid, void **ppv); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_READEX )
+HB_FUNC(WAPI_IMAGELIST_READEX)
 {
 }
 #endif
@@ -296,7 +296,7 @@ HB_FUNC(WAPI_IMAGELIST_SETBKCOLOR)
 
 /* int ImageList_SetColorTable(HIMAGELIST himl, int start, int len, RGBQUAD *prgb); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_SETCOLORTABLE )
+HB_FUNC(WAPI_IMAGELIST_SETCOLORTABLE)
 {
    hbwapi_ret_NI(ImageList_SetColorTable(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), hbwapi_par_INT(3), nullptr));
 }
@@ -327,21 +327,21 @@ HB_FUNC(WAPI_IMAGELIST_SETIMAGECOUNT)
 
 /* BOOL ImageList_SetOverlayImage(HIMAGELIST himl, int iImage, int iOverlay); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_SETOVERLAYIMAGE )
+HB_FUNC(WAPI_IMAGELIST_SETOVERLAYIMAGE)
 {
 }
 #endif
 
 /* BOOL ImageList_Write(HIMAGELIST himl, LPSTREAM pstm); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_WRITE )
+HB_FUNC(WAPI_IMAGELIST_WRITE)
 {
 }
 #endif
 
 /* HRESULT ImageList_WriteEx(HIMAGELIST himl, DWORD dwFlags, LPSTREAM pstm); */
 #if 0
-HB_FUNC( WAPI_IMAGELIST_WRITEEX )
+HB_FUNC(WAPI_IMAGELIST_WRITEEX)
 {
 }
 #endif
@@ -734,7 +734,7 @@ HB_FUNC(WAPI_TREEVIEW_GETEDITCONTROL)
 
 #if 0
 /* Vista DWORD TreeView_GetExtendedStyle(HWND hwnd); */
-HB_FUNC( WAPI_TREEVIEW_GETEXTENDEDSTYLE )
+HB_FUNC(WAPI_TREEVIEW_GETEXTENDEDSTYLE)
 {
    hbwapi_ret_DWORD(TreeView_GetExtendedStyle(hbwapi_par_raw_HWND(1)));
 }
@@ -798,7 +798,7 @@ HB_FUNC(WAPI_TREEVIEW_GETITEMHEIGHT)
 
 #if 0
 /* Vista BOOL TreeView_GetItemPartRect(HWND hwnd, HTREEITEM hitem, RECT *prc, TVITEMPART *partid); */
-HB_FUNC( WAPI_TREEVIEW_GETITEMPARTRECT )
+HB_FUNC(WAPI_TREEVIEW_GETITEMPARTRECT)
 {
    RECT       rc;
    TVITEMPART partid;
@@ -859,7 +859,7 @@ HB_FUNC(WAPI_TREEVIEW_GETNEXTITEM)
 
 #if 0
 /* HTREEITEM TreeView_GetNextSelected(HWND hwnd, TREEITEM *hitem); */
-HB_FUNC( WAPI_TREEVIEW_GETNEXTSELECTED )
+HB_FUNC(WAPI_TREEVIEW_GETNEXTSELECTED)
 {
    hbwapi_ret_raw_HANDLE(TreeView_GetNextSelected(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HTREEITEM(2)));
 }
@@ -967,7 +967,7 @@ HB_FUNC(WAPI_TREEVIEW_INSERTITEM)
 
 #if 0
 /* HTREEITEM TreeView_MapAccIDToHTREEITEM(HWND hwnd, UINT id); */
-HB_FUNC( WAPI_TREEVIEW_MAPACCIDTOHTREEITEM )
+HB_FUNC(WAPI_TREEVIEW_MAPACCIDTOHTREEITEM)
 {
    hbwapi_ret_raw_HANDLE(TreeView_MapAccIDToHTREEITEM(hbwapi_par_raw_HWND(1), hbwapi_par_UINT(2)));
 }
@@ -975,7 +975,7 @@ HB_FUNC( WAPI_TREEVIEW_MAPACCIDTOHTREEITEM )
 
 #if 0
 /* UINT TreeView_MapHTREEITEMtoAccID(HWND hwnd, HTREEITEM htreeitem); */
-HB_FUNC( WAPI_TREEVIEW_MAPHTREEITEMTOACCID )
+HB_FUNC(WAPI_TREEVIEW_MAPHTREEITEMTOACCID)
 {
    hbwapi_ret_UINT(TreeView_MapHTREEITEMtoAccID(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HANDLE(2)));
 }
@@ -1007,7 +1007,7 @@ HB_FUNC(WAPI_TREEVIEW_SELECTSETFIRSTVISIBLE)
 
 #if 0
 /* LRESULT TreeView_SetAutoScrollInfo(HWND hwnd, UINT uPixPerSec, UINT uUpdateTime); */
-HB_FUNC( WAPI_TREEVIEW_SETAUTOSCROLLINFO )
+HB_FUNC(WAPI_TREEVIEW_SETAUTOSCROLLINFO)
 {
    hbwapi_ret_LRESULT(TreeView_SetAutoScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_UINT(2), hbwapi_par_UINT(2)));
 }
@@ -1037,7 +1037,7 @@ HB_FUNC(WAPI_TREEVIEW_SETCHECKSTATE)
 
 #if 0
 /* HRESULT TreeView_SetExtendedStyle(HWND hwnd, DWORD dw, UINT mask); */
-HB_FUNC( WAPI_TREEVIEW_SETEXTENDEDSTYLE )
+HB_FUNC(WAPI_TREEVIEW_SETEXTENDEDSTYLE)
 {
    hbwapi_ret_HRESULT(TreeView_SetExtendedStyle(hbwapi_par_raw_HWND(1), hbwapi_par_DWORD(2), hbwapi_par_UINT(2)));
 }
@@ -1157,7 +1157,7 @@ HB_FUNC(WAPI_TREEVIEW_SETUNICODEFORMAT)
 
 #if 0
 /* DWORD TreeView_ShowInfoTip(HWND hwnd, HITEM hitem); */
-HB_FUNC( WAPI_TREEVIEW_SHOWINFOTIP )
+HB_FUNC(WAPI_TREEVIEW_SHOWINFOTIP)
 {
    hbwapi_ret_DWORD(TreeView_ShowInfoTip(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HITEM(2)));
 }
@@ -1171,7 +1171,7 @@ HB_FUNC(WAPI_TREEVIEW_SORTCHILDREN)
 
 #if 0
 /* BOOL TreeView_SortChildrenCB(HWND hwndTV, LPTVSORTCB psort, BOOL fRecurse); */
-HB_FUNC( WAPI_TREEVIEW_SORTCHILDRENCB )
+HB_FUNC(WAPI_TREEVIEW_SORTCHILDRENCB)
 {
    hbwapi_ret_L(TreeView_SortChildrenCB(hbwapi_par_raw_HWND(1), hbwapi_par_raw_TVSORTCB(2), hbwapi_par_BOOL(3)));
 }

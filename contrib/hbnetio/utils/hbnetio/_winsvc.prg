@@ -39,12 +39,12 @@ PROCEDURE WinMain(...)
    CASE "-install"
 
       IF win_serviceInstall( _SERVICE_NAME, "Harbour NetIO Service", '"' + hb_ProgName() + '"' + " -service", WIN_SERVICE_AUTO_START )
-         OutStd( "Service has been successfully installed" + hb_eol() )
+         OutStd("Service has been successfully installed" + hb_eol())
       ELSE
          nError := wapi_GetLastError()
          cMsg := Space( 128 )
          wapi_FormatMessage( ,,,, @cMsg )
-         OutStd( hb_StrFormat( "Error installing service: %1$d %2$s", nError, cMsg ) + hb_eol() )
+         OutStd(hb_StrFormat( "Error installing service: %1$d %2$s", nError, cMsg ) + hb_eol())
       ENDIF
       EXIT
 
@@ -52,12 +52,12 @@ PROCEDURE WinMain(...)
    CASE "-uninstall"
 
       IF win_serviceDelete( _SERVICE_NAME )
-         OutStd( "Service has been deleted" + hb_eol() )
+         OutStd("Service has been deleted" + hb_eol())
       ELSE
          nError := wapi_GetLastError()
          cMsg := Space( 128 )
          wapi_FormatMessage( ,,,, @cMsg )
-         OutStd( hb_StrFormat( "Error uninstalling service: %1$d %2$s", nError, cMsg ) + hb_eol() )
+         OutStd(hb_StrFormat( "Error uninstalling service: %1$d %2$s", nError, cMsg ) + hb_eol())
       ENDIF
       EXIT
 
@@ -65,9 +65,9 @@ PROCEDURE WinMain(...)
    CASE "-service"
 
       IF win_serviceStart( _SERVICE_NAME, @hbnetio_WinServiceEntry() )
-         OutStd( "Service has started OK" + hb_eol() )
+         OutStd("Service has started OK" + hb_eol())
       ELSE
-         OutStd( hb_StrFormat( "Service has had some problems: %1$d", wapi_GetLastError() ) + hb_eol() )
+         OutStd(hb_StrFormat( "Service has had some problems: %1$d", wapi_GetLastError() ) + hb_eol())
       ENDIF
       EXIT
 

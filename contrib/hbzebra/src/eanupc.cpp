@@ -234,7 +234,7 @@ PHB_ZEBRA hb_zebra_create_ean8(const char * szCode, HB_SIZE nLen, int iFlags)
    return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
+PHB_ZEBRA hb_zebra_create_upca(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    int        i;
    auto iLen = static_cast<int>(nLen);
@@ -345,7 +345,7 @@ PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
    return pZebra;
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_EAN13 )
+HB_FUNC(HB_ZEBRA_CREATE_EAN13)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 
@@ -356,7 +356,7 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN13 )
    }
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_EAN8 )
+HB_FUNC(HB_ZEBRA_CREATE_EAN8)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 
@@ -367,7 +367,7 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN8 )
    }
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_UPCA )
+HB_FUNC(HB_ZEBRA_CREATE_UPCA)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 
@@ -378,7 +378,7 @@ HB_FUNC( HB_ZEBRA_CREATE_UPCA )
    }
 }
 
-HB_FUNC( HB_ZEBRA_CREATE_UPCE )
+HB_FUNC(HB_ZEBRA_CREATE_UPCE)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 

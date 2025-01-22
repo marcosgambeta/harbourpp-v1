@@ -49,26 +49,26 @@
 FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
 
    /* Not supported (yet?) */
-   HB_SYMBOL_UNUSED( lBackground )
+   HB_SYMBOL_UNUSED(lBackground)
 
    IF !HB_IsString( cProgram )
-#if defined( __PLATFORM__UNIX )
+#if defined(__PLATFORM__UNIX)
       cProgram := GetEnv("SHELL")
-#elif defined( __PLATFORM__OS2 )
+#elif defined(__PLATFORM__OS2)
       cProgram := GetEnv("OS2_SHELL")
 #else
       cProgram := GetEnv("COMSPEC")
 #endif
       IF Empty(cProgram)
-#if defined( __PLATFORM__WINDOWS )
+#if defined(__PLATFORM__WINDOWS)
          IF hb_osIsWinNT()
             cProgram := "cmd.exe"
          ELSE
             cProgram := "command.com"
          ENDIF
-#elif defined( __PLATFORM__DOS )
+#elif defined(__PLATFORM__DOS)
          cProgram := "command.com"
-#elif defined( __PLATFORM__OS2 )
+#elif defined(__PLATFORM__OS2)
          cProgram := "cmd.exe"
 #else
          cProgram := ""
@@ -77,7 +77,7 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
    ENDIF
 
    IF HB_IsString( cCommand )
-#if defined( __PLATFORM__UNIX )
+#if defined(__PLATFORM__UNIX)
       cProgram += " -c " + "'" + StrTran(cCommand, "'", "'\''") + "'"
 #else
       cProgram += " /c " + cCommand

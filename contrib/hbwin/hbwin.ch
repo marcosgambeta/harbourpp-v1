@@ -157,17 +157,17 @@
 #define HB_WIN_BITMAP_JPEG                 2
 #define HB_WIN_BITMAP_PNG                  3
 
-#define WIN_RGB( nR, nG, nB )              ( nR + ( nG * 256 ) + ( nB * 256 * 256 ) )
+#define WIN_RGB(nR, nG, nB)                (nR + (nG * 256) + (nB * 256 * 256))
 
 /* Color constants for convenience */
-#define HB_WIN_RGB_BLACK                   WIN_RGB( 0x00, 0x00, 0x00 )
-#define HB_WIN_RGB_BLUE                    WIN_RGB( 0x00, 0x00, 0xFF )
-#define HB_WIN_RGB_GREEN                   WIN_RGB( 0x00, 0xFF, 0x00 )
-#define HB_WIN_RGB_RED                     WIN_RGB( 0xFF, 0x00, 0x00 )
-#define HB_WIN_RGB_CYAN                    WIN_RGB( 0x00, 0xFF, 0xFF )
-#define HB_WIN_RGB_MAGENTA                 WIN_RGB( 0xFF, 0x00, 0xFF )
-#define HB_WIN_RGB_YELLOW                  WIN_RGB( 0xFF, 0xFF, 0x00 )
-#define HB_WIN_RGB_WHITE                   WIN_RGB( 0xFF, 0xFF, 0xFF )
+#define HB_WIN_RGB_BLACK                   WIN_RGB(0x00, 0x00, 0x00)
+#define HB_WIN_RGB_BLUE                    WIN_RGB(0x00, 0x00, 0xFF)
+#define HB_WIN_RGB_GREEN                   WIN_RGB(0x00, 0xFF, 0x00)
+#define HB_WIN_RGB_RED                     WIN_RGB(0xFF, 0x00, 0x00)
+#define HB_WIN_RGB_CYAN                    WIN_RGB(0x00, 0xFF, 0xFF)
+#define HB_WIN_RGB_MAGENTA                 WIN_RGB(0xFF, 0x00, 0xFF)
+#define HB_WIN_RGB_YELLOW                  WIN_RGB(0xFF, 0xFF, 0x00)
+#define HB_WIN_RGB_WHITE                   WIN_RGB(0xFF, 0xFF, 0xFF)
 
 /* win_SetDocumentProperties() paper types */
 #define WIN_DMPAPER_LETTER                 1

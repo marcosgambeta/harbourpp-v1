@@ -71,7 +71,7 @@ PROCEDURE Main()
    LOCAL oMouse
    LOCAL ch
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -354,11 +354,11 @@ PROCEDURE Demo_Get()
 
    ResetMiscObjects( nCurWindow )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 15 - nTop, 59 - nLeft, 18 - nTop, 72 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, "vouch1.bmp" ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft) } )
    AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
@@ -448,7 +448,7 @@ FUNCTION DEMO_Browse()
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
    FOR i := 1 TO Len(info_)
-      bBlock := VouBlockField( i )
+      bBlock := VouBlockField(i)
       oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
    NEXT
 
@@ -462,7 +462,7 @@ FUNCTION DEMO_Browse()
       tmp := oBrowse:getColumn( tmp:__enumIndex() ):colSep
    NEXT
 
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
@@ -471,8 +471,8 @@ FUNCTION DEMO_Browse()
    */
    wvw_pbCreate( nCurWindow, MaxRow(), MaxCol() - 15, MaxRow(), MaxCol() - 5, "Info", NIL, {|| xDebugInfo() }, NIL )
 
-   nHScrollBar := wvw_xbCreate( nCurWindow, 0, oBrowse:nBottom + 1, oBrowse:nLeft, oBrowse:nRight - oBrowse:nLeft + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), HXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ NIL )
-   nVScrollBar := wvw_xbCreate( nCurWindow, 1, oBrowse:nTop, oBrowse:nRight + 1, oBrowse:nBottom - oBrowse:nTop + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), VXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ NIL )
+   nHScrollBar := wvw_xbCreate( nCurWindow, 0, oBrowse:nBottom + 1, oBrowse:nLeft, oBrowse:nRight - oBrowse:nLeft + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED(nXBpos), HXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ NIL )
+   nVScrollBar := wvw_xbCreate( nCurWindow, 1, oBrowse:nTop, oBrowse:nRight + 1, oBrowse:nBottom - oBrowse:nTop + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED(nXBpos), VXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ NIL )
 
    hb_DispOutAt( nTop + 1 - nTop, nleft - nleft, PadC(hb_CurDrive() + ":" + hb_ps() + CurDir() + hb_ps() + "test.dbf", nRight - nLeft + 1), "W+/W" )
 
@@ -685,9 +685,9 @@ STATIC FUNCTION RefreshVXB(oBrowse, nWinNum, XBid)
       ENDDO
 
       nMin := 1
-      nMax := Round( ordKeyCount() / nRatio, 0 )
-      nPage := Round( oBrowse:RowCount / nRatio, 0 )       // ordKeyCount()
-      nPos := Round( ( ordKeyNo() - oBrowse:RowPos + 1 ) / nRatio, 0 )// ordKeyCount()
+      nMax := Round(ordKeyCount() / nRatio, 0)
+      nPage := Round(oBrowse:RowCount / nRatio, 0)       // ordKeyCount()
+      nPos := Round(( ordKeyNo() - oBrowse:RowPos + 1 ) / nRatio, 0)// ordKeyCount()
    ENDIF
 
    wvw_xbUpdate( nWinNum, XBid, nPos, nPage, nMin, nMax )
@@ -714,7 +714,7 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
 
    LOCAL nSkipped := 0
 
-   HB_SYMBOL_UNUSED( oTbr )
+   HB_SYMBOL_UNUSED(oTbr)
 
    IF n == 0
       dbSkip(0)
@@ -738,7 +738,7 @@ STATIC FUNCTION TBNext( oTbr )
    LOCAL nSaveRecNum := RecNo()
    LOCAL lMoved := .T.
 
-   HB_SYMBOL_UNUSED( oTbr )
+   HB_SYMBOL_UNUSED(oTbr)
 
    IF Eof()
       lMoved := .F.
@@ -759,7 +759,7 @@ STATIC FUNCTION TBPrev( oTbr )
    LOCAL nSaveRecNum := RecNo()
    LOCAL lMoved := .T.
 
-   HB_SYMBOL_UNUSED( oTbr )
+   HB_SYMBOL_UNUSED(oTbr)
 
    dbSkip( -1 )
 
@@ -772,7 +772,7 @@ STATIC FUNCTION TBPrev( oTbr )
 
 //
 
-STATIC FUNCTION VouBlockField( i )
+STATIC FUNCTION VouBlockField(i)
 
    RETURN {|| FieldGet( i ) }
 
@@ -828,11 +828,11 @@ FUNCTION WVW_KillFocus( hWnd )
 
 FUNCTION WVW_TIMER( nWinNum, hWnd, message, wParam, lParam )
 
-   HB_SYMBOL_UNUSED( nWinNum )
-   HB_SYMBOL_UNUSED( hWnd )
-   HB_SYMBOL_UNUSED( message )
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(nWinNum)
+   HB_SYMBOL_UNUSED(hWnd)
+   HB_SYMBOL_UNUSED(message)
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
 
    // this function is called every certain interval, by GTWVW gtwndproc
    wvw_sbSetText( 0, 1, Time() )
@@ -916,7 +916,7 @@ FUNCTION xEnableToolbar( nWinNum )
 FUNCTION ResetMiscObjects( nWinNum )
 
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
-      AAdd( s_amiscobjlist, {} )
+      AAdd(s_amiscobjlist, {})
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}
 
@@ -924,7 +924,7 @@ FUNCTION ResetMiscObjects( nWinNum )
 
 FUNCTION AddMiscObjects( nWinNum, bAction )
 
-   AAdd( s_amiscobjlist[ nWinNum + 1 ], bAction )
+   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
 
    RETURN .T.
 
@@ -1186,7 +1186,7 @@ STATIC PROCEDURE MyError( e )
 
 PROCEDURE debugging( cMsg, nRow, nCol, nWinNum )
 
-   HB_SYMBOL_UNUSED( nWinNum )
+   HB_SYMBOL_UNUSED(nWinNum)
 
    ? cmsg + hb_ntos( nrow ) + ", " + hb_ntos( ncol )
 

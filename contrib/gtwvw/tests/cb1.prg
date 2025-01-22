@@ -26,7 +26,7 @@ PROCEDURE Main()
    LOCAL nMaxWidth, nCBid, nPBid, nPos
    LOCAL ch, ncursor
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -111,7 +111,7 @@ STATIC FUNCTION CBhandler( nWinNum, nId, nEvent, nIndex, nPBid )
          wvw_pbEnable( nWinNum, nPBid, .F. )
       ENDIF
    CASE nEvent == CBN_SELCHANGE
-      IF !wvw_cbIsDropped( nWinNum, nId )
+      IF !wvw_cbIsDropped(nWinNum, nId)
          // nIndex is 0-based
          IF nIndex == 0
             wvw_pbEnable( nWinNum, nPBid, .T. )

@@ -19,7 +19,7 @@ PROCEDURE Main()
 
    LOCAL i, j
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -114,7 +114,7 @@ FUNCTION xBrowse1()
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
    FOR i := 1 TO Len(info_)
-      bBlock := VouBlockField( i )
+      bBlock := VouBlockField(i)
       oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
    NEXT
 
@@ -180,7 +180,7 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
 
    LOCAL nSkipped := 0
 
-   HB_SYMBOL_UNUSED( oTbr )
+   HB_SYMBOL_UNUSED(oTbr)
 
    IF n == 0
       dbSkip(0)
@@ -203,7 +203,7 @@ STATIC FUNCTION TBNext( oTbr )
    LOCAL nSaveRecNum := RecNo()
    LOCAL lMoved := .T.
 
-   HB_SYMBOL_UNUSED( oTbr )
+   HB_SYMBOL_UNUSED(oTbr)
 
    IF Eof()
       lMoved := .F.
@@ -224,7 +224,7 @@ STATIC FUNCTION TBPrev( oTbr )
    LOCAL nSaveRecNum := RecNo()
    LOCAL lMoved := .T.
 
-   HB_SYMBOL_UNUSED( oTbr )
+   HB_SYMBOL_UNUSED(oTbr)
 
    dbSkip( -1 )
    IF Bof()
@@ -236,7 +236,7 @@ STATIC FUNCTION TBPrev( oTbr )
 
 //
 
-STATIC FUNCTION VouBlockField( i )
+STATIC FUNCTION VouBlockField(i)
 
    RETURN  {|| FieldGet( i ) }
 
@@ -351,7 +351,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
    hb_default( @ccolor, s_cStdColor )
    SetColor( ccolor )
 
-   AAdd( s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor } )
+   AAdd(s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor })
 
    SetColor( ccolor )
 

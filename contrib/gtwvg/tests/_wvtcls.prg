@@ -47,7 +47,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    LOCAL hPopup, nGetRow, aGets_, lChkMouse
    LOCAL g_oMenuBar, oPBar2, oPBar3, oMenu
 
-   HB_SYMBOL_UNUSED( oCrt )
+   HB_SYMBOL_UNUSED(oCrt)
 
    WvtSetKeys(.F.)
    lChkMouse := SetMouseCheck(.F.)
@@ -64,13 +64,13 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    cTxt := cTxt + "Enjoy - Pritpal Bedi, INDIA"
 
    aImg_ := {}
-   AAdd( aImg_, GetResource( "resources\v_lock.bmp"   ) )
-   AAdd( aImg_, GetResource( "resources\v_new.bmp"    ) )
-   AAdd( aImg_, GetResource( "resources\v_clclt.bmp"  ) )
-   AAdd( aImg_, GetResource( "resources\v_calend.bmp" ) )
-   AAdd( aImg_, GetResource( "resources\v_index.bmp"  ) )
-   AAdd( aImg_, GetResource( "resources\v_notes1.bmp" ) )
-   AAdd( aImg_, GetResource( "resources\v_selct1.bmp" ) )
+   AAdd(aImg_, GetResource( "resources\v_lock.bmp"   ))
+   AAdd(aImg_, GetResource( "resources\v_new.bmp"    ))
+   AAdd(aImg_, GetResource( "resources\v_clclt.bmp"  ))
+   AAdd(aImg_, GetResource( "resources\v_calend.bmp" ))
+   AAdd(aImg_, GetResource( "resources\v_index.bmp"  ))
+   AAdd(aImg_, GetResource( "resources\v_notes1.bmp" ))
+   AAdd(aImg_, GetResource( "resources\v_selct1.bmp" ))
    ? "."
    wvt_ShowWindow(1)
    nWinRows  := 55
@@ -140,7 +140,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
 
    oBtn := WvtPushButton():New( oDlg, 124, 6, 129, 7, 137 )
    oBtn:cCaption  := "Print"
-   oBtn:bOnLeftUp := {|| wvt_Keyboard( 379 ) }
+   oBtn:bOnLeftUp := {|| wvt_Keyboard(379) }
    oBtn:Tooltip   := "Open Printing Dialog for the Browser in Focus"
    oDlg:AddObject( oBtn )
 
@@ -221,8 +221,8 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oTBx:nTextColor  := RGB(255, 255, 255)
    oTBx:nTextColorHoverOn := RGB(0, 0, 255)
    oTBx:aPopup      := {}
-   AAdd( oTBx:aPopup, { "Getsome", {|| .T. } } )
-   AAdd( oTBx:aPopup, { "Getsome2", {|| .T. } } )
+   AAdd(oTBx:aPopup, { "Getsome", {|| .T. } })
+   AAdd(oTBx:aPopup, { "Getsome2", {|| .T. } })
    oDlg:AddObject( oTBx )
 
    oGetArea := WvtStatic():New( oDlg, , 4, 2, 37, 62 )
@@ -253,7 +253,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
       PadR( "Ludhiana, INDIA", 30 ), ;
       "PB", ;
       PadR( "141004", 10 ), ;
-      hb_SToD( "20040622" ), ;
+      hb_SToD("20040622"), ;
       .T., ;
       48, ;
       17000, ;
@@ -281,7 +281,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oMenu:Caption := "Other Dialogs"
    oMenu:AddItem( "Dialog Two", {|| DialogWvgClassesTwo() } )
    oMenu:AddItem( "-" )
-   oMenu:AddItem( "Exit",       {|| wvt_Keyboard( K_ESC ) } )
+   oMenu:AddItem( "Exit",       {|| wvt_Keyboard(K_ESC) } )
    g_oMenuBar:addItem( "", oMenu )
 
    oDlg:oMenu := g_oMenuBar
@@ -338,7 +338,7 @@ PROCEDURE DialogWvgClassesTwo()
    oMenu:Caption := "Miscellaneous"
    oMenu:AddItem( "Progressbar", {|| ExeProgBar( oPBar, oPBar1, oPBar2, oPBar3, oPBar4 ) } )
    oMenu:AddItem( "-" )
-   oMenu:AddItem( "Exit",        {|| wvt_Keyboard( K_ESC ) } )
+   oMenu:AddItem( "Exit",        {|| wvt_Keyboard(K_ESC) } )
    g_oMenuBar:addItem( "", oMenu )
 
    oDlg:oMenu := g_oMenuBar

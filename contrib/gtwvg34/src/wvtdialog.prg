@@ -155,7 +155,7 @@ CREATE CLASS WvtDialog
    METHOD Eval( bBlock, p1, p2, p3, p4, p5 )
    METHOD ActivateMenu()
 
-   METHOD AddObject( oObject )                    INLINE AAdd( ::aObjects, oObject )
+   METHOD AddObject( oObject )                    INLINE AAdd(::aObjects, oObject)
    METHOD MaxRow()                                INLINE ::nRows - 1
    METHOD MaxCol()                                INLINE ::nCols - 1
    METHOD OnTimer()                               INLINE AEval( ::aObjects, {| o | o:OnTimer() } )
@@ -539,7 +539,7 @@ METHOD WvtDialog:Inkey()
                IF ::oCurObj:nChildren > 0
                   FOR i := 1 to ::oCurObj:nChildren
                      IF AScan( ::oCurObj:aChildren[ i ][ OBJ_CHILD_EVENTS ], ::nKey ) > 0
-                        ::oCurObj:NotifyChild( i, ::nKey, ::oCurObj )
+                        ::oCurObj:NotifyChild(i, ::nKey, ::oCurObj)
                      ENDIF
                   NEXT
                ENDIF
@@ -652,7 +652,7 @@ METHOD WvtDialog:ActivateMenu()
 
    IF nMenu != 0
       IF HB_IsObject( ::oMenu )
-         IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( nMenu ))
+         IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nMenu))
             IF HB_IsEvalItem( aMenuItem[ WVT_MENU_ACTION ] )
                Eval( aMenuItem[ WVT_MENU_ACTION ] )
             ENDIF

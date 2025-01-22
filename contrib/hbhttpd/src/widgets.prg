@@ -12,7 +12,7 @@ CREATE CLASS UWMain
 
    VAR aChilds     INIT {}
 
-   METHOD Add( oWidget )
+   METHOD Add(oWidget)
    METHOD Paint()
 
 ENDCLASS
@@ -36,9 +36,9 @@ METHOD UWMain:Paint()
 
    RETURN Self
 
-METHOD UWMain:Add( oWidget )
+METHOD UWMain:Add(oWidget)
 
-   AAdd( ::aChilds, oWidget )
+   AAdd(::aChilds, oWidget)
 
    RETURN Self
 
@@ -48,7 +48,7 @@ CREATE CLASS UWLayoutGrid
 
    VAR aChilds     INIT { { {} } }     // {{{}}, {{}}} ;   {{{}, {}}}
 
-   METHOD Add( oWidget, nRow, nCol )
+   METHOD Add(oWidget, nRow, nCol)
    METHOD Paint()
 
 ENDCLASS
@@ -74,7 +74,7 @@ METHOD UWLayoutGrid:Paint()
 
    RETURN Self
 
-METHOD UWLayoutGrid:Add( oWidget, nRow, nCol )
+METHOD UWLayoutGrid:Add(oWidget, nRow, nCol)
 
    LOCAL nI, nJ, aI
 
@@ -84,15 +84,15 @@ METHOD UWLayoutGrid:Add( oWidget, nRow, nCol )
          FOR nJ := 1 TO Len(::aChilds[ 1 ])
             aI[ nJ ] := {}
          NEXT
-         AAdd( ::aChilds, aI )
+         AAdd(::aChilds, aI)
       NEXT
    ENDIF
    IF nCol > Len(::aChilds[ 1 ])
       FOR nI := Len(::aChilds[ 1 ]) + 1 TO nCol
-         AEval( ::aChilds, {| x | AAdd( x, {} ) } )
+         AEval( ::aChilds, {| x | AAdd(x, {}) } )
       NEXT
    ENDIF
-   AAdd( ::aChilds[ nRow ][ nCol ], oWidget )
+   AAdd(::aChilds[ nRow ][ nCol ], oWidget)
 
    RETURN Self
 
@@ -137,7 +137,7 @@ FUNCTION UWLabelNew( cText, cID, cStyle )
    LOCAL oW := UWLabel()
 
    oW:cText := cText
-   SetWId( oW, cID )
+   SetWId(oW, cID)
    oW:cStyle := cStyle
 
    RETURN oW
@@ -158,7 +158,7 @@ CREATE CLASS UWForm
    VAR cMethod   INIT "POST"
    VAR aChilds   INIT {}
 
-   METHOD Add( oWidget )
+   METHOD Add(oWidget)
    METHOD Paint()
 
 ENDCLASS
@@ -171,9 +171,9 @@ FUNCTION UWFormNew( cAction )
 
    RETURN oW
 
-METHOD UWForm:Add( oWidget )
+METHOD UWForm:Add(oWidget)
 
-   AAdd( ::aChilds, oWidget )
+   AAdd(::aChilds, oWidget)
 
    RETURN Self
 
@@ -204,7 +204,7 @@ FUNCTION UWInputNew( cName, cValue, cID, cStyle )
 
    oW:cName := cName
    oW:cValue := cValue
-   SetWId( oW, cID )
+   SetWId(oW, cID)
    oW:cStyle := cStyle
 
    RETURN oW
@@ -302,7 +302,7 @@ FUNCTION UWMenuNew()
 
 METHOD UWMenu:AddItem( cTitle, cLink )
 
-   AAdd( ::aItems, { cTitle, cLink } )
+   AAdd(::aItems, { cTitle, cLink })
 
    RETURN Self
 
@@ -339,7 +339,7 @@ FUNCTION UWBrowseNew()
 
 METHOD UWBrowse:AddColumn( nID, cTitle, cField, lRaw )
 
-   AAdd( ::aColumns, { nID, cTitle, cField, ! Empty(lRaw) } )
+   AAdd(::aColumns, { nID, cTitle, cField, ! Empty(lRaw) })
 
    RETURN Self
 
@@ -425,7 +425,7 @@ CREATE CLASS UWOption
    VAR aOption   INIT {}
    VAR cValue
 
-   METHOD Add( cTitle, cCode, lRaw )
+   METHOD Add(cTitle, cCode, lRaw)
    METHOD Output()
 
 ENDCLASS
@@ -433,9 +433,9 @@ ENDCLASS
 FUNCTION UWOptionNew()
    RETURN UWOption()
 
-METHOD UWOption:Add( cTitle, cCode, lRaw )
+METHOD UWOption:Add(cTitle, cCode, lRaw)
 
-   AAdd( ::aOption, { iif(Empty(lRaw), UHtmlEncode( cTitle ), cTitle), cCode } )
+   AAdd(::aOption, { iif(Empty(lRaw), UHtmlEncode( cTitle ), cTitle), cCode })
 
    RETURN Self
 
@@ -489,14 +489,14 @@ PROCEDURE UProcWidgets( cURL, aMap )
          IF hb_HHasKey( aMap, cI )
             session[ "_uthis" ] := { "idhash" => { => } }
             IF ( lRet := Eval( aMap[ cI ], "INIT" ) ) == .T.
-               AAdd( aStack, { aURL[ nI ], aMap[ cI ], session[ "_uthis" ] } )
+               AAdd(aStack, { aURL[ nI ], aMap[ cI ], session[ "_uthis" ] })
                session[ "_uthis" ] := NIL
             ELSE
                session[ "_uthis" ] := NIL
                EXIT
             ENDIF
          ELSE
-            AAdd( aStack, { aURL[ nI ], NIL, NIL } )
+            AAdd(aStack, { aURL[ nI ], NIL, NIL })
          ENDIF
          nI++
       ENDDO
@@ -526,7 +526,7 @@ PROCEDURE UWDefaultHandler( cMethod )
       IF ( cID := hb_HGetDef( get, "ajax" ) ) == NIL
          session[ "_uthis" ][ "main" ]:Paint()
       ELSE
-         IF ( oW := UGetWidgetById( cID ) ) != NIL
+         IF ( oW := UGetWidgetById(cID) ) != NIL
             UAddHeader( "Content-type", "text/html; charset=UTF-8" )
             oW:Ajax( hb_HGetDef( get, "action" ) )
          ENDIF
@@ -535,7 +535,7 @@ PROCEDURE UWDefaultHandler( cMethod )
 
    RETURN
 
-STATIC PROCEDURE SetWId( oW, cID )
+STATIC PROCEDURE SetWId(oW, cID)
 
    IF cID != NIL
       oW:cID := cID
@@ -544,7 +544,7 @@ STATIC PROCEDURE SetWId( oW, cID )
 
    RETURN
 
-FUNCTION UGetWidgetById( cID )
+FUNCTION UGetWidgetById(cID)
    RETURN hb_HGetDef( session[ "_uthis" ][ "idhash" ], cID )
 
 STATIC FUNCTION uhttpd_split( cSeparator, cString )
@@ -553,10 +553,10 @@ STATIC FUNCTION uhttpd_split( cSeparator, cString )
    LOCAL nI
 
    DO WHILE ( nI := At( cSeparator, cString ) ) > 0
-      AAdd( aRet, Left(cString, nI - 1) )
+      AAdd(aRet, Left(cString, nI - 1))
       cString := SubStr(cString, nI + Len(cSeparator))
    ENDDO
-   AAdd( aRet, cString )
+   AAdd(aRet, cString)
 
    RETURN aRet
 

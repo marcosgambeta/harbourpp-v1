@@ -181,7 +181,7 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
 
    LOCAL aRect, nL, nH
 
-   HB_SYMBOL_UNUSED( nlParam )
+   HB_SYMBOL_UNUSED(nlParam)
 
    DO CASE
 
@@ -224,10 +224,10 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
       RETURN EVENT_UNHANDLED
 
    CASE nMessage == WIN_WM_COMMAND
-      nL := wapi_LOWORD( nwParam )
-      nH := wapi_HIWORD( nwParam )
+      nL := wapi_LOWORD(nwParam)
+      nH := wapi_HIWORD(nwParam)
 
-      HB_SYMBOL_UNUSED( nH )
+      HB_SYMBOL_UNUSED(nH)
 
       DO CASE
 

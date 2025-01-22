@@ -90,7 +90,7 @@ CREATE CLASS WvtBrowse INHERIT WvtObject
    METHOD SetTooltip()
    METHOD SaveSettings()
    METHOD RestSettings()
-   METHOD NotifyChild( nIndex, nKey, oCurObj )
+   METHOD NotifyChild(nIndex, nKey, oCurObj)
 
 ENDCLASS
 
@@ -147,17 +147,17 @@ METHOD WvtBrowse:SetVBar()
       ::oVBar:aPxlScroll := {  0, 2, 0, 0 }
       ::oVBar:Create()
 
-      AAdd( ::aPaint, { ::oVBar:bBtnLeftTop, ;
+      AAdd(::aPaint, { ::oVBar:bBtnLeftTop, ;
          { WVT_BLOCK_BUTTON, ::oVBar:nBtn1Top, ::oVBar:nBtn1Left, ;
-         ::oVBar:nBtn1Bottom, ::oVBar:nBtn1Right } } )
+         ::oVBar:nBtn1Bottom, ::oVBar:nBtn1Right } })
 
-      AAdd( ::aPaint, { ::oVBar:bBtnRightBottom, ;
+      AAdd(::aPaint, { ::oVBar:bBtnRightBottom, ;
          { WVT_BLOCK_BUTTON, ::oVBar:nBtn2Top, ::oVBar:nBtn2Left, ;
-         ::oVBar:nBtn2Bottom, ::oVBar:nBtn2Right } } )
+         ::oVBar:nBtn2Bottom, ::oVBar:nBtn2Right } })
 
-      AAdd( ::aPaint, { ::oVBar:bBtnScroll, ;
+      AAdd(::aPaint, { ::oVBar:bBtnScroll, ;
          { WVT_BLOCK_BUTTON, ::oVBar:nSTop, ::oVBar:nSLeft, ;
-         ::oVBar:nSBottom, ::oVBar:nSRight } } )
+         ::oVBar:nSBottom, ::oVBar:nSRight } })
 
       ::oParent:AddObject( ::oVBar )
    ENDIF
@@ -177,15 +177,15 @@ METHOD WvtBrowse:SetHBar()
       ::oHBar:aPxlScroll := { 2, 0, 0, 0 }
       ::oHBar:Create()
 
-      AAdd( ::aPaint, { ::oHBar:bBtnLeftTop, ;
+      AAdd(::aPaint, { ::oHBar:bBtnLeftTop, ;
          { WVT_BLOCK_BUTTON, ::oHBar:nBtn1Top, ::oHBar:nBtn1Left, ;
-         ::oHBar:nBtn1Bottom, ::oHBar:nBtn1Right } } )
-      AAdd( ::aPaint, { ::oHBar:bBtnRightBottom, ;
+         ::oHBar:nBtn1Bottom, ::oHBar:nBtn1Right } })
+      AAdd(::aPaint, { ::oHBar:bBtnRightBottom, ;
          { WVT_BLOCK_BUTTON, ::oHBar:nBtn2Top, ::oHBar:nBtn2Left, ;
-         ::oHBar:nBtn2Bottom, ::oHBar:nBtn2Right } } )
-      AAdd( ::aPaint, { ::oHBar:bBtnScroll, ;
+         ::oHBar:nBtn2Bottom, ::oHBar:nBtn2Right } })
+      AAdd(::aPaint, { ::oHBar:bBtnScroll, ;
          { WVT_BLOCK_BUTTON, ::oHBar:nSTop, ::oHBar:nSLeft, ;
-         ::oHBar:nSBottom, ::oHBar:nSRight } } )
+         ::oHBar:nSBottom, ::oHBar:nSRight } })
 
       ::oParent:AddObject( ::oHBar )
    ENDIF
@@ -210,7 +210,7 @@ METHOD WvtBrowse:HandleEvent( nKey )
 
    RETURN .F.
 
-METHOD WvtBrowse:NotifyChild( nIndex, nKey, oCurObj )
+METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
 
    LOCAL xData, i
 
@@ -231,7 +231,7 @@ METHOD WvtBrowse:NotifyChild( nIndex, nKey, oCurObj )
          Eval( ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:bOnFocus, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ] )
 
          FOR i := 1 to ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:nChildren
-            ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:NotifyChild( i, nKey, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ] )
+            ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:NotifyChild(i, nKey, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ])
          NEXT
 
          // Restore previous environments
@@ -300,23 +300,23 @@ METHOD WvtBrowse:PaintBlock( nPaintObj )
    SWITCH nPaintObj
 
    CASE 1
-      bBlock := {|| wvt_DrawBoxRaised( b:nTop - 2, b:nLeft - 2, b:nBottom + 1, b:nRight + 2 ) }
-      AAdd( ::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 3, b:nLeft - 3, b:nBottom + 2, b:nRight + 3 } } )
+      bBlock := {|| wvt_DrawBoxRaised(b:nTop - 2, b:nLeft - 2, b:nBottom + 1, b:nRight + 2) }
+      AAdd(::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 3, b:nLeft - 3, b:nBottom + 2, b:nRight + 3 } })
       EXIT
 
    CASE 2
-      bBlock := {|| wvt_DrawBoxRecessed( b:nTop, b:nLeft, b:nBottom, b:nRight ) }
-      AAdd( ::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 1, b:nLeft - 1, b:nBottom + 1, b:nRight + 1 } } )
+      bBlock := {|| wvt_DrawBoxRecessed(b:nTop, b:nLeft, b:nBottom, b:nRight) }
+      AAdd(::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 1, b:nLeft - 1, b:nBottom + 1, b:nRight + 1 } })
       EXIT
 
    CASE 3
       bBlock := {|| wvt_DrawGridHorz( b:nTop + 3, b:nLeft, b:nRight, b:nBottom - b:nTop - 2 ) }
-      AAdd( ::aPaint, { bBlock, { WVT_BLOCK_GRID_H, b:nTop + 4, b:nLeft + 1, b:nBottom - 1, b:nRight - 1 } } )
+      AAdd(::aPaint, { bBlock, { WVT_BLOCK_GRID_H, b:nTop + 4, b:nLeft + 1, b:nBottom - 1, b:nRight - 1 } })
       EXIT
 
    CASE 4
       bBlock := {|| wvt_DrawGridVert( b:nTop, b:nBottom, b:aColumnsSep, Len(b:aColumnsSep) ) }
-      AAdd( ::aPaint, { bBlock, { WVT_BLOCK_GRID_V, b:nTop + 1, b:nLeft + 1, b:nBottom - 1, b:nRight - 1, b } } )
+      AAdd(::aPaint, { bBlock, { WVT_BLOCK_GRID_V, b:nTop + 1, b:nLeft + 1, b:nBottom - 1, b:nRight - 1, b } })
       EXIT
 
    ENDSWITCH

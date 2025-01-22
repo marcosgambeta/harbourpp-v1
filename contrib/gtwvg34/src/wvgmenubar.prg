@@ -91,24 +91,24 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
    METHOD delAllItems()
    METHOD delItem( nItemNum )
    METHOD addItem( aItem, p2, p3, p4 )
-   METHOD findMenuItemById( nId )
-   METHOD findMenuPosById( nId )
+   METHOD findMenuItemById(nId)
+   METHOD findMenuPosById(nId)
    METHOD checkItem( nItemNum, lCheck )
    METHOD enableItem( nItemNum )
    METHOD disableItem( nItemNum )
 
    METHOD getItem( nItemNum )
    METHOD insItem( nItemNum, aItem )
-   METHOD isItemChecked( nItemNum )
-   METHOD isItemEnabled( nItemNum )
+   METHOD isItemChecked(nItemNum)
+   METHOD isItemEnabled(nItemNum)
    METHOD selectItem( nItemNum )
    METHOD setItem( nItemNum, aItem )
 
    // Event Callback Methods
    METHOD beginMenu( xParam )                   SETGET
    METHOD endMenu( xParam )                     SETGET
-   METHOD itemMarked( xParam )                  SETGET
-   METHOD itemSelected( xParam )                SETGET
+   METHOD itemMarked(xParam)                    SETGET
+   METHOD itemSelected(xParam)                  SETGET
    METHOD drawItem( xParam )                    SETGET
    METHOD measureItem( xParam )                 SETGET
    METHOD onMenuKey( xParam )                   SETGET
@@ -286,7 +286,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
    ENDSWITCH
 
    IF nPos <= 0
-      AAdd( ::aMenuItems, aItem )
+      AAdd(::aMenuItems, aItem)
       nItemIndex := Len(::aMenuItems)
       wapi_AppendMenu( ::hMenu, ;
          aItem[ 1 ], ;
@@ -326,7 +326,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
 
    RETURN nItemIndex
 
-METHOD WvgMenuBar:findMenuItemById( nId )
+METHOD WvgMenuBar:findMenuItemById(nId)
 
    LOCAL x, aResult := {}
 
@@ -335,7 +335,7 @@ METHOD WvgMenuBar:findMenuItemById( nId )
 
       DO WHILE x > 0 .AND. Empty(aResult)
          IF ::aMenuItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
-            aResult := ::aMenuItems[ x ][ WVT_MENU_MENUOBJ ]:findMenuItemById( nId )
+            aResult := ::aMenuItems[ x ][ WVT_MENU_MENUOBJ ]:findMenuItemById(nId)
 
          ELSEIF ::aMenuItems[ x ][ WVT_MENU_IDENTIFIER ] == nId
             aResult := { x, ::aMenuItems[ x ][ WVT_MENU_ACTION ], ::sl_itemSelected, Self }
@@ -347,7 +347,7 @@ METHOD WvgMenuBar:findMenuItemById( nId )
 
    RETURN aResult
 
-METHOD WvgMenuBar:findMenuPosById( nId )
+METHOD WvgMenuBar:findMenuPosById(nId)
 
    LOCAL x, nPos
 
@@ -356,7 +356,7 @@ METHOD WvgMenuBar:findMenuPosById( nId )
 
       DO WHILE x > 0 .AND. Empty(nPos)
          IF ::aMenuItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
-            nPos := ::aMenuItems[ x ][ WVT_MENU_MENUOBJ ]:findMenuPosById( nId )
+            nPos := ::aMenuItems[ x ][ WVT_MENU_MENUOBJ ]:findMenuPosById(nId)
 
          ELSEIF ::aMenuItems[ x ][ WVT_MENU_IDENTIFIER ] == nId
             nPos := x
@@ -414,11 +414,11 @@ METHOD WvgMenuBar:insItem( nItemNum, aItem )
 
    RETURN Self
 
-METHOD WvgMenuBar:isItemChecked( nItemNum )
-   RETURN wvg_IsMenuItemChecked( ::hMenu, nItemNum - 1 )
+METHOD WvgMenuBar:isItemChecked(nItemNum)
+   RETURN wvg_IsMenuItemChecked(::hMenu, nItemNum - 1)
 
-METHOD WvgMenuBar:isItemEnabled( nItemNum )
-   RETURN wvg_IsMenuItemEnabled( ::hMenu, nItemNum - 1 )
+METHOD WvgMenuBar:isItemEnabled(nItemNum)
+   RETURN wvg_IsMenuItemEnabled(::hMenu, nItemNum - 1)
 
 METHOD WvgMenuBar:selectItem( nItemNum )
    RETURN ! HB_IsNumeric(nItemNum)
@@ -444,7 +444,7 @@ METHOD WvgMenuBar:endMenu( xParam )
 
    RETURN Self
 
-METHOD WvgMenuBar:itemMarked( xParam )
+METHOD WvgMenuBar:itemMarked(xParam)
 
    IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_itemMarked := xParam
@@ -453,7 +453,7 @@ METHOD WvgMenuBar:itemMarked( xParam )
 
    RETURN Self
 
-METHOD WvgMenuBar:itemSelected( xParam )
+METHOD WvgMenuBar:itemSelected(xParam)
 
    IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_itemSelected := xParam

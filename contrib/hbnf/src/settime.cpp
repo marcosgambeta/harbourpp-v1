@@ -74,7 +74,7 @@
 #include <hbapi.hpp>
 #include <hbdate.hpp>
 
-HB_FUNC( FT_SETTIME )
+HB_FUNC(FT_SETTIME)
 {
    hb_retl(false);
 }

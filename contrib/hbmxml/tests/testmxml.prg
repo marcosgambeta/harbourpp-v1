@@ -92,7 +92,7 @@ PROCEDURE Main( cFileArg )
    mxmlLoadString( hTree, "<group>opaque opaque opaque</group>", MXML_OPAQUE_CALLBACK )
    mxmlLoadString( hTree, "<foo><bar><one><two>value<two>value2</two></two></one></bar></foo>", MXML_OPAQUE_CALLBACK )
 
-   IF Empty(hNode := mxmlGetFirstChild( hTree ))
+   IF Empty(hNode := mxmlGetFirstChild(hTree))
       OutErr( "ERROR: No first child in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -311,7 +311,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    mxmlIndexReset( hInd )
-   IF Empty(mxmlIndexFind( hInd, "group" ))
+   IF Empty(mxmlIndexFind(hInd, "group"))
       OutErr( "ERROR: mxmlIndexFind for 'group' failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -372,7 +372,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    mxmlIndexReset( hInd )
-   IF Empty(mxmlIndexFind( hInd,, "string" ))
+   IF Empty(mxmlIndexFind(hInd,, "string"))
       OutErr( "ERROR: mxmlIndexFind for 'string' failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -402,7 +402,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    mxmlIndexReset( hInd )
-   IF Empty(mxmlIndexFind( hInd, "group", "string" ))
+   IF Empty(mxmlIndexFind(hInd, "group", "string"))
       OutErr( "ERROR: mxmlIndexFind for 'string' failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -418,8 +418,8 @@ PROCEDURE Main( cFileArg )
     */
 
    FOR i := 0 TO 8
-      IF !Empty(mxmlGetFirstChild( hTree ))
-         mxmlDelete( mxmlGetFirstChild( hTree ) )
+      IF !Empty(mxmlGetFirstChild(hTree))
+         mxmlDelete( mxmlGetFirstChild(hTree) )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Child pointer prematurely NULL on child #%d", i ) + hb_eol() )
 
@@ -429,14 +429,14 @@ PROCEDURE Main( cFileArg )
       ENDIF
    NEXT
 
-   IF !Empty(mxmlGetFirstChild( hTree ))
+   IF !Empty(mxmlGetFirstChild(hTree))
       OutErr( "ERROR: Child pointer not NULL after deleting all children!" + hb_eol() )
 
       ErrorLevel(1)
       QUIT
    ENDIF
 
-   IF !Empty(mxmlGetLastChild( hTree ))
+   IF !Empty(mxmlGetLastChild(hTree))
       OutErr( "ERROR: Last child pointer not NULL after deleting all children!" + hb_eol() )
 
       ErrorLevel(1)
@@ -502,7 +502,7 @@ PROCEDURE Main( cFileArg )
 
    cStr := Space( 16384 )
    IF ( nNum := mxmlSaveString( hTree, @cStr, @whitespace_cb() ) ) > 0
-      OutStd( cStr + hb_eol() )
+      OutStd(cStr + hb_eol())
    ENDIF
 
    /*
@@ -590,8 +590,8 @@ PROCEDURE sax_cb(hNode, hEvent, hData)
     * This SAX callback just counts the different events.
     */
 
-   HB_SYMBOL_UNUSED( hNode )
-   HB_SYMBOL_UNUSED( hData )
+   HB_SYMBOL_UNUSED(hNode)
+   HB_SYMBOL_UNUSED(hData)
 
    s_aSAXEventCounts[ hEvent ]++
 
@@ -703,7 +703,7 @@ FUNCTION whitespace_cb(hNode, nWhere)
          nWhere == MXML_WS_AFTER_OPEN )
 
       RETURN hb_eol()
-   ELSEIF nWhere == MXML_WS_AFTER_OPEN .AND. Empty(mxmlGetFirstChild( hNode ))
+   ELSEIF nWhere == MXML_WS_AFTER_OPEN .AND. Empty(mxmlGetFirstChild(hNode))
       RETURN hb_eol()
    ENDIF
 

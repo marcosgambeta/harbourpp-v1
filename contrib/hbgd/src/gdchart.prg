@@ -99,7 +99,7 @@ METHOD GDChart:New( sx, sy )
 METHOD GDChart:AddData(hData)
 
    IF HB_IsHash( hData )
-      AAdd( ::aDataOfHashes, hData )
+      AAdd(::aDataOfHashes, hData)
    ENDIF
 
    RETURN Self
@@ -240,7 +240,7 @@ METHOD GDChart:PieChart()
          nPosY   := nPosY + ( ( nExtrude + nWidth ) / 4 ) * Sin( ::Radians( nDegree + nDim / 2 ) )
          IF textcolor == NIL
             colorp    := ::GetPixel( nPosX, nPosY )
-            textcolor := ::SetColor( 255 - ::Red( colorp ), 255 - ::Green( colorp ), 255 - ::Blue( colorp ) )
+            textcolor := ::SetColor( 255 - ::Red(colorp), 255 - ::Green( colorp ), 255 - ::Blue( colorp ) )
          ENDIF
          // cTitle := hb_ntos( nVal )
          IF hFont == NIL
@@ -866,7 +866,7 @@ METHOD GDChart:LineChart()
          ENDIF
       ENDIF
       // ::Rectangle( nPosX + nBorder, ::Height() - ( nPosY + nDim ), nPosX + nSize - nBorder, ::Height() - nPosY, lFilled, colorp )
-      AAdd( aPoints, { nPosX, ::Height() - ( nPosY + nDim ) } )
+      AAdd(aPoints, { nPosX, ::Height() - ( nPosY + nDim ) })
 
       IF lShowAxis
          // Y Axis

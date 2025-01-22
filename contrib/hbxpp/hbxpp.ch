@@ -59,7 +59,7 @@
 
 #include "hbclass.ch"
 
-#if ! defined( XPP_OP_OVERLOAD_OFF )
+#if ! defined(XPP_OP_OVERLOAD_OFF)
    #pragma -ks+
    REQUEST xpp_op_Overload
 #endif

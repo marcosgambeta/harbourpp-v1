@@ -53,7 +53,7 @@
    #include <windows.h>
 #endif
 
-HB_FUNC( CONVTOOEMCP )
+HB_FUNC(CONVTOOEMCP)
 {
    auto pString = hb_param(1, Harbour::Item::STRING);
 
@@ -83,7 +83,7 @@ HB_FUNC( CONVTOOEMCP )
       hb_retc_null();
 }
 
-HB_FUNC( CONVTOANSICP )
+HB_FUNC(CONVTOANSICP)
 {
    auto pString = hb_param(1, Harbour::Item::STRING);
 

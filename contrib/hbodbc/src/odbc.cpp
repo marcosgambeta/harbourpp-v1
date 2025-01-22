@@ -364,7 +364,7 @@ static SQLHSTMT hb_SQLHSTMT_par(int iParam)
    return (pHStmt && pHStmt->hStmt && hb_SQLHDBC_check(pHStmt->pHDbcItm, pHStmt->conn_counter)) ? pHStmt->hStmt : nullptr;
 }
 
-HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
+HB_FUNC(SQLALLOCENV)  /* @hEnv --> nRetCode */
 {
    SQLHENV   hEnv;
    SQLRETURN result;
@@ -384,7 +384,7 @@ HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
    hb_SQLHENV_stor(hEnv, 1);
 }
 
-HB_FUNC( SQLALLOCCONNECT )  /* hEnv, @hDbc --> nRetCode */
+HB_FUNC(SQLALLOCCONNECT)  /* hEnv, @hDbc --> nRetCode */
 {
    auto hEnv = hb_SQLHENV_par(1);
 
@@ -403,7 +403,7 @@ HB_FUNC( SQLALLOCCONNECT )  /* hEnv, @hDbc --> nRetCode */
    }
 }
 
-HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
+HB_FUNC(SQLDRIVERCONNECT)  /* hDbc, @cConnectString --> nRetCode */
 {
    auto hDbc = hb_SQLHDBC_par(1);
 
@@ -436,7 +436,7 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
    }
 }
 
-HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
+HB_FUNC(SQLCONNECT)  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
 {
    auto hDbc = hb_SQLHDBC_par(1);
 
@@ -465,7 +465,7 @@ HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
    }
 }
 
-HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
+HB_FUNC(SQLDISCONNECT)  /* hDbc --> nRetCode */
 {
    PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(hb_param(1, Harbour::Item::POINTER));
 
@@ -484,21 +484,21 @@ HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
 
 #if defined(HB_LEGACY_LEVEL4)
 
-HB_FUNC( SQLFREECONNECT )  /* hDbc --> nRetCode */
+HB_FUNC(SQLFREECONNECT)  /* hDbc --> nRetCode */
 {
 }
 
-HB_FUNC( SQLFREEENV )  /* hEnv --> nRetCode */
+HB_FUNC(SQLFREEENV)  /* hEnv --> nRetCode */
 {
 }
 
-HB_FUNC( SQLFREESTMT )  /* hStmt, nType --> nRetCode */
+HB_FUNC(SQLFREESTMT)  /* hStmt, nType --> nRetCode */
 {
 }
 
 #endif
 
-HB_FUNC( SQLALLOCSTMT )  /* hDbc, @hStmt --> nRetCode */
+HB_FUNC(SQLALLOCSTMT)  /* hDbc, @hStmt --> nRetCode */
 {
    auto hDbc = hb_SQLHDBC_par(1);
 
@@ -517,7 +517,7 @@ HB_FUNC( SQLALLOCSTMT )  /* hDbc, @hStmt --> nRetCode */
    }
 }
 
-HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
+HB_FUNC(SQLEXECDIRECT)  /* hStmt, cStatement --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -533,7 +533,7 @@ HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
    }
 }
 
-HB_FUNC( SQLFETCH )  /* hStmt --> nRetCode */
+HB_FUNC(SQLFETCH)  /* hStmt --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -544,7 +544,7 @@ HB_FUNC( SQLFETCH )  /* hStmt --> nRetCode */
    }
 }
 
-HB_FUNC( SQLFETCHSCROLL )
+HB_FUNC(SQLFETCHSCROLL)
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -559,7 +559,7 @@ HB_FUNC( SQLFETCHSCROLL )
    }
 }
 
-HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode */
+HB_FUNC(SQLGETDATA)  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -750,7 +750,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
    }
 }
 
-HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
+HB_FUNC(SQLNUMRESULTCOLS)  /* hStmt, @nColCount --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -765,7 +765,7 @@ HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
    }
 }
 
-HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType, @nColSize, @nDec, @nNull --> nRetCode */
+HB_FUNC(SQLDESCRIBECOL)  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType, @nColSize, @nDec, @nNull --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -808,7 +808,7 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
    }
 }
 
-HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @nAttribute --> nRetCode */
+HB_FUNC(SQLCOLATTRIBUTE)  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @nAttribute --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -856,7 +856,7 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
    }
 }
 
-HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
+HB_FUNC(SQLERROR)  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
 {
    auto hEnv = hb_SQLHENV_par(1);
    auto hDbc = hb_SQLHDBC_par(2);
@@ -889,7 +889,7 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
    }
 }
 
-HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError, @cErrorMsg */
+HB_FUNC(SQLGETDIAGREC)  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError, @cErrorMsg */
 {
 #if ODBCVER >= 0x0300
    auto iHandleType = static_cast<SQLSMALLINT>(hb_parni(1));
@@ -942,7 +942,7 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
 #endif
 }
 
-HB_FUNC( SQLROWCOUNT )
+HB_FUNC(SQLROWCOUNT)
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -957,7 +957,7 @@ HB_FUNC( SQLROWCOUNT )
    }
 }
 
-HB_FUNC( SQLGETINFO )  /* hDbc, nType, @cResult */
+HB_FUNC(SQLGETINFO)  /* hDbc, nType, @cResult */
 {
    auto hDbc = hb_SQLHDBC_par(1);
 
@@ -979,7 +979,7 @@ HB_FUNC( SQLGETINFO )  /* hDbc, nType, @cResult */
    }
 }
 
-HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
+HB_FUNC(SQLSETCONNECTATTR)  /* hDbc, nOption, uOption */
 {
    auto hDbc = hb_SQLHDBC_par(1);
 
@@ -1002,7 +1002,7 @@ HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
    }
 }
 
-HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
+HB_FUNC(SQLSETSTMTATTR)  /* hStmt, nOption, uOption --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -1025,7 +1025,7 @@ HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
    }
 }
 
-HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
+HB_FUNC(SQLGETCONNECTATTR)  /* hDbc, nOption, @cOption */
 {
    auto hDbc = hb_SQLHDBC_par(1);
 
@@ -1051,7 +1051,7 @@ HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
    }
 }
 
-HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
+HB_FUNC(SQLGETSTMTATTR)  /* hStmt, nOption, @cOption */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -1077,7 +1077,7 @@ HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
    }
 }
 
-HB_FUNC( SQLCOMMIT )  /* hEnv, hDbc */
+HB_FUNC(SQLCOMMIT)  /* hEnv, hDbc */
 {
    auto hEnv = hb_SQLHENV_par(1);
    auto hDbc = hb_SQLHDBC_par(2);
@@ -1089,7 +1089,7 @@ HB_FUNC( SQLCOMMIT )  /* hEnv, hDbc */
    }
 }
 
-HB_FUNC( SQLROLLBACK )  /* hEnv, hDbc */
+HB_FUNC(SQLROLLBACK)  /* hEnv, hDbc */
 {
    auto hEnv = hb_SQLHENV_par(1);
    auto hDbc = hb_SQLHDBC_par(2);
@@ -1101,7 +1101,7 @@ HB_FUNC( SQLROLLBACK )  /* hEnv, hDbc */
    }
 }
 
-HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
+HB_FUNC(SQLPREPARE)  /* hStmt, cStatement --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -1118,7 +1118,7 @@ HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
    }
 }
 
-HB_FUNC( SQLEXECUTE )  /* hStmt --> nRetCode */
+HB_FUNC(SQLEXECUTE)  /* hStmt --> nRetCode */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -1129,7 +1129,7 @@ HB_FUNC( SQLEXECUTE )  /* hStmt --> nRetCode */
    }
 }
 
-HB_FUNC( SQLMORERESULTS )  /* hEnv, hDbc */
+HB_FUNC(SQLMORERESULTS)  /* hEnv, hDbc */
 {
    auto hStmt = hb_SQLHSTMT_par(1);
 
@@ -1140,7 +1140,7 @@ HB_FUNC( SQLMORERESULTS )  /* hEnv, hDbc */
    }
 }
 
-HB_FUNC( HB_ODBCSTOD )
+HB_FUNC(HB_ODBCSTOD)
 {
    if( hb_parclen(1) >= 10 ) {
       auto szSqlDate = hb_parc(1);  /* YYYY-MM-DD */
@@ -1161,7 +1161,7 @@ HB_FUNC( HB_ODBCSTOD )
    }
 }
 
-HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
+HB_FUNC(HB_ODBCNUMSETLEN)  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
 {
    auto pValue = hb_param(1, Harbour::Item::NUMERIC);
    auto iLen = hb_parni(2);
@@ -1174,7 +1174,7 @@ HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec
    }
 }
 
-HB_FUNC( HB_ODBCVER )
+HB_FUNC(HB_ODBCVER)
 {
    hb_retni(ODBCVER);
 }

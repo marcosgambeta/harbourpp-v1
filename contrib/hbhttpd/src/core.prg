@@ -99,7 +99,7 @@ METHOD UHttpd:Run( hConfig )
       IF ::lHasSSL
          SSL_init()
          DO WHILE RAND_status() != 1
-            RAND_add( Str( hb_Random(), 18, 15 ) + Str( hb_MilliSeconds(), 20 ), 1 )
+            RAND_add(Str( hb_Random(), 18, 15 ) + Str( hb_MilliSeconds(), 20 ), 1)
          ENDDO
 
          ::hSSLCtx := SSL_CTX_new( HB_SSL_CTX_NEW_METHOD_SSLV23_SERVER )
@@ -139,7 +139,7 @@ METHOD UHttpd:Run( hConfig )
       RETURN .F.
    ENDIF
 
-   IF !hb_socketBind( ::hListen, { HB_SOCKET_AF_INET, ::hConfig[ "BindAddress" ], ::hConfig[ "Port" ] } )
+   IF !hb_socketBind(::hListen, { HB_SOCKET_AF_INET, ::hConfig[ "BindAddress" ], ::hConfig[ "Port" ] })
       ::cError := "Bind error: " + hb_socketErrorString()
       hb_socketClose( ::hListen )
       RETURN .F.
@@ -153,7 +153,7 @@ METHOD UHttpd:Run( hConfig )
 
    aThreads := {}
    FOR nI := 1 TO THREAD_COUNT_PREALLOC
-      AAdd( aThreads, hb_threadStart( HB_THREAD_INHERIT_PUBLIC, @ProcessConnection(), Self ) )
+      AAdd(aThreads, hb_threadStart( HB_THREAD_INHERIT_PUBLIC, @ProcessConnection(), Self ))
    NEXT
 
    ::lStop := .F.
@@ -174,7 +174,7 @@ METHOD UHttpd:Run( hConfig )
          IF hb_mutexQueueInfo( ::hmtxQueue, @nWorkers, @nJobs ) .AND. ;
                Len(aThreads) < THREAD_COUNT_MAX .AND. ;
                nJobs >= nWorkers
-            AAdd( aThreads, hb_threadStart( HB_THREAD_INHERIT_PUBLIC, @ProcessConnection(), Self ) )
+            AAdd(aThreads, hb_threadStart( HB_THREAD_INHERIT_PUBLIC, @ProcessConnection(), Self ))
          ENDIF
          hb_mutexNotify( ::hmtxQueue, hSocket )
       ENDIF
@@ -250,7 +250,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
                   RETURN .F.
                ENDIF
                nPrefix := 32
-               DO WHILE hb_bitAnd( nI, 1 ) == 0
+               DO WHILE hb_bitAnd(nI, 1) == 0
                   nPrefix--
                   nI := hb_bitShift( nI, -1 )
                ENDDO
@@ -272,11 +272,11 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
          nPrefix := 0x100000000 - hb_bitShift( 1, 32 - nPrefix )
 
          // Remove unnecessary network address part
-         nAddr := hb_bitAnd( nAddr, nPrefix )
+         nAddr := hb_bitAnd(nAddr, nPrefix)
          nAddr2 := hb_bitOr( nAddr, hb_bitXor( nPrefix, 0xFFFFFFFF ) )
 
          IF lDeny
-            AAdd( aDeny, { nAddr, nAddr2 } )
+            AAdd(aDeny, { nAddr, nAddr2 })
          ELSE
             // Add to filter
             hb_HHasKey( aFilter, nAddr, @nPos )
@@ -324,15 +324,15 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
 
    RETURN .T.
 
-STATIC FUNCTION MY_SSL_READ( hConfig, hSSL, hSocket, cBuf, nTimeout, nError )
+STATIC FUNCTION MY_SSL_READ(hConfig, hSSL, hSocket, cBuf, nTimeout, nError)
 
    LOCAL nErr, nLen
 
-   nLen := SSL_read( hSSL, @cBuf )
+   nLen := SSL_read(hSSL, @cBuf)
    IF nLen < 0
       nErr := SSL_get_error( hSSL, nLen )
       IF nErr == HB_SSL_ERROR_WANT_READ
-         nErr := hb_socketSelectRead( hSocket, nTimeout )
+         nErr := hb_socketSelectRead(hSocket, nTimeout)
          IF nErr < 0
             nError := hb_socketGetError()
          ELSE // Both cases: data received and timeout
@@ -364,7 +364,7 @@ STATIC FUNCTION MY_SSL_WRITE( hConfig, hSSL, hSocket, cBuf, nTimeout, nError )
    IF nLen <= 0
       nErr := SSL_get_error( hSSL, nLen )
       IF nErr == HB_SSL_ERROR_WANT_READ
-         nErr := hb_socketSelectRead( hSocket, nTimeout )
+         nErr := hb_socketSelectRead(hSocket, nTimeout)
          IF nErr < 0
             nError := hb_socketGetError()
             RETURN -1
@@ -398,7 +398,7 @@ STATIC FUNCTION MY_SSL_ACCEPT( hConfig, hSSL, hSocket, nTimeout )
    ELSEIF nErr < 0
       nErr := SSL_get_error( hSSL, nErr )
       IF nErr == HB_SSL_ERROR_WANT_READ
-         nErr := hb_socketSelectRead( hSocket, nTimeout )
+         nErr := hb_socketSelectRead(hSocket, nTimeout)
          IF nErr < 0
             nErr := hb_socketGetError()
          ELSE
@@ -469,7 +469,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          hSSL := SSL_new( oServer:hSSLCtx )
          SSL_set_mode( hSSL, hb_bitOr( SSL_get_mode( hSSL ), HB_SSL_MODE_ENABLE_PARTIAL_WRITE ) )
          hb_socketSetBlockingIO( hSocket, .F. )
-         SSL_set_fd( hSSL, hb_socketGetFD( hSocket ) )
+         SSL_set_fd(hSSL, hb_socketGetFD( hSocket ))
 
          nTime := hb_MilliSeconds()
          DO WHILE .T.
@@ -516,7 +516,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          cBuf := Space( 4096 )
          DO WHILE At( CR_LF + CR_LF, cRequest ) == 0
             IF oServer:lHasSSL .AND. oServer:hConfig[ "SSL" ]
-               nLen := MY_SSL_READ( oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr )
+               nLen := MY_SSL_READ(oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr)
             ELSE
                nLen := hb_socketRecv( hSocket, @cBuf,,, 1000 )
                IF nLen < 0
@@ -573,7 +573,7 @@ STATIC FUNCTION ProcessConnection( oServer )
             cBuf := Space( 4096 )
             DO WHILE Len(cRequest) < nReqLen
                IF oServer:lHasSSL .AND. oServer:hConfig[ "SSL" ]
-                  nLen := MY_SSL_READ( oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr )
+                  nLen := MY_SSL_READ(oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr)
                ELSE
                   nLen := hb_socketRecv( hSocket, @cBuf,,, 1000 )
                   IF nLen < 0
@@ -638,7 +638,7 @@ STATIC FUNCTION ProcessConnection( oServer )
             IF oServer:lHasSSL .AND. oServer:hConfig[ "SSL" ]
                nLen := MY_SSL_WRITE( oServer:hConfig, hSSL, hSocket, cBuf, 1000, @nErr )
             ELSE
-               nLen := hb_socketSend( hSocket, cBuf,,, 1000 )
+               nLen := hb_socketSend(hSocket, cBuf,,, 1000)
                IF nLen < 0
                   nErr := hb_socketGetError()
                ENDIF
@@ -1150,7 +1150,7 @@ PROCEDURE UAddHeader( cType, cValue )
    IF ( nI := AScan( t_aHeader, {| x | Upper(x[ 1 ]) == Upper(cType) } ) ) > 0
       t_aHeader[ nI ][ 2 ] := cValue
    ELSE
-      AAdd( t_aHeader, { cType, cValue } )
+      AAdd(t_aHeader, { cType, cValue })
    ENDIF
 
    RETURN
@@ -1424,7 +1424,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
             UAddHeader( "Last-Modified", HttpDateFormat( tDate ) )
          ENDIF
 
-         UWrite( hb_MemoRead( UOsFileName( cFileName ) ) )
+         UWrite( hb_MemoRead(UOsFileName( cFileName )) )
       ENDIF
    ELSEIF hb_DirExists( UOsFileName( cFileName ) )
       IF !( Right(cFileName, 1) == "/" )
@@ -1434,7 +1434,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       IF AScan( { "index.html", "index.htm" }, ;
             {| x | iif(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, .T. ), .F.) } ) > 0
          UAddHeader( "Content-Type", "text/html" )
-         UWrite( hb_MemoRead( UOsFileName( cFileName ) ) )
+         UWrite( hb_MemoRead(UOsFileName( cFileName )) )
          RETURN
       ENDIF
       IF !lIndex
@@ -1635,7 +1635,7 @@ STATIC FUNCTION compile_file( cFileName, hConfig )
    ENDIF
    cFileName := UOsFileName( hb_DirBase() + "tpl/" + cFileName + ".html" )
    IF hb_FileExists( cFileName )
-      cTpl := hb_MemoRead( cFileName )
+      cTpl := hb_MemoRead(cFileName)
       BEGIN SEQUENCE
          IF ( nPos := compile_buffer( cTpl, 1, aCode ) ) < Len(cTpl) + 1
             Break( nPos )
@@ -1656,7 +1656,7 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
 
    DO WHILE ( nS := hb_At( "{{", cTpl, nStart ) ) > 0
       IF nS > nStart
-         AAdd( aCode, { "txt", SubStr(cTpl, nStart, nS - nStart) } )
+         AAdd(aCode, { "txt", SubStr(cTpl, nStart, nS - nStart) })
       ENDIF
       nE := hb_At( "}}", cTpl, nS )
       IF nE > 0
@@ -1669,12 +1669,12 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
          SWITCH cTag
          CASE "="
          CASE ":"
-            AAdd( aCode, { cTag, cParam } )
+            AAdd(aCode, { cTag, cParam })
             nStart := nE + 2
             EXIT
 
          CASE "if"
-            AAdd( aCode, { "if", cParam, {}, {} } )
+            AAdd(aCode, { "if", cParam, {}, {} })
             nI := compile_buffer( cTpl, nE + 2, ATail( aCode )[ 3 ] )
             IF SubStr(cTpl, nI, 8) == "{{else}}"
                nI := compile_buffer( cTpl, nI + 8, ATail( aCode )[ 4 ] )
@@ -1687,7 +1687,7 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
             EXIT
 
          CASE "loop"
-            AAdd( aCode, { "loop", cParam, {} } )
+            AAdd(aCode, { "loop", cParam, {} })
             nI := compile_buffer( cTpl, nE + 2, ATail( aCode )[ 3 ] )
             IF SubStr(cTpl, nI, 11) == "{{endloop}}"
                nStart := nI + 11
@@ -1697,12 +1697,12 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
             EXIT
 
          CASE "extend"
-            AAdd( aCode, { "extend", cParam } )
+            AAdd(aCode, { "extend", cParam })
             nStart := nE + 2
             EXIT
 
          CASE "include"
-            AAdd( aCode, { "include", cParam } )
+            AAdd(aCode, { "include", cParam })
             nStart := nE + 2
             EXIT
 
@@ -1715,7 +1715,7 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
       ENDIF
    ENDDO
    IF nStart < Len(cTpl)
-      AAdd( aCode, { "txt", SubStr(cTpl, nStart) } )
+      AAdd(aCode, { "txt", SubStr(cTpl, nStart) })
    ENDIF
 
    RETURN Len(cTpl) + 1

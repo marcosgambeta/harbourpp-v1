@@ -68,7 +68,7 @@
 /* now this function is RDD independent and can work with any RDD supporting
  * DBOI_SKIPWILD and DBOI_SKIPWILDBACK
  */
-HB_FUNC( BM_DBSEEKWILD )
+HB_FUNC(BM_DBSEEKWILD)
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -174,7 +174,7 @@ HB_FUNC( BM_DBSEEKWILD )
    }
 }
 
-HB_FUNC( BM_TURBO )
+HB_FUNC(BM_TURBO)
 {
    hb_retl(false);
 }
@@ -191,17 +191,17 @@ using PBM_FILTER = BM_FILTER *;
 #define BM_ITEMSIZE( n )   ( ( ( n ) + 31 ) >> 5 )
 #define BM_BYTESIZE( n )   ( ( ( ( n ) + 31 ) >> 5 ) * sizeof(HB_U32) )
 
-#define BM_SETREC( p, r )  \
+#define BM_SETREC(p, r)  \
    do { if( (r) > 0 && (r) <= (p)->maxrec ) \
            ( p )->map[( ( r ) - 1 ) >> 5] |= ( 1 << ( ( ( r ) - 1 ) & 0x1f ) ); \
    } while( 0 )
 
-#define BM_CLRREC( p, r )  \
+#define BM_CLRREC(p, r)  \
    do { if( (r) > 0 && (r) <= (p)->maxrec ) \
            ( p )->map[( ( r ) - 1 ) >> 5] &= ~( 1 << ( ( ( r ) - 1 ) & 0x1f ) ); \
    } while( 0 )
 
-#define BM_GETREC( p, r )  ( ( ( r ) > 0 && ( r ) <= ( p )->maxrec ) && \
+#define BM_GETREC(p, r)  ( ( ( r ) > 0 && ( r ) <= ( p )->maxrec ) && \
                              ( ( p )->map[( ( r ) - 1 ) >> 5] & ( 1 << ( ( ( r ) - 1 ) & 0x1f ) ) ) != 0 )
 
 #define SUPERTABLE  ( hb_bmGetRdd( pArea->rddID ) )
@@ -303,7 +303,7 @@ static PBM_FILTER hb_bmCreate(AREAP pArea, HB_BOOL fFull)
    return pBM;
 }
 
-HB_FUNC( BM_DBGETFILTERARRAY )
+HB_FUNC(BM_DBGETFILTERARRAY)
 {
    auto pArea = hb_bmGetCurrentWorkArea();
 
@@ -343,7 +343,7 @@ HB_FUNC( BM_DBGETFILTERARRAY )
    }
 }
 
-HB_FUNC( BM_DBSETFILTERARRAY )
+HB_FUNC(BM_DBSETFILTERARRAY)
 {
    auto pArea = hb_bmGetCurrentWorkArea();
 
@@ -369,7 +369,7 @@ HB_FUNC( BM_DBSETFILTERARRAY )
    }
 }
 
-HB_FUNC( BM_DBSETFILTERARRAYADD )
+HB_FUNC(BM_DBSETFILTERARRAYADD)
 {
    auto pArea = hb_bmGetCurrentWorkArea();
 
@@ -390,7 +390,7 @@ HB_FUNC( BM_DBSETFILTERARRAYADD )
    }
 }
 
-HB_FUNC( BM_DBSETFILTERARRAYDEL )
+HB_FUNC(BM_DBSETFILTERARRAYDEL)
 {
    auto pArea = hb_bmGetCurrentWorkArea();
 
@@ -731,22 +731,22 @@ static void hb_bmRddInit(void * cargo)
    }
 }
 
-HB_FUNC( _BMDBF )
+HB_FUNC(_BMDBF)
 {
    ;
 }
 
-HB_FUNC_STATIC( BMDBFCDX_GETFUNCTABLE )
+HB_FUNC_STATIC(BMDBFCDX_GETFUNCTABLE)
 {
    hb_bmGetFuncTable("DBFCDX");
 }
 
-HB_FUNC_STATIC( BMDBFNTX_GETFUNCTABLE )
+HB_FUNC_STATIC(BMDBFNTX_GETFUNCTABLE)
 {
    hb_bmGetFuncTable("DBFNTX");
 }
 
-HB_FUNC_STATIC( BMDBFNSX_GETFUNCTABLE )
+HB_FUNC_STATIC(BMDBFNSX_GETFUNCTABLE)
 {
    hb_bmGetFuncTable("DBFNSX");
 }

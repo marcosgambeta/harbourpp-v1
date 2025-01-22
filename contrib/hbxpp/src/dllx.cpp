@@ -70,7 +70,7 @@ typedef struct
    void *   pFunctionPtr; /* Function Address */
 } HB_DLLEXEC, * PHB_DLLEXEC;
 
-static HB_GARBAGE_FUNC( _DLLUnload )
+static HB_GARBAGE_FUNC(_DLLUnload)
 {
    auto xec = static_cast<PHB_DLLEXEC>(Cargo);
 
@@ -85,7 +85,7 @@ static HB_GARBAGE_FUNC( _DLLUnload )
    }
 }
 
-static HB_GARBAGE_FUNC( _DLLMark )
+static HB_GARBAGE_FUNC(_DLLMark)
 {
    auto xec = static_cast<PHB_DLLEXEC>(Cargo);
 
@@ -106,7 +106,7 @@ HB_FUNC_TRANSLATE( DLLUNLOAD, HB_LIBFREE )
 
 /* NOTE: Function ordinals are not supported in 3rd parameter. */
 
-HB_FUNC( DLLCALL )
+HB_FUNC(DLLCALL)
 {
    auto pLibrary = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLibraryHandle = nullptr;
@@ -151,7 +151,7 @@ HB_FUNC( DLLCALL )
 /* NOTE: Function ordinals are not supported in 3rd parameter. */
 /* NOTE: In Harbour this function will return an in-memory object, not a string. */
 
-HB_FUNC( DLLPREPARECALL )
+HB_FUNC(DLLPREPARECALL)
 {
    auto pLibrary = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLibraryHandle = nullptr;
@@ -207,7 +207,7 @@ HB_FUNC( DLLPREPARECALL )
    hb_errRT_BASE(EG_ARG, 2010, pszErrorText, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-HB_FUNC( DLLEXECUTECALL )
+HB_FUNC(DLLEXECUTECALL)
 {
    auto xec = static_cast<PHB_DLLEXEC>(hb_parptrGC(&s_gcDllFuncs, 1));
 

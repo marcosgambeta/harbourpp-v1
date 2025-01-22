@@ -1037,7 +1037,7 @@ HB_FUNC(SQLITE3_STMT_READONLY)
  */
 
 #if 0
-HB_FUNC( SQLITE3_DB_HANDLE )
+HB_FUNC(SQLITE3_DB_HANDLE)
 {
   auto pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 

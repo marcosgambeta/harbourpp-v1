@@ -28,7 +28,7 @@ PROCEDURE Main( cParam )
    ENDIF
 
    IF "C" $ Upper(cParam)
-      ? hb_ValToExp( hb_udpds_Find( 39999, "UDPDSDemo" ) )
+      ? hb_ValToExp( hb_udpds_Find(39999, "UDPDSDemo") )
    ENDIF
 
    IF "S" $ Upper(cParam)

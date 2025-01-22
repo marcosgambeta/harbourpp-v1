@@ -26,7 +26,7 @@ PROCEDURE Main()
    LOCAL nMaxWidth, nCBid, nPBid, nPos
    LOCAL nKeyStd, ncursor
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -62,7 +62,7 @@ PROCEDURE Main()
    wvw_ShowWindow()
 
    nPos := 1
-   DO WHILE ( nKeyStd := hb_keyStd( Inkey(0) ) ) != _SECRET_KEY
+   DO WHILE ( nKeyStd := hb_keyStd(Inkey(0)) ) != _SECRET_KEY
 
       DO CASE
       CASE nKeyStd == K_TAB .OR. nKeyStd == K_ENTER
@@ -111,7 +111,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, nPBid )
       wvw_pbEnable( nWinNum, nPBid, nIndex == 0 )
       EXIT
    CASE 1  // CBN_SELCHANGE
-      IF !wvw_cbIsDropped( nWinNum, nId )
+      IF !wvw_cbIsDropped(nWinNum, nId)
          wvw_pbEnable( nWinNum, nPBid, nIndex == 0 )  // nIndex is 0-based
          wvw_cbSetFocus( nWinNum, nId )
       ENDIF

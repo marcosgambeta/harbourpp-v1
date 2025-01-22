@@ -624,7 +624,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
     case VK_F4:
 #if 0
                if( pWVT->AltF4Close && bAlt )
-                  return DefWindowProc( pWVT->hWnd, message, wParam, lParam ) != 0;
+                  return DefWindowProc(pWVT->hWnd, message, wParam, lParam) != 0;
 #endif
       hb_gt_wvt_TranslateKey(pWVT, K_F4, K_SH_F4, K_ALT_F4, K_CTRL_F4);
       break;

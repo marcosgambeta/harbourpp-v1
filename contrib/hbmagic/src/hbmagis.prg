@@ -56,7 +56,7 @@ FUNCTION hb_magic_simple( cFileName, nFlags )
 
    hMagic := magic_open( nFlags )
    IF Empty(hMagic) .OR.;
-      magic_load( hMagic ) != 0
+      magic_load(hMagic) != 0
       RETURN ""
    ENDIF
 

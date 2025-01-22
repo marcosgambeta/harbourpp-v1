@@ -877,7 +877,7 @@ HB_FUNC(WVG_TREEVIEW_SETBKCOLOR)
 HB_FUNC(WVG_TREEVIEW_SETLINECOLOR)
 {
 #if 0
-   hb_retl( TreeView_SetLineColor( wvg_parhwnd( 1 ), wvg_parcolor( 2 ) ) );
+   hb_retl( TreeView_SetLineColor( wvg_parhwnd(1), wvg_parcolor( 2 ) ) );
 #endif
 }
 
@@ -894,7 +894,7 @@ HB_FUNC(WVG_TREEVIEW_EXPAND)
 HB_FUNC(WVG_TVIS_EXPANDED)
 {
 #if 0
-   hb_retl( TreeView_GetItemState( wvg_parhwnd( 1 ), wvg_parhandle( 2 ), ( UINT ) TVIS_EXPANDED ) );
+   hb_retl( TreeView_GetItemState( wvg_parhwnd(1), wvg_parhandle( 2 ), ( UINT ) TVIS_EXPANDED ) );
 #endif
 }
 

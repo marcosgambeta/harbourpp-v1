@@ -213,7 +213,7 @@ METHOD GDBarCode:Draw13( cText )
          FOR ii := 1 TO Len(::text)
 
             // Calculate check digit
-            IF Mod( Len(::text) + 1 - ii, 2 ) == 0
+            IF Mod(Len(::text) + 1 - ii, 2) == 0
                nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
             ELSE
                nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
@@ -247,7 +247,7 @@ METHOD GDBarCode:Draw13( cText )
 
          NEXT
 
-         jj := Mod( nChkSum, 10 )
+         jj := Mod(nChkSum, 10)
 
          IF jj != 0
             nChk := 10 - jj
@@ -330,7 +330,7 @@ METHOD GDBarCode:Draw8( cText )
 
       FOR ii := 1 TO Len(::text)
 
-         IF Mod( Len(::text) + 1 - ii, 2 ) == 0
+         IF Mod(Len(::text) + 1 - ii, 2) == 0
             nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
          ELSE
             nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
@@ -358,7 +358,7 @@ METHOD GDBarCode:Draw8( cText )
 
       NEXT
 
-      jj := Mod( nChkSum, 10 )
+      jj := Mod(nChkSum, 10)
 
       IF jj != 0
          nChk := 10 - jj

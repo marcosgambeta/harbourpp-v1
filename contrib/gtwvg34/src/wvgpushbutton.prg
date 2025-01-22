@@ -132,7 +132,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
       ::style += BS_FLAT
    ENDIF
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 #if 0
@@ -222,7 +222,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
    LOCAL nLoadFromDiskFile      := 2
 
    __defaultNIL( @xCaption, ::caption )
-   HB_SYMBOL_UNUSED( cDll )
+   HB_SYMBOL_UNUSED(cDll)
 
    ::caption := xCaption
 

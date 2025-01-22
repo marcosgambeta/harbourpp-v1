@@ -377,7 +377,7 @@ HB_FUNC(WVG_STATUSBARSETTEXT)
 HB_FUNC(WVG_STATUSBARREFRESH)
 {
 #if 0
-   HWND hWndSB = hbwapi_par_raw_HWND( 1 );
+   HWND hWndSB = hbwapi_par_raw_HWND(1);
 
    if( hWndSB && IsWindow( hWndSB ) )
    {

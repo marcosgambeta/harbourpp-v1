@@ -47,7 +47,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 FUNCTION hb_MailAssemble(...)
    RETURN tip_MailAssemble(...)
 #endif

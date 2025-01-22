@@ -11,7 +11,7 @@ PROCEDURE Main( cFile )
       IF hb_FileMatch( cFile, __FILE__ )
          lEdit := .F.
       ENDIF
-      cText := MemoRead( cFile )
+      cText := MemoRead(cFile)
    ENDIF
 
    cText := MyMemoEdit( cText, 0, 0, MaxRow(), MaxCol(), lEdit )

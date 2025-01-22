@@ -7,7 +7,7 @@
 
 #ifndef ISC_INT64_FORMAT
 
-#if ( defined( _MSC_VER ) && defined( WIN32 ) ) || ( defined( __BORLANDC__ ) && defined( __WIN32__ ) )
+#if ( defined(_MSC_VER) && defined(WIN32) ) || ( defined(__BORLANDC__) && defined(__WIN32__) )
 #define  ISC_INT64_FORMAT  "I64"
 #else
 #define  ISC_INT64_FORMAT  "ll"
@@ -24,7 +24,7 @@ int execute( char * exec_str );
 int query( char * sel_str );
 int fetch( void );
 int qclose( void );
-char * getdata( int pos );
+char * getdata(int pos);
 
 
 isc_db_handle db = NULL;
@@ -64,7 +64,7 @@ int main()
 
    query( "SELECT * FROM TESTE" );
    while( fetch() == 0 )
-      printf( "%s\n", getdata( 0 ) );
+      printf( "%s\n", getdata(0) );
    qclose();
 
 
@@ -102,7 +102,7 @@ int query( char * sel_str )
       ERREXIT( status, 1 );
 
    /* Allocate an output SQLDA. Just to check number of columns */
-   sqlda          = ( XSQLDA * ) malloc( XSQLDA_LENGTH( 1 ) );
+   sqlda          = ( XSQLDA * ) malloc(XSQLDA_LENGTH( 1 ));
    sqlda->sqln    = 1;
    sqlda->version = 1;
 
@@ -123,7 +123,7 @@ int query( char * sel_str )
    {
       free( sqlda );
       n              = sqlda->sqld;
-      sqlda          = ( XSQLDA * ) malloc( XSQLDA_LENGTH( n ) );
+      sqlda          = ( XSQLDA * ) malloc(XSQLDA_LENGTH( n ));
       sqlda->sqln    = n;
       sqlda->version = 1;
 
@@ -138,22 +138,22 @@ int query( char * sel_str )
       {
          case SQL_VARYING:
             var->sqltype = SQL_TEXT;
-            var->sqldata = ( char * ) malloc( sizeof( char ) * var->sqllen + 2 );
+            var->sqldata = ( char * ) malloc(sizeof( char ) * var->sqllen + 2);
             break;
          case SQL_TEXT:
-            var->sqldata = ( char * ) malloc( sizeof( char ) * var->sqllen + 2 );
+            var->sqldata = ( char * ) malloc(sizeof( char ) * var->sqllen + 2);
             break;
          case SQL_LONG:
             var->sqltype = SQL_LONG;
-            var->sqldata = ( char * ) malloc( sizeof( long ) );
+            var->sqldata = ( char * ) malloc(sizeof( long ));
             break;
          default:
-            var->sqldata = ( char * ) malloc( sizeof( char ) * var->sqllen );
+            var->sqldata = ( char * ) malloc(sizeof( char ) * var->sqllen);
             break;
       }
       if( var->sqltype & 1 )
       {
-         var->sqlind = ( short * ) malloc( sizeof( short ) );
+         var->sqlind = ( short * ) malloc(sizeof( short ));
       }
    }
 
@@ -208,7 +208,7 @@ int qclose( void )
    return 1;
 }
 
-char * getdata( int pos )
+char * getdata(int pos)
 {
    short dtype;
    char  data[ MAX_BUFFER ], * p;

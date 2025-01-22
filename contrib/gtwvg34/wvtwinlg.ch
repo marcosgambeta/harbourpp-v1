@@ -7,7 +7,7 @@
 #xtranslate MAKELONG( <nLow>, <nHigh> )   => WIN_MAKELONG( <nLow>, <nHigh> )
 #xtranslate MAKELPARAM( <nLow>, <nHigh> ) => WIN_MAKELPARAM( <nLow>, <nHigh> )
 #ifndef RGB
-#define RGB( nR, nG, nB )  WIN_RGB( nR, nG, nB )
+#define RGB(nR, nG, nB)  WIN_RGB(nR, nG, nB)
 #endif
 #endif
 

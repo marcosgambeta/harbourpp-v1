@@ -84,7 +84,7 @@ PROCEDURE Main()
    LOCAL oLastMenu
    LOCAL oError := ErrorBlock( {| o | MyError( o ) } )
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVG" )
 #endif
 
@@ -107,15 +107,15 @@ PROCEDURE Main()
    oLastMenu:checkItem(1)
    oLastMenu:insItem( 11, { "I am inserted later !", ;
       {|| wvg_MessageBox( , "Hi " + iif(oLastMenu:isItemChecked(1), "Yes", "No") + ;
-      iif(oLastMenu:isItemEnabled( 12 ), " Yes", " No") ) } } )
+      iif(oLastMenu:isItemEnabled(12), " Yes", " No") ) } } )
 
    oLastMenu:setItem( 14, { "This is Set Against Prev Menu", {|| wvg_MessageBox( , "Hi" ) } } )
 
    SetMode( MaxRow() + 1, MaxCol() + 1 )  /* Needed to accommodate attached menu */
 
    SetKey( K_F12        , {|| hb_gtInfo( HB_GTI_ACTIVATESELECTCOPY ) } )
-   SetKey( K_CTRL_V     , {|| __Keyboard( hb_gtInfo( HB_GTI_CLIPBOARDDATA ) ) } )
-   SetKey( K_RBUTTONDOWN, {|| __Keyboard( hb_gtInfo( HB_GTI_CLIPBOARDDATA ) ) } )
+   SetKey( K_CTRL_V     , {|| __Keyboard(hb_gtInfo( HB_GTI_CLIPBOARDDATA )) } )
+   SetKey( K_RBUTTONDOWN, {|| __Keyboard(hb_gtInfo( HB_GTI_CLIPBOARDDATA )) } )
 
    hPopup := wvt_SetPopupMenu()
 
@@ -124,20 +124,20 @@ PROCEDURE Main()
    /* Force mouse pointer right below the Harbour label */
    wvt_SetMousePos( 2, 40 )
 
-   AAdd( aBlocks, {|| wvt_SetIcon( GetResource( "resources\vr_1.ico" ) ) } )
-   AAdd( aBlocks, {|| Wvt_SetTitle( "Vouch" ) } )
-   AAdd( aBlocks, {|| wvt_DrawLabel( 1, 40, cLabel, 6,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) } )
-   AAdd( aBlocks, {|| wvt_DrawBoxRaised( nTop, nLft, nBtm, nRgt ) } )
-   AAdd( aBlocks, {|| wvt_DrawBoxRecessed( 7, 61, 13, 70 ) } )
-   AAdd( aBlocks, {|| wvt_DrawBoxGroup( 15, 59, 18, 72 ) } )
-   AAdd( aBlocks, {|| wvt_DrawBoxGroup( 5, 6, 19, 44 ) } )
-   AAdd( aBlocks, {|| wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH, , .T. ) } )
-   AAdd( aBlocks, {|| wvt_DrawBoxRecessed( 7, 48, 13, 55 ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( MaxRow() - 1, 41, MaxRow(), 41, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) } )
-   AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
+   AAdd(aBlocks, {|| wvt_SetIcon( GetResource( "resources\vr_1.ico" ) ) })
+   AAdd(aBlocks, {|| Wvt_SetTitle( "Vouch" ) })
+   AAdd(aBlocks, {|| wvt_DrawLabel( 1, 40, cLabel, 6,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) })
+   AAdd(aBlocks, {|| wvt_DrawBoxRaised(nTop, nLft, nBtm, nRgt) })
+   AAdd(aBlocks, {|| wvt_DrawBoxRecessed(7, 61, 13, 70) })
+   AAdd(aBlocks, {|| wvt_DrawBoxGroup( 15, 59, 18, 72 ) })
+   AAdd(aBlocks, {|| wvt_DrawBoxGroup( 5, 6, 19, 44 ) })
+   AAdd(aBlocks, {|| wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH, , .T. ) })
+   AAdd(aBlocks, {|| wvt_DrawBoxRecessed(7, 48, 13, 55) })
+   AAdd(aBlocks, {|| wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( MaxRow() - 1, 41, MaxRow(), 41, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) })
+   AAdd(aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) })
 
-   AAdd( aBlocks, {|| wvt_Mouse( -1000001 ) } )
+   AAdd(aBlocks, {|| wvt_Mouse( -1000001 ) })
 
    aLastPaint := WvtSetBlocks( aBlocks )
 
@@ -154,7 +154,7 @@ PROCEDURE Main()
    @ 12, nColGet SAY "<" + PadC("Address", 33) + ">"
    @ 16, 61      SAY "< Salary >"
 
-   dDate := hb_SToD( "20040401" )
+   dDate := hb_SToD("20040401")
 
    @  7, nColGet GET dDate WHEN DispStatusMsg( "Date must be valid" ) VALID ClearStatusMsg()
    @ 10, nColGet GET cName WHEN DispStatusMsg( "Must be one of the list!" ) VALID VouChoice() < 7 .AND. ClearStatusMsg()
@@ -187,7 +187,7 @@ STATIC PROCEDURE WvtConsoleGets( nMode )
    hb_default( @nMode, 0 )
 
    IF hb_mtvm()
-      hb_threadStart( {| oCrt | hb_gtReload( "WVT" ), ;
+      hb_threadStart( {| oCrt | hb_gtReload("WVT"), ;
          oCrt := hb_gtSelect(), ;
          iif(nMode == 0, WvtNextGetsConsole(), OnlineMap()), ;
          oCrt := NIL } )
@@ -232,7 +232,7 @@ PROCEDURE WvtNextGetsConsole()
 PROCEDURE WvtNextGets()  /* must be a public function */
 
    IF hb_mtvm()
-      hb_threadStart( {|| hb_gtReload( "WVG" ), wvt_SetFont( "Terminal", 20 ), ;
+      hb_threadStart( {|| hb_gtReload("WVG"), wvt_SetFont( "Terminal", 20 ), ;
          hb_clear(), wvt_ShowWindow( SW_RESTORE ), WvtNextGets_X() } )
    ELSE
       WvtNextGets_X()
@@ -268,22 +268,22 @@ PROCEDURE WvtNextGets_X()
 
    Wvt_SetPalette( aNewPalette )
 
-   AAdd( aBlocks, {|| Wvt_SetTitle( "Wvt Gets 2nd Window with Different Palette" ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( MaxRow() - 1, 0, MaxRow() - 1, MaxCol() ) } )
-   AAdd( aBlocks, {|| wvt_SetBrush( 0, RGB(32, 255, 100) )    } )
-   AAdd( aBlocks, {|| wvt_DrawEllipse( 6, 50, 10, 58 )           } )
-   AAdd( aBlocks, {|| wvt_SetBrush( 2, RGB(255, 255, 100), 1 ) } )
-   AAdd( aBlocks, {|| wvt_DrawRectangle( 11, 50, 13, 58 )     } )
-   AAdd( aBlocks, {|| wvt_DrawBoxGroupRaised( 5, 6, 19, 72 )  } )
-   AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
+   AAdd(aBlocks, {|| Wvt_SetTitle( "Wvt Gets 2nd Window with Different Palette" ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( MaxRow() - 1, 0, MaxRow() - 1, MaxCol() ) })
+   AAdd(aBlocks, {|| wvt_SetBrush( 0, RGB(32, 255, 100) )    })
+   AAdd(aBlocks, {|| wvt_DrawEllipse( 6, 50, 10, 58 )           })
+   AAdd(aBlocks, {|| wvt_SetBrush( 2, RGB(255, 255, 100), 1 ) })
+   AAdd(aBlocks, {|| wvt_DrawRectangle( 11, 50, 13, 58 )     })
+   AAdd(aBlocks, {|| wvt_DrawBoxGroupRaised(5, 6, 19, 72)  })
+   AAdd(aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) })
 
-   AAdd( aBlocks, {|| wvt_DrawButton( 21,  6, 22,  9, "New", "resources\vouch1.bmp" ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 11, 22, 14, "Browse", "resources\vouch1.bmp", 1, RGB(255, 255, 255) ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 16, 22, 19, , "resources\vouch1.bmp" ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 21, 22, 24, "Data",, 0, RGB(100, 22, 241), RGB(198, 198, 198) ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 26, 22, 29, "Flat", IMAGE_VR, 2 ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 31, 22, 34, "Outline", IMAGE_VR, 3 ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 22, 36, 22, 41, "Data",, 0, RGB(100, 22, 241), RGB(198, 198, 198) ) } )
+   AAdd(aBlocks, {|| wvt_DrawButton( 21,  6, 22,  9, "New", "resources\vouch1.bmp" ) })
+   AAdd(aBlocks, {|| wvt_DrawButton( 21, 11, 22, 14, "Browse", "resources\vouch1.bmp", 1, RGB(255, 255, 255) ) })
+   AAdd(aBlocks, {|| wvt_DrawButton( 21, 16, 22, 19, , "resources\vouch1.bmp" ) })
+   AAdd(aBlocks, {|| wvt_DrawButton( 21, 21, 22, 24, "Data",, 0, RGB(100, 22, 241), RGB(198, 198, 198) ) })
+   AAdd(aBlocks, {|| wvt_DrawButton( 21, 26, 22, 29, "Flat", IMAGE_VR, 2 ) })
+   AAdd(aBlocks, {|| wvt_DrawButton( 21, 31, 22, 34, "Outline", IMAGE_VR, 3 ) })
+   AAdd(aBlocks, {|| wvt_DrawButton( 22, 36, 22, 41, "Data",, 0, RGB(100, 22, 241), RGB(198, 198, 198) ) })
 
    aLastPaint := WvtSetBlocks( aBlocks )
 
@@ -332,7 +332,7 @@ PROCEDURE WvtPartialScreen()  /* must be a public function */
    @ 10, 25 SAY "wvt_SaveScreen()" COLOR "N/GR*"
    @ 11, 25 SAY "wvt_RestScreen()" COLOR "N/GR*"
    @ 13, 25 SAY "Press Esc "       COLOR "N/GR*"
-   wvt_DrawBoxRecessed( 8, 22, 14, 58 )
+   wvt_DrawBoxRecessed(8, 22, 14, 58)
 
    wvtScr1 := wvt_SaveScreen( 7, 20, 15, 60 )
 
@@ -343,7 +343,7 @@ PROCEDURE WvtPartialScreen()  /* must be a public function */
    @ 10, 25 SAY "wvt_SaveScreen()" COLOR "N/B*"
    @ 11, 25 SAY "wvt_RestScreen()" COLOR "N/B*"
    @ 13, 25 SAY "Press Esc "       COLOR "N/B*"
-   wvt_DrawBoxRecessed( 8, 22, 14, 58 )
+   wvt_DrawBoxRecessed(8, 22, 14, 58)
 
    DO WHILE Inkey(0) != K_ESC
    ENDDO
@@ -373,11 +373,11 @@ PROCEDURE WvtLines()  /* must be a public function */
 
    CLS
 
-   AAdd( aBlocks, {|| wvt_DrawLine( 0, 0, 0, nCols, WVT_LINE_HORZ, WVT_LINE_RAISED, WVT_LINE_CENTER ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 1, 0, 1, nCols, WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_TOP )    } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 2, 0, 2, nCols, WVT_LINE_HORZ, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_SOLID, 4, RGB(255, 255, 255) ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 3, 0, 3, nCols, WVT_LINE_HORZ, WVT_LINE_RAISED, WVT_LINE_CENTER, WVT_LINE_DASH, 0, RGB(255, 0, 0) ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 4, 0, 4, nCols, WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) } )
+   AAdd(aBlocks, {|| wvt_DrawLine( 0, 0, 0, nCols, WVT_LINE_HORZ, WVT_LINE_RAISED, WVT_LINE_CENTER ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 1, 0, 1, nCols, WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_TOP )    })
+   AAdd(aBlocks, {|| wvt_DrawLine( 2, 0, 2, nCols, WVT_LINE_HORZ, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_SOLID, 4, RGB(255, 255, 255) ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 3, 0, 3, nCols, WVT_LINE_HORZ, WVT_LINE_RAISED, WVT_LINE_CENTER, WVT_LINE_DASH, 0, RGB(255, 0, 0) ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 4, 0, 4, nCols, WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) })
 
    @ 0,  1 SAY "Center Raised"
    @ 1, 11 SAY "Top Recessed"
@@ -388,14 +388,14 @@ PROCEDURE WvtLines()  /* must be a public function */
 
    @ nRows, 0 SAY PadC("Press ESC to Quit", nCols + 1) COLOR "GR+/W"
 
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 5, nRows - 2, 5, WVT_LINE_VERT, WVT_LINE_RAISED, WVT_LINE_CENTER ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 6, nRows - 2, 6, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 7, nRows - 2, 7, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_LEFT   ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 8, nRows - 2, 8, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 9, nRows - 2, 9, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_RIGHT  ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 10, nRows - 2, 10, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_DOT,     0, RGB(0, 0, 255) ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 11, nRows - 2, 11, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_DASH,    0, RGB(255, 0, 0) ) } )
-   AAdd( aBlocks, {|| wvt_DrawLine( 11, 12, nRows - 2, 12, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_DASHDOT, 0, RGB(0, 255, 0) ) } )
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 5, nRows - 2, 5, WVT_LINE_VERT, WVT_LINE_RAISED, WVT_LINE_CENTER ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 6, nRows - 2, 6, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 7, nRows - 2, 7, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_LEFT   ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 8, nRows - 2, 8, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 9, nRows - 2, 9, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_RIGHT  ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 10, nRows - 2, 10, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_DOT,     0, RGB(0, 0, 255) ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 11, nRows - 2, 11, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_DASH,    0, RGB(255, 0, 0) ) })
+   AAdd(aBlocks, {|| wvt_DrawLine( 11, 12, nRows - 2, 12, WVT_LINE_VERT, WVT_LINE_PLAIN, WVT_LINE_CENTER, WVT_LINE_DASHDOT, 0, RGB(0, 255, 0) ) })
 
    WvtSetBlocks( aBlocks )
 
@@ -431,7 +431,7 @@ STATIC FUNCTION BuildMainMenu()
    oMenu:AddItem( "-" )
    oMenu:AddItem( "Dialog Two"                  , {|| DialogWvgClassesTwo()       } )
    oMenu:AddItem( "-" )
-   oMenu:AddItem( "Exit"                        , {|| __Keyboard( K_ESC ) } )
+   oMenu:AddItem( "Exit"                        , {|| __Keyboard(K_ESC) } )
    g_oMenuBar:addItem( { oMenu, "Wvt*Classes" } )
 
    oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
@@ -462,8 +462,8 @@ STATIC FUNCTION BuildMainMenu()
 
    oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
    oMenu:Caption := "Functionality"
-   oMenu:AddItem( "Expand"                      , {|| WvtWindowExpand(  1 ) } )
-   oMenu:AddItem( "Shrink"                      , {|| WvtWindowExpand( -1 ) } )
+   oMenu:AddItem( "Expand"                      , {|| WvtWindowExpand(1) } )
+   oMenu:AddItem( "Shrink"                      , {|| WvtWindowExpand(-1) } )
    oMenu:AddItem( "-" )
    oMenu:AddItem( "Minimize"                    , {|| wvt_Minimize()   } )
    oMenu:AddItem( "Maximize"                    , {|| hb_gtInfo( HB_GTI_SPEC, HB_GTS_WNDSTATE, HB_GTS_WS_MAXIMIZED ) } )
@@ -551,33 +551,33 @@ STATIC PROCEDURE BuildButtons()
    oXbp:pointerFocus := .F.
    oXbp:caption := IMAGE_VOUCH
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -6 }, { -2, -4 } )
-   oXbp:activate := {|| wvt_Keyboard( K_F2 ) }
+   oXbp:activate := {|| wvt_Keyboard(K_F2) }
    oXbp:toolTipText := "Open Another GET Screen"
 
    oXbp := WvgPushButton():new()
    oXbp:pointerFocus := .F.
    oXbp:caption := IMAGE_BROWSE
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -11 }, { -2, -4 } )
-   oXbp:activate := {|| wvt_Keyboard( K_F5 ) }
+   oXbp:activate := {|| wvt_Keyboard(K_F5) }
    oXbp:toolTipText := "TBrowse + GUI Controls"
 
    oXbp := WvgPushButton():new()
    oXbp:pointerFocus := .F.
    oXbp:caption := IMAGE_NOTES
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -16 }, { -2, -4 } )
-   oXbp:activate := {|| wvt_Keyboard( K_F3 ) }
+   oXbp:activate := {|| wvt_Keyboard(K_F3) }
 
    oXbp := WvgPushButton():new()
    oXbp:pointerFocus := .F.
    oXbp:caption := IMAGE_TOOLS
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -21 }, { -2, -4 } )
-   oXbp:activate := {|| wvt_Keyboard( K_F6 ) }
+   oXbp:activate := {|| wvt_Keyboard(K_F6) }
 
    oXbp := WvgPushButton():new()
    oXbp:pointerFocus := .F.
    oXbp:caption := IMAGE_HELP
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -26 }, { -2, -4 } )
-   oXbp:activate := {|| wvt_Keyboard( K_F7 ) }
+   oXbp:activate := {|| wvt_Keyboard(K_F7) }
 
    oXbp := WvgPushButton():new()
    oXbp:pointerFocus := .F.
@@ -589,7 +589,7 @@ STATIC PROCEDURE BuildButtons()
 
    RETURN
 
-#if ! defined( __HBSCRIPT__HBSHELL )
+#if ! defined(__HBSCRIPT__HBSHELL)
 
 PROCEDURE hb_GTSYS()  /* must be a public function */
 

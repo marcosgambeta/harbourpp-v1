@@ -228,7 +228,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    METHOD wheel( xParam )                       SETGET
    METHOD close( xParam )                       SETGET
    METHOD helpRequest( xParam )                 SETGET
-   METHOD keyboard( xParam )                    SETGET
+   METHOD keyboard(xParam)                      SETGET
    METHOD killDisplayFocus( xParam )            SETGET
    METHOD killInputFocus( xParam )              SETGET
    METHOD move( xParam )                        SETGET
@@ -311,7 +311,7 @@ METHOD WvgWindow:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 METHOD PROCEDURE WvgWindow:destroy()
 
    IF !Empty(::oParent)
-      ::oParent:removeChild( Self )
+      ::oParent:removeChild(Self)
    ENDIF
 
    IF Len(::aChildren) > 0
@@ -607,9 +607,9 @@ METHOD WvgWindow:setFontCompoundName( cFont )
 
       cFace := AllTrim(cFont)
 
-      HB_SYMBOL_UNUSED( cFace )
-      HB_SYMBOL_UNUSED( cAttr )
-      HB_SYMBOL_UNUSED( nPoint )
+      HB_SYMBOL_UNUSED(cFace)
+      HB_SYMBOL_UNUSED(cAttr)
+      HB_SYMBOL_UNUSED(nPoint)
    ENDIF
 
    RETURN cOldFont
@@ -892,7 +892,7 @@ METHOD WvgWindow:helpRequest( xParam )
 
    RETURN Self
 
-METHOD WvgWindow:keyboard( xParam )
+METHOD WvgWindow:keyboard(xParam)
 
    IF HB_IsNumeric(xParam) .AND. HB_IsEvalItem( ::sl_keyboard )
       Eval( ::sl_keyboard, xParam, , Self )

@@ -51,7 +51,7 @@
 #if defined(HB_OS_WIN) && !defined(_Windows)
 #  define _Windows
 #  include <windows.h>
-#  define GSDLLEXPORT  __declspec( dllimport )
+#  define GSDLLEXPORT  __declspec(dllimport)
 #endif
 
 #include "ierrors.h"
@@ -62,7 +62,7 @@
 #  define gs_error_Quit  e_Quit
 #endif
 
-HB_FUNC( HB_GS )
+HB_FUNC(HB_GS)
 {
    HB_BOOL  bResult = false;
    auto pParam = hb_param(1, Harbour::Item::ARRAY);
@@ -101,7 +101,7 @@ HB_FUNC( HB_GS )
    hb_retl(bResult);
 }
 
-HB_FUNC( HB_GSAPI_REVISION )
+HB_FUNC(HB_GSAPI_REVISION)
 {
    gsapi_revision_t r;
    int result = gsapi_revision(&r, sizeof(r));

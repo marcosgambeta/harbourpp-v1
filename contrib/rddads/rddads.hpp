@@ -50,51 +50,51 @@
 #include "hbapiitm.hpp"
 #include "hbapirdd.hpp"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
-#if ! defined( WIN32 ) && defined( HB_OS_WIN )
+#if ! defined(WIN32) && defined(HB_OS_WIN)
    #define WIN32
 #endif
-#if ! defined( unix ) && defined( HB_OS_UNIX )
+#if ! defined(unix) && defined(HB_OS_UNIX)
    #define unix
 #endif
-#if ! defined( x64 ) && defined( HB_ARCH_64BIT )
+#if ! defined(x64) && defined(HB_ARCH_64BIT)
    #define x64
 #endif
-#if ( defined( __MINGW32__ ) && ! defined( _declspec ) )
-   #define _declspec( dllexport )  __declspec( dllexport )
+#if ( defined(__MINGW32__) && ! defined(_declspec) )
+   #define _declspec(dllexport)  __declspec(dllexport)
 #endif
 
 #include "ace.h"
 
 /* Auto-detect ACE version. */
-#if   defined( ADS_ROOT_DD_ALIAS )
+#if   defined(ADS_ROOT_DD_ALIAS)
    #define _ADS_LIB_VERSION  1110 /* or upper */
-#elif defined( ADS_GET_FORMAT_WEB )
+#elif defined(ADS_GET_FORMAT_WEB)
    #define _ADS_LIB_VERSION  1100
-#elif defined( ADS_GET_UTF8 )
+#elif defined(ADS_GET_UTF8)
    #define _ADS_LIB_VERSION  1010
-#elif defined( ADS_DEFAULT_SQL_TIMEOUT )
+#elif defined(ADS_DEFAULT_SQL_TIMEOUT)
    #define _ADS_LIB_VERSION  1000
-#elif defined( DANISH_ADS_CS_AS_1252 )
+#elif defined(DANISH_ADS_CS_AS_1252)
    #define _ADS_LIB_VERSION  910
-#elif defined( ADS_NOTIFICATION_CONNECTION )
+#elif defined(ADS_NOTIFICATION_CONNECTION)
    #define _ADS_LIB_VERSION  900
-#elif defined( ADS_UDP_IP_CONNECTION )
+#elif defined(ADS_UDP_IP_CONNECTION)
    #define _ADS_LIB_VERSION  810
-#elif defined( ADS_REPLICATION_CONNECTION )
+#elif defined(ADS_REPLICATION_CONNECTION)
    #define _ADS_LIB_VERSION  800
-#elif defined( ADS_NOT_AUTO_OPEN )
+#elif defined(ADS_NOT_AUTO_OPEN)
    #define _ADS_LIB_VERSION  710
-#elif defined( ADS_FTS_INDEX_ORDER )
+#elif defined(ADS_FTS_INDEX_ORDER)
    #define _ADS_LIB_VERSION  700
-#elif defined( ADS_COMPRESS_ALWAYS )
+#elif defined(ADS_COMPRESS_ALWAYS)
    #define _ADS_LIB_VERSION  620
-#elif defined( ADS_READ_ALL_COLUMNS )
+#elif defined(ADS_READ_ALL_COLUMNS)
    #define _ADS_LIB_VERSION  610
-#elif defined( ADS_USER_DEFINED )
+#elif defined(ADS_USER_DEFINED)
    #define _ADS_LIB_VERSION  600
 #else
    #define _ADS_LIB_VERSION  500
@@ -102,7 +102,7 @@
 
 /* Make sure to not allow a manual override requesting
    a higher version than the one of ACE. [vszakats] */
-#if ! defined( ADS_LIB_VERSION )
+#if ! defined(ADS_LIB_VERSION)
    #define ADS_LIB_VERSION   _ADS_LIB_VERSION
 #elif ADS_LIB_VERSION > _ADS_LIB_VERSION
    #undef ADS_LIB_VERSION
@@ -165,7 +165,7 @@ typedef ADSAREA * ADSAREAP;
 
 #define HB_RDD_ADS_VERSION_STRING  "ADS RDD 1.4"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  define ADS_USE_OEM_TRANSLATION
 #else
 #  undef ADS_USE_OEM_TRANSLATION

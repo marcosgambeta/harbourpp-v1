@@ -50,12 +50,12 @@
 #include <hbapiitm.hpp>
 #include <hbapigt.hpp>
 
-HB_FUNC( NUMBUTTONS )
+HB_FUNC(NUMBUTTONS)
 {
    hb_retni(hb_mouseCountButton());
 }
 
-HB_FUNC( SETMOUSE )
+HB_FUNC(SETMOUSE)
 {
    HB_BOOL fRow, fCol;
 

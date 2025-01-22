@@ -102,7 +102,7 @@ HB_FUNC(WAPI_ISZOOMED)
 }
 
 #if 0
-HB_FUNC( WAPI_GETSYSTEMMETRICS ) // TODO: deprecated (using waGetSystemMetrics from WinApi library)
+HB_FUNC(WAPI_GETSYSTEMMETRICS) // TODO: deprecated (using waGetSystemMetrics from WinApi library)
 {
    int iResult = GetSystemMetrics(hbwapi_par_INT(1));
    hbwapi_SetLastError(GetLastError());
@@ -113,7 +113,7 @@ HB_FUNC( WAPI_GETSYSTEMMETRICS ) // TODO: deprecated (using waGetSystemMetrics f
 HB_FUNC_TRANSLATE(WAPI_GETSYSTEMMETRICS, WAGETSYSTEMMETRICS)
 
 #if 0
-HB_FUNC( WAPI_GETKEYSTATE ) // TODO: deprecated (using waGetKeyState from WinApi library)
+HB_FUNC(WAPI_GETKEYSTATE) // TODO: deprecated (using waGetKeyState from WinApi library)
 {
    hbwapi_ret_NI(GetKeyState(hbwapi_par_INT(1)));
 }
@@ -263,7 +263,7 @@ HB_FUNC(WAPI_ENABLESCROLLBAR)
 
 #if 0
 /* BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi); */
-HB_FUNC( WAPI_GETSCROLLBARINFO )
+HB_FUNC(WAPI_GETSCROLLBARINFO)
 {
    BOOL bSuccess;
 
@@ -354,17 +354,17 @@ HB_FUNC(WAPI_GETSCROLLRANGE)
 
 #if 0
 /* BOOL ScrollDC(HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate); */
-HB_FUNC( WAPI_SCROLLDC )
+HB_FUNC(WAPI_SCROLLDC)
 {
 }
 
 /* BOOL ScrollWindow(HWND hWnd, int XAmount, int YAmount, const RECT * lpRect, const RECT * lpClipRect); */
-HB_FUNC( WAPI_SCROLLWINDOW )
+HB_FUNC(WAPI_SCROLLWINDOW)
 {
 }
 
 /* int ScrollWindowEx(HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags); */
-HB_FUNC( WAPI_SCROLLWINDOWEX )
+HB_FUNC(WAPI_SCROLLWINDOWEX)
 {
 }
 #endif
@@ -429,7 +429,7 @@ HB_FUNC(WAPI_SETACTIVEWINDOW)
 }
 
 #if 0
-HB_FUNC( WAPI_LOADBITMAP )
+HB_FUNC(WAPI_LOADBITMAP)
 {
    if( HB_ISNUM(2) )
    {
@@ -701,12 +701,12 @@ HB_FUNC(WAPI_APPENDMENU)
 }
 
 #if 0
-HB_FUNC( WAPI_GETMENUITEMINFO )
+HB_FUNC(WAPI_GETMENUITEMINFO)
 {
    GetMenuItemInfo();
 }
 
-HB_FUNC( WAPI_SETMENUITEMINFO )
+HB_FUNC(WAPI_SETMENUITEMINFO)
 {
    SetMenuItemInfo();
 }
@@ -844,7 +844,7 @@ HB_FUNC(WAPI_GETKEYBOARDLAYOUTNAME)
 }
 
 #if 0
-HB_FUNC( WAPI_GETSYSCOLOR ) // TODO: deprecated (using waGetSysColor from WinApi library)
+HB_FUNC(WAPI_GETSYSCOLOR) // TODO: deprecated (using waGetSysColor from WinApi library)
 {
    hbwapi_ret_DWORD(GetSysColor(hb_parni(1)));
 }

@@ -35,7 +35,7 @@ PROCEDURE Main()
 
    xData := mxmlGetCustom( node )
    IF HB_IsHash( xData ) .AND. hb_HHasKey( xData, "Today" )
-      OutStd( xData[ "Today" ], hb_eol() )
+      OutStd(xData[ "Today" ], hb_eol())
    ENDIF
 
    mxmlSetErrorCallback(NIL)
@@ -119,7 +119,7 @@ FUNCTION whitespace_cb(node, where)
          where == MXML_WS_AFTER_OPEN )
       RETURN hb_eol()
 
-   ELSEIF where == MXML_WS_AFTER_OPEN .AND. Empty(mxmlGetFirstChild( node ))
+   ELSEIF where == MXML_WS_AFTER_OPEN .AND. Empty(mxmlGetFirstChild(node))
       RETURN hb_eol()
    ENDIF
 

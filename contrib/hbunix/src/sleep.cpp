@@ -48,7 +48,7 @@
 
 #include "hbposix.hpp"
 
-HB_FUNC( POSIX_SLEEP )
+HB_FUNC(POSIX_SLEEP)
 {
    hb_retnint(sleep(static_cast<unsigned>(hb_parnint(1))));
 }

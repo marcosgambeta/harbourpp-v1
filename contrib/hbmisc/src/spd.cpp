@@ -194,7 +194,7 @@ static HB_UINT SCItm( char * cBuffer, HB_UINT ulMaxBuf, const char * cParFrm, in
 #define DK_EMPTYDATE      "'0001-01-01 BC'"
 #define DK_EMPTYDATETIME  "'0001-01-01 00:00:00 BC'"
 
-HB_FUNC( SQL_SPRINTF )
+HB_FUNC(SQL_SPRINTF)
 {
    HB_UINT      ulItmFrm;
    const char * cItmFrm;

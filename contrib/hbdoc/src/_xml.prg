@@ -98,8 +98,8 @@ METHOD GenerateXML:BeginSection( cSection, cFilename )
 
 METHOD GenerateXML:EndSection( cSection, cFilename )
 
-   HB_SYMBOL_UNUSED( cSection )
-   HB_SYMBOL_UNUSED( cFilename )
+   HB_SYMBOL_UNUSED(cSection)
+   HB_SYMBOL_UNUSED(cFilename)
    ::Depth--
    ::cFile += Replicate( Chr(9), ::Depth ) + '</Section>' + hb_eol()
 
@@ -121,7 +121,7 @@ METHOD GenerateXML:AddEntry( oEntry )
       ::cFile += '<Entry>' + hb_eol()
       ::Depth++
       FOR EACH item IN FieldIDList()
-         ::WriteEntry( item, oEntry:fld[ item ], oEntry:IsPreformatted( item ) )
+         ::WriteEntry( item, oEntry:fld[ item ], oEntry:IsPreformatted(item) )
       NEXT
       ::Depth--
       ::cFile += '</Entry>' + hb_eol()

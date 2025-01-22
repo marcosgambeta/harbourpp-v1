@@ -68,7 +68,7 @@ CREATE CLASS wvtMenu
    METHOD NumItems()
    METHOD Destroy()
    METHOD GetItem( nItemNum )
-   METHOD FindMenuItemById( nId )
+   METHOD FindMenuItemById(nId)
    METHOD DrawMenuBar()
 
    CLASS VAR MenuItemId                            INIT 1
@@ -132,7 +132,7 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
 #endif
       ENDIF
 
-      AAdd( ::aItems, aItem )
+      AAdd(::aItems, aItem)
 
       RETURN .T.
    ENDIF
@@ -200,7 +200,7 @@ METHOD wvtMenu:GetItem( nItemNum )
 
    RETURN aResult
 
-METHOD wvtMenu:FindMenuItemById( nId )
+METHOD wvtMenu:FindMenuItemById(nId)
 
    LOCAL x, aResult := {}
 
@@ -208,7 +208,7 @@ METHOD wvtMenu:FindMenuItemById( nId )
       x := ::NumItems()
       DO WHILE x > 0 .AND. Empty(aResult)
          IF ::aItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
-            aResult := ::aItems[ x ][ WVT_MENU_MENUOBJ ]:FindMenuItemById( nId )
+            aResult := ::aItems[ x ][ WVT_MENU_MENUOBJ ]:FindMenuItemById(nId)
          ELSEIF ::aItems[ x ][ WVT_MENU_IDENTIFIER ] == nId
             aResult := ::aItems[ x ]
          ENDIF

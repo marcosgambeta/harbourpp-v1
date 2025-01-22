@@ -80,13 +80,13 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    VAR    sl_itemMarked
    VAR    sl_itemSelected
 
-   METHOD itemCollapsed( xParam )               SETGET
-   METHOD itemExpanded( xParam )                SETGET
-   METHOD itemMarked( xParam )                  SETGET
+   METHOD itemCollapsed(xParam)               SETGET
+   METHOD itemExpanded(xParam)                SETGET
+   METHOD itemMarked(xParam)                  SETGET
 
    VAR    oItemSelected
    ACCESS itemSelected                          INLINE ::sl_itemSelected
-   ASSIGN itemSelected( bBlock )                INLINE ::sl_itemSelected := bBlock
+   ASSIGN itemSelected(bBlock)                INLINE ::sl_itemSelected := bBlock
 
    VAR    hParentSelected
    VAR    hItemSelected
@@ -97,8 +97,8 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    METHOD setColorFG( nRGB )                    INLINE wapi_TreeView_SetTextColor( ::hWnd, iif(HB_IsString( nRGB ), wvt_GetRGBColorByString( nRGB, 0 ), nRGB) )
    METHOD setColorBG( nRGB )                    INLINE wapi_TreeView_SetBkColor( ::hWnd, iif(HB_IsString( nRGB ), wvt_GetRGBColorByString( nRGB, 1 ), nRGB) )
    METHOD setColorLines( nRGB )                 INLINE wapi_TreeView_SetLineColor( ::hWnd, nRGB )
-   METHOD showExpanded( lExpanded, nLevels )    INLINE wvg_TreeView_ShowExpanded( ::hWnd, ;
-      iif(lExpanded == NIL, .F., lExpanded), nLevels )
+   METHOD showExpanded(lExpanded, nLevels)    INLINE wvg_TreeView_ShowExpanded(::hWnd, ;
+      iif(lExpanded == NIL, .F., lExpanded), nLevels)
 
 ENDCLASS
 
@@ -128,7 +128,7 @@ METHOD WvgTreeView:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::style += TVS_HASLINES + TVS_LINESATROOT
    ENDIF
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -280,11 +280,11 @@ METHOD WvgTreeView:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
 METHOD WvgTreeView:itemFromPos( aPos )
 
-   HB_SYMBOL_UNUSED( aPos )
+   HB_SYMBOL_UNUSED(aPos)
 
    RETURN Self
 
-METHOD WvgTreeView:itemCollapsed( xParam )
+METHOD WvgTreeView:itemCollapsed(xParam)
 
    IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_paint := xParam
@@ -292,7 +292,7 @@ METHOD WvgTreeView:itemCollapsed( xParam )
 
    RETURN Self
 
-METHOD WvgTreeView:itemExpanded( xParam )
+METHOD WvgTreeView:itemExpanded(xParam)
 
    IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_itemExpanded := xParam
@@ -300,7 +300,7 @@ METHOD WvgTreeView:itemExpanded( xParam )
 
    RETURN Self
 
-METHOD WvgTreeView:itemMarked( xParam )
+METHOD WvgTreeView:itemMarked(xParam)
 
    IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_itemMarked := xParam
@@ -310,7 +310,7 @@ METHOD WvgTreeView:itemMarked( xParam )
 
 #if 0
 
-METHOD WvgTreeView:itemSelected( xParam )
+METHOD WvgTreeView:itemSelected(xParam)
 
    IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_itemSelected := xParam

@@ -132,7 +132,7 @@ PROCEDURE Main()
 
    ? oRow:FieldGet(1), oRow:FieldGet(2)
 
-   ? oServer:Append( oRow )
+   ? oServer:Append(oRow)
 
    ? oServer:Delete( oQuery:blank(), "code = 200" )
 

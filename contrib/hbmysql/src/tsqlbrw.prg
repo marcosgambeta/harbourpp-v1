@@ -155,8 +155,8 @@ METHOD TBrowseSQL:New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable )
 
    LOCAL i, oCol
 
-   HB_SYMBOL_UNUSED( oServer )
-   HB_SYMBOL_UNUSED( cTable )
+   HB_SYMBOL_UNUSED(oServer)
+   HB_SYMBOL_UNUSED(cTable)
 
    ::super:New( nTop, nLeft, nBottom, nRight )
 
@@ -413,6 +413,6 @@ METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
 // Empty method to be subclassed
 METHOD TBrowseSQL:KeyboardHook( nKey )
 
-   HB_SYMBOL_UNUSED( nKey )
+   HB_SYMBOL_UNUSED(nKey)
 
    RETURN Self

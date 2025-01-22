@@ -53,7 +53,7 @@
 #include "hbapi.hpp"
 #include <hbwinuni.hpp>
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include <windows.h>
 

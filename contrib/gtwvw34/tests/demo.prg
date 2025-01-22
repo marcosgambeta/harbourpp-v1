@@ -83,7 +83,7 @@ PROCEDURE Main()
 
    ErrorBlock( {| e | MyError( e ) } )
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -202,7 +202,7 @@ PROCEDURE Main()
    @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos( MaxRow() - 1 )
    @ MaxRow(), 0 SAY "This is line " + hb_ntos( MaxRow() )
 
-   DO WHILE ( nKeyStd := hb_keyStd( Inkey(0) ) ) != K_ESC
+   DO WHILE ( nKeyStd := hb_keyStd(Inkey(0)) ) != K_ESC
       // experiment with different paint refresh interval:
       DO CASE
       CASE nKeyStd == hb_keyCode( "<" )
@@ -296,7 +296,7 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    ?? "Press <Ctrl+E> to toggle between echoing what you type to previous window"
    ?
    CLEAR TYPEAHEAD
-   DO WHILE ( nKeyStd := hb_keyStd( Inkey(0) ) ) != K_ESC
+   DO WHILE ( nKeyStd := hb_keyStd(Inkey(0)) ) != K_ESC
       IF nKeyStd == K_ENTER
          ?? hb_keyChar( nKeyStd ) + Chr(10)
          IF lEchoing
@@ -368,11 +368,11 @@ STATIC PROCEDURE Demo_Get()
 
    ResetMiscObjects( nCurWindow )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 15 - nTop, 59 - nLeft, 18 - nTop, 72 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, hb_DirBase() + "vouch1.bmp" ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft) } )
    AddMiscObjects( nCurWindow, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
@@ -470,7 +470,7 @@ STATIC PROCEDURE DEMO_Browse()
       tmp := oBrowse:getColumn( tmp:__enumIndex() ):colSep
    NEXT
 
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
@@ -480,8 +480,8 @@ STATIC PROCEDURE DEMO_Browse()
 #endif
    wvw_pbCreate( nCurWindow, MaxRow() - 1, MaxCol() - 15, MaxRow() - 1, MaxCol() - 5, "Info", , {|| xDebugInfo() } )
 
-   nHScrollBar := wvw_xbCreate( nCurWindow, 0, oBrowse:nBottom + 1, oBrowse:nLeft, oBrowse:nRight - oBrowse:nLeft + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), HXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ )
-   nVScrollBar := wvw_xbCreate( nCurWindow, 1, oBrowse:nTop, oBrowse:nRight + 1, oBrowse:nBottom - oBrowse:nTop + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), VXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ )
+   nHScrollBar := wvw_xbCreate( nCurWindow, 0, oBrowse:nBottom + 1, oBrowse:nLeft, oBrowse:nRight - oBrowse:nLeft + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED(nXBpos), HXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ )
+   nVScrollBar := wvw_xbCreate( nCurWindow, 1, oBrowse:nTop, oBrowse:nRight + 1, oBrowse:nBottom - oBrowse:nTop + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED(nXBpos), VXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ )
 
    hb_DispOutAt( nTop + 1 - nTop, nleft - nleft, PadC("Test table", nRight - nLeft + 1), "W+/W" )
 
@@ -490,7 +490,7 @@ STATIC PROCEDURE DEMO_Browse()
    RefreshVXB(oBrowse, nCurWindow, nVScrollBar)  // 2004-07-04
 
    DO WHILE ! lEnd
-      nKey := hb_keyStd( Inkey(0) )
+      nKey := hb_keyStd(Inkey(0))
 
       DO CASE
       CASE nKey == K_ESC .OR. nKey == K_ENTER
@@ -717,9 +717,9 @@ STATIC PROCEDURE RefreshVXB(oBrowse, nWinNum, XBid)
       ENDDO
 
       nMin := 1
-      nMax := Round( ordKeyCount() / nRatio, 0 )
-      nPage := Round( oBrowse:RowCount / nRatio, 0 )       // ordKeyCount()
-      nPos := Round( ( ordKeyNo() - oBrowse:RowPos + 1 ) / nRatio, 0 )// ordKeyCount()
+      nMax := Round(ordKeyCount() / nRatio, 0)
+      nPage := Round(oBrowse:RowCount / nRatio, 0)       // ordKeyCount()
+      nPos := Round(( ordKeyNo() - oBrowse:RowPos + 1 ) / nRatio, 0)// ordKeyCount()
    ENDIF
 
    wvw_xbUpdate( nWinNum, XBid, nPos, nPage, nMin, nMax )
@@ -842,11 +842,11 @@ PROCEDURE WVW_KILLFOCUS( hWnd )  /* must be a public function */
 
 PROCEDURE WVW_TIMER( nWinNum, hWnd, message, wParam, lParam )  /* must be a public function */
 
-   HB_SYMBOL_UNUSED( nWinNum )
-   HB_SYMBOL_UNUSED( hWnd )
-   HB_SYMBOL_UNUSED( message )
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(nWinNum)
+   HB_SYMBOL_UNUSED(hWnd)
+   HB_SYMBOL_UNUSED(message)
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
 
    // this function is called every certain interval, by GTWVW gtwndproc
    wvw_sbSetText( 0, 1, Time() )
@@ -924,7 +924,7 @@ STATIC PROCEDURE xEnableToolbar( nWinNum )
 STATIC PROCEDURE ResetMiscObjects( nWinNum )
 
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
-      AAdd( s_amiscobjlist, {} )
+      AAdd(s_amiscobjlist, {})
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}
 
@@ -932,7 +932,7 @@ STATIC PROCEDURE ResetMiscObjects( nWinNum )
 
 STATIC PROCEDURE AddMiscObjects( nWinNum, bAction )
 
-   AAdd( s_amiscobjlist[ nWinNum + 1 ], bAction )
+   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
 
    RETURN
 
@@ -946,7 +946,7 @@ STATIC FUNCTION nAfterInkey(nKey)
    // (1) menu command, or
    // (2) mouse button action
    LOCAL bAction
-   LOCAL nKeyStd := hb_keyStd( nKey )
+   LOCAL nKeyStd := hb_keyStd(nKey)
 
    IF nKey == WVW_DEFAULT_MENUKEYEVENT
       // MenuKeyEvent
@@ -1477,10 +1477,10 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    IF lPressed  // ::lPressed
       IF ::nType != _BUTTON_HARD
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, win_CreateBrush( WIN_BS_HATCHED,, WIN_HS_FDIAGONAL ), ::lTight, .T. )
-         wvw_DrawBoxRecessed( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight )  // wvw
+         wvw_DrawBoxRecessed(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)  // wvw
       ELSE
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
-         wvw_DrawBoxRaised(   nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight )
+         wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ENDIF
 
       IF lUseImage .AND. ::nType != _BUTTON_NONE
@@ -1495,7 +1495,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
-         wvw_DrawBoxRaised( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight )
+         wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ELSE
          // must undraw the box. ideally GTWVW has this function
          wvw_DrawBoxGroup( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2 )
@@ -1537,7 +1537,7 @@ STATIC PROCEDURE wvwm_paint( nWinNum )
 STATIC PROCEDURE wvwm_ResetMouseObjects( nWinNum )
 
    DO WHILE Len(s_amouseobjlist) < nWinNum + 1
-      AAdd( s_amouseobjlist, {} )
+      AAdd(s_amouseobjlist, {})
    ENDDO
    s_amouseobjlist[ nWinNum + 1 ] := {}
 
@@ -1546,7 +1546,7 @@ STATIC PROCEDURE wvwm_ResetMouseObjects( nWinNum )
 STATIC PROCEDURE wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 
    // adds a mouse object oMouse into window nWinNum
-   AAdd( s_amouseobjlist[ nWinNum + 1 ], { hb_defaultValue( nObjType, _MOBJECT_BUTTON ), oMouse } )
+   AAdd(s_amouseobjlist[ nWinNum + 1 ], { hb_defaultValue( nObjType, _MOBJECT_BUTTON ), oMouse })
 
    RETURN
 
@@ -1559,7 +1559,7 @@ STATIC FUNCTION wvwm_SetKeyRepeater( lSet )
    IF HB_IsLogical( lSet )
       IF lSet
          IF !lWasSet
-            s_nkeyrepeater := hb_idleAdd( {|| xKeyRepeater() } )
+            s_nkeyrepeater := hb_idleAdd({|| xKeyRepeater() })
          ENDIF
       ELSE
          IF lWasSet
@@ -1615,7 +1615,7 @@ STATIC FUNCTION nScrollChecker( nKey, cType, oMouseObj )
 
    // cType == "H" or "V"
 
-   HB_SYMBOL_UNUSED( cType )
+   HB_SYMBOL_UNUSED(cType)
 
    nButtonChecker( nkey, oMouseObj:oFirstButton )
    nButtonChecker( nkey, oMouseObj:oRail1Button )

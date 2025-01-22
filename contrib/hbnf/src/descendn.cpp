@@ -19,7 +19,7 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 
-HB_FUNC( FT_DESCEND )
+HB_FUNC(FT_DESCEND)
 {
    PHB_ITEM iP     = hb_itemParam(1);
    HB_TYPE  uiType = hb_itemType(iP);

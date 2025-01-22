@@ -31,7 +31,7 @@
 #xtranslate Wvt_SetPen             ( [<vlist,...>] )  => wvw_SetPen             ( [<vlist>] )
 #xtranslate Wvt_SetBrush           ( [<vlist,...>] )  => wvw_SetBrush           ( [<vlist>] )
 
-#xtranslate Wvt_CreateDialogDynamic( [<vlist,...>] )  => wvw_CreateDialogDynamic( [<vlist>] )
+#xtranslate Wvt_CreateDialogDynamic([<vlist,...>])    => wvw_CreateDialogDynamic([<vlist>])
 #xtranslate Wvt_CreateDialogModal  ( [<vlist,...>] )  => wvw_CreateDialogModal  ( [<vlist>] )
 #xtranslate Wvt__MakeDlgTemplate   ( [<vlist,...>] )  => wvw__MakeDlgTemplate   ( [<vlist>] )
 #xtranslate Wvt_LBAddString        ( [<vlist,...>] )  => wvw_LBAddString        ( [<vlist>] )

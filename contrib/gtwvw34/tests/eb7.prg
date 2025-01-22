@@ -60,7 +60,7 @@ PROCEDURE Main()
    LOCAL lClosepermitted := .F.
    LOCAL bSetKey := SetKey( K_F8, {|| MyHelp() } )
 
-#if defined( __HBSCRIPT__HBSHELL ) .AND. defined( __PLATFORM__WINDOWS )
+#if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
@@ -173,7 +173,7 @@ STATIC PROCEDURE MyHelp()
 
 PROCEDURE WVW_SETFOCUS( nWinNum, hWnd )  /* must be a public function */
 
-   HB_SYMBOL_UNUSED( hWnd )
+   HB_SYMBOL_UNUSED(hWnd)
 
    IF nwinnum != 0
       wvw_nSetCurWindow( nwinnum )
@@ -220,7 +220,7 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
    ENDIF
    hb_default( @mcLabel, mcVarName + ":" )
 
-   AAdd( aEBGets, { ;
+   AAdd(aEBGets, { ;
       mlMultiline, ;    // __GET_LMULTILINE
       mcLabel, ;        // __GET_CLABEL
       mnrow, ;          // __GET_NROW
@@ -231,7 +231,7 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
       mbText, ;         // __GET_BTEXT
       mbAssign, ;       // __GET_BASSIGN
       NIL, ;            // __GET_NEBID
-      .F. } )           // __GET_LFOCUSED
+      .F. })           // __GET_LFOCUSED
 
    RETURN .T.
 
@@ -303,7 +303,7 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
    wvw_ebSetFocus( nwinnum, aEBGets[ 1 ][ __GET_NEBID ] )
    nFocus := 1
    DO WHILE ! lDone
-      nKeyStd := hb_keyStd( nKey := Inkey(0.5, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )) )
+      nKeyStd := hb_keyStd(nKey := Inkey(0.5, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )))
       DO CASE
       CASE HB_IsEvalItem( SetKey( nKey ) )
          Eval( SetKey( nKey ) )
@@ -337,12 +337,12 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
             ENDIF
          ENDIF
       ENDCASE
-      IF wvw_pbIsFocused( nwinnum, nOKbutton )
+      IF wvw_pbIsFocused(nwinnum, nOKbutton)
          nFocus := nNumGets + 1
-      ELSEIF wvw_pbIsFocused( nwinnum, nCancelbutton )
+      ELSEIF wvw_pbIsFocused(nwinnum, nCancelbutton)
          nFocus := nNumGets + 2
       ELSE
-         nFocus := nFocused( aEBGets )
+         nFocus := nFocused(aEBGets)
       ENDIF
    ENDDO
 
@@ -370,12 +370,12 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
       RETURN
    ENDIF
    DO CASE
-   CASE wvw_pbIsFocused( nwinnum, nOKbutton )
+   CASE wvw_pbIsFocused(nwinnum, nOKbutton)
       nFocus := nNumGets + 1
-   CASE wvw_pbIsFocused( nwinnum, nCancelbutton )
+   CASE wvw_pbIsFocused(nwinnum, nCancelbutton)
       nFocus := nNumGets + 2
    OTHERWISE
-      nFocus := nFocused( aEBGets )
+      nFocus := nFocused(aEBGets)
    ENDCASE
    lchangefocus := .T.
    DO CASE
@@ -480,7 +480,7 @@ STATIC FUNCTION nGetIndex( aEBGets, nEBId )
 
 // returns index to aEBGets array containing editbox that is/was in focus
 
-STATIC FUNCTION nFocused( aEBGets )
+STATIC FUNCTION nFocused(aEBGets)
    RETURN AScan( aEBGets, {| x | x[ __GET_LFOCUSED ] } )
 
 // callback function called by GTWVW during some events on editbox
@@ -521,7 +521,7 @@ STATIC PROCEDURE MaskEditBox( nWinNum, nId, nEvent, aEBGets )
          wvw_ebSetText( nwinnum, nId, Transform(GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype )) )
       ENDIF
       wvw_ebSetSel( nwinnum, nid, 0, -1 )
-      nwasFocus := nFocused( aEBGets )
+      nwasFocus := nFocused(aEBGets)
       IF nwasFocus != 0
          aEBGets[ nwasFocus ][ __GET_LFOCUSED ] := .F.
       ENDIF
@@ -814,7 +814,7 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
    CASE "C"
       RETURN Text
    CASE "D"
-      RETURN CToD( Text )
+      RETURN CToD(Text)
    ENDSWITCH
 
    // ASSUME numeric
@@ -871,7 +871,7 @@ STATIC FUNCTION IsBadDate( cBuffer )
       RETURN .F.
    ENDIF
 
-   IF Empty(CToD( cBuffer ))
+   IF Empty(CToD(cBuffer))
       MyMessageBox( , "'" + cBuffer + "' is not a valid DATE" )
       RETURN .T.
    ENDIF
@@ -886,9 +886,9 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
 
    LOCAL bhandler
 
-   HB_SYMBOL_UNUSED( hWnd )
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(hWnd)
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
 
    // did user perform a menu/toolbar action on Main Window?
 #if 0

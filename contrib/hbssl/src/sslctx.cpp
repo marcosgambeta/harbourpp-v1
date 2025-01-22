@@ -1034,9 +1034,9 @@ int(*SSL_CTX_get_client_cert_cb(SSL_CTX * ctx))(SSL * ssl, X509 * *x509, EVP_PKE
 int SSL_CTX_get_ex_new_index( long argl, char * argp, int (*new_func); (void), int ( * dup_func )(void), void ( * free_func )(void) )
 void( *SSL_CTX_get_info_callback( SSL_CTX * ctx ) )(SSL * ssl, int cb, int ret);
 int( *SSL_CTX_get_verify_callback( const SSL_CTX * ctx ) )(int ok, X509_STORE_CTX * ctx);
-SSL_SESSION *( *SSL_CTX_sess_get_get_cb( SSL_CTX * ctx ) )(SSL * ssl, unsigned char * data, int len, int * copy);
-int ( *SSL_CTX_sess_get_new_cb( SSL_CTX * ctx )(SSL * ssl, SSL_SESSION * sess);
-void ( *SSL_CTX_sess_get_remove_cb( SSL_CTX * ctx )(SSL_CTX * ctx, SSL_SESSION * sess);
+SSL_SESSION *( *SSL_CTX_sess_get_get_cb(SSL_CTX * ctx) )(SSL * ssl, unsigned char * data, int len, int * copy);
+int ( *SSL_CTX_sess_get_new_cb(SSL_CTX * ctx)(SSL * ssl, SSL_SESSION * sess);
+void ( *SSL_CTX_sess_get_remove_cb(SSL_CTX * ctx)(SSL_CTX * ctx, SSL_SESSION * sess);
 void SSL_CTX_sess_set_get_cb(SSL_CTX * ctx, SSL_SESSION * ( *cb )(SSL * ssl, unsigned char * data, int len, int * copy));
 void SSL_CTX_sess_set_new_cb(SSL_CTX * ctx, int ( * cb )(SSL * ssl, SSL_SESSION * sess));
 void SSL_CTX_sess_set_remove_cb(SSL_CTX * ctx, void ( * cb )(SSL_CTX * ctx, SSL_SESSION * sess));

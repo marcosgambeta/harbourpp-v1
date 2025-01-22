@@ -54,9 +54,9 @@
 #define DLL_CDECL                   0x08
 #define DLL_STDCALL                 0x20
 #define DLL_SYSTEM                  0x04
-#if defined( __PLATFORM__WINDOWS )
+#if defined(__PLATFORM__WINDOWS)
 #define DLL_OSAPI                   DLL_STDCALL
-#elif defined( __PLATFORM__OS2 )
+#elif defined(__PLATFORM__OS2)
 #define DLL_OSAPI                   DLL_SYSTEM
 #else
 #define DLL_OSAPI                   DLL_CDECL

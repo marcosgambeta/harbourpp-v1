@@ -173,7 +173,7 @@ struct HB_GTWVG
    int      fontQuality;                    // requested font quality
    TCHAR    fontFace[ LF_FACESIZE ];        // requested font face name LF_FACESIZE #defined in wingdi.h
    HFONT    hFont;                          // current font handle
-#if ! defined( UNICODE )
+#if ! defined(UNICODE)
    HFONT    hFontBox;                       // current font handle to draw lines
 #endif
 
@@ -187,7 +187,7 @@ struct HB_GTWVG
    LPCTSTR  lpWindowTitle;
 
    int      CodePage;                       // Code page to use for display characters
-#if ! defined( UNICODE )
+#if ! defined(UNICODE)
    int      boxCodePage;                    // Code page to use for display draw line characters
 #endif
    HB_BOOL  Win9X;                          // Flag to say if running on Win9X not NT/2000/XP
@@ -303,8 +303,8 @@ using PHB_GTWVG = HB_GTWVG *;
 extern HB_EXPORT POINT         hb_wvt_gtGetXYFromColRow( int col, int row );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPicture( const char * pszFileName );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPictureFromResource( LPCTSTR resource, LPCTSTR section );
-extern HB_EXPORT void          hb_wvt_GetStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib );
-extern HB_EXPORT void          hb_wvt_PutStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib );
+extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib);
+extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib);
 
 extern HB_EXPORT PHB_GTWVT     hb_wvt_gtGetWVT( void );
 

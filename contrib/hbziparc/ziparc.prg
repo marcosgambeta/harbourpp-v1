@@ -188,7 +188,7 @@ FUNCTION hb_GetFilesInZip( cFileName, lVerbose )
 
 FUNCTION hb_ZipTestPK( cFileName )
 
-   HB_SYMBOL_UNUSED( cFileName )
+   HB_SYMBOL_UNUSED(cFileName)
 
    /* NOTE: Spanning not supported. */
 
@@ -196,7 +196,7 @@ FUNCTION hb_ZipTestPK( cFileName )
 
 FUNCTION hb_SetDiskZip( bBlock )
 
-   HB_SYMBOL_UNUSED( bBlock )
+   HB_SYMBOL_UNUSED(bBlock)
 
    /* NOTE: Spanning not supported. */
 
@@ -204,9 +204,9 @@ FUNCTION hb_SetDiskZip( bBlock )
 
 FUNCTION TransferFromZip( cZipSrc, cZipDst, aFiles )
 
-   HB_SYMBOL_UNUSED( cZipSrc )
-   HB_SYMBOL_UNUSED( cZipDst )
-   HB_SYMBOL_UNUSED( aFiles )
+   HB_SYMBOL_UNUSED(cZipSrc)
+   HB_SYMBOL_UNUSED(cZipDst)
+   HB_SYMBOL_UNUSED(aFiles)
 
    /* TODO: Implement. */
 
@@ -214,8 +214,8 @@ FUNCTION TransferFromZip( cZipSrc, cZipDst, aFiles )
 
 PROCEDURE hb_SetBuffer( nWriteBuffer, nExtractBuffer, nReadBuffer )
 
-   HB_SYMBOL_UNUSED( nWriteBuffer )
-   HB_SYMBOL_UNUSED( nExtractBuffer )
+   HB_SYMBOL_UNUSED(nWriteBuffer)
+   HB_SYMBOL_UNUSED(nExtractBuffer)
 
    IF HB_IsNumeric(nReadBuffer) .AND. nReadBuffer >= 1
       t_nReadBuffer := Min( nReadBuffer, 32768 )
@@ -226,7 +226,7 @@ PROCEDURE hb_SetBuffer( nWriteBuffer, nExtractBuffer, nReadBuffer )
 /* NOTE: Spanning not supported. */
 FUNCTION hb_ZipFileByTDSpan( cFileName, aFileToCompress, nLevel, bUpdate, lOverwrite, cPassword, nSpanSize, lWithPath, lWithDrive, bProgress, lFullPath, acExclude )
 
-   HB_SYMBOL_UNUSED( nSpanSize )
+   HB_SYMBOL_UNUSED(nSpanSize)
 
    RETURN hb_ZipFile( cFileName, aFileToCompress, nLevel, bUpdate, lOverwrite, cPassword, lWithPath, lWithDrive, bProgress, lFullPath, acExclude )
 
