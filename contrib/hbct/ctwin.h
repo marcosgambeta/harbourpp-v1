@@ -1,9 +1,8 @@
-/*
- * Header file for Clipper Tools like window system
- *
- * Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Header file for Clipper Tools like window system
+//
+// Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -94,4 +93,4 @@ extern HB_EXPORT int     hb_ctwLastKey( int * piNewKey );
 
 HB_EXTERN_END
 
-#endif /* HB_CTWIN_H_ */
+#endif // HB_CTWIN_H_

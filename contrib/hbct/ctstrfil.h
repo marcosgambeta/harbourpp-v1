@@ -1,9 +1,8 @@
-/*
- * Header file for Clipper Tools like window system
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Header file for Clipper Tools like window system
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -59,4 +58,4 @@ extern void ct_setsafety( HB_BOOL bSafety );
 
 HB_EXTERN_END
 
-#endif /* HB_CTSTRFIL_H_ */
+#endif // HB_CTSTRFIL_H_

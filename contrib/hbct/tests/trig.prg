@@ -1,20 +1,19 @@
-/*
- * Test CT3 TRIGONOMETRIC functions - PART 1
- *   - Pi()
- *   - Sin()
- *   - Cos()
- *   - Tan()
- *   - Cot()
- *   - Asin()
- *   - Acos()
- *   - Atan()
- *   - Atn2()
- *   - Sinh()
- *   - Cosh()
- *   - Tanh()
- * Copyright 2001   Alejandro de garate  <alex_degarate@hotmail.com>
- *
- */
+//
+// Test CT3 TRIGONOMETRIC functions - PART 1
+//   - Pi()
+//   - Sin()
+//   - Cos()
+//   - Tan()
+//   - Cot()
+//   - Asin()
+//   - Acos()
+//   - Atan()
+//   - Atn2()
+//   - Sinh()
+//   - Cosh()
+//   - Tanh()
+// Copyright 2001   Alejandro de garate  <alex_degarate@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -231,9 +230,8 @@ PROCEDURE Main()
    WAIT4()
 
 
-/* NOTE: Atn2( x, y) have the parameters inverted, when
-         comparing with the standard C languaje ATAN2( y, x)
-*/
+// NOTE: Atn2( x, y) have the parameters inverted, when
+//       comparing with the standard C languaje ATAN2( y, x)
 
 
    ? "Testing Atn2( x, y )... where:"

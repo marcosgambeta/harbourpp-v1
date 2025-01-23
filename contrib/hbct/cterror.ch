@@ -1,10 +1,9 @@
-/*
- * Header file for CT error codes
- *
- * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// Header file for CT error codes
+//
+// Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -47,94 +46,91 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* NOTE: This file is also used by C code. */
+// NOTE: This file is also used by C code.
 
 #ifndef _CTERROR_CH
 #define _CTERROR_CH
 
-/* sub code ranges */
-#define CT_ERROR_MATHLIB_RANGEL     100 /* math lib errors */
+// sub code ranges
+#define CT_ERROR_MATHLIB_RANGEL     100 // math lib errors
 #define CT_ERROR_MATHLIB_RANGEH     199
 
-#define CT_ERROR_GENERAL_RANGEL    1000 /* general functions */
+#define CT_ERROR_GENERAL_RANGEL    1000 // general functions
 #define CT_ERROR_GENERAL_RANGEH    1199
 
-#define CT_ERROR_WINDOW_RANGEL     1200 /* windowing functions */
+#define CT_ERROR_WINDOW_RANGEL     1200 // windowing functions
 #define CT_ERROR_WINDOW_RANGEH     1599
 
-#define CT_ERROR_EXTDRV_RANGEL     1600 /* extended driver functions */
+#define CT_ERROR_EXTDRV_RANGEL     1600 // extended driver functions
 #define CT_ERROR_EXTDRV_RANGEH     2399
 
-#define CT_ERROR_SERIAL_RANGEL     2400 /* serial communication functions */
+#define CT_ERROR_SERIAL_RANGEL     2400 // serial communication functions
 #define CT_ERROR_SERIAL_RANGEH     3099
 
-#define CT_ERROR_STRING_RANGEL     3100 /* string functions */
+#define CT_ERROR_STRING_RANGEL     3100 // string functions
 #define CT_ERROR_STRING_RANGEH     4499
 
-#define CT_ERROR_NUMBIT_RANGEL     4500 /* number and bit manipulation functions */
+#define CT_ERROR_NUMBIT_RANGEL     4500 // number and bit manipulation functions
 #define CT_ERROR_NUMBIT_RANGEH     4999
 
-#define CT_ERROR_VIDEO_RANGEL      5000 /* video functions */
+#define CT_ERROR_VIDEO_RANGEL      5000 // video functions
 #define CT_ERROR_VIDEO_RANGEH      5699
 
-#define CT_ERROR_DISC_RANGEL       5700 /* disc functions */
+#define CT_ERROR_DISC_RANGEL       5700 // disc functions
 #define CT_ERROR_DISC_RANGEH       6399
 
-#define CT_ERROR_PRINT_RANGEL      6400 /* printer functions */
+#define CT_ERROR_PRINT_RANGEL      6400 // printer functions
 #define CT_ERROR_PRINT_RANGEH      6699
 
-#define CT_ERROR_DATE_RANGEL       6700 /* date & time functions */
+#define CT_ERROR_DATE_RANGEL       6700 // date & time functions
 #define CT_ERROR_DATE_RANGEH       7099
 
-#define CT_ERROR_DBF_RANGEL        7100 /* DBF functions */
+#define CT_ERROR_DBF_RANGEL        7100 // DBF functions
 #define CT_ERROR_DBF_RANGEH        7299
 
-#define CT_ERROR_SWITCH_RANGEL     7300 /* switch functions */
+#define CT_ERROR_SWITCH_RANGEL     7300 // switch functions
 #define CT_ERROR_SWITCH_RANGEH     7799
 
-#define CT_ERROR_SYSINF_RANGEL     7800 /* system info functions */
+#define CT_ERROR_SYSINF_RANGEL     7800 // system info functions
 #define CT_ERROR_SYSINF_RANGEH     8099
 
-#define CT_ERROR_MISC_RANGEL       8100 /* misc. functions */
+#define CT_ERROR_MISC_RANGEL       8100 // misc. functions
 #define CT_ERROR_MISC_RANGEH       8399
 
-#define CT_ERROR_MATH_RANGEL       8400 /* math functions */
+#define CT_ERROR_MATH_RANGEL       8400 // math functions
 #define CT_ERROR_MATH_RANGEH       8699
 
-#define CT_ERROR_PEEK_RANGEL       8800 /* peek & poke functions */
+#define CT_ERROR_PEEK_RANGEL       8800 // peek & poke functions
 #define CT_ERROR_PEEK_RANGEH       8899
 
-#define CT_ERROR_GETREAD_RANGEL    8900 /* get & read functions */
+#define CT_ERROR_GETREAD_RANGEL    8900 // get & read functions
 #define CT_ERROR_GETREAD_RANGEH    9099
 
-/*
- * function error sub codes
- *
- * The sub code simply defines the function that throws the error.
- * The last digit stands for the type of the return value of the function:
- *
- *    0 == NIL
- *    1 == String/Memo
- *    2 == Numeric (Integer)
- *    3 == Numeric (Float)
- *    4 == Boolean
- *    5 == Date
- *    6 == Block
- *    7 == Array
- *    8 == Object
- *    9 == can not be specified
- *
- * This can be useful for custom errorblocks, since the CT3 library allows
- * to set a return value when (for example) an argument error occurs.
- *
- */
+// function error sub codes
+//
+// The sub code simply defines the function that throws the error.
+// The last digit stands for the type of the return value of the function:
+//
+//    0 == NIL
+//    1 == String/Memo
+//    2 == Numeric (Integer)
+//    3 == Numeric (Float)
+//    4 == Boolean
+//    5 == Date
+//    6 == Block
+//    7 == Array
+//    8 == Object
+//    9 == can not be specified
+//
+// This can be useful for custom errorblocks, since the CT3 library allows
+// to set a return value when (for example) an argument error occurs.
 
-/* general functions */
+// general functions
 #define CT_ERROR_CTINIT          1014
 #define CT_ERROR_CTEXIT          1020
 #define CT_ERROR_CSETARGERR      1032
 
-/* windowing functions */
+// windowing functions
 #define CT_ERROR_WACLOSE         1212
 #define CT_ERROR_WBOARD          1222
 #define CT_ERROR_WBOX            1232
@@ -157,7 +153,7 @@
 #define CT_ERROR_WSETSHADOW      1412
 #define CT_ERROR_WSTEP           1422
 
-/* extended driver */
+// extended driver
 #define CT_ERROR_CGA40           1614
 #define CT_ERROR_CGA80           1624
 #define CT_ERROR_DSETKBIOS       1634
@@ -209,7 +205,7 @@
 #define CT_ERROR_VGA28           2094
 #define CT_ERROR_VGA50           2104
 
-/* serial communication */
+// serial communication
 #define CT_ERROR_COM_BREAK       2414
 #define CT_ERROR_COM_CLOSE       2424
 #define CT_ERROR_COM_COUNT       2432
@@ -251,7 +247,7 @@
 #define CT_ERROR_ZEROINSERT      2791
 #define CT_ERROR_ZEROREMOVE      2801
 
-/* string functions */
+// string functions
 #define CT_ERROR_ADDASCII        3111
 #define CT_ERROR_AFTERATNUM      3121
 #define CT_ERROR_ASCIISUM        3132
@@ -350,7 +346,7 @@
 #define CT_ERROR_WORDSWAP        4061
 #define CT_ERROR_WORDTOCHAR      4071
 
-/* number and bit manipulation */
+// number and bit manipulation
 #define CT_ERROR_BITTOC          4511
 #define CT_ERROR_CELSIUS         4523
 #define CT_ERROR_CLEARBIT        4532
@@ -386,7 +382,7 @@
 #define CT_ERROR_NUMROLX         4832
 #define CT_ERROR_NUMXORX         4842
 
-/* video functions */
+// video functions
 #define CT_ERROR_CHARPIX         5012
 #define CT_ERROR_CHARWIN         5021
 #define CT_ERROR_CLEAREOL        5031
@@ -448,7 +444,7 @@
 #define CT_ERROR_VIDEOSETUP      5592
 #define CT_ERROR_VIDEOTYPE       5602
 
-/* disc functions */
+// disc functions
 #define CT_ERROR_DELETEFILE      5712
 #define CT_ERROR_DIRCHANGE       5722
 #define CT_ERROR_DIRMAKE         5732
@@ -500,7 +496,7 @@
 #define CT_ERROR_VOLSERIAL       6192
 #define CT_ERROR_VOLUME          6204
 
-/* printer functions */
+// printer functions
 #define CT_ERROR_NUMPRINTER      6412
 #define CT_ERROR_PRINTFILE       6424
 #define CT_ERROR_PRINTINIT       6432
@@ -517,7 +513,7 @@
 #define CT_ERROR_SPOOLFLUSH      6544
 #define CT_ERROR_TOF             6554
 
-/* date & time functions */
+// date & time functions
 #define CT_ERROR_ADDMONTH        6715
 #define CT_ERROR_BOM             6725
 #define CT_ERROR_BOQ             6735
@@ -546,7 +542,7 @@
 #define CT_ERROR_WEEK            6962
 #define CT_ERROR_WOM             6972
 
-/* DBF functions */
+// DBF functions
 #define CT_ERROR_DBFDSKSIZE      7112
 #define CT_ERROR_DBFSIZE         7122
 #define CT_ERROR_FIELDDECI       7132
@@ -555,8 +551,8 @@
 #define CT_ERROR_FIELDTYPE       7161
 #define CT_ERROR_ISDBT           7174
 
-/* switch and state functions */
-#define CT_ERROR_CSETALL         7310  /* TODO: change last digit */
+// switch and state functions
+#define CT_ERROR_CSETALL         7310  // TODO: change last digit
 #define CT_ERROR_CSETCLIP        7320
 #define CT_ERROR_CSETDATE        7330
 #define CT_ERROR_CSETDECI        7340
@@ -601,8 +597,8 @@
 #define CT_ERROR_NUMFKEY         7730
 #define CT_ERROR_SETLASTKEY      7740
 
-/* system info functions */
-#define CT_ERROR_BIOSDATE        7810  /* TODO: change last digit */
+// system info functions
+#define CT_ERROR_BIOSDATE        7810  // TODO: change last digit
 #define CT_ERROR_BOOTCOLD        7820
 #define CT_ERROR_BOOTWARM        7830
 #define CT_ERROR_CPUTYPE         7840
@@ -627,8 +623,8 @@
 #define CT_ERROR_SSETBREAK       8030
 #define CT_ERROR_SSETVERIFY      8040
 
-/* 3.3 misc. functions */
-#define CT_ERROR_ALLOFREE        8110  /* TODO: change last digit */
+// 3.3 misc. functions
+#define CT_ERROR_ALLOFREE        8110  // TODO: change last digit
 #define CT_ERROR_BLANK           8120
 #define CT_ERROR_COMPLEMENT      8130
 #define CT_ERROR_DATATYPE        8140
@@ -651,7 +647,7 @@
 #define CT_ERROR_TOOLVER         8310
 #define CT_ERROR_XTOC            8320
 
-/* math functions */
+// math functions
 #define CT_ERROR_ACOS            8413
 #define CT_ERROR_ASIN            8423
 #define CT_ERROR_ATAN            8433
@@ -679,8 +675,8 @@
 #define CT_ERROR_COSH            8663
 #define CT_ERROR_TANH            8673
 
-/* peek and poke functions */
-#define CT_ERROR_INBYTE          8810  /* TODO: change last digit */
+// peek and poke functions
+#define CT_ERROR_INBYTE          8810  // TODO: change last digit
 #define CT_ERROR_INWORD          8820
 #define CT_ERROR_OUTBYTE         8830
 #define CT_ERROR_OUTWORD         8840
@@ -690,8 +686,8 @@
 #define CT_ERROR_POKEBYTE        8880
 #define CT_ERROR_POKEWORD        8890
 
-/* GET/READ functions */
-#define CT_ERROR_COUNTGETS       8910  /* TODO: change last digit */
+// GET/READ functions
+#define CT_ERROR_COUNTGETS       8910  // TODO: change last digit
 #define CT_ERROR_CURRENTGET      8920
 #define CT_ERROR_GETFLDCOL       8930
 #define CT_ERROR_GETFLDROW       8940
@@ -703,6 +699,6 @@
 #define CT_ERROR_SAVEGETS        9000
 #define CT_ERROR_SAVESETKEY      9010
 
-/* TODO: add network functions */
+// TODO: add network functions
 
-#endif /* _CTERROR_CH */
+#endif // _CTERROR_CH

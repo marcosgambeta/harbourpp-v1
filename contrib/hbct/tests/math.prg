@@ -1,13 +1,12 @@
-/*
- * Test CT3 math functions
- *   - Floor()
- *   - Ceiling()
- *   - Log10()
- *   - Sign()
- *   - Fact()
- * Copyright 2001   Alejandro de Garate  <alex_degarate@hotmail.com>
- *
- */
+//
+// Test CT3 math functions
+//   - Floor()
+//   - Ceiling()
+//   - Log10()
+//   - Sign()
+//   - Fact()
+// Copyright 2001   Alejandro de Garate  <alex_degarate@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,11 +1,10 @@
-/*
- * Test CT3 Numeric functions - PART 1
- *   - Celsius()
- *   - Fahrenheit()
- *   - Infinity()
- * Copyright 2001   Alejandro de Garate  <alex_degarate@hotmail.com>
- *
- */
+//
+// Test CT3 Numeric functions - PART 1
+//   - Celsius()
+//   - Fahrenheit()
+//   - Infinity()
+// Copyright 2001   Alejandro de Garate  <alex_degarate@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

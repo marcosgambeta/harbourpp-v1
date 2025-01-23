@@ -1,10 +1,9 @@
-/*
- * header for CT3 functions
- *
- * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// header for CT3 functions
+//
+// Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -71,7 +70,7 @@
 
 HB_EXTERN_BEGIN
 
-/* ct_charlist() modes */
+// ct_charlist() modes
 #define CT_CHARLIST_CHARLIST    0
 #define CT_CHARLIST_CHARNOLIST  1
 #define CT_CHARLIST_CHARHIST    2
@@ -79,30 +78,30 @@ HB_EXTERN_BEGIN
 
 extern void ct_charlist( int iMode );
 
-/* ct_charop() modes */
+// ct_charop() modes
 #define CT_CHAROP_CHARADD       0
-#define CT_CHAROP_CHARSUB       1  /* new: character subtraction */
+#define CT_CHAROP_CHARSUB       1  // new: character subtraction
 #define CT_CHAROP_CHARAND       2
 #define CT_CHAROP_CHARNOT       3
 #define CT_CHAROP_CHAROR        4
 #define CT_CHAROP_CHARXOR       5
-#define CT_CHAROP_CHARSHL       6  /* new: shift left */
-#define CT_CHAROP_CHARSHR       7  /* new: shift right */
-#define CT_CHAROP_CHARRLL       8  /* new: left rotation */
-#define CT_CHAROP_CHARRLR       9  /* new: right rotation */
+#define CT_CHAROP_CHARSHL       6  // new: shift left
+#define CT_CHAROP_CHARSHR       7  // new: shift right
+#define CT_CHAROP_CHARRLL       8  // new: left rotation
+#define CT_CHAROP_CHARRLR       9  // new: right rotation
 
 extern void ct_charop( int iMode );
 
 extern HB_BOOL ct_numParam( int iParam, HB_MAXINT * plNum );
 
-/* CT subsystem error throwing functions */
+// CT subsystem error throwing functions
 extern HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
                            const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, HB_USHORT uiFlags, HB_ULONG uiArgCount, ... );
 
 extern PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
                                 const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, HB_USHORT uiFlags, HB_ULONG uiArgCount, ... );
 
-/* set argument error behaviour */
+// set argument error behaviour
 extern void ct_setargerrormode( int iMode );
 extern int ct_getargerrormode( void );
 

@@ -1,9 +1,8 @@
-/*
- * Header file for CT video adapter definitions
- *
- * Copyright 2004 Phil Krylov <phil@newstar.rinet.ru>
- *
- */
+//
+// Header file for CT video adapter definitions
+//
+// Copyright 2004 Phil Krylov <phil@newstar.rinet.ru>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -46,17 +45,17 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* NOTE: This file is also used by C code. */
+// NOTE: This file is also used by C code.
 
 #ifndef _CTVIDEO_CH
 #define _CTVIDEO_CH
 
-#define VCARD_MONOCHROME    1    /* Monochrome adapter */
-#define VCARD_CGA           2    /* CGA adapter */
-#define VCARD_HERCULES      5    /* Hercules, also emulates monochrome */
-#define VCARD_MCGA          10   /* MCGA, also emulates CGA */
-#define VCARD_PGA           19   /* PGA, also emulates CGA and monochrome */
-#define VCARD_EGA           55   /* EGA, emulates all of the above except MCGA */
-#define VCARD_VGA           127  /* VGA, emulates all of the above */
+#define VCARD_MONOCHROME    1    // Monochrome adapter
+#define VCARD_CGA           2    // CGA adapter
+#define VCARD_HERCULES      5    // Hercules, also emulates monochrome
+#define VCARD_MCGA          10   // MCGA, also emulates CGA
+#define VCARD_PGA           19   // PGA, also emulates CGA and monochrome
+#define VCARD_EGA           55   // EGA, emulates all of the above except MCGA
+#define VCARD_VGA           127  // VGA, emulates all of the above
 
-#endif /* _CTVIDEO_CH */
+#endif // _CTVIDEO_CH

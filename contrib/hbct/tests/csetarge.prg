@@ -1,10 +1,9 @@
-/*
- * Test CT3 function CSetArgErr()
- *
- * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// Test CT3 function CSetArgErr()
+//
+// Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -260,7 +259,7 @@ FUNCTION myerrhandler( oerr )
 
          CASE nDigit == 5
             ?? "Date."
-            cInput := CToD("") /* Need to compile with CA-Cl*pper, too */
+            cInput := CToD("") // Need to compile with CA-Cl*pper, too
 
          CASE nDigit == 6
             ?? "Block."

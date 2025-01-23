@@ -1,11 +1,10 @@
-/*
- * CT3 function test for
- *     - Exponent()
- *     - Mantissa()
- *
- * Copyright 2002 Walter Negro - FOEESITRA" <waltern@foeesitra.org.ar>
- *
- */
+//
+// CT3 function test for
+//     - Exponent()
+//     - Mantissa()
+//
+// Copyright 2002 Walter Negro - FOEESITRA" <waltern@foeesitra.org.ar>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,7 +1,7 @@
-/*
- * Clipper Tool III like window system test program
- * Donated to the public domain on 2006-02-11 by Przemyslaw Czerpak
- */
+//
+// Clipper Tool III like window system test program
+// Donated to the public domain on 2006-02-11 by Przemyslaw Czerpak
+//
 
 #ifdef __HARBOURPP__
 #require "hbct"

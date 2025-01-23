@@ -1,10 +1,9 @@
-/*
- * Program to test functions to mimic Clipper Tools III date and time functions.
- *   (C) Alan Secker 2002 <alansecker@globalnet.co.uk>
- *
- *   small changes: Martin Vogel <vogel@inttec.de> 2003
- *
- */
+//
+// Program to test functions to mimic Clipper Tools III date and time functions.
+//   (C) Alan Secker 2002 <alansecker@globalnet.co.uk>
+//
+//   small changes: Martin Vogel <vogel@inttec.de> 2003
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,9 @@
-/*
- * Test CT3 function CharShr()
- *
- * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// Test CT3 function CharShr()
+//
+// Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

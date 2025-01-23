@@ -1,13 +1,12 @@
-/*
- * CT3 Financial functions
- *     - PV()
- *     - FV()
- *     - Payment()
- *     - Periods()
- *     - Rate()
- * Copyright 2001  Alejandro de Garate  <alex_degarate@hotmail.com>
- *
- */
+//
+// CT3 Financial functions
+//     - PV()
+//     - FV()
+//     - Payment()
+//     - Periods()
+//     - Rate()
+// Copyright 2001  Alejandro de Garate  <alex_degarate@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

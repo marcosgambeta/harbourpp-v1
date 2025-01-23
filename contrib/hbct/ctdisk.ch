@@ -1,9 +1,8 @@
-/*
- * Header file for CT for floppy / hard disk functions
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Header file for CT for floppy / hard disk functions
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -46,27 +45,27 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* NOTE: This file is also used by C code. */
+// NOTE: This file is also used by C code.
 
 #ifndef _CTDISK_CH
 #define _CTDISK_CH
 
-#define FA_NORMAL           0       /*   */
-#define FA_READONLY         1       /* R */
-#define FA_HIDDEN           2       /* H */
-#define FA_SYSTEM           4       /* S */
-#define FA_VOLUME           8       /* V */
-#define FA_DIRECTORY        16      /* D */
-#define FA_ARCHIVE          32      /* A */
+#define FA_NORMAL           0       //
+#define FA_READONLY         1       // R
+#define FA_HIDDEN           2       // H
+#define FA_SYSTEM           4       // S
+#define FA_VOLUME           8       // V
+#define FA_DIRECTORY        16      // D
+#define FA_ARCHIVE          32      // A
 
-#define FA_DEVICE           64      /* I */
-#define FA_TEMPORARY        256     /* T */
-#define FA_SPARSE           512     /* P */
-#define FA_REPARSE          1024    /* L */
-#define FA_COMPRESSED       2048    /* C */
-#define FA_OFFLINE          4096    /* O */
-#define FA_NOTINDEXED       8192    /* X */
-#define FA_ENCRYPTED        16384   /* E */
-#define FA_VOLCOMP          32768   /* M */
+#define FA_DEVICE           64      // I
+#define FA_TEMPORARY        256     // T
+#define FA_SPARSE           512     // P
+#define FA_REPARSE          1024    // L
+#define FA_COMPRESSED       2048    // C
+#define FA_OFFLINE          4096    // O
+#define FA_NOTINDEXED       8192    // X
+#define FA_ENCRYPTED        16384   // E
+#define FA_VOLCOMP          32768   // M
 
-#endif /* _CTDISK_CH */
+#endif // _CTDISK_CH
