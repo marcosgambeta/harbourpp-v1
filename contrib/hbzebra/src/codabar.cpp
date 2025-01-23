@@ -1,9 +1,8 @@
-/*
- * Zebra barcode library
- *
- * Copyright 2010 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+//
+// Zebra barcode library
+//
+// Copyright 2010 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -48,121 +47,143 @@
 
 #include "hbzebra.hpp"
 
-static const char s_code[] = {
-   0x60,   /* 0 */
-   0x30,   /* 1 */
-   0x48,   /* 2 */
-   0x03,   /* 3 */
-   0x24,   /* 4 */
-   0x21,   /* 5 */
-   0x42,   /* 6 */
-   0x12,   /* 7 */
-   0x06,   /* 8 */
-   0x09,   /* 9 */
-   0x18,   /* - */
-   0x0C,   /* $ */
-   0x51,   /* : */
-   0x45,   /* / */
-   0x15,   /* . */
-   0x7C,   /* + */
-   0x2C,   /* A */
-   0x4A,   /* B */
-   0x68,   /* C */
-   0x38 }; /* D */
+static const char s_code[] = {0x60,  /* 0 */
+                              0x30,  /* 1 */
+                              0x48,  /* 2 */
+                              0x03,  /* 3 */
+                              0x24,  /* 4 */
+                              0x21,  /* 5 */
+                              0x42,  /* 6 */
+                              0x12,  /* 7 */
+                              0x06,  /* 8 */
+                              0x09,  /* 9 */
+                              0x18,  /* - */
+                              0x0C,  /* $ */
+                              0x51,  /* : */
+                              0x45,  /* / */
+                              0x15,  /* . */
+                              0x7C,  /* + */
+                              0x2C,  /* A */
+                              0x4A,  /* B */
+                              0x68,  /* C */
+                              0x38}; /* D */
 
 static int _codabar_charno(char ch)
 {
-   if( '0' <= ch && ch <= '9' ) {
-      return ch - '0';
-   } else {
-      static const char * s_symbols = "-$:/.+ABCD";
+  if ('0' <= ch && ch <= '9')
+  {
+    return ch - '0';
+  }
+  else
+  {
+    static const char *s_symbols = "-$:/.+ABCD";
 
-      const char * ptr = strchr(s_symbols, ch);
-      if( ptr && *ptr ) {
-         return static_cast<int>(ptr - s_symbols + 10);
-      }
-   }
-   return -1;
+    const char *ptr = strchr(s_symbols, ch);
+    if (ptr && *ptr)
+    {
+      return static_cast<int>(ptr - s_symbols + 10);
+    }
+  }
+  return -1;
 }
 
 static void _codabar_add(PHB_BITBUFFER pBits, char code, int iFlags, bool fLast)
 {
-   int i;
+  int i;
 
-   if( iFlags & HB_ZEBRA_FLAG_WIDE2_5 ) {
-      for( i = 0; i < 7; i++ ) {
-         hb_bitbuffer_cat_int(pBits, (i & 1) ? 0 : 31, (code & 1) ? 5 : 2);
-         code >>= 1;
-      }
-      if( !fLast ) {
-         hb_bitbuffer_cat_int(pBits, 0, 2);
-      }
-   } else if( iFlags & HB_ZEBRA_FLAG_WIDE3 ) {
-      for( i = 0; i < 7; i++ ) {
-         hb_bitbuffer_cat_int(pBits, (i & 1) ? 0 : 31, (code & 1) ? 3 : 1);
-         code >>= 1;
-      }
-      if( !fLast ) {
-         hb_bitbuffer_cat_int(pBits, 0, 1);
-      }
-   } else {
-      for( i = 0; i < 7; i++ ) {
-         hb_bitbuffer_cat_int(pBits, (i & 1) ? 0 : 31, (code & 1) ? 2 : 1);
-         code >>= 1;
-      }
-      if( !fLast ) {
-         hb_bitbuffer_cat_int(pBits, 0, 1);
-      }
-   }
+  if (iFlags & HB_ZEBRA_FLAG_WIDE2_5)
+  {
+    for (i = 0; i < 7; i++)
+    {
+      hb_bitbuffer_cat_int(pBits, (i & 1) ? 0 : 31, (code & 1) ? 5 : 2);
+      code >>= 1;
+    }
+    if (!fLast)
+    {
+      hb_bitbuffer_cat_int(pBits, 0, 2);
+    }
+  }
+  else if (iFlags & HB_ZEBRA_FLAG_WIDE3)
+  {
+    for (i = 0; i < 7; i++)
+    {
+      hb_bitbuffer_cat_int(pBits, (i & 1) ? 0 : 31, (code & 1) ? 3 : 1);
+      code >>= 1;
+    }
+    if (!fLast)
+    {
+      hb_bitbuffer_cat_int(pBits, 0, 1);
+    }
+  }
+  else
+  {
+    for (i = 0; i < 7; i++)
+    {
+      hb_bitbuffer_cat_int(pBits, (i & 1) ? 0 : 31, (code & 1) ? 2 : 1);
+      code >>= 1;
+    }
+    if (!fLast)
+    {
+      hb_bitbuffer_cat_int(pBits, 0, 1);
+    }
+  }
 }
 
-PHB_ZEBRA hb_zebra_create_codabar(const char * szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_codabar(const char *szCode, HB_SIZE nLen, int iFlags)
 {
-   unsigned int i;
-   auto iLen = static_cast<unsigned int>(nLen);
+  unsigned int i;
+  auto iLen = static_cast<unsigned int>(nLen);
 
-   auto pZebra = hb_zebra_create();
-   pZebra->iType = HB_ZEBRA_TYPE_CODABAR;
+  auto pZebra = hb_zebra_create();
+  pZebra->iType = HB_ZEBRA_TYPE_CODABAR;
 
-   for( i = 0; i < iLen; i++ ) {
-      int j = _codabar_charno(szCode[i]);
+  for (i = 0; i < iLen; i++)
+  {
+    int j = _codabar_charno(szCode[i]);
 
-      if( j < 0 || (j >= 16 && i != 0 && i != iLen - 1) ) {
-         pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
-         return pZebra;
-      }
-   }
+    if (j < 0 || (j >= 16 && i != 0 && i != iLen - 1))
+    {
+      pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
+      return pZebra;
+    }
+  }
 
-   pZebra->szCode = static_cast<char*>(hb_xgrab(iLen + 1));
-   hb_xmemcpy(pZebra->szCode, szCode, iLen);
-   pZebra->szCode[iLen] = '\0';
-   szCode = pZebra->szCode;
+  pZebra->szCode = static_cast<char *>(hb_xgrab(iLen + 1));
+  hb_xmemcpy(pZebra->szCode, szCode, iLen);
+  pZebra->szCode[iLen] = '\0';
+  szCode = pZebra->szCode;
 
-   pZebra->pBits = hb_bitbuffer_create();
+  pZebra->pBits = hb_bitbuffer_create();
 
-   if( iLen == 0 || _codabar_charno(static_cast<int>(szCode[0])) < 16 ) {
-      _codabar_add(pZebra->pBits, s_code[_codabar_charno( 'A' )], iFlags, false);  /* Default start A */
-   }
+  if (iLen == 0 || _codabar_charno(static_cast<int>(szCode[0])) < 16)
+  {
+    _codabar_add(pZebra->pBits, s_code[_codabar_charno('A')], iFlags, false); /* Default start A */
+  }
 
-   for( i = 0; i < iLen; i++ ) {
-      int no = _codabar_charno(szCode[i]);
-      _codabar_add(pZebra->pBits, s_code[no], iFlags, i > 0 && no >= 16);
-   }
+  for (i = 0; i < iLen; i++)
+  {
+    int no = _codabar_charno(szCode[i]);
+    _codabar_add(pZebra->pBits, s_code[no], iFlags, i > 0 && no >= 16);
+  }
 
-   if( iLen == 0 || _codabar_charno(szCode[i - 1]) < 16 ) {
-      _codabar_add(pZebra->pBits, s_code[_codabar_charno( 'B' )], iFlags, true);  /* Default stop B */
-   }
+  if (iLen == 0 || _codabar_charno(szCode[i - 1]) < 16)
+  {
+    _codabar_add(pZebra->pBits, s_code[_codabar_charno('B')], iFlags, true); /* Default stop B */
+  }
 
-   return pZebra;
+  return pZebra;
 }
 
 HB_FUNC(HB_ZEBRA_CREATE_CODABAR)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr ) {
-      hb_zebra_ret(hb_zebra_create_codabar(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pItem != nullptr)
+  {
+    hb_zebra_ret(hb_zebra_create_codabar(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

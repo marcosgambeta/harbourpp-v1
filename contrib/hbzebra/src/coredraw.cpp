@@ -1,10 +1,9 @@
-/*
- * Zebra barcode library
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2010 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+//
+// Zebra barcode library
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2010 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -54,89 +53,106 @@
 #include "hbzebra.hpp"
 #include <hbvm.hpp>
 
-typedef void (*HB_ZEBRA_CALLBACK)(void * cargo, double dX, double dY, double dWidth, double dHeight);
+typedef void (*HB_ZEBRA_CALLBACK)(void *cargo, double dX, double dY, double dWidth, double dHeight);
 
-int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, double dX, double dY, double dWidth, double dHeight, int iFlags )
+int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, double dX, double dY, double dWidth,
+                  double dHeight, int iFlags)
 {
-   double  dLast;
-   HB_SIZE nLen, nCount;
-   bool fLastBit;
-   int     i, iCol = pZebra->iCol;
+  double dLast;
+  HB_SIZE nLen, nCount;
+  bool fLastBit;
+  int i, iCol = pZebra->iCol;
 
-   HB_SYMBOL_UNUSED(iFlags);
+  HB_SYMBOL_UNUSED(iFlags);
 
-   if( pZebra->iError != 0 ) {
-      return HB_ZEBRA_ERROR_INVALIDZEBRA;
-   }
+  if (pZebra->iError != 0)
+  {
+    return HB_ZEBRA_ERROR_INVALIDZEBRA;
+  }
 
-   nLen = hb_bitbuffer_len(pZebra->pBits);
-   fLastBit = hb_bitbuffer_get(pZebra->pBits, 0);
-   dLast = dX;
-   nCount = 0;
-   i = 0;
-   for( HB_SIZE n = 0; n < nLen; n++ ) {
-      bool fBit = hb_bitbuffer_get(pZebra->pBits, n);
-      if( fBit != fLastBit ) {
-         if( fLastBit && pCallback ) {
-            pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
-         }
-
-         dLast += dWidth * nCount;
-         nCount = 0;
-         fLastBit = fBit;
+  nLen = hb_bitbuffer_len(pZebra->pBits);
+  fLastBit = hb_bitbuffer_get(pZebra->pBits, 0);
+  dLast = dX;
+  nCount = 0;
+  i = 0;
+  for (HB_SIZE n = 0; n < nLen; n++)
+  {
+    bool fBit = hb_bitbuffer_get(pZebra->pBits, n);
+    if (fBit != fLastBit)
+    {
+      if (fLastBit && pCallback)
+      {
+        pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
       }
-      nCount++;
-      if( ++i == iCol ) {
-         if( nCount ) {
-            if( fBit && pCallback ) {
-               pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
-            }
-            nCount = 0;
-         }
-         i = 0;
-         dY += dHeight;
-         dLast = dX;
-         if( n + 1 < nLen ) {
-            fLastBit = hb_bitbuffer_get(pZebra->pBits, n + 1);
-         }
-      }
-   }
-   if( fLastBit && nCount && pCallback ) {
-      pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
-   }
 
-   return 0;
+      dLast += dWidth * nCount;
+      nCount = 0;
+      fLastBit = fBit;
+    }
+    nCount++;
+    if (++i == iCol)
+    {
+      if (nCount)
+      {
+        if (fBit && pCallback)
+        {
+          pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
+        }
+        nCount = 0;
+      }
+      i = 0;
+      dY += dHeight;
+      dLast = dX;
+      if (n + 1 < nLen)
+      {
+        fLastBit = hb_bitbuffer_get(pZebra->pBits, n + 1);
+      }
+    }
+  }
+  if (fLastBit && nCount && pCallback)
+  {
+    pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
+  }
+
+  return 0;
 }
 
-static void hb_zebra_draw_codeblock_callback( void * pDrawBlock, double dX, double dY, double dWidth, double dHeight )
+static void hb_zebra_draw_codeblock_callback(void *pDrawBlock, double dX, double dY, double dWidth, double dHeight)
 {
-   if( pDrawBlock && static_cast<PHB_ITEM>(pDrawBlock)->isBlock() && hb_vmRequestReenter() ) {
-      hb_vmPushEvalSym();
-      hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
-      hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);
-      hb_vmPushDouble(dY, HB_DEFAULT_DECIMALS);
-      hb_vmPushDouble(dWidth, HB_DEFAULT_DECIMALS);
-      hb_vmPushDouble(dHeight, HB_DEFAULT_DECIMALS);
-      hb_vmSend(4);
-      hb_vmRequestRestore();
-   }
+  if (pDrawBlock && static_cast<PHB_ITEM>(pDrawBlock)->isBlock() && hb_vmRequestReenter())
+  {
+    hb_vmPushEvalSym();
+    hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
+    hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);
+    hb_vmPushDouble(dY, HB_DEFAULT_DECIMALS);
+    hb_vmPushDouble(dWidth, HB_DEFAULT_DECIMALS);
+    hb_vmPushDouble(dHeight, HB_DEFAULT_DECIMALS);
+    hb_vmSend(4);
+    hb_vmRequestRestore();
+  }
 }
 
-int hb_zebra_draw_codeblock( PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, double dY, double dWidth, double dHeight, int iFlags )
+int hb_zebra_draw_codeblock(PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, double dY, double dWidth, double dHeight,
+                            int iFlags)
 {
-   return hb_zebra_draw(pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags);
+  return hb_zebra_draw(pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags);
 }
 
 HB_FUNC(HB_ZEBRA_DRAW)
 {
-   auto pZebra = hb_zebra_param(1);
+  auto pZebra = hb_zebra_param(1);
 
-   if( pZebra ) {
-      auto pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
-      if( pDrawBlock ) {
-         hb_retni(hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));
-      } else {
-         hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-      }
-   }
+  if (pZebra)
+  {
+    auto pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
+    if (pDrawBlock)
+    {
+      hb_retni(
+          hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));
+    }
+    else
+    {
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    }
+  }
 }

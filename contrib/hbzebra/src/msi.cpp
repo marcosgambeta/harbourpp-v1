@@ -1,9 +1,8 @@
-/*
- * Zebra barcode library
- *
- * Copyright 2010 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+//
+// Zebra barcode library
+//
+// Copyright 2010 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -48,100 +47,122 @@
 
 #include "hbzebra.hpp"
 
-static char _msi_checksum( const char * szCode )
+static char _msi_checksum(const char *szCode)
 {
-   int j = 1, sum = 0;
+  int j = 1, sum = 0;
 
-   /* Luhn algorithm */
-   for( int i = static_cast<int>(strlen(szCode)) - 1; i >= 0; i-- ) {
-      int k = (szCode[i] - '0') * (j ? 2 : 1);
-      if( k > 9 ) {
-         k -= 9;
-      }
-      sum += k;
-      j = 1 - j;
-   }
-   sum %= 10;
-   return static_cast<char>('0' + (sum ? 10 - sum : 0));
+  /* Luhn algorithm */
+  for (int i = static_cast<int>(strlen(szCode)) - 1; i >= 0; i--)
+  {
+    int k = (szCode[i] - '0') * (j ? 2 : 1);
+    if (k > 9)
+    {
+      k -= 9;
+    }
+    sum += k;
+    j = 1 - j;
+  }
+  sum %= 10;
+  return static_cast<char>('0' + (sum ? 10 - sum : 0));
 }
 
-PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
+PHB_ZEBRA hb_zebra_create_msi(const char *szCode, HB_SIZE nLen, int iFlags)
 {
-   int        i, j, iN, iW;
-   auto iLen = static_cast<int>(nLen);
+  int i, j, iN, iW;
+  auto iLen = static_cast<int>(nLen);
 
-   auto pZebra = hb_zebra_create();
-   pZebra->iType = HB_ZEBRA_TYPE_MSI;
+  auto pZebra = hb_zebra_create();
+  pZebra->iType = HB_ZEBRA_TYPE_MSI;
 
-   for( i = 0; i < iLen; i++ ) {
-      if( szCode[i] < '0' || szCode[i] > '9' ) {
-         pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
-         return pZebra;
+  for (i = 0; i < iLen; i++)
+  {
+    if (szCode[i] < '0' || szCode[i] > '9')
+    {
+      pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
+      return pZebra;
+    }
+  }
+
+  pZebra->szCode = static_cast<char *>(hb_xgrab(iLen + 1));
+  hb_xmemcpy(pZebra->szCode, szCode, iLen);
+  pZebra->szCode[iLen] = '\0';
+  szCode = pZebra->szCode;
+
+  pZebra->pBits = hb_bitbuffer_create();
+
+  if (iFlags & HB_ZEBRA_FLAG_WIDE2_5)
+  {
+    iN = 2;
+    iW = 5;
+  }
+  else if (iFlags & HB_ZEBRA_FLAG_WIDE3)
+  {
+    iN = 1;
+    iW = 3;
+  }
+  else
+  {
+    iN = 1;
+    iW = 2;
+  }
+
+  /* start */
+  hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
+  hb_bitbuffer_cat_int(pZebra->pBits, 0, iN);
+  for (i = 0; i < iLen; i++)
+  {
+    char code = szCode[i] - '0';
+    for (j = 0; j < 4; j++)
+    {
+      if (code & 8)
+      {
+        hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
+        hb_bitbuffer_cat_int(pZebra->pBits, 0, iN);
       }
-   }
-
-   pZebra->szCode = static_cast<char*>(hb_xgrab(iLen + 1));
-   hb_xmemcpy(pZebra->szCode, szCode, iLen);
-   pZebra->szCode[iLen] = '\0';
-   szCode = pZebra->szCode;
-
-   pZebra->pBits = hb_bitbuffer_create();
-
-   if( iFlags & HB_ZEBRA_FLAG_WIDE2_5 ) {
-      iN = 2;
-      iW = 5;
-   } else if( iFlags & HB_ZEBRA_FLAG_WIDE3 ) {
-      iN = 1;
-      iW = 3;
-   } else {
-      iN = 1;
-      iW = 2;
-   }
-
-   /* start */
-   hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
-   hb_bitbuffer_cat_int(pZebra->pBits,  0, iN);
-   for( i = 0; i < iLen; i++ ) {
-      char code = szCode[i] - '0';
-      for( j = 0; j < 4; j++ ) {
-         if( code & 8 ) {
-            hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
-            hb_bitbuffer_cat_int(pZebra->pBits,  0, iN);
-         } else {
-            hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
-            hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
-         }
-         code <<= 1;
+      else
+      {
+        hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
+        hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
       }
-   }
-   if( iFlags & HB_ZEBRA_FLAG_CHECKSUM ) {
-      char code = _msi_checksum(szCode);
-      code -= '0';
-      for( j = 0; j < 4; j++ ) {
-         if( code & 8 ) {
-            hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
-            hb_bitbuffer_cat_int(pZebra->pBits,  0, iN);
-         } else {
-            hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
-            hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
-         }
-         code <<= 1;
+      code <<= 1;
+    }
+  }
+  if (iFlags & HB_ZEBRA_FLAG_CHECKSUM)
+  {
+    char code = _msi_checksum(szCode);
+    code -= '0';
+    for (j = 0; j < 4; j++)
+    {
+      if (code & 8)
+      {
+        hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
+        hb_bitbuffer_cat_int(pZebra->pBits, 0, iN);
       }
-   }
-   /* stop */
-   hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
-   hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
-   hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
-   return pZebra;
+      else
+      {
+        hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
+        hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
+      }
+      code <<= 1;
+    }
+  }
+  /* stop */
+  hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
+  hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
+  hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
+  return pZebra;
 }
 
 HB_FUNC(HB_ZEBRA_CREATE_MSI)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr ) {
-      hb_zebra_ret(hb_zebra_create_msi(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pItem != nullptr)
+  {
+    hb_zebra_ret(hb_zebra_create_msi(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
