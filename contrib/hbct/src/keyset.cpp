@@ -52,9 +52,7 @@
 static void SetGet(int iFlag)
 {
   int iState = 0;
-  HB_GT_INFO gtInfo;
-
-  memset(&gtInfo, 0, sizeof(gtInfo));
+  HB_GT_INFO gtInfo{};
 
   hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
   if (gtInfo.pResult)
