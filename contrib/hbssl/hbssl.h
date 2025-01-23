@@ -232,4 +232,4 @@ extern char *             hb_openssl_strdup(const char * pszText);
 
 HB_EXTERN_END
 
-#endif /* HBSSL_H_ */
+#endif // HBSSL_H_

@@ -70,4 +70,4 @@
 #define HB_BZ_COMPRESSION_SIZE      9
 #define HB_BZ_COMPRESSION_DEFAULT   9
 
-#endif /* HB_BZ2_CH_ */
+#endif // HB_BZ2_CH_

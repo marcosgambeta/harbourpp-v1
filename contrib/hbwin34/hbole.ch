@@ -139,4 +139,4 @@
 #define WIN_DISP_E_DIVBYZERO        0x80020012
 #define WIN_DISP_E_BUFFERTOOSMALL   0x80020013
 
-#endif /* HBOLE_CH_ */
+#endif // HBOLE_CH_

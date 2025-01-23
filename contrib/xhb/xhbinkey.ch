@@ -94,4 +94,4 @@
 #define XHB_K_SH_RETURN         434   /* Shift-Enter */
 #define XHB_K_SH_ENTER          434   /* Shift-Enter */
 
-#endif /* XHB_INKEY_CH_ */
+#endif // XHB_INKEY_CH_

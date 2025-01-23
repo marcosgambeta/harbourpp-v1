@@ -172,4 +172,4 @@
 /* -> { NETIO_SRVDATA,   id[4], size[ 4 ], ... } + data[ size ] */
 /* alternative answer for all messages: -> { NETIO_ERROR,  err[ 4 ], ... } */
 
-#endif /* HBNETIO_H_ */
+#endif // HBNETIO_H_

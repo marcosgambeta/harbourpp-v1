@@ -60,4 +60,4 @@
 #define LZO_E_INPUT_NOT_CONSUMED    -8
 #define LZO_E_NOT_YET_IMPLEMENTED   -9
 
-#endif /* HBMLZO_CH_ */
+#endif // HBMLZO_CH_

@@ -110,4 +110,4 @@
 #define HB_XML_ATTR_cName                               1
 #define HB_XML_ATTR_cValue                              2
 
-#endif /* HBEXPAT_CH_ */
+#endif // HBEXPAT_CH_

@@ -56,4 +56,4 @@
    #define HB_FILE_VER( id )
 #endif
 
-#endif /* HB_HBCOMMON_CH_ */
+#endif // HB_HBCOMMON_CH_

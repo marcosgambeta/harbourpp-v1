@@ -2842,4 +2842,4 @@ HB_CALL_ON_STARTUP_END(_hb_file_netio_init_)
    #include "hbiniseg.hpp"
 #endif
 
-#endif /* HB_NETIO_STARTUP_INIT */
+#endif // HB_NETIO_STARTUP_INIT

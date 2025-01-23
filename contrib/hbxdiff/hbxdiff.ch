@@ -67,4 +67,4 @@
 #define XDL_BDOP_CPY            2
 #define XDL_BDOP_INSB           3
 
-#endif /* HBXDIFF_CH_ */
+#endif // HBXDIFF_CH_

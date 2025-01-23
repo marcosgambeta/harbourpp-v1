@@ -134,4 +134,4 @@
 #define CAIRO_STATUS_INVALID_SLANT          30
 #define CAIRO_STATUS_INVALID_WEIGHT         31
 
-#endif /* HB_CAIRO_CH_ */
+#endif // HB_CAIRO_CH_

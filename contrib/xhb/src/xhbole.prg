@@ -257,4 +257,4 @@ FUNCTION CreateOleObject(...)
 FUNCTION OleDefaultArg()
    RETURN __oleVariantNew(WIN_VT_ERROR, WIN_DISP_E_PARAMNOTFOUND)
 
-#endif /* __PLATFORM__WINDOWS */
+#endif // __PLATFORM__WINDOWS

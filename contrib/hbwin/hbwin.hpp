@@ -95,4 +95,4 @@ HB_EXTERN_END
 
 #endif
 
-#endif /* __HBWIN_H */
+#endif // __HBWIN_H

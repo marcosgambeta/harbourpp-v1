@@ -58,4 +58,4 @@
 
 #define HB_LZF_DEFAULT_BUFFSIZE 1024
 
-#endif /* HBLZF_CH_ */
+#endif // HBLZF_CH_

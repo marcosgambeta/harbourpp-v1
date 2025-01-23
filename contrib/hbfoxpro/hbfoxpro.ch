@@ -123,4 +123,4 @@
 #command REGIONAL [<defs,...>] => LOCAL <defs>
 #command CD <(path)> => hb_cwd(<(path)>)
 
-#endif /* HBFOXPRO_CH_ */
+#endif // HBFOXPRO_CH_

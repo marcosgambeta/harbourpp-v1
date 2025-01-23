@@ -79,4 +79,4 @@
 #define NETIO_SRVINFO_BYTESRECEIVED -3
 #define NETIO_SRVINFO_PEERADDRESS   -4
 
-#endif /* HBNETIO_CH_ */
+#endif // HBNETIO_CH_

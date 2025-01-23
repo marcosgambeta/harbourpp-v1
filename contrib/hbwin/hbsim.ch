@@ -125,4 +125,4 @@
 #define SIM_ADDRTYPE_ALPHANUM           0x00000005      // Alphanumeric address
 #define SIM_ADDRTYPE_ABBREV             0x00000006      // Abbreviated number
 
-#endif /* HBSIM_CH_ */
+#endif // HBSIM_CH_

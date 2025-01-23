@@ -128,4 +128,4 @@ METHOD WIN32PRN:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBo
 CREATE CLASS Win32Bmp FROM win_BMP
 ENDCLASS
 
-#endif /* __PLATFORM__WINDOWS */
+#endif // __PLATFORM__WINDOWS

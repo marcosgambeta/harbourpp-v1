@@ -565,4 +565,4 @@
 
 #endif
 
-#endif /* __HARBOURPP__ */
+#endif // __HARBOURPP__

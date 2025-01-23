@@ -215,4 +215,4 @@
 #define WVG_IMAGE_BITMAPFILE                      3
 #define WVG_IMAGE_BITMAPRESOURCE                  4
 
-#endif /* _WVG_CH */
+#endif // _WVG_CH

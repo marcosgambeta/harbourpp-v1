@@ -419,6 +419,6 @@ protected:
    void closeEvent(QCloseEvent * evt);
 };
 
-#endif /* HB_QTC_H_ */
+#endif // HB_QTC_H_
 
 // TODO: review code under #ifdef

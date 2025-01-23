@@ -87,6 +87,6 @@
 
 #endif
 
-#endif /* __HARBOURPP__ */
+#endif // __HARBOURPP__
 
-#endif /* XHB__CH_ */
+#endif // XHB__CH_

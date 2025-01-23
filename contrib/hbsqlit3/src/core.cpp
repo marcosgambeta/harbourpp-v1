@@ -74,7 +74,7 @@
 
 #ifdef SQLITE3_DYNLIB
 extern char *sqlite3_temp_directory;
-#endif /* SQLITE3_DYNLIB */
+#endif // SQLITE3_DYNLIB
 
 static PHB_ITEM hb_sqlite3_itemPut(PHB_ITEM pItem, void *pMemAddr, int iType);
 static void *hb_sqlite3_itemGet(PHB_ITEM pItem, int iType, bool fError);
@@ -770,7 +770,7 @@ HB_FUNC(SQLITE3_TEMP_DIRECTORY)
       hb_xfree(pszFree);
     }
   }
-#endif /* SQLITE3_DYNLIB */
+#endif // SQLITE3_DYNLIB
   hb_retl(bResult);
 }
 
@@ -1564,7 +1564,7 @@ HB_FUNC(SQLITE3_LOAD_EXTENSION)
   }
 #else
   hb_retni(-1);
-#endif /* SQLITE_OMIT_LOAD_EXTENSION */
+#endif // SQLITE_OMIT_LOAD_EXTENSION
 }
 
 /**
@@ -1583,7 +1583,7 @@ HB_FUNC(SQLITE3_ENABLE_LOAD_EXTENSION)
     hb_retni(sqlite3_enable_load_extension(pHbSqlite3->db, hb_parl(2)));
 #else
     hb_retni(-1);
-#endif /* SQLITE_OMIT_LOAD_EXTENSION */
+#endif // SQLITE_OMIT_LOAD_EXTENSION
   }
   else
   {
@@ -1735,7 +1735,7 @@ HB_FUNC(SQLITE3_TABLE_COLUMN_METADATA)
   }
 #else
   hb_reta(0);
-#endif /* SQLITE_ENABLE_COLUMN_METADATA */
+#endif // SQLITE_ENABLE_COLUMN_METADATA
 }
 
 /**
@@ -1761,7 +1761,7 @@ HB_FUNC(SQLITE3_COLUMN_DATABASE_NAME)
   }
 #else
   hb_retc_null();
-#endif /* SQLITE_ENABLE_COLUMN_METADATA */
+#endif // SQLITE_ENABLE_COLUMN_METADATA
 }
 
 HB_FUNC(SQLITE3_COLUMN_TABLE_NAME)
@@ -1779,7 +1779,7 @@ HB_FUNC(SQLITE3_COLUMN_TABLE_NAME)
   }
 #else
   hb_retc_null();
-#endif /* SQLITE_ENABLE_COLUMN_METADATA */
+#endif // SQLITE_ENABLE_COLUMN_METADATA
 }
 
 HB_FUNC(SQLITE3_COLUMN_ORIGIN_NAME)
@@ -1797,7 +1797,7 @@ HB_FUNC(SQLITE3_COLUMN_ORIGIN_NAME)
   }
 #else
   hb_retc_null();
-#endif /* SQLITE_ENABLE_COLUMN_METADATA */
+#endif // SQLITE_ENABLE_COLUMN_METADATA
 }
 
 /*

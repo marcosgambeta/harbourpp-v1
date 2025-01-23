@@ -67,4 +67,4 @@
 #define DLL_CALLMODE_COPY           0
 #define DLL_CALLMODE_NORMAL         DLL_CALLMODE_COPY
 
-#endif /* _DLL_CH */
+#endif // _DLL_CH

@@ -109,4 +109,4 @@
 /* Extension to DBS_xxx defines to encompass NOT NULL fields, needed by indexes */
 #define DBS_NOTNULL             5     /* True if field has to be NOT NULL */
 
-#endif /* HBMARIADB_CH_ */
+#endif // HBMARIADB_CH_

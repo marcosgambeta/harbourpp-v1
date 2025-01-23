@@ -125,4 +125,4 @@
 #define gdAlignCenter                 1
 #define gdAlignRight                  2
 
-#endif /* GD_CH */
+#endif // GD_CH

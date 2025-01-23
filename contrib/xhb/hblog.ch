@@ -108,4 +108,4 @@
 #xtranslate PRIO[RITY] INFO => PRIO HB_LOG_INFO
 #xtranslate PRIO[RITY] DEBUG => PRIO HB_LOG_DEBUG
 
-#endif /* HB_LOGDEF_CH */
+#endif // HB_LOGDEF_CH

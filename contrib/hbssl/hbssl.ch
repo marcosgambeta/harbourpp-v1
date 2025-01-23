@@ -352,4 +352,4 @@
 #define HB_BIO_METHOD_F_LINEBUFFER                          52
 #define HB_BIO_METHOD_F_NBIO_TEST                           53
 
-#endif /* HBSSL_CH_ */
+#endif // HBSSL_CH_

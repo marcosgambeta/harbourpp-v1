@@ -107,4 +107,4 @@
 #define HB_ZEBRA_FLAG_QR_LEVEL_Q            0x0300
 #define HB_ZEBRA_FLAG_QR_LEVEL_H            0x0400
 
-#endif /* HB_ZEBRA_CH_ */
+#endif // HB_ZEBRA_CH_

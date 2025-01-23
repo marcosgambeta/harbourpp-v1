@@ -59,4 +59,4 @@
 #define MAGIC_NO_CHECK_FORTRAN  0x000000 /* Don't check ASCII/fortran */
 #define MAGIC_NO_CHECK_TROFF    0x000000 /* Don't check ASCII/troff */
 
-#endif /* HBMAGIC_CH_ */
+#endif // HBMAGIC_CH_

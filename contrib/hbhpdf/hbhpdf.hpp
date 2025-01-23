@@ -71,4 +71,4 @@ extern HB_EXPORT HPDF_Doc hb_HPDF_Doc_par( int iParam );
 
 HB_EXTERN_END
 
-#endif /* __HBHPDF_H */
+#endif // __HBHPDF_H

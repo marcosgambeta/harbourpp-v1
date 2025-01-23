@@ -81,7 +81,7 @@
 #define tolower(c) (__dj_ctype_tolower[static_cast<unsigned char>(c) + 1])
 #define toupper(c) (__dj_ctype_toupper[static_cast<unsigned char>(c) + 1])
 
-#endif /* __dj_include_inline_ctype_ha_ */
+#endif // __dj_include_inline_ctype_ha_
 
 #if !defined(isascii)
 #define isascii(c) (static_cast<unsigned>(c) <= 0x7F)

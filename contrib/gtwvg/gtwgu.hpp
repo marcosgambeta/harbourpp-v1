@@ -348,4 +348,4 @@ extern void     wvt_Size2ArrayEx( SIZE * siz, PHB_ITEM aSize );
 
 HB_EXTERN_END
 
-#endif /* HB_WGU_H_ */
+#endif // HB_WGU_H_

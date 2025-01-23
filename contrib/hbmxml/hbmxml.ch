@@ -89,4 +89,4 @@
 #define MXML_SAX_ELEMENT_CLOSE  5
 #define MXML_SAX_ELEMENT_OPEN   6
 
-#endif /* HBMXML_CH_ */
+#endif // HBMXML_CH_

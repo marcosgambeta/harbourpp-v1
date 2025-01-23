@@ -53,4 +53,4 @@
 
 #pragma linenumber=on
 
-#endif /* HB_TEST_CH_ */
+#endif // HB_TEST_CH_

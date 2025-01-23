@@ -73,4 +73,4 @@ int  hb_posix_get_errno( void );
 
 HB_EXTERN_END
 
-#endif /* __HBPOSIX_H */
+#endif // __HBPOSIX_H

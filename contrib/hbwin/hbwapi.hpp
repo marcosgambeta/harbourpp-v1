@@ -160,4 +160,4 @@ HB_EXTERN_END
 
 #endif
 
-#endif /* __HBWAPI_H */
+#endif // __HBWAPI_H

@@ -106,4 +106,4 @@
       #xtranslate ( struct <stru>* ) <pointer> => hb_CStructure( #<stru> ):Pointer( <pointer> )
    #endif
 
-#endif /* __HBCSTRUCT_CH_ */
+#endif // __HBCSTRUCT_CH_

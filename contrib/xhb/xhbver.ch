@@ -84,4 +84,4 @@
 #define _HB_CREDITS                 34  /* array */
 #define _HB_VER_LAST                35  /* last */
 
-#endif /* HB_VERX_CH_ */
+#endif // HB_VERX_CH_

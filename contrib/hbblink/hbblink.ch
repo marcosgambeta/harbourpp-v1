@@ -79,4 +79,4 @@
 #define BliModeReal         0
 #define BliMode286Prot      1
 
-#endif /* BLINKER_CH_ */
+#endif // BLINKER_CH_

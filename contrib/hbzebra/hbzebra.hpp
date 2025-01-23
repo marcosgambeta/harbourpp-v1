@@ -96,4 +96,4 @@ extern HB_EXPORT void          hb_zebra_ret( PHB_ZEBRA pZebra );
 
 HB_EXTERN_END
 
-#endif /* HB_ZEBRA_H_ */
+#endif // HB_ZEBRA_H_

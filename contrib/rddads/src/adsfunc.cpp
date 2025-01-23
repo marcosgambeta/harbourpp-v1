@@ -140,7 +140,7 @@ typedef struct
    int iIndexPageSize;
 #if !defined(ADS_LINUX)
    PHB_ITEM pCallBack;
-#endif /* ! ADS_LINUX */
+#endif // ! ADS_LINUX
 } HB_ADSDATA, * PHB_ADSDATA;
 
 #if !defined(ADS_LINUX) || defined(HB_ADS_TSD_CONNECTION)
@@ -156,7 +156,7 @@ static void hb_adsThreadRelease( void * cargo )
    if( pAdsData->pCallBack ) {
       hb_itemRelease(pAdsData->pCallBack);
    }
-#endif /* ! ADS_LINUX */
+#endif // ! ADS_LINUX
 }
 
 static HB_TSD_NEW( s_adsData, sizeof(HB_ADSDATA), nullptr, hb_adsThreadRelease );
@@ -235,7 +235,7 @@ static void hb_ads_setCallBack(PHB_ITEM pCallBack)
 
    pAdsData->pCallBack = pCallBack ? hb_itemNew(pCallBack) : nullptr;
 }
-#endif /* ! ADS_LINUX */
+#endif // ! ADS_LINUX
 
 /* Debug Implicit locks Set/Get call */
 HB_FUNC(ADSTESTRECLOCKS)
@@ -1444,7 +1444,7 @@ UNSIGNED32 WINAPI hb_adsShowCallback( UNSIGNED16 usPercentDone )
 
    return 0;
 }
-#endif /* ! ADS_LINUX */
+#endif // ! ADS_LINUX
 
 HB_FUNC(ADSREGCALLBACK)
 {
@@ -1473,7 +1473,7 @@ HB_FUNC(ADSREGCALLBACK)
          hb_ads_setCallBack(nullptr);
       }
    }
-#endif /* ! ADS_LINUX */
+#endif // ! ADS_LINUX
 
    hb_retl(fResult);
 }
@@ -1489,7 +1489,7 @@ HB_FUNC(ADSCLRCALLBACK)
 #endif
 #else
    hb_retnl(0);
-#endif /* ADS_LINUX */
+#endif // ADS_LINUX
 }
 
 HB_FUNC(ADSISINDEXED)

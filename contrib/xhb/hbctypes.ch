@@ -82,4 +82,4 @@
 #define CTYPE_STRUCTURE             1000
 #define CTYPE_STRUCTURE_PTR         10000
 
-#endif /* __HBCTYPES_CH_ */
+#endif // __HBCTYPES_CH_

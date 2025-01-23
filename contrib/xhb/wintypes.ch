@@ -106,4 +106,4 @@
 
 #ytranslate CTYPE_Int( <x> ) => Int( <x> )  /* Fixes conflict with Int() function */
 
-#endif /* __WINTYPES_CH */
+#endif // __WINTYPES_CH

@@ -157,4 +157,4 @@
 #define BLAT_TRY_INFINITE_KEY                          -1
 #define BLAT_TRY_INFINITE_VALUE                        "INFINITE"
 
-#endif /* _HBBLAT_CH */
+#endif // _HBBLAT_CH

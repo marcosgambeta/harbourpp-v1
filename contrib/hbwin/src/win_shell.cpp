@@ -149,8 +149,8 @@ struct _SHNAMEMAPPING
 using SHNAMEMAPPING = _SHNAMEMAPPING;
 using LPSHNAMEMAPPING = _SHNAMEMAPPING *;
 
-#endif /* End MinGW-w64 detection */
-#endif /* End MinGW detection */
+#endif // End MinGW-w64 detection
+#endif // End MinGW detection
 
 struct HANDLETOMAPPINGS
 {

@@ -112,8 +112,8 @@
                          __xhb_cls_scope( <scope>, <.persist.> ) )
 
 
-#endif /* __XHARBOUR__ */
+#endif // __XHARBOUR__
 
-#endif /* __HARBOURPP__ */
+#endif // __HARBOURPP__
 
-#endif /* XHB_CLS__CH_ */
+#endif // XHB_CLS__CH_

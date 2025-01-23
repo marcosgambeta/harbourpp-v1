@@ -191,4 +191,4 @@
 
 #define GOBJ_OBJTYPE_OBJECT               25  /* One of the above objects */
 
-#endif /* _HBGTWVG_CH */
+#endif // _HBGTWVG_CH

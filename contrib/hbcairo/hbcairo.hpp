@@ -79,4 +79,4 @@ extern HB_EXPORT void               hb_cairo_pattern_ret( cairo_pattern_t * pPat
 
 HB_EXTERN_END
 
-#endif /* HB_CAIRO_H_ */
+#endif // HB_CAIRO_H_

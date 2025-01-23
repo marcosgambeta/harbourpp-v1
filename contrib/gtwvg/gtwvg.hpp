@@ -56,10 +56,10 @@
    #ifndef __MINGW64_VERSION_MAJOR
       #define _WIN32_IE 0x0500
    #endif
-#endif /* _WIN32_IE */
+#endif // _WIN32_IE
 #ifndef WINVER
    #define WINVER 0x0500
-#endif /* WINVER */
+#endif // WINVER
 
 #include <hbset.hpp>
 #include <hbgtcore.hpp>
@@ -520,4 +520,4 @@ extern void     wvt_Size2ArrayEx( SIZE * siz, PHB_ITEM aSize );
 
 HB_EXTERN_END
 
-#endif /* HB_WVG_H_ */
+#endif // HB_WVG_H_

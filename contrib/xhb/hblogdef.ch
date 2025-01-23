@@ -59,4 +59,4 @@
 #define HB_LOG_INFO        4
 #define HB_LOG_DEBUG       5
 
-#endif /* HB_LOGDEF_CH */
+#endif // HB_LOGDEF_CH

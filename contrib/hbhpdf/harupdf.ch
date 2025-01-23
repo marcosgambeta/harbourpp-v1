@@ -903,4 +903,4 @@
 #define HPDF_NAME_CANNOT_GET_NAMES          0x1084
 #define HPDF_INVALID_ICC_COMPONENT_NUM      0x1085
 
-#endif /* _HARUPDF_CH */
+#endif // _HARUPDF_CH

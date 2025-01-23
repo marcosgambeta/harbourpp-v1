@@ -147,8 +147,8 @@ typedef struct _SHNAMEMAPPING
   int cchNewPath;
 } SHNAMEMAPPING, *LPSHNAMEMAPPING;
 
-#endif /* End MinGW-w64 detection */
-#endif /* End MinGW detection */
+#endif // End MinGW-w64 detection
+#endif // End MinGW detection
 
 typedef struct
 {

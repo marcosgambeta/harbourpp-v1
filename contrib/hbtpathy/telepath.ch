@@ -112,4 +112,4 @@
 #define THS_CRTS           128          /* Flow control with RTS */
 #define THS_SXOFF          256          /* Send XON/XOFF */
 
-#endif /* TELEPATH_CH_ */
+#endif // TELEPATH_CH_

@@ -163,4 +163,4 @@ HB_EXTERN_END
 
 #endif
 
-#endif /* __HBWINOLE_H */
+#endif // __HBWINOLE_H
