@@ -33,9 +33,8 @@
 HB_FUNC(FT_CAPLOCK)
 {
    int        iState = 0;
-   HB_GT_INFO gtInfo;
+   HB_GT_INFO gtInfo{};
 
-   memset(&gtInfo, 0, sizeof(gtInfo));
    hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
    if( gtInfo.pResult )
    {
