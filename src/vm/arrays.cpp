@@ -495,7 +495,7 @@ HB_BOOL hb_arrayGetItemRef(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayGetItemRef(%p, %" HB_PFS "u, %p)", static_cast<void*>(pArray), nIndex, static_cast<void*>(pItem)));
 #endif
 
-  if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
+  if (pArray->isArray() && pArray->isValidIndex(nIndex))
   {
     if (pArray != pItem)
     {
