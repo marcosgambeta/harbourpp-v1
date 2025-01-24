@@ -380,14 +380,14 @@ static PHB_ITEM hb_breakBlock()
 {
   if (s_breakBlock == nullptr)
   {
-    static const HB_BYTE s_pCode[8] = {HB_P_PUSHFUNCSYM,   0, 0, /* BREAK */
-                                       HB_P_PUSHLOCALNEAR, 1,    /* oErr */
+    static const HB_BYTE s_pCode[8] = {HB_P_PUSHFUNCSYM,   0, 0, // BREAK
+                                       HB_P_PUSHLOCALNEAR, 1,    // oErr
                                        HB_P_FUNCTIONSHORT, 1, HB_P_ENDBLOCK};
 
     s_breakBlock = hb_itemNew(nullptr);
-    s_breakBlock->setBlockValue(hb_codeblockNew(s_pCode, /* pcode buffer         */
-                                                0,       /* number of referenced local variables */
-                                                nullptr, /* table with referenced local variables */
+    s_breakBlock->setBlockValue(hb_codeblockNew(s_pCode, // pcode buffer
+                                                0,       // number of referenced local variables
+                                                nullptr, // table with referenced local variables
                                                 &s_symBreak, sizeof(s_pCode)));
     s_breakBlock->setType(Harbour::Item::BLOCK);
     s_breakBlock->setBlockParamCnt(1);
@@ -515,9 +515,8 @@ static void hb_vmDoModuleQuitFunctions()
   hb_vmDoModuleFunctions(&s_QuitFunctions);
 }
 
-/* call __HBVMINIT() function to initialize GetList public variable
- * and set ErrorBlock() by ErrorSys() function
- */
+// call __HBVMINIT() function to initialize GetList public variable
+// and set ErrorBlock() by ErrorSys() function
 static void hb_vmDoInitHVM()
 {
   auto pDynSym = hb_dynsymFind("__HBVMINIT");
@@ -530,7 +529,7 @@ static void hb_vmDoInitHVM()
   }
 }
 
-/* call __SetHelpK() if HELP() function is linked */
+// call __SetHelpK() if HELP() function is linked
 static void hb_vmDoInitHelp()
 {
   auto pDynSym = hb_dynsymFind("HELP");
@@ -634,13 +633,13 @@ void hb_vmThreadQuitRequest(void *Cargo)
 static HB_CRITICAL_NEW(s_vmMtx);
 static HB_COND_NEW(s_vmCond);
 
-/* number of allocated HVM stacks */
+// number of allocated HVM stacks
 static int volatile s_iStackCount = 0;
-/* number of running HVM threads */
+// number of running HVM threads
 static int volatile s_iRunningCount = 0;
-/* active HVM stacks list */
+// active HVM stacks list
 static PHB_THREADSTATE s_vmStackLst = nullptr;
-/* thread number */
+// thread number
 static HB_THREAD_NO s_threadNo = 0;
 
 #define HB_THREQUEST_STOP 1
@@ -685,7 +684,7 @@ static void hb_vmRequestTest()
   HB_VM_UNLOCK();
 }
 
-/* unlock VM, allow GC and other exclusive single task code execution */
+// unlock VM, allow GC and other exclusive single task code execution
 void hb_vmUnlock(void)
 {
   if (s_fHVMActive)
@@ -693,7 +692,7 @@ void hb_vmUnlock(void)
     HB_STACK_TLS_PRELOAD
 
     if (hb_stackId())
-    { /* check if thread has associated HVM stack */
+    { // check if thread has associated HVM stack
       if (hb_stackUnlock() == 1)
       {
         HB_VM_LOCK();
@@ -718,7 +717,7 @@ void hb_vmUnlock(void)
   }
 }
 
-/* lock VM blocking GC and other exclusive single task code execution */
+// lock VM blocking GC and other exclusive single task code execution
 void hb_vmLock(void)
 {
   if (s_fHVMActive)
@@ -726,7 +725,7 @@ void hb_vmLock(void)
     HB_STACK_TLS_PRELOAD
 
     if (hb_stackId())
-    { /* check if thread has associated HVM stack */
+    { // check if thread has associated HVM stack
       if (hb_stackLock() == 0)
       {
         HB_VM_LOCK();
@@ -763,7 +762,7 @@ void hb_vmLockForce(void)
     HB_STACK_TLS_PRELOAD
 
     if (hb_stackId())
-    { /* check if thread has associated HVM stack */
+    { // check if thread has associated HVM stack
       if (hb_stackLock() == 0)
       {
         HB_VM_LOCK();
@@ -782,7 +781,7 @@ void hb_vmLockForce(void)
   }
 }
 
-/* (try to) stop all threads except current one */
+// (try to) stop all threads except current one
 HB_BOOL hb_vmSuspendThreads(HB_BOOL fWait)
 {
   HB_VM_LOCK();
@@ -818,7 +817,7 @@ HB_BOOL hb_vmSuspendThreads(HB_BOOL fWait)
   return false;
 }
 
-/* unblock execution of threads stopped by hb_vmSuspendThreads() */
+// unblock execution of threads stopped by hb_vmSuspendThreads()
 void hb_vmResumeThreads(void)
 {
   hb_vmThreadRequest &= ~HB_THREQUEST_STOP;
@@ -826,10 +825,9 @@ void hb_vmResumeThreads(void)
   HB_VM_UNLOCK();
 }
 
-/* send QUIT request to all threads except current one
- * and wait for their termination,
- * should be called only by main HVM thread
- */
+// send QUIT request to all threads except current one
+// and wait for their termination,
+// should be called only by main HVM thread
 void hb_vmTerminateThreads(void)
 {
   HB_STACK_TLS_PRELOAD
@@ -861,9 +859,8 @@ void hb_vmTerminateThreads(void)
   }
 }
 
-/* wait for all threads to terminate
- * should be called only by main HVM thread
- */
+// wait for all threads to terminate
+// should be called only by main HVM thread
 void hb_vmWaitForThreads(void)
 {
   HB_STACK_TLS_PRELOAD
@@ -977,10 +974,9 @@ static PHB_ITEM hb_vmStackDel(PHB_THREADSTATE pState, HB_BOOL fCounter)
     }
   }
 
-  /* NOTE: releasing pThItm may force pState freeing if parent
-   *       thread does not keep thread pointer item. So it's
-   *       important to not access it later. [druzus]
-   */
+  // NOTE: releasing pThItm may force pState freeing if parent
+  //       thread does not keep thread pointer item. So it's
+  //       important to not access it later. [druzus]
   PHB_ITEM pThItm = pState->pThItm;
   pState->pThItm = nullptr;
 
@@ -993,7 +989,7 @@ static void hb_vmStackInit(PHB_THREADSTATE pState)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmStackInit(%p)", static_cast<void*>(pState)));
 #endif
 
-  hb_stackInit(); /* initialize HVM thread stack */
+  hb_stackInit(); // initialize HVM thread stack
 
   HB_VM_LOCK();
   {
@@ -1019,10 +1015,9 @@ static void hb_vmStackRelease()
   PHB_ITEM pThItm = hb_vmStackDel(static_cast<PHB_THREADSTATE>(hb_stackList()), false);
   HB_VM_UNLOCK();
 
-  /* NOTE: releasing pThItm may force pState freeing if parent
-   *       thread does not keep thread pointer item. So it's
-   *       important to not access it later. [druzus]
-   */
+  // NOTE: releasing pThItm may force pState freeing if parent
+  //       thread does not keep thread pointer item. So it's
+  //       important to not access it later. [druzus]
   if (pThItm)
   {
     hb_itemRelease(pThItm);
@@ -1072,7 +1067,7 @@ void hb_vmThreadRelease(void *Cargo)
   }
 }
 
-/* thread entry point */
+// thread entry point
 void hb_vmThreadInit(void *Cargo)
 {
 #if 0
@@ -1085,7 +1080,7 @@ void hb_vmThreadInit(void *Cargo)
     pState = hb_threadStateNew();
   }
 
-  hb_vmStackInit(pState); /* initialize HVM thread stack */
+  hb_vmStackInit(pState); // initialize HVM thread stack
   hb_vmLock();
   {
     HB_STACK_TLS_PRELOAD
@@ -1117,9 +1112,8 @@ void hb_vmThreadInit(void *Cargo)
 
     if (s_fHVMActive)
     {
-      /* call __HBVMINIT() function to initialize GetList public variable
-       * and set ErrorBlock() by ErrorSys() function
-       */
+      // call __HBVMINIT() function to initialize GetList public variable
+      // and set ErrorBlock() by ErrorSys() function
       hb_vmDoInitHVM();
     }
 
@@ -1132,7 +1126,7 @@ void hb_vmThreadInit(void *Cargo)
   }
 }
 
-/* thread leave point */
+// thread leave point
 void hb_vmThreadQuit(void)
 {
 #if 0
@@ -1166,18 +1160,18 @@ void hb_vmThreadQuit(void)
   hb_stackReturnItem()->clear();
 
   hb_stackSetActionRequest(0);
-  hb_rddCloseAll();      /* close all workareas */
-  hb_stackRemove(1);     /* clear stack items, leave only initial symbol item */
-  hb_memvarsClear(true); /* clear all PUBLIC (and PRIVATE if any) variables */
-  hb_vmSetI18N(nullptr); /* remove i18n translation table */
+  hb_rddCloseAll();      // close all workareas
+  hb_stackRemove(1);     // clear stack items, leave only initial symbol item
+  hb_memvarsClear(true); // clear all PUBLIC (and PRIVATE if any) variables
+  hb_vmSetI18N(nullptr); // remove i18n translation table
 #ifndef HB_NO_DEBUG
-  hb_vmDebuggerExit(false); /* deactivate debugger */
+  hb_vmDebuggerExit(false); // deactivate debugger
 #endif
   hb_gtRelease(nullptr);
-  hb_vmStackRelease(); /* release HVM stack and remove it from linked HVM stacks list */
+  hb_vmStackRelease(); // release HVM stack and remove it from linked HVM stacks list
 }
 
-/* send QUIT request to given thread */
+// send QUIT request to given thread
 void hb_vmThreadQuitRequest(void *Cargo)
 {
 #if 0
@@ -1196,7 +1190,7 @@ void hb_vmThreadQuitRequest(void *Cargo)
   HB_VM_UNLOCK();
 }
 
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
 PHB_ITEM hb_vmThreadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
 {
@@ -1211,7 +1205,7 @@ PHB_ITEM hb_vmThreadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
   HB_SYMBOL_UNUSED(pFunc);
   HB_SYMBOL_UNUSED(cargo);
   return nullptr;
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
 void hb_vmSetFunction(PHB_SYMB pOldSym, PHB_SYMB pNewSym)
@@ -1219,9 +1213,8 @@ void hb_vmSetFunction(PHB_SYMB pOldSym, PHB_SYMB pNewSym)
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
   HB_SYMB SymOldBuf, SymNewBuf;
 
-  /* make copy of symbols to eliminate possible problem with
-   * dynamic modification of passed parameters inside the loop
-   */
+  // make copy of symbols to eliminate possible problem with
+  // dynamic modification of passed parameters inside the loop
   memcpy(&SymOldBuf, pOldSym, sizeof(SymOldBuf));
   pOldSym = &SymOldBuf;
   memcpy(&SymNewBuf, pNewSym, sizeof(SymNewBuf));
@@ -1267,7 +1260,7 @@ void hb_vmSetDynFunc(PHB_DYNS pDynSym)
   }
 }
 
-/* application entry point */
+// application entry point
 
 void hb_vmInit(HB_BOOL bStartMainProc)
 {
@@ -1281,46 +1274,46 @@ void hb_vmInit(HB_BOOL bStartMainProc)
 
   hb_xinit();
   hb_vmSetExceptionHandler();
-  hb_vmSymbolInit_RT(); /* initialize symbol table with runtime support functions */
+  hb_vmSymbolInit_RT(); // initialize symbol table with runtime support functions
 
 #if defined(HB_MT_VM)
   hb_threadInit();
-  hb_vmStackInit(hb_threadStateNew()); /* initialize HVM thread stack */
+  hb_vmStackInit(hb_threadStateNew()); // initialize HVM thread stack
   s_pSymbolsMtx = hb_threadMutexCreate();
 #else
-  hb_stackInit(); /* initialize HVM stack */
-#endif /* HB_MT_VM */
-  /* Set the language and codepage to the default */
-  /* This trick is needed to stringify the macro value */
+  hb_stackInit(); // initialize HVM stack
+#endif // HB_MT_VM
+  // Set the language and codepage to the default
+  // This trick is needed to stringify the macro value
   hb_langSelectID(HB_MACRO2STRING(HB_LANG_DEFAULT));
   hb_cdpSelectID(HB_MACRO2STRING(HB_CODEPAGE_DEFAULT));
   {
     HB_STACK_TLS_PRELOAD
     s_main_thread = hb_stackId();
-    /* _SET_* initialization */
+    // _SET_* initialization
     hb_setInitialize(hb_stackSetStruct());
   }
 
   hb_cmdargUpdate();
 
-  hb_clsInit(); /* initialize Classy/OO system */
+  hb_clsInit(); // initialize Classy/OO system
 
   hb_errInit();
   hb_breakBlock();
 
-  /* initialize dynamic symbol for evaluating codeblocks and break function */
+  // initialize dynamic symbol for evaluating codeblocks and break function
   hb_symEval.pDynSym = hb_dynsymGetCase(hb_symEval.szName);
   s_symBreak.pDynSym = hb_dynsymGetCase(s_symBreak.szName);
 
   hb_conInit();
 
-  /* Check for some internal switches */
+  // Check for some internal switches
   hb_cmdargProcess();
 
-  hb_i18n_init(); /* initialize i18n module */
+  hb_i18n_init(); // initialize i18n module
 
 #ifndef HB_NO_PROFILER
-  /* Initialize opcodes profiler support arrays */
+  // Initialize opcodes profiler support arrays
   {
     for (HB_ULONG ul = 0; ul < HB_P_LAST_PCODE; ul++)
     {
@@ -1330,17 +1323,17 @@ void hb_vmInit(HB_BOOL bStartMainProc)
   }
 #endif
 
-  /* enable executing PCODE (HVM reenter request) */
+  // enable executing PCODE (HVM reenter request)
   s_fHVMActive = true;
 
-  /* lock main HVM thread */
+  // lock main HVM thread
   hb_vmLock();
 
 #ifndef HB_NO_DEBUG
   s_pDynsDbgEntry = hb_dynsymFind("__DBGENTRY");
   if (s_pDynsDbgEntry)
   {
-    /* Try to get C dbgEntry() function pointer */
+    // Try to get C dbgEntry() function pointer
     if (!s_pFunDbgEntry)
     {
       hb_vmDebugEntry(HB_DBG_GETENTRY, 0, nullptr, 0, nullptr);
@@ -1352,31 +1345,28 @@ void hb_vmInit(HB_BOOL bStartMainProc)
   }
 #endif
 
-  /* Call functions that initializes static variables
-   * Static variables have to be initialized before any INIT functions
-   * because INIT function can use static variables
-   */
+  // Call functions that initializes static variables
+  // Static variables have to be initialized before any INIT functions
+  // because INIT function can use static variables
   hb_vmDoInitStatics();
 
-  /* call __HBVMINIT() function to initialize GetList public variable
-   * and set ErrorBlock() by ErrorSys() function.
-   */
+  // call __HBVMINIT() function to initialize GetList public variable
+  // and set ErrorBlock() by ErrorSys() function.
   hb_vmDoInitHVM();
 
-  hb_clsDoInit(); /* initialize Class(y) .prg functions */
+  hb_clsDoInit(); // initialize Class(y) .prg functions
 
-  hb_vmDoModuleInitFunctions(); /* process AtInit registered functions */
-  hb_vmDoInitFunctions(true);   /* process registered CLIPINIT INIT procedures */
-  hb_vmDoInitFunctions(false);  /* process registered other INIT procedures */
+  hb_vmDoModuleInitFunctions(); // process AtInit registered functions
+  hb_vmDoInitFunctions(true);   // process registered CLIPINIT INIT procedures
+  hb_vmDoInitFunctions(false);  // process registered other INIT procedures
 
-  /* Call __SetHelpK() function to redirect K_F1 to HELP() function
-   * if it is linked. CA-Cl*pper calls it after INIT PROCEDUREs and
-   * before executing the application entry function.
-   */
+  // Call __SetHelpK() function to redirect K_F1 to HELP() function
+  // if it is linked. CA-Cl*pper calls it after INIT PROCEDUREs and
+  // before executing the application entry function.
   hb_vmDoInitHelp();
 
-  /* This is undocumented CA-Cl*pper, if there's a function called _APPMAIN()
-     it will be executed first. [vszakats] */
+  // This is undocumented CA-Cl*pper, if there's a function called _APPMAIN()
+  // it will be executed first. [vszakats]
   {
     auto pDynSym = hb_dynsymFind("_APPMAIN");
 
@@ -1386,12 +1376,11 @@ void hb_vmInit(HB_BOOL bStartMainProc)
     }
     else
     {
-      /* if first char is '@' then start procedure were set by
-       * programmer explicitly and should have the highest priority
-       * otherwise it's the name of first public function in
-       * first linked module which is used if there is no
-       * HB_START_PROCEDURE in code
-       */
+      // if first char is '@' then start procedure were set by
+      // programmer explicitly and should have the highest priority
+      // otherwise it's the name of first public function in
+      // first linked module which is used if there is no
+      // HB_START_PROCEDURE in code
       const char *pszMain;
 
       if (s_vm_pszLinkedMain && *s_vm_pszLinkedMain == '@')
@@ -1424,7 +1413,7 @@ void hb_vmInit(HB_BOOL bStartMainProc)
 #ifdef HB_START_PROC_STRICT
       else
       {
-        /* clear startup symbol set by initialization code */
+        // clear startup symbol set by initialization code
         s_pSymStart = nullptr;
       }
 #endif
@@ -1447,9 +1436,9 @@ void hb_vmInit(HB_BOOL bStartMainProc)
 
   if (bStartMainProc && s_pSymStart)
   {
-    hb_vmPushSymbol(s_pSymStart);                           /* pushes first HB_FS_PUBLIC defined symbol to the stack */
-    hb_vmPushNil();                                         /* places NIL at self */
-    hb_vmProc(static_cast<HB_USHORT>(hb_cmdargPushArgs())); /* invoke it with number of supplied parameters */
+    hb_vmPushSymbol(s_pSymStart);                           // pushes first HB_FS_PUBLIC defined symbol to the stack
+    hb_vmPushNil();                                         // places NIL at self
+    hb_vmProc(static_cast<HB_USHORT>(hb_cmdargPushArgs())); // invoke it with number of supplied parameters
   }
 }
 
@@ -1465,41 +1454,39 @@ int hb_vmQuit(void)
   hb_vmTerminateThreads();
 #endif
 
-  hb_vmDoExitFunctions();       /* process defined EXIT functions */
-  hb_vmDoModuleExitFunctions(); /* process AtExit registered functions */
+  hb_vmDoExitFunctions();       // process defined EXIT functions
+  hb_vmDoModuleExitFunctions(); // process AtExit registered functions
 
-  /* release all known items stored in subsystems */
+  // release all known items stored in subsystems
   hb_stackReturnItem()->clear();
-  hb_stackRemove(1); /* clear stack items, leave only initial symbol item */
+  hb_stackRemove(1); // clear stack items, leave only initial symbol item
 
-  /* intentionally here to allow executing object destructors for all
-   * cross referenced items before we release classy subsystem
-   */
+  // intentionally here to allow executing object destructors for all
+  // cross referenced items before we release classy subsystem
   hb_gcCollectAll(true);
 
-  /* Clear any pending actions so RDD shutdown process
-   * can be cleanly executed
-   */
+  // Clear any pending actions so RDD shutdown process
+  // can be cleanly executed
   hb_stackSetActionRequest(0);
-  hb_rddCloseAll();      /* close all workareas */
-  hb_rddShutDown();      /* remove all registered RDD drivers */
-  hb_memvarsClear(true); /* clear all PUBLIC (and PRIVATE if any) variables */
-  hb_vmSetI18N(nullptr); /* remove i18n translation table */
-  hb_i18n_exit();        /* unregister i18n module */
+  hb_rddCloseAll();      // close all workareas
+  hb_rddShutDown();      // remove all registered RDD drivers
+  hb_memvarsClear(true); // clear all PUBLIC (and PRIVATE if any) variables
+  hb_vmSetI18N(nullptr); // remove i18n translation table
+  hb_i18n_exit();        // unregister i18n module
 
   hb_stackReturnItem()->clear();
   hb_gcCollectAll(true);
 #ifndef HB_NO_DEBUG
-  /* deactivate debugger */
+  // deactivate debugger
   hb_vmDebuggerExit(true);
 #endif
 
-  /* stop executing PCODE (HVM reenter request) */
+  // stop executing PCODE (HVM reenter request)
   s_fHVMActive = false;
 
   hb_vmStaticsClear();
 
-  /* release thread specific data */
+  // release thread specific data
   hb_stackDestroyTSD();
 
   hb_breakBlockRelease();
@@ -1508,19 +1495,19 @@ int hb_vmQuit(void)
 
   hb_vmStaticsRelease();
 
-  /* release all remaining items */
+  // release all remaining items
 
-  hb_conRelease();            /* releases Console */
-  hb_vmReleaseLocalSymbols(); /* releases the local modules linked list */
-  hb_dynsymRelease();         /* releases the dynamic symbol table */
+  hb_conRelease();            // releases Console
+  hb_vmReleaseLocalSymbols(); // releases the local modules linked list
+  hb_dynsymRelease();         // releases the dynamic symbol table
   hb_stackReturnItem()->clear();
   hb_gcCollectAll(true);
 
-  hb_vmDoModuleQuitFunctions(); /* process AtQuit registered functions */
+  hb_vmDoModuleQuitFunctions(); // process AtQuit registered functions
   hb_vmCleanModuleFunctions();
 
 #if defined(HB_MT_VM)
-  hb_vmStackRelease(); /* release HVM stack and remove it from linked HVM stacks list */
+  hb_vmStackRelease(); // release HVM stack and remove it from linked HVM stacks list
   if (s_pSymbolsMtx)
   {
     hb_itemRelease(s_pSymbolsMtx);
@@ -1528,16 +1515,16 @@ int hb_vmQuit(void)
   }
   hb_threadExit();
 #else
-  hb_setRelease(hb_stackSetStruct()); /* releases Sets */
+  hb_setRelease(hb_stackSetStruct()); // releases Sets
   hb_stackFree();
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
-  hb_langReleaseAll(); /* release lang modules */
-  hb_cdpReleaseAll();  /* releases codepages */
+  hb_langReleaseAll(); // release lang modules
+  hb_cdpReleaseAll();  // releases codepages
 
-  /* release all known garbage */
+  // release all known garbage
   if (hb_xquery(HB_MEM_STATISTICS) == 0)
-  { /* check if fmstat is ON */
+  { // check if fmstat is ON
     hb_gcReleaseAll();
   }
 
@@ -1563,8 +1550,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
   bool bDynCode = pSymbols == nullptr || (pSymbols->scope.value & HB_FS_DYNCODE) != 0;
 
 #ifndef HB_NO_PROFILER
-  HB_ULONG ulLastOpcode = 0; /* opcodes profiler support */
-  HB_ULONG ulPastClock = 0;  /* opcodes profiler support */
+  HB_ULONG ulLastOpcode = 0; // opcodes profiler support
+  HB_ULONG ulPastClock = 0;  // opcodes profiler support
 #endif
 #ifndef HB_GUI
   int *piKeyPolls = hb_stackKeyPolls();
@@ -1600,23 +1587,22 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       }
       *piKeyPolls = 65536;
 
-      /* IMHO we should have a _SET_ controlled by user
-       * something like:
-
-      if( hb_stackSetStruct()->HB_SET_KEYPOLL ) {
-         hb_inkeyPoll();
-         *piKeyPolls = hb_stackSetStruct()->HB_SET_KEYPOLL;
-      }
-
-      for some GTs which can work in asynchronous mode user may
-      set it to 0 (or if he doesn't need any inkey poll) and
-      when ALT+C/ALT+D is pressed (or any other platform dependent
-      key combination) they should set proper flags in
-      ActionRequest so we can serve it in main VM loop without
-      performance decrease or ignore depending on
-      hb_stackSetStruct()->HB_SET_CANCEL,
-      hb_stackSetStruct()->HB_SET_DEBUG flags
-      */
+      // IMHO we should have a _SET_ controlled by user
+      // something like:
+      //
+      // if( hb_stackSetStruct()->HB_SET_KEYPOLL ) {
+      //    hb_inkeyPoll();
+      //    *piKeyPolls = hb_stackSetStruct()->HB_SET_KEYPOLL;
+      // }
+      //
+      // for some GTs which can work in asynchronous mode user may
+      // set it to 0 (or if he doesn't need any inkey poll) and
+      // when ALT+C/ALT+D is pressed (or any other platform dependent
+      // key combination) they should set proper flags in
+      // ActionRequest so we can serve it in main VM loop without
+      // performance decrease or ignore depending on
+      // hb_stackSetStruct()->HB_SET_CANCEL,
+      // hb_stackSetStruct()->HB_SET_DEBUG flags
     }
 #endif
 #if defined(HB_MT_VM)
@@ -1628,7 +1614,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
     switch (pCode[0])
     {
-      /* Operators (mathematical / character / misc) */
+      // Operators (mathematical / character / misc)
 
     case HB_P_NEGATE:
       hb_vmNegate();
@@ -1842,7 +1828,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-      /* Operators (relational) */
+      // Operators (relational)
 
     case HB_P_EQUAL:
       hb_vmEqual();
@@ -1913,7 +1899,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode = hb_vmSwitch(pCode + 3, HB_PCODE_MKUSHORT(&pCode[1]));
       break;
 
-      /* Operators (logical) */
+      // Operators (logical)
 
     case HB_P_NOT:
       hb_vmNot();
@@ -1930,7 +1916,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-      /* Array */
+      // Array
 
     case HB_P_ARRAYPUSH:
       hb_vmArrayPush();
@@ -1962,21 +1948,21 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 3;
       break;
 
-      /* Object */
+      // Object
 
     case HB_P_MESSAGE:
       hb_vmPushSymbol(pSymbols + HB_PCODE_MKUSHORT(&pCode[1]));
       pCode += 3;
       break;
 
-      /* Database */
+      // Database
 
     case HB_P_SWAPALIAS:
       hb_vmSwapAlias();
       pCode++;
       break;
 
-      /* Execution */
+      // Execution
 
     case HB_P_DO:
       hb_vmProc(HB_PCODE_MKUSHORT(&pCode[1]));
@@ -2006,7 +1992,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       hb_itemSetNil(hb_stackReturnItem());
       hb_vmSend(HB_PCODE_MKUSHORT(&pCode[1]));
       pCode += 3;
-      /* Small opt */
+      // Small opt
       if (pCode[0] == HB_P_POP)
       {
         pCode++;
@@ -2021,7 +2007,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       hb_itemSetNil(hb_stackReturnItem());
       hb_vmSend(pCode[1]);
       pCode += 2;
-      /* Small opt */
+      // Small opt
       if (pCode[0] == HB_P_POP)
       {
         pCode++;
@@ -2141,9 +2127,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
             HB_TRACE(HB_TR_INFO, ("HB_P_ENDBLOCK"));
 #endif
       hb_stackPopReturn();
-      /* manually inlined hb_vmRequestEndProc() for some C compilers
-       * which does not make such optimization
-       */
+      // manually inlined hb_vmRequestEndProc() for some C compilers
+      // which does not make such optimization
       hb_stackSetActionRequest(HB_ENDPROC_REQUESTED);
       break;
 
@@ -2151,13 +2136,12 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 #if 0
             HB_TRACE(HB_TR_INFO, ("HB_P_ENDPROC"));
 #endif
-      /* manually inlined hb_vmRequestEndProc() for some C compilers
-       * which does not make such optimization
-       */
+      // manually inlined hb_vmRequestEndProc() for some C compilers
+      // which does not make such optimization
       hb_stackSetActionRequest(HB_ENDPROC_REQUESTED);
       break;
 
-      /* BEGIN SEQUENCE/RECOVER/ALWAYS/END SEQUENCE */
+      // BEGIN SEQUENCE/RECOVER/ALWAYS/END SEQUENCE
 
     case HB_P_SEQBLOCK:
       hb_vmSeqBlock();
@@ -2165,40 +2149,30 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_SEQALWAYS: {
-      /*
-       * Create the SEQUENCE envelope
-       * [ break return value ]  -2
-       * [ recover envelope   ]  -1
-       * [                    ] <- new recover base
-       */
+      // Create the SEQUENCE envelope
+      // [ break return value ]  -2
+      // [ recover envelope   ]  -1
+      // [                    ] <- new recover base
 
-      /*
-       * 1) clear the storage for value returned by BREAK statement
-       */
+      // 1) clear the storage for value returned by BREAK statement
       hb_stackAllocItem()->setType(Harbour::Item::NIL);
 
-      /*
-       * 2) recover data
-       */
+      // 2) recover data
       auto pItem = hb_stackAllocItem();
-      /* mark type as NIL - it's not real item */
+      // mark type as NIL - it's not real item
       pItem->setType(Harbour::Item::RECOVER);
-      /* store the address of RECOVER or END opcode */
+      // store the address of RECOVER or END opcode
       pItem->item.asRecover.recover = pCode + HB_PCODE_MKINT24(&pCode[1]);
-      /* store current RECOVER base */
+      // store current RECOVER base
       pItem->item.asRecover.base = hb_stackGetRecoverBase();
-      /* store current bCanRecover flag - in a case of nested sequences */
+      // store current bCanRecover flag - in a case of nested sequences
       pItem->item.asRecover.flags = HB_SEQ_DOALWAYS | (bCanRecover ? HB_SEQ_CANRECOVER : 0);
-      /* clear new recovery state */
+      // clear new recovery state
       pItem->item.asRecover.request = 0;
 
-      /*
-       * set new recover base
-       */
+      // set new recover base
       hb_stackSetRecoverBase(hb_stackTopOffset());
-      /*
-       * we are now inside a valid SEQUENCE envelope
-       */
+      // we are now inside a valid SEQUENCE envelope
       bCanRecover = true;
       pCode += 4;
       break;
@@ -2211,13 +2185,13 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
         hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_ALWAYSBEGIN", nullptr, nullptr);
       }
 #endif
-      /* change the recover address to ALWAYSEND opcode */
+      // change the recover address to ALWAYSEND opcode
       hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.recover = pCode + HB_PCODE_MKINT24(&pCode[1]);
-      /* store and reset action */
+      // store and reset action
       hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags |=
           hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request;
       hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request = 0;
-      /* store RETURN value */
+      // store RETURN value
       if (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_ENDPROC_REQUESTED)
       {
         hb_itemMove(hb_stackItemFromTop(HB_RECOVER_VALUE), hb_stackReturnItem());
@@ -2235,11 +2209,11 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       HB_USHORT uiPrevAction = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags;
       HB_USHORT uiCurrAction = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request;
 
-      /* restore previous recovery base */
+      // restore previous recovery base
       bCanRecover = (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_CANRECOVER) != 0;
       hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
 
-      /* restore requested action */
+      // restore requested action
       if ((uiCurrAction | uiPrevAction) & HB_QUIT_REQUESTED)
       {
         hb_stackSetActionRequest(HB_QUIT_REQUESTED);
@@ -2257,10 +2231,10 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
         hb_stackSetActionRequest(0);
       }
 
-      /* Remove the ALWAYS envelope */
+      // Remove the ALWAYS envelope
       hb_stackDec();
 
-      /* restore RETURN value if not overloaded inside ALWAYS code */
+      // restore RETURN value if not overloaded inside ALWAYS code
       if (!(uiCurrAction & HB_ENDPROC_REQUESTED) && (uiPrevAction & HB_ENDPROC_REQUESTED))
       {
         hb_stackPopReturn();
@@ -2274,99 +2248,75 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_SEQBEGIN: {
-      /*
-       * Create the SEQUENCE envelope
-       * [ break return value ]  -2
-       * [ recover envelope   ]  -1
-       * [                    ] <- new recover base
-       */
+      // Create the SEQUENCE envelope
+      // [ break return value ]  -2
+      // [ recover envelope   ]  -1
+      // [                    ] <- new recover base
 
-      /*
-       * 1) clear the storage for value returned by BREAK statement
-       */
+      // 1) clear the storage for value returned by BREAK statement
       hb_stackAllocItem()->setType(Harbour::Item::NIL);
 
-      /*
-       * 2) recover data
-       */
+      // 2) recover data
       auto pItem = hb_stackAllocItem();
-      /* mark type as NIL - it's not real item */
+      // mark type as NIL - it's not real item
       pItem->setType(Harbour::Item::RECOVER);
-      /* store the address of RECOVER or END opcode */
+      // store the address of RECOVER or END opcode
       pItem->item.asRecover.recover = pCode + HB_PCODE_MKINT24(&pCode[1]);
-      /* store current RECOVER base */
+      // store current RECOVER base
       pItem->item.asRecover.base = hb_stackGetRecoverBase();
-      /* store current bCanRecover flag - in a case of nested sequences */
+      // store current bCanRecover flag - in a case of nested sequences
       pItem->item.asRecover.flags = bCanRecover ? HB_SEQ_CANRECOVER : 0;
-      /* clear new recovery state */
+      // clear new recovery state
       pItem->item.asRecover.request = 0;
 
-      /*
-       * set new recover base
-       */
+      // set new recover base
       hb_stackSetRecoverBase(hb_stackTopOffset());
-      /*
-       * we are now inside a valid SEQUENCE envelope
-       */
+      // we are now inside a valid SEQUENCE envelope
       bCanRecover = true;
       pCode += 4;
       break;
     }
 
     case HB_P_SEQEND:
-      /*
-       * Remove the SEQUENCE envelope
-       * This is executed either at the end of sequence or as the
-       * response to the break statement if there is no RECOVER clause
-       */
+      // Remove the SEQUENCE envelope
+      // This is executed either at the end of sequence or as the
+      // response to the break statement if there is no RECOVER clause
 #if defined(_HB_RECOVER_DEBUG)
       if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
       {
         hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_SEQEND", nullptr, nullptr);
       }
 #endif
-      /*
-       * 2) Restore previous recovery state
-       */
+      // 2) Restore previous recovery state
       bCanRecover = (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_CANRECOVER) != 0;
       hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
       hb_stackDec();
 
-      /*
-       * 1) Discard the value returned by BREAK statement - there
-       * was no RECOVER clause or there was no BREAK statement
-       */
+      // 1) Discard the value returned by BREAK statement - there
+      // was no RECOVER clause or there was no BREAK statement
       hb_stackPop();
-      /*
-       * skip outside of SEQUENCE structure
-       */
+      // skip outside of SEQUENCE structure
       pCode += HB_PCODE_MKINT24(&pCode[1]);
       break;
 
     case HB_P_SEQRECOVER:
-      /*
-       * Execute the RECOVER code
-       */
+      // Execute the RECOVER code
 #if defined(_HB_RECOVER_DEBUG)
       if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
       {
         hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_SEQRECOVER", nullptr, nullptr);
       }
 #endif
-      /*
-       * 2) Restore previous recovery state
-       */
+      // 2) Restore previous recovery state
       bCanRecover = (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_CANRECOVER) != 0;
       hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
       hb_stackDec();
-      /*
-       * 1) Leave the value returned from BREAK  - it will be popped
-       * in next executed opcode
-       */
+      // 1) Leave the value returned from BREAK  - it will be popped
+      // in next executed opcode
       pCode++;
       break;
 
-      /* Jumps */
+      // Jumps
 
     case HB_P_JUMPNEAR:
       pCode += static_cast<signed char>(pCode[1]);
@@ -2446,7 +2396,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       }
       break;
 
-      /* Push */
+      // Push
 
     case HB_P_TRUE: {
       auto pItem = hb_stackAllocItem();
@@ -2624,33 +2574,30 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_PUSHBLOCK: {
-      /* +0    -> _pushblock
-       * +1 +2 -> size of codeblock
-       * +3 +4 -> number of expected parameters
-       * +5 +6 -> number of referenced local variables
-       * +7    -> start of table with referenced local variables
-       */
+      // +0    -> _pushblock
+      // +1 +2 -> size of codeblock
+      // +3 +4 -> number of expected parameters
+      // +5 +6 -> number of referenced local variables
+      // +7    -> start of table with referenced local variables
       HB_SIZE nSize = HB_PCODE_MKUSHORT(&pCode[1]);
       hb_vmPushBlock(pCode + 3, pSymbols, bDynCode ? nSize - 7 : 0);
       pCode += nSize;
       break;
     }
     case HB_P_PUSHBLOCKLARGE: {
-      /* +0       -> _pushblock
-       * +1 +2 +3 -> size of codeblock
-       * +4 +5    -> number of expected parameters
-       * +6 +7    -> number of referenced local variables
-       * +8       -> start of table with referenced local variables
-       */
+      // +0       -> _pushblock
+      // +1 +2 +3 -> size of codeblock
+      // +4 +5    -> number of expected parameters
+      // +6 +7    -> number of referenced local variables
+      // +8       -> start of table with referenced local variables
       HB_SIZE nSize = HB_PCODE_MKUINT24(&pCode[1]);
       hb_vmPushBlock(pCode + 4, pSymbols, bDynCode ? nSize - 8 : 0);
       pCode += nSize;
       break;
     }
     case HB_P_PUSHBLOCKSHORT: {
-      /* +0    -> _pushblock
-       * +1    -> size of codeblock
-       */
+      // +0    -> _pushblock
+      // +1    -> size of codeblock
       HB_SIZE nSize = pCode[1];
       hb_vmPushBlockShort(pCode + 2, pSymbols, bDynCode ? nSize - 2 : 0);
       pCode += nSize;
@@ -2699,8 +2646,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_PUSHFIELD:
-      /* It pushes the current value of the given field onto the eval stack
-       */
+      // It pushes the current value of the given field onto the eval stack
       hb_rddGetFieldValue(hb_stackAllocItem(), pSymbols + HB_PCODE_MKUSHORT(&pCode[1]));
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmPushField)"));
@@ -2715,7 +2661,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
     case HB_P_PUSHLOCALNEAR:
       hb_vmPushLocal(static_cast<signed char>(pCode[1]));
-      pCode += 2; /* only first two bytes are used */
+      pCode += 2; // only first two bytes are used
       break;
 
     case HB_P_PUSHLOCALREF:
@@ -2750,8 +2696,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_PUSHVARIABLE:
-      /* Push a value of variable of unknown type onto the eval stack
-       */
+      // Push a value of variable of unknown type onto the eval stack
       hb_vmPushVariable(pSymbols + HB_PCODE_MKUSHORT(&pCode[1]));
       pCode += 3;
       break;
@@ -2786,7 +2731,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 2;
       break;
 
-      /* Pop */
+      // Pop
 
     case HB_P_POP:
       hb_stackPop();
@@ -2814,9 +2759,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_POPFIELD:
-      /* Pops a value from the eval stack and uses it to set
-       * a new value of the given field
-       */
+      // Pops a value from the eval stack and uses it to set
+      // a new value of the given field
       hb_rddPutFieldValue(hb_stackItemFromTop(-1), pSymbols + HB_PCODE_MKUSHORT(&pCode[1]));
       hb_stackPop();
 #if 0
@@ -2832,7 +2776,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
     case HB_P_POPLOCALNEAR:
       hb_vmPopLocal(static_cast<signed char>(pCode[1]));
-      pCode += 2; /* only first two bytes are used */
+      pCode += 2; // only first two bytes are used
       break;
 
     case HB_P_POPSTATIC:
@@ -2850,31 +2794,28 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_POPVARIABLE: {
-      /*
-         2004-03-19 Ron Pinkas
-         Test with Clipper shows that for assignment, MEMVAR context
-         is always used even if MEMVAR does NOT exists, and a FIELD
-         with this name exists!!!
-         Here is the Test Used - Clipper produced NO runtime error -
-         indicating MEMVAR was created.
-           PROCEDURE Main()
-              USE test.dbf
-              First := First
-              dbCloseArea()
-              ? First
-              RETURN
-       */
+      // 2004-03-19 Ron Pinkas
+      // Test with Clipper shows that for assignment, MEMVAR context
+      // is always used even if MEMVAR does NOT exists, and a FIELD
+      // with this name exists!!!
+      // Here is the Test Used - Clipper produced NO runtime error -
+      // indicating MEMVAR was created.
+      //   PROCEDURE Main()
+      //      USE test.dbf
+      //      First := First
+      //      dbCloseArea()
+      //      ? First
+      //      RETURN
 #if 0
-            /* Pops a value from the eval stack and uses it to set
-             * a new value of a variable of unknown type.
-             */
+            // Pops a value from the eval stack and uses it to set
+            // a new value of a variable of unknown type.
             PHB_SYMB pSymbol = pSymbols + HB_PCODE_MKUSHORT(&pCode[1]);
 
             if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) ) {
-               /* If exist a memory symbol with this name use it */
+               // If exist a memory symbol with this name use it
                hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
             } else if( hb_rddFieldPut(hb_stackItemFromTop(-1), pSymbol) == Harbour::FAILURE ) {
-               /* Try with a field and after create a memvar */
+               // Try with a field and after create a memvar
                hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
             }
 #else
@@ -2888,34 +2829,32 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-      /* macro creation */
+      // macro creation
 
     case HB_P_MACROPOP:
-      /* compile and run - pop a value from the stack */
+      // compile and run - pop a value from the stack
       hb_macroSetValue(hb_stackItemFromTop(-1), pCode[1]);
       pCode += 2;
       break;
 
     case HB_P_MACROPOPALIASED:
-      /* compile and run - pop an aliased variable from the stack */
+      // compile and run - pop an aliased variable from the stack
       hb_macroPopAliasedValue(hb_stackItemFromTop(-2), hb_stackItemFromTop(-1), pCode[1]);
       pCode += 2;
       break;
 
     case HB_P_MACROPUSH:
-      /* compile and run - leave the result on the stack */
-      /* the topmost element on the stack contains a macro
-       * string for compilation
-       */
+      // compile and run - leave the result on the stack
+      // the topmost element on the stack contains a macro
+      // string for compilation
       hb_macroGetValue(hb_stackItemFromTop(-1), 0, pCode[1]);
       pCode += 2;
       break;
 
     case HB_P_MACROPUSHLIST:
-      /* compile and run - leave the result on the stack */
-      /* the topmost element on the stack contains a macro
-       * string for compilation
-       */
+      // compile and run - leave the result on the stack
+      // the topmost element on the stack contains a macro
+      // string for compilation
       hb_macroGetValue(hb_stackItemFromTop(-1), HB_P_MACROPUSHLIST, pCode[1]);
       pCode += 2;
       break;
@@ -2946,16 +2885,15 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_MACROPUSHPARE:
-      /* compile and run - leave the result on the stack */
-      /* the topmost element on the stack contains a macro
-       * string for compilation
-       */
+      // compile and run - leave the result on the stack
+      // the topmost element on the stack contains a macro
+      // string for compilation
       hb_macroGetValue(hb_stackItemFromTop(-1), HB_P_MACROPUSHPARE, pCode[1]);
       pCode += 2;
       break;
 
     case HB_P_MACROPUSHALIASED:
-      /* compile and run - leave an aliased variable on the stack */
+      // compile and run - leave an aliased variable on the stack
       hb_macroPushAliasedValue(hb_stackItemFromTop(-2), hb_stackItemFromTop(-1), pCode[1]);
       pCode += 2;
       break;
@@ -2968,20 +2906,19 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_MACROSYMBOL:
-      /* compile into a symbol name (used in function calls) */
+      // compile into a symbol name (used in function calls)
       hb_macroPushSymbol(hb_stackItemFromTop(-1));
       pCode++;
       break;
 
     case HB_P_MACROTEXT:
-      /* macro text substitution
-       * "text &macro.other text"
-       */
+      // macro text substitution
+      // "text &macro.other text"
       hb_macroTextValue(hb_stackItemFromTop(-1));
       pCode++;
       break;
 
-      /* macro compiled opcodes - we are using symbol address here */
+      // macro compiled opcodes - we are using symbol address here
 
     case HB_P_MMESSAGE: {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
@@ -3006,9 +2943,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
     case HB_P_MPOPFIELD: {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
-      /* Pops a value from the eval stack and uses it to set
-       * a new value of the given field
-       */
+      // Pops a value from the eval stack and uses it to set
+      // a new value of the given field
       hb_rddPutFieldValue((hb_stackItemFromTop(-1)), pDynSym->pSymbol);
       hb_stackPop();
 #if 0
@@ -3044,15 +2980,14 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_MPUSHBLOCK: {
-      /*NOTE: the pcode is stored in dynamically allocated memory
-       * We need to handle it with more care than compile-time
-       * codeblocks
-       */
-      /* +0    -> _pushblock
-       * +1 +2 -> size of codeblock
-       * +3 +4 -> number of expected parameters
-       * +5    -> pcode bytes
-       */
+      // NOTE: the pcode is stored in dynamically allocated memory
+      // We need to handle it with more care than compile-time
+      // codeblocks
+
+      // +0    -> _pushblock
+      // +1 +2 -> size of codeblock
+      // +3 +4 -> number of expected parameters
+      // +5    -> pcode bytes
       HB_SIZE nSize = HB_PCODE_MKUSHORT(&pCode[1]);
       hb_vmPushMacroBlock(pCode + 5, nSize - 5, HB_PCODE_MKUSHORT(&pCode[3]));
       pCode += nSize;
@@ -3060,15 +2995,14 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_MPUSHBLOCKLARGE: {
-      /*NOTE: the pcode is stored in dynamically allocated memory
-       * We need to handle it with more care than compile-time
-       * codeblocks
-       */
-      /* +0       -> _pushblock
-       * +1 +2 +3 -> size of codeblock
-       * +4 +5    -> number of expected parameters
-       * +6       -> pcode bytes
-       */
+      // NOTE: the pcode is stored in dynamically allocated memory
+      // We need to handle it with more care than compile-time
+      // codeblocks
+
+      // +0       -> _pushblock
+      // +1 +2 +3 -> size of codeblock
+      // +4 +5    -> number of expected parameters
+      // +6       -> pcode bytes
       HB_SIZE nSize = HB_PCODE_MKUINT24(&pCode[1]);
       hb_vmPushMacroBlock(pCode + 6, nSize - 6, HB_PCODE_MKUSHORT(&pCode[4]));
       pCode += nSize;
@@ -3077,8 +3011,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
     case HB_P_MPUSHFIELD: {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
-      /* It pushes the current value of the given field onto the eval stack
-       */
+      // It pushes the current value of the given field onto the eval stack
       hb_rddGetFieldValue(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPushField)"));
@@ -3186,16 +3119,15 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-      /* WITH OBJECT */
+      // WITH OBJECT
 
     case HB_P_WITHOBJECTMESSAGE: {
       HB_USHORT wSymPos = HB_PCODE_MKUSHORT(&pCode[1]);
       if (wSymPos != 0xFFFF)
       {
-        /* NOTE: 0xFFFF is passed when ':&varmacro' syntax is used.
-         * In this case symbol is already pushed on the stack
-         * using HB_P_MACROSYMBOL.
-         */
+        // NOTE: 0xFFFF is passed when ':&varmacro' syntax is used.
+        // In this case symbol is already pushed on the stack
+        // using HB_P_MACROSYMBOL.
         hb_vmPushSymbol(pSymbols + wSymPos);
       }
       PHB_ITEM pWith = hb_stackWithObjectItem();
@@ -3217,20 +3149,20 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
 
     case HB_P_WITHOBJECTEND:
-      hb_stackPop(); /* remove with object envelope */
-      hb_stackPop(); /* remove implicit object */
+      hb_stackPop(); // remove with object envelope
+      hb_stackPop(); // remove implicit object
       pCode++;
       break;
 
-      /* misc */
+      // misc
 
     case HB_P_NOOP:
-      /* Intentionally do nothing */
+      // Intentionally do nothing
       pCode++;
       break;
 
     default:
-      /* TODO: Include to failing pcode in the error message */
+      // TODO: Include to failing pcode in the error message
       hb_errInternal(HB_EI_VMBADOPCODE, nullptr, nullptr, nullptr);
       break;
     }
@@ -3239,13 +3171,11 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     {
       if (hb_stackGetActionRequest() & HB_ENDPROC_REQUESTED)
       {
-        /* request to stop current procedure was issued
-         * (from macro evaluation)
-         */
+        // request to stop current procedure was issued
+        // (from macro evaluation)
 
-        /* This code allow to use RETURN inside BEGIN/END sequence
-         * or in RECOVER code when ALWAYS clause is used
-         */
+        // This code allow to use RETURN inside BEGIN/END sequence
+        // or in RECOVER code when ALWAYS clause is used
         if (bCanRecover)
         {
           do
@@ -3261,12 +3191,12 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
             {
               break;
             }
-            /* Restore previous recovery state */
+            // Restore previous recovery state
             bCanRecover = (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_CANRECOVER) != 0;
             hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
           } while (bCanRecover);
 
-          /* ALWAYS found? */
+          // ALWAYS found?
           if (bCanRecover)
           {
 #if defined(_HB_RECOVER_DEBUG)
@@ -3275,9 +3205,9 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
               hb_errInternal(HB_EI_ERRUNRECOV, "ENDPROC ALWAYS", nullptr, nullptr);
             }
 #endif
-            /* reload the address of ALWAYS code */
+            // reload the address of ALWAYS code
             pCode = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.recover;
-            /* store and reset action */
+            // store and reset action
             hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request = hb_stackGetActionRequest();
             hb_stackSetActionRequest(0);
             continue;
@@ -3290,17 +3220,12 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       {
         if (bCanRecover)
         {
-          /*
-           * There is the BEGIN/END sequence defined in current
-           * procedure/function - use it to continue opcodes execution
-           */
-          /*
-           * remove all items placed on the stack after BEGIN code
-           */
+          // There is the BEGIN/END sequence defined in current
+          // procedure/function - use it to continue opcodes execution
+
+          // remove all items placed on the stack after BEGIN code
           hb_stackRemove(hb_stackGetRecoverBase());
-          /*
-           * reload the address of recovery code
-           */
+          // reload the address of recovery code
 #if defined(_HB_RECOVER_DEBUG)
           if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
           {
@@ -3308,12 +3233,10 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
           }
 #endif
           pCode = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.recover;
-          /*
-           * leave the SEQUENCE envelope on the stack - it will
-           * be popped either in RECOVER or END opcode
-           */
+          // leave the SEQUENCE envelope on the stack - it will
+          // be popped either in RECOVER or END opcode
 
-          /* store and reset action */
+          // store and reset action
           hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request = hb_stackGetActionRequest();
           hb_stackSetActionRequest(0);
         }
@@ -3339,13 +3262,13 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
             {
               break;
             }
-            /* Restore previous recovery state */
+            // Restore previous recovery state
             bCanRecover = (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_CANRECOVER) != 0;
             hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
-            /* skip other steps */
+            // skip other steps
           } while (bCanRecover);
 
-          /* ALWAYS found? */
+          // ALWAYS found?
           if (bCanRecover)
           {
 #if defined(_HB_RECOVER_DEBUG)
@@ -3354,9 +3277,9 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
               hb_errInternal(HB_EI_ERRUNRECOV, "QUIT ALWAYS", nullptr, nullptr);
             }
 #endif
-            /* reload the address of ALWAYS code */
+            // reload the address of ALWAYS code
             pCode = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.recover;
-            /* store and reset action */
+            // store and reset action
             hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request = hb_stackGetActionRequest();
             hb_stackSetActionRequest(0);
             continue;
@@ -3368,7 +3291,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
   }
 }
 
-/* Operators (mathematical / character / misc) */
+// Operators (mathematical / character / misc)
 
 static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd)
 {
@@ -3432,7 +3355,7 @@ static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd)
   }
 }
 
-/* NOTE: Clipper is resetting the number width on a negate. */
+// NOTE: Clipper is resetting the number width on a negate.
 
 static void hb_vmNegate()
 {
@@ -3513,7 +3436,7 @@ static void hb_vmTimeStampPut(PHB_ITEM pItem, long lJulian, long lMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmTimeStampPut(%p,%ld,%ld)", static_cast<void*>(pItem), lJulian, lMilliSec));
 #endif
 
-  /* timestamp normalization */
+  // timestamp normalization
   if (lJulian < 0)
   {
     if (lMilliSec <= -HB_MILLISECS_PER_DAY)
@@ -3651,7 +3574,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      /* NOTE: This is not a bug. CA-Cl*pper does exactly that for DATEs. */
+      // NOTE: This is not a bug. CA-Cl*pper does exactly that for DATEs.
       hb_itemPutDL(pResult, pItem1->dateTimeJulian() + pItem2->dateTimeJulian());
     }
   }
@@ -3909,13 +3832,12 @@ static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      /* If all both operand was integer and the result is an integer, too,
-         push the number without decimals. Clipper compatible. Actually,
-         this is not Clipper compatible. The only time Clipper returns 0
-         decimal places is for compiler optimized integer division with an
-         integer result. Therefore this code is not needed and has been
-         removed - David G. Holm <dholm@jsd-llc.com>
-       */
+      // If all both operand was integer and the result is an integer, too,
+      // push the number without decimals. Clipper compatible. Actually,
+      // this is not Clipper compatible. The only time Clipper returns 0
+      // decimal places is for compiler optimized integer division with an
+      // integer result. Therefore this code is not needed and has been
+      // removed - David G. Holm <dholm@jsd-llc.com>
       hb_itemPutND(pResult, pItem1->getND() / dDivisor);
     }
   }
@@ -3953,7 +3875,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      /* NOTE: Clipper always returns the result of modulus with the SET number of decimal places. */
+      // NOTE: Clipper always returns the result of modulus with the SET number of decimal places.
       hb_itemPutND(pResult, static_cast<double>(HB_ITEM_GET_NUMINTRAW(pItem1) % nDivisor));
     }
   }
@@ -3973,7 +3895,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      /* NOTE: Clipper always returns the result of modulus with the SET number of decimal places. */
+      // NOTE: Clipper always returns the result of modulus with the SET number of decimal places.
       hb_itemPutND(pResult, fmod(pItem1->getND(), dDivisor));
     }
   }
@@ -3997,7 +3919,7 @@ static void hb_vmPower(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
 
   if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    /* NOTE: Clipper always returns the result of power with the SET number of decimal places. */
+    // NOTE: Clipper always returns the result of power with the SET number of decimal places.
     hb_itemPutND(pResult, pow(pItem1->getND(), pItem2->getND()));
   }
   else if (!hb_objOperatorCall(HB_OO_OP_POWER, pResult, pItem1, pItem2, nullptr))
@@ -4146,7 +4068,7 @@ static void hb_vmDec(PHB_ITEM pItem)
   }
 }
 
-static void hb_vmFuncPtr() /* pushes a function address pointer. Removes the symbol from the stack */
+static void hb_vmFuncPtr() // pushes a function address pointer. Removes the symbol from the stack
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmFuncPtr()"));
@@ -4158,7 +4080,7 @@ static void hb_vmFuncPtr() /* pushes a function address pointer. Removes the sym
 
   if (pItem->isSymbol())
   {
-    /* do nothing - now we are using Harbour::Item::SYMBOL */
+    // do nothing - now we are using Harbour::Item::SYMBOL
 #if 0
       hb_stackPop();
       hb_vmPushPointer(static_cast<void*>(pItem->symbolValue()->value.pFunPtr));
@@ -4170,9 +4092,9 @@ static void hb_vmFuncPtr() /* pushes a function address pointer. Removes the sym
   }
 }
 
-/* ------------------------------- */
-/* Operators (relational)          */
-/* ------------------------------- */
+// -------------------------------
+// Operators (relational)
+// -------------------------------
 
 static void hb_vmExactlyEqual()
 {
@@ -4187,14 +4109,14 @@ static void hb_vmExactlyEqual()
 
   if (pItem1->isNil())
   {
-    /* pItem1 is NIL so this is safe */
+    // pItem1 is NIL so this is safe
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(pItem2->isNil());
-    hb_stackPop(); /* clear the pItem2 */
+    hb_stackPop(); // clear the pItem2
   }
   else if (pItem2->isNil())
   {
-    hb_stackDec(); /* pItem2 is already NIL */
+    hb_stackDec(); // pItem2 is already NIL
     if (pItem1->isComplex())
     {
       pItem1->clear();
@@ -4307,14 +4229,14 @@ static void hb_vmEqual()
 
   if (pItem1->isNil())
   {
-    /* pItem1 is NIL so this is safe */
+    // pItem1 is NIL so this is safe
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(pItem2->isNil());
-    hb_stackPop(); /* clear the pItem2 */
+    hb_stackPop(); // clear the pItem2
   }
   else if (pItem2->isNil())
   {
-    hb_stackDec(); /* pItem2 is already NIL */
+    hb_stackDec(); // pItem2 is already NIL
     if (pItem1->isComplex())
     {
       pItem1->clear();
@@ -4407,14 +4329,14 @@ static void hb_vmNotEqual()
 
   if (pItem1->isNil())
   {
-    /* pItem1 is NIL so this is safe */
+    // pItem1 is NIL so this is safe
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(!pItem2->isNil());
-    hb_stackPop(); /* clear the pItem2 */
+    hb_stackPop(); // clear the pItem2
   }
   else if (pItem2->isNil())
   {
-    hb_stackDec(); /* pItem2 is already NIL */
+    hb_stackDec(); // pItem2 is already NIL
     if (pItem1->isComplex())
     {
       pItem1->clear();
@@ -4816,12 +4738,11 @@ static void hb_vmInstring()
   }
 }
 
-/* At this moment the eval stack should store:
- * -3 -> <current counter value>
- * -2 -> <end value>
- * -1 -> <step value>
- */
-static void hb_vmForTest() /* Test to check the end point of the FOR */
+// At this moment the eval stack should store:
+// -3 -> <current counter value>
+// -2 -> <end value>
+// -1 -> <step value>
+static void hb_vmForTest() // Test to check the end point of the FOR
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmForTest()"));
@@ -4874,7 +4795,7 @@ static void hb_vmForTest() /* Test to check the end point of the FOR */
   }
 }
 
-/* Begin Sequence WITH block auto destructor */
+// Begin Sequence WITH block auto destructor
 static HB_GARBAGE_FUNC(hb_SeqBlockDestructor)
 {
   hb_itemMove(hb_errorBlock(), static_cast<PHB_ITEM>(Cargo));
@@ -4904,7 +4825,7 @@ static void hb_vmSeqBlock()
   }
 }
 
-/* With object auto destructor */
+// With object auto destructor
 static HB_GARBAGE_FUNC(hb_withObjectDestructor)
 {
   HB_STACK_TLS_PRELOAD
@@ -4929,14 +4850,12 @@ static void hb_vmWithObjectStart()
   pItem->setPointerValue(pnWithObjectBase);
   pItem->setPointerCollect(true);
   pItem->setPointerSingle(true);
-  /* The object is pushed directly before this pcode */
-  /* store position of current WITH OBJECT frame */
+  // The object is pushed directly before this pcode
+  // store position of current WITH OBJECT frame
   hb_stackWithObjectSetOffset(hb_stackTopOffset() - 2);
 }
 
-/*
- * Release enumerator items - called from hb_itemClear()
- */
+// Release enumerator items - called from hb_itemClear()
 void hb_vmEnumRelease(PHB_ITEM pBase, PHB_ITEM pValue)
 {
 #if 0
@@ -4960,9 +4879,7 @@ void hb_vmEnumRelease(PHB_ITEM pBase, PHB_ITEM pValue)
   }
 }
 
-/*
- * extended reference used as enumerator destructor
- */
+// extended reference used as enumerator destructor
 struct HB_ENUMREF
 {
   HB_ITEM basevalue;
@@ -5021,9 +4938,7 @@ static void hb_vmEnumRefMark(void *value)
   }
 }
 
-/*
- * create extended reference for enumerator destructor
- */
+// create extended reference for enumerator destructor
 static void hb_vmEnumReference(PHB_ITEM pBase)
 {
 #if 0
@@ -5042,11 +4957,11 @@ static void hb_vmEnumReference(PHB_ITEM pBase)
   pBase->item.asExtRef.func = &s_EnumExtRef;
 }
 
-/* At this moment the eval stack should store:
- * -2 -> <array for traverse>
- * -1 -> <the reference to enumerate variable>
- */
-/* Test to check the start point of the FOR EACH loop */
+// At this moment the eval stack should store:
+// -2 -> <array for traverse>
+// -1 -> <the reference to enumerate variable>
+
+// Test to check the start point of the FOR EACH loop
 static void hb_vmEnumStart(int nVars, int nDescend)
 {
   HB_STACK_TLS_PRELOAD
@@ -5065,17 +4980,17 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     PHB_ITEM pBase;
 
     auto pValue = hb_stackItemFromTop(-i);
-    /* create extended reference for enumerator destructor */
+    // create extended reference for enumerator destructor
     hb_vmEnumReference(pValue);
-    /* store the reference to control variable */
+    // store the reference to control variable
     auto pEnumRef = hb_stackItemFromTop(-i + 1);
     hb_itemCopy(&(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->enumref, pEnumRef);
-    /* the control variable */
+    // the control variable
     auto pEnum = hb_itemUnRefOnce(pEnumRef);
-    /* store the old value of control variable and clear it */
+    // store the old value of control variable and clear it
     hb_itemMove(&(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->oldvalue, pEnum);
 
-    /* set the iterator value */
+    // set the iterator value
     pEnum->setType(Harbour::Item::BYREF | Harbour::Item::ENUM);
     pEnum->item.asEnum.basePtr = pBase = &(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->basevalue;
     pEnum->item.asEnum.valuePtr = nullptr;
@@ -5108,7 +5023,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
 
     if (pBase->isArray())
     {
-      /* the index into an array */
+      // the index into an array
       pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->arrayLen();
       if (pBase->arrayLen() == 0)
       {
@@ -5118,7 +5033,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     else if (pBase->isHash())
     {
       HB_SIZE nLen = hb_hashLen(pBase);
-      /* the index into a hash */
+      // the index into a hash
       pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : nLen;
       if (nLen == 0)
       {
@@ -5127,7 +5042,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     }
     else if (pBase->isString())
     {
-      /* storage item for single characters */
+      // storage item for single characters
       pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->stringLength();
       if (pBase->stringLength())
       {
@@ -5145,17 +5060,16 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     }
   }
 
-  hb_vmPushInteger(nVars); /* number of iterators */
-  /* empty array/string - do not start enumerations loop */
+  hb_vmPushInteger(nVars); // number of iterators
+  // empty array/string - do not start enumerations loop
   hb_vmPushLogical(fStart);
 }
 
-/* Enumeration in ascending order
- * At this moment the eval stack should store:
- * -3 -> <old value of enumerator variable>
- * -2 -> <the reference to enumerate variable>
- * -1 -> <number of iterators>
- */
+// Enumeration in ascending order
+// At this moment the eval stack should store:
+// -3 -> <old value of enumerator variable>
+// -2 -> <the reference to enumerate variable>
+// -1 -> <number of iterators>
 static void hb_vmEnumNext()
 {
   HB_STACK_TLS_PRELOAD
@@ -5186,9 +5100,8 @@ static void hb_vmEnumNext()
       }
       else
       {
-        /* Clear the item value which can be set with RT error
-           when enumerator was out of array size during unreferencing
-         */
+        // Clear the item value which can be set with RT error
+        // when enumerator was out of array size during unreferencing
         if (pEnum->item.asEnum.valuePtr)
         {
           hb_itemRelease(pEnum->item.asEnum.valuePtr);
@@ -5202,9 +5115,8 @@ static void hb_vmEnumNext()
     }
     else if (pBase->isHash())
     {
-      /* Clear the item value which can be set with RT error
-         when enumerator was out of array size during unreferencing
-       */
+      // Clear the item value which can be set with RT error
+      // when enumerator was out of array size during unreferencing
       if (pEnum->item.asEnum.valuePtr)
       {
         hb_itemRelease(pEnum->item.asEnum.valuePtr);
@@ -5233,12 +5145,11 @@ static void hb_vmEnumNext()
   hb_vmPushLogical(i == 0);
 }
 
-/* Enumeration in descending order
- * At this moment the eval stack should store:
- * -3 -> <old value of enumerator variable>
- * -2 -> <the reference to enumerate variable>
- * -1 -> <number of iterators>
- */
+// Enumeration in descending order
+// At this moment the eval stack should store:
+// -3 -> <old value of enumerator variable>
+// -2 -> <the reference to enumerate variable>
+// -1 -> <number of iterators>
 static void hb_vmEnumPrev()
 {
   HB_STACK_TLS_PRELOAD
@@ -5269,9 +5180,8 @@ static void hb_vmEnumPrev()
       }
       else
       {
-        /* Clear the item value which can be set with RT error
-           when enumerator was out of array size during unreferencing
-         */
+        // Clear the item value which can be set with RT error
+        // when enumerator was out of array size during unreferencing
         if (pEnum->item.asEnum.valuePtr)
         {
           hb_itemRelease(pEnum->item.asEnum.valuePtr);
@@ -5285,9 +5195,8 @@ static void hb_vmEnumPrev()
     }
     else if (pBase->isHash())
     {
-      /* Clear the item value which can be set with RT error
-         when enumerator was out of array size during unreferencing
-       */
+      // Clear the item value which can be set with RT error
+      // when enumerator was out of array size during unreferencing
       if (pEnum->item.asEnum.valuePtr)
       {
         hb_itemRelease(pEnum->item.asEnum.valuePtr);
@@ -5316,17 +5225,16 @@ static void hb_vmEnumPrev()
   hb_vmPushLogical(i == 0);
 }
 
-/* Enumeration in descending order
- * At this moment the eval stack should store:
- * -3 -> <old value of enumerator variable>
- * -2 -> <the reference to enumerate variable>
- * -1 -> <number of iterators>
- */
+// Enumeration in descending order
+// At this moment the eval stack should store:
+// -3 -> <old value of enumerator variable>
+// -2 -> <the reference to enumerate variable>
+// -1 -> <number of iterators>
 static void hb_vmEnumEnd()
 {
   HB_STACK_TLS_PRELOAD
 
-  /* remove number of iterators */
+  // remove number of iterators
   int iVars = hb_stackItemFromTop(-1)->integerValue();
   hb_stackDec();
 
@@ -5392,7 +5300,7 @@ static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT casesCnt)
         break;
 
       case HB_P_PUSHNIL:
-        /* default clause */
+        // default clause
         fFound = true;
         pCode++;
         break;
@@ -5437,9 +5345,9 @@ static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT casesCnt)
   return pCode;
 }
 
-/* ------------------------------- */
-/* Operators (logical)             */
-/* ------------------------------- */
+// -------------------------------
+// Operators (logical)
+// -------------------------------
 
 static void hb_vmNot()
 {
@@ -5536,9 +5444,9 @@ static void hb_vmOr()
   }
 }
 
-/* ------------------------------- */
-/* Array                           */
-/* ------------------------------- */
+// -------------------------------
+// Array
+// -------------------------------
 
 static void hb_vmArrayPush()
 {
@@ -5664,7 +5572,7 @@ static void hb_vmArrayPushRef()
     }
     else if (hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
     {
-      /* create extended object index reference */
+      // create extended object index reference
       hb_vmMsgIndexReference(pRefer, pArray, pIndex);
       hb_stackPop();
       return;
@@ -5689,7 +5597,7 @@ static void hb_vmArrayPushRef()
   }
   else if (hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
   {
-    /* create extended object index reference */
+    // create extended object index reference
     hb_vmMsgIndexReference(pRefer, pArray, pIndex);
     hb_stackPop();
     return;
@@ -5712,20 +5620,20 @@ static void hb_vmArrayPushRef()
   {
     if (pArray->isObject() && hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
     {
-      /* create extended object index reference */
+      // create extended object index reference
       hb_vmMsgIndexReference(pRefer, pArray, pIndex);
       hb_stackPop();
       return;
     }
     else if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
-      /* This function is safe for overwriting passed array, [druzus] */
+      // This function is safe for overwriting passed array, [druzus]
       hb_arrayGetItemRef(pArray, nIndex, pRefer);
       hb_stackDec();
     }
     else if (!pArray->isObject() && hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
     {
-      /* create extended object index reference */
+      // create extended object index reference
       hb_vmMsgIndexReference(pRefer, pArray, pIndex);
       hb_stackPop();
       return;
@@ -5741,7 +5649,7 @@ static void hb_vmArrayPushRef()
   }
   else if (hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
   {
-    /* create extended object index reference */
+    // create extended object index reference
     hb_vmMsgIndexReference(pRefer, pArray, pIndex);
     hb_stackPop();
     return;
@@ -5779,7 +5687,7 @@ static void hb_vmArrayPop()
       hb_itemMoveFromRef(pDest, pValue);
       hb_stackPop();
       hb_stackPop();
-      hb_stackDec(); /* value was moved above hb_stackDec() is enough */
+      hb_stackDec(); // value was moved above hb_stackDec() is enough
     }
     else if (hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue))
     {
@@ -5836,7 +5744,7 @@ static void hb_vmArrayPop()
       hb_itemMoveRef(pArray->arrayItem(nIndex), pValue);
       hb_stackPop();
       hb_stackPop();
-      hb_stackDec(); /* value was moved above hb_stackDec() is enough */
+      hb_stackDec(); // value was moved above hb_stackDec() is enough
     }
     else if (!pArray->isObject() && hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue))
     {
@@ -5866,7 +5774,7 @@ static void hb_vmArrayPop()
   }
 }
 
-static void hb_vmArrayGen(HB_SIZE nElements) /* generates an nElements Array and fills it from the stack values */
+static void hb_vmArrayGen(HB_SIZE nElements) // generates an nElements Array and fills it from the stack values
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayGen(%" HB_PFS "u)", nElements));
@@ -5874,30 +5782,29 @@ static void hb_vmArrayGen(HB_SIZE nElements) /* generates an nElements Array and
 
   HB_STACK_TLS_PRELOAD
 
-  /* create new array on HVM stack */
+  // create new array on HVM stack
   auto pArray = hb_stackAllocItem();
   hb_arrayNew(pArray, nElements);
 
   if (nElements)
   {
-    /* move items from HVM stack to created array */
+    // move items from HVM stack to created array
     for (HB_SIZE nPos = 0; nPos < nElements; nPos++)
     {
       auto pValue = hb_stackItemFromTop(static_cast<int>(nPos - nElements - 1));
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
       hb_itemMove(pArray->arrayItems() + nPos, pValue);
     }
-    /* move the new array to position of first parameter */
+    // move the new array to position of first parameter
     hb_itemMove(hb_stackItemFromTop(-1 - static_cast<int>(nElements)), pArray);
 
-    /* decrease the stack counter - all items are NIL */
+    // decrease the stack counter - all items are NIL
     hb_stackDecrease(nElements);
   }
 }
 
-/* This function creates an array item using 'uiDimension' as an index
- * to retrieve the number of elements from the stack
- */
+// This function creates an array item using 'uiDimension' as an index
+// to retrieve the number of elements from the stack
 static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
 {
 #if 0
@@ -5909,7 +5816,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
 
   auto pDim = hb_stackItemFromTop(static_cast<int>(-1 - uiDimension));
 
-  /* use the proper type of number of elements */
+  // use the proper type of number of elements
   if (pDim->isInteger())
   {
     nElements = static_cast<HB_ISIZ>(pDim->integerValue());
@@ -5924,21 +5831,20 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
   }
   else
   {
-    /* NOTE: Clipper creates empty array if non-numeric value is
-     * specified as dimension and stops further processing.
-     * There is no runtime error generated.
-     */
+    // NOTE: Clipper creates empty array if non-numeric value is
+    // specified as dimension and stops further processing.
+    // There is no runtime error generated.
     nElements = 0;
   }
 
   if (nElements >= 0)
   {
-    /* create an array */
+    // create an array
     hb_arrayNew(pArray, nElements);
 
     if (--uiDimension)
     {
-      /* call self recursively to create next dimensions */
+      // call self recursively to create next dimensions
       while (nElements--)
       {
         if (!hb_vmArrayNew(pArray->arrayItems() + nElements, uiDimension))
@@ -5955,7 +5861,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
 }
 
 static void hb_vmArrayDim(
-    HB_USHORT uiDimensions) /* generates an uiDimensions Array and initialize those dimensions from the stack values */
+    HB_USHORT uiDimensions) // generates an uiDimensions Array and initialize those dimensions from the stack values
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayDim(%hu)", uiDimensions));
@@ -5979,7 +5885,7 @@ static void hb_vmArrayDim(
   }
 }
 
-static void hb_vmHashGen(HB_SIZE nElements) /* generates an nElements Hash and fills it from the stack values */
+static void hb_vmHashGen(HB_SIZE nElements) // generates an nElements Hash and fills it from the stack values
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmHashGen(%" HB_PFS "u)", nElements));
@@ -5987,7 +5893,7 @@ static void hb_vmHashGen(HB_SIZE nElements) /* generates an nElements Hash and f
 
   HB_STACK_TLS_PRELOAD
 
-  /* create new hash item */
+  // create new hash item
   PHB_ITEM pHash = hb_hashNew(nullptr);
   hb_hashPreallocate(pHash, nElements);
   nElements <<= 1;
@@ -6011,9 +5917,9 @@ static void hb_vmHashGen(HB_SIZE nElements) /* generates an nElements Hash and f
   hb_itemRelease(pHash);
 }
 
-/* ------------------------------- */
-/* Macros                          */
-/* ------------------------------- */
+// -------------------------------
+// Macros
+// -------------------------------
 
 static void hb_vmMacroPushIndex()
 {
@@ -6023,10 +5929,8 @@ static void hb_vmMacroPushIndex()
 
   HB_STACK_TLS_PRELOAD
 
-  /*
-   * Now the top most element on the stack points to number of
-   * additional indexes to generated array
-   */
+  // Now the top most element on the stack points to number of
+  // additional indexes to generated array
   HB_SIZE nIndexes = hb_itemGetNS(hb_stackItemFromTop(-1));
   hb_stackDec();
 
@@ -6038,7 +5942,7 @@ static void hb_vmMacroPushIndex()
     auto pIndexArray = hb_itemNew(hb_stackItemFromTop(-1));
     hb_stackPop();
 
-    /* First index is still on stack.*/
+    // First index is still on stack.
     do
     {
       auto pArray = hb_stackItemFromTop(-2);
@@ -6050,7 +5954,7 @@ static void hb_vmMacroPushIndex()
       {
         hb_vmArrayPush();
       }
-      /* RT error? */
+      // RT error?
       if (hb_stackGetActionRequest() != 0)
       {
         break;
@@ -6062,24 +5966,22 @@ static void hb_vmMacroPushIndex()
   }
   else if (nIndexes == 0)
   {
-    HB_VM_PUSHNIL(); /* It will force RT error later in array push or pop */
+    HB_VM_PUSHNIL(); // It will force RT error later in array push or pop
   }
 }
 
-/*
- * On HVM stack we have sets with arguments
- *    offset   value
- *    (-9)     6
- *    (-8)     7
- *    (-7)     2 // number of arguments
- *    (-6)     1
- *    (-5)     2
- *    (-4)     2 // number of arguments
- *    (-3)     1
- *    (-2)     2
- *    (-1)     2 // number of arguments
- * we should join them into one continuous list
- */
+// On HVM stack we have sets with arguments
+//    offset   value
+//    (-9)     6
+//    (-8)     7
+//    (-7)     2 // number of arguments
+//    (-6)     1
+//    (-5)     2
+//    (-4)     2 // number of arguments
+//    (-3)     1
+//    (-2)     2
+//    (-1)     2 // number of arguments
+// we should join them into one continuous list
 static HB_LONG hb_vmArgsJoin(HB_LONG lLevel, HB_USHORT uiArgSets)
 {
   HB_STACK_TLS_PRELOAD
@@ -6213,9 +6115,9 @@ static void hb_vmPushAParams()
   }
 }
 
-/* ------------------------------- */
-/* Database                        */
-/* ------------------------------- */
+// -------------------------------
+// Database
+// -------------------------------
 
 static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
 {
@@ -6227,9 +6129,8 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
   HB_ERRCODE errCode;
   auto fRepeat = false;
 
-  /* NOTE: Clipper doesn't generate an error if an workarea specified
-   * as numeric value cannot be selected
-   */
+  // NOTE: Clipper doesn't generate an error if an workarea specified
+  // as numeric value cannot be selected
   do
   {
     fRepeat = false;
@@ -6238,39 +6139,35 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
     switch (HB_ITEM_TYPE(pAlias))
     {
     case Harbour::Item::INTEGER:
-      /* Alias was used as integer value, for example: 4->field
-       * or it was saved on the stack using hb_vmPushAlias()
-       * or was evaluated from an expression, (nWorkArea)->field
-       */
+      // Alias was used as integer value, for example: 4->field
+      // or it was saved on the stack using hb_vmPushAlias()
+      // or was evaluated from an expression, (nWorkArea)->field
       hb_rddSelectWorkAreaNumber(pAlias->integerValue());
       pAlias->setType(Harbour::Item::NIL);
       break;
 
     case Harbour::Item::LONG:
-      /* Alias was evaluated from an expression, (nWorkArea)->field
-       */
+      // Alias was evaluated from an expression, (nWorkArea)->field
       hb_rddSelectWorkAreaNumber(static_cast<int>(pAlias->longValue()));
       pAlias->setType(Harbour::Item::NIL);
       break;
 
     case Harbour::Item::DOUBLE:
-      /* Alias was evaluated from an expression, (nWorkArea)->field
-       */
+      // Alias was evaluated from an expression, (nWorkArea)->field
       hb_rddSelectWorkAreaNumber(static_cast<int>(pAlias->doubleValue()));
       pAlias->setType(Harbour::Item::NIL);
       break;
 
     case Harbour::Item::SYMBOL:
-      /* Alias was specified using alias identifier, for example: al->field
-       */
+      // Alias was specified using alias identifier, for example: al->field
       errCode = hb_rddSelectWorkAreaSymbol(pAlias->symbolValue());
       pAlias->setType(Harbour::Item::NIL);
       break;
 
     case Harbour::Item::STRING: {
-      /* Alias was evaluated from an expression, for example: (cVar)->field
-       */
-      /* expand '&' operator if exists */
+      // Alias was evaluated from an expression, for example: (cVar)->field
+
+      // expand '&' operator if exists
       HB_BOOL bNewString;
 
       char *szAlias = hb_macroExpandString(pAlias->stringValue(), pAlias->stringLength(), &bNewString);
@@ -6323,9 +6220,8 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
   return errCode;
 }
 
-/* Swaps two last items on the eval stack - the last item after swapping
- * is popped as current workarea number
- */
+// Swaps two last items on the eval stack - the last item after swapping
+// is popped as current workarea number
 static void hb_vmSwapAlias()
 {
 #if 0
@@ -6340,9 +6236,9 @@ static void hb_vmSwapAlias()
   hb_stackDec();
 }
 
-/* ------------------------------- */
-/* Execution                       */
-/* ------------------------------- */
+// -------------------------------
+// Execution
+// -------------------------------
 
 void hb_vmProc(HB_USHORT uiParams)
 {
@@ -6354,7 +6250,7 @@ void hb_vmProc(HB_USHORT uiParams)
 
 #ifndef HB_NO_PROFILER
   HB_ULONG ulClock = 0;
-  bool bProfiler = hb_bProfiler; /* because profiler state may change */
+  bool bProfiler = hb_bProfiler; // because profiler state may change
 #endif
 
   HB_TASK_SHEDULER();
@@ -6366,7 +6262,7 @@ void hb_vmProc(HB_USHORT uiParams)
   }
 #endif
 
-  /* Poll the console keyboard */
+  // Poll the console keyboard
 #if 0
 #ifndef HB_GUI
    if( s_fKeyPool ) {
@@ -6393,11 +6289,11 @@ void hb_vmProc(HB_USHORT uiParams)
 #ifndef HB_NO_PROFILER
     if (bProfiler && pSym->pDynSym)
     {
-      pSym->pDynSym->ulCalls++; /* profiler support */
-      /* Time spent has to be added only inside topmost call of a recursive function */
+      pSym->pDynSym->ulCalls++; // profiler support
+      // Time spent has to be added only inside topmost call of a recursive function
       if (--pSym->pDynSym->ulRecurse == 0)
       {
-        pSym->pDynSym->ulTime += clock() - ulClock; /* profiler support */
+        pSym->pDynSym->ulTime += clock() - ulClock; // profiler support
       }
     }
 #endif
@@ -6427,7 +6323,7 @@ void hb_vmDo(HB_USHORT uiParams)
 
 #ifndef HB_NO_PROFILER
   HB_ULONG ulClock = 0;
-  bool bProfiler = hb_bProfiler; /* because profiler state may change */
+  bool bProfiler = hb_bProfiler; // because profiler state may change
 #endif
 
   HB_TASK_SHEDULER();
@@ -6439,7 +6335,7 @@ void hb_vmDo(HB_USHORT uiParams)
   }
 #endif
 
-  /* Poll the console keyboard */
+  // Poll the console keyboard
 #if 0
 #ifndef HB_GUI
    if( s_fKeyPool ) {
@@ -6450,10 +6346,10 @@ void hb_vmDo(HB_USHORT uiParams)
 
   HB_STACK_STATE sStackState;
   PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
-  auto pSelf = hb_stackSelfItem(); /* NIL, OBJECT or BLOCK */
+  auto pSelf = hb_stackSelfItem(); // NIL, OBJECT or BLOCK
 
   if (!pSelf->isNil())
-  { /* are we sending a message ? */
+  { // are we sending a message ?
     PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
     if (pExecSym)
     {
@@ -6482,7 +6378,7 @@ void hb_vmDo(HB_USHORT uiParams)
     }
   }
   else
-  { /* it is a function */
+  { // it is a function
     HB_VM_FUNCUNREF(pSym);
     if (HB_VM_ISFUNC(pSym))
     {
@@ -6500,11 +6396,11 @@ void hb_vmDo(HB_USHORT uiParams)
 #ifndef HB_NO_PROFILER
       if (bProfiler && pSym->pDynSym)
       {
-        pSym->pDynSym->ulCalls++; /* profiler support */
-        /* Time spent has to be added only inside topmost call of a recursive function */
+        pSym->pDynSym->ulCalls++; // profiler support
+        // Time spent has to be added only inside topmost call of a recursive function
         if (--pSym->pDynSym->ulRecurse == 0)
         {
-          pSym->pDynSym->ulTime += clock() - ulClock; /* profiler support */
+          pSym->pDynSym->ulTime += clock() - ulClock; // profiler support
         }
       }
 #endif
@@ -6535,7 +6431,7 @@ void hb_vmSend(HB_USHORT uiParams)
 
 #ifndef HB_NO_PROFILER
   HB_ULONG ulClock = 0;
-  bool bProfiler = hb_bProfiler; /* because profiler state may change */
+  bool bProfiler = hb_bProfiler; // because profiler state may change
 #endif
 
   HB_TASK_SHEDULER();
@@ -6547,7 +6443,7 @@ void hb_vmSend(HB_USHORT uiParams)
   }
 #endif
 
-  /* Poll the console keyboard */
+  // Poll the console keyboard
 #if 0
 #if !defined(HB_GUI)
       hb_inkeyPoll();
@@ -6556,7 +6452,7 @@ void hb_vmSend(HB_USHORT uiParams)
 
   HB_STACK_STATE sStackState;
   PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
-  auto pSelf = hb_stackSelfItem(); /* NIL, OBJECT or BLOCK */
+  auto pSelf = hb_stackSelfItem(); // NIL, OBJECT or BLOCK
 
   PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
   if (pExecSym)
@@ -6603,7 +6499,7 @@ static void hb_vmPushObjectVarRef()
 
   HB_STACK_TLS_PRELOAD
   HB_STACK_STATE sStackState;
-  PHB_ITEM pItem = hb_stackNewFrame(&sStackState, 0); /* procedure name */
+  PHB_ITEM pItem = hb_stackNewFrame(&sStackState, 0); // procedure name
   PHB_SYMB pSym = pItem->symbolValue();
   if (!hb_objGetVarRef(hb_stackSelfItem(), pSym, &sStackState) && hb_vmRequestQuery() == 0)
   {
@@ -6622,7 +6518,7 @@ void hb_vmEval(HB_USHORT uiParams)
 
 #ifndef HB_NO_PROFILER
   HB_ULONG ulClock = 0;
-  bool bProfiler = hb_bProfiler; /* because profiler state may change */
+  bool bProfiler = hb_bProfiler; // because profiler state may change
 #endif
 
   HB_TASK_SHEDULER();
@@ -6672,27 +6568,26 @@ static HARBOUR hb_vmDoBlock()
 
   auto pBase = hb_stackBaseItem();
 
-  /* set number of declared parameters */
+  // set number of declared parameters
   pBase->setSymbolParamDeclCnt(pBlock->blockParamCnt());
-  /* set the current line number to a line where the codeblock was defined */
+  // set the current line number to a line where the codeblock was defined
   pBase->symbolStackState()->uiLineNo = pBlock->blockLineNo();
-  /* set execution context for OOP scope */
+  // set execution context for OOP scope
   pBase->symbolStackState()->uiClass = pBlock->blockHClass();
   pBase->symbolStackState()->uiMethod = pBlock->blockMethod();
-  /* add missing parameters */
+  // add missing parameters
   int iParam = pBlock->blockParamCnt() - pBase->symbolParamCnt();
   while (--iParam >= 0)
   {
     hb_stackAllocItem()->setType(Harbour::Item::NIL);
   }
-  /* set static base offset */
+  // set static base offset
   hb_stackSetStaticsBase(pBlock->blockValue()->pStatics);
 
   hb_vmExecute(pBlock->blockValue()->pCode, pBlock->blockValue()->pSymbols);
 }
 
-/* Evaluates a passed codeblock item with no arguments passed to a codeblock
- */
+// Evaluates a passed codeblock item with no arguments passed to a codeblock
 PHB_ITEM hb_vmEvalBlock(PHB_ITEM pBlock)
 {
 #if 0
@@ -6706,14 +6601,13 @@ PHB_ITEM hb_vmEvalBlock(PHB_ITEM pBlock)
   return hb_stackReturnItem();
 }
 
-/* Evaluates a codeblock item using passed additional arguments
- * pBlock = an item of codeblock type to evaluate
- * ulArgCount = number of arguments passed to a codeblock
- * ... = the list of arguments of type PHB_ITEM
- *
- * for example:
- *  retVal = hb_vmEvalBlockV(pBlock, 2, pParam1, pParam2);
- */
+// Evaluates a codeblock item using passed additional arguments
+// pBlock = an item of codeblock type to evaluate
+// ulArgCount = number of arguments passed to a codeblock
+// ... = the list of arguments of type PHB_ITEM
+//
+// for example:
+//  retVal = hb_vmEvalBlockV(pBlock, 2, pParam1, pParam2);
 PHB_ITEM hb_vmEvalBlockV(PHB_ITEM pBlock, HB_ULONG ulArgCount, ...)
 {
 #if 0
@@ -6733,15 +6627,14 @@ PHB_ITEM hb_vmEvalBlockV(PHB_ITEM pBlock, HB_ULONG ulArgCount, ...)
   }
   va_end(va);
 
-  /* take care here, possible loss of data long to short ... */
-  /* added an explicit casting here for VC++ JFL */
+  // take care here, possible loss of data long to short ...
+  // added an explicit casting here for VC++ JFL
   hb_vmSend(static_cast<HB_USHORT>(ulArgCount));
 
   return hb_stackReturnItem();
 }
 
-/* Evaluates a passed codeblock item or macro pointer item
- */
+// Evaluates a passed codeblock item or macro pointer item
 PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem)
 {
 #if 0
@@ -6772,9 +6665,7 @@ PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem)
   return hb_stackReturnItem();
 }
 
-/*
- * destroy codeblock or macro in given item
- */
+// destroy codeblock or macro in given item
 void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
 {
 #if 0
@@ -6792,9 +6683,7 @@ void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
   hb_itemRelease(pItem);
 }
 
-/*
- * compile given expression and return macro pointer item or NULL
- */
+// compile given expression and return macro pointer item or NULL
 PHB_ITEM hb_vmCompileMacro(const char *szExpr, PHB_ITEM pDest)
 {
 #if 0
@@ -6859,8 +6748,8 @@ static void hb_vmDebugEntry(int nMode, int nLine, const char *szName, int nIndex
     hb_vmPushDynSym(s_pDynsDbgEntry);
     HB_VM_PUSHNIL();
     hb_vmPushInteger(HB_DBG_STATICNAME);
-    hb_vmPush(pFrame);        /* current static frame */
-    hb_vmPushInteger(nIndex); /* variable index */
+    hb_vmPush(pFrame);        // current static frame
+    hb_vmPushInteger(nIndex); // variable index
     hb_vmPushString(szName, strlen(szName));
     hb_vmProc(4);
     break;
@@ -6874,16 +6763,16 @@ static void hb_vmDebugEntry(int nMode, int nLine, const char *szName, int nIndex
     break;
 
   case HB_DBG_ENDPROC:
-    hb_stackPushReturn(); /* saves the previous returned value */
+    hb_stackPushReturn(); // saves the previous returned value
     hb_vmPushDynSym(s_pDynsDbgEntry);
     HB_VM_PUSHNIL();
     hb_vmPushInteger(HB_DBG_ENDPROC);
     hb_vmProc(1);
-    hb_stackPopReturn(); /* restores the previous returned value */
+    hb_stackPopReturn(); // restores the previous returned value
     break;
 
   case HB_DBG_GETENTRY:
-    /* Try to get C dbgEntry() function pointer */
+    // Try to get C dbgEntry() function pointer
     hb_vmPushDynSym(s_pDynsDbgEntry);
     HB_VM_PUSHNIL();
     hb_vmPushInteger(HB_DBG_GETENTRY);
@@ -6919,13 +6808,13 @@ static void hb_vmDebuggerExit(HB_BOOL fRemove)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmDebuggerExit(%d)", fRemove));
 #endif
 
-  /* is debugger linked ? */
+  // is debugger linked ?
   if (s_pFunDbgEntry)
   {
-    /* inform debugger that we are quitting now */
+    // inform debugger that we are quitting now
     s_pFunDbgEntry(HB_DBG_VMQUIT, 0, nullptr, fRemove ? 1 : 0, nullptr);
-    /* set dummy debugger function to avoid debugger activation in .prg
-     *       destructors if any */
+    // set dummy debugger function to avoid debugger activation in .prg
+    //       destructors if any
     if (fRemove)
     {
       s_pFunDbgEntry = hb_vmDummyDebugEntry;
@@ -6942,7 +6831,7 @@ static void hb_vmDebuggerEndProc()
   s_pFunDbgEntry(HB_DBG_ENDPROC, 0, nullptr, 0, nullptr);
 }
 
-static void hb_vmDebuggerShowLine(HB_USHORT uiLine) /* makes the debugger shows a specific source code line */
+static void hb_vmDebuggerShowLine(HB_USHORT uiLine) // makes the debugger shows a specific source code line
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmDebuggerShowLine(%hu)", uiLine));
@@ -6952,7 +6841,7 @@ static void hb_vmDebuggerShowLine(HB_USHORT uiLine) /* makes the debugger shows 
 }
 
 static void hb_vmLocalName(
-    HB_USHORT uiLocal, const char *szLocalName) /* locals and parameters index and name information for the debugger */
+    HB_USHORT uiLocal, const char *szLocalName) // locals and parameters index and name information for the debugger
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmLocalName(%hu, %s)", uiLocal, szLocalName));
@@ -6966,7 +6855,7 @@ static void hb_vmLocalName(
 }
 
 static void hb_vmStaticName(HB_BYTE bIsGlobal, HB_USHORT uiStatic,
-                            const char *szStaticName) /* statics vars information for the debugger */
+                            const char *szStaticName) // statics vars information for the debugger
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmStaticName(%hu, %s)", uiStatic, szStaticName));
@@ -6980,7 +6869,7 @@ static void hb_vmStaticName(HB_BYTE bIsGlobal, HB_USHORT uiStatic,
   }
 }
 
-static void hb_vmModuleName(const char *szModuleName) /* PRG and function name information for the debugger */
+static void hb_vmModuleName(const char *szModuleName) // PRG and function name information for the debugger
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmModuleName(%s)", szModuleName));
@@ -7007,9 +6896,8 @@ static void hb_vmFrame(HB_USHORT usLocals, unsigned char ucParams)
   auto pBase = hb_stackBaseItem();
 
 #if 0
-   /* This old code which clears additional parameters to make space for
-    * local variables without updating pBase->item.asSymbol.paramdeclcnt
-    */
+   // This old code which clears additional parameters to make space for
+   // local variables without updating pBase->item.asSymbol.paramdeclcnt
    iTotal = pBase->symbolParamCnt() - ucParams;
    if( iTotal > 0 ) {
       pBase->setSymbolParamCnt(ucParams);
@@ -7067,7 +6955,7 @@ static void hb_vmVFrame(HB_USHORT usLocals, unsigned char ucParams)
   }
 }
 
-static void hb_vmSFrame(PHB_SYMB pSym) /* sets the statics frame for a function */
+static void hb_vmSFrame(PHB_SYMB pSym) // sets the statics frame for a function
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmSFrame(%p)", static_cast<void*>(pSym)));
@@ -7075,26 +6963,24 @@ static void hb_vmSFrame(PHB_SYMB pSym) /* sets the statics frame for a function 
 
   HB_STACK_TLS_PRELOAD
 
-  /* _INITSTATICS is now the statics frame. Statics() changed it! */
+  // _INITSTATICS is now the statics frame. Statics() changed it!
   hb_stackSetStaticsBase(pSym->value.pStaticsBase);
 }
 
 static void hb_vmStatics(PHB_SYMB pSym,
-                         HB_USHORT uiStatics) /* initializes the global aStatics array or redimensions it */
+                         HB_USHORT uiStatics) // initializes the global aStatics array or redimensions it
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmStatics(%p, %hu)", static_cast<void*>(pSym), uiStatics));
 #endif
 
-  /* statics frame for this PRG */
+  // statics frame for this PRG
   pSym->value.pStaticsBase = static_cast<void *>(hb_itemArrayNew(uiStatics));
   pSym->scope.value |= HB_FS_FRAME;
 }
 
 #if defined(HB_MT_VM)
-/*
- * extended thread static variable reference structure
- */
+// extended thread static variable reference structure
 struct HB_TSVREF
 {
   HB_ITEM source;
@@ -7103,9 +6989,7 @@ struct HB_TSVREF
 
 using PHB_TSVREF = HB_TSVREF *;
 
-/*
- * extended thread static variable reference functions
- */
+// extended thread static variable reference functions
 static PHB_ITEM hb_vmTSVRefRead(PHB_ITEM pRefer)
 {
   auto pTSVRef = static_cast<PHB_TSVREF>(pRefer->item.asExtRef.value);
@@ -7159,7 +7043,7 @@ static void hb_vmTSVRefMark(void *value)
   }
 }
 
-/* destructor for terminated threads */
+// destructor for terminated threads
 static void hb_vmTSVarClean(void *pThreadItem)
 {
   if (static_cast<PHB_ITEM>(pThreadItem)->isComplex())
@@ -7168,9 +7052,7 @@ static void hb_vmTSVarClean(void *pThreadItem)
   }
 }
 
-/*
- * create extended thread static variable reference
- */
+// create extended thread static variable reference
 static void hb_vmTSVReference(PHB_ITEM pStatic)
 {
 #if 0
@@ -7187,7 +7069,7 @@ static void hb_vmTSVReference(PHB_ITEM pStatic)
   pTSVRef->source.type = Harbour::Item::NIL;
   HB_TSD_INIT(&pTSVRef->threadData, sizeof(HB_ITEM), nullptr, hb_vmTSVarClean);
 
-  /* Use hb_stackReturnItem() as temporary item holder */
+  // Use hb_stackReturnItem() as temporary item holder
   auto pRefer = hb_stackReturnItem();
   if (pRefer->isComplex())
   {
@@ -7224,16 +7106,16 @@ static void hb_vmInitThreadStatics(HB_USHORT uiCount, const HB_BYTE *pCode)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmInitThreadStatics(%hu,%p)", uiCount, static_cast<const void*>(pCode)));
 #endif
 
-  /* single thread VM - do nothing, use normal static variables */
+  // single thread VM - do nothing, use normal static variables
 
   HB_SYMBOL_UNUSED(uiCount);
   HB_SYMBOL_UNUSED(pCode);
 }
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
-/* ------------------------------- */
-/* Push                            */
-/* ------------------------------- */
+// -------------------------------
+// Push
+// -------------------------------
 
 void hb_vmPush(PHB_ITEM pItem)
 {
@@ -7267,7 +7149,7 @@ void hb_vmPushLogical(HB_BOOL bValue)
   pItem->setLogicalValue(bValue);
 }
 
-/* not used by HVM code */
+// not used by HVM code
 void hb_vmPushNumber(double dNumber, int iDec)
 {
 #if 0
@@ -7592,14 +7474,13 @@ void hb_vmPushEvalSym(void)
   pItem->setSymbolStackState(nullptr);
 }
 
-/* -3    -> HB_P_PUSHBLOCK
- * -2 -1 -> size of codeblock
- *  0 +1 -> number of expected parameters
- * +2 +3 -> number of referenced local variables
- * +4    -> start of table with referenced local variables
- *
- * NOTE: pCode points to static memory
- */
+// -3    -> HB_P_PUSHBLOCK
+// -2 -1 -> size of codeblock
+//  0 +1 -> number of expected parameters
+// +2 +3 -> number of referenced local variables
+// +4    -> start of table with referenced local variables
+//
+// NOTE: pCode points to static memory
 static void hb_vmPushBlock(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen)
 {
 #if 0
@@ -7616,28 +7497,25 @@ static void hb_vmPushBlock(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen
 
   auto pItem = hb_stackAllocItem();
 
-  pItem->setBlockValue(hb_codeblockNew(pCode + 4 + (uiLocals << 1), /* pcode buffer         */
-                                       uiLocals,                    /* number of referenced local variables */
-                                       pCode + 4,                   /* table with referenced local variables */
+  pItem->setBlockValue(hb_codeblockNew(pCode + 4 + (uiLocals << 1), // pcode buffer
+                                       uiLocals,                    // number of referenced local variables
+                                       pCode + 4,                   // table with referenced local variables
                                        pSymbols, nLen));
 
   pItem->setType(Harbour::Item::BLOCK);
-  /* store the number of expected parameters
-   */
+  // store the number of expected parameters
   pItem->setBlockParamCnt(HB_PCODE_MKUSHORT(pCode));
-  /* store the line number where the codeblock was defined
-   */
+  // store the line number where the codeblock was defined
   pItem->setBlockLineNo(hb_stackBaseItem()->symbolStackState()->uiLineNo);
   pItem->setBlockHClass(hb_stackBaseItem()->symbolStackState()->uiClass);
   pItem->setBlockMethod(hb_stackBaseItem()->symbolStackState()->uiMethod);
 }
 
-/* -2    -> HB_P_PUSHBLOCKSHORT
- * -1    -> size of codeblock
- *  0    -> start of table with referenced local variables
- *
- * NOTE: pCode points to static memory
- */
+// -2    -> HB_P_PUSHBLOCKSHORT
+// -1    -> size of codeblock
+//  0    -> start of table with referenced local variables
+//
+// NOTE: pCode points to static memory
 static void hb_vmPushBlockShort(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen)
 {
 #if 0
@@ -7647,30 +7525,27 @@ static void hb_vmPushBlockShort(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
 
-  pItem->setBlockValue(hb_codeblockNew(pCode,   /* pcode buffer         */
-                                       0,       /* number of referenced local variables */
-                                       nullptr, /* table with referenced local variables */
+  pItem->setBlockValue(hb_codeblockNew(pCode,   // pcode buffer
+                                       0,       // number of referenced local variables
+                                       nullptr, // table with referenced local variables
                                        pSymbols, nLen));
 
   pItem->setType(Harbour::Item::BLOCK);
 
-  /* store the number of expected parameters
-   */
+  // store the number of expected parameters
   pItem->setBlockParamCnt(0);
-  /* store the line number where the codeblock was defined
-   */
+  // store the line number where the codeblock was defined
   pItem->setBlockLineNo(hb_stackBaseItem()->symbolStackState()->uiLineNo);
   pItem->setBlockHClass(hb_stackBaseItem()->symbolStackState()->uiClass);
   pItem->setBlockMethod(hb_stackBaseItem()->symbolStackState()->uiMethod);
 }
 
-/* -(5|6)     -> HB_P_MPUSHBLOCK[LARGE]
- * [-5] -4 -3 -> size of codeblock
- * -2 -1      -> number of expected parameters
- * +0         -> start of pcode
- *
- * NOTE: pCode points to dynamically allocated memory
- */
+// -(5|6)     -> HB_P_MPUSHBLOCK[LARGE]
+// [-5] -4 -3 -> size of codeblock
+// -2 -1      -> number of expected parameters
+// +0         -> start of pcode
+//
+// NOTE: pCode points to dynamically allocated memory
 static void hb_vmPushMacroBlock(const HB_BYTE *pCode, HB_SIZE nSize, HB_USHORT usParams)
 {
 #if 0
@@ -7681,18 +7556,15 @@ static void hb_vmPushMacroBlock(const HB_BYTE *pCode, HB_SIZE nSize, HB_USHORT u
   auto pItem = hb_stackAllocItem();
   pItem->setBlockValue(hb_codeblockMacroNew(pCode, nSize));
   pItem->setType(Harbour::Item::BLOCK);
-  /* store the number of expected parameters
-   */
+  // store the number of expected parameters
   pItem->setBlockParamCnt(usParams);
-  /* store the line number where the codeblock was defined
-   */
+  // store the line number where the codeblock was defined
   pItem->setBlockLineNo(hb_stackBaseItem()->symbolStackState()->uiLineNo);
   pItem->setBlockHClass(hb_stackBaseItem()->symbolStackState()->uiClass);
   pItem->setBlockMethod(hb_stackBaseItem()->symbolStackState()->uiMethod);
 }
 
-/* pushes current workarea number on the eval stack
- */
+// pushes current workarea number on the eval stack
 static void hb_vmPushAlias()
 {
 #if 0
@@ -7706,10 +7578,9 @@ static void hb_vmPushAlias()
   pItem->setIntegerLength(10);
 }
 
-/* It pops the last item from the stack to use it to select a workarea
- * and next pushes the value of a given field
- * (for performance reason it replaces alias value with field value)
- */
+// It pops the last item from the stack to use it to select a workarea
+// and next pushes the value of a given field
+// (for performance reason it replaces alias value with field value)
 static void hb_vmPushAliasedField(PHB_SYMB pSym)
 {
 #if 0
@@ -7720,9 +7591,7 @@ static void hb_vmPushAliasedField(PHB_SYMB pSym)
   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
   auto pAlias = hb_stackItemFromTop(-1);
 
-  /*
-   * NOTE: hb_vmSelectWorkarea() clears passed item
-   */
+  // NOTE: hb_vmSelectWorkarea() clears passed item
   if (hb_vmSelectWorkarea(pAlias, pSym) == Harbour::SUCCESS)
   {
     hb_rddGetFieldValue(pAlias, pSym);
@@ -7731,12 +7600,11 @@ static void hb_vmPushAliasedField(PHB_SYMB pSym)
   hb_rddSelectWorkAreaNumber(iCurrArea);
 }
 
-/* It pops the last item from the stack to use it to select a workarea
- * and next pushes the value of either a field or a memvar based on alias value
- * (for performance reason it replaces alias value with field value)
- * This is used in the following context:
- * (any_alias)->variable
- */
+// It pops the last item from the stack to use it to select a workarea
+// and next pushes the value of either a field or a memvar based on alias value
+// (for performance reason it replaces alias value with field value)
+// This is used in the following context:
+// (any_alias)->variable
 static void hb_vmPushAliasedVar(PHB_SYMB pSym)
 {
 #if 0
@@ -7752,17 +7620,17 @@ static void hb_vmPushAliasedVar(PHB_SYMB pSym)
 
     if (szAlias[0] == 'M' || szAlias[0] == 'm')
     {
-      if (pAlias->stringLength() == 1 ||                                 /* M->variable */
-          (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
+      if (pAlias->stringLength() == 1 ||                                 // M->variable
+          (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", // MEMVAR-> or MEMVA-> or MEMV->
                                                       pAlias->stringLength()) == 0))
       {
         hb_memvarGetValue(pAlias, pSym);
         return;
       }
     }
-    else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
+    else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", // FIELD-> or FIEL->
                                                          pAlias->stringLength()) == 0 ||
-                                             hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
+                                             hb_strnicmp(szAlias, "_FIELD", // _FIELD-> or _FIE->
                                                          pAlias->stringLength()) == 0))
     {
       hb_rddGetFieldValue(pAlias, pSym);
@@ -7783,14 +7651,13 @@ static void hb_vmPushLocal(int iLocal)
 
   if (iLocal >= 0)
   {
-    /* local variable or local parameter */
+    // local variable or local parameter
     pLocal = hb_stackLocalVariable(iLocal);
   }
   else
   {
-    /* local variable referenced in a codeblock
-     * hb_stackSelfItem() points to a codeblock that is currently evaluated
-     */
+    // local variable referenced in a codeblock
+    // hb_stackSelfItem() points to a codeblock that is currently evaluated
     pLocal = hb_codeblockGetRef(hb_stackSelfItem()->blockValue(), iLocal);
   }
 
@@ -7806,7 +7673,7 @@ static void hb_vmPushLocalByRef(int iLocal)
   HB_STACK_TLS_PRELOAD
 
   auto pTop = hb_stackAllocItem();
-  /* we store its stack offset instead of a pointer to support a dynamic stack */
+  // we store its stack offset instead of a pointer to support a dynamic stack
   if (iLocal >= 0)
   {
     PHB_ITEM pLocal = hb_stackLocalVariableAt(&iLocal);
@@ -7819,10 +7686,9 @@ static void hb_vmPushLocalByRef(int iLocal)
   }
   else
   {
-    /* store direct codeblock address because an item where a codeblock
-     * is stored can be no longer placed on the eval stack at the time
-     * of a codeblock evaluation or variable access
-     */
+    // store direct codeblock address because an item where a codeblock
+    // is stored can be no longer placed on the eval stack at the time
+    // of a codeblock evaluation or variable access
     pTop->item.asRefer.BasePtr.block = hb_stackSelfItem()->blockValue();
   }
   pTop->setType(Harbour::Item::BYREF);
@@ -7858,9 +7724,9 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
     return;
   }
   pTop->setType(Harbour::Item::BYREF);
-  /* we store the offset instead of a pointer to support a dynamic stack */
+  // we store the offset instead of a pointer to support a dynamic stack
   pTop->item.asRefer.value = uiStatic - 1;
-  pTop->item.asRefer.offset = 0; /* 0 for static variables */
+  pTop->item.asRefer.offset = 0; // 0 for static variables
   pTop->item.asRefer.BasePtr.array = pBase->arrayValue();
   hb_gcRefInc(pBase->arrayValue());
 }
@@ -7875,10 +7741,9 @@ static void hb_vmPushVariable(PHB_SYMB pVarSymb)
 
   auto pItem = hb_stackAllocItem();
 
-  /* First try if passed symbol is a name of field
-   * in a current workarea - if it is not a field (Harbour::FAILURE)
-   * then try the memvar variable
-   */
+  // First try if passed symbol is a name of field
+  // in a current workarea - if it is not a field (Harbour::FAILURE)
+  // then try the memvar variable
   if (hb_rddFieldGet(pItem, pVarSymb) != Harbour::SUCCESS && hb_memvarGet(pItem, pVarSymb) != Harbour::SUCCESS)
   {
 
@@ -7950,9 +7815,9 @@ static void hb_vmSwap(int iCount)
   } while (iCount--);
 }
 
-/* ------------------------------- */
-/* Pop                             */
-/* ------------------------------- */
+// -------------------------------
+// Pop
+// -------------------------------
 
 static HB_BOOL hb_vmPopLogical()
 {
@@ -7975,9 +7840,8 @@ static HB_BOOL hb_vmPopLogical()
   }
 }
 
-/* Pops the item from the eval stack and uses it to select the current
- * workarea
- */
+// Pops the item from the eval stack and uses it to select the current
+// workarea
 static void hb_vmPopAlias()
 {
 #if 0
@@ -7985,13 +7849,12 @@ static void hb_vmPopAlias()
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_vmSelectWorkarea(hb_stackItemFromTop(-1), nullptr); /* it clears the passed item */
+  hb_vmSelectWorkarea(hb_stackItemFromTop(-1), nullptr); // it clears the passed item
   hb_stackDec();
 }
 
-/* Pops the alias to use it to select a workarea and next pops a value
- * into a given field
- */
+// Pops the alias to use it to select a workarea and next pops a value
+// into a given field
 static void hb_vmPopAliasedField(PHB_SYMB pSym)
 {
 #if 0
@@ -8007,15 +7870,14 @@ static void hb_vmPopAliasedField(PHB_SYMB pSym)
   }
 
   hb_rddSelectWorkAreaNumber(iCurrArea);
-  hb_stackDec(); /* alias - it was cleared in hb_vmSelectWorkarea() */
-  hb_stackPop(); /* field value */
+  hb_stackDec(); // alias - it was cleared in hb_vmSelectWorkarea()
+  hb_stackPop(); // field value
 }
 
-/* Pops the alias to use it to select a workarea and next pops a value
- * into either a field or a memvar based on the alias value
- * This is used in the following context:
- * (any_alias)->variable
- */
+// Pops the alias to use it to select a workarea and next pops a value
+// into either a field or a memvar based on the alias value
+// This is used in the following context:
+// (any_alias)->variable
 static void hb_vmPopAliasedVar(PHB_SYMB pSym)
 {
 #if 0
@@ -8025,33 +7887,31 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
   HB_STACK_TLS_PRELOAD
   auto pAlias = hb_stackItemFromTop(-1);
 
-  /*
-   * "M", "MEMV" - "MEMVAR" and "FIEL" - "FIELD" are reserved aliases
-   */
+  // "M", "MEMV" - "MEMVAR" and "FIEL" - "FIELD" are reserved aliases
   if (pAlias->isString())
   {
     const char *szAlias = pAlias->stringValue();
 
     if (szAlias[0] == 'M' || szAlias[0] == 'm')
     {
-      if (pAlias->stringLength() == 1 ||                                 /* M->variable */
-          (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
+      if (pAlias->stringLength() == 1 ||                                 // M->variable
+          (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", // MEMVAR-> or MEMVA-> or MEMV->
                                                       pAlias->stringLength()) == 0))
       {
         hb_memvarSetValue(pSym, hb_stackItemFromTop(-2));
-        hb_stackPop(); /* alias */
-        hb_stackPop(); /* value */
+        hb_stackPop(); // alias
+        hb_stackPop(); // value
         return;
       }
     }
-    else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
+    else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", // FIELD-> or FIEL->
                                                          pAlias->stringLength()) == 0 ||
-                                             hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
+                                             hb_strnicmp(szAlias, "_FIELD", // _FIELD-> or _FIE->
                                                          pAlias->stringLength()) == 0))
     {
       hb_rddPutFieldValue(hb_stackItemFromTop(-2), pSym);
-      hb_stackPop(); /* alias */
-      hb_stackPop(); /* value */
+      hb_stackPop(); // alias
+      hb_stackPop(); // value
       return;
     }
   }
@@ -8068,21 +7928,20 @@ static void hb_vmPopLocal(int iLocal)
 
   auto pVal = hb_stackItemFromTop(-1);
 
-  /* Remove MEMOFLAG if exists (assignment from field). */
+  // Remove MEMOFLAG if exists (assignment from field).
   pVal->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
 
   PHB_ITEM pLocal;
 
   if (iLocal >= 0)
   {
-    /* local variable or local parameter */
+    // local variable or local parameter
     pLocal = hb_stackLocalVariable(iLocal);
   }
   else
   {
-    /* local variable referenced in a codeblock
-     * hb_stackSelfItem() points to a codeblock that is currently evaluated
-     */
+    // local variable referenced in a codeblock
+    // hb_stackSelfItem() points to a codeblock that is currently evaluated
     pLocal = hb_codeblockGetRef(hb_stackSelfItem()->blockValue(), iLocal);
   }
 
@@ -8098,17 +7957,16 @@ static void hb_vmPopStatic(HB_USHORT uiStatic)
 
   HB_STACK_TLS_PRELOAD
   auto pVal = hb_stackItemFromTop(-1);
-  /* Remove MEMOFLAG if exists (assignment from field). */
+  // Remove MEMOFLAG if exists (assignment from field).
   pVal->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
   PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->arrayItems() + uiStatic - 1;
   hb_itemMoveToRef(pStatic, pVal);
   hb_stackDec();
 }
 
-/* ------------------------------- */
-/*
- * Functions to manage module symbols
- */
+// -------------------------------
+
+// Functions to manage module symbols
 
 PHB_SYMB hb_vmGetRealFuncSym(PHB_SYMB pSym)
 {
@@ -8129,7 +7987,7 @@ HB_BOOL hb_vmLockModuleSymbols(void)
   return !s_pSymbolsMtx || hb_threadMutexLock(s_pSymbolsMtx);
 #else
   return true;
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
 void hb_vmUnlockModuleSymbols(void)
@@ -8139,7 +7997,7 @@ void hb_vmUnlockModuleSymbols(void)
   {
     hb_threadMutexUnlock(s_pSymbolsMtx);
   }
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
 const char *hb_vmFindModuleSymbolName(PHB_SYMB pSym)
@@ -8391,7 +8249,7 @@ void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols)
       {
         PHB_SYMB pSymbol = &pSymbols->pModuleSymbols[ui];
 
-        /* do not overwrite already initialized statics' frame */
+        // do not overwrite already initialized statics' frame
         if (ui == 0 || ui != pSymbols->uiStaticsOffset || !HB_SYM_STATICSBASE(pSymbol))
         {
           pSymbol->value.pFunPtr = nullptr;
@@ -8465,9 +8323,9 @@ void hb_vmInitSymbolGroup(void *hNewDynLib, int argc, const char *argv[])
       pLastSymbols = pLastSymbols->pNext;
     }
 
-    /* library symbols are modified beforeinit functions
-       execution intentionally because init functions may
-       load new modules [druzus] */
+    // library symbols are modified beforeinit functions
+    // execution intentionally because init functions may
+    // load new modules [druzus]
     hb_vmDoModuleSetLibID(s_InitFunctions, hDynLib, hNewDynLib);
     hb_vmDoModuleSetLibID(s_ExitFunctions, hDynLib, hNewDynLib);
     hb_vmDoModuleSetLibID(s_QuitFunctions, hDynLib, hNewDynLib);
@@ -8633,7 +8491,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
     {
       PHB_SYMBOLS pLastSymbols = s_pSymbols;
       while (pLastSymbols->pNext)
-      { /* locates the latest processed group of symbols */
+      { // locates the latest processed group of symbols
         pLastSymbols = pLastSymbols->pNext;
       }
       pLastSymbols->pNext = pNewSymbols;
@@ -8641,7 +8499,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
   }
 
   for (ui = 0; ui < uiSymbols; ui++)
-  { /* register each public symbol on the dynamic symbol table */
+  { // register each public symbol on the dynamic symbol table
     PHB_SYMB pSymbol = pNewSymbols->pModuleSymbols + ui;
 
     bool fStatics = (pSymbol->scope.value & HB_FS_INITEXIT) == HB_FS_INITEXIT ||
@@ -8680,11 +8538,11 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
 
     if (!s_pSymStart && !fDynLib && !fStatics && (hSymScope & HB_FS_FIRST) != 0 && (hSymScope & HB_FS_INITEXIT) == 0)
     {
-      /* first public defined symbol to start execution */
+      // first public defined symbol to start execution
       s_pSymStart = pSymbol;
     }
 
-    /* Enable this code to see static functions which are registered in global dynsym table */
+    // Enable this code to see static functions which are registered in global dynsym table
 #if 0
       if( fPublic && (hSymScope & (HB_FS_INITEXIT | HB_FS_STATIC)) != 0 ) {
 #if 0
@@ -8703,7 +8561,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
         {
           if (fOverLoad && (pSymbol->scope.value & HB_FS_LOCAL) != 0)
           {
-            /* overload existing public function */
+            // overload existing public function
             pDynSym->pSymbol = pSymbol;
             hb_vmSetDynFunc(pDynSym);
             continue;
@@ -8777,9 +8635,9 @@ static void hb_vmVerifyPCodeVersion(const char *szModuleName, HB_USHORT uiPCodeV
 {
   if (uiPCodeVer != 0)
   {
-    if (uiPCodeVer > HB_PCODE_VER || /* the module is compiled with newer compiler version then HVM */
+    if (uiPCodeVer > HB_PCODE_VER || // the module is compiled with newer compiler version then HVM
         uiPCodeVer < HB_PCODE_VER_MIN)
-    { /* the module is compiled with old not longer supported by HVM compiler version */
+    { // the module is compiled with old not longer supported by HVM compiler version
       char szPCode[10];
       hb_snprintf(szPCode, sizeof(szPCode), "%i.%i", uiPCodeVer >> 8, uiPCodeVer & 0xff);
 
@@ -8792,9 +8650,8 @@ static void hb_vmVerifyPCodeVersion(const char *szModuleName, HB_USHORT uiPCodeV
   }
 }
 
-/*
- * module symbols initialization with extended information
- */
+// module symbols initialization with extended information
+
 PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiModuleSymbols, const char *szModuleName, HB_ULONG ulID,
                              HB_USHORT uiPCodeVer)
 {
@@ -8840,11 +8697,10 @@ static void hb_vmReleaseLocalSymbols()
   }
 }
 
-/* This calls all _INITSTATICS functions defined in the application.
- * We are using a special symbol's scope HB_FS_INITEXIT to mark
- * this function. These two bits cannot be marked at the same
- * time for normal user defined functions.
- */
+// This calls all _INITSTATICS functions defined in the application.
+// We are using a special symbol's scope HB_FS_INITEXIT to mark
+// this function. These two bits cannot be marked at the same
+// time for normal user defined functions.
 static void hb_vmDoInitStatics()
 {
 #if 0
@@ -8884,7 +8740,7 @@ static void hb_vmDoInitFunctions(HB_BOOL fClipInit)
 
   while (pLastSymbols && hb_vmRequestQuery() == 0)
   {
-    /* only if module contains some INIT functions */
+    // only if module contains some INIT functions
     if (pLastSymbols->fActive && (pLastSymbols->hScope & HB_FS_INIT) != 0)
     {
       HB_USHORT ui = pLastSymbols->uiModuleSymbols;
@@ -8919,7 +8775,7 @@ static void hb_vmDoExitFunctions()
   HB_STACK_TLS_PRELOAD
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
 
-  /* EXIT procedures should be processed? */
+  // EXIT procedures should be processed?
   if (s_fDoExitProc)
   {
     s_fDoExitProc = false;
@@ -8927,7 +8783,7 @@ static void hb_vmDoExitFunctions()
 
     while (pLastSymbols)
     {
-      /* only if module contains some EXIT functions */
+      // only if module contains some EXIT functions
       if (pLastSymbols->fActive && pLastSymbols->hScope & HB_FS_EXIT)
       {
         for (HB_USHORT ui = 0; ui < pLastSymbols->uiModuleSymbols; ui++)
@@ -8941,8 +8797,7 @@ static void hb_vmDoExitFunctions()
             hb_vmProc(0);
             if (hb_stackGetActionRequest())
             {
-              /* QUIT or BREAK was issued - stop processing
-               */
+              // QUIT or BREAK was issued - stop processing
               return;
             }
           }
@@ -8953,13 +8808,12 @@ static void hb_vmDoExitFunctions()
   }
 }
 
-/* ------------------------------- */
-/* Extended references             */
-/* ------------------------------- */
+// -------------------------------
+// Extended references
+// -------------------------------
 
-/*
- * extended item reference functions
- */
+// extended item reference functions
+
 static PHB_ITEM hb_vmItemRawRefRead(PHB_ITEM pRefer)
 {
   return static_cast<PHB_ITEM>(pRefer->item.asExtRef.value);
@@ -9037,9 +8891,8 @@ static void hb_vmItemRefClear(void *value)
 
 static void hb_vmItemRefMark(void *value)
 {
-  /* the original value should be accessible from initial item so it's
-   * not necessary to mark if form this point.
-   */
+  // the original value should be accessible from initial item so it's
+  // not necessary to mark if form this point.
 #if 1
   HB_SYMBOL_UNUSED(value);
 #else
@@ -9048,9 +8901,7 @@ static void hb_vmItemRefMark(void *value)
 #endif
 }
 
-/*
- * push extended item reference
- */
+// push extended item reference
 void hb_vmPushItemRef(PHB_ITEM pItem)
 {
 #if 0
@@ -9078,11 +8929,9 @@ void hb_vmPushItemRef(PHB_ITEM pItem)
   pRefer->item.asExtRef.func = &s_ItmExtRef;
 }
 
-/* ------------------------------- */
+// -------------------------------
 
-/*
- * extended message reference structure
- */
+// extended message reference structure
 struct HB_MSGREF
 {
   PHB_DYNS access;
@@ -9093,9 +8942,7 @@ struct HB_MSGREF
 
 using PHB_MSGREF = HB_MSGREF *;
 
-/*
- * extended message reference functions
- */
+// extended message reference functions
 static PHB_ITEM hb_vmMsgRefRead(PHB_ITEM pRefer)
 {
   auto pMsgRef = static_cast<PHB_MSGREF>(pRefer->item.asExtRef.value);
@@ -9175,9 +9022,8 @@ static void hb_vmMsgRefClear(void *value)
 {
   auto pMsgRef = static_cast<PHB_MSGREF>(value);
 
-  /* value were change by C code without calling RefWrite(),
-   *  f.e. hb_stor*() function
-   */
+  // value were change by C code without calling RefWrite(),
+  //  f.e. hb_stor*() function
   if ((pMsgRef->value.type & Harbour::Item::DEFAULT) == 0)
   {
     if (hb_vmRequestReenter())
@@ -9217,9 +9063,7 @@ static void hb_vmMsgRefMark(void *value)
   }
 }
 
-/*
- * create extended message reference
- */
+// create extended message reference
 HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
 {
 #if 0
@@ -9250,11 +9094,9 @@ HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
   return true;
 }
 
-/* ------------------------------- */
+// -------------------------------
 
-/*
- * extended object index reference structure
- */
+// extended object index reference structure
 struct HB_MSGIDXREF
 {
   HB_ITEM object;
@@ -9264,9 +9106,8 @@ struct HB_MSGIDXREF
 
 using PHB_MSGIDXREF = HB_MSGIDXREF *;
 
-/*
- * extended object index reference functions
- */
+// extended object index reference functions
+
 static PHB_ITEM hb_vmMsgIdxRefRead(PHB_ITEM pRefer)
 {
   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pRefer->item.asExtRef.value);
@@ -9317,9 +9158,8 @@ static void hb_vmMsgIdxRefCopy(PHB_ITEM pDest)
 
   hb_xRefInc(pMsgIdxRef);
 
-  /* value were change by C code without calling RefWrite(),
-   *  f.e. hb_stor*() function
-   */
+  // value were change by C code without calling RefWrite(),
+  //  f.e. hb_stor*() function
   if ((pMsgIdxRef->value.type & Harbour::Item::DEFAULT) == 0)
   {
     if (hb_vmRequestReenter())
@@ -9335,9 +9175,8 @@ static void hb_vmMsgIdxRefClear(void *value)
 {
   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(value);
 
-  /* value were change by C code without calling RefWrite(),
-   *  f.e. hb_stor*() function
-   */
+  // value were change by C code without calling RefWrite(),
+  //  f.e. hb_stor*() function
   if ((pMsgIdxRef->value.type & Harbour::Item::DEFAULT) == 0)
   {
     if (hb_vmRequestReenter())
@@ -9382,9 +9221,7 @@ static void hb_vmMsgIdxRefMark(void *value)
   }
 }
 
-/*
- * create extended message reference
- */
+// create extended message reference
 static void hb_vmMsgIndexReference(PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM pIndex)
 {
 #if 0
@@ -9407,9 +9244,9 @@ static void hb_vmMsgIndexReference(PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM p
   hb_itemMove(pRefer, pIndex);
 }
 
-/* ------------------------------- */
-/* VM exceptions                   */
-/* ------------------------------- */
+// -------------------------------
+// VM exceptions
+// -------------------------------
 
 void hb_vmRequestQuit(void)
 {
@@ -9419,12 +9256,11 @@ void hb_vmRequestQuit(void)
 
   HB_STACK_TLS_PRELOAD
 
-  /* In MT mode EXIT functions are executed only from hb_vmQuit()
-   * when all other threads have terminated
-   */
+  // In MT mode EXIT functions are executed only from hb_vmQuit()
+  // when all other threads have terminated
 #if !defined(HB_MT_VM)
-  hb_vmDoExitFunctions(); /* process defined EXIT functions */
-#endif                    /* HB_MT_VM */
+  hb_vmDoExitFunctions(); // process defined EXIT functions
+#endif                    // HB_MT_VM
   hb_stackSetActionRequest(HB_QUIT_REQUESTED);
 }
 
@@ -9476,25 +9312,21 @@ void hb_vmRequestBreak(PHB_ITEM pItem)
   else
   {
 #ifdef HB_CLP_STRICT
-    /*
-     * do not execute EXIT procedures to be as close as possible
-     * buggy Clipper behavior. [druzus]
-     */
+    // do not execute EXIT procedures to be as close as possible
+    // buggy Clipper behavior. [druzus]
     s_fDoExitProc = false;
     hb_stackSetActionRequest(HB_QUIT_REQUESTED);
 #else
-    /*
-     * Clipper has a bug here. Tests shows that it set exception flag
-     * and then tries to execute EXIT procedures so the first one is
-     * immediately interrupted. Because Clipper does not check the
-     * exception flag often enough then it's possible to execute one
-     * function from first EXIT PROC. Using small trick with
-     * QOut(Type(cPrivateVar)) in the EXIT procedure (Type() is
-     * not normal function) we can also check that it tries to execute
-     * EXIT procedures exactly here before leave current function.
-     * So to be as close as possible the Clipper intentional behavior
-     * we execute hb_vmRequestQuit() here. [druzus]
-     */
+    // Clipper has a bug here. Tests shows that it set exception flag
+    // and then tries to execute EXIT procedures so the first one is
+    // immediately interrupted. Because Clipper does not check the
+    // exception flag often enough then it's possible to execute one
+    // function from first EXIT PROC. Using small trick with
+    // QOut(Type(cPrivateVar)) in the EXIT procedure (Type() is
+    // not normal function) we can also check that it tries to execute
+    // EXIT procedures exactly here before leave current function.
+    // So to be as close as possible the Clipper intentional behavior
+    // we execute hb_vmRequestQuit() here. [druzus]
     hb_vmRequestQuit();
 #endif
   }
@@ -9511,7 +9343,7 @@ void hb_vmRequestCancel(void)
   if (hb_stackSetStruct()->HB_SET_CANCEL)
   {
     char
-        buffer[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 + 10]; /* additional 10 bytes for line info (%hu) overhead */
+        buffer[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 + 10]; // additional 10 bytes for line info (%hu) overhead
     char file[HB_PATH_MAX];
     HB_USHORT uiLine;
     int iLevel = 0;
@@ -9527,9 +9359,7 @@ void hb_vmRequestCancel(void)
       hb_conOutErr(hb_conNewLine(), 0);
     }
 
-    /*
-     * Clipper does not execute EXIT procedures when quitting using break key
-     */
+    // Clipper does not execute EXIT procedures when quitting using break key
     s_fDoExitProc = false;
     hb_stackSetActionRequest(HB_QUIT_REQUESTED);
   }
@@ -9667,7 +9497,7 @@ HB_BOOL hb_vmRequestReenterExt(void)
     {
       uiAction = HB_VMSTACK_REQUESTED;
 
-      /* protection against executing hb_threadStateNew() during GC pass */
+      // protection against executing hb_threadStateNew() during GC pass
       HB_VM_LOCK();
       for (;;)
       {
@@ -9893,7 +9723,7 @@ void hb_vmSetI18N(void *pI18N)
   {                                                                                                                    \
     return (hb_stackGetActionRequest() & (HB_ENDPROC_REQUESTED | HB_BREAK_REQUESTED | HB_QUIT_REQUESTED)) != 0;        \
   }
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
 void hb_xvmExitProc(void)
 {
@@ -9917,33 +9747,31 @@ void hb_xvmSeqBegin(void)
 {
   HB_STACK_TLS_PRELOAD
 
-  /*
-   * Create the SEQUENCE envelope
-   * To keep compatibility with pure PCODE evaluation we have
-   * use exactly the same SEQUENCE envelope or hb_vmRequestBreak()
-   * will not work as expected.
-   *
-   * [ break return value ]  -2
-   * [ recover envelope   ]  -1
-   * [                    ] <- new recover base
-   */
+  // Create the SEQUENCE envelope
+  // To keep compatibility with pure PCODE evaluation we have
+  // use exactly the same SEQUENCE envelope or hb_vmRequestBreak()
+  // will not work as expected.
+  //
+  // [ break return value ]  -2
+  // [ recover envelope   ]  -1
+  // [                    ] <- new recover base
 
-  /* 1) clear the storage for value returned by BREAK statement */
+  // 1) clear the storage for value returned by BREAK statement
   hb_stackAllocItem()->setType(Harbour::Item::NIL);
-  /* 2) recovery state */
+  // 2) recovery state
   auto pItem = hb_stackAllocItem();
-  /* mark type as NIL - it's not real item */
+  // mark type as NIL - it's not real item
   pItem->setType(Harbour::Item::RECOVER);
-  /* address of RECOVER or END opcode - not used in C code */
+  // address of RECOVER or END opcode - not used in C code
   pItem->item.asRecover.recover = nullptr;
-  /* store current RECOVER base */
+  // store current RECOVER base
   pItem->item.asRecover.base = hb_stackGetRecoverBase();
-  /* store current bCanRecover flag - not used in C code */
+  // store current bCanRecover flag - not used in C code
   pItem->item.asRecover.flags = 0;
-  /* clear new recovery state */
+  // clear new recovery state
   pItem->item.asRecover.request = 0;
 
-  /* set new recover base */
+  // set new recover base
   hb_stackSetRecoverBase(hb_stackTopOffset());
 }
 
@@ -9951,9 +9779,7 @@ HB_BOOL hb_xvmSeqEnd(void)
 {
   HB_STACK_TLS_PRELOAD
 
-  /*
-   * remove all items placed on the stack after BEGIN code
-   */
+  // remove all items placed on the stack after BEGIN code
   hb_stackRemove(hb_stackGetRecoverBase());
 #if defined(_HB_RECOVER_DEBUG)
   if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
@@ -9961,16 +9787,14 @@ HB_BOOL hb_xvmSeqEnd(void)
     hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqEnd", nullptr, nullptr);
   }
 #endif
-  /*
-   * Remove the SEQUENCE envelope
-   * This is executed either at the end of sequence or as the
-   * response to the break statement if there is no RECOVER clause
-   */
+  // Remove the SEQUENCE envelope
+  // This is executed either at the end of sequence or as the
+  // response to the break statement if there is no RECOVER clause
 
-  /* 2) Restore previous recovery base address */
+  // 2) Restore previous recovery base address
   hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
   hb_stackDec();
-  /* 1) Discard the value returned by BREAK statement */
+  // 1) Discard the value returned by BREAK statement
   hb_stackPop();
 
 #if defined(HB_MT_VM)
@@ -9978,7 +9802,7 @@ HB_BOOL hb_xvmSeqEnd(void)
   {
     hb_vmRequestTest();
   }
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
   if (hb_stackGetActionRequest() & (HB_ENDPROC_REQUESTED | HB_QUIT_REQUESTED))
   {
     return true;
@@ -9999,15 +9823,13 @@ HB_BOOL hb_xvmSeqEndTest(void)
   {
     hb_vmRequestTest();
   }
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
   if ((hb_stackGetActionRequest() & (HB_ENDPROC_REQUESTED | HB_BREAK_REQUESTED | HB_QUIT_REQUESTED)) != 0)
   {
     return true;
   }
 
-  /*
-   * remove all items placed on the stack after BEGIN code
-   */
+  // remove all items placed on the stack after BEGIN code
   hb_stackRemove(hb_stackGetRecoverBase());
 #if defined(_HB_RECOVER_DEBUG)
   if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
@@ -10015,16 +9837,14 @@ HB_BOOL hb_xvmSeqEndTest(void)
     hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqEndTest", nullptr, nullptr);
   }
 #endif
-  /*
-   * Remove the SEQUENCE envelope
-   * This is executed either at the end of sequence or as the
-   * response to the break statement if there is no RECOVER clause
-   */
+  // Remove the SEQUENCE envelope
+  // This is executed either at the end of sequence or as the
+  // response to the break statement if there is no RECOVER clause
 
-  /* 2) Restore previous recovery base address */
+  // 2) Restore previous recovery base address
   hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
   hb_stackDec();
-  /* 1) Discard the value returned by BREAK statement */
+  // 1) Discard the value returned by BREAK statement
   hb_stackPop();
   return false;
 }
@@ -10033,13 +9853,9 @@ HB_BOOL hb_xvmSeqRecover(void)
 {
   HB_STACK_TLS_PRELOAD
 
-  /*
-   * Execute the RECOVER code
-   */
+  // Execute the RECOVER code
 
-  /*
-   * remove all items placed on the stack after BEGIN code
-   */
+  // remove all items placed on the stack after BEGIN code
   hb_stackRemove(hb_stackGetRecoverBase());
 #if defined(_HB_RECOVER_DEBUG)
   if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
@@ -10047,17 +9863,17 @@ HB_BOOL hb_xvmSeqRecover(void)
     hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqRecover", nullptr, nullptr);
   }
 #endif
-  /* 2) Restore previous recovery base address */
+  // 2) Restore previous recovery base address
   hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
   hb_stackDec();
-  /* 1) Leave the value returned from BREAK */
+  // 1) Leave the value returned from BREAK
 
 #if defined(HB_MT_VM)
   if (hb_vmThreadRequest)
   {
     hb_vmRequestTest();
   }
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
   if (hb_stackGetActionRequest() & (HB_ENDPROC_REQUESTED | HB_QUIT_REQUESTED))
   {
     return true;
@@ -10077,24 +9893,24 @@ void hb_xvmSeqAlways(void)
 
   HB_STACK_TLS_PRELOAD
 
-  /* Create the SEQUENCE ALWAYS envelope */
-  /* 1) clear the storage for RETURN value */
+  // Create the SEQUENCE ALWAYS envelope
+  // 1) clear the storage for RETURN value
   hb_stackAllocItem()->setType(Harbour::Item::NIL);
-  /* 2) recovery state */
+  // 2) recovery state
   auto pItem = hb_stackAllocItem();
-  /* mark type as NIL - it's not real item */
+  // mark type as NIL - it's not real item
   pItem->setType(Harbour::Item::RECOVER);
-  /* address of RECOVER or END opcode - not used in C code */
+  // address of RECOVER or END opcode - not used in C code
   pItem->item.asRecover.recover = nullptr;
-  /* store current RECOVER base */
+  // store current RECOVER base
   pItem->item.asRecover.base = hb_stackGetRecoverBase();
-  /* store current bCanRecover flag - not used in C code */
+  // store current bCanRecover flag - not used in C code
   pItem->item.asRecover.flags = 0;
-  /* clear new recovery state */
+  // clear new recovery state
   pItem->item.asRecover.request = 0;
-  /* set sequence type */
+  // set sequence type
   pItem->item.asRecover.flags = HB_SEQ_DOALWAYS;
-  /* set new recover base */
+  // set new recover base
   hb_stackSetRecoverBase(hb_stackTopOffset());
 }
 
@@ -10106,7 +9922,7 @@ HB_BOOL hb_xvmAlwaysBegin(void)
 
   HB_STACK_TLS_PRELOAD
 
-  /* remove all items placed on the stack after BEGIN code */
+  // remove all items placed on the stack after BEGIN code
   hb_stackRemove(hb_stackGetRecoverBase());
 #if defined(_HB_RECOVER_DEBUG)
   if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
@@ -10114,10 +9930,10 @@ HB_BOOL hb_xvmAlwaysBegin(void)
     hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmAlwaysBegin", nullptr, nullptr);
   }
 #endif
-  /* store and reset action */
+  // store and reset action
   hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request = hb_stackGetActionRequest();
   hb_stackSetActionRequest(0);
-  /* store RETURN value */
+  // store RETURN value
   if (hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request & HB_ENDPROC_REQUESTED)
   {
     hb_itemMove(hb_stackItemFromTop(HB_RECOVER_VALUE), hb_stackReturnItem());
@@ -10134,7 +9950,7 @@ HB_BOOL hb_xvmAlwaysEnd(void)
 
   HB_STACK_TLS_PRELOAD
 
-  /* remove all items placed on the stack after ALWAYSBEGIN code */
+  // remove all items placed on the stack after ALWAYSBEGIN code
   hb_stackRemove(hb_stackGetRecoverBase());
 
 #if defined(_HB_RECOVER_DEBUG)
@@ -10143,11 +9959,11 @@ HB_BOOL hb_xvmAlwaysEnd(void)
     hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmAlwaysEnd", nullptr, nullptr);
   }
 #endif
-  /* restore previous recovery base address */
+  // restore previous recovery base address
   hb_stackSetRecoverBase(hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.base);
   HB_USHORT uiCurrAction = hb_stackGetActionRequest();
   HB_USHORT uiPrevAction = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.request;
-  /* restore requested action */
+  // restore requested action
   if ((uiCurrAction | uiPrevAction) & HB_QUIT_REQUESTED)
   {
     hb_stackSetActionRequest(HB_QUIT_REQUESTED);
@@ -10164,9 +9980,9 @@ HB_BOOL hb_xvmAlwaysEnd(void)
   {
     hb_stackSetActionRequest(0);
   }
-  /* remove the ALWAYS envelope */
+  // remove the ALWAYS envelope
   hb_stackDec();
-  /* restore RETURN value if not overloaded inside ALWAYS code */
+  // restore RETURN value if not overloaded inside ALWAYS code
   if (!(uiCurrAction & HB_ENDPROC_REQUESTED) && (uiPrevAction & HB_ENDPROC_REQUESTED))
   {
     hb_stackPopReturn();
@@ -10431,14 +10247,13 @@ static PHB_ITEM hb_xvmLocalPtr(int iLocal)
 
   if (iLocal >= 0)
   {
-    /* local variable or local parameter */
+    // local variable or local parameter
     return hb_stackLocalVariable(iLocal);
   }
   else
   {
-    /* local variable referenced in a codeblock
-     * hb_stackSelfItem() points to a codeblock that is currently evaluated
-     */
+    // local variable referenced in a codeblock
+    // hb_stackSelfItem() points to a codeblock that is currently evaluated
     return hb_codeblockGetRef(hb_stackSelfItem()->blockValue(), iLocal);
   }
 }
@@ -10498,7 +10313,7 @@ HB_BOOL hb_xvmPopVariable(PHB_SYMB pSymbol)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  /* See the note above in HB_P_POPVARIABLE */
+  // See the note above in HB_P_POPVARIABLE
 #if 0
    if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) ) {
       hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
@@ -10569,7 +10384,7 @@ HB_BOOL hb_xvmPopAlias(void)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_vmSelectWorkarea(hb_stackItemFromTop(-1), nullptr); /* it clears the passed item */
+  hb_vmSelectWorkarea(hb_stackItemFromTop(-1), nullptr); // it clears the passed item
   hb_stackDec();
   HB_XVM_RETURN
 }
@@ -10741,7 +10556,7 @@ void hb_xvmLocalSetInt(int iLocal, HB_LONG lValue)
 
   if (iLocal >= 0)
   {
-    /* local variable or local parameter */
+    // local variable or local parameter
     pLocal = hb_stackLocalVariable(iLocal);
     if (pLocal->isByRef())
     {
@@ -10750,9 +10565,8 @@ void hb_xvmLocalSetInt(int iLocal, HB_LONG lValue)
   }
   else
   {
-    /* local variable referenced in a codeblock
-     * hb_stackSelfItem() points to a codeblock that is currently evaluated
-     */
+    // local variable referenced in a codeblock
+    // hb_stackSelfItem() points to a codeblock that is currently evaluated
     pLocal = hb_codeblockGetVar(hb_stackSelfItem(), iLocal);
   }
 
@@ -11021,7 +10835,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() == static_cast<HB_MAXINT>(lValue);
     pItem->setLogicalValue(f);
 #else
@@ -11076,7 +10890,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() == static_cast<HB_MAXINT>(lValue);
     *pfValue = f;
 #else
@@ -11144,7 +10958,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() != static_cast<HB_MAXINT>(lValue);
     pItem->setLogicalValue(f);
 #else
@@ -11199,7 +11013,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() != static_cast<HB_MAXINT>(lValue);
     *pfValue = f;
 #else
@@ -11267,7 +11081,7 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() < static_cast<HB_MAXINT>(lValue);
     pItem->setLogicalValue(f);
 #else
@@ -11317,7 +11131,7 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() < static_cast<HB_MAXINT>(lValue);
     *pfValue = f;
 #else
@@ -11380,7 +11194,7 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() <= static_cast<HB_MAXINT>(lValue);
     pItem->setLogicalValue(f);
 #else
@@ -11430,7 +11244,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() <= static_cast<HB_MAXINT>(lValue);
     *pfValue = f;
 #else
@@ -11493,7 +11307,7 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() > static_cast<HB_MAXINT>(lValue);
     pItem->setLogicalValue(f);
 #else
@@ -11543,7 +11357,7 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() > static_cast<HB_MAXINT>(lValue);
     *pfValue = f;
 #else
@@ -11606,7 +11420,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() >= static_cast<HB_MAXINT>(lValue);
     pItem->setLogicalValue(f);
 #else
@@ -11656,7 +11470,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isLong())
   {
-#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) // NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug.
     bool f = pItem->longValue() >= static_cast<HB_MAXINT>(lValue);
     *pfValue = f;
 #else
@@ -12322,7 +12136,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
       hb_itemMoveRef(pArray->arrayItem(nIndex), pValue);
       hb_stackPop();
-      hb_stackDec(); /* value was moved above hb_stackDec() is enough */
+      hb_stackDec(); // value was moved above hb_stackDec() is enough
     }
     else
     {
@@ -12354,7 +12168,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
       hb_itemMoveRef(pDest, pValue);
       hb_stackPop();
       hb_stackPop();
-      hb_stackDec(); /* value was moved above hb_stackDec() is enough */
+      hb_stackDec(); // value was moved above hb_stackDec() is enough
     }
     else if (hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop(-1), pValue))
     {
@@ -12710,8 +12524,8 @@ void hb_xvmWithObjectEnd(void)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_stackPop(); /* remove with object envelope */
-  hb_stackPop(); /* remove implicit object */
+  hb_stackPop(); // remove with object envelope
+  hb_stackPop(); // remove implicit object
 }
 
 void hb_xvmWithObjectMessage(PHB_SYMB pSymbol)
@@ -12738,9 +12552,9 @@ void hb_xvmWithObjectMessage(PHB_SYMB pSymbol)
   }
 }
 
-/* ------------------------------------------------------------------------ */
-/* The debugger support functions */
-/* ------------------------------------------------------------------------ */
+// ------------------------------------------------------------------------
+// The debugger support functions
+// ------------------------------------------------------------------------
 
 void hb_vmRequestDebug(void)
 {
@@ -12804,10 +12618,8 @@ HB_ULONG hb_dbg_ProcLevel(void)
   return hb_stackCallDepth();
 }
 
-/*
- * check if the debugger activation was requested or request the debugger
- * activation if .T. is passed
- */
+// check if the debugger activation was requested or request the debugger
+// activation if .T. is passed
 HB_FUNC(__DBGINVOKEDEBUG)
 {
   HB_STACK_TLS_PRELOAD
@@ -12828,9 +12640,8 @@ HB_FUNC(__DBGINVOKEDEBUG)
   }
 }
 
-/* Return the statics array. Please AClone() before assignments
- * __dbgVMVarSList() --> <aStat>
- */
+// Return the statics array. Please AClone() before assignments
+// __dbgVMVarSList() --> <aStat>
 HB_FUNC(__DBGVMVARSLIST)
 {
   if (hb_vmInternalsEnabled())
@@ -12844,9 +12655,8 @@ HB_FUNC(__DBGVMVARSLIST)
   }
 }
 
-/* Return the statics array length.
- * __dbgVMVarSLen() --> <nStatics>
- */
+// Return the statics array length.
+// __dbgVMVarSLen() --> <nStatics>
 HB_FUNC(__DBGVMVARSLEN)
 {
   HB_STACK_TLS_PRELOAD
@@ -12861,9 +12671,8 @@ HB_FUNC(__DBGVMVARSLEN)
   }
 }
 
-/* Return a specified statics
- * __dbgVMVarSGet(<nStatic>) --> <xStat>
- */
+// Return a specified statics
+// __dbgVMVarSGet(<nStatic>) --> <xStat>
 HB_FUNC(__DBGVMVARSGET)
 {
   if (hb_vmInternalsEnabled())
@@ -12872,10 +12681,8 @@ HB_FUNC(__DBGVMVARSGET)
   }
 }
 
-/*
- * Sets the value of a specified statics
- * __dbgVMVarSSet(<nStatic>, <uValue>) --> NIL
- */
+// Sets the value of a specified statics
+// __dbgVMVarSSet(<nStatic>, <uValue>) --> NIL
 HB_FUNC(__DBGVMVARSSET)
 {
   if (hb_vmInternalsEnabled())
@@ -12895,15 +12702,13 @@ HB_FUNC(__DBGPROCLEVEL)
   if (hb_vmInternalsEnabled())
   {
     HB_STACK_TLS_PRELOAD
-    hb_retnl(hb_dbg_ProcLevel() - 1); /* Don't count self */
+    hb_retnl(hb_dbg_ProcLevel() - 1); // Don't count self
   }
 }
 
-/*
- * These functions are for GLOBAL variables - now they are only for
- * compatibility with xHarbour debugger - Harbour does not support
- * GLOBALs
- */
+// These functions are for GLOBAL variables - now they are only for
+// compatibility with xHarbour debugger - Harbour does not support
+// GLOBALs
 HB_ULONG hb_dbg_vmVarGCount(void)
 {
 #if 0
@@ -12924,10 +12729,8 @@ PHB_ITEM hb_dbg_vmVarGGet(int nGlobal, int nOffset)
 #endif
 }
 
-/*
- * Return a clone of the globals array.
- * __dbgVMVarGList() --> <aStat>
- */
+// Return a clone of the globals array.
+// __dbgVMVarGList() --> <aStat>
 HB_FUNC(__DBGVMVARGLIST)
 {
   if (hb_vmInternalsEnabled())
@@ -12966,22 +12769,20 @@ HB_FUNC(__DBGVMVARGSET)
 #endif
 }
 
-/* ------------------------------------------------------------------------ */
-/* The garbage collector interface */
-/* ------------------------------------------------------------------------ */
+// ------------------------------------------------------------------------
+// The garbage collector interface
+// ------------------------------------------------------------------------
 
-/* Mark all statics as used so they will not be released by the
- * garbage collector
- */
+// Mark all statics as used so they will not be released by the
+// garbage collector
 void hb_vmIsStaticRef(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmIsStaticRef()"));
 #endif
 
-  /* statics are stored as an item of arrays allocated by hb_itemNew() so
-   * they do not need any special GC support
-   */
+  // statics are stored as an item of arrays allocated by hb_itemNew() so
+  // they do not need any special GC support
 }
 
 void hb_vmIsStackRef(void)
@@ -13006,7 +12807,7 @@ void hb_vmIsStackRef(void)
   }
 #else
   hb_stackIsStackRef(hb_stackId(), nullptr);
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
 void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int iCount)
@@ -13030,15 +12831,13 @@ void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int iCount)
   }
 #else
   hb_stackUpdateAllocator(hb_stackId(), pFunc, iCount);
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
-/* ------------------------------------------------------------------------ */
+// ------------------------------------------------------------------------
 
-/*
- * Turns on | off the profiler activity
- * __SetProfiler(<lOnOff>) --> <lOldValue>
- */
+// Turns on | off the profiler activity
+// __SetProfiler(<lOnOff>) --> <lOldValue>
 HB_FUNC(__SETPROFILER)
 {
   HB_STACK_TLS_PRELOAD
@@ -13053,15 +12852,15 @@ HB_FUNC(__SETPROFILER)
 #endif
 }
 
-HB_FUNC(__OPCOUNT) /* it returns the total amount of opcodes */
+HB_FUNC(__OPCOUNT) // it returns the total amount of opcodes
 {
   HB_STACK_TLS_PRELOAD
   hb_retnl(HB_P_LAST_PCODE - 1);
 }
 
-HB_FUNC(__OPGETPRF) /* profiler: It returns an array with an opcode called and
-                       consumed times { nTimes, nTime },
-                       given the opcode index */
+HB_FUNC(__OPGETPRF) // profiler: It returns an array with an opcode called and
+                    // consumed times { nTimes, nTime },
+                    // given the opcode index
 {
   HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
@@ -13082,10 +12881,8 @@ HB_FUNC(__OPGETPRF) /* profiler: It returns an array with an opcode called and
   }
 }
 
-/*
- * Turns on | off tracing of PRG-level function and method calls
- * __TracePrgCalls(<lOnOff>) --> <lOldValue>
- */
+// Turns on | off tracing of PRG-level function and method calls
+// __TracePrgCalls(<lOnOff>) --> <lOldValue>
 HB_FUNC(__TRACEPRGCALLS)
 {
   HB_STACK_TLS_PRELOAD
@@ -13289,19 +13086,19 @@ HB_FUNC(ERRORLEVEL)
 
   hb_retni(s_nErrorLevel);
 
-  /* NOTE: This should be HB_ISNUM(1), but it's sort of a Clipper bug that it
-           accepts other types also and considers them zero. [vszakats] */
+  // NOTE: This should be HB_ISNUM(1), but it's sort of a Clipper bug that it
+  //       accepts other types also and considers them zero. [vszakats]
 
   if (hb_pcount() >= 1)
   {
-    /* Only replace the error level if a parameter was passed */
+    // Only replace the error level if a parameter was passed
     s_nErrorLevel = hb_parni(1);
   }
 }
 
-/* NOTE: We should make sure that these get linked.
-         Don't make this function static, because it's not called from
-         this file. [vszakats] */
+// NOTE: We should make sure that these get linked.
+//       Don't make this function static, because it's not called from
+//       this file. [vszakats]
 
 extern void hb_vmForceLink(void);
 void hb_vmForceLink(void)
@@ -13313,7 +13110,7 @@ void hb_vmForceLink(void)
   HB_FUNC_EXEC(SYSINIT);
 }
 
-/* NOTE: Pass string literals only. */
+// NOTE: Pass string literals only.
 void hb_vmSetLinkedMain(const char *szMain)
 {
   s_vm_pszLinkedMain = szMain;
@@ -13324,7 +13121,7 @@ void hb_vmSetDefaultGT(const char *szGtName)
   hb_gtSetDefault(szGtName);
 }
 
-/* Force linking default language and codepage modules */
+// Force linking default language and codepage modules
 HB_CODEPAGE_REQUEST(HB_CODEPAGE_DEFAULT)
 HB_LANG_REQUEST(HB_LANG_DEFAULT)
 
