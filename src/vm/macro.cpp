@@ -1622,7 +1622,7 @@ void hb_macroGenPopAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, co
     // Alias is already placed on stack
     // NOTE: An alias will be determined at runtime then we cannot decide
     // here if passed name is either a field or a memvar
-    
+
     // TODO: memvars created inside Type() function should have PUBLIC scope
     hb_macroMemvarGenPCode(HB_P_MPOPALIASEDVAR, szVarName, HB_COMP_PARAM);
   }
@@ -1851,7 +1851,7 @@ void hb_macroGenPCodeN(const HB_BYTE *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
   pFunc->nPCodePos += nSize;
 }
 
-// - 
+// -
 
 void hb_macroError(int iError, HB_COMP_DECL)
 {

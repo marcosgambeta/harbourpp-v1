@@ -859,7 +859,9 @@ char *hb_itemGetTS(PHB_ITEM pItem, char *szDateTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetTS(%p, %s)", static_cast<void*>(pItem), szDateTime));
 #endif
 
-  return pItem && pItem->isDateTime() ? hb_timeStampStrRawPut(szDateTime, pItem->dateTimeJulian(), pItem->dateTimeTime()) : hb_timeStampStrRawPut(szDateTime, 0, 0);
+  return pItem && pItem->isDateTime()
+             ? hb_timeStampStrRawPut(szDateTime, pItem->dateTimeJulian(), pItem->dateTimeTime())
+             : hb_timeStampStrRawPut(szDateTime, 0, 0);
 }
 
 double hb_itemGetTD(PHB_ITEM pItem)

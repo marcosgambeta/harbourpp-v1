@@ -537,7 +537,8 @@ char *hb_arrayGetDS(PHB_ITEM pArray, HB_SIZE nIndex, char *szDate)
 
   // NOTE: Intentionally calling it with a bad parameter in order to get
   //       the default value from hb_itemGetDS(). [vszakats]
-  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getDS(szDate) : hb_itemGetDS(nullptr, szDate);
+  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getDS(szDate)
+                                                           : hb_itemGetDS(nullptr, szDate);
 }
 
 long hb_arrayGetDL(PHB_ITEM pArray, HB_SIZE nIndex)
@@ -548,7 +549,8 @@ long hb_arrayGetDL(PHB_ITEM pArray, HB_SIZE nIndex)
 
   // NOTE: Intentionally calling it with a bad parameter in order to get
   //       the default value from hb_itemGetDL(). [vszakats]
-  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getDL() : hb_itemGetDL(nullptr);
+  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getDL()
+                                                           : hb_itemGetDL(nullptr);
 }
 
 double hb_arrayGetTD(PHB_ITEM pArray, HB_SIZE nIndex)
@@ -648,7 +650,8 @@ HB_SIZE hb_arrayCopyC(PHB_ITEM pArray, HB_SIZE nIndex, char *szBuffer, HB_SIZE n
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayCopyC(%p, %" HB_PFS "u, %s, %" HB_PFS "u)", static_cast<void*>(pArray), nIndex, szBuffer, nLen));
 #endif
 
-  return pArray->isArray() && pArray->isValidIndex(nIndex) ? hb_itemCopyC(pArray->arrayItem(nIndex), szBuffer, nLen) : 0;
+  return pArray->isArray() && pArray->isValidIndex(nIndex) ? hb_itemCopyC(pArray->arrayItem(nIndex), szBuffer, nLen)
+                                                           : 0;
 }
 
 char *hb_arrayGetC(PHB_ITEM pArray, HB_SIZE nIndex)
@@ -693,7 +696,8 @@ void *hb_arrayGetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS *pFunc
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayGetPtrGC(%p, %" HB_PFS "u, %p)", static_cast<void*>(pArray), nIndex, static_cast<const void*>(pFuncs)));
 #endif
 
-  return pArray->isArray() && pArray->isValidIndex(nIndex) ? hb_itemGetPtrGC(pArray->arrayItem(nIndex), pFuncs) : nullptr;
+  return pArray->isArray() && pArray->isValidIndex(nIndex) ? hb_itemGetPtrGC(pArray->arrayItem(nIndex), pFuncs)
+                                                           : nullptr;
 }
 
 PHB_SYMB hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex)
