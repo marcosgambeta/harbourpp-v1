@@ -32,13 +32,13 @@
 PROCEDURE WvtMyBrowse()
 
    IF hb_mtvm()
-      hb_threadStart( {| oCrt | oCrt := WvgCrt():new( , , { -1, -2 }, { 34, 69 }, , .T. ), ;
+      hb_threadStart({|oCrt|oCrt := WvgCrt():new(, , {-1, -2}, {34, 69}, , .T.), ;
          oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS, ;
-         oCrt:icon := GetResource( "resources\dia_excl.ico" ), ;
+         oCrt:icon := GetResource("resources\dia_excl.ico"), ;
          oCrt:create(), ;
          wvt_SetGUI(.T.), ;
-         ExecBrowser( oCrt ), ;
-         oCrt:destroy() } )
+         ExecBrowser(oCrt), ;
+         oCrt:destroy()})
 
    ELSE
       ExecBrowser()
@@ -46,22 +46,22 @@ PROCEDURE WvtMyBrowse()
 
    RETURN
 
-STATIC PROCEDURE ExecBrowser( oCrt )
+STATIC PROCEDURE ExecBrowser(oCrt)
 
    LOCAL nKey, bBlock, oBrowse, aLastPaint, i, pGT
    LOCAL cFileIndex, cFileDbf, cRDD, nIndex, oTBar, cScr, info_ // , oLB
-   LOCAL lEnd       := .F.
-   LOCAL aBlocks    := {}
-   LOCAL nTop       :=  4
-   LOCAL nLeft      :=  3
-   LOCAL nBottom    := MaxRow() - 2
-   LOCAL nRight     := MaxCol() - 3
-   LOCAL nCursor    := SetCursor(0)
-   LOCAL nRow       := Row()
-   LOCAL nCol       := Col()
-   LOCAL cColor     := SetColor( "N/W*,N/GR*,,,N/W*" )
-   LOCAL aObjects   := WvtSetObjects( {} )
-   LOCAL hPopup     := wvt_SetPopupMenu()
+   LOCAL lEnd := .F.
+   LOCAL aBlocks := {}
+   LOCAL nTop :=  4
+   LOCAL nLeft :=  3
+   LOCAL nBottom := MaxRow() - 2
+   LOCAL nRight := MaxCol() - 3
+   LOCAL nCursor := SetCursor(0)
+   LOCAL nRow := Row()
+   LOCAL nCol := Col()
+   LOCAL cColor := SetColor("N/W*,N/GR*,,,N/W*")
+   LOCAL aObjects := WvtSetObjects({})
+   LOCAL hPopup := wvt_SetPopupMenu()
    LOCAL oVBar, oHBar, oCom, oTre, oChk, oSLE, oLBx, aNvg, oIdx
 
    STATIC s_nStyle := 0
@@ -70,111 +70,111 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    THREAD STATIC t_lActiveX := .F.
 
    IF oCrt == NIL
-      cScr := SaveScreen( 0, 0, MaxRow(), MaxCol() )
+      cScr := SaveScreen(0, 0, MaxRow(), MaxCol())
    ENDIF
 
-   BrwBuildMenu( oCrt )
-   oTBar := BrwBuildToolBar( oCrt )
-   oTBar:buttonClick := {| oBtn | Vou_ExecTBarAction( oBtn ) }
+   BrwBuildMenu(oCrt)
+   oTBar := BrwBuildToolBar(oCrt)
+   oTBar:buttonClick := {|oBtn|Vou_ExecTBarAction(oBtn)}
 
-   SetMode( MaxRow() + 1, MaxCol() + 1 )  /* Necessary because adding menu has reduced the overall size of window */
+   SetMode(MaxRow() + 1, MaxCol() + 1)  /* Necessary because adding menu has reduced the overall size of window */
 
-   pGT := SetGT( 2, hb_gtSelect() )
+   pGT := SetGT(2, hb_gtSelect())
 
-   cRDD       := "DBFCDX"
-   cFileDbf   := hb_DirBase() + ".." + hb_ps() + ".." + hb_ps() + ".." + hb_ps() + "tests" + hb_ps() + "test.dbf"
+   cRDD := "DBFCDX"
+   cFileDbf := hb_DirBase() + ".." + hb_ps() + ".." + hb_ps() + ".." + hb_ps() + "tests" + hb_ps() + "test.dbf"
    cFileIndex := "test.z01"
 
-   USE ( cFileDbf ) NEW SHARED VIA ( cRDD )
+   USE (cFileDbf) NEW SHARED VIA (cRDD)
    IF NetErr()
       RETURN
    ENDIF
    IF FLock()
-      INDEX ON Test->FIRST TAG "001" TO ( cFileIndex )
-      INDEX ON Test->LAST  TAG "002" TO ( cFileIndex )
-      INDEX ON Test->CITY  TAG "003" TO ( cFileIndex )
+      INDEX ON Test->FIRST TAG "001" TO (cFileIndex)
+      INDEX ON Test->LAST  TAG "002" TO (cFileIndex)
+      INDEX ON Test->CITY  TAG "003" TO (cFileIndex)
       dbUnlock()
    ENDIF
    SET INDEX TO
-   SET INDEX TO ( cFileIndex )
+   SET INDEX TO (cFileIndex)
    SET ORDER TO 1
-   dbGoto( 50 )
+   dbGoto(50)
 
    info_ := dbStruct()
 
    Popups(2)
 
-   oBrowse := TBrowseWvg():New( nTop + 2, nLeft + 12, nBottom - 1, nRight - 1 )
+   oBrowse := TBrowseWvg():New(nTop + 2, nLeft + 12, nBottom - 1, nRight - 1)
 
-   oBrowse:ColSep        := "  "
-   oBrowse:HeadSep       := "__"
-   oBrowse:GoTopBlock    := {|| dbGoTop() }
-   oBrowse:GoBottomBlock := {|| dbGoBottom() }
-   oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
+   oBrowse:ColSep := "  "
+   oBrowse:HeadSep := "__"
+   oBrowse:GoTopBlock := {||dbGoTop()}
+   oBrowse:GoBottomBlock := {||dbGoBottom()}
+   oBrowse:SkipBlock := {|nSkip|dbSkipBlock(nSkip, oBrowse)}
 
    FOR i := 1 TO Len(info_)
       bBlock := VouBlockField(i)
-      oBrowse:AddColumn( TBColumnNew( info_[i, 1], bBlock ) )
+      oBrowse:AddColumn(TBColumnNew(info_[i, 1], bBlock))
    NEXT
    oBrowse:configure()
 
    IF s_nStyle > 5
       s_nStyle := 0
    ENDIF
-   wvt_SetPen( s_nStyle, 0, RGB(210, 1210, 210) ) // TODO: 1210 ?
+   wvt_SetPen(s_nStyle, 0, RGB(210, 1210, 210)) // TODO: 1210 ?
    s_nStyle++
-   hb_gtInfo( HB_GTI_WINTITLE, "WVT GUI TBrowse()" )
+   hb_gtInfo(HB_GTI_WINTITLE, "WVT GUI TBrowse()")
 
-   AAdd(aBlocks, {|| wvt_DrawBoxRaised(oBrowse:nTop - 2, oBrowse:nLeft - 2, oBrowse:nBottom + 1, oBrowse:nRight + 2) })
-   AAdd(aBlocks, {|| wvt_DrawBoxRecessed(oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight) })
-   AAdd(aBlocks, {|| wvt_DrawGridHorz( oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) })
-   AAdd(aBlocks, {|| wvt_DrawGridVert( oBrowse:nTop, oBrowse:nBottom, oBrowse:aColumnsSep, Len(oBrowse:aColumnsSep) ) })
+   AAdd(aBlocks, {||wvt_DrawBoxRaised(oBrowse:nTop - 2, oBrowse:nLeft - 2, oBrowse:nBottom + 1, oBrowse:nRight + 2)})
+   AAdd(aBlocks, {||wvt_DrawBoxRecessed(oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight)})
+   AAdd(aBlocks, {||wvt_DrawGridHorz(oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2)})
+   AAdd(aBlocks, {||wvt_DrawGridVert(oBrowse:nTop, oBrowse:nBottom, oBrowse:aColumnsSep, Len(oBrowse:aColumnsSep))})
 
-   Vou_BrwAddScrollBars( oCrt, oBrowse, @oVBar, @oHBar )
+   Vou_BrwAddScrollBars(oCrt, oBrowse, @oVBar, @oHBar)
 
-   aLastPaint := WvtSetBlocks( aBlocks )
+   aLastPaint := WvtSetBlocks(aBlocks)
 
-   hb_DispBox( 0, 0, MaxRow(), MaxCol(), "         ", "N/W" )
-   hb_DispOutAt( oBrowse:nTop - 2, oBrowse:nleft - 2, PadC(cFileDbf, oBrowse:nRight - oBrowse:nLeft + 5), "W+/B*" )
+   hb_DispBox(0, 0, MaxRow(), MaxCol(), "         ", "N/W")
+   hb_DispOutAt(oBrowse:nTop - 2, oBrowse:nleft - 2, PadC(cFileDbf, oBrowse:nRight - oBrowse:nLeft + 5), "W+/B*")
 
-   oCom := BrwBuildActiveX( oCrt, oBrowse )
-   oChk := BrwBuildCheckBox( oCrt, oBrowse, @t_lActiveX )
-   oSLE := BrwBuildSLE( oCrt, oBrowse )
-   aNvg := BrwBuildNvg( oCrt, oBrowse, oCom )
-   oLBx := BrwBuildListBox( oCrt, oBrowse )
-   oIdx := BrwBuildListBoxIdx( oCrt, oBrowse )
-   BrwBuildButtons( oCrt, oBrowse )
-   oTre := BrwBuildTree( oCrt, oBrowse )
+   oCom := BrwBuildActiveX(oCrt, oBrowse)
+   oChk := BrwBuildCheckBox(oCrt, oBrowse, @t_lActiveX)
+   oSLE := BrwBuildSLE(oCrt, oBrowse)
+   aNvg := BrwBuildNvg(oCrt, oBrowse, oCom)
+   oLBx := BrwBuildListBox(oCrt, oBrowse)
+   oIdx := BrwBuildListBoxIdx(oCrt, oBrowse)
+   BrwBuildButtons(oCrt, oBrowse)
+   oTre := BrwBuildTree(oCrt, oBrowse)
 
    wvt_Keyboard(HB_K_RESIZE) /* Refresh All GUI Controls */
 
    DO WHILE ! lEnd
       DispBegin()
-      DO WHILE ( ( nKey := Inkey(NIL, INKEY_ALL + HB_INKEY_GTEVENT) ) == 0 .OR. nKey == K_MOVING ) .AND. ! oBrowse:stabilize()
+      DO WHILE ((nKey := Inkey(NIL, INKEY_ALL + HB_INKEY_GTEVENT)) == 0 .OR. nKey == K_MOVING) .AND. ! oBrowse:stabilize()
       ENDDO
       DispEnd()
 
       IF nKey == 0
          oVBar:setData(ordKeyNo())
          oHBar:setData(oBrowse:colPos)
-         DO WHILE ( ( nKey := Inkey(NIL, INKEY_ALL + HB_INKEY_GTEVENT) ) == 0 .OR. nKey == K_MOVING )
+         DO WHILE ((nKey := Inkey(NIL, INKEY_ALL + HB_INKEY_GTEVENT)) == 0 .OR. nKey == K_MOVING)
          ENDDO
       ENDIF
 
       DO CASE
       CASE nKey == K_F12
          t_nFactor--
-         hb_gtInfo( HB_GTI_SPEC, HB_GTS_FACTOR, t_nFactor )
+         hb_gtInfo(HB_GTI_SPEC, HB_GTS_FACTOR, t_nFactor)
 
       CASE nKey == K_F11
          t_nFactor++
-         hb_gtInfo( HB_GTI_SPEC, HB_GTS_FACTOR, t_nFactor )
+         hb_gtInfo(HB_GTI_SPEC, HB_GTS_FACTOR, t_nFactor)
 
       CASE nKey == K_F6
-         hb_gtInfo( HB_GTI_RESIZABLE, .F. )
+         hb_gtInfo(HB_GTI_RESIZABLE, .F.)
 
       CASE nKey == K_F7
-         hb_gtInfo( HB_GTI_RESIZABLE, .T. )
+         hb_gtInfo(HB_GTI_RESIZABLE, .T.)
 
       CASE nKey == K_F2
          nIndex := IndexOrd()
@@ -182,7 +182,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
          IF nIndex > 3
             nIndex := 1
          ENDIF
-         SET ORDER TO ( nIndex )
+         SET ORDER TO (nIndex)
          oBrowse:RefreshAll()
          oBrowse:ForceStable()
 
@@ -190,35 +190,35 @@ STATIC PROCEDURE ExecBrowser( oCrt )
          DoModalWindow()
 
       CASE nKey == K_F4
-         hb_gtInfo( HB_GTI_SPEC, HB_GTS_WNDSTATE, HB_GTS_WS_MAXIMIZED )
+         hb_gtInfo(HB_GTI_SPEC, HB_GTS_WNDSTATE, HB_GTS_WS_MAXIMIZED)
 
-      CASE BrwHandleKey( oBrowse, nKey, @lEnd )
+      CASE BrwHandleKey(oBrowse, nKey, @lEnd)
 
       CASE nKey == HB_K_RESIZE
-         BrwHandleResize( oCrt, oBrowse, oVBar, oHBar, oCom, oSLE, oLBx, oTre, oChk, aNvg, oIdx, t_lActiveX, cFileDbf )
+         BrwHandleResize(oCrt, oBrowse, oVBar, oHBar, oCom, oSLE, oLBx, oTre, oChk, aNvg, oIdx, t_lActiveX, cFileDbf)
 
       ENDCASE
    ENDDO
 
    wvt_SetPen(0)
-   WvtSetBlocks( aLastPaint )
-   WvtSetObjects( aObjects )
+   WvtSetBlocks(aLastPaint)
+   WvtSetObjects(aObjects)
 
-   DevPos( nRow, nCol )
-   SetColor( cColor )
-   SetCursor( nCursor )
+   DevPos(nRow, nCol)
+   SetColor(cColor)
+   SetCursor(nCursor)
 
    dbCloseArea()
 
    IF oCrt == NIL
-      RestScreen( 0, 0, MaxRow(), MaxCol(), cScr )
+      RestScreen(0, 0, MaxRow(), MaxCol(), cScr)
    ENDIF
-   wvt_SetPopupMenu( hPopup )
-   SetGT( 2, pGT )
+   wvt_SetPopupMenu(hPopup)
+   SetGT(2, pGT)
 
    RETURN
 
-STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTre, oChk, aNvg, oIdx, lActiveX, cFileDbf )
+STATIC FUNCTION BrwHandleResize(oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTre, oChk, aNvg, oIdx, lActiveX, cFileDbf)
 
    HB_SYMBOL_UNUSED(oSle)
    HB_SYMBOL_UNUSED(oLBx)
@@ -228,11 +228,11 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
    oCrt:setFocus()
 
    oBrw:nBottom := iif(lActiveX, 20, MaxRow() - 3)
-   oBrw:nRight  := MaxCol() - 4
+   oBrw:nRight := MaxCol() - 4
    oBrw:configure()
 
-   hb_DispBox( 0, 0, MaxRow(), MaxCol(), "         ", "N/W" )
-   hb_DispOutAt( oBrw:nTop - 2, oBrw:nleft - 2, PadC(cFileDbf, oBrw:nRight - oBrw:nLeft + 5), "W+/B*" )
+   hb_DispBox(0, 0, MaxRow(), MaxCol(), "         ", "N/W")
+   hb_DispOutAt(oBrw:nTop - 2, oBrw:nleft - 2, PadC(cFileDbf, oBrw:nRight - oBrw:nLeft + 5), "W+/B*")
 
    oVBar:setPosAndSize()
    oHBar:setPosAndSize()
@@ -248,7 +248,7 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
    oChk:setPosAndSize()
 #endif
 
-   BrwReposButtons( oCrt ) /* Because we are repositioning at the center of console width */
+   BrwReposButtons(oCrt) /* Because we are repositioning at the center of console width */
 
    IF lActiveX
       aNvg[1]:show()
@@ -266,13 +266,13 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
 
    RETURN .T.
 
-STATIC PROCEDURE BrwShowColumn( oBrw, cHeading )
+STATIC PROCEDURE BrwShowColumn(oBrw, cHeading)
 
    LOCAL i, j, nCur
 
    nCur := oBrw:colPos
    FOR i := 1 TO oBrw:colCount
-      IF oBrw:getColumn( i ):heading == cHeading
+      IF oBrw:getColumn(i):heading == cHeading
          EXIT
       ENDIF
    NEXT
@@ -290,29 +290,29 @@ STATIC PROCEDURE BrwShowColumn( oBrw, cHeading )
 
    RETURN
 
-STATIC FUNCTION BrwBuildTree( oCrt /*, oBrw*/ )
+STATIC FUNCTION BrwBuildTree(oCrt /*, oBrw*/)
 
    LOCAL oTree, oItem1, oItem2
 
-   oTree := WvgTreeView():new( oCrt )
-   oTree:hasLines   := .T.
+   oTree := WvgTreeView():new(oCrt)
+   oTree:hasLines := .T.
    oTree:hasButtons := .T.
    oTree:alwaysShowSelection := .T.
-   oTree:create( , , { -24, -1 }, { {|| -( MaxRow() - 1 - 24 ) }, -10 } )
-   oTree:setColorFG( "W+" )
-   oTree:setColorBG( "R*" )
-   oTree:itemSelected := {| oItem | wvg_MessageBox( , iif(oItem != NIL, oItem:caption, "Some Problem") ) }
+   oTree:create(, , {-24, -1}, {{||-(MaxRow() - 1 - 24)}, -10})
+   oTree:setColorFG("W+")
+   oTree:setColorBG("R*")
+   oTree:itemSelected := {|oItem|wvg_MessageBox(, iif(oItem != NIL, oItem:caption, "Some Problem"))}
 
-   oItem1 := oTree:rootItem:addItem( "First level A" )
+   oItem1 := oTree:rootItem:addItem("First level A")
 
-   oTree:rootItem:addItem( "First level B" )
+   oTree:rootItem:addItem("First level B")
 
-   oItem2 := oItem1:addItem( "Second level 1" )
-   oItem1:addItem( "Second level 2" )
+   oItem2 := oItem1:addItem("Second level 1")
+   oItem1:addItem("Second level 2")
 
-   oItem2:addItem( "Third level x" )
-   oItem2:addItem( "Third level y" )
-   oItem2:addItem( "Third level z" )
+   oItem2:addItem("Third level x")
+   oItem2:addItem("Third level y")
+   oItem2:addItem("Third level z")
 
    oTree:showExpanded(.T., 2)
    oTree:setData(oItem2)
@@ -321,190 +321,190 @@ STATIC FUNCTION BrwBuildTree( oCrt /*, oBrw*/ )
 
    RETURN oTree
 
-STATIC FUNCTION BrwBuildActiveX( oCrt, oBrw )
+STATIC FUNCTION BrwBuildActiveX(oCrt, oBrw)
 
    LOCAL oCom
 
    HB_SYMBOL_UNUSED(oBrw)
 
-   oCom := WvgActiveXControl():new( oCrt, , { -24, -13 }, { {|| -( MaxRow() - 1 - 24 ) }, {|| -( MaxCol() - 1 - 13 ) } }, , .F. )
+   oCom := WvgActiveXControl():new(oCrt, , {-24, -13}, {{||-(MaxRow() - 1 - 24)}, {||-(MaxCol() - 1 - 13)}}, , .F.)
    oCom:CLSID := "Shell.Explorer.2"
 #if 0
-   oCom:mapEvent( 269, {|| uiDebug( "EXPLORER-269" ) } )
+   oCom:mapEvent(269, {||uiDebug("EXPLORER-269")})
 #endif
    oCom:create()
-   oCom:navigate( hb_Version( HB_VERSION_URL_BASE ) )
+   oCom:navigate(hb_Version(HB_VERSION_URL_BASE))
 
    RETURN oCom
 
-STATIC FUNCTION BrwBuildListBox( oCrt, oBrw )
+STATIC FUNCTION BrwBuildListBox(oCrt, oBrw)
 
    LOCAL oXbp, i
 
-   oXbp := WvgListBox():new( oCrt )
-   oXbp:create( , , { -4, -1 }, { -10, -10 }, , .T. )
-   oXbp:setColorFG( "W+" )
-   oXbp:setColorBG( "B*" )
-   oXbp:itemMarked := {| m1, m2, o | m1 := m1, m2 := m2, BrwShowColumn( oBrw, o:getCurItem() ) }
+   oXbp := WvgListBox():new(oCrt)
+   oXbp:create(, , {-4, -1}, {-10, -10}, , .T.)
+   oXbp:setColorFG("W+")
+   oXbp:setColorBG("B*")
+   oXbp:itemMarked := {|m1, m2, o|m1 := m1, m2 := m2, BrwShowColumn(oBrw, o:getCurItem())}
    FOR i := 1 TO oBrw:colCount
-      oXbp:addItem( oBrw:getColumn( i ):heading )
+      oXbp:addItem(oBrw:getColumn(i):heading)
    NEXT
    oXbp:setData(1)
    oXbp:tooltipText := "Click on a field name to make it active!"
 
    RETURN oXbp
 
-STATIC PROCEDURE BrwSetThisOrder( oBrw, nOrd )
+STATIC PROCEDURE BrwSetThisOrder(oBrw, nOrd)
 
-   dbSetOrder( nOrd )
+   dbSetOrder(nOrd)
    oBrw:refreshAll()
    oBrw:forceStable()
 
    RETURN
 
-STATIC FUNCTION BrwBuildListBoxIdx( oCrt, oBrw )
+STATIC FUNCTION BrwBuildListBoxIdx(oCrt, oBrw)
 
    LOCAL oXbp, i, cKey, aIdx := {}
 
    FOR i := 1 TO 10
-      IF ( cKey := IndexKey( i ) ) == ""
+      IF (cKey := IndexKey(i)) == ""
          EXIT
       ENDIF
-      AAdd(aIdx, ordName( i ) + ": " + cKey)
+      AAdd(aIdx, ordName(i) + ": " + cKey)
    NEXT
 
-   oXbp := WvgComboBox():new( oCrt )
+   oXbp := WvgComboBox():new(oCrt)
    oXbp:type := WVGCOMBO_DROPDOWN
-   oXbp:create( , , { -18, -1 }, { -5, -10 }, , .T. )
-   oXbp:setColorFG( "W+" )
-   oXbp:setColorBG( "B*" )
-   oXbp:itemMarked := {| m1, m2, o | m1 := m2, BrwSetThisOrder( oBrw, o:XbpListBox:getData() - 1 ) }
-   oXbp:addItem( "Natural Order" )
+   oXbp:create(, , {-18, -1}, {-5, -10}, , .T.)
+   oXbp:setColorFG("W+")
+   oXbp:setColorBG("B*")
+   oXbp:itemMarked := {|m1, m2, o|m1 := m2, BrwSetThisOrder(oBrw, o:XbpListBox:getData() - 1)}
+   oXbp:addItem("Natural Order")
    FOR i := 1 TO Len(aIdx)
-      oXbp:addItem( aIdx[i] )
+      oXbp:addItem(aIdx[i])
    NEXT
    oXbp:tooltipText := "Click on an index to order database!"
 
    RETURN oXbp
 
-STATIC FUNCTION BrwBuildSLE( oCrt, oBrw )
+STATIC FUNCTION BrwBuildSLE(oCrt, oBrw)
 
    LOCAL oXbp
 
-   oXbp := WvgStatic():new( oCrt )
-   oXbp:type    := WVGSTATIC_TYPE_TEXT
+   oXbp := WvgStatic():new(oCrt)
+   oXbp:type := WVGSTATIC_TYPE_TEXT
    oXbp:options := WVGSTATIC_TEXT_CENTER
    oXbp:caption := "Field Name"
-   oXbp:create( , , { -15, -1 }, { -1, -10 } )
-   oXbp:setColorFG( "W+" )
-   oXbp:setColorBG( "BG" )
+   oXbp:create(, , {-15, -1}, {-1, -10})
+   oXbp:setColorFG("W+")
+   oXbp:setColorBG("BG")
 
-   oXbp := WvgSLE():new( oCrt )
-   oXbp:create( , , { -16, -1 }, { -1, -10 } )
-   oXbp:setColorFG( "N"  )
-   oXbp:setColorBG( "BG+"  )
-   oXbp:returnPressed := {| m1, m2, o | m1 := m1, m2 := m2, BrwShowColumn( oBrw, Upper(RTrim(o:getData())) ) }
+   oXbp := WvgSLE():new(oCrt)
+   oXbp:create(, , {-16, -1}, {-1, -10})
+   oXbp:setColorFG("N")
+   oXbp:setColorBG("BG+")
+   oXbp:returnPressed := {|m1, m2, o|m1 := m1, m2 := m2, BrwShowColumn(oBrw, Upper(RTrim(o:getData())))}
    oXbp:tooltipText := "Type in a field name and press ENTER"
 
    RETURN oXbp
 
-STATIC FUNCTION BrwBuildNvg( oCrt, oBrw, oCom )
+STATIC FUNCTION BrwBuildNvg(oCrt, oBrw, oCom)
 
    LOCAL oLbl, oXbp
 
    HB_SYMBOL_UNUSED(oBrw)
 
-   oLbl := WvgStatic():new( oCrt )
-   oLbl:type    := WVGSTATIC_TYPE_TEXT
+   oLbl := WvgStatic():new(oCrt)
+   oLbl:type := WVGSTATIC_TYPE_TEXT
    oLbl:options := WVGSTATIC_TEXT_LEFT
    oLbl:caption := "Navigate"
-   oLbl:create( , , { -23, -13 }, { -1, -6 }, , .F. )
-   oLbl:setColorFG( "W+" )
-   oLbl:setColorBG( "BG" )
+   oLbl:create(, , {-23, -13}, {-1, -6}, , .F.)
+   oLbl:setColorFG("W+")
+   oLbl:setColorBG("BG")
 
-   oXbp := WvgSLE():new( oCrt )
+   oXbp := WvgSLE():new(oCrt)
    oXbp:bufferLength := 300
-   oXbp:create( , , { -23, -19 }, { -1, {|| -( MaxCol() - 1 - 19 ) } }, , .F. )
-   oXbp:setColorFG( "N"  )
-   oXbp:setColorBG( "BG+"  )
-   oXbp:returnPressed := {| m1, m2, o | m1 := m2, oCom:navigate( RTrim(o:getData()) ) }
+   oXbp:create(, , {-23, -19}, {-1, {||-(MaxCol() - 1 - 19)}}, , .F.)
+   oXbp:setColorFG("N")
+   oXbp:setColorBG("BG+")
+   oXbp:returnPressed := {|m1, m2, o|m1 := m2, oCom:navigate(RTrim(o:getData()))}
    oXbp:tooltipText := "Type-in a web address and press ENTER"
-   oXbp:setData(hb_Version( HB_VERSION_URL_BASE ))
+   oXbp:setData(hb_Version(HB_VERSION_URL_BASE))
 
-   RETURN { oLbl, oXbp }
+   RETURN {oLbl, oXbp}
 
-STATIC FUNCTION BrwBuildCheckBox( oCrt, oBrw, lActiveX )
+STATIC FUNCTION BrwBuildCheckBox(oCrt, oBrw, lActiveX)
 
    LOCAL oXbp
 
    HB_SYMBOL_UNUSED(oBrw)
 
-   oXbp := WvgCheckBox():new( oCrt )
+   oXbp := WvgCheckBox():new(oCrt)
    oXbp:pointerFocus := .F.
-   oXbp:caption      := "ActiveX"
-   oXbp:selected     := {| x, y, o | x := y, lActiveX := o:getData(), wvt_Keyboard(HB_K_RESIZE) }
-   oXbp:selection    := .F.
-   oXbp:create( , , { -23, -1 }, { -1, -10 } )
-   oXbp:setColorFG( "R+" )
-   oXbp:setColorBG( "W" )
-   oXbp:tooltipText  := "Navigate: " + hb_Version( HB_VERSION_URL_BASE )
+   oXbp:caption := "ActiveX"
+   oXbp:selected := {|x, y, o|x := y, lActiveX := o:getData(), wvt_Keyboard(HB_K_RESIZE)}
+   oXbp:selection := .F.
+   oXbp:create(, , {-23, -1}, {-1, -10})
+   oXbp:setColorFG("R+")
+   oXbp:setColorBG("W")
+   oXbp:tooltipText := "Navigate: " + hb_Version(HB_VERSION_URL_BASE)
 
    RETURN oXbp
 
-STATIC PROCEDURE BrwReposButtons( oCrt )
+STATIC PROCEDURE BrwReposButtons(oCrt)
 
    LOCAL oXbp, nOff, nTtl, nG, i
-   LOCAL aW   := { 10, 10, 10, 10, 10 }
+   LOCAL aW := {10, 10, 10, 10, 10}
 
-   nG   := 2
+   nG := 2
    nTtl := 0
-   AEval( aW, {| e | nTtl += e } )
-   nTtl += ( Len(aW) - 1 ) * nG
+   AEval(aW, {|e|nTtl += e})
+   nTtl += (Len(aW) - 1) * nG
 
-   nOff := ( ( MaxCol() + 1 ) - nTtl ) / 2
+   nOff := ((MaxCol() + 1) - nTtl) / 2
    i := 0
    FOR EACH oXbp IN oCrt:childList()
-      IF __objGetClsName( oXbp ) == "WVGPUSHBUTTON"
+      IF __objGetClsName(oXbp) == "WVGPUSHBUTTON"
          i++
-         oXbp:setPosAndSize( { -MaxRow(), -nOff }, { -1, -aW[i] } )
+         oXbp:setPosAndSize({-MaxRow(), -nOff}, {-1, -aW[i]})
          nOff += aW[i] + nG
       ENDIF
    NEXT
 
    RETURN
 
-STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
+STATIC PROCEDURE BrwBuildButtons(oCrt, oBrw)
 
    LOCAL oPB, nOff, nTtl, nG, i
-   LOCAL aPmt := { "Modal Window", "Maximize", "Go Top", "Go Bottom", "Right Most" }
-   LOCAL aAct := { {|| wvt_Keyboard(K_F3) }, ;
-      {|| wvt_Keyboard(K_F4) }, ;
-      {|| oBrw:goTop(), oBrw:forceStable() }, ;
-      {|| oBrw:goBottom(), oBrw:forceStable() }, ;
-      {|| oBrw:panEnd(), oBrw:forceStable() } }
-   LOCAL aW   := { 10, 10, 10, 10, 10 }
+   LOCAL aPmt := {"Modal Window", "Maximize", "Go Top", "Go Bottom", "Right Most"}
+   LOCAL aAct := {{||wvt_Keyboard(K_F3)}, ;
+      {||wvt_Keyboard(K_F4)}, ;
+      {||oBrw:goTop(), oBrw:forceStable()}, ;
+      {||oBrw:goBottom(), oBrw:forceStable()}, ;
+      {||oBrw:panEnd(), oBrw:forceStable()}}
+   LOCAL aW := {10, 10, 10, 10, 10}
 
-   nG   := 2
+   nG := 2
    nTtl := 0
-   AEval( aW, {| e | nTtl += e } )
-   nTtl += ( Len(aW) - 1 ) * nG
+   AEval(aW, {|e|nTtl += e})
+   nTtl += (Len(aW) - 1) * nG
 
-   nOff := ( ( MaxCol() + 1 ) - nTtl ) / 2
+   nOff := ((MaxCol() + 1) - nTtl) / 2
 
    FOR i := 1 TO Len(aPmt)
-      oPB := WvgPushButton():new( oCrt )
+      oPB := WvgPushButton():new(oCrt)
       IF i == 3  /* We do not want this button to gain focus anytime */
          oPB:pointerFocus := .F.
       ENDIF
       IF i == Len(aPmt)
          oPB:caption := hb_DirBase() + "\" + "resources\v_lock.bmp"
-         oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[i] } )
+         oPB:create(, , {{||-MaxRow()}, -nOff}, {-1, -aW[i]})
       ELSE
          oPB:caption := aPmt[i]
-         oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[i] } )
+         oPB:create(, , {{||-MaxRow()}, -nOff}, {-1, -aW[i]})
       ENDIF
       oPB:activate := aAct[i]
-      oPB:setColorFG( RGB(0, 255, 0) )
+      oPB:setColorFG(RGB(0, 255, 0))
       oPB:tooltipText := aPmt[i]
 
       nOff += aW[i] + nG
@@ -512,91 +512,91 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
 
    RETURN
 
-STATIC PROCEDURE Vou_BrwAddScrollBars( oCrt, oBrw, oVBar, oHBar )
+STATIC PROCEDURE Vou_BrwAddScrollBars(oCrt, oBrw, oVBar, oHBar)
 
-   oHBar := WvgScrollBar():new( oCrt, , { {|| -( oBrw:nBottom + 1 ) }, {|| -oBrw:nLeft } }, ;
-      { -1, {|| -( oBrw:nRight - oBrw:nLeft + 1 ) } } )
-   oHBar:range := { 1, oBrw:colCount }
-   oHBar:type  := WVGSCROLL_HORIZONTAL
+   oHBar := WvgScrollBar():new(oCrt, , {{||-(oBrw:nBottom + 1)}, {||-oBrw:nLeft}}, ;
+      {-1, {||-(oBrw:nRight - oBrw:nLeft + 1)}})
+   oHBar:range := {1, oBrw:colCount}
+   oHBar:type := WVGSCROLL_HORIZONTAL
    oHBar:create()
-   oHBar:scroll := {| mp1 | oBrw:colPos := mp1[1], oBrw:refreshCurrent(), oBrw:forceStable() }
+   oHBar:scroll := {|mp1|oBrw:colPos := mp1[1], oBrw:refreshCurrent(), oBrw:forceStable()}
 
-   oVBar := WvgScrollBar():new( oCrt, , { {|| -oBrw:nTop }, {|| -( oBrw:nRight + 1 ) } }, ;
-      { {|| -( oBrw:nBottom - oBrw:nTop + 1 ) }, {|| -2 } } )
-   oVBar:range := { 1, LastRec() }
-   oVBar:type  := WVGSCROLL_VERTICAL
+   oVBar := WvgScrollBar():new(oCrt, , {{||-oBrw:nTop}, {||-(oBrw:nRight + 1)}}, ;
+      {{||-(oBrw:nBottom - oBrw:nTop + 1)}, {||-2}})
+   oVBar:range := {1, LastRec()}
+   oVBar:type := WVGSCROLL_VERTICAL
    oVBar:create()
-   oVBar:scroll := {| mp1 | Vou_BrwSetVScroll( mp1, oBrw ) }
+   oVBar:scroll := {|mp1|Vou_BrwSetVScroll(mp1, oBrw)}
 
    RETURN
 
-STATIC FUNCTION BrwBuildMenu( oCrt )
+STATIC FUNCTION BrwBuildMenu(oCrt)
 
    LOCAL oMenu, oSMenu
 
    oMenu := oCrt:menubar()
 
-   oSMenu := WvgMenu():new( oMenu ):create()
-   oSMenu:addItem( { "~First" , {|| Alert( "First"  ) } } )
-   oSMenu:addItem( { "~Second", {|| Alert( "Second" ) } } )
+   oSMenu := WvgMenu():new(oMenu):create()
+   oSMenu:addItem({"~First" , {||Alert("First")}})
+   oSMenu:addItem({"~Second", {||Alert("Second")}})
    oSMenu:addItem()
-   oSMenu:addItem( { "~Third" , {|| Alert( "Third"  ) } } )
-   oMenu:addItem( { oSMenu, "~Hello" } )
+   oSMenu:addItem({"~Third" , {||Alert("Third")}})
+   oMenu:addItem({oSMenu, "~Hello"})
 
-   oSMenu := WvgMenu():new( oMenu ):create()
-   oSMenu:addItem( { "~First" , {|| Alert( "First"  ) } } )
-   oSMenu:addItem( "-" )
-   oSMenu:addItem( { "~Second", {|| Alert( "Second" ) } } )
-   oSMenu:addItem( { "~Third" , {|| Alert( "Third"  ) } } )
-   oMenu:addItem( { oSMenu, "~MyFriends" } )
+   oSMenu := WvgMenu():new(oMenu):create()
+   oSMenu:addItem({"~First" , {||Alert("First")}})
+   oSMenu:addItem("-")
+   oSMenu:addItem({"~Second", {||Alert("Second")}})
+   oSMenu:addItem({"~Third" , {||Alert("Third")}})
+   oMenu:addItem({oSMenu, "~MyFriends"})
 
-   oSMenu := WvgMenu():new( oMenu ):create()
+   oSMenu := WvgMenu():new(oMenu):create()
    oSMenu:title := "~Procedural"
-   oSMenu:addItem( { "Procedure ~1", } )
-   oSMenu:addItem( { "Procedure ~2", } )
-   oSMenu:itemSelected := {| mp1 | MyMenuProcedure( 100 + mp1 ) }
+   oSMenu:addItem({"Procedure ~1",})
+   oSMenu:addItem({"Procedure ~2",})
+   oSMenu:itemSelected := {|mp1|MyMenuProcedure(100 + mp1)}
    oSMenu:checkItem(2)
-   oMenu:addItem( { oSMenu, NIL } )
+   oMenu:addItem({oSMenu, NIL})
 
    RETURN oMenu
 
-STATIC FUNCTION BrwBuildToolBar( oCrt )
+STATIC FUNCTION BrwBuildToolBar(oCrt)
 
    LOCAL oTBar, nRGB := RGB(172, 172, 172)
 
-   oTBar := WvgToolBar():new( oCrt, , { -0.1, -0.1 }, { -3, {|| -( MaxCol() + 1 ) } } )
+   oTBar := WvgToolBar():new(oCrt, , {-0.1, -0.1}, {-3, {||-(MaxCol() + 1)}})
 
-   oTBar:style        := WVGTOOLBAR_STYLE_FLAT
-   oTBar:borderStyle  := WVGFRAME_RECT
+   oTBar:style := WVGTOOLBAR_STYLE_FLAT
+   oTBar:borderStyle := WVGFRAME_RECT
 
-   oTBar:buttonWidth  := 40 // 28
+   oTBar:buttonWidth := 40 // 28
    oTBar:buttonHeight := 26
 
-   oTBar:imageWidth   := 26
-   oTBar:imageHeight  := 24
+   oTBar:imageWidth := 26
+   oTBar:imageHeight := 24
 
    oTBar:showToolTips := .T.
 
    // After setting properties, create toolbar.
    oTBar:create()
 
-   oTBar:addItem( "New"       , hb_DirBase() + "resources\v_new.bmp"   , , , , , , nRGB )
-   oTBar:addItem( "Select"    , hb_DirBase() + "resources\v_selct1.bmp", , , , , , nRGB )
-   oTBar:addItem( "Calendar"  , hb_DirBase() + "resources\v_calend.bmp", , , , , , nRGB )
-   oTBar:addItem( "Tools"     , hb_DirBase() + "resources\v_lock.bmp"  , , , , , , nRGB )
-   oTBar:addItem( "Index"     , hb_DirBase() + "resources\v_index.bmp" , , , , , , nRGB )
-   oTBar:addItem( "Show"      , hb_DirBase() + "resources\v_clclt.bmp" , , , , , , nRGB )
-   oTBar:addItem( "Hide"      , hb_DirBase() + "resources\v_notes1.bmp", , , , , , nRGB )
+   oTBar:addItem("New"       , hb_DirBase() + "resources\v_new.bmp"   , , , , , , nRGB)
+   oTBar:addItem("Select"    , hb_DirBase() + "resources\v_selct1.bmp", , , , , , nRGB)
+   oTBar:addItem("Calendar"  , hb_DirBase() + "resources\v_calend.bmp", , , , , , nRGB)
+   oTBar:addItem("Tools"     , hb_DirBase() + "resources\v_lock.bmp"  , , , , , , nRGB)
+   oTBar:addItem("Index"     , hb_DirBase() + "resources\v_index.bmp" , , , , , , nRGB)
+   oTBar:addItem("Show"      , hb_DirBase() + "resources\v_clclt.bmp" , , , , , , nRGB)
+   oTBar:addItem("Hide"      , hb_DirBase() + "resources\v_notes1.bmp", , , , , , nRGB)
 
    RETURN oTBar
 
 // Key Handling
 
-STATIC FUNCTION BrwHandleKey( oBrowse, nKey, lEnd )
+STATIC FUNCTION BrwHandleKey(oBrowse, nKey, lEnd)
 
    LOCAL lVMove := .F.
    LOCAL lHMove := .F.
-   LOCAL lRet   := .T.
+   LOCAL lRet := .T.
 
    DO CASE
    CASE nKey == K_ESC
@@ -669,7 +669,7 @@ STATIC FUNCTION BrwHandleKey( oBrowse, nKey, lEnd )
       lVMove := .T.
       oBrowse:up()
 
-   CASE Vou_NavigateToCell( oBrowse, nKey )
+   CASE Vou_NavigateToCell(oBrowse, nKey)
 
    OTHERWISE
       lRet := .F.
@@ -682,12 +682,12 @@ STATIC FUNCTION BrwHandleKey( oBrowse, nKey, lEnd )
 
    RETURN lRet
 
-STATIC FUNCTION Vou_NavigateToCell( oBrowse )
+STATIC FUNCTION Vou_NavigateToCell(oBrowse)
 
    LOCAL nCount
 
    IF LastKey() == K_LBUTTONUP
-      IF oBrowse:HitTest( MRow(), MCol() ) == -5121   // on a cell
+      IF oBrowse:HitTest(MRow(), MCol()) == -5121   // on a cell
          oBrowse:deHilite()
          oBrowse:refreshCurrent()
          oBrowse:forceStable()
@@ -725,7 +725,7 @@ STATIC FUNCTION Vou_NavigateToCell( oBrowse )
 
    RETURN .F.
 
-STATIC FUNCTION DbSkipBlock( n )
+STATIC FUNCTION DbSkipBlock(n)
 
    LOCAL nSkipped := 0
 
@@ -755,7 +755,7 @@ STATIC FUNCTION TBNext()
       dbSkip()
       IF Eof()
          lMoved := .F.
-         dbGoto( nSaveRecNum )
+         dbGoto(nSaveRecNum)
       ENDIF
    ENDIF
 
@@ -766,10 +766,10 @@ STATIC FUNCTION TBPrev()
    LOCAL nSaveRecNum := RecNo()
    LOCAL lMoved := .T.
 
-   dbSkip( -1 )
+   dbSkip(-1)
 
    IF Bof()
-      dbGoto( nSaveRecNum )
+      dbGoto(nSaveRecNum)
       lMoved := .F.
    ENDIF
 
@@ -777,9 +777,9 @@ STATIC FUNCTION TBPrev()
 
 STATIC FUNCTION VouBlockField(i)
 
-   RETURN  {|| FieldGet( i ) }
+   RETURN  {||FieldGet(i)}
 
-STATIC PROCEDURE Vou_ExecTBarAction( oBtn )
+STATIC PROCEDURE Vou_ExecTBarAction(oBtn)
 
    SWITCH oBtn:caption
    CASE "New"
@@ -807,7 +807,7 @@ STATIC PROCEDURE Vou_ExecTBarAction( oBtn )
 
    RETURN
 
-STATIC PROCEDURE Vou_BrwSetVScroll( mp1, oBrowse )
+STATIC PROCEDURE Vou_BrwSetVScroll(mp1, oBrowse)
 
    SWITCH mp1[2]
 
@@ -828,17 +828,17 @@ STATIC PROCEDURE Vou_BrwSetVScroll( mp1, oBrowse )
       EXIT
 
    CASE WVGSB_NEXTPAGE
-      ordKeyGoto( mp1[1] )
+      ordKeyGoto(mp1[1])
       oBrowse:refreshAll()
       EXIT
 
    CASE WVGSB_PREVPAGE
-      ordKeyGoto( mp1[1] )
+      ordKeyGoto(mp1[1])
       oBrowse:refreshAll()
       EXIT
 
    CASE WVGSB_ENDTRACK
-      ordKeyGoto( mp1[1] )
+      ordKeyGoto(mp1[1])
       oBrowse:refreshAll()
       EXIT
 
@@ -850,7 +850,7 @@ STATIC PROCEDURE Vou_BrwSetVScroll( mp1, oBrowse )
 
 /* For brosers inside WvtDialog() */
 
-STATIC FUNCTION BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey )
+STATIC FUNCTION BrwOnEvent(oWvtBrw, cPaintID, oBrowse, nKey)
 
    LOCAL lRet := .T., lRefAll := .F.
 
@@ -910,7 +910,7 @@ STATIC FUNCTION BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey )
       oBrowse:up()
 
    CASE nKey == K_SBTHUMBTRACKVERT
-      ordKeyGoto( oWvtBrw:oVBar:GetPos() )
+      ordKeyGoto(oWvtBrw:oVBar:GetPos())
       lRefAll := .T.
 
    CASE nKey == K_SBTHUMBTRACKHORZ
@@ -951,57 +951,57 @@ STATIC FUNCTION BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey )
       ENDIF
       oBrowse:forceStable()
 
-      oWvtBrw:oVBar:SetPos( ordKeyCount(), ordKeyNo() )
-      oWvtBrw:oHBar:SetPos( oBrowse:ColCount, oBrowse:ColPos )
+      oWvtBrw:oVBar:SetPos(ordKeyCount(), ordKeyNo())
+      oWvtBrw:oHBar:SetPos(oBrowse:ColCount, oBrowse:ColPos)
    ENDIF
 
    RETURN lRet
 
-FUNCTION ConfigBrowser( aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, nID )
+FUNCTION ConfigBrowser(aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, nID)
 
    LOCAL info_, oWvtBrw, oBrowse, i, bBlock
    LOCAL aPopup := {}
 
-   AAdd(aPopup, { "Down"     , {|| oBrowse:Down()    , oBrowse:ForceStable() } })
-   AAdd(aPopup, { "Up"       , {|| oBrowse:Up()      , oBrowse:ForceStable() } })
-   AAdd(aPopup, { "Page Down", {|| oBrowse:PageDown(), oBrowse:ForceStable() } })
-   AAdd(aPopup, { "Page Up"  , {|| oBrowse:PageUp()  , oBrowse:ForceStable() } })
-   AAdd(aPopup, { "Top"      , {|| oBrowse:GoTop()   , oBrowse:ForceStable() } })
-   AAdd(aPopup, { "Bottom"   , {|| oBrowse:GoBottom(), oBrowse:ForceStable() } })
+   AAdd(aPopup, {"Down"     , {||oBrowse:Down()    , oBrowse:ForceStable()}})
+   AAdd(aPopup, {"Up"       , {||oBrowse:Up()      , oBrowse:ForceStable()}})
+   AAdd(aPopup, {"Page Down", {||oBrowse:PageDown(), oBrowse:ForceStable()}})
+   AAdd(aPopup, {"Page Up"  , {||oBrowse:PageUp()  , oBrowse:ForceStable()}})
+   AAdd(aPopup, {"Top"      , {||oBrowse:GoTop()   , oBrowse:ForceStable()}})
+   AAdd(aPopup, {"Bottom"   , {||oBrowse:GoBottom(), oBrowse:ForceStable()}})
 
-   Select( cUseAlias )
+   Select(cUseAlias)
    info_ := dbStruct()
 
-   oBrowse := TBrowseWvg():New( aTLBR[1], aTLBR[2], aTLBR[3], aTLBR[4] )
+   oBrowse := TBrowseWvg():New(aTLBR[1], aTLBR[2], aTLBR[3], aTLBR[4])
 
-   oBrowse:ColSep        := "  "
-   oBrowse:HeadSep       := "__"
-   oBrowse:ColorSpec     := cColorSpec
-   oBrowse:GoTopBlock    := {|| dbGoTop() }
-   oBrowse:GoBottomBlock := {|| dbGoBottom() }
-   oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
+   oBrowse:ColSep := "  "
+   oBrowse:HeadSep := "__"
+   oBrowse:ColorSpec := cColorSpec
+   oBrowse:GoTopBlock := {||dbGoTop()}
+   oBrowse:GoBottomBlock := {||dbGoBottom()}
+   oBrowse:SkipBlock := {|nSkip|dbSkipBlock(nSkip, oBrowse)}
 
    FOR i := 1 TO Len(aFields)
       bBlock := VouBlockField(aFields[i])
-      oBrowse:AddColumn( TBColumnNew( info_[aFields[i], 1], bBlock ) )
+      oBrowse:AddColumn(TBColumnNew(info_[aFields[i], 1], bBlock))
    NEXT
 
    oBrowse:configure()
 
-   oWvtBrw := WvtBrowse():New( oParent, nID )
+   oWvtBrw := WvtBrowse():New(oParent, nID)
 
-   oWvtBrw:nTop         := aTLBR[1]
-   oWvtBrw:nLeft        := aTLBR[2]
-   oWvtBrw:nBottom      := aTLBR[3]
-   oWvtBrw:nRight       := aTLBR[4]
-   oWvtBrw:cAlias       := cUseAlias
-   oWvtBrw:oBrw         := oBrowse
-   oWvtBrw:cDesc        := cDesc
-   oWvtBrw:nPointer     := WVT_IDC_HAND
+   oWvtBrw:nTop := aTLBR[1]
+   oWvtBrw:nLeft := aTLBR[2]
+   oWvtBrw:nBottom := aTLBR[3]
+   oWvtBrw:nRight := aTLBR[4]
+   oWvtBrw:cAlias := cUseAlias
+   oWvtBrw:oBrw := oBrowse
+   oWvtBrw:cDesc := cDesc
+   oWvtBrw:nPointer := WVT_IDC_HAND
    oWvtBrw:cColorHilite := "W+/B*"
-   oWvtBrw:Tooltip      := cDesc
-   oWvtBrw:aPopup       := aPopup
+   oWvtBrw:Tooltip := cDesc
+   oWvtBrw:aPopup := aPopup
 
-   oWvtBrw:bHandleEvent := {| oWvtBrw, cPaintID, oBrowse, nKey | BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey ) }
+   oWvtBrw:bHandleEvent := {|oWvtBrw, cPaintID, oBrowse, nKey|BrwOnEvent(oWvtBrw, cPaintID, oBrowse, nKey)}
 
    RETURN oWvtBrw

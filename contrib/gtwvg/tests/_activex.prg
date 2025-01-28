@@ -5,9 +5,9 @@
 #include "hbgtinfo.ch"
 #include "hbver.ch"
 
-// The function has to be called via hb_threadStart( {|| ExecuteActiveX( nActiveX ) } )
+// The function has to be called via hb_threadStart({||ExecuteActiveX(nActiveX)})
 
-FUNCTION ExecuteActiveX( nActiveX, xParam )
+FUNCTION ExecuteActiveX(nActiveX, xParam)
 
    LOCAL oCrt, oTBar, oSBar, oStatic, oCom, oXbp, oTree, oItem1, oItem2
    LOCAL oListBox, oStatic2, oDA
@@ -15,8 +15,8 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
 
 #if 0
    LOCAL oCheck, oRadio, oMLE, cText
-   LOCAL cVarA  := "Test A", cVarB := "Test B"
-   LOCAL aState := { "not selected", "selected", "undefined" }
+   LOCAL cVarA := "Test A", cVarB := "Test B"
+   LOCAL aState := {"not selected", "selected", "undefined"}
 #endif
    LOCAL aParts := {}
 
@@ -25,11 +25,11 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
 
    // --- Dialog ---
 #if 1
-   oCrt := WvgDialog():new( , , { 30, 30 }, { 800, 600 }, , .T. )
+   oCrt := WvgDialog():new(, , {30, 30}, {800, 600}, , .T.)
    oCrt:closable := .T.
    oCrt:create()
 #else
-   oCrt := WvgCrt():new( , , { 5, 5 }, { 30, 60 }, , .T. )
+   oCrt := WvgCrt():new(, , {5, 5}, {30, 60}, , .T.)
    oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS
    oCrt:closable := .T.
    oCrt:create()
@@ -39,15 +39,15 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
    oDA := oCrt:drawingArea
 
    // --- Menu ---
-   ActiveXBuildMenu( oCrt, @oStatic, @oStatic2 )
+   ActiveXBuildMenu(oCrt, @oStatic, @oStatic2)
 
    // --- ToolBar ---
-   oTBar := BuildWvgToolBar( oDA )
+   oTBar := BuildWvgToolBar(oDA)
 
    // --- StatusBar ---
-   oSBar   := WvgStatusBar():new( oDA ):create( , , , , , .T. )
-   oSBar:panelClick := {| oPanel | Wvg_MessageBox( , oPanel:caption ) }
-   oPanel  := oSBar:getItem(1)
+   oSBar := WvgStatusBar():new(oDA):create(, , , , , .T.)
+   oSBar:panelClick := {|oPanel|Wvg_MessageBox(, oPanel:caption)}
+   oPanel := oSBar:getItem(1)
    oPanel:caption := "My Root Panel"
    oPanel1 := oSBar:addItem()
    oPanel1:caption := "Ready"
@@ -55,96 +55,96 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
    oPanel2:caption := "Click on any part!"
 
    // --- Static ---
-   oStatic := WvgStatic():new( oDA )
-   oStatic:type    := WVGSTATIC_TYPE_TEXT
+   oStatic := WvgStatic():new(oDA)
+   oStatic:type := WVGSTATIC_TYPE_TEXT
    oStatic:options := WVGSTATIC_TEXT_CENTER
    oStatic:caption := Chr(13) + "Implemented Xbase++ Parts"
-   oStatic:create( , , { 0, oTBar:currentSize()[2] + 3 }, { 120, oCrt:currentSize()[2] - ;
-      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4 }, , .T. )
-   oStatic:setColorBG( RGB(198, 198, 198) )
+   oStatic:create(, , {0, oTBar:currentSize()[2] + 3}, {120, oCrt:currentSize()[2] - ;
+      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4}, , .T.)
+   oStatic:setColorBG(RGB(198, 198, 198))
 
 #if 0  // panel
    // --- Static + Radio + Checkbox ---
-   oStatic2 := WvgStatic():New( oCrt, , { 150, 150 }, { 500, 310 }, , .F. )
-// oStatic2:type    := WVGSTATIC_TYPE_RAISEDBOX //BGNDFRAME
+   oStatic2 := WvgStatic():New(oCrt, , {150, 150}, {500, 310}, , .F.)
+// oStatic2:type := WVGSTATIC_TYPE_RAISEDBOX //BGNDFRAME
    oStatic2:exStyle += WS_EX_WINDOWEDGE
 // oStatic2:options := WVGSTATIC_FRAMETHICK
    oStatic2:create()
-// oStatic2:setColorBG( RGB(198, 198, 198) )
+// oStatic2:setColorBG(RGB(198, 198, 198))
 
-   oXbp    := WvgPushButton():new( oStatic2 )
-   oXbp:caption     := "Hide"
-   oXbp:create( , , { 430, 275 }, { 60, 25 } )
-   oXbp:activate    := {|| oStatic2:hide(), oCrt:sendMessage( WM_SIZE, 0, 0 ) }
+   oXbp := WvgPushButton():new(oStatic2)
+   oXbp:caption := "Hide"
+   oXbp:create(, , {430, 275}, {60, 25})
+   oXbp:activate := {||oStatic2:hide(), oCrt:sendMessage(WM_SIZE, 0, 0)}
 
-   oRadio  := WvgRadioButton():new( oStatic2, , { 10, 10 }, { 100, 15 } )
-   oRadio:caption   := "Com 1"
+   oRadio := WvgRadioButton():new(oStatic2, , {10, 10}, {100, 15})
+   oRadio:caption := "Com 1"
    oRadio:selection := .T.
-   oRadio:selected  := {| m1, m2, obj | m1 := m1, m2 := m2, Wvg_MessageBox( , obj:caption + iif(obj:selection, "< S >", "< N >") ) }
+   oRadio:selected := {|m1, m2, obj|m1 := m1, m2 := m2, Wvg_MessageBox(, obj:caption + iif(obj:selection, "< S >", "< N >"))}
    oRadio:create()
 
-   oRadio              := WvgRadioButton():new( oStatic2, , { 10, 35 }, { 100, 15 } )
-   oRadio:caption   := "Com 2"
+   oRadio := WvgRadioButton():new(oStatic2, , {10, 35}, {100, 15})
+   oRadio:caption := "Com 2"
    oRadio:create()
 
-   oCheck              := WvgCheckBox():New( oStatic2, , { 10, 70 }, { 100, 15 }, , .T. )
-   oCheck:caption   := "Checkbox A"
+   oCheck := WvgCheckBox():New(oStatic2, , {10, 70}, {100, 15}, , .T.)
+   oCheck:caption := "Checkbox A"
    oCheck:create()
-   oCheck:selected  := {| m1, m2, o | m1 := m1, m2 := m2, Wvg_MessageBox( , iif(o:getData(), "I am selected", "I am not selected") ) }
+   oCheck:selected := {|m1, m2, o|m1 := m1, m2 := m2, Wvg_MessageBox(, iif(o:getData(), "I am selected", "I am not selected"))}
 
    // Create first 3State button, passing the position to :create()
-   oXbp                := Wvg3State():new( oStatic2 )
+   oXbp := Wvg3State():new(oStatic2)
    oXbp:caption := "3 State A"
-   oXbp:create( , , { 10, 100 }, { 100, 15 } )
+   oXbp:create(, , {10, 100}, {100, 15})
    // Determine current state using mp1
-   oXbp:selected := {| m1, m2, oBtn | m2 := m2, oBtn := oBtn, oPanel1:caption := "3State A [" + aState[m1 + 1] + "]" }
+   oXbp:selected := {|m1, m2, oBtn|m2 := m2, oBtn := oBtn, oPanel1:caption := "3State A [" + aState[m1 + 1] + "]"}
 
    // Create second 3State Button, passing the position to :new()
-   oXbp                := Wvg3State():new( oStatic2, , { 10, 125 }, { 100, 15 } )
+   oXbp := Wvg3State():new(oStatic2, , {10, 125}, {100, 15})
    oXbp:caption := "3 State B"
-   oXbp:create( oStatic2 )
+   oXbp:create(oStatic2)
    // Determine current state using :getData()
-   oXbp:selected := {| m1, m2, oBtn | m1 := m1, m2 := m2, Wvg_MessageBox( , "3State B", aState[oBtn:getData() + 1] ) }
+   oXbp:selected := {|m1, m2, oBtn|m1 := m1, m2 := m2, Wvg_MessageBox(, "3State B", aState[oBtn:getData() + 1])}
 
    // Create first SLE, specify position using :create()
    // On :typeOut set the focus to the second SLE
-   oXbp                := WvgSLE():new( oStatic2 )
-   oXbp:autoTab        := .T.
-   oXbp:bufferLength   := 20
+   oXbp := WvgSLE():new(oStatic2)
+   oXbp:autoTab := .T.
+   oXbp:bufferLength := 20
    // Data code block containing assignment to LOCAL variable
-   oXbp:dataLink       := {| x | iif(x == NIL, cVarA, cVarA := x) }
-   oXbp:create( , , { 10, 170 }, { 150, 20 } )
+   oXbp:dataLink := {|x|iif(x == NIL, cVarA, cVarA := x)}
+   oXbp:create(, , {10, 170}, {150, 20})
    oXbp:setData()
    // Assign the value of the edit buffer to a LOCAL variable when the input focus is lost
-   oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarA =" + cVarA }
+   oXbp:killInputFocus := {|x, y, oSLE|x := x, y := y, oSLE:getData(), oPanel:caption := "cVarA =" + cVarA}
 
    // Create second SLE, specify position using :new()
-   oXbp                := WvgSLE():new( oStatic2, , { 10, 200 }, { 150, 20 } )
-   oXbp:tabStop        := .T.
-   oXbp:bufferLength   := 15
-   oXbp:dataLink       := {| x | iif(x == NIL, cVarB, cVarB := x) }
+   oXbp := WvgSLE():new(oStatic2, , {10, 200}, {150, 20})
+   oXbp:tabStop := .T.
+   oXbp:bufferLength := 15
+   oXbp:dataLink := {|x|iif(x == NIL, cVarB, cVarB := x)}
    oXbp:create()
    oXbp:setData()
-   oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB }
+   oXbp:killInputFocus := {|x, y, oSLE|x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB}
 
    // Read file into LOCAL variable
-   cText   := MemoRead("hbmk.hbm")
+   cText := MemoRead("hbmk.hbm")
    // Create MLE, specify position using :create() and
    // assign data code block accessing LOCAL variable
-   oMLE    := WvgMLE():new( oStatic2 )
+   oMLE := WvgMLE():new(oStatic2)
    oMLE:wordWrap := .F.
-   oMLE:border   := .T.
-   oMLE:dataLink := {| x | iif(x == NIL, cText, cText := x) }
-   oMLE:create( oStatic2, , { 180, 10 }, { 310, 250 } )
+   oMLE:border := .T.
+   oMLE:dataLink := {|x|iif(x == NIL, cText, cText := x)}
+   oMLE:create(oStatic2, , {180, 10}, {310, 250})
    // Copy text from LOCAL variable into edit buffer via :dataLink
    oMLE:setData()
 #endif
 
    // --- ListBox ---
    oListBox := WvgListBox():new()
-   oListBox:create( oStatic, , { 5, 55 }, { 107, 380 } )
+   oListBox:create(oStatic, , {5, 55}, {107, 380})
 
-   oListBox:setColorFG( RGB(218, 61, 34) )
+   oListBox:setColorFG(RGB(218, 61, 34))
 
    AAdd(aParts, "XbpDialog")
    AAdd(aParts, "XbpMenuBar")
@@ -162,38 +162,38 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
    AAdd(aParts, "XbpMLE")
    AAdd(aParts, "DataRef")
 
-   AEval( aParts, {| e | oListBox:addItem( e ) } )
-   oListBox:itemSelected := {|| Wvg_MessageBox( , oListBox:getCurItem() ) }
+   AEval(aParts, {|e|oListBox:addItem(e)})
+   oListBox:itemSelected := {||Wvg_MessageBox(, oListBox:getCurItem())}
    oListBox:setData(3)
 
    // --- PushButton ---
-   oXbp := WvgPushButton():new( oStatic )
+   oXbp := WvgPushButton():new(oStatic)
    oXbp:caption := "Hide"
-   oXbp:create( , , { 20, 440 }, { 80, 30 } )
-   oXbp:activate := {|| oStatic:hide(), oCrt:sendMessage( WM_SIZE, 0, 0 ) }
+   oXbp:create(, , {20, 440}, {80, 30})
+   oXbp:activate := {||oStatic:hide(), oCrt:sendMessage(WM_SIZE, 0, 0)}
 
    // --- TreeView ---
-   oTree := WvgTreeView():new( oDA, , { oCrt:currentSize()[1] - 160, oTBar:currentSize()[2] + 3 }, ;
-      { 160, oCrt:currentSize()[2] - ;
-      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4 }, , .T. )
-   oTree:hasLines   := .T.
+   oTree := WvgTreeView():new(oDA, , {oCrt:currentSize()[1] - 160, oTBar:currentSize()[2] + 3}, ;
+      {160, oCrt:currentSize()[2] - ;
+      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4}, , .T.)
+   oTree:hasLines := .T.
    oTree:hasButtons := .T.
    oTree:alwaysShowSelection := .T.
    oTree:create()
-   oTree:setColorBG( RGB(120, 15, 240) )
-   oTree:setColorFG( RGB(15, 240, 120) )
-   oTree:itemSelected := {| oItem | iif(oItem != NIL, Wvg_MessageBox( , oItem:caption ), NIL) }
+   oTree:setColorBG(RGB(120, 15, 240))
+   oTree:setColorFG(RGB(15, 240, 120))
+   oTree:itemSelected := {|oItem|iif(oItem != NIL, Wvg_MessageBox(, oItem:caption), NIL)}
 
-   oItem1 := oTree:rootItem:addItem( "First level A" )
+   oItem1 := oTree:rootItem:addItem("First level A")
 
-   oTree:rootItem:addItem( "First level B" )
+   oTree:rootItem:addItem("First level B")
 
-   oItem2 := oItem1:addItem( "Second level A" )
-   oItem1:addItem( "Second level B" )
+   oItem2 := oItem1:addItem("Second level A")
+   oItem1:addItem("Second level B")
 
-   oItem2:addItem( "Third level A" )
-   oItem2:addItem( "Third level B" )
-   oItem2:addItem( "Third level C" )
+   oItem2:addItem("Third level A")
+   oItem2:addItem("Third level B")
+   oItem2:addItem("Third level C")
 
 #if 0
    oItem1:expand(.T.)
@@ -204,20 +204,20 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
    oTree:setData(oItem2)
 
    // --- Misc Config ---
-   oTBar:buttonClick := {| oBtn | iif(oBtn:caption == "Hide", oStatic:hide(), NIL), ;
+   oTBar:buttonClick := {|oBtn|iif(oBtn:caption == "Hide", oStatic:hide(), NIL), ;
       iif(oBtn:caption == "Show", oStatic:show(), NIL), ;
       iif(oBtn:caption == "Tools", oStatic2:show():toFront(), NIL), ;
-      iif(oBtn:caption $ "Hide,Show", oCrt:sendMessage( WM_SIZE, 0, 0 ), NIL), ;
-      oPanel2:caption := "Button [ " + oBtn:caption + " ] clicked!" }
-   oDA:resize := {|| ResizeDialog( oCrt, oTBar, oSBar, oStatic, oCom, oTree ) }
+      iif(oBtn:caption $ "Hide,Show", oCrt:sendMessage(WM_SIZE, 0, 0), NIL), ;
+      oPanel2:caption := "Button [ " + oBtn:caption + " ] clicked!"}
+   oDA:resize := {||ResizeDialog(oCrt, oTBar, oSBar, oStatic, oCom, oTree)}
 
 #if 1
    // --- Active-X ---
-   oCom := BuildActiveXControl( nActiveX, oDA )
-   IF HB_IsObject( oCom )
-      oCrt:sendMessage( WM_SIZE, 0, 0 )
+   oCom := BuildActiveXControl(nActiveX, oDA)
+   IF HB_IsObject(oCom)
+      oCrt:sendMessage(WM_SIZE, 0, 0)
       oCrt:show()
-      ExeActiveX( nActiveX, oCom, xParam )
+      ExeActiveX(nActiveX, oCom, xParam)
    ENDIF
 #else
    oCrt:show()
@@ -232,90 +232,90 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
 
    RETURN NIL
 
-STATIC FUNCTION ResizeDialog( oCrt, oTBar, oSBar, oStatic, oCom, oTree )
+STATIC FUNCTION ResizeDialog(oCrt, oTBar, oSBar, oStatic, oCom, oTree)
 
    LOCAL aCrt, aTBar, aSBar
    LOCAL nH, nT
 
 // LOCAL aStatic, aCom, aTree
 
-   aCrt    := oCrt:currentSize()
-   aTBar   := oTBar:currentSize()
-   aSBar   := oSBar:currentSize()
+   aCrt := oCrt:currentSize()
+   aTBar := oTBar:currentSize()
+   aSBar := oSBar:currentSize()
 // aStatic := oStatic:currentSize()
-// aTree   := oTree:currentSize()
-// aCom    := oCom:currentSize()
+// aTree := oTree:currentSize()
+// aCom := oCom:currentSize()
 
    nT := aTBar[2]
    nH := aCrt[2] - aTBar[2] - aSBar[2]
 
    IF oStatic:isVisible
-      oStatic:setPosAndSize( { 0, nT + 3 }, { 120, nH - 4 }, .T. )
-      oCom:setPosAndSize( { 120, nT }, { aCrt[1] - 120 - 150, nH }, .T. )
-      oTree:setPosAndSize( { aCrt[1] - 150, nT }, { 150, nH }, .T. )
+      oStatic:setPosAndSize({0, nT + 3}, {120, nH - 4}, .T.)
+      oCom:setPosAndSize({120, nT}, {aCrt[1] - 120 - 150, nH}, .T.)
+      oTree:setPosAndSize({aCrt[1] - 150, nT}, {150, nH}, .T.)
    ELSE
-      oCom:setPosAndSize( { 0, nT }, { aCrt[1] - 150, nH }, .T. )
-      oTree:setPosAndSize( { aCrt[1] - 150, nT }, { 150, nH }, .T. )
+      oCom:setPosAndSize({0, nT}, {aCrt[1] - 150, nH}, .T.)
+      oTree:setPosAndSize({aCrt[1] - 150, nT}, {150, nH}, .T.)
    ENDIF
 
    RETURN 1
 
-STATIC FUNCTION ActiveXBuildMenu( oCrt, oStatic, oStatic2 )
+STATIC FUNCTION ActiveXBuildMenu(oCrt, oStatic, oStatic2)
 
    LOCAL oMenuBar, oSubMenu
 
-   oMenuBar := WvgMenuBar():new( oCrt ):create()
+   oMenuBar := WvgMenuBar():new(oCrt):create()
 
    // Define submenu in procedural style.
    // The numeric index of the selected menu item
    // is passed to the Callback code block -> mp1
 
-   oSubMenu       := WvgMenu():new( oMenuBar ):create()
+   oSubMenu := WvgMenu():new(oMenuBar):create()
    oSubMenu:title := "~Procedural"
-   oSubMenu:addItem( { "Play Charge ~1", } )
-   oSubMenu:addItem( { "Play Nannyboo ~2", } )
-   oSubMenu:itemSelected := {| mp1 | MyFunction( 100 + mp1 ) }
-   oMenuBar:addItem( { oSubMenu, NIL } )
+   oSubMenu:addItem({"Play Charge ~1",})
+   oSubMenu:addItem({"Play Nannyboo ~2",})
+   oSubMenu:itemSelected := {|mp1|MyFunction(100 + mp1)}
+   oMenuBar:addItem({oSubMenu, NIL})
 
    // Define submenu in the functional style:
    // A menu item executes a code block that
    // calls a function
-   oSubMenu       := WvgMenu():new( oMenuBar ):create()
+   oSubMenu := WvgMenu():new(oMenuBar):create()
    oSubMenu:title := "~Functional"
-   oSubMenu:addItem( { "Play Opening ~1", {|| MyFunction(1) } } )
-   oSubMenu:addItem( { "Play Closing ~2", {|| MyFunction(2) } } )
+   oSubMenu:addItem({"Play Opening ~1", {||MyFunction(1)}})
+   oSubMenu:addItem({"Play Closing ~2", {||MyFunction(2)}})
    oSubMenu:addItem()
-   oSubMenu:addItem( { "~MessageBox", {|| MyFunction(3) } } )
-   oMenuBar:addItem( { oSubMenu, NIL } )
+   oSubMenu:addItem({"~MessageBox", {||MyFunction(3)}})
+   oMenuBar:addItem({oSubMenu, NIL})
 
-   oSubMenu       := WvgMenu():new( oMenuBar ):create()
+   oSubMenu := WvgMenu():new(oMenuBar):create()
    oSubMenu:title := "F~eatures"
-   oSubMenu:addItem( { "~Hide or Show Left Panel", {|| iif(oStatic:isVisible, ;
-      oStatic:hide(), oStatic:show()), oCrt:sendMessage( WM_SIZE, 0, 0 ) } } )
-   oSubMenu:addItem( { "~Show My Panel", {|| oStatic2:show() } } )
-   oMenuBar:addItem( { oSubMenu, NIL } )
+   oSubMenu:addItem({"~Hide or Show Left Panel", {||iif(oStatic:isVisible, ;
+      oStatic:hide(), oStatic:show()), oCrt:sendMessage(WM_SIZE, 0, 0)}})
+   oSubMenu:addItem({"~Show My Panel", {||oStatic2:show()}})
+   oMenuBar:addItem({oSubMenu, NIL})
 
    RETURN NIL
 
-STATIC FUNCTION BuildActiveXControl( nActiveX, oDA )
+STATIC FUNCTION BuildActiveXControl(nActiveX, oDA)
 
    LOCAL oCom
 
-   hb_default( @nActiveX, 2 )
+   hb_default(@nActiveX, 2)
 
-   oCom := WvgActiveXControl():New( oDA, , { 0, 0 }, { 100, 100 }, , .T. )
+   oCom := WvgActiveXControl():New(oDA, , {0, 0}, {100, 100}, , .T.)
 
    DO CASE
    CASE nActiveX == 1
-      hb_gtInfo( HB_GTI_WINTITLE, "Shell.Explorer.2" + "  [  " + "http://harbour.vouch.info" + "  ]" )
+      hb_gtInfo(HB_GTI_WINTITLE, "Shell.Explorer.2" + "  [  " + "http://harbour.vouch.info" + "  ]")
       oCom:CLSID := "Shell.Explorer.2"
-      oCom:mapEvent( 269, {|| wapi_OutputDebugString( " E X P L O R E R - 2 6 9" ) } )
-      oCom:mapEvent( 105, {|| wapi_OutputDebugString( " E X P L O R E R - 105"   ) } )
+      oCom:mapEvent(269, {||wapi_OutputDebugString(" E X P L O R E R - 2 6 9")})
+      oCom:mapEvent(105, {||wapi_OutputDebugString(" E X P L O R E R - 105")})
 
    CASE nActiveX == 11
-      hb_gtInfo( HB_GTI_WINTITLE, "Shell.Explorer.2" + "  [  " + "MSHTML Demo" + "  ]" )
+      hb_gtInfo(HB_GTI_WINTITLE, "Shell.Explorer.2" + "  [  " + "MSHTML Demo" + "  ]")
       oCom:CLSID := "MSHTML:" + "<html><h1>Stream Test</h1><p>This HTML content is being loaded from a stream.</html>"
-      oCom:mapEvent( 269, {|| QOut( " E X P L O R E R - 2 6 9" ) } )
+      oCom:mapEvent(269, {||QOut(" E X P L O R E R - 2 6 9")})
 
    CASE nActiveX == 2
 #define evClick     1
@@ -324,28 +324,28 @@ STATIC FUNCTION BuildActiveXControl( nActiveX, oDA )
 #define evMouseMove 4
 #define evBtnUp     5
 
-      hb_gtInfo( HB_GTI_WINTITLE, "AnalogClockControl.AnalogClock" )
+      hb_gtInfo(HB_GTI_WINTITLE, "AnalogClockControl.AnalogClock")
       oCom:CLSID := "AnalogClockControl.AnalogClock"
-      oCom:Id    := 5
+      oCom:Id := 5
 
-      oCom:mapEvent( evDblClk, {|| oCom:Value     := Seconds() / 86400, ;
+      oCom:mapEvent(evDblClk, {||oCom:Value := Seconds() / 86400, ;
          oCom:BackColor := RGB(0, 140, 210), ;
          oCom:Refresh(), ;
          oCom:ShowSecondsHand := .T., ;
          oCom:Hands3D := .T., ;
          oCom:Refresh(), ;
          oCom:showAboutBox() ;
-         } )
+        })
 
-      oCom:mapEvent( evBtnUp, {| nBtn | iif(nBtn == 2, oCom:oParent:sendMessage( WM_CLOSE, 0, 0 ), NIL) } )
+      oCom:mapEvent(evBtnUp, {|nBtn|iif(nBtn == 2, oCom:oParent:sendMessage(WM_CLOSE, 0, 0), NIL)})
 
    CASE nActiveX == 3
-      hb_gtInfo( HB_GTI_WINTITLE, "file://" + hb_DirBase() + "myharu.pdf" )
+      hb_gtInfo(HB_GTI_WINTITLE, "file://" + hb_DirBase() + "myharu.pdf")
       oCom:CLSID := "file://" + hb_DirBase() + "myharu.pdf"
-      oCom:mapEvent( 269, {|| QOut( "EXPLORER-269" ) } )
+      oCom:mapEvent(269, {||QOut("EXPLORER-269")})
 
    CASE nActiveX == 4
-      hb_gtInfo( HB_GTI_WINTITLE, "RM Chart [ <F12> Attributes  <F11> Next Charts ]" )
+      hb_gtInfo(HB_GTI_WINTITLE, "RM Chart [ <F12> Attributes  <F11> Next Charts ]")
       oCom:CLSID := "RMChart.RMChartX"
 
       // RMChart does not have event interface.
@@ -353,7 +353,7 @@ STATIC FUNCTION BuildActiveXControl( nActiveX, oDA )
       // Please download RMChart.ocx from https://web.archive.org/web/20090205114428/rmchart.com/ . It is free in every sense.
 
    CASE nActiveX == 5
-      hb_gtInfo( HB_GTI_WINTITLE, "Image Viewer" )
+      hb_gtInfo(HB_GTI_WINTITLE, "Image Viewer")
       oCom:CLSID := "SCRIBBLE.ScribbleCtrl.1"
 
    ENDCASE
@@ -362,7 +362,7 @@ STATIC FUNCTION BuildActiveXControl( nActiveX, oDA )
 
    RETURN oCom
 
-STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
+STATIC FUNCTION ExeActiveX(nActiveX, oCom, xParam)
 
    LOCAL nKey, sData
 
@@ -370,23 +370,23 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
 
    // After :CREATE() Messages
    IF nActiveX == 1
-      hb_gtInfo( HB_GTI_WINTITLE, iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      hb_gtInfo(HB_GTI_WINTITLE, iif(Empty(xParam), hb_Version(HB_VERSION_URL_BASE), xParam))
       oCom:AddressBar := .T.
-      oCom:Navigate( iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      oCom:Navigate(iif(Empty(xParam), hb_Version(HB_VERSION_URL_BASE), xParam))
 
    ELSEIF nActiveX == 4
-      ConfigureRMChart( oCom )
+      ConfigureRMChart(oCom)
       oCom:Draw(.T.)
       oCom:Draw2Clipboard()
 
    ELSEIF nActiveX == 5
-      oCom:loadMultiPage( hb_DirBase() + "myharu.pdf", 2 )
-      oCom:addGradientBorder( 10, RGB(12, 20, 233), RGB(100, 255, 20), 0 )
-      oCom:drawText( 10, 10, "Vouch" )
-      // oCom:emboss( 3,0 )
+      oCom:loadMultiPage(hb_DirBase() + "myharu.pdf", 2)
+      oCom:addGradientBorder(10, RGB(12, 20, 233), RGB(100, 255, 20), 0)
+      oCom:drawText(10, 10, "Vouch")
+      // oCom:emboss(3, 0)
       oCom:copy2ClipBoard()
       oCom:view := 11
-      oCom:setBackGroundColor( RGB(225, 225, 225) )
+      oCom:setBackGroundColor(RGB(225, 225, 225))
       // oCom:rotate90()
 
    ENDIF
@@ -400,17 +400,17 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
 
       IF nKey == K_F12
          IF nActiveX == 1
-            oCom:Navigate( "www.vouch.info" )
+            oCom:Navigate("www.vouch.info")
 
          ELSEIF nActiveX == 11
             // oCom:document(0):InnerHTML := "<html><h1>Stream Test</h1><p>This HTML content in a document.</html>"
 
          ELSEIF nActiveX == 4
-            oCom:RMCBackColor     := 23456142
-            oCom:RMCStyle         := 2
+            oCom:RMCBackColor := 23456142
+            oCom:RMCStyle := 2
             oCom:RMCUserWatermark := "Vouch"
 
-            oCom:Region(1):SetProperties( 5, 5, -5, -5 )
+            oCom:Region(1):SetProperties(5, 5, -5, -5)
 
             oCom:Draw(.T.)
          ENDIF
@@ -426,8 +426,8 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
 
             DO CASE
             CASE s_nTurn == 1
-               hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Stacked Bars" )
-               // SetMode( 30, 100 )
+               hb_gtInfo(HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Stacked Bars")
+               // SetMode(30, 100)
 
                sData := ;
                   "00003600|00004450|000051|000061|000073|00008-6972|00009412|00011Tahoma|100011|10" + ;
@@ -448,8 +448,8 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
                   "|140221|140236|140535000*9000*12000*6000*10000*5000"
 
             CASE s_nTurn == 2
-               hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Floating Bars" )
-               // SetMode( 20, 90 )
+               hb_gtInfo(HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Floating Bars")
+               // SetMode(20, 90)
 
                sData := ;
                   "00003550|00004300|000051|000073|00008-2894893|00009412|00011Tahoma|100011|100035" + ;
@@ -464,8 +464,8 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
                   "1|120221|1202312|120531*.5*1.5*10.5*12*1*12*1*12.5*.5*2*11"
 
             CASE s_nTurn == 3
-               hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Four Regions" )
-               // SetMode( 40, 120 )
+               hb_gtInfo(HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Four Regions")
+               // SetMode(40, 120)
 
                sData := ;
                   "00003700|00004500|000054|000061|000071|00008-984833|00009412|00011Tahoma|100011|" + ;
@@ -498,8 +498,8 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
                   "2*11.4*7.3*4.2"
 
             CASE s_nTurn == 4
-               hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "10 Biggest Companies" )
-               // SetMode( 25, 90 )
+               hb_gtInfo(HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "10 Biggest Companies")
+               // SetMode(25, 90)
 
                sData := ;
                   "00003670|00004450|000051|000061|000071|00008-10185235|00009412|00011Tahoma|10001" + ;
@@ -517,8 +517,8 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
                   "02115|120221|1202310|120261|120538.9*4.1*4.4*2.1*.3*.3*5.9*11.3*6.7*6"
 
             CASE s_nTurn == 5
-               hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Grouped Bars" )
-               // SetMode( 25, 80 )
+               hb_gtInfo(HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Grouped Bars")
+               // SetMode(25, 80)
 
                sData := ;
                   "00003600|00004450|000051|000061|000075|00008-2|00009412|00010paper.jpg|00011Taho" + ;
@@ -531,8 +531,8 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
                   "|140011|140022|140044|140131|1402111|140221|140235|1405370*50*80*40*30"
 
             CASE s_nTurn == 6
-               hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Flow Chart" )
-               // SetMode( 30, 50 )
+               hb_gtInfo(HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Flow Chart")
+               // SetMode(30, 50)
 
                sData := ;
                   "00003305|00004400|000051|00008-984833|00009412|00011Tahoma|100011|100035|100045|" + ;
@@ -583,7 +583,7 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
 
    RETURN NIL
 
-STATIC PROCEDURE ConfigureRMChart( RMChart )
+STATIC PROCEDURE ConfigureRMChart(RMChart)
 
    LOCAL oRegion
    LOCAL oCaption
@@ -597,60 +597,60 @@ STATIC PROCEDURE ConfigureRMChart( RMChart )
 #define RMC_HATCHBRUSH_OFF         0
 
    /* The code pulled from freewin sources */
-   RMChart:Font             := "Tahoma"
-   RMChart:RMCStyle         := RMC_CTRLSTYLEFLAT
+   RMChart:Font := "Tahoma"
+   RMChart:RMCStyle := RMC_CTRLSTYLEFLAT
 
    RMChart:AddRegion()
 
    oRegion := RMChart:Region(1)
-   oRegion:Footer := hb_Version( HB_VERSION_URL_BASE )
+   oRegion:Footer := hb_Version(HB_VERSION_URL_BASE)
 
    oRegion:AddCaption()
 
    oCaption := oRegion:Caption()
-   oCaption:Titel     := "GTWVG Active-X Demo"
-   oCaption:FontSize  := 10
-   oCaption:Bold      := .T.
+   oCaption:Titel := "GTWVG Active-X Demo"
+   oCaption:FontSize := 10
+   oCaption:Bold := .T.
 
    oRegion:AddGridlessSeries()
 
    oChart := oRegion:GridLessSeries
-   oChart:SeriesStyle      := RMC_PIE_GRADIENT
-   oChart:Alignment        := RMC_FULL
-   oChart:Explodemode      := RMC_EXPLODE_NONE
-   oChart:Lucent           := .F.
-   oChart:ValueLabelOn     := RMC_VLABEL_ABSOLUTE
-   oChart:HatchMode        := RMC_HATCHBRUSH_OFF
-   oChart:StartAngle       := 0
-   oChart:DataString       := "10*5*20*25"
+   oChart:SeriesStyle := RMC_PIE_GRADIENT
+   oChart:Alignment := RMC_FULL
+   oChart:Explodemode := RMC_EXPLODE_NONE
+   oChart:Lucent := .F.
+   oChart:ValueLabelOn := RMC_VLABEL_ABSOLUTE
+   oChart:HatchMode := RMC_HATCHBRUSH_OFF
+   oChart:StartAngle := 0
+   oChart:DataString := "10*5*20*25"
 
    RETURN
 
-STATIC PROCEDURE MyFunction( nMode )
+STATIC PROCEDURE MyFunction(nMode)
 
-#define MUSIC_WAITON          { 800, 1600 }
+#define MUSIC_WAITON          {800, 1600}
 
    DO CASE
    CASE nMode == 1
-      Tone( MUSIC_WAITON[1], 1 )
-      Tone( MUSIC_WAITON[2], 1 )
+      Tone(MUSIC_WAITON[1], 1)
+      Tone(MUSIC_WAITON[2], 1)
 
    CASE nMode == 2
-      Tone( MUSIC_WAITON[2], 1 )
-      Tone( MUSIC_WAITON[1], 1 )
+      Tone(MUSIC_WAITON[2], 1)
+      Tone(MUSIC_WAITON[1], 1)
 
    CASE nMode == 3
-      Wvg_MessageBox( , "Button clicked!" )
+      Wvg_MessageBox(, "Button clicked!")
 
    CASE nMode == 101  // Charge
-      Eval( {|| Tone( 523, 2 ), Tone( 698, 2 ), Tone( 880, 2 ), Tone( 1046, 4 ), Tone( 880, 2 ), Tone( 1046, 8 ) } )
+      Eval({||Tone(523, 2), Tone(698, 2), Tone(880, 2), Tone(1046, 4), Tone(880, 2), Tone(1046, 8)})
 
    CASE nMode == 102  // NannyBoo
-      AEval( { { 196, 2 }, { 196, 2 }, { 164, 2 }, { 220, 2 }, { 196, 4 }, { 164, 4 } }, {| a | Tone( a[1], a[2] ) } )
+      AEval({{196, 2}, {196, 2}, {164, 2}, {220, 2}, {196, 4}, {164, 4}}, {|a|Tone(a[1], a[2])})
 
    CASE nMode == 103  // BADKEY
-      Tone( 480, 0.25 )
-      Tone( 240, 0.25 )
+      Tone(480, 0.25)
+      Tone(240, 0.25)
 
    ENDCASE
 
