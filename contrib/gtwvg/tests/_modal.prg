@@ -1,4 +1,4 @@
-/* Pritpal Bedi <bedipritpal@hotmail.com> */
+// Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "inkey.ch"
 #include "hbgtinfo.ch"
@@ -274,7 +274,7 @@ FUNCTION CreateOCrt(nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
 
    aPos := iif(lCenter, {-1, -1}, iif(nRow == NIL, {nT, nL}, {nRow, nCol}))
 
-   oCrt := WvgCrt():new(,, aPos, {nB - nT, nR - nL},, ! lHidden)
+   oCrt := WvgCrt():new(,, aPos, {nB - nT, nR - nL},, !lHidden)
    oCrt:lModal := lModal
    IF lRowCols
       oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS
@@ -307,8 +307,8 @@ PROCEDURE DoModalWindow()
    LOCAL oCrt, nSel, pGT
    LOCAL aLastPaint := WvtSetBlocks({})
 
-   /* This part can be clubbed in a separate .prg for different dialogs
-      OR can be loaded from a data dictionary. */
+   // This part can be clubbed in a separate .prg for different dialogs
+   // OR can be loaded from a data dictionary.
 
    oCrt := WvgCrt():New(, , {4, 8}, {12, 49}, , .T.)
 

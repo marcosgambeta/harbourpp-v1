@@ -417,7 +417,7 @@ STATIC FUNCTION ExeFontDialog(oCrt)
 
    RETURN NIL
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 
 FUNCTION hb_GTSYS()
 

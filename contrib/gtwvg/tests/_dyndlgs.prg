@@ -1,4 +1,4 @@
-/* Pritpal Bedi <bedipritpal@hotmail.com> */
+// Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "inkey.ch"
 #include "hbgtinfo.ch"
@@ -52,11 +52,11 @@ FUNCTION DynWinDialog(nInfo)
    // Icon
    nStyle := WS_CHILD + WS_VISIBLE + SS_ICON //+ SS_CENTERIMAGE
    aDlg := wvt_AddDlgItem(aDlg, 18, 2, 2, 6, {}, ID_ICO_VOUCH  , "STATIC" , nStyle, "")
-/*
+#if 0
    // Bitmap
    nStyle := WS_CHILD + WS_VISIBLE + SS_BITMAP + SS_REALSIZEIMAGE
    aDlg := wvt_AddDlgItem(aDlg, 18, 41, 2,8, {-3, 0, 3}, ID_STA_IMAGE, "STATIC" , nStyle, "")
-*/
+#endif
    nStyle := WS_CHILD + WS_VISIBLE + WS_TABSTOP + BS_AUTOCHECKBOX
    aDlg := wvt_AddDlgItem(aDlg, 18, 15,  1, 10, {}, ID_CHK_SATIS , "BUTTON" , nStyle, "Satisfied?")
 
@@ -205,14 +205,14 @@ FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
          wvg_SendMessage(wvg_GetDlgItem(hDlg, ID_ICO_VOUCH), STM_SETIMAGE, IMAGE_ICON, SetIcons()[1])
       ENDIF
 
-      /*
+#if 0
       IF t_hImage == NIL
          t_hImage := wvg_LoadImage("vouch1.bmp", 2)
       ENDIF
       IF t_hImage != NIL .AND. t_hImage != 0
          wvg_SendMessage(wvg_GetDlgItem(hDlg, ID_STA_IMAGE), STM_SETIMAGE, IMAGE_BITMAP, t_hImage)
       ENDIF
-      */
+#endif
       wvg_SetDlgItemText(hDlg, ID_MLE, GetEditText())
       wvg_CheckDlgButton(hDlg, ID_CHK_SATIS, .T.)
 

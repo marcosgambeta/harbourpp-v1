@@ -1,4 +1,4 @@
-/* Pritpal Bedi <bedipritpal@hotmail.com> */
+// Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "inkey.ch"
 #include "hbgtinfo.ch"
@@ -62,7 +62,7 @@ PROCEDURE WvtSetKeys(lSet)
 // wvt_Paint() must be a FUNCTION in your application
 // as it is called when Window gets WIN_WM_PAINT message.
 
-FUNCTION wvt_Paint()  /* must be a public function */
+FUNCTION wvt_Paint()  // must be a public function
 
    LOCAL aBlocks := WvtSetBlocks()
 
@@ -78,7 +78,7 @@ FUNCTION wvt_Paint()  /* must be a public function */
 
 #if 0
 
-PROCEDURE wvt_SetFocus()  /* must be a public function */
+PROCEDURE wvt_SetFocus()  // must be a public function
 
    LOCAL nRow := Row()
    LOCAL nCol := Col()
@@ -97,7 +97,7 @@ PROCEDURE wvt_SetFocus()  /* must be a public function */
 
 #if 0
 
-PROCEDURE wvt_KillFocus()  /* must be a public function */
+PROCEDURE wvt_KillFocus()  // must be a public function
 
    LOCAL nRow := Row()
    LOCAL nCol := Col()

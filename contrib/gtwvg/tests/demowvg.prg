@@ -1,20 +1,20 @@
-/*
- *                 GTWVT Console GUI Interface
- *
- *       Copyright (c) Pritpal Bedi <pritpal@vouchcac.com>
- *
- *     I have tried to simulate the GUI controls through GDI
- *      functions and found a way to refresh those controls
- *       through WIN_WM_PAINT message issued to the Window.
- *                             and
- *           I feel that IF this functionality is built
- *               into the GT itself, what a wonder!
- *
- * This protocol opens up the the distinct possibilities and hope
- *          you all will cooperate to enhance it further.
- *
- *         Thanks Peter Rees! You have laid the foundation!
- */
+//
+//                 GTWVT Console GUI Interface
+//
+//       Copyright (c) Pritpal Bedi <pritpal@vouchcac.com>
+//
+//     I have tried to simulate the GUI controls through GDI
+//      functions and found a way to refresh those controls
+//       through WIN_WM_PAINT message issued to the Window.
+//                             and
+//           I feel that IF this functionality is built
+//               into the GT itself, what a wonder!
+//
+// This protocol opens up the the distinct possibilities and hope
+//          you all will cooperate to enhance it further.
+//
+//         Thanks Peter Rees! You have laid the foundation!
+//
 
 #require "gtwvg"
 
@@ -101,7 +101,7 @@ PROCEDURE Main()
    CLS
    wvt_ShowWindow(SW_RESTORE)
 
-   /* Xbase++ compatible menu protocol */
+   // Xbase++ compatible menu protocol
    oLastMenu := BuildMainMenu()
    oLastMenu:disableItem(11)
    oLastMenu:checkItem(1)
@@ -111,7 +111,7 @@ PROCEDURE Main()
 
    oLastMenu:setItem(14, {"This is Set Against Prev Menu", {||wvg_MessageBox(, "Hi")}})
 
-   SetMode(MaxRow() + 1, MaxCol() + 1)  /* Needed to accommodate attached menu */
+   SetMode(MaxRow() + 1, MaxCol() + 1)  // Needed to accommodate attached menu
 
    SetKey(K_F12        , {||hb_gtInfo(HB_GTI_ACTIVATESELECTCOPY)})
    SetKey(K_CTRL_V     , {||__Keyboard(hb_gtInfo(HB_GTI_CLIPBOARDDATA))})
@@ -121,7 +121,7 @@ PROCEDURE Main()
 
    pGT := SetGT(1, hb_gtSelect())
 
-   /* Force mouse pointer right below the Harbour label */
+   // Force mouse pointer right below the Harbour label
    wvt_SetMousePos(2, 40)
 
    AAdd(aBlocks, {||wvt_SetIcon(GetResource("resources\vr_1.ico"))})
@@ -141,7 +141,7 @@ PROCEDURE Main()
 
    aLastPaint := WvtSetBlocks(aBlocks)
 
-   /* Xbase++ compatible pure GUI controls onto CUI console */
+   // Xbase++ compatible pure GUI controls onto CUI console
    BuildButtons()
 
    scr := SaveScreen(0, 0, MaxRow(), MaxCol())
@@ -229,7 +229,7 @@ PROCEDURE WvtNextGetsConsole()
 
    RETURN
 
-PROCEDURE WvtNextGets()  /* must be a public function */
+PROCEDURE WvtNextGets()  // must be a public function
 
    IF hb_mtvm()
       hb_threadStart({||hb_gtReload("WVG"), wvt_SetFont("Terminal", 20), ;
@@ -318,7 +318,7 @@ PROCEDURE WvtNextGets_X()
 
    RETURN
 
-PROCEDURE WvtPartialScreen()  /* must be a public function */
+PROCEDURE WvtPartialScreen()  // must be a public function
 
    LOCAL scr := SaveScreen(7, 20, 15, 60)
    LOCAL wvtScr := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
@@ -360,7 +360,7 @@ PROCEDURE WvtPartialScreen()  /* must be a public function */
 
    RETURN
 
-PROCEDURE WvtLines()  /* must be a public function */
+PROCEDURE WvtLines()  // must be a public function
 
    LOCAL scr := SaveScreen(0, 0, MaxRow(), MaxCol())
    LOCAL clr := SetColor("N/W")
@@ -494,7 +494,7 @@ STATIC FUNCTION BuildMainMenu()
    oMenu:AddItem("ActiveX - Image Viewer"      , {||hb_threadStart({||ExecuteActiveX(5)})})
    g_oMenuBar:addItem({oMenu, "~XbpDialog()s"})
 
-   RETURN oMenu  /* The last submenu item */
+   RETURN oMenu  // The last submenu item
 
 STATIC PROCEDURE OnlineMap()
 
@@ -589,9 +589,9 @@ STATIC PROCEDURE BuildButtons()
 
    RETURN
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 
-PROCEDURE hb_GTSYS()  /* must be a public function */
+PROCEDURE hb_GTSYS()  // must be a public function
 
    REQUEST HB_GT_WVG_DEFAULT
    REQUEST HB_GT_WVT

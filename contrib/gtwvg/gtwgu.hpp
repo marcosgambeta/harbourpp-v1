@@ -43,13 +43,14 @@
 // If you write modifications of your own for Harbour, it is your choice
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
+// $HB_END_LICENSE$
 
 #ifndef HB_WGU_H_
 #define HB_WGU_H_
 
 #define HB_GT_NAME  WGU
 
-/*-*/
+//-
 
 #ifndef _WIN32_IE
    #ifdef __MINGW32__
@@ -60,7 +61,7 @@
    #endif
 #endif
 
-/*-*/
+//-
 
 #include <windows.h>
 #include <winuser.h>
@@ -88,7 +89,7 @@
 
 HB_EXTERN_BEGIN
 
-/*-*/
+//-
 
 #define WVT_CHAR_QUEUE_SIZE         128
 #define WVT_MAX_TITLE_SIZE          128
@@ -118,32 +119,32 @@ HB_EXTERN_BEGIN
 #define YELLOW                      RGB(0xFF, 0xFF, 0x00)
 #define BRIGHT_WHITE                RGB(0xFF, 0xFF, 0xFF)
 
-#define WM_MY_UPDATE_CARET          ( WM_USER + 0x0101 )
+#define WM_MY_UPDATE_CARET          (WM_USER + 0x0101)
 
 #define SYS_EV_MARK                 1000
-#define HB_MSG_NOTIFYICON          ( WM_USER+1399 )
+#define HB_MSG_NOTIFYICON           (WM_USER+1399)
 #define HB_ID_NOTIFYICON            99
 
-/*-*/
+//-
 #define WVT_PICTURES_MAX            50
 #define WVT_FONTS_MAX               50
 #define WVT_PENS_MAX                50
 #define WVT_DLGML_MAX               50
 #define WVT_DLGMD_MAX               50
-/*-*/
+//-
 
-#if defined(__BORLANDC__) && ( __BORLANDC__ == 0x0550 )
+#if defined(__BORLANDC__) && (__BORLANDC__ == 0x0550)
    #ifdef __cplusplus
-      extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
+      extern "C" { STDAPI OleLoadPicture(LPSTREAM, LONG, BOOL, REFIID, PVOID *); }
    #else
-      STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * );
+      STDAPI OleLoadPicture(LPSTREAM, LONG, BOOL, REFIID, PVOID *);
 
    #endif
 #endif
 
-/*-*/
+//-
 
-typedef BOOL ( WINAPI * wvtGradientFill )     (
+typedef BOOL (WINAPI * wvtGradientFill)     (
                       HDC        hdc,
                       PTRIVERTEX pVertex,
                       ULONG      dwNumVertex,
@@ -151,13 +152,13 @@ typedef BOOL ( WINAPI * wvtGradientFill )     (
                       ULONG      dwNumMesh,
                       ULONG      dwMode      );
 
-typedef BOOL ( WINAPI * wvtSetLayeredWindowAttributes )(
+typedef BOOL (WINAPI * wvtSetLayeredWindowAttributes)(
                       HWND       hwnd,
                       COLORREF   crKey,
                       BYTE       bAlpha,
                       DWORD      dwFlags     );
 
-/*-*/
+//-
 
 typedef struct
 {
@@ -176,95 +177,95 @@ typedef struct
 
 typedef struct
 {
-   PHB_GT   pGT;                            /* core GT pointer */
-   int      iHandle;                        /* window number */
+   PHB_GT   pGT;                            // core GT pointer
+   int      iHandle;                        // window number
 
    HINSTANCE hInstance;
    int       iCmdShow;
 
-   int      ROWS;                           /* number of displayable rows in window */
-   int      COLS;                           /* number of displayable columns in window */
+   int      ROWS;                           // number of displayable rows in window
+   int      COLS;                           // number of displayable columns in window
 
-   POINT    MousePos;                       /* the last mouse position */
-   HB_BOOL  MouseMove;                      /* Flag to say whether to return mouse movement events */
+   POINT    MousePos;                       // the last mouse position
+   HB_BOOL  MouseMove;                      // Flag to say whether to return mouse movement events
 
-   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    /* Array to hold the characters & events */
-   int      keyPointerIn;                   /* Offset into key array for character to be placed */
-   int      keyPointerOut;                  /* Offset into key array of next character to read */
-   int      keyLast;                        /* last inkey code value in buffer */
+   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    // Array to hold the characters & events
+   int      keyPointerIn;                   // Offset into key array for character to be placed
+   int      keyPointerOut;                  // Offset into key array of next character to read
+   int      keyLast;                        // last inkey code value in buffer
 
-   POINT    PTEXTSIZE;                      /* size of the fixed width font */
-   HB_BOOL  FixedFont;                      /* TRUE if current font is a fixed font */
-   int      FixedSize[ WVT_MAX_COLS ];      /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
-   int      fontHeight;                     /* requested font height */
-   int      fontWidth;                      /* requested font width */
-   int      fontWeight;                     /* Bold level */
-   int      fontQuality;                    /* requested font quality */
-   char     fontFace[ LF_FACESIZE ];        /* requested font face name LF_FACESIZE #defined in wingdi.h */
-   HFONT    hFont;                          /* current font handle */
+   POINT    PTEXTSIZE;                      // size of the fixed width font
+   HB_BOOL  FixedFont;                      // TRUE if current font is a fixed font
+   int      FixedSize[ WVT_MAX_COLS ];      // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
+   int      fontHeight;                     // requested font height
+   int      fontWidth;                      // requested font width
+   int      fontWeight;                     // Bold level
+   int      fontQuality;                    // requested font quality
+   char     fontFace[ LF_FACESIZE ];        // requested font face name LF_FACESIZE #defined in wingdi.h
+   HFONT    hFont;                          // current font handle
 
-   HWND     hWnd;                           /* the window handle */
-   HB_BOOL  fInit;                          /* logical variable indicating that window should be open */
+   HWND     hWnd;                           // the window handle
+   HB_BOOL  fInit;                          // logical variable indicating that window should be open
 
-   PHB_CODEPAGE hostCDP;                    /* Host/HVM CodePage for unicode output translations */
-   PHB_CODEPAGE inCDP;                      /* Host/HVM CodePage for unicode input translations */
+   PHB_CODEPAGE hostCDP;                    // Host/HVM CodePage for unicode output translations
+   PHB_CODEPAGE inCDP;                      // Host/HVM CodePage for unicode input translations
 #if ! defined(UNICODE)
    BYTE     keyTransTbl[ 256 ];
    BYTE     chrTransTbl[ 256 ];
 #endif
 
-   HICON    hIcon;                          /* Title Bar and Task List icon. Can be nullptr. */
-   HB_BOOL  bIconToFree;                    /* Do we need to free this icon when it's not nullptr? */
+   HICON    hIcon;                          // Title Bar and Task List icon. Can be nullptr.
+   HB_BOOL  bIconToFree;                    // Do we need to free this icon when it's not nullptr?
 
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
 
-   int      CodePage;                       /* Code page to use for display characters */
-   HB_BOOL  Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
-   HB_BOOL  CentreWindow;                   /* True if window is to be Reset into centre of window */
+   int      CodePage;                       // Code page to use for display characters
+   HB_BOOL  Win9X;                          // Flag to say if running on Win9X not NT/2000/XP
+   HB_BOOL  CentreWindow;                   // True if window is to be Reset into centre of window
 
    HB_BOOL  IgnoreWM_SYSCHAR;
 
    HB_BOOL  bResizable;
    HB_BOOL  bClosable;
 
-   /* To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed> */
+   // To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed>
 
-   int       rowStart;                      /* Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect() */
-   int       rowStop;                       /* Holds nBottom of last WM_PAINT rectangle */
-   int       colStart;                      /* Holds nLeft   of last WM_PAINT rectangle */
-   int       colStop;                       /* Holds nRight  of last WM_PAINT rectangle */
+   int       rowStart;                      // Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect()
+   int       rowStop;                       // Holds nBottom of last WM_PAINT rectangle
+   int       colStart;                      // Holds nLeft   of last WM_PAINT rectangle
+   int       colStop;                       // Holds nRight  of last WM_PAINT rectangle
 
-   int       iFactor;                       /* Transparency factor 0~255 */
+   int       iFactor;                       // Transparency factor 0~255
 
-   int       LastMenuEvent;                 /* Last menu item selected */
-   int       MenuKeyEvent;                  /* User definable event number for windows menu command */
-   HB_BOOL   InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
-   HB_BOOL   EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
+   int       LastMenuEvent;                 // Last menu item selected
+   int       MenuKeyEvent;                  // User definable event number for windows menu command
+   HB_BOOL   InvalidateWindow;              // Flag for controlling whether to use ScrollWindowEx()
+   HB_BOOL   EnableShortCuts;               // Determines whether ALT key enables menu or system menu
 
    HB_BOOL   bPaint;
    HB_BOOL   bGetFocus;
    HB_BOOL   bSetFocus;
    HB_BOOL   bKillFocus;
 
-   HINSTANCE hMSImg32;                      /* Handle to the loaded library msimg32.dll */
-   wvtGradientFill pfnGF;                   /* Pointer to Address of the GradientFill function in MSImg32.dll */
-   HINSTANCE hUser32;                       /* Handle to the loaded library user32.dll */
-   wvtSetLayeredWindowAttributes pfnLayered;/* Pointer to set Windows attribute - transparency. */
+   HINSTANCE hMSImg32;                      // Handle to the loaded library msimg32.dll
+   wvtGradientFill pfnGF;                   // Pointer to Address of the GradientFill function in MSImg32.dll
+   HINSTANCE hUser32;                       // Handle to the loaded library user32.dll
+   wvtSetLayeredWindowAttributes pfnLayered;// Pointer to set Windows attribute - transparency.
 
-   PHB_GT_PARAMS  pPP;                      /* Presentation Parameters */
+   PHB_GT_PARAMS  pPP;                      // Presentation Parameters
 
-   HB_BOOL   bTracking;                     /* To track if mouse has entered or left the window area */
-   HB_BOOL   bResizing;                     /* To know when it is in resizing mode */
+   HB_BOOL   bTracking;                     // To track if mouse has entered or left the window area
+   HB_BOOL   bResizing;                     // To know when it is in resizing mode
    int       width;
    int       height;
 
 } HB_GTWVT, * PHB_GTWVT;
 
-/*-*/
+//-
 
 #ifndef INVALID_FILE_SIZE
-   #define INVALID_FILE_SIZE ( DWORD ) 0xFFFFFFFF
+   #define INVALID_FILE_SIZE static_cast<DWORD>(0xFFFFFFFF)
 #endif
 
 #ifndef CC_ANYCOLOR
@@ -272,7 +273,7 @@ typedef struct
 #endif
 
 #ifndef IDC_HAND
-   #define IDC_HAND MAKEINTRESOURCE( 32649 )
+   #define IDC_HAND MAKEINTRESOURCE(32649)
 #endif
 
 #ifndef GRADIENT_FILL_RECT_H
@@ -280,10 +281,10 @@ typedef struct
 #endif
 
 #ifndef GCLP_HCURSOR
-   #define GCLP_HCURSOR ( -12 )
+   #define GCLP_HCURSOR (-12)
 #endif
 
-/*-*/
+//-
 
 typedef enum
 {
@@ -293,11 +294,11 @@ typedef enum
    GTO_RECTANGLE      = 4,
    GTO_CIRCLE         = 5,
    GTO_DISK           = 7,
-   /* TODO: add other types */
+   // TODO: add other types
    GTO_TEXT           = 100,
 } HB_gt_object_enum;
 
-/* Event subsystem */
+// Event subsystem
 
 typedef enum
 {
@@ -311,39 +312,39 @@ typedef enum
    GTEVENT_SHUTDOWN   = 7
 } HB_gt_event_enum;
 
-/*-*/
+//-
 
-/* xHarbour compatible definitions */
+// xHarbour compatible definitions
 #if ! defined(K_SH_LEFT)
-#define K_SH_LEFT           K_LEFT   /* Shift-Left  == Left  */
-#define K_SH_UP             K_UP     /* Shift-Up    == Up    */
-#define K_SH_RIGHT          K_RIGHT  /* Shift-Right == Right */
-#define K_SH_DOWN           K_DOWN   /* Shift-Down  == Down  */
-#define K_SH_INS            K_INS    /* Shift-Ins   == Ins   */
-#define K_SH_DEL            K_DEL    /* Shift-Del   == Del   */
-#define K_SH_HOME           K_HOME   /* Shift-Home  == Home  */
-#define K_SH_END            K_END    /* Shift-End   == End   */
-#define K_SH_PGUP           K_PGUP   /* Shift-PgUp  == PgUp  */
-#define K_SH_PGDN           K_PGDN   /* Shift-PgDn  == PgDn  */
-#define K_SH_RETURN         K_RETURN /* Shift-Enter == Enter */
-#define K_SH_ENTER          K_ENTER  /* Shift-Enter == Enter */
+#define K_SH_LEFT           K_LEFT   // Shift-Left  == Left
+#define K_SH_UP             K_UP     // Shift-Up    == Up
+#define K_SH_RIGHT          K_RIGHT  // Shift-Right == Right
+#define K_SH_DOWN           K_DOWN   // Shift-Down  == Down
+#define K_SH_INS            K_INS    // Shift-Ins   == Ins
+#define K_SH_DEL            K_DEL    // Shift-Del   == Del
+#define K_SH_HOME           K_HOME   // Shift-Home  == Home
+#define K_SH_END            K_END    // Shift-End   == End
+#define K_SH_PGUP           K_PGUP   // Shift-PgUp  == PgUp
+#define K_SH_PGDN           K_PGDN   // Shift-PgDn  == PgDn
+#define K_SH_RETURN         K_RETURN // Shift-Enter == Enter
+#define K_SH_ENTER          K_ENTER  // Shift-Enter == Enter
 #endif
 
 #ifndef WM_MOUSEWHEEL
 #  define WM_MOUSEWHEEL 0x020A
 #endif
 
-/*-*/
+//-
 #if 0
-extern HB_BOOL  wvt_Array2Rect( PHB_ITEM aRect, RECT * rc );
-extern PHB_ITEM wvt_Rect2Array( RECT * rc );
-extern HB_BOOL  wvt_Array2Point( PHB_ITEM aPoint, POINT * pt );
-extern PHB_ITEM wvt_Point2Array( POINT * pt );
-extern HB_BOOL  wvt_Array2Size( PHB_ITEM aSize, SIZE * siz );
-extern PHB_ITEM wvt_Size2Array( SIZE * siz );
-extern void     wvt_Rect2ArrayEx( RECT * rc, PHB_ITEM aRect );
-extern void     wvt_Point2ArrayEx( POINT * pt, PHB_ITEM aPoint);
-extern void     wvt_Size2ArrayEx( SIZE * siz, PHB_ITEM aSize );
+extern HB_BOOL  wvt_Array2Rect(PHB_ITEM aRect, RECT *rc);
+extern PHB_ITEM wvt_Rect2Array(RECT *rc);
+extern HB_BOOL  wvt_Array2Point(PHB_ITEM aPoint, POINT *pt);
+extern PHB_ITEM wvt_Point2Array(POINT *pt);
+extern HB_BOOL  wvt_Array2Size(PHB_ITEM aSize, SIZE *siz);
+extern PHB_ITEM wvt_Size2Array(SIZE *siz);
+extern void     wvt_Rect2ArrayEx(RECT *rc, PHB_ITEM aRect);
+extern void     wvt_Point2ArrayEx(POINT *pt, PHB_ITEM aPoint);
+extern void     wvt_Size2ArrayEx(SIZE *siz, PHB_ITEM aSize);
 #endif
 
 HB_EXTERN_END

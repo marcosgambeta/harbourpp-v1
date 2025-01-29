@@ -1,6 +1,6 @@
-/*
- *    Pritpal Bedi <bedipritpal@hotmail.com>
- */
+//
+//    Pritpal Bedi <bedipritpal@hotmail.com>
+//
 
 #include "inkey.ch"
 #include "hbgtinfo.ch"
