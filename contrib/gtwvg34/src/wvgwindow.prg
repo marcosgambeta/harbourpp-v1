@@ -208,7 +208,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    METHOD HandleEvent()                         INLINE EVENT_UNHANDLED
    METHOD isEnabled()                           INLINE ::is_enabled
    METHOD isVisible()                           INLINE ! ::is_hidden
-   METHOD setColorFG( nRGB )                    INLINE ::clr_FG := iif(HB_IsString( nRGB ), wvt_GetRGBColorByString( nRGB, 0 ), nRGB), ::invalidateRect()
+   METHOD setColorFG( nRGB )                    INLINE ::clr_FG := IIf(HB_IsString( nRGB ), wvt_GetRGBColorByString( nRGB, 0 ), nRGB), ::invalidateRect()
 
    METHOD enter( xParam )                       SETGET
    METHOD leave( xParam )                       SETGET

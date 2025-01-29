@@ -38,8 +38,8 @@ FUNCTION ft_Calendar(nRow, nCol, cColor, lShadow, lShowHelp)
    __defaultNIL(@lShadow, .F.)    // check shadow switch
    __defaultNIL(@lShowHelp, .F.)  // check help switch
 
-   nRow := iif(nRow < 1 .OR. nRow > 21,  1, nRow)     // check row bounds
-   nCol := iif(nCol < 1 .OR. nCol > 63, 63, nCol)     // check col bounds
+   nRow := IIf(nRow < 1 .OR. nRow > 21,  1, nRow)     // check row bounds
+   nCol := IIf(nCol < 1 .OR. nCol > 63, 63, nCol)     // check col bounds
 
    cSavColor   := SetColor(cColor)  // save current and set display color
    cSaveScreen := SaveScreen(nRow - 1, nCol - 1, nRow + 3, nCol + 17) // save screen
@@ -51,7 +51,7 @@ FUNCTION ft_Calendar(nRow, nCol, cColor, lShadow, lShowHelp)
    ENDIF
 
    IF lShowHelp
-      nHelpRow := iif(nRow > 10, nRow - 10, nRow + 6)
+      nHelpRow := IIf(nRow > 10, nRow - 10, nRow + 6)
    ENDIF
 
    DO WHILE nKey != K_ESC
@@ -135,7 +135,7 @@ STATIC FUNCTION JDOY(nYear, nMonth, nDay)
 
    LOCAL cString := "000031059090120151181212243273304334"
 
-   RETURN VALS(cString, (nMonth - 1) * 3 + 1, 3 ) + nDay + iif(nYear % 4 == 0 .AND. nMonth > 2, 1, 0)
+   RETURN VALS(cString, (nMonth - 1) * 3 + 1, 3 ) + nDay + IIf(nYear % 4 == 0 .AND. nMonth > 2, 1, 0)
 
 STATIC FUNCTION VALS(cString, nOffset, nChar)
 

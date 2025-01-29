@@ -35,7 +35,7 @@ FUNCTION DynWinDialog( nInfo )
 
    aDlg := wvt_MakeDlgTemplate( 1, 4, 21, 60, { 0, 0, 0, 0 },  ;
       "Dialog First [ " + hb_ntos( nInfo ) + " ] " + ;
-      iif(nInfo % 2 == 0, "Modeless", "Modal"), " Dialog !", nStyle )
+      IIf(nInfo % 2 == 0, "Modeless", "Modal"), " Dialog !", nStyle )
 
    // Multi line edit control
    nStyle := WIN_WS_CHILD + WIN_WS_VISIBLE + WIN_WS_TABSTOP + ES_AUTOVSCROLL + ES_MULTILINE + ;
@@ -127,7 +127,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       DO CASE
       CASE wParam == ID_CHK_SATIS
          lClicked := ( wapi_IsDlgButtonChecked(hDlg, ID_CHK_SATIS) == 1 )
-         wapi_MessageBox( hDlg, iif(lClicked, "Satisfied", "UnSatisfied"), "CheckBoxStatus" )
+         wapi_MessageBox( hDlg, IIf(lClicked, "Satisfied", "UnSatisfied"), "CheckBoxStatus" )
 
       CASE wParam == ID_RDO_XH
          wapi_MessageBox( hDlg, "Harbour", "Compiler" )

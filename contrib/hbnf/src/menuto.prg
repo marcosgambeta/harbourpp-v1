@@ -260,19 +260,19 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
          // If Home was pressed, go to the designated menu item.
 
       CASE nKey == K_HOME
-         nActive := iif(t_aHome[nMenu, nActive] == NIL, 1, t_aHome[nMenu, nActive])
+         nActive := IIf(t_aHome[nMenu, nActive] == NIL, 1, t_aHome[nMenu, nActive])
 
          // If End was pressed, go to the designated menu item.
 
       CASE nKey == K_END
-         nActive := iif(t_aEnd[nMenu, nActive] == NIL, nCount, t_aEnd[nMenu, nActive])
+         nActive := IIf(t_aEnd[nMenu, nActive] == NIL, nCount, t_aEnd[nMenu, nActive])
 
          // If Up Arrow was pressed, go to the designated menu item.
 
       CASE nKey == K_UP
          IF t_aUp[nMenu, nActive] == NIL
             IF --nActive < 1
-               nActive := iif(lWrap, nCount, 1)
+               nActive := IIf(lWrap, nCount, 1)
             ENDIF
          ELSE
             IF isOkay(t_aUp[nMenu, nActive])
@@ -285,7 +285,7 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
       CASE nKey == K_DOWN
          IF t_aDown[nMenu, nActive] == NIL
             if ++nActive > nCount
-               nActive := iif(lWrap, 1, nCount)
+               nActive := IIf(lWrap, 1, nCount)
             ENDIF
          ELSE
             IF isOkay(t_aDown[nMenu, nActive])
@@ -298,7 +298,7 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
       CASE nKey == K_LEFT
          IF t_aLeft[nMenu, nActive] == NIL
             IF --nActive < 1
-               nActive := iif(lWrap, nCount, 1)
+               nActive := IIf(lWrap, nCount, 1)
             ENDIF
          ELSE
             IF isOkay(t_aLeft[nMenu, nActive])
@@ -311,7 +311,7 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
       CASE nKey == K_RIGHT
          IF t_aRight[nMenu, nActive] == NIL
             if ++nActive > nCount
-               nActive := iif(lWrap, 1, nCount)
+               nActive := IIf(lWrap, 1, nCount)
             ENDIF
          ELSE
             IF isOkay(t_aRight[nMenu, nActive])

@@ -31,4 +31,4 @@ FUNCTION ft_AAvg(aArray, nStartIndex, nEndIndex)
    FORCE_BETWEEN(1, nEndIndex, Len(aArray))
    FORCE_BETWEEN(1, nStartIndex, nEndIndex)
 
-   RETURN iif(!HB_IsArray(aArray) .OR. Empty(aArray), 0, ft_ASum(aArray, nStartIndex, nEndIndex) / (nEndIndex - nStartIndex + 1))
+   RETURN IIf(!HB_IsArray(aArray) .OR. Empty(aArray), 0, ft_ASum(aArray, nStartIndex, nEndIndex) / (nEndIndex - nStartIndex + 1))

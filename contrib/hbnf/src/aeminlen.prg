@@ -43,7 +43,7 @@ FUNCTION ft_AEMinLen(aArray, nDimension, nStart, nCount)
          nLen := Len(LTrim(Transform(aArray[i], "@X")))
       ENDSWITCH
 
-      nMinlen := iif(nMinLen == NIL, nLen, Min(nMinlen, nLen))
+      nMinlen := IIf(nMinLen == NIL, nLen, Min(nMinlen, nLen))
    NEXT
 
    IF nMinLen == NIL

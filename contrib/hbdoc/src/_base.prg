@@ -107,7 +107,7 @@ METHOD TPLGenerate:New( cDir, cFilename, cTitle, cExtension, cLang, nType )
    ::cOutFileName := ;
       ::cDir + hb_ps() + ;
       ::cFilename + ;
-      iif(Lower(::cLang) == "en", "", "." + ::cLang) + ;
+      IIf(Lower(::cLang) == "en", "", "." + ::cLang) + ;
       ::cExtension
 
    RETURN Self

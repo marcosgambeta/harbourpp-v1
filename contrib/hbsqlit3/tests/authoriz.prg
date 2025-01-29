@@ -138,7 +138,7 @@ FUNCTION Authorizer2(nAction, cName1, cName2, cDatabaseName, cTriggerOrViewName)
 
    SetColor(oldColor)
 
-   RETURN iif(cName2 == "pasw", SQLITE_IGNORE, SQLITE_OK)
+   RETURN IIf(cName2 == "pasw", SQLITE_IGNORE, SQLITE_OK)
 
 /**
 */
@@ -150,7 +150,7 @@ FUNCTION Authorizer3(nAction, cName1, cName2, cDatabaseName, cTriggerOrViewName)
    HB_SYMBOL_UNUSED(cDatabaseName)
    HB_SYMBOL_UNUSED(cTriggerOrViewName)
 
-   RETURN iif(nAction == SQLITE_SELECT, SQLITE_DENY, SQLITE_OK)
+   RETURN IIf(nAction == SQLITE_SELECT, SQLITE_DENY, SQLITE_OK)
 
 /**
 */
@@ -175,7 +175,7 @@ STATIC FUNCTION cErrorMsg(nError, lShortMsg)
 
    hb_default(@lShortMsg, .T.)
 
-   RETURN iif(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
+   RETURN IIf(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
 
 /**
 */

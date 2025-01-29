@@ -51,7 +51,7 @@ PROCEDURE Main()
    ? Time()
    FOR n := 1 TO _NUMROWS_
       cSql := "INSERT INTO test(code, dept, name, sales, tax, salary, budget, Discount, Creation, Description) "
-      cSql += "VALUES( " + Str(n) + ", 2, 'TEST', '" + iif(n % 2 != 0, "y", "n") + "', 5, 3000, 1500.2, 7.5, '12-22-2003', 'Short Description ')"
+      cSql += "VALUES( " + Str(n) + ", 2, 'TEST', '" + IIf(n % 2 != 0, "y", "n") + "', 5, 3000, 1500.2, 7.5, '12-22-2003', 'Short Description ')"
 
       oStmt := oConn:createStatement()
       oStmt:executeUpdate(cSql)
@@ -70,7 +70,7 @@ PROCEDURE Main()
       oStmt:SetNumber(1, n)
       oStmt:SetNumber(2, 2)
       oStmt:SetString(3, "TEST")
-      oStmt:SetBoolean(4, iif(n % 2 != 0, .T., .F.))
+      oStmt:SetBoolean(4, IIf(n % 2 != 0, .T., .F.))
       oStmt:SetNumber(5, 5)
       oStmt:SetNumber(6, 3000)
       oStmt:SetNumber(7, 1500)

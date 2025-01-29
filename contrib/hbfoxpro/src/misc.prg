@@ -66,23 +66,23 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 10
       RETURN DToC(CToD("") + hb_defaultValue( xPar1, 0 ))
    CASE 11
-      RETURN hb_ntos( iif(HB_IsDateTime( xPar1 ), xPar1, ;
-                           iif(HB_IsString( xPar1 ), CToD(xPar1), ;
+      RETURN hb_ntos( IIf(HB_IsDateTime( xPar1 ), xPar1, ;
+                           IIf(HB_IsString( xPar1 ), CToD(xPar1), ;
                            Date())) - CToD("") )
    CASE 100
-      RETURN iif(Set( _SET_CONSOLE ), "ON", "OFF")
+      RETURN IIf(Set( _SET_CONSOLE ), "ON", "OFF")
    CASE 101
       RETURN Set( _SET_DEVICE )
    CASE 102
-      RETURN iif(Set( _SET_PRINTER ), "ON", "OFF")
+      RETURN IIf(Set( _SET_PRINTER ), "ON", "OFF")
    CASE 2002
       RETURN SetCursor( hb_defaultValue( xPar1, SC_NONE ) )
    CASE 2003
       RETURN CurDir()
    CASE 2011
-      RETURN iif(! dbInfo( DBOI_SHARED ),     "Exclusive", ;
-             iif(dbInfo( DBI_ISFLOCK ),       "File locked", ;
-             iif(dbRecordInfo( DBRI_LOCKED ), "Record locked", ;
+      RETURN IIf(! dbInfo( DBOI_SHARED ),     "Exclusive", ;
+             IIf(dbInfo( DBI_ISFLOCK ),       "File locked", ;
+             IIf(dbRecordInfo( DBRI_LOCKED ), "Record locked", ;
                                                "Not locked")))
    CASE 2020
       RETURN hb_DiskSpace( Set( _SET_DEFAULT ) )

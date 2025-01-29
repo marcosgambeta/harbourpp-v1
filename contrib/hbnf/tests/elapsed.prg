@@ -13,7 +13,7 @@ PROCEDURE Main()
    FOR n := 1 TO 4
       ? aDataTest[ n, 1 ], Str( aDataTest[ n, 2 ], 12, 4 )
       ?? " "
-      ?? iif(n == 1, "Days", iif(n == 2, "Hours", iif(n == 3, "Mins.", "Secs.")))
+      ?? IIf(n == 1, "Days", IIf(n == 2, "Hours", IIf(n == 3, "Mins.", "Secs.")))
    NEXT
 
    RETURN

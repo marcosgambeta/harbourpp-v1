@@ -185,7 +185,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    IF HB_IsString( cPopServer ) .AND. lPopAuth
 
       BEGIN SEQUENCE WITH __BreakBlock()
-         oUrl1 := TUrl():New( iif(lSSL, "pop3s://", "pop://") + cUser + ":" + cPass + "@" + cPopServer + "/" )
+         oUrl1 := TUrl():New( IIf(lSSL, "pop3s://", "pop://") + cUser + ":" + cPass + "@" + cPopServer + "/" )
          oUrl1:cUserid := StrTran(cUser, "&at;", "@")
          oPop := TIPClientPOP():New( oUrl1, xTrace )
       RECOVER
@@ -200,7 +200,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      oUrl := TUrl():New( iif(lSSL, "smtps://", "smtp://") + cUser + iif(Empty(cSMTPPass), "", ":" + cSMTPPass) + "@" + cServer )
+      oUrl := TUrl():New( IIf(lSSL, "smtps://", "smtp://") + cUser + IIf(Empty(cSMTPPass), "", ":" + cSMTPPass) + "@" + cServer )
    RECOVER
       RETURN .F.
    END SEQUENCE
@@ -210,8 +210,8 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
 
    oUrl:cFile := ;
       cTo + ;
-      iif(Empty(cCC), "", "," + cCC) + ;
-      iif(Empty(cBCC), "", "," + cBCC)
+      IIf(Empty(cCC), "", "," + cCC) + ;
+      IIf(Empty(cBCC), "", "," + cBCC)
 
    BEGIN SEQUENCE WITH __BreakBlock()
       oInmail := TIPClientSMTP():New( oUrl, xTrace,, cClientHost )

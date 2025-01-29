@@ -68,7 +68,7 @@ STATIC FUNCTION xhb_cgi_DefError(e)
    LOCAL i
    LOCAL cMessage   := ""
    LOCAL cErrString := ""
-   LOCAL nH         := iif(HtmlPageHandle() == NIL, 0, HtmlPageHandle())
+   LOCAL nH         := IIf(HtmlPageHandle() == NIL, 0, HtmlPageHandle())
 
    // by default, division by zero yields zero
    IF e:genCode == EG_ZERODIV
@@ -197,7 +197,7 @@ STATIC FUNCTION ErrorMessage(e)
    LOCAL cMessage := ""
 
    // start error message
-   cMessage += iif(e:severity > ES_WARNING, "Error ", "Warning ")
+   cMessage += IIf(e:severity > ES_WARNING, "Error ", "Warning ")
 
    // add subsystem name if available
    IF HB_IsString(e:subsystem)

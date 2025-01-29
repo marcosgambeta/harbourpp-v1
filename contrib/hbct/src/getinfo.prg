@@ -78,7 +78,7 @@ FUNCTION GetFldRow(nField)
       oGet := GetList[nField]
    ENDIF
 
-   RETURN iif(oGet != NIL, oGet:Row, -1)
+   RETURN IIf(oGet != NIL, oGet:Row, -1)
 
 FUNCTION GetFldCol(nField)
 
@@ -90,7 +90,7 @@ FUNCTION GetFldCol(nField)
       oGet := GetList[nField]
    ENDIF
 
-   RETURN iif(oGet != NIL, oGet:Col, -1)
+   RETURN IIf(oGet != NIL, oGet:Col, -1)
 
 FUNCTION GetFldVar(nField)
 
@@ -102,4 +102,4 @@ FUNCTION GetFldVar(nField)
       oGet := GetList[nField]
    ENDIF
 
-   RETURN iif(oGet != NIL, oGet:Name, -1)
+   RETURN IIf(oGet != NIL, oGet:Name, -1)

@@ -161,8 +161,8 @@ FUNCTION hsx_Create( cFile, cExpr, nKeySize, nBufSize, lCase, nFiltSet )
    ELSEIF ! rddName() == "HSCDX"
    ELSE
       aWData := USRRDD_AREADATA(Select())
-      nOpenMode := iif(dbInfo( DBI_SHARED ), 1, 0) + ;
-         iif(dbInfo( DBI_ISREADONLY ), 2, 0)
+      nOpenMode := IIf(dbInfo( DBI_SHARED ), 1, 0) + ;
+         IIf(dbInfo( DBI_ISREADONLY ), 2, 0)
       IF ( nHsx := hs_Index( cFile, cExpr, nKeySize, nOpenMode, nBufSize, lCase, nFiltSet ) ) >= 0
          AAdd( aWData[ 2 ], nHsx )
          AAdd( aWData[ 3 ], cFile )
@@ -179,8 +179,8 @@ PROCEDURE hsx_Open( cFile, nBufSize )
    ELSEIF ! rddName() == "HSCDX"
    ELSE
       aWData := USRRDD_AREADATA(Select())
-      nOpenMode := iif(dbInfo( DBI_SHARED ), 1, 0) + ;
-         iif(dbInfo( DBI_ISREADONLY ), 2, 0)
+      nOpenMode := IIf(dbInfo( DBI_SHARED ), 1, 0) + ;
+         IIf(dbInfo( DBI_ISREADONLY ), 2, 0)
       IF ( nHsx := hs_Open( cFile, nBufSize, nOpenMode ) ) >= 0
          AAdd( aWData[ 2 ], nHsx )
          AAdd( aWData[ 3 ], cFile )

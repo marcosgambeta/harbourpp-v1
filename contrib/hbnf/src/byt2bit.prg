@@ -28,7 +28,7 @@ FUNCTION ft_Byt2Bit(cByte)
       cByte := hb_BCode(cByte)
       cBitString := ""
       FOR nCounter := 7 TO 0 STEP -1
-         cBitString += iif(hb_bitTest(cByte, nCounter), "1", "0")
+         cBitString += IIf(hb_bitTest(cByte, nCounter), "1", "0")
       NEXT
       RETURN cBitString
    ENDIF

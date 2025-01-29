@@ -157,7 +157,7 @@ METHOD THtmlControl:Put()
    ::form := HtmlFormName()
    ::oHtm := HtmlPageObject()
 
-   ::cOutput += iif(::lBreak, CRLF() + "<br />", CRLF())
+   ::cOutput += IIf(::lBreak, CRLF() + "<br />", CRLF())
    IF ::lLabel
       ::cOutPut += CRLF() + "<label>" + CRLF()
    ENDIF
@@ -307,10 +307,10 @@ METHOD THtmlControl:Put()
 
       FOR i := 1 TO Len(::aOptions)
          cStr := "<option"
-         cStr += iif(::aOptions[i, _OPTION_VALUE] != NIL, " value=" + ::aOptions[i, _OPTION_VALUE], "")
-         cStr += iif(::aOptions[i, _OPTION_LABEL] != NIL, " label=" + ::aOptions[i, _OPTION_LABEL], "")
-         cStr += iif(::aOptions[i, _OPTION_SELECTED] != NIL .AND. ::aOptions[i, _OPTION_SELECTED], " SELECTED ", "")
-         cStr += iif(::aOptions[i, _OPTION_DISABLED] != NIL .AND. ::aOptions[i, _OPTION_DISABLED], " DISABLED ", "")
+         cStr += IIf(::aOptions[i, _OPTION_VALUE] != NIL, " value=" + ::aOptions[i, _OPTION_VALUE], "")
+         cStr += IIf(::aOptions[i, _OPTION_LABEL] != NIL, " label=" + ::aOptions[i, _OPTION_LABEL], "")
+         cStr += IIf(::aOptions[i, _OPTION_SELECTED] != NIL .AND. ::aOptions[i, _OPTION_SELECTED], " SELECTED ", "")
+         cStr += IIf(::aOptions[i, _OPTION_DISABLED] != NIL .AND. ::aOptions[i, _OPTION_DISABLED], " DISABLED ", "")
          cStr += ">" + ::aOptions[i, _OPTION_TEXT] + "</option>" + CRLF()
 //       FWrite(::nH, cStr)
          ::oHtm:cStr += cStr
@@ -442,7 +442,7 @@ CREATE CLASS THtmlForm
 
    METHOD setwidth(c) INLINE ::width := c
 
-   METHOD AddControl(o) INLINE iif(HB_IsObject(o), (o:nH := ::nH, o:Form := Self), ), ;
+   METHOD AddControl(o) INLINE IIf(HB_IsObject(o), (o:nH := ::nH, o:Form := Self), ), ;
       AAdd(::aControls, o)
 
    METHOD PutControls() INLINE AEval(::aControls, {|e|e:Put()})
@@ -625,7 +625,7 @@ METHOD THtmlForm:Put(lPutControls)
 // FWrite(::nH, ::cOutput)
    ::oHtm:cStr += ::cOutput
    IF lPutControls
-      AEval(::aControls, {|e|iif(HB_IsObject(e), e:Put(), ::oHtm:cStr += e)})
+      AEval(::aControls, {|e|IIf(HB_IsObject(e), e:Put(), ::oHtm:cStr += e)})
    ENDIF
 
    RETURN Self

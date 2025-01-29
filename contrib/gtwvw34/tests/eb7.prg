@@ -263,7 +263,7 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
       clabel := aGet[ __GET_CLABEL ]
       nrow1 := aGet[ __GET_NROW ]
       ncol1 := aGet[ __GET_NCOL ]
-      nrow2 := iif(aGet[ __GET_LMULTILINE ], nrow1 + 3, nrow1)
+      nrow2 := IIf(aGet[ __GET_LMULTILINE ], nrow1 + 3, nrow1)
       ncol2 := ncol1 + nlen - 1
 
       @ nrow1, ncol1 - Len(clabel) - 1 SAY clabel
@@ -273,7 +273,7 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
          {| nWinNum, nId, nEvent | MaskEditBox( nWinNum, nId, nEvent, @aEBGets ) }, ;
          aGet[ __GET_LMULTILINE ], ;  // EBtype
       0, ;  // nmorestyle
-      iif(lmultiline, NIL, nlen + 1), ; // nMaxChar
+      IIf(lmultiline, NIL, nlen + 1), ; // nMaxChar
       , )
 
       nmaxrow := Max( nmaxrow, nrow2 )
@@ -919,7 +919,7 @@ STATIC FUNCTION inp_handler( nwinnum, bhandler )
 
    STATIC s_bhandlers := {}
 
-   LOCAL retval := iif(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
+   LOCAL retval := IIf(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
 
    IF HB_IsEvalItem( bhandler )
       IF Len(s_bhandlers) < nwinnum + 1

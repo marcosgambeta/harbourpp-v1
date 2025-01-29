@@ -26,10 +26,10 @@ FUNCTION ft_Sqzn(nValue, nSize, nDecimals)
    __defaultNIL(@nDecimals, 0)
 
    nValue      := nValue * (10 ^ nDecimals)
-   nSize       := iif((nSize / 2) != Int(nSize / 2), nSize + 1, nSize)
+   nSize       := IIf((nSize / 2) != Int(nSize / 2), nSize + 1, nSize)
    tmpstr      := Str(Abs(nValue), nSize)
    tmpstr      := StrTran(tmpstr, " ", "0")
-   cCompressed := hb_BChar(Val(hb_BSubStr(tmpstr, 1, 2)) + iif(nValue < 0, 128, 0))
+   cCompressed := hb_BChar(Val(hb_BSubStr(tmpstr, 1, 2)) + IIf(nValue < 0, 128, 0))
 
    FOR k := 3 TO hb_BLen(tmpstr) STEP 2
       cCompressed += hb_BChar(Val(hb_BSubStr(tmpstr, k, 2)))
@@ -47,7 +47,7 @@ FUNCTION ft_Unsqzn(cCompressed, nSize, nDecimals)
    __defaultNIL(@nSize, 10)
    __defaultNIL(@nDecimals, 0)
 
-   nSize := iif((nSize / 2) != Int(nSize / 2), nSize + 1, nSize)
+   nSize := IIf((nSize / 2) != Int(nSize / 2), nSize + 1, nSize)
    IF hb_BCode(cCompressed) > 127
       tmp   := Str(hb_BCode(cCompressed) - 128, 2)
       multi := -1

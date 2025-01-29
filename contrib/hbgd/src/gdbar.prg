@@ -198,7 +198,7 @@ METHOD GDBar:DrawSingleBar( pcode )
 
       FOR i := 1 TO ::res
          ::Line( ::positionX + i, ::positionY, ::positionX + i, ::positionY + ::maxHeight, ;
-            iif(SubStr(pcode, j, 1) $ "0", ::BackColor, ::FillColor) )
+            IIf(SubStr(pcode, j, 1) $ "0", ::BackColor, ::FillColor) )
       NEXT
 
       ::NextX()
@@ -222,8 +222,8 @@ METHOD GDBar:DrawSingleI25( pcode )
 
    FOR j := 1 TO Len(pcode)
 
-      imgBar := iif(j % 2 == 0, ::FillColor, ::BackColor)
-      imgWid := iif(SubStr(pcode, j, 1) == "0", widthSlimBar, widthFatBar)
+      imgBar := IIf(j % 2 == 0, ::FillColor, ::BackColor)
+      imgWid := IIf(SubStr(pcode, j, 1) == "0", widthSlimBar, widthFatBar)
 
       end_y := ::maxHeight
 
@@ -298,7 +298,7 @@ METHOD GDBar:CheckValInArray( cChar )
 
    LOCAL nPos := AScan( ::keys, {| x | SubStr(x, 1, 1) == cChar } )
 
-   RETURN iif(nPos > 0, nPos, NIL)
+   RETURN IIf(nPos > 0, nPos, NIL)
 
 METHOD GDBar:Finish( image_style, quality, nFG )
 

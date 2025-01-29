@@ -108,15 +108,15 @@ CREATE CLASS THtml
 
    METHOD CGIClose()
 
-   METHOD SetPageColor(cColor, lBody) INLINE hb_default(@lBody, .T.), ::cStr += iif(lBody, '<body bgcolor="' + cColor + '">', ' bgcolor="' + cColor + '" ')
+   METHOD SetPageColor(cColor, lBody) INLINE hb_default(@lBody, .T.), ::cStr += IIf(lBody, '<body bgcolor="' + cColor + '">', ' bgcolor="' + cColor + '" ')
 
-   METHOD SetTextColor(cColor, lBody) INLINE hb_default(@lBody, .T.), ::cStr += iif(lBody, '<body text="' + cColor + '">', ' text="' + cColor + '" ')
+   METHOD SetTextColor(cColor, lBody) INLINE hb_default(@lBody, .T.), ::cStr += IIf(lBody, '<body text="' + cColor + '">', ' text="' + cColor + '" ')
 
-   METHOD SetBgImage(cImage, lBody) INLINE hb_default(@lBody, .T.), ::cStr += iif(lBody, '<body background="' + cImage + '">', ' background="' + cImage + '" ')
+   METHOD SetBgImage(cImage, lBody) INLINE hb_default(@lBody, .T.), ::cStr += IIf(lBody, '<body background="' + cImage + '">', ' background="' + cImage + '" ')
 
    METHOD Close()
 
-   METHOD SetCenter(lOn) INLINE ::cStr += iif(lOn, "<center>", "</center>")
+   METHOD SetCenter(lOn) INLINE ::cStr += IIf(lOn, "<center>", "</center>")
 
    METHOD SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet)
 
@@ -145,7 +145,7 @@ CREATE CLASS THtml
       cName, cAlt, cTarget, nWidth, lBreak, ID, MAP, ALING, HSPACE)
 
    METHOD Text(cText, nCols, lWrap) INLINE hb_default(@lWrap, .T.), hb_default(@nCols, 80), ;
-      ::cStr += "<pre" + iif(nCols != NIL, ' cols="' + hb_ntos(nCols) + "'", "") + iif(lWrap, " WRAP>", ">") + CRLF() + cText + CRLF() + "</pre>" + CRLF()
+      ::cStr += "<pre" + IIf(nCols != NIL, ' cols="' + hb_ntos(nCols) + "'", "") + IIf(lWrap, " WRAP>", ">") + CRLF() + cText + CRLF() + "</pre>" + CRLF()
 
    METHOD MultiCol(txt, cols, gutter, width) INLINE hb_default(@txt, ""), ;
       hb_default(@cols, 2), ;
@@ -533,7 +533,7 @@ METHOD THtml:SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet)
    __defaultNIL(@cFont, ::fontFace)
    __defaultNIL(@nSize, ::fontSize)
    __defaultNIL(@cColor, ::fontColor)
-   __defaultNIL(@lset, iif(cFont != NIL, .T., .F.))
+   __defaultNIL(@lset, IIf(cFont != NIL, .T., .F.))
 
    IF cFont != NIL
       cStr += ' face="' + cFont + '"'
@@ -565,15 +565,15 @@ METHOD THtml:SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet)
    ENDIF
 
    IF lBold != NIL
-      iif(lBold, cStr += '<b>', cStr += '</b>')
+      IIf(lBold, cStr += '<b>', cStr += '</b>')
    ENDIF
 
    IF lItalic != NIL
-      iif(lItalic, cStr += '<i>', cStr += '</i>')
+      IIf(lItalic, cStr += '<i>', cStr += '</i>')
    ENDIF
 
    IF lULine != NIL
-      iif(lULine, cStr += '<u>', cStr += '</u>')
+      IIf(lULine, cStr += '<u>', cStr += '</u>')
    ENDIF
 
    cStr += '</font>'
@@ -635,15 +635,15 @@ METHOD THtml:StartFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet, lPut)
    ENDIF
 
    IF lBold != NIL
-      iif(lBold, cStr += '<b>', cStr += '</b>')
+      IIf(lBold, cStr += '<b>', cStr += '</b>')
    ENDIF
 
    IF lItalic != NIL
-      iif(lItalic, cStr += '<i>', cStr += '</i>')
+      IIf(lItalic, cStr += '<i>', cStr += '</i>')
    ENDIF
 
    IF lULine != NIL
-      iif(lULine, cStr += '<u>', cStr += '</u>')
+      IIf(lULine, cStr += '<u>', cStr += '</u>')
    ENDIF
 
    ::cStr += cStr + CRLF()
@@ -665,7 +665,7 @@ METHOD THtml:DefineFont(cFont, cType, nSize, cColor, lSet)
    __defaultNIL(@cFont, ::fontFace)
    __defaultNIL(@nSize, ::fontSize)
    __defaultNIL(@cColor, ::fontColor)
-   __defaultNIL(@lset, iif(cFont != NIL, .T., .F.))
+   __defaultNIL(@lset, IIf(cFont != NIL, .T., .F.))
 
    IF cFont != NIL
       cStr += ' face="' + cFont + '"'
@@ -741,7 +741,7 @@ METHOD THtml:Say(str, font, size, type, color, style)
    __defaultNIL(@COLOR, ::FontColor)
 
    IF FONT != NIL .OR. Size != NIL .OR. COLOR != NIL
-      cOut := '<font ' + iif(font != NIL, 'face="' + font + '"', '') + iif(color != NIL, ' color=' + color, '') + iif(nSize != NIL, ' size=' + hb_ntos(size), "")
+      cOut := '<font ' + IIf(font != NIL, 'face="' + font + '"', '') + IIf(color != NIL, ' color=' + color, '') + IIf(nSize != NIL, ' size=' + hb_ntos(size), "")
 
       IF Style != NIL
          cOut += '" Style="' + style + '">'
@@ -861,11 +861,11 @@ METHOD THtml:HLine(nSize, nWidth, lShade, cColor)
 
    IF lShade
       ::cStr += CRLF() + ;
-         "<hr size = " + hb_ntos(nSize) + iif(cColor != NIL, " COLOR  " + cColor, "") + " width= " + hb_ntos(nWidth) + '%>' + ;
+         "<hr size = " + hb_ntos(nSize) + IIf(cColor != NIL, " COLOR  " + cColor, "") + " width= " + hb_ntos(nWidth) + '%>' + ;
          CRLF()
    ELSE
       ::cStr += CRLF() + ;
-         "<hr noshade size = " + hb_ntos(nSize) + iif(cColor != NIL, " COLOR  " + cColor, "") + " width= " + hb_ntos(nWidth) + '%>' + ;
+         "<hr noshade size = " + hb_ntos(nSize) + IIf(cColor != NIL, " COLOR  " + cColor, "") + " width= " + hb_ntos(nWidth) + '%>' + ;
          CRLF()
    ENDIF
 
@@ -983,7 +983,7 @@ METHOD THtml:PutTextUrl(cText, cUrl, cOnClick, cOnMsOver, cOnMsout, cTarget, fon
    ENDIF
 
    ::cStr += ;
-      '</a>' + iif(lBreak, "<br />" + CRLF(), CRLF())
+      '</a>' + IIf(lBreak, "<br />" + CRLF(), CRLF())
 
    RETURN Self
 
@@ -1011,7 +1011,7 @@ METHOD THtml:PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
    ENDIF
 
    IF nBorder != NIL
-      cStr += " border = " + iif(HB_IsNumeric(nBorder), hb_ntos(nBorder), nBorder) + CRLF()
+      cStr += " border = " + IIf(HB_IsNumeric(nBorder), hb_ntos(nBorder), nBorder) + CRLF()
    ENDIF
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
@@ -1055,8 +1055,8 @@ METHOD THtml:PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
    ENDIF
 
    ::cStr += ;
-      '<a href=' + cUrl + iif(cClass != NIL, ' class="' + cClass + '"', "") + '><img src="' + cImage + '"' + ;
-      cStr + '></a>' + iif(lBreak, "<br />" + CRLF(), "")
+      '<a href=' + cUrl + IIf(cClass != NIL, ' class="' + cClass + '"', "") + '><img src="' + cImage + '"' + ;
+      cStr + '></a>' + IIf(lBreak, "<br />" + CRLF(), "")
 
    RETURN Self
 
@@ -1107,8 +1107,8 @@ METHOD THtml:PutTextImageUrl(cImage, nBorder, nHeight, cUrl, ;
    ENDIF
 
    ::cStr += ;
-      '<a href=' + cUrl + iif(cClass != NIL, ' class="' + cClass + '"', "") + ">" + cText + '<img src="' + cImage + '"' + ;
-      cStr + '></a>' + iif(lBreak, "<br />" + CRLF(), "")
+      '<a href=' + cUrl + IIf(cClass != NIL, ' class="' + cClass + '"', "") + ">" + cText + '<img src="' + cImage + '"' + ;
+      cStr + '></a>' + IIf(lBreak, "<br />" + CRLF(), "")
 
    RETURN Self
 
@@ -1187,7 +1187,7 @@ METHOD THtml:PutImage(cImage, nBorder, nHeight, ;
 
    ::cStr += ;
       '<img src="' + cImage + '"' + ;
-      cStr + ">" + iif(lBreak, "<br />" + CRLF(), "")
+      cStr + ">" + IIf(lBreak, "<br />" + CRLF(), "")
 
    RETURN Self
 
@@ -1262,7 +1262,7 @@ METHOD THtml:DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
       cStr += " bgcolor=" + ColorBG + " "
    ENDIF
 
-   cStr += iif(nBorder = NIL, "border ", "border=" + hb_ntos(nBorder) + " ")
+   cStr += IIf(nBorder = NIL, "border ", "border=" + hb_ntos(nBorder) + " ")
 
    IF ncellpadding != NIL
       cStr += ' CellPadding=' + hb_ntos(nCellPadding)
@@ -1276,7 +1276,7 @@ METHOD THtml:DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
       cStr += ' aling=' + '"' + cAling + '"'
    ENDIF
 
-   cStr += iif(xCols != NIL, " cols=" + hb_ntos(nCols), "")
+   cStr += IIf(xCols != NIL, " cols=" + hb_ntos(nCols), "")
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width=" + hb_ntos(nWidth)
@@ -1384,7 +1384,7 @@ METHOD THtml:TableHead(cHead, cColor, cAlign, cFont, nSize, cFntColor, nHeight, 
       cStr += ">"
    ENDIF
 
-   cStr += cHead + iif(cFont != NIL, '</font>', "") + "</th>" + CRLF()
+   cStr += cHead + IIf(cFont != NIL, '</font>', "") + "</th>" + CRLF()
 
    ::cStr += cStr
 
@@ -1840,17 +1840,17 @@ METHOD THtml:Marquee(cText, cFont, cFntColor, nFntSize, ;
    ::cStr += '<marquee align="' + cAlign + '" '
    ::cStr += 'behavior="' + cBehavior + '" '
    ::cStr += 'width="' + hb_ntos(nWidth) + '%" '
-   ::cStr += iif(nHeight != NIL, 'height=' + hb_ntos(nHeight) + " ", "")
+   ::cStr += IIf(nHeight != NIL, 'height=' + hb_ntos(nHeight) + " ", "")
    ::cStr += 'bgColor="' + cBgColor + '" '
    ::cStr += 'scrollamount="' + hb_ntos(nScrollAmt) + '" '
    ::cStr += 'scrolldelay="' + hb_ntos(nScrollDelay) + '" '
-   ::cStr += 'loop=' + iif(HB_IsNumeric(loop), hb_ntos(loop), loop) + " "
+   ::cStr += 'loop=' + IIf(HB_IsNumeric(loop), hb_ntos(loop), loop) + " "
    ::cStr += 'direction="' + cDirection + '" '
-   ::cStr += iif(onMsOver != NIL, 'onMouseOver="' + onMsOver + '" ', "")
-   ::cStr += iif(onMsOut != NIL, 'onMouseOut="' + onMsOut + '" ', "")
-   ::cStr += iif(onClick != NIL, 'onClick="' + onClick + '" ', "")
-   ::cStr += iif(onStart != NIL, 'onStart="' + onStart + '" ', "")
-   ::cStr += iif(onFinish != NIL, 'onFinish="' + onFinish + '" ', "")
+   ::cStr += IIf(onMsOver != NIL, 'onMouseOver="' + onMsOver + '" ', "")
+   ::cStr += IIf(onMsOut != NIL, 'onMouseOut="' + onMsOut + '" ', "")
+   ::cStr += IIf(onClick != NIL, 'onClick="' + onClick + '" ', "")
+   ::cStr += IIf(onStart != NIL, 'onStart="' + onStart + '" ', "")
+   ::cStr += IIf(onFinish != NIL, 'onFinish="' + onFinish + '" ', "")
    ::cStr += ">"
    ::cStr += cText
 
@@ -1891,17 +1891,17 @@ METHOD THtml:StartMarquee(cFont, cFntColor, nFntSize, ;
    cStr += '<marquee align="' + cAlign + '" ' + ;
       'behavior="' + cBehavior + '" ' + ;
       'width="' + hb_ntos(nWidth) + '%" ' + ;
-      iif(nHeight != NIL, 'height=' + hb_ntos(nHeight) + " ", "") + ;
+      IIf(nHeight != NIL, 'height=' + hb_ntos(nHeight) + " ", "") + ;
       'bgColor="' + cBgColor + '" ' + ;
       'scrollamount="' + hb_ntos(nScrollAmt) + '" ' + ;
       'scrolldelay="' + hb_ntos(nScrollDelay) + '" ' + ;
-      'loop=' + iif(HB_IsNumeric(loop), hb_ntos(loop), loop) + " " + ;
+      'loop=' + IIf(HB_IsNumeric(loop), hb_ntos(loop), loop) + " " + ;
       'direction="' + cDirection + '" ' + ;
-      iif(onMsOver != NIL, 'onMouseOver="' + onMsOver + '" ', "") + ;
-      iif(onMsOut != NIL, 'onMouseOut="' + onMsOut + '" ', "") + ;
-      iif(onClick != NIL, 'onClick="' + onClick + '" ', "") + ;
-      iif(onStart != NIL, 'onStart="' + onStart + '" ', "") + ;
-      iif(onFinish != NIL, 'onFinish="' + onFinish + '" ', "") + ;
+      IIf(onMsOver != NIL, 'onMouseOver="' + onMsOver + '" ', "") + ;
+      IIf(onMsOut != NIL, 'onMouseOut="' + onMsOut + '" ', "") + ;
+      IIf(onClick != NIL, 'onClick="' + onClick + '" ', "") + ;
+      IIf(onStart != NIL, 'onStart="' + onStart + '" ', "") + ;
+      IIf(onFinish != NIL, 'onFinish="' + onFinish + '" ', "") + ;
       ">" + ;
       CRLF()
 
@@ -2292,7 +2292,7 @@ FUNCTION HtmlAny2Str(xVal)
    LOCAL xRet := NIL
 
    IF HB_IsString(xVal)
-      xRet := iif(Empty(xVal), ".", xVal)
+      xRet := IIf(Empty(xVal), ".", xVal)
 
    ELSEIF HB_IsNumeric(xVal)
       xRet := hb_ntos(xVal)
@@ -2304,7 +2304,7 @@ FUNCTION HtmlAny2Str(xVal)
       xRet := DToC(xVal)
 
    ELSEIF HB_IsLogical(xVal)
-      xRet := iif(xVal, "T", "F")
+      xRet := IIf(xVal, "T", "F")
 
    ELSEIF HB_IsBlock(xVal)
       xRet := "{||...}"

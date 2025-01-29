@@ -237,7 +237,7 @@ METHOD TRPCFunction:New(cFname, cSerial, nAuthLevel, oExec, oMeth)
 
    ::cName := aFuncDef[2]
    cParam := aFuncDef[3]
-   ::cReturn := iif(Len(aFuncDef) == 4, aFuncDef[4], aFuncDef[5])
+   ::cReturn := IIf(Len(aFuncDef) == 4, aFuncDef[4], aFuncDef[5])
 
    // analyze parameter list
    IF Len(RTrim(cParam)) > 0
@@ -301,7 +301,7 @@ METHOD TRPCFunction:Run(aParams, oClient)
       RETURN NIL
    ENDIF
 
-   nStart := iif(HB_IsObject(::aCall[1]), 3, 2)
+   nStart := IIf(HB_IsObject(::aCall[1]), 3, 2)
 
    FOR nCount := 1 TO Len(aParams)
       ::aCall[nStart] := aParams[nCount]

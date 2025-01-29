@@ -209,7 +209,7 @@ ENDCLASS
 
 METHOD win_Prn:New(cPrinter)
 
-   ::PrinterName := iif(!HB_IsString(cPrinter) .OR. Empty(cPrinter), win_printerGetDefault(), cPrinter)
+   ::PrinterName := IIf(!HB_IsString(cPrinter) .OR. Empty(cPrinter), win_printerGetDefault(), cPrinter)
    /* Initialized with the current properties of the printer [jarabal] */
    ::GetDocumentProperties()
 
@@ -853,7 +853,7 @@ METHOD win_Prn:Inch_To_PosY(nInch)
    RETURN Int((nInch * ::PixelsPerInchY) - ::TopMargin)
 
 METHOD win_Prn:GetDeviceCaps(nCaps)
-   RETURN iif(Empty(::hPrinterDc), 0, wapi_GetDeviceCaps(::hPrinterDC, nCaps))
+   RETURN IIf(Empty(::hPrinterDc), 0, wapi_GetDeviceCaps(::hPrinterDC, nCaps))
 
 STATIC FUNCTION __win_CreateFont(hDC, cName, nHeight, nMul, nWidth, nWeight, lUnderline, lItalic, nCharSet, lManualSize)
 
@@ -875,7 +875,7 @@ STATIC FUNCTION __win_CreateFont(hDC, cName, nHeight, nMul, nWidth, nWeight, lUn
       ENDIF
 
       hFont := wapi_CreateFont(nHeight, nWidth, 0, 0, nWeight, lItalic, lUnderline, .F., nCharSet, ;
-         iif(hb_Version(HB_VERSION_PLATFORM) == "WCE",, WIN_OUT_DEVICE_PRECIS ),, WIN_DRAFT_QUALITY,, cName)
+         IIf(hb_Version(HB_VERSION_PLATFORM) == "WCE",, WIN_OUT_DEVICE_PRECIS ),, WIN_DRAFT_QUALITY,, cName)
 
       IF !Empty(hFont)
          wapi_SelectObject(hDC, hFont)
@@ -896,5 +896,5 @@ STATIC FUNCTION win_GetCharSize(hDC, lHeight)
    tm := {=>}
    wapi_GetTextMetrics(hDC, tm)
 
-   RETURN tm[iif(hb_defaultValue(lHeight, .F.), "tmHeight", "tmAveCharWidth")]
+   RETURN tm[IIf(hb_defaultValue(lHeight, .F.), "tmHeight", "tmAveCharWidth")]
 #endif

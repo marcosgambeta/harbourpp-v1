@@ -30,7 +30,7 @@ FUNCTION ft_FindITh(cCheckFor, cCheckIn, nWhichOccurrence, lIgnoreCase)
       cCheckIn  := Upper(cCheckIn)
    ENDIF
 
-   RETURN iif(nWhichOccurrence == 1, ;
+   RETURN IIf(nWhichOccurrence == 1, ;
       At(cCheckFor, cCheckIn), ;
-      iif((nIthOccurrence := At(cCheckFor, StrTran(cCheckIn, cCheckFor, "", 1, nWhichOccurrence - 1)) ) == 0, 0, ;
+      IIf((nIthOccurrence := At(cCheckFor, StrTran(cCheckIn, cCheckFor, "", 1, nWhichOccurrence - 1)) ) == 0, 0, ;
       nIthOccurrence + ((nWhichOccurrence - 1) * Len(cCheckFor))))

@@ -38,7 +38,7 @@ FUNCTION ft_ASum(aArray, nStartIndex, nEndIndex)
       nSumTotal += ;
       CASE_AT(ValType(xElement), "NC", ;
       {0, xElement, ;
-      iif(HB_IsString(xElement), Len(xElement), 0)})}, ;
+      IIf(HB_IsString(xElement), Len(xElement), 0)})}, ;
       nStartIndex, nEndIndex - nStartIndex + 1)
 
    RETURN nSumTotal

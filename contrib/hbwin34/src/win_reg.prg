@@ -140,7 +140,7 @@ FUNCTION win_regQuery(nHKEY, cKeyName, cEntryName, xValue, lSetIt, nRegSam)
 
    SWITCH cValType
    CASE "L"
-      xValue := iif(xValue, 1, 0)
+      xValue := IIf(xValue, 1, 0)
       cValType := ValType(xValue)
       EXIT
    CASE "D"
@@ -160,7 +160,7 @@ STATIC FUNCTION Bin2U(c)
 
    LOCAL l := Bin2L(c)
 
-   RETURN iif(l < 0, l + (2 ^ 32), l)
+   RETURN IIf(l < 0, l + (2 ^ 32), l)
 
 FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
 
@@ -214,7 +214,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
       SWITCH ValType(xValue)
       CASE "L"
          nValueType := WIN_REG_DWORD
-         xName := iif(xValue, 1, 0)
+         xName := IIf(xValue, 1, 0)
          EXIT
       CASE "D"
          nValueType := WIN_REG_SZ

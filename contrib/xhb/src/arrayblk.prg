@@ -46,4 +46,4 @@
 // $HB_END_LICENSE$
 
 FUNCTION hb_ArrayBlock(aArray, nIndex)
-   RETURN {|x|iif(PCount() == 0, aArray[nIndex], aArray[nIndex] := x)}
+   RETURN {|x|IIf(PCount() == 0, aArray[nIndex], aArray[nIndex] := x)}

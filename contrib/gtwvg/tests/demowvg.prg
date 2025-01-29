@@ -106,8 +106,8 @@ PROCEDURE Main()
    oLastMenu:disableItem(11)
    oLastMenu:checkItem(1)
    oLastMenu:insItem(11, {"I am inserted later !", ;
-      {||wvg_MessageBox(, "Hi " + iif(oLastMenu:isItemChecked(1), "Yes", "No") + ;
-      iif(oLastMenu:isItemEnabled(12), " Yes", " No"))}})
+      {||wvg_MessageBox(, "Hi " + IIf(oLastMenu:isItemChecked(1), "Yes", "No") + ;
+      IIf(oLastMenu:isItemEnabled(12), " Yes", " No"))}})
 
    oLastMenu:setItem(14, {"This is Set Against Prev Menu", {||wvg_MessageBox(, "Hi")}})
 
@@ -189,7 +189,7 @@ STATIC PROCEDURE WvtConsoleGets(nMode)
    IF hb_mtvm()
       hb_threadStart({|oCrt|hb_gtReload("WVT"), ;
          oCrt := hb_gtSelect(), ;
-         iif(nMode == 0, WvtNextGetsConsole(), OnlineMap()), ;
+         IIf(nMode == 0, WvtNextGetsConsole(), OnlineMap()), ;
          oCrt := NIL})
    ENDIF
 

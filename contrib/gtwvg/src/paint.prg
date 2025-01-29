@@ -309,8 +309,8 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
       nStyle := WS_CAPTION + WS_SYSMENU + WS_GROUP + WS_TABSTOP + DS_SETFONT + WS_THICKFRAME + WS_VISIBLE + WS_POPUP + DS_3DLOOK
    ENDIF
 
-   AAdd(aDlg[1], iif(Empty(nHelpId), 0, nHelpId))
-   AAdd(aDlg[1], iif(Empty(nExStyle), 0, nExStyle))
+   AAdd(aDlg[1], IIf(Empty(nHelpId), 0, nHelpId))
+   AAdd(aDlg[1], IIf(Empty(nExStyle), 0, nExStyle))
    AAdd(aDlg[1], nStyle)
    AAdd(aDlg[1], 0)
    AAdd(aDlg[1], nX)
@@ -319,13 +319,13 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
    AAdd(aDlg[1], nH)
    AAdd(aDlg[1], 0)
    AAdd(aDlg[1], 0)
-   AAdd(aDlg[1], iif(HB_IsString(cTitle), cTitle, ""))
+   AAdd(aDlg[1], IIf(HB_IsString(cTitle), cTitle, ""))
 
    IF hb_bitAnd(nStyle, DS_SETFONT) == DS_SETFONT
-      AAdd(aDlg[1], iif(HB_IsNumeric(nPointSize), nPointSize, 8))
-      AAdd(aDlg[1], iif(HB_IsNumeric(nWeight), nWeight, 400))
-      AAdd(aDlg[1], iif(HB_IsLogical(lItalic), lItalic, .F.))
-      AAdd(aDlg[1], iif(HB_IsString(cFaceName), cFaceName, "MS Sans Serif"))
+      AAdd(aDlg[1], IIf(HB_IsNumeric(nPointSize), nPointSize, 8))
+      AAdd(aDlg[1], IIf(HB_IsNumeric(nWeight), nWeight, 400))
+      AAdd(aDlg[1], IIf(HB_IsLogical(lItalic), lItalic, .F.))
+      AAdd(aDlg[1], IIf(HB_IsString(cFaceName), cFaceName, "MS Sans Serif"))
    ENDIF
 
    RETURN aDlg
@@ -387,16 +387,16 @@ FUNCTION wvt_AddDlgItem(aDlg, nTop, nLeft, nRows, nCols, aOffSet, cnId, cnDlgCla
 
    aDlg[1][4]++  // item count
 
-   AAdd(aDlg[ 2], iif(HB_IsNumeric(nHelpId), nHelpId, 0))
-   AAdd(aDlg[ 3], iif(HB_IsNumeric(nExStyle), nExStyle, 0))
-   AAdd(aDlg[ 4], iif(HB_IsNumeric(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
+   AAdd(aDlg[ 2], IIf(HB_IsNumeric(nHelpId), nHelpId, 0))
+   AAdd(aDlg[ 3], IIf(HB_IsNumeric(nExStyle), nExStyle, 0))
+   AAdd(aDlg[ 4], IIf(HB_IsNumeric(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
    AAdd(aDlg[ 5], nX)
    AAdd(aDlg[ 6], nY)
    AAdd(aDlg[ 7], nW)
    AAdd(aDlg[ 8], nH)
    AAdd(aDlg[ 9], cnId)
    AAdd(aDlg[10], cnDlgClass)
-   AAdd(aDlg[11], iif(HB_IsString(cText), cText, iif(HB_IsNumeric(cText), cText, "")))
+   AAdd(aDlg[11], IIf(HB_IsString(cText), cText, IIf(HB_IsNumeric(cText), cText, "")))
    AAdd(aDlg[12], 0)
 
    RETURN aDlg
@@ -413,7 +413,7 @@ FUNCTION wvt_CreateDialog(acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu)
    ENDIF
 
    cType := ValType(acnDlg)
-   nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
+   nDlgMode := IIf(cType == "C", 0, IIf(cType == "N", 1, 2))
 
    IF cType == "A"
       xTemplate := wvt__MakeDlgTemplate(acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], acnDlg[5], acnDlg[6], acnDlg[7], acnDlg[8], acnDlg[9], acnDlg[10], acnDlg[11], acnDlg[12])
@@ -451,7 +451,7 @@ FUNCTION wvt_DialogBox(acnDlg, cbDlgProc, hWndParent)
    ENDIF
 
    cType := ValType(acnDlg)
-   nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
+   nDlgMode := IIf(cType == "C", 0, IIf(cType == "N", 1, 2))
 
    IF cType == "A"
       xTemplate := wvt__MakeDlgTemplate(acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], acnDlg[5], acnDlg[6], acnDlg[7], acnDlg[8], acnDlg[9], acnDlg[10], acnDlg[11], acnDlg[12])
@@ -623,7 +623,7 @@ FUNCTION wvt_GetRGBColorByString(cColor, nForeBack)
    LOCAL nIndex := 0
    LOCAL a_ := {"N", "B", "G", "BG", "R", "RB", "GR", "W"}
 
-   nForeBack := iif(HB_IsNumeric(nForeBack), nForeBack, 0)
+   nForeBack := IIf(HB_IsNumeric(nForeBack), nForeBack, 0)
 
    IF HB_IsString(cColor)
       IF (n := At("/", cColor)) > 0

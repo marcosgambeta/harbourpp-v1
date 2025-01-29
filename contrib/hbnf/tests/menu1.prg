@@ -24,12 +24,12 @@ PROCEDURE Main( cCmdLine )
 
    AEval( aBar, {| x, i | HB_SYMBOL_UNUSED(x), aOptions[ i ] := { {}, {}, {} } } )
 
-   cCmdLine := iif(cCmdLine == NIL, "", cCmdLine)
+   cCmdLine := IIf(cCmdLine == NIL, "", cCmdLine)
 
-   lColor := iif("MONO" $ Upper(cCmdLine), .F., IsColor())
+   lColor := IIf("MONO" $ Upper(cCmdLine), .F., IsColor())
 
    // Border, Box, Bar, Current, Unselected
-   aColors := iif(lColor, { "W+/G", "N/G", "N/G", "N/W", "N+/G" }, ;
+   aColors := IIf(lColor, { "W+/G", "N/G", "N/G", "N/W", "N+/G" }, ;
       { "W+/N", "W+/N", "W/N", "N/W", "W/N" })
 
    ft_Fill( aOptions[ 1 ], "A. Execute A Dummy Procedure"        , {|| fubar() }, .T. )
@@ -71,10 +71,10 @@ PROCEDURE Main( cCmdLine )
    // main routine starts here
    SET SCOREBOARD OFF
 
-   cNormN := iif(lColor, "N/G" , "W/N")
-   cWindN := iif(lColor, "W/B" , "W/N")
-   cErrH  := iif(lColor, "W+/R", "W+/N")
-   cErrN  := iif(lColor, "W/R" , "W/N")
+   cNormN := IIf(lColor, "N/G" , "W/N")
+   cWindN := IIf(lColor, "W/B" , "W/N")
+   cErrH  := IIf(lColor, "W+/R", "W+/N")
+   cErrN  := IIf(lColor, "W/R" , "W/N")
 
    SAVE SCREEN TO sDosScrn
    nDosRow := Row()

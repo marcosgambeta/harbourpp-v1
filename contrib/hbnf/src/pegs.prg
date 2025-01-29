@@ -102,7 +102,7 @@ FUNCTION ft_Pegs()
       move := 1
 
       SetColor("w/n")
-      GetList := {Get():New(23, 44, {|v|iif(PCount() == 0, move, move := v)}, "move", "##")}
+      GetList := {Get():New(23, 44, {|v|IIf(PCount() == 0, move, move := v)}, "move", "##")}
       ATail(GetList):postBlock := {|oGet|RangeCheck(oGet,, 1, 33)}
       ATail(GetList):display()
       READ
@@ -141,7 +141,7 @@ FUNCTION ft_Pegs()
                AEval(possible_, {|a|hb_DispOutAt(Row() + 1, 65, Transform(a[2], "##"))})
                oldscore := Set(_SET_SCOREBOARD, .F.)
 
-               GetList := {Get():New(23, 44, {|v|iif(PCount() == 0, move2, move2 := v)}, "move2", "##")}
+               GetList := {Get():New(23, 44, {|v|IIf(PCount() == 0, move2, move2 := v)}, "move2", "##")}
                ATail(GetList):postBlock := {||AScan(possible_, scanblock) > 0}
                ATail(GetList):display()
                READ
@@ -168,7 +168,7 @@ FUNCTION ft_Pegs()
 
 STATIC FUNCTION DrawBox(board_, nelement)
 
-   SetColor(iif(board_[nelement][4], "+w/rb", "w/n"))
+   SetColor(IIf(board_[nelement][4], "+w/rb", "w/n"))
 
    hb_DispBox(board_[nelement][1, 1], board_[nelement][1, 2], board_[nelement][1, 3], board_[nelement][1, 4], hb_UTF8ToStrBox("┌─┐│┘─└│ "))
 

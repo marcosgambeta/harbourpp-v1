@@ -101,7 +101,7 @@ METHOD xhb_TMemoEditor:MemoInit(xUDF)
       K_SH_TAB }
 
    ::aAsciiKeys := Array(255 - 31) // asc codes greater than space.
-   AEval(::aAsciiKeys, {|c, i|iif(Empty(c), ::aAsciiKeys[i] := i + 31,)})
+   AEval(::aAsciiKeys, {|c, i|IIf(Empty(c), ::aAsciiKeys[i] := i + 31,)})
 
    // Save/Init object internal representation of user function
    //
@@ -246,7 +246,7 @@ METHOD xhb_TMemoEditor:Edit()
             ELSE
 
                IF AScan(::aConfigurableKeys, nKey) == 0
-                  nUdfReturn := ::CallUdf(iif(::lChanged, ME_UNKEYX, ME_UNKEY))
+                  nUdfReturn := ::CallUdf(IIf(::lChanged, ME_UNKEYX, ME_UNKEY))
                ELSE
                   nUdfReturn := ::CallUdf(ME_UNKEY)
                ENDIF
@@ -274,7 +274,7 @@ METHOD xhb_TMemoEditor:KeyboardHook(nKey)
    LOCAL nUdfReturn
 
    IF ::ExistUdf()
-      nUdfReturn := ::CallUdf(iif(::lChanged, ME_UNKEYX, ME_UNKEY))
+      nUdfReturn := ::CallUdf(IIf(::lChanged, ME_UNKEYX, ME_UNKEY))
       ::HandleUdf(nKey, nUdfReturn, .F.)
    ENDIF
 

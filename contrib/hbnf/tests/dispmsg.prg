@@ -22,12 +22,12 @@ PROCEDURE Main()
 
    lColor := .T.
 
-   cNormH := iif(lColor, "W+/BG", "W+/N")
-   cNormN := iif(lColor, "N/BG", "W/N")
-   cWindH := iif(lColor, "W+/B", "W+/N")
-   cWindN := iif(lColor, "W/B", "W/N")
-   cErrH  := iif(lColor, "W+/R", "W+/N")
-   cErrN  := iif(lColor, "W/R", "W/N")
+   cNormH := IIf(lColor, "W+/BG", "W+/N")
+   cNormN := IIf(lColor, "N/BG", "W/N")
+   cWindH := IIf(lColor, "W+/B", "W+/N")
+   cWindN := IIf(lColor, "W/B", "W/N")
+   cErrH  := IIf(lColor, "W+/R", "W+/N")
+   cErrN  := IIf(lColor, "W/R", "W/N")
 
    cDosScrn := SaveScreen()
    nDosRow := Row()

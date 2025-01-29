@@ -80,7 +80,7 @@ FUNCTION SecToTime(nSec, lHundredth)
 
    LOCAL i, h, n
 
-   n := iif(!HB_IsNumeric(nSec), Seconds(), nSec)
+   n := IIf(!HB_IsNumeric(nSec), Seconds(), nSec)
 
    IF HB_IsLogical(lHundredth) .AND. lHundredth
       h := StrZero((nSec * 100) % 100, 2)
@@ -91,7 +91,7 @@ FUNCTION SecToTime(nSec, lHundredth)
    n := Int(n % 86400)
 
    FOR i := 1 TO 3
-      h := StrZero(n % 60, 2) + iif(h == "", "", ":" + h)
+      h := StrZero(n % 60, 2) + IIf(h == "", "", ":" + h)
       n := Int(n / 60)
    NEXT
 

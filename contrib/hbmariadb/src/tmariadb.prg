@@ -102,7 +102,7 @@ METHOD TMariaDBRow:New(aRow, aFStruct, cTableName)
 
 METHOD TMariaDBRow:FieldGet(cnField)
 
-   LOCAL nNum := iif(HB_IsString(cnField), ::FieldPos(cnField), cnField)
+   LOCAL nNum := IIf(HB_IsString(cnField), ::FieldPos(cnField), cnField)
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
@@ -118,7 +118,7 @@ METHOD TMariaDBRow:FieldGet(cnField)
 
 METHOD TMariaDBRow:FieldPut(cnField, Value)
 
-   LOCAL nNum := iif(HB_IsString(cnField), ::FieldPos(cnField), cnField)
+   LOCAL nNum := IIf(HB_IsString(cnField), ::FieldPos(cnField), cnField)
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
@@ -152,10 +152,10 @@ METHOD TMariaDBRow:FieldPos(cFieldName)
 
 // Returns name of field N
 METHOD TMariaDBRow:FieldName(nNum)
-   RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_NAME], "")
+   RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_NAME], "")
 
 METHOD TMariaDBRow:FieldLen(nNum)
-   RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_LENGTH], 0)
+   RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_LENGTH], 0)
 
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
@@ -531,7 +531,7 @@ METHOD TMariaDBQuery:GetRow(nRow)
       ENDIF
    ENDIF
 
-   RETURN iif(::aRow == NIL, NIL, oRow)
+   RETURN IIf(::aRow == NIL, NIL, oRow)
 
 // Free result handle and associated resources
 METHOD TMariaDBQuery:Destroy()
@@ -1311,7 +1311,7 @@ METHOD TMariaDBServer:CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAut
    LOCAL i
 
    // returns NOT NULL if extended structure has DBS_NOTNULL field to true
-   LOCAL cNN := {|aArr|iif(Len(aArr) > DBS_DEC, iif(aArr[DBS_NOTNULL], " NOT NULL ", ""), "")}
+   LOCAL cNN := {|aArr|IIf(Len(aArr) > DBS_DEC, IIf(aArr[DBS_NOTNULL], " NOT NULL ", ""), "")}
 
    ::cCreateQuery := "CREATE TABLE " + Lower(cTable) + " ("
 
@@ -1320,7 +1320,7 @@ METHOD TMariaDBServer:CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAut
       SWITCH aStruct[i][DBS_TYPE]
 
       CASE "C"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + iif(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + ","
          EXIT
 
       CASE "M"
@@ -1330,7 +1330,7 @@ METHOD TMariaDBServer:CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAut
       CASE "N"
 #if 0
          IF aStruct[i][DBS_DEC] == 0
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + iif(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + iif(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
          ELSE
             ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos(aStruct[i][DBS_LEN]) + "," + hb_ntos(aStruct[i][DBS_DEC]) + ")" + Eval(cNN, aStruct[i]) + ","
          ENDIF
@@ -1348,7 +1348,7 @@ METHOD TMariaDBServer:CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAut
             OTHERWISE
                ::cCreateQuery += aStruct[i][DBS_NAME] + " bigint(" + hb_ntos(aStruct[i][DBS_LEN]) + ")"
             ENDCASE
-            ::cCreateQuery += Eval(cNN, aStruct[i]) + iif(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + iif(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
+            ::cCreateQuery += Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
          ELSE
             ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos(aStruct[i][DBS_LEN]) + "," + hb_ntos(aStruct[i][DBS_DEC]) + ")" + Eval(cNN, aStruct[i]) + ","
          ENDIF
@@ -1496,7 +1496,7 @@ METHOD TMariaDBServer:Error()
 
    ::lError := .F.
 
-   RETURN iif(Empty(::nSocket ), "No connection to server", mysql_error(::nSocket))
+   RETURN IIf(Empty(::nSocket ), "No connection to server", mysql_error(::nSocket))
 
 METHOD TMariaDBServer:ListDBs()
    RETURN mysql_list_dbs(::nSocket)
@@ -1609,7 +1609,7 @@ STATIC FUNCTION ClipValue2SQL(Value)
       ENDIF
 
    CASE "L"
-      RETURN iif(Value, "1", "0")
+      RETURN IIf(Value, "1", "0")
 
    CASE "U"
       RETURN "NULL"

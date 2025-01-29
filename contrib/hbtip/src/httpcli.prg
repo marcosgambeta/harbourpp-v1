@@ -95,9 +95,9 @@ ENDCLASS
 
 METHOD TIPClientHTTP:New( oUrl, xTrace, oCredentials )
 
-   ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "http", xTrace), oCredentials )
+   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, .F. ), "http", xTrace), oCredentials )
 
-   ::nDefaultPort := iif(::oUrl:cProto == "https", 443, 80)
+   ::nDefaultPort := IIf(::oUrl:cProto == "https", 443, 80)
    ::nConnTimeout := 5000
    ::bChunked     := .F.
 
@@ -488,9 +488,9 @@ METHOD TIPClientHTTP:Boundary( nType )
    hb_default( @nType, 0 )
 
    RETURN ;
-      iif(nType <= 1, "--", "") + ;
+      IIf(nType <= 1, "--", "") + ;
       ::cBoundary + ;
-      iif(nType == 1, "--", "")
+      IIf(nType == 1, "--", "")
 
 METHOD PROCEDURE TIPClientHTTP:Attach( cName, cFileName, cType )
 

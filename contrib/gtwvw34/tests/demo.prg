@@ -732,7 +732,7 @@ STATIC PROCEDURE RefreshHXB(oBrowse, nWinNum, XBid)
    LOCAL nMin := 1
    LOCAL nMax := oBrowse:ColCount
    LOCAL nPage := oBrowse:RightVisible - oBrowse:LeftVisible + 1
-   LOCAL nPos := iif(oBrowse:RightVisible == oBrowse:ColCount, nMax, oBrowse:LeftVisible)
+   LOCAL nPos := IIf(oBrowse:RightVisible == oBrowse:ColCount, nMax, oBrowse:LeftVisible)
 
    wvw_xbUpdate( nWinNum, XBid, nPos, nPage, nMin, nMax )
 
@@ -863,7 +863,7 @@ STATIC PROCEDURE CreateToolbar( nWinNum )
 
    IF !lYesNo( "would you like to use default toolbar setting?" )
       nSysBitmap := Alert( "Select toolbar button size", { "Small", "Big" } )
-      nSysBitmap := iif(nSysBitmap == 0, 1, nSysBitmap)
+      nSysBitmap := IIf(nSysBitmap == 0, 1, nSysBitmap)
       lDisplayText := Alert( "Display text in toolbar?", { "Yes", "No" } ) == 1
    ENDIF
 
@@ -1118,7 +1118,7 @@ STATIC FUNCTION SetDefaultWindowSize()
    CASE screenWidth >= 1024
       Result := wvw_SetFont( , "Terminal", 20, 10 )
    CASE screenWidth >= 800
-      Result := wvw_SetFont( , iif(hb_osIsWinNT(), "Lucida Console", "System"), 16, -8 )
+      Result := wvw_SetFont( , IIf(hb_osIsWinNT(), "Lucida Console", "System"), 16, -8 )
    OTHERWISE
       Result := wvw_SetFont( , "Terminal", 12, 6 )
    ENDCASE
@@ -1273,7 +1273,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    hb_default( @nCol2, nCol1 + Max( 10, Len(cCaption) + 2 ) - 1 )
 
 #if 0  // TODO
-   ::nId := iif(Empty(s_amouseobjlist), 1, ATail( s_amouseobjlist ):nGetId() + 1)
+   ::nId := IIf(Empty(s_amouseobjlist), 1, ATail( s_amouseobjlist ):nGetId() + 1)
    ::nHotKey := NIL
 #endif
    ::nWinId := hb_defaultValue( nWinId, wvw_nNumWindows() - 1 )  // 2004-03-03
@@ -1283,7 +1283,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::nRow2 := nRow2
    ::nCol2 := nCol2
 
-   ::bClickBlock    := iif(HB_IsEvalItem( bClickBlock ), bClickBlock, NIL)
+   ::bClickBlock    := IIf(HB_IsEvalItem( bClickBlock ), bClickBlock, NIL)
    ::bPressBlock    := NIL
 
    ::lRepeatPress   := .F.
@@ -1458,8 +1458,8 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    LOCAL nOldCursor := SetCursor( SC_NONE )
    LOCAL lMouseOver := ::lHover // 2004-03-03,was: ( MRow() >= ::nrow1 .AND. MRow() <= ::nrow2 .AND. MCol() >= ::ncol1 .AND. MCol() <= ::ncol2 )
    LOCAL lPressed := ::lPressed .AND. lMouseOver
-   LOCAL aFontInfo := iif(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
-   LOCAL nLabelColor := iif(lPressed, WIN_RGB(96, 96, 96), WIN_RGB(0, 0, 0))
+   LOCAL aFontInfo := IIf(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
+   LOCAL nLabelColor := IIf(lPressed, WIN_RGB(96, 96, 96), WIN_RGB(0, 0, 0))
    LOCAL lUseImage := HB_IsString( ::cImage )  // 2004-03-25
 
    IF !::lVisible .OR. ::nType == _BUTTON_NONE
@@ -1490,7 +1490,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, iif(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -1514,7 +1514,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, iif(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -1676,7 +1676,7 @@ STATIC PROCEDURE xKeyRepeater( lInit )
       RETURN
    ENDIF
 
-   nRepeatInterval := iif(s_lFirstRepeat, s_nrepeatdelay, s_nrepeatrate)
+   nRepeatInterval := IIf(s_lFirstRepeat, s_nrepeatdelay, s_nrepeatrate)
 
    nNow := Seconds()
    IF nNow - s_nLastValidCheck < nRepeatInterval  // s_nrepeatrate
@@ -1700,6 +1700,6 @@ STATIC PROCEDURE xKeyRepeater( lInit )
    RETURN
 
 STATIC FUNCTION _nCeiling( nNumber )
-   RETURN Int( nNumber ) + iif(( nNumber - Int( nNumber ) ) > 0, 1, 0)
+   RETURN Int( nNumber ) + IIf(( nNumber - Int( nNumber ) ) > 0, 1, 0)
 
 SET PROCEDURE TO "table.prg"

@@ -31,7 +31,7 @@ FUNCTION ft_InvClr(cDsrdColor)
    cDsrdColor := Left(cDsrdColor, At(",", cDsrdColor + ",") - 1)
 
    // Get Any Modifiers
-   cModifiers := iif("*" $ cDsrdColor, "*", "") + iif("+" $ cDsrdColor, "+", "")
+   cModifiers := IIf("*" $ cDsrdColor, "*", "") + IIf("+" $ cDsrdColor, "+", "")
 
    // Separate the Fore/Background Colors
    cForeground := AllTrim(Left(cDsrdColor,   At("/", cDsrdColor) - 1))

@@ -189,7 +189,7 @@ PROCEDURE HtmlBrowse(oHtm, cAction, lUseLinks)
 
       // --> put the formatted fields data...
       FOR i := 1 TO Len(aFlds)
-         cAlign := iif(aFlds[i, 2] == "N", "RIGHT", "CENTER")
+         cAlign := IIf(aFlds[i, 2] == "N", "RIGHT", "CENTER")
          oHtm:newTableCell(cAlign, , , , "black")
          oHtm:Write(Greek2Html(HtmlAny2Str(FieldGet(i))))
          oHtm:EndTableCell()
@@ -266,7 +266,7 @@ PROCEDURE htmlBrowseSql(oHtm, cAction, lUseLinks, cTarget, oServer, oQuery)
 
       FOR i := 1 TO oquery:FCount()
 
-         cAlign := iif(oCurRow:FieldType(i) == "N", "RIGHT", "CENTER")
+         cAlign := IIf(oCurRow:FieldType(i) == "N", "RIGHT", "CENTER")
          oHtm:newTableCell(cAlign, , , , "black")
          oHtm:Write(Greek2Html(HtmlAny2Str(oCurRow:FieldGet(i))))
          oHtm:EndTableCell()
@@ -329,13 +329,13 @@ CREATE CLASS JWindow
 
    METHOD Paragraph() INLINE ::QOut("<p></p>")
 
-   METHOD Center(l) INLINE ::QOut(iif(l, "<center>", "</center>"))
+   METHOD Center(l) INLINE ::QOut(IIf(l, "<center>", "</center>"))
 
-   METHOD bold(l) INLINE ::QOut(iif(l, "<b>", "</b>"))
+   METHOD bold(l) INLINE ::QOut(IIf(l, "<b>", "</b>"))
 
-   METHOD Italic(l) INLINE ::QOut(iif(l, "<i>", "</i>"))
+   METHOD Italic(l) INLINE ::QOut(IIf(l, "<i>", "</i>"))
 
-   METHOD ULine(l) INLINE ::QOut(iif(l, "<u>", "</u>"))
+   METHOD ULine(l) INLINE ::QOut(IIf(l, "<u>", "</u>"))
 
    METHOD Put()
 
@@ -488,7 +488,7 @@ METHOD JWindow:SetFeatures(alwaysRaised, alwaysLowered, ;
       cStr += "copyHistory=no,"
    ENDIF
 
-   ::features += iif(Empty(::Features), cStr + ",", cStr)
+   ::features += IIf(Empty(::Features), cStr + ",", cStr)
 
    RETURN Self
 
@@ -520,7 +520,7 @@ METHOD JWindow:SetSize(x, y, h, w)
    cStr += "height=" + hb_ntos(::height) + ","
    cStr += "width=" + hb_ntos(::width)
 
-   ::features += iif(Empty(::Features), cStr + ",", cStr)
+   ::features += IIf(Empty(::Features), cStr + ",", cStr)
 
    RETURN Self
 

@@ -185,7 +185,7 @@ METHOD TODBC:SetAutoCommit(lEnable)
    hb_default(@lEnable, .T.)
 
    IF lEnable != lOld
-      ::SetCnnOptions(SQL_AUTOCOMMIT, iif(lEnable, SQL_AUTOCOMMIT_ON, SQL_AUTOCOMMIT_OFF))
+      ::SetCnnOptions(SQL_AUTOCOMMIT, IIf(lEnable, SQL_AUTOCOMMIT_ON, SQL_AUTOCOMMIT_OFF))
       ::lAutoCommit := lEnable
    ENDIF
 
@@ -606,7 +606,7 @@ METHOD TODBC:LoadData(nPos)
 
    FOR EACH oField IN ::Fields
       IF ::lCacheRS .AND. ::Active
-         xValue := iif(nPos > 0 .AND. nPos <= ::nRecCount, ::aRecordSet[nPos, oField:__enumIndex()], NIL)
+         xValue := IIf(nPos > 0 .AND. nPos <= ::nRecCount, ::aRecordSet[nPos, oField:__enumIndex()], NIL)
       ELSE
          SQLGetData(::hStmt, oField:FieldID, oField:DataType,, @xValue)
 

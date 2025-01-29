@@ -44,7 +44,7 @@ FUNCTION ft_Month(dGivenDate, nMonthNum)
    ENDIF
 
    nTemp := Month(dGivenDate) - Month(aRetVal[2])
-   nTemp += iif(nTemp >= 0, 1, 13)
+   nTemp += IIf(nTemp >= 0, 1, 13)
 
    aRetVal[1] += StrZero(nTemp, 2)
    aRetVal[2] := ft_MAdd(aRetVal[2], nTemp - 1)

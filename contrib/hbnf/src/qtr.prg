@@ -44,7 +44,7 @@ FUNCTION ft_Qtr(dGivenDate, nQtrNum)
    ENDIF
 
    nTemp := Month(dGivenDate) - Month(aRetVal[2])
-   nTemp += iif(nTemp >= 0, 1, 13)
+   nTemp += IIf(nTemp >= 0, 1, 13)
    nTemp := Int((nTemp - 1) / 3)
 
    aRetVal[1] += StrZero(nTemp + 1, 2)

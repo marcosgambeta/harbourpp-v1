@@ -72,7 +72,7 @@ CREATE CLASS WvgCheckBox INHERIT WvgWindow, WvgDataRef
 #if 0
    METHOD editBuffer()                          INLINE wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED
    METHOD getData()                             INLINE wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED
-   METHOD setData(lCheck)                       INLINE ::sendMessage( BM_SETCHECK, iif(lCheck, BST_CHECKED, BST_UNCHECKED), 0 )
+   METHOD setData(lCheck)                       INLINE ::sendMessage( BM_SETCHECK, IIf(lCheck, BST_CHECKED, BST_UNCHECKED), 0 )
 #endif
    METHOD setCaption( xCaption )
 
@@ -157,7 +157,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
          IF aNM[ 1 ] == WIN_WM_LBUTTONUP
             IF HB_IsEvalItem( ::sl_lbClick )
                ::oParent:setFocus()
-               ::sendMessage( BM_SETCHECK, iif(wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED, BST_UNCHECKED, BST_CHECKED), 0 )
+               ::sendMessage( BM_SETCHECK, IIf(wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED, BST_UNCHECKED, BST_CHECKED), 0 )
                ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
                Eval( ::sl_lbClick, , , Self )
             ENDIF

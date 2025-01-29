@@ -110,4 +110,4 @@ METHOD win_BMP:Draw(oPrn, aRectangle, /* @ */ nError) // Pass a win_Prn object r
       ::Rect := aRectangle
    ENDIF
 
-   RETURN iif(::IsSupported(oPrn, @nError), oPrn:DrawBitMap(Self), .F.)
+   RETURN IIf(::IsSupported(oPrn, @nError), oPrn:DrawBitMap(Self), .F.)

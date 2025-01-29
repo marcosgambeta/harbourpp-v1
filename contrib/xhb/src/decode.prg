@@ -196,7 +196,7 @@ FUNCTION hb_DecodeOrEmpty(...)
    LOCAL aParams := hb_AParams()
    LOCAL xVal    := hb_ExecFromArray(@hb_Decode(), aParams)
 
-   RETURN iif(xVal == NIL, EmptyValue(aParams[1]), xVal)
+   RETURN IIf(xVal == NIL, EmptyValue(aParams[1]), xVal)
 
 STATIC FUNCTION EmptyValue(xVal)
 

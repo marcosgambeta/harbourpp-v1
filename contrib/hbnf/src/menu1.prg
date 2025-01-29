@@ -136,9 +136,9 @@ FUNCTION ft_Menu1(aBar, aOptions, aColors, nTopRow, lShadow)
       t_nVPos := AChoice(nTopRow + 2, aBoxLoc[t_nHPos] + 2, Len(t_aChoices[t_nHPos, 1]) + nTopRow + 2, aBarWidth[t_nHPos] + 1 + aBoxLoc[t_nHPos], t_aChoices[t_nHPos, 1], t_aChoices[t_nHPos, 3], {|nMode|__ftAcUdf(nMode)}, aLastSel[t_nHPos])
       DO CASE
       CASE LastKey() == K_RIGHT .OR. LastKey() == K_TAB
-         t_nHPos := iif(t_nHPos == Len(t_aChoices), 1, t_nHPos + 1)
+         t_nHPos := IIf(t_nHPos == Len(t_aChoices), 1, t_nHPos + 1)
       CASE LastKey() == K_LEFT .OR. LastKey() == K_SH_TAB
-         t_nHPos := iif(t_nHPos == 1, Len(t_aChoices), t_nHPos - 1)
+         t_nHPos := IIf(t_nHPos == 1, Len(t_aChoices), t_nHPos - 1)
       CASE LastKey() == K_ESC
          lLooping := _ftBailOut(cBorder, cBox)
       CASE LastKey() == K_HOME
@@ -196,7 +196,7 @@ STATIC FUNCTION _ftWidest(i, t_aChoices, aBarWidth)
 
 STATIC FUNCTION _ftLocat(i, aBarCol, aBarWidth, aBoxLoc, t_nMaxCol)
 
-   aBoxLoc[i] := iif(aBarCol[i] + aBarWidth[i] + 4 > t_nMaxCol + 1, t_nMaxCol - 3 - aBarWidth[i], aBarCol[i])
+   aBoxLoc[i] := IIf(aBarCol[i] + aBarWidth[i] + 4 > t_nMaxCol + 1, t_nMaxCol - 3 - aBarWidth[i], aBarCol[i])
 
    RETURN NIL
 

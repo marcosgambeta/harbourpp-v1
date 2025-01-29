@@ -244,7 +244,7 @@ METHOD WvgSLE:changed(lChanged)
    LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
 
    IF HB_IsLogical( lChanged )
-      ::sendMessage( EM_SETMODIFY, iif(lChanged, 0, 1), 0 )
+      ::sendMessage( EM_SETMODIFY, IIf(lChanged, 0, 1), 0 )
    ENDIF
 
    RETURN lChg

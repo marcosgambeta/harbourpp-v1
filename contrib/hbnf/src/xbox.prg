@@ -65,14 +65,14 @@ FUNCTION ft_XBox( ;
    nNumRows := Min(PCount() - 7, 8)
 
    // establish array of strings to be displayed
-   aLines_[1] := iif(HB_IsString(cLine1), AllTrim(Left(cLine1, 74)), "")
-   aLines_[2] := iif(HB_IsString(cLine2), AllTrim(Left(cLine2, 74)), "")
-   aLines_[3] := iif(HB_IsString(cLine3), AllTrim(Left(cLine3, 74)), "")
-   aLines_[4] := iif(HB_IsString(cLine4), AllTrim(Left(cLine4, 74)), "")
-   aLines_[5] := iif(HB_IsString(cLine5), AllTrim(Left(cLine5, 74)), "")
-   aLines_[6] := iif(HB_IsString(cLine6), AllTrim(Left(cLine6, 74)), "")
-   aLines_[7] := iif(HB_IsString(cLine7), AllTrim(Left(cLine7, 74)), "")
-   aLines_[8] := iif(HB_IsString(cLine8), AllTrim(Left(cLine8, 74)), "")
+   aLines_[1] := IIf(HB_IsString(cLine1), AllTrim(Left(cLine1, 74)), "")
+   aLines_[2] := IIf(HB_IsString(cLine2), AllTrim(Left(cLine2, 74)), "")
+   aLines_[3] := IIf(HB_IsString(cLine3), AllTrim(Left(cLine3, 74)), "")
+   aLines_[4] := IIf(HB_IsString(cLine4), AllTrim(Left(cLine4, 74)), "")
+   aLines_[5] := IIf(HB_IsString(cLine5), AllTrim(Left(cLine5, 74)), "")
+   aLines_[6] := IIf(HB_IsString(cLine6), AllTrim(Left(cLine6, 74)), "")
+   aLines_[7] := IIf(HB_IsString(cLine7), AllTrim(Left(cLine7, 74)), "")
+   aLines_[8] := IIf(HB_IsString(cLine8), AllTrim(Left(cLine8, 74)), "")
    ASize(aLines_, Min(nNumRows, 8))
 
    // determine longest line
@@ -80,9 +80,9 @@ FUNCTION ft_XBox( ;
    AEval(aLines_, {||nLLen := Max(nLLen, Len(aLines_[nLoop])), nLoop++})
 
    // calculate corners
-   nLCol := iif(nStartCol == 99, Int((76 - nLLen) / 2 ), Min(nStartCol, 74 - nLLen))
+   nLCol := IIf(nStartCol == 99, Int((76 - nLLen) / 2 ), Min(nStartCol, 74 - nLLen))
    nRCol := nLCol + nLLen + 3
-   nTRow := iif(nStartRow == 99, Int((24 - nNumRows) / 2), Min(nStartRow, 22 - nNumRows))
+   nTRow := IIf(nStartRow == 99, Int((24 - nNumRows) / 2), Min(nStartRow, 22 - nNumRows))
    nBRow := nTRow + nNumRows + 1
 
    // form box and border
@@ -106,7 +106,7 @@ FUNCTION ft_XBox( ;
    nLoop := 1
    AEval(aLines_, {|cSayStr| ;
       nSayRow := nTRow + nLoop, ;
-      nSayCol := iif(Left(cJustType, 1) == "L", ;
+      nSayCol := IIf(Left(cJustType, 1) == "L", ;
       nLCol + 2, ;
       nLCol + 2 + (nLLen - Int(Len(aLines_[nLoop]))) / 2), ;
       nLoop++, ;

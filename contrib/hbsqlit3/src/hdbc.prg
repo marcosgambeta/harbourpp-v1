@@ -216,7 +216,7 @@ CREATE CLASS hdbcSQLTPreparedStatement
    METHOD setString(nParam, xValue)
    METHOD SetNumber(n, x) INLINE ::setString(n, Str(x))
    METHOD SetDate(n, x) INLINE ::setString(n, DToS(x))
-   METHOD SetBoolean(n, x) INLINE ::setString(n, iif(x, "t", "f"))
+   METHOD SetBoolean(n, x) INLINE ::setString(n, IIf(x, "t", "f"))
 
 ENDCLASS
 
@@ -341,7 +341,7 @@ CREATE CLASS hdbcSQLTResultSet
    METHOD updateString(nField, cValue) INLINE ::updateBuffer(nField, cValue, "C")
    METHOD updateNumber(nField, nValue) INLINE ::updateBuffer(nField, hb_ntos(nValue), "N")
    METHOD updateDate(nField, dValue) INLINE ::updateBuffer(nField, DToS(dValue), "D")
-   METHOD updateBoolean(nField, lValue) INLINE ::updateBuffer(nField, iif(lValue, "t", "f"), "L")
+   METHOD updateBoolean(nField, lValue) INLINE ::updateBuffer(nField, IIf(lValue, "t", "f"), "L")
 
 ENDCLASS
 

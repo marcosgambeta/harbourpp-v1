@@ -94,10 +94,10 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    VAR textItemSelected INIT ""
 
    METHOD getSelectionInfo(nlParam)
-   METHOD setColorFG(nRGB) INLINE wvg_TreeView_SetTextColor(::hWnd, iif(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
-   METHOD setColorBG(nRGB) INLINE wvg_TreeView_SetBkColor(::hWnd, iif(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
+   METHOD setColorFG(nRGB) INLINE wvg_TreeView_SetTextColor(::hWnd, IIf(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
+   METHOD setColorBG(nRGB) INLINE wvg_TreeView_SetBkColor(::hWnd, IIf(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
    METHOD setColorLines(nRGB) INLINE wvg_TreeView_SetLineColor(::hWnd, nRGB)
-   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, iif(lExpanded == NIL, .F., lExpanded), nLevels)
+   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, IIf(lExpanded == NIL, .F., lExpanded), nLevels)
 
 ENDCLASS
 

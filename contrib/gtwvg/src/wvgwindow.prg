@@ -209,7 +209,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    METHOD HandleEvent() INLINE EVENT_UNHANDELLED
    METHOD isEnabled() INLINE ::is_enabled
    METHOD isVisible() INLINE !::is_hidden
-   METHOD setColorFG(nRGB) INLINE ::clr_FG := iif(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB), ::invalidateRect()
+   METHOD setColorFG(nRGB) INLINE ::clr_FG := IIf(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB), ::invalidateRect()
 
    METHOD enter(xParam) SETGET
    METHOD leave(xParam) SETGET
@@ -246,7 +246,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    PROTECTED:
 
    METHOD getPosAndSize(aPs, aSz)
-   METHOD isParentCrt() INLINE (iif(HB_IsObject(::oParent), ::oParent:objType == objTypeCrt, .F.))
+   METHOD isParentCrt() INLINE (IIf(HB_IsObject(::oParent), ::oParent:objType == objTypeCrt, .F.))
    METHOD rePosition()
    METHOD createControl()
 

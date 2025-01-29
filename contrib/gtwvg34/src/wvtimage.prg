@@ -78,7 +78,7 @@ METHOD WvtImage:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
 METHOD WvtImage:Create()
 
-   ::bPaint := {|| iif(hb_vfExists( ::cImage ), ;
+   ::bPaint := {|| IIf(hb_vfExists( ::cImage ), ;
       wvt_DrawImage( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cImage ), "") }
 
    AAdd(::aPaint, { ::bPaint, ;

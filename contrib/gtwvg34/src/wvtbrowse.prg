@@ -75,7 +75,7 @@ CREATE CLASS WvtBrowse INHERIT WvtObject
    VAR    bTotalColumns
    VAR    bCurrentColumn
 
-   ACCESS cDesc                                   INLINE iif(::cText == NIL, "", ::cText)
+   ACCESS cDesc                                   INLINE IIf(::cText == NIL, "", ::cText)
    ASSIGN cDesc(cText)                            INLINE ::cText := cText
 
    METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
@@ -106,8 +106,8 @@ METHOD WvtBrowse:Create()
 #if 0
    ::nTop    := ::oBrw:nTop - 2
    ::nLeft   := ::oBrw:nLeft - 2
-   ::nBottom := iif(::lHSBar, ::oBrw:nBottom, ::oBrw:nBottom + 1)
-   ::nRight  := iif(::lVSBar, ::oBrw:nRight, ::oBrw:nRight + 2)
+   ::nBottom := IIf(::lHSBar, ::oBrw:nBottom, ::oBrw:nBottom + 1)
+   ::nRight  := IIf(::lVSBar, ::oBrw:nRight, ::oBrw:nRight + 2)
 #else
    ::nTop    := ::oBrw:nTop
    ::nLeft   := ::oBrw:nLeft

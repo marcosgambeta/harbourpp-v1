@@ -198,7 +198,7 @@ METHOD GDBarCode:Draw13( cText )
       IF !lError
 
          // If we have to write text, we moved the barcode to the right to have space to put digit
-         ::positionX := iif(::textfont == 0, 0, 10)
+         ::positionX := IIf(::textfont == 0, 0, 10)
 
          xParity := ::Parity[ Val( SubStr(::text, 1, 1) ) ]
 
@@ -236,7 +236,7 @@ METHOD GDBarCode:Draw13( cText )
 
             IF ii > 1 .AND. ii < 8
 
-               ::DrawSingleBar( iif(SubStr(xParity, ii - 1, 1) == "E", ;
+               ::DrawSingleBar( IIf(SubStr(xParity, ii - 1, 1) == "E", ;
                   ::LeftHand_Even[ jj ], ;
                   ::LeftHand_Odd[ jj ]) )
             ELSEIF ii > 1 .AND. ii >= 8
@@ -314,7 +314,7 @@ METHOD GDBarCode:Draw8( cText )
 
    IF !lError
 
-      ::positionX := iif(::textfont == 0, 0, 10)
+      ::positionX := IIf(::textfont == 0, 0, 10)
 
 #if 0
       xParity := ::Parity[ 7 ]
@@ -481,7 +481,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
             nSum       := STARTB
          ELSE
             FOR n := 1 TO Len(::text)
-               nC += iif(SubStr(::text, n, 1) > 31, 1, 0)
+               nC += IIf(SubStr(::text, n, 1) > 31, 1, 0)
             NEXT
 
             IF nC < Len(::text) / 2

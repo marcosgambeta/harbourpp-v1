@@ -191,8 +191,8 @@ STATIC PROCEDURE StatLine(oBrw, oDataSource)
    ELSE
       hb_DispOutAt(nTop, nRight - 20, PadR(hb_ntos(oDataSource:RecNo()) + "/" + ;
          hb_ntos(oDataSource:LastRec()), 16) + ;
-         iif(oBrw:hitTop, "<bof>", "     ") + ;
-         iif(oBrw:hitBottom, "<eof>", "     "))
+         IIf(oBrw:hitTop, "<bof>", "     ") + ;
+         IIf(oBrw:hitBottom, "<eof>", "     "))
    ENDIF
 
    RETURN
@@ -235,7 +235,7 @@ STATIC FUNCTION ODBCFGet(cFieldName, oDataSource)
 
    IF HB_IsString(cFieldName)
       // For changing value rather write a decent SQL statement
-      RETURN {|x|iif(x == NIL, oDataSource:FieldByName(cFieldName):value, NIL)}
+      RETURN {|x|IIf(x == NIL, oDataSource:FieldByName(cFieldName):value, NIL)}
    ENDIF
 
    RETURN NIL

@@ -100,7 +100,7 @@ PROCEDURE Main(cInputFile)
       IF Empty(hWas)
          ? "No error definitions found in input file"
       ELSE
-         ? iif(hb_MemoWrit(__FILE__, cOutput), "Saved OK:", "Save error:"), __FILE__
+         ? IIf(hb_MemoWrit(__FILE__, cOutput), "Saved OK:", "Save error:"), __FILE__
       ENDIF
    ENDIF
 

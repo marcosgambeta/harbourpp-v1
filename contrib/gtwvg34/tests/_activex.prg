@@ -80,7 +80,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oRadio  := WvgRadioButton():new( oStatic2, , { 10, 10 }, { 100, 15 } )
    oRadio:caption   := "Com 1"
    oRadio:selection := .T.
-   oRadio:selected  := {| m1, m2, obj | m1 := m1, m2 := m2, wapi_MessageBox( , obj:caption + iif(obj:selection, "< S >", "< N >") ) }
+   oRadio:selected  := {| m1, m2, obj | m1 := m1, m2 := m2, wapi_MessageBox( , obj:caption + IIf(obj:selection, "< S >", "< N >") ) }
    oRadio:create()
 
    oRadio              := WvgRadioButton():new( oStatic2, , { 10, 35 }, { 100, 15 } )
@@ -90,7 +90,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oCheck              := WvgCheckBox():New( oStatic2, , { 10, 70 }, { 100, 15 }, , .T. )
    oCheck:caption   := "Checkbox A"
    oCheck:create()
-   oCheck:selected  := {| m1, m2, o | m1 := m1, m2 := m2, wapi_MessageBox( , iif(o:getData(), "I am selected", "I am not selected") ) }
+   oCheck:selected  := {| m1, m2, o | m1 := m1, m2 := m2, wapi_MessageBox( , IIf(o:getData(), "I am selected", "I am not selected") ) }
 
    // Create first 3State button, passing the position to :create()
    oXbp                := Wvg3State():new( oStatic2 )
@@ -112,7 +112,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oXbp:autoTab        := .T.
    oXbp:bufferLength   := 20
    // Data code block containing assignment to LOCAL variable
-   oXbp:dataLink       := {| x | iif(x == NIL, cVarA, cVarA := x) }
+   oXbp:dataLink       := {| x | IIf(x == NIL, cVarA, cVarA := x) }
    oXbp:create( , , { 10, 170 }, { 150, 20 } )
    oXbp:setData()
    // Assign the value of the edit buffer to a LOCAL variable when the input focus is lost
@@ -122,7 +122,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oXbp                := WvgSLE():new( oStatic2, , { 10, 200 }, { 150, 20 } )
    oXbp:tabStop        := .T.
    oXbp:bufferLength   := 15
-   oXbp:dataLink       := {| x | iif(x == NIL, cVarB, cVarB := x) }
+   oXbp:dataLink       := {| x | IIf(x == NIL, cVarB, cVarB := x) }
    oXbp:create()
    oXbp:setData()
    oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB }
@@ -134,7 +134,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oMLE    := WvgMLE():new( oStatic2 )
    oMLE:wordWrap := .F.
    oMLE:border   := .T.
-   oMLE:dataLink := {| x | iif(x == NIL, cText, cText := x) }
+   oMLE:dataLink := {| x | IIf(x == NIL, cText, cText := x) }
    oMLE:create( oStatic2, , { 180, 10 }, { 310, 250 } )
    // Copy text from LOCAL variable into edit buffer via :dataLink
    oMLE:setData()
@@ -182,7 +182,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oTree:create()
    oTree:setColorBG( WIN_RGB(120, 15, 240) )
    oTree:setColorFG( WIN_RGB(15, 240, 120) )
-   oTree:itemSelected := {| oItem | iif(oItem != NIL, wapi_MessageBox( , oItem:caption ), NIL) }
+   oTree:itemSelected := {| oItem | IIf(oItem != NIL, wapi_MessageBox( , oItem:caption ), NIL) }
 
    oItem1 := oTree:rootItem:addItem( "First level A" )
 
@@ -204,10 +204,10 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oTree:setData(oItem2)
 
    // --- Misc Config ---
-   oTBar:buttonClick := {| oBtn | iif(oBtn:caption == "Hide", oStatic:hide(), NIL), ;
-      iif(oBtn:caption == "Show", oStatic:show(), NIL), ;
-      iif(oBtn:caption == "Tools", oStatic2:show():toFront(), NIL), ;
-      iif(oBtn:caption $ "Hide,Show", oCrt:sendMessage( WIN_WM_SIZE, 0, 0 ), NIL), ;
+   oTBar:buttonClick := {| oBtn | IIf(oBtn:caption == "Hide", oStatic:hide(), NIL), ;
+      IIf(oBtn:caption == "Show", oStatic:show(), NIL), ;
+      IIf(oBtn:caption == "Tools", oStatic2:show():toFront(), NIL), ;
+      IIf(oBtn:caption $ "Hide,Show", oCrt:sendMessage( WIN_WM_SIZE, 0, 0 ), NIL), ;
       oPanel2:caption := "Button [ " + oBtn:caption + " ] clicked!" }
    oDA:resize := {|| ResizeDialog( oCrt, oTBar, oSBar, oStatic, oCom, oTree ) }
 
@@ -284,7 +284,7 @@ STATIC PROCEDURE ActiveXBuildMenu( oCrt, oStatic, oStatic2 )
 
    oSubMenu       := WvgMenu():new( oMenuBar ):create()
    oSubMenu:title := "F~eatures"
-   oSubMenu:addItem( { "~Hide or Show Left Panel", {|| iif(oStatic:isVisible, ;
+   oSubMenu:addItem( { "~Hide or Show Left Panel", {|| IIf(oStatic:isVisible, ;
       oStatic:hide(), oStatic:show()), oCrt:sendMessage( WIN_WM_SIZE, 0, 0 ) } } )
    oSubMenu:addItem( { "~Show My Panel", {|| oStatic2:show() } } )
    oMenuBar:addItem( { oSubMenu, NIL } )
@@ -329,7 +329,7 @@ STATIC FUNCTION BuildActiveXControl( nActiveX, oDA )
          oCom:showAboutBox() ;
          } )
 
-      oCom:mapEvent( evBtnUp, {| nBtn | iif(nBtn == 2, oCom:oParent:sendMessage( WIN_WM_CLOSE, 0, 0 ), NIL) } )
+      oCom:mapEvent( evBtnUp, {| nBtn | IIf(nBtn == 2, oCom:oParent:sendMessage( WIN_WM_CLOSE, 0, 0 ), NIL) } )
       EXIT
 
    CASE 3
@@ -368,9 +368,9 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
    // After :Create() Messages
    SWITCH nActiveX
    CASE 1
-      hb_gtInfo( HB_GTI_WINTITLE, iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      hb_gtInfo( HB_GTI_WINTITLE, IIf(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
       oCom:AddressBar := .T.
-      oCom:Navigate( iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      oCom:Navigate( IIf(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
       EXIT
 
    CASE 4

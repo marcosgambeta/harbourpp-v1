@@ -135,7 +135,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
    SWITCH ::className()
 
    CASE "BUTTON"     // CheckBox, Radio, 3State
-      ::sendMessage(BM_SETCHECK, iif(::sl_editBuffer, BST_CHECKED, BST_UNCHECKED), 0)
+      ::sendMessage(BM_SETCHECK, IIf(::sl_editBuffer, BST_CHECKED, BST_UNCHECKED), 0)
       EXIT
 
    CASE "LISTBOX"    // Single Selection

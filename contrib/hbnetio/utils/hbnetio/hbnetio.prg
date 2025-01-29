@@ -217,7 +217,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
       netiosrv[ _NETIOSRV_nPort ], ;
       netiosrv[ _NETIOSRV_cIFAddr ], ;
       netiosrv[ _NETIOSRV_cRootDir ], ;
-      iif(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), netiosrv[ _NETIOSRV_lRPC ], hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER )), ;
+      IIf(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), netiosrv[ _NETIOSRV_lRPC ], hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER )), ;
       cPassword, ;
       NIL, ;
       NIL, ;
@@ -365,9 +365,9 @@ STATIC FUNCTION netiosrv_config( netiosrv, netiomgm )
    LOCAL aArray := { ;
       hb_StrFormat( "Listening on: %1$s:%2$d", netiosrv[ _NETIOSRV_cIFAddr ], netiosrv[ _NETIOSRV_nPort ] ), ;
       hb_StrFormat( "Root filesystem: %1$s", netiosrv[ _NETIOSRV_cRootDir ] ), ;
-      hb_StrFormat( "RPC support: %1$s", iif(netiosrv[ _NETIOSRV_lRPC ], "enabled", "disabled") ), ;
-      hb_StrFormat( "Encryption: %1$s", iif(netiosrv[ _NETIOSRV_lEncryption ], "enabled", "disabled") ), ;
-      hb_StrFormat( "RPC filter module: %1$s", iif(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), iif(netiosrv[ _NETIOSRV_lRPC ], "not set (WARNING: unsafe open server)", "not set"), netiosrv[ _NETIOSRV_cRPCFFileName ] )) }
+      hb_StrFormat( "RPC support: %1$s", IIf(netiosrv[ _NETIOSRV_lRPC ], "enabled", "disabled") ), ;
+      hb_StrFormat( "Encryption: %1$s", IIf(netiosrv[ _NETIOSRV_lEncryption ], "enabled", "disabled") ), ;
+      hb_StrFormat( "RPC filter module: %1$s", IIf(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), IIf(netiosrv[ _NETIOSRV_lRPC ], "not set (WARNING: unsafe open server)", "not set"), netiosrv[ _NETIOSRV_cRPCFFileName ] )) }
 
    IF !Empty(netiomgm[ _NETIOSRV_pListenSocket ])
       AAdd(aArray, hb_StrFormat( "Management iface: %1$s:%2$d", netiomgm[ _NETIOSRV_cIFAddr ], netiomgm[ _NETIOSRV_nPort ] ))
@@ -525,7 +525,7 @@ STATIC FUNCTION netiomgm_rpc_regnotif( netiomgm, pConnSock, nStreamID, lRegister
    SWITCH PCount()
 #if 0
    CASE 2
-      RETURN iif(cIndex $ netiomgm[ _NETIOSRV_hNotifStream ], netiomgm[ _NETIOSRV_hNotifStream ][ cIndex ][ _CLI_xCargo ], NIL)
+      RETURN IIf(cIndex $ netiomgm[ _NETIOSRV_hNotifStream ], netiomgm[ _NETIOSRV_hNotifStream ][ cIndex ][ _CLI_xCargo ], NIL)
 #endif
    CASE 4
       IF !HB_IsLogical( lRegister ) .OR. ! lRegister

@@ -149,7 +149,7 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
             ENDIF
             Eval(bGetFunc, b, ar, b:colPos, nElem)
             // after get move to next field
-            hb_keyPut(iif(b:colPos < b:colCount, K_RIGHT, {K_HOME, K_DOWN}))
+            hb_keyPut(IIf(b:colPos < b:colCount, K_RIGHT, {K_HOME, K_DOWN}))
 
             // Placing K_ENTER here below Edit Block (i.e. bGetFunc)
             // defaults K_ENTER to Edit when bGetFunc Is Present

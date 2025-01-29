@@ -147,7 +147,7 @@ CREATE CLASS XHBEditor
    // ReadInsert(), ::lInsert must check in it.
    // VAR   lInsert        INIT .F.              // Is editor in Insert mode or in Overstrike one? Default : Overstrike - Clipper
    METHOD lInsert()            BLOCK {||Set(_SET_INSERT)}
-   METHOD _lInsert(lInsert)    BLOCK {|Self, lInsert|HB_SYMBOL_UNUSED(Self), iif(HB_IsLogical(lInsert), Set(_SET_INSERT, lInsert), Set(_SET_INSERT))}
+   METHOD _lInsert(lInsert)    BLOCK {|Self, lInsert|HB_SYMBOL_UNUSED(Self), IIf(HB_IsLogical(lInsert), Set(_SET_INSERT, lInsert), Set(_SET_INSERT))}
 
    METHOD  New(cString, nTop, nLeft, nBottom, ;             // Converts a string to an array of strings splitting input string at EOL boundaries
       nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol)
@@ -159,7 +159,7 @@ CREATE CLASS XHBEditor
    METHOD  InsertLine(cLine, lSoftCR, nRow)               // Insert a line of text at a defined row
    METHOD  RemoveLine(nRow)                               // Remove a line of text
    METHOD  GetLine(nRow)                                  // Return line n of text
-   METHOD  LineLen(nRow) INLINE iif(nRow == NIL, nRow := ::nRow,), iif(nRow <= ::LastRow(), Len(::aText[nRow]:cText), 0) // Return text length of line n
+   METHOD  LineLen(nRow) INLINE IIf(nRow == NIL, nRow := ::nRow,), IIf(nRow <= ::LastRow(), Len(::aText[nRow]:cText), 0) // Return text length of line n
    METHOD  SplitLine(nRow)                                // If a line of text is longer than nWordWrapCol divides it into multiple lines
    METHOD  GotoLine(nRow)                                 // Put line nRow at cursor position
    METHOD  GotoCol(nCol)                                  // Put line nCol at cursor position
@@ -239,8 +239,8 @@ CREATE CLASS XHBEditor
 
    // 2006-07-25 - E.F. - Internal use only.
 
-   METHOD GetCol(nRow, nCol) INLINE iif(nRow > 0 .AND. nRow <= ::LastRow(), iif(nCol > 0 .AND. nCol <= Min(::nWordWrapCol + 1, ::LineLen(nRow)), SubStr(::aText[nRow]:cText, nCol, 1), ""), "")
-   METHOD IsEmptyLine(nRow)  INLINE iif(nRow > 0 .AND. nRow <= ::LastRow(), Empty(::aText[nRow]:cText), .T.)
+   METHOD GetCol(nRow, nCol) INLINE IIf(nRow > 0 .AND. nRow <= ::LastRow(), IIf(nCol > 0 .AND. nCol <= Min(::nWordWrapCol + 1, ::LineLen(nRow)), SubStr(::aText[nRow]:cText, nCol, 1), ""), "")
+   METHOD IsEmptyLine(nRow)  INLINE IIf(nRow > 0 .AND. nRow <= ::LastRow(), Empty(::aText[nRow]:cText), .T.)
 
 ENDCLASS
 
@@ -443,7 +443,7 @@ METHOD XHBEditor:RefreshWindow()
       //              Don't replace ::GetLine(nRow) by ::aText[nRow]:cText here,
       //              because getline return line number in tbrwtext.prg (debug).
       hb_DispOutAt(Min(::nTop + i, ::nBottom), ::nLeft, ;
-         PadR(iif(::nFirstRow + i <= ::LastRow(), SubStr(::GetLine(::nFirstRow + i), ::nFirstCol, ::nNumCols), Space(::nNumCols)), ::nNumCols), ;
+         PadR(IIf(::nFirstRow + i <= ::LastRow(), SubStr(::GetLine(::nFirstRow + i), ::nFirstCol, ::nNumCols), Space(::nNumCols)), ::nNumCols), ;
          ::LineColor(::nFirstRow + i))
 
    NEXT
@@ -2111,7 +2111,7 @@ METHOD XHBEditor:SplitLine(nRow)
    // remember that nFirstSpace is zero based, and pointing to one space
    // before the current word.
    //
-   nPosInWord := iif(::nCol > nFirstSpace, ::nCol - nFirstSpace, 1)
+   nPosInWord := IIf(::nCol > nFirstSpace, ::nCol - nFirstSpace, 1)
 
    nStartRow  := nRow
    cLine      := GetParagraph(Self, nRow)
@@ -2356,11 +2356,11 @@ METHOD XHBEditor:GetText(lSoftCr)
 
       __defaultNIL(@lSoftCr, .F.)
 
-      cSoftCR := iif(lSoftCr, __SoftCR(), "")
+      cSoftCR := IIf(lSoftCr, __SoftCR(), "")
       cEOL := hb_eol()
 
       IF ::lWordWrap
-         AEval(::aText, {|cItem|cString += cItem:cText + iif(cItem:lSoftCR, cSoftCR, cEOL)}, , ::LastRow() - 1)
+         AEval(::aText, {|cItem|cString += cItem:cText + IIf(cItem:lSoftCR, cSoftCR, cEOL)}, , ::LastRow() - 1)
       ELSE
          AEval(::aText, {|cItem|cString += cItem:cText + cEOL}, , ::LastRow() - 1)
       ENDIF
@@ -2391,7 +2391,7 @@ METHOD XHBEditor:GetTextSelection(lSoftCr)
 
    __defaultNIL(@lSoftCr, .F.)
 
-   cSoftCR := iif(lSoftCr, __SoftCR(), "")
+   cSoftCR := IIf(lSoftCr, __SoftCR(), "")
 
    IF ::nRowSelStart > 0 .AND. ::nRowSelEnd > 0
 
@@ -2404,12 +2404,12 @@ METHOD XHBEditor:GetTextSelection(lSoftCr)
       ENDIF
 
       FOR nI := nRowSelStart TO nRowSelEnd
-         cString += ::aText[nI]:cText + iif(::lWordWrap .AND. ::aText[nI]:lSoftCR, cSoftCR, cEOL)
+         cString += ::aText[nI]:cText + IIf(::lWordWrap .AND. ::aText[nI]:lSoftCR, cSoftCR, cEOL)
       NEXT
    ENDIF
 
    IF ::nColSelStart > 0 .AND. ::nColSelEnd > 0
-      cString += SubStr(::aText[::nRow]:cText, ::nColSelStart, ::nColSelEnd - ::nColSelStart + 1) + iif(::lWordWrap .AND. ::aText[::nRow]:lSoftCR, cSoftCR, cEOL)
+      cString += SubStr(::aText[::nRow]:cText, ::nColSelStart, ::nColSelEnd - ::nColSelStart + 1) + IIf(::lWordWrap .AND. ::aText[::nRow]:lSoftCR, cSoftCR, cEOL)
    ENDIF
 
    RETURN cString
@@ -2783,7 +2783,7 @@ METHOD XHBEditor:AddText(cString, lAtPos)
 
    IF !Empty(cString)
 
-      aTmpText := Text2Array(cString, iif(::lWordWrap, ::nNumCols, NIL))
+      aTmpText := Text2Array(cString, IIf(::lWordWrap, ::nNumCols, NIL))
       nLines := Len(aTmpText)
       nAtRow := ::nRow
       lSaveIns := ::lInsert
@@ -2831,7 +2831,7 @@ METHOD XHBEditor:GetTextIndex()
    IF ::lWordWrap
       FOR nCount := 1 TO ::nRow - 1
          oItem := ::aText[nCount]
-         nPos += iif(oItem:lSoftCR, 0, nEol) + Len(oItem:cText)
+         nPos += IIf(oItem:lSoftCR, 0, nEol) + Len(oItem:cText)
       NEXT
    ELSE
       FOR nCount := 1 TO ::nRow - 1
@@ -2846,7 +2846,7 @@ METHOD XHBEditor:GetTextIndex()
 
 METHOD XHBEditor:LoadText(cString)
 
-   ::aText := Text2Array(cString, iif(::lWordWrap, ::nNumCols, NIL))
+   ::aText := Text2Array(cString, IIf(::lWordWrap, ::nNumCols, NIL))
 
    IF ::LastRow() == 0
       AAdd(::aText, HBTextLine():New())
@@ -2868,7 +2868,7 @@ METHOD XHBEditor:LoadFile(cFileName)
       cString := MemoRead(cFileName)
    ENDIF
 
-   ::aText := Text2Array(cString, iif(::lWordWrap, ::nNumCols, NIL))
+   ::aText := Text2Array(cString, IIf(::lWordWrap, ::nNumCols, NIL))
 
    IF ::LastRow() == 0
       AAdd(::aText, HBTextLine():New())

@@ -129,7 +129,7 @@ METHOD WvtBanner:Create()
    ::oLabel:lStrikeout := ::lStrikeout
    ::oLabel:lUnderline := ::lUnderline
    ::oLabel:nAlignVert := ::nAlignVert
-   ::oLabel:nAlignHorz := iif(::nDirection == 0, 0, 1)
+   ::oLabel:nAlignHorz := IIf(::nDirection == 0, 0, 1)
    ::oLabel:nTextColor := ::nTextColor
    ::oLabel:nBackColor := ::nBackColor
    ::oLabel:nTextColorHoverOn := ::nTextColorHoverOn
@@ -139,7 +139,7 @@ METHOD WvtBanner:Create()
 
    ::nCurSeconds := Seconds()
    ::nTextLen := Len(::cText)
-   ::nTextIndex := iif(::nDirection == 0, 1, ::nTextLen)
+   ::nTextIndex := IIf(::nDirection == 0, 1, ::nTextLen)
    ::nCurAlign := ::nDirection
 
    ::Super:Create()
@@ -181,7 +181,7 @@ METHOD WvtBanner:Refresh()
          ::nTextIndex++
          IF ::nTextIndex > ::nTextLen
             ::nTextIndex := 1
-            ::nCurAlign := iif(::nCurAlign == 0, 1, 0)
+            ::nCurAlign := IIf(::nCurAlign == 0, 1, 0)
          ENDIF
 
          IF ::nCurAlign == 0   // Left
@@ -193,7 +193,7 @@ METHOD WvtBanner:Refresh()
          ::nTextIndex--
          IF ::nTextIndex < 0
             ::nTextIndex := ::nTextLen
-            ::nCurAlign := iif(::nCurAlign == 0, 1, 0)
+            ::nCurAlign := IIf(::nCurAlign == 0, 1, 0)
          ENDIF
 
          IF ::nCurAlign == 0   // Left

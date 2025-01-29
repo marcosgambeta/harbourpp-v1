@@ -142,7 +142,7 @@ CREATE CLASS WvtObject
    VAR nAlignVert
    VAR nAngle
 
-   ACCESS ToolTip INLINE iif(::cTooltip == NIL, "", ::cTooltip)
+   ACCESS ToolTip INLINE IIf(::cTooltip == NIL, "", ::cTooltip)
    ASSIGN ToolTip(cTip) INLINE ::cToolTip := cTip
 
    VAR bHandleEvent
@@ -171,7 +171,7 @@ CREATE CLASS WvtObject
 
    METHOD SetToolTip() INLINE wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
    METHOD Refresh() INLINE wvt_InvalidateRect(::nTop, ::nLeft, ::nTop, ::nLeft)
-   METHOD Eval(bBlock) INLINE iif(HB_IsEvalItem(bBlock), Eval(bBlock, Self), NIL)
+   METHOD Eval(bBlock) INLINE IIf(HB_IsEvalItem(bBlock), Eval(bBlock, Self), NIL)
    METHOD AddChild(aChild) INLINE AAdd(::aChildren, aChild)
    METHOD AddParent(aParent) INLINE AAdd(::aParent, aParent)
 

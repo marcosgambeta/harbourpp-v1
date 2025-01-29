@@ -47,7 +47,7 @@ FUNCTION ft_TempFil(cPath, lHide, /* @ */ nHandle)
 
    cPath := AllTrim(cPath)
 
-   nHandle := hb_FTempCreate(cPath, NIL, iif(lHide, FC_HIDDEN, FC_NORMAL), @cFile)
+   nHandle := hb_FTempCreate(cPath, NIL, IIf(lHide, FC_HIDDEN, FC_NORMAL), @cFile)
 
    IF PCount() <= 2
       FClose(nHandle)

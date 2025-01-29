@@ -116,7 +116,7 @@ ENDCLASS
 
 METHOD TIPClientFTP:New( oUrl, xTrace, oCredentials )
 
-   ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "ftp", xTrace), oCredentials )
+   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, .F. ), "ftp", xTrace), oCredentials )
 
    ::nDefaultPort := 21
    ::nConnTimeout := 3000
@@ -776,7 +776,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             cTime  := SubStr(cEntry, nStart, nEnd - nStart)
             nStart := nEnd
 
-            aFile[ F_TIME ] := Left(TString( Secs( Left(cTime, 5) ) + iif(Right(cTime, 2) == "PM", 43200, 0) ), 5)
+            aFile[ F_TIME ] := Left(TString( Secs( Left(cTime, 5) ) + IIf(Right(cTime, 2) == "PM", 43200, 0) ), 5)
 
             // file size
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "

@@ -42,6 +42,6 @@ PROCEDURE Main(cURL, ...)
       ENDIF
    ENDIF
 
-   ErrorLevel( iif(lRetVal, 0, 1) )
+   ErrorLevel( IIf(lRetVal, 0, 1) )
 
    RETURN

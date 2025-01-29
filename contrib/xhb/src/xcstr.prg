@@ -161,7 +161,7 @@ FUNCTION ValToPrg(xVal, cName, nPad, hRefs)
       RETURN 't"' + hb_TSToStr(xVal, .T.) + '"'
 
    CASE "L"
-      RETURN iif(xVal, ".T.", ".F.")
+      RETURN IIf(xVal, ".T.", ".F.")
 
    CASE "N"
       RETURN hb_ntos(xVal)
@@ -332,7 +332,7 @@ FUNCTION ValToDate(xVal)
       RETURN ValToDate(Eval(xVal))
 
    CASE "C"
-      RETURN iif(IsDigit(SubStr(xVal, 3, 1)) .AND. IsDigit(SubStr(xVal, 5, 1)), hb_SToD(xVal), CToD(xVal))
+      RETURN IIf(IsDigit(SubStr(xVal, 3, 1)) .AND. IsDigit(SubStr(xVal, 5, 1)), hb_SToD(xVal), CToD(xVal))
 
    CASE "D"
       RETURN xVal
@@ -368,7 +368,7 @@ FUNCTION ValToTimeStamp(xVal)
       RETURN ValToTimeStamp(Eval(xVal))
 
    CASE "C"
-      RETURN iif(IsDigit(SubStr(xVal, 3, 1)) .AND. IsDigit(SubStr(xVal, 5, 1)) .AND. IsDigit(SubStr(xVal, 7, 1)), hb_SToT(xVal), hb_StrToTS(xVal))
+      RETURN IIf(IsDigit(SubStr(xVal, 3, 1)) .AND. IsDigit(SubStr(xVal, 5, 1)) .AND. IsDigit(SubStr(xVal, 7, 1)), hb_SToT(xVal), hb_StrToTS(xVal))
 
    CASE "D"
       RETURN hb_DToT(xVal)
@@ -457,7 +457,7 @@ FUNCTION ValToNumber(xVal)
       RETURN xVal - 0d19000101
 
    CASE "L"
-      RETURN iif(xVal, 1, 0)
+      RETURN IIf(xVal, 1, 0)
 
    CASE "O"
       RETURN xVal:hClass

@@ -100,7 +100,7 @@ METHOD WvtImage:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
 METHOD WvtImage:Create()
 
-   ::bPaint := {||iif(hb_FileExists(::cImage), wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cImage), "")}
+   ::bPaint := {||IIf(hb_FileExists(::cImage), wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cImage), "")}
 
    AAdd(::aPaint, {::bPaint, {WVT_BLOCK_IMAGE, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 

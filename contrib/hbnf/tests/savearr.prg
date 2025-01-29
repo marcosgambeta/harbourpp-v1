@@ -37,7 +37,7 @@ FUNCTION DispArray( aTest )
       ?? "  "
       ?? Str( aTest[ nk, 3 ] )
       ?? "  "
-      ?? iif(aTest[ nk, 4 ], "true", "false")
+      ?? IIf(aTest[ nk, 4 ], "true", "false")
    NEXT
 
    RETURN NIL

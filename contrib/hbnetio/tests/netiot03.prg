@@ -78,10 +78,10 @@ PROCEDURE Main()
    WAIT
 
    lExists := netio_FuncExec("hb_DirExists", "./data")
-   ? "Directory './data'", iif(lExists, "exists", "not exists")
+   ? "Directory './data'", IIf(lExists, "exists", "not exists")
    IF !lExists
       ? "Creating directory './data' ->", ;
-         iif(netio_FuncExec("hb_DirCreate", "./data") == -1, "error", "OK")
+         IIf(netio_FuncExec("hb_DirCreate", "./data") == -1, "error", "OK")
    ENDIF
 
    createdb(DBNAME)

@@ -188,7 +188,7 @@ METHOD win_Com:PurgeTX()
    RETURN win_comPurge(::nPort, .F., .T.)
 
 METHOD win_Com:Close(nDrain)
-   RETURN win_comClose(::nPort, iif(Empty(nDrain), 0, nDrain))
+   RETURN win_comClose(::nPort, IIf(Empty(nDrain), 0, nDrain))
 
 METHOD win_Com:DebugDCB(nDebug)
    RETURN win_comDebugDCB(::nPort, nDebug)

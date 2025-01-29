@@ -176,7 +176,7 @@ STATIC FUNCTION cErrorMsg(nError, lShortMsg)
 
    hb_default(@lShortMsg, .T.)
 
-   RETURN iif(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
+   RETURN IIf(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
 
 /**
 */

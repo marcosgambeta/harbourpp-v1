@@ -154,9 +154,9 @@ FUNCTION sprintf(...)
                ELSE
                   nDec := 0
                ENDIF
-               cTok := Str(iif(lUnsigned, Abs(xVal), xVal), nLen, nDec)
+               cTok := Str(IIf(lUnsigned, Abs(xVal), xVal), nLen, nDec)
             ELSE
-               cTok := hb_ntos(iif(lUnsigned, Abs(xVal), xVal))
+               cTok := hb_ntos(IIf(lUnsigned, Abs(xVal), xVal))
             ENDIF
             IF l0
                IF "-" $ cTok .AND. !(Left(cTok, 1) == "-" )

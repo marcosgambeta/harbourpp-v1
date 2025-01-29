@@ -85,8 +85,8 @@ PROCEDURE Main()
 
 STATIC FUNCTION _ftRow( nElem )  //  Determine which row to print on
 
-   RETURN iif(nElem > 40, nElem - 40, iif(nElem > 20, nElem - 20, nElem))
+   RETURN IIf(nElem > 40, nElem - 40, IIf(nElem > 20, nElem - 20, nElem))
 
 STATIC FUNCTION _ftCol( nElem )  //  Determine which column to start print
 
-   RETURN iif(nElem > 40,  55, iif(nElem > 20, 28, 1))
+   RETURN IIf(nElem > 40,  55, IIf(nElem > 20, 28, 1))

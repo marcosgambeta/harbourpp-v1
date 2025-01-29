@@ -169,7 +169,7 @@ STATIC FUNCTION s_RealPath(cFilename)
       IF Empty(hb_osDriveSeparator())
          cDrv := ""
       ENDIF
-      nStart := iif(Empty(cDrv), 1, 3)
+      nStart := IIf(Empty(cDrv), 1, 3)
       IF !SubStr(cPath, nStart, 1) $ hb_osPathDelimiters()
          IF Empty(cDrv) .OR. cDrv == DiskName()
             cPath := hb_cwd() + SubStr(cPath, nStart)

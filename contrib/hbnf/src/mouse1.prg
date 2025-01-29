@@ -91,7 +91,7 @@ FUNCTION ft_MGetPos(/* @ */ nX, /* @ */ nY)
    nX := MRow() * 8
    nY := MCol() * 8
 
-   RETURN iif(MLeftDown(), 1, 0) + iif(MRightDown(), 2, 0) + iif(hb_MMiddleDown(), 4, 0)
+   RETURN IIf(MLeftDown(), 1, 0) + IIf(MRightDown(), 2, 0) + IIf(hb_MMiddleDown(), 4, 0)
 
 FUNCTION ft_MSetPos(nX, nY)
    RETURN MSetPos(nX / 8, nY / 8)
@@ -101,7 +101,7 @@ FUNCTION ft_MGetCoord(/* @ */ nX, /* @ */ nY)
    nX := MRow()
    nY := MCol()
 
-   RETURN iif(MLeftDown(), 1, 0) + iif(MRightDown(), 2, 0) + iif(hb_MMiddleDown(), 4, 0)
+   RETURN IIf(MLeftDown(), 1, 0) + IIf(MRightDown(), 2, 0) + IIf(hb_MMiddleDown(), 4, 0)
 
 FUNCTION ft_MSetCoord(nX, nY)
    RETURN MSetPos(nX, nY)
@@ -152,7 +152,7 @@ FUNCTION ft_MReset()
    MSetBounds()
    MSetPos((MaxRow() + 1) / 2, (MaxCol() + 1) / 2)
 
-   RETURN iif(MPresent(), -1, 0)
+   RETURN IIf(MPresent(), -1, 0)
 
 FUNCTION ft_MCursor(lState)
 

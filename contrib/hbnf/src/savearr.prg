@@ -83,7 +83,7 @@ STATIC FUNCTION _ftsavesub(xMemVar, nHandle, /* @ */ nErrorCode)
       CASE "L"
          nLen := 1
          FWrite(nHandle, L2Bin(nLen), 4)
-         FWrite(nHandle, iif(xMemVar, "T", "F"))
+         FWrite(nHandle, IIf(xMemVar, "T", "F"))
          EXIT
       CASE "N"
          cString := Str(xMemVar)

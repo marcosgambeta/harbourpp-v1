@@ -945,7 +945,7 @@ STATIC FUNCTION DataToSql( xField )
    CASE "N"
       RETURN Str( xField )
    CASE "L"
-      RETURN iif(xField, "1", "0")
+      RETURN IIf(xField, "1", "0")
    ENDSWITCH
 
    RETURN NIL
@@ -994,9 +994,9 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 
       DO WHILE FBFetch( qry ) == 0
          AAdd(aDomains, { ;
-            iif(FBGetData(qry, 1) == NIL, "", FBGetData(qry, 1)), ;
-            iif(FBGetData(qry, 2) == NIL, "", FBGetData(qry, 2)), ;
-            iif(FBGetData(qry, 3) == NIL, "", FBGetData(qry, 3)) })
+            IIf(FBGetData(qry, 1) == NIL, "", FBGetData(qry, 1)), ;
+            IIf(FBGetData(qry, 2) == NIL, "", FBGetData(qry, 2)), ;
+            IIf(FBGetData(qry, 3) == NIL, "", FBGetData(qry, 3)) })
       ENDDO
 
       FBFree( qry )

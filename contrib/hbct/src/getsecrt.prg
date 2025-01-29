@@ -121,7 +121,7 @@ STATIC PROCEDURE _SECRET(/* @ */ _cGetSecret, /* @ */ lHide, oGet, oGetList)
          ENDIF
 
          DO WHILE oGet:exitState == GE_NOEXIT
-            SetCursor(iif(ReadStats(17 /* SNSVCURSOR */) == SC_NONE, SC_NORMAL, ReadStats(17 /* SNSVCURSOR */)))
+            SetCursor(IIf(ReadStats(17 /* SNSVCURSOR */) == SC_NONE, SC_NORMAL, ReadStats(17 /* SNSVCURSOR */)))
             nKey := Inkey(0)
             SetCursor(SC_NONE)
             IF (bKeyBlock := SetKey(nKey)) != NIL

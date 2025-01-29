@@ -80,9 +80,9 @@ ENDCLASS
 
 METHOD TIPClientPOP:New( oUrl, xTrace, oCredentials )
 
-   ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "pop3", xTrace), oCredentials )
+   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, .F. ), "pop3", xTrace), oCredentials )
 
-   ::nDefaultPort := iif(::oUrl:cProto == "pop3s" .OR. ::oUrl:cProto == "pops", 995, 110)
+   ::nDefaultPort := IIf(::oUrl:cProto == "pop3s" .OR. ::oUrl:cProto == "pops", 995, 110)
    ::nConnTimeout := 10000
 
    RETURN Self

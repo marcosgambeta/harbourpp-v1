@@ -74,8 +74,8 @@
 
 #xtrans S_STACK()             => S_STACK( 64 )
 #xtrans S_STACK( <n> )        => { Array( <n> ), 0, <n>, Max( 32, Int( <n> / 2 ) ) }
-#xtrans S_GROW( <a> )         => ( iif(++<a>\[S_NUM] > <a>\[S_SIZE], ASize( <a>\[S_DATA], ( <a>\[S_SIZE] += <a>\[S_STEP] ) ), <a>) )
-#xtrans S_SHRINK( <a> )       => ( iif(<a>\[S_NUM] > 0 .AND. --<a>\[S_NUM] \< <a>\[S_SIZE] - <a>\[S_STEP], ASize( <a>\[S_DATA], <a>\[S_SIZE] -= <a>\[S_STEP] ), <a>) )
+#xtrans S_GROW( <a> )         => ( IIf(++<a>\[S_NUM] > <a>\[S_SIZE], ASize( <a>\[S_DATA], ( <a>\[S_SIZE] += <a>\[S_STEP] ) ), <a>) )
+#xtrans S_SHRINK( <a> )       => ( IIf(<a>\[S_NUM] > 0 .AND. --<a>\[S_NUM] \< <a>\[S_SIZE] - <a>\[S_STEP], ASize( <a>\[S_DATA], <a>\[S_SIZE] -= <a>\[S_STEP] ), <a>) )
 #xtrans S_COMPRESS( <a> )     => ( ASize( <a>\[S_DATA], <a>\[S_SIZE] := <a>\[S_NUM] ) )
 #xtrans S_PUSH( <a>, <x> )    => ( S_GROW( <a> ), <a>\[S_DATA, <a>\[S_NUM]] := <x> )
 #xtrans S_POP( <a>, @<x> )    => ( <x> := <a>\[S_DATA, <a>\[S_NUM]], <a>\[S_DATA, <a>\[S_NUM]] := NIL, S_SHRINK( <a> ) )
@@ -561,10 +561,10 @@ CREATE CLASS THtmlNode MODULE FRIENDLY
    ACCESS nextNode()
    ACCESS prevNode()
 
-   ACCESS siblingNodes()  INLINE iif(::parent == NIL, NIL, ::parent:htmlContent)
-   ACCESS childNodes()    INLINE iif(::isNode(), ::htmlContent, NIL)
+   ACCESS siblingNodes()  INLINE IIf(::parent == NIL, NIL, ::parent:htmlContent)
+   ACCESS childNodes()    INLINE IIf(::isNode(), ::htmlContent, NIL)
    ACCESS parentNode()    INLINE ::parent
-   ACCESS document()      INLINE iif(::root == NIL, NIL, ::root:_document)
+   ACCESS document()      INLINE IIf(::root == NIL, NIL, ::root:_document)
 
    METHOD toString( nIndent )
    METHOD attrToString()
@@ -631,7 +631,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       ENDIF
       ::htmlTagName := cTagName
       ::htmlTagType := THtmlTagType( cTagName )
-      ::htmlContent := iif(cContent == NIL, {}, cContent)
+      ::htmlContent := IIf(cContent == NIL, {}, cContent)
    ELSE
       RETURN ::error( "Parameter error", ::className(), ":new()", EG_ARG, hb_AParams() )
    ENDIF
@@ -966,7 +966,7 @@ METHOD THtmlNode:firstNode( lRoot )
       RETURN ::parent:htmlContent[ 1 ]
    ENDIF
 
-   RETURN iif(Empty(::htmlContent), NIL, ::htmlContent[ 1 ])
+   RETURN IIf(Empty(::htmlContent), NIL, ::htmlContent[ 1 ])
 
 // returns last node in subtree (.F.) or last node of entire tree (.T.)
 METHOD THtmlNode:lastNode( lRoot )
@@ -977,7 +977,7 @@ METHOD THtmlNode:lastNode( lRoot )
       RETURN ::parent:lastNode( lRoot )
    ENDIF
 
-   RETURN ATail( iif(lRoot, ::root:collect(), ::collect() ))
+   RETURN ATail( IIf(lRoot, ::root:collect(), ::collect() ))
 
 // returns next node
 METHOD THtmlNode:nextNode()
@@ -1000,7 +1000,7 @@ METHOD THtmlNode:nextNode()
    aNodes := ::parent:parent:collect()
    nPos   := hb_AScan( aNodes, Self,,, .T. )
 
-   RETURN iif(nPos == Len(aNodes), NIL, aNodes[ nPos + 1 ])
+   RETURN IIf(nPos == Len(aNodes), NIL, aNodes[ nPos + 1 ])
 
 // returns previous node
 METHOD THtmlNode:prevNode()
@@ -1014,7 +1014,7 @@ METHOD THtmlNode:prevNode()
    aNodes := ::parent:collect( Self )
    nPos   := hb_AScan( aNodes, Self,,, .T. )
 
-   RETURN iif(nPos == 1, ::parent, aNodes[ nPos - 1 ])
+   RETURN IIf(nPos == 1, ::parent, aNodes[ nPos - 1 ])
 
 // creates HTML code for this node
 METHOD THtmlNode:toString( nIndent )
@@ -1028,7 +1028,7 @@ METHOD THtmlNode:toString( nIndent )
 
    hb_default( @nIndent, -1 )
 
-   cIndent := iif(::keepFormatting(), "", Space( Max( 0, nIndent ) ))
+   cIndent := IIf(::keepFormatting(), "", Space( Max( 0, nIndent ) ))
 
    IF !::htmlTagName == "_root_"
       // all nodes but the root node have a HTML tag
@@ -1059,12 +1059,12 @@ METHOD THtmlNode:toString( nIndent )
 
    IF ::htmlEndTagName != NIL
       IF ::isInline() .OR. ::keepFormatting() .OR. ::isType( CM_HEADING ) .OR. ::isType( CM_HEAD )
-         RETURN cHtml += iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
+         RETURN cHtml += IIf(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
       ENDIF
       IF !Right(cHtml, Len(hb_eol())) == hb_eol()
          cHtml += hb_eol()
       ENDIF
-      RETURN cHtml += cIndent + iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
+      RETURN cHtml += cIndent + IIf(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
    ELSEIF ::htmlTagName $ "!--,br"
       RETURN cHtml += hb_eol() + cIndent
    ENDIF
@@ -1241,7 +1241,7 @@ STATIC FUNCTION __ParseAttr( parser )
             LOOP
          ENDIF
 
-         nMode := iif(lIsQuoted, 2, 1)
+         nMode := IIf(lIsQuoted, 2, 1)
          hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
          aAttr[ 1 ] := ""
          aAttr[ 2 ] := ""
@@ -1480,7 +1480,7 @@ METHOD THtmlNode:_setTextNode( cText )
       cText := StrTran(cText, ">", "&gt;")
    ENDDO
 
-   ::_getTextNode():htmlContent := iif(cText == "", "&nbsp;", cText)
+   ::_getTextNode():htmlContent := IIf(cText == "", "&nbsp;", cText)
 
    RETURN Self
 

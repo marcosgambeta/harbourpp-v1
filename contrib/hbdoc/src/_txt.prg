@@ -150,7 +150,7 @@ METHOD PROCEDURE GenerateText:WriteEntry( cCaption, cContent, lPreformatted )
    LOCAL nIndent
 
    IF !Empty(cContent)
-      nIndent := iif(HB_IsNull( cCaption ), 0, 6)
+      nIndent := IIf(HB_IsNull( cCaption ), 0, 6)
       IF !HB_IsNull( cCaption ) .AND. nIndent > 0
          ::cFile += Space( ::Depth * 6 ) + cCaption + ": " + hb_eol()
       ENDIF

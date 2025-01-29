@@ -286,7 +286,7 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
       EXIT
 
    CASE "O"
-      cCaption := iif(bAction == NIL, xCaption:title, bAction)
+      cCaption := IIf(bAction == NIL, xCaption:title, bAction)
       aItem := {MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib}
       EXIT
 
@@ -298,18 +298,18 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
    IF nPos <= 0
       AAdd(::aMenuItems, aItem)
       nItemIndex := Len(::aMenuItems)
-      wvg_AppendMenu(::hMenu, aItem[1], aItem[2], iif(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
+      wvg_AppendMenu(::hMenu, aItem[1], aItem[2], IIf(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
    ELSE
       nItemIndex := nPos
       IF lInsert
          ::aMenuItems := hb_AIns(::aMenuItems, nPos, aItem, .T.)
-         wvg_InsertMenu(::hMenu, nItemIndex - 1, aItem[1] + MF_BYPOSITION, aItem[2], iif(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
+         wvg_InsertMenu(::hMenu, nItemIndex - 1, aItem[1] + MF_BYPOSITION, aItem[2], IIf(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
       ELSE
          IF HB_IsString(xCaption)
             aItem[2] := ::aMenuItems[nItemIndex][2]
          ENDIF
          ::aMenuItems[nItemIndex] := aItem
-         wvg_SetMenuItem(::hMenu, nItemIndex - 1, aItem[2], iif(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]), HB_IsString(xCaption))
+         wvg_SetMenuItem(::hMenu, nItemIndex - 1, aItem[2], IIf(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]), HB_IsString(xCaption))
       ENDIF
    ENDIF
 
@@ -376,10 +376,10 @@ METHOD WvgMenuBar:checkItem(nItemNum, lCheck)
    __defaultNIL(@lCheck, .T.)
 
    IF !Empty(::hMenu) .AND. HB_IsNumeric(nItemNum)
-      nRet := wvg_CheckMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + iif(lCheck, MF_CHECKED, MF_UNCHECKED))
+      nRet := wvg_CheckMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + IIf(lCheck, MF_CHECKED, MF_UNCHECKED))
    ENDIF
 
-   RETURN iif(nRet == -1, .F., .T.)
+   RETURN IIf(nRet == -1, .F., .T.)
 
 METHOD WvgMenuBar:enableItem(nItemNum)
 

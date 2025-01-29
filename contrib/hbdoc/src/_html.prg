@@ -358,7 +358,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
             IF lTable != lTablePrev
                IF lTable
-                  ::OpenTag( "div", "class", "d-t" + iif(HB_IsNull( cHeaderClass ), "", " " + cHeaderClass) )
+                  ::OpenTag( "div", "class", "d-t" + IIf(HB_IsNull( cHeaderClass ), "", " " + cHeaderClass) )
                ELSE
                   ::CloseTag( "div" )
                ENDIF
@@ -370,13 +370,13 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
                ::Append(tmp1,, .T.)
             CASE lTable
                ::OpenTagInline( "div" )
-               ::AppendInline( iif(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .T. )
+               ::AppendInline( IIf(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .T. )
             OTHERWISE
                ::OpenTagInline( "div" )
                IF cField $ "DESCRIPTION|"
                   ::OpenTagInline( "p" )
                ENDIF
-               ::AppendInline( iif(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .F. )
+               ::AppendInline( IIf(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .F. )
             ENDCASE
             IF lCode
                ::CloseTag( "pre" )
@@ -476,7 +476,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
          nLen := Len(cText)
          FOR tmp := 1 TO nLen
 
-            cPrev := iif(tmp > 1, SubStr(cText, tmp - 1, 1), "")
+            cPrev := IIf(tmp > 1, SubStr(cText, tmp - 1, 1), "")
             cChar := SubStr(cText, tmp, 1)
             cNext := SubStr(cText, tmp + 1, 1)
 
@@ -485,12 +485,12 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
                tmp++
                cChar := cNext
             CASE ! lPR .AND. cChar == "*" .AND. ! lIT .AND. ;
-                 iif(lEM, ! Empty(cPrev) .AND. Empty(cNext), Empty(cPrev) .AND. ! Empty(cNext))
+                 IIf(lEM, ! Empty(cPrev) .AND. Empty(cNext), Empty(cPrev) .AND. ! Empty(cNext))
                lEM := ! lEM
                IF lEM
                   nEM := Len(cOut) + 1
                ENDIF
-               cChar := iif(lEM, "<strong>", "</strong>")
+               cChar := IIf(lEM, "<strong>", "</strong>")
             CASE ! lPR .AND. cChar == "_" .AND. ! lEM .AND. ;
                  ( ( ! lIT .AND. Empty(cPrev) .AND. ! Empty(cNext) ) .OR. ;
                    (   lIT .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
@@ -498,7 +498,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
                IF lIT
                   nIT := Len(cOut) + 1
                ENDIF
-               cChar := iif(lIT, "<i>", "</i>")
+               cChar := IIf(lIT, "<i>", "</i>")
             CASE cChar == "`" .AND. ;
                  ( ( ! lPR .AND. Empty(cPrev) .AND. ! Empty(cNext) ) .OR. ;
                    (   lPR .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
@@ -506,7 +506,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
                IF lPR
                   nPR := Len(cOut) + 1
                ENDIF
-               cChar := iif(lPR, "<code>", "</code>")
+               cChar := IIf(lPR, "<code>", "</code>")
             CASE ! lPR .AND. SubStr(cText, tmp, 3) == "<b>"
                tmp += 2
                cChar := "<strong>"

@@ -113,8 +113,8 @@ METHOD WvtProgressBar:Create()
 
    __defaultNIL(@::nTop, 0)
    __defaultNIL(@::nLeft, 0)
-   __defaultNIL(@::nBottom, iif(::lVertical, ::nTop + 9, ::nTop))
-   __defaultNIL(@::nRight, iif(::lVertical, ::nLeft + 1, ::nLeft + 19))
+   __defaultNIL(@::nBottom, IIf(::lVertical, ::nTop + 9, ::nTop))
+   __defaultNIL(@::nRight, IIf(::lVertical, ::nLeft + 1, ::nLeft + 19))
    __defaultNIL(@::nTextColor, RGB(255, 255, 255))
    __defaultNIL(@::nBackColor, RGB(198, 198, 198))
 

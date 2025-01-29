@@ -320,7 +320,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    hb_gtInfo( HB_GTI_CLOSABLE  , ::closable  )
    hb_gtInfo( HB_GTI_WINTITLE  , ::title     )
-   hb_gtInfo( HB_GTI_RESIZEMODE, iif(::resizeMode == HB_GTI_RESIZEMODE_ROWS, HB_GTI_RESIZEMODE_ROWS, HB_GTI_RESIZEMODE_FONT) )
+   hb_gtInfo( HB_GTI_RESIZEMODE, IIf(::resizeMode == HB_GTI_RESIZEMODE_ROWS, HB_GTI_RESIZEMODE_ROWS, HB_GTI_RESIZEMODE_FONT) )
 
    IF ::lModal
       hb_gtInfo( HB_GTI_DISABLE, ::pGTp )

@@ -277,7 +277,7 @@ METHOD WvgStatic:setCaption(xCaption, cDll)
          wvg_DeleteObject(::hBitmap)
       ENDIF
 
-      ::hBitmap := wvg_LoadImage(::caption, iif(HB_IsNumeric(::caption), 1, 2))
+      ::hBitmap := wvg_LoadImage(::caption, IIf(HB_IsNumeric(::caption), 1, 2))
 
       wvg_SendMessage(::hWnd, STM_SETIMAGE, IMAGE_BITMAP, ::hBitmap)
 

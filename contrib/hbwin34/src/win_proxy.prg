@@ -55,12 +55,12 @@ FUNCTION win_ProxyDetect(cURL, /* @ */ cByPass)
 
    hb_default(@cURL, "")
 
-   cProtocol := iif((nPos := At("://", cURL)) > 1, Lower(Left(cURL, nPos - 1)), "http")
+   cProtocol := IIf((nPos := At("://", cURL)) > 1, Lower(Left(cURL, nPos - 1)), "http")
 
-   cHost := SubStr(cURL, iif(nPos > 0, nPos + Len("://"), 1))
-   cHost := iif((nPos := At("/", cHost)) > 0, Left(cHost, nPos - 1), cHost)
-   cHost := iif((nPos := At("@", cHost)) > 0, SubStr(cHost, nPos + 1), cHost)
-   cHost := iif((nPos := At(":", cHost)) > 0, Left(cHost, nPos - 1), cHost)
+   cHost := SubStr(cURL, IIf(nPos > 0, nPos + Len("://"), 1))
+   cHost := IIf((nPos := At("/", cHost)) > 0, Left(cHost, nPos - 1), cHost)
+   cHost := IIf((nPos := At("@", cHost)) > 0, SubStr(cHost, nPos + 1), cHost)
+   cHost := IIf((nPos := At(":", cHost)) > 0, Left(cHost, nPos - 1), cHost)
 
    cProxy := __win_ProxyDetect(cProtocol + "://" + cHost, @cByPass)
 

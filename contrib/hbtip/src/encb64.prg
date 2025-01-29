@@ -68,7 +68,7 @@ METHOD TIPEncoderBase64:New()
    RETURN Self
 
 METHOD TIPEncoderBase64:Encode( cData )
-   RETURN hb_base64Encode( cData, iif(::bHttpExcept, NIL, 76) )
+   RETURN hb_base64Encode( cData, IIf(::bHttpExcept, NIL, 76) )
 
 METHOD TIPEncoderBase64:Decode( cData )
    RETURN hb_base64Decode( cData )

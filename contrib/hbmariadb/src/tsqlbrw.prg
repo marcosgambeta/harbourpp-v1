@@ -111,7 +111,7 @@ METHOD TBColumnSQL:Block()
       EXIT
 
    CASE "L"
-      xValue := iif(xValue, ".T.", ".F.")
+      xValue := IIf(xValue, ".T.", ".F.")
       EXIT
 
    CASE "C"
@@ -284,13 +284,13 @@ METHOD TBrowseSQL:EditField()
       // NOTE: I need to use ::oCurRow:FieldPut(...) when changing values since message redirection doesn't work at present
       //       time for write access to instance variables but only for reading them
       aGetList := {GetNew(Row(), Col(),;
-                          {|xValue|iif(xValue == NIL, Eval(oCol:Block), ::oCurRow:FieldPut(oCol:nFieldNum, xValue))},;
+                          {|xValue|IIf(xValue == NIL, Eval(oCol:Block), ::oCurRow:FieldPut(oCol:nFieldNum, xValue))},;
                           oCol:heading,;
                           oCol:picture,;
                           ::colorSpec)}
 
       // Set initial cursor shape
-      // SetCursor(iif(ReadInsert(), SC_INSERT, SC_NORMAL))
+      // SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
       ReadModal(aGetList)
       // SetCursor(SC_NONE)
 

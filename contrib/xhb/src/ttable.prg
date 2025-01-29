@@ -146,7 +146,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
 
    SWITCH nType
    CASE NET_RECLOCK                        // 1 = Record Lock...
-      xIdentifier := iif(lReleaseLocks, NIL, RecNo())
+      xIdentifier := IIf(lReleaseLocks, NIL, RecNo())
       bOperation  := {|x|dbRLock(x)}
       EXIT
    CASE NET_FILELOCK                       // 2 = File Lock...
@@ -623,7 +623,7 @@ CREATE CLASS HBTable
    METHOD goTop() INLINE (::Alias)->(dbGoTop())
    METHOD goBottom() INLINE (::Alias)->(dbGoBottom())
    METHOD SetFocus() INLINE (::Alias)->(Select(::ALias))
-   METHOD Append(l) INLINE iif(::isNet, (::Alias)->(NetAppend(l)), (::alias)->(dbAppend()))
+   METHOD Append(l) INLINE IIf(::isNet, (::Alias)->(NetAppend(l)), (::alias)->(dbAppend()))
    METHOD Recall() INLINE (::Alias)->(NetRecall())
    METHOD Locate(bFor, bWhile, nNext, nRec, lRest) INLINE (::Alias)->(__dbLocate(bFor, bWhile, nNext, nRec, lRest))
    METHOD Continue() INLINE (::Alias)->(__dbContinue())
@@ -670,7 +670,7 @@ CREATE CLASS HBTable
    METHOD dbEval(a, b, c, d, e, f) INLINE (::Alias)->(dbEval(a, b, c, d, e, f))
    METHOD dbSeek(a, b, c) INLINE (::Alias)->(dbSeek(a, b, c))
    METHOD dbFilter() INLINE (::Alias)->(dbFilter())
-   METHOD SetFilter(c) INLINE iif(c != NIL, (::Alias)->(dbSetFilter(hb_macroBlock(c), c)), (::Alias)->(dbClearFilter()))
+   METHOD SetFilter(c) INLINE IIf(c != NIL, (::Alias)->(dbSetFilter(hb_macroBlock(c), c)), (::Alias)->(dbClearFilter()))
    METHOD AddChild(oChild, cKey)
    METHOD AddOrder(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOrderFile)
    METHOD GetOrderLabels()
@@ -1318,7 +1318,7 @@ STATIC FUNCTION FixExt(cFileName)
 
    LOCAL nLeft := At(".", cFilename)
 
-   RETURN Left(cFileName, iif(nLeft == 0, Len(cFilename), nLeft - 1))
+   RETURN Left(cFileName, IIf(nLeft == 0, Len(cFilename), nLeft - 1))
 
 METHOD HBTable:CreateTable(cFile)
 
@@ -1354,7 +1354,7 @@ METHOD HBTable:OnError(uParam)
    nPos := (::Alias)->(FieldPos(cMsg))
 
    IF nPos != 0
-      uRet := (::Alias)->(iif(uParam == NIL, FieldGet(nPos), FieldPut(nPos, uParam)))
+      uRet := (::Alias)->(IIf(uParam == NIL, FieldGet(nPos), FieldPut(nPos, uParam)))
    ELSE
 
       oErr := ErrorNew()

@@ -216,7 +216,7 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
 
    FetchChars( nPort )
 
-   nDone := Seconds() + iif(nTimeout >= 0, nTimeout, 0)
+   nDone := Seconds() + IIf(nTimeout >= 0, nTimeout, 0)
 
    DO WHILE Len(t_aPorts[ nPort, TPFP_INBUF ]) < nLength .AND. ;
          ( nTimeout < 0 .OR. Seconds() < nDone )
@@ -289,7 +289,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
       RETURN ""
    ENDIF
 
-   nDone := Seconds() + iif(nTimeout >= 0, nTimeout, 0)
+   nDone := Seconds() + IIf(nTimeout >= 0, nTimeout, 0)
 
    DO WHILE ( nTimeout < 0 .OR. Seconds() < nDone )
 
@@ -297,7 +297,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
          nAt := hb_At( cDelim, t_aPorts[ nPort, TPFP_INBUF ], nStartPos )
 
-         IF nAt > 0 .AND. iif(nFirst > 0, nAt < nFirst, .T.)
+         IF nAt > 0 .AND. IIf(nFirst > 0, nAt < nFirst, .T.)
             nFirst := nAt
          ENDIF
 
@@ -307,7 +307,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
             nAt := hb_At( cChar, t_aPorts[ nPort, TPFP_INBUF ], nStartPos )
 
-            IF nAt > 0 .AND. iif(nFirst > 0, nAt < nFirst, .T.)
+            IF nAt > 0 .AND. IIf(nFirst > 0, nAt < nFirst, .T.)
                nFirst := nAt
             ENDIF
 
@@ -497,7 +497,7 @@ FUNCTION tp_ctrlcts( nPort, nNewCtrl )
 
          hb_comFlowControl( t_aPorts[ nPort, TPFP_HANDLE ], NIL, nNewCtrl )
       ENDIF
-      nCurValue := iif(hb_bitAnd( nCurValue, nFlag ) != 0, 1, 0)
+      nCurValue := IIf(hb_bitAnd( nCurValue, nFlag ) != 0, 1, 0)
    ENDIF
 
    RETURN nCurValue
@@ -532,7 +532,7 @@ FUNCTION tp_ctrldtr( nPort, nNewCtrl )
 
          hb_comFlowControl( t_aPorts[ nPort, TPFP_HANDLE ], NIL, nNewCtrl )
       ENDIF
-      nCurValue := iif(hb_bitAnd( nCurValue, nFlag ) != 0, 1, 0)
+      nCurValue := IIf(hb_bitAnd( nCurValue, nFlag ) != 0, 1, 0)
    ENDIF
 
    RETURN nCurValue
@@ -599,14 +599,14 @@ FUNCTION tp_flush( nPort, nTimeout )
       nTimeout := 1800
    ENDIF
 
-   nDone := Seconds() + iif(nTimeout >= 0, nTimeout, 0)
+   nDone := Seconds() + IIf(nTimeout >= 0, nTimeout, 0)
 
    DO WHILE tp_outfree( nPort ) > 0 .AND. ;
          ( nTimeout < 0 .OR. Seconds() < nDone )
       hb_idleState()
    ENDDO
 
-   RETURN iif(tp_outfree( nPort ) > 0, TE_TMOUT, 0)
+   RETURN IIf(tp_outfree( nPort ) > 0, TE_TMOUT, 0)
 
 #if 0
 

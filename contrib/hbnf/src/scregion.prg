@@ -59,7 +59,7 @@ FUNCTION ft_RgnStack(cAction, nTop, nLeft, nBottom, nRight)
 
    ELSEIF cAction == "pop" .OR. cAction == "pop all"
 
-      nPopTop := iif("all" $ cAction, 0, t_nStackPtr - 1)
+      nPopTop := IIf("all" $ cAction, 0, t_nStackPtr - 1)
 
       DO WHILE t_nStackPtr > nPopTop
          ft_RstRgn(t_aRgnStack[t_nStackPtr--])

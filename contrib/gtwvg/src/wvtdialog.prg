@@ -578,7 +578,7 @@ METHOD WvtDialog:MouseOver()
       mRow >= o:nTop  .AND. mRow <= o:nBottom .AND. mCol >= o:nLeft .AND. mCol <= o:nRight})
 
    ::nObjOver := nObj
-   ::oObjOver := iif(nObj > 0, ::aObjects[nObj], NIL)
+   ::oObjOver := IIf(nObj > 0, ::aObjects[nObj], NIL)
    IF nObj > 0
       ::aObjects[nObj]:nmRow := mRow
       ::aObjects[nObj]:nmCol := mCol

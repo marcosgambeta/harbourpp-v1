@@ -111,7 +111,7 @@ METHOD wvtMenu:Create(cCaption)
       Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:Init()", "Create Menu Error", {cCaption, cCaption}))
 #endif
    ENDIF
-   ::Caption := iif(cCaption == NIL, "", cCaption)
+   ::Caption := IIf(cCaption == NIL, "", cCaption)
 
    RETURN Self
 
@@ -137,7 +137,7 @@ METHOD wvtMenu:AddItem(cCaption, bAction)
 
    IF !Empty(::hMenu) .AND. (!Empty(cCaption) .OR. !Empty(bAction))
       IF HB_IsObject(bAction)
-         cCaption := iif(!Empty(cCaption), cCaption, bAction:Caption)
+         cCaption := IIf(!Empty(cCaption), cCaption, bAction:Caption)
          aItem := {MF_POPUP, bAction:hMenu, cCaption, bAction}   // bAction is a wvtMenu object reference
       ELSEIF HB_IsBlock(bAction)
          aItem := {MF_STRING, ::MenuItemId++, cCaption, bAction} // bAction is a code block to execute

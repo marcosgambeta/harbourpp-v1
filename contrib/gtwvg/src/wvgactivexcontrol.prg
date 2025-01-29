@@ -128,14 +128,14 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
 
    ::CLSID := cCLSID
    ::license := cLicense
-   ::hContainer := iif(HB_IsObject(::oParent), ::oParent:getHWND(), ::oParent)
+   ::hContainer := IIf(HB_IsObject(::oParent), ::oParent:getHWND(), ::oParent)
 
    IF !HB_IsNumeric(::hContainer) .OR. !HB_IsString(::CLSID)
       RETURN NIL
    ENDIF
 
    ::hWnd := NIL
-   ::nID := iif(HB_IsObject(::oParent), ::oParent:GetControlId(), ::getControlID())
+   ::nID := IIf(HB_IsObject(::oParent), ::oParent:GetControlId(), ::getControlID())
    ::oOLE := win_oleAuto()
 
    win_axInit()

@@ -742,8 +742,8 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
       server[ "SERVER_PROTOCOL" ] := aLine[ 3 ]
    ELSE
       server[ "REQUEST_METHOD" ] := aLine[ 1 ]
-      server[ "REQUEST_URI" ] := iif(Len(aLine) >= 2, aLine[ 2 ], "")
-      server[ "SERVER_PROTOCOL" ] := iif(Len(aLine) >= 3, aLine[ 3 ], "")
+      server[ "REQUEST_URI" ] := IIf(Len(aLine) >= 2, aLine[ 2 ], "")
+      server[ "SERVER_PROTOCOL" ] := IIf(Len(aLine) >= 3, aLine[ 3 ], "")
       RETURN NIL
    ENDIF
 
@@ -852,7 +852,7 @@ STATIC FUNCTION MakeResponse( hConfig )
    ENDIF
    UAddHeader( "Date", HttpDateFormat( hb_DateTime() ) )
 
-   cRet := iif(server[ "SERVER_PROTOCOL" ] == "HTTP/1.0", "HTTP/1.0 ", "HTTP/1.1 ")
+   cRet := IIf(server[ "SERVER_PROTOCOL" ] == "HTTP/1.0", "HTTP/1.0 ", "HTTP/1.1 ")
    SWITCH t_nStatusCode
    CASE 100 ; cStatus := "100 Continue"                        ;  EXIT
    CASE 101 ; cStatus := "101 Switching Protocols"             ;  EXIT
@@ -1043,7 +1043,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
                dbSelectArea(nI)
                cRet += Str( nI, 6 ) + " " + rddName() + " " + PadR( Alias(), 15 ) + ;
                   Str( RecNo() ) + "/" + Str( LastRec() ) + ;
-                  iif(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos( ordNumber() ) + ")") + hb_eol()
+                  IIf(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos( ordNumber() ) + ")") + hb_eol()
                dbCloseArea()
             ENDIF
          RECOVER
@@ -1069,7 +1069,7 @@ STATIC FUNCTION ErrDescCode( nCode )
          "LOCK"    }[ nCode ]                                                                                           // 41
    ENDIF
 
-   RETURN iif(cI == NIL, "", "EG_" + cI)
+   RETURN IIf(cI == NIL, "", "EG_" + cI)
 
 STATIC FUNCTION cvt2str( xI, lLong )
 
@@ -1078,14 +1078,14 @@ STATIC FUNCTION cvt2str( xI, lLong )
    cValtype := ValType(xI)
    lLong := ! Empty(lLong)
    IF cValtype == "U"
-      RETURN iif(lLong, "[U]:NIL", "NIL")
+      RETURN IIf(lLong, "[U]:NIL", "NIL")
    ELSEIF cValtype == "N"
-      RETURN iif(lLong, "[N]:" + Str( xI ), hb_ntos( xI ))
+      RETURN IIf(lLong, "[N]:" + Str( xI ), hb_ntos( xI ))
    ELSEIF cValtype $ "CM"
       IF Len(xI) <= 260
-         RETURN iif(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + xI + '"'
+         RETURN IIf(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + xI + '"'
       ELSE
-         RETURN iif(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + Left(xI, 100) + '"...'
+         RETURN IIf(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + Left(xI, 100) + '"...'
       ENDIF
    ELSEIF cValtype == "A"
       RETURN "[A" + hb_ntos( Len(xI) ) + "]"
@@ -1113,11 +1113,11 @@ STATIC FUNCTION cvt2str( xI, lLong )
       ENDIF
       RETURN "[O:" + xI:ClassName() + cI + "]"
    ELSEIF cValtype == "D"
-      RETURN iif(lLong, "[D]:", "") + DToC(xI)
+      RETURN IIf(lLong, "[D]:", "") + DToC(xI)
    ELSEIF cValtype == "L"
-      RETURN iif(lLong, "[L]:", "") + iif(xI, ".T.", ".F.")
+      RETURN IIf(lLong, "[L]:", "") + IIf(xI, ".T.", ".F.")
    ELSEIF cValtype == "P"
-      RETURN iif(lLong, "[P]:", "") + "0p" + hb_NumToHex( xI )
+      RETURN IIf(lLong, "[P]:", "") + "0p" + hb_NumToHex( xI )
    ELSE
       RETURN "[" + cValtype + "]" // BS,etc
    ENDIF
@@ -1336,7 +1336,7 @@ FUNCTION ULink( cText, cUrl )
 
 FUNCTION UUrlChecksum( cUrl )
 
-   RETURN cUrl + iif("?" $ cUrl, "&", "?") + "_ucs=" + hb_MD5( session[ "_unique" ] + cUrl + session[ "_unique" ] )
+   RETURN cUrl + IIf("?" $ cUrl, "&", "?") + "_ucs=" + hb_MD5( session[ "_unique" ] + cUrl + session[ "_unique" ] )
 
 FUNCTION UUrlValidate( cUrl )
 
@@ -1432,7 +1432,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
          RETURN
       ENDIF
       IF AScan( { "index.html", "index.htm" }, ;
-            {| x | iif(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, .T. ), .F.) } ) > 0
+            {| x | IIf(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, .T. ), .F.) } ) > 0
          UAddHeader( "Content-Type", "text/html" )
          UWrite( hb_MemoRead(UOsFileName( cFileName )) )
          RETURN
@@ -1447,18 +1447,18 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       aDir := Directory( UOsFileName( cFileName ), "D" )
       IF hb_HHasKey( get, "s" )
          IF get[ "s" ] == "s"
-            ASort( aDir,,, {| X, Y | iif(X[ 5 ] == "D", iif(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-               iif(Y[ 5 ] == "D", .F., X[ 2 ] < Y[ 2 ])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
+               IIf(Y[ 5 ] == "D", .F., X[ 2 ] < Y[ 2 ])) } )
          ELSEIF get[ "s" ] == "m"
-            ASort( aDir,,, {| X, Y | iif(X[ 5 ] == "D", iif(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-               iif(Y[ 5 ] == "D", .F., DToS( X[ 3 ] ) + X[ 4 ] < DToS( Y[ 3 ] ) + Y[ 4 ])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
+               IIf(Y[ 5 ] == "D", .F., DToS( X[ 3 ] ) + X[ 4 ] < DToS( Y[ 3 ] ) + Y[ 4 ])) } )
          ELSE
-            ASort( aDir,,, {| X, Y | iif(X[ 5 ] == "D", iif(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-               iif(Y[ 5 ] == "D", .F., X[ 1 ] < Y[ 1 ])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
+               IIf(Y[ 5 ] == "D", .F., X[ 1 ] < Y[ 1 ])) } )
          ENDIF
       ELSE
-         ASort( aDir,,, {| X, Y | iif(X[ 5 ] == "D", iif(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-            iif(Y[ 5 ] == "D", .F., X[ 1 ] < Y[ 1 ])) } )
+         ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
+            IIf(Y[ 5 ] == "D", .F., X[ 1 ] < Y[ 1 ])) } )
       ENDIF
 
       UWrite( '<html><body><h1>Index of ' + server[ "SCRIPT_NAME" ] + '</h1><pre>' )
@@ -1499,7 +1499,7 @@ PROCEDURE UProcInfo()
    UWrite( '<h2>Capabilities</h2>' )
    UWrite( '<table border=1 cellspacing=0>' )
    cI := ""
-   AEval( rddList(), {| X | cI += iif(Empty(cI), "", ", ") + X } )
+   AEval( rddList(), {| X | cI += IIf(Empty(cI), "", ", ") + X } )
    UWrite( '<tr><td>RDD</td><td>' + UHtmlEncode( cI ) + '</td></tr>' )
    UWrite( '</table>' )
 
@@ -1586,7 +1586,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
             EXIT
 
          CASE "if"
-            xValue := iif(hb_HHasKey( aData, aInstr[ 2 ] ), aData[ aInstr[ 2 ] ], NIL)
+            xValue := IIf(hb_HHasKey( aData, aInstr[ 2 ] ), aData[ aInstr[ 2 ] ], NIL)
             IF !Empty(xValue)
                cRet += parse_data(aData, aInstr[ 3 ], hConfig)
             ELSE

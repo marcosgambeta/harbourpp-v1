@@ -50,7 +50,7 @@ FUNCTION ft_NWSemOpen(cName, nInitVal, nHandle, nOpenCnt)
    __defaultNIL(@nHandle, 0)
    __defaultNIL(@nOpenCnt, 0)
 
-   cName    := iif(hb_BLen(cName) > 127, hb_BSubStr(cName, 1, 127), cName)
+   cName    := IIf(hb_BLen(cName) > 127, hb_BSubStr(cName, 1, 127), cName)
    cRequest := hb_BChar(Len(cName)) + cName
 
    aRegs[AX] := MAKEHI(197)                       // C5h
@@ -65,7 +65,7 @@ FUNCTION ft_NWSemOpen(cName, nInitVal, nHandle, nOpenCnt)
 
    nRet := LOWBYTE(aRegs[AX])
 
-   RETURN iif(nRet < 0, nRet + 256, nRet)
+   RETURN IIf(nRet < 0, nRet + 256, nRet)
 
 /* TODO: rewrite in C */
 
@@ -88,7 +88,7 @@ FUNCTION ft_NWSemEx(nHandle, nValue, nOpenCnt)
    nOpenCnt := LOWBYTE(aRegs[DX])
    nRet     := LOWBYTE(aRegs[AX])
 
-   RETURN iif(nRet < 0, nRet + 256, nRet)
+   RETURN IIf(nRet < 0, nRet + 256, nRet)
 
 FUNCTION ft_NWSemWait(nHandle, nTimeout)
 
@@ -123,7 +123,7 @@ STATIC FUNCTION _ftnwsem(nOp, nHandle, nTimeout)
 
    ft_int86(33, aRegs)
    nRet := LOWBYTE(aRegs[AX])
-   nRet := iif(nRet < 0, nRet + 256, nRet)
+   nRet := IIf(nRet < 0, nRet + 256, nRet)
 
    RETURN nRet
 

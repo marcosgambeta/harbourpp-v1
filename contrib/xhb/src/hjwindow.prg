@@ -86,10 +86,10 @@ CREATE CLASS TJSWindow
    METHOD Write(c)
    METHOD lineBreak() INLINE ::QOut("<br />")
    METHOD Paragraph() INLINE ::QOut("<p></p>")
-   METHOD Center(l) INLINE ::QOut(iif(l, "<center>", "</center>"))
-   METHOD bold(l) INLINE ::QOut(iif(l, "<b>", "</b>"))
-   METHOD Italic(l) INLINE ::QOut(iif(l, "<i>", "</i>"))
-   METHOD ULine(l) INLINE ::QOut(iif(l, "<u>", "</u>"))
+   METHOD Center(l) INLINE ::QOut(IIf(l, "<center>", "</center>"))
+   METHOD bold(l) INLINE ::QOut(IIf(l, "<b>", "</b>"))
+   METHOD Italic(l) INLINE ::QOut(IIf(l, "<i>", "</i>"))
+   METHOD ULine(l) INLINE ::QOut(IIf(l, "<u>", "</u>"))
    METHOD Put()
    METHOD Begin()
    METHOD End()
@@ -223,7 +223,7 @@ METHOD TJSWindow:SetFeatures(alwaysRaised, alwaysLowered, ;
       cStr += "copyHistory=no,"
    ENDIF
 
-   ::features += iif(Empty(::Features), cStr + ",", cStr)
+   ::features += IIf(Empty(::Features), cStr + ",", cStr)
 
    RETURN Self
 
@@ -248,7 +248,7 @@ METHOD TJSWindow:SetSize(x, y, h, w)
    cStr += "height=" + hb_ntos(::height) + ","
    cStr += "width=" + hb_ntos(::width)
 
-   ::features += iif(Empty(::Features), cStr + ",", cStr)
+   ::features += IIf(Empty(::Features), cStr + ",", cStr)
 
    RETURN Self
 

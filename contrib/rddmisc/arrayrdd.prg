@@ -61,7 +61,7 @@
 
 #xtranslate Throw( <oErr> ) => ( Eval( ErrorBlock(), <oErr> ), Break( <oErr> ) )
 
-#define LEFTEQUAL( l, r )    iif( ValType(l) $ "CM", Left(l, Len(r)) == r, l == r )
+#define LEFTEQUAL( l, r )    IIf( ValType(l) $ "CM", Left(l, Len(r)) == r, l == r )
 
 ANNOUNCE ARRAYRDD
 
@@ -242,7 +242,7 @@ STATIC FUNCTION AR_CREATEFIELDS( nWA, aStruct )
 
       aField := Array( UR_FI_SIZE )
       aField[ UR_FI_NAME ]    := aFieldStruct[ DBS_NAME ]
-      aField[ UR_FI_TYPE ]    := hb_Decode( aFieldStruct[ DBS_TYPE ], "C", HB_FT_STRING, "L", HB_FT_LOGICAL, "M", HB_FT_MEMO, "D", HB_FT_DATE, "N", iif( aFieldStruct[ DBS_DEC ] > 0, HB_FT_DOUBLE, HB_FT_INTEGER ) )
+      aField[ UR_FI_TYPE ]    := hb_Decode( aFieldStruct[ DBS_TYPE ], "C", HB_FT_STRING, "L", HB_FT_LOGICAL, "M", HB_FT_MEMO, "D", HB_FT_DATE, "N", IIf( aFieldStruct[ DBS_DEC ] > 0, HB_FT_DOUBLE, HB_FT_INTEGER ) )
       aField[ UR_FI_TYPEEXT ] := 0
       aField[ UR_FI_LEN ]     := aFieldStruct[ DBS_LEN ]
       aField[ UR_FI_DEC ]     := aFieldStruct[ DBS_DEC ]
@@ -358,7 +358,7 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
    FOR EACH aFieldStruct IN aStruct
       aField := Array( UR_FI_SIZE )
       aField[ UR_FI_NAME ]    := aFieldStruct[ DBS_NAME ]
-      aField[ UR_FI_TYPE ]    := hb_Decode( aFieldStruct[ DBS_TYPE ], "C", HB_FT_STRING, "L", HB_FT_LOGICAL, "M", HB_FT_MEMO, "D", HB_FT_DATE, "N", iif( aFieldStruct[ DBS_DEC ] > 0, HB_FT_DOUBLE, HB_FT_INTEGER ) )
+      aField[ UR_FI_TYPE ]    := hb_Decode( aFieldStruct[ DBS_TYPE ], "C", HB_FT_STRING, "L", HB_FT_LOGICAL, "M", HB_FT_MEMO, "D", HB_FT_DATE, "N", IIf( aFieldStruct[ DBS_DEC ] > 0, HB_FT_DOUBLE, HB_FT_INTEGER ) )
       aField[ UR_FI_TYPEEXT ] := 0
       aField[ UR_FI_LEN ]     := aFieldStruct[ DBS_LEN ]
       aField[ UR_FI_DEC ]     := aFieldStruct[ DBS_DEC ]
@@ -464,7 +464,7 @@ STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nField: %2$d, xValue: %3$s", nWA, nField, hb_ValToExp( xValue ) ) )
 
    IF nField > 0 .AND. nField <= Len(aStruct) .AND. ;
-      iif( HB_IsString( xValue ) .AND. aStruct[ nField ][ DBS_TYPE ] == "M", .T., ValType(xValue) == aStruct[ nField ][ DBS_TYPE ] )
+      IIf( HB_IsString( xValue ) .AND. aStruct[ nField ][ DBS_TYPE ] == "M", .T., ValType(xValue) == aStruct[ nField ][ DBS_TYPE ] )
 
       xVal := PutValue( xValue, aStruct[ nField ][ DBS_TYPE ], aStruct[ nField ][ DBS_LEN ], aStruct[ nField ][ DBS_DEC ] )
 
@@ -629,7 +629,7 @@ STATIC FUNCTION AR_SKIPFILTER( nWA, nRecords )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nRecords: %2$d", nWA, nRecords ) )
 
-   nToSkip := iif( nRecords > 0, 1, iif( nRecords < 0, -1, 0 ) )
+   nToSkip := IIf( nRecords > 0, 1, IIf( nRecords < 0, -1, 0 ) )
 
    IF nToSkip != 0
       DO WHILE ! aWAData[ WADATA_BOF ] .AND. ! aWAData[ WADATA_EOF ]
@@ -919,7 +919,7 @@ STATIC FUNCTION AR_APPEND(nWA, nRecords)
 STATIC FUNCTION AR_LOCK( nWA, aLock )
 
    LOCAL aWAData := USRRDD_AREADATA(nWA)
-   LOCAL nRec    := iif( aLock[ UR_LI_RECORD ] == NIL, aWAData[ WADATA_RECNO ], aLock[ UR_LI_RECORD ] )
+   LOCAL nRec    := IIf( aLock[ UR_LI_RECORD ] == NIL, aWAData[ WADATA_RECNO ], aLock[ UR_LI_RECORD ] )
    LOCAL aRecInfo
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, aLock: %2$s", nWA, hb_ValToExp( aLock ) ) )
@@ -1178,11 +1178,11 @@ STATIC FUNCTION AR_ORDLSTFOCUS( nWA, aOrderInfo )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, aOrderInfo: %2$s", nWA, hb_ValToExp( aOrderInfo ) ) )
 
-   aOrderInfo[ UR_ORI_RESULT ] := iif( aWAData[ WADATA_INDEX ] > 0, aIndexes[ aWAData[ WADATA_INDEX ], INDEX_TAG ], "" )
+   aOrderInfo[ UR_ORI_RESULT ] := IIf( aWAData[ WADATA_INDEX ] > 0, aIndexes[ aWAData[ WADATA_INDEX ], INDEX_TAG ], "" )
 
    SWITCH ValType(xIndex)
    CASE "N"
-      aWAData[ WADATA_INDEX ] := iif( xIndex >= 1 .AND. xIndex <= Len(aIndexes), Int( xIndex ), 0 )
+      aWAData[ WADATA_INDEX ] := IIf( xIndex >= 1 .AND. xIndex <= Len(aIndexes), Int( xIndex ), 0 )
       EXIT
    CASE "C"
       xIndex := Upper(xIndex)
@@ -1278,7 +1278,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    ELSE
       bEvalOCI := aOCInfo[ UR_ORC_BEVAL ]
       nStep    := aOCInfo[ UR_ORC_STEP ]
-      bEval    := {|| iif( ++nContStep == nStep, ( nContStep := 0, Eval( bEvalOCI ) ), .T. ) }
+      bEval    := {|| IIf( ++nContStep == nStep, ( nContStep := 0, Eval( bEvalOCI ) ), .T. ) }
       HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "bEvalOCI = %1$s, nStep = %2$d, bEval = %3$s", hb_ValToExp( bEvalOCI ), nStep, hb_ValToExp( bEval ) ) )
    ENDIF
 
@@ -1963,8 +1963,8 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
       EXIT
    CASE 1   /* Archive with 1 record */
       IF aIndex[ 1 ] == NIL .OR. ;
-         iif( lSoft, ;
-            iif( aIndexInfo[ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ], ;
+         IIf( lSoft, ;
+            IIf( aIndexInfo[ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ], ;
                aIndex[ 1 ][ INDEXKEY_KEY ] <= xSeek, ;
                aIndex[ 1 ][ INDEXKEY_KEY ] >= xSeek ), ;
             LEFTEQUAL( aIndex[ 1 ][ INDEXKEY_KEY ], xSeek ) )

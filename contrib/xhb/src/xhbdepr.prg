@@ -80,7 +80,7 @@ FUNCTION hb_BuildDate()
    RETURN hb_Version(HB_VERSION_BUILD_DATE_STR)
 
 FUNCTION hb_regexMatch(...)
-   RETURN iif(HB_IsLogical(hb_PValue(5)) .AND. hb_PValue(5), hb_regexLike(...), hb_regexHas(...))
+   RETURN IIf(HB_IsLogical(hb_PValue(5)) .AND. hb_PValue(5), hb_regexLike(...), hb_regexHas(...))
 
 #endif
 

@@ -86,4 +86,4 @@ STATIC FUNCTION Bin2U( c )
 
    LOCAL l := Bin2L( c )
 
-   RETURN iif( l < 0, l + ( 2 ^ 32 ), l )
+   RETURN IIf( l < 0, l + ( 2 ^ 32 ), l )

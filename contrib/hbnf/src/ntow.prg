@@ -51,7 +51,7 @@ STATIC FUNCTION grp_to_words(nGrp, sQual)
 
    nTemp   := Int(nGrp % 100)
    nGrp    := Int(nGrp / 100)
-   sResult += sc_ones[nGrp + 1] + iif(nGrp > 0, " Hundred", "")
+   sResult += sc_ones[nGrp + 1] + IIf(nGrp > 0, " Hundred", "")
 
    DO CASE
    CASE nTemp > 19

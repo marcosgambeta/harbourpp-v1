@@ -86,7 +86,7 @@ FUNCTION wvw_GetRGBColor(nColor)
 
    hb_default(@nColor, -1)
 
-   RETURN iif(nColor >= 0 .AND. nColor <= 15, hb_gtInfo(HB_GTI_PALETTE, nColor), 0)
+   RETURN IIf(nColor >= 0 .AND. nColor <= 15, hb_gtInfo(HB_GTI_PALETTE, nColor), 0)
 
 FUNCTION wvw_BringToTop1(hWnd)
 
@@ -100,13 +100,13 @@ FUNCTION wvw_BringToTop1(hWnd)
    RETURN .T.
 
 FUNCTION wvw_LoadIcon(ncRes)
-   RETURN wapi_LoadIcon(iif(HB_IsNumeric(ncRes),, wapi_GetModuleHandle()), ncRes)
+   RETURN wapi_LoadIcon(IIf(HB_IsNumeric(ncRes),, wapi_GetModuleHandle()), ncRes)
 
 FUNCTION wvw_LoadImage(hInstance, ncRes, ...)
-   RETURN wapi_LoadImage(iif(HB_IsNumeric(ncRes), wapi_GetModuleHandle(), hInstance), ncRes, ...)
+   RETURN wapi_LoadImage(IIf(HB_IsNumeric(ncRes), wapi_GetModuleHandle(), hInstance), ncRes, ...)
 
 FUNCTION wvw_LoadBitmap(ncRes, lNULLInstance)
-   RETURN wapi_LoadBitmap(iif(hb_defaultValue(lNULLInstance, .F.),, wapi_GetModuleHandle()), ncRes)
+   RETURN wapi_LoadBitmap(IIf(hb_defaultValue(lNULLInstance, .F.),, wapi_GetModuleHandle()), ncRes)
 
 FUNCTION wvw_LoadBitmapEx(hInstance, ncRes)
    RETURN wapi_LoadBitmap(hb_defaultValue(hInstance, wapi_GetModuleHandle()), ncRes)
@@ -190,7 +190,7 @@ FUNCTION wvw_GetMenu(nWin)
 
    LOCAL hWnd := wvw_Get_hnd_Window(nWin)
 
-   RETURN iif(Empty(hWnd),, wapi_GetMenu(hWnd))
+   RETURN IIf(Empty(hWnd),, wapi_GetMenu(hWnd))
 
 PROCEDURE wvw_DrawMenuBar(nWin)
 
@@ -216,14 +216,14 @@ FUNCTION wvw_GetTitle(nWin)
 
    LOCAL hWnd
 
-   RETURN iif(Empty(hWnd := wvw_Get_hnd_Window(nWin)), "", wapi_GetWindowText(hWnd))
+   RETURN IIf(Empty(hWnd := wvw_Get_hnd_Window(nWin)), "", wapi_GetWindowText(hWnd))
 
 /* Returns the System Menu of a window */
 FUNCTION wvw_GetSystemMenu(nWin, lReset)
 
    LOCAL hWnd := wvw_Get_hnd_Window(nWin)
 
-   RETURN iif(Empty(hWnd),, wapi_GetSystemMenu(hWnd, lReset))
+   RETURN IIf(Empty(hWnd),, wapi_GetSystemMenu(hWnd, lReset))
 
 FUNCTION wvw_TrackPopupMenu(nWin, hMenu)
 
@@ -388,7 +388,7 @@ FUNCTION wvw_EnableMaximize(nWin, lEnable)
    lEnableOld := hb_bitAnd(nStyle, WIN_WS_MAXIMIZEBOX) != 0
 
    IF HB_IsLogical(lEnable) .AND. lEnable != lEnableOld
-      wapi_SetWindowLongPtr(hWnd, WIN_GWL_STYLE, iif(lEnable, hb_bitOr(nStyle, WIN_WS_MAXIMIZEBOX), hb_bitAnd(nStyle, hb_bitNot(WIN_WS_MAXIMIZEBOX))))
+      wapi_SetWindowLongPtr(hWnd, WIN_GWL_STYLE, IIf(lEnable, hb_bitOr(nStyle, WIN_WS_MAXIMIZEBOX), hb_bitAnd(nStyle, hb_bitNot(WIN_WS_MAXIMIZEBOX))))
       wapi_SetWindowPos(hWnd,,,,,, hb_bitOr(WIN_SWP_NOMOVE, WIN_SWP_NOSIZE, WIN_SWP_NOZORDER, WIN_SWP_FRAMECHANGED))
       wapi_ShowWindow(hWnd, WIN_SW_SHOW)
    ENDIF
@@ -445,7 +445,7 @@ FUNCTION win_SetTimer(...)
    RETURN !Empty(wapi_SetTimer(...))
 
 FUNCTION win_InvalidateRect(w, e, l, t, r, b)
-   RETURN wapi_InvalidateRect(w, iif(PCount() > 2, {l, t, r, b}, NIL), iif(HB_IsLogical(e), e, hb_defaultValue(e, 1) != 0))
+   RETURN wapi_InvalidateRect(w, IIf(PCount() > 2, {l, t, r, b}, NIL), IIf(HB_IsLogical(e), e, hb_defaultValue(e, 1) != 0))
 
 FUNCTION win_CreateBrush(...)
    RETURN wapi_CreateBrushIndirect({...})

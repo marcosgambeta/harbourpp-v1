@@ -201,7 +201,7 @@ METHOD THtmlFrameSet:Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidt
       cStr += ' scrolling="' + cScrolling + '"'
    ELSE
       IF lScrolling != NIL
-         cStr += ' scrolling=' + iif(lScrolling, '"yes"', '"no"')
+         cStr += ' scrolling=' + IIf(lScrolling, '"yes"', '"no"')
       ELSE
          cStr += ' scrolling="auto"'
       ENDIF

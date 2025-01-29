@@ -175,7 +175,7 @@ METHOD TUrl:BuildAddress()
       cRet += "?" + ::cQuery
    ENDIF
 
-   RETURN iif(cRet == "", NIL, ::cAddress := cRet)
+   RETURN IIf(cRet == "", NIL, ::cAddress := cRet)
 
 METHOD TUrl:BuildQuery()
 
@@ -220,5 +220,5 @@ METHOD TUrl:AddGetForm( xPostData )
       cData := xPostData
    ENDCASE
 
-   RETURN iif(cData == "", NIL, ;
-      ::cQuery += iif(::cQuery == "", "", "&") + cData)
+   RETURN IIf(cData == "", NIL, ;
+      ::cQuery += IIf(::cQuery == "", "", "&") + cData)

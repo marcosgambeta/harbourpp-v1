@@ -32,10 +32,10 @@ FUNCTION ft_Blink(cMsg, nRow, nCol)
 
       // If blink colors not already set, add blink to current foreground color.
       hb_DispOutAt(;
-         iif(nRow == NIL, Row(), nRow), ;
-         iif(nCol == NIL, Col(), nCol), ;
+         IIf(nRow == NIL, Row(), nRow), ;
+         IIf(nCol == NIL, Col(), nCol), ;
          cMsg, ;
-         iif("*" $ Left(cSavColor, 4), cSavColor, "*" + cSavColor))
+         IIf("*" $ Left(cSavColor, 4), cSavColor, "*" + cSavColor))
    ENDIF
 
    RETURN NIL

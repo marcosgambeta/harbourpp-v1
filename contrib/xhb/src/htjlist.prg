@@ -122,7 +122,7 @@ METHOD TJSList:New(name, lOpen, width, height, bgColor, FONT, fntColor, fntSize,
 
    cStr += ""       // Space(10)
    cStr += name + " = new List("
-   cStr += iif(lOpen, "true,", "false,")
+   cStr += IIf(lOpen, "true,", "false,")
    cStr += hb_ntos(width) + ","
    cStr += hb_ntos(height) + ","
    cStr += '"' + BGCOLOR + '"' + ");" + CRLF()
@@ -150,7 +150,7 @@ METHOD TJSList:NewNode(name, lOpen, width, height, bgColor)
    __defaultNIL(@BGCOLOR, "white")
    cStr += ""       // Space(10)
    cStr += name + "= new List("
-   cStr += iif(lOpen, "true,", "false,")
+   cStr += IIf(lOpen, "true,", "false,")
    cStr += hb_ntos(width) + ","
    cStr += hb_ntos(height) + ","
    cStr += '"' + BGCOLOR + '"' + ");" + CRLF()
@@ -202,7 +202,7 @@ METHOD TJSList:AddItem(name, url, bgColor)
    __defaultNIL(@name, "o")
    __defaultNIL(@url, "")
    cUrl := "<a href='" + url + "'>" + htmlSpace(2) + name + htmlSpace(2)
-   cStr := ::cCurrentNode + '.addItem("' + cUrl + '"' + iif(bgColor != NIL, ',"' + bgColor + '"', "") + ');' + CRLF()
+   cStr := ::cCurrentNode + '.addItem("' + cUrl + '"' + IIf(bgColor != NIL, ',"' + bgColor + '"', "") + ');' + CRLF()
    ::nItems++
    AAdd(::aScript, cStr)
 
@@ -223,7 +223,7 @@ METHOD TJSList:AddLink(name, url, img, bgColor)
    __defaultNIL(@url, "")
    __defaultNIL(@img, "webpage.jpg")
    cUrl := "<a href='" + url + "'><img src='" + img + "' border=0 align=absmiddle>" + htmlSpace(2) + name + htmlSpace(2)
-   cStr := ::cCurrentNode + '.addItem("' + curl + '"' + iif(bgColor != NIL, ',"' + bgColor + '"', "") + ');' + CRLF()
+   cStr := ::cCurrentNode + '.addItem("' + curl + '"' + IIf(bgColor != NIL, ',"' + bgColor + '"', "") + ');' + CRLF()
    ::nItems++
    AAdd(::aScript, cStr)
 

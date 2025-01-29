@@ -85,11 +85,11 @@ FUNCTION ft_ClrSel(aClrs, lColour, cChr)
    cChr := PadR(cChr, 2)
 
    SetCursor(SC_NONE)
-   SetColor(iif(lColour, "GR+/N,,N/N", "W+/N,,N/N"))
+   SetColor(IIf(lColour, "GR+/N,,N/N", "W+/N,,N/N"))
    hb_Scroll()
 
    // .... initialize the colour palette
-   aClrPal := _ftInitPal(iif(lColour, aClrTab, aClrBW))
+   aClrPal := _ftInitPal(IIf(lColour, aClrTab, aClrBW))
 
    // .... paint the colours on the screen
    _ftShowPal(aClrPal, cChr)
@@ -109,7 +109,7 @@ FUNCTION ft_ClrSel(aClrs, lColour, cChr)
    nR := Min(nL + nLen + 3, 26)
 
    // .... set up the window for aChoice
-   SetColor(iif(lColour, "N/W,W+/R", "N/W,W+/N"))
+   SetColor(IIf(lColour, "N/W,W+/R", "N/W,W+/N"))
    hb_Scroll(nT, nL, nB, nR)
 
    // .... prompt for colour setting and modify
@@ -134,7 +134,7 @@ FUNCTION ft_ClrSel(aClrs, lColour, cChr)
    RestScreen(0, 0, MaxRow(), MaxCol(), cScrSav)
    SetPos(nRowSav, nColSav)
 
-   RETURN iif(nChoice == 1, aClrs, aClrOld)
+   RETURN IIf(nChoice == 1, aClrs, aClrOld)
 
 // Highlight the current selected aChoice element
 // Return -> NIL
@@ -190,7 +190,7 @@ STATIC FUNCTION _ftColours(aOpt, aClrPal, lColour)
       // .... we need to know top,left,bottom,right for the prompt window
       AEval(aPrompt, {|cPrompt|nLen := Max(nLen, Len(cPrompt))})
       nLen := Max(nLen, Len(aOpt[C_NAME]) + 2)
-      nT := iif(aOpt[C_TYPE] == "M", 18, 19)
+      nT := IIf(aOpt[C_TYPE] == "M", 18, 19)
       nB := nT + Len(aPrompt) + 1
       nL := Max(Int((27 - nLen) / 2) - 2, 1)
       nR := Min(nL + nLen + 3, 26)
@@ -206,7 +206,7 @@ STATIC FUNCTION _ftColours(aOpt, aClrPal, lColour)
       _ftShowIt(aOpt)
 
       IF !(aOpt[C_TYPE] == "T")  // no prompt for titles
-         SetColor(iif(lColour, "N/W,W+/R,,,N/W", "N/W,W+/N,,,N/W"))
+         SetColor(IIf(lColour, "N/W,W+/R,,,N/W", "N/W,W+/N,,,N/W"))
          Double(nT, nL + 1, nB, nR - 1)
          hb_DispOutAt(nT, nL + 2, PadC(" " + aOpt[C_NAME] + " ", nR - nL - 3, hb_UTF8ToStr("═")))
          FOR nX := 1 TO Len(aPrompt)
@@ -230,7 +230,7 @@ STATIC FUNCTION _ftColours(aOpt, aClrPal, lColour)
       aClrs := _ftChr2Arr(aOpt[C_CLR])   // place color string in an array
       ASize(aClrs, 5)                      // make sure there are 5 settings
       // .... empty elements are made NIL so they can be defaulted
-      AEval(aClrs, {|v, e|aClrs[e] := iif(Empty(v), NIL, AllTrim(v))})
+      AEval(aClrs, {|v, e|aClrs[e] := IIf(Empty(v), NIL, AllTrim(v))})
       __defaultNIL(@aClrs[1], "W/N")
       __defaultNIL(@aClrs[2], "N/W")  // place default colours into
       __defaultNIL(@aClrs[3], "N/N")  // elements which are empty
@@ -405,14 +405,14 @@ STATIC FUNCTION _ftClrSel(aClrPal, cClr, nElem, aOpt)
 
    IF !lFound
       nR := 1                         // black background
-      nC := iif(nDim == 5, 3, 8)    // white foreground
+      nC := IIf(nDim == 5, 3, 8)    // white foreground
    ENDIF
 
    DO WHILE .T.
 
       // .... make sure array boundary not exceeded
-      nR := iif(nR > nDim, 1, iif(nR == 0, nDim, nR))
-      nC := iif(nC > nDim, 1, iif(nC == 0, nDim, nC))
+      nR := IIf(nR > nDim, 1, IIf(nR == 0, nDim, nR))
+      nC := IIf(nC > nDim, 1, IIf(nC == 0, nDim, nC))
 
       // .... place selected colour in the appropriate spot in clr string
       aOpt[C_CLR] := _ftClrPut(aOpt[C_CLR], nElem, aClrPal[nR, nC])
@@ -482,7 +482,7 @@ STATIC FUNCTION _ftDeskChar(aOpt)
    n := nElem + 18
    DO WHILE .T.
       // .... make sure boundary not exeeded
-      n := iif(n > Len(aChar) + 18, 19, iif(n < 19, Len(aChar) + 18, n))
+      n := IIf(n > Len(aChar) + 18, 19, IIf(n < 19, Len(aChar) + 18, n))
 
       // .... show sample window
       aOpt[C_CHAR] := aChar[n - 18] // place in array
@@ -528,7 +528,7 @@ STATIC FUNCTION _ftChr2Arr(cString, cDelim)
          EXIT
       ENDIF
       n := At(cDelim, cString)
-      AAdd(aArray, iif(n == 1, "", Left(cString, n - 1)))
+      AAdd(aArray, IIf(n == 1, "", Left(cString, n - 1)))
       cString := SubStr(cString, n + 1)
    ENDDO
 
@@ -544,7 +544,7 @@ STATIC FUNCTION _ftArr2Chr(aArray, cDelim)
    __defaultNIL(@aArray, {})
    __defaultNIL(@cDelim, ",")
 
-   AEval(aArray, {|v, e|cString += iif(e == 1, v, cDelim + v)})
+   AEval(aArray, {|v, e|cString += IIf(e == 1, v, cDelim + v)})
 
    RETURN cString
 
@@ -587,7 +587,7 @@ STATIC FUNCTION _ftInitPal(aClrTab)
 
    FOR nF := 1 TO nDim * 2
       FOR nB := 1 TO nDim * 2
-         aClrPal[nF, nB] := iif(nF <= nDim, aClrTab[nF], aClrTab[nF - nDim] + "+") + "/" + iif(nB <= nDim, aClrTab[nB], aClrTab[nB - nDim] + "*")
+         aClrPal[nF, nB] := IIf(nF <= nDim, aClrTab[nF], aClrTab[nF - nDim] + "+") + "/" + IIf(nB <= nDim, aClrTab[nB], aClrTab[nB - nDim] + "*")
       NEXT
    NEXT
 
@@ -603,7 +603,7 @@ STATIC FUNCTION _ftIdentArr(aArr1, aArr2)
 
    DO WHILE lIdentical .AND. n <= Len(aArr1)
       IF ValType(aArr1[n]) == ValType(aArr2[n])
-         lIdentical := iif(HB_IsArray(aArr1[n]), _ftIdentArr(aArr1[n], aArr2[n]), aArr1[n] == aArr2[n])
+         lIdentical := IIf(HB_IsArray(aArr1[n]), _ftIdentArr(aArr1[n], aArr2[n]), aArr1[n] == aArr2[n])
       ELSE
          lIdentical := .F.
       ENDIF

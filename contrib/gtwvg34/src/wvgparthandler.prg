@@ -240,7 +240,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       CASE xParams[ 1 ] == WIN_WM_MOUSELEAVE
          // Nothing
       OTHERWISE
-         aPos := iif(::mouseMode == 2, { xParams[ 3 ], xParams[ 4 ] }, { xParams[ 5 ], xParams[ 6 ] })
+         aPos := IIf(::mouseMode == 2, { xParams[ 3 ], xParams[ 4 ] }, { xParams[ 5 ], xParams[ 6 ] })
       ENDCASE
 
       SWITCH xParams[ 1 ]

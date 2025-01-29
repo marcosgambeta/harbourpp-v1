@@ -104,7 +104,7 @@ FUNCTION tip_MailAssemble( ;
       cCharsetCP := hb_cdpUniID( Lower(cCharset) )
    ENDIF
 
-   cContentType := iif(lBodyHTML, "text/html", "text/plain") + "; charset=" + cCharset
+   cContentType := IIf(lBodyHTML, "text/html", "text/plain") + "; charset=" + cCharset
 
    /* add ending EOL to body, if there wasn't any */
    IF !Right(cBody, 2) == Chr(13) + Chr(10)
@@ -169,7 +169,7 @@ FUNCTION tip_MailAssemble( ;
 
          oAttach := TIPMail():New()
          oAttach:SetCharset( cCharset )
-         oAttach:SetEncoder( iif(hb_LeftEq( cMimeType, "text/" ), cEncoding, "base64") )
+         oAttach:SetEncoder( IIf(hb_LeftEq( cMimeType, "text/" ), cEncoding, "base64") )
 
          IF cMimeType == "text/html"
             cMimeType += "; charset=" + cCharset
@@ -211,7 +211,7 @@ FUNCTION tip_MailAssemble( ;
       oMail:hHeaders[ "X-Priority" ] := hb_ntos( nPriority )
    ENDIF
 
-   RETURN iif(HB_IsString( tmp ), oMail:HeadersToString() + tmp, oMail:ToString())
+   RETURN IIf(HB_IsString( tmp ), oMail:HeadersToString() + tmp, oMail:ToString())
 
 STATIC FUNCTION s_TransCP( xData, cCP )
 

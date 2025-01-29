@@ -272,7 +272,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 
    cmsg := AllTrim(cmsg)
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
-   nWidth := iif(nNumLines < 2, Len(cmsg), nRight - nLeft - 1)
+   nWidth := IIf(nNumLines < 2, Len(cmsg), nRight - nLeft - 1)
    nTopLine := nBotLine - nNumLines - 1
    IF nTopLine < 0            // too many lines to display
       nNumLines += nTopLine
@@ -363,6 +363,6 @@ STATIC PROCEDURE ZREVWINDOW()
    RETURN
 
 STATIC FUNCTION nCeiling( nNumber )
-   RETURN Int( nNumber ) + iif(( nNumber - Int( nNumber ) ) > 0, 1, 0)
+   RETURN Int( nNumber ) + IIf(( nNumber - Int( nNumber ) ) > 0, 1, 0)
 
 SET PROCEDURE TO "table.prg"

@@ -61,7 +61,7 @@ FUNCTION Subscribe(mtx, nTimeOut, /* @ */ lSubscribed)
 
    LOCAL xSubscribed
 
-   lSubscribed := hb_mutexSubscribe(mtx, iif(HB_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
+   lSubscribed := hb_mutexSubscribe(mtx, IIf(HB_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
 
    RETURN xSubscribed
 
@@ -69,12 +69,12 @@ FUNCTION SubscribeNow(mtx, nTimeOut, /* @ */ lSubscribed)
 
    LOCAL xSubscribed
 
-   lSubscribed := hb_mutexSubscribeNow(mtx, iif(HB_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
+   lSubscribed := hb_mutexSubscribeNow(mtx, IIf(HB_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
 
    RETURN xSubscribed
 
 FUNCTION IsSameThread(pThID1, pThID2)
-   RETURN hb_threadID(pThID1) == iif(PCount() < 2, hb_threadID(), hb_threadID(pThID2))
+   RETURN hb_threadID(pThID1) == IIf(PCount() < 2, hb_threadID(), hb_threadID(pThID2))
 
 FUNCTION IsValidThread(pThID)
 
@@ -108,7 +108,7 @@ FUNCTION hb_MutexTryLock(mtx)
    RETURN hb_mutexLock(mtx, 0)
 
 FUNCTION hb_MutexTimeOutLock(mtx, nTimeOut)
-   RETURN hb_mutexLock(mtx, iif(HB_IsNumeric(nTimeOut), nTimeOut / 1000, 0))
+   RETURN hb_mutexLock(mtx, IIf(HB_IsNumeric(nTimeOut), nTimeOut / 1000, 0))
 
 FUNCTION GetSystemThreadId(pThID)
-   RETURN iif(PCount() < 1, hb_threadID(), hb_threadID(pThID))
+   RETURN IIf(PCount() < 1, hb_threadID(), hb_threadID(pThID))

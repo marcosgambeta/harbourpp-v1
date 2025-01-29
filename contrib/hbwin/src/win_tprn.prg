@@ -212,7 +212,7 @@ ENDCLASS
 
 METHOD win_Prn:New(cPrinter)
 
-   ::PrinterName := iif(Empty(cPrinter), win_printerGetDefault(), cPrinter)
+   ::PrinterName := IIf(Empty(cPrinter), win_printerGetDefault(), cPrinter)
    /* Initialized with the current properties of the printer [jarabal] */
    ::GetDocumentProperties()
 

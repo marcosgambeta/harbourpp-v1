@@ -249,7 +249,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          // Nothing
          EXIT
       OTHERWISE
-         aPos := iif(::mouseMode == 2, {xParams[3], xParams[4]}, {xParams[5], xParams[6]})
+         aPos := IIf(::mouseMode == 2, {xParams[3], xParams[4]}, {xParams[5], xParams[6]})
       ENDSWITCH
 
       SWITCH xParams[1]

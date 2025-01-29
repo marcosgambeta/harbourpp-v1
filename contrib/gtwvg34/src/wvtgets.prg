@@ -115,7 +115,7 @@ METHOD WvtGets:Create()
       __defaultNIL( @::aGetList[ i ][ 5 ], {|| .T. } )
       __defaultNIL( @::aGetList[ i ][ 6 ], {|| .T. } )
 
-      AAdd(::GetList, Get():New( ::aGetList[ i ][ 1 ], ::aGetList[ i ][ 2 ], {| v | iif(PCount() == 0, ::aGetList[ i ][ 3 ], ::aGetList[ i ][ 3 ] := v) }, "::aGetList[ i ][ 3 ]", ::aGetList[ i ][ 7 ] ))
+      AAdd(::GetList, Get():New( ::aGetList[ i ][ 1 ], ::aGetList[ i ][ 2 ], {| v | IIf(PCount() == 0, ::aGetList[ i ][ 3 ], ::aGetList[ i ][ 3 ] := v) }, "::aGetList[ i ][ 3 ]", ::aGetList[ i ][ 7 ] ))
 
       ::GetList[ i ]:Display()
       ::PaintBlock( i )

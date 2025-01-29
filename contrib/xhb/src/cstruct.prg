@@ -103,10 +103,10 @@ FUNCTION __ActiveStructure(cStructure, nAlign)
 
          // In most cases we can simply ignore the redefinition, by returning a FAKED Structure Array!
          // TraceLog("Redefinition of C Structure: " + cStructure)
-         RETURN t_aActiveStructure := {cStructure, NIL, {}, {}, iif(HB_IsNumeric(nAlign), nAlign, 8)}
+         RETURN t_aActiveStructure := {cStructure, NIL, {}, {}, IIf(HB_IsNumeric(nAlign), nAlign, 8)}
       ENDIF
 
-      AAdd(s_aClasses, {cStructure, NIL, {}, {}, iif(HB_IsNumeric(nAlign), nAlign, 8)})
+      AAdd(s_aClasses, {cStructure, NIL, {}, {}, IIf(HB_IsNumeric(nAlign), nAlign, 8)})
       // TraceLog("Registered: " + cStructure, ATail(s_aClasses)[5])
 
       t_aActiveStructure := ATail(s_aClasses)
@@ -196,9 +196,9 @@ FUNCTION hb_CStructureId(cStructure, lInplace)
          nID := s_aSynonyms[nID][2]
       ENDIF
 
-      nID += iif(lInplace, 0, CTYPE_STRUCTURE_PTR - CTYPE_STRUCTURE)
+      nID += IIf(lInplace, 0, CTYPE_STRUCTURE_PTR - CTYPE_STRUCTURE)
    ELSE
-      nID += iif(lInplace, CTYPE_STRUCTURE, CTYPE_STRUCTURE_PTR)
+      nID += IIf(lInplace, CTYPE_STRUCTURE, CTYPE_STRUCTURE_PTR)
    ENDIF
 
    // TraceLog(cStructure, nID)
@@ -477,8 +477,8 @@ STATIC FUNCTION SayMembers(cPad, lShowMembers, lReturnString)
             xProperty:SayMembers(cPad + cPad, lShowMembers)
          ENDIF
       ELSE
-         // QOut(cPad + iif(lShowMembers, acMembers[xProperty:__enumIndex()], "") + ":", xProperty)
-         cOut += hb_eol() + cPad + iif(lShowMembers, QSelf():acMembers[xProperty:__enumIndex()], "") + ":" + hb_CStr(xProperty)
+         // QOut(cPad + IIf(lShowMembers, acMembers[xProperty:__enumIndex()], "") + ":", xProperty)
+         cOut += hb_eol() + cPad + IIf(lShowMembers, QSelf():acMembers[xProperty:__enumIndex()], "") + ":" + hb_CStr(xProperty)
       ENDIF
    NEXT
 
@@ -486,7 +486,7 @@ STATIC FUNCTION SayMembers(cPad, lShowMembers, lReturnString)
       QOut(cOut)
    ENDIF
 
-   RETURN iif(lReturnString, cOut, QSelf())
+   RETURN IIf(lReturnString, cOut, QSelf())
 
 STATIC FUNCTION Reset()
 

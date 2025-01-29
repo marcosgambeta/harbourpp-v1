@@ -54,7 +54,7 @@ FUNCTION AlloFree(lMode)
 
    hb_default(@lMode, .F.)
 
-   RETURN Memory(iif(lMode, HB_MEM_CHAR, HB_MEM_BLOCK))
+   RETURN Memory(IIf(lMode, HB_MEM_CHAR, HB_MEM_BLOCK))
 
 FUNCTION Center(c, n, p, lMode)
 
@@ -78,7 +78,7 @@ FUNCTION Center(c, n, p, lMode)
 
    cRet := PadC(RTrim(c), n, p)
 
-   RETURN iif(lMode, cRet, RTrim(cRet))
+   RETURN IIf(lMode, cRet, RTrim(cRet))
 
 FUNCTION CSetCurs(l)
 
@@ -86,7 +86,7 @@ FUNCTION CSetCurs(l)
       RETURN SetCursor() != SC_NONE
    ENDIF
 
-   RETURN SetCursor(iif(l, SC_NORMAL, SC_NONE)) != SC_NONE
+   RETURN SetCursor(IIf(l, SC_NORMAL, SC_NONE)) != SC_NONE
 
 FUNCTION CSetKey(n)
 
@@ -98,7 +98,7 @@ FUNCTION CSetCent(nCentury)
 
 FUNCTION LToC(l)
 
-   RETURN iif(l, "T", "F")
+   RETURN IIf(l, "T", "F")
 
 FUNCTION DosParam()
 
@@ -106,7 +106,7 @@ FUNCTION DosParam()
    LOCAL nCount := hb_argc(), i
 
    FOR i := 1 TO nCount
-      cRet += iif(i == 1, "", " ") + hb_argv(i)
+      cRet += IIf(i == 1, "", " ") + hb_argv(i)
    NEXT
 
    RETURN cRet

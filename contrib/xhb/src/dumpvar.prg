@@ -336,7 +336,7 @@ STATIC FUNCTION DecodeType(nType AS NUMERIC)
    RETURN PadR(cString, 7)
 
 STATIC FUNCTION asString(x)
-   RETURN iif(HB_IsString(x), '"' + x + '"', hb_CStr(x))
+   RETURN IIf(HB_IsString(x), '"' + x + '"', hb_CStr(x))
 
 #include "error.ch"
 

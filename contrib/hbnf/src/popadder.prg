@@ -141,8 +141,8 @@ FUNCTION ft_Adder()
 
    nTopOS       := Int((MaxRow() - 24) / 2)  // Using the TopOffSet and LeftOffSet
    nLeftOS      := Int((MaxCol() - 79) / 2)  // the Adder will always be centered
-   nAddSpace    := iif(lShowRight, 40, 0) + nLeftOS
-   nTapeSpace   := iif(lShowRight, 0, 40) + nLeftOS
+   nAddSpace    := IIf(lShowRight, 40, 0) + nLeftOS
+   nTapeSpace   := IIf(lShowRight, 0, 40) + nLeftOS
 
    // Set Up the STATIC variables
    t_aKeys      := {}
@@ -206,8 +206,8 @@ FUNCTION ft_Adder()
          NEXT
          _ftPopWin()                     // Remove Adder
          lShowRight := !lShowRight
-         nAddSpace  := iif(lShowRight, 40, 0) + nLeftOS
-         nTapeSpace := iif(lShowRight, 0, 40) + nLeftOS
+         nAddSpace  := IIf(lShowRight, 40, 0) + nLeftOS
+         nTapeSpace := IIf(lShowRight, 0, 40) + nLeftOS
          _ftAddScreen(aAdder)
          _ftDispTotal(aAdder)
          IF lTape
@@ -217,7 +217,7 @@ FUNCTION ft_Adder()
          hb_DispOutAt(4 + nTopOS, 8 + nAddSpace, cTotal)
          IF !Empty(cMoveTotSubTot)
             _ftSetWinColor(W_CURR, W_SCREEN)
-            hb_DispOutAt(6 + nTopOS, 18 + nAddSpace, iif(cMoveTotSubTot == "T", "   <TOTAL>", "<SUBTOTAL>"))
+            hb_DispOutAt(6 + nTopOS, 18 + nAddSpace, IIf(cMoveTotSubTot == "T", "   <TOTAL>", "<SUBTOTAL>"))
             _ftSetWinColor(W_CURR, W_PROMPT)
          ENDIF
       CASE (nKey == hb_keyCode("S") .OR. nKey == hb_keyCode("s")) .AND. lTape  // <S> Scroll tape display
@@ -233,7 +233,7 @@ FUNCTION ft_Adder()
             _ftSetWinColor(W_CURR, W_PROMPT)
             CLEAR TYPEAHEAD
          ELSE
-            _ftError("there are " + iif(Len(aTrans) > 0, "only " + ;
+            _ftError("there are " + IIf(Len(aTrans) > 0, "only " + ;
                hb_ntos(Len(aTrans)), "no") + ;
                " transactions entered so far." + ;
                " No need to scroll!" )
@@ -340,7 +340,7 @@ STATIC FUNCTION _ftChangeDec(aAdder, nNumDec)
       cTotPict := _ftPosRepl(cDefTotPict, ".", 19 - Abs(nNumDec))
 
       cTotPict := Right(_ftStuffComma(cTotPict), 19)
-      cTotPict := iif(nNumDec == 2 .OR. nNumDec == 6, " " + Right(cTotPict, 18), cTotPict)
+      cTotPict := IIf(nNumDec == 2 .OR. nNumDec == 6, " " + Right(cTotPict, 18), cTotPict)
 
       nMaxDeci := nNumDec
 
@@ -668,15 +668,15 @@ STATIC FUNCTION _ftUpdateTrans(aAdder, lTypeTotal, nAmount)
    ENDIF
 
    IF lTypeTotal                         // If lTypeTotal == .T. Update from total
-      AAdd(aTrans, Str(iif(lUseTotal, nTotal, nAmount), 22, nMaxDeci))
-      aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], .T.) + " *" + iif(lAddError, "ER", "")
+      AAdd(aTrans, Str(IIf(lUseTotal, nTotal, nAmount), 22, nMaxDeci))
+      aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], .T.) + " *" + IIf(lAddError, "ER", "")
 
    ELSE                            // If lTypeTotal=.F. Update from nNumTotal
-      AAdd(aTrans, Str(iif(lUseTotal, nTotal, nAmount), 22, nMaxDeci))
+      AAdd(aTrans, Str(IIf(lUseTotal, nTotal, nAmount), 22, nMaxDeci))
 
       aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], .T.) + ;
-         iif(lSubRtn, " S", iif(nAddMode == 1, " +", iif(nAddMode == 2, " -", ;
-         iif(lTotalOk, " =", iif(nAddMode == 3, " X", " /"))))) + iif(lAddError, "ER", "")
+         IIf(lSubRtn, " S", IIf(nAddMode == 1, " +", IIf(nAddMode == 2, " -", ;
+         IIf(lTotalOk, " =", IIf(nAddMode == 3, " X", " /"))))) + IIf(lAddError, "ER", "")
 
    ENDIF
 
@@ -704,7 +704,7 @@ STATIC FUNCTION _ftRoundIt(nNumber, nPlaces)
 
    __defaultNIL(@nPlaces, 0)
 
-   RETURN iif(nNumber < 0.0, -1.0, 1.0) * ;
+   RETURN IIf(nNumber < 0.0, -1.0, 1.0) * ;
       Int(Abs(nNumber) * 10 ^ nPlaces + 0.50 + 10 ^ -12) / 10 ^ nPlaces
 
 // ----------------------------------------------------------
@@ -838,7 +838,7 @@ STATIC FUNCTION _ftPushMessage(cMessage, lWait, cTitle, cBotTitle, xQuiet, nTop)
    cOldDevic := Set(_SET_DEVICE, "SCREEN")
    lOldPrint := Set(_SET_PRINTER, .F.)
    nMessLen  := Len(cMessage)
-   nWide     := iif(nMessLen > 72, 72, iif(nMessLen < 12, 12, nMessLen))
+   nWide     := IIf(nMessLen > 72, 72, IIf(nMessLen < 12, 12, nMessLen))
    nNumRows  := MLCount(cMessage, nWide)
 
    // If they didn't say what the top row is, Center it on the screen
@@ -902,10 +902,10 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    LOCAL nOldCurs
    LOCAL cVarType := ValType(xVarVal)
    LOCAL nVarLen  := ;
-      iif(cVarType == "C", Len(xVarVal), ;
-      iif(cVarType == "D", 10, ;
-      iif(cVarType == "L", 1, ;
-      iif(cVarType == "N", iif(cPict == NIL, 9, Len(cPict)), 0))))
+      IIf(cVarType == "C", Len(xVarVal), ;
+      IIf(cVarType == "D", 10, ;
+      IIf(cVarType == "L", 1, ;
+      IIf(cVarType == "N", IIf(cPict == NIL, 9, Len(cPict)), 0))))
    LOCAL nOldLastKey := LastKey()
    LOCAL cOldDevice  := Set(_SET_DEVICE, "SCREEN")
    LOCAL lOldPrint   := Set(_SET_PRINTER, .F.)
@@ -918,29 +918,29 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    __defaultNIL(@lNoESC, .F.)
 
    nMessLen  := Len(cMessage) + nVarLen + 1
-   nWide     := iif(nMessLen > 66, 66, iif(nMessLen < 12, 12, nMessLen))
+   nWide     := IIf(nMessLen > 66, 66, IIf(nMessLen < 12, 12, nMessLen))
 
    nNumMessRow    := MLCount(cMessage, nWide)
    nLenLastRow    := Len(RTrim(MemoLine(cMessage, nWide, nNumMessRow)))
    lGetOnNextLine := (nLenLastRow + nVarLen) > nWide
-   nNumRows       := nNumMessRow + iif(lGetOnNextLine, 1, 0)
+   nNumRows       := nNumMessRow + IIf(lGetOnNextLine, 1, 0)
 
    // Center it in the screen
-   nTop        := iif(nTop == NIL, Int((MaxRow() - nNumRows) / 2), nTop)
+   nTop        := IIf(nTop == NIL, Int((MaxRow() - nNumRows) / 2), nTop)
    nBottom     := nTop + nNumRows + 1
    nLeft       := Int((MaxCol() - nWide) / 2) - 4
    nRight      := nLeft + nWide + 4
 
-   _ftPushWin(nTop, nLeft, nBottom, nRight, "QUESTION ?", iif(HB_IsString(xVarVal) ;
+   _ftPushWin(nTop, nLeft, nBottom, nRight, "QUESTION ?", IIf(HB_IsString(xVarVal) ;
       .AND. nVarLen > nWide, /* LOW-ASCII "←" */ Chr(27) + " scroll " + Chr(26) /* LOW-ASCII "→" */, NIL), nWinColor)
    _ftDispMessage(cMessage, nTop + 1, nLeft + 2, nBottom - 1, nRight - 2)
 
-   oNewGet := GetNew(iif(lGetOnNextLine, Row() + 1, Row()), iif(lGetOnNextLine, nLeft + 2, Col() + 1), ;
-      {|x|iif(PCount() > 0, xVarVal := x, xVarVal)}, "xVarVal")
+   oNewGet := GetNew(IIf(lGetOnNextLine, Row() + 1, Row()), IIf(lGetOnNextLine, nLeft + 2, Col() + 1), ;
+      {|x|IIf(PCount() > 0, xVarVal := x, xVarVal)}, "xVarVal")
 
    // If the input line is character and wider than window SCROLL
    IF lGetOnNextLine .AND. HB_IsString(xVarVal) .AND. nVarLen > nWide
-      oNewGet:Picture := "@S" + hb_ntos(nWide) + iif(cPict == NIL, "", " " + cPict)
+      oNewGet:Picture := "@S" + hb_ntos(nWide) + IIf(cPict == NIL, "", " " + cPict)
    ENDIF
 
    IF cPict != NIL                       // Use the picture they passed
@@ -955,7 +955,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
       ENDIF
    ENDIF
 
-   oNewGet:PostBlock := iif(bValid == NIL, NIL, bValid)
+   oNewGet:PostBlock := IIf(bValid == NIL, NIL, bValid)
 
    oNewGet:Display()
 
@@ -1046,7 +1046,7 @@ STATIC FUNCTION _ftError(cMessage, xDontReset)
    lOldPrint := Set(_SET_PRINTER, .F.)
    cMessage := "I'm sorry but, " + cMessage
    nMessLen := Len(cMessage)
-   nWide    := iif(nMessLen > 66, 66, iif(nMessLen < 12, 12, nMessLen))
+   nWide    := IIf(nMessLen > 66, 66, IIf(nMessLen < 12, 12, nMessLen))
    nNumRows := MLCount(cMessage, nWide)
    nTop     := Int((MaxRow() - nNumRows) / 2)  // Center it in the screen
    nBot     := nTop + 3 + nNumRows
@@ -1086,7 +1086,7 @@ STATIC FUNCTION _ftStuffComma(cStrToStuff, lTrimStuffedStr)
    __defaultNIL(@lTrimStuffedStr, .F.)
 
    IF !("." $ cStrToStuff)
-      cStrToStuff := _ftPosIns(cStrToStuff, ".", iif("C" $ cStrToStuff .OR. ;
+      cStrToStuff := _ftPosIns(cStrToStuff, ".", IIf("C" $ cStrToStuff .OR. ;
          "E" $ cStrToStuff .OR. "+" $ cStrToStuff .OR. "-" $ cStrToStuff ;
          .OR. "X" $ cStrToStuff .OR. "*" $ cStrToStuff .OR. ;
          Chr(4) /* LOW-ASCII "♦" */ $ cStrToStuff .OR. ;
@@ -1152,7 +1152,7 @@ STATIC FUNCTION _ftPushWin(t, l, b, r, cTitle, cBotTitle, nWinColor)
 
    LOCAL lAutoWindow := (nWinColor == NIL)
 
-   nWinColor := iif(nWinColor == NIL, _ftNextWinColor(), nWinColor)
+   nWinColor := IIf(nWinColor == NIL, _ftNextWinColor(), nWinColor)
    AAdd(t_aWindow, {t, l, b, r, nWinColor, SaveScreen(t, l, b + 1, r + 2), lAutoWindow})
    hb_Shadow(t, l, b, r)
    _ftSetWinColor(nWinColor, W_BORDER)
@@ -1226,7 +1226,7 @@ STATIC FUNCTION _ftSetWinColor(nWin, nStd, nEnh, nBord, nBack, nUnsel)
 
 STATIC FUNCTION _ftLastWinColor()
 
-   RETURN t_nWinColor := iif(t_nWinColor == 1, 4, t_nWinColor - 1)
+   RETURN t_nWinColor := IIf(t_nWinColor == 1, 4, t_nWinColor - 1)
 
 // ----------------------------------------------------------
 // Increment the active window color number and return the current value
@@ -1238,7 +1238,7 @@ STATIC FUNCTION _ftNextWinColor()
       _ftInitColors()
    ENDIF
 
-   RETURN t_nWinColor := (iif(t_nWinColor < 4, t_nWinColor + 1, 1))
+   RETURN t_nWinColor := (IIf(t_nWinColor < 4, t_nWinColor + 1, 1))
 
 // ----------------------------------------------------------
 // Print the top or bottom titles on the border of the currently
@@ -1249,7 +1249,7 @@ STATIC FUNCTION _ftWinTitle(cTheTitle, cTopOrBot)
    LOCAL nCurWin  := Len(t_aWindow)
    LOCAL nLenTitle := Len(cTheTitle)
 
-   hb_DispOutAt(t_aWindow[nCurWin, iif(cTopOrBot == NIL, 1, 3)], (t_aWindow[nCurWin, 4] - ;
+   hb_DispOutAt(t_aWindow[nCurWin, IIf(cTopOrBot == NIL, 1, 3)], (t_aWindow[nCurWin, 4] - ;
       t_aWindow[nCurWin, 2] - nLenTitle) / 2 + t_aWindow[nCurWin, 2], " " + cTheTitle + " ")
 
    RETURN NIL

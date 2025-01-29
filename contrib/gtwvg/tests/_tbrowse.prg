@@ -226,7 +226,7 @@ STATIC FUNCTION BrwHandleResize(oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTre
 
    oCrt:setFocus()
 
-   oBrw:nBottom := iif(lActiveX, 20, MaxRow() - 3)
+   oBrw:nBottom := IIf(lActiveX, 20, MaxRow() - 3)
    oBrw:nRight := MaxCol() - 4
    oBrw:configure()
 
@@ -300,7 +300,7 @@ STATIC FUNCTION BrwBuildTree(oCrt /*, oBrw*/)
    oTree:create(, , {-24, -1}, {{||-(MaxRow() - 1 - 24)}, -10})
    oTree:setColorFG("W+")
    oTree:setColorBG("R*")
-   oTree:itemSelected := {|oItem|wvg_MessageBox(, iif(oItem != NIL, oItem:caption, "Some Problem"))}
+   oTree:itemSelected := {|oItem|wvg_MessageBox(, IIf(oItem != NIL, oItem:caption, "Some Problem"))}
 
    oItem1 := oTree:rootItem:addItem("First level A")
 

@@ -194,13 +194,13 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    mcVarType := ValType(mxValue)
    DO CASE
    CASE mcVarType == "C"
-      mcPict := iif(HB_IsString( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
+      mcPict := IIf(HB_IsString( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
-      mcPict := iif(HB_IsString( mcPict ), mcPict, "999,999,999.99")
+      mcPict := IIf(HB_IsString( mcPict ), mcPict, "999,999,999.99")
       mbText := {|| Transform(mxValue, mcPict) }
    CASE mcVarType == "D"
-      mcPict := iif(HB_IsString( mcPict ), mcPict, "9999-99-99")
+      mcPict := IIf(HB_IsString( mcPict ), mcPict, "9999-99-99")
       mbText := {|| DToC(mxValue) }
    OTHERWISE
       // unsupported valtype
@@ -259,7 +259,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
       clabel := aEBGets[ i ][ __GET_CLABEL ]
       nrow1 := aEBGets[ i ][ __GET_NROW ]
       ncol1 := aEBGets[ i ][ __GET_NCOL ]
-      nrow2 := iif(aEBGets[ i ][ __GET_LMULTILINE ], nrow1 + 3, nrow1)
+      nrow2 := IIf(aEBGets[ i ][ __GET_LMULTILINE ], nrow1 + 3, nrow1)
       ncol2 := ncol1 + nlen - 1
 
       @ nrow1, ncol1 - Len(clabel) - 1 SAY clabel
@@ -269,7 +269,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
          {| nWinNum, nId, nEvent | MaskEditBox( nWinNum, nId, nEvent, @aEBGets ) }, ;
          aEBGets[ i ][ __GET_LMULTILINE ], ;  // EBtype
       0, ;  // nmorestyle
-      iif(lmultiline, NIL, nlen + 1), ; // nMaxChar
+      IIf(lmultiline, NIL, nlen + 1), ; // nMaxChar
       NIL, NIL )
 
       nmaxrow := Max( nmaxrow, nrow2 )
@@ -920,7 +920,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
 FUNCTION inp_handler( nwinnum, bhandler )
 
    STATIC s_bhandlers := {}
-   LOCAL retval := iif(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
+   LOCAL retval := IIf(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
 
    IF HB_IsBlock( bhandler )
       IF Len(s_bhandlers) < nwinnum + 1

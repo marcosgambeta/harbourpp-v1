@@ -90,7 +90,7 @@ CREATE CLASS TPQServer
    METHOD DeleteTable(cTable)
    METHOD TraceOn(cFile)
    METHOD TraceOff()
-   METHOD SetVerbosity(num)  INLINE PQsetErrorVerbosity(::pDb, iif(num >= 0 .AND. num <= 2, num, 1))
+   METHOD SetVerbosity(num)  INLINE PQsetErrorVerbosity(::pDb, IIf(num >= 0 .AND. num <= 2, num, 1))
    METHOD SetNull(lValue)
 
 ENDCLASS
@@ -101,11 +101,11 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
    LOCAL item
 
    LOCAL cConnect := ;
-      iif(HB_IsString(cDatabase), " dbname = " + EscapeParam(cDatabase), "") + ;
-      iif(HB_IsString(cHost), " host = " + EscapeParam(cHost), "") + ;
-      iif(HB_IsString(cUser), " user = " + EscapeParam(cUser), "") + ;
-      iif(HB_IsString(cPass), " password = " + EscapeParam(cPass), "") + ;
-      iif(HB_IsNumeric(nPort), " port = " + hb_ntos(nPort), "")
+      IIf(HB_IsString(cDatabase), " dbname = " + EscapeParam(cDatabase), "") + ;
+      IIf(HB_IsString(cHost), " host = " + EscapeParam(cHost), "") + ;
+      IIf(HB_IsString(cUser), " user = " + EscapeParam(cUser), "") + ;
+      IIf(HB_IsString(cPass), " password = " + EscapeParam(cPass), "") + ;
+      IIf(HB_IsNumeric(nPort), " port = " + hb_ntos(nPort), "")
 
    IF HB_IsHash(hCustom)
       FOR EACH item IN hCustom
@@ -299,7 +299,7 @@ METHOD TPQserver:TableStruct(cTable)
             cType := "N"
             nDec  := Val(nDec)
             // Postgres doesn't store ".", but .dbf does, it can cause data width problem
-            nSize := Val(nSize) + iif(nDec > 0, 1, 0)
+            nSize := Val(nSize) + IIf(nDec > 0, 1, 0)
 
             // Numeric/Decimal without scale/precision can generate big values, so, I limit this to 10,5
 
@@ -396,7 +396,7 @@ METHOD TPQserver:CreateTable(cTable, aStruct)
          EXIT
       ENDSWITCH
 
-      cQuery += iif(fld:__enumIsLast(), ")", ",")
+      cQuery += IIf(fld:__enumIsLast(), ")", ",")
    NEXT
 
    res := PQexec(::pDB, cQuery)
@@ -1292,7 +1292,7 @@ STATIC FUNCTION EscapeParam(cString)
 
    cString := hb_StrReplace(cString, {"'" => "\'", "\" => "\\" })
 
-   RETURN iif(Empty(cString) .OR. " " $ cString, "'" + cString + "'", cString)
+   RETURN IIf(Empty(cString) .OR. " " $ cString, "'" + cString + "'", cString)
 
 STATIC FUNCTION DataToSql(xField)
 
@@ -1301,7 +1301,7 @@ STATIC FUNCTION DataToSql(xField)
    CASE "M" ; RETURN "'" + StrTran(xField, "'", " ") + "'"
    CASE "D" ; RETURN DToS(xField)
    CASE "N" ; RETURN hb_ntos(xField)
-   CASE "L" ; RETURN iif(xField, "'t'", "'f'")
+   CASE "L" ; RETURN IIf(xField, "'t'", "'f'")
    ENDSWITCH
 
    RETURN "NULL"
@@ -1311,9 +1311,9 @@ STATIC FUNCTION ValueToString(xField)
    SWITCH ValType(xField)
    CASE "C"
    CASE "M" ; RETURN xField
-   CASE "D" ; RETURN iif(Empty(xField), NIL, DToS(xField))
+   CASE "D" ; RETURN IIf(Empty(xField), NIL, DToS(xField))
    CASE "N" ; RETURN hb_ntos(xField)
-   CASE "L" ; RETURN iif(xField, "t", "f")
+   CASE "L" ; RETURN IIf(xField, "t", "f")
    ENDSWITCH
 
    RETURN NIL

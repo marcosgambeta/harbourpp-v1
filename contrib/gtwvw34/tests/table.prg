@@ -93,7 +93,7 @@ PROCEDURE Main( cInputFile )
             PadR( '"' + fld[ DBS_TYPE ] + '"', 8 ) + ", " + ;
             Str( fld[ DBS_LEN ], 5 ) + ", " + ;
             Str( fld[ DBS_DEC ], 2 ) + " }" + ;
-            iif(fld:__enumIsLast(), " }, ... )", ", ;") + hb_eol()
+            IIf(fld:__enumIsLast(), " }, ... )", ", ;") + hb_eol()
       NEXT
       cOutput += ;
          "      RETURN .F." + hb_eol() + ;
@@ -111,9 +111,9 @@ PROCEDURE Main( cInputFile )
             FOR tmp := 1 TO FCount()
                cOutput += ;
                   hb_ValToExp( ;
-                     iif(hb_LeftEq( hb_FieldType( tmp ), "C" ), RTrim(FieldGet( tmp )), FieldGet( tmp )) ) + ;
-                  iif(tmp == FCount(), ;
-                     iif(RecNo() == LastRec(), " } }", " }, ;") + hb_eol(), ", ")
+                     IIf(hb_LeftEq( hb_FieldType( tmp ), "C" ), RTrim(FieldGet( tmp )), FieldGet( tmp )) ) + ;
+                  IIf(tmp == FCount(), ;
+                     IIf(RecNo() == LastRec(), " } }", " }, ;") + hb_eol(), ", ")
             NEXT
             dbSkip()
          ENDDO
@@ -133,7 +133,7 @@ PROCEDURE Main( cInputFile )
 
       dbCloseArea()
 
-      ? iif(hb_MemoWrit( __FILE__, cOutput ), "Saved OK:", "Save error:"), __FILE__
+      ? IIf(hb_MemoWrit( __FILE__, cOutput ), "Saved OK:", "Save error:"), __FILE__
    ELSE
       ? "Input file not found or invalid"
    ENDIF

@@ -80,15 +80,15 @@ PROCEDURE xhb_ErrorSys()
 
 STATIC FUNCTION err_ModuleName(oError, n)
 
-   RETURN iif(__objHasMsg(oError, "MODULENAME"), oError:ModuleName, iif(n != NIL, ProcFile(n), NIL))
+   RETURN IIf(__objHasMsg(oError, "MODULENAME"), oError:ModuleName, IIf(n != NIL, ProcFile(n), NIL))
 
 STATIC FUNCTION err_ProcName(oError, n)
 
-   RETURN iif(__objHasMsg(oError, "PROCNAME"), oError:ProcName, iif(n != NIL, ProcName(n), NIL))
+   RETURN IIf(__objHasMsg(oError, "PROCNAME"), oError:ProcName, IIf(n != NIL, ProcName(n), NIL))
 
 STATIC FUNCTION err_ProcLine(oError, n)
 
-   RETURN iif(__objHasMsg(oError, "PROCLINE"), oError:ProcLine, iif(n != NIL, ProcLine(n), NIL))
+   RETURN IIf(__objHasMsg(oError, "PROCLINE"), oError:ProcLine, IIf(n != NIL, ProcLine(n), NIL))
 
 STATIC FUNCTION xhb_DefError(oError)
 
@@ -234,7 +234,7 @@ STATIC FUNCTION ErrorMessage(oError)
    LOCAL cMessage
 
    // start error message
-   cMessage := iif(oError:severity > ES_WARNING, "Error", "Warning") + " "
+   cMessage := IIf(oError:severity > ES_WARNING, "Error", "Warning") + " "
 
    // add subsystem name if available
    IF HB_IsString(oError:subsystem)
@@ -335,7 +335,7 @@ STATIC FUNCTION LogError(oErr)
       FWriteLine(nHandle, "xHarbour built on..: " + hb_BuildDate())
       FWriteLine(nHandle, "C/C++ compiler.....: " + hb_Compiler())
 
-      FWriteLine(nHandle, "Multi Threading....: " + iif(hb_mtvm(), "YES", "NO"))
+      FWriteLine(nHandle, "Multi Threading....: " + IIf(hb_mtvm(), "YES", "NO"))
       FWriteLine(nHandle, "VM Optimization....: " + strvalue(hb_VMMode()))
 
       IF hb_IsFunction("Select")
@@ -602,7 +602,7 @@ STATIC FUNCTION strvalue(c, l)
       cr := DToC(c)
       EXIT
    CASE "L"
-      cr := iif(l, iif(c, "On", "Off"), iif(c, ".T.", ".F."))
+      cr := IIf(l, IIf(c, "On", "Off"), IIf(c, ".T.", ".F."))
       EXIT
    ENDSWITCH
 
