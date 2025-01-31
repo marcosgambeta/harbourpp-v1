@@ -50,7 +50,7 @@ PROCEDURE Main( cDL, cUL )
       ? "Press key..."
       Inkey(0)
 
-      hb_default( @cUL, __FILE__ )
+      hb_default(@cUL, __FILE__)
 
       ? curl_easy_setopt( curl, HB_CURLOPT_UPLOAD )
       ? curl_easy_setopt( curl, HB_CURLOPT_URL, REMOTE_URL )
@@ -127,7 +127,7 @@ PROCEDURE Main( cDL, cUL )
       ? "Press key..."
       Inkey(0)
 
-      hb_default( @cDL, "ftp://ftp.cisco.com/pub/mibs/README-MIB.txt" )
+      hb_default(@cDL, "ftp://ftp.cisco.com/pub/mibs/README-MIB.txt")
 
       /* Now let's download to a file */
 
@@ -173,7 +173,7 @@ PROCEDURE Main( cDL, cUL )
       ? "Press key..."
       Inkey(0)
 
-      hb_default( @cDL, "ftp://ftp.cisco.com/" )
+      hb_default(@cDL, "ftp://ftp.cisco.com/")
 
       /* Now let's download a dirlist to memory */
 
@@ -208,6 +208,6 @@ STATIC FUNCTION CurGet()
 
 STATIC PROCEDURE CurSet( a )
 
-   SetPos( a[ 1 ], a[ 2 ] )
+   SetPos(a[ 1 ], a[ 2 ])
 
    RETURN

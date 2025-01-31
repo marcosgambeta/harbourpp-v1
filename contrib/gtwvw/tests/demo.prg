@@ -81,7 +81,7 @@ PROCEDURE Main()
    SET SCOREBOARD OFF
    // wvw_SetPaintRefresh(0)
    wvw_SetVertCaret(.T.)
-   wvw_pbSetFont( , "Tahoma", 14 )
+   wvw_pbSetFont(, "Tahoma", 14)
    nCursor := SetCursor( SC_NONE )
 
    IF !SetDefaultWindowSize()
@@ -99,13 +99,13 @@ PROCEDURE Main()
 
    hb_gtInfo( HB_GTI_INKEYFILTER, {| nkey | nAfterInkey(nkey) } )
    wvw_SetMouseMove( , .T. )                           // required by wvwmouse
-   kF1 := SetKey( K_F1, {|| xHelp() } )
-   kF2 := SetKey( K_F2, {|| xDebugInfo() } )
-   kF3 := SetKey( K_F3, {|| Demo_Console() } )
+   kF1 := SetKey(K_F1, {||xHelp()})
+   kF2 := SetKey(K_F2, {||xDebugInfo()})
+   kF3 := SetKey(K_F3, {||Demo_Console()})
 
-   kF9 := SetKey( K_F9, {|| wvw_SetLineSpacing( NIL, wvw_SetLineSpacing() - 2 ) } )
-   kF10 := SetKey( K_F10, {|| wvw_SetLineSpacing( NIL, wvw_SetLineSpacing() + 2 ) } )
-   kF11 := SetKey( K_F11, {|| wvw_SetDefLineSpacing( wvw_SetLineSpacing() ) } )
+   kF9 := SetKey(K_F9, {||wvw_SetLineSpacing(NIL, wvw_SetLineSpacing() - 2)})
+   kF10 := SetKey(K_F10, {||wvw_SetLineSpacing(NIL, wvw_SetLineSpacing() + 2)})
+   kF11 := SetKey(K_F11, {||wvw_SetDefLineSpacing(wvw_SetLineSpacing())})
 
    // start menu definitions *************************************
 
@@ -175,7 +175,7 @@ PROCEDURE Main()
    // 20070525 the real pushbutton, easier and better looking. Nothing to do with wvwmouse.prg.
    wvw_pbCreate( nCurWindow, MaxRow() - 4, 67 - 11 - 11 - 11 - 11 - 11, MaxRow() - 4, 67 + 9 - 11 - 11 - 11 - 11 - 11, "native", NIL, {|| lboxmessage( "native pushbutton" ) }, NIL )
 
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
    CLS
    @ 0, 0 SAY "This is line 0"
    @ 1, 0 SAY "This is line 1"
@@ -205,14 +205,14 @@ PROCEDURE Main()
    // restore state
    wvwm_ResetMouseObjects( nCurWindow )
    ResetMiscObjects( nCurWindow )
-   SetKey( K_F11, kF11 )
-   SetKey( K_F10, kF10 )
-   SetKey( K_F9, kF9 )
+   SetKey(K_F11, kF11)
+   SetKey(K_F10, kF10)
+   SetKey(K_F9, kF9)
 
-   // SetKey( K_F4, kF4 )
-   SetKey( K_F3, kF3 )
-   SetKey( K_F2, kF2 )
-   SetKey( K_F1, kF1 )
+   // SetKey(K_F4, kF4)
+   SetKey(K_F3, kF3)
+   SetKey(K_F2, kF2)
+   SetKey(K_F1, kF1)
    SetCursor( nCursor )
 
    RETURN  // main()
@@ -254,10 +254,10 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    LOCAL lMouseMove
    LOCAL lEchoing := .F.
 
-   hb_default( @nTop, 2 )
-   hb_default( @nLeft, 2 )
-   hb_default( @nBottom, nTop + 10 )
-   hb_default( @nRight, nLeft + 45 )
+   hb_default(@nTop, 2)
+   hb_default(@nLeft, 2)
+   hb_default(@nBottom, nTop + 10)
+   hb_default(@nRight, nLeft + 45)
 
    cWinName := "Typewriter (Win#" + hb_ntos( wvw_nNumWindows() ) + "); CtrlW: New Window; ESC: Exit"
 
@@ -269,7 +269,7 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    ENDIF
 
    nCursor := SetCursor( SC_NORMAL )
-   cColor := SetColor( "W+/N" )
+   cColor := SetColor("W+/N")
    lMouseMove := wvw_SetMouseMove( , .F. )
 
    ResetMiscObjects( nCurWindow )
@@ -318,7 +318,7 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    wvwm_ResetMouseObjects( nCurWindow )
    ResetMiscObjects( nCurWindow )
    SetCursor( nCursor )
-   SetColor( cColor )
+   SetColor(cColor)
    wvw_SetMouseMove( , lMouseMove )
 
    RETURN // Demo_Console()
@@ -335,10 +335,10 @@ PROCEDURE Demo_Get()
    LOCAL nRight    := 75
    LOCAL nColGet := 8
    LOCAL get_1   := hb_SToD()
-   LOCAL get_2   := PadR( "Pritpal Bedi", 35 )
-   LOCAL get_3   := PadR( "60, New Professor Colony", 35 )
-   LOCAL get_4   := PadR( "Ludhiana, INDIA", 35 )
-   LOCAL get_5   := PadR( "http://www.vouchcac.com", 35 )
+   LOCAL get_2   := PadR("Pritpal Bedi", 35)
+   LOCAL get_3   := PadR("60, New Professor Colony", 35)
+   LOCAL get_4   := PadR("Ludhiana, INDIA", 35)
+   LOCAL get_5   := PadR("http://www.vouchcac.com", 35)
    LOCAL get_6   := 20000
    LOCAL nCursor := SetCursor( SC_NORMAL )
    MEMVAR x
@@ -425,9 +425,9 @@ FUNCTION DEMO_Browse()
    ResetMiscObjects( nCurWindow )
    wvwm_ResetMouseObjects( nCurWindow )
 
-   cColor := SetColor( "N/W" )
+   cColor := SetColor("N/W")
    CLS
-   SetColor( "N/W*,N/GR*,,,N/W* " )
+   SetColor("N/W*,N/GR*,,,N/W* ")
 
    USE "..\..\..\tests\test" NEW
    IF NetErr()
@@ -564,7 +564,7 @@ FUNCTION DEMO_Browse()
 
    wvw_SetPen(0)
 
-   SetColor( cColor )
+   SetColor(cColor)
    // SetCursor( nCursor )
 
    RETURN NIL // DEMO_Browse()
@@ -664,7 +664,7 @@ FUNCTION HXBscroller( oBrowse, nWinNum, XBid, XBmsg )
 0 <= nPage <= ( nMax - nMin + 1 )
 nPage :: pagesize
 
-nMin <= nPos <= ( nMax - Max( nPage - 1, 0 ) )
+nMin <= nPos <= ( nMax - Max(nPage - 1, 0) )
 **/
 
 STATIC FUNCTION RefreshVXB(oBrowse, nWinNum, XBid)
@@ -946,7 +946,7 @@ FUNCTION nAfterInkey(nkey)
          K_LDBLCLK }, nKey ) > 0
       // MouseEvent
       RETURN wvwm_nMouseChecker( nkey )
-   ELSEIF ( bAction := SetKey( nKey ) ) != NIL
+   ELSEIF ( bAction := SetKey(nKey) ) != NIL
       Eval( bAction, ProcName(), ProcLine(), ReadVar() )
       RETURN 0
    ENDIF
@@ -1014,14 +1014,14 @@ FUNCTION nMenuChecker( nMenuEvent )
 
 FUNCTION lBoxMessage( cMsg, cTitle )
 
-   hb_default( @cTitle, "Info" )
+   hb_default(@cTitle, "Info")
    win_MessageBox( wvw_GetWindowHandle(), cMsg, cTitle, MB_OK + MB_ICONINFORMATION + MB_SYSTEMMODAL )
 
    RETURN .T.
 
 FUNCTION lYesNo( cMsg, cTitle )
 
-   hb_default( @cTitle, "Konfirmasi" )
+   hb_default(@cTitle, "Konfirmasi")
 
    RETURN win_MessageBox( wvw_GetWindowHandle(), cMsg, cTitle, MB_YESNO + MB_ICONQUESTION + MB_SYSTEMMODAL ) == IDYES
 
@@ -1033,7 +1033,7 @@ FUNCTION xDebugInfo()
 
    STATIC s_nfh := 0
 
-   MSetPos( MaxRow(), MaxCol() )
+   MSetPos(MaxRow(), MaxCol())
 
    // SetMouse( .T., MaxRow(), MaxCol() )
 
@@ -1094,7 +1094,7 @@ FUNCTION nCeiling( nNumber, nRoundDec )
    LOCAL i
    LOCAL nTemp
 
-   hb_default( @nRoundDec, 0 )  // SATUAN
+   hb_default(@nRoundDec, 0)  // SATUAN
 
    IF nRoundDec > 0
       nRoundDec := 0
@@ -1127,21 +1127,21 @@ FUNCTION SetDefaultWindowSize()
    // x was: LOCAL Result:= SetMode(32,98), ScreenWidth
    LOCAL Result := .T., ScreenWidth
 
-   SetMode( 25, 80 )
+   SetMode(25, 80)
 
    IF Result
       screenWidth := wvw_GetScreenWidth()
       DO CASE
       CASE screenWidth >= 1024
-         Result := wvw_SetFont( , "Terminal", 20, 10 )
+         Result := wvw_SetFont(, "Terminal", 20, 10)
       CASE screenWidth >= 800
          IF hb_osIsWinNT()
-            Result := wvw_SetFont( , "Lucida Console", 16, - 8 )
+            Result := wvw_SetFont(, "Lucida Console", 16, - 8)
          ELSE
-            Result := wvw_SetFont( , "System", 16, - 8 )
+            Result := wvw_SetFont(, "System", 16, - 8)
          ENDIF
       OTHERWISE
-         Result := wvw_SetFont( , "Terminal", 12, 6 )
+         Result := wvw_SetFont(, "Terminal", 12, 6)
       ENDCASE
       IF Result
          wvw_SetCodepage( , 255 )  // #define OEM_CHARSET 255 - from wingdi.h

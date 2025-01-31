@@ -25,7 +25,7 @@ PROCEDURE Main()
 
    ? wapi_StartDoc(hDC, { "lpszDocName" => "test job" } /* DOCINFO */)
    ? wapi_StartPage( hDC )
-   ? hOBJECT := wapi_CreateFont( ,,,,,,,,,,,,, "Arial" )
+   ? hOBJECT := wapi_CreateFont(,,,,,,,,,,,,, "Arial")
    ? wapi_SelectObject( hDC, hOBJECT )
 
    ? "in ARR"

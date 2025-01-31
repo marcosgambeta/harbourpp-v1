@@ -31,10 +31,10 @@ PROCEDURE Main()
    Set( _SET_EVENTMASK, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT ) )
 
    wvt_SetGUI(.T.)
-   wvt_SetFont( "Courier New", 18, 0, 0 )
+   wvt_SetFont("Courier New", 18, 0, 0)
    wvt_SetMouseMove(.T.)
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
    wvt_ShowWindow( SW_RESTORE )
    hb_gtInfo( HB_GTI_WINTITLE, "Harbour's GTWVG Demo ( Simplified )" )
@@ -71,20 +71,20 @@ STATIC PROCEDURE ExecForm( aPaint )
    LOCAL cColor  := SetColor()
    LOCAL aPnt
    LOCAL dDate   := Date()
-   LOCAL cName   := PadR( "Pritpal Bedi", 35 )
-   LOCAL cAdd1   := PadR( "60, New Professor Colony", 35 )
-   LOCAL cAdd2   := PadR( "Ludhiana, INDIA", 35 )
-   LOCAL cAdd3   := PadR( hb_Version( HB_VERSION_URL_BASE ), 35 )
+   LOCAL cName   := PadR("Pritpal Bedi", 35)
+   LOCAL cAdd1   := PadR("60, New Professor Colony", 35)
+   LOCAL cAdd2   := PadR("Ludhiana, INDIA", 35)
+   LOCAL cAdd3   := PadR(hb_Version(HB_VERSION_URL_BASE), 35)
    LOCAL nSlry   := 20000
    LOCAL nColGet := 8
 
    aPnt := WvtSetPaint( aPaint )
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
 
-   SetKey( K_F2, {|| DoModalDialog() } )
+   SetKey(K_F2, {|| DoModalDialog() })
 
    @  6, nColGet SAY "< Date >"
    @  9, nColGet SAY "<" + PadC("Name", 33) + ">"
@@ -99,7 +99,7 @@ STATIC PROCEDURE ExecForm( aPaint )
 
    READ
 
-   SetColor( cColor )
+   SetColor(cColor)
    WvtSetPaint( aPnt )
 
    RETURN
@@ -118,13 +118,13 @@ STATIC FUNCTION SetGT( nIndex, pGT )
 
 STATIC FUNCTION MyChoice( aChoices )
 
-   LOCAL scr := SaveScreen( 7, 48, 13, 55 )
-   LOCAL clr := SetColor( "N/W*,GR+/B*,,,GR+/B" )
+   LOCAL scr := SaveScreen(7, 48, 13, 55)
+   LOCAL clr := SetColor("N/W*,GR+/B*,,,GR+/B")
 
    LOCAL nChoice := AChoice( 7, 48, 13, 55, hb_defaultValue( aChoices, { "One", "Two", "Three", "Four", "Five", "Six", "Seven" } ) )
 
-   SetColor( clr )
-   RestScreen( 7, 48, 13, 55, scr )
+   SetColor(clr)
+   RestScreen(7, 48, 13, 55, scr)
 
    RETURN nChoice
 
@@ -144,7 +144,7 @@ STATIC FUNCTION ClearStatusMsg()
 
    hb_DispOutAt( MaxRow(), 42, Space( 37 ), "W/W" )
 
-   SetPos( nRow, nCol )
+   SetPos(nRow, nCol)
 
    RETURN .T.
 
@@ -168,7 +168,7 @@ STATIC PROCEDURE DoModalDialog()
    AAdd(aPaint, { "Box_V", {|| wvt_DrawBoxRaised(1, 2, 11, 47) }, NIL, { WVT_BLOCK_BOX, 0, 0, MaxRow(), MaxCol() } })
    WvtSetPaint( aPaint )
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
    DO WHILE .T.
       nSel := Alert( "A modal window !;Click on parent window;Move this window", { "OK" } )

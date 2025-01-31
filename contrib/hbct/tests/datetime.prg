@@ -85,14 +85,14 @@ PROCEDURE Main( cLang )
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
 
-   IF HB_IsString( cLang )
+   IF HB_IsString(cLang)
       hb_langSelect( cLang )
    ENDIF
 
    CLS
 
    DO WHILE c
-      cScr := SaveScreen( 2, 5, 24, 66 )
+      cScr := SaveScreen(2, 5, 24, 66)
 
       @ 2, 5 TO 24, 66
       nChoice := AChoice( 3, 7, 23, 65, farr,,, nChoice )
@@ -148,7 +148,7 @@ PROCEDURE Main( cLang )
          weektest()
       ENDCASE
 
-      RestScreen( 2, 5, 24, 66, cScr )
+      RestScreen(2, 5, 24, 66, cScr)
    ENDDO
 
    RETURN
@@ -1013,7 +1013,7 @@ FUNCTION ntocdowtest()
       ELSE
 
          @ 11, 10 SAY "The day selected is " + ;
-            PadR( NToCDoW( Val( cDay ) ), 10 )
+            PadR(NToCDoW( Val( cDay ) ), 10)
 
          SET CURSOR OFF
          Inkey(0)
@@ -1063,7 +1063,7 @@ FUNCTION ntocmthtest()
       ELSE
 
          @ 11, 10 SAY "The month selected is " + ;
-            PadR( NToCMonth( Val( cMonth ) ), 10 )
+            PadR(NToCMonth( Val( cMonth ) ), 10)
 
          SET CURSOR OFF
          Inkey(0)
@@ -1165,7 +1165,7 @@ FUNCTION stodtest()
          dDate := hb_SToD(cAnsidate)
 
          @ 10, 10 SAY "The Clipper format date is " + ;
-            PadR( LTrim(DToC(dDate)), 10 )
+            PadR(LTrim(DToC(dDate)), 10)
 
          SET CURSOR OFF
          Inkey(0)

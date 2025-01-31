@@ -96,7 +96,7 @@ CREATE CLASS WVWMouseButton
 
 #if 0
    METHOD nGetId() INLINE ::nId            /* TODO */
-   METHOD SetHotKey( nKey )                /* TODO */
+   METHOD SetHotKey(nKey)                /* TODO */
    METHOD nGetHotKey() INLINE ::nHotKey    /* TODO */
 #endif
 
@@ -126,14 +126,14 @@ ENDCLASS   // WVWMouseButton
 
 METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWinId )
 
-   hb_default( @cCaption, "" ) // 20040325,was: "Button"
-   hb_default( @nRow1, 0 )
-   hb_default( @nCol1, 0 )
-   hb_default( @nRow2, nRow1 )
-   hb_default( @nCol2, nCol1 + Max( 10, Len(cCaption) + 2 ) - 1 )
-   hb_default( @nType, _BUTTON_NORMAL )        // 20040303
-   hb_default( @lDraw, .T. )
-   hb_default( @nWinId, wvw_nNumWindows() - 1 )  // 20040303
+   hb_default(@cCaption, "") // 20040325,was: "Button"
+   hb_default(@nRow1, 0)
+   hb_default(@nCol1, 0)
+   hb_default(@nRow2, nRow1)
+   hb_default(@nCol2, nCol1 + Max(10, Len(cCaption) + 2) - 1)
+   hb_default(@nType, _BUTTON_NORMAL)        // 20040303
+   hb_default(@lDraw, .T.)
+   hb_default(@nWinId, wvw_nNumWindows() - 1)  // 20040303
 
    // TODO: ::nId := IIf(Empty(s_amouseobjlist), 1, s_amouseobjlist[ Len(s_amouseobjlist) ]:nGetId() + 1)
    // TODO: ::nHotKey := NIL
@@ -144,7 +144,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::nRow2 := nRow2
    ::nCol2 := nCol2
 
-   ::bClickBlock   := IIf(HB_IsBlock( bClickBlock ), bClickBlock, NIL)
+   ::bClickBlock   := IIf(HB_IsBlock(bClickBlock), bClickBlock, NIL)
    ::bPressBlock   := NIL
 
    ::lRepeatPress  := .F.
@@ -222,7 +222,7 @@ METHOD WVWMouseButton:OnPress()
       wvwm_SetKeyRepeater(.T.)   // activate key repeater
    ENDIF
 
-   IF HB_IsBlock( ::bPressBlock )
+   IF HB_IsBlock(::bPressBlock)
       Eval( ::bPressBlock )
    ENDIF
 
@@ -236,7 +236,7 @@ METHOD WVWMouseButton:OnClick()
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock( ::bClickBlock )
+   IF HB_IsBlock(::bClickBlock)
       Eval( ::bClickBlock )
    ENDIF
 
@@ -321,7 +321,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    LOCAL lPressed := ::lPressed .AND. lMouseOver
    LOCAL aFontInfo := IIf(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
    LOCAL nLabelColor := IIf(! lPressed, RGB(0, 0, 0), RGB(96, 96, 96))
-   LOCAL lUseImage := HB_IsString( ::cImage ) // 20040325
+   LOCAL lUseImage := HB_IsString(::cImage) // 20040325
 
    IF !::lVisible .OR. ::nType == _BUTTON_NONE
       SetCursor( nOldCursor ) // 20040303
@@ -333,14 +333,14 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       RETURN Self
    ENDIF
 
-   hb_default( @nWinNum, ::nWinId )
+   hb_default(@nWinNum, ::nWinId)
 
    IF lPressed // ::lPressed
       IF ::nType != _BUTTON_HARD
-         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cPressedColor ) ), ::lTight )
+         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor(hb_ColorToN( ::cPressedColor )), ::lTight )
          wvw_DrawBoxRecessed(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)  // wvw
       ELSE
-         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
+         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor(hb_ColorToN( ::cNormalColor )), ::lTight )
          wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ENDIF
 
@@ -351,11 +351,11 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
-         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
+         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor(hb_ColorToN( ::cNormalColor )), ::lTight )
          wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ELSE
          // must undraw the box. ideally GTWVW has this function
@@ -375,7 +375,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -408,7 +408,7 @@ FUNCTION wvwm_ResetMouseObjects( nWinNum )
 FUNCTION wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 
    // adds a mouse object oMouse into window nWinNum
-   hb_default( @nObjType, _MOBJECT_BUTTON )
+   hb_default(@nObjType, _MOBJECT_BUTTON)
    AAdd(s_amouseobjlist[ nWinNum + 1 ], { nObjType, oMouse })
 
    RETURN .T.
@@ -549,7 +549,7 @@ STATIC PROCEDURE xKeyRepeater( lInit )
    LOCAL nNow
    LOCAL nRepeatInterval
 
-   hb_default( @lInit, .F. )
+   hb_default(@lInit, .F.)
 
    IF lInit
       // simply init the locally static var

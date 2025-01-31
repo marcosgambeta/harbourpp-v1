@@ -45,7 +45,7 @@ PROCEDURE Main()
 
    key := ""
    iv := ""
-   ? "EVP_BytesToKey", EVP_BytesToKey( HB_EVP_CIPHER_AES_192_OFB, HB_EVP_MD_SHA256, "salt1234", "data", 2, @key, @iv )
+   ? "EVP_BytesToKey", EVP_BytesToKey(HB_EVP_CIPHER_AES_192_OFB, HB_EVP_MD_SHA256, "salt1234", "data", 2, @key, @iv)
    ? "KEY", hb_StrToHex( key )
    ? ">" + key + "<"
    ? "IV", hb_StrToHex( iv )
@@ -53,7 +53,7 @@ PROCEDURE Main()
 
    key := ""
    iv := ""
-   ? "EVP_BytesToKey", EVP_BytesToKey( "AES-192-OFB", "SHA256", "salt1234", "data", 2, @key, @iv )
+   ? "EVP_BytesToKey", EVP_BytesToKey("AES-192-OFB", "SHA256", "salt1234", "data", 2, @key, @iv)
    ? "KEY", hb_StrToHex( key )
    ? ">" + key + "<"
    ? "IV", hb_StrToHex( iv )
@@ -61,7 +61,7 @@ PROCEDURE Main()
 
    key := ""
    iv := ""
-   ? "EVP_BytesToKey", EVP_BytesToKey( "AES-192-OFB", "SHA256",, "data", 2, @key, @iv )
+   ? "EVP_BytesToKey", EVP_BytesToKey("AES-192-OFB", "SHA256",, "data", 2, @key, @iv)
    ? "KEY", hb_StrToHex( key )
    ? ">" + key + "<"
    ? "IV", hb_StrToHex( iv )

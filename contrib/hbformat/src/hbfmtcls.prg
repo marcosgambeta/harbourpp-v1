@@ -134,7 +134,7 @@ METHOD HBFormatCode:New( aParams, cIniName )
 
    ::nErr := 0
 
-   IF HB_IsString( cIniName )
+   IF HB_IsString(cIniName)
       IF !::ReadIni( cIniName )
          RETURN Self
       ENDIF
@@ -474,7 +474,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
       RETURN cLine
    ENDIF
 
-   hb_default( @lContinued, .F. )
+   hb_default(@lContinued, .F.)
    lFirst := ! lContinued
 
    nLen := Len(cLine)
@@ -702,7 +702,7 @@ METHOD HBFormatCode:ConvertCmd(cLine, nBegin, nEnd, lFirstOnly)
             RETURN .T.
          ENDIF
 
-         hb_default( @lFirstOnly, .F. )
+         hb_default(@lFirstOnly, .F.)
 
          cToken := Upper(SubStr(cLine, nBegin, nEnd - nBegin))
 
@@ -937,7 +937,7 @@ STATIC FUNCTION FindNotQuoted(subs, stroka, nPos2)
 
    LOCAL nPos1, i, c, nState := 0, cSymb
 
-   hb_default( @nPos2, 1 )
+   hb_default(@nPos2, 1)
 
    DO WHILE .T.
       IF ( nPos1 := hb_At( subs, stroka, nPos2 ) ) == 0

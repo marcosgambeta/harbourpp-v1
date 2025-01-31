@@ -19,7 +19,7 @@ PROCEDURE Main( cPar1 )
          @ 2, 0 TO MaxRow(), MaxCol()
 
          IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
-            PrnTest( aPrn[ nPrn ], cBMPFile, IIf(HB_IsString( cPar1 ) .AND. Lower(cPar1) == "ask", .T., NIL) )
+            PrnTest( aPrn[ nPrn ], cBMPFile, IIf(HB_IsString(cPar1) .AND. Lower(cPar1) == "ask", .T., NIL) )
          ENDIF
       ENDDO
    ENDIF
@@ -38,7 +38,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
    oPrinter:Landscape := .F.
    oPrinter:FormType  := WIN_DMPAPER_A4
    oPrinter:Copies    := 1
-   IF HB_IsLogical( lAsk )
+   IF HB_IsLogical(lAsk)
       oPrinter:AskProperties := lAsk
    ENDIF
 
@@ -54,17 +54,17 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:UnderLine(.T.)
          oPrinter:Italic(.T.)
 #if 0
-         oPrinter:SetFont( "Courier New", 7, { 3, -50 } )  // Compressed print
+         oPrinter:SetFont("Courier New", 7, { 3, -50 })  // Compressed print
 #endif
          nColFixed   := 40 * oPrinter:CharWidth
          nColTTF     := 48 * oPrinter:CharWidth
          nColCharSet := 60 * oPrinter:CharWidth
          oPrinter:TextOut( "FontName" )
-         oPrinter:SetPos( nColFixed )
+         oPrinter:SetPos(nColFixed)
          oPrinter:TextOut( "Fixed?" )
-         oPrinter:SetPos( nColTTF )
+         oPrinter:SetPos(nColTTF)
          oPrinter:TextOut( "TrueType?" )
-         oPrinter:SetPos( nColCharset )
+         oPrinter:SetPos(nColCharset)
          oPrinter:TextOut( "CharSet#", .T. )
          oPrinter:NewLine()
          oPrinter:Italic(.F.)
@@ -73,16 +73,16 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          aFonts := oPrinter:GetFonts()
          FOR x := 1 TO Len(aFonts) STEP 2
             oPrinter:CharSet( aFonts[ x ][ HB_WINFONT_CHARSET ] )
-            IF oPrinter:SetFont( aFonts[ x ][ HB_WINFONT_NAME ] )      // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
+            IF oPrinter:SetFont(aFonts[ x ][ HB_WINFONT_NAME ])      // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
                IF oPrinter:FontName == aFonts[ x ][ HB_WINFONT_NAME ]  // Make sure Windows didn't pick a different font
                   oPrinter:TextOut( aFonts[ x ][ HB_WINFONT_NAME ] )
-                  oPrinter:SetPos( nColFixed )
+                  oPrinter:SetPos(nColFixed)
                   oPrinter:TextOut( IIf(aFonts[ x ][ HB_WINFONT_FIXED ], "Yes", "No") )
-                  oPrinter:SetPos( nColTTF )
+                  oPrinter:SetPos(nColTTF)
                   oPrinter:TextOut( IIf(aFonts[ x ][ HB_WINFONT_TRUETYPE ], "Yes", "No") )
-                  oPrinter:SetPos( nColCharSet )
+                  oPrinter:SetPos(nColCharSet)
                   oPrinter:TextOut( hb_ntos( aFonts[ x ][ HB_WINFONT_CHARSET ] ) )
-                  oPrinter:SetPos( oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ) )
+                  oPrinter:SetPos(oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ))
                   IF oPrinter:PRow() > oPrinter:MaxRow() - 16  // Could use "oPrinter:NewPage()" to start a new page
                      EXIT
                   ENDIF
@@ -90,7 +90,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
             ENDIF
             oPrinter:Line( 0, oPrinter:PosY + 5, 2000, oPrinter:PosY + 5 )
          NEXT
-         oPrinter:SetFont( "Lucida Console", 8, { 3, -50 } )  // Alternative Compressed print
+         oPrinter:SetFont("Lucida Console", 8, { 3, -50 })  // Alternative Compressed print
          oPrinter:CharSet(0)  // Reset default charset
          oPrinter:Bold( WIN_FW_EXTRABOLD )
          oPrinter:NewLine()
@@ -111,8 +111,8 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:TextOut( "        you can to alter :LineHeight or use a smaller font, or use :SetBkMode( WIN_TRANSPARENT )" )
          oPrinter:NewLine()
          oPrinter:NewLine()
-         oPrinter:SetFont( "Lucida Console", 18, 0 )  // Large print
-         oPrinter:SetColor( HB_WIN_RGB_GREEN )
+         oPrinter:SetFont("Lucida Console", 18, 0)  // Large print
+         oPrinter:SetColor(HB_WIN_RGB_GREEN)
          oPrinter:TextOut( "Finally some larger print" )
          oPrinter:Box(   0, oPrinter:PosY + 100, 100, oPrinter:PosY + 200 )
          oPrinter:Arc(200, oPrinter:PosY + 100, 300, oPrinter:PosY + 200)
@@ -121,7 +121,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
 
          // To print a barcode;
          // Replace "BCod39HN" with your own bar code font or any other font
-         //   oPrinter:TextAtFont( oPrinter:MM_TO_POSX( 30 ), oPrinter:MM_TO_POSY( 60 ), "1234567890", "BCod39HN", 24, 0 )
+         //   oPrinter:TextAtFont(oPrinter:MM_TO_POSX( 30 ), oPrinter:MM_TO_POSY( 60 ), "1234567890", "BCod39HN", 24, 0)
          PrintBitmap( oPrinter, cBMPFile )
 
          oPrinter:EndDoc()

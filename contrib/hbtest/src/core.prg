@@ -57,7 +57,7 @@ THREAD STATIC t_hParams := { => }
 
 PROCEDURE hbtest_Setup( cName, xValue )
 
-   IF HB_IsString( cName ) .AND. ! Empty(cName)
+   IF HB_IsString(cName) .AND. ! Empty(cName)
       IF PCount() > 1
          t_hParams[ cName ] := xValue
       ELSEIF cName $ t_hParams
@@ -79,7 +79,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
 
    LOCAL cLangOld
 
-   IF HB_IsString( cBlock )
+   IF HB_IsString(cBlock)
       lPPError := .F.
    ELSE
       cBlock := "[Preprocessor error]"
@@ -102,7 +102,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       lFailed := !( XToStr( xResult, .F. ) == XToStr( xResultExpected, .F. ) )
    ELSE
       IF !( ValType(xResult) == ValType(xResultExpected) )
-         IF HB_IsString( xResultExpected ) .AND. ValType(xResult) $ "ABOHPS"
+         IF HB_IsString(xResultExpected) .AND. ValType(xResult) $ "ABOHPS"
             lFailed := !( XToStr( xResult, .F. ) == xResultExpected )
          ELSE
             lFailed := .T.
@@ -116,8 +116,8 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       bOut := hb_HGetDef( t_hParams, "output", {| cMsg | OutStd( cMsg ) } )
       IF lFailed
          Eval( bOut, ;
-            PadR( IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
-            PadR( ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
+            PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
+            PadR(ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             RTrim(cBlock) + ;
             hb_eol() + ;
             Space(5) + "  Result: " + XToStr( xResult, .F. ) + ;
@@ -126,10 +126,10 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
             hb_eol() )
       ELSE
          Eval( bOut, ;
-            PadR( IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
-            PadR( ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
-            PadR( cBlock, TEST_RESULT_COL3_WIDTH ) + " -> " + ;
-            PadR( XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH ) + " | " + ;
+            PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
+            PadR(ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
+            PadR(cBlock, TEST_RESULT_COL3_WIDTH) + " -> " + ;
+            PadR(XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH) + " | " + ;
             XToStr( xResultExpected, .F. ) + ;
             hb_eol() )
       ENDIF
@@ -153,13 +153,13 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_IsNumeric(oError:genCode)
       cMessage += hb_ntos( oError:genCode ) + " "
    ENDIF
-   IF HB_IsString( oError:subsystem )
+   IF HB_IsString(oError:subsystem)
       cMessage += oError:subsystem + " "
    ENDIF
    IF HB_IsNumeric(oError:subCode)
       cMessage += hb_ntos( oError:subCode ) + " "
    ENDIF
-   IF HB_IsString( oError:description )
+   IF HB_IsString(oError:description)
       cMessage += oError:description + " "
    ENDIF
    IF !Empty(oError:operation)
@@ -175,7 +175,7 @@ STATIC FUNCTION ErrorMessage( oError )
       cMessage += "#:" + hb_ntos( oError:tries ) + " "
    ENDIF
 
-   IF HB_IsArray( oError:Args )
+   IF HB_IsArray(oError:Args)
       cMessage += "A:" + hb_ntos( Len(oError:Args) ) + ":"
       FOR tmp := 1 TO Len(oError:Args)
          cMessage += ValType(oError:Args[ tmp ]) + ":" + XToStr( oError:Args[ tmp ], .T. )

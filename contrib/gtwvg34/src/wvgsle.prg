@@ -147,7 +147,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::setPosAndSize()
 
-   IF HB_IsObject( ::datalink )
+   IF HB_IsObject(::datalink)
       Eval( ::datalink )
    ENDIF
 
@@ -174,12 +174,12 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
       CASE aNM[ NMH_code ] == EN_MAXTEXT
 
       CASE aNM[ NMH_code ] == EN_KILLFOCUS
-         IF HB_IsEvalItem( ::sl_killInputFocus )
+         IF HB_IsEvalItem(::sl_killInputFocus)
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
       CASE aNM[ NMH_code ] == EN_SETFOCUS
-         IF HB_IsEvalItem( ::sl_setInputFocus )
+         IF HB_IsEvalItem(::sl_setInputFocus)
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
@@ -187,7 +187,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
          RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
@@ -199,12 +199,12 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_ANY
       DO CASE
       CASE aNM[ NMH_code ] == WIN_WM_KILLFOCUS
-         IF HB_IsEvalItem( ::sl_killInputFocus )
+         IF HB_IsEvalItem(::sl_killInputFocus)
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
       CASE aNM[ NMH_code ] == WIN_WM_SETFOCUS
-         IF HB_IsEvalItem( ::sl_setInputFocus )
+         IF HB_IsEvalItem(::sl_setInputFocus)
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
@@ -215,7 +215,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            IF HB_IsEvalItem( ::sl_returnPressed )
+            IF HB_IsEvalItem(::sl_returnPressed)
                Eval( ::sl_returnPressed, , , Self )
             ENDIF
          CASE aNM[ 2 ] == WIN_VK_TAB
@@ -243,7 +243,7 @@ METHOD WvgSLE:changed(lChanged)
 
    LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
 
-   IF HB_IsLogical( lChanged )
+   IF HB_IsLogical(lChanged)
       ::sendMessage( EM_SETMODIFY, IIf(lChanged, 0, 1), 0 )
    ENDIF
 
@@ -286,9 +286,9 @@ METHOD WvgSLE:cutMarked()
 
 METHOD WvgSLE:returnPressed(bReturnPressed)
 
-   IF HB_IsEvalItem( bReturnPressed )
+   IF HB_IsEvalItem(bReturnPressed)
       ::sl_returnPressed := bReturnPressed
-   ELSEIF HB_IsEvalItem( ::sl_returnPressed )
+   ELSEIF HB_IsEvalItem(::sl_returnPressed)
       Eval( ::sl_returnPressed, , , Self )
    ENDIF
 

@@ -62,10 +62,10 @@ PROCEDURE Main()
    /* ***** DRAW A LINE IN A TRUE COLOR IMAGE ***** */
 
    /* First we create a true color image */
-   im := gdImageCreateTrueColor( 100, 100 )
+   im := gdImageCreateTrueColor(100, 100)
 
    /* Background color (true color comes with black background, we have to fill it) */
-   white := gdTrueColor( 255, 255, 255 )
+   white := gdTrueColor(255, 255, 255)
    gdImageFilledRectangle( im, 0, 0, 100, 100, white )
 
    /* set foreground color */

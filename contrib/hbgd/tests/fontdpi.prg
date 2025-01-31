@@ -14,9 +14,9 @@ PROCEDURE Main()
 
    LOCAL oI := GDImage():Create( 600, 300 )
 
-   LOCAL black := oI:SetColor( 50, 0, 0 )
+   LOCAL black := oI:SetColor(50, 0, 0)
 
-   oI:SetColor( black )
+   oI:SetColor(black)
    oI:SetFontName( "Arial" ) // TOFIX
    oI:SetFontPitch( 10 )
 

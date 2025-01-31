@@ -7,7 +7,7 @@ PROCEDURE Main( cVidMode )
    LOCAL nRowOri := Row()
    LOCAL nColOri := Col()
    LOCAL aEnvOri := ft_SaveSets()
-   LOCAL cScrOri := SaveScreen( 0, 0, MaxRow(), MaxCol() )
+   LOCAL cScrOri := SaveScreen(0, 0, MaxRow(), MaxCol())
    LOCAL lColour
    LOCAL aClrs
 
@@ -17,10 +17,10 @@ PROCEDURE Main( cVidMode )
 
    NoSnow( ( "NOSNOW" $ Upper(cVidMode) ) )
    IF "VGA" $ Upper(cVidMode)
-      SetMode( 50, 80 )
+      SetMode(50, 80)
    ENDIF
    IF "EGA" $ Upper(cVidMode)
-      SetMode( 43, 80 )
+      SetMode(43, 80)
    ENDIF
    lColour := IIf("MONO" $ Upper(cVidMode), .F., IsColor())
 
@@ -48,8 +48,8 @@ PROCEDURE Main( cVidMode )
 
    // .... restore the original environment
    ft_RestSets( aEnvOri )
-   RestScreen( 0, 0, MaxRow(), MaxCol(), cScrOri )
-   SetPos( nRowOri, nColOri )
+   RestScreen(0, 0, MaxRow(), MaxCol(), cScrOri)
+   SetPos(nRowOri, nColOri)
    SetBlink(.F.)  // doesn't appear to be reset from FT_RestSets
 
    RETURN

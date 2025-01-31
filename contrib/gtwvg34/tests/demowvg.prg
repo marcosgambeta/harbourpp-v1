@@ -62,10 +62,10 @@ PROCEDURE Main()
    LOCAL aLastPaint, clr, scr, pGT
    LOCAL hPopup
    LOCAL dDate     := hb_SToD()
-   LOCAL cName     := PadR( "Pritpal Bedi", 35 )
-   LOCAL cAdd1     := PadR( "60, New Professor Colony", 35 )
-   LOCAL cAdd2     := PadR( "Ludhiana, INDIA", 35 )
-   LOCAL cAdd3     := PadR( hb_Version( HB_VERSION_URL_BASE ), 35 )
+   LOCAL cName     := PadR("Pritpal Bedi", 35)
+   LOCAL cAdd1     := PadR("60, New Professor Colony", 35)
+   LOCAL cAdd2     := PadR("Ludhiana, INDIA", 35)
+   LOCAL cAdd3     := PadR(hb_Version(HB_VERSION_URL_BASE), 35)
    LOCAL nSlry     := 20000
    LOCAL aBlocks   := {}
    LOCAL nColGet   := 8
@@ -91,7 +91,7 @@ PROCEDURE Main()
    WvtSetKeys(.T.)
    Popups(1)
    wvt_SetMouseMove(.T.)
-   wvt_SetFont( "Courier New", 18, 0, 0 )
+   wvt_SetFont("Courier New", 18, 0, 0)
 
    CLS
    wvt_ShowWindow( WIN_SW_RESTORE )
@@ -106,7 +106,7 @@ PROCEDURE Main()
 
    oLastMenu:setItem( 14, { "This is Set Against Prev Menu", {|| wapi_MessageBox( , "Hi" ) } } )
 
-   SetMode( MaxRow() + 1, MaxCol() + 1 )  // Needed to accommodate attached menu
+   SetMode(MaxRow() + 1, MaxCol() + 1)  // Needed to accommodate attached menu
 
    SetKey(K_F12, {||hb_gtInfo( HB_GTI_ACTIVATESELECTCOPY)})
    SetKey(K_CTRL_V, {||__Keyboard(hb_gtInfo(HB_GTI_CLIPBOARDDATA))})
@@ -139,10 +139,10 @@ PROCEDURE Main()
    // Xbase++ compatible pure GUI controls onto CUI console
    BuildButtons()
 
-   scr := SaveScreen( 0, 0, MaxRow(), MaxCol() )
-   clr := SetColor( "N/W" )
+   scr := SaveScreen(0, 0, MaxRow(), MaxCol())
+   clr := SetColor("N/W")
    CLS
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
 
    @  6, nColGet SAY "< Date >"
    @  9, nColGet SAY "<" + PadC("Name", 33) + ">"
@@ -165,8 +165,8 @@ PROCEDURE Main()
    //  Restore Environment
    WvtSetBlocks( aLastPaint )
    WvtSetObjects( aObjects )
-   SetColor( clr )
-   RestScreen( 0, 0, MaxRow(), MaxCol(), scr )
+   SetColor(clr)
+   RestScreen(0, 0, MaxRow(), MaxCol(), scr)
    WvtSetKeys(.F.)
    wvt_SetPopupMenu( hPopup )
 
@@ -199,8 +199,8 @@ STATIC PROCEDURE WvtNextGetsConsole()
    LOCAL nColGet := 8
    LOCAL GetList := {}
 
-   SetMode( 20, 51 )
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetMode(20, 51)
+   SetColor("N/W,N/GR*,,,N/W*")
    CLS
    hb_gtInfo( HB_GTI_WINTITLE, "WVT Console in WVG Application" )
 
@@ -225,7 +225,7 @@ STATIC PROCEDURE WvtNextGetsConsole()
 PROCEDURE WvtNextGets()  // must be a public function
 
    IF hb_mtvm()
-      hb_threadStart( {|| hb_gtReload("WVG"), wvt_SetFont( "Terminal", 20 ), ;
+      hb_threadStart( {|| hb_gtReload("WVG"), wvt_SetFont("Terminal", 20), ;
          hb_clear(), wvt_ShowWindow( WIN_SW_RESTORE ), WvtNextGets_X() } )
    ELSE
       WvtNextGets_X()
@@ -252,8 +252,8 @@ STATIC PROCEDURE WvtNextGets_X()
    LOCAL aObjects   := WvtSetObjects( {} )
    LOCAL nRow       := Row()
    LOCAL nCol       := Col()
-   LOCAL scr        := SaveScreen( 0, 0, MaxRow(), MaxCol() )
-   LOCAL wvtScr     := wvt_SaveScreen( 0, 0, MaxRow(), MaxCol() )
+   LOCAL scr        := SaveScreen(0, 0, MaxRow(), MaxCol())
+   LOCAL wvtScr     := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
 
    // Change the values of palette arbitrarly though you can fine-tune
    // these values with realistic values.
@@ -280,7 +280,7 @@ STATIC PROCEDURE WvtNextGets_X()
 
    aLastPaint := WvtSetBlocks( aBlocks )
 
-   clr := SetColor( "N/W,N/GR*,,,N/W*" )
+   clr := SetColor("N/W,N/GR*,,,N/W*")
    CLS
 
    @ MaxRow(), 0 SAY PadC("Harbour + WVT Console GUI Screen", 80) COLOR "R+/W"
@@ -303,18 +303,18 @@ STATIC PROCEDURE WvtNextGets_X()
    hb_gtInfo( HB_GTI_PALETTE, aPalette )
    WvtSetObjects( aObjects )
    WvtSetBlocks( aLastPaint )
-   SetColor( clr )
+   SetColor(clr)
 
-   RestScreen( 0, 0, MaxRow(), MaxCol(), scr )
-   wvt_RestScreen( wvtScr )
-   SetPos( nRow, nCol )
+   RestScreen(0, 0, MaxRow(), MaxCol(), scr)
+   wvt_RestScreen(wvtScr)
+   SetPos(nRow, nCol)
 
    RETURN
 
 PROCEDURE WvtPartialScreen()  // must be a public function
 
-   LOCAL scr        := SaveScreen( 7, 20, 15, 60 )
-   LOCAL wvtScr     := wvt_SaveScreen( 0, 0, MaxRow(), MaxCol() )
+   LOCAL scr        := SaveScreen(7, 20, 15, 60)
+   LOCAL wvtScr     := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
    LOCAL wvtScr1
    LOCAL aLastPaint
    LOCAL hPopup     := wvt_SetPopupMenu()
@@ -327,7 +327,7 @@ PROCEDURE WvtPartialScreen()  // must be a public function
    @ 13, 25 SAY "Press Esc "       COLOR "N/GR*"
    wvt_DrawBoxRecessed(8, 22, 14, 58)
 
-   wvtScr1 := wvt_SaveScreen( 7, 20, 15, 60 )
+   wvtScr1 := wvt_SaveScreen(7, 20, 15, 60)
 
    DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
@@ -341,13 +341,13 @@ PROCEDURE WvtPartialScreen()  // must be a public function
    DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
 
-   wvt_RestScreen( 7, 20, 15, 60, wvtScr1 )
+   wvt_RestScreen(7, 20, 15, 60, wvtScr1)
 
    DO WHILE hb_keyStd(Inkey(0)) != K_ESC
    ENDDO
 
-   RestScreen( 7, 20, 15, 60, scr )
-   wvt_RestScreen( 0, 0, MaxRow(), MaxCol(), wvtScr )
+   RestScreen(7, 20, 15, 60, scr)
+   wvt_RestScreen(0, 0, MaxRow(), MaxCol(), wvtScr)
    WvtSetBlocks( aLastPaint )
    wvt_SetPopupMenu( hPopup )
 
@@ -355,8 +355,8 @@ PROCEDURE WvtPartialScreen()  // must be a public function
 
 PROCEDURE WvtLines()  // must be a public function
 
-   LOCAL scr        := SaveScreen( 0, 0, MaxRow(), MaxCol() )
-   LOCAL clr        := SetColor( "N/W" )
+   LOCAL scr        := SaveScreen(0, 0, MaxRow(), MaxCol())
+   LOCAL clr        := SetColor("N/W")
    LOCAL nRows      := MaxRow()
    LOCAL nCols      := MaxCol()
    LOCAL aLastPaint := WvtSetBlocks( {} )
@@ -402,13 +402,13 @@ PROCEDURE WvtLines()  // must be a public function
    ENDDO
 
    //  Restore Environments
-   SetColor( clr )
+   SetColor(clr)
 
    WvtSetBlocks( aLastPaint )
    WvtSetObjects( aObjects )
    wvt_SetPopupMenu( hPopup )
 
-   RestScreen( 0, 0, MaxRow(), MaxCol(), scr )
+   RestScreen(0, 0, MaxRow(), MaxCol(), scr)
 
    RETURN
 
@@ -494,8 +494,8 @@ STATIC PROCEDURE OnlineMap()
    LOCAL mfrom1, mto1, mfrom2, mto2, mfrom3, mto3, mweb
    LOCAL getlist := {}
 
-   SetMode( 22, 65 )
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetMode(22, 65)
+   SetColor("N/W,N/GR*,,,N/W*")
    cls
    hb_gtInfo( HB_GTI_WINTITLE, "Online Maps" )
 
@@ -610,10 +610,10 @@ STATIC PROCEDURE ExecGCUI()
 STATIC PROCEDURE GCUIConsole( oCrt )
 
    LOCAL dDate   := Date()
-   LOCAL cName   := PadR( "Some Useful Name", 35 )
-   LOCAL cAdd1   := PadR( "Linda Goldman Avenue", 35 )
-   LOCAL cAdd2   := PadR( "Excellent Street", 35 )
-   LOCAL cAdd3   := PadR( "Suit #415", 35 )
+   LOCAL cName   := PadR("Some Useful Name", 35)
+   LOCAL cAdd1   := PadR("Linda Goldman Avenue", 35)
+   LOCAL cAdd2   := PadR("Excellent Street", 35)
+   LOCAL cAdd3   := PadR("Suit #415", 35)
    LOCAL nSlry   := 9000
    LOCAL nColGet := 8
    LOCAL GetList := {}
@@ -621,7 +621,7 @@ STATIC PROCEDURE GCUIConsole( oCrt )
 
    Set( _SET_SCOREBOARD, .F. )
 
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
    CLS
    hb_gtInfo( HB_GTI_WINTITLE, "WVG Simplified yet Powerful CUI-GUI Console!" )
 

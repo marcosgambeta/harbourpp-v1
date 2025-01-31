@@ -69,17 +69,17 @@ PROCEDURE Main()
       "Exxon" }
 
    Set( _SET_SCOREBOARD, .F. )
-   SetColor( "W/B" )
+   SetColor("W/B")
    CLS
 
    // display names and metaphones in 3 columns on screen
    AEval( aNames, ;
       {| cName, nElem | ;
-      SetPos( _ftRow( nElem ), _ftCol( nElem ) ), ;
-      QQOut( PadR( cName, 18, "." ) + ft_Metaph( cName ) ) ;
+      SetPos(_ftRow( nElem ), _ftCol( nElem )), ;
+      QQOut( PadR(cName, 18, ".") + ft_Metaph( cName ) ) ;
       } )
 
-   SetPos( 21, 0 )
+   SetPos(21, 0)
 
    RETURN
 

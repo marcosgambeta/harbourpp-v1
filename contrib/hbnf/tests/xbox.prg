@@ -4,7 +4,7 @@ PROCEDURE Main()
 
    LOCAL i
 
-   SetColor( "W/B" )
+   SetColor("W/B")
    CLS
    FOR i := 1 TO 24
       @ i, 0 SAY Replicate( "@", 80 )

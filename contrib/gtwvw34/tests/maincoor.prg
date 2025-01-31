@@ -12,7 +12,7 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   SetColor( "N/W" )
+   SetColor("N/W")
 
    wvw_SetMainCoord(.F.)    // Standard Mode
    fillscreen()
@@ -29,9 +29,9 @@ STATIC PROCEDURE fillscreen()
    Scroll()
    wvw_nOpenWindow( "Win2", 10, 10, 19, 69 )
    wvw_nOpenWindow( "Win3", 15, 15, 22, 75 )
-   DevPos( 0, 0 )
+   DevPos(0, 0)
    ?? "I'm going to fill this (" + hb_ntos( MaxRow() + 1 ) + "x" + hb_ntos( MaxCol() + 1 ) + ") screen"
-   DevPos( 1, 0 )
+   DevPos(1, 0)
    FOR i := 1 TO MaxRow() - 1
       FOR j := 0 TO MaxCol()
          ?? hb_ntos( j % 10 )

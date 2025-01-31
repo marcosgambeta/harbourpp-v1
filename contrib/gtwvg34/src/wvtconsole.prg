@@ -80,7 +80,7 @@ METHOD WvtConsole:Say( nRow, nCol, xExp, cColor )
       nCRow   := Row()
       nCCol   := Col()
       hb_DispOutAt( nRow, nCol, xExp, cColor )
-      SetPos( nCRow, nCCol )
+      SetPos(nCRow, nCCol)
       SetCursor( nCursor )
    ENDIF
 
@@ -95,7 +95,7 @@ METHOD WvtConsole:Box( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
       nCRow   := Row()
       nCCol   := Col()
       hb_DispBox( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
-      SetPos( nCRow, nCCol )
+      SetPos(nCRow, nCCol)
       SetCursor( nCursor )
    ENDIF
 

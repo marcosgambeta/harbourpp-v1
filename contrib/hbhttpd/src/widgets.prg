@@ -367,9 +367,9 @@ METHOD UWBrowse:Output()
       FOR nI := 1 TO Len(::aColumns)
          xField := ::aColumns[ nI ][ 3 ]
          DO CASE
-         CASE HB_IsString( xField )
+         CASE HB_IsString(xField)
             xI := FieldGet( FieldPos( xField ) )
-         CASE HB_IsEvalItem( xField )
+         CASE HB_IsEvalItem(xField)
             xI := Eval( xField )
          ENDCASE
          SWITCH ValType(xI)
@@ -411,7 +411,7 @@ METHOD UWBrowse:Output()
          cRet := '<a href="' + IIf(lValidate, UUrlChecksum( cI ), cI) + '">&gt;&gt;</a>' + cRet
       ENDIF
       IF ::nPos > 0
-         cI := cUrl + hb_ntos( Max( 0, ::nPos - ::nPageSize ) )
+         cI := cUrl + hb_ntos( Max(0, ::nPos - ::nPageSize) )
          cRet := '<a href="' + IIf(lValidate, UUrlChecksum( cI ), cI) + '">&lt;&lt;</a>&nbsp;&nbsp;' + cRet
       ENDIF
    ENDIF
@@ -453,7 +453,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
 
    LOCAL aStack, aURL, aFrame, cI, nI, nL, lRet
 
-   IF hb_HHasKey( aMap, cURL )
+   IF hb_HHasKey(aMap, cURL)
       // aStack[ i ] := { url_part, function, variables }
       IF ( aStack := hb_HGetDef( session, "_ustack" ) ) == NIL
          session[ "_ustack" ] := aStack := {}
@@ -461,7 +461,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
 
       aURL := uhttpd_split( "/", cURL )
       nI := 1
-      nL := Min( Len(aURL), Len(aStack) )
+      nL := Min(Len(aURL), Len(aStack))
       DO WHILE nI <= nL
          IF aStack[ nI ][ 1 ] == aURL[ nI ]
             nI++
@@ -486,7 +486,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
       // Enter procedures
       DO WHILE nI <= Len(aURL)
          cI := uhttpd_join( "/", ASize( AClone( aURL ), nI ) )
-         IF hb_HHasKey( aMap, cI )
+         IF hb_HHasKey(aMap, cI)
             session[ "_uthis" ] := { "idhash" => { => } }
             IF ( lRet := Eval( aMap[ cI ], "INIT" ) ) == .T.
                AAdd(aStack, { aURL[ nI ], aMap[ cI ], session[ "_uthis" ] })

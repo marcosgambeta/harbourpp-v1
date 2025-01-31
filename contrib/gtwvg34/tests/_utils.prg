@@ -36,25 +36,25 @@ THREAD STATIC t_pic_ := {, , , , , , , , , , , , , , , , , , , }
 PROCEDURE WvtSetKeys( lSet )
 
    IF lSet
-      t_keys_[  2 ] := SetKey( K_F2, {|| WvtNextGets()         } )
-      t_keys_[  3 ] := SetKey( K_F3, {|| WvtWindowExpand(1)    } )
-      t_keys_[  4 ] := SetKey( K_F4, {|| WvtWindowExpand(-1) } )
-      t_keys_[  5 ] := SetKey( K_F5, {|| WvtMyBrowse()         } )
-      t_keys_[  6 ] := SetKey( K_F6, {|| wvt_Minimize()        } )
-      t_keys_[  7 ] := SetKey( K_F7, {|| WvtPartialScreen()    } )
-      t_keys_[  8 ] := SetKey( K_F8, {|| WvtLines()            } )
-      t_keys_[  9 ] := SetKey( K_F9, {|| wvt_ChooseFont()      } )
-      t_keys_[ 10 ] := SetKey( K_F10, {|| wvt_ChooseColor()     } )
+      t_keys_[  2 ] := SetKey(K_F2, {||WvtNextGets()})
+      t_keys_[  3 ] := SetKey(K_F3, {||WvtWindowExpand(1)})
+      t_keys_[  4 ] := SetKey(K_F4, {||WvtWindowExpand(-1)})
+      t_keys_[  5 ] := SetKey(K_F5, {||WvtMyBrowse()})
+      t_keys_[  6 ] := SetKey(K_F6, {||wvt_Minimize()})
+      t_keys_[  7 ] := SetKey(K_F7, {||WvtPartialScreen()})
+      t_keys_[  8 ] := SetKey(K_F8, {||WvtLines()})
+      t_keys_[  9 ] := SetKey(K_F9, {||wvt_ChooseFont()})
+      t_keys_[ 10 ] := SetKey(K_F10, {||wvt_ChooseColor()})
    ELSE
-      SetKey( K_F2,  t_keys_[ 2 ] )
-      SetKey( K_F3,  t_keys_[ 3 ] )
-      SetKey( K_F4,  t_keys_[ 4 ] )
-      SetKey( K_F5,  t_keys_[ 5 ] )
-      SetKey( K_F6,  t_keys_[ 6 ] )
-      SetKey( K_F7,  t_keys_[ 7 ] )
-      SetKey( K_F8,  t_keys_[ 8 ] )
-      SetKey( K_F9,  t_keys_[ 9 ] )
-      SetKey( K_F10, t_keys_[ 10 ] )
+      SetKey(K_F2, t_keys_[ 2 ])
+      SetKey(K_F3, t_keys_[ 3 ])
+      SetKey(K_F4, t_keys_[ 4 ])
+      SetKey(K_F5, t_keys_[ 5 ])
+      SetKey(K_F6, t_keys_[ 6 ])
+      SetKey(K_F7, t_keys_[ 7 ])
+      SetKey(K_F8, t_keys_[ 8 ])
+      SetKey(K_F9, t_keys_[ 9 ])
+      SetKey(K_F10, t_keys_[ 10 ])
    ENDIF
 
    RETURN
@@ -85,7 +85,7 @@ PROCEDURE wvt_SetFocus()  // must be a public function
 
    hb_DispOutAt( 1, 3, "Focus Gained!", "R/W" )
 
-   DevPos( nRow, nCol )
+   DevPos(nRow, nCol)
 
    RETURN
 
@@ -104,7 +104,7 @@ PROCEDURE wvt_KillFocus()  // must be a public function
 
    hb_DispOutAt( 1, 3, "Focus Lost...", "B/W" )
 
-   DevPos( nRow, nCol )
+   DevPos(nRow, nCol)
 
    RETURN
 
@@ -222,12 +222,12 @@ FUNCTION WvtSetObjects( aObject )
       IF Empty(aObject)
          t_aObjects := {}
       ELSE
-         IF HB_IsArray( aObject[ 1 ] )
+         IF HB_IsArray(aObject[ 1 ])
             AEval( aObject, {| e_ | AAdd(t_aObjects, e_) } )
          ELSE
             ASize( aObject, WVT_OBJ_VRBLS )
 
-            hb_default( @aObject[ WVT_OBJ_STATE ], OBJ_STATE_DISP )
+            hb_default(@aObject[WVT_OBJ_STATE], OBJ_STATE_DISP)
 
             AAdd(t_aObjects, aObject)
          ENDIF
@@ -254,19 +254,19 @@ FUNCTION WvtWindowExpand(nUnits)
 
    s_nUnits += nUnits
 
-   wvt_SetFont( "Courier New", s_nUnits )
+   wvt_SetFont("Courier New", s_nUnits)
 
    RETURN .T.
 
 FUNCTION VouChoice( aChoices )
 
-   LOCAL scr := SaveScreen( 7, 48, 13, 55 )
-   LOCAL clr := SetColor( "N/W*,GR+/B*,,,GR+/B" )
+   LOCAL scr := SaveScreen(7, 48, 13, 55)
+   LOCAL clr := SetColor("N/W*,GR+/B*,,,GR+/B")
 
    LOCAL nChoice := AChoice( 7, 48, 13, 55, hb_defaultValue( aChoices, { "One", "Two", "Three", "Four", "Five", "Six", "Seven" } ) )
 
-   SetColor( clr )
-   RestScreen( 7, 48, 13, 55, scr )
+   SetColor(clr)
+   RestScreen(7, 48, 13, 55, scr)
 
    RETURN nChoice
 
@@ -433,7 +433,7 @@ FUNCTION ClearStatusMsg()
 
    hb_DispOutAt( MaxRow(), 42, Space( 37 ), "W/W" )
 
-   SetPos( nRow, nCol )
+   SetPos(nRow, nCol)
 
    RETURN .T.
 

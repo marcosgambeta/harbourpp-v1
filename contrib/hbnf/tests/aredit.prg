@@ -22,13 +22,13 @@ PROCEDURE Main()
    bGetFunc   := {| b, ar, nDim, nElem | TestGet( b, ar, nDim, nElem ) }
 
    SET SCOREBOARD OFF
-   SetColor( "W/N" )
+   SetColor("W/N")
    CLS
    @ 21, 4 SAY "Use Cursor Keys To Move Between Fields, <F7> = Delete Row, <F8> = Add Row"
    @ 22, 7 SAY "<ESC> = Quit Array Edit, <Enter> or <Any Other Key> Edits Element"
-   SetColor( "N/W, W/N, , , W/N" )
+   SetColor("N/W, W/N, , , W/N")
    cRet := ft_ArEdit( 3, 5, 18, 75, ar, @nElem, aHeadings, aBlocks, bGetFunc )
-   SetColor( "W/N" )
+   SetColor("W/N")
    CLS
    ? cRet
    ? "LastKey() = ESC:", LastKey() == K_ESC
@@ -40,12 +40,12 @@ FUNCTION TestGet( b, ar, nDim, nElem )
    LOCAL GetList   := {}
    LOCAL nRow      := Row()
    LOCAL nCol      := Col()
-   LOCAL cSaveScrn := SaveScreen( 21, 0, 22, MaxCol() )
-   LOCAL cOldColor := SetColor( "W/N" )
+   LOCAL cSaveScrn := SaveScreen(21, 0, 22, MaxCol())
+   LOCAL cOldColor := SetColor("W/N")
 
    @ 21, 0 CLEAR TO 22, MaxCol()
    @ 21, 29 SAY "Editing Array Element"
-   SetColor( cOldColor )
+   SetColor(cOldColor)
    DO CASE
    CASE nDim == 1
       @ nRow, nCol GET ar[ 1, nElem ] PICTURE "99"
@@ -60,7 +60,7 @@ FUNCTION TestGet( b, ar, nDim, nElem )
       READ
       b:refreshAll()
    ENDCASE
-   RestScreen( 21, 0, 22, MaxCol(), cSaveScrn )
+   RestScreen(21, 0, 22, MaxCol(), cSaveScrn)
    @ nRow, nCol SAY ""
 
    RETURN .T.

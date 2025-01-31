@@ -81,7 +81,7 @@ PROCEDURE Main()
    NEXT
    BIO_free( bioe )
 
-   ? pub := PEM_READ_BIO_PUBKEY( "pubkey.pem", "test" )
+   ? pub := PEM_READ_BIO_PUBKEY("pubkey.pem", "test")
 
    ? "EVP_SealInit", EVP_SealInit( ctx, "AES-192-OFB", @a, @iv, { pub } )
    ? ValType(a), Len(a)

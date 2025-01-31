@@ -166,12 +166,12 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
    CASE WIN_WM_CTLCOLOREDIT
       DO CASE
       CASE wapi_GetDlgItem( hDlg, ID_MLE ) == wvg_n2p( lParam )
-         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB(0, 0, 255) )
-         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB(255, 255, 200) )
+         wapi_SetTextColor(wvg_n2p( wParam ), WIN_RGB(0, 0, 255))
+         wapi_SetBkColor(wvg_n2p( wParam ), WIN_RGB(255, 255, 200))
          RETURN EVENT_UNHANDLED
       CASE wapi_GetDlgItem( hDlg, ID_EDT_TEXT ) == wvg_n2p( lParam )
-         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB(255, 255, 255) )
-         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB(10, 200, 45) )
+         wapi_SetTextColor(wvg_n2p( wParam ), WIN_RGB(255, 255, 255))
+         wapi_SetBkColor(wvg_n2p( wParam ), WIN_RGB(10, 200, 45))
          RETURN EVENT_UNHANDLED
       ENDCASE
       EXIT
@@ -179,8 +179,8 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
    CASE WIN_WM_CTLCOLORSTATIC
 #if 0
       IF wapi_GetDlgItem( hDlg, ID_STA_TEXT ) == wvg_n2p( lParam )
-         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB(255, 255, 255) )
-         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB(0, 0, 0) )
+         wapi_SetTextColor(wvg_n2p( wParam ), WIN_RGB(255, 255, 255))
+         wapi_SetBkColor(wvg_n2p( wParam ), WIN_RGB(0, 0, 0))
          RETURN EVENT_UNHANDLED
       ENDIF
 #endif
@@ -190,7 +190,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       wvg_SetTimer( hDlg, 5001, 1000 ) // 1 sec
 
       IF Empty(aHFonts := SetFonts())
-         IF !Empty(hFont := wvt_CreateFont( "Times New Roman", 18 ))
+         IF !Empty(hFont := wvt_CreateFont("Times New Roman", 18))
             SetFonts( hFont )
          ENDIF
       ENDIF

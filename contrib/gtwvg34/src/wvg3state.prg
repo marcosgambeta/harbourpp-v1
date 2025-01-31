@@ -128,7 +128,7 @@ METHOD Wvg3State:handleEvent( nMessage, aNM )
       IF aNM[ NMH_code ] == BN_CLICKED
          ::editBuffer := wvg_Button_GetCheck( ::hWnd )
 
-         IF HB_IsEvalItem( ::sl_lbClick )
+         IF HB_IsEvalItem(::sl_lbClick)
             Eval( ::sl_lbClick, ::editBuffer, , Self )
             RETURN EVENT_HANDLED
          ENDIF
@@ -136,7 +136,7 @@ METHOD Wvg3State:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
          RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
@@ -165,7 +165,7 @@ METHOD Wvg3State:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 
 METHOD Wvg3State:setCaption( xCaption )
 
-   IF HB_IsString( xCaption )
+   IF HB_IsString(xCaption)
       ::caption := xCaption
       ::sendMessage( WIN_WM_SETTEXT, 0, ::caption )
    ENDIF

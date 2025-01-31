@@ -54,18 +54,18 @@
 PROCEDURE Main()
 
    LOCAL lClosepermitted := .F.
-   LOCAL bSetKey := SetKey( K_F8, {|| MyHelp() } )
+   LOCAL bSetKey := SetKey(K_F8, {||MyHelp()})
 
 #if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVW" )
 #endif
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
-   SetMode( 4, 54 )   // a small window
-   SetColor( "N/W" )
-   wvw_SetFont( 0, "Courier New", 16, - 7 )
-   wvw_ebSetFont( 0, "Arial" )  // font for editbox
-   wvw_pbSetFont( 0, "Arial" )  // font for pushbuttons
+   SetMode(4, 54)   // a small window
+   SetColor("N/W")
+   wvw_SetFont(0, "Courier New", 16, - 7)
+   wvw_ebSetFont(0, "Arial")  // font for editbox
+   wvw_pbSetFont(0, "Arial")  // font for pushbuttons
 
    wvw_SetCodepage( 0, 255 )
    wvw_AllowNonTopEvent(.T.)   // this will make pushbuttons to work
@@ -89,7 +89,7 @@ PROCEDURE Main()
    DO WHILE ! lClosepermitted
       Inkey(0.2)
    ENDDO
-   SetKey( K_F8, bSetKey )
+   SetKey(K_F8, bSetKey)
 
    RETURN
 
@@ -194,26 +194,26 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    mcVarType := ValType(mxValue)
    DO CASE
    CASE mcVarType == "C"
-      mcPict := IIf(HB_IsString( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
+      mcPict := IIf(HB_IsString(mcPict), mcPict, Replicate( "X", Len(mxValue) ))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
-      mcPict := IIf(HB_IsString( mcPict ), mcPict, "999,999,999.99")
+      mcPict := IIf(HB_IsString(mcPict), mcPict, "999,999,999.99")
       mbText := {|| Transform(mxValue, mcPict) }
    CASE mcVarType == "D"
-      mcPict := IIf(HB_IsString( mcPict ), mcPict, "9999-99-99")
+      mcPict := IIf(HB_IsString(mcPict), mcPict, "9999-99-99")
       mbText := {|| DToC(mxValue) }
    OTHERWISE
       // unsupported valtype
       RETURN .F.
    ENDCASE
 
-   hb_default( @aEBGEts, {} )
+   hb_default(@aEBGEts, {})
 
-   IF !HB_IsLogical( mlMultiline ) .OR. ;
-      ! HB_IsString( mxValue )
+   IF !HB_IsLogical(mlMultiline) .OR. ;
+      ! HB_IsString(mxValue)
       mlMultiline := .F.
    ENDIF
-   hb_default( @mcLabel, mcVarName + ":" )
+   hb_default(@mcLabel, mcVarName + ":")
 
    AAdd(aEBGets, { ;
       mlMultiline, ;    // __GET_LMULTILINE
@@ -272,8 +272,8 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
       IIf(lmultiline, NIL, nlen + 1), ; // nMaxChar
       NIL, NIL )
 
-      nmaxrow := Max( nmaxrow, nrow2 )
-      nmincol := Min( nmincol, ncol1 )
+      nmaxrow := Max(nmaxrow, nrow2)
+      nmincol := Min(nmincol, ncol1)
    NEXT
    nrow1 := nmaxrow + 2 // Min(nmaxrow+2, MaxRow())
    ncol1 := nmincol // Min(nmincol, MaxCol()-33)
@@ -300,8 +300,8 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    nFocus := 1
    ch := Inkey(0.5)
    DO WHILE ! lDone
-      IF HB_IsBlock( SetKey( ch ) )
-         Eval( SetKey( ch ) )
+      IF HB_IsBlock(SetKey(ch))
+         Eval( SetKey(ch) )
       ELSEIF ch != 0
          lchangefocus := .T.
          DO CASE
@@ -357,8 +357,8 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
    LOCAL nNumGets := Len(aEBGets)
    LOCAL nFocus, lchangefocus
 
-   IF HB_IsBlock( SetKey( ch ) )
-      Eval( SetKey( ch ) )
+   IF HB_IsBlock(SetKey(ch))
+      Eval( SetKey(ch) )
       RETURN
    ELSEIF ch == 0
       RETURN
@@ -694,7 +694,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
          // x better:
          ol := Len(Output)
-         Output := PadL( "-" + SubStr(Output, At( ".", OutBuffer ) - 1), ol )
+         Output := PadL("-" + SubStr(Output, At( ".", OutBuffer ) - 1), ol)
 
          // Replace Text
          wvw_ebSetText( mnwinnum, mnebid, Output )
@@ -741,7 +741,7 @@ STATIC FUNCTION CharMaskTekstOK( cString, cvaltype, cMask )
    LOCAL CB, CM, x
 
    IF cvaltype == "D"
-      FOR x := 1 TO Min( Len(cString), Len(cMask) )
+      FOR x := 1 TO Min(Len(cString), Len(cMask))
          CB := SubStr(cString, x, 1)
          CM := SubStr(cMask, x, 1)
          DO CASE
@@ -758,7 +758,7 @@ STATIC FUNCTION CharMaskTekstOK( cString, cvaltype, cMask )
       RETURN .T.
    ENDIF
 
-   FOR x := 1 TO Min( Len(cString), Len(cMask) )
+   FOR x := 1 TO Min(Len(cString), Len(cMask))
       CB := SubStr(cString, x, 1)
       CM := SubStr(cMask, x, 1)
       DO CASE
@@ -904,7 +904,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
    CASE message == WM_CHAR
       ch := wParam
       bhandler := inp_handler( nWinNum )
-      IF HB_IsBlock( bhandler )
+      IF HB_IsBlock(bhandler)
          Eval( bhandler, nWinNum, ch )
          RETURN .T.
       ELSE
@@ -922,7 +922,7 @@ FUNCTION inp_handler( nwinnum, bhandler )
    STATIC s_bhandlers := {}
    LOCAL retval := IIf(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
 
-   IF HB_IsBlock( bhandler )
+   IF HB_IsBlock(bhandler)
       IF Len(s_bhandlers) < nwinnum + 1
          ASize( s_bhandlers, nwinnum + 1 )
       ENDIF
@@ -937,7 +937,7 @@ STATIC FUNCTION MyMessageBox( nwinnum, cMessage, cCaption, nFlags )
 
    LOCAL nParent
 
-   hb_default( @cCaption, "Debug Message" )
+   hb_default(@cCaption, "Debug Message")
    nParent := wvw_GetWindowHandle( nwinnum )
 
    RETURN win_MessageBox( nParent, cMessage, cCaption, nFlags )

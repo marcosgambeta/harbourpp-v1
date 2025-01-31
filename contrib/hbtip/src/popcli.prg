@@ -166,7 +166,7 @@ METHOD TIPClientPOP:List()
    cRet := ""
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
-      IF !HB_IsString( cStr ) .OR. cStr == "."
+      IF !HB_IsString(cStr) .OR. cStr == "."
          ::bEof := .T.
       ELSE
          cRet += cStr + ::cCRLF
@@ -219,7 +219,7 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
                       otherwise if response breaks EOM in two, it will never
                       be found
        */
-      IF ( nPos := hb_BAt( cEOM, cRet, Max( nRetLen - hb_BLen(cEOM), 1 ) ) ) > 0
+      IF ( nPos := hb_BAt( cEOM, cRet, Max(nRetLen - hb_BLen(cEOM), 1) ) ) > 0
          // Remove ".CRLF"
          cRet := hb_BLeft(cRet, nPos + 1)
          ::bEof := .T.
@@ -266,7 +266,7 @@ METHOD TIPClientPOP:Top( nMsgId )
    cRet := ""
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 512 )
-      IF !HB_IsString( cStr ) .OR. cStr == "."
+      IF !HB_IsString(cStr) .OR. cStr == "."
          ::bEof := .T.
       ELSE
          cRet += cStr + ::cCRLF
@@ -304,7 +304,7 @@ METHOD TIPClientPOP:UIDL( nMsgId )
       cRet := ""
       DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
          cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
-         IF !HB_IsString( cStr ) .OR. cStr == "."
+         IF !HB_IsString(cStr) .OR. cStr == "."
             ::bEof := .T.
          ELSE
             cRet += cStr + ::cCRLF
@@ -328,7 +328,7 @@ METHOD TIPClientPOP:countMail()
    IF ::isOpen
       ::reset()
       cStat := ::Stat()
-      IF HB_IsString( cStat ) .AND. hb_LeftEq( cStat, "+OK" )
+      IF HB_IsString(cStat) .AND. hb_LeftEq( cStat, "+OK" )
          RETURN Val( SubStr(cStat, 4, hb_At( " ", cStat, 5 ) - 4) )
       ENDIF
    ENDIF
@@ -340,7 +340,7 @@ METHOD TIPClientPOP:GetOk()
    ::cReply := ::inetRecvLine( ::SocketCon,, 128 )
 
    RETURN ::inetErrorCode( ::SocketCon ) == 0 .AND. ;
-      HB_IsString( ::cReply ) .AND. hb_LeftEq( ::cReply, "+" )
+      HB_IsString(::cReply) .AND. hb_LeftEq( ::cReply, "+" )
 
 /* QUESTION: This method will return logical, NIL or string
              Is it really intended that way? [vszakats] */
@@ -361,7 +361,7 @@ METHOD TIPClientPOP:retrieveAll( lDelete )
 
    IF ::isOpen
 
-      hb_default( @lDelete, .F. )
+      hb_default(@lDelete, .F.)
 
       FOR EACH oMail IN aMails := Array( ::countMail() )
          ::reset()
@@ -390,7 +390,7 @@ METHOD TIPClientPOP:getTop( nMsgId )
    xRet := cStr := ""
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 1024 )
-      IF HB_IsString( cStr ) .AND. ! cStr == "."
+      IF HB_IsString(cStr) .AND. ! cStr == "."
          xRet += cStr + ::cCRLF
       ENDIF
    ENDDO
@@ -409,7 +409,7 @@ METHOD TIPClientPOP:getMessageRaw( nMsgId )
    xRet := ""
    DO WHILE ::inetErrorCode( ::SocketCon ) == 0
       cLine := ::inetRecvLine( ::SocketCon, @nBytes, 8192 )
-      IF nBytes <= 0 .OR. ! HB_IsString( cLine ) .OR. cLine == "."
+      IF nBytes <= 0 .OR. ! HB_IsString(cLine) .OR. cLine == "."
          EXIT
       ENDIF
       xRet += cLine + ::cCRLF

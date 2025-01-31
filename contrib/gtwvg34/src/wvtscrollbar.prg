@@ -124,7 +124,7 @@ CREATE CLASS WvtScrollBar INHERIT WvtObject
    METHOD Configure( nTop, nLeft, nBottom, nRight )
    METHOD Refresh()
    METHOD HandleEvent( nKey )
-   METHOD SetPos( nTotal, nCurrent )
+   METHOD SetPos(nTotal, nCurrent)
    METHOD GetPos()
    METHOD ThumbPos()
    METHOD SetTooltip()
@@ -148,7 +148,7 @@ METHOD wvtScrollbar:Create()
       __defaultNIL( @::nRight, ::nLeft + 1 )
 
       ::nRight       := ::nLeft + 1
-      ::nBottom      := Max( 7, ::nBottom )
+      ::nBottom      := Max(7, ::nBottom)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -188,7 +188,7 @@ METHOD wvtScrollbar:Create()
       __defaultNIL( @::nRight, ::nLeft + 11 )
 
       ::nBottom      := ::nTop
-      ::nRight       := Max( 11, ::nRight )
+      ::nRight       := Max(11, ::nRight)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -246,7 +246,7 @@ METHOD wvtScrollbar:Configure( nTop, nLeft, nBottom, nRight )
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
       ::nRight       := ::nLeft + 1
-      ::nBottom      := Max( 7, ::nBottom )
+      ::nBottom      := Max(7, ::nBottom)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -270,7 +270,7 @@ METHOD wvtScrollbar:Configure( nTop, nLeft, nBottom, nRight )
       ::ThumbPos()
    ELSE
       ::nBottom      := ::nTop
-      ::nRight       := Max( 11, ::nRight )
+      ::nRight       := Max(11, ::nRight)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -305,7 +305,7 @@ METHOD wvtScrollbar:Refresh()
 
    RETURN Self
 
-METHOD wvtScrollbar:SetPos( nTotal, nCurrent )
+METHOD wvtScrollbar:SetPos(nTotal, nCurrent)
 
    __defaultNIL( @nTotal, Eval( ::bTotal   ) )
    __defaultNIL( @nCurrent, Eval( ::bCurrent ) )
@@ -404,9 +404,9 @@ METHOD wvtScrollbar:HandleEvent( nKey )
          IF nmRow != ::nThumbPos
             nOff := ::nThumbPos - nmRow
             IF nOff > 0
-               ::nThumbPos := Max( ::nTop + 1, nmRow )
+               ::nThumbPos := Max(::nTop + 1, nmRow)
             ELSE
-               ::nThumbPos := Min( ::nBottom - 1, nmRow )
+               ::nThumbPos := Min(::nBottom - 1, nmRow)
             ENDIF
             ::nCurrent := ( ::nTotal * ( ::nThumbPos - ::nTop ) / ::nScrollUnits )
 
@@ -417,7 +417,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ::nCurrent := 1
             ENDIF
 
-            ::SetPos( ::nTotal, ::nCurrent )
+            ::SetPos(::nTotal, ::nCurrent)
 
             ::SetTooltip()
             wvt_Keyboard(K_SBTHUMBTRACKVERT)
@@ -501,9 +501,9 @@ METHOD wvtScrollbar:HandleEvent( nKey )
 
             nOff := ::nThumbPos - nmCol
             IF nOff > 0
-               ::nThumbPos := Max( ::nLeft + 2, nmCol )
+               ::nThumbPos := Max(::nLeft + 2, nmCol)
             ELSE
-               ::nThumbPos := Min( ::nRight - 2, nmCol )
+               ::nThumbPos := Min(::nRight - 2, nmCol)
             ENDIF
 
             ::nCurrent := ( ::nTotal * ( ::nThumbPos - ::nLeft + 1 ) / ::nScrollUnits )
@@ -515,7 +515,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ::nCurrent := 1
             ENDIF
 
-            ::SetPos( ::nTotal, ::nCurrent )
+            ::SetPos(::nTotal, ::nCurrent)
 
             wvt_Keyboard(K_SBTHUMBTRACKHORZ)
          ENDIF

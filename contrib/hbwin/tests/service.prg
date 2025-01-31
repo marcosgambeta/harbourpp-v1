@@ -55,7 +55,7 @@ PROCEDURE Main( cMode )
    LOCAL nError
    LOCAL cMsg
 
-   hb_default( @cMode, "S" ) /* NOTE: Must be the default action */
+   hb_default(@cMode, "S") /* NOTE: Must be the default action */
 
    SWITCH Upper(cMode)
    CASE "I"
@@ -109,8 +109,8 @@ PROCEDURE SrvMain( cParam1, cParam2 )
    LOCAL fhnd := hb_FCreate( hb_FNameExtSet( hb_ProgName(), ".out" ), FC_NORMAL, FO_DENYNONE + FO_WRITE )
    LOCAL cParam
 
-   hb_default( @cParam1, "" )
-   hb_default( @cParam2, "" )
+   hb_default(@cParam1, "")
+   hb_default(@cParam2, "")
 
    FWrite( fhnd, "Startup" + hb_eol() )
    FWrite( fhnd, "|" + hb_CmdLine() + "|" + hb_eol() )

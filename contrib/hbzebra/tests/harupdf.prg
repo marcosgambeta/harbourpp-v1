@@ -15,7 +15,7 @@ PROCEDURE Main()
    pdf := HPDF_New()
    page := HPDF_AddPage( pdf )
    HPDF_Page_SetSize( page, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT )
-   HPDF_Page_SetFontAndSize( page, HPDF_GetFont( pdf, "Helvetica", NIL ), 12 )
+   HPDF_Page_SetFontAndSize( page, HPDF_GetFont(pdf, "Helvetica", NIL), 12 )
 
    DrawBarcode( page,  20,   1, "EAN13",      "477012345678" )
    DrawBarcode( page,  40,   1, "EAN8",       "1234567" )

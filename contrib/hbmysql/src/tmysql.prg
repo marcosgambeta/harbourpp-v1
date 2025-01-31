@@ -84,8 +84,8 @@ ENDCLASS
 
 METHOD TMySQLRow:New( aRow, aFStruct, cTableName )
 
-   hb_default( @cTableName, "" )
-   hb_default( @aFStruct, {} )
+   hb_default(@cTableName, "")
+   hb_default(@aFStruct, {})
 
    ::aRow := aRow
    ::aOriValue := AClone( aRow )    // Original values ( same as TMySQLtable:aOldValue )
@@ -102,13 +102,13 @@ METHOD TMySQLRow:New( aRow, aFStruct, cTableName )
 
 METHOD TMySQLRow:FieldGet( cnField )
 
-   LOCAL nNum := IIf(HB_IsString( cnField ), ::FieldPos( cnField ), cnField)
+   LOCAL nNum := IIf(HB_IsString(cnField), ::FieldPos( cnField ), cnField)
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
       // Char fields are padded with spaces since a real .dbf field would be
       IF ::FieldType( nNum ) == "C"
-         RETURN PadR( ::aRow[ nNum ], ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ] )
+         RETURN PadR(::aRow[ nNum ], ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ])
       ELSE
          RETURN ::aRow[ nNum ]
       ENDIF
@@ -118,14 +118,14 @@ METHOD TMySQLRow:FieldGet( cnField )
 
 METHOD TMySQLRow:FieldPut( cnField, Value )
 
-   LOCAL nNum := IIf(HB_IsString( cnField ), ::FieldPos( cnField ), cnField)
+   LOCAL nNum := IIf(HB_IsString(cnField), ::FieldPos( cnField ), cnField)
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
       IF ValType(Value) == ValType(::aRow[ nNum ]) .OR. ::aRow[ nNum ] == NIL
 
          // if it is a char field remove trailing spaces
-         IF HB_IsString( Value )
+         IF HB_IsString(Value)
             Value := RTrim(Value)
          ENDIF
 
@@ -162,7 +162,7 @@ METHOD TMySQLRow:FieldLen(nNum)
  */
 METHOD TMySQLRow:FieldDec(nNum, lFormat)
 
-   hb_default( @lFormat, .F. )
+   hb_default(@lFormat, .F.)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
@@ -387,7 +387,7 @@ METHOD TMySQLQuery:Skip( nRows )
    LOCAL lBof
 
    // NOTE: MySQL row count starts from 0
-   hb_default( @nRows, 1 )
+   hb_default(@nRows, 1)
 
    ::lBof := Empty(::LastRec())
 
@@ -582,7 +582,7 @@ METHOD TMySQLQuery:FieldGet( cnField )
 
    LOCAL nNum, Value
 
-   IF HB_IsString( cnField )
+   IF HB_IsString(cnField)
       nNum := ::FieldPos( cnField )
    ELSE
       nNum := cnField
@@ -593,7 +593,7 @@ METHOD TMySQLQuery:FieldGet( cnField )
 
       // Char fields are padded with spaces since a real .dbf field would be
       IF ::FieldType( nNum ) == "C"
-         RETURN PadR( Value, ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ] )
+         RETURN PadR(Value, ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ])
       ELSE
          RETURN Value
       ENDIF
@@ -613,7 +613,7 @@ METHOD TMySQLQuery:FieldLen(nNum)
    lFormat is useful for copying table structure from mysql to dbf */
 METHOD TMySQLQuery:FieldDec(nNum, lFormat)
 
-   hb_default( @lFormat, .F. )
+   hb_default(@lFormat, .F.)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       IF !lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
@@ -742,9 +742,9 @@ METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
 
    LOCAL ni, cWhere := " WHERE "
 
-   hb_default( @lOldRecord, .F. )
+   hb_default(@lOldRecord, .F.)
    // Too many ::refresh() can slow some processes, so we can deactivate it by parameter
-   hb_default( @lRefresh, .T. )
+   hb_default(@lRefresh, .T.)
 
    ::lError := .F.
 
@@ -850,9 +850,9 @@ METHOD TMySQLTable:Delete( oRow, lOldRecord, lRefresh )
 
    LOCAL ni, cWhere := " WHERE "
 
-   hb_default( @lOldRecord, .F. )
+   hb_default(@lOldRecord, .F.)
    // Too many ::refresh() can slow some processes, so we can deactivate it by parameter
-   hb_default( @lRefresh, .T. )
+   hb_default(@lRefresh, .T.)
 
    // is this a row of this table ?
    IF oRow == NIL
@@ -935,7 +935,7 @@ METHOD TMySQLTable:Append(oRow, lRefresh)
    LOCAL i
 
    // Too many ::refresh() can slow some processes, so we can deactivate it by parameter
-   hb_default( @lRefresh, .T. )
+   hb_default(@lRefresh, .T.)
 
    IF oRow == NIL // default Current row
 
@@ -1034,7 +1034,7 @@ METHOD TMySQLTable:GetBlankRow( lSetValues )
    LOCAL aRow := Array( ::nNumFields )
 
    // It is not current row, so do not change it
-   hb_default( @lSetValues, .F. )
+   hb_default(@lSetValues, .F.)
 
    // crate an array of empty fields
    FOR i := 1 TO ::nNumFields
@@ -1084,7 +1084,7 @@ METHOD TMySQLTable:FieldPut( cnField, Value )
 
    LOCAL nNum
 
-   IF HB_IsString( cnField )
+   IF HB_IsString(cnField)
       nNum := ::FieldPos( cnField )
    ELSE
       nNum := cnField
@@ -1095,7 +1095,7 @@ METHOD TMySQLTable:FieldPut( cnField, Value )
       IF ValType(Value) == ValType(::aRow[ nNum ]) .OR. ::aRow[ nNum ] == NIL
 
          // if it is a char field remove trailing spaces
-         IF HB_IsString( Value )
+         IF HB_IsString(Value)
             Value := RTrim(Value)
          ENDIF
 
@@ -1377,7 +1377,7 @@ METHOD TMySQLServer:CreateIndex( cName, cTable, aFNames, lUnique )
    LOCAL cCreateQuery := "CREATE "
    LOCAL i
 
-   hb_default( @lUnique, .F. )
+   hb_default(@lUnique, .F.)
 
    IF lUnique
       cCreateQuery += "UNIQUE INDEX "
@@ -1438,7 +1438,7 @@ METHOD TMySQLServer:Query( cQuery )
 
    LOCAL oQuery, cTableName, i, cUpperQuery, nNumTables, cToken
 
-   hb_default( @cQuery, "" )
+   hb_default(@cQuery, "")
 
    cUpperQuery := Upper(AllTrim(cQuery))
    i := 1

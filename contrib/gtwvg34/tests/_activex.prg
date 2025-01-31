@@ -214,7 +214,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
 #if 1
    // --- Active-X ---
    oCom := BuildActiveXControl( nActiveX, oDA )
-   IF HB_IsObject( oCom )
+   IF HB_IsObject(oCom)
       oCrt:sendMessage( WIN_WM_SIZE, 0, 0 )
       oCrt:show()
       ExeActiveX( nActiveX, oCom, xParam )
@@ -386,7 +386,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
       // oCom:emboss( 3,0 )
       oCom:copy2ClipBoard()
       oCom:view := 11
-      oCom:setBackGroundColor( WIN_RGB(225, 225, 225) )
+      oCom:setBackGroundColor(WIN_RGB(225, 225, 225))
 #if 0
       oCom:rotate90()
 #endif
@@ -437,7 +437,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
             SWITCH s_nTurn
             CASE 1
                hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Stacked Bars" )
-               // SetMode( 30, 100 )
+               // SetMode(30, 100)
 
                sData := ;
                   "00003600|00004450|000051|000061|000073|00008-6972|00009412|00011Tahoma|100011|10" + ;
@@ -460,7 +460,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
             CASE 2
                hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Floating Bars" )
-               // SetMode( 20, 90 )
+               // SetMode(20, 90)
 
                sData := ;
                   "00003550|00004300|000051|000073|00008-2894893|00009412|00011Tahoma|100011|100035" + ;
@@ -477,7 +477,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
             CASE 3
                hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Four Regions" )
-               // SetMode( 40, 120 )
+               // SetMode(40, 120)
 
                sData := ;
                   "00003700|00004500|000054|000061|000071|00008-984833|00009412|00011Tahoma|100011|" + ;
@@ -512,7 +512,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
             CASE 4
                hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "10 Biggest Companies" )
-               // SetMode( 25, 90 )
+               // SetMode(25, 90)
 
                sData := ;
                   "00003670|00004450|000051|000061|000071|00008-10185235|00009412|00011Tahoma|10001" + ;
@@ -532,7 +532,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
             CASE 5
                hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Grouped Bars" )
-               // SetMode( 25, 80 )
+               // SetMode(25, 80)
 
                sData := ;
                   "00003600|00004450|000051|000061|000075|00008-2|00009412|00010paper.jpg|00011Taho" + ;
@@ -547,7 +547,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
             CASE 6
                hb_gtInfo( HB_GTI_WINTITLE, "RMChart [ Next:F11 ] " + "Flow Chart" )
-               // SetMode( 30, 50 )
+               // SetMode(30, 50)
 
                sData := ;
                   "00003305|00004400|000051|00008-984833|00009412|00011Tahoma|100011|100035|100045|" + ;

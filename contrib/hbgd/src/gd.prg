@@ -61,9 +61,9 @@ FUNCTION gdImageFTWidth( fontname, ptsize, angle )
    LOCAL cErr
    LOCAL aRect := Array(8)
 
-   hb_default( @fontname, "Arial" )
-   hb_default( @ptsize, 8 )
-   hb_default( @angle, 0 )
+   hb_default(@fontname, "Arial")
+   hb_default(@ptsize, 8)
+   hb_default(@angle, 0)
 
    cErr := gdImageStringFTEx( , @aRect, 0, fontname, ptsize, angle, 0, 0, "M" )
 
@@ -79,9 +79,9 @@ FUNCTION gdImageFTHeight( fontname, ptsize, angle )
    LOCAL cErr
    LOCAL aRect := Array(8)
 
-   hb_default( @fontname, "Arial" )
-   hb_default( @ptsize, 8 )
-   hb_default( @angle, 0 )
+   hb_default(@fontname, "Arial")
+   hb_default(@ptsize, 8)
+   hb_default(@angle, 0)
 
    cErr := gdImageStringFTEx( , @aRect, 0, fontname, ptsize, angle, 0, 0, "M" )
    IF cErr == ""
@@ -98,9 +98,9 @@ FUNCTION gdImageFTSize( string, fontname, ptsize, angle )
    LOCAL cErr
    LOCAL aRect := Array(8)
 
-   hb_default( @fontname, "Arial" )
-   hb_default( @ptsize, 8 )
-   hb_default( @angle, 0 )
+   hb_default(@fontname, "Arial")
+   hb_default(@ptsize, 8)
+   hb_default(@angle, 0)
 
    cErr := gdImageStringFTEx( , @aRect, 0, fontname, ptsize, angle, 0, 0, string )
 
@@ -177,7 +177,7 @@ FUNCTION gdImageToString( oImage )
 
    LOCAL cString
 
-   IF HB_IsObject( oImage ) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
+   IF HB_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
       SWITCH oImage:cType
       CASE "jpeg"
          cString := oImage:ToStringJpeg()
@@ -197,9 +197,9 @@ PROCEDURE gdImageToFile( oImage, cFile )
 
    LOCAL cString, cExt
 
-   hb_default( @cFile, "image" )
+   hb_default(@cFile, "image")
 
-   IF HB_IsObject( oImage ) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
+   IF HB_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
       SWITCH oImage:cType
       CASE "jpeg"
          cString := oImage:ToStringJpeg()
@@ -225,9 +225,9 @@ PROCEDURE gdImageToFile( oImage, cFile )
 
 PROCEDURE gdImageToHandle( oImage, nHandle )
 
-   hb_default( @nHandle, 1 )
+   hb_default(@nHandle, 1)
 
-   IF HB_IsObject( oImage ) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) )
+   IF HB_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) )
       IF oImage:cType != NIL
          SWITCH oImage:cType
          CASE "jpeg"

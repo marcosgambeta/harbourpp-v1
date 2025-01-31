@@ -65,7 +65,7 @@ FUNCTION ThreadWait( aThreads, nTimeOut )
 
    apThIDs := {}
    FOR EACH th IN aThreads
-      IF HB_IsObject( th )
+      IF HB_IsObject(th)
          AAdd( apThIDs, th:threadSelf )
       ELSE
          AAdd( apThIDs, th )
@@ -87,7 +87,7 @@ FUNCTION ThreadWaitAll( aThreads, nTimeOut )
 
    apThIDs := {}
    FOR EACH th IN aThreads
-      IF HB_IsObject( th )
+      IF HB_IsObject(th)
          AAdd( apThIDs, th:threadSelf )
       ELSE
          AAdd( apThIDs, th )

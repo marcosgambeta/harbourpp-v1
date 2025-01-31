@@ -81,9 +81,9 @@ METHOD WvtTextBox:Create()
 
    ::nTextColorHoverOff := ::nTextColor
 
-   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ;
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ;
       ::nFontWeight, ::lItalic, ::lUnderline, ::lStrikeout, ;
-      ::nCharSet, ::nFontQuality, 0 )
+      ::nCharSet, ::nFontQuality, 0)
 
    IF !Empty(::hFont)
       ::bPaint := {|| wvt_DrawTextBox( ::nTop, ::nLeft, ::nBottom, ::nRight, ;

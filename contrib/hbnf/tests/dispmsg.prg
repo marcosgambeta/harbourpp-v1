@@ -32,13 +32,13 @@ PROCEDURE Main()
    cDosScrn := SaveScreen()
    nDosRow := Row()
    nDosCol := Col()
-   SetColor( "W/N" )
+   SetColor("W/N")
    CLS
    nMaxRow := MaxRow()
    SetBlink(.F.)
-   SetColor( cWindN + "*" )
+   SetColor(cWindN + "*")
    CLS
-   SetColor( cNormN )
+   SetColor(cNormN)
 
    ft_DispMsg( { { "[Esc] To Abort Changes   [PgDn] To Continue" }, { cNormN, , cNormH } }, , nMaxRow - 5 )
 
@@ -56,10 +56,10 @@ PROCEDURE Main()
 
    HB_SYMBOL_UNUSED(nType)
 
-   SetColor( "W/N" )
+   SetColor("W/N")
    SetCursor( SC_NORMAL )
    SetBlink(.T.)
-   RestScreen( , , , , cDosScrn )
-   SetPos( nDosRow, nDosCol )
+   RestScreen(, , , , cDosScrn)
+   SetPos(nDosRow, nDosCol)
 
    RETURN

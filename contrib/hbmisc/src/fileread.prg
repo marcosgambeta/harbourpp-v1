@@ -170,7 +170,7 @@ METHOD TFileRead:EOL_pos()
       nPos := nCRpos
    OTHERWISE
       // If there's both a CR and an LF, use the position of the first one.
-      nPos := Min( nCRpos, nLFpos )
+      nPos := Min(nCRpos, nLFpos)
    ENDCASE
 
    RETURN nPos

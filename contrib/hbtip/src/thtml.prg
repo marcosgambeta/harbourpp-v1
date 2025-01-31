@@ -73,7 +73,7 @@
 #define S_STEP                4  // number of elements for auto sizing
 
 #xtrans S_STACK()             => S_STACK( 64 )
-#xtrans S_STACK( <n> )        => { Array( <n> ), 0, <n>, Max( 32, Int( <n> / 2 ) ) }
+#xtrans S_STACK( <n> )        => { Array( <n> ), 0, <n>, Max(32, Int( <n> / 2 )) }
 #xtrans S_GROW( <a> )         => ( IIf(++<a>\[S_NUM] > <a>\[S_SIZE], ASize( <a>\[S_DATA], ( <a>\[S_SIZE] += <a>\[S_STEP] ) ), <a>) )
 #xtrans S_SHRINK( <a> )       => ( IIf(<a>\[S_NUM] > 0 .AND. --<a>\[S_NUM] \< <a>\[S_SIZE] - <a>\[S_STEP], ASize( <a>\[S_DATA], <a>\[S_SIZE] -= <a>\[S_STEP] ), <a>) )
 #xtrans S_COMPRESS( <a> )     => ( ASize( <a>\[S_DATA], <a>\[S_SIZE] := <a>\[S_NUM] ) )
@@ -139,7 +139,7 @@ METHOD THtmlDocument:new( cHtmlString )
       " </body>" + hb_eol() + ;
       "</html>"
 
-   IF !HB_IsString( cHtmlString )
+   IF !HB_IsString(cHtmlString)
       ::root := THtmlNode():new( cEmptyHtmlDoc )
    ELSEIF "<html" $ Lower(Left(cHtmlString, 4096))
       ::root := THtmlNode():new( cHtmlString )
@@ -607,7 +607,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       THtmlInit(.T.)
    ENDIF
 
-   IF HB_IsString( oParent )
+   IF HB_IsString(oParent)
       // a HTML string is passed -> build new tree of objects
       oParent := StrTran(oParent, Chr(9), " ")
       ::root           := Self
@@ -615,11 +615,11 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       ::htmlTagType    := THtmlTagType( "_root_" )
       ::htmlContent    := {}
       ::parseHtml( P_PARSER( oParent ) )
-   ELSEIF HB_IsObject( oParent )
+   ELSEIF HB_IsObject(oParent)
       // a HTML object is passed -> we are in the course of building an object tree
       ::root        := oParent:root
       ::parent      := oParent
-      IF HB_IsString( cAttrib )
+      IF HB_IsString(cAttrib)
          IF Right(cAttrib, 1) == "/"
             ::htmlEndTagName := "/"
             ::htmlAttributes := hb_StrShrink( cAttrib )
@@ -664,7 +664,7 @@ METHOD THtmlNode:isOptional()
 
 // checks if this is a node (leafs contain no further nodes, e.g. <br />,<hr>,_text_)
 METHOD THtmlNode:isNode()
-   RETURN HB_IsArray( ::htmlContent ) .AND. Len(::htmlContent) > 0
+   RETURN HB_IsArray(::htmlContent) .AND. Len(::htmlContent) > 0
 
 // checks if this is a block node that must be closed with an ending tag: eg: <table></table>, <ul></ul>
 METHOD THtmlNode:isBlock()
@@ -907,7 +907,7 @@ METHOD THtmlNode:insertBefore( oTHtmlNode )
       ::root:_document:changed := .T.
    ENDIF
 
-   IF HB_IsArray( ::parent:htmlContent )
+   IF HB_IsArray(::parent:htmlContent)
       hb_AIns( ::parent:htmlContent, 1, oTHtmlNode, .T. )
    ENDIF
 
@@ -948,7 +948,7 @@ METHOD THtmlNode:Delete()
       ::root:_document:changed := .T.
    ENDIF
 
-   IF HB_IsArray( ::parent:htmlContent )
+   IF HB_IsArray(::parent:htmlContent)
       hb_ADel( ::parent:htmlContent, hb_AScan( ::parent:htmlContent, Self,,, .T. ), .T. )
    ENDIF
 
@@ -971,7 +971,7 @@ METHOD THtmlNode:firstNode( lRoot )
 // returns last node in subtree (.F.) or last node of entire tree (.T.)
 METHOD THtmlNode:lastNode( lRoot )
 
-   hb_default( @lRoot, .F. )
+   hb_default(@lRoot, .F.)
 
    IF ::htmlTagName == "_text_"
       RETURN ::parent:lastNode( lRoot )
@@ -1026,9 +1026,9 @@ METHOD THtmlNode:toString( nIndent )
       RETURN ::htmlContent
    ENDIF
 
-   hb_default( @nIndent, -1 )
+   hb_default(@nIndent, -1)
 
-   cIndent := IIf(::keepFormatting(), "", Space( Max( 0, nIndent ) ))
+   cIndent := IIf(::keepFormatting(), "", Space( Max(0, nIndent) ))
 
    IF !::htmlTagName == "_root_"
       // all nodes but the root node have a HTML tag
@@ -1044,7 +1044,7 @@ METHOD THtmlNode:toString( nIndent )
       ENDIF
    ENDIF
 
-   IF HB_IsArray( ::htmlContent )
+   IF HB_IsArray(::htmlContent)
 
       FOR EACH oNode IN ::htmlContent
          IF !oNode:isInline() .OR. oNode:htmlTagName == "!--"
@@ -1053,7 +1053,7 @@ METHOD THtmlNode:toString( nIndent )
          cHtml += oNode:toString( nIndent + 1 )
       NEXT
 
-   ELSEIF HB_IsString( ::htmlContent )
+   ELSEIF HB_IsString(::htmlContent)
       cHtml += ::htmlContent
    ENDIF
 
@@ -1078,7 +1078,7 @@ METHOD THtmlNode:attrToString()
 
    IF ::htmlAttributes == NIL
       cAttr := ""
-   ELSEIF HB_IsString( ::htmlAttributes )
+   ELSEIF HB_IsString(::htmlAttributes)
       cAttr := " " + ::htmlAttributes
    ELSE
       // attributes are parsed into a Hash
@@ -1147,7 +1147,7 @@ METHOD THtmlNode:getText( cEOL )
    LOCAL cText := ""
    LOCAL oNode
 
-   hb_default( @cEOL, hb_eol() )
+   hb_default(@cEOL, hb_eol())
 
    IF ::htmlTagName == "_text_"
       RETURN RTrim(::htmlContent) + cEOL
@@ -1169,7 +1169,7 @@ METHOD THtmlNode:getAttribute( cName )
    LOCAL hHash := ::getAttributes()
    LOCAL cValue
 
-   IF !HB_IsHash( hHash )
+   IF !HB_IsHash(hHash)
       RETURN hHash
    ENDIF
 
@@ -1196,7 +1196,7 @@ METHOD THtmlNode:getAttributes()
       ::htmlAttributes := { => }
       hb_HCaseMatch( ::htmlAttributes, .F. )
 
-   ELSEIF HB_IsString( ::htmlAttributes )
+   ELSEIF HB_IsString(::htmlAttributes)
       IF ::htmlAttributes == "/"
          ::htmlAttributes := { => }
          hb_HCaseMatch( ::htmlAttributes, .F. )
@@ -1311,7 +1311,7 @@ METHOD THtmlNode:setAttribute( cName, cValue )
    LOCAL nPos
    LOCAL hHash := ::getAttributes()
 
-   IF !HB_IsHash( hHash )
+   IF !HB_IsHash(hHash)
       // Tag doesn't have any attribute
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF

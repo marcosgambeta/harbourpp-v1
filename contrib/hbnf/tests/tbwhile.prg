@@ -38,7 +38,7 @@ PROCEDURE Main()
    AAdd( aFields, { "First Name", {|| tbnames->First } } )
    AAdd( aFields, { "City"      , {|| tbnames->City }  } )
 
-   cOldColor := SetColor( "N/BG" )
+   cOldColor := SetColor("N/BG")
    CLS
    @ 5, 10 SAY "Enter First Letter Of Last Name:" GET cKey PICTURE "!"
    READ
@@ -67,7 +67,7 @@ PROCEDURE Main()
    ?
 
    WAIT
-   SetColor( cOldColor )
+   SetColor(cOldColor)
    CLS
 
    RETURN

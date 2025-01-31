@@ -118,9 +118,9 @@ METHOD TIPMail:New( cBody, xEncoder )
 
 METHOD TIPMail:SetEncoder( xEncoder )
 
-   ::oEncoder := IIf(HB_IsString( xEncoder ), tip_GetEncoder( xEncoder ), xEncoder)
+   ::oEncoder := IIf(HB_IsString(xEncoder), tip_GetEncoder( xEncoder ), xEncoder)
 
-   IF HB_IsObject( ::oEncoder )
+   IF HB_IsObject(::oEncoder)
       ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
       RETURN .T.
    ENDIF
@@ -129,18 +129,18 @@ METHOD TIPMail:SetEncoder( xEncoder )
 
 METHOD TIPMail:SetBody( cBody )
 
-   IF HB_IsObject( ::oEncoder )
+   IF HB_IsObject(::oEncoder)
       ::cBody := ::oEncoder:Encode( cBody )
       ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
       ::lBodyEncoded := .T.  // needed to prevent an extra CRLF from being appended [GD]
-   ELSEIF HB_IsString( cBody ) .OR. cBody == NIL
+   ELSEIF HB_IsString(cBody) .OR. cBody == NIL
       ::cBody := cBody
    ENDIF
 
    RETURN .T.
 
 METHOD TIPMail:GetBody()
-   RETURN IIf(HB_IsObject( ::oEncoder ), ::oEncoder:Decode( ::cBody ), ::cBody)
+   RETURN IIf(HB_IsObject(::oEncoder), ::oEncoder:Decode( ::cBody ), ::cBody)
 
 METHOD TIPMail:GetFieldPart( cPart )
 
@@ -173,7 +173,7 @@ METHOD TIPMail:SetFieldPart( cPart, cValue )
    LOCAL nPos
    LOCAL cEnc
 
-   IF HB_IsString( cValue ) .AND. ! Empty(cValue)
+   IF HB_IsString(cValue) .AND. ! Empty(cValue)
       IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
          ( nPos := At( ";", cEnc ) ) > 0
          ::hHeaders[ cPart ] := cValue + SubStr(cEnc, nPos)
@@ -188,8 +188,8 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
 
    LOCAL aMatch
 
-   IF HB_IsString( cPart ) .AND. cPart $ ::hHeaders .AND. ;
-      HB_IsString( cOption ) .AND. ! Empty(cOption)
+   IF HB_IsString(cPart) .AND. cPart $ ::hHeaders .AND. ;
+      HB_IsString(cOption) .AND. ! Empty(cOption)
 
       aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[ cPart ], .F. )
 
@@ -206,7 +206,7 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
 
 METHOD TIPMail:Attach( oSubPart )
 
-   IF HB_IsObject( oSubPart ) .AND. oSubPart:ClassName() == "TIPMAIL"
+   IF HB_IsObject(oSubPart) .AND. oSubPart:ClassName() == "TIPMAIL"
       // reset wrong content-type
       IF !::isMultiPart()
          ::hHeaders[ "Content-Type" ] := "multipart/mixed"
@@ -337,7 +337,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
    LOCAL nLinePos, nSplitPos, nBodyPos
    LOCAL cValue, cLastField
 
-   IF !HB_IsString( cMail )
+   IF !HB_IsString(cMail)
       RETURN 0
    ENDIF
 
@@ -355,7 +355,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
    ENDIF
 
    // Part 1: parsing header
-   hb_default( @nPos, 1 )
+   hb_default(@nPos, 1)
 
    DO WHILE ( nLinePos := hb_At( e"\r\n", cMail, nPos ) ) > nPos
       // going on with last field?
@@ -382,7 +382,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
       nPos := nLinePos + 2
 
       // Prevents malformed body to affect us
-      IF HB_IsString( cBoundary ) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == 1
+      IF HB_IsString(cBoundary) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == 1
          RETURN 0
       ENDIF
    ENDDO
@@ -416,12 +416,12 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
       ENDIF
 
       // have we met the boundary?
-      IF HB_IsString( cBoundary ) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == nPos
+      IF HB_IsString(cBoundary) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == nPos
          EXIT
       ENDIF
 
       // Have we met a section?
-      IF HB_IsString( cSubBoundary ) .AND. hb_At( "--" + cSubBoundary, cMail, nPos ) == nPos
+      IF HB_IsString(cSubBoundary) .AND. hb_At( "--" + cSubBoundary, cMail, nPos ) == nPos
 
          // is it the last subsection?
          IF hb_At( "--", cMail, nPos + Len(cSubBoundary) + 2, nLinePos ) > 0
@@ -486,14 +486,14 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
 
    LOCAL i
 
-   IF !HB_IsString( cFrom ) .OR. Empty(cFrom)
+   IF !HB_IsString(cFrom) .OR. Empty(cFrom)
       RETURN .F.
    ENDIF
 
    DO CASE
-   CASE HB_IsString( xTo )
+   CASE HB_IsString(xTo)
       aTo := { xTo }
-   CASE HB_IsArray( xTo )
+   CASE HB_IsArray(xTo)
       aTo := xTo
    ENDCASE
 
@@ -502,9 +502,9 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    ENDIF
 
    DO CASE
-   CASE HB_IsString( xCC )
+   CASE HB_IsString(xCC)
       aCC := { xCC }
-   CASE HB_IsArray( xCC )
+   CASE HB_IsArray(xCC)
       aCC := xCC
    ENDCASE
 
@@ -584,7 +584,7 @@ METHOD TIPMail:detachFile( cPath )
       RETURN .F.
    ENDIF
 
-   IF HB_IsString( cPath )
+   IF HB_IsString(cPath)
       cFileName := hb_DirSepAdd( cPath ) + cFileName
    ENDIF
 
@@ -602,7 +602,7 @@ METHOD TIPMail:getMultiParts( aParts )
 
    ::resetAttachment()
 
-   hb_default( @aParts, {} )
+   hb_default(@aParts, {})
 
    DO WHILE ( oSubPart := ::nextAttachment() ) != NIL
       lReset := .T.
@@ -667,15 +667,15 @@ FUNCTION tip_GetNameEmail( cAddress )
 
 FUNCTION __tip_FAttrToUmask( nAttr )
    RETURN hb_bitOr( ;
-      Min( hb_bitAnd( nAttr, HB_FA_SUID ), 1 ) * 0x4000, ;
-      Min( hb_bitAnd( nAttr, HB_FA_SGID ), 1 ) * 0x2000, ;
-      Min( hb_bitAnd( nAttr, HB_FA_SVTX ), 1 ) * 0x1000, ;
-      Min( hb_bitAnd( nAttr, HB_FA_RUSR ), 1 ) * 0x0400, ;
-      Min( hb_bitAnd( nAttr, HB_FA_WUSR ), 1 ) * 0x0200, ;
-      Min( hb_bitAnd( nAttr, HB_FA_XUSR ), 1 ) * 0x0100, ;
-      Min( hb_bitAnd( nAttr, HB_FA_RGRP ), 1 ) * 0x0040, ;
-      Min( hb_bitAnd( nAttr, HB_FA_WGRP ), 1 ) * 0x0020, ;
-      Min( hb_bitAnd( nAttr, HB_FA_XGRP ), 1 ) * 0x0010, ;
-      Min( hb_bitAnd( nAttr, HB_FA_ROTH ), 1 ) * 0x0004, ;
-      Min( hb_bitAnd( nAttr, HB_FA_WOTH ), 1 ) * 0x0002, ;
-      Min( hb_bitAnd( nAttr, HB_FA_XOTH ), 1 ) * 0x0001 )
+      Min(hb_bitAnd( nAttr, HB_FA_SUID ), 1) * 0x4000, ;
+      Min(hb_bitAnd( nAttr, HB_FA_SGID ), 1) * 0x2000, ;
+      Min(hb_bitAnd( nAttr, HB_FA_SVTX ), 1) * 0x1000, ;
+      Min(hb_bitAnd( nAttr, HB_FA_RUSR ), 1) * 0x0400, ;
+      Min(hb_bitAnd( nAttr, HB_FA_WUSR ), 1) * 0x0200, ;
+      Min(hb_bitAnd( nAttr, HB_FA_XUSR ), 1) * 0x0100, ;
+      Min(hb_bitAnd( nAttr, HB_FA_RGRP ), 1) * 0x0040, ;
+      Min(hb_bitAnd( nAttr, HB_FA_WGRP ), 1) * 0x0020, ;
+      Min(hb_bitAnd( nAttr, HB_FA_XGRP ), 1) * 0x0010, ;
+      Min(hb_bitAnd( nAttr, HB_FA_ROTH ), 1) * 0x0004, ;
+      Min(hb_bitAnd( nAttr, HB_FA_WOTH ), 1) * 0x0002, ;
+      Min(hb_bitAnd( nAttr, HB_FA_XOTH ), 1) * 0x0001 )

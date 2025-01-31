@@ -246,17 +246,17 @@ STATIC PROCEDURE MyDialogOne( oCrt )
       }
 
    aGets_ := { ;
-      PadR( "Pritpal", 20 ), ;
-      PadR( "Bedi", 20 ), ;
-      PadR( "60, New Professor Colony", 30 ), ;
-      PadR( "Ludhiana, INDIA", 30 ), ;
+      PadR("Pritpal", 20), ;
+      PadR("Bedi", 20), ;
+      PadR("60, New Professor Colony", 30), ;
+      PadR("Ludhiana, INDIA", 30), ;
       "PB", ;
-      PadR( "141004", 10 ), ;
+      PadR("141004", 10), ;
       hb_SToD("20040622"), ;
       .T., ;
       48, ;
       17000, ;
-      PadR( "Wvtgui is a classical example of Harbour capabilities...", 65 ) }
+      PadR("Wvtgui is a classical example of Harbour capabilities...", 65) }
 
    oGet1 := WvtGets():New( oDlg, , 4, 2, 37, 62 )
    oGet1:AddGets( nGetRow +  0, nGetCol, aGets_[ 1 ], "@ "       , "N/W*,N/GR*" )
@@ -295,7 +295,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
       oDlg:AddObject( oWvtBrw1 )
    ENDIF
 
-   SetKey( K_F12, {|| hb_gtInfo( HB_GTI_SPEC, HB_GTS_FACTOR, 200 ) } )
+   SetKey(K_F12, {|| hb_gtInfo( HB_GTI_SPEC, HB_GTS_FACTOR, 200 ) })
 
    oDlg:Create()
    oDlg:Execute()

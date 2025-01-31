@@ -132,7 +132,7 @@ METHOD TIPClientFTP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientFTP:Open( cUrl )
 
-   IF HB_IsString( cUrl )
+   IF HB_IsString(cUrl)
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
@@ -406,7 +406,7 @@ METHOD TIPClientFTP:List( cSpec )
       RETURN NIL
    ENDIF
 
-   hb_default( @cSpec, "" )
+   hb_default(@cSpec, "")
 
    IF !Empty(cSpec)
       cSpec := " " + cSpec
@@ -554,7 +554,7 @@ METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
       RETURN NIL
    ENDIF
 
-   hb_default( @cLocalPath, "" )
+   hb_default(@cLocalPath, "")
 
    ::inetSendAll( ::SocketCon, "NLST " + hb_defaultValue( cSpec, "" ) + ::cCRLF )
 
@@ -574,7 +574,7 @@ METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
    LOCAL aFile
    LOCAL cStr
 
-   IF !HB_IsString( cFileSpec )
+   IF !HB_IsString(cFileSpec)
       RETURN NIL
    ENDIF
 

@@ -91,32 +91,32 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       SetCursor( IIf(ReadInsert(), SC_INSERT, SC_NORMAL) )
 
-      bKeyIns   := SetKey( K_INS, ;
+      bKeyIns   := SetKey(K_INS, ;
          {|| SetCursor( IIf(ReadInsert( ! ReadInsert() ), ;
-                          SC_NORMAL, SC_INSERT) ) } )
-      bKeyUp    := SetKey( K_UP, ;
+                          SC_NORMAL, SC_INSERT) ) })
+      bKeyUp    := SetKey(K_UP, ;
          {|| IIf(nHistIndex > 1, ;
-                  cCommand := PadR( aHistory[ --nHistIndex ], Len(cCommand) ), NIL), ;
-                  ManageCursor( cCommand ) } )
-      bKeyDown  := SetKey( K_DOWN, ;
-         {|| cCommand := PadR( IIf(nHistIndex < Len(aHistory), ;
+                  cCommand := PadR(aHistory[ --nHistIndex ], Len(cCommand)), NIL), ;
+                  ManageCursor( cCommand ) })
+      bKeyDown  := SetKey(K_DOWN, ;
+         {|| cCommand := PadR(IIf(nHistIndex < Len(aHistory), ;
              aHistory[ ++nHistIndex ], ;
-             ( nHistIndex := Len(aHistory) + 1, "" )), Len(cCommand) ), ;
-                  ManageCursor( cCommand ) } )
-      bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
+             ( nHistIndex := Len(aHistory) + 1, "" )), Len(cCommand)), ;
+                  ManageCursor( cCommand ) })
+      bKeyPaste := SetKey(K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) })
 
-      bKeyTab   := SetKey( K_TAB, {|| CompleteCmd(@cCommand, hCommands) } )
+      bKeyTab   := SetKey(K_TAB, {|| CompleteCmd(@cCommand, hCommands) })
 
       READ
 
       /* Positions the cursor on the line previously saved */
-      SetPos( nSavedRow, MaxCol() - 1 )
+      SetPos(nSavedRow, MaxCol() - 1)
 
-      SetKey( K_ALT_V, bKeyPaste )
-      SetKey( K_DOWN,  bKeyDown  )
-      SetKey( K_UP,    bKeyUp    )
-      SetKey( K_INS,   bKeyIns   )
-      SetKey( K_TAB,   bKeyTab   )
+      SetKey(K_ALT_V, bKeyPaste)
+      SetKey(K_DOWN, bKeyDown)
+      SetKey(K_UP, bKeyUp)
+      SetKey(K_INS, bKeyIns)
+      SetKey(K_TAB, bKeyTab)
 
       QQOut( hb_eol() )
 
@@ -178,7 +178,7 @@ STATIC PROCEDURE CompleteCmd(cCommand, hCommands)
    IF Len(s) > 1
       FOR EACH n IN hCommands
          IF s == Lower(Left(n:__enumKey(), Len(s)))
-            cCommand := PadR( n:__enumKey(), Len(cCommand) )
+            cCommand := PadR(n:__enumKey(), Len(cCommand))
             ManageCursor( cCommand )
             RETURN
          ENDIF
@@ -193,21 +193,21 @@ STATIC PROCEDURE ShowHelp( hCommands )
    LOCAL n, c, m
 
    m := 8
-   hb_HEval( hCommands, {| k, l | m := Max( m, Len(k + IIf(Empty(l[ 1 ]), "", " " + l[ 1 ])) ) } )
+   hb_HEval( hCommands, {| k, l | m := Max(m, Len(k + IIf(Empty(l[ 1 ]), "", " " + l[ 1 ]))) } )
 
    AAdd(aTexts, "Commands:")
 
    /* Processing commands */
    FOR EACH n IN hCommands
-      AAdd(aTexts, " " + PadR( n:__enumKey() + IIf(Empty(n[ 1 ]), "", " " + n[ 1 ]), m ) + " - " + n[ 2 ])
+      AAdd(aTexts, " " + PadR(n:__enumKey() + IIf(Empty(n[ 1 ]), "", " " + n[ 1 ]), m) + " - " + n[ 2 ])
    NEXT
    AAdd(aTexts, "")
 
    AAdd(aTexts, "Keyboard shortcuts:")
-   AAdd(aTexts, PadR( " <Up>", m )    + "  - Move up on historic list.")
-   AAdd(aTexts, PadR( " <Down>", m )  + "  - Move down on historic list.")
-   AAdd(aTexts, PadR( " <Tab>", m )   + "  - Complete command.")
-   AAdd(aTexts, PadR( " <Alt+V>", m ) + "  - Paste from clipboard.")
+   AAdd(aTexts, PadR(" <Up>", m)    + "  - Move up on historic list.")
+   AAdd(aTexts, PadR(" <Down>", m)  + "  - Move down on historic list.")
+   AAdd(aTexts, PadR(" <Tab>", m)   + "  - Complete command.")
+   AAdd(aTexts, PadR(" <Alt+V>", m) + "  - Paste from clipboard.")
    AAdd(aTexts, "")
 
    c := 0
@@ -222,7 +222,7 @@ STATIC PROCEDURE ShowHelp( hCommands )
          Inkey(0)
 
          Scroll( Row(), 0, Row(), MaxCol() )
-         SetPos( Row(), 0 )
+         SetPos(Row(), 0)
       ENDIF
    NEXT
 
@@ -251,13 +251,13 @@ STATIC FUNCTION hbnetiocon_GetHidden()
    ATail( GetList ):display()
 
    SetCursor( IIf(ReadInsert(), SC_INSERT, SC_NORMAL) )
-   bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
+   bKeyPaste := SetKey(K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) })
 
    READ
 
    /* Positions the cursor on the line previously saved */
-   SetPos( nSavedRow, MaxCol() - 1 )
-   SetKey( K_ALT_V, bKeyPaste )
+   SetPos(nSavedRow, MaxCol() - 1)
+   SetKey(K_ALT_V, bKeyPaste)
 
    QQOut( hb_eol() )
 

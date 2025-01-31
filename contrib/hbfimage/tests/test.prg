@@ -139,8 +139,8 @@ PROCEDURE Main()
    ? "Save GIF ?       :", fi_Save( FIF_GIF, im, IMAGES_OUT + "wrong.gif", 0 )
 
    bkcolor := hb_BChar(0) + hb_BChar(0) + hb_BChar( 205 ) + hb_BChar(0) /* RGBA */
-   ? fi_SetBackgroundColor( im, bkcolor )
-   ? fi_GetBackgroundColor( im, @bkcolor )
+   ? fi_SetBackgroundColor(im, bkcolor)
+   ? fi_GetBackgroundColor(im, @bkcolor)
    ? hb_StrToHex( bkcolor )
 
 #if 0

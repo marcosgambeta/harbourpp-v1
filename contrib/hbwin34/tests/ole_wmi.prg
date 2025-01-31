@@ -20,7 +20,7 @@ PROCEDURE Main()
 
    ? "Win_LogicalDisk"
    FOR EACH i IN oWMI:ExecQuery( "SELECT * FROM Win32_LogicalDisk" )
-      IF HB_IsString( i:VolumeSerialNumber )
+      IF HB_IsString(i:VolumeSerialNumber)
          ? i:VolumeSerialNumber, i:Description
       ENDIF
    NEXT
@@ -28,7 +28,7 @@ PROCEDURE Main()
 
    ? "Win_NetworkAdapter"
    FOR EACH i IN oWMI:ExecQuery( "SELECT * FROM Win32_NetworkAdapter" )
-      IF HB_IsString( i:MACAddress )
+      IF HB_IsString(i:MACAddress)
          ? i:MACAddress, i:Description
       ENDIF
    NEXT
@@ -40,14 +40,14 @@ PROCEDURE Main()
       ? "Win_Bios #" + hb_ntos( nIndex++ )
 
       ? "BiosCharacteristics . :", TypeAndValue( i:BiosCharacteristics )
-      IF HB_IsArray( i:BiosCharacteristics )
+      IF HB_IsArray(i:BiosCharacteristics)
          FOR EACH tmp IN i:BiosCharacteristics
             ? Space( 27 ), Str( tmp, 2 ), "->", WMI_Bios_BiosCharacteristics( tmp )
          NEXT
       ENDIF
 
       ? "BIOSVersion ......... :", TypeAndValue( i:BIOSVersion )
-      IF HB_IsArray( i:BIOSVersion )
+      IF HB_IsArray(i:BIOSVersion)
          FOR EACH tmp IN i:BIOSVersion
             ? Space( 27 ), tmp
          NEXT
@@ -64,7 +64,7 @@ PROCEDURE Main()
       ? "LanguageEdition ..... :", TypeAndValue( i:LanguageEdition )
 
       ? "ListOfLanguages ..... :", TypeAndValue( i:ListOfLanguages )
-      IF HB_IsArray( i:ListOfLanguages )
+      IF HB_IsArray(i:ListOfLanguages)
          FOR EACH tmp IN i:ListOfLanguages
             ? Space( 27 ), tmp
          NEXT

@@ -93,7 +93,7 @@ PROCEDURE Main()
    Set( _SET_SCOREBOARD, .F. )
    // wvw_SetPaintRefresh(0)
    wvw_SetVertCaret(.T.)
-   wvw_pbSetFont( , "Tahoma", 14 )
+   wvw_pbSetFont(, "Tahoma", 14)
    nCursor := SetCursor( SC_NONE )
 
    IF SetDefaultWindowSize()
@@ -111,13 +111,13 @@ PROCEDURE Main()
 
    hb_gtInfo( HB_GTI_INKEYFILTER, {| nkey | nAfterInkey(nkey) } )
    wvw_SetMouseMove( , .T. )                           // required by wvwmouse
-   kF1 := SetKey( K_F1, {|| xHelp() } )
-   kF2 := SetKey( K_F2, {|| xDebugInfo() } )
-   kF3 := SetKey( K_F3, {|| Demo_Console() } )
+   kF1 := SetKey(K_F1, {||xHelp()})
+   kF2 := SetKey(K_F2, {||xDebugInfo()})
+   kF3 := SetKey(K_F3, {||Demo_Console()})
 
-   kF9 := SetKey( K_F9, {|| wvw_SetLineSpacing( , wvw_SetLineSpacing() - 2 ) } )
-   kF10 := SetKey( K_F10, {|| wvw_SetLineSpacing( , wvw_SetLineSpacing() + 2 ) } )
-   kF11 := SetKey( K_F11, {|| wvw_SetDefLineSpacing( wvw_SetLineSpacing() ) } )
+   kF9 := SetKey(K_F9, {||wvw_SetLineSpacing(, wvw_SetLineSpacing() - 2)})
+   kF10 := SetKey(K_F10, {||wvw_SetLineSpacing(, wvw_SetLineSpacing() + 2)})
+   kF11 := SetKey(K_F11, {||wvw_SetDefLineSpacing(wvw_SetLineSpacing())})
 
    // start menu definitions
 
@@ -195,7 +195,7 @@ PROCEDURE Main()
    // 2007-05-25 the real pushbutton, easier and better looking. Nothing to do with wvwmouse.prg.
    wvw_pbCreate( nCurWindow, MaxRow() - 4, 67 - 11 - 11 - 11 - 11 - 11, MaxRow() - 4, 67 + 9 - 11 - 11 - 11 - 11 - 11, "native", , {|| lboxmessage( "native pushbutton" ) } )
 
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
    CLS
    @ 0, 0 SAY "This is line 0"
    @ 1, 0 SAY "This is line 1"
@@ -224,14 +224,14 @@ PROCEDURE Main()
    // restore state
    wvwm_ResetMouseObjects( nCurWindow )
    ResetMiscObjects( nCurWindow )
-   SetKey( K_F11, kF11 )
-   SetKey( K_F10, kF10 )
-   SetKey( K_F9, kF9 )
+   SetKey(K_F11, kF11)
+   SetKey(K_F10, kF10)
+   SetKey(K_F9, kF9)
 
-   // SetKey( K_F4, kF4 )
-   SetKey( K_F3, kF3 )
-   SetKey( K_F2, kF2 )
-   SetKey( K_F1, kF1 )
+   // SetKey(K_F4, kF4)
+   SetKey(K_F3, kF3)
+   SetKey(K_F2, kF2)
+   SetKey(K_F1, kF1)
    SetCursor( nCursor )
 
    RETURN
@@ -272,10 +272,10 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    LOCAL lMouseMove
    LOCAL lEchoing := .F.
 
-   hb_default( @nTop, 2 )
-   hb_default( @nLeft, 2 )
-   hb_default( @nBottom, nTop + 10 )
-   hb_default( @nRight, nLeft + 45 )
+   hb_default(@nTop, 2)
+   hb_default(@nLeft, 2)
+   hb_default(@nBottom, nTop + 10)
+   hb_default(@nRight, nLeft + 45)
 
    cWinName := "Typewriter (Win#" + hb_ntos( wvw_nNumWindows() ) + "); <Ctrl+W>: New Window; <Esc>: Exit"
 
@@ -285,7 +285,7 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    ENDIF
 
    nCursor := SetCursor( SC_NORMAL )
-   cColor := SetColor( "W+/N" )
+   cColor := SetColor("W+/N")
    lMouseMove := wvw_SetMouseMove( , .F. )
 
    ResetMiscObjects( nCurWindow )
@@ -332,7 +332,7 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    wvwm_ResetMouseObjects( nCurWindow )
    ResetMiscObjects( nCurWindow )
    SetCursor( nCursor )
-   SetColor( cColor )
+   SetColor(cColor)
    wvw_SetMouseMove( , lMouseMove )
 
    RETURN
@@ -350,10 +350,10 @@ STATIC PROCEDURE Demo_Get()
    LOCAL nRight  := 75
    LOCAL nColGet := 8
    LOCAL get_1   := hb_SToD()
-   LOCAL get_2   := PadR( "Pritpal Bedi", 35 )
-   LOCAL get_3   := PadR( "60, New Professor Colony", 35 )
-   LOCAL get_4   := PadR( "Ludhiana, INDIA", 35 )
-   LOCAL get_5   := PadR( hb_Version( HB_VERSION_URL_BASE ), 35 )
+   LOCAL get_2   := PadR("Pritpal Bedi", 35)
+   LOCAL get_3   := PadR("60, New Professor Colony", 35)
+   LOCAL get_4   := PadR("Ludhiana, INDIA", 35)
+   LOCAL get_5   := PadR(hb_Version(HB_VERSION_URL_BASE), 35)
    LOCAL get_6   := 20000
    LOCAL nCursor := SetCursor( SC_NORMAL )
 
@@ -437,9 +437,9 @@ STATIC PROCEDURE DEMO_Browse()
    ResetMiscObjects( nCurWindow )
    wvwm_ResetMouseObjects( nCurWindow )
 
-   cColor := SetColor( "N/W" )
+   cColor := SetColor("N/W")
    CLS
-   SetColor( "N/W*,N/GR*,,,N/W*" )
+   SetColor("N/W*,N/GR*,,,N/W*")
 
    IF !hbtest_Table()
       wvw_lCloseWindow()
@@ -577,7 +577,7 @@ STATIC PROCEDURE DEMO_Browse()
 
    wvw_SetPen(0)
 
-   SetColor( cColor )
+   SetColor(cColor)
 
    RETURN
 
@@ -697,7 +697,7 @@ STATIC PROCEDURE HXBscroller( oBrowse, nWinNum, XBid, XBmsg )
    0 <= nPage <= ( nMax - nMin + 1 )
    nPage :: pagesize
 
-   nMin <= nPos <= ( nMax - Max( nPage - 1, 0 ) )
+   nMin <= nPos <= ( nMax - Max(nPage - 1, 0) )
  */
 STATIC PROCEDURE RefreshVXB(oBrowse, nWinNum, XBid)
 
@@ -955,8 +955,8 @@ STATIC FUNCTION nAfterInkey(nKey)
    ELSEIF AScan( { K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE, K_MMLEFTDOWN, K_LDBLCLK }, nKeyStd ) > 0
       // MouseEvent
       RETURN wvwm_nMouseChecker( nkey )
-   ELSEIF ( bAction := SetKey( nKey ) ) != NIL .OR. ;
-          ( bAction := SetKey( nKeyStd ) ) != NIL
+   ELSEIF ( bAction := SetKey(nKey) ) != NIL .OR. ;
+          ( bAction := SetKey(nKeyStd) ) != NIL
       Eval( bAction, ProcName(), ProcLine(), ReadVar() )
       RETURN 0
    ENDIF
@@ -1048,7 +1048,7 @@ STATIC FUNCTION lDebug( cMsg )
 
 STATIC PROCEDURE xDebugInfo()
 
-   MSetPos( MaxRow(), MaxCol() )
+   MSetPos(MaxRow(), MaxCol())
 
 #if 0
    SetMouse( .T., MaxRow(), MaxCol() )
@@ -1111,16 +1111,16 @@ STATIC FUNCTION SetDefaultWindowSize()
 
    LOCAL Result, ScreenWidth
 
-   SetMode( 25, 80 )
+   SetMode(25, 80)
 
    screenWidth := wvw_GetScreenWidth()
    DO CASE
    CASE screenWidth >= 1024
-      Result := wvw_SetFont( , "Terminal", 20, 10 )
+      Result := wvw_SetFont(, "Terminal", 20, 10)
    CASE screenWidth >= 800
-      Result := wvw_SetFont( , IIf(hb_osIsWinNT(), "Lucida Console", "System"), 16, -8 )
+      Result := wvw_SetFont(, IIf(hb_osIsWinNT(), "Lucida Console", "System"), 16, -8)
    OTHERWISE
-      Result := wvw_SetFont( , "Terminal", 12, 6 )
+      Result := wvw_SetFont(, "Terminal", 12, 6)
    ENDCASE
 
    IF Result
@@ -1235,7 +1235,7 @@ CREATE CLASS WVWMouseButton STATIC
 
 #if 0
    METHOD nGetId() INLINE ::nId            /* TODO */
-   METHOD SetHotKey( nKey )                /* TODO */
+   METHOD SetHotKey(nKey)                /* TODO */
    METHOD nGetHotKey() INLINE ::nHotKey    /* TODO */
 #endif
 
@@ -1265,12 +1265,12 @@ ENDCLASS
 
 METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWinId )
 
-   hb_default( @cCaption, "" )  // 2004-03-25, was: "Button"
+   hb_default(@cCaption, "")  // 2004-03-25, was: "Button"
 
-   hb_default( @nRow1, 0 )
-   hb_default( @nCol1, 0 )
-   hb_default( @nRow2, nRow1 )
-   hb_default( @nCol2, nCol1 + Max( 10, Len(cCaption) + 2 ) - 1 )
+   hb_default(@nRow1, 0)
+   hb_default(@nCol1, 0)
+   hb_default(@nRow2, nRow1)
+   hb_default(@nCol2, nCol1 + Max(10, Len(cCaption) + 2) - 1)
 
 #if 0  // TODO
    ::nId := IIf(Empty(s_amouseobjlist), 1, ATail( s_amouseobjlist ):nGetId() + 1)
@@ -1283,7 +1283,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::nRow2 := nRow2
    ::nCol2 := nCol2
 
-   ::bClickBlock    := IIf(HB_IsEvalItem( bClickBlock ), bClickBlock, NIL)
+   ::bClickBlock    := IIf(HB_IsEvalItem(bClickBlock), bClickBlock, NIL)
    ::bPressBlock    := NIL
 
    ::lRepeatPress   := .F.
@@ -1361,7 +1361,7 @@ METHOD WVWMouseButton:OnPress()
       wvwm_SetKeyRepeater(.T.)  // activate key repeater
    ENDIF
 
-   IF HB_IsEvalItem( ::bPressBlock )
+   IF HB_IsEvalItem(::bPressBlock)
       Eval( ::bPressBlock )
    ENDIF
 
@@ -1375,7 +1375,7 @@ METHOD WVWMouseButton:OnClick()
       RETURN Self
    ENDIF
 
-   IF HB_IsEvalItem( ::bClickBlock )
+   IF HB_IsEvalItem(::bClickBlock)
       Eval( ::bClickBlock )
    ENDIF
 
@@ -1460,7 +1460,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    LOCAL lPressed := ::lPressed .AND. lMouseOver
    LOCAL aFontInfo := IIf(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
    LOCAL nLabelColor := IIf(lPressed, WIN_RGB(96, 96, 96), WIN_RGB(0, 0, 0))
-   LOCAL lUseImage := HB_IsString( ::cImage )  // 2004-03-25
+   LOCAL lUseImage := HB_IsString(::cImage)  // 2004-03-25
 
    IF !::lVisible .OR. ::nType == _BUTTON_NONE
       SetCursor( nOldCursor )  // 2004-03-03
@@ -1472,14 +1472,14 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       RETURN Self
    ENDIF
 
-   hb_default( @nWinNum, ::nWinId )
+   hb_default(@nWinNum, ::nWinId)
 
    IF lPressed  // ::lPressed
       IF ::nType != _BUTTON_HARD
          wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, win_CreateBrush( WIN_BS_HATCHED,, WIN_HS_FDIAGONAL ), ::lTight, .T. )
          wvw_DrawBoxRecessed(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)  // wvw
       ELSE
-         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
+         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor(hb_ColorToN( ::cNormalColor )), ::lTight )
          wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ENDIF
 
@@ -1490,11 +1490,11 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
-         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor( hb_ColorToN( ::cNormalColor ) ), ::lTight )
+         wvw_FillRectangle(   nWinNum, ::nrow1, ::nCol1, ::nrow2, ::nCol2, wvw_GetRGBColor(hb_ColorToN( ::cNormalColor )), ::lTight )
          wvw_DrawBoxRaised(nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::lTight)
       ELSE
          // must undraw the box. ideally GTWVW has this function
@@ -1514,7 +1514,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -1556,7 +1556,7 @@ STATIC FUNCTION wvwm_SetKeyRepeater( lSet )
    // if lSet is supplied, KeyRepeater is enable/disable accordingly
    LOCAL lWasSet := ( s_nkeyrepeater != NIL )
 
-   IF HB_IsLogical( lSet )
+   IF HB_IsLogical(lSet)
       IF lSet
          IF !lWasSet
             s_nkeyrepeater := hb_idleAdd({|| xKeyRepeater() })

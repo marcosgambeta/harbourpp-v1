@@ -66,7 +66,7 @@ ENDCLASS
 
 METHOD TIPLog:New( cFileName )
 
-   hb_default( @cFileName, "hbtip" )
+   hb_default(@cFileName, "hbtip")
 
    IF Set( _SET_DEFEXTENSIONS )
       cFileName := hb_FNameExtSetDef( cFileName, ".log" )

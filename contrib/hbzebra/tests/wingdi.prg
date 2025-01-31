@@ -28,21 +28,20 @@ PROCEDURE Main()
 
          IF wapi_StartPage( hDC ) > 0
 
-            hOBJECT := wapi_CreateFont( ;
-               96, ;
-               42, ;
-               NIL, ;
-               NIL, ;
-               WIN_FW_NORMAL, ;
-               .F., ;
-               .F., ;
-               NIL, ;
-               WIN_ANSI_CHARSET, ;
-               NIL, ;
-               NIL, ;
-               NIL, ;
-               NIL, ;
-               "Arial" )
+            hOBJECT := wapi_CreateFont(96,               ;
+                                       42,               ;
+                                       NIL,              ;
+                                       NIL,              ;
+                                       WIN_FW_NORMAL,    ;
+                                       .F.,              ;
+                                       .F.,              ;
+                                       NIL,              ;
+                                       WIN_ANSI_CHARSET, ;
+                                       NIL,              ;
+                                       NIL,              ;
+                                       NIL,              ;
+                                       NIL,              ;
+                                       "Arial")
 
             wapi_SelectObject( hDC, hOBJECT )
 

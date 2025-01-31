@@ -254,7 +254,7 @@ FUNCTION hb_LogRddLogFileName( cFileName )
 
       cOldFileName := aRDDData[ ARRAY_FILENAME ]
 
-      IF HB_IsString( cFileName )
+      IF HB_IsString(cFileName)
          aRDDData[ ARRAY_FILENAME ] := cFileName
       ENDIF
    ENDIF
@@ -272,7 +272,7 @@ FUNCTION hb_LogRddTag( cTag )
 
       cOldTag := aRDDData[ ARRAY_TAG ]
 
-      IF HB_IsString( cTag )
+      IF HB_IsString(cTag)
          aRDDData[ ARRAY_TAG ] := cTag
       ENDIF
    ENDIF
@@ -290,7 +290,7 @@ FUNCTION hb_LogRddActive( lActive )
 
       lOldActive := aRDDData[ ARRAY_ACTIVE ]
 
-      IF HB_IsLogical( lActive )
+      IF HB_IsLogical(lActive)
          aRDDData[ ARRAY_ACTIVE ] := lActive
       ENDIF
    ENDIF
@@ -308,7 +308,7 @@ FUNCTION hb_LogRddMsgLogBlock( bMsgLogBlock )
 
       bOldMsgLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
 
-      IF HB_IsEvalItem( bMsgLogBlock )
+      IF HB_IsEvalItem(bMsgLogBlock)
          aRDDData[ ARRAY_MSGLOGBLOCK ] := bMsgLogBlock
       ENDIF
    ENDIF
@@ -326,7 +326,7 @@ FUNCTION hb_LogRddUserLogBlock( bUserLogBlock )
 
       bOldUserLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
 
-      IF HB_IsEvalItem( bUserLogBlock )
+      IF HB_IsEvalItem(bUserLogBlock)
          aRDDData[ ARRAY_USERLOGBLOCK ] := bUserLogBlock
       ENDIF
    ENDIF
@@ -412,7 +412,7 @@ STATIC FUNCTION ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
    CASE "PUTVALUE"
       // Parameters received: xPar1: nField, xPar2: xValue, xPar3: xOldValue
       HB_SYMBOL_UNUSED(xPar3) // Here don't log previous value
-      RETURN Alias() + "(" + hb_ntos( RecNo() ) + ")->" + PadR( FieldName( xPar1 ), 10 ) + " := " + hb_LogRddValueToText( xPar2 )
+      RETURN Alias() + "(" + hb_ntos( RecNo() ) + ")->" + PadR(FieldName( xPar1 ), 10) + " := " + hb_LogRddValueToText( xPar2 )
    CASE "ZAP"
       // Parameters received: none
       RETURN 'Alias: "' + Alias() + ' Table: "' + dbInfo( DBI_FULLPATH ) + '"'
@@ -435,7 +435,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
       bUserLogBlock := aRDDData[ ARRAY_USERLOGBLOCK ]
 
       // If not defined a User codeblock
-      IF !HB_IsEvalItem( bUserLogBlock )
+      IF !HB_IsEvalItem(bUserLogBlock)
 
          hFile := aRDDData[ ARRAY_FHANDLE ]
 
@@ -450,13 +450,13 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
 
             // If defined a codeblock I send to user infos and he has to return a formatted string
             // Look at local ToString() function for details
-            IF HB_IsEvalItem( bMsgLogBlock )
+            IF HB_IsEvalItem(bMsgLogBlock)
                cLog := Eval( bMsgLogBlock, cTag, cRDDName, cCmd, nWA, xPar1, xPar2, xPar3 )
             ELSE
-               cLog := DToS( Date() ) + " " + Time() + " " + cTag + ": " + PadR( cRDDName + "_" + cCmd, 20 ) + " - " + ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
+               cLog := DToS( Date() ) + " " + Time() + " " + cTag + ": " + PadR(cRDDName + "_" + cCmd, 20) + " - " + ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
             ENDIF
             // Log to file only if cLog is a valid string
-            IF HB_IsString( cLog )
+            IF HB_IsString(cLog)
                FWrite( hFile, cLog + hb_eol() )
             ENDIF
          ENDIF

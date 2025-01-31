@@ -58,7 +58,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    LOCAL nCursor    := SetCursor( SC_NONE )
    LOCAL nRow       := Row()
    LOCAL nCol       := Col()
-   LOCAL cColor     := SetColor( "N/W*,N/GR*,,,N/W*" )
+   LOCAL cColor     := SetColor("N/W*,N/GR*,,,N/W*")
    LOCAL aObjects   := WvtSetObjects( {} )
    LOCAL hPopup     := wvt_SetPopupMenu()
    LOCAL oVBar, oHBar, oCom, oTre, oChk, oSLE, oLBx, aNvg, oIdx
@@ -69,14 +69,14 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    THREAD STATIC t_lActiveX := .F.
 
    IF oCrt == NIL
-      cScr := SaveScreen( 0, 0, MaxRow(), MaxCol() )
+      cScr := SaveScreen(0, 0, MaxRow(), MaxCol())
    ENDIF
 
    BrwBuildMenu( oCrt )
    oTBar := BrwBuildToolBar( oCrt )
    oTBar:buttonClick := {| oBtn | Vou_ExecTBarAction( oBtn ) }
 
-   SetMode( MaxRow() + 1, MaxCol() + 1 )  // Necessary because adding menu has reduced the overall size of window
+   SetMode(MaxRow() + 1, MaxCol() + 1)  // Necessary because adding menu has reduced the overall size of window
 
    pGT := SetGT( 2, hb_gtSelect() )
 
@@ -180,7 +180,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
       CASE nKey == K_F4
          hb_gtInfo( HB_GTI_SPEC, HB_GTS_WNDSTATE, HB_GTS_WS_MAXIMIZED )
 
-      CASE BrwHandleKey( oBrowse, nKey, @lEnd )
+      CASE BrwHandleKey(oBrowse, nKey, @lEnd)
 
       CASE nKey == HB_K_RESIZE
          BrwHandleResize( oCrt, oBrowse, oVBar, oHBar, oCom, oSLE, oLBx, oTre, oChk, aNvg, oIdx, t_lActiveX )
@@ -192,14 +192,14 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    WvtSetBlocks( aLastPaint )
    WvtSetObjects( aObjects )
 
-   DevPos( nRow, nCol )
-   SetColor( cColor )
+   DevPos(nRow, nCol)
+   SetColor(cColor)
    SetCursor( nCursor )
 
    dbCloseArea()
 
    IF oCrt == NIL
-      RestScreen( 0, 0, MaxRow(), MaxCol(), cScr )
+      RestScreen(0, 0, MaxRow(), MaxCol(), cScr)
    ENDIF
    wvt_SetPopupMenu( hPopup )
    SetGT( 2, pGT )
@@ -357,7 +357,7 @@ STATIC FUNCTION BrwBuildListBoxIdx( oCrt, oBrw )
    LOCAL oXbp, i, cKey, aIdx := {}
 
    FOR i := 1 TO 10
-      IF ( cKey := IndexKey( i ) ) == ""
+      IF ( cKey := IndexKey(i) ) == ""
          EXIT
       ENDIF
       AAdd(aIdx, ordName( i ) + ": " + cKey)
@@ -588,7 +588,7 @@ STATIC FUNCTION BrwBuildToolBar( oCrt )
 
 // Key Handling
 
-STATIC FUNCTION BrwHandleKey( oBrowse, nKey, lEnd )
+STATIC FUNCTION BrwHandleKey(oBrowse, nKey, lEnd)
 
    LOCAL lVMove := .F.
    LOCAL lHMove := .F.
@@ -943,8 +943,8 @@ STATIC FUNCTION BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey )
       ENDIF
       oBrowse:forceStable()
 
-      oWvtBrw:oVBar:SetPos( ordKeyCount(), ordKeyNo() )
-      oWvtBrw:oHBar:SetPos( oBrowse:ColCount, oBrowse:ColPos )
+      oWvtBrw:oVBar:SetPos(ordKeyCount(), ordKeyNo())
+      oWvtBrw:oHBar:SetPos(oBrowse:ColCount, oBrowse:ColPos)
    ENDIF
 
    RETURN lRet

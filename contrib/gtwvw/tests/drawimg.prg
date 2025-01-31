@@ -92,13 +92,13 @@ PROCEDURE Main()
 
    nMaxCache := wvw_SetMaxBMCache()
 
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
    wvw_SetCodepage( , 255 )
    wg_ResetWPaintObj(0)
    DO WHILE .T.
       CLS
       SetCursor( SC_NORMAL )
-      cpict := PadR( cpict, 40 )
+      cpict := PadR(cpict, 40)
       @ 0, 0 SAY "FileName  :" GET cpict PICT "@K" VALID hb_FileExists( AllTrim(cpict) )
       @ 1, 0 SAY "Transpar? :" GET ltransp PICT "Y"
       @ 2, 0 SAY "Max Cache :" GET nMaxCache PICT "999"
@@ -193,8 +193,8 @@ ENDCLASS
 
 METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp )
 
-   hb_default( @aOffTLBR, { 0, 0, 0, 0 } )
-   hb_default( @lTransp, .F. )
+   hb_default(@aOffTLBR, {0, 0, 0, 0})
+   hb_default(@lTransp, .F.)
 
    ::nWinNum := nWinNum
    ::lVisible := .T.
@@ -250,15 +250,15 @@ METHOD wPaintObj:Undraw()
       nRow2 := ::nRow2
       nCol2 := ::nCol2
    OTHERWISE
-      nRow1 := Max( ::nRow1 - 1, 0 )
-      nCol1 := Max( ::nCol1 - 1, 0 )
-      nRow2 := Min( ::nRow2 + 1, nMaxRow )
-      nCol2 := Min( ::nCol2 + 1, nMaxCol )
+      nRow1 := Max(::nRow1 - 1, 0)
+      nCol1 := Max(::nCol1 - 1, 0)
+      nRow2 := Min(::nRow2 + 1, nMaxRow)
+      nCol2 := Min(::nCol2 + 1, nMaxCol)
    ENDCASE
 
-   cScreen := SaveScreen( nRow1, nCol1, nRow2, nCol2 )
+   cScreen := SaveScreen(nRow1, nCol1, nRow2, nCol2)
    DispBegin()
-   RestScreen( nRow1, nCol1, nRow2, nCol2, cScreen )
+   RestScreen(nRow1, nCol1, nRow2, nCol2, cScreen)
    DispEnd()
 
    RETURN NIL // undraw()
@@ -285,8 +285,8 @@ METHOD wPaintObj:Show()
 // if nObjNum specified, clears object >= nObjNum
 FUNCTION wg_ResetWPaintObj( nWinNum, nObjNum, lStrict )
 
-   hb_default( @nObjNum, 0 )
-   hb_default( @lStrict, .F. )
+   hb_default(@nObjNum, 0)
+   hb_default(@lStrict, .F.)
 
    DO WHILE Len(s_aPObjList) < nWinNum + 1
       AAdd(s_aPObjList, {})
@@ -302,8 +302,8 @@ FUNCTION wg_AddWPaintObj( nWinNum, oWPaint, lStrict, nOperation )
 
    LOCAL i
 
-   hb_default( @lStrict, .F. )
-   hb_default( @nOperation, WOBJ_ADD_OVERWRITE )
+   hb_default(@lStrict, .F.)
+   hb_default(@nOperation, WOBJ_ADD_OVERWRITE)
 
    // simplified:
    nOperation := WOBJ_ADD_OVERWRITE
@@ -347,7 +347,7 @@ FUNCTION wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
    LOCAL nDeleted := 0
    LOCAL nLen
 
-   hb_default( @lStrict, .F. )
+   hb_default(@lStrict, .F.)
 
    // is nType set?
    IF nType < 1

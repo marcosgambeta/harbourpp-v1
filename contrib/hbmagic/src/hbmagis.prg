@@ -52,7 +52,7 @@ FUNCTION hb_magic_simple( cFileName, nFlags )
 
    LOCAL hMagic
 
-   hb_default( @nFlags, MAGIC_MIME_TYPE )
+   hb_default(@nFlags, MAGIC_MIME_TYPE)
 
    hMagic := magic_open( nFlags )
    IF Empty(hMagic) .OR.;

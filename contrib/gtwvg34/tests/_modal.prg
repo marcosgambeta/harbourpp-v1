@@ -20,7 +20,7 @@ FUNCTION MyAlert( cMsg, aOpt )
    oCrt:create()
    oCrt:resizable := .T.
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
    hb_gtInfo( HB_GTI_WINTITLE, cMsg )
 
@@ -72,25 +72,25 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    LOCAL pal_    := { "w+/n", "w/r", "n/w", "n/bg", "r/bg", "N/W", "n/B", "w+/B" }
    LOCAL aTrg_, x_ := {}
 
-   hb_default( @cCaption, "Your Attention Please!" )
-   hb_default( @sel     , 1 )
-   hb_default( @nTime   , 10 )
+   hb_default(@cCaption, "Your Attention Please!")
+   hb_default(@sel, 1)
+   hb_default(@nTime, 10)
 
    IF nTime == 0
       nTime := 10000   //  Seconds
    ENDIF
 
-   IF HB_IsString( aText_ )
+   IF HB_IsString(aText_)
       aText_ := { aText_ }
    ENDIF
 
-   hb_default( @aText_, {} )
+   hb_default(@aText_, {})
 
-   IF HB_IsString( aButtons_ )
+   IF HB_IsString(aButtons_)
       aButtons_ := { aButtons_ }
    ENDIF
 
-   hb_default( @aButtons_, { "OK" } )
+   hb_default(@aButtons_, {"OK"})
 
    nLinesRqd := Len(aText_) + IIf(Len(aText_) == 0, 4, 5)
    nTopReq   := Int( ( maxRow - nLinesRqd ) / 2 )
@@ -102,7 +102,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    nColCap   := Len(cCaption) + 7  // " - " + "  " + cCaption + "  "
    nColTxt   := 0
    IF !Empty(aText_)
-      AEval( aText_, {| e | nColTxt := Max( nColTxt, Len(e) ) } )
+      AEval( aText_, {| e | nColTxt := Max(nColTxt, Len(e)) } )
    ENDIF
    nColTxt   += 6                   // for two spaces at both sides
    nColBut   := 0
@@ -110,7 +110,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    nColBut   += 3
 
    nColRqd   := 0
-   AEval( { nColCap, nColTxt, nColBut }, {| e | nColRqd := Max( nColRqd, e ) } )
+   AEval( { nColCap, nColTxt, nColBut }, {| e | nColRqd := Max(nColRqd, e) } )
 
    nLeft     := IIf(maxCol > nColRqd, Int( ( maxCol - nColRqd ) / 2 ), 0)
    nRight    := nLeft + nColRqd
@@ -139,15 +139,15 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    ENDIF
 
    SetCursor( SC_NONE )
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
 
    DispBegin()
-   SetColor( pal_[ DLG_CLR_TEXT ] )
+   SetColor(pal_[ DLG_CLR_TEXT ])
 
    wvg_BoxRaised(nTop, nLeft, nBottom, nRight)
 
-   SetColor( pal_[ DLG_CLR_TEXT ] )
+   SetColor(pal_[ DLG_CLR_TEXT ])
    IF !Empty(aText_)
       FOR i := 1 TO Len(aText_)
          @ nTop + 1 + i, nLeft SAY PadC(aText_[ i ], nRight - nLeft + 1)
@@ -156,18 +156,18 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
 
    // display buttons
    FOR i := 1 TO Len(aButtons_)
-      SetColor( pal_[ DLG_CLR_BTN ] )
+      SetColor(pal_[ DLG_CLR_BTN ])
       @ nBtnRow, nBtnCol_[ i ] SAY "  " + aButtons_[ i ] + "  "
-      SetColor( pal_[ DLG_CLR_TRG ] )
+      SetColor(pal_[ DLG_CLR_TRG ])
       @ nBtnRow, nBtnCol_[ i ] + 2 SAY Left(aButtons_[ i ], 1)
 
       AAdd(x_, { nBtnRow, nBtnCol_[ i ], nBtnRow, nBtnCol_[ i ] + Len(aButtons_[ i ]) + 3 })
    NEXT
 
-   SetColor( pal_[ DLG_CLR_HILITE ] )
+   SetColor(pal_[ DLG_CLR_HILITE ])
    @ nBtnRow, nBtnCol_[ sel ] SAY "  " + aButtons_[ sel ] + "  "
 
-   SetColor( pal_[ DLG_CLR_HISEL ] )
+   SetColor(pal_[ DLG_CLR_HISEL ])
    @ nBtnRow, nBtnCol_[ sel ] + 2 SAY Left(aButtons_[ sel ], 1)
 
    AEval( x_, {| e_ | wvg_BoxRaised(e_[ 1 ], e_[ 2 ], e_[ 3 ], e_[ 4 ]) } )
@@ -220,10 +220,10 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
       CASE ( nTrg := hb_AScan( aTrg_, Upper(hb_keyChar( nKey )), , , .T. ) ) > 0
          sel := nTrg
          lGo := .F.
-      CASE SetKey( nKey ) != NIL
-         Eval( SetKey( nKey ) )
-      CASE SetKey( nKeyStd ) != NIL
-         Eval( SetKey( nKeyStd ) )
+      CASE SetKey(nKey) != NIL
+         Eval( SetKey(nKey) )
+      CASE SetKey(nKeyStd) != NIL
+         Eval( SetKey(nKeyStd) )
       ENDCASE
 
       IF sel > Len(aButtons_)
@@ -234,15 +234,15 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
 
       DispBegin()
       FOR i := 1 TO Len(aButtons_)
-         SetColor( pal_[ DLG_CLR_BTN ] )
+         SetColor(pal_[ DLG_CLR_BTN ])
          @ nBtnRow, nBtnCol_[ i ] SAY "  " + aButtons_[ i ] + "  "
-         SetColor( pal_[ DLG_CLR_TRG ] )
+         SetColor(pal_[ DLG_CLR_TRG ])
          @ nBtnRow, nBtnCol_[ i ] + 2 SAY Left(aButtons_[ i ], 1)
       NEXT
       IF sel > 0
-         SetColor( pal_[ DLG_CLR_HILITE ] )
+         SetColor(pal_[ DLG_CLR_HILITE ])
          @ nBtnRow, nBtnCol_[ sel ] SAY "  " + aButtons_[ sel ] + "  "
-         SetColor( pal_[ DLG_CLR_HISEL ] )
+         SetColor(pal_[ DLG_CLR_HISEL ])
          @ nBtnRow, nBtnCol_[ sel ] + 2 SAY Left(aButtons_[ sel ], 1)
       ENDIF
 
@@ -270,7 +270,7 @@ STATIC FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHi
    IF HB_IsNumeric(xIcon)
       hb_gtInfo( HB_GTI_ICONRES, xIcon )
    ELSE
-      hb_default( @xIcon, "VW_DFT" )
+      hb_default(@xIcon, "VW_DFT")
       IF ".bmp" $ Lower(xIcon)
          xIcon := "VW_DFT"
       ENDIF
@@ -279,7 +279,7 @@ STATIC FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHi
 
    hb_gtInfo( HB_GTI_WINTITLE, hb_defaultValue( cTitle, "Info" ) )
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
 
    RETURN oCrt
@@ -310,7 +310,7 @@ PROCEDURE DoModalWindow()
    pGT := SetGT( 3, hb_gtSelect() )
 
    // Here goes the Cl*pper Code
-   SetColor( "N/W" )
+   SetColor("N/W")
    CLS
    DO WHILE .T.
       nSel := Just_Alert( "I am in modal window !;< Try: MMove LBUp RBUp >;Click Parent Window", { "OK" } )

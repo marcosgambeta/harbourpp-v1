@@ -220,7 +220,7 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_IsEvalItem( ::sl_resize )
+      IF HB_IsEvalItem(::sl_resize)
          Eval( ::sl_resize, , , Self )
       ENDIF
       AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )
@@ -228,7 +228,7 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
          RETURN wvg_GetCurrentBrush( aNM[ 1 ] )

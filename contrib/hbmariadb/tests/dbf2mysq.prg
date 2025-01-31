@@ -158,9 +158,9 @@ PROCEDURE Main(...)
 
       dbffile->( dbSkip() )
 
-      DevPos( Row(), 1 )
+      DevPos(Row(), 1)
       IF ( dbffile->( RecNo() ) % 100 ) == 0
-         DevOut( "imported recs: " + hb_ntos( dbffile->( RecNo() ) ) )
+         DevOut("imported recs: " + hb_ntos( dbffile->( RecNo() ) ))
       ENDIF
    ENDDO
 

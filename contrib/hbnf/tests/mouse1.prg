@@ -9,7 +9,7 @@
 PROCEDURE Main( nRow, nCol )
 
    LOCAL nX, nY, cSavClr
-   LOCAL cSavScr := SaveScreen( 0, 0, MaxRow(), MaxCol() )
+   LOCAL cSavScr := SaveScreen(0, 0, MaxRow(), MaxCol())
    LOCAL nSaveRow := MaxRow() + 1, nSaveCol := MaxCol() + 1
    LOCAL nMinor, nType, nIRQ
    LOCAL aType := { "Bus", "Serial", "InPort", "PS/2", "HP" }
@@ -27,7 +27,7 @@ PROCEDURE Main( nRow, nCol )
       nCol := Val( nCol )
    ENDIF
 
-   IF !SetMode( nRow, nCol )
+   IF !SetMode(nRow, nCol)
       @ MaxRow(), 0 SAY "Mode Change unsuccessful:" + Str( nRow, 2, 0 ) + " by";
          + Str( nCol, 3, 0 )
       RETURN
@@ -35,26 +35,26 @@ PROCEDURE Main( nRow, nCol )
 
    IF Empty(ft_MInit())
       @ MaxRow(), 0 SAY "Mouse driver is not installed!"
-      SetMode( nSaveRow, nSaveCol )
+      SetMode(nSaveRow, nSaveCol)
       RETURN
    ENDIF
 
    SET CURSOR OFF
 
    // ..... Set up the screen
-   cSavClr := SetColor( "w/n" )
+   cSavClr := SetColor("w/n")
    @ 0, 0, MaxRow(), MaxCol() BOX hb_UTF8ToStr( "░░░░░░░░░" )
 
-   SetColor( "GR+/RB" )
+   SetColor("GR+/RB")
    Scroll( 7, 2, 19, 63, 0 )
    @ 7, 2 TO 20, 63
 
    @ 17, 10 TO 19, 40 double
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    @ 18, 11 SAY "  Double Click here to Quit  "
 
-   SetColor( "GR+/RB" )
+   SetColor("GR+/RB")
 
    // ..... Start the demo
 
@@ -71,26 +71,26 @@ PROCEDURE Main( nRow, nCol )
 
    // put the unchanging stuff
 
-   DevPos( 9, 10 )
-   DevOut( "FT_MMICKEYS :" )
+   DevPos(9, 10)
+   DevOut("FT_MMICKEYS :")
 
-   DevPos( 10, 10 )
-   DevOut( "FT_MGETPOS  :" )
+   DevPos(10, 10)
+   DevOut("FT_MGETPOS  :")
 
-   DevPos( 11, 10 )
-   DevOut( "FT_MGETX    :" )
+   DevPos(11, 10)
+   DevOut("FT_MGETX    :")
 
-   DevPos( 12, 10 )
-   DevOut( "FT_MGETY    :" )
+   DevPos(12, 10)
+   DevOut("FT_MGETY    :")
 
-   DevPos( 13, 10 )
-   DevOut( "FT_MGETCOORD:" )
+   DevPos(13, 10)
+   DevOut("FT_MGETCOORD:")
 
-   DevPos( 14, 10 )
-   DevOut( "FT_MBUTPRS  :" )
+   DevPos(14, 10)
+   DevOut("FT_MBUTPRS  :")
 
-   DevPos( 16, 10 )
-   DevOut( "FT_MBUTREL  :" )
+   DevPos(16, 10)
+   DevOut("FT_MBUTREL  :")
 
    nX := nY := 1
    DO WHILE .T.
@@ -108,48 +108,48 @@ PROCEDURE Main( nRow, nCol )
 
       ft_MCOnOff( 9, 23, 16, 53 )
 
-      DevPos( 9, 23 )
-      DevOut( nX )
-      DevOut( nY )
+      DevPos(9, 23)
+      DevOut(nX)
+      DevOut(nY)
 
-      DevPos( 10, 23 )
-      DevOut( ft_MGetPos( @nX, @nY ) )
-      DevOut( nX )
-      DevOut( nY )
+      DevPos(10, 23)
+      DevOut(ft_MGetPos(@nX, @nY))
+      DevOut(nX)
+      DevOut(nY)
 
-      DevPos( 11, 23 )
-      DevOut( ft_MGetX() )
+      DevPos(11, 23)
+      DevOut(ft_MGetX())
 
-      DevPos( 12, 23 )
-      DevOut( ft_MGetY() )
+      DevPos(12, 23)
+      DevOut(ft_MGetY())
 
-      DevPos( 13, 23 )
-      DevOut( ft_MGetCoord( @nX, @nY ) )
-      DevOut( nX )
-      DevOut( nY )
+      DevPos(13, 23)
+      DevOut(ft_MGetCoord(@nX, @nY))
+      DevOut(nX)
+      DevOut(nY)
 
       nX := nY := 0
-      DevPos( 14, 23 )
-      DevOut( ft_MButPrs(1) )
-      DevOut( ft_MButPrs( 0,, nX, nY ) )
-      DevPos( 15, 23 )
+      DevPos(14, 23)
+      DevOut(ft_MButPrs(1))
+      DevOut(ft_MButPrs(0,, nX, nY))
+      DevPos(15, 23)
 
       // show only the last Press since it flashes by so quickly
 
       IF nX != 0 .OR. nY != 0
-         DevOut( nX )
-         DevOut( nY )
+         DevOut(nX)
+         DevOut(nY)
       ENDIF
 
       nX := nY := 0
-      DevPos( 16, 23 )
-      DevOut( ft_MButRel( 0,, @nX, @nY ) )
+      DevPos(16, 23)
+      DevOut(ft_MButRel(0,, @nX, @nY))
 
       // show only the last release since it flashes by so quickly
 
       IF nX != 0 .OR. nY != 0
-         DevOut( nX )
-         DevOut( nY )
+         DevOut(nX)
+         DevOut(nY)
       ENDIF
 
       // Restore the cursor if it has been hidden
@@ -185,10 +185,10 @@ PROCEDURE Main( nRow, nCol )
 
    ft_MHideCrs()
 
-   SetMode( nSaveRow, nSaveCol )
-   SetColor( cSavClr )
-   RestScreen( 0, 0, MaxRow(), MaxCol(), cSavScr )
-   DevPos( MaxRow(), 0 )
+   SetMode(nSaveRow, nSaveCol)
+   SetColor(cSavClr)
+   RestScreen(0, 0, MaxRow(), MaxCol(), cSavScr)
+   DevPos(MaxRow(), 0)
 
    // Reset sensitivity
 

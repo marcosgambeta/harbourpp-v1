@@ -111,7 +111,7 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
    METHOD itemSelected(xParam)                  SETGET
    METHOD drawItem( xParam )                    SETGET
    METHOD measureItem( xParam )                 SETGET
-   METHOD onMenuKey( xParam )                   SETGET
+   METHOD onMenuKey(xParam)                   SETGET
 
    PROTECTED:
    METHOD putItem( aItem, nPos, lInsert )
@@ -234,7 +234,7 @@ METHOD WvgMenuBar:addItem( aItem, p2, p3, p4 )
 
    LOCAL xCaption, bAction, nStyle, nAttrib
 
-   IF PCount() == 1 .AND. HB_IsArray( aItem )
+   IF PCount() == 1 .AND. HB_IsArray(aItem)
       ASize( aItem, 4 )
       xCaption := aItem[ 1 ]
       bAction  := aItem[ 2 ]
@@ -291,7 +291,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
       wapi_AppendMenu( ::hMenu, ;
          aItem[ 1 ], ;
          aItem[ 2 ], ;
-         IIf(HB_IsString( aItem[ 3 ] ), StrTran(aItem[ 3 ], "~", "&"), aItem[ 3 ]) )
+         IIf(HB_IsString(aItem[ 3 ]), StrTran(aItem[ 3 ], "~", "&"), aItem[ 3 ]) )
    ELSE
       nItemIndex := nPos
       IF hb_defaultValue( lInsert, .T. )
@@ -300,17 +300,17 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
             nItemIndex - 1, ;
             aItem[ 1 ] + WIN_MF_BYPOSITION, ;
             aItem[ 2 ], ;
-            IIf(HB_IsString( aItem[ 3 ] ), StrTran(aItem[ 3 ], "~", "&"), aItem[ 3 ]) )
+            IIf(HB_IsString(aItem[ 3 ]), StrTran(aItem[ 3 ], "~", "&"), aItem[ 3 ]) )
       ELSE
-         IF HB_IsString( xCaption )
+         IF HB_IsString(xCaption)
             aItem[ 2 ] := ::aMenuItems[ nItemIndex ][ 2 ]
          ENDIF
          ::aMenuItems[ nItemIndex ] := aItem
          wvg_SetMenuItem( ::hMenu, ;
             nItemIndex - 1, ;
             aItem[ 2 ], ;
-            IIf(HB_IsString( aItem[ 3 ] ), StrTran(aItem[ 3 ], "~", "&"), aItem[ 3 ]), ;
-            HB_IsString( xCaption ) )
+            IIf(HB_IsString(aItem[ 3 ]), StrTran(aItem[ 3 ], "~", "&"), aItem[ 3 ]), ;
+            HB_IsString(xCaption) )
       ENDIF
    ENDIF
 
@@ -428,7 +428,7 @@ METHOD WvgMenuBar:setItem( nItemNum, aItem )
 
 METHOD WvgMenuBar:beginMenu( xParam )
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_beginMenu := xParam
       RETURN NIL
    ENDIF
@@ -437,7 +437,7 @@ METHOD WvgMenuBar:beginMenu( xParam )
 
 METHOD WvgMenuBar:endMenu( xParam )
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_endMenu := xParam
       RETURN NIL
    ENDIF
@@ -446,7 +446,7 @@ METHOD WvgMenuBar:endMenu( xParam )
 
 METHOD WvgMenuBar:itemMarked(xParam)
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_itemMarked := xParam
       RETURN NIL
    ENDIF
@@ -455,7 +455,7 @@ METHOD WvgMenuBar:itemMarked(xParam)
 
 METHOD WvgMenuBar:itemSelected(xParam)
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_itemSelected := xParam
       RETURN NIL
    ENDIF
@@ -464,7 +464,7 @@ METHOD WvgMenuBar:itemSelected(xParam)
 
 METHOD WvgMenuBar:drawItem( xParam )
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_drawItem := xParam
       RETURN NIL
    ENDIF
@@ -473,16 +473,16 @@ METHOD WvgMenuBar:drawItem( xParam )
 
 METHOD WvgMenuBar:measureItem( xParam )
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_measureItem := xParam
       RETURN NIL
    ENDIF
 
    RETURN Self
 
-METHOD WvgMenuBar:onMenuKey( xParam )
+METHOD WvgMenuBar:onMenuKey(xParam)
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_onMenuKey := xParam
       RETURN NIL
    ENDIF

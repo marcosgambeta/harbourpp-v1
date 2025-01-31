@@ -39,7 +39,7 @@ MEMVAR __nCBid__, __temp__
       AAdd(s_aComboList, { __nCBid__, <"var"> });                        ;
       __temp__ := wvw_cbFindString( NIL, __nCBid__, <var> );             ;
       IIf(__temp__ >= 0, wvw_cbSetIndex( NIL, __nCBid__, __temp__ ), NIL);   ;
-      SetPos( <row>, <col> );                                              ;
+      SetPos(<row>, <col>);                                              ;
       AAdd(GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, )) ;   ;
       ATail( GetList ):cargo := __nCBid__;                                ;
       ATail( GetList ):reader := {| get | CBreader( get ) }
@@ -47,7 +47,7 @@ MEMVAR __nCBid__, __temp__
 PROCEDURE Main()
 
    LOCAL getlist := {}
-   LOCAL mname := PadR( "Budyanto Dj.", 30 ), msex := "MALE", mage := 17, mstat := "married"
+   LOCAL mname := PadR("Budyanto Dj.", 30), msex := "MALE", mage := 17, mstat := "married"
    LOCAL __nCBid__, __temp__  // these two are temporary var required by CB get creation
 
 #if defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
@@ -56,8 +56,8 @@ PROCEDURE Main()
 
    wvw_SetCodepage( NIL, 255 )
    wvw_SetLineSpacing( NIL, 4 )
-   wvw_SetLSpaceColor( NIL, 0 )
-   wvw_cbSetFont( NIL, "Arial", 14 )  // std: 20-2
+   wvw_SetLSpaceColor(NIL, 0)
+   wvw_cbSetFont(NIL, "Arial", 14)  // std: 20-2
 #if 0
    Set( _SET_TRACESTACK, 0 )
 
@@ -80,7 +80,7 @@ PROCEDURE Main()
    // disable all comboboxes:
    AEval( s_aComboList, {| x | wvw_cbEnable( NIL, x[ 1 ], .F. ) } )
 
-   DevPos( 5, 0 )
+   DevPos(5, 0)
    ? "name: '" + mname + "'"
    ? "sex : '" + msex + "'"
    ? "stat: '" + mstat + "'"
@@ -168,7 +168,7 @@ FUNCTION CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
              */
 
             SetWinFocus( nWinNum )
-            MSetPos( GetList[ i ]:row, GetList[ i ]:col + 1 )
+            MSetPos(GetList[ i ]:row, GetList[ i ]:col + 1)
             hb_keyPut( K_LBUTTONDOWN )
          ENDIF // oGet:HasFocus
 
@@ -247,8 +247,8 @@ FUNCTION CBreader( oGet )
          oGet:exitState := GE_NOEXIT
       ENDIF
 
-   ELSEIF HB_IsBlock( bKeyBlock := SetKey( nKey ) )
-      oGetList:GetDoSetKey( bKeyBlock )  // Eval(bKeyBlock)
+   ELSEIF HB_IsBlock(bKeyBlock := SetKey(nKey))
+      oGetList:GetDoSetKey(bKeyBlock)  // Eval(bKeyBlock)
       oGet:exitState := GE_NOEXIT
 
    ENDIF

@@ -104,7 +104,7 @@ FUNCTION tip_CheckSID( cSID, cCRCKey )
 
 FUNCTION tip_DateToGMT( tDate )
 
-   hb_default( @tDate, hb_DateTime() )
+   hb_default(@tDate, hb_DateTime())
 
    RETURN ;
       { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }[ DoW( tDate ) ] + ", " + ;

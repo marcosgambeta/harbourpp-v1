@@ -69,8 +69,8 @@ CREATE CLASS WvtLabel INHERIT WvtObject
    METHOD HoverOn()
    METHOD HoverOff()
    METHOD SetText( ctxt )
-   METHOD SetTextColor( nRGB )
-   METHOD SetBackColor( nRGB )
+   METHOD SetTextColor(nRGB)
+   METHOD SetBackColor(nRGB)
 
 ENDCLASS
 
@@ -91,8 +91,8 @@ METHOD WvtLabel:Create( lConfg )
    ::nTextColorHoverOff := ::nTextColor
    ::nBackColorHoverOff := ::nBackColor
 
-   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
-      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
+      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle)
    IF !Empty(::hFont)
       IF !lConfg
          ::bPaint := {|| wvt_DrawLabelObj( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
@@ -113,14 +113,14 @@ METHOD WvtLabel:Refresh()
 
 METHOD WvtLabel:SetText( cTxt )
 
-   IF HB_IsString( cTxt )
+   IF HB_IsString(cTxt)
       ::Text := cTxt
       ::Refresh()
    ENDIF
 
    RETURN Self
 
-METHOD WvtLabel:SetTextColor( nRGB )
+METHOD WvtLabel:SetTextColor(nRGB)
 
    IF HB_IsNumeric(nRGB)
       ::nTextColor := nRGB
@@ -130,7 +130,7 @@ METHOD WvtLabel:SetTextColor( nRGB )
 
    RETURN Self
 
-METHOD WvtLabel:SetBackColor( nRGB )
+METHOD WvtLabel:SetBackColor(nRGB)
 
    IF HB_IsNumeric(nRGB)
       ::nBackColor := nRGB
@@ -149,8 +149,8 @@ METHOD WvtLabel:Configure()
       wvg_DeleteObject( ::hFont )
    ENDIF
 
-   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
-      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
+      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle)
 
    RETURN Self
 

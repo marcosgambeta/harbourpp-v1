@@ -27,8 +27,8 @@ PROCEDURE Main( cValue, cBaseImage )
    LOCAL n, nValue
 
    // A value if not passed
-   hb_default( @cValue, Str( hb_RandomInt( 1, 10 ^ DISPLAY_NUM ), DISPLAY_NUM ) )
-   hb_default( @cBaseImage, "d57chevy.gif" )
+   hb_default(@cValue, Str(hb_RandomInt(1, 10 ^ DISPLAY_NUM), DISPLAY_NUM))
+   hb_default(@cBaseImage, "d57chevy.gif")
 
    IF !hb_FileExists( IMAGES_IN + cBaseImage )
       ? "ERROR: Base Image File '" + IMAGES_IN + cBaseImage + "' not found"
@@ -92,11 +92,11 @@ PROCEDURE Main( cValue, cBaseImage )
 
    /* Allocate drawing color */
 #if 0
-   black := oI:SetColor( 0, 0, 0 )
-   blue  := oI:SetColor( 0, 0, 255 )
-   red   := oI:SetColor( 255, 0, 0 )
-   green := oI:SetColor( 0, 255, 0 )
-   cyan  := oI:SetColor( 0, 255, 255 )
+   black := oI:SetColor(0, 0, 0)
+   blue  := oI:SetColor(0, 0, 255)
+   red   := oI:SetColor(255, 0, 0)
+   green := oI:SetColor(0, 255, 0)
+   cyan  := oI:SetColor(0, 255, 255)
 
    /* Draw rectangle */
    oI:Rectangle( 0, 0, 200, 30, , blue )

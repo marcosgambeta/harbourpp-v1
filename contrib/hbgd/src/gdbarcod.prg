@@ -428,12 +428,12 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
    LOCAL cBarCode   := ""
    LOCAL cConc      := ""
 
-   hb_default( @cModeCode, "B" )
+   hb_default(@cModeCode, "B")
 
    ::settext( cText )
 
    IF !Empty(cModeCode)
-      IF HB_IsString( cModeCode ) .AND. Upper(cModeCode) $ "ABC"
+      IF HB_IsString(cModeCode) .AND. Upper(cModeCode) $ "ABC"
          cModeCode := Upper(cModeCode)
       ELSE
          ::DrawError( "Code 128 Modes are A, B or C character values." )

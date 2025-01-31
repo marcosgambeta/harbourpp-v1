@@ -79,54 +79,54 @@ PROCEDURE Main( cCmdLine )
    SAVE SCREEN TO sDosScrn
    nDosRow := Row()
    nDosCol := Col()
-   SetColor( "w/n" )
+   SetColor("w/n")
    CLS
    NoSnow( "NOSNOW" $ Upper(cCmdLine) )
    IF "VGA" $ Upper(cCmdLine)
-      SetMode( 50, 80 )
+      SetMode(50, 80)
    ENDIF
    nMaxRow := MaxRow()
    SetBlink(.F.)
-   SetColor( cWindN + "*" )
+   SetColor(cWindN + "*")
    CLS
-   SetColor( cNormN )
+   SetColor(cNormN)
    @ nMaxRow, 0
    @ nMaxRow, 0 SAY hb_UTF8ToStr( " FT_MENU1 1.0 │ " )
    @ nMaxRow, 16 SAY "WRITTEN BY PAUL FERRARA [76702,556] FOR NANFORUM.LIB"
    @ nMaxRow, 69 SAY hb_UTF8ToStr( "│ " ) + DToC(Date())
 
-   SetColor( cErrH )
+   SetColor(cErrH)
    @ nMaxRow - 11, 23, nMaxRow - 3, 56 BOX hb_UTF8ToStr( "┌─┐│┘─└│ " )
    @ nMaxRow - 9, 23 SAY hb_UTF8ToStr( "├────────────────────────────────┤" )
-   SetColor( cErrN )
+   SetColor(cErrN)
    @ nMaxRow - 10, 33 SAY "Navigation Keys"
    @ nMaxRow - 8, 25 SAY "LeftArrow   RightArrow   Alt-E"
    @ nMaxRow - 7, 25 SAY "Home        End          Alt-R"
    @ nMaxRow - 6, 25 SAY "Tab         Shift-Tab    Alt-D"
    @ nMaxRow - 5, 25 SAY "PgUp        PgDn         Alt-M"
    @ nMaxRow - 4, 25 SAY "Enter       ESCape       Alt-Q"
-   SetColor( cNormN )
+   SetColor(cNormN)
 
    ft_Menu1( aBar, aOptions, aColors )
 
-   SetColor( "W/N" )
+   SetColor("W/N")
    SetCursor( SC_NORMAL )
    SetBlink(.T.)
    IF "VGA" $ Upper(cCmdLine)
-      SetMode( 25, 80 )
+      SetMode(25, 80)
    ENDIF
    RESTORE SCREEN FROM sDosScrn
-   SetPos( nDosRow, nDosCol )
+   SetPos(nDosRow, nDosCol)
 
    RETURN
 
 FUNCTION fubar()
 
-   LOCAL OldColor := SetColor( "W/N" )
+   LOCAL OldColor := SetColor("W/N")
 
    CLS
    QOut( "Press Any Key" )
    Inkey(0)
-   SetColor( OldColor )
+   SetColor(OldColor)
 
    RETURN .T.

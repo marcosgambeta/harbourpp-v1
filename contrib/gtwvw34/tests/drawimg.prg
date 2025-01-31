@@ -85,13 +85,13 @@ PROCEDURE Main()
 
    nMaxCache := wvw_SetMaxBMCache()
 
-   SetColor( "N/W,N/GR*,,,N/W*" )
+   SetColor("N/W,N/GR*,,,N/W*")
    wvw_SetCodepage( , 255 )
    wg_ResetWPaintObj(0)
    DO WHILE .T.
       CLS
       SetCursor( SC_NORMAL )
-      cpict := PadR( cpict, 256 )
+      cpict := PadR(cpict, 256)
       @ 0, 0 SAY "FileName  :" GET cpict PICTURE "@KS40" VALID hb_vfExists( RTrim(cpict) )
       @ 1, 0 SAY "Transpar? :" GET ltransp PICTURE "Y"
       @ 2, 0 SAY "Max Cache :" GET nMaxCache PICTURE "999"
@@ -207,7 +207,7 @@ METHOD PROCEDURE wPaintObj:Draw()
    IF ::lVisible
       DO CASE
       CASE ::nType == WPAINTOBJ_IMAGE
-         IF HB_IsString( ::cImage )
+         IF HB_IsString(::cImage)
             wvw_DrawImage( ::nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ;
                ::cImage, ::aOffTLBR, ::lTransp )
          ENDIF
@@ -237,15 +237,15 @@ METHOD PROCEDURE wPaintObj:Undraw()
       nRow2 := ::nRow2
       nCol2 := ::nCol2
    OTHERWISE
-      nRow1 := Max( ::nRow1 - 1, 0 )
-      nCol1 := Max( ::nCol1 - 1, 0 )
-      nRow2 := Min( ::nRow2 + 1, nMaxRow )
-      nCol2 := Min( ::nCol2 + 1, nMaxCol )
+      nRow1 := Max(::nRow1 - 1, 0)
+      nCol1 := Max(::nCol1 - 1, 0)
+      nRow2 := Min(::nRow2 + 1, nMaxRow)
+      nCol2 := Min(::nCol2 + 1, nMaxCol)
    ENDCASE
 
-   cScreen := SaveScreen( nRow1, nCol1, nRow2, nCol2 )
+   cScreen := SaveScreen(nRow1, nCol1, nRow2, nCol2)
    DispBegin()
-   RestScreen( nRow1, nCol1, nRow2, nCol2, cScreen )
+   RestScreen(nRow1, nCol1, nRow2, nCol2, cScreen)
    DispEnd()
 
    RETURN
@@ -315,7 +315,7 @@ STATIC PROCEDURE wg_AddWPaintObj( nWinNum, oWPaint, lStrict )
 STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
 
    LOCAL i
-   LOCAL lDelAll := ! HB_IsString( cId )
+   LOCAL lDelAll := ! HB_IsString(cId)
    LOCAL nLen
 
    // is nType set?

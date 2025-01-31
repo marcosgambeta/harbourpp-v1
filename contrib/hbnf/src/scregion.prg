@@ -33,12 +33,11 @@ FUNCTION ft_RstRgn(cScreen, nTop, nLeft)
          (nLeft - hb_BCode(hb_BSubStr(cScreen, 2, 1))) + hb_BCode(hb_BSubStr(cScreen, 4, 1)), ;
          hb_BSubStr(cScreen, 5))
    ELSE
-      RestScreen( ;
-         hb_BCode(hb_BSubStr(cScreen, 1, 1)), ;
-         hb_BCode(hb_BSubStr(cScreen, 2, 1)), ;
-         hb_BCode(hb_BSubStr(cScreen, 3, 1)), ;
-         hb_BCode(hb_BSubStr(cScreen, 4, 1)), ;
-         hb_BSubStr(cScreen, 5))
+      RestScreen(hb_BCode(hb_BSubStr(cScreen, 1, 1)), ;
+                 hb_BCode(hb_BSubStr(cScreen, 2, 1)), ;
+                 hb_BCode(hb_BSubStr(cScreen, 3, 1)), ;
+                 hb_BCode(hb_BSubStr(cScreen, 4, 1)), ;
+                 hb_BSubStr(cScreen, 5))
    ENDIF
 
    RETURN NIL

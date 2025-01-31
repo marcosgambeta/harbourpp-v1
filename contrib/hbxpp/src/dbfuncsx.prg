@@ -70,15 +70,15 @@ FUNCTION xpp_dbUseArea(lNewArea, cDriver, cName, xcAlias, lShared, lReadonly)
    LOCAL nOldArea
    LOCAL nArea
 
-   IF HB_IsLogical( lNewArea ) .AND. lNewArea
+   IF HB_IsLogical(lNewArea) .AND. lNewArea
 
-      hb_default( @xcAlias, "" )
+      hb_default(@xcAlias, "")
 
       IF Empty(xcAlias)
          xcAlias := cName
       ENDIF
 
-      IF HB_IsString( xcAlias )
+      IF HB_IsString(xcAlias)
          nOldArea := Select()
          IF ( nArea := Select( xcAlias ) ) > 0
             xcAlias += "_" + hb_ntos( nArea )

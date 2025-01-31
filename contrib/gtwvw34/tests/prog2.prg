@@ -32,12 +32,12 @@ PROCEDURE Main()
    nMaxRow := MaxRow()
    nMaxCol := MaxCol()
 
-   wvw_SetFont( , "Lucida Console", 16, -8 )
+   wvw_SetFont(, "Lucida Console", 16, -8)
    wvw_SetCodepage( , 255 )
    wvw_sbCreate()
 
    Set( _SET_SCOREBOARD, .F. )
-   SetColor( _STD_COLOR_ )
+   SetColor(_STD_COLOR_)
    SetCursor( SC_NONE )
    CLS
    @ 0, 0 SAY PadC("This is the Main Window", MaxCol() + 1)
@@ -58,11 +58,11 @@ PROCEDURE Main()
 
 STATIC PROCEDURE xGet1()
 
-   LOCAL cName  := PadR( "Name", 20 )
-   LOCAL cAddr  := PadR( "Address", 25 )
-   LOCAL cPhone := PadR( "Phone", 15 )
-   LOCAL cFax   := PadR( "Fax", 15 )
-   LOCAL cEmail := PadR( "Email", 15 )
+   LOCAL cName  := PadR("Name", 20)
+   LOCAL cAddr  := PadR("Address", 25)
+   LOCAL cPhone := PadR("Phone", 15)
+   LOCAL cFax   := PadR("Fax", 15)
+   LOCAL cEmail := PadR("Email", 15)
 
    LOCAL nWin := znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), 10, 20, 22, 59, "Some Window" )
    LOCAL GetList := {}
@@ -110,7 +110,7 @@ STATIC PROCEDURE xBrowse1()
       RETURN
    ENDIF
 
-   SetColor( "N/W*,N/GR*,,,N/W* " )
+   SetColor("N/W*,N/GR*,,,N/W* ")
    oBrowse := TBrowseNew( nTop + 1, nLeft + 1, nBottom - 1, nRight - 1 )
 
    oBrowse:ColSep        := "  "     // we'll draw a line between these spaces
@@ -249,27 +249,27 @@ STATIC FUNCTION lYesNo( cMsg )
       nRight := MaxCol() - 5
    LOCAL nChoice, nWidth
    LOCAL oldCurs := SetCursor( SC_NONE )
-   LOCAL oldColor := SetColor( _STD_COLOR_ )
+   LOCAL oldColor := SetColor(_STD_COLOR_)
 
    cmsg := " " + AllTrim(hb_defaultValue( cMsg, "Please Confirm" )) + " "
-   nWidth := Max( Len(cmsg), Len("Yes") )
+   nWidth := Max(Len(cmsg), Len("Yes"))
    nTopLine := nBotLine - 2 - 1
 
-   nLeft := Max( nLeft, ( ( nRight + nLeft ) * .5 ) - ( nWidth * .5 ) - 1 )
+   nLeft := Max(nLeft, ( ( nRight + nLeft ) * .5 ) - ( nWidth * .5 ) - 1)
    nRight := nLeft + nWidth + 1
 
    // open window
    znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), nTopLine, nLeft, nBotLine, nRight, cMsg )
 
-   @ nTopLine + 1, nLeft + 1 PROMPT PadR( "Yes", nWidth )
-   @ nTopLine + 2, nLeft + 1 PROMPT PadR( "No", nWidth )
+   @ nTopLine + 1, nLeft + 1 PROMPT PadR("Yes", nWidth)
+   @ nTopLine + 2, nLeft + 1 PROMPT PadR("No", nWidth)
    MENU TO nChoice
 
    // close window
    zrevwindow()
 
    SetCursor( oldCurs )
-   SetColor( oldColor )
+   SetColor(oldColor)
 
    RETURN nChoice == 1
 
@@ -281,7 +281,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
       nRight := MaxCol() - 5
    LOCAL nwidth, nmaxwidth, i, nNumLines, cAline
    LOCAL oldCurs := SetCursor( SC_NONE )
-   LOCAL oldColor := SetColor( _STD_COLOR_ )
+   LOCAL oldColor := SetColor(_STD_COLOR_)
 
    cmsg := AllTrim(cmsg)
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
@@ -294,10 +294,10 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 
    nMaxWidth := 0
    FOR i := 1 TO nNumLines
-      nMaxWidth := Max( nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))) )
+      nMaxWidth := Max(nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))))
    NEXT
 
-   nLeft := Max( nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ) )
+   nLeft := Max(nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ))
    nRight := nLeft + nMaxWidth + 1
 
    // open window
@@ -315,7 +315,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
    zrevwindow()
 
    SetCursor( oldCurs )
-   SetColor( oldColor )
+   SetColor(oldColor)
 
    RETURN
 
@@ -326,27 +326,27 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 STATIC FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 
    LOCAL i := Len(s_zwin)
-   LOCAL cScreen := SaveScreen( r1, c1, r2, c2 )
+   LOCAL cScreen := SaveScreen(r1, c1, r2, c2)
    LOCAL cOldColor := SetColor()
    LOCAL nrow := Row(), ncol := Col()
 
-   hb_default( @ctitle, "" )
-   hb_default( @ccolor, _STD_COLOR_ )
+   hb_default(@ctitle, "")
+   hb_default(@ccolor, _STD_COLOR_)
 
-   SetColor( ccolor )
+   SetColor(ccolor)
 
    wvw_nOpenWindow( ctitle, r1, c1, r2, c2 )
    ResetMiscObjects()   // make sure we start with no GUI objects
 
    AAdd(s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor })
 
-   SetColor( ccolor )
+   SetColor(ccolor)
 
    Scroll( r1, c1, r2, c2 )
 
    HB_SYMBOL_UNUSED(wtype)
 
-   SetColor( cOldColor )
+   SetColor(cOldColor)
 
    RETURN i + 1
 
@@ -363,9 +363,9 @@ STATIC PROCEDURE ZREVWINDOW()
    wvw_lCloseWindow()
 
    // restore states
-   RestScreen( s_zwin[ i ][ 2 ], s_zwin[ i ][ 3 ], s_zwin[ i ][ 4 ], s_zwin[ i ][ 5 ], s_zwin[ i ][ 6 ] )
-   SetPos( s_zwin[ i ][ 8 ], s_zwin[ i ][ 9 ] )
-   SetColor( s_zwin[ i ][ 10 ] )
+   RestScreen(s_zwin[ i ][ 2 ], s_zwin[ i ][ 3 ], s_zwin[ i ][ 4 ], s_zwin[ i ][ 5 ], s_zwin[ i ][ 6 ])
+   SetPos(s_zwin[ i ][ 8 ], s_zwin[ i ][ 9 ])
+   SetColor(s_zwin[ i ][ 10 ])
 
    // remove window from list
    hb_ADel( s_zwin, i, .T. )
@@ -386,7 +386,7 @@ FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 
 STATIC PROCEDURE ResetMiscObjects( nWinNum )
 
-   hb_default( @nWinNum, wvw_nNumWindows() - 1 )
+   hb_default(@nWinNum, wvw_nNumWindows() - 1)
 
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd(s_amiscobjlist, {})

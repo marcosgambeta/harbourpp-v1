@@ -4,7 +4,7 @@
 
 PROCEDURE Main( cFile )
 
-   hb_default( @cFile, __FILE__ )
+   hb_default(@cFile, __FILE__)
 
    // open a text file here
    IF ft_FUse( cFile, FO_READ ) > 1

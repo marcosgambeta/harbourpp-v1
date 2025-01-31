@@ -5,7 +5,7 @@ PROCEDURE Main( cFile )
    LOCAL i
    LOCAL aPrinter
 
-   hb_default( @cFile, __FILE__ )
+   hb_default(@cFile, __FILE__)
 
    IF Empty(cupsGetDefault())
       ? "No default printer configured"

@@ -19,10 +19,10 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
       RETURN
    ENDIF
 
-   hb_default( @cFrom    , "<from@example.net>" )
-   hb_default( @cPassword, "password" )
-   hb_default( @cTo      , "to@example.com" )
-   hb_default( @cHost    , "localhost" )
+   hb_default(@cFrom, "<from@example.net>")
+   hb_default(@cPassword, "password")
+   hb_default(@cTo, "to@example.com")
+   hb_default(@cHost, "localhost")
 
    cHost := Lower(cHost)
 
@@ -62,7 +62,7 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
       cHost := TUrl():New( cHost ):cServer
    ENDCASE
 
-   hb_default( @nPort, IIf(lSTARTTLS, 587, 465) )
+   hb_default(@nPort, IIf(lSTARTTLS, 587, 465))
 
    ? "Host:", cHost, hb_ntos( nPort ), IIf(lSTARTTLS, "(STARTTLS)", "")
 

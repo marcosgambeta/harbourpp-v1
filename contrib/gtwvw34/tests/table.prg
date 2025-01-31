@@ -61,7 +61,7 @@ PROCEDURE Main( cInputFile )
    LOCAL fld
    LOCAL tmp
 
-   hb_default( @cInputFile, hb_DirBase() + hb_DirSepToOS( "../../tests/test.dbf" ) )
+   hb_default(@cInputFile, hb_DirBase() + hb_DirSepToOS("../../tests/test.dbf"))
 
    ? "Input file:", cInputFile
 
@@ -89,8 +89,8 @@ PROCEDURE Main( cInputFile )
       FOR EACH fld IN dbStruct()
          cOutput += ;
             "      " + ;
-            "{ " + PadR( '"' + fld[ DBS_NAME ] + '"', 12 ) + ", " + ;
-            PadR( '"' + fld[ DBS_TYPE ] + '"', 8 ) + ", " + ;
+            "{ " + PadR('"' + fld[ DBS_NAME ] + '"', 12) + ", " + ;
+            PadR('"' + fld[ DBS_TYPE ] + '"', 8) + ", " + ;
             Str( fld[ DBS_LEN ], 5 ) + ", " + ;
             Str( fld[ DBS_DEC ], 2 ) + " }" + ;
             IIf(fld:__enumIsLast(), " }, ... )", ", ;") + hb_eol()

@@ -100,7 +100,7 @@ ENDCLASS
 
 METHOD TFbServer:New( cServer, cUser, cPassword, nDialect )
 
-   hb_default( @nDialect, 1 )
+   hb_default(@nDialect, 1)
 
    ::lError := .F.
    ::nError := 0
@@ -210,7 +210,7 @@ METHOD TFbServer:TableExists( cTable )
 
    qry := FBQuery( ::db, cQuery, ::dialect )
 
-   IF HB_IsArray( qry )
+   IF HB_IsArray(qry)
       result := ( FBFetch( qry ) == 0 )
 
       FBFree( qry )
@@ -232,7 +232,7 @@ METHOD TFbServer:ListTables()
 
    qry := FBQuery( ::db, RemoveSpaces( cQuery ), ::dialect )
 
-   IF HB_IsArray( qry )
+   IF HB_IsArray(qry)
       DO WHILE FBFetch( qry ) == 0
          AAdd(result, FBGetData(qry, 1))
       ENDDO
@@ -264,7 +264,7 @@ METHOD TFbServer:TableStruct( cTable )
 
    qry := FBQuery( ::db, RemoveSpaces( cQuery ), ::dialect )
 
-   IF HB_IsArray( qry )
+   IF HB_IsArray(qry)
       DO WHILE FBFetch( qry ) == 0
          cField  := FBGetData(qry, 1)
          nType   := Val( FBGetData(qry, 2) )
@@ -542,7 +542,7 @@ METHOD TFbQuery:Refresh()
 
    qry := FBQuery( ::db, ::query, ::dialect )
 
-   IF HB_IsArray( qry )
+   IF HB_IsArray(qry)
       ::numcols := qry[ 4 ]
 
       /* FIXME: This is faulty code. ::aStruct will become zero length, out of sync with ::numcols. */
@@ -924,7 +924,7 @@ STATIC FUNCTION KeyField(aTables, db, dialect)
 
       qry := FBQuery( db, RemoveSpaces( cQuery ), dialect )
 
-      IF HB_IsArray( qry )
+      IF HB_IsArray(qry)
          DO WHILE FBFetch( qry ) == 0
             AAdd(aKeys, RTrim(FBGetData(qry, 1)))
          ENDDO
@@ -990,7 +990,7 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 
    qry := FBQuery( db, RemoveSpaces( cQuery ), dialect )
 
-   IF HB_IsArray( qry )
+   IF HB_IsArray(qry)
 
       DO WHILE FBFetch( qry ) == 0
          AAdd(aDomains, { ;

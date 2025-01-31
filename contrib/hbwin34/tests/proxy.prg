@@ -9,7 +9,7 @@ PROCEDURE Main( cURL )
    LOCAL aURL := { "https://example.org/" }
    LOCAL cByPass
 
-   IF HB_IsString( cURL )
+   IF HB_IsString(cURL)
       AAdd( aURL, cURL )
    ENDIF
 

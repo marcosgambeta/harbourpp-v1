@@ -50,7 +50,7 @@ FUNCTION Occurs( cSub, cStr )
 
    LOCAL nCount := 0, nPos
 
-   IF HB_IsString( cSub ) .AND. HB_IsString( cStr )
+   IF HB_IsString(cSub) .AND. HB_IsString(cStr)
       nPos := 0
       DO WHILE ( nPos := hb_At( cSub, cStr, nPos + 1 ) ) > 0
          ++nCount
@@ -63,8 +63,8 @@ FUNCTION fox_At( cSub, cStr, nOccurrence )
 
    LOCAL nPos := 0
 
-   IF HB_IsString( cSub ) .AND. HB_IsString( cStr )
-      hb_default( @nOccurrence, 1 )
+   IF HB_IsString(cSub) .AND. HB_IsString(cStr)
+      hb_default(@nOccurrence, 1)
       DO WHILE --nOccurrence >= 0 .AND. ( nPos := hb_At( cSub, cStr, nPos + 1 ) ) != 0
       ENDDO
    ENDIF

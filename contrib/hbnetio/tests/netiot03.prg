@@ -165,7 +165,7 @@ PROCEDURE testdb(cName)
    j := Col()
    dbGoTop()
    Browse()
-   SetPos( i, j )
+   SetPos(i, j)
    CLOSE
 
    RETURN

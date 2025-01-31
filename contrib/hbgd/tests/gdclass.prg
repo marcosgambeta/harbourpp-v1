@@ -34,17 +34,17 @@ PROCEDURE Main()
    /* Now work on first empty image */
 
    /* Allocate drawing color */
-   black := oI:SetColor( 0, 0, 0 )
-   blue  := oI:SetColor( 0, 0, 255 )
-   red   := oI:SetColor( 255, 0, 0 )
-   green := oI:SetColor( 0, 255, 0 )
-   cyan  := oI:SetColor( 0, 255, 255 )
+   black := oI:SetColor(0, 0, 0)
+   blue  := oI:SetColor(0, 0, 255)
+   red   := oI:SetColor(255, 0, 0)
+   green := oI:SetColor(0, 255, 0)
+   cyan  := oI:SetColor(0, 255, 255)
 
    /* Draw rectangle */
    oI:Rectangle( 0, 0, 199, 199, .T., cyan )
    oI:Rectangle( 0, 0, 199, 199, , black )
 
-   oI:SetColor( blue )
+   oI:SetColor(blue)
 
    /* Draw pixel */
    oI:SetPixel( 50, 5 )
@@ -92,7 +92,7 @@ PROCEDURE Main()
    /* Draw a character. */
    oI:SetFontLarge()
    ? "Font Dims", oI:GetFontWidth(), oI:GetFontHeight()
-   oI:SetColor( black )
+   oI:SetColor(black)
    oI:Say( 0, 0, "Test" )
    oI:Say( 0, 15, "P" )
    oI:Say( 0, 30, "W" )
@@ -124,7 +124,7 @@ PROCEDURE Main()
 
    /* test copy functions */
 
-   // oI3 := GDImage():CreateTrueColor( oI2:Width * 2, oI2:Height * 2 )
+   // oI3 := GDImage():CreateTrueColor(oI2:Width * 2, oI2:Height * 2)
    // oI2:CopyResampled(0, 0, oI2:Width, oI2:Height, 0, 0, oI3:Width, oI3:Height, oI3)
    // oI3:SaveJpeg("vale2.jpg")
 
@@ -155,10 +155,10 @@ PROCEDURE Main()
 
    // __OutDebug( oI2:pImage )
    // oI4:SetFontGiant()
-   gray := oI4:SetColor( 30, 30, 30 )
-   blue := oI4:SetColor( 0, 0, 200 )
+   gray := oI4:SetColor(30, 30, 30)
+   blue := oI4:SetColor(0, 0, 200)
 
-   // oI4:SetColor( black )
+   // oI4:SetColor(black)
    // oI4:Say( 100, 10, "Valentina" )
 #if defined(__PLATFORM__UNIX)
    oI4:SayFreeType( oI4:CenterWidth(), oI4:CenterHeight(), "GD power", "arib____", 40, 45 )
@@ -195,17 +195,17 @@ PROCEDURE Main()
 
    oI5:Zoom( 40 )
    // oI5:Rotate( 90 )
-   blue := oI5:SetColor( 0, 0, 200 )
+   blue := oI5:SetColor(0, 0, 200)
    oI5:SayFreeType( oI5:CenterWidth(), oI5:CenterHeight(), "GD", "verdana", 20, 0, blue )
    oI5:SaveJpeg( IMAGES_OUT + "gd_zoom.jpg" )
 
 
    oI5 := GDChart():New( 400, 400 )
    // Define piece colors
-   blue  := oI5:SetColor( 0, 0, 200 )
-   gray  := oI5:SetColor( 30, 30, 30 )
-   green := oI5:SetColor( 0, 250, 0 )
-   red   := oI5:SetColor( 250, 0, 0 )
+   blue  := oI5:SetColor(0, 0, 200)
+   gray  := oI5:SetColor(30, 30, 30)
+   green := oI5:SetColor(0, 250, 0)
+   red   := oI5:SetColor(250, 0, 0)
 
    // Load an image as brush
    oB := GDImage():LoadFromGif( IMAGES_IN + "harbour.gif" )
@@ -234,10 +234,10 @@ PROCEDURE Main()
 
    oI5 := GDChart():New( 640, 480 )
    // Define piece colors
-   blue  := oI5:SetColor( 0, 0, 200 )
-   gray  := oI5:SetColor( 30, 30, 30 )
-   green := oI5:SetColor( 0, 250, 0 )
-   red   := oI5:SetColor( 250, 0, 0 )
+   blue  := oI5:SetColor(0, 0, 200)
+   gray  := oI5:SetColor(30, 30, 30)
+   green := oI5:SetColor(0, 250, 0)
+   red   := oI5:SetColor(250, 0, 0)
 
    // Load an image as brush
    oB := GDImage():LoadFromJpeg( IMAGES_IN + "conv_tst.jpg" )
@@ -287,7 +287,7 @@ PROCEDURE Main()
    oI5:LineChart()
    oI5:SaveJpeg( IMAGES_OUT + "hystogrm.jpg" )
 
-   // oI4 := GDImage():CreateTrueColor( oI2:Width * 2, oI2:Height * 2 )
+   // oI4 := GDImage():CreateTrueColor(oI2:Width * 2, oI2:Height * 2)
    // oI2:CopyResampled(0, 0, oI2:Width, oI2:Height, 0, 0, oI2:Width, oI2:Height, oI4)
    // oI2:CopyResampled(0, 0, oI2:Width, oI2:Height, oI4:CenterWidth(), oI4:CenterHeight(), oI2:Width, oI2:Height, oI4)
    // oI4:SaveJpeg("vale3.jpg")

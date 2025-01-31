@@ -6,7 +6,7 @@ PROCEDURE Main()
 
    LOCAL im, im2, col, i
 
-   im := gdImageCreateTrueColor( 100, 100 )
+   im := gdImageCreateTrueColor(100, 100)
    col := gdImageColorAllocate( im, 255, 255, 255 )
 
    FOR i := 0 TO 99 STEP 10

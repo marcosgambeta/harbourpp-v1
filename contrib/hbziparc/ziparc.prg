@@ -67,7 +67,7 @@ PROCEDURE SetZipReadOnly( lReadOnly )
 
 PROCEDURE hb_SetZipComment( cComment )
 
-   IF cComment == NIL .OR. HB_IsString( cComment )
+   IF cComment == NIL .OR. HB_IsString(cComment)
       t_cComment := cComment
    ENDIF
 
@@ -153,7 +153,7 @@ FUNCTION hb_GetFilesInZip( cFileName, lVerbose )
 
    IF !Empty(hUnzip := hb_unzipOpen( cFileName ))
 
-      hb_default( @lVerbose, .F. )
+      hb_default(@lVerbose, .F.)
 
       nErr := hb_unzipFileFirst( hUnzip )
       DO WHILE nErr == 0
@@ -218,7 +218,7 @@ PROCEDURE hb_SetBuffer( nWriteBuffer, nExtractBuffer, nReadBuffer )
    HB_SYMBOL_UNUSED(nExtractBuffer)
 
    IF HB_IsNumeric(nReadBuffer) .AND. nReadBuffer >= 1
-      t_nReadBuffer := Min( nReadBuffer, 32768 )
+      t_nReadBuffer := Min(nReadBuffer, 32768)
    ENDIF
 
    RETURN
@@ -264,8 +264,8 @@ FUNCTION hb_ZipFile( ;
    LOCAL cFN
    LOCAL aFile
 
-   hb_default( @lOverwrite, .F. )
-   hb_default( @lFullPath, .F. )
+   hb_default(@lOverwrite, .F.)
+   hb_default(@lFullPath, .F.)
 
    IF Set( _SET_DEFEXTENSIONS )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
@@ -277,10 +277,10 @@ FUNCTION hb_ZipFile( ;
 
    IF !Empty(hZip := hb_zipOpen( cFileName, IIf(! lOverwrite .AND. hb_FileExists( cFileName ), HB_ZIP_OPEN_ADDINZIP, NIL) ))
 
-      IF HB_IsString( acFiles )
+      IF HB_IsString(acFiles)
          acFiles := { acFiles }
       ENDIF
-      IF HB_IsString( acExclude )
+      IF HB_IsString(acExclude)
          acExclude := { acExclude }
       ENDIF
 
@@ -323,8 +323,8 @@ FUNCTION hb_ZipFile( ;
 
       aExclFile := NIL
 
-      hb_default( @lWithPath, .F. )
-      hb_default( @lWithDrive, .F. )
+      hb_default(@lWithPath, .F.)
+      hb_default(@lWithDrive, .F.)
 
       //
 
@@ -333,7 +333,7 @@ FUNCTION hb_ZipFile( ;
 
          IF ( hHandle := FOpen( cFileToZip ) ) != F_ERROR
 
-            IF HB_IsEvalItem( bUpdate )
+            IF HB_IsEvalItem(bUpdate)
                Eval( bUpdate, cFileToZip, nPos++ )
             ENDIF
 
@@ -360,7 +360,7 @@ FUNCTION hb_ZipFile( ;
 
             DO WHILE ( nLen := FRead( hHandle, @cBuffer, hb_BLen(cBuffer) ) ) > 0
 
-               IF HB_IsEvalItem( bProgress )
+               IF HB_IsEvalItem(bProgress)
                   nRead += nLen
                   Eval( bProgress, nRead, nSize )
                ENDIF
@@ -419,7 +419,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
       lRetVal := .F.
    ELSE
       IF HB_IsNumeric(acFiles) .OR. ;
-         HB_IsString( acFiles )
+         HB_IsString(acFiles)
          acFiles := { acFiles }
       ENDIF
 
@@ -451,7 +451,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
 
                nRead := 0
                DO WHILE ( nLen := hb_unzipFileRead( hUnzip, @cBuffer, hb_BLen(cBuffer) ) ) > 0
-                  IF HB_IsEvalItem( bProgress )
+                  IF HB_IsEvalItem(bProgress)
                      nRead += nLen
                      Eval( bProgress, nRead, nSize )
                   ENDIF
@@ -463,7 +463,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
 
                hb_FSetDateTime( cPath + cZipName, dDate, cTime )
 
-               IF HB_IsEvalItem( bUpdate )
+               IF HB_IsEvalItem(bUpdate)
                   Eval( bUpdate, cZipName, nPos )
                ENDIF
             ENDIF
@@ -493,7 +493,7 @@ FUNCTION hb_ZipDeleteFiles( cFileName, acFiles )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF HB_IsString( acFiles )
+   IF HB_IsString(acFiles)
       acFiles := { acFiles }
    ENDIF
 

@@ -51,7 +51,7 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
    /* Not supported (yet?) */
    HB_SYMBOL_UNUSED(lBackground)
 
-   IF !HB_IsString( cProgram )
+   IF !HB_IsString(cProgram)
 #if defined(__PLATFORM__UNIX)
       cProgram := GetEnv("SHELL")
 #elif defined(__PLATFORM__OS2)
@@ -76,7 +76,7 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
       ENDIF
    ENDIF
 
-   IF HB_IsString( cCommand )
+   IF HB_IsString(cCommand)
 #if defined(__PLATFORM__UNIX)
       cProgram += " -c " + "'" + StrTran(cCommand, "'", "'\''") + "'"
 #else

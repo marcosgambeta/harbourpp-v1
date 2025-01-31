@@ -145,7 +145,7 @@ METHOD WvtToolBar:AddButton( cFileImage, bBlock, cTooltip )
    oObj:nLeft      := ::nBtnLeft + 1
    oObj:nBottom    := ::nBottom
 
-   IF HB_IsString( cFileImage )
+   IF HB_IsString(cFileImage)
       oObj:nBtnType   := TLB_BUTTON_TYPE_IMAGE
       oObj:nRight     := oObj:nLeft + nCol - 1
       oObj:cFileImage := cFileImage
@@ -171,8 +171,8 @@ METHOD WvtToolBar:HoverOn()
       ::lHidden   := .F.
       ::lActive   := .T.
 #if 0
-      ::cScreen   := SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
-      ::wScreen   := wvt_SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
+      ::cScreen   := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
+      ::wScreen   := wvt_SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
 #endif
       AEval( ::aObjects, {| o | o:lActive := ::lActive } )
 
@@ -188,8 +188,8 @@ METHOD WvtToolBar:HoverOff()
       ::lActive := .F.
       AEval( ::aObjects, {| o | o:lActive := ::lActive } )
 #if 0
-      RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen )
-      wvt_RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, .F. )
+      RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
+      wvt_RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, .F.)
 #endif
       ::Refresh()
    ENDIF

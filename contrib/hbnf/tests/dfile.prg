@@ -9,7 +9,7 @@ PROCEDURE Main( cInFile )
    LOCAL nHColor   := 15
    LOCAL nColSkip  := 5
    LOCAL nRMargin  := 132
-   LOCAL cExitKeys := PadR( "AABBC", 12 )
+   LOCAL cExitKeys := PadR("AABBC", 12)
    LOCAL lBrowse   := .F.
    LOCAL nStart    := 1
    LOCAL nBuffSize := 4096
@@ -20,9 +20,9 @@ PROCEDURE Main( cInFile )
 
    CLS
 
-   hb_default( @cInFile, __FILE__ )
+   hb_default(@cInFile, __FILE__)
 
-   cInFile := PadR( cInFile, 128 )
+   cInFile := PadR(cInFile, 128)
 
    @ 0,  0 SAY "ENTER FILENAME: "   GET cInFile   PICTURE "@S30"
    @ 1,  0 SAY "    FOREGROUND: "   GET nNColor   PICTURE "999"

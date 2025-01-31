@@ -27,10 +27,10 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   IF !SetMode( 25, 80 )
+   IF !SetMode(25, 80)
       wvw_MessageBox( 0, "Cannot set to (25,80) screen", "Warning", MB_OK + MB_ICONEXCLAMATION )
    ENDIF
-   SetColor( "W*/N+" )
+   SetColor("W*/N+")
    CLS
    SetCursor( SC_NONE )
    @ 0, 0 SAY PadC("This will demonstrate how to handle input on non-topmost window", MaxCol() + 1)
@@ -127,7 +127,7 @@ STATIC FUNCTION OpenNewWindow()
    ncol2  := WinMaxCol(0) - ( _MAX_WINNUM + 1 ) * 3 + ( nWinNum - 1 ) * 3
 
    // open a window whose parent is Main Window
-   SetColor( "W+/N" )
+   SetColor("W+/N")
    IF wvw_nOpenWindow( ctitle, nrow1, ncol1, nrow2, ncol2, NIL, 0 ) != nWinNum
       // currently wvw_nOpenWindow() will always return sequentially numbered window
       wvw_MessageBox( 0, "Something horrible has happened, program aborted", ;

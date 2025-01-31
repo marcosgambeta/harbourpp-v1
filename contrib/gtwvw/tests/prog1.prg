@@ -39,7 +39,7 @@ PROCEDURE Main()
    wvw_SetCodepage( , 255 )
 
    SET SCOREBOARD OFF
-   SetColor( s_cStdColor )
+   SetColor(s_cStdColor)
    SetCursor( SC_NONE )
    CLS
    @ 0, 0 SAY PadC("This is the Main Window", MaxCol() + 1)
@@ -67,10 +67,10 @@ PROCEDURE Main()
 
 PROCEDURE xGet1()
 
-   LOCAL cName := PadR( "Name", 20 )
-   LOCAL cAddr := PadR( "Address", 25 )
-   LOCAL cPhone := PadR( "Phone", 15 )
-   LOCAL cFax  := PadR( "Fax", 15 )
+   LOCAL cName := PadR("Name", 20)
+   LOCAL cAddr := PadR("Address", 25)
+   LOCAL cPhone := PadR("Phone", 15)
+   LOCAL cFax  := PadR("Fax", 15)
    LOCAL lDone := .F.
    LOCAL getlist := {}
    LOCAL oldCurs := SetCursor( SC_NORMAL )
@@ -119,7 +119,7 @@ FUNCTION xBrowse1()
    ENDIF
    info_ := dbStruct()
 
-   SetColor( "N/W*,N/GR*,,,N/W* " )
+   SetColor("N/W*,N/GR*,,,N/W* ")
    oBrowse := TBrowseNew( nTop + 1, nLeft + 1, nBottom - 1, nRight - 1 )
 
    oBrowse:ColSep        := hb_UTF8ToStrBox( "│" )
@@ -260,9 +260,9 @@ STATIC FUNCTION VouBlockField(i)
 FUNCTION lMessage( cMsg )
 
    // displays a message on MaxRow() and returns .T.
-   LOCAL cOldColor := SetColor( s_cStdColor )
+   LOCAL cOldColor := SetColor(s_cStdColor)
    @ MaxRow(), 0 SAY PadC(cMsg, MaxCol() + 1)
-   SetColor( cOldColor )
+   SetColor(cOldColor)
 
    RETURN .T.
 
@@ -275,29 +275,29 @@ FUNCTION lYesNo( cMsg )
       nRight := MaxCol() - 5
    LOCAL nChoice, nWidth
    LOCAL oldCurs := SetCursor( SC_NONE )
-   LOCAL oldColor := SetColor( s_cStdColor )
+   LOCAL oldColor := SetColor(s_cStdColor)
 
-   hb_default( @cMsg, "Please Confirm" )
+   hb_default(@cMsg, "Please Confirm")
 
    cmsg := " " + AllTrim(cmsg) + " "
-   nWidth := Max( Len(cmsg), Len("Yes") )
+   nWidth := Max(Len(cmsg), Len("Yes"))
    nTopLine := nBotLine - 2 - 1
 
-   nLeft := Max( nLeft, ( ( nRight + nLeft ) * .5 ) - ( nWidth * .5 ) - 1 )
+   nLeft := Max(nLeft, ( ( nRight + nLeft ) * .5 ) - ( nWidth * .5 ) - 1)
    nRight := nLeft + nWidth + 1
 
    // open window
    znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), nTopLine, nLeft, nBotLine, nRight, cMsg )
 
-   @ nTopLine + 1, nLeft + 1 PROMPT PadR( "Yes", nWidth )
-   @ nTopLine + 2, nLeft + 1 PROMPT PadR( "No", nWidth )
+   @ nTopLine + 1, nLeft + 1 PROMPT PadR("Yes", nWidth)
+   @ nTopLine + 2, nLeft + 1 PROMPT PadR("No", nWidth)
    MENU TO nChoice
 
    // close window
    zrevwindow()
 
    SetCursor( oldCurs )
-   SetColor( oldColor )
+   SetColor(oldColor)
 
    RETURN nChoice == 1
 
@@ -309,9 +309,9 @@ FUNCTION lBoxMessage( cMsg, cTitle )
       nRight := MaxCol() - 5
    LOCAL nwidth, nmaxwidth, i, nNumLines, cAline
    LOCAL oldCurs := SetCursor( SC_NONE )
-   LOCAL oldColor := SetColor( s_cStdColor )
+   LOCAL oldColor := SetColor(s_cStdColor)
 
-   hb_default( @cTitle, "Info" )
+   hb_default(@cTitle, "Info")
 
    cmsg := AllTrim(cmsg)
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
@@ -324,10 +324,10 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 
    nMaxWidth := 0
    FOR i := 1 TO nNumLines
-      nMaxWidth := Max( nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))) )
+      nMaxWidth := Max(nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))))
    NEXT
 
-   nLeft := Max( nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ) )
+   nLeft := Max(nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ))
    nRight := nLeft + nMaxWidth + 1
 
    // open window
@@ -345,7 +345,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
    zrevwindow()
 
    SetCursor( oldCurs )
-   SetColor( oldColor )
+   SetColor(oldColor)
 
    RETURN .T.
 
@@ -356,20 +356,20 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 
    LOCAL i := Len(s_zwin)
-   LOCAL cScreen := SaveScreen( r1, c1, r2, c2 )
+   LOCAL cScreen := SaveScreen(r1, c1, r2, c2)
    LOCAL cOldColor := SetColor()
    LOCAL nrow := Row(), ncol := Col()
 
-   hb_default( @ctitle, "" )
-   hb_default( @ccolor, s_cStdColor )
+   hb_default(@ctitle, "")
+   hb_default(@ccolor, s_cStdColor)
 
-   SetColor( ccolor )
+   SetColor(ccolor)
 
    wvw_nOpenWindow( ctitle, r1, c1, r2, c2 )
 
    AAdd(s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor })
 
-   SetColor( ccolor )
+   SetColor(ccolor)
 
    hb_Scroll( r1, c1, r2, c2 )
 
@@ -380,7 +380,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
       hb_DispOutAt( r1, nCeiling( ( c2 + c1 - Len(cTitle) ) / 2 ), cTitle )
    ENDIF
 
-   SetColor( cOldColor )
+   SetColor(cOldColor)
 
    RETURN i + 1
 
@@ -397,9 +397,9 @@ FUNCTION ZREVWINDOW()
    wvw_lCloseWindow()
 
    // restore states
-   RestScreen( s_zwin[ i ][ 2 ], s_zwin[ i ][ 3 ], s_zwin[ i ][ 4 ], s_zwin[ i ][ 5 ], s_zwin[ i ][ 6 ] )
-   SetPos( s_zwin[ i ][ 8 ], s_zwin[ i ][ 9 ] )
-   SetColor( s_zwin[ i ][ 10 ] )
+   RestScreen(s_zwin[ i ][ 2 ], s_zwin[ i ][ 3 ], s_zwin[ i ][ 4 ], s_zwin[ i ][ 5 ], s_zwin[ i ][ 6 ])
+   SetPos(s_zwin[ i ][ 8 ], s_zwin[ i ][ 9 ])
+   SetColor(s_zwin[ i ][ 10 ])
 
    // remove window from list
    hb_ADel( s_zwin, i, .T. )

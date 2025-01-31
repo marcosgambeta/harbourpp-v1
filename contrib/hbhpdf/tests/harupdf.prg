@@ -114,7 +114,7 @@ FUNCTION DesignHaruPDF( cFileToSave )
    HPDF_Page_Stroke( page )
 
    /* Print the title of the page(with positioning center). */
-   def_font := HPDF_GetFont( pdf, "Helvetica", NIL )
+   def_font := HPDF_GetFont(pdf, "Helvetica", NIL)
 
    HPDF_Page_SetFontAndSize( page, def_font, 24 )
    tw := HPDF_Page_TextWidth( page, page_title )
@@ -134,7 +134,7 @@ FUNCTION DesignHaruPDF( cFileToSave )
 
    FOR i := 1 TO Len(font_list)
       samp_text := "abcdefgABCDEFG12345!#$%&+-@?"
-      font := HPDF_GetFont( pdf, font_list[ i ], NIL )
+      font := HPDF_GetFont(pdf, font_list[ i ], NIL)
 
 
       HPDF_Page_SetFontAndSize( page, def_font, 9 )
@@ -183,7 +183,7 @@ STATIC PROCEDURE Page_Lines( pdf )
    LOCAL x, y, x1, y1, x2, y2, x3, y3, tw
 
    /* create default-font */
-   font := HPDF_GetFont( pdf, "Helvetica", NIL )
+   font := HPDF_GetFont(pdf, "Helvetica", NIL)
 
    /* add a new page object. */
    page := HPDF_AddPage( pdf )
@@ -481,7 +481,7 @@ STATIC PROCEDURE Page_Text( pdf )
    page_height := HPDF_Page_GetHeight( page )
 #endif
 
-   font := HPDF_GetFont( pdf, "Helvetica", NIL )
+   font := HPDF_GetFont(pdf, "Helvetica", NIL)
    HPDF_Page_SetTextLeading( page, 20 )
 
    #define rLEFT    1
@@ -641,7 +641,7 @@ STATIC PROCEDURE Page_Text( pdf )
    angle2 := 180
 
    HPDF_Page_BeginText( page )
-   font := HPDF_GetFont( pdf, "Courier-Bold", NIL )
+   font := HPDF_GetFont(pdf, "Courier-Bold", NIL)
    HPDF_Page_SetFontAndSize( page, font, 30 )
 
    FOR i := 1 TO Len(SAMP_TXT)
@@ -675,7 +675,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
 #endif
 
    /* create default-font */
-   font := HPDF_GetFont( pdf, "Helvetica", NIL )
+   font := HPDF_GetFont(pdf, "Helvetica", NIL)
 
    /* add a new page object. */
    page := HPDF_AddPage( pdf )
@@ -921,7 +921,7 @@ STATIC PROCEDURE show_stripe_pattern( page, x, y )
 STATIC PROCEDURE show_description( page, x, y, text )
 
    LOCAL fsize := HPDF_Page_GetCurrentFontSize( page )
-   LOCAL font  := HPDF_Page_GetCurrentFont( page )
+   LOCAL font  := HPDF_Page_GetCurrentFont(page)
    LOCAL c     := HPDF_Page_GetRGBFill( page )
 
    HPDF_Page_BeginText( page )
@@ -975,7 +975,7 @@ STATIC FUNCTION Page_CodePages( pdf )
    HPDF_SetPageMode( pdf, HPDF_PAGE_MODE_USE_OUTLINE )
 
    /* get default font */
-   font := HPDF_GetFont( pdf, "Helvetica", NIL )
+   font := HPDF_GetFont(pdf, "Helvetica", NIL)
 
    /* load font object */
    font_name := HPDF_LoadType1FontFromFile( pdf, cAfm, cPfb )
@@ -1010,11 +1010,11 @@ STATIC FUNCTION Page_CodePages( pdf )
       HPDF_Page_EndText( page )
 
       IF encodings[ i ] == "Symbol-Set"
-         font2 := HPDF_GetFont( pdf, "Symbol", NIL )
+         font2 := HPDF_GetFont(pdf, "Symbol", NIL)
       ELSEIF encodings[ i ] == "ZapfDingbats-Set"
-         font2 := HPDF_GetFont( pdf, "ZapfDingbats", NIL )
+         font2 := HPDF_GetFont(pdf, "ZapfDingbats", NIL)
       ELSE
-         font2 := HPDF_GetFont( pdf, font_name, encodings[ i ] )
+         font2 := HPDF_GetFont(pdf, font_name, encodings[ i ])
       ENDIF
 
       HPDF_Page_SetFontAndSize( page, font2, 14 )
@@ -1174,7 +1174,7 @@ STATIC PROCEDURE Page_Annotation( pdf )
    LOCAL page, font, encoding, annot
 
    /* use Times-Roman font. */
-   font := HPDF_GetFont( pdf, "Times-Roman", "WinAnsiEncoding" )
+   font := HPDF_GetFont(pdf, "Times-Roman", "WinAnsiEncoding")
 
    page := HPDF_AddPage( pdf )
 
@@ -1269,7 +1269,7 @@ STATIC PROCEDURE Page_Images( pdf )
    LOCAL cImagePath := hb_DirBase() + "files" + hb_ps()
 
    /* create default-font */
-   font := HPDF_GetFont( pdf, "Helvetica", NIL )
+   font := HPDF_GetFont(pdf, "Helvetica", NIL)
 
    /* add a new page object. */
    page := HPDF_AddPage( pdf )
@@ -1401,7 +1401,7 @@ STATIC PROCEDURE show_description_1( page, x, y, text )
    HPDF_Page_LineTo( page, x + 10, y )
    HPDF_Page_Stroke( page )
 
-   HPDF_Page_SetFontAndSize( page, HPDF_Page_GetCurrentFont( page ), 8 )
+   HPDF_Page_SetFontAndSize( page, HPDF_Page_GetCurrentFont(page), 8 )
    HPDF_Page_SetRGBFill( page, 0, 0, 0 )
 
    HPDF_Page_BeginText( page )

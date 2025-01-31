@@ -13,15 +13,15 @@ PROCEDURE Main()
    ?? cTarget
    ?
    var0 := ft_At2( cSearch, cTarget )
-   ? PadR( "ft_At2( cSearch, cTarget ) -> ", 40 )
+   ? PadR("ft_At2( cSearch, cTarget ) -> ", 40)
    ?? var0
    ?
    var0 := ft_At2( cSearch, cTarget, 2 )
-   ? PadR( "ft_At2( cSearch, cTarget, 2 ) -> ", 40 )
+   ? PadR("ft_At2( cSearch, cTarget, 2 ) -> ", 40)
    ??var0
    ?
    var0 := ft_At2( cSearch, cTarget, 2, .F. )
-   ? PadR( "ft_At2( cSearch, cTarget, 2, .F. ) -> ", 40 )
+   ? PadR("ft_At2( cSearch, cTarget, 2, .F. ) -> ", 40)
    ??var0
    ?
 

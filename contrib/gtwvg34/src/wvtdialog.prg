@@ -194,7 +194,7 @@ METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFon
    ::aPalette            := hb_gtInfo( HB_GTI_PALETTE )
 
    ::oldMenuHandle       := wvt_GetMenu()
-   ::oldMenuBlock        := SetKey( wvt_SetMenuKeyEvent() )
+   ::oldMenuBlock        := SetKey(wvt_SetMenuKeyEvent())
 
    ::oldTooltipWidth     := wvt_GetToolTipWidth()
    ::oldTooltipBkColor   := wvt_GetToolTipBkColor()
@@ -227,35 +227,35 @@ METHOD WvtDialog:Create()
       wvt_SetToolTipWidth( ::nTooltipWidth )
    ENDIF
    IF HB_IsNumeric(::nTooltipBkColor)
-      wvt_SetToolTipBkColor( ::nTooltipBkColor )
+      wvt_SetToolTipBkColor(::nTooltipBkColor)
    ENDIF
    IF HB_IsNumeric(::nTooltipTextColor)
-      wvt_SetToolTipTextColor( ::nTooltipTextColor )
+      wvt_SetToolTipTextColor(::nTooltipTextColor)
    ENDIF
 
    aPalette      := hb_gtInfo( HB_GTI_PALETTE )
    aPalette[ 9 ] := WIN_RGB(175, 175, 175)
    hb_gtInfo( HB_GTI_PALETTE, aPalette )
 
-   ::cScreen     := SaveScreen( 0, 0, MaxRow(), MaxCol() )
-   ::aWvtScreen  := wvt_SaveScreen( 0, 0, MaxRow(), MaxCol() )
+   ::cScreen     := SaveScreen(0, 0, MaxRow(), MaxCol())
+   ::aWvtScreen  := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
    ::aOldPnt     := WvtSetPaint( {} )
 
-   SetMode( ::nRows, ::nCols )
+   SetMode(::nRows, ::nCols)
    DO WHILE .T.
-      IF wvt_SetFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality )
+      IF wvt_SetFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality)
          EXIT
       ENDIF
       ::nFontHeight--
    ENDDO
 #if 0
-   wvt_SetFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality )
+   wvt_SetFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality)
 #endif
-   SetMode( ::nRows, ::nCols )
+   SetMode(::nRows, ::nCols)
 
    hb_gtInfo( HB_GTI_WINTITLE, ::cTitle )
 
-   SetColor( ::cColor )
+   SetColor(::cColor)
    CLS
    ::Eval( ::bOnCreate )
 
@@ -278,17 +278,17 @@ METHOD WvtDialog:Create()
 
    ::Update()
 
-   IF HB_IsObject( ::oMenu )
+   IF HB_IsObject(::oMenu)
       wvt_SetMenu( ::oMenu:hMenu )
       wvt_DrawMenuBar()
-      SetKey( wvt_SetMenuKeyEvent(), {|| ::ActivateMenu( ::oMenu ) } )
+      SetKey(wvt_SetMenuKeyEvent(), {|| ::ActivateMenu( ::oMenu ) })
    ENDIF
 
    RETURN Self
 
 METHOD PROCEDURE WvtDialog:Destroy()
 
-   IF HB_IsObject( ::oMenu )
+   IF HB_IsObject(::oMenu)
       ::oMenu:Destroy()
    ENDIF
 
@@ -297,26 +297,26 @@ METHOD PROCEDURE WvtDialog:Destroy()
    wvt_SetToolTip( 0, 0, 0, 0, "" )
    wvt_SetToolTipActive( ::oldToolTipActive )
    wvt_SetToolTipWidth( ::oldTooltipWidth )
-   wvt_SetToolTipBkColor( ::oldTooltipBkColor )
-   wvt_SetToolTipTextColor( ::oldTooltipTextColor )
+   wvt_SetToolTipBkColor(::oldTooltipBkColor)
+   wvt_SetToolTipTextColor(::oldTooltipTextColor)
 
    // Here set mode is before setting the font
-   SetMode( ::nOldRows, ::nOldCols )
-   wvt_SetFont( ::aOldFont[ 1 ], ::aOldFont[ 2 ], ::aOldFont[ 3 ], ::aOldFont[ 4 ], ::aOldFont[ 5 ] )
+   SetMode(::nOldRows, ::nOldCols)
+   wvt_SetFont(::aOldFont[ 1 ], ::aOldFont[ 2 ], ::aOldFont[ 3 ], ::aOldFont[ 4 ], ::aOldFont[ 5 ])
    hb_gtInfo( HB_GTI_WINTITLE, ::cOldTitle )
    hb_gtInfo( HB_GTI_PALETTE, ::aPalette )
    wvt_SetPointer( WVT_IDC_ARROW )
    wvt_SetMousePos( MRow(), MCol() )
 
-   SetColor( ::cOldColor )
+   SetColor(::cOldColor)
    SetCursor( ::nOldCursor )
 
    IF ::oldMenuHandle != NIL .AND. ! Empty(::oldMenuHandle)
       wvt_SetMenu( ::oldMenuHandle )
    ENDIF
-   SetKey( wvt_SetMenuKeyEvent(), ::oldMenuBlock )
-   RestScreen( 0, 0, MaxRow(), MaxCol(), ::cScreen )
-   wvt_RestScreen( 0, 0, MaxRow(), MaxCol(), ::aWvtScreen )
+   SetKey(wvt_SetMenuKeyEvent(), ::oldMenuBlock)
+   RestScreen(0, 0, MaxRow(), MaxCol(), ::cScreen)
+   wvt_RestScreen(0, 0, MaxRow(), MaxCol(), ::aWvtScreen)
    wvg_PurgePaint( ::cPaintBlockID )
    WvtSetPaint( ::aOldPnt )
    wvt_SetGUI( ::lGui )
@@ -548,8 +548,8 @@ METHOD WvtDialog:Inkey()
       ENDIF
 
       IF !::lEventHandled
-         IF HB_IsEvalItem( SetKey( ::nKey ) )
-            Eval( SetKey( ::nKey ) )
+         IF HB_IsEvalItem(SetKey(::nKey))
+            Eval( SetKey(::nKey) )
          ENDIF
       ENDIF
    ENDIF
@@ -639,7 +639,7 @@ METHOD WvtDialog:Eval( bBlock, p1, p2, p3, p4, p5 )
 
    LOCAL lRet
 
-   IF ( lRet := HB_IsEvalItem( bBlock ) )
+   IF ( lRet := HB_IsEvalItem(bBlock) )
       Eval( bBlock, p1, p2, p3, p4, p5 )
    ENDIF
 
@@ -651,9 +651,9 @@ METHOD WvtDialog:ActivateMenu()
    LOCAL aMenuItem
 
    IF nMenu != 0
-      IF HB_IsObject( ::oMenu )
+      IF HB_IsObject(::oMenu)
          IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nMenu))
-            IF HB_IsEvalItem( aMenuItem[ WVT_MENU_ACTION ] )
+            IF HB_IsEvalItem(aMenuItem[ WVT_MENU_ACTION ])
                Eval( aMenuItem[ WVT_MENU_ACTION ] )
             ENDIF
          ENDIF

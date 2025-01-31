@@ -51,7 +51,7 @@ FUNCTION StrOccurs( cSub, cStr, lAny )
 
    LOCAL nCount := 0, nPos := 0
 
-   IF HB_IsString( cSub ) .AND. HB_IsString( cStr )
+   IF HB_IsString(cSub) .AND. HB_IsString(cStr)
       IF hb_defaultValue( lAny, PCount() < 3 )
          DO WHILE ( nPos := hb_At( cSub, cStr, nPos + 1 ) ) != 0
             nCount++

@@ -24,15 +24,15 @@ PROCEDURE Main()
    nelapsed := nstop - nstart
    ? "time for 100 merges:", nelapsed
 
-   ? PadR( "ft_AAddition( aList1, aList2 ) ->", 44 )
+   ? PadR("ft_AAddition( aList1, aList2 ) ->", 44)
    AEval( var0, {| x | QQOut( x + "," ) } )
    ?
    var0 := ft_AAddition( aList1, aList2, , .F. )
-   ? PadR( "ft_AAddition( aList1, aList2, , .F. ) ->", 44 )
+   ? PadR("ft_AAddition( aList1, aList2, , .F. ) ->", 44)
    AEval( var0, {| x | QQOut( x + "," ) } )
    ?
    var0 := ft_AAddition( aList1, aList2, .F., .F. )
-   ? PadR( "ft_AAddition( aList1, aList2, .F., .F. ) ->", 44 )
+   ? PadR("ft_AAddition( aList1, aList2, .F., .F. ) ->", 44)
    AEval( var0, {| x | QQOut( x + "," ) } )
    ?
 

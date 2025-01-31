@@ -67,7 +67,7 @@ FUNCTION Sys( nValue, xPar1 )
       RETURN DToC(CToD("") + hb_defaultValue( xPar1, 0 ))
    CASE 11
       RETURN hb_ntos( IIf(HB_IsDateTime( xPar1 ), xPar1, ;
-                           IIf(HB_IsString( xPar1 ), CToD(xPar1), ;
+                           IIf(HB_IsString(xPar1), CToD(xPar1), ;
                            Date())) - CToD("") )
    CASE 100
       RETURN IIf(Set( _SET_CONSOLE ), "ON", "OFF")
@@ -100,7 +100,7 @@ STATIC FUNCTION AFillNested(aValue, xVal)
    LOCAL item
 
    FOR EACH item IN aValue
-      IF HB_IsArray( item )
+      IF HB_IsArray(item)
          AFillNested(item, xVal)
       ELSE
          item := xVal

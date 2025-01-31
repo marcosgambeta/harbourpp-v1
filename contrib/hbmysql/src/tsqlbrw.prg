@@ -177,7 +177,7 @@ METHOD TBrowseSQL:New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable )
       oCol := TBColumnSQL():New( ::oCurRow:FieldName( i ),, Self )
 
       IF !( ::oCurRow:FieldType( i ) == "M" )
-         oCol:Width := Max( ::oCurRow:FieldLen(i), Len(oCol:Heading) )
+         oCol:Width := Max(::oCurRow:FieldLen(i), Len(oCol:Heading))
       ELSE
          oCol:Width := 10
       ENDIF
@@ -250,7 +250,7 @@ METHOD TBrowseSQL:EditField()
    IF ::oCurRow:FieldType( oCol:nFieldNum ) == "M"
 
       /* save, clear, and frame window for memoedit */
-      cMemoBuff := SaveScreen( 10, 10, 22, 69 )
+      cMemoBuff := SaveScreen(10, 10, 22, 69)
 
       hb_Scroll( 10, 10, 22, 69, 0 )
       hb_DispBox( 10, 10, 22, 69 )
@@ -270,7 +270,7 @@ METHOD TBrowseSQL:EditField()
          ENDIF
       ENDIF
 
-      RestScreen( 10, 10, 22, 69, cMemoBuff )
+      RestScreen(10, 10, 22, 69, cMemoBuff)
 
    ELSE
       // Create a corresponding GET
@@ -321,8 +321,8 @@ METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
    IF !HB_IsNumeric(nKey)
       nKey := NIL
    ENDIF
-   hb_default( @lCanEdit, .F. )
-   hb_default( @aExitKeys, { K_ESC } )
+   hb_default(@lCanEdit, .F.)
+   hb_default(@aExitKeys, {K_ESC})
 
    DO WHILE lKeepGoing
 

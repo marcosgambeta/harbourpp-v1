@@ -20,8 +20,8 @@ PROCEDURE Main()
    s_lSizeReady := .T.
 
    // the biggest possible window
-   SetColor( "N/W" )
-   SetMode( wvw_MaxMaxRow() + 1, wvw_MaxMaxCol() + 1 )
+   SetColor("N/W")
+   SetMode(wvw_MaxMaxRow() + 1, wvw_MaxMaxCol() + 1)
 
    // enable MAXIMIZE button
    wvw_EnableMaximize( 0, .T. )
@@ -105,11 +105,11 @@ FUNCTION WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )
          .OR. MaxRow() != wvw_MaxMaxRow()
 
       IF lNeedReset
-         maxsavedscrrow := Min( Min( s_nNormalMaxrow, wvw_MaxMaxRow() ), MaxRow() )
-         maxsavedscrcol := Min( Min( s_nNormalMaxcol, wvw_MaxMaxCol() ), MaxCol() )
-         cScreen := SaveScreen( 0, 0, maxsavedscrrow, maxsavedscrcol )
-         IF SetMode( wvw_MaxMaxRow() + 1, wvw_MaxMaxCol() + 1 ) // adjust MaxRow() & MaxCol()
-            RestScreen( 0, 0, maxsavedscrrow, maxsavedscrcol, cScreen )
+         maxsavedscrrow := Min(Min(s_nNormalMaxrow, wvw_MaxMaxRow()), MaxRow())
+         maxsavedscrcol := Min(Min(s_nNormalMaxcol, wvw_MaxMaxCol()), MaxCol())
+         cScreen := SaveScreen(0, 0, maxsavedscrrow, maxsavedscrcol)
+         IF SetMode(wvw_MaxMaxRow() + 1, wvw_MaxMaxCol() + 1) // adjust MaxRow() & MaxCol()
+            RestScreen(0, 0, maxsavedscrrow, maxsavedscrcol, cScreen)
          ENDIF
          diminfo()  // updatescr()
       ENDIF
@@ -118,11 +118,11 @@ FUNCTION WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )
       lNeedReset := MaxCol() != s_nNormalMaxcol .OR. ;
          MaxRow() != s_nNormalMaxrow
       IF lNeedReset
-         maxsavedscrrow := Min( s_nNormalMaxrow, MaxRow() )
-         maxsavedscrcol := Min( s_nNormalMaxcol, MaxCol() )
-         cScreen := SaveScreen( 0, 0, maxsavedscrrow, maxsavedscrcol )
-         IF SetMode( s_nNormalMaxrow + 1, s_nNormalMaxcol + 1 )
-            RestScreen( 0, 0, maxsavedscrrow, maxsavedscrcol, cScreen )
+         maxsavedscrrow := Min(s_nNormalMaxrow, MaxRow())
+         maxsavedscrcol := Min(s_nNormalMaxcol, MaxCol())
+         cScreen := SaveScreen(0, 0, maxsavedscrrow, maxsavedscrcol)
+         IF SetMode(s_nNormalMaxrow + 1, s_nNormalMaxcol + 1)
+            RestScreen(0, 0, maxsavedscrrow, maxsavedscrcol, cScreen)
          ENDIF
          diminfo()  // updatescr()
       ENDIF

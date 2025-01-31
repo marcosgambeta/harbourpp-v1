@@ -230,7 +230,7 @@ METHOD Thread:start(xAction, ...)
                ENDIF
 
                ::atStart(...)
-               IF HB_IsBlock( ::_atStart )
+               IF HB_IsBlock(::_atStart)
                   Eval(::_atStart, ...)
                ENDIF
 
@@ -269,7 +269,7 @@ METHOD Thread:start(xAction, ...)
                ENDDO
 
                ::atEnd(...)
-               IF HB_IsBlock( ::_atEnd )
+               IF HB_IsBlock(::_atEnd)
                   Eval(::_atEnd, ...)
                ENDIF
                ::active := .F.

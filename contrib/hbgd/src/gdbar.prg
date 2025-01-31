@@ -115,9 +115,9 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
 
    ::Create( sx, sy )
 
-   hb_default( @cColor, { 255, 255, 255 } )
+   hb_default(@cColor, {255, 255, 255})
 
-   ::SetColor( cColor[ 1 ], cColor[ 2 ], cColor[ 3 ] )
+   ::SetColor(cColor[ 1 ], cColor[ 2 ], cColor[ 3 ])
 
    ::error     := 0
    ::positionY := 0
@@ -127,10 +127,10 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
       ::filename := filename
    ENDIF
 
-   ::FillColor := ::SetColor( ::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ] )
-   ::BackColor := ::SetColor( ::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ] )
+   ::FillColor := ::SetColor(::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ])
+   ::BackColor := ::SetColor(::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ])
 
-   ::Setfont( "Arial" )
+   ::Setfont("Arial")
 
    // configures Fontes
    IF     ::textfont == 1 ; ::SetFontSmall()
@@ -149,13 +149,13 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
 
 METHOD GDBar:Configure( nMaxHeight, aFillColor, aBackColor, nRes, nTextFont, lBook, lDrawValue )
 
-   hb_default( @lBook      , .F. )
-   hb_default( @lDrawValue , .T. )
-   hb_default( @nMaxHeight , 25 )
-   hb_default( @nTextFont  , 2 )
-   hb_default( @nRes       , 2 )
-   hb_default( @aBackColor , { 255, 255, 255 } )
-   hb_default( @aFillColor , { 0, 0, 0 } )
+   hb_default(@lBook, .F.)
+   hb_default(@lDrawValue, .T.)
+   hb_default(@nMaxHeight, 25)
+   hb_default(@nTextFont, 2)
+   hb_default(@nRes, 2)
+   hb_default(@aBackColor, {255, 255, 255})
+   hb_default(@aFillColor, {0, 0, 0})
 
    ::book       := lBook
    ::maxHeight  := nMaxHeight
@@ -176,8 +176,8 @@ METHOD GDBar:SetText( ptext )
 
 METHOD GDBar:ResetColor()
 
-   ::FillColor := ::SetColor( ::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ] )
-   ::BackColor := ::SetColor( ::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ] )
+   ::FillColor := ::SetColor(::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ])
+   ::BackColor := ::SetColor(::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ])
 
    RETURN NIL
 
@@ -187,7 +187,7 @@ METHOD GDBar:Allocate()
    LOCAL G := ::color_b[ 2 ]
    LOCAL B := ::color_b[ 3 ]
 
-   RETURN ::SetColor( R, G, B )
+   RETURN ::SetColor(R, G, B)
 
 METHOD GDBar:DrawSingleBar( pcode )
 
@@ -241,14 +241,14 @@ METHOD GDBar:DrawError( ptext )
 
    ::error++
 
-   ::lastX := Max( ::GetFontWidth() * Len(ptext), ::lastX )
+   ::lastX := Max(::GetFontWidth() * Len(ptext), ::lastX)
    ::lastY := ::error * 15
 
    RETURN NIL
 
 METHOD GDBar:nextX( lI25 )
 
-   hb_default( @li25, .F. )
+   hb_default(@li25, .F.)
 
    IF li25
       ::positionX++
@@ -262,7 +262,7 @@ METHOD GDBar:DrawText( lIsI25 )
 
    LOCAL xPosition
 
-   hb_default( @lIsI25, .F. )
+   hb_default(@lIsI25, .F.)
 
    IF lIsI25
       If ::textfont != 0
@@ -286,7 +286,7 @@ METHOD GDBar:CheckCode()
    LOCAL i
 
    FOR i := 1 TO Len(::text)
-      IF HB_IsString( ::CheckValInArray( SubStr(::text, i, 1) ) )
+      IF HB_IsString(::CheckValInArray( SubStr(::text, i, 1) ))
          ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
          lRet := .F.
       ENDIF
@@ -302,9 +302,9 @@ METHOD GDBar:CheckValInArray( cChar )
 
 METHOD GDBar:Finish( image_style, quality, nFG )
 
-   hb_default( @image_style, IMG_FORMAT_PNG )
-   hb_default( @quality    , 95 )
-   hb_default( @nFG        , { 255, 255, 255 } )
+   hb_default(@image_style, IMG_FORMAT_PNG)
+   hb_default(@quality, 95)
+   hb_default(@nFG, {255, 255, 255})
 
    IF Empty(::filename) .OR. ::filename == NIL
 

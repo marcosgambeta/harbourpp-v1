@@ -171,14 +171,14 @@ METHOD TIPClient:New( oUrl, xTrace, oCredentials )
    LOCAL lSSL
 
    DO CASE
-   CASE HB_IsString( xTrace ) .OR. hb_defaultValue( xTrace, .F. )
-      oLog := TIPLog():New( IIf(HB_IsString( xTrace ), xTrace, NIL) )
+   CASE HB_IsString(xTrace) .OR. hb_defaultValue( xTrace, .F. )
+      oLog := TIPLog():New( IIf(HB_IsString(xTrace), xTrace, NIL) )
       ::bTrace := {| cMsg | IIf(PCount() > 0, oLog:Add( cMsg ), oLog:Close()) }
-   CASE HB_IsEvalItem( xTrace )
+   CASE HB_IsEvalItem(xTrace)
       ::bTrace := xTrace
    ENDCASE
 
-   IF HB_IsString( oUrl )
+   IF HB_IsString(oUrl)
       oUrl := TUrl():New( oUrl )
    ENDIF
 
@@ -235,7 +235,7 @@ METHOD TIPClient:Open( cUrl )
 
    LOCAL nPort
 
-   IF HB_IsString( cUrl )
+   IF HB_IsString(cUrl)
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
@@ -299,10 +299,10 @@ METHOD TIPClient:OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName
       cRequest := ;
          "CONNECT " + cServer + ":" + hb_ntos( nPort ) + " HTTP/1.1" + Chr(13) + Chr(10) + ;
          "Proxy-Connection: Keep-Alive" + Chr(13) + Chr(10)
-      IF HB_IsString( cUserAgent ) .AND. ! cUserAgent == ""
+      IF HB_IsString(cUserAgent) .AND. ! cUserAgent == ""
          cRequest += "User-Agent: " + cUserAgent + Chr(13) + Chr(10)
       ENDIF
-      IF HB_IsString( cUserName ) .AND. ! cUserName == ""
+      IF HB_IsString(cUserName) .AND. ! cUserName == ""
          cRequest += "Proxy-Authorization: Basic " + hb_base64Encode( cUserName + ":" + hb_defaultValue( cPassword, "" ) ) + Chr(13) + Chr(10)
       ENDIF
       cRequest += Chr(13) + Chr(10)
@@ -366,7 +366,7 @@ METHOD TIPClient:Close()
       ::lProxyXferSSL := .F.
    ENDIF
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       /* Call with no parameter to signal end of logging session */
       Eval( ::bTrace )
    ENDIF
@@ -444,13 +444,13 @@ METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
 
    LOCAL lToMemory := hb_PIsByRef(1)
 
-   hb_default( @nSize, 0 )
+   hb_default(@nSize, 0)
 
    IF lToMemory
       cFile := ""
    ENDIF
 
-   IF HB_IsEvalItem( ::exGauge ) .AND. ;
+   IF HB_IsEvalItem(::exGauge) .AND. ;
       ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
       RETURN .F.
    ENDIF
@@ -481,7 +481,7 @@ METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
 
       nSent += hb_BLen(cData)
 
-      IF HB_IsEvalItem( ::exGauge ) .AND. ;
+      IF HB_IsEvalItem(::exGauge) .AND. ;
          ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
          IF hFile != NIL
             hb_vfClose( hFile )
@@ -521,7 +521,7 @@ METHOD TIPClient:WriteFromFile( cFile )
    // allow initialization of the gauge
    nSent := 0
 
-   IF HB_IsEvalItem( ::exGauge ) .AND. ;
+   IF HB_IsEvalItem(::exGauge) .AND. ;
       ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
       hb_vfClose( nFIn )
       RETURN .F.
@@ -535,7 +535,7 @@ METHOD TIPClient:WriteFromFile( cFile )
          RETURN .F.
       ENDIF
       nSent += nLen
-      IF HB_IsEvalItem( ::exGauge ) .AND. ;
+      IF HB_IsEvalItem(::exGauge) .AND. ;
          ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
          hb_vfClose( nFIn )
          RETURN .F.
@@ -590,7 +590,7 @@ METHOD TIPClient:inetSendAll( SocketCon, cData, nLen )
       nRet := hb_inetSendAll( SocketCon, cData, nLen )
    ENDIF
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( SocketCon, nlen, cData, nRet )
    ENDIF
 
@@ -600,7 +600,7 @@ METHOD TIPClient:inetCount( SocketCon )
 
    LOCAL nRet := hb_inetCount( SocketCon )
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( SocketCon, nRet )
    ENDIF
 
@@ -624,7 +624,7 @@ METHOD TIPClient:inetRecv( SocketCon, cStr1, len )
       nRet := hb_inetRecv( SocketCon, @cStr1, len )
    ENDIF
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( SocketCon, "", len, IIf(nRet >= 0, cStr1, nRet) )
    ENDIF
 
@@ -652,7 +652,7 @@ METHOD TIPClient:inetRecvLine( SocketCon, nRet, size )
       cRet := hb_inetRecvLine( SocketCon, @nRet, size )
    ENDIF
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( SocketCon, "", size, cRet )
    ENDIF
 
@@ -680,7 +680,7 @@ METHOD TIPClient:inetRecvAll( SocketCon, cRet, size )
       nRet := hb_inetRecvAll( SocketCon, @cRet, size )
    ENDIF
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( SocketCon, "", size, IIf(nRet >= 0, cRet, nRet) )
    ENDIF
 
@@ -702,7 +702,7 @@ METHOD TIPClient:inetErrorCode( SocketCon )
 
    ::nLastError := nRet
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( SocketCon, nRet )
    ENDIF
 
@@ -710,7 +710,7 @@ METHOD TIPClient:inetErrorCode( SocketCon )
 
 METHOD TIPClient:inetErrorDesc(SocketCon)
 
-   hb_default( @SocketCon, ::SocketCon )
+   hb_default(@SocketCon, ::SocketCon)
 
    IF !Empty(SocketCon)
       IF ::lSSL
@@ -751,7 +751,7 @@ METHOD PROCEDURE TIPClient:inetConnect( cServer, nPort, SocketCon )
       ::lProxyXferSSL := .F.
    ENDIF
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
       ::Log( cServer, nPort, SocketCon )
    ENDIF
 
@@ -794,7 +794,7 @@ METHOD TIPClient:Log(...)
    LOCAL xVar
    LOCAL cMsg
 
-   IF HB_IsEvalItem( ::bTrace )
+   IF HB_IsEvalItem(::bTrace)
 
       cMsg := DToS( Date() ) + "-" + Time() + Space(2) + ;
          SubStr(ProcName(1), RAt( ":", ProcName(1) )) + ;

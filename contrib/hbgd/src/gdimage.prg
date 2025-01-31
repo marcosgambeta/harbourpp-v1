@@ -76,7 +76,7 @@ CREATE CLASS GDImage
 
    // Create in memory
    METHOD Create( sx, sy )                 INLINE ::pImage := gdImageCreate( sx, sy ), Self
-   METHOD CreateTrueColor( sx, sy )        INLINE ::pImage := gdImageCreateTrueColor( sx, sy ), Self
+   METHOD CreateTrueColor(sx, sy)        INLINE ::pImage := gdImageCreateTrueColor(sx, sy), Self
 
    // Load From File
    METHOD LoadFromPng( cFile )             INLINE ::pImage := gdImageCreateFromPng( cFile )          , IIf(::pImage != NIL, Self, NIL)
@@ -136,9 +136,9 @@ CREATE CLASS GDImage
 
    /* Drawing functions */
 
-   METHOD SetPixel( x, y, color )          INLINE hb_default( @color, ::pColor ), gdImageSetPixel( ::pImage, x, y, color )
-   METHOD Line( x1, y1, x2, y2, color )    INLINE hb_default( @color, ::pColor ), gdImageLine( ::pImage, x1, y1, x2, y2, color )
-   METHOD DashedLine( x1, y1, x2, y2, color )    INLINE hb_default( @color, ::pColor ), gdImageDashedLine( ::pImage, x1, y1, x2, y2, color )
+   METHOD SetPixel( x, y, color )          INLINE hb_default(@color, ::pColor), gdImageSetPixel( ::pImage, x, y, color )
+   METHOD Line( x1, y1, x2, y2, color )    INLINE hb_default(@color, ::pColor), gdImageLine( ::pImage, x1, y1, x2, y2, color )
+   METHOD DashedLine( x1, y1, x2, y2, color )    INLINE hb_default(@color, ::pColor), gdImageDashedLine( ::pImage, x1, y1, x2, y2, color )
 
    // Functions useful for polygons
    METHOD Polygon( aPoints, lFilled, color )
@@ -154,18 +154,18 @@ CREATE CLASS GDImage
    METHOD Circle( x, y, nRadius, lFilled, nColor ) ;
                                            INLINE ::Ellipse( x, y, nRadius, nRadius, lFilled, nColor )
 
-   METHOD Fill( x, y, color )              INLINE hb_default( @color, ::pColor ), gdImageFill( ::pImage, x, y, color )
+   METHOD Fill( x, y, color )              INLINE hb_default(@color, ::pColor), gdImageFill( ::pImage, x, y, color )
    METHOD FillToBorder( x, y, border, color ) ;
-                                           INLINE hb_default( @color, ::pColor ), gdImageFillToBorder( ::pImage, x, y, border, color )
-   METHOD SetAntiAliased(color)            INLINE hb_default( @color, ::pColor ), gdImageSetAntiAliased(::pImage, color)
+                                           INLINE hb_default(@color, ::pColor), gdImageFillToBorder( ::pImage, x, y, border, color )
+   METHOD SetAntiAliased(color)            INLINE hb_default(@color, ::pColor), gdImageSetAntiAliased(::pImage, color)
    METHOD SetAntiAliasedDontBlend(lDontBlend, color) ;
-                                           INLINE hb_default( @color, ::pColor ), gdImageSetAntiAliasedDontBlend(::pImage, color, lDontBlend)
+                                           INLINE hb_default(@color, ::pColor), gdImageSetAntiAliasedDontBlend(::pImage, color, lDontBlend)
 
    METHOD SetBrush( pBrush )               INLINE gdImageSetBrush( ::pImage, pBrush:pImage ), ::pBrush := pBrush
    METHOD SetTile( pTile )                 INLINE gdImageSetTile( ::pImage, pTile:pImage ), ::pTile := pTile
 
    // Functions usefull for style
-   METHOD SetStyle( aStyle )               INLINE hb_default( @aStyle, ::aStyles ), gdImageSetStyle( ::pImage, aStyle )
+   METHOD SetStyle( aStyle )               INLINE hb_default(@aStyle, ::aStyles), gdImageSetStyle( ::pImage, aStyle )
    METHOD AddStyle( pColor )               INLINE AAdd(::aStyles, pColor)
    METHOD ResetStyles()                    INLINE ::aStyles := {}
    METHOD StyleLenght()                    INLINE Len(::aStyles)
@@ -178,10 +178,10 @@ CREATE CLASS GDImage
    /* QUERY FUNCTIONS */
 
    METHOD ColorsTotal()                    INLINE gdImageColorsTotal( ::pImage )
-   METHOD Alpha(color)                     INLINE hb_default( @color, ::pColor ), gdImageAlpha(::pImage, color)
-   METHOD Red(color)                       INLINE hb_default( @color, ::pColor ), gdImageRed(::pImage, color)
-   METHOD Green( color )                   INLINE hb_default( @color, ::pColor ), gdImageGreen( ::pImage, color )
-   METHOD Blue( color )                    INLINE hb_default( @color, ::pColor ), gdImageBlue( ::pImage, color )
+   METHOD Alpha(color)                     INLINE hb_default(@color, ::pColor), gdImageAlpha(::pImage, color)
+   METHOD Red(color)                       INLINE hb_default(@color, ::pColor), gdImageRed(::pImage, color)
+   METHOD Green( color )                   INLINE hb_default(@color, ::pColor), gdImageGreen( ::pImage, color )
+   METHOD Blue( color )                    INLINE hb_default(@color, ::pColor), gdImageBlue( ::pImage, color )
    METHOD Width()                          INLINE gdImageSX( ::pImage )
    METHOD Height()                         INLINE gdImageSY( ::pImage )
    METHOD CenterWidth()                    INLINE ::Width() / 2
@@ -194,14 +194,14 @@ CREATE CLASS GDImage
    METHOD IsInterlaced()                   INLINE gdImageGetInterlaced(::pImage)
    METHOD GetTransparent()                 INLINE gdImageGetTransparent( ::pImage )
    METHOD IsTransparent()                  INLINE ::GetTransparent() > 0
-   METHOD IsTrueColor()                    INLINE gdImageTrueColor( ::pImage )
+   METHOD IsTrueColor()                    INLINE gdImageTrueColor(::pImage)
 
    METHOD ConvertFromTrueColorToPalette( lDither, nColorsWanted ) ;
                                            INLINE gdImageTrueColorToPalette ( ::pImage, lDither, nColorsWanted )
-   METHOD CreatePaletteFromTrueColor( lDither, nColorsWanted ) ;
-                                           INLINE gdImageCreatePaletteFromTrueColor( ::pImage, lDither, nColorsWanted )
+   METHOD CreatePaletteFromTrueColor(lDither, nColorsWanted) ;
+                                           INLINE gdImageCreatePaletteFromTrueColor(::pImage, lDither, nColorsWanted)
    METHOD GetPalette( x, y )               INLINE gdImagePalettePixel( ::pImage, x, y )
-   METHOD GetTrueColor( x, y )             INLINE gdImageTrueColorPixel( ::pImage, x, y )
+   METHOD GetTrueColor(x, y)             INLINE gdImageTrueColorPixel( ::pImage, x, y )
    METHOD GetThickness()                   INLINE gdImageGetThickness( ::pImage )
 
    /* FONTS AND TEXT-HANDLING FUNCTIONS */
@@ -211,7 +211,7 @@ CREATE CLASS GDImage
    METHOD SetFontGiant()                   INLINE ::pFont := gdFontGetGiant()
    METHOD SetFontTiny()                    INLINE ::pFont := gdFontGetTiny()
    METHOD Say( x, y, cString, color, nAlign )
-   METHOD SayVertical( x, y, cString, color )  INLINE hb_default( @color, ::pColor ), gdImageStringUp( ::pImage, ::pFont, x, y, cString, color )
+   METHOD SayVertical( x, y, cString, color )  INLINE hb_default(@color, ::pColor), gdImageStringUp( ::pImage, ::pFont, x, y, cString, color )
 
    METHOD SetFontName( cFontName )         INLINE ::cFontName  := cFontName
    METHOD SetFontPitch( nPitch )           INLINE ::nFontPitch := nPitch
@@ -220,29 +220,29 @@ CREATE CLASS GDImage
                        nLineSpacing, nCharMap, nResolution )
 
    METHOD SayFreeTypeCircle( x, y, cStringTop, cStringBottom, color, nRadius, nTextRadius, nFillPortion, cFontName, nPitch ) ;
-                                           INLINE hb_default( @color, ::pColor ), gdImageStringFTCircle( ::pImage, x, y, nRadius, ;
+                                           INLINE hb_default(@color, ::pColor), gdImageStringFTCircle( ::pImage, x, y, nRadius, ;
                                                            nTextRadius, nFillPortion, cFontName, nPitch, cStringTop, cStringBottom, color )
 
    METHOD GetFont()                        INLINE ::pFont
-   METHOD GetFontWidth( pFont )            INLINE hb_default( @pFont, ::pFont ), gdFontGetWidth( pFont )
-   METHOD GetFontHeight( pFont )           INLINE hb_default( @pFont, ::pFont ), gdFontGetHeight( pFont )
+   METHOD GetFontWidth( pFont )            INLINE hb_default(@pFont, ::pFont), gdFontGetWidth( pFont )
+   METHOD GetFontHeight( pFont )           INLINE hb_default(@pFont, ::pFont), gdFontGetHeight( pFont )
 
-   METHOD GetFTFontWidth( cFontName, nPitch )  INLINE hb_default( @cFontName, ::cFontName ), ;
-                                                      hb_default( @nPitch, ::nFontPitch )  , ;
+   METHOD GetFTFontWidth( cFontName, nPitch )  INLINE hb_default(@cFontName, ::cFontName), ;
+                                                      hb_default(@nPitch, ::nFontPitch)  , ;
                                                       gdImageFTWidth( cFontName, nPitch )
 
-   METHOD GetFTFontHeight( cFontName, nPitch ) INLINE hb_default( @cFontName, ::cFontName ), ;
-                                                      hb_default( @nPitch, ::nFontPitch )  , ;
+   METHOD GetFTFontHeight( cFontName, nPitch ) INLINE hb_default(@cFontName, ::cFontName), ;
+                                                      hb_default(@nPitch, ::nFontPitch)  , ;
                                                       gdImageFTHeight( cFontName, nPitch )
 
-   METHOD GetFTStringSize( cString, cFontName, nPitch ) INLINE hb_default( @cFontName, ::cFontName ), ;
-                                                      hb_default( @nPitch, ::nFontPitch )  , ;
+   METHOD GetFTStringSize( cString, cFontName, nPitch ) INLINE hb_default(@cFontName, ::cFontName), ;
+                                                      hb_default(@nPitch, ::nFontPitch)  , ;
                                                       gdImageFTSize( cString, cFontName, nPitch )
 
    /* COLOR HANDLING FUNCTIONS */
 
-   METHOD SetColor( r, g, b )              INLINE IIf(PCount() == 2, ::pColor := r, ::pColor := gdImageColorAllocate( ::pImage, r, g, b ))
-   METHOD DelColor( pColor )               INLINE ::pColor := NIL, gdImageColorDeallocate( ::pImage, pColor )
+   METHOD SetColor(r, g, b)              INLINE IIf(PCount() == 2, ::pColor := r, ::pColor := gdImageColorAllocate( ::pImage, r, g, b ))
+   METHOD DelColor(pColor)               INLINE ::pColor := NIL, gdImageColorDeallocate( ::pImage, pColor )
    METHOD SetColorAlpha(r, g, b, a)        INLINE ::pColor := gdImageColorAllocateAlpha(::pImage, r, g, b, a)
    METHOD SetColorClosest( r, g, b )       INLINE ::pColor := gdImageColorClosest( ::pImage, r, g, b )
    METHOD SetColorClosestAlpha(r, g, b, a) INLINE ::pColor := gdImageColorClosestAlpha(::pImage, r, g, b, a)
@@ -305,9 +305,9 @@ METHOD PROCEDURE GDImage:Destruct()
 
 METHOD GDImage:Polygon( aPoints, lFilled, color )
 
-   hb_default( @aPoints, ::aPoints )
-   hb_default( @lFilled, .F. )
-   hb_default( @color, ::pColor )
+   hb_default(@aPoints, ::aPoints)
+   hb_default(@lFilled, .F.)
+   hb_default(@color, ::pColor)
 
    IF lFilled
       gdImageFilledPolygon( ::pImage, aPoints, color )
@@ -319,8 +319,8 @@ METHOD GDImage:Polygon( aPoints, lFilled, color )
 
 METHOD GDImage:OpenPolygon( aPoints, color )
 
-   hb_default( @aPoints, ::aPoints )
-   hb_default( @color, ::pColor )
+   hb_default(@aPoints, ::aPoints)
+   hb_default(@color, ::pColor)
 
    gdImageOpenPolygon( ::pImage, aPoints, color )
 
@@ -328,8 +328,8 @@ METHOD GDImage:OpenPolygon( aPoints, color )
 
 METHOD GDImage:Rectangle( x1, y1, x2, y2, lFilled, color )
 
-   hb_default( @lFilled, .F. )
-   hb_default( @color, ::pColor )
+   hb_default(@lFilled, .F.)
+   hb_default(@color, ::pColor)
 
    IF lFilled
       gdImageFilledRectangle( ::pImage, x1, y1, x2, y2, color )
@@ -341,9 +341,9 @@ METHOD GDImage:Rectangle( x1, y1, x2, y2, lFilled, color )
 
 METHOD GDImage:Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle)
 
-   hb_default( @lFilled, .F. )
-   hb_default( @color, ::pColor )
-   hb_default( @nStyle, gdArc )
+   hb_default(@lFilled, .F.)
+   hb_default(@color, ::pColor)
+   hb_default(@nStyle, gdArc)
 
    IF lFilled
       gdImageFilledArc(::pImage, x, y, nWidth, nHeight, nStartDegree, nEndDegree, color, nStyle)
@@ -355,8 +355,8 @@ METHOD GDImage:Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, col
 
 METHOD GDImage:Ellipse( x, y, nWidth, nHeight, lFilled, color )
 
-   hb_default( @lFilled, .F. )
-   hb_default( @color, ::pColor )
+   hb_default(@lFilled, .F.)
+   hb_default(@color, ::pColor)
 
    IF lFilled
       gdImageFilledEllipse( ::pImage, x, y, nWidth, nHeight, color )
@@ -392,16 +392,16 @@ METHOD GDImage:Destroy()
 
 METHOD GDImage:Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage )
 
-   hb_default( @nSrcX     , 0 )
-   hb_default( @nSrcY     , 0 )
-   hb_default( @nWidth    , ::Width() )
-   hb_default( @nHeight   , ::Height() )
-   hb_default( @nDstX     , 0 )
-   hb_default( @nDstY     , 0 )
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nWidth, ::Width())
+   hb_default(@nHeight, ::Height())
+   hb_default(@nDstX, 0)
+   hb_default(@nDstY, 0)
 
    IF oDestImage == NIL
       IF ::IsTrueColor()
-         oDestImage := GDImage():CreateTrueColor( nWidth, nHeight )
+         oDestImage := GDImage():CreateTrueColor(nWidth, nHeight)
       ELSE
          oDestImage := GDImage():Create( nWidth, nHeight )
       ENDIF
@@ -413,18 +413,18 @@ METHOD GDImage:Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage )
 
 METHOD GDImage:CopyResized(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage)
 
-   hb_default( @nSrcX     , 0 )
-   hb_default( @nSrcY     , 0 )
-   hb_default( @nSrcWidth , ::Width() )
-   hb_default( @nSrcHeight, ::Height() )
-   hb_default( @nDstX     , 0 )
-   hb_default( @nDstY     , 0 )
-   hb_default( @nDstWidth , ::Width() )
-   hb_default( @nDstHeight, ::Height() )
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nSrcWidth, ::Width())
+   hb_default(@nSrcHeight, ::Height())
+   hb_default(@nDstX, 0)
+   hb_default(@nDstY, 0)
+   hb_default(@nDstWidth, ::Width())
+   hb_default(@nDstHeight, ::Height())
 
    IF oDestImage == NIL
       IF ::IsTrueColor()
-         oDestImage := GDImage():CreateTrueColor( nDstWidth, nDstHeight )
+         oDestImage := GDImage():CreateTrueColor(nDstWidth, nDstHeight)
       ELSE
          oDestImage := GDImage():Create( nDstWidth, nDstHeight )
       ENDIF
@@ -436,18 +436,18 @@ METHOD GDImage:CopyResized(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nD
 
 METHOD GDImage:CopyResampled(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage)
 
-   hb_default( @nSrcX      , 0 )
-   hb_default( @nSrcY      , 0 )
-   hb_default( @nSrcWidth  , ::Width() )
-   hb_default( @nSrcHeight , ::Height() )
-   hb_default( @nDstX      , 0 )
-   hb_default( @nDstY      , 0 )
-   hb_default( @nDstWidth  , ::Width() )
-   hb_default( @nDstHeight , ::Height() )
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nSrcWidth, ::Width())
+   hb_default(@nSrcHeight, ::Height())
+   hb_default(@nDstX, 0)
+   hb_default(@nDstY, 0)
+   hb_default(@nDstWidth, ::Width())
+   hb_default(@nDstHeight, ::Height())
 
    IF oDestImage == NIL
       IF ::IsTrueColor()
-         oDestImage := GDImage():CreateTrueColor( nDstWidth, nDstHeight )
+         oDestImage := GDImage():CreateTrueColor(nDstWidth, nDstHeight)
       ELSE
          oDestImage := GDImage():Create( nDstWidth, nDstHeight )
       ENDIF
@@ -459,17 +459,17 @@ METHOD GDImage:CopyResampled(nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, 
 
 METHOD GDImage:CopyRotated(nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage)
 
-   hb_default( @nSrcX      , 0 )
-   hb_default( @nSrcY      , 0 )
-   hb_default( @nWidth     , ::Width )
-   hb_default( @nHeight    , ::Height )
-   hb_default( @nDstX      , nWidth / 2 )
-   hb_default( @nDstY      , nHeight / 2 )
-   hb_default( @nAngle     , 90 )
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nWidth, ::Width)
+   hb_default(@nHeight, ::Height)
+   hb_default(@nDstX, nWidth / 2)
+   hb_default(@nDstY, nHeight / 2)
+   hb_default(@nAngle, 90)
 
    IF oDestImage == NIL
       IF ::IsTrueColor()
-         oDestImage := GDImage():CreateTrueColor( nWidth, nHeight )
+         oDestImage := GDImage():CreateTrueColor(nWidth, nHeight)
       ELSE
          oDestImage := GDImage():Create( nWidth, nHeight )
       ENDIF
@@ -481,17 +481,17 @@ METHOD GDImage:CopyRotated(nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, 
 
 METHOD GDImage:CopyMerge( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage )
 
-   hb_default( @nSrcX      , 0 )
-   hb_default( @nSrcY      , 0 )
-   hb_default( @nWidth     , ::Width )
-   hb_default( @nHeight    , ::Height )
-   hb_default( @nDstX      , 0 )
-   hb_default( @nDstY      , 0 )
-   hb_default( @nPerc      , 100 )
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nWidth, ::Width)
+   hb_default(@nHeight, ::Height)
+   hb_default(@nDstX, 0)
+   hb_default(@nDstY, 0)
+   hb_default(@nPerc, 100)
 
    IF oDestImage == NIL
       IF ::IsTrueColor()
-         oDestImage := GDImage():CreateTrueColor( nWidth, nHeight )
+         oDestImage := GDImage():CreateTrueColor(nWidth, nHeight)
       ELSE
          oDestImage := GDImage():Create( nWidth, nHeight )
       ENDIF
@@ -503,17 +503,17 @@ METHOD GDImage:CopyMerge( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oD
 
 METHOD GDImage:CopyMergeGray( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage )
 
-   hb_default( @nSrcX      , 0 )
-   hb_default( @nSrcY      , 0 )
-   hb_default( @nWidth     , ::Width )
-   hb_default( @nHeight    , ::Height )
-   hb_default( @nDstX      , 0 )
-   hb_default( @nDstY      , 0 )
-   hb_default( @nPerc      , 100 )
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nWidth, ::Width)
+   hb_default(@nHeight, ::Height)
+   hb_default(@nDstX, 0)
+   hb_default(@nDstY, 0)
+   hb_default(@nPerc, 100)
 
    IF oDestImage == NIL
       IF ::IsTrueColor()
-         oDestImage := GDImage():CreateTrueColor( nWidth, nHeight )
+         oDestImage := GDImage():CreateTrueColor(nWidth, nHeight)
       ELSE
          oDestImage := GDImage():Create( nWidth, nHeight )
       ENDIF
@@ -528,11 +528,11 @@ METHOD GDImage:CopyZoomed(nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight)
    LOCAL oDestImage
    LOCAL nDstX, nDstY, nDstWidth, nDstHeight
 
-   hb_default( @nPerc      , 100 )
-   hb_default( @nSrcX      , 0 )
-   hb_default( @nSrcY      , 0 )
-   hb_default( @nSrcWidth  , ::Width() )
-   hb_default( @nSrcHeight , ::Height() )
+   hb_default(@nPerc, 100)
+   hb_default(@nSrcX, 0)
+   hb_default(@nSrcY, 0)
+   hb_default(@nSrcWidth, ::Width())
+   hb_default(@nSrcHeight, ::Height())
 
    IF nPerc < 0
       nPerc := 100
@@ -544,7 +544,7 @@ METHOD GDImage:CopyZoomed(nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight)
    nDstHeight := nSrcHeight * nPerc / 100
 
    IF ::IsTrueColor()
-      oDestImage := GDImage():CreateTrueColor( nDstWidth, nDstHeight )
+      oDestImage := GDImage():CreateTrueColor(nDstWidth, nDstHeight)
    ELSE
       oDestImage := GDImage():Create( nDstWidth, nDstHeight )
    ENDIF
@@ -559,7 +559,7 @@ METHOD GDImage:Rotate( nAngle, lInside )
    LOCAL nWidth, nHeight
    LOCAL nAngRad := nAngle * Pi() / 180
 
-   hb_default( @lInside, .F. )
+   hb_default(@lInside, .F.)
 
    IF !lInside
       nWidth  := ::Width * Cos( nAngRad ) + ::Height * Sin( nAngRad )
@@ -570,7 +570,7 @@ METHOD GDImage:Rotate( nAngle, lInside )
    ENDIF
 
    IF ::IsTrueColor()
-      oDestImage := GDImage():CreateTrueColor( nWidth, nHeight )
+      oDestImage := GDImage():CreateTrueColor(nWidth, nHeight)
    ELSE
       oDestImage := GDImage():Create( nWidth, nHeight )
    ENDIF
@@ -632,7 +632,7 @@ METHOD GDImage:Clone()
    LOCAL pImage
 
    IF ::IsTrueColor()
-      oDestImage := GDImage():CreateTrueColor( ::Width, ::Height )
+      oDestImage := GDImage():CreateTrueColor(::Width, ::Height)
    ELSE
       oDestImage := GDImage():Create( ::Width, ::Height )
    ENDIF
@@ -654,8 +654,8 @@ METHOD GDImage:Say( x, y, cString, color, nAlign )
    LOCAL nWidth, nLen
    LOCAL nPosX
 
-   hb_default( @color, ::pColor )
-   hb_default( @nAlign, gdAlignLeft )
+   hb_default(@color, ::pColor)
+   hb_default(@nAlign, gdAlignLeft)
 
    IF     nAlign == gdAlignCenter
       nWidth := ::GetFontWidth()
@@ -679,11 +679,11 @@ METHOD GDImage:SayFreeType( x, y, cString, cFontName, nPitch, nAngle, color, nAl
    LOCAL nWidth, nLen
    LOCAL nPosX
 
-   hb_default( @nAlign    , gdAlignLeft )
-   hb_default( @color     , ::pColor )
-   hb_default( @cFontName , ::cFontName )
-   hb_default( @nPitch    , ::nFontPitch )
-   hb_default( @nAngle    , ::nFontAngle )
+   hb_default(@nAlign, gdAlignLeft)
+   hb_default(@color, ::pColor)
+   hb_default(@cFontName, ::cFontName)
+   hb_default(@nPitch, ::nFontPitch)
+   hb_default(@nAngle, ::nFontAngle)
 
    IF     nAlign == gdAlignCenter
       nWidth := nPitch // gdImageFTWidth( cFontName, nPitch )//, ::Radians( nAngle ) ) //::GetFontWidth()

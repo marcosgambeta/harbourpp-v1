@@ -54,7 +54,7 @@ FUNCTION EditorNew( nTop, nLeft, nBottom, nRight, nLength, ;
    LOCAL pEdit, oEdit
 
    __defaultNIL( @nSize, t_nESize )
-   hb_default( @nLength, 80 )
+   hb_default(@nLength, 80)
 
    pEdit := ed_New( nLength, 4, nSize, nEscape )
    IF !Empty(pEdit)
@@ -99,7 +99,7 @@ FUNCTION EditorTitle( oEdit, cTitle )
 
    LOCAL _cTitle := oEdit[ E_TITLE ]
 
-   IF HB_IsString( cTitle )
+   IF HB_IsString(cTitle)
       oEdit[ E_TITLE ] := cTitle
    ENDIF
 
@@ -113,7 +113,7 @@ FUNCTION EditorMode( oEdit, lMode )
 
    LOCAL _lMode := oEdit[ E_MODE ]
 
-   IF HB_IsLogical( lMode )
+   IF HB_IsLogical(lMode)
       oEdit[ E_MODE ] := lMode
    ENDIF
 
@@ -164,7 +164,7 @@ PROCEDURE EditorInsText( oEdit, cText, nLine )
 
 FUNCTION EditorGetText( oEdit, nCarret )
 
-   hb_default( @nCarret, EDIT_HARD )
+   hb_default(@nCarret, EDIT_HARD)
 
    RETURN ed_GetText( oEdit[ E_EDIT ], nCarret )
 
@@ -209,9 +209,9 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
    LOCAL nHandle, nLen, oEdit, lSaved, lClose := .F.
    LOCAL nSize
 
-   hb_default( @lSave, .T. )
+   hb_default(@lSave, .T.)
 
-   IF HB_IsString( xInput )
+   IF HB_IsString(xInput)
       nHandle := FOpen( xInput )
       lClose := .T.
    ELSE
@@ -219,7 +219,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
    ENDIF
 
    IF nHandle != F_ERROR
-      nLen := Max( FileLength( nHandle ), t_nESize )
+      nLen := Max(FileLength( nHandle ), t_nESize)
    ELSE
       nLen := t_nESize
    ENDIF
@@ -282,10 +282,10 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
    SayInsert()
 #endif
    nCursor := SetCursor( IIf(oEdit[ E_INSERT ], SC_NORMAL, SC_SPECIAL1) )
-   IF HB_IsLogical( lEdit )
+   IF HB_IsLogical(lEdit)
       oEdit[ E_MODE ] := lEdit
    ENDIF
-   lSaveAllowed := ( SetKey( K_F2 ) == NIL )
+   lSaveAllowed := ( SetKey(K_F2) == NIL )
 #if 0
    IF lSaveAllowed
       DisplayHelp( 73 )     // F2-save
@@ -325,7 +325,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
          nCol := ed_Col( oEdit[ E_EDIT ] )
          hb_DispOutAt( oEdit[ E_TOP ], nState + 5, StrZero( nCol, 3 ) )
       ENDIF
-      SetPos( nTop + ed_WinRow( oEdit[ E_EDIT ] ), nLeft + ed_WinCol( oEdit[ E_EDIT ] ) )
+      SetPos(nTop + ed_WinRow( oEdit[ E_EDIT ] ), nLeft + ed_WinCol( oEdit[ E_EDIT ] ))
 
 #if 0
       nKey := WaitForKey()
@@ -357,8 +357,8 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
          EXIT
 
       OTHERWISE
-         bKey := SetKey( nKey )
-         IF HB_IsBlock( bKey )
+         bKey := SetKey(nKey)
+         IF HB_IsBlock(bKey)
             Eval( bKey, oEdit )
          ELSE
             IF oEdit[ E_MODE ]
@@ -465,12 +465,12 @@ FUNCTION SaveBox( top, left, bott, right, color, patt )
    LOCAL cBox, cClr, nBottom, nRight
 
    IF PCount() > 4
-      cClr    := SetColor( color )
-      cBox    := SaveScreen( top, left, bott, right )
+      cClr    := SetColor(color)
+      cBox    := SaveScreen(top, left, bott, right)
       hb_DispBox( top, left, bott, right, patt )
    ELSE
       cClr    := SetColor()
-      cBox    := SaveScreen( top, left, bott, right )
+      cBox    := SaveScreen(top, left, bott, right)
       nBottom := bott
       nRight  := right
    ENDIF
@@ -479,8 +479,8 @@ FUNCTION SaveBox( top, left, bott, right, color, patt )
 
 PROCEDURE RestBox( oBox )
 
-   RestScreen( oBox[ 1 ], oBox[ 2 ], oBox[ 3 ], oBox[ 4 ], oBox[ 5 ] )
-   SetColor( oBox[ 6 ] )
+   RestScreen(oBox[ 1 ], oBox[ 2 ], oBox[ 3 ], oBox[ 4 ], oBox[ 5 ])
+   SetColor(oBox[ 6 ])
 
    RETURN
 

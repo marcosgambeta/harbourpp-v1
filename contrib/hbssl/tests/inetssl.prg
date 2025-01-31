@@ -180,7 +180,7 @@ STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
    ENDIF
 
    /* verify private key */
-   IF !SSL_CTX_check_private_key( ssl_ctx ) == 1
+   IF !SSL_CTX_check_private_key(ssl_ctx) == 1
       OutErr( e"SERVER: Private key does not match the public certificate\n" )
       QUIT
    ENDIF

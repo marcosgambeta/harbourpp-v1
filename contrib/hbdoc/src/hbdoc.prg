@@ -208,18 +208,18 @@ PROCEDURE Main(...)
    OutStd(hb_eol())
 
    ASort( aContent,,, {| oL, oR | ;
-         PadR( SortWeight( oL:fld[ "CATEGORY" ] ), 20 ) + ;
-         PadR( SortWeight( oL:fld[ "SUBCATEGORY" ] ), 20 ) + ;
-         PadR( oL:fld[ "NAME" ], 50 ) ;
+         PadR(SortWeight( oL:fld[ "CATEGORY" ] ), 20) + ;
+         PadR(SortWeight( oL:fld[ "SUBCATEGORY" ] ), 20) + ;
+         PadR(oL:fld[ "NAME" ], 50) ;
       <= ;
-         PadR( SortWeight( oR:fld[ "CATEGORY" ] ), 20 ) + ;
-         PadR( SortWeight( oR:fld[ "SUBCATEGORY" ] ), 20 ) + ;
-         PadR( oR:fld[ "NAME" ], 50 ) ;
+         PadR(SortWeight( oR:fld[ "CATEGORY" ] ), 20) + ;
+         PadR(SortWeight( oR:fld[ "SUBCATEGORY" ] ), 20) + ;
+         PadR(oR:fld[ "NAME" ], 50) ;
       } )
 
    FOR EACH cFormat IN s_hSwitches[ "format" ]
 
-      IF HB_IsEvalItem( generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ) )
+      IF HB_IsEvalItem(generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ))
 
          OutStd("Output as", cFormat + hb_eol())
 
@@ -589,7 +589,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField("SUBCATEGORY")
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. IIf(HB_IsString( c ), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
+               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
@@ -730,9 +730,9 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
    CASE xLine == NIL
    CASE HB_IsNumeric(xLine)
       nMode := xLine
-   CASE HB_IsEvalItem( xLine )
+   CASE HB_IsEvalItem(xLine)
       Eval( xLine )
-   CASE HB_IsArray( xLine )
+   CASE HB_IsArray(xLine)
       IF nMode == 2
          OutStd(Space( nIndent ) + Space(2))
       ENDIF
@@ -868,12 +868,12 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
 
    LOCAL aText := hb_ATokens( cText, .T. )
 
-   hb_default( @lRaw, .F. )
-   hb_default( @lForceRaw, .F. )
+   hb_default(@lRaw, .F.)
+   hb_default(@lForceRaw, .F.)
 
    IF nWidth == 0 .OR. lRaw
       idx := 99999
-      AEval( aText, {| c | IIf(Empty(c), , idx := Min( idx, Len(c) - Len(LTrim(c)) )) } )
+      AEval( aText, {| c | IIf(Empty(c), , idx := Min(idx, Len(c) - Len(LTrim(c)))) } )
       AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr(c, idx + 1) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE

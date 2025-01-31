@@ -240,12 +240,12 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
    LOCAL nMode := wvt_SetDlgCoMode()
 
    IF nMode == 0
-      hb_default( @aOffSet, {} )
+      hb_default(@aOffSet, {})
       ASize( aOffSet, 4 )
-      hb_default( @aOffSet[ 1 ], 0 )
-      hb_default( @aOffSet[ 2 ], 0 )
-      hb_default( @aOffSet[ 3 ], 0 )
-      hb_default( @aOffSet[ 4 ], 0 )
+      hb_default(@aOffSet[ 1 ], 0)
+      hb_default(@aOffSet[ 2 ], 0)
+      hb_default(@aOffSet[ 3 ], 0)
+      hb_default(@aOffSet[ 4 ], 0)
 
       nBaseUnits  := wapi_GetDialogBaseUnits()
       nBaseUnitsX := wapi_LOWORD(nBaseUnits)
@@ -278,7 +278,7 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
       nH := nRows
    ENDIF
 
-   hb_default( @nStyle, WIN_WS_CAPTION + WIN_WS_SYSMENU + WIN_WS_GROUP + WIN_WS_TABSTOP + DS_SETFONT + WIN_WS_THICKFRAME + WIN_WS_VISIBLE + WIN_WS_POPUP + DS_3DLOOK )
+   hb_default(@nStyle, WIN_WS_CAPTION + WIN_WS_SYSMENU + WIN_WS_GROUP + WIN_WS_TABSTOP + DS_SETFONT + WIN_WS_THICKFRAME + WIN_WS_VISIBLE + WIN_WS_POPUP + DS_3DLOOK)
 
    AAdd(aDlg[ 1 ], hb_defaultValue( nHelpId, 0 ))
    AAdd(aDlg[ 1 ], hb_defaultValue( nExStyle, 0 ))
@@ -313,14 +313,14 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
       nBottom := nTop  + nRows - 1
       nRight  := nLeft + nCols - 1
 
-      hb_default( @aOffSet, {} )
+      hb_default(@aOffSet, {})
 
       ASize( aOffSet, 4 )
 
-      hb_default( @aOffSet[ 1 ], 0 )
-      hb_default( @aOffSet[ 2 ], 0 )
-      hb_default( @aOffSet[ 3 ], 0 )
-      hb_default( @aOffSet[ 4 ], 0 )
+      hb_default(@aOffSet[ 1 ], 0)
+      hb_default(@aOffSet[ 2 ], 0)
+      hb_default(@aOffSet[ 3 ], 0)
+      hb_default(@aOffSet[ 4 ], 0)
 
       nBaseUnits  := wapi_GetDialogBaseUnits()
       nBaseUnitsX := wapi_LOWORD(nBaseUnits)
@@ -359,7 +359,7 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
    AAdd(aDlg[  8 ], nH)
    AAdd(aDlg[  9 ], cnId)
    AAdd(aDlg[ 10 ], cnDlgClass)
-   AAdd(aDlg[ 11 ], IIf(HB_IsString( cText ) .OR. HB_IsNumeric(cText), cText, ""))
+   AAdd(aDlg[ 11 ], IIf(HB_IsString(cText) .OR. HB_IsNumeric(cText), cText, ""))
    AAdd(aDlg[ 12 ], 0)
 
    RETURN aDlg
@@ -368,13 +368,13 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
 
    LOCAL hDlg, xTemplate, nDlgMode
 
-   IF HB_IsString( cbDlgProc )
+   IF HB_IsString(cbDlgProc)
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := IIf(HB_IsString( acnDlg ), 0, IIf(HB_IsNumeric(acnDlg), 1, 2))
+   nDlgMode := IIf(HB_IsString(acnDlg), 0, IIf(HB_IsNumeric(acnDlg), 1, 2))
 
-   IF HB_IsArray( acnDlg )
+   IF HB_IsArray(acnDlg)
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
    ELSE
       xTemplate := acnDlg
@@ -402,13 +402,13 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
 
    LOCAL nResult, xTemplate, nDlgMode
 
-   IF HB_IsString( cbDlgProc )
+   IF HB_IsString(cbDlgProc)
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := IIf(HB_IsString( acnDlg ), 0, IIf(HB_IsNumeric(acnDlg), 1, 2))
+   nDlgMode := IIf(HB_IsString(acnDlg), 0, IIf(HB_IsNumeric(acnDlg), 1, 2))
 
-   IF HB_IsArray( acnDlg )
+   IF HB_IsArray(acnDlg)
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
    ELSE
       xTemplate := acnDlg
@@ -439,8 +439,8 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    HB_SYMBOL_UNUSED(hWnd)
 
-   hb_default( @cPath, "" )
-   hb_default( @nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR )
+   hb_default(@cPath, "")
+   hb_default(@nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR)
 
 // win_GetOpenFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
 //                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
@@ -479,7 +479,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    HB_SYMBOL_UNUSED(hWnd)
 
-   hb_default( @nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR )
+   hb_default(@nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR)
 
 // win_GetSaveFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
 //                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
@@ -519,13 +519,13 @@ PROCEDURE wvt_SetIcon( ncIconRes, cIconName )
 
    DO CASE
    CASE HB_IsNumeric(ncIconRes) ; hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
-   CASE HB_IsString( cIconName )  ; hb_gtInfo( HB_GTI_ICONRES, cIconName )
-   CASE HB_IsString( ncIconRes )  ; hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
+   CASE HB_IsString(cIconName)  ; hb_gtInfo( HB_GTI_ICONRES, cIconName )
+   CASE HB_IsString(ncIconRes)  ; hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
    ENDCASE
 
    RETURN
 
-FUNCTION wvt_SetFont( cFontName, nSize, nWidth, nWeight, nQuality )
+FUNCTION wvt_SetFont(cFontName, nSize, nWidth, nWeight, nQuality)
    RETURN hb_gtInfo( HB_GTI_SETFONT, { ;
       hb_defaultValue( cFontName, hb_gtInfo( HB_GTI_FONTNAME ) ), ;
       hb_defaultValue( nSize, hb_gtInfo( HB_GTI_FONTSIZE ) ), ;
@@ -544,7 +544,7 @@ FUNCTION wvt_GetPalette()
 FUNCTION wvt_SetPalette( aRGB )
    RETURN hb_gtInfo( HB_GTI_PALETTE, aRGB )
 
-FUNCTION wvt_GetRGBColor( nIndex )
+FUNCTION wvt_GetRGBColor(nIndex)
    RETURN hb_gtInfo( HB_GTI_PALETTE, nIndex )
 
 #endif
@@ -571,7 +571,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
    LOCAL s, n, lEnh
    LOCAL nIndex := 0
 
-   IF HB_IsString( cColor )
+   IF HB_IsString(cColor)
       IF ( n := At( "/", cColor ) ) > 0
          IF hb_defaultValue( nForeBack, 0 ) == 0
             s := Left(cColor, n - 1)
@@ -755,11 +755,11 @@ FUNCTION wvg_CreateBrush(...)  // FIXME: causes problems due to the GC collected
    RETURN wapi_CreateBrushIndirect( {...} )
 #endif
 
-FUNCTION wvg_SetDCBrushColor( hDC, nRGB )
-   RETURN wapi_SetDCBrushColor( hDC, nRGB )
+FUNCTION wvg_SetDCBrushColor(hDC, nRGB)
+   RETURN wapi_SetDCBrushColor(hDC, nRGB)
 
-FUNCTION wvg_SetDCPenColor( hDC, nRGB )
-   RETURN wapi_SetDCPenColor( hDC, nRGB )
+FUNCTION wvg_SetDCPenColor(hDC, nRGB)
+   RETURN wapi_SetDCPenColor(hDC, nRGB)
 
 FUNCTION wvg_SetWindowPosToBack( hWnd )
    RETURN wapi_SetWindowPos( hWnd, WIN_HWND_BOTTOM,,,,, ;
@@ -886,12 +886,12 @@ FUNCTION wvt_GetMenu()
 
    RETURN IIf(Empty(hWnd),, wapi_GetMenu( hWnd ))
 
-FUNCTION wvg_ChooseColor( nColor, aColor, nFlags, hWnd )
-   RETURN win_ChooseColor( hWnd,, nColor, ;
+FUNCTION wvg_ChooseColor(nColor, aColor, nFlags, hWnd)
+   RETURN win_ChooseColor(hWnd,, nColor, ;
       hb_defaultValue( aColor, AFill( Array( 16 ), waGetSysColor(WIN_COLOR_BTNFACE) ) ), ;
-      hb_defaultValue( nFlags, hb_bitOr( WIN_CC_ANYCOLOR, WIN_CC_RGBINIT, WIN_CC_FULLOPEN ) ) )
+      hb_defaultValue( nFlags, hb_bitOr( WIN_CC_ANYCOLOR, WIN_CC_RGBINIT, WIN_CC_FULLOPEN ) ))
 
-FUNCTION wvt_ChooseColor( nColor, aColor, nFlags )
+FUNCTION wvt_ChooseColor(nColor, aColor, nFlags)
 
    LOCAL hWnd := wvg_hWnd()
 
@@ -899,9 +899,9 @@ FUNCTION wvt_ChooseColor( nColor, aColor, nFlags )
       RETURN -1
    ENDIF
 
-   RETURN win_ChooseColor( hWnd,, nColor, ;
+   RETURN win_ChooseColor(hWnd,, nColor, ;
       hb_defaultValue( aColor, AFill( Array( 16 ), waGetSysColor(WIN_COLOR_BTNFACE) ) ), ;
-      hb_defaultValue( nFlags, hb_bitOr( WIN_CC_ANYCOLOR, WIN_CC_RGBINIT, WIN_CC_FULLOPEN ) ) )
+      hb_defaultValue( nFlags, hb_bitOr( WIN_CC_ANYCOLOR, WIN_CC_RGBINIT, WIN_CC_FULLOPEN ) ))
 
 FUNCTION wvg_PrepareBitmapFromResource( xNameOrID, nExpWidth, nExpHeight, lMap3Dcolors )
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), xNameOrID, WIN_IMAGE_BITMAP, ;

@@ -67,7 +67,7 @@ CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
    METHOD enable()
    METHOD hide()
    METHOD show()
-   METHOD SetPos( aPos )
+   METHOD SetPos(aPos)
 
    METHOD currentPos()
    METHOD currentSize()
@@ -139,7 +139,7 @@ METHOD WvgSysWindow:hide()
 METHOD WvgSysWindow:show()
    RETURN Self
 
-METHOD WvgSysWindow:SetPos( aPos )
+METHOD WvgSysWindow:SetPos(aPos)
 
    wvg_SetWindowPosition( ::hWnd, aPos[ 1 ], aPos[ 2 ], .F. )
 

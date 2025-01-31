@@ -128,7 +128,7 @@ METHOD WvtProgressBar:Display( nCurrent, nTotal )
 
 METHOD WvtProgressBar:Activate()
 
-   ::cScreen := SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
+   ::cScreen := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
    hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, "         ", ::cBackColor )
    ::lActive := .T.
 
@@ -139,7 +139,7 @@ METHOD WvtProgressBar:DeActivate()
    ::lActive  := .F.
    ::nCurrent := 0
    ::nTotal   := 1
-   RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen )
+   RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
    ::cScreen := NIL
 
    RETURN Self

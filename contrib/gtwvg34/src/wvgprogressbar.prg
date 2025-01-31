@@ -145,7 +145,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
          ::rePosition()
       ENDIF
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
-      IF HB_IsEvalItem( ::sl_resize )
+      IF HB_IsEvalItem(::sl_resize)
          Eval( ::sl_resize,,, Self )
       ENDIF
 
@@ -155,7 +155,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_CTLCOLOR
 
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
       ENDIF
       IF !Empty(::hBrushBG)
          wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )
@@ -180,10 +180,10 @@ METHOD WvgProgressBar:configure( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
 METHOD PROCEDURE WvgProgressBar:setCaption( cCaption )
 
-   IF HB_IsString( cCaption )
+   IF HB_IsString(cCaption)
       ::Caption := cCaption
    ENDIF
-   IF HB_IsString( ::Caption )
+   IF HB_IsString(::Caption)
       ::sendMessage( WIN_WM_SETTEXT, 0, ::Caption )
    ENDIF
 
@@ -191,7 +191,7 @@ METHOD PROCEDURE WvgProgressBar:setCaption( cCaption )
 
 METHOD WvgProgressBar:draw( xParam )
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 
@@ -199,7 +199,7 @@ METHOD WvgProgressBar:draw( xParam )
 
 METHOD WvgProgressBar:activate( xParam )
 
-   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 

@@ -20,8 +20,8 @@ PROCEDURE Main()
    WSetShadow(7)
    SetClearA(10 * 16 + 14)
    SetClearB(35)
-   DispBox( 0, 0, MaxRow(), MaxCol(), Replicate( "#", 9 ), NToColor( 10 * 16 + 14 ) )
-   SetPos( 0, 0 )
+   DispBox( 0, 0, MaxRow(), MaxCol(), Replicate( "#", 9 ), NToColor(10 * 16 + 14) )
+   SetPos(0, 0)
    ? "GT driver: " + hb_gtVersion()
    ? hb_gtVersion(1)
    ?
@@ -40,7 +40,7 @@ PROCEDURE Main()
    FOR i := 1 TO Len(aWin)
       y := i + 2
       x := i * 4 + 10
-      SetColor( NToColor( i * 16 + 15 ) + ",W+/B*" )
+      SetColor(NToColor(i * 16 + 15) + ",W+/B*")
       WSetShadow( i % 8 )
       aWin[ i ] := WOpen( y, x, y + 10, x + 20 )
       WBox()
@@ -108,8 +108,8 @@ STATIC PROCEDURE dspcord()
    LOCAL mr := MRow(), mc := MCol(), r := WRow(), c := WCol(), w := WSelect()
 
    WSelect(0)
-   @ MaxRow(), 0 SAY PadR( "WPOS(" + hb_ntos( r ) + "," + hb_ntos( c ) + ")" + ;
-      IIf(MPresent(), "MPOS(" + hb_ntos( mr ) + "," + hb_ntos( mc ) + ")", ""), MaxCol() + 1 )
+   @ MaxRow(), 0 SAY PadR("WPOS(" + hb_ntos( r ) + "," + hb_ntos( c ) + ")" + ;
+      IIf(MPresent(), "MPOS(" + hb_ntos( mr ) + "," + hb_ntos( mc ) + ")", ""), MaxCol() + 1)
    WSelect( w )
 
    RETURN

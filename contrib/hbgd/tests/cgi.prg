@@ -60,9 +60,9 @@ PROCEDURE Main(...)
    // __OutDebug( cQuery, ValToPrg( hParams ) )
 
 #if 0
-   hb_default( @cText, "Testo di Prova" )
+   hb_default(@cText, "Testo di Prova")
 #endif
-   hb_default( @nPt, 30 )
+   hb_default(@nPt, 30)
 
    IF cImg != NIL
 #if 0
@@ -107,7 +107,7 @@ PROCEDURE Main(...)
 
 PROCEDURE StartHTML( cTitle )
 
-   hb_default( @cTitle, "" )
+   hb_default(@cTitle, "")
 
    WRITE "content-type: text/html"
    WRITE "Pragma: no-cache"
@@ -169,18 +169,18 @@ PROCEDURE OutJpg( cText, nPitch )
    LOCAL blue
    LOCAL aSize, nWidth, nHeight, nX, nY
 
-   hb_default( @cText, "Sample TEXT" )
-   hb_default( @nPitch, 30 )
+   hb_default(@cText, "Sample TEXT")
+   hb_default(@nPitch, 30)
 
    /* Create an image in memory */
    oI := GDImage( 400, 100 )
 
 #if 0
    /* Allocate background */
-   cyan := oI:SetColor( 0, 255, 255 )
+   cyan := oI:SetColor(0, 255, 255)
 
    /* Allocate drawing color */
-   blue := oI:SetColor( 0, 0, 200 )
+   blue := oI:SetColor(0, 0, 200)
 
    oI:SetTransparent( blue )
 #endif
@@ -199,7 +199,7 @@ PROCEDURE OutJpg( cText, nPitch )
 
 
    /* Allocate drawing color */
-   blue := oI:SetColor( 0, 0, 200 )
+   blue := oI:SetColor(0, 0, 200)
    oI:SetFontName( "Verdana" ) // TOFIX
    oI:SetFontPitch( nPitch )
    oI:SayFreeType( 0 - nX, 0 + nHeight - nY, cText, , , 0, blue )
@@ -212,7 +212,7 @@ PROCEDURE OutJpg( cText, nPitch )
    __OutDebug( "dopo", oI:Width(), oI:Height() )
 
    oI:SetFontLarge()
-   oI:SetColor( blue )
+   oI:SetColor(blue)
    oI:Say( 0, 0, cText )
 #endif
 
@@ -228,7 +228,7 @@ FUNCTION GetVars( cFields, cSeparator )
    LOCAL aField, cField, aFields
    LOCAL cName, xValue
 
-   hb_default( @cSeparator, "&" )
+   hb_default(@cSeparator, "&")
 
    aFields := hb_regexSplit( cSeparator, cFields )
 

@@ -120,7 +120,7 @@ METHOD WvtGets:Create()
       ::GetList[ i ]:Display()
       ::PaintBlock( i )
    NEXT
-   SetPos( nCurRow, nCurCol )
+   SetPos(nCurRow, nCurCol)
 
    ::Super:Create()
    ::Dehilite()
@@ -179,12 +179,12 @@ METHOD WvtGets:SetData(/* aData */)
 
 METHOD WvtGets:Hilite()
 
-   hb_DispOutAt( ::nTop, ::nLeft, PadR( " " + ::cDesc, ::nRight - ::nLeft + 1 ), ::cColorHilite )
+   hb_DispOutAt( ::nTop, ::nLeft, PadR(" " + ::cDesc, ::nRight - ::nLeft + 1), ::cColorHilite )
 
    RETURN Self
 
 METHOD WvtGets:DeHilite()
 
-   hb_DispOutAt( ::nTop, ::nLeft, PadR( " " + ::cDesc, ::nRight - ::nLeft + 1 ), ::cColorDeHilite )
+   hb_DispOutAt( ::nTop, ::nLeft, PadR(" " + ::cDesc, ::nRight - ::nLeft + 1), ::cColorDeHilite )
 
    RETURN Self

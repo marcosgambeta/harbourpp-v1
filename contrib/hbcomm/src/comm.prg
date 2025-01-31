@@ -64,7 +64,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
              compatibility interface. [vszakats] */
    nPort := Len(s_hPort) + 1
 
-   IF HB_IsString( cPort )
+   IF HB_IsString(cPort)
       cOldPortName := hb_comGetDevice( nPort )
       hb_comSetDevice( nPort, cPort )
    ENDIF
@@ -73,7 +73,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
 
    IF hb_comOpen( nPort )
 
-      hb_default( @nBaud, 9600 )
+      hb_default(@nBaud, 9600)
 
       cParity := "N"
       IF HB_IsNumeric(nParity)
@@ -85,7 +85,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
          ENDSWITCH
       ENDIF
 
-      hb_default( @nStop, 1 )
+      hb_default(@nStop, 1)
 
       HB_SYMBOL_UNUSED(nBufferSize)
 

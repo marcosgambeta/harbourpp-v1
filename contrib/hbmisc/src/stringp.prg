@@ -75,8 +75,8 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
    LOCAL nLen
    LOCAL aData
 
-   hb_default( @cSeparator, " " )
-   hb_default( @lDebug, .F. )
+   hb_default(@cSeparator, " ")
+   hb_default(@lDebug, .F.)
 
    SWITCH ValType(xTxt)
    CASE "C"

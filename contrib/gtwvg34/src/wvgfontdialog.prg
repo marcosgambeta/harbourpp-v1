@@ -126,7 +126,7 @@ CREATE CLASS WvgFontDialog INHERIT WvgSysWindow
    VAR    ok                                    INIT .F.
 
    METHOD wndProc(hWnd, nMessage, nwParam, nlParam)
-   METHOD GetWvgFont( aFont )                   PROTECTED
+   METHOD GetWvgFont(aFont)                   PROTECTED
 
 ENDCLASS
 
@@ -233,17 +233,17 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
 
       CASE nL == WIN_IDOK
          ::ok := .T.
-         IF HB_IsEvalItem( ::sl_activateOk )
+         IF HB_IsEvalItem(::sl_activateOk)
             Eval( ::sl_activateOk, ::GetWvgFont(), , Self )
          ENDIF
 
       CASE nL == WIN_IDCANCEL
-         IF HB_IsEvalItem( ::sl_activateCancel )
+         IF HB_IsEvalItem(::sl_activateCancel)
             Eval( ::sl_activateCancel, , , Self )
          ENDIF
 
       CASE nL == 1026
-         IF HB_IsEvalItem( ::sl_activateApply )
+         IF HB_IsEvalItem(::sl_activateApply)
             Eval( ::sl_activateApply, ::GetWvgFont(), , Self )
          ENDIF
 
@@ -266,13 +266,13 @@ METHOD WvgFontDialog:display( nMode )
    ENDIF
 
    ::ok := .F.
-   aInfo := wvg_ChooseFont( hWnd, {| h, m, w, l | ::wndProc(h, m, w, l) }, ::familyName, ;
-      ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts )
+   aInfo := wvg_ChooseFont(hWnd, {| h, m, w, l | ::wndProc(h, m, w, l) }, ::familyName, ;
+      ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts)
    IF !::ok
       RETURN NIL
    ENDIF
 
-   RETURN ::GetWvgFont( aInfo )
+   RETURN ::GetWvgFont(aInfo)
 
 METHOD WvgFontDialog:destroy()
 
@@ -283,12 +283,12 @@ METHOD WvgFontDialog:destroy()
    RETURN Self
 
 // Only callable from ::activateOK and ::activateApply
-METHOD WvgFontDialog:GetWvgFont( aFont )
+METHOD WvgFontDialog:GetWvgFont(aFont)
 
    LOCAL oWvgFont
 
-   IF !HB_IsArray( aFont )
-      aFont := wvg_ChooseFont_GetLogFont( ::hWnd )
+   IF !HB_IsArray(aFont)
+      aFont := wvg_ChooseFont_GetLogFont(::hWnd)
    ENDIF
 
    oWvgFont := WvgFont():new()

@@ -30,21 +30,21 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   SetColor( "N/W" )
+   SetColor("N/W")
    wvw_SetTitle( NIL, "Quick Survey" )
    wvw_NoClose(NIL)
    wvw_SetAltF4Close(.F.)
    wvw_SetLineSpacing( NIL, 4 )
 #if 0
-   wvw_SetLSpaceColor( NIL, 7 )
+   wvw_SetLSpaceColor(NIL, 7)
 #endif
-   wvw_cbSetFont( NIL, "Arial", 16 )
-   wvw_pbSetFont( NIL, "Arial", 16 )
+   wvw_cbSetFont(NIL, "Arial", 16)
+   wvw_pbSetFont(NIL, "Arial", 16)
 
    nMaxWidth := 0
-   AEval( s_aAnswers, {| x | nMaxWIdth := Max( nMaxWidth, Len(x) ) } )
+   AEval( s_aAnswers, {| x | nMaxWIdth := Max(nMaxWidth, Len(x)) } )
 
-   SetMode( 11, nMaxWidth + 1 + 10 + 2 )
+   SetMode(11, nMaxWidth + 1 + 10 + 2)
 
    CLS
    nCursor := SetCursor( SC_NONE )
