@@ -2930,7 +2930,7 @@ static void hb_gt_wvt_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   HB_GTSELF_RESIZE(pGT, pWVT->ROWS, pWVT->COLS);
   HB_GTSELF_SEMICOLD(pGT);
 
-  // hb_gt_wvt_CreateConsoleWindow( pWVT );
+  // hb_gt_wvt_CreateConsoleWindow(pWVT);
 }
 
 // ---
@@ -3235,13 +3235,13 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
         if (hb_gt_wvt_ValidWindowSize(pWVT->hWnd, pWVT->ROWS, pWVT->COLS, hFont, hb_arrayGetNI(pInfo->pNewVal, 3)))
         {
 #if 0
-                  pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_TRUE );
+                  pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
 
-                  hb_strncpy( pWVT->fontFace, hb_arrayGetCPtr( pInfo->pNewVal, 1 ), sizeof( pWVT->fontFace ) - 1 );
-                  pWVT->fontHeight  = hb_arrayGetNI( pInfo->pNewVal, 2 );
-                  pWVT->fontWidth   = hb_arrayGetNI( pInfo->pNewVal, 3 );
-                  pWVT->fontWeight  = hb_arrayGetNI( pInfo->pNewVal, 4 );
-                  pWVT->fontQuality = hb_arrayGetNI( pInfo->pNewVal, 5 );
+                  hb_strncpy(pWVT->fontFace, hb_arrayGetCPtr(pInfo->pNewVal, 1), sizeof(pWVT->fontFace) - 1);
+                  pWVT->fontHeight  = hb_arrayGetNI(pInfo->pNewVal, 2);
+                  pWVT->fontWidth   = hb_arrayGetNI(pInfo->pNewVal, 3);
+                  pWVT->fontWeight  = hb_arrayGetNI(pInfo->pNewVal, 4);
+                  pWVT->fontQuality = hb_arrayGetNI(pInfo->pNewVal, 5);
 #endif
           if (pWVT->hWnd)
           {
@@ -3805,18 +3805,18 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
 #if 0
       case HB_GTI_CLOSABLE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->bClosable );
-         if( pInfo->pNewVal )
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bClosable);
+         if (pInfo->pNewVal)
          {
-            HB_BOOL bNewValue = hb_itemGetL( pInfo->pNewVal );
-            if( bNewValue != pWVT->bClosable )
+            HB_BOOL bNewValue = hb_itemGetL(pInfo->pNewVal);
+            if (bNewValue != pWVT->bClosable)
             {
-               if( pWVT->hWnd )
+               if (pWVT->hWnd)
                {
-                  HMENU hSysMenu = GetSystemMenu( pWVT->hWnd, FALSE );
-                  if( hSysMenu )
+                  HMENU hSysMenu = GetSystemMenu(pWVT->hWnd, FALSE);
+                  if (hSysMenu)
                   {
-                     EnableMenuItem( hSysMenu, SC_CLOSE, MF_BYCOMMAND | ( bNewValue ? MF_ENABLED : MF_GRAYED ) );
+                     EnableMenuItem(hSysMenu, SC_CLOSE, MF_BYCOMMAND | (bNewValue ? MF_ENABLED : MF_GRAYED));
                      pWVT->bClosable = bNewValue;
                   }
                }
@@ -4484,7 +4484,7 @@ static int hb_gt_wvt_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft, i
 }
 
 #if 0
-static void hb_gt_wvt_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char *cBuf, int iColor, int iSize, int iWidth )
+static void hb_gt_wvt_gfx_Text(PHB_GT pGT, int iTop, int iLeft, const char *cBuf, int iColor, int iSize, int iWidth)
 {
    HB_SYMBOL_UNUSED(pGT);
    HB_SYMBOL_UNUSED(iTop);

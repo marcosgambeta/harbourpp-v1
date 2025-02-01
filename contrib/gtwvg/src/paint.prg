@@ -387,14 +387,14 @@ FUNCTION wvt_AddDlgItem(aDlg, nTop, nLeft, nRows, nCols, aOffSet, cnId, cnDlgCla
 
    aDlg[1][4]++  // item count
 
-   AAdd(aDlg[ 2], IIf(HB_IsNumeric(nHelpId), nHelpId, 0))
-   AAdd(aDlg[ 3], IIf(HB_IsNumeric(nExStyle), nExStyle, 0))
-   AAdd(aDlg[ 4], IIf(HB_IsNumeric(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
-   AAdd(aDlg[ 5], nX)
-   AAdd(aDlg[ 6], nY)
-   AAdd(aDlg[ 7], nW)
-   AAdd(aDlg[ 8], nH)
-   AAdd(aDlg[ 9], cnId)
+   AAdd(aDlg[2], IIf(HB_IsNumeric(nHelpId), nHelpId, 0))
+   AAdd(aDlg[3], IIf(HB_IsNumeric(nExStyle), nExStyle, 0))
+   AAdd(aDlg[4], IIf(HB_IsNumeric(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
+   AAdd(aDlg[5], nX)
+   AAdd(aDlg[6], nY)
+   AAdd(aDlg[7], nW)
+   AAdd(aDlg[8], nH)
+   AAdd(aDlg[9], cnId)
    AAdd(aDlg[10], cnDlgClass)
    AAdd(aDlg[11], IIf(HB_IsString(cText), cText, IIf(HB_IsNumeric(cText), cText, "")))
    AAdd(aDlg[12], 0)

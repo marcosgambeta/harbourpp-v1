@@ -365,9 +365,9 @@ static void hb_gt_wvt_AddCharToInputQueue(PHB_GTWVT pWVT, int iKey)
 #if 0
    // Fire event to be trapped by the application
    {
-      auto pEvParams = hb_itemNew( nullptr );
-      hb_itemPutNI( pEvParams, iKey );
-      hb_gt_wvt_FireEvent( pWVT, HB_GTE_KEYBOARD, pEvParams );
+      auto pEvParams = hb_itemNew(nullptr);
+      hb_itemPutNI(pEvParams, iKey);
+      hb_gt_wvt_FireEvent(pWVT, HB_GTE_KEYBOARD, pEvParams);
    }
 #endif
 }
@@ -521,14 +521,14 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
       keyCode = K_MOUSEMOVE;
     }
 #if 0
-         if( ! pWVT->bTracking )
+         if (!pWVT->bTracking)
          {
             TRACKMOUSEEVENT tmi;
-            tmi.cbSize      = sizeof( tmi );
+            tmi.cbSize      = sizeof(tmi);
             tmi.dwFlags     = TME_LEAVE | TME_HOVER;
             tmi.hwndTrack   = pWVT->hWnd;
             tmi.dwHoverTime = 1;
-            pWVT->bTracking = _TrackMouseEvent( &tmi );
+            pWVT->bTracking = _TrackMouseEvent(&tmi);
          }
 #endif
     break;
@@ -612,8 +612,10 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
       break;
     case VK_F4:
 #if 0
-               if( pWVT->AltF4Close && bAlt )
-                  return DefWindowProc(pWVT->hWnd, message, wParam, lParam) != 0;
+               if (pWVT->AltF4Close && bAlt)
+               {
+                 return DefWindowProc(pWVT->hWnd, message, wParam, lParam) != 0;
+               }  
 #endif
       hb_gt_wvt_TranslateKey(pWVT, K_F4, K_SH_F4, K_ALT_F4, K_CTRL_F4);
       break;
@@ -1263,8 +1265,8 @@ static void hb_gt_wvt_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   HB_GTSELF_SEMICOLD(pGT);
 
 #if 0
-   hb_gt_wvt_CreateConsoleWindow( pWVT );
-   hb_gt_wvt_ProcessMessages( pWVT );
+   hb_gt_wvt_CreateConsoleWindow(pWVT);
+   hb_gt_wvt_ProcessMessages(pWVT);
 #endif
 }
 
@@ -1841,7 +1843,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       if (pWVT->hWnd)
       {
 #if 0
-                  hb_gt_wvt_ResetWindowSize( pWVT );
+                  hb_gt_wvt_ResetWindowSize(pWVT);
 #else
         UpdateWindow(pWVT->hWnd);
 #endif

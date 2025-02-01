@@ -433,7 +433,7 @@ static void hb_wvg_BoxRecessed(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, 
   LineTo(hdc, iRight + 1, iTop - 1);
 }
 
-// wvt_BoxGet( nRow, nCol, nWidth ) --> NIL
+// wvt_BoxGet(nRow, nCol, nWidth) --> NIL
 HB_FUNC(WVG_BOXGET)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -474,7 +474,7 @@ static void hb_wvg_BoxGet(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, int i
   LineTo(hdc, iLeft - 2, iBottom);
 }
 
-// wvg_BoxGroup( nTop, nLeft, nBottom, nRight, aPxlOff ) --> NIL
+// wvg_BoxGroup(nTop, nLeft, nBottom, nRight, aPxlOff) --> NIL
 HB_FUNC(WVG_BOXGROUP)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -586,10 +586,10 @@ static void hb_wvg_BoxGroupRaised(PHB_GTWVT pWVT, int iLeft, int iTop, int iRigh
   LineTo(hdc, iRight, iTop);
 }
 
-// wvg_Label( nRow, nCol, aPxlOff, cLabel, nAlign,
-//            nEscapement, nTextColor, nBkColor, cFontFace, nFontHeight,
-//            nFontWidth, nFontWeight, nQuality,  nCharSet, lItalics,
-//            lUnderline, lStrikeOut )
+// wvg_Label(nRow, nCol, aPxlOff, cLabel, nAlign,
+//           nEscapement, nTextColor, nBkColor, cFontFace, nFontHeight,
+//           nFontWidth, nFontWeight, nQuality,  nCharSet, lItalics,
+//           lUnderline, lStrikeOut)
 HB_FUNC(WVG_LABEL)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -645,7 +645,7 @@ HB_FUNC(WVG_LABEL)
   }
 }
 
-// wvg_LabelEx( nRow, nCol, aPxlOff, cLabel, nAlign, nTextColor, nBkColor, nSlotFont )
+// wvg_LabelEx(nRow, nCol, aPxlOff, cLabel, nAlign, nTextColor, nBkColor, nSlotFont)
 HB_FUNC(WVG_LABELEX)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -700,10 +700,10 @@ static void hb_wvg_Label(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop)
   SelectObject(pWVT->hdc, hOldFont);
 }
 
-// wvg_LabelEx2( nTop, nLeft, nBottom, nRight, aPxlOff, cLabel, nAlign,
-//               nEscapement, nTextColor, nBkColor, cFontFace, nFontHeight,
-//               nFontWidth, nFontWeight, nQuality, nCharSet, lItalics,
-//               lUnderline, lStrikeOut )
+// wvg_LabelEx2(nTop, nLeft, nBottom, nRight, aPxlOff, cLabel, nAlign,
+//              nEscapement, nTextColor, nBkColor, cFontFace, nFontHeight,
+//              nFontWidth, nFontWeight, nQuality, nCharSet, lItalics,
+//              lUnderline, lStrikeOut)
 HB_FUNC(WVG_LABELEX2)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -810,7 +810,7 @@ static void hb_wvg_LabelEx2(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
 }
 
 //               1      2       3        4       5       6        7         8
-// wvg_Outline( nTop, nLeft, nBottom, nRight, aPxlOff, nThick, nShape, nRGBColor )
+// wvg_Outline(nTop, nLeft, nBottom, nRight, aPxlOff, nThick, nShape, nRGBColor)
 HB_FUNC(WVG_OUTLINE)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -847,7 +847,7 @@ HB_FUNC(WVG_OUTLINE)
   pWVT->gObjs = gObj;
 }
 
-// wvg_OutlineEx( nTop, nLeft, nBottom, nRight, aPxlOff, nSlotPen )
+// wvg_OutlineEx(nTop, nLeft, nBottom, nRight, aPxlOff, nSlotPen)
 HB_FUNC(WVG_OUTLINEEX)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -900,7 +900,7 @@ static void hb_wvg_Outline(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
 }
 
 //            1      2       3       4        5        6       7       8       9      10        11
-// wvg_Line( nTop, nLeft, nBottom, nRight, aPxlOff, nOrient, nFormat, nAlign, nStyle, nThick, nColor )
+// wvg_Line(nTop, nLeft, nBottom, nRight, aPxlOff, nOrient, nFormat, nAlign, nStyle, nThick, nColor)
 HB_FUNC(WVG_LINE)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -934,7 +934,7 @@ HB_FUNC(WVG_LINE)
 }
 
 //              1      2       3       4        5        6       7       8          9
-// wvg_LineEx( nTop, nLeft, nBottom, nRight, aPxlOff, nOrient, nFormat, nAlign, nSlotPen )
+// wvg_LineEx(nTop, nLeft, nBottom, nRight, aPxlOff, nOrient, nFormat, nAlign, nSlotPen)
 HB_FUNC(WVG_LINEEX)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1082,7 +1082,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
 }
 
 // Inside the area requested!
-// wvg_Ellipse( nTop, nLeft, nBottom, nRight, aPxlOff )
+// wvg_Ellipse(nTop, nLeft, nBottom, nRight, aPxlOff)
 HB_FUNC(WVG_ELLIPSE)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1120,7 +1120,7 @@ static void hb_wvg_Ellipse(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
   SelectObject(pWVT->hdc, hBrush);
 }
 
-// wvg_Rectangle( nTop, nLeft, nBottom, nRight, aPxlOff )
+// wvg_Rectangle(nTop, nLeft, nBottom, nRight, aPxlOff)
 HB_FUNC(WVG_RECTANGLE)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1158,7 +1158,7 @@ static void hb_wvg_Rectangle(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
   SelectObject(pWVT->hdc, hBrush);
 }
 
-// wvg_RoundRect( nTop, nLeft, nBottom, nRight, aPxlOff, nRoundHeight, nRoundWidth )
+// wvg_RoundRect(nTop, nLeft, nBottom, nRight, aPxlOff, nRoundHeight, nRoundWidth)
 HB_FUNC(WVG_ROUNDRECT)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1199,7 +1199,7 @@ static void hb_wvg_RoundRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
   SelectObject(pWVT->hdc, hBrush);
 }
 
-// wvg_ColorRect( nTop, nLeft, nBottom, nRight, aPxlOff, nRGB )
+// wvg_ColorRect(nTop, nLeft, nBottom, nRight, aPxlOff, nRGB)
 HB_FUNC(WVG_COLORRECT)
 {
   HBRUSH hBrush = CreateSolidBrush((COLORREF)hb_parnint(6));
@@ -1237,7 +1237,7 @@ static void hb_wvg_ColorRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
   FillRect(pWVT->hGuiDC, &rc, gObj->hBrush);
 }
 
-// wvg_ShadedRect( nTop, nLeft, nBottom, nRight, aPxlOff, nHorVert, aRGBb, aRGBe )
+// wvg_ShadedRect(nTop, nLeft, nBottom, nRight, aPxlOff, nHorVert, aRGBb, aRGBe)
 HB_FUNC(WVG_SHADEDRECT)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1298,8 +1298,8 @@ static void hb_wvg_ShadedRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTo
   HB_SYMBOL_UNUSED(bGF);
 }
 
-// wvg_TextBox( nTop, nLeft, nBottom, nRight, aPxlOff, cText, ;
-//              nAlignHorz, nAlignVert, nTextColor, nBackColor, hFont )
+// wvg_TextBox(nTop, nLeft, nBottom, nRight, aPxlOff, cText, ;
+//             nAlignHorz, nAlignVert, nTextColor, nBackColor, hFont)
 HB_FUNC(WVG_TEXTBOX)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1367,7 +1367,7 @@ static void hb_wvg_TextBox(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
   DrawText(hdc, gObj->lpText, lstrlen(gObj->lpText), &rc, gObj->iAlign | DT_WORDBREAK | DT_TOP);
 }
 
-// wvg_Picture( nTop, nLeft, nBottom, nRight, aPxlOff, nSlot, lDoNotScale ) --> NIL
+// wvg_Picture(nTop, nLeft, nBottom, nRight, aPxlOff, nSlot, lDoNotScale) --> NIL
 HB_FUNC(WVG_PICTURE)
 {
   if (HB_ISNUM(6) && hb_parni(6) <= WVT_PICTURES_MAX)
@@ -1432,7 +1432,7 @@ HB_FUNC(WVG_PICTUREEX)
   }
 }
 
-// wvg_Image( nTop, nLeft, nBottom, nRight, aPxlOff, nImageSource, cImage/nPictureSlot, cSection, lDoNotScale )
+// wvg_Image(nTop, nLeft, nBottom, nRight, aPxlOff, nImageSource, cImage/nPictureSlot, cSection, lDoNotScale)
 HB_FUNC(WVG_IMAGE)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1564,7 +1564,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
   }
 }
 
-// wvg_Object( nObj, bBlock )
+// wvg_Object(nObj, bBlock)
 // nObj == one of the objects == GOBJ_OBJTYPE_ROUNDRECT | GOBJ_OBJTYPE_IMAGE | etc
 // bBlock == Block returning the array containing as many elements as necessary for the given object
 //           Also it will return those array elements in the same order expected by the object to draw
@@ -1572,7 +1572,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
 // This protocol is necessary for dynamic coordinates which might have been changed by the
 // applications, like TBrowse dimensions.
 //
-// wvg_Object( GOBJ_OBJTYPE_BOXRAISED, {|| { oBrw:nTop, oBrw:nLeft, oBrw:nBottom, oBrw:nRight, {-2,-2,2,2} } } )
+// wvg_Object(GOBJ_OBJTYPE_BOXRAISED, {||{oBrw:nTop, oBrw:nLeft, oBrw:nBottom, oBrw:nRight, {-2, -2, 2, 2}}})
 HB_FUNC(WVG_OBJECT)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
@@ -1587,8 +1587,8 @@ HB_FUNC(WVG_OBJECT)
   pWVT->gObjs = gObj;
 }
 
-// wvg_Object( GOBJ_OBJTYPE_GRIDVERT, {|| { nTop, nBottom, aCols, nCols, aPxlOff } } )
-//                                               aPxlOff[ 1 ] and aPxlOff[ 3 ] used
+// wvg_Object(GOBJ_OBJTYPE_GRIDVERT, {||{nTop, nBottom, aCols, nCols, aPxlOff}})
+//                                              aPxlOff[1] and aPxlOff[3] used
 static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
 {
   PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);
@@ -1720,10 +1720,10 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 
 // CAREFUL
 #if 0
-               if( pArray )
+               if (pArray)
                {
-                  hb_itemRelease( pArray );
-                  pArray = nullptr;
+                 hb_itemRelease(pArray);
+                 pArray = nullptr;
                }
 #endif
           hb_vmRequestRestore();
@@ -1831,10 +1831,10 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
       case GOBJ_OBJTYPE_LABEL:
       case GOBJ_OBJTYPE_LABELEX:
 #if 0
-               if( uRect->top > ( iTop + gObj->lf->lfHeight ) ||
-                   uRect->bottom < iTop || uRect->right < iLeft )
+               if (uRect->top > (iTop + gObj->lf->lfHeight) ||
+                   uRect->bottom < iTop || uRect->right < iLeft)
                {
-                  // Nothing to do
+                 // Nothing to do
                }
                else
 #endif

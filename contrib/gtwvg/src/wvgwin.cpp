@@ -142,7 +142,7 @@ HB_FUNC(WVG_SENDDLGITEMMESSAGE)
 }
 
 //
-//  win_SetTimer( hWnd, nIdentifier, nTimeOut )
+//  win_SetTimer(hWnd, nIdentifier, nTimeOut)
 //
 HB_FUNC(WVG_SETTIMER)
 {
@@ -284,7 +284,7 @@ HB_FUNC(WVG_INVALIDATERECT)
 }
 
 //
-//  win_LoadIcon( ncIcon )
+//  win_LoadIcon(ncIcon)
 //
 HB_FUNC(WVG_LOADICON)
 {
@@ -304,7 +304,7 @@ HB_FUNC(WVG_LOADICON)
   hb_retnint((HB_PTRUINT)hIcon);
 }
 
-//  win_LoadImage( ncImage, nSource, nBmpOrIcon, nWidth, nHeight ) -> hImage
+//  win_LoadImage(ncImage, nSource, nBmpOrIcon, nWidth, nHeight) -> hImage
 //    nSource == 0 ResourceIdByNumber
 //    nSource == 1 ResourceIdByName
 //    nSource == 2 ImageFromDiskFile
@@ -371,7 +371,7 @@ HB_FUNC(WVG_GETCLIENTRECT)
 }
 
 //
-//    Win_DrawImage( hdc, nLeft, nTop, nWidth, nHeight, cImage, lDoNotScale ) in Pixels
+//    Win_DrawImage(hdc, nLeft, nTop, nWidth, nHeight, cImage, lDoNotScale) in Pixels
 //
 HB_FUNC(WVG_DRAWIMAGE)
 {
@@ -403,7 +403,7 @@ HB_FUNC(WVG_CREATEBRUSH)
 }
 
 //
-//   win_DrawText( hDC, cText, aRect, nFormat )
+//   win_DrawText(hDC, cText, aRect, nFormat)
 //
 HB_FUNC(WVG_DRAWTEXT)
 {
@@ -436,7 +436,7 @@ HB_FUNC(WVG_GETWINDOWRECT)
 }
 
 //
-// Win_MoveWindow( hWnd, nLeft, nTop, nWidth, nHeight, lRePaint )
+// Win_MoveWindow(hWnd, nLeft, nTop, nWidth, nHeight, lRePaint)
 //
 HB_FUNC(WVG_MOVEWINDOW)
 {
@@ -653,7 +653,7 @@ HB_FUNC(WVG_SETMENU)
 #endif
 
 #if 0
-   hb_retl( SetMenu( hWnd, ( HMENU ) ( HB_PTRUINT ) hb_parnint( 2 ) ) );
+   hb_retl(SetMenu( hWnd, (HMENU)(HB_PTRUINT)hb_parnint(2)));
 #endif
 }
 
@@ -877,7 +877,7 @@ HB_FUNC(WVG_TREEVIEW_SETBKCOLOR)
 HB_FUNC(WVG_TREEVIEW_SETLINECOLOR)
 {
 #if 0
-   hb_retl( TreeView_SetLineColor( wvg_parhwnd(1), wvg_parcolor( 2 ) ) );
+   hb_retl(TreeView_SetLineColor(wvg_parhwnd(1), wvg_parcolor(2)));
 #endif
 }
 
@@ -894,7 +894,7 @@ HB_FUNC(WVG_TREEVIEW_EXPAND)
 HB_FUNC(WVG_TVIS_EXPANDED)
 {
 #if 0
-   hb_retl( TreeView_GetItemState( wvg_parhwnd(1), wvg_parhandle( 2 ), ( UINT ) TVIS_EXPANDED ) );
+   hb_retl(TreeView_GetItemState(wvg_parhwnd(1), wvg_parhandle(2), (UINT)TVIS_EXPANDED));
 #endif
 }
 
@@ -937,7 +937,7 @@ HB_FUNC(WVG_ISZOOMED)
 }
 
 //
-// Win_SetDCBrushColor( hDC, nRGB )
+// Win_SetDCBrushColor(hDC, nRGB)
 //
 HB_FUNC(WVG_SETDCBRUSHCOLOR)
 {
@@ -949,7 +949,7 @@ HB_FUNC(WVG_SETDCBRUSHCOLOR)
 }
 
 //
-// Win_SetDCPenColor( hDC, nRGB )
+// Win_SetDCPenColor(hDC, nRGB)
 //
 HB_FUNC(WVG_SETDCPENCOLOR)
 {
@@ -961,7 +961,7 @@ HB_FUNC(WVG_SETDCPENCOLOR)
 }
 
 //
-// Win_GetCurrentObject( hDC, nObjType )
+// Win_GetCurrentObject(hDC, nObjType)
 //
 HB_FUNC(WVG_GETCURRENTOBJECT)
 {
@@ -969,7 +969,7 @@ HB_FUNC(WVG_GETCURRENTOBJECT)
 }
 
 //
-// Win_GetCurrentBrush( hDC )
+// Win_GetCurrentBrush(hDC)
 //
 HB_FUNC(WVG_GETCURRENTBRUSH)
 {
@@ -977,7 +977,7 @@ HB_FUNC(WVG_GETCURRENTBRUSH)
 }
 
 //
-// Win_GetCurrentFornt( hDC )
+// Win_GetCurrentFornt(hDC)
 //
 HB_FUNC(WVG_GETCURRENTFONT)
 {
@@ -1024,7 +1024,7 @@ HB_FUNC(WVG_FORCEWINDOWTOTOP)
 }
 
 //
-// Win_SetLayeredWindowAttributes( hWnd, nRGB, nOpacityFactor [0-255] )
+// Win_SetLayeredWindowAttributes(hWnd, nRGB, nOpacityFactor [0-255])
 //
 HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 {

@@ -159,15 +159,15 @@ METHOD WvgFont:createFont()
 
    ::aFontInfo := Array(15)
 
-   ::aFontInfo[ 1] := ::familyName
-   ::aFontInfo[ 2] := ::height
-   ::aFontInfo[ 3] := ::width
-   ::aFontInfo[ 4] := IIf(::bold, FW_BOLD, 0)
-   ::aFontInfo[ 5] := ::italic
-   ::aFontInfo[ 6] := ::underscore
-   ::aFontInfo[ 7] := ::strikeout
-   ::aFontInfo[ 8] := ::codePage
-   ::aFontInfo[ 9] := 0
+   ::aFontInfo[1] := ::familyName
+   ::aFontInfo[2] := ::height
+   ::aFontInfo[3] := ::width
+   ::aFontInfo[4] := IIf(::bold, FW_BOLD, 0)
+   ::aFontInfo[5] := ::italic
+   ::aFontInfo[6] := ::underscore
+   ::aFontInfo[7] := ::strikeout
+   ::aFontInfo[8] := ::codePage
+   ::aFontInfo[9] := 0
    ::aFontInfo[10] := 0
    ::aFontInfo[11] := 0
    ::aFontInfo[12] := 0

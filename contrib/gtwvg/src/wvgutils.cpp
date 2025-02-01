@@ -77,15 +77,15 @@ BOOL WINAPI ChooseColor(LPCHOOSECOLORW);
 #if 0
 HB_EXTERN_BEGIN
 
-extern HB_BOOL  wvt_Array2Rect( PHB_ITEM aRect, RECT * rc );
-extern PHB_ITEM wvt_Rect2Array( RECT * rc  );
-extern HB_BOOL  wvt_Array2Point( PHB_ITEM aPoint, POINT * pt );
-extern PHB_ITEM wvt_Point2Array( POINT * pt  );
-extern HB_BOOL  wvt_Array2Size( PHB_ITEM aSize, SIZE * siz );
-extern PHB_ITEM wvt_Size2Array( SIZE * siz  );
-extern void     wvt_Rect2ArrayEx( RECT * rc, PHB_ITEM aRect );
-extern void     wvt_Point2ArrayEx( POINT * pt, PHB_ITEM aPoint );
-extern void     wvt_Size2ArrayEx( SIZE * siz, PHB_ITEM aSize );
+extern HB_BOOL  wvt_Array2Rect(PHB_ITEM aRect, RECT * rc);
+extern PHB_ITEM wvt_Rect2Array(RECT * rc);
+extern HB_BOOL  wvt_Array2Point(PHB_ITEM aPoint, POINT * pt);
+extern PHB_ITEM wvt_Point2Array(POINT * pt);
+extern HB_BOOL  wvt_Array2Size(PHB_ITEM aSize, SIZE * siz);
+extern PHB_ITEM wvt_Size2Array(SIZE * siz);
+extern void     wvt_Rect2ArrayEx(RECT * rc, PHB_ITEM aRect);
+extern void     wvt_Point2ArrayEx(POINT * pt, PHB_ITEM aPoint);
+extern void     wvt_Size2ArrayEx(SIZE * siz, PHB_ITEM aSize);
 
 HB_EXTERN_END
 #endif
@@ -108,8 +108,8 @@ HB_FUNC(WVT_UTILS)
   // Retained for legacy code.
 }
 
-//     Wvt_ChooseFont( cFontName, nHeight, nWidth, nWeight, nQuality, ;
-//                                    lItalic, lUnderline, lStrikeout )
+//     Wvt_ChooseFont(cFontName, nHeight, nWidth, nWeight, nQuality, ;
+//                                    lItalic, lUnderline, lStrikeout)
 //              ->
 //    { cFontName, nHeight, nWidth, nWeight, nQuality, lItalic, lUnderline, lStrikeout, nRGB }
 HB_FUNC(WVT_CHOOSEFONT)
@@ -195,7 +195,7 @@ HB_FUNC(WVT_CHOOSEFONT)
 }
 
 //
-//    Wvt_ChooseColor( nRGBInit, aRGB16, nFlags ) => nRGBSelected
+//    Wvt_ChooseColor(nRGBInit, aRGB16, nFlags) => nRGBSelected
 //
 HB_FUNC(WVT_CHOOSECOLOR)
 {
@@ -227,7 +227,7 @@ HB_FUNC(WVT_CHOOSECOLOR)
 }
 
 //
-//  Wvt_MessageBox( cMessage, cTitle, nIcon, hWnd )
+//  Wvt_MessageBox(cMessage, cTitle, nIcon, hWnd)
 //
 HB_FUNC(WVT_MESSAGEBOX)
 {
@@ -260,7 +260,7 @@ HB_FUNC(WVT_SETTOOLTIPACTIVE)
 }
 
 //
-//   Wvt_SetToolTip( nTop, nLeft, nBottom, nRight, cToolText )
+//   Wvt_SetToolTip(nTop, nLeft, nBottom, nRight, cToolText)
 //
 HB_FUNC(WVT_SETTOOLTIP)
 {
@@ -1170,7 +1170,7 @@ HB_FUNC(WVT_CBSETCURSEL)
 }
 
 //
-//   Wvt_DlgSetIcon( hDlg, ncIcon )
+//   Wvt_DlgSetIcon(hDlg, ncIcon)
 //
 HB_FUNC(WVT_DLGSETICON)
 {

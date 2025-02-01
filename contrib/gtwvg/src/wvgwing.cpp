@@ -520,29 +520,29 @@ HB_FUNC(WVG_STATUSBARSETTEXT)
 HB_FUNC(WVG_STATUSBARREFRESH)
 {
 #if 0
-   HWND hWndSB = ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 );
+   HWND hWndSB = (HWND)(HB_PTRUINT)hb_parnint(1);
 
-   if( hWndSB && IsWindow( hWndSB ) )
+   if (hWndSB && IsWindow(hWndSB))
    {
-      int ptArray[ WIN_STATUSBAR_MAX_PARTS ];
+      int ptArray[WIN_STATUSBAR_MAX_PARTS];
       int iParts, i;
 
-      iParts = SendMessage( hWndSB, SB_GETPARTS, WIN_STATUSBAR_MAX_PARTS, ( LPARAM ) ( LPINT ) ptArray );
+      iParts = SendMessage(hWndSB, SB_GETPARTS, WIN_STATUSBAR_MAX_PARTS, (LPARAM)(LPINT)ptArray);
 
-      ptArray[ iParts - 1 ] = -1;
+      ptArray[iParts - 1] = -1;
 
-      if( SendMessage( hWndSB, SB_SETPARTS, iParts, ( LPARAM ) ( LPINT ) ptArray ) )
+      if (SendMessage(hWndSB, SB_SETPARTS, iParts, (LPARAM)(LPINT)ptArray))
       {
-         hb_retl( HB_TRUE );
+         hb_retl(HB_TRUE);
          return;
       }
    }
-   hb_retl( HB_FALSE );
+   hb_retl(HB_FALSE);
 #endif
 }
 
 //
-// Wvg_GetNMHInfo( nlParam )
+// Wvg_GetNMHInfo(nlParam)
 //
 HB_FUNC(WVG_GETNMHDRINFO)
 {
@@ -559,7 +559,7 @@ HB_FUNC(WVG_GETNMHDRINFO)
 }
 
 //
-// Wvg_GetNMMouseInfo( nlParam )
+// Wvg_GetNMMouseInfo(nlParam)
 //
 HB_FUNC(WVG_GETNMMOUSEINFO)
 {
@@ -578,7 +578,7 @@ HB_FUNC(WVG_GETNMMOUSEINFO)
 }
 
 //
-//  Wvg_GetNMTreeViewInfo( nlParam )
+//  Wvg_GetNMTreeViewInfo(nlParam)
 //
 HB_FUNC(WVG_GETNMTREEVIEWINFO)
 {
@@ -598,7 +598,7 @@ HB_FUNC(WVG_GETNMTREEVIEWINFO)
 }
 
 //
-//  Wvg_TreeView_GetSelectionInfo( ::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected )
+//  Wvg_TreeView_GetSelectionInfo(::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected)
 //
 HB_FUNC(WVG_TREEVIEW_GETSELECTIONINFO)
 {
@@ -640,7 +640,7 @@ HB_FUNC(WVG_TREEVIEW_GETSELECTIONINFO)
 }
 
 //
-//   hItem := Wvg_TreeView_AddItem( oItem:hTree, hParent, oItem:Caption )
+//   hItem := Wvg_TreeView_AddItem(oItem:hTree, hParent, oItem:Caption)
 //
 HB_FUNC(WVG_TREEVIEW_ADDITEM)
 {
@@ -803,8 +803,8 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
 }
 
 //
-// Wvg_ChooseFont( hWnd, nWndProc, familyName, nominalPointSize,;
-//                 viewScreenFonts, viewPrinterFonts )
+// Wvg_ChooseFont(hWnd, nWndProc, familyName, nominalPointSize,;
+//                viewScreenFonts, viewPrinterFonts)
 HB_FUNC(WVG_CHOOSEFONT)
 {
   CHOOSEFONT cf; // = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
@@ -947,7 +947,7 @@ HB_FUNC(WVG_FONTCREATE)
 }
 
 //
-// Wvg_PointSizeToHeight( hdc, nPointSize )
+// Wvg_PointSizeToHeight(hdc, nPointSize)
 //
 HB_FUNC(WVG_POINTSIZETOHEIGHT)
 {
@@ -962,7 +962,7 @@ HB_FUNC(WVG_POINTSIZETOHEIGHT)
 }
 
 //
-// Wvg_HeightToPointSize( hdc, nHeight )
+// Wvg_HeightToPointSize(hdc, nHeight)
 //
 HB_FUNC(WVG_HEIGHTTOPOINTSIZE)
 {
@@ -986,7 +986,7 @@ HB_FUNC(WVG_SETCURRENTBRUSH)
 }
 
 //                                IL  | DL
-//  Wvg_AddToolBarButton( hWndTB, nBtn|hBitmap, cCaption, nButtonID, nMode, lIsTooltip )
+//  Wvg_AddToolBarButton(hWndTB, nBtn|hBitmap, cCaption, nButtonID, nMode, lIsTooltip)
 //
 HB_FUNC(WVG_ADDTOOLBARBUTTON)
 {
@@ -1044,7 +1044,7 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
 }
 
 //
-// Wvg_RegisterClass( cClassName,
+// Wvg_RegisterClass(cClassName,
 //
 HB_FUNC(WVG_REGISTERCLASS_BYNAME)
 {
@@ -1154,7 +1154,7 @@ HB_FUNC(WVG_RELEASEWINDOWPROCBLOCK)
 }
 
 //
-// Wvg_CreateToolTipWindow( hControl ) -> hWndTT
+// Wvg_CreateToolTipWindow(hControl) -> hWndTT
 //
 HB_FUNC(WVG_CREATETOOLTIPWINDOW)
 {
