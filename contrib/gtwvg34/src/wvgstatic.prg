@@ -228,12 +228,12 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
+         wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ELSE
-         wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )
+         wapi_SetBkMode( aNM[1], WIN_TRANSPARENT )
          RETURN ::hBrushBG
       ENDIF
 

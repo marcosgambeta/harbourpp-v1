@@ -74,47 +74,47 @@ FUNCTION WvtPaintObjects()
       FOR EACH blk IN aBlocks
          lExe := .T.
 
-         IF blk[ 3 ] != NIL .AND. ! Empty(blk[ 3 ])
+         IF blk[3] != NIL .AND. ! Empty(blk[3])
             // Check parameters against tlbr_ depending upon the
             // type of object and attributes contained in aAttr
             DO CASE
-            CASE blk[ 3 ][ 1 ] == WVT_BLOCK_GRID_V
-               b := blk[ 3 ][ 6 ]
+            CASE blk[3][1] == WVT_BLOCK_GRID_V
+               b := blk[3][6]
                IF Len(b:aColumnsSep) == 0
                   lExe := .F.
                ELSE
-                  nLeft  := b:aColumnsSep[ 1 ]
+                  nLeft  := b:aColumnsSep[1]
                   nRight := ATail( b:aColumnsSep )
-                  IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  // top    > bottom
-                     tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  // bottom < top
-                     tlbr_[ 2 ] > nRight + 1 .OR. ;     // left   > right
-                     tlbr_[ 4 ] < nLeft - 2             // right  < left
+                  IF tlbr_[1] > blk[3][4] .OR. ;  // top    > bottom
+                     tlbr_[3] < blk[3][2] .OR. ;  // bottom < top
+                     tlbr_[2] > nRight + 1 .OR. ;     // left   > right
+                     tlbr_[4] < nLeft - 2             // right  < left
                      lExe := .F.
                   ENDIF
                ENDIF
 
-            CASE blk[ 3 ][ 1 ] == WVT_BLOCK_GETS
-               IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  // top    > bottom
-                  tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  // bottom < top
-                  tlbr_[ 2 ] > blk[ 3 ][ 5 ] .OR. ;  // left   > right
-                  tlbr_[ 4 ] < blk[ 3 ][ 3 ]         // right  < left
+            CASE blk[3][1] == WVT_BLOCK_GETS
+               IF tlbr_[1] > blk[3][4] .OR. ;  // top    > bottom
+                  tlbr_[3] < blk[3][2] .OR. ;  // bottom < top
+                  tlbr_[2] > blk[3][5] .OR. ;  // left   > right
+                  tlbr_[4] < blk[3][3]         // right  < left
                   lExe := .F.
                ENDIF
 
             OTHERWISE
                // If refreshing rectangle's top is less than objects' bottom
                // and left is less than objects' right
-               IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  // top    > bottom
-                  tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  // bottom < top
-                  tlbr_[ 2 ] > blk[ 3 ][ 5 ] .OR. ;  // left   > right
-                  tlbr_[ 4 ] < blk[ 3 ][ 3 ]         // right  < left
+               IF tlbr_[1] > blk[3][4] .OR. ;  // top    > bottom
+                  tlbr_[3] < blk[3][2] .OR. ;  // bottom < top
+                  tlbr_[2] > blk[3][5] .OR. ;  // left   > right
+                  tlbr_[4] < blk[3][3]         // right  < left
                   lExe := .F.
                ENDIF
             ENDCASE
          ENDIF
 
          IF lExe
-            Eval( blk[ 2 ] )
+            Eval( blk[2] )
          ENDIF
       NEXT
    ENDIF
@@ -144,17 +144,17 @@ FUNCTION wvg_SetPaint( cID, nAction, xData, aAttr )
    LOCAL n, n1, oldData
 
    IF xData != NIL
-      IF ( n := AScan( t_paint_, {| e_ | e_[ 1 ] == cID } ) ) > 0
-         IF ( n1 := AScan( t_paint_[ n ][ 2 ], {| e_ | e_[ 1 ] == nAction } ) ) > 0
-            oldData := t_paint_[ n ][ 2 ][ n1 ][ 2 ]
-            t_paint_[ n ][ 2 ][ n1 ][ 2 ] := xData
-            t_paint_[ n ][ 2 ][ n1 ][ 3 ] := aAttr
+      IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+         IF ( n1 := AScan( t_paint_[n][2], {| e_ | e_[1] == nAction } ) ) > 0
+            oldData := t_paint_[n][2][n1][2]
+            t_paint_[n][2][n1][2] := xData
+            t_paint_[n][2][n1][3] := aAttr
          ELSE
-            AAdd(t_paint_[ n ][ 2 ], { nAction, xData, aAttr })
+            AAdd(t_paint_[n][2], { nAction, xData, aAttr })
          ENDIF
       ELSE
          AAdd(t_paint_, { cID, {} })
-         AAdd(ATail( t_paint_ )[ 2 ], { nAction, xData, aAttr })
+         AAdd(ATail( t_paint_ )[2], { nAction, xData, aAttr })
       ENDIF
    ENDIF
 
@@ -164,8 +164,8 @@ FUNCTION wvg_GetPaint( cID )
 
    LOCAL n
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[ 1 ] == cID } ) ) > 0
-      RETURN t_paint_[ n ][ 2 ]
+   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+      RETURN t_paint_[n][2]
    ENDIF
 
    RETURN {}
@@ -174,10 +174,10 @@ FUNCTION wvg_DelPaint( cID, nAction )
 
    LOCAL xData, n1, n
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[ 1 ] == cID } ) ) > 0
-      IF ( n1 := AScan( t_paint_[ n ][ 2 ], {| e_ | e_[ 1 ] == nAction } ) ) > 0
-         xData := t_paint_[ n ][ 2 ][ n1 ][ 2 ]
-         t_paint_[ n ][ 2 ][ n1 ][ 2 ] := {|| .T. }
+   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+      IF ( n1 := AScan( t_paint_[n][2], {| e_ | e_[1] == nAction } ) ) > 0
+         xData := t_paint_[n][2][n1][2]
+         t_paint_[n][2][n1][2] := {|| .T. }
       ENDIF
    ENDIF
 
@@ -187,8 +187,8 @@ FUNCTION wvg_PurgePaint( cID, lDummy )
 
    LOCAL n, aPaint
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[ 1 ] == cID } ) ) > 0
-      aPaint := t_paint_[ n ]
+   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+      aPaint := t_paint_[n]
       hb_ADel( t_paint_, n, .T. )
    ENDIF
 
@@ -202,8 +202,8 @@ PROCEDURE wvg_InsertPaint( cID, aPaint, lSet )
 
    LOCAL n
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[ 1 ] == cID } ) ) > 0
-      t_paint_[ n ] := aPaint
+   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+      t_paint_[n] := aPaint
    ELSE
       AAdd(t_paint_, aPaint)
    ENDIF
@@ -242,23 +242,23 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
    IF nMode == 0
       hb_default(@aOffSet, {})
       ASize( aOffSet, 4 )
-      hb_default(@aOffSet[ 1 ], 0)
-      hb_default(@aOffSet[ 2 ], 0)
-      hb_default(@aOffSet[ 3 ], 0)
-      hb_default(@aOffSet[ 4 ], 0)
+      hb_default(@aOffSet[1], 0)
+      hb_default(@aOffSet[2], 0)
+      hb_default(@aOffSet[3], 0)
+      hb_default(@aOffSet[4], 0)
 
       nBaseUnits  := wapi_GetDialogBaseUnits()
       nBaseUnitsX := wapi_LOWORD(nBaseUnits)
       nBaseUnitsY := wapi_HIWORD(nBaseUnits)
 
-      nW := aFont[ 7 ] * nCols + aOffSet[ 4 ]
-      nH := aFont[ 6 ] * nRows + aOffSet[ 3 ]
+      nW := aFont[7] * nCols + aOffSet[4]
+      nH := aFont[6] * nRows + aOffSet[3]
 
       // Position it exactly where user has requested
 
       aXY := wvt_ClientToScreen( nTop, nLeft )
-      nX  := aXY[ 1 ] + aOffSet[ 2 ]
-      nY  := aXY[ 2 ] + aOffSet[ 1 ]
+      nX  := aXY[1] + aOffSet[2]
+      nY  := aXY[2] + aOffSet[1]
 
       // MSDN says DlgBaseUnits and Screen Coordinates has multiplier of 4,8 for X and Y.
       // But in my practice, the values below are 99% accurate.
@@ -280,23 +280,23 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
 
    hb_default(@nStyle, WIN_WS_CAPTION + WIN_WS_SYSMENU + WIN_WS_GROUP + WIN_WS_TABSTOP + DS_SETFONT + WIN_WS_THICKFRAME + WIN_WS_VISIBLE + WIN_WS_POPUP + DS_3DLOOK)
 
-   AAdd(aDlg[ 1 ], hb_defaultValue( nHelpId, 0 ))
-   AAdd(aDlg[ 1 ], hb_defaultValue( nExStyle, 0 ))
-   AAdd(aDlg[ 1 ], nStyle)
-   AAdd(aDlg[ 1 ], 0)
-   AAdd(aDlg[ 1 ], nX)
-   AAdd(aDlg[ 1 ], nY)
-   AAdd(aDlg[ 1 ], nW)
-   AAdd(aDlg[ 1 ], nH)
-   AAdd(aDlg[ 1 ], 0)
-   AAdd(aDlg[ 1 ], 0)
-   AAdd(aDlg[ 1 ], hb_defaultValue( cTitle, "" ))
+   AAdd(aDlg[1], hb_defaultValue( nHelpId, 0 ))
+   AAdd(aDlg[1], hb_defaultValue( nExStyle, 0 ))
+   AAdd(aDlg[1], nStyle)
+   AAdd(aDlg[1], 0)
+   AAdd(aDlg[1], nX)
+   AAdd(aDlg[1], nY)
+   AAdd(aDlg[1], nW)
+   AAdd(aDlg[1], nH)
+   AAdd(aDlg[1], 0)
+   AAdd(aDlg[1], 0)
+   AAdd(aDlg[1], hb_defaultValue( cTitle, "" ))
 
    IF hb_bitAnd(nStyle, DS_SETFONT) != 0
-      AAdd(aDlg[ 1 ], hb_defaultValue( nPointSize, 8 ))
-      AAdd(aDlg[ 1 ], hb_defaultValue( nWeight, 400 ))
-      AAdd(aDlg[ 1 ], hb_defaultValue( lItalic, .F. ))
-      AAdd(aDlg[ 1 ], hb_defaultValue( cFaceName, "MS Sans Serif" ))
+      AAdd(aDlg[1], hb_defaultValue( nPointSize, 8 ))
+      AAdd(aDlg[1], hb_defaultValue( nWeight, 400 ))
+      AAdd(aDlg[1], hb_defaultValue( lItalic, .F. ))
+      AAdd(aDlg[1], hb_defaultValue( cFaceName, "MS Sans Serif" ))
    ENDIF
 
    RETURN aDlg
@@ -317,22 +317,22 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
 
       ASize( aOffSet, 4 )
 
-      hb_default(@aOffSet[ 1 ], 0)
-      hb_default(@aOffSet[ 2 ], 0)
-      hb_default(@aOffSet[ 3 ], 0)
-      hb_default(@aOffSet[ 4 ], 0)
+      hb_default(@aOffSet[1], 0)
+      hb_default(@aOffSet[2], 0)
+      hb_default(@aOffSet[3], 0)
+      hb_default(@aOffSet[4], 0)
 
       nBaseUnits  := wapi_GetDialogBaseUnits()
       nBaseUnitsX := wapi_LOWORD(nBaseUnits)
       nBaseUnitsY := wapi_HIWORD(nBaseUnits)
 
       aXY := wvt_GetXYFromRowCol( nTop, nLeft )
-      nX  := aXY[ 1 ] + aOffSet[ 2 ]
-      nY  := aXY[ 2 ] + aOffSet[ 1 ]
+      nX  := aXY[1] + aOffSet[2]
+      nY  := aXY[2] + aOffSet[1]
 
       aXY := wvt_GetXYFromRowCol( nBottom + 1, nRight + 1 )
-      nW  := aXY[ 1 ] + aOffSet[ 4 ] - nX
-      nH  := aXY[ 2 ] + aOffSet[ 3 ] - nY
+      nW  := aXY[1] + aOffSet[4] - nX
+      nH  := aXY[2] + aOffSet[3] - nY
 
       nXM :=  5.25
       nYM := 10.25
@@ -348,19 +348,19 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
       nH := nRows
    ENDIF
 
-   aDlg[ 1 ][ 4 ]++  // item count
+   aDlg[1][4]++  // item count
 
-   AAdd(aDlg[  2 ], hb_defaultValue( nHelpId, 0 ))
-   AAdd(aDlg[  3 ], hb_defaultValue( nExStyle, 0 ))
-   AAdd(aDlg[  4 ], hb_defaultValue( nStyle, WIN_WS_CHILD + WIN_WS_VISIBLE ))
-   AAdd(aDlg[  5 ], nX)
-   AAdd(aDlg[  6 ], nY)
-   AAdd(aDlg[  7 ], nW)
-   AAdd(aDlg[  8 ], nH)
-   AAdd(aDlg[  9 ], cnId)
-   AAdd(aDlg[ 10 ], cnDlgClass)
-   AAdd(aDlg[ 11 ], IIf(HB_IsString(cText) .OR. HB_IsNumeric(cText), cText, ""))
-   AAdd(aDlg[ 12 ], 0)
+   AAdd(aDlg[2], hb_defaultValue( nHelpId, 0 ))
+   AAdd(aDlg[3], hb_defaultValue( nExStyle, 0 ))
+   AAdd(aDlg[4], hb_defaultValue( nStyle, WIN_WS_CHILD + WIN_WS_VISIBLE ))
+   AAdd(aDlg[5], nX)
+   AAdd(aDlg[6], nY)
+   AAdd(aDlg[7], nW)
+   AAdd(aDlg[8], nH)
+   AAdd(aDlg[9], cnId)
+   AAdd(aDlg[10], cnDlgClass)
+   AAdd(aDlg[11], IIf(HB_IsString(cText) .OR. HB_IsNumeric(cText), cText, ""))
+   AAdd(aDlg[12], 0)
 
    RETURN aDlg
 
@@ -450,9 +450,9 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
    IF hb_bitAnd(nFlags, WIN_OFN_ALLOWMULTISELECT) != 0
       xRet := {}
       IF !Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
-         cPath := aTmp[ 1 ]
+         cPath := aTmp[1]
          FOR i := 2 TO Len(aTmp)
-            AAdd(xRet, cPath + "\" + aTmp[ i ])
+            AAdd(xRet, cPath + "\" + aTmp[i])
          NEXT
       ENDIF
    ELSE
@@ -489,9 +489,9 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
    IF hb_bitAnd(nFlags, WIN_OFN_ALLOWMULTISELECT) != 0
       xRet := {}
       IF !Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
-         cPath := aTmp[ 1 ]
+         cPath := aTmp[1]
          FOR i := 2 TO Len(aTmp)
-            AAdd(xRet, cPath + "\" + aTmp[ i ])
+            AAdd(xRet, cPath + "\" + aTmp[i])
          NEXT
       ENDIF
    ELSE
@@ -855,8 +855,8 @@ FUNCTION wvg_TrackPopupMenu( hMenu, nFlags, x, y, hWnd )
    IF !HB_IsNumeric(x) .OR. ! HB_IsNumeric(y)
       xy := { => }
       wapi_GetCursorPos( @xy )
-      x := xy[ "x" ]
-      y := xy[ "y" ]
+      x := xy["x"]
+      y := xy["y"]
    ENDIF
 
    RETURN wapi_TrackPopupMenu( hMenu, ;
@@ -878,7 +878,7 @@ FUNCTION wvt_TrackPopupMenu( hMenu )
 
    RETURN wapi_TrackPopupMenu( hMenu, ;
       hb_bitOr( WIN_TPM_CENTERALIGN, WIN_TPM_RETURNCMD ), ;
-      xy[ "x" ], xy[ "y" ], 0, hWnd )
+      xy["x"], xy["y"], 0, hWnd )
 
 FUNCTION wvt_GetMenu()
 

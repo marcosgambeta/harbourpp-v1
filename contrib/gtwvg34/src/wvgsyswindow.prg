@@ -141,7 +141,7 @@ METHOD WvgSysWindow:show()
 
 METHOD WvgSysWindow:SetPos(aPos)
 
-   wvg_SetWindowPosition( ::hWnd, aPos[ 1 ], aPos[ 2 ], .F. )
+   wvg_SetWindowPosition( ::hWnd, aPos[1], aPos[2], .F. )
 
    RETURN Self
 
@@ -151,7 +151,7 @@ METHOD WvgSysWindow:currentPos()
 
    aRect := wvg_GetWindowRect( ::hWnd )
 
-   RETURN { aRect[ 1 ], aRect[ 2 ] }
+   RETURN { aRect[1], aRect[2] }
 
 METHOD WvgSysWindow:currentSize()
 
@@ -159,4 +159,4 @@ METHOD WvgSysWindow:currentSize()
 
    aRect := wvg_GetClientRect( ::hWnd )
 
-   RETURN { aRect[ 3 ] - aRect[ 1 ], aRect[ 4 ] - aRect[ 2 ] }
+   RETURN { aRect[3] - aRect[1], aRect[4] - aRect[2] }

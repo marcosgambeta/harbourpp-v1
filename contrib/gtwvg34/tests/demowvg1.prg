@@ -108,10 +108,10 @@ STATIC FUNCTION SetGT( nIndex, pGT )
 
    STATIC s_pGT_ := { NIL, NIL, NIL }
 
-   LOCAL oldGT := s_pGT_[ nIndex ]
+   LOCAL oldGT := s_pGT_[nIndex]
 
    IF PCount() == 2
-      s_pGT_[ nIndex ] := pGT
+      s_pGT_[nIndex] := pGT
    ENDIF
 
    RETURN oldGT

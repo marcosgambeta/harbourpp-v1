@@ -215,23 +215,23 @@ METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
    LOCAL xData, i
 
    IF nIndex >= 1 .AND. nIndex <= Len(::aChildren)
-      IF HB_IsEvalItem(::aChildren[ nIndex ][ OBJ_CHILD_DATABLOCK ])
-         xData := Eval( ::aChildren[ nIndex ][ OBJ_CHILD_DATABLOCK ] )
+      IF HB_IsEvalItem(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
+         xData := Eval( ::aChildren[nIndex][OBJ_CHILD_DATABLOCK] )
       ENDIF
 
-      Eval( ::aChildren[ nIndex ][ OBJ_CHILD_REFRESHBLOCK ], ;
-         ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ], ;
-         ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:oParent:cPaintBlockID, ;
-         ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:oBrw, ;
+      Eval( ::aChildren[nIndex][OBJ_CHILD_REFRESHBLOCK], ;
+         ::aChildren[nIndex][OBJ_CHILD_OBJ], ;
+         ::aChildren[nIndex][OBJ_CHILD_OBJ]:oParent:cPaintBlockID, ;
+         ::aChildren[nIndex][OBJ_CHILD_OBJ]:oBrw, ;
          nKey, ;
          xData )
 
-      IF ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:nChildren > 0
+      IF ::aChildren[nIndex][OBJ_CHILD_OBJ]:nChildren > 0
          // Pretend IF focus is current on this object
-         Eval( ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:bOnFocus, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ] )
+         Eval( ::aChildren[nIndex][OBJ_CHILD_OBJ]:bOnFocus, ::aChildren[nIndex][OBJ_CHILD_OBJ] )
 
-         FOR i := 1 to ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:nChildren
-            ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:NotifyChild(i, nKey, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ])
+         FOR i := 1 to ::aChildren[nIndex][OBJ_CHILD_OBJ]:nChildren
+            ::aChildren[nIndex][OBJ_CHILD_OBJ]:NotifyChild(i, nKey, ::aChildren[nIndex][OBJ_CHILD_OBJ])
          NEXT
 
          // Restore previous environments

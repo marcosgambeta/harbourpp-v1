@@ -59,8 +59,8 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oStatic:type    := WVGSTATIC_TYPE_TEXT
    oStatic:options := WVGSTATIC_TEXT_CENTER
    oStatic:caption := Chr(13) + "Implemented Xbase++ Parts"
-   oStatic:create( , , { 0, oTBar:currentSize()[ 2 ] + 3 }, { 120, oCrt:currentSize()[ 2 ] - ;
-      oTBar:currentSize()[ 2 ] - oSBar:currentSize()[ 2 ] - 4 }, , .T. )
+   oStatic:create( , , { 0, oTBar:currentSize()[2] + 3 }, { 120, oCrt:currentSize()[2] - ;
+      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4 }, , .T. )
    oStatic:setColorBG( WIN_RGB(198, 198, 198) )
 
 #if 0  // panel
@@ -97,14 +97,14 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oXbp:caption := "3 State A"
    oXbp:create( , , { 10, 100 }, { 100, 15 } )
    // Determine current state using mp1
-   oXbp:selected := {| m1, m2, oBtn | m2 := m2, oBtn := oBtn, oPanel1:caption := "3State A [" + aState[ m1 + 1 ] + "]" }
+   oXbp:selected := {| m1, m2, oBtn | m2 := m2, oBtn := oBtn, oPanel1:caption := "3State A [" + aState[m1 + 1] + "]" }
 
    // Create second 3State Button, passing the position to :new()
    oXbp                := Wvg3State():new( oStatic2, , { 10, 125 }, { 100, 15 } )
    oXbp:caption := "3 State B"
    oXbp:create( oStatic2 )
    // Determine current state using :getData()
-   oXbp:selected := {| m1, m2, oBtn | m1 := m1, m2 := m2, wapi_MessageBox( , "3State B", aState[ oBtn:getData() + 1 ] ) }
+   oXbp:selected := {| m1, m2, oBtn | m1 := m1, m2 := m2, wapi_MessageBox( , "3State B", aState[oBtn:getData() + 1] ) }
 
    // Create first SLE, specify position using :create()
    // On :typeOut set the focus to the second SLE
@@ -173,9 +173,9 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oXbp:activate := {|| oStatic:hide(), oCrt:sendMessage( WIN_WM_SIZE, 0, 0 ) }
 
    // --- TreeView ---
-   oTree := WvgTreeView():new( oDA, , { oCrt:currentSize()[ 1 ] - 160, oTBar:currentSize()[ 2 ] + 3 }, ;
-      { 160, oCrt:currentSize()[ 2 ] - ;
-      oTBar:currentSize()[ 2 ] - oSBar:currentSize()[ 2 ] - 4 }, , .T. )
+   oTree := WvgTreeView():new( oDA, , { oCrt:currentSize()[1] - 160, oTBar:currentSize()[2] + 3 }, ;
+      { 160, oCrt:currentSize()[2] - ;
+      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4 }, , .T. )
    oTree:hasLines   := .T.
    oTree:hasButtons := .T.
    oTree:alwaysShowSelection := .T.
@@ -241,16 +241,16 @@ STATIC FUNCTION ResizeDialog( oCrt, oTBar, oSBar, oStatic, oCom, oTree )
    LOCAL aCom    := oCom:currentSize()
 #endif
 
-   LOCAL nT := aTBar[ 2 ]
-   LOCAL nH := aCrt[ 2 ] - aTBar[ 2 ] - aSBar[ 2 ]
+   LOCAL nT := aTBar[2]
+   LOCAL nH := aCrt[2] - aTBar[2] - aSBar[2]
 
    IF oStatic:isVisible
       oStatic:setPosAndSize( { 0, nT + 3 }, { 120, nH - 4 }, .T. )
-      oCom:setPosAndSize( { 120, nT }, { aCrt[ 1 ] - 120 - 150, nH }, .T. )
-      oTree:setPosAndSize( { aCrt[ 1 ] - 150, nT }, { 150, nH }, .T. )
+      oCom:setPosAndSize( { 120, nT }, { aCrt[1] - 120 - 150, nH }, .T. )
+      oTree:setPosAndSize( { aCrt[1] - 150, nT }, { 150, nH }, .T. )
    ELSE
-      oCom:setPosAndSize( { 0, nT }, { aCrt[ 1 ] - 150, nH }, .T. )
-      oTree:setPosAndSize( { aCrt[ 1 ] - 150, nT }, { 150, nH }, .T. )
+      oCom:setPosAndSize( { 0, nT }, { aCrt[1] - 150, nH }, .T. )
+      oTree:setPosAndSize( { aCrt[1] - 150, nT }, { 150, nH }, .T. )
    ENDIF
 
    RETURN 1
@@ -644,13 +644,13 @@ STATIC PROCEDURE MyFunction( nMode )
 
    SWITCH nMode
    CASE 1
-      Tone( MUSIC_WAITON[ 1 ], 1 )
-      Tone( MUSIC_WAITON[ 2 ], 1 )
+      Tone( MUSIC_WAITON[1], 1 )
+      Tone( MUSIC_WAITON[2], 1 )
       EXIT
 
    CASE 2
-      Tone( MUSIC_WAITON[ 2 ], 1 )
-      Tone( MUSIC_WAITON[ 1 ], 1 )
+      Tone( MUSIC_WAITON[2], 1 )
+      Tone( MUSIC_WAITON[1], 1 )
       EXIT
 
    CASE 3
@@ -662,7 +662,7 @@ STATIC PROCEDURE MyFunction( nMode )
       EXIT
 
    CASE 102  // NannyBoo
-      AEval( { { 196, 2 }, { 196, 2 }, { 164, 2 }, { 220, 2 }, { 196, 4 }, { 164, 4 } }, {| a | Tone( a[ 1 ], a[ 2 ] ) } )
+      AEval( { { 196, 2 }, { 196, 2 }, { 164, 2 }, { 220, 2 }, { 196, 4 }, { 164, 4 } }, {| a | Tone( a[1], a[2] ) } )
       EXIT
 
    CASE 103  // BADKEY

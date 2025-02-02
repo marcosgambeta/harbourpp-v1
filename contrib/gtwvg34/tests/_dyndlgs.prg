@@ -196,14 +196,14 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       ENDIF
 
       IF Len(aHFonts) > 0
-         wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_MLE ), WIN_WM_SETFONT, ahFonts[ 1 ], 0 )
+         wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_MLE ), WIN_WM_SETFONT, ahFonts[1], 0 )
       ENDIF
 
       IF Empty(SetIcons())
          SetIcons( wvg_LoadIcon( "vr_1.ico" ) )
       ENDIF
       IF !Empty(SetIcons())
-         wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, WIN_IMAGE_ICON, SetIcons()[ 1 ] )
+         wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, WIN_IMAGE_ICON, SetIcons()[1] )
       ENDIF
 
 #if 0
@@ -327,9 +327,9 @@ STATIC PROCEDURE DrawSlide( hDlg, nSlide )
    LOCAL hDC   := wvg_GetDC(hDlg)
    LOCAL aRect := wvg_GetClientRect( hDlg )
 
-   wapi_Rectangle( hDC, aRect[ 1 ] + 10, aRect[ 2 ] + 10, aRect[ 3 ] - 10, aRect[ 4 ] - 10 )
-   wvg_DrawImage( hDC, aRect[ 1 ] + 10, aRect[ 2 ] + 10, aRect[ 3 ] - aRect[ 1 ] - 20, ;
-      aRect[ 4 ] - aRect[ 2 ] - 20, t_aSlides[ nSlide ] )
+   wapi_Rectangle( hDC, aRect[1] + 10, aRect[2] + 10, aRect[3] - 10, aRect[4] - 10 )
+   wvg_DrawImage( hDC, aRect[1] + 10, aRect[2] + 10, aRect[3] - aRect[1] - 20, ;
+      aRect[4] - aRect[2] - 20, t_aSlides[nSlide] )
 
    wvg_ReleaseDC(hDlg, hDC)
 

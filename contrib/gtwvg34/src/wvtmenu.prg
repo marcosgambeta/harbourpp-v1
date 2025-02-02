@@ -126,7 +126,7 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
 #endif
       ENDIF
 
-      IF !wapi_AppendMenu( ::hMenu, aItem[ WVT_MENU_TYPE ], aItem[ WVT_MENU_IDENTIFIER ], aItem[ WVT_MENU_CAPTION ] )
+      IF !wapi_AppendMenu( ::hMenu, aItem[WVT_MENU_TYPE], aItem[WVT_MENU_IDENTIFIER], aItem[WVT_MENU_CAPTION] )
 #if 0
          Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:AddItem()", "Add menu item", { cCaption, bAction } ) )
 #endif
@@ -156,8 +156,8 @@ METHOD wvtMenu:DelItem( nItemNum )
    LOCAL lResult := .F.
 
    IF nItemNum >= 1 .AND. nItemNum <= ::NumItems()
-      IF ::aItems[ nItemNum ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
-         ::aItems[ nItemNum ][ WVT_MENU_MENUOBJ ]:Destroy()
+      IF ::aItems[nItemNum][WVT_MENU_TYPE] == WIN_MF_POPUP
+         ::aItems[nItemNum][WVT_MENU_MENUOBJ]:Destroy()
       ENDIF
 
       IF ( lResult := wapi_DeleteMenu( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION ) ) // Remember ZERO base
@@ -195,7 +195,7 @@ METHOD wvtMenu:GetItem( nItemNum )
    LOCAL nItems := ::NumItems(), aResult := NIL
 
    IF nItemNum >= 1 .AND. nItemNum <= nItems
-      aResult := ::aItems[ nItemNum ]
+      aResult := ::aItems[nItemNum]
    ENDIF
 
    RETURN aResult
@@ -207,10 +207,10 @@ METHOD wvtMenu:FindMenuItemById(nId)
    IF !Empty(nId)
       x := ::NumItems()
       DO WHILE x > 0 .AND. Empty(aResult)
-         IF ::aItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
-            aResult := ::aItems[ x ][ WVT_MENU_MENUOBJ ]:FindMenuItemById(nId)
-         ELSEIF ::aItems[ x ][ WVT_MENU_IDENTIFIER ] == nId
-            aResult := ::aItems[ x ]
+         IF ::aItems[x][WVT_MENU_TYPE] == WIN_MF_POPUP
+            aResult := ::aItems[x][WVT_MENU_MENUOBJ]:FindMenuItemById(nId)
+         ELSEIF ::aItems[x][WVT_MENU_IDENTIFIER] == nId
+            aResult := ::aItems[x]
          ENDIF
          x--
       ENDDO

@@ -381,12 +381,12 @@ HB_FUNC(WVG_STATUSBARREFRESH)
 
    if( hWndSB && IsWindow( hWndSB ) )
    {
-      int ptArray[ WIN_STATUSBAR_MAX_PARTS ];
+      int ptArray[WIN_STATUSBAR_MAX_PARTS];
       int iParts, i;
 
       iParts = SendMessage( hWndSB, SB_GETPARTS, ( WPARAM ) HB_SIZEOFARRAY( ptArray ), ( LPARAM ) ( LPINT ) ptArray );
 
-      ptArray[ iParts - 1 ] = -1;
+      ptArray[iParts - 1] = -1;
 
       if( SendMessage( hWndSB, SB_SETPARTS, iParts, ( LPARAM ) ( LPINT ) ptArray ) )
       {

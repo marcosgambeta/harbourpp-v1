@@ -144,10 +144,10 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
       RETURN EVENT_HANDLED
 
    CASE nMessage == HB_GTE_NOTIFY
-      aHdr := wvg_GetNMHdrInfo( aNM[ 2 ] )
+      aHdr := wvg_GetNMHdrInfo( aNM[2] )
 
       DO CASE
-      CASE aHdr[ NMH_code ] == -551 // TCN_SELCHANGE
+      CASE aHdr[NMH_code] == -551 // TCN_SELCHANGE
       ENDCASE
 
    CASE nMessage == HB_GTE_CTLCOLOR

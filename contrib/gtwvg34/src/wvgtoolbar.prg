@@ -194,17 +194,17 @@ METHOD WvgToolBar:handleEvent( nMessage, aNM )
       EXIT
 
    CASE HB_GTE_NOTIFY
-      aNMMouse := wvg_GetNMMouseInfo( aNM[ 2 ] )
+      aNMMouse := wvg_GetNMMouseInfo( aNM[2] )
 
       DO CASE
 
-      CASE aNMMouse[ NMH_code ] == NM_CLICK
-         IF ( nObj := AScan( ::aItems, {| e_ | e_[ 1 ] == aNMMouse[ NMH_dwItemSpec ] } ) ) > 0
+      CASE aNMMouse[NMH_code] == NM_CLICK
+         IF ( nObj := AScan( ::aItems, {| e_ | e_[1] == aNMMouse[NMH_dwItemSpec] } ) ) > 0
             IF HB_IsEvalItem(::sl_lbClick)
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
-               Eval( ::sl_lbClick, ::aItems[ nObj ][ 2 ], , Self )
+               Eval( ::sl_lbClick, ::aItems[nObj][2], , Self )
 
             ENDIF
          ENDIF
@@ -225,14 +225,14 @@ METHOD PROCEDURE WvgToolBar:destroy()
    LOCAL i
 
    FOR EACH i IN ::aItems
-      IF i[ 2 ]:image != NIL
-         wvg_DeleteObject( i[ 2 ]:image )
+      IF i[2]:image != NIL
+         wvg_DeleteObject( i[2]:image )
       ENDIF
-      IF i[ 2 ]:disabledImage != NIL
-         wvg_DeleteObject( i[ 2 ]:disabledImage )
+      IF i[2]:disabledImage != NIL
+         wvg_DeleteObject( i[2]:disabledImage )
       ENDIF
-      IF i[ 2 ]:hotImage != NIL
-         wvg_DeleteObject( i[ 2 ]:hotImage )
+      IF i[2]:hotImage != NIL
+         wvg_DeleteObject( i[2]:hotImage )
       ENDIF
    NEXT
 

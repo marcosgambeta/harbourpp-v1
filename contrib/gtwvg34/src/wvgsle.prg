@@ -117,7 +117,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::style += es_[ ::align ]
+   ::style += es_[::align]
    ::style += ES_AUTOHSCROLL
 
    IF ::tabStop
@@ -167,18 +167,18 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
-      CASE aNM[ NMH_code ] == EN_CHANGE
+      CASE aNM[NMH_code] == EN_CHANGE
 
-      CASE aNM[ NMH_code ] == EN_UPDATE
+      CASE aNM[NMH_code] == EN_UPDATE
 
-      CASE aNM[ NMH_code ] == EN_MAXTEXT
+      CASE aNM[NMH_code] == EN_MAXTEXT
 
-      CASE aNM[ NMH_code ] == EN_KILLFOCUS
+      CASE aNM[NMH_code] == EN_KILLFOCUS
          IF HB_IsEvalItem(::sl_killInputFocus)
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == EN_SETFOCUS
+      CASE aNM[NMH_code] == EN_SETFOCUS
          IF HB_IsEvalItem(::sl_setInputFocus)
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
@@ -187,43 +187,43 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
+         wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ELSE
-         wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )
+         wapi_SetBkMode( aNM[1], WIN_TRANSPARENT )
          RETURN ::hBrushBG
       ENDIF
 
    CASE nMessage == HB_GTE_ANY
       DO CASE
-      CASE aNM[ NMH_code ] == WIN_WM_KILLFOCUS
+      CASE aNM[NMH_code] == WIN_WM_KILLFOCUS
          IF HB_IsEvalItem(::sl_killInputFocus)
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == WIN_WM_SETFOCUS
+      CASE aNM[NMH_code] == WIN_WM_SETFOCUS
          IF HB_IsEvalItem(::sl_setInputFocus)
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == WIN_WM_KEYDOWN
+      CASE aNM[NMH_code] == WIN_WM_KEYDOWN
 
          DO CASE
-         CASE aNM[ 2 ] == K_ENTER
+         CASE aNM[2] == K_ENTER
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
             IF HB_IsEvalItem(::sl_returnPressed)
                Eval( ::sl_returnPressed, , , Self )
             ENDIF
-         CASE aNM[ 2 ] == WIN_VK_TAB
+         CASE aNM[2] == WIN_VK_TAB
             IF ::isParentCrt()
                ::oParent:setFocus()
                RETURN EVENT_HANDLED
             ENDIF
-         CASE aNM[ 2 ] == hb_keyCode( "A" )  // ~
+         CASE aNM[2] == hb_keyCode( "A" )  // ~
             // RETURN EVENT_HANDLED
          ENDCASE
 

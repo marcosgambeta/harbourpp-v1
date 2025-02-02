@@ -85,10 +85,10 @@ PROCEDURE Main( cInputFile )
       FOR EACH fld IN dbStruct()
          cOutput += ;
             "      " + ;
-            "{ " + PadR('"' + fld[ DBS_NAME ] + '"', 12) + ", " + ;
-            PadR('"' + fld[ DBS_TYPE ] + '"', 8) + ", " + ;
-            Str( fld[ DBS_LEN ], 5 ) + ", " + ;
-            Str( fld[ DBS_DEC ], 2 ) + " }" + ;
+            "{ " + PadR('"' + fld[DBS_NAME] + '"', 12) + ", " + ;
+            PadR('"' + fld[DBS_TYPE] + '"', 8) + ", " + ;
+            Str( fld[DBS_LEN], 5 ) + ", " + ;
+            Str( fld[DBS_DEC], 2 ) + " }" + ;
             IIf(fld:__enumIsLast(), " }, ... )", ", ;") + hb_eol()
       NEXT
       cOutput += ;

@@ -155,10 +155,10 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_CTLCOLOR
 
       IF HB_IsNumeric(::clr_FG)
-         wapi_SetTextColor(aNM[ 1 ], ::clr_FG)
+         wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF !Empty(::hBrushBG)
-         wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )
+         wapi_SetBkMode( aNM[1], WIN_TRANSPARENT )
          RETURN ::hBrushBG
       ENDIF
 

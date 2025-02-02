@@ -257,7 +257,7 @@ STATIC PROCEDURE WvtNextGets_X()
 
    // Change the values of palette arbitrarly though you can fine-tune
    // these values with realistic values.
-   aNewPalette[ 8 ] += 100000 * ++s_nPalletMultiplier
+   aNewPalette[8] += 100000 * ++s_nPalletMultiplier
 
    hb_gtInfo( HB_GTI_PALETTE, aNewPalette )
 

@@ -139,8 +139,8 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
    win_axInit()
 
-   hWnd := wapi_CreateWindowEx( ::exStyle, "AtlAxWin", ::CLSID, ::style, ::aPos[ 1 ], ::aPos[ 2 ], ;
-      ::aSize[ 1 ], ::aSize[ 2 ], ::hContainer )
+   hWnd := wapi_CreateWindowEx( ::exStyle, "AtlAxWin", ::CLSID, ::style, ::aPos[1], ::aPos[2], ;
+      ::aSize[1], ::aSize[2], ::hContainer )
    IF Empty(hWnd)
       RETURN NIL
    ENDIF
@@ -185,7 +185,7 @@ METHOD PROCEDURE WvgActiveXControl:execEvent(nEvent, ...)
 #endif
 
    IF nEvent $ ::hEvents
-      Eval(::hEvents[ nEvent ], ...)
+      Eval(::hEvents[nEvent], ...)
    ENDIF
 
    RETURN
@@ -237,7 +237,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
 
    IF HB_IsNumeric(nEvent) .AND. HB_IsEvalItem(bBlock)
-      ::hEvents[ nEvent ] := bBlock
+      ::hEvents[nEvent] := bBlock
    ENDIF
 
    RETURN Self

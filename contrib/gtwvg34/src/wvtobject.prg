@@ -285,9 +285,9 @@ METHOD WvtObject:CreatePopup()
       FOR EACH i IN ::aPopup
 
          ASize( i, 3 )
-         i[ 3 ] := nID := ::nPopupItemID++
+         i[3] := nID := ::nPopupItemID++
 
-         wapi_AppendMenu( ::hPopup, WIN_MF_ENABLED + WIN_MF_STRING, nID, i[ 1 ] )
+         wapi_AppendMenu( ::hPopup, WIN_MF_ENABLED + WIN_MF_STRING, nID, i[1] )
       NEXT
    ENDIF
 
@@ -301,13 +301,13 @@ METHOD WvtObject:ShowPopup()
       aPos := wvt_GetCursorPos()
 
       nRet := wvt_TrackPopupMenu( ::hPopup, WIN_TPM_CENTERALIGN + WIN_TPM_RETURNCMD, ;
-         aPos[ 1 ], aPos[ 2 ], 0, hb_gtInfo( HB_GTI_WINHANDLE ) )
+         aPos[1], aPos[2], 0, hb_gtInfo( HB_GTI_WINHANDLE ) )
       IF nRet > 0
-         IF ( n := AScan( ::aPopup, {| e_ | e_[ 3 ] == nRet } ) ) > 0
+         IF ( n := AScan( ::aPopup, {| e_ | e_[3] == nRet } ) ) > 0
             lRet := .T.
 
-            IF HB_IsEvalItem(::aPopup[ n ][ 2 ])
-               Eval( ::aPopup[ n ][ 2 ] )
+            IF HB_IsEvalItem(::aPopup[n][2])
+               Eval( ::aPopup[n][2] )
             ENDIF
          ENDIF
       ENDIF

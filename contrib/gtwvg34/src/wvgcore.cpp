@@ -705,7 +705,7 @@ HB_FUNC(WVT_SETPEN)
   hb_retl(HB_FALSE);
 }
 
-/* wvt_SetBrush( nStyle, nColor, [ nHatch ] ) */
+/* wvt_SetBrush( nStyle, nColor, [nHatch] ) */
 HB_FUNC(WVT_SETBRUSH)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -1816,7 +1816,7 @@ HB_FUNC(WVT_DRAWCOLORRECT)
 
 /*                     1     2       3      4       5
    wvt_DrawGridHorz( nTop, nLeft, nRight, nRows, aPxlOff )
-   aPxlOff[ 2 ] and aPxlOff[ 4 ] used */
+   aPxlOff[2] and aPxlOff[4] used */
 HB_FUNC(WVT_DRAWGRIDHORZ)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -1864,7 +1864,7 @@ HB_FUNC(WVT_DRAWGRIDHORZ)
 }
 
 /* wvt_DrawGridVert( nTop, nBottom, aCols, nCols, aPxlOff )
-   aPxlOff[ 1 ] and aPxlOff[ 3 ] used */
+   aPxlOff[1] and aPxlOff[3] used */
 HB_FUNC(WVT_DRAWGRIDVERT)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();

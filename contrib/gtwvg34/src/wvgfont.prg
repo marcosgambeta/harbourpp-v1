@@ -159,28 +159,28 @@ METHOD WvgFont:createFont()
 
    ::aFontInfo := Array( 15 )
 
-   ::aFontInfo[  1 ] := ::familyName
-   ::aFontInfo[  2 ] := ::height
-   ::aFontInfo[  3 ] := ::width
-   ::aFontInfo[  4 ] := IIf(::bold, WIN_FW_BOLD, 0)
-   ::aFontInfo[  5 ] := ::italic
-   ::aFontInfo[  6 ] := ::underscore
-   ::aFontInfo[  7 ] := ::strikeout
-   ::aFontInfo[  8 ] := ::codePage
-   ::aFontInfo[  9 ] := 0
-   ::aFontInfo[ 10 ] := 0
-   ::aFontInfo[ 11 ] := 0
-   ::aFontInfo[ 12 ] := 0
-   ::aFontInfo[ 13 ] := WIN_DEFAULT_QUALITY
-   ::aFontInfo[ 14 ] := NIL
+   ::aFontInfo[1] := ::familyName
+   ::aFontInfo[2] := ::height
+   ::aFontInfo[3] := ::width
+   ::aFontInfo[4] := IIf(::bold, WIN_FW_BOLD, 0)
+   ::aFontInfo[5] := ::italic
+   ::aFontInfo[6] := ::underscore
+   ::aFontInfo[7] := ::strikeout
+   ::aFontInfo[8] := ::codePage
+   ::aFontInfo[9] := 0
+   ::aFontInfo[10] := 0
+   ::aFontInfo[11] := 0
+   ::aFontInfo[12] := 0
+   ::aFontInfo[13] := WIN_DEFAULT_QUALITY
+   ::aFontInfo[14] := NIL
 
    aFont := wvg_FontCreate( ::aFontInfo )
 
-   IF Empty(aFont[ 1 ])
+   IF Empty(aFont[1])
       RETURN NIL
    ENDIF
 
-   ::hFont     := aFont[ 15 ]
+   ::hFont     := aFont[15]
    ::aFontInfo := aFont
 
    RETURN ::hFont

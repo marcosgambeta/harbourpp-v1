@@ -216,9 +216,9 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1138 ), .F. )
       ENDIF
 
-      IF ::aPos[ 1 ] > 0 .OR. ::aPos[ 2 ] > 0
+      IF ::aPos[1] > 0 .OR. ::aPos[2] > 0
          aRect := wvg_GetWindowRect( ::hWnd )
-         wapi_MoveWindow( ::hWnd, ::aPos[ 1 ], ::aPos[ 2 ], aRect[ 3 ] - aRect[ 1 ], aRect[ 4 ] - aRect[ 2 ], .F. )
+         wapi_MoveWindow( ::hWnd, ::aPos[1], ::aPos[2], aRect[3] - aRect[1], aRect[4] - aRect[2], .F. )
       ENDIF
 
       RETURN EVENT_UNHANDLED
@@ -293,16 +293,16 @@ METHOD WvgFontDialog:GetWvgFont(aFont)
 
    oWvgFont := WvgFont():new()
 
-   oWvgFont:familyName       := aFont[ 1 ]
-   oWvgFont:height           := aFont[ 2 ]
+   oWvgFont:familyName       := aFont[1]
+   oWvgFont:height           := aFont[2]
    oWvgFont:nominalPointSize := wvg_HeightToPointSize( /* hdc */, oWvgFont:height )
-   oWvgFont:width            := aFont[ 3 ]
-   oWvgFont:bold             := aFont[ 4 ] > 400
-   oWvgFont:italic           := aFont[ 5 ]
-   oWvgFont:underscore       := aFont[ 6 ]
-   oWvgFont:strikeOut        := aFont[ 7 ]
-   oWvgFont:codePage         := aFont[ 8 ]
-   oWvgFont:setCompoundName( RTrim(aFont[ 1 ] + " " + IIf(oWvgFont:bold, "Bold ", "") + ;
+   oWvgFont:width            := aFont[3]
+   oWvgFont:bold             := aFont[4] > 400
+   oWvgFont:italic           := aFont[5]
+   oWvgFont:underscore       := aFont[6]
+   oWvgFont:strikeOut        := aFont[7]
+   oWvgFont:codePage         := aFont[8]
+   oWvgFont:setCompoundName( RTrim(aFont[1] + " " + IIf(oWvgFont:bold, "Bold ", "") + ;
       IIf(oWvgFont:italic, "Italic", "")) )
    oWvgFont:create()
 

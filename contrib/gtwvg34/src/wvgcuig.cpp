@@ -1628,7 +1628,7 @@ HB_FUNC(WVG_OBJECT)
 }
 
 /* wvg_Object( GOBJ_OBJTYPE_GRIDVERT, {|| { nTop, nBottom, aCols, nCols, aPxlOff } } )
-                                                 aPxlOff[ 1 ] and aPxlOff[ 3 ] used */
+                                                 aPxlOff[1] and aPxlOff[3] used */
 static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
 {
   PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);

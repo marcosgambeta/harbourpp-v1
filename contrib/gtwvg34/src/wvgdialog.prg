@@ -74,8 +74,8 @@ CREATE CLASS WvgDialog INHERIT WvgWindow
    METHOD showModal()                           INLINE NIL
    METHOD setTitle( cTitle )                    INLINE ::title := cTitle, hb_gtInfo( HB_GTI_WINTITLE, cTitle )
    METHOD getTitle()                            INLINE hb_gtInfo( HB_GTI_WINTITLE )
-   METHOD calcClientRect()                      INLINE ::aRect := wvg_GetClientRect( ::hWnd ), { 0, 0, ::aRect[ 3 ], ::aRect[ 4 ] }
-   METHOD calcFrameRect()                       INLINE ::aRect := wvg_GetWindowRect( ::hWnd ), { ::aRect[ 1 ], ::aRect[ 2 ], ::aRect[ 3 ] - ::aRect[ 1 ], ::aRect[ 4 ] - ::aRect[ 2 ] }
+   METHOD calcClientRect()                      INLINE ::aRect := wvg_GetClientRect( ::hWnd ), { 0, 0, ::aRect[3], ::aRect[4] }
+   METHOD calcFrameRect()                       INLINE ::aRect := wvg_GetWindowRect( ::hWnd ), { ::aRect[1], ::aRect[2], ::aRect[3] - ::aRect[1], ::aRect[4] - ::aRect[2] }
 
 ENDCLASS
 
@@ -106,8 +106,8 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::pGT := hb_gtSelect()
    ENDIF
 
-   hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[ 1 ], ::aPos[ 2 ], ;
-      ::aSize[ 1 ], ::aSize[ 2 ], ::pGTp, .F., .F., HB_WNDTYPE_DIALOG } )
+   hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
+      ::aSize[1], ::aSize[2], ::pGTp, .F., .F., HB_WNDTYPE_DIALOG } )
 
    IF ::visible
       hb_gtInfo( HB_GTI_SPEC, HB_GTS_SHOWWINDOW, WIN_SW_NORMAL )

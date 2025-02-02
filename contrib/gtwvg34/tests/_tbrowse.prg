@@ -103,7 +103,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
    FOR EACH i IN dbStruct()
-      oBrowse:AddColumn( TBColumnNew( i[ DBS_NAME ], FieldBlock( i[ DBS_NAME ] ) ) )
+      oBrowse:AddColumn( TBColumnNew( i[DBS_NAME], FieldBlock( i[DBS_NAME] ) ) )
    NEXT
    oBrowse:configure()
 
@@ -239,12 +239,12 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
    BrwReposButtons( oCrt ) // Because we are repositioning at the center of console width
 
    IF lActiveX
-      aNvg[ 1 ]:show()
-      aNvg[ 2 ]:show()
+      aNvg[1]:show()
+      aNvg[2]:show()
       oCom:show()
    ELSE
-      aNvg[ 1 ]:hide()
-      aNvg[ 2 ]:hide()
+      aNvg[1]:hide()
+      aNvg[2]:hide()
       oCom:hide()
    ENDIF
 
@@ -371,7 +371,7 @@ STATIC FUNCTION BrwBuildListBoxIdx( oCrt, oBrw )
    oXbp:itemMarked := {| m1, m2, o | m1 := m2, BrwSetThisOrder( oBrw, o:XbpListBox:getData() - 1 ) }
    oXbp:addItem( "Natural Order" )
    FOR i := 1 TO Len(aIdx)
-      oXbp:addItem( aIdx[ i ] )
+      oXbp:addItem( aIdx[i] )
    NEXT
    oXbp:tooltipText := "Click on an index to order database!"
 
@@ -456,8 +456,8 @@ STATIC PROCEDURE BrwReposButtons( oCrt )
    FOR EACH oXbp IN oCrt:childList()
       IF oXbp:ClassName() == "WVGPUSHBUTTON"
          i++
-         oXbp:setPosAndSize( { -MaxRow(), -nOff }, { -1, -aW[ i ] } )
-         nOff += aW[ i ] + nG
+         oXbp:setPosAndSize( { -MaxRow(), -nOff }, { -1, -aW[i] } )
+         nOff += aW[i] + nG
       ENDIF
    NEXT
 
@@ -494,16 +494,16 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
       ENDIF
       IF i == Len(aPmt)
          oPB:caption := hb_DirBase() + "v_lock.bmp"
-         oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[ i ] } )
+         oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[i] } )
       ELSE
-         oPB:caption := aPmt[ i ]
-         oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[ i ] } )
+         oPB:caption := aPmt[i]
+         oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[i] } )
       ENDIF
-      oPB:activate := aAct[ i ]
+      oPB:activate := aAct[i]
       oPB:setColorFG( WIN_RGB(0, 255, 0) )
-      oPB:tooltipText := aPmt[ i ]
+      oPB:tooltipText := aPmt[i]
 
-      nOff += aW[ i ] + nG
+      nOff += aW[i] + nG
    NEXT
 
    RETURN
@@ -515,7 +515,7 @@ STATIC PROCEDURE Vou_BrwAddScrollBars( oCrt, oBrw, oVBar, oHBar )
    oHBar:range := { 1, oBrw:colCount }
    oHBar:type  := WVGSCROLL_HORIZONTAL
    oHBar:create()
-   oHBar:scroll := {| mp1 | oBrw:colPos := mp1[ 1 ], oBrw:refreshCurrent(), oBrw:forceStable() }
+   oHBar:scroll := {| mp1 | oBrw:colPos := mp1[1], oBrw:refreshCurrent(), oBrw:forceStable() }
 
    oVBar := WvgScrollBar():new( oCrt, , { {|| -oBrw:nTop }, {|| -( oBrw:nRight + 1 ) } }, ;
       { {|| -( oBrw:nBottom - oBrw:nTop + 1 ) }, {|| -2 } } )
@@ -801,7 +801,7 @@ STATIC PROCEDURE Vou_ExecTBarAction( oBtn )
 
 STATIC PROCEDURE Vou_BrwSetVScroll( mp1, oBrowse )
 
-   SWITCH mp1[ 2 ]
+   SWITCH mp1[2]
 
    CASE WVGSB_TOP
       oBrowse:goTop()
@@ -820,17 +820,17 @@ STATIC PROCEDURE Vou_BrwSetVScroll( mp1, oBrowse )
       EXIT
 
    CASE WVGSB_NEXTPAGE
-      ordKeyGoto( mp1[ 1 ] )
+      ordKeyGoto( mp1[1] )
       oBrowse:refreshAll()
       EXIT
 
    CASE WVGSB_PREVPAGE
-      ordKeyGoto( mp1[ 1 ] )
+      ordKeyGoto( mp1[1] )
       oBrowse:refreshAll()
       EXIT
 
    CASE WVGSB_ENDTRACK
-      ordKeyGoto( mp1[ 1 ] )
+      ordKeyGoto( mp1[1] )
       oBrowse:refreshAll()
       EXIT
 
@@ -963,7 +963,7 @@ FUNCTION ConfigBrowser( aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, n
 
    dbSelectArea(cUseAlias)
 
-   oBrowse := TBrowseWvg():New( aTLBR[ 1 ], aTLBR[ 2 ], aTLBR[ 3 ], aTLBR[ 4 ] )
+   oBrowse := TBrowseWvg():New( aTLBR[1], aTLBR[2], aTLBR[3], aTLBR[4] )
 
    oBrowse:ColSep        := "  "
    oBrowse:HeadSep       := "__"
@@ -974,17 +974,17 @@ FUNCTION ConfigBrowser( aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, n
 
    info_ := dbStruct()
    FOR EACH i IN aFields
-      oBrowse:AddColumn( TBColumnNew( info_[ i ][ DBS_NAME ], FieldBlock( info_[ i ][ DBS_NAME ] ) ) )
+      oBrowse:AddColumn( TBColumnNew( info_[i][DBS_NAME], FieldBlock( info_[i][DBS_NAME] ) ) )
    NEXT
 
    oBrowse:configure()
 
    oWvtBrw := WvtBrowse():New( oParent, nID )
 
-   oWvtBrw:nTop         := aTLBR[ 1 ]
-   oWvtBrw:nLeft        := aTLBR[ 2 ]
-   oWvtBrw:nBottom      := aTLBR[ 3 ]
-   oWvtBrw:nRight       := aTLBR[ 4 ]
+   oWvtBrw:nTop         := aTLBR[1]
+   oWvtBrw:nLeft        := aTLBR[2]
+   oWvtBrw:nBottom      := aTLBR[3]
+   oWvtBrw:nRight       := aTLBR[4]
    oWvtBrw:cAlias       := cUseAlias
    oWvtBrw:oBrw         := oBrowse
    oWvtBrw:cDesc        := cDesc
