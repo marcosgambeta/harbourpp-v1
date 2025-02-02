@@ -163,7 +163,7 @@ FUNCTION xBrowse1()
 
    FOR i := 1 TO Len(info_)
       bBlock := VouBlockField(i)
-      oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
+      oBrowse:AddColumn( TBColumnNew( info_[i, 1], bBlock ) )
    NEXT
 
    oBrowse:configure()
@@ -456,9 +456,9 @@ FUNCTION ZREVWINDOW()
 #endif
 
    // restore states
-   RestScreen(s_zwin[ i ][ 2 ], s_zwin[ i ][ 3 ], s_zwin[ i ][ 4 ], s_zwin[ i ][ 5 ], s_zwin[ i ][ 6 ])
-   SetPos(s_zwin[ i ][ 8 ], s_zwin[ i ][ 9 ])
-   SetColor(s_zwin[ i ][ 10 ])
+   RestScreen(s_zwin[i][2], s_zwin[i][3], s_zwin[i][4], s_zwin[i][5], s_zwin[i][6])
+   SetPos(s_zwin[i][8], s_zwin[i][9])
+   SetColor(s_zwin[i][10])
 
    // remove window from list
    hb_ADel( s_zwin, i, .T. )
@@ -489,7 +489,7 @@ FUNCTION nCeiling( nNumber )
 FUNCTION WVW_Paint( nWinNum )
 
    IF Len(s_amiscobjlist) >= nWinNum + 1
-      AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
+      AEval( s_amiscobjlist[nWinNum + 1], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
    RETURN 0
@@ -501,13 +501,13 @@ FUNCTION ResetMiscObjects( nWinNum )
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd(s_amiscobjlist, {})
    ENDDO
-   s_amiscobjlist[ nWinNum + 1 ] := {}
+   s_amiscobjlist[nWinNum + 1] := {}
 
    RETURN .T.
 
 FUNCTION AddMiscObjects( nWinNum, bAction )
 
-   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
+   AAdd(s_amiscobjlist[nWinNum + 1], bAction)
 
    RETURN .T.
 

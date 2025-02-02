@@ -135,7 +135,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    hb_default(@lDraw, .T.)
    hb_default(@nWinId, wvw_nNumWindows() - 1)  // 20040303
 
-   // TODO: ::nId := IIf(Empty(s_amouseobjlist), 1, s_amouseobjlist[ Len(s_amouseobjlist) ]:nGetId() + 1)
+   // TODO: ::nId := IIf(Empty(s_amouseobjlist), 1, s_amouseobjlist[Len(s_amouseobjlist)]:nGetId() + 1)
    // TODO: ::nHotKey := NIL
    ::nWinId := nWinId  // 20040303
 
@@ -351,7 +351,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -375,7 +375,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -390,7 +390,7 @@ FUNCTION wvwm_paint( nWinNum )
    // normally called by WVW_Paint()
    // redraw every mouse object in window nWinNum
    IF Len(s_amouseobjlist) >= nWinNum + 1
-      AEval( s_amouseobjlist[ nWinNum + 1 ], {| o | o[ 2 ]:draw( nWinNum ) } )
+      AEval( s_amouseobjlist[nWinNum + 1], {| o | o[2]:draw( nWinNum ) } )
    ENDIF
 
    RETURN NIL
@@ -401,7 +401,7 @@ FUNCTION wvwm_ResetMouseObjects( nWinNum )
    DO WHILE Len(s_amouseobjlist) < nWinNum + 1
       AAdd(s_amouseobjlist, {})
    ENDDO
-   s_amouseobjlist[ nWinNum + 1 ] := {}
+   s_amouseobjlist[nWinNum + 1] := {}
 
    RETURN .T.
 
@@ -409,19 +409,19 @@ FUNCTION wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 
    // adds a mouse object oMouse into window nWinNum
    hb_default(@nObjType, _MOBJECT_BUTTON)
-   AAdd(s_amouseobjlist[ nWinNum + 1 ], { nObjType, oMouse })
+   AAdd(s_amouseobjlist[nWinNum + 1], { nObjType, oMouse })
 
    RETURN .T.
 
 // returns number of mouse objects in window nWinNum
 FUNCTION wvwm_nNumMouseObjects( nWinNum )
 
-   RETURN Len(s_amouseobjlist[ nWinNum + 1 ])
+   RETURN Len(s_amouseobjlist[nWinNum + 1])
 
 // returns type of mouse objects number nObjNum in window nWinNum
 FUNCTION wvwm_nObjectType( nWinNum, nObjNum )
 
-   RETURN s_amouseobjlist[ nWinNum + 1 ][ nObjNum ][ 1 ]
+   RETURN s_amouseobjlist[nWinNum + 1][nObjNum][1]
 
 FUNCTION wvwm_SetKeyRepeater( lSet )
 
@@ -521,15 +521,15 @@ FUNCTION wvwm_nMouseChecker( nkey )
 
    s_ncurkey := nkey   // 20040303
 
-   FOR i := 1 TO Len(s_amouseobjlist[ nCurWindow + 1 ])
-      oMouseObj := s_amouseobjlist[ nCurWindow + 1 ][ i ][ 2 ]
+   FOR i := 1 TO Len(s_amouseobjlist[nCurWindow + 1])
+      oMouseObj := s_amouseobjlist[nCurWindow + 1][i][2]
 
       DO CASE
-      CASE s_amouseobjlist[ nCurWindow + 1 ][ i ][ 1 ] == _MOBJECT_BUTTON
+      CASE s_amouseobjlist[nCurWindow + 1][i][1] == _MOBJECT_BUTTON
          nButtonChecker( nkey, oMouseObj )
-      CASE s_amouseobjlist[ nCurWindow + 1 ][ i ][ 1 ] == _MOBJECT_HSCROLL
+      CASE s_amouseobjlist[nCurWindow + 1][i][1] == _MOBJECT_HSCROLL
          nScrollChecker( nkey, "H", oMouseObj )
-      CASE s_amouseobjlist[ nCurWindow + 1 ][ i ][ 1 ] == _MOBJECT_VSCROLL
+      CASE s_amouseobjlist[nCurWindow + 1][i][1] == _MOBJECT_VSCROLL
          nScrollChecker( nkey, "V", oMouseObj )
       OTHERWISE
          // runtime error!

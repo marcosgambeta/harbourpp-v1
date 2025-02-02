@@ -17,7 +17,7 @@
 #define _MAX_WINNUM  10
 
 // array of codeblock
-STATIC s_akeyhandlers[ _MAX_WINNUM ]
+STATIC s_akeyhandlers[_MAX_WINNUM]
 
 PROCEDURE Main()
 
@@ -138,7 +138,7 @@ STATIC FUNCTION OpenNewWindow()
 
    // assign the key handler for previous window
    IF nWinNum > 1
-      s_akeyhandlers[ nWinNum - 1 ] := {| n, ch | KeyHandler( n, ch ) }
+      s_akeyhandlers[nWinNum - 1] := {| n, ch | KeyHandler( n, ch ) }
    ENDIF
 
    // then echoing user input, until user press ESC
@@ -154,7 +154,7 @@ STATIC FUNCTION OpenNewWindow()
 
    // release keyhandler for previous window, we're going back there
    IF nWinNum > 1
-      s_akeyhandlers[ nWinNum - 1 ] := NIL
+      s_akeyhandlers[nWinNum - 1] := NIL
    ELSEIF nWinNum == 1
       SetCursor( SC_NONE )
    ENDIF
@@ -242,7 +242,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
    DO CASE
    CASE message == WM_CHAR
       ch := wParam
-      Eval( s_akeyhandlers[ nWinNum ], nWinNum, ch )
+      Eval( s_akeyhandlers[nWinNum], nWinNum, ch )
       RETURN .T.
    OTHERWISE
       // let it be ignored

@@ -149,7 +149,7 @@ PROCEDURE Main()
    CreateToolbar( nCurWindow )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[2], , , , , .T., .T. ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New( "Info!", MaxRow() - 2, 67, , , {|| xDebugInfo() } ) )
@@ -353,7 +353,7 @@ PROCEDURE Demo_Get()
    wvw_SetIcon( , "vr_1.ico" )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[2], , , , , .T., .T. ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 15 - nTop, 59 - nLeft, 18 - nTop, 72 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
@@ -449,7 +449,7 @@ FUNCTION DEMO_Browse()
 
    FOR i := 1 TO Len(info_)
       bBlock := VouBlockField(i)
-      oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
+      oBrowse:AddColumn( TBColumnNew( info_[i, 1], bBlock ) )
    NEXT
 
    oBrowse:configure()
@@ -789,7 +789,7 @@ FUNCTION WVW_Paint( nWinNum )
    //        "hWnd = " + hb_ntos( hWnd ) + hb_eol() +;
    //        "nWinNum = " + hb_ntos( nWinNum ) )
    IF Len(s_amiscobjlist) >= nWinNum + 1
-      AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
+      AEval( s_amiscobjlist[nWinNum + 1], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
    wvwm_paint( nWinNum )
@@ -918,13 +918,13 @@ FUNCTION ResetMiscObjects( nWinNum )
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd(s_amiscobjlist, {})
    ENDDO
-   s_amiscobjlist[ nWinNum + 1 ] := {}
+   s_amiscobjlist[nWinNum + 1] := {}
 
    RETURN .T.
 
 FUNCTION AddMiscObjects( nWinNum, bAction )
 
-   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
+   AAdd(s_amiscobjlist[nWinNum + 1], bAction)
 
    RETURN .T.
 
@@ -1050,9 +1050,9 @@ FUNCTION xDebugInfo()
       "Line Spacing = " + hb_ntos( wvw_SetLineSpacing() ) + hb_eol() + ;
       "Default Line Spacing = " + hb_ntos( wvw_SetDefLineSpacing() ) + hb_eol() + ;
       hb_eol() + ;
-      "Font Face = '" + s_aFontInfo[ 1 ] + "'" + hb_eol() + ;
-      "Font Height = " + hb_ntos( s_aFontInfo[ 2 ] ) + hb_eol() + ;
-      "Font Width = " + hb_ntos( s_aFontInfo[ 3 ] ) + hb_eol() + ;
+      "Font Face = '" + s_aFontInfo[1] + "'" + hb_eol() + ;
+      "Font Height = " + hb_ntos( s_aFontInfo[2] ) + hb_eol() + ;
+      "Font Width = " + hb_ntos( s_aFontInfo[3] ) + hb_eol() + ;
       hb_eol() + ;
       "BTW, mouse pointer now sits on MaxRow(),MaxCol(), doesn't it?" )
 
