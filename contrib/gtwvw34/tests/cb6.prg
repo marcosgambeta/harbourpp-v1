@@ -73,7 +73,7 @@ PROCEDURE Main()
    READ
 
    // disable all comboboxes:
-   AEval( s_aComboList, {| x | wvw_cbEnable( , x[ 1 ], .F. ) } )
+   AEval( s_aComboList, {| x | wvw_cbEnable( , x[1], .F. ) } )
 
    DevPos(5, 0)
    ? "name:", "'" + mname + "'"
@@ -84,7 +84,7 @@ PROCEDURE Main()
    Inkey(0)
 
    // destroy all comboboxes:
-   AEval( s_aComboList, {| x | wvw_cbDestroy( , x[ 1 ] ) } )
+   AEval( s_aComboList, {| x | wvw_cbDestroy( , x[1] ) } )
    s_aComboList := {}
 
    ?
@@ -162,7 +162,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
              */
 
             SetWinFocus( nWinNum )
-            MSetPos(GetList[ i ]:row, GetList[ i ]:col + 1)
+            MSetPos(GetList[i]:row, GetList[i]:col + 1)
             hb_keyPut( K_LBUTTONDOWN )
          ENDIF  // oGet:HasFocus
       ELSE

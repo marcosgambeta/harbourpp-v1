@@ -120,7 +120,7 @@ STATIC PROCEDURE xBrowse1()
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip ) }
 
    FOR EACH i IN dbStruct()
-      oBrowse:AddColumn( TBColumnNew( i[ DBS_NAME ], FieldBlock( i[ DBS_NAME ] ) ) )
+      oBrowse:AddColumn( TBColumnNew( i[DBS_NAME], FieldBlock( i[DBS_NAME] ) ) )
    NEXT
 
    oBrowse:configure()
@@ -363,9 +363,9 @@ STATIC PROCEDURE ZREVWINDOW()
    wvw_lCloseWindow()
 
    // restore states
-   RestScreen(s_zwin[ i ][ 2 ], s_zwin[ i ][ 3 ], s_zwin[ i ][ 4 ], s_zwin[ i ][ 5 ], s_zwin[ i ][ 6 ])
-   SetPos(s_zwin[ i ][ 8 ], s_zwin[ i ][ 9 ])
-   SetColor(s_zwin[ i ][ 10 ])
+   RestScreen(s_zwin[i][2], s_zwin[i][3], s_zwin[i][4], s_zwin[i][5], s_zwin[i][6])
+   SetPos(s_zwin[i][8], s_zwin[i][9])
+   SetColor(s_zwin[i][10])
 
    // remove window from list
    hb_ADel( s_zwin, i, .T. )
@@ -379,7 +379,7 @@ STATIC PROCEDURE ZREVWINDOW()
 FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 
    IF nWinNum + 1 <= Len(s_amiscobjlist)
-      AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
+      AEval( s_amiscobjlist[nWinNum + 1], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
    RETURN 0
@@ -391,13 +391,13 @@ STATIC PROCEDURE ResetMiscObjects( nWinNum )
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd(s_amiscobjlist, {})
    ENDDO
-   s_amiscobjlist[ nWinNum + 1 ] := {}
+   s_amiscobjlist[nWinNum + 1] := {}
 
    RETURN
 
 STATIC PROCEDURE AddMiscObjects( nWinNum, bAction )
 
-   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
+   AAdd(s_amiscobjlist[nWinNum + 1], bAction)
 
    RETURN
 

@@ -276,7 +276,7 @@ STATIC PROCEDURE wg_ResetWPaintObj( nWinNum, nObjNum )
       AAdd(s_aPObjList, {})
    ENDDO
 
-   ASize( s_aPObjList[ nWinNum + 1 ], hb_defaultValue( nObjNum, 0 ) )
+   ASize( s_aPObjList[nWinNum + 1], hb_defaultValue( nObjNum, 0 ) )
 
    RETURN
 
@@ -287,18 +287,18 @@ STATIC PROCEDURE wg_AddWPaintObj( nWinNum, oWPaint, lStrict )
    LOCAL i
 
    // exist nType + cId ?
-   IF ( i := AScan( s_aPObjList[ nWinNum + 1 ], {| x | x:nType == oWPaint:nType .AND. x:cId == oWPaint:cId } ) ) > 0
+   IF ( i := AScan( s_aPObjList[nWinNum + 1], {| x | x:nType == oWPaint:nType .AND. x:cId == oWPaint:cId } ) ) > 0
       // so we are about to overwrite now...
       // ::Hide() is ideal, but it can be slow
       // let's do it only of user want strict/perfect operation
       IF hb_defaultValue( lStrict, .F. )
-         s_aPObjList[ nWinNum + 1 ][ i ]:Hide()
+         s_aPObjList[nWinNum + 1][i]:Hide()
       ELSE
-         s_aPObjList[ nWinNum + 1 ][ i ]:lVisible := .F.
+         s_aPObjList[nWinNum + 1][i]:lVisible := .F.
       ENDIF
-      s_aPObjList[ nWinNum + 1 ][ i ] := oWPaint
+      s_aPObjList[nWinNum + 1][i] := oWPaint
    ELSE
-      AAdd(s_aPObjList[ nWinNum + 1 ], oWPaint)
+      AAdd(s_aPObjList[nWinNum + 1], oWPaint)
    ENDIF
 
    // if it is visible, draw it now!
@@ -322,16 +322,16 @@ STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
    IF nType >= 1
       // exist nType + cId ?
       i := 1
-      nLen := Len(s_aPObjList[ nWinNum + 1 ])
+      nLen := Len(s_aPObjList[nWinNum + 1])
       DO WHILE i <= nLen
-         IF s_aPObjList[ nWinNum + 1 ][ i ]:nType == nType .AND. ;
-            ( lDelAll .OR. s_aPObjList[ nWinNum + 1 ][ i ]:cId == cId )
+         IF s_aPObjList[nWinNum + 1][i]:nType == nType .AND. ;
+            ( lDelAll .OR. s_aPObjList[nWinNum + 1][i]:cId == cId )
             IF hb_defaultValue( lStrict, .F. )
-               s_aPObjList[ nWinNum + 1 ][ i ]:Hide()
+               s_aPObjList[nWinNum + 1][i]:Hide()
             ELSE
-               s_aPObjList[ nWinNum + 1 ][ i ]:lVisible := .F.
+               s_aPObjList[nWinNum + 1][i]:lVisible := .F.
             ENDIF
-            hb_ADel( s_aPObjList[ nWinNum + 1 ], i, .T. )
+            hb_ADel( s_aPObjList[nWinNum + 1], i, .T. )
             nLen--
          ELSE
             i++
@@ -345,7 +345,7 @@ FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 
    IF Len(s_aPObjList) >= nWinNum + 1
       // simple redraw, ignoring wpaint obj dependency with each other:
-     AEval( s_aPObjList[ nWinNum + 1 ], {| oWPaint | oWPaint:draw() } )
+     AEval( s_aPObjList[nWinNum + 1], {| oWPaint | oWPaint:draw() } )
    ENDIF
 
    RETURN 0

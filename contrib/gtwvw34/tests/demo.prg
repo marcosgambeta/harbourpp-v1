@@ -169,7 +169,7 @@ PROCEDURE Main()
    CreateToolbar( nCurWindow )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[2], , , , , .T., .T. ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New( "Info!", MaxRow() - 2, 67, , , {|| xDebugInfo() } ) )
@@ -367,7 +367,7 @@ STATIC PROCEDURE Demo_Get()
    wvw_SetIcon( , hb_DirBase() + "vr_1.ico" )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[2], , , , , .T., .T. ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 15 - nTop, 59 - nLeft, 18 - nTop, 72 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
@@ -457,7 +457,7 @@ STATIC PROCEDURE DEMO_Browse()
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip ) }
 
    FOR EACH i IN dbStruct()
-      oBrowse:AddColumn( TBColumnNew( i[ DBS_NAME ], FieldBlock( i[ DBS_NAME ] ) ) )
+      oBrowse:AddColumn( TBColumnNew( i[DBS_NAME], FieldBlock( i[DBS_NAME] ) ) )
    NEXT
 
    oBrowse:configure()
@@ -805,7 +805,7 @@ FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 #endif
 
    IF Len(s_amiscobjlist) >= nWinNum + 1
-      AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
+      AEval( s_amiscobjlist[nWinNum + 1], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
    wvwm_paint( nWinNum )
@@ -926,13 +926,13 @@ STATIC PROCEDURE ResetMiscObjects( nWinNum )
    DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd(s_amiscobjlist, {})
    ENDDO
-   s_amiscobjlist[ nWinNum + 1 ] := {}
+   s_amiscobjlist[nWinNum + 1] := {}
 
    RETURN
 
 STATIC PROCEDURE AddMiscObjects( nWinNum, bAction )
 
-   AAdd(s_amiscobjlist[ nWinNum + 1 ], bAction)
+   AAdd(s_amiscobjlist[nWinNum + 1], bAction)
 
    RETURN
 
@@ -1067,9 +1067,9 @@ STATIC PROCEDURE xDebugInfo()
       "Line Spacing: " + hb_ntos( wvw_SetLineSpacing() ) + hb_eol() + ;
       "Default Line Spacing: " + hb_ntos( wvw_SetDefLineSpacing() ) + hb_eol() + ;
       hb_eol() + ;
-      "Font Face: '" + s_aFontInfo[ 1 ] + "'" + hb_eol() + ;
-      "Font Height: " + hb_ntos( s_aFontInfo[ 2 ] ) + hb_eol() + ;
-      "Font Width: " + hb_ntos( s_aFontInfo[ 3 ] ) + hb_eol() + ;
+      "Font Face: '" + s_aFontInfo[1] + "'" + hb_eol() + ;
+      "Font Height: " + hb_ntos( s_aFontInfo[2] ) + hb_eol() + ;
+      "Font Width: " + hb_ntos( s_aFontInfo[3] ) + hb_eol() + ;
       hb_eol() + ;
       "BTW, mouse pointer now sits on MaxRow(),MaxCol(), doesn't it?" )
 
@@ -1490,7 +1490,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -1514,7 +1514,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -1528,7 +1528,7 @@ STATIC PROCEDURE wvwm_paint( nWinNum )
    // normally called by WVW_PAINT()
    // redraw every mouse object in window nWinNum
    IF Len(s_amouseobjlist) >= nWinNum + 1
-      AEval( s_amouseobjlist[ nWinNum + 1 ], {| o | o[ 2 ]:draw( nWinNum ) } )
+      AEval( s_amouseobjlist[nWinNum + 1], {| o | o[2]:draw( nWinNum ) } )
    ENDIF
 
    RETURN
@@ -1539,14 +1539,14 @@ STATIC PROCEDURE wvwm_ResetMouseObjects( nWinNum )
    DO WHILE Len(s_amouseobjlist) < nWinNum + 1
       AAdd(s_amouseobjlist, {})
    ENDDO
-   s_amouseobjlist[ nWinNum + 1 ] := {}
+   s_amouseobjlist[nWinNum + 1] := {}
 
    RETURN
 
 STATIC PROCEDURE wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 
    // adds a mouse object oMouse into window nWinNum
-   AAdd(s_amouseobjlist[ nWinNum + 1 ], { hb_defaultValue( nObjType, _MOBJECT_BUTTON ), oMouse })
+   AAdd(s_amouseobjlist[nWinNum + 1], { hb_defaultValue( nObjType, _MOBJECT_BUTTON ), oMouse })
 
    RETURN
 
@@ -1645,11 +1645,11 @@ STATIC FUNCTION wvwm_nMouseChecker( nkey )
 
    s_ncurkey := nkey  // 2004-03-03
 
-   FOR EACH i IN s_amouseobjlist[ nCurWindow + 1 ]
+   FOR EACH i IN s_amouseobjlist[nCurWindow + 1]
 
-      oMouseObj := i[ 2 ]
+      oMouseObj := i[2]
 
-      SWITCH i[ 1 ]
+      SWITCH i[1]
       CASE _MOBJECT_BUTTON  ; nButtonChecker( nkey, oMouseObj ) ; EXIT
       CASE _MOBJECT_HSCROLL ; nScrollChecker( nkey, "H", oMouseObj ) ; EXIT
       CASE _MOBJECT_VSCROLL ; nScrollChecker( nkey, "V", oMouseObj ) ; EXIT
