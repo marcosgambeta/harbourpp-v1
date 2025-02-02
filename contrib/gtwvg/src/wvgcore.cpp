@@ -213,7 +213,7 @@ HB_BOOL hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture *iPicture,
   int xe, ye;
   HRGN hrgn1;
   POINT lpp = {0, 0};
-  HB_BOOL bResult = HB_FALSE;
+  HB_BOOL bResult = false;
   HDC hdc = _s->hdc;
 
   if (iPicture)
@@ -270,7 +270,7 @@ HB_BOOL hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture *iPicture,
       DeleteObject(hrgn1);
     }
 
-    bResult = HB_TRUE;
+    bResult = true;
   }
 
   return bResult;
@@ -278,12 +278,12 @@ HB_BOOL hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture *iPicture,
 
 HB_BOOL hb_wvt_gtDestroyPicture(IPicture *iPicture)
 {
-  HB_BOOL bResult = HB_FALSE;
+  HB_BOOL bResult = false;
 
   if (iPicture)
   {
     HB_VTBL(iPicture)->Release(HB_THIS(iPicture));
-    bResult = HB_TRUE;
+    bResult = true;
   }
 
   return bResult;
@@ -521,7 +521,7 @@ HB_BOOL hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage,
   int xe, ye;
   HRGN hrgn1;
   POINT lpp = {0, 0};
-  HB_BOOL bResult = HB_FALSE;
+  HB_BOOL bResult = false;
 
   hFile = CreateFile(lpImage, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
@@ -584,7 +584,7 @@ HB_BOOL hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage,
             DeleteObject(hrgn1);
 
             HB_VTBL(iPicture)->Release(HB_THIS(iPicture));
-            bResult = HB_TRUE;
+            bResult = true;
           }
         }
         GlobalFree(hGlobal);
@@ -2527,7 +2527,7 @@ HB_FUNC(WVT_DRAWSHADEDRECT)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  HB_BOOL bGF = HB_FALSE;
+  HB_BOOL bGF = false;
 
   if (_s->pGUI->hMSImg32)
   {
@@ -2763,7 +2763,7 @@ HB_FUNC(WVT_CREATEFONT)
 // wvt_LoadPicture(nSlot, cFilePic)
 HB_FUNC(WVT_LOADPICTURE)
 {
-  HB_BOOL bResult = HB_FALSE;
+  HB_BOOL bResult = false;
 
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
   void *hImage;
@@ -2778,7 +2778,7 @@ HB_FUNC(WVT_LOADPICTURE)
       hb_wvt_gtDestroyPicture(_s->pGUI->pPicture[iSlot]);
     }
     _s->pGUI->pPicture[iSlot] = iPicture;
-    bResult = HB_TRUE;
+    bResult = true;
   }
   hb_retl(bResult);
 }
@@ -2804,7 +2804,7 @@ HB_FUNC(WVT_LOADPICTUREEX)
 
 HB_FUNC(WVT_LOADPICTUREFROMRESOURCE)
 {
-  HB_BOOL bResult = HB_FALSE;
+  HB_BOOL bResult = false;
 
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
   void *hResource;
@@ -2821,7 +2821,7 @@ HB_FUNC(WVT_LOADPICTUREFROMRESOURCE)
       hb_wvt_gtDestroyPicture(_s->pGUI->pPicture[iSlot]);
     }  
     _s->pGUI->pPicture[iSlot] = iPicture;
-    bResult = HB_TRUE;
+    bResult = true;
   }
   hb_retl(bResult);
 }
@@ -2959,7 +2959,7 @@ HB_FUNC(WVT_RESTSCREEN)
   HBITMAP hBmp;
   HDC hCompDC;
 
-  HB_BOOL bResult = HB_FALSE;
+  HB_BOOL bResult = false;
   HB_BOOL bDoNotDestroyBMP = hb_parl(6);
 
   xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -2981,14 +2981,14 @@ HB_FUNC(WVT_RESTSCREEN)
     {
       if (BitBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, SRCCOPY))
       {
-        bResult = HB_TRUE;
+        bResult = true;
       }  
     }
     else
     {
       if (StretchBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, hb_parvni(5, 1), hb_parvni(5, 2), SRCCOPY))
       {
-        bResult = HB_TRUE;
+        bResult = true;
       }  
     }
   }

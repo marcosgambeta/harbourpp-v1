@@ -533,11 +533,11 @@ HB_FUNC(WVG_STATUSBARREFRESH)
 
       if (SendMessage(hWndSB, SB_SETPARTS, iParts, (LPARAM)(LPINT)ptArray))
       {
-         hb_retl(HB_TRUE);
+         hb_retl(true);
          return;
       }
    }
-   hb_retl(HB_FALSE);
+   hb_retl(false);
 #endif
 }
 
@@ -763,8 +763,8 @@ PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 
 UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  HB_BOOL bret = HB_FALSE;
-  HB_BOOL binit = HB_FALSE;
+  HB_BOOL bret = false;
+  HB_BOOL binit = false;
   PHB_ITEM block;
 
   if (msg == WM_INITDIALOG)
@@ -772,7 +772,7 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
     CHOOSEFONT *cf = (CHOOSEFONT *)lParam;
     auto pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData)));
     SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
-    binit = HB_TRUE;
+    binit = true;
   }
 
   block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
@@ -796,7 +796,7 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
   }
   if (binit)
   {
-    return HB_TRUE;
+    return true;
   }  
 
   return bret;
@@ -876,7 +876,7 @@ HB_FUNC(WVG_CHOOSEFONT)
 
   if (ChooseFont(&cf))
   {
-    PHB_ITEM aFont = wvg_logfontTOarray(&lf, HB_FALSE);
+    PHB_ITEM aFont = wvg_logfontTOarray(&lf, false);
     auto aInfo = hb_itemNew(nullptr);
 
     hb_arrayNew(aInfo, 4);
@@ -899,7 +899,7 @@ HB_FUNC(WVG_CHOOSEFONT_GETLOGFONT)
 
   SendMessage(wvg_parhwnd(1), WM_CHOOSEFONT_GETLOGFONT, (WPARAM)0, (LPARAM)&lf);
 
-  aFont = wvg_logfontTOarray(&lf, HB_FALSE);
+  aFont = wvg_logfontTOarray(&lf, false);
 
   hb_itemReturnRelease(aFont);
 }
@@ -935,12 +935,12 @@ HB_FUNC(WVG_FONTCREATE)
 
   if (hFont)
   {
-    aFont = wvg_logfontTOarray(&lf, HB_FALSE);
+    aFont = wvg_logfontTOarray(&lf, false);
     hb_arraySetNInt(aFont, 15, (HB_PTRUINT)hFont);
   }
   else
   {
-    aFont = wvg_logfontTOarray(&lf, HB_TRUE);
+    aFont = wvg_logfontTOarray(&lf, true);
   }
   
   hb_itemReturnRelease(aFont);

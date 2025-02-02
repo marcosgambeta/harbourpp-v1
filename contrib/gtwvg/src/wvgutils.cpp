@@ -1230,9 +1230,9 @@ HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT *rc)
     rc->top = hb_arrayGetNL(aRect, 2);
     rc->right = hb_arrayGetNL(aRect, 3);
     rc->bottom = hb_arrayGetNL(aRect, 4);
-    return HB_TRUE;
+    return true;
   }
-  return HB_FALSE;
+  return false;
 }
 
 PHB_ITEM wvt_Rect2Array(RECT *rc)
@@ -1253,9 +1253,9 @@ HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT *pt)
   {
     pt->x = hb_arrayGetNL(aPoint, 1);
     pt->y = hb_arrayGetNL(aPoint, 2);
-    return HB_TRUE;
+    return true;
   }
-  return HB_FALSE;
+  return false;
 }
 
 PHB_ITEM wvt_Point2Array(POINT *pt)
@@ -1274,9 +1274,9 @@ HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE *siz)
   {
     siz->cx = hb_arrayGetNL(aSize, 1);
     siz->cy = hb_arrayGetNL(aSize, 2);
-    return HB_TRUE;
+    return true;
   }
-  return HB_FALSE;
+  return false;
 }
 
 PHB_ITEM wvt_Size2Array(SIZE *siz)
