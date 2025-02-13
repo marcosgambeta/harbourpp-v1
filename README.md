@@ -28,6 +28,9 @@ Harbour MiniGUI Extended for Harbour++
 https://github.com/marcosgambeta/sqlrddpp  
 SQLRDD for Harbour++
 
+https://github.com/marcosgambeta/hblibvlc  
+libvlc for Harbour++
+
 ## Portuguese
 
 Harbour++ é um projeto derivado do projeto Harbour, tendo como objetivo principal
@@ -137,6 +140,9 @@ HMGEXT++ - fork da Harbour MiniGUI Extended para Harbour++
 
 https://github.com/marcosgambeta/sqlrddpp  
 SQLRDD for Harbour++
+
+https://github.com/marcosgambeta/hblibvlc  
+libvlc for Harbour++
 
 ### Contato
 
