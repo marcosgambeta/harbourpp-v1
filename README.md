@@ -1,5 +1,8 @@
 # Harbour++
 
+* [English](#english)
+* [Portuguese](#portuguese)
+
 ## English
 
 Harbour++ is derived from the Harbour project, having as main goal the transition
@@ -161,3 +164,10 @@ marcosgambeta@outlook.com
 Siga o blog abaixo para se manter informado:
 
 https://magsoftinfo.com/blog/
+
+### Donativos
+
+Se este projeto for útil para você e desejar apoiar seu desenvolvimento através de donativos,
+basta utilizar a chave Pix abaixo:
+
+marcosgambeta@outlook.com
