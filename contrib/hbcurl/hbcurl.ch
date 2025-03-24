@@ -274,6 +274,7 @@
 #define HB_CURLOPT_UL_FHANDLE_SETUP           1011
 #define HB_CURLOPT_DL_FHANDLE_SETUP           1012
 #define HB_CURLOPT_DEBUGBLOCK                 1013
+#define HB_CURLOPT_ER_BUFF_SETUP              1014
 // Compatibility ones. Please don't use these.
 #define HB_CURLOPT_SETUPLOADFILE              HB_CURLOPT_UL_FILE_SETUP
 #define HB_CURLOPT_CLOSEUPLOADFILE            HB_CURLOPT_UL_FILE_CLOSE
@@ -296,6 +297,11 @@
 
 // HB_CURLOPT_SSL_OPTIONS values
 #define HB_CURLSSLOPT_ALLOW_BEAST             hb_bitShift( 1, 0 )
+#define HB_CURLSSLOPT_NO_REVOKE               hb_bitShift( 1, 1 )
+#define HB_CURLSSLOPT_NO_PARTIALCHAIN         hb_bitShift( 1, 2 )
+#define HB_CURLSSLOPT_REVOKE_BEST_EFFORT      hb_bitShift( 1, 3 )
+#define HB_CURLSSLOPT_NATIVE_CA               hb_bitShift( 1, 4 )
+#define HB_CURLSSLOPT_AUTO_CLIENT_CERT        hb_bitShift( 1, 5 )
 
 // HB_CURLOPT_HTTPAUTH option
 #define HB_CURLAUTH_NONE                      0                    // nothing
@@ -336,7 +342,7 @@
 #define HB_CURLFTPMETHOD_NOCWD                2  // no CWD at all
 #define HB_CURLFTPMETHOD_SINGLECWD            3  // one CWD to full dir, then work on file
 
-// HB_CURLOPT_FTP_CREATE_MISSING_DIRS option 
+// HB_CURLOPT_FTP_CREATE_MISSING_DIRS option
 #define HB_CURLFTP_CREATE_DIR_NONE            0
 #define HB_CURLFTP_CREATE_DIR                 1
 #define HB_CURLFTP_CREATE_DIR_RETRY           2
@@ -489,56 +495,56 @@
 
 #define HB_CURLE_ERROR                        -1 // request not passed to libcurl (libcurl not initialized or unknown parameter)
 #define HB_CURLE_OK                           0
-#define HB_CURLE_UNSUPPORTED_PROTOCOL         1  //
-#define HB_CURLE_FAILED_INIT                  2  //
-#define HB_CURLE_URL_MALFORMAT                3  //
-#define HB_CURLE_NOT_BUILT_IN                 4  //
-#define HB_CURLE_COULDNT_RESOLVE_PROXY        5  //
-#define HB_CURLE_COULDNT_RESOLVE_HOST         6  //
-#define HB_CURLE_COULDNT_CONNECT              7  //
-#define HB_CURLE_FTP_WEIRD_SERVER_REPLY       8  //
+#define HB_CURLE_UNSUPPORTED_PROTOCOL         1
+#define HB_CURLE_FAILED_INIT                  2
+#define HB_CURLE_URL_MALFORMAT                3
+#define HB_CURLE_NOT_BUILT_IN                 4
+#define HB_CURLE_COULDNT_RESOLVE_PROXY        5
+#define HB_CURLE_COULDNT_RESOLVE_HOST         6
+#define HB_CURLE_COULDNT_CONNECT              7
+#define HB_CURLE_FTP_WEIRD_SERVER_REPLY       8
 #define HB_CURLE_REMOTE_ACCESS_DENIED         9  // a service was denied by the server due to lack of access - when login fails this is not returned.
 #define HB_CURLE_OBSOLETE10                   10 // NOT USED
-#define HB_CURLE_FTP_WEIRD_PASS_REPLY         11 //
+#define HB_CURLE_FTP_WEIRD_PASS_REPLY         11
 #define HB_CURLE_OBSOLETE12                   12 // NOT USED
-#define HB_CURLE_FTP_WEIRD_PASV_REPLY         13 //
-#define HB_CURLE_FTP_WEIRD_227_FORMAT         14 //
-#define HB_CURLE_FTP_CANT_GET_HOST            15 //
+#define HB_CURLE_FTP_WEIRD_PASV_REPLY         13
+#define HB_CURLE_FTP_WEIRD_227_FORMAT         14
+#define HB_CURLE_FTP_CANT_GET_HOST            15
 #define HB_CURLE_OBSOLETE16                   16 // NOT USED
-#define HB_CURLE_FTP_COULDNT_SET_TYPE         17 //
-#define HB_CURLE_PARTIAL_FILE                 18 //
-#define HB_CURLE_FTP_COULDNT_RETR_FILE        19 //
+#define HB_CURLE_FTP_COULDNT_SET_TYPE         17
+#define HB_CURLE_PARTIAL_FILE                 18
+#define HB_CURLE_FTP_COULDNT_RETR_FILE        19
 #define HB_CURLE_OBSOLETE20                   20 // NOT USED
 #define HB_CURLE_QUOTE_ERROR                  21 // quote command failure
-#define HB_CURLE_HTTP_RETURNED_ERROR          22 //
-#define HB_CURLE_WRITE_ERROR                  23 //
+#define HB_CURLE_HTTP_RETURNED_ERROR          22
+#define HB_CURLE_WRITE_ERROR                  23
 #define HB_CURLE_OBSOLETE24                   24 // NOT USED
 #define HB_CURLE_UPLOAD_FAILED                25 // failed upload "command"
 #define HB_CURLE_READ_ERROR                   26 // could open/read from file
-#define HB_CURLE_OUT_OF_MEMORY                27 //
+#define HB_CURLE_OUT_OF_MEMORY                27
 #define HB_CURLE_OPERATION_TIMEDOUT           28 // the timeout time was reached
 #define HB_CURLE_OBSOLETE29                   29 // NOT USED
 #define HB_CURLE_FTP_PORT_FAILED              30 // FTP PORT operation failed
 #define HB_CURLE_FTP_COULDNT_USE_REST         31 // the REST command failed
 #define HB_CURLE_OBSOLETE32                   32 // NOT USED
 #define HB_CURLE_RANGE_ERROR                  33 // RANGE "command" didn't work
-#define HB_CURLE_HTTP_POST_ERROR              34 //
+#define HB_CURLE_HTTP_POST_ERROR              34
 #define HB_CURLE_SSL_CONNECT_ERROR            35 // wrong when connecting with SSL
 #define HB_CURLE_BAD_DOWNLOAD_RESUME          36 // couldn't resume download
-#define HB_CURLE_FILE_COULDNT_READ_FILE       37 //
-#define HB_CURLE_LDAP_CANNOT_BIND             38 //
-#define HB_CURLE_LDAP_SEARCH_FAILED           39 //
+#define HB_CURLE_FILE_COULDNT_READ_FILE       37
+#define HB_CURLE_LDAP_CANNOT_BIND             38
+#define HB_CURLE_LDAP_SEARCH_FAILED           39
 #define HB_CURLE_OBSOLETE40                   40 // NOT USED
-#define HB_CURLE_FUNCTION_NOT_FOUND           41 //
-#define HB_CURLE_ABORTED_BY_CALLBACK          42 //
-#define HB_CURLE_BAD_FUNCTION_ARGUMENT        43 //
+#define HB_CURLE_FUNCTION_NOT_FOUND           41
+#define HB_CURLE_ABORTED_BY_CALLBACK          42
+#define HB_CURLE_BAD_FUNCTION_ARGUMENT        43
 #define HB_CURLE_OBSOLETE44                   44 // NOT USED
 #define HB_CURLE_INTERFACE_FAILED             45 // CURLOPT_INTERFACE failed
 #define HB_CURLE_OBSOLETE46                   46 // NOT USED
 #define HB_CURLE_TOO_MANY_REDIRECTS           47 // catch endless re-direct loops
 #define HB_CURLE_UNKNOWN_OPTION               48 // User specified an unknown option
 #define HB_CURLE_UNKNOWN_TELNET_OPTION        HB_CURLE_UNKNOWN_OPTION
-#define HB_CURLE_TELNET_OPTION_SYNTAX         49 // Malformed telnet option 
+#define HB_CURLE_TELNET_OPTION_SYNTAX         49 // Malformed telnet option
 #define HB_CURLE_OBSOLETE50                   50 // NOT USED
 #define HB_CURLE_PEER_FAILED_VERIFICATION     51 // peer's certificate or fingerprint wasn't verified fine
 #define HB_CURLE_GOT_NOTHING                  52 // when this is a specific error
@@ -546,7 +552,7 @@
 #define HB_CURLE_SSL_ENGINE_SETFAILED         54 // can not set SSL crypto engine as default
 #define HB_CURLE_SEND_ERROR                   55 // failed sending network data
 #define HB_CURLE_RECV_ERROR                   56 // failure in receiving network data
-#define HB_CURLE_OBSOLETE57                   57 // NOT IN USE 
+#define HB_CURLE_OBSOLETE57                   57 // NOT IN USE
 #define HB_CURLE_SSL_CERTPROBLEM              58 // problem with the local certificate
 #define HB_CURLE_SSL_CIPHER                   59 // couldn't use specified cipher
 #define HB_CURLE_SSL_CACERT                   60 // problem with the CA cert (path?)
@@ -578,5 +584,34 @@
 #define HB_CURLE_RTSP_SESSION_ERROR           86 // mismatch of RTSP Session Identifiers
 #define HB_CURLE_FTP_BAD_FILE_LIST            87 // unable to parse FTP file list
 #define HB_CURLE_CHUNK_FAILED                 88 // chunk callback reported error
+
+// multi interface result codes.
+#define HB_CURLM_ERROR                        -9 // request not passed to libcurl
+#define HB_CURLM_CALL_MULTI_PERFORM           -1 // please call curl_multi_perform() or curl_multi_socket*() soon
+#define HB_CURLM_OK                           0
+#define HB_CURLM_BAD_HANDLE                   1  // the passed-in handle is not a valid CURLM handle
+#define HB_CURLM_BAD_EASY_HANDLE              2  // an easy handle was not good/valid
+#define HB_CURLM_OUT_OF_MEMORY                3  // if you ever get this, you're in deep sh*t
+#define HB_CURLM_INTERNAL_ERROR               4  // this is a libcurl bug
+#define HB_CURLM_BAD_SOCKET                   5  // the passed in socket argument did not match
+#define HB_CURLM_UNKNOWN_OPTION               6  // curl_multi_setopt() with unsupported option
+#define HB_CURLM_ADDED_ALREADY                7  // an easy handle already added to a multi handle was attempted to get added - again
+#define HB_CURLM_RECURSIVE_API_CALL           8  // an api function was called from inside a callback
+#define HB_CURLM_WAKEUP_FAILURE               9  // wakeup is unavailable or failed
+#define HB_CURLM_BAD_FUNCTION_ARGUMENT        10 // function called with a bad parameter
+#define HB_CURLM_ABORTED_BY_CALLBACK          11
+#define HB_CURLM_UNRECOVERABLE_POLL           12
+
+// curl_multi_info_read() result codes.
+#define HB_CURLMSG_NONE                       0  // first, not used
+#define HB_CURLMSG_DONE                       1  // This easy handle has completed. 'result' contains the CURLcode of the transfer
+
+#define HB_CURLMSG_RESP_LEN                   1  // queue len
+#define HB_CURLMSG_RESP_RESPONSE_CODE         2  // curl_easy_getinfo( msg->easy_handle, CURLINFO_RESPONSE_CODE )
+#define HB_CURLMSG_RESP_MSG                   3  // CURLMSG
+#define HB_CURLMSG_RESP_RESULT                4  // CURLcode
+#define HB_CURLMSG_RESP_HANDLE                5  // handle to original curl_easy_init
+#define HB_CURLMSG_RESP_HPOS                  6  // position in handle <array> passed to curl_multi_info_read(, <array> )
+#define HB_CURLMSG_RESP_LAST                  HB_CURLMSG_RESP_HPOS
 
 #endif // HBCURL_CH_
