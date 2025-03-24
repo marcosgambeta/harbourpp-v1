@@ -31,6 +31,9 @@ SQLRDD for Harbour++
 https://github.com/marcosgambeta/hblibvlc  
 libvlc for Harbour++
 
+https://github.com/marcosgambeta/hbopencv2  
+OpenCV2 for Harbour++
+
 ## Portuguese
 
 Harbour++ é um projeto derivado do projeto Harbour, tendo como objetivo principal
@@ -143,6 +146,9 @@ SQLRDD for Harbour++
 
 https://github.com/marcosgambeta/hblibvlc  
 libvlc for Harbour++
+
+https://github.com/marcosgambeta/hbopencv2  
+OpenCV2 for Harbour++
 
 ### Contato
 
