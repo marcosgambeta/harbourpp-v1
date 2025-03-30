@@ -365,10 +365,10 @@ METHOD TFbServer:Delete( oRow, cWhere )
 
          cWhere := ""
          FOR i := 1 TO Len(aKeys)
-            nField := oRow:FieldPos( aKeys[ i ] )
+            nField := oRow:FieldPos( aKeys[i] )
             xField := oRow:FieldGet( nField )
 
-            cWhere += aKeys[ i ] + "=" + DataToSql( xField )
+            cWhere += aKeys[i] + "=" + DataToSql( xField )
 
             IF i != Len(aKeys)
                cWhere += ","
@@ -433,10 +433,10 @@ METHOD TFbServer:Update( oRow, cWhere )
 
          cWhere := ""
          FOR i := 1 TO Len(aKeys)
-            nField := oRow:FieldPos( aKeys[ i ] )
+            nField := oRow:FieldPos( aKeys[i] )
             xField := oRow:FieldGet( nField )
 
-            cWhere += aKeys[ i ] + "=" + DataToSql( xField )
+            cWhere += aKeys[i] + "=" + DataToSql( xField )
 
             IF i != Len(aKeys)
                cWhere += ", "
@@ -554,8 +554,8 @@ METHOD TFbQuery:Refresh()
 
       /* Tables in query */
       FOR i := 1 TO Len(::aStruct)
-         IF hb_AScan( aTable, ::aStruct[ i ][5], , , .T. ) == 0
-            AAdd(aTable, ::aStruct[ i ][5])
+         IF hb_AScan( aTable, ::aStruct[i][5], , , .T. ) == 0
+            AAdd(aTable, ::aStruct[i][5])
          ENDIF
       NEXT
 
@@ -612,7 +612,7 @@ METHOD TFbQuery:Struct()
 
    IF !::lError
       FOR i := 1 TO Len(::aStruct)
-         AAdd(result, { ::aStruct[ i ][1], ::aStruct[ i ][2], ::aStruct[ i ][3], ::aStruct[ i ][4] })
+         AAdd(result, { ::aStruct[i][1], ::aStruct[i][2], ::aStruct[i][3], ::aStruct[i][4] })
       NEXT
    ENDIF
 
@@ -687,7 +687,7 @@ METHOD TFbQuery:FieldGet( nField )
 
             result := ""
             FOR i := 1 TO Len(aBlob)
-               result += aBlob[ i ]
+               result += aBlob[i]
             NEXT
 
             // result := FBGetBlob(::db, result)
@@ -731,7 +731,7 @@ METHOD TFbQuery:Getrow()
       aRow := Array( ::numcols )
 
       FOR i := 1 TO ::numcols
-         aRow[ i ] := ::FieldGet( i )
+         aRow[i] := ::FieldGet( i )
       NEXT
 
       result := TFBRow():New( aRow, ::aStruct, ::db, ::dialect, ::aTables )
@@ -750,19 +750,19 @@ METHOD TFbQuery:GetBlankRow()
 
       FOR i := 1 TO ::numcols
 
-         SWITCH ::aStruct[ i ][2]
+         SWITCH ::aStruct[i][2]
          CASE "C"
          CASE "M"
-            aRow[ i ] := ""
+            aRow[i] := ""
             EXIT
          CASE "N"
-            aRow[ i ] := 0
+            aRow[i] := 0
             EXIT
          CASE "L"
-            aRow[ i ] := .F.
+            aRow[i] := .F.
             EXIT
          CASE "D"
-            aRow[ i ] := hb_SToD()
+            aRow[i] := hb_SToD()
             EXIT
          ENDSWITCH
       NEXT
@@ -972,8 +972,8 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
    /* create table list and field list */
 
    FOR i := 1 TO Len(aStru)
-      xtables += DataToSql( aStru[ i ][5] )
-      xfields += DataToSql( aStru[ i ][1] )
+      xtables += DataToSql( aStru[i][5] )
+      xfields += DataToSql( aStru[i][1] )
 
       IF i != Len(aStru)
          xtables += ","
@@ -1002,11 +1002,11 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
       FBFree( qry )
 
       FOR i := 1 TO Len(aStru)
-         cField := RTrim(aStru[ i ][7])
-         nType := aStru[ i ][2]
-         nSize := aStru[ i ][3]
-         nDec := aStru[ i ][4] * -1
-         cTable := RTrim(aStru[ i ][5])
+         cField := RTrim(aStru[i][7])
+         nType := aStru[i][2]
+         nSize := aStru[i][3]
+         nDec := aStru[i][4] * -1
+         cTable := RTrim(aStru[i][5])
 
          nVal := AScan( aDomains, {| x | RTrim(x[1]) == cTable .AND. RTrim(x[2]) == cField } )
 

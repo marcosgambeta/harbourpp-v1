@@ -22,8 +22,8 @@ PROCEDURE Main()
 
       aOrders := {}
       FOR i := 1 TO Len(dsFunctions:Fields)
-         AAdd(aOrders, dsFunctions:Fields[ i ]:FieldName)
-         @ i + 3, 25 PROMPT PadC("ORDER BY " + aOrders[ i ], 30)
+         AAdd(aOrders, dsFunctions:Fields[i]:FieldName)
+         @ i + 3, 25 PROMPT PadC("ORDER BY " + aOrders[i], 30)
       NEXT
 
       MENU TO nOp

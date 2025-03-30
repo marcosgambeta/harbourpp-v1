@@ -467,33 +467,33 @@ METHOD TMySQLQuery:GetRow( nRow )
          // Convert answer from text field to correct clipper types
          FOR i := 1 TO ::nNumFields
 
-            SWITCH ::aFieldStruct[ i ][ MYSQL_FS_TYPE ]
+            SWITCH ::aFieldStruct[i][ MYSQL_FS_TYPE ]
             CASE MYSQL_TYPE_TINY
             CASE MYSQL_TYPE_SHORT
             CASE MYSQL_TYPE_LONG
             CASE MYSQL_TYPE_LONGLONG
             CASE MYSQL_TYPE_INT24
             CASE MYSQL_TYPE_NEWDECIMAL
-               IF ::aRow[ i ] == NIL
-                  ::aRow[ i ] := "0"
+               IF ::aRow[i] == NIL
+                  ::aRow[i] := "0"
                ENDIF
-               ::aRow[ i ] := Val( ::aRow[ i ] )
+               ::aRow[i] := Val( ::aRow[i] )
                EXIT
 
             CASE MYSQL_TYPE_DOUBLE
             CASE MYSQL_TYPE_FLOAT
-               IF ::aRow[ i ] == NIL
-                  ::aRow[ i ] := "0"
+               IF ::aRow[i] == NIL
+                  ::aRow[i] := "0"
                ENDIF
-               ::aRow[ i ] := Val( ::aRow[ i ] )
+               ::aRow[i] := Val( ::aRow[i] )
                EXIT
 
             CASE MYSQL_TYPE_DATE
-               IF Empty(::aRow[ i ])
-                  ::aRow[ i ] := hb_SToD()
+               IF Empty(::aRow[i])
+                  ::aRow[i] := hb_SToD()
                ELSE
                   // Date format YYYY-MM-DD
-                  ::aRow[ i ] := hb_SToD(Left(::aRow[ i ], 4) + SubStr(::aRow[ i ], 6, 2) + Right(::aRow[ i ], 2))
+                  ::aRow[i] := hb_SToD(Left(::aRow[i], 4) + SubStr(::aRow[i], 6, 2) + Right(::aRow[i], 2))
                ENDIF
                EXIT
 
@@ -512,12 +512,12 @@ METHOD TMySQLQuery:GetRow( nRow )
 
             OTHERWISE
 
-               // ? "Unknown type from SQL Server Field: " + hb_ntos( i ) + " is type " + hb_ntos( ::aFieldStruct[ i ][ MYSQL_FS_TYPE ] )
+               // ? "Unknown type from SQL Server Field: " + hb_ntos( i ) + " is type " + hb_ntos( ::aFieldStruct[i][ MYSQL_FS_TYPE ] )
 
             ENDSWITCH
 
             IF ::lFieldAsData
-               __objSetValueList( Self, { { ::aFieldStruct[ i ][ MYSQL_FS_NAME ], ::aRow[ i ] } } )
+               __objSetValueList( Self, { { ::aFieldStruct[i][ MYSQL_FS_NAME ], ::aRow[i] } } )
             ENDIF
          NEXT
 
@@ -716,7 +716,7 @@ METHOD TMySQLTable:GetRow( nRow )
 
    ::aOldvalue := {}
    FOR i := 1 TO ::nNumFields
-      // ::aOldValue[ i ] := ::FieldGet( i )
+      // ::aOldValue[i] := ::FieldGet( i )
       AAdd(::aOldvalue, ::FieldGet( i ))
    NEXT
 
@@ -729,7 +729,7 @@ METHOD TMySQLTable:Skip( nRow )
    ::super:skip( nRow )
 
    FOR i := 1 TO ::nNumFields
-      ::aOldValue[ i ] := ::FieldGet( i )
+      ::aOldValue[i] := ::FieldGet( i )
    NEXT
 
    RETURN NIL
@@ -751,8 +751,8 @@ METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
    IF oRow == NIL // default Current row
 
       FOR i := 1 TO  ::nNumFields
-         IF !( ::aOldValue[ i ] == ::FieldGet( i ) )
-            cUpdateQuery += ::aFieldStruct[ i ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::FieldGet( i ) ) + ","
+         IF !( ::aOldValue[i] == ::FieldGet( i ) )
+            cUpdateQuery += ::aFieldStruct[i][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::FieldGet( i ) ) + ","
          ENDIF
       NEXT
 
@@ -788,7 +788,7 @@ METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
             ::refresh()
          ELSE
             FOR i := 1 TO ::nNumFields
-               ::aOldValue[ i ] := ::FieldGet( i )
+               ::aOldValue[i] := ::FieldGet( i )
             NEXT
          ENDIF
       ELSE
@@ -798,8 +798,8 @@ METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
       IF oRow:cTable == ::cTable
 
          FOR i := 1 TO Len(oRow:aRow)
-            IF oRow:aDirty[ i ]
-               cUpdateQuery += oRow:aFieldStruct[ i ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aRow[ i ] ) + ","
+            IF oRow:aDirty[i]
+               cUpdateQuery += oRow:aFieldStruct[i][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aRow[i] ) + ","
             ENDIF
          NEXT
 
@@ -884,7 +884,7 @@ METHOD TMySQLTable:Delete( oRow, lOldRecord, lRefresh )
             ::refresh()
          ELSE
             FOR i := 1 TO ::nNumFields
-               ::aOldValue[ i ] := ::FieldGet( i )
+               ::aOldValue[i] := ::FieldGet( i )
             NEXT
          ENDIF
       ELSE
@@ -941,8 +941,8 @@ METHOD TMySQLTable:Append(oRow, lRefresh)
 
       // field names
       FOR i := 1 TO ::nNumFields
-         IF ::aFieldStruct[ i ][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
-            cInsertQuery += ::aFieldStruct[ i ][ MYSQL_FS_NAME ] + ","
+         IF ::aFieldStruct[i][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
+            cInsertQuery += ::aFieldStruct[i][ MYSQL_FS_NAME ] + ","
          ENDIF
       NEXT
       // remove last comma from list
@@ -950,7 +950,7 @@ METHOD TMySQLTable:Append(oRow, lRefresh)
 
       // field values
       FOR i := 1 TO ::nNumFields
-         IF ::aFieldStruct[ i ][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
+         IF ::aFieldStruct[i][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
             cInsertQuery += ClipValue2SQL( ::FieldGet( i ) ) + ","
          ENDIF
       NEXT
@@ -970,7 +970,7 @@ METHOD TMySQLTable:Append(oRow, lRefresh)
 #if 0
             /* was same values from FieldGet( i ) ! */
             FOR i := 1 TO ::nNumFields
-               ::aOldValue[ i ] := ::FieldGet( i )
+               ::aOldValue[i] := ::FieldGet( i )
             NEXT
 #endif
          ENDIF
@@ -985,8 +985,8 @@ METHOD TMySQLTable:Append(oRow, lRefresh)
 
          // field names
          FOR i := 1 TO Len(oRow:aRow)
-            IF oRow:aFieldStruct[ i ][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
-               cInsertQuery += oRow:aFieldStruct[ i ][ MYSQL_FS_NAME ] + ","
+            IF oRow:aFieldStruct[i][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
+               cInsertQuery += oRow:aFieldStruct[i][ MYSQL_FS_NAME ] + ","
             ENDIF
          NEXT
          // remove last comma from list
@@ -994,8 +994,8 @@ METHOD TMySQLTable:Append(oRow, lRefresh)
 
          // field values
          FOR i := 1 TO Len(oRow:aRow)
-            IF oRow:aFieldStruct[ i ][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
-               cInsertQuery += ClipValue2SQL( oRow:aRow[ i ] ) + ","
+            IF oRow:aFieldStruct[i][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
+               cInsertQuery += ClipValue2SQL( oRow:aRow[i] ) + ","
             ENDIF
          NEXT
 
@@ -1039,12 +1039,12 @@ METHOD TMySQLTable:GetBlankRow( lSetValues )
    // crate an array of empty fields
    FOR i := 1 TO ::nNumFields
 
-      SWITCH ::aFieldStruct[ i ][ MYSQL_FS_TYPE ]
+      SWITCH ::aFieldStruct[i][ MYSQL_FS_TYPE ]
       CASE MYSQL_TYPE_STRING
       CASE MYSQL_TYPE_VAR_STRING
       CASE MYSQL_TYPE_BLOB
       CASE MYSQL_TYPE_DATETIME
-         aRow[ i ] := ""
+         aRow[i] := ""
          EXIT
 
       CASE MYSQL_TYPE_TINY
@@ -1053,28 +1053,28 @@ METHOD TMySQLTable:GetBlankRow( lSetValues )
       CASE MYSQL_TYPE_LONGLONG
       CASE MYSQL_TYPE_INT24
       CASE MYSQL_TYPE_NEWDECIMAL
-         aRow[ i ] := 0
+         aRow[i] := 0
          EXIT
 
       CASE MYSQL_TYPE_DOUBLE
       CASE MYSQL_TYPE_FLOAT
-         aRow[ i ] := 0.0
+         aRow[i] := 0.0
          EXIT
 
       CASE MYSQL_TYPE_DATE
-         aRow[ i ] := hb_SToD()
+         aRow[i] := hb_SToD()
          EXIT
 
       OTHERWISE
-         aRow[ i ] := NIL
+         aRow[i] := NIL
 
       ENDSWITCH
    NEXT
 
    IF lSetValues   // Assign values as current row values
       FOR i := 1 TO ::nNumFields
-         ::FieldPut( i, aRow[ i ] )
-         ::aOldValue[ i ] := aRow[ i ]
+         ::FieldPut( i, aRow[i] )
+         ::aOldValue[i] := aRow[i]
       NEXT
    ENDIF
 
@@ -1301,56 +1301,56 @@ METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto
 
    FOR i := 1 TO Len(aStruct)
 
-      SWITCH aStruct[ i ][ DBS_TYPE ]
+      SWITCH aStruct[i][ DBS_TYPE ]
       CASE "C"
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " char(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + IIf(aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + ","
+         ::cCreateQuery += aStruct[i][ DBS_NAME ] + " char(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[i] ) + IIf(aStruct[i][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + ","
          EXIT
 
       CASE "M"
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " text" + Eval( cNN, aStruct[ i ] ) + ","
+         ::cCreateQuery += aStruct[i][ DBS_NAME ] + " text" + Eval( cNN, aStruct[i] ) + ","
          EXIT
 
       CASE "N"
 #if 0
-         IF aStruct[ i ][ DBS_DEC ] == 0
-            ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " int(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + IIf(aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[ i ][ DBS_NAME ] == cAuto, " auto_increment ", "") + ","
+         IF aStruct[i][ DBS_DEC ] == 0
+            ::cCreateQuery += aStruct[i][ DBS_NAME ] + " int(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[i] ) + IIf(aStruct[i][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][ DBS_NAME ] == cAuto, " auto_increment ", "") + ","
          ELSE
-            ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " real(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + "," + hb_ntos( aStruct[ i ][ DBS_DEC ] ) + ")" + Eval( cNN, aStruct[ i ] ) + ","
+            ::cCreateQuery += aStruct[i][ DBS_NAME ] + " real(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + "," + hb_ntos( aStruct[i][ DBS_DEC ] ) + ")" + Eval( cNN, aStruct[i] ) + ","
          ENDIF
 #endif
-         IF aStruct[ i ][ DBS_DEC ] == 0 .AND. aStruct[ i ][ DBS_LEN ] <= 18
+         IF aStruct[i][ DBS_DEC ] == 0 .AND. aStruct[i][ DBS_LEN ] <= 18
             DO CASE
-            CASE aStruct[ i ][ DBS_LEN ] <= 2
-               ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " tinyint(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")"
-            CASE aStruct[ i ][ DBS_LEN ] <= 4
-               ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " smallint(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")"
-            CASE aStruct[ i ][ DBS_LEN ] <= 6
-               ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " mediumint(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")"
-            CASE aStruct[ i ][ DBS_LEN ] <= 9
-               ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " int(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")"
+            CASE aStruct[i][ DBS_LEN ] <= 2
+               ::cCreateQuery += aStruct[i][ DBS_NAME ] + " tinyint(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")"
+            CASE aStruct[i][ DBS_LEN ] <= 4
+               ::cCreateQuery += aStruct[i][ DBS_NAME ] + " smallint(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")"
+            CASE aStruct[i][ DBS_LEN ] <= 6
+               ::cCreateQuery += aStruct[i][ DBS_NAME ] + " mediumint(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")"
+            CASE aStruct[i][ DBS_LEN ] <= 9
+               ::cCreateQuery += aStruct[i][ DBS_NAME ] + " int(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")"
             OTHERWISE
-               ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " bigint(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")"
+               ::cCreateQuery += aStruct[i][ DBS_NAME ] + " bigint(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")"
             ENDCASE
-            ::cCreateQuery += Eval( cNN, aStruct[ i ] ) + IIf(aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[ i ][ DBS_NAME ] == cAuto, " auto_increment ", "") + ","
+            ::cCreateQuery += Eval( cNN, aStruct[i] ) + IIf(aStruct[i][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][ DBS_NAME ] == cAuto, " auto_increment ", "") + ","
          ELSE
-            ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " real(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + "," + hb_ntos( aStruct[ i ][ DBS_DEC ] ) + ")" + Eval( cNN, aStruct[ i ] ) + ","
+            ::cCreateQuery += aStruct[i][ DBS_NAME ] + " real(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + "," + hb_ntos( aStruct[i][ DBS_DEC ] ) + ")" + Eval( cNN, aStruct[i] ) + ","
          ENDIF
          EXIT
 
       CASE "D"
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " date " + Eval( cNN, aStruct[ i ] ) + ","
+         ::cCreateQuery += aStruct[i][ DBS_NAME ] + " date " + Eval( cNN, aStruct[i] ) + ","
          EXIT
 
       CASE "B"
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " mediumblob "  + Eval( cNN, aStruct[ i ] ) + ","
+         ::cCreateQuery += aStruct[i][ DBS_NAME ] + " mediumblob "  + Eval( cNN, aStruct[i] ) + ","
          EXIT
 
       CASE "I"
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " mediumint " + Eval( cNN, aStruct[ i ] ) + ","
+         ::cCreateQuery += aStruct[i][ DBS_NAME ] + " mediumint " + Eval( cNN, aStruct[i] ) + ","
          EXIT
 
       OTHERWISE
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " char(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + ","
+         ::cCreateQuery += aStruct[i][ DBS_NAME ] + " char(" + hb_ntos( aStruct[i][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[i] ) + ","
 
       ENDSWITCH
 
@@ -1388,7 +1388,7 @@ METHOD TMySQLServer:CreateIndex( cName, cTable, aFNames, lUnique )
    cCreateQuery += cName + " ON " + Lower(cTable) + " ("
 
    FOR i := 1 TO Len(aFNames)
-      cCreateQuery += aFNames[ i ] + ","
+      cCreateQuery += aFNames[i] + ","
    NEXT
 
    // remove last comma from list

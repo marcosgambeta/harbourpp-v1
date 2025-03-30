@@ -25,10 +25,10 @@ PROCEDURE Main( cFile )
       CLS
       aPrinter := cupsGetDests()
       i := AChoice( 2, 5, 30, Len(aPrinter) + 2, aPrinter )
-      ? "Printing... Job ID:", cupsPrintFile( aPrinter[ i ], cFile, "Harbour CUPS Printing" )
+      ? "Printing... Job ID:", cupsPrintFile( aPrinter[i], cFile, "Harbour CUPS Printing" )
 #if 0
       /* for duplex printing, tested on OKI B410 */
-      ? "Printing... Job ID:", cupsPrintFile( aPrinter[ i ], ".." + hb_ps() + "core.c", "Harbour CUPS Printing", { "sides=two-sided-short-edge" } )
+      ? "Printing... Job ID:", cupsPrintFile( aPrinter[i], ".." + hb_ps() + "core.c", "Harbour CUPS Printing", { "sides=two-sided-short-edge" } )
 #endif
    ELSE
       ? "Printing... Job ID:", cupsPrintFile( cupsGetDefault(), cFile, "Harbour CUPS Printing", { "sides=one-sided" } )

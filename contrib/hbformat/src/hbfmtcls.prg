@@ -206,38 +206,38 @@ METHOD HBFormatCode:Reformat( aFile )
 
    ::nErr := 0
    FOR i := 1 TO nLen
-      IF aFile[ i ] == NIL
+      IF aFile[i] == NIL
          EXIT
       ENDIF
-      IF HB_IsNull( aFile[ i ] )
+      IF HB_IsNull( aFile[i] )
          LOOP
       ENDIF
       IF ::bCallBack != NIL
          Eval( ::bCallBack, aFile, i )
       ENDIF
       nPosComment := 0
-      lSpaceFirst := hb_LeftEq( aFile[ i ], " " )
+      lSpaceFirst := hb_LeftEq( aFile[i], " " )
       IF ::lIndent
-         aFile[ i ] := StrTran(aFile[ i ], Chr(9), " ")
+         aFile[i] := StrTran(aFile[i], Chr(9), " ")
       ENDIF
-      aFile[ i ] := RTrim(aFile[ i ])
+      aFile[i] := RTrim(aFile[i])
 
-      IF Empty(aFile[ i ])
-         aFile[ i ] := ""
+      IF Empty(aFile[i])
+         aFile[i] := ""
          lContinue  := .F.
          LOOP
       ENDIF
       IF lComment
-         IF ( nPos := hb_At( "*/", aFile[ i ] ) ) > 0
+         IF ( nPos := hb_At( "*/", aFile[i] ) ) > 0
             lComment := .F.
-            IF !Empty(cToken1 := SubStr(aFile[ i ], nPos + 2))
-               aFile[ i ] := Left(aFile[ i ], nPos + 1)
+            IF !Empty(cToken1 := SubStr(aFile[i], nPos + 2))
+               aFile[i] := Left(aFile[i], nPos + 1)
                nLen := rf_AINS( aFile, i + 1, cToken1 )
                iDelta++
             ENDIF
          ENDIF
       ELSE
-         cLineAll := LTrim(aFile[ i ])
+         cLineAll := LTrim(aFile[i])
          IF hb_LeftEq( cLineAll, "#" )
             cToken1 := Lower(hb_tokenGet( cLineAll, 1 ))
             cToken2 := Lower(hb_tokenGet( cLineAll, 2 ))
@@ -282,21 +282,21 @@ METHOD HBFormatCode:Reformat( aFile )
             nState := 0
          ENDIF
          lToBeContinued := ( nPosComment > 0 .AND. Right(RTrim(Left(cLineAll, nPosComment - 1)), 1) == ';' ) ;
-            .OR. ( nPosComment == 0 .AND. Right(aFile[ i ], 1) == ';' )
+            .OR. ( nPosComment == 0 .AND. Right(aFile[i], 1) == ';' )
          IF !lPragmaDump .AND. ::lIndent .AND. ! lComment
-            aFile[ i ] := cLineAll
+            aFile[i] := cLineAll
             IF !lContinue
                nPosSep := 1
                nLineSegment := 1
                DO WHILE .T.
                   nPos := nPosSep
-                  IF !hb_LeftEq( aFile[ i ], "#" ) .AND. ;
-                        ( nPosSep := FindNotQuoted(";", aFile[ i ], nPosSep) ) > 0 .AND. ;
-                        nPosSep < Len(aFile[ i ]) .AND. ( nPosComment == 0 .OR. nPosSep < nPosComment )
-                     cLine := SubStr(aFile[ i ], nPos, nPosSep - nPos + 1)
+                  IF !hb_LeftEq( aFile[i], "#" ) .AND. ;
+                        ( nPosSep := FindNotQuoted(";", aFile[i], nPosSep) ) > 0 .AND. ;
+                        nPosSep < Len(aFile[i]) .AND. ( nPosComment == 0 .OR. nPosSep < nPosComment )
+                     cLine := SubStr(aFile[i], nPos, nPosSep - nPos + 1)
                   ELSE
                      nPosSep := 0
-                     cLine := SubStr(aFile[ i ], nPos, Len(aFile[ i ]) - nPos + 1)
+                     cLine := SubStr(aFile[i], nPos, Len(aFile[i]) - nPos + 1)
                   ENDIF
 
                   nContrState := 0
@@ -436,20 +436,20 @@ METHOD HBFormatCode:Reformat( aFile )
                      ENDIF
                      nState := 0
                   ENDIF
-                  IF nPosSep == 0 .OR. nPosSep == Len(aFile[ i ])
+                  IF nPosSep == 0 .OR. nPosSep == Len(aFile[i])
                      EXIT
                   ENDIF
                   nPosSep++
                   nLineSegment++
                ENDDO
-               aFile[ i ] := cLineAll
+               aFile[i] := cLineAll
             ELSE
                // This line is a continuation of previous
-               aFile[ i ] := Space( ::nIndLeft + ::nIndNext * nDeep + ::nIndCont ) + ::FormatLine( aFile[ i ], .T. )
+               aFile[i] := Space( ::nIndLeft + ::nIndNext * nDeep + ::nIndCont ) + ::FormatLine( aFile[i], .T. )
             ENDIF
             lContinue := lToBeContinued
          ELSEIF ! lPragmaDump
-            aFile[ i ] := ::FormatLine( aFile[ i ] )
+            aFile[i] := ::FormatLine( aFile[i] )
          ENDIF
       ENDIF
    NEXT
@@ -567,7 +567,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                   i := nEnd - 1
                ENDIF
             ELSEIF c == "(" .OR. c == "{"
-               aBrackets[ IIf(c == "(", 1, 2) ]++
+               aBrackets[IIf(c == "(", 1, 2)]++
                IF nState == FL_STATE_STRING
                   IF nEnd == nBegin
                      nEnd := i
@@ -576,7 +576,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                      ::ConvertFnc(@cLine, nBegin, nEnd)
                   ENDIF
                ENDIF
-               IF ::lSpaces .AND. aBrackets[ IIf(c == "(", 1, 2) ] <= ::nBr4Brac .AND. ;
+               IF ::lSpaces .AND. aBrackets[IIf(c == "(", 1, 2)] <= ::nBr4Brac .AND. ;
                      i < nLen .AND. !( SubStr(cLine, i + 1, 1) $ IIf(c == "(", " )", " |}") )
                   nA := i
                ENDIF
@@ -647,11 +647,11 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                   nB := i
                ENDIF
             ELSEIF c == ")" .OR. c == "}" .OR. c == "]"
-               IF ::lSpaces .AND. aBrackets[ IIf(c == "(", 1, 2) ] <= ::nBr4Brac .AND. ;
+               IF ::lSpaces .AND. aBrackets[IIf(c == "(", 1, 2)] <= ::nBr4Brac .AND. ;
                      i > 1 .AND. !( SubStr(cLine, i - 1, 1) $ " ({" )
                   nB := i
                ENDIF
-               aBrackets[ IIf(c == ")", 1, 2) ]--
+               aBrackets[IIf(c == ")", 1, 2)]--
                nState := FL_STATE_ANY
             ELSE
                nState := FL_STATE_ANY
@@ -809,10 +809,10 @@ METHOD HBFormatCode:SetOption( cLine, i, aIni )
                IF Right(cToken2, 1) == ";" .AND. aIni != NIL
                   xRes := RTrim(hb_StrShrink( cToken2 ))
                   DO WHILE ++i < Len(aIni)
-                     IF Right(aIni[ i ], 1) == ";"
-                        xRes += AllTrim(hb_StrShrink( aIni[ i ] ))
+                     IF Right(aIni[i], 1) == ";"
+                        xRes += AllTrim(hb_StrShrink( aIni[i] ))
                      ELSE
-                        xRes += AllTrim(aIni[ i ])
+                        xRes += AllTrim(aIni[i])
                         EXIT
                      ENDIF
                   ENDDO
@@ -847,9 +847,9 @@ METHOD HBFormatCode:ReadIni( cIniName )
       aIni := hb_ATokens( MemoRead(cIniName), .T. )
       nLen := Len(aIni)
       FOR i := 1 TO nLen
-         IF !HB_IsNull( aIni[ i ] := AllTrim(aIni[ i ]) ) .AND. ;
-               !( ( c := Left(aIni[ i ], 1) ) == ";" ) .AND. !( c == "#" )
-            IF !::SetOption( aIni[ i ], @i, aIni )
+         IF !HB_IsNull( aIni[i] := AllTrim(aIni[i]) ) .AND. ;
+               !( ( c := Left(aIni[i], 1) ) == ";" ) .AND. !( c == "#" )
+            IF !::SetOption( aIni[i], @i, aIni )
                EXIT
             ENDIF
          ENDIF
@@ -876,11 +876,11 @@ METHOD HBFormatCode:Array2Source( aSource )
    LOCAL cSource := ""
 
    FOR i := 1 TO nLen
-      IF aSource[ i ] == NIL
+      IF aSource[i] == NIL
          EXIT
       ENDIF
-      IF i < nLen .OR. ! Empty(aSource[ i ])
-         cSource += RTrim(aSource[ i ]) + ::cEol
+      IF i < nLen .OR. ! Empty(aSource[i])
+         cSource += RTrim(aSource[i]) + ::cEol
       ENDIF
    NEXT
 

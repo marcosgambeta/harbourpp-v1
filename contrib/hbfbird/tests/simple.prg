@@ -37,7 +37,7 @@ PROCEDURE Main()
       aTables := oServer:ListTables()
 
       FOR i := 1 TO Len(aTables)
-         ? aTables[ i ]
+         ? aTables[i]
       NEXT
    NEXT
 
@@ -82,8 +82,8 @@ PROCEDURE Main()
 
    FOR i := 1 TO Len(aStruct)
       ?
-      FOR x := 1 TO Len(aStruct[ i ])
-         ?? aStruct[ i, x ]
+      FOR x := 1 TO Len(aStruct[i])
+         ?? aStruct[i, x]
       NEXT
    NEXT
 
@@ -108,7 +108,7 @@ PROCEDURE Main()
    aStruct := oQuery:Struct()
 
    FOR i := 1 TO Len(aStruct)
-      ? aStruct[ i, 1 ], aStruct[ i, 2 ], aStruct[ i, 3 ], aStruct[ i, 4 ]
+      ? aStruct[i, 1], aStruct[i, 2], aStruct[i, 3], aStruct[i, 4]
    NEXT
 
    aKey := oQuery:GetKeyField()

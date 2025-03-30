@@ -134,11 +134,11 @@ FUNCTION DesignHaruPDF( cFileToSave )
 
    FOR i := 1 TO Len(font_list)
       samp_text := "abcdefgABCDEFG12345!#$%&+-@?"
-      font := HPDF_GetFont(pdf, font_list[ i ], NIL)
+      font := HPDF_GetFont(pdf, font_list[i], NIL)
 
 
       HPDF_Page_SetFontAndSize( page, def_font, 9 )
-      HPDF_Page_ShowText( page, font_list[ i ] )
+      HPDF_Page_ShowText( page, font_list[i] )
       HPDF_Page_MoveTextPos( page, 0, - 18 )
 
 
@@ -990,7 +990,7 @@ STATIC FUNCTION Page_CodePages( pdf )
       HPDF_Page_SetWidth( page, PAGE_WIDTH )
       HPDF_Page_SetHeight( page, PAGE_HEIGHT )
 
-      outline := HPDF_CreateOutline( pdf, root, encodings[ i ], NIL )
+      outline := HPDF_CreateOutline( pdf, root, encodings[i], NIL )
       dst := HPDF_Page_CreateDestination( page )
       HPDF_Destination_SetXYZ( dst, 0, HPDF_Page_GetHeight( page ), 1 )
 
@@ -1005,16 +1005,16 @@ STATIC FUNCTION Page_CodePages( pdf )
       HPDF_Page_BeginText( page )
       HPDF_Page_SetFontAndSize( page, font, 20 )
       HPDF_Page_MoveTextPos( page, 40, PAGE_HEIGHT - 50 )
-      HPDF_Page_ShowText( page, encodings[ i ] )
+      HPDF_Page_ShowText( page, encodings[i] )
       HPDF_Page_ShowText( page, " Encoding" )
       HPDF_Page_EndText( page )
 
-      IF encodings[ i ] == "Symbol-Set"
+      IF encodings[i] == "Symbol-Set"
          font2 := HPDF_GetFont(pdf, "Symbol", NIL)
-      ELSEIF encodings[ i ] == "ZapfDingbats-Set"
+      ELSEIF encodings[i] == "ZapfDingbats-Set"
          font2 := HPDF_GetFont(pdf, "ZapfDingbats", NIL)
       ELSE
-         font2 := HPDF_GetFont(pdf, font_name, encodings[ i ])
+         font2 := HPDF_GetFont(pdf, font_name, encodings[i])
       ENDIF
 
       HPDF_Page_SetFontAndSize( page, font2, 14 )

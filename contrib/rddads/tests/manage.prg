@@ -237,7 +237,7 @@ PROCEDURE Main()
    IF aRay != NIL
       ? "Number of connected users: ", Len(aRay)
       FOR i := 1 TO Len(aRay)
-         ? aRay[ i ]
+         ? aRay[i]
       NEXT
    ENDIF
 

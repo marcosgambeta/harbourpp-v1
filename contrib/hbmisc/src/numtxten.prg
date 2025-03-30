@@ -87,10 +87,10 @@ STATIC FUNCTION int_to_string( nValue )
    IF nValue < 20
       cRetVal := aArray1[nValue]
    ELSE
-      cRetVal := aArray2[ Int( nValue / 10 ) ]
+      cRetVal := aArray2[Int( nValue / 10 )]
       nValue -= 10 * Int( nValue / 10 )
       IF Int( nValue ) >= 1
-         cRetVal += " " + aArray1[ Int( nValue ) ]
+         cRetVal += " " + aArray1[Int( nValue )]
       ENDIF
    ENDIF
 

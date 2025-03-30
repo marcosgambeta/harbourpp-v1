@@ -108,7 +108,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
          aLockInfo[ UR_LI_RESULT ] := .T.
          RETURN HB_SUCCESS
       ELSEIF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
-         ++aWData[2][ i ][2]
+         ++aWData[2][i][2]
          aLockInfo[ UR_LI_RESULT ] := .T.
          RETURN HB_SUCCESS
       ENDIF
@@ -152,7 +152,7 @@ STATIC FUNCTION RLCDX_UNLOCK( nWA, xRecID )
 
    IF HB_IsNumeric(xRecID) .AND. xRecID > 0
       IF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
-         IF --aWData[2][ i ][2] > 0
+         IF --aWData[2][i][2] > 0
             RETURN HB_SUCCESS
          ENDIF
          hb_ADel( aWData[2], i, .T. )
@@ -186,7 +186,7 @@ STATIC FUNCTION RLCDX_APPEND( nWA, lUnlockAll )
          /* Some RDDs may allow to set phantom locks with RLOCK so we should
             check if it's not the case and increase the counter when it is */
          IF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
-            ++aWData[2][ i ][2]
+            ++aWData[2][i][2]
          ELSE
             AAdd( aWData[2], { xRecID, 1 } )
          ENDIF

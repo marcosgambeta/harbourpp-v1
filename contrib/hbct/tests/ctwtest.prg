@@ -42,17 +42,17 @@ PROCEDURE Main()
       x := i * 4 + 10
       SetColor(NToColor(i * 16 + 15) + ",W+/B*")
       WSetShadow( i % 8 )
-      aWin[ i ] := WOpen( y, x, y + 10, x + 20 )
+      aWin[i] := WOpen( y, x, y + 10, x + 20 )
       WBox()
 
-      @ -1, 0 SAY "TITLE " + hb_ntos( aWin[ i ] )
+      @ -1, 0 SAY "TITLE " + hb_ntos( aWin[i] )
       ? hb_ntos( Row() ) + ":" + hb_ntos( Col() ), "/", hb_ntos( MaxRow() ) + ":" + hb_ntos( MaxCol() ), ""
       ? hb_ntos( WRow() ) + ":" + hb_ntos( WCol() ), "/", hb_ntos( MaxRow(.T.) ) + ":" + hb_ntos( MaxCol(.T.) ), ""
       ? hb_ntos( WFRow() ) + ":" + hb_ntos( WFCol() ), "/", ;
          hb_ntos( WFLastRow() ) + ":" + hb_ntos( WFLastCol() ), ""
       ? hb_ntos( WFRow(.T.) ) + ":" + hb_ntos( WFCol(.T.) ), "/", ;
          hb_ntos( WFLastRow(.T.) ) + ":" + hb_ntos( WFLastCol(.T.) ), ""
-      ? "window:", hb_ntos( aWin[ i ] ), ""
+      ? "window:", hb_ntos( aWin[i] ), ""
       SetCursor( Int( i % 5 ) )
 
    NEXT

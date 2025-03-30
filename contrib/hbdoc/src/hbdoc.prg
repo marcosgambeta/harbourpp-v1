@@ -302,15 +302,15 @@ PROCEDURE Main(...)
                oDocument:BeginSection( item:__enumKey(), oDocument:cFilename )
 
                FOR idx := 1 TO Len(item[2])
-                  IF !Empty(item[2][ idx ])
-                     ASort( item[2][ idx ], , , {| oL, oR | oL:fld[ "NAME" ] <= oR:fld[ "NAME" ] } )
-                     IF Len(item[1][ idx ]) > 0
+                  IF !Empty(item[2][idx])
+                     ASort( item[2][idx], , , {| oL, oR | oL:fld[ "NAME" ] <= oR:fld[ "NAME" ] } )
+                     IF Len(item[1][idx]) > 0
                         IF oIndex != NIL
-                           oIndex:BeginSection( item[1][ idx ], oDocument:cFilename )
+                           oIndex:BeginSection( item[1][idx], oDocument:cFilename )
                         ENDIF
-                        oDocument:BeginSection( item[1][ idx ], oDocument:cFilename )
+                        oDocument:BeginSection( item[1][idx], oDocument:cFilename )
                      ENDIF
-                     FOR EACH item4 IN item[2][ idx ]
+                     FOR EACH item4 IN item[2][idx]
                         IF !Empty(item4)
                            IF !( Right(item4:_sourcefile, Len("1stread.txt")) == "1stread.txt" )
                               IF oIndex != NIL
@@ -325,11 +325,11 @@ PROCEDURE Main(...)
                            ENDIF
                         ENDIF
                      NEXT
-                     IF Len(item[1][ idx ]) > 0
+                     IF Len(item[1][idx]) > 0
                         IF oIndex != NIL
-                           oIndex:EndSection( item[1][ idx ], oDocument:cFilename )
+                           oIndex:EndSection( item[1][idx], oDocument:cFilename )
                         ENDIF
-                        oDocument:EndSection( item[1][ idx ], oDocument:cFilename )
+                        oDocument:EndSection( item[1][idx], oDocument:cFilename )
                      ENDIF
                   ENDIF
                NEXT
@@ -532,7 +532,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
       ", " + hb_HGetDef( hEntry, "SUBCATEGORY", "" ), "," )
 
       IF !HB_IsNull( item := AllTrim(item) )
-         o:_tags[ item ] := NIL
+         o:_tags[item] := NIL
       ENDIF
    NEXT
    hEntry[ "TAGS" ] := ""
@@ -589,7 +589,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField("SUBCATEGORY")
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][1], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) } ) ) == 0
+               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][idxCategory][1], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
@@ -669,7 +669,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
             idxSubCategory := o:SubcategoryIndex( o:fld[ "CATEGORY" ], "" )
          ENDIF
          IF idxSubCategory > 0
-            AAdd(sc_hConstraint[ "categories" ][ idxCategory ][2][ idxSubCategory ], o)
+            AAdd(sc_hConstraint[ "categories" ][idxCategory][2][idxSubCategory], o)
          ENDIF
       ENDIF
    ENDIF
@@ -1001,7 +1001,7 @@ METHOD Entry:New( cTemplate )
    FOR EACH item IN sc_hFields
       key := item:__enumKey()
       idx := item:__enumIndex()
-      ::fld[ key ] := IIf(key == "TEMPLATE", cTemplate, IIf(::_group[ idx ] == TPL_REQUIRED,, ""))
+      ::fld[ key ] := IIf(key == "TEMPLATE", cTemplate, IIf(::_group[idx] == TPL_REQUIRED,, ""))
    NEXT
 
    RETURN self
@@ -1011,8 +1011,8 @@ METHOD Entry:IsField(cField, nType)
    LOCAL idx
 
    IF ( idx := hb_HPos( sc_hFields, cField ) ) > 0
-      IF ::_group[ idx ] == 0
-      ELSEIF HB_IsNumeric(nType) .AND. hb_bitAnd(::_group[ idx ], nType) != nType
+      IF ::_group[idx] == 0
+      ELSEIF HB_IsNumeric(nType) .AND. hb_bitAnd(::_group[idx], nType) != nType
       ELSE
          RETURN .T.
       ENDIF
@@ -1041,7 +1041,7 @@ METHOD Entry:IsComplete( cIncompleteFieldsList )
 
    FOR idx := 1 TO Len(sc_hFields)
       key := hb_HKeyAt( sc_hFields, idx )
-      IF hb_bitAnd(::_group[ idx ], TPL_REQUIRED) != 0 .AND. Empty(::fld[ key ])
+      IF hb_bitAnd(::_group[idx], TPL_REQUIRED) != 0 .AND. Empty(::fld[ key ])
          cIncompleteFieldsList += "," + key
          lResult := .F.
       ENDIF
@@ -1245,11 +1245,11 @@ STATIC PROCEDURE ShowTemplatesHelp( cTemplate, cDelimiter )
 
          FOR idx := 1 TO Len(sc_hFields)
             fldkey := hb_HKeyAt( sc_hFields, idx )
-            IF o:_group[ idx ] != 0
+            IF o:_group[idx] != 0
                ShowSubHelp( IIf(idx == 1, "/", " ") + "*  " + cDelimiter + fldkey + cDelimiter, 1, 0 )
                IF fldkey == "TEMPLATE"
                   ShowSubHelp( " *      " + o:fld[ "TEMPLATE" ], 1, 0 )
-               ELSEIF o:_group[ idx ] != TPL_START .AND. o:_group[ idx ] != TPL_END .AND. .T.
+               ELSEIF o:_group[idx] != TPL_START .AND. o:_group[idx] != TPL_END .AND. .T.
                   ShowSubHelp( " *      " + IIf(o:IsRequired(fldkey), "<required>", "<optional>"), 1, 0 )
                ENDIF
             ENDIF

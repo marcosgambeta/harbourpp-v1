@@ -119,7 +119,7 @@ METHOD GDBarCode:New( nTypeCode )
       ::KeysModeC := Array( 99 )
 
       FOR ii := 1 TO 99
-         ::KeysmodeC[ ii ] := StrZero( ii, 2 )
+         ::KeysmodeC[ii] := StrZero( ii, 2 )
       NEXT
 
    ELSEIF nTypeCode == 25

@@ -435,12 +435,12 @@ METHOD TIPClientPOP:getBody( nMsgId )
       IF ( n := AScan( aMsg, {| cLine | cBoundary $ cLine }, nBoundary + 1 ) ) > 0 .AND. ;
          ( n1 := AScan( aMsg, {| cLine | cBoundary $ cLine }, n + 1 ) ) > 0  // This must not happen, but
          FOR i := n + 3 TO n1 - 1
-            xRet += aMsg[ i ] + ::cCRLF
+            xRet += aMsg[i] + ::cCRLF
          NEXT
       ENDIF
    ELSEIF ( n := AScan( aMsg, {| cLine | Empty(cLine) } ) ) > 0
       FOR i := n + 1 TO Len(aMsg)
-         xRet += aMsg[ i ] + ::cCRLF
+         xRet += aMsg[i] + ::cCRLF
       NEXT
    ENDIF
 

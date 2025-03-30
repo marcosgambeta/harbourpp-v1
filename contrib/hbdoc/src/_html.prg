@@ -241,8 +241,8 @@ METHOD GenerateHTML:AddEntry( oEntry )
          ELSE
             ::OpenTagInline( "h4" ):AppendInline( cEntry ):CloseTag( "h4" )
          ENDIF
-      ELSEIF oEntry:IsField(item) .AND. oEntry:IsOutput( item ) .AND. Len(oEntry:fld[ item ]) > 0
-         ::WriteEntry( item, oEntry:fld[ item ], oEntry:IsPreformatted(item) )
+      ELSEIF oEntry:IsField(item) .AND. oEntry:IsOutput( item ) .AND. Len(oEntry:fld[item]) > 0
+         ::WriteEntry( item, oEntry:fld[item], oEntry:IsPreformatted(item) )
       ENDIF
    NEXT
 
@@ -399,7 +399,7 @@ METHOD GenerateHTML:OpenTagInline(cText, ...)
    LOCAL idx
 
    FOR idx := 2 TO Len(aArgs) STEP 2
-      cText += " " + aArgs[ idx ] + "=" + '"' + aArgs[ idx + 1 ] + '"'
+      cText += " " + aArgs[idx] + "=" + '"' + aArgs[idx + 1] + '"'
    NEXT
 
    IF !cText $ "pre"
@@ -424,7 +424,7 @@ METHOD GenerateHTML:Tagged(cText, cTag, ...)
    LOCAL idx
 
    FOR idx := 3 TO Len(aArgs) STEP 2
-      cResult += " " + aArgs[ idx ] + "=" + '"' + aArgs[ idx + 1 ] + '"'
+      cResult += " " + aArgs[idx] + "=" + '"' + aArgs[idx + 1] + '"'
    NEXT
 
    ::cFile += "<" + cTag + cResult + ">" + cText + "</" + cTag + ">" + hb_eol()

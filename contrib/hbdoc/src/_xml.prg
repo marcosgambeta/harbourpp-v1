@@ -121,7 +121,7 @@ METHOD GenerateXML:AddEntry( oEntry )
       ::cFile += '<Entry>' + hb_eol()
       ::Depth++
       FOR EACH item IN FieldIDList()
-         ::WriteEntry( item, oEntry:fld[ item ], oEntry:IsPreformatted(item) )
+         ::WriteEntry( item, oEntry:fld[item], oEntry:IsPreformatted(item) )
       NEXT
       ::Depth--
       ::cFile += '</Entry>' + hb_eol()

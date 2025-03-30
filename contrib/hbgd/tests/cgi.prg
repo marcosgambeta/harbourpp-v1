@@ -308,7 +308,7 @@ FUNCTION URLDecode( cStr )
    // LOCAL lNumeric := .T.
 
    FOR i := 1 TO Len(cStr)
-      cCar := cStr[ i ]
+      cCar := cStr[i]
 
       DO CASE
       CASE cCar == "+"
@@ -325,7 +325,7 @@ FUNCTION URLDecode( cStr )
       ENDCASE
 
 #if 0
-      IF ( cRet[ i ] > "9" .OR. cRet[ i ] < "0" ) .AND. !( cRet[ i ] == "." )
+      IF ( cRet[i] > "9" .OR. cRet[i] < "0" ) .AND. !( cRet[i] == "." )
          lNumeric := .F.
       ENDIF
 #endif
@@ -344,7 +344,7 @@ FUNCTION URLEncode( cStr )
    LOCAL cRet := "", i, nVal, cCar
 
    FOR i := 1 TO Len(cStr)
-      cCar := cStr[ i ]
+      cCar := cStr[i]
       DO CASE
       CASE cCar == " "
          cRet += "+"

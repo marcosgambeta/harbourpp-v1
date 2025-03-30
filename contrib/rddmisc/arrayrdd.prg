@@ -468,13 +468,13 @@ STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
 
       xVal := PutValue( xValue, aStruct[nField][ DBS_TYPE ], aStruct[nField][ DBS_LEN ], aStruct[nField][ DBS_DEC ] )
 
-      AEval( aIndexes, {| aInd, n | aKeys[n] := Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ) } )
+      AEval( aIndexes, {| aInd, n | aKeys[n] := Eval( aInd[INDEX_ORCR][ UR_ORCR_BKEY ] ) } )
 
       IF ! aWAData[ WADATA_EOF ]
          aRecords[nRecNo][nField] := xVal
       ENDIF
 
-      AEval( aIndexes, {| aInd, n | ModifyIndex( n, Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ), aInd, aWAData, aKeys[n] ) } )
+      AEval( aIndexes, {| aInd, n | ModifyIndex( n, Eval( aInd[INDEX_ORCR][ UR_ORCR_BKEY ] ), aInd, aWAData, aKeys[n] ) } )
 
       RETURN HB_SUCCESS
    ENDIF
@@ -541,16 +541,16 @@ STATIC FUNCTION AR_GOTOP( nWA )
       IF nIndex == 0
          aWAData[ WADATA_RECNO ] := 1
       ELSEIF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] == NIL
-         IF Empty(aIndexes[nIndex][ INDEX_RECORDS ])
+         IF Empty(aIndexes[nIndex][INDEX_RECORDS])
             aWAData[ WADATA_ORDRECNO ] := 0
             nResult := AR_GOTO( nWA, 0 )
          ELSE
             aWAData[ WADATA_ORDRECNO ] := 1
-            nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][1][ INDEXKEY_RECORD ] )
+            nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][1][INDEXKEY_RECORD] )
          ENDIF
       ELSE
          aWAData[ WADATA_ORDRECNO ] := SeekScope( aIndexes[nIndex], aWAData[ WADATA_WAORDINFO ][nIndex], .F. )
-         nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_RECORD ] )
+         nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_RECORD] )
       ENDIF
 
       IF Set( _SET_DELETED ) .AND. aRecInfo[ aWAData[ WADATA_RECNO ] ][ RECDATA_DELETED ]
@@ -583,16 +583,16 @@ STATIC FUNCTION AR_GOBOTTOM( nWA )
       IF nIndex == 0
          aWAData[ WADATA_RECNO ] := Len(aRecords)
       ELSEIF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] == NIL
-         IF Empty(aIndexes[nIndex][ INDEX_RECORDS ])
+         IF Empty(aIndexes[nIndex][INDEX_RECORDS])
             aWAData[ WADATA_ORDRECNO ] := 0
             nResult := AR_GOTO( nWA, 0 )
          ELSE
-            aWAData[ WADATA_ORDRECNO ] := Len(aIndexes[nIndex][ INDEX_RECORDS ])
-            nResult := AR_GOTO( nWA, ATail( aIndexes[nIndex][ INDEX_RECORDS ] )[ INDEXKEY_RECORD ] )
+            aWAData[ WADATA_ORDRECNO ] := Len(aIndexes[nIndex][INDEX_RECORDS])
+            nResult := AR_GOTO( nWA, ATail( aIndexes[nIndex][INDEX_RECORDS] )[INDEXKEY_RECORD] )
          ENDIF
       ELSE
          aWAData[ WADATA_ORDRECNO ] := SeekScope( aIndexes[nIndex], aWAData[ WADATA_WAORDINFO ][nIndex], .T. )
-         nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_RECORD ] )
+         nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_RECORD] )
       ENDIF
 
       IF Set( _SET_DELETED ) .AND. aRecInfo[ aWAData[ WADATA_RECNO ] ][ RECDATA_DELETED ]
@@ -691,33 +691,33 @@ STATIC FUNCTION AR_SKIPRAW( nWA, nRecords )
          nIni := SeekScope( aIndexes[nIndex], aWAData[ WADATA_WAORDINFO ][nIndex], .F. )
          nIni--
       ENDIF
-      IF nIni == -1 .OR. Empty(aIndexes[nIndex][ INDEX_RECORDS ])
+      IF nIni == -1 .OR. Empty(aIndexes[nIndex][INDEX_RECORDS])
          nResult := AR_GOTO( nWA, 0 )
          aWAData[ WADATA_ORDRECNO ] := 0
       ELSEIF nRecords < 0 .AND. -nRecords >= nRec
-         nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][nIni + 1][ INDEXKEY_RECORD ] )
+         nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][nIni + 1][INDEXKEY_RECORD] )
          aWAData[ WADATA_ORDRECNO ] := 1
          aWAData[ WADATA_BOF ]      := .T.
       ELSEIF nRecords > 0 .AND. nRec + nRecords > nEnd
          nResult := AR_GOTO( nWA, 0 )
          aWAData[ WADATA_ORDRECNO ] := 0
       ELSE
-         nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][nRec + nRecords + nIni][ INDEXKEY_RECORD ] )
+         nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][nRec + nRecords + nIni][INDEXKEY_RECORD] )
          aWAData[ WADATA_ORDRECNO ] := nRec + nRecords + nIni
-         IF aIndexes[nIndex][ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ]
+         IF aIndexes[nIndex][INDEX_ORCR][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ]
             IF nRecords < 0
-               IF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] != NIL .AND. aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] < aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_KEY ]
-                  nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][1][ INDEXKEY_RECORD ] )
+               IF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] != NIL .AND. aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] < aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_KEY]
+                  nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][1][INDEXKEY_RECORD] )
                   aWAData[ WADATA_ORDRECNO ] := 1
                   aWAData[ WADATA_BOF ]      := .T.
                ENDIF
-            ELSEIF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] != NIL .AND. aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] > aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_KEY ]
+            ELSEIF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] != NIL .AND. aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] > aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_KEY]
                nResult := AR_GOTO( nWA, 0 )
                aWAData[ WADATA_ORDRECNO ] := 0
             ENDIF
-         ELSEIF lScope0 .AND. ! aIndexes[nIndex][ INDEX_RECORDS ][nRec + nRecords + nIni][ INDEXKEY_KEY ] >= aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] .OR. lScope1 .AND. ! aIndexes[nIndex][ INDEX_RECORDS ][nRec + nRecords + nIni][ INDEXKEY_KEY ] <= aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ]
+         ELSEIF lScope0 .AND. ! aIndexes[nIndex][INDEX_RECORDS][nRec + nRecords + nIni][INDEXKEY_KEY] >= aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] .OR. lScope1 .AND. ! aIndexes[nIndex][INDEX_RECORDS][nRec + nRecords + nIni][INDEXKEY_KEY] <= aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ]
             IF nRecords < 0
-               IF aIndexes[nIndex][ INDEX_RECORDS ][nIni + 1][ INDEXKEY_KEY ]
+               IF aIndexes[nIndex][INDEX_RECORDS][nIni + 1][INDEXKEY_KEY]
                ENDIF
                aWAData[ WADATA_ORDRECNO ] := SeekScope( aIndexes[nIndex], aWAData[ WADATA_WAORDINFO ][nIndex], .F. )
                aWAData[ WADATA_BOF ]      := aWAData[ WADATA_EOF ]
@@ -798,11 +798,11 @@ STATIC FUNCTION AR_DELETE( nWA )
       ENDIF
 
       IF Len(aRecInfo) > 0 .AND. aWAData[ WADATA_RECNO ] <= Len(aRecInfo)
-         AEval( aIndexes, {| aInd, n | aKeys[n] := Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ) } )
+         AEval( aIndexes, {| aInd, n | aKeys[n] := Eval( aInd[INDEX_ORCR][ UR_ORCR_BKEY ] ) } )
 
          aRecInfo[ aWAData[ WADATA_RECNO ] ][ RECDATA_DELETED ] := .T.
 
-         AEval( aIndexes, {| aInd, n | ModifyIndex( n, Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ), aInd, aWAData, aKeys[n] ) } )
+         AEval( aIndexes, {| aInd, n | ModifyIndex( n, Eval( aInd[INDEX_ORCR][ UR_ORCR_BKEY ] ), aInd, aWAData, aKeys[n] ) } )
       ENDIF
    ENDIF
 
@@ -859,9 +859,9 @@ STATIC FUNCTION AR_RECALL( nWA )
       ENDIF
 
       IF Len(aRecInfo) > 0 .AND. aWAData[ WADATA_RECNO ] <= Len(aRecInfo)
-         AEval( aIndexes, {| aInd, n | aKeys[n] := Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ) } )
+         AEval( aIndexes, {| aInd, n | aKeys[n] := Eval( aInd[INDEX_ORCR][ UR_ORCR_BKEY ] ) } )
          aRecInfo[ aWAData[ WADATA_RECNO ] ][ RECDATA_DELETED ] := .F.
-         AEval( aIndexes, {| aInd, n | ModifyIndex( n, Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ), aInd, aWAData, aKeys[n] ) } )
+         AEval( aIndexes, {| aInd, n | ModifyIndex( n, Eval( aInd[INDEX_ORCR][ UR_ORCR_BKEY ] ), aInd, aWAData, aKeys[n] ) } )
       ENDIF
    ENDIF
 
@@ -906,7 +906,7 @@ STATIC FUNCTION AR_APPEND(nWA, nRecords)
 
    NetErr( .F. )
    AR_GOTO( nWa, Len(aRecords) )
-   AEval( aIndexes, {| aIndex, n | ModifyIndex( n, Eval( aIndex[ INDEX_ORCR ][ UR_ORCR_BKEY ] ), aIndex, aWAData ) } )
+   AEval( aIndexes, {| aIndex, n | ModifyIndex( n, Eval( aIndex[INDEX_ORCR][ UR_ORCR_BKEY ] ), aIndex, aWAData ) } )
 
    /* SHARED ACCESS */
    IF aWAData[ WADATA_OPENINFO ][ UR_OI_SHARED ]
@@ -1024,16 +1024,16 @@ STATIC FUNCTION AR_PACK( nWA )
 
    ENDIF
 
-   AEval( aIndexes, {| aIndex, n | ModifyIndex( n, Eval( aIndex[ INDEX_ORCR, UR_ORCR_BKEY ] ), aIndex, aWAData ) } )
+   AEval( aIndexes, {| aIndex, n | ModifyIndex( n, Eval( aIndex[INDEX_ORCR, UR_ORCR_BKEY] ), aIndex, aWAData ) } )
    FOR EACH aIndex IN aIndexes
-      FOR nRec := Len(aIndex[ INDEX_RECORDS ]) TO 1 STEP -1
-         IF aRecInfo[ aIndex[ INDEX_RECORDS, INDEXKEY_RECORD ], RECDATA_DELETED ]
-            ADel( aIndex[ INDEX_RECORDS ], nRec )
+      FOR nRec := Len(aIndex[INDEX_RECORDS]) TO 1 STEP -1
+         IF aRecInfo[ aIndex[INDEX_RECORDS, INDEXKEY_RECORD], RECDATA_DELETED ]
+            ADel( aIndex[INDEX_RECORDS], nRec )
             nDel++
          ENDIF
       NEXT
       IF nDel > 0
-         ASize( aIndex[ INDEX_RECORDS ], Len(aIndex[ INDEX_RECORDS ]) - nDel )
+         ASize( aIndex[INDEX_RECORDS], Len(aIndex[INDEX_RECORDS]) - nDel )
          nDel := 0
       ENDIF
    NEXT
@@ -1086,7 +1086,7 @@ STATIC FUNCTION AR_ZAP( nWA )
    /* empty records */
    aDBFData[ DATABASE_RECORDS ] := {}
    aDBFData[ DATABASE_RECINFO ] := {}
-   AEval( aDBFData[ DATABASE_INDEX ], {| aIndex | ASize( aIndex[ INDEX_RECORDS ], 0 ) } )
+   AEval( aDBFData[ DATABASE_INDEX ], {| aIndex | ASize( aIndex[INDEX_RECORDS], 0 ) } )
 
    /* move to 0 recno */
    AR_GOTO( nWA, 0 )
@@ -1117,12 +1117,12 @@ STATIC FUNCTION AR_SEEK( nWa, lSoftSeek, xSeek, lLast )
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, lSoftSeek: %2$s, xSeek: %3$s, lLast: %4$s", nWa, hb_ValToExp( lSoftSeek ), hb_ValToExp( xSeek ), hb_ValToExp( lLast ) ) )
 
    aWAData[ WADATA_ORDRECNO ] := Seek( xSeek, lSoftSeek, lLast, aIndexes[nIndex] )
-   IF aWAData[ WADATA_ORDRECNO ] == 0 .OR. aWAData[ WADATA_ORDRECNO ] > Len(aIndexes[nIndex][ INDEX_RECORDS ])
+   IF aWAData[ WADATA_ORDRECNO ] == 0 .OR. aWAData[ WADATA_ORDRECNO ] > Len(aIndexes[nIndex][INDEX_RECORDS])
       aWAData[ WADATA_FOUND ] := .F.
       nResult := AR_GOTO( nWA, 0 )
    ELSE
-      aWAData[ WADATA_FOUND ] := LEFTEQUAL( aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_KEY ], xSeek )
-      nResult := AR_GOTO( nWA, aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_RECORD ] )
+      aWAData[ WADATA_FOUND ] := LEFTEQUAL( aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_KEY], xSeek )
+      nResult := AR_GOTO( nWA, aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_RECORD] )
    ENDIF
 
    RETURN nResult
@@ -1186,7 +1186,7 @@ STATIC FUNCTION AR_ORDLSTFOCUS( nWA, aOrderInfo )
       EXIT
    CASE "C"
       xIndex := Upper(xIndex)
-      aWAData[ WADATA_INDEX ] := AScan( aIndexes, {| x | x[ INDEX_TAG ] == xIndex } )
+      aWAData[ WADATA_INDEX ] := AScan( aIndexes, {| x | x[INDEX_TAG] == xIndex } )
       EXIT
    ENDSWITCH
 
@@ -1243,9 +1243,9 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    ENDIF
    cIndex := aOrderCreate[ UR_ORCR_TAGNAME ] := Upper(aOrderCreate[ UR_ORCR_TAGNAME ])
    aIndex := AR_INDEXINIT()
-   aIndex[ INDEX_TAG ]  := cIndex
-   aIndex[ INDEX_ORCR ] := aOrderCreate
-   IF ( nIndex := AScan( aIndexes, {| x | x[ INDEX_TAG ] == cIndex } ) ) > 0
+   aIndex[INDEX_TAG]  := cIndex
+   aIndex[INDEX_ORCR] := aOrderCreate
+   IF ( nIndex := AScan( aIndexes, {| x | x[INDEX_TAG] == cIndex } ) ) > 0
       ADel( aIndexes, nIndex )
       aIndexes[ Len(aIndexes) ] := aIndex
    ELSE
@@ -1288,10 +1288,10 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "aWAData[ WADATA_EOF ] = %1$s", hb_ValToExp( aWAData[ WADATA_EOF ] ) ) )
 
    DO WHILE ! aWAData[ WADATA_EOF ] .AND. Eval( bEval ) .AND. Eval( bNext ) .AND. Eval( bWhile )
-      HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "aWAData[ WADATA_INDEX ] = %1$s, Eval( aIndex[ INDEX_ORCR, UR_ORCR_BKEY ] ) = %2$s, aIndex = %3$s, aWAData = %4$s", ;
-         hb_ValToExp( aWAData[ WADATA_INDEX ] ), hb_ValToExp( Eval( aIndex[ INDEX_ORCR, UR_ORCR_BKEY ] ) ), ;
+      HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "aWAData[ WADATA_INDEX ] = %1$s, Eval( aIndex[INDEX_ORCR, UR_ORCR_BKEY] ) = %2$s, aIndex = %3$s, aWAData = %4$s", ;
+         hb_ValToExp( aWAData[ WADATA_INDEX ] ), hb_ValToExp( Eval( aIndex[INDEX_ORCR, UR_ORCR_BKEY] ) ), ;
          hb_ValToExp( hb_ValToExp( aIndex ) ), hb_ValToExp( aWAData ) ) )
-      ModifyIndex( aWAData[ WADATA_INDEX ], Eval( aIndex[ INDEX_ORCR, UR_ORCR_BKEY ] ), aIndex, aWAData )
+      ModifyIndex( aWAData[ WADATA_INDEX ], Eval( aIndex[INDEX_ORCR, UR_ORCR_BKEY] ), aIndex, aWAData )
       AR_GOTO( nWA, ++nRec )
    ENDDO
 
@@ -1312,7 +1312,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
    SWITCH ValType(aOrderInfo[ UR_ORI_TAG ])
    CASE "C"
       nIndex := Upper(aOrderInfo[ UR_ORI_TAG ])
-      nIndex := AScan( aIndexes, {| x | x[ INDEX_TAG ] == nIndex } )
+      nIndex := AScan( aIndexes, {| x | x[INDEX_TAG] == nIndex } )
       EXIT
    CASE "N"
       nIndex := aOrderInfo[ UR_ORI_TAG ]
@@ -1329,22 +1329,22 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
       IF nIndex < 1 .OR. Empty(aIndexes) .OR. nIndex > Len(aIndexes[nIndex])
          aOrderInfo[ UR_ORI_RESULT ] := ""
       ELSE
-         aOrderInfo[ UR_ORI_RESULT ] := aIndexes[nIndex][ INDEX_ORCR ][ UR_ORCR_CKEY ]
+         aOrderInfo[ UR_ORI_RESULT ] := aIndexes[nIndex][INDEX_ORCR][ UR_ORCR_CKEY ]
       ENDIF
       EXIT
    CASE DBOI_POSITION
-      IF nIndex < 1 .OR. Empty(aIndexes) .OR. nIndex > Len(aIndexes) .OR. Empty(aIndexes[nIndex][ INDEX_RECORDS ]) .OR. aWAData[ WADATA_ORDRECNO ] == 0
+      IF nIndex < 1 .OR. Empty(aIndexes) .OR. nIndex > Len(aIndexes) .OR. Empty(aIndexes[nIndex][INDEX_RECORDS]) .OR. aWAData[ WADATA_ORDRECNO ] == 0
          aOrderInfo[ UR_ORI_RESULT ] := 0
       ELSE
-         IF aIndexes[nIndex][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_RECORD ] != aWAData[ WADATA_RECNO ]
-            aWAData[ WADATA_ORDRECNO ] := Seek( Eval( aIndexes[nIndex][ INDEX_ORCR ][ UR_ORCR_BKEY ] ), .F., .F., aIndexes[nIndex], aWAData[ WADATA_RECNO ] )
+         IF aIndexes[nIndex][INDEX_RECORDS][ aWAData[ WADATA_ORDRECNO ] ][INDEXKEY_RECORD] != aWAData[ WADATA_RECNO ]
+            aWAData[ WADATA_ORDRECNO ] := Seek( Eval( aIndexes[nIndex][INDEX_ORCR][ UR_ORCR_BKEY ] ), .F., .F., aIndexes[nIndex], aWAData[ WADATA_RECNO ] )
          ENDIF
          IF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ] == NIL
             aOrderInfo[ UR_ORI_RESULT ] := aWAData[ WADATA_ORDRECNO ]
          ELSE
             nPos := Seek( aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ], .T., .F., aIndexes[nIndex] )
-            IF nPos > 0 .AND. ! LEFTEQUAL( aIndexes[nIndex][ INDEX_RECORDS ][nPos][ INDEXKEY_KEY ], aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] )
-               IF nPos > 1 .AND. aIndexes[nIndex][ INDEX_RECORDS ][nPos - 1][ INDEXKEY_KEY ] >= aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ]
+            IF nPos > 0 .AND. ! LEFTEQUAL( aIndexes[nIndex][INDEX_RECORDS][nPos][INDEXKEY_KEY], aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] )
+               IF nPos > 1 .AND. aIndexes[nIndex][INDEX_RECORDS][nPos - 1][INDEXKEY_KEY] >= aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_0 ]
                   nPos--
                ELSE
                   aOrderInfo[ UR_ORI_RESULT ] := 0
@@ -1371,7 +1371,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
          ENDIF
          IF aWAData[ WADATA_WAORDINFO ][nIndex][ WAOI_SCOPE_1 ] == NIL
             IF nPos > 0
-               nPos := Len(aIndexes[nIndex][ INDEX_RECORDS ]) - nPos + 1
+               nPos := Len(aIndexes[nIndex][INDEX_RECORDS]) - nPos + 1
             ENDIF
          ELSE
             nMsg := SeekScope( aIndexes[nIndex], aWAData[ WADATA_WAORDINFO ][nIndex], .T. )
@@ -1386,7 +1386,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
          IF nPos > 0
             aOrderInfo[ UR_ORI_RESULT ] := nPos
          ELSE
-            aOrderInfo[ UR_ORI_RESULT ] := Len(aIndexes[nIndex][ INDEX_RECORDS ])
+            aOrderInfo[ UR_ORI_RESULT ] := Len(aIndexes[nIndex][INDEX_RECORDS])
          ENDIF
       ELSE
          aOrderInfo[ UR_ORI_RESULT ] := 0
@@ -1782,8 +1782,8 @@ STATIC FUNCTION hb_Decode( ... )
 
                   n := 1
                   FOR i := 1 TO nLen - 1
-                     aParams[n++] := xDefault[ i ][1]
-                     aParams[n++] := xDefault[ i ][2]
+                     aParams[n++] := xDefault[i][1]
+                     aParams[n++] := xDefault[i][2]
                   NEXT
 
                   AAdd(aParams, xDefault[nLen])
@@ -1794,8 +1794,8 @@ STATIC FUNCTION hb_Decode( ... )
 
                   n := 1
                   FOR i := 1 TO Len(xDefault)
-                     aParams[n++] := xDefault[ i ][1]
-                     aParams[n++] := xDefault[ i ][2]
+                     aParams[n++] := xDefault[i][1]
+                     aParams[n++] := xDefault[i][2]
                   NEXT
 
                ENDIF
@@ -1811,8 +1811,8 @@ STATIC FUNCTION hb_Decode( ... )
 
             i := 1
             FOR EACH cKey IN xDefault:Keys
-               aParams[ i++ ] := cKey
-               aParams[ i++ ] := xDefault[ cKey ]
+               aParams[i++] := cKey
+               aParams[i++] := xDefault[ cKey ]
             NEXT
 
          ENDIF
@@ -1832,8 +1832,8 @@ STATIC FUNCTION hb_Decode( ... )
 
          i := 1
          FOR n := 1 TO nParams - 1 STEP 2
-            aValues[ i ]  := aParams[n]
-            aResults[ i ] := aParams[n + 1]
+            aValues[i]  := aParams[n]
+            aResults[i] := aParams[n + 1]
             i++
          NEXT
 
@@ -1912,37 +1912,37 @@ STATIC PROCEDURE ModifyIndex( nIndex, xValue, aIndex, aWAData, xValorAnt )
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nIndex = %1$d, xValue = %2$s, aIndex = %3$s, aWAData = %4$s, xValorAnt = %5$s", ;
       nIndex, hb_ValToExp( xValue ), hb_ValToExp( aIndex ), hb_ValToExp( aWAData ), hb_ValToExp( xValorAnt ) ) )
 
-   aOCInfo := aIndex[ INDEX_ORCR, UR_ORCR_CONDINFO ]
+   aOCInfo := aIndex[INDEX_ORCR, UR_ORCR_CONDINFO]
    lFor    := ( aOCInfo[ UR_ORC_BFOR ] == NIL .OR. Eval( aOCInfo[ UR_ORC_BFOR ] ) )
    lDel    := .F.
 
    IF xValorAnt != NIL .AND. ( ! lFor .OR. ! xValue == xValorAnt )
-      ADel( aIndex[ INDEX_RECORDS ], Seek( xValorAnt, .F., .F., aIndex, aWAData[ WADATA_RECNO ] ) )
+      ADel( aIndex[INDEX_RECORDS], Seek( xValorAnt, .F., .F., aIndex, aWAData[ WADATA_RECNO ] ) )
       lDel := .T.
    ENDIF
 
    IF lFor .AND. ! xValue == xValorAnt
       nPos := Seek( xValue, .T., .T., aIndex )
       IF xValorAnt == NIL
-         AAdd(aIndex[ INDEX_RECORDS ], NIL)
+         AAdd(aIndex[INDEX_RECORDS], NIL)
       ENDIF
       IF nPos > 0
-         IF aIndex[ INDEX_RECORDS ][nPos] != NIL .AND. aIndex[ INDEX_RECORDS ][nPos][ INDEXKEY_KEY ] <= xValue
+         IF aIndex[INDEX_RECORDS][nPos] != NIL .AND. aIndex[INDEX_RECORDS][nPos][INDEXKEY_KEY] <= xValue
             nPos++
          ENDIF
       ELSE
-         nPos := Len(aIndex[ INDEX_RECORDS ])
+         nPos := Len(aIndex[INDEX_RECORDS])
       ENDIF
-      AIns( aIndex[ INDEX_RECORDS ], nPos )
-      aIndex[ INDEX_RECORDS ][nPos] := AR_INDEXKEYINIT()
-      aIndex[ INDEX_RECORDS ][nPos][ INDEXKEY_KEY ]    := xValue
-      aIndex[ INDEX_RECORDS ][nPos][ INDEXKEY_RECORD ] := aWAData[ WADATA_RECNO ]
+      AIns( aIndex[INDEX_RECORDS], nPos )
+      aIndex[INDEX_RECORDS][nPos] := AR_INDEXKEYINIT()
+      aIndex[INDEX_RECORDS][nPos][INDEXKEY_KEY]    := xValue
+      aIndex[INDEX_RECORDS][nPos][INDEXKEY_RECORD] := aWAData[ WADATA_RECNO ]
       IF nIndex == aWAData[ WADATA_INDEX ]
          aWAData[ WADATA_ORDRECNO ] := nPos
       ENDIF
 
    ELSEIF lDel
-      ASize( aIndex[ INDEX_RECORDS ], Len(aIndex[ INDEX_RECORDS ]) - 1 )
+      ASize( aIndex[INDEX_RECORDS], Len(aIndex[INDEX_RECORDS]) - 1 )
       IF nIndex == aWAData[ WADATA_INDEX ]
          aWAData[ WADATA_ORDRECNO ] := 0
       ENDIF
@@ -1953,7 +1953,7 @@ STATIC PROCEDURE ModifyIndex( nIndex, xValue, aIndex, aWAData, xValorAnt )
 STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
 
    LOCAL nPos, bFirst, bBefore, bAfter, bAjust
-   LOCAL aIndex := aIndexInfo[ INDEX_RECORDS ]
+   LOCAL aIndex := aIndexInfo[INDEX_RECORDS]
    LOCAL nIni   := 1
    LOCAL nEnd   := Len(aIndex)
 
@@ -1964,26 +1964,26 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
    CASE 1   /* Archive with 1 record */
       IF aIndex[1] == NIL .OR. ;
          IIf( lSoft, ;
-            IIf( aIndexInfo[ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ], ;
-               aIndex[1][ INDEXKEY_KEY ] <= xSeek, ;
-               aIndex[1][ INDEXKEY_KEY ] >= xSeek ), ;
-            LEFTEQUAL( aIndex[1][ INDEXKEY_KEY ], xSeek ) )
+            IIf( aIndexInfo[INDEX_ORCR][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ], ;
+               aIndex[1][INDEXKEY_KEY] <= xSeek, ;
+               aIndex[1][INDEXKEY_KEY] >= xSeek ), ;
+            LEFTEQUAL( aIndex[1][INDEXKEY_KEY], xSeek ) )
          nPos := 1
       ELSE
          nPos := 0
       ENDIF
       EXIT
    OTHERWISE   /* Archive with 2 or more records */
-      IF aIndexInfo[ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ]
-         bFirst  := {|| aIndex[2][ INDEXKEY_KEY ] >= xSeek }
-         bBefore := {|| xSeek > aIndex[nPos][ INDEXKEY_KEY ]  }
-         bAfter  := {|| xSeek < aIndex[nPos][ INDEXKEY_KEY ] }
-         bAjust  := {|| ! aIndex[nPos][ INDEXKEY_KEY ] <= xSeek }
+      IF aIndexInfo[INDEX_ORCR][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ]
+         bFirst  := {|| aIndex[2][INDEXKEY_KEY] >= xSeek }
+         bBefore := {|| xSeek > aIndex[nPos][INDEXKEY_KEY]  }
+         bAfter  := {|| xSeek < aIndex[nPos][INDEXKEY_KEY] }
+         bAjust  := {|| ! aIndex[nPos][INDEXKEY_KEY] <= xSeek }
       ELSE
-         bFirst  := {|| aIndex[2][ INDEXKEY_KEY ] <= xSeek }
-         bBefore := {|| ! aIndex[nPos][ INDEXKEY_KEY ] <= xSeek }
-         bAfter  := {|| xSeek > aIndex[nPos][ INDEXKEY_KEY ] }
-         bAjust  := {|| ! aIndex[nPos][ INDEXKEY_KEY ] >= xSeek }
+         bFirst  := {|| aIndex[2][INDEXKEY_KEY] <= xSeek }
+         bBefore := {|| ! aIndex[nPos][INDEXKEY_KEY] <= xSeek }
+         bAfter  := {|| xSeek > aIndex[nPos][INDEXKEY_KEY] }
+         bAjust  := {|| ! aIndex[nPos][INDEXKEY_KEY] >= xSeek }
       ENDIF
 
       IF aIndex[2] != NIL .AND. Eval( bFirst )
@@ -1995,7 +1995,7 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
                nIni := nPos + 1
             ELSE
                IF lLast
-                  IF nPos < nEnd .AND. aIndex[nPos + 1] != NIL .AND. LEFTEQUAL( aIndex[nPos + 1][ INDEXKEY_KEY ], xSeek )
+                  IF nPos < nEnd .AND. aIndex[nPos + 1] != NIL .AND. LEFTEQUAL( aIndex[nPos + 1][INDEXKEY_KEY], xSeek )
                      nIni := nPos + 1
                   ELSE
                      EXIT
@@ -2003,7 +2003,7 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
                ELSE
                   nEnd := nPos - 1
                ENDIF
-               IF nRec != NIL .AND. nRec == aIndex[nPos][ INDEXKEY_RECORD ]
+               IF nRec != NIL .AND. nRec == aIndex[nPos][INDEXKEY_RECORD]
                   EXIT
                ENDIF
             ENDIF
@@ -2015,13 +2015,13 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
          nPos := 1
       ENDIF
       IF nRec != NIL
-         IF nIni <= nEnd .AND. ! Empty(aIndex) .AND. aIndex[nPos] != NIL .AND. nRec != aIndex[nPos][ INDEXKEY_RECORD ]
+         IF nIni <= nEnd .AND. ! Empty(aIndex) .AND. aIndex[nPos] != NIL .AND. nRec != aIndex[nPos][INDEXKEY_RECORD]
             nEnd := Len(aIndex)
             FOR nPos := nIni TO nEnd
-               IF aIndex[nPos] == NIL .OR. ! LEFTEQUAL( xSeek, aIndex[nPos][ INDEXKEY_KEY ] )
+               IF aIndex[nPos] == NIL .OR. ! LEFTEQUAL( xSeek, aIndex[nPos][INDEXKEY_KEY] )
                   nPos := 0
                   EXIT
-               ELSEIF aIndex[nPos][ INDEXKEY_RECORD ] == nRec
+               ELSEIF aIndex[nPos][INDEXKEY_RECORD] == nRec
                   EXIT
                ENDIF
             NEXT
@@ -2030,7 +2030,7 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
             ENDIF
          ENDIF
       ELSEIF ! lSoft
-         IF nPos > Len(aIndex) .OR. ! LEFTEQUAL( aIndex[nPos][ INDEXKEY_KEY ], xSeek )
+         IF nPos > Len(aIndex) .OR. ! LEFTEQUAL( aIndex[nPos][INDEXKEY_KEY], xSeek )
             nPos := 0
          ENDIF
       ENDIF
@@ -2043,8 +2043,8 @@ STATIC FUNCTION SeekScope( aIndex, aOrdInfo, lBottom )
 
    LOCAL nPos := Seek( aOrdInfo[ WAOI_SCOPE_0 ], .T., lBottom, aIndex )
 
-   IF nPos > 0 .AND. ! LEFTEQUAL( aIndex[ INDEX_RECORDS ][nPos][ INDEXKEY_KEY ], aOrdInfo[ WAOI_SCOPE_1 ] )
-      IF nPos > 1 .AND. aIndex[ INDEX_RECORDS ][nPos - 1][ INDEXKEY_KEY ] >= aOrdInfo[ WAOI_SCOPE_0 ]
+   IF nPos > 0 .AND. ! LEFTEQUAL( aIndex[INDEX_RECORDS][nPos][INDEXKEY_KEY], aOrdInfo[ WAOI_SCOPE_1 ] )
+      IF nPos > 1 .AND. aIndex[INDEX_RECORDS][nPos - 1][INDEXKEY_KEY] >= aOrdInfo[ WAOI_SCOPE_0 ]
          nPos--
       ELSE
          nPos := 0

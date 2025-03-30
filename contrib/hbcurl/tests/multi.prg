@@ -29,13 +29,13 @@ PROCEDURE Main( cRemote4 )
    FOR i := 1 TO Len( aUrls )
       hEasy := curl_easy_init()
       IF hEasy != NIL
-         curl_easy_setopt( hEasy, HB_CURLOPT_URL, aUrls[ i ] )
+         curl_easy_setopt( hEasy, HB_CURLOPT_URL, aUrls[i] )
          curl_easy_setopt( hEasy, HB_CURLOPT_DOWNLOAD )
          curl_easy_setopt( hEasy, HB_CURLOPT_DL_BUFF_SETUP )
 //       curl_easy_setopt( hEasy, HB_CURLOPT_VERBOSE, .T. )
          curl_easy_setopt( hEasy, HB_CURLOPT_SSL_OPTIONS, HB_CURLSSLOPT_NATIVE_CA )
          curl_multi_add_handle( hMulti, hEasy )
-         aHandles[ i ] := hEasy
+         aHandles[i] := hEasy
       ENDIF
    NEXT
 
