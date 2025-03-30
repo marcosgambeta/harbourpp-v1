@@ -51,7 +51,7 @@
 
 static HB_GARBAGE_FUNC(s_RSA_release)
 {
-  void **ph = static_cast<void **>(Cargo);
+  auto ph = static_cast<void **>(Cargo);
 
   /* Check if pointer is not nullptr to avoid multiple freeing */
   if (ph && *ph)
@@ -73,13 +73,23 @@ HB_BOOL hb_RSA_is(int iParam)
 
 RSA *hb_RSA_par(int iParam)
 {
-  void **ph = static_cast<void **>(hb_parptrGC(&s_gcRSA_funcs, iParam));
+  auto ph = static_cast<void **>(hb_parptrGC(&s_gcRSA_funcs, iParam));
   return ph ? static_cast<RSA *>(*ph) : nullptr;
+}
+
+void hb_RSA_par_remove(int iParam)
+{
+  auto ph = static_cast<void **>(hb_parptrGC(&s_gcRSA_funcs, iParam));
+
+  if (ph && *ph)
+  {
+    *ph = nullptr;
+  }
 }
 
 void hb_RSA_ret(RSA *rsa)
 {
-  void **ph = static_cast<void **>(hb_gcAllocate(sizeof(RSA *), &s_gcRSA_funcs));
+  auto ph = static_cast<void **>(hb_gcAllocate(sizeof(RSA *), &s_gcRSA_funcs));
   *ph = rsa;
   hb_retptrGC(ph);
 }

@@ -74,6 +74,9 @@
 #endif
 
 #include "hbssl.h"
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#include <openssl/x509v3.h>
+#endif
 #include <hbapiitm.hpp>
 #include <hbvm.hpp>
 
@@ -132,7 +135,8 @@ HB_FUNC(OPENSSL_VERSION)
 {
   auto value = hb_parni(1);
 
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x30500000L)
   switch (value)
   {
   case HB_OPENSSL_VERSION:
@@ -182,7 +186,8 @@ HB_FUNC(OPENSSL_VERSION_NUMBER)
 
 HB_FUNC(OPENSSL_VERSION_NUM)
 {
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x30500000L)
   hb_retnint(OpenSSL_version_num());
 #else
   hb_retnint(SSLeay());
@@ -216,13 +221,13 @@ static HB_GARBAGE_FUNC(PHB_SSL_release)
   if (hb_ssl != nullptr)
   {
     /* Destroy the object */
-    if (hb_ssl->ssl)
+    if (hb_ssl->ssl != nullptr)
     {
       SSL_free(hb_ssl->ssl);
       hb_ssl->ssl = nullptr;
     }
 
-    if (hb_ssl->pCallbackArg)
+    if (hb_ssl->pCallbackArg != nullptr)
     {
       hb_itemRelease(hb_ssl->pCallbackArg);
       hb_ssl->pCallbackArg = nullptr;
@@ -236,7 +241,7 @@ static HB_GARBAGE_FUNC(PHB_SSL_mark)
 
   if (hb_ssl != nullptr)
   {
-    if (hb_ssl->pCallbackArg)
+    if (hb_ssl->pCallbackArg != nullptr)
     {
       hb_gcMark(hb_ssl->pCallbackArg);
     }
@@ -278,10 +283,8 @@ HB_FUNC(SSL_NEW)
     if (ctx != nullptr)
     {
       auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
-
       memset(hb_ssl, 0, sizeof(HB_SSL));
       hb_ssl->ssl = SSL_new(ctx);
-
       hb_retptrGC(hb_ssl);
     }
   }
@@ -388,7 +391,7 @@ HB_FUNC(SSL_SET_BIO)
   auto rbio = hb_BIO_par(2);
   auto wbio = hb_BIO_par(3);
 
-  if (hb_SSL_is(1) && rbio && wbio)
+  if (hb_SSL_is(1) && rbio != nullptr && wbio != nullptr)
   {
     auto ssl = hb_SSL_par(1);
 
@@ -711,7 +714,7 @@ HB_FUNC(SSL_READ)
       HB_SIZE nLen;
       auto nRead = 0;
 
-      if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen))
+      if (pItem != nullptr && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen))
       {
         if (HB_ISNUM(3))
         {
@@ -748,7 +751,7 @@ HB_FUNC(SSL_PEEK)
       HB_SIZE nLen;
       auto nRead = 0;
 
-      if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen))
+      if (pItem != nullptr && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen))
       {
         if (HB_ISNUM(3))
         {
@@ -856,41 +859,77 @@ HB_FUNC(SSL_GET_SSL_METHOD)
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
       if (p == TLS_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_TLS;
+      }
       else if (p == TLS_server_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_TLS_SERVER;
+      }
       else if (p == TLS_client_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_TLS_CLIENT;
+      }
 #else
-      if (p == SSLv3_method())
-        n = HB_SSL_CTX_NEW_METHOD_SSLV3;
-      else if (p == SSLv3_server_method())
-        n = HB_SSL_CTX_NEW_METHOD_SSLV3_SERVER;
-      else if (p == SSLv3_client_method())
-        n = HB_SSL_CTX_NEW_METHOD_SSLV3_CLIENT;
+      if (p == SSLv23_method())
+      {
+        n = HB_SSL_CTX_NEW_METHOD_SSLV23;
+      }
+      else if (p == SSLv23_server_method())
+      {
+        n = HB_SSL_CTX_NEW_METHOD_SSLV23_SERVER;
+      }
+      else if (p == SSLv23_client_method())
+      {
+        n = HB_SSL_CTX_NEW_METHOD_SSLV23_CLIENT;
+      }
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
       else if (p == SSLv2_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_SSLV2;
+      }
       else if (p == SSLv2_server_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_SSLV2_SERVER;
+      }
       else if (p == SSLv2_client_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_SSLV2_CLIENT;
+      }
 #endif
+#ifndef OPENSSL_NO_SSL3_METHOD
+      else if (p == SSLv3_method())
+      {
+        n = HB_SSL_CTX_NEW_METHOD_SSLV3;
+      }
+      else if (p == SSLv3_server_method())
+      {
+        n = HB_SSL_CTX_NEW_METHOD_SSLV3_SERVER;
+      }
+      else if (p == SSLv3_client_method())
+      {
+        n = HB_SSL_CTX_NEW_METHOD_SSLV3_CLIENT;
+      }
+#endif
+#ifndef OPENSSL_NO_TLS1_METHOD
       else if (p == TLSv1_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_TLSV1;
+      }
       else if (p == TLSv1_server_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_TLSV1_SERVER;
+      }
       else if (p == TLSv1_client_method())
+      {
         n = HB_SSL_CTX_NEW_METHOD_TLSV1_CLIENT;
-      else if (p == SSLv23_method())
-        n = HB_SSL_CTX_NEW_METHOD_SSLV23;
-      else if (p == SSLv23_server_method())
-        n = HB_SSL_CTX_NEW_METHOD_SSLV23_SERVER;
-      else if (p == SSLv23_client_method())
-        n = HB_SSL_CTX_NEW_METHOD_SSLV23_CLIENT;
+      }
+#endif
 #endif
       else
+      {
         n = HB_SSL_CTX_NEW_METHOD_UNKNOWN;
+      }
 
       hb_retni(n);
     }
@@ -927,9 +966,7 @@ HB_FUNC(SSL_GET_CIPHER_BITS)
     if (ssl != nullptr)
     {
       auto alg_bits = 0;
-
       hb_retni(SSL_get_cipher_bits(ssl, &alg_bits));
-
       hb_storni(alg_bits, 2);
     }
   }
@@ -1034,9 +1071,7 @@ HB_FUNC(SSL_GET_SHARED_CIPHERS)
     if (ssl != nullptr)
     {
       char buffer[128 + 1]; /* See: CVE-2006-3738 */
-
       buffer[0] = '\0';
-
       hb_retc(SSL_get_shared_ciphers(ssl, buffer, sizeof(buffer) - 1));
     }
   }
@@ -1157,28 +1192,36 @@ HB_FUNC(SSL_STATE_STRING_LONG)
 
 HB_FUNC(SSL_GET_PSK_IDENTITY_HINT)
 {
-   if( hb_SSL_is(1) ) {
-      auto ssl = hb_SSL_par(1);
+  if (hb_SSL_is(1))
+  {
+    auto ssl = hb_SSL_par(1);
 
-      if( ssl != nullptr ) {
-         hb_retc(SSL_get_psk_identity_hint(ssl));
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (ssl != nullptr)
+    {
+      hb_retc(SSL_get_psk_identity_hint(ssl));
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(SSL_GET_PSK_IDENTITY)
 {
-   if( hb_SSL_is(1) ) {
-      auto ssl = hb_SSL_par(1);
+  if (hb_SSL_is(1))
+  {
+    auto ssl = hb_SSL_par(1);
 
-      if( ssl != nullptr ) {
-         hb_retc(SSL_get_psk_identity(ssl));
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (ssl != nullptr)
+    {
+      hb_retc(SSL_get_psk_identity(ssl));
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 #endif
@@ -1569,7 +1612,7 @@ HB_FUNC(SSL_GET_OPTIONS)
 
     if (ssl != nullptr)
     {
-      hb_retnl(SSL_get_options(ssl));
+      hb_retnint(SSL_get_options(ssl));
     }
   }
   else
@@ -1586,7 +1629,11 @@ HB_FUNC(SSL_SET_OPTIONS)
 
     if (ssl != nullptr)
     {
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L
+      SSL_set_options(ssl, static_cast<uint64_t>(hb_parnint(2)));
+#else
       SSL_set_options(ssl, static_cast<unsigned long>(hb_parnl(2)));
+#endif
     }
   }
   else
@@ -1741,7 +1788,21 @@ HB_FUNC(SSL_GET_CERTIFICATE)
 
     if (ssl != nullptr)
     {
-      hb_X509_ret(SSL_get_certificate(ssl), false);
+      X509 *x509 = SSL_get_certificate(ssl);
+
+      if (x509 != nullptr)
+      {
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+        X509_up_ref(x509);
+#else
+        x509 = X509_dup(x509);
+        if (x509 != nullptr)
+        {
+          X509_check_purpose(x509, -1, 0);
+        }
+#endif
+      }
+      hb_X509_ret(x509);
     }
   }
   else
@@ -1758,7 +1819,7 @@ HB_FUNC(SSL_GET_PEER_CERTIFICATE)
 
     if (ssl != nullptr)
     {
-      hb_X509_ret(SSL_get_peer_certificate(ssl), true);
+      hb_X509_ret(SSL_get_peer_certificate(ssl));
     }
   }
   else
@@ -2041,7 +2102,7 @@ static void hb_ssl_msg_callback(int write_p, int version, int content_type, cons
 {
   HB_SYMBOL_UNUSED(ssl);
 
-  if (userdata && hb_vmRequestReenter())
+  if (userdata != nullptr && hb_vmRequestReenter())
   {
     hb_vmPushEvalSym();
     hb_vmPush(static_cast<PHB_ITEM>(userdata));
@@ -2060,14 +2121,14 @@ HB_FUNC(SSL_SET_MSG_CALLBACK)
 {
   if (hb_SSL_is(1))
   {
-    PHB_SSL hb_ssl = hb_SSL_par_raw(1);
+    auto hb_ssl = hb_SSL_par_raw(1);
 
     if (hb_ssl != nullptr)
     {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       auto pCallback = hb_param(2, Harbour::Item::EVALITEM);
 
-      if (hb_ssl->pCallbackArg)
+      if (hb_ssl->pCallbackArg != nullptr)
       {
         SSL_set_msg_callback_arg(hb_ssl->ssl, nullptr);
         hb_itemRelease(hb_ssl->pCallbackArg);
@@ -2113,7 +2174,7 @@ STACK * SSL_dup_CA_list(STACK * sk);
 SSL_CTX * SSL_get_SSL_CTX(const SSL * ssl);
 int SSL_get_ex_data_X509_STORE_CTX_idx(void);
 int SSL_get_ex_new_index(long argl, char * argp, int (*new_func); (void), int (* dup_func)(void), void (* free_func)(void))
-void( *SSL_get_info_callback(const SSL * ssl); )()
+void(*SSL_get_info_callback(const SSL * ssl);)()
 SSL_SESSION * SSL_get_session(const SSL * ssl);
 int(*SSL_get_verify_callback(const SSL * ssl))(int, X509_STORE_CTX *)
 void SSL_set_client_CA_list(SSL * ssl, STACK * list);

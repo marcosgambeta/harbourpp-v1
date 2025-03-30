@@ -79,6 +79,23 @@ EVP_PKEY *hb_EVP_PKEY_par(int iParam)
   return ph ? static_cast<EVP_PKEY *>(*ph) : nullptr;
 }
 
+EVP_PKEY *hb_EVP_PKEY_get(PHB_ITEM pItem)
+{
+  auto ph = static_cast<void **>(hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs));
+  return ph ? static_cast<EVP_PKEY *>(*ph) : nullptr;
+}
+
+void hb_EVP_PKEY_free(PHB_ITEM pItem)
+{
+  auto ph = static_cast<void **>(hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs));
+
+  if (ph && *ph)
+  {
+    EVP_PKEY_free(static_cast<EVP_PKEY *>(*ph));
+    *ph = nullptr;
+  }
+}
+
 void hb_EVP_PKEY_ret(EVP_PKEY *pkey)
 {
   auto ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_PKEY *), &s_gcEVP_PKEY_funcs));
@@ -88,7 +105,7 @@ void hb_EVP_PKEY_ret(EVP_PKEY *pkey)
 
 static HB_GARBAGE_FUNC(EVP_PKEY_CTX_release)
 {
-  void **ph = static_cast<void **>(Cargo);
+  auto ph = static_cast<void **>(Cargo);
 
   /* Check if pointer is not nullptr to avoid multiple freeing */
   if (ph && *ph)
@@ -104,22 +121,22 @@ static HB_GARBAGE_FUNC(EVP_PKEY_CTX_release)
 static const HB_GC_FUNCS s_gcEVP_PKEY_CTX_funcs = {EVP_PKEY_CTX_release, hb_gcDummyMark};
 
 #if 0
-static HB_BOOL hb_EVP_PKEY_CTX_is(int iParam)
+static bool hb_EVP_PKEY_CTX_is(int iParam)
 {
-   return hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam ) != nullptr;
+  return hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam) != nullptr;
 }
 #endif
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
 static EVP_PKEY_CTX *hb_EVP_PKEY_CTX_par(int iParam)
 {
-  void **ph = static_cast<void **>(hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam));
+  auto ph = static_cast<void **>(hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam));
   return ph ? static_cast<EVP_PKEY_CTX *>(*ph) : nullptr;
 }
 
 static void hb_EVP_PKEY_CTX_ret(EVP_PKEY_CTX *pkey)
 {
-  void **ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_PKEY_CTX *), &s_gcEVP_PKEY_CTX_funcs));
+  auto ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_PKEY_CTX *), &s_gcEVP_PKEY_CTX_funcs));
   *ph = pkey;
   hb_retptrGC(ph);
 }
@@ -142,11 +159,13 @@ HB_FUNC(EVP_PKEY_BASE_ID)
     auto pkey = hb_EVP_PKEY_par(1);
 
     if (pkey != nullptr)
+    {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
       hb_retni(EVP_PKEY_base_id(pkey));
 #else
       hb_retni(EVP_PKEY_type(hb_parni(1)));
 #endif
+    }
   }
   else
   {
@@ -209,15 +228,26 @@ HB_FUNC(EVP_PKEY_ASSIGN)
 HB_FUNC(EVP_PKEY_ASSIGN_RSA)
 {
 #ifndef OPENSSL_NO_RSA
-  if (hb_EVP_PKEY_is(1) && HB_ISPOINTER(2))
+  if (hb_EVP_PKEY_is(1) && hb_RSA_is(2))
   {
     auto pkey = hb_EVP_PKEY_par(1);
-    auto key = static_cast<RSA *>(hb_parptr(2));
+    RSA *key = hb_RSA_par(2);
+    int res = 0;
 
     if (pkey != nullptr && key != nullptr)
     {
-      hb_retni(EVP_PKEY_assign_RSA(pkey, key));
+      res = EVP_PKEY_assign_RSA(pkey, key);
+
+      if (res != 0)
+      {
+#if OPENSSL_VERSION_NUMBER >= 0x0090700fL
+        RSA_up_ref(key);
+#else
+        hb_RSA_par_remove(2);
+#endif
+      }
     }
+    hb_retni(res);
   }
   else
   {
@@ -361,15 +391,13 @@ HB_FUNC(EVP_PKEY_ENCRYPT)
     auto rsa = hb_RSA_par(1);
     auto from = static_cast<const unsigned char *>(hb_parcx(3));
     auto flen = static_cast<int>(hb_parclen(3));
-    auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
-
     int ret;
 
+    auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
+
     if (HB_RSA_KEY_ISPRIVATE(rsa))
-    {
       /* private key */
       ret = RSA_private_encrypt(flen, const_cast<unsigned char *>(from), buffer, rsa, RSA_PKCS1_PADDING);
-    }
     else
     {
       /* public key */

@@ -47,7 +47,6 @@
 // $HB_END_LICENSE$
 
 #include "hbssl.h"
-
 #include <openssl/rand.h>
 
 HB_FUNC(RAND_SEED)

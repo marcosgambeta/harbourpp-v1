@@ -68,7 +68,7 @@ static HB_GARBAGE_FUNC(EVP_MD_CTX_release)
   if (ph && *ph)
   {
     /* Destroy the object */
-#if defined(LIBRESSL_VERSION_NUMBER)
+#if defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x20700000L
     EVP_MD_CTX_destroy(static_cast<EVP_MD_CTX *>(*ph));
 #elif OPENSSL_VERSION_NUMBER >= 0x00907000L
     EVP_MD_CTX_free(static_cast<EVP_MD_CTX *>(*ph));
@@ -189,59 +189,91 @@ static int hb_EVP_MD_ptr_to_id(const EVP_MD *p)
   int n;
 
   if (p == EVP_md_null())
+  {
     n = HB_EVP_MD_MD_NULL;
+  }
 #ifndef OPENSSL_NO_MD2
   else if (p == EVP_md2())
+  {
     n = HB_EVP_MD_MD2;
+  }
 #endif
 #ifndef OPENSSL_NO_MD4
   else if (p == EVP_md4())
+  {
     n = HB_EVP_MD_MD4;
+  }
 #endif
 #ifndef OPENSSL_NO_MD5
   else if (p == EVP_md5())
+  {
     n = HB_EVP_MD_MD5;
+  }
 #endif
 #ifndef OPENSSL_NO_SHA
 #if OPENSSL_VERSION_NUMBER < 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
   else if (p == EVP_sha())
+  {
     n = HB_EVP_MD_SHA;
+  }
 #endif
   else if (p == EVP_sha1())
+  {
     n = HB_EVP_MD_SHA1;
+  }
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
   else if (p == EVP_dss())
+  {
     n = HB_EVP_MD_DSS;
+  }
   else if (p == EVP_dss1())
+  {
     n = HB_EVP_MD_DSS1;
+  }
 #endif
 #if OPENSSL_VERSION_NUMBER >= 0x00908000L && OPENSSL_VERSION_NUMBER < 0x10100000L && !defined(HB_OPENSSL_OLD_OSX_)
   else if (p == EVP_ecdsa())
+  {
     n = HB_EVP_MD_ECDSA;
+  }
 #endif
 #endif
 #ifndef OPENSSL_NO_SHA256
   else if (p == EVP_sha224())
+  {
     n = HB_EVP_MD_SHA224;
+  }
   else if (p == EVP_sha256())
+  {
     n = HB_EVP_MD_SHA256;
+  }
 #endif
 #ifndef OPENSSL_NO_SHA512
   else if (p == EVP_sha384())
+  {
     n = HB_EVP_MD_SHA384;
+  }
   else if (p == EVP_sha512())
+  {
     n = HB_EVP_MD_SHA512;
+  }
 #endif
 #ifndef OPENSSL_NO_MDC2
   else if (p == EVP_mdc2())
+  {
     n = HB_EVP_MD_MDC2;
+  }
 #endif
 #ifndef OPENSSL_NO_RIPEMD
   else if (p == EVP_ripemd160())
+  {
     n = HB_EVP_MD_RIPEMD160;
+  }
 #endif
   else
+  {
     n = HB_EVP_MD_UNSUPPORTED;
+  }
 
   return n;
 }
@@ -309,7 +341,8 @@ HB_FUNC(EVP_MD_CTX_NEW)
 {
   auto ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_MD_CTX *), &s_gcEVP_MD_CTX_funcs));
 
-#if OPENSSL_VERSION_NUMBER >= 0x00907000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x00907000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20700000L)
   auto ctx = EVP_MD_CTX_new();
 #else
   auto ctx = static_cast<EVP_MD_CTX *>(hb_xgrabz(sizeof(EVP_MD_CTX)));
@@ -330,9 +363,8 @@ HB_FUNC(EVP_MD_CTX_RESET)
 
     if (ctx != nullptr)
     {
-#if defined(LIBRESSL_VERSION_NUMBER)
-      hb_retni(EVP_MD_CTX_cleanup(ctx));
-#elif OPENSSL_VERSION_NUMBER >= 0x10100000L
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20700000L)
       hb_retni(EVP_MD_CTX_reset(ctx));
 #elif OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_MD_CTX_cleanup(ctx));

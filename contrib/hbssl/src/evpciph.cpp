@@ -467,243 +467,443 @@ static int hb_EVP_CIPHER_ptr_to_id(const EVP_CIPHER *p)
   int n;
 
   if (p == EVP_enc_null())
+  {
     n = HB_EVP_CIPHER_ENC_NULL;
+  }
 #ifndef OPENSSL_NO_DES
   else if (p == EVP_des_ecb())
+  {
     n = HB_EVP_CIPHER_DES_ECB;
+  }
   else if (p == EVP_des_ede())
+  {
     n = HB_EVP_CIPHER_DES_EDE;
+  }
   else if (p == EVP_des_ede3())
+  {
     n = HB_EVP_CIPHER_DES_EDE3;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
   else if (p == EVP_des_ede_ecb())
+  {
     n = HB_EVP_CIPHER_DES_EDE_ECB;
+  }
   else if (p == EVP_des_ede3_ecb())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_ECB;
+  }
 #endif
   else if (p == EVP_des_cfb())
+  {
     n = HB_EVP_CIPHER_DES_CFB;
+  }
   else if (p == EVP_des_ede_cfb())
+  {
     n = HB_EVP_CIPHER_DES_EDE_CFB;
+  }
   else if (p == EVP_des_ede3_cfb())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_CFB;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_des_cfb64())
+  {
     n = HB_EVP_CIPHER_DES_CFB64;
+  }
   else if (p == EVP_des_cfb1())
+  {
     n = HB_EVP_CIPHER_DES_CFB1;
+  }
   else if (p == EVP_des_cfb8())
+  {
     n = HB_EVP_CIPHER_DES_CFB8;
+  }
   else if (p == EVP_des_ede_cfb64())
+  {
     n = HB_EVP_CIPHER_DES_EDE_CFB64;
+  }
   else if (p == EVP_des_ede3_cfb64())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_CFB64;
+  }
   else if (p == EVP_des_ede3_cfb1())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_CFB1;
+  }
   else if (p == EVP_des_ede3_cfb8())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_CFB8;
+  }
 #endif
   else if (p == EVP_des_ofb())
+  {
     n = HB_EVP_CIPHER_DES_OFB;
+  }
   else if (p == EVP_des_ede_ofb())
+  {
     n = HB_EVP_CIPHER_DES_EDE_OFB;
+  }
   else if (p == EVP_des_ede3_ofb())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_OFB;
+  }
   else if (p == EVP_des_cbc())
+  {
     n = HB_EVP_CIPHER_DES_CBC;
+  }
   else if (p == EVP_des_ede_cbc())
+  {
     n = HB_EVP_CIPHER_DES_EDE_CBC;
+  }
   else if (p == EVP_des_ede3_cbc())
+  {
     n = HB_EVP_CIPHER_DES_EDE3_CBC;
+  }
   else if (p == EVP_desx_cbc())
+  {
     n = HB_EVP_CIPHER_DESX_CBC;
+  }
 #endif
 #ifndef OPENSSL_NO_RC4
   else if (p == EVP_rc4())
+  {
     n = HB_EVP_CIPHER_RC4;
+  }
   else if (p == EVP_rc4_40())
+  {
     n = HB_EVP_CIPHER_RC4_40;
+  }
 #endif
 #ifndef OPENSSL_NO_IDEA
   else if (p == EVP_idea_ecb())
+  {
     n = HB_EVP_CIPHER_IDEA_ECB;
+  }
   else if (p == EVP_idea_cfb64())
+  {
     n = HB_EVP_CIPHER_IDEA_CFB64;
+  }
   else if (p == EVP_idea_cfb())
+  {
     n = HB_EVP_CIPHER_IDEA_CFB;
+  }
   else if (p == EVP_idea_ofb())
+  {
     n = HB_EVP_CIPHER_IDEA_OFB;
+  }
   else if (p == EVP_idea_cbc())
+  {
     n = HB_EVP_CIPHER_IDEA_CBC;
+  }
 #endif
 #ifndef OPENSSL_NO_RC2
   else if (p == EVP_rc2_ecb())
+  {
     n = HB_EVP_CIPHER_RC2_ECB;
+  }
   else if (p == EVP_rc2_cbc())
+  {
     n = HB_EVP_CIPHER_RC2_CBC;
+  }
   else if (p == EVP_rc2_40_cbc())
+  {
     n = HB_EVP_CIPHER_RC2_40_CBC;
+  }
   else if (p == EVP_rc2_64_cbc())
+  {
     n = HB_EVP_CIPHER_RC2_64_CBC;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_rc2_cfb64())
+  {
     n = HB_EVP_CIPHER_RC2_CFB64;
+  }
 #endif
   else if (p == EVP_rc2_cfb())
+  {
     n = HB_EVP_CIPHER_RC2_CFB;
+  }
   else if (p == EVP_rc2_ofb())
+  {
     n = HB_EVP_CIPHER_RC2_OFB;
+  }
 #endif
 #ifndef OPENSSL_NO_BF
   else if (p == EVP_bf_ecb())
+  {
     n = HB_EVP_CIPHER_BF_ECB;
+  }
   else if (p == EVP_bf_cbc())
+  {
     n = HB_EVP_CIPHER_BF_CBC;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_bf_cfb64())
+  {
     n = HB_EVP_CIPHER_BF_CFB64;
+  }
 #endif
   else if (p == EVP_bf_cfb())
+  {
     n = HB_EVP_CIPHER_BF_CFB;
+  }
   else if (p == EVP_bf_ofb())
+  {
     n = HB_EVP_CIPHER_BF_OFB;
+  }
 #endif
 #ifndef OPENSSL_NO_CAST
   else if (p == EVP_cast5_ecb())
+  {
     n = HB_EVP_CIPHER_CAST5_ECB;
+  }
   else if (p == EVP_cast5_cbc())
+  {
     n = HB_EVP_CIPHER_CAST5_CBC;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_cast5_cfb64())
+  {
     n = HB_EVP_CIPHER_CAST5_CFB64;
+  }
 #endif
   else if (p == EVP_cast5_cfb())
+  {
     n = HB_EVP_CIPHER_CAST5_CFB;
+  }
   else if (p == EVP_cast5_ofb())
+  {
     n = HB_EVP_CIPHER_CAST5_OFB;
+  }
 #endif
 #ifndef OPENSSL_NO_RC5
   else if (p == EVP_rc5_32_12_16_cbc())
+  {
     n = HB_EVP_CIPHER_RC5_32_12_16_CBC;
+  }
   else if (p == EVP_rc5_32_12_16_ecb())
+  {
     n = HB_EVP_CIPHER_RC5_32_12_16_ECB;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_rc5_32_12_16_cfb64())
+  {
     n = HB_EVP_CIPHER_RC5_32_12_16_CFB64;
+  }
 #endif
   else if (p == EVP_rc5_32_12_16_cfb())
+  {
     n = HB_EVP_CIPHER_RC5_32_12_16_CFB;
+  }
   else if (p == EVP_rc5_32_12_16_ofb())
+  {
     n = HB_EVP_CIPHER_RC5_32_12_16_OFB;
+  }
 #endif
 #ifndef OPENSSL_NO_AES
   else if (p == EVP_aes_128_ecb())
+  {
     n = HB_EVP_CIPHER_AES_128_ECB;
+  }
   else if (p == EVP_aes_128_cbc())
+  {
     n = HB_EVP_CIPHER_AES_128_CBC;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_aes_128_cfb1())
+  {
     n = HB_EVP_CIPHER_AES_128_CFB1;
+  }
   else if (p == EVP_aes_128_cfb8())
+  {
     n = HB_EVP_CIPHER_AES_128_CFB8;
+  }
   else if (p == EVP_aes_128_cfb128())
+  {
     n = HB_EVP_CIPHER_AES_128_CFB128;
+  }
 #endif
   else if (p == EVP_aes_128_cfb())
+  {
     n = HB_EVP_CIPHER_AES_128_CFB;
+  }
   else if (p == EVP_aes_128_ofb())
+  {
     n = HB_EVP_CIPHER_AES_128_OFB;
+  }
   else if (p == EVP_aes_192_ecb())
+  {
     n = HB_EVP_CIPHER_AES_192_ECB;
+  }
   else if (p == EVP_aes_192_cbc())
+  {
     n = HB_EVP_CIPHER_AES_192_CBC;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_aes_192_cfb1())
+  {
     n = HB_EVP_CIPHER_AES_192_CFB1;
+  }
   else if (p == EVP_aes_192_cfb8())
+  {
     n = HB_EVP_CIPHER_AES_192_CFB8;
+  }
   else if (p == EVP_aes_192_cfb128())
+  {
     n = HB_EVP_CIPHER_AES_192_CFB128;
+  }
 #endif
   else if (p == EVP_aes_192_cfb())
+  {
     n = HB_EVP_CIPHER_AES_192_CFB;
+  }
   else if (p == EVP_aes_192_ofb())
+  {
     n = HB_EVP_CIPHER_AES_192_OFB;
+  }
   else if (p == EVP_aes_256_ecb())
+  {
     n = HB_EVP_CIPHER_AES_256_ECB;
+  }
   else if (p == EVP_aes_256_cbc())
+  {
     n = HB_EVP_CIPHER_AES_256_CBC;
+  }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
   else if (p == EVP_aes_256_cfb1())
+  {
     n = HB_EVP_CIPHER_AES_256_CFB1;
+  }
   else if (p == EVP_aes_256_cfb8())
+  {
     n = HB_EVP_CIPHER_AES_256_CFB8;
+  }
   else if (p == EVP_aes_256_cfb128())
+  {
     n = HB_EVP_CIPHER_AES_256_CFB128;
+  }
 #endif
   else if (p == EVP_aes_256_cfb())
+  {
     n = HB_EVP_CIPHER_AES_256_CFB;
+  }
   else if (p == EVP_aes_256_ofb())
+  {
     n = HB_EVP_CIPHER_AES_256_OFB;
+  }
 #endif
 #ifndef OPENSSL_NO_CAMELLIA
   else if (p == EVP_camellia_128_ecb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_ECB;
+  }
   else if (p == EVP_camellia_128_cbc())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_CBC;
+  }
   else if (p == EVP_camellia_128_cfb1())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB1;
+  }
   else if (p == EVP_camellia_128_cfb8())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB8;
+  }
   else if (p == EVP_camellia_128_cfb128())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB128;
+  }
   else if (p == EVP_camellia_128_cfb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB;
+  }
   else if (p == EVP_camellia_128_ofb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_128_OFB;
+  }
   else if (p == EVP_camellia_192_ecb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_ECB;
+  }
   else if (p == EVP_camellia_192_cbc())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_CBC;
+  }
   else if (p == EVP_camellia_192_cfb1())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB1;
+  }
   else if (p == EVP_camellia_192_cfb8())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB8;
+  }
   else if (p == EVP_camellia_192_cfb128())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB128;
+  }
   else if (p == EVP_camellia_192_cfb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB;
+  }
   else if (p == EVP_camellia_192_ofb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_192_OFB;
+  }
   else if (p == EVP_camellia_256_ecb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_ECB;
+  }
   else if (p == EVP_camellia_256_cbc())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_CBC;
+  }
   else if (p == EVP_camellia_256_cfb1())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB1;
+  }
   else if (p == EVP_camellia_256_cfb8())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB8;
+  }
   else if (p == EVP_camellia_256_cfb128())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB128;
+  }
   else if (p == EVP_camellia_256_cfb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB;
+  }
   else if (p == EVP_camellia_256_ofb())
+  {
     n = HB_EVP_CIPHER_CAMELLIA_256_OFB;
+  }
 #endif
 #ifndef OPENSSL_NO_SEED
   else if (p == EVP_seed_ecb())
+  {
     n = HB_EVP_CIPHER_SEED_ECB;
+  }
   else if (p == EVP_seed_cbc())
+  {
     n = HB_EVP_CIPHER_SEED_CBC;
+  }
   else if (p == EVP_seed_cfb128())
+  {
     n = HB_EVP_CIPHER_SEED_CFB128;
+  }
   else if (p == EVP_seed_cfb())
+  {
     n = HB_EVP_CIPHER_SEED_CFB;
+  }
   else if (p == EVP_seed_ofb())
+  {
     n = HB_EVP_CIPHER_SEED_OFB;
+  }
 #endif
   else
+  {
     n = HB_EVP_CIPHER_UNSUPPORTED;
+  }
 
   return n;
 }
@@ -735,30 +935,35 @@ HB_FUNC(EVP_GET_CIPHERBYNID)
 HB_FUNC(EVP_CIPHER_NID)
 {
   auto cipher = hb_EVP_CIPHER_par(1);
+
   hb_retni(cipher ? EVP_CIPHER_nid(cipher) : 0);
 }
 
 HB_FUNC(EVP_CIPHER_BLOCK_SIZE)
 {
   auto cipher = hb_EVP_CIPHER_par(1);
+
   hb_retni(cipher ? EVP_CIPHER_block_size(cipher) : 0);
 }
 
 HB_FUNC(EVP_CIPHER_KEY_LENGTH)
 {
   auto cipher = hb_EVP_CIPHER_par(1);
+
   hb_retni(cipher ? EVP_CIPHER_key_length(cipher) : 0);
 }
 
 HB_FUNC(EVP_CIPHER_IV_LENGTH)
 {
   auto cipher = hb_EVP_CIPHER_par(1);
+
   hb_retni(cipher ? EVP_CIPHER_iv_length(cipher) : 0);
 }
 
 HB_FUNC(EVP_CIPHER_FLAGS)
 {
   auto cipher = hb_EVP_CIPHER_par(1);
+
   hb_retnint(cipher ? EVP_CIPHER_flags(cipher) : 0);
 }
 
@@ -777,6 +982,7 @@ HB_FUNC(EVP_CIPHER_MODE)
 HB_FUNC(EVP_CIPHER_TYPE)
 {
   auto cipher = hb_EVP_CIPHER_par(1);
+
   hb_retni(cipher ? EVP_CIPHER_type(cipher) : 0);
 }
 
@@ -806,7 +1012,8 @@ HB_FUNC(EVP_CIPHER_CTX_RESET)
 
     if (ctx != nullptr)
     {
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20700000L)
       hb_retni(EVP_CIPHER_CTX_reset(ctx));
 #else
       hb_retni(EVP_CIPHER_CTX_cleanup(ctx));
@@ -1380,11 +1587,21 @@ HB_FUNC(EVP_SEALINIT)
 
       if (HB_ISARRAY(5))
       {
+        int tmp;
+
         npubk = static_cast<int>(hb_arrayLen(pArray = hb_param(5, Harbour::Item::ARRAY)));
+        for (tmp = 1; tmp <= npubk; ++tmp)
+        {
+          if (hb_EVP_PKEY_get(hb_arrayGetItemPtr(pArray, tmp)) == nullptr)
+          {
+            npubk = 0;
+            break;
+          }
+        }
       }
       else if (HB_ISPOINTER(5))
       {
-        if ((pkey1 = static_cast<EVP_PKEY *>(hb_parptr(5))) != nullptr)
+        if ((pkey1 = hb_EVP_PKEY_par(5)) != nullptr)
         {
           npubk = 1;
         }
@@ -1400,9 +1617,9 @@ HB_FUNC(EVP_SEALINIT)
         auto pubk = static_cast<EVP_PKEY **>(hb_xgrab(sizeof(EVP_PKEY *) * npubk + 1));
         int tmp;
 
-        for (tmp = 0; tmp < npubk; tmp++)
+        for (tmp = 0; tmp < npubk; ++tmp)
         {
-          pubk[tmp] = pkey1 ? pkey1 : static_cast<EVP_PKEY *>(hb_arrayGetPtr(pArray, tmp + 1));
+          pubk[tmp] = pkey1 ? pkey1 : hb_EVP_PKEY_get(hb_arrayGetItemPtr(pArray, tmp + 1));
           ek[tmp] = static_cast<unsigned char *>(hb_xgrab(EVP_PKEY_size(pubk[tmp]) + 1));
           ekl[tmp] = 0;
         }
@@ -1522,7 +1739,7 @@ HB_FUNC(EVP_OPENINIT)
   if (hb_EVP_CIPHER_CTX_is(1) && cipher)
   {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
-    auto priv = static_cast<EVP_PKEY *>(hb_parptr(5));
+    EVP_PKEY *priv = hb_EVP_PKEY_par(5);
 
     if (ctx != nullptr && priv != nullptr)
     {

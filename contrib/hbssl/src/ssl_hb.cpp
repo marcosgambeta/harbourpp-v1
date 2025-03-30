@@ -139,7 +139,7 @@ HB_FUNC(HB_SSL_READ_LINE)
   {
     auto ssl = hb_SSL_par(1);
 
-    if (ssl)
+    if (ssl != nullptr)
     {
       auto iMax = hb_parnidef(3, INT_MAX);
       auto iTimeout = hb_parnidef(4, -1);

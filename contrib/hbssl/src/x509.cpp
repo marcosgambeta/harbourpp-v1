@@ -51,7 +51,7 @@
    but if #included, it still must come before its own headers.
    The Harbour wrapper code doesn't need the Windows headers, so
    they will be dropped once 1.0.2 is EOLed in 2019-12-31. */
-#include "hbdefs.hpp"
+#include <hbdefs.hpp>
 #if defined(HB_OS_WIN)
 #include <windows.h>
 #include <wincrypt.h>
@@ -62,7 +62,6 @@
 struct HB_X509
 {
   X509 *pX509;
-  bool fRelease;
 };
 
 using PHB_X509 = HB_X509 *;
@@ -75,10 +74,7 @@ static HB_GARBAGE_FUNC(X509_release)
   if (ph && ph->pX509)
   {
     /* Destroy the object */
-    if (ph->fRelease)
-    {
-      X509_free(static_cast<X509 *>(ph->pX509));
-    }
+    X509_free(static_cast<X509 *>(ph->pX509));
 
     /* set pointer to nullptr just in case */
     ph->pX509 = nullptr;
@@ -89,7 +85,8 @@ static const HB_GC_FUNCS s_gcX509_funcs = {X509_release, hb_gcDummyMark};
 
 HB_BOOL hb_X509_is(int iParam)
 {
-  return hb_parptrGC(&s_gcX509_funcs, iParam) != nullptr;
+  auto ph = static_cast<PHB_X509>(hb_parptrGC(&s_gcX509_funcs, iParam));
+  return ph && ph->pX509;
 }
 
 X509 *hb_X509_par(int iParam)
@@ -98,12 +95,18 @@ X509 *hb_X509_par(int iParam)
   return ph ? ph->pX509 : nullptr;
 }
 
-void hb_X509_ret(X509 *x509, HB_BOOL fRelease)
+void hb_X509_ret(X509 *x509)
 {
-  auto ph = static_cast<PHB_X509>(hb_gcAllocate(sizeof(HB_X509), &s_gcX509_funcs));
-  ph->pX509 = x509;
-  ph->fRelease = fRelease;
-  hb_retptrGC(static_cast<void *>(ph));
+  if (x509 != nullptr)
+  {
+    auto ph = static_cast<PHB_X509>(hb_gcAllocate(sizeof(HB_X509), &s_gcX509_funcs));
+    ph->pX509 = x509;
+    hb_retptrGC(static_cast<void *>(ph));
+  }
+  else
+  {
+    hb_ret();
+  }
 }
 
 HB_FUNC(X509_GET_SUBJECT_NAME)
@@ -146,7 +149,7 @@ HB_FUNC(X509_NAME_ONELINE)
     OPENSSL_VERSION_NUMBER >= 0x1000000FL /* NOTE: Compilation error when tried with 1.0.0beta5 */
   auto x509_name = static_cast<X509_NAME *>(hb_parptr(1));
 
-  if (x509_name)
+  if (x509_name != nullptr)
   {
     char buffer[1024];
     X509_NAME_oneline(x509_name, buffer, sizeof(buffer));
@@ -167,7 +170,7 @@ HB_FUNC(X509_GET_PUBKEY)
 
     if (x509 != nullptr)
     {
-      hb_retptr(X509_get_pubkey(x509));
+      hb_EVP_PKEY_ret(X509_get_pubkey(x509));
     }
   }
   else

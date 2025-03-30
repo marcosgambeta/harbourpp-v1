@@ -57,7 +57,8 @@ static HB_GARBAGE_FUNC(EVP_ENCODE_CTX_release)
   /* Check if pointer is not nullptr to avoid multiple freeing */
   if (ph && *ph)
   {
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20900000L)
     EVP_ENCODE_CTX_free(static_cast<EVP_ENCODE_CTX *>(*ph));
 #else
     /* Destroy the object */
@@ -86,7 +87,8 @@ HB_FUNC(EVP_ENCODE_CTX_NEW)
 {
   auto ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_ENCODE_CTX *), &s_gcEVP_ENCODE_CTX_funcs));
 
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20900000L)
   auto ctx = EVP_ENCODE_CTX_new();
 #else
   auto ctx = static_cast<EVP_ENCODE_CTX *>(hb_xgrabz(sizeof(EVP_ENCODE_CTX)));
@@ -128,11 +130,12 @@ HB_FUNC(EVP_ENCODEUPDATE)
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
       int result;
 
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
+    (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20900000L)
       result = EVP_EncodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                                 static_cast<int>(hb_parclen(3)));
 #else
-      EVP_EncodeUpdate(ctx, buffer, &size, static_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
+      EVP_EncodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                        static_cast<int>(hb_parclen(3)));
       result = 1; /* Success */
 #endif

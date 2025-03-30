@@ -71,16 +71,18 @@ HB_FUNC(EVP_CLEANUP)
 
 HB_FUNC(ERR_LOAD_EVP_STRINGS)
 {
+#if OPENSSL_VERSION_NUMBER < 0x30000000L
   ERR_load_EVP_strings();
+#endif
 }
 
 HB_FUNC(EVP_PKEY_FREE)
 {
-  auto key = static_cast<EVP_PKEY *>(hb_parptr(1));
+  auto pKey = hb_param(1, Harbour::Item::POINTER);
 
-  if (key != nullptr)
+  if (pKey != nullptr)
   {
-    EVP_PKEY_free(key);
+    hb_EVP_PKEY_free(pKey);
   }
   else
   {
@@ -98,13 +100,16 @@ HB_FUNC(EVP_BYTESTOKEY)
     unsigned char key[EVP_MAX_KEY_LENGTH];
     unsigned char iv[EVP_MAX_IV_LENGTH];
 
+    memset(key, 0, sizeof(key));
+    memset(iv, 0, sizeof(iv));
+
     hb_retni(EVP_BytesToKey(cipher, static_cast<HB_SSL_CONST EVP_MD *>(md),
                             reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)) /* salt */,
                             reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(4)) /* data */,
                             static_cast<int>(hb_parclen(4)), hb_parni(5) /* count */, key, iv));
 
-    hb_storc(reinterpret_cast<char *>(key), 6);
-    hb_storc(reinterpret_cast<char *>(iv), 7);
+    hb_storclen(reinterpret_cast<char *>(key), EVP_CIPHER_key_length(cipher), 6);
+    hb_storclen(reinterpret_cast<char *>(iv), EVP_CIPHER_iv_length(cipher), 7);
   }
   else
   {
