@@ -188,7 +188,7 @@ HB_FUNC(HB_TRANSLATE)
   auto szIdIn = hb_parc(2);
   auto szIdOut = hb_parc(3);
 
-  if (nLen && (szIdIn || szIdOut))
+  if (nLen)
   {
     PHB_CODEPAGE cdpIn = szIdIn ? hb_cdpFindExt(szIdIn) : hb_vmCDP();
     PHB_CODEPAGE cdpOut = szIdOut ? hb_cdpFindExt(szIdOut) : hb_vmCDP();
