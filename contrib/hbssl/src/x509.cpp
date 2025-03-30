@@ -45,11 +45,11 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* This must come before #include "hbssl.h".
-   OpenSSL 1.1.x and upper don't require Windows headers anymore,
-   but if #included, it still must come before its own headers.
-   The Harbour wrapper code doesn't need the Windows headers, so
-   they will be dropped once 1.0.2 is EOLed in 2019-12-31. */
+// This must come before #include "hbssl.h".
+// OpenSSL 1.1.x and upper don't require Windows headers anymore,
+// but if #included, it still must come before its own headers.
+// The Harbour wrapper code doesn't need the Windows headers, so
+// they will be dropped once 1.0.2 is EOLed in 2019-12-31.
 #include <hbdefs.hpp>
 #if defined(HB_OS_WIN)
 #include <windows.h>
@@ -69,13 +69,13 @@ static HB_GARBAGE_FUNC(X509_release)
 {
   auto ph = static_cast<PHB_X509>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && ph->pX509)
   {
-    /* Destroy the object */
+    // Destroy the object
     X509_free(static_cast<X509 *>(ph->pX509));
 
-    /* set pointer to nullptr just in case */
+    // set pointer to nullptr just in case
     ph->pX509 = nullptr;
   }
 }
@@ -145,7 +145,7 @@ HB_FUNC(X509_GET_ISSUER_NAME)
 HB_FUNC(X509_NAME_ONELINE)
 {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L ||                                                                            \
-    OPENSSL_VERSION_NUMBER >= 0x1000000FL /* NOTE: Compilation error when tried with 1.0.0beta5 */
+    OPENSSL_VERSION_NUMBER >= 0x1000000FL // NOTE: Compilation error when tried with 1.0.0beta5
   auto x509_name = static_cast<X509_NAME *>(hb_parptr(1));
 
   if (x509_name != nullptr)

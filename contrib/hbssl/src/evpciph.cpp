@@ -58,19 +58,19 @@ static HB_GARBAGE_FUNC(EVP_CIPHER_CTX_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     EVP_CIPHER_CTX_free(static_cast<EVP_CIPHER_CTX *>(*ph));
 #else
-    /* Cleanup the object */
+    // Cleanup the object
     EVP_CIPHER_CTX_cleanup(static_cast<EVP_CIPHER_CTX *>(*ph));
-    /* Destroy the object */
+    // Destroy the object
     hb_xfree(*ph);
 #endif
 
-    /* set pointer to nullptr just in case */
+    // set pointer to nullptr just in case
     *ph = nullptr;
   }
 }
@@ -971,7 +971,7 @@ HB_FUNC(EVP_CIPHER_MODE)
   auto cipher = hb_EVP_CIPHER_par(1);
 
 #if OPENSSL_VERSION_NUMBER < 0x00906040L
-/* fix for typo in macro definition in openssl/evp.h */
+// fix for typo in macro definition in openssl/evp.h
 #undef EVP_CIPHER_mode
 #define EVP_CIPHER_mode(e) ((e)->flags & EVP_CIPH_MODE)
 #endif
@@ -1091,9 +1091,9 @@ HB_FUNC(EVP_CIPHER_CTX_CTRL)
 
     if (ctx != nullptr)
     {
-      /* NOTE: 4th param doesn't have a 'const' qualifier. This is a setter
-               function, so even if we do a copy, what sort of allocation
-               routine to use? [vszakats] */
+      // NOTE: 4th param doesn't have a 'const' qualifier. This is a setter
+      //       function, so even if we do a copy, what sort of allocation
+      //       routine to use? [vszakats]
       hb_retni(EVP_CIPHER_CTX_ctrl(ctx, hb_parni(2), hb_parni(3), static_cast<void *>(const_cast<char *>(hb_parc(4)))));
     }
   }

@@ -24,18 +24,18 @@ PROCEDURE Main( delay )
       s_lDelaySrv := "S" $ Upper(delay)
    ENDIF
 
-   /* initialize SSL library */
+   // initialize SSL library
    SSL_init()
    RAND_seed( Time() + hb_TSToStr( hb_DateTime() ) + hb_DirBase() + NetName() )
 
-   /* start server thread */
+   // start server thread
    thrd := hb_threadStart( @Server() )
    IF Empty(thrd)
       ? "Cannot start thread."
       RETURN
    ENDIF
 
-   /* wait for server being ready to accept incoming connections */
+   // wait for server being ready to accept incoming connections
    DO WHILE ! s_lReady
       hb_idleSleep( 0.01 )
       IF hb_threadWait( thrd, 0 ) != 0
@@ -44,10 +44,10 @@ PROCEDURE Main( delay )
       ENDIF
    ENDDO
 
-   /* start client */
+   // start client
    Client()
 
-   /* inform server it should finish and wait for it */
+   // inform server it should finish and wait for it
    s_lStop := .T.
    hb_threadJoin( thrd )
    ?
@@ -154,32 +154,31 @@ STATIC FUNCTION Server()
 
 STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
 
-   /* Server using hb_inetSSL_ACCEPT() needs certificates,
-      they can be generated using the following command:
-         openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                 -out <cCertFile> -keyout <cKeyFile>
-    */
+   // Server using hb_inetSSL_ACCEPT() needs certificates,
+   // they can be generated using the following command:
+   //    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+   //            -out <cCertFile> -keyout <cKeyFile>
    IF !hb_FileExists( cCertFile ) .AND. ! hb_FileExists( cKeyFile )
       ? "SERVER: generating certificates..."
       hb_run( "openssl req -x509 -nodes -days 365 -newkey rsa:2048 " + ;
               "-out " + cCertFile + " -keyout " + cKeyFile )
    ENDIF
 
-   /* set the local certificate from CertFile */
+   // set the local certificate from CertFile
    IF SSL_CTX_use_certificate_file( ssl_ctx, cCertFile, HB_SSL_FILETYPE_PEM ) <= 0
       OutErr( hb_StrFormat( e"SERVER: SSL_CTX_use_certificate_file()=> '%s'\n", ;
                             ERR_error_string( ERR_get_error() ) ) )
       QUIT
    ENDIF
 
-   /* set the private key from KeyFile (may be the same as CertFile) */
+   // set the private key from KeyFile (may be the same as CertFile)
    IF SSL_CTX_use_PrivateKey_file( ssl_ctx, cKeyFile, HB_SSL_FILETYPE_PEM ) <= 0
       OutErr( hb_StrFormat( e"SERVER: SSL_CTX_use_PrivateKey_file()=> '%s'\n", ;
                             ERR_error_string( ERR_get_error() ) ) )
       QUIT
    ENDIF
 
-   /* verify private key */
+   // verify private key
    IF !SSL_CTX_check_private_key(ssl_ctx) == 1
       OutErr( e"SERVER: Private key does not match the public certificate\n" )
       QUIT

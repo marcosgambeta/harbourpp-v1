@@ -53,18 +53,18 @@ static HB_GARBAGE_FUNC(EVP_ENCODE_CTX_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
     (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20900000L)
     EVP_ENCODE_CTX_free(static_cast<EVP_ENCODE_CTX *>(*ph));
 #else
-    /* Destroy the object */
+    // Destroy the object
     hb_xfree(*ph);
 #endif
 
-    /* set pointer to nullptr just in case */
+    // set pointer to nullptr just in case
     *ph = nullptr;
   }
 }
@@ -136,7 +136,7 @@ HB_FUNC(EVP_ENCODEUPDATE)
 #else
       EVP_EncodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                        static_cast<int>(hb_parclen(3)));
-      result = 1; /* Success */
+      result = 1; // Success
 #endif
       hb_retni(result);
 

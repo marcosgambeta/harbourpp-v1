@@ -45,11 +45,11 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* This must come before #include "hbssl.h".
-   OpenSSL 1.1.x and upper don't require Windows headers anymore,
-   but if #included, it still must come before its own headers.
-   The Harbour wrapper code doesn't need the Windows headers, so
-   they will be dropped once 1.0.2 is EOLed in 2019-12-31. */
+// This must come before #include "hbssl.h".
+// OpenSSL 1.1.x and upper don't require Windows headers anymore,
+// but if #included, it still must come before its own headers.
+// The Harbour wrapper code doesn't need the Windows headers, so
+// they will be dropped once 1.0.2 is EOLed in 2019-12-31.
 #include <hbdefs.hpp>
 #if defined(HB_OS_WIN)
 #include <windows.h>
@@ -64,13 +64,13 @@ static HB_GARBAGE_FUNC(SSL_CTX_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     SSL_CTX_free(static_cast<SSL_CTX *>(*ph));
 
-    /* set pointer to nullptr just in case */
+    // set pointer to nullptr just in case
     *ph = nullptr;
   }
 }
@@ -793,7 +793,7 @@ HB_FUNC(SSL_CTX_GET_CLIENT_CA_LIST)
     if (ctx != nullptr)
     {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L ||                                                                            \
-    OPENSSL_VERSION_NUMBER >= 0x1000000FL /* NOTE: Compilation error when tried with 1.0.0beta5 */
+    OPENSSL_VERSION_NUMBER >= 0x1000000FL // NOTE: Compilation error when tried with 1.0.0beta5
       STACK_OF(X509_NAME) *stack = SSL_CTX_get_client_CA_list(ctx);
       int len = sk_X509_NAME_num(stack);
 
@@ -997,9 +997,9 @@ HB_FUNC(SSL_CTX_USE_PRIVATEKEY)
 
     if (ctx != nullptr)
     {
-      /* QUESTION: It's unclear whether we should pass a copy here,
-                   and who should free such passed EV_PKEY object.
-                   [vszakats] */
+      // QUESTION: It's unclear whether we should pass a copy here,
+      //           and who should free such passed EV_PKEY object.
+      //           [vszakats]
       hb_retni(SSL_CTX_use_PrivateKey(ctx, hb_EVP_PKEY_par(2)));
     }
   }
@@ -1088,7 +1088,7 @@ void SSL_CTX_set_msg_callback_arg(SSL_CTX * ctx, void * arg);
 long SSL_CTX_set_tmp_dh(SSL_CTX * ctx, DH * dh);
 long SSL_CTX_set_tmp_dh_callback(SSL_CTX * ctx, DH * (*cb)(void));
 long SSL_CTX_set_tmp_rsa(SSL_CTX * ctx, RSA * rsa);
-/* SSL_CTX_set_tmp_rsa_callback */
+// SSL_CTX_set_tmp_rsa_callback
 long SSL_CTX_set_tmp_rsa_callback(SSL_CTX * ctx, RSA * (*cb)(SSL * ssl, int export, int keylength));
 long SSL_set_tmp_rsa_callback(SSL * ssl, RSA * (*cb)(SSL * ssl, int export, int keylength));
 The same as SSL_CTX_set_tmp_rsa_callback, except it operates on an SSL session instead of a context.

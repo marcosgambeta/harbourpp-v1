@@ -52,7 +52,7 @@
 #include "hbapierr.h"
 #include "hbsocket.h"
 
-/* pacify OpenSSL 3.0 depreciated warnings until we update the code */
+// pacify OpenSSL 3.0 depreciated warnings until we update the code
 #ifndef OPENSSL_API_COMPAT
    #define OPENSSL_API_COMPAT 10100
 #endif
@@ -68,7 +68,7 @@
 #include "hbssl.ch"
 
 #if OPENSSL_VERSION_NUMBER < 0x00906000L
-   /* #error "unsupported OpenSSL version, required 0.9.6 or higher" */
+   // #error "unsupported OpenSSL version, required 0.9.6 or higher"
 #endif
 
 #if OPENSSL_VERSION_NUMBER < 0x00908060L
@@ -97,7 +97,7 @@
       #define SSL_ERROR_WANT_ACCEPT    8
    #endif
 
-   /* translate old configuration macros to new ones */
+   // translate old configuration macros to new ones
    #if defined(NO_BF) && !defined(OPENSSL_NO_BF)
       #define OPENSSL_NO_BF
    #endif
@@ -171,8 +171,8 @@
    #define OPENSSL_DIR       SSLEAY_DIR
 #endif
 
-/* use macro to pacify warnings with missing 'const' in some function
-   declarations in OpenSSL prior 0.9.8 */
+// use macro to pacify warnings with missing 'const' in some function
+// declarations in OpenSSL prior 0.9.8
 #if OPENSSL_VERSION_NUMBER < 0x0090800fL
    #define HB_SSL_CONST
    #define HB_SSL_CONST_BYTE(x)   ((unsigned char *)(x))

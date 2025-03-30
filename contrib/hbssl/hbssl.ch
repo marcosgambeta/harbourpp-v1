@@ -48,7 +48,7 @@
 #ifndef HBSSL_CH_
 #define HBSSL_CH_
 
-/* NOTE: This file is also used by C code. */
+// NOTE: This file is also used by C code.
 
 #define HB_SSL_CTX_NEW_METHOD_UNKNOWN                       (-2)
 #define HB_SSL_CTX_NEW_METHOD_DEFAULT                       (-1)
@@ -276,7 +276,7 @@
 #define HB_EVP_CIPHER_AES_192_CFB                           64
 #define HB_EVP_CIPHER_AES_192_OFB                           65
 #define HB_EVP_CIPHER_AES_256_ECB                           66
-#define HB_EVP_CIPHER_AES_256_GCM                           101  /* highest */
+#define HB_EVP_CIPHER_AES_256_GCM                           101  // highest
 #define HB_EVP_CIPHER_AES_256_CBC                           67
 #define HB_EVP_CIPHER_AES_256_CFB1                          68
 #define HB_EVP_CIPHER_AES_256_CFB8                          69

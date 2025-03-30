@@ -125,13 +125,13 @@ static void hb_inetStartSSL(HB_BOOL fServer)
   }
 }
 
-/* hb_inetSSL_connect(<pSocket>, <pSSL> [, <nTimeout> ]) */
+// hb_inetSSL_connect(<pSocket>, <pSSL> [, <nTimeout> ])
 HB_FUNC(HB_INETSSL_CONNECT)
 {
   hb_inetStartSSL(false);
 }
 
-/* hb_inetSSL_accept(<pSocket>, <pSSL> [, <nTimeout> ]) */
+// hb_inetSSL_accept(<pSocket>, <pSSL> [, <nTimeout> ])
 HB_FUNC(HB_INETSSL_ACCEPT)
 {
   hb_inetStartSSL(true);

@@ -45,27 +45,26 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* for applink.c */
+// for applink.c
 #if defined(_MSC_VER)
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #elif defined(__BORLANDC__)
-/* NOTE: To avoid these with BCC 5.5:
-         Warning W8065 openssl/applink.c 40: Call to function '_setmode' with no prototype in function app_fsetmod
-         Error E2451 openssl/applink.c 82: Undefined symbol '_lseek' in function OPENSSL_Applink
- */
+// NOTE: To avoid these with BCC 5.5:
+//       Warning W8065 openssl/applink.c 40: Call to function '_setmode' with no prototype in function app_fsetmod
+//       Error E2451 openssl/applink.c 82: Undefined symbol '_lseek' in function OPENSSL_Applink
 #include "io.h"
 #define _setmode setmode
 #undef _lseek
 #define _lseek lseek
 #endif
 
-/* This must come before #include "hbssl.h".
-   OpenSSL 1.1.x and upper don't require Windows headers anymore,
-   but if #included, it still must come before its own headers.
-   The Harbour wrapper code doesn't need the Windows headers, so
-   they will be dropped once 1.0.2 is EOLed in 2019-12-31. */
+// This must come before #include "hbssl.h".
+// OpenSSL 1.1.x and upper don't require Windows headers anymore,
+// but if #included, it still must come before its own headers.
+// The Harbour wrapper code doesn't need the Windows headers, so
+// they will be dropped once 1.0.2 is EOLed in 2019-12-31.
 #include "hbdefs.hpp"
 #if defined(HB_OS_WIN)
 #include <windows.h>
@@ -81,28 +80,28 @@
 
 #if !defined(HB_OPENSSL_NO_APPLINK) && defined(HB_OS_WIN) && defined(HB_CPU_X86) &&                                    \
     OPENSSL_VERSION_NUMBER >= 0x00908000L
-/* Enable this to add support for various scenarios when
-   OpenSSL is build with OPENSSL_USE_APPLINK (the default).
-   In such case care must be taken to initialize pointers
-   to C RTL function to avoid crashes. */
+// Enable this to add support for various scenarios when
+// OpenSSL is build with OPENSSL_USE_APPLINK (the default).
+// In such case care must be taken to initialize pointers
+// to C RTL function to avoid crashes.
 #define HB_OPENSSL_HAS_APPLINK
 #endif
 
-/* NOTE: See: http://www.openssl.org/support/faq.html#PROG2
-         Application must call SSL_init(), so that this module gets linked.
-         [vszakats] */
+// NOTE: See: http://www.openssl.org/support/faq.html#PROG2
+//       Application must call SSL_init(), so that this module gets linked.
+//       [vszakats]
 #if defined(HB_OS_WIN) && !defined(HB_OPENSSL_STATIC) && OPENSSL_VERSION_NUMBER >= 0x00908000L
-/* Pull a stub that returns a table with some selected
-   C RTL function pointers. When linking to OpenSSL shared
-   libraries, the function OPENSSL_Applink() exported from
-   the application executable will be dynamically called
-   from the OpenSSL crypto .dll. When linking OpenSSL statically,
-   we will call it manually from SSL_init(). This will not
-   work when using 'hbssl' as a dynamic lib, because
-   OPENSSL_Applink() must be exported from the main executable.
-   Consequently 'hbrun' will fail with operations that require
-   C RTL calls internally. Such calls are currently made when
-   using BIO_new_fd() BIO_new_file() IO API. */
+// Pull a stub that returns a table with some selected
+// C RTL function pointers. When linking to OpenSSL shared
+// libraries, the function OPENSSL_Applink() exported from
+// the application executable will be dynamically called
+// from the OpenSSL crypto .dll. When linking OpenSSL statically,
+// we will call it manually from SSL_init(). This will not
+// work when using 'hbssl' as a dynamic lib, because
+// OPENSSL_Applink() must be exported from the main executable.
+// Consequently 'hbrun' will fail with operations that require
+// C RTL calls internally. Such calls are currently made when
+// using BIO_new_fd() BIO_new_file() IO API.
 #include "openssl/applink.c"
 #endif
 
@@ -193,7 +192,7 @@ HB_FUNC(OPENSSL_VERSION_NUM)
 #endif
 }
 
-/* SSLEAY_VERSION is existing macro so we cannot use HB_FUNC_TRANSLATE */
+// SSLEAY_VERSION is existing macro so we cannot use HB_FUNC_TRANSLATE
 #if 0
    HB_FUNC_TRANSLATE( SSLEAY_VERSION, OPENSSL_VERSION )
 #else
@@ -219,7 +218,7 @@ static HB_GARBAGE_FUNC(PHB_SSL_release)
 
   if (hb_ssl != nullptr)
   {
-    /* Destroy the object */
+    // Destroy the object
     if (hb_ssl->ssl != nullptr)
     {
       SSL_free(hb_ssl->ssl);
@@ -1069,7 +1068,7 @@ HB_FUNC(SSL_GET_SHARED_CIPHERS)
 
     if (ssl != nullptr)
     {
-      char buffer[128 + 1]; /* See: CVE-2006-3738 */
+      char buffer[128 + 1]; // See: CVE-2006-3738
       buffer[0] = '\0';
       hb_retc(SSL_get_shared_ciphers(ssl, buffer, sizeof(buffer) - 1));
     }
@@ -1348,7 +1347,7 @@ HB_FUNC(SSL_GET_READ_AHEAD)
 {
   if (hb_SSL_is(1))
   {
-#if defined(__BORLANDC__) /* FIXME: SSL_get_read_ahead is an unresolved external when trying to link with BCC */
+#if defined(__BORLANDC__) // FIXME: SSL_get_read_ahead is an unresolved external when trying to link with BCC
     hb_retni(0);
 #else
     auto ssl = hb_SSL_par(1);
@@ -2023,9 +2022,9 @@ HB_FUNC(SSL_USE_RSAPRIVATEKEY_ASN1)
       hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, reinterpret_cast<const unsigned char *>(hb_parc(2)),
                                           static_cast<int>(hb_parclen(2))));
 #else
-      /* 'const' not used in 2nd param because ssh.h misses it, too.
-          Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
-          [vszakats] */
+      // 'const' not used in 2nd param because ssh.h misses it, too.
+      //  Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
+      //  [vszakats]
       hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, static_cast<unsigned char *>(const_cast<char *>(hb_parc(2))),
                                           static_cast<int>(hb_parclen(2))));
 #endif
@@ -2081,9 +2080,9 @@ HB_FUNC(SSL_USE_PRIVATEKEY)
 
     if (ssl != nullptr)
     {
-      /* QUESTION: It's unclear whether we should pass a copy here,
-                   and who should free such passed EVP_PKEY object.
-                   [vszakats] */
+      // QUESTION: It's unclear whether we should pass a copy here,
+      //           and who should free such passed EVP_PKEY object.
+      //           [vszakats]
       hb_retni(SSL_use_PrivateKey(ssl, hb_EVP_PKEY_par(2)));
     }
   }
@@ -2093,7 +2092,7 @@ HB_FUNC(SSL_USE_PRIVATEKEY)
   }
 }
 
-/* Callback */
+// Callback
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
 static void hb_ssl_msg_callback(int write_p, int version, int content_type, const void *buf, size_t len, SSL *ssl,
