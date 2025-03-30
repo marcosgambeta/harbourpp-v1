@@ -955,9 +955,9 @@ METHOD HBBlat:TranslateBlatError( nErr )
       { BLAT_ERR_LOGICAL_EXPECTED               , BLAT_TEXT_ERR_LOGICAL_EXPECTED               }, ;
       { BLAT_ERR_STRING_EXPECTED                , BLAT_TEXT_ERR_STRING_EXPECTED                } }
 
-   nPos := AScan( aErrors, {| e | e[ 1 ] == nErr }, 2 )
+   nPos := AScan( aErrors, {| e | e[1] == nErr }, 2 )
    IF nPos == 0
-      cError := aErrors[ 1, 2 ]  // BLAT_TEXT_ERR_UNKNOWN has to be first error
+      cError := aErrors[1, 2]  // BLAT_TEXT_ERR_UNKNOWN has to be first error
    ELSE
       cError := aErrors[ nPos, 2 ]
    ENDIF

@@ -112,14 +112,14 @@ METHOD TIPCgi:New()
          ::HTTP_RAW_POST_DATA := cTemp
          FOR EACH item IN hb_ATokens( cTemp, "&" )
             IF Len(aVar := hb_ATokens( item, "=" )) == 2
-               ::hPosts[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
+               ::hPosts[ AllTrim(tip_URLDecode( aVar[1] )) ] := tip_URLDecode( aVar[2] )
             ENDIF
          NEXT
       ENDIF
    ELSEIF ! Empty(cTemp := GetEnv("QUERY_STRING"))
       FOR EACH item IN hb_ATokens( cTemp, "&" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
-            ::hGets[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
+            ::hGets[ AllTrim(tip_URLDecode( aVar[1] )) ] := tip_URLDecode( aVar[2] )
          ENDIF
       NEXT
    ENDIF
@@ -127,7 +127,7 @@ METHOD TIPCgi:New()
    IF !Empty(cTemp := GetEnv("HTTP_COOKIE"))
       FOR EACH item IN hb_ATokens( cTemp, ";" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
-            ::hCookies[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
+            ::hCookies[ AllTrim(tip_URLDecode( aVar[1] )) ] := tip_URLDecode( aVar[2] )
          ENDIF
       NEXT
    ENDIF
@@ -489,7 +489,7 @@ STATIC FUNCTION HtmlLinkRel( hVal, cKey )
             cVal := { cVal, cVal }
          ENDIF
          IF HB_IsArray(cVal)
-            AScan( cVal, {| aVal | cRet += '<link rel="' + aVal[ 1 ] + '" href="' + aVal[ 2 ] + '"/>' + _CRLF } )
+            AScan( cVal, {| aVal | cRet += '<link rel="' + aVal[1] + '" href="' + aVal[2] + '"/>' + _CRLF } )
          ENDIF
       ENDIF
       hb_HDel( hVal, cKey )

@@ -371,14 +371,14 @@ METHOD GDImage:LoadFromFile( cFile )
    LOCAL aLoad
 
    aLoad := gdImageFromFile( cFile )
-   // Self  := aLoad[ 1 ]:Clone()
-   Self := ::CloneDataFrom( aLoad[ 1 ] )
-   // Self := __objClone( aLoad[ 1 ] )
-   aLoad[ 1 ] := NIL
+   // Self  := aLoad[1]:Clone()
+   Self := ::CloneDataFrom( aLoad[1] )
+   // Self := __objClone( aLoad[1] )
+   aLoad[1] := NIL
 
-   ::hFile := aLoad[ 2 ]
-   ::cType := aLoad[ 3 ]
-   ::cMime := aLoad[ 4 ]
+   ::hFile := aLoad[2]
+   ::cType := aLoad[3]
+   ::cMime := aLoad[4]
 
    RETURN Self
 

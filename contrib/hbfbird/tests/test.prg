@@ -81,8 +81,8 @@ PROCEDURE Main()
    IF HB_IsNumeric(qry)
       ? "Error:", qry, FBError( qry )
    ELSE
-      num_cols := qry[ 4 ]
-      columns := qry[ 6 ]
+      num_cols := qry[4]
+      columns := qry[6]
 
       FOR x := 1 TO num_cols
          ? x, "> "

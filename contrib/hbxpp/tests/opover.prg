@@ -6,6 +6,6 @@ PROCEDURE Main()
 
    LOCAL cString := "ABC"
 
-   ? cString[ 2 ]   // ------>   'B'
+   ? cString[2]   // ------>   'B'
 
    RETURN

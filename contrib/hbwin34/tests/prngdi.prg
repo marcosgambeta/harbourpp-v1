@@ -34,7 +34,7 @@ PROCEDURE Main()
    ? "inout ARR"
    aRECT := { 100, 150, 450, 250 }
    ? wapi_DrawText( hDC, "1TEST", aRECT, WIN_DT_CALCRECT )
-   ? aRECT[ 1 ], aRECT[ 2 ], aRECT[ 3 ], aRECT[ 4 ]
+   ? aRECT[1], aRECT[2], aRECT[3], aRECT[4]
 
    ? "out HASH"
    hRECT := { => }

@@ -360,16 +360,16 @@ METHOD HBFormatCode:Reformat( aFile )
                      IF nState > 0
                         nState := RF_STATE_CODE
                      ENDIF
-                     IF ( nContrState := AScan( ::aContr, {| a | a[ 1 ] == cToken1 .AND. ( Empty(a[ 2 ]) .OR. a[ 2 ] == cToken2 ) } ) ) > 0
+                     IF ( nContrState := AScan( ::aContr, {| a | a[1] == cToken1 .AND. ( Empty(a[2]) .OR. a[2] == cToken2 ) } ) ) > 0
                         IF Len(aDeep) < ++nDeep
                            AAdd(aDeep, NIL)
                         ENDIF
                         aDeep[ nDeep ] := nContrState
-                     ELSEIF Len(cToken1) < 4 .OR. ( nContrState := AScan( ::aContr, {| a | AScan( a[ 3 ], {| e | e == cToken1 } ) > 0 } ) ) == 0
-                        IF ( nPos := AScan( ::aContr, {| a | AScan( a[ 4 ], {| e | e == cToken1 } ) > 0 } ) ) > 0 .OR. ;
+                     ELSEIF Len(cToken1) < 4 .OR. ( nContrState := AScan( ::aContr, {| a | AScan( a[3], {| e | e == cToken1 } ) > 0 } ) ) == 0
+                        IF ( nPos := AScan( ::aContr, {| a | AScan( a[4], {| e | e == cToken1 } ) > 0 } ) ) > 0 .OR. ;
                               cToken1 == "end"
                            IF nPos > 0 .AND. nDeep > 0 .AND. aDeep[ nDeep ] != nPos
-                              DO WHILE ( nPos := AScan( ::aContr, {| a | AScan( a[ 4 ], {| e | e == cToken1 } ) > 0 }, ;
+                              DO WHILE ( nPos := AScan( ::aContr, {| a | AScan( a[4], {| e | e == cToken1 } ) > 0 }, ;
                                     nPos + 1 ) ) > 0 .AND. aDeep[ nDeep ] != nPos
                               ENDDO
                            ENDIF
@@ -466,7 +466,7 @@ METHOD HBFormatCode:Reformat( aFile )
 METHOD HBFormatCode:FormatLine( cLine, lContinued )
 
    LOCAL i, nLen, c, nState := 0, cSymb, cToken, nPos := 1
-   LOCAL lFirst, nBegin, nEnd, nB := 0, nA := 0, aBrackets[ 2 ]
+   LOCAL lFirst, nBegin, nEnd, nB := 0, nA := 0, aBrackets[2]
    LOCAL cOperators := "+-*/%#=~^<>$!"
    LOCAL nPrevState
 
@@ -505,7 +505,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
          cLine := Left(cLine, i - 1) + cToken + IIf(nPos > nLen, "", SubStr(cLine, nPos))
       ENDIF
    ELSE
-      aBrackets[ 1 ] := aBrackets[ 2 ] := 0
+      aBrackets[1] := aBrackets[2] := 0
       FOR i := nPos TO nLen
          c := SubStr(cLine, i, 1)
          IF nState <= FL_STATE_STRING
@@ -602,7 +602,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                ENDIF
                nState := FL_STATE_ANY
             ELSEIF c == ","
-               IF aBrackets[ 1 ] <= ::nBr4Comma .AND. aBrackets[ 2 ] <= ::nBr4Comma
+               IF aBrackets[1] <= ::nBr4Comma .AND. aBrackets[2] <= ::nBr4Comma
                   nA := i
                ENDIF
                nState := FL_STATE_ANY

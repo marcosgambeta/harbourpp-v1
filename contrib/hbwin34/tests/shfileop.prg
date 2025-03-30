@@ -24,9 +24,9 @@ PROCEDURE Main()
       a, "Harbour SHFile 2" ) )
    ? lAbort
    FOR EACH tmp IN a
-      ? tmp[ 1 ], tmp[ 2 ]
-      hb_vfErase( tmp[ 1 ] )
-      hb_vfErase( tmp[ 2 ] )
+      ? tmp[1], tmp[2]
+      hb_vfErase( tmp[1] )
+      hb_vfErase( tmp[2] )
    NEXT
 
    hb_vfErase( "rename1.txt" )

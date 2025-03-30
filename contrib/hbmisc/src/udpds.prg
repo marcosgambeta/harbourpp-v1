@@ -38,8 +38,8 @@ FUNCTION hb_udpds_Find(nPort, cName)
             cBuffer := Space( 2000 )
             nLen := hb_socketRecvFrom( hSocket, @cBuffer, , , @aAddr, nEnd - nTime )
             IF hb_BLeft(cBuffer, hb_BLen(cName) + 2) == hb_BChar(6) + cName + hb_BChar(0) .AND. ;
-               AScan( aRet, {| x | x[ 1 ] == aAddr[ 2 ] } ) == 0
-               AAdd(aRet, { aAddr[ 2 ], hb_BSubStr(cBuffer, hb_BLen(cName) + 3, nLen - hb_BLen(cName) - 2) })
+               AScan( aRet, {| x | x[1] == aAddr[2] } ) == 0
+               AAdd(aRet, { aAddr[2], hb_BSubStr(cBuffer, hb_BLen(cName) + 3, nLen - hb_BLen(cName) - 2) })
             ENDIF
             nTime := hb_MilliSeconds()
          ENDDO

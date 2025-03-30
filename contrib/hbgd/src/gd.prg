@@ -68,7 +68,7 @@ FUNCTION gdImageFTWidth( fontname, ptsize, angle )
    cErr := gdImageStringFTEx( , @aRect, 0, fontname, ptsize, angle, 0, 0, "M" )
 
    IF cErr == ""
-      nWidth := aRect[ 3 ] - aRect[ 1 ]
+      nWidth := aRect[3] - aRect[1]
    ENDIF
 
    RETURN nWidth
@@ -85,7 +85,7 @@ FUNCTION gdImageFTHeight( fontname, ptsize, angle )
 
    cErr := gdImageStringFTEx( , @aRect, 0, fontname, ptsize, angle, 0, 0, "M" )
    IF cErr == ""
-      nWidth := aRect[ 2 ] - aRect[ 8 ]
+      nWidth := aRect[2] - aRect[8]
    ENDIF
 
    RETURN nWidth
@@ -105,10 +105,10 @@ FUNCTION gdImageFTSize( string, fontname, ptsize, angle )
    cErr := gdImageStringFTEx( , @aRect, 0, fontname, ptsize, angle, 0, 0, string )
 
    IF cErr == ""
-      nWidth  := aRect[ 3 ] - aRect[ 1 ]
-      nHeight := aRect[ 2 ] - aRect[ 8 ]
-      nX      := aRect[ 1 ]
-      nY      := aRect[ 2 ]
+      nWidth  := aRect[3] - aRect[1]
+      nHeight := aRect[2] - aRect[8]
+      nX      := aRect[1]
+      nY      := aRect[2]
    ENDIF
 
    RETURN { nWidth, nHeight, nX, nY }

@@ -55,10 +55,10 @@
 
 // Directives for a light weight html parser
 #xtrans P_PARSER( <c> )       => { <c>, 0, Len(<c>), 0 }
-#xtrans :p_str                => \[ 1 ]  // the string to parse
-#xtrans :p_pos                => \[ 2 ]  // current parser position
-#xtrans :p_len                => \[ 3 ]  // length of string
-#xtrans :p_end                => \[ 4 ]  // last parser position
+#xtrans :p_str                => \[1]  // the string to parse
+#xtrans :p_pos                => \[2]  // current parser position
+#xtrans :p_len                => \[3]  // length of string
+#xtrans :p_end                => \[4]  // last parser position
 
 #xtrans P_SEEK( <a>, <c> )    => ( <a>:p_end := <a>:p_pos, <a>:p_pos := hb_At( <c>, <a>:p_str, <a>:p_end + 1 ) )
 #xtrans P_SEEKI( <a>, <c> )   => ( <a>:p_end := <a>:p_pos, <a>:p_pos := hb_AtI( <c>, <a>:p_str, <a>:p_end + 1 ) )
@@ -643,7 +643,7 @@ METHOD THtmlNode:isType( nType )
    LOCAL lRet
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      lRet := hb_bitAnd( ::htmlTagType[ 2 ], nType ) != 0
+      lRet := hb_bitAnd( ::htmlTagType[2], nType ) != 0
    RECOVER
       lRet := .F.
    END SEQUENCE
@@ -652,15 +652,15 @@ METHOD THtmlNode:isType( nType )
 
 // checks if this is a node that is always empty and never has HTML text, e.g. <img>,<link>,<meta>
 METHOD THtmlNode:isEmpty()
-   RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_EMPTY ) != 0
+   RETURN hb_bitAnd( ::htmlTagType[2], CM_EMPTY ) != 0
 
 // checks if this is a node that may occur inline, eg. <b>,<font>
 METHOD THtmlNode:isInline()
-   RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_INLINE ) != 0
+   RETURN hb_bitAnd( ::htmlTagType[2], CM_INLINE ) != 0
 
 // checks if this is a node that may appear without a closing tag, eg. <p>,<tr>,<td>
 METHOD THtmlNode:isOptional()
-   RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_OPT ) != 0
+   RETURN hb_bitAnd( ::htmlTagType[2], CM_OPT ) != 0
 
 // checks if this is a node (leafs contain no further nodes, e.g. <br />,<hr>,_text_)
 METHOD THtmlNode:isNode()
@@ -668,7 +668,7 @@ METHOD THtmlNode:isNode()
 
 // checks if this is a block node that must be closed with an ending tag: eg: <table></table>, <ul></ul>
 METHOD THtmlNode:isBlock()
-   RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_BLOCK ) != 0
+   RETURN hb_bitAnd( ::htmlTagType[2], CM_BLOCK ) != 0
 
 // checks if this is a node whose text line formatting must be preserved: <pre>,<script>,<textarea>
 METHOD THtmlNode:keepFormatting()
@@ -961,12 +961,12 @@ METHOD THtmlNode:Delete()
 METHOD THtmlNode:firstNode( lRoot )
 
    IF hb_defaultValue( lRoot, .F. )
-      RETURN ::root:htmlContent[ 1 ]
+      RETURN ::root:htmlContent[1]
    ELSEIF ::htmlTagName == "_text_"
-      RETURN ::parent:htmlContent[ 1 ]
+      RETURN ::parent:htmlContent[1]
    ENDIF
 
-   RETURN IIf(Empty(::htmlContent), NIL, ::htmlContent[ 1 ])
+   RETURN IIf(Empty(::htmlContent), NIL, ::htmlContent[1])
 
 // returns last node in subtree (.F.) or last node of entire tree (.T.)
 METHOD THtmlNode:lastNode( lRoot )
@@ -985,12 +985,12 @@ METHOD THtmlNode:nextNode()
    LOCAL nPos, aNodes
 
    IF ::htmlTagName == "_root_"
-      RETURN ::htmlContent[ 1 ]
+      RETURN ::htmlContent[1]
    ENDIF
 
    /* NOTE: != changed to ! == */
    IF !::htmlTagName == "_text_" .AND. ! Empty(::htmlContent)
-      RETURN ::htmlContent[ 1 ]
+      RETURN ::htmlContent[1]
    ENDIF
 
    IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) ) < Len(::parent:htmlContent)
@@ -1083,7 +1083,7 @@ METHOD THtmlNode:attrToString()
    ELSE
       // attributes are parsed into a Hash
       BEGIN SEQUENCE WITH __BreakBlock()
-         aAttr := ::htmlTagType[ 1 ]:exec()
+         aAttr := ::htmlTagType[1]:exec()
       RECOVER
          aAttr := {}  // Tag has no attributes
       END SEQUENCE
@@ -1097,12 +1097,12 @@ STATIC FUNCTION __AttrToStr( cName, cValue, aAttr, oTHtmlNode )
 
    LOCAL nPos
 
-   IF ( nPos := AScan( aAttr, {| a | a[ 1 ] == Lower(cName) } ) ) == 0
+   IF ( nPos := AScan( aAttr, {| a | a[1] == Lower(cName) } ) ) == 0
       // Tag doesn't have this attribute
       RETURN oTHtmlNode:error( "Invalid HTML attribute for: <" + oTHtmlNode:htmlTagName + ">", oTHtmlNode:className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
 
-   IF aAttr[ nPos ][ 2 ] == HTML_ATTR_TYPE_BOOL
+   IF aAttr[ nPos ][2] == HTML_ATTR_TYPE_BOOL
       RETURN " " + cName
    ENDIF
 
@@ -1184,7 +1184,7 @@ METHOD THtmlNode:getAttribute( cName )
 // Returns all HTML attributes as a Hash
 METHOD THtmlNode:getAttributes()
 
-   IF ::htmlTagType[ 1 ] == NIL
+   IF ::htmlTagType[1] == NIL
       // Tag has no valid attributes
       RETURN NIL
 
@@ -1225,7 +1225,7 @@ STATIC FUNCTION __ParseAttr( parser )
          lIsQuoted := .F.
 
          IF nMode == 2
-            aAttr[ 2 ] += "="
+            aAttr[2] += "="
          ELSE
             nMode := 2
          ENDIF
@@ -1233,18 +1233,18 @@ STATIC FUNCTION __ParseAttr( parser )
 
       CASE " "
          IF nMode == 1
-            IF !aAttr[ 1 ] == ""
-               hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
-               aAttr[ 1 ] := ""
-               aAttr[ 2 ] := ""
+            IF !aAttr[1] == ""
+               hHash[ aAttr[1] ] := aAttr[2]
+               aAttr[1] := ""
+               aAttr[2] := ""
             ENDIF
             LOOP
          ENDIF
 
          nMode := IIf(lIsQuoted, 2, 1)
-         hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
-         aAttr[ 1 ] := ""
-         aAttr[ 2 ] := ""
+         hHash[ aAttr[1] ] := aAttr[2]
+         aAttr[1] := ""
+         aAttr[2] := ""
 
          DO WHILE P_NEXT( parser ) == " "
          ENDDO
@@ -1267,7 +1267,7 @@ STATIC FUNCTION __ParseAttr( parser )
 
          IF SubStr(parser:p_str, nStart, 1) == cChr
             // empty value ""
-            hHash[ aAttr[ 1 ] ] := ""
+            hHash[ aAttr[1] ] := ""
             parser:p_end := parser:p_pos
             parser:p_pos --
          ELSE
@@ -1275,16 +1275,16 @@ STATIC FUNCTION __ParseAttr( parser )
             nEnd := parser:p_pos
 
             IF nEnd > 0
-               aAttr[ 2 ] := SubStr(parser:p_str, nStart, nEnd - nStart)
+               aAttr[2] := SubStr(parser:p_str, nStart, nEnd - nStart)
             ELSE
-               aAttr[ 2 ] := SubStr(parser:p_str, nStart)
+               aAttr[2] := SubStr(parser:p_str, nStart)
             ENDIF
 
-            hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
+            hHash[ aAttr[1] ] := aAttr[2]
          ENDIF
 
-         aAttr[ 1 ] := ""
-         aAttr[ 2 ] := ""
+         aAttr[1] := ""
+         aAttr[2] := ""
          nMode := 1
 
          IF nEnd == 0
@@ -1298,8 +1298,8 @@ STATIC FUNCTION __ParseAttr( parser )
       ENDSWITCH
    ENDDO
 
-   IF !aAttr[ 1 ] == ""
-      hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
+   IF !aAttr[1] == ""
+      hHash[ aAttr[1] ] := aAttr[2]
    ENDIF
 
    RETURN hHash
@@ -1317,18 +1317,18 @@ METHOD THtmlNode:setAttribute( cName, cValue )
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      aAttr := ::htmlTagType[ 1 ]:exec()
+      aAttr := ::htmlTagType[1]:exec()
    RECOVER
       // Tag has no attributes
       aAttr := {}
    END SEQUENCE
 
-   IF ( nPos := AScan( aAttr, {| a | a[ 1 ] == Lower(cName) } ) ) == 0
+   IF ( nPos := AScan( aAttr, {| a | a[1] == Lower(cName) } ) ) == 0
       // Tag doesn't have this attribute
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
 
-   IF aAttr[ nPos ][ 2 ] == HTML_ATTR_TYPE_BOOL
+   IF aAttr[ nPos ][2] == HTML_ATTR_TYPE_BOOL
       hHash[ cName ] := ""
    ELSE
       hHash[ cName ] := cValue
@@ -1415,7 +1415,7 @@ METHOD THtmlNode:noAttribute( cName, aValue )
    ENDIF
 
    IF !Empty(aValue)
-      RETURN ::setAttribute( cName, aValue[ 1 ] )
+      RETURN ::setAttribute( cName, aValue[1] )
    ENDIF
 
    RETURN ::getAttribute( cName )
@@ -1614,8 +1614,8 @@ FUNCTION THtmlIsValid( cTagName, cAttrName )
    BEGIN SEQUENCE WITH __BreakBlock()
       aValue := t_hHT[ cTagName ]
       IF cAttrName != NIL
-         aValue := aValue[ 1 ]:exec()
-         lRet   := AScan( aValue, {| a | Lower(a[ 1 ]) == Lower(cAttrName) } ) > 0
+         aValue := aValue[1]:exec()
+         lRet   := AScan( aValue, {| a | Lower(a[1]) == Lower(cAttrName) } ) > 0
       ENDIF
    RECOVER
       lRet := .F.

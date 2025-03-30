@@ -317,7 +317,7 @@ METHOD GDBarCode:Draw8( cText )
       ::positionX := IIf(::textfont == 0, 0, 10)
 
 #if 0
-      xParity := ::Parity[ 7 ]
+      xParity := ::Parity[7]
 #endif
 
       // First Bar
@@ -553,7 +553,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
       NEXT
 
       nSum := nSum % 103 + 1
-      cConc += ::aCode[ nSum ] + ::aCode[ 107 ]
+      cConc += ::aCode[ nSum ] + ::aCode[107]
 
       FOR n := 1 TO Len(cConc) STEP 2
          cBarCode += Replicate( "1", Val( SubStr(cConc, n, 1) ) )
@@ -603,7 +603,7 @@ METHOD GDBarCode:GenCodei25()
 
       // Adding Start and Stop Pattern
 
-      ::DrawSingleI25( ::acode[ 11 ] + bc_string + ::acode[ 12 ]  )
+      ::DrawSingleI25( ::acode[11] + bc_string + ::acode[12]  )
 
       ::lastY := ::maxHeight
 

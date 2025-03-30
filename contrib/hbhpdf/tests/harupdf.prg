@@ -495,7 +495,7 @@ STATIC PROCEDURE Page_Text( pdf )
    rect[ rLEFT   ] := 25
    rect[ rTOP    ] := 545
    rect[ rRIGHT  ] := 200
-   rect[ rBOTTOM ] := rect[ 2 ] - 40
+   rect[ rBOTTOM ] := rect[2] - 40
 
    HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
       rect[ rTOP ] - rect[ rBOTTOM ] )
@@ -932,7 +932,7 @@ STATIC PROCEDURE show_description( page, x, y, text )
    HPDF_Page_EndText( page )
 
    HPDF_Page_SetFontAndSize( page, font, fsize )
-   HPDF_Page_SetRGBFill( page, c[ 1 ], c[ 2 ], c[ 3 ] )
+   HPDF_Page_SetRGBFill( page, c[1], c[2], c[3] )
 
    RETURN
 
@@ -1126,7 +1126,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    /* B */
    HPDF_Page_SetRGBFill( page, 0, 0, 1.0 )
    HPDF_Page_MoveTo( page, 100, 100 )
-   HPDF_Page_LineTo( page, pos[ 1 ], pos[ 2 ] )
+   HPDF_Page_LineTo( page, pos[1], pos[2] )
    HPDF_Page_Arc(page, 100, 100, 80, 360 * 0.45, 360 * 0.7)
    pos := HPDF_Page_GetCurrentPos( page )
    HPDF_Page_LineTo( page, 100, 100 )
@@ -1135,7 +1135,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    /* C */
    HPDF_Page_SetRGBFill( page, 0, 1.0, 0 )
    HPDF_Page_MoveTo( page, 100, 100 )
-   HPDF_Page_LineTo( page, pos[ 1 ], pos[ 2 ] )
+   HPDF_Page_LineTo( page, pos[1], pos[2] )
    HPDF_Page_Arc(page, 100, 100, 80, 360 * 0.7, 360 * 0.85)
    pos := HPDF_Page_GetCurrentPos( page )
    HPDF_Page_LineTo( page, 100, 100 )
@@ -1144,7 +1144,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    /* D */
    HPDF_Page_SetRGBFill( page, 1.0, 1.0, 0 )
    HPDF_Page_MoveTo( page, 100, 100 )
-   HPDF_Page_LineTo( page, pos[ 1 ], pos[ 2 ] )
+   HPDF_Page_LineTo( page, pos[1], pos[2] )
    HPDF_Page_Arc(page, 100, 100, 80, 360 * 0.85, 360)
 #if 0
    pos := HPDF_Page_GetCurrentPos( page )
@@ -1221,42 +1221,42 @@ STATIC PROCEDURE Page_Annotation( pdf )
    HPDF_Page_SetFontAndSize( page, font, 11 )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect1[ 1 ] + 35, rect1[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect1[1] + 35, rect1[2] - 20 )
    HPDF_Page_ShowText( page, "Comment Icon." )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect2[ 1 ] + 35, rect2[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect2[1] + 35, rect2[2] - 20 )
    HPDF_Page_ShowText( page, "Key Icon" )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect3[ 1 ] + 35, rect3[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect3[1] + 35, rect3[2] - 20 )
    HPDF_Page_ShowText( page, "Note Icon." )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect4[ 1 ] + 35, rect4[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect4[1] + 35, rect4[2] - 20 )
    HPDF_Page_ShowText( page, "Help Icon" )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect5[ 1 ] + 35, rect5[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect5[1] + 35, rect5[2] - 20 )
    HPDF_Page_ShowText( page, "NewParagraph Icon" )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect6[ 1 ] + 35, rect6[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect6[1] + 35, rect6[2] - 20 )
    HPDF_Page_ShowText( page, "Paragraph Icon" )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect7[ 1 ] + 35, rect7[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect7[1] + 35, rect7[2] - 20 )
    HPDF_Page_ShowText( page, "Insert Icon" )
    HPDF_Page_EndText( page )
 
    HPDF_Page_BeginText( page )
-   HPDF_Page_MoveTextPos( page, rect8[ 1 ] + 35, rect8[ 2 ] - 20 )
+   HPDF_Page_MoveTextPos( page, rect8[1] + 35, rect8[2] - 20 )
    HPDF_Page_ShowText( page, "Text Icon(ISO8859-2 text)" )
    HPDF_Page_EndText( page )
 

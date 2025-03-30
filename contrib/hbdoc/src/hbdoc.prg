@@ -149,8 +149,8 @@ PROCEDURE Main(...)
       "not in hbextern"     => {} }
 
    IF Empty(aArgs) .OR. ;
-      aArgs[ 1 ] == "-h" .OR. ;
-      aArgs[ 1 ] == "--help"
+      aArgs[1] == "-h" .OR. ;
+      aArgs[1] == "--help"
       ShowHelp( , aArgs )
       RETURN
    ENDIF
@@ -289,28 +289,28 @@ PROCEDURE Main(...)
             NEXT
 
             FOR EACH item IN sc_hConstraint[ "categories" ]
-               item[ 3 ] := Filename( item:__enumKey() )
+               item[3] := Filename( item:__enumKey() )
             NEXT
 
             FOR EACH item IN sc_hConstraint[ "categories" ]
 
-               oDocument := Eval( generatorClass ):NewDocument( cFormat, item[ 3 ], hb_StrFormat( "Harbour Reference Guide — %1$s", item:__enumKey() ), s_hSwitches[ "lang" ] )
+               oDocument := Eval( generatorClass ):NewDocument( cFormat, item[3], hb_StrFormat( "Harbour Reference Guide — %1$s", item:__enumKey() ), s_hSwitches[ "lang" ] )
 
                IF oIndex != NIL
                   oIndex:BeginSection( item:__enumKey(), oDocument:cFilename )
                ENDIF
                oDocument:BeginSection( item:__enumKey(), oDocument:cFilename )
 
-               FOR idx := 1 TO Len(item[ 2 ])
-                  IF !Empty(item[ 2 ][ idx ])
-                     ASort( item[ 2 ][ idx ], , , {| oL, oR | oL:fld[ "NAME" ] <= oR:fld[ "NAME" ] } )
-                     IF Len(item[ 1 ][ idx ]) > 0
+               FOR idx := 1 TO Len(item[2])
+                  IF !Empty(item[2][ idx ])
+                     ASort( item[2][ idx ], , , {| oL, oR | oL:fld[ "NAME" ] <= oR:fld[ "NAME" ] } )
+                     IF Len(item[1][ idx ]) > 0
                         IF oIndex != NIL
-                           oIndex:BeginSection( item[ 1 ][ idx ], oDocument:cFilename )
+                           oIndex:BeginSection( item[1][ idx ], oDocument:cFilename )
                         ENDIF
-                        oDocument:BeginSection( item[ 1 ][ idx ], oDocument:cFilename )
+                        oDocument:BeginSection( item[1][ idx ], oDocument:cFilename )
                      ENDIF
-                     FOR EACH item4 IN item[ 2 ][ idx ]
+                     FOR EACH item4 IN item[2][ idx ]
                         IF !Empty(item4)
                            IF !( Right(item4:_sourcefile, Len("1stread.txt")) == "1stread.txt" )
                               IF oIndex != NIL
@@ -320,16 +320,16 @@ PROCEDURE Main(...)
                               IF oIndex != NIL
                                  oDocument:AddReference( "Index", oIndex:cFilename )
                                  /* this kind of works; the reference is outputed but it is not what I meant */
-                                 oDocument:AddReference( item:__enumKey(), oIndex:cFilename, item[ 3 ] )
+                                 oDocument:AddReference( item:__enumKey(), oIndex:cFilename, item[3] )
                               ENDIF
                            ENDIF
                         ENDIF
                      NEXT
-                     IF Len(item[ 1 ][ idx ]) > 0
+                     IF Len(item[1][ idx ]) > 0
                         IF oIndex != NIL
-                           oIndex:EndSection( item[ 1 ][ idx ], oDocument:cFilename )
+                           oIndex:EndSection( item[1][ idx ], oDocument:cFilename )
                         ENDIF
-                        oDocument:EndSection( item[ 1 ][ idx ], oDocument:cFilename )
+                        oDocument:EndSection( item[1][ idx ], oDocument:cFilename )
                      ENDIF
                   ENDIF
                NEXT
@@ -423,7 +423,7 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
    IF !Empty(aEntry)
 
 #if 1
-      hb_MemoWrit( "_" + aEntry[ 1 ][ "_COMPONENT" ] + ".json", hb_jsonEncode( aEntry, .t. ) )
+      hb_MemoWrit( "_" + aEntry[1][ "_COMPONENT" ] + ".json", hb_jsonEncode( aEntry, .t. ) )
 #endif
 
       nOldContentLen := Len(aContent)
@@ -589,7 +589,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField("SUBCATEGORY")
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
+               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][1], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
@@ -669,7 +669,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
             idxSubCategory := o:SubcategoryIndex( o:fld[ "CATEGORY" ], "" )
          ENDIF
          IF idxSubCategory > 0
-            AAdd(sc_hConstraint[ "categories" ][ idxCategory ][ 2 ][ idxSubCategory ], o)
+            AAdd(sc_hConstraint[ "categories" ][ idxCategory ][2][ idxSubCategory ], o)
          ENDIF
       ENDIF
    ENDIF
@@ -766,7 +766,7 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
    LOCAL aHelp
 
    DO CASE
-   CASE Empty(aArgs) .OR. Len(aArgs) <= 1 .OR. Empty(aArgs[ 1 ])
+   CASE Empty(aArgs) .OR. Len(aArgs) <= 1 .OR. Empty(aArgs[1])
       aHelp := { ;
          cExtraMessage, ;
          "Harbour++ Document Compiler (hbdoc) " + HBRawVersion(), ;
@@ -794,24 +794,24 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
             "-include-doc-source             output is to indicate the document source file name", ;
          } }
 
-   CASE aArgs[ 2 ] == "Categories"
+   CASE aArgs[2] == "Categories"
       aHelp := { ;
          "Defined categories and sub-categories are:", ;
          sc_hConstraint[ "categories" ] }
 
-   CASE aArgs[ 2 ] == "Templates"
+   CASE aArgs[2] == "Templates"
       aHelp := { ;
-         IIf(Len(aArgs) >= 3, aArgs[ 3 ] + " template is:", "Defined templates are:"), ;
+         IIf(Len(aArgs) >= 3, aArgs[3] + " template is:", "Defined templates are:"), ;
          "", ;
-         {|| ShowTemplatesHelp( IIf(Len(aArgs) >= 3, aArgs[ 3 ], NIL), s_hSwitches[ "DELIMITER" ] ) } }
+         {|| ShowTemplatesHelp( IIf(Len(aArgs) >= 3, aArgs[3], NIL), s_hSwitches[ "DELIMITER" ] ) } }
 
-   CASE aArgs[ 2 ] == "Compliance"
+   CASE aArgs[2] == "Compliance"
       aHelp := { ;
          "Defined 'COMPLIANCE' are:", ;
          "", ;
          {|| ShowComplianceHelp() } }
 
-   CASE aArgs[ 2 ] == "Platforms"
+   CASE aArgs[2] == "Platforms"
       aHelp := { ;
          "Defined 'PLATFORMS' are:", ;
          "", ;
@@ -1066,7 +1066,7 @@ METHOD Entry:IsOutput( cField )
 
 METHOD Entry:SubcategoryIndex( cCategory, cSubcategory )
    RETURN IIf(cCategory $ sc_hConstraint[ "categories" ], ;
-      hb_AScan( sc_hConstraint[ "categories" ][ cCategory ][ 1 ], cSubcategory, , , .T. ), ;
+      hb_AScan( sc_hConstraint[ "categories" ][ cCategory ][1], cSubcategory, , , .T. ), ;
       0)
 
 FUNCTION FieldIDList()
@@ -1318,10 +1318,10 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
 
          IF !Empty(pRegex := hb_regexComp( cFilter, .T., .T. ))
             FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
-               IF tmp[ 2 ] $ hAll
-                  hAll[ tmp[ 2 ] ] += "," + cName
+               IF tmp[2] $ hAll
+                  hAll[ tmp[2] ] += "," + cName
                ELSE
-                  hAll[ tmp[ 2 ] ] := cName
+                  hAll[ tmp[2] ] := cName
                ENDIF
             NEXT
          ENDIF

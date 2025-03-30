@@ -85,7 +85,7 @@ PROCEDURE Main()
 
    ? "EVP_SealInit", EVP_SealInit( ctx, "AES-192-OFB", @a, @iv, { pub } )
    ? ValType(a), Len(a)
-   ? ValType(a[ 1 ]), ">" + hb_StrToHex( a[ 1 ] ) + "<"
+   ? ValType(a[1]), ">" + hb_StrToHex( a[1] ) + "<"
    ? ValType(iv), ">" + hb_StrToHex( iv ) + "<"
 
    ? "EVP_PKEY_free", EVP_PKEY_free( pub )

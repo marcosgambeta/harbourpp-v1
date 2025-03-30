@@ -28,7 +28,7 @@ PROCEDURE Main( cFileName )
    ENDIF
 
    aUserData := Array(1)
-   aUserData[ 1 ] := 1
+   aUserData[1] := 1
 
    ? XML_GetUserData(p)
    XML_SetUserData(p, aUserData)
@@ -50,7 +50,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttr )
 
    LOCAL aItem
 
-   ? Replicate( "  ", aUserData[ 1 ] ), cElement
+   ? Replicate( "  ", aUserData[1] ), cElement
 
    IF !Empty(aAttr)
       FOR EACH aItem IN aAttr
@@ -58,7 +58,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttr )
       NEXT
    ENDIF
 
-   ++aUserData[ 1 ]
+   ++aUserData[1]
 
    RETURN
 
@@ -67,7 +67,7 @@ STATIC PROCEDURE cb_end(aUserData, cElement)
    HB_SYMBOL_UNUSED(aUserData)
    HB_SYMBOL_UNUSED(cElement)
 
-   --aUserData[ 1 ]
+   --aUserData[1]
 
    RETURN
 

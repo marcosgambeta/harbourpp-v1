@@ -223,8 +223,8 @@ STATIC FUNCTION IPAddr2Num( cIP )
    LOCAL aA, n1, n2, n3, n4
 
    aA := hb_regex( "^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", cIP )
-   IF Len(aA) == 5 .AND. ( n1 := Val( aA[ 2 ] ) ) <= 255 .AND. ( n2 := Val( aA[ 3 ] ) ) <= 255 .AND. ;
-         ( n3 := Val( aA[ 4 ] ) ) <= 255 .AND. ( n4 := Val( aA[ 5 ] ) ) <= 255
+   IF Len(aA) == 5 .AND. ( n1 := Val( aA[2] ) ) <= 255 .AND. ( n2 := Val( aA[3] ) ) <= 255 .AND. ;
+         ( n3 := Val( aA[4] ) ) <= 255 .AND. ( n4 := Val( aA[5] ) ) <= 255
       RETURN ( ( ( n1 * 256 ) + n2 ) * 256 + n3 ) * 256 + n4
    ENDIF
 
@@ -297,8 +297,8 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
    NEXT
 
    FOR EACH aI IN aDeny
-      nAddr := aI[ 1 ]
-      nAddr2 := aI[ 2 ]
+      nAddr := aI[1]
+      nAddr2 := aI[2]
 
       // Delete from filter
       hb_HHasKey(aFilter, nAddr, @nPos)
@@ -446,13 +446,13 @@ STATIC FUNCTION ProcessConnection( oServer )
       aServer := { => }
       aServer[ "HTTPS" ] := oServer:hConfig[ "SSL" ]
       IF !Empty(aI := hb_socketGetPeerName( hSocket ))
-         aServer[ "REMOTE_ADDR" ] := aI[ 2 ]
+         aServer[ "REMOTE_ADDR" ] := aI[2]
          aServer[ "REMOTE_HOST" ] := aServer[ "REMOTE_ADDR" ] // no reverse DNS
-         aServer[ "REMOTE_PORT" ] := aI[ 3 ]
+         aServer[ "REMOTE_PORT" ] := aI[3]
       ENDIF
       IF !Empty(aI := hb_socketGetSockName( hSocket ))
-         aServer[ "SERVER_ADDR" ] := aI[ 2 ]
-         aServer[ "SERVER_PORT" ] := aI[ 3 ]
+         aServer[ "SERVER_ADDR" ] := aI[2]
+         aServer[ "SERVER_PORT" ] := aI[3]
       ENDIF
 
       /* Firewall */
@@ -715,7 +715,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
       // Unlock session
       IF t_aSessionData != NIL
          session := NIL
-         hb_mutexUnlock( t_aSessionData[ 1 ] )
+         hb_mutexUnlock( t_aSessionData[1] )
          t_aSessionData := NIL
       ENDIF
    ELSE
@@ -733,17 +733,17 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
    aRequest := hb_ATokens( Left(cRequest, nI - 1), CR_LF )
    cRequest := SubStr(cRequest, nI + 4)
 
-   aLine := hb_ATokens( aRequest[ 1 ], " " )
+   aLine := hb_ATokens( aRequest[1], " " )
 
-   server[ "REQUEST_ALL" ] := aRequest[ 1 ]
-   IF Len(aLine) == 3 .AND. Left(aLine[ 3 ], 5) == "HTTP/"
-      server[ "REQUEST_METHOD" ] := aLine[ 1 ]
-      server[ "REQUEST_URI" ] := aLine[ 2 ]
-      server[ "SERVER_PROTOCOL" ] := aLine[ 3 ]
+   server[ "REQUEST_ALL" ] := aRequest[1]
+   IF Len(aLine) == 3 .AND. Left(aLine[3], 5) == "HTTP/"
+      server[ "REQUEST_METHOD" ] := aLine[1]
+      server[ "REQUEST_URI" ] := aLine[2]
+      server[ "SERVER_PROTOCOL" ] := aLine[3]
    ELSE
-      server[ "REQUEST_METHOD" ] := aLine[ 1 ]
-      server[ "REQUEST_URI" ] := IIf(Len(aLine) >= 2, aLine[ 2 ], "")
-      server[ "SERVER_PROTOCOL" ] := IIf(Len(aLine) >= 3, aLine[ 3 ], "")
+      server[ "REQUEST_METHOD" ] := aLine[1]
+      server[ "REQUEST_URI" ] := IIf(Len(aLine) >= 2, aLine[2], "")
+      server[ "SERVER_PROTOCOL" ] := IIf(Len(aLine) >= 3, aLine[3], "")
       RETURN NIL
    ENDIF
 
@@ -902,7 +902,7 @@ STATIC FUNCTION MakeResponse( hConfig )
       t_cResult := "<html><body><h1>" + cStatus + "</h1></body></html>"
    ENDIF
    UAddHeader( "Content-Length", hb_ntos( Len(t_cResult) ) )
-   AEval( t_aHeader, {| x | cRet += x[ 1 ] + ": " + x[ 2 ] + CR_LF } )
+   AEval( t_aHeader, {| x | cRet += x[1] + ": " + x[2] + CR_LF } )
    cRet += CR_LF
    Eval( hConfig[ "Trace" ], cRet )
    cRet += t_cResult
@@ -1137,8 +1137,8 @@ FUNCTION UGetHeader( cType )
 
    LOCAL nI
 
-   IF ( nI := AScan( t_aHeader, {| x | Upper(x[ 1 ]) == Upper(cType) } ) ) > 0
-      RETURN t_aHeader[ nI ][ 2 ]
+   IF ( nI := AScan( t_aHeader, {| x | Upper(x[1]) == Upper(cType) } ) ) > 0
+      RETURN t_aHeader[ nI ][2]
    ENDIF
 
    RETURN NIL
@@ -1147,8 +1147,8 @@ PROCEDURE UAddHeader( cType, cValue )
 
    LOCAL nI
 
-   IF ( nI := AScan( t_aHeader, {| x | Upper(x[ 1 ]) == Upper(cType) } ) ) > 0
-      t_aHeader[ nI ][ 2 ] := cValue
+   IF ( nI := AScan( t_aHeader, {| x | Upper(x[1]) == Upper(cType) } ) ) > 0
+      t_aHeader[ nI ][2] := cValue
    ELSE
       AAdd(t_aHeader, { cType, cValue })
    ENDIF
@@ -1179,16 +1179,16 @@ STATIC PROCEDURE USessionCreateInternal()
    hMtx := hb_mutexCreate()
    hb_mutexLock( hMtx )
    t_aSessionData := httpd:hSession[ cSID ] := { hMtx, { "_unique" => hb_MD5( Str( hb_Random(), 15, 12 ) ) }, hb_MilliSeconds() + SESSION_TIMEOUT * 1000, cSID }
-   session := t_aSessionData[ 2 ]
+   session := t_aSessionData[2]
    UAddHeader( "Set-Cookie", "SESSID=" + cSID + "; path=/" )
 
    RETURN
 
 STATIC PROCEDURE USessionDestroyInternal()
 
-   hb_HDel( httpd:hSession, t_aSessionData[ 4 ] )
-   hb_mutexUnlock( t_aSessionData[ 1 ] )
-   UAddHeader( "Set-Cookie", "SESSID=" + t_aSessionData[ 4 ] + "; path=/; Max-Age=0" )
+   hb_HDel( httpd:hSession, t_aSessionData[4] )
+   hb_mutexUnlock( t_aSessionData[1] )
+   UAddHeader( "Set-Cookie", "SESSID=" + t_aSessionData[4] + "; path=/; Max-Age=0" )
 
    RETURN
 
@@ -1208,12 +1208,12 @@ PROCEDURE USessionStart()
 
       // Session exists
       t_aSessionData := httpd:hSession[ cSID ]
-      IF hb_mutexLock( t_aSessionData[ 1 ], 0 )
+      IF hb_mutexLock( t_aSessionData[1], 0 )
 
          // No concurrent sessions
-         IF t_aSessionData[ 3 ] > hb_MilliSeconds()
-            t_aSessionData[ 3 ] := hb_MilliSeconds() + SESSION_TIMEOUT * 1000
-            session := t_aSessionData[ 2 ]
+         IF t_aSessionData[3] > hb_MilliSeconds()
+            t_aSessionData[3] := hb_MilliSeconds() + SESSION_TIMEOUT * 1000
+            session := t_aSessionData[2]
          ELSE
             USessionDestroyInternal()
             USessionCreateInternal()
@@ -1224,15 +1224,15 @@ PROCEDURE USessionStart()
          hb_mutexUnlock( httpd:hmtxSession )
 
          // Wait for session
-         hb_mutexLock( t_aSessionData[ 1 ] )
+         hb_mutexLock( t_aSessionData[1] )
 
          // Check if session is not destroyed
          hb_mutexLock( httpd:hmtxSession )
          IF hb_HHasKey(httpd:hSession, cSID)
             // Session exists
-            IF t_aSessionData[ 3 ] > hb_MilliSeconds()
-               t_aSessionData[ 3 ] := hb_MilliSeconds() + SESSION_TIMEOUT * 1000
-               session := t_aSessionData[ 2 ]
+            IF t_aSessionData[3] > hb_MilliSeconds()
+               t_aSessionData[3] := hb_MilliSeconds() + SESSION_TIMEOUT * 1000
+               session := t_aSessionData[2]
             ELSE
                USessionDestroyInternal()
                USessionCreateInternal()
@@ -1250,7 +1250,7 @@ PROCEDURE USessionStart()
 PROCEDURE USessionStop()
 
    session := NIL
-   hb_mutexUnlock( t_aSessionData[ 1 ] )
+   hb_mutexUnlock( t_aSessionData[1] )
    t_aSessionData := NIL
 
    RETURN
@@ -1447,18 +1447,18 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       aDir := Directory( UOsFileName( cFileName ), "D" )
       IF hb_HHasKey(get, "s")
          IF get[ "s" ] == "s"
-            ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-               IIf(Y[ 5 ] == "D", .F., X[ 2 ] < Y[ 2 ])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
+               IIf(Y[5] == "D", .F., X[2] < Y[2])) } )
          ELSEIF get[ "s" ] == "m"
-            ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-               IIf(Y[ 5 ] == "D", .F., DToS( X[ 3 ] ) + X[ 4 ] < DToS( Y[ 3 ] ) + Y[ 4 ])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
+               IIf(Y[5] == "D", .F., DToS( X[3] ) + X[4] < DToS( Y[3] ) + Y[4])) } )
          ELSE
-            ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-               IIf(Y[ 5 ] == "D", .F., X[ 1 ] < Y[ 1 ])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
+               IIf(Y[5] == "D", .F., X[1] < Y[1])) } )
          ENDIF
       ELSE
-         ASort( aDir,,, {| X, Y | IIf(X[ 5 ] == "D", IIf(Y[ 5 ] == "D", X[ 1 ] < Y[ 1 ], .T.), ;
-            IIf(Y[ 5 ] == "D", .F., X[ 1 ] < Y[ 1 ])) } )
+         ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
+            IIf(Y[5] == "D", .F., X[1] < Y[1])) } )
       ENDIF
 
       UWrite( '<html><body><h1>Index of ' + server[ "SCRIPT_NAME" ] + '</h1><pre>' )
@@ -1466,13 +1466,13 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       UWrite( '<a href="?s=m">Modified</a>' )
       UWrite( '<a href="?s=s">Size</a>' + CR_LF + '<hr>' )
       FOR EACH aF IN aDir
-         IF Left(aF[ 1 ], 1) == "."
-         ELSEIF "D" $ aF[ 5 ]
-            UWrite( '[DIR] <a href="' + aF[ 1 ] + '/">' + aF[ 1 ] + '</a>' + Space( 50 - Len(aF[ 1 ]) ) + ;
-               DToC(aF[ 3 ]) + ' ' + aF[ 4 ] + CR_LF )
+         IF Left(aF[1], 1) == "."
+         ELSEIF "D" $ aF[5]
+            UWrite( '[DIR] <a href="' + aF[1] + '/">' + aF[1] + '</a>' + Space( 50 - Len(aF[1]) ) + ;
+               DToC(aF[3]) + ' ' + aF[4] + CR_LF )
          ELSE
-            UWrite( '      <a href="' + aF[ 1 ] + '">' + aF[ 1 ] + '</a>' + Space( 50 - Len(aF[ 1 ]) ) + ;
-               DToC(aF[ 3 ]) + ' ' + aF[ 4 ] + Str( aF[ 2 ], 12 ) + CR_LF )
+            UWrite( '      <a href="' + aF[1] + '">' + aF[1] + '</a>' + Space( 50 - Len(aF[1]) ) + ;
+               DToC(aF[3]) + ' ' + aF[4] + Str( aF[2], 12 ) + CR_LF )
          ENDIF
       NEXT
       UWrite( "<hr></pre></body></html>" )
@@ -1538,14 +1538,14 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
       cExtend := NIL
       cRet := ""
       FOR EACH aInstr IN aCode
-         SWITCH aInstr[ 1 ]
+         SWITCH aInstr[1]
          CASE "txt"
-            cRet += aInstr[ 2 ]
+            cRet += aInstr[2]
             EXIT
 
          CASE "="
-            IF hb_HHasKey(aData, aInstr[ 2 ])
-               xValue := aData[ aInstr[ 2 ] ]
+            IF hb_HHasKey(aData, aInstr[2])
+               xValue := aData[ aInstr[2] ]
                IF HB_IsString(xValue)
                   cRet += UHtmlEncode( xValue )
                ELSEIF HB_IsNumeric(xValue)
@@ -1560,13 +1560,13 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                   Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ) )
                ENDIF
             ELSE
-               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[ 2 ] ) )
+               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[2] ) )
             ENDIF
             EXIT
 
          CASE ":"
-            IF hb_HHasKey(aData, aInstr[ 2 ])
-               xValue := aData[ aInstr[ 2 ] ]
+            IF hb_HHasKey(aData, aInstr[2])
+               xValue := aData[ aInstr[2] ]
                IF HB_IsString(xValue)
                   cRet += xValue
                ELSEIF HB_IsNumeric(xValue)
@@ -1581,39 +1581,39 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                   Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ) )
                ENDIF
             ELSE
-               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[ 2 ] ) )
+               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[2] ) )
             ENDIF
             EXIT
 
          CASE "if"
-            xValue := IIf(hb_HHasKey(aData, aInstr[ 2 ]), aData[ aInstr[ 2 ] ], NIL)
+            xValue := IIf(hb_HHasKey(aData, aInstr[2]), aData[ aInstr[2] ], NIL)
             IF !Empty(xValue)
-               cRet += parse_data(aData, aInstr[ 3 ], hConfig)
+               cRet += parse_data(aData, aInstr[3], hConfig)
             ELSE
-               cRet += parse_data(aData, aInstr[ 4 ], hConfig)
+               cRet += parse_data(aData, aInstr[4], hConfig)
             ENDIF
             EXIT
 
          CASE "loop"
-            IF hb_HHasKey(aData, aInstr[ 2 ]) .AND. HB_IsArray(aValue := aData[ aInstr[ 2 ] ])
+            IF hb_HHasKey(aData, aInstr[2]) .AND. HB_IsArray(aValue := aData[ aInstr[2] ])
                FOR EACH xValue IN aValue
                   aData2 := hb_HClone( aData )
-                  hb_HEval( xValue, {| k, v | aData2[ aInstr[ 2 ] + "." + k ] := v } )
-                  aData2[ aInstr[ 2 ] + ".__index" ] := xValue:__enumIndex
-                  cRet += parse_data(aData2, aInstr[ 3 ], hConfig)
+                  hb_HEval( xValue, {| k, v | aData2[ aInstr[2] + "." + k ] := v } )
+                  aData2[ aInstr[2] + ".__index" ] := xValue:__enumIndex
+                  cRet += parse_data(aData2, aInstr[3], hConfig)
                   aData2 := NIL
                NEXT
             ELSE
-               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: loop variable '%s' not found", aInstr[ 2 ] ) )
+               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: loop variable '%s' not found", aInstr[2] ) )
             ENDIF
             EXIT
 
          CASE "extend"
-            cExtend := aInstr[ 2 ]
+            cExtend := aInstr[2]
             EXIT
 
          CASE "include"
-            cRet += parse_data(aData, compile_file( aInstr[ 2 ], hConfig ), hConfig)
+            cRet += parse_data(aData, compile_file( aInstr[2], hConfig ), hConfig)
             EXIT
          ENDSWITCH
       NEXT
@@ -1675,9 +1675,9 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
 
          CASE "if"
             AAdd(aCode, { "if", cParam, {}, {} })
-            nI := compile_buffer( cTpl, nE + 2, ATail( aCode )[ 3 ] )
+            nI := compile_buffer( cTpl, nE + 2, ATail( aCode )[3] )
             IF SubStr(cTpl, nI, 8) == "{{else}}"
-               nI := compile_buffer( cTpl, nI + 8, ATail( aCode )[ 4 ] )
+               nI := compile_buffer( cTpl, nI + 8, ATail( aCode )[4] )
             ENDIF
             IF SubStr(cTpl, nI, 9) == "{{endif}}"
                nStart := nI + 9
@@ -1688,7 +1688,7 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
 
          CASE "loop"
             AAdd(aCode, { "loop", cParam, {} })
-            nI := compile_buffer( cTpl, nE + 2, ATail( aCode )[ 3 ] )
+            nI := compile_buffer( cTpl, nE + 2, ATail( aCode )[3] )
             IF SubStr(cTpl, nI, 11) == "{{endloop}}"
                nStart := nI + 11
             ELSE

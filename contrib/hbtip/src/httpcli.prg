@@ -152,8 +152,8 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim(hb_CStr( item[ 1 ] )) ) + "=" + ;
-            tip_URLEncode(          hb_CStr( item[ 2 ] ) )
+            tip_URLEncode( AllTrim(hb_CStr( item[1] )) ) + "=" + ;
+            tip_URLEncode(          hb_CStr( item[2] ) )
          IF !item:__enumIsLast()
             cData += "&"
          ENDIF
@@ -240,10 +240,10 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       ::nReplyCode := 0
       ::cReplyDescr := ""
    ELSE
-      ::nVersion := Val( aVersion[ 2 ] )
-      ::nSubversion := Val( aVersion[ 3 ] )
-      ::nReplyCode := Val( aVersion[ 4 ] )
-      ::cReplyDescr := aVersion[ 5 ]
+      ::nVersion := Val( aVersion[2] )
+      ::nSubversion := Val( aVersion[3] )
+      ::nReplyCode := Val( aVersion[4] )
+      ::cReplyDescr := aVersion[5]
    ENDIF
 
    ::nLength := -1
@@ -259,22 +259,22 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
          LOOP
       ENDIF
 
-      ::hHeaders[ aHead[ 1 ] ] := LTrim(aHead[ 2 ])
+      ::hHeaders[ aHead[1] ] := LTrim(aHead[2])
 
       DO CASE
       // RFC 2068 forces to discard content length on chunked encoding
-      CASE Lower(aHead[ 1 ]) == "content-length" .AND. ! ::bChunked
+      CASE Lower(aHead[1]) == "content-length" .AND. ! ::bChunked
          cLine := SubStr(cLine, 16)
          ::nLength := Val( cLine )
 
       // as above
-      CASE Lower(aHead[ 1 ]) == "transfer-encoding"
+      CASE Lower(aHead[1]) == "transfer-encoding"
          IF "chunked" $ Lower(cLine)
             ::bChunked := .T.
             ::nLength := -1
          ENDIF
-      CASE Lower(aHead[ 1 ]) == "set-cookie"
-         ::setCookie( aHead[ 2 ] )
+      CASE Lower(aHead[1]) == "set-cookie"
+         ::setCookie( aHead[2] )
       ENDCASE
 
       cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
@@ -316,7 +316,7 @@ METHOD TIPClientHTTP:Read( nLen )
          DO WHILE ! ( cLine := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nPos, 1024 ), "" ) ) == ""
             // add Headers to footers
             IF Len(aHead := hb_regexSplit( ":", cLine,,, 1 )) == 2
-               ::hHeaders[ aHead[ 1 ] ] := LTrim(aHead[ 2 ])
+               ::hHeaders[ aHead[1] ] := LTrim(aHead[2])
             ENDIF
          ENDDO
 
@@ -391,19 +391,19 @@ METHOD PROCEDURE TIPClientHTTP:setCookie( cLine )
    FOR EACH x IN hb_regexSplit( ";", cLine )
       IF Len(aElements := hb_regexSplit( "=", x, 1 )) == 2
          IF x:__enumIsFirst()
-            cName := AllTrim(aElements[ 1 ])
-            cValue := AllTrim(aElements[ 2 ])
+            cName := AllTrim(aElements[1])
+            cValue := AllTrim(aElements[2])
          ELSE
-            SWITCH Upper(AllTrim(aElements[ 1 ]))
+            SWITCH Upper(AllTrim(aElements[1]))
 #if 0
             CASE "EXPIRES"
                EXIT
 #endif
             CASE "PATH"
-               cPath := AllTrim(aElements[ 2 ])
+               cPath := AllTrim(aElements[2])
                EXIT
             CASE "DOMAIN"
-               cHost := AllTrim(aElements[ 2 ])
+               cHost := AllTrim(aElements[2])
                EXIT
             ENDSWITCH
          ENDIF
@@ -520,8 +520,8 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
          IF Len(item) >= 2
             cData += ;
                cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;
-               tip_URLEncode( AllTrim(hb_CStr( item[ 1 ] )) ) + '"' + cCrlf + cCrLf + ;
-               tip_URLEncode( AllTrim(hb_CStr( item[ 2 ] )) ) + cCrLf
+               tip_URLEncode( AllTrim(hb_CStr( item[1] )) ) + '"' + cCrlf + cCrLf + ;
+               tip_URLEncode( AllTrim(hb_CStr( item[2] )) ) + cCrLf
          ENDIF
       NEXT
    CASE HB_IsString(xPostData)
@@ -530,16 +530,16 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    FOR EACH aAttachment IN ::aAttachments
 
-      cFile := hb_defaultValue( aAttachment[ 2 ], "" )
+      cFile := hb_defaultValue( aAttachment[2], "" )
 
-      cType := aAttachment[ 3 ]
+      cType := aAttachment[3]
       IF !HB_IsString(cType) .OR. Empty(cType)
          cType := "text/html"
       ENDIF
 
       cData += cBound + cCrlf + ;
          "Content-Disposition: form-data; " + ;
-         "name=" + '"' + hb_defaultValue( aAttachment[ 1 ], "unspecified" ) + '"' + "; " + ;
+         "name=" + '"' + hb_defaultValue( aAttachment[1], "unspecified" ) + '"' + "; " + ;
          "filename=" + '"' + hb_FNameNameExt( hb_DirSepToOS( cFile ) ) + '"' + cCrlf + ;
          "Content-Type: " + cType + cCrLf + ;
          cCrLf

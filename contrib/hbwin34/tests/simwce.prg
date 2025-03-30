@@ -30,19 +30,19 @@ PROCEDURE Main()
 
    a := o:aGetAllPhoneBookEntries()
    AEval( a, {| n | hb_Alert( { ;
-      "Phone: " + n[ 1 ], ;
-      "Name: " + n[ 2 ], ;
-      "Addr. Type: " + hb_ntos( n[ 3 ] ), ;
-      "Plan Type: " + hb_ntos( n[ 4 ] ) } ) } )
+      "Phone: " + n[1], ;
+      "Name: " + n[2], ;
+      "Addr. Type: " + hb_ntos( n[3] ), ;
+      "Plan Type: " + hb_ntos( n[4] ) } ) } )
 #endif
 
    IF o:lGetSimPhoneEntry( 1, SIM_PBSTORAGE_SIM, @a )
-      hb_Alert( { "ValType() -> " + ValType(a) + " Len() -> " + hb_ntos( Len(a) ), a[ 1 ][ 1 ] } )
+      hb_Alert( { "ValType() -> " + ValType(a) + " Len() -> " + hb_ntos( Len(a) ), a[1][1] } )
       AEval( a, {| n | hb_Alert( { ;
-         "Phone: " + n[ 1 ], ;
-         "Name: " + n[ 2 ], ;
-         "Addr. Type: " + hb_ntos( n[ 3 ] ), ;
-         "Plan Type: " + hb_ntos( n[ 4 ] ), ;
+         "Phone: " + n[1], ;
+         "Name: " + n[2], ;
+         "Addr. Type: " + hb_ntos( n[3] ), ;
+         "Plan Type: " + hb_ntos( n[4] ), ;
          "pos 1" } ) } )
    ELSE
       Alert( "Pos 1 error" )
@@ -50,10 +50,10 @@ PROCEDURE Main()
 
    IF o:lGetSimPhoneEntry( 110, SIM_PBSTORAGE_SIM, @a )
       AEval( a, {| n | hb_Alert( { ;
-         "Phone: " + n[ 1 ], ;
-         "Name: " + n[ 2 ], ;
-         "Addr. Type: " + hb_ntos( n[ 3 ] ), ;
-         "Plan Type: " + hb_ntos( n[ 4 ] ), ;
+         "Phone: " + n[1], ;
+         "Name: " + n[2], ;
+         "Addr. Type: " + hb_ntos( n[3] ), ;
+         "Plan Type: " + hb_ntos( n[4] ), ;
          "pos 110" } ) } )
    ELSE
       Alert( "Pos 123 error" )

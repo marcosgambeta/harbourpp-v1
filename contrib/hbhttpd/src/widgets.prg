@@ -80,15 +80,15 @@ METHOD UWLayoutGrid:Add(oWidget, nRow, nCol)
 
    IF nRow > Len(::aChilds)
       FOR nI := Len(::aChilds) + 1 TO nRow
-         aI := Array( Len(::aChilds[ 1 ]) )
-         FOR nJ := 1 TO Len(::aChilds[ 1 ])
+         aI := Array( Len(::aChilds[1]) )
+         FOR nJ := 1 TO Len(::aChilds[1])
             aI[ nJ ] := {}
          NEXT
          AAdd(::aChilds, aI)
       NEXT
    ENDIF
-   IF nCol > Len(::aChilds[ 1 ])
-      FOR nI := Len(::aChilds[ 1 ]) + 1 TO nCol
+   IF nCol > Len(::aChilds[1])
+      FOR nI := Len(::aChilds[1]) + 1 TO nCol
          AEval( ::aChilds, {| x | AAdd(x, {}) } )
       NEXT
    ENDIF
@@ -315,7 +315,7 @@ METHOD UWMenu:Paint()
       IF nI != 1
          UWrite( '&nbsp;|&nbsp;' )
       ENDIF
-      UWrite( '<a href="' + ::aItems[ nI ][ 2 ] + '">' + UHtmlEncode( ::aItems[ nI ][ 1 ] ) + '</a>' )
+      UWrite( '<a href="' + ::aItems[ nI ][2] + '">' + UHtmlEncode( ::aItems[ nI ][1] ) + '</a>' )
    NEXT
    UWrite( '</div>' )
 
@@ -352,7 +352,7 @@ METHOD UWBrowse:Output()
    // Header
    cRet += '<tr>'
    FOR nI := 1 TO Len(::aColumns)
-      cRet += '<th>' + UHtmlEncode( ::aColumns[ nI ][ 2 ] ) + '</th>'
+      cRet += '<th>' + UHtmlEncode( ::aColumns[ nI ][2] ) + '</th>'
    NEXT
    cRet += '</tr>'
 
@@ -365,7 +365,7 @@ METHOD UWBrowse:Output()
    DO WHILE ! Eof()
       cRet += '<tr>'
       FOR nI := 1 TO Len(::aColumns)
-         xField := ::aColumns[ nI ][ 3 ]
+         xField := ::aColumns[ nI ][3]
          DO CASE
          CASE HB_IsString(xField)
             xI := FieldGet( FieldPos( xField ) )
@@ -378,7 +378,7 @@ METHOD UWBrowse:Output()
          CASE "D"  ; xI := DToC(xI); EXIT
          OTHERWISE ; xI := "ValType()==" + ValType(xI)
          ENDSWITCH
-         IF !::aColumns[ nI ][ 4 ]
+         IF !::aColumns[ nI ][4]
             xI := UHtmlEncode( xI )
          ENDIF
          cRet += '<td><nobr>' + xI + '</nobr></td>'
@@ -443,7 +443,7 @@ METHOD UWOption:Output()
 
    LOCAL cRet := ""
 
-   AEval( ::aOption, {| X | cRet += hb_StrFormat( '<option value="%s"%s>%s</option>', UHtmlEncode( X[ 2 ] ), IIf(X[ 2 ] == ::cValue, " selected", ""), X[ 1 ] ) } )
+   AEval( ::aOption, {| X | cRet += hb_StrFormat( '<option value="%s"%s>%s</option>', UHtmlEncode( X[2] ), IIf(X[2] == ::cValue, " selected", ""), X[1] ) } )
 
    RETURN cRet
 
@@ -463,7 +463,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
       nI := 1
       nL := Min(Len(aURL), Len(aStack))
       DO WHILE nI <= nL
-         IF aStack[ nI ][ 1 ] == aURL[ nI ]
+         IF aStack[ nI ][1] == aURL[ nI ]
             nI++
          ELSE
             EXIT
@@ -473,9 +473,9 @@ PROCEDURE UProcWidgets( cURL, aMap )
       // Exit procedures
       DO WHILE nI <= Len(aStack)
          aFrame := ATail( aStack )
-         IF aFrame[ 2 ] != NIL
-            session[ "_uthis" ] := aFrame[ 3 ]
-            Eval( aFrame[ 2 ], "EXIT" )
+         IF aFrame[2] != NIL
+            session[ "_uthis" ] := aFrame[3]
+            Eval( aFrame[2], "EXIT" )
             session[ "_uthis" ] := NIL
          ENDIF
          ASize( aStack, Len(aStack) - 1 )
@@ -502,14 +502,14 @@ PROCEDURE UProcWidgets( cURL, aMap )
       ENDDO
 
       IF lRet
-         session[ "_uthis" ] := ATail( aStack )[ 3 ]
+         session[ "_uthis" ] := ATail( aStack )[3]
          DO CASE
          CASE server[ "REQUEST_METHOD" ] == "GET"
-            Eval( ATail( aStack )[ 2 ], "GET" )
+            Eval( ATail( aStack )[2], "GET" )
          CASE server[ "REQUEST_METHOD" ] == "POST"
-            Eval( ATail( aStack )[ 2 ], "POST" )
+            Eval( ATail( aStack )[2], "POST" )
          ENDCASE
-         ATail( aStack )[ 3 ] := session[ "_uthis" ]
+         ATail( aStack )[3] := session[ "_uthis" ]
          session[ "_uthis" ] := NIL
       ENDIF
    ELSE

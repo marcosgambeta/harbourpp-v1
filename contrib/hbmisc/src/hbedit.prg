@@ -479,8 +479,8 @@ FUNCTION SaveBox( top, left, bott, right, color, patt )
 
 PROCEDURE RestBox( oBox )
 
-   RestScreen(oBox[ 1 ], oBox[ 2 ], oBox[ 3 ], oBox[ 4 ], oBox[ 5 ])
-   SetColor(oBox[ 6 ])
+   RestScreen(oBox[1], oBox[2], oBox[3], oBox[4], oBox[5])
+   SetColor(oBox[6])
 
    RETURN
 

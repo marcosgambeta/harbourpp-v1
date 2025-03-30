@@ -117,7 +117,7 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
 
    hb_default(@cColor, {255, 255, 255})
 
-   ::SetColor(cColor[ 1 ], cColor[ 2 ], cColor[ 3 ])
+   ::SetColor(cColor[1], cColor[2], cColor[3])
 
    ::error     := 0
    ::positionY := 0
@@ -127,8 +127,8 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
       ::filename := filename
    ENDIF
 
-   ::FillColor := ::SetColor(::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ])
-   ::BackColor := ::SetColor(::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ])
+   ::FillColor := ::SetColor(::color_f[1], ::color_f[2], ::color_f[3])
+   ::BackColor := ::SetColor(::color_b[1], ::color_b[2], ::color_b[3])
 
    ::Setfont("Arial")
 
@@ -176,16 +176,16 @@ METHOD GDBar:SetText( ptext )
 
 METHOD GDBar:ResetColor()
 
-   ::FillColor := ::SetColor(::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ])
-   ::BackColor := ::SetColor(::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ])
+   ::FillColor := ::SetColor(::color_f[1], ::color_f[2], ::color_f[3])
+   ::BackColor := ::SetColor(::color_b[1], ::color_b[2], ::color_b[3])
 
    RETURN NIL
 
 METHOD GDBar:Allocate()
 
-   LOCAL R := ::color_b[ 1 ]
-   LOCAL G := ::color_b[ 2 ]
-   LOCAL B := ::color_b[ 3 ]
+   LOCAL R := ::color_b[1]
+   LOCAL G := ::color_b[2]
+   LOCAL B := ::color_b[3]
 
    RETURN ::SetColor(R, G, B)
 

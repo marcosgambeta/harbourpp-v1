@@ -416,8 +416,8 @@ FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
    LOCAL aParam := hb_AParams()
    LOCAL nPort // , nTimeout, lIgnorecase
 
-   nPort := aParam[ 1 ]
-   // nTimeout := aParam[ 2 ]
+   nPort := aParam[1]
+   // nTimeout := aParam[2]
    // lIgnorecase := aParam[ Len(aParam) ]
 
    IF !isopenport( nPort )

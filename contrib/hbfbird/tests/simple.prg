@@ -113,7 +113,7 @@ PROCEDURE Main()
 
    aKey := oQuery:GetKeyField()
 
-   ? "Fields: ", oQuery:FCount(), "Primary Key: ", aKey[ 1 ]
+   ? "Fields: ", oQuery:FCount(), "Primary Key: ", aKey[1]
 
    oRow := oQuery:Blank()
 

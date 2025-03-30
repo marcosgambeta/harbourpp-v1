@@ -191,10 +191,10 @@ PROCEDURE OutJpg( cText, nPitch )
    __OutDebug( oI:GetFTFontHeight() )
 #endif
    aSize := oI:GetFTStringSize( cText )
-   nWidth  := aSize[ 1 ]
-   nHeight := aSize[ 2 ]
-   nX      := aSize[ 3 ]
-   nY      := aSize[ 4 ]
+   nWidth  := aSize[1]
+   nHeight := aSize[2]
+   nX      := aSize[3]
+   nY      := aSize[4]
    oI:Resize( nWidth, nHeight )
 
 
@@ -238,8 +238,8 @@ FUNCTION GetVars( cFields, cSeparator )
          LOOP
       ENDIF
 
-      cName  := LTrim(aField[ 1 ])
-      xValue := UrlDecode( aField[ 2 ] )
+      cName  := LTrim(aField[1])
+      xValue := UrlDecode( aField[2] )
 
       // TraceLog( "cName, xValue", cName, xValue )
 
@@ -274,8 +274,8 @@ FUNCTION GetParams( aParams )
          LOOP
       ENDIF
 
-      cName  := LTrim(aField[ 1 ])
-      xValue := UrlDecode( aField[ 2 ] )
+      cName  := LTrim(aField[1])
+      xValue := UrlDecode( aField[2] )
 
       // TraceLog( "cName, xValue", cName, xValue )
 

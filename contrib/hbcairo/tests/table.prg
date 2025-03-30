@@ -49,8 +49,8 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
    dbGoTop()
    aWidth := Array( Len(aCol) )
    FOR nI := 1 TO Len(aCol)
-      aWidth[ nI ] := cairo_text_extents( hCairo, Replicate( "9", FieldLen(FieldPos( aCol[ nI, 2 ] )) ) )[ 5 ]
-      aWidth[ nI ] := Max(aWidth[ nI ], cairo_text_extents( hCairo, aCol[ nI, 1 ] )[ 5 ]) + 20
+      aWidth[ nI ] := cairo_text_extents( hCairo, Replicate( "9", FieldLen(FieldPos( aCol[ nI, 2 ] )) ) )[5]
+      aWidth[ nI ] := Max(aWidth[ nI ], cairo_text_extents( hCairo, aCol[ nI, 1 ] )[5]) + 20
    NEXT
    nW := 0
    AEval( aWidth, {| X | nW += X } )
@@ -114,7 +114,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
 
 STATIC PROCEDURE show_text_right(hCairo, cText)
 
-   cairo_rel_move_to( hCairo, - cairo_text_extents( hCairo, cText )[ 5 ], 0 )
+   cairo_rel_move_to( hCairo, - cairo_text_extents( hCairo, cText )[5], 0 )
    cairo_show_text( hCairo, cText )
 
    RETURN
@@ -122,7 +122,7 @@ STATIC PROCEDURE show_text_right(hCairo, cText)
 
 STATIC PROCEDURE show_text_center( hCairo, cText )
 
-   cairo_rel_move_to( hCairo, -0.5 * cairo_text_extents( hCairo, cText )[ 5 ], 0 )
+   cairo_rel_move_to( hCairo, -0.5 * cairo_text_extents( hCairo, cText )[5], 0 )
    cairo_show_text( hCairo, cText )
 
    RETURN

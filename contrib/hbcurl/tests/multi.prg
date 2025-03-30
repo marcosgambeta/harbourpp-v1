@@ -151,6 +151,6 @@ STATIC FUNCTION CurGet()
 
 STATIC PROCEDURE CurSet( a )
 
-   SetPos( a[ 1 ], a[ 2 ] )
+   SetPos( a[1], a[2] )
 
    RETURN

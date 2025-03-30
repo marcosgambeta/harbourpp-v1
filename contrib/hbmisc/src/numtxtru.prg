@@ -501,7 +501,7 @@ STATIC FUNCTION MnyToStrRaw( nValue, aMsg, aCur, nMode )
       IF nValue == 0
          cRetVal := aMsg[ NTSR_MALE, 1 ]
       ELSE
-         cRetVal := NumToStrRaw( nValue, aMsg, aCur[ 1 ] )
+         cRetVal := NumToStrRaw( nValue, aMsg, aCur[1] )
       ENDIF
    ELSE
       cRetVal := IIf(nValue < 100, StrZero( nValue, 2 ), hb_ntos( nValue ))
@@ -510,16 +510,16 @@ STATIC FUNCTION MnyToStrRaw( nValue, aMsg, aCur, nMode )
    IF !lShort
       nTemp := Int( nValue % 100 )
       IF nTemp >= 5 .AND. nTemp <= 20
-         cTemp := aCur[ 5 ]
+         cTemp := aCur[5]
       ELSEIF nTemp % 10 == 1
-         cTemp := aCur[ 3 ]
+         cTemp := aCur[3]
       ELSEIF nTemp % 10 >= 2 .AND. nTemp % 10 <= 4
-         cTemp := aCur[ 4 ]
+         cTemp := aCur[4]
       ELSE
-         cTemp := aCur[ 5 ]
+         cTemp := aCur[5]
       ENDIF
    ELSE
-      cTemp := aCur[ 2 ]
+      cTemp := aCur[2]
    ENDIF
 
    RETURN cRetVal + " " + cTemp

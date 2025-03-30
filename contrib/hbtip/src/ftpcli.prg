@@ -195,7 +195,7 @@ METHOD TIPClientFTP:ScanLength()
    LOCAL aBytes := hb_regex( ::RegBytes, ::cReply )
 
    IF !Empty(aBytes)
-      ::nLength := Val( aBytes[ 2 ] )
+      ::nLength := Val( aBytes[2] )
    ENDIF
 
    RETURN .T.
@@ -256,8 +256,8 @@ METHOD TIPClientFTP:Pasv()
       RETURN .F.
    ENDIF
 
-   ::cDataServer := aRep[ 2 ] + "." + aRep[ 3 ] + "." + aRep[ 4 ] + "." + aRep[ 5 ]
-   ::nDataPort := Val( aRep[ 6 ] ) * 256 + Val( aRep[ 7 ] )
+   ::cDataServer := aRep[2] + "." + aRep[3] + "." + aRep[4] + "." + aRep[5]
+   ::nDataPort := Val( aRep[6] ) * 256 + Val( aRep[7] )
 
    RETURN .T.
 
@@ -461,7 +461,7 @@ METHOD TIPClientFTP:SendPort()
    LOCAL nPort := hb_inetPort( ::SocketPortServer )
 
    ::inetSendAll( ::SocketCon, "PORT " + ;
-      StrTran(hb_inetGetHosts( NetName() )[ 1 ], ".", ",") + "," + ;
+      StrTran(hb_inetGetHosts( NetName() )[1], ".", ",") + "," + ;
       hb_ntos( Int( nPort / 256 ) ) + "," + hb_ntos( Int( nPort % 256 ) ) + ;
       ::cCRLF )
 

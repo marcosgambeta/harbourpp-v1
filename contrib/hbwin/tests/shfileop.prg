@@ -28,9 +28,9 @@ PROCEDURE Main()
       a, "Harbour SHFile 2" ) )
    ? lAbort
    FOR EACH tmp IN a
-      ? tmp[ 1 ], tmp[ 2 ]
-      FErase( tmp[ 1 ] )
-      FErase( tmp[ 2 ] )
+      ? tmp[1], tmp[2]
+      FErase( tmp[1] )
+      FErase( tmp[2] )
    NEXT
 
    FErase( "rename1.txt" )

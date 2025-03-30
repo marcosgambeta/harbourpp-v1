@@ -97,33 +97,33 @@ STATIC PROCEDURE transform_point( nX, nY, hPath, aLengths )
       nNX -= aLengths[ nI ]
       nI++
       IF nType == CAIRO_PATH_MOVE_TO .OR. nType == CAIRO_PATH_LINE_TO
-         aLast := aPoints[ 1 ]
+         aLast := aPoints[1]
       ELSEIF nType == CAIRO_PATH_CURVE_TO
-         aLast := aPoints[ 3 ]
+         aLast := aPoints[3]
       ENDIF
    ENDDO
 
    IF nType == CAIRO_PATH_MOVE_TO
    ELSEIF nType == CAIRO_PATH_LINE_TO
       nRatio := nNX / aLengths[ nI ]
-      nX := aLast[ 1 ] * ( 1 - nRatio ) + aPoints[ 1, 1 ] * nRatio
-      nY := aLast[ 2 ] * ( 1 - nRatio ) + aPoints[ 1, 2 ] * nRatio
+      nX := aLast[1] * ( 1 - nRatio ) + aPoints[1, 1] * nRatio
+      nY := aLast[2] * ( 1 - nRatio ) + aPoints[1, 2] * nRatio
 
-      nDX := -( aLast[ 1 ] - aPoints[ 1, 1 ] )
-      nDY := -( aLast[ 2 ] - aPoints[ 1, 2 ] )
+      nDX := -( aLast[1] - aPoints[1, 1] )
+      nDY := -( aLast[2] - aPoints[1, 2] )
 
       nRatio := nNY / aLengths[ nI ]
       nX += -nDY * nRatio
       nY += nDX * nRatio
    ELSEIF nType == CAIRO_PATH_CURVE_TO
-      nX := aLast[ 1 ] * ( 1 - nRatio ) ^ 3 + 3 * aPoints[ 1, 1 ] * ( 1 - nRatio ) ^ 2 * nRatio + 3 * aPoints[ 2, 1 ] * ( 1 - nRatio ) * nRatio ^ 2 + aPoints[ 3, 1 ] * nRatio ^ 3
-      nY := aLast[ 2 ] * ( 1 - nRatio ) ^ 3 + 3 * aPoints[ 1, 2 ] * ( 1 - nRatio ) ^ 2 * nRatio + 3 * aPoints[ 2, 2 ] * ( 1 - nRatio ) * nRatio ^ 2 + aPoints[ 3, 2 ] * nRatio ^ 3
+      nX := aLast[1] * ( 1 - nRatio ) ^ 3 + 3 * aPoints[1, 1] * ( 1 - nRatio ) ^ 2 * nRatio + 3 * aPoints[2, 1] * ( 1 - nRatio ) * nRatio ^ 2 + aPoints[3, 1] * nRatio ^ 3
+      nY := aLast[2] * ( 1 - nRatio ) ^ 3 + 3 * aPoints[1, 2] * ( 1 - nRatio ) ^ 2 * nRatio + 3 * aPoints[2, 2] * ( 1 - nRatio ) * nRatio ^ 2 + aPoints[3, 2] * nRatio ^ 3
 
       nK1 := 1 - 4 * nRatio + 3 * nRatio ^ 2
       nK2 := 2 * nRatio - 3 * nRatio ^ 2
 
-      nDX := -3 * aLast[ 1 ] * ( 1 - nRatio ) ^ 2 + 3 * aPoints[ 1, 1 ] * nK1 + 3 * aPoints[ 2, 1 ] * nK2 + 3 * aPoints[ 3, 1 ] * nRatio ^ 2
-      nDY := -3 * aLast[ 2 ] * ( 1 - nRatio ) ^ 2 + 3 * aPoints[ 1, 2 ] * nK1 + 3 * aPoints[ 2, 2 ] * nK2 + 3 * aPoints[ 3, 2 ] * nRatio ^ 2
+      nDX := -3 * aLast[1] * ( 1 - nRatio ) ^ 2 + 3 * aPoints[1, 1] * nK1 + 3 * aPoints[2, 1] * nK2 + 3 * aPoints[3, 1] * nRatio ^ 2
+      nDY := -3 * aLast[2] * ( 1 - nRatio ) ^ 2 + 3 * aPoints[1, 2] * nK1 + 3 * aPoints[2, 2] * nK2 + 3 * aPoints[3, 2] * nRatio ^ 2
 
       nRatio := nNY / Sqrt( nDX * nDX + nDY * nDY )
       nX += -nDY * nRatio
@@ -144,14 +144,14 @@ STATIC FUNC path_lengths( hPath )
       aPoints := cairo_path_iterator_get_points( hIterator )
       nLen := 0
       IF nType == CAIRO_PATH_MOVE_TO
-         aLast := aPoints[ 1 ]
+         aLast := aPoints[1]
       ELSEIF nType == CAIRO_PATH_LINE_TO
-         nLen := distance( aLast[ 1 ], aLast[ 2 ], aPoints[ 1, 1 ], aPoints[ 1, 2 ] )
-         aLast := aPoints[ 1 ]
+         nLen := distance( aLast[1], aLast[2], aPoints[1, 1], aPoints[1, 2] )
+         aLast := aPoints[1]
       ELSEIF nType == CAIRO_PATH_CURVE_TO
-         nLen := curve_length( aLast[ 1 ], aLast[ 2 ], aPoints[ 1, 1 ], aPoints[ 1, 2 ], ;
-            aPoints[ 2, 1 ], aPoints[ 2, 2 ], aPoints[ 3, 1 ], aPoints[ 3, 2 ] )
-         aLast := aPoints[ 3 ]
+         nLen := curve_length( aLast[1], aLast[2], aPoints[1, 1], aPoints[1, 2], ;
+            aPoints[2, 1], aPoints[2, 2], aPoints[3, 1], aPoints[3, 2] )
+         aLast := aPoints[3]
       ENDIF
       AAdd(aRet, nLen)
    ENDDO
@@ -178,7 +178,7 @@ STATIC FUNC curve_length( nX1, nY1, nX2, nY2, nX3, nY3, nX4, nY4 )
       IF nType == CAIRO_PATH_MOVE_TO
          aLast := aPoints
       ELSEIF nType == CAIRO_PATH_LINE_TO
-         nLength += distance( aLast[ 1 ], aLast[ 2 ], aPoints[ 1 ], aPoints[ 2 ] )
+         nLength += distance( aLast[1], aLast[2], aPoints[1], aPoints[2] )
          aLast := aPoints
       ENDIF
    ENDDO

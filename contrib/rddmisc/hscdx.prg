@@ -88,13 +88,13 @@ STATIC FUNCTION _HSX_CLOSE( nWA )
 
    /* close all HSX indexes */
 
-   FOR EACH nHSX IN aWData[ 2 ]
+   FOR EACH nHSX IN aWData[2]
       hs_Close( nHSX )
    NEXT
 
    /* clean the HSX index array */
-   ASize( aWData[ 2 ], 0 )
-   ASize( aWData[ 3 ], 0 )
+   ASize( aWData[2], 0 )
+   ASize( aWData[3], 0 )
 
    /* call SUPER CLOSE method to close parent RDD */
 
@@ -106,11 +106,11 @@ STATIC FUNCTION _HSX_GOCOLD( nWA )
 
    IF ( nResult := UR_SUPER_GOCOLD( nWA ) ) == HB_SUCCESS
       aWData := USRRDD_AREADATA(nWA)
-      IF aWData[ 1 ]
-         IF !Empty(aWData[ 2 ])
+      IF aWData[1]
+         IF !Empty(aWData[2])
             nRecNo := RecNo()
             /* update HSX indexes */
-            FOR EACH nHSX IN aWData[ 2 ]
+            FOR EACH nHSX IN aWData[2]
                nKeyNo := hs_KeyCount( nHSX )
                DO WHILE nKeyNo >= 0 .AND. nKeyNo < nRecNo
                   nKeyNo := hs_Add( nHSX, "" )
@@ -120,7 +120,7 @@ STATIC FUNCTION _HSX_GOCOLD( nWA )
                ENDIF
             NEXT
          ENDIF
-         aWData[ 1 ] := .F.
+         aWData[1] := .F.
       ENDIF
    ENDIF
 
@@ -132,7 +132,7 @@ STATIC FUNCTION _HSX_GOHOT( nWA )
 
    IF ( nResult := UR_SUPER_GOHOT( nWA ) ) == HB_SUCCESS
       aWData := USRRDD_AREADATA(nWA)
-      aWData[ 1 ] := .T.
+      aWData[1] := .T.
    ENDIF
 
    RETURN nResult
@@ -143,7 +143,7 @@ STATIC FUNCTION _HSX_APPEND( nWA, lUnlockAll )
 
    IF ( nResult := UR_SUPER_APPEND( nWA, lUnlockAll ) ) == HB_SUCCESS
       aWData := USRRDD_AREADATA(nWA)
-      aWData[ 1 ] := .T.
+      aWData[1] := .T.
    ENDIF
 
    RETURN nResult
@@ -164,8 +164,8 @@ FUNCTION hsx_Create( cFile, cExpr, nKeySize, nBufSize, lCase, nFiltSet )
       nOpenMode := IIf(dbInfo( DBI_SHARED ), 1, 0) + ;
          IIf(dbInfo( DBI_ISREADONLY ), 2, 0)
       IF ( nHsx := hs_Index( cFile, cExpr, nKeySize, nOpenMode, nBufSize, lCase, nFiltSet ) ) >= 0
-         AAdd( aWData[ 2 ], nHsx )
-         AAdd( aWData[ 3 ], cFile )
+         AAdd( aWData[2], nHsx )
+         AAdd( aWData[3], cFile )
       ENDIF
    ENDIF
 
@@ -182,8 +182,8 @@ PROCEDURE hsx_Open( cFile, nBufSize )
       nOpenMode := IIf(dbInfo( DBI_SHARED ), 1, 0) + ;
          IIf(dbInfo( DBI_ISREADONLY ), 2, 0)
       IF ( nHsx := hs_Open( cFile, nBufSize, nOpenMode ) ) >= 0
-         AAdd( aWData[ 2 ], nHsx )
-         AAdd( aWData[ 3 ], cFile )
+         AAdd( aWData[2], nHsx )
+         AAdd( aWData[3], cFile )
       ENDIF
    ENDIF
 
@@ -197,15 +197,15 @@ PROCEDURE hsx_Close( xHSX )
       aWData := USRRDD_AREADATA(Select())
       DO CASE
       CASE HB_IsNumeric(xHSX)
-         nSlot := AScan( aWData[ 2 ], xHSX )
+         nSlot := AScan( aWData[2], xHSX )
       CASE HB_IsString(xHSX)
-         nSlot := AScan( aWData[ 3 ], {| _1 | _1 == xHSX } )
+         nSlot := AScan( aWData[3], {| _1 | _1 == xHSX } )
       OTHERWISE
          nSlot := 0
       ENDCASE
       IF nSlot > 0
-         hb_ADel( aWData[ 2 ], nSlot, .T. )
-         hb_ADel( aWData[ 3 ], nSlot, .T. )
+         hb_ADel( aWData[2], nSlot, .T. )
+         hb_ADel( aWData[3], nSlot, .T. )
       ENDIF
    ENDIF
 
@@ -217,9 +217,9 @@ FUNCTION hsx_Handle( cFile )
 
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
-      nSlot := AScan( aWData[ 3 ], {| _1 | _1 == cFile } )
+      nSlot := AScan( aWData[3], {| _1 | _1 == cFile } )
       IF nSlot != 0
-         RETURN aWData[ 2 ][ nSlot ]
+         RETURN aWData[2][ nSlot ]
       ENDIF
    ENDIF
 
@@ -231,9 +231,9 @@ FUNCTION hsx_File( nHsx )
 
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
-      nSlot := AScan( aWData[ 3 ], nHsx )
+      nSlot := AScan( aWData[3], nHsx )
       IF nSlot != 0
-         RETURN aWData[ 3 ][ nSlot ]
+         RETURN aWData[3][ nSlot ]
       ENDIF
    ENDIF
 
@@ -245,8 +245,8 @@ FUNCTION hsx_Get( nSlot )
 
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
-      IF nSlot > 0 .AND. nSlot <= Len(aWData[ 2 ])
-         RETURN aWData[ 2 ][ nSlot ]
+      IF nSlot > 0 .AND. nSlot <= Len(aWData[2])
+         RETURN aWData[2][ nSlot ]
       ENDIF
    ENDIF
 

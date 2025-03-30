@@ -185,15 +185,15 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
                IF !( ATail( tmp ) == "OK" )
                   RETURN -7
                ENDIF
-               IF !( Left(tmp[ 1 ], Len("+CSMP: ")) == "+CSMP: " )
+               IF !( Left(tmp[1], Len("+CSMP: ")) == "+CSMP: " )
                   RETURN -8
                ENDIF
-               tmp := GetList( SubStr(tmp[ 1 ], Len("+CSMP: ") + 1) )
+               tmp := GetList( SubStr(tmp[1], Len("+CSMP: ") + 1) )
                IF Len(tmp) > 1
                   IF lNotification
-                     tmp[ 1 ] := hb_ntos( hb_bitSet( Val( tmp[ 1 ] ), 5 ) )
+                     tmp[1] := hb_ntos( hb_bitSet( Val( tmp[1] ), 5 ) )
                   ELSE
-                     tmp[ 1 ] := hb_ntos( hb_bitReset( Val( tmp[ 1 ] ), 5 ) )
+                     tmp[1] := hb_ntos( hb_bitReset( Val( tmp[1] ), 5 ) )
                   ENDIF
                   port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP=" + MakeList( tmp ) + Chr(13) )
                   IF !( StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK" )

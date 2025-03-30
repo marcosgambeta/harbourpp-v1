@@ -94,7 +94,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
 
    IF aLockInfo[ UR_LI_METHOD ] == DBLM_MULTIPLE      /* RLOCK */
 
-      IF aWData[ 1 ] > 0
+      IF aWData[1] > 0
          aLockInfo[ UR_LI_RESULT ] := .T.
          RETURN HB_SUCCESS
       ENDIF
@@ -104,18 +104,18 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
          xRecID := RecNo()
       ENDIF
 
-      IF aWData[ 1 ] > 0
+      IF aWData[1] > 0
          aLockInfo[ UR_LI_RESULT ] := .T.
          RETURN HB_SUCCESS
-      ELSEIF ( i := AScan( aWData[ 2 ], {| x | x[ 1 ] == xRecID } ) ) > 0
-         ++aWData[ 2 ][ i ][ 2 ]
+      ELSEIF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
+         ++aWData[2][ i ][2]
          aLockInfo[ UR_LI_RESULT ] := .T.
          RETURN HB_SUCCESS
       ENDIF
 
       IF ( nResult := UR_SUPER_LOCK( nWA, aLockInfo ) ) == HB_SUCCESS
          IF aLockInfo[ UR_LI_RESULT ]
-            AAdd( aWData[ 2 ], { xRecID, 1 } )
+            AAdd( aWData[2], { xRecID, 1 } )
          ENDIF
       ENDIF
 
@@ -123,18 +123,18 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
 
    ELSEIF aLockInfo[ UR_LI_METHOD ] == DBLM_FILE      /* FLOCK */
 
-      IF aWData[ 1 ] > 0
-         ++aWData[ 1 ]
+      IF aWData[1] > 0
+         ++aWData[1]
          RETURN HB_SUCCESS
       ENDIF
 
       IF ( nResult := UR_SUPER_LOCK( nWA, aLockInfo ) ) == HB_SUCCESS
 
          /* FLOCK always first remove all RLOCKs, even if it fails */
-         ASize( aWData[ 2 ], 0 )
+         ASize( aWData[2], 0 )
 
          IF aLockInfo[ UR_LI_RESULT ]
-            aWData[ 1 ] := 1
+            aWData[1] := 1
          ENDIF
       ENDIF
 
@@ -151,21 +151,21 @@ STATIC FUNCTION RLCDX_UNLOCK( nWA, xRecID )
    LOCAL aWData := USRRDD_AREADATA(nWA), i
 
    IF HB_IsNumeric(xRecID) .AND. xRecID > 0
-      IF ( i := AScan( aWData[ 2 ], {| x | x[ 1 ] == xRecID } ) ) > 0
-         IF --aWData[ 2 ][ i ][ 2 ] > 0
+      IF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
+         IF --aWData[2][ i ][2] > 0
             RETURN HB_SUCCESS
          ENDIF
-         hb_ADel( aWData[ 2 ], i, .T. )
+         hb_ADel( aWData[2], i, .T. )
       ELSE
          RETURN HB_SUCCESS
       ENDIF
    ELSE
-      IF aWData[ 1 ] > 1
-         --aWData[ 1 ]
+      IF aWData[1] > 1
+         --aWData[1]
          RETURN HB_SUCCESS
       ENDIF
-      aWData[ 1 ] := 0
-      ASize( aWData[ 2 ], 0 )
+      aWData[1] := 0
+      ASize( aWData[2], 0 )
    ENDIF
 
    RETURN UR_SUPER_UNLOCK( nWA, xRecID )
@@ -181,14 +181,14 @@ STATIC FUNCTION RLCDX_APPEND( nWA, lUnlockAll )
    IF ( nResult := UR_SUPER_APPEND( nWA, lUnlockAll ) ) == HB_SUCCESS
 
       aWData := USRRDD_AREADATA(nWA)
-      IF aWData[ 1 ] == 0
+      IF aWData[1] == 0
          xRecId := RecNo()
          /* Some RDDs may allow to set phantom locks with RLOCK so we should
             check if it's not the case and increase the counter when it is */
-         IF ( i := AScan( aWData[ 2 ], {| x | x[ 1 ] == xRecID } ) ) > 0
-            ++aWData[ 2 ][ i ][ 2 ]
+         IF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
+            ++aWData[2][ i ][2]
          ELSE
-            AAdd( aWData[ 2 ], { xRecID, 1 } )
+            AAdd( aWData[2], { xRecID, 1 } )
          ENDIF
       ENDIF
    ENDIF

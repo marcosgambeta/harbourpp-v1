@@ -211,7 +211,7 @@ METHOD GDChart:PieChart()
          colorp := gdTiled
       ELSE
          IF HB_IsArray(colorp)
-            colorp := ::SetColor(colorp[ 1 ], colorp[ 2 ], colorp[ 3 ])
+            colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
       IF lFilled
@@ -434,7 +434,7 @@ METHOD GDChart:VerticalBarChart()
          colorp := gdTiled
       ELSE
          IF HB_IsArray(colorp)
-            colorp := ::SetColor(colorp[ 1 ], colorp[ 2 ], colorp[ 3 ])
+            colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
       ::Rectangle( nPosX + nBorder, ::Height() - ( nPosY + nDim ), nPosX + nSize - nBorder, ::Height() - nPosY, lFilled, colorp )
@@ -628,7 +628,7 @@ METHOD GDChart:HorizontalBarChart()
          colorp := gdTiled
       ELSE
          IF HB_IsArray(colorp)
-            colorp := ::SetColor(colorp[ 1 ], colorp[ 2 ], colorp[ 3 ])
+            colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
       ::Rectangle( nPosX, nPosY + nBorder, nPosX + nDim,  nPosY + nSize - nBorder, lFilled, colorp )
@@ -862,7 +862,7 @@ METHOD GDChart:LineChart()
          colorp := gdTiled
       ELSE
          IF HB_IsArray(colorp)
-            colorp := ::SetColor(colorp[ 1 ], colorp[ 2 ], colorp[ 3 ])
+            colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
       // ::Rectangle( nPosX + nBorder, ::Height() - ( nPosY + nDim ), nPosX + nSize - nBorder, ::Height() - nPosY, lFilled, colorp )
@@ -891,7 +891,7 @@ METHOD GDChart:LineChart()
    // ::AddStyle( gdTransparent )
    // ::SetStyle()
    FOR n := 1 TO Len(aPoints) - 1
-      ::Line( aPoints[ n ][ 1 ], aPoints[ n ][ 2 ], aPoints[ n + 1 ][ 1 ], aPoints[ n + 1 ][ 2 ], colorp )
+      ::Line( aPoints[ n ][1], aPoints[ n ][2], aPoints[ n + 1 ][1], aPoints[ n + 1 ][2], colorp )
    NEXT
    ::SetThickness( nThick )
 

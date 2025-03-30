@@ -145,9 +145,9 @@ FUNCTION tip_MailAssemble( ;
             cData := hb_MemoRead( cFile )
             hb_vfAttrGet( cFile, @nAttr )
          CASE HB_IsArray(aThisFile) .AND. Len(aThisFile) >= 2
-            cFile := aThisFile[ 1 ]
-            IF HB_IsString(aThisFile[ 2 ])
-               cData := aThisFile[ 2 ]
+            cFile := aThisFile[1]
+            IF HB_IsString(aThisFile[2])
+               cData := aThisFile[2]
                hb_default(@cFile, "unnamed")
             ELSEIF HB_IsString(cFile)
                cData := hb_MemoRead( cFile )
@@ -155,8 +155,8 @@ FUNCTION tip_MailAssemble( ;
             ELSE
                LOOP  /* No filename and no content. */
             ENDIF
-            IF Len(aThisFile) >= 3 .AND. HB_IsString(aThisFile[ 3 ])
-               cMimeType := aThisFile[ 3 ]
+            IF Len(aThisFile) >= 3 .AND. HB_IsString(aThisFile[3])
+               cMimeType := aThisFile[3]
             ENDIF
          OTHERWISE
             LOOP

@@ -117,25 +117,25 @@ METHOD TUrl:SetAddress( cUrl )
       RETURN .F.
    ENDIF
 
-   ::cProto := Lower(aMatch[ 2 ])
-   cServer := aMatch[ 3 ]
-   cPath := aMatch[ 4 ]
-   ::cQuery := aMatch[ 5 ]
+   ::cProto := Lower(aMatch[2])
+   cServer := aMatch[3]
+   cPath := aMatch[4]
+   ::cQuery := aMatch[5]
 
    // server parsing (never fails)
    aMatch := hb_regex( ::cREServ, cServer )
-   ::cUserId := aMatch[ 2 ]
-   ::cPassword := aMatch[ 3 ]
-   ::cServer := aMatch[ 4 ]
-   ::nPort := Val( aMatch[ 5 ] )
+   ::cUserId := aMatch[2]
+   ::cPassword := aMatch[3]
+   ::cServer := aMatch[4]
+   ::nPort := Val( aMatch[5] )
    IF ::nPort < 1
       ::nPort := -1
    ENDIF
 
    // Parse path and file (never fails)
    aMatch := hb_regex( ::cREFile, cPath )
-   ::cPath := aMatch[ 2 ]
-   ::cFile := aMatch[ 3 ]
+   ::cPath := aMatch[2]
+   ::cFile := aMatch[3]
 
    RETURN .T.
 

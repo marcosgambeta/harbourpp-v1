@@ -546,7 +546,7 @@ STATIC FUNCTION AR_GOTOP( nWA )
             nResult := AR_GOTO( nWA, 0 )
          ELSE
             aWAData[ WADATA_ORDRECNO ] := 1
-            nResult := AR_GOTO( nWA, aIndexes[ nIndex ][ INDEX_RECORDS ][ 1 ][ INDEXKEY_RECORD ] )
+            nResult := AR_GOTO( nWA, aIndexes[ nIndex ][ INDEX_RECORDS ][1][ INDEXKEY_RECORD ] )
          ENDIF
       ELSE
          aWAData[ WADATA_ORDRECNO ] := SeekScope( aIndexes[ nIndex ], aWAData[ WADATA_WAORDINFO ][ nIndex ], .F. )
@@ -707,7 +707,7 @@ STATIC FUNCTION AR_SKIPRAW( nWA, nRecords )
          IF aIndexes[ nIndex ][ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ]
             IF nRecords < 0
                IF aWAData[ WADATA_WAORDINFO ][ nIndex ][ WAOI_SCOPE_0 ] != NIL .AND. aWAData[ WADATA_WAORDINFO ][ nIndex ][ WAOI_SCOPE_0 ] < aIndexes[ nIndex ][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_KEY ]
-                  nResult := AR_GOTO( nWA, aIndexes[ nIndex ][ INDEX_RECORDS ][ 1 ][ INDEXKEY_RECORD ] )
+                  nResult := AR_GOTO( nWA, aIndexes[ nIndex ][ INDEX_RECORDS ][1][ INDEXKEY_RECORD ] )
                   aWAData[ WADATA_ORDRECNO ] := 1
                   aWAData[ WADATA_BOF ]      := .T.
                ENDIF
@@ -1744,7 +1744,7 @@ STATIC FUNCTION hb_Decode( ... )
 
    DO CASE
    CASE nParams > 1     /* More parameters, real CASE */
-      xVal := aParams[ 1 ]
+      xVal := aParams[1]
 
       hb_ADel( aParams, 1, .T. ) /* Resize params */
       nParams := Len(aParams)
@@ -1769,7 +1769,7 @@ STATIC FUNCTION hb_Decode( ... )
              * first element tell me what type is */
 
             /* couples of values */
-            IF HB_IsArray(xDefault[ 1 ])
+            IF HB_IsArray(xDefault[1])
                /* If i have an array as default, this contains couples of key / value */
                /* so I have to convert in a linear array */
 
@@ -1782,8 +1782,8 @@ STATIC FUNCTION hb_Decode( ... )
 
                   n := 1
                   FOR i := 1 TO nLen - 1
-                     aParams[ n++ ] := xDefault[ i ][ 1 ]
-                     aParams[ n++ ] := xDefault[ i ][ 2 ]
+                     aParams[ n++ ] := xDefault[ i ][1]
+                     aParams[ n++ ] := xDefault[ i ][2]
                   NEXT
 
                   AAdd(aParams, xDefault[ nLen ])
@@ -1794,8 +1794,8 @@ STATIC FUNCTION hb_Decode( ... )
 
                   n := 1
                   FOR i := 1 TO Len(xDefault)
-                     aParams[ n++ ] := xDefault[ i ][ 1 ]
-                     aParams[ n++ ] := xDefault[ i ][ 2 ]
+                     aParams[ n++ ] := xDefault[ i ][1]
+                     aParams[ n++ ] := xDefault[ i ][2]
                   NEXT
 
                ENDIF
@@ -1855,7 +1855,7 @@ STATIC FUNCTION hb_Decode( ... )
       xRet := NIL
 
    CASE nParams == 1    /* Only value to decode as parameter, return an empty value of itself */
-      xRet := DecEmptyValue( aParams[ 1 ] )
+      xRet := DecEmptyValue( aParams[1] )
 
    ENDCASE
 
@@ -1962,12 +1962,12 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
       nPos := 0
       EXIT
    CASE 1   /* Archive with 1 record */
-      IF aIndex[ 1 ] == NIL .OR. ;
+      IF aIndex[1] == NIL .OR. ;
          IIf( lSoft, ;
             IIf( aIndexInfo[ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ], ;
-               aIndex[ 1 ][ INDEXKEY_KEY ] <= xSeek, ;
-               aIndex[ 1 ][ INDEXKEY_KEY ] >= xSeek ), ;
-            LEFTEQUAL( aIndex[ 1 ][ INDEXKEY_KEY ], xSeek ) )
+               aIndex[1][ INDEXKEY_KEY ] <= xSeek, ;
+               aIndex[1][ INDEXKEY_KEY ] >= xSeek ), ;
+            LEFTEQUAL( aIndex[1][ INDEXKEY_KEY ], xSeek ) )
          nPos := 1
       ELSE
          nPos := 0
@@ -1975,18 +1975,18 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
       EXIT
    OTHERWISE   /* Archive with 2 or more records */
       IF aIndexInfo[ INDEX_ORCR ][ UR_ORCR_CONDINFO ][ UR_ORC_DESCEND ]
-         bFirst  := {|| aIndex[ 2 ][ INDEXKEY_KEY ] >= xSeek }
+         bFirst  := {|| aIndex[2][ INDEXKEY_KEY ] >= xSeek }
          bBefore := {|| xSeek > aIndex[ nPos ][ INDEXKEY_KEY ]  }
          bAfter  := {|| xSeek < aIndex[ nPos ][ INDEXKEY_KEY ] }
          bAjust  := {|| ! aIndex[ nPos ][ INDEXKEY_KEY ] <= xSeek }
       ELSE
-         bFirst  := {|| aIndex[ 2 ][ INDEXKEY_KEY ] <= xSeek }
+         bFirst  := {|| aIndex[2][ INDEXKEY_KEY ] <= xSeek }
          bBefore := {|| ! aIndex[ nPos ][ INDEXKEY_KEY ] <= xSeek }
          bAfter  := {|| xSeek > aIndex[ nPos ][ INDEXKEY_KEY ] }
          bAjust  := {|| ! aIndex[ nPos ][ INDEXKEY_KEY ] >= xSeek }
       ENDIF
 
-      IF aIndex[ 2 ] != NIL .AND. Eval( bFirst )
+      IF aIndex[2] != NIL .AND. Eval( bFirst )
          DO WHILE nIni <= nEnd
             nPos := Int( ( nIni + nEnd ) / 2 )
             IF aIndex[ nPos ] == NIL .OR. Eval( bBefore )

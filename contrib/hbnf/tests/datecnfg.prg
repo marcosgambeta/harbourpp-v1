@@ -55,8 +55,8 @@ PROCEDURE Main()
 #if 0
    aTemp      := ft_DateCnfg( "1980-01-03", 1 )  // Date string in user's format.
 #endif
-   cFY_Start  := aTemp[ 1 ]                      // See ft_DateCnfg()
-   nDOW_Start := aTemp[ 2 ]                      // for parameters.
+   cFY_Start  := aTemp[1]                      // See ft_DateCnfg()
+   nDOW_Start := aTemp[2]                      // for parameters.
    dDate      := Date() - 500
 
    CLS
@@ -67,72 +67,72 @@ PROCEDURE Main()
    ?    "---- Fiscal Year Data -----------"
 
    aTestData := ft_Year( dDate )
-   ? "FYYear     ", aTestData[ 1 ] + "  ", aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYYear     ", aTestData[1] + "  ", aTestData[2], aTestData[3]
 
    aTestData := ft_Qtr( dDate )
-   ? "FYQtr      ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYQtr      ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 2) )
+   nNum      := Val( SubStr(aTestData[1], 5, 2) )
    aTestData := ft_Qtr( dDate, nNum )
-   ? "FYQtr    " + Str( nNum, 2 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYQtr    " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_Month( dDate )
-   ? "FYMonth    ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYMonth    ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum := Val( SubStr(aTestData[ 1 ], 5, 2) )
+   nNum := Val( SubStr(aTestData[1], 5, 2) )
    aTestData := ft_Month( dDate, nNum )
-   ? "FYMonth  " + Str( nNum, 2 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYMonth  " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_Week( dDate )
-   ? "FYWeek     ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYWeek     ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 2) )
+   nNum      := Val( SubStr(aTestData[1], 5, 2) )
    aTestData := ft_Week( dDate, nNum )
-   ? "FYWeek   " + Str( nNum, 2 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYWeek   " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_DayOfYr( dDate )
-   ? "FYDay     ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYDay     ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 3) )
+   nNum      := Val( SubStr(aTestData[1], 5, 3) )
    aTestData := ft_DayOfYr( dDate, nNum )
-   ? "FYDAY   " + Str( nNum, 3 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "FYDAY   " + Str( nNum, 3 ), aTestData[1], aTestData[2], aTestData[3]
 
    ?
    ? "---- Accounting Year Data -------"
 
    aTestData := ft_AcctYear( dDate )
-   ? "ACCTYear   ", aTestData[ 1 ] + "  ", aTestData[ 2 ], aTestData[ 3 ], ;
-      Str( ( aTestData[ 3 ] - aTestData[ 2 ] + 1 ) / 7, 3 ) + " Weeks"
+   ? "ACCTYear   ", aTestData[1] + "  ", aTestData[2], aTestData[3], ;
+      Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
 
    aTestData := ft_AcctQtr( dDate )
-   ? "ACCTQtr    ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ], ;
-      Str( ( aTestData[ 3 ] - aTestData[ 2 ] + 1 ) / 7, 3 ) + " Weeks"
+   ? "ACCTQtr    ", aTestData[1], aTestData[2], aTestData[3], ;
+      Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 2) )
+   nNum      := Val( SubStr(aTestData[1], 5, 2) )
    aTestData := ft_AcctQtr( dDate, nNum )
-   ? "ACCTQtr  " + Str( nNum, 2 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "ACCTQtr  " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_AcctMonth( dDate )
-   ? "ACCTMonth  ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ], ;
-      Str( ( aTestData[ 3 ] - aTestData[ 2 ] + 1 ) / 7, 3 ) + " Weeks"
+   ? "ACCTMonth  ", aTestData[1], aTestData[2], aTestData[3], ;
+      Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 2) )
+   nNum      := Val( SubStr(aTestData[1], 5, 2) )
    aTestData := ft_AcctMonth( dDate, nNum )
-   ? "ACCTMonth" + Str( nNum, 2 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "ACCTMonth" + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_AcctWeek( dDate )
-   ? "ACCTWeek   ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "ACCTWeek   ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 2) )
+   nNum      := Val( SubStr(aTestData[1], 5, 2) )
    aTestData := ft_AcctWeek( dDate, nNum )
-   ? "ACCTWeek " + Str( nNum, 2 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "ACCTWeek " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_DayOfYr( dDate, , .T. )
-   ? "ACCTDay   ", aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "ACCTDay   ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[ 1 ], 5, 3) )
+   nNum      := Val( SubStr(aTestData[1], 5, 3) )
    aTestData := ft_DayOfYr( dDate, nNum, .T. )
-   ? "ACCTDay " + Str( nNum, 3 ), aTestData[ 1 ], aTestData[ 2 ], aTestData[ 3 ]
+   ? "ACCTDay " + Str( nNum, 3 ), aTestData[1], aTestData[2], aTestData[3]
 
    WAIT
 
@@ -149,7 +149,7 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
    LOCAL nTemp, dTemp, aTemp, cFY_Start, dStart, dEnd
 
    aTemp     := ft_DateCnfg()
-   cFY_Start := aTemp[ 1 ]
+   cFY_Start := aTemp[1]
 
    IF dGivenDate == NIL .OR. !( ValType(dGivenDate) $ "NDT" )
       dGivenDate := Date()
@@ -168,24 +168,24 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
       ENDIF
 
       aTemp    := ft_Month( dGivenDate )
-      dStart   := aTemp[ 2 ]
-      dEnd     := aTemp[ 3 ]
-      aTemp[ 2 ] -= ft_DayToBoW( aTemp[ 2 ] )
-      aTemp[ 3 ] += 6 - ft_DayToBoW( aTemp[ 3 ] )
+      dStart   := aTemp[2]
+      dEnd     := aTemp[3]
+      aTemp[2] -= ft_DayToBoW( aTemp[2] )
+      aTemp[3] += 6 - ft_DayToBoW( aTemp[3] )
    ELSE
       ? "            Accounting Month Calendar containing " + DToC(dGivenDate)
       aTemp := ft_AcctMonth( dGivenDate )
    ENDIF
 
    ?
-   dTemp := aTemp[ 2 ]
+   dTemp := aTemp[2]
 
    FOR nTemp := 0 TO 6
       ?? PadC(CDoW( dTemp + nTemp ), 10)
    NEXT
 
    ?
-   DO WHILE dTemp <= aTemp[ 3 ]
+   DO WHILE dTemp <= aTemp[3]
       FOR nTemp := 1 TO 7
          ?? " "
          IF nType == 0 .AND. ( dTemp < dStart .OR. dTemp > dEnd )

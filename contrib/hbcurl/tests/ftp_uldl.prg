@@ -29,8 +29,8 @@ PROCEDURE Main( cDL, cUL )
    FOR tmp := 1 TO Len(info)
       IF tmp == 8
          ? tmp, ""
-         FOR tmp1 := 1 TO Len(info[ 8 ])
-            ?? info[ 8 ][ tmp1 ] + " "
+         FOR tmp1 := 1 TO Len(info[8])
+            ?? info[8][ tmp1 ] + " "
          NEXT
       ELSE
          ? tmp, info[ tmp ]
@@ -208,6 +208,6 @@ STATIC FUNCTION CurGet()
 
 STATIC PROCEDURE CurSet( a )
 
-   SetPos(a[ 1 ], a[ 2 ])
+   SetPos(a[1], a[2])
 
    RETURN

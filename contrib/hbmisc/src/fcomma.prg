@@ -159,8 +159,8 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       RETURN HB_FAILURE
    ENDIF
    aRData[ nSlot ] := nHandle
-   aWData[ 1 ] := nSlot
-   aWData[ 2 ] := aWData[ 3 ] := .F.
+   aWData[1] := nSlot
+   aWData[2] := aWData[3] := .F.
 
    /* Set one field called LINE to access current record buffer */
    UR_SUPER_SETFIELDEXTENT( nWA, 1 )
@@ -183,7 +183,7 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
 
 STATIC FUNCTION FCM_CLOSE( nWA )
 
-   LOCAL aRData, nSlot := USRRDD_AREADATA(nWA)[ 1 ]
+   LOCAL aRData, nSlot := USRRDD_AREADATA(nWA)[1]
 
    IF nSlot >= 0
       hb_FSelect( nSlot )
@@ -199,11 +199,11 @@ STATIC FUNCTION FCM_GETVALUE( nWA, nField, xValue )
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
    IF nField == 1
-      IF aWData[ 3 ]
+      IF aWData[3]
          /* We are at EOF position, return empty value */
          xValue := ""
       ELSE
-         hb_FSelect( aWData[ 1 ] )
+         hb_FSelect( aWData[1] )
          xValue := hb_FReadLn()
       ENDIF
       RETURN HB_SUCCESS
@@ -215,18 +215,18 @@ STATIC FUNCTION FCM_GOTO( nWA, nRecord )
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
-   hb_FSelect( aWData[ 1 ] )
+   hb_FSelect( aWData[1] )
    IF nRecord <= 0
-      aWData[ 2 ] := aWData[ 3 ] := .T.
+      aWData[2] := aWData[3] := .T.
    ELSEIF nRecord == 1
       hb_FGoTop()
-      aWData[ 2 ] := aWData[ 3 ] := hb_FAtEof()
+      aWData[2] := aWData[3] := hb_FAtEof()
    ELSE
       hb_FSkip(0) /* Clear the EOF flag inside hb_F* engin
                      - it's not done automatically in hb_FGoBottom() :-( */
       hb_FGoto( nRecord )
-      aWData[ 2 ] := hb_FRecNo() == 0
-      aWData[ 3 ] := hb_FAtEof()
+      aWData[2] := hb_FRecNo() == 0
+      aWData[3] := hb_FAtEof()
    ENDIF
 
    RETURN HB_SUCCESS
@@ -238,9 +238,9 @@ STATIC FUNCTION FCM_GOTOP( nWA )
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
-   hb_FSelect( aWData[ 1 ] )
+   hb_FSelect( aWData[1] )
    hb_FGoTop()
-   aWData[ 2 ] := aWData[ 3 ] := hb_FAtEof()
+   aWData[2] := aWData[3] := hb_FAtEof()
 
    RETURN HB_SUCCESS
 
@@ -248,14 +248,14 @@ STATIC FUNCTION FCM_GOBOTTOM( nWA )
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
-   hb_FSelect( aWData[ 1 ] )
+   hb_FSelect( aWData[1] )
    IF hb_FLastRec() == 0
-      aWData[ 2 ] := aWData[ 3 ] := .T.
+      aWData[2] := aWData[3] := .T.
    ELSE
       hb_FSkip(0) /* Clear the EOF flag inside hb_F* engin
                      - it's not done automatically in hb_FGoBottom() :-( */
       hb_FGoBottom()
-      aWData[ 2 ] := aWData[ 3 ] := .F.
+      aWData[2] := aWData[3] := .F.
    ENDIF
 
    RETURN HB_SUCCESS
@@ -266,8 +266,8 @@ STATIC FUNCTION FCM_SKIPRAW( nWA, nRecords )
 
    IF nRecords != 0
       aWData := USRRDD_AREADATA(nWA)
-      hb_FSelect( aWData[ 1 ] )
-      IF aWData[ 3 ]
+      hb_FSelect( aWData[1] )
+      IF aWData[3]
          IF nRecords > 0
             RETURN HB_SUCCESS
          ENDIF
@@ -276,12 +276,12 @@ STATIC FUNCTION FCM_SKIPRAW( nWA, nRecords )
       ENDIF
       IF nRecords < 0 .AND. hb_FRecNo() <= -nRecords
          hb_FGoTop()
-         aWData[ 2 ] := .T.
-         aWData[ 3 ] := hb_FAtEof()
+         aWData[2] := .T.
+         aWData[3] := hb_FAtEof()
       ELSEIF nRecords != 0
          hb_FSkip( nRecords )
-         aWData[ 2 ] := .F.
-         aWData[ 3 ] := hb_FAtEof()
+         aWData[2] := .F.
+         aWData[3] := hb_FAtEof()
       ENDIF
    ENDIF
 
@@ -291,7 +291,7 @@ STATIC FUNCTION FCM_Bof( nWA, lBof )
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
-   lBof := aWData[ 2 ]
+   lBof := aWData[2]
 
    RETURN HB_SUCCESS
 
@@ -299,7 +299,7 @@ STATIC FUNCTION FCM_EOF( nWA, lEof )
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
-   lEof := aWData[ 3 ]
+   lEof := aWData[3]
 
    RETURN HB_SUCCESS
 
@@ -314,8 +314,8 @@ STATIC FUNCTION FCM_RECID(nWA, nRecNo)
 
    LOCAL aWData := USRRDD_AREADATA(nWA)
 
-   hb_FSelect( aWData[ 1 ] )
-   IF aWData[ 3 ]
+   hb_FSelect( aWData[1] )
+   IF aWData[3]
       nRecNo := hb_FLastRec() + 1
    ELSE
       nRecNo := hb_FRecNo()
@@ -325,7 +325,7 @@ STATIC FUNCTION FCM_RECID(nWA, nRecNo)
 
 STATIC FUNCTION FCM_RECCOUNT( nWA, nRecords )
 
-   hb_FSelect( USRRDD_AREADATA(nWA)[ 1 ] )
+   hb_FSelect( USRRDD_AREADATA(nWA)[1] )
    nRecords := hb_FLastRec()
 
    RETURN HB_SUCCESS

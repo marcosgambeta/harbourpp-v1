@@ -9,7 +9,7 @@ PROCEDURE Main()
    ?
    ? "myarray1 := Directory()"
    ?
-   AEval( myarray1, {| v | QOut( PadR(v[ 1 ], 12), v[ 2 ], v[ 3 ], v[ 4 ], v[ 5 ] ) } )
+   AEval( myarray1, {| v | QOut( PadR(v[1], 12), v[2], v[3], v[4], v[5] ) } )
    var0 := ft_AEMinLen(myarray1)
    ? PadR("ft_AEMinLen(myarray1) ->", 30)
    ?? var0
@@ -19,7 +19,7 @@ PROCEDURE Main()
    ?? var0
    ?
    ?
-   var0 := ft_AEMinLen(myarray1[ 2 ])
+   var0 := ft_AEMinLen(myarray1[2])
    ? PadR("ft_AEMinLen(myarray1[2]) ->", 30)
    ?? var0
    ?

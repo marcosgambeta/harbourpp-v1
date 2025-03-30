@@ -163,7 +163,7 @@ METHOD TIPMail:GetFieldOption( cPart, cOption )
 
    IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
       ! Empty(aMatch := hb_regex( ";\s*" + cOption + "\s*=\s*([^;]*)", cEnc, .F. /* Case insensitive */ ))
-      RETURN aMatch[ 2 ]
+      RETURN aMatch[2]
    ENDIF
 
    RETURN ""
@@ -196,7 +196,7 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
       IF Empty(aMatch)
          ::hHeaders[ cPart ] += "; " + cOption + "=" + '"' + cValue + '"'
       ELSE
-         ::hHeaders[ cPart ] := aMatch[ 2 ] + cOption + "=" + '"' + cValue + '"' + aMatch[ 3 ]
+         ::hHeaders[ cPart ] := aMatch[2] + cOption + "=" + '"' + cValue + '"' + aMatch[3]
       ENDIF
 
       RETURN .T.

@@ -138,8 +138,8 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       aCommand := hb_ATokens( cCommand, " " )
       IF !Empty(aCommand)
-         IF ( nPos := hb_HPos( hCommands, Lower(aCommand[ 1 ]) ) ) > 0
-            Eval( hb_HValueAt( hCommands, nPos )[ 3 ], cCommand )
+         IF ( nPos := hb_HPos( hCommands, Lower(aCommand[1]) ) ) > 0
+            Eval( hb_HValueAt( hCommands, nPos )[3], cCommand )
          ELSE
             IF Left(cCommand, Len(netcliID) + 1) == netcliID + "."
                IF !Eval( netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len(netcliID) + 2) )
@@ -193,13 +193,13 @@ STATIC PROCEDURE ShowHelp( hCommands )
    LOCAL n, c, m
 
    m := 8
-   hb_HEval( hCommands, {| k, l | m := Max(m, Len(k + IIf(Empty(l[ 1 ]), "", " " + l[ 1 ]))) } )
+   hb_HEval( hCommands, {| k, l | m := Max(m, Len(k + IIf(Empty(l[1]), "", " " + l[1]))) } )
 
    AAdd(aTexts, "Commands:")
 
    /* Processing commands */
    FOR EACH n IN hCommands
-      AAdd(aTexts, " " + PadR(n:__enumKey() + IIf(Empty(n[ 1 ]), "", " " + n[ 1 ]), m) + " - " + n[ 2 ])
+      AAdd(aTexts, " " + PadR(n:__enumKey() + IIf(Empty(n[1]), "", " " + n[1]), m) + " - " + n[2])
    NEXT
    AAdd(aTexts, "")
 

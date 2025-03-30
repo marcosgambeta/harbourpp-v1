@@ -377,7 +377,7 @@ METHOD TFbServer:Delete( oRow, cWhere )
       ENDIF
 
       IF !( cWhere == "" )
-         cQuery := 'DELETE FROM ' + aTables[ 1 ] + ' WHERE ' + cWhere
+         cQuery := 'DELETE FROM ' + aTables[1] + ' WHERE ' + cWhere
 
          result := ::Execute( cQuery )
       ENDIF
@@ -395,7 +395,7 @@ METHOD TFbServer:Append(oRow)
    IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
       // Can insert only one table, not in joined tables
 
-      cQuery := 'INSERT INTO ' + aTables[ 1 ] + '('
+      cQuery := 'INSERT INTO ' + aTables[1] + '('
       FOR i := 1 TO oRow:FCount()
          IF oRow:Changed(i)
             // Send only changed field
@@ -444,7 +444,7 @@ METHOD TFbServer:Update( oRow, cWhere )
          NEXT
       ENDIF
 
-      cQuery := "UPDATE " + aTables[ 1 ] + " SET "
+      cQuery := "UPDATE " + aTables[1] + " SET "
       FOR i := 1 TO oRow:FCount()
          IF oRow:Changed(i)
             cQuery += oRow:FieldName( i ) + " = " + DataToSql( oRow:FieldGet( i ) ) + ","
@@ -543,10 +543,10 @@ METHOD TFbQuery:Refresh()
    qry := FBQuery( ::db, ::query, ::dialect )
 
    IF HB_IsArray(qry)
-      ::numcols := qry[ 4 ]
+      ::numcols := qry[4]
 
       /* FIXME: This is faulty code. ::aStruct will become zero length, out of sync with ::numcols. */
-      ::aStruct := StructConvert( qry[ 6 ], ::db, ::dialect )
+      ::aStruct := StructConvert( qry[6], ::db, ::dialect )
 
       ::lError := .F.
       ::nError := 0
@@ -554,8 +554,8 @@ METHOD TFbQuery:Refresh()
 
       /* Tables in query */
       FOR i := 1 TO Len(::aStruct)
-         IF hb_AScan( aTable, ::aStruct[ i ][ 5 ], , , .T. ) == 0
-            AAdd(aTable, ::aStruct[ i ][ 5 ])
+         IF hb_AScan( aTable, ::aStruct[ i ][5], , , .T. ) == 0
+            AAdd(aTable, ::aStruct[ i ][5])
          ENDIF
       NEXT
 
@@ -612,7 +612,7 @@ METHOD TFbQuery:Struct()
 
    IF !::lError
       FOR i := 1 TO Len(::aStruct)
-         AAdd(result, { ::aStruct[ i ][ 1 ], ::aStruct[ i ][ 2 ], ::aStruct[ i ][ 3 ], ::aStruct[ i ][ 4 ] })
+         AAdd(result, { ::aStruct[ i ][1], ::aStruct[ i ][2], ::aStruct[ i ][3], ::aStruct[ i ][4] })
       NEXT
    ENDIF
 
@@ -623,7 +623,7 @@ METHOD TFbQuery:FieldPos( cField )
    LOCAL result := 0
 
    IF !::lError
-      result := AScan( ::aStruct, {| x | x[ 1 ] == RTrim(Upper(cField)) } )
+      result := AScan( ::aStruct, {| x | x[1] == RTrim(Upper(cField)) } )
    ENDIF
 
    RETURN result
@@ -633,7 +633,7 @@ METHOD TFbQuery:FieldName( nField )
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 1 ]
+      result := ::aStruct[ nField ][1]
    ENDIF
 
    RETURN result
@@ -643,7 +643,7 @@ METHOD TFbQuery:FieldType( nField )
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 2 ]
+      result := ::aStruct[ nField ][2]
    ENDIF
 
    RETURN result
@@ -653,7 +653,7 @@ METHOD TFbQuery:FieldLen(nField)
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 3 ]
+      result := ::aStruct[ nField ][3]
    ENDIF
 
    RETURN result
@@ -663,7 +663,7 @@ METHOD TFbQuery:FieldDec(nField)
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 4 ]
+      result := ::aStruct[ nField ][4]
    ENDIF
 
    RETURN result
@@ -677,7 +677,7 @@ METHOD TFbQuery:FieldGet( nField )
       /* TODO: Convert to right data type */
 
       result := FBGetData(::qry, nField)
-      cType := ::aStruct[ nField ][ 2 ]
+      cType := ::aStruct[ nField ][2]
 
       IF cType == "M"
          /* Blob */
@@ -750,7 +750,7 @@ METHOD TFbQuery:GetBlankRow()
 
       FOR i := 1 TO ::numcols
 
-         SWITCH ::aStruct[ i ][ 2 ]
+         SWITCH ::aStruct[ i ][2]
          CASE "C"
          CASE "M"
             aRow[ i ] := ""
@@ -852,20 +852,20 @@ METHOD TFbRow:FieldName( nField )
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 1 ]
+      result := ::aStruct[ nField ][1]
    ENDIF
 
    RETURN result
 
 METHOD TFbRow:FieldPos( cField )
-   RETURN AScan( ::aStruct, {| x | x[ 1 ] == RTrim(Upper(cField)) } )
+   RETURN AScan( ::aStruct, {| x | x[1] == RTrim(Upper(cField)) } )
 
 METHOD TFbRow:FieldType( nField )
 
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 2 ]
+      result := ::aStruct[ nField ][2]
    ENDIF
 
    RETURN result
@@ -875,7 +875,7 @@ METHOD TFbRow:FieldLen(nField)
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 3 ]
+      result := ::aStruct[ nField ][3]
    ENDIF
 
    RETURN result
@@ -885,7 +885,7 @@ METHOD TFbRow:FieldDec(nField)
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][ 4 ]
+      result := ::aStruct[ nField ][4]
    ENDIF
 
    RETURN result
@@ -907,7 +907,7 @@ STATIC FUNCTION KeyField(aTables, db, dialect)
    /* Check row, many tables exists in current query, so we must have only one table */
 
    IF Len(aTables) == 1
-      cTable := aTables[ 1 ]
+      cTable := aTables[1]
 
       cQuery := ' select                                      '
       cQuery += '   a.rdb$field_name                          '
@@ -972,8 +972,8 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
    /* create table list and field list */
 
    FOR i := 1 TO Len(aStru)
-      xtables += DataToSql( aStru[ i ][ 5 ] )
-      xfields += DataToSql( aStru[ i ][ 1 ] )
+      xtables += DataToSql( aStru[ i ][5] )
+      xfields += DataToSql( aStru[ i ][1] )
 
       IF i != Len(aStru)
          xtables += ","
@@ -1002,13 +1002,13 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
       FBFree( qry )
 
       FOR i := 1 TO Len(aStru)
-         cField := RTrim(aStru[ i ][ 7 ])
-         nType := aStru[ i ][ 2 ]
-         nSize := aStru[ i ][ 3 ]
-         nDec := aStru[ i ][ 4 ] * -1
-         cTable := RTrim(aStru[ i ][ 5 ])
+         cField := RTrim(aStru[ i ][7])
+         nType := aStru[ i ][2]
+         nSize := aStru[ i ][3]
+         nDec := aStru[ i ][4] * -1
+         cTable := RTrim(aStru[ i ][5])
 
-         nVal := AScan( aDomains, {| x | RTrim(x[ 1 ]) == cTable .AND. RTrim(x[ 2 ]) == cField } )
+         nVal := AScan( aDomains, {| x | RTrim(x[1]) == cTable .AND. RTrim(x[2]) == cField } )
 
          IF nVal != 0
             cDomain := aDomains[ nVal, 3 ]
