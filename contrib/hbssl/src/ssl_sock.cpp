@@ -1,9 +1,8 @@
-/*
- * Harbour extended socket filter with SSL encryption
- *
- * Copyright 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Harbour extended socket filter with SSL encryption
+//
+// Copyright 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

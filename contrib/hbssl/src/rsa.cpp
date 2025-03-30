@@ -1,9 +1,8 @@
-/*
- * OpenSSL API (RSA) - Harbour interface.
- *
- * Copyright 2016 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// OpenSSL API (RSA) - Harbour interface.
+//
+// Copyright 2016 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * OpenSSL API (SSL_CTX) - Harbour interface.
- *
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// OpenSSL API (SSL_CTX) - Harbour interface.
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

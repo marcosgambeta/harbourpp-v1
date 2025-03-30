@@ -1,6 +1,6 @@
-/*
- * Copyright 2015 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
- */
+//
+// Copyright 2015 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+//
 
 #require "hbssl"
 

@@ -1,6 +1,6 @@
-/*
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- */
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 #require "hbssl"
 

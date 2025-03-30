@@ -1,9 +1,8 @@
-/*
- * OpenSSL API (SSL) - Harbour extensions
- *
- * Copyright 2016 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// OpenSSL API (SSL) - Harbour extensions
+//
+// Copyright 2016 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
