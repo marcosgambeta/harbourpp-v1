@@ -82,7 +82,7 @@ METHOD UWLayoutGrid:Add(oWidget, nRow, nCol)
       FOR nI := Len(::aChilds) + 1 TO nRow
          aI := Array( Len(::aChilds[1]) )
          FOR nJ := 1 TO Len(::aChilds[1])
-            aI[ nJ ] := {}
+            aI[nJ] := {}
          NEXT
          AAdd(::aChilds, aI)
       NEXT
@@ -92,7 +92,7 @@ METHOD UWLayoutGrid:Add(oWidget, nRow, nCol)
          AEval( ::aChilds, {| x | AAdd(x, {}) } )
       NEXT
    ENDIF
-   AAdd(::aChilds[ nRow ][ nCol ], oWidget)
+   AAdd(::aChilds[nRow][nCol], oWidget)
 
    RETURN Self
 
@@ -315,7 +315,7 @@ METHOD UWMenu:Paint()
       IF nI != 1
          UWrite( '&nbsp;|&nbsp;' )
       ENDIF
-      UWrite( '<a href="' + ::aItems[ nI ][2] + '">' + UHtmlEncode( ::aItems[ nI ][1] ) + '</a>' )
+      UWrite( '<a href="' + ::aItems[nI][2] + '">' + UHtmlEncode( ::aItems[nI][1] ) + '</a>' )
    NEXT
    UWrite( '</div>' )
 
@@ -352,7 +352,7 @@ METHOD UWBrowse:Output()
    // Header
    cRet += '<tr>'
    FOR nI := 1 TO Len(::aColumns)
-      cRet += '<th>' + UHtmlEncode( ::aColumns[ nI ][2] ) + '</th>'
+      cRet += '<th>' + UHtmlEncode( ::aColumns[nI][2] ) + '</th>'
    NEXT
    cRet += '</tr>'
 
@@ -365,7 +365,7 @@ METHOD UWBrowse:Output()
    DO WHILE ! Eof()
       cRet += '<tr>'
       FOR nI := 1 TO Len(::aColumns)
-         xField := ::aColumns[ nI ][3]
+         xField := ::aColumns[nI][3]
          DO CASE
          CASE HB_IsString(xField)
             xI := FieldGet( FieldPos( xField ) )
@@ -378,7 +378,7 @@ METHOD UWBrowse:Output()
          CASE "D"  ; xI := DToC(xI); EXIT
          OTHERWISE ; xI := "ValType()==" + ValType(xI)
          ENDSWITCH
-         IF !::aColumns[ nI ][4]
+         IF !::aColumns[nI][4]
             xI := UHtmlEncode( xI )
          ENDIF
          cRet += '<td><nobr>' + xI + '</nobr></td>'
@@ -463,7 +463,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
       nI := 1
       nL := Min(Len(aURL), Len(aStack))
       DO WHILE nI <= nL
-         IF aStack[ nI ][1] == aURL[ nI ]
+         IF aStack[nI][1] == aURL[nI]
             nI++
          ELSE
             EXIT
@@ -489,14 +489,14 @@ PROCEDURE UProcWidgets( cURL, aMap )
          IF hb_HHasKey(aMap, cI)
             session[ "_uthis" ] := { "idhash" => { => } }
             IF ( lRet := Eval( aMap[ cI ], "INIT" ) ) == .T.
-               AAdd(aStack, { aURL[ nI ], aMap[ cI ], session[ "_uthis" ] })
+               AAdd(aStack, { aURL[nI], aMap[ cI ], session[ "_uthis" ] })
                session[ "_uthis" ] := NIL
             ELSE
                session[ "_uthis" ] := NIL
                EXIT
             ENDIF
          ELSE
-            AAdd(aStack, { aURL[ nI ], NIL, NIL })
+            AAdd(aStack, { aURL[nI], NIL, NIL })
          ENDIF
          nI++
       ENDDO
@@ -571,11 +571,11 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
          cRet += cSeparator
       ENDIF
 
-      SWITCH ValType(aData[ nI ])
+      SWITCH ValType(aData[nI])
       CASE "C"
-      CASE "M" ; cRet += aData[ nI ]; EXIT
-      CASE "N" ; cRet += hb_ntos( aData[ nI ] ); EXIT
-      CASE "D" ; cRet += IIf(Empty(aData[ nI ]), "", DToC(aData[ nI ])); EXIT
+      CASE "M" ; cRet += aData[nI]; EXIT
+      CASE "N" ; cRet += hb_ntos( aData[nI] ); EXIT
+      CASE "D" ; cRet += IIf(Empty(aData[nI]), "", DToC(aData[nI])); EXIT
       ENDSWITCH
    NEXT
 

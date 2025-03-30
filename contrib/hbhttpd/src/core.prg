@@ -283,7 +283,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
             IF nPos == 0 .OR. hb_HValueAt( aFilter, nPos ) + 1 < nAddr
                // Does not overlap/glue with nPos
                // So, add new interval
-               aFilter[ nAddr ] := nAddr2
+               aFilter[nAddr] := nAddr2
                nPos++
             ENDIF
             hb_HHasKey(aFilter, nAddr2 + 1, @nPos2)
@@ -311,7 +311,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
 
       hb_HHasKey(aFilter, nAddr2, @nPos2)
       IF nPos2 > 0 .AND. hb_HValueAt( aFilter, nPos2 ) > nAddr2
-         aFilter[ nAddr2 + 1 ] := hb_HValueAt( aFilter, nPos2 )
+         aFilter[nAddr2 + 1] := hb_HValueAt( aFilter, nPos2 )
       ENDIF
       IF nAddr > hb_HKeyAt( aFilter, nPos )
          aFilter[ hb_HKeyAt( aFilter, nPos ) ] := nAddr - 1
@@ -771,11 +771,11 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
    server[ "HTTP_USER_AGENT" ] := ""
 
    FOR nI := 2 TO Len(aRequest)
-      IF aRequest[ nI ] == ""
+      IF aRequest[nI] == ""
          EXIT
-      ELSEIF ( nJ := At( ":", aRequest[ nI ] ) ) > 0
-         cI := AllTrim(SubStr(aRequest[ nI ], nJ + 1))
-         SWITCH Upper(Left(aRequest[ nI ], nJ - 1))
+      ELSEIF ( nJ := At( ":", aRequest[nI] ) ) > 0
+         cI := AllTrim(SubStr(aRequest[nI], nJ + 1))
+         SWITCH Upper(Left(aRequest[nI], nJ - 1))
          CASE "COOKIE"
             server[ "HTTP_COOKIE" ] := cI
             IF ( nK := At( ";", cI ) ) == 0
@@ -794,7 +794,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
             server[ "CONTENT_TYPE" ] := cI
             EXIT
          OTHERWISE
-            server[ "HTTP_" + StrTran(Upper(Left(aRequest[ nI ], nJ - 1)), "-", "_") ] := cI
+            server[ "HTTP_" + StrTran(Upper(Left(aRequest[nI], nJ - 1)), "-", "_") ] := cI
             EXIT
          ENDSWITCH
       ENDIF
@@ -992,7 +992,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
       cI += "("
       aPar := __dbgVMParLList( nI )
       FOR nJ := 1 TO Len(aPar)
-         cI += cvt2str( aPar[ nJ ] )
+         cI += cvt2str( aPar[nJ] )
          IF nJ < Len(aPar)
             cI += ", "
          ENDIF
@@ -1066,7 +1066,7 @@ STATIC FUNCTION ErrDescCode( nCode )
          "BADALIAS", "DUPALIAS" , NIL          , "CREATE"     , "OPEN"    , "CLOSE"      , "READ"    , "WRITE"      , ; // 17, 18, 19, 20, 21, 22, 23, 24
          "PRINT"   , NIL        , NIL          , NIL          , NIL       , "UNSUPPORTED", "LIMIT"   , "CORRUPTION" , ; // 25, 26 - 29, 30, 31, 32
          "DATATYPE", "DATAWIDTH", "NOTABLE"    , "NOORDER"    , "SHARED"  , "UNLOCKED"   , "READONLY", "APPENDLOCK" , ; // 33, 34, 35, 36, 37, 38, 39, 40
-         "LOCK"    }[ nCode ]                                                                                           // 41
+         "LOCK"    }[nCode]                                                                                             // 41
    ENDIF
 
    RETURN IIf(cI == NIL, "", "EG_" + cI)
@@ -1138,7 +1138,7 @@ FUNCTION UGetHeader( cType )
    LOCAL nI
 
    IF ( nI := AScan( t_aHeader, {| x | Upper(x[1]) == Upper(cType) } ) ) > 0
-      RETURN t_aHeader[ nI ][2]
+      RETURN t_aHeader[nI][2]
    ENDIF
 
    RETURN NIL
@@ -1148,7 +1148,7 @@ PROCEDURE UAddHeader( cType, cValue )
    LOCAL nI
 
    IF ( nI := AScan( t_aHeader, {| x | Upper(x[1]) == Upper(cType) } ) ) > 0
-      t_aHeader[ nI ][2] := cValue
+      t_aHeader[nI][2] := cValue
    ELSE
       AAdd(t_aHeader, { cType, cValue })
    ENDIF

@@ -31,13 +31,13 @@ FUNCTION DispArray( aTest )
    LOCAL nk
 
    FOR nk := 1 TO Len(aTest)
-      ? aTest[ nk, 1 ]
+      ? aTest[nk, 1]
       ?? "  "
-      ?? DToC(aTest[ nk, 2 ])
+      ?? DToC(aTest[nk, 2])
       ?? "  "
-      ?? Str( aTest[ nk, 3 ] )
+      ?? Str( aTest[nk, 3] )
       ?? "  "
-      ?? IIf(aTest[ nk, 4 ], "true", "false")
+      ?? IIf(aTest[nk, 4], "true", "false")
    NEXT
 
    RETURN NIL

@@ -158,7 +158,7 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
    ENDIF
-   aRData[ nSlot ] := nHandle
+   aRData[nSlot] := nHandle
    aWData[1] := nSlot
    aWData[2] := aWData[3] := .F.
 
@@ -189,7 +189,7 @@ STATIC FUNCTION FCM_CLOSE( nWA )
       hb_FSelect( nSlot )
       hb_FUse()
       aRData := USRRDD_RDDDATA(USRRDD_ID(nWA))
-      aRData[ nSlot ] := F_ERROR
+      aRData[nSlot] := F_ERROR
    ENDIF
 
    RETURN UR_SUPER_CLOSE( nWA )

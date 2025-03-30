@@ -60,7 +60,7 @@ FUNCTION FieldGetArr( xRecNo )
    nFields := FCount()
    aFields := Array( nFields )
    FOR n := 1 TO nFields
-      aFields[ n ] := FieldGet( n )
+      aFields[n] := FieldGet( n )
    NEXT
 
    IF xPrevRec != NIL
@@ -84,8 +84,8 @@ FUNCTION FieldPutArr( aFields, xRecNo )
       nFields := Len(aFields)
    ENDIF
    FOR n := 1 TO nFields
-      IF aFields[ n ] != NIL
-         FieldPut( n, aFields[ n ] )
+      IF aFields[n] != NIL
+         FieldPut( n, aFields[n] )
       ENDIF
    NEXT
 

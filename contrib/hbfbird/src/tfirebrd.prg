@@ -633,7 +633,7 @@ METHOD TFbQuery:FieldName( nField )
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][1]
+      result := ::aStruct[nField][1]
    ENDIF
 
    RETURN result
@@ -643,7 +643,7 @@ METHOD TFbQuery:FieldType( nField )
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][2]
+      result := ::aStruct[nField][2]
    ENDIF
 
    RETURN result
@@ -653,7 +653,7 @@ METHOD TFbQuery:FieldLen(nField)
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][3]
+      result := ::aStruct[nField][3]
    ENDIF
 
    RETURN result
@@ -663,7 +663,7 @@ METHOD TFbQuery:FieldDec(nField)
    LOCAL result
 
    IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][4]
+      result := ::aStruct[nField][4]
    ENDIF
 
    RETURN result
@@ -677,7 +677,7 @@ METHOD TFbQuery:FieldGet( nField )
       /* TODO: Convert to right data type */
 
       result := FBGetData(::qry, nField)
-      cType := ::aStruct[ nField ][2]
+      cType := ::aStruct[nField][2]
 
       IF cType == "M"
          /* Blob */
@@ -821,7 +821,7 @@ METHOD TFbRow:Changed(nField)
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aRow)
-      result := ( ::aChanged[ nField ] != NIL )
+      result := ( ::aChanged[nField] != NIL )
    ENDIF
 
    RETURN result
@@ -831,7 +831,7 @@ METHOD TFbRow:FieldGet( nField )
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aRow)
-      result := ::aRow[ nField ]
+      result := ::aRow[nField]
    ENDIF
 
    RETURN result
@@ -841,8 +841,8 @@ METHOD TFbRow:FieldPut( nField, Value )
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aRow)
-      ::aChanged[ nField ] := .T.
-      result := ::aRow[ nField ] := Value
+      ::aChanged[nField] := .T.
+      result := ::aRow[nField] := Value
    ENDIF
 
    RETURN result
@@ -852,7 +852,7 @@ METHOD TFbRow:FieldName( nField )
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][1]
+      result := ::aStruct[nField][1]
    ENDIF
 
    RETURN result
@@ -865,7 +865,7 @@ METHOD TFbRow:FieldType( nField )
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][2]
+      result := ::aStruct[nField][2]
    ENDIF
 
    RETURN result
@@ -875,7 +875,7 @@ METHOD TFbRow:FieldLen(nField)
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][3]
+      result := ::aStruct[nField][3]
    ENDIF
 
    RETURN result
@@ -885,7 +885,7 @@ METHOD TFbRow:FieldDec(nField)
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aStruct)
-      result := ::aStruct[ nField ][4]
+      result := ::aStruct[nField][4]
    ENDIF
 
    RETURN result
@@ -1011,7 +1011,7 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
          nVal := AScan( aDomains, {| x | RTrim(x[1]) == cTable .AND. RTrim(x[2]) == cField } )
 
          IF nVal != 0
-            cDomain := aDomains[ nVal, 3 ]
+            cDomain := aDomains[nVal, 3]
          ELSE
             cDomain := ""
          ENDIF

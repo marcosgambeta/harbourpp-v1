@@ -219,7 +219,7 @@ FUNCTION hsx_Handle( cFile )
       aWData := USRRDD_AREADATA(Select())
       nSlot := AScan( aWData[3], {| _1 | _1 == cFile } )
       IF nSlot != 0
-         RETURN aWData[2][ nSlot ]
+         RETURN aWData[2][nSlot]
       ENDIF
    ENDIF
 
@@ -233,7 +233,7 @@ FUNCTION hsx_File( nHsx )
       aWData := USRRDD_AREADATA(Select())
       nSlot := AScan( aWData[3], nHsx )
       IF nSlot != 0
-         RETURN aWData[3][ nSlot ]
+         RETURN aWData[3][nSlot]
       ENDIF
    ENDIF
 
@@ -246,7 +246,7 @@ FUNCTION hsx_Get( nSlot )
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
       IF nSlot > 0 .AND. nSlot <= Len(aWData[2])
-         RETURN aWData[2][ nSlot ]
+         RETURN aWData[2][nSlot]
       ENDIF
    ENDIF
 

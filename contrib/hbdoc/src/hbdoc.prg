@@ -874,7 +874,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
    IF nWidth == 0 .OR. lRaw
       idx := 99999
       AEval( aText, {| c | IIf(Empty(c), , idx := Min(idx, Len(c) - Len(LTrim(c)))) } )
-      AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr(c, idx + 1) } )
+      AEval( aText, {| c, n | aText[n] := Space( nLeftMargin ) + SubStr(c, idx + 1) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
       FOR EACH cLine IN aText
@@ -1053,7 +1053,7 @@ METHOD Entry:IsComplete( cIncompleteFieldsList )
 
 METHOD Entry:IsPreformatted(cField)
    LOCAL nGroup := hb_HPos( sc_hFields, cField )
-   RETURN nGroup > 0 .AND. hb_bitAnd(::_group[ nGroup ], TPL_PREFORMATTED) != 0
+   RETURN nGroup > 0 .AND. hb_bitAnd(::_group[nGroup], TPL_PREFORMATTED) != 0
 
 METHOD Entry:IsRequired(cField)
    RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_REQUIRED) != 0

@@ -114,7 +114,7 @@ FUNCTION CallBack(nColCount, aValue, aColName)
    LOCAL oldColor := SetColor("G/N")
 
    FOR nI := 1 TO nColCount
-      ? PadR(aColName[nI], 5), " == ", aValue[ nI ]
+      ? PadR(aColName[nI], 5), " == ", aValue[nI]
    NEXT
 
    SetColor(oldColor)

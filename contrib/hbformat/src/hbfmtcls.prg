@@ -364,16 +364,16 @@ METHOD HBFormatCode:Reformat( aFile )
                         IF Len(aDeep) < ++nDeep
                            AAdd(aDeep, NIL)
                         ENDIF
-                        aDeep[ nDeep ] := nContrState
+                        aDeep[nDeep] := nContrState
                      ELSEIF Len(cToken1) < 4 .OR. ( nContrState := AScan( ::aContr, {| a | AScan( a[3], {| e | e == cToken1 } ) > 0 } ) ) == 0
                         IF ( nPos := AScan( ::aContr, {| a | AScan( a[4], {| e | e == cToken1 } ) > 0 } ) ) > 0 .OR. ;
                               cToken1 == "end"
-                           IF nPos > 0 .AND. nDeep > 0 .AND. aDeep[ nDeep ] != nPos
+                           IF nPos > 0 .AND. nDeep > 0 .AND. aDeep[nDeep] != nPos
                               DO WHILE ( nPos := AScan( ::aContr, {| a | AScan( a[4], {| e | e == cToken1 } ) > 0 }, ;
-                                    nPos + 1 ) ) > 0 .AND. aDeep[ nDeep ] != nPos
+                                    nPos + 1 ) ) > 0 .AND. aDeep[nDeep] != nPos
                               ENDDO
                            ENDIF
-                           IF nDeep > 0 .AND. ( aDeep[ nDeep ] == nPos .OR. cToken1 == "end" )
+                           IF nDeep > 0 .AND. ( aDeep[nDeep] == nPos .OR. cToken1 == "end" )
                               nDeep--
                            ELSE
                               ::nLineErr := i - iDelta
@@ -412,7 +412,7 @@ METHOD HBFormatCode:Reformat( aFile )
                            ( nState == RF_STATE_FUNC .AND. ::nLineFnc == 1 ) .OR. ;
                            ( nState == RF_STATE_VAR  .AND. ::nLineVar == 1 ) .OR. ;
                            ( nState == RF_STATE_CODE .AND. ::nLineCode == 1 )
-                           IF !Empty(aFile[ nPos ])
+                           IF !Empty(aFile[nPos])
                               nLen := rf_AINS( aFile, nPos + 1, "" )
                               iDelta++
                               i++
@@ -420,7 +420,7 @@ METHOD HBFormatCode:Reformat( aFile )
                               nPos--
                            ENDIF
                         ENDIF
-                        DO WHILE nPos > 1 .AND. Empty(aFile[ nPos ])
+                        DO WHILE nPos > 1 .AND. Empty(aFile[nPos])
                            rf_ADEL( aFile, nPos )
                            iDelta--
                            i--

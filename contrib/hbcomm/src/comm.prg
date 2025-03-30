@@ -90,7 +90,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
       HB_SYMBOL_UNUSED(nBufferSize)
 
       IF hb_comInit( nPort, nBaud, cParity, nData, nStop )
-         s_hPort[ nPort ] := cOldPortName
+         s_hPort[nPort] := cOldPortName
          hb_mutexUnlock( s_hbcomm_mutex )
          RETURN nPort
       ELSE
@@ -162,8 +162,8 @@ FUNCTION UNINT_PORT( nPort )
    IF nPort $ s_hPort
       IF hb_comClose( nPort )
          /* Restore com port name */
-         IF s_hPort[ nPort ] != NIL
-            hb_comSetDevice( nPort, s_hPort[ nPort ] )
+         IF s_hPort[nPort] != NIL
+            hb_comSetDevice( nPort, s_hPort[nPort] )
          ENDIF
          hb_HDel( s_hPort, nPort )
          lRetVal := .T.

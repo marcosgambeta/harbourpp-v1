@@ -891,7 +891,7 @@ METHOD GDChart:LineChart()
    // ::AddStyle( gdTransparent )
    // ::SetStyle()
    FOR n := 1 TO Len(aPoints) - 1
-      ::Line( aPoints[ n ][1], aPoints[ n ][2], aPoints[ n + 1 ][1], aPoints[ n + 1 ][2], colorp )
+      ::Line( aPoints[n][1], aPoints[n][2], aPoints[n + 1][1], aPoints[n + 1][2], colorp )
    NEXT
    ::SetThickness( nThick )
 

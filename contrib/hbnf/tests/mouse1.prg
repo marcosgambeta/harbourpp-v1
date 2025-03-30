@@ -61,7 +61,7 @@ PROCEDURE Main( nRow, nCol )
    @ MaxRow(), 0 SAY "Driver version: " + ;
       hb_ntos( ft_MVersion( @nMinor, @nType, @nIRQ ) ) + "." + ;
       hb_ntos( nMinor )
-   @ Row(), Col() SAY " " + aType[ nType ] + " mouse using IRQ " + Str( nIRQ, 1, 0 )
+   @ Row(), Col() SAY " " + aType[nType] + " mouse using IRQ " + Str( nIRQ, 1, 0 )
 
    ft_MGetSens( @nHoriz, @nVert, @nDouble )  // Get the current sensitivities
    ft_MSetSens( 70, 70, 60 )    // Bump up the sensitivity of the mouse

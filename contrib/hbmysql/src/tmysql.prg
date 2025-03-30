@@ -59,7 +59,7 @@ CREATE CLASS TMySQLRow
 
    VAR aRow                                     // a single row of answer
    VAR aDirty                                   // array of booleans set to .T. if corresponding field of aRow has been changed
-   VAR aOldValue                                // If aDirty[ n ] is .T. aOldValue[ n ] keeps a copy of changed value if aRow[ n ] is part of a primary key
+   VAR aOldValue                                // If aDirty[n] is .T. aOldValue[n] keeps a copy of changed value if aRow[n] is part of a primary key
 
    VAR aOriValue                                // Original values ( same as TMySQLtable:aOldValue )
 
@@ -108,9 +108,9 @@ METHOD TMySQLRow:FieldGet( cnField )
 
       // Char fields are padded with spaces since a real .dbf field would be
       IF ::FieldType( nNum ) == "C"
-         RETURN PadR(::aRow[ nNum ], ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ])
+         RETURN PadR(::aRow[nNum], ::aFieldStruct[nNum][ MYSQL_FS_LENGTH ])
       ELSE
-         RETURN ::aRow[ nNum ]
+         RETURN ::aRow[nNum]
       ENDIF
    ENDIF
 
@@ -122,7 +122,7 @@ METHOD TMySQLRow:FieldPut( cnField, Value )
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
-      IF ValType(Value) == ValType(::aRow[ nNum ]) .OR. ::aRow[ nNum ] == NIL
+      IF ValType(Value) == ValType(::aRow[nNum]) .OR. ::aRow[nNum] == NIL
 
          // if it is a char field remove trailing spaces
          IF HB_IsString(Value)
@@ -130,12 +130,12 @@ METHOD TMySQLRow:FieldPut( cnField, Value )
          ENDIF
 
          // Save starting value for this field
-         IF !::aDirty[ nNum ]
-            ::aOldValue[ nNum ] := ::aRow[ nNum ]
-            ::aDirty[ nNum ] := .T.
+         IF !::aDirty[nNum]
+            ::aOldValue[nNum] := ::aRow[nNum]
+            ::aDirty[nNum] := .T.
          ENDIF
 
-         ::aRow[ nNum ] := Value
+         ::aRow[nNum] := Value
 
          RETURN Value
       ENDIF
@@ -152,10 +152,10 @@ METHOD TMySQLRow:FieldPos( cFieldName )
 
 // Returns name of field N
 METHOD TMySQLRow:FieldName( nNum )
-   RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], "")
+   RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][ MYSQL_FS_NAME ], "")
 
 METHOD TMySQLRow:FieldLen(nNum)
-   RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ], 0)
+   RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][ MYSQL_FS_LENGTH ], 0)
 
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
@@ -166,11 +166,11 @@ METHOD TMySQLRow:FieldDec(nNum, lFormat)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
-      IF !lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
-                           ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
+      IF !lFormat .AND. ( ::aFieldStruct[nNum][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
+                           ::aFieldStruct[nNum][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
          RETURN Set( _SET_DECIMALS )
       ELSE
-         RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_DECIMALS ]
+         RETURN ::aFieldStruct[nNum][ MYSQL_FS_DECIMALS ]
       ENDIF
    ENDIF
 
@@ -180,7 +180,7 @@ METHOD TMySQLRow:FieldType( nNum )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
-      SWITCH ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ]
+      SWITCH ::aFieldStruct[nNum][ MYSQL_FS_TYPE ]
       CASE MYSQL_TYPE_TINY
       CASE MYSQL_TYPE_SHORT
       CASE MYSQL_TYPE_LONG
@@ -216,20 +216,20 @@ METHOD TMySQLRow:MakePrimaryKeyWhere()
    FOR nI := 1 TO Len(::aFieldStruct)
 
       // search for fields part of a primary key
-      IF hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG) == PRI_KEY_FLAG .OR. ;
-         hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG) == MULTIPLE_KEY_FLAG
+      IF hb_bitAnd(::aFieldStruct[nI][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG) == PRI_KEY_FLAG .OR. ;
+         hb_bitAnd(::aFieldStruct[nI][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG) == MULTIPLE_KEY_FLAG
 
          IF !Empty(cWhere)
             cWhere += " AND "
          ENDIF
 
-         cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "="
+         cWhere += ::aFieldStruct[nI][ MYSQL_FS_NAME ] + "="
 
          // if a part of a primary key has been changed, use original value
-         IF ::aDirty[ nI ]
-            cWhere += ClipValue2SQL( ::aOldValue[ nI ] )
+         IF ::aDirty[nI]
+            cWhere += ClipValue2SQL( ::aOldValue[nI] )
          ELSE
-            cWhere += ClipValue2SQL( ::aRow[ nI ] )
+            cWhere += ClipValue2SQL( ::aRow[nI] )
          ENDIF
       ENDIF
    NEXT
@@ -331,7 +331,7 @@ METHOD TMySQLQuery:New( nSocket, cQuery )
             aField := mysql_fetch_field(::nResultHandle)
             AAdd(::aFieldStruct, aField)
             IF ::lFieldAsData
-               __objAddData(Self, ::aFieldStruct[ nI ][ MYSQL_FS_NAME ])
+               __objAddData(Self, ::aFieldStruct[nI][ MYSQL_FS_NAME ])
             ENDIF
          NEXT
 
@@ -555,7 +555,7 @@ METHOD TMySQLQuery:FieldPos( cFieldName )
 #if 0
    nPos := 0
    DO WHILE ++nPos <= Len(::aFieldStruct)
-      IF Upper(::aFieldStruct[ nPos ][ MYSQL_FS_NAME ]) == cUpperName
+      IF Upper(::aFieldStruct[nPos][ MYSQL_FS_NAME ]) == cUpperName
          EXIT
       ENDIF
    ENDDO
@@ -573,7 +573,7 @@ METHOD TMySQLQuery:FieldPos( cFieldName )
 METHOD TMySQLQuery:FieldName( nNum )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
-      RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ]
+      RETURN ::aFieldStruct[nNum][ MYSQL_FS_NAME ]
    ENDIF
 
    RETURN ""
@@ -589,11 +589,11 @@ METHOD TMySQLQuery:FieldGet( cnField )
    ENDIF
 
    IF nNum > 0 .AND. nNum <= ::nNumfields
-      Value := ::aRow[ nNum ]
+      Value := ::aRow[nNum]
 
       // Char fields are padded with spaces since a real .dbf field would be
       IF ::FieldType( nNum ) == "C"
-         RETURN PadR(Value, ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ])
+         RETURN PadR(Value, ::aFieldStruct[nNum][ MYSQL_FS_LENGTH ])
       ELSE
          RETURN Value
       ENDIF
@@ -604,7 +604,7 @@ METHOD TMySQLQuery:FieldGet( cnField )
 METHOD TMySQLQuery:FieldLen(nNum)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
-      RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ]
+      RETURN ::aFieldStruct[nNum][ MYSQL_FS_LENGTH ]
    ENDIF
 
    RETURN 0
@@ -616,11 +616,11 @@ METHOD TMySQLQuery:FieldDec(nNum, lFormat)
    hb_default(@lFormat, .F.)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
-      IF !lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
-                           ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
+      IF !lFormat .AND. ( ::aFieldStruct[nNum][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
+                           ::aFieldStruct[nNum][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
          RETURN Set( _SET_DECIMALS )
       ELSE
-         RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_DECIMALS ]
+         RETURN ::aFieldStruct[nNum][ MYSQL_FS_DECIMALS ]
       ENDIF
    ENDIF
 
@@ -629,7 +629,7 @@ METHOD TMySQLQuery:FieldDec(nNum, lFormat)
 METHOD TMySQLQuery:FieldType( nNum )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
-      SWITCH ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ]
+      SWITCH ::aFieldStruct[nNum][ MYSQL_FS_TYPE ]
       CASE MYSQL_TYPE_TINY
       CASE MYSQL_TYPE_SHORT
       CASE MYSQL_TYPE_LONG
@@ -769,7 +769,7 @@ METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
          // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
          FOR nI := 1 TO Len(::aFieldStruct)
-            cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::aOldValue[ nI ] ) + " AND "
+            cWhere += ::aFieldStruct[nI][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::aOldValue[nI] ) + " AND "
          NEXT
          // remove last " AND "
          cWhere := Left(cWhere, Len(cWhere) - 5)
@@ -811,7 +811,7 @@ METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
             // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
             FOR nI := 1 TO Len(oRow:aFieldStruct)
-               cWhere += oRow:aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aOriValue[ nI ] ) + " AND "
+               cWhere += oRow:aFieldStruct[nI][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aOriValue[nI] ) + " AND "
             NEXT
             // remove last " AND "
             cWhere := Left(cWhere, Len(cWhere) - 5)
@@ -862,9 +862,9 @@ METHOD TMySQLTable:Delete( oRow, lOldRecord, lRefresh )
          // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
          FOR nI := 1 TO Len(::aFieldStruct)
-            cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "="
+            cWhere += ::aFieldStruct[nI][ MYSQL_FS_NAME ] + "="
             // use original value
-            cWhere += ClipValue2SQL( ::aOldValue[ nI ] )
+            cWhere += ClipValue2SQL( ::aOldValue[nI] )
             cWhere += " AND "
          NEXT
          // remove last " AND "
@@ -899,9 +899,9 @@ METHOD TMySQLTable:Delete( oRow, lOldRecord, lRefresh )
             // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
             FOR nI := 1 TO Len(oRow:aFieldStruct)
-               cWhere += oRow:aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "="
+               cWhere += oRow:aFieldStruct[nI][ MYSQL_FS_NAME ] + "="
                // use original value
-               cWhere += ClipValue2SQL( oRow:aOriValue[ nI ] )
+               cWhere += ClipValue2SQL( oRow:aOriValue[nI] )
                cWhere += " AND "
             NEXT
             // remove last " AND "
@@ -1092,16 +1092,16 @@ METHOD TMySQLTable:FieldPut( cnField, Value )
 
    IF nNum > 0 .AND. nNum <= ::nNumFields
 
-      IF ValType(Value) == ValType(::aRow[ nNum ]) .OR. ::aRow[ nNum ] == NIL
+      IF ValType(Value) == ValType(::aRow[nNum]) .OR. ::aRow[nNum] == NIL
 
          // if it is a char field remove trailing spaces
          IF HB_IsString(Value)
             Value := RTrim(Value)
          ENDIF
 
-         ::aRow[ nNum ] := Value
+         ::aRow[nNum] := Value
          IF ::lFieldAsData
-            __objSetValueList( Self, { { ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], Value } } )
+            __objSetValueList( Self, { { ::aFieldStruct[nNum][ MYSQL_FS_NAME ], Value } } )
          ENDIF
 
          RETURN Value
@@ -1155,14 +1155,14 @@ METHOD TMySQLTable:MakePrimaryKeyWhere()
    FOR nI := 1 TO Len(::aFieldStruct)
 
       // search for fields part of a primary key
-      IF hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG) == PRI_KEY_FLAG .OR. ;
-         hb_bitAnd(::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG) == MULTIPLE_KEY_FLAG
+      IF hb_bitAnd(::aFieldStruct[nI][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG) == PRI_KEY_FLAG .OR. ;
+         hb_bitAnd(::aFieldStruct[nI][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG) == MULTIPLE_KEY_FLAG
 
          IF !Empty(cWhere)
             cWhere += " AND "
          ENDIF
 
-         cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::aOldValue[ nI ] )
+         cWhere += ::aFieldStruct[nI][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::aOldValue[nI] )
       ENDIF
    NEXT
 

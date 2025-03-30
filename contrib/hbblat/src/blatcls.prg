@@ -959,7 +959,7 @@ METHOD HBBlat:TranslateBlatError( nErr )
    IF nPos == 0
       cError := aErrors[1, 2]  // BLAT_TEXT_ERR_UNKNOWN has to be first error
    ELSE
-      cError := aErrors[ nPos, 2 ]
+      cError := aErrors[nPos, 2]
    ENDIF
 
 #if 0

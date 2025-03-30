@@ -21,7 +21,7 @@ PROCEDURE Main()
          @ 2, 0 TO MaxRow(), MaxCol()
          nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn )
          IF nPrn != 0
-            PrnTest( aPrn[ nPrn ], cFileName )
+            PrnTest( aPrn[nPrn], cFileName )
          ENDIF
       ENDDO
    ENDIF

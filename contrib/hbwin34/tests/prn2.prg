@@ -23,10 +23,10 @@ PROCEDURE Main()
 
             IF Empty(cFileName)
                Alert( "win_PrintDataRaw() returned: " + ;
-                  hb_ntos( win_PrintDataRaw( aPrn[ nPrn ], "Hello World!" + hb_BChar( 12 ), cDocName ) ) )
+                  hb_ntos( win_PrintDataRaw( aPrn[nPrn], "Hello World!" + hb_BChar( 12 ), cDocName ) ) )
             ELSE
                Alert( "win_PrintFileRaw() returned: " + ;
-                  hb_ntos( win_PrintFileRaw( aPrn[ nPrn ], cFileName, cDocName ) ) )
+                  hb_ntos( win_PrintFileRaw( aPrn[nPrn], cFileName, cDocName ) ) )
             ENDIF
          ENDIF
       ENDDO

@@ -994,13 +994,13 @@ METHOD THtmlNode:nextNode()
    ENDIF
 
    IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) ) < Len(::parent:htmlContent)
-      RETURN ::parent:htmlContent[ nPos + 1 ]
+      RETURN ::parent:htmlContent[nPos + 1]
    ENDIF
 
    aNodes := ::parent:parent:collect()
    nPos   := hb_AScan( aNodes, Self,,, .T. )
 
-   RETURN IIf(nPos == Len(aNodes), NIL, aNodes[ nPos + 1 ])
+   RETURN IIf(nPos == Len(aNodes), NIL, aNodes[nPos + 1])
 
 // returns previous node
 METHOD THtmlNode:prevNode()
@@ -1014,7 +1014,7 @@ METHOD THtmlNode:prevNode()
    aNodes := ::parent:collect( Self )
    nPos   := hb_AScan( aNodes, Self,,, .T. )
 
-   RETURN IIf(nPos == 1, ::parent, aNodes[ nPos - 1 ])
+   RETURN IIf(nPos == 1, ::parent, aNodes[nPos - 1])
 
 // creates HTML code for this node
 METHOD THtmlNode:toString( nIndent )
@@ -1102,7 +1102,7 @@ STATIC FUNCTION __AttrToStr( cName, cValue, aAttr, oTHtmlNode )
       RETURN oTHtmlNode:error( "Invalid HTML attribute for: <" + oTHtmlNode:htmlTagName + ">", oTHtmlNode:className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
 
-   IF aAttr[ nPos ][2] == HTML_ATTR_TYPE_BOOL
+   IF aAttr[nPos][2] == HTML_ATTR_TYPE_BOOL
       RETURN " " + cName
    ENDIF
 
@@ -1294,7 +1294,7 @@ STATIC FUNCTION __ParseAttr( parser )
          EXIT
 
       OTHERWISE
-         aAttr[ nMode ] += cChr
+         aAttr[nMode] += cChr
       ENDSWITCH
    ENDDO
 
@@ -1328,7 +1328,7 @@ METHOD THtmlNode:setAttribute( cName, cValue )
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
 
-   IF aAttr[ nPos ][2] == HTML_ATTR_TYPE_BOOL
+   IF aAttr[nPos][2] == HTML_ATTR_TYPE_BOOL
       hHash[ cName ] := ""
    ELSE
       hHash[ cName ] := cValue
@@ -1451,7 +1451,7 @@ METHOD THtmlNode:findNodesByTagName( cName, nOrdinal )
       IF nOrdinal < 1 .OR. nOrdinal > Len(aRet)
          RETURN NIL
       ENDIF
-      RETURN aRet[ nOrdinal ]
+      RETURN aRet[nOrdinal]
    ENDIF
 
    RETURN aRet

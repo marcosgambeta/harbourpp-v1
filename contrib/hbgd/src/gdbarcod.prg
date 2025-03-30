@@ -259,7 +259,7 @@ METHOD GDBarCode:Draw13( cText )
             nChk := 10
          ENDIF
 
-         ::DrawSingleBar( ::Right_Hand[ nChk ] )
+         ::DrawSingleBar( ::Right_Hand[nChk] )
 
          // Now, finish bar
          ::maxHeight += 9
@@ -364,7 +364,7 @@ METHOD GDBarCode:Draw8( cText )
          nChk := 10 - jj
       ENDIF
 
-      ::DrawSingleBar( ::Right_Hand[ nChk ] )
+      ::DrawSingleBar( ::Right_Hand[nChk] )
 
       // Now, finish bar
       ::maxHeight += 9
@@ -548,12 +548,12 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
          ENDIF
          nSum += ( nValChar - 1 ) * nC
-         cConc += ::aCode[ nValChar ]
+         cConc += ::aCode[nValChar]
 
       NEXT
 
       nSum := nSum % 103 + 1
-      cConc += ::aCode[ nSum ] + ::aCode[107]
+      cConc += ::aCode[nSum] + ::aCode[107]
 
       FOR n := 1 TO Len(cConc) STEP 2
          cBarCode += Replicate( "1", Val( SubStr(cConc, n, 1) ) )

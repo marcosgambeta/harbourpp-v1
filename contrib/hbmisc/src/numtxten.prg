@@ -85,7 +85,7 @@ STATIC FUNCTION int_to_string( nValue )
       "ninety" }
 
    IF nValue < 20
-      cRetVal := aArray1[ nValue ]
+      cRetVal := aArray1[nValue]
    ELSE
       cRetVal := aArray2[ Int( nValue / 10 ) ]
       nValue -= 10 * Int( nValue / 10 )

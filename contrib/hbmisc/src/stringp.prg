@@ -94,7 +94,7 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
       ENDIF
       nLen := Len(xTxt)
       FOR n := 1 TO nLen                     // For each item : Recurse !
-         cOut += ToChar( xTxt[ n ], cSeparator, lDebug )
+         cOut += ToChar( xTxt[n], cSeparator, lDebug )
          IF n != nLen
             cOut += cSeparator
          ENDIF
@@ -110,8 +110,8 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
          aData := __objGetValueList( xTxt )
          nLen  := Len(aData)
          FOR n := 1 TO nLen                     // For each item : Recurse !
-            cOut += aData[ n ][ HB_OO_DATA_SYMBOL ] + ":" + ;
-               ToChar( aData[ n ][ HB_OO_DATA_VALUE ], cSeparator, lDebug )
+            cOut += aData[n][ HB_OO_DATA_SYMBOL ] + ":" + ;
+               ToChar( aData[n][ HB_OO_DATA_VALUE ], cSeparator, lDebug )
             IF n != nLen
                cOut += cSeparator
             ENDIF

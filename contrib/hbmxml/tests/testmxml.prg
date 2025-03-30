@@ -64,7 +64,7 @@ PROCEDURE Main( cFileArg )
             "UNKNOWN", nNum ) + hb_eol() )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Parent has type %s (%d), expected MXML_ELEMENT!", ;
-            s_aTypes[ nNum + 1 ], nNum ) + hb_eol() )
+            s_aTypes[nNum + 1], nNum ) + hb_eol() )
       ENDIF
 
       mxmlDelete( hTree )
@@ -107,7 +107,7 @@ PROCEDURE Main( cFileArg )
             "UNKNOWN", nNum ) + hb_eol() )
       ELSE
          OutErr( hb_StrFormat( "ERROR: First child has type %s (%d), expected MXML_TEXT!", ;
-            s_aTypes[ nNum + 1 ], nNum ) + hb_eol() )
+            s_aTypes[nNum + 1], nNum ) + hb_eol() )
       ENDIF
 
       mxmlDelete( hTree )
@@ -140,7 +140,7 @@ PROCEDURE Main( cFileArg )
             "UNKNOWN", nNum ) + hb_eol() )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Second child has type %s (%d), expected MXML_OPAQUE!", ;
-            s_aTypes[ nNum + 1 ], nNum ) + hb_eol() )
+            s_aTypes[nNum + 1], nNum ) + hb_eol() )
       ENDIF
 
       mxmlDelete( hTree )
@@ -164,7 +164,7 @@ PROCEDURE Main( cFileArg )
             "UNKNOWN", nNum ) + hb_eol() )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Third child has type %s (%d), expected MXML_REAL!", ;
-            s_aTypes[ nNum + 1 ], nNum ) + hb_eol() )
+            s_aTypes[nNum + 1], nNum ) + hb_eol() )
       ENDIF
 
       mxmlDelete( hTree )
@@ -197,7 +197,7 @@ PROCEDURE Main( cFileArg )
             "UNKNOWN", nNum ) + hb_eol() )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Fourth child has type %s (%d), expected MXML_TEXT!", ;
-            s_aTypes[ nNum + 1 ], nNum ) + hb_eol() )
+            s_aTypes[nNum + 1], nNum ) + hb_eol() )
       ENDIF
 
       mxmlDelete( hTree )
@@ -230,7 +230,7 @@ PROCEDURE Main( cFileArg )
                i + 1, "UNKNOWN", nNum ) + hb_eol() )
          ELSE
             OutErr( hb_StrFormat( "ERROR: Group child #%d has type %s (%d), expected MXML_ELEMENT!", ;
-               s_aTypes[ nNum + 1 ], nNum ) + hb_eol() )
+               s_aTypes[nNum + 1], nNum ) + hb_eol() )
          ENDIF
 
          mxmlDelete( hTree )

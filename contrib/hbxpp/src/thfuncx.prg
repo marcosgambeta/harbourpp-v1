@@ -75,7 +75,7 @@ FUNCTION ThreadWait( aThreads, nTimeOut )
    nPos := hb_threadWait( apThIDs, IIf(HB_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
       nTimeOut / 100, NIL) )
    IF nPos != 0
-      xResult := aThreads[ nPos ]
+      xResult := aThreads[nPos]
    ENDIF
 
    RETURN xResult

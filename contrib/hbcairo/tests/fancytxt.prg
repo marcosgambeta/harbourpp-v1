@@ -70,7 +70,7 @@ PROCEDURE map_path_onto( hCairo, hPath )
    DO WHILE cairo_path_iterator_next( hIterator ) != NIL
       IF Len(aPoints := cairo_path_iterator_get_points( hIterator )) > 0
          FOR nI := 1 TO Len(aPoints)
-            transform_point( @aPoints[ nI, 1 ], @aPoints[ nI, 2 ], hPath, aLengths )
+            transform_point( @aPoints[nI, 1], @aPoints[nI, 2], hPath, aLengths )
          NEXT
          cairo_path_iterator_set_points( hIterator, aPoints )
       ENDIF
@@ -91,10 +91,10 @@ STATIC PROCEDURE transform_point( nX, nY, hPath, aLengths )
    nI := 1
    DO WHILE ( nType := cairo_path_iterator_next( hIterator ) ) != NIL
       aPoints := cairo_path_iterator_get_points( hIterator )
-      IF nNX <= aLengths[ nI ] .AND. nType != CAIRO_PATH_MOVE_TO
+      IF nNX <= aLengths[nI] .AND. nType != CAIRO_PATH_MOVE_TO
          EXIT
       ENDIF
-      nNX -= aLengths[ nI ]
+      nNX -= aLengths[nI]
       nI++
       IF nType == CAIRO_PATH_MOVE_TO .OR. nType == CAIRO_PATH_LINE_TO
          aLast := aPoints[1]
@@ -105,14 +105,14 @@ STATIC PROCEDURE transform_point( nX, nY, hPath, aLengths )
 
    IF nType == CAIRO_PATH_MOVE_TO
    ELSEIF nType == CAIRO_PATH_LINE_TO
-      nRatio := nNX / aLengths[ nI ]
+      nRatio := nNX / aLengths[nI]
       nX := aLast[1] * ( 1 - nRatio ) + aPoints[1, 1] * nRatio
       nY := aLast[2] * ( 1 - nRatio ) + aPoints[1, 2] * nRatio
 
       nDX := -( aLast[1] - aPoints[1, 1] )
       nDY := -( aLast[2] - aPoints[1, 2] )
 
-      nRatio := nNY / aLengths[ nI ]
+      nRatio := nNY / aLengths[nI]
       nX += -nDY * nRatio
       nY += nDX * nRatio
    ELSEIF nType == CAIRO_PATH_CURVE_TO

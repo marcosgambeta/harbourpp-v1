@@ -69,27 +69,27 @@ PROCEDURE Main()
 
    ? "  Original strings:"
    FOR ni := 1 TO Len(aStr)
-      ? Space(4) + aStr[ ni ]
+      ? Space(4) + aStr[ni]
    NEXT
    ?
 
-   ? '  AtAdjust( ":", aStr[ ni ], 21, 1,, "." ) yields'
+   ? '  AtAdjust( ":", aStr[ni], 21, 1,, "." ) yields'
    FOR ni := 1 TO Len(aStr)
-      ? Space(4) + AtAdjust( ":", aStr[ ni ], 21, 1,, "." )
+      ? Space(4) + AtAdjust( ":", aStr[ni], 21, 1,, "." )
    NEXT
    ?
 
-   ? '  AtAdjust( ":", aStr[ ni ], 10, 1,, "." ) yields'
+   ? '  AtAdjust( ":", aStr[ni], 10, 1,, "." ) yields'
    FOR ni := 1 TO Len(aStr)
-      ? Space(4) + AtAdjust( ":", aStr[ ni ], 10, 1,, "." )
+      ? Space(4) + AtAdjust( ":", aStr[ni], 10, 1,, "." )
    NEXT
    ?
 
    ? '  SetAtLike( CT_SETATLIKE_WILDCARD, ":" )'
-   ? '  AtAdjust( ":", aStr[ ni ], 10, 1,, "." ) yields now'
+   ? '  AtAdjust( ":", aStr[ni], 10, 1,, "." ) yields now'
    SetAtLike( CT_SETATLIKE_WILDCARD, ":" )
    FOR ni := 1 TO Len(aStr)
-      ? Space(4) + AtAdjust( ":", aStr[ ni ], 10, 1,, "." )
+      ? Space(4) + AtAdjust( ":", aStr[ni], 10, 1,, "." )
    NEXT
    ?
 

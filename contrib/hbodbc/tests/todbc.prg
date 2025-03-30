@@ -34,7 +34,7 @@ PROCEDURE Main()
 
       dsFunctions:Close()
 
-      dsFunctions:SetSQL("SELECT * FROM test ORDER BY " + aOrders[ nOp ])
+      dsFunctions:SetSQL("SELECT * FROM test ORDER BY " + aOrders[nOp])
       dsFunctions:Open()
 
       @ 14, 5 SAY " " + ;
