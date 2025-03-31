@@ -89,7 +89,9 @@ extern HB_EXPORT char * hb_timeStr( char * szTime, long lMilliSec );
 extern HB_EXPORT HB_BOOL hb_timeStrGet( const char * szTime,
                                         int * piHour, int * piMinutes,
                                         int * piSeconds, int * piMSec );
-
+extern HB_EXPORT HB_BOOL hb_timeStrGetUTC( const char * szTime,
+                                           int * piHour, int * piMinutes, int * piSeconds,
+                                           int * piMSec, int * piUTCOffset );
 extern HB_EXPORT void   hb_timeStrRawGet( const char * szTime,
                                           int * piHour, int * piMinutes,
                                           int * piSeconds, int * piMSec );
@@ -114,6 +116,10 @@ extern HB_EXPORT HB_BOOL hb_timeStampStrGet( const char * szDateTime,
                                             int * piYear, int * piMonth, int * piDay,
                                             int * piHour, int * piMinutes, int * piSeconds,
                                             int * piMSec );
+extern HB_EXPORT HB_BOOL hb_timeStampStrGetUTC( const char * szDateTime,
+                                                int * piYear, int * piMonth, int * piDay,
+                                                int * piHour, int * piMinutes, int * piSeconds,
+                                                int * piMSec, int * piUTCOffset );
 extern HB_EXPORT HB_BOOL hb_timeStampStrGetDT( const char * szDateTime,
                                               long * plJulian, long * plMilliSec );
 

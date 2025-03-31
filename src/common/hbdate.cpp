@@ -512,18 +512,19 @@ char *hb_timeStr(char *szTime, long lMilliSec)
   return szTime;
 }
 
-HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec)
+HB_BOOL hb_timeStrGetUTC(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec, int *piUTCOffset)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_timeStrGet(%s, %p, %p, %p, %p)", szTime, static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_timeStrGetUTC(%s, %p, %p, %p, %p, %p)", szTime, static_cast<void *>(piHour), static_cast<void *>(piMinutes),
+                         static_cast<void *>(piSeconds), static_cast<void *>(piMSec), static_cast<void *>(piUTCOffset)));
 #endif
 
-  int iHour, iMinutes, iSeconds, iMSec, iBlocks;
+  int iHour, iMinutes, iSeconds, iMSec, iUTCOffset, iBlocks;
 
-  iHour = iMinutes = iSeconds = iMSec = iBlocks = 0;
-  auto fValid = false;
+  iHour = iMinutes = iSeconds = iMSec = iUTCOffset = iBlocks = 0;
+  bool fValid = false;
 
-  if (szTime != nullptr)
+  if (szTime)
   {
     while (HB_ISSPACE(*szTime))
     {
@@ -611,12 +612,46 @@ HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
             iHour = 0;
           }
         }
+        else
+        {
+          if (HB_TOUPPER(szTime[0]) == 'U' && HB_TOUPPER(szTime[1]) == 'T' && HB_TOUPPER(szTime[2]) == 'C' &&
+              (szTime[3] == '+' || szTime[3] == '-'))
+          {
+            szTime += 3;
+          }
+          if ((szTime[0] == '+' || szTime[0] == '-') && HB_ISDIGIT(szTime[1]))
+          {
+            bool fMinus = (szTime[0] == '-');
+            iUTCOffset = szTime[1] - '0';
+            szTime += 2;
+            if (HB_ISDIGIT(*szTime))
+            {
+              iUTCOffset = iUTCOffset * 10 + (*szTime++ - '0');
+            }
+            iUTCOffset *= 60;
+            if (*szTime == ':' && HB_ISDIGIT(szTime[1]))
+            {
+              ++szTime;
+            }
+            if (szTime[0] >= '0' && szTime[0] <= '5' && HB_ISDIGIT(szTime[1]))
+            {
+              iUTCOffset += (szTime[0] - '0') * 10 + (szTime[1] - '0');
+              szTime += 2;
+            }
+            iUTCOffset *= 60;
+            if (fMinus)
+            {
+              iUTCOffset = -iUTCOffset;
+            }
+          }
+        }
       }
       while (HB_ISSPACE(*szTime))
       {
         ++szTime;
       }
-      if (*szTime == 0 && iBlocks > 0 && iHour < 24 && iMinutes < 60 && iSeconds < 60)
+      if (*szTime == 0 && iBlocks > 0 && iHour < 24 && iMinutes < 60 && iSeconds < 60 && iUTCOffset >= -43200 &&
+          iUTCOffset <= 43200)
       {
         fValid = true;
       }
@@ -643,8 +678,21 @@ HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
   {
     *piMSec = iMSec;
   }
+  if (piUTCOffset)
+  {
+    *piUTCOffset = iUTCOffset;
+  }
 
   return fValid;
+}
+
+HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_timeStrGet(%s, %p, %p, %p, %p)", szTime, static_cast<void *>(piHour), static_cast<void *>(piMinutes),
+                         static_cast<void *>(piSeconds), static_cast<void *>(piMSec)));
+#endif
+  return hb_timeStrGetUTC(szTime, piHour, piMinutes, piSeconds, piMSec, nullptr);
 }
 
 void hb_timeStrRawGet(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec)
@@ -769,19 +817,21 @@ char *hb_timeStampStr(char *szDateTime, long lJulian, long lMilliSec)
   return szDateTime;
 }
 
-HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes,
-                           int *piSeconds, int *piMSec)
+HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int *piYear, int *piMonth, int *piDay, int *piHour,
+                              int *piMinutes, int *piSeconds, int *piMSec, int *piUTCOffset)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_timeStampStrGet(%s, %p, %p, %p, %p, %p, %p, %p)", szDateTime, static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay), static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
+   HB_TRACE(HB_TR_DEBUG,
+           ("hb_timeStampStrGetUTC(%s, %p, %p, %p, %p, %p, %p, %p, %p)", szDateTime, static_cast<void *>(piYear), static_cast<void *>(piMonth),
+            static_cast<void *>(piDay), static_cast<void *>(piHour), static_cast<void *>(piMinutes), static_cast<void *>(piSeconds), static_cast<void *>(piMSec), static_cast<void *>(piUTCOffset)));
 #endif
 
   int iYear, iMonth, iDay;
 
   iYear = iMonth = iDay = 0;
-  auto fValid = false;
+  bool fValid = false;
 
-  if (szDateTime != nullptr)
+  if (szDateTime)
   {
     while (HB_ISSPACE(*szDateTime))
     {
@@ -807,9 +857,10 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
           fValid = true;
         }
       }
-      else if ((szDateTime[5] == 'W' || szDateTime[5] == 'w') && // ISO 8601 Week dates: YYYY-Www-D
-               HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) && szDateTime[8] == szDateTime[4] &&
-               HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10]))
+      // ISO 8601 Week dates: YYYY-Www-D
+      else if ((szDateTime[5] == 'W' || szDateTime[5] == 'w') && HB_ISDIGIT(szDateTime[6]) &&
+               HB_ISDIGIT(szDateTime[7]) && szDateTime[8] == szDateTime[4] && HB_ISDIGIT(szDateTime[9]) &&
+               !HB_ISDIGIT(szDateTime[10]))
       {
         long lDate = hb_dateEncWeek(iYear, (szDateTime[6] - '0') * 10 + (szDateTime[7] - '0'), szDateTime[9] - '0');
         if (lDate)
@@ -819,8 +870,9 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
           fValid = true;
         }
       }
-      else if (szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && // ISO 8601 Ordinal dates: YYYY-DDD
-               HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) && !HB_ISDIGIT(szDateTime[8]))
+      // ISO 8601 Ordinal dates: YYYY-DDD
+      else if (szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) &&
+               HB_ISDIGIT(szDateTime[7]) && !HB_ISDIGIT(szDateTime[8]))
       {
         iDay = (static_cast<int>(szDateTime[5] - '0') * 10 + static_cast<int>(szDateTime[6] - '0')) * 10 +
                static_cast<int>(szDateTime[7] - '0');
@@ -870,21 +922,18 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
     }
   }
 
-  if (piHour || piMinutes || piSeconds || piMSec)
+  if (piHour || piMinutes || piSeconds || piMSec || piUTCOffset || (!fValid && szDateTime))
   {
-    if (!hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec))
-    {
-      if (szDateTime != nullptr)
-      {
-        fValid = false;
-      }
-    }
-    else
+    if (hb_timeStrGetUTC(szDateTime, piHour, piMinutes, piSeconds, piMSec, piUTCOffset))
     {
       fValid = true;
     }
+    else if (szDateTime)
+    {
+      fValid = false;
+    }
   }
-  else if (szDateTime != nullptr)
+  else if (szDateTime)
   {
     fValid = false;
   }
@@ -905,15 +954,28 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
   return fValid;
 }
 
+HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes,
+                           int *piSeconds, int *piMSec)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG,
+           ("hb_timeStampStrGet(%s, %p, %p, %p, %p, %p, %p, %p)", szDateTime, static_cast<void *>(piYear), static_cast<void *>(piMonth),
+            static_cast<void *>(piDay), static_cast<void *>(piHour), static_cast<void *>(piMinutes), (void *)piSeconds, static_cast<void *>(piMSec)));
+#endif
+
+  return hb_timeStampStrGetUTC(szDateTime, piYear, piMonth, piDay, piHour, piMinutes, piSeconds, piMSec, nullptr);
+}
+
 HB_BOOL hb_timeStampStrGetDT(const char *szDateTime, long *plJulian, long *plMilliSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampStrGetDT(%s, %p, %p)", szDateTime, static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
+  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec, iUTCOffset;
 
-  bool fValid = hb_timeStampStrGet(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec);
+  bool fValid =
+      hb_timeStampStrGetUTC(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec, &iUTCOffset);
   if (plJulian)
   {
     *plJulian = hb_dateEncode(iYear, iMonth, iDay);
@@ -921,6 +983,25 @@ HB_BOOL hb_timeStampStrGetDT(const char *szDateTime, long *plJulian, long *plMil
   if (plMilliSec)
   {
     *plMilliSec = hb_timeEncode(iHour, iMinutes, iSeconds, iMSec);
+  }
+
+  if (iUTCOffset != 0 && fValid)
+  {
+    *plMilliSec -= iUTCOffset * 1000;
+
+    if (*plMilliSec < 0)
+    {
+      *plMilliSec += HB_MILLISECS_PER_DAY;
+      if (--(*plJulian) < 0)
+      {
+        fValid = false;
+      }
+    }
+    else if (*plMilliSec >= HB_MILLISECS_PER_DAY)
+    {
+      *plMilliSec -= HB_MILLISECS_PER_DAY;
+      ++(*plJulian);
+    }
   }
 
   return fValid;
