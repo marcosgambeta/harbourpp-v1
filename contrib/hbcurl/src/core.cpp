@@ -1074,7 +1074,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         // Callback
 
       case HB_CURLOPT_WRITEFUNCTION: {
-        PHB_ITEM pWriteFunctionCallback = hb_param(3, HB_IT_EVALITEM);
+        PHB_ITEM pWriteFunctionCallback = hb_param(3, Harbour::Item::EVALITEM);
 
         if (hb_curl->pWriteFunctionCallback)
         {
@@ -2830,7 +2830,7 @@ HB_FUNC(CURL_WS_RECV)
 #else
     struct curl_ws_frame *meta = nullptr;
 #endif
-    PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
+    PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
     char *buffer;
     HB_SIZE buflen;
 
@@ -3038,7 +3038,7 @@ HB_FUNC(CURL_MULTI_INFO_READ)
 
       if (msg && curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &response_code) == CURLE_OK)
       {
-        PHB_ITEM pHandles = hb_param(2, HB_IT_ARRAY);
+        PHB_ITEM pHandles = hb_param(2, Harbour::Item::ARRAY);
         PHB_ITEM pReturn = hb_itemArrayNew(HB_CURLMSG_RESP_LAST);
 
         hb_arraySetNI(pReturn, HB_CURLMSG_RESP_LEN, msgs_in_queue);
