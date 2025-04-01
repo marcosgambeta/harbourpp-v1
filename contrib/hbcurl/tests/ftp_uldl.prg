@@ -30,10 +30,10 @@ PROCEDURE Main( cDL, cUL )
       IF tmp == 8
          ? tmp, ""
          FOR tmp1 := 1 TO Len(info[8])
-            ?? info[8][ tmp1 ] + " "
+            ?? info[8][tmp1] + " "
          NEXT
       ELSE
-         ? tmp, info[ tmp ]
+         ? tmp, info[tmp]
       ENDIF
    NEXT
 
@@ -73,7 +73,7 @@ PROCEDURE Main( cDL, cUL )
       info := curl_easy_getinfo( curl, HB_CURLINFO_SSL_ENGINES, @tmp )
       ? "SSL ENGINES: ", tmp, Len(info)
       FOR tmp := 1 TO Len(info)
-         ?? info[ tmp ] + " "
+         ?? info[tmp] + " "
       NEXT
 
       curl_easy_reset( curl )

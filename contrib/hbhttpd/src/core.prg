@@ -88,11 +88,11 @@ METHOD UHttpd:Run( hConfig )
       "FirewallFilter"       => "0.0.0.0/0" }
 
    FOR EACH xValue IN hConfig
-      IF !hb_HHasKey(::hConfig, xValue:__enumKey) .OR. !( ValType(xValue) == ValType(::hConfig[ xValue:__enumKey ]) )
+      IF !hb_HHasKey(::hConfig, xValue:__enumKey) .OR. !( ValType(xValue) == ValType(::hConfig[xValue:__enumKey]) )
          ::cError := "Invalid config option '" + xValue:__enumKey + "'"
          RETURN .F.
       ENDIF
-      ::hConfig[ xValue:__enumKey ] := xValue
+      ::hConfig[xValue:__enumKey] := xValue
    NEXT
 
    IF ::hConfig[ "SSL" ]
@@ -209,7 +209,7 @@ METHOD UHttpd:LogAccess()
    hb_mutexLock( ::hmtxLog )
    Eval( ::hConfig[ "LogAccess" ], ;
       server[ "REMOTE_ADDR" ] + " - - [" + Right(cDate, 2) + "/" + ;
-      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[ Val( SubStr(cDate, 5, 2) ) ] + ;
+      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[Val( SubStr(cDate, 5, 2) )] + ;
       "/" + Left(cDate, 4) + ":" + cTime + ' +0000] "' + server[ "REQUEST_ALL" ] + '" ' + ;
       hb_ntos( t_nStatusCode ) + " " + hb_ntos( Len(t_cResult) ) + ;
       ' "' + server[ "HTTP_REFERER" ] + '" "' + server[ "HTTP_USER_AGENT" ] + ;
@@ -288,7 +288,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
             ENDIF
             hb_HHasKey(aFilter, nAddr2 + 1, @nPos2)
             // Merge and delete inner subintervals
-            aFilter[ hb_HKeyAt( aFilter, nPos ) ] := Max(hb_HValueAt( aFilter, nPos2 ), nAddr2)
+            aFilter[hb_HKeyAt( aFilter, nPos )] := Max(hb_HValueAt( aFilter, nPos2 ), nAddr2)
             DO WHILE nPos2-- > nPos
                hb_HDelAt( aFilter, nPos + 1 )
             ENDDO
@@ -314,7 +314,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
          aFilter[nAddr2 + 1] := hb_HValueAt( aFilter, nPos2 )
       ENDIF
       IF nAddr > hb_HKeyAt( aFilter, nPos )
-         aFilter[ hb_HKeyAt( aFilter, nPos ) ] := nAddr - 1
+         aFilter[hb_HKeyAt( aFilter, nPos )] := nAddr - 1
          nPos++
       ENDIF
       DO WHILE nPos2-- >= nPos
@@ -699,7 +699,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
    ENDIF
 
    IF cPath != NIL
-      bEval := aMount[ cMount ]
+      bEval := aMount[cMount]
       BEGIN SEQUENCE WITH {| oErr | UErrorHandler( oErr, oServer ) }
          xRet := Eval( bEval, cPath )
          IF HB_IsString(xRet)
@@ -784,7 +784,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
             cI := Left(cI, nK)
             IF ( nK := At( "=", cI ) ) > 0
                /* cookie names are case insensitive, uppercase it */
-               cookie[ Upper(Left(cI, nK - 1)) ] := SubStr(cI, nK + 1)
+               cookie[Upper(Left(cI, nK - 1))] := SubStr(cI, nK + 1)
             ENDIF
             EXIT
          CASE "CONTENT-LENGTH"
@@ -802,9 +802,9 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
    IF !server[ "QUERY_STRING" ] == ""
       FOR EACH cI IN hb_ATokens( server[ "QUERY_STRING" ], "&" )
          IF ( nI := At( "=", cI ) ) > 0
-            get[ UUrlDecode( Left(cI, nI - 1) ) ] := UUrlDecode( SubStr(cI, nI + 1) )
+            get[UUrlDecode( Left(cI, nI - 1) )] := UUrlDecode( SubStr(cI, nI + 1) )
          ELSE
-            get[ UUrlDecode( cI ) ] := NIL
+            get[UUrlDecode( cI )] := NIL
          ENDIF
       NEXT
    ENDIF
@@ -824,17 +824,17 @@ STATIC PROCEDURE ParseRequestBody( cRequest )
          IF cEncoding == "UTF-8"
             FOR EACH cPart IN hb_ATokens( cRequest, "&" )
                IF ( nI := At( "=", cPart ) ) > 0
-                  post[ hb_UTF8ToStr( UUrlDecode( Left(cPart, nI - 1) ) ) ] := hb_UTF8ToStr( UUrlDecode( SubStr(cPart, nI + 1) ) )
+                  post[hb_UTF8ToStr( UUrlDecode( Left(cPart, nI - 1) ) )] := hb_UTF8ToStr( UUrlDecode( SubStr(cPart, nI + 1) ) )
                ELSE
-                  post[ hb_UTF8ToStr( UUrlDecode( cPart ) ) ] := NIL
+                  post[hb_UTF8ToStr( UUrlDecode( cPart ) )] := NIL
                ENDIF
             NEXT
          ELSE
             FOR EACH cPart IN hb_ATokens( cRequest, "&" )
                IF ( nI := At( "=", cPart ) ) > 0
-                  post[ UUrlDecode( Left(cPart, nI - 1) ) ] := UUrlDecode( SubStr(cPart, nI + 1) )
+                  post[UUrlDecode( Left(cPart, nI - 1) )] := UUrlDecode( SubStr(cPart, nI + 1) )
                ELSE
-                  post[ UUrlDecode( cPart ) ] := NIL
+                  post[UUrlDecode( cPart )] := NIL
                ENDIF
             NEXT
          ENDIF
@@ -914,9 +914,9 @@ STATIC FUNCTION HttpDateFormat( tDate )
    tDate -= hb_UTCOffset() / ( 3600 * 24 )
 
    RETURN ;
-      { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }[ DoW( tDate ) ] + ", " + ;
+      { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }[DoW( tDate )] + ", " + ;
       PadL(Day( tDate ), 2, "0") + " " + ;
-      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[ Month( tDate ) ] + ;
+      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[Month( tDate )] + ;
       " " + PadL(Year( tDate ), 4, "0") + " " + hb_TToC(tDate, "", "HH:MM:SS") + " GMT" // FIXME: time zone
 
 STATIC FUNCTION HttpDateUnformat( cDate, tDate )
@@ -1178,7 +1178,7 @@ STATIC PROCEDURE USessionCreateInternal()
    cSID := hb_MD5( DToS( Date() ) + Time() + Str( hb_Random(), 15, 12 ) )
    hMtx := hb_mutexCreate()
    hb_mutexLock( hMtx )
-   t_aSessionData := httpd:hSession[ cSID ] := { hMtx, { "_unique" => hb_MD5( Str( hb_Random(), 15, 12 ) ) }, hb_MilliSeconds() + SESSION_TIMEOUT * 1000, cSID }
+   t_aSessionData := httpd:hSession[cSID] := { hMtx, { "_unique" => hb_MD5( Str( hb_Random(), 15, 12 ) ) }, hb_MilliSeconds() + SESSION_TIMEOUT * 1000, cSID }
    session := t_aSessionData[2]
    UAddHeader( "Set-Cookie", "SESSID=" + cSID + "; path=/" )
 
@@ -1207,7 +1207,7 @@ PROCEDURE USessionStart()
    ELSE
 
       // Session exists
-      t_aSessionData := httpd:hSession[ cSID ]
+      t_aSessionData := httpd:hSession[cSID]
       IF hb_mutexLock( t_aSessionData[1], 0 )
 
          // No concurrent sessions
@@ -1507,20 +1507,20 @@ PROCEDURE UProcInfo()
 
    UWrite( '<h3>server</h3>' )
    UWrite( '<table border=1 cellspacing=0>' )
-   AEval( ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[ X ] ) ) + '</td></tr>' ) } )
+   AEval( ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[X] ) ) + '</td></tr>' ) } )
    UWrite( '</table>' )
 
    IF !Empty(get)
       UWrite( '<h3>get</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
-      AEval( ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[ X ] ) ) + '</td></tr>' ) } )
+      AEval( ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[X] ) ) + '</td></tr>' ) } )
       UWrite( '</table>' )
    ENDIF
 
    IF !Empty(post)
       UWrite( '<h3>post</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
-      AEval( ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[ X ] ) ) + '</td></tr>' ) } )
+      AEval( ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[X] ) ) + '</td></tr>' ) } )
       UWrite( '</table>' )
    ENDIF
 
@@ -1545,7 +1545,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
 
          CASE "="
             IF hb_HHasKey(aData, aInstr[2])
-               xValue := aData[ aInstr[2] ]
+               xValue := aData[aInstr[2]]
                IF HB_IsString(xValue)
                   cRet += UHtmlEncode( xValue )
                ELSEIF HB_IsNumeric(xValue)
@@ -1566,7 +1566,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
 
          CASE ":"
             IF hb_HHasKey(aData, aInstr[2])
-               xValue := aData[ aInstr[2] ]
+               xValue := aData[aInstr[2]]
                IF HB_IsString(xValue)
                   cRet += xValue
                ELSEIF HB_IsNumeric(xValue)
@@ -1586,7 +1586,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
             EXIT
 
          CASE "if"
-            xValue := IIf(hb_HHasKey(aData, aInstr[2]), aData[ aInstr[2] ], NIL)
+            xValue := IIf(hb_HHasKey(aData, aInstr[2]), aData[aInstr[2]], NIL)
             IF !Empty(xValue)
                cRet += parse_data(aData, aInstr[3], hConfig)
             ELSE
@@ -1595,11 +1595,11 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
             EXIT
 
          CASE "loop"
-            IF hb_HHasKey(aData, aInstr[2]) .AND. HB_IsArray(aValue := aData[ aInstr[2] ])
+            IF hb_HHasKey(aData, aInstr[2]) .AND. HB_IsArray(aValue := aData[aInstr[2]])
                FOR EACH xValue IN aValue
                   aData2 := hb_HClone( aData )
-                  hb_HEval( xValue, {| k, v | aData2[ aInstr[2] + "." + k ] := v } )
-                  aData2[ aInstr[2] + ".__index" ] := xValue:__enumIndex
+                  hb_HEval( xValue, {| k, v | aData2[aInstr[2] + "." + k] := v } )
+                  aData2[aInstr[2] + ".__index"] := xValue:__enumIndex
                   cRet += parse_data(aData2, aInstr[3], hConfig)
                   aData2 := NIL
                NEXT

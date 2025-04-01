@@ -54,7 +54,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttr )
 
    IF !Empty(aAttr)
       FOR EACH aItem IN aAttr
-         ?? "", aItem[ HB_XML_ATTR_cName ] + "='" + aItem[ HB_XML_ATTR_cValue ] + "'"
+         ?? "", aItem[HB_XML_ATTR_cName] + "='" + aItem[HB_XML_ATTR_cValue] + "'"
       NEXT
    ENDIF
 

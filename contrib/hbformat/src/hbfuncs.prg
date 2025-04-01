@@ -59,10 +59,10 @@ PROCEDURE __hbformat_BuildListOfFunctions( /* @ */ cFunctions, cHBXList )
 
    /* from .hbr container files */
    FOR EACH aFile IN Directory( hb_DirBase() + "*.hbr" )
-      IF hb_FileMatch( hb_FNameName( aFile[ F_NAME ] ), "contrib" )
+      IF hb_FileMatch( hb_FNameName( aFile[F_NAME] ), "contrib" )
          lContribHBR := .T.
       ENDIF
-      FOR EACH cName IN hb_Deserialize( hb_ZUncompress( hb_MemoRead(hb_DirBase() + aFile[ F_NAME ]) ) )
+      FOR EACH cName IN hb_Deserialize( hb_ZUncompress( hb_MemoRead(hb_DirBase() + aFile[F_NAME]) ) )
          cFunctions += "," + cName:__enumKey()
       NEXT
    NEXT
@@ -88,7 +88,7 @@ STATIC PROCEDURE WalkDir( cDir, /* @ */ cFunctions )
    cDir := hb_DirSepAdd(cDir)
 
    FOR EACH aFile IN hb_DirScan( cDir, "*.hbx" )
-      HBXToFuncList( @cFunctions, hb_MemoRead(cDir + aFile[ F_NAME ]) )
+      HBXToFuncList( @cFunctions, hb_MemoRead(cDir + aFile[F_NAME]) )
    NEXT
 
    RETURN

@@ -110,25 +110,25 @@ FUNCTION sms_ReceiveAll( cPort, cPIN )
 
 FUNCTION smsctx_New( xPort )
 
-   LOCAL smsctx[ _SMSCTX_MAX_ ]
+   LOCAL smsctx[_SMSCTX_MAX_]
 
    IF HB_IsNumeric(xPort)
-      smsctx[ _SMSCTX_xHnd ] := xPort
-      smsctx[ _SMSCTX_cPrevName ] := NIL
+      smsctx[_SMSCTX_xHnd] := xPort
+      smsctx[_SMSCTX_cPrevName] := NIL
    ELSEIF HB_IsString(xPort)
-      smsctx[ _SMSCTX_xHnd ] := 1
-      smsctx[ _SMSCTX_cPrevName ] := hb_comGetDevice( smsctx[ _SMSCTX_xHnd ] )
-      hb_comSetDevice( smsctx[ _SMSCTX_xHnd ], xPort )
+      smsctx[_SMSCTX_xHnd] := 1
+      smsctx[_SMSCTX_cPrevName] := hb_comGetDevice( smsctx[_SMSCTX_xHnd] )
+      hb_comSetDevice( smsctx[_SMSCTX_xHnd], xPort )
    ELSE
-      smsctx[ _SMSCTX_xHnd ] := NIL
+      smsctx[_SMSCTX_xHnd] := NIL
    ENDIF
 
-   IF smsctx[ _SMSCTX_xHnd ] != NIL
-      IF hb_comOpen( smsctx[ _SMSCTX_xHnd ] )
-         IF hb_comInit( smsctx[ _SMSCTX_xHnd ], 9600, "N", 8, 1 )
+   IF smsctx[_SMSCTX_xHnd] != NIL
+      IF hb_comOpen( smsctx[_SMSCTX_xHnd] )
+         IF hb_comInit( smsctx[_SMSCTX_xHnd], 9600, "N", 8, 1 )
             RETURN smsctx
          ELSE
-            hb_comClose( smsctx[ _SMSCTX_xHnd ] )
+            hb_comClose( smsctx[_SMSCTX_xHnd] )
          ENDIF
       ENDIF
    ENDIF
@@ -141,13 +141,13 @@ FUNCTION smsctx_Close( smsctx )
       RETURN .F.
    ENDIF
 
-   IF !hb_comClose( smsctx[ _SMSCTX_xHnd ] )
+   IF !hb_comClose( smsctx[_SMSCTX_xHnd] )
       RETURN .F.
    ENDIF
 
    /* Restore com port name */
-   IF smsctx[ _SMSCTX_cPrevName ] != NIL
-      hb_comSetDevice( smsctx[ _SMSCTX_xHnd ], smsctx[ _SMSCTX_cPrevName ] )
+   IF smsctx[_SMSCTX_cPrevName] != NIL
+      hb_comSetDevice( smsctx[_SMSCTX_xHnd], smsctx[_SMSCTX_cPrevName] )
    ENDIF
 
    RETURN .T.
@@ -160,25 +160,25 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
       RETURN -1
    ENDIF
 
-   port_send( smsctx[ _SMSCTX_xHnd ], "ATE0V1Q0" + Chr(13) )
-   IF IsOK( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
+   port_send( smsctx[_SMSCTX_xHnd], "ATE0V1Q0" + Chr(13) )
+   IF IsOK( port_rece( smsctx[_SMSCTX_xHnd] ) )
 
-      port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr(13) )
-      IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK"
+      port_send( smsctx[_SMSCTX_xHnd], "AT+CMGF=1" + Chr(13) )
+      IF StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) ) == "OK"
 
-         IF !Empty(smsctx[ _SMSCTX_cPIN ])
-            port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CPIN="' + smsctx[ _SMSCTX_cPIN ] + '"' + Chr(13) )
-            IF !( StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK" )
+         IF !Empty(smsctx[_SMSCTX_cPIN])
+            port_send( smsctx[_SMSCTX_xHnd], 'AT+CPIN="' + smsctx[_SMSCTX_cPIN] + '"' + Chr(13) )
+            IF !( StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) ) == "OK" )
                RETURN -5
             ENDIF
          ENDIF
 
-         port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr(13) )
-         IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK"
+         port_send( smsctx[_SMSCTX_xHnd], "AT+CMGF=1" + Chr(13) )
+         IF StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) ) == "OK"
 
             IF HB_IsLogical(lNotification)
-               port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP?" + Chr(13) )
-               tmp := GetLines( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
+               port_send( smsctx[_SMSCTX_xHnd], "AT+CSMP?" + Chr(13) )
+               tmp := GetLines( port_rece( smsctx[_SMSCTX_xHnd] ) )
                IF Len(tmp) < 2
                   RETURN -6
                ENDIF
@@ -195,17 +195,17 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
                   ELSE
                      tmp[1] := hb_ntos( hb_bitReset( Val( tmp[1] ), 5 ) )
                   ENDIF
-                  port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP=" + MakeList( tmp ) + Chr(13) )
-                  IF !( StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK" )
+                  port_send( smsctx[_SMSCTX_xHnd], "AT+CSMP=" + MakeList( tmp ) + Chr(13) )
+                  IF !( StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) ) == "OK" )
                      RETURN -9
                   ENDIF
                ENDIF
             ENDIF
 
-            port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CMGS="' + cPhoneNo + '"' + Chr(13) )
-            IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "> "
-               port_send( smsctx[ _SMSCTX_xHnd ], StrTran(cText, Chr(13)) + Chr(26) )
-               tmp := StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
+            port_send( smsctx[_SMSCTX_xHnd], 'AT+CMGS="' + cPhoneNo + '"' + Chr(13) )
+            IF StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) ) == "> "
+               port_send( smsctx[_SMSCTX_xHnd], StrTran(cText, Chr(13)) + Chr(26) )
+               tmp := StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) )
                IF Left(tmp, Len("+CMGS: ")) == "+CMGS: "
                   RETURN 0
                ELSE
@@ -244,9 +244,9 @@ FUNCTION smsctx_PIN( smsctx, cPIN )
       RETURN NIL
    ENDIF
 
-   cOldValue := smsctx[ _SMSCTX_cPIN ]
+   cOldValue := smsctx[_SMSCTX_cPIN]
    IF cPIN == NIL .OR. ( HB_IsString(cPIN) .AND. Len(cPIN) == 4 )
-      smsctx[ _SMSCTX_cPIN ] := cPIN
+      smsctx[_SMSCTX_cPIN] := cPIN
    ENDIF
 
    RETURN cOldValue

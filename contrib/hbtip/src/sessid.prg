@@ -107,8 +107,8 @@ FUNCTION tip_DateToGMT( tDate )
    hb_default(@tDate, hb_DateTime())
 
    RETURN ;
-      { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }[ DoW( tDate ) ] + ", " + ;
+      { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }[DoW( tDate )] + ", " + ;
       StrZero( Day( tDate ), 2 ) + " " + ;
-      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[ Month( tDate ) ] + " " + ;
+      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[Month( tDate )] + " " + ;
       StrZero( Year( tDate ), 4 ) + " " + ;
       hb_TToC(tDate, "", "hh:mm:ss") + " GMT"

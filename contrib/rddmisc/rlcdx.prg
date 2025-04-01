@@ -87,41 +87,41 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
    aWData := USRRDD_AREADATA(nWA)
 
    /* Convert EXCLUSIVE locks to DBLM_MULTIPLE */
-   IF aLockInfo[ UR_LI_METHOD ] == DBLM_EXCLUSIVE
-      aLockInfo[ UR_LI_METHOD ] := DBLM_MULTIPLE
-      aLockInfo[ UR_LI_RECORD ] := RecNo()
+   IF aLockInfo[UR_LI_METHOD] == DBLM_EXCLUSIVE
+      aLockInfo[UR_LI_METHOD] := DBLM_MULTIPLE
+      aLockInfo[UR_LI_RECORD] := RecNo()
    ENDIF
 
-   IF aLockInfo[ UR_LI_METHOD ] == DBLM_MULTIPLE      /* RLOCK */
+   IF aLockInfo[UR_LI_METHOD] == DBLM_MULTIPLE      /* RLOCK */
 
       IF aWData[1] > 0
-         aLockInfo[ UR_LI_RESULT ] := .T.
+         aLockInfo[UR_LI_RESULT] := .T.
          RETURN HB_SUCCESS
       ENDIF
 
-      xRecID := aLockInfo[ UR_LI_RECORD ]
+      xRecID := aLockInfo[UR_LI_RECORD]
       IF Empty(xRecID)
          xRecID := RecNo()
       ENDIF
 
       IF aWData[1] > 0
-         aLockInfo[ UR_LI_RESULT ] := .T.
+         aLockInfo[UR_LI_RESULT] := .T.
          RETURN HB_SUCCESS
       ELSEIF ( i := AScan( aWData[2], {| x | x[1] == xRecID } ) ) > 0
          ++aWData[2][i][2]
-         aLockInfo[ UR_LI_RESULT ] := .T.
+         aLockInfo[UR_LI_RESULT] := .T.
          RETURN HB_SUCCESS
       ENDIF
 
       IF ( nResult := UR_SUPER_LOCK( nWA, aLockInfo ) ) == HB_SUCCESS
-         IF aLockInfo[ UR_LI_RESULT ]
+         IF aLockInfo[UR_LI_RESULT]
             AAdd( aWData[2], { xRecID, 1 } )
          ENDIF
       ENDIF
 
       RETURN nResult
 
-   ELSEIF aLockInfo[ UR_LI_METHOD ] == DBLM_FILE      /* FLOCK */
+   ELSEIF aLockInfo[UR_LI_METHOD] == DBLM_FILE      /* FLOCK */
 
       IF aWData[1] > 0
          ++aWData[1]
@@ -133,7 +133,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
          /* FLOCK always first remove all RLOCKs, even if it fails */
          ASize( aWData[2], 0 )
 
-         IF aLockInfo[ UR_LI_RESULT ]
+         IF aLockInfo[UR_LI_RESULT]
             aWData[1] := 1
          ENDIF
       ENDIF
@@ -142,7 +142,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
 
    ENDIF
 
-   aLockInfo[ UR_LI_RESULT ] := .F.
+   aLockInfo[UR_LI_RESULT] := .F.
 
    RETURN HB_FAILURE
 
@@ -207,12 +207,12 @@ REQUEST DBFCDX
 FUNCTION RLCDX_GETFUNCTABLE( pFuncCount, pFuncTable, pSuperTable, nRddID, pSuperRddID )
 
    LOCAL cSuperRDD := "DBFCDX" /* We are inheriting from DBFCDX */
-   LOCAL aMethods[ UR_METHODCOUNT ]
+   LOCAL aMethods[UR_METHODCOUNT]
 
-   aMethods[ UR_NEW  ]   := @RLCDX_NEW()
-   aMethods[ UR_LOCK ]   := @RLCDX_LOCK()
-   aMethods[ UR_UNLOCK ] := @RLCDX_UNLOCK()
-   aMethods[ UR_APPEND ] := @RLCDX_APPEND()
+   aMethods[UR_NEW]   := @RLCDX_NEW()
+   aMethods[UR_LOCK]   := @RLCDX_LOCK()
+   aMethods[UR_UNLOCK] := @RLCDX_UNLOCK()
+   aMethods[UR_APPEND] := @RLCDX_APPEND()
 
    RETURN USRRDD_GETFUNCTABLE( pFuncCount, pFuncTable, pSuperTable, nRddID, ;
       cSuperRDD, aMethods, pSuperRddID )

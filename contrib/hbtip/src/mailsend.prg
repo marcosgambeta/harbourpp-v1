@@ -124,7 +124,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    DO CASE
    CASE HB_IsArray(xTo)
       FOR tmp := Len(xTo) TO 1 STEP -1
-         IF Empty(xTo[ tmp ])
+         IF Empty(xTo[tmp])
             hb_ADel( xTo, tmp, .T. )
          ENDIF
       NEXT
@@ -146,7 +146,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    DO CASE
    CASE HB_IsArray(xCC)
       FOR tmp := Len(xCC) TO 1 STEP -1
-         IF Empty(xCC[ tmp ])
+         IF Empty(xCC[tmp])
             hb_ADel( xCC, tmp, .T. )
          ENDIF
       NEXT
@@ -165,7 +165,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    DO CASE
    CASE HB_IsArray(xBCC)
       FOR tmp := Len(xBCC) TO 1 STEP -1
-         IF Empty(xBCC[ tmp ])
+         IF Empty(xBCC[tmp])
             hb_ADel( xBCC, tmp, .T. )
          ENDIF
       NEXT

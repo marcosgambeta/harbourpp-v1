@@ -12,7 +12,7 @@ PROCEDURE Main()
    a := Array( ft_GetE() )
    ft_GetE( @a )
    FOR tmp := 1 TO Len(a)
-      ? a[ tmp ]
+      ? a[tmp]
    NEXT
 
    ? "-------------------------------------"

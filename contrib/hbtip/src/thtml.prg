@@ -1174,7 +1174,7 @@ METHOD THtmlNode:getAttribute( cName )
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      cValue := hHash[ cName ]
+      cValue := hHash[cName]
    RECOVER
       cValue := NIL
    END SEQUENCE
@@ -1234,7 +1234,7 @@ STATIC FUNCTION __ParseAttr( parser )
       CASE " "
          IF nMode == 1
             IF !aAttr[1] == ""
-               hHash[ aAttr[1] ] := aAttr[2]
+               hHash[aAttr[1]] := aAttr[2]
                aAttr[1] := ""
                aAttr[2] := ""
             ENDIF
@@ -1242,7 +1242,7 @@ STATIC FUNCTION __ParseAttr( parser )
          ENDIF
 
          nMode := IIf(lIsQuoted, 2, 1)
-         hHash[ aAttr[1] ] := aAttr[2]
+         hHash[aAttr[1]] := aAttr[2]
          aAttr[1] := ""
          aAttr[2] := ""
 
@@ -1267,7 +1267,7 @@ STATIC FUNCTION __ParseAttr( parser )
 
          IF SubStr(parser:p_str, nStart, 1) == cChr
             // empty value ""
-            hHash[ aAttr[1] ] := ""
+            hHash[aAttr[1]] := ""
             parser:p_end := parser:p_pos
             parser:p_pos --
          ELSE
@@ -1280,7 +1280,7 @@ STATIC FUNCTION __ParseAttr( parser )
                aAttr[2] := SubStr(parser:p_str, nStart)
             ENDIF
 
-            hHash[ aAttr[1] ] := aAttr[2]
+            hHash[aAttr[1]] := aAttr[2]
          ENDIF
 
          aAttr[1] := ""
@@ -1299,7 +1299,7 @@ STATIC FUNCTION __ParseAttr( parser )
    ENDDO
 
    IF !aAttr[1] == ""
-      hHash[ aAttr[1] ] := aAttr[2]
+      hHash[aAttr[1]] := aAttr[2]
    ENDIF
 
    RETURN hHash
@@ -1329,12 +1329,12 @@ METHOD THtmlNode:setAttribute( cName, cValue )
    ENDIF
 
    IF aAttr[nPos][2] == HTML_ATTR_TYPE_BOOL
-      hHash[ cName ] := ""
+      hHash[cName] := ""
    ELSE
-      hHash[ cName ] := cValue
+      hHash[cName] := cValue
    ENDIF
 
-   RETURN hHash[ cName ]
+   RETURN hHash[cName]
 
 // Sets all attribute and values
 METHOD THtmlNode:setAttributes( cHtml )
@@ -1596,7 +1596,7 @@ FUNCTION THtmlTagType( cTagName )
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      aType := t_hHT[ cTagName ]
+      aType := t_hHT[cTagName]
    RECOVER
       aType := t_hHT[ "_text_" ]
    END SEQUENCE
@@ -1612,7 +1612,7 @@ FUNCTION THtmlIsValid( cTagName, cAttrName )
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      aValue := t_hHT[ cTagName ]
+      aValue := t_hHT[cTagName]
       IF cAttrName != NIL
          aValue := aValue[1]:exec()
          lRet   := AScan( aValue, {| a | Lower(a[1]) == Lower(cAttrName) } ) > 0

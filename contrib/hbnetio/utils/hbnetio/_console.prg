@@ -131,7 +131,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
             AAdd(aHistory, cCommand)
          ELSE
             ADel( aHistory, 1 )
-            aHistory[ Len(aHistory) ] := cCommand
+            aHistory[Len(aHistory)] := cCommand
          ENDIF
       ENDIF
       nHistIndex := Len(aHistory) + 1

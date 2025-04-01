@@ -393,13 +393,13 @@ STATIC FUNCTION ProcessDirs( hAll )
       cDir := s_hSwitches[ "basedir" ] + "contrib"
 
       FOR EACH file IN hb_DirScan( cDir,, "D" )
-         IF file[ F_ATTR ] == "D" .AND. ;
-            !( hb_FNameName( hb_DirSepDel( file[ F_NAME ] ) ) == "." ) .AND. ;
-            !( hb_FNameName( hb_DirSepDel( file[ F_NAME ] ) ) == ".." )
+         IF file[F_ATTR] == "D" .AND. ;
+            !( hb_FNameName( hb_DirSepDel( file[F_NAME] ) ) == "." ) .AND. ;
+            !( hb_FNameName( hb_DirSepDel( file[F_NAME] ) ) == ".." )
 
-            DirLoadHBX( cDir + hb_ps() + file[ F_NAME ], hAll )
+            DirLoadHBX( cDir + hb_ps() + file[F_NAME], hAll )
 
-            IF !ProcessDocDir( cDir + hb_ps() + file[ F_NAME ], hb_FNameName( file[ F_NAME ] ), @aContent )
+            IF !ProcessDocDir( cDir + hb_ps() + file[F_NAME], hb_FNameName( file[F_NAME] ), @aContent )
                EXIT
             ENDIF
          ENDIF
@@ -581,7 +581,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
             EXIT
 
-         CASE ! Empty(o:fld[ cSectionName ])
+         CASE ! Empty(o:fld[cSectionName])
 
             AddErrorCondition( cFile, "Duplicate " + cSectionName, .T. )
             lAccepted := .F.
@@ -607,13 +607,13 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 #if 0
             cSource := hb_HKeyAt( hsTemplate, idx ) + " should be one of: "
 #endif
-            AEval( sc_hConstraint[ cSectionName ], {| c, n | cSource += IIf(n == 1, "", ",") + c } )
+            AEval( sc_hConstraint[cSectionName], {| c, n | cSource += IIf(n == 1, "", ",") + c } )
             AddErrorCondition( cFile, cSource )
 
          ENDCASE
 
          IF lAccepted
-            o:fld[ cSectionName ] := ExpandAbbrevs( cSectionName, cSection )
+            o:fld[cSectionName] := ExpandAbbrevs( cSectionName, cSection )
          ENDIF
       ELSE
          AddErrorCondition( cFile, "Using template '" + hEntry[ "TEMPLATE" ] + "' encountered an unexpected section '" + cSectionName + "'", .T. )
@@ -661,7 +661,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
       AAdd(aContent, o)
 
       IF !cComponent $ s_hComponent
-         s_hComponent[ cComponent ] := NIL
+         s_hComponent[cComponent] := NIL
       ENDIF
 
       IF idxCategory != NIL
@@ -691,7 +691,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
       ENDIF
 
       IF cCode $ sc_hConstraint[ "status" ]
-         RETURN sc_hConstraint[ "status" ][ cCode ]
+         RETURN sc_hConstraint[ "status" ][cCode]
       ELSEIF Len(cCode) > 1
          RETURN cCode
       ELSEIF ! HB_IsNull( cCode )
@@ -961,7 +961,7 @@ STATIC FUNCTION Filename( cFile )
       cResult := tmp
    ENDIF
 
-   s_hFiles[ cResult ] := NIL
+   s_hFiles[cResult] := NIL
 
    RETURN cResult
 
@@ -994,14 +994,14 @@ METHOD Entry:New( cTemplate )
 
    ::fld := { => }
    hb_HCaseMatch( ::fld, .F. )
-   hb_HEval( sc_hFields, {| k | ::fld[ k ] := "" } )
+   hb_HEval( sc_hFields, {| k | ::fld[k] := "" } )
 
-   ::_group := sc_hTemplates[ cTemplate ]
+   ::_group := sc_hTemplates[cTemplate]
 
    FOR EACH item IN sc_hFields
       key := item:__enumKey()
       idx := item:__enumIndex()
-      ::fld[ key ] := IIf(key == "TEMPLATE", cTemplate, IIf(::_group[idx] == TPL_REQUIRED,, ""))
+      ::fld[key] := IIf(key == "TEMPLATE", cTemplate, IIf(::_group[idx] == TPL_REQUIRED,, ""))
    NEXT
 
    RETURN self
@@ -1022,12 +1022,12 @@ METHOD Entry:IsField(cField, nType)
 
 METHOD Entry:IsConstraint( cField, cSection )
 
-   IF hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], hb_bitAnd(TPL_REQUIRED, TPL_OPTIONAL)) == 0
+   IF hb_bitAnd(::_group[hb_HPos( sc_hFields, cField )], hb_bitAnd(TPL_REQUIRED, TPL_OPTIONAL)) == 0
       RETURN .T.
    ELSEIF cField $ sc_hConstraint
       RETURN ;
-         cSection $ sc_hConstraint[ cField ] .OR. ;
-         Parse( cSection, "," ) $ sc_hConstraint[ cField ]
+         cSection $ sc_hConstraint[cField] .OR. ;
+         Parse( cSection, "," ) $ sc_hConstraint[cField]
    ENDIF
 
    RETURN .T.
@@ -1041,7 +1041,7 @@ METHOD Entry:IsComplete( cIncompleteFieldsList )
 
    FOR idx := 1 TO Len(sc_hFields)
       key := hb_HKeyAt( sc_hFields, idx )
-      IF hb_bitAnd(::_group[idx], TPL_REQUIRED) != 0 .AND. Empty(::fld[ key ])
+      IF hb_bitAnd(::_group[idx], TPL_REQUIRED) != 0 .AND. Empty(::fld[key])
          cIncompleteFieldsList += "," + key
          lResult := .F.
       ENDIF
@@ -1056,24 +1056,24 @@ METHOD Entry:IsPreformatted(cField)
    RETURN nGroup > 0 .AND. hb_bitAnd(::_group[nGroup], TPL_PREFORMATTED) != 0
 
 METHOD Entry:IsRequired(cField)
-   RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_REQUIRED) != 0
+   RETURN hb_bitAnd(::_group[hb_HPos( sc_hFields, cField )], TPL_REQUIRED) != 0
 
 METHOD Entry:IsOptional( cField )
-   RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OPTIONAL) != 0
+   RETURN hb_bitAnd(::_group[hb_HPos( sc_hFields, cField )], TPL_OPTIONAL) != 0
 
 METHOD Entry:IsOutput( cField )
-   RETURN hb_bitAnd(::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OUTPUT) != 0
+   RETURN hb_bitAnd(::_group[hb_HPos( sc_hFields, cField )], TPL_OUTPUT) != 0
 
 METHOD Entry:SubcategoryIndex( cCategory, cSubcategory )
    RETURN IIf(cCategory $ sc_hConstraint[ "categories" ], ;
-      hb_AScan( sc_hConstraint[ "categories" ][ cCategory ][1], cSubcategory, , , .T. ), ;
+      hb_AScan( sc_hConstraint[ "categories" ][cCategory][1], cSubcategory, , , .T. ), ;
       0)
 
 FUNCTION FieldIDList()
    RETURN hb_HKeys( sc_hFields )
 
 FUNCTION FieldCaption( cName )
-   RETURN sc_hFields[ cName ]
+   RETURN sc_hFields[cName]
 
 STATIC PROCEDURE init_Templates()
 
@@ -1293,7 +1293,7 @@ STATIC PROCEDURE DirLoadHBX( cDir, hAll )
    cDir := hb_DirSepAdd(cDir)
 
    FOR EACH aFile IN hb_vfDirectory( cDir + "*.hbx" )
-      IF hb_vfExists( cFileName := cDir + aFile[ F_NAME ] )
+      IF hb_vfExists( cFileName := cDir + aFile[F_NAME] )
          LoadHBX( cFileName, hAll )
       ENDIF
    NEXT
@@ -1319,9 +1319,9 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
          IF !Empty(pRegex := hb_regexComp( cFilter, .T., .T. ))
             FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
                IF tmp[2] $ hAll
-                  hAll[ tmp[2] ] += "," + cName
+                  hAll[tmp[2]] += "," + cName
                ELSE
-                  hAll[ tmp[2] ] := cName
+                  hAll[tmp[2]] := cName
                ENDIF
             NEXT
          ENDIF

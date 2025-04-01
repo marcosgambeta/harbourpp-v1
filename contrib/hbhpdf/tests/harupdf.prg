@@ -492,81 +492,81 @@ STATIC PROCEDURE Page_Text( pdf )
    /* text_rect method */
 
    /* HPDF_TALIGN_LEFT */
-   rect[ rLEFT   ] := 25
-   rect[ rTOP    ] := 545
-   rect[ rRIGHT  ] := 200
-   rect[ rBOTTOM ] := rect[2] - 40
+   rect[rLEFT] := 25
+   rect[rTOP] := 545
+   rect[rRIGHT] := 200
+   rect[rBOTTOM] := rect[2] - 40
 
-   HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
-      rect[ rTOP ] - rect[ rBOTTOM ] )
+   HPDF_Page_Rectangle( page, rect[rLEFT], rect[rBOTTOM], rect[rRIGHT] - rect[rLEFT], ;
+      rect[rTOP] - rect[rBOTTOM] )
    HPDF_Page_Stroke( page )
 
    HPDF_Page_BeginText( page )
 
    HPDF_Page_SetFontAndSize( page, font, 10 )
-   HPDF_Page_TextOut( page, rect[ rLEFT ], rect[ rTOP ] + 3, "HPDF_TALIGN_LEFT" )
+   HPDF_Page_TextOut( page, rect[rLEFT], rect[rTOP] + 3, "HPDF_TALIGN_LEFT" )
 
    HPDF_Page_SetFontAndSize( page, font, 13 )
-   HPDF_Page_TextRect( page, rect[ rLEFT ], rect[ rTOP ], rect[ rRIGHT ], rect[ rBOTTOM ], ;
+   HPDF_Page_TextRect( page, rect[rLEFT], rect[rTOP], rect[rRIGHT], rect[rBOTTOM], ;
       SAMP_TXT, HPDF_TALIGN_LEFT, NIL )
 
    HPDF_Page_EndText( page )
 
    /* HPDF_TALIGN_RIGTH */
-   rect[ rLEFT  ] := 220
-   rect[ rRIGHT ] := 395
+   rect[rLEFT] := 220
+   rect[rRIGHT] := 395
 
-   HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
-      rect[ rTOP ] - rect[ rBOTTOM ] )
+   HPDF_Page_Rectangle( page, rect[rLEFT], rect[rBOTTOM], rect[rRIGHT] - rect[rLEFT], ;
+      rect[rTOP] - rect[rBOTTOM] )
    HPDF_Page_Stroke( page )
 
    HPDF_Page_BeginText( page )
 
    HPDF_Page_SetFontAndSize( page, font, 10 )
-   HPDF_Page_TextOut( page, rect[ rLEFT ], rect[ rTOP ] + 3, "HPDF_TALIGN_RIGTH" )
+   HPDF_Page_TextOut( page, rect[rLEFT], rect[rTOP] + 3, "HPDF_TALIGN_RIGTH" )
 
    HPDF_Page_SetFontAndSize( page, font, 13 )
-   HPDF_Page_TextRect( page, rect[ rLEFT ], rect[ rTOP ], rect[ rRIGHT ], rect[ rBOTTOM ], ;
+   HPDF_Page_TextRect( page, rect[rLEFT], rect[rTOP], rect[rRIGHT], rect[rBOTTOM], ;
       SAMP_TXT, HPDF_TALIGN_RIGHT, NIL )
 
    HPDF_Page_EndText( page )
 
    /* HPDF_TALIGN_CENTER */
-   rect[ rLEFT   ] := 25
-   rect[ rTOP    ] := 475
-   rect[ rRIGHT  ] := 200
-   rect[ rBOTTOM ] := rect[ rTOP ] - 40
+   rect[rLEFT] := 25
+   rect[rTOP] := 475
+   rect[rRIGHT] := 200
+   rect[rBOTTOM] := rect[rTOP] - 40
 
-   HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
-      rect[ rTOP ] - rect[ rBOTTOM ] )
+   HPDF_Page_Rectangle( page, rect[rLEFT], rect[rBOTTOM], rect[rRIGHT] - rect[rLEFT], ;
+      rect[rTOP] - rect[rBOTTOM] )
    HPDF_Page_Stroke( page )
 
    HPDF_Page_BeginText( page )
 
    HPDF_Page_SetFontAndSize( page, font, 10 )
-   HPDF_Page_TextOut( page, rect[ rLEFT ], rect[ rTOP ] + 3, "HPDF_TALIGN_CENTER" )
+   HPDF_Page_TextOut( page, rect[rLEFT], rect[rTOP] + 3, "HPDF_TALIGN_CENTER" )
 
    HPDF_Page_SetFontAndSize( page, font, 13 )
-   HPDF_Page_TextRect( page, rect[ rLEFT ], rect[ rTOP ], rect[ rRIGHT ], rect[ rBOTTOM ], ;
+   HPDF_Page_TextRect( page, rect[rLEFT], rect[rTOP], rect[rRIGHT], rect[rBOTTOM], ;
       SAMP_TXT, HPDF_TALIGN_CENTER, NIL )
 
    HPDF_Page_EndText( page )
 
    /* HPDF_TALIGN_JUSTIFY */
-   rect[ rLEFT  ] := 220
-   rect[ rRIGHT ] := 395
+   rect[rLEFT] := 220
+   rect[rRIGHT] := 395
 
-   HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
-      rect[ rTOP ] - rect[ rBOTTOM ] )
+   HPDF_Page_Rectangle( page, rect[rLEFT], rect[rBOTTOM], rect[rRIGHT] - rect[rLEFT], ;
+      rect[rTOP] - rect[rBOTTOM] )
    HPDF_Page_Stroke( page )
 
    HPDF_Page_BeginText( page )
 
    HPDF_Page_SetFontAndSize( page, font, 10 )
-   HPDF_Page_TextOut( page, rect[ rLEFT ], rect[ rTOP ] + 3, "HPDF_TALIGN_JUSTIFY" )
+   HPDF_Page_TextOut( page, rect[rLEFT], rect[rTOP] + 3, "HPDF_TALIGN_JUSTIFY" )
 
    HPDF_Page_SetFontAndSize( page, font, 13 )
-   HPDF_Page_TextRect( page, rect[ rLEFT ], rect[ rTOP ], rect[ rRIGHT ], rect[ rBOTTOM ], ;
+   HPDF_Page_TextRect( page, rect[rLEFT], rect[rTOP], rect[rRIGHT], rect[rBOTTOM], ;
       SAMP_TXT, HPDF_TALIGN_JUSTIFY, NIL )
 
    HPDF_Page_EndText( page )
@@ -580,22 +580,22 @@ STATIC PROCEDURE Page_Text( pdf )
    rad2   := angle2 / 180 * 3.141592
 
    HPDF_Page_Concat( page, 1, Tan( rad1 ), Tan( rad2 ), 1, 25, 350 )
-   rect[ rLEFT   ] := 0
-   rect[ rTOP    ] := 40
-   rect[ rRIGHT  ] := 175
-   rect[ rBOTTOM ] := 0
+   rect[rLEFT] := 0
+   rect[rTOP] := 40
+   rect[rRIGHT] := 175
+   rect[rBOTTOM] := 0
 
-   HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
-      rect[ rTOP ] - rect[ rBOTTOM ] )
+   HPDF_Page_Rectangle( page, rect[rLEFT], rect[rBOTTOM], rect[rRIGHT] - rect[rLEFT], ;
+      rect[rTOP] - rect[rBOTTOM] )
    HPDF_Page_Stroke( page )
 
    HPDF_Page_BeginText( page )
 
    HPDF_Page_SetFontAndSize( page, font, 10 )
-   HPDF_Page_TextOut( page, rect[ rLEFT ], rect[ rTOP ] + 3, "Skewed coordinate system" )
+   HPDF_Page_TextOut( page, rect[rLEFT], rect[rTOP] + 3, "Skewed coordinate system" )
 
    HPDF_Page_SetFontAndSize( page, font, 13 )
-   HPDF_Page_TextRect( page, rect[ rLEFT ], rect[ rTOP ], rect[ rRIGHT ], rect[ rBOTTOM ], ;
+   HPDF_Page_TextRect( page, rect[rLEFT], rect[rTOP], rect[rRIGHT], rect[rBOTTOM], ;
       SAMP_TXT, HPDF_TALIGN_LEFT, NIL )
 
    HPDF_Page_EndText( page )
@@ -609,22 +609,22 @@ STATIC PROCEDURE Page_Text( pdf )
    rad1   := angle1 / 180 * 3.141592
 
    HPDF_Page_Concat( page, Cos( rad1 ), Sin( rad1 ), - Sin( rad1 ), Cos( rad1 ), 220, 350 )
-   rect[ rLEFT   ] := 0
-   rect[ rTOP    ] := 40
-   rect[ rRIGHT  ] := 175
-   rect[ rBOTTOM ] := 0
+   rect[rLEFT] := 0
+   rect[rTOP] := 40
+   rect[rRIGHT] := 175
+   rect[rBOTTOM] := 0
 
-   HPDF_Page_Rectangle( page, rect[ rLEFT ], rect[ rBOTTOM ], rect[ rRIGHT ] - rect[ rLEFT ], ;
-      rect[ rTOP ] - rect[ rBOTTOM ] )
+   HPDF_Page_Rectangle( page, rect[rLEFT], rect[rBOTTOM], rect[rRIGHT] - rect[rLEFT], ;
+      rect[rTOP] - rect[rBOTTOM] )
    HPDF_Page_Stroke( page )
 
    HPDF_Page_BeginText( page )
 
    HPDF_Page_SetFontAndSize( page, font, 10 )
-   HPDF_Page_TextOut( page, rect[ rLEFT ], rect[ rTOP ] + 3, "Rotated coordinate system" )
+   HPDF_Page_TextOut( page, rect[rLEFT], rect[rTOP] + 3, "Rotated coordinate system" )
 
    HPDF_Page_SetFontAndSize( page, font, 13 )
-   HPDF_Page_TextRect( page, rect[ rLEFT ], rect[ rTOP ], rect[ rRIGHT ], rect[ rBOTTOM ], ;
+   HPDF_Page_TextRect( page, rect[rLEFT], rect[rTOP], rect[rRIGHT], rect[rBOTTOM], ;
       SAMP_TXT, HPDF_TALIGN_LEFT, NIL )
 
    HPDF_Page_EndText( page )

@@ -63,7 +63,7 @@ PROCEDURE Main()
       IF k == K_ESC
          EXIT
       ELSEIF k >= hb_keyCode( "1" ) .AND. k <= hb_keyCode( "9" )
-         WSelect( aWin[ k - hb_keyCode( "0" ) ] )
+         WSelect( aWin[k - hb_keyCode( "0" )] )
       ELSEIF k == hb_keyCode( "0" )
          WSelect(0)
       ELSEIF k == hb_keyCode( "C" ) .OR. k == hb_keyCode( "c" )

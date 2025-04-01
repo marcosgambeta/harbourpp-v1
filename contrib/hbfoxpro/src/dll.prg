@@ -78,7 +78,7 @@ FUNCTION fox___DynCall(cCommand, ...)
    ENDIF
 
    IF nPos <= Len(aCommand) .AND. Upper(aCommand[nPos]) $ aType
-      nFuncFlags := hb_bitOr( nFuncFlags, aType[ Upper(aCommand[nPos]) ] )
+      nFuncFlags := hb_bitOr( nFuncFlags, aType[Upper(aCommand[nPos])] )
       ++nPos
    ELSE
       RETURN NIL
@@ -112,7 +112,7 @@ FUNCTION fox___DynCall(cCommand, ...)
 
    DO WHILE nPos <= Len(aCommand)
       IF Upper(Upper(aCommand[nPos])) $ aType
-         AAdd(aParam, hb_bitOr( HB_DYN_ENC_RAW, aType[ Upper(aCommand[nPos]) ] ))
+         AAdd(aParam, hb_bitOr( HB_DYN_ENC_RAW, aType[Upper(aCommand[nPos])] ))
          ++nPos
       ENDIF
       IF nPos <= Len(aCommand) .AND. aCommand[nPos] == "@"

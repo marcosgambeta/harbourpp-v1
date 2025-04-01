@@ -63,7 +63,7 @@ PROCEDURE Main( cRemote4 )
 
             /*
              * passing possible aHandles is required to receive curl_easy_*
-             * compatible GC-pointer in aResult[ HB_CURLMSG_RESP_HANDLE ]
+             * compatible GC-pointer in aResult[HB_CURLMSG_RESP_HANDLE]
              */
 
             aResult := curl_multi_info_read( hMulti, aHandles )
@@ -72,17 +72,17 @@ PROCEDURE Main( cRemote4 )
                /*
                 * instead of FOR loop you could possibly
                 * DO WHILE HB_IsArray( aResult := curl_multi_info_read( hMulti ) ) .AND. ;
-                *          aResult[ HB_CURLMSG_RESP_LEN ] > 0
+                *          aResult[HB_CURLMSG_RESP_LEN] > 0
                 */
-               ? "HB_CURLMSG_RESP_LEN          :", aResult[ HB_CURLMSG_RESP_LEN ]
-               ? "HB_CURLMSG_RESP_RESPONSE_CODE:", aResult[ HB_CURLMSG_RESP_RESPONSE_CODE ]
-               ? "HB_CURLMSG_RESP_MSG          :", aResult[ HB_CURLMSG_RESP_MSG ]
-               ? "HB_CURLMSG_RESP_RESULT       :", aResult[ HB_CURLMSG_RESP_RESULT ]
-               ? "HB_CURLMSG_RESP_HPOS         :", aResult[ HB_CURLMSG_RESP_HPOS ]
-               IF aResult[ HB_CURLMSG_RESP_HPOS ] > 0
-                  ? "URL                          :", aUrls[ aResult[ HB_CURLMSG_RESP_HPOS ] ]
-                  IF ! Empty( curl_easy_getinfo( aResult[ HB_CURLMSG_RESP_HANDLE ], HB_CURLINFO_REDIRECT_URL ) )
-                     ? "HB_CURLINFO_REDIRECT_URL     :", curl_easy_getinfo( aResult[ HB_CURLMSG_RESP_HANDLE ], HB_CURLINFO_REDIRECT_URL )
+               ? "HB_CURLMSG_RESP_LEN          :", aResult[HB_CURLMSG_RESP_LEN]
+               ? "HB_CURLMSG_RESP_RESPONSE_CODE:", aResult[HB_CURLMSG_RESP_RESPONSE_CODE]
+               ? "HB_CURLMSG_RESP_MSG          :", aResult[HB_CURLMSG_RESP_MSG]
+               ? "HB_CURLMSG_RESP_RESULT       :", aResult[HB_CURLMSG_RESP_RESULT]
+               ? "HB_CURLMSG_RESP_HPOS         :", aResult[HB_CURLMSG_RESP_HPOS]
+               IF aResult[HB_CURLMSG_RESP_HPOS] > 0
+                  ? "URL                          :", aUrls[aResult[HB_CURLMSG_RESP_HPOS]]
+                  IF ! Empty( curl_easy_getinfo( aResult[HB_CURLMSG_RESP_HANDLE], HB_CURLINFO_REDIRECT_URL ) )
+                     ? "HB_CURLINFO_REDIRECT_URL     :", curl_easy_getinfo( aResult[HB_CURLMSG_RESP_HANDLE], HB_CURLINFO_REDIRECT_URL )
                   ENDIF
                ENDIF
                ? "--"

@@ -259,7 +259,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
          LOOP
       ENDIF
 
-      ::hHeaders[ aHead[1] ] := LTrim(aHead[2])
+      ::hHeaders[aHead[1]] := LTrim(aHead[2])
 
       DO CASE
       // RFC 2068 forces to discard content length on chunked encoding
@@ -316,7 +316,7 @@ METHOD TIPClientHTTP:Read( nLen )
          DO WHILE ! ( cLine := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nPos, 1024 ), "" ) ) == ""
             // add Headers to footers
             IF Len(aHead := hb_regexSplit( ":", cLine,,, 1 )) == 2
-               ::hHeaders[ aHead[1] ] := LTrim(aHead[2])
+               ::hHeaders[aHead[1]] := LTrim(aHead[2])
             ENDIF
          ENDDO
 
@@ -413,12 +413,12 @@ METHOD PROCEDURE TIPClientHTTP:setCookie( cLine )
       // cookies are stored in hashes as host.path.name
       // check if we have a host hash yet
       IF !cHost $ ::hCookies
-         ::hCookies[ cHost ] := { => }
+         ::hCookies[cHost] := { => }
       ENDIF
-      IF !cPath $ ::hCookies[ cHost ]
-         ::hCookies[ cHost ][ cPath ] := { => }
+      IF !cPath $ ::hCookies[cHost]
+         ::hCookies[cHost][cPath] := { => }
       ENDIF
-      ::hCookies[ cHost ][ cPath ][ cName ] := cValue
+      ::hCookies[cHost][cPath][cName] := cValue
    ENDIF
 
    RETURN
@@ -453,18 +453,18 @@ METHOD TIPClientHTTP:getcookies( cHost, cPath )
    nPath := Len(cPath)
    FOR EACH x IN ASort( aDomKeys,,, {| cX, cY | Len(cX) > Len(cY) } )  // more specific paths should be sent before lesser generic paths
       aPathKeys := {}
-      FOR EACH cKey IN hb_HKeys( ::hCookies[ x ] )
+      FOR EACH cKey IN hb_HKeys( ::hCookies[x] )
          IF cKey == "/" .OR. ( Len(cKey) <= nPath .AND. Left(cKey, nPath) == cKey )
             AAdd( aPathKeys, cKey )
          ENDIF
       NEXT
 
       FOR EACH a IN ASort( aPathKeys,,, {| cX, cY | Len(cX) > Len(cY) } )
-         FOR EACH c IN hb_HKeys( ::hCookies[ x ][ a ] )
+         FOR EACH c IN hb_HKeys( ::hCookies[x][a] )
             IF !cOut == ""
                cOut += "; "
             ENDIF
-            cOut += c + "=" + ::hCookies[ x ][ a ][ c ]
+            cOut += c + "=" + ::hCookies[x][a][c]
          NEXT
       NEXT
    NEXT

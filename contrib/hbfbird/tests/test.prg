@@ -86,8 +86,8 @@ PROCEDURE Main()
 
       FOR x := 1 TO num_cols
          ? x, "> "
-         FOR y := 1 TO Len(columns[ x ])
-            ?? columns[ x, y ], " "
+         FOR y := 1 TO Len(columns[x])
+            ?? columns[x, y], " "
          NEXT
       NEXT
 

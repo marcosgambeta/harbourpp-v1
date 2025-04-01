@@ -289,7 +289,7 @@ FUNCTION hb_ZipFile( ;
       FOR EACH cFN IN hb_defaultValue( acExclude, {} )
          IF "?" $ cFN .OR. "*" $ cFN
             FOR EACH aFile IN Directory( cFN )
-               AAdd( aExclFile, aFile[ F_NAME ] )
+               AAdd( aExclFile, aFile[F_NAME] )
             NEXT
          ELSE
             AAdd( aExclFile, cFN )
@@ -307,8 +307,8 @@ FUNCTION hb_ZipFile( ;
                cPath := hb_PathJoin( hb_cwd(), cPath )
             ENDIF
             FOR EACH aFile IN Directory( cFN )
-               IF AScan( aExclFile, {| cExclFile | hb_FileMatch( aFile[ F_NAME ], cExclFile ) } ) == 0
-                  AAdd( aProcFile, cPath + aFile[ F_NAME ] )
+               IF AScan( aExclFile, {| cExclFile | hb_FileMatch( aFile[F_NAME], cExclFile ) } ) == 0
+                  AAdd( aProcFile, cPath + aFile[F_NAME] )
                ENDIF
             NEXT
          ELSE

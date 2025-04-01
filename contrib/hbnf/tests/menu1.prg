@@ -16,7 +16,7 @@ PROCEDURE Main( cCmdLine )
    // options on menu bar
    LOCAL aColors
    LOCAL aBar     := { " ENTER/EDIT ", " REPORTS ", " DISPLAY ", " MAINTENANCE ", " QUIT " }
-   LOCAL aOptions[ Len(aBar) ]
+   LOCAL aOptions[Len(aBar)]
 
    LOCAL nMaxRow
 

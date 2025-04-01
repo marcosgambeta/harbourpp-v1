@@ -488,8 +488,8 @@ PROCEDURE UProcWidgets( cURL, aMap )
          cI := uhttpd_join( "/", ASize( AClone( aURL ), nI ) )
          IF hb_HHasKey(aMap, cI)
             session[ "_uthis" ] := { "idhash" => { => } }
-            IF ( lRet := Eval( aMap[ cI ], "INIT" ) ) == .T.
-               AAdd(aStack, { aURL[nI], aMap[ cI ], session[ "_uthis" ] })
+            IF ( lRet := Eval( aMap[cI], "INIT" ) ) == .T.
+               AAdd(aStack, { aURL[nI], aMap[cI], session[ "_uthis" ] })
                session[ "_uthis" ] := NIL
             ELSE
                session[ "_uthis" ] := NIL
@@ -539,7 +539,7 @@ STATIC PROCEDURE SetWId(oW, cID)
 
    IF cID != NIL
       oW:cID := cID
-      session[ "_uthis" ][ "idhash" ][ cID ] := oW
+      session[ "_uthis" ][ "idhash" ][cID] := oW
    ENDIF
 
    RETURN

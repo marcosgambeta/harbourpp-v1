@@ -39,15 +39,15 @@ PROCEDURE Main( cFileName )
    ENDIF
 
    aNode := Array( _N_MAX_ )
-   aNode[ _N_hChild ] := { => }
-   aNode[ _N_xValue ] := NIL
-   aNode[ _N_hAttr ] := NIL
+   aNode[_N_hChild] := { => }
+   aNode[_N_xValue] := NIL
+   aNode[_N_hAttr] := NIL
 
    aUserData := Array( _D_MAX_ )
-   aUserData[ _D_aTree ] := aNode
-   aUserData[ _D_aNode ] := aUserData[ _D_aTree ]
+   aUserData[_D_aTree] := aNode
+   aUserData[_D_aNode] := aUserData[_D_aTree]
 
-   aNode[ _N_aParent ] := aUserData[ _D_aTree ]
+   aNode[_N_aParent] := aUserData[_D_aTree]
 
    ? XML_GetUserData(p)
    XML_SetUserData(p, aUserData)
@@ -65,10 +65,10 @@ PROCEDURE Main( cFileName )
       RETURN
    ENDIF
 
-   DUMP( aUserData[ _D_aTree ], 0 )
+   DUMP( aUserData[_D_aTree], 0 )
 
-   hb_MemoWrit( "json_raw.txt", hb_jsonEncode( aUserData[ _D_aTree ], .F. ) )
-   hb_MemoWrit( "json_hum.txt", hb_jsonEncode( aUserData[ _D_aTree ], .T. ) )
+   hb_MemoWrit( "json_raw.txt", hb_jsonEncode( aUserData[_D_aTree], .F. ) )
+   hb_MemoWrit( "json_hum.txt", hb_jsonEncode( aUserData[_D_aTree], .T. ) )
 
    RETURN
 
@@ -77,9 +77,9 @@ STATIC PROCEDURE DUMP( hTree, n )
    LOCAL aEl
    LOCAL aNode
 
-   FOR EACH aEl IN hTree[ _N_hChild ]
+   FOR EACH aEl IN hTree[_N_hChild]
       FOR EACH aNode IN aEl
-         ? Replicate( "  ", n ) + aEl:__enumKey() + ":", "'" + aNode[ _N_xValue ] + "'" + DUMPATTR( aNode[ _N_hAttr ] )
+         ? Replicate( "  ", n ) + aEl:__enumKey() + ":", "'" + aNode[_N_xValue] + "'" + DUMPATTR( aNode[_N_hAttr] )
          DUMP( aNode, n + 1 )
       NEXT
    NEXT
@@ -122,41 +122,41 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttrList )
    LOCAL aNode
    LOCAL aNewNode
 
-   aNode := aUserData[ _D_aNode ]
+   aNode := aUserData[_D_aNode]
 
    aNewNode := Array( _N_MAX_ )
-   aNewNode[ _N_aParent ] := aNode
-   aNewNode[ _N_hChild ] := { => }
-   aNewNode[ _N_xValue ] := ""
-   aNewNode[ _N_hAttr ] := { => }
+   aNewNode[_N_aParent] := aNode
+   aNewNode[_N_hChild] := { => }
+   aNewNode[_N_xValue] := ""
+   aNewNode[_N_hAttr] := { => }
 
-   IF cElement $ aNode[ _N_hChild ]
-      AAdd(aNode[ _N_hChild ][ cElement ], aNewNode)
+   IF cElement $ aNode[_N_hChild]
+      AAdd(aNode[_N_hChild][cElement], aNewNode)
    ELSE
-      aNode[ _N_hChild ][ cElement ] := { aNewNode }
+      aNode[_N_hChild][cElement] := { aNewNode }
    ENDIF
 
    FOR EACH aAttr IN aAttrList
-      aNewNode[ _N_hAttr ][ aAttr[ HB_XML_ATTR_cName ] ] := aAttr[ HB_XML_ATTR_cValue ]
+      aNewNode[_N_hAttr][aAttr[HB_XML_ATTR_cName]] := aAttr[HB_XML_ATTR_cValue]
    NEXT
 
-   aUserData[ _D_aNode ] := aNewNode
+   aUserData[_D_aNode] := aNewNode
 
    RETURN
 
 STATIC PROCEDURE cb_end(aUserData)
 
-   aUserData[ _D_aNode ] := aUserData[ _D_aNode ][ _N_aParent ]
+   aUserData[_D_aNode] := aUserData[_D_aNode][_N_aParent]
 
    RETURN
 
 STATIC PROCEDURE cb_data(aUserData, cData)
 
-   aUserData[ _D_aNode ][ _N_xValue ] += cData
+   aUserData[_D_aNode][_N_xValue] += cData
 
    /* Still not perfect. In unlucky case, it can strip valid whitespace */
-   IF Empty(aUserData[ _D_aNode ][ _N_xValue ])
-      aUserData[ _D_aNode ][ _N_xValue ] := AllTrim(aUserData[ _D_aNode ][ _N_xValue ])
+   IF Empty(aUserData[_D_aNode][_N_xValue])
+      aUserData[_D_aNode][_N_xValue] := AllTrim(aUserData[_D_aNode][_N_xValue])
    ENDIF
 
    RETURN

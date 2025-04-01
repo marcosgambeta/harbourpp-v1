@@ -528,44 +528,44 @@ PROCEDURE Main( cFileArg )
 
    IF cFileArg == "test.xml"
 
-      IF s_aSAXEventCounts[ MXML_SAX_CDATA ] != 1
+      IF s_aSAXEventCounts[MXML_SAX_CDATA] != 1
          OutErr( hb_StrFormat( "MXML_SAX_CDATA seen %d times, expected 1 times!", ;
-            s_aSAXEventCounts[ MXML_SAX_CDATA ] ) + hb_eol() )
+            s_aSAXEventCounts[MXML_SAX_CDATA] ) + hb_eol() )
          ErrorLevel(1)
          QUIT
       ENDIF
 
-      IF s_aSAXEventCounts[ MXML_SAX_COMMENT ] != 1
+      IF s_aSAXEventCounts[MXML_SAX_COMMENT] != 1
          OutErr( hb_StrFormat( "MXML_SAX_COMMENT seen %d times, expected 1 times!", ;
-            s_aSAXEventCounts[ MXML_SAX_COMMENT ] ) + hb_eol() )
+            s_aSAXEventCounts[MXML_SAX_COMMENT] ) + hb_eol() )
          ErrorLevel(1)
          QUIT
       ENDIF
 
-      IF s_aSAXEventCounts[ MXML_SAX_DATA ] != 60
+      IF s_aSAXEventCounts[MXML_SAX_DATA] != 60
          OutErr( hb_StrFormat( "MXML_SAX_DATA seen %d times, expected 60 times!", ;
-            s_aSAXEventCounts[ MXML_SAX_DATA ] ) + hb_eol() )
+            s_aSAXEventCounts[MXML_SAX_DATA] ) + hb_eol() )
          ErrorLevel(1)
          QUIT
       ENDIF
 
-      IF s_aSAXEventCounts[ MXML_SAX_DIRECTIVE ] != 1
+      IF s_aSAXEventCounts[MXML_SAX_DIRECTIVE] != 1
          OutErr( hb_StrFormat( "MXML_SAX_DIRECTIVE seen %d times, expected 1 times!", ;
-            s_aSAXEventCounts[ MXML_SAX_DIRECTIVE ] ) + hb_eol() )
+            s_aSAXEventCounts[MXML_SAX_DIRECTIVE] ) + hb_eol() )
          ErrorLevel(1)
          QUIT
       ENDIF
 
-      IF s_aSAXEventCounts[ MXML_SAX_ELEMENT_CLOSE ] != 20
+      IF s_aSAXEventCounts[MXML_SAX_ELEMENT_CLOSE] != 20
          OutErr( hb_StrFormat( "MXML_SAX_ELEMENT_CLOSE seen %d times, expected 20 times!", ;
-            s_aSAXEventCounts[ MXML_SAX_ELEMENT_CLOSE ] ) + hb_eol() )
+            s_aSAXEventCounts[MXML_SAX_ELEMENT_CLOSE] ) + hb_eol() )
          ErrorLevel(1)
          QUIT
       ENDIF
 
-      IF s_aSAXEventCounts[ MXML_SAX_ELEMENT_OPEN ] != 20
+      IF s_aSAXEventCounts[MXML_SAX_ELEMENT_OPEN] != 20
          OutErr( hb_StrFormat( "MXML_SAX_ELEMENT_OPEN seen %d times, expected 20 times!", ;
-            s_aSAXEventCounts[ MXML_SAX_ELEMENT_OPEN ] ) + hb_eol() )
+            s_aSAXEventCounts[MXML_SAX_ELEMENT_OPEN] ) + hb_eol() )
          ErrorLevel(1)
          QUIT
       ENDIF
@@ -593,7 +593,7 @@ PROCEDURE sax_cb(hNode, hEvent, hData)
    HB_SYMBOL_UNUSED(hNode)
    HB_SYMBOL_UNUSED(hData)
 
-   s_aSAXEventCounts[ hEvent ]++
+   s_aSAXEventCounts[hEvent]++
 
    RETURN
 

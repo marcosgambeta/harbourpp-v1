@@ -94,9 +94,9 @@ STATIC FUNCTION LOGRDD_EXIT( nRDD )
 
    /* Closing log file */
 
-   IF aRDDData[ ARRAY_FHANDLE ] != NIL
-      FClose( aRDDData[ ARRAY_FHANDLE ] )
-      aRDDData[ ARRAY_FHANDLE ] := NIL
+   IF aRDDData[ARRAY_FHANDLE] != NIL
+      FClose( aRDDData[ARRAY_FHANDLE] )
+      aRDDData[ARRAY_FHANDLE] := NIL
    ENDIF
 
    RETURN HB_SUCCESS
@@ -216,21 +216,21 @@ REQUEST DBFCDX
 FUNCTION LOGRDD_GETFUNCTABLE( pFuncCount, pFuncTable, pSuperTable, nRddID, pSuperRddID )
 
    LOCAL cSuperRDD := hb_LogRddInherit() /* We are inheriting from a User Defined RDD */
-   LOCAL aMyFunc[ UR_METHODCOUNT ]
+   LOCAL aMyFunc[UR_METHODCOUNT]
 
    s_nRddID := nRddID
 
-   aMyFunc[ UR_INIT         ] := @LOGRDD_INIT()
-   aMyFunc[ UR_EXIT         ] := @LOGRDD_EXIT()
-   aMyFunc[ UR_CREATE       ] := @LOGRDD_CREATE()
-   aMyFunc[ UR_CREATEFIELDS ] := @LOGRDD_CREATEFIELDS()
-   aMyFunc[ UR_OPEN         ] := @LOGRDD_OPEN()
-   aMyFunc[ UR_CLOSE        ] := @LOGRDD_CLOSE()
-   aMyFunc[ UR_APPEND       ] := @LOGRDD_APPEND()
-   aMyFunc[ UR_DELETE       ] := @LOGRDD_DELETE()
-   aMyFunc[ UR_RECALL       ] := @LOGRDD_RECALL()
-   aMyFunc[ UR_PUTVALUE     ] := @LOGRDD_PUTVALUE()
-   aMyFunc[ UR_ZAP          ] := @LOGRDD_ZAP()
+   aMyFunc[UR_INIT] := @LOGRDD_INIT()
+   aMyFunc[UR_EXIT] := @LOGRDD_EXIT()
+   aMyFunc[UR_CREATE] := @LOGRDD_CREATE()
+   aMyFunc[UR_CREATEFIELDS] := @LOGRDD_CREATEFIELDS()
+   aMyFunc[UR_OPEN] := @LOGRDD_OPEN()
+   aMyFunc[UR_CLOSE] := @LOGRDD_CLOSE()
+   aMyFunc[UR_APPEND] := @LOGRDD_APPEND()
+   aMyFunc[UR_DELETE] := @LOGRDD_DELETE()
+   aMyFunc[UR_RECALL] := @LOGRDD_RECALL()
+   aMyFunc[UR_PUTVALUE] := @LOGRDD_PUTVALUE()
+   aMyFunc[UR_ZAP] := @LOGRDD_ZAP()
 
    RETURN USRRDD_GETFUNCTABLE( pFuncCount, pFuncTable, pSuperTable, nRddID, ;
       cSuperRDD, aMyFunc, pSuperRddID )
@@ -252,10 +252,10 @@ FUNCTION hb_LogRddLogFileName( cFileName )
 
       aRDDData := USRRDD_RDDDATA(s_nRddID)
 
-      cOldFileName := aRDDData[ ARRAY_FILENAME ]
+      cOldFileName := aRDDData[ARRAY_FILENAME]
 
       IF HB_IsString(cFileName)
-         aRDDData[ ARRAY_FILENAME ] := cFileName
+         aRDDData[ARRAY_FILENAME] := cFileName
       ENDIF
    ENDIF
 
@@ -270,10 +270,10 @@ FUNCTION hb_LogRddTag( cTag )
 
       aRDDData := USRRDD_RDDDATA(s_nRddID)
 
-      cOldTag := aRDDData[ ARRAY_TAG ]
+      cOldTag := aRDDData[ARRAY_TAG]
 
       IF HB_IsString(cTag)
-         aRDDData[ ARRAY_TAG ] := cTag
+         aRDDData[ARRAY_TAG] := cTag
       ENDIF
    ENDIF
 
@@ -288,10 +288,10 @@ FUNCTION hb_LogRddActive( lActive )
 
       aRDDData := USRRDD_RDDDATA(s_nRddID)
 
-      lOldActive := aRDDData[ ARRAY_ACTIVE ]
+      lOldActive := aRDDData[ARRAY_ACTIVE]
 
       IF HB_IsLogical(lActive)
-         aRDDData[ ARRAY_ACTIVE ] := lActive
+         aRDDData[ARRAY_ACTIVE] := lActive
       ENDIF
    ENDIF
 
@@ -306,10 +306,10 @@ FUNCTION hb_LogRddMsgLogBlock( bMsgLogBlock )
 
       aRDDData := USRRDD_RDDDATA(s_nRddID)
 
-      bOldMsgLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
+      bOldMsgLogBlock := aRDDData[ARRAY_MSGLOGBLOCK]
 
       IF HB_IsEvalItem(bMsgLogBlock)
-         aRDDData[ ARRAY_MSGLOGBLOCK ] := bMsgLogBlock
+         aRDDData[ARRAY_MSGLOGBLOCK] := bMsgLogBlock
       ENDIF
    ENDIF
 
@@ -324,10 +324,10 @@ FUNCTION hb_LogRddUserLogBlock( bUserLogBlock )
 
       aRDDData := USRRDD_RDDDATA(s_nRddID)
 
-      bOldUserLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
+      bOldUserLogBlock := aRDDData[ARRAY_MSGLOGBLOCK]
 
       IF HB_IsEvalItem(bUserLogBlock)
-         aRDDData[ ARRAY_USERLOGBLOCK ] := bUserLogBlock
+         aRDDData[ARRAY_USERLOGBLOCK] := bUserLogBlock
       ENDIF
    ENDIF
 
@@ -352,9 +352,9 @@ FUNCTION hb_LogRddValueToText( uValue )
 STATIC PROCEDURE OpenLogFile( nWA )
 
    LOCAL aRDDData  := USRRDD_RDDDATA(USRRDD_ID( nWA ))
-   LOCAL cFileName := aRDDData[ ARRAY_FILENAME ]
-   LOCAL hFile     := aRDDData[ ARRAY_FHANDLE ]
-   LOCAL lActive   := aRDDData[ ARRAY_ACTIVE ]
+   LOCAL cFileName := aRDDData[ARRAY_FILENAME]
+   LOCAL hFile     := aRDDData[ARRAY_FHANDLE]
+   LOCAL lActive   := aRDDData[ARRAY_ACTIVE]
 
 #if 0
    TraceLog( "hFile " + CStr( hFile ) )
@@ -380,7 +380,7 @@ STATIC PROCEDURE OpenLogFile( nWA )
          hFile := NIL
       ENDIF
 
-      aRDDData[ ARRAY_FHANDLE  ] := hFile
+      aRDDData[ARRAY_FHANDLE] := hFile
    ENDIF
 
    RETURN
@@ -390,13 +390,13 @@ STATIC FUNCTION ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
    SWITCH cCmd
    CASE "CREATE"
       // Parameters received: xPar1: aOpenInfo
-      RETURN xPar1[ UR_OI_NAME ]
+      RETURN xPar1[UR_OI_NAME]
    CASE "CREATEFIELDS"
       // Parameters received: xPar1: aStruct
       RETURN hb_ValToExp( xPar1 )
    CASE "OPEN"
       // Parameters received: xPar1: aOpenInfo
-      RETURN 'Table: "' + xPar1[ UR_OI_NAME ] + '", Alias: "' + Alias() + '", WorkArea: ' + hb_ntos( nWA )
+      RETURN 'Table: "' + xPar1[UR_OI_NAME] + '", Alias: "' + Alias() + '", WorkArea: ' + hb_ntos( nWA )
    CASE "CLOSE"
       // Parameters received: xPar1: cTableName, xPar2: cAlias
       RETURN 'Table: "' + xPar1 + '", Alias: "' + xPar2 + '", WorkArea: ' + hb_ntos( nWA )
@@ -423,21 +423,21 @@ STATIC FUNCTION ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
 STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
 
    LOCAL aRDDData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
-   LOCAL lActive  := aRDDData[ ARRAY_ACTIVE ]
+   LOCAL lActive  := aRDDData[ARRAY_ACTIVE]
    LOCAL hFile, cTag, cRDDName, bMsgLogBlock, bUserLogBlock, cLog
 
    // Check if logging system is active
 
    IF lActive
 
-      cTag          := aRDDData[ ARRAY_TAG ]
-      cRDDName      := aRDDData[ ARRAY_RDDNAME ]
-      bUserLogBlock := aRDDData[ ARRAY_USERLOGBLOCK ]
+      cTag          := aRDDData[ARRAY_TAG]
+      cRDDName      := aRDDData[ARRAY_RDDNAME]
+      bUserLogBlock := aRDDData[ARRAY_USERLOGBLOCK]
 
       // If not defined a User codeblock
       IF !HB_IsEvalItem(bUserLogBlock)
 
-         hFile := aRDDData[ ARRAY_FHANDLE ]
+         hFile := aRDDData[ARRAY_FHANDLE]
 
          // If log file is not already open I open now
          IF hFile == NIL
@@ -446,7 +446,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
 
          IF hFile != NIL
 
-            bMsgLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
+            bMsgLogBlock := aRDDData[ARRAY_MSGLOGBLOCK]
 
             // If defined a codeblock I send to user infos and he has to return a formatted string
             // Look at local ToString() function for details

@@ -59,7 +59,7 @@ PROCEDURE hbtest_Setup( cName, xValue )
 
    IF HB_IsString(cName) .AND. ! Empty(cName)
       IF PCount() > 1
-         t_hParams[ cName ] := xValue
+         t_hParams[cName] := xValue
       ELSEIF cName $ t_hParams
          hb_HDel( t_hParams, cName )
       ENDIF
@@ -178,7 +178,7 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_IsArray(oError:Args)
       cMessage += "A:" + hb_ntos( Len(oError:Args) ) + ":"
       FOR tmp := 1 TO Len(oError:Args)
-         cMessage += ValType(oError:Args[ tmp ]) + ":" + XToStr( oError:Args[ tmp ], .T. )
+         cMessage += ValType(oError:Args[tmp]) + ":" + XToStr( oError:Args[tmp], .T. )
          IF tmp < Len(oError:Args)
             cMessage += ";"
          ENDIF

@@ -176,9 +176,9 @@ METHOD TIPMail:SetFieldPart( cPart, cValue )
    IF HB_IsString(cValue) .AND. ! Empty(cValue)
       IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
          ( nPos := At( ";", cEnc ) ) > 0
-         ::hHeaders[ cPart ] := cValue + SubStr(cEnc, nPos)
+         ::hHeaders[cPart] := cValue + SubStr(cEnc, nPos)
       ELSE
-         ::hHeaders[ cPart ] := cValue
+         ::hHeaders[cPart] := cValue
       ENDIF
    ENDIF
 
@@ -191,12 +191,12 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
    IF HB_IsString(cPart) .AND. cPart $ ::hHeaders .AND. ;
       HB_IsString(cOption) .AND. ! Empty(cOption)
 
-      aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[ cPart ], .F. )
+      aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[cPart], .F. )
 
       IF Empty(aMatch)
-         ::hHeaders[ cPart ] += "; " + cOption + "=" + '"' + cValue + '"'
+         ::hHeaders[cPart] += "; " + cOption + "=" + '"' + cValue + '"'
       ELSE
-         ::hHeaders[ cPart ] := aMatch[2] + cOption + "=" + '"' + cValue + '"' + aMatch[3]
+         ::hHeaders[cPart] := aMatch[2] + cOption + "=" + '"' + cValue + '"' + aMatch[3]
       ENDIF
 
       RETURN .T.
@@ -242,7 +242,7 @@ METHOD TIPMail:HeadersToString()
    // Begin output the fields, presenting them in a "well-known" order
    FOR EACH cElem IN { "Return-Path", "Delivered-To" }
       IF cElem $ ::hHeaders
-         cRet += cElem + ": " + ::hHeaders[ cElem ] + e"\r\n"
+         cRet += cElem + ": " + ::hHeaders[cElem] + e"\r\n"
       ENDIF
    NEXT
 
@@ -252,7 +252,7 @@ METHOD TIPMail:HeadersToString()
 
    FOR EACH cElem IN { "Date", "From", "To", "Subject" }
       IF cElem $ ::hHeaders
-         cRet += cElem + ": " + ::hHeaders[ cElem ] + e"\r\n"
+         cRet += cElem + ": " + ::hHeaders[cElem] + e"\r\n"
       ENDIF
    NEXT
 
@@ -364,9 +364,9 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
 
          cValue := LTrim(SubStr(cMail, nPos, nLinePos - nPos))
          IF Lower(cLastField) == "received"
-            ::aReceived[ Len(::aReceived) ] += " " + cValue
+            ::aReceived[Len(::aReceived)] += " " + cValue
          ELSE
-            ::hHeaders[ cLastField ] += " " + cValue
+            ::hHeaders[cLastField] += " " + cValue
          ENDIF
       ELSE
          nSplitPos := hb_At( ":", cMail, nPos )
@@ -375,7 +375,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
          IF Lower(cLastField) == "received"
             AAdd( ::aReceived, cValue )
          ELSE
-            ::hHeaders[ cLastField ] := cValue
+            ::hHeaders[cLastField] := cValue
          ENDIF
       ENDIF
 

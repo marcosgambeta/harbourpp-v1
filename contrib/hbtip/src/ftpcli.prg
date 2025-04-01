@@ -580,8 +580,8 @@ METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
 
    cStr := ""
    FOR EACH aFile IN hb_vfDirectory( cFileSpec, cAttr )
-      IF ::UploadFile( hb_FNameDir( cFileSpec ) + aFile[ F_NAME ] )
-         cStr += e"\r\n" + aFile[ F_NAME ]
+      IF ::UploadFile( hb_FNameDir( cFileSpec ) + aFile[F_NAME] )
+         cStr += e"\r\n" + aFile[F_NAME]
       ENDIF
    NEXT
 
@@ -652,7 +652,7 @@ METHOD TIPClientFTP:FileSize( cFileSpec )
    LOCAL nSize := 0
 
    FOR EACH aFile IN ::ListFiles( cFileSpec )
-      nSize += aFile[ F_SIZE ]
+      nSize += aFile[F_SIZE]
    NEXT
 
    RETURN nSize
@@ -694,10 +694,10 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
          nEnd   := hb_At( " ", cEntry, nStart )
 
          // file permissions (attributes)
-         aFile[ F_ATTR ] := SubStr(cEntry, nStart, nEnd - nStart)
+         aFile[F_ATTR] := SubStr(cEntry, nStart, nEnd - nStart)
          nStart          := nEnd
 
-         IF Val( StrTran(aFile[ F_ATTR ], "-") ) == 0
+         IF Val( StrTran(aFile[F_ATTR], "-") ) == 0
 
             // continue with Unix format
 
@@ -705,28 +705,28 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[ F_LEN + 1 ] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
+            aFile[F_LEN + 1] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
             nStart             := nEnd
 
             // owner name
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[ F_LEN + 2 ] := SubStr(cEntry, nStart, nEnd - nStart)
+            aFile[F_LEN + 2] := SubStr(cEntry, nStart, nEnd - nStart)
             nStart             := nEnd
 
             // group name
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[ F_LEN + 3 ] := SubStr(cEntry, nStart, nEnd - nStart)
+            aFile[F_LEN + 3] := SubStr(cEntry, nStart, nEnd - nStart)
             nStart             := nEnd
 
             // file size
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd            := hb_At( " ", cEntry, nStart )
-            aFile[ F_SIZE ] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
+            aFile[F_SIZE] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
             nStart          := nEnd
 
             // Month
@@ -757,17 +757,17 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
                cTime := ""
             ENDIF
 
-            aFile[ F_DATE ] := hb_SToD( cYear + cMonth + cDay )
-            aFile[ F_TIME ] := cTime
+            aFile[F_DATE] := hb_SToD( cYear + cMonth + cDay )
+            aFile[F_TIME] := cTime
 
          ELSE
 
             // DOS style/IIS format
 
-            aFile[ F_LEN + 1 ] := 0
-            aFile[ F_LEN + 2 ] := aFile[ F_LEN + 3 ] := aFile[ F_ATTR ] := ""
+            aFile[F_LEN + 1] := 0
+            aFile[F_LEN + 2] := aFile[F_LEN + 3] := aFile[F_ATTR] := ""
 
-            aFile[ F_DATE ] := hb_CToD( aFile[ F_ATTR ], "mm-dd-yy" )
+            aFile[F_DATE] := hb_CToD( aFile[F_ATTR], "mm-dd-yy" )
 
             // # time
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
@@ -776,13 +776,13 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             cTime  := SubStr(cEntry, nStart, nEnd - nStart)
             nStart := nEnd
 
-            aFile[ F_TIME ] := Left(TString( Secs( Left(cTime, 5) ) + IIf(Right(cTime, 2) == "PM", 43200, 0) ), 5)
+            aFile[F_TIME] := Left(TString( Secs( Left(cTime, 5) ) + IIf(Right(cTime, 2) == "PM", 43200, 0) ), 5)
 
             // file size
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd            := hb_At( " ", cEntry, nStart )
-            aFile[ F_SIZE ] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
+            aFile[F_SIZE] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
             nStart          := nEnd
 
          ENDIF
@@ -791,7 +791,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
          DO WHILE SubStr(cEntry, ++nStart, 1) == " "
          ENDDO
 
-         aFile[ F_NAME ] := SubStr(cEntry, nStart)
+         aFile[F_NAME] := SubStr(cEntry, nStart)
 
          cEntry := aFile
       ENDIF

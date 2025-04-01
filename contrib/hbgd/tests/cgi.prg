@@ -36,22 +36,22 @@ PROCEDURE Main(...)
 
          DO CASE
          CASE cPar == "txt"
-            // cText := hParams[ cPar ]
+            // cText := hParams[cPar]
 
          CASE cPar == "img"
-            cImg := hParams[ cPar ]
+            cImg := hParams[cPar]
 
          CASE cPar == "photo"
-            cPhoto := hParams[ cPar ]
+            cPhoto := hParams[cPar]
 
          CASE cPar == "width"
-            nWidth := Val( hParams[ cPar ] )
+            nWidth := Val( hParams[cPar] )
 
          CASE cPar == "height"
-            nHeight := Val( hParams[ cPar ] )
+            nHeight := Val( hParams[cPar] )
 
          CASE cPar == "pt"
-            nPt := Val( hParams[ cPar ] )
+            nPt := Val( hParams[cPar] )
 
          ENDCASE
       NEXT
@@ -247,11 +247,11 @@ FUNCTION GetVars( cFields, cSeparator )
       IF SubStr(cName, Len(cName) - 1) == "[]"
          cName := SubStr(cName, 1, Len(cName) - 2)
 
-         hHashVars[ cName ] := { xValue }
+         hHashVars[cName] := { xValue }
 
       ELSE
 
-         hHashVars[ cName ] := xValue
+         hHashVars[cName] := xValue
 
       ENDIF
       // TraceLog( "hHashVars, cName, xValue", DumpValue( hHashVars ), cName, xValue )
@@ -283,11 +283,11 @@ FUNCTION GetParams( aParams )
       IF SubStr(cName, Len(cName) - 1) == "[]"
          cName := SubStr(cName, 1, Len(cName) - 2)
 
-         hHashVars[ cName ] := { xValue }
+         hHashVars[cName] := { xValue }
 
       ELSE
 
-         hHashVars[ cName ] := xValue
+         hHashVars[cName] := xValue
 
       ENDIF
       // TraceLog( "hHashVars, cName, xValue", DumpValue( hHashVars ), cName, xValue )

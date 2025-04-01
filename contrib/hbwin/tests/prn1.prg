@@ -74,16 +74,16 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          aFonts := oPrinter:GetFonts()
          oPrinter:NewLine()
          FOR x := 1 TO Len(aFonts) STEP 2
-            oPrinter:CharSet( aFonts[ x, 4 ] )
-            IF oPrinter:SetFont(aFonts[ x, 1 ])       // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
-               IF oPrinter:FontName == aFonts[ x, 1 ]  // Make sure Windows didn't pick a different font
-                  oPrinter:TextOut( aFonts[ x, 1 ] )
+            oPrinter:CharSet( aFonts[x, 4] )
+            IF oPrinter:SetFont(aFonts[x, 1])       // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
+               IF oPrinter:FontName == aFonts[x, 1]  // Make sure Windows didn't pick a different font
+                  oPrinter:TextOut( aFonts[x, 1] )
                   oPrinter:SetPos(nColFixed)
-                  oPrinter:TextOut( IIf(aFonts[ x, 2 ], "Yes", "No") )
+                  oPrinter:TextOut( IIf(aFonts[x, 2], "Yes", "No") )
                   oPrinter:SetPos(nColTTF)
-                  oPrinter:TextOut( IIf(aFonts[ x, 3 ], "Yes", "No") )
+                  oPrinter:TextOut( IIf(aFonts[x, 3], "Yes", "No") )
                   oPrinter:SetPos(nColCharSet)
-                  oPrinter:TextOut( hb_ntos( aFonts[ x, 4 ] ) )
+                  oPrinter:TextOut( hb_ntos( aFonts[x, 4] ) )
                   oPrinter:SetPos(oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ))
                   IF oPrinter:PRow() > oPrinter:MaxRow() - 16  // Could use "oPrinter:NewPage()" to start a new page
                      EXIT

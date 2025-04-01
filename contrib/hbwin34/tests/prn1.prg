@@ -72,16 +72,16 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:NewLine()
          aFonts := oPrinter:GetFonts()
          FOR x := 1 TO Len(aFonts) STEP 2
-            oPrinter:CharSet( aFonts[ x ][ HB_WINFONT_CHARSET ] )
-            IF oPrinter:SetFont(aFonts[ x ][ HB_WINFONT_NAME ])      // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
-               IF oPrinter:FontName == aFonts[ x ][ HB_WINFONT_NAME ]  // Make sure Windows didn't pick a different font
-                  oPrinter:TextOut( aFonts[ x ][ HB_WINFONT_NAME ] )
+            oPrinter:CharSet( aFonts[x][HB_WINFONT_CHARSET] )
+            IF oPrinter:SetFont(aFonts[x][HB_WINFONT_NAME])      // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
+               IF oPrinter:FontName == aFonts[x][HB_WINFONT_NAME]  // Make sure Windows didn't pick a different font
+                  oPrinter:TextOut( aFonts[x][HB_WINFONT_NAME] )
                   oPrinter:SetPos(nColFixed)
-                  oPrinter:TextOut( IIf(aFonts[ x ][ HB_WINFONT_FIXED ], "Yes", "No") )
+                  oPrinter:TextOut( IIf(aFonts[x][HB_WINFONT_FIXED], "Yes", "No") )
                   oPrinter:SetPos(nColTTF)
-                  oPrinter:TextOut( IIf(aFonts[ x ][ HB_WINFONT_TRUETYPE ], "Yes", "No") )
+                  oPrinter:TextOut( IIf(aFonts[x][HB_WINFONT_TRUETYPE], "Yes", "No") )
                   oPrinter:SetPos(nColCharSet)
-                  oPrinter:TextOut( hb_ntos( aFonts[ x ][ HB_WINFONT_CHARSET ] ) )
+                  oPrinter:TextOut( hb_ntos( aFonts[x][HB_WINFONT_CHARSET] ) )
                   oPrinter:SetPos(oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ))
                   IF oPrinter:PRow() > oPrinter:MaxRow() - 16  // Could use "oPrinter:NewPage()" to start a new page
                      EXIT

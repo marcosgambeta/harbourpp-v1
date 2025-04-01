@@ -32,7 +32,7 @@ PROCEDURE Main( cURL )
             ? "Skipping the rest..."
             EXIT
          ENDIF
-         ? aFile[ F_DATE ], Str( aFile[ F_SIZE ], 10 ), aFile[ F_NAME ]
+         ? aFile[F_DATE], Str( aFile[F_SIZE], 10 ), aFile[F_NAME]
       NEXT
       IF oFTP:CWD( oURL:cPath )
          ? "CWD success"

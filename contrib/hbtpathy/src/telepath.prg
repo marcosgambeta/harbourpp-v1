@@ -418,7 +418,7 @@ FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
 
    nPort := aParam[1]
    // nTimeout := aParam[2]
-   // lIgnorecase := aParam[ Len(aParam) ]
+   // lIgnorecase := aParam[Len(aParam)]
 
    IF !isopenport( nPort )
       RETURN 0
@@ -447,9 +447,9 @@ FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
 
       FOR x := 1 TO Len(acList)
          IF lIgnorecase
-            nAt := At( Upper(acList[ x ]), Upper(t_aPorts[nPort, TPFP_INBUF]) )
+            nAt := At( Upper(acList[x]), Upper(t_aPorts[nPort, TPFP_INBUF]) )
          ELSE
-            nAt := At( acList[ x ], t_aPorts[nPort, TPFP_INBUF] )
+            nAt := At( acList[x], t_aPorts[nPort, TPFP_INBUF] )
          ENDIF
          IF nAt > 0 .AND. nAt < nFirst
             nFirst := nAt
@@ -665,7 +665,7 @@ INIT PROCEDURE _tpinit()
       t_aPorts := Array( TP_MAXPORTS )
       FOR x := 1 TO Len(t_aPorts)
          // / port name, file handle, baud, data bits, parity, stop bits, Open?, input buffer, input buff.size
-         t_aPorts[ x ] := { "", -1, 1200, 8, "N", 1, .F., "", 0 }
+         t_aPorts[x] := { "", -1, 1200, 8, "N", 1, .F., "", 0 }
       NEXT
    ENDIF
 

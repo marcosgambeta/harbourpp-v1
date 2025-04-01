@@ -71,8 +71,8 @@ STATIC FUNCTION s_getBroadcastAddresses()
    LOCAL aAddrs := {}
 
    FOR EACH aIF IN hb_socketGetIFaces()
-      IF Empty(cAddr := aIF[ HB_SOCKET_IFINFO_BROADCAST ])
-         IF !lLo .AND. aIF[ HB_SOCKET_IFINFO_ADDR ] == "127.0.0.1"
+      IF Empty(cAddr := aIF[HB_SOCKET_IFINFO_BROADCAST])
+         IF !lLo .AND. aIF[HB_SOCKET_IFINFO_ADDR] == "127.0.0.1"
             lLo := .T.
          ENDIF
       ELSEIF hb_AScan( aAddrs, cAddr,,, .T. ) == 0

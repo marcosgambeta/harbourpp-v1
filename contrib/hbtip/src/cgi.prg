@@ -112,14 +112,14 @@ METHOD TIPCgi:New()
          ::HTTP_RAW_POST_DATA := cTemp
          FOR EACH item IN hb_ATokens( cTemp, "&" )
             IF Len(aVar := hb_ATokens( item, "=" )) == 2
-               ::hPosts[ AllTrim(tip_URLDecode( aVar[1] )) ] := tip_URLDecode( aVar[2] )
+               ::hPosts[AllTrim(tip_URLDecode( aVar[1] ))] := tip_URLDecode( aVar[2] )
             ENDIF
          NEXT
       ENDIF
    ELSEIF ! Empty(cTemp := GetEnv("QUERY_STRING"))
       FOR EACH item IN hb_ATokens( cTemp, "&" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
-            ::hGets[ AllTrim(tip_URLDecode( aVar[1] )) ] := tip_URLDecode( aVar[2] )
+            ::hGets[AllTrim(tip_URLDecode( aVar[1] ))] := tip_URLDecode( aVar[2] )
          ENDIF
       NEXT
    ENDIF
@@ -127,7 +127,7 @@ METHOD TIPCgi:New()
    IF !Empty(cTemp := GetEnv("HTTP_COOKIE"))
       FOR EACH item IN hb_ATokens( cTemp, ";" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
-            ::hCookies[ AllTrim(tip_URLDecode( aVar[1] )) ] := tip_URLDecode( aVar[2] )
+            ::hCookies[AllTrim(tip_URLDecode( aVar[1] ))] := tip_URLDecode( aVar[2] )
          ENDIF
       NEXT
    ENDIF
@@ -350,7 +350,7 @@ STATIC FUNCTION HtmlTag( xVal, cKey, cDefault )
    LOCAL cVal
 
    IF HB_IsHash(xVal) .AND. ! Empty(cKey) .AND. cKey $ xVal
-      cVal := xVal[ cKey ]
+      cVal := xVal[cKey]
       hb_HDel( xVal, cKey )
    ELSE
       cVal := ""
@@ -374,7 +374,7 @@ STATIC FUNCTION HtmlOption( xVal, cKey, cPre, cPost, lScan )
       IF Empty(cKey)
          cVal := xVal
       ELSEIF cKey $ xVal
-         cVal := xVal[ cKey ]
+         cVal := xVal[cKey]
          IF hb_defaultValue( lScan, .F. )
             hb_HDel( xVal, cKey )
          ENDIF

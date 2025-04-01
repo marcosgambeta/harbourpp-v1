@@ -98,7 +98,7 @@ METHOD xpp_TBrowse:firstScrCol()
 
 #if 0
    // FIXME
-   RETURN IIf(::leftVisible == 0, 0, ::aColData[ ::leftVisible ][ _TBCI_COLPOS ])
+   RETURN IIf(::leftVisible == 0, 0, ::aColData[ ::leftVisible ][_TBCI_COLPOS])
 #endif
    RETURN 0
 

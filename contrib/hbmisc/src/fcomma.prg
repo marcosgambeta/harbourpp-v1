@@ -109,7 +109,7 @@ STATIC FUNCTION FCM_CREATE( nWA, aOpenInfo )
    oError:SubCode     := 1004
    oError:Description := hb_langErrMsg( EG_CREATE ) + " (" + ;
       hb_langErrMsg( EG_UNSUPPORTED ) + ")"
-   oError:FileName    := aOpenInfo[ UR_OI_NAME ]
+   oError:FileName    := aOpenInfo[UR_OI_NAME]
    oError:CanDefault  := .T.
    UR_SUPER_ERROR( nWA, oError )
 
@@ -120,14 +120,14 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
    LOCAL cName, nMode, nSlot, nHandle, aRData, aWData, aField, oError, nResult
 
    /* When there is no ALIAS we will create new one using file name */
-   IF aOpenInfo[ UR_OI_ALIAS ] == NIL
-      hb_FNameSplit( aOpenInfo[ UR_OI_NAME ], , @cName )
-      aOpenInfo[ UR_OI_ALIAS ] := cName
+   IF aOpenInfo[UR_OI_ALIAS] == NIL
+      hb_FNameSplit( aOpenInfo[UR_OI_NAME], , @cName )
+      aOpenInfo[UR_OI_ALIAS] := cName
    ENDIF
 
    nMode := ;
-      IIf(aOpenInfo[ UR_OI_SHARED ], FO_SHARED, FO_EXCLUSIVE) + ;
-      IIf(aOpenInfo[ UR_OI_READONLY ], FO_READ, FO_READWRITE)
+      IIf(aOpenInfo[UR_OI_SHARED], FO_SHARED, FO_EXCLUSIVE) + ;
+      IIf(aOpenInfo[UR_OI_READONLY], FO_READ, FO_READWRITE)
 
    aRData := USRRDD_RDDDATA(USRRDD_ID(nWA))
    aWData := USRRDD_AREADATA(nWA)
@@ -138,20 +138,20 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       oError:GenCode     := EG_OPEN
       oError:SubCode     := 1000
       oError:Description := hb_langErrMsg( EG_OPEN ) + ", no free slots"
-      oError:FileName    := aOpenInfo[ UR_OI_NAME ]
+      oError:FileName    := aOpenInfo[UR_OI_NAME]
       oError:CanDefault  := .T.
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
    ENDIF
 
    hb_FSelect( nSlot )
-   nHandle := hb_FUse( aOpenInfo[ UR_OI_NAME ], nMode )
+   nHandle := hb_FUse( aOpenInfo[UR_OI_NAME], nMode )
    IF nHandle == F_ERROR
       oError := ErrorNew()
       oError:GenCode     := EG_OPEN
       oError:SubCode     := 1001
       oError:Description := hb_langErrMsg( EG_OPEN )
-      oError:FileName    := aOpenInfo[ UR_OI_NAME ]
+      oError:FileName    := aOpenInfo[UR_OI_NAME]
       oError:OsCode      := FError()
       oError:CanDefault  := .T.
 
@@ -165,11 +165,11 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
    /* Set one field called LINE to access current record buffer */
    UR_SUPER_SETFIELDEXTENT( nWA, 1 )
    aField := Array( UR_FI_SIZE )
-   aField[ UR_FI_NAME ]    := "LINE"
-   aField[ UR_FI_TYPE ]    := HB_FT_STRING
-   aField[ UR_FI_TYPEEXT ] := 0
-   aField[ UR_FI_LEN ]     := 80   // set any arbitrary length - the real size will be differ
-   aField[ UR_FI_DEC ]     := 0
+   aField[UR_FI_NAME]    := "LINE"
+   aField[UR_FI_TYPE]    := HB_FT_STRING
+   aField[UR_FI_TYPEEXT] := 0
+   aField[UR_FI_LEN]     := 80   // set any arbitrary length - the real size will be differ
+   aField[UR_FI_DEC]     := 0
    UR_SUPER_ADDFIELD(nWA, aField)
 
    /* Call SUPER OPEN to finish allocating work area (f.e.: alias settings) */
@@ -337,24 +337,24 @@ STATIC FUNCTION FCM_RECCOUNT( nWA, nRecords )
 FUNCTION FCOMMA_GETFUNCTABLE( pFuncCount, pFuncTable, pSuperTable, nRddID )
 
    LOCAL cSuperRDD := NIL     /* NO SUPER RDD */
-   LOCAL aMyFunc[ UR_METHODCOUNT ]
+   LOCAL aMyFunc[UR_METHODCOUNT]
 
-   aMyFunc[ UR_INIT ]     := @FCM_INIT()
-   aMyFunc[ UR_NEW ]      := @FCM_NEW()
-   aMyFunc[ UR_CREATE ]   := @FCM_CREATE()
-   aMyFunc[ UR_OPEN ]     := @FCM_OPEN()
-   aMyFunc[ UR_CLOSE ]    := @FCM_CLOSE()
-   aMyFunc[ UR_BOF  ]     := @FCM_Bof()
-   aMyFunc[ UR_EOF  ]     := @FCM_EOF()
-   aMyFunc[ UR_DELETED ]  := @FCM_DELETED()
-   aMyFunc[ UR_SKIPRAW ]  := @FCM_SKIPRAW()
-   aMyFunc[ UR_GOTO ]     := @FCM_GOTO()
-   aMyFunc[ UR_GOTOID ]   := @FCM_GOTOID()
-   aMyFunc[ UR_GOTOP ]    := @FCM_GOTOP()
-   aMyFunc[ UR_GOBOTTOM ] := @FCM_GOBOTTOM()
-   aMyFunc[ UR_RECID ]    := @FCM_RECID()
-   aMyFunc[ UR_RECCOUNT ] := @FCM_RECCOUNT()
-   aMyFunc[ UR_GETVALUE ] := @FCM_GETVALUE()
+   aMyFunc[UR_INIT]     := @FCM_INIT()
+   aMyFunc[UR_NEW]      := @FCM_NEW()
+   aMyFunc[UR_CREATE]   := @FCM_CREATE()
+   aMyFunc[UR_OPEN]     := @FCM_OPEN()
+   aMyFunc[UR_CLOSE]    := @FCM_CLOSE()
+   aMyFunc[UR_BOF]      := @FCM_Bof()
+   aMyFunc[UR_EOF]      := @FCM_EOF()
+   aMyFunc[UR_DELETED]  := @FCM_DELETED()
+   aMyFunc[UR_SKIPRAW]  := @FCM_SKIPRAW()
+   aMyFunc[UR_GOTO]     := @FCM_GOTO()
+   aMyFunc[UR_GOTOID]   := @FCM_GOTOID()
+   aMyFunc[UR_GOTOP]    := @FCM_GOTOP()
+   aMyFunc[UR_GOBOTTOM] := @FCM_GOBOTTOM()
+   aMyFunc[UR_RECID]    := @FCM_RECID()
+   aMyFunc[UR_RECCOUNT] := @FCM_RECCOUNT()
+   aMyFunc[UR_GETVALUE] := @FCM_GETVALUE()
 
    RETURN USRRDD_GETFUNCTABLE( pFuncCount, pFuncTable, pSuperTable, nRddID, ;
       cSuperRDD, aMyFunc )

@@ -63,16 +63,16 @@ FUNCTION EditorNew( nTop, nLeft, nBottom, nRight, nLength, ;
       __defaultNIL( @cColor, "W/N,W+/N,W+/R,GR+/N,G+/N" )
 
       oEdit := Array( E_STRUCT_LEN )
-      oEdit[ E_EDIT ]    := pEdit
-      oEdit[ E_TOP ]     := nTop
-      oEdit[ E_LEFT ]    := nLeft
-      oEdit[ E_BOTTOM ]  := nBottom
-      oEdit[ E_RIGHT ]   := nRight
-      oEdit[ E_LINELEN ] := nLength
-      oEdit[ E_FRAME ]   := cFrame
-      oEdit[ E_TITLE ]   := cTitle
-      oEdit[ E_COLOR ]   := cColor
-      oEdit[ E_MODE ]    := EDIT_VIEW
+      oEdit[E_EDIT]    := pEdit
+      oEdit[E_TOP]     := nTop
+      oEdit[E_LEFT]    := nLeft
+      oEdit[E_BOTTOM]  := nBottom
+      oEdit[E_RIGHT]   := nRight
+      oEdit[E_LINELEN] := nLength
+      oEdit[E_FRAME]   := cFrame
+      oEdit[E_TITLE]   := cTitle
+      oEdit[E_COLOR]   := cColor
+      oEdit[E_MODE]    := EDIT_VIEW
 
       ed_Config( pEdit, nTop, nLeft, nBottom, nRight, 0, 0 )
    ENDIF
@@ -81,26 +81,26 @@ FUNCTION EditorNew( nTop, nLeft, nBottom, nRight, nLength, ;
 
 PROCEDURE EditorKill( oEdit )
 
-   oEdit[ E_EDIT ] := NIL
+   oEdit[E_EDIT] := NIL
 
    RETURN
 
 FUNCTION EditorCargo( oEdit, xCargo )
 
-   LOCAL _xCargo := oEdit[ E_CARGO ]
+   LOCAL _xCargo := oEdit[E_CARGO]
 
    IF PCount() >= 2
-      oEdit[ E_CARGO ] := xCargo
+      oEdit[E_CARGO] := xCargo
    ENDIF
 
    RETURN _xCargo
 
 FUNCTION EditorTitle( oEdit, cTitle )
 
-   LOCAL _cTitle := oEdit[ E_TITLE ]
+   LOCAL _cTitle := oEdit[E_TITLE]
 
    IF HB_IsString(cTitle)
-      oEdit[ E_TITLE ] := cTitle
+      oEdit[E_TITLE] := cTitle
    ENDIF
 
    RETURN _cTitle
@@ -111,10 +111,10 @@ FUNCTION EditorTitle( oEdit, cTitle )
 //
 FUNCTION EditorMode( oEdit, lMode )
 
-   LOCAL _lMode := oEdit[ E_MODE ]
+   LOCAL _lMode := oEdit[E_MODE]
 
    IF HB_IsLogical(lMode)
-      oEdit[ E_MODE ] := lMode
+      oEdit[E_MODE] := lMode
    ENDIF
 
    RETURN _lMode
@@ -133,7 +133,7 @@ FUNCTION EditorSize( nSize )
 //
 PROCEDURE EditorAddText( oEdit, cText )
 
-   ed_AddText( oEdit[ E_EDIT ], cText )
+   ed_AddText( oEdit[E_EDIT], cText )
 
    RETURN
 
@@ -141,7 +141,7 @@ PROCEDURE EditorAddText( oEdit, cText )
 //
 PROCEDURE EditorSetText( oEdit, cText )
 
-   ed_SetText( oEdit[ E_EDIT ], cText )
+   ed_SetText( oEdit[E_EDIT], cText )
 
    RETURN
 
@@ -150,10 +150,10 @@ PROCEDURE EditorSetText( oEdit, cText )
 PROCEDURE EditorInsText( oEdit, cText, nLine )
 
    IF nLine == NIL
-      nLine := ed_LCount( oEdit[ E_EDIT ] )
+      nLine := ed_LCount( oEdit[E_EDIT] )
    ENDIF
 
-   ed_InsText( oEdit[ E_EDIT ], cText, nLine )
+   ed_InsText( oEdit[E_EDIT], cText, nLine )
 
    RETURN
 
@@ -166,18 +166,18 @@ FUNCTION EditorGetText( oEdit, nCarret )
 
    hb_default(@nCarret, EDIT_HARD)
 
-   RETURN ed_GetText( oEdit[ E_EDIT ], nCarret )
+   RETURN ed_GetText( oEdit[E_EDIT], nCarret )
 
 //
 // Returns the line count stored in editor
 //
 FUNCTION EditorLCount( oEdit )
-   RETURN ed_LCount( oEdit[ E_EDIT ] )
+   RETURN ed_LCount( oEdit[E_EDIT] )
 
 // Returns the specified line of text from the editor
 //
 FUNCTION EditorGetLine( oEdit, nLine )
-   RETURN ed_GetLine( oEdit[ E_EDIT ], nLine )
+   RETURN ed_GetLine( oEdit[E_EDIT], nLine )
 
 // Returns the next line of text
 //
@@ -189,7 +189,7 @@ FUNCTION EditorGetLine( oEdit, nLine )
 // NEXT
 //
 FUNCTION EditorNextLine( oEdit )
-   RETURN ed_GetNext( oEdit[ E_EDIT ] )
+   RETURN ed_GetNext( oEdit[E_EDIT] )
 
 // Edit the specified file
 //
@@ -229,7 +229,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
       nSize, nEscape )
 
    IF nHandle != F_ERROR
-      ed_ReadText( oEdit[ E_EDIT ], nHandle, 0, nLen, ;
+      ed_ReadText( oEdit[E_EDIT], nHandle, 0, nLen, ;
          IIf(lConv == NIL, .F., lConv) )
       IF lClose
          FClose( nHandle )
@@ -257,7 +257,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 
 FUNCTION EditorRead(oEditor, nHandle, nOffset, nLen, lConv)
 
-   RETURN ed_ReadText( oEditor[ E_EDIT ], nHandle, nOffset, nLen, ;
+   RETURN ed_ReadText( oEditor[E_EDIT], nHandle, nOffset, nLen, ;
       IIf(lConv == NIL, .T., lConv) )
 
 // Start the editor
@@ -273,17 +273,17 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
    LOCAL nTop, nLeft, nBottom, nRight
    LOCAL lSaveAllowed, lSaved := .F.
 
-   oBox := SaveBox( oEdit[ E_TOP ], oEdit[ E_LEFT ], ;
-      oEdit[ E_BOTTOM ], oEdit[ E_RIGHT ], ;
-      oEdit[ E_COLOR ], oEdit[ E_FRAME ] )
+   oBox := SaveBox( oEdit[E_TOP], oEdit[E_LEFT], ;
+      oEdit[E_BOTTOM], oEdit[E_RIGHT], ;
+      oEdit[E_COLOR], oEdit[E_FRAME] )
 
-   oEdit[ E_INSERT ] := Set( _SET_INSERT )
+   oEdit[E_INSERT] := Set( _SET_INSERT )
 #if 0
    SayInsert()
 #endif
-   nCursor := SetCursor( IIf(oEdit[ E_INSERT ], SC_NORMAL, SC_SPECIAL1) )
+   nCursor := SetCursor( IIf(oEdit[E_INSERT], SC_NORMAL, SC_SPECIAL1) )
    IF HB_IsLogical(lEdit)
-      oEdit[ E_MODE ] := lEdit
+      oEdit[E_MODE] := lEdit
    ENDIF
    lSaveAllowed := ( SetKey(K_F2) == NIL )
 #if 0
@@ -292,40 +292,40 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
    ENDIF
 #endif
 
-   nTop    := oEdit[ E_TOP ] + 1
-   nLeft   := oEdit[ E_LEFT ] + 1
-   nBottom := oEdit[ E_BOTTOM ] - 1
-   nRight  := oEdit[ E_RIGHT ] - 1
+   nTop    := oEdit[E_TOP] + 1
+   nLeft   := oEdit[E_LEFT] + 1
+   nBottom := oEdit[E_BOTTOM] - 1
+   nRight  := oEdit[E_RIGHT] - 1
    IF lFrame != NIL .AND. ! lFrame
       nLeft--
       nBottom++
       nRight++
    ENDIF
-   nState := oEdit[ E_RIGHT ] - 8
+   nState := oEdit[E_RIGHT] - 8
 
    /* The position of the editor can be changed (in a windowed environment)
       then it sets current position of editor.
       It also sets the current editor as the working one. This means that
       all next ED_* functions will used the editor handle specified
-      by oEditor[ E_EDIT ] - it is tricky solution to speed access (we
+      by oEditor[E_EDIT] - it is tricky solution to speed access (we
       don't need to pass the editor handle with every ed_*() call
       (Well... this editor was created when AT-286 computers worked in
       its full glory :) */
-   ed_Config( oEdit[ E_EDIT ], nTop, nLeft, nBottom, nRight, 0, 0 )
+   ed_Config( oEdit[E_EDIT], nTop, nLeft, nBottom, nRight, 0, 0 )
 
    DO WHILE .T.
-      nRow := ed_Stabilize( oEdit[ E_EDIT ] )    // displays all visible lines
+      nRow := ed_Stabilize( oEdit[E_EDIT] )    // displays all visible lines
       // It doesn't uses incremental stabilization for performance reasons
 
-      IF nRow != ed_Row( oEdit[ E_EDIT ] )
-         nRow := ed_Row( oEdit[ E_EDIT ] )
-         hb_DispOutAt( oEdit[ E_TOP ], nState, StrZero( nRow, 4 ) )
+      IF nRow != ed_Row( oEdit[E_EDIT] )
+         nRow := ed_Row( oEdit[E_EDIT] )
+         hb_DispOutAt( oEdit[E_TOP], nState, StrZero( nRow, 4 ) )
       ENDIF
-      IF nCol != ed_Col( oEdit[ E_EDIT ] )
-         nCol := ed_Col( oEdit[ E_EDIT ] )
-         hb_DispOutAt( oEdit[ E_TOP ], nState + 5, StrZero( nCol, 3 ) )
+      IF nCol != ed_Col( oEdit[E_EDIT] )
+         nCol := ed_Col( oEdit[E_EDIT] )
+         hb_DispOutAt( oEdit[E_TOP], nState + 5, StrZero( nCol, 3 ) )
       ENDIF
-      SetPos(nTop + ed_WinRow( oEdit[ E_EDIT ] ), nLeft + ed_WinCol( oEdit[ E_EDIT ] ))
+      SetPos(nTop + ed_WinRow( oEdit[E_EDIT] ), nLeft + ed_WinCol( oEdit[E_EDIT] ))
 
 #if 0
       nKey := WaitForKey()
@@ -334,22 +334,22 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
 
       DO CASE
       CASE !( hb_keyChar( nKey ) == "" )
-         IF oEdit[ E_MODE ]
-            ed_PutChar( oEdit[ E_EDIT ], Asc(hb_keyChar( nKey )), oEdit[ E_INSERT ] )
+         IF oEdit[E_MODE]
+            ed_PutChar( oEdit[E_EDIT], Asc(hb_keyChar( nKey )), oEdit[E_INSERT] )
          ENDIF
 
       CASE nKey == K_F2 .AND. lSaveAllowed
          lSaved := EditorSave( oEdit )     // save the copy of edited buffer
 
-      CASE EditorMove( oEdit[ E_EDIT ], nKey )
+      CASE EditorMove( oEdit[E_EDIT], nKey )
 
       CASE nKey == K_DOWN
-         IF !ed_Down( oEdit[ E_EDIT ] )
+         IF !ed_Down( oEdit[E_EDIT] )
             hb_Scroll( nTop, nLeft, nBottom, nRight, 1 )
          ENDIF
 
       CASE nKey == K_UP
-         IF !ed_Up( oEdit[ E_EDIT ] )
+         IF !ed_Up( oEdit[E_EDIT] )
             hb_Scroll( nTop, nLeft, nBottom, nRight, -1 )
          ENDIF
 
@@ -361,7 +361,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
          IF HB_IsBlock(bKey)
             Eval( bKey, oEdit )
          ELSE
-            IF oEdit[ E_MODE ]
+            IF oEdit[E_MODE]
                EditorKeys( oEdit, nKey )
             ENDIF
          ENDIF
@@ -383,32 +383,32 @@ STATIC PROCEDURE EditorKeys( oEdit, nKey )
 
    DO CASE
    CASE nKey == K_CTRL_Y
-      ed_DelLine( oEdit[ E_EDIT ] )
+      ed_DelLine( oEdit[E_EDIT] )
 
    CASE nKey == K_CTRL_T
-      ed_DelWord(oEdit[ E_EDIT ])
+      ed_DelWord(oEdit[E_EDIT])
 
    CASE nKey == K_DEL
-      ed_DelChar( oEdit[ E_EDIT ] )
+      ed_DelChar( oEdit[E_EDIT] )
 
    CASE nKey == K_BS
-      ed_BSpace( oEdit[ E_EDIT ], oEdit[ E_INSERT ] )
+      ed_BSpace( oEdit[E_EDIT], oEdit[E_INSERT] )
 
    CASE nKey == K_ENTER
-      ed_Return( oEdit[ E_EDIT ], oEdit[ E_INSERT ] )
+      ed_Return( oEdit[E_EDIT], oEdit[E_INSERT] )
 
    CASE nKey == K_TAB
 #if 0
-      ed_Tab(oEdit[ E_EDIT ], oEdit[ E_INSERT ])
+      ed_Tab(oEdit[E_EDIT], oEdit[E_INSERT])
 #endif
       FOR i := 1 TO 4
-         ed_PutChar( oEdit[ E_EDIT ], Asc(" "), oEdit[ E_INSERT ] )
+         ed_PutChar( oEdit[E_EDIT], Asc(" "), oEdit[E_INSERT] )
       NEXT
 
    CASE nKey == K_INS
-      oEdit[ E_INSERT ] := ! oEdit[ E_INSERT ]
-      Set( _SET_INSERT, oEdit[ E_INSERT ] )
-      SetCursor( IIf(oEdit[ E_INSERT ], SC_NORMAL, SC_SPECIAL1) )
+      oEdit[E_INSERT] := ! oEdit[E_INSERT]
+      Set( _SET_INSERT, oEdit[E_INSERT] )
+      SetCursor( IIf(oEdit[E_INSERT], SC_NORMAL, SC_SPECIAL1) )
 #if 0
       SayInsert()
 #endif

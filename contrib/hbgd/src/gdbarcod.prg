@@ -200,7 +200,7 @@ METHOD GDBarCode:Draw13( cText )
          // If we have to write text, we moved the barcode to the right to have space to put digit
          ::positionX := IIf(::textfont == 0, 0, 10)
 
-         xParity := ::Parity[ Val( SubStr(::text, 1, 1) ) ]
+         xParity := ::Parity[Val( SubStr(::text, 1, 1) )]
 
          // First Bar
          ::positionX := 10
@@ -237,11 +237,11 @@ METHOD GDBarCode:Draw13( cText )
             IF ii > 1 .AND. ii < 8
 
                ::DrawSingleBar( IIf(SubStr(xParity, ii - 1, 1) == "E", ;
-                  ::LeftHand_Even[ jj ], ;
-                  ::LeftHand_Odd[ jj ]) )
+                  ::LeftHand_Even[jj], ;
+                  ::LeftHand_Odd[jj]) )
             ELSEIF ii > 1 .AND. ii >= 8
 
-               ::DrawSingleBar( ::Right_Hand[ jj ] )
+               ::DrawSingleBar( ::Right_Hand[jj] )
 
             ENDIF
 
@@ -351,9 +351,9 @@ METHOD GDBarCode:Draw8( cText )
          ENDIF
 
          IF ii < 5
-            ::DrawSingleBar( ::LeftHand_Odd[ jj ] )
+            ::DrawSingleBar( ::LeftHand_Odd[jj] )
          ELSEIF ii >= 5
-            ::DrawSingleBar( ::Right_Hand[ jj ] )
+            ::DrawSingleBar( ::Right_Hand[jj] )
          ENDIF
 
       NEXT
@@ -519,7 +519,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
          IF lTypeCodeC
 
             IF Len(::text) == n
-               cConc += ::aCode[ CODEB ]
+               cConc += ::aCode[CODEB]
                nValChar := Asc(cChar) - 31
             ELSE
                nValChar := Val( SubStr(::text, n, 2) ) + 1
@@ -529,7 +529,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
          ELSEIF lTypeCodeA
 
             IF cChar > "_"
-               cConc += ::aCode[ CODEB ]
+               cConc += ::aCode[CODEB]
                nValChar := Asc(cChar) - 31
             ELSEIF cChar <= " "
                nValChar := Asc(cChar) + 64
@@ -540,7 +540,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
          ELSE
 
             IF cChar < " "
-               cConc += ::aCode[ CODEA ]
+               cConc += ::aCode[CODEA]
                nValChar := Asc(cChar) + 64
             ELSE
                nValChar := Asc(cChar) - 31
@@ -660,4 +660,4 @@ METHOD GDBarCode:MixCode( value )
 
 METHOD GDBarCode:Findcode( uVal )
 
-   RETURN ::acode[ AScan( ::keys, {| x | Left(x, 1) == uVal } ) ]
+   RETURN ::acode[AScan( ::keys, {| x | Left(x, 1) == uVal } )]

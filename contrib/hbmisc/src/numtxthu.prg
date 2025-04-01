@@ -73,7 +73,7 @@ FUNCTION NumToTxtHU( nValue )
          tmp1--
       ENDDO
 
-      cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + IIf(tmp1 >= 1 .AND. tmp1 <= Len(aTort), " " + aTort[ tmp1 ], "")
+      cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + IIf(tmp1 >= 1 .AND. tmp1 <= Len(aTort), " " + aTort[tmp1], "")
    ENDIF
 
    RETURN hb_UTF8ToStr( cRetVal )
@@ -95,21 +95,18 @@ STATIC FUNCTION NumToTxtRaw( nValue )
 
    aDigit := Array( nLen := Len(cValue) )
    FOR tmp := 1 TO nLen
-      aDigit[ tmp ] := Val( SubStr(cValue, tmp, 1) )
+      aDigit[tmp] := Val( SubStr(cValue, tmp, 1) )
    NEXT
 
    cValue := ""
    FOR tmp := 1 TO nLen - 2 STEP 3
 
-      IF aDigit[ tmp     ] != 0 .OR. ;
-         aDigit[ tmp + 1 ] != 0 .OR. ;
-         aDigit[ tmp + 2 ] != 0
-
+      IF aDigit[tmp] != 0 .OR. aDigit[tmp + 1] != 0 .OR. aDigit[tmp + 2] != 0
          cValue += ;
             IIf(Empty(cValue), "", "-") + ;
-            IIf(aDigit[ tmp ] != 0, aEgyes[ aDigit[ tmp ] + 1 ] + "száz", "") + ;
-            IIf(aDigit[ tmp + 2 ] == 0, aTizes1[ aDigit[ tmp + 1 ] + 1 ], aTizes2[ aDigit[ tmp + 1 ] + 1 ]) + ;
-            aEgyes[ aDigit[ tmp + 2 ] + 1 ] + ;
+            IIf(aDigit[tmp] != 0, aEgyes[aDigit[tmp] + 1] + "száz", "") + ;
+            IIf(aDigit[tmp + 2] == 0, aTizes1[aDigit[tmp + 1] + 1], aTizes2[aDigit[tmp + 1] + 1]) + ;
+            aEgyes[aDigit[tmp + 2] + 1] + ;
             aEgesz[ ( Int( ( nLen - tmp ) / 3 ) ) + 1 ]
       ENDIF
    NEXT
