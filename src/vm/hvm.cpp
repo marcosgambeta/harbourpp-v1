@@ -7303,9 +7303,9 @@ void hb_vmPushNumber(double dNumber, int iDec)
   }
 }
 
-static int hb_vmCalcIntWidth(HB_MAXINT nNumber)
+static HB_USHORT hb_vmCalcIntWidth(HB_MAXINT nNumber)
 {
-  int iWidth;
+  HB_USHORT iWidth;
 
   if (nNumber <= -1000000000L)
   {
@@ -7347,7 +7347,7 @@ static void hb_vmPushIntegerConst(int iNumber)
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
   pItem->setIntegerValue(iNumber);
-  pItem->setIntegerLength(static_cast<HB_USHORT>(hb_vmCalcIntWidth(iNumber)));
+  pItem->setIntegerLength(hb_vmCalcIntWidth(iNumber));
 }
 #else
 static void hb_vmPushLongConst(long lNumber)
@@ -7360,7 +7360,7 @@ static void hb_vmPushLongConst(long lNumber)
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LONG);
   pItem->setLongValue(static_cast<HB_MAXINT>(lNumber));
-  pItem->setLongLength(static_cast<HB_USHORT>(hb_vmCalcIntWidth(lNumber)));
+  pItem->setLongLength(hb_vmCalcIntWidth(lNumber));
 }
 #endif
 
@@ -7415,7 +7415,7 @@ static void hb_vmPushLongLongConst(HB_LONGLONG llNumber)
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LONG);
   pItem->setLongValue(static_cast<HB_MAXINT>(llNumber));
-  pItem->setLongLength(static_cast<HB_USHORT>(hb_vmCalcIntWidth(llNumber)));
+  pItem->setLongLength(hb_vmCalcIntWidth(llNumber));
 }
 #endif
 
