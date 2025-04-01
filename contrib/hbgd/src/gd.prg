@@ -139,31 +139,31 @@ FUNCTION gdImageFromFile( cFile )
       SWITCH Lower(cExt)
       CASE ".jpg"
       CASE ".jpeg"
-         hFile[ "file"  ] := cFile
-         hFile[ "path"  ] := cPath
-         hFile[ "name"  ] := cName
-         hFile[ "ext"   ] := cExt
-         hFile[ "drive" ] := cDrive
+         hFile["file"] := cFile
+         hFile["path"] := cPath
+         hFile["name"] := cName
+         hFile["ext"] := cExt
+         hFile["drive"] := cDrive
          cType  := "jpeg"
          cMime  := "image/jpeg"
          oImage := GDImage():LoadFromJpeg( cFile )
          EXIT
       CASE ".gif"
-         hFile[ "file"  ] := cFile
-         hFile[ "path"  ] := cPath
-         hFile[ "name"  ] := cName
-         hFile[ "ext"   ] := cExt
-         hFile[ "drive" ] := cDrive
+         hFile["file"] := cFile
+         hFile["path"] := cPath
+         hFile["name"] := cName
+         hFile["ext"] := cExt
+         hFile["drive"] := cDrive
          cType  := "gif"
          cMime  := "image/gif"
          oImage := GDImage():LoadFromGif( cFile )
          EXIT
       CASE ".png"
-         hFile[ "file"  ] := cFile
-         hFile[ "path"  ] := cPath
-         hFile[ "name"  ] := cName
-         hFile[ "ext"   ] := cExt
-         hFile[ "drive" ] := cDrive
+         hFile["file"] := cFile
+         hFile["path"] := cPath
+         hFile["name"] := cName
+         hFile["ext"] := cExt
+         hFile["drive"] := cDrive
          cType  := "png"
          cMime  := "image/png"
          oImage := GDImage():LoadFromPng( cFile )

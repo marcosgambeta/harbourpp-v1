@@ -35,7 +35,7 @@ PROCEDURE Main()
 
    xData := mxmlGetCustom( node )
    IF HB_IsHash(xData) .AND. hb_HHasKey(xData, "Today")
-      OutStd(xData[ "Today" ], hb_eol())
+      OutStd(xData["Today"], hb_eol())
    ENDIF
 
    mxmlSetErrorCallback(NIL)
@@ -50,7 +50,7 @@ STATIC PROCEDURE create_cust()
    LOCAL tree, group, element, node
    LOCAL hData := { => }
 
-   hData[ "Today" ] := hb_TSToStr( hb_DateTime() )
+   hData["Today"] := hb_TSToStr( hb_DateTime() )
    /* etc. */
 
    tree    := mxmlNewXML()

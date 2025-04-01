@@ -243,7 +243,7 @@ METHOD TIPCgi:StartSession( cSID )
       ::hSession := { => }
    ENDIF
 
-   ::hCookies[ "SESSIONID" ] := ::cSID
+   ::hCookies["SESSIONID"] := ::cSID
 
    RETURN Self
 
@@ -272,9 +272,9 @@ METHOD TIPCgi:DestroySession( cID )
       cFile := hb_DirSepAdd( ::cSessionSavePath ) + "SESSIONID_" + cSID
 
       IF ( lOk := ( hb_vfErase( cFile ) != F_ERROR ) )
-         ::hCookies[ "SESSIONID" ] := cSID + "; expires= " + tip_DateToGMT( hb_DateTime() - 1 )
+         ::hCookies["SESSIONID"] := cSID + "; expires= " + tip_DateToGMT( hb_DateTime() - 1 )
          ::CreateSID()
-         ::hCookies[ "SESSIONID" ] := ::cSID
+         ::hCookies["SESSIONID"] := ::cSID
       ELSE
          ::Write( "ERROR: On deleting session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
       ENDIF

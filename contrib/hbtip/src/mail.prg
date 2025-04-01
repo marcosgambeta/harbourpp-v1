@@ -121,7 +121,7 @@ METHOD TIPMail:SetEncoder( xEncoder )
    ::oEncoder := IIf(HB_IsString(xEncoder), tip_GetEncoder( xEncoder ), xEncoder)
 
    IF HB_IsObject(::oEncoder)
-      ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
+      ::hHeaders["Content-Transfer-Encoding"] := ::oEncoder:cName
       RETURN .T.
    ENDIF
 
@@ -131,7 +131,7 @@ METHOD TIPMail:SetBody( cBody )
 
    IF HB_IsObject(::oEncoder)
       ::cBody := ::oEncoder:Encode( cBody )
-      ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
+      ::hHeaders["Content-Transfer-Encoding"] := ::oEncoder:cName
       ::lBodyEncoded := .T.  // needed to prevent an extra CRLF from being appended [GD]
    ELSEIF HB_IsString(cBody) .OR. cBody == NIL
       ::cBody := cBody
@@ -209,7 +209,7 @@ METHOD TIPMail:Attach( oSubPart )
    IF HB_IsObject(oSubPart) .AND. oSubPart:ClassName() == "TIPMAIL"
       // reset wrong content-type
       IF !::isMultiPart()
-         ::hHeaders[ "Content-Type" ] := "multipart/mixed"
+         ::hHeaders["Content-Type"] := "multipart/mixed"
       ENDIF
 
       AAdd( ::aAttachments, oSubPart )
@@ -257,7 +257,7 @@ METHOD TIPMail:HeadersToString()
    NEXT
 
    IF !Empty(::aAttachments)
-      cRet += "Mime-Version: " + ::hHeaders[ "Mime-Version" ] + e"\r\n"
+      cRet += "Mime-Version: " + ::hHeaders["Mime-Version"] + e"\r\n"
    ENDIF
 
    FOR EACH i IN ::hHeaders
@@ -284,11 +284,11 @@ METHOD TIPMail:ToString()
 
    // this is a multipart message; we need a boundary
    IF !Empty(::aAttachments)
-      ::hHeaders[ "Mime-Version" ] := "1.0"
+      ::hHeaders["Mime-Version"] := "1.0"
 
       // reset failing content type
       IF !::isMultiPart()
-         ::hHeaders[ "Content-Type" ] := "multipart/mixed"
+         ::hHeaders["Content-Type"] := "multipart/mixed"
       ENDIF
 
       // have we got it already?
@@ -296,7 +296,7 @@ METHOD TIPMail:ToString()
       IF Empty(cBoundary)
          cBoundary := ::MakeBoundary()
          IF !::SetFieldOption( "Content-Type", "Boundary", cBoundary )
-            ::hHeaders[ "Content-Type" ] := "multipart/mixed; boundary=" + '"' + cBoundary + '"'
+            ::hHeaders["Content-Type"] := "multipart/mixed; boundary=" + '"' + cBoundary + '"'
          ENDIF
       ENDIF
    ENDIF
@@ -393,7 +393,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
       boundary. */
 
    IF "Content-Transfer-Encoding" $ ::hHeaders
-      ::oEncoder := tip_GetEncoder( ::hHeaders[ "Content-Transfer-Encoding" ] )
+      ::oEncoder := tip_GetEncoder( ::hHeaders["Content-Transfer-Encoding"] )
    ENDIF
 
    // se if we have subparts:

@@ -214,7 +214,7 @@ METHOD GenerateHTML:EndSection( cSection, cFilename )
 METHOD GenerateHTML:AddReference( oEntry, cReference, cSubReference )
 
    IF HB_IsObject(oEntry) .AND. oEntry:ClassName() == "ENTRY"
-      ::OpenTag( "a", "href", ::TargetFilename + ::cExtension + "#" + oEntry:_filename ):Append(oEntry:fld[ "NAME" ]):CloseTag( "a" ):Append(oEntry:fld[ "ONELINER" ]):Newline()
+      ::OpenTag( "a", "href", ::TargetFilename + ::cExtension + "#" + oEntry:_filename ):Append(oEntry:fld["NAME"]):CloseTag( "a" ):Append(oEntry:fld["ONELINER"]):Newline()
    ELSE
       IF HB_IsString(cSubReference)
          ::OpenTag( "a", "href", cReference + ::cExtension + "#" + cSubReference ):Append(oEntry):CloseTag( "a" ):Newline()
@@ -235,7 +235,7 @@ METHOD GenerateHTML:AddEntry( oEntry )
 
    FOR EACH item IN FieldIDList()
       IF item == "NAME"
-         cEntry := oEntry:fld[ "NAME" ]
+         cEntry := oEntry:fld["NAME"]
          IF "(" $ cEntry .OR. Upper(cEntry) == cEntry  // guess if it's code
             ::OpenTagInline( "h4" ):OpenTagInline( "code" ):AppendInline( cEntry ):CloseTagInline( "code" ):CloseTag( "h4" )
          ELSE

@@ -61,11 +61,11 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
    SetCancel(.F.)
 
-   netclictx := Eval(netclictrl[ "init" ], hConIO, { ;
+   netclictx := Eval(netclictrl["init"], hConIO, { ;
       "--netio.addr=" + cIP + ":" + hb_ntos( nPort ), ;
       "--netio.pass=" + cPassword })
    IF !Empty(netclictx)
-      netcliID := netclictrl[ "id" ]
+      netcliID := netclictrl["id"]
    ENDIF
 
    hbnetiocon_ToConsole( "Type a command or '?' for help." )
@@ -74,8 +74,8 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    nHistIndex := Len(aHistory) + 1
 
    hCommands  := { ;
-      "?"    => { "", "Synonym for 'help'." , {|| ShowHelp( hCommands ), Eval(netclictrl[ "cmd" ], netclictx, "?") } }, ;
-      "help" => { "", "Display this help."  , {|| ShowHelp( hCommands ), Eval(netclictrl[ "cmd" ], netclictx, "?") } }, ;
+      "?"    => { "", "Synonym for 'help'." , {|| ShowHelp( hCommands ), Eval(netclictrl["cmd"], netclictx, "?") } }, ;
+      "help" => { "", "Display this help."  , {|| ShowHelp( hCommands ), Eval(netclictrl["cmd"], netclictx, "?") } }, ;
       "quit" => { "", "Exit console."       , {|| lQuit := .T. } } }
 
    lQuit := .F.
@@ -142,11 +142,11 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
             Eval(hb_HValueAt( hCommands, nPos )[3], cCommand)
          ELSE
             IF Left(cCommand, Len(netcliID) + 1) == netcliID + "."
-               IF !Eval(netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len(netcliID) + 2))
+               IF !Eval(netclictrl["cmd"], netclictx, SubStr(cCommand, Len(netcliID) + 2))
                   hbnetiocon_ToConsole( hb_StrFormat( "Error: Unrecognized command '%1$s'.", cCommand ) )
                ENDIF
             ELSE
-               IF !Eval(netclictrl[ "cmd" ], netclictx, cCommand)
+               IF !Eval(netclictrl["cmd"], netclictx, cCommand)
                   hbnetiocon_ToConsole( hb_StrFormat( "Error: Unrecognized command '%1$s'.", cCommand ) )
                ENDIF
             ENDIF
@@ -154,7 +154,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
       ENDIF
    ENDDO
 
-   Eval(netclictrl[ "exit" ], netclictx)
+   Eval(netclictrl["exit"], netclictx)
 
    RETURN
 

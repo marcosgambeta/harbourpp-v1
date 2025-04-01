@@ -39,21 +39,21 @@ PROCEDURE Main()
    ? "out HASH"
    hRECT := { => }
    ? wapi_DrawText( hDC, "2TEST", hRECT, WIN_DT_CALCRECT )
-   ? hRECT[ "left" ], hRECT[ "top" ], hRECT[ "bottom" ], hRECT[ "right" ]
+   ? hRECT["left"], hRECT["top"], hRECT["bottom"], hRECT["right"]
 
    ? "inout HASH"
    hRECT := { => }
-   hRECT[ "left" ] := 300
-   hRECT[ "top" ] := 350
+   hRECT["left"] := 300
+   hRECT["top"] := 350
    ? wapi_DrawText( hDC, "3TEST", hRECT, WIN_DT_CALCRECT )
-   ? hRECT[ "left" ], hRECT[ "top" ], hRECT[ "bottom" ], hRECT[ "right" ]
+   ? hRECT["left"], hRECT["top"], hRECT["bottom"], hRECT["right"]
 
    ? "in HASH"
    hRECT := { => }
-   hRECT[ "left" ] := 300
-   hRECT[ "top" ] := 350
-   hRECT[ "right" ] := 650
-   hRECT[ "bottom" ] := 450
+   hRECT["left"] := 300
+   hRECT["top"] := 350
+   hRECT["right"] := 650
+   hRECT["bottom"] := 450
    ? wapi_DrawText( hDC, "4TEST", hRECT )
 
    ? "out TEXTMETRIC"

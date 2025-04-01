@@ -318,14 +318,14 @@ STATIC FUNCTION netiosrv_ConfSave( netiosrv, netiomgm )
 
    LOCAL hConf := { => }
 
-   hConf[ "__signature" ]  := _NETIOSRV_SIGNATURE
-   hConf[ "__version" ]    := 1
-   hConf[ "srv.showconn" ] := netiosrv[_NETIOSRV_lShowConn]
-   hConf[ "srv.allow" ]    := netiosrv[_NETIOSRV_hAllow]
-   hConf[ "srv.block" ]    := netiosrv[_NETIOSRV_hBlock]
-   hConf[ "mgm.showconn" ] := netiomgm[_NETIOSRV_lShowConn]
-   hConf[ "mgm.allow" ]    := netiomgm[_NETIOSRV_hAllow]
-   hConf[ "mgm.block" ]    := netiomgm[_NETIOSRV_hBlock]
+   hConf["__signature"]  := _NETIOSRV_SIGNATURE
+   hConf["__version"]    := 1
+   hConf["srv.showconn"] := netiosrv[_NETIOSRV_lShowConn]
+   hConf["srv.allow"]    := netiosrv[_NETIOSRV_hAllow]
+   hConf["srv.block"]    := netiosrv[_NETIOSRV_hBlock]
+   hConf["mgm.showconn"] := netiomgm[_NETIOSRV_lShowConn]
+   hConf["mgm.allow"]    := netiomgm[_NETIOSRV_hAllow]
+   hConf["mgm.block"]    := netiomgm[_NETIOSRV_hBlock]
 
    RETURN hb_MemoWrit( netiosrv_ConfName(), hb_Serialize( hConf ) )
 
@@ -335,25 +335,25 @@ STATIC FUNCTION netiosrv_ConfLoad(netiosrv, netiomgm)
 
    IF HB_IsHash(hConf) .AND. ;
       "__signature" $ hConf .AND. ;
-      hConf[ "__signature" ] == _NETIOSRV_SIGNATURE
+      hConf["__signature"] == _NETIOSRV_SIGNATURE
 
       IF "srv.showconn" $ hConf
-         netiosrv[_NETIOSRV_lShowConn] := hConf[ "srv.showconn" ]
+         netiosrv[_NETIOSRV_lShowConn] := hConf["srv.showconn"]
       ENDIF
       IF "srv.allow"    $ hConf
-         netiosrv[_NETIOSRV_hAllow]    := hConf[ "srv.allow" ]
+         netiosrv[_NETIOSRV_hAllow]    := hConf["srv.allow"]
       ENDIF
       IF "srv.block"    $ hConf
-         netiosrv[_NETIOSRV_hBlock]    := hConf[ "srv.block" ]
+         netiosrv[_NETIOSRV_hBlock]    := hConf["srv.block"]
       ENDIF
       IF "mgm.showconn" $ hConf
-         netiomgm[_NETIOSRV_lShowConn] := hConf[ "mgm.showconn" ]
+         netiomgm[_NETIOSRV_lShowConn] := hConf["mgm.showconn"]
       ENDIF
       IF "mgm.allow"    $ hConf
-         netiomgm[_NETIOSRV_hAllow]    := hConf[ "mgm.allow" ]
+         netiomgm[_NETIOSRV_hAllow]    := hConf["mgm.allow"]
       ENDIF
       IF "mgm.block"    $ hConf
-         netiomgm[_NETIOSRV_hBlock]    := hConf[ "mgm.block" ]
+         netiomgm[_NETIOSRV_hBlock]    := hConf["mgm.block"]
       ENDIF
       RETURN .T.
    ENDIF

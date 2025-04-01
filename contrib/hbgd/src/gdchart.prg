@@ -173,7 +173,7 @@ METHOD GDChart:PieChart()
 
    // Before sum of values to determine perentual
    FOR EACH hElement IN aPieDataOfHash
-      nTot += hElement[ "VALUE" ]
+      nTot += hElement["VALUE"]
       // Check extrution
       IF ( nExtrude := __HGetValue( hElement, "EXTRUDE" ) ) != NIL
          nTotExtr := Max(nTotExtr, nExtrude)
@@ -194,7 +194,7 @@ METHOD GDChart:PieChart()
          lExtruded := .F.
       ENDIF
       colorp    := __HGetValue( hElement, "COLOR" )
-      nVal      := hElement[ "VALUE" ]
+      nVal      := hElement["VALUE"]
       nDim      := 360 * ( ( nVal / nTot ) * 100 ) / 100
       hb_default(@lFilled, .F.)
       hb_default(@nExtrude, 0)
@@ -330,13 +330,13 @@ METHOD GDChart:VerticalBarChart()
    nMax      := 0
    FOR EACH hElement IN aDataOfHash
       IF hElement:__enumIndex() == 1
-         nMax := hElement[ "VALUE" ]
+         nMax := hElement["VALUE"]
       ELSE
-         nMax := Max(nMax, hElement[ "VALUE" ])
+         nMax := Max(nMax, hElement["VALUE"])
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
       nMaxLabel := Max(nMaxLabel, Len(IIf(cLabel != NIL, cLabel, "")))
-      nTot      += hElement[ "VALUE" ]
+      nTot      += hElement["VALUE"]
    NEXT
 
    IF !HB_IsNumeric(nLeftLabelSpace)
@@ -419,7 +419,7 @@ METHOD GDChart:VerticalBarChart()
       //   lExtruded := .F.
       // ENDIF
       colorp    := __HGetValue( hElement, "COLOR" )
-      nVal      := hElement[ "VALUE" ]
+      nVal      := hElement["VALUE"]
       nDim      := ( nVal / nMaxValue ) * nHeight
 
       hb_default(@lFilled, .F.)
@@ -522,13 +522,13 @@ METHOD GDChart:HorizontalBarChart()
    nMax      := 0
    FOR EACH hElement IN aDataOfHash
       IF hElement:__enumIndex() == 1
-         nMax := hElement[ "VALUE" ]
+         nMax := hElement["VALUE"]
       ELSE
-         nMax := Max(nMax, hElement[ "VALUE" ])
+         nMax := Max(nMax, hElement["VALUE"])
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
       nMaxLabel := Max(nMaxLabel, Len(IIf(cLabel != NIL, cLabel, "")))
-      nTot      += hElement[ "VALUE" ]
+      nTot      += hElement["VALUE"]
    NEXT
 
    IF !HB_IsNumeric(nLeftLabelSpace)
@@ -614,7 +614,7 @@ METHOD GDChart:HorizontalBarChart()
       //    lExtruded := .F.
       // ENDIF
       colorp    := __HGetValue( hElement, "COLOR" )
-      nVal      := hElement[ "VALUE" ]
+      nVal      := hElement["VALUE"]
       nDim      := ( nVal / nMaxValue ) * nWidth
       hb_default(@lFilled, .F.)
       // hb_default(@nExtrude, 0)
@@ -718,9 +718,9 @@ METHOD GDChart:LineChart()
    nMax      := 0
    FOR EACH hElement IN aDataOfHash
       IF hElement:__enumIndex() == 1
-         nMax := hElement[ "VALUE" ]
+         nMax := hElement["VALUE"]
       ELSE
-         nMax := Max(nMax, hElement[ "VALUE" ])
+         nMax := Max(nMax, hElement["VALUE"])
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
       nMaxLabel := Max(nMaxLabel, Len(IIf(cLabel != NIL, cLabel, "")))
@@ -731,9 +731,9 @@ METHOD GDChart:LineChart()
    nMin      := 0
    FOR EACH hElement IN aDataOfHash
       IF hElement:__enumIndex() == 1
-         nMin := hElement[ "VALUE" ]
+         nMin := hElement["VALUE"]
       ELSE
-         nMin := Min(nMin, hElement[ "VALUE" ])
+         nMin := Min(nMin, hElement["VALUE"])
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
       nMinLabel := Max(nMinLabel, Len(IIf(cLabel != NIL, cLabel, "")))
@@ -847,7 +847,7 @@ METHOD GDChart:LineChart()
       //   lExtruded := .F.
       // ENDIF
       colorp    := __HGetValue( hElement, "COLOR" )
-      nVal      := hElement[ "VALUE" ]
+      nVal      := hElement["VALUE"]
       nDim      := ( ( nVal + Abs( nMinValue ) ) / nTotRange ) * nHeight
 
       // hb_default(@lFilled, .F.)

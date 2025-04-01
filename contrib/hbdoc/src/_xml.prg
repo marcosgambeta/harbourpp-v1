@@ -107,7 +107,7 @@ METHOD GenerateXML:EndSection( cSection, cFilename )
 
 METHOD GenerateXML:AddIndex( oEntry )
 
-   ::WriteEntry( "ENTRY", oEntry:fld[ "NAME" ] + " - " + oEntry:fld[ "ONELINER" ], .F. )
+   ::WriteEntry( "ENTRY", oEntry:fld["NAME"] + " - " + oEntry:fld["ONELINER"], .F. )
 
    RETURN Self
 

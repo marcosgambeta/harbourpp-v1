@@ -121,7 +121,7 @@ METHOD GenerateText:BeginSection( cSection, cFilename )
 
 METHOD GenerateText:AddIndex( oEntry )
 
-   ::WriteEntry( FieldCaption( "NAME" ), oEntry:fld[ "NAME" ] + " - " + oEntry:fld[ "ONELINER" ], .F. )
+   ::WriteEntry( FieldCaption( "NAME" ), oEntry:fld["NAME"] + " - " + oEntry:fld["ONELINER"], .F. )
 
    RETURN Self
 

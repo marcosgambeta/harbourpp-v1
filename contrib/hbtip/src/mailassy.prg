@@ -124,13 +124,13 @@ FUNCTION tip_MailAssemble( ;
    oMail:SetEncoder( cEncoding )
    oMail:SetCharset( cCharset )
    IF Empty(aFiles)
-      oMail:hHeaders[ "Content-Type" ] := cContentType
+      oMail:hHeaders["Content-Type"] := cContentType
       oMail:SetBody( cBody )
    ELSE
       oAttach := TIPMail():New()
       oAttach:SetEncoder( cEncoding )
       oAttach:SetCharset( cCharset )
-      oAttach:hHeaders[ "Content-Type" ] := cContentType
+      oAttach:hHeaders["Content-Type"] := cContentType
       oAttach:SetBody( cBody )
       oMail:Attach( oAttach )
 
@@ -182,9 +182,9 @@ FUNCTION tip_MailAssemble( ;
          IF ( nAttr := __tip_FAttrToUmask( nAttr ) ) != 0
             cMimeType += "; x-unix-mode=" + '"' + hb_NumToHex( nAttr, 4 ) + '"'
          ENDIF
-         oAttach:hHeaders[ "Content-Type" ] := cMimeType
+         oAttach:hHeaders["Content-Type"] := cMimeType
          // Usually, original filename is set here
-         oAttach:hHeaders[ "Content-Disposition" ] := "attachment; filename=" + '"' + hb_FNameNameExt( cFile ) + '"'
+         oAttach:hHeaders["Content-Disposition"] := "attachment; filename=" + '"' + hb_FNameNameExt( cFile ) + '"'
          oAttach:SetBody( cData )
          oMail:Attach( oAttach )
       NEXT
@@ -200,15 +200,15 @@ FUNCTION tip_MailAssemble( ;
    ENDIF
 
    oMail:SetHeader( cSubject, cFrom, xTo, xCC )
-   oMail:hHeaders[ "Date" ] := tip_TimeStamp()
+   oMail:hHeaders["Date"] := tip_TimeStamp()
    IF !Empty(cReplyTo)
-      oMail:hHeaders[ "Reply-to" ] := cReplyTo
+      oMail:hHeaders["Reply-to"] := cReplyTo
    ENDIF
    IF lRead
-      oMail:hHeaders[ "Disposition-Notification-To" ] := tip_GetRawEmail( cFrom )
+      oMail:hHeaders["Disposition-Notification-To"] := tip_GetRawEmail( cFrom )
    ENDIF
    IF nPriority != 3
-      oMail:hHeaders[ "X-Priority" ] := hb_ntos( nPriority )
+      oMail:hHeaders["X-Priority"] := hb_ntos( nPriority )
    ENDIF
 
    RETURN IIf(HB_IsString(tmp), oMail:HeadersToString() + tmp, oMail:ToString())

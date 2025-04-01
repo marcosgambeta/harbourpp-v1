@@ -18,8 +18,8 @@ PROCEDURE Main(...)
    ENDIF
 
    oMail := TIPMail():New( "This is the body of the mail" )
-   oMail:hHeaders[ "Content-Type" ] := "text/plain; charset=utf-8"
-   oMail:hHeaders[ "Date" ] := tip_TimeStamp()
+   oMail:hHeaders["Content-Type"] := "text/plain; charset=utf-8"
+   oMail:hHeaders["Date"] := tip_TimeStamp()
 
    FOR i := 1 TO PCount()
 
@@ -29,17 +29,17 @@ PROCEDURE Main(...)
          RETURN
       CASE "-f"
          IF HB_IsString(cData := hb_PValue( ++i ))
-            oMail:hHeaders[ "From" ] := hb_StrToUTF8( cData )
+            oMail:hHeaders["From"] := hb_StrToUTF8( cData )
          ENDIF
          EXIT
       CASE "-t"
          IF HB_IsString(cData := hb_PValue( ++i ))
-            oMail:hHeaders[ "To" ] := hb_StrToUTF8( cData )
+            oMail:hHeaders["To"] := hb_StrToUTF8( cData )
          ENDIF
          EXIT
       CASE "-s"
          IF HB_IsString(cData := hb_PValue( ++i ))
-            oMail:hHeaders[ "Subject" ] := hb_StrToUTF8( cData )
+            oMail:hHeaders["Subject"] := hb_StrToUTF8( cData )
          ENDIF
          EXIT
       CASE "-b"
@@ -67,10 +67,10 @@ PROCEDURE Main(...)
          // TODO: mime type magic auto-finder
          cFName := hb_FNameNameExt( hb_PValue( i ) )
          // Some EMAIL readers use Content-Type to check for filename
-         oAttach:hHeaders[ "Content-Type" ] := ;
+         oAttach:hHeaders["Content-Type"] := ;
             "application/X-TIP-Attachment; filename=" + cFName
          // But usually, original filename is set here
-         oAttach:hHeaders[ "Content-Disposition" ] := ;
+         oAttach:hHeaders["Content-Disposition"] := ;
             "attachment; filename=" + cFname
          oAttach:SetBody( cData )
 

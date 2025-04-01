@@ -15,11 +15,11 @@ PROCEDURE DllMain()
 
    hAction := { => }
    hb_HCaseMatch( hAction, .F. )
-   hAction[ "DATE" ]     := @Date()          // DISPID=1
-   hAction[ "TIME" ]     := @Time()          // DISPID=2
-   hAction[ "DATETIME" ] := @hb_DateTime()   // DISPID=3
-   hAction[ "VALUE" ]    := NIL              // DISPID=4
-   hAction[ "GETDATA" ]  := @get_data()      // DISPID=5
+   hAction["DATE"]     := @Date()          // DISPID=1
+   hAction["TIME"]     := @Time()          // DISPID=2
+   hAction["DATETIME"] := @hb_DateTime()   // DISPID=3
+   hAction["VALUE"]    := NIL              // DISPID=4
+   hAction["GETDATA"]  := @get_data()      // DISPID=5
 
    /* Initialize OLE server ID and name.
     * win_oleServerInit() should be executed from DllMain()
@@ -33,11 +33,11 @@ STATIC FUNCTION get_data(...)
 
    LOCAL hAction := QSelf()
 
-   IF hAction[ "VALUE" ] == NIL
+   IF hAction["VALUE"] == NIL
       RETURN "(:VALUE IS NOT SET)"
    ENDIF
 
-   RETURN ":VALUE='" + hAction[ "VALUE" ] + "'"
+   RETURN ":VALUE='" + hAction["VALUE"] + "'"
 
 
 ANNOUNCE GT_SYS
