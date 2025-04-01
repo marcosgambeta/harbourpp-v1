@@ -3,7 +3,7 @@
 PROCEDURE Main()
 
    LOCAL nPrn := 1
-   LOCAL cFileName := Space( 40 )
+   LOCAL cFileName := Space(40)
    LOCAL GetList := {}
 
    LOCAL aPrn := win_printerList()
@@ -39,7 +39,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cFileName )
       lDelete := .F.
    ENDIF
 
-   Alert( "win_PrintFileRaw() returned: " + hb_ntos( win_PrintFileRaw( cPrinter, cFileName, "testing raw printing" ) ) )
+   Alert( "win_PrintFileRaw() returned: " + hb_ntos(win_PrintFileRaw( cPrinter, cFileName, "testing raw printing" )) )
 
    IF lDelete
       FErase( cFileName )

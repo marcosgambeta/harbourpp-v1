@@ -149,7 +149,7 @@ METHOD TIPClientPOP:Close( lAutoQuit )
 
 METHOD TIPClientPOP:Delete( nId )
 
-   ::inetSendAll( ::SocketCon, "DELE " + hb_ntos( Int( nId ) ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "DELE " + hb_ntos(Int(nId)) + ::cCRLF )
 
    RETURN ::GetOk()
 
@@ -192,7 +192,7 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
    LOCAL cEOM := ::cCRLF + "." + ::cCRLF        // End Of Mail
 
    IF !::bInitialized
-      ::inetSendAll( ::SocketCon, "RETR " + hb_ntos( Int( nId ) ) + ::cCRLF )
+      ::inetSendAll( ::SocketCon, "RETR " + hb_ntos(Int(nId)) + ::cCRLF )
       IF !::GetOk()
          ::bEof := .T.
          RETURN NIL
@@ -208,7 +208,7 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
     */
    DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. ! ::bEof
 
-      cBuffer := Space( 1024 )
+      cBuffer := Space(1024)
 
       nRead := ::inetRecv( ::SocketCon, @cBuffer, hb_BLen(cBuffer) )
 
@@ -258,7 +258,7 @@ METHOD TIPClientPOP:Top( nMsgId )
    LOCAL nPos
    LOCAL cStr, cRet
 
-   ::inetSendAll( ::SocketCon, "TOP " + hb_ntos( Int( nMsgId ) ) + " 0" + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "TOP " + hb_ntos(Int(nMsgId)) + " 0" + ::cCRLF )
    IF !::GetOk()
       RETURN NIL
    ENDIF
@@ -291,7 +291,7 @@ METHOD TIPClientPOP:UIDL( nMsgId )
    LOCAL cStr, cRet
 
    IF HB_IsNumeric(nMsgId) .AND. nMsgId >= 1
-      ::inetSendAll( ::SocketCon, "UIDL " + hb_ntos( Int( nMsgId ) ) + ::cCRLF )
+      ::inetSendAll( ::SocketCon, "UIDL " + hb_ntos(Int(nMsgId)) + ::cCRLF )
    ELSE
       ::inetSendAll( ::SocketCon, "UIDL" + ::cCRLF )
    ENDIF
@@ -329,7 +329,7 @@ METHOD TIPClientPOP:countMail()
       ::reset()
       cStat := ::Stat()
       IF HB_IsString(cStat) .AND. hb_LeftEq( cStat, "+OK" )
-         RETURN Val( SubStr(cStat, 4, hb_At( " ", cStat, 5 ) - 4) )
+         RETURN Val(SubStr(cStat, 4, hb_At( " ", cStat, 5 ) - 4))
       ENDIF
    ENDIF
 
@@ -349,11 +349,11 @@ METHOD TIPClientPOP:Read( nLen )
    /* Decide what to read */
    IF Empty(::oUrl:cFile)
       RETURN ::List()  /* return NIL or string */
-   ELSEIF Val( ::oUrl:cFile ) < 0
-      RETURN ::Delete( -Val( ::oUrl:cFile ) ) .AND. ::Quit()  /* return logical */
+   ELSEIF Val(::oUrl:cFile) < 0
+      RETURN ::Delete( -Val(::oUrl:cFile) ) .AND. ::Quit()  /* return logical */
    ENDIF
 
-   RETURN ::Retrieve( Val( ::oUrl:cFile ), nLen )  /* return NIL or string */
+   RETURN ::Retrieve( Val(::oUrl:cFile), nLen )  /* return NIL or string */
 
 METHOD TIPClientPOP:retrieveAll( lDelete )
 
@@ -382,7 +382,7 @@ METHOD TIPClientPOP:getTop( nMsgId )
 
    LOCAL nPos, cStr, xRet
 
-   ::inetSendAll( ::SocketCon, "TOP " + hb_ntos( Int( nMsgId ) ) + " 0" + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "TOP " + hb_ntos(Int(nMsgId)) + " 0" + ::cCRLF )
    IF !::GetOk()
       RETURN NIL
    ENDIF
@@ -401,7 +401,7 @@ METHOD TIPClientPOP:getMessageRaw( nMsgId )
 
    LOCAL cLine, nBytes, xRet
 
-   ::inetSendAll( ::SocketCon, "RETR " + hb_ntos( Int( nMsgId ) ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "RETR " + hb_ntos(Int(nMsgId)) + ::cCRLF )
    IF !::GetOk()
       RETURN NIL
    ENDIF
@@ -427,18 +427,18 @@ METHOD TIPClientPOP:getBody( nMsgId )
 
    xRet := ""
 
-   IF ( nBoundary := AScan( aMsg, {| cLine | n1 := hb_AtI( "boundary=", cLine ), n1 > 0 } ) ) > 0
+   IF ( nBoundary := AScan(aMsg, {| cLine | n1 := hb_AtI( "boundary=", cLine ), n1 > 0 }) ) > 0
       cBoundary := AllTrim(StrTran(SubStr(aMsg[nBoundary], n1 + 1), '"'))
    ENDIF
 
    IF !Empty(cBoundary)
-      IF ( n := AScan( aMsg, {| cLine | cBoundary $ cLine }, nBoundary + 1 ) ) > 0 .AND. ;
-         ( n1 := AScan( aMsg, {| cLine | cBoundary $ cLine }, n + 1 ) ) > 0  // This must not happen, but
+      IF ( n := AScan(aMsg, {| cLine | cBoundary $ cLine }, nBoundary + 1) ) > 0 .AND. ;
+         ( n1 := AScan(aMsg, {| cLine | cBoundary $ cLine }, n + 1) ) > 0  // This must not happen, but
          FOR i := n + 3 TO n1 - 1
             xRet += aMsg[i] + ::cCRLF
          NEXT
       ENDIF
-   ELSEIF ( n := AScan( aMsg, {| cLine | Empty(cLine) } ) ) > 0
+   ELSEIF ( n := AScan(aMsg, {| cLine | Empty(cLine) }) ) > 0
       FOR i := n + 1 TO Len(aMsg)
          xRet += aMsg[i] + ::cCRLF
       NEXT

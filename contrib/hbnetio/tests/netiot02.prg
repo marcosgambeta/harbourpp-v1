@@ -60,9 +60,9 @@ PROCEDURE Main()
    ? "hb_DateTime() function is supported:", net:exists:HB_DATETIME
    ?
    /* display text on server console */
-   net:QOut( Replicate( "=", 70 ) )
+   net:QOut( Replicate("=", 70) )
    net:QOut( "This is RPC TEST", hb_DateTime(), Version() )
-   net:QOut( Replicate( "=", 70 ) )
+   net:QOut( Replicate("=", 70) )
 
    /* execute some functions on the server side and display the results */
    ? "SERVER DATE:",     net:Date()

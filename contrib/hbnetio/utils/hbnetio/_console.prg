@@ -62,7 +62,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    SetCancel(.F.)
 
    netclictx := Eval(netclictrl["init"], hConIO, { ;
-      "--netio.addr=" + cIP + ":" + hb_ntos( nPort ), ;
+      "--netio.addr=" + cIP + ":" + hb_ntos(nPort), ;
       "--netio.pass=" + cPassword })
    IF !Empty(netclictx)
       netcliID := netclictrl["id"]
@@ -82,12 +82,12 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
    DO WHILE ! lQuit
 
-      cCommand := Space( 128 )
+      cCommand := Space(128)
 
       QQOut( "$ " )
       nSavedRow := Row()
 
-      @ nSavedRow, Col() GET cCommand PICTURE "@S" + hb_ntos( MaxCol() - Col() + 1 ) COLOR hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD )
+      @ nSavedRow, Col() GET cCommand PICTURE "@S" + hb_ntos(MaxCol() - Col() + 1) COLOR hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD )
 
       SetCursor( IIf(ReadInsert(), SC_INSERT, SC_NORMAL) )
 
@@ -237,7 +237,7 @@ STATIC PROCEDURE hbnetiocon_ToConsole( cText )
 STATIC FUNCTION hbnetiocon_GetHidden()
 
    LOCAL GetList := {}
-   LOCAL cPassword := Space( 128 )
+   LOCAL cPassword := Space(128)
    LOCAL nSavedRow
    LOCAL bKeyPaste
 
@@ -245,7 +245,7 @@ STATIC FUNCTION hbnetiocon_GetHidden()
 
    nSavedRow := Row()
 
-   AAdd(GetList, hb_Get():New( Row(), Col(), {| v | IIf(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ))
+   AAdd(GetList, hb_Get():New( Row(), Col(), {| v | IIf(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos(MaxCol() - Col() + 1), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ))
    ATail( GetList ):hideInput(.T.)
    ATail( GetList ):postBlock := {|| ! Empty(cPassword) }
    ATail( GetList ):display()

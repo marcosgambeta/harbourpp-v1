@@ -385,7 +385,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
 // *******************************************************
 // interface functions
 
-FUNCTION wvwm_paint( nWinNum )
+FUNCTION wvwm_paint(nWinNum)
 
    // normally called by WVW_Paint()
    // redraw every mouse object in window nWinNum
@@ -589,11 +589,11 @@ STATIC FUNCTION _nCeiling( nNumber )
 
    LOCAL nTemp
 
-   nTemp := nNumber - Int( nNumber )  // right of dec point
+   nTemp := nNumber - Int(nNumber)  // right of dec point
    IF nTemp > 0
-      nNumber := Int( nNumber ) + 1
+      nNumber := Int(nNumber) + 1
    ELSE
-      nNumber := Int( nNumber )
+      nNumber := Int(nNumber)
    ENDIF
 
    RETURN nNumber

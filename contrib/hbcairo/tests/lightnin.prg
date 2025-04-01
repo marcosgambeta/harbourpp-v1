@@ -10,7 +10,7 @@ PROCEDURE Main()
    // 20 pages
    FOR nI := 1 TO 20
       cairo_set_source_rgb(hCairo, 0, 0, 0)
-      cairo_paint( hCairo )
+      cairo_paint(hCairo)
       cairo_set_source_rgb(hCairo, 1, 0.7, 1)
       DrawLightning( hCairo, 250, 50, 700, 3 )
       cairo_show_page( hCairo )
@@ -47,10 +47,10 @@ PROCEDURE DrawLightning( hCairo, nX, nY, nLen, nW, nInit )
          nW0 := nW
       ENDIF
       // Branch
-      IF Abs( nInit ) > 1.6
+      IF Abs(nInit) > 1.6
          cairo_set_line_width( hCairo, nW0 )
          cairo_stroke( hCairo )
-         DrawLightning( hCairo, nX2, nI + nY, Int( ( nLen - nI ) / 2 ), nW / 2, nInit * 0.5 )
+         DrawLightning( hCairo, nX2, nI + nY, Int(( nLen - nI ) / 2), nW / 2, nInit * 0.5 )
          nInit *= -0.3
          cairo_move_to( hCairo, nX2, nI + nY )
       ENDIF

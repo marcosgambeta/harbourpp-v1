@@ -3,7 +3,7 @@
 PROCEDURE Main( cPar1 )
 
    LOCAL nPrn := 1
-   LOCAL cBMPFile := Space( 40 )
+   LOCAL cBMPFile := Space(40)
    LOCAL GetList := {}
 
    LOCAL aPrn := win_printerList()
@@ -50,7 +50,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
       ELSE
          oPrinter:SetPen( WIN_PS_SOLID, 1, HB_WIN_RGB_RED )
          oPrinter:Bold( WIN_FW_EXTRABOLD )
-         oPrinter:TextOut( oPrinter:PrinterName + ": MaxRow() = " + hb_ntos( oPrinter:MaxRow() ) + "   MaxCol() = " + hb_ntos( oPrinter:MaxCol() ) )
+         oPrinter:TextOut( oPrinter:PrinterName + ": MaxRow() = " + hb_ntos(oPrinter:MaxRow()) + "   MaxCol() = " + hb_ntos(oPrinter:MaxCol()) )
          oPrinter:Bold( WIN_FW_DONTCARE )
          oPrinter:NewLine()
          oPrinter:TextOut( "   Partial list of available fonts that are available for OEM_" )
@@ -83,7 +83,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
                   oPrinter:SetPos(nColTTF)
                   oPrinter:TextOut( IIf(aFonts[x, 3], "Yes", "No") )
                   oPrinter:SetPos(nColCharSet)
-                  oPrinter:TextOut( hb_ntos( aFonts[x, 4] ) )
+                  oPrinter:TextOut( hb_ntos(aFonts[x, 4]) )
                   oPrinter:SetPos(oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ))
                   IF oPrinter:PRow() > oPrinter:MaxRow() - 16  // Could use "oPrinter:NewPage()" to start a new page
                      EXIT
@@ -96,9 +96,9 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:CharSet(0)  // Reset default charset
          oPrinter:Bold( WIN_FW_EXTRABOLD )
          oPrinter:NewLine()
-         oPrinter:TextOut( "This is on line" + hb_ntos( oPrinter:PRow() ) + ", Printed bold, " )
+         oPrinter:TextOut( "This is on line" + hb_ntos(oPrinter:PRow()) + ", Printed bold, " )
          oPrinter:TextOut( " finishing at Column: " )
-         oPrinter:TextOut( hb_ntos( oPrinter:PCol() ) )
+         oPrinter:TextOut( hb_ntos(oPrinter:PCol()) )
          oPrinter:SetPRC(oPrinter:PRow() + 3, 0)
          oPrinter:Bold( WIN_FW_DONTCARE )
          oPrinter:TextOut( "Notice: UNDERLINE only prints correctly if there is a blank line after", .T. )

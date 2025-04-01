@@ -5,7 +5,7 @@ PROCEDURE Main()
    LOCAL aPrn
    LOCAL nPrn := 1
    LOCAL cDocName := "Raw printing test"
-   LOCAL cFileName := Space( 256 )
+   LOCAL cFileName := Space(256)
    LOCAL GetList := {}
 
    IF Empty(aPrn := win_printerList())
@@ -23,10 +23,10 @@ PROCEDURE Main()
 
             IF Empty(cFileName)
                Alert( "win_PrintDataRaw() returned: " + ;
-                  hb_ntos( win_PrintDataRaw( aPrn[nPrn], "Hello World!" + hb_BChar( 12 ), cDocName ) ) )
+                  hb_ntos(win_PrintDataRaw( aPrn[nPrn], "Hello World!" + hb_BChar( 12 ), cDocName )) )
             ELSE
                Alert( "win_PrintFileRaw() returned: " + ;
-                  hb_ntos( win_PrintFileRaw( aPrn[nPrn], cFileName, cDocName ) ) )
+                  hb_ntos(win_PrintFileRaw( aPrn[nPrn], cFileName, cDocName )) )
             ENDIF
          ENDIF
       ENDDO

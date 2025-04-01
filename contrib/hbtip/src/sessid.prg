@@ -64,7 +64,7 @@ FUNCTION tip_GenerateSID( cCRCKey )
    cSID := ""
    nKey := 0
    FOR n := 1 TO SID_LENGTH
-      nRand := hb_randInt( nLenKeys )
+      nRand := hb_randInt(nLenKeys)
       cSID  += SubStr(cBaseKeys, nRand, 1)
       nKey  += nRand
    NEXT
@@ -74,7 +74,7 @@ FUNCTION tip_GenerateSID( cCRCKey )
 
    cSIDCRC := ""
    FOR n := 1 TO Len(cTemp)
-      cSIDCRC += SubStr(cCRCKey, Val( SubStr(cTemp, n, 1) ) + 1, 1)
+      cSIDCRC += SubStr(cCRCKey, Val(SubStr(cTemp, n, 1)) + 1, 1)
    NEXT
 
    RETURN cSID + cSIDCRC
@@ -97,7 +97,7 @@ FUNCTION tip_CheckSID( cSID, cCRCKey )
 
    cSIDCRC := ""
    FOR n := 1 TO Len(cTemp)
-      cSIDCRC += SubStr(cCRCKey, Val( SubStr(cTemp, n, 1) ) + 1, 1)
+      cSIDCRC += SubStr(cCRCKey, Val(SubStr(cTemp, n, 1)) + 1, 1)
    NEXT
 
    RETURN Right(cSID, 5) == cSIDCRC

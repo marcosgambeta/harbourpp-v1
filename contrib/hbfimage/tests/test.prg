@@ -178,7 +178,7 @@ PROCEDURE Main()
    IF ( nH := FOpen( IMAGES_IN + "sample1.jpg" ) ) != F_ERROR
       nLen := FSeek( nH, 0, FS_END )
       FSeek( nH, 0, FS_SET )
-      cStr := Space( nLen )
+      cStr := Space(nLen)
       FRead(nH, @cStr, nLen)
       FClose( nH )
 

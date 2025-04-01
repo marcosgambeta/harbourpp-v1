@@ -29,7 +29,7 @@ PROCEDURE Main()
    ShowResult( @cStr, @cCompressed, @nLenC, @nResult )
 
    FOR EACH k IN aRepl
-      cStr := Replicate( TEST_STRING, k )
+      cStr := Replicate(TEST_STRING, k)
 
       cCompressed := hb_lzo1x_1_compress( @cStr, @nLenC, @nResult )
       ShowResult( @cStr, @cCompressed, @nLenC, @nResult )
@@ -39,7 +39,7 @@ PROCEDURE Main()
    NEXT
 
    ?
-   cStr := Replicate( TEST_STRING, 500 )
+   cStr := Replicate(TEST_STRING, 500)
    nLen := Len(cStr)
    checksum := hb_Adler32( cStr )
    cCompressed := hb_lzo1x_1_compress( @cStr, @nLenC, @nResult )
@@ -56,7 +56,7 @@ PROCEDURE Main()
    cDeCompressed := hb_lzo1x_decompress_safe( @cCompressed, @nLenD, @nResult )
 
    IF nResult != LZO_E_OK .OR. nLenD != nLen .OR. checksum != hb_Adler32( cDeCompressed )
-      ? "Internal error - decompression failed: ", hb_ntos( nResult )
+      ? "Internal error - decompression failed: ", hb_ntos(nResult)
    ELSE
       ? hb_StrFormat( FMT2_STRING, nLenC, nLenD, nLen )
    ENDIF
@@ -75,7 +75,7 @@ PROCEDURE Main()
    cDeCompressed := hb_lzo1x_decompress( @cCompressed, @nLenD, @nResult )
 
    IF nResult != LZO_E_OK .OR. nLenD != nLen .OR. checksum != hb_Adler32( cDeCompressed )
-      ? "Internal error - decompression failed: ", hb_ntos( nResult )
+      ? "Internal error - decompression failed: ", hb_ntos(nResult)
    ELSE
       ? hb_StrFormat( FMT2_STRING, nLenC, nLenD, nLen )
    ENDIF
@@ -84,21 +84,21 @@ PROCEDURE Main()
    ? "Simple compression test passed."
 
 #if 0
-   cStr := Replicate( TEST_STRING, 1000000 )
+   cStr := Replicate(TEST_STRING, 1000000)
    ?
-   ? "BZ2 ", hb_ntos( Len(hb_bz2_Compress( cStr, NIL, @nResult )) )
-   ? "GZIP", hb_ntos( Len(hb_gzCompress( cStr, NIL, @nResult )) )
-   ? "ZLIB", hb_ntos( Len(hb_ZCompress( cStr, NIL,  @nResult )) )
-   ? "LZF ", hb_ntos( Len(hb_lzf_compress( cStr, NIL, @nResult )) )
-   ? "LZO ", hb_ntos( Len(hb_lzo1x_1_compress( cStr, NIL, @nResult )) )
+   ? "BZ2 ", hb_ntos(Len(hb_bz2_Compress( cStr, NIL, @nResult )))
+   ? "GZIP", hb_ntos(Len(hb_gzCompress( cStr, NIL, @nResult )))
+   ? "ZLIB", hb_ntos(Len(hb_ZCompress( cStr, NIL,  @nResult )))
+   ? "LZF ", hb_ntos(Len(hb_lzf_compress( cStr, NIL, @nResult )))
+   ? "LZO ", hb_ntos(Len(hb_lzo1x_1_compress( cStr, NIL, @nResult )))
 
-   cStr := Replicate( hb_MemoRead(hb_argv(0)), 50 )
+   cStr := Replicate(hb_MemoRead(hb_argv(0)), 50)
    ?
-   ? "BZ2 ", hb_ntos( Len(hb_bz2_Compress( cStr, NIL, @nResult )) )
-   ? "GZIP", hb_ntos( Len(hb_gzCompress( cStr, NIL, @nResult )) )
-   ? "ZLIB", hb_ntos( Len(hb_ZCompress( cStr, NIL,  @nResult )) )
-   ? "LZF ", hb_ntos( Len(hb_lzf_compress( cStr, NIL, @nResult )) )
-   ? "LZO ", hb_ntos( Len(hb_lzo1x_1_compress( cStr, NIL, @nResult )) )
+   ? "BZ2 ", hb_ntos(Len(hb_bz2_Compress( cStr, NIL, @nResult )))
+   ? "GZIP", hb_ntos(Len(hb_gzCompress( cStr, NIL, @nResult )))
+   ? "ZLIB", hb_ntos(Len(hb_ZCompress( cStr, NIL,  @nResult )))
+   ? "LZF ", hb_ntos(Len(hb_lzf_compress( cStr, NIL, @nResult )))
+   ? "LZO ", hb_ntos(Len(hb_lzo1x_1_compress( cStr, NIL, @nResult )))
 #endif
 
    RETURN
@@ -110,9 +110,9 @@ STATIC PROCEDURE ShowResult( cStr, cCompressed, nLen, nResult )
    ELSEIF nResult == LZO_E_OUT_OF_MEMORY
       ? "Out of memory.."
    ELSEIF nResult == LZO_E_NOT_COMPRESSIBLE
-      ? "This block contains incompressible data", hb_ntos( nLen )
+      ? "This block contains incompressible data", hb_ntos(nLen)
    ELSE
-      ? "Internal error - compression failed:", hb_ntos( nResult )
+      ? "Internal error - compression failed:", hb_ntos(nResult)
    ENDIF
 
    RETURN

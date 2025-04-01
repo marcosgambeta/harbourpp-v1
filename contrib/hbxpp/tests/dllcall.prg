@@ -52,14 +52,14 @@ PROCEDURE Main()
 
    IF hb_FileExists( "pscript.dll" )
       hDLL := DllLoad( "pscript.dll" )
-      cData := Space( 24 )
+      cData := Space(24)
       DllCall( hDll, DLL_OSAPI, "PSGetVersion", @cData )
       ? ">" + cData + "<"
       DllUnload( hDLL )
 
       // ; Testing failure 1
       hDLL := DllLoad( "pscript.dll" )
-      cData := Space( 24 )
+      cData := Space(24)
       DllCall( hDll, DLL_OSAPI, "PSGet__Version", @cData )
       ? ">" + cData + "<"
       DllUnload( hDLL )
@@ -67,7 +67,7 @@ PROCEDURE Main()
 
    // ; Testing failure 2
    hDLL := DllLoad( "nothere.dll" )
-   cData := Space( 24 )
+   cData := Space(24)
    DllCall( hDll, NIL, "PSGetVersion", @cData )
    ? cData
    DllUnload( hDLL )
@@ -85,12 +85,12 @@ PROCEDURE Main()
    Inkey(0)
 
    ? "DLLCALL"
-   cData := Space( MAX_PATH )
+   cData := Space(MAX_PATH)
    ? DllCall( "shell32.dll", DLL_OSAPI, "SHGetFolderPathA", 0, CSIDL_ADMINTOOLS, 0, 0, @cData )
    ? "REF:", cData
 
    ? "DLLCALL"
-   cData := Space( MAX_PATH )
+   cData := Space(MAX_PATH)
    ? DllCall( "shell32.dll", DLL_OSAPI, "SHGetFolderPathW", 0, CSIDL_ADMINTOOLS, 0, 0, @cData )
    ? "REF:", cData
 

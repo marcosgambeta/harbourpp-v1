@@ -142,7 +142,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
       CASE Lower(Left(cParam, 5)) == "-noui"
          lUI := .F.
       CASE Lower(Left(cParam, 6)) == "-port="
-         netiosrv[_NETIOSRV_nPort] := Val( SubStr(cParam, 7) )
+         netiosrv[_NETIOSRV_nPort] := Val(SubStr(cParam, 7))
       CASE Lower(Left(cParam, 7)) == "-iface="
          netiosrv[_NETIOSRV_cIFAddr] := SubStr(cParam, 8)
       CASE Lower(Left(cParam, 9)) == "-rootdir="
@@ -151,7 +151,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
          cPassword := SubStr(cParam, 7)
          hb_StrClear( @cParam )
       CASE Lower(Left(cParam, 11)) == "-adminport="
-         netiomgm[_NETIOSRV_nPort] := Val( SubStr(cParam, 12) )
+         netiomgm[_NETIOSRV_nPort] := Val(SubStr(cParam, 12))
       CASE Lower(Left(cParam, 12)) == "-adminiface="
          netiomgm[_NETIOSRV_cIFAddr] := SubStr(cParam, 13)
       CASE Lower(Left(cParam, 11)) == "-adminpass="
@@ -788,7 +788,7 @@ STATIC FUNCTION ConnStatusStr( nStatus )
    CASE NETIO_SRVSTAT_ITEMSTREAM  ; RETURN "ITEMSTREAM"
    ENDSWITCH
 
-   RETURN "UNKNOWN:" + hb_ntos( nStatus )
+   RETURN "UNKNOWN:" + hb_ntos(nStatus)
 
 STATIC FUNCTION AddrToIPPort( aAddr )
 
@@ -797,7 +797,7 @@ STATIC FUNCTION AddrToIPPort( aAddr )
    IF HB_IsArray(aAddr) .AND. ;
       ( aAddr[HB_SOCKET_ADINFO_FAMILY] == HB_SOCKET_AF_INET .OR. ;
         aAddr[HB_SOCKET_ADINFO_FAMILY] == HB_SOCKET_AF_INET6 )
-      cIP := aAddr[HB_SOCKET_ADINFO_ADDRESS] + ":" + hb_ntos( aAddr[HB_SOCKET_ADINFO_PORT] )
+      cIP := aAddr[HB_SOCKET_ADINFO_ADDRESS] + ":" + hb_ntos(aAddr[HB_SOCKET_ADINFO_PORT])
    ELSE
       cIP := "(?)"
    ENDIF
@@ -815,7 +815,7 @@ STATIC FUNCTION FileSig( cFile )
    hFile := FOpen( cFile, FO_READ )
    IF hFile != F_ERROR
       cSig := hb_hrbSignature()
-      cBuff := Space( hb_BLen(cSig) )
+      cBuff := Space(hb_BLen(cSig))
       FRead(hFile, @cBuff, hb_BLen(cBuff))
       FClose( hFile )
       IF cBuff == cSig

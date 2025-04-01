@@ -59,6 +59,6 @@ PROCEDURE Main( cInFile )
 
    ft_DFClose()
 
-   @ 20, 0 SAY "Key pressed was: " + "[" + hb_keyChar( nKey ) + "] (" + hb_ntos( nKey ) + ")"
+   @ 20, 0 SAY "Key pressed was: " + "[" + hb_keyChar( nKey ) + "] (" + hb_ntos(nKey) + ")"
 
    RETURN

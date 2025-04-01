@@ -45,13 +45,13 @@ PROCEDURE Main(...)
             cPhoto := hParams[cPar]
 
          CASE cPar == "width"
-            nWidth := Val( hParams[cPar] )
+            nWidth := Val(hParams[cPar])
 
          CASE cPar == "height"
-            nHeight := Val( hParams[cPar] )
+            nHeight := Val(hParams[cPar])
 
          CASE cPar == "pt"
-            nPt := Val( hParams[cPar] )
+            nPt := Val(hParams[cPar])
 
          ENDCASE
       NEXT
@@ -76,7 +76,7 @@ PROCEDURE Main(...)
       OutHTML ValToPrg( hParams ) + "<br />"
       OutHTML ValToPrg( cParams ) + "<br />"
       OutHTML ValToPrg( cQuery ) + "<br />"
-      OutHTML "<img src='test_out.exe?img=" + cPhoto + "&width=" + hb_ntos( nWidth ) + "&height=" + hb_ntos( nHeight ) + "'>" + "<br />"
+      OutHTML "<img src='test_out.exe?img=" + cPhoto + "&width=" + hb_ntos(nWidth) + "&height=" + hb_ntos(nHeight) + "'>" + "<br />"
 #endif
       OutHTML "<table border=1>"
       OutHTML "<tr><td align='center'>"
@@ -84,8 +84,8 @@ PROCEDURE Main(...)
       OutHTML "</td></tr>"
       OutHTML "<tr><td align='center'>"
       OutHTML "<img src='test_out.exe?img=" + cPhoto + ;
-         IIf(nWidth != NIL, "&width="  + hb_ntos( nWidth ), "") + ;
-         IIf(nHeight != NIL, "&height=" + hb_ntos( nHeight ), "") + ;
+         IIf(nWidth != NIL, "&width="  + hb_ntos(nWidth), "") + ;
+         IIf(nHeight != NIL, "&height=" + hb_ntos(nHeight), "") + ;
          "'>" + "<br />"
       OutHTML "</td></tr>"
       OutHTML "<tr><td align='center'>"
@@ -94,7 +94,7 @@ PROCEDURE Main(...)
       OutHTML "</table>"
       OutHTML "<br />"
 #if 0
-      OutHTML "<img src='test_out.exe?img=" + cText + "_2&pt=" + hb_ntos( nPt ) + "'>" + "<br />"
+      OutHTML "<img src='test_out.exe?img=" + cText + "_2&pt=" + hb_ntos(nPt) + "'>" + "<br />"
       OutHTML OS() + "<br />"
 #endif
       EndHTML()
@@ -333,7 +333,7 @@ FUNCTION URLDecode( cStr )
 
 #if 0
    IF lNumeric
-      cRet := Val( cRet )
+      cRet := Val(cRet)
    ENDIF
 #endif
 

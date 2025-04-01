@@ -191,8 +191,8 @@ STATIC PROCEDURE Exm_MSOutlook2()
       oMail := oOL:CreateItem( 0 /* olMailItem */ )
 
       FOR i := 1 TO 10
-         oMail:Recipients:Add( "Contact" + hb_ntos( i ) + ;
-            "<contact" + hb_ntos( i ) + "@example.org>" )
+         oMail:Recipients:Add( "Contact" + hb_ntos(i) + ;
+            "<contact" + hb_ntos(i) + "@example.org>" )
       NEXT
 
       oLista := oOL:CreateItem( 7 /* olDistributionListItem */ )
@@ -505,7 +505,7 @@ STATIC PROCEDURE Exm_DownloadHTTPS()
       oHTTP:Open( "GET", "https://example.org/index.html", .F. )
       oHTTP:Send()
       IF oHTTP:Status() == 200
-         ? "Downloaded", hb_ntos( hb_BLen(oHTTP:responseBody) ), "byte(s)"
+         ? "Downloaded", hb_ntos(hb_BLen(oHTTP:responseBody)), "byte(s)"
       ENDIF
    ELSE
       ? "Error: WinHttp 5.1 not available. [" + win_oleErrorText() + "]"

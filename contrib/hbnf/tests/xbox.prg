@@ -7,7 +7,7 @@ PROCEDURE Main()
    SetColor("W/B")
    CLS
    FOR i := 1 TO 24
-      @ i, 0 SAY Replicate( "@", 80 )
+      @ i, 0 SAY Replicate("@", 80)
    NEXT
 
    ft_XBox( , , , , , , , "This is a test", "of the XBOX() function" )

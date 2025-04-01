@@ -62,7 +62,7 @@ PROCEDURE Main()
    oServer:StartTransaction()
 
    FOR i := 1 TO 10000
-      @ 15, 0 SAY "Inserting values...." + hb_ntos( i )
+      @ 15, 0 SAY "Inserting values...." + hb_ntos(i)
 
       oRow := oQuery:Blank()
 

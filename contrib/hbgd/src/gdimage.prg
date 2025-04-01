@@ -143,7 +143,7 @@ CREATE CLASS GDImage
    // Functions useful for polygons
    METHOD Polygon( aPoints, lFilled, color )
    METHOD OpenPolygon( aPoints, color )
-   METHOD AddPoint( x, y )                 INLINE AAdd(::aPoints, { x, y })
+   METHOD AddPoint(x, y)                   INLINE AAdd(::aPoints, { x, y })
    METHOD ResetPoints()                    INLINE ::aPoints := {}
    METHOD Points()                         INLINE Len(::aPoints)
 

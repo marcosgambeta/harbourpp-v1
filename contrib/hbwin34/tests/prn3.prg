@@ -12,7 +12,7 @@ PROCEDURE Main()
    Dump( win_printerList( .T., .T. ) )
 
    ? "win_printerGetDefault():", ">" + win_printerGetDefault() + "<"
-   ? "win_printerStatus():", hb_ntos( win_printerStatus() )
+   ? "win_printerStatus():", hb_ntos(win_printerStatus())
 
    RETURN
 

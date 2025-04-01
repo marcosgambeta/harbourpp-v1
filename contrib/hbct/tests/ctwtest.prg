@@ -20,7 +20,7 @@ PROCEDURE Main()
    WSetShadow(7)
    SetClearA(10 * 16 + 14)
    SetClearB(35)
-   DispBox( 0, 0, MaxRow(), MaxCol(), Replicate( "#", 9 ), NToColor(10 * 16 + 14) )
+   DispBox( 0, 0, MaxRow(), MaxCol(), Replicate("#", 9), NToColor(10 * 16 + 14) )
    SetPos(0, 0)
    ? "GT driver: " + hb_gtVersion()
    ? hb_gtVersion(1)
@@ -45,15 +45,15 @@ PROCEDURE Main()
       aWin[i] := WOpen( y, x, y + 10, x + 20 )
       WBox()
 
-      @ -1, 0 SAY "TITLE " + hb_ntos( aWin[i] )
-      ? hb_ntos( Row() ) + ":" + hb_ntos( Col() ), "/", hb_ntos( MaxRow() ) + ":" + hb_ntos( MaxCol() ), ""
-      ? hb_ntos( WRow() ) + ":" + hb_ntos( WCol() ), "/", hb_ntos( MaxRow(.T.) ) + ":" + hb_ntos( MaxCol(.T.) ), ""
-      ? hb_ntos( WFRow() ) + ":" + hb_ntos( WFCol() ), "/", ;
-         hb_ntos( WFLastRow() ) + ":" + hb_ntos( WFLastCol() ), ""
-      ? hb_ntos( WFRow(.T.) ) + ":" + hb_ntos( WFCol(.T.) ), "/", ;
-         hb_ntos( WFLastRow(.T.) ) + ":" + hb_ntos( WFLastCol(.T.) ), ""
-      ? "window:", hb_ntos( aWin[i] ), ""
-      SetCursor( Int( i % 5 ) )
+      @ -1, 0 SAY "TITLE " + hb_ntos(aWin[i])
+      ? hb_ntos(Row()) + ":" + hb_ntos(Col()), "/", hb_ntos(MaxRow()) + ":" + hb_ntos(MaxCol()), ""
+      ? hb_ntos(WRow()) + ":" + hb_ntos(WCol()), "/", hb_ntos(MaxRow(.T.)) + ":" + hb_ntos(MaxCol(.T.)), ""
+      ? hb_ntos(WFRow()) + ":" + hb_ntos(WFCol()), "/", ;
+         hb_ntos(WFLastRow()) + ":" + hb_ntos(WFLastCol()), ""
+      ? hb_ntos(WFRow(.T.)) + ":" + hb_ntos(WFCol(.T.)), "/", ;
+         hb_ntos(WFLastRow(.T.)) + ":" + hb_ntos(WFLastCol(.T.)), ""
+      ? "window:", hb_ntos(aWin[i]), ""
+      SetCursor( Int(i % 5) )
 
    NEXT
 
@@ -108,8 +108,8 @@ STATIC PROCEDURE dspcord()
    LOCAL mr := MRow(), mc := MCol(), r := WRow(), c := WCol(), w := WSelect()
 
    WSelect(0)
-   @ MaxRow(), 0 SAY PadR("WPOS(" + hb_ntos( r ) + "," + hb_ntos( c ) + ")" + ;
-      IIf(MPresent(), "MPOS(" + hb_ntos( mr ) + "," + hb_ntos( mc ) + ")", ""), MaxCol() + 1)
+   @ MaxRow(), 0 SAY PadR("WPOS(" + hb_ntos(r) + "," + hb_ntos(c) + ")" + ;
+      IIf(MPresent(), "MPOS(" + hb_ntos(mr) + "," + hb_ntos(mc) + ")", ""), MaxCol() + 1)
    WSelect( w )
 
    RETURN

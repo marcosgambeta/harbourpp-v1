@@ -650,7 +650,7 @@ STATIC FUNCTION FetchChars( nPort )
       RETURN 0
    ENDIF
 
-   cStr := Space( hb_comInputCount( t_aPorts[nPort, TPFP_HANDLE] ) )
+   cStr := Space(hb_comInputCount( t_aPorts[nPort, TPFP_HANDLE] ))
    hb_comRecv( t_aPorts[nPort, TPFP_HANDLE], @cStr )
 
    t_aPorts[nPort, TPFP_INBUF] += cStr

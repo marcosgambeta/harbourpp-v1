@@ -2,6 +2,6 @@
 
 PROCEDURE Main( cNum )
 
-   ? ft_NToW( Val( cNum ) )
+   ? ft_NToW( Val(cNum) )
 
    RETURN

@@ -60,7 +60,7 @@ PROCEDURE Main( cMode )
                              Chr(34) + hb_ProgName() + Chr(34) + " -service" )
          ? "Service has been successfully installed"
       ELSE
-         ? "Error installing Service:", hb_ntos( wapi_GetLastError() ), win_ErrorDesc()
+         ? "Error installing Service:", hb_ntos(wapi_GetLastError()), win_ErrorDesc()
       ENDIF
       EXIT
 
@@ -69,7 +69,7 @@ PROCEDURE Main( cMode )
       IF win_serviceDelete( _SERVICE_NAME )
          ? "Service has been deleted"
       ELSE
-         ? "Error deleting Service:", hb_ntos( wapi_GetLastError() ), win_ErrorDesc()
+         ? "Error deleting Service:", hb_ntos(wapi_GetLastError()), win_ErrorDesc()
       ENDIF
       EXIT
 
@@ -81,7 +81,7 @@ PROCEDURE Main( cMode )
       IF win_serviceStart( _SERVICE_NAME, @SrvMain() )
          ? "Service has started OK"
       ELSE
-         ? "Service has had some problems:", hb_ntos( wapi_GetLastError() ), win_ErrorDesc()
+         ? "Service has had some problems:", hb_ntos(wapi_GetLastError()), win_ErrorDesc()
       ENDIF
       EXIT
 
@@ -113,11 +113,11 @@ STATIC PROCEDURE SrvMain( cParam1, cParam2 )
       "|" + hb_defaultValue( cParam1, "" ) + "|" + hb_defaultValue( cParam2, "" ) + "|" + hb_eol() )
 
    FOR EACH cParam IN hb_AParams()
-      hb_vfWrite( hFile, "Parameter " + hb_ntos( cParam:__enumIndex() ) + " >" + cParam + "<" + hb_eol() )
+      hb_vfWrite( hFile, "Parameter " + hb_ntos(cParam:__enumIndex()) + " >" + cParam + "<" + hb_eol() )
    NEXT
 
    DO WHILE win_serviceGetStatus() == WIN_SERVICE_RUNNING
-      hb_vfWrite( hFile, "Work in progress " + hb_ntos( ++n ) + hb_eol() )
+      hb_vfWrite( hFile, "Work in progress " + hb_ntos(++n) + hb_eol() )
       hb_idleSleep( 0.5 )
    ENDDO
 

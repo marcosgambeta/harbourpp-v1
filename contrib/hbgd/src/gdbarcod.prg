@@ -200,7 +200,7 @@ METHOD GDBarCode:Draw13( cText )
          // If we have to write text, we moved the barcode to the right to have space to put digit
          ::positionX := IIf(::textfont == 0, 0, 10)
 
-         xParity := ::Parity[Val( SubStr(::text, 1, 1) )]
+         xParity := ::Parity[Val(SubStr(::text, 1, 1))]
 
          // First Bar
          ::positionX := 10
@@ -214,9 +214,9 @@ METHOD GDBarCode:Draw13( cText )
 
             // Calculate check digit
             IF Mod(Len(::text) + 1 - ii, 2) == 0
-               nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
+               nChkSum += Int(Val(SubStr(::text, ii, 1)))
             ELSE
-               nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
+               nChkSum += Int(Val(SubStr(::text, ii, 1))) * 3
             ENDIF
 
             // Now, the bar of the middle
@@ -228,7 +228,7 @@ METHOD GDBarCode:Draw13( cText )
                ::positionX += 1
             ENDIF
 
-            jj := Val( SubStr(::text, ii, 1) )
+            jj := Val(SubStr(::text, ii, 1))
 
             IF jj == 0
                jj := 10
@@ -331,9 +331,9 @@ METHOD GDBarCode:Draw8( cText )
       FOR ii := 1 TO Len(::text)
 
          IF Mod(Len(::text) + 1 - ii, 2) == 0
-            nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
+            nChkSum += Int(Val(SubStr(::text, ii, 1)))
          ELSE
-            nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
+            nChkSum += Int(Val(SubStr(::text, ii, 1))) * 3
          ENDIF
 
          IF ii == 5
@@ -344,7 +344,7 @@ METHOD GDBarCode:Draw8( cText )
             ::positionX += 1
          ENDIF
 
-         jj := Val( SubStr(::text, ii, 1) )
+         jj := Val(SubStr(::text, ii, 1))
 
          IF jj == 0
             jj := 10
@@ -446,7 +446,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
       IF cModeCode == "C"
 
-         nPos := AScan( ::KeysmodeC, {| x | x == SubStr(::Text, i, 1) + SubStr(::Text, i + 1, 1) } )
+         nPos := AScan(::KeysmodeC, {| x | x == SubStr(::Text, i, 1) + SubStr(::Text, i + 1, 1) })
 
          IF nPos == 0
             ::DrawError( "With Code C, you must provide always pair of two integers. Character " + SubStr(::text, i, 1) + SubStr(::text, i + 1, 1) + " not allowed." )
@@ -475,7 +475,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
       IF Empty(cModeCode)
 
-         IF Str( Val( ::text ), Len(::text) ) == ::text
+         IF Str( Val(::text), Len(::text) ) == ::text
             lTypeCodeC :=  .T.
             cConc      := ::aCode[ STARTC ]
             nSum       := STARTB
@@ -522,7 +522,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
                cConc += ::aCode[CODEB]
                nValChar := Asc(cChar) - 31
             ELSE
-               nValChar := Val( SubStr(::text, n, 2) ) + 1
+               nValChar := Val(SubStr(::text, n, 2)) + 1
                ++n
             ENDIF
 
@@ -556,8 +556,8 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
       cConc += ::aCode[nSum] + ::aCode[107]
 
       FOR n := 1 TO Len(cConc) STEP 2
-         cBarCode += Replicate( "1", Val( SubStr(cConc, n, 1) ) )
-         cBarCode += Replicate( "0", Val( SubStr(cConc, n + 1, 1) ) )
+         cBarCode += Replicate("1", Val(SubStr(cConc, n, 1)))
+         cBarCode += Replicate("0", Val(SubStr(cConc, n + 1, 1)))
       NEXT
 
       ::DrawSingleBar( cBarCode )
@@ -660,4 +660,4 @@ METHOD GDBarCode:MixCode( value )
 
 METHOD GDBarCode:Findcode( uVal )
 
-   RETURN ::acode[AScan( ::keys, {| x | Left(x, 1) == uVal } )]
+   RETURN ::acode[AScan(::keys, {| x | Left(x, 1) == uVal })]

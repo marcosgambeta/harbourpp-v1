@@ -93,7 +93,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    hb_default(@aButtons_, {"OK"})
 
    nLinesRqd := Len(aText_) + IIf(Len(aText_) == 0, 4, 5)
-   nTopReq   := Int( ( maxRow - nLinesRqd ) / 2 )
+   nTopReq   := Int(( maxRow - nLinesRqd ) / 2)
    nTop      := IIf(HB_IsNumeric(nTop), IIf(nTop > nTopReq, nTop, nTopReq), nTopReq)
    nBottom   := nTop + nLinesRqd - 1   // 1 for shadow
 
@@ -112,7 +112,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    nColRqd   := 0
    AEval({ nColCap, nColTxt, nColBut }, {| e | nColRqd := Max(nColRqd, e) })
 
-   nLeft     := IIf(maxCol > nColRqd, Int( ( maxCol - nColRqd ) / 2 ), 0)
+   nLeft     := IIf(maxCol > nColRqd, Int(( maxCol - nColRqd ) / 2), 0)
    nRight    := nLeft + nColRqd
 
    aTrg_ := Array( Len(aButtons_) )
@@ -131,7 +131,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
 
    nBtnCol_  := Array( Len(aButtons_) )
 
-   nBtnCol_[1] := Int( ( nColRqd - nColBut ) / 2 ) + 3
+   nBtnCol_[1] := Int(( nColRqd - nColBut ) / 2) + 3
    IF Len(aButtons_) > 1
       FOR i := 2 TO Len(aButtons_)
          nBtnCol_[i] := nBtnCol_[i - 1] + Len(aButtons_[i - 1]) + 3 + 4
@@ -217,7 +217,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
          --sel
       CASE nKeyStd == K_RIGHT .OR. nKeyStd == K_UP
          ++sel
-      CASE ( nTrg := hb_AScan( aTrg_, Upper(hb_keyChar( nKey )), , , .T. ) ) > 0
+      CASE ( nTrg := hb_AScan(aTrg_, Upper(hb_keyChar( nKey )), , , .T.) ) > 0
          sel := nTrg
          lGo := .F.
       CASE SetKey(nKey) != NIL

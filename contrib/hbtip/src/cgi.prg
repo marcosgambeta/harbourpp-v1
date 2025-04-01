@@ -104,10 +104,10 @@ METHOD TIPCgi:New()
    ::cHtmlPage := ""
 
    IF "POST" $ Upper(GetEnv("REQUEST_METHOD"))
-      nLen := Val( GetEnv("CONTENT_LENGTH") )
-      cTemp := Space( nLen )
+      nLen := Val(GetEnv("CONTENT_LENGTH"))
+      cTemp := Space(nLen)
       IF ( nRead := FRead( hb_GetStdIn(), @cTemp, nLen ) ) != nLen
-         ::ErrHandler( "post error read " + hb_ntos( nRead ) + " instead of " + hb_ntos( nLen ) )
+         ::ErrHandler( "post error read " + hb_ntos(nRead) + " instead of " + hb_ntos(nLen) )
       ELSE
          ::HTTP_RAW_POST_DATA := cTemp
          FOR EACH item IN hb_ATokens( cTemp, "&" )
@@ -227,7 +227,7 @@ METHOD TIPCgi:StartSession( cSID )
          IF ( hFile := hb_vfOpen( cFile, FO_READ ) ) != NIL
             nFileSize := hb_vfSize( hFile )
             hb_vfSeek( hFile, 0, FS_SET )
-            cBuffer := Space( nFileSize )
+            cBuffer := Space(nFileSize)
             IF hb_vfRead( hFile, @cBuffer, nFileSize ) != nFileSize
                ::ErrHandler( "ERROR: On reading session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
             ELSE
@@ -295,7 +295,7 @@ METHOD PROCEDURE TIPCgi:ErrHandler( xError )
       cErrMsg += ;
          "<tr><td>CRITICAL ERROR:</td><td>" + xError:Description + "</td></tr>" + ;
          "<tr><td>OPERATION:</td><td>" + xError:Operation + "</td></tr>" + ;
-         "<tr><td>OS ERROR:</td><td>" + hb_ntos( xError:OsCode ) + " IN " + xError:SubSystem + "/" + hb_ntos( xError:SubCode ) + "</td></tr>" + ;
+         "<tr><td>OS ERROR:</td><td>" + hb_ntos(xError:OsCode) + " IN " + xError:SubSystem + "/" + hb_ntos(xError:SubCode) + "</td></tr>" + ;
          "<tr><td>FILENAME:</td><td>" + Right(xError:FileName, 40) + "</td></tr>"
    CASE HB_IsString(xError)
       cErrMsg += "<tr><td>ERROR MESSAGE:</td><td>" + tip_HtmlSpecialChars( xError ) + "</td></tr>"
@@ -303,7 +303,7 @@ METHOD PROCEDURE TIPCgi:ErrHandler( xError )
 
    nCalls := 0
    DO WHILE ! Empty(ProcName( ++nCalls ))
-      cErrMsg += "<tr><td>PROC/LINE:</td><td>" + ProcName( nCalls ) + "/" + hb_ntos( ProcLine( nCalls ) ) + "</td></tr>"
+      cErrMsg += "<tr><td>PROC/LINE:</td><td>" + ProcName( nCalls ) + "/" + hb_ntos(ProcLine( nCalls )) + "</td></tr>"
    ENDDO
 
    cErrMsg += "</table>"
@@ -419,7 +419,7 @@ STATIC FUNCTION HtmlScript( hVal, cKey )
          ENDIF
          IF HB_IsArray(cVal)
             cTmp := ""
-            AScan( cVal, {| cFile | cTmp += '<script src="' + cFile + '" type="text/javascript"></script>' + _CRLF } )
+            AScan(cVal, {| cFile | cTmp += '<script src="' + cFile + '" type="text/javascript"></script>' + _CRLF })
             cRet += cTmp
          ENDIF
       ENDIF
@@ -429,7 +429,7 @@ STATIC FUNCTION HtmlScript( hVal, cKey )
          ENDIF
          IF HB_IsArray(cVal)
             cTmp := ""
-            AScan( cVal, {| cVar | cTmp += cVar } )
+            AScan(cVal, {| cVar | cTmp += cVar })
             cRet += '<script type="text/javascript">' + _CRLF + "<!--" + _CRLF + cTmp + _CRLF + "-->" + _CRLF + "</script>" + _CRLF
          ENDIF
       ENDIF
@@ -455,7 +455,7 @@ STATIC FUNCTION HtmlStyle( hVal, cKey )
          ENDIF
          IF HB_IsArray(cVal)
             cTmp := ""
-            AScan( cVal, {| cFile | cTmp += '<link rel="StyleSheet" href="' + cFile + '" type="text/css">' + _CRLF } )
+            AScan(cVal, {| cFile | cTmp += '<link rel="StyleSheet" href="' + cFile + '" type="text/css">' + _CRLF })
             cRet += cTmp
          ENDIF
       ENDIF
@@ -465,7 +465,7 @@ STATIC FUNCTION HtmlStyle( hVal, cKey )
          ENDIF
          IF HB_IsArray(cVal)
             cTmp := ""
-            AScan( cVal, {| cVar | cTmp += cVar } )
+            AScan(cVal, {| cVar | cTmp += cVar })
             cRet += '<style type="text/css">' + _CRLF + "<!--" + _CRLF + cTmp + _CRLF + "-->" + _CRLF + "</style>" + _CRLF
          ENDIF
       ENDIF
@@ -489,7 +489,7 @@ STATIC FUNCTION HtmlLinkRel( hVal, cKey )
             cVal := { cVal, cVal }
          ENDIF
          IF HB_IsArray(cVal)
-            AScan( cVal, {| aVal | cRet += '<link rel="' + aVal[1] + '" href="' + aVal[2] + '"/>' + _CRLF } )
+            AScan(cVal, {| aVal | cRet += '<link rel="' + aVal[1] + '" href="' + aVal[2] + '"/>' + _CRLF })
          ENDIF
       ENDIF
       hb_HDel( hVal, cKey )

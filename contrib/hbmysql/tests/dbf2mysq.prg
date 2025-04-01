@@ -122,7 +122,7 @@ PROCEDURE Main(...)
    ENDIF
 
    IF lCreateTable
-      IF hb_AScan( oServer:ListTables(), cTable,,, .T. ) > 0
+      IF hb_AScan(oServer:ListTables(), cTable,,, .T.) > 0
          oServer:DeleteTable( cTable )
          IF oServer:NetErr()
             ? oServer:Error()
@@ -160,7 +160,7 @@ PROCEDURE Main(...)
 
       DevPos(Row(), 1)
       IF ( dbffile->( RecNo() ) % 100 ) == 0
-         DevOut("imported recs: " + hb_ntos( dbffile->( RecNo() ) ))
+         DevOut("imported recs: " + hb_ntos(dbffile->( RecNo() )))
       ENDIF
    ENDDO
 

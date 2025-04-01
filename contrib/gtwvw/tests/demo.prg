@@ -179,17 +179,17 @@ PROCEDURE Main()
    CLS
    @ 0, 0 SAY "This is line 0"
    @ 1, 0 SAY "This is line 1"
-   @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos( MaxRow() - 1 )
-   @ MaxRow(), 0 SAY "This is line " + hb_ntos( MaxRow() )
+   @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos(MaxRow() - 1)
+   @ MaxRow(), 0 SAY "This is line " + hb_ntos(MaxRow())
 
    DO WHILE ( ch := Inkey(0) ) != K_ESC
       // experiment with different paintrefresh interval:
       DO CASE
       CASE ch == hb_keyCode( "<" )
-         wvw_SetPaintRefresh( Int( wvw_SetPaintRefresh() / 2 ) )
+         wvw_SetPaintRefresh( Int(wvw_SetPaintRefresh() / 2) )
          Alert( wvw_SetPaintRefresh() )
       CASE ch == hb_keyCode( ">" )
-         wvw_SetPaintRefresh( Int( wvw_SetPaintRefresh() * 2 ) )
+         wvw_SetPaintRefresh( Int(wvw_SetPaintRefresh() * 2) )
          Alert( wvw_SetPaintRefresh() )
       CASE ch == hb_keyCode( "0" )
          wvw_SetPaintRefresh(0)
@@ -259,7 +259,7 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    hb_default(@nBottom, nTop + 10)
    hb_default(@nRight, nLeft + 45)
 
-   cWinName := "Typewriter (Win#" + hb_ntos( wvw_nNumWindows() ) + "); CtrlW: New Window; ESC: Exit"
+   cWinName := "Typewriter (Win#" + hb_ntos(wvw_nNumWindows()) + "); CtrlW: New Window; ESC: Exit"
 
    // x init window
    nCurWindow := wvw_nOpenWindow( cWinName, nTop, nLeft, nBottom, nRight )
@@ -780,19 +780,19 @@ STATIC FUNCTION VouBlockField(i)
 //      WVW_Paint() must be a FUNCTION in your application
 //      as it is called when Window gets WM_PAINT message.
 //
-// 20040330,was: FUNCTION WVW_Paint( hWnd, msg, wParam, lParam, nWinNum )
-// 20040408,was: FUNCTION WVW_Paint( nWinNum, nrow1, ncol1, nrow2, ncol2 )
+// 20040330,was: FUNCTION WVW_Paint(hWnd, msg, wParam, lParam, nWinNum)
+// 20040408,was: FUNCTION WVW_Paint(nWinNum, nrow1, ncol1, nrow2, ncol2)
 
-FUNCTION WVW_Paint( nWinNum )
+FUNCTION WVW_Paint(nWinNum)
 
    // ldebug( "WVW_Paint:" + hb_eol() +;
-   //        "hWnd = " + hb_ntos( hWnd ) + hb_eol() +;
-   //        "nWinNum = " + hb_ntos( nWinNum ) )
+   //        "hWnd = " + hb_ntos(hWnd) + hb_eol() +;
+   //        "nWinNum = " + hb_ntos(nWinNum) )
    IF Len(s_amiscobjlist) >= nWinNum + 1
       AEval(s_amiscobjlist[nWinNum + 1], {| e | Eval(e, nWinNum) })
    ENDIF
 
-   wvwm_paint( nWinNum )
+   wvwm_paint(nWinNum)
 
    RETURN 0
 
@@ -942,8 +942,8 @@ FUNCTION nAfterInkey(nkey)
       // MenuKeyEvent
       RETURN nMenuChecker( wvw_GetLastMenuEvent() )
       // was: elseif AScan({K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE}, nKey) > 0
-   ELSEIF AScan( { K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE, K_MMLEFTDOWN, ;
-         K_LDBLCLK }, nKey ) > 0
+   ELSEIF AScan({ K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE, K_MMLEFTDOWN, ;
+         K_LDBLCLK }, nKey) > 0
       // MouseEvent
       RETURN wvwm_nMouseChecker( nkey )
    ELSEIF ( bAction := SetKey(nKey) ) != NIL
@@ -1042,17 +1042,17 @@ FUNCTION xDebugInfo()
    lboxmessage( "GTWVW test/demo" + hb_eol() + ;
       "Budyanto Dj. <budyanto@centrin.net.id>" + hb_eol() + ;
       hb_eol() + ;
-      "Topmost Window is Window #" + hb_ntos( wvw_nNumWindows() - 1 ) + hb_eol() + ;
-      "Current Window is Window #" + hb_ntos( wvw_nSetCurWindow() ) + hb_eol() + ;
-      "MaxRow() = " + hb_ntos( MaxRow() ) + ", MaxCol() = " + hb_ntos( MaxCol() ) + hb_eol() + ;
-      "Row() = " + hb_ntos( Row() ) + ", Col() = " + hb_ntos( Col() ) + hb_eol() + ;
-      "WVW_RowOfs() = " + hb_ntos( wvw_nRowOfs() ) + ", WVW_ColOfs() = " + hb_ntos( wvw_nColOfs() ) + hb_eol() + ;
-      "Line Spacing = " + hb_ntos( wvw_SetLineSpacing() ) + hb_eol() + ;
-      "Default Line Spacing = " + hb_ntos( wvw_SetDefLineSpacing() ) + hb_eol() + ;
+      "Topmost Window is Window #" + hb_ntos(wvw_nNumWindows() - 1) + hb_eol() + ;
+      "Current Window is Window #" + hb_ntos(wvw_nSetCurWindow()) + hb_eol() + ;
+      "MaxRow() = " + hb_ntos(MaxRow()) + ", MaxCol() = " + hb_ntos(MaxCol()) + hb_eol() + ;
+      "Row() = " + hb_ntos(Row()) + ", Col() = " + hb_ntos(Col()) + hb_eol() + ;
+      "WVW_RowOfs() = " + hb_ntos(wvw_nRowOfs()) + ", WVW_ColOfs() = " + hb_ntos(wvw_nColOfs()) + hb_eol() + ;
+      "Line Spacing = " + hb_ntos(wvw_SetLineSpacing()) + hb_eol() + ;
+      "Default Line Spacing = " + hb_ntos(wvw_SetDefLineSpacing()) + hb_eol() + ;
       hb_eol() + ;
       "Font Face = '" + s_aFontInfo[1] + "'" + hb_eol() + ;
-      "Font Height = " + hb_ntos( s_aFontInfo[2] ) + hb_eol() + ;
-      "Font Width = " + hb_ntos( s_aFontInfo[3] ) + hb_eol() + ;
+      "Font Height = " + hb_ntos(s_aFontInfo[2]) + hb_eol() + ;
+      "Font Width = " + hb_ntos(s_aFontInfo[3]) + hb_eol() + ;
       hb_eol() + ;
       "BTW, mouse pointer now sits on MaxRow(),MaxCol(), doesn't it?" )
 
@@ -1080,7 +1080,7 @@ FUNCTION xHelp()
       "Press Ctrl+W to open a new, bigger window." + hb_eol() + ;
       "Press ESC to exit)" + hb_eol() + ;
       hb_eol() + ;
-      "Maximum number of windows opened: " + hb_ntos( WVW_MAXWINDOWS ) + hb_eol() + ;
+      "Maximum number of windows opened: " + hb_ntos(WVW_MAXWINDOWS) + hb_eol() + ;
       hb_eol() + ;
       "Other info:" + hb_eol() + ;
       "Window repainting is checked at 100msec interval" )
@@ -1105,11 +1105,11 @@ FUNCTION nCeiling( nNumber, nRoundDec )
       nNumber := nNumber / 10
    NEXT
 
-   nTemp := nNumber - Int( nNumber )  // right of dec point
+   nTemp := nNumber - Int(nNumber)  // right of dec point
    IF nTemp > 0
-      nNumber := Int( nNumber ) + 1
+      nNumber := Int(nNumber) + 1
    ELSE
-      nNumber := Int( nNumber )
+      nNumber := Int(nNumber)
    ENDIF
 
    // geser kiri
@@ -1165,16 +1165,16 @@ STATIC PROCEDURE MyError( e )
 
    cErr := "Runtime error" + hb_eol() + ;
       hb_eol() + ;
-      "Gencode: " + hb_ntos( e:GenCode ) + hb_eol() + ;
+      "Gencode: " + hb_ntos(e:GenCode) + hb_eol() + ;
       "Desc: " + e:Description +  + hb_eol() + ;
-      "Sub-system: " + hb_ntos( e:SubCode ) + hb_eol() + ;
+      "Sub-system: " + hb_ntos(e:SubCode) + hb_eol() + ;
       hb_eol() + ;
       "Call trace:" + hb_eol() + ;
       hb_eol()
 
 
    DO WHILE ! Empty(ProcName( ++i ))
-      cErr += RTrim(ProcName( i )) + "(" + hb_ntos( ProcLine( i ) ) + ")" + hb_eol()
+      cErr += RTrim(ProcName( i )) + "(" + hb_ntos(ProcLine( i )) + ")" + hb_eol()
    ENDDO
 
    // ? cErr  // Calls quit
@@ -1188,7 +1188,7 @@ PROCEDURE debugging( cMsg, nRow, nCol, nWinNum )
 
    HB_SYMBOL_UNUSED(nWinNum)
 
-   ? cmsg + hb_ntos( nrow ) + ", " + hb_ntos( ncol )
+   ? cmsg + hb_ntos(nrow) + ", " + hb_ntos(ncol)
 
    RETURN
 

@@ -56,9 +56,9 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 0
       RETURN Id()
    CASE 1
-      RETURN hb_ntos( Date() - CToD("") )
+      RETURN hb_ntos(Date() - CToD(""))
    CASE 2
-      RETURN hb_ntos( Seconds() )
+      RETURN hb_ntos(Seconds())
    CASE 5
       RETURN Set( _SET_DEFAULT )
    CASE 6
@@ -66,9 +66,9 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 10
       RETURN DToC(CToD("") + hb_defaultValue( xPar1, 0 ))
    CASE 11
-      RETURN hb_ntos( IIf(HB_IsDateTime( xPar1 ), xPar1, ;
+      RETURN hb_ntos(IIf(HB_IsDateTime( xPar1 ), xPar1, ;
                            IIf(HB_IsString(xPar1), CToD(xPar1), ;
-                           Date())) - CToD("") )
+                           Date())) - CToD(""))
    CASE 100
       RETURN IIf(Set( _SET_CONSOLE ), "ON", "OFF")
    CASE 101
@@ -85,7 +85,7 @@ FUNCTION Sys( nValue, xPar1 )
              IIf(dbRecordInfo( DBRI_LOCKED ), "Record locked", ;
                                                "Not locked")))
    CASE 2020
-      RETURN hb_DiskSpace( Set( _SET_DEFAULT ) )
+      RETURN hb_DiskSpace(Set( _SET_DEFAULT ))
    OTHERWISE
       /* Throw RTE? */
    ENDSWITCH

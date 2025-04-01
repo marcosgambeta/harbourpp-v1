@@ -100,8 +100,8 @@ PROCEDURE GetSession()
 
    STATIC s_nsession := 0
    LOCAL aEBGets := {}
-   LOCAL cName      := Space( 30 )
-   LOCAL cNickName  := Space( 10 )
+   LOCAL cName      := Space(30)
+   LOCAL cNickName  := Space(10)
    LOCAL dBirthdate := hb_SToD()
    LOCAL nBudget    := 125000
    LOCAL cRemark    := "Some notes" + hb_eol() + ;
@@ -122,20 +122,20 @@ PROCEDURE GetSession()
    ncol1 := 10 + ( s_nsession - 1 ) * 2
    nrow2 := nrow1 + 15
    ncol2 := ncol1 + 60
-   wvw_nOpenWindow( "Session " + hb_ntos( s_nsession ) + " (press F8 for help)", ;
+   wvw_nOpenWindow( "Session " + hb_ntos(s_nsession) + " (press F8 for help)", ;
       nrow1, ncol1, nrow2, ncol2, NIL, 0 )
 
-   cRemark += hb_eol() + "(from Session " + hb_ntos( nwinnum ) + ")"
+   cRemark += hb_eol() + "(from Session " + hb_ntos(nwinnum) + ")"
 
    @ 1, 15 ebGET cName      LABEL "Name:"
-   @ 3, 15 ebGET cNickName  LABEL "Nickname:"   PICTURE Replicate( "!", Len(cNickName) )
+   @ 3, 15 ebGET cNickName  LABEL "Nickname:"   PICTURE Replicate("!", Len(cNickName))
    @ 5, 15 ebGET dBirthDate LABEL "Birth Date:"
    @ 7, 15 ebGET nBudget    PICTURE "999,999.99"   // using default label
    @ 9, 15 ebGET cRemark    LABEL "Remarks:" MULTILINE
    EBReadGets( nwinnum, @aEBGets )   // READ
 
    // debugging text
-   cdebugreport := "Back to GetSession() of window " + hb_ntos( nwinnum ) + " with these values returned:" + hb_eol()
+   cdebugreport := "Back to GetSession() of window " + hb_ntos(nwinnum) + " with these values returned:" + hb_eol()
    cdebugreport += "cName:" + cName + hb_eol()
    cdebugreport += "cNickName:" + cNickName + hb_eol()
    cdebugreport += "dBirthDate:" + DToC(dBirthDate) + hb_eol()
@@ -155,7 +155,7 @@ FUNCTION MyHelp()
 
    ccallstack := ""
    FOR i := 0 TO 8
-      ccallstack += hb_ntos( i ) + ". " + ProcName( i ) + "(" + hb_ntos( ProcLine( i ) ) + ")" + hb_eol()
+      ccallstack += hb_ntos(i) + ". " + ProcName( i ) + "(" + hb_ntos(ProcLine( i )) + ")" + hb_eol()
    NEXT
 
    MyMessageBox( NIL, ;
@@ -194,7 +194,7 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    mcVarType := ValType(mxValue)
    DO CASE
    CASE mcVarType == "C"
-      mcPict := IIf(HB_IsString(mcPict), mcPict, Replicate( "X", Len(mxValue) ))
+      mcPict := IIf(HB_IsString(mcPict), mcPict, Replicate("X", Len(mxValue)))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
       mcPict := IIf(HB_IsString(mcPict), mcPict, "999,999,999.99")
@@ -431,7 +431,7 @@ STATIC PROCEDURE SaveVar( nwinnum, aEBGets, lDone )
    lDone := .T.
 
    // debugging text
-   cdebugreport := "Get session in window " + hb_ntos( nwinnum ) + " is ended with confirmation" + hb_eol() + ;
+   cdebugreport := "Get session in window " + hb_ntos(nwinnum) + " is ended with confirmation" + hb_eol() + ;
       "Values have been assigned to the respective ebGET variables"
    MyMessageBox( nwinnum, cdebugreport )
 
@@ -449,7 +449,7 @@ STATIC PROCEDURE CancelVar( nwinnum, aEBGets, lDone )
    lDone := .T.
 
    // debugging text
-   cdebugreport := "Get session in window " + hb_ntos( nwinnum ) + " is ended with cancellation" + hb_eol() + ;
+   cdebugreport := "Get session in window " + hb_ntos(nwinnum) + " is ended with cancellation" + hb_eol() + ;
       "Values has been assigned to the respective initial ebGET variables"
    MyMessageBox( nwinnum, cdebugreport )
 
@@ -460,8 +460,8 @@ STATIC PROCEDURE ToCloseWindow( nwinnum, lPermitted )
    // allow to close topmost window only
    lPermitted := ( nwinnum == wvw_nNumWindows() - 1 )
    IF !lpermitted
-      MyMessageBox( nwinnum, "Window " + hb_ntos( nwinnum ) + " is not allowed to be closed, yet" + hb_eol() + ;
-         "Please close window " + hb_ntos( wvw_nNumWindows() - 1 ) + " first" )
+      MyMessageBox( nwinnum, "Window " + hb_ntos(nwinnum) + " is not allowed to be closed, yet" + hb_eol() + ;
+         "Please close window " + hb_ntos(wvw_nNumWindows() - 1) + " first" )
    ENDIF
 
    RETURN
@@ -470,13 +470,13 @@ STATIC PROCEDURE ToCloseWindow( nwinnum, lPermitted )
 
 STATIC FUNCTION nGetIndex( aEBGets, nEBId )
 
-   RETURN AScan( aEBGets, {| x | x[__GET_NEBID] == nEBId } )
+   RETURN AScan(aEBGets, {| x | x[__GET_NEBID] == nEBId })
 
 // returns index to aEBGets array containing editbox that is/was in focus
 
 STATIC FUNCTION nFocused(aEBGets)
 
-   RETURN AScan( aEBGets, {| x | x[__GET_LFOCUSED] } )
+   RETURN AScan(aEBGets, {| x | x[__GET_LFOCUSED] })
 
 // callback function called by GTWVW during some events on editbox
 STATIC FUNCTION MaskEditBox( nWinNum, nId, nEvent, aEBGets )
@@ -563,7 +563,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    pFlag := .F. // x for clarity
    IF mcvaltype == "N"
       // RL 104
-      IF Left(AllTrim(InBuffer), 1) == "-" .AND. Val( InBuffer ) == 0
+      IF Left(AllTrim(InBuffer), 1) == "-" .AND. Val(InBuffer) == 0
          NegativeZero := .T.
       ENDIF
 
@@ -818,9 +818,9 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
    ENDIF
 
    // useless!
-   // s := Transform(Val( s ), Getnummask( s_cmask, mcvaltype ))
+   // s := Transform(Val(s), Getnummask( s_cmask, mcvaltype ))
 
-   RETURN Val( s )
+   RETURN Val(s)
 
 // from h_textbox.prg
 

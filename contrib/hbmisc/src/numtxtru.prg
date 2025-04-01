@@ -438,7 +438,7 @@ FUNCTION NumToTxtRU( nValue, cLang, nGender, lOrd )
       cRetVal := ""
    ENDIF
 
-   nValue := Int( nValue )
+   nValue := Int(nValue)
    cRetVal += NumToStrRaw( nValue, aMsg, nGender, lOrd )
 
    RETURN hb_UTF8ToStr( cRetVal )
@@ -459,8 +459,8 @@ FUNCTION MnyToTxtRU( nValue, cLang, nMode1, nMode2 )
    LOCAL nCent
 
    nValue := Round(nValue, 2)
-   nCent  := Round(( nValue - Int( nValue ) ) * 100, 0)
-   nValue := Int( nValue )
+   nCent  := Round(( nValue - Int(nValue) ) * 100, 0)
+   nValue := Int(nValue)
 
    cRetVal := MnyToStrRaw( nValue, aMsg, aMsg[NTSR_CURR], nMode1 ) + " " + ;
       MnyToStrRaw( nCent, aMsg, aMsg[NTSR_CENT], nMode2 )
@@ -477,7 +477,7 @@ FUNCTION DateToTxtRU( dDate, cLang, lWord )
       IF lWord != NIL
          cRetVal := NumToStrRaw( nTemp, aMsg, NTSR_MIDD, .T. )
       ELSE
-         cRetVal := hb_ntos( nTemp )
+         cRetVal := hb_ntos(nTemp)
       ENDIF
 
       cRetVal += " " + aMsg[NTSR_MONTH, Month( dDate )] + " " + ;
@@ -504,11 +504,11 @@ STATIC FUNCTION MnyToStrRaw( nValue, aMsg, aCur, nMode )
          cRetVal := NumToStrRaw( nValue, aMsg, aCur[1] )
       ENDIF
    ELSE
-      cRetVal := IIf(nValue < 100, StrZero( nValue, 2 ), hb_ntos( nValue ))
+      cRetVal := IIf(nValue < 100, StrZero( nValue, 2 ), hb_ntos(nValue))
    ENDIF
 
    IF !lShort
-      nTemp := Int( nValue % 100 )
+      nTemp := Int(nValue % 100)
       IF nTemp >= 5 .AND. nTemp <= 20
          cTemp := aCur[5]
       ELSEIF nTemp % 10 == 1
@@ -563,7 +563,7 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
                IF nTri + 37 <= Len(aMsg[NTSR_CNT])
                   cTemp += OrdToGender( aMsg[NTSR_CNT, nTri + 37], aMsg, nGender )
                ELSE
-                  cTemp += "10**" + hb_ntos( nTri * 3 )
+                  cTemp += "10**" + hb_ntos(nTri * 3)
                ENDIF
             ELSEIF nTri <= Len(aMsg[NTSR_1000_1])
                cTemp += " "
@@ -576,7 +576,7 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
                   cTemp += aMsg[NTSR_1000_3, nTri]
                ENDIF
             ELSE
-               cTemp += "10**" + hb_ntos( nTri * 3 ) + " "
+               cTemp += "10**" + hb_ntos(nTri * 3) + " "
             ENDIF
          ENDIF
          cTemp := TriToStr( nTemp, aMsg, IIf(nTri == 0, nGender, IIf(nTri == 1, 2, 1)), lOrd, @lLast, nTri ) + cTemp
@@ -585,7 +585,7 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
          ENDIF
          cRetVal := cTemp + cRetVal
       ENDIF
-      nValue := Int( nValue / 1000 )
+      nValue := Int(nValue / 1000)
       nTri++
    ENDDO
 
@@ -604,7 +604,7 @@ STATIC FUNCTION TriToStr( nValue, aMsg, nGender, lOrd, lLast, nTri )
       ELSE
          nIdx := NTSR_MALE
       ENDIF
-      cRetVal := aMsg[nIdx, Int( nValue / 100 ) + 28]
+      cRetVal := aMsg[nIdx, Int(nValue / 100) + 28]
       IF nIdx == NTSR_CNT
          cRetVal := OrdToGender( cRetVal, aMsg, nGender )
       ENDIF
@@ -628,7 +628,7 @@ STATIC FUNCTION TriToStr( nValue, aMsg, nGender, lOrd, lLast, nTri )
          nIdx := NTSR_ROD
          lLast := .F.
       ENDIF
-      cTemp := aMsg[nIdx, Int( nValue / 10 ) - 1 + 20]
+      cTemp := aMsg[nIdx, Int(nValue / 10) - 1 + 20]
       IF nIdx == NTSR_CNT
          cTemp := OrdToGender( cTemp, aMsg, nGender )
       ENDIF

@@ -29,9 +29,9 @@ PROCEDURE Main()
    ft_NWSemEx( nHandle, @nValue, @nOpenCnt )
    DO WHILE .T.
       @ 23, 0 SAY "Semaphore test -> Open at [" + ;
-         hb_ntos( nOpenCnt )           + ;
+         hb_ntos(nOpenCnt)           + ;
          "] stations, value is ["      + ;
-         hb_ntos( nValue ) + "]"
+         hb_ntos(nValue) + "]"
 
       IF Inkey(WAIT_SECONDS) != 0
          EXIT

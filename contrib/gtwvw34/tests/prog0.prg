@@ -115,7 +115,7 @@ STATIC PROCEDURE xBrowse1()
    DO WHILE ! lEnd
       oBrowse:ForceStable()
 
-      lMessage( "Record #" + hb_ntos( RecNo() ) )
+      lMessage( "Record #" + hb_ntos(RecNo()) )
 
       nKey := hb_keyStd(Inkey(0))
 
@@ -273,7 +273,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
       nMaxWidth := Max(nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))))
    NEXT
 
-   nLeft := Max(nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ))
+   nLeft := Max(nLeft, Int(( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1))
    nRight := nLeft + nMaxWidth + 1
 
    // open window
@@ -348,6 +348,6 @@ STATIC PROCEDURE ZREVWINDOW()
    RETURN
 
 STATIC FUNCTION nCeiling( nNumber )
-   RETURN Int( nNumber ) + IIf(( nNumber - Int( nNumber ) ) > 0, 1, 0)
+   RETURN Int(nNumber) + IIf(( nNumber - Int(nNumber) ) > 0, 1, 0)
 
 SET PROCEDURE TO "table.prg"

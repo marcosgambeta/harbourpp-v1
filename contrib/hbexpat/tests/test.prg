@@ -17,9 +17,9 @@ PROCEDURE Main( cFileName )
 
    ? XML_ExpatVersion()
    XML_ExpatVersionInfo( @v1, @v2, @v3 )
-   ? hb_ntos( v1 ) + "." + hb_ntos( v2 ) + "." + hb_ntos( v3 )
+   ? hb_ntos(v1) + "." + hb_ntos(v2) + "." + hb_ntos(v3)
    hb_XML_ExpatVersionInfo( @v1, @v2, @v3 )
-   ? hb_ntos( v1 ) + "." + hb_ntos( v2 ) + "." + hb_ntos( v3 )
+   ? hb_ntos(v1) + "." + hb_ntos(v2) + "." + hb_ntos(v3)
 
    IF Empty(p)
       ? "Couldn't allocate memory for parser"
@@ -50,7 +50,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttr )
 
    LOCAL aItem
 
-   ? Replicate( "  ", aUserData[1] ), cElement
+   ? Replicate("  ", aUserData[1]), cElement
 
    IF !Empty(aAttr)
       FOR EACH aItem IN aAttr

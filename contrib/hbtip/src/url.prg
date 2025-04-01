@@ -127,7 +127,7 @@ METHOD TUrl:SetAddress( cUrl )
    ::cUserId := aMatch[2]
    ::cPassword := aMatch[3]
    ::cServer := aMatch[4]
-   ::nPort := Val( aMatch[5] )
+   ::nPort := Val(aMatch[5])
    IF ::nPort < 1
       ::nPort := -1
    ENDIF
@@ -162,7 +162,7 @@ METHOD TUrl:BuildAddress()
    IF !::cServer == ""
       cRet += ::cServer
       IF ::nPort > 0
-         cRet += ":" + hb_ntos( ::nPort )
+         cRet += ":" + hb_ntos(::nPort)
       ENDIF
    ENDIF
 

@@ -51,7 +51,7 @@
 PROCEDURE Main( cPortName )
 
    LOCAL oWinPort
-   LOCAL cString := Space( 32 )
+   LOCAL cString := Space(32)
    LOCAL lCTS, lDSR, lRing, lDCD
    LOCAL lCTSHold, lDSRHold, lDCDHold, lXoffHold, lXoffSent, nInQueue, nOutQueue
    LOCAL nResult
@@ -78,7 +78,7 @@ PROCEDURE Main( cPortName )
       ? "Testing DTR, configure a scanner to require DTR"
       ? "Scan something... and press enter (shouldn't scan)"
       Inkey(0)
-      ? "Read()", oWinPort:Read( @cString, 32 ), hb_ntos( hb_BLen(cString) ), cString
+      ? "Read()", oWinPort:Read( @cString, 32 ), hb_ntos(hb_BLen(cString)), cString
       ?
       IF oWinPort:SetDTR(.T.)
          ? "SetDTR(.T.) succeeded"
@@ -95,7 +95,7 @@ PROCEDURE Main( cPortName )
          ? "QueueStatus() failed:", oWinPort:ErrorText()
       ENDIF
       ?
-      ? "Read()", oWinPort:Read( @cString, 32 ), hb_ntos( hb_BLen(cString) ), cString
+      ? "Read()", oWinPort:Read( @cString, 32 ), hb_ntos(hb_BLen(cString)), cString
       ?
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )
          ? "QueueStatus(): CTSHold", lCtsHold, ", DSRHold", lDsrHold, ", DCDHold", lDCDHold, ", XoffHold", lXoffHold, ;
@@ -149,7 +149,7 @@ PROCEDURE Main( cPortName )
          ? "QueueStatus() failed:", oWinPort:ErrorText()
       ENDIF
       ?
-      ? "Read", oWinPort:Read( @cString, 32 ), hb_ntos( hb_BLen(cString) ), cString
+      ? "Read", oWinPort:Read( @cString, 32 ), hb_ntos(hb_BLen(cString)), cString
       ?
       ? "Close", oWinPort:Close()
    ELSE
@@ -186,11 +186,11 @@ PROCEDURE Main( cPortName )
       ?
 
       ? "With no flow control the write should succeed whether printer is on or off"
-      cString := "this is a test string " + Replicate( "012356789", 30 ) + Chr(13) + Chr(10)
+      cString := "this is a test string " + Replicate("012356789", 30) + Chr(13) + Chr(10)
       IF ( nResult := oWinPort:Write( cString ) ) == hb_BLen(cString)
          ? "Write() succeeded"
       ELSE
-         ? "Write() failed, returned:", nResult, "expected:", hb_ntos( hb_BLen(cString) )
+         ? "Write() failed, returned:", nResult, "expected:", hb_ntos(hb_BLen(cString))
       ENDIF
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )
          ? "QueueStatus(): CTSHold", lCtsHold, ", DSRHold", lDsrHold, ", DCDHold", lDCDHold, ", XoffHold", lXoffHold, ;
@@ -231,7 +231,7 @@ PROCEDURE Main( cPortName )
       IF ( nResult := oWinPort:Write( cString ) ) == hb_BLen(cString)
          ? "Write() succeeded"
       ELSE
-         ? "Write() failed, returned:", nResult, "expected:", hb_ntos( hb_BLen(cString) )
+         ? "Write() failed, returned:", nResult, "expected:", hb_ntos(hb_BLen(cString))
       ENDIF
       ? Seconds()
       ? "Close", oWinPort:Close()

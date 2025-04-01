@@ -787,7 +787,7 @@ STATIC FUNCTION AR_DELETE( nWA )
 
    IF ! aWAData[WADATA_EOF]
 
-      IF aOpenInfo[UR_OI_SHARED] .AND. AScan( aWAData[WADATA_LOCKS], aWAData[WADATA_RECNO] ) == 0
+      IF aOpenInfo[UR_OI_SHARED] .AND. AScan(aWAData[WADATA_LOCKS], aWAData[WADATA_RECNO]) == 0
          oError := ErrorNew()
          oError:GenCode     := EG_UNLOCKED
          oError:SubCode     := 1022  /* EDBF_UNLOCKED */
@@ -848,7 +848,7 @@ STATIC FUNCTION AR_RECALL( nWA )
 
    IF ! aWAData[WADATA_EOF]
 
-      IF aOpenInfo[UR_OI_SHARED] .AND. AScan( aWAData[WADATA_LOCKS], aWAData[WADATA_RECNO] ) == 0
+      IF aOpenInfo[UR_OI_SHARED] .AND. AScan(aWAData[WADATA_LOCKS], aWAData[WADATA_RECNO]) == 0
          oError := ErrorNew()
          oError:GenCode     := EG_UNLOCKED
          oError:SubCode     := 1022  /* EDBF_UNLOCKED */
@@ -962,7 +962,7 @@ STATIC FUNCTION AR_UNLOCK( nWA, nRec )
          NEXT
          ASize( aRecords, 0 )
       ELSE
-         IF ( nPos := AScan( aRecords, nRec ) ) > 0
+         IF ( nPos := AScan(aRecords, nRec) ) > 0
             aRecInfo[nRec][RECDATA_LOCKED] := 0
             hb_ADel( aRecords, nPos, .T. )
          ENDIF
@@ -1182,11 +1182,11 @@ STATIC FUNCTION AR_ORDLSTFOCUS( nWA, aOrderInfo )
 
    SWITCH ValType(xIndex)
    CASE "N"
-      aWAData[WADATA_INDEX] := IIf( xIndex >= 1 .AND. xIndex <= Len(aIndexes), Int( xIndex ), 0 )
+      aWAData[WADATA_INDEX] := IIf( xIndex >= 1 .AND. xIndex <= Len(aIndexes), Int(xIndex), 0 )
       EXIT
    CASE "C"
       xIndex := Upper(xIndex)
-      aWAData[WADATA_INDEX] := AScan( aIndexes, {| x | x[INDEX_TAG] == xIndex } )
+      aWAData[WADATA_INDEX] := AScan(aIndexes, {| x | x[INDEX_TAG] == xIndex })
       EXIT
    ENDSWITCH
 
@@ -1245,7 +1245,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    aIndex := AR_INDEXINIT()
    aIndex[INDEX_TAG]  := cIndex
    aIndex[INDEX_ORCR] := aOrderCreate
-   IF ( nIndex := AScan( aIndexes, {| x | x[INDEX_TAG] == cIndex } ) ) > 0
+   IF ( nIndex := AScan(aIndexes, {| x | x[INDEX_TAG] == cIndex }) ) > 0
       ADel( aIndexes, nIndex )
       aIndexes[Len(aIndexes)] := aIndex
    ELSE
@@ -1312,7 +1312,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
    SWITCH ValType(aOrderInfo[UR_ORI_TAG])
    CASE "C"
       nIndex := Upper(aOrderInfo[UR_ORI_TAG])
-      nIndex := AScan( aIndexes, {| x | x[INDEX_TAG] == nIndex } )
+      nIndex := AScan(aIndexes, {| x | x[INDEX_TAG] == nIndex })
       EXIT
    CASE "N"
       nIndex := aOrderInfo[UR_ORI_TAG]
@@ -1696,7 +1696,7 @@ STATIC FUNCTION PutValue( xValue, cType, nLen, nDec )
    CASE cType == "M"
       xVal := xValue  /* No limit for a memo field */
    CASE cType == "N"
-      xVal := Val( Str( xValue, nLen, nDec ) )
+      xVal := Val(Str( xValue, nLen, nDec ))
    OTHERWISE
       xVal := xValue
    ENDCASE
@@ -1712,13 +1712,13 @@ STATIC FUNCTION EmptyValue( cType, nLen, nDec )
 
    DO CASE
    CASE cType == "C" .OR. cType == "M"
-      xVal := Space( nLen )
+      xVal := Space(nLen)
    CASE cType == "D"
       xVal := hb_SToD()
    CASE cType == "L"
       xVal := .F.
    CASE cType == "N"
-      xVal := Val( Str( 0, nLen, nDec ) )
+      xVal := Val(Str( 0, nLen, nDec ))
    ENDCASE
 
    RETURN xVal
@@ -1840,7 +1840,7 @@ STATIC FUNCTION hb_Decode( ... )
          /* Check if value exists (valtype of values MUST be same of xVal,
           * otherwise I will get a runtime error)
           * TODO: Have I to check also between different valtypes, jumping different ? */
-         nPos := AScan( aValues, {| e | e == xVal } )
+         nPos := AScan(aValues, {| e | e == xVal })
 
          IF nPos == 0   /* Not Found, returning DEFAULT */
             xRet := xDefault   /* it could be also NIL because not present */
@@ -1988,7 +1988,7 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
 
       IF aIndex[2] != NIL .AND. Eval(bFirst)
          DO WHILE nIni <= nEnd
-            nPos := Int( ( nIni + nEnd ) / 2 )
+            nPos := Int(( nIni + nEnd ) / 2)
             IF aIndex[nPos] == NIL .OR. Eval(bBefore)
                nEnd := nPos - 1
             ELSEIF Eval(bAfter)

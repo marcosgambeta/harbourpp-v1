@@ -204,7 +204,7 @@ PROCEDURE Main(...)
    hb_MemoWrit( "cats.json", hb_jsonencode( sc_hConstraint["categories"], .T. ) )
 #endif
 
-   OutStd(hb_ntos( Len(aContent) ), "items found" + hb_eol())
+   OutStd(hb_ntos(Len(aContent)), "items found" + hb_eol())
    OutStd(hb_eol())
 
    ASort( aContent,,, {| oL, oR | ;
@@ -435,7 +435,7 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
       NEXT
 
       IF Len(aContent) > nOldContentLen
-         OutStd(">", cDir, "(" + hb_ntos( Len(aContent) - nOldContentLen ), "items)" + hb_eol())
+         OutStd(">", cDir, "(" + hb_ntos(Len(aContent) - nOldContentLen), "items)" + hb_eol())
       ENDIF
    ENDIF
 
@@ -589,7 +589,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField("SUBCATEGORY")
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint["categories"][idxCategory][1], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) } ) ) == 0
+               ( idxSubCategory := AScan(sc_hConstraint["categories"][idxCategory][1], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) }) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
@@ -601,7 +601,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
             AddErrorCondition( cFile, "'" + o:fld["NAME"] + "' is identified as template " + hEntry["TEMPLATE"] + " but has no RETURNS value (" + cSection + ")" )
 
-         CASE ! o:IsConstraint( cSectionName, cSection )
+         CASE ! o:IsConstraint(cSectionName, cSection)
 
             cSource := cSectionName + " is '" + IIf(Len(cSection) <= 20, cSection, Left(StrTran(cSection, hb_eol()), 20) + "...") + "', should be one of: "
 #if 0
@@ -734,7 +734,7 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
       Eval(xLine)
    CASE HB_IsArray(xLine)
       IF nMode == 2
-         OutStd(Space( nIndent ) + Space(2))
+         OutStd(Space(nIndent) + Space(2))
       ENDIF
       AEval(xLine, {| x, n | ShowSubHelp( x, @nMode, nIndent + 2, n ) })
       IF nMode == 2
@@ -742,9 +742,9 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
       ENDIF
    OTHERWISE
       DO CASE
-      CASE nMode == 1 ; OutStd(Space( nIndent ) + xLine + hb_eol())
+      CASE nMode == 1 ; OutStd(Space(nIndent) + xLine + hb_eol())
       CASE nMode == 2 ; OutStd(IIf(n > 1, ", ", "") + xLine)
-      OTHERWISE       ; OutStd("(" + hb_ntos( nMode ) + ") " + xLine + hb_eol())
+      OTHERWISE       ; OutStd("(" + hb_ntos(nMode) + ") " + xLine + hb_eol())
       ENDCASE
    ENDCASE
 
@@ -874,7 +874,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
    IF nWidth == 0 .OR. lRaw
       idx := 99999
       AEval(aText, {| c | IIf(Empty(c), , idx := Min(idx, Len(c) - Len(LTrim(c)))) })
-      AEval(aText, {| c, n | aText[n] := Space( nLeftMargin ) + SubStr(c, idx + 1) })
+      AEval(aText, {| c, n | aText[n] := Space(nLeftMargin) + SubStr(c, idx + 1) })
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
       FOR EACH cLine IN aText
@@ -884,7 +884,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
             cResult += hb_eol()
             lRaw := .F.
          ELSEIF lRaw .OR. lForceRaw
-            cResult += Space( nLeftMargin ) + LTrim(cLine) + hb_eol()
+            cResult += Space(nLeftMargin) + LTrim(cLine) + hb_eol()
          ELSE
             DO WHILE Len(cLine) > nWidth
                idx := nWidth + 1
@@ -923,12 +923,12 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                   idx := nWidth
                ENDIF
 
-               cResult += Space( nLeftMargin ) + Left(cLine, idx - IIf(SubStr(cLine, idx, 1) == " ", 1, 0)) + hb_eol()
+               cResult += Space(nLeftMargin) + Left(cLine, idx - IIf(SubStr(cLine, idx, 1) == " ", 1, 0)) + hb_eol()
                cLine := LTrim(SubStr(cLine, idx + 1))
             ENDDO
 
             IF !HB_IsNull( cLine )
-               cResult += Space( nLeftMargin ) + cLine + hb_eol()
+               cResult += Space(nLeftMargin) + cLine + hb_eol()
             ENDIF
 
             cResult += hb_eol()
@@ -970,7 +970,7 @@ CREATE CLASS Entry
 
    METHOD New( cTemplate )
    METHOD IsField(cField, nType)
-   METHOD IsConstraint( cField, cSection )
+   METHOD IsConstraint(cField, cSection)
    METHOD IsComplete( cIncompleteFieldsList )
    METHOD IsPreformatted(cField)
    METHOD IsRequired(cField)
@@ -1020,7 +1020,7 @@ METHOD Entry:IsField(cField, nType)
 
    RETURN .F.
 
-METHOD Entry:IsConstraint( cField, cSection )
+METHOD Entry:IsConstraint(cField, cSection)
 
    IF hb_bitAnd(::_group[hb_HPos( sc_hFields, cField )], hb_bitAnd(TPL_REQUIRED, TPL_OPTIONAL)) == 0
       RETURN .T.
@@ -1066,7 +1066,7 @@ METHOD Entry:IsOutput( cField )
 
 METHOD Entry:SubcategoryIndex( cCategory, cSubcategory )
    RETURN IIf(cCategory $ sc_hConstraint["categories"], ;
-      hb_AScan( sc_hConstraint["categories"][cCategory][1], cSubcategory, , , .T. ), ;
+      hb_AScan(sc_hConstraint["categories"][cCategory][1], cSubcategory, , , .T.), ;
       0)
 
 FUNCTION FieldIDList()

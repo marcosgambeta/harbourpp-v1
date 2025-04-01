@@ -188,10 +188,10 @@ METHOD TBrowseSQL:New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable )
       // Add a picture
       DO CASE
       CASE ::oCurRow:FieldType( i ) == "N"
-         oCol:picture := Replicate( "9", oCol:Width )
+         oCol:picture := Replicate("9", oCol:Width)
 
       CASE ::oCurRow:FieldType( i ) $ "CM"
-         oCol:picture := Replicate( "!", oCol:Width )
+         oCol:picture := Replicate("!", oCol:Width)
       ENDCASE
 
       ::AddColumn( oCol )
@@ -337,7 +337,7 @@ METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
          nKey := Inkey(0)
       ENDIF
 
-      IF AScan( aExitKeys, nKey ) > 0
+      IF AScan(aExitKeys, nKey) > 0
          lKeepGoing := .F.
          LOOP
       ENDIF

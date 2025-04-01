@@ -225,7 +225,7 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    METHOD killDisplayFocus( xParam )            SETGET
    METHOD killInputFocus( xParam )              SETGET
    METHOD move( xParam )                        SETGET
-   METHOD paint( xParam )                       SETGET
+   METHOD paint(xParam)                         SETGET
    METHOD quit( xParam, xParam1 )               SETGET
    METHOD resize( xParam )                      SETGET
    METHOD setDisplayFocus( xParam )             SETGET
@@ -838,7 +838,7 @@ METHOD WvgCrt:move( xParam )
 
    RETURN Self
 
-METHOD WvgCrt:paint( xParam )
+METHOD WvgCrt:paint(xParam)
 
    IF HB_IsArray(xParam) .AND. HB_IsEvalItem(::sl_paint)
       Eval(::sl_paint, xParam, , Self)

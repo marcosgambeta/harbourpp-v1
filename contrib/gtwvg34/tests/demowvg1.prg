@@ -78,7 +78,7 @@ STATIC PROCEDURE ExecForm( aPaint )
    LOCAL nSlry   := 20000
    LOCAL nColGet := 8
 
-   aPnt := WvtSetPaint( aPaint )
+   aPnt := WvtSetPaint(aPaint)
 
    SetColor("N/W")
    CLS
@@ -100,7 +100,7 @@ STATIC PROCEDURE ExecForm( aPaint )
    READ
 
    SetColor(cColor)
-   WvtSetPaint( aPnt )
+   WvtSetPaint(aPnt)
 
    RETURN
 
@@ -142,7 +142,7 @@ STATIC FUNCTION ClearStatusMsg()
    LOCAL nRow := Row()
    LOCAL nCol := Col()
 
-   hb_DispOutAt( MaxRow(), 42, Space( 37 ), "W/W" )
+   hb_DispOutAt( MaxRow(), 42, Space(37), "W/W" )
 
    SetPos(nRow, nCol)
 
@@ -150,7 +150,7 @@ STATIC FUNCTION ClearStatusMsg()
 
 STATIC PROCEDURE DoModalDialog()
 
-   LOCAL aPnt   := WvtSetPaint( {} )
+   LOCAL aPnt   := WvtSetPaint({})
    LOCAL aPaint := {}
    LOCAL nSel
 
@@ -166,7 +166,7 @@ STATIC PROCEDURE DoModalDialog()
    oCrt:show()
 
    AAdd(aPaint, { "Box_V", {|| wvt_DrawBoxRaised(1, 2, 11, 47) }, NIL, { WVT_BLOCK_BOX, 0, 0, MaxRow(), MaxCol() } })
-   WvtSetPaint( aPaint )
+   WvtSetPaint(aPaint)
 
    SetColor("N/W")
    CLS
@@ -179,7 +179,7 @@ STATIC PROCEDURE DoModalDialog()
 
    oCrt:Destroy()
 
-   WvtSetPaint( aPnt )
+   WvtSetPaint(aPnt)
 
    RETURN
 

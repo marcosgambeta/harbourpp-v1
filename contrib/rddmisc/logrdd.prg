@@ -340,7 +340,7 @@ FUNCTION hb_LogRddValueToText( uValue )
 
    SWITCH cType := ValType(uValue)
    CASE "C"  ; cText := hb_StrToExp( uValue ) ; EXIT
-   CASE "N"  ; cText := hb_ntos( uValue ) ; EXIT
+   CASE "N"  ; cText := hb_ntos(uValue) ; EXIT
    CASE "D"  ; cText := DToS( uValue ) ; cText := "0d" + IIf(Empty(cText), "00000000", cText) ; EXIT
    OTHERWISE ; cText := hb_ValToStr( uValue )
    ENDSWITCH
@@ -396,23 +396,23 @@ STATIC FUNCTION ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
       RETURN hb_ValToExp( xPar1 )
    CASE "OPEN"
       // Parameters received: xPar1: aOpenInfo
-      RETURN 'Table: "' + xPar1[UR_OI_NAME] + '", Alias: "' + Alias() + '", WorkArea: ' + hb_ntos( nWA )
+      RETURN 'Table: "' + xPar1[UR_OI_NAME] + '", Alias: "' + Alias() + '", WorkArea: ' + hb_ntos(nWA)
    CASE "CLOSE"
       // Parameters received: xPar1: cTableName, xPar2: cAlias
-      RETURN 'Table: "' + xPar1 + '", Alias: "' + xPar2 + '", WorkArea: ' + hb_ntos( nWA )
+      RETURN 'Table: "' + xPar1 + '", Alias: "' + xPar2 + '", WorkArea: ' + hb_ntos(nWA)
    CASE "APPEND"
       // Parameters received: xPar1: lUnlockAll
-      RETURN Alias() + "->RecNo() == " + hb_ntos( RecNo() )
+      RETURN Alias() + "->RecNo() == " + hb_ntos(RecNo())
    CASE "DELETE"
       // Parameters received: none
-      RETURN Alias() + "->RecNo() == " + hb_ntos( RecNo() )
+      RETURN Alias() + "->RecNo() == " + hb_ntos(RecNo())
    CASE "RECALL"
       // Parameters received: none
-      RETURN Alias() + "->RecNo() == " + hb_ntos( RecNo() )
+      RETURN Alias() + "->RecNo() == " + hb_ntos(RecNo())
    CASE "PUTVALUE"
       // Parameters received: xPar1: nField, xPar2: xValue, xPar3: xOldValue
       HB_SYMBOL_UNUSED(xPar3) // Here don't log previous value
-      RETURN Alias() + "(" + hb_ntos( RecNo() ) + ")->" + PadR(FieldName( xPar1 ), 10) + " := " + hb_LogRddValueToText( xPar2 )
+      RETURN Alias() + "(" + hb_ntos(RecNo()) + ")->" + PadR(FieldName( xPar1 ), 10) + " := " + hb_LogRddValueToText( xPar2 )
    CASE "ZAP"
       // Parameters received: none
       RETURN 'Alias: "' + Alias() + ' Table: "' + dbInfo( DBI_FULLPATH ) + '"'

@@ -73,7 +73,7 @@
 #define S_STEP                4  // number of elements for auto sizing
 
 #xtrans S_STACK()             => S_STACK( 64 )
-#xtrans S_STACK( <n> )        => { Array( <n> ), 0, <n>, Max(32, Int( <n> / 2 )) }
+#xtrans S_STACK( <n> )        => { Array( <n> ), 0, <n>, Max(32, Int(<n> / 2)) }
 #xtrans S_GROW( <a> )         => ( IIf(++<a>\[S_NUM] > <a>\[S_SIZE], ASize( <a>\[S_DATA], ( <a>\[S_SIZE] += <a>\[S_STEP] ) ), <a>) )
 #xtrans S_SHRINK( <a> )       => ( IIf(<a>\[S_NUM] > 0 .AND. --<a>\[S_NUM] \< <a>\[S_SIZE] - <a>\[S_STEP], ASize( <a>\[S_DATA], <a>\[S_SIZE] -= <a>\[S_STEP] ), <a>) )
 #xtrans S_COMPRESS( <a> )     => ( ASize( <a>\[S_DATA], <a>\[S_SIZE] := <a>\[S_NUM] ) )
@@ -929,7 +929,7 @@ METHOD THtmlNode:insertAfter( oTHtmlNode )
       ::root:_document:changed := .T.
    ENDIF
 
-   IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) + 1 ) > Len(::parent:htmlContent)
+   IF ( nPos := hb_AScan(::parent:htmlContent, Self,,, .T.) + 1 ) > Len(::parent:htmlContent)
       ::parent:addNode( oTHtmlNode )
    ELSE
       hb_AIns( ::parent:htmlContent, nPos, oTHtmlNode, .T. )
@@ -949,7 +949,7 @@ METHOD THtmlNode:Delete()
    ENDIF
 
    IF HB_IsArray(::parent:htmlContent)
-      hb_ADel( ::parent:htmlContent, hb_AScan( ::parent:htmlContent, Self,,, .T. ), .T. )
+      hb_ADel( ::parent:htmlContent, hb_AScan(::parent:htmlContent, Self,,, .T.), .T. )
    ENDIF
 
    ::parent := NIL
@@ -993,12 +993,12 @@ METHOD THtmlNode:nextNode()
       RETURN ::htmlContent[1]
    ENDIF
 
-   IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) ) < Len(::parent:htmlContent)
+   IF ( nPos := hb_AScan(::parent:htmlContent, Self,,, .T.) ) < Len(::parent:htmlContent)
       RETURN ::parent:htmlContent[nPos + 1]
    ENDIF
 
    aNodes := ::parent:parent:collect()
-   nPos   := hb_AScan( aNodes, Self,,, .T. )
+   nPos   := hb_AScan(aNodes, Self,,, .T.)
 
    RETURN IIf(nPos == Len(aNodes), NIL, aNodes[nPos + 1])
 
@@ -1012,7 +1012,7 @@ METHOD THtmlNode:prevNode()
    ENDIF
 
    aNodes := ::parent:collect( Self )
-   nPos   := hb_AScan( aNodes, Self,,, .T. )
+   nPos   := hb_AScan(aNodes, Self,,, .T.)
 
    RETURN IIf(nPos == 1, ::parent, aNodes[nPos - 1])
 
@@ -1028,7 +1028,7 @@ METHOD THtmlNode:toString( nIndent )
 
    hb_default(@nIndent, -1)
 
-   cIndent := IIf(::keepFormatting(), "", Space( Max(0, nIndent) ))
+   cIndent := IIf(::keepFormatting(), "", Space(Max(0, nIndent)))
 
    IF !::htmlTagName == "_root_"
       // all nodes but the root node have a HTML tag
@@ -1097,7 +1097,7 @@ STATIC FUNCTION __AttrToStr( cName, cValue, aAttr, oTHtmlNode )
 
    LOCAL nPos
 
-   IF ( nPos := AScan( aAttr, {| a | a[1] == Lower(cName) } ) ) == 0
+   IF ( nPos := AScan(aAttr, {| a | a[1] == Lower(cName) }) ) == 0
       // Tag doesn't have this attribute
       RETURN oTHtmlNode:error( "Invalid HTML attribute for: <" + oTHtmlNode:htmlTagName + ">", oTHtmlNode:className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
@@ -1155,7 +1155,7 @@ METHOD THtmlNode:getText( cEOL )
 
    FOR EACH oNode IN ::htmlContent
       cText += oNode:getText( cEOL )
-      IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan( ::parent:htmlContent, Self,,, .T. ) < Len(::parent:htmlContent)
+      IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan(::parent:htmlContent, Self,,, .T.) < Len(::parent:htmlContent)
          // leave table rows in one line, cells separated by Tab
          cText := hb_StrShrink( cText, Len(cEOL) ) + Chr(9)
       ENDIF
@@ -1323,7 +1323,7 @@ METHOD THtmlNode:setAttribute( cName, cValue )
       aAttr := {}
    END SEQUENCE
 
-   IF ( nPos := AScan( aAttr, {| a | a[1] == Lower(cName) } ) ) == 0
+   IF ( nPos := AScan(aAttr, {| a | a[1] == Lower(cName) }) ) == 0
       // Tag doesn't have this attribute
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
@@ -1538,7 +1538,7 @@ METHOD THtmlNode:popNode( cName )
       this allows to properly close the tags "tr,th,td" by simply using:
       node - ["tr","th","td"]
     */
-   IF hb_AScan( { "tr", "th", "td" }, cName,,, .T. ) > 0
+   IF hb_AScan({ "tr", "th", "td" }, cName,,, .T.) > 0
       endTag := "</" + cName + ">"
       IF !Right(::toString(), 3 + Len(cName)) == endTag
          ::addNode( THtmlNode():new( Self, "/" + cName, ,  ) )
@@ -1615,7 +1615,7 @@ FUNCTION THtmlIsValid( cTagName, cAttrName )
       aValue := t_hHT[cTagName]
       IF cAttrName != NIL
          aValue := aValue[1]:exec()
-         lRet   := AScan( aValue, {| a | Lower(a[1]) == Lower(cAttrName) } ) > 0
+         lRet   := AScan(aValue, {| a | Lower(a[1]) == Lower(cAttrName) }) > 0
       ENDIF
    RECOVER
       lRet := .F.

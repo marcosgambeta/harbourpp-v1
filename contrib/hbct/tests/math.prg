@@ -147,7 +147,7 @@ PROCEDURE Main()
    ?
 
    ? "Fact( 21 ) = 51090942171709440000    // CT3"
-   ? Space( 12 ), Fact( 21 ), "  <-- CT for Harbour"
+   ? Space(12), Fact( 21 ), "  <-- CT for Harbour"
    ?
 
    ? "Fact( 25 ) = -1    // CT3"

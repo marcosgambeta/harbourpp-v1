@@ -242,7 +242,7 @@ METHOD GDChart:PieChart()
             colorp    := ::GetPixel( nPosX, nPosY )
             textcolor := ::SetColor(255 - ::Red(colorp), 255 - ::Green( colorp ), 255 - ::Blue( colorp ))
          ENDIF
-         // cTitle := hb_ntos( nVal )
+         // cTitle := hb_ntos(nVal)
          IF hFont == NIL
             ::Say( nPosX, nPosY, cLabel, textcolor, gdAlignCenter )
          ELSE
@@ -343,7 +343,7 @@ METHOD GDChart:VerticalBarChart()
       nLeftLabelSpace := nBorder + Len(LTrim(Transform(nMax, cAxisPict))) * ::GetFontWidth() + nBorder
    ENDIF
    IF !HB_IsNumeric(nRightLabelSpace)
-      nRightLabelSpace := nLeftLabelSpace // nBorder + Len(hb_ntos( nMax )) * ::GetFontWidth() + nBorder
+      nRightLabelSpace := nLeftLabelSpace // nBorder + Len(hb_ntos(nMax)) * ::GetFontWidth() + nBorder
    ENDIF
    IF !HB_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
@@ -777,7 +777,7 @@ METHOD GDChart:LineChart()
       nSize := nWidth
    ENDIF
 
-   nTotRange := nMaxValue + IIf(nMinValue < 0, Abs( nMinValue ), 0)
+   nTotRange := nMaxValue + IIf(nMinValue < 0, Abs(nMinValue), 0)
 
    nCeiling := 0
 
@@ -788,9 +788,9 @@ METHOD GDChart:LineChart()
    nCeiling := 10 ^ nCeiling
 
    nMaxValue := Ceiling( nMaxValue / nCeiling ) * nCeiling
-   nMinValue := IIf(nMinValue < 0, -Ceiling( Abs( nMinValue ) / nCeiling ) * nCeiling, Ceiling( nMinValue / nCeiling ) * nCeiling)
+   nMinValue := IIf(nMinValue < 0, -Ceiling( Abs(nMinValue) / nCeiling ) * nCeiling, Ceiling( nMinValue / nCeiling ) * nCeiling)
 
-   nTotRange := nMaxValue + IIf(nMinValue < 0, Abs( nMinValue ), 0)
+   nTotRange := nMaxValue + IIf(nMinValue < 0, Abs(nMinValue), 0)
 
    IF lShowGrid
       ::Rectangle( x, ::Height() - ( y + nHeight ), x + nWidth, ::Height() - y, .F., colorp )
@@ -848,7 +848,7 @@ METHOD GDChart:LineChart()
       // ENDIF
       colorp    := __HGetValue( hElement, "COLOR" )
       nVal      := hElement["VALUE"]
-      nDim      := ( ( nVal + Abs( nMinValue ) ) / nTotRange ) * nHeight
+      nDim      := ( ( nVal + Abs(nMinValue) ) / nTotRange ) * nHeight
 
       // hb_default(@lFilled, .F.)
       // hb_default(@nExtrude, 0)

@@ -267,9 +267,9 @@ METHOD TFbServer:TableStruct( cTable )
    IF HB_IsArray(qry)
       DO WHILE FBFetch( qry ) == 0
          cField  := FBGetData(qry, 1)
-         nType   := Val( FBGetData(qry, 2) )
-         nSize   := Val( FBGetData(qry, 3) )
-         nDec    := Val( FBGetData(qry, 4) )
+         nType   := Val(FBGetData(qry, 2))
+         nSize   := Val(FBGetData(qry, 3))
+         nDec    := Val(FBGetData(qry, 4))
          cDomain := FBGetData(qry, 5)
 
          SWITCH nType
@@ -554,7 +554,7 @@ METHOD TFbQuery:Refresh()
 
       /* Tables in query */
       FOR i := 1 TO Len(::aStruct)
-         IF hb_AScan( aTable, ::aStruct[i][5], , , .T. ) == 0
+         IF hb_AScan(aTable, ::aStruct[i][5], , , .T.) == 0
             AAdd(aTable, ::aStruct[i][5])
          ENDIF
       NEXT
@@ -623,7 +623,7 @@ METHOD TFbQuery:FieldPos( cField )
    LOCAL result := 0
 
    IF !::lError
-      result := AScan( ::aStruct, {| x | x[1] == RTrim(Upper(cField)) } )
+      result := AScan(::aStruct, {| x | x[1] == RTrim(Upper(cField)) })
    ENDIF
 
    RETURN result
@@ -697,7 +697,7 @@ METHOD TFbQuery:FieldGet( nField )
 
       ELSEIF cType == "N"
          IF result != NIL
-            result := Val( result )
+            result := Val(result)
          ELSE
             result := 0
          ENDIF
@@ -711,7 +711,7 @@ METHOD TFbQuery:FieldGet( nField )
 
       ELSEIF cType == "L"
          IF result != NIL
-            result := ( Val( result ) == 1 )
+            result := ( Val(result) == 1 )
          ELSE
             result := .F.
          ENDIF
@@ -858,7 +858,7 @@ METHOD TFbRow:FieldName( nField )
    RETURN result
 
 METHOD TFbRow:FieldPos( cField )
-   RETURN AScan( ::aStruct, {| x | x[1] == RTrim(Upper(cField)) } )
+   RETURN AScan(::aStruct, {| x | x[1] == RTrim(Upper(cField)) })
 
 METHOD TFbRow:FieldType( nField )
 
@@ -1008,7 +1008,7 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
          nDec := aStru[i][4] * -1
          cTable := RTrim(aStru[i][5])
 
-         nVal := AScan( aDomains, {| x | RTrim(x[1]) == cTable .AND. RTrim(x[2]) == cField } )
+         nVal := AScan(aDomains, {| x | RTrim(x[1]) == cTable .AND. RTrim(x[2]) == cField })
 
          IF nVal != 0
             cDomain := aDomains[nVal, 3]

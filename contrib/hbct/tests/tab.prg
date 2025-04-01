@@ -85,7 +85,7 @@ PROCEDURE Main()
    cStr := StrTran(cStr, Chr(13), "^M")
    ? '  TabExpand("-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!",, "+", "$")'
    nLen := Len(hb_eol())
-   ? '     == "-+++++++!$$--"+hb_eol()+"' + Replicate( "-", 4 - nLen ) + '++!"  ? -> "' + cStr + '"'
+   ? '     == "-+++++++!$$--"+hb_eol()+"' + Replicate("-", 4 - nLen) + '++!"  ? -> "' + cStr + '"'
    ?
 
    ? "Tests with tab characters:"

@@ -197,9 +197,9 @@ PROCEDURE hsx_Close( xHSX )
       aWData := USRRDD_AREADATA(Select())
       DO CASE
       CASE HB_IsNumeric(xHSX)
-         nSlot := AScan( aWData[2], xHSX )
+         nSlot := AScan(aWData[2], xHSX)
       CASE HB_IsString(xHSX)
-         nSlot := AScan( aWData[3], {| _1 | _1 == xHSX } )
+         nSlot := AScan(aWData[3], {| _1 | _1 == xHSX })
       OTHERWISE
          nSlot := 0
       ENDCASE
@@ -217,7 +217,7 @@ FUNCTION hsx_Handle( cFile )
 
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
-      nSlot := AScan( aWData[3], {| _1 | _1 == cFile } )
+      nSlot := AScan(aWData[3], {| _1 | _1 == cFile })
       IF nSlot != 0
          RETURN aWData[2][nSlot]
       ENDIF
@@ -231,7 +231,7 @@ FUNCTION hsx_File( nHsx )
 
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
-      nSlot := AScan( aWData[3], nHsx )
+      nSlot := AScan(aWData[3], nHsx)
       IF nSlot != 0
          RETURN aWData[3][nSlot]
       ENDIF

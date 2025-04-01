@@ -55,7 +55,7 @@ PROCEDURE Main( cRemote4 )
 
       aResult := CurGet()
       @ 1, 1 SAY Time()
-      @ 2, 1 SAY "downloading... (" + hb_ntos( nRun ) + " transfers left)"
+      @ 2, 1 SAY "downloading... (" + hb_ntos(nRun) + " transfers left)"
       CurSet( aResult )
 
       IF nRun < nLastRun
@@ -115,7 +115,7 @@ STATIC PROCEDURE PrintAllDownloaded( aHandles )
          LOOP
       ENDIF
 
-      ?  "Transfer #" + hb_ntos( h:__enumIndex ) + " (" + hb_ntos( curl_easy_getinfo( h, HB_CURLINFO_RESPONSE_CODE ) ) + "): "
+      ?  "Transfer #" + hb_ntos(h:__enumIndex) + " (" + hb_ntos(curl_easy_getinfo( h, HB_CURLINFO_RESPONSE_CODE )) + "): "
       IF curl_easy_getinfo( h, HB_CURLINFO_RESPONSE_CODE ) == 0
         ?? "aborted"
       ELSE

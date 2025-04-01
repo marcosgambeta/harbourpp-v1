@@ -348,7 +348,7 @@ FUNCTION SQLPrepare(cQuery, ...)
 
       // Place {} in the parameters
       FOR i := 1 TO PCount() - 1
-         IF (x := At(":" + hb_ntos( i ), cQuery)) > 0
+         IF (x := At(":" + hb_ntos(i), cQuery)) > 0
             cQuery := Stuff(cQuery, x, 0, "{")
             cQuery := Stuff(cQuery, x + Len(hb_ntos(i)) + 2, 0, "}")
          ENDIF

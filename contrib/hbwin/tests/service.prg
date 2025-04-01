@@ -64,9 +64,9 @@ PROCEDURE Main( cMode )
          ? "Service has been successfully installed"
       ELSE
          nError := wapi_GetLastError()
-         cMsg := Space( 128 )
+         cMsg := Space(128)
          wapi_FormatMessage( ,,,, @cMsg )
-         ? "Error installing service: " + hb_ntos( nError ) + " " + cMsg
+         ? "Error installing service: " + hb_ntos(nError) + " " + cMsg
       ENDIF
       EXIT
 
@@ -76,9 +76,9 @@ PROCEDURE Main( cMode )
          ? "Service has been deleted"
       ELSE
          nError := wapi_GetLastError()
-         cMsg := Space( 128 )
+         cMsg := Space(128)
          wapi_FormatMessage( ,,,, @cMsg )
-         ? "Error deleting service: " + hb_ntos( nError ) + " " + cMsg
+         ? "Error deleting service: " + hb_ntos(nError) + " " + cMsg
       ENDIF
       EXIT
 
@@ -91,9 +91,9 @@ PROCEDURE Main( cMode )
          ? "Service has started OK"
       ELSE
          nError := wapi_GetLastError()
-         cMsg := Space( 128 )
+         cMsg := Space(128)
          wapi_FormatMessage( ,,,, @cMsg )
-         ? "Service has had some problems: " + hb_ntos( nError ) + " " + cMsg
+         ? "Service has had some problems: " + hb_ntos(nError) + " " + cMsg
       ENDIF
       EXIT
 
@@ -117,11 +117,11 @@ PROCEDURE SrvMain( cParam1, cParam2 )
    FWrite( fhnd, "|" + cParam1 + "|" + cParam2 + "|" + hb_eol() )
 
    FOR EACH cParam IN hb_AParams()
-      FWrite( fhnd, "Parameter " + hb_ntos( cParam:__enumIndex() ) + " >" + cParam + "<" + hb_eol() )
+      FWrite( fhnd, "Parameter " + hb_ntos(cParam:__enumIndex()) + " >" + cParam + "<" + hb_eol() )
    NEXT
 
    DO WHILE win_serviceGetStatus() == WIN_SERVICE_RUNNING
-      FWrite( fhnd, "Work in progress " + hb_ntos( ++n ) + hb_eol() )
+      FWrite( fhnd, "Work in progress " + hb_ntos(++n) + hb_eol() )
       hb_idleSleep( 0.5 )
    ENDDO
 

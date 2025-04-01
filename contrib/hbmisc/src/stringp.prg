@@ -81,7 +81,7 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
    SWITCH ValType(xTxt)
    CASE "C"
    CASE "M" ; RETURN IIf(lDebug, '"' + xTxt + '"', xTxt)
-   CASE "N" ; RETURN hb_ntos( xTxt )
+   CASE "N" ; RETURN hb_ntos(xTxt)
    CASE "U" ; RETURN IIf(lDebug, "NIL", "")
    CASE "D" ; RETURN hb_DToC(xTxt, "yyyy-mm-dd")
    CASE "L" ; RETURN IIf(lDebug, IIf(xTxt, ".T.", ".F."), IIf(xTxt, "True", "False"))

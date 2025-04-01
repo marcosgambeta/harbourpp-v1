@@ -49,7 +49,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_ntos( n ) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str( n ))
 #define hb_BChar( n ) Chr(n)
 #endif
 
@@ -70,7 +70,7 @@ PROCEDURE Main()
    ? '          '
    cStr := CharNot( hb_BChar( 85 ) + hb_BChar( 128 ) + hb_BChar( 170 ) + hb_BChar(1) )
    FOR ni := 1 TO Len(cStr)
-      ?? "hb_BChar( " + hb_ntos( Asc(SubStr(cStr, ni, 1)) ) + " )"
+      ?? "hb_BChar( " + hb_ntos(Asc(SubStr(cStr, ni, 1))) + " )"
       IF ni < Len(cStr)
          ?? " + "
       ENDIF

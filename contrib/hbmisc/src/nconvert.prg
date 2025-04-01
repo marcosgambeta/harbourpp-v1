@@ -106,7 +106,7 @@ FUNCTION DecToBin( nNumber )
    DO WHILE nNumber > 0
       nTemp := nNumber % 2
       cNewString := SubStr("01", nTemp + 1, 1) + cNewString
-      nNumber := Int( ( nNumber - nTemp ) / 2 )
+      nNumber := Int(( nNumber - nTemp ) / 2)
    ENDDO
 
    RETURN cNewString
@@ -119,7 +119,7 @@ FUNCTION DecToOctal( nNumber )
    DO WHILE nNumber > 0
       nTemp := nNumber % 8
       cNewString := SubStr("01234567", nTemp + 1, 1) + cNewString
-      nNumber := Int( ( nNumber - nTemp ) / 8 )
+      nNumber := Int(( nNumber - nTemp ) / 8)
    ENDDO
 
    RETURN cNewString
@@ -132,7 +132,7 @@ FUNCTION DecToHexa(nNumber)
    DO WHILE nNumber > 0
       nTemp := nNumber % 16
       cNewString := SubStr("0123456789ABCDEF", nTemp + 1, 1) + cNewString
-      nNumber := Int( ( nNumber - nTemp ) / 16 )
+      nNumber := Int(( nNumber - nTemp ) / 16)
    ENDDO
 
    RETURN cNewString

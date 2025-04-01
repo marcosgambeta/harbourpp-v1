@@ -268,7 +268,7 @@ METHOD HBFormatCode:Reformat( aFile )
          ENDIF
          IF nPosComment > 0 .AND. ::nSpaceComment >= 0
             nPos := nPosComment + IIf(SubStr(cLineAll, nPosComment, 1) == "*", 1, 2)
-               cLineAll := Left(cLineAll, nPos - 1) + Space( ::nSpaceComment ) + LTrim(SubStr(cLineAll, nPos))
+               cLineAll := Left(cLineAll, nPos - 1) + Space(::nSpaceComment) + LTrim(SubStr(cLineAll, nPos))
             ENDIF
          IF ( nPos := FindNotQuoted("/*", cLineAll) ) > 0 .AND. ( nPosComment == 0 .OR. nPosComment > nPos )
             nPosComment := nPos
@@ -360,17 +360,17 @@ METHOD HBFormatCode:Reformat( aFile )
                      IF nState > 0
                         nState := RF_STATE_CODE
                      ENDIF
-                     IF ( nContrState := AScan( ::aContr, {| a | a[1] == cToken1 .AND. ( Empty(a[2]) .OR. a[2] == cToken2 ) } ) ) > 0
+                     IF ( nContrState := AScan(::aContr, {| a | a[1] == cToken1 .AND. ( Empty(a[2]) .OR. a[2] == cToken2 ) }) ) > 0
                         IF Len(aDeep) < ++nDeep
                            AAdd(aDeep, NIL)
                         ENDIF
                         aDeep[nDeep] := nContrState
-                     ELSEIF Len(cToken1) < 4 .OR. ( nContrState := AScan( ::aContr, {| a | AScan( a[3], {| e | e == cToken1 } ) > 0 } ) ) == 0
-                        IF ( nPos := AScan( ::aContr, {| a | AScan( a[4], {| e | e == cToken1 } ) > 0 } ) ) > 0 .OR. ;
+                     ELSEIF Len(cToken1) < 4 .OR. ( nContrState := AScan(::aContr, {| a | AScan(a[3], {| e | e == cToken1 }) > 0 }) ) == 0
+                        IF ( nPos := AScan(::aContr, {| a | AScan(a[4], {| e | e == cToken1 }) > 0 }) ) > 0 .OR. ;
                               cToken1 == "end"
                            IF nPos > 0 .AND. nDeep > 0 .AND. aDeep[nDeep] != nPos
-                              DO WHILE ( nPos := AScan( ::aContr, {| a | AScan( a[4], {| e | e == cToken1 } ) > 0 }, ;
-                                    nPos + 1 ) ) > 0 .AND. aDeep[nDeep] != nPos
+                              DO WHILE ( nPos := AScan(::aContr, {| a | AScan(a[4], {| e | e == cToken1 }) > 0 }, ;
+                                    nPos + 1) ) > 0 .AND. aDeep[nDeep] != nPos
                               ENDDO
                            ENDIF
                            IF nDeep > 0 .AND. ( aDeep[nDeep] == nPos .OR. cToken1 == "end" )
@@ -399,7 +399,7 @@ METHOD HBFormatCode:Reformat( aFile )
                      IF ( hb_LeftEq( cLine, "#" ) .AND. ! ::lIndDrt ) .OR. ( nPosComment == 1 .AND. ! lSpaceFirst )
                         nIndent := 0
                      ENDIF
-                     cLineAll := Space( nIndent ) + ::FormatLine( cLine )
+                     cLineAll := Space(nIndent) + ::FormatLine( cLine )
                      IF nPosComment > 0
                         nPosComment += nIndent
                      ENDIF
@@ -445,7 +445,7 @@ METHOD HBFormatCode:Reformat( aFile )
                aFile[i] := cLineAll
             ELSE
                // This line is a continuation of previous
-               aFile[i] := Space( ::nIndLeft + ::nIndNext * nDeep + ::nIndCont ) + ::FormatLine( aFile[i], .T. )
+               aFile[i] := Space(::nIndLeft + ::nIndNext * nDeep + ::nIndCont) + ::FormatLine( aFile[i], .T. )
             ENDIF
             lContinue := lToBeContinued
          ELSEIF ! lPragmaDump
@@ -485,7 +485,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
 
    IF !lContinued .AND. hb_LeftEq( cLine, "#" )
       IF ::lSpaces .AND. ::nSpaceDrt != -1
-         cLine := Left(cLine, nPos) + Space( ::nSpaceDrt ) + LTrim(SubStr(cLine, nPos + 1))
+         cLine := Left(cLine, nPos) + Space(::nSpaceDrt) + LTrim(SubStr(cLine, nPos + 1))
       ENDIF
       nLen := Len(cLine)
       IF ::lCase .AND. ::nCaseDrt != -1
@@ -798,7 +798,7 @@ METHOD HBFormatCode:SetOption( cLine, i, aIni )
          IF Empty(cToken2)
             xRes := ""
          ELSEIF IsDigit( cToken2 ) .OR. ( hb_LeftEq( cToken2, "-" ) .AND. IsDigit( LTrim(SubStr(cToken2, 2)) ) )
-            xRes := Val( cToken2 )
+            xRes := Val(cToken2)
          ELSE
             cTemp := Upper(cToken2)
             IF cTemp == "ON" .OR. cTemp == "YES"
@@ -884,7 +884,7 @@ METHOD HBFormatCode:Array2Source( aSource )
       ENDIF
    NEXT
 
-   DO WHILE Right(cSource, Len(::cEol) * 2) == Replicate( ::cEol, 2 )
+   DO WHILE Right(cSource, Len(::cEol) * 2) == Replicate(::cEol, 2)
       cSource := hb_StrShrink( cSource, Len(::cEol) )
    ENDDO
 

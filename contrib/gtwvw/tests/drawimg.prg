@@ -78,8 +78,8 @@ PROCEDURE Main()
       nleft := 3, ;
       nbot := MaxRow() - 2, ;
       nrig := MaxCol() - 2, ;
-      nmidver := Int( ( ntop + nbot ) / 2 ), ;
-      nmidhor := Int( ( nleft + nrig ) / 2 )
+      nmidver := Int(( ntop + nbot ) / 2), ;
+      nmidhor := Int(( nleft + nrig ) / 2)
    LOCAL cpict := "vouch1.gif"
    LOCAL ltransp := .F.
    LOCAL nMaxCache
@@ -312,7 +312,7 @@ FUNCTION wg_AddWPaintObj( nWinNum, oWPaint, lStrict, nOperation )
    // ...
 
    // exist nType + cId ?
-   i := AScan( s_aPObjList[nWinNum + 1], {| x | x:nType == oWPaint:nType .AND. x:cId == oWPaint:cId } )
+   i := AScan(s_aPObjList[nWinNum + 1], {| x | x:nType == oWPaint:nType .AND. x:cId == oWPaint:cId })
 
    IF i > 0
       // so we are about to overwrite now...

@@ -203,7 +203,7 @@ METHOD WvgStatusBar:delItem( nItemORcKey )
 
    DO CASE
    CASE HB_IsNumeric(nItemORcKey)
-      nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
+      nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
    CASE HB_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
@@ -220,7 +220,7 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
 
    DO CASE
    CASE HB_IsString(nItemORcKey)
-      nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
+      nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
    CASE HB_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE

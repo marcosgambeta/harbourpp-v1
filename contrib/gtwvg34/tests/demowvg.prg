@@ -191,10 +191,10 @@ STATIC PROCEDURE WvtConsoleGets( nMode )
 STATIC PROCEDURE WvtNextGetsConsole()
 
    LOCAL dDate   := hb_SToD()
-   LOCAL cName   := Space( 35 )
-   LOCAL cAdd1   := Space( 35 )
-   LOCAL cAdd2   := Space( 35 )
-   LOCAL cAdd3   := Space( 35 )
+   LOCAL cName   := Space(35)
+   LOCAL cAdd1   := Space(35)
+   LOCAL cAdd2   := Space(35)
+   LOCAL cAdd3   := Space(35)
    LOCAL nSlry   := 0
    LOCAL nColGet := 8
    LOCAL GetList := {}
@@ -239,10 +239,10 @@ STATIC PROCEDURE WvtNextGets_X()
 
    LOCAL aLastPaint, clr
    LOCAL dDate      := hb_SToD()
-   LOCAL cName      := Space( 35 )
-   LOCAL cAdd1      := Space( 35 )
-   LOCAL cAdd2      := Space( 35 )
-   LOCAL cAdd3      := Space( 35 )
+   LOCAL cName      := Space(35)
+   LOCAL cAdd1      := Space(35)
+   LOCAL cAdd2      := Space(35)
+   LOCAL cAdd3      := Space(35)
    LOCAL nSlry      := 0
    LOCAL aBlocks    := {}
    LOCAL nColGet    := 8
@@ -499,9 +499,9 @@ STATIC PROCEDURE OnlineMap()
    cls
    hb_gtInfo( HB_GTI_WINTITLE, "Online Maps" )
 
-   mfrom1 := mto1 := Space( 20 )
-   mfrom2 := mto2 := Space( 40 )
-   mfrom3 := mto3 := Space( 50 )
+   mfrom1 := mto1 := Space(20)
+   mfrom2 := mto2 := Space(40)
+   mfrom3 := mto3 := Space(50)
 
    DO WHILE .T.
       @  5, 01 SAY "FROM :"

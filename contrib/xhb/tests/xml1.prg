@@ -18,7 +18,7 @@ PROCEDURE Main()
 
    oDoc := TXMLDocument():New( cString, HBXML_STYLE_NOESCAPE )
    IF oDoc:nError != HBXML_ERROR_NONE
-      WAIT "xml file parsing error " + hb_ntos( oDoc:nError )
+      WAIT "xml file parsing error " + hb_ntos(oDoc:nError)
       RETURN
    ENDIF
 

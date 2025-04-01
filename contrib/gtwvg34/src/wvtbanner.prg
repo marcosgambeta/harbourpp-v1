@@ -152,7 +152,7 @@ METHOD WvtBanner:Refresh()
 
    LOCAL nNewTime
 
-   IF Abs( ( nNewTime := Seconds() ) - ::nCurSeconds ) >= ::nTimeDelay
+   IF Abs(( nNewTime := Seconds() ) - ::nCurSeconds) >= ::nTimeDelay
       ::nCurSeconds := nNewTime
 
       IF ::nDirection == 0

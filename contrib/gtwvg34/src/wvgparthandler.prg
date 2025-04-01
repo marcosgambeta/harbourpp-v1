@@ -164,7 +164,7 @@ METHOD WvgPartHandler:removeChild(oChild)
 
    LOCAL n
 
-   IF ( n := hb_AScan( ::aChildren, oChild,,, .T. ) ) > 0
+   IF ( n := hb_AScan(::aChildren, oChild,,, .T.) ) > 0
       hb_ADel( ::aChildren, n, .T. )
    ENDIF
 
@@ -174,7 +174,7 @@ METHOD WvgPartHandler:delChild(oWvg)
 
    LOCAL n
 
-   IF ( n := hb_AScan( ::aChildren, oWvg,,, .T. ) ) > 0
+   IF ( n := hb_AScan(::aChildren, oWvg,,, .T.) ) > 0
       oWvg:destroy()
       hb_ADel( ::aChildren, n, .T. )
    ENDIF
@@ -377,13 +377,13 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
 
    CASE nEvent == HB_GTE_NOTIFY
       nCtrlID := xParams[1]
-      IF ( nIndex := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
+      IF ( nIndex := AScan(::aChildren, {| o | o:nID == nCtrlID }) ) > 0
          RETURN ::aChildren[nIndex]:handleEvent( HB_GTE_NOTIFY, xParams )
       ENDIF
 
    CASE nEvent == HB_GTE_COMMAND
       nCtrlID := xParams[2]
-      IF ( nIndex := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
+      IF ( nIndex := AScan(::aChildren, {| o | o:nID == nCtrlID }) ) > 0
          RETURN ::aChildren[nIndex]:handleEvent( HB_GTE_COMMAND, xParams )
       ENDIF
 
@@ -469,7 +469,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
          ENDIF
          RETURN EVENT_HANDLED
       ELSE
-         IF ( nObj := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
+         IF ( nObj := AScan(::aChildren, {| o | o:nID == nCtrlID }) ) > 0
             nReturn := ::aChildren[nObj]:handleEvent( HB_GTE_COMMAND, { nNotifctn, nCtrlID, hWndCtrl } )
             IF HB_IsNumeric(nReturn) .AND. nReturn == 0
                RETURN EVENT_HANDLED
@@ -479,7 +479,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       EXIT
 
    CASE WIN_WM_NOTIFY
-      IF ( nObj := AScan( ::aChildren, {| o | o:nID == nwParam } ) ) > 0
+      IF ( nObj := AScan(::aChildren, {| o | o:nID == nwParam }) ) > 0
          nReturn := ::aChildren[nObj]:handleEvent( HB_GTE_NOTIFY, { nwParam, wvg_n2p( nlParam ) } )
          DO CASE
          CASE HB_IsNumeric(nReturn) .AND. nReturn == EVENT_HANDLED

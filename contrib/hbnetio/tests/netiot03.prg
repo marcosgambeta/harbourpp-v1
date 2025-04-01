@@ -16,7 +16,7 @@
 #define DBDIR     "data"
 #define DBFILE    "_tst_"
 
-#define DBNAME    "net:" + DBSERVER + ":" + hb_ntos( DBPORT ) + ":" + ;
+#define DBNAME    "net:" + DBSERVER + ":" + hb_ntos(DBPORT) + ":" + ;
       DBPASSWD + ":" + DBDIR + "/" + DBFILE
 
 REQUEST DBFCDX
@@ -205,7 +205,7 @@ STATIC FUNCTION rpc_charstream( pConnSock, nStream )
          ? "CLOSED STREAM:", nStream
          EXIT
       ENDIF
-      n := Int( ( n + 1 ) % 26 )
+      n := Int(( n + 1 ) % 26)
       hb_idleSleep( 0.1 )
    ENDDO
 

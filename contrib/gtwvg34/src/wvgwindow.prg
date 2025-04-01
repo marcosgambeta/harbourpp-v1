@@ -232,7 +232,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    METHOD killDisplayFocus( xParam )            SETGET
    METHOD killInputFocus( xParam )              SETGET
    METHOD move( xParam )                        SETGET
-   METHOD paint( xParam )                       SETGET
+   METHOD paint(xParam)                         SETGET
    METHOD quit( xParam, xParam1 )               SETGET
    METHOD resize( xParam, xParam1 )             SETGET
    METHOD setDisplayFocus( xParam )             SETGET
@@ -591,7 +591,7 @@ METHOD WvgWindow:setFontCompoundName( cFont )
 
    IF !Empty(cFont)
 
-      IF ( n := AScan( aAttr, {| e | e $ cFont } ) ) > 0
+      IF ( n := AScan(aAttr, {| e | e $ cFont }) ) > 0
          cAttr := aAttr[n]
          cFont := Left(cFont, At( cAttr, Lower(cFont) ) - 1)
       ELSE
@@ -599,7 +599,7 @@ METHOD WvgWindow:setFontCompoundName( cFont )
       ENDIF
 
       IF ( n := At( ".", cFont ) ) > 0
-         nPoint := Val( Left(cFont, n - 1) )
+         nPoint := Val(Left(cFont, n - 1))
          cFont  := SubStr(cFont, n + 1)
       ELSE
          nPoint := 0
@@ -950,7 +950,7 @@ METHOD WvgWindow:move( xParam )
 
    RETURN Self
 
-METHOD WvgWindow:paint( xParam )
+METHOD WvgWindow:paint(xParam)
 
    IF HB_IsArray(xParam) .AND. HB_IsEvalItem(::sl_paint)
       Eval(::sl_paint, xParam, , Self)
@@ -1109,7 +1109,7 @@ METHOD WvgWindow:findObjectByHandle( hWnd )
 
    LOCAL nObj
 
-   IF ( nObj := AScan( ::aChildren, {| o | o:hWnd == hWnd } ) ) > 0
+   IF ( nObj := AScan(::aChildren, {| o | o:hWnd == hWnd }) ) > 0
       RETURN ::aChildren[nObj]
    ENDIF
 
@@ -1143,19 +1143,19 @@ METHOD WvgWindow:getPosAndSize( aPs, aSz )
       IF aPos[1] < 0 .OR. aPos[2] < 0 .OR. aSize[1] < 0 .OR. aSize[2] < 0
          nx := aPos[2]
          IF nX < 0
-            nX := Int( Abs( aPos[2] ) * wvt_GetFontInfo()[7] )
+            nX := Int(Abs(aPos[2]) * wvt_GetFontInfo()[7])
          ENDIF
          nY := aPos[1]
          IF nY < 0
-            nY := Int( Abs( aPos[1] ) * wvt_GetFontInfo()[6] )
+            nY := Int(Abs(aPos[1]) * wvt_GetFontInfo()[6])
          ENDIF
          nW := aSize[2]
          IF nW < 0
-            nW := Int( Abs( aSize[2] ) * wvt_GetFontInfo()[7] )
+            nW := Int(Abs(aSize[2]) * wvt_GetFontInfo()[7])
          ENDIF
          nH := aSize[1]
          IF nH < 0
-            nH := Int( Abs( aSize[1] ) * wvt_GetFontInfo()[6] )
+            nH := Int(Abs(aSize[1]) * wvt_GetFontInfo()[6])
          ENDIF
          RETURN { nX, nY, nW, nH }
       ENDIF

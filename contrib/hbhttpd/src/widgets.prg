@@ -407,11 +407,11 @@ METHOD UWBrowse:Output()
       cUrl += IIf("?" $ cUrl, "&", "?") + "_pos="
       cRet := '<br />' + cRet
       IF !Eof()
-         cI := cUrl + hb_ntos( ::nPos + ::nPageSize )
+         cI := cUrl + hb_ntos(::nPos + ::nPageSize)
          cRet := '<a href="' + IIf(lValidate, UUrlChecksum( cI ), cI) + '">&gt;&gt;</a>' + cRet
       ENDIF
       IF ::nPos > 0
-         cI := cUrl + hb_ntos( Max(0, ::nPos - ::nPageSize) )
+         cI := cUrl + hb_ntos(Max(0, ::nPos - ::nPageSize))
          cRet := '<a href="' + IIf(lValidate, UUrlChecksum( cI ), cI) + '">&lt;&lt;</a>&nbsp;&nbsp;' + cRet
       ENDIF
    ENDIF
@@ -574,7 +574,7 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
       SWITCH ValType(aData[nI])
       CASE "C"
       CASE "M" ; cRet += aData[nI]; EXIT
-      CASE "N" ; cRet += hb_ntos( aData[nI] ); EXIT
+      CASE "N" ; cRet += hb_ntos(aData[nI]); EXIT
       CASE "D" ; cRet += IIf(Empty(aData[nI]), "", DToC(aData[nI])); EXIT
       ENDSWITCH
    NEXT

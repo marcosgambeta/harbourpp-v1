@@ -80,8 +80,8 @@ PROCEDURE Main()
    nleft := 3
    nbot := MaxRow() - 2
    nrig := MaxCol() - 2
-   nmidver := Int( ( ntop + nbot ) / 2 )
-   nmidhor := Int( ( nleft + nrig ) / 2 )
+   nmidver := Int(( ntop + nbot ) / 2)
+   nmidhor := Int(( nleft + nrig ) / 2)
 
    nMaxCache := wvw_SetMaxBMCache()
 
@@ -287,7 +287,7 @@ STATIC PROCEDURE wg_AddWPaintObj( nWinNum, oWPaint, lStrict )
    LOCAL i
 
    // exist nType + cId ?
-   IF ( i := AScan( s_aPObjList[nWinNum + 1], {| x | x:nType == oWPaint:nType .AND. x:cId == oWPaint:cId } ) ) > 0
+   IF ( i := AScan(s_aPObjList[nWinNum + 1], {| x | x:nType == oWPaint:nType .AND. x:cId == oWPaint:cId }) ) > 0
       // so we are about to overwrite now...
       // ::Hide() is ideal, but it can be slow
       // let's do it only of user want strict/perfect operation
@@ -341,7 +341,7 @@ STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
 
    RETURN
 
-FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
+FUNCTION WVW_PAINT(nWinNum)  /* must be a public function */
 
    IF Len(s_aPObjList) >= nWinNum + 1
       // simple redraw, ignoring wpaint obj dependency with each other:

@@ -35,7 +35,7 @@ STATIC s_aComboList := {}
       __temp__ := wvw_cbFindString( , __nCBid__, <var> ); ;
       IIf(__temp__ >= 0, wvw_cbSetIndex( , __nCBid__, __temp__ ), NIL); ;
       SetPos(<row>, <col>); ;
-      AAdd(GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, )) ; ;
+      AAdd(GetList, _GET_( <var>, <"var">, Replicate("X", <nWidth>),, )) ; ;
       ATail( GetList ):cargo := __nCBid__; ;
       ATail( GetList ):reader := {| get | CBreader( get ) }
 
@@ -79,7 +79,7 @@ PROCEDURE Main()
    ? "name:", "'" + mname + "'"
    ? "sex :", "'" + msex + "'"
    ? "stat:", "'" + mstat + "'"
-   ? "age :", hb_ntos( mage )
+   ? "age :", hb_ntos(mage)
    ? "that's what you've got from GET"
    Inkey(0)
 
@@ -132,7 +132,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
    SWITCH nEvent
    CASE 3  // CBN_SETFOCUS
 
-      IF ( i := AScan( GetList, {| x | x:Name == cVar } ) ) > 0
+      IF ( i := AScan(GetList, {| x | x:Name == cVar }) ) > 0
          /* ! oGet:HasFocus means
           * CBN_SETFOCUS was NOT initiated from mouse click
           * then we don't need to bother about setting focus to the

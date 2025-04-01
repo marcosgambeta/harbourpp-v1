@@ -723,7 +723,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
       /* print the description. */
       HPDF_Page_MoveTextPos( page, 0, -10 )
       HPDF_Page_SetFontAndSize( page, font, 8 )
-      buf := "Fontsize=" + hb_ntos( fsize )
+      buf := "Fontsize=" + hb_ntos(fsize)
 
       HPDF_Page_ShowText( page, buf )
 
@@ -883,14 +883,14 @@ STATIC PROCEDURE Page_TextScaling( pdf )
    HPDF_Page_EndText( page )
 
    /* char-spacing 1.5 */
-   HPDF_Page_SetCharSpace( page, 1.5 )
+   HPDF_Page_SetCharSpace(page, 1.5)
 
    HPDF_Page_BeginText( page )
    HPDF_Page_TextOut( page, 60, 100, samp_text2 )
    HPDF_Page_EndText( page )
 
    /* char-spacing 1.5, word-spacing 3.5 */
-   HPDF_Page_SetWordSpace( page, 2.5 )
+   HPDF_Page_SetWordSpace(page, 2.5)
 
    HPDF_Page_BeginText( page )
    HPDF_Page_TextOut( page, 60, 60, samp_text2 )
@@ -1406,7 +1406,7 @@ STATIC PROCEDURE show_description_1( page, x, y, text )
 
    HPDF_Page_BeginText( page )
 
-   buf := "x=" + hb_ntos( x ) + ",y=" + hb_ntos( y )
+   buf := "x=" + hb_ntos(x) + ",y=" + hb_ntos(y)
 
    HPDF_Page_MoveTextPos( page, x - HPDF_Page_TextWidth( page, buf ) - 5, y - 10 )
    HPDF_Page_ShowText( page, buf )

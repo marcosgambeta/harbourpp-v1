@@ -199,7 +199,7 @@ METHOD WvgToolBar:handleEvent( nMessage, aNM )
       DO CASE
 
       CASE aNMMouse[NMH_code] == NM_CLICK
-         IF ( nObj := AScan( ::aItems, {| e_ | e_[1] == aNMMouse[NMH_dwItemSpec] } ) ) > 0
+         IF ( nObj := AScan(::aItems, {| e_ | e_[1] == aNMMouse[NMH_dwItemSpec] }) ) > 0
             IF HB_IsEvalItem(::sl_lbClick)
                IF ::isParentCrt()
                   ::oParent:setFocus()

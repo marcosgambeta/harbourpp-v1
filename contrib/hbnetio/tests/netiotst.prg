@@ -16,7 +16,7 @@
 #define DBDIR     "data"
 #define DBFILE    "_tst_"
 
-#define DBNAME    "net:" + DBSERVER + ":" + hb_ntos( DBPORT ) + ":" + ;
+#define DBNAME    "net:" + DBSERVER + ":" + hb_ntos(DBPORT) + ":" + ;
                   DBPASSWD + ":" + DBDIR + "/" + DBFILE
 
 REQUEST DBFCDX

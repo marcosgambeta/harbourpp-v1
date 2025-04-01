@@ -131,7 +131,7 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
 
    aRData := USRRDD_RDDDATA(USRRDD_ID(nWA))
    aWData := USRRDD_AREADATA(nWA)
-   nSlot := AScan( aRData, F_ERROR )
+   nSlot := AScan(aRData, F_ERROR)
 
    IF nSlot == 0
       oError := ErrorNew()

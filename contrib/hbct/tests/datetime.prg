@@ -468,7 +468,7 @@ FUNCTION dInMonthtest()
       SET CONFIRM ON
 
       cMonth := Upper(RTrim(cMonth))
-      nMonth := Val( cMonth )
+      nMonth := Val(cMonth)
 
       DO CASE
       CASE ValType(cMonth) == "C" .AND. nmonth == 0
@@ -487,7 +487,7 @@ FUNCTION dInMonthtest()
       ELSE
 
          @ 10, 40 SAY "The day number is " + ;
-            hb_ntos( DaysInMonth( nMonth, IsAffirm( cLeap ) ) )
+            hb_ntos(DaysInMonth( nMonth, IsAffirm( cLeap ) ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -537,7 +537,7 @@ FUNCTION d2month()
       SET ESCAPE OFF
       SET CONFIRM ON
 
-      nMonth := Val( cMonth )
+      nMonth := Val(cMonth)
 
       nKey := LastKey()
 
@@ -545,7 +545,7 @@ FUNCTION d2month()
          c := .F.
       ELSE
          @ 11, 10 SAY "The day number is " +  ;
-            hb_ntos( DaysToMonth( nMonth, IsAffirm( cLeap ) ) )
+            hb_ntos(DaysToMonth( nMonth, IsAffirm( cLeap ) ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -651,7 +651,7 @@ FUNCTION doytest()
          c := .F.
       ELSE
          @ 11, 10 SAY "The day of the date entered is " + ;
-            hb_ntos( DoY( dDate ) )
+            hb_ntos(DoY( dDate ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -894,7 +894,7 @@ FUNCTION lastdayomtest()
       @ 10, 10 SAY "a month"
 
       @  9, 30 GET dDate
-      @ 10, 38 GET cMth PICTURE "99"       // VALID Val( cmth ) < 12
+      @ 10, 38 GET cMth PICTURE "99"       // VALID Val(cmth) < 12
 
       SET CONFIRM ON
       SET ESCAPE ON
@@ -908,10 +908,10 @@ FUNCTION lastdayomtest()
          c := .F.
       ELSE
 
-         IIf(Empty(dDate), dDate := Val( cMth ), dDate)
+         IIf(Empty(dDate), dDate := Val(cMth), dDate)
 
          @ 12, 10 SAY "The number of days in the month is " + ;
-            hb_ntos( LastDayOM( dDate ) )
+            hb_ntos(LastDayOM( dDate ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -1013,7 +1013,7 @@ FUNCTION ntocdowtest()
       ELSE
 
          @ 11, 10 SAY "The day selected is " + ;
-            PadR(NToCDoW( Val( cDay ) ), 10)
+            PadR(NToCDoW( Val(cDay) ), 10)
 
          SET CURSOR OFF
          Inkey(0)
@@ -1063,7 +1063,7 @@ FUNCTION ntocmthtest()
       ELSE
 
          @ 11, 10 SAY "The month selected is " + ;
-            PadR(NToCMonth( Val( cMonth ) ), 10)
+            PadR(NToCMonth( Val(cMonth) ), 10)
 
          SET CURSOR OFF
          Inkey(0)
@@ -1112,7 +1112,7 @@ FUNCTION qtrtest()
       ELSE
 
          @  8, 10 SAY "The quarter number is " + ;
-            hb_ntos( Quarter( dDate ) )
+            hb_ntos(Quarter( dDate ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -1189,9 +1189,9 @@ FUNCTION chkansi( cAnsidate )
    LOCAL nDay
    LOCAL lretval := .T.
 
-   nYear  := Val( Left(cAnsidate, 4) )
-   nMonth := Val( SubStr(cAnsidate, 5, 2) )
-   nDay   := Val( Right(cAnsidate, 2) )
+   nYear  := Val(Left(cAnsidate, 4))
+   nMonth := Val(SubStr(cAnsidate, 5, 2))
+   nDay   := Val(Right(cAnsidate, 2))
 
    DO CASE
 
@@ -1244,7 +1244,7 @@ FUNCTION weektest()
       ELSE
 
          @ 8, 10 SAY "The week number is " + ;
-            hb_ntos( Week( dDate, IsAffirm( cMode ) ) )
+            hb_ntos(Week( dDate, IsAffirm( cMode ) ))
 
          SET CURSOR OFF
          Inkey(0)

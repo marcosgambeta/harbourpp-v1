@@ -5,7 +5,7 @@
 PROCEDURE Main( nSleep )
 
    ? "Time is now: " + Time()
-   ft_Sleep( Val( nSleep ) )
+   ft_Sleep( Val(nSleep) )
    ? "Time is now: " + Time()
 
    RETURN

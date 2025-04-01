@@ -209,7 +209,7 @@ METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFon
    ::nFontBold           := nFontBold
    ::nFontQuality        := nFontQuality
 
-   ::cPaintBlockID       := StrZero( hb_randInt( 99999998 ), 8 )
+   ::cPaintBlockID       := StrZero( hb_randInt(99999998), 8 )
    ::nObjOver            := 0
    ::nKey                := 0
    ::cColor              := "N/W"
@@ -239,7 +239,7 @@ METHOD WvtDialog:Create()
 
    ::cScreen     := SaveScreen(0, 0, MaxRow(), MaxCol())
    ::aWvtScreen  := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
-   ::aOldPnt     := WvtSetPaint( {} )
+   ::aOldPnt     := WvtSetPaint({})
 
    SetMode(::nRows, ::nCols)
    DO WHILE .T.
@@ -267,12 +267,12 @@ METHOD WvtDialog:Create()
 
    FOR EACH i IN ::aObjects
       FOR EACH j IN i:aPaint
-         wvg_SetPaint( ::cPaintBlockID, ::nPaintID++, j[1], j[2] )
+         wvg_SetPaint(::cPaintBlockID, ::nPaintID++, j[1], j[2])
       NEXT
    NEXT
-   WvtSetPaint( wvg_GetPaint( ::cPaintBlockID ) )
+   WvtSetPaint(wvg_GetPaint(::cPaintBlockID))
 
-   IF AScan( ::aObjects, {| o | o:lTabStop } ) > 0
+   IF AScan(::aObjects, {| o | o:lTabStop }) > 0
       ::lTabStops := .T.
    ENDIF
 
@@ -317,8 +317,8 @@ METHOD PROCEDURE WvtDialog:Destroy()
    SetKey(wvt_SetMenuKeyEvent(), ::oldMenuBlock)
    RestScreen(0, 0, MaxRow(), MaxCol(), ::cScreen)
    wvt_RestScreen(0, 0, MaxRow(), MaxCol(), ::aWvtScreen)
-   wvg_PurgePaint( ::cPaintBlockID )
-   WvtSetPaint( ::aOldPnt )
+   wvg_PurgePaint(::cPaintBlockID)
+   WvtSetPaint(::aOldPnt)
    wvt_SetGUI( ::lGui )
 
    RETURN
@@ -428,7 +428,7 @@ METHOD WvtDialog:Inkey()
                oObj := ::aObjects[::nObjOver]
                IF oObj:oParent:className() == "WVTBROWSE"
                   nID := oObj:oParent:nID
-                  IF ( n := AScan( ::aObjects, {| o | o:nID == nID } ) ) > 0
+                  IF ( n := AScan(::aObjects, {| o | o:nID == nID }) ) > 0
                      ::nCurObj := n
                   ENDIF
                ENDIF
@@ -528,7 +528,7 @@ METHOD WvtDialog:Inkey()
       IF !::lEventHandled
          IF ::nCurObj > 0
             IF !Empty(::aDialogKeys)
-               IF ( n := AScan( ::aDialogKeys, {| e_ | e_[1] == ::nKey } ) ) > 0
+               IF ( n := AScan(::aDialogKeys, {| e_ | e_[1] == ::nKey }) ) > 0
                   Eval(::aDialogKeys[n][2], Self, ::oCurObj)
                ENDIF
             ENDIF
@@ -538,7 +538,7 @@ METHOD WvtDialog:Inkey()
             IF ::lEventHandled
                IF ::oCurObj:nChildren > 0
                   FOR i := 1 to ::oCurObj:nChildren
-                     IF AScan( ::oCurObj:aChildren[i][OBJ_CHILD_EVENTS], ::nKey ) > 0
+                     IF AScan(::oCurObj:aChildren[i][OBJ_CHILD_EVENTS], ::nKey) > 0
                         ::oCurObj:NotifyChild(i, ::nKey, ::oCurObj)
                      ENDIF
                   NEXT
@@ -562,10 +562,10 @@ METHOD WvtDialog:MouseOver()
    LOCAL mCol := MCol()
    LOCAL nObj
 
-   nObj := AScan( ::aObjects, {| o | o:nType != DLG_OBJ_STATIC .AND. ;
+   nObj := AScan(::aObjects, {| o | o:nType != DLG_OBJ_STATIC .AND. ;
       o:nType != DLG_OBJ_TOOLBAR .AND. ;
       mRow >= o:nTop  .AND. mRow <= o:nBottom .AND. ;
-      mCol >= o:nLeft .AND. mCol <= o:nRight } )
+      mCol >= o:nLeft .AND. mCol <= o:nRight })
 
    ::nObjOver := nObj
    ::oObjOver := IIf(nObj > 0, ::aObjects[nObj], NIL)

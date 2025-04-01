@@ -255,8 +255,8 @@ METHOD PROCEDURE WvgTreeView:destroy()
 METHOD WvgTreeView:getSelectionInfo( nlParam )
 
    LOCAL hItemSelected, hParentOfSelected
-   LOCAL cParent := Space( 20 )
-   LOCAL cText   := Space( 20 )
+   LOCAL cParent := Space(20)
+   LOCAL cText   := Space(20)
    LOCAL n
 
    wvg_TreeView_GetSelectionInfo( ::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected )
@@ -266,7 +266,7 @@ METHOD WvgTreeView:getSelectionInfo( nlParam )
    ::textParentSelected := RTrim(cParent)
    ::textItemSelected   := RTrim(cText)
 
-   IF ( n := AScan( ::aItems, {| o | o:hItem == hItemSelected } ) ) > 0
+   IF ( n := AScan(::aItems, {| o | o:hItem == hItemSelected }) ) > 0
       ::oItemSelected      := ::aItems[n]
    ENDIF
 

@@ -49,7 +49,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_ntos( n ) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str( n ))
 #endif
 
 PROCEDURE Main()
@@ -73,7 +73,7 @@ PROCEDURE Main()
    ? "    Value of cStr is: " + '"' + cStr + '"'
    ?
    FOR ni := 1 TO NumToken( cStr, ".!", 1 )
-      ? '    Token #' + hb_ntos( ni ) + '("' + Token( cStr, ".!", ni, 1 ) + '")'
+      ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".!", ni, 1 ) + '")'
       ? "          starts at pos " + Str( npos := AtToken( cStr, ".!", ni, 1 ), 3 ) + ;
          " and is " + IIf(SubStr(cStr, npos, 1) $ ".!", "", "not ") + "an empty token."
    NEXT

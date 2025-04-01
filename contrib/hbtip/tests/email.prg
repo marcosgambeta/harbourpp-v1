@@ -64,7 +64,7 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
 
    hb_default(@nPort, IIf(lSTARTTLS, 587, 465))
 
-   ? "Host:", cHost, hb_ntos( nPort ), IIf(lSTARTTLS, "(STARTTLS)", "")
+   ? "Host:", cHost, hb_ntos(nPort), IIf(lSTARTTLS, "(STARTTLS)", "")
 
    ? tip_MailSend( ;
       cHost, ;

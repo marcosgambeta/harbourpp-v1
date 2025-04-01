@@ -35,10 +35,10 @@ FUNCTION hb_udpds_Find(nPort, cName)
          nEnd := nTime + 100   /* 100ms delay is enough on LAN */
          aRet := {}
          DO WHILE nEnd > nTime
-            cBuffer := Space( 2000 )
+            cBuffer := Space(2000)
             nLen := hb_socketRecvFrom( hSocket, @cBuffer, , , @aAddr, nEnd - nTime )
             IF hb_BLeft(cBuffer, hb_BLen(cName) + 2) == hb_BChar(6) + cName + hb_BChar(0) .AND. ;
-               AScan( aRet, {| x | x[1] == aAddr[2] } ) == 0
+               AScan(aRet, {| x | x[1] == aAddr[2] }) == 0
                AAdd(aRet, { aAddr[2], hb_BSubStr(cBuffer, hb_BLen(cName) + 3, nLen - hb_BLen(cName) - 2) })
             ENDIF
             nTime := hb_MilliSeconds()
@@ -75,7 +75,7 @@ STATIC FUNCTION s_getBroadcastAddresses()
          IF !lLo .AND. aIF[HB_SOCKET_IFINFO_ADDR] == "127.0.0.1"
             lLo := .T.
          ENDIF
-      ELSEIF hb_AScan( aAddrs, cAddr,,, .T. ) == 0
+      ELSEIF hb_AScan(aAddrs, cAddr,,, .T.) == 0
          AAdd(aAddrs, cAddr)
       ENDIF
    NEXT
@@ -118,7 +118,7 @@ STATIC PROCEDURE UDPDS( hSocket, cName, cVersion )
    cVersion := IIf(HB_IsString(cVersion), hb_StrToUTF8( cVersion ), "")
 
    DO WHILE .T.
-      cBuffer := Space( 2000 )
+      cBuffer := Space(2000)
       BEGIN SEQUENCE WITH {| oErr | Break( oErr ) }
          nLen := hb_socketRecvFrom( hSocket, @cBuffer, , , @aAddr, 1000 )
       RECOVER

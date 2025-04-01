@@ -324,7 +324,7 @@ METHOD wvtScrollbar:ThumbPos()
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
       nRecPerUnit := ::nTotal / ::nScrollUnits
-      nCurUnit    := Int( ::nCurrent / nRecPerUnit )
+      nCurUnit    := Int(::nCurrent / nRecPerUnit)
 
       DO CASE
       CASE ::nCurrent == 1
@@ -343,10 +343,10 @@ METHOD wvtScrollbar:ThumbPos()
 
    ELSE
       IF ::nTotal < ::nScrollUnits
-         nCurUnit := ::nCurrent * Int( ::nScrollUnits / ::nTotal )
+         nCurUnit := ::nCurrent * Int(::nScrollUnits / ::nTotal)
       ELSE
          nRecPerUnit := ::nTotal / ::nScrollUnits
-         nCurUnit    := Int( ::nCurrent / nRecPerUnit )
+         nCurUnit    := Int(::nCurrent / nRecPerUnit)
       ENDIF
 
       DO CASE
@@ -376,7 +376,7 @@ METHOD wvtScrollbar:GetPos()
 
 METHOD wvtScrollbar:SetTooltip()
 
-   ::Tooltip := hb_ntos( Int( ::nCurrent ) ) + " / " + hb_ntos( Int( ::nTotal ) )
+   ::Tooltip := hb_ntos(Int(::nCurrent)) + " / " + hb_ntos(Int(::nTotal))
 
    wvt_SetToolTip( ::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip )
 
@@ -388,7 +388,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
    LOCAL lHit  := .F.
    LOCAL mKeys_ := { K_LBUTTONDOWN, K_LBUTTONUP, K_MMLEFTDOWN, K_LBUTTONPRESSED }
 
-   IF AScan( mKeys_, nKey ) == 0
+   IF AScan(mKeys_, nKey) == 0
       RETURN .F.
    ENDIF
 

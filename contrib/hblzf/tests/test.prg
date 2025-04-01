@@ -10,7 +10,7 @@ PROCEDURE Main()
    LOCAL nLen, nResult := 0
 
    ? "LZF API version is", ;
-      hb_ntos( hb_lzf_version() ) + " (0x" + hb_NumToHex( hb_lzf_version() ) + ")"
+      hb_ntos(hb_lzf_version()) + " (0x" + hb_NumToHex( hb_lzf_version() ) + ")"
    ? "LibLZF optimized for", IIf(hb_lzf_optimized_for_speed(), "speed.", "compression.")
 
    ? "--- test 1 ---"
@@ -22,20 +22,20 @@ PROCEDURE Main()
    str_compressed := hb_lzf_compress( cStr, 15, @nResult )
 
    IF nResult == HB_LZF_OK
-      ? "Lenght of a string is", hb_ntos( Len(cStr) )
-      ? "Lenght of a compressed string is", hb_ntos( Len(str_compressed) )
+      ? "Lenght of a string is", hb_ntos(Len(cStr))
+      ? "Lenght of a compressed string is", hb_ntos(Len(str_compressed))
    ELSE
       ? "hb_lzf_compress() returns", IIf(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
 
    ? "--- test 2 ---"
    cStr := TEST_STRING
-   str_compressed := Space( 15 )
+   str_compressed := Space(15)
    str_compressed := hb_lzf_compress( cStr, @str_compressed, @nResult )
 
    IF nResult == HB_LZF_OK
-      ? "Lenght of a string is", hb_ntos( Len(cStr) )
-      ? "Lenght of a compressed string is", hb_ntos( Len(str_compressed) )
+      ? "Lenght of a string is", hb_ntos(Len(cStr))
+      ? "Lenght of a compressed string is", hb_ntos(Len(str_compressed))
    ELSE
       ? "hb_lzf_compress() returns", IIf(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
@@ -47,8 +47,8 @@ PROCEDURE Main()
    str_compressed := hb_lzf_compress( cStr, nLen, @nResult )
 
    IF nResult == HB_LZF_OK
-      ? "Lenght of a string is", hb_ntos( Len(cStr) )
-      ? "Lenght of a compressed string is", hb_ntos( Len(str_compressed) )
+      ? "Lenght of a string is", hb_ntos(Len(cStr))
+      ? "Lenght of a compressed string is", hb_ntos(Len(str_compressed))
 
       ? IIf(hb_base64Encode( str_compressed ) == b64_expected_result, "OK!", "not OK!")
    ELSE
@@ -57,14 +57,14 @@ PROCEDURE Main()
 
    ? "--- test 4 ---"
    nLen := hb_lzf_compressbound(cStr)
-   str_compressed := Space( nLen )
+   str_compressed := Space(nLen)
 
    cStr := TEST_STRING
    str_compressed := hb_lzf_compress( cStr, @str_compressed, @nResult )
 
    IF nResult == HB_LZF_OK
-      ? "Lenght of a string is", hb_ntos( Len(cStr) )
-      ? "Lenght of a compressed string is", hb_ntos( Len(str_compressed) )
+      ? "Lenght of a string is", hb_ntos(Len(cStr))
+      ? "Lenght of a compressed string is", hb_ntos(Len(str_compressed))
 
       ? IIf(hb_base64Encode( str_compressed ) == b64_expected_result, "OK!", "not OK!")
    ELSE
@@ -72,12 +72,12 @@ PROCEDURE Main()
    ENDIF
 
    ? "--- test 5 ---"
-   cStr := Replicate( TEST_STRING, _NREPL_ )
+   cStr := Replicate(TEST_STRING, _NREPL_)
    str_compressed := hb_lzf_compress( cStr, NIL, @nResult )
 
    IF nResult == HB_LZF_OK
-      ? "Lenght of a string is", hb_ntos( Len(cStr) )
-      ? "Lenght of a compressed string is", hb_ntos( Len(str_compressed) )
+      ? "Lenght of a string is", hb_ntos(Len(cStr))
+      ? "Lenght of a compressed string is", hb_ntos(Len(str_compressed))
    ELSE
       ? "hb_lzf_compress() returns", IIf(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
@@ -92,7 +92,7 @@ PROCEDURE Main()
    ENDIF
 
    ? "--- test 7 ---"
-   cStr := Replicate( TEST_STRING, _NREPL_ )
+   cStr := Replicate(TEST_STRING, _NREPL_)
    str_compressed := hb_ZCompress( cStr, NIL, @nResult )
 
    str_decompressed := hb_lzf_decompress( str_compressed, NIL, @nResult )
@@ -104,10 +104,10 @@ PROCEDURE Main()
    ENDIF
 
    ? "--- test 8 ---"
-   cStr := Replicate( TEST_STRING, _NREPL_ )
+   cStr := Replicate(TEST_STRING, _NREPL_)
    str_compressed := hb_lzf_compress( cStr, NIL, @nResult )
 
-   str_decompressed := Space( 4096 )
+   str_decompressed := Space(4096)
    str_decompressed := hb_lzf_decompress( str_compressed, @str_decompressed, @nResult )
 
    IF nResult == HB_LZF_DATA_CORRUPTED
@@ -117,7 +117,7 @@ PROCEDURE Main()
    ENDIF
 
    ? "--- test 9 ---"
-   cStr := Replicate( TEST_STRING, _NREPL_ )
+   cStr := Replicate(TEST_STRING, _NREPL_)
    str_compressed := hb_lzf_compress( cStr, NIL, @nResult )
 
    str_decompressed := ""
@@ -125,7 +125,7 @@ PROCEDURE Main()
 
    IF nResult != HB_LZF_OK
       ? "hb_lzf_decompress() returns", ;
-         IIf(nResult == HB_LZF_MEM_ERROR, "HB_LZF_MEM_ERROR", hb_ntos( nResult ))
+         IIf(nResult == HB_LZF_MEM_ERROR, "HB_LZF_MEM_ERROR", hb_ntos(nResult))
    ELSE
       ? IIf(cStr == str_decompressed, "OK!", "not OK!")
    ENDIF

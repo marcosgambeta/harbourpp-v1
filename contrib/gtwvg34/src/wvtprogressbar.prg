@@ -119,7 +119,7 @@ METHOD WvtProgressBar:Display( nCurrent, nTotal )
       ::nCurrent := ::nTotal
    ENDIF
 
-   ::nPercent := Int( ::nCurrent / ::nTotal * 100 )
+   ::nPercent := Int(::nCurrent / ::nTotal * 100)
 
    wvt_DrawProgressBar( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::nPercent, ;
       ::nBackColor, ::nBarColor, ::cImage, ::lVertical, ::nDirection )

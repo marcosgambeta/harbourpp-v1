@@ -296,7 +296,7 @@ METHOD GDBar:CheckCode()
 
 METHOD GDBar:CheckValInArray( cChar )
 
-   LOCAL nPos := AScan( ::keys, {| x | SubStr(x, 1, 1) == cChar } )
+   LOCAL nPos := AScan(::keys, {| x | SubStr(x, 1, 1) == cChar })
 
    RETURN IIf(nPos > 0, nPos, NIL)
 

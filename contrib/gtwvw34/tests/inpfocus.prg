@@ -119,7 +119,7 @@ STATIC FUNCTION OpenNewWindow()
    ENDIF
 
    // prepare titles and coordinates
-   ctitle := "Win #" + hb_ntos( nWinNum )
+   ctitle := "Win #" + hb_ntos(nWinNum)
    nrow1  := 4 + ( nWinNum - 1 )
    ncol1  := 1 + ( nWinNum - 1 ) * 3
    nrow2  := WinMaxRow(0) - _MAX_WINNUM + 1 + ( nWinNum - 1 )
@@ -242,11 +242,11 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
 
 #if 0
    wvw_MessageBox( 0, "Sorry, we cannot handle this event:" + hb_eol() + ;
-      "nWinNum == " + hb_ntos( nWinNum ) + hb_eol() + ;
-      "message == " + hb_ntos( message ) + hb_eol() + ;
-      "wParam == " + hb_ntos( wParam ) + hb_eol() + ;
-      "wParamLow == " + hb_ntos( wParamLow ) + hb_eol() + ;
-      "wParamHi == " + hb_ntos( wParamHi ), "Debug", WIN_MB_OK )
+      "nWinNum == " + hb_ntos(nWinNum) + hb_eol() + ;
+      "message == " + hb_ntos(message) + hb_eol() + ;
+      "wParam == " + hb_ntos(wParam) + hb_eol() + ;
+      "wParamLow == " + hb_ntos(wParamLow) + hb_eol() + ;
+      "wParamHi == " + hb_ntos(wParamHi), "Debug", WIN_MB_OK )
 #endif
 
    RETURN .F.

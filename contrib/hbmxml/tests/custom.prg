@@ -112,7 +112,7 @@ FUNCTION whitespace_cb(node, where)
          nLevel := 0
       ENDIF
 
-      RETURN Replicate( Chr(9), nLevel )
+      RETURN Replicate(Chr(9), nLevel)
 
    ELSEIF where == MXML_WS_AFTER_CLOSE .OR. ;
          ( ( name == "group" .OR. name == "option" .OR. name == "choice" ) .AND. ;

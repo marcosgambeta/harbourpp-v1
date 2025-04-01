@@ -1,7 +1,7 @@
 #require "hbnf"
 
 #ifndef __HARBOURPP__
-#define hb_ntos( n ) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str( n ))
 #endif
 
 // Pass valid row and column values for different video modes to change modes
@@ -18,13 +18,13 @@ PROCEDURE Main( nRow, nCol )
    IF nRow == NIL
       nRow := MaxRow() + 1
    ELSE
-      nRow := Val( nRow )
+      nRow := Val(nRow)
    ENDIF
 
    IF nCol == NIL
       nCol := MaxCol() + 1
    ELSE
-      nCol := Val( nCol )
+      nCol := Val(nCol)
    ENDIF
 
    IF !SetMode(nRow, nCol)
@@ -59,8 +59,8 @@ PROCEDURE Main( nRow, nCol )
    // ..... Start the demo
 
    @ MaxRow(), 0 SAY "Driver version: " + ;
-      hb_ntos( ft_MVersion( @nMinor, @nType, @nIRQ ) ) + "." + ;
-      hb_ntos( nMinor )
+      hb_ntos(ft_MVersion( @nMinor, @nType, @nIRQ )) + "." + ;
+      hb_ntos(nMinor)
    @ Row(), Col() SAY " " + aType[nType] + " mouse using IRQ " + Str( nIRQ, 1, 0 )
 
    ft_MGetSens( @nHoriz, @nVert, @nDouble )  // Get the current sensitivities

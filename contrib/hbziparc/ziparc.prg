@@ -250,7 +250,7 @@ FUNCTION hb_ZipFile( ;
    LOCAL hZip
    LOCAL hHandle
    LOCAL nLen
-   LOCAL cBuffer := Space( t_nReadBuffer )
+   LOCAL cBuffer := Space(t_nReadBuffer)
    LOCAL cFileToZip
    LOCAL nPos
    LOCAL nRead
@@ -307,13 +307,13 @@ FUNCTION hb_ZipFile( ;
                cPath := hb_PathJoin( hb_cwd(), cPath )
             ENDIF
             FOR EACH aFile IN Directory( cFN )
-               IF AScan( aExclFile, {| cExclFile | hb_FileMatch( aFile[F_NAME], cExclFile ) } ) == 0
+               IF AScan(aExclFile, {| cExclFile | hb_FileMatch( aFile[F_NAME], cExclFile ) }) == 0
                   AAdd( aProcFile, cPath + aFile[F_NAME] )
                ENDIF
             NEXT
          ELSE
             cName := hb_FNameNameExt( cFN )
-            IF AScan( aExclFile, {| cExclFile | hb_FileMatch( cName, cExclFile ) } ) == 0
+            IF AScan(aExclFile, {| cExclFile | hb_FileMatch( cName, cExclFile ) }) == 0
                IF hb_FileExists( cFN )
                   AAdd( aProcFile, IIf(lFullPath, hb_PathJoin( hb_cwd(), cFN ), cFN) )
                ENDIF
@@ -401,7 +401,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
    LOCAL nLen
    LOCAL dDate
    LOCAL cTime
-   LOCAL cBuffer := Space( t_nReadBuffer )
+   LOCAL cBuffer := Space(t_nReadBuffer)
 
    IF hb_defaultValue( lWithPath, .F. ) .AND. ! hb_DirExists( cPath ) .AND. hb_DirCreate( cPath ) != 0
       lRetVal := .F.
@@ -439,8 +439,8 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
 
             /* NOTE: As opposed to original hbziparch we don't do a second match without path. */
             lExtract := Empty(acFiles) .OR. ;
-               AScan( acFiles, nPos ) > 0 .OR. ;
-               AScan( acFiles, {| cMask | hb_FileMatch( cZipName, cMask ) } ) > 0
+               AScan(acFiles, nPos) > 0 .OR. ;
+               AScan(acFiles, {| cMask | hb_FileMatch( cZipName, cMask ) }) > 0
 
             IF lExtract .AND. ( hHandle := FCreate( cPath + cZipName ) ) != F_ERROR
 

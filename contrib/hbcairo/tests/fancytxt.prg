@@ -70,7 +70,7 @@ PROCEDURE map_path_onto( hCairo, hPath )
    DO WHILE cairo_path_iterator_next( hIterator ) != NIL
       IF Len(aPoints := cairo_path_iterator_get_points( hIterator )) > 0
          FOR nI := 1 TO Len(aPoints)
-            transform_point( @aPoints[nI, 1], @aPoints[nI, 2], hPath, aLengths )
+            transform_point(@aPoints[nI, 1], @aPoints[nI, 2], hPath, aLengths)
          NEXT
          cairo_path_iterator_set_points( hIterator, aPoints )
       ENDIF
@@ -81,7 +81,7 @@ PROCEDURE map_path_onto( hCairo, hPath )
    RETURN
 
 
-STATIC PROCEDURE transform_point( nX, nY, hPath, aLengths )
+STATIC PROCEDURE transform_point(nX, nY, hPath, aLengths)
 
    LOCAL hIterator, nI, nNX, nNY, nDX, nDY, nRatio, nType, aLast, aPoints, nK1, nK2
 

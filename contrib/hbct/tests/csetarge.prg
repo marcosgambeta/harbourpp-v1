@@ -49,7 +49,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_ntos( n ) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str( n ))
 #endif
 
 #include "ct.ch"
@@ -208,7 +208,7 @@ FUNCTION myerrhandler( oerr )
    ? "      err:operation....:", oerr:operation
    ? "      Len(err:args)....:", Len(oerr:args)
    FOR ni := 1 TO Len(oerr:args)
-      ? "          err:args[" + hb_ntos( ni ) + "]..:", oerr:args[ni]
+      ? "          err:args[" + hb_ntos(ni) + "]..:", oerr:args[ni]
    NEXT
    ? "      err:genCode......:", oerr:genCode
    ? "      err:subCode......:", oerr:subCode
@@ -234,8 +234,8 @@ FUNCTION myerrhandler( oerr )
          ? "      3 is Float,  4 is Boolean,   5 is Date"
          ? "      6 is Block,  7 is Array,    8 is Object"
          ? "      9 is unknown"
-         nDigit := Int( oerr:subCode % 10 )
-         ? "    Here it's a " + hb_ntos( nDigit ) + ", so I return a "
+         nDigit := Int(oerr:subCode % 10)
+         ? "    Here it's a " + hb_ntos(nDigit) + ", so I return a "
          DO CASE
          CASE nDigit == 0
             ?? "NIL."

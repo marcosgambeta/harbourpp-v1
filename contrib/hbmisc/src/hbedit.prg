@@ -224,7 +224,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
       nLen := t_nESize
    ENDIF
 
-   nSize := IIf(nLen < 8192, nLen * 2, Int( nLen * 1.5 ))
+   nSize := IIf(nLen < 8192, nLen * 2, Int(nLen * 1.5))
    oEdit := EditorNew( 1, 0, 23, 79, nLineLen, "---      ", cOutput, , ;
       nSize, nEscape )
 
@@ -392,7 +392,7 @@ STATIC PROCEDURE EditorKeys( oEdit, nKey )
       ed_DelChar( oEdit[E_EDIT] )
 
    CASE nKey == K_BS
-      ed_BSpace( oEdit[E_EDIT], oEdit[E_INSERT] )
+      ed_BSpace(oEdit[E_EDIT], oEdit[E_INSERT])
 
    CASE nKey == K_ENTER
       ed_Return( oEdit[E_EDIT], oEdit[E_INSERT] )

@@ -148,7 +148,7 @@ METHOD TMySQLRow:FieldPos( cFieldName )
 
    LOCAL cUpperName := Upper(cFieldName)
 
-   RETURN AScan( ::aFieldStruct, {| aItem | Upper(aItem[MYSQL_FS_NAME]) == cUpperName } )
+   RETURN AScan(::aFieldStruct, {| aItem | Upper(aItem[MYSQL_FS_NAME]) == cUpperName })
 
 // Returns name of field N
 METHOD TMySQLRow:FieldName( nNum )
@@ -477,7 +477,7 @@ METHOD TMySQLQuery:GetRow( nRow )
                IF ::aRow[i] == NIL
                   ::aRow[i] := "0"
                ENDIF
-               ::aRow[i] := Val( ::aRow[i] )
+               ::aRow[i] := Val(::aRow[i])
                EXIT
 
             CASE MYSQL_TYPE_DOUBLE
@@ -485,7 +485,7 @@ METHOD TMySQLQuery:GetRow( nRow )
                IF ::aRow[i] == NIL
                   ::aRow[i] := "0"
                ENDIF
-               ::aRow[i] := Val( ::aRow[i] )
+               ::aRow[i] := Val(::aRow[i])
                EXIT
 
             CASE MYSQL_TYPE_DATE
@@ -512,7 +512,7 @@ METHOD TMySQLQuery:GetRow( nRow )
 
             OTHERWISE
 
-               // ? "Unknown type from SQL Server Field: " + hb_ntos( i ) + " is type " + hb_ntos( ::aFieldStruct[i][MYSQL_FS_TYPE] )
+               // ? "Unknown type from SQL Server Field: " + hb_ntos(i) + " is type " + hb_ntos(::aFieldStruct[i][MYSQL_FS_TYPE])
 
             ENDSWITCH
 
@@ -550,7 +550,7 @@ METHOD TMySQLQuery:FieldPos( cFieldName )
 
    cUpperName := Upper(cFieldName)
 
-   nPos := AScan( ::aFieldStruct, {| aItem | Upper(aItem[MYSQL_FS_NAME]) == cUpperName } )
+   nPos := AScan(::aFieldStruct, {| aItem | Upper(aItem[MYSQL_FS_NAME]) == cUpperName })
 
 #if 0
    nPos := 0
@@ -1303,7 +1303,7 @@ METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto
 
       SWITCH aStruct[i][DBS_TYPE]
       CASE "C"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + ","
          EXIT
 
       CASE "M"
@@ -1313,27 +1313,27 @@ METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto
       CASE "N"
 #if 0
          IF aStruct[i][DBS_DEC] == 0
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
          ELSE
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos( aStruct[i][DBS_LEN] ) + "," + hb_ntos( aStruct[i][DBS_DEC] ) + ")" + Eval(cNN, aStruct[i]) + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos(aStruct[i][DBS_LEN]) + "," + hb_ntos(aStruct[i][DBS_DEC]) + ")" + Eval(cNN, aStruct[i]) + ","
          ENDIF
 #endif
          IF aStruct[i][DBS_DEC] == 0 .AND. aStruct[i][DBS_LEN] <= 18
             DO CASE
             CASE aStruct[i][DBS_LEN] <= 2
-               ::cCreateQuery += aStruct[i][DBS_NAME] + " tinyint(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")"
+               ::cCreateQuery += aStruct[i][DBS_NAME] + " tinyint(" + hb_ntos(aStruct[i][DBS_LEN]) + ")"
             CASE aStruct[i][DBS_LEN] <= 4
-               ::cCreateQuery += aStruct[i][DBS_NAME] + " smallint(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")"
+               ::cCreateQuery += aStruct[i][DBS_NAME] + " smallint(" + hb_ntos(aStruct[i][DBS_LEN]) + ")"
             CASE aStruct[i][DBS_LEN] <= 6
-               ::cCreateQuery += aStruct[i][DBS_NAME] + " mediumint(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")"
+               ::cCreateQuery += aStruct[i][DBS_NAME] + " mediumint(" + hb_ntos(aStruct[i][DBS_LEN]) + ")"
             CASE aStruct[i][DBS_LEN] <= 9
-               ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")"
+               ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos(aStruct[i][DBS_LEN]) + ")"
             OTHERWISE
-               ::cCreateQuery += aStruct[i][DBS_NAME] + " bigint(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")"
+               ::cCreateQuery += aStruct[i][DBS_NAME] + " bigint(" + hb_ntos(aStruct[i][DBS_LEN]) + ")"
             ENDCASE
             ::cCreateQuery += Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
          ELSE
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos( aStruct[i][DBS_LEN] ) + "," + hb_ntos( aStruct[i][DBS_DEC] ) + ")" + Eval(cNN, aStruct[i]) + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos(aStruct[i][DBS_LEN]) + "," + hb_ntos(aStruct[i][DBS_DEC]) + ")" + Eval(cNN, aStruct[i]) + ","
          ENDIF
          EXIT
 
@@ -1350,7 +1350,7 @@ METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto
          EXIT
 
       OTHERWISE
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval(cNN, aStruct[i]) + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos(aStruct[i][DBS_LEN]) + ")" + Eval(cNN, aStruct[i]) + ","
 
       ENDSWITCH
 
@@ -1563,7 +1563,7 @@ STATIC FUNCTION ClipValue2SQL( Value )
 
    SWITCH ValType(Value)
    CASE "N"
-      RETURN hb_ntos( Value )
+      RETURN hb_ntos(Value)
 
    CASE "D"
       IF Empty(Value)

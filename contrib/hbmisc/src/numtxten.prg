@@ -18,33 +18,33 @@ FUNCTION NumToTxtEN( nValue )
 
    IF nValue >= 1000000
       IF nValue >= 100000000
-         cRetVal += int_to_string( Int( nValue / 100000000 ) ) + " hundred "
-         nValue -= 100000000 * Int( nValue / 100000000 )
+         cRetVal += int_to_string( Int(nValue / 100000000) ) + " hundred "
+         nValue -= 100000000 * Int(nValue / 100000000)
       ENDIF
       IF nValue >= 1000000
-         cRetVal += int_to_string( Int( nValue / 1000000 ) ) + " "
-         nValue -= 1000000 * Int( nValue / 1000000 )
+         cRetVal += int_to_string( Int(nValue / 1000000) ) + " "
+         nValue -= 1000000 * Int(nValue / 1000000)
       ENDIF
       cRetVal += "million "
    ENDIF
    IF nValue >= 1000
       IF nValue >= 100000
-         cRetVal += int_to_string( Int( nValue / 100000 ) ) + " hundred "
-         nValue -= 100000 * Int( nValue / 100000 )
+         cRetVal += int_to_string( Int(nValue / 100000) ) + " hundred "
+         nValue -= 100000 * Int(nValue / 100000)
       ENDIF
       IF nValue >= 1000
-         cRetVal += int_to_string( Int( nValue / 1000 ) ) + " "
-         nValue -= 1000 * Int( nValue / 1000 )
+         cRetVal += int_to_string( Int(nValue / 1000) ) + " "
+         nValue -= 1000 * Int(nValue / 1000)
       ENDIF
       cRetVal += "thousand "
    ENDIF
    IF nValue >= 100
-      cRetVal += int_to_string( Int( nValue / 100 ) ) + " hundred "
-      nValue -= 100 * Int( nValue / 100 )
+      cRetVal += int_to_string( Int(nValue / 100) ) + " hundred "
+      nValue -= 100 * Int(nValue / 100)
    ENDIF
    IF nValue >= 1
-      cRetVal += int_to_string( Int( nValue ) )
-      nValue -= Int( nValue )
+      cRetVal += int_to_string( Int(nValue) )
+      nValue -= Int(nValue)
    ENDIF
 
    RETURN RTrim(cRetVal)
@@ -87,10 +87,10 @@ STATIC FUNCTION int_to_string( nValue )
    IF nValue < 20
       cRetVal := aArray1[nValue]
    ELSE
-      cRetVal := aArray2[Int( nValue / 10 )]
-      nValue -= 10 * Int( nValue / 10 )
-      IF Int( nValue ) >= 1
-         cRetVal += " " + aArray1[Int( nValue )]
+      cRetVal := aArray2[Int(nValue / 10)]
+      nValue -= 10 * Int(nValue / 10)
+      IF Int(nValue) >= 1
+         cRetVal += " " + aArray1[Int(nValue)]
       ENDIF
    ENDIF
 

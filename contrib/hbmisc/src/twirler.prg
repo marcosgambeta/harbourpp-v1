@@ -64,6 +64,6 @@ METHOD Twirler:show()
 
 METHOD Twirler:hide()
 
-   hb_DispOutAt( ::n_Row, ::n_Col - Len(::c_Title), Space( Len(::c_Title) + 1 ) )
+   hb_DispOutAt( ::n_Row, ::n_Col - Len(::c_Title), Space(Len(::c_Title) + 1) )
 
    RETURN Self

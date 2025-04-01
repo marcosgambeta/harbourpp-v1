@@ -72,28 +72,28 @@ PROCEDURE Main()
    aTestData := ft_Qtr( dDate )
    ? "FYQtr      ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[1], 5, 2) )
+   nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_Qtr( dDate, nNum )
    ? "FYQtr    " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_Month( dDate )
    ? "FYMonth    ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum := Val( SubStr(aTestData[1], 5, 2) )
+   nNum := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_Month( dDate, nNum )
    ? "FYMonth  " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_Week( dDate )
    ? "FYWeek     ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[1], 5, 2) )
+   nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_Week( dDate, nNum )
    ? "FYWeek   " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_DayOfYr( dDate )
    ? "FYDay     ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[1], 5, 3) )
+   nNum      := Val(SubStr(aTestData[1], 5, 3))
    aTestData := ft_DayOfYr( dDate, nNum )
    ? "FYDAY   " + Str( nNum, 3 ), aTestData[1], aTestData[2], aTestData[3]
 
@@ -108,7 +108,7 @@ PROCEDURE Main()
    ? "ACCTQtr    ", aTestData[1], aTestData[2], aTestData[3], ;
       Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
 
-   nNum      := Val( SubStr(aTestData[1], 5, 2) )
+   nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_AcctQtr( dDate, nNum )
    ? "ACCTQtr  " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
@@ -116,21 +116,21 @@ PROCEDURE Main()
    ? "ACCTMonth  ", aTestData[1], aTestData[2], aTestData[3], ;
       Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
 
-   nNum      := Val( SubStr(aTestData[1], 5, 2) )
+   nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_AcctMonth( dDate, nNum )
    ? "ACCTMonth" + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_AcctWeek( dDate )
    ? "ACCTWeek   ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[1], 5, 2) )
+   nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_AcctWeek( dDate, nNum )
    ? "ACCTWeek " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_DayOfYr( dDate, , .T. )
    ? "ACCTDay   ", aTestData[1], aTestData[2], aTestData[3]
 
-   nNum      := Val( SubStr(aTestData[1], 5, 3) )
+   nNum      := Val(SubStr(aTestData[1], 5, 3))
    aTestData := ft_DayOfYr( dDate, nNum, .T. )
    ? "ACCTDay " + Str( nNum, 3 ), aTestData[1], aTestData[2], aTestData[3]
 

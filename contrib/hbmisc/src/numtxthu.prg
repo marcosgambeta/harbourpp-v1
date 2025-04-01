@@ -59,11 +59,11 @@ FUNCTION NumToTxtHU( nValue )
       cRetVal := ""
    ENDIF
 
-   IF Int( nValue ) == 0
+   IF Int(nValue) == 0
       cRetVal += "nulla"
    ENDIF
 
-   cRetVal += NumToTxtRaw( tmp := Int( nValue ) )
+   cRetVal += NumToTxtRaw( tmp := Int(nValue) )
 
    IF ( tmp := ( nValue - tmp ) ) > 0 .AND. tmp < 1
 
@@ -90,12 +90,12 @@ STATIC FUNCTION NumToTxtRaw( nValue )
    LOCAL cValue
    LOCAL tmp
 
-   cValue := hb_ntos( nValue )
-   cValue := PadL(cValue, ( Int( Max(Len(cValue) - 1, 0) / 3 ) + 1 ) * 3, "0")
+   cValue := hb_ntos(nValue)
+   cValue := PadL(cValue, ( Int(Max(Len(cValue) - 1, 0) / 3) + 1 ) * 3, "0")
 
    aDigit := Array( nLen := Len(cValue) )
    FOR tmp := 1 TO nLen
-      aDigit[tmp] := Val( SubStr(cValue, tmp, 1) )
+      aDigit[tmp] := Val(SubStr(cValue, tmp, 1))
    NEXT
 
    cValue := ""
@@ -107,7 +107,7 @@ STATIC FUNCTION NumToTxtRaw( nValue )
             IIf(aDigit[tmp] != 0, aEgyes[aDigit[tmp] + 1] + "száz", "") + ;
             IIf(aDigit[tmp + 2] == 0, aTizes1[aDigit[tmp + 1] + 1], aTizes2[aDigit[tmp + 1] + 1]) + ;
             aEgyes[aDigit[tmp + 2] + 1] + ;
-            aEgesz[ ( Int( ( nLen - tmp ) / 3 ) ) + 1 ]
+            aEgesz[ ( Int(( nLen - tmp ) / 3) ) + 1 ]
       ENDIF
    NEXT
 

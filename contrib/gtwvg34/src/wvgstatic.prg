@@ -177,7 +177,7 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 #if 1
    // Options
-   IF AScan( { WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME }, ::type ) > 0
+   IF AScan({ WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME }, ::type) > 0
       DO CASE
       CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHIN) != 0
          ::style += WIN_WS_BORDER

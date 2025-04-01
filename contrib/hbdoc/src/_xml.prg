@@ -88,9 +88,9 @@ METHOD GenerateXML:NewIndex( cDir, cFilename, cTitle, cLang )
 METHOD GenerateXML:BeginSection( cSection, cFilename )
 
    IF ::Depth == 0
-      ::cFile += Replicate( Chr(9), ::Depth ) + '<Section name="' + cSection + '" file="' + cFilename + ::cExtension + '">' + hb_eol()
+      ::cFile += Replicate(Chr(9), ::Depth) + '<Section name="' + cSection + '" file="' + cFilename + ::cExtension + '">' + hb_eol()
    ELSE
-      ::cFile += Replicate( Chr(9), ::Depth ) + '<Section name="' + cSection + '">' + hb_eol()
+      ::cFile += Replicate(Chr(9), ::Depth) + '<Section name="' + cSection + '">' + hb_eol()
    ENDIF
    ::Depth++
 
@@ -101,7 +101,7 @@ METHOD GenerateXML:EndSection( cSection, cFilename )
    HB_SYMBOL_UNUSED(cSection)
    HB_SYMBOL_UNUSED(cFilename)
    ::Depth--
-   ::cFile += Replicate( Chr(9), ::Depth ) + '</Section>' + hb_eol()
+   ::cFile += Replicate(Chr(9), ::Depth) + '</Section>' + hb_eol()
 
    RETURN Self
 
@@ -146,7 +146,7 @@ METHOD PROCEDURE GenerateXML:WriteEntry( cCaption, cContent, lPreformatted )
       ENDIF
 
       ::cFile += ;
-         Replicate( Chr(9), ::Depth ) + "<" + cCaption + IIf(lPreformatted, ' preformatted="yes"', "") + ">" + ;
+         Replicate(Chr(9), ::Depth) + "<" + cCaption + IIf(lPreformatted, ' preformatted="yes"', "") + ">" + ;
          hb_StrReplace( cContent, { ;
             "&" => "&amp;", ;
             '"' => "&quot;", ;

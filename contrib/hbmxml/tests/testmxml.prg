@@ -500,7 +500,7 @@ PROCEDURE Main( cFileArg )
     * Save the XML tree to a string and print it...
     */
 
-   cStr := Space( 16384 )
+   cStr := Space(16384)
    IF ( nNum := mxmlSaveString( hTree, @cStr, @whitespace_cb() ) ) > 0
       OutStd(cStr + hb_eol())
    ENDIF
@@ -697,7 +697,7 @@ FUNCTION whitespace_cb(hNode, nWhere)
          nLevel := 0
       ENDIF
 
-      RETURN Replicate( Chr(9), nLevel )
+      RETURN Replicate(Chr(9), nLevel)
    ELSEIF nWhere == MXML_WS_AFTER_CLOSE .OR. ;
          ( ( cName == "group" .OR. cName == "option" .OR. cName == "choice" ) .AND. ;
          nWhere == MXML_WS_AFTER_OPEN )

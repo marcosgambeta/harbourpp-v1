@@ -89,7 +89,7 @@ FUNCTION tip_MailAssemble( ;
    hb_default(@cBody, "")
    hb_default(@cSubject, "")
    hb_default(@aFiles, {})
-   nPriority := Int( hb_defaultValue( nPriority, 3 ) )
+   nPriority := Int(hb_defaultValue( nPriority, 3 ))
    hb_default(@lRead, .F.)
    hb_default(@cReplyTo, "")
    hb_default(@cCharset, "UTF-8")
@@ -208,7 +208,7 @@ FUNCTION tip_MailAssemble( ;
       oMail:hHeaders["Disposition-Notification-To"] := tip_GetRawEmail( cFrom )
    ENDIF
    IF nPriority != 3
-      oMail:hHeaders["X-Priority"] := hb_ntos( nPriority )
+      oMail:hHeaders["X-Priority"] := hb_ntos(nPriority)
    ENDIF
 
    RETURN IIf(HB_IsString(tmp), oMail:HeadersToString() + tmp, oMail:ToString())

@@ -140,7 +140,7 @@ FUNCTION xBrowse1()
    DO WHILE ! lEnd
       oBrowse:ForceStable()
 
-      lMessage( "Record #" + hb_ntos( RecNo() ) )
+      lMessage( "Record #" + hb_ntos(RecNo()) )
 
       nKey := Inkey(0)
 
@@ -327,7 +327,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
       nMaxWidth := Max(nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))))
    NEXT
 
-   nLeft := Max(nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ))
+   nLeft := Max(nLeft, Int(( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1))
    nRight := nLeft + nMaxWidth + 1
 
    // open window
@@ -410,11 +410,11 @@ FUNCTION nCeiling( nNumber )
 
    LOCAL nTemp
 
-   nTemp := nNumber - Int( nNumber )  // right of dec point
+   nTemp := nNumber - Int(nNumber)  // right of dec point
    IF nTemp > 0
-      nNumber := Int( nNumber ) + 1
+      nNumber := Int(nNumber) + 1
    ELSE
-      nNumber := Int( nNumber )
+      nNumber := Int(nNumber)
    ENDIF
 
    RETURN nNumber

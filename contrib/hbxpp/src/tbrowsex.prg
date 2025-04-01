@@ -52,7 +52,7 @@
 
 #include "hbclass.ch"
 
-#define _TBR_COORD( n )  Int( n )
+#define _TBR_COORD( n )  Int(n)
 
 CREATE CLASS xpp_TBrowse INHERIT TBrowse
 

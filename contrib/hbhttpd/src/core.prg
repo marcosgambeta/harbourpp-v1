@@ -209,9 +209,9 @@ METHOD UHttpd:LogAccess()
    hb_mutexLock( ::hmtxLog )
    Eval(::hConfig["LogAccess"], ;
       server["REMOTE_ADDR"] + " - - [" + Right(cDate, 2) + "/" + ;
-      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[Val( SubStr(cDate, 5, 2) )] + ;
+      { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[Val(SubStr(cDate, 5, 2))] + ;
       "/" + Left(cDate, 4) + ":" + cTime + ' +0000] "' + server["REQUEST_ALL"] + '" ' + ;
-      hb_ntos( t_nStatusCode ) + " " + hb_ntos( Len(t_cResult) ) + ;
+      hb_ntos(t_nStatusCode) + " " + hb_ntos(Len(t_cResult)) + ;
       ' "' + server["HTTP_REFERER"] + '" "' + server["HTTP_USER_AGENT"] + ;
       '"')
    hb_mutexUnlock( ::hmtxLog )
@@ -223,8 +223,8 @@ STATIC FUNCTION IPAddr2Num( cIP )
    LOCAL aA, n1, n2, n3, n4
 
    aA := hb_regex( "^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", cIP )
-   IF Len(aA) == 5 .AND. ( n1 := Val( aA[2] ) ) <= 255 .AND. ( n2 := Val( aA[3] ) ) <= 255 .AND. ;
-         ( n3 := Val( aA[4] ) ) <= 255 .AND. ( n4 := Val( aA[5] ) ) <= 255
+   IF Len(aA) == 5 .AND. ( n1 := Val(aA[2]) ) <= 255 .AND. ( n2 := Val(aA[3]) ) <= 255 .AND. ;
+         ( n3 := Val(aA[4]) ) <= 255 .AND. ( n4 := Val(aA[5]) ) <= 255
       RETURN ( ( ( n1 * 256 ) + n2 ) * 256 + n3 ) * 256 + n4
    ENDIF
 
@@ -258,8 +258,8 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
                   RETURN .F.
                ENDIF
             ELSE
-               nPrefix := Val( cI )
-               IF nPrefix < 0 .OR. nPrefix > 32 .OR. ! hb_ntos( nPrefix ) == cI
+               nPrefix := Val(cI)
+               IF nPrefix < 0 .OR. nPrefix > 32 .OR. ! hb_ntos(nPrefix) == cI
                   RETURN .F.
                ENDIF
             ENDIF
@@ -513,7 +513,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          /* receive query header */
          nLen := 1
          nTime := hb_MilliSeconds()
-         cBuf := Space( 4096 )
+         cBuf := Space(4096)
          DO WHILE At( CR_LF + CR_LF, cRequest ) == 0
             IF oServer:lHasSSL .AND. oServer:hConfig["SSL"]
                nLen := MY_SSL_READ(oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr)
@@ -570,7 +570,7 @@ STATIC FUNCTION ProcessConnection( oServer )
             /* receive query body */
             nLen := 1
             nTime := hb_MilliSeconds()
-            cBuf := Space( 4096 )
+            cBuf := Space(4096)
             DO WHILE Len(cRequest) < nReqLen
                IF oServer:lHasSSL .AND. oServer:hConfig["SSL"]
                   nLen := MY_SSL_READ(oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr)
@@ -721,7 +721,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
    ELSE
       USetStatusCode( 404 )
    ENDIF
-   Eval(oServer:hConfig["Trace"], "ProcessRequest time:", hb_ntos( hb_MilliSeconds() - nT ), "ms")
+   Eval(oServer:hConfig["Trace"], "ProcessRequest time:", hb_ntos(hb_MilliSeconds() - nT), "ms")
 
    RETURN
 
@@ -788,7 +788,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
             ENDIF
             EXIT
          CASE "CONTENT-LENGTH"
-            nContentLength := Val( cI )
+            nContentLength := Val(cI)
             EXIT
          CASE "CONTENT-TYPE"
             server["CONTENT_TYPE"] := cI
@@ -901,7 +901,7 @@ STATIC FUNCTION MakeResponse( hConfig )
    IF t_nStatusCode != 200
       t_cResult := "<html><body><h1>" + cStatus + "</h1></body></html>"
    ENDIF
-   UAddHeader( "Content-Length", hb_ntos( Len(t_cResult) ) )
+   UAddHeader( "Content-Length", hb_ntos(Len(t_cResult)) )
    AEval(t_aHeader, {| x | cRet += x[1] + ": " + x[2] + CR_LF })
    cRet += CR_LF
    Eval(hConfig["Trace"], cRet)
@@ -925,8 +925,8 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
 
    // TODO: support outdated compatibility format RFC2616
    IF Len(cDate) == 29 .AND. Right(cDate, 4) == " GMT" .AND. SubStr(cDate, 4, 2) == ", "
-      nMonth := AScan( { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", ;
-         "Oct", "Nov", "Dec" }, SubStr(cDate, 9, 3) )
+      nMonth := AScan({ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", ;
+         "Oct", "Nov", "Dec" }, SubStr(cDate, 9, 3))
       IF nMonth > 0
          tI := hb_SToT( SubStr(cDate, 13, 4) + PadL(nMonth, 2, "0") + SubStr(cDate, 6, 2) + StrTran(SubStr(cDate, 18, 8), ":") )
          IF !Empty(tI)
@@ -963,15 +963,15 @@ STATIC FUNCTION GetErrorDesc(oErr)
    LOCAL cRet, nI, cI, aPar, nJ, xI
 
    cRet := "ERRORLOG ============================================================" + hb_eol() + ;
-      "Error: " + oErr:subsystem + "/" + ErrDescCode( oErr:genCode ) + "(" + hb_ntos( oErr:genCode ) + ") " + ;
-      hb_ntos( oErr:subcode ) + hb_eol()
+      "Error: " + oErr:subsystem + "/" + ErrDescCode( oErr:genCode ) + "(" + hb_ntos(oErr:genCode) + ") " + ;
+      hb_ntos(oErr:subcode) + hb_eol()
    IF !Empty(oErr:filename);      cRet += "File: " + oErr:filename + hb_eol()
    ENDIF
    IF !Empty(oErr:description);   cRet += "Description: " + oErr:description + hb_eol()
    ENDIF
    IF !Empty(oErr:operation);     cRet += "Operation: " + oErr:operation + hb_eol()
    ENDIF
-   IF !Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos( oErr:osCode ) + hb_eol()
+   IF !Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos(oErr:osCode) + hb_eol()
    ENDIF
    IF HB_IsArray(oErr:args)
       cRet += "Arguments:" + hb_eol()
@@ -983,11 +983,11 @@ STATIC FUNCTION GetErrorDesc(oErr)
    nI := 2
 #if 0
    DO WHILE ! Empty(ProcName( ++nI ))
-      cRet += "    " + ProcName( nI ) + "(" + hb_ntos( ProcLine( nI ) ) + ")" + hb_eol()
+      cRet += "    " + ProcName( nI ) + "(" + hb_ntos(ProcLine( nI )) + ")" + hb_eol()
    ENDDO
 #else
    DO WHILE ! Empty(ProcName( ++nI ))
-      cI := "    " + ProcName( nI ) + "(" + hb_ntos( ProcLine( nI ) ) + ")"
+      cI := "    " + ProcName( nI ) + "(" + hb_ntos(ProcLine( nI )) + ")"
       cI := PadR(cI, Max(32, Len(cI) + 1))
       cI += "("
       aPar := __dbgVMParLList( nI )
@@ -1016,7 +1016,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
 
    IF oErr:genCode != EG_MEM
       cRet += "Database areas:" + hb_eol()
-      cRet += "    Current: " + hb_ntos( Select() ) + "  " + Alias() + hb_eol()
+      cRet += "    Current: " + hb_ntos(Select()) + "  " + Alias() + hb_eol()
 
       BEGIN SEQUENCE WITH {| o | Break( o ) }
          IF Used()
@@ -1043,7 +1043,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
                dbSelectArea(nI)
                cRet += Str( nI, 6 ) + " " + rddName() + " " + PadR(Alias(), 15) + ;
                   Str( RecNo() ) + "/" + Str( LastRec() ) + ;
-                  IIf(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos( ordNumber() ) + ")") + hb_eol()
+                  IIf(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos(ordNumber()) + ")") + hb_eol()
                dbCloseArea()
             ENDIF
          RECOVER
@@ -1080,17 +1080,17 @@ STATIC FUNCTION cvt2str( xI, lLong )
    IF cValtype == "U"
       RETURN IIf(lLong, "[U]:NIL", "NIL")
    ELSEIF cValtype == "N"
-      RETURN IIf(lLong, "[N]:" + Str( xI ), hb_ntos( xI ))
+      RETURN IIf(lLong, "[N]:" + Str( xI ), hb_ntos(xI))
    ELSEIF cValtype $ "CM"
       IF Len(xI) <= 260
-         RETURN IIf(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + xI + '"'
+         RETURN IIf(lLong, "[" + cValtype + hb_ntos(Len(xI)) + "]:", "") + '"' + xI + '"'
       ELSE
-         RETURN IIf(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + Left(xI, 100) + '"...'
+         RETURN IIf(lLong, "[" + cValtype + hb_ntos(Len(xI)) + "]:", "") + '"' + Left(xI, 100) + '"...'
       ENDIF
    ELSEIF cValtype == "A"
-      RETURN "[A" + hb_ntos( Len(xI) ) + "]"
+      RETURN "[A" + hb_ntos(Len(xI)) + "]"
    ELSEIF cValtype == "H"
-      RETURN "[H" + hb_ntos( Len(xI) ) + "]"
+      RETURN "[H" + hb_ntos(Len(xI)) + "]"
    ELSEIF cValtype == "O"
       cI := ""
       IF __objHasMsg( xI, "ID" )
@@ -1137,7 +1137,7 @@ FUNCTION UGetHeader( cType )
 
    LOCAL nI
 
-   IF ( nI := AScan( t_aHeader, {| x | Upper(x[1]) == Upper(cType) } ) ) > 0
+   IF ( nI := AScan(t_aHeader, {| x | Upper(x[1]) == Upper(cType) }) ) > 0
       RETURN t_aHeader[nI][2]
    ENDIF
 
@@ -1147,7 +1147,7 @@ PROCEDURE UAddHeader( cType, cValue )
 
    LOCAL nI
 
-   IF ( nI := AScan( t_aHeader, {| x | Upper(x[1]) == Upper(cType) } ) ) > 0
+   IF ( nI := AScan(t_aHeader, {| x | Upper(x[1]) == Upper(cType) }) ) > 0
       t_aHeader[nI][2] := cValue
    ELSE
       AAdd(t_aHeader, { cType, cValue })
@@ -1431,8 +1431,8 @@ PROCEDURE UProcFiles( cFileName, lIndex )
          URedirect( "http://" + server["HTTP_HOST"] + server["SCRIPT_NAME"] + "/" )
          RETURN
       ENDIF
-      IF AScan( { "index.html", "index.htm" }, ;
-            {| x | IIf(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, .T. ), .F.) } ) > 0
+      IF AScan({ "index.html", "index.htm" }, ;
+            {| x | IIf(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, .T. ), .F.) }) > 0
          UAddHeader( "Content-Type", "text/html" )
          UWrite( hb_MemoRead(UOsFileName( cFileName )) )
          RETURN
@@ -1468,10 +1468,10 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       FOR EACH aF IN aDir
          IF Left(aF[1], 1) == "."
          ELSEIF "D" $ aF[5]
-            UWrite( '[DIR] <a href="' + aF[1] + '/">' + aF[1] + '</a>' + Space( 50 - Len(aF[1]) ) + ;
+            UWrite( '[DIR] <a href="' + aF[1] + '/">' + aF[1] + '</a>' + Space(50 - Len(aF[1])) + ;
                DToC(aF[3]) + ' ' + aF[4] + CR_LF )
          ELSE
-            UWrite( '      <a href="' + aF[1] + '">' + aF[1] + '</a>' + Space( 50 - Len(aF[1]) ) + ;
+            UWrite( '      <a href="' + aF[1] + '">' + aF[1] + '</a>' + Space(50 - Len(aF[1])) + ;
                DToC(aF[3]) + ' ' + aF[4] + Str( aF[2], 12 ) + CR_LF )
          ENDIF
       NEXT

@@ -151,10 +151,10 @@ PROCEDURE wvt_Mouse( nKey, nRow, nCol )  // must be a public function
       RETURN
    ENDIF
 
-   nObj := AScan( aObjects, {| e_ | e_[WVT_OBJ_ROW] <= nRow .AND. ;
+   nObj := AScan(aObjects, {| e_ | e_[WVT_OBJ_ROW] <= nRow .AND. ;
       e_[WVT_OBJ_ROWTO] >= nRow .AND. ;
       e_[WVT_OBJ_COL] <= nCol .AND. ;
-      e_[WVT_OBJ_COLTO] >= nCol } )
+      e_[WVT_OBJ_COLTO] >= nCol })
    IF nObj == 0
       IF s_nLastObj > 0
          aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_DISP
@@ -431,7 +431,7 @@ FUNCTION ClearStatusMsg()
    LOCAL nRow := Row()
    LOCAL nCol := Col()
 
-   hb_DispOutAt( MaxRow(), 42, Space( 37 ), "W/W" )
+   hb_DispOutAt( MaxRow(), 42, Space(37), "W/W" )
 
    SetPos(nRow, nCol)
 

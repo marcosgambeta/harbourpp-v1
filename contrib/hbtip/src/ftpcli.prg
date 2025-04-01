@@ -177,7 +177,7 @@ METHOD TIPClientFTP:GetReply()
    ENDDO
 
    // 4 and 5 are error codes
-   RETURN ::inetErrorCode( ::SocketCon ) == 0 .AND. Val( Left(::cReply, 1) ) < 4
+   RETURN ::inetErrorCode( ::SocketCon ) == 0 .AND. Val(Left(::cReply, 1)) < 4
 
 METHOD TIPClientFTP:Commit()
 
@@ -195,7 +195,7 @@ METHOD TIPClientFTP:ScanLength()
    LOCAL aBytes := hb_regex( ::RegBytes, ::cReply )
 
    IF !Empty(aBytes)
-      ::nLength := Val( aBytes[2] )
+      ::nLength := Val(aBytes[2])
    ENDIF
 
    RETURN .T.
@@ -257,7 +257,7 @@ METHOD TIPClientFTP:Pasv()
    ENDIF
 
    ::cDataServer := aRep[2] + "." + aRep[3] + "." + aRep[4] + "." + aRep[5]
-   ::nDataPort := Val( aRep[6] ) * 256 + Val( aRep[7] )
+   ::nDataPort := Val(aRep[6]) * 256 + Val(aRep[7])
 
    RETURN .T.
 
@@ -287,7 +287,7 @@ METHOD TIPClientFTP:NoOp()
 
 METHOD TIPClientFTP:Rest( nPos )
 
-   ::inetSendAll( ::SocketCon, "REST " + hb_ntos( Int( hb_defaultValue( nPos, 0 ) ) ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "REST " + hb_ntos(Int(hb_defaultValue( nPos, 0 ))) + ::cCRLF )
 
    RETURN ::GetReply()
 
@@ -462,7 +462,7 @@ METHOD TIPClientFTP:SendPort()
 
    ::inetSendAll( ::SocketCon, "PORT " + ;
       StrTran(hb_inetGetHosts( NetName() )[1], ".", ",") + "," + ;
-      hb_ntos( Int( nPort / 256 ) ) + "," + hb_ntos( Int( nPort % 256 ) ) + ;
+      hb_ntos(Int(nPort / 256)) + "," + hb_ntos(Int(nPort % 256)) + ;
       ::cCRLF )
 
    RETURN ::GetReply()
@@ -697,7 +697,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
          aFile[F_ATTR] := SubStr(cEntry, nStart, nEnd - nStart)
          nStart          := nEnd
 
-         IF Val( StrTran(aFile[F_ATTR], "-") ) == 0
+         IF Val(StrTran(aFile[F_ATTR], "-")) == 0
 
             // continue with Unix format
 
@@ -705,7 +705,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[F_LEN + 1] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
+            aFile[F_LEN + 1] := Val(SubStr(cEntry, nStart, nEnd - nStart))
             nStart             := nEnd
 
             // owner name
@@ -726,14 +726,14 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd            := hb_At( " ", cEntry, nStart )
-            aFile[F_SIZE] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
+            aFile[F_SIZE] := Val(SubStr(cEntry, nStart, nEnd - nStart))
             nStart          := nEnd
 
             // Month
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd          := hb_At( " ", cEntry, nStart )
-            cMonth        := StrZero( hb_AScan( aMonth, SubStr(cEntry, nStart, nEnd - nStart), , , .T. ), 2 )
+            cMonth        := StrZero( hb_AScan(aMonth, SubStr(cEntry, nStart, nEnd - nStart), , , .T.), 2 )
             nStart        := nEnd
 
             // Day
@@ -782,7 +782,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd            := hb_At( " ", cEntry, nStart )
-            aFile[F_SIZE] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
+            aFile[F_SIZE] := Val(SubStr(cEntry, nStart, nEnd - nStart))
             nStart          := nEnd
 
          ENDIF

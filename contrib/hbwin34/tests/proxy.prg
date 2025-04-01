@@ -18,7 +18,7 @@ PROCEDURE Main( cURL )
       ? "Proxy (raw):", hb_ValToExp( __win_ProxyDetect( cURL ) )
       ? "Proxy:", hb_ValToExp( win_ProxyDetect( cURL, @cByPass ) )
       ? "ByPass:", hb_ValToExp( cByPass )
-      ? "Result:", hb_ntos( wapi_GetLastError() ), win_ErrorString( wapi_GetLastError() )
+      ? "Result:", hb_ntos(wapi_GetLastError()), win_ErrorString( wapi_GetLastError() )
       ?
    NEXT
 

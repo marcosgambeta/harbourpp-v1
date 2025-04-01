@@ -73,15 +73,15 @@ PROCEDURE Main()
 
 
    /* Draw polygons */
-   oI:AddPoint( 10, 10 )
-   oI:AddPoint( 70, 10 )
-   oI:AddPoint( 80, 60 )
+   oI:AddPoint(10, 10)
+   oI:AddPoint(70, 10)
+   oI:AddPoint(80, 60)
    oI:Polygon()
 
    oI:ResetPoints()
-   oI:AddPoint( 160, 180 )
-   oI:AddPoint( 170, 110 )
-   oI:AddPoint( 150, 160 )
+   oI:AddPoint(160, 180)
+   oI:AddPoint(170, 110)
+   oI:AddPoint(150, 160)
    oI:Polygon( , .T., green )
 
    /* Draw an arc */

@@ -28,9 +28,9 @@ PROCEDURE Main( cFileName )
 
    ? XML_ExpatVersion()
    XML_ExpatVersionInfo( @v1, @v2, @v3 )
-   ? hb_ntos( v1 ) + "." + hb_ntos( v2 ) + "." + hb_ntos( v3 )
+   ? hb_ntos(v1) + "." + hb_ntos(v2) + "." + hb_ntos(v3)
    hb_XML_ExpatVersionInfo( @v1, @v2, @v3 )
-   ? hb_ntos( v1 ) + "." + hb_ntos( v2 ) + "." + hb_ntos( v3 )
+   ? hb_ntos(v1) + "." + hb_ntos(v2) + "." + hb_ntos(v3)
 
    IF Empty(p)
       ? "Couldn't allocate memory for parser"
@@ -79,7 +79,7 @@ STATIC PROCEDURE DUMP( hTree, n )
 
    FOR EACH aEl IN hTree[_N_hChild]
       FOR EACH aNode IN aEl
-         ? Replicate( "  ", n ) + aEl:__enumKey() + ":", "'" + aNode[_N_xValue] + "'" + DUMPATTR( aNode[_N_hAttr] )
+         ? Replicate("  ", n) + aEl:__enumKey() + ":", "'" + aNode[_N_xValue] + "'" + DUMPATTR( aNode[_N_hAttr] )
          DUMP( aNode, n + 1 )
       NEXT
    NEXT

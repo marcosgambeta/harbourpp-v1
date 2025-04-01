@@ -42,7 +42,7 @@ PROCEDURE WinMain(...)
          OutStd("Service has been successfully installed" + hb_eol())
       ELSE
          nError := wapi_GetLastError()
-         cMsg := Space( 128 )
+         cMsg := Space(128)
          wapi_FormatMessage( ,,,, @cMsg )
          OutStd(hb_StrFormat( "Error installing service: %1$d %2$s", nError, cMsg ) + hb_eol())
       ENDIF
@@ -55,7 +55,7 @@ PROCEDURE WinMain(...)
          OutStd("Service has been deleted" + hb_eol())
       ELSE
          nError := wapi_GetLastError()
-         cMsg := Space( 128 )
+         cMsg := Space(128)
          wapi_FormatMessage( ,,,, @cMsg )
          OutStd(hb_StrFormat( "Error uninstalling service: %1$d %2$s", nError, cMsg ) + hb_eol())
       ENDIF

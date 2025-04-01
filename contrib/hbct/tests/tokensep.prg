@@ -49,7 +49,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_ntos( n ) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str( n ))
 #endif
 
 PROCEDURE Main()
@@ -66,7 +66,7 @@ PROCEDURE Main()
    ? '    with skip width == 1 and ".,!" as tokenizer list:'
    ?
    FOR ni := 1 TO NumToken( cStr, ".,!", 1 )
-      ? '    Token #' + hb_ntos( ni ) + '("' + Token( cStr, ".,!", ni, 1 ) + ;
+      ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".,!", ni, 1 ) + ;
          '") is tokenized by "' + TokenSep(.F.) + '" and "' + TokenSep(.T.) + '"'
    NEXT
 
@@ -75,7 +75,7 @@ PROCEDURE Main()
    ? '    with skip width == 3 and ".,!" as tokenizer list:'
    ?
    FOR ni := 1 TO NumToken( cStr, ".,!", 3 )
-      ? '    Token #' + hb_ntos( ni ) + '("' + Token( cStr, ".,!", ni, 3 ) + ;
+      ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".,!", ni, 3 ) + ;
          '") is tokenized by "' + TokenSep(.F.) + '" and "' + TokenSep(.T.) + '"'
    NEXT
 

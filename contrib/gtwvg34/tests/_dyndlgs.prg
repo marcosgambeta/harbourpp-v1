@@ -34,7 +34,7 @@ FUNCTION DynWinDialog( nInfo )
    nStyle := DS_SETFONT + WIN_WS_VISIBLE + WIN_WS_POPUP + WIN_WS_CAPTION + WIN_WS_SYSMENU + WIN_WS_THICKFRAME + WIN_WS_MINIMIZEBOX
 
    aDlg := wvt_MakeDlgTemplate( 1, 4, 21, 60, { 0, 0, 0, 0 },  ;
-      "Dialog First [ " + hb_ntos( nInfo ) + " ] " + ;
+      "Dialog First [ " + hb_ntos(nInfo) + " ] " + ;
       IIf(nInfo % 2 == 0, "Modeless", "Modal"), " Dialog !", nStyle )
 
    // Multi line edit control
@@ -147,7 +147,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       CASE wapi_LOWORD(wParam) == ID_LST_LIST
          IF wapi_HIWORD(wParam) == LBN_SELCHANGE
             nIndex  := wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_LST_LIST ), LB_GETCURSEL, 0, 0 )
-            cPrompt := Space( 20 )
+            cPrompt := Space(20)
             wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_LST_LIST ), LB_GETTEXT, nIndex, @cPrompt )
             wapi_MessageBox( hDlg, cPrompt, "ListBox" )
          ENDIF
@@ -155,7 +155,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       CASE wapi_LOWORD(wParam) == ID_CMB_COMBO
          IF wapi_HIWORD(wParam) == CBN_SELCHANGE
             nIndex  := wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_CMB_COMBO ), CB_GETCURSEL, 0, 0 )
-            cPrompt := Space( 20 )
+            cPrompt := Space(20)
             wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_CMB_COMBO ), CB_GETLBTEXT, nIndex, @cPrompt )
             wapi_MessageBox( hDlg, cPrompt, "Combo Box" )
          ENDIF

@@ -191,12 +191,12 @@ METHOD GenerateHTML:BeginSection( cSection, cFilename )
 
    IF ::IsIndex()
       IF cFilename == ::cFilename
-         ::OpenTagInline( "div", "id", cSection ):AppendInline( cSection, "h" + hb_ntos( ::Depth + 2 ) ):CloseTag( "div" )
+         ::OpenTagInline( "div", "id", cSection ):AppendInline( cSection, "h" + hb_ntos(::Depth + 2) ):CloseTag( "div" )
       ELSE
-         ::OpenTag( "a", "href", cFilename + ::cExtension + "#" + cSection ):Append(cSection, "h" + hb_ntos( ::Depth + 2 )):CloseTag( "a" )
+         ::OpenTag( "a", "href", cFilename + ::cExtension + "#" + cSection ):Append(cSection, "h" + hb_ntos(::Depth + 2)):CloseTag( "a" )
       ENDIF
    ELSE
-      ::OpenTagInline( "div", "id", cSection ):AppendInline( cSection, "h" + hb_ntos( ::Depth + 2 ) ):CloseTag( "div" )
+      ::OpenTagInline( "div", "id", cSection ):AppendInline( cSection, "h" + hb_ntos(::Depth + 2) ):CloseTag( "div" )
    ENDIF
    ::TargetFilename := cFilename
    ::Depth++
@@ -403,7 +403,7 @@ METHOD GenerateHTML:OpenTagInline(cText, ...)
    NEXT
 
    IF !cText $ "pre"
-      ::cFile += Replicate( "  ", ::nIndent )
+      ::cFile += Replicate("  ", ::nIndent)
    ENDIF
    ::cFile += "<" + cText + ">"
 

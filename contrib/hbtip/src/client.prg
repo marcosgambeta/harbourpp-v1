@@ -64,8 +64,8 @@
 #undef __HBEXTREQ__
 #include "hbssl.hbx"
 
-#define RCV_BUF_SIZE  Int( ::InetRcvBufSize( ::SocketCon ) / 2 )
-#define SND_BUF_SIZE  Int( ::InetSndBufSize( ::SocketCon ) / 2 )
+#define RCV_BUF_SIZE  Int(::InetRcvBufSize( ::SocketCon ) / 2)
+#define SND_BUF_SIZE  Int(::InetSndBufSize( ::SocketCon ) / 2)
 
 /* Inet Client class */
 CREATE CLASS TIPClient
@@ -297,7 +297,7 @@ METHOD TIPClient:OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName
 
    IF ( tmp := ::inetErrorCode( ::SocketCon ) ) == 0
       cRequest := ;
-         "CONNECT " + cServer + ":" + hb_ntos( nPort ) + " HTTP/1.1" + Chr(13) + Chr(10) + ;
+         "CONNECT " + cServer + ":" + hb_ntos(nPort) + " HTTP/1.1" + Chr(13) + Chr(10) + ;
          "Proxy-Connection: Keep-Alive" + Chr(13) + Chr(10)
       IF HB_IsString(cUserAgent) .AND. ! cUserAgent == ""
          cRequest += "User-Agent: " + cUserAgent + Chr(13) + Chr(10)
@@ -310,13 +310,13 @@ METHOD TIPClient:OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName
       cResp := ""
       IF ::ReadHTTPProxyResponse( @cResp ) .AND. ;
          ( tmp := At( " ", cResp ) ) > 0 .AND. ;
-         Val( SubStr(cResp, tmp + 1) ) == 200
+         Val(SubStr(cResp, tmp + 1)) == 200
          lRet := .T.
       ELSE
          ::close()
       ENDIF
    ELSE
-      cResp := hb_ntos( tmp )
+      cResp := hb_ntos(tmp)
    ENDIF
 
    /* Enable SSL after proxy connection is OK */
@@ -398,7 +398,7 @@ METHOD TIPClient:Read( nLen )
 
    IF nLen <= 0
       // read till end of stream
-      cStr1 := Space( RCV_BUF_SIZE )
+      cStr1 := Space(RCV_BUF_SIZE)
       cStr0 := ""
       DO WHILE ( ::nLastRead := ::inetRecv( ::SocketCon, @cStr1, RCV_BUF_SIZE ) ) > 0
          ::nRead += ::nLastRead
@@ -407,7 +407,7 @@ METHOD TIPClient:Read( nLen )
       ::bEof := .T.
    ELSE
       // read an amount of data
-      cStr0 := Space( nLen )
+      cStr0 := Space(nLen)
 
       IF ::lSSL .AND. ::lHasSSL
          /* Getting around implementing the hack used in non-SSL branch for now.
@@ -528,7 +528,7 @@ METHOD TIPClient:WriteFromFile( cFile )
    ENDIF
 
    ::nStatus := 1
-   cData := Space( nBufSize )
+   cData := Space(nBufSize)
    DO WHILE ( nLen := hb_vfRead( nFIn, @cData, nBufSize ) ) > 0
       IF ::Write( @cData, nLen ) != nLen
          hb_vfClose( nFIn )

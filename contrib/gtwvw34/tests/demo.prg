@@ -199,17 +199,17 @@ PROCEDURE Main()
    CLS
    @ 0, 0 SAY "This is line 0"
    @ 1, 0 SAY "This is line 1"
-   @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos( MaxRow() - 1 )
-   @ MaxRow(), 0 SAY "This is line " + hb_ntos( MaxRow() )
+   @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos(MaxRow() - 1)
+   @ MaxRow(), 0 SAY "This is line " + hb_ntos(MaxRow())
 
    DO WHILE ( nKeyStd := hb_keyStd(Inkey(0)) ) != K_ESC
       // experiment with different paint refresh interval:
       DO CASE
       CASE nKeyStd == hb_keyCode( "<" )
-         wvw_SetPaintRefresh( Int( wvw_SetPaintRefresh() / 2 ) )
+         wvw_SetPaintRefresh( Int(wvw_SetPaintRefresh() / 2) )
          Alert( wvw_SetPaintRefresh() )
       CASE nKeyStd == hb_keyCode( ">" )
-         wvw_SetPaintRefresh( Int( wvw_SetPaintRefresh() * 2 ) )
+         wvw_SetPaintRefresh( Int(wvw_SetPaintRefresh() * 2) )
          Alert( wvw_SetPaintRefresh() )
       CASE nKeyStd == hb_keyCode( "0" )
          wvw_SetPaintRefresh(0)
@@ -277,7 +277,7 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    hb_default(@nBottom, nTop + 10)
    hb_default(@nRight, nLeft + 45)
 
-   cWinName := "Typewriter (Win#" + hb_ntos( wvw_nNumWindows() ) + "); <Ctrl+W>: New Window; <Esc>: Exit"
+   cWinName := "Typewriter (Win#" + hb_ntos(wvw_nNumWindows()) + "); <Ctrl+W>: New Window; <Esc>: Exit"
 
    IF ( nCurWindow := wvw_nOpenWindow( cWinName, nTop, nLeft, nBottom, nRight ) ) == 0
       lboxmessage( "Failed Opening new window!" )
@@ -792,23 +792,23 @@ STATIC FUNCTION TBPrev()
 // WVW_PAINT() must be a FUNCTION in your application
 // as it is called when Window gets WM_PAINT message.
 //
-// 2004-03-30, was: FUNCTION WVW_PAINT( hWnd, msg, wParam, lParam, nWinNum )
-// 2004-04-08, was: FUNCTION WVW_PAINT( nWinNum, nrow1, ncol1, nrow2, ncol2 )
+// 2004-03-30, was: FUNCTION WVW_PAINT(hWnd, msg, wParam, lParam, nWinNum)
+// 2004-04-08, was: FUNCTION WVW_PAINT(nWinNum, nrow1, ncol1, nrow2, ncol2)
 
-FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
+FUNCTION WVW_PAINT(nWinNum)  /* must be a public function */
 
 #if 0
    ldebug( ;
       "WVW_PAINT():" + hb_eol() + ;
-      "hWnd: " + hb_ntos( hWnd ) + hb_eol() + ;
-      "nWinNum: " + hb_ntos( nWinNum ) )
+      "hWnd: " + hb_ntos(hWnd) + hb_eol() + ;
+      "nWinNum: " + hb_ntos(nWinNum) )
 #endif
 
    IF Len(s_amiscobjlist) >= nWinNum + 1
       AEval(s_amiscobjlist[nWinNum + 1], {| e | Eval(e, nWinNum) })
    ENDIF
 
-   wvwm_paint( nWinNum )
+   wvwm_paint(nWinNum)
 
    RETURN 0
 
@@ -827,7 +827,7 @@ PROCEDURE WVW_SETFOCUS( hWnd, nWinNum )  /* must be a public function */
    s_nGotFocus++
    @ 0, 0 SAY s_nGotFocus
    IF s_nGotFocus % 3 == 0
-      Alert( "Got focus " + hb_ntos( s_nGotFocus ) + "th times" )
+      Alert( "Got focus " + hb_ntos(s_nGotFocus) + "th times" )
    ENDIF
 
    RETURN
@@ -951,8 +951,8 @@ STATIC FUNCTION nAfterInkey(nKey)
    IF nKey == WVW_DEFAULT_MENUKEYEVENT
       // MenuKeyEvent
       RETURN nMenuChecker( wvw_GetLastMenuEvent() )
-      // was: ELSEIF AScan( { K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE }, nKeyStd ) > 0
-   ELSEIF AScan( { K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE, K_MMLEFTDOWN, K_LDBLCLK }, nKeyStd ) > 0
+      // was: ELSEIF AScan({ K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE }, nKeyStd) > 0
+   ELSEIF AScan({ K_LBUTTONDOWN, K_LBUTTONUP, K_MOUSEMOVE, K_MMLEFTDOWN, K_LDBLCLK }, nKeyStd) > 0
       // MouseEvent
       RETURN wvwm_nMouseChecker( nkey )
    ELSEIF ( bAction := SetKey(nKey) ) != NIL .OR. ;
@@ -1024,7 +1024,7 @@ STATIC FUNCTION nMenuChecker( nMenuEvent )
       xDebugInfo()
       EXIT
    OTHERWISE
-      lboxmessage( "Sorry, unrecognized menu option: " + hb_ntos( nMenuEvent ) )
+      lboxmessage( "Sorry, unrecognized menu option: " + hb_ntos(nMenuEvent) )
    ENDSWITCH
 
    // xEnableToolbar(0)
@@ -1059,17 +1059,17 @@ STATIC PROCEDURE xDebugInfo()
    lboxmessage( "GTWVW test/demo" + hb_eol() + ;
       "Budyanto Dj. <budyanto@centrin.net.id>" + hb_eol() + ;
       hb_eol() + ;
-      "Topmost Window is Window #" + hb_ntos( wvw_nNumWindows() - 1 ) + hb_eol() + ;
-      "Current Window is Window #" + hb_ntos( wvw_nSetCurWindow() ) + hb_eol() + ;
-      "MaxRow(): " + hb_ntos( MaxRow() ) + ", MaxCol(): " + hb_ntos( MaxCol() ) + hb_eol() + ;
-      "Row(): " + hb_ntos( Row() ) + ", Col(): " + hb_ntos( Col() ) + hb_eol() + ;
-      "WVW_RowOfs(): " + hb_ntos( wvw_nRowOfs() ) + ", WVW_ColOfs(): " + hb_ntos( wvw_nColOfs() ) + hb_eol() + ;
-      "Line Spacing: " + hb_ntos( wvw_SetLineSpacing() ) + hb_eol() + ;
-      "Default Line Spacing: " + hb_ntos( wvw_SetDefLineSpacing() ) + hb_eol() + ;
+      "Topmost Window is Window #" + hb_ntos(wvw_nNumWindows() - 1) + hb_eol() + ;
+      "Current Window is Window #" + hb_ntos(wvw_nSetCurWindow()) + hb_eol() + ;
+      "MaxRow(): " + hb_ntos(MaxRow()) + ", MaxCol(): " + hb_ntos(MaxCol()) + hb_eol() + ;
+      "Row(): " + hb_ntos(Row()) + ", Col(): " + hb_ntos(Col()) + hb_eol() + ;
+      "WVW_RowOfs(): " + hb_ntos(wvw_nRowOfs()) + ", WVW_ColOfs(): " + hb_ntos(wvw_nColOfs()) + hb_eol() + ;
+      "Line Spacing: " + hb_ntos(wvw_SetLineSpacing()) + hb_eol() + ;
+      "Default Line Spacing: " + hb_ntos(wvw_SetDefLineSpacing()) + hb_eol() + ;
       hb_eol() + ;
       "Font Face: '" + s_aFontInfo[1] + "'" + hb_eol() + ;
-      "Font Height: " + hb_ntos( s_aFontInfo[2] ) + hb_eol() + ;
-      "Font Width: " + hb_ntos( s_aFontInfo[3] ) + hb_eol() + ;
+      "Font Height: " + hb_ntos(s_aFontInfo[2]) + hb_eol() + ;
+      "Font Width: " + hb_ntos(s_aFontInfo[3]) + hb_eol() + ;
       hb_eol() + ;
       "BTW, mouse pointer now sits on MaxRow(),MaxCol(), doesn't it?" )
 
@@ -1097,7 +1097,7 @@ STATIC PROCEDURE xHelp()
       "Press <Ctrl+W> to open a new, bigger window." + hb_eol() + ;
       "Press <Esc> to exit)" + hb_eol() + ;
       hb_eol() + ;
-      "Maximum number of windows opened: " + hb_ntos( WVW_MAXWINDOWS ) + hb_eol() + ;
+      "Maximum number of windows opened: " + hb_ntos(WVW_MAXWINDOWS) + hb_eol() + ;
       hb_eol() + ;
       "Other info:" + hb_eol() + ;
       "Window repainting is checked at 100msec interval" )
@@ -1138,15 +1138,15 @@ STATIC PROCEDURE MyError( e )
 
    LOCAL cErr := "Runtime error" + hb_eol() + ;
       hb_eol() + ;
-      "Gencode: " + hb_ntos( e:GenCode ) + hb_eol() + ;
+      "Gencode: " + hb_ntos(e:GenCode) + hb_eol() + ;
       "Desc: " + e:Description +  + hb_eol() + ;
-      "Sub-system: " + hb_ntos( e:SubCode ) + hb_eol() + ;
+      "Sub-system: " + hb_ntos(e:SubCode) + hb_eol() + ;
       hb_eol() + ;
       "Call trace:" + hb_eol() + ;
       hb_eol()
 
    DO WHILE ! Empty(ProcName( ++i ))
-      cErr += RTrim(ProcName( i )) + "(" + hb_ntos( ProcLine( i ) ) + ")" + hb_eol()
+      cErr += RTrim(ProcName( i )) + "(" + hb_ntos(ProcLine( i )) + ")" + hb_eol()
    ENDDO
 
    // ? cErr  // Calls quit
@@ -1523,7 +1523,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
 
 // interface functions
 
-STATIC PROCEDURE wvwm_paint( nWinNum )
+STATIC PROCEDURE wvwm_paint(nWinNum)
 
    // normally called by WVW_PAINT()
    // redraw every mouse object in window nWinNum
@@ -1700,6 +1700,6 @@ STATIC PROCEDURE xKeyRepeater( lInit )
    RETURN
 
 STATIC FUNCTION _nCeiling( nNumber )
-   RETURN Int( nNumber ) + IIf(( nNumber - Int( nNumber ) ) > 0, 1, 0)
+   RETURN Int(nNumber) + IIf(( nNumber - Int(nNumber) ) > 0, 1, 0)
 
 SET PROCEDURE TO "table.prg"

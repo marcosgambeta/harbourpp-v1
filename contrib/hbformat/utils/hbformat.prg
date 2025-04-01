@@ -110,7 +110,7 @@ PROCEDURE Main(...)
 
 STATIC PROCEDURE FCallBack( aFile, nItem )
 
-   IF nItem % Int( Len(aFile) / 40 ) == 1
+   IF nItem % Int(Len(aFile) / 40) == 1
       OutStd(".")
    ENDIF
 

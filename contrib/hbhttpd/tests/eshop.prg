@@ -83,7 +83,7 @@ PROCEDURE Main()
 
    IF !oLogAccess:Add("")
       oLogAccess:Close()
-      ? "Access log file open error " + hb_ntos( FError() )
+      ? "Access log file open error " + hb_ntos(FError())
       RETURN
    ENDIF
 
@@ -92,7 +92,7 @@ PROCEDURE Main()
    IF !oLogError:Add("")
       oLogError:Close()
       oLogAccess:Close()
-      ? "Error log file open error " + hb_ntos( FError() )
+      ? "Error log file open error " + hb_ntos(FError())
       RETURN
    ENDIF
 
@@ -223,7 +223,7 @@ STATIC FUNCTION proc_shopping()
    oW:AddColumn( 104, "",            {|| ULink( "Add to cart", "?add=" + RTrim(FIELD->CODE) ) }, .T. )
    oW:nPageSize := 10
    IF hb_HHasKey(get, "_pos")
-      oW:nPos := Val( get["_pos"] )
+      oW:nPos := Val(get["_pos"])
    ENDIF
 
    RETURN { "browse" => oW:Output(), "cartsum" => nT }
@@ -270,7 +270,7 @@ STATIC FUNCTION proc_cart()
    oW:AddColumn( 104, "",            {|| ULink( "Delete", "?del=" + RTrim(FIELD->CODE) ) }, .T. )
    oW:nPageSize := 10
    IF hb_HHasKey(get, "_pos")
-      oW:nPos := Val( get["_pos"] )
+      oW:nPos := Val(get["_pos"])
    ENDIF
 
    RETURN { "browse" => oW:Output(), "cartsum" => nT }

@@ -121,7 +121,7 @@ FUNCTION WvtPaintObjects()
 
    RETURN 0
 
-FUNCTION WvtSetPaint( a_ )
+FUNCTION WvtSetPaint(a_)
 
    THREAD STATIC t
 
@@ -139,13 +139,13 @@ FUNCTION WvtSetPaint( a_ )
 
    RETURN o
 
-FUNCTION wvg_SetPaint( cID, nAction, xData, aAttr )
+FUNCTION wvg_SetPaint(cID, nAction, xData, aAttr)
 
    LOCAL n, n1, oldData
 
    IF xData != NIL
-      IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
-         IF ( n1 := AScan( t_paint_[n][2], {| e_ | e_[1] == nAction } ) ) > 0
+      IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
+         IF ( n1 := AScan(t_paint_[n][2], {| e_ | e_[1] == nAction }) ) > 0
             oldData := t_paint_[n][2][n1][2]
             t_paint_[n][2][n1][2] := xData
             t_paint_[n][2][n1][3] := aAttr
@@ -160,22 +160,22 @@ FUNCTION wvg_SetPaint( cID, nAction, xData, aAttr )
 
    RETURN oldData
 
-FUNCTION wvg_GetPaint( cID )
+FUNCTION wvg_GetPaint(cID)
 
    LOCAL n
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+   IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
       RETURN t_paint_[n][2]
    ENDIF
 
    RETURN {}
 
-FUNCTION wvg_DelPaint( cID, nAction )
+FUNCTION wvg_DelPaint(cID, nAction)
 
    LOCAL xData, n1, n
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
-      IF ( n1 := AScan( t_paint_[n][2], {| e_ | e_[1] == nAction } ) ) > 0
+   IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
+      IF ( n1 := AScan(t_paint_[n][2], {| e_ | e_[1] == nAction }) ) > 0
          xData := t_paint_[n][2][n1][2]
          t_paint_[n][2][n1][2] := {|| .T. }
       ENDIF
@@ -183,33 +183,33 @@ FUNCTION wvg_DelPaint( cID, nAction )
 
    RETURN xData
 
-FUNCTION wvg_PurgePaint( cID, lDummy )
+FUNCTION wvg_PurgePaint(cID, lDummy)
 
    LOCAL n, aPaint
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+   IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
       aPaint := t_paint_[n]
       hb_ADel( t_paint_, n, .T. )
    ENDIF
 
    IF hb_defaultValue( lDummy, .F. )
-      WvtSetPaint( {} )
+      WvtSetPaint({})
    ENDIF
 
    RETURN aPaint
 
-PROCEDURE wvg_InsertPaint( cID, aPaint, lSet )
+PROCEDURE wvg_InsertPaint(cID, aPaint, lSet)
 
    LOCAL n
 
-   IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
+   IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
       t_paint_[n] := aPaint
    ELSE
       AAdd(t_paint_, aPaint)
    ENDIF
 
    IF hb_defaultValue( lSet, .F. )
-      WvtSetPaint( aPaint )
+      WvtSetPaint(aPaint)
    ENDIF
 
    RETURN
@@ -586,7 +586,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
       IF lEnh
          s := hb_StrReplace( s, "*+" )
       ENDIF
-      IF ( nIndex := hb_AScan( { "N", "B", "G", "BG", "R", "RB", "GR", "W" }, s,,, .T. ) ) > 0
+      IF ( nIndex := hb_AScan({ "N", "B", "G", "BG", "R", "RB", "GR", "W" }, s,,, .T.) ) > 0
          IF lEnh
             nIndex += 8
          ENDIF
@@ -738,7 +738,7 @@ FUNCTION wvg_InvalidateRect( w, r, e )
 
 FUNCTION wvg_GetMessageText( w, p1, p2 )
 
-   LOCAL cText := Replicate( hb_BChar(0), 64000 )
+   LOCAL cText := Replicate(hb_BChar(0), 64000)
 
    wapi_SendMessage( w, p1, p2, @cText )
 

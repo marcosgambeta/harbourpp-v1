@@ -174,7 +174,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
    IF !"Content-Type" $ ::hFields
       ::inetSendAll( ::SocketCon, "Content-Type: application/x-www-form-urlencoded" + ::cCRLF )
    ENDIF
-   ::inetSendAll( ::SocketCon, "Content-Length: " + hb_ntos( hb_BLen(cData) ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "Content-Length: " + hb_ntos(hb_BLen(cData)) + ::cCRLF )
 
    // End of header
    ::inetSendAll( ::SocketCon, ::cCRLF )
@@ -240,9 +240,9 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       ::nReplyCode := 0
       ::cReplyDescr := ""
    ELSE
-      ::nVersion := Val( aVersion[2] )
-      ::nSubversion := Val( aVersion[3] )
-      ::nReplyCode := Val( aVersion[4] )
+      ::nVersion := Val(aVersion[2])
+      ::nSubversion := Val(aVersion[3])
+      ::nReplyCode := Val(aVersion[4])
       ::cReplyDescr := aVersion[5]
    ENDIF
 
@@ -265,7 +265,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       // RFC 2068 forces to discard content length on chunked encoding
       CASE Lower(aHead[1]) == "content-length" .AND. ! ::bChunked
          cLine := SubStr(cLine, 16)
-         ::nLength := Val( cLine )
+         ::nLength := Val(cLine)
 
       // as above
       CASE Lower(aHead[1]) == "transfer-encoding"
@@ -482,7 +482,7 @@ METHOD TIPClientHTTP:getcookies( cHost, cPath )
 METHOD TIPClientHTTP:Boundary( nType )
 
    IF ::cBoundary == NIL
-      ::cBoundary := Replicate( "-", 27 ) + StrZero( hb_randNum( 99999999999 ), 11, 0 )
+      ::cBoundary := Replicate("-", 27) + StrZero( hb_randNum( 99999999999 ), 11, 0 )
    ENDIF
 
    hb_default(@nType, 0)
@@ -545,7 +545,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
          cCrLf
 
       IF ( hFile := hb_vfOpen( cFile, FO_READ ) ) != NIL
-         cBuffer := Space( 65536 )
+         cBuffer := Space(65536)
          DO WHILE ( nRead := hb_vfRead( hFile, @cBuffer, hb_Blen(cBuffer) ) ) > 0
             cData += hb_BLeft(cBuffer, nRead)
          ENDDO
@@ -568,7 +568,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
       ::inetSendAll( ::SocketCon, "Content-Type: multipart/form-data; boundary=" + ::boundary(2) + ::cCrlf )
    ENDIF
 
-   ::inetSendAll( ::SocketCon, "Content-Length: " + hb_ntos( hb_BLen(cData) ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "Content-Length: " + hb_ntos(hb_BLen(cData)) + ::cCRLF )
    // End of header
    ::inetSendAll( ::SocketCon, ::cCRLF )
 

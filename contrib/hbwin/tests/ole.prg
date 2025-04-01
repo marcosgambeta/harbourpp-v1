@@ -202,8 +202,8 @@ STATIC PROCEDURE Exm_MSOutlook2()
       oMail := oOL:CreateItem( 0 /* olMailItem */ )
 
       FOR i := 1 TO 10
-         oMail:Recipients:Add( "Contact" + hb_ntos( i ) + ;
-            "<contact" + hb_ntos( i ) + "@example.org>" )
+         oMail:Recipients:Add( "Contact" + hb_ntos(i) + ;
+            "<contact" + hb_ntos(i) + "@example.org>" )
       NEXT
 
       oLista := oOL:CreateItem( 7 /* olDistributionListItem */ )

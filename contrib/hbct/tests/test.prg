@@ -15,7 +15,7 @@ PROCEDURE Main()
    HBTEST AddAscii( "AAAA", 258,, .T. )    IS "AABC"
    HBTEST AddAscii( "ABBA", -257, 3, .T. ) IS "AAAA"
 
-   HBTEST AsciiSum( Replicate( "A", 10000 ) ) IS 650000
+   HBTEST AsciiSum( Replicate("A", 10000) ) IS 650000
    HBTEST AsciiSum( "0123456789" )            IS 525
    HBTEST AsciiSum(NIL)                       IS 0
 

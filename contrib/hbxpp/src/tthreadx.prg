@@ -116,7 +116,7 @@ PROTECTED:
 
 EXPORTED:
    METHOD quit( xResult, nRestart )
-   METHOD setInterval( nHSeconds )
+   METHOD setInterval(nHSeconds)
    METHOD setPriority( nPriority )
    METHOD setStartTime( nSeconds )
    METHOD start(xAction, ...)
@@ -168,10 +168,10 @@ METHOD PROCEDURE Thread:quit( xResult, nRestart )
 
    RETURN
 
-METHOD Thread:setInterval( nHSeconds )
+METHOD Thread:setInterval(nHSeconds)
 
-   IF HB_IsNumeric(nHSeconds) .AND. Int( nHSeconds ) >= 0
-      ::interval := Int( nHSeconds )
+   IF HB_IsNumeric(nHSeconds) .AND. Int(nHSeconds) >= 0
+      ::interval := Int(nHSeconds)
    ELSEIF PCount() > 0 .OR. nHSeconds == NIL
       ::interval := NIL
    ELSE
@@ -248,7 +248,7 @@ METHOD Thread:start(xAction, ...)
                      __QuitCancel()
                   END SEQUENCE
 
-                  nTime := Int( ( hb_MilliSeconds() - nTime ) / 10 )
+                  nTime := Int(( hb_MilliSeconds() - nTime ) / 10)
                   ::deltaTime := nTime
 
                   /* TODO: when ::startTime is set execution is suspended

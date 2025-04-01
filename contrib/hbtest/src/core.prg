@@ -117,7 +117,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       IF lFailed
          Eval(bOut, ;
             PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
-            PadR(ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
+            PadR(ProcName(1) + "(" + hb_ntos(ProcLine(1)) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             RTrim(cBlock) + ;
             hb_eol() + ;
             Space(5) + "  Result: " + XToStr( xResult, .F. ) + ;
@@ -127,7 +127,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       ELSE
          Eval(bOut, ;
             PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
-            PadR(ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
+            PadR(ProcName(1) + "(" + hb_ntos(ProcLine(1)) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             PadR(cBlock, TEST_RESULT_COL3_WIDTH) + " -> " + ;
             PadR(XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH) + " | " + ;
             XToStr( xResultExpected, .F. ) + ;
@@ -151,13 +151,13 @@ STATIC FUNCTION ErrorMessage( oError )
       ENDSWITCH
    ENDIF
    IF HB_IsNumeric(oError:genCode)
-      cMessage += hb_ntos( oError:genCode ) + " "
+      cMessage += hb_ntos(oError:genCode) + " "
    ENDIF
    IF HB_IsString(oError:subsystem)
       cMessage += oError:subsystem + " "
    ENDIF
    IF HB_IsNumeric(oError:subCode)
-      cMessage += hb_ntos( oError:subCode ) + " "
+      cMessage += hb_ntos(oError:subCode) + " "
    ENDIF
    IF HB_IsString(oError:description)
       cMessage += oError:description + " "
@@ -169,14 +169,14 @@ STATIC FUNCTION ErrorMessage( oError )
       cMessage += "<" + oError:filename + "> "
    ENDIF
    IF HB_IsNumeric(oError:osCode)
-      cMessage += "OS:" + hb_ntos( oError:osCode ) + " "
+      cMessage += "OS:" + hb_ntos(oError:osCode) + " "
    ENDIF
    IF HB_IsNumeric(oError:tries)
-      cMessage += "#:" + hb_ntos( oError:tries ) + " "
+      cMessage += "#:" + hb_ntos(oError:tries) + " "
    ENDIF
 
    IF HB_IsArray(oError:Args)
-      cMessage += "A:" + hb_ntos( Len(oError:Args) ) + ":"
+      cMessage += "A:" + hb_ntos(Len(oError:Args)) + ":"
       FOR tmp := 1 TO Len(oError:Args)
          cMessage += ValType(oError:Args[tmp]) + ":" + XToStr( oError:Args[tmp], .T. )
          IF tmp < Len(oError:Args)
@@ -207,7 +207,7 @@ STATIC FUNCTION ErrorMessage( oError )
 STATIC FUNCTION XToStr( xValue, lInString )
 
    SWITCH ValType(xValue)
-   CASE "N" ; RETURN hb_ntos( xValue )
+   CASE "N" ; RETURN hb_ntos(xValue)
    CASE "D" ; RETURN IIf(lInString, "0d" + IIf(Empty(xValue), "00000000", DToS( xValue )), 'hb_SToD( "' + DToS( xValue ) + '" )')
    CASE "U" ; RETURN "NIL"
    CASE "C"
@@ -259,7 +259,7 @@ STATIC FUNCTION __ByteEscape( nByte )
    ELSE
       cResult := ""
       FOR nExp := 2 TO 0 STEP -1
-         cResult += SubStr("01234567", Int( nByte / ( 8 ^ nExp ) ) + 1, 1)
+         cResult += SubStr("01234567", Int(nByte / ( 8 ^ nExp )) + 1, 1)
          nByte %= 8 ^ nExp
       NEXT
    ENDIF

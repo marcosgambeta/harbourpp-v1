@@ -141,7 +141,7 @@ STATIC PROCEDURE xBrowse1()
    DO WHILE ! lEnd
       oBrowse:ForceStable()
 
-      lMessage( "Record #" + hb_ntos( RecNo() ) )
+      lMessage( "Record #" + hb_ntos(RecNo()) )
 
       nKey := hb_keyStd(Inkey(0))
 
@@ -297,7 +297,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
       nMaxWidth := Max(nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))))
    NEXT
 
-   nLeft := Max(nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ))
+   nLeft := Max(nLeft, Int(( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1))
    nRight := nLeft + nMaxWidth + 1
 
    // open window
@@ -376,7 +376,7 @@ STATIC PROCEDURE ZREVWINDOW()
 // as it is called when Window gets WM_PAINT message.
 // WARNING: it now receives only nWinNum parameter
 
-FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
+FUNCTION WVW_PAINT(nWinNum)  /* must be a public function */
 
    IF nWinNum + 1 <= Len(s_amiscobjlist)
       AEval(s_amiscobjlist[nWinNum + 1], {| e | Eval(e, nWinNum) })

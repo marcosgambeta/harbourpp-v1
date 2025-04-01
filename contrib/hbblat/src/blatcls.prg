@@ -300,7 +300,7 @@ METHOD PROCEDURE HBBlat:Check()
 
       // nMaxNames
       IF HB_IsNumeric(::nMaxNames) .AND. ::nMaxNames > 0
-         ::cCommand += " -maxNames " + hb_ntos( ::nMaxNames )
+         ::cCommand += " -maxNames " + hb_ntos(::nMaxNames)
       ENDIF
 
       // lToUndiscloseRecipients
@@ -491,22 +491,22 @@ METHOD PROCEDURE HBBlat:Check()
 
       // nPortSMTP
       IF HB_IsNumeric(::nPortSMTP) .AND. ::nPortSMTP > 0
-         ::cCommand += " -portSMTP " + hb_ntos( ::nPortSMTP )
+         ::cCommand += " -portSMTP " + hb_ntos(::nPortSMTP)
       ENDIF
 
       // nPortNNTP
       IF HB_IsNumeric(::nPortNNTP) .AND. ::nPortNNTP > 0
-         ::cCommand += " -portNNTP " + hb_ntos( ::nPortNNTP )
+         ::cCommand += " -portNNTP " + hb_ntos(::nPortNNTP)
       ENDIF
 
       // nPortPOP3
       IF HB_IsNumeric(::nPortPOP3) .AND. ::nPortPOP3 > 0
-         ::cCommand += " -portPOP3 " + hb_ntos( ::nPortPOP3 )
+         ::cCommand += " -portPOP3 " + hb_ntos(::nPortPOP3)
       ENDIF
 
       // nPortIMAP
       IF HB_IsNumeric(::nPortIMAP) .AND. ::nPortIMAP > 0
-         ::cCommand += " -portIMAP " + hb_ntos( ::nPortIMAP )
+         ::cCommand += " -portIMAP " + hb_ntos(::nPortIMAP)
       ENDIF
 
       // cUserAUTH
@@ -632,8 +632,8 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // nSensitivity
-      IF HB_IsNumeric(::nSensitivity) .AND. AScan( { 0, 1, 2 }, ::nSensitivity ) > 0
-         ::cCommand += " -sensitivity " + hb_ntos( ::nSensitivity )
+      IF HB_IsNumeric(::nSensitivity) .AND. AScan({ 0, 1, 2 }, ::nSensitivity) > 0
+         ::cCommand += " -sensitivity " + hb_ntos(::nSensitivity)
       ENDIF
 
       // Attachment and encoding options --------
@@ -788,7 +788,7 @@ METHOD PROCEDURE HBBlat:Check()
 
       // nMultipartSize - optional
       IF HB_IsNumeric(::nMultipartSize) .AND. ::nMultipartSize > 0
-         ::cCommand += " -multipart " + hb_ntos( ::nMultipartSize )
+         ::cCommand += " -multipart " + hb_ntos(::nMultipartSize)
       ENDIF
 
       // lNoMultipartMessage - optional
@@ -849,7 +849,7 @@ METHOD PROCEDURE HBBlat:Check()
 
       // nTimeout
       IF HB_IsNumeric(::nTimeout) .AND. ::nTimeout > 0
-         ::cCommand += " -ti " + hb_ntos( ::nTimeout )
+         ::cCommand += " -ti " + hb_ntos(::nTimeout)
       ENDIF
 
       // nTry
@@ -857,7 +857,7 @@ METHOD PROCEDURE HBBlat:Check()
          IF ::nTry == BLAT_TRY_INFINITE_KEY
             ::cCommand += " -try " + BLAT_TRY_INFINITE_VALUE
          ELSEIF ::nTry >= 0
-            ::cCommand += " -try " + hb_ntos( ::nTry )
+            ::cCommand += " -try " + hb_ntos(::nTry)
          ENDIF
       ENDIF
 
@@ -878,7 +878,7 @@ METHOD PROCEDURE HBBlat:Check()
 
       // nDelay
       IF HB_IsNumeric(::nDelay) .AND. ::nDelay > 0
-         ::cCommand += " -delay " + hb_ntos( ::nDelay )
+         ::cCommand += " -delay " + hb_ntos(::nDelay)
       ENDIF
 
       // cCommentChar
@@ -955,7 +955,7 @@ METHOD HBBlat:TranslateBlatError( nErr )
       { BLAT_ERR_LOGICAL_EXPECTED               , BLAT_TEXT_ERR_LOGICAL_EXPECTED               }, ;
       { BLAT_ERR_STRING_EXPECTED                , BLAT_TEXT_ERR_STRING_EXPECTED                } }
 
-   nPos := AScan( aErrors, {| e | e[1] == nErr }, 2 )
+   nPos := AScan(aErrors, {| e | e[1] == nErr }, 2)
    IF nPos == 0
       cError := aErrors[1, 2]  // BLAT_TEXT_ERR_UNKNOWN has to be first error
    ELSE

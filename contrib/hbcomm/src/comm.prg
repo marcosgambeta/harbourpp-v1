@@ -121,7 +121,7 @@ FUNCTION ISWORKING( nPort )
 /* Fetch <nCount> chars into <cData> */
 FUNCTION INCHR(nPort, nCount, /* @ */ cData)
 
-   cData := IIf(HB_IsNumeric(nCount), Space( nCount ), "")
+   cData := IIf(HB_IsNumeric(nCount), Space(nCount), "")
 
    RETURN hb_comRecv( nPort, @cData, nCount )
 
