@@ -301,7 +301,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    ch := Inkey(0.5)
    DO WHILE ! lDone
       IF HB_IsBlock(SetKey(ch))
-         Eval( SetKey(ch) )
+         Eval(SetKey(ch))
       ELSEIF ch != 0
          lchangefocus := .T.
          DO CASE
@@ -358,7 +358,7 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
    LOCAL nFocus, lchangefocus
 
    IF HB_IsBlock(SetKey(ch))
-      Eval( SetKey(ch) )
+      Eval(SetKey(ch))
       RETURN
    ELSEIF ch == 0
       RETURN
@@ -425,8 +425,8 @@ STATIC PROCEDURE SaveVar( nwinnum, aEBGets, lDone )
 
    FOR i := 1 TO Len(aEBGets)
       // do some validation if necessary
-      Eval( aEBGets[i][__GET_BASSIGN], ;
-         GetValFromText( wvw_ebGetText( nwinnum, aEBGets[i][__GET_NEBID] ), aEBGets[i][__GET_CVALTYPE] ) )
+      Eval(aEBGets[i][__GET_BASSIGN], ;
+         GetValFromText( wvw_ebGetText( nwinnum, aEBGets[i][__GET_NEBID] ), aEBGets[i][__GET_CVALTYPE] ))
    NEXT
    lDone := .T.
 
@@ -443,8 +443,8 @@ STATIC PROCEDURE CancelVar( nwinnum, aEBGets, lDone )
    LOCAL i, cdebugreport
 
    FOR i := 1 TO Len(aEBGets)
-      Eval( aEBGets[i][__GET_BASSIGN], ;
-         aEBGets[i][__GET_XINIT] )
+      Eval(aEBGets[i][__GET_BASSIGN], ;
+         aEBGets[i][__GET_XINIT])
    NEXT
    lDone := .T.
 
@@ -905,7 +905,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
       ch := wParam
       bhandler := inp_handler( nWinNum )
       IF HB_IsBlock(bhandler)
-         Eval( bhandler, nWinNum, ch )
+         Eval(bhandler, nWinNum, ch)
          RETURN .T.
       ELSE
          RETURN .F.

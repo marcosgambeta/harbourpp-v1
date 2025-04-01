@@ -1303,19 +1303,19 @@ METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto
 
       SWITCH aStruct[i][DBS_TYPE]
       CASE "C"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval( cNN, aStruct[i] ) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + ","
          EXIT
 
       CASE "M"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " text" + Eval( cNN, aStruct[i] ) + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " text" + Eval(cNN, aStruct[i]) + ","
          EXIT
 
       CASE "N"
 #if 0
          IF aStruct[i][DBS_DEC] == 0
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval( cNN, aStruct[i] ) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " int(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
          ELSE
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos( aStruct[i][DBS_LEN] ) + "," + hb_ntos( aStruct[i][DBS_DEC] ) + ")" + Eval( cNN, aStruct[i] ) + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos( aStruct[i][DBS_LEN] ) + "," + hb_ntos( aStruct[i][DBS_DEC] ) + ")" + Eval(cNN, aStruct[i]) + ","
          ENDIF
 #endif
          IF aStruct[i][DBS_DEC] == 0 .AND. aStruct[i][DBS_LEN] <= 18
@@ -1331,26 +1331,26 @@ METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto
             OTHERWISE
                ::cCreateQuery += aStruct[i][DBS_NAME] + " bigint(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")"
             ENDCASE
-            ::cCreateQuery += Eval( cNN, aStruct[i] ) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
+            ::cCreateQuery += Eval(cNN, aStruct[i]) + IIf(aStruct[i][DBS_NAME] == cPrimaryKey, " NOT NULL ", "") + IIf(aStruct[i][DBS_NAME] == cAuto, " auto_increment ", "") + ","
          ELSE
-            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos( aStruct[i][DBS_LEN] ) + "," + hb_ntos( aStruct[i][DBS_DEC] ) + ")" + Eval( cNN, aStruct[i] ) + ","
+            ::cCreateQuery += aStruct[i][DBS_NAME] + " real(" + hb_ntos( aStruct[i][DBS_LEN] ) + "," + hb_ntos( aStruct[i][DBS_DEC] ) + ")" + Eval(cNN, aStruct[i]) + ","
          ENDIF
          EXIT
 
       CASE "D"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " date " + Eval( cNN, aStruct[i] ) + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " date " + Eval(cNN, aStruct[i]) + ","
          EXIT
 
       CASE "B"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " mediumblob "  + Eval( cNN, aStruct[i] ) + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " mediumblob "  + Eval(cNN, aStruct[i]) + ","
          EXIT
 
       CASE "I"
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " mediumint " + Eval( cNN, aStruct[i] ) + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " mediumint " + Eval(cNN, aStruct[i]) + ","
          EXIT
 
       OTHERWISE
-         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval( cNN, aStruct[i] ) + ","
+         ::cCreateQuery += aStruct[i][DBS_NAME] + " char(" + hb_ntos( aStruct[i][DBS_LEN] ) + ")" + Eval(cNN, aStruct[i]) + ","
 
       ENDSWITCH
 

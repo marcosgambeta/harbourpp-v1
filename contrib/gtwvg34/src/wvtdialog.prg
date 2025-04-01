@@ -152,13 +152,13 @@ CREATE CLASS WvtDialog
    METHOD MouseOver()
    METHOD Update()
    METHOD CreateObjects()
-   METHOD Eval( bBlock, p1, p2, p3, p4, p5 )
+   METHOD Eval(bBlock, p1, p2, p3, p4, p5)
    METHOD ActivateMenu()
 
    METHOD AddObject( oObject )                    INLINE AAdd(::aObjects, oObject)
    METHOD MaxRow()                                INLINE ::nRows - 1
    METHOD MaxCol()                                INLINE ::nCols - 1
-   METHOD OnTimer()                               INLINE AEval( ::aObjects, {| o | o:OnTimer() } )
+   METHOD OnTimer()                               INLINE AEval(::aObjects, {| o | o:OnTimer() })
 
 ENDCLASS
 
@@ -257,7 +257,7 @@ METHOD WvtDialog:Create()
 
    SetColor(::cColor)
    CLS
-   ::Eval( ::bOnCreate )
+   ::Eval(::bOnCreate)
 
    ::CreateObjects()
 
@@ -292,7 +292,7 @@ METHOD PROCEDURE WvtDialog:Destroy()
       ::oMenu:Destroy()
    ENDIF
 
-   AEval( ::aObjects, {| o | o:destroy() } )
+   AEval(::aObjects, {| o | o:destroy() })
 
    wvt_SetToolTip( 0, 0, 0, 0, "" )
    wvt_SetToolTipActive( ::oldToolTipActive )
@@ -477,13 +477,13 @@ METHOD WvtDialog:Inkey()
             dbSelectArea(::oCurObj:cAlias)
          ENDIF
 
-         ::Eval( ::oCurObj:bOnFocus, ::oCurObj )
+         ::Eval(::oCurObj:bOnFocus, ::oCurObj)
       ENDIF
 
       IF ::nKey == K_LBUTTONDOWN
          IF ::nUseObj > 0
             IF !( ::lEventHandled := ::aObjects[::nUseObj]:LeftDown() )
-               ::lEventHandled := ::Eval( ::aObjects[::nUseObj]:bOnLeftDown )
+               ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftDown)
                IF ::aObjects[::nUseObj]:className() == "WVTBROWSE"
                   ::lEventHandled := .F.
                ENDIF
@@ -494,7 +494,7 @@ METHOD WvtDialog:Inkey()
       IF ::nKey == K_LBUTTONUP
          IF ::nUseObj > 0
             IF !( ::lEventHandled := ::aObjects[::nUseObj]:LeftUp() )
-               ::lEventHandled := ::Eval( ::aObjects[::nUseObj]:bOnLeftUp )
+               ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftUp)
             ENDIF
          ENDIF
       ENDIF
@@ -502,7 +502,7 @@ METHOD WvtDialog:Inkey()
       IF ::nKey == K_MMLEFTDOWN
          IF ::nUseObj > 0
             IF !( ::lEventHandled := ::aObjects[::nUseObj]:MMLeftDown() )
-               ::lEventHandled := ::Eval( ::aObjects[::nUseObj]:bOnMMLeftDown )
+               ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnMMLeftDown)
             ENDIF
          ENDIF
       ENDIF
@@ -510,14 +510,14 @@ METHOD WvtDialog:Inkey()
       IF ::nKey == K_LBUTTONPRESSED
          IF ::nUseObj > 0
             IF !( ::lEventHandled := ::aObjects[::nUseObj]:LeftPressed() )
-               ::lEventHandled := ::Eval( ::aObjects[::nUseObj]:bOnLeftPressed )
+               ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftPressed)
             ENDIF
          ENDIF
       ENDIF
 
       IF ::nKey == K_LDBLCLK
          IF ::nUseObj > 0
-            ::lEventHandled := ::Eval( ::aObjects[::nUseObj]:bOnSelect )
+            ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnSelect)
          ENDIF
       ENDIF
 
@@ -529,7 +529,7 @@ METHOD WvtDialog:Inkey()
          IF ::nCurObj > 0
             IF !Empty(::aDialogKeys)
                IF ( n := AScan( ::aDialogKeys, {| e_ | e_[1] == ::nKey } ) ) > 0
-                  Eval( ::aDialogKeys[n][2], Self, ::oCurObj )
+                  Eval(::aDialogKeys[n][2], Self, ::oCurObj)
                ENDIF
             ENDIF
 
@@ -549,7 +549,7 @@ METHOD WvtDialog:Inkey()
 
       IF !::lEventHandled
          IF HB_IsEvalItem(SetKey(::nKey))
-            Eval( SetKey(::nKey) )
+            Eval(SetKey(::nKey))
          ENDIF
       ENDIF
    ENDIF
@@ -635,12 +635,12 @@ METHOD WvtDialog:CreateObjects()
 
    RETURN Self
 
-METHOD WvtDialog:Eval( bBlock, p1, p2, p3, p4, p5 )
+METHOD WvtDialog:Eval(bBlock, p1, p2, p3, p4, p5)
 
    LOCAL lRet
 
    IF ( lRet := HB_IsEvalItem(bBlock) )
-      Eval( bBlock, p1, p2, p3, p4, p5 )
+      Eval(bBlock, p1, p2, p3, p4, p5)
    ENDIF
 
    RETURN lRet
@@ -654,7 +654,7 @@ METHOD WvtDialog:ActivateMenu()
       IF HB_IsObject(::oMenu)
          IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nMenu))
             IF HB_IsEvalItem(aMenuItem[WVT_MENU_ACTION])
-               Eval( aMenuItem[WVT_MENU_ACTION] )
+               Eval(aMenuItem[WVT_MENU_ACTION])
             ENDIF
          ENDIF
       ENDIF

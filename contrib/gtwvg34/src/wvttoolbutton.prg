@@ -94,7 +94,7 @@ METHOD WvtToolButton:Create()
 METHOD WvtToolButton:Refresh()
 
    IF ::lActive
-      Eval( ::bPaint )
+      Eval(::bPaint)
    ENDIF
 
    RETURN Self
@@ -126,7 +126,7 @@ METHOD WvtToolButton:LeftUp()
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
       wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1 )
-      Eval( ::bOnLeftUp )
+      Eval(::bOnLeftUp)
       RETURN .T.
    ENDIF
 

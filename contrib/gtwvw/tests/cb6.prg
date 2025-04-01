@@ -78,7 +78,7 @@ PROCEDURE Main()
    READ
 
    // disable all comboboxes:
-   AEval( s_aComboList, {| x | wvw_cbEnable( NIL, x[1], .F. ) } )
+   AEval(s_aComboList, {| x | wvw_cbEnable( NIL, x[1], .F. ) })
 
    DevPos(5, 0)
    ? "name: '" + mname + "'"
@@ -89,7 +89,7 @@ PROCEDURE Main()
    Inkey(0)
 
    // destroy all comboboxes:
-   AEval( s_aComboList, {| x | wvw_cbDestroy( NIL, x[1] ) } )
+   AEval(s_aComboList, {| x | wvw_cbDestroy( NIL, x[1] ) })
    s_aComboList := {}
 
    ?

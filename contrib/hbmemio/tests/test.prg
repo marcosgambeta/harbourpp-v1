@@ -12,7 +12,7 @@ PROCEDURE Main()
       FIELD->F1 := hb_Random() * 1000000
    NEXT
    INDEX ON FIELD->F1 TAG f1
-   dbEval( {|| QOut( FIELD->F1 ) } )
+   dbEval({|| QOut( FIELD->F1 ) })
    dbCloseArea()
    dbDrop( "mem:test" )  /* Free memory resource */
 

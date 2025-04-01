@@ -176,7 +176,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             ::oParent:setFocus()
          ENDIF
          IF HB_IsEvalItem(::sl_itemMarked)
-            Eval( ::sl_itemMarked, , , Self )
+            Eval(::sl_itemMarked, , , Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -190,7 +190,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             ::oParent:setFocus()
          ENDIF
          IF HB_IsEvalItem(::sl_itemSelected)
-            Eval( ::sl_itemSelected, , , Self )
+            Eval(::sl_itemSelected, , , Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -212,7 +212,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             ::oParent:setFocus()
          ENDIF
          IF HB_IsEvalItem(::sl_itemSelected)
-            Eval( ::sl_itemSelected, , , Self )
+            Eval(::sl_itemSelected, , , Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -242,7 +242,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_itemMarked, , , Self )
+            Eval(::sl_itemMarked, , , Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -254,7 +254,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_itemSelected, , , Self )
+            Eval(::sl_itemSelected, , , Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -268,7 +268,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
-               Eval( ::sl_itemMarked, , , Self )
+               Eval(::sl_itemMarked, , , Self)
                IF ::isParentCrt()
                   ::setFocus()
                ENDIF

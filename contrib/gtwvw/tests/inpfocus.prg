@@ -242,7 +242,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
    DO CASE
    CASE message == WM_CHAR
       ch := wParam
-      Eval( s_akeyhandlers[nWinNum], nWinNum, ch )
+      Eval(s_akeyhandlers[nWinNum], nWinNum, ch)
       RETURN .T.
    OTHERWISE
       // let it be ignored

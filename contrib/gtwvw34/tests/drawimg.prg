@@ -345,7 +345,7 @@ FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 
    IF Len(s_aPObjList) >= nWinNum + 1
       // simple redraw, ignoring wpaint obj dependency with each other:
-     AEval( s_aPObjList[nWinNum + 1], {| oWPaint | oWPaint:draw() } )
+     AEval(s_aPObjList[nWinNum + 1], {| oWPaint | oWPaint:draw() })
    ENDIF
 
    RETURN 0

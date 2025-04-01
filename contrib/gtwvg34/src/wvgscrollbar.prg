@@ -212,7 +212,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       ENDCASE
 
       ::sl_editBuffer := nScrPos
-      Eval( ::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self )
+      Eval(::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self)
       RETURN EVENT_HANDLED
 
    CASE nMessage == HB_GTE_VSCROLL
@@ -283,7 +283,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       ENDCASE
 
       ::sl_editBuffer := nScrPos
-      Eval( ::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self )
+      Eval(::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self)
       RETURN EVENT_HANDLED
 
    ENDCASE

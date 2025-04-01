@@ -277,7 +277,7 @@ METHOD TBrowseSQL:EditField()
       // NOTE: I need to use ::oCurRow:FieldPut(...) when changing values since message redirection doesn't work at present
       //       time for write access to instance variables but only for reading them
       aGetList := { GetNew( Row(), Col(),;
-                            {| xValue | IIf(xValue == NIL, Eval( oCol:Block ), ::oCurRow:FieldPut( oCol:nFieldNum, xValue )) },;
+                            {| xValue | IIf(xValue == NIL, Eval(oCol:Block), ::oCurRow:FieldPut( oCol:nFieldNum, xValue )) },;
                             oCol:heading,;
                             oCol:picture,;
                             ::colorSpec ) }

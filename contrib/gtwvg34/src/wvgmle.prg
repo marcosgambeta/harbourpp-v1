@@ -165,22 +165,22 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
       DO CASE
       CASE aNM[NMH_code] == EN_KILLFOCUS
          IF HB_IsEvalItem(::sl_killInputFocus)
-            Eval( ::sl_killInputFocus, , , Self )
+            Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_SETFOCUS
          IF HB_IsEvalItem(::sl_setInputFocus)
-            Eval( ::sl_setInputFocus, , , Self )
+            Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_HSCROLL
          IF HB_IsEvalItem(::sl_hScroll)
-            Eval( ::sl_hScroll, , , Self )
+            Eval(::sl_hScroll, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_VSCROLL
          IF HB_IsEvalItem(::sl_vScroll)
-            Eval( ::sl_vScroll, , , Self )
+            Eval(::sl_vScroll, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_CHANGE
@@ -212,22 +212,22 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
 
          CASE aNM[NMH_code] == WIN_WM_KILLFOCUS
             IF HB_IsEvalItem(::sl_killInputFocus)
-               Eval( ::sl_killInputFocus, , , Self )
+               Eval(::sl_killInputFocus, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_SETFOCUS
             IF HB_IsEvalItem(::sl_setInputFocus)
-               Eval( ::sl_setInputFocus, , , Self )
+               Eval(::sl_setInputFocus, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_HSCROLL
             IF HB_IsEvalItem(::sl_hScroll)
-               Eval( ::sl_hScroll, , , Self )
+               Eval(::sl_hScroll, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_VSCROLL
             IF HB_IsEvalItem(::sl_vScroll)
-               Eval( ::sl_vScroll, , , Self )
+               Eval(::sl_vScroll, , , Self)
             ENDIF
 
          ENDCASE

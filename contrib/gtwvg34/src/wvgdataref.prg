@@ -118,7 +118,7 @@ METHOD WvgDataRef:getData()
    ENDSWITCH
 
    IF HB_IsEvalItem(::dataLink)
-      Eval( ::dataLink, ::sl_editBuffer )
+      Eval(::dataLink, ::sl_editBuffer)
    ENDIF
 
    RETURN ::sl_editBuffer
@@ -130,7 +130,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
    HB_SYMBOL_UNUSED(mp2)
 
    IF HB_IsEvalItem(::dataLink)
-      ::sl_editBuffer := Eval( ::dataLink  )
+      ::sl_editBuffer := Eval(::dataLink)
    ELSEIF xValue != NIL
       ::sl_editBuffer := xValue
    ENDIF
@@ -185,7 +185,7 @@ METHOD WvgDataRef:undo()
 METHOD WvgDataRef:validate( xParam )
 
    IF PCount() == 0 .AND. HB_IsEvalItem(::sl_validate)
-      RETURN Eval( ::sl_validate, Self )
+      RETURN Eval(::sl_validate, Self)
    ELSEIF HB_IsEvalItem(xParam)
       ::sl_validate := xParam
    ENDIF

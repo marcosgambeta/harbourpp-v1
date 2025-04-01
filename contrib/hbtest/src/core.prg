@@ -89,7 +89,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
    cLangOld := hb_langSelect( "en" ) /* to always have RTEs in one language */
 
    BEGIN SEQUENCE WITH ErrorBlock( {| oError | Break( oError ) } )
-      xResult := Eval( bBlock )
+      xResult := Eval(bBlock)
       lRTE := .F.
    RECOVER USING oError
       xResult := ErrorMessage( oError )
@@ -115,7 +115,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
    IF lFailed .OR. lPPError .OR. hb_HGetDef( t_hParams, "showall", .T. )
       bOut := hb_HGetDef( t_hParams, "output", {| cMsg | OutStd( cMsg ) } )
       IF lFailed
-         Eval( bOut, ;
+         Eval(bOut, ;
             PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
             PadR(ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             RTrim(cBlock) + ;
@@ -123,15 +123,15 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
             Space(5) + "  Result: " + XToStr( xResult, .F. ) + ;
             hb_eol() + ;
             Space(5) + "Expected: " + XToStr( xResultExpected, .F. ) + ;
-            hb_eol() )
+            hb_eol())
       ELSE
-         Eval( bOut, ;
+         Eval(bOut, ;
             PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
             PadR(ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             PadR(cBlock, TEST_RESULT_COL3_WIDTH) + " -> " + ;
             PadR(XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH) + " | " + ;
             XToStr( xResultExpected, .F. ) + ;
-            hb_eol() )
+            hb_eol())
       ENDIF
    ENDIF
 

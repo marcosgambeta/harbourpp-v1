@@ -827,7 +827,7 @@ STATIC FUNCTION FileSig( cFile )
 
 STATIC PROCEDURE ShowConfig( netiosrv, netiomgm )
 
-   AEval( netiosrv_config( netiosrv, netiomgm ), {| tmp | netiosrv_LogEvent( tmp ) } )
+   AEval(netiosrv_config( netiosrv, netiomgm ), {| tmp | netiosrv_LogEvent( tmp ) })
 
    RETURN
 

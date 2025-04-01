@@ -53,7 +53,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
       aWidth[nI] := Max(aWidth[nI], cairo_text_extents( hCairo, aCol[nI, 1] )[5]) + 20
    NEXT
    nW := 0
-   AEval( aWidth, {| X | nW += X } )
+   AEval(aWidth, {| X | nW += X })
 
    cairo_move_to( hCairo, nX, nY )
    cairo_rel_line_to( hCairo, nW, 0 )

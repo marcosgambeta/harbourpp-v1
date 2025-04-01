@@ -223,7 +223,7 @@ METHOD WVWMouseButton:OnPress()
    ENDIF
 
    IF HB_IsBlock(::bPressBlock)
-      Eval( ::bPressBlock )
+      Eval(::bPressBlock)
    ENDIF
 
    RETURN Self
@@ -237,7 +237,7 @@ METHOD WVWMouseButton:OnClick()
    ENDIF
 
    IF HB_IsBlock(::bClickBlock)
-      Eval( ::bClickBlock )
+      Eval(::bClickBlock)
    ENDIF
 
    RETURN Self
@@ -390,7 +390,7 @@ FUNCTION wvwm_paint( nWinNum )
    // normally called by WVW_Paint()
    // redraw every mouse object in window nWinNum
    IF Len(s_amouseobjlist) >= nWinNum + 1
-      AEval( s_amouseobjlist[nWinNum + 1], {| o | o[2]:draw( nWinNum ) } )
+      AEval(s_amouseobjlist[nWinNum + 1], {| o | o[2]:draw( nWinNum ) })
    ENDIF
 
    RETURN NIL

@@ -373,7 +373,7 @@ STATIC PROCEDURE Demo_Get()
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, hb_DirBase() + "vouch1.bmp" ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft) } )
-   AddMiscObjects( nCurWindow, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | __temp__ := nWindow, AEval(GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) }) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
 
@@ -805,7 +805,7 @@ FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 #endif
 
    IF Len(s_amiscobjlist) >= nWinNum + 1
-      AEval( s_amiscobjlist[nWinNum + 1], {| e | Eval( e, nWinNum ) } )
+      AEval(s_amiscobjlist[nWinNum + 1], {| e | Eval(e, nWinNum) })
    ENDIF
 
    wvwm_paint( nWinNum )
@@ -957,7 +957,7 @@ STATIC FUNCTION nAfterInkey(nKey)
       RETURN wvwm_nMouseChecker( nkey )
    ELSEIF ( bAction := SetKey(nKey) ) != NIL .OR. ;
           ( bAction := SetKey(nKeyStd) ) != NIL
-      Eval( bAction, ProcName(), ProcLine(), ReadVar() )
+      Eval(bAction, ProcName(), ProcLine(), ReadVar())
       RETURN 0
    ENDIF
 
@@ -1362,7 +1362,7 @@ METHOD WVWMouseButton:OnPress()
    ENDIF
 
    IF HB_IsEvalItem(::bPressBlock)
-      Eval( ::bPressBlock )
+      Eval(::bPressBlock)
    ENDIF
 
    RETURN Self
@@ -1376,7 +1376,7 @@ METHOD WVWMouseButton:OnClick()
    ENDIF
 
    IF HB_IsEvalItem(::bClickBlock)
-      Eval( ::bClickBlock )
+      Eval(::bClickBlock)
    ENDIF
 
    RETURN Self
@@ -1528,7 +1528,7 @@ STATIC PROCEDURE wvwm_paint( nWinNum )
    // normally called by WVW_PAINT()
    // redraw every mouse object in window nWinNum
    IF Len(s_amouseobjlist) >= nWinNum + 1
-      AEval( s_amouseobjlist[nWinNum + 1], {| o | o[2]:draw( nWinNum ) } )
+      AEval(s_amouseobjlist[nWinNum + 1], {| o | o[2]:draw( nWinNum ) })
    ENDIF
 
    RETURN

@@ -162,7 +162,7 @@ METHOD WvgDialog:destroy()
       ::oMenu:destroy()
    ENDIF
 
-   AEval( ::aChildren, {| o | o:destroy() } )
+   AEval(::aChildren, {| o | o:destroy() })
 
    IF !Empty(::hBrushBG)
       wvg_DeleteObject( ::hBrushBG )

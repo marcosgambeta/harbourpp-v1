@@ -159,7 +159,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
       ENDIF
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
       IF HB_IsEvalItem(::sl_resize)
-         Eval( ::sl_resize, , , Self )
+         Eval(::sl_resize, , , Self)
       ENDIF
 
    CASE nMessage == HB_GTE_COMMAND
@@ -168,7 +168,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_lbClick, , , Self )
+            Eval(::sl_lbClick, , , Self)
             IF ::pointerFocus
                ::setFocus()
             ENDIF
@@ -195,7 +195,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_lbClick, , , Self )
+            Eval(::sl_lbClick, , , Self)
          ENDIF
       ENDIF
 #endif

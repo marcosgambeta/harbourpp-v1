@@ -213,7 +213,7 @@ METHOD HBFormatCode:Reformat( aFile )
          LOOP
       ENDIF
       IF ::bCallBack != NIL
-         Eval( ::bCallBack, aFile, i )
+         Eval(::bCallBack, aFile, i)
       ENDIF
       nPosComment := 0
       lSpaceFirst := hb_LeftEq( aFile[i], " " )

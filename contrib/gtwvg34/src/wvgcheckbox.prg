@@ -133,7 +133,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_lbClick, ::editBuffer, , Self )
+            Eval(::sl_lbClick, ::editBuffer, , Self)
             IF ::pointerFocus
                ::setFocus()
             ENDIF
@@ -159,7 +159,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
                ::oParent:setFocus()
                ::sendMessage( BM_SETCHECK, IIf(wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED, BST_UNCHECKED, BST_CHECKED), 0 )
                ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
-               Eval( ::sl_lbClick, , , Self )
+               Eval(::sl_lbClick, , , Self)
             ENDIF
          ENDIF
       ENDIF

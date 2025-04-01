@@ -180,7 +180,7 @@ METHOD PROCEDURE WvgActiveXControl:execEvent(nEvent, ...)
    LOCAL cEvents := hb_ValToStr( nEvent ) + ", "
    LOCAL aEvents := {...}
 
-   AEval( aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " } )
+   AEval(aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " })
    hb_traceLog( cEvents )
 #endif
 
@@ -203,7 +203,7 @@ METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
          ::rePosition()
       ENDIF
       IF HB_IsEvalItem(::sl_resize)
-         Eval( ::sl_resize, , , Self )
+         Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
 

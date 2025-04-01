@@ -31,7 +31,7 @@ METHOD UWMain:Paint()
    UWrite( '<meta http-equiv="content-type" content="text/html; charset=UTF-8">' )
    UWrite( '<script language="javascript" src="/files/main.js"></script>' )
    UWrite( '<body>' )
-   AEval( ::aChilds, {| x | x:Paint() } )
+   AEval(::aChilds, {| x | x:Paint() })
    UWrite( '</body></html>' )
 
    RETURN Self
@@ -65,7 +65,7 @@ METHOD UWLayoutGrid:Paint()
       UWrite( '<tr>' )
       FOR EACH aCell IN aRow
          UWrite( '<td>' )
-         AEval( aCell, {| o | o:Paint() } )
+         AEval(aCell, {| o | o:Paint() })
          UWrite( '</td>' )
       NEXT
       UWrite( '</tr>' )
@@ -89,7 +89,7 @@ METHOD UWLayoutGrid:Add(oWidget, nRow, nCol)
    ENDIF
    IF nCol > Len(::aChilds[1])
       FOR nI := Len(::aChilds[1]) + 1 TO nCol
-         AEval( ::aChilds, {| x | AAdd(x, {}) } )
+         AEval(::aChilds, {| x | AAdd(x, {}) })
       NEXT
    ENDIF
    AAdd(::aChilds[nRow][nCol], oWidget)
@@ -180,7 +180,7 @@ METHOD UWForm:Add(oWidget)
 METHOD UWForm:Paint()
 
    UWrite( '<form action="' + ::cAction + '" method="' + ::cMethod + '">' )
-   AEval( ::aChilds, {| x | x:Paint() } )
+   AEval(::aChilds, {| x | x:Paint() })
    UWrite( '</form>' )
 
    RETURN Self
@@ -370,7 +370,7 @@ METHOD UWBrowse:Output()
          CASE HB_IsString(xField)
             xI := FieldGet( FieldPos( xField ) )
          CASE HB_IsEvalItem(xField)
-            xI := Eval( xField )
+            xI := Eval(xField)
          ENDCASE
          SWITCH ValType(xI)
          CASE "C"  ; xI := RTrim(xI); EXIT
@@ -443,7 +443,7 @@ METHOD UWOption:Output()
 
    LOCAL cRet := ""
 
-   AEval( ::aOption, {| X | cRet += hb_StrFormat( '<option value="%s"%s>%s</option>', UHtmlEncode( X[2] ), IIf(X[2] == ::cValue, " selected", ""), X[1] ) } )
+   AEval(::aOption, {| X | cRet += hb_StrFormat( '<option value="%s"%s>%s</option>', UHtmlEncode( X[2] ), IIf(X[2] == ::cValue, " selected", ""), X[1] ) })
 
    RETURN cRet
 
@@ -475,7 +475,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
          aFrame := ATail( aStack )
          IF aFrame[2] != NIL
             session[ "_uthis" ] := aFrame[3]
-            Eval( aFrame[2], "EXIT" )
+            Eval(aFrame[2], "EXIT")
             session[ "_uthis" ] := NIL
          ENDIF
          ASize( aStack, Len(aStack) - 1 )
@@ -488,7 +488,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
          cI := uhttpd_join( "/", ASize( AClone( aURL ), nI ) )
          IF hb_HHasKey(aMap, cI)
             session[ "_uthis" ] := { "idhash" => { => } }
-            IF ( lRet := Eval( aMap[cI], "INIT" ) ) == .T.
+            IF ( lRet := Eval(aMap[cI], "INIT") ) == .T.
                AAdd(aStack, { aURL[nI], aMap[cI], session[ "_uthis" ] })
                session[ "_uthis" ] := NIL
             ELSE
@@ -505,9 +505,9 @@ PROCEDURE UProcWidgets( cURL, aMap )
          session[ "_uthis" ] := ATail( aStack )[3]
          DO CASE
          CASE server[ "REQUEST_METHOD" ] == "GET"
-            Eval( ATail( aStack )[2], "GET" )
+            Eval(ATail( aStack )[2], "GET")
          CASE server[ "REQUEST_METHOD" ] == "POST"
-            Eval( ATail( aStack )[2], "POST" )
+            Eval(ATail( aStack )[2], "POST")
          ENDCASE
          ATail( aStack )[3] := session[ "_uthis" ]
          session[ "_uthis" ] := NIL

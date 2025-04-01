@@ -101,7 +101,7 @@ FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
       oError:fileName    := ""
       oError:osCode      := 0
 
-      Eval( ErrorBlock(), oError )
+      Eval(ErrorBlock(), oError)
    ENDIF
 
    RETURN pListenSocket

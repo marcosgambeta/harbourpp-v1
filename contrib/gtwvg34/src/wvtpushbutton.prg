@@ -110,6 +110,6 @@ METHOD WvtPushButton:LeftDown()
 METHOD WvtPushButton:LeftUp()
 
    wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 1 )
-   ::Eval( ::bOnLeftUp )
+   ::Eval(::bOnLeftUp)
 
    RETURN .T.

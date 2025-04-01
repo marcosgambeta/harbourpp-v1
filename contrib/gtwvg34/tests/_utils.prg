@@ -66,7 +66,7 @@ FUNCTION wvt_Paint()  // must be a public function
 
    LOCAL aBlocks := WvtSetBlocks()
 
-   AEval( aBlocks, {| e | Eval( e ) } )
+   AEval(aBlocks, {| e | Eval(e) })
 
    WvtPaintObjects()
 
@@ -133,16 +133,16 @@ PROCEDURE wvt_Mouse( nKey, nRow, nCol )  // must be a public function
       FOR EACH oObj IN aObjects
          SWITCH oObj[WVT_OBJ_STATE]
          CASE OBJ_STATE_DISP
-            Eval( oObj[WVT_OBJ_ONDISP] )
+            Eval(oObj[WVT_OBJ_ONDISP])
             EXIT
          CASE OBJ_STATE_MOUSEOVER
-            Eval( oObj[WVT_OBJ_ONMOUSEOVER] )
+            Eval(oObj[WVT_OBJ_ONMOUSEOVER])
             EXIT
          CASE OBJ_STATE_BUTTONDOWN
-            Eval( oObj[WVT_OBJ_ONBUTTONDOWN] )
+            Eval(oObj[WVT_OBJ_ONBUTTONDOWN])
             EXIT
          CASE OBJ_STATE_BUTTONUP
-            Eval( oObj[WVT_OBJ_ONDISP] )
+            Eval(oObj[WVT_OBJ_ONDISP])
             EXIT
          CASE OBJ_STATE_HIDE
             EXIT
@@ -158,7 +158,7 @@ PROCEDURE wvt_Mouse( nKey, nRow, nCol )  // must be a public function
    IF nObj == 0
       IF s_nLastObj > 0
          aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_DISP
-         Eval( aObjects[s_nLastObj][WVT_OBJ_ONDISP] )
+         Eval(aObjects[s_nLastObj][WVT_OBJ_ONDISP])
          s_nLastObj := 0
       ENDIF
       RETURN
@@ -176,20 +176,20 @@ PROCEDURE wvt_Mouse( nKey, nRow, nCol )  // must be a public function
       IF aObjects[s_nLastObj][WVT_OBJ_STATE] != OBJ_STATE_MOUSEOVER
          aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_MOUSEOVER
          IF aObjects[nObj][WVT_OBJ_ONMOUSEOVER] != NIL
-            Eval( aObjects[nObj][WVT_OBJ_ONMOUSEOVER] )
+            Eval(aObjects[nObj][WVT_OBJ_ONMOUSEOVER])
          ENDIF
       ENDIF
 
    CASE nKey == K_LBUTTONDOWN
       aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_BUTTONDOWN
       IF aObjects[nObj][WVT_OBJ_ONBUTTONDOWN] != NIL
-         Eval( aObjects[nObj][WVT_OBJ_ONBUTTONDOWN] )
+         Eval(aObjects[nObj][WVT_OBJ_ONBUTTONDOWN])
       ENDIF
 
    CASE nKey == K_LBUTTONUP
       aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_DISP
       IF aObjects[nObj][WVT_OBJ_ONBUTTONUP] != NIL
-         Eval( aObjects[nObj][WVT_OBJ_ONBUTTONUP] )
+         Eval(aObjects[nObj][WVT_OBJ_ONBUTTONUP])
       ENDIF
 
    ENDCASE
@@ -223,7 +223,7 @@ FUNCTION WvtSetObjects( aObject )
          t_aObjects := {}
       ELSE
          IF HB_IsArray(aObject[1])
-            AEval( aObject, {| e_ | AAdd(t_aObjects, e_) } )
+            AEval(aObject, {| e_ | AAdd(t_aObjects, e_) })
          ELSE
             ASize( aObject, WVT_OBJ_VRBLS )
 
@@ -465,7 +465,7 @@ PROCEDURE uiDebug(...)
    LOCAL aP := hb_AParams()
    LOCAL s := ""
 
-   AEval( aP, {| e | s += hb_ValToStr( e ) + "   " } )
+   AEval(aP, {| e | s += hb_ValToStr( e ) + "   " })
 
    wapi_OutputDebugString( s )
 

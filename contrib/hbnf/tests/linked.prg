@@ -18,7 +18,7 @@ PROCEDURE Main()
    CLS
    @ 1, 0 SAY "String Tested                               Result"
    @ 2, 0 TO 2, MaxCol()
-   AEval( aString, {| ele | QOut( ele, Space( 45 - Len(ele) ), ft_Linked( ele ) ) } )
+   AEval(aString, {| ele | QOut( ele, Space( 45 - Len(ele) ), ft_Linked( ele ) ) })
    @ MaxRow() - 2, 0
 
    RETURN

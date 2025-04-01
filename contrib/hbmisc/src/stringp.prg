@@ -85,7 +85,7 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
    CASE "U" ; RETURN IIf(lDebug, "NIL", "")
    CASE "D" ; RETURN hb_DToC(xTxt, "yyyy-mm-dd")
    CASE "L" ; RETURN IIf(lDebug, IIf(xTxt, ".T.", ".F."), IIf(xTxt, "True", "False"))
-   CASE "B" ; RETURN IIf(lDebug, "Block", Eval( xTxt ))
+   CASE "B" ; RETURN IIf(lDebug, "Block", Eval(xTxt))
 
    CASE "A"
       cOut := ""

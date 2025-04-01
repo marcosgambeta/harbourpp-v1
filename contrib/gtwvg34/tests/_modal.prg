@@ -102,15 +102,15 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    nColCap   := Len(cCaption) + 7  // " - " + "  " + cCaption + "  "
    nColTxt   := 0
    IF !Empty(aText_)
-      AEval( aText_, {| e | nColTxt := Max(nColTxt, Len(e)) } )
+      AEval(aText_, {| e | nColTxt := Max(nColTxt, Len(e)) })
    ENDIF
    nColTxt   += 6                   // for two spaces at both sides
    nColBut   := 0
-   AEval( aButtons_, {| e | nColBut += Len(e) + 7 } )
+   AEval(aButtons_, {| e | nColBut += Len(e) + 7 })
    nColBut   += 3
 
    nColRqd   := 0
-   AEval( { nColCap, nColTxt, nColBut }, {| e | nColRqd := Max(nColRqd, e) } )
+   AEval({ nColCap, nColTxt, nColBut }, {| e | nColRqd := Max(nColRqd, e) })
 
    nLeft     := IIf(maxCol > nColRqd, Int( ( maxCol - nColRqd ) / 2 ), 0)
    nRight    := nLeft + nColRqd
@@ -170,7 +170,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    SetColor(pal_[DLG_CLR_HISEL])
    @ nBtnRow, nBtnCol_[sel] + 2 SAY Left(aButtons_[sel], 1)
 
-   AEval( x_, {| e_ | wvg_BoxRaised(e_[1], e_[2], e_[3], e_[4]) } )
+   AEval(x_, {| e_ | wvg_BoxRaised(e_[1], e_[2], e_[3], e_[4]) })
 
    DispEnd()
 
@@ -221,9 +221,9 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
          sel := nTrg
          lGo := .F.
       CASE SetKey(nKey) != NIL
-         Eval( SetKey(nKey) )
+         Eval(SetKey(nKey))
       CASE SetKey(nKeyStd) != NIL
-         Eval( SetKey(nKeyStd) )
+         Eval(SetKey(nKeyStd))
       ENDCASE
 
       IF sel > Len(aButtons_)

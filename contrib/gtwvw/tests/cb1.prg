@@ -42,7 +42,7 @@ PROCEDURE Main()
    wvw_pbSetFont(NIL, "Arial", 16)
 
    nMaxWidth := 0
-   AEval( s_aAnswers, {| x | nMaxWIdth := Max(nMaxWidth, Len(x)) } )
+   AEval(s_aAnswers, {| x | nMaxWIdth := Max(nMaxWidth, Len(x)) })
 
    SetMode(11, nMaxWidth + 1 + 10 + 2)
 

@@ -130,7 +130,7 @@ PROCEDURE Main()
    AAdd(aBlocks, {||wvt_DrawBoxRecessed(7, 48, 13, 55) })
    AAdd(aBlocks, {||wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) })
    AAdd(aBlocks, {||wvt_DrawLine( MaxRow() - 1, 41, MaxRow(), 41, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) })
-   AAdd(aBlocks, {||AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) })
+   AAdd(aBlocks, {||AEval(GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } )})
 
    AAdd(aBlocks, {|| wvt_Mouse( -1000001 ) })
 
@@ -268,7 +268,7 @@ STATIC PROCEDURE WvtNextGets_X()
    AAdd(aBlocks, {|| wvt_SetBrush( 2, WIN_RGB(255, 255, 100), 1 ) })
    AAdd(aBlocks, {|| wvt_DrawRectangle( 11, 50, 13, 58 )     })
    AAdd(aBlocks, {|| wvt_DrawBoxGroupRaised(5, 6, 19, 72)  })
-   AAdd(aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) })
+   AAdd(aBlocks, {|| AEval(GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } )})
 
    AAdd(aBlocks, {|| wvt_DrawButton( 21,  6, 22,  9, "New", "vouch1.bmp" )                             })
    AAdd(aBlocks, {|| wvt_DrawButton( 21, 11, 22, 14, "Browse", "vouch1.bmp", 1, WIN_RGB(255, 255, 255))      } )
@@ -653,7 +653,7 @@ STATIC PROCEDURE GCUIConsole( oCrt )
 
    // The only additional calls to render your console GUI
    // The GETLIST  : This can be embedded via  @ GET preprocessor command
-   AEval( GetList, {| oGet | wvg_BoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } )
+   AEval(GetList, {| oGet | wvg_BoxGet( oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) })
 
    hBoxR := wvg_BoxRaised(1, 2, 18, 49, { -5, -5, 5, 5 })
 

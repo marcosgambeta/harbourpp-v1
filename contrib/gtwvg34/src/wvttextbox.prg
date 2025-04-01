@@ -99,7 +99,7 @@ METHOD WvtTextBox:Create()
 
 METHOD WvtTextBox:Refresh()
 
-   Eval( ::bPaint )
+   Eval(::bPaint)
 
    RETURN Self
 

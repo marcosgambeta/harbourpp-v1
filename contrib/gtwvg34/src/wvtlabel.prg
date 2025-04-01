@@ -107,7 +107,7 @@ METHOD WvtLabel:Create( lConfg )
 
 METHOD WvtLabel:Refresh()
 
-   Eval( ::bPaint )
+   Eval(::bPaint)
 
    RETURN Self
 

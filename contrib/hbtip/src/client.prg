@@ -210,7 +210,7 @@ METHOD TIPClient:New( oUrl, xTrace, oCredentials )
       oErr:Severity      := ES_ERROR
       oErr:SubCode       := 1081
       oErr:SubSystem     := "BASE"
-      Eval( ErrorBlock(), oErr )
+      Eval(ErrorBlock(), oErr)
    ENDSWITCH
 
    IF !::bInitSocks
@@ -368,7 +368,7 @@ METHOD TIPClient:Close()
 
    IF HB_IsEvalItem(::bTrace)
       /* Call with no parameter to signal end of logging session */
-      Eval( ::bTrace )
+      Eval(::bTrace)
    ENDIF
 
    RETURN nRet
@@ -451,7 +451,7 @@ METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
    ENDIF
 
    IF HB_IsEvalItem(::exGauge) .AND. ;
-      ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
+      ! hb_defaultValue( Eval(::exGauge, nSent, nSize, Self), .T. )
       RETURN .F.
    ENDIF
 
@@ -482,7 +482,7 @@ METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
       nSent += hb_BLen(cData)
 
       IF HB_IsEvalItem(::exGauge) .AND. ;
-         ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
+         ! hb_defaultValue( Eval(::exGauge, nSent, nSize, Self), .T. )
          IF hFile != NIL
             hb_vfClose( hFile )
          ENDIF
@@ -522,7 +522,7 @@ METHOD TIPClient:WriteFromFile( cFile )
    nSent := 0
 
    IF HB_IsEvalItem(::exGauge) .AND. ;
-      ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
+      ! hb_defaultValue( Eval(::exGauge, nSent, nSize, Self), .T. )
       hb_vfClose( nFIn )
       RETURN .F.
    ENDIF
@@ -536,7 +536,7 @@ METHOD TIPClient:WriteFromFile( cFile )
       ENDIF
       nSent += nLen
       IF HB_IsEvalItem(::exGauge) .AND. ;
-         ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
+         ! hb_defaultValue( Eval(::exGauge, nSent, nSize, Self), .T. )
          hb_vfClose( nFIn )
          RETURN .F.
       ENDIF
@@ -819,7 +819,7 @@ METHOD TIPClient:Log(...)
          ENDCASE
       NEXT
 
-      Eval( ::bTrace, cMsg )
+      Eval(::bTrace, cMsg)
    ENDIF
 
    RETURN Self

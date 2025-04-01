@@ -100,7 +100,7 @@ STATIC FUNCTION make_dbf()
    USE tbnames
    FOR x := 1 TO Len(aData)
       APPEND BLANK
-      AEval( aData[x], {| e, n | FieldPut( n, e ) } )
+      AEval(aData[x], {| e, n | FieldPut( n, e ) })
    NEXT
    USE
 

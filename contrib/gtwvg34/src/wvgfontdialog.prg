@@ -234,17 +234,17 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
       CASE nL == WIN_IDOK
          ::ok := .T.
          IF HB_IsEvalItem(::sl_activateOk)
-            Eval( ::sl_activateOk, ::GetWvgFont(), , Self )
+            Eval(::sl_activateOk, ::GetWvgFont(), , Self)
          ENDIF
 
       CASE nL == WIN_IDCANCEL
          IF HB_IsEvalItem(::sl_activateCancel)
-            Eval( ::sl_activateCancel, , , Self )
+            Eval(::sl_activateCancel, , , Self)
          ENDIF
 
       CASE nL == 1026
          IF HB_IsEvalItem(::sl_activateApply)
-            Eval( ::sl_activateApply, ::GetWvgFont(), , Self )
+            Eval(::sl_activateApply, ::GetWvgFont(), , Self)
          ENDIF
 
       CASE nL == 1038  // Help

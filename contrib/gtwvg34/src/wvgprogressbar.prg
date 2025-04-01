@@ -146,7 +146,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
       ENDIF
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
       IF HB_IsEvalItem(::sl_resize)
-         Eval( ::sl_resize,,, Self )
+         Eval(::sl_resize,,, Self)
       ENDIF
 
    CASE nMessage == HB_GTE_NOTIFY

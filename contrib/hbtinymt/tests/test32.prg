@@ -33,7 +33,7 @@ STATIC PROCEDURE TestMatrix( cDescription, bBlock )
    ? cDescription
    FOR i := 1 TO 10
       FOR j := 1 TO 5
-         ?? Eval( bBlock )
+         ?? Eval(bBlock)
       NEXT
       ?
    NEXT

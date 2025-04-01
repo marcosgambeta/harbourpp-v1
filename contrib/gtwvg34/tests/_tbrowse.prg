@@ -448,7 +448,7 @@ STATIC PROCEDURE BrwReposButtons( oCrt )
 
    nG   := 2
    nTtl := 0
-   AEval( aW, {| e | nTtl += e } )
+   AEval(aW, {| e | nTtl += e })
    nTtl += ( Len(aW) - 1 ) * nG
 
    nOff := ( ( MaxCol() + 1 ) - nTtl ) / 2
@@ -482,7 +482,7 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
 
    nG   := 2
    nTtl := 0
-   AEval( aW, {| e | nTtl += e } )
+   AEval(aW, {| e | nTtl += e })
    nTtl += ( Len(aW) - 1 ) * nG
 
    nOff := ( ( MaxCol() + 1 ) - nTtl ) / 2

@@ -162,7 +162,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    AAdd(aParts, "XbpMLE")
    AAdd(aParts, "DataRef")
 
-   AEval( aParts, {| e | oListBox:addItem( e ) } )
+   AEval(aParts, {| e | oListBox:addItem( e ) })
    oListBox:itemSelected := {|| wapi_MessageBox( , oListBox:getCurItem() ) }
    oListBox:setData(3)
 
@@ -658,11 +658,11 @@ STATIC PROCEDURE MyFunction( nMode )
       EXIT
 
    CASE 101  // Charge
-      Eval( {|| Tone( 523, 2 ), Tone( 698, 2 ), Tone( 880, 2 ), Tone( 1046, 4 ), Tone( 880, 2 ), Tone( 1046, 8 ) } )
+      Eval({|| Tone( 523, 2 ), Tone( 698, 2 ), Tone( 880, 2 ), Tone( 1046, 4 ), Tone( 880, 2 ), Tone( 1046, 8 ) })
       EXIT
 
    CASE 102  // NannyBoo
-      AEval( { { 196, 2 }, { 196, 2 }, { 164, 2 }, { 220, 2 }, { 196, 4 }, { 164, 4 } }, {| a | Tone( a[1], a[2] ) } )
+      AEval({ { 196, 2 }, { 196, 2 }, { 164, 2 }, { 220, 2 }, { 196, 4 }, { 164, 4 } }, {| a | Tone( a[1], a[2] ) })
       EXIT
 
    CASE 103  // BADKEY

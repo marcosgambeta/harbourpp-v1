@@ -195,7 +195,7 @@ METHOD WvtBrowse:SetHBar()
 METHOD WvtBrowse:Refresh()
 
    IF HB_IsEvalItem(::bOnRefresh)
-      Eval( ::bOnRefresh, Self )
+      Eval(::bOnRefresh, Self)
    ELSE
       ( ::cAlias )->( ::oBrw:RefreshAll():ForceStable() )
    ENDIF
@@ -205,7 +205,7 @@ METHOD WvtBrowse:Refresh()
 METHOD WvtBrowse:HandleEvent( nKey )
 
    IF HB_IsEvalItem(::bHandleEvent)
-      RETURN Eval( ::bHandleEvent, Self, ::oParent:cPaintBlockID, ::oBrw, nKey )
+      RETURN Eval(::bHandleEvent, Self, ::oParent:cPaintBlockID, ::oBrw, nKey)
    ENDIF
 
    RETURN .F.
@@ -216,26 +216,26 @@ METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
 
    IF nIndex >= 1 .AND. nIndex <= Len(::aChildren)
       IF HB_IsEvalItem(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
-         xData := Eval( ::aChildren[nIndex][OBJ_CHILD_DATABLOCK] )
+         xData := Eval(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
       ENDIF
 
-      Eval( ::aChildren[nIndex][OBJ_CHILD_REFRESHBLOCK], ;
+      Eval(::aChildren[nIndex][OBJ_CHILD_REFRESHBLOCK], ;
          ::aChildren[nIndex][OBJ_CHILD_OBJ], ;
          ::aChildren[nIndex][OBJ_CHILD_OBJ]:oParent:cPaintBlockID, ;
          ::aChildren[nIndex][OBJ_CHILD_OBJ]:oBrw, ;
          nKey, ;
-         xData )
+         xData)
 
       IF ::aChildren[nIndex][OBJ_CHILD_OBJ]:nChildren > 0
          // Pretend IF focus is current on this object
-         Eval( ::aChildren[nIndex][OBJ_CHILD_OBJ]:bOnFocus, ::aChildren[nIndex][OBJ_CHILD_OBJ] )
+         Eval(::aChildren[nIndex][OBJ_CHILD_OBJ]:bOnFocus, ::aChildren[nIndex][OBJ_CHILD_OBJ])
 
          FOR i := 1 to ::aChildren[nIndex][OBJ_CHILD_OBJ]:nChildren
             ::aChildren[nIndex][OBJ_CHILD_OBJ]:NotifyChild(i, nKey, ::aChildren[nIndex][OBJ_CHILD_OBJ])
          NEXT
 
          // Restore previous environments
-         Eval( oCurObj:bOnFocus, oCurObj )
+         Eval(oCurObj:bOnFocus, oCurObj)
       ENDIF
    ENDIF
 
@@ -264,7 +264,7 @@ METHOD WvtBrowse:SetTooltip()
    IF HB_IsEvalItem(::bTooltip)
       ::SaveSettings()
 
-      cTip := ( ::cAlias )->( Eval( ::bTooltip ) )
+      cTip := ( ::cAlias )->( Eval(::bTooltip) )
 
       ::RestSettings()
    ENDIF
@@ -280,7 +280,7 @@ METHOD WvtBrowse:SetTooltip()
 METHOD WvtBrowse:SaveSettings()
 
    IF HB_IsEvalItem(::bSaveSettings)
-      ::xSettings := Eval( ::bSaveSettings, Self )
+      ::xSettings := Eval(::bSaveSettings, Self)
    ENDIF
 
    RETURN Self
@@ -288,7 +288,7 @@ METHOD WvtBrowse:SaveSettings()
 METHOD WvtBrowse:RestSettings()
 
    IF ::xSettings != NIL .AND. HB_IsEvalItem(::bRestSettings)
-      Eval( ::bRestSettings, Self )
+      Eval(::bRestSettings, Self)
    ENDIF
 
    RETURN Self

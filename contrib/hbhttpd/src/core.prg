@@ -162,7 +162,7 @@ METHOD UHttpd:Run( hConfig )
    DO WHILE .T.
       IF Empty(hSocket := hb_socketAccept( ::hListen,, 1000 ))
          IF hb_socketGetError() == HB_SOCKET_ERR_TIMEOUT
-            Eval( ::hConfig[ "Idle" ], Self )
+            Eval(::hConfig[ "Idle" ], Self)
             IF ::lStop
                EXIT
             ENDIF
@@ -170,7 +170,7 @@ METHOD UHttpd:Run( hConfig )
             ::LogError( "[error] Accept error: " + hb_socketErrorString() )
          ENDIF
       ELSE
-         Eval( ::hConfig[ "Trace" ], "New connection", hSocket )
+         Eval(::hConfig[ "Trace" ], "New connection", hSocket)
          IF hb_mutexQueueInfo( ::hmtxQueue, @nWorkers, @nJobs ) .AND. ;
                Len(aThreads) < THREAD_COUNT_MAX .AND. ;
                nJobs >= nWorkers
@@ -182,14 +182,14 @@ METHOD UHttpd:Run( hConfig )
    hb_socketClose( ::hListen )
 
    /* End child threads */
-   AEval( aThreads, {|| hb_mutexNotify( ::hmtxQueue, NIL ) } )
-   AEval( aThreads, {| h | hb_threadJoin( h ) } )
+   AEval(aThreads, {|| hb_mutexNotify( ::hmtxQueue, NIL ) })
+   AEval(aThreads, {| h | hb_threadJoin( h ) })
 
    RETURN .T.
 
 METHOD UHttpd:Stop()
 
-   Eval( ::hConfig[ "Trace" ], "stopping" )
+   Eval(::hConfig[ "Trace" ], "stopping")
    ::lStop := .T.
 
    RETURN NIL
@@ -197,7 +197,7 @@ METHOD UHttpd:Stop()
 METHOD UHttpd:LogError( cError )
 
    hb_mutexLock( ::hmtxLog )
-   Eval( ::hConfig[ "LogError" ], DToS( Date() ) + " " + Time() + " " + cError )
+   Eval(::hConfig[ "LogError" ], DToS( Date() ) + " " + Time() + " " + cError)
    hb_mutexUnlock( ::hmtxLog )
 
    RETURN NIL
@@ -207,13 +207,13 @@ METHOD UHttpd:LogAccess()
    LOCAL cDate := DToS( Date() ), cTime := Time()
 
    hb_mutexLock( ::hmtxLog )
-   Eval( ::hConfig[ "LogAccess" ], ;
+   Eval(::hConfig[ "LogAccess" ], ;
       server[ "REMOTE_ADDR" ] + " - - [" + Right(cDate, 2) + "/" + ;
       { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[Val( SubStr(cDate, 5, 2) )] + ;
       "/" + Left(cDate, 4) + ":" + cTime + ' +0000] "' + server[ "REQUEST_ALL" ] + '" ' + ;
       hb_ntos( t_nStatusCode ) + " " + hb_ntos( Len(t_cResult) ) + ;
       ' "' + server[ "HTTP_REFERER" ] + '" "' + server[ "HTTP_USER_AGENT" ] + ;
-      '"' )
+      '"')
    hb_mutexUnlock( ::hmtxLog )
 
    RETURN NIL
@@ -348,7 +348,7 @@ STATIC FUNCTION MY_SSL_READ(hConfig, hSSL, hSocket, cBuf, nTimeout, nError)
          ENDIF
          RETURN -1
       ELSE
-         Eval( hConfig[ "Trace" ], "SSL_read() error", nErr )
+         Eval(hConfig[ "Trace" ], "SSL_read() error", nErr)
          nError := 1000 + nErr
          RETURN -1
       ENDIF
@@ -380,7 +380,7 @@ STATIC FUNCTION MY_SSL_WRITE( hConfig, hSSL, hSocket, cBuf, nTimeout, nError )
             RETURN 0
          ENDIF
       ELSE
-         Eval( hConfig[ "Trace" ], "SSL_write() error", nErr )
+         Eval(hConfig[ "Trace" ], "SSL_write() error", nErr)
          nError := 1000 + nErr
          RETURN -1
       ENDIF
@@ -412,12 +412,12 @@ STATIC FUNCTION MY_SSL_ACCEPT( hConfig, hSSL, hSocket, nTimeout )
             nErr := HB_SOCKET_ERR_TIMEOUT
          ENDIF
       ELSE
-         Eval( hConfig[ "Trace" ], "SSL_accept() error", nErr )
+         Eval(hConfig[ "Trace" ], "SSL_accept() error", nErr)
          nErr := 1000 + nErr
       ENDIF
    ELSE /* nErr == 0 */
       nErr := SSL_get_error( hSSL, nErr )
-      Eval( hConfig[ "Trace" ], "SSL_accept() shutdown error", nErr )
+      Eval(hConfig[ "Trace" ], "SSL_accept() shutdown error", nErr)
       nErr := 1000 + nErr
    ENDIF
 
@@ -459,7 +459,7 @@ STATIC FUNCTION ProcessConnection( oServer )
       nLen := IPAddr2Num( aServer[ "REMOTE_ADDR" ] )
       hb_HHasKey(oServer:aFirewallFilter, nLen, @nErr)
       IF nErr > 0 .AND. nLen <= hb_HValueAt( oServer:aFirewallFilter, nErr )
-         Eval( oServer:hConfig[ "Trace" ], "Firewall denied", aServer[ "REMOTE_ADDR" ] )
+         Eval(oServer:hConfig[ "Trace" ], "Firewall denied", aServer[ "REMOTE_ADDR" ])
          hb_socketShutdown( hSocket )
          hb_socketClose( hSocket )
          LOOP
@@ -478,18 +478,18 @@ STATIC FUNCTION ProcessConnection( oServer )
             ELSE
                IF nErr == HB_SOCKET_ERR_TIMEOUT
                   IF ( hb_MilliSeconds() - nTime ) > 1000 * 30 .OR. oServer:lStop
-                     Eval( oServer:hConfig[ "Trace" ], "SSL accept timeout", hSocket )
+                     Eval(oServer:hConfig[ "Trace" ], "SSL accept timeout", hSocket)
                      EXIT
                   ENDIF
                ELSE
-                  Eval( oServer:hConfig[ "Trace" ], "SSL accept error:", nErr, hb_socketErrorString( nErr ) )
+                  Eval(oServer:hConfig[ "Trace" ], "SSL accept error:", nErr, hb_socketErrorString( nErr ))
                   EXIT
                ENDIF
             ENDIF
          ENDDO
 
          IF nErr != 0
-            Eval( oServer:hConfig[ "Trace" ], "Close connection", hSocket )
+            Eval(oServer:hConfig[ "Trace" ], "Close connection", hSocket)
             hb_socketShutdown( hSocket )
             hb_socketClose( hSocket )
             LOOP
@@ -533,11 +533,11 @@ STATIC FUNCTION ProcessConnection( oServer )
                /* nLen == -1  socket error */
                IF nErr == HB_SOCKET_ERR_TIMEOUT
                   IF ( hb_MilliSeconds() - nTime ) > 1000 * 30 .OR. oServer:lStop
-                     Eval( oServer:hConfig[ "Trace" ], "receive timeout", hSocket )
+                     Eval(oServer:hConfig[ "Trace" ], "receive timeout", hSocket)
                      EXIT
                   ENDIF
                ELSE
-                  Eval( oServer:hConfig[ "Trace" ], "receive error:", nErr, hb_socketErrorString( nErr ) )
+                  Eval(oServer:hConfig[ "Trace" ], "receive error:", nErr, hb_socketErrorString( nErr ))
                   EXIT
                ENDIF
             ENDIF
@@ -559,7 +559,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          t_nStatusCode := 200
          t_aSessionData := NIL
 
-         Eval( oServer:hConfig[ "Trace" ], Left(cRequest, At( CR_LF + CR_LF, cRequest ) + 1) )
+         Eval(oServer:hConfig[ "Trace" ], Left(cRequest, At( CR_LF + CR_LF, cRequest ) + 1))
 
          nReqLen := ParseRequestHeader( @cRequest )
          IF nReqLen == NIL
@@ -590,11 +590,11 @@ STATIC FUNCTION ProcessConnection( oServer )
                   /* nLen == -1  socket error */
                   IF nErr == HB_SOCKET_ERR_TIMEOUT
                      IF ( hb_MilliSeconds() - nTime ) > 1000 * 120 .OR. oServer:lStop
-                        Eval( oServer:hConfig[ "Trace" ], "receive timeout", hSocket )
+                        Eval(oServer:hConfig[ "Trace" ], "receive timeout", hSocket)
                         EXIT
                      ENDIF
                   ELSE
-                     Eval( oServer:hConfig[ "Trace" ], "receive error:", nErr, hb_socketErrorString( nErr ) )
+                     Eval(oServer:hConfig[ "Trace" ], "receive error:", nErr, hb_socketErrorString( nErr ))
                      EXIT
                   ENDIF
                ENDIF
@@ -604,7 +604,7 @@ STATIC FUNCTION ProcessConnection( oServer )
                EXIT
             ENDIF
 
-            Eval( oServer:hConfig[ "Trace" ], cRequest )
+            Eval(oServer:hConfig[ "Trace" ], cRequest)
             ParseRequestBody( Left(cRequest, nReqLen) )
             cRequest := SubStr(cRequest, nReqLen + 1)
 
@@ -645,7 +645,7 @@ STATIC FUNCTION ProcessConnection( oServer )
             ENDIF
 
             IF nLen < 0
-               Eval( oServer:hConfig[ "Trace" ], "send error:", nErr, hb_socketErrorString( nErr ) )
+               Eval(oServer:hConfig[ "Trace" ], "send error:", nErr, hb_socketErrorString( nErr ))
                EXIT
             ELSEIF nLen > 0
                cBuf := hb_BSubStr(cBuf, nLen + 1)
@@ -667,7 +667,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          hSSL := NIL
       ENDIF
 
-      Eval( oServer:hConfig[ "Trace" ], "Close connection1", hSocket )
+      Eval(oServer:hConfig[ "Trace" ], "Close connection1", hSocket)
       hb_socketShutdown( hSocket )
       hb_socketClose( hSocket )
    ENDDO
@@ -687,7 +687,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
       nI := Len(cMount)
       DO WHILE ( nI := hb_RAt( "/", cMount,, nI ) ) > 0
          IF hb_HHasKey(aMount, Left(cMount, nI) + "*")
-            Eval( oServer:hConfig[ "Trace" ], "HAS", Left(cMount, nI) + "*" )
+            Eval(oServer:hConfig[ "Trace" ], "HAS", Left(cMount, nI) + "*")
             cMount := Left(cMount, nI) + "*"
             cPath := SubStr(server[ "SCRIPT_NAME" ], nI + 1)
             EXIT
@@ -701,7 +701,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
    IF cPath != NIL
       bEval := aMount[cMount]
       BEGIN SEQUENCE WITH {| oErr | UErrorHandler( oErr, oServer ) }
-         xRet := Eval( bEval, cPath )
+         xRet := Eval(bEval, cPath)
          IF HB_IsString(xRet)
             UWrite( xRet )
          ELSEIF HB_IsHash(xRet)
@@ -721,7 +721,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
    ELSE
       USetStatusCode( 404 )
    ENDIF
-   Eval( oServer:hConfig[ "Trace" ], "ProcessRequest time:", hb_ntos( hb_MilliSeconds() - nT ), "ms" )
+   Eval(oServer:hConfig[ "Trace" ], "ProcessRequest time:", hb_ntos( hb_MilliSeconds() - nT ), "ms")
 
    RETURN
 
@@ -902,9 +902,9 @@ STATIC FUNCTION MakeResponse( hConfig )
       t_cResult := "<html><body><h1>" + cStatus + "</h1></body></html>"
    ENDIF
    UAddHeader( "Content-Length", hb_ntos( Len(t_cResult) ) )
-   AEval( t_aHeader, {| x | cRet += x[1] + ": " + x[2] + CR_LF } )
+   AEval(t_aHeader, {| x | cRet += x[1] + ": " + x[2] + CR_LF })
    cRet += CR_LF
-   Eval( hConfig[ "Trace" ], cRet )
+   Eval(hConfig[ "Trace" ], cRet)
    cRet += t_cResult
 
    RETURN cRet
@@ -940,7 +940,7 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
 
 STATIC FUNCTION UErrorHandler( oErr, oServer )
 
-   Eval( oServer:hConfig[ "Trace" ], "UErrorHandler" )
+   Eval(oServer:hConfig[ "Trace" ], "UErrorHandler")
    DO CASE
    CASE oErr:genCode == EG_ZERODIV
       RETURN 0
@@ -975,7 +975,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
    ENDIF
    IF HB_IsArray(oErr:args)
       cRet += "Arguments:" + hb_eol()
-      AEval( oErr:args, {| X, Y | cRet += Str( Y, 5 ) + ": " + hb_CStr( X ) + hb_eol() } )
+      AEval(oErr:args, {| X, Y | cRet += Str( Y, 5 ) + ": " + hb_CStr( X ) + hb_eol() })
    ENDIF
    cRet += hb_eol()
 
@@ -1499,7 +1499,7 @@ PROCEDURE UProcInfo()
    UWrite( '<h2>Capabilities</h2>' )
    UWrite( '<table border=1 cellspacing=0>' )
    cI := ""
-   AEval( rddList(), {| X | cI += IIf(Empty(cI), "", ", ") + X } )
+   AEval(rddList(), {| X | cI += IIf(Empty(cI), "", ", ") + X })
    UWrite( '<tr><td>RDD</td><td>' + UHtmlEncode( cI ) + '</td></tr>' )
    UWrite( '</table>' )
 
@@ -1507,20 +1507,20 @@ PROCEDURE UProcInfo()
 
    UWrite( '<h3>server</h3>' )
    UWrite( '<table border=1 cellspacing=0>' )
-   AEval( ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[X] ) ) + '</td></tr>' ) } )
+   AEval(ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[X] ) ) + '</td></tr>' ) })
    UWrite( '</table>' )
 
    IF !Empty(get)
       UWrite( '<h3>get</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
-      AEval( ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[X] ) ) + '</td></tr>' ) } )
+      AEval(ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[X] ) ) + '</td></tr>' ) })
       UWrite( '</table>' )
    ENDIF
 
    IF !Empty(post)
       UWrite( '<h3>post</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
-      AEval( ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[X] ) ) + '</td></tr>' ) } )
+      AEval(ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[X] ) ) + '</td></tr>' ) })
       UWrite( '</table>' )
    ENDIF
 
@@ -1557,10 +1557,10 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                ELSEIF HB_IsObject(xValue)
                   cRet += UHtmlEncode( xValue:Output() )
                ELSE
-                  Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ) )
+                  Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ))
                ENDIF
             ELSE
-               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[2] ) )
+               Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[2] ))
             ENDIF
             EXIT
 
@@ -1578,10 +1578,10 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                ELSEIF HB_IsObject(xValue)
                   cRet += xValue:Output()
                ELSE
-                  Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ) )
+                  Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ))
                ENDIF
             ELSE
-               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[2] ) )
+               Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: variable '%s' not found", aInstr[2] ))
             ENDIF
             EXIT
 
@@ -1598,13 +1598,13 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
             IF hb_HHasKey(aData, aInstr[2]) .AND. HB_IsArray(aValue := aData[aInstr[2]])
                FOR EACH xValue IN aValue
                   aData2 := hb_HClone( aData )
-                  hb_HEval( xValue, {| k, v | aData2[aInstr[2] + "." + k] := v } )
+                  hb_HEval(xValue, {| k, v | aData2[aInstr[2] + "." + k] := v })
                   aData2[aInstr[2] + ".__index"] := xValue:__enumIndex
                   cRet += parse_data(aData2, aInstr[3], hConfig)
                   aData2 := NIL
                NEXT
             ELSE
-               Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: loop variable '%s' not found", aInstr[2] ) )
+               Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: loop variable '%s' not found", aInstr[2] ))
             ENDIF
             EXIT
 
@@ -1641,11 +1641,11 @@ STATIC FUNCTION compile_file( cFileName, hConfig )
             Break( nPos )
          ENDIF
       RECOVER USING nPos
-         Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: syntax at %s(%d,%d)", cFileName, SUBSTRCOUNT( Chr(10), cTpl,, nPos ) + 1, nPos - hb_RAt( Chr(10), cTpl,, nPos - 1 ) ) )
+         Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: syntax at %s(%d,%d)", cFileName, SUBSTRCOUNT( Chr(10), cTpl,, nPos ) + 1, nPos - hb_RAt( Chr(10), cTpl,, nPos - 1 ) ))
          aCode := {}
       END SEQUENCE
    ELSE
-      Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: file '%s' not found", cFileName ) )
+      Eval(hConfig[ "Trace" ], hb_StrFormat( "Template error: file '%s' not found", cFileName ))
    ENDIF
 
    RETURN aCode

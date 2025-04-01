@@ -359,7 +359,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
       OTHERWISE
          bKey := SetKey(nKey)
          IF HB_IsBlock(bKey)
-            Eval( bKey, oEdit )
+            Eval(bKey, oEdit)
          ELSE
             IF oEdit[E_MODE]
                EditorKeys( oEdit, nKey )

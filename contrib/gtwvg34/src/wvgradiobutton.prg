@@ -117,7 +117,7 @@ METHOD WvgRadioButton:handleEvent( nMessage, aNM )
          ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
 
          IF HB_IsEvalItem(::sl_lbClick)
-            Eval( ::sl_lbClick, ::editBuffer, , Self )
+            Eval(::sl_lbClick, ::editBuffer, , Self)
             RETURN EVENT_HANDLED
          ENDIF
       ENDIF

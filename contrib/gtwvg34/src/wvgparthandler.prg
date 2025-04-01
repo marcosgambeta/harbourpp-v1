@@ -219,7 +219,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
       ::sb_notifier := a_[1]
 
    ELSEIF ! Empty(a_) .AND. HB_IsEvalItem(::sb_notifier) .AND. HB_IsNumeric(a_[1]) .AND. HB_IsArray(a_[2])
-      Eval( ::sb_notifier, a_[1], a_[2], Self )
+      Eval(::sb_notifier, a_[1], a_[2], Self)
 
    ENDIF
 
@@ -246,67 +246,67 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       SWITCH xParams[1]
       CASE WIN_WM_MOUSEHOVER
          IF HB_IsEvalItem(::sl_enter)
-            Eval( ::sl_enter, aPos, , Self )
+            Eval(::sl_enter, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_MOUSELEAVE
          IF HB_IsEvalItem(::sl_leave)
-            Eval( ::sl_leave, aPos, , Self )
+            Eval(::sl_leave, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_RBUTTONDOWN
          IF HB_IsEvalItem(::sl_rbDown)
-            Eval( ::sl_rbDown, aPos, , Self )
+            Eval(::sl_rbDown, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_LBUTTONDOWN
          IF HB_IsEvalItem(::sl_lbDown)
-            Eval( ::sl_lbDown, aPos, , Self )
+            Eval(::sl_lbDown, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_RBUTTONUP
          IF HB_IsEvalItem(::sl_rbUp)
-            Eval( ::sl_rbUp, aPos, , Self )
+            Eval(::sl_rbUp, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_LBUTTONUP
          IF HB_IsEvalItem(::sl_lbUp)
-            Eval( ::sl_lbUp, aPos, , Self )
+            Eval(::sl_lbUp, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_RBUTTONDBLCLK
          IF HB_IsEvalItem(::sl_rbDblClick)
-            Eval( ::sl_rbDblClick, aPos, , Self )
+            Eval(::sl_rbDblClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_LBUTTONDBLCLK
          IF HB_IsEvalItem(::sl_lbDblClick)
-            Eval( ::sl_lbDblClick, aPos, , Self )
+            Eval(::sl_lbDblClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_MBUTTONDOWN
          IF HB_IsEvalItem(::sl_mbDown)
-            Eval( ::sl_mbDown, aPos, , Self )
+            Eval(::sl_mbDown, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_MBUTTONUP
          IF HB_IsEvalItem(::sl_mbClick)
-            Eval( ::sl_mbClick, aPos, , Self )
+            Eval(::sl_mbClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_MBUTTONDBLCLK
          IF HB_IsEvalItem(::sl_mbDblClick)
-            Eval( ::sl_mbDblClick, aPos, , Self )
+            Eval(::sl_mbDblClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_MOUSEMOVE
          IF HB_IsEvalItem(::sl_motion)
-            Eval( ::sl_motion, aPos, , Self )
+            Eval(::sl_motion, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_MOUSEWHEEL
          IF HB_IsEvalItem(::sl_wheel)
-            Eval( ::sl_wheel, aPos, , Self )
+            Eval(::sl_wheel, aPos, , Self)
          ENDIF
          EXIT
       CASE WIN_WM_NCMOUSEMOVE
@@ -315,38 +315,38 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
 
    CASE nEvent == HB_GTE_KEYBOARD
       IF HB_IsEvalItem(::keyboard)
-         Eval( ::keyboard, xParams, , Self )
+         Eval(::keyboard, xParams, , Self)
       ENDIF
 
    CASE nEvent == HB_GTE_SETFOCUS
 #if 0
-      AEval( ::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) } )
+      AEval(::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) })
 #endif
 
       IF HB_IsEvalItem(::sl_setInputFocus)
-         Eval( ::sl_setInputFocus, , , Self )
+         Eval(::sl_setInputFocus, , , Self)
       ENDIF
       ::lHasInputFocus := .T.
 
    CASE nEvent == HB_GTE_KILLFOCUS
       IF HB_IsEvalItem(::sl_killInputFocus)
-         Eval( ::sl_killInputFocus, , , Self )
+         Eval(::sl_killInputFocus, , , Self)
       ENDIF
       ::lHasInputFocus := .F.
 
    CASE nEvent == HB_GTE_PAINT
 #if 0
-      AEval( ::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) } )
+      AEval(::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) })
 #endif
 
    CASE nEvent == HB_GTE_GUIPARTS
       // Eventually every window be checked if it falls within returned rectangle or not
       // then it will avoid a lot of flickering
-      AEval( ::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) } )
+      AEval(::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) })
 
    CASE nEvent == HB_GTE_CLOSE
       IF HB_IsEvalItem(::close)
-         nReturn := Eval( ::close, , , Self )
+         nReturn := Eval(::close, , , Self)
       ENDIF
 
    CASE nEvent == HB_GTE_MENU
@@ -356,21 +356,21 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(xParams[2]))
                DO CASE
                CASE HB_IsEvalItem(aMenuItem[2])
-                  Eval( aMenuItem[2], aMenuItem[1], , aMenuItem[4] )
+                  Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
                CASE HB_IsEvalItem(aMenuItem[3])
-                  Eval( aMenuItem[3], aMenuItem[1], , aMenuItem[4] )
+                  Eval(aMenuItem[3], aMenuItem[1], , aMenuItem[4])
                ENDCASE
             ENDIF
          ENDIF
 
       CASE xParams[1] == 1 .AND. HB_IsObject(::oMenu) // enter menu loop
          IF HB_IsEvalItem(::oMenu:sl_beginMenu)
-            Eval( ::oMenu:sl_beginMenu, , , Self )
+            Eval(::oMenu:sl_beginMenu, , , Self)
          ENDIF
 
       CASE xParams[1] == 2 .AND. HB_IsObject(::oMenu) // exit menu loop
          IF HB_IsEvalItem(::oMenu:sl_endMenu)
-            Eval( ::oMenu:sl_endMenu, , , Self )
+            Eval(::oMenu:sl_endMenu, , , Self)
          ENDIF
 
       ENDCASE
@@ -420,9 +420,9 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          ENDIF
       ENDIF
       IF HB_IsEvalItem(::sl_resize)
-         Eval( ::sl_resize, { xParams[1], xParams[2] }, { xParams[3], xParams[4] }, Self )
+         Eval(::sl_resize, { xParams[1], xParams[2] }, { xParams[3], xParams[4] }, Self)
       ENDIF
-      AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )
+      AEval(::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) })
 
    CASE nEvent == HB_GTE_KEYTOITEM
       IF xParams[3] == ::hWnd
@@ -461,9 +461,9 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nCtrlID))
                DO CASE
                CASE HB_IsEvalItem(aMenuItem[2])
-                  Eval( aMenuItem[2], aMenuItem[1], , aMenuItem[4] )
+                  Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
                CASE HB_IsEvalItem(aMenuItem[3])
-                  Eval( aMenuItem[3], aMenuItem[1], , aMenuItem[4] )
+                  Eval(aMenuItem[3], aMenuItem[1], , aMenuItem[4])
                ENDCASE
             ENDIF
          ENDIF

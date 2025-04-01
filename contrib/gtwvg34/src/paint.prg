@@ -114,7 +114,7 @@ FUNCTION WvtPaintObjects()
          ENDIF
 
          IF lExe
-            Eval( blk[2] )
+            Eval(blk[2])
          ENDIF
       NEXT
    ENDIF

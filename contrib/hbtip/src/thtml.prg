@@ -1088,7 +1088,7 @@ METHOD THtmlNode:attrToString()
          aAttr := {}  // Tag has no attributes
       END SEQUENCE
       cAttr := ""
-      hb_HEval( ::htmlAttributes, {| cKey, cValue | cAttr += __AttrToStr( cKey, cValue, aAttr, Self ) } )
+      hb_HEval(::htmlAttributes, {| cKey, cValue | cAttr += __AttrToStr( cKey, cValue, aAttr, Self ) })
    ENDIF
 
    RETURN cAttr

@@ -22,7 +22,7 @@ PROCEDURE Main( cCmdLine )
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
 
-   AEval( aBar, {| x, i | HB_SYMBOL_UNUSED(x), aOptions[i] := { {}, {}, {} } } )
+   AEval(aBar, {| x, i | HB_SYMBOL_UNUSED(x), aOptions[i] := { {}, {}, {} } })
 
    cCmdLine := IIf(cCmdLine == NIL, "", cCmdLine)
 

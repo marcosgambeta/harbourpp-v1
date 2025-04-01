@@ -359,7 +359,7 @@ PROCEDURE Demo_Get()
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, "vouch1.bmp" ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed(nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft) } )
-   AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) } ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval(GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) }) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
 
@@ -789,7 +789,7 @@ FUNCTION WVW_Paint( nWinNum )
    //        "hWnd = " + hb_ntos( hWnd ) + hb_eol() +;
    //        "nWinNum = " + hb_ntos( nWinNum ) )
    IF Len(s_amiscobjlist) >= nWinNum + 1
-      AEval( s_amiscobjlist[nWinNum + 1], {| e | Eval( e, nWinNum ) } )
+      AEval(s_amiscobjlist[nWinNum + 1], {| e | Eval(e, nWinNum) })
    ENDIF
 
    wvwm_paint( nWinNum )
@@ -947,7 +947,7 @@ FUNCTION nAfterInkey(nkey)
       // MouseEvent
       RETURN wvwm_nMouseChecker( nkey )
    ELSEIF ( bAction := SetKey(nKey) ) != NIL
-      Eval( bAction, ProcName(), ProcLine(), ReadVar() )
+      Eval(bAction, ProcName(), ProcLine(), ReadVar())
       RETURN 0
    ENDIF
 

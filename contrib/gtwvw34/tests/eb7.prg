@@ -306,9 +306,9 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
       nKeyStd := hb_keyStd(nKey := Inkey(0.5, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )))
       DO CASE
       CASE HB_IsEvalItem(SetKey(nKey))
-         Eval( SetKey(nKey) )
+         Eval(SetKey(nKey))
       CASE HB_IsEvalItem(SetKey(nKeyStd))
-         Eval( SetKey(nKeyStd) )
+         Eval(SetKey(nKeyStd))
       CASE nKeyStd != 0
          lchangefocus := .T.
          DO CASE
@@ -364,7 +364,7 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
    LOCAL nFocus, lchangefocus
 
    IF HB_IsEvalItem(SetKey(ch))
-      Eval( SetKey(ch) )
+      Eval(SetKey(ch))
       RETURN
    ELSEIF ch == 0
       RETURN
@@ -433,8 +433,8 @@ STATIC PROCEDURE SaveVar( nwinnum, aEBGets, lDone )
 
    FOR EACH aGet IN aEBGets
       // do some validation if necessary
-      Eval( aGet[__GET_BASSIGN], ;
-         GetValFromText( wvw_ebGetText( nwinnum, aGet[__GET_NEBID] ), aGet[__GET_CVALTYPE] ) )
+      Eval(aGet[__GET_BASSIGN], ;
+         GetValFromText( wvw_ebGetText( nwinnum, aGet[__GET_NEBID] ), aGet[__GET_CVALTYPE] ))
    NEXT
    lDone := .T.
 
@@ -451,7 +451,7 @@ STATIC PROCEDURE CancelVar( nwinnum, aEBGets, lDone )
    LOCAL aGet
 
    FOR EACH aGet IN aEBGets
-      Eval( aGet[__GET_BASSIGN], aGet[__GET_XINIT] )
+      Eval(aGet[__GET_BASSIGN], aGet[__GET_XINIT])
    NEXT
    lDone := .T.
 
@@ -903,7 +903,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
    CASE message == WIN_WM_CHAR
       bhandler := inp_handler( nWinNum )
       IF HB_IsEvalItem(bhandler)
-         Eval( bhandler, nWinNum, wParam )
+         Eval(bhandler, nWinNum, wParam)
          RETURN .T.
       ELSE
          RETURN .F.

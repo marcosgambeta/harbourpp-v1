@@ -34,7 +34,7 @@ STATIC PROCEDURE MakeTest(...)
 
    FOR EACH e, e2 IN hb_PValue(1), hb_PValue(2)
       nBegin := hb_SecondsCPU()
-      cRes := Eval( e:__enumValue(), IIf(lCmp, hb_PValue(3), e2), NIL, @nResult )
+      cRes := Eval(e:__enumValue(), IIf(lCmp, hb_PValue(3), e2), NIL, @nResult)
       nEnd := hb_SecondsCPU()
       IF lCmp
          e2 := cRes

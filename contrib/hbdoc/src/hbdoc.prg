@@ -226,7 +226,7 @@ PROCEDURE Main(...)
          DO CASE
          CASE s_hSwitches[ "output" ] == "single"
 
-            oDocument := Eval( generatorClass ):NewDocument( cFormat, "harbour", "Harbour Reference Guide", s_hSwitches[ "lang" ] )
+            oDocument := Eval(generatorClass):NewDocument( cFormat, "harbour", "Harbour Reference Guide", s_hSwitches[ "lang" ] )
 
             FOR EACH item IN aContent
                IF item:_type == "harbour"
@@ -249,7 +249,7 @@ PROCEDURE Main(...)
 
          CASE s_hSwitches[ "output" ] == "component"
 
-            oDocument := Eval( generatorClass ):NewDocument( cFormat, "harbour", "Harbour Reference Guide", s_hSwitches[ "lang" ] )
+            oDocument := Eval(generatorClass):NewDocument( cFormat, "harbour", "Harbour Reference Guide", s_hSwitches[ "lang" ] )
 
             FOR EACH item IN aContent
                IF item:_type == "harbour"
@@ -261,7 +261,7 @@ PROCEDURE Main(...)
 
             FOR EACH tmp IN ASort( hb_HKeys( s_hComponent ) )
                IF !( tmp == "harbour" )
-                  oDocument := Eval( generatorClass ):NewDocument( cFormat, tmp, hb_StrFormat( "Harbour Reference Guide — %1$s", tmp ), s_hSwitches[ "lang" ] )
+                  oDocument := Eval(generatorClass):NewDocument( cFormat, tmp, hb_StrFormat( "Harbour Reference Guide — %1$s", tmp ), s_hSwitches[ "lang" ] )
 
                   FOR EACH item IN aContent
                      IF item:_type == tmp .AND. ;
@@ -277,7 +277,7 @@ PROCEDURE Main(...)
 
          CASE s_hSwitches[ "output" ] == "category"
 
-            oIndex := Eval( generatorClass ):NewIndex( cFormat, "harbour", "Harbour Reference Guide" )
+            oIndex := Eval(generatorClass):NewIndex( cFormat, "harbour", "Harbour Reference Guide" )
 
             FOR EACH item IN aContent
                IF Right(item:_sourcefile, Len("1stread.txt")) == "1stread.txt"
@@ -294,7 +294,7 @@ PROCEDURE Main(...)
 
             FOR EACH item IN sc_hConstraint[ "categories" ]
 
-               oDocument := Eval( generatorClass ):NewDocument( cFormat, item[3], hb_StrFormat( "Harbour Reference Guide — %1$s", item:__enumKey() ), s_hSwitches[ "lang" ] )
+               oDocument := Eval(generatorClass):NewDocument( cFormat, item[3], hb_StrFormat( "Harbour Reference Guide — %1$s", item:__enumKey() ), s_hSwitches[ "lang" ] )
 
                IF oIndex != NIL
                   oIndex:BeginSection( item:__enumKey(), oDocument:cFilename )
@@ -343,7 +343,7 @@ PROCEDURE Main(...)
          CASE s_hSwitches[ "output" ] == "entry"
 
             FOR EACH item IN aContent
-               oDocument := Eval( generatorClass ):NewDocument( cFormat, item:_filename, "Harbour Reference Guide", s_hSwitches[ "lang" ] )
+               oDocument := Eval(generatorClass):NewDocument( cFormat, item:_filename, "Harbour Reference Guide", s_hSwitches[ "lang" ] )
                IF oIndex != NIL
                   oIndex:AddEntry( item )
                ENDIF
@@ -607,7 +607,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 #if 0
             cSource := hb_HKeyAt( hsTemplate, idx ) + " should be one of: "
 #endif
-            AEval( sc_hConstraint[cSectionName], {| c, n | cSource += IIf(n == 1, "", ",") + c } )
+            AEval(sc_hConstraint[cSectionName], {| c, n | cSource += IIf(n == 1, "", ",") + c })
             AddErrorCondition( cFile, cSource )
 
          ENDCASE
@@ -731,12 +731,12 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
    CASE HB_IsNumeric(xLine)
       nMode := xLine
    CASE HB_IsEvalItem(xLine)
-      Eval( xLine )
+      Eval(xLine)
    CASE HB_IsArray(xLine)
       IF nMode == 2
          OutStd(Space( nIndent ) + Space(2))
       ENDIF
-      AEval( xLine, {| x, n | ShowSubHelp( x, @nMode, nIndent + 2, n ) } )
+      AEval(xLine, {| x, n | ShowSubHelp( x, @nMode, nIndent + 2, n ) })
       IF nMode == 2
          OutStd(hb_eol())
       ENDIF
@@ -825,7 +825,7 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
    ENDCASE
 
    /* using hbmk2 style */
-   AEval( aHelp, {| x | ShowSubHelp( x, @nMode, 0 ) } )
+   AEval(aHelp, {| x | ShowSubHelp( x, @nMode, 0 ) })
 
    RETURN
 
@@ -848,7 +848,7 @@ STATIC FUNCTION Join( aVar, cDelimiter )
 
    LOCAL cResult := ""
 
-   AEval( aVar, {| c, n | cResult += IIf(n > 1, cDelimiter, "") + c } )
+   AEval(aVar, {| c, n | cResult += IIf(n > 1, cDelimiter, "") + c })
 
    RETURN cResult
 
@@ -873,8 +873,8 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
 
    IF nWidth == 0 .OR. lRaw
       idx := 99999
-      AEval( aText, {| c | IIf(Empty(c), , idx := Min(idx, Len(c) - Len(LTrim(c)))) } )
-      AEval( aText, {| c, n | aText[n] := Space( nLeftMargin ) + SubStr(c, idx + 1) } )
+      AEval(aText, {| c | IIf(Empty(c), , idx := Min(idx, Len(c) - Len(LTrim(c)))) })
+      AEval(aText, {| c, n | aText[n] := Space( nLeftMargin ) + SubStr(c, idx + 1) })
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
       FOR EACH cLine IN aText
@@ -994,7 +994,7 @@ METHOD Entry:New( cTemplate )
 
    ::fld := { => }
    hb_HCaseMatch( ::fld, .F. )
-   hb_HEval( sc_hFields, {| k | ::fld[k] := "" } )
+   hb_HEval(sc_hFields, {| k | ::fld[k] := "" })
 
    ::_group := sc_hTemplates[cTemplate]
 

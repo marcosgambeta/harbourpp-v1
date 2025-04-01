@@ -52,7 +52,7 @@ PROCEDURE HActiveX:Event(...)
    LOCAL cEvents := ""
    LOCAL aEvents := {...}
 
-   AEval( aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " } )
+   AEval(aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " })
    wapi_OutputDebugString( cEvents )
 
    RETURN

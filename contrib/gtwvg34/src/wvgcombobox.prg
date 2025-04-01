@@ -292,7 +292,7 @@ METHOD WvgComboBox:itemMarked(...)
    IF Len(a_) == 1 .AND. HB_IsEvalItem(a_[1])
       ::sl_itemMarked := a_[1]
    ELSEIF HB_IsEvalItem(::sl_itemMarked)
-      Eval( ::sl_itemMarked, , , Self )
+      Eval(::sl_itemMarked, , , Self)
    ENDIF
 
    RETURN Self
@@ -304,7 +304,7 @@ METHOD WvgComboBox:itemSelected(...)
    IF Len(a_) == 1 .AND. HB_IsEvalItem(a_[1])
       ::sl_itemSelected := a_[1]
    ELSEIF HB_IsEvalItem(::sl_itemSelected)
-      Eval( ::sl_itemSelected, , , Self )
+      Eval(::sl_itemSelected, , , Self)
    ENDIF
 
    RETURN Self
@@ -316,7 +316,7 @@ METHOD WvgComboBox:drawItem(...)
    IF Len(a_) == 1 .AND. HB_IsEvalItem(a_[1])
       ::sl_xbePDrawItem := a_[1]
    ELSEIF Len(a_) >= 2 .AND. HB_IsEvalItem(::sl_xbePDrawItem)
-      Eval( ::sl_xbePDrawItem, a_[1], a_[2], Self )
+      Eval(::sl_xbePDrawItem, a_[1], a_[2], Self)
    ENDIF
 
    RETURN Self

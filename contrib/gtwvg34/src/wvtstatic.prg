@@ -179,6 +179,6 @@ METHOD WvtStatic:HoverOff()
 
 METHOD WvtStatic:Refresh()
 
-   Eval( ::bPaint )
+   Eval(::bPaint)
 
    RETURN Self

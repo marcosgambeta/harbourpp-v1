@@ -191,7 +191,7 @@ FUNCTION tip_MailAssemble( ;
    ENDIF
 
    IF HB_IsEvalItem(bSMIME) .AND. ;
-      HB_IsString(tmp := Eval( bSMIME, oMail:ToString() ))
+      HB_IsString(tmp := Eval(bSMIME, oMail:ToString()))
 
       oMail := TIPMail():New()
       oMail:SetCharset( cCharset )

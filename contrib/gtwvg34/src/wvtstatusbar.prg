@@ -99,8 +99,8 @@ METHOD WvtStatusBar:PaintBlock()
 
    LOCAL a_ := {}, nPanels
 
-   AEval( ::aPanels, {| o | AAdd(a_, o:nTop), AAdd(a_, o:nLeft), ;
-      AAdd(a_, o:nBottom), AAdd(a_, o:nRight) } )
+   AEval(::aPanels, {| o | AAdd(a_, o:nTop), AAdd(a_, o:nLeft), ;
+      AAdd(a_, o:nBottom), AAdd(a_, o:nRight) })
 
    a_[Len(a_)]++
    nPanels := Len(::aPanels)

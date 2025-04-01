@@ -214,7 +214,7 @@ STATIC FUNCTION proc_shopping()
    ordScope( 0, session[ "user" ] )
    ordScope( 1, session[ "user" ] )
    nT := 0
-   carts->( dbEval( {|| nT += FIELD->TOTAL } ) )
+   carts->( dbEval({|| nT += FIELD->TOTAL } ))
    dbSelectArea("items")
    oW := UWBrowseNew( "br_item" )
    oW:AddColumn( 101, "Item No.",    "CODE" )
@@ -260,7 +260,7 @@ STATIC FUNCTION proc_cart()
    ordScope( 0, session[ "user" ] )
    ordScope( 1, session[ "user" ] )
    nT := 0
-   carts->( dbEval( {|| nT += FIELD->TOTAL } ) )
+   carts->( dbEval({|| nT += FIELD->TOTAL } ))
 
    oW := UWBrowseNew( "br_cart" )
    oW:AddColumn( 101, "Item No.",    "CODE" )

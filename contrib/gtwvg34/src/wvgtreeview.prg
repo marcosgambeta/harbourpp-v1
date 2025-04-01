@@ -161,7 +161,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
 
    CASE HB_GTE_COMMAND
       IF HB_IsEvalItem(::sl_lbClick)
-         Eval( ::sl_lbClick, , , Self )
+         Eval(::sl_lbClick, , , Self)
          RETURN EVENT_HANDLED
       ENDIF
       EXIT
@@ -176,7 +176,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
             ::oParent:setFocus()
          ENDIF
          IF HB_IsEvalItem(::sl_itemSelected)
-            Eval( ::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self )
+            Eval(::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -193,7 +193,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
             ::oParent:setFocus()
          ENDIF
          IF HB_IsEvalItem(::sl_itemMarked)
-            Eval( ::sl_itemMarked, ::oItemSelected, { 0, 0, 0, 0 }, Self )
+            Eval(::sl_itemMarked, ::oItemSelected, { 0, 0, 0, 0 }, Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -219,7 +219,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_lbClick, , , Self )
+            Eval(::sl_lbClick, , , Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -232,7 +232,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self )
+            Eval(::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF

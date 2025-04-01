@@ -162,7 +162,7 @@ METHOD TIPCgi:Flush()
 
    LOCAL cSession
 
-   hb_HEval( ::hCookies, {| k, v | ::cCgiHeader += "Set-Cookie: " + k + "=" + v + ";" + _CRLF } )
+   hb_HEval(::hCookies, {| k, v | ::cCgiHeader += "Set-Cookie: " + k + "=" + v + ";" + _CRLF })
 
    cStream := ::cCgiHeader + _CRLF + ::cHtmlPage + _CRLF
 
@@ -397,7 +397,7 @@ STATIC FUNCTION HtmlAllOption( hOptions, cSep )
    IF HB_IsHash(hOptions)
       hb_default(@cSep, " ")
 
-      hb_HEval( hOptions, {| k | cVal += HtmlOption( hOptions, k,,, .T. ) + cSep } )
+      hb_HEval(hOptions, {| k | cVal += HtmlOption( hOptions, k,,, .T. ) + cSep })
    ENDIF
 
    RETURN cVal

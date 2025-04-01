@@ -100,7 +100,7 @@ PROCEDURE Main(...)
          IF HB_IsNull( cInitDir )
             cInitDir := "." + hb_ps()
          ENDIF
-         DirEval( cInitDir, hb_FNameNameExt( cFileName ), lRecursive, {| name | Reformat( oRef, name ) } )
+         DirEval(cInitDir, hb_FNameNameExt( cFileName ), lRecursive, {| name | Reformat( oRef, name ) })
       ENDIF
    ELSE
       Reformat( oRef, cFileName )
@@ -135,7 +135,7 @@ STATIC PROCEDURE Reformat( oRef, cFileName )
 
    RETURN
 
-STATIC PROCEDURE DirEval( cInitDir, cMask, lRecur, bCode )
+STATIC PROCEDURE DirEval(cInitDir, cMask, lRecur, bCode)
 
    LOCAL file
 
@@ -146,11 +146,11 @@ STATIC PROCEDURE DirEval( cInitDir, cMask, lRecur, bCode )
       IF "D" $ file[F_ATTR]
          IF !"." == file[F_NAME] .AND. ;
             ! ".." == file[F_NAME] .AND. lRecur
-            DirEval( cInitDir + file[F_NAME], cMask, lRecur, bCode )
+            DirEval(cInitDir + file[F_NAME], cMask, lRecur, bCode)
          ENDIF
       ELSE
          IF bCode != NIL
-            Eval( bCode, cInitDir + file[F_NAME] )
+            Eval(bCode, cInitDir + file[F_NAME])
          ENDIF
       ENDIF
    NEXT

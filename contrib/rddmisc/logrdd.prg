@@ -451,7 +451,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
             // If defined a codeblock I send to user infos and he has to return a formatted string
             // Look at local ToString() function for details
             IF HB_IsEvalItem(bMsgLogBlock)
-               cLog := Eval( bMsgLogBlock, cTag, cRDDName, cCmd, nWA, xPar1, xPar2, xPar3 )
+               cLog := Eval(bMsgLogBlock, cTag, cRDDName, cCmd, nWA, xPar1, xPar2, xPar3)
             ELSE
                cLog := DToS( Date() ) + " " + Time() + " " + cTag + ": " + PadR(cRDDName + "_" + cCmd, 20) + " - " + ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
             ENDIF
@@ -462,7 +462,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
          ENDIF
       ELSE
          // Otherwise I send all to user that is responsible to log everywhere
-         Eval( bUserLogBlock, cTag, cRDDName, cCmd, nWA, xPar1, xPar2, xPar3 )
+         Eval(bUserLogBlock, cTag, cRDDName, cCmd, nWA, xPar1, xPar2, xPar3)
       ENDIF
    ENDIF
 

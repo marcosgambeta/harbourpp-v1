@@ -10,10 +10,10 @@ PROCEDURE Main()
    aList1 := { "apple", "orange", "pear" }
    aList2 := { "apple ", "banana", "PEAR" }
    ? "aList1 : "
-   AEval( aList1, {| x | QQOut( x + "," ) } )
+   AEval(aList1, {| x | QQOut( x + "," ) })
    ?
    ? "aList2 : "
-   AEval( aList2, {| x | QQOut( x + "," ) } )
+   AEval(aList2, {| x | QQOut( x + "," ) })
    ?
 
    nstart := Seconds()
@@ -25,15 +25,15 @@ PROCEDURE Main()
    ? "time for 100 merges:", nelapsed
 
    ? PadR("ft_AAddition( aList1, aList2 ) ->", 44)
-   AEval( var0, {| x | QQOut( x + "," ) } )
+   AEval(var0, {| x | QQOut( x + "," ) })
    ?
    var0 := ft_AAddition( aList1, aList2, , .F. )
    ? PadR("ft_AAddition( aList1, aList2, , .F. ) ->", 44)
-   AEval( var0, {| x | QQOut( x + "," ) } )
+   AEval(var0, {| x | QQOut( x + "," ) })
    ?
    var0 := ft_AAddition( aList1, aList2, .F., .F. )
    ? PadR("ft_AAddition( aList1, aList2, .F., .F. ) ->", 44)
-   AEval( var0, {| x | QQOut( x + "," ) } )
+   AEval(var0, {| x | QQOut( x + "," ) })
    ?
 
    RETURN

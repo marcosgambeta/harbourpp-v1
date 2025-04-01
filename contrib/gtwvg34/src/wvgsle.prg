@@ -148,7 +148,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::setPosAndSize()
 
    IF HB_IsObject(::datalink)
-      Eval( ::datalink )
+      Eval(::datalink)
    ENDIF
 
    ::sendMessage( EM_SETLIMITTEXT, ::bufferLength )
@@ -175,12 +175,12 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
 
       CASE aNM[NMH_code] == EN_KILLFOCUS
          IF HB_IsEvalItem(::sl_killInputFocus)
-            Eval( ::sl_killInputFocus, , , Self )
+            Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_SETFOCUS
          IF HB_IsEvalItem(::sl_setInputFocus)
-            Eval( ::sl_setInputFocus, , , Self )
+            Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       ENDCASE
@@ -200,12 +200,12 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
       DO CASE
       CASE aNM[NMH_code] == WIN_WM_KILLFOCUS
          IF HB_IsEvalItem(::sl_killInputFocus)
-            Eval( ::sl_killInputFocus, , , Self )
+            Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == WIN_WM_SETFOCUS
          IF HB_IsEvalItem(::sl_setInputFocus)
-            Eval( ::sl_setInputFocus, , , Self )
+            Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == WIN_WM_KEYDOWN
@@ -216,7 +216,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
                ::oParent:setFocus()
             ENDIF
             IF HB_IsEvalItem(::sl_returnPressed)
-               Eval( ::sl_returnPressed, , , Self )
+               Eval(::sl_returnPressed, , , Self)
             ENDIF
          CASE aNM[2] == WIN_VK_TAB
             IF ::isParentCrt()
@@ -289,7 +289,7 @@ METHOD WvgSLE:returnPressed(bReturnPressed)
    IF HB_IsEvalItem(bReturnPressed)
       ::sl_returnPressed := bReturnPressed
    ELSEIF HB_IsEvalItem(::sl_returnPressed)
-      Eval( ::sl_returnPressed, , , Self )
+      Eval(::sl_returnPressed, , , Self)
    ENDIF
 
    RETURN Self
