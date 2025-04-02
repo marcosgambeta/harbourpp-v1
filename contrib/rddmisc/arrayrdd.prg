@@ -2043,7 +2043,7 @@ STATIC FUNCTION SeekScope( aIndex, aOrdInfo, lBottom )
 
    LOCAL nPos := Seek( aOrdInfo[WAOI_SCOPE_0], .T., lBottom, aIndex )
 
-   IF nPos > 0 .AND. ! LEFTEQUAL( aIndex[INDEX_RECORDS][nPos][INDEXKEY_KEY], aOrdInfo[WAOI_SCOPE1 ] )
+   IF nPos > 0 .AND. ! LEFTEQUAL( aIndex[INDEX_RECORDS][nPos][INDEXKEY_KEY], aOrdInfo[WAOI_SCOPE_1] )
       IF nPos > 1 .AND. aIndex[INDEX_RECORDS][nPos - 1][INDEXKEY_KEY] >= aOrdInfo[WAOI_SCOPE_0]
          nPos--
       ELSE
