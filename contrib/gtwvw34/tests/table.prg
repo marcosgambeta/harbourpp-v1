@@ -91,8 +91,8 @@ PROCEDURE Main( cInputFile )
             "      " + ;
             "{ " + PadR('"' + fld[DBS_NAME] + '"', 12) + ", " + ;
             PadR('"' + fld[DBS_TYPE] + '"', 8) + ", " + ;
-            Str( fld[DBS_LEN], 5 ) + ", " + ;
-            Str( fld[DBS_DEC], 2 ) + " }" + ;
+            Str(fld[DBS_LEN], 5) + ", " + ;
+            Str(fld[DBS_DEC], 2) + " }" + ;
             IIf(fld:__enumIsLast(), " }, ... )", ", ;") + hb_eol()
       NEXT
       cOutput += ;

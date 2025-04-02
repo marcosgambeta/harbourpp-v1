@@ -49,7 +49,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_ntos(n) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str(n))
 #endif
 
 PROCEDURE Main()
@@ -63,10 +63,10 @@ PROCEDURE Main()
    ?
 
    ? "  Simple tests:"
-   ? '    AtToken( "Hello, World!" ) == 8 ? ------------> ' + Str( AtToken( "Hello, World!" ) )
-   ? '    AtToken( "Hello, World!",, 2 ) == 8 ? --------> ' + Str( AtToken( "Hello, World!",, 2 ) )
-   ? '    AtToken( "Hello, World!",, 2, 1 ) == 7 ? -----> ' + Str( AtToken( "Hello, World!",, 2, 1 ) )
-   ? '    AtToken( "Hello, World!", " ", 2, 1 ) == 8 ? -> ' + Str( AtToken( "Hello, World!", " ", 2, 1 ) )
+   ? '    AtToken( "Hello, World!" ) == 8 ? ------------> ' + Str(AtToken( "Hello, World!" ))
+   ? '    AtToken( "Hello, World!",, 2 ) == 8 ? --------> ' + Str(AtToken( "Hello, World!",, 2 ))
+   ? '    AtToken( "Hello, World!",, 2, 1 ) == 7 ? -----> ' + Str(AtToken( "Hello, World!",, 2, 1 ))
+   ? '    AtToken( "Hello, World!", " ", 2, 1 ) == 8 ? -> ' + Str(AtToken( "Hello, World!", " ", 2, 1 ))
    ?
 
    ? '  Tokenizing a string with skip width == 1 and ".!" as tokenizer list:'
@@ -74,7 +74,7 @@ PROCEDURE Main()
    ?
    FOR ni := 1 TO NumToken( cStr, ".!", 1 )
       ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".!", ni, 1 ) + '")'
-      ? "          starts at pos " + Str( npos := AtToken( cStr, ".!", ni, 1 ), 3 ) + ;
+      ? "          starts at pos " + Str(npos := AtToken( cStr, ".!", ni, 1 ), 3) + ;
          " and is " + IIf(SubStr(cStr, npos, 1) $ ".!", "", "not ") + "an empty token."
    NEXT
 

@@ -8,7 +8,7 @@ PROCEDURE Main( cPar1 )
    LOCAL GetList := {}
 
    IF Empty(aPrn := win_printerList())
-      Alert( "No printers installed - Cannot continue" )
+      Alert("No printers installed - Cannot continue")
    ELSE
       DO WHILE nPrn > 0
 
@@ -126,11 +126,11 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
 
          oPrinter:EndDoc()
       ELSE
-         Alert( "StartDoc() failed" )
+         Alert("StartDoc() failed")
       ENDIF
       oPrinter:Destroy()
    ELSE
-      Alert( "Cannot Create Printer" )
+      Alert("Cannot Create Printer")
    ENDIF
 
    RETURN
@@ -153,7 +153,7 @@ STATIC PROCEDURE PrintBitmap( oPrn, cBitFile )
          ENDIF
          oBMP:Destroy()
       ELSE
-         Alert( hb_StrFormat( "%1$s not found", cBitFile ) )
+         Alert(hb_StrFormat( "%1$s not found", cBitFile ))
       ENDIF
    ENDIF
 

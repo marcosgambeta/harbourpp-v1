@@ -519,7 +519,7 @@ STATIC PROCEDURE netiosrv_conn_unregister( netiosrv, pConnectionSocket )
 
 STATIC FUNCTION netiomgm_rpc_regnotif( netiomgm, pConnSock, nStreamID, lRegister )
 
-   LOCAL cIndex := hb_ValToStr( pConnSock )
+   LOCAL cIndex := hb_ValToStr(pConnSock)
    LOCAL cli
 
    SWITCH PCount()
@@ -716,7 +716,7 @@ STATIC FUNCTION netiomgm_rpc_conninfo( netiosrv )
       AAdd(aArray, { ;
          "nThreadID"      => nconn[_NETIOSRV_CONN_nThreadID], ;
          "tStart"         => nconn[_NETIOSRV_CONN_tStart], ;
-         "cStatus"        => ConnStatusStr( nStatus ), ;
+         "cStatus"        => ConnStatusStr(nStatus), ;
          "nFilesCount"    => nFilesCount, ;
          "nBytesSent"     => nBytesSent, ;
          "nBytesReceived" => nBytesReceived, ;
@@ -777,7 +777,7 @@ STATIC FUNCTION netiomgm_rpc_filters( netiosrv )
 STATIC FUNCTION netiomgm_rpc_filtersave( netiosrv, netiomgm )
    RETURN netiosrv_ConfSave( netiosrv, netiomgm )
 
-STATIC FUNCTION ConnStatusStr( nStatus )
+STATIC FUNCTION ConnStatusStr(nStatus)
 
    SWITCH nStatus
    CASE NETIO_SRVSTAT_RUNNING     ; RETURN "RUNNING"

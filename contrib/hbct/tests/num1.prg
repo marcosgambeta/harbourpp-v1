@@ -91,7 +91,7 @@ PROCEDURE Main()
    ?
 
    ?  "Infinity()       // CT3"
-   ?  Space(8), Str( Infinity(), 30, 15 ), "  <-- CT for Harbour"
+   ?  Space(8), Str(Infinity(), 30, 15), "  <-- CT for Harbour"
    ?
 
    ctexit()

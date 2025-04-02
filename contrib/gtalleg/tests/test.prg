@@ -7,6 +7,6 @@ PROCEDURE Main()
 #endif
 
    CLS
-   Alert( "Hello world!" )
+   Alert("Hello world!")
 
    RETURN

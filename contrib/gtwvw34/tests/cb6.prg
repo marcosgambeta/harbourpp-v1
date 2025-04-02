@@ -125,7 +125,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
       this should not be happening! */
 
    IF Empty(GetList)
-      MyAlert( "Bad practice: you left an active combobox, but READ already ended" )
+      MyAlert("Bad practice: you left an active combobox, but READ already ended")
       RETURN  // ignore this event
    ENDIF
 
@@ -294,10 +294,10 @@ STATIC PROCEDURE SetWinFocus( nWinNum )
 
    RETURN
 
-STATIC FUNCTION MyAlert( cMsg, par2, par3, par4, par5, par6 )
+STATIC FUNCTION MyAlert(cMsg, par2, par3, par4, par5, par6)
 
    LOCAL nLineSpacing := wvw_SetLineSpacing( NIL, 0 )
-   LOCAL retval := Alert( cMsg, par2, par3, par4, par5, par6 )
+   LOCAL retval := Alert(cMsg, par2, par3, par4, par5, par6)
 
    wvw_SetLineSpacing( NIL, nLineSpacing )
 

@@ -58,7 +58,7 @@ STATIC PROCEDURE updatescr()
    FOR i := 0 TO MaxCol()
       @ MaxRow(), i SAY "B"
 #if 0
-      @ MaxRow() - 1, i SAY Right(Str( i, 3 ), 1)
+      @ MaxRow() - 1, i SAY Right(Str(i, 3), 1)
 #endif
    NEXT
    FOR i := 0 TO MaxRow()
@@ -99,7 +99,7 @@ PROCEDURE WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )  /* must be a publi
 
    DO CASE
    CASE wParam == 2 // SIZE_MAXIMIZED
-      // Alert( "MAXIMIZE" )
+      // Alert("MAXIMIZE")
       // reset is required only if we are changing size
       lNeedReset := MaxCol() != wvw_MaxMaxCol();
          .OR. MaxRow() != wvw_MaxMaxRow()
@@ -114,7 +114,7 @@ PROCEDURE WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )  /* must be a publi
          diminfo()  // updatescr()
       ENDIF
    CASE wParam == 0 // SIZE_RESTORED
-      // Alert( "RESTORE" )
+      // Alert("RESTORE")
       lNeedReset := MaxCol() != s_nNormalMaxcol .OR. ;
          MaxRow() != s_nNormalMaxrow
       IF lNeedReset

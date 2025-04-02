@@ -99,11 +99,11 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
    hb_langSelect( cLangOld )
 
    IF lRTE
-      lFailed := !( XToStr( xResult, .F. ) == XToStr( xResultExpected, .F. ) )
+      lFailed := !( XToStr(xResult, .F.) == XToStr(xResultExpected, .F.) )
    ELSE
       IF !( ValType(xResult) == ValType(xResultExpected) )
          IF HB_IsString(xResultExpected) .AND. ValType(xResult) $ "ABOHPS"
-            lFailed := !( XToStr( xResult, .F. ) == xResultExpected )
+            lFailed := !( XToStr(xResult, .F.) == xResultExpected )
          ELSE
             lFailed := .T.
          ENDIF
@@ -120,17 +120,17 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
             PadR(ProcName(1) + "(" + hb_ntos(ProcLine(1)) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             RTrim(cBlock) + ;
             hb_eol() + ;
-            Space(5) + "  Result: " + XToStr( xResult, .F. ) + ;
+            Space(5) + "  Result: " + XToStr(xResult, .F.) + ;
             hb_eol() + ;
-            Space(5) + "Expected: " + XToStr( xResultExpected, .F. ) + ;
+            Space(5) + "Expected: " + XToStr(xResultExpected, .F.) + ;
             hb_eol())
       ELSE
          Eval(bOut, ;
             PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
             PadR(ProcName(1) + "(" + hb_ntos(ProcLine(1)) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             PadR(cBlock, TEST_RESULT_COL3_WIDTH) + " -> " + ;
-            PadR(XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH) + " | " + ;
-            XToStr( xResultExpected, .F. ) + ;
+            PadR(XToStr(xResult, .F.), TEST_RESULT_COL4_WIDTH) + " | " + ;
+            XToStr(xResultExpected, .F.) + ;
             hb_eol())
       ENDIF
    ENDIF
@@ -178,7 +178,7 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_IsArray(oError:Args)
       cMessage += "A:" + hb_ntos(Len(oError:Args)) + ":"
       FOR tmp := 1 TO Len(oError:Args)
-         cMessage += ValType(oError:Args[tmp]) + ":" + XToStr( oError:Args[tmp], .T. )
+         cMessage += ValType(oError:Args[tmp]) + ":" + XToStr(oError:Args[tmp], .T.)
          IF tmp < Len(oError:Args)
             cMessage += ";"
          ENDIF
@@ -204,7 +204,7 @@ STATIC FUNCTION ErrorMessage( oError )
 
    RETURN cMessage
 
-STATIC FUNCTION XToStr( xValue, lInString )
+STATIC FUNCTION XToStr(xValue, lInString)
 
    SWITCH ValType(xValue)
    CASE "N" ; RETURN hb_ntos(xValue)
@@ -223,7 +223,7 @@ STATIC FUNCTION XToStr( xValue, lInString )
       EXIT
    ENDSWITCH
 
-   RETURN hb_CStr( xValue )
+   RETURN hb_CStr(xValue)
 
 STATIC FUNCTION __StrToExp( cStr )
 

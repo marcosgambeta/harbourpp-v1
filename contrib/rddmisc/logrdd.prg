@@ -342,7 +342,7 @@ FUNCTION hb_LogRddValueToText( uValue )
    CASE "C"  ; cText := hb_StrToExp( uValue ) ; EXIT
    CASE "N"  ; cText := hb_ntos(uValue) ; EXIT
    CASE "D"  ; cText := DToS( uValue ) ; cText := "0d" + IIf(Empty(cText), "00000000", cText) ; EXIT
-   OTHERWISE ; cText := hb_ValToStr( uValue )
+   OTHERWISE ; cText := hb_ValToStr(uValue)
    ENDSWITCH
 
    RETURN "[" + cType + "]>>>" + cText + "<<<"
@@ -357,7 +357,7 @@ STATIC PROCEDURE OpenLogFile( nWA )
    LOCAL lActive   := aRDDData[ARRAY_ACTIVE]
 
 #if 0
-   TraceLog( "hFile " + CStr( hFile ) )
+   TraceLog( "hFile " + CStr(hFile) )
 #endif
 
    IF lActive .AND. hFile == NIL

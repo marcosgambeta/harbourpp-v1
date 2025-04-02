@@ -59,7 +59,7 @@ PROCEDURE Main( cArg )
 
    oServer := TMariaDBServer():New( "localhost", "root", "" )
    IF oServer:NetErr()
-      Alert( oServer:Error() )
+      Alert(oServer:Error())
    ENDIF
 
    oServer:SelectDB("ims")
@@ -71,14 +71,14 @@ PROCEDURE Main( cArg )
    dbUseArea(.T.,, cArg, "wn", .F.)
 
    IF !oServer:DeleteTable( "test" )
-      Alert( oServer:Error() )
+      Alert(oServer:Error())
    ENDIF
 
    aStru := dbStruct()
    IF oServer:CreateTable( "test", aStru )
-      Alert( "test created successfully" )
+      Alert("test created successfully")
    ELSE
-      Alert( oServer:Error() )
+      Alert(oServer:Error())
    ENDIF
 
    oQuery := oServer:Query( "SELECT C111, C116, C134 from maga limit 10" )
@@ -103,7 +103,7 @@ PROCEDURE Main( cArg )
          oRow:FieldPut( oRow:FieldPos( "ACQDI" ), oRow:FieldGet( oRow:FieldPos( "ACQDI" ) ) + wn->ACQDI )
 
          IF !oQuery2:Update( oRow )
-            Alert( oQuery2:Error() )
+            Alert(oQuery2:Error())
          ENDIF
       ELSE
          ? wn->CODF + " " + wn->CODP
@@ -118,7 +118,7 @@ PROCEDURE Main( cArg )
          oRow:FieldPut( oRow:FieldPos( "ACQDI" ), wn->ACQDI )
 
          IF !oQuery:Append(oRow)
-            Alert( oQuery:Error() )
+            Alert(oQuery:Error())
          ENDIF
       ENDIF
 

@@ -207,13 +207,13 @@ PROCEDURE Main()
       DO CASE
       CASE nKeyStd == hb_keyCode( "<" )
          wvw_SetPaintRefresh( Int(wvw_SetPaintRefresh() / 2) )
-         Alert( wvw_SetPaintRefresh() )
+         Alert(wvw_SetPaintRefresh())
       CASE nKeyStd == hb_keyCode( ">" )
          wvw_SetPaintRefresh( Int(wvw_SetPaintRefresh() * 2) )
-         Alert( wvw_SetPaintRefresh() )
+         Alert(wvw_SetPaintRefresh())
       CASE nKeyStd == hb_keyCode( "0" )
          wvw_SetPaintRefresh(0)
-         Alert( wvw_SetPaintRefresh() )
+         Alert(wvw_SetPaintRefresh())
       OTHERWISE
          // do nothing. Inkey() has been handled by nAfterInket()
       ENDCASE
@@ -827,7 +827,7 @@ PROCEDURE WVW_SETFOCUS( hWnd, nWinNum )  /* must be a public function */
    s_nGotFocus++
    @ 0, 0 SAY s_nGotFocus
    IF s_nGotFocus % 3 == 0
-      Alert( "Got focus " + hb_ntos(s_nGotFocus) + "th times" )
+      Alert("Got focus " + hb_ntos(s_nGotFocus) + "th times")
    ENDIF
 
    RETURN
@@ -862,9 +862,9 @@ STATIC PROCEDURE CreateToolbar( nWinNum )
    wvw_tbDestroy( nWinNum )
 
    IF !lYesNo( "would you like to use default toolbar setting?" )
-      nSysBitmap := Alert( "Select toolbar button size", { "Small", "Big" } )
+      nSysBitmap := Alert("Select toolbar button size", { "Small", "Big" })
       nSysBitmap := IIf(nSysBitmap == 0, 1, nSysBitmap)
-      lDisplayText := Alert( "Display text in toolbar?", { "Yes", "No" } ) == 1
+      lDisplayText := Alert("Display text in toolbar?", { "Yes", "No" }) == 1
    ENDIF
 
    IF Empty(wvw_tbCreate( nWinNum, lDisplayText, , nSysBitmap ))

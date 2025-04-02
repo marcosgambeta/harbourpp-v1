@@ -102,7 +102,7 @@ METHOD TBColumnSQL:Block()
 
    DO CASE
    CASE xType == "N"
-      xValue := "'" + Str( xValue, ::oBrw:oCurRow:FieldLen(::nFieldNum), ::oBrw:oCurRow:FieldDec(::nFieldNum) ) + "'"
+      xValue := "'" + Str(xValue, ::oBrw:oCurRow:FieldLen(::nFieldNum), ::oBrw:oCurRow:FieldDec(::nFieldNum)) + "'"
 
    CASE xType == "D"
       xValue :=  "'" + DToC(xValue) + "'"
@@ -266,7 +266,7 @@ METHOD TBrowseSQL:EditField()
 
          /* NOTE: To do in a better way */
          IF !::oQuery:Update( ::oCurRow )
-            Alert( Left(::oQuery:Error(), 60) )
+            Alert(Left(::oQuery:Error(), 60))
          ENDIF
       ENDIF
 
@@ -289,13 +289,13 @@ METHOD TBrowseSQL:EditField()
 
       /* NOTE: To do in a better way */
       IF !::oQuery:Update( ::oCurRow )
-         Alert( Left(::oQuery:Error(), 60) )
+         Alert(Left(::oQuery:Error(), 60))
       ENDIF
 
    endif
 
    IF !::oQuery:Refresh()
-      Alert( ::oQuery:Error() )
+      Alert(::oQuery:Error())
    ENDIF
 
    ::RefreshAll()
@@ -392,10 +392,10 @@ METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
       CASE nKey == K_DEL
          IF lCanEdit
             IF !::oQuery:Delete( ::oCurRow )
-               Alert( "not deleted " + ::oQuery:Error() )
+               Alert("not deleted " + ::oQuery:Error())
             ENDIF
             IF !::oQuery:Refresh()
-               Alert( ::oQuery:Error() )
+               Alert(::oQuery:Error())
             ENDIF
 
             ::inValidate()

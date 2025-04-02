@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    aDataTest := ft_Elapsed( dStart, dEnd, cTimeStart, cTimeEnd )
    FOR n := 1 TO 4
-      ? aDataTest[n, 1], Str( aDataTest[n, 2], 12, 4 )
+      ? aDataTest[n, 1], Str(aDataTest[n, 2], 12, 4)
       ?? " "
       ?? IIf(n == 1, "Days", IIf(n == 2, "Hours", IIf(n == 3, "Mins.", "Secs.")))
    NEXT

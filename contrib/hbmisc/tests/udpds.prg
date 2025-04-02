@@ -22,7 +22,7 @@ PROCEDURE Main( cParam )
    ENDIF
 
    IF "S" $ Upper(cParam)
-      IF !Empty(h := hb_udpds_Start( 39999, "UDPDSDemo", NetName() + " " + hb_TSToStr( hb_DateTime() ) ))
+      IF !Empty(h := hb_udpds_Start( 39999, "UDPDSDemo", NetName() + " " + hb_TSToStr(hb_DateTime()) ))
          hb_idleSleep( 0.1 )
       ENDIF
    ENDIF

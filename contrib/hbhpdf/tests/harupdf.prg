@@ -57,9 +57,9 @@ PROCEDURE Main( cFileToSave )
    ENDIF
 
    IF DesignHaruPDF( cFileToSave )
-      Alert( "PDF File <" + cFileToSave + "> is created!" )
+      Alert("PDF File <" + cFileToSave + "> is created!")
    ELSE
-      Alert( "Some problems in creating the PDF!" )
+      Alert("Some problems in creating the PDF!")
    ENDIF
 
    RETURN
@@ -89,7 +89,7 @@ FUNCTION DesignHaruPDF( cFileToSave )
    LOCAL pdf := HPDF_New()
 
    IF pdf == NIL
-      Alert( "PDF could not be created!" )
+      Alert("PDF could not be created!")
       RETURN NIL
    ENDIF
 

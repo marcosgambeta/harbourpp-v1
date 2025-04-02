@@ -17,7 +17,7 @@ PROCEDURE Main()
    ELSE
 
       ? "writting..."
-      cData := hb_tsToStr( hb_dateTime() ) + hb_eol() + ;
+      cData := hb_tsToStr(hb_dateTime()) + hb_eol() + ;
                Version() + hb_eol() + ;
                OS() + hb_eol() + ;
                Replicate("0123456789" + hb_eol(), 1000) + ;

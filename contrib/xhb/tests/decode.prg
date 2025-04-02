@@ -67,7 +67,7 @@ PROCEDURE Main()
    ? hb_Decode( 2, { 1 => "A", 2 => "B", 3 => "C" } )
 
    // Returning a codeblock
-   ? hb_CStr( hb_Decode( 2, 1, {|| 1 }, 2, {|| 2 }, 3, {|| 3 } ) )
+   ? hb_CStr(hb_Decode( 2, 1, {|| 1 }, 2, {|| 2 }, 3, {|| 3 } ))
 
    // Checking an array
    aArray := { 1 }

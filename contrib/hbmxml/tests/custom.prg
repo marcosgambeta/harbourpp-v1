@@ -50,7 +50,7 @@ STATIC PROCEDURE create_cust()
    LOCAL tree, group, element, node
    LOCAL hData := { => }
 
-   hData["Today"] := hb_TSToStr( hb_DateTime() )
+   hData["Today"] := hb_TSToStr(hb_DateTime())
    /* etc. */
 
    tree    := mxmlNewXML()

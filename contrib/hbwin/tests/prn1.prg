@@ -9,7 +9,7 @@ PROCEDURE Main( cPar1 )
    LOCAL aPrn := win_printerList()
 
    IF Empty(aPrn)
-      Alert( "No printers installed - Cannot continue" )
+      Alert("No printers installed - Cannot continue")
    ELSE
       DO WHILE nPrn != 0
          CLS
@@ -43,10 +43,10 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
    ENDIF
 
    IF !oPrinter:Create()
-      Alert( "Cannot Create Printer" )
+      Alert("Cannot Create Printer")
    ELSE
       IF !oPrinter:startDoc("win_Prn(Doc name in Printer Properties)")
-         Alert( "StartDoc() failed" )
+         Alert("StartDoc() failed")
       ELSE
          oPrinter:SetPen( WIN_PS_SOLID, 1, HB_WIN_RGB_RED )
          oPrinter:Bold( WIN_FW_EXTRABOLD )
@@ -146,7 +146,7 @@ STATIC PROCEDURE PrintBitmap( oPrn, cBitFile )
          ENDIF
          oBMP:Destroy()
       ELSE
-         Alert( hb_StrFormat( "%1$s not found ", cBitFile ) )
+         Alert(hb_StrFormat( "%1$s not found ", cBitFile ))
       ENDIF
    ENDIF
 

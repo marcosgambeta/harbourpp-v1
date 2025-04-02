@@ -1696,7 +1696,7 @@ STATIC FUNCTION PutValue( xValue, cType, nLen, nDec )
    CASE cType == "M"
       xVal := xValue  /* No limit for a memo field */
    CASE cType == "N"
-      xVal := Val(Str( xValue, nLen, nDec ))
+      xVal := Val(Str(xValue, nLen, nDec))
    OTHERWISE
       xVal := xValue
    ENDCASE
@@ -1718,7 +1718,7 @@ STATIC FUNCTION EmptyValue( cType, nLen, nDec )
    CASE cType == "L"
       xVal := .F.
    CASE cType == "N"
-      xVal := Val(Str( 0, nLen, nDec ))
+      xVal := Val(Str(0, nLen, nDec))
    ENDCASE
 
    RETURN xVal

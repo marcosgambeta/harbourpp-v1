@@ -1,7 +1,7 @@
 #require "hbnf"
 
 #ifndef __HARBOURPP__
-#define hb_ntos(n) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str(n))
 #endif
 
 // Pass valid row and column values for different video modes to change modes
@@ -28,8 +28,8 @@ PROCEDURE Main( nRow, nCol )
    ENDIF
 
    IF !SetMode(nRow, nCol)
-      @ MaxRow(), 0 SAY "Mode Change unsuccessful:" + Str( nRow, 2, 0 ) + " by";
-         + Str( nCol, 3, 0 )
+      @ MaxRow(), 0 SAY "Mode Change unsuccessful:" + Str(nRow, 2, 0) + " by";
+         + Str(nCol, 3, 0)
       RETURN
    ENDIF
 
@@ -43,7 +43,7 @@ PROCEDURE Main( nRow, nCol )
 
    // ..... Set up the screen
    cSavClr := SetColor("w/n")
-   @ 0, 0, MaxRow(), MaxCol() BOX hb_UTF8ToStr( "░░░░░░░░░" )
+   @ 0, 0, MaxRow(), MaxCol() BOX hb_UTF8ToStr("░░░░░░░░░")
 
    SetColor("GR+/RB")
    Scroll( 7, 2, 19, 63, 0 )
@@ -61,7 +61,7 @@ PROCEDURE Main( nRow, nCol )
    @ MaxRow(), 0 SAY "Driver version: " + ;
       hb_ntos(ft_MVersion( @nMinor, @nType, @nIRQ )) + "." + ;
       hb_ntos(nMinor)
-   @ Row(), Col() SAY " " + aType[nType] + " mouse using IRQ " + Str( nIRQ, 1, 0 )
+   @ Row(), Col() SAY " " + aType[nType] + " mouse using IRQ " + Str(nIRQ, 1, 0)
 
    ft_MGetSens( @nHoriz, @nVert, @nDouble )  // Get the current sensitivities
    ft_MSetSens( 70, 70, 60 )    // Bump up the sensitivity of the mouse

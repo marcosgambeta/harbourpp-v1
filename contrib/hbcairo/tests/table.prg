@@ -86,7 +86,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
             EXIT
          CASE "N"
             cairo_move_to( hCairo, nDX + aWidth[nI] - 10, nY + 10 )
-            show_text_right(hCairo, Str( xValue ))
+            show_text_right(hCairo, Str(xValue))
             EXIT
          CASE "D"
             cairo_move_to( hCairo, nDX + 10, nY + 10 )

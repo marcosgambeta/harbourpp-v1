@@ -259,7 +259,7 @@ FUNCTION SwpAddEnv( nBytes )
 
    RETURN 32768
 
-FUNCTION SwpAddStr( cPID, cString )
+FUNCTION SwpAddStr(cPID, cString)
 
    HB_SYMBOL_UNUSED(cPID)
    HB_SYMBOL_UNUSED(cString)
@@ -416,7 +416,7 @@ FUNCTION SwpSetPidBas( cIDString )
 
    RETURN .T.
 
-FUNCTION SwpSetStr( cString )
+FUNCTION SwpSetStr(cString)
 
    HB_SYMBOL_UNUSED(cString)
 

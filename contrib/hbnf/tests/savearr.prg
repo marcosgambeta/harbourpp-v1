@@ -35,7 +35,7 @@ FUNCTION DispArray( aTest )
       ?? "  "
       ?? DToC(aTest[nk, 2])
       ?? "  "
-      ?? Str( aTest[nk, 3] )
+      ?? Str(aTest[nk, 3])
       ?? "  "
       ?? IIf(aTest[nk, 4], "true", "false")
    NEXT

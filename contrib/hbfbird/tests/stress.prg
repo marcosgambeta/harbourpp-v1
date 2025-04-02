@@ -82,10 +82,10 @@ PROCEDURE Main()
    NEXT
 
    FOR i := 5000 TO 7000
-      @ 16, 0 SAY "Deleting values...." + Str( i )
+      @ 16, 0 SAY "Deleting values...." + Str(i)
 
       oRow := oQuery:Blank()
-      oServer:Delete( oRow, "code = " + Str( i ) )
+      oServer:Delete( oRow, "code = " + Str(i) )
 
       IF i % 100 == 0
          oServer:Commit()
@@ -94,11 +94,11 @@ PROCEDURE Main()
    NEXT
 
    FOR i := 2000 TO 3000
-      @ 17, 0 SAY "Updating values...." + Str( i )
+      @ 17, 0 SAY "Updating values...." + Str(i)
 
       oRow := oQuery:Blank()
       oRow:FieldPut( 5, 4000 + i )
-      oServer:update( oRow, "code = " + Str( i ) )
+      oServer:update( oRow, "code = " + Str(i) )
 
       IF i % 100 == 0
          oServer:Commit()
@@ -110,13 +110,13 @@ PROCEDURE Main()
 
    IF !oQuery:NetErr()
       oQuery:Fetch()
-      @ 18, 0 SAY "Sum values...." + Str( oQuery:FieldGet(1) )
+      @ 18, 0 SAY "Sum values...." + Str(oQuery:FieldGet(1))
       oQuery:Destroy()
    ENDIF
 
    x := 0
    FOR i := 1 TO 4000
-      oQuery := oServer:Query( "SELECT * FROM test WHERE code = " + Str( i ) )
+      oQuery := oServer:Query( "SELECT * FROM test WHERE code = " + Str(i) )
 
       IF !oQuery:NetErr()
          oQuery:Fetch()
@@ -125,7 +125,7 @@ PROCEDURE Main()
          oQuery:destroy()
          x += oRow:FieldGet( oRow:FieldPos( "salary" ) )
 
-         @ 19, 0 SAY "Sum values...." + Str( x )
+         @ 19, 0 SAY "Sum values...." + Str(x)
       ENDIF
    NEXT
 

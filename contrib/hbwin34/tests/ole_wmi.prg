@@ -42,7 +42,7 @@ PROCEDURE Main()
       ? "BiosCharacteristics . :", TypeAndValue( i:BiosCharacteristics )
       IF HB_IsArray(i:BiosCharacteristics)
          FOR EACH tmp IN i:BiosCharacteristics
-            ? Space(27), Str( tmp, 2 ), "->", WMI_Bios_BiosCharacteristics( tmp )
+            ? Space(27), Str(tmp, 2), "->", WMI_Bios_BiosCharacteristics( tmp )
          NEXT
       ENDIF
 
@@ -84,14 +84,14 @@ PROCEDURE Main()
 
       ? "SoftwareElementState  :", TypeAndValue( i:SoftwareElementState )
       IF HB_IsNumeric(i:SoftwareElementState)
-         ? Space(27), Str( i:SoftwareElementState, 2 ), "->", WMI_Bios_SoftwareElementState( i:SoftwareElementState )
+         ? Space(27), Str(i:SoftwareElementState, 2), "->", WMI_Bios_SoftwareElementState( i:SoftwareElementState )
       ENDIF
 
       ? "Status .............. :", TypeAndValue( i:Status )
       ? "TargetOperatingSystem :", TypeAndValue( i:TargetOperatingSystem )
 
       IF HB_IsNumeric(i:TargetOperatingSystem)
-         ? Space(27), Str( i:TargetOperatingSystem, 2 ), "->", WMI_Bios_TargetOperatingSystem( i:TargetOperatingSystem )
+         ? Space(27), Str(i:TargetOperatingSystem, 2), "->", WMI_Bios_TargetOperatingSystem( i:TargetOperatingSystem )
       ENDIF
 
       ? "Version ............. :", TypeAndValue( i:Version )

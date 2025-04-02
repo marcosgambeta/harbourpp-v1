@@ -11,7 +11,7 @@ PROCEDURE Main()
    CLS
 
    IF Empty(aPrn)
-      Alert( "No printers installed - Cannot continue" )
+      Alert("No printers installed - Cannot continue")
    ELSE
       DO WHILE nPrn != 0
          CLS
@@ -39,7 +39,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cFileName )
       lDelete := .F.
    ENDIF
 
-   Alert( "win_PrintFileRaw() returned: " + hb_ntos(win_PrintFileRaw( cPrinter, cFileName, "testing raw printing" )) )
+   Alert("win_PrintFileRaw() returned: " + hb_ntos(win_PrintFileRaw( cPrinter, cFileName, "testing raw printing" )))
 
    IF lDelete
       FErase( cFileName )

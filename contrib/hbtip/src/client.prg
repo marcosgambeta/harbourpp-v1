@@ -217,7 +217,7 @@ METHOD TIPClient:New( oUrl, xTrace, oCredentials )
       hb_inetInit()
       IF ::lHasSSL
          SSL_init()
-         RAND_seed( hb_randStr( 20 ) + hb_TToS( hb_DateTime() ) + NetName() )
+         RAND_seed( hb_randStr(20) + hb_TToS( hb_DateTime() ) + NetName() )
       ENDIF
       ::bInitSocks := .T.
    ENDIF
@@ -804,9 +804,9 @@ METHOD TIPClient:Log(...)
 
          // Preserves CRLF on result
          IF xVar:__enumIsLast()
-            cMsg += hb_CStr( xVar )
+            cMsg += hb_CStr(xVar)
          ELSE
-            cMsg += hb_StrReplace( AllTrim(hb_CStr( xVar )), Chr(13) + Chr(10), { "<cr>", "<lf>" } )
+            cMsg += hb_StrReplace( AllTrim(hb_CStr(xVar)), Chr(13) + Chr(10), { "<cr>", "<lf>" } )
          ENDIF
 
          DO CASE

@@ -678,7 +678,7 @@ STATIC PROCEDURE GCUIConsole( oCrt )
    // Issue the read
    READ
 
-   My_Alert( "How did you like the 'Alert' replacement?", { "WOW", "OK", "OOps" } )
+   My_Alert("How did you like the 'Alert' replacement?", { "WOW", "OK", "OOps" })
 
    RETURN
 

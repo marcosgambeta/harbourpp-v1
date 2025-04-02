@@ -39,7 +39,7 @@ PROCEDURE Main()
    /* "aS" is the plural of "a" and returns all <a href="url"> tags */
    FOR EACH oNode IN oDoc:body:div( "links" ):aS
       IF oNode:class == "large"
-         ? tip_HtmlToStr( oNode:getText( "" ) ), oNode:href
+         ? tip_HtmlToStr(oNode:getText( "" )), oNode:href
       ENDIF
    NEXT
 

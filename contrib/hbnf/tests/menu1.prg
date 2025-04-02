@@ -91,13 +91,13 @@ PROCEDURE Main( cCmdLine )
    CLS
    SetColor(cNormN)
    @ nMaxRow, 0
-   @ nMaxRow, 0 SAY hb_UTF8ToStr( " FT_MENU1 1.0 │ " )
+   @ nMaxRow, 0 SAY hb_UTF8ToStr(" FT_MENU1 1.0 │ ")
    @ nMaxRow, 16 SAY "WRITTEN BY PAUL FERRARA [76702,556] FOR NANFORUM.LIB"
-   @ nMaxRow, 69 SAY hb_UTF8ToStr( "│ " ) + DToC(Date())
+   @ nMaxRow, 69 SAY hb_UTF8ToStr("│ ") + DToC(Date())
 
    SetColor(cErrH)
-   @ nMaxRow - 11, 23, nMaxRow - 3, 56 BOX hb_UTF8ToStr( "┌─┐│┘─└│ " )
-   @ nMaxRow - 9, 23 SAY hb_UTF8ToStr( "├────────────────────────────────┤" )
+   @ nMaxRow - 11, 23, nMaxRow - 3, 56 BOX hb_UTF8ToStr("┌─┐│┘─└│ ")
+   @ nMaxRow - 9, 23 SAY hb_UTF8ToStr("├────────────────────────────────┤")
    SetColor(cErrN)
    @ nMaxRow - 10, 33 SAY "Navigation Keys"
    @ nMaxRow - 8, 25 SAY "LeftArrow   RightArrow   Alt-E"

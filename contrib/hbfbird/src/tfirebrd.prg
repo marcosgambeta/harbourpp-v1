@@ -943,7 +943,7 @@ STATIC FUNCTION DataToSql( xField )
    CASE "D"
       RETURN '"' + StrZero( Month( xField ), 2 ) + "/" + StrZero( Day( xField ), 2 ) + "/" + StrZero( Year( xField ), 4 ) + '"'
    CASE "N"
-      RETURN Str( xField )
+      RETURN Str(xField)
    CASE "L"
       RETURN IIf(xField, "1", "0")
    ENDSWITCH

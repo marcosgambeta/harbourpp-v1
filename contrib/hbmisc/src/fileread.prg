@@ -104,7 +104,7 @@ METHOD TFileRead:ReadLine()
          // Maybe means that we found either a CR or an LF, but we don't
          // have enough characters to discriminate between the three types
          // of end of line conditions that the class recognizes (see below).
-         cLine := FReadStr( ::nHan, ::nReadSize )
+         cLine := FReadStr(::nHan, ::nReadSize)
          IF Empty(cLine)
             // There was nothing more to be read. Why? (Error or EOF.)
             ::nError := FError()

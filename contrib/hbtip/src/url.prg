@@ -201,8 +201,8 @@ METHOD TUrl:AddGetForm( xPostData )
    CASE HB_IsHash(xPostData)
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;
-            tip_URLEncode( AllTrim(hb_CStr( item )) )
+            tip_URLEncode( AllTrim(hb_CStr(item:__enumKey())) ) + "=" + ;
+            tip_URLEncode( AllTrim(hb_CStr(item)) )
          IF !item:__enumIsLast()
             cData += "&"
          ENDIF
@@ -210,8 +210,8 @@ METHOD TUrl:AddGetForm( xPostData )
    CASE HB_IsArray(xPostData)
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim(hb_CStr( item:__enumIndex() )) ) + "=" + ;
-            tip_URLEncode( AllTrim(hb_CStr( item )) )
+            tip_URLEncode( AllTrim(hb_CStr(item:__enumIndex())) ) + "=" + ;
+            tip_URLEncode( AllTrim(hb_CStr(item)) )
          IF !item:__enumIsLast()
             cData += "&"
          ENDIF

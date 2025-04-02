@@ -99,7 +99,7 @@ PROCEDURE Main()
    ENDIF
 
    WAIT
-   ? tip_HtmlToStr( oDoc:body:getText() )
+   ? tip_HtmlToStr(oDoc:body:getText())
 
    hb_run( "address.html" )
 

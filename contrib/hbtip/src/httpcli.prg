@@ -142,8 +142,8 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;
-            tip_URLEncode(          hb_CStr( item ) )
+            tip_URLEncode( AllTrim(hb_CStr(item:__enumKey())) ) + "=" + ;
+            tip_URLEncode(          hb_CStr(item) )
          IF !item:__enumIsLast()
             cData += "&"
          ENDIF
@@ -152,8 +152,8 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim(hb_CStr( item[1] )) ) + "=" + ;
-            tip_URLEncode(          hb_CStr( item[2] ) )
+            tip_URLEncode( AllTrim(hb_CStr(item[1])) ) + "=" + ;
+            tip_URLEncode(          hb_CStr(item[2]) )
          IF !item:__enumIsLast()
             cData += "&"
          ENDIF
@@ -512,16 +512,16 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
       FOR EACH item IN xPostData
          cData += ;
             cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;
-            tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + '"' + cCrlf + cCrLf + ;
-            tip_URLEncode( AllTrim(hb_CStr( item )) ) + cCrLf
+            tip_URLEncode( AllTrim(hb_CStr(item:__enumKey())) ) + '"' + cCrlf + cCrLf + ;
+            tip_URLEncode( AllTrim(hb_CStr(item)) ) + cCrLf
       NEXT
    CASE HB_IsArray(xPostData)
       FOR EACH item IN xPostData
          IF Len(item) >= 2
             cData += ;
                cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;
-               tip_URLEncode( AllTrim(hb_CStr( item[1] )) ) + '"' + cCrlf + cCrLf + ;
-               tip_URLEncode( AllTrim(hb_CStr( item[2] )) ) + cCrLf
+               tip_URLEncode( AllTrim(hb_CStr(item[1])) ) + '"' + cCrlf + cCrLf + ;
+               tip_URLEncode( AllTrim(hb_CStr(item[2])) ) + cCrLf
          ENDIF
       NEXT
    CASE HB_IsString(xPostData)

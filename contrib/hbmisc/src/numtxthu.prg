@@ -67,7 +67,7 @@ FUNCTION NumToTxtHU( nValue )
 
    IF ( tmp := ( nValue - tmp ) ) > 0 .AND. tmp < 1
 
-      tmp1 := Len(tmp2 := SubStr(Str( tmp, 8, 6 ), 3))
+      tmp1 := Len(tmp2 := SubStr(Str(tmp, 8, 6), 3))
 
       DO WHILE SubStr(tmp2, tmp1, 1) == "0" .AND. tmp1 > 0
          tmp1--
@@ -76,7 +76,7 @@ FUNCTION NumToTxtHU( nValue )
       cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + IIf(tmp1 >= 1 .AND. tmp1 <= Len(aTort), " " + aTort[tmp1], "")
    ENDIF
 
-   RETURN hb_UTF8ToStr( cRetVal )
+   RETURN hb_UTF8ToStr(cRetVal)
 
 STATIC FUNCTION NumToTxtRaw( nValue )
 

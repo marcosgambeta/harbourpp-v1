@@ -49,7 +49,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_ntos(n) LTrim(Str( n ))
+#define hb_ntos(n) LTrim(Str(n))
 #endif
 
 PROCEDURE Main()
@@ -76,7 +76,7 @@ PROCEDURE Main()
    ?
    FOR ni := 1 TO NumToken( cStr, ".,!", 1 )
       ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".,!", ni, 1, @cPre, @cPost ) + ;
-         '") @ pos ' + Str( npos := AtToken( cStr, ".,!", ni, 1 ), 3 ) + ', tokenized by "' + cPre + '" and "' + cPost + '" is ' + IIf(SubStr(cStr, npos, 1) $ ".,!", "", "not ") + "empty"
+         '") @ pos ' + Str(npos := AtToken( cStr, ".,!", ni, 1 ), 3) + ', tokenized by "' + cPre + '" and "' + cPost + '" is ' + IIf(SubStr(cStr, npos, 1) $ ".,!", "", "not ") + "empty"
    NEXT
 
    ?
@@ -85,7 +85,7 @@ PROCEDURE Main()
    ?
    FOR ni := 1 TO NumToken( cStr, ".,!", 3 )
       ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".,!", ni, 3, @cPre, @cPost ) + ;
-         '") @ pos ' + Str( npos := AtToken( cStr, ".,!", ni, 3 ), 3 ) + ', tokenized by "' + cPre + '" and "' + cPost + '" is ' + IIf(SubStr(cStr, npos, 1) $ ".,!", "", "not ") + "empty."
+         '") @ pos ' + Str(npos := AtToken( cStr, ".,!", ni, 3 ), 3) + ', tokenized by "' + cPre + '" and "' + cPost + '" is ' + IIf(SubStr(cStr, npos, 1) $ ".,!", "", "not ") + "empty."
    NEXT
 
    ?

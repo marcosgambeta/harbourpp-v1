@@ -696,12 +696,12 @@ METHOD THtmlNode:parseHtml( parser )
       nEnd     := parser:p_pos
       cAttr    := SubStr(parser:p_Str, nStart, nEnd - nStart + 1)
       cText    := LTrim(SubStr(parser:p_str, nLastPos + 1, nStart - nLastPos - 1))
-      cTagName := CutStr( " ", @cAttr )
+      cTagName := CutStr(" ", @cAttr)
 
       IF !cText == ""
          IF hb_LeftEq( cText, "</" )
             // ending tag of previous node
-            cText := Lower(AllTrim(SubStr(CutStr( ">", @cText ), 3)))
+            cText := Lower(AllTrim(SubStr(CutStr(">", @cText), 3)))
             oLastTag := oThisTag:parent
             DO WHILE oLastTag != NIL .AND. ! Lower(oLastTag:htmlTagName) == cText  /* NOTE: != changed to ! == */
                oLastTag := oLastTag:parent
@@ -724,7 +724,7 @@ METHOD THtmlNode:parseHtml( parser )
       IF cTagName == "<"
          // <  tagName>
          cAttr    := LTrim(cAttr)
-         cTagName += CutStr( " ", @cAttr )
+         cTagName += CutStr(" ", @cAttr)
       ENDIF
       cTagName := StrTran(cTagName, ">")
       cTagName := AllTrim(SubStr(cTagName, 2))
@@ -1088,12 +1088,12 @@ METHOD THtmlNode:attrToString()
          aAttr := {}  // Tag has no attributes
       END SEQUENCE
       cAttr := ""
-      hb_HEval(::htmlAttributes, {| cKey, cValue | cAttr += __AttrToStr( cKey, cValue, aAttr, Self ) })
+      hb_HEval(::htmlAttributes, {| cKey, cValue | cAttr += __AttrToStr(cKey, cValue, aAttr, Self) })
    ENDIF
 
    RETURN cAttr
 
-STATIC FUNCTION __AttrToStr( cName, cValue, aAttr, oTHtmlNode )
+STATIC FUNCTION __AttrToStr(cName, cValue, aAttr, oTHtmlNode)
 
    LOCAL nPos
 
@@ -1470,7 +1470,7 @@ METHOD THtmlNode:_getTextNode()
 // assigns text to a text node of this node
 METHOD THtmlNode:_setTextNode( cText )
 
-   cText := LTrim(hb_ValToStr( cText ))
+   cText := LTrim(hb_ValToStr(cText))
 
    DO WHILE "<" $ cText
       cText := StrTran(cText, "<", "&lt;")
@@ -1490,7 +1490,7 @@ METHOD THtmlNode:pushNode( cTagName )
 
    LOCAL oNode
    LOCAL cAttr := AllTrim(cTagName)
-   LOCAL cName := CutStr( " ", @cAttr )
+   LOCAL cName := CutStr(" ", @cAttr)
 
    IF ::isEmpty()
       RETURN ::error( "Cannot add HTML tag to: <" + ::htmlTagName + ">", ::className(), "+", EG_ARG, { cName } )
@@ -1549,7 +1549,7 @@ METHOD THtmlNode:popNode( cName )
 
 // Generic parsing function
 
-STATIC FUNCTION CutStr( cCut, cString )
+STATIC FUNCTION CutStr(cCut, cString)
 
    LOCAL cLeftPart, i
 
@@ -4359,7 +4359,7 @@ STATIC PROCEDURE _Init_Html_AnsiCharacterEntities()
 #endif
 
 // Converts an HTML formatted text string to the current character set
-FUNCTION tip_HtmlToStr( cHtmlText )
+FUNCTION tip_HtmlToStr(cHtmlText)
 
    _Init_Html_CharacterEntities()
 
@@ -4415,7 +4415,7 @@ STATIC PROCEDURE _Init_Html_CharacterEntities()
 
    IF t_aHtmlUnicEntities == NIL .OR. ! t_cHtmlCP == hb_cdpSelect()
       t_cHtmlCP := hb_cdpSelect()
-      t_cHtmlUnicChars := hb_UTF8ToStr( "&<>¢£¥¦§©®°¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ^¢£¥¦§©®°¿~" )
+      t_cHtmlUnicChars := hb_UTF8ToStr("&<>¢£¥¦§©®°¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ^¢£¥¦§©®°¿~")
       t_aHtmlUnicEntities := __HtmlEntities()
    ENDIF
 

@@ -253,7 +253,7 @@ METHOD GDBarCode:Draw13( cText )
             nChk := 10 - jj
          ENDIF
 
-         cText += Str( nChk, 1 )
+         cText += Str(nChk, 1)
 
          IF nChk == 0
             nChk := 10
@@ -373,7 +373,7 @@ METHOD GDBarCode:Draw8( cText )
       ::lastX := ::positionX
       ::lastY := ::maxHeight
 
-      cText += Str( nChk, 1 )
+      cText += Str(nChk, 1)
 
       // Draw text
       IF ::lDrawValue
@@ -475,7 +475,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
       IF Empty(cModeCode)
 
-         IF Str( Val(::text), Len(::text) ) == ::text
+         IF Str(Val(::text), Len(::text)) == ::text
             lTypeCodeC :=  .T.
             cConc      := ::aCode[ STARTC ]
             nSum       := STARTB

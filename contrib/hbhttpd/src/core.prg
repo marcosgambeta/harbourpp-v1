@@ -99,7 +99,7 @@ METHOD UHttpd:Run( hConfig )
       IF ::lHasSSL
          SSL_init()
          DO WHILE RAND_status() != 1
-            RAND_add(Str( hb_Random(), 18, 15 ) + Str( hb_MilliSeconds(), 20 ), 1)
+            RAND_add(Str(hb_Random(), 18, 15) + Str(hb_MilliSeconds(), 20), 1)
          ENDDO
 
          ::hSSLCtx := SSL_CTX_new( HB_SSL_CTX_NEW_METHOD_SSLV23_SERVER )
@@ -824,9 +824,9 @@ STATIC PROCEDURE ParseRequestBody( cRequest )
          IF cEncoding == "UTF-8"
             FOR EACH cPart IN hb_ATokens( cRequest, "&" )
                IF ( nI := At( "=", cPart ) ) > 0
-                  post[hb_UTF8ToStr( UUrlDecode( Left(cPart, nI - 1) ) )] := hb_UTF8ToStr( UUrlDecode( SubStr(cPart, nI + 1) ) )
+                  post[hb_UTF8ToStr(UUrlDecode( Left(cPart, nI - 1) ))] := hb_UTF8ToStr(UUrlDecode( SubStr(cPart, nI + 1) ))
                ELSE
-                  post[hb_UTF8ToStr( UUrlDecode( cPart ) )] := NIL
+                  post[hb_UTF8ToStr(UUrlDecode( cPart ))] := NIL
                ENDIF
             NEXT
          ELSE
@@ -975,7 +975,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
    ENDIF
    IF HB_IsArray(oErr:args)
       cRet += "Arguments:" + hb_eol()
-      AEval(oErr:args, {| X, Y | cRet += Str( Y, 5 ) + ": " + hb_CStr( X ) + hb_eol() })
+      AEval(oErr:args, {| X, Y | cRet += Str(Y, 5) + ": " + hb_CStr(X) + hb_eol() })
    ENDIF
    cRet += hb_eol()
 
@@ -992,7 +992,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
       cI += "("
       aPar := __dbgVMParLList( nI )
       FOR nJ := 1 TO Len(aPar)
-         cI += cvt2str( aPar[nJ] )
+         cI += cvt2str(aPar[nJ])
          IF nJ < Len(aPar)
             cI += ", "
          ENDIF
@@ -1000,7 +1000,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
       cI += ")"
       nJ := Len(aPar)
       DO WHILE ! HB_IsSymbol(xI := __dbgVMVarLGet( nI, ++nJ ))
-         cI += ", " + cvt2str( xI )
+         cI += ", " + cvt2str(xI)
       ENDDO
       xI := NIL
       cRet += cI + hb_eol()
@@ -1026,7 +1026,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
             cRet += hb_eol()
             BEGIN SEQUENCE WITH {| o | Break( o ) }
                FOR nI := 1 TO FCount()
-                  cRet += Str( nI, 6 ) + " " + PadR(FieldName( nI ), 14) + ": " + hb_ValToExp( FieldGet( nI ) ) + hb_eol()
+                  cRet += Str(nI, 6) + " " + PadR(FieldName( nI ), 14) + ": " + hb_ValToExp( FieldGet( nI ) ) + hb_eol()
                NEXT
             RECOVER
                cRet += "!!! Error reading database fields !!!" + hb_eol()
@@ -1041,13 +1041,13 @@ STATIC FUNCTION GetErrorDesc(oErr)
          BEGIN SEQUENCE WITH {| o | Break( o ) }
             IF Used()
                dbSelectArea(nI)
-               cRet += Str( nI, 6 ) + " " + rddName() + " " + PadR(Alias(), 15) + ;
-                  Str( RecNo() ) + "/" + Str( LastRec() ) + ;
+               cRet += Str(nI, 6) + " " + rddName() + " " + PadR(Alias(), 15) + ;
+                  Str(RecNo()) + "/" + Str(LastRec()) + ;
                   IIf(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos(ordNumber()) + ")") + hb_eol()
                dbCloseArea()
             ENDIF
          RECOVER
-            cRet += "!!! Error accessing workarea number: " + Str( nI, 4 ) + "!!!" + hb_eol()
+            cRet += "!!! Error accessing workarea number: " + Str(nI, 4) + "!!!" + hb_eol()
          END SEQUENCE
       NEXT
       cRet += hb_eol()
@@ -1071,7 +1071,7 @@ STATIC FUNCTION ErrDescCode( nCode )
 
    RETURN IIf(cI == NIL, "", "EG_" + cI)
 
-STATIC FUNCTION cvt2str( xI, lLong )
+STATIC FUNCTION cvt2str(xI, lLong)
 
    LOCAL cValtype, cI, xJ
 
@@ -1080,7 +1080,7 @@ STATIC FUNCTION cvt2str( xI, lLong )
    IF cValtype == "U"
       RETURN IIf(lLong, "[U]:NIL", "NIL")
    ELSEIF cValtype == "N"
-      RETURN IIf(lLong, "[N]:" + Str( xI ), hb_ntos(xI))
+      RETURN IIf(lLong, "[N]:" + Str(xI), hb_ntos(xI))
    ELSEIF cValtype $ "CM"
       IF Len(xI) <= 260
          RETURN IIf(lLong, "[" + cValtype + hb_ntos(Len(xI)) + "]:", "") + '"' + xI + '"'
@@ -1096,19 +1096,19 @@ STATIC FUNCTION cvt2str( xI, lLong )
       IF __objHasMsg( xI, "ID" )
          xJ := xI:ID
          IF !HB_IsObject(xJ)
-            cI += ",ID=" + cvt2str( xJ )
+            cI += ",ID=" + cvt2str(xJ)
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "nID" )
          xJ := xI:nID
          IF !HB_IsObject(xJ)
-            cI += ",NID=" + cvt2str( xJ )
+            cI += ",NID=" + cvt2str(xJ)
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "xValue" )
          xJ := xI:xValue
          IF !HB_IsObject(xJ)
-            cI += ",XVALUE=" + cvt2str( xJ )
+            cI += ",XVALUE=" + cvt2str(xJ)
          ENDIF
       ENDIF
       RETURN "[O:" + xI:ClassName() + cI + "]"
@@ -1175,10 +1175,10 @@ STATIC PROCEDURE USessionCreateInternal()
 
    LOCAL cSID, hMtx
 
-   cSID := hb_MD5( DToS( Date() ) + Time() + Str( hb_Random(), 15, 12 ) )
+   cSID := hb_MD5( DToS( Date() ) + Time() + Str(hb_Random(), 15, 12) )
    hMtx := hb_mutexCreate()
    hb_mutexLock( hMtx )
-   t_aSessionData := httpd:hSession[cSID] := { hMtx, { "_unique" => hb_MD5( Str( hb_Random(), 15, 12 ) ) }, hb_MilliSeconds() + SESSION_TIMEOUT * 1000, cSID }
+   t_aSessionData := httpd:hSession[cSID] := { hMtx, { "_unique" => hb_MD5( Str(hb_Random(), 15, 12) ) }, hb_MilliSeconds() + SESSION_TIMEOUT * 1000, cSID }
    session := t_aSessionData[2]
    UAddHeader( "Set-Cookie", "SESSID=" + cSID + "; path=/" )
 
@@ -1323,7 +1323,7 @@ FUNCTION UUrlDecode( cString )
       ENDIF
       IF Upper(SubStr(cString, nI + 1, 1)) $ "0123456789ABCDEF" .AND. ;
             Upper(SubStr(cString, nI + 2, 1)) $ "0123456789ABCDEF"
-         cString := Stuff( cString, nI, 3, hb_HexToStr( SubStr(cString, nI + 1, 2) ) )
+         cString := Stuff( cString, nI, 3, hb_HexToStr(SubStr(cString, nI + 1, 2)) )
       ENDIF
       nI++
    ENDDO
@@ -1472,7 +1472,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
                DToC(aF[3]) + ' ' + aF[4] + CR_LF )
          ELSE
             UWrite( '      <a href="' + aF[1] + '">' + aF[1] + '</a>' + Space(50 - Len(aF[1])) + ;
-               DToC(aF[3]) + ' ' + aF[4] + Str( aF[2], 12 ) + CR_LF )
+               DToC(aF[3]) + ' ' + aF[4] + Str(aF[2], 12) + CR_LF )
          ENDIF
       NEXT
       UWrite( "<hr></pre></body></html>" )
@@ -1507,20 +1507,20 @@ PROCEDURE UProcInfo()
 
    UWrite( '<h3>server</h3>' )
    UWrite( '<table border=1 cellspacing=0>' )
-   AEval(ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[X] ) ) + '</td></tr>' ) })
+   AEval(ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr(server[X]) ) + '</td></tr>' ) })
    UWrite( '</table>' )
 
    IF !Empty(get)
       UWrite( '<h3>get</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
-      AEval(ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[X] ) ) + '</td></tr>' ) })
+      AEval(ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr(get[X]) ) + '</td></tr>' ) })
       UWrite( '</table>' )
    ENDIF
 
    IF !Empty(post)
       UWrite( '<h3>post</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
-      AEval(ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[X] ) ) + '</td></tr>' ) })
+      AEval(ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr(post[X]) ) + '</td></tr>' ) })
       UWrite( '</table>' )
    ENDIF
 
@@ -1549,7 +1549,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                IF HB_IsString(xValue)
                   cRet += UHtmlEncode( xValue )
                ELSEIF HB_IsNumeric(xValue)
-                  cRet += UHtmlEncode( Str( xValue ) )
+                  cRet += UHtmlEncode( Str(xValue) )
                ELSEIF HB_IsDate(xValue)
                   cRet += UHtmlEncode( DToC(xValue) )
                ELSEIF HB_IsTimestamp(xValue)
@@ -1570,7 +1570,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                IF HB_IsString(xValue)
                   cRet += xValue
                ELSEIF HB_IsNumeric(xValue)
-                  cRet += Str( xValue )
+                  cRet += Str(xValue)
                ELSEIF HB_IsDate(xValue)
                   cRet += DToC(xValue)
                ELSEIF HB_IsTimestamp(xValue)

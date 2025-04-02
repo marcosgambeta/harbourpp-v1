@@ -60,18 +60,18 @@ PROCEDURE Main()
    ?
 
    ? "  Simple tests:"
-   ? '    NumToken( "Hello, World!" ) ==  2 ? --------------------------------> ' + Str( NumToken( "Hello, World!" ), 2 )
-   ? '    NumToken( "This is good. See you! How do you do?", ".!?" ) == 3 ? --> ' + Str( NumToken( "This is good. See you! How do you do?", ".!?" ), 2 )
-   ? '    NumToken( "one,,three,four,,six", ",", 1 ) ==  6 ? -----------------> ' + Str( NumToken( "one,,three,four,,six", ",", 1 ), 2 )
+   ? '    NumToken( "Hello, World!" ) ==  2 ? --------------------------------> ' + Str(NumToken( "Hello, World!" ), 2)
+   ? '    NumToken( "This is good. See you! How do you do?", ".!?" ) == 3 ? --> ' + Str(NumToken( "This is good. See you! How do you do?", ".!?" ), 2)
+   ? '    NumToken( "one,,three,four,,six", ",", 1 ) ==  6 ? -----------------> ' + Str(NumToken( "one,,three,four,,six", ",", 1 ), 2)
    ?
 
    ? '  # of tokens in the string "' + cStr + '"'
-   ? '      separator list = ".,!" and skip width = 1: ' + Str( NumToken( cStr, ".,!", 1 ) )
-   ? '                                 skip width = 3: ' + Str( NumToken( cStr, ".,!", 3 ) )
-   ? '      separator list = ",!"  and skip width = 1: ' + Str( NumToken( cStr, ",!", 1 ) )
-   ? '                                 skip width = 3: ' + Str( NumToken( cStr, ",!", 3 ) )
-   ? '      separator list = "!"   and skip width = 1: ' + Str( NumToken( cStr, "!", 1 ) )
-   ? '                                 skip width = 3: ' + Str( NumToken( cStr, "!", 3 ) )
+   ? '      separator list = ".,!" and skip width = 1: ' + Str(NumToken( cStr, ".,!", 1 ))
+   ? '                                 skip width = 3: ' + Str(NumToken( cStr, ".,!", 3 ))
+   ? '      separator list = ",!"  and skip width = 1: ' + Str(NumToken( cStr, ",!", 1 ))
+   ? '                                 skip width = 3: ' + Str(NumToken( cStr, ",!", 3 ))
+   ? '      separator list = "!"   and skip width = 1: ' + Str(NumToken( cStr, "!", 1 ))
+   ? '                                 skip width = 3: ' + Str(NumToken( cStr, "!", 3 ))
 
    ?
    ? "End test of NumToken()"

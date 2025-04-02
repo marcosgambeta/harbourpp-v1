@@ -280,10 +280,10 @@ FUNCTION MyMenuProcedure( nID )
 
    SWITCH nID
    CASE 101
-      Alert( "Procedure 101" )
+      Alert("Procedure 101")
       EXIT
    CASE 102
-      Alert( "Procedure 102" )
+      Alert("Procedure 102")
       EXIT
    ENDSWITCH
 
@@ -465,7 +465,7 @@ PROCEDURE uiDebug(...)
    LOCAL aP := hb_AParams()
    LOCAL s := ""
 
-   AEval(aP, {| e | s += hb_ValToStr( e ) + "   " })
+   AEval(aP, {| e | s += hb_ValToStr(e) + "   " })
 
    wapi_OutputDebugString( s )
 

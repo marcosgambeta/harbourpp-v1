@@ -29,7 +29,7 @@ PROCEDURE Main()
    cairo_set_font_size( hCairo, 10 )
    cairo_set_source_rgb(hCairo, 0, 0, 0)
    cairo_move_to( hCairo, 50, 300 )
-   cairo_show_text( hCairo, hb_UTF8ToStr( "Plaukė žąselė per ežerėlį..." ) )
+   cairo_show_text( hCairo, hb_UTF8ToStr("Plaukė žąselė per ežerėlį...") )
 
    cairo_show_page( hCairo )
    cairo_destroy( hCairo )

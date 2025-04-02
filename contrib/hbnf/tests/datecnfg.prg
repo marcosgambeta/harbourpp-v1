@@ -63,7 +63,7 @@ PROCEDURE Main()
    ?    "Given       Date:  "
    ??   dDate
    ??   " cFY_Start: " + cFY_Start
-   ??   " nDOW_Start:" + Str( nDOW_Start, 2 )
+   ??   " nDOW_Start:" + Str(nDOW_Start, 2)
    ?    "---- Fiscal Year Data -----------"
 
    aTestData := ft_Year( dDate )
@@ -74,65 +74,65 @@ PROCEDURE Main()
 
    nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_Qtr( dDate, nNum )
-   ? "FYQtr    " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "FYQtr    " + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_Month( dDate )
    ? "FYMonth    ", aTestData[1], aTestData[2], aTestData[3]
 
    nNum := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_Month( dDate, nNum )
-   ? "FYMonth  " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "FYMonth  " + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_Week( dDate )
    ? "FYWeek     ", aTestData[1], aTestData[2], aTestData[3]
 
    nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_Week( dDate, nNum )
-   ? "FYWeek   " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "FYWeek   " + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_DayOfYr( dDate )
    ? "FYDay     ", aTestData[1], aTestData[2], aTestData[3]
 
    nNum      := Val(SubStr(aTestData[1], 5, 3))
    aTestData := ft_DayOfYr( dDate, nNum )
-   ? "FYDAY   " + Str( nNum, 3 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "FYDAY   " + Str(nNum, 3), aTestData[1], aTestData[2], aTestData[3]
 
    ?
    ? "---- Accounting Year Data -------"
 
    aTestData := ft_AcctYear( dDate )
    ? "ACCTYear   ", aTestData[1] + "  ", aTestData[2], aTestData[3], ;
-      Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
+      Str(( aTestData[3] - aTestData[2] + 1 ) / 7, 3) + " Weeks"
 
    aTestData := ft_AcctQtr( dDate )
    ? "ACCTQtr    ", aTestData[1], aTestData[2], aTestData[3], ;
-      Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
+      Str(( aTestData[3] - aTestData[2] + 1 ) / 7, 3) + " Weeks"
 
    nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_AcctQtr( dDate, nNum )
-   ? "ACCTQtr  " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "ACCTQtr  " + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_AcctMonth( dDate )
    ? "ACCTMonth  ", aTestData[1], aTestData[2], aTestData[3], ;
-      Str( ( aTestData[3] - aTestData[2] + 1 ) / 7, 3 ) + " Weeks"
+      Str(( aTestData[3] - aTestData[2] + 1 ) / 7, 3) + " Weeks"
 
    nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_AcctMonth( dDate, nNum )
-   ? "ACCTMonth" + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "ACCTMonth" + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_AcctWeek( dDate )
    ? "ACCTWeek   ", aTestData[1], aTestData[2], aTestData[3]
 
    nNum      := Val(SubStr(aTestData[1], 5, 2))
    aTestData := ft_AcctWeek( dDate, nNum )
-   ? "ACCTWeek " + Str( nNum, 2 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "ACCTWeek " + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
    aTestData := ft_DayOfYr( dDate, , .T. )
    ? "ACCTDay   ", aTestData[1], aTestData[2], aTestData[3]
 
    nNum      := Val(SubStr(aTestData[1], 5, 3))
    aTestData := ft_DayOfYr( dDate, nNum, .T. )
-   ? "ACCTDay " + Str( nNum, 3 ), aTestData[1], aTestData[2], aTestData[3]
+   ? "ACCTDay " + Str(nNum, 3), aTestData[1], aTestData[2], aTestData[3]
 
    WAIT
 

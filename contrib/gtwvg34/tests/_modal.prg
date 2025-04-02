@@ -4,13 +4,13 @@
 #include "hbgtinfo.ch"
 #include "setcurs.ch"
 
-FUNCTION Just_Alert( cMsg, aOpt )
-   RETURN Alert( cMsg, aOpt )
+FUNCTION Just_Alert(cMsg, aOpt)
+   RETURN Alert(cMsg, aOpt)
 
-FUNCTION My_Alert( cMessage, aOptions, cCaption, nInit, nTime )
-   RETURN DialogAlert( cCaption, cMessage, aOptions, nInit,, nTime )
+FUNCTION My_Alert(cMessage, aOptions, cCaption, nInit, nTime)
+   RETURN DialogAlert(cCaption, cMessage, aOptions, nInit,, nTime)
 
-FUNCTION MyAlert( cMsg, aOpt )
+FUNCTION MyAlert(cMsg, aOpt)
 
    LOCAL nSel, oCrt
 
@@ -24,7 +24,7 @@ FUNCTION MyAlert( cMsg, aOpt )
    CLS
    hb_gtInfo( HB_GTI_WINTITLE, cMsg )
 
-   nSel := Alert( cMsg, aOpt )
+   nSel := Alert(cMsg, aOpt)
 
    oCrt:destroy()
 
@@ -61,7 +61,7 @@ FUNCTION MyAlert( cMsg, aOpt )
       <.lModal.>, <.lRowCols.>, <.lHidden.>, <.lCenter.>, ;
       <nRow>, <nCol> )
 
-STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
+STATIC FUNCTION DialogAlert(cCaption, aText_, aButtons_, sel, nTop, nTime)
 
    LOCAL nLinesRqd, nColRqd, nLeft, nBottom, nRight, oCrt
    LOCAL nColTxt, nColCap, nColBut, nBtnRow
@@ -313,7 +313,7 @@ PROCEDURE DoModalWindow()
    SetColor("N/W")
    CLS
    DO WHILE .T.
-      nSel := Just_Alert( "I am in modal window !;< Try: MMove LBUp RBUp >;Click Parent Window", { "OK" } )
+      nSel := Just_Alert("I am in modal window !;< Try: MMove LBUp RBUp >;Click Parent Window", { "OK" })
 
       IF nSel == 0 .OR. nSel == 1
          EXIT

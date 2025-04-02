@@ -117,7 +117,7 @@ PROCEDURE Main()
 
       FOR n := 1 TO  100
          IF AdsCreateSQLStatement( "Data2", 3 )
-            IF !AdsExecuteSQLDirect( " insert into Table1( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str( n ) + ")" )
+            IF !AdsExecuteSQLDirect( " insert into Table1( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str(n) + ")" )
                ShowAdsError()
             ENDIF
             USE
@@ -126,7 +126,7 @@ PROCEDURE Main()
 
       FOR n := 1 TO 100
          IF AdsCreateSQLStatement( "Data1", 3 )
-            IF !AdsExecuteSQLDirect( " insert into " + '"Customer Data"' + "( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str( n ) + ")" )
+            IF !AdsExecuteSQLDirect( " insert into " + '"Customer Data"' + "( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str(n) + ")" )
                ShowAdsError()
             ENDIF
             USE
@@ -157,6 +157,6 @@ PROCEDURE ShowAdsError()
 
    AdsGetLastError( @cMsg )
 
-   Alert( cMsg )
+   Alert(cMsg)
 
    RETURN

@@ -171,7 +171,7 @@ STATIC PROCEDURE DoModalDialog()
    SetColor("N/W")
    CLS
    DO WHILE .T.
-      nSel := Alert( "A modal window !;Click on parent window;Move this window", { "OK" } )
+      nSel := Alert("A modal window !;Click on parent window;Move this window", { "OK" })
       IF nSel == 0 .OR. nSel == 1
          EXIT
       ENDIF

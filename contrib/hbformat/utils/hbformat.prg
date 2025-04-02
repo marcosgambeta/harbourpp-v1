@@ -54,7 +54,7 @@
 ANNOUNCE HB_GTSYS
 REQUEST HB_GT_CGI_DEFAULT
 
-#define I_( x )                 hb_UTF8ToStr( hb_i18n_gettext( x ) )
+#define I_( x )                 hb_UTF8ToStr(hb_i18n_gettext( x ))
 
 PROCEDURE Main(...)
 

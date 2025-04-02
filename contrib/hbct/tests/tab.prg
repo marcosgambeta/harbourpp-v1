@@ -142,14 +142,14 @@ PROCEDURE Main()
    cStr1 := StrTran(cStr, hb_BChar( 141 ), hb_eol())
 
    FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
-      ? "  " + Str( ni ) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
+      ? "  " + Str(ni) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
    NEXT
 
    QOut( "  Now printing the expanded text using a tab length of 4 but without soft CRs" )
    cStr1 := TabExpand(cStr, 4, "+",,, .T.)
 
    FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
-      ? "  " + Str( ni ) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
+      ? "  " + Str(ni) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
    NEXT
    Inkey(0)
 #endif

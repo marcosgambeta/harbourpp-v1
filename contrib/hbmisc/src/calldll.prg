@@ -102,5 +102,5 @@ FUNCTION hb_DynaCall1(cFunction, cLibrary, nCount, ...)
 FUNCTION StrPtr( x )
    RETURN x
 
-FUNCTION PtrStr( x )
+FUNCTION PtrStr(x)
    RETURN x

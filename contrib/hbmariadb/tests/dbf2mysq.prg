@@ -139,7 +139,7 @@ PROCEDURE Main(...)
    // Initialize MySQL table
    oTable := oServer:Query( "SELECT * FROM " + cTable + " LIMIT 1" )
    IF oTable:NetErr()
-      Alert( oTable:Error() )
+      Alert(oTable:Error())
       QUIT
    ENDIF
 
@@ -153,7 +153,7 @@ PROCEDURE Main(...)
 
       oTable:Append(oRecord)
       IF oTable:NetErr()
-         Alert( oTable:Error() )
+         Alert(oTable:Error())
       ENDIF
 
       dbffile->( dbSkip() )

@@ -26,7 +26,7 @@ PROCEDURE Main( delay )
 
    // initialize SSL library
    SSL_init()
-   RAND_seed( Time() + hb_TSToStr( hb_DateTime() ) + hb_DirBase() + NetName() )
+   RAND_seed( Time() + hb_TSToStr(hb_DateTime()) + hb_DirBase() + NetName() )
 
    // start server thread
    thrd := hb_threadStart( @Server() )
@@ -86,7 +86,7 @@ STATIC FUNCTION Client()
          ? "CLIENT: connected with", SSL_get_cipher( ssl ), "encryption."
          DispCertInfo( ssl, "CLIENT: " )
 
-         hb_inetSendAll( sock, hb_TSToStr( hb_DateTime() ) + EOL )
+         hb_inetSendAll( sock, hb_TSToStr(hb_DateTime()) + EOL )
          DO WHILE ! Empty(cLine := hb_inetRecvLine( sock ))
             ? "CLIENT: RECV:", hb_ValToExp( cLine )
          ENDDO
@@ -135,7 +135,7 @@ STATIC FUNCTION Server()
                ? "SERVER: RECV:", hb_ValToExp( cLine )
                hb_inetSendAll( sockConn, ;
                                "ECHO[ " + cLine + " ]" + EOL + ;
-                               hb_TSToStr( hb_DateTime() ) + EOL + ;
+                               hb_TSToStr(hb_DateTime()) + EOL + ;
                                OS() + EOL + ;
                                Version() + EOL + ;
                                EOL )

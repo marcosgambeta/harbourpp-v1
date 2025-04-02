@@ -9,7 +9,7 @@ PROCEDURE Main()
    LOCAL GetList := {}
 
    IF Empty(aPrn := win_printerList())
-      Alert( "No printers installed - Cannot continue" )
+      Alert("No printers installed - Cannot continue")
    ELSE
       DO WHILE nPrn > 0
 
@@ -22,11 +22,11 @@ PROCEDURE Main()
          IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
 
             IF Empty(cFileName)
-               Alert( "win_PrintDataRaw() returned: " + ;
-                  hb_ntos(win_PrintDataRaw( aPrn[nPrn], "Hello World!" + hb_BChar( 12 ), cDocName )) )
+               Alert("win_PrintDataRaw() returned: " + ;
+                  hb_ntos(win_PrintDataRaw( aPrn[nPrn], "Hello World!" + hb_BChar( 12 ), cDocName )))
             ELSE
-               Alert( "win_PrintFileRaw() returned: " + ;
-                  hb_ntos(win_PrintFileRaw( aPrn[nPrn], cFileName, cDocName )) )
+               Alert("win_PrintFileRaw() returned: " + ;
+                  hb_ntos(win_PrintFileRaw( aPrn[nPrn], cFileName, cDocName )))
             ENDIF
          ENDIF
       ENDDO

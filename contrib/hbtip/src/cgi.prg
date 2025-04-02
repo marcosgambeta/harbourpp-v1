@@ -185,11 +185,11 @@ METHOD TIPCgi:Flush()
       IF ( hFile := hb_vfOpen( cFile, FO_CREAT + FO_TRUNC + FO_WRITE + FO_EXCLUSIVE ) ) != NIL
          cSession := ::SessionEncode()
          IF hb_vfWrite( hFile, cSession ) != hb_BLen(cSession)
-            ::Write( "ERROR: On writing session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
+            ::Write( "ERROR: On writing session file: " + cFile + ", File error: " + hb_CStr(FError()) )
          ENDIF
          hb_vfClose( hFile )
       ELSE
-         ::Write( "ERROR: On writing session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
+         ::Write( "ERROR: On writing session file: " + cFile + ", File error: " + hb_CStr(FError()) )
       ENDIF
    ENDIF
 
@@ -229,7 +229,7 @@ METHOD TIPCgi:StartSession( cSID )
             hb_vfSeek( hFile, 0, FS_SET )
             cBuffer := Space(nFileSize)
             IF hb_vfRead( hFile, @cBuffer, nFileSize ) != nFileSize
-               ::ErrHandler( "ERROR: On reading session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
+               ::ErrHandler( "ERROR: On reading session file: " + cFile + ", File error: " + hb_CStr(FError()) )
             ELSE
                ::SessionDecode( cBuffer )
             ENDIF
@@ -276,7 +276,7 @@ METHOD TIPCgi:DestroySession( cID )
          ::CreateSID()
          ::hCookies["SESSIONID"] := ::cSID
       ELSE
-         ::Write( "ERROR: On deleting session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
+         ::Write( "ERROR: On deleting session file: " + cFile + ", File error: " + hb_CStr(FError()) )
       ENDIF
    ENDIF
 
