@@ -1,8 +1,8 @@
 #require "rddsql"
 #require "sddmy"
 
-#include "dbinfo.ch"
-#include "error.ch"
+#include <dbinfo.ch>
+#include <error.ch>
 
 REQUEST SDDMY
 REQUEST SQLMIX

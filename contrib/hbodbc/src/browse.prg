@@ -51,9 +51,9 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "box.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <box.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
 
 FUNCTION BrowseODBC(nTop, nLeft, nBottom, nRight, oDataSource)
 

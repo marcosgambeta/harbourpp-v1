@@ -31,9 +31,9 @@
      PASS "VGA" OR "VGA" AS A COMMAND LINE PARAMETER FOR 50-LINE MODE.
  */
 
-#include "achoice.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <achoice.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
 
 #define DISABLE     0
 #define ENABLE      1

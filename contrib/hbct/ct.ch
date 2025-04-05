@@ -53,7 +53,7 @@
 #define CT_SUBSYSTEM  "CT"
 
 // CSetArgErr() argument error behaviour
-#include "error.ch"
+#include <error.ch>
 #define CT_ARGERR_WHOCARES      ES_WHOCARES
 #define CT_ARGERR_WARNING       ES_WARNING
 #define CT_ARGERR_ERROR         ES_ERROR

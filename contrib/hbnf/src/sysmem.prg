@@ -25,7 +25,7 @@
  *
  */
 
-#include "hbmemory.ch"
+#include <hbmemory.ch>
 
 FUNCTION ft_SysMem()
 

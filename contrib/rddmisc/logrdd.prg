@@ -52,10 +52,10 @@
  * on tables it writes changes in a log file.
  */
 
-#include "dbinfo.ch"
-#include "fileio.ch"
-#include "hbusrrdd.ch"
-#include "rddsys.ch"
+#include <dbinfo.ch>
+#include <fileio.ch>
+#include <hbusrrdd.ch>
+#include <rddsys.ch>
 
 #define ARRAY_FILENAME      1
 #define ARRAY_FHANDLE       2

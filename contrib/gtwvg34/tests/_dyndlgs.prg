@@ -1,7 +1,7 @@
 // Pritpal Bedi <bedipritpal@hotmail.com>
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
 
 #define ID_BTN_OK                  1
 #define ID_MLE                     10

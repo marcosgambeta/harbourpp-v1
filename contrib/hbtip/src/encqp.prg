@@ -48,7 +48,7 @@
 
 #pragma -gc3
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 CREATE CLASS TIPEncoderQP INHERIT TIPEncoder
 

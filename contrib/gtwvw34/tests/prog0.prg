@@ -10,10 +10,10 @@
 #require "gtwvw34"
 //#require "hbtest"
 
-#include "dbstruct.ch"
-#include "hbgtinfo.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <dbstruct.ch>
+#include <hbgtinfo.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
 
 STATIC s_zwin := {}
 

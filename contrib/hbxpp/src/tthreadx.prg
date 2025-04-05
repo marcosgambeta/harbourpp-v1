@@ -49,8 +49,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
-#include "hbthread.ch"
+#include <hbclass.ch>
+#include <hbthread.ch>
 
 #include "thread.ch"
 

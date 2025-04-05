@@ -45,9 +45,9 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
-#include "memoedit.ch"
-#include "inkey.ch"
+#include <hbclass.ch>
+#include <memoedit.ch>
+#include <inkey.ch>
 
 // A specialized HBEditor which can simulate MemoEdit() behaviour
 

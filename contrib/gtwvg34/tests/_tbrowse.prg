@@ -7,11 +7,11 @@
 // Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "button.ch"
-#include "dbstruct.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "hbgtinfo.ch"
-#include "hbver.ch"
+#include <dbstruct.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <hbgtinfo.ch>
+#include <hbver.ch>
 
 #define K_MOVING                1001
 

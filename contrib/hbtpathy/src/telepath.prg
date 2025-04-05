@@ -54,7 +54,7 @@
 
 #include "telepath.ch"
 
-#include "hbcom.ch"
+#include <hbcom.ch>
 
 #define TPFP_NAME          1  /* Structure of ports array */
 #define TPFP_HANDLE        2

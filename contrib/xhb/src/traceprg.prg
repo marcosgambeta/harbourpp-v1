@@ -44,7 +44,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 #define HB_SET_TRACESTACK_NONE    0
 #define HB_SET_TRACESTACK_CURRENT 1

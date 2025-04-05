@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "error.ch"
+#include <error.ch>
 #include "cgi.ch"
 
 #define DEF_ERR_HEADER "Date : " + DToC(Date()) + "<br />" + "Time : " + Time() + "<br />"

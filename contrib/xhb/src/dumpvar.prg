@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 /* Send to hb_OutDebug() more parameters */
 PROCEDURE __OutDebug(...)
@@ -338,7 +338,7 @@ STATIC FUNCTION DecodeType(nType AS NUMERIC)
 STATIC FUNCTION asString(x)
    RETURN IIf(HB_IsString(x), '"' + x + '"', hb_CStr(x))
 
-#include "error.ch"
+#include <error.ch>
 
 /*
  * (C) 2003 - Francesco Saverio Giudice

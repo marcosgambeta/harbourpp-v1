@@ -57,7 +57,7 @@
 
 /* Translations for Xbase++ programs compiled with Harbour compiler */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #if ! defined(XPP_OP_OVERLOAD_OFF)
    #pragma -ks+

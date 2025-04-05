@@ -47,7 +47,7 @@
 
 #include "wvtwin.ch"
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 
 THREAD STATIC t_paint_ := { { "", {} } }
 
@@ -502,7 +502,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
 // C functions to PRG Ports
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 #include "hbgtwvg.ch"
 
 #ifdef HB_LEGACY_LEVEL4

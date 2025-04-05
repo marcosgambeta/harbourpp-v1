@@ -10,8 +10,8 @@
 #define CLS_Name  "MyOleObjServer"
 #define CLS_ID    "{23245C3F-4487-404B-985F-E33886698D23}"
 
-#include "hbclass.ch"
-#include "hbver.ch"
+#include <hbclass.ch>
+#include <hbver.ch>
 
 PROCEDURE DllMain()
 

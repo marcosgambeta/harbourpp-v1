@@ -48,7 +48,7 @@
 
 #require "hbmysql"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 PROCEDURE Main(...)
 

@@ -3,8 +3,8 @@
 
 #require "gtwvw34"
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 #include "hbwin.ch"
 

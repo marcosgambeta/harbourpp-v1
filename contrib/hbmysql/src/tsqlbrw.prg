@@ -47,10 +47,10 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
-#include "inkey.ch"
-#include "dbstruct.ch"
+#include <inkey.ch>
+#include <dbstruct.ch>
 
 #include "mysql.ch"
 

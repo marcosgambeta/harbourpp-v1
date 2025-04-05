@@ -99,7 +99,7 @@ PROCEDURE Main( cMode )
 
    RETURN
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 STATIC PROCEDURE SrvMain( cParam1, cParam2 )
 

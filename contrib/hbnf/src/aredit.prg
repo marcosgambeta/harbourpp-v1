@@ -37,8 +37,8 @@
 
 */
 
-#include "box.ch"
-#include "inkey.ch"
+#include <box.ch>
+#include <inkey.ch>
 
 // Default info for tb_methods section
 #define KEY_ELEM 1

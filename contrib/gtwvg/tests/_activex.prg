@@ -1,9 +1,9 @@
 // Pritpal Bedi <bedipritpal@hotmail.com>
 
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "hbgtinfo.ch"
-#include "hbver.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <hbgtinfo.ch>
+#include <hbver.ch>
 
 // The function has to be called via hb_threadStart({||ExecuteActiveX(nActiveX)})
 

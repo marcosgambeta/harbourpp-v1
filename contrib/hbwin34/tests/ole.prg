@@ -9,7 +9,7 @@
 
 #require "hbwin34"
 
-#include "hbver.ch"
+#include <hbver.ch>
 
 PROCEDURE Main()
 

@@ -48,7 +48,7 @@
 
 #require "hbmysql"
 
-#include "dbstruct.ch"
+#include <dbstruct.ch>
 
 PROCEDURE Main( cArg )
 

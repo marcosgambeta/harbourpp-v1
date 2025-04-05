@@ -47,7 +47,7 @@
 
 #include "cstruct.ch"
 #include "hboo.ch"
-#include "error.ch"
+#include <error.ch>
 
 #define CLASS_PROPERTIES 6
 

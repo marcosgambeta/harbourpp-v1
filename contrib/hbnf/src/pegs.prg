@@ -24,8 +24,8 @@
  *
  */
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 #translate DOUBLEBOX(<top>, <left>, <bottom>, <right>) => hb_DispBox(<top>, <left>, <bottom>, <right>, hb_UTF8ToStrBox("╔═╗║╝═╚║ "))
 

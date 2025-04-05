@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 #define ERR_WRONG_PARAMETERS  -1
 #define ERR_NO_ERROR          0

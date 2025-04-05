@@ -46,8 +46,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
-#include "error.ch"
+#include <hbclass.ch>
+#include <error.ch>
 #include "hbsqlit3.ch"
 
 #define _TODO_ NIL

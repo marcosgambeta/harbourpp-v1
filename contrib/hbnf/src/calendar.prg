@@ -16,9 +16,9 @@
  *
  */
 
-#include "box.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <box.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
 
 FUNCTION ft_Calendar(nRow, nCol, cColor, lShadow, lShowHelp)
 

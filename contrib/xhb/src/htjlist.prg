@@ -50,7 +50,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 #include "cgi.ch"
 
 CREATE CLASS TJSList

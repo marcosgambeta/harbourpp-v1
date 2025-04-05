@@ -19,9 +19,9 @@
 #require "gtwvg34"
 //#require "hbtest"
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
-#include "hbver.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
+#include <hbver.ch>
 #include "wvgparts.ch"
 
 REQUEST DBFCDX

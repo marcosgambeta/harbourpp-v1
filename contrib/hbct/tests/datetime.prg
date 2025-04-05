@@ -50,8 +50,8 @@
 #require "hbct"
 #endif
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 #include "hbextlng.ch"
 

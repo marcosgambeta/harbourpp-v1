@@ -190,7 +190,7 @@
 
 */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #include "hbrpc.ch"
 

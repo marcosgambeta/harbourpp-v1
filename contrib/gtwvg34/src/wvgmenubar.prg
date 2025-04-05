@@ -48,9 +48,9 @@
 //                              EkOnkar
 //                         ( The LORD is ONE )
 
-#include "hbclass.ch"
-#include "inkey.ch"
-#include "hbgtinfo.ch"
+#include <hbclass.ch>
+#include <inkey.ch>
+#include <hbgtinfo.ch>
 
 #include "hbgtwvg.ch"
 #include "wvtwin.ch"

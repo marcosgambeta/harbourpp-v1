@@ -49,7 +49,7 @@
 // $HB_END_LICENSE$
 
 #include "directry.ch"
-#include "fileio.ch"
+#include <fileio.ch>
 
 #include "hbmzip.ch"
 

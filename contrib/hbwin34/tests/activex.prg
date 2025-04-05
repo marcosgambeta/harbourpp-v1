@@ -1,7 +1,7 @@
 #require "hbwin34"
 
-#include "hbgtinfo.ch"
-#include "hbclass.ch"
+#include <hbgtinfo.ch>
+#include <hbclass.ch>
 
 #if ! defined(__HBSCRIPT__HBSHELL)
 REQUEST HB_GT_WVT_DEFAULT

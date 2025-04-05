@@ -46,9 +46,9 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "fileio.ch"
+#include <fileio.ch>
 #include "hbxml.ch"
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 CREATE CLASS TXMLNode
 

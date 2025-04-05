@@ -71,7 +71,7 @@
  *
  */
 
-#include "setcurs.ch"
+#include <setcurs.ch>
 
 /* NOTE: In Harbour video pages are ignored. */
 

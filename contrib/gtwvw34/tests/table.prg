@@ -52,7 +52,7 @@
 
 #if defined(__HBSCRIPT__HBSHELL)
 
-#include "dbstruct.ch"
+#include <dbstruct.ch>
 
 PROCEDURE Main( cInputFile )
 

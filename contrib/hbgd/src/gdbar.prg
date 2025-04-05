@@ -47,7 +47,7 @@
 // $HB_END_LICENSE$
 
 #include "gd.ch"
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #define IMG_FORMAT_PNG   1
 #define IMG_FORMAT_JPEG  2

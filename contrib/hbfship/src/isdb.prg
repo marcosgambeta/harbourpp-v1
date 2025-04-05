@@ -49,7 +49,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "dbinfo.ch"
+#include <dbinfo.ch>
 
 FUNCTION IsDbExcl()
    RETURN ! dbInfo( DBI_SHARED )

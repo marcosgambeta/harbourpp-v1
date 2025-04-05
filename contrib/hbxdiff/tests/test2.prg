@@ -1,6 +1,6 @@
 #require "hbxdiff"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 PROCEDURE Main()
 

@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 
 #include "hbwin.ch"
 

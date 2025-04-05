@@ -50,7 +50,7 @@
 
 #define HB_CLS_NOTOBJECT
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #define _TBR_COORD( n )  Int(n)
 

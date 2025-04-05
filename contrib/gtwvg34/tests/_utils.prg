@@ -1,7 +1,7 @@
 // Pritpal Bedi <bedipritpal@hotmail.com>
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
 
 // WvtSetObjects() array structure
 #define WVT_OBJ_TYPE               1

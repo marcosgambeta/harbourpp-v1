@@ -8,8 +8,8 @@
 
 #require "gtwvg"
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
 
 PROCEDURE Main()
 

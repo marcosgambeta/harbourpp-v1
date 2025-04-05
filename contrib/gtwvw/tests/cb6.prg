@@ -7,7 +7,7 @@
 #require "gtwvw"
 
 #include "getexit.ch"
-#include "inkey.ch"
+#include <inkey.ch>
 #include "winapi_winuser.ch"
 
 /* Two different keyboard handling method

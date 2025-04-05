@@ -14,9 +14,9 @@
   use your imagination :-)
 */
 
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "hbclass.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <hbclass.ch>
 
 STATIC s_amouseobjlist := {}
 STATIC s_ncurkey := 0

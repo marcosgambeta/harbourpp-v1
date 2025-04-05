@@ -80,13 +80,13 @@
  *       - Color persistence problems in previous version corrected by taking SetColor() at Method New file call.
  */
 
-#include "hbclass.ch"
-#include "error.ch"
-#include "fileio.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "color.ch"
-#include "hbgtinfo.ch"
+#include <hbclass.ch>
+#include <error.ch>
+#include <fileio.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <color.ch>
+#include <hbgtinfo.ch>
 
 CREATE CLASS XHBEditor
 

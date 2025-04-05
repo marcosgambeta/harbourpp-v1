@@ -54,10 +54,10 @@
  * To retrieve an handle use: hsx_Handle()
  */
 
-#include "dbinfo.ch"
-#include "fileio.ch"
-#include "hbusrrdd.ch"
-#include "rddsys.ch"
+#include <dbinfo.ch>
+#include <fileio.ch>
+#include <hbusrrdd.ch>
+#include <rddsys.ch>
 
 ANNOUNCE HSCDX
 

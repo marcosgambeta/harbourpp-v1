@@ -9,8 +9,8 @@
 
 #require "gtwvw"
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 #ifdef __HARBOURPP__
 #define __GTWVW__

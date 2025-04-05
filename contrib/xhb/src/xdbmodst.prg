@@ -45,10 +45,10 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "dbstruct.ch"
+#include <dbstruct.ch>
 
-#include "dbinfo.ch"
-#include "error.ch"
+#include <dbinfo.ch>
+#include <error.ch>
 
 #ifndef EG_RENAME
 #define EG_RENAME       26

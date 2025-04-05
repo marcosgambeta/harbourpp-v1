@@ -13,9 +13,9 @@
 
 #require "gtwvw"
 
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "hbgtinfo.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <hbgtinfo.ch>
 #include "winapi_winuser.ch"
 
 #define WVW_MAXWINDOWS    20             // ! must match with hbgtwvw.h

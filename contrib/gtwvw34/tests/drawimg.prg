@@ -21,9 +21,9 @@
 
 #require "gtwvw34"
 
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "hbclass.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <hbclass.ch>
 
 // WPAINTOBJ types
 #define WPAINTOBJ_LABEL                  1

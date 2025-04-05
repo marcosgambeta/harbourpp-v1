@@ -21,8 +21,8 @@
 
 #require "gtwvw"
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 #include "winapi_winuser.ch"
 
 #command @ <row>, <col> EBGET <var>                                       ;

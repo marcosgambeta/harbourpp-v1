@@ -49,10 +49,10 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
-#include "hbgtinfo.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <hbclass.ch>
+#include <hbgtinfo.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
 
 #include "wvtwin.ch"
 

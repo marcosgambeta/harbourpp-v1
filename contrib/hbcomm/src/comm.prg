@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbcom.ch"
+#include <hbcom.ch>
 
 STATIC s_hPort := { => }
 STATIC s_hbcomm_mutex := hb_mutexCreate()

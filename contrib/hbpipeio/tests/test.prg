@@ -7,7 +7,7 @@
 
 #require "hbpipeio"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 PROCEDURE Main()
    LOCAL pFile, cData, cBuffer, cResult, nLen, nDone

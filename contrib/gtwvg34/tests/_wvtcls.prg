@@ -6,8 +6,8 @@
 //
 // Pritpal Bedi <bedipritpal@hotmail.com>
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
 
 PROCEDURE DialogWvgClassesOne( nMode )
 

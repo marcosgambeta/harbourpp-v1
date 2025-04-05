@@ -49,9 +49,9 @@
 
 /* Internet Messaging: https://tools.ietf.org/html/rfc2045 */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 CREATE CLASS TIPEncoder
 

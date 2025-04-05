@@ -1,6 +1,6 @@
 #require "hbnf"
 
-#include "setcurs.ch"
+#include <setcurs.ch>
 
 PROCEDURE Main( cVidMode )
 

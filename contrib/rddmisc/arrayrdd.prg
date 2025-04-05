@@ -51,13 +51,13 @@
    It works only in memory and actually supports standard dbf commands
    except relations. */
 
-#include "dbinfo.ch"
-#include "dbstruct.ch"
-#include "error.ch"
-#include "fileio.ch"
-#include "hbtrace.ch"
-#include "hbusrrdd.ch"
-#include "rddsys.ch"
+#include <dbinfo.ch>
+#include <dbstruct.ch>
+#include <error.ch>
+#include <fileio.ch>
+#include <hbtrace.ch>
+#include <hbusrrdd.ch>
+#include <rddsys.ch>
 
 #xtranslate Throw( <oErr> ) => ( Eval(ErrorBlock(), <oErr> ), Break( <oErr>) )
 

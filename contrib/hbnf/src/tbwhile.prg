@@ -50,8 +50,8 @@
  * 2. Passing and evaluating the block for the TbSkipWhil().
  */
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 FUNCTION ft_BrwsWhl(aFields, bWhileCond, cKey, nFreeze, lSaveScrn, cColorList, cColorShad, nTop, nLeft, nBottom, nRight)
 

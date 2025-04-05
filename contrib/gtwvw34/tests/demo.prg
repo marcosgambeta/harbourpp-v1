@@ -14,11 +14,11 @@
 #require "gtwvw34"
 //#require "hbtest"
 
-#include "dbstruct.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "hbgtinfo.ch"
-#include "hbver.ch"
+#include <dbstruct.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <hbgtinfo.ch>
+#include <hbver.ch>
 
 #define WVW_MAXWINDOWS    20             // ! must match with hbgtwvw.h
 #define WVW_DEFAULT_MENUKEYEVENT  1024   // ! must match with hbgtwvw.h
@@ -1170,7 +1170,7 @@ STATIC PROCEDURE MyError( e )
    There are many other ways to handle pseudo GUI objects in GTWVW, just
    use your imagination :-) */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #define _DEFAULT_CAPTION_FONT    "Tahoma"
 #define _DEFAULT_CAPTION_HEIGHT  16

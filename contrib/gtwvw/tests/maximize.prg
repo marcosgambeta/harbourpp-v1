@@ -2,7 +2,7 @@
 
 #require "gtwvw"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 // this dimension will be used when user presses RESTORE button
 STATIC s_nNormalMaxrow := 24

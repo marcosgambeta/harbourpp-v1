@@ -22,7 +22,7 @@
  *
  */
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 THREAD STATIC t_nHandle := F_ERROR
 

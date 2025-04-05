@@ -2,7 +2,7 @@
 
 #require "hbpgsql"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 PROCEDURE Main(cHost, cDatabase, cUser, cPass)
 

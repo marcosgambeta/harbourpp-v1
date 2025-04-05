@@ -2,10 +2,10 @@
  * Copyright 2009 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
  */
 
-#include "hbclass.ch"
-#include "error.ch"
-#include "hbsocket.ch"
-#include "hbthread.ch"
+#include <hbclass.ch>
+#include <error.ch>
+#include <hbsocket.ch>
+#include <hbthread.ch>
 
 #include "hbssl.ch"
 #undef __HBEXTREQ__

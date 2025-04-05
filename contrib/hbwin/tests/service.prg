@@ -101,7 +101,7 @@ PROCEDURE Main( cMode )
 
    RETURN
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 PROCEDURE SrvMain( cParam1, cParam2 )
 

@@ -47,9 +47,9 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 #define _CRLF Chr(13) + Chr(10)
 

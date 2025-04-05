@@ -2,7 +2,7 @@
 
 /* New twirler class */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 CREATE CLASS Twirler
 

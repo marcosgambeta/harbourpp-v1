@@ -26,10 +26,10 @@
  *
  */
 
-#include "box.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "achoice.ch"
+#include <box.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <achoice.ch>
 
 // Set up manifest constants to access the window colors in the array t_aWinColor
 #define W_BORDER 1

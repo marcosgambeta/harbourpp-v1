@@ -72,8 +72,8 @@
 */
 
 #include "directry.ch"
-#include "hbclass.ch"
-#include "hbver.ch"
+#include <hbclass.ch>
+#include <hbver.ch>
 
 ANNOUNCE HB_GTSYS
 REQUEST HB_GT_CGI_DEFAULT

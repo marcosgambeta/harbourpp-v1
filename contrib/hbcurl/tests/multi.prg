@@ -4,7 +4,7 @@
 
 #require "hbcurl"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 PROCEDURE Main( cRemote4 )
    LOCAL hMulti

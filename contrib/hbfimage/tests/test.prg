@@ -6,7 +6,7 @@
 
 #require "hbfimage"
 
-#include "fileio.ch"
+#include <fileio.ch>
 #include "simpleio.ch"
 
 #define IMAGES_IN  ""

@@ -51,10 +51,10 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
-#include "error.ch"
-#include "fileio.ch"
+#include <error.ch>
+#include <fileio.ch>
 
 #if defined(_SSL_DEBUG_TEMP)
    #include "simpleio.ch"

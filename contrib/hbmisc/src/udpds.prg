@@ -19,7 +19,7 @@
  *
  */
 
-#include "hbsocket.ch"
+#include <hbsocket.ch>
 
 /* Client */
 

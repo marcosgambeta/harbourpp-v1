@@ -1,9 +1,9 @@
 /* Copyright 1999 Ryszard Glab */
 
-#include "inkey.ch"
-#include "setcurs.ch"
-#include "fileio.ch"
-#include "box.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
+#include <fileio.ch>
+#include <box.ch>
 
 #define EDIT_LOWER      0       // convert to lowercase
 #define EDIT_UPPER      1       // convert to uppercase

@@ -49,7 +49,7 @@
 #require "hbformat"
 
 #include "directry.ch"
-#include "hbver.ch"
+#include <hbver.ch>
 
 ANNOUNCE HB_GTSYS
 REQUEST HB_GT_CGI_DEFAULT

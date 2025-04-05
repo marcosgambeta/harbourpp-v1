@@ -1,6 +1,6 @@
 #require "hbmisc"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 REQUEST HB_CODEPAGE_UTF8EX
 

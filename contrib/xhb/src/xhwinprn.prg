@@ -59,7 +59,7 @@ FUNCTION Win32Bmp()
 
 #else
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #define TA_LEFT               0
 #define TA_BOTTOM             8

@@ -62,7 +62,7 @@
 
 #require "hbsqlit3"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 
 PROCEDURE init_trace(pDb, cPrefix)

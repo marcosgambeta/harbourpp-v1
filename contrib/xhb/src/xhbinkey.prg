@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 
 FUNCTION SetInkeyBeforeBlock(...)
    RETURN hb_gtInfo(HB_GTI_INKEYREAD, ...)

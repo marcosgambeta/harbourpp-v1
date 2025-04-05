@@ -20,11 +20,11 @@
  *
  */
 
-#include "color.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <color.ch>
+#include <inkey.ch>
+#include <setcurs.ch>
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 
 PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 

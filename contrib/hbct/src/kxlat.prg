@@ -45,9 +45,9 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "inkey.ch"
+#include <inkey.ch>
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 #include "hbinkey.ch"
 
 #include "ctscan.ch"

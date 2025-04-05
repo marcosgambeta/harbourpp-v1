@@ -46,8 +46,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbhrb.ch"
-#include "hbmemory.ch"
+#include <hbhrb.ch>
+#include <hbmemory.ch>
 
 #include "hbblink.ch"
 

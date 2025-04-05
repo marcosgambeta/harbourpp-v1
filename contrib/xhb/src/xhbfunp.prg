@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 
 FUNCTION gtSetClipboard(x)            ; RETURN hb_gtInfo(HB_GTI_CLIPBOARDDATA, x)
 FUNCTION gtGetClipboard()             ; RETURN hb_gtInfo(HB_GTI_CLIPBOARDDATA)

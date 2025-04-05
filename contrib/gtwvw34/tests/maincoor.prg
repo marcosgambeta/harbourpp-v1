@@ -4,7 +4,7 @@
 
 #require "gtwvw34"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 PROCEDURE Main()
 

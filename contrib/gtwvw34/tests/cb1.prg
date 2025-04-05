@@ -3,8 +3,8 @@
 
 #require "gtwvw34"
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 STATIC s_cQuestion := "Quick survey: What do you think about GTWVW?"
 STATIC s_cHint     := "Hint: Please be positive..."

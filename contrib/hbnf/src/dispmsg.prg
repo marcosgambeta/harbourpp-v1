@@ -22,7 +22,7 @@
  *
  */
 
-#include "setcurs.ch"
+#include <setcurs.ch>
 
 // beginning of demo program
 

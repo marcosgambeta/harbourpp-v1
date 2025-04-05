@@ -1,6 +1,6 @@
 #require "hbnf"
 
-#include "inkey.ch"
+#include <inkey.ch>
 
 PROCEDURE Main()
 

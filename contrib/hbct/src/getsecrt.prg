@@ -46,8 +46,8 @@
 // $HB_END_LICENSE$
 
 #include "getexit.ch"
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 
 FUNCTION GetSecret(cVar, nRow, nCol, lSay, xPrompt)
 

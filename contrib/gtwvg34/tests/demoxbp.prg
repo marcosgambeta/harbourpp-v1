@@ -8,8 +8,8 @@
 
 #require "gtwvg34"
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
 
 #define GetResource( x )  ( x )
 

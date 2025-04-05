@@ -3,8 +3,8 @@
 
 #require "gtwvw"
 
-#include "inkey.ch"
-#include "setcurs.ch"
+#include <inkey.ch>
+#include <setcurs.ch>
 #include "winapi_winuser.ch"
 
 STATIC s_cQuestion := "Quick survey: What do you think about GTWVW?"

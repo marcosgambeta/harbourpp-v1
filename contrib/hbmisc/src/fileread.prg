@@ -2,9 +2,9 @@
    Donated to the public domain on 2001-04-03 by David G. Holm <dholm@jsd-llc.com>
  */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 #define oF_ERROR_MIN          1
 #define oF_CREATE_OBJECT      1

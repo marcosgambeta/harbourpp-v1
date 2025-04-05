@@ -2,7 +2,7 @@
 
 #require "hbcurl"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 #define UPLOAD_FILE_AS      "test_ul.bin"
 #define RENAME_FILE_TO      "test_ul_renamed.bin"

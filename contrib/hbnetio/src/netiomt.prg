@@ -55,7 +55,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "error.ch"
+#include <error.ch>
 
 FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
                          cPasswd, nCompressLevel, nStrategy, ;

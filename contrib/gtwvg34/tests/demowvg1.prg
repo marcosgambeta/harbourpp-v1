@@ -5,9 +5,9 @@
 #require "gtwvg34"
 #require "hbtest"
 
-#include "inkey.ch"
-#include "hbgtinfo.ch"
-#include "hbver.ch"
+#include <inkey.ch>
+#include <hbgtinfo.ch>
+#include <hbver.ch>
 
 #define IMAGE_VOUCH                hb_DirBase() + "vouch1.bmp"
 #define IMAGE_BROWSE               hb_DirBase() + "v_browse.ico"

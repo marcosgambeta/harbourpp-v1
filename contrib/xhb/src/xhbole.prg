@@ -68,9 +68,9 @@ FUNCTION OleDefaultArg()
 
 #define HB_CLS_NOTOBJECT  /* avoid definition of method: INIT */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
-#include "error.ch"
+#include <error.ch>
 
 #include "hbole.ch"
 

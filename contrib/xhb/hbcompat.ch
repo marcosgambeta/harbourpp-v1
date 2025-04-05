@@ -47,7 +47,7 @@
 
 #ifdef __HARBOURPP__
 
-#include "hbgtinfo.ch"
+#include <hbgtinfo.ch>
 #include "hbgfx.ch"
 
 #ifdef __XHARBOUR__

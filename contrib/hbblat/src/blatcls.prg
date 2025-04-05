@@ -47,7 +47,7 @@
 // $HB_END_LICENSE$
 
 #include "hbblat.ch"
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 CREATE CLASS HBBlat
 

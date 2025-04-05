@@ -29,8 +29,8 @@
  *
  */
 
-#include "setcurs.ch"
-#include "inkey.ch"
+#include <setcurs.ch>
+#include <inkey.ch>
 
 #xtranslate isOkay(<exp>)                      => (<exp> \> 0 .AND. <exp> \<= nCount)
 #xtranslate isBetween(<val>, <lower>, <upper>) => (<val> \>= <lower> .AND. <val> \<= <upper>)

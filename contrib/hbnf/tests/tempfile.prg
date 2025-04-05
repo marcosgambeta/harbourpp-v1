@@ -1,6 +1,6 @@
 #require "hbnf"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 PROCEDURE Main( cPath, cHide )
 

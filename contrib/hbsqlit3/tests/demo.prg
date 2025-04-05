@@ -48,7 +48,7 @@
 
 #require "hbsqlit3"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 #define TRACE
 #define TABLE_SQL "CREATE TABLE t1( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER )"

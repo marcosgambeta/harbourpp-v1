@@ -46,8 +46,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "error.ch"
-#include "hbclass.ch"
+#include <error.ch>
+#include <hbclass.ch>
 #include "thtml.ch"
 
 // A Html document can have more than 16 nesting levels.

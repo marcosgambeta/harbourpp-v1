@@ -7,7 +7,7 @@
 #require "gtwvw34"
 
 #include "getexit.ch"
-#include "inkey.ch"
+#include <inkey.ch>
 
 /* Two different keyboard handling method
    (notes: WVW_CB_KBD_CLIPPER doesn't mimic anything from Cl*pper

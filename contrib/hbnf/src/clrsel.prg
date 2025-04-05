@@ -45,8 +45,8 @@
  *
  */
 
-#include "setcurs.ch"
-#include "inkey.ch"
+#include <setcurs.ch>
+#include <inkey.ch>
 
 #define C_NAME   1
 #define C_CLR    2

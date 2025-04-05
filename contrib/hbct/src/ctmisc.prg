@@ -45,10 +45,10 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "color.ch"
-#include "setcurs.ch"
+#include <color.ch>
+#include <setcurs.ch>
 
-#include "hbmemory.ch"
+#include <hbmemory.ch>
 
 FUNCTION AlloFree(lMode)
 

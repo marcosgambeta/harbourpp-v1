@@ -1,6 +1,6 @@
 #require "hbmisc"
 
-#include "fileio.ch"
+#include <fileio.ch>
 
 PROCEDURE Main( cFile )
 

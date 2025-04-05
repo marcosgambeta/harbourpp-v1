@@ -48,8 +48,8 @@
 
 #require "hbpgsql"
 
-#include "fileio.ch"
-#include "inkey.ch"
+#include <fileio.ch>
+#include <inkey.ch>
 
 #include "hbextcdp.ch"
 

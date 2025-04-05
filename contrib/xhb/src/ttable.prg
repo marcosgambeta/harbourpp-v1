@@ -46,13 +46,13 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #include "ttable.ch"
 #include "ord.ch"
-#include "inkey.ch"
-#include "dbinfo.ch"
-#include "error.ch"
+#include <inkey.ch>
+#include <dbinfo.ch>
+#include <error.ch>
 
 STATIC s_aTables := {}
 

@@ -46,8 +46,8 @@
 REQUEST __HBEXTERN__HBSSL__
 #endif
 
-#include "hbclass.ch"
-#include "inkey.ch"
+#include <hbclass.ch>
+#include <inkey.ch>
 #include "tip.ch"
 
 PROCEDURE Main( cURL, cFile )

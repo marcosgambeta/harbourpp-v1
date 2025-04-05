@@ -62,8 +62,8 @@
    Peter Rees 2004-01-21 <peter@rees.co.nz>
  */
 
-#include "hbclass.ch"
-#include "hbver.ch"
+#include <hbclass.ch>
+#include <hbver.ch>
 #include "hbwin.ch"
 
 CREATE CLASS win_Prn

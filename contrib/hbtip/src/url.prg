@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 /* An URL:
    https://user:passwd@example.org:port/mypages/mysite/page.html?avar=0&avar1=1

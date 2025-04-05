@@ -49,7 +49,7 @@
 
 #ifndef HB_LEGACY_LEVEL4
 
-#include "hbver.ch"
+#include <hbver.ch>
 
 FUNCTION hb_osPathSeparator()
    RETURN hb_ps()

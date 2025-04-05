@@ -47,7 +47,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CLS_NOTOBJECT  /* avoid definition of method: INIT */
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 
 CREATE CLASS win_oleAuto

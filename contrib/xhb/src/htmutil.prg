@@ -49,7 +49,7 @@
 #include "html.ch"
 
 #include "html.ch"
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 THREAD STATIC t_aGreek := {}
 

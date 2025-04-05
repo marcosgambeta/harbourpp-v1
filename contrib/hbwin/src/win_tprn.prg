@@ -62,7 +62,7 @@
    Peter Rees 2004-01-21 <peter@rees.co.nz>
  */
 
-#include "hbclass.ch"
+#include <hbclass.ch>
 
 #include "hbwin.ch"
 

@@ -22,7 +22,7 @@
  *
  */
 
-#include "box.ch"
+#include <box.ch>
 
 /* NOTE: In original NF, flag parameters were also accepted when
          having extra characters (f.e. "DOUBLE" instead of "D"),
