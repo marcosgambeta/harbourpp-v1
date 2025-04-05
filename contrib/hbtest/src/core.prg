@@ -57,7 +57,7 @@ THREAD STATIC t_hParams := { => }
 
 PROCEDURE hbtest_Setup( cName, xValue )
 
-   IF HB_IsString(cName) .AND. ! Empty(cName)
+   IF HB_IsString(cName) .AND. !Empty(cName)
       IF PCount() > 1
          t_hParams[cName] := xValue
       ELSEIF cName $ t_hParams

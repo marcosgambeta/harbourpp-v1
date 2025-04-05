@@ -187,7 +187,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
             EXIT
          ENDSWITCH
 
-         netiosrv[_NETIOSRV_lRPC] := ! Empty(netiosrv[_NETIOSRV_hRPCFHRB]) .AND. ! Empty(hb_hrbGetFunSym( netiosrv[_NETIOSRV_hRPCFHRB], _RPC_FILTER ))
+         netiosrv[_NETIOSRV_lRPC] := ! Empty(netiosrv[_NETIOSRV_hRPCFHRB]) .AND. !Empty(hb_hrbGetFunSym( netiosrv[_NETIOSRV_hRPCFHRB], _RPC_FILTER ))
          IF !netiosrv[_NETIOSRV_lRPC]
             netiosrv[_NETIOSRV_cRPCFFileName] := NIL
             netiosrv[_NETIOSRV_hRPCFHRB] := NIL
@@ -286,7 +286,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
       ENDIF
 
       /* Command prompt */
-      DO WHILE ! netiosrv[_NETIOSRV_lQuit] .AND. inkey() != 27
+      DO WHILE !netiosrv[_NETIOSRV_lQuit] .AND. inkey() != 27
          hb_idleSleep(5)
       ENDDO
 
@@ -528,7 +528,7 @@ STATIC FUNCTION netiomgm_rpc_regnotif( netiomgm, pConnSock, nStreamID, lRegister
       RETURN IIf(cIndex $ netiomgm[_NETIOSRV_hNotifStream], netiomgm[_NETIOSRV_hNotifStream][cIndex][_CLI_xCargo], NIL)
 #endif
    CASE 4
-      IF !HB_IsLogical(lRegister) .OR. ! lRegister
+      IF !HB_IsLogical(lRegister) .OR. !lRegister
          hb_mutexLock( netiomgm[_NETIOSRV_mtxNotifStream] )
          IF cIndex $ netiomgm[_NETIOSRV_hNotifStream]
             hb_HDel( netiomgm[_NETIOSRV_hNotifStream], cIndex )
@@ -866,7 +866,7 @@ STATIC PROCEDURE HB_Usage()
    OutStd(                                                                                                               hb_eol() )
    OutStd(               "  -noui                 don't open interactive console"                                      , hb_eol() )
    OutStd(                                                                                                               hb_eol() )
-   #if ! defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
+   #if !defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    OutStd(               "  -i                    install as service (requires admin rights)"                          , hb_eol() )
    OutStd(               "  -u                    uninstall service (requires admin rights)"                           , hb_eol() )
    OutStd(                                                                                                               hb_eol() )

@@ -447,7 +447,7 @@ STATIC PROCEDURE Exm_ADODB()
          adOpenForwardOnly, ;
          adLockReadOnly )
 
-      DO WHILE ! oRs:EOF
+      DO WHILE !oRs:EOF
          ? oRs:Fields( "First" ):Value
          oRs:MoveNext()
       ENDDO
@@ -477,7 +477,7 @@ STATIC PROCEDURE Exm_PocketSOAP()
    LOCAL oHttp := win_oleCreateObject( "PocketSOAP.HTTPTransport.2" )
    LOCAL oEnvelope := win_oleCreateObject( "PocketSOAP.Envelope.2" )
 
-   IF !Empty(oHttp) .OR. ! Empty(oEnvelope)
+   IF !Empty(oHttp) .OR. !Empty(oEnvelope)
 
       oEnvelope:EncodingStyle := ""
       oEnvelope:SetMethod( "InvertStringCase", "http:" + "//www.dataaccess.com/webservicesserver/" )

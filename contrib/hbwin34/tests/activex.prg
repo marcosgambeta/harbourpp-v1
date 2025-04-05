@@ -3,7 +3,7 @@
 #include <hbgtinfo.ch>
 #include <hbclass.ch>
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 REQUEST HB_GT_WVT_DEFAULT
 #endif
 

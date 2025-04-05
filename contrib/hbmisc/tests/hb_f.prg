@@ -9,7 +9,7 @@ PROCEDURE Main( cFile )
    // open a text file here
    IF hb_FUse( cFile, FO_READ ) > 1
 
-      DO WHILE ! hb_FAtEof()
+      DO WHILE !hb_FAtEof()
          ? "line " + Str(hb_FRecNo(), 2) + " " + hb_FReadLn()
          hb_FSkip(1)
       ENDDO

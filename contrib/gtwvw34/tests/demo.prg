@@ -489,7 +489,7 @@ STATIC PROCEDURE DEMO_Browse()
    RefreshHXB(oBrowse, nCurWindow, nHScrollBar)  // 2004-07-04
    RefreshVXB(oBrowse, nCurWindow, nVScrollBar)  // 2004-07-04
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       nKey := hb_keyStd(Inkey(0))
 
       DO CASE
@@ -1145,7 +1145,7 @@ STATIC PROCEDURE MyError( e )
       "Call trace:" + hb_eol() + ;
       hb_eol()
 
-   DO WHILE ! Empty(ProcName( ++i ))
+   DO WHILE !Empty(ProcName( ++i ))
       cErr += RTrim(ProcName( i )) + "(" + hb_ntos(ProcLine( i )) + ")" + hb_eol()
    ENDDO
 

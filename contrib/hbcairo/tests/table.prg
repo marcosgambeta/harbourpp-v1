@@ -75,7 +75,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
    cairo_rel_line_to( hCairo, nW, 0 )
    cairo_stroke( hCairo )
 
-   DO WHILE ! Eof()
+   DO WHILE !Eof()
       nDX := nX
       FOR nI := 1 TO Len(aCol)
          xValue := FieldGet( FieldPos( aCol[nI, 2] ) )

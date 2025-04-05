@@ -207,12 +207,12 @@ METHOD WvgProgressBar:activate( xParam )
 
 METHOD WvgProgressBar:SetValue( nValue, nRangeMin, nRangeMax, nSpeed )
 
-   IF HB_IsNumeric(nRangeMin) .AND. HB_IsNumeric(nRangeMax) .AND. ! ::lMarquee
+   IF HB_IsNumeric(nRangeMin) .AND. HB_IsNumeric(nRangeMax) .AND. !::lMarquee
       ::nRangeMin := nRangeMin
       ::nRangeMax := nRangeMax
       ::sendMessage( PBM_SETRANGE, 0, WIN_MAKELONG( ::nRangeMin, ::nRangeMax ) )
    ENDIF
-   IF HB_IsNumeric(nValue) .AND. ! ::lMarquee
+   IF HB_IsNumeric(nValue) .AND. !::lMarquee
       ::sendMessage( PBM_SETPOS, nValue, 0 )
       ::nValue := nValue
    ENDIF

@@ -79,14 +79,14 @@ PROCEDURE Main()
    ? '    TokenInit( @cStr1, ",", 1 ) == .T. ? ----> ' + LToC(TokenInit( @cStr1, ",", 1 ))
    ? '    TokenNum() == 6 ? -----------------------> ' + Str(TokenNum())
    ? '      TokenEnd() ? --------------------------> ' + LToC(TokenEnd())
-   DO WHILE ! TokenEnd()
+   DO WHILE !TokenEnd()
       ? '      TokenNext(@cStr1)  -----------------> "' + TokenNext( @cStr1 ) + '"'
       ? '      TokenEnd() ? -----------------------> ' + LToC(TokenEnd())
    ENDDO
    ?
    ? '    rewind with TokenInit() == .T. ? --------> ' + LToC(TokenInit())
    ? '      TokenEnd() ? --------------------------> ' + LToC(TokenEnd())
-   DO WHILE ! TokenEnd()
+   DO WHILE !TokenEnd()
       ? '      TokenNext( @cStr1 ) ----------------> "' + TokenNext( @cStr1 ) + '"'
       ? '      TokenEnd() ? -----------------------> ' + LToC(TokenEnd())
    ENDDO
@@ -104,14 +104,14 @@ PROCEDURE Main()
    ? '  token environment of cStr1 !'
    ? '    rewind with TokenInit() == .T. ? ------> ' + LToC(TokenInit())
    ? '      TokenEnd() ? -------------------------> ' + LToC(TokenEnd())
-   DO WHILE ! TokenEnd()
+   DO WHILE !TokenEnd()
       ? '      TokenNext( @cStr3 ) ------------------> "' + TokenNext( @cStr3 ) + '"'
       ? '      TokenEnd() ? -------------------------> ' + LToC(TokenEnd())
    ENDDO
    ?
    ? '    rewind with TokenInit() == .T. ? ------> ' + LToC(TokenInit())
    ? '      TokenEnd() ? -------------------------> ' + LToC(TokenEnd())
-   DO WHILE ! TokenEnd()
+   DO WHILE !TokenEnd()
       ? '      start / end with TokenAt(.F./.T.)-----> ' + Str(TokenAt()) + ' ' + Str(TokenAt(.T.))
       TokenNext( @cStr1 )
       ? '      TokenEnd() ? -------------------------> ' + LToC(TokenEnd())
@@ -137,7 +137,7 @@ PROCEDURE Main()
    TokenInit()
    ? '    TokenNum() == 6 ? ----------------------> ' + Str(TokenNum())
    ? '      TokenEnd() ? -------------------------> ' + LToC(TokenEnd())
-   DO WHILE ! TokenEnd()
+   DO WHILE !TokenEnd()
       ? '      TokenNext( @cStr1 ) -----------------> "' + TokenNext( @cStr1 ) + '"'
       ? '      TokenEnd() ? -------------------------> ' + LToC(TokenEnd())
    ENDDO
@@ -157,7 +157,7 @@ PROCEDURE Main()
    ? '    TokenNum( @cTE2 ) == 4 ? --------------------> ' + Str(TokenNum( @cTE2 ))
    ? '        TokenEnd(@cTE1) ? ---------------------> ' + LToC(TokenEnd(@cTE1))
    ? '        TokenEnd(@cTE2) ? ---------------------> ' + LToC(TokenEnd(@cTE2))
-   DO WHILE ! TokenEnd(@cTE1) .AND. ! TokenEnd(@cTE2)
+   DO WHILE !TokenEnd(@cTE1) .AND. !TokenEnd(@cTE2)
       ? '      next train at ' + TokenNext( cStr4,, @cTE1 ) + ":" + TokenNext( cStr5,, @cTE2 )
       ? '          compiled with TokenNext( cStr4,, @cTE1 ) + ":" + TokenNext( cStr5,, @cTE2 )'
       ? '        TokenEnd(@cTE1) ? ---------------------> ' + LToC(TokenEnd(@cTE1))

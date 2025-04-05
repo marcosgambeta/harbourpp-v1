@@ -112,7 +112,7 @@ STATIC PROCEDURE xBrowse1()
 
    znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), nTop, nLeft, nBottom, nRight, "Test table" )
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       oBrowse:ForceStable()
 
       lMessage( "Record #" + hb_ntos(RecNo()) )

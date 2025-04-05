@@ -250,7 +250,7 @@ METHOD TIPClient:Open( cUrl )
       IF ::inetErrorCode( ::SocketCon ) != 0
          RETURN .F.
       ENDIF
-   ELSEIF ! ::OpenProxy( ::oUrl:cServer, nPort, ::cProxyHost, ::nProxyPort,, ::cProxyUser, ::cProxyPassword, "Mozilla/3.0 compatible" )
+   ELSEIF !::OpenProxy( ::oUrl:cServer, nPort, ::cProxyHost, ::nProxyPort,, ::cProxyUser, ::cProxyPassword, "Mozilla/3.0 compatible" )
       RETURN .F.
    ENDIF
    ::isOpen := .T.
@@ -458,7 +458,7 @@ METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
    ::nRead   := 0
    ::nStatus := 1
 
-   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. ! ::bEof
+   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. !::bEof
       IF ( cData := ::Read( RCV_BUF_SIZE ) ) == NIL
          IF hFile != NIL
             hb_vfClose( hFile )

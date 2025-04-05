@@ -480,7 +480,7 @@ FUNCTION DEMO_Browse()
    RefreshHXB(oBrowse, nCurWindow, nHScrollBar) // 20040704
    RefreshVXB(oBrowse, nCurWindow, nVScrollBar) // 20040704
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       nKey := Inkey(0)
 
       DO CASE
@@ -1173,7 +1173,7 @@ STATIC PROCEDURE MyError( e )
       hb_eol()
 
 
-   DO WHILE ! Empty(ProcName( ++i ))
+   DO WHILE !Empty(ProcName( ++i ))
       cErr += RTrim(ProcName( i )) + "(" + hb_ntos(ProcLine( i )) + ")" + hb_eol()
    ENDDO
 

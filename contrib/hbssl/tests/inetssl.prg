@@ -36,7 +36,7 @@ PROCEDURE Main( delay )
    ENDIF
 
    // wait for server being ready to accept incoming connections
-   DO WHILE ! s_lReady
+   DO WHILE !s_lReady
       hb_idleSleep( 0.01 )
       IF hb_threadWait( thrd, 0 ) != 0
          hb_threadJoin( thrd )
@@ -87,7 +87,7 @@ STATIC FUNCTION Client()
          DispCertInfo( ssl, "CLIENT: " )
 
          hb_inetSendAll( sock, hb_TSToStr(hb_DateTime()) + EOL )
-         DO WHILE ! Empty(cLine := hb_inetRecvLine( sock ))
+         DO WHILE !Empty(cLine := hb_inetRecvLine( sock ))
             ? "CLIENT: RECV:", hb_ValToExp( cLine )
          ENDDO
       ENDIF
@@ -113,7 +113,7 @@ STATIC FUNCTION Server()
       ? "SERVER: waiting for connections..."
       hb_inetTimeout( sockSrv, 100 )
       s_lReady := .T.
-      DO WHILE ! s_lStop
+      DO WHILE !s_lStop
          IF !Empty(sockConn := hb_inetAccept( sockSrv ))
             ? "SERVER: accepted new connection."
             hb_inetTimeout( sockConn, 3000 )
@@ -158,7 +158,7 @@ STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
    // they can be generated using the following command:
    //    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
    //            -out <cCertFile> -keyout <cKeyFile>
-   IF !hb_FileExists( cCertFile ) .AND. ! hb_FileExists( cKeyFile )
+   IF !hb_FileExists( cCertFile ) .AND. !hb_FileExists( cKeyFile )
       ? "SERVER: generating certificates..."
       hb_run( "openssl req -x509 -nodes -days 365 -newkey rsa:2048 " + ;
               "-out " + cCertFile + " -keyout " + cKeyFile )

@@ -106,7 +106,7 @@ PROCEDURE Main( cInputFile )
             "   FOR EACH r IN { ;" + hb_eol()
 
          dbGoTop()
-         DO WHILE ! Eof()
+         DO WHILE !Eof()
             cOutput += "      { "
             FOR tmp := 1 TO FCount()
                cOutput += ;

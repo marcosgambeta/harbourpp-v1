@@ -302,7 +302,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
       CASE cField == "SYNTAX"
 
          ::OpenTagInline( "div", "class", cTagClass )
-         DO WHILE ! HB_IsNull( cContent )
+         DO WHILE !HB_IsNull( cContent )
             ::OpenTagInline( "code" )
             ::AppendInline( Indent( Parse( @cContent, hb_eol() ), 0, -1,, .T. ),, .F. )
             ::CloseTagInline( "code" )
@@ -316,13 +316,13 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
          lTable := .F.
 
-         DO WHILE ! HB_IsNull( cContent )
+         DO WHILE !HB_IsNull( cContent )
 
             lCode := .F.
             lTablePrev := lTable
 
             tmp1 := ""
-            DO WHILE ! HB_IsNull( cContent )
+            DO WHILE !HB_IsNull( cContent )
 
                cLine := Parse( @cContent, hb_eol() )
 
@@ -484,24 +484,24 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
             CASE ! lPR .AND. cChar == "\" .AND. tmp < Len(cText)
                tmp++
                cChar := cNext
-            CASE ! lPR .AND. cChar == "*" .AND. ! lIT .AND. ;
-                 IIf(lEM, ! Empty(cPrev) .AND. Empty(cNext), Empty(cPrev) .AND. ! Empty(cNext))
+            CASE ! lPR .AND. cChar == "*" .AND. !lIT .AND. ;
+                 IIf(lEM, ! Empty(cPrev) .AND. Empty(cNext), Empty(cPrev) .AND. !Empty(cNext))
                lEM := ! lEM
                IF lEM
                   nEM := Len(cOut) + 1
                ENDIF
                cChar := IIf(lEM, "<strong>", "</strong>")
-            CASE ! lPR .AND. cChar == "_" .AND. ! lEM .AND. ;
-                 ( ( ! lIT .AND. Empty(cPrev) .AND. ! Empty(cNext) ) .OR. ;
-                   (   lIT .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
+            CASE ! lPR .AND. cChar == "_" .AND. !lEM .AND. ;
+                 ( ( !lIT .AND. Empty(cPrev) .AND. !Empty(cNext) ) .OR. ;
+                   (   lIT .AND. !Empty(cPrev) .AND. Empty(cNext) ) )
                lIT := ! lIT
                IF lIT
                   nIT := Len(cOut) + 1
                ENDIF
                cChar := IIf(lIT, "<i>", "</i>")
             CASE cChar == "`" .AND. ;
-                 ( ( ! lPR .AND. Empty(cPrev) .AND. ! Empty(cNext) ) .OR. ;
-                   (   lPR .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
+                 ( ( !lPR .AND. Empty(cPrev) .AND. !Empty(cNext) ) .OR. ;
+                   (   lPR .AND. !Empty(cPrev) .AND. Empty(cNext) ) )
                lPR := ! lPR
                IF lPR
                   nPR := Len(cOut) + 1

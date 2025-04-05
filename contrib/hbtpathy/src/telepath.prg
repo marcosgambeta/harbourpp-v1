@@ -437,7 +437,7 @@ FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
       nDone := _clock() + nTimeout
    ENDIF
 
-   DO WHILE ( nDone > _clock() .OR. nFirst == 100000 ) .AND. ! tp_idle()
+   DO WHILE ( nDone > _clock() .OR. nFirst == 100000 ) .AND. !tp_idle()
 
       IF nFirst == 100000
          nFirst := 99999

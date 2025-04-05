@@ -587,7 +587,7 @@ METHOD TFbQuery:Fetch()
    LOCAL result := .F.
    LOCAL fetch_stat
 
-   IF !::lError .AND. ! ::lEof
+   IF !::lError .AND. !::lEof
 
       IF !::Closed
          fetch_stat := FBFetch( ::qry )
@@ -672,7 +672,7 @@ METHOD TFbQuery:FieldGet( nField )
 
    LOCAL result, aBlob, i, cType
 
-   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct) .AND. ! ::closed
+   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct) .AND. !::closed
 
       /* TODO: Convert to right data type */
 
@@ -726,7 +726,7 @@ METHOD TFbQuery:Getrow()
    LOCAL aRow
    LOCAL i
 
-   IF !::lError .AND. ! ::closed
+   IF !::lError .AND. !::closed
 
       aRow := Array( ::numcols )
 

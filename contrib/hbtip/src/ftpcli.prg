@@ -172,7 +172,7 @@ METHOD TIPClientFTP:GetReply()
    ENDIF
 
    // now, if the reply has a "-" as fourth character, we need to proceed...
-   DO WHILE ! Empty(cRep) .AND. SubStr(cRep, 4, 1) == "-"
+   DO WHILE !Empty(cRep) .AND. SubStr(cRep, 4, 1) == "-"
       cRep := ::cReply := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nLen, 128 ), "" )
    ENDDO
 
@@ -187,7 +187,7 @@ METHOD TIPClientFTP:Commit()
    ::bInitialized := .F.
 
    // error code?
-   RETURN ::GetReply() .AND. ! hb_LeftEq( ::cReply, "5" )
+   RETURN ::GetReply() .AND. !hb_LeftEq( ::cReply, "5" )
 
 // scan last reply for an hint of length
 METHOD TIPClientFTP:ScanLength()
@@ -316,14 +316,14 @@ METHOD TIPClientFTP:Dele( cPath )
 
 METHOD TIPClientFTP:LS( cSpec )
 
-   IF ::bUsePasv .AND. ! ::Pasv()
+   IF ::bUsePasv .AND. !::Pasv()
 #if 0
       ::bUsePasv := .F.
 #endif
       RETURN .F.
    ENDIF
 
-   IF !::bUsePasv .AND. ! ::Port()
+   IF !::bUsePasv .AND. !::Port()
       RETURN .F.
    ENDIF
 
@@ -357,7 +357,7 @@ METHOD TIPClientFTP:RMD( cPath )
 
 METHOD TIPClientFTP:Retr( cFile )
 
-   IF ::bUsePasv .AND. ! ::Pasv()
+   IF ::bUsePasv .AND. !::Pasv()
 #if 0
       ::bUsePasv := .F.
 #endif
@@ -375,7 +375,7 @@ METHOD TIPClientFTP:Retr( cFile )
 
 METHOD TIPClientFTP:Stor( cFile )
 
-   IF ::bUsePasv .AND. ! ::Pasv()
+   IF ::bUsePasv .AND. !::Pasv()
 #if 0
       ::bUsePasv := .F.
 #endif
@@ -396,13 +396,13 @@ METHOD TIPClientFTP:List( cSpec )
 
    LOCAL cStr
 
-   IF ::bUsePasv .AND. ! ::Pasv()
+   IF ::bUsePasv .AND. !::Pasv()
 #if 0
       ::bUsePasv := .F.
 #endif
       RETURN NIL
    ENDIF
-   IF !::bUsePasv .AND. ! ::Port()
+   IF !::bUsePasv .AND. !::Port()
       RETURN NIL
    ENDIF
 
@@ -420,7 +420,7 @@ METHOD TIPClientFTP:List( cSpec )
 
 METHOD TIPClientFTP:UserCommand( cCommand, lPasv, lReadPort, lGetReply )
 
-   IF ::bUsePasv .AND. hb_defaultValue( lPasv, .T. ) .AND. ! ::Pasv()
+   IF ::bUsePasv .AND. hb_defaultValue( lPasv, .T. ) .AND. !::Pasv()
       RETURN .F.
    ENDIF
 
@@ -495,7 +495,7 @@ METHOD TIPClientFTP:Read( nLen )
 
    IF !::bInitialized
 
-      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
          ::bEof := .T.  // no data for this transaction
          RETURN NIL
       ENDIF
@@ -529,7 +529,7 @@ METHOD TIPClientFTP:Write( cData, nLen )
          RETURN -1
       ENDIF
 
-      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
          RETURN -1
       ENDIF
 
@@ -547,7 +547,7 @@ METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
 
    LOCAL cStr, cFile
 
-   IF ::bUsePasv .AND. ! ::Pasv()
+   IF ::bUsePasv .AND. !::Pasv()
 #if 0
       ::bUsePasv := .F.
 #endif
@@ -600,11 +600,11 @@ METHOD TIPClientFTP:UploadFile( cLocalFile, cRemoteFile )
          RETURN .F.
       ENDIF
 
-      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
          RETURN .F.
       ENDIF
 
-      IF !::bUsePasv .AND. ! ::Port()
+      IF !::bUsePasv .AND. !::Port()
          RETURN .F.
       ENDIF
 
@@ -625,12 +625,12 @@ METHOD TIPClientFTP:DownloadFile( cLocalFile, cRemoteFile )
 
    IF !::bInitialized
 
-      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
          ::bEof := .T.  // no data for this transaction
          RETURN .F.
       ENDIF
 
-      IF !::bUsePasv .AND. ! ::Port()
+      IF !::bUsePasv .AND. !::Port()
          RETURN .F.
       ENDIF
 

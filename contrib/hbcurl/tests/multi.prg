@@ -14,7 +14,7 @@ PROCEDURE Main( cRemote4 )
 
    /* add a remote from command-line if you want */
 
-   IF ! Empty( cRemote4 )
+   IF !Empty( cRemote4 )
       AAdd( aUrls, cRemote4 )
    ENDIF
 
@@ -81,7 +81,7 @@ PROCEDURE Main( cRemote4 )
                ? "HB_CURLMSG_RESP_HPOS         :", aResult[HB_CURLMSG_RESP_HPOS]
                IF aResult[HB_CURLMSG_RESP_HPOS] > 0
                   ? "URL                          :", aUrls[aResult[HB_CURLMSG_RESP_HPOS]]
-                  IF ! Empty( curl_easy_getinfo( aResult[HB_CURLMSG_RESP_HANDLE], HB_CURLINFO_REDIRECT_URL ) )
+                  IF !Empty( curl_easy_getinfo( aResult[HB_CURLMSG_RESP_HANDLE], HB_CURLINFO_REDIRECT_URL ) )
                      ? "HB_CURLINFO_REDIRECT_URL     :", curl_easy_getinfo( aResult[HB_CURLMSG_RESP_HANDLE], HB_CURLINFO_REDIRECT_URL )
                   ENDIF
                ENDIF

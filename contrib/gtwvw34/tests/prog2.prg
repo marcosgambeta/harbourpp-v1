@@ -138,7 +138,7 @@ STATIC PROCEDURE xBrowse1()
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       oBrowse:ForceStable()
 
       lMessage( "Record #" + hb_ntos(RecNo()) )

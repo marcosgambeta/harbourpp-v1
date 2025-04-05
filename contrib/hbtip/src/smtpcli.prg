@@ -150,7 +150,7 @@ METHOD TIPClientSMTP:OpenSecure( cUrl, lSSL )
 
    lOk := ::DetectSecurity()
 
-   IF lOk .AND. ! lSSL .AND. ::lTLS
+   IF lOk .AND. !lSSL .AND. ::lTLS
       lOk := ::StartTLS()
    ENDIF
 
@@ -159,7 +159,7 @@ METHOD TIPClientSMTP:OpenSecure( cUrl, lSSL )
 METHOD TIPClientSMTP:GetOk()
 
    ::cReply := ::inetRecvLine( ::SocketCon,, 512 )
-   IF ::inetErrorCode( ::SocketCon ) != 0 .OR. ! HB_IsString(::cReply) .OR. hb_LeftEq( ::cReply, "5" )
+   IF ::inetErrorCode( ::SocketCon ) != 0 .OR. !HB_IsString(::cReply) .OR. hb_LeftEq( ::cReply, "5" )
       RETURN .F.
    ENDIF
 

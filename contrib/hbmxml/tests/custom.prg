@@ -101,7 +101,7 @@ FUNCTION whitespace_cb(node, where)
          where == MXML_WS_BEFORE_CLOSE )
 
       parent := mxmlGetParent( node )
-      DO WHILE ! Empty(parent)
+      DO WHILE !Empty(parent)
          nLevel++
          parent := mxmlGetParent( parent )
       ENDDO

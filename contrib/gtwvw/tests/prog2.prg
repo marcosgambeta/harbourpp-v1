@@ -105,7 +105,7 @@ PROCEDURE xGet1()
    @ 23, 0  say "Outside the window" color "R/W"
 #endif
 
-   DO WHILE ! lDone
+   DO WHILE !lDone
       @ 12, 22 SAY "Name    : " GET cName  PICT "@!K" WHEN lMessage( "Please enter your name" )
       @ 14, 22 SAY "Address : " GET cAddr  PICT "@!K" WHEN lMessage( "Please enter your address" )
       @ 16, 22 SAY "Phone   : " GET cPhone PICT "@K"  WHEN lMessage( "Please enter your phone number" )
@@ -183,7 +183,7 @@ FUNCTION xBrowse1()
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 #endif
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       oBrowse:ForceStable()
 
       lMessage( "Record #" + hb_ntos(RecNo()) )

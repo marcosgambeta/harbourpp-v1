@@ -296,7 +296,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
    nLeft   := oEdit[E_LEFT] + 1
    nBottom := oEdit[E_BOTTOM] - 1
    nRight  := oEdit[E_RIGHT] - 1
-   IF lFrame != NIL .AND. ! lFrame
+   IF lFrame != NIL .AND. !lFrame
       nLeft--
       nBottom++
       nRight++

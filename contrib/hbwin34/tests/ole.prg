@@ -434,7 +434,7 @@ STATIC PROCEDURE Exm_ADODB()
          adOpenForwardOnly, ;
          adLockReadOnly )
 
-      DO WHILE ! oRs:EOF
+      DO WHILE !oRs:EOF
          ? oRs:Fields( "First" ):Value
          oRs:MoveNext()
       ENDDO

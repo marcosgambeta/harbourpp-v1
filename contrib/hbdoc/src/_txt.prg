@@ -155,14 +155,14 @@ METHOD PROCEDURE GenerateText:WriteEntry( cCaption, cContent, lPreformatted )
          ::cFile += Space(::Depth * 6) + cCaption + ": " + hb_eol()
       ENDIF
       nIndent += ::Depth * 6
-      DO WHILE ! HB_IsNull( cContent )
+      DO WHILE !HB_IsNull( cContent )
          ::cFile += Indent( Parse( @cContent, hb_eol() ), nIndent, 70, lPreformatted )
       ENDDO
    ENDIF
 
 METHOD GenerateText:Generate()
 
-   IF ::IsIndex() .AND. ! ::lContinuous
+   IF ::IsIndex() .AND. !::lContinuous
       ::cFile += hb_BChar( 12 ) + hb_eol()
    ENDIF
 

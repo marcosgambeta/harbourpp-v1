@@ -665,7 +665,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
       ENDIF
 
       IF idxCategory != NIL
-         IF idxSubCategory == -1 .AND. ( ! o:IsField("SUBCATEGORY") .OR. ! o:IsRequired("SUBCATEGORY") )
+         IF idxSubCategory == -1 .AND. ( !o:IsField("SUBCATEGORY") .OR. !o:IsRequired("SUBCATEGORY") )
             idxSubCategory := o:SubcategoryIndex( o:fld["CATEGORY"], "" )
          ENDIF
          IF idxSubCategory > 0
@@ -684,7 +684,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "STATUS"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint["status"]
          cResult := ""
-         DO WHILE ! HB_IsNull( cCode )
+         DO WHILE !HB_IsNull( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
          RETURN SubStr(cResult, Len(hb_eol()) + 1)
@@ -694,7 +694,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          RETURN sc_hConstraint["status"][cCode]
       ELSEIF Len(cCode) > 1
          RETURN cCode
-      ELSEIF ! HB_IsNull( cCode )
+      ELSEIF !HB_IsNull( cCode )
          RETURN "Unrecognized 'STATUS' code: '" + cCode + "'"
       ELSE
          RETURN sc_hConstraint["status"]["N"]
@@ -712,7 +712,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "COMPLIANCE"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint["compliance"]
          cResult := ""
-         DO WHILE ! HB_IsNull( cCode )
+         DO WHILE !HB_IsNull( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
          RETURN SubStr(cResult, Len(hb_eol()) + 1)

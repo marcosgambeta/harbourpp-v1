@@ -183,7 +183,7 @@ METHOD WvtToolBar:HoverOn()
 
 METHOD WvtToolBar:HoverOff()
 
-   IF ::lFloating .AND. ! ::lHidden
+   IF ::lFloating .AND. !::lHidden
       ::lHidden := .T.
       ::lActive := .F.
       AEval(::aObjects, {| o | o:lActive := ::lActive })

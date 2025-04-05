@@ -206,7 +206,7 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
       Instead of receiving a single char at a time until after we have the full mail, let's receive as
       much as we can and stop when we reach EOM (end of mail :)) sequence. This way is _a lot_ faster
     */
-   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. ! ::bEof
+   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. !::bEof
 
       cBuffer := Space(1024)
 
@@ -409,7 +409,7 @@ METHOD TIPClientPOP:getMessageRaw( nMsgId )
    xRet := ""
    DO WHILE ::inetErrorCode( ::SocketCon ) == 0
       cLine := ::inetRecvLine( ::SocketCon, @nBytes, 8192 )
-      IF nBytes <= 0 .OR. ! HB_IsString(cLine) .OR. cLine == "."
+      IF nBytes <= 0 .OR. !HB_IsString(cLine) .OR. cLine == "."
          EXIT
       ENDIF
       xRet += cLine + ::cCRLF

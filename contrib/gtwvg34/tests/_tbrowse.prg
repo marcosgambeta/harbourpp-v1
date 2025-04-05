@@ -136,9 +136,9 @@ STATIC PROCEDURE ExecBrowser( oCrt )
 
    wvt_Keyboard(HB_K_RESIZE) // Refresh All GUI Controls
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       DispBegin()
-      DO WHILE ( ( nKey := Inkey(NIL, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT )) ) == 0 .OR. nKey == K_MOVING ) .AND. ! oBrowse:stabilize()
+      DO WHILE ( ( nKey := Inkey(NIL, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT )) ) == 0 .OR. nKey == K_MOVING ) .AND. !oBrowse:stabilize()
       ENDDO
       DispEnd()
 
@@ -321,7 +321,7 @@ STATIC FUNCTION BrwBuildActiveX( oCrt, oBrw )
    oCom:mapEvent( 269, {|| uiDebug( "EXPLORER-269" ) } )
 #endif
    oCom:create()
-#if ! defined(__HBSCRIPT__HBSHELL)  // FIXME: disabled in hbrun due to OLE bugs
+#if !defined(__HBSCRIPT__HBSHELL)  // FIXME: disabled in hbrun due to OLE bugs
    oCom:navigate( hb_Version( HB_VERSION_URL_BASE ) )
 #endif
 

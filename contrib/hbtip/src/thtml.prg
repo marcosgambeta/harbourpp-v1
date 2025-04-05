@@ -403,7 +403,7 @@ METHOD THtmlIterator:Next()
 
    LOCAL oFound, lExit := .F.
 
-   DO WHILE ! lExit
+   DO WHILE !lExit
       BEGIN SEQUENCE WITH __BreakBlock()
          oFound := ::aNodes[ ++::nCurrent ]
          IF ::MatchCriteria(oFound)
@@ -489,7 +489,7 @@ METHOD THtmlIteratorRegex:MatchCriteria(oFound)
 
    LOCAL xData
 
-   IF ::cName != NIL .AND. ! hb_regexLike( Lower(oFound:htmlTagName), Lower(::cName) )
+   IF ::cName != NIL .AND. !hb_regexLike( Lower(oFound:htmlTagName), Lower(::cName) )
       RETURN .F.
    ENDIF
 
@@ -505,7 +505,7 @@ METHOD THtmlIteratorRegex:MatchCriteria(oFound)
 
    IF ::cData != NIL
       xData := oFound:getText( " " )
-      IF Empty(xData) .OR. ! hb_regexHas( AllTrim(::cData), AllTrim(xData) )
+      IF Empty(xData) .OR. !hb_regexHas( AllTrim(::cData), AllTrim(xData) )
          RETURN .F.
       ENDIF
    ENDIF
@@ -771,7 +771,7 @@ METHOD THtmlNode:parseHtml( parser )
                // the next tag is the same like this tag
                // ( e.g. <p>|<tr>|<td>|<li>)
                lRewind := .T.
-            CASE Lower(cTagName) == Lower(oThisTag:parent:htmlTagName) .AND. ! oThisTag:isType( CM_LIST )
+            CASE Lower(cTagName) == Lower(oThisTag:parent:htmlTagName) .AND. !oThisTag:isType( CM_LIST )
                // the next tag is the same like the parent tag
                // ( e.g. this is <td> and the next tag is <tr> )
                lRewind := .T.
@@ -808,7 +808,7 @@ METHOD THtmlNode:parseHtml( parser )
                // do not spoil formatting of Html text
                oNextTag:parseHtmlFixed( parser )
 
-            ELSEIF ! oNextTag:isEmpty()
+            ELSEIF !oNextTag:isEmpty()
                // parse into node list of new tag
                oThisTag := oNextTag
 
@@ -989,7 +989,7 @@ METHOD THtmlNode:nextNode()
    ENDIF
 
    /* NOTE: != changed to ! == */
-   IF !::htmlTagName == "_text_" .AND. ! Empty(::htmlContent)
+   IF !::htmlTagName == "_text_" .AND. !Empty(::htmlContent)
       RETURN ::htmlContent[1]
    ENDIF
 
@@ -1401,7 +1401,7 @@ METHOD THtmlNode:noAttribute( cName, aValue )
 
       IF oNode == NIL
          oNode := THtmlNode():new( Self, cName )
-         IF !oNode:isOptional() .AND. ! oNode:isEmpty()
+         IF !oNode:isOptional() .AND. !oNode:isEmpty()
             oNode:htmlEndTagName := "/" + cName
          ENDIF
          ::addNode( oNode )
@@ -1511,7 +1511,7 @@ METHOD THtmlNode:pushNode( cTagName )
    ENDIF
 
    oNode := THtmlNode():new( Self, cName, cAttr )
-   IF !oNode:isOptional() .AND. ! oNode:isEmpty()
+   IF !oNode:isOptional() .AND. !oNode:isEmpty()
       oNode:htmlEndTagName := "/" + cName
    ENDIF
    ::addNode( oNode )
@@ -1572,7 +1572,7 @@ FUNCTION THtmlInit( lInit )
       t_aHtmlAnsiEntities := NIL
 #endif
       t_lInit := .F.
-   ELSEIF ! t_lInit
+   ELSEIF !t_lInit
       t_aHA := Array( HTML_ATTR_COUNT )
 #ifdef HB_LEGACY_LEVEL4
       _Init_Html_AnsiCharacterEntities()
@@ -4236,7 +4236,7 @@ FUNCTION ANSIToHtml( cAnsiText )
       nEnd  := parser:p_pos
       cText := SubStr(parser:p_str, nStart, nEnd - nStart)
 
-      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty(cChr) .AND. parser:p_pos != 0
+      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. !Empty(cChr) .AND. parser:p_pos != 0
       ENDDO
 
       SWITCH cChr
@@ -4380,7 +4380,7 @@ FUNCTION tip_StrToHtml( cAnsiText )
       nEnd  := parser:p_pos
       cText := SubStr(parser:p_str, nStart, nEnd - nStart)
 
-      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty(cChr) .AND. parser:p_pos != 0
+      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. !Empty(cChr) .AND. parser:p_pos != 0
       ENDDO
 
       SWITCH cChr

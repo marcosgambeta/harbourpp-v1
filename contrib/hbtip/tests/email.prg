@@ -3,7 +3,7 @@
 #require "hbssl"
 #require "hbtip"
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 REQUEST __HBEXTERN__HBSSL__
 #endif
 

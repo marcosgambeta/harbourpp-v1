@@ -173,7 +173,7 @@ METHOD TIPMail:SetFieldPart( cPart, cValue )
    LOCAL nPos
    LOCAL cEnc
 
-   IF HB_IsString(cValue) .AND. ! Empty(cValue)
+   IF HB_IsString(cValue) .AND. !Empty(cValue)
       IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
          ( nPos := At( ";", cEnc ) ) > 0
          ::hHeaders[cPart] := cValue + SubStr(cEnc, nPos)
@@ -189,7 +189,7 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
    LOCAL aMatch
 
    IF HB_IsString(cPart) .AND. cPart $ ::hHeaders .AND. ;
-      HB_IsString(cOption) .AND. ! Empty(cOption)
+      HB_IsString(cOption) .AND. !Empty(cOption)
 
       aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[cPart], .F. )
 

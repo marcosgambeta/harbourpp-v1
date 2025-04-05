@@ -1444,14 +1444,14 @@ METHOD TMySQLServer:Query( cQuery )
    i := 1
    nNumTables := 1
 
-   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "FROM" ) .AND. ! Empty(cToken)
+   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "FROM" ) .AND. !Empty(cToken)
    ENDDO
 
    // first token after "FROM" is a table name
    // NOTE: SubSelects ?
    cTableName := hb_tokenGet( cUpperQuery, i++, " " )
 
-   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "WHERE" ) .AND. ! Empty(cToken)
+   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "WHERE" ) .AND. !Empty(cToken)
       // do we have more than one table referenced ?
       IF cToken == "," .OR. cToken == "JOIN"
          nNumTables++

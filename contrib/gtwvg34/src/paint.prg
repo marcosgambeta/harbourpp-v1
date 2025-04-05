@@ -74,7 +74,7 @@ FUNCTION WvtPaintObjects()
       FOR EACH blk IN aBlocks
          lExe := .T.
 
-         IF blk[3] != NIL .AND. ! Empty(blk[3])
+         IF blk[3] != NIL .AND. !Empty(blk[3])
             // Check parameters against tlbr_ depending upon the
             // type of object and attributes contained in aAttr
             DO CASE
@@ -852,7 +852,7 @@ FUNCTION wvg_TrackPopupMenu( hMenu, nFlags, x, y, hWnd )
 
    LOCAL xy
 
-   IF !HB_IsNumeric(x) .OR. ! HB_IsNumeric(y)
+   IF !HB_IsNumeric(x) .OR. !HB_IsNumeric(y)
       xy := { => }
       wapi_GetCursorPos( @xy )
       x := xy["x"]

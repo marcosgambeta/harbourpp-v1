@@ -248,7 +248,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
 
    ::nLength := -1
    ::bChunked := .F.
-   IF hb_defaultValue( lClear, .F. ) .AND. ! Empty(::hHeaders)
+   IF hb_defaultValue( lClear, .F. ) .AND. !Empty(::hHeaders)
       ::hHeaders := { => }
    ENDIF
    cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
@@ -263,7 +263,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
 
       DO CASE
       // RFC 2068 forces to discard content length on chunked encoding
-      CASE Lower(aHead[1]) == "content-length" .AND. ! ::bChunked
+      CASE Lower(aHead[1]) == "content-length" .AND. !::bChunked
          cLine := SubStr(cLine, 16)
          ::nLength := Val(cLine)
 

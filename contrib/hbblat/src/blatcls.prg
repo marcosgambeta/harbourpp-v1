@@ -233,7 +233,7 @@ METHOD PROCEDURE HBBlat:Check()
       // The Basics ----------------------------------
 
       // to
-      IF !HB_IsString(::cTO) .AND. ! HB_IsString(::cTOFile) .AND. ! ::lToUndiscloseRecipients
+      IF !HB_IsString(::cTO) .AND. !HB_IsString(::cTOFile) .AND. !::lToUndiscloseRecipients
          ::nError := BLAT_ERR_MISSING_TO
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TO )
          AAdd(::aErrors, { ::nError, ::cError })
@@ -347,7 +347,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // body
-      IF !HB_IsString(::cBody) .AND. ! HB_IsString(::cBodyFile)
+      IF !HB_IsString(::cBody) .AND. !HB_IsString(::cBodyFile)
          ::nError := BLAT_ERR_MISSING_BODY
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BODY )
          AAdd(::aErrors, { ::nError, ::cError })

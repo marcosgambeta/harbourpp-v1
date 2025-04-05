@@ -619,7 +619,7 @@ STATIC FUNCTION TriToStr(nValue, aMsg, nGender, lOrd, lLast, nTri)
 
    IF nValue >= 20
       nTemp := nValue % 10
-      IF !lOrd .OR. nTemp != 0 .OR. ! lLast
+      IF !lOrd .OR. nTemp != 0 .OR. !lLast
          nIdx := NTSR_MALE
       ELSEIF lLast .AND. nTemp == 0 .AND. nTri == 0
          nIdx := NTSR_CNT
@@ -642,7 +642,7 @@ STATIC FUNCTION TriToStr(nValue, aMsg, nGender, lOrd, lLast, nTri)
 
    IF nValue > 0
       IF lOrd
-         IF nTri >= 1 .AND. lLast .AND. ! l20
+         IF nTri >= 1 .AND. lLast .AND. !l20
             nIdx := NTSR_ROD
             lLast := .F.
          ELSE

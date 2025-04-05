@@ -686,7 +686,7 @@ FUNCTION whitespace_cb(hNode, nWhere)
          ( ( cName == "choice" .OR. cName == "option" ) .AND. nWhere == MXML_WS_BEFORE_CLOSE )
       nLevel := -1
       hParent := mxmlGetParent( hNode )
-      DO WHILE ! Empty(hParent)
+      DO WHILE !Empty(hParent)
          nLevel++
          hParent := mxmlGetParent( hParent )
       ENDDO

@@ -25,7 +25,7 @@ PROCEDURE Main()
 
 #include "_xbp.prg"
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 
 PROCEDURE hb_GTSYS()  // must be a public function
 

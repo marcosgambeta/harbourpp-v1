@@ -82,7 +82,7 @@ PROCEDURE xGet1()
    @ 23, 0  SAY "Outside the window" COLOR "R/W"
 #endif
 
-   DO WHILE ! lDone
+   DO WHILE !lDone
       @ 12, 22 SAY "Name    : " GET cName  PICT "@!K" WHEN lMessage( "Please enter your name" )
       @ 14, 22 SAY "Address : " GET cAddr  PICT "@!K" WHEN lMessage( "Please enter your address" )
       @ 16, 22 SAY "Phone   : " GET cPhone PICT "@K"  WHEN lMessage( "Please enter your phone number" )
@@ -137,7 +137,7 @@ FUNCTION xBrowse1()
 
    znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), nTop, nLeft, nBottom, nRight, "test.dbf" )
 
-   DO WHILE ! lEnd
+   DO WHILE !lEnd
       oBrowse:ForceStable()
 
       lMessage( "Record #" + hb_ntos(RecNo()) )

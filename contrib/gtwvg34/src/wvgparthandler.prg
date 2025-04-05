@@ -218,7 +218,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
    IF !Empty(a_) .AND. HB_IsEvalItem(a_[1])
       ::sb_notifier := a_[1]
 
-   ELSEIF ! Empty(a_) .AND. HB_IsEvalItem(::sb_notifier) .AND. HB_IsNumeric(a_[1]) .AND. HB_IsArray(a_[2])
+   ELSEIF !Empty(a_) .AND. HB_IsEvalItem(::sb_notifier) .AND. HB_IsNumeric(a_[1]) .AND. HB_IsArray(a_[2])
       Eval(::sb_notifier, a_[1], a_[2], Self)
 
    ENDIF
@@ -446,7 +446,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
    SWITCH nMessage
 
    CASE WIN_WM_ERASEBKGND
-      IF ::objType == objTypeDA .AND. ! Empty(::hBrushBG)
+      IF ::objType == objTypeDA .AND. !Empty(::hBrushBG)
          ::handleEvent( HB_GTE_CTLCOLOR, { wvg_n2p( nwParam ), wvg_n2p( nlParam ) } )
       ENDIF
       EXIT

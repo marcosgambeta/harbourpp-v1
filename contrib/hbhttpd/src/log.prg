@@ -86,7 +86,7 @@ METHOD UHttpdLog:Add(cMsg)
       RETURN .F.
    ENDIF
 
-   IF ::fhnd == F_ERROR .AND. ! Empty(::cFileName)
+   IF ::fhnd == F_ERROR .AND. !Empty(::cFileName)
       ::fhnd := hb_FCreate( ::cFileName, FC_NORMAL, FO_WRITE + FO_DENYNONE )
    ENDIF
 

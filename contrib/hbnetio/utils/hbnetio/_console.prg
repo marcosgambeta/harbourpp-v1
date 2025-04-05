@@ -80,7 +80,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
    lQuit := .F.
 
-   DO WHILE ! lQuit
+   DO WHILE !lQuit
 
       cCommand := Space(128)
 
@@ -92,7 +92,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
       SetCursor( IIf(ReadInsert(), SC_INSERT, SC_NORMAL) )
 
       bKeyIns   := SetKey(K_INS, ;
-         {|| SetCursor( IIf(ReadInsert( ! ReadInsert() ), ;
+         {|| SetCursor( IIf(ReadInsert( !ReadInsert() ), ;
                           SC_NORMAL, SC_INSERT) ) })
       bKeyUp    := SetKey(K_UP, ;
          {|| IIf(nHistIndex > 1, ;

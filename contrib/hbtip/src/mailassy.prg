@@ -79,10 +79,10 @@ FUNCTION tip_MailAssemble( ;
    LOCAL cCharsetCP
    LOCAL tmp
 
-   IF Empty(cFrom) .OR. ! HB_IsString(cFrom)
+   IF Empty(cFrom) .OR. !HB_IsString(cFrom)
       RETURN ""
    ENDIF
-   IF Empty(xTo) .OR. ( ! HB_IsString(xTo) .AND. ! HB_IsArray(xTo) )
+   IF Empty(xTo) .OR. ( !HB_IsString(xTo) .AND. !HB_IsArray(xTo) )
       RETURN ""
    ENDIF
 

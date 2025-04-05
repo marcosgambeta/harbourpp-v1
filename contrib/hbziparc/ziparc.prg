@@ -403,7 +403,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
    LOCAL cTime
    LOCAL cBuffer := Space(t_nReadBuffer)
 
-   IF hb_defaultValue( lWithPath, .F. ) .AND. ! hb_DirExists( cPath ) .AND. hb_DirCreate( cPath ) != 0
+   IF hb_defaultValue( lWithPath, .F. ) .AND. !hb_DirExists( cPath ) .AND. hb_DirCreate( cPath ) != 0
       lRetVal := .F.
    ENDIF
 

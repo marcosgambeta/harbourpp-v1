@@ -311,7 +311,7 @@ METHOD PROCEDURE WvtDialog:Destroy()
    SetColor(::cOldColor)
    SetCursor( ::nOldCursor )
 
-   IF ::oldMenuHandle != NIL .AND. ! Empty(::oldMenuHandle)
+   IF ::oldMenuHandle != NIL .AND. !Empty(::oldMenuHandle)
       wvt_SetMenu( ::oldMenuHandle )
    ENDIF
    SetKey(wvt_SetMenuKeyEvent(), ::oldMenuBlock)

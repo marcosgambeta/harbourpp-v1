@@ -119,7 +119,7 @@ PROCEDURE testdb(cName)
    NEXT
    ordSetFocus(1)
    dbGoTop()
-   DO WHILE ! Eof()
+   DO WHILE !Eof()
       IF !field->F1 == field->F2
          ? "error at record:", RecNo()
          ? "  ! '" + field->F1 + "' == '" + field->F2 + "'"

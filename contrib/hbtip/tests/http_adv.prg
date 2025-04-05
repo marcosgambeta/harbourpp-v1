@@ -3,7 +3,7 @@
 #require "hbssl"
 #require "hbtip"
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 REQUEST __HBEXTERN__HBSSL__
 #endif
 
@@ -23,7 +23,7 @@ PROCEDURE Main( cURL )
       RETURN
    ENDIF
 
-   IF oURL:cProto == "https" .AND. ! tip_SSL()
+   IF oURL:cProto == "https" .AND. !tip_SSL()
       ? "Error: Requires SSL support"
       RETURN
    ENDIF

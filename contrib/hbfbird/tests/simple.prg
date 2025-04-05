@@ -138,7 +138,7 @@ PROCEDURE Main()
 
    ? oServer:Execute( "error caused intentionaly" )
 
-   DO WHILE ! oQuery:Eof()
+   DO WHILE !oQuery:Eof()
       oQuery:Skip()
       ? ;
          oQuery:FieldGet( oQuery:FieldPos( "code" ) ), ;

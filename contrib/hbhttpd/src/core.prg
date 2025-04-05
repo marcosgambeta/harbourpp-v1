@@ -508,7 +508,7 @@ STATIC FUNCTION ProcessConnection( oServer )
 
       /* Set cRequest to empty string here. This enables request pipelining */
       cRequest := ""
-      DO WHILE ! oServer:lStop
+      DO WHILE !oServer:lStop
 
          /* receive query header */
          nLen := 1
@@ -634,7 +634,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          // Send response
          cBuf := MakeResponse( oServer:hConfig )
 
-         DO WHILE hb_BLen(cBuf) > 0 .AND. ! oServer:lStop
+         DO WHILE hb_BLen(cBuf) > 0 .AND. !oServer:lStop
             IF oServer:lHasSSL .AND. oServer:hConfig["SSL"]
                nLen := MY_SSL_WRITE( oServer:hConfig, hSSL, hSocket, cBuf, 1000, @nErr )
             ELSE
@@ -982,11 +982,11 @@ STATIC FUNCTION GetErrorDesc(oErr)
    cRet += "Stack:" + hb_eol()
    nI := 2
 #if 0
-   DO WHILE ! Empty(ProcName( ++nI ))
+   DO WHILE !Empty(ProcName( ++nI ))
       cRet += "    " + ProcName( nI ) + "(" + hb_ntos(ProcLine( nI )) + ")" + hb_eol()
    ENDDO
 #else
-   DO WHILE ! Empty(ProcName( ++nI ))
+   DO WHILE !Empty(ProcName( ++nI ))
       cI := "    " + ProcName( nI ) + "(" + hb_ntos(ProcLine( nI )) + ")"
       cI := PadR(cI, Max(32, Len(cI) + 1))
       cI += "("
@@ -999,7 +999,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
       NEXT
       cI += ")"
       nJ := Len(aPar)
-      DO WHILE ! HB_IsSymbol(xI := __dbgVMVarLGet( nI, ++nJ ))
+      DO WHILE !HB_IsSymbol(xI := __dbgVMVarLGet( nI, ++nJ ))
          cI += ", " + cvt2str(xI)
       ENDDO
       xI := NIL
@@ -1201,7 +1201,7 @@ PROCEDURE USessionStart()
    ENDIF
 
    hb_mutexLock( httpd:hmtxSession )
-   IF cSID == NIL .OR. ! hb_HHasKey(httpd:hSession, cSID)
+   IF cSID == NIL .OR. !hb_HHasKey(httpd:hSession, cSID)
       // Session does not exist
       USessionCreateInternal()
    ELSE

@@ -3,7 +3,7 @@
 #include <hbgtinfo.ch>
 #include <hbclass.ch>
 
-#if ! defined(__HBSCRIPT__HBSHELL)
+#if !defined(__HBSCRIPT__HBSHELL)
 REQUEST HB_GT_WVT_DEFAULT
 #endif
 
@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    LOCAL oMSCAL
 
-#if ! defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
+#if !defined(__HBSCRIPT__HBSHELL) .AND. defined(__PLATFORM__WINDOWS)
    hbshell_gtSelect( "GTWVT" )
 #endif
 

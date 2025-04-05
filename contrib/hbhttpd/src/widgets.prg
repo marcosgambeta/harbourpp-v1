@@ -362,7 +362,7 @@ METHOD UWBrowse:Output()
    IF ::nPageSize > 0 .AND. ::nPos > 0
       dbSkip( ::nPos )
    ENDIF
-   DO WHILE ! Eof()
+   DO WHILE !Eof()
       cRet += '<tr>'
       FOR nI := 1 TO Len(::aColumns)
          xField := ::aColumns[nI][3]

@@ -86,7 +86,7 @@ PROCEDURE Main()
    wvw_ShowWindow(0)
 
    // wait until user click the close button
-   DO WHILE ! lClosepermitted
+   DO WHILE !lClosepermitted
       Inkey(0.2)
    ENDDO
    SetKey(K_F8, bSetKey)
@@ -299,7 +299,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    wvw_ebSetFocus( nwinnum, aEBGets[1][__GET_NEBID] )
    nFocus := 1
    ch := Inkey(0.5)
-   DO WHILE ! lDone
+   DO WHILE !lDone
       IF HB_IsBlock(SetKey(ch))
          Eval(SetKey(ch))
       ELSEIF ch != 0
@@ -344,7 +344,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
 
    lClosepermitted := ( nwinnum == wvw_nNumWindows() - 1 )
    // wait until user click the close button
-   DO WHILE ! lClosepermitted
+   DO WHILE !lClosepermitted
       Inkey(0.5)
    ENDDO
 
@@ -372,7 +372,7 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
    ENDIF
    lchangefocus := .T.
    DO CASE
-   CASE ch == K_TAB .AND. ! lShiftPressed()
+   CASE ch == K_TAB .AND. !lShiftPressed()
       IF nFocus < ( nNumGets + 2 )  // incl buttons
          nFocus++
       ELSE
@@ -721,7 +721,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
             CB := SubStr(OutBuffer, icp + x, 1)
             CM := SubStr(Mask, icp + x, 1)
 
-            IF !IsDigit( CB ) .AND. ! IsAlpha(CB) .AND. ;
+            IF !IsDigit( CB ) .AND. !IsAlpha(CB) .AND. ;
                ( !( CB == " " ) .OR. ( CB == " " .AND. CM == " " ) )
                wvw_ebSetSel( mnwinnum, mnebid, icp + x, icp + x )
             ELSE

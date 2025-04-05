@@ -116,7 +116,7 @@ METHOD TIPCgi:New()
             ENDIF
          NEXT
       ENDIF
-   ELSEIF ! Empty(cTemp := GetEnv("QUERY_STRING"))
+   ELSEIF !Empty(cTemp := GetEnv("QUERY_STRING"))
       FOR EACH item IN hb_ATokens( cTemp, "&" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
             ::hGets[AllTrim(tip_URLDecode( aVar[1] ))] := tip_URLDecode( aVar[2] )
@@ -136,7 +136,7 @@ METHOD TIPCgi:New()
 
 METHOD TIPCgi:Header( cValue )
 
-   IF HB_IsString(cValue) .AND. ! Empty(cValue)
+   IF HB_IsString(cValue) .AND. !Empty(cValue)
       ::cCgiHeader += cValue + _CRLF
    ELSE
       ::cCgiHeader += "Content-Type: text/html" + _CRLF
@@ -146,7 +146,7 @@ METHOD TIPCgi:Header( cValue )
 
 METHOD TIPCgi:Redirect( cUrl )
 
-   IF HB_IsString(cUrl) .AND. ! Empty(cUrl)
+   IF HB_IsString(cUrl) .AND. !Empty(cUrl)
       ::cCgiHeader += "Location: " + cUrl + _CRLF
    ENDIF
 
@@ -259,7 +259,7 @@ METHOD TIPCgi:DestroySession( cID )
    LOCAL cSID
    LOCAL lOk
 
-   IF HB_IsString(cID) .AND. ! Empty(cID)
+   IF HB_IsString(cID) .AND. !Empty(cID)
       cSID := cID
    ELSE
       cSID := ::cSID
@@ -302,7 +302,7 @@ METHOD PROCEDURE TIPCgi:ErrHandler( xError )
    ENDCASE
 
    nCalls := 0
-   DO WHILE ! Empty(ProcName( ++nCalls ))
+   DO WHILE !Empty(ProcName( ++nCalls ))
       cErrMsg += "<tr><td>PROC/LINE:</td><td>" + ProcName( nCalls ) + "/" + hb_ntos(ProcLine( nCalls )) + "</td></tr>"
    ENDDO
 
@@ -349,7 +349,7 @@ STATIC FUNCTION HtmlTag( xVal, cKey, cDefault )
 
    LOCAL cVal
 
-   IF HB_IsHash(xVal) .AND. ! Empty(cKey) .AND. cKey $ xVal
+   IF HB_IsHash(xVal) .AND. !Empty(cKey) .AND. cKey $ xVal
       cVal := xVal[cKey]
       hb_HDel( xVal, cKey )
    ELSE

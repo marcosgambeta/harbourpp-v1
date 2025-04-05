@@ -58,5 +58,5 @@ FUNCTION IsDbFLock()
    RETURN dbInfo( DBI_ISFLOCK )
 
 FUNCTION IsDbRLock( xRec )
-   RETURN dbInfo( DBI_ISFLOCK ) .OR. ! dbInfo( DBI_SHARED ) .OR. ;
+   RETURN dbInfo( DBI_ISFLOCK ) .OR. !dbInfo( DBI_SHARED ) .OR. ;
       dbRecordInfo( DBRI_LOCKED, xRec )

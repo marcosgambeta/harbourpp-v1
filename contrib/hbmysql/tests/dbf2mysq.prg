@@ -143,7 +143,7 @@ PROCEDURE Main(...)
       QUIT
    ENDIF
 
-   DO WHILE ! dbffile->( Eof() ) .AND. Inkey() != K_ESC
+   DO WHILE !dbffile->( Eof() ) .AND. Inkey() != K_ESC
 
       oRecord := oTable:GetBlankRow()
 

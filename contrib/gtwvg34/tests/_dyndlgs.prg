@@ -210,7 +210,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       IF t_hImage == NIL
          t_hImage := wvg_LoadImage( "vouch1.bmp", 2 )
       ENDIF
-      IF t_hImage != NIL .AND. ! Empty(t_hImage)
+      IF t_hImage != NIL .AND. !Empty(t_hImage)
          wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_STA_IMAGE ), STM_SETIMAGE, WIN_IMAGE_BITMAP, t_hImage )
       ENDIF
 #endif
