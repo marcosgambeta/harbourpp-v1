@@ -1,11 +1,10 @@
-/*
- * demonstration/test code for OLE server which works like
- *    xHarbour.com OLE servers described at
- *    http://xharbour.com/index.asp?page=add_on_oleserver&show_sub=7&show_i=1
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// demonstration/test code for OLE server which works like
+//    xHarbour.com OLE servers described at
+//    http://xharbour.com/index.asp?page=add_on_oleserver&show_sub=7&show_i=1
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #define CLS_Name  "MyOleServer"
 #define CLS_ID    "{466AC7B2-35D7-4509-B909-C3C2F8FDBD3C}"

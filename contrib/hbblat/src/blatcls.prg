@@ -1,9 +1,8 @@
-/*
- * BLAT wrapper library interface code.
- *
- * Copyright 2007-2012 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- */
+//
+// BLAT wrapper library interface code.
+//
+// Copyright 2007-2012 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,12 +1,11 @@
-/*
- * TIP Class oriented Internet protocol library
- *
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
- * Copyright 2007 Hannes Ziegler <hz AT knowlexbase.com> (sendMail())
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour) (SSL support)
- * Copyright 2015 Jean Lefebvre (STARTTLS support)
- *
- */
+//
+// TIP Class oriented Internet protocol library
+//
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
+// Copyright 2007 Hannes Ziegler <hz AT knowlexbase.com> (sendMail())
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour) (SSL support)
+// Copyright 2015 Jean Lefebvre (STARTTLS support)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

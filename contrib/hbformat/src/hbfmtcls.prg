@@ -1,9 +1,8 @@
-/*
- * Harbour source code formatter
- *
- * Copyright 2009 Alexander S.Kresin <alex@belacy.belgorod.su>
- *
- */
+//
+// Harbour source code formatter
+//
+// Copyright 2009 Alexander S.Kresin <alex@belacy.belgorod.su>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

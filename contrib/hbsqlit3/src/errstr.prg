@@ -1,10 +1,9 @@
-/*
- * Supplementary functions (error strings)
- *
- * Copyright 2013 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2009 P.Chornyj <myorg63@mail.ru>
- *
- */
+//
+// Supplementary functions (error strings)
+//
+// Copyright 2013 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2009 P.Chornyj <myorg63@mail.ru>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * NTP functions
- *
- * Copyright 2013 Viktor Szakats (vsz.me/hb)
- *
- */
+//
+// NTP functions
+//
+// Copyright 2013 Viktor Szakats (vsz.me/hb)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

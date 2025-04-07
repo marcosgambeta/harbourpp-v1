@@ -1,11 +1,11 @@
-/*
- * OLE demo/test code
- *
- * Copyright 2007 Enrico Maria Giordano e.m.giordano at emagsoftware.it
- * Copyright 2008-2017 Viktor Szakats
- *    Exm_CDO(), Exm_OOOpen(), Exm_CreateShortcut()
- * Copyright 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- */
+//
+// OLE demo/test code
+//
+// Copyright 2007 Enrico Maria Giordano e.m.giordano at emagsoftware.it
+// Copyright 2008-2017 Viktor Szakats
+//    Exm_CDO(), Exm_OOOpen(), Exm_CreateShortcut()
+// Copyright 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 #require "hbwin34"
 

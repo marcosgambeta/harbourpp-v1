@@ -1,8 +1,8 @@
-/* Copyright 2005 Budyanto Dj. <budyanto@centrin.net.id>
-
-   This is an example on how to integrate GTWVW's combobox into
-   regular GET/GetList system. Be creative, do not be bound by
-   the ideas presented herein. There may be better ways to do it. */
+// Copyright 2005 Budyanto Dj. <budyanto@centrin.net.id>
+//
+// This is an example on how to integrate GTWVW's combobox into
+// regular GET/GetList system. Be creative, do not be bound by
+// the ideas presented herein. There may be better ways to do it.
 
 #require "gtwvw34"
 

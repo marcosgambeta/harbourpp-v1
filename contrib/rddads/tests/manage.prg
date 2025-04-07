@@ -1,9 +1,8 @@
-/*
- * Advantage Database Server RDD Management Functions Test program
- *
- * Copyright 2001 Brian Hays <bhays@abacuslaw.com>
- *
- */
+//
+// Advantage Database Server RDD Management Functions Test program
+//
+// Copyright 2001 Brian Hays <bhays@abacuslaw.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

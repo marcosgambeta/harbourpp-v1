@@ -1,11 +1,10 @@
-/*
- * ZipArchive interface compatibility implementation.
- *
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2008 Toninho (toninhofwi yahoo.com.br)
- * Copyright 2000-2001 Luiz Rafael Culik <culik@sl.conex.net> (original ZipArchive interface, docs)
- *
- */
+//
+// ZipArchive interface compatibility implementation.
+//
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2008 Toninho (toninhofwi yahoo.com.br)
+// Copyright 2000-2001 Luiz Rafael Culik <culik@sl.conex.net> (original ZipArchive interface, docs)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,19 +1,18 @@
-/*
- * Test program for Mini-XML, a small XML-like file parsing library.
- *
- * Copyright 2003-2011 by Michael R Sweet.
- *
- * These coded instructions, statements, and computer programs are the
- * property of Michael R Sweet and are protected by Federal copyright
- * law.  Distribution and use rights are outlined in the file "LICENSE.txt"
- * which should have been included with this file.  If this file is
- * missing or damaged, see the license at:
- *
- *     https://www.msweet.org/projects.php?Z3
- *
- * Harbour port Copyright (c) 2011 Tamas TEVESZ <ice@extreme.hu>
- *
- */
+//
+// Test program for Mini-XML, a small XML-like file parsing library.
+//
+// Copyright 2003-2011 by Michael R Sweet.
+//
+// These coded instructions, statements, and computer programs are the
+// property of Michael R Sweet and are protected by Federal copyright
+// law.  Distribution and use rights are outlined in the file "LICENSE.txt"
+// which should have been included with this file.  If this file is
+// missing or damaged, see the license at:
+//
+//     https://www.msweet.org/projects.php?Z3
+//
+// Harbour port Copyright (c) 2011 Tamas TEVESZ <ice@extreme.hu>
+//
 
 #require "hbmxml"
 

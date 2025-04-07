@@ -1,9 +1,8 @@
-/*
- * HBBLAT sample blat pure command interface
- *
- * Copyright 2007-2009 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- */
+//
+// HBBLAT sample blat pure command interface
+//
+// Copyright 2007-2009 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

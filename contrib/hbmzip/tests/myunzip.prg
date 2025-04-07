@@ -1,9 +1,8 @@
-/*
- *  MyUnzip utility
- *
- * Copyright 2008 Mindaugas Kavaliauskas <dbtopas.at.dbtopas.lt>
- *
- */
+//
+// MyUnzip utility
+//
+// Copyright 2008 Mindaugas Kavaliauskas <dbtopas.at.dbtopas.lt>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,5 +1,5 @@
-/* Copyright 2005 Budyanto Dj. <budyanto@centrin.net.id>
-   A simple example on how to make use of GTWVW's combobox. */
+// Copyright 2005 Budyanto Dj. <budyanto@centrin.net.id>
+// A simple example on how to make use of GTWVW's combobox.
 
 #require "gtwvw34"
 

@@ -1,7 +1,6 @@
-/*
- * Copyright 2008 Pritpal Bedi <pritpal@vouchcac.com>
- *
- */
+//
+// Copyright 2008 Pritpal Bedi <pritpal@vouchcac.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

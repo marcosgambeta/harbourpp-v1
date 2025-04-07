@@ -1,9 +1,8 @@
-/*
- * CALLDLL compatibility library. EXPERIMENTAL CODE. USE AT YOUR OWN RISK. NO GUARANTEES.
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// CALLDLL compatibility library. EXPERIMENTAL CODE. USE AT YOUR OWN RISK. NO GUARANTEES.
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * NumToTxtHU() function to convert a number to Hungarian text
- *
- * Copyright 1999-2008 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// NumToTxtHU() function to convert a number to Hungarian text
+//
+// Copyright 1999-2008 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

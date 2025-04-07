@@ -1,9 +1,8 @@
-/*
- * Demonstration/test code for NETIO-RPC OLE server client
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Demonstration/test code for NETIO-RPC OLE server client
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #require "hbwin34"
 

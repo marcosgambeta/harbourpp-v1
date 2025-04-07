@@ -1,18 +1,17 @@
-/*
- * Demonstration code for alternative RDD IO API which uses own
- * very simple TCP/IP file server with RPC support
- * All files which names starts 'net:' are redirected to this API.
- * This is code for simple MT server which is activated by:
- *    netio_MTServer( [<nPort>], [<cIfAddr>], [<cRootDir>], [<xRPC>],
- *                    [<cPasswd>], [<nCompressionLevel>], [<nStrategy>],
- *                    [<sSrvFunc>] )
- *                                           --> <pListenSocket> | NIL
- * and can be stopped by:
- *    netio_ServerStop( <pListenSocket>, .T. )
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Demonstration code for alternative RDD IO API which uses own
+// very simple TCP/IP file server with RPC support
+// All files which names starts 'net:' are redirected to this API.
+// This is code for simple MT server which is activated by:
+//    netio_MTServer( [<nPort>], [<cIfAddr>], [<cRootDir>], [<xRPC>],
+//                    [<cPasswd>], [<nCompressionLevel>], [<nStrategy>],
+//                    [<sSrvFunc>] )
+//                                           --> <pListenSocket> | NIL
+// and can be stopped by:
+//    netio_ServerStop( <pListenSocket>, .T. )
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

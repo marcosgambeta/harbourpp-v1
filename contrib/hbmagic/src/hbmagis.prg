@@ -1,9 +1,8 @@
-/*
- * libmagic convenience functions
- *
- * Copyright 2010 Tamas TEVESZ <ice@extreme.hu>
- *
- */
+//
+// libmagic convenience functions
+//
+// Copyright 2010 Tamas TEVESZ <ice@extreme.hu>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

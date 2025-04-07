@@ -1,9 +1,8 @@
-/*
- * GTWVW compatibility wrappers and other .prg functions
- *
- * Copyright 2014 Viktor Szakats
- *
- */
+//
+// GTWVW compatibility wrappers and other .prg functions
+//
+// Copyright 2014 Viktor Szakats
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

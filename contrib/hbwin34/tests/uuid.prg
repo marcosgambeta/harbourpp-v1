@@ -1,4 +1,4 @@
-/* Copyright 2010 Viktor Szakats */
+// Copyright 2010 Viktor Szakats
 
 #require "hbwin34"
 

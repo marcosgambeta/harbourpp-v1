@@ -1,10 +1,9 @@
-/*
- * Undocumented FlagShip compatible function
- *    StrOccurs( <cSub>, <cStr>, [<lAny>] ) --> <nCount>
- *
- * Copyright 2013 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Undocumented FlagShip compatible function
+//    StrOccurs( <cSub>, <cStr>, [<lAny>] ) --> <nCount>
+//
+// Copyright 2013 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,9 @@
-/*
- * Misc FoxPro functions (feel free to expand/fix it as you like)
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2010-2013 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Misc FoxPro functions (feel free to expand/fix it as you like)
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2010-2013 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

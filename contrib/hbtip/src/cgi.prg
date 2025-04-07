@@ -1,10 +1,9 @@
-/*
- * TIPCgi Class oriented cgi protocol
- *
- * Copyright 2006 Lorenzo Fiorini <lorenzo.fiorini@gmail.com>
- * Copyright 2003-2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
- *
- */
+//
+// TIPCgi Class oriented cgi protocol
+//
+// Copyright 2006 Lorenzo Fiorini <lorenzo.fiorini@gmail.com>
+// Copyright 2003-2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

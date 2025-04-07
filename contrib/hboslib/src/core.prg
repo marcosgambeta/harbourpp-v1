@@ -1,10 +1,9 @@
-/*
- * OSLib emulation for Harbour
- *    http://www.davep.org/clipper/OSLib/
- *
- * Copyright 2011 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// OSLib emulation for Harbour
+//    http://www.davep.org/clipper/OSLib/
+//
+// Copyright 2011 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

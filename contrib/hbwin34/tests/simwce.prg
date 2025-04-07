@@ -1,8 +1,8 @@
-/*
- * SIM test code
- *
- * Copyright 2009 Jose Luis Capel <jlcapel@hotmail.com>
- */
+//
+// SIM test code
+//
+// Copyright 2009 Jose Luis Capel <jlcapel@hotmail.com>
+//
 
 #require "hbwin34"
 

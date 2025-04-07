@@ -1,9 +1,8 @@
-/*
- * SQLite3 Demo
- *
- * Copyright 2007 P.Chornyj <myorg63@mail.ru>
- *
- */
+//
+// SQLite3 Demo
+//
+// Copyright 2007 P.Chornyj <myorg63@mail.ru>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * CodeBar engine library class
- *
- * Copyright 2005 Laverson Espindola <laverson.espindola@gmail.com>
- *
- */
+//
+// CodeBar engine library class
+//
+// Copyright 2005 Laverson Espindola <laverson.espindola@gmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

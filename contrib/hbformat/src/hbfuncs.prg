@@ -1,9 +1,8 @@
-/*
- * Processing .hbx files for function lists
- *
- * Copyright 2012 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Processing .hbx files for function lists
+//
+// Copyright 2012 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

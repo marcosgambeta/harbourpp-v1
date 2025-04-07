@@ -1,9 +1,8 @@
-/*
- * ActiveX module
- *
- * Copyright 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+//
+// ActiveX module
+//
+// Copyright 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

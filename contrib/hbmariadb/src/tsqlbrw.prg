@@ -1,10 +1,9 @@
-/*
- * MySQL TBrowse
- * A TBrowse on a MySQL Table / query
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- *
- */
+//
+// MySQL TBrowse
+// A TBrowse on a MySQL Table / query
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

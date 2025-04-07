@@ -1,9 +1,8 @@
-/*
- * Windows communications library
- *
- * Copyright 2005-2009 Alex Strickland <sscc@mweb.co.za>
- *
- */
+//
+// Windows communications library
+//
+// Copyright 2005-2009 Alex Strickland <sscc@mweb.co.za>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

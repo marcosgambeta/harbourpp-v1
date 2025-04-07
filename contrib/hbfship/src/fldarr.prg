@@ -1,9 +1,8 @@
-/*
- * FieldGetArr() and FieldPutArr() FlagShip compatible function
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus@acn.waw.pl>
- *
- */
+//
+// FieldGetArr() and FieldPutArr() FlagShip compatible function
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus@acn.waw.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

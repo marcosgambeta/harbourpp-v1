@@ -1,9 +1,8 @@
-/*
- * HTML Classes
- *
- * Copyright 2007 Hannes Ziegler <hz/at/knowleXbase.com>
- *
- */
+//
+// HTML Classes
+//
+// Copyright 2007 Hannes Ziegler <hz/at/knowleXbase.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

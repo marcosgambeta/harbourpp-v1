@@ -1,8 +1,8 @@
-/*
- * Copyright 2005 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- * FreeImage API test file
- */
+//
+// Copyright 2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
+// FreeImage API test file
+//
 
 #require "hbfimage"
 

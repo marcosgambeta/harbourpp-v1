@@ -1,9 +1,8 @@
-/*
- * hb_base64EncodeUrl(), hb_base64DecodeUrl()
- *
- * Copyright 2014 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// hb_base64EncodeUrl(), hb_base64DecodeUrl()
+//
+// Copyright 2014 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

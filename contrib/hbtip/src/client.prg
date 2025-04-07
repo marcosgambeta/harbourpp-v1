@@ -1,14 +1,13 @@
-/*
- * TIP Class oriented Internet protocol library
- *
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
- * Copyright 2007 Hannes Ziegler (INetErrorDesc(), lastErrorCode(), lastErrorMessage())
- * Copyright 2007 Toninho@fwi (::nWrite to work like ::nRead)
- * Copyright 2009 Luiz Rafael Culik (luiz at xharbour dot com dot br) (Proxy connection)
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour) (SSL support)
- * Copyright 2015 Jean Lefebvre (STARTTLS support)
- *
- */
+//
+// TIP Class oriented Internet protocol library
+//
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
+// Copyright 2007 Hannes Ziegler (INetErrorDesc(), lastErrorCode(), lastErrorMessage())
+// Copyright 2007 Toninho@fwi (::nWrite to work like ::nRead)
+// Copyright 2009 Luiz Rafael Culik (luiz at xharbour dot com dot br) (Proxy connection)
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour) (SSL support)
+// Copyright 2015 Jean Lefebvre (STARTTLS support)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

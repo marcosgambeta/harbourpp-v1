@@ -1,4 +1,4 @@
-/* Copyright 2009 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt> */
+// Copyright 2009 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
 
 #include <hbclass.ch>
 

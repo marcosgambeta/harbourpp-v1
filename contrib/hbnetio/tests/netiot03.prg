@@ -1,10 +1,9 @@
-/*
- * demonstration/test code for alternative RDD IO API, RPC and
- *    asynchronous data streams in NETIO
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// demonstration/test code for alternative RDD IO API, RPC and
+//    asynchronous data streams in NETIO
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #require "hbnetio"
 

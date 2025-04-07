@@ -1,12 +1,11 @@
-/*
- * FlagShip compatible functions
- *    IsDbExcl() --> <lExclusive>
- *    IsDbFLock() --> <lFLocked>
- *    IsDbRLock( [ <xRec> ] ) --> <lLocked>
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus@acn.waw.pl>
- *
- */
+//
+// FlagShip compatible functions
+//    IsDbExcl() --> <lExclusive>
+//    IsDbFLock() --> <lFLocked>
+//    IsDbRLock( [ <xRec> ] ) --> <lLocked>
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus@acn.waw.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

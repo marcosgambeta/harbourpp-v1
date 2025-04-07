@@ -1,4 +1,4 @@
-/* Copyright 1999 Ryszard Glab */
+// Copyright 1999 Ryszard Glab
 
 #include <inkey.ch>
 #include <setcurs.ch>

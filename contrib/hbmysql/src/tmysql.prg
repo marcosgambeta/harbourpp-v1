@@ -1,10 +1,9 @@
-/*
- * MySQL DBMS classes.
- * These classes try to emulate Cl*pper db*() functions on a SQL query
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- *
- */
+//
+// MySQL DBMS classes.
+// These classes try to emulate Cl*pper db*() functions on a SQL query
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

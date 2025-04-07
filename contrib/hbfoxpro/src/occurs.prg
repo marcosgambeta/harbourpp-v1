@@ -1,9 +1,8 @@
-/*
- * FoxPro compatible Occurs() and At() functions
- *
- * Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// FoxPro compatible Occurs() and At() functions
+//
+// Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

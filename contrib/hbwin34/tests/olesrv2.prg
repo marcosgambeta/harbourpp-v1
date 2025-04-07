@@ -1,11 +1,10 @@
-/*
- * Demonstration/test code for OLE server using hash array with
- * strict item order (associative hash array) to define OLE objects
- * with fixed message numbers (DISPIDs)
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Demonstration/test code for OLE server using hash array with
+// strict item order (associative hash array) to define OLE objects
+// with fixed message numbers (DISPIDs)
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #define CLS_Name  "MyOleTimeServer"
 #define CLS_ID    "{5552013F-2990-4D6C-9C96-55A4BDDCE376}"

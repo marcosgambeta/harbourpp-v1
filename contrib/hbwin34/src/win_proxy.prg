@@ -1,9 +1,8 @@
-/*
- * win_ProxyDetect()
- *
- * Copyright 2015 Viktor Szakats
- *
- */
+//
+// win_ProxyDetect()
+//
+// Copyright 2015 Viktor Szakats
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

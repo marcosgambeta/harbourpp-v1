@@ -1,12 +1,11 @@
-/*
- * ODBC Access Class
- *
- * Copyright 2006 Marcelo Lombardo <lombardo@uol.com.br>
- *   (:SetCnnOptions(), :GetCnnOptions(), :Commit(), :RollBack(),
- *   :SetStmtOptions(), :GetStmtOptions(), :SetAutoCommit())
- * Copyright 1999 Felipe G. Coury <fcoury@creation.com.br>
- *
- */
+//
+// ODBC Access Class
+//
+// Copyright 2006 Marcelo Lombardo <lombardo@uol.com.br>
+//   (:SetCnnOptions(), :GetCnnOptions(), :Commit(), :RollBack(),
+//   :SetStmtOptions(), :GetStmtOptions(), :SetAutoCommit())
+// Copyright 1999 Felipe G. Coury <fcoury@creation.com.br>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

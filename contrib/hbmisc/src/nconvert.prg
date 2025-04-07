@@ -1,9 +1,8 @@
-/*
- * Conversion Funtions
- *
- * Copyright 1999 Luiz Rafael Culik <Culik@sl.conex.net>
- *
- */
+//
+// Conversion Funtions
+//
+// Copyright 1999 Luiz Rafael Culik <Culik@sl.conex.net>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

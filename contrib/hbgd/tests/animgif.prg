@@ -1,10 +1,10 @@
-/*
- * Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- * GD API anim gif test file - from GD official documantation, adapted to porting
- *
- * This test shows how handle either file handle than file name
- */
+//
+// Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
+// GD API anim gif test file - from GD official documantation, adapted to porting
+//
+// This test shows how handle either file handle than file name
+//
 
 #require "hbgd"
 

@@ -1,10 +1,9 @@
-/*
- * ARRAY RDD
- *
- * Copyright 2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
- * Copyright 2011-2013 Quique <quique@quiquesoft.com> (Index, locate and filter Support)
- *
- */
+//
+// ARRAY RDD
+//
+// Copyright 2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
+// Copyright 2011-2013 Quique <quique@quiquesoft.com> (Index, locate and filter Support)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

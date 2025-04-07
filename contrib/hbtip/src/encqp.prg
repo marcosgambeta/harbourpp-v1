@@ -1,9 +1,8 @@
-/*
- * TIP quoted-printable encoder/decoder class
- *
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// TIP quoted-printable encoder/decoder class
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

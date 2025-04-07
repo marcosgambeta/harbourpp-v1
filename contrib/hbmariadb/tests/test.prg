@@ -1,9 +1,8 @@
-/*
- * MySQL DBMS test program
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- *
- */
+//
+// MySQL DBMS test program
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

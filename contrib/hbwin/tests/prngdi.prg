@@ -1,9 +1,8 @@
-/*
- * GDI calls and passing structures.
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// GDI calls and passing structures.
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+//
 
 #require "hbwin"
 

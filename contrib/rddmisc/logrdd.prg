@@ -1,9 +1,8 @@
-/*
- * LOGRDD
- *
- * Copyright 2009 Francesco Saverio Giudice <info / at / fsgiudice.com>
- *
- */
+//
+// LOGRDD
+//
+// Copyright 2009 Francesco Saverio Giudice <info / at / fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

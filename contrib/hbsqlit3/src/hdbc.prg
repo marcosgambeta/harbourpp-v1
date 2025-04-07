@@ -1,9 +1,8 @@
-/*
- * SQLite3 JDBC like interface code.
- *
- * Copyright 2008 Lorenzo Fiorini lorenzo.fiorini@gmail.com
- *
- */
+//
+// SQLite3 JDBC like interface code.
+//
+// Copyright 2008 Lorenzo Fiorini lorenzo.fiorini@gmail.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

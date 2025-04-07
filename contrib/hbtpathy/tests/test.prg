@@ -1,9 +1,8 @@
-/*
- * Telepathy emulation library
- *
- * Copyright 2000, 2001 Dan Levitt <dan@boba-fett.net>
- *
- */
+//
+// Telepathy emulation library
+//
+// Copyright 2000, 2001 Dan Levitt <dan@boba-fett.net>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

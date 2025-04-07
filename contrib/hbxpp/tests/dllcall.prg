@@ -1,9 +1,8 @@
-/*
- * DLL call demonstration.
- *
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// DLL call demonstration.
+//
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour)
+//
 
 #require "hbxpp"
 

@@ -1,15 +1,14 @@
-/*
- * Demonstration code for generating .pdf documents using PDFCreator
- *   COM interface.
- *
- * You should install PDFCreator to be able to run this test
- *
- * COM interface docs:
- * https://www.pdfforge.org/pdfcreator/manual/com-interface
- *
- * Copyright 2010 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
- *
- */
+//
+// Demonstration code for generating .pdf documents using PDFCreator
+//   COM interface.
+//
+// You should install PDFCreator to be able to run this test
+//
+// COM interface docs:
+// https://www.pdfforge.org/pdfcreator/manual/com-interface
+//
+// Copyright 2010 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
+//
 
 #require "hbwin34"
 

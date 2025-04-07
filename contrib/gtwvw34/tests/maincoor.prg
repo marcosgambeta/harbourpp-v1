@@ -1,6 +1,6 @@
-/* Copyright 2004 Budyanto Dj. <budyanto@centrin.net.id>
-   Simplest demo program to show the difference of MainCoord Mode and
-   Standard Mode of GTWVW. */
+// Copyright 2004 Budyanto Dj. <budyanto@centrin.net.id>
+// Simplest demo program to show the difference of MainCoord Mode and
+// Standard Mode of GTWVW.
 
 #require "gtwvw34"
 

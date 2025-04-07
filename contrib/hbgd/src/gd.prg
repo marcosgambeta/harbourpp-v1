@@ -1,9 +1,8 @@
-/*
- * GD graphic library .prg level (client API) interface code.
- *
- * Copyright 2004 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- */
+//
+// GD graphic library .prg level (client API) interface code.
+//
+// Copyright 2004 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

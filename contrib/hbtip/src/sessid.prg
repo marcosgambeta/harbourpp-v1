@@ -1,11 +1,10 @@
-/*
- * Functions to create session id and some utils
- *
- * Copyright 2008 Lorenzo Fiorini <lorenzo.fiorini@gmail.com>
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws> (CGI Session Manager Class)
- * Copyright 2003-2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
- *
- */
+//
+// Functions to create session id and some utils
+//
+// Copyright 2008 Lorenzo Fiorini <lorenzo.fiorini@gmail.com>
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws> (CGI Session Manager Class)
+// Copyright 2003-2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

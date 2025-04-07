@@ -1,8 +1,6 @@
-/*
- *
- * Copyright 2011 Tamas TEVESZ <ice@extreme.hu>
- *
- */
+//
+// Copyright 2011 Tamas TEVESZ <ice@extreme.hu>
+//
 
 #require "hbunix"
 

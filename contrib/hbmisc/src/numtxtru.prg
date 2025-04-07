@@ -1,14 +1,13 @@
-/*
- * Functions to convert a number and date to East Slavic (Russian,
- * Ukrainian and Belorussian) text
- *
- * NumToTxtRU() - convert a number
- * MnyToTxtRU() - convert a money
- * DateToTxtRU() - convert a date
- *
- * Copyright 2012 Pavel Tsarenko (tpe2 at mail.ru)
- *
- */
+//
+// Functions to convert a number and date to East Slavic (Russian,
+// Ukrainian and Belorussian) text
+//
+// NumToTxtRU() - convert a number
+// MnyToTxtRU() - convert a money
+// DateToTxtRU() - convert a date
+//
+// Copyright 2012 Pavel Tsarenko (tpe2 at mail.ru)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

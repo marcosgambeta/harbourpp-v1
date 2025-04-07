@@ -1,9 +1,8 @@
-/*
- * demonstration/test code for NETIO-RPC OLE server
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// demonstration/test code for NETIO-RPC OLE server
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 
 #define CLS_Name  "MyOleRPCServer"

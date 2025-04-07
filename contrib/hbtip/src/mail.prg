@@ -1,12 +1,11 @@
-/*
- * TIP Class oriented Internet protocol library
- *
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
- * Copyright 2007 Hannes Ziegler <hz AT knowlexbase.com>
- *   (setHeader(), attachFile(), detachFile(), getFileName(), isMultiPart(),
- *   getMultiParts())
- *
- */
+//
+// TIP Class oriented Internet protocol library
+//
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
+// Copyright 2007 Hannes Ziegler <hz AT knowlexbase.com>
+//   (setHeader(), attachFile(), detachFile(), getFileName(), isMultiPart(),
+//   getMultiParts())
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

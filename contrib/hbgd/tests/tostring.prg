@@ -1,8 +1,8 @@
-/*
- * Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- * GD Class test file: tostring() demo
- */
+//
+// Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
+// GD Class test file: tostring() demo
+//
 
 #require "hbgd"
 

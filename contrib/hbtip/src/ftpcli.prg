@@ -1,14 +1,13 @@
-/*
- * TIP Class oriented Internet protocol library (FTP)
- *
- * Copyright 2007 Hannes Ziegler <hz AT knowlexbase.com> (RMD(), listFiles(), MPut())
- * Copyright 2007 Toninho@fwi (UserCommand())
- * Copyright 2007 miguelangel@marchuet.net (NoOp(), Rest(), Port(), SendPort())
- * Copyright 2007 Patrick Mast <patrick/dot/mast/at/xharbour.com> (fileSize())
- * Copyright 2005 Rafa Carmona (LS(), Rename(), UploadFile(), DownloadFile(), MKD())
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
- *
- */
+//
+// TIP Class oriented Internet protocol library (FTP)
+//
+// Copyright 2007 Hannes Ziegler <hz AT knowlexbase.com> (RMD(), listFiles(), MPut())
+// Copyright 2007 Toninho@fwi (UserCommand())
+// Copyright 2007 miguelangel@marchuet.net (NoOp(), Rest(), Port(), SendPort())
+// Copyright 2007 Patrick Mast <patrick/dot/mast/at/xharbour.com> (fileSize())
+// Copyright 2005 Rafa Carmona (LS(), Rename(), UploadFile(), DownloadFile(), MKD())
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * demonstration/test code for PIPEIO
- *
- * Copyright 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// demonstration/test code for PIPEIO
+//
+// Copyright 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #require "hbpipeio"
 

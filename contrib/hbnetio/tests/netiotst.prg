@@ -1,10 +1,9 @@
-/*
- * demonstration/test code for alternative RDD IO API which uses own
- *    very simple TCP/IP file server.
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// demonstration/test code for alternative RDD IO API which uses own
+//    very simple TCP/IP file server.
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #require "hbnetio"
 

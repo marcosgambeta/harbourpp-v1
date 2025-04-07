@@ -1,11 +1,11 @@
-/* Copyright 2004 Budyanto Dj. <budyanto@centrin.net.id>
-
-   To present prettier displays we may want to use pseudo-GUI objects.
-   This, however, is not as easy as the previous example.
-   Once you understand how GTWVW draws these objects, you can put
-   pseudo-GUI objects onto each window, one by one.
-
-   Notes: GTWVW now also has native Windows Controls. See other samples. */
+// Copyright 2004 Budyanto Dj. <budyanto@centrin.net.id>
+//
+// To present prettier displays we may want to use pseudo-GUI objects.
+// This, however, is not as easy as the previous example.
+// Once you understand how GTWVW draws these objects, you can put
+// pseudo-GUI objects onto each window, one by one.
+//
+// Notes: GTWVW now also has native Windows Controls. See other samples.
 
 #require "gtwvw34"
 //#require "hbtest"

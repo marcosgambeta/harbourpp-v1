@@ -45,40 +45,40 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/*
- * Teditor Fix: v3.0beta 2004-04-17
- * Copyright 2004 Giancarlo Niccolai <antispam /at/ niccolai.ws>
- *
- * Minimal revision for proper working (especially with word wrapping).
- * Fixed many functions
- * Added GotoCol() and GotoPos() to goto a logical column or position;
- * they translate this movement in a adequate ::SetPos call.
- */
+//
+// Teditor Fix: v3.0beta 2004-04-17
+// Copyright 2004 Giancarlo Niccolai <antispam /at/ niccolai.ws>
+//
+// Minimal revision for proper working (especially with word wrapping).
+// Fixed many functions
+// Added GotoCol() and GotoPos() to goto a logical column or position;
+// they translate this movement in a adequate ::SetPos call.
+//
 
-/*
- * Pritpal Bedi <pritpal@vouchcac.com> 2004-02-28
- *
- * Support for Cl*pper's MemoEdit(..., nTextBufferRow, nTextBufferCol, nWindowRow, nWindowCol)
- * Rearrangement of code in logical sections.
- * Reformatting of code to be more readable.
- * Navigation code broken into small methods for easy maintainability on lines with TBrowse()
- */
+//
+// Pritpal Bedi <pritpal@vouchcac.com> 2004-02-28
+//
+// Support for Cl*pper's MemoEdit(..., nTextBufferRow, nTextBufferCol, nWindowRow, nWindowCol)
+// Rearrangement of code in logical sections.
+// Reformatting of code to be more readable.
+// Navigation code broken into small methods for easy maintainability on lines with TBrowse()
+//
 
-/*
- * Teditor Fix: v2.0 2003-11-17
- * Copyright 2003 Lance Owens <servant@gnosis.org>
- *
- * This revised version has a completely rewritten edit method key commands, with dynamic line and paragraph reformatting.
- * Includes a fix for the bugs in TEditor key processing that previously caused array errors
- *
- * NOTE: - If using the paste function to enter text, increase size of keyboard buffer to 2048 or 4096!
- *         Otherwise buffer will overrun -- it takes some processor time to do all the dynamic reformatting
- *       - SetCursor() is used to change cursor between insert and overwrite. Modify if desired....
- *         This will need to be cleared to return to original cursor within MemoEdit()!!
- *       - K_LEFT is set to exit MemoEdit() in read-only mode, in addition to the standard exit keys ESC.
- *       - __SoftCR() "soft CR" inserted by Cl*pper MemoEdit() is automatically removed when encountered in text
- *       - Color persistence problems in previous version corrected by taking SetColor() at Method New file call.
- */
+//
+// Teditor Fix: v2.0 2003-11-17
+// Copyright 2003 Lance Owens <servant@gnosis.org>
+//
+// This revised version has a completely rewritten edit method key commands, with dynamic line and paragraph reformatting.
+// Includes a fix for the bugs in TEditor key processing that previously caused array errors
+//
+// NOTE: - If using the paste function to enter text, increase size of keyboard buffer to 2048 or 4096!
+//         Otherwise buffer will overrun -- it takes some processor time to do all the dynamic reformatting
+//       - SetCursor() is used to change cursor between insert and overwrite. Modify if desired....
+//         This will need to be cleared to return to original cursor within MemoEdit()!!
+//       - K_LEFT is set to exit MemoEdit() in read-only mode, in addition to the standard exit keys ESC.
+//       - __SoftCR() "soft CR" inserted by Cl*pper MemoEdit() is automatically removed when encountered in text
+//       - Color persistence problems in previous version corrected by taking SetColor() at Method New file call.
+//
 
 #include <hbclass.ch>
 #include <error.ch>

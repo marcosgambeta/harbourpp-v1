@@ -1,9 +1,9 @@
-/*
- * GD graphic library.
- * graphic font DPI demo
- *
- * Copyright 2005 Francesco Saverio Giudice <info@fsgiudice.com>
- */
+//
+// GD graphic library.
+// graphic font DPI demo
+//
+// Copyright 2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 #require "hbgd"
 

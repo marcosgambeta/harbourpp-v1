@@ -1,10 +1,10 @@
-/* Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- * Counter sample
- * usage:
- * counter <number to show>
- * i.e.: counter 34524
- */
+// Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
+// Counter sample
+// usage:
+// counter <number to show>
+// i.e.: counter 34524
+//
 
 #require "hbgd"
 

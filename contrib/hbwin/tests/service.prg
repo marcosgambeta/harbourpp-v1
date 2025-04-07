@@ -1,9 +1,8 @@
-/*
- * Windows Service API test code
- *
- * Copyright 2010 Jose Luis Capel - <jlcapel at hotmail . com>
- *
- */
+//
+// Windows Service API test code
+//
+// Copyright 2010 Jose Luis Capel - <jlcapel at hotmail . com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

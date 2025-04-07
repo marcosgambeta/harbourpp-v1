@@ -1,9 +1,8 @@
-/*
- * VFPCDX
- *
- * Copyright 2007 Miguel Angel Marchuet Frutos <miguelangel /at/ marchuet.net>
- *
- */
+//
+// VFPCDX
+//
+// Copyright 2007 Miguel Angel Marchuet Frutos <miguelangel /at/ marchuet.net>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

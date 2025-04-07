@@ -1,6 +1,6 @@
-/* Copyright 2010-2017 Viktor Szakats */
+// Copyright 2010-2017 Viktor Szakats
 
-/* GDI calls and passing structures. */
+// GDI calls and passing structures.
 
 #require "hbwin34"
 

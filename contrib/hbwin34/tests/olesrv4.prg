@@ -1,11 +1,10 @@
-/*
- * Demonstration/test code for OLE server returning to client
- * HVM objects as OLE object. It's also test for parameters
- * passed by reference.
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Demonstration/test code for OLE server returning to client
+// HVM objects as OLE object. It's also test for parameters
+// passed by reference.
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #define CLS_Name  "MyOleObjServer"
 #define CLS_ID    "{23245C3F-4487-404B-985F-E33886698D23}"

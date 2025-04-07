@@ -1,11 +1,10 @@
-/*
- * tip_MailSend() (This version started from Luiz's original work on SendMail())
- *
- * Copyright 2007 Luiz Rafael Culik Guimaraes and Patrick Mast
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour) (SSL support)
- * Copyright 2015 Jean Lefebvre (STARTTLS support)
- *
- */
+//
+// tip_MailSend() (This version started from Luiz's original work on SendMail())
+//
+// Copyright 2007 Luiz Rafael Culik Guimaraes and Patrick Mast
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour) (SSL support)
+// Copyright 2015 Jean Lefebvre (STARTTLS support)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

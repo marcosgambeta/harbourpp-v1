@@ -1,9 +1,8 @@
-/*
- * GD graphic library class
- *
- * Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- */
+//
+// GD graphic library class
+//
+// Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

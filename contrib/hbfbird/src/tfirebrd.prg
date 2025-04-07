@@ -1,9 +1,8 @@
-/*
- * Firebird RDBMS low-level (client API) interface code.
- *
- * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
- *
- */
+//
+// Firebird RDBMS low-level (client API) interface code.
+//
+// Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

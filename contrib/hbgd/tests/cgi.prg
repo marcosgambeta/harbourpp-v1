@@ -1,8 +1,8 @@
-/*
- * Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- * CGI test application
- */
+//
+// Copyright 2004-2005 Francesco Saverio Giudice <info@fsgiudice.com>
+//
+// CGI test application
+//
 
 #require "hbgd"
 

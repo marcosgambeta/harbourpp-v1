@@ -1,9 +1,8 @@
-/*
- * hbmagic test suite
- *
- * Copyright 2010 Tamas TEVESZ <ice@extreme.hu>
- *
- */
+//
+// hbmagic test suite
+//
+// Copyright 2010 Tamas TEVESZ <ice@extreme.hu>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

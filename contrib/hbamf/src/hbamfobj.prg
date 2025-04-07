@@ -1,10 +1,9 @@
-/*
- * Basic routines for communications using AMFIO over standard IO pipes and TCP/IP
- *
- * Copyright 2011-2012 Aleksander Czajczynski <hb/at/fki.pl>
- * Copyright 2011 Ilina Stoilkovska <anili100/at/gmail.com>
- *
- */
+//
+// Basic routines for communications using AMFIO over standard IO pipes and TCP/IP
+//
+// Copyright 2011-2012 Aleksander Czajczynski <hb/at/fki.pl>
+// Copyright 2011 Ilina Stoilkovska <anili100/at/gmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
