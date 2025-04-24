@@ -67,7 +67,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
-#include <hbapierr.h>
+#include "hbapierr.hpp"
 #include "winapi.hpp"
 
 using namespace Gdiplus;
