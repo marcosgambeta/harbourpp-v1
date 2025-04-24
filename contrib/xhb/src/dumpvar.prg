@@ -163,7 +163,7 @@ STATIC FUNCTION DShowProperties(oVar, nScope, lRecursive, nIndent, nRecursionLev
 
    __defaultNIL(@nIndent, 0)
 
-   IF HB_IsObject(oVar)
+   IF hb_IsObject(oVar)
 #if 0
       lOldScope := __SetClassScope(.F.)
 #endif
@@ -208,7 +208,7 @@ STATIC FUNCTION DShowArray(aVar, lRecursive, nIndent, nRecursionLevel, nMaxRecur
 
    // TraceLog("DShowArray: aVar, lRecursive", aVar, lRecursive)
 
-   IF HB_IsArray(aVar)
+   IF hb_IsArray(aVar)
       nEolLen := Len(hb_eol())
       nChar := Len(hb_ntos(Len(aVar)))  // return number of chars to display that value
       // i.e. if Len(aVar) == 99, then nChar := 2
@@ -239,7 +239,7 @@ STATIC FUNCTION DShowHash(hVar, lRecursive, nIndent, nRecursionLevel, nMaxRecurs
 
    // TraceLog("DShowHash: hVar, ValType(hVar), lRecursive", hVar, ValType(hVar), ValToPrg(hVar), lRecursive)
 
-   IF HB_IsHash(hVar)
+   IF hb_IsHash(hVar)
       nEolLen := Len(hb_eol())
       cString += Space(nIndent) + "{" + hb_eol()
       FOR EACH xVal IN hVar
@@ -336,7 +336,7 @@ STATIC FUNCTION DecodeType(nType AS NUMERIC)
    RETURN PadR(cString, 7)
 
 STATIC FUNCTION asString(x)
-   RETURN IIf(HB_IsString(x), '"' + x + '"', hb_CStr(x))
+   RETURN IIf(hb_IsString(x), '"' + x + '"', hb_CStr(x))
 
 #include <error.ch>
 
@@ -352,7 +352,7 @@ STATIC FUNCTION __objGetMsgFullList(oObject, lData, nRange, nScope, nNoScope)
    LOCAL aReturn
    LOCAL nFirstProperty, aMsg
 
-   IF !HB_IsObject(oObject)
+   IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName())
    ENDIF
 
@@ -393,7 +393,7 @@ STATIC FUNCTION __objGetValueFullList(oObject, aExcept, nScope, nNoScope)
    LOCAL aReturn
    LOCAL aVar
 
-   IF !HB_IsObject(oObject)
+   IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 

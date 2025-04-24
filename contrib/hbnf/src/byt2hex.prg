@@ -21,7 +21,7 @@
 
 FUNCTION ft_Byt2Hex(cByte)
 
-   IF HB_IsString(cByte)
+   IF hb_IsString(cByte)
       RETURN hb_StrToHex(Left(cByte, 1)) + "h"
    ENDIF
 

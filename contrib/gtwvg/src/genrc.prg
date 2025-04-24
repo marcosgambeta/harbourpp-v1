@@ -60,7 +60,7 @@ THREAD STATIC t_oCrt
 
 EXIT PROCEDURE KillGTChildren()
 
-   IF HB_IsObject(t_oCrt) .AND. __objGetClsName(t_oCrt) == "WVGCRT" .AND. t_oCrt:isGT
+   IF hb_IsObject(t_oCrt) .AND. __objGetClsName(t_oCrt) == "WVGCRT" .AND. t_oCrt:isGT
       t_oCrt:destroy()
       t_oCrt := NIL
    ENDIF

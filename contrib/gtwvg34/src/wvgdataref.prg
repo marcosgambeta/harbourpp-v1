@@ -88,11 +88,11 @@ METHOD WvgDataRef:getData()
 
    SWITCH ::className()
    CASE "COMBOBOX"
-      IF HB_IsObject(::XbpListBox) .AND. HB_IsEvalItem(::XbpListBox:dataLink)
+      IF hb_IsObject(::XbpListBox) .AND. hb_IsEvalItem(::XbpListBox:dataLink)
          ::sl_editBuffer := ::XbpListBox:getData()
-      ELSEIF HB_IsObject(::XbpSLE) .AND. HB_IsEvalItem(::XbpSLE:dataLink)
+      ELSEIF hb_IsObject(::XbpSLE) .AND. hb_IsEvalItem(::XbpSLE:dataLink)
          ::sl_editBuffer := ::XbpSLE:getData()
-      ELSEIF HB_IsObject(::XbpListBox)
+      ELSEIF hb_IsObject(::XbpListBox)
          ::sl_editBuffer := ::XbpListBox:getData()
       ENDIF
       EXIT
@@ -117,7 +117,7 @@ METHOD WvgDataRef:getData()
       EXIT
    ENDSWITCH
 
-   IF HB_IsEvalItem(::dataLink)
+   IF hb_IsEvalItem(::dataLink)
       Eval(::dataLink, ::sl_editBuffer)
    ENDIF
 
@@ -129,7 +129,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
 
    HB_SYMBOL_UNUSED(mp2)
 
-   IF HB_IsEvalItem(::dataLink)
+   IF hb_IsEvalItem(::dataLink)
       ::sl_editBuffer := Eval(::dataLink)
    ELSEIF xValue != NIL
       ::sl_editBuffer := xValue
@@ -142,7 +142,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "LISTBOX"    // Single Selection
-      IF HB_IsNumeric(::sl_editBuffer)
+      IF hb_IsNumeric(::sl_editBuffer)
          RETURN wvg_lbSetCurSel( ::hWnd, ::sl_editBuffer - 1 ) >= 0
       ENDIF
       EXIT
@@ -154,7 +154,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "EDIT"
-      IF HB_IsString(::sl_editBuffer)
+      IF hb_IsString(::sl_editBuffer)
          wapi_SendMessage( ::hWnd, WIN_WM_SETTEXT, 0, ::sl_editBuffer )
       ENDIF
       EXIT
@@ -166,7 +166,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "COMBOBOX"
-      IF HB_IsArray(::sl_editBuffer)
+      IF hb_IsArray(::sl_editBuffer)
          // NOT sure which way it should behave.
          // Xbase++ documentation IN this regard is crappy.
          FOR EACH s IN ::sl_editBuffer
@@ -184,9 +184,9 @@ METHOD WvgDataRef:undo()
 
 METHOD WvgDataRef:validate( xParam )
 
-   IF PCount() == 0 .AND. HB_IsEvalItem(::sl_validate)
+   IF PCount() == 0 .AND. hb_IsEvalItem(::sl_validate)
       RETURN Eval(::sl_validate, Self)
-   ELSEIF HB_IsEvalItem(xParam)
+   ELSEIF hb_IsEvalItem(xParam)
       ::sl_validate := xParam
    ENDIF
 

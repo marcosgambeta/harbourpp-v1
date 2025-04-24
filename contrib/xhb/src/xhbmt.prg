@@ -51,7 +51,7 @@ FUNCTION StartThread(p1, p2, ...)
 
    IF PCount() < 2
       RETURN hb_threadStart(p1)
-   ELSEIF HB_IsObject(p1) .AND. HB_IsString(p2)
+   ELSEIF hb_IsObject(p1) .AND. hb_IsString(p2)
       RETURN hb_threadStart({|...|p1:&p2(...)}, ...)
    ENDIF
 
@@ -61,7 +61,7 @@ FUNCTION Subscribe(mtx, nTimeOut, /* @ */ lSubscribed)
 
    LOCAL xSubscribed
 
-   lSubscribed := hb_mutexSubscribe(mtx, IIf(HB_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
+   lSubscribed := hb_mutexSubscribe(mtx, IIf(hb_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
 
    RETURN xSubscribed
 
@@ -69,7 +69,7 @@ FUNCTION SubscribeNow(mtx, nTimeOut, /* @ */ lSubscribed)
 
    LOCAL xSubscribed
 
-   lSubscribed := hb_mutexSubscribeNow(mtx, IIf(HB_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
+   lSubscribed := hb_mutexSubscribeNow(mtx, IIf(hb_IsNumeric(nTimeOut), nTimeOut / 1000,), @xSubscribed)
 
    RETURN xSubscribed
 
@@ -108,7 +108,7 @@ FUNCTION hb_MutexTryLock(mtx)
    RETURN hb_mutexLock(mtx, 0)
 
 FUNCTION hb_MutexTimeOutLock(mtx, nTimeOut)
-   RETURN hb_mutexLock(mtx, IIf(HB_IsNumeric(nTimeOut), nTimeOut / 1000, 0))
+   RETURN hb_mutexLock(mtx, IIf(hb_IsNumeric(nTimeOut), nTimeOut / 1000, 0))
 
 FUNCTION GetSystemThreadId(pThID)
    RETURN IIf(PCount() < 1, hb_threadID(), hb_threadID(pThID))

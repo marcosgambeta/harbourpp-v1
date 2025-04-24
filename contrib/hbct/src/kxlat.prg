@@ -318,7 +318,7 @@ STATIC sc_hCnv := { ;
 
 FUNCTION __hbct_key_c_to_n(cKey)
 
-   IF HB_IsString(cKey)
+   IF hb_IsString(cKey)
       RETURN hb_HGetDef(sc_hCnv, cKey, 0)
    ENDIF
 
@@ -328,7 +328,7 @@ FUNCTION __hbct_key_n_to_c(nKey)
 
    LOCAL hKey
 
-   IF HB_IsNumeric(nKey)
+   IF hb_IsNumeric(nKey)
       FOR EACH hKey IN sc_hCnv
          IF hKey:__enumValue() == nKey
             RETURN hKey:__enumKey()
@@ -352,7 +352,7 @@ FUNCTION GetKXLat(cKeyValue)
    LOCAL xKey := hbct_GetKXLat(__hbct_key_c_to_n(cKeyValue))
 
    // doc is unclear. should this return a numeric in these cases?
-   IF HB_IsNumeric(xKey)
+   IF hb_IsNumeric(xKey)
       RETURN xKey
    ENDIF
 
@@ -363,7 +363,7 @@ FUNCTION SetKXTab(cTrs)
    LOCAL hTrs := {=>}
    LOCAL tmp
 
-   IF HB_IsString(cTrs)
+   IF hb_IsString(cTrs)
       FOR tmp := 1 TO hb_BLen(cTrs) STEP 4
          hTrs[__hbct_key_c_to_n(hb_BSubStr(cTrs, tmp, 2))] := __hbct_key_c_to_n(hb_BSubStr(cTrs, tmp + 2, 2))
       NEXT
@@ -399,7 +399,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
          hb_mutexUnlock(s_hMutex)
       ENDIF
    ELSE
-      IF HB_IsNumeric(nOrgKeyValue) .AND. nOrgKeyValue != 0
+      IF hb_IsNumeric(nOrgKeyValue) .AND. nOrgKeyValue != 0
          IF hb_mutexLock(s_hMutex)
             IF PCount() == 1
                IF nOrgKeyValue $ s_hTrs
@@ -409,7 +409,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
                      hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
                   ENDIF
                ENDIF
-            ELSEIF HB_IsNumeric(nNewKeyValue)
+            ELSEIF hb_IsNumeric(nNewKeyValue)
                // refuse overwriting custom HB_GTI_INKEYFILTER
                IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
                   lAccepted := .T.
@@ -430,7 +430,7 @@ FUNCTION hbct_GetKXLat(nKeyValue)
 
    LOCAL nNewValue := 0
 
-   IF HB_IsNumeric(nKeyValue)
+   IF hb_IsNumeric(nKeyValue)
       IF hb_mutexLock(s_hMutex)
          IF nKeyValue $ s_hTrs
             nNewValue := s_hTrs[nKeyValue]
@@ -448,7 +448,7 @@ FUNCTION hbct_SetKXTab(hTrs)
 
    LOCAL lAccepted := .F.
 
-   IF HB_IsHash(hTrs)
+   IF hb_IsHash(hTrs)
       IF hb_mutexLock(s_hMutex)
          IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
             lAccepted := .T.

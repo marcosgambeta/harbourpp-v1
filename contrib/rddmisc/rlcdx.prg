@@ -149,7 +149,7 @@ STATIC FUNCTION RLCDX_UNLOCK( nWA, xRecID )
 
    LOCAL aWData := USRRDD_AREADATA(nWA), i
 
-   IF HB_IsNumeric(xRecID) .AND. xRecID > 0
+   IF hb_IsNumeric(xRecID) .AND. xRecID > 0
       IF ( i := AScan(aWData[2], {| x | x[1] == xRecID }) ) > 0
          IF --aWData[2][i][2] > 0
             RETURN HB_SUCCESS

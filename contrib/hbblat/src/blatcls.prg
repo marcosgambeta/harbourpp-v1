@@ -232,7 +232,7 @@ METHOD PROCEDURE HBBlat:Check()
       // The Basics ----------------------------------
 
       // to
-      IF !HB_IsString(::cTO) .AND. !HB_IsString(::cTOFile) .AND. !::lToUndiscloseRecipients
+      IF !hb_IsString(::cTO) .AND. !hb_IsString(::cTOFile) .AND. !::lToUndiscloseRecipients
          ::nError := BLAT_ERR_MISSING_TO
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TO )
          AAdd(::aErrors, { ::nError, ::cError })
@@ -240,13 +240,13 @@ METHOD PROCEDURE HBBlat:Check()
             RETURN
          ENDIF
       ELSE
-         IF HB_IsString(::cTO)
+         IF hb_IsString(::cTO)
             ::cCommand += " -to " + ::cTo
          ENDIF
       ENDIF
 
       // tofile - optional
-      IF HB_IsString(::cTOFile)
+      IF hb_IsString(::cTOFile)
          IF !hb_FileExists( ::cTOFile )
             ::nError := BLAT_ERR_MISSING_TOFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TOFILE ) + ": " + ::cToFile
@@ -260,12 +260,12 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cc - optional
-      IF HB_IsString(::cCC)
+      IF hb_IsString(::cCC)
          ::cCommand += " -cc " + ::cCC
       ENDIF
 
       // ccfile - optional
-      IF HB_IsString(::cCCFile)
+      IF hb_IsString(::cCCFile)
          IF !hb_FileExists( ::cCCFile )
             ::nError := BLAT_ERR_MISSING_CCFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_CCFILE ) + ": " + ::cCCFile
@@ -279,12 +279,12 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // bcc - optional
-      IF HB_IsString(::cBCC)
+      IF hb_IsString(::cBCC)
          ::cCommand += " -bcc " + ::cBCC
       ENDIF
 
       // bccfile - optional
-      IF HB_IsString(::cBCCFile)
+      IF hb_IsString(::cBCCFile)
          IF !hb_FileExists( ::cBCCFile )
             ::nError := BLAT_ERR_MISSING_BCCFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BCCFILE ) + ": " + ::cBCCFile
@@ -298,7 +298,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // nMaxNames
-      IF HB_IsNumeric(::nMaxNames) .AND. ::nMaxNames > 0
+      IF hb_IsNumeric(::nMaxNames) .AND. ::nMaxNames > 0
          ::cCommand += " -maxNames " + hb_ntos(::nMaxNames)
       ENDIF
 
@@ -308,7 +308,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cSubject - optional
-      IF HB_IsString(::cSubject)
+      IF hb_IsString(::cSubject)
          ::cCommand += ' -subject "' + ::cSubject + '"'
       ENDIF
 
@@ -318,7 +318,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cSubjectFile - optional
-      IF HB_IsString(::cSubjectFile)
+      IF hb_IsString(::cSubjectFile)
          IF !hb_FileExists( ::cSubjectFile )
             ::nError := BLAT_ERR_MISSING_SUBJECTFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_SUBJECTFILE ) + ": " + ::cSubjectFile
@@ -332,7 +332,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // bodyfile - optional
-      IF HB_IsString(::cBodyFile)
+      IF hb_IsString(::cBodyFile)
          IF !hb_FileExists( ::cBodyFile )
             ::nError := BLAT_ERR_MISSING_BODYFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BODYFILE ) + ": " + ::cBodyFile
@@ -346,7 +346,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // body
-      IF !HB_IsString(::cBody) .AND. !HB_IsString(::cBodyFile)
+      IF !hb_IsString(::cBody) .AND. !hb_IsString(::cBodyFile)
          ::nError := BLAT_ERR_MISSING_BODY
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_BODY )
          AAdd(::aErrors, { ::nError, ::cError })
@@ -354,7 +354,7 @@ METHOD PROCEDURE HBBlat:Check()
             RETURN
          ENDIF
       ELSE
-         IF HB_IsString(::cBody)
+         IF hb_IsString(::cBody)
             ::cCommand += ' -body "' + ::cBody + '"'
          ELSE
             IF !hb_FileExists( ::cBodyFile )
@@ -371,7 +371,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cSignatureFile
-      IF HB_IsString(::cSignatureFile)
+      IF hb_IsString(::cSignatureFile)
          IF !hb_FileExists( ::cSignatureFile )
             ::nError := BLAT_ERR_MISSING_SIGNATUREFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_SIGNATUREFILE ) + ": " + ::cSignatureFile
@@ -385,7 +385,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cTagFile
-      IF HB_IsString(::cTagFile)
+      IF hb_IsString(::cTagFile)
          IF !hb_FileExists( ::cTagFile )
             ::nError := BLAT_ERR_MISSING_TAGFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_TAGFILE ) + ": " + ::cTagFile
@@ -399,7 +399,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cPostScriptumFile - optional
-      IF HB_IsString(::cPostScriptumFile)
+      IF hb_IsString(::cPostScriptumFile)
          IF !hb_FileExists( ::cPostScriptumFile )
             ::nError := BLAT_ERR_MISSING_PSFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_PSFILE ) + ": " + ::cPostScriptumFile
@@ -415,7 +415,7 @@ METHOD PROCEDURE HBBlat:Check()
       // Registry overrides ------------------------------
 
       // cProfile
-      IF HB_IsString(::cProfile)
+      IF hb_IsString(::cProfile)
          ::cCommand += " -p " + ::cProfile
       ENDIF
 
@@ -425,7 +425,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cServerSMTP
-      IF !HB_IsString(::cServerSMTP)
+      IF !hb_IsString(::cServerSMTP)
          ::nError := BLAT_ERR_MISSING_SERVERSMTP
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_SERVERSMTP )
          AAdd(::aErrors, { ::nError, ::cError })
@@ -437,27 +437,27 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cServerNNTP
-      IF HB_IsString(::cServerNNTP)
+      IF hb_IsString(::cServerNNTP)
          ::cCommand += " -serverNNTP " + ::cServerNNTP
       ENDIF
 
       // cServerPOP3
-      IF HB_IsString(::cServerPOP3)
+      IF hb_IsString(::cServerPOP3)
          ::cCommand += " -serverPOP3 " + ::cServerPOP3
       ENDIF
 
       // cServerIMAP
-      IF HB_IsString(::cServerIMAP)
+      IF hb_IsString(::cServerIMAP)
          ::cCommand += " -serverIMAP " + ::cServerIMAP
       ENDIF
 
       // cMailFrom
-      IF HB_IsString(::cMailFrom)
+      IF hb_IsString(::cMailFrom)
          ::cCommand += " -mailfrom " + ::cMailFrom
       ENDIF
 
       // cFrom
-      IF !HB_IsString(::cFrom)
+      IF !hb_IsString(::cFrom)
          ::nError := BLAT_ERR_MISSING_FROM
          ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_FROM )
          AAdd(::aErrors, { ::nError, ::cError })
@@ -469,72 +469,72 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cReplyTo
-      IF HB_IsString(::cReplyTo)
+      IF hb_IsString(::cReplyTo)
          ::cCommand += " -replyto " + ::cReplyTo
       ENDIF
 
       // cReplyTo
-      IF HB_IsString(::cReplyTo)
+      IF hb_IsString(::cReplyTo)
          ::cCommand += " -replyto " + ::cReplyTo
       ENDIF
 
       // cReturnPath
-      IF HB_IsString(::cReturnPath)
+      IF hb_IsString(::cReturnPath)
          ::cCommand += " -returnpath " + ::cReturnPath
       ENDIF
 
       // cSender
-      IF HB_IsString(::cSender)
+      IF hb_IsString(::cSender)
          ::cCommand += " -sender " + ::cSender
       ENDIF
 
       // nPortSMTP
-      IF HB_IsNumeric(::nPortSMTP) .AND. ::nPortSMTP > 0
+      IF hb_IsNumeric(::nPortSMTP) .AND. ::nPortSMTP > 0
          ::cCommand += " -portSMTP " + hb_ntos(::nPortSMTP)
       ENDIF
 
       // nPortNNTP
-      IF HB_IsNumeric(::nPortNNTP) .AND. ::nPortNNTP > 0
+      IF hb_IsNumeric(::nPortNNTP) .AND. ::nPortNNTP > 0
          ::cCommand += " -portNNTP " + hb_ntos(::nPortNNTP)
       ENDIF
 
       // nPortPOP3
-      IF HB_IsNumeric(::nPortPOP3) .AND. ::nPortPOP3 > 0
+      IF hb_IsNumeric(::nPortPOP3) .AND. ::nPortPOP3 > 0
          ::cCommand += " -portPOP3 " + hb_ntos(::nPortPOP3)
       ENDIF
 
       // nPortIMAP
-      IF HB_IsNumeric(::nPortIMAP) .AND. ::nPortIMAP > 0
+      IF hb_IsNumeric(::nPortIMAP) .AND. ::nPortIMAP > 0
          ::cCommand += " -portIMAP " + hb_ntos(::nPortIMAP)
       ENDIF
 
       // cUserAUTH
-      IF HB_IsString(::cUserAUTH)
+      IF hb_IsString(::cUserAUTH)
          ::cCommand += " -u " + ::cUserAUTH
       ENDIF
 
       // cPasswordAUTH
-      IF HB_IsString(::cPasswordAUTH)
+      IF hb_IsString(::cPasswordAUTH)
          ::cCommand += " -pw " + ::cPasswordAUTH
       ENDIF
 
       // cUserPOP3
-      IF HB_IsString(::cUserPOP3)
+      IF hb_IsString(::cUserPOP3)
          ::cCommand += " -pu " + ::cUserPOP3
       ENDIF
 
       // cPasswordPOP3
-      IF HB_IsString(::cPasswordPOP3)
+      IF hb_IsString(::cPasswordPOP3)
          ::cCommand += " -ppw " + ::cPasswordPOP3
       ENDIF
 
       // cUserIMAP
-      IF HB_IsString(::cUserIMAP)
+      IF hb_IsString(::cUserIMAP)
          ::cCommand += " -iu " + ::cUserIMAP
       ENDIF
 
       // cPasswordIMAP
-      IF HB_IsString(::cPasswordIMAP)
+      IF hb_IsString(::cPasswordIMAP)
          ::cCommand += " -ipw " + ::cPasswordIMAP
       ENDIF
 
@@ -546,17 +546,17 @@ METHOD PROCEDURE HBBlat:Check()
       // Miscellaneous RFC header switches ----------------------
 
       // cOrganization
-      IF HB_IsString(::cOrganization)
+      IF hb_IsString(::cOrganization)
          ::cCommand += " -organization " + ::cOrganization
       ENDIF
 
       // cUserAgent
-      IF HB_IsString(::cUserAgent)
+      IF hb_IsString(::cUserAgent)
          ::cCommand += " -ua " + ::cUserAgent
       ENDIF
 
       // cXHeader
-      IF HB_IsString(::cXHeader)
+      IF hb_IsString(::cXHeader)
          ::cCommand += " -x " + ::cXHeader
       ENDIF
 
@@ -584,22 +584,22 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cCharSet
-      IF HB_IsString(::cCharSet)
+      IF hb_IsString(::cCharSet)
          ::cCommand += " -charset " + ::cCharSet
       ENDIF
 
       // cUserHeader1
-      IF HB_IsString(::cUserHeader1)
+      IF hb_IsString(::cUserHeader1)
          ::cCommand += " -a1 " + ::cUserHeader1
       ENDIF
 
       // cUserHeader2
-      IF HB_IsString(::cUserHeader2)
+      IF hb_IsString(::cUserHeader2)
          ::cCommand += " -a2 " + ::cUserHeader2
       ENDIF
 
       // cDSN
-      IF HB_IsString(::cDSN)
+      IF hb_IsString(::cDSN)
          IF "n" $ Lower(::cDSN) .OR. "s" $ Lower(::cDSN) .OR. ;
             "f" $ Lower(::cDSN) .OR. "d" $ Lower(::cDSN)
             ::cCommand += " -dsn " + ::cDSN
@@ -631,7 +631,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // nSensitivity
-      IF HB_IsNumeric(::nSensitivity) .AND. AScan({ 0, 1, 2 }, ::nSensitivity) > 0
+      IF hb_IsNumeric(::nSensitivity) .AND. AScan({ 0, 1, 2 }, ::nSensitivity) > 0
          ::cCommand += " -sensitivity " + hb_ntos(::nSensitivity)
       ENDIF
 
@@ -639,58 +639,58 @@ METHOD PROCEDURE HBBlat:Check()
 
       // Attach Binary Files
       IF !Empty(::aAttachBinFiles)
-         IF HB_IsString(::cAttachBinFiles)
+         IF hb_IsString(::cAttachBinFiles)
             ::cAttachBinFiles += ","
          ELSE
             ::cAttachBinFiles := ""
          ENDIF
          ::cAttachBinFiles += ArrayToString( ::aAttachBinFiles )
       ENDIF
-      IF HB_IsString(::cAttachBinFiles)
+      IF hb_IsString(::cAttachBinFiles)
          ::cCommand += " -attach " + ::cAttachBinFiles
       ENDIF
 
       // Attach Text Files
       IF !Empty(::aAttachTextFiles)
-         IF HB_IsString(::cAttachTextFiles)
+         IF hb_IsString(::cAttachTextFiles)
             ::cAttachTextFiles += ","
          ELSE
             ::cAttachTextFiles := ""
          ENDIF
          ::cAttachTextFiles += ArrayToString( ::aAttachTextFiles )
       ENDIF
-      IF HB_IsString(::cAttachTextFiles)
+      IF hb_IsString(::cAttachTextFiles)
          ::cCommand += " -attacht " + ::cAttachTextFiles
       ENDIF
 
       // Attach INLINE Files
       IF !Empty(::aAttachInlineFiles)
-         IF HB_IsString(::cAttachInlineFiles)
+         IF hb_IsString(::cAttachInlineFiles)
             ::cAttachInlineFiles += ","
          ELSE
             ::cAttachInlineFiles := ""
          ENDIF
          ::cAttachInlineFiles += ArrayToString( ::aAttachInlineFiles )
       ENDIF
-      IF HB_IsString(::cAttachInlineFiles)
+      IF hb_IsString(::cAttachInlineFiles)
          ::cCommand += " -attachi " + ::cAttachInlineFiles
       ENDIF
 
       // Attach Html Embedded Files
       IF !Empty(::aHtmlEmbeddedFiles)
-         IF HB_IsString(::cHtmlEmbeddedFiles)
+         IF hb_IsString(::cHtmlEmbeddedFiles)
             ::cHtmlEmbeddedFiles += ","
          ELSE
             ::cHtmlEmbeddedFiles := ""
          ENDIF
          ::cHtmlEmbeddedFiles += ArrayToString( ::aHtmlEmbeddedFiles )
       ENDIF
-      IF HB_IsString(::cHtmlEmbeddedFiles)
+      IF hb_IsString(::cHtmlEmbeddedFiles)
          ::cCommand += " -embed " + ::cHtmlEmbeddedFiles
       ENDIF
 
       // cAttachListBinFile - optional
-      IF HB_IsString(::cAttachListBinFile)
+      IF hb_IsString(::cAttachListBinFile)
          IF !hb_FileExists( ::cAttachListBinFile )
             ::nError := BLAT_ERR_MISSING_ATTACHLISTBINFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ATTACHLISTBINFILE ) + ": " + ::cAttachListBinFile
@@ -704,7 +704,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cAttachListTextFile - optional
-      IF HB_IsString(::cAttachListTextFile)
+      IF hb_IsString(::cAttachListTextFile)
          IF !hb_FileExists( ::cAttachListTextFile )
             ::nError := BLAT_ERR_MISSING_ATTACHLISTTEXTFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ATTACHLISTTEXTFILE ) + ": " + ::cAttachListTextFile
@@ -718,7 +718,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cAttachListEmbeddedFile - optional
-      IF HB_IsString(::cAttachListEmbeddedFile)
+      IF hb_IsString(::cAttachListEmbeddedFile)
          IF !hb_FileExists( ::cAttachListEmbeddedFile )
             ::nError := BLAT_ERR_MISSING_ATTACHLISTEMBEDDEDFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ATTACHLISTEMBEDDEDFILE ) + ": " + ::cAttachListEmbeddedFile
@@ -757,12 +757,12 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cAlternateText - optional
-      IF HB_IsString(::cAlternateText)
+      IF hb_IsString(::cAlternateText)
          ::cCommand += " -alttext " + ::cAlternateText
       ENDIF
 
       // cAlternateTextFile - optional
-      IF HB_IsString(::cAlternateTextFile)
+      IF hb_IsString(::cAlternateTextFile)
          IF !hb_FileExists( ::cAlternateTextFile )
             ::nError := BLAT_ERR_MISSING_ALTERNATETEXTFILE
             ::cError := ::TranslateBlatError( BLAT_ERR_MISSING_ALTERNATETEXTFILE ) + ": " + ::cAlternateTextFile
@@ -786,7 +786,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // nMultipartSize - optional
-      IF HB_IsNumeric(::nMultipartSize) .AND. ::nMultipartSize > 0
+      IF hb_IsNumeric(::nMultipartSize) .AND. ::nMultipartSize > 0
          ::cCommand += " -multipart " + hb_ntos(::nMultipartSize)
       ENDIF
 
@@ -796,14 +796,14 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cContentType - optional
-      IF HB_IsString(::cContentType)
+      IF hb_IsString(::cContentType)
          ::cCommand += " -contentType " + ::cContentType
       ENDIF
 
       // NNTP specific options ------------------
 
       // cGroups - optional
-      IF HB_IsString(::cGroups)
+      IF hb_IsString(::cGroups)
          ::cCommand += " -groups " + ::cGroups
       ENDIF
 
@@ -832,7 +832,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cLogFile
-      IF HB_IsString(::cLogFile)
+      IF hb_IsString(::cLogFile)
          ::cCommand += " -log " + ::cLogFile
       ENDIF
 
@@ -847,12 +847,12 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // nTimeout
-      IF HB_IsNumeric(::nTimeout) .AND. ::nTimeout > 0
+      IF hb_IsNumeric(::nTimeout) .AND. ::nTimeout > 0
          ::cCommand += " -ti " + hb_ntos(::nTimeout)
       ENDIF
 
       // nTry
-      IF HB_IsNumeric(::nTry)
+      IF hb_IsNumeric(::nTry)
          IF ::nTry == BLAT_TRY_INFINITE_KEY
             ::cCommand += " -try " + BLAT_TRY_INFINITE_VALUE
          ELSEIF ::nTry >= 0
@@ -866,7 +866,7 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // cHostname
-      IF HB_IsString(::cHostname)
+      IF hb_IsString(::cHostname)
          ::cCommand += " -hostname " + ::cHostname
       ENDIF
 
@@ -876,12 +876,12 @@ METHOD PROCEDURE HBBlat:Check()
       ENDIF
 
       // nDelay
-      IF HB_IsNumeric(::nDelay) .AND. ::nDelay > 0
+      IF hb_IsNumeric(::nDelay) .AND. ::nDelay > 0
          ::cCommand += " -delay " + hb_ntos(::nDelay)
       ENDIF
 
       // cCommentChar
-      IF HB_IsString(::cCommentChar)
+      IF hb_IsString(::cCommentChar)
          ::cCommand += " -comment " + ::cCommentChar
       ENDIF
 

@@ -72,7 +72,7 @@ FUNCTION GetFldRow(nField)
 
    LOCAL oGet
 
-   IF !HB_IsNumeric(nField)
+   IF !hb_IsNumeric(nField)
       oGet := GetActive()
    ELSEIF nField >= 1 .AND. nField <= Len(GetList)
       oGet := GetList[nField]
@@ -84,7 +84,7 @@ FUNCTION GetFldCol(nField)
 
    LOCAL oGet
 
-   IF !HB_IsNumeric(nField)
+   IF !hb_IsNumeric(nField)
       oGet := GetActive()
    ELSEIF nField >= 1 .AND. nField <= Len(GetList)
       oGet := GetList[nField]
@@ -96,7 +96,7 @@ FUNCTION GetFldVar(nField)
 
    LOCAL oGet
 
-   IF !HB_IsNumeric(nField)
+   IF !hb_IsNumeric(nField)
       oGet := GetActive()
    ELSEIF nField >= 1 .AND. nField <= Len(GetList)
       oGet := GetList[nField]

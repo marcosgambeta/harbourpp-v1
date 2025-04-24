@@ -61,7 +61,7 @@ FUNCTION hb_regexReplace(cRegex, cString, cReplace, lCaseSensitive, lNewLine, nM
 
    IF !Empty(aMatches)
       FOR EACH aMatch IN aMatches
-         IF HB_IsArray(aMatch) .AND. Len(aMatch) >= 1 .AND. HB_IsArray(aMatch[1])
+         IF hb_IsArray(aMatch) .AND. Len(aMatch) >= 1 .AND. hb_IsArray(aMatch[1])
             aMatch := aMatch[1]
             IF Len(aMatch) == 3 // if regex matches I must have an array of 3 elements
                cSearch := aMatch[MATCH_STRING]

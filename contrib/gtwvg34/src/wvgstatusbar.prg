@@ -124,7 +124,7 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       RETURN EVENT_HANDLED
 
    CASE nMessage == HB_GTE_COMMAND
-      IF HB_IsEvalItem(::sl_lbClick)
+      IF hb_IsEvalItem(::sl_lbClick)
          Eval(::sl_lbClick, , , Self)
          RETURN EVENT_HANDLED
       ENDIF
@@ -135,7 +135,7 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       DO CASE
       CASE aNMH[NMH_code] == NM_CLICK
 
-         IF HB_IsEvalItem(::sl_lbClick)
+         IF hb_IsEvalItem(::sl_lbClick)
             IF aNMH[NMH_dwItemSpec] >= 0
                nObj := aNMH[NMH_dwItemSpec] + 1
 
@@ -148,7 +148,7 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       ENDCASE
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
@@ -202,9 +202,9 @@ METHOD WvgStatusBar:delItem( nItemORcKey )
    LOCAL nIndex := 0
 
    DO CASE
-   CASE HB_IsNumeric(nItemORcKey)
+   CASE hb_IsNumeric(nItemORcKey)
       nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
-   CASE HB_IsNumeric(nItemORcKey)
+   CASE hb_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
@@ -219,9 +219,9 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
    LOCAL nIndex := 0
 
    DO CASE
-   CASE HB_IsString(nItemORcKey)
+   CASE hb_IsString(nItemORcKey)
       nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
-   CASE HB_IsNumeric(nItemORcKey)
+   CASE hb_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
@@ -245,7 +245,7 @@ METHOD WvgStatusBar:clear()
 
 METHOD WvgStatusBar:panelClick( xParam )
 
-   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
+   IF hb_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -253,7 +253,7 @@ METHOD WvgStatusBar:panelClick( xParam )
 
 METHOD WvgStatusBar:panelDblClick( xParam )
 
-   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
+   IF hb_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_lbDblClick := xParam
    ENDIF
 

@@ -214,8 +214,8 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
 
    hb_default(@aEBGEts, {})
 
-   IF !HB_IsLogical(mlMultiline) .OR. ;
-      ! HB_IsString(mxValue)
+   IF !hb_IsLogical(mlMultiline) .OR. ;
+      ! hb_IsString(mxValue)
       mlMultiline := .F.
    ENDIF
    hb_default(@mcLabel, mcVarName + ":")
@@ -305,9 +305,9 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
    DO WHILE !lDone
       nKeyStd := hb_keyStd(nKey := Inkey(0.5, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )))
       DO CASE
-      CASE HB_IsEvalItem(SetKey(nKey))
+      CASE hb_IsEvalItem(SetKey(nKey))
          Eval(SetKey(nKey))
-      CASE HB_IsEvalItem(SetKey(nKeyStd))
+      CASE hb_IsEvalItem(SetKey(nKeyStd))
          Eval(SetKey(nKeyStd))
       CASE nKeyStd != 0
          lchangefocus := .T.
@@ -363,7 +363,7 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
    LOCAL nNumGets := Len(aEBGets)
    LOCAL nFocus, lchangefocus
 
-   IF HB_IsEvalItem(SetKey(ch))
+   IF hb_IsEvalItem(SetKey(ch))
       Eval(SetKey(ch))
       RETURN
    ELSEIF ch == 0
@@ -902,7 +902,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
    DO CASE
    CASE message == WIN_WM_CHAR
       bhandler := inp_handler( nWinNum )
-      IF HB_IsEvalItem(bhandler)
+      IF hb_IsEvalItem(bhandler)
          Eval(bhandler, nWinNum, wParam)
          RETURN .T.
       ELSE
@@ -921,7 +921,7 @@ STATIC FUNCTION inp_handler( nwinnum, bhandler )
 
    LOCAL retval := IIf(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[nwinnum + 1], NIL)
 
-   IF HB_IsEvalItem(bhandler)
+   IF hb_IsEvalItem(bhandler)
       IF Len(s_bhandlers) < nwinnum + 1
          ASize( s_bhandlers, nwinnum + 1 )
       ENDIF

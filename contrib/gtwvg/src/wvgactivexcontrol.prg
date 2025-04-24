@@ -128,14 +128,14 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
 
    ::CLSID := cCLSID
    ::license := cLicense
-   ::hContainer := IIf(HB_IsObject(::oParent), ::oParent:getHWND(), ::oParent)
+   ::hContainer := IIf(hb_IsObject(::oParent), ::oParent:getHWND(), ::oParent)
 
-   IF !HB_IsNumeric(::hContainer) .OR. !HB_IsString(::CLSID)
+   IF !hb_IsNumeric(::hContainer) .OR. !hb_IsString(::CLSID)
       RETURN NIL
    ENDIF
 
    ::hWnd := NIL
-   ::nID := IIf(HB_IsObject(::oParent), ::oParent:GetControlId(), ::getControlID())
+   ::nID := IIf(hb_IsObject(::oParent), ::oParent:GetControlId(), ::getControlID())
    ::oOLE := win_oleAuto()
 
    win_axInit()
@@ -162,7 +162,7 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    ::SetWindowProcCallback()  // Is this needed to catch windowing events ? - NO
 #endif
 
-   IF HB_IsObject(::oParent)
+   IF hb_IsObject(::oParent)
       ::oParent:addChild(Self)
    ENDIF
 
@@ -206,7 +206,7 @@ METHOD WvgActiveXControl:handleEvent(nEvent, aNM)
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_IsBlock(::sl_resize)
+      IF hb_IsBlock(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
@@ -241,7 +241,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent(nEvent, bBlock)
 
-   IF HB_IsNumeric(nEvent) .AND. HB_IsBlock(bBlock)
+   IF hb_IsNumeric(nEvent) .AND. hb_IsBlock(bBlock)
       ::hEvents[nEvent] := bBlock
    ENDIF
 

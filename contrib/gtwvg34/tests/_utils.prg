@@ -222,7 +222,7 @@ FUNCTION WvtSetObjects( aObject )
       IF Empty(aObject)
          t_aObjects := {}
       ELSE
-         IF HB_IsArray(aObject[1])
+         IF hb_IsArray(aObject[1])
             AEval(aObject, {| e_ | AAdd(t_aObjects, e_) })
          ELSE
             ASize( aObject, WVT_OBJ_VRBLS )
@@ -439,7 +439,7 @@ FUNCTION ClearStatusMsg()
 
 PROCEDURE WvtPictures( nSlot, cFilePic )
 
-   IF HB_IsNumeric(nSlot) .AND. nSlot <= 20 .AND. hb_vfExists( cFilePic )
+   IF hb_IsNumeric(nSlot) .AND. nSlot <= 20 .AND. hb_vfExists( cFilePic )
       IF !t_pic_[nSlot] == cFilePic
          IF wvt_LoadPicture( cFilePic, nSlot )
             t_pic_[nSlot] := cFilePic

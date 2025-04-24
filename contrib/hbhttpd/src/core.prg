@@ -702,9 +702,9 @@ STATIC PROCEDURE ProcessRequest( oServer )
       bEval := aMount[cMount]
       BEGIN SEQUENCE WITH {| oErr | UErrorHandler( oErr, oServer ) }
          xRet := Eval(bEval, cPath)
-         IF HB_IsString(xRet)
+         IF hb_IsString(xRet)
             UWrite( xRet )
-         ELSEIF HB_IsHash(xRet)
+         ELSEIF hb_IsHash(xRet)
             UWrite( UParse( xRet ) )
          ENDIF
       RECOVER
@@ -973,7 +973,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
    ENDIF
    IF !Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos(oErr:osCode) + hb_eol()
    ENDIF
-   IF HB_IsArray(oErr:args)
+   IF hb_IsArray(oErr:args)
       cRet += "Arguments:" + hb_eol()
       AEval(oErr:args, {| X, Y | cRet += Str(Y, 5) + ": " + hb_CStr(X) + hb_eol() })
    ENDIF
@@ -999,7 +999,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
       NEXT
       cI += ")"
       nJ := Len(aPar)
-      DO WHILE !HB_IsSymbol(xI := __dbgVMVarLGet( nI, ++nJ ))
+      DO WHILE !hb_IsSymbol(xI := __dbgVMVarLGet( nI, ++nJ ))
          cI += ", " + cvt2str(xI)
       ENDDO
       xI := NIL
@@ -1095,19 +1095,19 @@ STATIC FUNCTION cvt2str(xI, lLong)
       cI := ""
       IF __objHasMsg( xI, "ID" )
          xJ := xI:ID
-         IF !HB_IsObject(xJ)
+         IF !hb_IsObject(xJ)
             cI += ",ID=" + cvt2str(xJ)
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "nID" )
          xJ := xI:nID
-         IF !HB_IsObject(xJ)
+         IF !hb_IsObject(xJ)
             cI += ",NID=" + cvt2str(xJ)
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "xValue" )
          xJ := xI:xValue
-         IF !HB_IsObject(xJ)
+         IF !hb_IsObject(xJ)
             cI += ",XVALUE=" + cvt2str(xJ)
          ENDIF
       ENDIF
@@ -1355,7 +1355,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
 
    LOCAL aDir, aF, nI, cI, tDate, tHDate
 
-   IF !HB_IsLogical(lIndex)
+   IF !hb_IsLogical(lIndex)
       lIndex := .F.
    ENDIF
 
@@ -1546,15 +1546,15 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
          CASE "="
             IF hb_HHasKey(aData, aInstr[2])
                xValue := aData[aInstr[2]]
-               IF HB_IsString(xValue)
+               IF hb_IsString(xValue)
                   cRet += UHtmlEncode( xValue )
-               ELSEIF HB_IsNumeric(xValue)
+               ELSEIF hb_IsNumeric(xValue)
                   cRet += UHtmlEncode( Str(xValue) )
-               ELSEIF HB_IsDate(xValue)
+               ELSEIF hb_IsDate(xValue)
                   cRet += UHtmlEncode( DToC(xValue) )
-               ELSEIF HB_IsTimestamp(xValue)
+               ELSEIF hb_IsTimestamp(xValue)
                   cRet += UHtmlEncode( hb_TToC(xValue) )
-               ELSEIF HB_IsObject(xValue)
+               ELSEIF hb_IsObject(xValue)
                   cRet += UHtmlEncode( xValue:Output() )
                ELSE
                   Eval(hConfig["Trace"], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ))
@@ -1567,15 +1567,15 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
          CASE ":"
             IF hb_HHasKey(aData, aInstr[2])
                xValue := aData[aInstr[2]]
-               IF HB_IsString(xValue)
+               IF hb_IsString(xValue)
                   cRet += xValue
-               ELSEIF HB_IsNumeric(xValue)
+               ELSEIF hb_IsNumeric(xValue)
                   cRet += Str(xValue)
-               ELSEIF HB_IsDate(xValue)
+               ELSEIF hb_IsDate(xValue)
                   cRet += DToC(xValue)
-               ELSEIF HB_IsTimestamp(xValue)
+               ELSEIF hb_IsTimestamp(xValue)
                   cRet += hb_TToC(xValue)
-               ELSEIF HB_IsObject(xValue)
+               ELSEIF hb_IsObject(xValue)
                   cRet += xValue:Output()
                ELSE
                   Eval(hConfig["Trace"], hb_StrFormat( "Template error: invalid type '%s'", ValType(xValue) ))
@@ -1595,7 +1595,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
             EXIT
 
          CASE "loop"
-            IF hb_HHasKey(aData, aInstr[2]) .AND. HB_IsArray(aValue := aData[aInstr[2]])
+            IF hb_HHasKey(aData, aInstr[2]) .AND. hb_IsArray(aValue := aData[aInstr[2]])
                FOR EACH xValue IN aValue
                   aData2 := hb_HClone( aData )
                   hb_HEval(xValue, {| k, v | aData2[aInstr[2] + "." + k] := v })

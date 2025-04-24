@@ -173,7 +173,7 @@ FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
 
       win_regQueryValueEx(pKeyHandle, cEntryName, 0, @nValueType, @xRetVal)
 
-      IF HB_IsString(xRetVal)
+      IF hb_IsString(xRetVal)
          SWITCH nValueType
          CASE WIN_REG_DWORD_LITTLE_ENDIAN  /* == WIN_REG_DWORD */
             xRetVal := Bin2U(xRetVal)
@@ -220,7 +220,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
          xName := DToS(xValue)
          EXIT
       CASE "N"
-         IF !HB_IsNumeric(nValueType) .OR. ;
+         IF !hb_IsNumeric(nValueType) .OR. ;
             !(nValueType == WIN_REG_DWORD .OR. ;
               nValueType == WIN_REG_DWORD_LITTLE_ENDIAN .OR. ;
               nValueType == WIN_REG_DWORD_BIG_ENDIAN .OR. ;
@@ -232,7 +232,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
          EXIT
       CASE "C"
       CASE "M"
-         IF !HB_IsNumeric(nValueType) .OR. ;
+         IF !hb_IsNumeric(nValueType) .OR. ;
             !(nValueType == WIN_REG_SZ .OR. ;
               nValueType == WIN_REG_EXPAND_SZ .OR. ;
               nValueType == WIN_REG_MULTI_SZ)

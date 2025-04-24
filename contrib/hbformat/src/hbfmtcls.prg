@@ -133,7 +133,7 @@ METHOD HBFormatCode:New( aParams, cIniName )
 
    ::nErr := 0
 
-   IF HB_IsString(cIniName)
+   IF hb_IsString(cIniName)
       IF !::ReadIni( cIniName )
          RETURN Self
       ENDIF
@@ -208,7 +208,7 @@ METHOD HBFormatCode:Reformat( aFile )
       IF aFile[i] == NIL
          EXIT
       ENDIF
-      IF HB_IsNull( aFile[i] )
+      IF hb_IsNull( aFile[i] )
          LOOP
       ENDIF
       IF ::bCallBack != NIL
@@ -633,7 +633,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                      ELSEIF nState == FL_STATE_OP
                         nState := FL_STATE_ANY
                      ENDIF
-                  ELSEIF ( HB_IsNumeric(nEnd) .AND. SubStr(cLine, nEnd - 1, 1) != "(" ) .OR. nState == FL_STATE_ANY .OR. nState == FL_STATE_DIGIT
+                  ELSEIF ( hb_IsNumeric(nEnd) .AND. SubStr(cLine, nEnd - 1, 1) != "(" ) .OR. nState == FL_STATE_ANY .OR. nState == FL_STATE_DIGIT
                      nA := i
                      nState := FL_STATE_OP
                   ENDIF
@@ -690,7 +690,7 @@ METHOD HBFormatCode:ConvertCmd(cLine, nBegin, nEnd, lFirstOnly)
 
    IF ::lCase
 
-      IF !HB_IsNumeric(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
+      IF !hb_IsNumeric(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
          ::nErr := 1
          ::cLineErr := cLine
          RETURN .F.
@@ -846,7 +846,7 @@ METHOD HBFormatCode:ReadIni( cIniName )
       aIni := hb_ATokens( MemoRead(cIniName), .T. )
       nLen := Len(aIni)
       FOR i := 1 TO nLen
-         IF !HB_IsNull( aIni[i] := AllTrim(aIni[i]) ) .AND. ;
+         IF !hb_IsNull( aIni[i] := AllTrim(aIni[i]) ) .AND. ;
                !( ( c := Left(aIni[i], 1) ) == ";" ) .AND. !( c == "#" )
             IF !::SetOption( aIni[i], @i, aIni )
                EXIT
@@ -901,12 +901,12 @@ METHOD HBFormatCode:Array2File( cFileName, aSource )
 
    LOCAL cDir, cName, cExt
 
-   IF HB_IsNull( ::cExtSave ) .AND. ;
+   IF hb_IsNull( ::cExtSave ) .AND. ;
       hb_vfCopyFile( cFileName, hb_FNameExtSet( cFileName, ::cExtBack ) ) == F_ERROR
       RETURN .F.
    ENDIF
 
-   IF !HB_IsNull( ::cExtSave )
+   IF !hb_IsNull( ::cExtSave )
       cFileName := hb_FNameExtSet( cFileName, ::cExtSave )
    ENDIF
 

@@ -111,10 +111,10 @@ FUNCTION smsctx_New( xPort )
 
    LOCAL smsctx[_SMSCTX_MAX_]
 
-   IF HB_IsNumeric(xPort)
+   IF hb_IsNumeric(xPort)
       smsctx[_SMSCTX_xHnd] := xPort
       smsctx[_SMSCTX_cPrevName] := NIL
-   ELSEIF HB_IsString(xPort)
+   ELSEIF hb_IsString(xPort)
       smsctx[_SMSCTX_xHnd] := 1
       smsctx[_SMSCTX_cPrevName] := hb_comGetDevice( smsctx[_SMSCTX_xHnd] )
       hb_comSetDevice( smsctx[_SMSCTX_xHnd], xPort )
@@ -136,7 +136,7 @@ FUNCTION smsctx_New( xPort )
 
 FUNCTION smsctx_Close( smsctx )
 
-   IF !HB_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !hb_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN .F.
    ENDIF
 
@@ -155,7 +155,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
 
    LOCAL tmp
 
-   IF !HB_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !hb_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN -1
    ENDIF
 
@@ -175,7 +175,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
          port_send( smsctx[_SMSCTX_xHnd], "AT+CMGF=1" + Chr(13) )
          IF StripCRLF( port_rece( smsctx[_SMSCTX_xHnd] ) ) == "OK"
 
-            IF HB_IsLogical(lNotification)
+            IF hb_IsLogical(lNotification)
                port_send( smsctx[_SMSCTX_xHnd], "AT+CSMP?" + Chr(13) )
                tmp := GetLines( port_rece( smsctx[_SMSCTX_xHnd] ) )
                IF Len(tmp) < 2
@@ -227,7 +227,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
 
 FUNCTION smsctx_Receive( smsctx )
 
-   IF !HB_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !hb_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN NIL
    ENDIF
 
@@ -239,12 +239,12 @@ FUNCTION smsctx_PIN( smsctx, cPIN )
 
    LOCAL cOldValue
 
-   IF !HB_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !hb_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN NIL
    ENDIF
 
    cOldValue := smsctx[_SMSCTX_cPIN]
-   IF cPIN == NIL .OR. ( HB_IsString(cPIN) .AND. Len(cPIN) == 4 )
+   IF cPIN == NIL .OR. ( hb_IsString(cPIN) .AND. Len(cPIN) == 4 )
       smsctx[_SMSCTX_cPIN] := cPIN
    ENDIF
 

@@ -103,10 +103,10 @@ FUNCTION __ActiveStructure(cStructure, nAlign)
 
          // In most cases we can simply ignore the redefinition, by returning a FAKED Structure Array!
          // TraceLog("Redefinition of C Structure: " + cStructure)
-         RETURN t_aActiveStructure := {cStructure, NIL, {}, {}, IIf(HB_IsNumeric(nAlign), nAlign, 8)}
+         RETURN t_aActiveStructure := {cStructure, NIL, {}, {}, IIf(hb_IsNumeric(nAlign), nAlign, 8)}
       ENDIF
 
-      AAdd(s_aClasses, {cStructure, NIL, {}, {}, IIf(HB_IsNumeric(nAlign), nAlign, 8)})
+      AAdd(s_aClasses, {cStructure, NIL, {}, {}, IIf(hb_IsNumeric(nAlign), nAlign, 8)})
       // TraceLog("Registered: " + cStructure, ATail(s_aClasses)[5])
 
       t_aActiveStructure := ATail(s_aClasses)
@@ -508,7 +508,7 @@ STATIC FUNCTION Reset()
 
 STATIC FUNCTION Buffer(Buffer, lAdopt)
 
-   IF HB_IsString(Buffer)
+   IF hb_IsString(Buffer)
       IF Len(Buffer) < QSelf():SizeOf
          // TraceLog(Buffer)
          Buffer := PadR(Buffer, QSelf():SizeOf, Chr(0))
@@ -518,7 +518,7 @@ STATIC FUNCTION Buffer(Buffer, lAdopt)
       QSelf():DeValue(lAdopt)
    ENDIF
 
-   IF !HB_IsString(QSelf():InternalBuffer)
+   IF !hb_IsString(QSelf():InternalBuffer)
       QSelf():InternalBuffer := QSelf():Value()
    ENDIF
 
@@ -555,7 +555,7 @@ STATIC FUNCTION DeValue(lAdopt)
    AEval(QSelf(), {|xVal|AAdd(aValues, xVal)}, 1, Len(QSelf()) - CLASS_PROPERTIES)
 #endif
 
-   IF !HB_IsString(Buffer) .OR. Len(Buffer) == 0
+   IF !hb_IsString(Buffer) .OR. Len(Buffer) == 0
       // TraceLog("EMPTY Buffer passed to " + ProcName())
    ELSEIF Len(Buffer) < QSelf():SizeOf
       // TraceLog("Should have been caught at ::Buffer()!!!", Buffer)

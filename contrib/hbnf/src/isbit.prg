@@ -21,7 +21,7 @@
 
 FUNCTION ft_IsBit(cInbyte, nBitPos)
 
-   IF HB_IsString(cInbyte) .AND. HB_IsNumeric(nBitPos)
+   IF hb_IsString(cInbyte) .AND. hb_IsNumeric(nBitPos)
       RETURN hb_bitTest(hb_BCode(cInbyte), nBitpos)
    ENDIF
 

@@ -207,7 +207,7 @@ METHOD PROCEDURE wPaintObj:Draw()
    IF ::lVisible
       DO CASE
       CASE ::nType == WPAINTOBJ_IMAGE
-         IF HB_IsString(::cImage)
+         IF hb_IsString(::cImage)
             wvw_DrawImage( ::nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ;
                ::cImage, ::aOffTLBR, ::lTransp )
          ENDIF
@@ -315,7 +315,7 @@ STATIC PROCEDURE wg_AddWPaintObj( nWinNum, oWPaint, lStrict )
 STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
 
    LOCAL i
-   LOCAL lDelAll := ! HB_IsString(cId)
+   LOCAL lDelAll := ! hb_IsString(cId)
    LOCAL nLen
 
    // is nType set?

@@ -23,7 +23,7 @@ STATIC PROCEDURE Dump( a )
    ? "==="
    FOR EACH b IN a
       ?
-      IF HB_IsArray(b)
+      IF hb_IsArray(b)
          FOR EACH c IN b
             ?? c:__enumIndex(), c
             IF c:__enumIndex() == 2

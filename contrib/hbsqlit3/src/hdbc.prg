@@ -159,7 +159,7 @@ METHOD hdbcSQLTStatement:executeQuery(cSql)
 
    ::pRes := sqlite3_prepare(::pDB, cSql)
 
-   IF !HB_IsPointer(::pRes)
+   IF !hb_IsPointer(::pRes)
       raiseError(sqlite3_errmsg(::pDb))
    ELSE
       ::oRs := hdbcSQLTResultSet():new(::pDB, SELF)
@@ -431,7 +431,7 @@ METHOD hdbcSQLTResultSet:findColumn(cField)
    LOCAL nCount
    LOCAL nMax
 
-   IF !HB_IsHash(::hColNames)
+   IF !hb_IsHash(::hColNames)
       ::hColNames := {=>}
       nMax := sqlite3_column_count(::pRes)
       FOR nCount := 1 TO nMax
@@ -445,7 +445,7 @@ METHOD hdbcSQLTResultSet:findColumn(cField)
 
 METHOD hdbcSQLTResultSet:getString(nField)
 
-   IF HB_IsString(nField)
+   IF hb_IsString(nField)
       nField := ::findColumn(nField)
    ENDIF
 
@@ -471,7 +471,7 @@ METHOD hdbcSQLTResultSet:moveToCurrentRow()
 
 METHOD hdbcSQLTResultSet:updateBuffer(nField, xValue, cType)
 
-   IF HB_IsString(nField)
+   IF hb_IsString(nField)
       nField := ::findColumn(nField)
    ENDIF
 

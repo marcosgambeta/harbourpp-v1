@@ -208,7 +208,7 @@ ENDCLASS
 
 METHOD win_Prn:New(cPrinter)
 
-   ::PrinterName := IIf(!HB_IsString(cPrinter) .OR. Empty(cPrinter), win_printerGetDefault(), cPrinter)
+   ::PrinterName := IIf(!hb_IsString(cPrinter) .OR. Empty(cPrinter), win_printerGetDefault(), cPrinter)
    /* Initialized with the current properties of the printer [jarabal] */
    ::GetDocumentProperties()
 
@@ -236,7 +236,7 @@ METHOD win_Prn:Create()
       ENDIF
 
       IF lResult
-         IF HB_IsNumeric(::BkMode)
+         IF hb_IsNumeric(::BkMode)
             wapi_SetBkMode(::hPrinterDc, ::BkMode)
          ENDIF
          // Set mapping mode to pixels, top-left down
@@ -302,7 +302,7 @@ METHOD win_Prn:StartDoc(cDocName)
 
    IF !Empty(::hPrinterDc)
 
-      IF !HB_IsString(cDocName)
+      IF !hb_IsString(cDocName)
          cDocName := hb_ProgName() + " [" + hb_TToC(hb_DateTime(), "yyyy-mm-dd", "hh:mm:ss") + "]"
       ENDIF
 
@@ -451,30 +451,30 @@ METHOD win_Prn:GetDocumentProperties()
 // If nDiv is < 0 then Fixed width printing is forced via ExtTextOut()
 METHOD win_Prn:SetFont(cFontName, nPointSize, xWidth, nBold, lUnderline, lItalic, nCharSet, lManualSize)
 
-   IF HB_IsString(cFontName)
+   IF hb_IsString(cFontName)
       ::FontName := cFontName
    ENDIF
-   IF HB_IsNumeric(nPointSize)
+   IF hb_IsNumeric(nPointSize)
       ::FontPointSize := nPointSize
    ENDIF
    DO CASE
-   CASE HB_IsArray(xWidth) .AND. Len(xWidth) >= 2 .AND. HB_IsNumeric(xWidth[1]) .AND. HB_IsNumeric(xWidth[2])
+   CASE hb_IsArray(xWidth) .AND. Len(xWidth) >= 2 .AND. hb_IsNumeric(xWidth[1]) .AND. hb_IsNumeric(xWidth[2])
       ::FontWidth := xWidth
-   CASE HB_IsNumeric(xWidth) .AND. xWidth != 0
+   CASE hb_IsNumeric(xWidth) .AND. xWidth != 0
       ::FontWidth := {1, xWidth}
    CASE xWidth != NIL
       ::FontWidth := {0, 0}
    ENDCASE
-   IF HB_IsNumeric(nBold)
+   IF hb_IsNumeric(nBold)
       ::fBold := nBold
    ENDIF
-   IF HB_IsLogical(lUnderLine)
+   IF hb_IsLogical(lUnderLine)
       ::fUnderline := lUnderLine
    ENDIF
-   IF HB_IsLogical(lItalic)
+   IF hb_IsLogical(lItalic)
       ::fItalic := lItalic
    ENDIF
-   IF HB_IsNumeric(nCharSet)
+   IF hb_IsNumeric(nCharSet)
       ::fCharSet := nCharSet
    ENDIF
    IF (::SetFontOk := !Empty(::hFont := __win_CreateFont(::hPrinterDC, ::FontName, ::FontPointSize, ::FontWidth[1], ::FontWidth[2], ::fBold, ::fUnderLine, ::fItalic, ::fCharSet, lManualSize)))
@@ -510,7 +510,7 @@ METHOD win_Prn:Bold(nWeight)
 
    LOCAL nOldValue := ::fBold
 
-   IF HB_IsNumeric(nWeight)
+   IF hb_IsNumeric(nWeight)
       ::fBold := nWeight
       IF ::Printing
          ::SetFont()
@@ -523,7 +523,7 @@ METHOD win_Prn:Underline(lUnderLine)
 
    LOCAL lOldValue := ::fUnderline
 
-   IF HB_IsLogical(lUnderLine)
+   IF hb_IsLogical(lUnderLine)
       ::fUnderLine := lUnderLine
       IF ::Printing
          ::SetFont()
@@ -536,7 +536,7 @@ METHOD win_Prn:Italic(lItalic)
 
    LOCAL lOldValue := ::fItalic
 
-   IF HB_IsLogical(lItalic)
+   IF hb_IsLogical(lItalic)
       ::fItalic := lItalic
       IF ::Printing
          ::SetFont()
@@ -549,7 +549,7 @@ METHOD win_Prn:CharSet(nCharSet)
 
    LOCAL nOldValue := ::fCharSet
 
-   IF HB_IsNumeric(nCharSet)
+   IF hb_IsNumeric(nCharSet)
       ::fCharSet := nCharSet
       IF ::Printing
          ::SetFont()
@@ -562,7 +562,7 @@ METHOD win_Prn:SetDuplexType(nDuplexType)
 
    LOCAL nOldValue := ::fDuplexType
 
-   IF HB_IsNumeric(nDuplexType)
+   IF hb_IsNumeric(nDuplexType)
       ::fNewDuplexType := nDuplexType
       IF !::Printing
          ::fDuplexType := nDuplexType
@@ -575,7 +575,7 @@ METHOD win_Prn:SetPrintQuality(nPrintQuality)
 
    LOCAL nOldValue := ::fPrintQuality
 
-   IF HB_IsNumeric(nPrintQuality)
+   IF hb_IsNumeric(nPrintQuality)
       ::fNewPrintQuality := nPrintQuality
       IF !::Printing
          ::fPrintQuality := nPrintQuality
@@ -591,10 +591,10 @@ METHOD win_Prn:SetPos(nPosX, nPosY)
 
    LOCAL aOldValue := {::PosX, ::PosY}
 
-   IF HB_IsNumeric(nPosX)
+   IF hb_IsNumeric(nPosX)
       ::PosX := Int(nPosX)
    ENDIF
-   IF HB_IsNumeric(nPosY)
+   IF hb_IsNumeric(nPosY)
       ::PosY := Int(nPosY)
    ENDIF
 
@@ -605,15 +605,15 @@ METHOD win_Prn:SetColor(nClrText, nClrPane, nAlign)
    LOCAL nOldColor
 
    IF !Empty(::hPrinterDc)
-      IF HB_IsNumeric(nClrText)
+      IF hb_IsNumeric(nClrText)
          nOldColor := wapi_SetTextColor(::hPrinterDC, ::TextColor := nClrText)
       ELSE
          nOldColor := wapi_GetTextColor(::hPrinterDC)
       ENDIF
-      IF HB_IsNumeric(nClrPane)
+      IF hb_IsNumeric(nClrPane)
          wapi_SetBkColor(::hPrinterDC, ::BkColor := nClrPane)
       ENDIF
-      IF HB_IsNumeric(nAlign)
+      IF hb_IsNumeric(nAlign)
          wapi_SetTextAlign(::hPrinterDC, ::TextAlign := nAlign)
       ENDIF
    ELSE
@@ -625,7 +625,7 @@ METHOD win_Prn:SetColor(nClrText, nClrPane, nAlign)
 METHOD win_Prn:SetBkMode(nMode)
 
    IF !Empty(::hPrinterDc)
-      IF HB_IsNumeric(nMode)
+      IF hb_IsNumeric(nMode)
          ::BkMode := nMode
          RETURN wapi_SetBkMode(::hPrinterDc, nMode)
       ELSE
@@ -641,7 +641,7 @@ METHOD win_Prn:TextOut(cString, lNewLine, lUpdatePosX, nAlign)
    LOCAL size
    LOCAL nPosX
 
-   IF !Empty(::hPrinterDc) .AND. HB_IsString(cString) .AND. !cString == "" .AND. ::CheckPage()
+   IF !Empty(::hPrinterDc) .AND. hb_IsString(cString) .AND. !cString == "" .AND. ::CheckPage()
 
       wapi_SetTextAlign(::hPrinterDC, hb_bitOr(WIN_TA_NOUPDATECP, hb_defaultValue(nAlign, hb_bitOr(WIN_TA_BOTTOM, WIN_TA_LEFT))))
 
@@ -682,27 +682,27 @@ METHOD win_Prn:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBol
 
    IF !Empty(::hPrinterDc) .AND. ::CheckPage()
 
-      IF HB_IsString(cFont)
+      IF hb_IsString(cFont)
          DO CASE
-         CASE HB_IsArray(nWidth)
+         CASE hb_IsArray(nWidth)
             nDiv   := nWidth[1]
             nWidth := nWidth[2]
-         CASE HB_IsNumeric(nWidth) .AND. nWidth != 0
+         CASE hb_IsNumeric(nWidth) .AND. nWidth != 0
             nDiv := 1
          ENDCASE
          hFont := ::hFont
          ::hFont := __win_CreateFont(::hPrinterDC, cFont, hb_defaultValue(nPointSize, ::FontPointSize), nDiv, nWidth, nBold, lUnderLine, lItalic, nCharSet)
       ENDIF
-      IF HB_IsNumeric(nColor)
+      IF hb_IsNumeric(nColor)
          nColor := wapi_SetTextColor(::hPrinterDC, nColor)
       ENDIF
 
       lResult := ::TextOutAt(nPosX, nPosY, cString, lNewLine, lUpdatePosX, nAlign)
 
-      IF HB_IsString(cFont)
+      IF hb_IsString(cFont)
          ::hFont := hFont  // Reset Font
       ENDIF
-      IF HB_IsNumeric(nColor)
+      IF hb_IsNumeric(nColor)
          wapi_SetTextColor(::hPrinterDC, nColor)  // Reset Color
       ENDIF
    ELSE

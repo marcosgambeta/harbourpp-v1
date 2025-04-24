@@ -164,7 +164,7 @@ FUNCTION tp_open( nPort, nInSize, nOutSize, nBaud, nData, cParity, nStop, cPortn
    hb_default(@cParity, "N")
    hb_default(@nStop, 1)
 
-   IF HB_IsString(cPortname)
+   IF hb_IsString(cPortname)
       hb_comSetDevice( nPort, cPortname )
    ENDIF
 
@@ -208,7 +208,7 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
    LOCAL nDone
    LOCAL cRet
 
-   IF !HB_IsNumeric(nLength)
+   IF !hb_IsNumeric(nLength)
       nLength := t_aPorts[nPort, TPFP_INBUF_SIZE]
    ENDIF
    hb_default(@nTimeout, 0)
@@ -255,7 +255,7 @@ FUNCTION tp_send( nPort, cString, nTimeout )
 FUNCTION tp_sendsub(nPort, cString, nStart, nLength, nTimeout)
 
    hb_default(@nStart, 1)
-   IF !HB_IsNumeric(nLength)
+   IF !hb_IsNumeric(nLength)
       nLength := Len(cString)
    ENDIF
 
@@ -273,7 +273,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
       RETURN ""
    ENDIF
 
-   IF !HB_IsString(cDelim) .OR. Len(cDelim) == 0
+   IF !hb_IsString(cDelim) .OR. Len(cDelim) == 0
       RETURN ""
    ENDIF
 
@@ -487,7 +487,7 @@ FUNCTION tp_ctrlcts( nPort, nNewCtrl )
 
    IF hb_comFlowControl( t_aPorts[nPort, TPFP_HANDLE], @nCurValue )
       nFlag := hb_bitOr( HB_COM_FLOW_IRTSCTS, HB_COM_FLOW_ORTSCTS )
-      IF HB_IsNumeric(nNewCtrl)
+      IF hb_IsNumeric(nNewCtrl)
          IF nNewCtrl == 0
             nNewCtrl := hb_bitAnd( nCurValue, hb_bitNot( nFlag ) )
          ELSE
@@ -522,7 +522,7 @@ FUNCTION tp_ctrldtr( nPort, nNewCtrl )
 
    IF hb_comFlowControl( t_aPorts[nPort, TPFP_HANDLE], @nCurValue )
       nFlag := hb_bitOr( HB_COM_FLOW_IDTRDSR, HB_COM_FLOW_ODTRDSR )
-      IF HB_IsNumeric(nNewCtrl)
+      IF hb_IsNumeric(nNewCtrl)
          IF nNewCtrl == 0
             nNewCtrl := hb_bitAnd( nCurValue, hb_bitNot( nFlag ) )
          ELSE
@@ -635,7 +635,7 @@ STATIC FUNCTION isopenport( nPort )
 
 STATIC FUNCTION isport( nPort )
 
-   IF !HB_IsNumeric(nPort) .OR. nPort < 1 .OR. nPort > TP_MAXPORTS
+   IF !hb_IsNumeric(nPort) .OR. nPort < 1 .OR. nPort > TP_MAXPORTS
       RETURN .F.
    ENDIF
 

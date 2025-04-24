@@ -1283,7 +1283,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::nRow2 := nRow2
    ::nCol2 := nCol2
 
-   ::bClickBlock    := IIf(HB_IsEvalItem(bClickBlock), bClickBlock, NIL)
+   ::bClickBlock    := IIf(hb_IsEvalItem(bClickBlock), bClickBlock, NIL)
    ::bPressBlock    := NIL
 
    ::lRepeatPress   := .F.
@@ -1361,7 +1361,7 @@ METHOD WVWMouseButton:OnPress()
       wvwm_SetKeyRepeater(.T.)  // activate key repeater
    ENDIF
 
-   IF HB_IsEvalItem(::bPressBlock)
+   IF hb_IsEvalItem(::bPressBlock)
       Eval(::bPressBlock)
    ENDIF
 
@@ -1375,7 +1375,7 @@ METHOD WVWMouseButton:OnClick()
       RETURN Self
    ENDIF
 
-   IF HB_IsEvalItem(::bClickBlock)
+   IF hb_IsEvalItem(::bClickBlock)
       Eval(::bClickBlock)
    ENDIF
 
@@ -1460,7 +1460,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    LOCAL lPressed := ::lPressed .AND. lMouseOver
    LOCAL aFontInfo := IIf(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
    LOCAL nLabelColor := IIf(lPressed, WIN_RGB(96, 96, 96), WIN_RGB(0, 0, 0))
-   LOCAL lUseImage := HB_IsString(::cImage)  // 2004-03-25
+   LOCAL lUseImage := hb_IsString(::cImage)  // 2004-03-25
 
    IF !::lVisible .OR. ::nType == _BUTTON_NONE
       SetCursor( nOldCursor )  // 2004-03-03
@@ -1490,7 +1490,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(hb_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -1514,7 +1514,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(HB_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, IIf(hb_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -1556,7 +1556,7 @@ STATIC FUNCTION wvwm_SetKeyRepeater( lSet )
    // if lSet is supplied, KeyRepeater is enable/disable accordingly
    LOCAL lWasSet := ( s_nkeyrepeater != NIL )
 
-   IF HB_IsLogical(lSet)
+   IF hb_IsLogical(lSet)
       IF lSet
          IF !lWasSet
             s_nkeyrepeater := hb_idleAdd({|| xKeyRepeater() })

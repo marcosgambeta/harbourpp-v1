@@ -93,7 +93,7 @@ METHOD TUrl:SetAddress( cUrl )
 
    LOCAL aMatch, cServer, cPath
 
-   IF !HB_IsString(cUrl)
+   IF !hb_IsString(cUrl)
       RETURN .F.
    ENDIF
 
@@ -197,7 +197,7 @@ METHOD TUrl:AddGetForm( xPostData )
    LOCAL item
 
    DO CASE
-   CASE HB_IsHash(xPostData)
+   CASE hb_IsHash(xPostData)
       FOR EACH item IN xPostData
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr(item:__enumKey())) ) + "=" + ;
@@ -206,7 +206,7 @@ METHOD TUrl:AddGetForm( xPostData )
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_IsArray(xPostData)
+   CASE hb_IsArray(xPostData)
       FOR EACH item IN xPostData
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr(item:__enumIndex())) ) + "=" + ;
@@ -215,7 +215,7 @@ METHOD TUrl:AddGetForm( xPostData )
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_IsString(xPostData)
+   CASE hb_IsString(xPostData)
       cData := xPostData
    ENDCASE
 

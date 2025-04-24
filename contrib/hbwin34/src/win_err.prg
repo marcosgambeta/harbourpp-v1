@@ -76,7 +76,7 @@ PROCEDURE Main(cInputFile)
       cOutput += ;
          "FUNCTION win_ErrorString(nCode)" + hb_eol() + ;
          hb_eol() + ;
-         "   IF !HB_IsNumeric(nCode)" + hb_eol() + ;
+         "   IF !hb_IsNumeric(nCode)" + hb_eol() + ;
          "      nCode := wapi_GetLastError()" + hb_eol() + ;
          "   ENDIF" + hb_eol() + ;
          hb_eol() + ;
@@ -180,7 +180,7 @@ STATIC FUNCTION __win_ErrorString_Manual(nCode)
 
 FUNCTION win_ErrorString(nCode)
 
-   IF !HB_IsNumeric(nCode)
+   IF !hb_IsNumeric(nCode)
       nCode := wapi_GetLastError()
    ENDIF
 

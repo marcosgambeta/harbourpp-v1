@@ -21,7 +21,7 @@
 
 FUNCTION ft_BitSet(cInbyte, nBitpos)
 
-   IF HB_IsString(cInbyte) .AND. HB_IsNumeric(nBitpos)
+   IF hb_IsString(cInbyte) .AND. hb_IsNumeric(nBitpos)
       RETURN hb_BChar(hb_bitSet(hb_BCode(cInbyte), nBitpos))
    ENDIF
 

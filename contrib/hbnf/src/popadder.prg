@@ -931,7 +931,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    nLeft       := Int((MaxCol() - nWide) / 2) - 4
    nRight      := nLeft + nWide + 4
 
-   _ftPushWin(nTop, nLeft, nBottom, nRight, "QUESTION ?", IIf(HB_IsString(xVarVal) ;
+   _ftPushWin(nTop, nLeft, nBottom, nRight, "QUESTION ?", IIf(hb_IsString(xVarVal) ;
       .AND. nVarLen > nWide, /* LOW-ASCII "←" */ Chr(27) + " scroll " + Chr(26) /* LOW-ASCII "→" */, NIL), nWinColor)
    _ftDispMessage(cMessage, nTop + 1, nLeft + 2, nBottom - 1, nRight - 2)
 
@@ -939,18 +939,18 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
       {|x|IIf(PCount() > 0, xVarVal := x, xVarVal)}, "xVarVal")
 
    // If the input line is character and wider than window SCROLL
-   IF lGetOnNextLine .AND. HB_IsString(xVarVal) .AND. nVarLen > nWide
+   IF lGetOnNextLine .AND. hb_IsString(xVarVal) .AND. nVarLen > nWide
       oNewGet:Picture := "@S" + hb_ntos(nWide) + IIf(cPict == NIL, "", " " + cPict)
    ENDIF
 
    IF cPict != NIL                       // Use the picture they passed
       oNewGet:Picture := cPict
    ELSE                                  // Else setup default pictures
-      IF HB_IsDate(xVarVal)
+      IF hb_IsDate(xVarVal)
          oNewGet:Picture   := "9999-99-99"
-      ELSEIF HB_IsLogical(xVarVal)
+      ELSEIF hb_IsLogical(xVarVal)
          oNewGet:Picture   := "Y"
-      ELSEIF HB_IsNumeric(xVarVal)
+      ELSEIF hb_IsNumeric(xVarVal)
          oNewGet:Picture   := "999999.99"  // Guess that they are inputting dollars
       ENDIF
    ENDIF

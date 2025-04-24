@@ -50,7 +50,7 @@
 
 FUNCTION hb_sqlite3_errstr_short(nError)
 
-   IF !HB_IsNumeric(nError)
+   IF !hb_IsNumeric(nError)
       RETURN "HB_SQLITE_INVALID"
    ENDIF
 

@@ -362,16 +362,16 @@ FUNCTION SQLPrepare(cQuery, ...)
          CASE x != NIL .AND. Empty(x)
             x := "null"
 
-         CASE HB_IsNumeric(x)
+         CASE hb_IsNumeric(x)
             x := hb_ntos(x)
 
-         CASE HB_IsDate(x)
+         CASE hb_IsDate(x)
             x := "'" + hb_DToC(x, "yyyy-mm-dd") + "'"
 
-         CASE HB_IsLogical(x)
+         CASE hb_IsLogical(x)
             x := IIf(x, "'t'", "'f'")
 
-         CASE HB_IsString(x)
+         CASE hb_IsString(x)
             x := SToQ(RTrim(x))
 
          OTHERWISE

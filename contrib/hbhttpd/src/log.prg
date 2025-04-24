@@ -65,7 +65,7 @@ ENDCLASS
 
 METHOD UHttpdLog:New( cFileName )
 
-   IF HB_IsString(cFileName)
+   IF hb_IsString(cFileName)
 
       IF Set( _SET_DEFEXTENSIONS )
          cFileName := hb_FNameExtSetDef( cFileName, ".log" )
@@ -81,7 +81,7 @@ METHOD UHttpdLog:IsOpen()
 
 METHOD UHttpdLog:Add(cMsg)
 
-   IF !HB_IsString(cMsg)
+   IF !hb_IsString(cMsg)
       RETURN .F.
    ENDIF
 

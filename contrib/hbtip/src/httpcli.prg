@@ -106,7 +106,7 @@ METHOD TIPClientHTTP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientHTTP:Get( cQuery )
 
-   IF !HB_IsString(cQuery)
+   IF !hb_IsString(cQuery)
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
@@ -137,7 +137,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
    LOCAL item
 
    DO CASE
-   CASE HB_IsHash(xPostData)
+   CASE hb_IsHash(xPostData)
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
@@ -147,7 +147,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_IsArray(xPostData)
+   CASE hb_IsArray(xPostData)
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
@@ -157,13 +157,13 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_IsString(xPostData)
+   CASE hb_IsString(xPostData)
       cData := xPostData
    OTHERWISE
       RETURN .F.
    ENDCASE
 
-   IF !HB_IsString(cQuery)
+   IF !hb_IsString(cQuery)
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
@@ -251,7 +251,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       ::hHeaders := { => }
    ENDIF
    cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
-   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. HB_IsString(cLine) .AND. ! cLine == ""
+   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. hb_IsString(cLine) .AND. ! cLine == ""
 
       IF Len(aHead := hb_regexSplit( ":", cLine,,, 1 )) != 2
          cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
@@ -304,7 +304,7 @@ METHOD TIPClientHTTP:Read( nLen )
 
       cLine := ::inetRecvLine( ::SocketCon, @nPos, 1024 )
 
-      IF !HB_IsString(cLine) .OR. cLine == ""
+      IF !hb_IsString(cLine) .OR. cLine == ""
          RETURN NIL
       ENDIF
 
@@ -429,7 +429,7 @@ METHOD TIPClientHTTP:getcookies( cHost, cPath )
 
    hb_default(@cHost, ::oUrl:cServer)
 
-   IF !HB_IsString(cPath)
+   IF !hb_IsString(cPath)
       cPath := ::oUrl:cPath
       IF cPath == ""
          cPath := "/"
@@ -507,14 +507,14 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    DO CASE
    CASE Empty(xPostData)
-   CASE HB_IsHash(xPostData)
+   CASE hb_IsHash(xPostData)
       FOR EACH item IN xPostData
          cData += ;
             cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;
             tip_URLEncode( AllTrim(hb_CStr(item:__enumKey())) ) + '"' + cCrlf + cCrLf + ;
             tip_URLEncode( AllTrim(hb_CStr(item)) ) + cCrLf
       NEXT
-   CASE HB_IsArray(xPostData)
+   CASE hb_IsArray(xPostData)
       FOR EACH item IN xPostData
          IF Len(item) >= 2
             cData += ;
@@ -523,7 +523,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
                tip_URLEncode( AllTrim(hb_CStr(item[2])) ) + cCrLf
          ENDIF
       NEXT
-   CASE HB_IsString(xPostData)
+   CASE hb_IsString(xPostData)
       cData := xPostData
    ENDCASE
 
@@ -532,7 +532,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
       cFile := hb_defaultValue( aAttachment[2], "" )
 
       cType := aAttachment[3]
-      IF !HB_IsString(cType) .OR. Empty(cType)
+      IF !hb_IsString(cType) .OR. Empty(cType)
          cType := "text/html"
       ENDIF
 
@@ -556,7 +556,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    cData += cBound + "--" + cCrlf
 
-   IF !HB_IsString(cQuery)
+   IF !hb_IsString(cQuery)
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 

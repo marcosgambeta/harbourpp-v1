@@ -108,4 +108,4 @@ FUNCTION hb_BuildInfo(n)
    v[_HB_ARRAY_MODE            ] := 0   /* Emulate xhb */
    v[_HB_CREDITS               ] := {"See 'harbour -credits'"}
 
-   RETURN IIf(HB_IsNumeric(n), IIf(n <= Len(v), v[n], NIL), v)
+   RETURN IIf(hb_IsNumeric(n), IIf(n <= Len(v), v[n], NIL), v)

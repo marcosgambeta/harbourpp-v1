@@ -63,7 +63,7 @@ THREAD STATIC t_nErrorMin := 0
 
 PROCEDURE hb_BliVerNum( cString )
 
-   IF HB_IsString(cString)
+   IF hb_IsString(cString)
       s_cSerialNum := cString
    ENDIF
 
@@ -71,7 +71,7 @@ PROCEDURE hb_BliVerNum( cString )
 
 PROCEDURE hb_BliDemDte( dDate )
 
-   IF HB_IsDate(dDate)
+   IF hb_IsDate(dDate)
       s_cDemoDate := DToS( dDate )
    ENDIF
 
@@ -79,7 +79,7 @@ PROCEDURE hb_BliDemDte( dDate )
 
 PROCEDURE hb_BliDemMin(nValue)
 
-   IF HB_IsNumeric(nValue)
+   IF hb_IsNumeric(nValue)
       s_nDemoMinutes := nValue
    ENDIF
 
@@ -90,7 +90,7 @@ FUNCTION BliDbgHan( nValue )
    STATIC s_nDebugHandle := 1
    LOCAL nOldValue := s_nDebugHandle
 
-   IF HB_IsNumeric(nValue)
+   IF hb_IsNumeric(nValue)
       s_nDebugHandle := nValue
    ENDIF
 
@@ -106,7 +106,7 @@ FUNCTION BliDemMin(nValue)
 
    LOCAL nOldValue := s_nDemoMinutes
 
-   IF HB_IsNumeric(nValue)
+   IF hb_IsNumeric(nValue)
       s_nDemoMinutes := nValue
    ENDIF
 
@@ -156,7 +156,7 @@ PROCEDURE BliLibFre( pLib )
 
 PROCEDURE BliLibOvr( lValue )
 
-   IF HB_IsLogical(lValue)
+   IF hb_IsLogical(lValue)
       s_lLibOverrides := lValue
    ENDIF
 
@@ -185,7 +185,7 @@ FUNCTION BliMemPak( nValue )
    STATIC s_nGCFrequency := 0
    LOCAL nOldValue := s_nDemoMinutes
 
-   IF HB_IsNumeric(nValue)
+   IF hb_IsNumeric(nValue)
       s_nGCFrequency := nValue
    ENDIF
 
@@ -380,7 +380,7 @@ FUNCTION SwpRunCmd(cCommand, nMem, cRunPath, cTempPath)
    HB_SYMBOL_UNUSED(cRunPath)
    HB_SYMBOL_UNUSED(cTempPath)
 
-   IF !HB_IsString(cCommand) .OR. Empty(cCommand)
+   IF !hb_IsString(cCommand) .OR. Empty(cCommand)
 #if defined(__PLATFORM__UNIX)
       cCommand := GetEnv("SHELL")
 #else

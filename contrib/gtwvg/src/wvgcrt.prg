@@ -242,16 +242,16 @@ METHOD WvgCrt:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   IF HB_IsArray(aPos)
+   IF hb_IsArray(aPos)
       ::aPos := aPos
    ENDIF
-   IF HB_IsArray(aSize)
+   IF hb_IsArray(aSize)
       ::aSize := aSize
    ENDIF
-   IF HB_IsArray(aPresParams)
+   IF hb_IsArray(aPresParams)
       ::aPresParams := aPresParams
    ENDIF
-   IF HB_IsLogical(lVisible)
+   IF hb_IsLogical(lVisible)
       ::visible := lVisible
    ENDIF
 
@@ -305,7 +305,7 @@ METHOD WvgCrt:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    hb_gtInfo(HB_GTI_PRESPARAMS, {::exStyle, ::style, ::aPos[1], ::aPos[2], ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT})
    hb_gtInfo(HB_GTI_SETFONT, {::fontName, ::fontHeight, ::fontWidth})
 
-   IF HB_IsNumeric(::icon)
+   IF hb_IsNumeric(::icon)
       hb_gtInfo(HB_GTI_ICONRES, ::icon)
    ELSEIF ".ico" $ Lower(::icon)
       hb_gtInfo(HB_GTI_ICONFILE, ::icon)
@@ -353,7 +353,7 @@ METHOD WvgCrt:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 METHOD WvgCrt:destroy()
 
-   IF HB_IsObject(::oMenu)
+   IF hb_IsObject(::oMenu)
       ::oMenu:destroy()
    ENDIF
 
@@ -452,7 +452,7 @@ METHOD WvgCrt:lockUpdate()
 
 METHOD WvgCrt:menuBar()
 
-   IF !HB_IsObject(::oMenu)
+   IF !hb_IsObject(::oMenu)
       ::oMenu := WvgMenuBar():New(Self):create()
    ENDIF
 
@@ -511,7 +511,7 @@ METHOD WvgCrt:setPresParam()
 
 METHOD WvgCrt:setSize(aSize, lPaint)
 
-   IF HB_IsArray(aSize)
+   IF hb_IsArray(aSize)
       __defaultNIL(@lPaint, .T.)
 
       hb_gtInfo(HB_GTI_SCREENHEIGHT, aSize[1])
@@ -544,12 +544,12 @@ METHOD WvgCrt:winDevice()
 
 METHOD WvgCrt:enter(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_enter)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_enter)
       Eval(::sl_enter, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_enter := xParam
       RETURN NIL
    ENDIF
@@ -558,12 +558,12 @@ METHOD WvgCrt:enter(xParam)
 
 METHOD WvgCrt:leave(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_leave)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_leave)
       Eval(::sl_leave, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_leave := xParam
       RETURN NIL
    ENDIF
@@ -572,12 +572,12 @@ METHOD WvgCrt:leave(xParam)
 
 METHOD WvgCrt:lbClick(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_lbClick)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_lbClick)
       Eval(::sl_lbClick, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
       RETURN NIL
    ENDIF
@@ -586,12 +586,12 @@ METHOD WvgCrt:lbClick(xParam)
 
 METHOD WvgCrt:lbDblClick(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_lbDblClick)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_lbDblClick)
       Eval(::sl_lbDblClick, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbDblClick := xParam
       RETURN NIL
    ENDIF
@@ -600,12 +600,12 @@ METHOD WvgCrt:lbDblClick(xParam)
 
 METHOD WvgCrt:lbDown(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_lbDown)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_lbDown)
       Eval(::sl_lbDown, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbDown := xParam
       RETURN NIL
    ENDIF
@@ -614,12 +614,12 @@ METHOD WvgCrt:lbDown(xParam)
 
 METHOD WvgCrt:lbUp(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_lbUp)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_lbUp)
       Eval(::sl_lbUp, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbUp := xParam
       RETURN NIL
    ENDIF
@@ -628,12 +628,12 @@ METHOD WvgCrt:lbUp(xParam)
 
 METHOD WvgCrt:mbClick(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_mbClick)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_mbClick)
       Eval(::sl_mbClick, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbClick := xParam
       RETURN NIL
    ENDIF
@@ -642,12 +642,12 @@ METHOD WvgCrt:mbClick(xParam)
 
 METHOD WvgCrt:mbDblClick(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_mbDblClick)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_mbDblClick)
       Eval(::sl_mbDblClick, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbDblClick := xParam
       RETURN NIL
    ENDIF
@@ -656,12 +656,12 @@ METHOD WvgCrt:mbDblClick(xParam)
 
 METHOD WvgCrt:mbDown(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_mbDown)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_mbDown)
       Eval(::sl_mbDown, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbDown := xParam
       RETURN NIL
    ENDIF
@@ -670,12 +670,12 @@ METHOD WvgCrt:mbDown(xParam)
 
 METHOD WvgCrt:mbUp(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_mbUp)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_mbUp)
       Eval(::sl_mbUp, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbUp := xParam
       RETURN NIL
    ENDIF
@@ -684,12 +684,12 @@ METHOD WvgCrt:mbUp(xParam)
 
 METHOD WvgCrt:motion(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_motion)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_motion)
       Eval(::sl_motion, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_motion := xParam
       RETURN NIL
    ENDIF
@@ -698,12 +698,12 @@ METHOD WvgCrt:motion(xParam)
 
 METHOD WvgCrt:rbClick(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_rbClick)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_rbClick)
       Eval(::sl_rbClick, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbClick := xParam
       RETURN NIL
    ENDIF
@@ -712,12 +712,12 @@ METHOD WvgCrt:rbClick(xParam)
 
 METHOD WvgCrt:rbDblClick(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_rbDblClick)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_rbDblClick)
       Eval(::sl_rbDblClick, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbDblClick := xParam
       RETURN NIL
    ENDIF
@@ -726,12 +726,12 @@ METHOD WvgCrt:rbDblClick(xParam)
 
 METHOD WvgCrt:rbDown(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_rbDown)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_rbDown)
       Eval(::sl_rbDown, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbDown := xParam
       RETURN NIL
    ENDIF
@@ -740,12 +740,12 @@ METHOD WvgCrt:rbDown(xParam)
 
 METHOD WvgCrt:rbUp(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_rbUp)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_rbUp)
       Eval(::sl_rbUp, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbUp := xParam
       RETURN NIL
    ENDIF
@@ -754,12 +754,12 @@ METHOD WvgCrt:rbUp(xParam)
 
 METHOD WvgCrt:wheel(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_wheel)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_wheel)
       Eval(::sl_wheel, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_wheel := xParam
       RETURN NIL
    ENDIF
@@ -768,12 +768,12 @@ METHOD WvgCrt:wheel(xParam)
 
 METHOD WvgCrt:close(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::sl_close)
+   IF xParam == NIL .AND. hb_IsBlock(::sl_close)
       Eval(::sl_close, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_close := xParam
       RETURN NIL
    ENDIF
@@ -782,12 +782,12 @@ METHOD WvgCrt:close(xParam)
 
 METHOD WvgCrt:helpRequest(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::sl_helpRequest)
+   IF xParam == NIL .AND. hb_IsBlock(::sl_helpRequest)
       Eval(::sl_helpRequest, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_helpRequest := xParam
       RETURN NIL
    ENDIF
@@ -796,12 +796,12 @@ METHOD WvgCrt:helpRequest(xParam)
 
 METHOD WvgCrt:keyboard(xParam)
 
-   IF HB_IsNumeric(xParam) .AND. HB_IsBlock(::sl_keyboard)
+   IF hb_IsNumeric(xParam) .AND. hb_IsBlock(::sl_keyboard)
       Eval(::sl_keyboard, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_keyboard := xParam
       RETURN NIL
    ENDIF
@@ -810,12 +810,12 @@ METHOD WvgCrt:keyboard(xParam)
 
 METHOD WvgCrt:killDisplayFocus(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::sl_killDisplayFocus)
+   IF xParam == NIL .AND. hb_IsBlock(::sl_killDisplayFocus)
       Eval(::sl_killDisplayFocus, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_killDisplayFocus := xParam
       RETURN NIL
    ENDIF
@@ -824,12 +824,12 @@ METHOD WvgCrt:killDisplayFocus(xParam)
 
 METHOD WvgCrt:killInputFocus(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::sl_killInputFocus)
+   IF xParam == NIL .AND. hb_IsBlock(::sl_killInputFocus)
       Eval(::sl_killInputFocus, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_killInputFocus := xParam
       RETURN NIL
    ENDIF
@@ -838,12 +838,12 @@ METHOD WvgCrt:killInputFocus(xParam)
 
 METHOD WvgCrt:move(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_move)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_move)
       Eval(::sl_move, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_move := xParam
       RETURN NIL
    ENDIF
@@ -852,12 +852,12 @@ METHOD WvgCrt:move(xParam)
 
 METHOD WvgCrt:paint(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_paint)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_paint)
       Eval(::sl_paint, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
       RETURN NIL
    ENDIF
@@ -866,12 +866,12 @@ METHOD WvgCrt:paint(xParam)
 
 METHOD WvgCrt:quit(xParam, xParam1)
 
-   IF HB_IsNumeric(xParam) .AND. HB_IsBlock(::sl_quit)
+   IF hb_IsNumeric(xParam) .AND. hb_IsBlock(::sl_quit)
       Eval(::sl_quit, xParam, xParam1, Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_quit := xParam
       RETURN NIL
    ENDIF
@@ -880,7 +880,7 @@ METHOD WvgCrt:quit(xParam, xParam1)
 
 METHOD WvgCrt:resize(xParam)
 
-   IF HB_IsBlock(xParam) // .OR. xParam == NIL
+   IF hb_IsBlock(xParam) // .OR. xParam == NIL
       ::sl_resize := xParam
       RETURN NIL
    ENDIF
@@ -892,12 +892,12 @@ METHOD WvgCrt:resize(xParam)
 
 METHOD WvgCrt:setDisplayFocus(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::setDisplayFocus)
+   IF xParam == NIL .AND. hb_IsBlock(::setDisplayFocus)
       Eval(::setDisplayFocus, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::setDisplayFocus := xParam
       RETURN NIL
    ENDIF
@@ -906,12 +906,12 @@ METHOD WvgCrt:setDisplayFocus(xParam)
 
 METHOD WvgCrt:setInputFocus(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::sl_setInputFocus)
+   IF xParam == NIL .AND. hb_IsBlock(::sl_setInputFocus)
       Eval(::sl_setInputFocus, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_setInputFocus := xParam
       RETURN NIL
    ENDIF
@@ -920,12 +920,12 @@ METHOD WvgCrt:setInputFocus(xParam)
 
 METHOD WvgCrt:dragEnter(xParam, xParam1)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_dragEnter)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_dragEnter)
       Eval(::sl_dragEnter, xParam, xParam1, Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragEnter := xParam
       RETURN NIL
    ENDIF
@@ -934,12 +934,12 @@ METHOD WvgCrt:dragEnter(xParam, xParam1)
 
 METHOD WvgCrt:dragMotion(xParam)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_dragMotion)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_dragMotion)
       Eval(::sl_dragMotion, xParam, , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragMotion := xParam
       RETURN NIL
    ENDIF
@@ -948,12 +948,12 @@ METHOD WvgCrt:dragMotion(xParam)
 
 METHOD WvgCrt:dragLeave(xParam)
 
-   IF xParam == NIL .AND. HB_IsBlock(::sl_dragLeave)
+   IF xParam == NIL .AND. hb_IsBlock(::sl_dragLeave)
       Eval(::sl_dragLeave, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragLeave := xParam
       RETURN NIL
    ENDIF
@@ -962,12 +962,12 @@ METHOD WvgCrt:dragLeave(xParam)
 
 METHOD WvgCrt:dragDrop(xParam, xParam1)
 
-   IF HB_IsArray(xParam) .AND. HB_IsBlock(::sl_dragDrop)
+   IF hb_IsArray(xParam) .AND. hb_IsBlock(::sl_dragDrop)
       Eval(::sl_dragDrop, xParam, xParam1, Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragDrop := xParam
       RETURN NIL
    ENDIF

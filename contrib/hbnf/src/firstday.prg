@@ -21,7 +21,7 @@
 
 FUNCTION ft_FDay(dDateToChk)
 
-   IF !HB_IsDate(dDatetoChk)
+   IF !hb_IsDate(dDatetoChk)
       dDatetoChk := Date()
    ENDIF
 

@@ -367,9 +367,9 @@ METHOD UWBrowse:Output()
       FOR nI := 1 TO Len(::aColumns)
          xField := ::aColumns[nI][3]
          DO CASE
-         CASE HB_IsString(xField)
+         CASE hb_IsString(xField)
             xI := FieldGet( FieldPos( xField ) )
-         CASE HB_IsEvalItem(xField)
+         CASE hb_IsEvalItem(xField)
             xI := Eval(xField)
          ENDCASE
          SWITCH ValType(xI)

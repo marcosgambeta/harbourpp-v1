@@ -117,9 +117,9 @@ METHOD TIPMail:New( cBody, xEncoder )
 
 METHOD TIPMail:SetEncoder( xEncoder )
 
-   ::oEncoder := IIf(HB_IsString(xEncoder), tip_GetEncoder( xEncoder ), xEncoder)
+   ::oEncoder := IIf(hb_IsString(xEncoder), tip_GetEncoder( xEncoder ), xEncoder)
 
-   IF HB_IsObject(::oEncoder)
+   IF hb_IsObject(::oEncoder)
       ::hHeaders["Content-Transfer-Encoding"] := ::oEncoder:cName
       RETURN .T.
    ENDIF
@@ -128,18 +128,18 @@ METHOD TIPMail:SetEncoder( xEncoder )
 
 METHOD TIPMail:SetBody( cBody )
 
-   IF HB_IsObject(::oEncoder)
+   IF hb_IsObject(::oEncoder)
       ::cBody := ::oEncoder:Encode( cBody )
       ::hHeaders["Content-Transfer-Encoding"] := ::oEncoder:cName
       ::lBodyEncoded := .T.  // needed to prevent an extra CRLF from being appended [GD]
-   ELSEIF HB_IsString(cBody) .OR. cBody == NIL
+   ELSEIF hb_IsString(cBody) .OR. cBody == NIL
       ::cBody := cBody
    ENDIF
 
    RETURN .T.
 
 METHOD TIPMail:GetBody()
-   RETURN IIf(HB_IsObject(::oEncoder), ::oEncoder:Decode( ::cBody ), ::cBody)
+   RETURN IIf(hb_IsObject(::oEncoder), ::oEncoder:Decode( ::cBody ), ::cBody)
 
 METHOD TIPMail:GetFieldPart( cPart )
 
@@ -172,7 +172,7 @@ METHOD TIPMail:SetFieldPart( cPart, cValue )
    LOCAL nPos
    LOCAL cEnc
 
-   IF HB_IsString(cValue) .AND. !Empty(cValue)
+   IF hb_IsString(cValue) .AND. !Empty(cValue)
       IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
          ( nPos := At( ";", cEnc ) ) > 0
          ::hHeaders[cPart] := cValue + SubStr(cEnc, nPos)
@@ -187,8 +187,8 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
 
    LOCAL aMatch
 
-   IF HB_IsString(cPart) .AND. cPart $ ::hHeaders .AND. ;
-      HB_IsString(cOption) .AND. !Empty(cOption)
+   IF hb_IsString(cPart) .AND. cPart $ ::hHeaders .AND. ;
+      hb_IsString(cOption) .AND. !Empty(cOption)
 
       aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[cPart], .F. )
 
@@ -205,7 +205,7 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
 
 METHOD TIPMail:Attach( oSubPart )
 
-   IF HB_IsObject(oSubPart) .AND. oSubPart:ClassName() == "TIPMAIL"
+   IF hb_IsObject(oSubPart) .AND. oSubPart:ClassName() == "TIPMAIL"
       // reset wrong content-type
       IF !::isMultiPart()
          ::hHeaders["Content-Type"] := "multipart/mixed"
@@ -336,7 +336,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
    LOCAL nLinePos, nSplitPos, nBodyPos
    LOCAL cValue, cLastField
 
-   IF !HB_IsString(cMail)
+   IF !hb_IsString(cMail)
       RETURN 0
    ENDIF
 
@@ -381,7 +381,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
       nPos := nLinePos + 2
 
       // Prevents malformed body to affect us
-      IF HB_IsString(cBoundary) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == 1
+      IF hb_IsString(cBoundary) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == 1
          RETURN 0
       ENDIF
    ENDDO
@@ -415,12 +415,12 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
       ENDIF
 
       // have we met the boundary?
-      IF HB_IsString(cBoundary) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == nPos
+      IF hb_IsString(cBoundary) .AND. hb_At( "--" + cBoundary, cMail, nPos ) == nPos
          EXIT
       ENDIF
 
       // Have we met a section?
-      IF HB_IsString(cSubBoundary) .AND. hb_At( "--" + cSubBoundary, cMail, nPos ) == nPos
+      IF hb_IsString(cSubBoundary) .AND. hb_At( "--" + cSubBoundary, cMail, nPos ) == nPos
 
          // is it the last subsection?
          IF hb_At( "--", cMail, nPos + Len(cSubBoundary) + 2, nLinePos ) > 0
@@ -485,14 +485,14 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
 
    LOCAL i
 
-   IF !HB_IsString(cFrom) .OR. Empty(cFrom)
+   IF !hb_IsString(cFrom) .OR. Empty(cFrom)
       RETURN .F.
    ENDIF
 
    DO CASE
-   CASE HB_IsString(xTo)
+   CASE hb_IsString(xTo)
       aTo := { xTo }
-   CASE HB_IsArray(xTo)
+   CASE hb_IsArray(xTo)
       aTo := xTo
    ENDCASE
 
@@ -501,9 +501,9 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    ENDIF
 
    DO CASE
-   CASE HB_IsString(xCC)
+   CASE hb_IsString(xCC)
       aCC := { xCC }
-   CASE HB_IsArray(xCC)
+   CASE hb_IsArray(xCC)
       aCC := xCC
    ENDCASE
 
@@ -583,7 +583,7 @@ METHOD TIPMail:detachFile( cPath )
       RETURN .F.
    ENDIF
 
-   IF HB_IsString(cPath)
+   IF hb_IsString(cPath)
       cFileName := hb_DirSepAdd( cPath ) + cFileName
    ENDIF
 

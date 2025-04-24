@@ -65,7 +65,7 @@ CREATE CLASS xhb_TMemoEditor INHERIT XHBEditor
    METHOD Edit()                                   // Calls ::Super:Edit(nKey) but is needed to handle configurable keys
    METHOD KeyboardHook(nKey)                     // Gets called every time there is a key not handled directly by HBEditor
 
-   METHOD ExistUdf() INLINE HB_IsString(::xUserFunction)
+   METHOD ExistUdf() INLINE hb_IsString(::xUserFunction)
    METHOD HandleUdf(nKey, nUdfReturn, lEdited)   // Handles requests returned to MemoEdit() by udf
    METHOD CallUdf(nMode)                         // Call user function. ( old xDo )
 
@@ -430,43 +430,43 @@ FUNCTION xhb_MemoEdit( ;
 
    // 2006-07-22 - E.F. Check argument types.
    //
-   IF cString != NIL .AND. !HB_IsString(cString) .AND. !HB_IsMemo(cString)
+   IF cString != NIL .AND. !hb_IsString(cString) .AND. !hb_IsMemo(cString)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cString> Argument type error", ProcName()))
    ENDIF
-   IF nTop != NIL .AND. !HB_IsNumeric(nTop)
+   IF nTop != NIL .AND. !hb_IsNumeric(nTop)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTop> Argument type error", ProcName()))
    ENDIF
-   IF nLeft != NIL .AND. !HB_IsNumeric(nLeft)
+   IF nLeft != NIL .AND. !hb_IsNumeric(nLeft)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nLeft> Argument type error", ProcName()))
    ENDIF
-   IF nRight != NIL .AND. !HB_IsNumeric(nRight)
+   IF nRight != NIL .AND. !hb_IsNumeric(nRight)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nRight> Argument type error", ProcName()))
    ENDIF
-   IF nBottom != NIL .AND. !HB_IsNumeric(nBottom)
+   IF nBottom != NIL .AND. !hb_IsNumeric(nBottom)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nBottom> Argument type error", ProcName()))
    ENDIF
-   IF lEditMode != NIL .AND. !HB_IsLogical(lEditMode)
+   IF lEditMode != NIL .AND. !hb_IsLogical(lEditMode)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<lEditMode> Argument type error", ProcName()))
    ENDIF
-   IF xUDF != NIL .AND. !HB_IsString(xUDF) .AND. !HB_IsLogical(xUDF)
+   IF xUDF != NIL .AND. !hb_IsString(xUDF) .AND. !hb_IsLogical(xUDF)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cUserFunction> Argument type error", ProcName()))
    ENDIF
-   IF nLineLength != NIL .AND. !HB_IsNumeric(nLineLength)
+   IF nLineLength != NIL .AND. !hb_IsNumeric(nLineLength)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nLineLength> Argument type error", ProcName()))
    ENDIF
-   IF nTabSize != NIL .AND. !HB_IsNumeric(nTabSize)
+   IF nTabSize != NIL .AND. !hb_IsNumeric(nTabSize)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTabSize> Argument type error", ProcName()))
    ENDIF
-   IF nTextBuffRow != NIL .AND. !HB_IsNumeric(nTextBuffRow)
+   IF nTextBuffRow != NIL .AND. !hb_IsNumeric(nTextBuffRow)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTextBuffRow> Argument type error", ProcName()))
    ENDIF
-   IF nTextBuffColumn != NIL .AND. !HB_IsNumeric(nTextBuffColumn)
+   IF nTextBuffColumn != NIL .AND. !hb_IsNumeric(nTextBuffColumn)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTextBuffColumn> Argument type error", ProcName()))
    ENDIF
-   IF nWindowRow != NIL .AND. !HB_IsNumeric(nWindowRow)
+   IF nWindowRow != NIL .AND. !hb_IsNumeric(nWindowRow)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nWindowRow> Argument type error", ProcName()))
    ENDIF
-   IF nWindowColumn != NIL .AND. !HB_IsNumeric(nWindowColumn)
+   IF nWindowColumn != NIL .AND. !hb_IsNumeric(nWindowColumn)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nWindowColumn> Argument type error", ProcName()))
    ENDIF
 
@@ -476,7 +476,7 @@ FUNCTION xhb_MemoEdit( ;
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTop,nLeft,nRight,nBottom> Argument error", ProcName()))
    ENDIF
 
-   IF HB_IsString(xUDF) .AND. Empty(xUDF)
+   IF hb_IsString(xUDF) .AND. Empty(xUDF)
       xUDF := NIL
    ENDIF
 
@@ -501,7 +501,7 @@ FUNCTION xhb_MemoEdit( ;
 
    // 2006-08-06 - E.F. Clipper's  <cUserFunction> in .T. or. F. is samething.
    //
-   IF !HB_IsLogical(xUDF) // .OR. cUserFunction
+   IF !hb_IsLogical(xUDF) // .OR. cUserFunction
 
       oEd:Edit()
 

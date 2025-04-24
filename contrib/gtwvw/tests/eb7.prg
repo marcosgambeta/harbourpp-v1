@@ -194,13 +194,13 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    mcVarType := ValType(mxValue)
    DO CASE
    CASE mcVarType == "C"
-      mcPict := IIf(HB_IsString(mcPict), mcPict, Replicate("X", Len(mxValue)))
+      mcPict := IIf(hb_IsString(mcPict), mcPict, Replicate("X", Len(mxValue)))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
-      mcPict := IIf(HB_IsString(mcPict), mcPict, "999,999,999.99")
+      mcPict := IIf(hb_IsString(mcPict), mcPict, "999,999,999.99")
       mbText := {|| Transform(mxValue, mcPict) }
    CASE mcVarType == "D"
-      mcPict := IIf(HB_IsString(mcPict), mcPict, "9999-99-99")
+      mcPict := IIf(hb_IsString(mcPict), mcPict, "9999-99-99")
       mbText := {|| DToC(mxValue) }
    OTHERWISE
       // unsupported valtype
@@ -209,8 +209,8 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
 
    hb_default(@aEBGEts, {})
 
-   IF !HB_IsLogical(mlMultiline) .OR. ;
-      ! HB_IsString(mxValue)
+   IF !hb_IsLogical(mlMultiline) .OR. ;
+      ! hb_IsString(mxValue)
       mlMultiline := .F.
    ENDIF
    hb_default(@mcLabel, mcVarName + ":")
@@ -300,7 +300,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    nFocus := 1
    ch := Inkey(0.5)
    DO WHILE !lDone
-      IF HB_IsBlock(SetKey(ch))
+      IF hb_IsBlock(SetKey(ch))
          Eval(SetKey(ch))
       ELSEIF ch != 0
          lchangefocus := .T.
@@ -357,7 +357,7 @@ STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
    LOCAL nNumGets := Len(aEBGets)
    LOCAL nFocus, lchangefocus
 
-   IF HB_IsBlock(SetKey(ch))
+   IF hb_IsBlock(SetKey(ch))
       Eval(SetKey(ch))
       RETURN
    ELSEIF ch == 0
@@ -904,7 +904,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
    CASE message == WM_CHAR
       ch := wParam
       bhandler := inp_handler( nWinNum )
-      IF HB_IsBlock(bhandler)
+      IF hb_IsBlock(bhandler)
          Eval(bhandler, nWinNum, ch)
          RETURN .T.
       ELSE
@@ -922,7 +922,7 @@ FUNCTION inp_handler( nwinnum, bhandler )
    STATIC s_bhandlers := {}
    LOCAL retval := IIf(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[nwinnum + 1], NIL)
 
-   IF HB_IsBlock(bhandler)
+   IF hb_IsBlock(bhandler)
       IF Len(s_bhandlers) < nwinnum + 1
          ASize( s_bhandlers, nwinnum + 1 )
       ENDIF

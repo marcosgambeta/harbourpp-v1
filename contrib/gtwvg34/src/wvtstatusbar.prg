@@ -122,7 +122,7 @@ METHOD WvtStatusBar:SetPanels( aPanels )
 
    AAdd(::aPanels, WvtPanel():New( ::oParent, ++nID, ::nTop, 0 ))
 
-   IF HB_IsArray(aPanels)
+   IF hb_IsArray(aPanels)
       FOR EACH i IN aPanels
          IF ::oParent:MaxCol() > i
             AAdd(::aPanels, WvtPanel():New( ::oParent, ++nID, ::nTop, i ))

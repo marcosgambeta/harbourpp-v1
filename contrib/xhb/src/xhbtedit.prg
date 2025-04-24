@@ -147,7 +147,7 @@ CREATE CLASS XHBEditor
    // ReadInsert(), ::lInsert must check in it.
    // VAR   lInsert        INIT .F.              // Is editor in Insert mode or in Overstrike one? Default : Overstrike - Clipper
    METHOD lInsert()            BLOCK {||Set(_SET_INSERT)}
-   METHOD _lInsert(lInsert)    BLOCK {|Self, lInsert|HB_SYMBOL_UNUSED(Self), IIf(HB_IsLogical(lInsert), Set(_SET_INSERT, lInsert), Set(_SET_INSERT))}
+   METHOD _lInsert(lInsert)    BLOCK {|Self, lInsert|HB_SYMBOL_UNUSED(Self), IIf(hb_IsLogical(lInsert), Set(_SET_INSERT, lInsert), Set(_SET_INSERT))}
 
    METHOD  New(cString, nTop, nLeft, nBottom, ;             // Converts a string to an array of strings splitting input string at EOL boundaries
       nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol)
@@ -285,7 +285,7 @@ METHOD XHBEditor:New(cString, nTop, nLeft, nBottom, nRight, lEditMode, nLineLeng
 
    // 2006-08-18 - E.F. Adjusted nLineLenght in accordance with Clipper's
    //                   memoedit.
-   IF !HB_IsNumeric(nLineLength)
+   IF !hb_IsNumeric(nLineLength)
       nLineLength := ::nNumCols
    ELSE
       IF nLineLength < 0
@@ -2047,7 +2047,7 @@ STATIC FUNCTION GetParagraph(oSelf, nRow)
    LOCAL cLine := ""
 
    // V@
-   DO WHILE nRow <= oSelf:LastRow() .AND. HB_IsLogical(oSelf:aText[nRow]:lSoftCR) .AND. oSelf:aText[nRow]:lSoftCR
+   DO WHILE nRow <= oSelf:LastRow() .AND. hb_IsLogical(oSelf:aText[nRow]:lSoftCR) .AND. oSelf:aText[nRow]:lSoftCR
       cLine += oSelf:aText[nRow]:cText
       oSelf:RemoveLine(nRow)
       IF oSelf:LastRow() <= 0 // V@
@@ -2290,7 +2290,7 @@ METHOD XHBEditor:SetPos(nRow, nCol)
 METHOD XHBEditor:InsertState(lInsState)
 
    // 2006-07-22 - E.F. - Insert only in edit mode.
-   IF ::lEditAllow .AND. HB_IsLogical(lInsState) .AND. ::lInsert != lInsState
+   IF ::lEditAllow .AND. hb_IsLogical(lInsState) .AND. ::lInsert != lInsState
 
       ::lInsert := lInsState
 
@@ -2977,7 +2977,7 @@ STATIC FUNCTION Text2Array(cString, nWordWrapCol)
       ENDIF
       nRetLen += Len(cLine) + nEOLLen
 
-      IF HB_IsNumeric(nWordWrapCol) .AND. Len(cLine) > nWordWrapCol
+      IF hb_IsNumeric(nWordWrapCol) .AND. Len(cLine) > nWordWrapCol
          DO WHILE .T.
             // Split line at nWordWrapCol boundary
             IF Len(cLine) > nWordWrapCol

@@ -170,7 +170,7 @@ ENDCLASS
 METHOD TOleAuto:hObj(xOle)
 
    IF xOle != NIL
-      IF HB_IsNumeric(xOle)
+      IF hb_IsNumeric(xOle)
          xOle := __olePDisp(xOle)
       ENDIF
       IF __oleIsDisp(xOle)
@@ -184,7 +184,7 @@ METHOD TOleAuto:New(xOle, cClass, cLicense)
 
    LOCAL hOle
 
-   IF HB_IsString(xOle)
+   IF hb_IsString(xOle)
       IF Empty(hOle := __oleCreateObject(xOle, , cLicense))
          RETURN Throw(s_oleError())
       ENDIF
@@ -194,7 +194,7 @@ METHOD TOleAuto:New(xOle, cClass, cLicense)
       ::hObj := xOle
       IF ::__hObj == NIL
          RETURN Throw(s_oleError(0, "Invalid argument to contructor!"))
-      ELSEIF HB_IsString(cClass)
+      ELSEIF hb_IsString(cClass)
          ::cClassName := cClass
       ELSE
          ::cClassName := hb_ntos(win_P2N(::__hObj))
@@ -205,7 +205,7 @@ METHOD TOleAuto:New(xOle, cClass, cLicense)
 
 METHOD TOleAuto:GetActiveObject(cClass)
 
-   IF HB_IsString(cClass)
+   IF hb_IsString(cClass)
       IF Empty(::__hObj := __oleGetActiveObject(cClass))
          RETURN Throw(s_oleError())
       ENDIF

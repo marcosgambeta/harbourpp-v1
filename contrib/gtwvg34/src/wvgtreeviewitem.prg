@@ -140,7 +140,7 @@ METHOD WvgTreeViewItem:addItem( cCaption )
    oItem:caption := cCaption
    oItem:oWnd    := ::oWnd
 
-   oItem:hItem := wvg_TreeView_AddItem( oItem:hTree, IIf(HB_IsObject(oItem:oParent), oItem:oParent:hItem, NIL), oItem:caption )
+   oItem:hItem := wvg_TreeView_AddItem( oItem:hTree, IIf(hb_IsObject(oItem:oParent), oItem:oParent:hItem, NIL), oItem:caption )
 
    AAdd(oItem:oWnd:aItems, oItem)
 

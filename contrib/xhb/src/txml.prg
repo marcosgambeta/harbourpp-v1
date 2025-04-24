@@ -405,7 +405,7 @@ METHOD TXMLDocument:Write(fHandle, nStyle)
 
    LOCAL nResult := HBXML_STATUS_ERROR
 
-   IF HB_IsString(fHandle)  // It's a filename!
+   IF hb_IsString(fHandle)  // It's a filename!
       fHandle := FCreate(fHandle)
       IF fHandle != F_ERROR
          IF Empty(::oRoot:oChild) .OR. !( ::oRoot:oChild:cName == "xml" )

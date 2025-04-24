@@ -138,7 +138,7 @@ METHOD THtmlDocument:new( cHtmlString )
       " </body>" + hb_eol() + ;
       "</html>"
 
-   IF !HB_IsString(cHtmlString)
+   IF !hb_IsString(cHtmlString)
       ::root := THtmlNode():new( cEmptyHtmlDoc )
    ELSEIF "<html" $ Lower(Left(cHtmlString, 4096))
       ::root := THtmlNode():new( cHtmlString )
@@ -606,7 +606,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       THtmlInit(.T.)
    ENDIF
 
-   IF HB_IsString(oParent)
+   IF hb_IsString(oParent)
       // a HTML string is passed -> build new tree of objects
       oParent := StrTran(oParent, Chr(9), " ")
       ::root           := Self
@@ -614,11 +614,11 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       ::htmlTagType    := THtmlTagType( "_root_" )
       ::htmlContent    := {}
       ::parseHtml( P_PARSER( oParent ) )
-   ELSEIF HB_IsObject(oParent)
+   ELSEIF hb_IsObject(oParent)
       // a HTML object is passed -> we are in the course of building an object tree
       ::root        := oParent:root
       ::parent      := oParent
-      IF HB_IsString(cAttrib)
+      IF hb_IsString(cAttrib)
          IF Right(cAttrib, 1) == "/"
             ::htmlEndTagName := "/"
             ::htmlAttributes := hb_StrShrink( cAttrib )
@@ -663,7 +663,7 @@ METHOD THtmlNode:isOptional()
 
 // checks if this is a node (leafs contain no further nodes, e.g. <br />,<hr>,_text_)
 METHOD THtmlNode:isNode()
-   RETURN HB_IsArray(::htmlContent) .AND. Len(::htmlContent) > 0
+   RETURN hb_IsArray(::htmlContent) .AND. Len(::htmlContent) > 0
 
 // checks if this is a block node that must be closed with an ending tag: eg: <table></table>, <ul></ul>
 METHOD THtmlNode:isBlock()
@@ -906,7 +906,7 @@ METHOD THtmlNode:insertBefore( oTHtmlNode )
       ::root:_document:changed := .T.
    ENDIF
 
-   IF HB_IsArray(::parent:htmlContent)
+   IF hb_IsArray(::parent:htmlContent)
       hb_AIns( ::parent:htmlContent, 1, oTHtmlNode, .T. )
    ENDIF
 
@@ -947,7 +947,7 @@ METHOD THtmlNode:Delete()
       ::root:_document:changed := .T.
    ENDIF
 
-   IF HB_IsArray(::parent:htmlContent)
+   IF hb_IsArray(::parent:htmlContent)
       hb_ADel( ::parent:htmlContent, hb_AScan(::parent:htmlContent, Self,,, .T.), .T. )
    ENDIF
 
@@ -1043,7 +1043,7 @@ METHOD THtmlNode:toString( nIndent )
       ENDIF
    ENDIF
 
-   IF HB_IsArray(::htmlContent)
+   IF hb_IsArray(::htmlContent)
 
       FOR EACH oNode IN ::htmlContent
          IF !oNode:isInline() .OR. oNode:htmlTagName == "!--"
@@ -1052,7 +1052,7 @@ METHOD THtmlNode:toString( nIndent )
          cHtml += oNode:toString( nIndent + 1 )
       NEXT
 
-   ELSEIF HB_IsString(::htmlContent)
+   ELSEIF hb_IsString(::htmlContent)
       cHtml += ::htmlContent
    ENDIF
 
@@ -1077,7 +1077,7 @@ METHOD THtmlNode:attrToString()
 
    IF ::htmlAttributes == NIL
       cAttr := ""
-   ELSEIF HB_IsString(::htmlAttributes)
+   ELSEIF hb_IsString(::htmlAttributes)
       cAttr := " " + ::htmlAttributes
    ELSE
       // attributes are parsed into a Hash
@@ -1168,7 +1168,7 @@ METHOD THtmlNode:getAttribute( cName )
    LOCAL hHash := ::getAttributes()
    LOCAL cValue
 
-   IF !HB_IsHash(hHash)
+   IF !hb_IsHash(hHash)
       RETURN hHash
    ENDIF
 
@@ -1195,7 +1195,7 @@ METHOD THtmlNode:getAttributes()
       ::htmlAttributes := { => }
       hb_HCaseMatch( ::htmlAttributes, .F. )
 
-   ELSEIF HB_IsString(::htmlAttributes)
+   ELSEIF hb_IsString(::htmlAttributes)
       IF ::htmlAttributes == "/"
          ::htmlAttributes := { => }
          hb_HCaseMatch( ::htmlAttributes, .F. )
@@ -1310,7 +1310,7 @@ METHOD THtmlNode:setAttribute( cName, cValue )
    LOCAL nPos
    LOCAL hHash := ::getAttributes()
 
-   IF !HB_IsHash(hHash)
+   IF !hb_IsHash(hHash)
       // Tag doesn't have any attribute
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
@@ -1446,7 +1446,7 @@ METHOD THtmlNode:findNodesByTagName( cName, nOrdinal )
       ENDIF
    NEXT
 
-   IF HB_IsNumeric(nOrdinal)
+   IF hb_IsNumeric(nOrdinal)
       IF nOrdinal < 1 .OR. nOrdinal > Len(aRet)
          RETURN NIL
       ENDIF

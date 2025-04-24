@@ -97,7 +97,7 @@ METHOD GDChart:New( sx, sy )
 
 METHOD GDChart:AddData(hData)
 
-   IF HB_IsHash(hData)
+   IF hb_IsHash(hData)
       AAdd(::aDataOfHashes, hData)
    ENDIF
 
@@ -105,7 +105,7 @@ METHOD GDChart:AddData(hData)
 
 METHOD GDChart:SetData(aData)
 
-   IF HB_IsArray(aData)
+   IF hb_IsArray(aData)
       ::aDataOfHashes := aData
    ENDIF
 
@@ -113,7 +113,7 @@ METHOD GDChart:SetData(aData)
 
 METHOD GDChart:AddDef( cDefKey, xDefVal )
 
-   IF HB_IsString(cDefKey)
+   IF hb_IsString(cDefKey)
       ::hDefs[Upper(cDefKey)] := xDefVal
    ENDIF
 
@@ -121,7 +121,7 @@ METHOD GDChart:AddDef( cDefKey, xDefVal )
 
 METHOD GDChart:SetDefs( hDefs )
 
-   IF HB_IsHash(hDefs)
+   IF hb_IsHash(hDefs)
       ::hDefs := hDefs
    ENDIF
 
@@ -209,7 +209,7 @@ METHOD GDChart:PieChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_IsArray(colorp)
+         IF hb_IsArray(colorp)
             colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
@@ -338,13 +338,13 @@ METHOD GDChart:VerticalBarChart()
       nTot      += hElement["VALUE"]
    NEXT
 
-   IF !HB_IsNumeric(nLeftLabelSpace)
+   IF !hb_IsNumeric(nLeftLabelSpace)
       nLeftLabelSpace := nBorder + Len(LTrim(Transform(nMax, cAxisPict))) * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_IsNumeric(nRightLabelSpace)
+   IF !hb_IsNumeric(nRightLabelSpace)
       nRightLabelSpace := nLeftLabelSpace // nBorder + Len(hb_ntos(nMax)) * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_IsNumeric(nBottomLabelSpace)
+   IF !hb_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
 
@@ -432,7 +432,7 @@ METHOD GDChart:VerticalBarChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_IsArray(colorp)
+         IF hb_IsArray(colorp)
             colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
@@ -530,16 +530,16 @@ METHOD GDChart:HorizontalBarChart()
       nTot      += hElement["VALUE"]
    NEXT
 
-   IF !HB_IsNumeric(nLeftLabelSpace)
+   IF !hb_IsNumeric(nLeftLabelSpace)
       nLeftLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_IsNumeric(nRightLabelSpace)
+   IF !hb_IsNumeric(nRightLabelSpace)
       nRightLabelSpace := nBorder + ( Len(LTrim(Transform(nMax, cAxisPict))) * ::GetFontWidth() / 2 )
    ENDIF
-   IF !HB_IsNumeric(nTopLabelSpace)
+   IF !hb_IsNumeric(nTopLabelSpace)
       nTopLabelSpace := nBorder + ::GetFontHeight() + nBorder
    ENDIF
-   IF !HB_IsNumeric(nBottomLabelSpace)
+   IF !hb_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nTopLabelSpace // nBorder + ::GetFontHeight() + nBorder
    ENDIF
 
@@ -626,7 +626,7 @@ METHOD GDChart:HorizontalBarChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_IsArray(colorp)
+         IF hb_IsArray(colorp)
             colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
@@ -738,13 +738,13 @@ METHOD GDChart:LineChart()
       nMinLabel := Max(nMinLabel, Len(IIf(cLabel != NIL, cLabel, "")))
    NEXT
 
-   IF !HB_IsNumeric(nLeftLabelSpace)
+   IF !hb_IsNumeric(nLeftLabelSpace)
       nLeftLabelSpace := nBorder + Max(Len(LTrim(Transform(nMax, cAxisPict))), Len(LTrim(Transform(nMin, cAxisPict)))) * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_IsNumeric(nRightLabelSpace)
+   IF !hb_IsNumeric(nRightLabelSpace)
       nRightLabelSpace := nLeftLabelSpace
    ENDIF
-   IF !HB_IsNumeric(nBottomLabelSpace)
+   IF !hb_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
 
@@ -860,7 +860,7 @@ METHOD GDChart:LineChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_IsArray(colorp)
+         IF hb_IsArray(colorp)
             colorp := ::SetColor(colorp[1], colorp[2], colorp[3])
          ENDIF
       ENDIF
@@ -946,4 +946,4 @@ METHOD CloneDataFrom( oSrc )
 
 
 STATIC FUNCTION __HGetValue( hHash, cKey )
-   RETURN IIf(HB_IsHash(hHash), hb_HGetDef( hHash, cKey ), NIL)
+   RETURN IIf(hb_IsHash(hHash), hb_HGetDef( hHash, cKey ), NIL)

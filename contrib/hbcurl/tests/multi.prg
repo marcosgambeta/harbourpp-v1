@@ -71,7 +71,7 @@ PROCEDURE Main( cRemote4 )
             IF aResult # NIL
                /*
                 * instead of FOR loop you could possibly
-                * DO WHILE HB_IsArray( aResult := curl_multi_info_read( hMulti ) ) .AND. ;
+                * DO WHILE hb_IsArray( aResult := curl_multi_info_read( hMulti ) ) .AND. ;
                 *          aResult[HB_CURLMSG_RESP_LEN] > 0
                 */
                ? "HB_CURLMSG_RESP_LEN          :", aResult[HB_CURLMSG_RESP_LEN]

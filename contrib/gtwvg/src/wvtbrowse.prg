@@ -199,7 +199,7 @@ METHOD WvtBrowse:Refresh()
 
    LOCAL nWorkArea := Select()
 
-   IF HB_IsBlock(::bOnRefresh)
+   IF hb_IsBlock(::bOnRefresh)
       Eval(::bOnRefresh, Self)
    ELSE
       Select(::cAlias)
@@ -216,7 +216,7 @@ METHOD WvtBrowse:HandleEvent(nKey)
 
    LOCAL lRet := .F.
 
-   IF HB_IsBlock(::bHandleEvent)
+   IF hb_IsBlock(::bHandleEvent)
       lRet := Eval(::bHandleEvent, Self, ::oParent:cPaintBlockID, ::oBrw, nKey)
    ENDIF
 
@@ -228,7 +228,7 @@ METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
    LOCAL i
 
    IF nIndex > 0 .AND. nIndex <= Len(::aChildren)
-      IF HB_IsBlock(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
+      IF hb_IsBlock(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
          xData := Eval(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
       ENDIF
 
@@ -275,7 +275,7 @@ METHOD WvtBrowse:SetTooltip()
    LOCAL cTip
    LOCAL nArea
 
-   IF HB_IsBlock(::bTooltip)
+   IF hb_IsBlock(::bTooltip)
       ::SaveSettings()
       nArea := Select(::cAlias)
 
@@ -298,7 +298,7 @@ METHOD WvtBrowse:SetTooltip()
 
 METHOD WvtBrowse:SaveSettings()
 
-   IF HB_IsBlock(::bSaveSettings)
+   IF hb_IsBlock(::bSaveSettings)
       ::xSettings := Eval(::bSaveSettings, Self)
    ENDIF
 
@@ -306,7 +306,7 @@ METHOD WvtBrowse:SaveSettings()
 
 METHOD WvtBrowse:RestSettings()
 
-   IF ::xSettings != NIL .AND. HB_IsBlock(::bRestSettings)
+   IF ::xSettings != NIL .AND. hb_IsBlock(::bRestSettings)
       Eval(::bRestSettings, Self)
    ENDIF
 

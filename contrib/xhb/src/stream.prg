@@ -171,7 +171,7 @@ METHOD TStreamFileReader:Read(sBuffer, nOffset, nCount)
    LOCAL nRead
 
 /*
-   IF !HB_IsByRef(@sBuffer)
+   IF !hb_IsByRef(@sBuffer)
       Throw(xhb_ErrorNew("Stream", 0, 1002, ProcName(), "Buffer not BYREF.", hb_AParams()))
    ENDIF
 */

@@ -164,22 +164,22 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
       CASE aNM[NMH_code] == EN_KILLFOCUS
-         IF HB_IsEvalItem(::sl_killInputFocus)
+         IF hb_IsEvalItem(::sl_killInputFocus)
             Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_SETFOCUS
-         IF HB_IsEvalItem(::sl_setInputFocus)
+         IF hb_IsEvalItem(::sl_setInputFocus)
             Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_HSCROLL
-         IF HB_IsEvalItem(::sl_hScroll)
+         IF hb_IsEvalItem(::sl_hScroll)
             Eval(::sl_hScroll, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_VSCROLL
-         IF HB_IsEvalItem(::sl_vScroll)
+         IF hb_IsEvalItem(::sl_vScroll)
             Eval(::sl_vScroll, , , Self)
          ENDIF
 
@@ -190,7 +190,7 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
       ENDCASE
 
    CASE nMessage ==  HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
@@ -211,22 +211,22 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_KILLFOCUS
-            IF HB_IsEvalItem(::sl_killInputFocus)
+            IF hb_IsEvalItem(::sl_killInputFocus)
                Eval(::sl_killInputFocus, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_SETFOCUS
-            IF HB_IsEvalItem(::sl_setInputFocus)
+            IF hb_IsEvalItem(::sl_setInputFocus)
                Eval(::sl_setInputFocus, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_HSCROLL
-            IF HB_IsEvalItem(::sl_hScroll)
+            IF hb_IsEvalItem(::sl_hScroll)
                Eval(::sl_hScroll, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WIN_WM_VSCROLL
-            IF HB_IsEvalItem(::sl_vScroll)
+            IF hb_IsEvalItem(::sl_vScroll)
                Eval(::sl_vScroll, , , Self)
             ENDIF
 
@@ -247,7 +247,7 @@ METHOD WvgMLE:changed(lChanged)
 
    LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
 
-   IF HB_IsLogical(lChanged)
+   IF hb_IsLogical(lChanged)
       ::sendMessage( EM_SETMODIFY, IIf(lChanged, 0, 1), 0 )
    ENDIF
 

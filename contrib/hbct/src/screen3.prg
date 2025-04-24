@@ -47,7 +47,7 @@
 
 FUNCTION ClearEol(nRow, nCol, xAttr, xChar)
 
-   IF !HB_IsNumeric(nRow)
+   IF !hb_IsNumeric(nRow)
       nRow := Row()
    ENDIF
 
@@ -55,7 +55,7 @@ FUNCTION ClearEol(nRow, nCol, xAttr, xChar)
 
 FUNCTION ClEol(nRow, nCol)
 
-   IF !HB_IsNumeric(nRow)
+   IF !hb_IsNumeric(nRow)
       nRow := Row()
    ENDIF
 

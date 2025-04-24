@@ -307,7 +307,7 @@ METHOD win_Prn:StartDoc(cDocName)
 
    LOCAL lResult
 
-   IF !HB_IsString(cDocName)
+   IF !hb_IsString(cDocName)
       cDocName := hb_argv(0) + " [" + DToC(Date()) + " - " + Time() + "]"
    ENDIF
 
@@ -612,13 +612,13 @@ METHOD win_Prn:SetPos(nPosX, nPosY)
 
 METHOD win_Prn:SetColor(nClrText, nClrPane, nAlign)
 
-   IF HB_IsNumeric(nClrText)
+   IF hb_IsNumeric(nClrText)
       ::TextColor := nClrText
    ENDIF
-   IF HB_IsNumeric(nClrPane)
+   IF hb_IsNumeric(nClrPane)
       ::BkColor := nClrPane
    ENDIF
-   IF HB_IsNumeric(nAlign)
+   IF hb_IsNumeric(nAlign)
       ::TextAlign := nAlign
    ENDIF
 
@@ -626,7 +626,7 @@ METHOD win_Prn:SetColor(nClrText, nClrPane, nAlign)
 
 METHOD win_Prn:SetBkMode(nMode)
 
-   IF HB_IsNumeric(nMode)
+   IF hb_IsNumeric(nMode)
       ::BkMode := nMode
    ENDIF
 
@@ -673,7 +673,7 @@ METHOD win_Prn:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBol
 
    IF ::CheckPage()
 
-      IF !HB_IsNumeric(nPointSize)
+      IF !hb_IsNumeric(nPointSize)
          nPointSize := ::FontPointSize
       ENDIF
 

@@ -133,7 +133,7 @@ METHOD WvtLabel:Refresh()
 
 METHOD WvtLabel:SetText(cTxt)
 
-   IF HB_IsString(cTxt)
+   IF hb_IsString(cTxt)
       ::Text := cTxt
       ::Refresh()
    ENDIF
@@ -142,7 +142,7 @@ METHOD WvtLabel:SetText(cTxt)
 
 METHOD WvtLabel:SetTextColor(nRGB)
 
-   IF HB_IsNumeric(nRGB)
+   IF hb_IsNumeric(nRGB)
       ::nTextColor := nRGB
       ::nTextColorHoverOff := nRGB
       ::Refresh()
@@ -152,7 +152,7 @@ METHOD WvtLabel:SetTextColor(nRGB)
 
 METHOD WvtLabel:SetBackColor(nRGB)
 
-   IF HB_IsNumeric(nRGB)
+   IF hb_IsNumeric(nRGB)
       ::nBackColor := nRGB
       ::nBackColorHoverOff := nRGB
       ::Refresh()

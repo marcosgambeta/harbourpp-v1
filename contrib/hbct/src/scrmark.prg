@@ -58,10 +58,10 @@ FUNCTION ScreenMark(cSearch, xAttr, lUpperLower, lAll, cForward, cTrailing)
    hb_default(@lUpperLower, .F.)
    hb_default(@lAll, .F.)
 
-   IF !HB_IsString(cForward) .OR. cForward == ""
+   IF !hb_IsString(cForward) .OR. cForward == ""
       cForward := NIL
    ENDIF
-   IF !HB_IsString(cTrailing) .OR. cTrailing == ""
+   IF !hb_IsString(cTrailing) .OR. cTrailing == ""
       cTrailing := NIL
    ENDIF
 

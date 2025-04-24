@@ -131,7 +131,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
    LOCAL nCh
    LOCAL cWord
 
-   IF !HB_IsNumeric(nType) .OR. ;
+   IF !hb_IsNumeric(nType) .OR. ;
       (nType != 1 .AND. ;
        nType != 2 .AND. ;
        nType != 3)
@@ -263,7 +263,7 @@ FUNCTION NetOpenFiles(aFiles)
       ENDIF
 
       IF NetDbUse(xFile[1], xFile[2], s_nNetDelay, "DBFCDX")
-         IF HB_IsArray(xFile[3])
+         IF hb_IsArray(xFile[3])
             FOR EACH cIndex IN xFile[3]
                IF hb_dbExists(cIndex)
                   ordListAdd(cIndex)

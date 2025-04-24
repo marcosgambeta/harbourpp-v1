@@ -77,7 +77,7 @@ CREATE CLASS WvgTreeViewItem
    METHOD configure()
    METHOD destroy()
 
-   METHOD Expand(lExpand) INLINE wvg_TreeView_Expand(::hTree, ::hItem, IIf(HB_IsLogical(lExpand), lExpand, .T.))
+   METHOD Expand(lExpand) INLINE wvg_TreeView_Expand(::hTree, ::hItem, IIf(hb_IsLogical(lExpand), lExpand, .T.))
    METHOD isExpanded()
    METHOD setCaption(cCaption)
    METHOD setExpandedImage(nResIdoBitmap)
@@ -143,7 +143,7 @@ METHOD WvgTreeViewItem:addItem(cCaption)
    oItem:caption := cCaption
    oItem:oWnd := ::oWnd
 
-   hParent := IIf(HB_IsObject(oItem:oParent), oItem:oParent:hItem, NIL)
+   hParent := IIf(hb_IsObject(oItem:oParent), oItem:oParent:hItem, NIL)
 
    oItem:hItem := wvg_TreeView_AddItem(oItem:hTree, hParent, oItem:caption)
 

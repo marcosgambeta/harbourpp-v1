@@ -85,7 +85,7 @@ PROCEDURE Main( cLang )
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
 
-   IF HB_IsString(cLang)
+   IF hb_IsString(cLang)
       hb_langSelect( cLang )
    ENDIF
 

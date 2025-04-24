@@ -53,7 +53,7 @@ FUNCTION TimeToSec(cTime)
 
    IF cTime == NIL
       nSec := Seconds()
-   ELSEIF HB_IsString(cTime)
+   ELSEIF hb_IsString(cTime)
       nLen := Len(cTime)
       IF (nLen + 1) % 3 == 0 .AND. nLen <= 11
          nInd := 1
@@ -80,9 +80,9 @@ FUNCTION SecToTime(nSec, lHundredth)
 
    LOCAL i, h, n
 
-   n := IIf(!HB_IsNumeric(nSec), Seconds(), nSec)
+   n := IIf(!hb_IsNumeric(nSec), Seconds(), nSec)
 
-   IF HB_IsLogical(lHundredth) .AND. lHundredth
+   IF hb_IsLogical(lHundredth) .AND. lHundredth
       h := StrZero((nSec * 100) % 100, 2)
    ELSE
       h := ""

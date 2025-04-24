@@ -232,7 +232,7 @@ STATIC FUNCTION Skipped(nRecs, oDataSource)
 
 STATIC FUNCTION ODBCFGet(cFieldName, oDataSource)
 
-   IF HB_IsString(cFieldName)
+   IF hb_IsString(cFieldName)
       // For changing value rather write a decent SQL statement
       RETURN {|x|IIf(x == NIL, oDataSource:FieldByName(cFieldName):value, NIL)}
    ENDIF

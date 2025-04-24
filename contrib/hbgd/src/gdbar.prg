@@ -285,7 +285,7 @@ METHOD GDBar:CheckCode()
    LOCAL i
 
    FOR i := 1 TO Len(::text)
-      IF HB_IsString(::CheckValInArray( SubStr(::text, i, 1) ))
+      IF hb_IsString(::CheckValInArray( SubStr(::text, i, 1) ))
          ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
          lRet := .F.
       ENDIF

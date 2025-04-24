@@ -132,7 +132,7 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
 
    DO CASE
    CASE nMessage == HB_GTE_SETFOCUS
-      IF HB_IsEvalItem(::sl_tabActivate)
+      IF hb_IsEvalItem(::sl_tabActivate)
          RETURN EVENT_HANDLED
       ENDIF
 
@@ -159,7 +159,7 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
 
 METHOD WvgTabPage:tabActivate( xParam )
 
-   IF HB_IsEvalItem(xParam)
+   IF hb_IsEvalItem(xParam)
       ::sl_tabActivate := xParam
    ENDIF
 

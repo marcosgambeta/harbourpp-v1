@@ -176,7 +176,7 @@ FUNCTION gdImageToString( oImage )
 
    LOCAL cString
 
-   IF HB_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
+   IF hb_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
       SWITCH oImage:cType
       CASE "jpeg"
          cString := oImage:ToStringJpeg()
@@ -198,7 +198,7 @@ PROCEDURE gdImageToFile( oImage, cFile )
 
    hb_default(@cFile, "image")
 
-   IF HB_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
+   IF hb_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) ) .AND. oImage:cType != NIL
       SWITCH oImage:cType
       CASE "jpeg"
          cString := oImage:ToStringJpeg()
@@ -226,7 +226,7 @@ PROCEDURE gdImageToHandle( oImage, nHandle )
 
    hb_default(@nHandle, 1)
 
-   IF HB_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) )
+   IF hb_IsObject(oImage) .AND. ( oImage:className() == "GDIMAGE" .OR. oImage:IsDerivedFrom( "GDIMAGE" ) )
       IF oImage:cType != NIL
          SWITCH oImage:cType
          CASE "jpeg"

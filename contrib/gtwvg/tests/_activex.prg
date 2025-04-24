@@ -214,7 +214,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
 #if 1
    // --- Active-X ---
    oCom := BuildActiveXControl(nActiveX, oDA)
-   IF HB_IsObject(oCom)
+   IF hb_IsObject(oCom)
       oCrt:sendMessage(WM_SIZE, 0, 0)
       oCrt:show()
       ExeActiveX(nActiveX, oCom, xParam)

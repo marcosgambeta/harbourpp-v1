@@ -545,15 +545,15 @@ METHOD TRPCClient:SetLoopMode(nMethod, xData, nEnd, nStep)
       RETURN .T.
    ENDIF
 
-   IF HB_IsArray(xData)
+   IF hb_IsArray(xData)
       ::aLoopData := xData
    ELSE
-      IF HB_IsNumeric(xData)
+      IF hb_IsNumeric(xData)
          // this is to allow garbage collecting
          ::aLoopData := NIL
          ::nLoopStart := xData
          ::nLoopEnd := nEnd
-         IF HB_IsNumeric(nStep)
+         IF hb_IsNumeric(nStep)
             ::nLoopStep := nStep
          ELSE
             ::nLoopStep := 1
@@ -600,7 +600,7 @@ METHOD TRPCClient:Call(...)
    ENDIF
 
    oCalling := hb_PValue(1)
-   IF HB_IsArray(oCalling)
+   IF hb_IsArray(oCalling)
       cFunction := oCalling[1]
       hb_ADel(oCalling, 1, .T.)
       aParams := oCalling
@@ -657,7 +657,7 @@ METHOD TRPCClient:SetPeriodCallback(...)
    ::nTimeLimit := hb_PValue(2)
 
    caCalling := hb_PValue(3)
-   IF !HB_IsArray(caCalling)
+   IF !hb_IsArray(caCalling)
       caCalling := Array(PCount() - 2)
       FOR nCount := 3 TO PCount()
          caCalling[nCount - 2] := hb_PValue(nCount)
@@ -961,7 +961,7 @@ METHOD TRPCClient:GetFunctionName(xId)
 
    LOCAL cData, nPos
 
-   IF HB_IsArray(xID)
+   IF hb_IsArray(xID)
       cData := xId[3]
    ELSEIF Len(::aFunctions) > 0
       cData := ::aFunctions[xId][3]
@@ -980,7 +980,7 @@ METHOD TRPCClient:GetServerName(xId)
 
    LOCAL cData
 
-   IF HB_IsArray(xID)
+   IF hb_IsArray(xID)
       cData := xId[2]
    ELSE
       IF Len(::aFunctions) > 0
@@ -998,7 +998,7 @@ METHOD TRPCClient:GetServerAddress(xId)
 
    LOCAL cData
 
-   IF HB_IsArray(xID)
+   IF hb_IsArray(xID)
       cData := xId[1]
    ELSE
       IF !Empty(::aFunctions)

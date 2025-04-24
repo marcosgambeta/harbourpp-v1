@@ -131,7 +131,7 @@ METHOD TIPClientFTP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientFTP:Open( cUrl )
 
-   IF HB_IsString(cUrl)
+   IF hb_IsString(cUrl)
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
@@ -232,10 +232,10 @@ METHOD TIPClientFTP:TransferStart()
 
    /* Set internal socket send buffer to 64 KiB, this should
       resolve the speed problems some users have reported */
-   IF HB_IsNumeric(::nDefaultSndBuffSize)
+   IF hb_IsNumeric(::nDefaultSndBuffSize)
       ::InetSndBufSize( ::SocketCon, ::nDefaultSndBuffSize )
    ENDIF
-   IF HB_IsNumeric(::nDefaultRcvBuffSize)
+   IF hb_IsNumeric(::nDefaultRcvBuffSize)
       ::InetRcvBufSize( ::SocketCon, ::nDefaultRcvBuffSize )
    ENDIF
 
@@ -573,7 +573,7 @@ METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
    LOCAL aFile
    LOCAL cStr
 
-   IF !HB_IsString(cFileSpec)
+   IF !hb_IsString(cFileSpec)
       RETURN NIL
    ENDIF
 

@@ -101,7 +101,7 @@ METHOD TMariaDBRow:New(aRow, aFStruct, cTableName)
 
 METHOD TMariaDBRow:FieldGet(cnField)
 
-   LOCAL nNum := IIf(HB_IsString(cnField), ::FieldPos(cnField), cnField)
+   LOCAL nNum := IIf(hb_IsString(cnField), ::FieldPos(cnField), cnField)
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
@@ -117,14 +117,14 @@ METHOD TMariaDBRow:FieldGet(cnField)
 
 METHOD TMariaDBRow:FieldPut(cnField, Value)
 
-   LOCAL nNum := IIf(HB_IsString(cnField), ::FieldPos(cnField), cnField)
+   LOCAL nNum := IIf(hb_IsString(cnField), ::FieldPos(cnField), cnField)
 
    IF nNum > 0 .AND. nNum <= Len(::aRow)
 
       IF ValType(Value) == ValType(::aRow[nNum]) .OR. ::aRow[nNum] == NIL
 
          // if it is a char field remove trailing spaces
-         IF HB_IsString(Value)
+         IF hb_IsString(Value)
             Value := RTrim(Value)
          ENDIF
 
@@ -432,7 +432,7 @@ METHOD TMariaDBQuery:GetRow(nRow)
    LOCAL oRow := NIL
    LOCAL i
 
-   IF !HB_IsNumeric(nRow)
+   IF !hb_IsNumeric(nRow)
       nRow := ::nCurRow
    ENDIF
 
@@ -589,7 +589,7 @@ METHOD TMariaDBQuery:FieldGet(cnField)
    LOCAL nNum
    LOCAL Value
 
-   IF HB_IsString(cnField)
+   IF hb_IsString(cnField)
       nNum := ::FieldPos(cnField)
    ELSE
       nNum := cnField
@@ -1098,7 +1098,7 @@ METHOD TMariaDBTable:FieldPut(cnField, Value)
 
    LOCAL nNum
 
-   IF HB_IsString(cnField)
+   IF hb_IsString(cnField)
       nNum := ::FieldPos(cnField)
    ELSE
       nNum := cnField
@@ -1109,7 +1109,7 @@ METHOD TMariaDBTable:FieldPut(cnField, Value)
       IF ValType(Value) == ValType(::aRow[nNum]) .OR. ::aRow[nNum] == NIL
 
          // if it is a char field remove trailing spaces
-         IF HB_IsString(Value)
+         IF hb_IsString(Value)
             Value := RTrim(Value)
          ENDIF
 

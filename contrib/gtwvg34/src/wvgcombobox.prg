@@ -161,10 +161,10 @@ METHOD WvgComboBox:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 METHOD PROCEDURE WvgComboBox:destroy()
 
 #if 0
-   IF HB_IsObject(::oSLE)
+   IF hb_IsObject(::oSLE)
       ::oSLE:destroy()
    ENDIF
-   IF HB_IsObject(::oListBox)
+   IF hb_IsObject(::oListBox)
       ::oListBox:destroy()
    ENDIF
 #endif
@@ -230,7 +230,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
       ENDIF
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
@@ -246,7 +246,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
 
 METHOD WvgComboBox:addItem( cItem )
 
-   IF HB_IsString(cItem)
+   IF hb_IsString(cItem)
       RETURN ::sendMessage( CB_ADDSTRING, 0, cItem )
    ENDIF
 
@@ -256,7 +256,7 @@ METHOD WvgComboBox:listBoxFocus( lFocus )
 
    LOCAL lOldFocus := ::sendMessage( CB_GETDROPPEDSTATE, 0, 0 )
 
-   IF HB_IsLogical(lFocus)
+   IF hb_IsLogical(lFocus)
       ::sendMessage( CB_SHOWDROPDOWN, lFocus, 0 )
    ENDIF
 
@@ -264,7 +264,7 @@ METHOD WvgComboBox:listBoxFocus( lFocus )
 
 METHOD WvgComboBox:sleSize()
 
-   IF HB_IsObject(::oSLE)
+   IF hb_IsObject(::oSLE)
       RETURN ::oSLE:currentSize()
    ENDIF
 
@@ -272,7 +272,7 @@ METHOD WvgComboBox:sleSize()
 
 METHOD WvgComboBox:listBoxSize()
 
-   IF HB_IsObject(::oListBox)
+   IF hb_IsObject(::oListBox)
       RETURN ::oListBox:currentSize()
    ENDIF
 
@@ -289,9 +289,9 @@ METHOD WvgComboBox:itemMarked(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF Len(a_) == 1 .AND. HB_IsEvalItem(a_[1])
+   IF Len(a_) == 1 .AND. hb_IsEvalItem(a_[1])
       ::sl_itemMarked := a_[1]
-   ELSEIF HB_IsEvalItem(::sl_itemMarked)
+   ELSEIF hb_IsEvalItem(::sl_itemMarked)
       Eval(::sl_itemMarked, , , Self)
    ENDIF
 
@@ -301,9 +301,9 @@ METHOD WvgComboBox:itemSelected(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF Len(a_) == 1 .AND. HB_IsEvalItem(a_[1])
+   IF Len(a_) == 1 .AND. hb_IsEvalItem(a_[1])
       ::sl_itemSelected := a_[1]
-   ELSEIF HB_IsEvalItem(::sl_itemSelected)
+   ELSEIF hb_IsEvalItem(::sl_itemSelected)
       Eval(::sl_itemSelected, , , Self)
    ENDIF
 
@@ -313,9 +313,9 @@ METHOD WvgComboBox:drawItem(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF Len(a_) == 1 .AND. HB_IsEvalItem(a_[1])
+   IF Len(a_) == 1 .AND. hb_IsEvalItem(a_[1])
       ::sl_xbePDrawItem := a_[1]
-   ELSEIF Len(a_) >= 2 .AND. HB_IsEvalItem(::sl_xbePDrawItem)
+   ELSEIF Len(a_) >= 2 .AND. hb_IsEvalItem(::sl_xbePDrawItem)
       Eval(::sl_xbePDrawItem, a_[1], a_[2], Self)
    ENDIF
 

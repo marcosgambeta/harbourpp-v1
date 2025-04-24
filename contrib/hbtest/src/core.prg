@@ -56,7 +56,7 @@ THREAD STATIC t_hParams := { => }
 
 PROCEDURE hbtest_Setup( cName, xValue )
 
-   IF HB_IsString(cName) .AND. !Empty(cName)
+   IF hb_IsString(cName) .AND. !Empty(cName)
       IF PCount() > 1
          t_hParams[cName] := xValue
       ELSEIF cName $ t_hParams
@@ -78,7 +78,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
 
    LOCAL cLangOld
 
-   IF HB_IsString(cBlock)
+   IF hb_IsString(cBlock)
       lPPError := .F.
    ELSE
       cBlock := "[Preprocessor error]"
@@ -101,7 +101,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       lFailed := !( XToStr(xResult, .F.) == XToStr(xResultExpected, .F.) )
    ELSE
       IF !( ValType(xResult) == ValType(xResultExpected) )
-         IF HB_IsString(xResultExpected) .AND. ValType(xResult) $ "ABOHPS"
+         IF hb_IsString(xResultExpected) .AND. ValType(xResult) $ "ABOHPS"
             lFailed := !( XToStr(xResult, .F.) == xResultExpected )
          ELSE
             lFailed := .T.
@@ -141,7 +141,7 @@ STATIC FUNCTION ErrorMessage( oError )
    LOCAL cMessage := ""
    LOCAL tmp
 
-   IF HB_IsNumeric(oError:severity)
+   IF hb_IsNumeric(oError:severity)
       SWITCH oError:severity
       CASE ES_WHOCARES     ; cMessage += "M " ; EXIT
       CASE ES_WARNING      ; cMessage += "W " ; EXIT
@@ -149,16 +149,16 @@ STATIC FUNCTION ErrorMessage( oError )
       CASE ES_CATASTROPHIC ; cMessage += "C " ; EXIT
       ENDSWITCH
    ENDIF
-   IF HB_IsNumeric(oError:genCode)
+   IF hb_IsNumeric(oError:genCode)
       cMessage += hb_ntos(oError:genCode) + " "
    ENDIF
-   IF HB_IsString(oError:subsystem)
+   IF hb_IsString(oError:subsystem)
       cMessage += oError:subsystem + " "
    ENDIF
-   IF HB_IsNumeric(oError:subCode)
+   IF hb_IsNumeric(oError:subCode)
       cMessage += hb_ntos(oError:subCode) + " "
    ENDIF
-   IF HB_IsString(oError:description)
+   IF hb_IsString(oError:description)
       cMessage += oError:description + " "
    ENDIF
    IF !Empty(oError:operation)
@@ -167,14 +167,14 @@ STATIC FUNCTION ErrorMessage( oError )
    IF !Empty(oError:filename)
       cMessage += "<" + oError:filename + "> "
    ENDIF
-   IF HB_IsNumeric(oError:osCode)
+   IF hb_IsNumeric(oError:osCode)
       cMessage += "OS:" + hb_ntos(oError:osCode) + " "
    ENDIF
-   IF HB_IsNumeric(oError:tries)
+   IF hb_IsNumeric(oError:tries)
       cMessage += "#:" + hb_ntos(oError:tries) + " "
    ENDIF
 
-   IF HB_IsArray(oError:Args)
+   IF hb_IsArray(oError:Args)
       cMessage += "A:" + hb_ntos(Len(oError:Args)) + ":"
       FOR tmp := 1 TO Len(oError:Args)
          cMessage += ValType(oError:Args[tmp]) + ":" + XToStr(oError:Args[tmp], .T.)

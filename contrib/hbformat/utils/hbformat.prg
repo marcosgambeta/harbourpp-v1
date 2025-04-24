@@ -96,7 +96,7 @@ PROCEDURE Main(...)
          OutErr( I_( "Wrong mask" ) + hb_eol() )
       ELSE
          cInitDir := hb_FNameDir( cFileName )
-         IF HB_IsNull( cInitDir )
+         IF hb_IsNull( cInitDir )
             cInitDir := "." + hb_ps()
          ENDIF
          DirEval(cInitDir, hb_FNameNameExt( cFileName ), lRecursive, {| name | Reformat( oRef, name ) })

@@ -53,7 +53,7 @@ FUNCTION hb_ntp_GetTimeUTC(cServer, nPort, nTimeOut)
    LOCAL tTime := hb_SToT( "" )
    LOCAL hSocket, cBuffer
 
-   IF HB_IsString(cServer) .AND. ! cServer == "" .AND. ;
+   IF hb_IsString(cServer) .AND. ! cServer == "" .AND. ;
       ! Empty(hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ))
       cBuffer := hb_BChar(8) + Replicate(hb_BChar(0), 47)
       IF hb_socketSendTo( hSocket, cBuffer,,, { HB_SOCKET_AF_INET, hb_socketResolveAddr( cServer ), hb_defaultValue( nPort, 123 ) } ) == hb_BLen(cBuffer)

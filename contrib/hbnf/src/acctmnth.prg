@@ -28,10 +28,10 @@ FUNCTION ft_AcctMonth(dGivenDate, nMonthNum)
    LOCAL nMTemp
    LOCAL aRetVal
 
-   IF HB_IsNumeric(dGivenDate)
+   IF hb_IsNumeric(dGivenDate)
       nMonthNum := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_IsDate(dGivenDate)
+   ELSEIF !hb_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
@@ -67,7 +67,7 @@ FUNCTION ft_AcctMonth(dGivenDate, nMonthNum)
 
    ENDIF
 
-   IF HB_IsNumeric(nMonthNum)
+   IF hb_IsNumeric(nMonthNum)
       IF nMonthNum < 1 .OR. nMonthNum > 12
          nMonthNum := 12
       ENDIF

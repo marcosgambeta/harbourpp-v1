@@ -21,7 +21,7 @@
 
 FUNCTION ft_ByteNeg(cByte)
 
-   IF HB_IsString(cByte)
+   IF hb_IsString(cByte)
       RETURN hb_BChar((256 - hb_BCode(cByte)) % 256)
    ENDIF
 

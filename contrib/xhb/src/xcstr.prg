@@ -62,7 +62,7 @@
 
 FUNCTION CStrToVal(cExp, cType)
 
-   IF !HB_IsString(cExp)
+   IF !hb_IsString(cExp)
       Throw(xhb_ErrorNew("CSTR", 0, 3101, ProcName(), "Argument error", {cExp, cType}))
    ENDIF
 
@@ -290,7 +290,7 @@ FUNCTION PrgExpToVal(cExp)
 
 FUNCTION ValToArray(xVal)
 
-   IF HB_IsArray(xVal)
+   IF hb_IsArray(xVal)
       RETURN xVal
    ENDIF
 
@@ -300,7 +300,7 @@ FUNCTION ValToArray(xVal)
 
 FUNCTION ValToBlock(xVal)
 
-   IF HB_IsBlock(xVal)
+   IF hb_IsBlock(xVal)
       RETURN xVal
    ENDIF
 
@@ -310,7 +310,7 @@ FUNCTION ValToBlock(xVal)
 
 FUNCTION ValToCharacter(xVal)
 
-   IF HB_IsString(xVal)
+   IF hb_IsString(xVal)
       RETURN xVal
    ENDIF
 
@@ -392,7 +392,7 @@ FUNCTION ValToTimeStamp(xVal)
 
 FUNCTION ValToHash(xVal)
 
-   IF HB_IsHash(xVal)
+   IF hb_IsHash(xVal)
       RETURN xVal
    ENDIF
 

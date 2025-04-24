@@ -60,18 +60,18 @@ FUNCTION Center(c, n, p, lMode)
 
    LOCAL cRet
 
-   IF !HB_IsNumeric(n)
+   IF !hb_IsNumeric(n)
       n := MaxCol() + 1 - Col() * 2
    ENDIF
-   IF !HB_IsString(c)
+   IF !hb_IsString(c)
       c := ""
    ENDIF
 
-   IF HB_IsLogical(p)
+   IF hb_IsLogical(p)
       lMode := p
       p := NIL
    ELSE
-      IF !HB_IsLogical(lMode)
+      IF !hb_IsLogical(lMode)
          lMode := .F.
       ENDIF
    ENDIF
@@ -82,7 +82,7 @@ FUNCTION Center(c, n, p, lMode)
 
 FUNCTION CSetCurs(l)
 
-   IF !HB_IsLogical(l)
+   IF !hb_IsLogical(l)
       RETURN SetCursor() != SC_NONE
    ENDIF
 

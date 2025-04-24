@@ -149,7 +149,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
          ::oParent:setFocus()
       ENDIF
 
-      IF !HB_IsEvalItem(::sl_xbeSB_Scroll)
+      IF !hb_IsEvalItem(::sl_xbeSB_Scroll)
          RETURN EVENT_UNHANDLED
       ENDIF
 
@@ -227,7 +227,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
          nScrPos := wapi_GetScrollPos( ::hWnd, SB_CTL )
       ENDIF
 
-      IF !HB_IsEvalItem(::sl_xbeSB_Scroll)
+      IF !hb_IsEvalItem(::sl_xbeSB_Scroll)
          RETURN EVENT_UNHANDLED
       ENDIF
 
@@ -298,7 +298,7 @@ METHOD PROCEDURE WvgScrollBar:destroy()
 
 METHOD WvgScrollBar:Scroll( xParam )
 
-   IF HB_IsEvalItem(xParam)
+   IF hb_IsEvalItem(xParam)
       ::sl_xbeSB_Scroll := xParam
    ENDIF
 

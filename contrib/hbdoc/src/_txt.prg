@@ -149,12 +149,12 @@ METHOD PROCEDURE GenerateText:WriteEntry( cCaption, cContent, lPreformatted )
    LOCAL nIndent
 
    IF !Empty(cContent)
-      nIndent := IIf(HB_IsNull( cCaption ), 0, 6)
-      IF !HB_IsNull( cCaption ) .AND. nIndent > 0
+      nIndent := IIf(hb_IsNull( cCaption ), 0, 6)
+      IF !hb_IsNull( cCaption ) .AND. nIndent > 0
          ::cFile += Space(::Depth * 6) + cCaption + ": " + hb_eol()
       ENDIF
       nIndent += ::Depth * 6
-      DO WHILE !HB_IsNull( cContent )
+      DO WHILE !hb_IsNull( cContent )
          ::cFile += Indent( Parse( @cContent, hb_eol() ), nIndent, 70, lPreformatted )
       ENDDO
    ENDIF

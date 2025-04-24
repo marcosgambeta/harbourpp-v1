@@ -27,7 +27,7 @@ FUNCTION ft_WoY(dInDate)
    LOCAL nWkNumber
    LOCAL cCentury
 
-   IF HB_IsDate(dInDate)
+   IF hb_IsDate(dInDate)
 
       cCentury := Left(DToS(dInDate), 4)
 
@@ -55,7 +55,7 @@ FUNCTION ft_DoY(dInDate)
 
    LOCAL nDayNum
 
-   IF HB_IsDate(dInDate)
+   IF hb_IsDate(dInDate)
       nDayNum := (dInDate - hb_SToD(Left(DToS(dInDate), 4) + "0101")) + 1
    ELSE
       nDayNum := NIL

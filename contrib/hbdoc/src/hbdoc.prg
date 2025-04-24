@@ -218,7 +218,7 @@ PROCEDURE Main(...)
 
    FOR EACH cFormat IN s_hSwitches["format"]
 
-      IF HB_IsEvalItem(generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ))
+      IF hb_IsEvalItem(generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ))
 
          OutStd("Output as", cFormat + hb_eol())
 
@@ -530,7 +530,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
       ", " + hb_HGetDef( hEntry, "CATEGORY", "" ) + ;
       ", " + hb_HGetDef( hEntry, "SUBCATEGORY", "" ), "," )
 
-      IF !HB_IsNull( item := AllTrim(item) )
+      IF !hb_IsNull( item := AllTrim(item) )
          o:_tags[item] := NIL
       ENDIF
    NEXT
@@ -588,7 +588,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField("SUBCATEGORY")
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan(sc_hConstraint["categories"][idxCategory][1], {| c | c != NIL .AND. IIf(HB_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) }) ) == 0
+               ( idxSubCategory := AScan(sc_hConstraint["categories"][idxCategory][1], {| c | c != NIL .AND. IIf(hb_IsString(c), Lower(c) == Lower(cSection), Lower(c[1]) == Lower(cSection)) }) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
@@ -683,7 +683,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "STATUS"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint["status"]
          cResult := ""
-         DO WHILE !HB_IsNull( cCode )
+         DO WHILE !hb_IsNull( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
          RETURN SubStr(cResult, Len(hb_eol()) + 1)
@@ -693,7 +693,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          RETURN sc_hConstraint["status"][cCode]
       ELSEIF Len(cCode) > 1
          RETURN cCode
-      ELSEIF !HB_IsNull( cCode )
+      ELSEIF !hb_IsNull( cCode )
          RETURN "Unrecognized 'STATUS' code: '" + cCode + "'"
       ELSE
          RETURN sc_hConstraint["status"]["N"]
@@ -702,7 +702,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "PLATFORMS"
       cResult := ""
       FOR EACH cCode IN hb_ATokens( cCode, "," )
-         IF !HB_IsNull( cCode := AllTrim(cCode) )
+         IF !hb_IsNull( cCode := AllTrim(cCode) )
             cResult += hb_eol() + hb_HGetDef( sc_hConstraint["platforms"], cCode, cCode )
          ENDIF
       NEXT
@@ -711,7 +711,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "COMPLIANCE"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint["compliance"]
          cResult := ""
-         DO WHILE !HB_IsNull( cCode )
+         DO WHILE !hb_IsNull( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
          RETURN SubStr(cResult, Len(hb_eol()) + 1)
@@ -727,11 +727,11 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
 
    DO CASE
    CASE xLine == NIL
-   CASE HB_IsNumeric(xLine)
+   CASE hb_IsNumeric(xLine)
       nMode := xLine
-   CASE HB_IsEvalItem(xLine)
+   CASE hb_IsEvalItem(xLine)
       Eval(xLine)
-   CASE HB_IsArray(xLine)
+   CASE hb_IsArray(xLine)
       IF nMode == 2
          OutStd(Space(nIndent) + Space(2))
       ENDIF
@@ -926,7 +926,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                cLine := LTrim(SubStr(cLine, idx + 1))
             ENDDO
 
-            IF !HB_IsNull( cLine )
+            IF !hb_IsNull( cLine )
                cResult += Space(nLeftMargin) + cLine + hb_eol()
             ENDIF
 
@@ -1011,7 +1011,7 @@ METHOD Entry:IsField(cField, nType)
 
    IF ( idx := hb_HPos( sc_hFields, cField ) ) > 0
       IF ::_group[idx] == 0
-      ELSEIF HB_IsNumeric(nType) .AND. hb_bitAnd(::_group[idx], nType) != nType
+      ELSEIF hb_IsNumeric(nType) .AND. hb_bitAnd(::_group[idx], nType) != nType
       ELSE
          RETURN .T.
       ENDIF
@@ -1309,7 +1309,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
    LOCAL aDynamic := {}
    LOCAL cFilter
 
-   IF !HB_IsNull( cFile := hb_MemoRead(cFileName) )
+   IF !hb_IsNull( cFile := hb_MemoRead(cFileName) )
 
       FOR EACH cFilter IN { ;
          "^DYNAMIC ([a-zA-Z0-9_]*)$", ;

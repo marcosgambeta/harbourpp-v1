@@ -52,11 +52,11 @@ FUNCTION TempFile(cDir, cExt, nAttr)
    LOCAL cName
    LOCAL fhnd
 
-   IF HB_IsString(cDir)
+   IF hb_IsString(cDir)
       cDir := hb_DirSepAdd(cDir)
    ENDIF
 
-   IF HB_IsString(cExt) .AND. !(Left(cExt, 1) == ".")
+   IF hb_IsString(cExt) .AND. !(Left(cExt, 1) == ".")
       cExt := "." + cExt
    ENDIF
 

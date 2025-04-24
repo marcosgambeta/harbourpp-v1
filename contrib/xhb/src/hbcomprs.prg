@@ -69,7 +69,7 @@ FUNCTION hb_Compress(xPar1, xPar2, xPar3, xPar4, xPar5)
 
    LOCAL oError
 
-   IF HB_IsNumeric(xPar1)
+   IF hb_IsNumeric(xPar1)
       nComprFactor := xPar1
       cSource      := xPar2
       nSourceLen   := xPar3
@@ -83,7 +83,7 @@ FUNCTION hb_Compress(xPar1, xPar2, xPar3, xPar4, xPar5)
       lReturnByRef := PCount() >= 3
    ENDIF
 
-   IF !HB_IsString(cSource)
+   IF !hb_IsString(cSource)
       oError := ErrorNew()
 
       oError:severity    := ES_ERROR
@@ -96,16 +96,16 @@ FUNCTION hb_Compress(xPar1, xPar2, xPar3, xPar4, xPar5)
       RETURN NIL
    ENDIF
 
-   IF !HB_IsNumeric(nDestLen)
+   IF !hb_IsNumeric(nDestLen)
       nDestLen := NIL
    ENDIF
 
-   IF HB_IsNumeric(nSourceLen) .AND. nSourceLen >= 0 .AND. nSourceLen < Len(cSource)
+   IF hb_IsNumeric(nSourceLen) .AND. nSourceLen >= 0 .AND. nSourceLen < Len(cSource)
       cSource := Left(cSource, nSourceLen)
    ENDIF
 
    IF lReturnByRef
-      IF HB_IsNumeric(xPar1)
+      IF hb_IsNumeric(xPar1)
          xPar4 := hb_ZCompress(cSource, nDestLen, @t_nLastError, nComprFactor)
          hb_default(@xPar4, "")
          xPar5 := Len(xPar4)
@@ -127,7 +127,7 @@ FUNCTION hb_Uncompress(nDestLen, cSource, nSourceLen, /* @ */ cDest)
 
    LOCAL oError
 
-   IF !HB_IsNumeric(nDestLen) .OR. !HB_IsString(cSource)
+   IF !hb_IsNumeric(nDestLen) .OR. !hb_IsString(cSource)
 
       oError := ErrorNew()
 
@@ -141,7 +141,7 @@ FUNCTION hb_Uncompress(nDestLen, cSource, nSourceLen, /* @ */ cDest)
       RETURN NIL
    ENDIF
 
-   IF HB_IsNumeric(nSourceLen) .AND. nSourceLen >= 0 .AND. nSourceLen < Len(cSource)
+   IF hb_IsNumeric(nSourceLen) .AND. nSourceLen >= 0 .AND. nSourceLen < Len(cSource)
       cSource := Left(cSource, nSourceLen)
    ENDIF
 

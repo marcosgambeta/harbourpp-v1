@@ -417,7 +417,7 @@ STATIC FUNCTION AR_CLOSE( nWA )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d", nWA ) )
 
-   IF HB_IsArray(aDBFData)
+   IF hb_IsArray(aDBFData)
       /* decrease open number */
       --aDBFData[DATABASE_OPENNUMBER]
 
@@ -463,7 +463,7 @@ STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nField: %2$d, xValue: %3$s", nWA, nField, hb_ValToExp( xValue ) ) )
 
    IF nField > 0 .AND. nField <= Len(aStruct) .AND. ;
-      IIf( HB_IsString(xValue) .AND. aStruct[nField][DBS_TYPE] == "M", .T., ValType(xValue) == aStruct[nField][DBS_TYPE] )
+      IIf( hb_IsString(xValue) .AND. aStruct[nField][DBS_TYPE] == "M", .T., ValType(xValue) == aStruct[nField][DBS_TYPE] )
 
       xVal := PutValue( xValue, aStruct[nField][DBS_TYPE], aStruct[nField][DBS_LEN], aStruct[nField][DBS_DEC] )
 
@@ -1202,7 +1202,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    aWAData  := USRRDD_AREADATA(nWA)
    aDBFData := aWAData[WADATA_DATABASE]
 
-   IF HB_IsArray(aOrderCreate[UR_ORCR_CONDINFO])
+   IF hb_IsArray(aOrderCreate[UR_ORCR_CONDINFO])
       aOCInfo := aOrderCreate[UR_ORCR_CONDINFO]
    ELSE
       aOCInfo := aOrderCreate[UR_ORCR_CONDINFO] := { ;
@@ -1538,7 +1538,7 @@ FUNCTION hb_EraseArrayRdd(cFullName)
       hRDDData := USRRDD_RDDDATA(s_nRddID)
 
       IF hRDDData != NIL
-         IF HB_IsString(cFullName)
+         IF hb_IsString(cFullName)
             cFullName := Upper(cFullName)
             /* First search if memory dbf exists */
             IF cFullName $ hRDDData
@@ -1617,7 +1617,7 @@ FUNCTION hb_FileArrayRdd(cFullName)
       hRDDData := USRRDD_RDDDATA(s_nRddID)
 
       IF hRDDData != NIL
-         IF HB_IsString(cFullName)
+         IF hb_IsString(cFullName)
             cFullName := Upper(cFullName)
             /* First search if memory dbf exists */
             IF cFullName $ hRDDData
@@ -1759,16 +1759,16 @@ STATIC FUNCTION hb_Decode( ... )
       /* Ok because I have no other value than default, I will check if it is a complex value */
       /* like an array or an hash, so I can get it to decode values */
       IF xDefault != NIL .AND. ;
-         ( HB_IsArray(xDefault) .OR. HB_IsHash(xDefault) )
+         ( hb_IsArray(xDefault) .OR. hb_IsHash(xDefault) )
 
          /* If it is an array I will restart this function creating a linear call */
-         IF HB_IsArray(xDefault) .AND. Len(xDefault) > 0
+         IF hb_IsArray(xDefault) .AND. Len(xDefault) > 0
             /* I can have a linear array like { 1, "A", 2, "B", 3, "C" }
              * or an array of array couples like { { 1, "A" }, { 2, "B" }, { 3, "C" } }
              * first element tell me what type is */
 
             /* couples of values */
-            IF HB_IsArray(xDefault[1])
+            IF hb_IsArray(xDefault[1])
                /* If i have an array as default, this contains couples of key / value */
                /* so I have to convert in a linear array */
 
@@ -1776,7 +1776,7 @@ STATIC FUNCTION hb_Decode( ... )
 
                /* Check if array has a default value, this will be last value and has a value */
                /* different from an array */
-               IF !HB_IsArray(ValType(xDefault[nLen]))
+               IF !hb_IsArray(ValType(xDefault[nLen]))
                   aParams := Array( ( nLen - 1 ) * 2 )
 
                   n := 1
@@ -1804,7 +1804,7 @@ STATIC FUNCTION hb_Decode( ... )
 
             ENDIF
 
-         ELSEIF HB_IsHash(xDefault) /* If it is an hash, translate it in an array */
+         ELSEIF hb_IsHash(xDefault) /* If it is an hash, translate it in an array */
 
             aParams := Array( Len(xDefault) * 2 )
 

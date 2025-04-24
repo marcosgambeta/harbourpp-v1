@@ -334,7 +334,7 @@ STATIC FUNCTION netiosrv_ConfLoad(netiosrv, netiomgm)
 
    LOCAL hConf := hb_Deserialize( hb_MemoRead(netiosrv_ConfName()) )
 
-   IF HB_IsHash(hConf) .AND. ;
+   IF hb_IsHash(hConf) .AND. ;
       "__signature" $ hConf .AND. ;
       hConf["__signature"] == _NETIOSRV_SIGNATURE
 
@@ -529,7 +529,7 @@ STATIC FUNCTION netiomgm_rpc_regnotif( netiomgm, pConnSock, nStreamID, lRegister
       RETURN IIf(cIndex $ netiomgm[_NETIOSRV_hNotifStream], netiomgm[_NETIOSRV_hNotifStream][cIndex][_CLI_xCargo], NIL)
 #endif
    CASE 4
-      IF !HB_IsLogical(lRegister) .OR. !lRegister
+      IF !hb_IsLogical(lRegister) .OR. !lRegister
          hb_mutexLock( netiomgm[_NETIOSRV_mtxNotifStream] )
          IF cIndex $ netiomgm[_NETIOSRV_hNotifStream]
             hb_HDel( netiomgm[_NETIOSRV_hNotifStream], cIndex )
@@ -555,7 +555,7 @@ STATIC FUNCTION netiomgm_rpc_setclientinfo( netiosrv, hInfo )
 
    LOCAL nconn
 
-   IF HB_IsHash(hInfo)
+   IF hb_IsHash(hInfo)
 
       hb_mutexLock( netiosrv[_NETIOSRV_mtxConnection] )
 
@@ -585,7 +585,7 @@ STATIC FUNCTION netiomgm_rpc_logconn( netiosrv, lValue )
 
    LOCAL lOldValue := netiosrv[_NETIOSRV_lShowConn]
 
-   IF HB_IsLogical(lValue)
+   IF hb_IsLogical(lValue)
       netiosrv[_NETIOSRV_lShowConn] := lValue
    ENDIF
 
@@ -595,7 +595,7 @@ STATIC FUNCTION netiomgm_rpc_conn( netiosrv, lValue )
 
    LOCAL lOldValue := netiosrv[_NETIOSRV_lAcceptConn]
 
-   IF HB_IsLogical(lValue)
+   IF hb_IsLogical(lValue)
       netiosrv[_NETIOSRV_lAcceptConn] := lValue
    ENDIF
 
@@ -606,7 +606,7 @@ STATIC FUNCTION netiomgm_rpc_stop( netiosrv, cIPPort )
    LOCAL nconn
    LOCAL aAddressPeer
 
-   IF HB_IsString(cIPPort)
+   IF hb_IsString(cIPPort)
 
       cIPPort := Lower(cIPPort)
 
@@ -637,7 +637,7 @@ STATIC FUNCTION netiomgm_rpc_clientinfo( netiosrv, netiomgm, cIPPort )
    LOCAL xCargo := NIL
    LOCAL lDone
 
-   IF HB_IsString(cIPPort)
+   IF hb_IsString(cIPPort)
 
       cIPPort := Lower(cIPPort)
 
@@ -795,7 +795,7 @@ STATIC FUNCTION AddrToIPPort( aAddr )
 
    LOCAL cIP
 
-   IF HB_IsArray(aAddr) .AND. ;
+   IF hb_IsArray(aAddr) .AND. ;
       ( aAddr[HB_SOCKET_ADINFO_FAMILY] == HB_SOCKET_AF_INET .OR. ;
         aAddr[HB_SOCKET_ADINFO_FAMILY] == HB_SOCKET_AF_INET6 )
       cIP := aAddr[HB_SOCKET_ADINFO_ADDRESS] + ":" + hb_ntos(aAddr[HB_SOCKET_ADINFO_PORT])

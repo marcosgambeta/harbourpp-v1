@@ -28,10 +28,10 @@ FUNCTION ft_AcctQtr(dGivenDate, nQtrNum)
    LOCAL nQTemp
    LOCAL aRetVal
 
-   IF HB_IsNumeric(dGivenDate)
+   IF hb_IsNumeric(dGivenDate)
       nQtrNum    := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_IsDate(dGivenDate)
+   ELSEIF !hb_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
@@ -67,7 +67,7 @@ FUNCTION ft_AcctQtr(dGivenDate, nQtrNum)
 
    ENDIF
 
-   IF HB_IsNumeric(nQtrNum)
+   IF hb_IsNumeric(nQtrNum)
       IF nQtrNum < 1 .OR. nQtrNum > 4
          nQtrNum := 4
       ENDIF

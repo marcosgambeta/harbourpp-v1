@@ -282,7 +282,7 @@ METHOD TRPCFunction:New(cFname, cSerial, nAuthLevel, oExec, oMeth)
 METHOD TRPCFunction:SetCallable(oExec, oMeth)
 
    // If the callable is an object, we need to store the method
-   IF HB_IsObject(oExec)
+   IF hb_IsObject(oExec)
       ::aCall := Array(Len(::aParameters) + 3)
       ::aCall[2] := oMeth
    ELSE
@@ -301,7 +301,7 @@ METHOD TRPCFunction:Run(aParams, oClient)
       RETURN NIL
    ENDIF
 
-   nStart := IIf(HB_IsObject(::aCall[1]), 3, 2)
+   nStart := IIf(hb_IsObject(::aCall[1]), 3, 2)
 
    FOR nCount := 1 TO Len(aParams)
       ::aCall[nStart] := aParams[nCount]
@@ -327,7 +327,7 @@ METHOD TRPCFunction:CheckTypes(aParams)
 
    LOCAL oElem, i := 0
 
-   IF !HB_IsArray(aParams)
+   IF !hb_IsArray(aParams)
       RETURN .F.
    ENDIF
 
@@ -969,7 +969,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
    CASE nMode == 1 // run in loop
       aSubst := AClone(aParams)
-      nSubstPos := AScan(aParams, {|x|HB_IsString(x) .AND. x == "$."})
+      nSubstPos := AScan(aParams, {|x|hb_IsString(x) .AND. x == "$."})
 
       SWITCH aDesc[1]
       CASE "A" // all results
@@ -1022,7 +1022,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
    CASE nMode == 2 // Run in a foreach loop
       aSubst := AClone(aParams)
-      nSubstPos := AScan(aParams, {|x|HB_IsString(x) .AND. x == "$."})
+      nSubstPos := AScan(aParams, {|x|hb_IsString(x) .AND. x == "$."})
 
       SWITCH aDesc[1]
       CASE "A" // all results
@@ -1271,7 +1271,7 @@ METHOD Add(xFunction, cVersion, nLevel, oExec, oMethod)
    LOCAL nElem, lRet := .F.
    LOCAL oFunction
 
-   IF HB_IsString(xFunction)
+   IF hb_IsString(xFunction)
       oFunction := TRPCFunction():New(xFunction, cVersion, nLevel, oExec, oMethod)
    ELSE
       oFunction := xFunction

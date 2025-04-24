@@ -108,7 +108,7 @@ METHOD TFbServer:New( cServer, cUser, cPassword, nDialect )
 
    ::db := FBConnect( cServer, cUser, cPassword )
 
-   IF HB_IsNumeric(::db)
+   IF hb_IsNumeric(::db)
       ::lError := .T.
       ::nError := ::db
    ENDIF
@@ -121,7 +121,7 @@ METHOD TFbServer:StartTransaction()
 
    ::trans := FBStartTransaction( ::db )
 
-   IF HB_IsNumeric(::trans)
+   IF hb_IsNumeric(::trans)
       ::lError := .T.
       ::nError := ::trans
    ELSE
@@ -209,7 +209,7 @@ METHOD TFbServer:TableExists( cTable )
 
    qry := FBQuery( ::db, cQuery, ::dialect )
 
-   IF HB_IsArray(qry)
+   IF hb_IsArray(qry)
       result := ( FBFetch( qry ) == 0 )
 
       FBFree( qry )
@@ -231,7 +231,7 @@ METHOD TFbServer:ListTables()
 
    qry := FBQuery( ::db, RemoveSpaces( cQuery ), ::dialect )
 
-   IF HB_IsArray(qry)
+   IF hb_IsArray(qry)
       DO WHILE FBFetch( qry ) == 0
          AAdd(result, FBGetData(qry, 1))
       ENDDO
@@ -263,7 +263,7 @@ METHOD TFbServer:TableStruct( cTable )
 
    qry := FBQuery( ::db, RemoveSpaces( cQuery ), ::dialect )
 
-   IF HB_IsArray(qry)
+   IF hb_IsArray(qry)
       DO WHILE FBFetch( qry ) == 0
          cField  := FBGetData(qry, 1)
          nType   := Val(FBGetData(qry, 2))
@@ -356,7 +356,7 @@ METHOD TFbServer:Delete( oRow, cWhere )
 
    aTables := oRow:GetTables()
 
-   IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
+   IF !hb_IsNumeric(::db) .AND. Len(aTables) == 1
       // Cannot delete joined tables
 
       IF cWhere == NIL
@@ -391,7 +391,7 @@ METHOD TFbServer:Append(oRow)
 
    aTables := oRow:GetTables()
 
-   IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
+   IF !hb_IsNumeric(::db) .AND. Len(aTables) == 1
       // Can insert only one table, not in joined tables
 
       cQuery := 'INSERT INTO ' + aTables[1] + '('
@@ -424,7 +424,7 @@ METHOD TFbServer:Update( oRow, cWhere )
 
    aTables := oRow:GetTables()
 
-   IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
+   IF !hb_IsNumeric(::db) .AND. Len(aTables) == 1
       // Can't insert joined tables
 
       IF cWhere == NIL
@@ -541,7 +541,7 @@ METHOD TFbQuery:Refresh()
 
    qry := FBQuery( ::db, ::query, ::dialect )
 
-   IF HB_IsArray(qry)
+   IF hb_IsArray(qry)
       ::numcols := qry[4]
 
       /* FIXME: This is faulty code. ::aStruct will become zero length, out of sync with ::numcols. */
@@ -923,7 +923,7 @@ STATIC FUNCTION KeyField(aTables, db, dialect)
 
       qry := FBQuery( db, RemoveSpaces( cQuery ), dialect )
 
-      IF HB_IsArray(qry)
+      IF hb_IsArray(qry)
          DO WHILE FBFetch( qry ) == 0
             AAdd(aKeys, RTrim(FBGetData(qry, 1)))
          ENDDO
@@ -989,7 +989,7 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 
    qry := FBQuery( db, RemoveSpaces( cQuery ), dialect )
 
-   IF HB_IsArray(qry)
+   IF hb_IsArray(qry)
 
       DO WHILE FBFetch( qry ) == 0
          AAdd(aDomains, { ;

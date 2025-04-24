@@ -147,7 +147,7 @@ METHOD WvgSLE:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ENDIF
    ::setPosAndSize()
 
-   IF HB_IsObject(::datalink)
+   IF hb_IsObject(::datalink)
       Eval(::datalink)
    ENDIF
 
@@ -176,22 +176,22 @@ METHOD WvgSLE:handleEvent(nMessage, aNM)
       CASE EN_MAXTEXT
          EXIT
       CASE EN_KILLFOCUS
-         IF HB_IsBlock(::sl_killInputFocus)
+         IF hb_IsBlock(::sl_killInputFocus)
             Eval(::sl_killInputFocus, , , Self)
          ENDIF
          EXIT
       CASE EN_SETFOCUS
-         IF HB_IsBlock(::sl_setInputFocus)
+         IF hb_IsBlock(::sl_setInputFocus)
             Eval(::sl_setInputFocus, , , Self)
          ENDIF
       ENDSWITCH
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_IsNumeric(::hBrushBG)
+      IF hb_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
@@ -202,12 +202,12 @@ METHOD WvgSLE:handleEvent(nMessage, aNM)
    CASE HB_GTE_ANY
       SWITCH aNM[NMH_code]
       CASE WM_KILLFOCUS
-         IF HB_IsBlock(::sl_killInputFocus)
+         IF hb_IsBlock(::sl_killInputFocus)
             Eval(::sl_killInputFocus, , , Self)
          ENDIF
          EXIT
       CASE WM_SETFOCUS
-         IF HB_IsBlock(::sl_setInputFocus)
+         IF hb_IsBlock(::sl_setInputFocus)
             Eval(::sl_setInputFocus, , , Self)
          ENDIF
          EXIT
@@ -217,7 +217,7 @@ METHOD WvgSLE:handleEvent(nMessage, aNM)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            IF HB_IsBlock(::sl_returnPressed)
+            IF hb_IsBlock(::sl_returnPressed)
                Eval(::sl_returnPressed, , , Self)
             ENDIF
          CASE aNM[2] == VK_TAB
@@ -244,7 +244,7 @@ METHOD WvgSLE:changed(lChanged)
 
    LOCAL lChg := ::sendMessage(EM_GETMODIFY, 0, 0)
 
-   IF HB_IsLogical(lChanged)
+   IF hb_IsLogical(lChanged)
       ::sendMessage(EM_SETMODIFY, IIf(lChanged, 0, 1), 0)
    ENDIF
 
@@ -294,9 +294,9 @@ METHOD WvgSLE:cutMarked()
 
 METHOD WvgSLE:returnPressed(bReturnPressed)
 
-   IF HB_IsBlock(bReturnPressed)
+   IF hb_IsBlock(bReturnPressed)
       ::sl_returnPressed := bReturnPressed
-   ELSEIF HB_IsBlock(::sl_returnPressed)
+   ELSEIF hb_IsBlock(::sl_returnPressed)
       Eval(::sl_returnPressed, , , Self)
    ENDIF
 

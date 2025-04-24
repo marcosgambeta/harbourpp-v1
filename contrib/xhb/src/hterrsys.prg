@@ -76,7 +76,7 @@ STATIC FUNCTION xhb_cgi_DefError(e)
    ENDIF
 
    IF e:genCode == EG_CORRUPTION
-      IF HB_IsBlock(s_bFixCorrupt)
+      IF hb_IsBlock(s_bFixCorrupt)
          Eval(s_bFixCorrupt, e)
          RETURN .F.
       ELSE
@@ -176,7 +176,7 @@ STATIC FUNCTION xhb_cgi_DefError(e)
 
 FUNCTION SetCorruptFunc(bFunc)
 
-   IF HB_IsBlock(bFunc)
+   IF hb_IsBlock(bFunc)
       s_bFixCorrupt := bFunc
    ENDIF
 
@@ -200,21 +200,21 @@ STATIC FUNCTION ErrorMessage(e)
    cMessage += IIf(e:severity > ES_WARNING, "Error ", "Warning ")
 
    // add subsystem name if available
-   IF HB_IsString(e:subsystem)
+   IF hb_IsString(e:subsystem)
       cMessage += e:subsystem()
    ELSE
       cMessage += "???"
    ENDIF
 
    // add subsystem's error code if available
-   IF HB_IsNumeric(e:subCode)
+   IF hb_IsNumeric(e:subCode)
       cMessage += "/" + hb_ntos(e:subCode)
    ELSE
       cMessage += "/???"
    ENDIF
 
    // add error description if available
-   IF HB_IsString(e:description)
+   IF hb_IsString(e:description)
       cMessage += "<br />  " + e:description
    ENDIF
 

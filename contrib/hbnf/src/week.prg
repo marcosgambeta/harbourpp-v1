@@ -28,10 +28,10 @@ FUNCTION ft_Week(dGivenDate, nWeekNum)
    LOCAL aRetVal
    LOCAL dTemp
 
-   IF HB_IsNumeric(dGivenDate)
+   IF hb_IsNumeric(dGivenDate)
       nWeekNum   := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_IsDate(dGivenDate)
+   ELSEIF !hb_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
@@ -39,7 +39,7 @@ FUNCTION ft_Week(dGivenDate, nWeekNum)
    dTemp      := aRetVal[2]
    aRetVal[2] -= ft_DayToBoW(aRetVal[2])
 
-   IF HB_IsNumeric(nWeekNum)
+   IF hb_IsNumeric(nWeekNum)
       nTemp := Int((aRetVal[3] - aRetVal[2]) / 7) + 1
       IF nWeekNum < 1 .OR. nWeekNum > nTemp
          nWeekNum := nTemp

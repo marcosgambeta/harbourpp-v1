@@ -317,7 +317,7 @@ METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
    LOCAL nKey
    LOCAL lKeepGoing := .T.
 
-   IF !HB_IsNumeric(nKey)
+   IF !hb_IsNumeric(nKey)
       nKey := NIL
    ENDIF
    hb_default(@lCanEdit, .F.)

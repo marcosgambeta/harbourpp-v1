@@ -222,7 +222,7 @@ FUNCTION WvtSetObjects(aObject)
       IF Empty(aObject)
          t_aObjects := {}
       ELSE
-         IF HB_IsArray(aObject[1])
+         IF hb_IsArray(aObject[1])
             AEval(aObject, {|e_|AAdd(t_aObjects, e_)})
          ELSE
             ASize(aObject, WVT_OBJ_VRBLS)

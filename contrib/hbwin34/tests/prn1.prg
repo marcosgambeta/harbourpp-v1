@@ -19,7 +19,7 @@ PROCEDURE Main( cPar1 )
          @ 2, 0 TO MaxRow(), MaxCol()
 
          IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
-            PrnTest( aPrn[nPrn], cBMPFile, IIf(HB_IsString(cPar1) .AND. Lower(cPar1) == "ask", .T., NIL) )
+            PrnTest( aPrn[nPrn], cBMPFile, IIf(hb_IsString(cPar1) .AND. Lower(cPar1) == "ask", .T., NIL) )
          ENDIF
       ENDDO
    ENDIF
@@ -38,7 +38,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
    oPrinter:Landscape := .F.
    oPrinter:FormType  := WIN_DMPAPER_A4
    oPrinter:Copies    := 1
-   IF HB_IsLogical(lAsk)
+   IF hb_IsLogical(lAsk)
       oPrinter:AskProperties := lAsk
    ENDIF
 

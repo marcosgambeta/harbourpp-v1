@@ -53,7 +53,7 @@ FUNCTION Occurs(s1, s2)
    LOCAL nCount := 0
    LOCAL nPos := 0
 
-   IF HB_IsString(s1) .AND. HB_IsString(s2)
+   IF hb_IsString(s1) .AND. hb_IsString(s2)
 #if defined(HB_CLP_STRICT)
       DO WHILE ( nPos := hb_At(s1, s2, nPos + 1) ) != 0
          nCount++

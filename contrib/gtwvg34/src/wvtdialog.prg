@@ -223,13 +223,13 @@ METHOD WvtDialog:Create()
    LOCAL aPalette, i, j
 
    ::oldToolTipActive := wvt_SetToolTipActive(.T.)
-   IF HB_IsNumeric(::nTooltipWidth)
+   IF hb_IsNumeric(::nTooltipWidth)
       wvt_SetToolTipWidth( ::nTooltipWidth )
    ENDIF
-   IF HB_IsNumeric(::nTooltipBkColor)
+   IF hb_IsNumeric(::nTooltipBkColor)
       wvt_SetToolTipBkColor(::nTooltipBkColor)
    ENDIF
-   IF HB_IsNumeric(::nTooltipTextColor)
+   IF hb_IsNumeric(::nTooltipTextColor)
       wvt_SetToolTipTextColor(::nTooltipTextColor)
    ENDIF
 
@@ -278,7 +278,7 @@ METHOD WvtDialog:Create()
 
    ::Update()
 
-   IF HB_IsObject(::oMenu)
+   IF hb_IsObject(::oMenu)
       wvt_SetMenu( ::oMenu:hMenu )
       wvt_DrawMenuBar()
       SetKey(wvt_SetMenuKeyEvent(), {|| ::ActivateMenu( ::oMenu ) })
@@ -288,7 +288,7 @@ METHOD WvtDialog:Create()
 
 METHOD PROCEDURE WvtDialog:Destroy()
 
-   IF HB_IsObject(::oMenu)
+   IF hb_IsObject(::oMenu)
       ::oMenu:Destroy()
    ENDIF
 
@@ -548,7 +548,7 @@ METHOD WvtDialog:Inkey()
       ENDIF
 
       IF !::lEventHandled
-         IF HB_IsEvalItem(SetKey(::nKey))
+         IF hb_IsEvalItem(SetKey(::nKey))
             Eval(SetKey(::nKey))
          ENDIF
       ENDIF
@@ -639,7 +639,7 @@ METHOD WvtDialog:Eval(bBlock, p1, p2, p3, p4, p5)
 
    LOCAL lRet
 
-   IF ( lRet := HB_IsEvalItem(bBlock) )
+   IF ( lRet := hb_IsEvalItem(bBlock) )
       Eval(bBlock, p1, p2, p3, p4, p5)
    ENDIF
 
@@ -651,9 +651,9 @@ METHOD WvtDialog:ActivateMenu()
    LOCAL aMenuItem
 
    IF nMenu != 0
-      IF HB_IsObject(::oMenu)
+      IF hb_IsObject(::oMenu)
          IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nMenu))
-            IF HB_IsEvalItem(aMenuItem[WVT_MENU_ACTION])
+            IF hb_IsEvalItem(aMenuItem[WVT_MENU_ACTION])
                Eval(aMenuItem[WVT_MENU_ACTION])
             ENDIF
          ENDIF

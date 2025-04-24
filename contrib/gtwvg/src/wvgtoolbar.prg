@@ -201,7 +201,7 @@ METHOD WvgToolBar:handleEvent(nMessage, aNM)
 
       CASE aNMMouse[NMH_code] == NM_CLICK
          IF (nObj := AScan(::aItems, {|e_|e_[1] == aNMMouse[NMH_dwItemSpec]})) > 0
-            IF HB_IsBlock(::sl_lbClick)
+            IF hb_IsBlock(::sl_lbClick)
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
@@ -306,12 +306,12 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
    IF !Empty(pBitmap)
       // oBtn:image := pBitmap
 
-      IF HB_IsNumeric(nMapRGB)
+      IF hb_IsNumeric(nMapRGB)
          nBtn := wapi_ImageList_AddMasked(::hImageList, pBitmap, nMapRGB)
       ELSE
          nBtn := wapi_ImageList_Add(::hImageList, pBitmap)
       ENDIF
-      IF !HB_IsPointer(xImage)
+      IF !hb_IsPointer(xImage)
          wvg_DeleteObject(pBitmap)
       ENDIF
 
@@ -365,7 +365,7 @@ METHOD WvgToolBar:setSize()
 
 METHOD WvgToolBar:buttonClick(xParam)
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -373,7 +373,7 @@ METHOD WvgToolBar:buttonClick(xParam)
 
 METHOD WvgToolBar:change(xParam)
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_change := xParam
    ENDIF
 
@@ -381,7 +381,7 @@ METHOD WvgToolBar:change(xParam)
 
 METHOD WvgToolBar:buttonMenuClick(xParam)
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_buttonMenuClick := xParam
    ENDIF
 
@@ -389,7 +389,7 @@ METHOD WvgToolBar:buttonMenuClick(xParam)
 
 METHOD WvgToolBar:buttonDropDown(xParam)
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_buttonDropDown := xParam
    ENDIF
 

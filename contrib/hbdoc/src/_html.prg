@@ -212,10 +212,10 @@ METHOD GenerateHTML:EndSection( cSection, cFilename )
 
 METHOD GenerateHTML:AddReference( oEntry, cReference, cSubReference )
 
-   IF HB_IsObject(oEntry) .AND. oEntry:ClassName() == "ENTRY"
+   IF hb_IsObject(oEntry) .AND. oEntry:ClassName() == "ENTRY"
       ::OpenTag( "a", "href", ::TargetFilename + ::cExtension + "#" + oEntry:_filename ):Append(oEntry:fld["NAME"]):CloseTag( "a" ):Append(oEntry:fld["ONELINER"]):Newline()
    ELSE
-      IF HB_IsString(cSubReference)
+      IF hb_IsString(cSubReference)
          ::OpenTag( "a", "href", cReference + ::cExtension + "#" + cSubReference ):Append(oEntry):CloseTag( "a" ):Newline()
       ELSE
          ::OpenTag( "a", "href", cReference + ::cExtension /* + "#" + oEntry:_filename */ ):Append(oEntry):CloseTag( "a" ):Newline()
@@ -268,7 +268,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
       cTagClass := hb_HGetDef( s_class, cField, "d-it" )
 
-      IF !HB_IsNull( cCaption := FieldCaption( cField ) )
+      IF !hb_IsNull( cCaption := FieldCaption( cField ) )
          ::Tagged(cCaption, "div", "class", "d-d")
       ENDIF
 
@@ -285,7 +285,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
          lFirst := .T.
          FOR EACH tmp IN hb_ATokens( cContent, "," )
             tmp := AllTrim(tmp)
-            IF !HB_IsNull( tmp )
+            IF !hb_IsNull( tmp )
                // TOFIX: for multi-file output
                tmp1 := Parse( tmp, "(" )
                IF lFirst
@@ -301,7 +301,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
       CASE cField == "SYNTAX"
 
          ::OpenTagInline( "div", "class", cTagClass )
-         DO WHILE !HB_IsNull( cContent )
+         DO WHILE !hb_IsNull( cContent )
             ::OpenTagInline( "code" )
             ::AppendInline( Indent( Parse( @cContent, hb_eol() ), 0, -1,, .T. ),, .F. )
             ::CloseTagInline( "code" )
@@ -315,13 +315,13 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
          lTable := .F.
 
-         DO WHILE !HB_IsNull( cContent )
+         DO WHILE !hb_IsNull( cContent )
 
             lCode := .F.
             lTablePrev := lTable
 
             tmp1 := ""
-            DO WHILE !HB_IsNull( cContent )
+            DO WHILE !hb_IsNull( cContent )
 
                cLine := Parse( @cContent, hb_eol() )
 
@@ -357,7 +357,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
             IF lTable != lTablePrev
                IF lTable
-                  ::OpenTag( "div", "class", "d-t" + IIf(HB_IsNull( cHeaderClass ), "", " " + cHeaderClass) )
+                  ::OpenTag( "div", "class", "d-t" + IIf(hb_IsNull( cHeaderClass ), "", " " + cHeaderClass) )
                ELSE
                   ::CloseTag( "div" )
                ENDIF
@@ -461,7 +461,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
    LOCAL nEM, nIT, nPR
    LOCAL cdp
 
-   IF !HB_IsNull( cText )
+   IF !hb_IsNull( cText )
 
       hb_default(@lCode, .F.)
 

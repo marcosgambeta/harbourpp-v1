@@ -94,11 +94,11 @@ FUNCTION DialogAlert(cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime)
       nTime := 10000   //  Seconds
    ENDIF
 
-   IF HB_IsString(aText_)
+   IF hb_IsString(aText_)
       aText_ := {aText_}
    ENDIF
 
-   IF HB_IsString(aButtons_)
+   IF hb_IsString(aButtons_)
       aButtons_ := {aButtons_}
    ENDIF
 
@@ -282,7 +282,7 @@ FUNCTION CreateOCrt(nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
    oCrt:create()
    SetCursor(0)
 
-   IF HB_IsNumeric(xIcon)
+   IF hb_IsNumeric(xIcon)
       hb_gtInfo(HB_GTI_ICONRES, xIcon)
    ELSE
       IF ".ico" $ Lower(xIcon)

@@ -164,7 +164,7 @@ METHOD TODBC:New(cODBCStr, cUserName, cPassword, lCache)
 
    SQLAllocConnect(::hEnv, @::hDbc)  // Allocates SQL Connection
 
-   IF HB_IsString(cUserName)
+   IF hb_IsString(cUserName)
 
       hb_default(@cPassword, "")
 
@@ -385,7 +385,7 @@ METHOD TODBC:FieldByName(cField)
    LOCAL nRet
    LOCAL xRet := NIL
 
-   IF HB_IsString(cField)
+   IF hb_IsString(cField)
       nRet := AScan(::Fields, {|x|Upper(x:FieldName) == Upper(cField)})
 
       IF nRet != 0

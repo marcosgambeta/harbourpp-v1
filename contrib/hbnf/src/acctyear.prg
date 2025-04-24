@@ -27,7 +27,7 @@ FUNCTION ft_AcctYear(dGivenDate)
    LOCAL nYTemp
    LOCAL aRetVal
 
-   IF !HB_IsDate(dGivenDate)
+   IF !hb_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

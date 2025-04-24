@@ -24,7 +24,7 @@ FUNCTION ft_Byt2Bit(cByte)
    LOCAL nCounter
    LOCAL cBitstring
 
-   IF HB_IsString(cByte)
+   IF hb_IsString(cByte)
       cByte := hb_BCode(cByte)
       cBitString := ""
       FOR nCounter := 7 TO 0 STEP -1

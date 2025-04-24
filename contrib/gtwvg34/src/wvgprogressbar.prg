@@ -122,10 +122,10 @@ METHOD WvgProgressBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
    ::createControl()
 
    ::SetValue( ::nValue, ::nRangeMin, ::nRangeMax, ::nSpeed )
-   IF HB_IsNumeric(::nColorBarFG)
+   IF hb_IsNumeric(::nColorBarFG)
       ::SetColorBarFG( ::nColorBarFG )
    ENDIF
-   IF HB_IsNumeric(::nColorBarBG)
+   IF hb_IsNumeric(::nColorBarBG)
       ::SetColorBarGB(::nColorBarBG)
    ENDIF
 
@@ -145,7 +145,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
          ::rePosition()
       ENDIF
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
-      IF HB_IsEvalItem(::sl_resize)
+      IF hb_IsEvalItem(::sl_resize)
          Eval(::sl_resize,,, Self)
       ENDIF
 
@@ -154,7 +154,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
 
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF !Empty(::hBrushBG)
@@ -180,10 +180,10 @@ METHOD WvgProgressBar:configure( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
 METHOD PROCEDURE WvgProgressBar:setCaption( cCaption )
 
-   IF HB_IsString(cCaption)
+   IF hb_IsString(cCaption)
       ::Caption := cCaption
    ENDIF
-   IF HB_IsString(::Caption)
+   IF hb_IsString(::Caption)
       ::sendMessage( WIN_WM_SETTEXT, 0, ::Caption )
    ENDIF
 
@@ -191,7 +191,7 @@ METHOD PROCEDURE WvgProgressBar:setCaption( cCaption )
 
 METHOD WvgProgressBar:draw( xParam )
 
-   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
+   IF hb_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 
@@ -199,7 +199,7 @@ METHOD WvgProgressBar:draw( xParam )
 
 METHOD WvgProgressBar:activate( xParam )
 
-   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
+   IF hb_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -207,16 +207,16 @@ METHOD WvgProgressBar:activate( xParam )
 
 METHOD WvgProgressBar:SetValue( nValue, nRangeMin, nRangeMax, nSpeed )
 
-   IF HB_IsNumeric(nRangeMin) .AND. HB_IsNumeric(nRangeMax) .AND. !::lMarquee
+   IF hb_IsNumeric(nRangeMin) .AND. hb_IsNumeric(nRangeMax) .AND. !::lMarquee
       ::nRangeMin := nRangeMin
       ::nRangeMax := nRangeMax
       ::sendMessage( PBM_SETRANGE, 0, WIN_MAKELONG( ::nRangeMin, ::nRangeMax ) )
    ENDIF
-   IF HB_IsNumeric(nValue) .AND. !::lMarquee
+   IF hb_IsNumeric(nValue) .AND. !::lMarquee
       ::sendMessage( PBM_SETPOS, nValue, 0 )
       ::nValue := nValue
    ENDIF
-   IF HB_IsNumeric(nSpeed) .AND. ::lMarquee
+   IF hb_IsNumeric(nSpeed) .AND. ::lMarquee
       ::sendMessage( PBM_SETMARQUEE, 1, nSpeed )
       ::nSpeed := nSpeed
    ENDIF
@@ -225,7 +225,7 @@ METHOD WvgProgressBar:SetValue( nValue, nRangeMin, nRangeMax, nSpeed )
 
 METHOD PROCEDURE WvgProgressBar:SetCOlorBarFG( nColor )
 
-   IF HB_IsNumeric(nColor)
+   IF hb_IsNumeric(nColor)
       ::sendMessage( PBM_SETBARCOLOR, 0, nColor )
    ENDIF
 
@@ -233,7 +233,7 @@ METHOD PROCEDURE WvgProgressBar:SetCOlorBarFG( nColor )
 
 METHOD PROCEDURE WvgProgressBar:SetColorBarBG( nColor )
 
-   IF HB_IsNumeric(nColor)
+   IF hb_IsNumeric(nColor)
       ::sendMessage( PBM_SETBKCOLOR, 0, nColor )
    ENDIF
 

@@ -99,7 +99,7 @@ FUNCTION EditorTitle( oEdit, cTitle )
 
    LOCAL _cTitle := oEdit[E_TITLE]
 
-   IF HB_IsString(cTitle)
+   IF hb_IsString(cTitle)
       oEdit[E_TITLE] := cTitle
    ENDIF
 
@@ -113,7 +113,7 @@ FUNCTION EditorMode( oEdit, lMode )
 
    LOCAL _lMode := oEdit[E_MODE]
 
-   IF HB_IsLogical(lMode)
+   IF hb_IsLogical(lMode)
       oEdit[E_MODE] := lMode
    ENDIF
 
@@ -211,7 +211,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 
    hb_default(@lSave, .T.)
 
-   IF HB_IsString(xInput)
+   IF hb_IsString(xInput)
       nHandle := FOpen( xInput )
       lClose := .T.
    ELSE
@@ -282,7 +282,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
    SayInsert()
 #endif
    nCursor := SetCursor( IIf(oEdit[E_INSERT], SC_NORMAL, SC_SPECIAL1) )
-   IF HB_IsLogical(lEdit)
+   IF hb_IsLogical(lEdit)
       oEdit[E_MODE] := lEdit
    ENDIF
    lSaveAllowed := ( SetKey(K_F2) == NIL )
@@ -358,7 +358,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
 
       OTHERWISE
          bKey := SetKey(nKey)
-         IF HB_IsBlock(bKey)
+         IF hb_IsBlock(bKey)
             Eval(bKey, oEdit)
          ELSE
             IF oEdit[E_MODE]

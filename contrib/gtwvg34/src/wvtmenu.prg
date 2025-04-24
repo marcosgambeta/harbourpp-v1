@@ -113,10 +113,10 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
    LOCAL aItem
 
    IF !Empty(::hMenu) .AND. ( !Empty(cCaption) .OR. !Empty(bAction) )
-      IF HB_IsObject(bAction)
+      IF hb_IsObject(bAction)
          cCaption := IIf(Empty(cCaption), bAction:Caption, cCaption)
          aItem := { WIN_MF_POPUP, bAction:hMenu, cCaption, bAction }   // bAction is a wvtMenu object reference
-      ELSEIF HB_IsEvalItem(bAction)
+      ELSEIF hb_IsEvalItem(bAction)
          aItem := { WIN_MF_STRING, ::MenuItemId++, cCaption, bAction } // bAction is a code block to execute
       ELSEIF hb_LeftEq( cCaption, "-" )
          aItem := { WIN_MF_SEPARATOR, 0, 0, NIL }
@@ -173,7 +173,7 @@ METHOD wvtMenu:DelItem( nItemNum )
 
 METHOD wvtMenu:EnableItem( nItemNum )
 
-   IF !Empty(::hMenu) .AND. HB_IsNumeric(nItemNum) .AND. nItemNum >= 1
+   IF !Empty(::hMenu) .AND. hb_IsNumeric(nItemNum) .AND. nItemNum >= 1
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_ENABLED )
    ENDIF
 
@@ -181,7 +181,7 @@ METHOD wvtMenu:EnableItem( nItemNum )
 
 METHOD wvtMenu:DisableItem( nItemNum )
 
-   IF !Empty(::hMenu) .AND. HB_IsNumeric(nItemNum) .AND. nItemNum >= 1
+   IF !Empty(::hMenu) .AND. hb_IsNumeric(nItemNum) .AND. nItemNum >= 1
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_GRAYED )
    ENDIF
 

@@ -131,7 +131,7 @@ METHOD Thread:new(...)
 
    IF PCount() == 1
       nMaxStackSize := hb_PValue(1)
-      IF HB_IsNumeric(nMaxStackSize)
+      IF hb_IsNumeric(nMaxStackSize)
          ::maxStackSize := nMaxStackSize
       ENDIF
       /* TODO: Create new thread here and suspend its execution
@@ -159,7 +159,7 @@ METHOD PROCEDURE Thread:quit( xResult, nRestart )
       IF PCount() > 0
          ::result := xResult
       ENDIF
-      IF !HB_IsNumeric(nRestart) .OR. nRestart != QUIT_RESTART
+      IF !hb_IsNumeric(nRestart) .OR. nRestart != QUIT_RESTART
          ::interval := NIL
       ENDIF
       QUIT
@@ -169,7 +169,7 @@ METHOD PROCEDURE Thread:quit( xResult, nRestart )
 
 METHOD Thread:setInterval(nHSeconds)
 
-   IF HB_IsNumeric(nHSeconds) .AND. Int(nHSeconds) >= 0
+   IF hb_IsNumeric(nHSeconds) .AND. Int(nHSeconds) >= 0
       ::interval := Int(nHSeconds)
    ELSEIF PCount() > 0 .OR. nHSeconds == NIL
       ::interval := NIL
@@ -183,7 +183,7 @@ METHOD Thread:setInterval(nHSeconds)
 METHOD Thread:setPriority( nPriority )
 
    /* TODO: add thread priority setting */
-   IF HB_IsNumeric(nPriority)
+   IF hb_IsNumeric(nPriority)
       ::priority := nPriority
    ENDIF
 
@@ -191,7 +191,7 @@ METHOD Thread:setPriority( nPriority )
 
 METHOD Thread:setStartTime( nSeconds )
 
-   IF HB_IsNumeric(nSeconds)
+   IF hb_IsNumeric(nSeconds)
       IF nSeconds < 0 .OR. nSeconds > 86400
          RETURN .F.
       ENDIF
@@ -219,7 +219,7 @@ METHOD Thread:start(xAction, ...)
                ::active := .T.
                ::startCount++
 
-               IF HB_IsNumeric(::startTime)
+               IF hb_IsNumeric(::startTime)
                   nTime := ::startTime - Seconds()
                   IF nTime < 0
                      nTime += 86400
@@ -229,7 +229,7 @@ METHOD Thread:start(xAction, ...)
                ENDIF
 
                ::atStart(...)
-               IF HB_IsBlock(::_atStart)
+               IF hb_IsBlock(::_atStart)
                   Eval(::_atStart, ...)
                ENDIF
 
@@ -255,7 +255,7 @@ METHOD Thread:start(xAction, ...)
                    *       it can be resumed
                    */
 
-                  IF !HB_IsNumeric(::interval)
+                  IF !hb_IsNumeric(::interval)
                      EXIT
                   ENDIF
 
@@ -268,7 +268,7 @@ METHOD Thread:start(xAction, ...)
                ENDDO
 
                ::atEnd(...)
-               IF HB_IsBlock(::_atEnd)
+               IF hb_IsBlock(::_atEnd)
                   Eval(::_atEnd, ...)
                ENDIF
                ::active := .F.
@@ -287,7 +287,7 @@ METHOD Thread:synchronize( nTimeOut )
 
    IF hb_threadSelf() != pThreadID
       RETURN hb_threadWait( pThreadID, ;
-         IIf(HB_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
+         IIf(hb_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
          nTimeOut / 100, NIL) )
    ENDIF
 

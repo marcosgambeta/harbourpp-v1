@@ -64,14 +64,14 @@ FUNCTION ThreadWait( aThreads, nTimeOut )
 
    apThIDs := {}
    FOR EACH th IN aThreads
-      IF HB_IsObject(th)
+      IF hb_IsObject(th)
          AAdd( apThIDs, th:threadSelf )
       ELSE
          AAdd( apThIDs, th )
       ENDIF
    NEXT
 
-   nPos := hb_threadWait( apThIDs, IIf(HB_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
+   nPos := hb_threadWait( apThIDs, IIf(hb_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
       nTimeOut / 100, NIL) )
    IF nPos != 0
       xResult := aThreads[nPos]
@@ -86,14 +86,14 @@ FUNCTION ThreadWaitAll( aThreads, nTimeOut )
 
    apThIDs := {}
    FOR EACH th IN aThreads
-      IF HB_IsObject(th)
+      IF hb_IsObject(th)
          AAdd( apThIDs, th:threadSelf )
       ELSE
          AAdd( apThIDs, th )
       ENDIF
    NEXT
 
-   RETURN hb_threadWait( apThIDs, IIf(HB_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
+   RETURN hb_threadWait( apThIDs, IIf(hb_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
       nTimeOut / 100, NIL), .T. ) == Len(apThIDs)
 
 /* TODO: ThreadInfo() */

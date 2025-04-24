@@ -100,9 +100,9 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
    IF lIsDefaultStyle
       DO CASE
-      CASE HB_IsNumeric(::caption)
+      CASE hb_IsNumeric(::caption)
          ::style += BS_BITMAP
-      CASE HB_IsString(::caption)
+      CASE hb_IsString(::caption)
          SWITCH Lower(hb_FNameExt( ::caption ))
          CASE ".ico"
             ::style += BS_ICON
@@ -111,9 +111,9 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
             ::style += BS_BITMAP
             EXIT
          ENDSWITCH
-      CASE HB_IsArray(::caption)
+      CASE hb_IsArray(::caption)
          ASize( ::caption, 3 )
-         IF HB_IsNumeric(::caption[2])
+         IF hb_IsNumeric(::caption[2])
             SWITCH ::caption[2]
             CASE WVG_IMAGE_ICONFILE
             CASE WVG_IMAGE_ICONRESOURCE
@@ -158,13 +158,13 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
          ::rePosition()
       ENDIF
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
-      IF HB_IsEvalItem(::sl_resize)
+      IF hb_IsEvalItem(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
 
    CASE nMessage == HB_GTE_COMMAND
       IF aNM[1] == BN_CLICKED
-         IF HB_IsEvalItem(::sl_lbClick)
+         IF hb_IsEvalItem(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -180,7 +180,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
       // Will never be issued because pushbutton sends WIN_WM_COMMAND
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF !Empty(::hBrushBG)
@@ -191,7 +191,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
 #if 0  // Must not reach here if WndProc is not installed
    CASE nMessage == HB_GTE_ANY
       IF aNM[1] == WIN_WM_LBUTTONUP
-         IF HB_IsEvalItem(::sl_lbClick)
+         IF hb_IsEvalItem(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -227,7 +227,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
    ::caption := xCaption
 
    DO CASE
-   CASE HB_IsString(xCaption)
+   CASE hb_IsString(xCaption)
 
       SWITCH Lower(hb_FNameExt( ::caption ))
       CASE ".ico"
@@ -240,12 +240,12 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
          ::sendMessage( WIN_WM_SETTEXT, 0, ::caption )
       ENDSWITCH
 
-   CASE HB_IsNumeric(xCaption)  // Handle to the bitmap
+   CASE hb_IsNumeric(xCaption)  // Handle to the bitmap
       ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, ::caption )
 
-   CASE HB_IsArray(xCaption)
+   CASE hb_IsArray(xCaption)
       ASize( xCaption, 4 )
-      IF HB_IsChar(xCaption[1])
+      IF hb_IsChar(xCaption[1])
          ::sendMessage( WIN_WM_SETTEXT, 0, xCaption[1] )
       ENDIF
       IF !Empty(xCaption[2])
@@ -254,7 +254,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
             ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[3], nLoadFromDiskFile, WIN_IMAGE_ICON ) )
             EXIT
          CASE WVG_IMAGE_ICONRESOURCE
-            IF HB_IsString(xCaption[3])
+            IF hb_IsString(xCaption[3])
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[3], nLoadFromResByIdName, WIN_IMAGE_ICON ) )
             ELSE
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[3], nLoadFromResByIdNumber, WIN_IMAGE_ICON ) )
@@ -264,7 +264,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
             ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, wvg_LoadImage( xCaption[3], nLoadFromDiskFile, WIN_IMAGE_BITMAP ) )
             EXIT
          CASE WVG_IMAGE_BITMAPRESOURCE
-            IF HB_IsString(xCaption[3])
+            IF hb_IsString(xCaption[3])
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, wvg_LoadImage( xCaption[3], nLoadFromResByIdName, WIN_IMAGE_BITMAP ) )
             ELSE
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, wvg_LoadImage( xCaption[3], nLoadFromResByIdNumber, WIN_IMAGE_BITMAP ) )
@@ -278,7 +278,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
 
 METHOD WvgPushButton:activate( xParam )
 
-   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
+   IF hb_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -286,7 +286,7 @@ METHOD WvgPushButton:activate( xParam )
 
 METHOD WvgPushButton:draw( xParam )
 
-   IF HB_IsEvalItem(xParam) .OR. xParam == NIL
+   IF hb_IsEvalItem(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 

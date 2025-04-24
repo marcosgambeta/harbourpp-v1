@@ -171,7 +171,7 @@ CREATE CLASS WvtObject
 
    METHOD SetToolTip() INLINE wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
    METHOD Refresh() INLINE wvt_InvalidateRect(::nTop, ::nLeft, ::nTop, ::nLeft)
-   METHOD Eval(bBlock) INLINE IIf(HB_IsEvalItem(bBlock), Eval(bBlock, Self), NIL)
+   METHOD Eval(bBlock) INLINE IIf(hb_IsEvalItem(bBlock), Eval(bBlock, Self), NIL)
    METHOD AddChild(aChild) INLINE AAdd(::aChildren, aChild)
    METHOD AddParent(aParent) INLINE AAdd(::aParent, aParent)
 
@@ -196,7 +196,7 @@ ENDCLASS
 
 METHOD WvtObject:New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
 
-   IF !HB_IsNumeric(nID)
+   IF !hb_IsNumeric(nID)
       nID := ++::nObjID
    ENDIF
 
@@ -332,7 +332,7 @@ METHOD WvtObject:ShowPopup()
          IF (n := AScan(::aPopup, {|e_|e_[3] == nRet})) > 0
             lRet := .T.
 
-            IF HB_IsBlock(::aPopup[n][2])
+            IF hb_IsBlock(::aPopup[n][2])
                Eval(::aPopup[n][2])
             ENDIF
          ENDIF

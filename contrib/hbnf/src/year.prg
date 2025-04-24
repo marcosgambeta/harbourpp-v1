@@ -28,7 +28,7 @@ FUNCTION ft_Year(dGivenDate)
 
    LOCAL cFY_Start := ft_DateCnfg()[1]
 
-   IF !HB_IsDate(dGivenDate)
+   IF !hb_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

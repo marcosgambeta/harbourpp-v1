@@ -27,9 +27,9 @@
 #define _XTOC(x)             CASE_AT(ValType(x), "CNDLM", ;
       {NULL, ;
       x, ;
-      IIf(HB_IsNumeric(x), hb_ntos(x), NULL), ;
-      IIf(HB_IsDate(x), DToC(x), NULL), ;
-      IIf(HB_IsLogical(x), IIf(x, ".T.", ".F."), NULL), ;
+      IIf(hb_IsNumeric(x), hb_ntos(x), NULL), ;
+      IIf(hb_IsDate(x), DToC(x), NULL), ;
+      IIf(hb_IsLogical(x), IIf(x, ".T.", ".F."), NULL), ;
       x})
 
 FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
@@ -39,62 +39,62 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
    DO CASE
 
    CASE cTypeToConvertTo == "C" .AND. ; // They Want a Character String
-      !HB_IsString(xValueToConvert)
+      !hb_IsString(xValueToConvert)
 
       xValueToConvert := _XTOC(xValueToConvert)
 
    CASE cTypeToConvertTo == "D" .AND. ; // They Want a Date
-      !HB_IsDate(xValueToConvert)
+      !hb_IsDate(xValueToConvert)
 
-      xValueToConvert := IIf(HB_IsString(xValueToConvert), ;
+      xValueToConvert := IIf(hb_IsString(xValueToConvert), ;
          ; // Convert from a Character
       CToD(xValueToConvert), ;
-         IIf(HB_IsNumeric(xValueToConvert), ;
+         IIf(hb_IsNumeric(xValueToConvert), ;
          ; // Convert from a Number
       xValueToConvert + EARLIEST_DATE, ;
-         IIf(HB_IsLogical(xValueToConvert), ;
+         IIf(hb_IsLogical(xValueToConvert), ;
          ; // Convert from a Logical
       IIf(xValueToConvert, Date(), BLANK_DATE), ;
          ; // Unsupported Type
       BLANK_DATE)))
 
    CASE cTypeToConvertTo == "N" .AND. ; // They Want a Number
-      !HB_IsNumeric(xValueToConvert)
+      !hb_IsNumeric(xValueToConvert)
 
-      xValueToConvert := IIf(HB_IsString(xValueToConvert), ;
+      xValueToConvert := IIf(hb_IsString(xValueToConvert), ;
          ; // Convert from a Character
       Val(xValueToConvert), ;
-         IIf(HB_IsDate(xValueToConvert), ;
+         IIf(hb_IsDate(xValueToConvert), ;
          ; // Convert from a Date
       xValueToConvert - EARLIEST_DATE, ;
-         IIf(HB_IsLogical(xValueToConvert), ;
+         IIf(hb_IsLogical(xValueToConvert), ;
          ; // Convert from a Logical
       IIf(xValueToConvert, 1, 0), ;
          ; // Unsupported Type
       0)))
 
    CASE cTypeToConvertTo == "L" .AND. ; // They Want a Logical
-      !HB_IsLogical(xValueToConvert)
+      !hb_IsLogical(xValueToConvert)
 
-      xValueToConvert := IIf(HB_IsString(xValueToConvert), ;
+      xValueToConvert := IIf(hb_IsString(xValueToConvert), ;
          ; // Convert from a Character
       Upper(xValueToConvert) == IIf(lWantYesNo, "Y", ".T."), ;
-         IIf(HB_IsDate(xValueToConvert), ;
+         IIf(hb_IsDate(xValueToConvert), ;
          ; // Convert from a Date
       !Empty(xValueToConvert), ;
-         IIf(HB_IsNumeric(xValueToConvert), ;
+         IIf(hb_IsNumeric(xValueToConvert), ;
          ; // Convert from a Number
       xValueToConvert != 0, ;
          ; // Unsupported Type
       .F.)))
 
    CASE cTypeToConvertTo == "A" .AND. ; // They Want an Array
-      !HB_IsArray(xValueToConvert)
+      !hb_IsArray(xValueToConvert)
 
       xValueToConvert := {xValueToConvert}
 
    CASE cTypeToConvertTo == "B" .AND. ; // They Want a Code Block
-      !HB_IsBlock(xValueToConvert)
+      !hb_IsBlock(xValueToConvert)
 
       xValueToConvert := {||xValueToConvert}
 

@@ -96,17 +96,17 @@ METHOD WvgPushButton:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   IF HB_IsNumeric(::caption)
+   IF hb_IsNumeric(::caption)
       ::style += BS_BITMAP
-   ELSEIF HB_IsString(::caption)
+   ELSEIF hb_IsString(::caption)
       IF ".ICO" == Upper(Right(::caption, 4))
          ::style += BS_ICON
       ELSEIF ".BMP" == Upper(Right(::caption, 4))
          ::style += BS_BITMAP
       ENDIF
-   ELSEIF HB_IsArray(::caption)
+   ELSEIF hb_IsArray(::caption)
       ASize(::caption, 3)
-      IF HB_IsNumeric(::caption[2])
+      IF hb_IsNumeric(::caption[2])
          IF ::caption[2] == WVG_IMAGE_ICONFILE .OR. ::caption[2] == WVG_IMAGE_ICONRESOURCE
             ::style += BS_ICON
          ELSEIF ::caption[2] == WVG_IMAGE_BITMAPFILE .OR. ::caption[2] == WVG_IMAGE_BITMAPRESOURCE
@@ -144,14 +144,14 @@ METHOD WvgPushButton:handleEvent(nMessage, aNM)
          ::rePosition()
       ENDIF
       ::sendMessage(WM_SIZE, 0, 0)
-      IF HB_IsBlock(::sl_resize)
+      IF hb_IsBlock(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
 
    CASE HB_GTE_COMMAND
       IF aNM[1] == BN_CLICKED
-         IF HB_IsBlock(::sl_lbClick)
+         IF hb_IsBlock(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -169,10 +169,10 @@ METHOD WvgPushButton:handleEvent(nMessage, aNM)
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_IsNumeric(::hBrushBG)
+      IF hb_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ENDIF
@@ -181,7 +181,7 @@ METHOD WvgPushButton:handleEvent(nMessage, aNM)
 #if 0  // Must not reach here if WndProc is not installed
    CASE HB_GTE_ANY
       IF aNM[1] == WM_LBUTTONUP
-         IF HB_IsBlock(::sl_lbClick)
+         IF hb_IsBlock(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -218,7 +218,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
 
    ::caption := xCaption
 
-   IF HB_IsString(xCaption)
+   IF hb_IsString(xCaption)
       IF ".ICO" == Upper(Right(::caption, 4))
          wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_ICON, wvg_LoadImage(::caption, nLoadFromDiskFile, IMAGE_ICON))
       ELSEIF ".BMP" == Upper(Right(::caption, 4))
@@ -227,12 +227,12 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
       ENDIF
 
-   ELSEIF HB_IsNumeric(xCaption)  // Handle to the bitmap
+   ELSEIF hb_IsNumeric(xCaption)  // Handle to the bitmap
       wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_BITMAP, ::caption)
 
-   ELSEIF HB_IsArray(xCaption)
+   ELSEIF hb_IsArray(xCaption)
       ASize(xCaption, 4)
-      IF HB_IsChar(xCaption[1])
+      IF hb_IsChar(xCaption[1])
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, xCaption[1])
       ENDIF
       IF !Empty(xCaption[2])
@@ -241,7 +241,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
             wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_ICON, wvg_LoadImage(xCaption[3], nLoadFromDiskFile, IMAGE_ICON))
             EXIT
          CASE WVG_IMAGE_ICONRESOURCE
-            IF HB_IsString(xCaption[3])
+            IF hb_IsString(xCaption[3])
                wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_ICON, wvg_LoadImage(xCaption[3], nLoadFromResByIdName, IMAGE_ICON))
             ELSE
                wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_ICON, wvg_LoadImage(xCaption[3], nLoadFromResByIdNumber, IMAGE_ICON))
@@ -251,7 +251,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
             wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_BITMAP, wvg_LoadImage(xCaption[3], nLoadFromDiskFile, IMAGE_BITMAP))
             EXIT
          CASE WVG_IMAGE_BITMAPRESOURCE
-            IF HB_IsString(xCaption[3])
+            IF hb_IsString(xCaption[3])
                wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_BITMAP, wvg_LoadImage(xCaption[3], nLoadFromResByIdName, IMAGE_BITMAP))
             ELSE
                wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_BITMAP, wvg_LoadImage(xCaption[3], nLoadFromResByIdNumber, IMAGE_BITMAP))
@@ -265,7 +265,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
 
 METHOD WvgPushButton:activate(xParam)
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -273,7 +273,7 @@ METHOD WvgPushButton:activate(xParam)
 
 METHOD WvgPushButton:draw(xParam)
 
-   IF HB_IsBlock(xParam) .OR. xParam == NIL
+   IF hb_IsBlock(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 

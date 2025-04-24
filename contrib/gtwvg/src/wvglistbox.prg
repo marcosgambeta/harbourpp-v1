@@ -176,7 +176,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_IsBlock(::sl_itemMarked)
+         IF hb_IsBlock(::sl_itemMarked)
             Eval(::sl_itemMarked, , , Self)
          ENDIF
          IF ::isParentCrt()
@@ -190,7 +190,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_IsBlock(::sl_itemSelected)
+         IF hb_IsBlock(::sl_itemSelected)
             Eval(::sl_itemSelected, , , Self)
          ENDIF
          IF ::isParentCrt()
@@ -212,7 +212,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_IsBlock(::sl_itemSelected)
+         IF hb_IsBlock(::sl_itemSelected)
             Eval(::sl_itemSelected, , , Self)
          ENDIF
          IF ::isParentCrt()
@@ -227,10 +227,10 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_IsNumeric(::hBrushBG)
+      IF hb_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
@@ -242,7 +242,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
       SWITCH aNM[1]
       CASE WM_LBUTTONUP
          ::nCurSelected := wvg_lbGetCurSel(::hWnd) + 1
-         IF HB_IsBlock(::sl_itemMarked)
+         IF hb_IsBlock(::sl_itemMarked)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -254,7 +254,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
          EXIT
       CASE WM_LBUTTONDBLCLK
          ::editBuffer := ::nCurSelected
-         IF HB_IsBlock(::sl_itemSelected)
+         IF hb_IsBlock(::sl_itemSelected)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -268,7 +268,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
       CASE WM_KEYUP
          IF ::nCurSelected != wvg_lbGetCurSel(::hWnd) + 1
             ::nCurSelected := wvg_lbGetCurSel(::hWnd) + 1
-            IF HB_IsBlock(::sl_itemMarked)
+            IF hb_IsBlock(::sl_itemMarked)
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF

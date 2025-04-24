@@ -30,7 +30,7 @@ FUNCTION ft_AcctAdj(dGivenDate, lIsEnd)
 
    LOCAL nTemp
 
-   IF !HB_IsDate(dGivenDate)
+   IF !hb_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

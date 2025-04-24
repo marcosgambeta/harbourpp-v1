@@ -46,11 +46,11 @@ FUNCTION ft_DFSetup(cInFile, nTop, nLeft, nBottom, nRight, ;
       hb_default(@nRMargin   , 255)
       hb_default(@nBuffSize  , 4096)
 
-      IF HB_IsArray(cExitKeys) /* Harbour extension */
+      IF hb_IsArray(cExitKeys) /* Harbour extension */
          IF Len(cExitKeys) > 25
             ASize(cExitKeys, 25)
          ENDIF
-      ELSEIF HB_IsString(cExitKeys)
+      ELSEIF hb_IsString(cExitKeys)
          cExitKeys := Left(cExitKeys, 25)
       ELSE
          cExitKeys := {}

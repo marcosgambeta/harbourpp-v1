@@ -28,7 +28,7 @@ FUNCTION ft_DateCnfg(cFYStart, nDow)
 
    LOCAL dCheck
 
-   IF HB_IsString(cFYStart)
+   IF hb_IsString(cFYStart)
       dCheck := CToD(cFYStart)
       IF !Empty(dCheck)
 
@@ -41,7 +41,7 @@ FUNCTION ft_DateCnfg(cFYStart, nDow)
       ENDIF
    ENDIF
 
-   IF HB_IsNumeric(nDow) .AND. nDow > 0 .AND. nDow < 8
+   IF hb_IsNumeric(nDow) .AND. nDow > 0 .AND. nDow < 8
       t_aDatePar[2] := nDow
    ENDIF
 

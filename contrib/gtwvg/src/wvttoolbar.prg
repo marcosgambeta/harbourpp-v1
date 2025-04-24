@@ -167,7 +167,7 @@ METHOD WvtToolBar:AddButton(cFileImage, bBlock, cTooltip)
    oObj:nLeft := ::nBtnLeft + 1
    oObj:nBottom := ::nBottom
 
-   IF HB_IsString(cFileImage)
+   IF hb_IsString(cFileImage)
       oObj:nBtnType := TLB_BUTTON_TYPE_IMAGE
       oObj:nRight := oObj:nLeft + nCol - 1
       oObj:cFileImage := cFileImage

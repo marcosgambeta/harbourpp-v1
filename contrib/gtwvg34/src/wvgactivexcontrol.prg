@@ -129,7 +129,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
    ::license    := cLicense
    ::hContainer := ::oParent:getHWND()
 
-   IF Empty(::hContainer) .OR. !HB_IsString(::CLSID)
+   IF Empty(::hContainer) .OR. !hb_IsString(::CLSID)
       RETURN NIL
    ENDIF
 
@@ -202,7 +202,7 @@ METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_IsEvalItem(::sl_resize)
+      IF hb_IsEvalItem(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
@@ -236,7 +236,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
 
-   IF HB_IsNumeric(nEvent) .AND. HB_IsEvalItem(bBlock)
+   IF hb_IsNumeric(nEvent) .AND. hb_IsEvalItem(bBlock)
       ::hEvents[nEvent] := bBlock
    ENDIF
 

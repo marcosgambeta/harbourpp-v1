@@ -187,7 +187,7 @@ METHOD WvgPartHandler:setName(nNameId)
 
    LOCAL nOldNameId := ::nNameId
 
-   IF HB_IsNumeric(nNameId)
+   IF hb_IsNumeric(nNameId)
       ::nNameID := nNameId
    ENDIF
 
@@ -197,7 +197,7 @@ METHOD WvgPartHandler:setOwner(oWvg)
 
    LOCAL oOldXbp := ::oOwner
 
-   IF HB_IsObject(oWvg)
+   IF hb_IsObject(oWvg)
       ::oOwner := oWvg
    ENDIF
 
@@ -207,7 +207,7 @@ METHOD WvgPartHandler:setParent(oWvg)
 
    LOCAL oOldXbp := ::oParent
 
-   IF HB_IsObject(oWvg)
+   IF hb_IsObject(oWvg)
       ::oParent := oWvg
    ENDIF
 
@@ -217,10 +217,10 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF !Empty(a_) .AND. HB_IsBlock(a_[1])
+   IF !Empty(a_) .AND. hb_IsBlock(a_[1])
       ::sb_notifier := a_[1]
 
-   ELSEIF !Empty(a_) .AND. HB_IsBlock(::sb_notifier) .AND. HB_IsNumeric(a_[1]) .AND. HB_IsArray(a_[2])
+   ELSEIF !Empty(a_) .AND. hb_IsBlock(::sb_notifier) .AND. hb_IsNumeric(a_[1]) .AND. hb_IsArray(a_[2])
       Eval(::sb_notifier, a_[1], a_[2], Self)
 
    ENDIF
@@ -254,67 +254,67 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
       SWITCH xParams[1]
       CASE WM_MOUSEHOVER
-         IF HB_IsBlock(::sl_enter)
+         IF hb_IsBlock(::sl_enter)
             Eval(::sl_enter, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_MOUSELEAVE
-         IF HB_IsBlock(::sl_leave)
+         IF hb_IsBlock(::sl_leave)
             Eval(::sl_leave, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_RBUTTONDOWN
-         IF HB_IsBlock(::sl_rbDown)
+         IF hb_IsBlock(::sl_rbDown)
             Eval(::sl_rbDown, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_LBUTTONDOWN
-         IF HB_IsBlock(::sl_lbDown)
+         IF hb_IsBlock(::sl_lbDown)
             Eval(::sl_lbDown, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_RBUTTONUP
-         IF HB_IsBlock(::sl_rbUp)
+         IF hb_IsBlock(::sl_rbUp)
             Eval(::sl_rbUp, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_LBUTTONUP
-         IF HB_IsBlock(::sl_lbUp)
+         IF hb_IsBlock(::sl_lbUp)
             Eval(::sl_lbUp, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_RBUTTONDBLCLK
-         IF HB_IsBlock(::sl_rbDblClick)
+         IF hb_IsBlock(::sl_rbDblClick)
             Eval(::sl_rbDblClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_LBUTTONDBLCLK
-         IF HB_IsBlock(::sl_lbDblClick)
+         IF hb_IsBlock(::sl_lbDblClick)
             Eval(::sl_lbDblClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_MBUTTONDOWN
-         IF HB_IsBlock(::sl_mbDown)
+         IF hb_IsBlock(::sl_mbDown)
             Eval(::sl_mbDown, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_MBUTTONUP
-         IF HB_IsBlock(::sl_mbClick)
+         IF hb_IsBlock(::sl_mbClick)
             Eval(::sl_mbClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_MBUTTONDBLCLK
-         IF HB_IsBlock(::sl_mbDblClick)
+         IF hb_IsBlock(::sl_mbDblClick)
             Eval(::sl_mbDblClick, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_MOUSEMOVE
-         IF HB_IsBlock(::sl_motion)
+         IF hb_IsBlock(::sl_motion)
             Eval(::sl_motion, aPos, , Self)
          ENDIF
          EXIT
       CASE WM_MOUSEWHEEL
-         IF HB_IsBlock(::sl_wheel)
+         IF hb_IsBlock(::sl_wheel)
             Eval(::sl_wheel, aPos, , Self)
          ENDIF
          EXIT
@@ -324,7 +324,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
       EXIT
 
    CASE HB_GTE_KEYBOARD
-      IF HB_IsBlock(::keyboard)
+      IF hb_IsBlock(::keyboard)
          Eval(::keyboard, xParams, , Self)
       ENDIF
       EXIT
@@ -334,14 +334,14 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
       AEval(::aChildren, {|o|wvg_InvalidateRect(o:hWnd)})
 #endif
 
-      IF HB_IsBlock(::sl_setInputFocus)
+      IF hb_IsBlock(::sl_setInputFocus)
          Eval(::sl_setInputFocus, , , Self)
       ENDIF
       ::lHasInputFocus := .T.
       EXIT
 
    CASE HB_GTE_KILLFOCUS
-      IF HB_IsBlock(::sl_killInputFocus)
+      IF hb_IsBlock(::sl_killInputFocus)
          Eval(::sl_killInputFocus, , , Self)
       ENDIF
       ::lHasInputFocus := .F.
@@ -360,7 +360,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
       EXIT
 
    CASE HB_GTE_CLOSE
-      IF HB_IsBlock(::close)
+      IF hb_IsBlock(::close)
          nReturn := Eval(::close, , , Self)
       ENDIF
       EXIT
@@ -368,24 +368,24 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
    CASE HB_GTE_MENU
       DO CASE
       CASE xParams[1] == 0                             // menu selected
-         IF HB_IsObject(::oMenu)
+         IF hb_IsObject(::oMenu)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(xParams[2]))
                DO CASE
-               CASE HB_IsBlock(aMenuItem[2])
+               CASE hb_IsBlock(aMenuItem[2])
                   Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
-               CASE HB_IsBlock(aMenuItem[3])
+               CASE hb_IsBlock(aMenuItem[3])
                   Eval(aMenuItem[3], aMenuItem[1], , aMenuItem[4])
                ENDCASE
             ENDIF
          ENDIF
 
-      CASE xParams[1] == 1 .AND. HB_IsObject(::oMenu) // enter menu loop
-         IF HB_IsBlock(::oMenu:sl_beginMenu)
+      CASE xParams[1] == 1 .AND. hb_IsObject(::oMenu) // enter menu loop
+         IF hb_IsBlock(::oMenu:sl_beginMenu)
             Eval(::oMenu:sl_beginMenu, , , Self)
          ENDIF
 
-      CASE xParams[1] == 2 .AND. HB_IsObject(::oMenu) // exit menu loop
-         IF HB_IsBlock(::oMenu:sl_endMenu)
+      CASE xParams[1] == 2 .AND. hb_IsObject(::oMenu) // exit menu loop
+         IF hb_IsBlock(::oMenu:sl_endMenu)
             Eval(::oMenu:sl_endMenu, , , Self)
          ENDIF
 
@@ -408,7 +408,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    CASE HB_GTE_CTLCOLOR
       oObj := ::findObjectByHandle(xParams[2])
-      IF HB_IsObject(oObj)
+      IF hb_IsObject(oObj)
          RETURN oObj:handleEvent(HB_GTE_CTLCOLOR, xParams)
       ENDIF
       EXIT
@@ -418,7 +418,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          RETURN ::handleEvent(HB_GTE_VSCROLL, xParams)
       ELSE
          oObj := ::findObjectByHandle(xParams[3])
-         IF HB_IsObject(oObj)
+         IF hb_IsObject(oObj)
             RETURN oObj:handleEvent(HB_GTE_VSCROLL, xParams)
          ENDIF
       ENDIF
@@ -429,7 +429,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          RETURN ::handleEvent(HB_GTE_VSCROLL, xParams)
       ELSE
          oObj := ::findObjectByHandle(xParams[3])
-         IF HB_IsObject(oObj)
+         IF hb_IsObject(oObj)
             RETURN oObj:handleEvent(HB_GTE_VSCROLL, xParams)
          ENDIF
       ENDIF
@@ -441,7 +441,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
             ::drawingArea:setPosAndSize({0, 0}, ::currentSize(), .F.)
          ENDIF
       ENDIF
-      IF HB_IsBlock(::sl_resize)
+      IF hb_IsBlock(::sl_resize)
          Eval(::sl_resize, {xParams[1], xParams[2]}, {xParams[3], xParams[4]}, Self)
       ENDIF
       AEval(::aChildren, {|o|o:handleEvent(HB_GTE_RESIZED, {0, 0, 0, 0, 0})})
@@ -452,7 +452,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          RETURN ::handleEvent(HB_GTE_KEYTOITEM, xParams)
       ELSE
          oObj := ::findObjectByHandle(xParams[3])
-         IF HB_IsObject(oObj)
+         IF hb_IsObject(oObj)
             RETURN oObj:handleEvent(HB_GTE_KEYTOITEM, xParams)
          ENDIF
       ENDIF
@@ -486,12 +486,12 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       hWndCtrl := nlParam
 
       IF hWndCtrl == 0                            // It is menu
-         IF HB_IsObject(::oMenu)
+         IF hb_IsObject(::oMenu)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nCtrlID))
                DO CASE
-               CASE HB_IsBlock(aMenuItem[2])
+               CASE hb_IsBlock(aMenuItem[2])
                   Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
-               CASE HB_IsBlock(aMenuItem[3])
+               CASE hb_IsBlock(aMenuItem[3])
                   Eval(aMenuItem[3], aMenuItem[1], , aMenuItem[4])
                ENDCASE
             ENDIF
@@ -500,7 +500,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       ELSE
          IF (nObj := AScan(::aChildren, {|o|o:nID == nCtrlID})) > 0
             nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_COMMAND, {nNotifctn, nCtrlID, hWndCtrl})
-            IF HB_IsNumeric(nReturn) .AND. nReturn == 0
+            IF hb_IsNumeric(nReturn) .AND. nReturn == 0
                RETURN 0
             ENDIF
          ENDIF
@@ -511,9 +511,9 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       IF (nObj := AScan(::aChildren, {|o|o:nID == nwParam})) > 0
          nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_NOTIFY, {nwParam, nlParam})
          DO CASE
-         CASE HB_IsNumeric(nReturn) .AND. nReturn == EVENT_HANDELLED
+         CASE hb_IsNumeric(nReturn) .AND. nReturn == EVENT_HANDELLED
             RETURN 0
-         CASE HB_IsLogical(nReturn)
+         CASE hb_IsLogical(nReturn)
             RETURN nReturn
          ENDCASE
       ENDIF
@@ -527,7 +527,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
    CASE WM_CTLCOLORSCROLLBAR
    CASE WM_CTLCOLORSTATIC
       oObj := ::findObjectByHandle(nlParam)
-      IF HB_IsObject(oObj)
+      IF hb_IsObject(oObj)
          nReturn := oObj:handleEvent(HB_GTE_CTLCOLOR, {nwParam, nlParam})
          IF nReturn == EVENT_UNHANDELLED
             RETURN wvg_CallWindowProc(::nOldProc, hWnd, nMessage, nwParam, nlParam)

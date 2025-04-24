@@ -28,27 +28,27 @@ PROCEDURE Main(...)
          Usage()
          RETURN
       CASE "-f"
-         IF HB_IsString(cData := hb_PValue( ++i ))
+         IF hb_IsString(cData := hb_PValue( ++i ))
             oMail:hHeaders["From"] := hb_StrToUTF8( cData )
          ENDIF
          EXIT
       CASE "-t"
-         IF HB_IsString(cData := hb_PValue( ++i ))
+         IF hb_IsString(cData := hb_PValue( ++i ))
             oMail:hHeaders["To"] := hb_StrToUTF8( cData )
          ENDIF
          EXIT
       CASE "-s"
-         IF HB_IsString(cData := hb_PValue( ++i ))
+         IF hb_IsString(cData := hb_PValue( ++i ))
             oMail:hHeaders["Subject"] := hb_StrToUTF8( cData )
          ENDIF
          EXIT
       CASE "-b"
-         IF HB_IsString(cData := hb_PValue( ++i ))
+         IF hb_IsString(cData := hb_PValue( ++i ))
             oMail:SetBody( hb_StrToUTF8( cData ) + e"\r\n" )
          ENDIF
          EXIT
       CASE "-m"
-         IF HB_IsString(cData := hb_PValue( ++i ))
+         IF hb_IsString(cData := hb_PValue( ++i ))
             IF ( cData := hb_MemoRead( cData ) ) == ""
                ? "Fatal: Could not read", hb_PValue( i )
                RETURN

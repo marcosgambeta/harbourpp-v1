@@ -90,7 +90,7 @@ METHOD WvtImage:Create()
 
 METHOD WvtImage:SetImage( cImage )
 
-   IF HB_IsString(cImage) .AND. hb_vfExists( cImage )
+   IF hb_IsString(cImage) .AND. hb_vfExists( cImage )
       ::cImageFile := cImage
       ::Refresh()
    ENDIF

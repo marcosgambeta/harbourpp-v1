@@ -121,7 +121,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
 
    // cTo
    DO CASE
-   CASE HB_IsArray(xTo)
+   CASE hb_IsArray(xTo)
       FOR tmp := Len(xTo) TO 1 STEP -1
          IF Empty(xTo[tmp])
             hb_ADel( xTo, tmp, .T. )
@@ -137,13 +137,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             cTo += ","
          ENDIF
       NEXT
-   CASE HB_IsString(xTo)
+   CASE hb_IsString(xTo)
       cTo := tip_GetRawEmail( AllTrim(xTo) )
    ENDCASE
 
    // CC (Carbon Copy)
    DO CASE
-   CASE HB_IsArray(xCC)
+   CASE hb_IsArray(xCC)
       FOR tmp := Len(xCC) TO 1 STEP -1
          IF Empty(xCC[tmp])
             hb_ADel( xCC, tmp, .T. )
@@ -156,13 +156,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             cCC += ","
          ENDIF
       NEXT
-   CASE HB_IsString(xCC)
+   CASE hb_IsString(xCC)
       cCC := tip_GetRawEmail( AllTrim(xCC) )
    ENDCASE
 
    // BCC (Blind Carbon Copy)
    DO CASE
-   CASE HB_IsArray(xBCC)
+   CASE hb_IsArray(xBCC)
       FOR tmp := Len(xBCC) TO 1 STEP -1
          IF Empty(xBCC[tmp])
             hb_ADel( xBCC, tmp, .T. )
@@ -175,13 +175,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             cBCC += ","
          ENDIF
       NEXT
-   CASE HB_IsString(xBCC)
+   CASE hb_IsString(xBCC)
       cBCC := tip_GetRawEmail( AllTrim(xBCC) )
    ENDCASE
 
    cUser := StrTran(cUser, "@", "&at;")
 
-   IF HB_IsString(cPopServer) .AND. lPopAuth
+   IF hb_IsString(cPopServer) .AND. lPopAuth
 
       BEGIN SEQUENCE WITH __BreakBlock()
          oUrl1 := TUrl():New( IIf(lSSL, "pop3s://", "pop://") + cUser + ":" + cPass + "@" + cPopServer + "/" )

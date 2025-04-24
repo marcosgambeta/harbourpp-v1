@@ -129,7 +129,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_COMMAND
       IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
-         IF HB_IsEvalItem(::sl_lbClick)
+         IF hb_IsEvalItem(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -141,7 +141,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
       ENDIF
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_IsNumeric(::clr_FG)
+      IF hb_IsNumeric(::clr_FG)
          wapi_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF Empty(::hBrushBG)
@@ -155,7 +155,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_ANY
       IF ::isParentCrt()
          IF aNM[1] == WIN_WM_LBUTTONUP
-            IF HB_IsEvalItem(::sl_lbClick)
+            IF hb_IsEvalItem(::sl_lbClick)
                ::oParent:setFocus()
                ::sendMessage( BM_SETCHECK, IIf(wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED, BST_UNCHECKED, BST_CHECKED), 0 )
                ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
@@ -183,7 +183,7 @@ METHOD WvgCheckBox:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
 METHOD WvgCheckBox:setCaption( xCaption )
 
-   IF HB_IsString(xCaption)
+   IF hb_IsString(xCaption)
       ::caption := xCaption
       ::sendMessage( WIN_WM_SETTEXT, 0, ::caption )
    ENDIF
