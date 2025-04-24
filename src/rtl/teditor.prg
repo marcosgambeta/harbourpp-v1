@@ -157,12 +157,12 @@ METHOD HBEditor:Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength
 
    ::lEditAllow := hb_defaultValue(lEditMode, .T.)
 
-   IF HB_ISNUMERIC(nLineLength) .AND. nLineLength >= 1
+   IF hb_IsNumeric(nLineLength) .AND. nLineLength >= 1
       ::lWordWrap := .T.
       ::nWordWrapCol := nLineLength
    ENDIF
 
-   IF HB_ISNUMERIC(nTabSize) .AND. nTabSize >= 1
+   IF hb_IsNumeric(nTabSize) .AND. nTabSize >= 1
       ::nTabWidth := Max(nTabSize, 2)
    ENDIF
 
@@ -181,16 +181,16 @@ METHOD HBEditor:Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength
 METHOD HBEditor:Resize(nTop, nLeft, nBottom, nRight)
 
    // don't change coordinates not given
-   IF HB_ISNUMERIC(nTop)
+   IF hb_IsNumeric(nTop)
       ::nTop := nTop
    ENDIF
-   IF HB_ISNUMERIC(nLeft)
+   IF hb_IsNumeric(nLeft)
       ::nLeft := nLeft
    ENDIF
-   IF HB_ISNUMERIC(nBottom)
+   IF hb_IsNumeric(nBottom)
       ::nBottom := nBottom
    ENDIF
-   IF HB_ISNUMERIC(nRight)
+   IF hb_IsNumeric(nRight)
       ::nRight := nRight
    ENDIF
 
@@ -480,7 +480,7 @@ METHOD HBEditor:Edit(nPassedKey)
       CASE (bKeyBlock := SetKey(nKeyStd)) != NIL
          Eval(bKeyBlock)
 
-      CASE !HB_ISNULL(cKey := IIf(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
+      CASE !hb_IsNull(cKey := IIf(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
          ::lDirty := .T.
          oLine := ::aText[::nRow]
          IF (nPos := ::nCol - hb_ULen(oLine:cText) - 1) > 0
@@ -666,7 +666,7 @@ METHOD HBEditor:ReformParagraph()
 // Changes insert state and insertion / overstrike mode of editor
 METHOD HBEditor:InsertState(lInsState)
 
-   IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
+   IF hb_IsLogical(lInsState) .AND. ::lEditAllow
       Set(_SET_INSERT, lInsState)
       SetCursor(IIf(lInsState, SC_INSERT, SC_NORMAL))
    ENDIF
@@ -680,7 +680,7 @@ METHOD HBEditor:SetColor(cColorString)
 
    LOCAL cOldColor := ::cColorSpec
 
-   IF HB_ISSTRING(cColorString)
+   IF hb_IsString(cColorString)
       ::cColorSpec := cColorString
    ENDIF
 

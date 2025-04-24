@@ -53,7 +53,7 @@ FUNCTION hb_PathNormalize(cPath)
    LOCAL aDir
    LOCAL cDir
 
-   IF !HB_ISSTRING(cPath)
+   IF !hb_IsString(cPath)
       RETURN ""
    ENDIF
 
@@ -106,11 +106,11 @@ FUNCTION hb_PathJoin(cPathA, cPathR)
    LOCAL cNameR
    LOCAL cExtR
 
-   IF !HB_ISSTRING(cPathR)
+   IF !hb_IsString(cPathR)
       RETURN ""
    ENDIF
 
-   IF !HB_ISSTRING(cPathA) .OR. Empty(cPathA)
+   IF !hb_IsString(cPathA) .OR. Empty(cPathA)
       RETURN cPathR
    ENDIF
 
@@ -135,7 +135,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    LOCAL cTestTarget
    LOCAL cTargetFileName
 
-   IF !HB_ISSTRING(cPathBase) .OR. !HB_ISSTRING(cPathTarget)
+   IF !hb_IsString(cPathBase) .OR. !hb_IsString(cPathTarget)
       RETURN ""
    ENDIF
 
@@ -223,7 +223,7 @@ STATIC FUNCTION s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
 
 FUNCTION hb_DirSepAdd(cDir)
 
-   IF !HB_ISSTRING(cDir)
+   IF !hb_IsString(cDir)
       RETURN ""
    ENDIF
 
@@ -238,7 +238,7 @@ FUNCTION hb_DirSepAdd(cDir)
 
 FUNCTION hb_DirSepDel(cDir)
 
-   IF !HB_ISSTRING(cDir)
+   IF !hb_IsString(cDir)
       RETURN ""
    ENDIF
 
@@ -261,7 +261,7 @@ FUNCTION hb_DirSepDel(cDir)
 
 FUNCTION hb_DirSepToOS(cFileName)
 
-   IF HB_ISSTRING(cFileName)
+   IF hb_IsString(cFileName)
       RETURN StrTran(cFileName, IIf(hb_ps() == "\", "/", "\"), hb_ps())
    ENDIF
 
@@ -273,7 +273,7 @@ FUNCTION hb_DirBuild(cDir)
    LOCAL cDirItem
    LOCAL tmp
 
-   IF !HB_ISSTRING(cDir)
+   IF !hb_IsString(cDir)
       RETURN .F.
    ENDIF
 
@@ -322,7 +322,7 @@ FUNCTION hb_DirUnbuild(cDir)
 
    LOCAL tmp
 
-   IF !HB_ISSTRING(cDir)
+   IF !hb_IsString(cDir)
       RETURN .F.
    ENDIF
 

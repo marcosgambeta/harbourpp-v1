@@ -196,7 +196,7 @@ METHOD PROCEDURE HBDbMenu:ClosePopup(nPopup)
 
    IF nPopup != 0
       oPopup := ::aItems[nPopup]:bAction
-      IF HB_ISOBJECT(oPopup)
+      IF hb_IsObject(oPopup)
          __dbgRestScreen(oPopup:nTop, oPopup:nLeft, oPopup:nBottom + 1, oPopup:nRight + 2, oPopup:cBackImage)
          oPopup:cBackImage := NIL
       ENDIF
@@ -278,7 +278,7 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
    LOCAL oItem
 
    FOR EACH oMenuItem IN ::aItems
-      IF HB_ISOBJECT(oMenuItem:bAction)
+      IF hb_IsObject(oMenuItem:bAction)
          IF (oItem := oMenuItem:bAction:GetItemByIdent(uIdent)) != NIL
             RETURN oItem
          ENDIF
@@ -373,7 +373,7 @@ METHOD PROCEDURE HBDbMenu:LoadColors()
    ::cClrHotFocus := aColors[11]
 
    FOR EACH oMenuItem IN ::aItems
-      IF HB_ISOBJECT(oMenuItem:bAction)
+      IF hb_IsObject(oMenuItem:bAction)
          oMenuItem:bAction:LoadColors()
       ENDIF
    NEXT
@@ -403,7 +403,7 @@ METHOD PROCEDURE HBDbMenu:ShowPopup(nPopup)
    ::aItems[nPopup]:Display(::cClrHilite, ::cClrHotFocus)
    ::nOpenPopup := nPopup
 
-   IF HB_ISOBJECT(::aItems[nPopup]:bAction)
+   IF hb_IsObject(::aItems[nPopup]:bAction)
       ::aItems[nPopup]:bAction:Display()
       ::aItems[nPopup]:bAction:ShowPopup(1)
    ENDIF

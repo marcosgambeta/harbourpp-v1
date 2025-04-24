@@ -63,7 +63,7 @@ FUNCTION dbReindex()
 
 PROCEDURE dbSetOrder(nOrderNum)
 
-   IF HB_ISSTRING(nOrderNum) .AND. !Empty(Val(nOrderNum))
+   IF hb_IsString(nOrderNum) .AND. !Empty(Val(nOrderNum))
       nOrderNum := Val(nOrderNum)
    ENDIF
 
@@ -76,7 +76,7 @@ FUNCTION IndexExt()
 
 FUNCTION IndexKey(nOrder)
 
-   IF !HB_ISNUMERIC(nOrder)
+   IF !hb_IsNumeric(nOrder)
       RETURN ordKey(nOrder)
    ENDIF
 

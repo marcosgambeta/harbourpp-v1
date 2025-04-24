@@ -61,7 +61,7 @@ FUNCTION hb_langSelect(cLangID, cCP)
    LOCAL cCPDef
    LOCAL cLangIDBase
 
-   IF HB_ISSTRING(cLangID)
+   IF hb_IsString(cLangID)
 
       cCPDef := hb_cdpSelect()
 
@@ -146,7 +146,7 @@ FUNCTION hb_langSelect(cLangID, cCP)
 
 #endif
 
-      IF !HB_ISSTRING(cCP)
+      IF !hb_IsString(cCP)
          cCP := cCPDef
       ENDIF
 
@@ -179,7 +179,7 @@ STATIC FUNCTION __LangStdToLangHb(cLangStd)
 
    LOCAL cLangHb := ""
 
-   IF HB_ISSTRING(cLangStd)
+   IF hb_IsString(cLangStd)
       SWITCH Lower(StrTran(cLangStd, "_", "-"))
 #if 0
       CASE "af-za"      ; EXIT

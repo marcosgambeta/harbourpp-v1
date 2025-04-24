@@ -193,7 +193,7 @@ METHOD TBColumn:setStyle(nStyle, lNewValue)
       ASize(::aSetStyle, nStyle)
    ENDIF
 
-   IF HB_ISLOGICAL(lNewValue)
+   IF hb_IsLogical(lNewValue)
       ::aSetStyle[nStyle] := lNewValue
    ENDIF
 

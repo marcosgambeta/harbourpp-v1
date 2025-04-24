@@ -79,13 +79,13 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
    LOCAL oError
    LOCAL nRetries
 
-   IF HB_ISSTRING(cFileName)
+   IF hb_IsString(cFileName)
 
       IF Set(_SET_DEFEXTENSIONS)
          cFileName := hb_FNameExtSetDef(cFileName, _HBMEM_EXT)
       ENDIF
 
-      IF !HB_ISSTRING(cMask) .OR. Empty(cMask) .OR. hb_LeftEq(cMask, "*")
+      IF !hb_IsString(cMask) .OR. Empty(cMask) .OR. hb_LeftEq(cMask, "*")
          cMask := "*"
       ENDIF
 
@@ -162,7 +162,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
    LOCAL oError
    LOCAL nRetries
 
-   IF HB_ISSTRING(cFileName)
+   IF hb_IsString(cFileName)
 
       IF !hb_defaultValue(lAdditive, .T.)
          __mvClear()
@@ -172,7 +172,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
          cFileName := hb_FNameExtSetDef(cFileName, _HBMEM_EXT)
       ENDIF
 
-      IF !HB_ISSTRING(cFileName) .OR. Empty(cMask) .OR. hb_LeftEq(cMask, "*")
+      IF !hb_IsString(cFileName) .OR. Empty(cMask) .OR. hb_LeftEq(cMask, "*")
          cMask := "*"
       ENDIF
 
@@ -217,9 +217,9 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
          aVars := hb_Deserialize(cBuffer)
          cBuffer := NIL
 
-         IF HB_ISARRAY(aVars)
+         IF hb_IsArray(aVars)
             FOR EACH item IN aVars
-               IF HB_ISARRAY(item) .AND. Len(item) == 2 .AND. HB_ISSTRING(item[1]) .AND. !Empty(item[1])
+               IF hb_IsArray(item) .AND. Len(item) == 2 .AND. hb_IsString(item[1]) .AND. !Empty(item[1])
 
                   cName := item[1]
                   lMatch := hb_WildMatchI(cMask, cName)

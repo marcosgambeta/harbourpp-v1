@@ -51,7 +51,7 @@ FUNCTION hb_vfDirBuild(cDir)
    LOCAL cDirItem
    LOCAL tmp
 
-   IF !HB_ISSTRING(cDir)
+   IF !hb_IsString(cDir)
       RETURN .F.
    ENDIF
 
@@ -100,7 +100,7 @@ FUNCTION hb_vfDirUnbuild(cDir)
 
    LOCAL tmp
 
-   IF !HB_ISSTRING(cDir)
+   IF !hb_IsString(cDir)
       RETURN .F.
    ENDIF
 

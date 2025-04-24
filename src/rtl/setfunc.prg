@@ -61,7 +61,7 @@ PROCEDURE __SetFunction(nFunctionKey, xKeySeq)
    OTHERWISE               ; nFunctionKey := -nFunctionKey + 1
    ENDCASE
 
-   IF HB_ISSTRING(xKeySeq)
+   IF hb_IsString(xKeySeq)
       SetKey(nFunctionKey, {||__Keyboard(), hb_keyPut(xKeySeq)})
    ELSE
       SetKey(nFunctionKey, NIL)

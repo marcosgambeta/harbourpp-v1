@@ -74,7 +74,7 @@ STATIC FUNCTION hb_doScan(cPath, cMask, cAttr, cPathSep)
 
 FUNCTION hb_DirScan(cPath, cFileMask, cAttr)
    RETURN hb_DoScan(hb_DirSepAdd(hb_defaultValue(cPath, "")), ;
-      IIf(HB_ISSTRING(cFileMask), cFileMask, hb_osFileMask()), ;
+      IIf(hb_IsString(cFileMask), cFileMask, hb_osFileMask()), ;
       hb_defaultValue(cAttr, ""), ;
       hb_ps())
 
@@ -122,7 +122,7 @@ FUNCTION hb_FileDelete(cFileMask, cAttr)
    LOCAL cAttrMask
    LOCAL nAttr
 
-   IF HB_ISSTRING(cFileMask) .AND. !Empty(cFileMask) .AND. !hb_vfDirExists(cFileMask)
+   IF hb_IsString(cFileMask) .AND. !Empty(cFileMask) .AND. !hb_vfDirExists(cFileMask)
       cPath := hb_FNameDir(cFileMask)
       cAttrMask := StrTran(hb_defaultValue(cAttr, ""), "D") + "L"
       FOR EACH aFile IN hb_vfDirectory(cFileMask, cAttrMask)

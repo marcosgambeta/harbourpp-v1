@@ -119,7 +119,7 @@ METHOD HBDbObject:addWindows(nRow)
    LOCAL nMaxLen
 
    IF nSize < MaxRow() - 2
-      IF HB_ISNUMERIC(nRow)
+      IF hb_IsNumeric(nRow)
          oWndSets := HBDbWindow():New(nRow, 5, IIf(nRow + nSize + 1 < MaxRow() - 2, nRow + nSize + 1, MaxRow() - 2), MaxCol() - 5, ;
             ::objname + " is of class: " + ::TheObj:ClassName(), "N/W")
       ELSE
@@ -231,19 +231,19 @@ METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
       aItemRef := ::pItems[::ArrayIndex]
       DO CASE
-      CASE HB_ISARRAY(aItemRef[OMSG_VALUE])
+      CASE hb_IsArray(aItemRef[OMSG_VALUE])
          IF Len(aItemRef[OMSG_VALUE]) > 0
             HBDbArray():New(aItemRef[OMSG_VALUE], aItemRef[OMSG_NAME])
          ENDIF
-      CASE HB_ISHASH(aItemRef[OMSG_VALUE])
+      CASE hb_IsHash(aItemRef[OMSG_VALUE])
          IF Len(aItemRef[OMSG_VALUE]) > 0
             HBDbHash():New(aItemRef[OMSG_VALUE], aItemRef[OMSG_NAME])
          ENDIF
-      CASE HB_ISOBJECT(aItemRef[OMSG_VALUE])
+      CASE hb_IsObject(aItemRef[OMSG_VALUE])
          HBDbObject():New(aItemRef[OMSG_VALUE], aItemRef[OMSG_NAME])
       CASE !aItemRef[OMSG_EDIT] .OR. ;
-           HB_ISBLOCK(aItemRef[OMSG_VALUE]) .OR. ;
-           HB_ISPOINTER(aItemRef[OMSG_VALUE]) .OR. ;
+           hb_IsBlock(aItemRef[OMSG_VALUE]) .OR. ;
+           hb_IsPointer(aItemRef[OMSG_VALUE]) .OR. ;
            !::lEditable
          __dbgAlert("Value cannot be edited")
       OTHERWISE

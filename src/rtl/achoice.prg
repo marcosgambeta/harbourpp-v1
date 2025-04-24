@@ -54,7 +54,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
       nBottom := MaxRow()
    ENDIF
 
-   IF !HB_ISARRAY(acItems) .OR. Len(acItems) == 0
+   IF !hb_IsArray(acItems) .OR. Len(acItems) == 0
       SetPos(nTop, nRight + 1)
       RETURN 0
    ENDIF
@@ -75,7 +75,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    lUserFunc := !Empty(xUserFunc) .AND. ValType(xUserFunc) $ "CBS"
 
-   IF !HB_ISARRAY(xSelect) .AND. !HB_ISLOGICAL(xSelect)
+   IF !hb_IsArray(xSelect) .AND. !hb_IsLogical(xSelect)
       xSelect := .T.               // Array or logical, what is selectable
    ENDIF
 
@@ -85,7 +85,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
    nNumCols := nRight - nLeft + 1
    nNumRows := nBottom - nTop + 1
 
-   IF HB_ISARRAY(xSelect)
+   IF hb_IsArray(xSelect)
       alSelect := xSelect
    ELSE
       alSelect := Array(Len(acItems))
@@ -482,7 +482,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
       IF lUserFunc
 
-         IF HB_ISNUMERIC(nUserFunc := Do(xUserFunc, nMode, nPos, nPos - nAtTop))
+         IF hb_IsNumeric(nUserFunc := Do(xUserFunc, nMode, nPos, nPos - nAtTop))
 
             SWITCH nUserFunc
             CASE AC_ABORT
@@ -594,9 +594,9 @@ STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
 
 STATIC PROCEDURE DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
-   ColorSelect(IIf(lSelect .AND. HB_ISSTRING(cLine), IIf(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED))
+   ColorSelect(IIf(lSelect .AND. hb_IsString(cLine), IIf(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED))
 
-   hb_DispOutAt(nRow, nCol, IIf(HB_ISSTRING(cLine), PadR(cLine, nNumCols), Space(nNumCols)))
+   hb_DispOutAt(nRow, nCol, IIf(hb_IsString(cLine), PadR(cLine, nNumCols), Space(nNumCols)))
    IF lHiLite
       SetPos(nRow, nCol)
    ENDIF
@@ -612,7 +612,7 @@ STATIC FUNCTION Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
    nFrstItem := nLastItem := nItems := 0
 
    FOR nCntr := 1 TO Len(acItems)
-      IF HB_ISSTRING(acItems[nCntr]) .AND. Len(acItems[nCntr]) > 0
+      IF hb_IsString(acItems[nCntr]) .AND. Len(acItems[nCntr]) > 0
          nItems++
          IF Ach_Select(alSelect, nCntr)
             IF nFrstItem == 0
@@ -640,12 +640,12 @@ STATIC FUNCTION Ach_Select(alSelect, nPos)
    IF nPos >= 1 .AND. nPos <= Len(alSelect)
       sel := alSelect[nPos]
       DO CASE
-      CASE HB_ISEVALITEM(sel)
+      CASE hb_IsEvalItem(sel)
          sel := Eval(sel)
-      CASE HB_ISSTRING(sel) .AND. !Empty(sel)
+      CASE hb_IsString(sel) .AND. !Empty(sel)
          sel := Eval(hb_macroBlock(sel))
       ENDCASE
-      IF HB_ISLOGICAL(sel)
+      IF hb_IsLogical(sel)
          RETURN sel
       ENDIF
    ENDIF

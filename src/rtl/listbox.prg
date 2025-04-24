@@ -162,7 +162,7 @@ ENDCLASS
 
 METHOD ListBox:addItem(cText, xData)
 
-   IF HB_ISSTRING(cText)
+   IF hb_IsString(cText)
 
       AAdd(::aItems, {cText, xData})
 
@@ -201,7 +201,7 @@ METHOD ListBox:delItem(nPos)
          ::cTextValue := IIf(::nValue == 0, "", _LISTBOX_ITEMDATA(::aItems[::nItemCount]))
 
          IF ::xBuffer == NIL
-         ELSEIF HB_ISNUMERIC(::xBuffer)
+         ELSEIF hb_IsNumeric(::xBuffer)
             ::xBuffer := ::nItemCount
          ELSEIF ::nValue > 0
             ::xBuffer := ::cTextValue
@@ -312,14 +312,14 @@ METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
 
 #ifndef HB_CLP_STRICT
    /* NOTE: Cl*pper will RTE if passed a non-string cText */
-   IF !HB_ISSTRING(cText)
+   IF !hb_IsString(cText)
       RETURN 0
    ENDIF
 #endif
 
    hb_default(@nPos, 1)
    hb_default(@lCaseSensitive, .T.)
-   IF !HB_ISLOGICAL(lExact)
+   IF !hb_IsLogical(lExact)
       lExact := Set(_SET_EXACT)
    ENDIF
 
@@ -355,7 +355,7 @@ METHOD ListBox:findData(xData, nPos, lCaseSensitive, lExact)
 
    hb_default(@nPos, 1)
    hb_default(@lCaseSensitive, .T.)
-   IF !HB_ISLOGICAL(lExact)
+   IF !hb_IsLogical(lExact)
       lExact := Set(_SET_EXACT)
    ENDIF
 
@@ -369,7 +369,7 @@ METHOD ListBox:findData(xData, nPos, lCaseSensitive, lExact)
       ENDIF
    ELSE
       IF lCaseSensitive
-         bSearch := {|aItem, xItemData|xItemData := _LISTBOX_ITEMDATA(aItem), IIf(HB_ISSTRING(xItemData), hb_LeftEq(xItemData, xData), xItemData == xData)}
+         bSearch := {|aItem, xItemData|xItemData := _LISTBOX_ITEMDATA(aItem), IIf(hb_IsString(xItemData), hb_LeftEq(xItemData, xData), xItemData == xData)}
       ELSE
          /* Cl*pper will also RTE here, if xData is not a string */
          bSearch := {|aItem|hb_LeftEqI(_LISTBOX_ITEMDATA(aItem), xData)}
@@ -477,7 +477,7 @@ METHOD ListBox:hitTest(nMRow, nMCol)
 
 METHOD ListBox:insItem(nPos, cText, xData)
 
-   IF HB_ISSTRING(cText) .AND. HB_ISNUMERIC(nPos) .AND. nPos < ::nItemCount
+   IF hb_IsString(cText) .AND. hb_IsNumeric(nPos) .AND. nPos < ::nItemCount
 
       hb_AIns(::aItems, nPos, {cText, xData}, .T.)
       ::nItemCount++
@@ -500,7 +500,7 @@ METHOD ListBox:killFocus()
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
@@ -572,7 +572,7 @@ METHOD ListBox:scroll(nMethod)
    LOCAL nKey
    LOCAL nCount
 
-   IF HB_ISNUMERIC(nMethod)
+   IF hb_IsNumeric(nMethod)
 
       SWITCH nMethod
       CASE HTSCROLLTHUMBDRAG
@@ -716,7 +716,7 @@ METHOD ListBox:select(xPos)
 
    ::display()
 
-   IF HB_ISEVALITEM(::bSBlock)
+   IF hb_IsEvalItem(::bSBlock)
       Eval(::bSBlock)
    ENDIF
 
@@ -740,7 +740,7 @@ METHOD ListBox:setFocus()
 
       ::display()
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
    ENDIF
@@ -749,7 +749,7 @@ METHOD ListBox:setFocus()
 
 METHOD ListBox:setItem(nPos, aItem)
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. Len(aItem) == _ITEM_xData .AND. HB_ISSTRING(aItem[_ITEM_cText])
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. Len(aItem) == _ITEM_xData .AND. hb_IsString(aItem[_ITEM_cText])
 
       ::aItems[nPos] := aItem
    ENDIF
@@ -776,7 +776,7 @@ METHOD ListBox:changeItem(nOldPos, nNewPos)
       ::cTextValue := IIf(::nValue == 0, "", _LISTBOX_ITEMDATA(::aItems[::nValue]))
 
       IF ::xBuffer == NIL
-      ELSEIF HB_ISNUMERIC(::xBuffer)
+      ELSEIF hb_IsNumeric(::xBuffer)
          ::xBuffer := ::nValue
       ELSEIF ::nValue > 0
          ::xBuffer := ::cTextValue
@@ -800,7 +800,7 @@ METHOD ListBox:changeItem(nOldPos, nNewPos)
 
       ::display()
 
-      IF HB_ISEVALITEM(::bSBlock)
+      IF hb_IsEvalItem(::bSBlock)
          Eval(::bSBlock)
       ENDIF
    ENDIF
@@ -1035,7 +1035,7 @@ METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
 
    LOCAL cColor
 
-   IF !HB_ISNUMERIC(nTop) .OR. !HB_ISNUMERIC(nLeft) .OR. !HB_ISNUMERIC(nBottom) .OR. !HB_ISNUMERIC(nRight)
+   IF !hb_IsNumeric(nTop) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nBottom) .OR. !hb_IsNumeric(nRight)
       RETURN NIL
    ENDIF
 
@@ -1077,7 +1077,7 @@ FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
 
    IF (o := HBListBox():New(nTop, nLeft, nBottom, nRight, lDropDown)) != NIL
 
-      IF HB_ISSTRING(cCaption)
+      IF hb_IsString(cCaption)
          o:caption := cCaption
          o:capCol  := nLeft - __CapLength(cCaption)
       ENDIF
@@ -1089,7 +1089,7 @@ FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
 
       FOR EACH xItem IN aItems
          DO CASE
-         CASE !HB_ISARRAY(xItem)
+         CASE !hb_IsArray(xItem)
             o:addItem(xItem)
          CASE Len(xItem) == _ITEM_cText
             o:addItem(xItem[_ITEM_cText])
@@ -1109,7 +1109,7 @@ FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
          o:VScroll := ScrollBar(nTop + 1, nBottom - 1, nRight)
       ENDIF
 
-      IF HB_ISSTRING(cBitmap)
+      IF hb_IsString(cBitmap)
          o:bitmap := cBitmap
       ENDIF
 

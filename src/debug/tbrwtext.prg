@@ -206,19 +206,19 @@ METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 
    LOCAL lResize := .F.
 
-   IF HB_ISNUMERIC(nTop) .AND. nTop != ::nTop
+   IF hb_IsNumeric(nTop) .AND. nTop != ::nTop
       ::nTop := nTop
       lResize := .T.
    ENDIF
-   IF HB_ISNUMERIC(nLeft) .AND. nLeft != ::nLeft
+   IF hb_IsNumeric(nLeft) .AND. nLeft != ::nLeft
       ::nLeft := nLeft
       lResize := .T.
    ENDIF
-   IF HB_ISNUMERIC(nBottom) .AND. nBottom != ::nBottom
+   IF hb_IsNumeric(nBottom) .AND. nBottom != ::nBottom
       ::nBottom := nBottom
       lResize := .T.
    ENDIF
-   IF HB_ISNUMERIC(nRight) .AND. nRight != ::nRight
+   IF hb_IsNumeric(nRight) .AND. nRight != ::nRight
       ::nRight := nRight
       lResize := .T.
    ENDIF

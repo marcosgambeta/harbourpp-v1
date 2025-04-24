@@ -78,9 +78,9 @@ ENDCLASS
 
 METHOD HBMemoEditor:UserFunctionIsValid()
 #ifdef HB_CLP_STRICT
-   RETURN HB_ISSTRING(::xUserFunction)
+   RETURN hb_IsString(::xUserFunction)
 #else
-   RETURN HB_ISSTRING(::xUserFunction) .OR. HB_ISEVALITEM(::xUserFunction)
+   RETURN hb_IsString(::xUserFunction) .OR. hb_IsEvalItem(::xUserFunction)
 #endif
 
 METHOD HBMemoEditor:MemoInit(xUserFunction)
@@ -211,7 +211,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
       // I won't reach this point during ME_INIT since ME_DEFAULT ends initialization phase of MemoEdit()
 
-      IF HB_ISNUMERIC(nKey)
+      IF hb_IsNumeric(nKey)
          // HBEditor is not able to handle keys with a value higher than 256, but I have to tell him
          // that user wants to save text
          IF hb_keyStd(nKey) == K_ESC
@@ -226,7 +226,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       EXIT
 
    CASE ME_DATA
-      IF HB_ISNUMERIC(nKey)
+      IF hb_IsNumeric(nKey)
          // TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character
          IF HB_ULen(hb_keyChar(nKey)) > 0
             ::super:Edit(nKey)
@@ -299,7 +299,7 @@ METHOD HBMemoEditor:MoveCursor(nKey)
 
 METHOD HBMemoEditor:InsertState(lInsState)
 
-   IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
+   IF hb_IsLogical(lInsState) .AND. ::lEditAllow
       Set(_SET_INSERT, lInsState)
       SetCursor(IIf(lInsState, SC_INSERT, SC_NORMAL))
       IF Set(_SET_SCOREBOARD)
@@ -340,7 +340,7 @@ FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
 
    // Contrary to what the NG says, any logical value will make it pass
    // through without any editing.
-   IF !HB_ISLOGICAL(xUserFunction)
+   IF !hb_IsLogical(xUserFunction)
       nOldCursor := SetCursor()
       oEd:InsertState(Set(_SET_INSERT))
       oEd:Edit()

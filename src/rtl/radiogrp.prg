@@ -132,7 +132,7 @@ ENDCLASS
 
 METHOD RadioGroup:addItem(oRadioButton)
 
-   IF HB_ISOBJECT(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN"
+   IF hb_IsObject(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN"
       AAdd(::aItems, oRadioButton)
       ::nItemCount++
    ENDIF
@@ -149,7 +149,7 @@ METHOD RadioGroup:delItem(nPos)
    IF ::lHasFocus .AND. ::nItemCount < ::nValue
       ::nValue := ::nItemCount
       ::cTextValue := ::aItems[::nValue]:data
-      ::xBuffer := IIf(HB_ISNUMERIC(::xBuffer), ::nValue, ::cTextValue)
+      ::xBuffer := IIf(hb_IsNumeric(::xBuffer), ::nValue, ::cTextValue)
    ENDIF
 
    RETURN Self
@@ -206,9 +206,9 @@ METHOD RadioGroup:getAccel(xKey)
    LOCAL cKey
 
    DO CASE
-   CASE HB_ISSTRING(xKey)
+   CASE hb_IsString(xKey)
       cKey := xKey
-   CASE HB_ISNUMERIC(xKey)
+   CASE hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
    OTHERWISE
       RETURN 0
@@ -295,7 +295,7 @@ METHOD RadioGroup:hitTest(nMRow, nMCol)
 
 METHOD RadioGroup:insItem(nPos, oRadioButton)
 
-   IF HB_ISOBJECT(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN" .AND. nPos < ::nItemCount
+   IF hb_IsObject(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN" .AND. nPos < ::nItemCount
 
       hb_AIns(::aItems, nPos, oRadioButton, .T.)
       ::nItemCount++
@@ -312,7 +312,7 @@ METHOD RadioGroup:killFocus()
 
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
@@ -358,7 +358,7 @@ METHOD RadioGroup:setFocus()
 
       MSetCursor(nOldMCur)
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
    ENDIF
@@ -478,7 +478,7 @@ METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
       ::nValue := nSelect
       ::cTextValue := ::aItems[nSelect]:data
-      ::xBuffer := IIf(HB_ISNUMERIC(::xBuffer), nSelect, ::cTextValue)
+      ::xBuffer := IIf(hb_IsNumeric(::xBuffer), nSelect, ::cTextValue)
    ENDIF
 
    MSetCursor(nOldMCur)
@@ -603,7 +603,7 @@ METHOD RadioGroup:Init(nTop, nLeft, nBottom, nRight)
 
    LOCAL cColor
 
-   IF !HB_ISNUMERIC(nTop) .OR. !HB_ISNUMERIC(nLeft) .OR. !HB_ISNUMERIC(nBottom) .OR. !HB_ISNUMERIC(nRight)
+   IF !hb_IsNumeric(nTop) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nBottom) .OR. !hb_IsNumeric(nRight)
       RETURN NIL
    ENDIF
 

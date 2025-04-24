@@ -112,7 +112,7 @@ METHOD RadioButtn:setFocus()
       ::lHasFocus := .T.
       ::display()
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
    ENDIF
@@ -123,9 +123,9 @@ METHOD RadioButtn:select(lState)
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := IIf(HB_ISLOGICAL(lState), lState, !::lBuffer)
+   ::lBuffer := IIf(hb_IsLogical(lState), lState, !::lBuffer)
 
-   IF lOldState != ::lBuffer .AND. HB_ISEVALITEM(::bSBlock)
+   IF lOldState != ::lBuffer .AND. hb_IsEvalItem(::bSBlock)
 
       Eval(::bSBlock)
    ENDIF
@@ -137,7 +137,7 @@ METHOD RadioButtn:killFocus()
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
@@ -183,9 +183,9 @@ METHOD RadioButtn:isAccel(xKey)
    LOCAL cKey
 
    DO CASE
-   CASE HB_ISSTRING(xKey)
+   CASE hb_IsString(xKey)
       cKey := xKey
-   CASE HB_ISNUMERIC(xKey)
+   CASE hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
    OTHERWISE
       RETURN .F.
@@ -312,7 +312,7 @@ METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
 
    LOCAL cColor
 
-   IF !HB_ISNUMERIC(nRow) .OR. !HB_ISNUMERIC(nCol)
+   IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nCol)
       RETURN NIL
    ENDIF
 

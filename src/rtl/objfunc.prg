@@ -52,7 +52,7 @@
 
 FUNCTION __objHasData(oObject, cSymbol)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
@@ -61,7 +61,7 @@ FUNCTION __objHasData(oObject, cSymbol)
 
 FUNCTION __objHasMethod(oObject, cSymbol)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
@@ -75,7 +75,7 @@ FUNCTION __objGetMsgList(oObject, lDataMethod, nClassType)
    LOCAL cName
    LOCAL nFirst
 
-   IF !HB_ISOBJECT(oObject)
+   IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
@@ -102,7 +102,7 @@ FUNCTION __objGetMsgList(oObject, lDataMethod, nClassType)
 
 FUNCTION __objGetMethodList(oObject)
 
-   IF !HB_ISOBJECT(oObject)
+   IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
@@ -113,7 +113,7 @@ FUNCTION __objGetValueList(oObject, aExcept)
    LOCAL aData
    LOCAL cSymbol
 
-   IF !HB_ISOBJECT(oObject)
+   IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
@@ -130,7 +130,7 @@ FUNCTION __objGetValueList(oObject, aExcept)
 
 FUNCTION __objSetValueList(oObject, aData)
 
-   IF HB_ISOBJECT(oObject)
+   IF hb_IsObject(oObject)
       AEval(aData, {|aItem|__objSendMsg(oObject, "_" + aItem[HB_OO_DATA_SYMBOL], aItem[HB_OO_DATA_VALUE])})
    ELSE
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -140,7 +140,7 @@ FUNCTION __objSetValueList(oObject, aData)
 
 FUNCTION __objAddMethod(oObject, cSymbol, nFuncPtr)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol) .OR. !HB_ISSYMBOL(nFuncPtr)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol) .OR. !hb_IsSymbol(nFuncPtr)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF !__objHasMsg(oObject, cSymbol)
       __clsAddMsg(oObject:ClassH, cSymbol, nFuncPtr, HB_OO_MSG_METHOD, NIL, 1)
@@ -150,7 +150,7 @@ FUNCTION __objAddMethod(oObject, cSymbol, nFuncPtr)
 
 FUNCTION __objAddInline(oObject, cSymbol, bInline)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF !__objHasMsg(oObject, cSymbol)
       __clsAddMsg(oObject:ClassH, cSymbol, bInline, HB_OO_MSG_INLINE, NIL, 1)
@@ -163,7 +163,7 @@ FUNCTION __objAddData(oObject, cSymbol)
    LOCAL nSeq
    LOCAL hClass
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF !__objHasMsg(oObject, cSymbol) .AND. !__objHasMsg(oObject, "_" + cSymbol)
       hClass := oObject:ClassH
@@ -176,7 +176,7 @@ FUNCTION __objAddData(oObject, cSymbol)
 
 FUNCTION __objModMethod(oObject, cSymbol, nFuncPtr)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol) .OR. !HB_ISSYMBOL(nFuncPtr)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol) .OR. !hb_IsSymbol(nFuncPtr)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF __objHasMethod(oObject, cSymbol)
       __clsModMsg(oObject:ClassH, cSymbol, nFuncPtr)
@@ -186,7 +186,7 @@ FUNCTION __objModMethod(oObject, cSymbol, nFuncPtr)
 
 FUNCTION __objModInline(oObject, cSymbol, bInline)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol) .OR. !HB_ISBLOCK(bInline)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol) .OR. !hb_IsBlock(bInline)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF __objHasMethod(oObject, cSymbol)
       __clsModMsg(oObject:ClassH, cSymbol, bInline)
@@ -196,7 +196,7 @@ FUNCTION __objModInline(oObject, cSymbol, bInline)
 
 FUNCTION __objDelMethod(oObject, cSymbol)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF __objHasMethod(oObject, cSymbol)
       __clsDelMsg(oObject:ClassH, cSymbol)
@@ -209,7 +209,7 @@ FUNCTION __objDelInline(oObject, cSymbol)
 
 FUNCTION __objDelData(oObject, cSymbol)
 
-   IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
+   IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ELSEIF __objHasData(oObject, cSymbol)
       __clsDelMsg(oObject:ClassH, cSymbol)
@@ -223,14 +223,14 @@ FUNCTION __objDerivedFrom(oObject, xSuper)
 
    LOCAL cClassName
 
-   IF !HB_ISOBJECT(oObject)
+   IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
    DO CASE
-   CASE HB_ISOBJECT(xSuper)
+   CASE hb_IsObject(xSuper)
       cClassName := xSuper:ClassName()
-   CASE HB_ISSTRING(xSuper)
+   CASE hb_IsString(xSuper)
       cClassName := hb_asciiUpper(xSuper)
    OTHERWISE
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))

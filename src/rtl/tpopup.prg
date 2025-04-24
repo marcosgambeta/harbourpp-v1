@@ -119,7 +119,7 @@ ENDCLASS
 
 METHOD PopupMenu:addItem(oItem)
 
-   IF HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
+   IF hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       AAdd(::aItems, oItem)
       ::nItemCount++
@@ -271,9 +271,9 @@ METHOD PopupMenu:getAccel(xKey)
    LOCAL item
 
    DO CASE
-   CASE HB_ISSTRING(xKey)
+   CASE hb_IsString(xKey)
       cKey := xKey
-   CASE HB_ISNUMERIC(xKey)
+   CASE hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
    OTHERWISE
       RETURN 0
@@ -409,7 +409,7 @@ METHOD PopupMenu:hitTest(nMRow, nMCol)
 
 METHOD PopupMenu:insItem(nPos, oItem)
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       hb_AIns(::aItems, nPos, oItem, .T.)
       ::nItemCount++
@@ -478,7 +478,7 @@ METHOD PopupMenu:select(nPos)
 
 METHOD PopupMenu:setItem(nPos, oItem)
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       ::aItems[nPos] := oItem
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
@@ -593,16 +593,16 @@ METHOD PopupMenu:Init(nTop, nLeft, nBottom, nRight)
 
    LOCAL cColor
 
-   IF HB_ISNUMERIC(nTop)
+   IF hb_IsNumeric(nTop)
       ::nTop := nTop
    ENDIF
-   IF HB_ISNUMERIC(nLeft)
+   IF hb_IsNumeric(nLeft)
       ::nLeft := nLeft
    ENDIF
-   IF HB_ISNUMERIC(nBottom)
+   IF hb_IsNumeric(nBottom)
       ::nBottom := nBottom
    ENDIF
-   IF HB_ISNUMERIC(nRight)
+   IF hb_IsNumeric(nRight)
       ::nRight := nRight
    ENDIF
 

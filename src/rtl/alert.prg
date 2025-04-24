@@ -43,13 +43,13 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
 
 #endif
 
-   IF !HB_ISSTRING(cMessage)
+   IF !hb_IsString(cMessage)
       RETURN NIL
    ENDIF
 
    cMessage := StrTran(cMessage, ";", Chr(10))
 
-   IF !HB_ISSTRING(cColorNorm) .OR. Empty(cColorNorm)
+   IF !hb_IsString(cColorNorm) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
@@ -59,7 +59,7 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
 
    aOptionsOK := {}
    FOR EACH cOption IN hb_defaultValue(aOptions, {})
-      IF HB_ISSTRING(cOption) .AND. !Empty(cOption)
+      IF hb_IsString(cOption) .AND. !Empty(cOption)
          AAdd(aOptionsOK, cOption)
       ENDIF
    NEXT
@@ -103,23 +103,23 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    ENDIF
 
    DO CASE
-   CASE HB_ISARRAY(xMessage)
+   CASE hb_IsArray(xMessage)
       cMessage := ""
       FOR EACH cString IN xMessage
          cMessage += IIf(cString:__enumIsFirst(), "", Chr(10)) + hb_CStr(cString)
       NEXT
-   CASE HB_ISSTRING(xMessage)
+   CASE hb_IsString(xMessage)
       cMessage := StrTran(xMessage, ";", Chr(10))
-   CASE HB_ISHASH(xMessage) .AND. "TXT" $ xMessage
+   CASE hb_IsHash(xMessage) .AND. "TXT" $ xMessage
       cMessage := xMessage
-      IF !HB_ISARRAY(aOptions) .OR. Empty(aOptions)
+      IF !hb_IsArray(aOptions) .OR. Empty(aOptions)
          aOptions := hb_HGetDef(xMessage, "BTN")
       ENDIF
    OTHERWISE
       cMessage := hb_CStr(xMessage)
    ENDCASE
 
-   IF !HB_ISSTRING(cColorNorm) .OR. Empty(cColorNorm)
+   IF !hb_IsString(cColorNorm) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
@@ -129,7 +129,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
    aOptionsOK := {}
    FOR EACH cString IN hb_defaultValue(aOptions, {})
-      IF HB_ISSTRING(cString) .AND. !Empty(cString)
+      IF hb_IsString(cString) .AND. !Empty(cString)
          AAdd(aOptionsOK, cString)
       ENDIF
    NEXT

@@ -1296,7 +1296,7 @@ METHOD HBDebugger:GetExprValue(xExpr, lValid)
       oErr := xResult
       IF oErr:ClassName() == "ERROR"
          xResult := oErr:operation + ": " + oErr:description
-         IF HB_ISARRAY(oErr:args)
+         IF hb_IsArray(oErr:args)
             xResult += "; arguments:"
             AEval(oErr:args, {|x, i|xResult += IIf(i == 1, " ", ", ") + __dbgValToStr(x)})
          ENDIF
@@ -1975,7 +1975,7 @@ METHOD PROCEDURE HBDebugger:Open(cFileName)
    ENDIF
 
    IF !Empty(cFileName) .AND. ;
-      (!HB_ISSTRING(::cPrgName) .OR. !hb_FileMatch(cFileName, ::cPrgName))
+      (!hb_IsString(::cPrgName) .OR. !hb_FileMatch(cFileName, ::cPrgName))
 
       IF !hb_FileExists(cFileName) .AND. !Empty(::cPathForFiles)
          cRealName := ::LocatePrgPath(cFileName)
@@ -2491,7 +2491,7 @@ METHOD HBDebugger:ResizeCmdWnd(nLines)
 
 METHOD PROCEDURE HBDebugger:SearchLine(cLine)
 
-   ::GotoLine(Max(1, IIf(HB_ISSTRING(cLine) .AND. IsDigit(cLine), Val(cLine), ::InputBox("Line number", 1))))
+   ::GotoLine(Max(1, IIf(hb_IsString(cLine) .AND. IsDigit(cLine), Val(cLine), ::InputBox("Line number", 1))))
    RETURN
 
 METHOD PROCEDURE HBDebugger:Show()
@@ -2792,7 +2792,7 @@ METHOD PROCEDURE HBDebugger:ShowVars()
 
 METHOD PROCEDURE HBDebugger:Stack(cParam)
 
-   SWITCH IIf(HB_ISSTRING(cParam), cParam, "")
+   SWITCH IIf(hb_IsString(cParam), cParam, "")
    CASE "ON"
       ::lShowCallStack := .T.
       EXIT
@@ -3080,13 +3080,13 @@ METHOD HBDebugger:WatchpointDel(xPos)
 
    IF ::oWndPnt != NIL .AND. ::oWndPnt:lVisible
       DO CASE
-      CASE HB_ISSTRING(xPos)
+      CASE hb_IsString(xPos)
          IF Upper(xPos) == "ALL"
             lAll := .T.
          ELSEIF IsDigit(xPos)
             nPos := Val(xPos)
          ENDIF
-      CASE HB_ISNUMERIC(xPos)
+      CASE hb_IsNumeric(xPos)
          nPos := xPos
       OTHERWISE
          nPos := ::InputBox("Enter item number to delete", ::oBrwPnt:cargo[1] - 1)
@@ -3427,7 +3427,7 @@ FUNCTION __dbgExprValidBlock(cType)
 
    LOCAL cTypeName
 
-   IF HB_ISSTRING(cType)
+   IF hb_IsString(cType)
       SWITCH cType
       CASE "N" ; cTypeName := "numeric"   ; EXIT
       CASE "C" ; cTypeName := "srtring"   ; EXIT
@@ -3453,7 +3453,7 @@ FUNCTION __dbgInput(nRow, nCol, nWidth, cValue, bValid, cColor, nSize)
    LOCAL nKey
    LOCAL oGet
 
-   IF !HB_ISNUMERIC(nWidth)
+   IF !hb_IsNumeric(nWidth)
       nWidth := Len(cValue)
    ENDIF
    oGet := HbDbInput():new(nRow, nCol, nWidth, cValue, cColor, nSize)

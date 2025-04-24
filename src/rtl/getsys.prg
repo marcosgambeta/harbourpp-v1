@@ -154,7 +154,7 @@ PROCEDURE GetDoSetKey(bKeyBlock, oGet)
 #ifdef HB_COMPAT_C53
 PROCEDURE GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
 
-   IF !HB_ISOBJECT(oGetList)
+   IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
    ENDIF
 #else
@@ -277,7 +277,7 @@ PROCEDURE __SetFormat(bFormat)
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      IF HB_ISEVALITEM(bFormat)
+      IF hb_IsEvalItem(bFormat)
          oGetList:SetFormat(bFormat)
       ELSE
          oGetList:SetFormat()

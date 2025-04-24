@@ -88,7 +88,7 @@ METHOD HBDbArray:addWindows(aArray, nRow)
    LOCAL oCol
 
    IF nSize < MaxRow() - 2
-      IF HB_ISNUMERIC(nRow)
+      IF hb_IsNumeric(nRow)
          oWndSets := HBDbWindow():New(GetTopPos(nRow), 5, getBottomPos(nRow + nSize + 1), MaxCol() - 5, ::arrayName + "[1.." + hb_ntos(nSize) + "]", "N/W")
       ELSE
          oWndSets := HBDbWindow():New(1, 5, 2 + nSize, MaxCol() - 5, ::arrayName + "[1.." + hb_ntos(nSize) + "]", "N/W")
@@ -185,7 +185,7 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
       EXIT
 
    CASE K_ENTER
-      IF HB_ISARRAY(aArray[nSet])
+      IF hb_IsArray(aArray[nSet])
          IF Len(aArray[nSet]) == 0
             __dbgAlert("Array is empty")
          ELSE
@@ -202,14 +202,14 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
                ::nCurWindow--
             ENDIF
          ENDIF
-      ELSEIF HB_ISPOINTER(aArray[nSet]) .OR. !::lEditable
+      ELSEIF hb_IsPointer(aArray[nSet]) .OR. !::lEditable
          __dbgAlert("Value cannot be edited")
       ELSE
          oBrwSets:RefreshCurrent()
          DO CASE
-         CASE HB_ISOBJECT(aArray[nSet])
+         CASE hb_IsObject(aArray[nSet])
             __dbgObject(aArray[nSet], cName + "[" + hb_ntos(nSet) + "]")
-         CASE HB_ISHASH(aArray[nSet])
+         CASE hb_IsHash(aArray[nSet])
             IF Len(aArray[nSet]) == 0
                __dbgAlert("Hash is empty")
             ELSE

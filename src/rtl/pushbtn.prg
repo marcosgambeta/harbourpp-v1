@@ -117,7 +117,7 @@ METHOD PushButton:setFocus()
       ::lHasFocus := .T.
       ::display()
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
    ENDIF
@@ -132,7 +132,7 @@ METHOD PushButton:select(nPos)
       ::lbuffer := .T.
       ::display()
 
-      IF HB_ISNUMERIC(nPos)
+      IF hb_IsNumeric(nPos)
 
          IF nPos == 32
 
@@ -146,7 +146,7 @@ METHOD PushButton:select(nPos)
          ENDIF
       ENDIF
 
-      IF HB_ISEVALITEM(::bSBlock)
+      IF hb_IsEvalItem(::bSBlock)
          Eval(::bSBlock)
       ENDIF
 
@@ -161,7 +161,7 @@ METHOD PushButton:killFocus()
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
@@ -332,7 +332,7 @@ METHOD PushButton:Init(nRow, nCol, cCaption)
 
    LOCAL cColor
 
-   IF !HB_ISNUMERIC(nRow) .OR. !HB_ISNUMERIC(nCol)
+   IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nCol)
       RETURN NIL
    ENDIF
 

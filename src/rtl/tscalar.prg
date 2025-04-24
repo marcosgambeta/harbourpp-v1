@@ -119,55 +119,55 @@ METHOD ScalarObject:AsExpStr()
    RETURN ::AsString()
 
 METHOD ScalarObject:isNumeric()
-   RETURN HB_ISNUMERIC(Self)
+   RETURN hb_IsNumeric(Self)
 
 METHOD ScalarObject:isLogical()
-   RETURN HB_ISLOGICAL(Self)
+   RETURN hb_IsLogical(Self)
 
 METHOD ScalarObject:isDate()
-   RETURN HB_ISDATE(Self)
+   RETURN hb_IsDate(Self)
 
 METHOD ScalarObject:isDateTime()
-   RETURN HB_ISDATETIME(Self)
+   RETURN hb_IsDateTime(Self)
 
 METHOD ScalarObject:isTimeStamp()
-   RETURN HB_ISTIMESTAMP(Self)
+   RETURN hb_IsTimestamp(Self)
 
 METHOD ScalarObject:isBlock()
-   RETURN HB_ISBLOCK(Self)
+   RETURN hb_IsBlock(Self)
 
 METHOD ScalarObject:isPointer()
-   RETURN HB_ISPOINTER(Self)
+   RETURN hb_IsPointer(Self)
 
 METHOD ScalarObject:isSymbol()
-   RETURN HB_ISSYMBOL(Self)
+   RETURN hb_IsSymbol(Self)
 
 METHOD ScalarObject:isString()
-   RETURN HB_ISSTRING(Self)
+   RETURN hb_IsString(Self)
 
 METHOD ScalarObject:isChar()
-   RETURN HB_ISCHAR(Self)
+   RETURN hb_IsChar(Self)
 
 METHOD ScalarObject:isMemo()
-   RETURN HB_ISMEMO(Self)
+   RETURN hb_IsMemo(Self)
 
 METHOD ScalarObject:isArray()
-   RETURN HB_ISARRAY(Self)
+   RETURN hb_IsArray(Self)
 
 METHOD ScalarObject:isObject()
-   RETURN HB_ISOBJECT(Self)
+   RETURN hb_IsObject(Self)
 
 METHOD ScalarObject:isHash()
-   RETURN HB_ISHASH(Self)
+   RETURN hb_IsHash(Self)
 
 METHOD ScalarObject:isHashKey()
-   RETURN HB_ISHASHKEY(Self)
+   RETURN hb_IsHashKey(Self)
 
 METHOD ScalarObject:isEvalItem()
-   RETURN HB_ISEVALITEM(Self)
+   RETURN hb_IsEvalItem(Self)
 
 METHOD ScalarObject:isNull()
-   RETURN HB_ISNULL(Self)
+   RETURN hb_IsNull(Self)
 
 METHOD PROCEDURE ScalarObject:BecomeErr()
 

@@ -120,7 +120,7 @@ METHOD MenuItem:checked(lChecked)
 METHOD MenuItem:data(boData)
 
    IF boData != NIL
-      IF HB_ISEVALITEM(boData)
+      IF hb_IsEvalItem(boData)
          ::boData := boData
       ELSE
          ::boData := __eInstVar53(Self, "DATA", boData, "O", 1001, {||IS_IN(boData:ClassName(), "POPUPMENU|HB_POPUPMENU")})
@@ -170,7 +170,7 @@ METHOD MenuItem:style(cStyle)
    RETURN ::cStyle
 
 METHOD MenuItem:isPopUp()
-   RETURN HB_ISOBJECT(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
+   RETURN hb_IsObject(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
 
 METHOD MenuItem:Init(cCaption, boData, nShortcut, cMessage, nID)
 
@@ -189,9 +189,9 @@ FUNCTION MenuItem(cCaption, boData, nShortcut, cMessage, nID)
 
 FUNCTION __MIColumn(o, nColumn)
 
-   IF HB_ISOBJECT(o) .AND. o:ClassName() == "MENUITEM"
+   IF hb_IsObject(o) .AND. o:ClassName() == "MENUITEM"
 
-      IF HB_ISNUMERIC(nColumn)
+      IF hb_IsNumeric(nColumn)
          o:__col := nColumn
       ENDIF
 
@@ -202,9 +202,9 @@ FUNCTION __MIColumn(o, nColumn)
 
 FUNCTION __MIRow(o, nRow)
 
-   IF HB_ISOBJECT(o) .AND. o:ClassName() == "MENUITEM"
+   IF hb_IsObject(o) .AND. o:ClassName() == "MENUITEM"
 
-      IF HB_ISNUMERIC(nRow)
+      IF hb_IsNumeric(nRow)
          o:__row := nRow
       ENDIF
 

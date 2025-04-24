@@ -86,7 +86,7 @@ METHOD HBDbInput:new(nRow, nCol, nWidth, cValue, cColor, nSize)
    ::nRow   := nRow
    ::nCol   := nCol
    ::nWidth := nWidth
-   ::nSize  := IIf(HB_ISNUMERIC(nSize), nSize, nWidth)
+   ::nSize  := IIf(hb_IsNumeric(nSize), nSize, nWidth)
    ::cValue := PadR(cValue, ::nSize)
 
    ::setColor(cColor)

@@ -70,7 +70,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
 
    hb_default(@lPrint, .F.)
 
-   IF !HB_ISSTRING(cFile)
+   IF !hb_IsString(cFile)
       oErr := ErrorNew()
       oErr:severity    := ES_ERROR
       oErr:genCode     := EG_ARG

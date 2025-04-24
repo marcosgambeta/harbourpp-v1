@@ -73,7 +73,7 @@ PROCEDURE __dbgHelp(cTopic)
    oBrw:GoTopBlock := {|| oBrw:Cargo := 1 }
    oBrw:GoBottomBlock := {|| oBrw:Cargo := Len(aTopics) }
 
-   IF HB_ISSTRING(cTopic) .AND. ;
+   IF hb_IsString(cTopic) .AND. ;
       (nTopic := AScan(aTopics, {| x | hb_LeftEqI(x[1], cTopic) })) > 1
       oBrw:nFirstVisible := nTopic
    ENDIF

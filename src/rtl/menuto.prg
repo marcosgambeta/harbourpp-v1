@@ -98,7 +98,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
 
       // put choice in a valid range
 
-      IF !HB_ISNUMERIC(n) .OR. n < 1
+      IF !hb_IsNumeric(n) .OR. n < 1
          n := 1
       ENDIF
 
@@ -132,7 +132,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             xMsg := t_aLevel[nPointer - 1][n][_ITM_MSG]
 
             // Codeblock messages (yes, they are documented!)
-            IF HB_ISEVALITEM(xMsg)
+            IF hb_IsEvalItem(xMsg)
                xMsg := Eval(xMsg)
             ENDIF
 

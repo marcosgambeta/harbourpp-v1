@@ -157,7 +157,7 @@ METHOD ScrollBar:update()
 
    LOCAL nOldThumbPos := ::nThumbPos
 
-   IF HB_ISEVALITEM(::bSBlock)
+   IF hb_IsEvalItem(::bSBlock)
       Eval(::bSBlock)
    ENDIF
 
@@ -244,7 +244,7 @@ METHOD ScrollBar:barLength()
 
 METHOD ScrollBar:bitmaps(aBitmaps)
 
-   IF HB_ISARRAY(aBitmaps) .AND. Len(aBitmaps) == 3
+   IF hb_IsArray(aBitmaps) .AND. Len(aBitmaps) == 3
 
       ::aBitmaps := aBitmaps
    ENDIF
@@ -253,7 +253,7 @@ METHOD ScrollBar:bitmaps(aBitmaps)
 
 METHOD ScrollBar:colorSpec(cColorSpec)
 
-   IF HB_ISSTRING(cColorSpec) .AND. !Empty(hb_ColorIndex(cColorSpec, 1)) .AND. Empty(hb_ColorIndex(cColorSpec, 2))
+   IF hb_IsString(cColorSpec) .AND. !Empty(hb_ColorIndex(cColorSpec, 1)) .AND. Empty(hb_ColorIndex(cColorSpec, 2))
 
       ::cColorSpec := cColorSpec
    ENDIF
@@ -262,7 +262,7 @@ METHOD ScrollBar:colorSpec(cColorSpec)
 
 METHOD ScrollBar:current(nCurrent)
 
-   IF HB_ISNUMERIC(nCurrent) .AND. nCurrent <= ::nTotal .AND. nCurrent != ::nCurrent
+   IF hb_IsNumeric(nCurrent) .AND. nCurrent <= ::nTotal .AND. nCurrent != ::nCurrent
 
       ::nCurrent := nCurrent
    ENDIF
@@ -271,7 +271,7 @@ METHOD ScrollBar:current(nCurrent)
 
 METHOD ScrollBar:end(nEnd)
 
-   IF HB_ISNUMERIC(nEnd) .AND. nEnd >= ::nStart .AND. nEnd != ::nEnd
+   IF hb_IsNumeric(nEnd) .AND. nEnd >= ::nStart .AND. nEnd != ::nEnd
 
       ::nEnd := nEnd
       ::nBarLength := nEnd - ::nStart - 1
@@ -281,7 +281,7 @@ METHOD ScrollBar:end(nEnd)
 
 METHOD ScrollBar:offset(nOffset)
 
-   IF HB_ISNUMERIC(nOffset) .AND. nOffset != ::nOffset
+   IF hb_IsNumeric(nOffset) .AND. nOffset != ::nOffset
 
       ::nOffset := nOffset
    ENDIF
@@ -290,7 +290,7 @@ METHOD ScrollBar:offset(nOffset)
 
 METHOD ScrollBar:orient(nOrient)
 
-   IF HB_ISNUMERIC(nOrient) .AND. (nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL)
+   IF hb_IsNumeric(nOrient) .AND. (nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL)
 
       ::nOrient := nOrient
    ENDIF
@@ -299,7 +299,7 @@ METHOD ScrollBar:orient(nOrient)
 
 METHOD ScrollBar:sBlock(bSBlock)
 
-   IF HB_ISEVALITEM(bSBlock)
+   IF hb_IsEvalItem(bSBlock)
       ::bSBlock := bSBlock
    ENDIF
 
@@ -307,7 +307,7 @@ METHOD ScrollBar:sBlock(bSBlock)
 
 METHOD ScrollBar:start(nStart)
 
-   IF HB_ISNUMERIC(nStart) .AND. nStart <= ::nEnd .AND. nStart != ::nStart
+   IF hb_IsNumeric(nStart) .AND. nStart <= ::nEnd .AND. nStart != ::nStart
 
       ::nStart := nStart
       ::nBarLength := ::nEnd - nStart - 1
@@ -317,7 +317,7 @@ METHOD ScrollBar:start(nStart)
 
 METHOD ScrollBar:style(cStyle)
 
-   IF HB_ISSTRING(cStyle) .AND. Len(cStyle) == 4
+   IF hb_IsString(cStyle) .AND. Len(cStyle) == 4
 
       ::cStyle := cStyle
    ENDIF
@@ -326,7 +326,7 @@ METHOD ScrollBar:style(cStyle)
 
 METHOD ScrollBar:thumbPos(nThumbPos)
 
-   IF HB_ISNUMERIC(nThumbPos)
+   IF hb_IsNumeric(nThumbPos)
 
       DO CASE
       CASE nThumbPos < 1
@@ -346,7 +346,7 @@ METHOD ScrollBar:thumbPos(nThumbPos)
 
 METHOD ScrollBar:total(nTotal)
 
-   IF HB_ISNUMERIC(nTotal) .AND. nTotal >= 2 .AND. nTotal != ::nTotal
+   IF hb_IsNumeric(nTotal) .AND. nTotal >= 2 .AND. nTotal != ::nTotal
 
       ::nTotal := nTotal
    ENDIF
@@ -384,11 +384,11 @@ METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
 
    __defaultNIL(@nOrient, SCROLL_VERTICAL)
 
-   IF !HB_ISNUMERIC(nStart) .OR. ;
-      !HB_ISNUMERIC(nEnd) .OR. ;
-      !HB_ISNUMERIC(nOffset) .OR. ;
+   IF !hb_IsNumeric(nStart) .OR. ;
+      !hb_IsNumeric(nEnd) .OR. ;
+      !hb_IsNumeric(nOffset) .OR. ;
       !ValType(bSBlock) $ "BU" .OR. ;
-      !HB_ISNUMERIC(nOrient) .OR. ;
+      !hb_IsNumeric(nOrient) .OR. ;
       (nOrient != SCROLL_VERTICAL .AND. nOrient != SCROLL_HORIZONTAL)
       RETURN NIL
    ENDIF

@@ -102,7 +102,7 @@ ENDCLASS
 
 METHOD TopBarMenu:addItem(oItem)
 
-   IF HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
+   IF hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       ::nItemCount++
       AAdd(::aItems, oItem)
@@ -324,7 +324,7 @@ METHOD TopBarMenu:hitTest(nMRow, nMCol)
 
 METHOD TopBarMenu:insItem(nPos, oItem)
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       hb_AIns(::aItems, nPos, oItem, .T.)
       ::nItemCount++
@@ -352,7 +352,7 @@ METHOD TopBarMenu:select(nPos)
 
 METHOD TopBarMenu:setItem(nPos, oItem)
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       ::aItems[nPos] := oItem
 
@@ -407,7 +407,7 @@ METHOD TopBarMenu:Init(nRow, nLeft, nRight)
 
    LOCAL cColor
 
-   IF !HB_ISNUMERIC(nRow) .OR. !HB_ISNUMERIC(nLeft) .OR. !HB_ISNUMERIC(nRight)
+   IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nRight)
       RETURN NIL
    ENDIF
 

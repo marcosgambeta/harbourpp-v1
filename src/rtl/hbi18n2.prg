@@ -337,10 +337,10 @@ FUNCTION __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTrans
    hb_default(@lKeepVoidTranslations, .T.)
 
    FOR EACH item IN aTrans
-      IF HB_ISEVALITEM(bTransformTranslation)
+      IF hb_IsEvalItem(bTransformTranslation)
          FOR EACH cString IN item[_I18N_MSGSTR]
             tmp := Eval(bTransformTranslation, cString, item[_I18N_MSGID][cString:__enumIndex()])
-            IF HB_ISSTRING(tmp)
+            IF hb_IsString(tmp)
                cString := tmp
             ENDIF
          NEXT
@@ -449,7 +449,7 @@ FUNCTION __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
    LOCAL hContext
 
    hb_default(@lEmpty, .F.)
-   IF !HB_ISHASH(hI18N)
+   IF !hb_IsHash(hI18N)
       hI18N := {"CONTEXT" => {"" => {=>}}}
    ENDIF
    hTrans := hI18N["CONTEXT"]
@@ -492,9 +492,9 @@ FUNCTION __i18n_potArrayTrans(aTrans, hI18N)
             IF aItem[_I18N_MSGID][1] $ hContext
                xTrans := hContext[aItem[_I18N_MSGID][1]]
                IF aItem[_I18N_PLURAL]
-                  aItem[_I18N_MSGSTR] := IIf(HB_ISARRAY(xTrans), AClone(xTrans), {xTrans})
+                  aItem[_I18N_MSGSTR] := IIf(hb_IsArray(xTrans), AClone(xTrans), {xTrans})
                ELSE
-                  aItem[_I18N_MSGSTR] := IIf(HB_ISARRAY(xTrans), {xTrans[1]}, {xTrans})
+                  aItem[_I18N_MSGSTR] := IIf(hb_IsArray(xTrans), {xTrans[1]}, {xTrans})
                ENDIF
             ENDIF
          ENDIF
@@ -516,7 +516,7 @@ FUNCTION __i18n_hashJoin(hTrans, hTrans2)
          hDstCtx := hContext[hCtx:__enumKey()]
          FOR EACH xTrans IN hCtx
             IF !Empty(xTrans) .AND. (!xTrans:__enumKey() $ hDstCtx .OR. Empty(hDstCtx[xTrans:__enumKey()]))
-               hDstCtx[xTrans:__enumKey()] := IIf(HB_ISARRAY(xTrans), AClone(xTrans), xTrans)
+               hDstCtx[xTrans:__enumKey()] := IIf(hb_IsArray(xTrans), AClone(xTrans), xTrans)
             ENDIF
          NEXT
       ELSE
@@ -533,7 +533,7 @@ FUNCTION __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
    LOCAL aSrc
    LOCAL ctx
 
-   IF !HB_ISHASH(hIndex)
+   IF !hb_IsHash(hIndex)
       hIndex := {=>}
       FOR EACH aItem in aTrans
          ctx := aItem[_I18N_CONTEXT] + _I18N_DELIM + aItem[_I18N_MSGID][1]
@@ -578,7 +578,7 @@ FUNCTION hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
    LOCAL hI18N
 
    IF (aTrans := __i18n_potArrayLoad(cFile, @cErrorMsg)) != NIL
-      IF HB_ISPOINTER(pI18N)
+      IF hb_IsPointer(pI18N)
          hI18N := __i18n_hashTable(pI18N)
       ENDIF
       IF hI18N == NIL
@@ -603,7 +603,7 @@ FUNCTION hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
    LOCAL msgctxt
    LOCAL msgstr
 
-   IF HB_ISPOINTER(pI18N)
+   IF hb_IsPointer(pI18N)
       hI18N := __i18n_hashTable(pI18N)
    ENDIF
    IF hI18N == NIL
@@ -623,7 +623,7 @@ FUNCTION hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
             cPOT += "msgid "
             cPOT += __i18n_strEncode(trans:__enumKey())
             cPOT += cEOL
-            IF HB_ISARRAY(trans)
+            IF hb_IsArray(trans)
                FOR EACH msgstr IN trans
                   cPOT += "msgstr["
                   cPOT += hb_ntos(msgstr:__enumIndex() - 1)

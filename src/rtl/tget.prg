@@ -512,19 +512,19 @@ METHOD Get:varPut(xValue)
    LOCAL i
    LOCAL aValue
 
-   IF HB_ISEVALITEM(::bBlock) .AND. ValType(xValue) $ "CNDTLU"
+   IF hb_IsEvalItem(::bBlock) .AND. ValType(xValue) $ "CNDTLU"
       aSubs := ::xSubScript
-      IF HB_ISARRAY(aSubs) .AND. !Empty(aSubs)
+      IF hb_IsArray(aSubs) .AND. !Empty(aSubs)
          nLen := Len(aSubs)
          aValue := Eval(::bBlock)
          FOR i := 1 TO nLen - 1
-            IF HB_ISNUMERIC(aSubs[i]) .OR. (HB_ISHASH(aValue) .AND. ValType(aSubs[i]) $ "CDT")
+            IF hb_IsNumeric(aSubs[i]) .OR. (hb_IsHash(aValue) .AND. ValType(aSubs[i]) $ "CDT")
                aValue := aValue[aSubs[i]]
             ELSE
                EXIT
             ENDIF
          NEXT
-         IF HB_ISNUMERIC(aSubs[i]) .OR. (HB_ISHASH(aValue) .AND. ValType(aSubs[i]) $ "CDT")
+         IF hb_IsNumeric(aSubs[i]) .OR. (hb_IsHash(aValue) .AND. ValType(aSubs[i]) $ "CDT")
             aValue[aSubs[i]] := xValue
          ENDIF
       ELSE
@@ -543,13 +543,13 @@ METHOD Get:varGet()
    LOCAL i
    LOCAL xValue
 
-   IF HB_ISEVALITEM(::bBlock)
+   IF hb_IsEvalItem(::bBlock)
       aSubs := ::xSubScript
-      IF HB_ISARRAY(aSubs) .AND. !Empty(aSubs)
+      IF hb_IsArray(aSubs) .AND. !Empty(aSubs)
          nLen := Len(aSubs)
          xValue := Eval(::bBlock)
          FOR i := 1 TO nLen
-            IF HB_ISNUMERIC(aSubs[i]) .OR. (HB_ISHASH(xValue) .AND. ValType(aSubs[i]) $ "CDT")
+            IF hb_IsNumeric(aSubs[i]) .OR. (hb_IsHash(xValue) .AND. ValType(aSubs[i]) $ "CDT")
                xValue := xValue[aSubs[i]]
             ELSE
                EXIT
@@ -569,7 +569,7 @@ METHOD Get:varGet()
 
 METHOD Get:overStrike(cChar)
 
-   IF ::hasFocus .AND. HB_ISSTRING(cChar)
+   IF ::hasFocus .AND. hb_IsString(cChar)
 
       IF ::cType == "N" .AND. !::lEdit .AND. ::lClear
          ::pos := ::FirstEditable()
@@ -623,7 +623,7 @@ METHOD Get:insert(cChar)
    LOCAL nFor
    LOCAL nMaxEdit
 
-   IF ::hasFocus .AND. HB_ISSTRING(cChar)
+   IF ::hasFocus .AND. hb_IsString(cChar)
 
       nMaxEdit := ::nMaxEdit
 
@@ -909,7 +909,7 @@ METHOD Get:setColorSpec(cColorSpec)
    LOCAL nClrUns
    LOCAL nClrOth
 
-   IF HB_ISSTRING(cColorSpec)
+   IF hb_IsString(cColorSpec)
 
 #ifdef HB_COMPAT_C53
       ::cColorSpec := hb_NToColor(nClrUns := Max(hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_UNSELECTED)), 0)) + ;
@@ -955,7 +955,7 @@ METHOD Get:setPos(nPos)
 
    LOCAL tmp
 
-   IF HB_ISNUMERIC(nPos)
+   IF hb_IsNumeric(nPos)
 
       nPos := Int(nPos)
 
@@ -1021,7 +1021,7 @@ METHOD Get:picture(cPicture)
          ::cPicMask      := ""
          ::lPicBlankZero := .F.
 
-         IF HB_ISSTRING(cPicture)
+         IF hb_IsString(cPicture)
 
             cNum := ""
 
@@ -1239,7 +1239,7 @@ METHOD Get:unTransform()
 
       cBuffer := ::cBuffer
 
-      IF HB_ISSTRING(cBuffer) .AND. ::cType != NIL
+      IF hb_IsString(cBuffer) .AND. ::cType != NIL
 
          SWITCH ::cType
          CASE "C"
@@ -1458,7 +1458,7 @@ METHOD Get:reform()
 
 METHOD Get:hitTest(nMRow, nMCol)
 
-   IF HB_ISOBJECT(::oControl)
+   IF hb_IsObject(::oControl)
       RETURN ::oControl:hitTest(nMRow, nMCol)
    ELSE
       DO CASE
@@ -1473,7 +1473,7 @@ METHOD Get:hitTest(nMRow, nMCol)
 
 METHOD Get:control(oControl)
 
-   IF PCount() == 1 .AND. (oControl == NIL .OR. HB_ISOBJECT(oControl))
+   IF PCount() == 1 .AND. (oControl == NIL .OR. hb_IsObject(oControl))
       ::oControl := oControl
    ENDIF
 
@@ -1481,7 +1481,7 @@ METHOD Get:control(oControl)
 
 METHOD Get:caption(cCaption)
 
-   IF HB_ISSTRING(cCaption)
+   IF hb_IsString(cCaption)
       ::cCaption := cCaption
    ENDIF
 
@@ -1489,7 +1489,7 @@ METHOD Get:caption(cCaption)
 
 METHOD Get:capRow(nCapRow)
 
-   IF HB_ISNUMERIC(nCapRow)
+   IF hb_IsNumeric(nCapRow)
       ::nCapRow := Int(nCapRow)
    ENDIF
 
@@ -1497,7 +1497,7 @@ METHOD Get:capRow(nCapRow)
 
 METHOD Get:capCol(nCapCol)
 
-   IF HB_ISNUMERIC(nCapCol)
+   IF hb_IsNumeric(nCapCol)
       ::nCapCol := Int(nCapCol)
    ENDIF
 
@@ -1505,7 +1505,7 @@ METHOD Get:capCol(nCapCol)
 
 METHOD Get:message(cMessage)
 
-   IF HB_ISSTRING(cMessage)
+   IF hb_IsString(cMessage)
       ::cMessage := cMessage
    ENDIF
 
@@ -1806,7 +1806,7 @@ METHOD Get:getChanged()
 
 METHOD Get:setChanged(lChanged)
 
-   IF HB_ISLOGICAL(lChanged)
+   IF hb_IsLogical(lChanged)
       RETURN IIf(::hasFocus, ::lChanged := lChanged, lChanged)
    ENDIF
 
@@ -1817,7 +1817,7 @@ METHOD Get:getClear()
 
 METHOD Get:setClear(lClear)
 
-   IF HB_ISLOGICAL(lClear)
+   IF hb_IsLogical(lClear)
       RETURN IIf(::hasFocus, ::lClear := lClear, lClear)
    ENDIF
 
@@ -1828,7 +1828,7 @@ METHOD Get:getMinus()
 
 METHOD Get:setMinus(lMinus)
 
-   IF HB_ISLOGICAL(lMinus)
+   IF hb_IsLogical(lMinus)
       RETURN IIf(::hasFocus, ::lMinus := lMinus, lMinus)
    ENDIF
 
@@ -1841,7 +1841,7 @@ METHOD Get:getRow()
    RETURN ::nRow
 
 METHOD Get:setRow(nRow)
-   RETURN ::nRow := IIf(HB_ISNUMERIC(nRow), Int(nRow), 0)
+   RETURN ::nRow := IIf(hb_IsNumeric(nRow), Int(nRow), 0)
 
 /* NOTE: CA-Cl*pper has a bug where negative nCol value will be translated to 16bit unsigned int,
          so the behaviour will be different in this case. [vszakats] */
@@ -1850,7 +1850,7 @@ METHOD Get:getCol()
    RETURN ::nCol
 
 METHOD Get:setCol(nCol)
-   RETURN ::nCol := IIf(HB_ISNUMERIC(nCol), Int(nCol), 0)
+   RETURN ::nCol := IIf(hb_IsNumeric(nCol), Int(nCol), 0)
 
 METHOD Get:name(cName)
 
@@ -1920,7 +1920,7 @@ METHOD Get:Init(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec)
    ENDIF
    __defaultNIL(@cVarName, "")
    IF bVarBlock == NIL
-      bVarBlock := IIf(HB_ISSTRING(cVarName), MemVarBlock(cVarName), NIL)
+      bVarBlock := IIf(hb_IsString(cVarName), MemVarBlock(cVarName), NIL)
    ENDIF
    IF cColorSpec == NIL
       cColorSpec := SetColor()

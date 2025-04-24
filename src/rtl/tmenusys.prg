@@ -124,9 +124,9 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
    ::nMsgRight  := nMsgRight
    ::cMsgColor  := cMsgColor
 
-   IF (::lMsgFlag := HB_ISNUMERIC(::nMsgRow) .AND. HB_ISNUMERIC(::nMsgLeft) .AND. HB_ISNUMERIC(::nMsgRight))
+   IF (::lMsgFlag := hb_IsNumeric(::nMsgRow) .AND. hb_IsNumeric(::nMsgLeft) .AND. hb_IsNumeric(::nMsgRight))
 
-      IF !HB_ISSTRING(::cMsgColor)
+      IF !hb_IsString(::cMsgColor)
          ::cMsgColor := GetClrPair(SetColor(), 1)
       ENDIF
 
@@ -439,7 +439,7 @@ METHOD HBMenuSys:PushMenu()
 
    LOCAL oNewMenu := ::oMenu:getItem(::oMenu:current)
 
-   IF HB_ISOBJECT(oNewMenu) .AND. oNewMenu:IsPopUp
+   IF hb_IsObject(oNewMenu) .AND. oNewMenu:IsPopUp
 
       ::oMenu := oNewMenu:data
       ::aMenuList[++::nMenuLevel] := ::oMenu
@@ -502,7 +502,7 @@ METHOD HBMenuSys:Execute()
    LOCAL lPas := .T.
 
    // Execute the Data block if selected MenuItem is !IsPopUp:
-   IF HB_ISOBJECT(oNewMenu) .AND. !oNewMenu:IsPopUp
+   IF hb_IsObject(oNewMenu) .AND. !oNewMenu:IsPopUp
 
       IF IS_IN(::oMenu:ClassName(), "TOPBARMENU|POPUPMENU|HB_POPUPMENU")
          SetPos(::nOldRow, ::nOldCol)
@@ -568,7 +568,7 @@ METHOD HBMenuSys:ShowMsg(lMode)
    ENDIF
 
    IF lMode
-      IF !HB_ISSTRING(::cMsgColor)
+      IF !hb_IsString(::cMsgColor)
          ::cMsgColor := GetClrPair(SetColor(), 1)
       ENDIF
 

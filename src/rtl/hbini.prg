@@ -74,11 +74,11 @@ STATIC s_cHalfLineComment := "#"
 
 PROCEDURE hb_iniSetComment(cLc, cHlc)
 
-   IF HB_ISSTRING(cLc)
+   IF hb_IsString(cLc)
       s_cLineComment := cLc
    ENDIF
 
-   IF HB_ISSTRING(cHlc)
+   IF hb_IsString(cHlc)
       s_cHalfLineComment := cHlc
    ENDIF
 
@@ -95,7 +95,7 @@ FUNCTION hb_iniNew(lAutoMain)
    RETURN hIni
 
 FUNCTION hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
-   RETURN hb_iniReadStr(IIf(HB_ISSTRING(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
+   RETURN hb_iniReadStr(IIf(hb_IsString(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
 
 FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
@@ -233,14 +233,14 @@ FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    cBuffer := hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
-   IF !HB_ISSTRING(cBuffer)
+   IF !hb_IsString(cBuffer)
       RETURN .F.
    ENDIF
 
-   IF HB_ISSTRING(xFileName)
+   IF hb_IsString(xFileName)
       hFile := FCreate(xFileName)
       lClose := .T.
-   ELSEIF HB_ISNUMERIC(xFileName)
+   ELSEIF hb_IsNumeric(xFileName)
       hFile := xFileName
       lClose := .F.
    ELSE
@@ -270,11 +270,11 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
    LOCAL cSection
    LOCAL cBuffer := ""
 
-   IF !HB_ISHASH(hIni)
+   IF !hb_IsHash(hIni)
       RETURN NIL
    ENDIF
 
-   IF HB_ISSTRING(cCommentBegin) .AND. !Empty(cCommentBegin)
+   IF hb_IsString(cCommentBegin) .AND. !Empty(cCommentBegin)
       cBuffer += cCommentBegin + cNewLine
    ENDIF
 
@@ -291,7 +291,7 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       hb_HEval(hIni["MAIN"], {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
    ELSE
       // When lAutoMain is off, just write all the top-level variables.
-      hb_HEval(hIni, {|cKey, xVal|IIf(HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
+      hb_HEval(hIni, {|cKey, xVal|IIf(hb_IsHash(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
    ENDIF
 
    FOR EACH cSection IN hIni
@@ -304,7 +304,7 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
          ENDIF
       ELSE
          // When lAutoMain is off, skip all the top-level variables.
-         IF !HB_ISHASH(cSection)
+         IF !hb_IsHash(cSection)
             LOOP
          ENDIF
       ENDIF
@@ -314,7 +314,7 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       hb_HEval(cSection, {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
    NEXT
 
-   IF HB_ISSTRING(cCommentEnd) .AND. !Empty(cCommentEnd)
+   IF hb_IsString(cCommentEnd) .AND. !Empty(cCommentEnd)
       cBuffer += cCommentEnd + cNewLine
    ENDIF
 

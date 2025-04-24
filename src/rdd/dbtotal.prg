@@ -71,10 +71,10 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    LOCAL lError := .F.
 
    DO CASE
-   CASE HB_ISEVALITEM(xWhile)
+   CASE hb_IsEvalItem(xWhile)
       bWhileBlock := xWhile
       lRest := .T.
-   CASE HB_ISSTRING(xWhile) .AND. !Empty(xWhile)
+   CASE hb_IsString(xWhile) .AND. !Empty(xWhile)
       bWhileBlock := hb_macroBlock(xWhile)
       lRest := .T.
    OTHERWISE
@@ -82,9 +82,9 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    ENDCASE
 
    DO CASE
-   CASE HB_ISEVALITEM(xFor)
+   CASE hb_IsEvalItem(xFor)
       bForBlock := xFor
-   CASE HB_ISSTRING(xFor) .AND. !Empty(xFor)
+   CASE hb_IsString(xFor) .AND. !Empty(xFor)
       bForBlock := hb_macroBlock(xFor)
    OTHERWISE
       bForBlock := {|| .T. }
@@ -114,13 +114,13 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
 
    BEGIN SEQUENCE
 
-      IF HB_ISEVALITEM(xKey)
+      IF hb_IsEvalItem(xKey)
          bKeyBlock := xKey
       ELSE
          IF Empty(xKey)
             xKey := ordKey()
          ENDIF
-         IF HB_ISSTRING(xKey) .AND. !Empty(xKey)
+         IF hb_IsString(xKey) .AND. !Empty(xKey)
             bKeyBlock := hb_macroBlock(xKey)
          ELSE
             bKeyBlock := {|| NIL }

@@ -150,11 +150,11 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
    LOCAL cType
    LOCAL lSpacer := .T.
 
-   IF !HB_ISSTRING(cObjectName)
+   IF !hb_IsString(cObjectName)
       cObjectName := "o" + ::ClassName()
    ENDIF
 
-   IF HB_ISNUMERIC(nIndent)
+   IF hb_IsNumeric(nIndent)
       nIndent += _INDENT
    ELSE
       nIndent := 0

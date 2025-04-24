@@ -57,7 +57,7 @@ PROCEDURE AltD(nAction)
       // on first LINE with debugged info
       __dbgInvokeDebug(Set(_SET_DEBUG))
 
-   ELSEIF HB_ISNUMERIC(nAction)
+   ELSEIF hb_IsNumeric(nAction)
 
       SWITCH nAction
       CASE ALTD_DISABLE

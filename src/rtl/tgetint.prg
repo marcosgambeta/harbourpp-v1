@@ -51,11 +51,11 @@ FUNCTION __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
    LOCAL oGet
 
-   IF !HB_ISSTRING(cVarName)
+   IF !hb_IsString(cVarName)
       RETURN NIL
    ENDIF
 
-   IF !HB_ISEVALITEM(bSetGet)
+   IF !hb_IsEvalItem(bSetGet)
       IF FieldPos(cVarName) > 0
          bSetGet := FieldWBlock(cVarName, Select())
       ELSEIF (bSetGet := MemVarBlock(cVarName)) == NIL
@@ -83,11 +83,11 @@ FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
 
    LOCAL oGet
 
-   IF !HB_ISSTRING(cVarName) .OR. !HB_ISARRAY(aIndex)
+   IF !hb_IsString(cVarName) .OR. !hb_IsArray(aIndex)
       RETURN NIL
    ENDIF
 
-   IF !HB_ISEVALITEM(bGetArray)
+   IF !hb_IsEvalItem(bGetArray)
       // CA-Cl*pper creates standard SET/GET block here
       IF FieldPos(cVarName) > 0
          bGetArray := FieldWBlock(cVarName, Select())

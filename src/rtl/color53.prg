@@ -171,15 +171,15 @@ FUNCTION ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
       IF "/" $ cClrToSet
 
          IF (cClrFore := GetClrFore(cClrToSet)) == ""
-            cClrFore := GetClrFore(IIf(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
+            cClrFore := GetClrFore(IIf(hb_IsNumeric(xNewColor), aSetColor[xNewColor], xNewColor))
          ENDIF
          IF (cClrBack := GetClrBack(cClrToSet)) == ""
-            cClrBack := GetClrBack(IIf(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
+            cClrBack := GetClrBack(IIf(hb_IsNumeric(xNewColor), aSetColor[xNewColor], xNewColor))
          ENDIF
 
          cClrDefa := SetClrPair(cClrDefa, n, cClrFore + "/" + cClrBack)
       ELSE
-         cClrDefa := SetClrPair(cClrDefa, n, IIf(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
+         cClrDefa := SetClrPair(cClrDefa, n, IIf(hb_IsNumeric(xNewColor), aSetColor[xNewColor], xNewColor))
       ENDIF
    NEXT
 

@@ -101,11 +101,11 @@ FUNCTION sxChar(nLen, /* @ */ xKeyVal)
       xKeyVal := IIf(xKeyVal, "T", "F")
       EXIT
    OTHERWISE
-      xKeyVal := IIf(HB_ISNUMERIC(nLen), "", Space(10))
+      xKeyVal := IIf(hb_IsNumeric(nLen), "", Space(10))
       EXIT
    ENDSWITCH
 
-   IF HB_ISNUMERIC(nLen)
+   IF hb_IsNumeric(nLen)
       xKeyVal := PadR(LTrim(xKeyVal), nLen)
    ENDIF
 
@@ -224,7 +224,7 @@ FUNCTION sx_TagInfo(cIndex)
 
    IF Used() .AND. (nOrds := ordCount(cIndex)) > 0
       aInfo := Array(nOrds, 6)
-      IF HB_ISSTRING(cIndex)
+      IF hb_IsString(cIndex)
          nFirst := dbOrderInfo(DBOI_BAGORDER, cIndex)
          nOrds += nFirst - 1
       ELSE
@@ -251,11 +251,11 @@ FUNCTION sx_TagCount(xIndex)
 
    IF Used()
       DO CASE
-      CASE HB_ISNUMERIC(xIndex)
+      CASE hb_IsNumeric(xIndex)
          IF (nOrder := sx_TagOrder(1, xIndex)) != 0
             cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
          ENDIF
-      CASE HB_ISSTRING(xIndex) .AND. !Empty(xIndex)
+      CASE hb_IsString(xIndex) .AND. !Empty(xIndex)
          cIndex := xIndex
       OTHERWISE
          cIndex := dbOrderInfo(DBOI_FULLPATH)
@@ -275,9 +275,9 @@ FUNCTION sx_Tags(xIndex)
 
    IF Used()
       DO CASE
-      CASE HB_ISNUMERIC(xIndex)
+      CASE hb_IsNumeric(xIndex)
          nOrder := sx_TagOrder(1, xIndex)
-      CASE HB_ISSTRING(xIndex) .AND. !Empty(xIndex)
+      CASE hb_IsString(xIndex) .AND. !Empty(xIndex)
          nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex)
       OTHERWISE
          nOrder := ordNumber()
@@ -300,10 +300,10 @@ FUNCTION sx_SetTag(xTag, xIndex)
    LOCAL cIndex
 
    IF Used() .AND. ValType(xTag) $ "CN"
-      IF HB_ISNUMERIC(xTag)
+      IF hb_IsNumeric(xTag)
          IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
             nOrder := xTag
-         ELSEIF HB_ISSTRING(xIndex)
+         ELSEIF hb_IsString(xIndex)
             IF xTag >= 1 .AND. xTag <= ordCount(xIndex)
                nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex) + xTag - 1
             ENDIF
@@ -313,7 +313,7 @@ FUNCTION sx_SetTag(xTag, xIndex)
       ELSE
          IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
             nOrder := ordNumber(xTag)
-         ELSEIF HB_ISSTRING(xIndex)
+         ELSEIF hb_IsString(xIndex)
             nOrder := sx_TagOrder(xTag, xIndex)
          ELSE
             nOrder := sx_TagOrder(1, xIndex)
@@ -348,14 +348,14 @@ FUNCTION sx_KillTag(xTag, xIndex)
    LOCAL nOrder
    LOCAL cIndex
 
-   IF HB_ISLOGICAL(xTag)
+   IF hb_IsLogical(xTag)
       IF xTag
          DO CASE
          CASE Empty(xIndex)
             cIndex := sx_IndexName()
-         CASE HB_ISNUMERIC(xIndex)
+         CASE hb_IsNumeric(xIndex)
             cIndex := sx_IndexName(1, xIndex)
-         CASE HB_ISSTRING(xIndex)
+         CASE hb_IsString(xIndex)
             nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex)
             IF nOrder != 0
                cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
@@ -368,10 +368,10 @@ FUNCTION sx_KillTag(xTag, xIndex)
          ENDIF
       ENDIF
    ELSE
-      IF HB_ISNUMERIC(xTag)
+      IF hb_IsNumeric(xTag)
          IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
             nOrder := xTag
-         ELSEIF HB_ISSTRING(xIndex)
+         ELSEIF hb_IsString(xIndex)
             IF xTag >= 1 .AND. xTag <= ordCount(xIndex)
                nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex) + xTag - 1
             ELSE
@@ -383,7 +383,7 @@ FUNCTION sx_KillTag(xTag, xIndex)
       ELSE
          IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
             nOrder := ordNumber(xTag)
-         ELSEIF HB_ISSTRING(xIndex)
+         ELSEIF hb_IsString(xIndex)
             nOrder := sx_TagOrder(xTag, xIndex)
          ELSE
             IF (nOrder := sx_TagOrder(1, xIndex)) != 0
@@ -407,7 +407,7 @@ FUNCTION sx_FileOrder()
    RETURN dbOrderInfo(DBOI_BAGNUMBER)
 
 FUNCTION sx_SetFileOrd(nIndex)
-   RETURN IIf(HB_ISNUMERIC(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
+   RETURN IIf(hb_IsNumeric(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
 
 FUNCTION rdd_Count()
    RETURN Len(rddList())
@@ -416,7 +416,7 @@ FUNCTION rdd_Name(nRDD)
 
    LOCAL aRDD
 
-   IF HB_ISNUMERIC(nRDD) .AND. nRDD >= 1
+   IF hb_IsNumeric(nRDD) .AND. nRDD >= 1
       aRDD := rddList()
       IF nRDD <= Len(aRDD)
          RETURN aRDD[nRDD]
@@ -430,11 +430,11 @@ FUNCTION rdd_Info(xID)
    LOCAL cRDD
 
    DO CASE
-   CASE HB_ISNUMERIC(xID)
+   CASE hb_IsNumeric(xID)
       IF !Alias(xID) == ""
          (xID)->(rddName())
       ENDIF
-   CASE HB_ISSTRING(xID)
+   CASE hb_IsString(xID)
       cRDD := Upper(AllTrim(xID))
       IF AScan(rddList(), {| x | Upper(x) == cRDD }) == 0
          cRDD := NIL
@@ -528,9 +528,9 @@ FUNCTION sx_VSigLen(xField)
 
    IF Used()
       DO CASE
-      CASE HB_ISSTRING(xField)
+      CASE hb_IsString(xField)
          nField := FieldPos(xField)
-      CASE HB_ISNUMERIC(xField)
+      CASE hb_IsNumeric(xField)
          nField := xField
       ENDCASE
       IF nField >= 1 .AND. nField <= FCount()
@@ -576,9 +576,9 @@ FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
 
    LOCAL cPrevTrigger := ""
 
-   IF HB_ISNUMERIC(nAction)
+   IF hb_IsNumeric(nAction)
       IF nAction == TRIGGER_PENDING
-         IF HB_ISSTRING(cTriggerName)
+         IF hb_IsString(cTriggerName)
             hb_rddInfo(RDDI_PENDINGTRIGGER, cTriggerName, cRDD)
          ENDIF
       ELSEIF Used()
@@ -594,7 +594,7 @@ FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
             dbInfo(DBI_TRIGGER, "")
             EXIT
          CASE TRIGGER_INSTALL
-            IF HB_ISSTRING(cTriggerName)
+            IF hb_IsString(cTriggerName)
                dbInfo(DBI_TRIGGER, cTriggerName)
             ENDIF
             EXIT

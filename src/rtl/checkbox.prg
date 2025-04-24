@@ -116,7 +116,7 @@ METHOD CheckBox:setFocus()
       ::lHasFocus := .T.
       ::display()
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
    ENDIF
@@ -127,12 +127,12 @@ METHOD CheckBox:select(lState)
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := IIf(HB_ISLOGICAL(lState), lState, !::lBuffer)
+   ::lBuffer := IIf(hb_IsLogical(lState), lState, !::lBuffer)
 
    IF lOldState != ::lBuffer
       ::display()
 
-      IF HB_ISEVALITEM(::bSBlock)
+      IF hb_IsEvalItem(::bSBlock)
          Eval(::bSBlock)
       ENDIF
    ENDIF
@@ -144,7 +144,7 @@ METHOD CheckBox:killFocus()
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM(::bFBlock)
+      IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 

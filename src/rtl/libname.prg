@@ -51,11 +51,11 @@ FUNCTION hb_libName(cLibName, cLibDir)
    LOCAL cName
    LOCAL cExt
 
-   IF HB_ISSTRING(cLibName)
+   IF hb_IsString(cLibName)
 
       hb_FNameSplit(cLibName, @cDir, @cName, @cExt)
 
-      IF Empty(cDir) .AND. HB_ISSTRING(cLibDir)
+      IF Empty(cDir) .AND. hb_IsString(cLibDir)
          cDir := cLibDir
       ENDIF
       IF Empty(cExt)
