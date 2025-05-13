@@ -67,6 +67,43 @@ HB_FUNC(WAPI_SHELLEXECUTE)
   hb_strfree(hDirectory);
 }
 
+/* Code by Antonino Perricone */
+
+// WAPI_SHELLEXECUTE_WAIT(HWND, cOperation, cFile, cParameters, cDirectory, nShow) --> logical
+HB_FUNC(WAPI_SHELLEXECUTE_WAIT)
+{
+  void *hOperation;
+  void *hFile;
+  void *hParameters;
+  void *hDirectory;
+  BOOL retVal;
+  MSG msg;
+  SHELLEXECUTEINFO ShExecInfo{};
+  ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+  ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+  ShExecInfo.hwnd = static_cast<HWND>(hb_parptr(1));
+  ShExecInfo.lpVerb = HB_PARSTR(2, &hOperation, nullptr);
+  ShExecInfo.lpFile = HB_PARSTRDEF(3, &hFile, nullptr);
+  ShExecInfo.lpParameters = HB_PARSTR(4, &hParameters, nullptr);
+  ShExecInfo.lpDirectory = HB_PARSTR(5, &hDirectory, nullptr);
+  ShExecInfo.nShow = hb_parnidef(6, SW_SHOWNORMAL);
+  ShExecInfo.hInstApp = nullptr;
+  retVal = ShellExecuteEx(&ShExecInfo);
+  hb_retl(retVal);
+  while (WaitForSingleObject(ShExecInfo.hProcess, 1000) != WAIT_OBJECT_0)
+  {
+    while (PeekMessage(&msg, static_cast<HWND>(nullptr), 0, 0, PM_REMOVE))
+    {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+    }
+  }
+  hb_strfree(hOperation);
+  hb_strfree(hFile);
+  hb_strfree(hParameters);
+  hb_strfree(hDirectory);
+}
+
 HB_FUNC(WAPI_ISUSERANADMIN)
 {
   BOOL bResult = FALSE;
