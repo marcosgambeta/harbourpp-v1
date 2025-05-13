@@ -1,9 +1,8 @@
-/*
- * win_printerSetDefault()
- *
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour) (based on MS sample code)
- *
- */
+//
+// win_printerSetDefault()
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour) (based on MS sample code)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

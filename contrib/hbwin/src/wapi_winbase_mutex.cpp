@@ -1,9 +1,8 @@
-/*
- * Windows Mutex functions
- *
- * Copyright 2009 Xavi <jarabal/at/gmail.com>
- *
- */
+//
+// Windows Mutex functions
+//
+// Copyright 2009 Xavi <jarabal/at/gmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

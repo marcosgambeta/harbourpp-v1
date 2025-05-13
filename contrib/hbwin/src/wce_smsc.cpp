@@ -1,9 +1,8 @@
-/*
- * SMS interface code
- *
- * Copyright 2009 Jose Luis Capel <jlcapel@hotmail.com>
- *
- */
+//
+// SMS interface code
+//
+// Copyright 2009 Jose Luis Capel <jlcapel@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

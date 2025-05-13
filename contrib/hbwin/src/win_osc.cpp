@@ -1,10 +1,9 @@
-/*
- * Windows OS version information
- *
- * Copyright 2014 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2004 Peter Rees <peter@rees.co.nz> Rees Software and Systems Ltd
- *
- */
+//
+// Windows OS version information
+//
+// Copyright 2014 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2004 Peter Rees <peter@rees.co.nz> Rees Software and Systems Ltd
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

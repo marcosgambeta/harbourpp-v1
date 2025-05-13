@@ -1,9 +1,8 @@
-/*
- * Windows API functions (wingdi.h) (alpha)
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Windows API functions (wingdi.h) (alpha)
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

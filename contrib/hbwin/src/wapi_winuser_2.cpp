@@ -1,9 +1,8 @@
-/*
- * Windows API functions (winuser)
- *
- * Copyright 2009-2014 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Windows API functions (winuser)
+//
+// Copyright 2009-2014 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
