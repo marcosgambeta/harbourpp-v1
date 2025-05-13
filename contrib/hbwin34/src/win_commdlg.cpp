@@ -1,10 +1,9 @@
-/*
- * Common dialogs
- *
- * Copyright 2014 Viktor Szakats
- * based on: Copyright 2007-2012 Pritpal Bedi <bedipritpal@hotmail.com>
- *
- */
+//
+// Common dialogs
+//
+// Copyright 2014 Viktor Szakats
+// based on: Copyright 2007-2012 Pritpal Bedi <bedipritpal@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

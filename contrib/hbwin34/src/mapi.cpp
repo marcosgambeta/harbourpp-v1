@@ -1,10 +1,9 @@
-/*
- * Simple MAPI wrapper
- *
- * Copyright 2009 Viktor Szakats
- * Copyright 2009 Toninho (toninhofwi yahoo.com.br)
- *
- */
+//
+// Simple MAPI wrapper
+//
+// Copyright 2009 Viktor Szakats
+// Copyright 2009 Toninho (toninhofwi yahoo.com.br)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,9 @@
-/*
- * Misc Windows API functions
- *
- * Copyright 2008-2009 Viktor Szakats
- * Copyright 2009 Francesco Saverio Giudice <info / at / fsgiudice.com> (win_SysRefresh())
- *
- */
+//
+// Misc Windows API functions
+//
+// Copyright 2008-2009 Viktor Szakats
+// Copyright 2009 Francesco Saverio Giudice <info / at / fsgiudice.com> (win_SysRefresh())
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

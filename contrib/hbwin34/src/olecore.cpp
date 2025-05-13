@@ -1,10 +1,9 @@
-/*
- * OLE library
- *
- * Copyright 2000, 2003 Jose F. Gimenez (JFG) <jfgimenez@wanadoo.es>
- * Copyright 2008, 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+//
+// OLE library
+//
+// Copyright 2000, 2003 Jose F. Gimenez (JFG) <jfgimenez@wanadoo.es>
+// Copyright 2008, 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

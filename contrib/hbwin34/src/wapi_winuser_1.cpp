@@ -1,10 +1,9 @@
-/*
- * Windows API functions (winuser)
- *
- * Copyright 2009-2014 Viktor Szakats
- * Copyright 2009 Pritpal Bedi <pritpal@vouchcac.com>
- *
- */
+//
+// Windows API functions (winuser)
+//
+// Copyright 2009-2014 Viktor Szakats
+// Copyright 2009 Pritpal Bedi <pritpal@vouchcac.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,9 @@
-/*
- * UUID definitions (for watcom)
- *
- * Copyright 2011 Viktor Szakats
- * Copyright 2011 Andi Jahja <andi.jahja yahoo.co.id>
- *
- */
+//
+// UUID definitions (for watcom)
+//
+// Copyright 2011 Viktor Szakats
+// Copyright 2011 Andi Jahja <andi.jahja yahoo.co.id>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

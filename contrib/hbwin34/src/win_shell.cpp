@@ -1,10 +1,9 @@
-/*
- * Windows API functions (shellapi.h - shell32.dll)
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2010 Viktor Szakats
- *
- */
+//
+// Windows API functions (shellapi.h - shell32.dll)
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2010 Viktor Szakats
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

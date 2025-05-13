@@ -1,9 +1,8 @@
-/*
- * Windows API functions (rpc.h)
- *
- * Copyright 2010 Viktor Szakats
- *
- */
+//
+// Windows API functions (rpc.h)
+//
+// Copyright 2010 Viktor Szakats
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

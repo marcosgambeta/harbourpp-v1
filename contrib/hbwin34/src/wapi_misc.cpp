@@ -1,9 +1,8 @@
-/*
- * Low-level Windows worker functions
- *
- * Copyright 2011 Viktor Szakats
- *
- */
+//
+// Low-level Windows worker functions
+//
+// Copyright 2011 Viktor Szakats
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,9 @@
-/*
- * Harbour Windows Printing support functions
- *
- * Copyright 2009 Viktor Szakats
- * Copyright 2002 Luiz Rafael Culik <culikr@uol.com.br>
- *
- */
+//
+// Harbour Windows Printing support functions
+//
+// Copyright 2009 Viktor Szakats
+// Copyright 2002 Luiz Rafael Culik <culikr@uol.com.br>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
