@@ -196,9 +196,7 @@ HB_FUNC(WAPI_GETPROCADDRESS)
   hb_retptr(reinterpret_cast<void *>(reinterpret_cast<HB_PTRUINT>(pProc)));
 }
 
-/*
-HMODULE WINAPI GetModuleHandle(__in_opt LPCTSTR lpModuleName);
-*/
+// HMODULE WINAPI GetModuleHandle(__in_opt LPCTSTR lpModuleName);
 HB_FUNC(WAPI_GETMODULEHANDLE)
 {
   void *hModuleName;
@@ -233,7 +231,7 @@ static void s_getPathName(_HB_GETPATHNAME getPathName)
       HB_BOOL fSize = HB_ISNUM(3);
 
       if (fSize)
-      { /* the size of buffer is limited by user */
+      { // the size of buffer is limited by user
         cchBuffer = static_cast<DWORD>(hb_parnl(3));
         if (cchBuffer == 0)
         {
@@ -247,7 +245,7 @@ static void s_getPathName(_HB_GETPATHNAME getPathName)
 
       length = getPathName(lpszLongPath, lpszShortPath, cchBuffer);
       if (!fSize && length > cchBuffer)
-      { /* default buffer size was too small */
+      { // default buffer size was too small
         cchBuffer = length;
         lpszShortPath = static_cast<LPTSTR>(hb_xgrab(cchBuffer * sizeof(TCHAR)));
         length = getPathName(lpszLongPath, lpszShortPath, cchBuffer);
@@ -347,10 +345,7 @@ HB_FUNC(WAPI_QUERYPERFORMANCEFREQUENCY)
   hb_retl(result != 0);
 }
 
-/*
-wapi_GetVolumeInformation(<cRootPath>, @<cVolumeName>, @<nSerial>, @<nMaxComponentLength>, @<nFileSystemFlags>,
-@<cFileSystemName>) --> <lSuccess>
-*/
+// wapi_GetVolumeInformation(<cRootPath>, @<cVolumeName>, @<nSerial>, @<nMaxComponentLength>, @<nFileSystemFlags>, @<cFileSystemName>) --> <lSuccess>
 HB_FUNC(WAPI_GETVOLUMEINFORMATION)
 {
 #if defined(HB_OS_WIN)
@@ -376,14 +371,14 @@ HB_FUNC(WAPI_GETVOLUMEINFORMATION)
     lpFSNameBuf = static_cast<LPTSTR>(hb_xgrab(MAX_PATH + 1));
   }
 
-  bResult = GetVolumeInformation(lpRootPath,         /* RootPathName */
-                                 lpVolNameBuf,       /* VolumeName */
-                                 dwVolNameSize,      /* VolumeNameSize */
-                                 &dwSerialNumber,    /* VolumeSerialNumber */
-                                 &dwMaxFileNameLen,  /* MaxComponentLength */
-                                 &dwFileSystemFlags, /* FileSystemFlags */
-                                 lpFSNameBuf,        /* FileSystemName */
-                                 dwFSNameSize);      /* FileSystemSize */
+  bResult = GetVolumeInformation(lpRootPath,         // RootPathName
+                                 lpVolNameBuf,       // VolumeName
+                                 dwVolNameSize,      // VolumeNameSize
+                                 &dwSerialNumber,    // VolumeSerialNumber
+                                 &dwMaxFileNameLen,  // MaxComponentLength
+                                 &dwFileSystemFlags, // FileSystemFlags
+                                 lpFSNameBuf,        // FileSystemName
+                                 dwFSNameSize);      // FileSystemSize
   hb_strfree(hRootPath);
 
   if (lpVolNameBuf)

@@ -49,9 +49,7 @@
 
 #include <mmsystem.h>
 
-/*
-WAPI_PLAYSOUND(cSound, pMod, nSound) -> .T./.F.
-*/
+// WAPI_PLAYSOUND(cSound, pMod, nSound) -> .T./.F.
 HB_FUNC(WAPI_PLAYSOUND)
 {
   void *hSound;

@@ -48,7 +48,7 @@
 
 #include "hbwin.ch"
 
-/* Predefined Value Types. from winnt.h */
+// Predefined Value Types. from winnt.h
 #define KEY_QUERY_VALUE                1
 #define KEY_SET_VALUE                  2
 #define KEY_CREATE_SUB_KEY             4
@@ -78,7 +78,7 @@ PROCEDURE win_regPathSplit(cRegPath, /* @ */ nHKEY, /* @ */ cKey, /* @ */ cEntry
          cEntry := cRegPath
       ENDIF
 
-      /* Len(<literal>) is optimized to a number by Harbour at compile time. */
+      // Len(<literal>) is optimized to a number by Harbour at compile time.
       DO CASE
       CASE Left(cHKEY, Len("HKCU"                 )) == "HKCU"                  ; nHKEY := WIN_HKEY_CURRENT_USER
       CASE Left(cHKEY, Len("HKLM"                 )) == "HKLM"                  ; nHKEY := WIN_HKEY_LOCAL_MACHINE
@@ -178,7 +178,7 @@ FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
 
    IF win_regOpenKeyEx(nHKEY, cKeyName, 0, hb_bitOr(KEY_QUERY_VALUE, nRegSam), @pKeyHandle)
 
-      /* retrieve the length of the value */
+      // retrieve the length of the value
 
       win_regQueryValueEx(pKeyHandle, cEntryName, 0, @nValueType, @xRetVal)
 
@@ -194,7 +194,7 @@ FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
             xRetVal := hb_bitShift(Bin2U(hb_BSubStr(xRetVal, 5, 4)), 32) +;
                                    Bin2U(hb_BSubStr(xRetVal, 1, 4))
          OTHERWISE
-            /* Strip ending zero byte */
+            // Strip ending zero byte
             IF hb_BRight(xRetVal, 1) == hb_BChar(0)
                xRetVal := hb_BLeft(xRetVal, hb_BLen(xRetVal) - 1)
             ENDIF
@@ -220,7 +220,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
 
    IF win_regCreateKeyEx(nHKEY, cKeyName, 0, 0, 0, hb_bitOr(KEY_SET_VALUE, nRegSam), 0, @pKeyHandle)
 
-      /* no support for Arrays, Codeblock ... */
+      // no support for Arrays, Codeblock ...
       SWITCH ValType(xValue)
       CASE "L"
          nValueType := WIN_REG_DWORD

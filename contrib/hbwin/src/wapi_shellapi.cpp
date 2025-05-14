@@ -58,7 +58,7 @@ HB_FUNC(WAPI_SHELLEXECUTE)
 
   hb_retnint(reinterpret_cast<HB_PTRUINT>(
       ShellExecute(static_cast<HWND>(hb_parptr(1)),
-                   HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
+                   HB_PARSTR(2, &hOperation, nullptr), // edit, explore, open, print, play?, properties?
                    HB_PARSTRDEF(3, &hFile, nullptr), HB_PARSTR(4, &hParameters, nullptr),
                    HB_PARSTR(5, &hDirectory, nullptr), hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */)));
 
@@ -68,7 +68,7 @@ HB_FUNC(WAPI_SHELLEXECUTE)
   hb_strfree(hDirectory);
 }
 
-/* Code by Antonino Perricone */
+// Code by Antonino Perricone
 
 HB_FUNC(WAPI_SHELLEXECUTE_WAIT)
 {

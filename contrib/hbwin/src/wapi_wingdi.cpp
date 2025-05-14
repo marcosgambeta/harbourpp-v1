@@ -45,9 +45,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* WinCE MSDN documentation:
-      https://msdn.microsoft.com/library/aa923590
- */
+// WinCE MSDN documentation:
+//    https://msdn.microsoft.com/library/aa923590
 
 #if !defined(_HB_API_INTERNAL_)
 #define _HB_API_INTERNAL_
@@ -57,7 +56,7 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 
-/* For Arc() */
+// For Arc()
 #include <winspool.h>
 
 static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char *pszKey, long v)
@@ -403,9 +402,7 @@ HB_FUNC(__WAPI_DEVMODE_GET)
   }
 }
 
-/*
-WAPI_CREATEDC(cDriver, cDevice, cOutput, PDEVMODE) -> HDC
-*/
+// WAPI_CREATEDC(cDriver, cDevice, cOutput, PDEVMODE) -> HDC
 HB_FUNC(WAPI_CREATEDC)
 {
   void *hDriver;
@@ -420,9 +417,7 @@ HB_FUNC(WAPI_CREATEDC)
   hb_strfree(hOutput);
 }
 
-/*
-WAPI_RESETDC(hDC, PDEVMODE) -> .T./.F.
-*/
+// WAPI_RESETDC(hDC, PDEVMODE) -> .T./.F.
 HB_FUNC(WAPI_RESETDC)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -438,9 +433,7 @@ HB_FUNC(WAPI_RESETDC)
   }
 }
 
-/*
-WAPI_STARTDOC(hDC, DOCINFO) -> numeric
-*/
+// WAPI_STARTDOC(hDC, DOCINFO) -> numeric
 HB_FUNC(WAPI_STARTDOC)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -459,9 +452,7 @@ HB_FUNC(WAPI_STARTDOC)
   hbwapi_strfree_DOCINFO(hDOCINFO);
 }
 
-/*
-WAPI_ENDDOC(hDC) -> numeric
-*/
+// WAPI_ENDDOC(hDC) -> numeric
 HB_FUNC(WAPI_ENDDOC)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -476,9 +467,7 @@ HB_FUNC(WAPI_ENDDOC)
   }
 }
 
-/*
-WAPI_ABORTDOC(hDC) -> numeric
-*/
+// WAPI_ABORTDOC(hDC) -> numeric
 HB_FUNC(WAPI_ABORTDOC)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -493,9 +482,7 @@ HB_FUNC(WAPI_ABORTDOC)
   }
 }
 
-/*
-WAPI_STARTPAGE(hDC) -> numeric
-*/
+// WAPI_STARTPAGE(hDC) -> numeric
 HB_FUNC(WAPI_STARTPAGE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -510,9 +497,7 @@ HB_FUNC(WAPI_STARTPAGE)
   }
 }
 
-/*
-WAPI_ENDPAGE(hDC) -> numeric
-*/
+// WAPI_ENDPAGE(hDC) -> numeric
 HB_FUNC(WAPI_ENDPAGE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -527,9 +512,7 @@ HB_FUNC(WAPI_ENDPAGE)
   }
 }
 
-/*
-WAPI_SETBKMODE(hDC, n) -> numeric
-*/
+// WAPI_SETBKMODE(hDC, n) -> numeric
 HB_FUNC(WAPI_SETBKMODE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -544,9 +527,7 @@ HB_FUNC(WAPI_SETBKMODE)
   }
 }
 
-/*
-WAPI_GETBKMODE(hDC) -> numeric
-*/
+// WAPI_GETBKMODE(hDC) -> numeric
 HB_FUNC(WAPI_GETBKMODE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -561,9 +542,7 @@ HB_FUNC(WAPI_GETBKMODE)
   }
 }
 
-/*
-WAPI_GETDEVICECAPS(hDC, n) -> numeric
-*/
+// WAPI_GETDEVICECAPS(hDC, n) -> numeric
 HB_FUNC(WAPI_GETDEVICECAPS)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -578,9 +557,7 @@ HB_FUNC(WAPI_GETDEVICECAPS)
   }
 }
 
-/*
-WAPI_SETMAPMODE(hDC, n) -> numeric
-*/
+// WAPI_SETMAPMODE(hDC, n) -> numeric
 HB_FUNC(WAPI_SETMAPMODE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -595,9 +572,7 @@ HB_FUNC(WAPI_SETMAPMODE)
   }
 }
 
-/*
-WAPI_GETMAPMODE(hDC) -> numeric
-*/
+// WAPI_GETMAPMODE(hDC) -> numeric
 HB_FUNC(WAPI_GETMAPMODE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -612,9 +587,7 @@ HB_FUNC(WAPI_GETMAPMODE)
   }
 }
 
-/*
-WAPI_SETTEXTALIGN(hDC, n) -> numeric
-*/
+// WAPI_SETTEXTALIGN(hDC, n) -> numeric
 HB_FUNC(WAPI_SETTEXTALIGN)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -629,9 +602,7 @@ HB_FUNC(WAPI_SETTEXTALIGN)
   }
 }
 
-/*
-WAPI_GETTEXTALIGN(hDC) -> numeric
-*/
+// WAPI_GETTEXTALIGN(hDC) -> numeric
 HB_FUNC(WAPI_GETTEXTALIGN)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -646,9 +617,7 @@ HB_FUNC(WAPI_GETTEXTALIGN)
   }
 }
 
-/*
-WAPI_TEXTOUT(hDC, nRow, nCol, cData) -> .T./.F.
-*/
+// WAPI_TEXTOUT(hDC, nRow, nCol, cData) -> .T./.F.
 HB_FUNC(WAPI_TEXTOUT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -671,9 +640,7 @@ HB_FUNC(WAPI_TEXTOUT)
   hb_retnl(false);
 }
 
-/*
-WAPI_EXTTEXTOUT(hDC, nRow, nCol, nOptions, RECT, cData, aFontWidths) -> .T./.F.
-*/
+// WAPI_EXTTEXTOUT(hDC, nRow, nCol, nOptions, RECT, cData, aFontWidths) -> .T./.F.
 HB_FUNC(WAPI_EXTTEXTOUT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -696,7 +663,7 @@ HB_FUNC(WAPI_EXTTEXTOUT)
 
       for (HB_SIZE tmp = 0; tmp < nDataLen; ++tmp)
       {
-        /* Pad width array with last known value if passed array was smaller than length of the string. */
+        // Pad width array with last known value if passed array was smaller than length of the string.
         if (tmp < nFontWidthsLen)
         {
           iWidth = static_cast<INT>(hb_arrayGetNI(pFontWidths, tmp + 1));
@@ -726,9 +693,7 @@ HB_FUNC(WAPI_EXTTEXTOUT)
   }
 }
 
-/*
-WAPI_SETTEXTCOLOR(hDC, nColor) -> numeric
-*/
+// WAPI_SETTEXTCOLOR(hDC, nColor) -> numeric
 HB_FUNC(WAPI_SETTEXTCOLOR)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -743,9 +708,7 @@ HB_FUNC(WAPI_SETTEXTCOLOR)
   }
 }
 
-/*
-WAPI_GETTEXTCOLOR(hDC) -> numeric
-*/
+// WAPI_GETTEXTCOLOR(hDC) -> numeric
 HB_FUNC(WAPI_GETTEXTCOLOR)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -760,9 +723,7 @@ HB_FUNC(WAPI_GETTEXTCOLOR)
   }
 }
 
-/*
-WAPI_GETTEXTFACE(hDC) -> cFontName
-*/
+// WAPI_GETTEXTFACE(hDC) -> cFontName
 HB_FUNC(WAPI_GETTEXTFACE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -781,9 +742,7 @@ HB_FUNC(WAPI_GETTEXTFACE)
   }
 }
 
-/*
-WAPI_SETBKCOLOR(hDC, nColor) -> numeric
-*/
+// WAPI_SETBKCOLOR(hDC, nColor) -> numeric
 HB_FUNC(WAPI_SETBKCOLOR)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -798,9 +757,7 @@ HB_FUNC(WAPI_SETBKCOLOR)
   }
 }
 
-/*
-WAPI_GETBKCOLOR(hDC) -> numeric
-*/
+// WAPI_GETBKCOLOR(hDC) -> numeric
 HB_FUNC(WAPI_GETBKCOLOR)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -815,17 +772,13 @@ HB_FUNC(WAPI_GETBKCOLOR)
   }
 }
 
-/*
-WAPI_CREATEPEN(nPenStyle, nWidth, nColor) -> HPEN
-*/
+// WAPI_CREATEPEN(nPenStyle, nWidth, nColor) -> HPEN
 HB_FUNC(WAPI_CREATEPEN)
 {
   hbwapi_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), static_cast<COLORREF>(hb_parnl(3))));
 }
 
-/*
-WAPI_CREATESOLIDBRUSH(nColor) -> HBRUSH
-*/
+// WAPI_CREATESOLIDBRUSH(nColor) -> HBRUSH
 HB_FUNC(WAPI_CREATESOLIDBRUSH)
 {
   auto h = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(1)));
@@ -833,18 +786,13 @@ HB_FUNC(WAPI_CREATESOLIDBRUSH)
   hbwapi_ret_HBRUSH(h);
 }
 
-/*
-WAPI_CREATEHATCHBRUSH(nStyle, nColor) -> HBRUSH
-*/
+// WAPI_CREATEHATCHBRUSH(nStyle, nColor) -> HBRUSH
 HB_FUNC(WAPI_CREATEHATCHBRUSH)
 {
   hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni(1), static_cast<COLORREF>(hb_parnl(2))));
 }
 
-/*
-WAPI_CREATEFONT(nHeight, nWidth, nEscapement, nOrientation, nWeight, lItalic, lUnderline, lStrikeOut, nCharSet,
-[nOutputPrecision], [nClipPrecision], [nQuality], [nPitchAndFamily], cFontFace) -> HFONT
-*/
+// WAPI_CREATEFONT(nHeight, nWidth, nEscapement, nOrientation, nWeight, lItalic, lUnderline, lStrikeOut, nCharSet, [nOutputPrecision], [nClipPrecision], [nQuality], [nPitchAndFamily], cFontFace) -> HFONT
 HB_FUNC(WAPI_CREATEFONT)
 {
   void *hFontFace;
@@ -859,9 +807,7 @@ HB_FUNC(WAPI_CREATEFONT)
   hb_strfree(hFontFace);
 }
 
-/*
-WAPI_CREATEFONTINDIRECT(LOGFONT) -> HFONT
-*/
+// WAPI_CREATEFONTINDIRECT(LOGFONT) -> HFONT
 HB_FUNC(WAPI_CREATEFONTINDIRECT)
 {
   LOGFONT p;
@@ -876,9 +822,7 @@ HB_FUNC(WAPI_CREATEFONTINDIRECT)
   }
 }
 
-/*
-WAPI_SELECTOBJECT(hDC, hGDIOBJ) -> numeric/.T./.F.
-*/
+// WAPI_SELECTOBJECT(hDC, hGDIOBJ) -> numeric/.T./.F.
 HB_FUNC(WAPI_SELECTOBJECT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -893,7 +837,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
   }
   else if ((h = hbwapi_par_HFONT(2)) != nullptr)
   {
-    /* TODO: Add BITMAP, REGION */
+    // TODO: Add BITMAP, REGION
   }
   else
   {
@@ -902,14 +846,14 @@ HB_FUNC(WAPI_SELECTOBJECT)
 
   if (hDC && h)
   {
-    /* TODO: Solve reference counting to 'h' handle. Also for returned one. */
+    // TODO: Solve reference counting to 'h' handle. Also for returned one.
     if (bRegion)
     {
       hb_retnint(reinterpret_cast<HB_PTRUINT>(SelectObject(hDC, h)));
     }
     else
     {
-      hb_retl(SelectObject(hDC, h) != nullptr); /* NOTE: We don't return a raw pointer. */
+      hb_retl(SelectObject(hDC, h) != nullptr); // NOTE: We don't return a raw pointer.
     }
   }
   else
@@ -918,9 +862,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
   }
 }
 
-/*
-WAPI_MOVETOEX(hDC, nX, nY, [POINT]) -> .T./.F.
-*/
+// WAPI_MOVETOEX(hDC, nX, nY, [POINT]) -> .T./.F.
 HB_FUNC(WAPI_MOVETOEX)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -946,9 +888,7 @@ HB_FUNC(WAPI_MOVETOEX)
   }
 }
 
-/*
-WAPI_LINETO(hDC, nXEnd, nYEnd) -> .T./.F.
-*/
+// WAPI_LINETO(hDC, nXEnd, nYEnd) -> .T./.F.
 HB_FUNC(WAPI_LINETO)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -963,9 +903,7 @@ HB_FUNC(WAPI_LINETO)
   }
 }
 
-/*
-WAPI_FILLRECT(hDC, RECT, hBrush) -> numeric
-*/
+// WAPI_FILLRECT(hDC, RECT, hBrush) -> numeric
 HB_FUNC(WAPI_FILLRECT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -982,9 +920,7 @@ HB_FUNC(WAPI_FILLRECT)
   }
 }
 
-/*
-WAPI_ROUNDRECT(hDC, nX1, nY1, nX2, nY2, nWidth, nHeight) -> .T./.F.
-*/
+// WAPI_ROUNDRECT(hDC, nX1, nY1, nX2, nY2, nWidth, nHeight) -> .T./.F.
 HB_FUNC(WAPI_ROUNDRECT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -999,9 +935,7 @@ HB_FUNC(WAPI_ROUNDRECT)
   }
 }
 
-/*
-WAPI_RECTANGLE(hDC, nX1, nY1, nX2, nY2) -> .T./.F.
-*/
+// WAPI_RECTANGLE(hDC, nX1, nY1, nX2, nY2) -> .T./.F.
 HB_FUNC(WAPI_RECTANGLE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -1016,9 +950,7 @@ HB_FUNC(WAPI_RECTANGLE)
   }
 }
 
-/*
-WAPI_ARC(hDC, nLeftRect, nTopRect, nRightRect, nBottomRect, nXStartArc, nYStartArc, nXEndArc, nYEndArc) -> .T./.F.
-*/
+// WAPI_ARC(hDC, nLeftRect, nTopRect, nRightRect, nBottomRect, nXStartArc, nYStartArc, nXEndArc, nYEndArc) -> .T./.F.
 HB_FUNC(WAPI_ARC)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -1034,9 +966,7 @@ HB_FUNC(WAPI_ARC)
   }
 }
 
-/*
-WAPI_ELLIPSE(hDC, nLeftRect, nTopRect, nRightRect, nBottomRect) -> .T./.F.
-*/
+// WAPI_ELLIPSE(hDC, nLeftRect, nTopRect, nRightRect, nBottomRect) -> .T./.F.
 HB_FUNC(WAPI_ELLIPSE)
 {
   HDC hDC = hbwapi_par_HDC(1);

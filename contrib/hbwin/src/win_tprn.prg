@@ -45,21 +45,19 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/*
-   win_Prn() was designed to make it easy to emulate Clipper Dot Matrix printing.
-   Dot Matrix printing was in CPI ( Characters per inch and Lines per inch ).
-   Even though "Mapping Mode" for win_Prn() is WIN_MM_TEXT, ::SetFont() accepts the
-   xWidth parameter in CPI not Pixels. Also the default ::LineHeight is for
-   6 lines per inch so ::NewLine() works as per "LineFeed" on Dot Matrix printers.
-   If you do not like this then inherit from the class and override anything you want
-
-   Simple example
-
-   TODO: Color printing
-         etc....
-
-   Peter Rees 2004-01-21 <peter@rees.co.nz>
- */
+// win_Prn() was designed to make it easy to emulate Clipper Dot Matrix printing.
+// Dot Matrix printing was in CPI ( Characters per inch and Lines per inch ).
+// Even though "Mapping Mode" for win_Prn() is WIN_MM_TEXT, ::SetFont() accepts the
+// xWidth parameter in CPI not Pixels. Also the default ::LineHeight is for
+// 6 lines per inch so ::NewLine() works as per "LineFeed" on Dot Matrix printers.
+// If you do not like this then inherit from the class and override anything you want
+//
+// Simple example
+//
+// TODO: Color printing
+//       etc....
+//
+// Peter Rees 2004-01-21 <peter@rees.co.nz>
 
 #include <hbclass.ch>
 
@@ -121,7 +119,7 @@ CREATE CLASS win_Prn
    METHOD GetTextHeight(cString)
    METHOD DrawBitmap(oBmp)
 
-   /* Clipper compatible functions. */
+   // Clipper compatible functions.
    METHOD SetPRC(nRow, nCol)   // Based on ::LineHeight and current ::CharWidth
    METHOD PRow()
    METHOD PCol()
@@ -149,8 +147,8 @@ CREATE CLASS win_Prn
 
    VAR AskProperties    INIT .F.
 
-   /* These next 6 variables must be set before calling ::Create() if
-      you wish to alter the defaults */
+   // These next 6 variables must be set before calling ::Create() if
+   // you wish to alter the defaults
    VAR FormType         INIT 0
    VAR BinNumber        INIT 0
    VAR Landscape        INIT .F.
@@ -212,7 +210,7 @@ ENDCLASS
 METHOD win_Prn:New(cPrinter)
 
    ::PrinterName := IIf(Empty(cPrinter), win_printerGetDefault(), cPrinter)
-   /* Initialized with the current properties of the printer [jarabal] */
+   // Initialized with the current properties of the printer [jarabal]
    ::GetDocumentProperties()
 
    RETURN Self

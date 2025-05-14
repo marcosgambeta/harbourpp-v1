@@ -85,8 +85,8 @@ static HINSTANCE s_hInstDll;
 
 static HB_BOOL s_objItemToVariant(VARIANT *pVariant, PHB_ITEM pItem);
 
-/* helper functions
- */
+// helper functions
+
 static DISPID hb_dynsymToDispId(PHB_DYNS pDynSym)
 {
   return static_cast<DISPID>(hb_dynsymToNum(pDynSym));
@@ -111,7 +111,7 @@ static void hb_errRT_OLESRV(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERR
       hb_errRT_New(ES_ERROR, "OLESERVER", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
   if (hb_pcount() != 0)
   {
-    /* HB_ERR_ARGS_BASEPARAMS */
+    // HB_ERR_ARGS_BASEPARAMS
     PHB_ITEM pArray = hb_arrayBaseParams();
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
@@ -198,8 +198,8 @@ static HB_BOOL s_getKeyValue(LPCTSTR lpKey, LPTSTR lpBuffer, int iLen)
   return iSize != 0;
 }
 
-/* IHbOleServer
- */
+// IHbOleServer
+
 #if !defined(HB_OLE_C_API)
 struct IDispatchVtbl
 {
@@ -524,8 +524,8 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
 static const IDispatchVtbl IHbOleServer_Vtbl = {QueryInterface, AddRef,        Release, GetTypeInfoCount,
                                                 GetTypeInfo,    GetIDsOfNames, Invoke};
 
-/* IClassFactory object
- */
+// IClassFactory object
+
 #if !defined(HB_OLE_C_API)
 struct IClassFactoryVtbl
 {
@@ -681,8 +681,8 @@ static HRESULT STDMETHODCALLTYPE classLockServer(IClassFactory *lpThis, BOOL fLo
 static const IClassFactoryVtbl IClassFactory_Vtbl = {classQueryInterface, classAddRef, classRelease,
                                                      classCreateInstance, classLockServer};
 
-/* OLE InProc DLL server API
- */
+// OLE InProc DLL server API
+
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
 {
   HRESULT hr;
@@ -705,8 +705,7 @@ STDAPI DllCanUnloadNow(void)
   return (s_lObjectCount | s_lLockCount) ? S_FALSE : S_OK;
 }
 
-/* server register/unregister code
- */
+// server register/unregister code
 
 STDAPI DllUnregisterServer(void)
 {
@@ -837,10 +836,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved)
   return fResult;
 }
 
-/*
-win_oleServerInit(<cClassID>, <cServerName>, [<hAction> | <oAction> | <bAction> | <sAction>], [<lHashClone> |
-<lAcceptAll>])
- */
+// win_oleServerInit(<cClassID>, <cServerName>, [<hAction> | <oAction> | <bAction> | <sAction>], [<lHashClone> | <lAcceptAll>])
 HB_FUNC(WIN_OLESERVERINIT)
 {
   HB_ERRCODE errCode = 0;

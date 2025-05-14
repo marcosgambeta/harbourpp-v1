@@ -50,7 +50,7 @@
 
 static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
-  using DEFPRINTER = BOOL(WINAPI *)(LPCTSTR); /* stops warnings */
+  using DEFPRINTER = BOOL(WINAPI *)(LPCTSTR); // stops warnings
 
   HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
   if (!hWinSpool)
@@ -73,8 +73,8 @@ static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
     return false;
   }
 
-  /* Tell all open programs that this change occurred.
-     Allow each app 1 second to handle this message. */
+  // Tell all open programs that this change occurred.
+  // Allow each app 1 second to handle this message.
   SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, nullptr);
 
   return true;

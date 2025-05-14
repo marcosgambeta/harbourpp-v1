@@ -79,7 +79,7 @@ HB_FUNC(WIN_PRINTEREXISTS)
   {
     auto pszPrinterName = hb_parc(1);
 
-    /* Don't bother with test if '\' in string */
+    // Don't bother with test if '\' in string
     if (!strchr(pszPrinterName, HB_OS_PATH_LIST_SEP_CHR) && !hb_IsLegacyDevice(pszPrinterName))
     {
       DWORD dwNeeded = 0, dwReturned = 0;
@@ -124,7 +124,7 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
   HB_ITEMPUTSTR(pPrinterName, lpPrinterName);
 
   if (!bResult)
-  { /* Win9x and Windows NT 4.0 or earlier & 2000+ if necessary for some reason i.e. dll could not load! */
+  { // Win9x and Windows NT 4.0 or earlier & 2000+ if necessary for some reason i.e. dll could not load!
     TCHAR lpPrinterName[256];
 
     DWORD dwSize = GetProfileString(TEXT("windows"), TEXT("device"), TEXT(""), lpPrinterName,
@@ -270,7 +270,7 @@ HB_FUNC(WIN_PRINTERSTATUS)
 
 HB_FUNC(WIN_PRINTERPORTTONAME)
 {
-  /* Set default return value */
+  // Set default return value
   hb_retc_null();
 
   if (hb_parclen(1) > 0)

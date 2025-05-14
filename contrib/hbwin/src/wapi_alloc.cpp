@@ -51,13 +51,13 @@ static HB_GARBAGE_FUNC(s_gc_HDC_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     DeleteDC(static_cast<HDC>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -91,13 +91,13 @@ static HB_GARBAGE_FUNC(s_gc_HPEN_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     DeleteObject(static_cast<HPEN>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -131,13 +131,13 @@ static HB_GARBAGE_FUNC(s_gc_HBRUSH_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     DeleteObject(static_cast<HBRUSH>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -171,13 +171,13 @@ static HB_GARBAGE_FUNC(s_gc_HFONT_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     DeleteObject(static_cast<HFONT>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -211,13 +211,13 @@ static HB_GARBAGE_FUNC(s_gc_PDEVMODE_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     hb_xfree(*ph);
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }

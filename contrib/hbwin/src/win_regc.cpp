@@ -53,7 +53,7 @@ static HKEY hb_regkeyconv(HB_PTRUINT nKey)
   {
   case 1:
     return static_cast<HKEY>(HKEY_CLASSES_ROOT);
-  /* NOTE: In xhb, zero value means HKEY_LOCAL_MACHINE. */
+  // NOTE: In xhb, zero value means HKEY_LOCAL_MACHINE.
   case 0:
   case 2:
     return static_cast<HKEY>(HKEY_CURRENT_USER);
@@ -127,7 +127,7 @@ HB_FUNC(WIN_REGQUERYVALUEEX)
         hb_xfree(lpValue);
       }
       else
-      { /* No translation for binary data */
+      { // No translation for binary data
         auto lpValue = static_cast<LPBYTE>(hb_xgrab(dwSize + 1));
 
         if (RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) ==
@@ -197,7 +197,7 @@ HB_FUNC(WIN_REGSETVALUEEX)
     hb_strfree(hValue);
   }
   else
-  { /* No translation for binary data */
+  { // No translation for binary data
     hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType,
                           reinterpret_cast<const BYTE *>(hb_parc(5)) /* cValue */,
                           static_cast<DWORD>(hb_parclen(5)) + 1) == ERROR_SUCCESS);

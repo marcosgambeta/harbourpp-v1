@@ -50,7 +50,7 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include <hbapi.hpp> /* for HB_OS_* detection */
+#include <hbapi.hpp> // for HB_OS_* detection
 
 #if defined(UNICODE)
 #define HB_UNICODE_ORI
@@ -80,7 +80,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
 {
   HINSTANCE hMapiDll;
 
-  /* Set default return value */
+  // Set default return value
   hb_retnl(-1);
 
   if ((hMapiDll = hbwapi_LoadLibrarySystem(
@@ -142,7 +142,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
       if (pFrom && hb_arrayLen(pFrom) >= 2)
       {
         origin.lpszName = const_cast<LPSTR>(HB_ARRAYGETSTR(pFrom, 1, &hString[iString++], nullptr));
-        origin.lpszAddress = const_cast<LPSTR>(HB_ARRAYGETSTR(pFrom, 2, &hString[iString++], nullptr)); /* optional */
+        origin.lpszAddress = const_cast<LPSTR>(HB_ARRAYGETSTR(pFrom, 2, &hString[iString++], nullptr)); // optional
         origin.ulRecipClass = MAPI_ORIG;
         note.lpOriginator = &origin;
       }
@@ -210,7 +210,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
           note.lpFiles[note.nFileCount].lpszPathName =
               const_cast<LPSTR>(HB_ARRAYGETSTR(pItem, 1, &hString[iString++], nullptr));
           note.lpFiles[note.nFileCount].lpszFileName =
-              const_cast<LPSTR>(HB_ARRAYGETSTR(pItem, 2, &hString[iString++], nullptr)); /* optional */
+              const_cast<LPSTR>(HB_ARRAYGETSTR(pItem, 2, &hString[iString++], nullptr)); // optional
           note.lpFiles[note.nFileCount].nPosition = static_cast<ULONG>(-1);
           ++note.nFileCount;
         }

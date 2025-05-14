@@ -48,7 +48,7 @@
 #include "hbwin.hpp"
 #include <hbapiitm.hpp>
 
-HB_FUNC(WCE_SIMINITIALIZE) /* hSim by reference, lNotifications */
+HB_FUNC(WCE_SIMINITIALIZE) // hSim by reference, lNotifications
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
   HSIM hSim = 0;
@@ -62,7 +62,7 @@ HB_FUNC(WCE_SIMINITIALIZE) /* hSim by reference, lNotifications */
 #endif
 }
 
-HB_FUNC(WCE_SIMDEINITIALIZE) /* hSim */
+HB_FUNC(WCE_SIMDEINITIALIZE) // hSim
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
   hb_retnl(SimDeinitialize(static_cast<HSIM>(hb_parptr(1))));
@@ -71,7 +71,7 @@ HB_FUNC(WCE_SIMDEINITIALIZE) /* hSim */
 #endif
 }
 
-HB_FUNC(WCE_SIMPHONEBOOKSTATUS) /* hSim, nLocation, @nTotal, @nUsed */
+HB_FUNC(WCE_SIMPHONEBOOKSTATUS) // hSim, nLocation, @nTotal, @nUsed
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
   DWORD dwUsed = 0, dwTotal = 0;
@@ -89,7 +89,7 @@ HB_FUNC(WCE_SIMPHONEBOOKSTATUS) /* hSim, nLocation, @nTotal, @nUsed */
 #endif
 }
 
-HB_FUNC(WCE_SIMREADPHONEBOOKENTRY) /* hSim, nLocation, nPos, @aEntry */
+HB_FUNC(WCE_SIMREADPHONEBOOKENTRY) // hSim, nLocation, nPos, @aEntry
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
   auto hSim = static_cast<HSIM>(hb_parptr(1));
@@ -114,7 +114,7 @@ HB_FUNC(WCE_SIMREADPHONEBOOKENTRY) /* hSim, nLocation, nPos, @aEntry */
 #endif
 }
 
-HB_FUNC(WCE_SIMWRITEPHONEBOOKENTRY) /* hSim, nLocation, nPos, cNumber, cName, nPlan, nAddrType */
+HB_FUNC(WCE_SIMWRITEPHONEBOOKENTRY) // hSim, nLocation, nPos, cNumber, cName, nPlan, nAddrType
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
   SIMPHONEBOOKENTRY PhoneEntry;
@@ -139,7 +139,7 @@ HB_FUNC(WCE_SIMWRITEPHONEBOOKENTRY) /* hSim, nLocation, nPos, cNumber, cName, nP
 #endif
 }
 
-HB_FUNC(WCE_SIMDELETEPHONEBOOKENTRY) /* hSim, nLocation, nPos */
+HB_FUNC(WCE_SIMDELETEPHONEBOOKENTRY) // hSim, nLocation, nPos
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
   hb_retnl(SimDeletePhonebookEntry(static_cast<HSIM>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)),

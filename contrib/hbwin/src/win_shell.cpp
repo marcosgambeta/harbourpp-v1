@@ -51,7 +51,7 @@
 #endif
 
 #undef _WIN32_IE
-#define _WIN32_IE 0x0500 /* request Windows 2000 features for NOTIFYICONDATA */
+#define _WIN32_IE 0x0500 // request Windows 2000 features for NOTIFYICONDATA
 
 #include "hbwapi.hpp"
 #include <hbapiitm.hpp>
@@ -85,9 +85,9 @@
 #define HB_WIN_V_UNION(x, z) ((x).z)
 #endif
 
-/* win_ShellNotifyIcon([<hWnd>], [<nUID>], [<nMessage>], [<hIcon>],
-                       [<cTooltip>], [<lAddDel>],
-                       [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>]) --> <lOK> */
+// win_ShellNotifyIcon([<hWnd>], [<nUID>], [<nMessage>], [<hIcon>],
+//                     [<cTooltip>], [<lAddDel>],
+//                     [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>]) --> <lOK>
 HB_FUNC(WIN_SHELLNOTIFYICON)
 {
   NOTIFYICONDATA tnid{};
@@ -109,9 +109,9 @@ HB_FUNC(WIN_SHELLNOTIFYICON)
     tnid.uFlags |= NIF_TIP;
   }
 
-#if defined(NIF_INFO) /* did the headers provide Windows 2000 features? */
+#if defined(NIF_INFO) // did the headers provide Windows 2000 features?
   if (hb_iswin2k())
-  { /* are we running on Windows 2000 or above? */
+  { // are we running on Windows 2000 or above?
     if (HB_ITEMCOPYSTR(hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY(tnid.szInfo)) > 0)
     {
       tnid.uFlags |= NIF_INFO;
@@ -128,10 +128,9 @@ HB_FUNC(WIN_SHELLNOTIFYICON)
   hbwapi_ret_L(Shell_NotifyIcon(HB_ISLOG(6) ? (hb_parl(6) ? NIM_ADD : NIM_DELETE) : NIM_MODIFY, &tnid));
 }
 
-/* Details:
-      https://msdn.microsoft.com/library/bb762164
-      https://msdn.microsoft.com/library/bb759795
- */
+// Details:
+//    https://msdn.microsoft.com/library/bb762164
+//    https://msdn.microsoft.com/library/bb759795
 
 #if defined(__MINGW32__)
 #include <_mingw.h>
@@ -216,9 +215,9 @@ static LPTSTR s_StringList(int iParam)
   return lpStr;
 }
 
-/* win_SHFileOperation([<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
-                       [<nFlags>], [<@lAnyOperationAborted>],
-                       [<aNameMappings>], [<cProgressTitle>]) -> <nResult> */
+// win_SHFileOperation([<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
+//                     [<nFlags>], [<@lAnyOperationAborted>],
+//                     [<aNameMappings>], [<cProgressTitle>]) -> <nResult>
 HB_FUNC(WIN_SHFILEOPERATION)
 {
   SHFILEOPSTRUCT fop;
@@ -256,7 +255,7 @@ HB_FUNC(WIN_SHFILEOPERATION)
     auto hm = static_cast<HANDLETOMAPPINGS *>(fop.hNameMappings);
     auto pArray = hb_param(7, Harbour::Item::ARRAY);
 
-    /* Process hNameMappings */
+    // Process hNameMappings
     if (hm)
     {
       if (pArray)
@@ -270,7 +269,7 @@ HB_FUNC(WIN_SHFILEOPERATION)
         {
           hb_arrayNew(pTempItem, 2);
 
-          /* always returns UNICODE on NT and upper systems */
+          // always returns UNICODE on NT and upper systems
           HB_ARRAYSETSTRLEN(pTempItem, 1, static_cast<LPTSTR>(pmap[tmp].pszOldPath), pmap[tmp].cchOldPath);
           HB_ARRAYSETSTRLEN(pTempItem, 2, static_cast<LPTSTR>(pmap[tmp].pszNewPath), pmap[tmp].cchNewPath);
 

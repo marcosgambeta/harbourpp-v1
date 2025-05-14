@@ -63,7 +63,7 @@ HB_SIZE hbwapi_tstrlen(const TCHAR *pText)
   return nLen;
 }
 
-/* NOTE: Based on hb_strdup() */
+// NOTE: Based on hb_strdup()
 TCHAR *hbwapi_tstrdup(const TCHAR *pszText)
 {
 #if 0
@@ -76,7 +76,7 @@ TCHAR *hbwapi_tstrdup(const TCHAR *pszText)
   return pszDup;
 }
 
-/* NOTE: Based on hb_strncat() */
+// NOTE: Based on hb_strncat()
 TCHAR *hbwapi_tstrncat(TCHAR *pDest, const TCHAR *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -138,7 +138,7 @@ HMODULE hbwapi_LoadLibrarySystem(LPCTSTR pFileName)
 {
   TCHAR *pLibPath = hbwapi_FileNameAtSystemDir(pFileName);
 
-  /* TODO: Replace flag with LOAD_LIBRARY_SEARCH_SYSTEM32 in the future [vszakats] */
+  // TODO: Replace flag with LOAD_LIBRARY_SEARCH_SYSTEM32 in the future [vszakats]
   HMODULE h = LoadLibraryEx(pLibPath, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 
   hb_xfree(pLibPath);

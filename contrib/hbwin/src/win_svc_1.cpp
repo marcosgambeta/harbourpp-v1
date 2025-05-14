@@ -56,7 +56,7 @@ static PHB_ITEM s_pHarbourEntryFunc = nullptr;
 static PHB_ITEM s_pHarbourControlFunc = nullptr;
 static TCHAR s_lpServiceName[256];
 
-/* Control handler function */
+// Control handler function
 static VOID WINAPI hbwin_SvcControlHandler(DWORD fdwControl)
 {
   if (s_pHarbourControlFunc)
@@ -94,7 +94,7 @@ static VOID WINAPI hbwin_SvcControlHandler(DWORD fdwControl)
     return;
   }
 
-  SetServiceStatus(s_hStatus, &s_ServiceStatus); /* Report current status */
+  SetServiceStatus(s_hStatus, &s_ServiceStatus); // Report current status
 }
 
 static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
@@ -119,7 +119,7 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
 
         if (!s_pHarbourControlFunc)
         {
-          /* We report the running status to SCM. */
+          // We report the running status to SCM.
           s_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
           SetServiceStatus(s_hStatus, &s_ServiceStatus);
         }

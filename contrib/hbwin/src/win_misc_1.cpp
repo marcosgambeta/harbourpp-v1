@@ -57,7 +57,7 @@ HB_FUNC(WIN_LOADRESOURCE)
 {
   HANDLE hInstance = nullptr;
 
-  /* Set default return value */
+  // Set default return value
   hb_retc_null();
 
   if (hb_winmainArgGet(&hInstance, nullptr, nullptr))
@@ -94,7 +94,7 @@ HB_FUNC(WIN_GETCOMMANDLINEPARAM)
   HB_BOOL fQuote = false;
   long pos;
 
-  /* Skip application path */
+  // Skip application path
   pos = 0;
   while (lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos])))
   {
@@ -198,8 +198,8 @@ HB_FUNC(WIN_SYSREFRESH)
 
   HANDLE hDummyEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 
-  /* Begin the operation and continue until it is complete
-     or until the user clicks the mouse or presses a key. */
+  // Begin the operation and continue until it is complete
+  // or until the user clicks the mouse or presses a key.
 
   if (MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec),
                                 QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1)
@@ -225,7 +225,7 @@ HB_FUNC(WIN_SYSREFRESH)
             case WM_LBUTTONUP:
             case WM_RBUTTONUP:
             case WM_KEYUP:
-               /* Perform any required cleanup. */
+               // Perform any required cleanup.
                break;
 #endif
       default:

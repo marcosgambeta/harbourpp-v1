@@ -49,20 +49,20 @@
 
 #include "hbwin.ch"
 
-/* The class is a VERY thin layer over the xHarbour functions and the xHarbour functions
-   are a VERY thin layer over the Win functions, almost no parameter checking! You get what you
-   pay for :)
-
-   I haven't bothered to remember things that you can remember for yourself - the state of DTR (low
-   to begin with) or the baud rate for example, you can always sub-class it.
-
-   I've only done the things that I've found useful over the years, for example I never used the
-   "BREAK" state of a line so I haven't done it here.
-
-   The class needs the port to be already open to change timeouts and buffer sizes, it doesn't have to
-   be that way, but it is.
-
-   Really Windows comms should be done with threads and/or OVERLAPPED I/O - and I haven't. */
+// The class is a VERY thin layer over the xHarbour functions and the xHarbour functions
+// are a VERY thin layer over the Win functions, almost no parameter checking! You get what you
+// pay for :)
+//
+// I haven't bothered to remember things that you can remember for yourself - the state of DTR (low
+// to begin with) or the baud rate for example, you can always sub-class it.
+//
+// I've only done the things that I've found useful over the years, for example I never used the
+// "BREAK" state of a line so I haven't done it here.
+//
+// The class needs the port to be already open to change timeouts and buffer sizes, it doesn't have to
+// be that way, but it is.
+//
+// Really Windows comms should be done with threads and/or OVERLAPPED I/O - and I haven't.
 
 CREATE CLASS win_Com
 
@@ -163,10 +163,10 @@ METHOD win_Com:QueueStatus(lCTSHold, lDSRHold, lDCDHold, lXoffHold, lXoffSent, n
    RETURN win_comQueueStatus(::nPort, @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue)
 
 METHOD win_Com:SetRTS(lCTS)
-   RETURN win_comSetRTS(::nPort, lCTS) /* boolean return is the status of the call not the line! */
+   RETURN win_comSetRTS(::nPort, lCTS) // boolean return is the status of the call not the line!
 
 METHOD win_Com:SetDTR(lDTR)
-   RETURN win_comSetDTR(::nPort, lDTR) /* boolean return is the status of the call not the line! */
+   RETURN win_comSetDTR(::nPort, lDTR) // boolean return is the status of the call not the line!
 
 METHOD win_Com:RTSFlow(nRTS)
    RETURN win_comRTSFlow(::nPort, nRTS)
@@ -192,8 +192,8 @@ METHOD win_Com:Close(nDrain)
 METHOD win_Com:DebugDCB(nDebug)
    RETURN win_comDebugDCB(::nPort, nDebug)
 
-/* Since the win_Com functions are an amalgamation of Win functions this allows
-   you to see what call did the deed when things go wrong. */
+// Since the win_Com functions are an amalgamation of Win functions this allows
+// you to see what call did the deed when things go wrong.
 
 METHOD win_Com:ErrorText()
 
@@ -223,7 +223,7 @@ METHOD win_Com:ErrorText()
       cString := "Function number (" + hb_ntos(nFcn) + ") invalid, "
    ENDIF
 
-   /* WinPortError clears the error - don't call it twice */
+   // WinPortError clears the error - don't call it twice
    cMsg := Space(256)
    wapi_FormatMessage(NIL, NIL, nError := win_comError(::nPort), NIL, @cMsg)
 

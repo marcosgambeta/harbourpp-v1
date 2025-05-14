@@ -64,7 +64,7 @@ HB_FUNC(WAPI_MESSAGEBOX)
 static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                IN WORD wLanguageId, IN DWORD dwMilliseconds)
 {
-  /* undocumented Windows API */
+  // undocumented Windows API
   using _HB_MSGBOXTOUT = int(__stdcall *)(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                           IN WORD wLanguageId, IN DWORD dwMilliseconds);
   static auto s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);

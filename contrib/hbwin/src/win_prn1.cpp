@@ -119,7 +119,7 @@ HB_FUNC(WIN_ABORTDOC)
   hb_retl(hDC && (AbortDoc(hDC) > 0));
 }
 
-/* Compatibility dummy */
+// Compatibility dummy
 HB_FUNC(WIN_DELETEDC)
 {
   hb_retni(0);
@@ -163,7 +163,7 @@ HB_FUNC(WIN_TEXTOUT)
 
       auto iRow = hb_parni(2);
       auto iCol = hb_parni(3);
-      auto iWidth = hb_parni(6); /* defaults to 0 */
+      auto iWidth = hb_parni(6); // defaults to 0
 
       if (HB_ISNUM(7))
       {
@@ -190,8 +190,8 @@ HB_FUNC(WIN_TEXTOUT)
       else if (ExtTextOut(hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), nullptr))
       {
         GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen),
-                             &sSize);          /* Get the length of the text in device size */
-        lResult = static_cast<long>(sSize.cx); /* return the width so we can update the current pen position (::PosY) */
+                             &sSize);          // Get the length of the text in device size
+        lResult = static_cast<long>(sSize.cx); // return the width so we can update the current pen position (::PosY)
       }
     }
 
@@ -223,15 +223,15 @@ HB_FUNC(WIN_GETTEXTSIZE)
     {
       SIZE sSize;
 
-      GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize); /* Get the length of the text in device size */
+      GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize); // Get the length of the text in device size
 
       if (hb_parldef(4, true))
       {
-        lResult = static_cast<long>(sSize.cx); /* return the width */
+        lResult = static_cast<long>(sSize.cx); // return the width
       }
       else
       {
-        lResult = static_cast<long>(sSize.cy); /* return the height */
+        lResult = static_cast<long>(sSize.cy); // return the height
       }
     }
 
@@ -297,7 +297,7 @@ HB_FUNC(WIN_CREATEFONT)
     iWeight = iWeight > 0 ? iWeight : FW_NORMAL;
 
     if (hb_parl(10))
-    { /* Ugly hack to enable full control for caller */
+    { // Ugly hack to enable full control for caller
       iHeight = hb_parni(3);
       iWidth = hb_parni(5);
     }
@@ -314,7 +314,7 @@ HB_FUNC(WIN_CREATEFONT)
       }
       else
       {
-        iWidth = 0; /* Use the default font width */
+        iWidth = 0; // Use the default font width
       }
     }
 
@@ -415,7 +415,7 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
                         HB_ISBYREF(8) || HB_ISBYREF(9) || HB_ISBYREF(10);
 
           if ((iProp = hb_parni(3)) != 0)
-          { /* [2007-02-22] don't change if 0 */
+          { // [2007-02-22] don't change if 0
             pDevMode->dmPaperSize = static_cast<short>(iProp);
             dmFields |= DM_PAPERSIZE;
           }
@@ -433,19 +433,19 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
           }
 
           if ((iProp = hb_parni(6)) != 0)
-          { /* [2007-02-22] don't change if 0 */
+          { // [2007-02-22] don't change if 0
             pDevMode->dmDefaultSource = static_cast<short>(iProp);
             dmFields |= DM_DEFAULTSOURCE;
           }
 
           if ((iProp = hb_parni(7)) != 0)
-          { /* [2007-02-22] don't change if 0 */
+          { // [2007-02-22] don't change if 0
             pDevMode->dmDuplex = static_cast<short>(iProp);
             dmFields |= DM_DUPLEX;
           }
 
           if ((iProp = hb_parni(8)) != 0)
-          { /* [2007-02-22] don't change if 0 */
+          { // [2007-02-22] don't change if 0
             pDevMode->dmPrintQuality = static_cast<short>(iProp);
             dmFields |= DM_PRINTQUALITY;
           }

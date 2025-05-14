@@ -117,7 +117,7 @@ HB_FUNC(WIN_COMOPEN)
       return;
     }
 
-    /* Initialised with NO flow control or control signals! */
+    // Initialised with NO flow control or control signals!
     NewDCB.BaudRate = dwBaudRate;
     NewDCB.fBinary = 1;
     NewDCB.fParity = 0;
@@ -132,18 +132,18 @@ HB_FUNC(WIN_COMOPEN)
     NewDCB.fNull = 0;
     NewDCB.fRtsControl = RTS_CONTROL_DISABLE;
     NewDCB.fAbortOnError = 0;
-    /*NewDCB.XonLim*/
-    /*NewDCB.XoffLim*/
+    //NewDCB.XonLim
+    //NewDCB.XoffLim
     NewDCB.ByteSize = static_cast<BYTE>(iByteSize);
     NewDCB.Parity = static_cast<BYTE>(iParity);
     NewDCB.StopBits = static_cast<BYTE>(iStopBits);
-    /*NewDCB.XonChar*/
-    /*NewDCB.XoffChar*/
+    //NewDCB.XonChar
+    //NewDCB.XoffChar
     NewDCB.ErrorChar = '?';
-    /*NewDCB.EofChar*/
-    /*NewDCB.EvtChar*/
+    //NewDCB.EofChar
+    //NewDCB.EvtChar
 
-    /* function reinitializes all hardware and control settings, but it does not empty output or input queues */
+    // function reinitializes all hardware and control settings, but it does not empty output or input queues
     s_PortData[iPort].iFunction = HB_WIN_COM_FUN_SETCOMMSTATE;
     s_PortData[iPort].dwError = 0;
     if (!SetCommState(hCommPort, &NewDCB))
@@ -305,11 +305,11 @@ HB_FUNC(WIN_COMSTATUS)
     s_PortData[iPort].dwError = 0;
     if (GetCommModemStatus(hCommPort, &dwModemStat))
     {
-      hb_storl((dwModemStat & MS_CTS_ON) != 0, 2);  /* The CTS (clear-to-send) signal is on. */
-      hb_storl((dwModemStat & MS_DSR_ON) != 0, 3);  /* The DSR (data-set-ready) signal is on. */
-      hb_storl((dwModemStat & MS_RING_ON) != 0, 4); /* The ring indicator signal is on. */
+      hb_storl((dwModemStat & MS_CTS_ON) != 0, 2);  // The CTS (clear-to-send) signal is on.
+      hb_storl((dwModemStat & MS_DSR_ON) != 0, 3);  // The DSR (data-set-ready) signal is on.
+      hb_storl((dwModemStat & MS_RING_ON) != 0, 4); // The ring indicator signal is on.
       hb_storl((dwModemStat & MS_RLSD_ON) != 0,
-               5); /* The RLSD (receive-line-signal-detect) signal is on. Also is DCD. */
+               5); // The RLSD (receive-line-signal-detect) signal is on. Also is DCD.
 
       hb_retl(true);
     }
@@ -381,7 +381,7 @@ HB_FUNC(WIN_COMQUEUESTATUS)
       hb_storl(ComStat.fXoffHold, 5);
       hb_storl(ComStat.fXoffSent, 6);
       hb_stornl(ComStat.cbInQue, 7);
-      hb_stornl(ComStat.cbOutQue, 8); /* This value will be zero for a nonoverlapped write */
+      hb_stornl(ComStat.cbOutQue, 8); // This value will be zero for a nonoverlapped write
 
       hb_retl(true);
     }
@@ -406,8 +406,8 @@ HB_FUNC(WIN_COMQUEUESTATUS)
   }
 }
 
-/* If handshaking is enabled, it is an error for the application to adjust the line by
-   using the EscapeCommFunction function */
+// If handshaking is enabled, it is an error for the application to adjust the line by
+// using the EscapeCommFunction function
 
 HB_FUNC(WIN_COMSETRTS)
 {
@@ -437,8 +437,8 @@ HB_FUNC(WIN_COMSETRTS)
   }
 }
 
-/* If handshaking is enabled, it is an error for the application to adjust the line by
-   using the EscapeCommFunction function */
+// If handshaking is enabled, it is an error for the application to adjust the line by
+// using the EscapeCommFunction function
 
 HB_FUNC(WIN_COMSETDTR)
 {
@@ -505,7 +505,7 @@ HB_FUNC(WIN_COMRTSFLOW)
       CurDCB.fRtsControl = RTS_CONTROL_HANDSHAKE;
     }
     else
-    { /* RTS_CONTROL_TOGGLE - RS485? */
+    { // RTS_CONTROL_TOGGLE - RS485?
       hb_retl(false);
       return;
     }
@@ -642,39 +642,39 @@ static int hb_win_ComSetTimeouts(HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWOR
 {
   COMMTIMEOUTS NewTimeouts;
 
-  /* Maximum time, in milliseconds, allowed to elapse between the arrival of two characters on
-     the communications line. During a ReadFile operation, the time period begins when the first
-     character is received. If the interval between the arrival of any two characters exceeds this
-     amount, the ReadFile operation is completed and any buffered data is returned. A value of zero
-     indicates that interval time-outs are not used. */
+  // Maximum time, in milliseconds, allowed to elapse between the arrival of two characters on
+  // the communications line. During a ReadFile operation, the time period begins when the first
+  // character is received. If the interval between the arrival of any two characters exceeds this
+  // amount, the ReadFile operation is completed and any buffered data is returned. A value of zero
+  // indicates that interval time-outs are not used.
 
-  /* A value of MAXDWORD, combined with zero values for both the ReadTotalTimeoutConstant and
-     ReadTotalTimeoutMultiplier members, specifies that the read operation is to return
-     immediately with the characters that have already been received, even if no characters
-     have been received. */
+  // A value of MAXDWORD, combined with zero values for both the ReadTotalTimeoutConstant and
+  // ReadTotalTimeoutMultiplier members, specifies that the read operation is to return
+  // immediately with the characters that have already been received, even if no characters
+  // have been received.
   NewTimeouts.ReadIntervalTimeout =
       (Timeouts->ReadIntervalTimeout == static_cast<DWORD>(-1) ? MAXDWORD : Timeouts->ReadIntervalTimeout);
 
-  /* Multiplier, in milliseconds, used to calculate the total time-out period for read operations.
-     For each read operation, this value is multiplied by the requested number of bytes to be read. */
+  // Multiplier, in milliseconds, used to calculate the total time-out period for read operations.
+  // For each read operation, this value is multiplied by the requested number of bytes to be read.
   NewTimeouts.ReadTotalTimeoutMultiplier =
       (Timeouts->ReadTotalTimeoutMultiplier == static_cast<DWORD>(-1) ? 0 : Timeouts->ReadTotalTimeoutMultiplier);
 
-  /* Constant, in milliseconds, used to calculate the total time-out period for read operations.
-     For each read operation, this value is added to the product of the ReadTotalTimeoutMultiplier
-     member and the requested number of bytes. */
+  // Constant, in milliseconds, used to calculate the total time-out period for read operations.
+  // For each read operation, this value is added to the product of the ReadTotalTimeoutMultiplier
+  // member and the requested number of bytes.
   NewTimeouts.ReadTotalTimeoutConstant =
       (Timeouts->ReadTotalTimeoutConstant == static_cast<DWORD>(-1) ? 0 : Timeouts->ReadTotalTimeoutConstant);
 
-  /* A value of zero for both the ReadTotalTimeoutMultiplier and ReadTotalTimeoutConstant members
-     indicates that total time-outs are not used for read operations ...
-     and MAXDWORD, 0 and 0 are what we use by default */
+  // A value of zero for both the ReadTotalTimeoutMultiplier and ReadTotalTimeoutConstant members
+  // indicates that total time-outs are not used for read operations ...
+  // and MAXDWORD, 0 and 0 are what we use by default
 
-  /* Multiplier, in milliseconds, used to calculate the total time-out period for write operations.
-     For each write operation, this value is multiplied by the number of bytes to be written. */
+  // Multiplier, in milliseconds, used to calculate the total time-out period for write operations.
+  // For each write operation, this value is multiplied by the number of bytes to be written.
   if (Timeouts->WriteTotalTimeoutMultiplier == static_cast<DWORD>(-1))
   {
-    /* float of 1.0 makes whole expression float */
+    // float of 1.0 makes whole expression float
     NewTimeouts.WriteTotalTimeoutMultiplier =
         HB_MIN(1, static_cast<DWORD>((1.0 / dwBaudRate) *
                                      (iByteSize + 1 + (iParity == NOPARITY ? 0 : 1) +
@@ -683,22 +683,22 @@ static int hb_win_ComSetTimeouts(HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWOR
                                                                    : 2)) *
                                      1000));
   }
-  /* Constant, in milliseconds, used to calculate the total time-out period for write operations.
-     For each write operation, this value is added to the product of the WriteTotalTimeoutMultiplier member and the
-     number of bytes to be written. */
+  // Constant, in milliseconds, used to calculate the total time-out period for write operations.
+  // For each write operation, this value is added to the product of the WriteTotalTimeoutMultiplier member and the
+  // number of bytes to be written.
   else
   {
     NewTimeouts.WriteTotalTimeoutMultiplier = Timeouts->WriteTotalTimeoutMultiplier;
   }
 
-  /* 50 ms is a thumbsuck - seems long enough and not too long! */
+  // 50 ms is a thumbsuck - seems long enough and not too long!
   NewTimeouts.WriteTotalTimeoutConstant =
       Timeouts->WriteTotalTimeoutConstant == static_cast<DWORD>(-1) ? 50 : Timeouts->WriteTotalTimeoutConstant;
 
-  /* A value of zero for both the WriteTotalTimeoutMultiplier and WriteTotalTimeoutConstant members
-     indicates that total time-outs are not used for write operations ...
-     and if flow control is enabled the program will "hang" or if it is not enabled the data will
-     be lost (potentially), so we set a minimum of 1ms (baud rates higher than 4800) */
+  // A value of zero for both the WriteTotalTimeoutMultiplier and WriteTotalTimeoutConstant members
+  // indicates that total time-outs are not used for write operations ...
+  // and if flow control is enabled the program will "hang" or if it is not enabled the data will
+  // be lost (potentially), so we set a minimum of 1ms (baud rates higher than 4800)
 
   return SetCommTimeouts(hCommPort, &NewTimeouts);
 }

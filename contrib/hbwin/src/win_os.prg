@@ -45,18 +45,17 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* Function to check and set Windows Registry settings
- * for safe networking - for all versions of Windows.
- *
- * Also includes check for buggy VREDIR.VXD under Win95
- * and if the correct patch file is found.
- */
+// Function to check and set Windows Registry settings
+// for safe networking - for all versions of Windows.
+//
+// Also includes check for buggy VREDIR.VXD under Win95
+// and if the correct patch file is found.
 
 #include "directry.ch"
 #include "hbwin.ch"
 
-/* NOTE: To change any of these registry settings
-         Administrator rights are required by default in Windows. [vszakats] */
+// NOTE: To change any of these registry settings
+//       Administrator rights are required by default in Windows. [vszakats]
 
 FUNCTION win_osNetRegOk(lSetIt, lDoVista)
 
@@ -67,7 +66,7 @@ FUNCTION win_osNetRegOk(lSetIt, lDoVista)
    hb_default(@lSetIt, .F.)
 
    IF !hb_defaultValue(lDoVista, .T.) .AND. hb_osIsWinVista()
-      /* do nothing */
+      // do nothing
    ELSEIF hb_osIsWin9x()
       bRetVal := win_regQuery(WIN_HKEY_LOCAL_MACHINE, "System\CurrentControlSet\Services\VxD\VREDIR", "DiscardCacheOnOpen", 1, lSetIt)
    ELSE
@@ -78,14 +77,14 @@ FUNCTION win_osNetRegOk(lSetIt, lDoVista)
          lSetIt := !hb_osIsWinNT() .OR. wapi_IsUserAnAdmin()
       ENDIF
 
-      /* Server settings */
+      // Server settings
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "CachedOpenLimit", 0, lSetIt)
-      bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "EnableOpLocks", 0, lSetIt) /* Q124916 */
+      bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "EnableOpLocks", 0, lSetIt) // Q124916
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "EnableOpLockForceClose", 1, lSetIt)
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "SharingViolationDelay", 0, lSetIt)
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "SharingViolationRetries", 0, lSetIt)
 
-      /* Workstation settings */
+      // Workstation settings
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeyWks, "UseOpportunisticLocking", 0, lSetIt)
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeyWks, "EnableOpLocks", 0, lSetIt)
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeyWks, "EnableOpLockForceClose", 1, lSetIt)
@@ -93,10 +92,10 @@ FUNCTION win_osNetRegOk(lSetIt, lDoVista)
       bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeyWks, "UseLockReadUnlock", 0, lSetIt)
 
       IF hb_osIsWin7()
-         /* https://groups.google.com/forum/#!msg/harbour-users/RyjXKmlQqWw/QOYwIPS5BQAJ */
+         // https://groups.google.com/forum/#!msg/harbour-users/RyjXKmlQqWw/QOYwIPS5BQAJ
          bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "DisableLeasing", 1, lSetIt)
       ELSEIF hb_osIsWinVista()
-         /* If SMB2 is enabled turning off oplocks does not work, so SMB2 is required to be turned off on Server. */
+         // If SMB2 is enabled turning off oplocks does not work, so SMB2 is required to be turned off on Server.
          bRetVal := bRetVal .AND. win_regQuery(WIN_HKEY_LOCAL_MACHINE, cKeySrv, "SMB2", 0, lSetIt)
       ENDIF
 
@@ -119,7 +118,7 @@ FUNCTION win_osNetVRedirOk(/* @ */ nResult)
 
    nResult := 0
 
-   /* Check for faulty files */
+   // Check for faulty files
    IF hb_osIsWin9x() .AND. ;
       !Empty(aFiles := Directory(hb_GetEnv("WINDIR", "C:\WINDOWS") + "\SYSTEM\VREDIR.VXD"))
       SWITCH aFiles[1][F_SIZE]

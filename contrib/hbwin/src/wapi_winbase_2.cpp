@@ -137,7 +137,7 @@ HB_FUNC(WAPI_FORMATMESSAGE)
   hb_strfree(hSource);
 }
 
-/* VOID WINAPI Sleep(__in DWORD dwMilliseconds); */
+// VOID WINAPI Sleep(__in DWORD dwMilliseconds);
 HB_FUNC(WAPI_SLEEP)
 {
   Sleep(static_cast<DWORD>(hb_parnl(1)));

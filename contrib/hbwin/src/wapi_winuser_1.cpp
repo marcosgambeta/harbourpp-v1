@@ -125,16 +125,16 @@ HB_FUNC(WAPI_CREATEWINDOWEX)
   void *hClassName;
   void *hWindowName;
 
-  HWND hResult = CreateWindowEx(hbwapi_par_DWORD(1), /* dwExStyle */
+  HWND hResult = CreateWindowEx(hbwapi_par_DWORD(1), // dwExStyle
                                 HB_PARSTRDEF(2, &hClassName, nullptr), HB_PARSTRDEF(3, &hWindowName, nullptr),
-                                HB_ISNUM(4) ? hbwapi_par_DWORD(4) : WS_OVERLAPPEDWINDOW,           /* dwStyle */
-                                HB_ISNUM(5) ? hbwapi_par_INT(5) : static_cast<int>(CW_USEDEFAULT), /* x */
-                                HB_ISNUM(6) ? hbwapi_par_INT(6) : static_cast<int>(CW_USEDEFAULT), /* y */
-                                hbwapi_par_INT(7),                                                 /* nWidth */
-                                hbwapi_par_INT(8),                                                 /* nHeight */
-                                hbwapi_par_raw_HWND(9),       /* hWndParent, default to HWND_DESKTOP */
-                                hbwapi_par_raw_HMENU(10),     /* hMenu */
-                                hbwapi_par_raw_HINSTANCE(11), /* hInstance */
+                                HB_ISNUM(4) ? hbwapi_par_DWORD(4) : WS_OVERLAPPEDWINDOW,           // dwStyle
+                                HB_ISNUM(5) ? hbwapi_par_INT(5) : static_cast<int>(CW_USEDEFAULT), // x
+                                HB_ISNUM(6) ? hbwapi_par_INT(6) : static_cast<int>(CW_USEDEFAULT), // y
+                                hbwapi_par_INT(7),                                                 // nWidth
+                                hbwapi_par_INT(8),                                                 // nHeight
+                                hbwapi_par_raw_HWND(9),       // hWndParent, default to HWND_DESKTOP
+                                hbwapi_par_raw_HMENU(10),     // hMenu
+                                hbwapi_par_raw_HINSTANCE(11), // hInstance
                                 static_cast<LPVOID>(hb_parptr(12)) /* lpParam */);
 
   hbwapi_SetLastError(GetLastError());
@@ -191,9 +191,9 @@ HB_FUNC(WAPI_DRAWTEXT)
   }
 }
 
-/* BEGIN SCROLLBAR MANIPULATION WINAPI FUNCTIONS */
+// BEGIN SCROLLBAR MANIPULATION WINAPI FUNCTIONS
 
-/* BOOL EnableScrollBar(HWND hWnd, UINT wSBflags, UINT wArrows); */
+// BOOL EnableScrollBar(HWND hWnd, UINT wSBflags, UINT wArrows);
 HB_FUNC(WAPI_ENABLESCROLLBAR)
 {
   BOOL bResult;
@@ -207,7 +207,7 @@ HB_FUNC(WAPI_ENABLESCROLLBAR)
 }
 
 #if 0
-/* BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi); */
+// BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi);
 HB_FUNC(WAPI_GETSCROLLBARINFO)
 {
    auto sbi = static_cast<PSCROLLBARINFO>(hbwapi_par_STRUCT(3));
@@ -228,7 +228,7 @@ HB_FUNC(WAPI_GETSCROLLBARINFO)
 }
 #endif
 
-/* BOOL GetScrollInfo(HWND hwnd, int fnBar, LPSCROLLINFO lpsi); */
+// BOOL GetScrollInfo(HWND hwnd, int fnBar, LPSCROLLINFO lpsi);
 HB_FUNC(WAPI_GETSCROLLINFO)
 {
   auto si = reinterpret_cast<LPSCROLLINFO>(const_cast<char *>(hbwapi_par_raw_STRUCT(3)));
@@ -246,7 +246,7 @@ HB_FUNC(WAPI_GETSCROLLINFO)
   hbwapi_ret_L(bSuccess);
 }
 
-/* int GetScrollPos(HWND hWnd, int nBar); */
+// int GetScrollPos(HWND hWnd, int nBar);
 HB_FUNC(WAPI_GETSCROLLPOS)
 {
   int iResult;
@@ -259,7 +259,7 @@ HB_FUNC(WAPI_GETSCROLLPOS)
   hbwapi_ret_NI(iResult);
 }
 
-/* BOOL GetScrollRange(HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos); */
+// BOOL GetScrollRange(HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos);
 HB_FUNC(WAPI_GETSCROLLRANGE)
 {
   BOOL bSuccess;
@@ -281,23 +281,23 @@ HB_FUNC(WAPI_GETSCROLLRANGE)
 }
 
 #if 0
-/* BOOL ScrollDC(HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate); */
+// BOOL ScrollDC(HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate);
 HB_FUNC(WAPI_SCROLLDC)
 {
 }
 
-/* BOOL ScrollWindow(HWND hWnd, int XAmount, int YAmount, const RECT * lpRect, const RECT * lpClipRect); */
+// BOOL ScrollWindow(HWND hWnd, int XAmount, int YAmount, const RECT * lpRect, const RECT * lpClipRect);
 HB_FUNC(WAPI_SCROLLWINDOW)
 {
 }
 
-/* int ScrollWindowEx(HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags); */
+// int ScrollWindowEx(HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags);
 HB_FUNC(WAPI_SCROLLWINDOWEX)
 {
 }
 #endif
 
-/* int SetScrollInfo(HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw); */
+// int SetScrollInfo(HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw);
 HB_FUNC(WAPI_SETSCROLLINFO)
 {
   auto si = reinterpret_cast<LPSCROLLINFO>(const_cast<char *>(hbwapi_par_raw_STRUCT(3)));
@@ -305,7 +305,7 @@ HB_FUNC(WAPI_SETSCROLLINFO)
   hbwapi_ret_NI(SetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si, HB_ISLOG(4) ? hbwapi_par_BOOL(4) : TRUE));
 }
 
-/* int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw); */
+// int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw);
 HB_FUNC(WAPI_SETSCROLLPOS)
 {
   int iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
@@ -313,7 +313,7 @@ HB_FUNC(WAPI_SETSCROLLPOS)
   hbwapi_ret_NI(iResult);
 }
 
-/* BOOL SetScrollRange(HWND hWnd, int nBar, int nMinPos, int nMaxPos, BOOL bRedraw); */
+// BOOL SetScrollRange(HWND hWnd, int nBar, int nMinPos, int nMaxPos, BOOL bRedraw);
 HB_FUNC(WAPI_SETSCROLLRANGE)
 {
   BOOL bResult = SetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_INT(4),
@@ -322,7 +322,7 @@ HB_FUNC(WAPI_SETSCROLLRANGE)
   hbwapi_ret_L(bResult);
 }
 
-/* BOOL ShowScrollBar(HWND hWnd, int wBar, BOOL bShow); */
+// BOOL ShowScrollBar(HWND hWnd, int wBar, BOOL bShow);
 HB_FUNC(WAPI_SHOWSCROLLBAR)
 {
   BOOL bResult;
@@ -366,7 +366,7 @@ HB_FUNC(WAPI_LOADBITMAP)
 }
 #endif
 
-/* wapi_LoadImage([<hInstance>], <cName>|<nID>, [<nType>], [<nWidth>], [<nHeight>], [<nFlags>]) --> <hImage> */
+// wapi_LoadImage([<hInstance>], <cName>|<nID>, [<nType>], [<nWidth>], [<nHeight>], [<nFlags>]) --> <hImage>
 HB_FUNC(WAPI_LOADIMAGE)
 {
   void *hString = nullptr;
@@ -374,9 +374,9 @@ HB_FUNC(WAPI_LOADIMAGE)
 
   hImage = LoadImage(hbwapi_par_raw_HINSTANCE(1),
                      HB_ISNUM(2) ? MAKEINTRESOURCE(hbwapi_par_INT(2)) : HB_PARSTR(2, &hString, nullptr),
-                     HB_ISNUM(3) ? hbwapi_par_UINT(3) : IMAGE_BITMAP, hbwapi_par_INT(4), /* desired width */
-                     hbwapi_par_INT(5),                                                  /* desired height */
-                     hbwapi_par_UINT(6));                                                /* load flags */
+                     HB_ISNUM(3) ? hbwapi_par_UINT(3) : IMAGE_BITMAP, hbwapi_par_INT(4), // desired width
+                     hbwapi_par_INT(5),                                                  // desired height
+                     hbwapi_par_UINT(6));                                                // load flags
 
   hbwapi_SetLastError(GetLastError());
 
@@ -385,7 +385,7 @@ HB_FUNC(WAPI_LOADIMAGE)
   hbwapi_ret_raw_HANDLE(hImage);
 }
 
-/* MENU functions */
+// MENU functions
 
 HB_FUNC(WAPI_LOADMENU)
 {
@@ -453,12 +453,12 @@ HB_FUNC(WAPI_TRACKPOPUPMENU)
   HWND hWnd = hbwapi_par_raw_HWND(6);
   UINT uiResult;
 
-  uiResult = TrackPopupMenu(hbwapi_par_raw_HMENU(1),         /* hMenu */
-                            hbwapi_par_UINT(2),              /* uFlags */
-                            hbwapi_par_INT(3),               /* x */
-                            hbwapi_par_INT(4),               /* y */
-                            hbwapi_par_INT(5),               /* nReserved */
-                            hWnd ? hWnd : GetActiveWindow(), /* hWnd */
+  uiResult = TrackPopupMenu(hbwapi_par_raw_HMENU(1),         // hMenu
+                            hbwapi_par_UINT(2),              // uFlags
+                            hbwapi_par_INT(3),               // x
+                            hbwapi_par_INT(4),               // y
+                            hbwapi_par_INT(5),               // nReserved
+                            hWnd ? hWnd : GetActiveWindow(), // hWnd
                             nullptr /* prcRect */);
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_UINT(uiResult);
@@ -493,10 +493,10 @@ HB_FUNC(WAPI_CHECKMENURADIOITEM)
 {
   BOOL fResult;
 
-  fResult = CheckMenuRadioItem(hbwapi_par_raw_HMENU(1), /* hMenu */
-                               hbwapi_par_UINT(2),      /* idFirst */
-                               hbwapi_par_UINT(3),      /* idLast */
-                               hbwapi_par_UINT(4),      /* idCheck */
+  fResult = CheckMenuRadioItem(hbwapi_par_raw_HMENU(1), // hMenu
+                               hbwapi_par_UINT(2),      // idFirst
+                               hbwapi_par_UINT(3),      // idLast
+                               hbwapi_par_UINT(4),      // idCheck
                                hbwapi_par_UINT(5) /* uFlags */);
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(fResult);
@@ -687,7 +687,7 @@ HB_FUNC(WAPI_GETMENUDEFAULTITEM)
   }
 }
 
-/* wapi_CreateAcceleratorTable( <aAccelTable> ) -> <hAccel> */
+// wapi_CreateAcceleratorTable( <aAccelTable> ) -> <hAccel>
 HB_FUNC(WAPI_CREATEACCELERATORTABLE)
 {
   HACCEL hAccel = nullptr;

@@ -52,8 +52,8 @@
 
 #include <windowsx.h>
 
-/* Application-defined callback used with the CreateDialog and DialogBox... It
-   processes messages sent to a modal or modeless dialog box. */
+// Application-defined callback used with the CreateDialog and DialogBox... It
+// processes messages sent to a modal or modeless dialog box.
 static INT_PTR CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
   PHB_SYMB pSymbol;
@@ -92,29 +92,29 @@ static INT_PTR CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wPar
   return static_cast<BOOL>(hb_parnl(-1));
 }
 
-/* Creates a modal dialog box from a dialog box template resource. */
+// Creates a modal dialog box from a dialog box template resource.
 HB_FUNC(WAPI_DIALOGBOXPARAM)
 {
   INT_PTR nResult =
-      DialogBoxParam(hbwapi_par_raw_HINSTANCE(1),                                                     /* hInstance */
-                     static_cast<LPCTSTR>(MAKEINTRESOURCE(hbwapi_par_INT(2))),                        /* lpTemplate */
-                     hbwapi_par_raw_HWND(3),                                                          /* hWndParent */
-                     wapi_DialogFuncProc,                                                             /* lpDialogFunc */
-                     reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL)))); /* dwInitParam */
+      DialogBoxParam(hbwapi_par_raw_HINSTANCE(1),                                                     // hInstance
+                     static_cast<LPCTSTR>(MAKEINTRESOURCE(hbwapi_par_INT(2))),                        // lpTemplate
+                     hbwapi_par_raw_HWND(3),                                                          // hWndParent
+                     wapi_DialogFuncProc,                                                             // lpDialogFunc
+                     reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL)))); // dwInitParam
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NINT(nResult);
 }
 
-/* Destroys a modal dialog box, causing the system to end any processing for the
-   dialog box. */
+// Destroys a modal dialog box, causing the system to end any processing for the
+// dialog box.
 HB_FUNC(WAPI_ENDDIALOG)
 {
   hbwapi_ret_L(EndDialog(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)));
   hbwapi_SetLastError(GetLastError());
 }
 
-/* Sets the title or text of a control in a dialog box. */
+// Sets the title or text of a control in a dialog box.
 HB_FUNC(WAPI_SETDLGITEMTEXT)
 {
   void *hStr;
@@ -125,7 +125,7 @@ HB_FUNC(WAPI_SETDLGITEMTEXT)
   hb_strfree(hStr);
 }
 
-/* Retrieves the title or text associated with a control in a dialog box. */
+// Retrieves the title or text associated with a control in a dialog box.
 HB_FUNC(WAPI_GETDLGITEMTEXT)
 {
   HWND nItem = GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
@@ -139,14 +139,14 @@ HB_FUNC(WAPI_GETDLGITEMTEXT)
   hb_xfree(lpResult);
 }
 
-/* Retrieves a handle to a control in the specified dialog box. */
+// Retrieves a handle to a control in the specified dialog box.
 HB_FUNC(WAPI_GETDLGITEM)
 {
   hbwapi_ret_raw_HWND(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)));
   hbwapi_SetLastError(GetLastError());
 }
 
-/* Adds a string to a list in a combo box. */
+// Adds a string to a list in a combo box.
 HB_FUNC(WAPI_COMBOBOX_ADDSTRING)
 {
   void *hStr;
