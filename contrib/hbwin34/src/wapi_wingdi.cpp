@@ -45,9 +45,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* WinCE MSDN documentation:
-      https://msdn.microsoft.com/library/aa923590
- */
+// WinCE MSDN documentation:
+//    https://msdn.microsoft.com/library/aa923590
 
 #if !defined(_HB_API_INTERNAL_)
 #define _HB_API_INTERNAL_
@@ -357,7 +356,7 @@ LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int iParam)
 #if 0
    else
    {
-      /* Just an experiment */
+      // Just an experiment
       p->lbStyle = hbwapi_par_UINT(iParam);
       p->lbColor = hbwapi_par_COLORREF(iParam + 1);
       switch( p->lbStyle )
@@ -747,9 +746,7 @@ HB_FUNC(WAPI_GETTEXTEXTENTPOINT32)
   hb_strfree(hData);
 }
 
-/*
-WAPI_TEXTOUT(HDC, nRow, nCol, cText) --> .T.|.F.
-*/
+// WAPI_TEXTOUT(HDC, nRow, nCol, cText) --> .T.|.F.
 HB_FUNC(WAPI_TEXTOUT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -790,7 +787,7 @@ HB_FUNC(WAPI_EXTTEXTOUT)
 
       for (HB_SIZE tmp = 0; tmp < nDataLen; ++tmp)
       {
-        /* Pad width array with last known value if passed array was smaller than length of the string. */
+        // Pad width array with last known value if passed array was smaller than length of the string.
         if (tmp < nFontWidthsLen)
         {
           iWidth = static_cast<INT>(hb_arrayGetNI(pFontWidths, tmp + 1));
@@ -892,33 +889,25 @@ HB_FUNC(WAPI_GETBKCOLOR)
   }
 }
 
-/*
-WAPI_CREATEPEN(fnPenStyle, nWidth, crColor) --> HPEN
-*/
+// WAPI_CREATEPEN(fnPenStyle, nWidth, crColor) --> HPEN
 HB_FUNC(WAPI_CREATEPEN)
 {
   hbwapi_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3)));
 }
 
-/*
-WAPI_CREATESOLIDBRUSH(crColor) --> HBRUSH
-*/
+// WAPI_CREATESOLIDBRUSH(crColor) --> HBRUSH
 HB_FUNC(WAPI_CREATESOLIDBRUSH)
 {
   hbwapi_ret_HBRUSH(CreateSolidBrush(hbwapi_par_COLORREF(1)));
 }
 
-/*
-WAPI_CREATEHATCHBRUSH(fnStyle, crColor) --> HBRUSH
-*/
+// WAPI_CREATEHATCHBRUSH(fnStyle, crColor) --> HBRUSH
 HB_FUNC(WAPI_CREATEHATCHBRUSH)
 {
   hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni(1), hbwapi_par_COLORREF(2)));
 }
 
-/*
-WAPI_CREATEBRUSHINDIRECT(p) --> HBRUSH
-*/
+// WAPI_CREATEBRUSHINDIRECT(p) --> HBRUSH
 HB_FUNC(WAPI_CREATEBRUSHINDIRECT)
 {
   LOGBRUSH lb;
@@ -979,7 +968,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
     h = hbwapi_par_HFONT(2);
   }
 #if _TODO_REGION
-  /* TODO: Add BITMAP, REGION */
+  // TODO: Add BITMAP, REGION
 #endif
   else
   {
@@ -989,7 +978,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
   if (hDC && h)
   {
 #if _TODO_REGION
-    /* TODO: Solve reference counting to 'h' handle. Also for returned one. */
+    // TODO: Solve reference counting to 'h' handle. Also for returned one.
     if (bRegion)
     {
       hb_retnint(static_cast<HB_PTRUINT>(SelectObject(hDC, h)));
@@ -997,7 +986,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
     else
 #endif
     {
-      hb_retl(SelectObject(hDC, h) != nullptr); /* NOTE: We don't return a raw pointer. */
+      hb_retl(SelectObject(hDC, h) != nullptr); // NOTE: We don't return a raw pointer.
     }
   }
   else
@@ -1060,9 +1049,7 @@ HB_FUNC(WAPI_FILLRECT)
   }
 }
 
-/*
-WAPI_ROUNDRECT(HDC, nX1, nY1, nX2, nY2, nWidth, nHeight) --> .T.|.F.
-*/
+// WAPI_ROUNDRECT(HDC, nX1, nY1, nX2, nY2, nWidth, nHeight) --> .T.|.F.
 HB_FUNC(WAPI_ROUNDRECT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -1077,9 +1064,7 @@ HB_FUNC(WAPI_ROUNDRECT)
   }
 }
 
-/*
-WAPI_RECTANGLE(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
-*/
+// WAPI_RECTANGLE(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
 HB_FUNC(WAPI_RECTANGLE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -1094,9 +1079,7 @@ HB_FUNC(WAPI_RECTANGLE)
   }
 }
 
-/*
-WAPI_ARC(HDC, nLeftRect, nTopRect, nRightRect, nBottomRect, nXStartArc, nYStartArc, nXEndArc, nYEndArc) --> .T.|.F.
-*/
+// WAPI_ARC(HDC, nLeftRect, nTopRect, nRightRect, nBottomRect, nXStartArc, nYStartArc, nXEndArc, nYEndArc) --> .T.|.F.
 HB_FUNC(WAPI_ARC)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -1112,9 +1095,7 @@ HB_FUNC(WAPI_ARC)
   }
 }
 
-/*
-WAPI_ELLIPSE(HDC, nLeftRect, nTopRect, nRightRect, nBottomRect) --> .T.|.F.
-*/
+// WAPI_ELLIPSE(HDC, nLeftRect, nTopRect, nRightRect, nBottomRect) --> .T.|.F.
 HB_FUNC(WAPI_ELLIPSE)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -1129,17 +1110,13 @@ HB_FUNC(WAPI_ELLIPSE)
   }
 }
 
-/*
-WAPI_SETDCBRUSHCOLOR(HDC, nColor) --> nColor
-*/
+// WAPI_SETDCBRUSHCOLOR(HDC, nColor) --> nColor
 HB_FUNC(WAPI_SETDCBRUSHCOLOR)
 {
   hbwapi_ret_COLORREF(SetDCBrushColor(hbwapi_par_raw_HDC(1), hbwapi_par_COLORREF(2)));
 }
 
-/*
-WAPI_SETDCPENCOLOR(HDC, nColor) --> nColor
-*/
+// WAPI_SETDCPENCOLOR(HDC, nColor) --> nColor
 HB_FUNC(WAPI_SETDCPENCOLOR)
 {
   hbwapi_ret_COLORREF(SetDCPenColor(hbwapi_par_raw_HDC(1), hbwapi_par_COLORREF(2)));

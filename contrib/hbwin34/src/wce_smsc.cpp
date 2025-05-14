@@ -47,7 +47,7 @@
 
 #include "hbwapi.hpp"
 
-HB_FUNC(WCE_SMSSENDMESSAGE) /* cMessage, cNumber */
+HB_FUNC(WCE_SMSSENDMESSAGE) // cMessage, cNumber
 {
   hb_retnint(-1);
 }

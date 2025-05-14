@@ -53,8 +53,8 @@
 #include <commdlg.h>
 
 #if defined(__MINGW32CE__)
-/* ChooseColorW() problem is fixed in current devel MINGW32CE version but
-   people who use recent official release (0.50) needs it */
+// ChooseColorW() problem is fixed in current devel MINGW32CE version but
+// people who use recent official release (0.50) needs it
 #undef ChooseColor
 BOOL WINAPI ChooseColor(LPCHOOSECOLORW);
 #endif

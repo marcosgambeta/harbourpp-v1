@@ -54,9 +54,7 @@
 
 #include <commdlg.h>
 
-/* win_PrintDlgDC([@<cDevice>], [<nFromPage>], [<nToPage>], [<nCopies>], [nFlags])
- *                --> <hDC>
- */
+// win_PrintDlgDC([@<cDevice>], [<nFromPage>], [<nToPage>], [<nCopies>], [nFlags]) --> <hDC>
 HB_FUNC(WIN_PRINTDLGDC)
 {
   PRINTDLG pd{};
@@ -295,21 +293,17 @@ static void s_GetFileName(HB_BOOL fSave)
   hb_strfree(hDefExt);
 }
 
-/* win_GetOpenFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
- *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
- *
- */
+// win_GetOpenFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
+//                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
+//    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
 HB_FUNC(WIN_GETOPENFILENAME)
 {
   s_GetFileName(false);
 }
 
-/* win_GetSaveFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
- *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
- *
- */
+// win_GetSaveFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
+//                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
+//    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
 HB_FUNC(WIN_GETSAVEFILENAME)
 {
   s_GetFileName(true);

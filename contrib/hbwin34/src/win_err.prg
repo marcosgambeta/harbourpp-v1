@@ -45,9 +45,8 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* Run this source file as script to regenerate the codes from Windows SDK:
-      hbrun <this_source>.prg [<full_path_of_winerror.h>]
- */
+// Run this source file as script to regenerate the codes from Windows SDK:
+//    hbrun <this_source>.prg [<full_path_of_winerror.h>]
 
 #if defined(__HBSCRIPT__HBSHELL)
 
@@ -120,8 +119,8 @@ FUNCTION win_ErrorDesc(nCode, nLangID)
 
    RETURN RTrim(cMsg)
 
-/* Codes that are too complex to parse automatically,
-   so they are rolled manually. */
+// Codes that are too complex to parse automatically,
+// so they are rolled manually.
 STATIC FUNCTION __win_ErrorString_Manual(nCode)
 
    SWITCH nCode
@@ -176,7 +175,7 @@ STATIC FUNCTION __win_ErrorString_Manual(nCode)
 
    RETURN "HBWIN_UNKNOWN_" + hb_ntos(nCode)
 
-/* DO NOT REMOVE OR MODIFY THIS LINE, OR ANY CODE BELOW <<< */
+// DO NOT REMOVE OR MODIFY THIS LINE, OR ANY CODE BELOW <<<
 
 FUNCTION win_ErrorString(nCode)
 

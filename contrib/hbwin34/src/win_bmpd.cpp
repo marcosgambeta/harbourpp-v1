@@ -52,7 +52,7 @@
 #include "png.h"
 #endif
 
-/* .jpeg size detection code. [vszakats] */
+// .jpeg size detection code. [vszakats]
 
 #define _JPEG_RET_OK 0
 #define _JPEG_RET_OVERRUN 1
@@ -99,7 +99,7 @@ static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *pi
   tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
   nPos += 2;
 
-  /* SOI marker */
+  // SOI marker
   if (tag != 0xFFD8)
   {
     return _JPEG_RET_INVALID;
@@ -125,7 +125,7 @@ static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *pi
     size = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
     nPos += 2;
 
-    /* SOF markers */
+    // SOF markers
     if (tag == 0xFFC0 || tag == 0xFFC1 || tag == 0xFFC2 || tag == 0xFFC9)
     {
       if (nPos >= nBufferSize)
@@ -161,7 +161,7 @@ static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *pi
 
       break;
     }
-    else if ((tag | 0x00FF) != 0xFFFF) /* lost marker */
+    else if ((tag | 0x00FF) != 0xFFFF) // lost marker
     {
       return _JPEG_RET_UNSUPPORTED;
     }
@@ -205,7 +205,7 @@ static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *pi
   return _JPEG_RET_OK;
 }
 
-/* .png size detection code. [vszakats] */
+// .png size detection code. [vszakats]
 
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
 
@@ -356,7 +356,7 @@ HB_FUNC(WIN_BITMAPDIMENSIONS)
     auto pbmfh = static_cast<const BITMAPFILEHEADER *>(buffer);
     auto pbmi = reinterpret_cast<const BITMAPINFO *>(pbmfh + 1);
 
-    /* Remember there are 2 types of BitMap File */
+    // Remember there are 2 types of BitMap File
     if (pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER))
     {
       iWidth = (reinterpret_cast<const BITMAPCOREHEADER *>(pbmi))->bcWidth;

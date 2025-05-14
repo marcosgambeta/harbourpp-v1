@@ -86,19 +86,19 @@ HB_FUNC(WIN_SERVICEINSTALL)
       LPCTSTR lpAccountName = HB_PARSTR(5, &hAccountName, nullptr);
       LPCTSTR lpPassword = HB_PARSTR(6, &hPassword, nullptr);
 
-      schSrv = CreateService(schSCM,                                                   /* SCM database */
-                             lpServiceName,                                            /* name of service */
-                             lpDisplayName,                                            /* service name to display */
-                             SERVICE_ALL_ACCESS,                                       /* desired access */
-                             SERVICE_WIN32_OWN_PROCESS,                                /* service type */
-                             static_cast<DWORD>(hb_parnldef(4, SERVICE_DEMAND_START)), /* start type */
-                             SERVICE_ERROR_NORMAL,                                     /* error control type */
-                             lpPath,                                                   /* path to service's binary */
-                             nullptr,                                                  /* no load ordering group */
-                             nullptr,                                                  /* no tag identifier */
-                             nullptr,                                                  /* no dependencies */
-                             lpAccountName, /* default: LocalSystem account */
-                             lpPassword);   /* default: no password */
+      schSrv = CreateService(schSCM,                                                   // SCM database
+                             lpServiceName,                                            // name of service
+                             lpDisplayName,                                            // service name to display
+                             SERVICE_ALL_ACCESS,                                       // desired access
+                             SERVICE_WIN32_OWN_PROCESS,                                // service type
+                             static_cast<DWORD>(hb_parnldef(4, SERVICE_DEMAND_START)), // start type
+                             SERVICE_ERROR_NORMAL,                                     // error control type
+                             lpPath,                                                   // path to service's binary
+                             nullptr,                                                  // no load ordering group
+                             nullptr,                                                  // no tag identifier
+                             nullptr,                                                  // no dependencies
+                             lpAccountName, // default: LocalSystem account
+                             lpPassword);   // default: no password
 
       hbwapi_SetLastError(GetLastError());
 
@@ -141,7 +141,7 @@ HB_FUNC(WIN_SERVICEDELETE)
 
     if (schSrv)
     {
-      if (hb_parl(2)) /* Check if service is up and stop it */
+      if (hb_parl(2)) // Check if service is up and stop it
       {
         SERVICE_STATUS ssStatus;
 

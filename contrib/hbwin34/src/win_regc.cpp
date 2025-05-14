@@ -115,7 +115,7 @@ HB_FUNC(WIN_REGQUERYVALUEEX)
 
         hb_xfree(lpValue);
       }
-      else /* No translation for binary data */
+      else // No translation for binary data
       {
         auto lpValue = static_cast<LPBYTE>(hb_xgrab(dwSize + 1));
 
@@ -188,7 +188,7 @@ HB_FUNC(WIN_REGSETVALUEEX)
                           static_cast<DWORD>(nValueLen)) == ERROR_SUCCESS);
     hb_strfree(hValue);
   }
-  else /* No translation for binary data */
+  else // No translation for binary data
   {
     hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType,
                           reinterpret_cast<const BYTE *>(hb_parc(5)) /* cValue */,

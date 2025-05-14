@@ -51,13 +51,13 @@
 #include <hbapiitm.hpp>
 
 #if defined(__MINGW32CE__)
-/* MINGW32CE gets this wrong in its headers,
-   'W' suffix is not used in coredll for this function. */
+// MINGW32CE gets this wrong in its headers,
+// 'W' suffix is not used in coredll for this function.
 #undef SendMessageTimeout
 WINUSERAPI LRESULT WINAPI SendMessageTimeout(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD);
 #endif
 
-/* For: (defined(HB_OS_WIN_CE) && defined(_MSC_VER) && (_MSC_VER <= 1310)) */
+// For: (defined(HB_OS_WIN_CE) && defined(_MSC_VER) && (_MSC_VER <= 1310))
 #ifndef WS_OVERLAPPEDWINDOW
 #define WS_OVERLAPPEDWINDOW (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)
 #endif
@@ -72,8 +72,8 @@ HB_FUNC(WAPI_SETWINDOWPOS)
   }
   else if (HB_ISNUM(2))
   {
-    /* Do not delete this, it will be active if
-       numeric pointers are not accepted above */
+    // Do not delete this, it will be active if
+    // numeric pointers are not accepted above
     hWndInsertAfter = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(2)));
 
     if (!(hWndInsertAfter == HWND_TOP || hWndInsertAfter == HWND_BOTTOM || hWndInsertAfter == HWND_TOPMOST ||
@@ -135,7 +135,7 @@ HB_FUNC(WAPI_MESSAGEBEEP)
 static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                IN WORD wLanguageId, IN DWORD dwMilliseconds)
 {
-  /* undocumented Windows API */
+  // undocumented Windows API
   typedef int(__stdcall * _HB_MSGBOXTOUT)(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                           IN WORD wLanguageId, IN DWORD dwMilliseconds);
   static auto s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);
@@ -152,9 +152,7 @@ static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCap
                               : MessageBoxEx(hWnd, lpText, lpCaption, uType, wLanguageId);
 }
 
-/*
-WAPI_MESSAGEBOXTIMEOUT(HWND, cText, cTitle, np4, np5, np6) --> numeric
-*/
+// WAPI_MESSAGEBOXTIMEOUT(HWND, cText, cTitle, np4, np5, np6) --> numeric
 HB_FUNC(WAPI_MESSAGEBOXTIMEOUT)
 {
   void *hStr1;
@@ -168,9 +166,7 @@ HB_FUNC(WAPI_MESSAGEBOXTIMEOUT)
   hb_strfree(hStr2);
 }
 
-/*
-WAPI_FINDWINDOW(cClassName, cWindowName) --> HWND
-*/
+// WAPI_FINDWINDOW(cClassName, cWindowName) --> HWND
 HB_FUNC(WAPI_FINDWINDOW)
 {
   void *hClassName;
@@ -187,18 +183,18 @@ HB_FUNC(WAPI_CREATEWINDOWEX)
   void *hClassName;
   void *hWindowName;
 
-  HWND hResult = CreateWindowEx(hbwapi_par_DWORD(1), /* dwExStyle */
+  HWND hResult = CreateWindowEx(hbwapi_par_DWORD(1), // dwExStyle
                                 HB_PARSTRDEF(2, &hClassName, nullptr), HB_PARSTRDEF(3, &hWindowName, nullptr),
-                                static_cast<DWORD>(hb_parnldef(4, WS_OVERLAPPEDWINDOW)), /* dwStyle */
-                                hb_parnidef(5, CW_USEDEFAULT),                           /* x */
-                                hb_parnidef(6, CW_USEDEFAULT),                           /* y */
-                                hbwapi_par_INT(7),                                       /* nWidth */
-                                hbwapi_par_INT(8),                                       /* nHeight */
-                                hbwapi_par_raw_HWND(9), /* hWndParent, default to HWND_DESKTOP */
+                                static_cast<DWORD>(hb_parnldef(4, WS_OVERLAPPEDWINDOW)), // dwStyle
+                                hb_parnidef(5, CW_USEDEFAULT),                           // x
+                                hb_parnidef(6, CW_USEDEFAULT),                           // y
+                                hbwapi_par_INT(7),                                       // nWidth
+                                hbwapi_par_INT(8),                                       // nHeight
+                                hbwapi_par_raw_HWND(9), // hWndParent, default to HWND_DESKTOP
                                 HB_ISNUM(10) ? reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(10)))
-                                             : hbwapi_par_raw_HMENU(10), /* hMenu */
-                                hbwapi_par_raw_HINSTANCE(11),            /* hInstance */
-                                static_cast<LPVOID>(hb_parptr(12)));     /* lpParam */
+                                             : hbwapi_par_raw_HMENU(10), // hMenu
+                                hbwapi_par_raw_HINSTANCE(11),            // hInstance
+                                static_cast<LPVOID>(hb_parptr(12)));     // lpParam
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_raw_HWND(hResult);
@@ -207,9 +203,7 @@ HB_FUNC(WAPI_CREATEWINDOWEX)
   hb_strfree(hWindowName);
 }
 
-/*
-WAPI_DESTROYWINDOW(HWND) --> .T.|.F.
-*/
+// WAPI_DESTROYWINDOW(HWND) --> .T.|.F.
 HB_FUNC(WAPI_DESTROYWINDOW)
 {
   BOOL bResult = DestroyWindow(hbwapi_par_raw_HWND(1));
@@ -217,9 +211,7 @@ HB_FUNC(WAPI_DESTROYWINDOW)
   hbwapi_ret_L(bResult);
 }
 
-/*
-WAPI_ISWINDOW(HWND) --> .T.|.F.
-*/
+// WAPI_ISWINDOW(HWND) --> .T.|.F.
 HB_FUNC(WAPI_ISWINDOW)
 {
   BOOL bResult = IsWindow(hbwapi_par_raw_HWND(1));
@@ -227,9 +219,7 @@ HB_FUNC(WAPI_ISWINDOW)
   hbwapi_ret_L(bResult);
 }
 
-/*
-WAPI_DRAWTEXT(HDC, cText, aRect, np5) --> numeric
-*/
+// WAPI_DRAWTEXT(HDC, cText, aRect, np5) --> numeric
 HB_FUNC(WAPI_DRAWTEXT)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -250,9 +240,9 @@ HB_FUNC(WAPI_DRAWTEXT)
   }
 }
 
-/* BEGIN SCROLLBAR MANIPULATION WINAPI FUNCTIONS */
+// BEGIN SCROLLBAR MANIPULATION WINAPI FUNCTIONS
 
-/* BOOL EnableScrollBar(HWND hWnd, UINT wSBflags, UINT wArrows); */
+// BOOL EnableScrollBar(HWND hWnd, UINT wSBflags, UINT wArrows);
 HB_FUNC(WAPI_ENABLESCROLLBAR)
 {
   BOOL bResult = EnableScrollBar(hbwapi_par_raw_HWND(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
@@ -261,7 +251,7 @@ HB_FUNC(WAPI_ENABLESCROLLBAR)
 }
 
 #if 0
-/* BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi); */
+// BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi);
 HB_FUNC(WAPI_GETSCROLLBARINFO)
 {
    BOOL bSuccess;
@@ -296,7 +286,7 @@ HB_FUNC(WAPI_GETSCROLLBARINFO)
 }
 #endif
 
-/* BOOL GetScrollInfo(HWND hwnd, int fnBar, LPSCROLLINFO lpsi); */
+// BOOL GetScrollInfo(HWND hwnd, int fnBar, LPSCROLLINFO lpsi);
 HB_FUNC(WAPI_GETSCROLLINFO)
 {
   BOOL bSuccess;
@@ -330,7 +320,7 @@ HB_FUNC(WAPI_GETSCROLLINFO)
   hbwapi_ret_L(bSuccess);
 }
 
-/* int GetScrollPos(HWND hWnd, int nBar); */
+// int GetScrollPos(HWND hWnd, int nBar);
 HB_FUNC(WAPI_GETSCROLLPOS)
 {
   int iResult = GetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
@@ -339,7 +329,7 @@ HB_FUNC(WAPI_GETSCROLLPOS)
   hbwapi_ret_NI(iResult);
 }
 
-/* BOOL GetScrollRange(HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos); */
+// BOOL GetScrollRange(HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos);
 HB_FUNC(WAPI_GETSCROLLRANGE)
 {
   int minPos, maxPos;
@@ -352,23 +342,23 @@ HB_FUNC(WAPI_GETSCROLLRANGE)
 }
 
 #if 0
-/* BOOL ScrollDC(HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate); */
+// BOOL ScrollDC(HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate);
 HB_FUNC(WAPI_SCROLLDC)
 {
 }
 
-/* BOOL ScrollWindow(HWND hWnd, int XAmount, int YAmount, const RECT * lpRect, const RECT * lpClipRect); */
+// BOOL ScrollWindow(HWND hWnd, int XAmount, int YAmount, const RECT * lpRect, const RECT * lpClipRect);
 HB_FUNC(WAPI_SCROLLWINDOW)
 {
 }
 
-/* int ScrollWindowEx(HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags); */
+// int ScrollWindowEx(HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags);
 HB_FUNC(WAPI_SCROLLWINDOWEX)
 {
 }
 #endif
 
-/* int SetScrollInfo(HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw); */
+// int SetScrollInfo(HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw);
 HB_FUNC(WAPI_SETSCROLLINFO)
 {
   hbwapi_ret_NI(SetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2),
@@ -378,7 +368,7 @@ HB_FUNC(WAPI_SETSCROLLINFO)
                               HB_ISLOG(4) ? hbwapi_par_BOOL(4) : TRUE));
 }
 
-/* int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw); */
+// int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw);
 HB_FUNC(WAPI_SETSCROLLPOS)
 {
   int iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
@@ -386,7 +376,7 @@ HB_FUNC(WAPI_SETSCROLLPOS)
   hbwapi_ret_NI(iResult);
 }
 
-/* BOOL SetScrollRange(HWND hWnd, int nBar, int nMinPos, int nMaxPos, BOOL bRedraw); */
+// BOOL SetScrollRange(HWND hWnd, int nBar, int nMinPos, int nMaxPos, BOOL bRedraw);
 HB_FUNC(WAPI_SETSCROLLRANGE)
 {
   BOOL bResult = SetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_INT(4),
@@ -395,7 +385,7 @@ HB_FUNC(WAPI_SETSCROLLRANGE)
   hbwapi_ret_L(bResult);
 }
 
-/* BOOL ShowScrollBar(HWND hWnd, int wBar, BOOL bShow); */
+// BOOL ShowScrollBar(HWND hWnd, int wBar, BOOL bShow);
 HB_FUNC(WAPI_SHOWSCROLLBAR)
 {
   BOOL bResult = ShowScrollBar(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_BOOL(3));
@@ -443,22 +433,22 @@ HB_FUNC(WAPI_LOADBITMAP)
 }
 #endif
 
-/* wapi_LoadImage([<hInstance>], <cName>|<nID>, [<nType>], [<nWidth>], [<nHeight>], [<nFlags>]) --> <hImage> */
+// wapi_LoadImage([<hInstance>], <cName>|<nID>, [<nType>], [<nWidth>], [<nHeight>], [<nFlags>]) --> <hImage>
 HB_FUNC(WAPI_LOADIMAGE)
 {
   void *hString = nullptr;
   HANDLE hImage = LoadImage(hbwapi_par_raw_HINSTANCE(1),
                             HB_ISNUM(2) ? MAKEINTRESOURCE(hbwapi_par_INT(2)) : HB_PARSTR(2, &hString, nullptr),
-                            static_cast<UINT>(hb_parnidef(3, IMAGE_BITMAP)), hbwapi_par_INT(4), /* desired width */
-                            hbwapi_par_INT(5),                                                  /* desired height */
-                            hbwapi_par_UINT(6));                                                /* load flags */
+                            static_cast<UINT>(hb_parnidef(3, IMAGE_BITMAP)), hbwapi_par_INT(4), // desired width
+                            hbwapi_par_INT(5),                                                  // desired height
+                            hbwapi_par_UINT(6));                                                // load flags
 
   hbwapi_SetLastError(GetLastError());
   hb_strfree(hString);
   hbwapi_ret_raw_HANDLE(hImage);
 }
 
-/* MENU functions */
+// MENU functions
 
 HB_FUNC(WAPI_LOADMENU)
 {
@@ -517,13 +507,13 @@ HB_FUNC(WAPI_DRAWMENUBAR)
 HB_FUNC(WAPI_TRACKPOPUPMENU)
 {
   HWND hWnd = hbwapi_par_raw_HWND(6);
-  UINT uiResult = TrackPopupMenu(hbwapi_par_raw_HMENU(1),         /* hMenu */
-                                 hbwapi_par_UINT(2),              /* uFlags */
-                                 hbwapi_par_INT(3),               /* x */
-                                 hbwapi_par_INT(4),               /* y */
-                                 0,                               /* nReserved */
-                                 hWnd ? hWnd : GetActiveWindow(), /* hWnd */
-                                 nullptr);                        /* prcRect */
+  UINT uiResult = TrackPopupMenu(hbwapi_par_raw_HMENU(1),         // hMenu
+                                 hbwapi_par_UINT(2),              // uFlags
+                                 hbwapi_par_INT(3),               // x
+                                 hbwapi_par_INT(4),               // y
+                                 0,                               // nReserved
+                                 hWnd ? hWnd : GetActiveWindow(), // hWnd
+                                 nullptr);                        // prcRect
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_UINT(uiResult);
 }
@@ -549,9 +539,7 @@ HB_FUNC(WAPI_CHECKMENUITEM)
   }
 }
 
-/*
-WAPI_CHECKMENURADIOITEM(hMENU, idFirst, idLast, idCheck, uFlags) --> .T.|.F.
-*/
+// WAPI_CHECKMENURADIOITEM(hMENU, idFirst, idLast, idCheck, uFlags) --> .T.|.F.
 HB_FUNC(WAPI_CHECKMENURADIOITEM)
 {
   BOOL fResult = CheckMenuRadioItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3), hbwapi_par_UINT(4),
@@ -595,7 +583,7 @@ HB_FUNC(WAPI_INSERTMENU)
   }
   else
   {
-    if (HB_ISPOINTER(4)) /* NOTE: assumes that pointer cannot be numeric */
+    if (HB_ISPOINTER(4)) // NOTE: assumes that pointer cannot be numeric
     {
       uFlags |= MF_POPUP;
       uIDNewItem = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HMENU(4));
@@ -654,7 +642,7 @@ HB_FUNC(WAPI_APPENDMENU)
   }
   else
   {
-    if (HB_ISPOINTER(3)) /* NOTE: assumes that pointer cannot be numeric */
+    if (HB_ISPOINTER(3)) // NOTE: assumes that pointer cannot be numeric
     {
       uFlags |= MF_POPUP;
       uIDNewItem = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HMENU(3));
@@ -790,7 +778,7 @@ HB_FUNC(WAPI_GETMENUDEFAULTITEM)
   }
 }
 
-/* wapi_CreateAcceleratorTable(<aAccelTable>) --> <hAccel> */
+// wapi_CreateAcceleratorTable(<aAccelTable>) --> <hAccel>
 HB_FUNC(WAPI_CREATEACCELERATORTABLE)
 {
   HACCEL hAccel = nullptr;
@@ -869,13 +857,11 @@ HB_FUNC(WAPI_GETWINDOWRECT)
   hbwapi_ret_L(bResult);
 }
 
-/*
-WAPI_CHECKRADIOBUTTON(p1, p2, p3, p4) --> .T.|.F.
-[p1] handle of dialog box
-[p2] identifier of first radio button in group
-[p3] identifier of last radio button in group
-[p4] identifier of radio button to select
-*/
+// WAPI_CHECKRADIOBUTTON(p1, p2, p3, p4) --> .T.|.F.
+// [p1] handle of dialog box
+// [p2] identifier of first radio button in group
+// [p3] identifier of last radio button in group
+// [p4] identifier of radio button to select
 HB_FUNC(WAPI_CHECKRADIOBUTTON)
 {
   BOOL bResult = CheckRadioButton(hbwapi_par_raw_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4));
@@ -930,7 +916,7 @@ HB_FUNC(WAPI_SETWINDOWTEXT)
   hb_strfree(hText);
 }
 
-/* https://blogs.msdn.com/b/oldnewthing/archive/2003/08/21/54675/ */
+// https://blogs.msdn.com/b/oldnewthing/archive/2003/08/21/54675/
 HB_FUNC(WAPI_GETWINDOWTEXT)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
@@ -1021,7 +1007,7 @@ HB_FUNC(WAPI_KILLTIMER)
   hb_retnint(result);
 }
 
-HB_FUNC(WAPI_POSTMESSAGE) /* NOTE: unsafe function, may write past buffer */
+HB_FUNC(WAPI_POSTMESSAGE) // NOTE: unsafe function, may write past buffer
 {
   void *hText;
   HB_SIZE nLen;
@@ -1040,7 +1026,7 @@ HB_FUNC(WAPI_POSTMESSAGE) /* NOTE: unsafe function, may write past buffer */
   hb_strfree(hText);
 }
 
-HB_FUNC(WAPI_SENDNOTIFYMESSAGE) /* NOTE: unsafe function, may write past buffer */
+HB_FUNC(WAPI_SENDNOTIFYMESSAGE) // NOTE: unsafe function, may write past buffer
 {
   void *hText;
   HB_SIZE nLen;
@@ -1059,7 +1045,7 @@ HB_FUNC(WAPI_SENDNOTIFYMESSAGE) /* NOTE: unsafe function, may write past buffer 
   hb_strfree(hText);
 }
 
-HB_FUNC(WAPI_SENDMESSAGE) /* NOTE: unsafe function, may write past buffer */
+HB_FUNC(WAPI_SENDMESSAGE) // NOTE: unsafe function, may write past buffer
 {
   void *hText;
   HB_SIZE nLen;
@@ -1087,7 +1073,7 @@ HB_FUNC(WAPI_SENDMESSAGE) /* NOTE: unsafe function, may write past buffer */
   hb_strfree(hText);
 }
 
-HB_FUNC(WAPI_SENDMESSAGETIMEOUT) /* NOTE: unsafe function, may write past buffer */
+HB_FUNC(WAPI_SENDMESSAGETIMEOUT) // NOTE: unsafe function, may write past buffer
 {
   void *hText;
   HB_SIZE nLen;
@@ -1142,17 +1128,13 @@ HB_FUNC(WAPI_SETCURSORPOS)
   hbwapi_ret_L(bResult);
 }
 
-/*
-WAPI_UPDATEWINDOW(HWND) --> .T.|.F.
-*/
+// WAPI_UPDATEWINDOW(HWND) --> .T.|.F.
 HB_FUNC(WAPI_UPDATEWINDOW)
 {
   hbwapi_ret_L(UpdateWindow(hbwapi_par_raw_HWND(1)));
 }
 
-/*
-WAPI_SHOWWINDOW(HWND, np2) --> .T.|.F.
-*/
+// WAPI_SHOWWINDOW(HWND, np2) --> .T.|.F.
 HB_FUNC(WAPI_SHOWWINDOW)
 {
   hbwapi_ret_L(ShowWindow(hbwapi_par_raw_HWND(1), hb_parni(2)));
@@ -1222,13 +1204,11 @@ HB_FUNC(WAPI_DRAWICON)
   hbwapi_ret_L(bResult);
 }
 
-/*
-WAPI_REDRAWWINDOW(HWND, aRect, HRGN, nFlags) --> .T.|.F.
-HWND = handle of window
-aRect = address of structure with update rectangle
-HRGN = handle of update region
-nFlags = array of redraw flags
-*/
+// WAPI_REDRAWWINDOW(HWND, aRect, HRGN, nFlags) --> .T.|.F.
+// HWND = handle of window
+// aRect = address of structure with update rectangle
+// HRGN = handle of update region
+// nFlags = array of redraw flags
 HB_FUNC(WAPI_REDRAWWINDOW)
 {
   RECT rc;
@@ -1236,11 +1216,11 @@ HB_FUNC(WAPI_REDRAWWINDOW)
                             static_cast<HRGN>(hbwapi_par_raw_HANDLE(3)), hbwapi_par_UINT(4)));
 }
 
-HB_FUNC(WAPI_GETICONINFO) /* TODO: added support to return hash instead of array. See wapi_GetTextMetrics() */
+HB_FUNC(WAPI_GETICONINFO) // TODO: added support to return hash instead of array. See wapi_GetTextMetrics()
 {
   auto aInfo = hb_itemArrayNew(5);
   ICONINFO ii{};
-  /* MSDN doc says it's in icon.lib, but I could not find such lib in wce msvcarm/mingwarm. */
+  // MSDN doc says it's in icon.lib, but I could not find such lib in wce msvcarm/mingwarm.
   BOOL bResult = GetIconInfo(hbwapi_par_raw_HICON(1), &ii);
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);

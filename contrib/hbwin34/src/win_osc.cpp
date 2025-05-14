@@ -141,7 +141,7 @@ HB_FUNC(WIN_OSISME)
 
 HB_FUNC(WIN_OSISTSCLIENT)
 {
-/* Only supported on NT 4.0 SP3 & higher */
+// Only supported on NT 4.0 SP3 & higher
 #ifndef SM_REMOTESESSION
 #define SM_REMOTESESSION 0x1000
 #endif

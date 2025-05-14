@@ -89,7 +89,7 @@ HB_FUNC(__WIN_PROXYDETECT)
         options.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
         options.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DNS_A;
 #if defined(HBWIN_USE_WINHTTP_DHCP)
-        /* This flag has issues, according to Chromium code. */
+        // This flag has issues, according to Chromium code.
         options.dwAutoDetectFlags |= WINHTTP_AUTO_DETECT_TYPE_DHCP;
 #endif
       }

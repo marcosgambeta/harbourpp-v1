@@ -61,7 +61,7 @@
 #define BI_PNG 5
 #endif
 
-/* Functions for loading and printing bitmaps */
+// Functions for loading and printing bitmaps
 
 int hbwin_bitmapType(const void *pImgBuf, HB_SIZE size)
 {
@@ -100,9 +100,9 @@ HB_FUNC(WIN_LOADBITMAPFILE)
 
   if (pBuffer)
   {
-    /* FIXME: No check is done on read data from disk which is a large security hole
-              and may cause GPF even in simple error cases, like invalid file content.
-              [vszakats] */
+    // FIXME: No check is done on read data from disk which is a large security hole
+    //        and may cause GPF even in simple error cases, like invalid file content.
+    //        [vszakats]
 
     if (nSize <= 2 || hbwin_bitmapType(pBuffer, nSize) == HB_WIN_BITMAP_UNKNOWN)
     {
@@ -121,7 +121,7 @@ HB_FUNC(WIN_LOADBITMAPFILE)
   }
 }
 
-/* Some compilers don't implement these define [jarabal] */
+// Some compilers don't implement these define [jarabal]
 #ifndef CHECKJPEGFORMAT
 #define CHECKJPEGFORMAT 4119
 #endif
@@ -188,9 +188,9 @@ HB_FUNC(WIN_DRAWBITMAP)
   auto pbmfh = reinterpret_cast<const BITMAPFILEHEADER *>(hb_parc(2));
   int iType = hbwin_bitmapType(pbmfh, nSize);
 
-  /* FIXME: No check is done on 2nd parameter which is a large security hole
-            and may cause GPF in simple error cases.
-            [vszakats] */
+  // FIXME: No check is done on 2nd parameter which is a large security hole
+  //        and may cause GPF in simple error cases.
+  //        [vszakats]
   if (hbwin_bitmapIsSupported(hDC, iType, pbmfh, nSize) == 0)
   {
     const BITMAPINFO *pbmi = nullptr;
@@ -204,7 +204,7 @@ HB_FUNC(WIN_DRAWBITMAP)
       pbmi = reinterpret_cast<const BITMAPINFO *>(pbmfh + 1);
       pBits = reinterpret_cast<const BYTE *>(pbmfh) + pbmfh->bfOffBits;
 
-      /* Remember there are 2 types of BitMap File */
+      // Remember there are 2 types of BitMap File
       if (pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER))
       {
         iWidth = (reinterpret_cast<const BITMAPCOREHEADER *>(pbmi))->bcWidth;
@@ -222,7 +222,7 @@ HB_FUNC(WIN_DRAWBITMAP)
 
       bmi.bmiHeader.biSize = sizeof(bmi);
       bmi.bmiHeader.biWidth = iWidth;
-      bmi.bmiHeader.biHeight = -iHeight; /* top-down image */
+      bmi.bmiHeader.biHeight = -iHeight; // top-down image
       bmi.bmiHeader.biPlanes = 1;
       bmi.bmiHeader.biBitCount = 0;
       bmi.bmiHeader.biCompression = (iType == HB_WIN_BITMAP_JPEG ? BI_JPEG : BI_PNG);

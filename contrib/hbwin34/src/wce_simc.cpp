@@ -48,35 +48,35 @@
 #include "hbwapi.hpp"
 #include <hbapiitm.hpp>
 
-HB_FUNC(WCE_SIMINITIALIZE) /* hSim by reference, lNotifications */
+HB_FUNC(WCE_SIMINITIALIZE) // hSim by reference, lNotifications
 {
   hb_storptr(0, 1);
   hb_retnint(-1);
 }
 
-HB_FUNC(WCE_SIMDEINITIALIZE) /* hSim */
+HB_FUNC(WCE_SIMDEINITIALIZE) // hSim
 {
   hb_retnint(-1);
 }
 
-HB_FUNC(WCE_SIMPHONEBOOKSTATUS) /* hSim, nLocation, @nTotal, @nUsed */
+HB_FUNC(WCE_SIMPHONEBOOKSTATUS) // hSim, nLocation, @nTotal, @nUsed
 {
   hb_stornint(0, 3);
   hb_stornint(0, 4);
   hb_retnint(-1);
 }
 
-HB_FUNC(WCE_SIMREADPHONEBOOKENTRY) /* hSim, nLocation, nPos, @aEntry */
+HB_FUNC(WCE_SIMREADPHONEBOOKENTRY) // hSim, nLocation, nPos, @aEntry
 {
   hb_reta(0);
 }
 
-HB_FUNC(WCE_SIMWRITEPHONEBOOKENTRY) /* hSim, nLocation, nPos, cNumber, cName, nPlan, nAddrType */
+HB_FUNC(WCE_SIMWRITEPHONEBOOKENTRY) // hSim, nLocation, nPos, cNumber, cName, nPlan, nAddrType
 {
   hb_retnint(-1);
 }
 
-HB_FUNC(WCE_SIMDELETEPHONEBOOKENTRY) /* hSim, nLocation, nPos */
+HB_FUNC(WCE_SIMDELETEPHONEBOOKENTRY) // hSim, nLocation, nPos
 {
   hb_retnint(-1);
 }

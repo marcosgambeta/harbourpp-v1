@@ -112,7 +112,7 @@ HB_FUNC(WIN_ABORTDOC)
   hb_retl(hDC && AbortDoc(hDC) > 0);
 }
 
-HB_FUNC(WIN_DELETEDC) /* Compatibility dummy */
+HB_FUNC(WIN_DELETEDC) // Compatibility dummy
 {
   hb_retni(0);
 }
@@ -151,7 +151,7 @@ HB_FUNC(WIN_TEXTOUT)
     {
       auto iRow = hb_parni(2);
       auto iCol = hb_parni(3);
-      auto iWidth = hb_parni(6); /* defaults to 0 */
+      auto iWidth = hb_parni(6); // defaults to 0
 
       if (HB_ISNUM(7))
       {
@@ -179,8 +179,8 @@ HB_FUNC(WIN_TEXTOUT)
       {
         SIZE sSize;
         GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen),
-                             &sSize);          /* Get the length of the text in device size */
-        lResult = static_cast<long>(sSize.cx); /* return the width so we can update the current pen position (::PosY) */
+                             &sSize);          // Get the length of the text in device size
+        lResult = static_cast<long>(sSize.cx); // return the width so we can update the current pen position (::PosY)
       }
     }
 
@@ -212,15 +212,15 @@ HB_FUNC(WIN_GETTEXTSIZE)
     {
       SIZE sSize;
 
-      GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize); /* Get the length of the text in device size */
+      GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize); // Get the length of the text in device size
 
       if (hb_parldef(4, true))
       {
-        lResult = static_cast<long>(sSize.cx); /* return the width */
+        lResult = static_cast<long>(sSize.cx); // return the width
       }
       else
       {
-        lResult = static_cast<long>(sSize.cy); /* return the height */
+        lResult = static_cast<long>(sSize.cy); // return the height
       }
     }
 
@@ -288,7 +288,7 @@ HB_FUNC(WIN_CREATEFONT)
       iWeight = FW_NORMAL;
     }
 
-    if (hb_parl(10)) /* Ugly hack to enable full control for caller */
+    if (hb_parl(10)) // Ugly hack to enable full control for caller
     {
       iHeight = hb_parni(3);
       iWidth = hb_parni(5);
@@ -401,7 +401,7 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
           fUserDialog = HB_ISBYREF(3) || HB_ISBYREF(4) || HB_ISBYREF(5) || HB_ISBYREF(6) || HB_ISBYREF(7) ||
                         HB_ISBYREF(8) || HB_ISBYREF(9) || HB_ISBYREF(10) || HB_ISBYREF(11);
 
-          if ((iProp = hb_parni(3)) != 0) /* [2007-02-22] don't change if 0 */
+          if ((iProp = hb_parni(3)) != 0) // [2007-02-22] don't change if 0
           {
             pDevMode->dmPaperSize = static_cast<short>(iProp);
             dmFields |= DM_PAPERSIZE;
@@ -425,19 +425,19 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
             }
           }
 
-          if ((iProp = hb_parni(6)) != 0) /* [2007-02-22] don't change if 0 */
+          if ((iProp = hb_parni(6)) != 0) // [2007-02-22] don't change if 0
           {
             pDevMode->dmDefaultSource = static_cast<short>(iProp);
             dmFields |= DM_DEFAULTSOURCE;
           }
 
-          if ((iProp = hb_parni(7)) != 0) /* [2007-02-22] don't change if 0 */
+          if ((iProp = hb_parni(7)) != 0) // [2007-02-22] don't change if 0
           {
             pDevMode->dmDuplex = static_cast<short>(iProp);
             dmFields |= DM_DUPLEX;
           }
 
-          if ((iProp = hb_parni(8)) != 0) /* [2007-02-22] don't change if 0 */
+          if ((iProp = hb_parni(8)) != 0) // [2007-02-22] don't change if 0
           {
             pDevMode->dmPrintQuality = static_cast<short>(iProp);
             dmFields |= DM_PRINTQUALITY;
@@ -627,9 +627,7 @@ HB_FUNC(WIN_SETCOLOR)
 
 #endif
 
-/*
-WIN_SETPEN(HDC, HPEN|nPenStyle, nPenWidth, nColor) --> HPEN
-*/
+// WIN_SETPEN(HDC, HPEN|nPenStyle, nPenWidth, nColor) --> HPEN
 HB_FUNC(WIN_SETPEN)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -686,9 +684,7 @@ HB_FUNC(WIN_FILLRECT)
   hb_retl(fResult);
 }
 
-/*
-WIN_LINETO(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
-*/
+// WIN_LINETO(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
 HB_FUNC(WIN_LINETO)
 {
   HDC hDC = hbwapi_par_HDC(1);
@@ -715,18 +711,14 @@ HB_FUNC(WIN_RECTANGLE)
   }
 }
 
-/*
-WIN_ARC(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
-*/
+// WIN_ARC(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
 HB_FUNC(WIN_ARC)
 {
   HDC hDC = hbwapi_par_HDC(1);
   hb_retl(hDC ? Arc(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), 0, 0, 0, 0) : false);
 }
 
-/*
-WIN_ELLIPSE(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
-*/
+// WIN_ELLIPSE(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
 HB_FUNC(WIN_ELLIPSE)
 {
   HDC hDC = hbwapi_par_HDC(1);

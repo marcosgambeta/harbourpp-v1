@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#define HB_CLS_NOTOBJECT  /* avoid definition of method: INIT */
+#define HB_CLS_NOTOBJECT  // avoid definition of method: INIT
 #include <hbclass.ch>
 
 CREATE CLASS win_oleAuto
@@ -71,11 +71,11 @@ METHOD win_oleAuto:__enumStart(enum, lDescend)
 
    IF !Empty(hObjEnum := __oleEnumCreate(::__hObj, lDescend))
       IF !Empty(::__hObjEnum)
-         /* small hack - clone the object array for nested FOR EACH calls */
+         // small hack - clone the object array for nested FOR EACH calls
          Self := __objClone(Self)
       ENDIF
       ::__hObjEnum := hObjEnum
-      /* set base value for enumerator */
+      // set base value for enumerator
       (@enum):__enumBase(Self)
       RETURN ::__enumSkip(@enum, lDescend)
    ENDIF
@@ -90,18 +90,18 @@ METHOD win_oleAuto:__enumSkip(enum, lDescend)
    HB_SYMBOL_UNUSED(lDescend)
 
    xValue := __oleEnumNext(::__hObjEnum, @lContinue, ::classH)
-   /* set enumerator value */
+   // set enumerator value
    (@enum):__enumValue(xValue)
 
    RETURN lContinue
 
 METHOD PROCEDURE win_oleAuto:__enumStop()
 
-   ::__hObjEnum := NIL     /* activate auto-destructor */
+   ::__hObjEnum := NIL     // activate auto-destructor
 
    RETURN
 
-/* OLE functions */
+// OLE functions
 
 FUNCTION win_oleGetActiveObject(...)
 

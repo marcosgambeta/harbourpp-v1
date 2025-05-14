@@ -54,7 +54,7 @@
 
 #if defined(_MSC_VER)
 #pragma warning(push)
-#pragma warning(disable : 4201) /* warning C4201: nonstandard extension used: nameless struct/union */
+#pragma warning(disable : 4201) // warning C4201: nonstandard extension used: nameless struct/union
 #endif
 #include <olectl.h>
 #if defined(_MSC_VER)
@@ -78,7 +78,7 @@ static void hb_errRT_OLE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCOD
 
   if (hb_pcount() != 0)
   {
-    /* HB_ERR_ARGS_BASEPARAMS */
+    // HB_ERR_ARGS_BASEPARAMS
     PHB_ITEM pArray = hb_arrayBaseParams();
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
@@ -176,7 +176,7 @@ PHB_ITEM hb_oleAxControlNew(PHB_ITEM pItem, HWND hWnd)
   return pItem;
 }
 
-HB_FUNC(__AXGETCONTROL) /* ( hWnd ) --> pDisp */
+HB_FUNC(__AXGETCONTROL) // ( hWnd ) --> pDisp
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
 
@@ -190,7 +190,7 @@ HB_FUNC(__AXGETCONTROL) /* ( hWnd ) --> pDisp */
   }
 }
 
-HB_FUNC(__AXDOVERB) /* ( hWndAx, iVerb ) --> hResult */
+HB_FUNC(__AXDOVERB) // ( hWndAx, iVerb ) --> hResult
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
   IUnknown *pUnk = nullptr;
@@ -233,7 +233,7 @@ HB_FUNC(__AXDOVERB) /* ( hWndAx, iVerb ) --> hResult */
   hb_retnint(lOleError);
 }
 
-/* --- Event handler support --- */
+// --- Event handler support ---
 
 #if !defined(HB_OLE_C_API)
 typedef struct
@@ -296,7 +296,7 @@ static ULONG STDMETHODCALLTYPE Release(IDispatch *lpThis)
       pSink->pConnectionPoint = nullptr;
       pSink->dwCookie = 0;
     }
-    hb_xfree(pSink); /* TODO: GlobalAlloc()/GlobalFree() GMEM_FIXED ??? */
+    hb_xfree(pSink); // TODO: GlobalAlloc()/GlobalFree() GMEM_FIXED ???
     return 0;
   }
   return pSink->count;
@@ -375,7 +375,7 @@ static const IDispatchVtbl ISink_Vtbl = {QueryInterface, AddRef,        Release,
                                          GetTypeInfo,    GetIDsOfNames, Invoke};
 
 #if 0
-/* Debug helper function */
+// Debug helper function
 static char * GUID2String(GUID * pID)
 {
    static char strguid[128];
@@ -406,7 +406,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
     IProvideClassInfo2 *iPCI2;
     IProvideClassInfo *iPCI;
 
-    /* Method 1: using IProvideClassInfo2 */
+    // Method 1: using IProvideClassInfo2
 
     hr = HB_VTBL(iDisp)->QueryInterface(HB_THIS_(iDisp) HB_ID_REF(IID_IProvideClassInfo2),
                                         static_cast<void **>(static_cast<void *>(&iPCI2)));
@@ -426,7 +426,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
       HB_TRACE(HB_TR_DEBUG, ("_get_default_sink() IProvideClassInfo2 obtain error %08lX", hr));
     }
 
-    /* Method 2: using IProvideClassInfo and searching for default source in ITypeInfo */
+    // Method 2: using IProvideClassInfo and searching for default source in ITypeInfo
 
     hr = HB_VTBL(iDisp)->QueryInterface(HB_THIS_(iDisp) HB_ID_REF(IID_IProvideClassInfo),
                                         static_cast<void **>(static_cast<void *>(&iPCI)));
@@ -478,7 +478,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
     }
   }
 
-  /* Method 3: using CoClass */
+  // Method 3: using CoClass
 
   hr = HB_VTBL(iDisp)->GetTypeInfo(HB_THIS_(iDisp) 0, LOCALE_SYSTEM_DEFAULT, &iTI);
   if (hr == S_OK)
@@ -541,7 +541,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
                     HB_VTBL(iTISink)->Release(HB_THIS(iTISink));
                   }
                 }
-                else /* szEvent == nullptr */
+                else // szEvent == nullptr
                 {
                   hr = HB_VTBL(iTI)->GetImplTypeFlags(HB_THIS_(iTI) j, &iFlags);
                   if (hr == S_OK && (iFlags & IMPLTYPEFLAG_FDEFAULT) && (iFlags & IMPLTYPEFLAG_FSOURCE))
@@ -553,7 +553,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
                       if (hr == S_OK)
                       {
 #if 0
-/* Debug code. You can also comment out iFlags condition, to list more interfaces [Mindaugas] */
+// Debug code. You can also comment out iFlags condition, to list more interfaces [Mindaugas]
                                     BSTR bstr;
                                     char str[256];
                                     int iLen;
@@ -596,9 +596,9 @@ static void hb_sink_destruct(void *cargo)
     IConnectionPoint *pConnectionPoint = pSink->pConnectionPoint;
     DWORD dwCookie = pSink->dwCookie;
 
-    /* Unadvise() may activate pSink destructor so clear these
-     * items as protection against recursive Unadvise() call.
-     */
+    // Unadvise() may activate pSink destructor so clear these
+    // items as protection against recursive Unadvise() call.
+
     pSink->pConnectionPoint = nullptr;
     pSink->dwCookie = 0;
 
@@ -607,7 +607,7 @@ static void hb_sink_destruct(void *cargo)
   }
 }
 
-HB_FUNC(__AXREGISTERHANDLER) /* ( pDisp, bHandler [, cIID] ) --> pSink */
+HB_FUNC(__AXREGISTERHANDLER) // ( pDisp, bHandler [, cIID] ) --> pSink
 {
   IDispatch *pDisp = hb_oleParam(1);
 
@@ -654,7 +654,7 @@ HB_FUNC(__AXREGISTERHANDLER) /* ( pDisp, bHandler [, cIID] ) --> pSink */
             PHB_ITEM pOleItem;
             DWORD dwCookie = 0;
 
-            auto pSink = static_cast<ISink *>(hb_xgrab(sizeof(ISink))); /* TODO: GlobalAlloc/Free GMEM_FIXED ??? */
+            auto pSink = static_cast<ISink *>(hb_xgrab(sizeof(ISink))); // TODO: GlobalAlloc/Free GMEM_FIXED ???
 
             pSink->lpVtbl = &ISink_Vtbl;
             pSink->count = 0;
@@ -671,9 +671,9 @@ HB_FUNC(__AXREGISTERHANDLER) /* ( pDisp, bHandler [, cIID] ) --> pSink */
 
             HB_VTBL(pDisp)->AddRef(HB_THIS(pDisp));
             pOleItem = hb_oleItemPut(hb_stackReturnItem(), static_cast<IDispatch *>(pDisp));
-            /* Bind call back handler item with returned object */
+            // Bind call back handler item with returned object
             hb_oleItemSetCallBack(pOleItem, &pSink->pItemHandler);
-            /* Add additional destructor */
+            // Add additional destructor
             hb_oleItemSetDestructor(pOleItem, hb_sink_destruct, static_cast<void *>(pSink));
           }
           HB_VTBL(pCPC)->Release(HB_THIS(pCPC));

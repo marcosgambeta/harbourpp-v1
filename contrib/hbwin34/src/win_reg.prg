@@ -48,7 +48,7 @@
 
 #include "hbwin.ch"
 
-/* Predefined Value Types. from winnt.h */
+// Predefined Value Types. from winnt.h
 #define KEY_QUERY_VALUE                1
 #define KEY_SET_VALUE                  2
 #define KEY_CREATE_SUB_KEY             4
@@ -169,23 +169,23 @@ FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
 
    IF win_regOpenKeyEx(nHKEY, cKeyName, 0, hb_bitOr(KEY_QUERY_VALUE, hb_defaultValue(nRegSam, 0)), @pKeyHandle)
 
-      /* retrieve the length of the value */
+      // retrieve the length of the value
 
       win_regQueryValueEx(pKeyHandle, cEntryName, 0, @nValueType, @xRetVal)
 
       IF hb_IsString(xRetVal)
          SWITCH nValueType
-         CASE WIN_REG_DWORD_LITTLE_ENDIAN  /* == WIN_REG_DWORD */
+         CASE WIN_REG_DWORD_LITTLE_ENDIAN  // == WIN_REG_DWORD
             xRetVal := Bin2U(xRetVal)
             EXIT
          CASE WIN_REG_DWORD_BIG_ENDIAN
             xRetVal := Bin2U(hb_BRight(xRetVal, 2) + hb_BLeft(xRetVal, 2))
             EXIT
-         CASE WIN_REG_QWORD_LITTLE_ENDIAN  /* == WIN_REG_QWORD */
+         CASE WIN_REG_QWORD_LITTLE_ENDIAN  // == WIN_REG_QWORD
             xRetVal := hb_bitShift(Bin2U(hb_BSubStr(xRetVal, 5, 4)), 32) + Bin2U(hb_BSubStr(xRetVal, 1, 4))
             EXIT
          OTHERWISE
-            /* Strip ending zero byte */
+            // Strip ending zero byte
             IF hb_BRight(xRetVal, 1) == hb_BChar(0)
                xRetVal := hb_BLeft(xRetVal, hb_BLen(xRetVal) - 1)
             ENDIF
@@ -209,7 +209,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
 
    IF win_regCreateKeyEx(nHKEY, cKeyName, 0, 0, 0, hb_bitOr(KEY_SET_VALUE, hb_defaultValue(nRegSam, 0)), 0, @pKeyHandle)
 
-      /* no support for Arrays, Codeblock ... */
+      // no support for Arrays, Codeblock ...
       SWITCH ValType(xValue)
       CASE "L"
          nValueType := WIN_REG_DWORD

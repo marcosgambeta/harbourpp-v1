@@ -63,10 +63,10 @@ FUNCTION win_ProxyDetect(cURL, /* @ */ cByPass)
 
    cProxy := __win_ProxyDetect(cProtocol + "://" + cHost, @cByPass)
 
-   /* https://msdn.microsoft.com/library/aa383912 */
+   // https://msdn.microsoft.com/library/aa383912
    FOR EACH cProxy IN hb_ATokens(cProxy, ";")
       IF (nPos := At("=", cProxy)) > 1
-         /* Return first match */
+         // Return first match
          IF Lower(Left(cProxy, nPos - 1)) == cProtocol
             RETURN SubStr(cProxy, nPos + 1)
          ENDIF
