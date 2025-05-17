@@ -1,9 +1,8 @@
-/*
- * Windows API (WAPI) wrapper main header
- *
- * Copyright 2009 {list of individual authors and e-mail addresses}
- *
- */
+//
+// Windows API (WAPI) wrapper main header
+//
+// Copyright 2009 {list of individual authors and e-mail addresses}
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -127,8 +126,8 @@
 
 HB_EXTERN_BEGIN
 
-/* Intentionally not used HB_EXPORT. These are UNICODE setting dependent functions,
-   meant to use only by the library itself. [vszakats] */
+// Intentionally not used HB_EXPORT. These are UNICODE setting dependent functions,
+// meant to use only by the library itself. [vszakats]
 extern TCHAR *   hbwapi_tstrdup( const TCHAR * pszText );
 extern TCHAR *   hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen );
 extern HB_SIZE   hbwapi_tstrlen(const TCHAR * pText);

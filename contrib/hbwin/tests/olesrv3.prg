@@ -15,9 +15,8 @@ PROCEDURE DllMain()
 
    M->Property1 := "MyProperty"
 
-   /* Initialize OLE server ID and name.
-    * win_oleServerInit() should be executed from DllMain()
-    */
+   // Initialize OLE server ID and name.
+   // win_oleServerInit() should be executed from DllMain()
    win_oleServerInit( CLS_ID, CLS_Name )
 
    RETURN

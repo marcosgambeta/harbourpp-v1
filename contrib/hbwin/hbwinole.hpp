@@ -1,9 +1,8 @@
-/*
- * OLE library C header
- *
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// OLE library C header
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -59,19 +58,17 @@
 
 #if defined(HB_OS_WIN)
 
-/* This option can resolve compilation problems in C++ mode for some
- * compilers like OpenWatcom but not for all, f.e. it will not help
- * BCC when used with -P (C++ mode) switch.
- */
+// This option can resolve compilation problems in C++ mode for some
+// compilers like OpenWatcom but not for all, f.e. it will not help
+// BCC when used with -P (C++ mode) switch.
 #if 0
 #if defined(__cplusplus) && ! defined(CINTERFACE)
    #define CINTERFACE 1
 #endif
 #endif
 
-/* This code uses named union so this declaration is necessary for
- * compilers where nameless unions are default
- */
+// This code uses named union so this declaration is necessary for
+// compilers where nameless unions are default
 #if defined(__BORLANDC__)
 #     if ! defined(NONAMELESSUNION)
 #        define NONAMELESSUNION
@@ -82,7 +79,7 @@
 #include <ole2.h>
 #include <ocidl.h>
 
-/* MinGW is lacking a number of variant accessors */
+// MinGW is lacking a number of variant accessors
 #if defined(__MINGW32__)
 #  if ! defined(V_I1REF)
 #     define V_I1REF( x )    V_UNION( x, pcVal )
@@ -114,7 +111,7 @@
 #  define HB_WIN_U3( x, y )  ( x )->y
 #endif
 
-/* macros used to hide type of interface: C or C++ */
+// macros used to hide type of interface: C or C++
 #if defined(__cplusplus) && ! defined(CINTERFACE) && ( defined(__BORLANDC__) || defined(_MSC_VER) || defined(__MINGW32__) )
 #  define HB_ID_REF( id )     ( id )
 #  define HB_VTBL( pSelf )    ( pSelf )
@@ -155,7 +152,7 @@ extern HB_EXPORT HB_BOOL     hb_oleDispInvoke( PHB_SYMB pSym, PHB_ITEM pObject, 
                                               HB_OLEOBJ_FUNC pObjFunc, HB_USHORT uiClass );
 extern HB_EXPORT void        hb_oleItemSetDestructor( PHB_ITEM pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void * cargo );
 
-/* ActiveX control */
+// ActiveX control
 extern HB_EXPORT HB_BOOL     hb_oleAxInit( void );
 extern HB_EXPORT PHB_ITEM    hb_oleAxControlNew( PHB_ITEM pItem, HWND hWnd );
 

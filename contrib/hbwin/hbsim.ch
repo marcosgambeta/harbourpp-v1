@@ -1,9 +1,8 @@
-/*
- * SIM header
- *
- * Copyright 2009 Jose Luis Capel <jlcapel@hotmail.com>
- *
- */
+//
+// SIM header
+//
+// Copyright 2009 Jose Luis Capel <jlcapel@hotmail.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -49,7 +48,7 @@
 #ifndef HBSIM_CH_
 #define HBSIM_CH_
 
-/* Error codes for SIM API */
+// Error codes for SIM API
 #define SIM_E_OK                        0               // This is non standard...
 #define SIM_E_HB_MISC                   -1              // This is non standard...
 #define SIM_E_HB_NOTINITIALIZED         -10             // This is non standard (class wce_Sim not initialized sim)
@@ -95,7 +94,7 @@
 #define SIM_E_RADIONOTPRESENT           -4100           // The Radio is not present
 #define SIM_E_RADIOOFF                  -4200           // The Radio is off
 
-/* Phone book storage locations */
+// Phone book storage locations
 #define SIM_PBSTORAGE_EMERGENCY         0x00000001      // Emergency dial list
 #define SIM_PBSTORAGE_FIXEDDIALING      0x00000002      // SIM fixed dialing list
 #define SIM_PBSTORAGE_LASTDIALING       0x00000004      // SIM last dialing list
@@ -103,11 +102,11 @@
 #define SIM_PBSTORAGE_SIM               0x00000010      // General SIM Storage
 #define SIM_NUMPBSTORAGES               5               // Number of phonebook storages
 
-/* Phonebook Misc | Special phonebook constants */
+// Phonebook Misc | Special phonebook constants
 #define SIM_PBINDEX_FIRSTAVAILABLE      0xFFFFFFFF      // Use first phonebook storage entry available
 
-/* Numbering Plan | Defines different numbering plans for SIM_ADDRTYPE_UNKNOWN,
-              SIM_ADDRTYPE_INTERNATIONAL, and SIM_ADDRTYPE_NATIONAL */
+// Numbering Plan | Defines different numbering plans for SIM_ADDRTYPE_UNKNOWN,
+//            SIM_ADDRTYPE_INTERNATIONAL, and SIM_ADDRTYPE_NATIONAL
 #define SIM_NUMPLAN_UNKNOWN             0x00000000      // Unknown
 #define SIM_NUMPLAN_TELEPHONE           0x00000001      // ISDN/telephone numbering plan (E.164/E.163)
 #define SIM_NUMPLAN_DATA                0x00000002      // Data numbering plan (X.121)
@@ -116,7 +115,7 @@
 #define SIM_NUMPLAN_PRIVATE             0x00000005      // Private numbering plan
 #define SIM_NUMPLAN_ERMES               0x00000006      // ERMES numbering plan (ETSI DE/PS 3 01-3)
 
-/* Address Type | Defines different address types */
+// Address Type | Defines different address types
 #define SIM_ADDRTYPE_UNKNOWN            0x00000000      // Unknown
 #define SIM_ADDRTYPE_INTERNATIONAL      0x00000001      // International number
 #define SIM_ADDRTYPE_NATIONAL           0x00000002      // National number

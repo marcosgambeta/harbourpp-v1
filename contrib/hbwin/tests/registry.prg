@@ -21,10 +21,10 @@ PROCEDURE Main()
    ? ">" + win_GetCommandLineParam() + "<"
    ? ">" + wapi_GetCommandLine() + "<"
 
-   /* old API */
+   // old API
    ? ">" + hb_ValToStr(win_regGet( WIN_HKEY_CURRENT_USER, "Control Panel\Desktop", "Wallpaper" )) + "<"
 
-   /* new API */
+   // new API
    ? ">" + hb_ValToStr(win_regRead( "HKCU\Environment\PATH" )) + "<"
    ? ">" + hb_ValToStr(tmp := win_regRead( "HKCU\Control Panel\Desktop\Wallpaper" )) + "<"
    ? ">" + hb_ValToStr(win_regRead( "" )) + "<"

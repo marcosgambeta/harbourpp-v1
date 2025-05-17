@@ -171,7 +171,7 @@ STATIC PROCEDURE Exm_MSWord()
       oText:Font:Bold := .T.
 
       oWord:Visible := .T.
-      oWord:WindowState := 1 /* Maximize */
+      oWord:WindowState := 1 // Maximize
    ELSE
       ? "Error. MS Word not available.", win_oleErrorText()
    ENDIF
@@ -385,7 +385,7 @@ STATIC FUNCTION OO_ConvertToURL( cString )
 
    RETURN "file:" + cString
 
-STATIC PROCEDURE Exm_CDO()  /* STARTTLS not supported by CDO */
+STATIC PROCEDURE Exm_CDO()  // STARTTLS not supported by CDO
 
    LOCAL oCDOMsg
    LOCAL oCDOConf

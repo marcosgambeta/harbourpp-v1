@@ -26,7 +26,7 @@ PROCEDURE Main()
 
    cFilename := hb_ProgName()
 
-   /* Setup event notification */
+   // Setup event notification
    oPC:__hSink := __axRegisterHandler( oPC:__hObj, {| X | nEvent := X } )
 
    oPC:cStart( "/NoProcessingAtStartup" )
@@ -40,8 +40,8 @@ PROCEDURE Main()
    oPC:cDefaultPrinter := "PDFCreator"
    oPC:cClearCache()
 
-   /* You can do any printing here using WinAPI or
-      call a 3rd party application to do printing */
+   // You can do any printing here using WinAPI or
+   // call a 3rd party application to do printing
 #if 1
    oPrinter := win_Prn():New( "PDFCreator" )
    oPrinter:Create()
@@ -62,7 +62,7 @@ PROCEDURE Main()
    nTime := hb_MilliSeconds()
    DO WHILE nEvent == 0 .AND. hb_MilliSeconds() - nTime < 10000
       hb_idleSleep( 0.5 )
-      /* The following dummy line is required to allow COM server to send event [Mindaugas] */
+      // The following dummy line is required to allow COM server to send event [Mindaugas]
       oPC:cOption( "UseAutosave" )
    ENDDO
 

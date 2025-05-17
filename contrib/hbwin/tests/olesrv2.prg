@@ -21,9 +21,8 @@ PROCEDURE DllMain()
    hAction["VALUE"]    := NIL              // DISPID=4
    hAction["GETDATA"]  := @get_data()      // DISPID=5
 
-   /* Initialize OLE server ID and name.
-    * win_oleServerInit() should be executed from DllMain()
-    */
+   // Initialize OLE server ID and name.
+   // win_oleServerInit() should be executed from DllMain()
    win_oleServerInit( CLS_ID, CLS_Name, hAction, .T. )
 
    RETURN

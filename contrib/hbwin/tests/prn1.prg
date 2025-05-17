@@ -139,7 +139,7 @@ STATIC PROCEDURE PrintBitmap( oPrn, cBitFile )
 
             oBmp:Draw( oPrn, { 200, 200, 2000, 1500 } )
 #if 0
-            /* Note: Can also use this method to print bitmap */
+            // Note: Can also use this method to print bitmap
             oBmp:Rect := { 200, 200, 2000, 1500 }
             oPrn:DrawBitmap( oBmp )
 #endif

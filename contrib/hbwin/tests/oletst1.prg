@@ -19,9 +19,8 @@ PROCEDURE Main()
    IF !Empty(oObject)
       IF oObject:connect( NETSERVER, NETPORT,, NETPASSWD )
          ? "Connected to the server:", NETSERVER
-         /* execute some functions on the server side and display
-          * the results.
-          */
+         // execute some functions on the server side and display
+         // the results.
          ? oObject:Upper("hello world !!!")
          ? "SERVER DATE:",     oObject:Date()
          ? "SERVER TIME:",     oObject:Time()

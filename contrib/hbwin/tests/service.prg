@@ -54,7 +54,7 @@ PROCEDURE Main( cMode )
    LOCAL nError
    LOCAL cMsg
 
-   hb_default(@cMode, "S") /* NOTE: Must be the default action */
+   hb_default(@cMode, "S") // NOTE: Must be the default action
 
    SWITCH Upper(cMode)
    CASE "I"
@@ -83,8 +83,8 @@ PROCEDURE Main( cMode )
 
    CASE "S"
 
-      /* NOTE: Used when starting up as service.
-               Do not invoke the executable manually with this option */
+      // NOTE: Used when starting up as service.
+      //       Do not invoke the executable manually with this option
 
       IF win_serviceStart( _SERVICE_NAME, @SrvMain() )
          ? "Service has started OK"

@@ -1,9 +1,8 @@
-/*
- * OLE header
- *
- * Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// OLE header
+//
+// Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -49,7 +48,7 @@
 #ifndef HBOLE_CH_
 #define HBOLE_CH_
 
-/* Variant types */
+// Variant types
 #define WIN_VT_EMPTY                0
 #define WIN_VT_NULL                 1
 #define WIN_VT_I2                   2
@@ -104,7 +103,7 @@
 #define WIN_VT_ILLEGALMASKED        0x0fff
 #define WIN_VT_TYPEMASK             0x0fff
 
-/* errors explicitly recognized by win_oleErrorText() */
+// errors explicitly recognized by win_oleErrorText()
 #define WIN_CO_E_CLASSSTRING        0x800401F3
 #define WIN_OLE_E_WRONGCOMPOBJ      0x8004000E
 #define WIN_REGDB_E_WRITEREGDB      0x80040151

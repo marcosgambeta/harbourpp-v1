@@ -1,10 +1,9 @@
-/*
- * Windows communications library
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2005-2009 Alex Strickland <sscc@mweb.co.za>
- *
- */
+//
+// Windows communications library
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2005-2009 Alex Strickland <sscc@mweb.co.za>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -66,9 +65,9 @@
 #define HB_WIN_COM_FUN_CLOSEHANDLE         7
 #define HB_WIN_COM_FUN_WRITEFILE           8
 #define HB_WIN_COM_FUN_READFILE            9
-#define HB_WIN_COM_FUN_GETCOMMMODEMSTATUS  10      /* win_com:Status() */
+#define HB_WIN_COM_FUN_GETCOMMMODEMSTATUS  10      // win_com:Status()
 #define HB_WIN_COM_FUN_PURGECOMM           11
-#define HB_WIN_COM_FUN_CLEARCOMMERROR      12      /* win_com:QueueStatus() */
+#define HB_WIN_COM_FUN_CLEARCOMMERROR      12      // win_com:QueueStatus()
 #define HB_WIN_COM_FUN_ESCAPECOMMFUNCTION  13
 #define HB_WIN_COM_FUN_GETCOMMPROPERTIES   14
 #define HB_WIN_COM_FUN_MAX                 14
@@ -81,7 +80,7 @@
 #define HB_WIN_COM_DBGQUEUE                0x20
 #define HB_WIN_COM_DBGALL                  0x3F
 
-/* hbwin_bitmapType() return values */
+// hbwin_bitmapType() return values
 #define HB_WIN_BITMAP_UNKNOWN              0
 #define HB_WIN_BITMAP_BMP                  1
 #define HB_WIN_BITMAP_JPEG                 2
