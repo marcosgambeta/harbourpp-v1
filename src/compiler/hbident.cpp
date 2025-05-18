@@ -78,7 +78,7 @@ static HB_HASH_FUNC(hb_comp_IdentKey) // HB_SIZE func (void *Value, void *Cargo)
 // deletes an identifier
 static HB_HASH_FUNC(hb_comp_IdentDel)
 {
-  hb_xfree(HB_UNCONST(Value));
+  hb_xfree(const_cast<void *>(Value));
   HB_SYMBOL_UNUSED(HashPtr);
   HB_SYMBOL_UNUSED(Cargo);
   return 1;
