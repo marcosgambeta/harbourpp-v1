@@ -69,16 +69,16 @@
    HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_RIGHT_CB ||                                                              \
    (HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_SEND && (t)->spaces == 0 && !HB_PP_LEX_SELF(t)))
 
-#define LOOKUP 0
-#define OPERATOR -2
-#define LSEPARATOR -3
-#define RSEPARATOR -4
-#define LINDEX -5
-#define RINDEX -6
-#define LARRAY -7
-#define RARRAY -8
-#define AS_TYPE -9
-#define DECLARE_TYPE -10
+constexpr int LOOKUP = 0; // #define LOOKUP 0
+constexpr int OPERATOR = -2; // #define OPERATOR -2
+constexpr int LSEPARATOR = -3; // #define LSEPARATOR -3
+constexpr int RSEPARATOR = -4; // #define RSEPARATOR -4
+constexpr int LINDEX = -5; // #define LINDEX -5
+constexpr int RINDEX = -6; // #define RINDEX -6
+constexpr int LARRAY = -7; // #define LARRAY -7
+constexpr int RARRAY = -8; // #define RARRAY -8
+constexpr int AS_TYPE = -9; // #define AS_TYPE -9
+constexpr int DECLARE_TYPE = -10; // #define DECLARE_TYPE -10
 
 struct HB_LEX_KEY
 {
@@ -147,19 +147,19 @@ static const HB_LEX_KEY s_keytable[] =
 };
 // clang-format on
 
-#define _AS_ARRAY 1
-#define _AS_BLOCK 2
-#define _AS_CHARACTER 3
-#define _AS_CLASS 4
-#define _AS_DATE 5
-#define _AS_DATETIME 5
-#define _AS_HASH 9
-#define _AS_LOGICAL 6
-#define _AS_NUMERIC 7
-#define _AS_OBJECT 8
-#define _AS_POINTER 9
-#define _AS_SYMBOL 9
-#define _AS_VARIANT 9
+constexpr int _AS_ARRAY = 1; // #define _AS_ARRAY 1
+constexpr int _AS_BLOCK = 2; // #define _AS_BLOCK 2
+constexpr int _AS_CHARACTER = 3; // #define _AS_CHARACTER 3
+constexpr int _AS_CLASS = 4; // #define _AS_CLASS 4
+constexpr int _AS_DATE = 5; // #define _AS_DATE 5
+constexpr int _AS_DATETIME = 5; // #define _AS_DATETIME 5
+constexpr int _AS_HASH = 9; // #define _AS_HASH 9
+constexpr int _AS_LOGICAL = 6; // #define _AS_LOGICAL 6
+constexpr int _AS_NUMERIC = 7; // #define _AS_NUMERIC 7
+constexpr int _AS_OBJECT = 8; // #define _AS_OBJECT 8
+constexpr int _AS_POINTER = 9; // #define _AS_POINTER 9
+constexpr int _AS_SYMBOL = 9; // #define _AS_SYMBOL 9
+constexpr int _AS_VARIANT = 9; // #define _AS_VARIANT 9
 
 static const int s_asTypes[] = {0,       AS_ARRAY,   AS_BLOCK,   AS_CHARACTER, AS_CLASS,
                                 AS_DATE, AS_LOGICAL, AS_NUMERIC, AS_OBJECT,    AS_VARIANT};
