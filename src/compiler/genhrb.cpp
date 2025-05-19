@@ -26,10 +26,10 @@
 #include "hbcomp.hpp"
 #include <string>
 
-#define SYM_NOLINK 0   // symbol does not have to be linked
-#define SYM_FUNC 1     // function defined in this module
-#define SYM_EXTERN 2   // function defined in other module
-#define SYM_DEFERRED 3 // lately bound function
+constexpr HB_BYTE SYM_NOLINK = 0; // #define SYM_NOLINK 0 // symbol does not have to be linked
+constexpr HB_BYTE SYM_FUNC = 1; // #define SYM_FUNC 1 // function defined in this module
+constexpr HB_BYTE SYM_EXTERN = 2; // #define SYM_EXTERN 2 // function defined in other module
+constexpr HB_BYTE SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound function
 
 static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
 {
