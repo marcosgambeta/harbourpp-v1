@@ -573,7 +573,7 @@ static void hb_compGenCByteStr(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
 {
   for (HB_SIZE nPos = 0; nPos < nLen; nPos++)
   {
-    HB_BYTE uchr = static_cast<HB_BYTE>(pText[nPos]);
+    auto uchr = static_cast<HB_BYTE>(pText[nPos]);
     // NOTE: After optimization some Chr(n) can be converted
     //    into a string containing non-printable characters.
     //

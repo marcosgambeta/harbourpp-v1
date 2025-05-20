@@ -62,7 +62,7 @@ const char *hb_compIdentifierNew(HB_COMP_DECL, const char *szName, int iType)
 static HB_HASH_FUNC(hb_comp_IdentKey) // HB_SIZE func (void *Value, void *Cargo)
 {
   HB_SIZE nSum = 0;
-  const char *szName = static_cast<const char *>(Value);
+  auto szName = static_cast<const char *>(Value);
 
   while (*szName)
   {

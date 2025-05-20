@@ -87,7 +87,7 @@ static int s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_BOOL
   if (!fBefore)
   {
     HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
-    PHB_ITEM pIncItem = static_cast<PHB_ITEM>(HB_COMP_PARAM->cargo);
+    auto pIncItem = static_cast<PHB_ITEM>(HB_COMP_PARAM->cargo);
 
     if (pIncItem)
     {

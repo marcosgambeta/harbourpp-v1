@@ -76,7 +76,7 @@ void hb_compGenCString(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
   fputc('"', yyc);
   for (HB_SIZE nPos = 0; nPos < nLen; nPos++)
   {
-    HB_BYTE uchr = static_cast<HB_BYTE>(pText[nPos]);
+    auto uchr = static_cast<HB_BYTE>(pText[nPos]);
     // NOTE: After optimization some Chr(n) can be converted
     //       into a string containing non-printable characters.
     //
@@ -645,7 +645,7 @@ static HB_GENC_FUNC(hb_p_line)
 static HB_GENC_FUNC(hb_p_localname)
 {
   HB_GENC_LABEL();
-  HB_USHORT usLen = static_cast<HB_USHORT>(strlen(reinterpret_cast<char *>(&pFunc->pCode[nPCodePos + 3])));
+  auto usLen = static_cast<HB_USHORT>(strlen(reinterpret_cast<char *>(&pFunc->pCode[nPCodePos + 3])));
   fprintf(cargo->yyc, "\thb_xvmLocalName(%hu, ", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   hb_compGenCString(cargo->yyc, &pFunc->pCode[nPCodePos + 3], usLen);
   fprintf(cargo->yyc, ");\n");
@@ -767,7 +767,7 @@ static HB_GENC_FUNC(hb_p_minus)
 static HB_GENC_FUNC(hb_p_modulename)
 {
   HB_GENC_LABEL();
-  HB_USHORT usLen = static_cast<HB_USHORT>(strlen(reinterpret_cast<char *>(&pFunc->pCode[nPCodePos + 1])));
+  auto usLen = static_cast<HB_USHORT>(strlen(reinterpret_cast<char *>(&pFunc->pCode[nPCodePos + 1])));
   fprintf(cargo->yyc, "\thb_xvmModuleName(");
   hb_compGenCString(cargo->yyc, &pFunc->pCode[nPCodePos + 1], usLen);
   fprintf(cargo->yyc, ");\n");
@@ -1514,7 +1514,7 @@ static HB_GENC_FUNC(hb_p_statics)
 static HB_GENC_FUNC(hb_p_staticname)
 {
   HB_GENC_LABEL();
-  HB_USHORT usLen = static_cast<HB_USHORT>(strlen(reinterpret_cast<char *>(&pFunc->pCode[nPCodePos + 4])));
+  auto usLen = static_cast<HB_USHORT>(strlen(reinterpret_cast<char *>(&pFunc->pCode[nPCodePos + 4])));
   fprintf(cargo->yyc, "\thb_xvmStaticName(%hu, %hu, ", static_cast<HB_USHORT>(pFunc->pCode[nPCodePos + 1]),
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 2]));
   hb_compGenCString(cargo->yyc, &pFunc->pCode[nPCodePos + 4], usLen);
