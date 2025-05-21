@@ -55,43 +55,43 @@
 
 // clang-format off
 
-#define HB_PP_WARN_EXPLICIT                     1     /* C10?? */
-#define HB_PP_WARN_DEFINE_REDEF                 2     /* C1005 */
+constexpr int HB_PP_WARN_EXPLICIT = 1; // #define HB_PP_WARN_EXPLICIT                     1     /* C10?? */
+constexpr int HB_PP_WARN_DEFINE_REDEF = 2; // #define HB_PP_WARN_DEFINE_REDEF                 2     /* C1005 */
 
-#define HB_PP_ERR_ILLEGAL_CHAR                  1     /* C2004 */
-#define HB_PP_ERR_STRING_TERMINATOR             2     /* C2007 */
-#define HB_PP_ERR_MISSING_ENDTEXT               3     /* C2033 */
-#define HB_PP_ERR_DEFINE_SYNTAX                 4     /* C2055 */
-#define HB_PP_ERR_LABEL_MISSING_IN_DEFINE       5     /* C2057 */
-#define HB_PP_ERR_PARE_MISSING_IN_DEFINE        6     /* C2058 */
-#define HB_PP_ERR_MISSING_PATTERN_SEP           7     /* C2059 */
-#define HB_PP_ERR_UNKNOWN_RESULT_MARKER         8     /* C2060 */
-#define HB_PP_ERR_WRONG_LABEL                   9     /* C2061 */
-#define HB_PP_ERR_BAD_MATCH_MARKER              10    /* C2062 */
-#define HB_PP_ERR_EMPTY_OPTIONAL                11    /* C2065 */
-#define HB_PP_ERR_UNCLOSED_OPTIONAL             12    /* C2066 */
-#define HB_PP_ERR_DIRECTIVE_IFDEF               13    /* C2068 */
-#define HB_PP_ERR_DIRECTIVE_ENDIF               14    /* C2069 */
-#define HB_PP_ERR_DIRECTIVE_ELSE                15    /* C2070 */
-#define HB_PP_ERR_DIRECTIVE_UNDEF               16    /* C2071 */
-#define HB_PP_ERR_AMBIGUOUS_MATCH_PATTERN       17    /* C2072 */
-#define HB_PP_ERR_NESTED_OPTIONAL               18    /* C2073 */
-#define HB_PP_ERR_EXPLICIT                      19    /* C2074 */
-#define HB_PP_ERR_CYCLIC_DEFINE                 20    /* C2078 */
-#define HB_PP_ERR_CYCLIC_TRANSLATE              21    /* C2079 */
-#define HB_PP_ERR_CYCLIC_COMMAND                22    /* C2080 */
-#define HB_PP_ERR_UNTERMINATED_COMMENT          23    /* C2083 */
-#define HB_PP_ERR_PRAGMA                        24    /* C20?? */
-#define HB_PP_ERR_DIRECTIVE_IF                  25    /* C20?? */
-#define HB_PP_ERR_CANNOT_OPEN_INPUT             26    /* C30?? */
-#define HB_PP_ERR_FILE_TOO_LONG                 27    /* C30?? */
-#define HB_PP_ERR_CANNOT_CREATE_FILE            28    /* C3006 */
-#define HB_PP_ERR_CANNOT_OPEN_FILE              29    /* C3007 */
-#define HB_PP_ERR_WRONG_FILE_NAME               30    /* C3008 */
-#define HB_PP_ERR_NESTED_INCLUDES               31    /* C3009 */
-#define HB_PP_ERR_INVALID_DIRECTIVE             32    /* C3010 */
-#define HB_PP_ERR_CANNOT_OPEN_RULES             33    /* C3011 */
-#define HB_PP_ERR_WRITE_FILE                    34    /* C3029 */
+constexpr int HB_PP_ERR_ILLEGAL_CHAR = 1; // #define HB_PP_ERR_ILLEGAL_CHAR                  1     /* C2004 */
+constexpr int HB_PP_ERR_STRING_TERMINATOR = 2; // #define HB_PP_ERR_STRING_TERMINATOR             2     /* C2007 */
+constexpr int HB_PP_ERR_MISSING_ENDTEXT = 3; // #define HB_PP_ERR_MISSING_ENDTEXT               3     /* C2033 */
+constexpr int HB_PP_ERR_DEFINE_SYNTAX = 4; // #define HB_PP_ERR_DEFINE_SYNTAX                 4     /* C2055 */
+constexpr int HB_PP_ERR_LABEL_MISSING_IN_DEFINE = 5; // #define HB_PP_ERR_LABEL_MISSING_IN_DEFINE       5     /* C2057 */
+constexpr int HB_PP_ERR_PARE_MISSING_IN_DEFINE = 6; // #define HB_PP_ERR_PARE_MISSING_IN_DEFINE        6     /* C2058 */
+constexpr int HB_PP_ERR_MISSING_PATTERN_SEP = 7; // #define HB_PP_ERR_MISSING_PATTERN_SEP           7     /* C2059 */
+constexpr int HB_PP_ERR_UNKNOWN_RESULT_MARKER = 8; // #define HB_PP_ERR_UNKNOWN_RESULT_MARKER         8     /* C2060 */
+constexpr int HB_PP_ERR_WRONG_LABEL = 9; // #define HB_PP_ERR_WRONG_LABEL                   9     /* C2061 */
+constexpr int HB_PP_ERR_BAD_MATCH_MARKER = 10; // #define HB_PP_ERR_BAD_MATCH_MARKER              10    /* C2062 */
+constexpr int HB_PP_ERR_EMPTY_OPTIONAL = 11; // #define HB_PP_ERR_EMPTY_OPTIONAL                11    /* C2065 */
+constexpr int HB_PP_ERR_UNCLOSED_OPTIONAL = 12; // #define HB_PP_ERR_UNCLOSED_OPTIONAL             12    /* C2066 */
+constexpr int HB_PP_ERR_DIRECTIVE_IFDEF = 13; // #define HB_PP_ERR_DIRECTIVE_IFDEF               13    /* C2068 */
+constexpr int HB_PP_ERR_DIRECTIVE_ENDIF = 14; // #define HB_PP_ERR_DIRECTIVE_ENDIF               14    /* C2069 */
+constexpr int HB_PP_ERR_DIRECTIVE_ELSE = 15; // #define HB_PP_ERR_DIRECTIVE_ELSE                15    /* C2070 */
+constexpr int HB_PP_ERR_DIRECTIVE_UNDEF = 16; // #define HB_PP_ERR_DIRECTIVE_UNDEF               16    /* C2071 */
+constexpr int HB_PP_ERR_AMBIGUOUS_MATCH_PATTERN = 17; // #define HB_PP_ERR_AMBIGUOUS_MATCH_PATTERN       17    /* C2072 */
+constexpr int HB_PP_ERR_NESTED_OPTIONAL = 18; // #define HB_PP_ERR_NESTED_OPTIONAL               18    /* C2073 */
+constexpr int HB_PP_ERR_EXPLICIT = 19; // #define HB_PP_ERR_EXPLICIT                      19    /* C2074 */
+constexpr int HB_PP_ERR_CYCLIC_DEFINE = 20; // #define HB_PP_ERR_CYCLIC_DEFINE                 20    /* C2078 */
+constexpr int HB_PP_ERR_CYCLIC_TRANSLATE = 21; // #define HB_PP_ERR_CYCLIC_TRANSLATE              21    /* C2079 */
+constexpr int HB_PP_ERR_CYCLIC_COMMAND = 22; // #define HB_PP_ERR_CYCLIC_COMMAND                22    /* C2080 */
+constexpr int HB_PP_ERR_UNTERMINATED_COMMENT = 23; // #define HB_PP_ERR_UNTERMINATED_COMMENT          23    /* C2083 */
+constexpr int HB_PP_ERR_PRAGMA = 24; // #define HB_PP_ERR_PRAGMA                        24    /* C20?? */
+constexpr int HB_PP_ERR_DIRECTIVE_IF = 25; // #define HB_PP_ERR_DIRECTIVE_IF                  25    /* C20?? */
+constexpr int HB_PP_ERR_CANNOT_OPEN_INPUT = 26; // #define HB_PP_ERR_CANNOT_OPEN_INPUT             26    /* C30?? */
+constexpr int HB_PP_ERR_FILE_TOO_LONG = 27; // #define HB_PP_ERR_FILE_TOO_LONG                 27    /* C30?? */
+constexpr int HB_PP_ERR_CANNOT_CREATE_FILE = 28; // #define HB_PP_ERR_CANNOT_CREATE_FILE            28    /* C3006 */
+constexpr int HB_PP_ERR_CANNOT_OPEN_FILE = 29; // #define HB_PP_ERR_CANNOT_OPEN_FILE              29    /* C3007 */
+constexpr int HB_PP_ERR_WRONG_FILE_NAME = 30; // #define HB_PP_ERR_WRONG_FILE_NAME               30    /* C3008 */
+constexpr int HB_PP_ERR_NESTED_INCLUDES = 31; // #define HB_PP_ERR_NESTED_INCLUDES               31    /* C3009 */
+constexpr int HB_PP_ERR_INVALID_DIRECTIVE = 32; // #define HB_PP_ERR_INVALID_DIRECTIVE             32    /* C3010 */
+constexpr int HB_PP_ERR_CANNOT_OPEN_RULES = 33; // #define HB_PP_ERR_CANNOT_OPEN_RULES             33    /* C3011 */
+constexpr int HB_PP_ERR_WRITE_FILE = 34; // #define HB_PP_ERR_WRITE_FILE                    34    /* C3029 */
 
 /* warning messages */
 static const char * const s_pp_szWarnings[] =
@@ -301,7 +301,7 @@ static const HB_PP_OPERATOR *hb_pp_operatorFind(PHB_PP_STATE pState, char *buffe
   return nullptr;
 }
 
-#define HB_MEMBUF_DEFAULT_SIZE 256
+constexpr HB_SIZE HB_MEMBUF_DEFAULT_SIZE = 256; // #define HB_MEMBUF_DEFAULT_SIZE 256
 
 static PHB_MEM_BUFFER hb_membufNew(void)
 {
@@ -2416,7 +2416,7 @@ static bool hb_pp_pragmaStream(PHB_PP_STATE pState, PHB_PP_TOKEN pToken)
   return fError;
 }
 
-#define MAX_STREAM_SIZE 0x1000000
+constexpr HB_SIZE MAX_STREAM_SIZE = 0x1000000; // #define MAX_STREAM_SIZE 0x1000000
 
 static void hb_pp_pragmaStreamFile(PHB_PP_STATE pState, const char *szFileName)
 {
