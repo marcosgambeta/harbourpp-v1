@@ -1,12 +1,12 @@
 //
 // WINAPI For Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -564,12 +564,12 @@
 #define CLIP_CHARACTER_PRECIS                                        1
 #define CLIP_STROKE_PRECIS                                           2
 #define CLIP_MASK                                                    0xf
-#define CLIP_LH_ANGLES                                               (1<<4)
-#define CLIP_TT_ALWAYS                                               (2<<4)
+#define CLIP_LH_ANGLES                                               hb_BitShift(1, 4)
+#define CLIP_TT_ALWAYS                                               hb_BitShift(2, 4)
 // #if _WIN32_WINNT >= 0x0600
-#define CLIP_DFA_DISABLE                                             (4<<4)
+#define CLIP_DFA_DISABLE                                             hb_BitShift(4, 4)
 // #endif
-#define CLIP_EMBEDDED                                                (8<<4)
+#define CLIP_EMBEDDED                                                hb_BitShift(8, 4)
 
 #define DEFAULT_QUALITY                                              0
 #define DRAFT_QUALITY                                                1
@@ -624,15 +624,15 @@
 #define FS_JOHAB                                                     0x00200000
 #define FS_SYMBOL                                                    0x80000000
 
-#define FF_DONTCARE                                                  (0<<4)
-#define FF_ROMAN                                                     (1<<4)
+#define FF_DONTCARE                                                  hb_BitShift(0, 4)
+#define FF_ROMAN                                                     hb_BitShift(1, 4)
 
-#define FF_SWISS                                                     (2<<4)
+#define FF_SWISS                                                     hb_BitShift(2, 4)
 
-#define FF_MODERN                                                    (3<<4)
+#define FF_MODERN                                                    hb_BitShift(3, 4)
 
-#define FF_SCRIPT                                                    (4<<4)
-#define FF_DECORATIVE                                                (5<<4)
+#define FF_SCRIPT                                                    hb_BitShift(4, 4)
+#define FF_DECORATIVE                                                hb_BitShift(5, 4)
 
 #define FW_DONTCARE                                                  0
 #define FW_THIN                                                      100
