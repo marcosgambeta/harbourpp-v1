@@ -1,12 +1,12 @@
 //
 // WINAPI For Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -499,10 +499,10 @@
 // #define GET_FLAGS_LPARAM(lParam)                                     (LOWORD(lParam))
 // #define GET_KEYSTATE_LPARAM(lParam)                                  GET_FLAGS_LPARAM(lParam)
 
-#define LLKHF_EXTENDED                                               (KF_EXTENDED>>8)
+#define LLKHF_EXTENDED                                               hb_BitShift(KF_EXTENDED, -8)
 #define LLKHF_INJECTED                                               0x00000010
-#define LLKHF_ALTDOWN                                                (KF_ALTDOWN>>8)
-#define LLKHF_UP                                                     (KF_UP>>8)
+#define LLKHF_ALTDOWN                                                hb_BitShift(KF_ALTDOWN, -8)
+#define LLKHF_UP                                                     hb_BitShift(KF_UP, -8)
 
 #define LLMHF_INJECTED                                               0x00000001
 
@@ -1392,10 +1392,10 @@
 #define PM_REMOVE                                                    0x0001
 #define PM_NOYIELD                                                   0x0002
 
-#define PM_QS_INPUT                                                  (QS_INPUT<<16)
-#define PM_QS_POSTMESSAGE                                            (hb_bitor(QS_POSTMESSAGE, QS_HOTKEY, QS_TIMER)<<16)
-#define PM_QS_PAINT                                                  (QS_PAINT<<16)
-#define PM_QS_SENDMESSAGE                                            (QS_SENDMESSAGE<<16)
+#define PM_QS_INPUT                                                  hb_BitShift(QS_INPUT, 16)
+#define PM_QS_POSTMESSAGE                                            hb_BitShift(hb_bitor(QS_POSTMESSAGE, QS_HOTKEY, QS_TIMER), 16)
+#define PM_QS_PAINT                                                  hb_BitShift(QS_PAINT, 16)
+#define PM_QS_SENDMESSAGE                                            hb_BitShift(QS_SENDMESSAGE, 16)
 #endif
 
 #define MOD_ALT                                                      0x0001
