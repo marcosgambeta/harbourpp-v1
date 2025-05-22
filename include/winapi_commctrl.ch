@@ -1,12 +1,12 @@
 //
 // WINAPI For Harbour++ - Bindings libraries for Harbour++ and WINAPI
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+// Copyright (c) 2025 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 //
 
 // MIT License
 //
-// Copyright (c) 2024 Marcos Antonio Gambeta
+// Copyright (c) 2025 Marcos Antonio Gambeta
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -293,7 +293,7 @@
 #define ILD_BLEND25                                                  0x2
 #define ILD_BLEND50                                                  0x4
 #define ILD_OVERLAYMASK                                              0xf00
-// #define INDEXTOOVERLAYMASK(i)                                        ((i)<<8)
+#define INDEXTOOVERLAYMASK(i)                                        hb_BitShift(i, 8)
 #define ILD_PRESERVEALPHA                                            0x1000
 #define ILD_SCALE                                                    0x2000
 #define ILD_DPISCALE                                                 0x4000
@@ -1652,7 +1652,7 @@
 #define LVIS_OVERLAYMASK                                             0xf00
 #define LVIS_STATEIMAGEMASK                                          0xF000
 
-// #define INDEXTOSTATEIMAGEMASK(i)                                     ((i)<<12)
+#define INDEXTOSTATEIMAGEMASK(i)                                     hb_BitShift(i, 12)
 
 #define I_INDENTCALLBACK                                             (-1)
 #define LV_ITEMA                                                     LVITEMA
