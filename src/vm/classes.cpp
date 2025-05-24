@@ -191,9 +191,9 @@ struct CLASS
 
 using PCLASS = CLASS *;
 
-#define BUCKETBITS 2
-#define BUCKETSIZE (1 << BUCKETBITS)
-#define BUCKETMASK (BUCKETSIZE - 1)
+constexpr int BUCKETBITS = 2; // #define BUCKETBITS 2
+constexpr HB_SYMCNT BUCKETSIZE = (1 << BUCKETBITS); // #define BUCKETSIZE (1 << BUCKETBITS)
+#define BUCKETMASK (BUCKETSIZE - 1) // not used
 #define HASHBITS 3
 #define HASH_KEY ((1 << HASHBITS) - 1)
 #define HASH_KEYMAX (1 << (32 - BUCKETBITS))
