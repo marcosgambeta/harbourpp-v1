@@ -7,9 +7,9 @@
 
 #include "hbapi.hpp"
 
-#define HB_CP950_FIRST   0xA140
-#define HB_CP950_LAST    0xF9FE
-#define HB_CP950_BITS    5
+constexpr int HB_CP950_FIRST = 0xA140; // #define HB_CP950_FIRST   0xA140
+constexpr int HB_CP950_LAST = 0xF9FE; // #define HB_CP950_LAST    0xF9FE
+constexpr int HB_CP950_BITS = 5; // #define HB_CP950_BITS    5
 
 static const HB_USHORT s_cp950index[710] =
 {
@@ -1845,9 +1845,9 @@ static HB_USHORT s_cp950_to_ucs16(int n)
    return 0;
 }
 
-#define HB_U16_FIRST    0x00A0
-#define HB_U16_LAST     0xFFE5
-#define HB_U16_BITS     6
+constexpr int HB_U16_FIRST = 0x00A0; // #define HB_U16_FIRST    0x00A0
+constexpr int HB_U16_LAST = 0xFFE5; // #define HB_U16_LAST     0xFFE5
+constexpr int HB_U16_BITS = 6; // #define HB_U16_BITS     6
 
 static const HB_USHORT s_ucs16index[1022] =
 {

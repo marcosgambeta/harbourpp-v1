@@ -7,9 +7,9 @@
 
 #include "hbapi.hpp"
 
-#define HB_BIG5_FIRST   0xA140
-#define HB_BIG5_LAST    0xF9D5
-#define HB_BIG5_BITS    5
+constexpr int HB_BIG5_FIRST = 0xA140; // #define HB_BIG5_FIRST   0xA140
+constexpr int HB_BIG5_LAST = 0xF9D5; // #define HB_BIG5_LAST    0xF9D5
+constexpr int HB_BIG5_BITS = 5; // #define HB_BIG5_BITS    5
 
 static const HB_USHORT s_big5index[709] =
 {
@@ -1868,9 +1868,9 @@ static HB_USHORT s_big5_to_ucs16(int n)
    return 0;
 }
 
-#define HB_U16_FIRST    0x00A0
-#define HB_U16_LAST     0xFFFD
-#define HB_U16_BITS     6
+constexpr int HB_U16_FIRST = 0x00A0; // #define HB_U16_FIRST    0x00A0
+constexpr int HB_U16_LAST = 0xFFFD; // #define HB_U16_LAST     0xFFFD
+constexpr int HB_U16_BITS = 6; // #define HB_U16_BITS     6
 
 static const HB_USHORT s_ucs16index[1022] =
 {

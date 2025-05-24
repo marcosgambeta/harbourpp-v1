@@ -1,8 +1,8 @@
 #include "hbapi.hpp"
 
-#define HB_GBK_FIRST   0x8140
-#define HB_GBK_LAST    0xFE4F
-#define HB_GBK_BITS    6
+constexpr int HB_GBK_FIRST = 0x8140; // #define HB_GBK_FIRST   0x8140
+constexpr int HB_GBK_LAST = 0xFE4F; // #define HB_GBK_LAST    0xFE4F
+constexpr int HB_GBK_BITS = 6; // #define HB_GBK_BITS    6
 
 static const HB_USHORT s_gbkindex[501] =
 {
@@ -2942,9 +2942,9 @@ static HB_USHORT s_gbk_to_ucs16(int n)
    return 0;
 }
 
-#define HB_U16_FIRST    0x00A4
-#define HB_U16_LAST     0xFFE5
-#define HB_U16_BITS     6
+constexpr int HB_U16_FIRST = 0x00A4; // #define HB_U16_FIRST    0x00A4
+constexpr int HB_U16_LAST = 0xFFE5; // #define HB_U16_LAST     0xFFE5
+constexpr int HB_U16_BITS = 6; // #define HB_U16_BITS     6
 
 static const HB_USHORT s_ucs16index[1022] =
 {

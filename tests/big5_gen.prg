@@ -137,9 +137,12 @@ proc main()
 
    cResult += '#include "hbapi.h"' + hb_eol()
    cResult += hb_eol()
-   cResult += "#define HB_BIG5_FIRST   0x" + hb_numToHex( nMin, 4 ) + hb_eol()
-   cResult += "#define HB_BIG5_LAST    0x" + hb_numToHex( nMax, 4 ) + hb_eol()
-   cResult += "#define HB_BIG5_BITS    " + hb_ntos( nBit ) + hb_eol()
+   cResult += "constexpr int HB_BIG5_FIRST = 0x" + hb_numToHex( nMin, 4 ) + ;
+      "; // #define HB_BIG5_FIRST   0x" + hb_numToHex( nMin, 4 ) + hb_eol()
+   cResult += "constexpr int HB_BIG5_LAST = 0x" + hb_numToHex( nMax, 4 ) + ;
+      "; // #define HB_BIG5_LAST    0x" + hb_numToHex( nMax, 4 ) + hb_eol()
+   cResult += "constexpr int HB_BIG5_BITS = " + hb_ntos( nBit ) + ;
+      "; // #define HB_BIG5_BITS    " + hb_ntos( nBit ) + hb_eol()
    cResult += hb_eol()
 
    cResult += array_to_code( aInd, "s_big5index", nn )
@@ -164,9 +167,12 @@ proc main()
    aValU2 := hash_to_array( hVal )
 
    cResult += hb_eol()
-   cResult += "#define HB_U16_FIRST    0x" + hb_numToHex( nUMin, 4 ) + hb_eol()
-   cResult += "#define HB_U16_LAST     0x" + hb_numToHex( nUMax, 4 ) + hb_eol()
-   cResult += "#define HB_U16_BITS     " + hb_ntos( nBit ) + hb_eol()
+   cResult += "constexpr int HB_U16_FIRST = 0x" + hb_numToHex( nUMin, 4 ) + ;
+      "; // #define HB_U16_FIRST    0x" + hb_numToHex( nUMin, 4 ) + hb_eol()
+   cResult += "constexpr int HB_U16_LAST = 0x" + hb_numToHex( nUMax, 4 ) + ;
+      "; // #define HB_U16_LAST     0x" + hb_numToHex( nUMax, 4 ) + hb_eol()
+   cResult += "constexpr int HB_U16_BITS = " + hb_ntos( nBit ) + ;
+      "; // #define HB_U16_BITS     " + hb_ntos( nBit ) + hb_eol()
    cResult += hb_eol()
    cResult += array_to_code( aInd, "s_ucs16index", nn )
    cResult += hb_eol()
