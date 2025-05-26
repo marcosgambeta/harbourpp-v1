@@ -417,7 +417,8 @@ static function genCPfile( id, info, unicode, flags, upper, lower, sort, ;
       ' * This file is generated automatically by cpinfo.prg' + EOL + ;
       ' */' + EOL + EOL + ;
       '#define HB_CP_ID        $1' + EOL + ;
-      '#define HB_CP_INFO      "$2"' + EOL + ;
+      'constexpr const char *HB_CP_INFO = "$2"' + ;
+      '; // #define HB_CP_INFO      "$2"' + EOL + ;
       '#define HB_CP_UNITB     HB_UNITB_$3' + EOL
    if ! lBin
       cDef += ;
