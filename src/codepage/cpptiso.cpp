@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        PTISO
-#define HB_CP_INFO      "Portuguese ISO-8859-1"
+constexpr const char *HB_CP_INFO = "Portuguese ISO-8859-1"; //#define HB_CP_INFO      "Portuguese ISO-8859-1"
 #define HB_CP_UNITB     HB_UNITB_8859_1
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_pt.hpp"

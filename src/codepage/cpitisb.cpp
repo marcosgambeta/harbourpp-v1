@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        ITISB
-#define HB_CP_INFO      "Italian ISO-8859-1b (with BOX characters)"
+constexpr const char *HB_CP_INFO = "Italian ISO-8859-1b (with BOX characters)"; // #define HB_CP_INFO      "Italian ISO-8859-1b (with BOX characters)"
 #define HB_CP_UNITB     HB_UNITB_8859_1B
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #if defined(__BORLANDC__)

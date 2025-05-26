@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        ELISO
-#define HB_CP_INFO      "Greek ISO-8859-7"
+constexpr const char *HB_CP_INFO = "Greek ISO-8859-7"; // #define HB_CP_INFO      "Greek ISO-8859-7"
 #define HB_CP_UNITB     HB_UNITB_8859_7
 #define HB_CP_ACSORT    HB_CDP_ACSORT_EQUAL
 #include "l_el.hpp"

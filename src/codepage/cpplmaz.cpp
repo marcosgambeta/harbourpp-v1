@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        PLMAZ
-#define HB_CP_INFO      "Polish Mazovia"
+constexpr const char *HB_CP_INFO = "Polish Mazovia"; //#define HB_CP_INFO      "Polish Mazovia"
 #define HB_CP_UNITB     HB_UNITB_MAZ
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_pl.hpp"

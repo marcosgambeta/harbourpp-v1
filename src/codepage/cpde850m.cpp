@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        DE850M
-#define HB_CP_INFO      "German CP-850 (mdxger.obj compatible)"
+constexpr const char *HB_CP_INFO = "German CP-850 (mdxger.obj compatible)"; // #define HB_CP_INFO      "German CP-850 (mdxger.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 
 #define HB_CP_RAW

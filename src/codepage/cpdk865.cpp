@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        DK865
-#define HB_CP_INFO      "Danish CP-865 (ntxdan.obj compatible)"
+constexpr const char *HB_CP_INFO = "Danish CP-865 (ntxdan.obj compatible)"; // #define HB_CP_INFO      "Danish CP-865 (ntxdan.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_865
 
 #define HB_CP_RAW

@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        PLWIN
-#define HB_CP_INFO      "Polish Windows-1250"
+constexpr const char *HB_CP_INFO = "Polish Windows-1250"; //#define HB_CP_INFO      "Polish Windows-1250"
 #define HB_CP_UNITB     HB_UNITB_1250
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_pl.hpp"

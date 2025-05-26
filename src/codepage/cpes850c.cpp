@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        ES850C
-#define HB_CP_INFO      "Spanish CP-850 (ntxspa.obj compatible)"
+constexpr const char *HB_CP_INFO = "Spanish CP-850 (ntxspa.obj compatible)"; // #define HB_CP_INFO      "Spanish CP-850 (ntxspa.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 
 #define HB_CP_RAW

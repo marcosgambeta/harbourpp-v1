@@ -266,7 +266,7 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
 #define HB_CP_RAW
 
 #define HB_CP_ID              UTF8EX
-#define HB_CP_INFO            "UTF-8 extended"
+constexpr const char *HB_CP_INFO = "UTF-8 extended"; // #define HB_CP_INFO            "UTF-8 extended"
 #define HB_CP_UNITB           HB_UNITB_437
 
 // use character indexes instead of bytes ones

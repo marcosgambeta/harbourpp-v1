@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        FRWIN
-#define HB_CP_INFO      "French Windows-1252"
+constexpr const char *HB_CP_INFO = "French Windows-1252"; // #define HB_CP_INFO      "French Windows-1252"
 #define HB_CP_UNITB     HB_UNITB_1252
 #define HB_CP_ACSORT    HB_CDP_ACSORT_EQUAL
 #include "l_fr.hpp"

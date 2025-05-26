@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        TR857
-#define HB_CP_INFO      "Turkish CP-857"
+constexpr const char *HB_CP_INFO = "Turkish CP-857"; //#define HB_CP_INFO      "Turkish CP-857"
 #define HB_CP_UNITB     HB_UNITB_857
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_tr.hpp"

@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        FR850
-#define HB_CP_INFO      "French CP-850"
+constexpr const char *HB_CP_INFO = "French CP-850"; // #define HB_CP_INFO      "French CP-850"
 #define HB_CP_UNITB     HB_UNITB_850
 #define HB_CP_ACSORT    HB_CDP_ACSORT_EQUAL
 #include "l_fr.hpp"

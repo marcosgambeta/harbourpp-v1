@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        FR850M
-#define HB_CP_INFO      "French CP-850 (mdxfre.obj compatible)"
+constexpr const char *HB_CP_INFO = "French CP-850 (mdxfre.obj compatible)"; // #define HB_CP_INFO      "French CP-850 (mdxfre.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 
 #define HB_CP_RAW

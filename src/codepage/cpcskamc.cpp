@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        CSKAMC
-#define HB_CP_INFO      "Czech Kamenicky (ntxcz895.obj compatible)"
+constexpr const char *HB_CP_INFO = "Czech Kamenicky (ntxcz895.obj compatible)"; // #define HB_CP_INFO      "Czech Kamenicky (ntxcz895.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_KAM
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #define HB_CP_CSSORT    HB_CDP_CSSORT_MIXED

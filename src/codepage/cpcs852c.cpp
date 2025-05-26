@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        CS852C
-#define HB_CP_INFO      "Czech CP-852 (ntxcz852.obj compatible)"
+constexpr const char *HB_CP_INFO = "Czech CP-852 (ntxcz852.obj compatible)"; // #define HB_CP_INFO      "Czech CP-852 (ntxcz852.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_852
 
 #define HB_CP_RAW

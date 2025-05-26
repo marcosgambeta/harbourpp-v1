@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        SKWIN
-#define HB_CP_INFO      "Slovak Windows-1250"
+constexpr const char *HB_CP_INFO = "Slovak Windows-1250"; //#define HB_CP_INFO      "Slovak Windows-1250"
 #define HB_CP_UNITB     HB_UNITB_1250
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_sk.hpp"

@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        EL437
-#define HB_CP_INFO      "Greek CP-437 (ntxgr437.obj compatible)"
+constexpr const char *HB_CP_INFO = "Greek CP-437 (ntxgr437.obj compatible)"; // #define HB_CP_INFO      "Greek CP-437 (ntxgr437.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_437
 
 #define HB_CP_RAW

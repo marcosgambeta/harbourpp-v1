@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        SV850
-#define HB_CP_INFO      "Swedish CP-850 (ntxswe.obj compatible)"
+constexpr const char *HB_CP_INFO = "Swedish CP-850 (ntxswe.obj compatible)"; //#define HB_CP_INFO      "Swedish CP-850 (ntxswe.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 
 #define HB_CP_RAW

@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        BGMIK
-#define HB_CP_INFO      "Bulgarian MIK"
+constexpr const char *HB_CP_INFO = "Bulgarian MIK"; // #define HB_CP_INFO      "Bulgarian MIK"
 #define HB_CP_UNITB     HB_UNITB_MIK
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_bg.hpp"

@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        TRWIN
-#define HB_CP_INFO      "Turkish Windows-1254"
+constexpr const char *HB_CP_INFO = "Turkish Windows-1254"; //#define HB_CP_INFO      "Turkish Windows-1254"
 #define HB_CP_UNITB     HB_UNITB_1254
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_tr.hpp"

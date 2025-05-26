@@ -48,7 +48,7 @@
 // NOTE: this CP is CL5.2 ntxcro.obj compatible
 
 #define HB_CP_ID        HR646
-#define HB_CP_INFO      "Croatian ISO-646 (CROSCII)"
+constexpr const char *HB_CP_INFO = "Croatian ISO-646 (CROSCII)"; // #define HB_CP_INFO      "Croatian ISO-646 (CROSCII)"
 #define HB_CP_UNITB     HB_UNITB_646YU
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_hr.hpp"

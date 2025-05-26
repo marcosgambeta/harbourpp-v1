@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        NL850
-#define HB_CP_INFO      "Dutch CP-850 (ntxdut.obj compatible)"
+constexpr const char *HB_CP_INFO = "Dutch CP-850 (ntxdut.obj compatible)"; //#define HB_CP_INFO      "Dutch CP-850 (ntxdut.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 
 #define HB_CP_RAW

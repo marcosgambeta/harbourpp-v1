@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        EEWIN
-#define HB_CP_INFO      "Estonian Windows-1257"
+constexpr const char *HB_CP_INFO = "Estonian Windows-1257"; // #define HB_CP_INFO      "Estonian Windows-1257"
 #define HB_CP_UNITB     HB_UNITB_1257
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_ee.hpp"

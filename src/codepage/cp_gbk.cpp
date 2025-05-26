@@ -152,7 +152,7 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
 #define HB_CP_RAW
 
 #define HB_CP_ID              GBK
-#define HB_CP_INFO            "CP936"
+constexpr const char *HB_CP_INFO = "CP936"; // #define HB_CP_INFO            "CP936"
 #define HB_CP_UNITB           HB_UNITB_437
 
 #define HB_CP_GET_FUNC        GBK_get

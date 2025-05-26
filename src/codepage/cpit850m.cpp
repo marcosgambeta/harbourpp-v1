@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        IT850M
-#define HB_CP_INFO      "Italian CP-850 (mdxita.obj compatible)"
+constexpr const char *HB_CP_INFO = "Italian CP-850 (mdxita.obj compatible)"; // #define HB_CP_INFO      "Italian CP-850 (mdxita.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 
 #define HB_CP_RAW

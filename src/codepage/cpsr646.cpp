@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        SR646
-#define HB_CP_INFO      "Serbian ISO-646 (YUSCII)"
+constexpr const char *HB_CP_INFO = "Serbian ISO-646 (YUSCII)"; //#define HB_CP_INFO      "Serbian ISO-646 (YUSCII)"
 #define HB_CP_UNITB     HB_UNITB_646YU
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_sr_lat.hpp"

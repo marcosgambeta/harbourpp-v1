@@ -6,7 +6,7 @@
 //
 
 #define HB_CP_ID        DE858
-#define HB_CP_INFO      "German CP-858"
+constexpr const char *HB_CP_INFO = "German CP-858"; // #define HB_CP_INFO      "German CP-858"
 #define HB_CP_UNITB     HB_UNITB_858
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_de.hpp"

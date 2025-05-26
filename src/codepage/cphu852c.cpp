@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        HU852C
-#define HB_CP_INFO      "Hungarian CP-852 (ntxhu852.obj compatible)"
+constexpr const char *HB_CP_INFO = "Hungarian CP-852 (ntxhu852.obj compatible)"; // #define HB_CP_INFO      "Hungarian CP-852 (ntxhu852.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_852
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #if defined(__BORLANDC__)

@@ -74,7 +74,7 @@
 
 #if 0
 #define HB_CP_ID        SVCLIP
-#define HB_CP_INFO      "Swedish CP-437"
+constexpr const char *HB_CP_INFO = "Swedish CP-437"; //#define HB_CP_INFO      "Swedish CP-437"
 #define HB_CP_UNITB     HB_UNITB_437
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #define HB_CP_UPPER     "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÅÄÖ"
@@ -83,7 +83,7 @@
 #endif
 
 #define HB_CP_ID        SV437C
-#define HB_CP_INFO      "Swedish CP-437 (ntxswe.obj compatible)"
+constexpr const char *HB_CP_INFO = "Swedish CP-437 (ntxswe.obj compatible)"; // #define HB_CP_INFO      "Swedish CP-437 (ntxswe.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_437
 
 #define HB_CP_RAW

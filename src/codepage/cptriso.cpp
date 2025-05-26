@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        TRISO
-#define HB_CP_INFO      "Turkish ISO-8859-9"
+constexpr const char *HB_CP_INFO = "Turkish ISO-8859-9"; //#define HB_CP_INFO      "Turkish ISO-8859-9"
 #define HB_CP_UNITB     HB_UNITB_8859_9
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_tr.hpp"

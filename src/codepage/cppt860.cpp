@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        PT860
-#define HB_CP_INFO      "Portuguese CP-860 (ntxpor.obj compatible)"
+constexpr const char *HB_CP_INFO = "Portuguese CP-860 (ntxpor.obj compatible)"; //#define HB_CP_INFO      "Portuguese CP-860 (ntxpor.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_860
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #define HB_CP_UPPER     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

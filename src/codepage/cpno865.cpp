@@ -7,7 +7,7 @@
 //
 
 #define HB_CP_ID        NO865
-#define HB_CP_INFO      "Norwegian CP-865 (ntxnor.obj compatible)"
+constexpr const char *HB_CP_INFO = "Norwegian CP-865 (ntxnor.obj compatible)"; //#define HB_CP_INFO      "Norwegian CP-865 (ntxnor.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_865
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #if defined(__BORLANDC__)

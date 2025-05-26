@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 #define HB_CP_ID        CS852
-#define HB_CP_INFO      "Czech CP-852"
+constexpr const char *HB_CP_INFO = "Czech CP-852"; // #define HB_CP_INFO      "Czech CP-852"
 #define HB_CP_UNITB     HB_UNITB_852
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #include "l_cs.hpp"
