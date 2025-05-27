@@ -11,11 +11,15 @@ constexpr const char *HB_CP_INFO = "Norwegian CP-865 (ntxnor.obj compatible)"; /
 #define HB_CP_UNITB     HB_UNITB_865
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #if defined(__BORLANDC__)
-#define HB_CP_UPPER     "ABCDE\xC3\x89" "FGHIJKLMNOPQRSTUVWXY\xC3\x9C" "Z\xC3\x86 \xC3\x98\xC3\x85"
-#define HB_CP_LOWER     "abcde\xC3\xA8" "fghijklmnopqrstuvwxy\xC3\xBC" "z\xC3\xA6\xC3\xA9\xC3\xB8\xC3\xA5"
+//#define HB_CP_UPPER     "ABCDE\xC3\x89" "FGHIJKLMNOPQRSTUVWXY\xC3\x9C" "Z\xC3\x86 \xC3\x98\xC3\x85"
+constexpr const char *HB_CP_UPPER = "ABCDE\xC3\x89" "FGHIJKLMNOPQRSTUVWXY\xC3\x9C" "Z\xC3\x86 \xC3\x98\xC3\x85";
+//#define HB_CP_LOWER     "abcde\xC3\xA8" "fghijklmnopqrstuvwxy\xC3\xBC" "z\xC3\xA6\xC3\xA9\xC3\xB8\xC3\xA5"
+constexpr const char *HB_CP_LOWER = "abcde\xC3\xA8" "fghijklmnopqrstuvwxy\xC3\xBC" "z\xC3\xA6\xC3\xA9\xC3\xB8\xC3\xA5";
 #else
-#define HB_CP_UPPER     "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÆ ØÅ"
-#define HB_CP_LOWER     "abcdeèfghijklmnopqrstuvwxyüzæéøå"
+//#define HB_CP_UPPER     "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÆ ØÅ"
+constexpr const char *HB_CP_UPPER = "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÆ ØÅ";
+//#define HB_CP_LOWER     "abcdeèfghijklmnopqrstuvwxyüzæéøå"
+constexpr const char *HB_CP_LOWER = "abcdeèfghijklmnopqrstuvwxyüzæéøå";
 #endif
 #define HB_CP_UTF8
 

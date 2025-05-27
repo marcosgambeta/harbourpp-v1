@@ -10,11 +10,14 @@
 constexpr const char *HB_CP_INFO = "French CP-850 (ntxfre.obj compatible)"; // #define HB_CP_INFO      "French CP-850 (ntxfre.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_850
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
-#define HB_CP_UPPER     "AAAAABCDEEEEEFGHIIIIIJKLMNOOOOOPQRSTUUUUUVWXYZ"
+//#define HB_CP_UPPER     "AAAAABCDEEEEEFGHIIIIIJKLMNOOOOOPQRSTUUUUUVWXYZ"
+constexpr const char *HB_CP_UPPER = "AAAAABCDEEEEEFGHIIIIIJKLMNOOOOOPQRSTUUUUUVWXYZ";
 #if defined(__BORLANDC__)
-#define HB_CP_LOWER     "a\xC3\xA1\xC3\xA0\xC3\xA2\xC3\xA4" "bcde\xC3\xA9\xC3\xA8\xC3\xAA\xC3\xAB" "fghi\xC3\xAD\xC3\xAC\xC3\xAE\xC3\xAF" "jklmno\xC3\xB3\xC3\xB2\xC3\xB4\xC3\xB6" "pqrstu\xC3\xBA\xC3\xB9\xC3\xBB\xC3\xBC" "vwxyz"
+//#define HB_CP_LOWER     "a\xC3\xA1\xC3\xA0\xC3\xA2\xC3\xA4" "bcde\xC3\xA9\xC3\xA8\xC3\xAA\xC3\xAB" "fghi\xC3\xAD\xC3\xAC\xC3\xAE\xC3\xAF" "jklmno\xC3\xB3\xC3\xB2\xC3\xB4\xC3\xB6" "pqrstu\xC3\xBA\xC3\xB9\xC3\xBB\xC3\xBC" "vwxyz"
+constexpr const char *HB_CP_LOWER = "a\xC3\xA1\xC3\xA0\xC3\xA2\xC3\xA4" "bcde\xC3\xA9\xC3\xA8\xC3\xAA\xC3\xAB" "fghi\xC3\xAD\xC3\xAC\xC3\xAE\xC3\xAF" "jklmno\xC3\xB3\xC3\xB2\xC3\xB4\xC3\xB6" "pqrstu\xC3\xBA\xC3\xB9\xC3\xBB\xC3\xBC" "vwxyz";
 #else
-#define HB_CP_LOWER     "aáàâäbcdeéèêëfghiíìîïjklmnoóòôöpqrstuúùûüvwxyz"
+//#define HB_CP_LOWER     "aáàâäbcdeéèêëfghiíìîïjklmnoóòôöpqrstuúùûüvwxyz"
+constexpr const char *HB_CP_LOWER = "aáàâäbcdeéèêëfghiíìîïjklmnoóòôöpqrstuúùûüvwxyz";
 #endif
 #define HB_CP_UTF8
 

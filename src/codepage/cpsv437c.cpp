@@ -77,8 +77,10 @@
 constexpr const char *HB_CP_INFO = "Swedish CP-437"; //#define HB_CP_INFO      "Swedish CP-437"
 #define HB_CP_UNITB     HB_UNITB_437
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
-#define HB_CP_UPPER     "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÅÄÖ"
-#define HB_CP_LOWER     "abcdeèfghijklmnopqrstuvwxyüzåäö"
+//#define HB_CP_UPPER     "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÅÄÖ"
+constexpr const char *HB_CP_UPPER = "ABCDEÉFGHIJKLMNOPQRSTUVWXYÜZÅÄÖ";
+//#define HB_CP_LOWER     "abcdeèfghijklmnopqrstuvwxyüzåäö"
+constexpr const char *HB_CP_LOWER = "abcdeèfghijklmnopqrstuvwxyüzåäö";
 #define HB_CP_UTF8
 #endif
 

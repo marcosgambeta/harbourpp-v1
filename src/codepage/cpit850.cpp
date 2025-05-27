@@ -11,11 +11,15 @@ constexpr const char *HB_CP_INFO = "Italian CP-850 (ntxita.obj compatible)"; // 
 #define HB_CP_UNITB     HB_UNITB_850
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
 #if defined(__BORLANDC__)
-#define HB_CP_UPPER     "AAABCDE\xC3\x89" "EFGHIIIJKLMNOOOPQRSTUUUVWXYZ"
-#define HB_CP_LOWER     "a\xC3\xA0\xC3\xA1" "bcde\xC3\xA9\xC3\xA8" "fghi\xC3\xAC\xC3\xAD" "jklmno\xC3\xB2\xC3\xB3" "pqrstu\xC3\xB9\xC3\xBA" "vwxyz"
+//#define HB_CP_UPPER     "AAABCDE\xC3\x89" "EFGHIIIJKLMNOOOPQRSTUUUVWXYZ"
+constexpr const char *HB_CP_UPPER = "AAABCDE\xC3\x89" "EFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
+//#define HB_CP_LOWER     "a\xC3\xA0\xC3\xA1" "bcde\xC3\xA9\xC3\xA8" "fghi\xC3\xAC\xC3\xAD" "jklmno\xC3\xB2\xC3\xB3" "pqrstu\xC3\xB9\xC3\xBA" "vwxyz"
+constexpr const char *HB_CP_LOWER = "a\xC3\xA0\xC3\xA1" "bcde\xC3\xA9\xC3\xA8" "fghi\xC3\xAC\xC3\xAD" "jklmno\xC3\xB2\xC3\xB3" "pqrstu\xC3\xB9\xC3\xBA" "vwxyz";
 #else
-#define HB_CP_UPPER     "AAABCDEÉEFGHIIIJKLMNOOOPQRSTUUUVWXYZ"
-#define HB_CP_LOWER     "aàábcdeéèfghiìíjklmnoòópqrstuùúvwxyz"
+//#define HB_CP_UPPER     "AAABCDEÉEFGHIIIJKLMNOOOPQRSTUUUVWXYZ"
+constexpr const char *HB_CP_UPPER = "AAABCDEÉEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
+//#define HB_CP_LOWER     "aàábcdeéèfghiìíjklmnoòópqrstuùúvwxyz"
+constexpr const char *HB_CP_LOWER = "aàábcdeéèfghiìíjklmnoòópqrstuùúvwxyz";
 #endif
 #define HB_CP_UTF8
 
