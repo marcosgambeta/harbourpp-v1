@@ -126,13 +126,9 @@ proc main()
 
 
    cResult := ;
-      "/*" + hb_eol() + ;
-      " * BIG5 <-> UCS16 conversion tables" + hb_eol() + ;
-      " * code generated automatically by tests/big5_gen.prg" + hb_eol() + ;
-      " *" + hb_eol() + ;
-      " * Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>" + hb_eol() + ;
-      " *" + hb_eol() + ;
-      " */" + hb_eol() + ;
+      "// BIG5 <-> UCS16 conversion tables" + hb_eol() + ;
+      "// code generated automatically by tests/big5_gen.prg" + hb_eol() + ;
+      "// Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>" + hb_eol() + ;
        hb_eol()
 
    cResult += '#include "hbapi.h"' + hb_eol()
