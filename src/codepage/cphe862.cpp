@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (HE862)
-//
 // Copyright 2012 {list of individual authors and e-mail addresses}
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

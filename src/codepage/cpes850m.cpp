@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (ES850M)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        ES850M
 constexpr const char *HB_CP_INFO = "Spanish CP-850 (mdxspa.obj compatible)"; // #define HB_CP_INFO      "Spanish CP-850 (mdxspa.obj compatible)"

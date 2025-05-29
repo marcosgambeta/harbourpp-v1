@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (CS852C)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        CS852C
 constexpr const char *HB_CP_INFO = "Czech CP-852 (ntxcz852.obj compatible)"; // #define HB_CP_INFO      "Czech CP-852 (ntxcz852.obj compatible)"

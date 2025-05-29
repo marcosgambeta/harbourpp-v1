@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (PLMAZ)
-//
 // Copyright 2002 Jacek Kubica <kubica@wssk.wroc.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (EEWIN)
-//
 // Copyright 2019 Pavel Tsarenko <tpe2@mail.ru>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

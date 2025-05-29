@@ -1,6 +1,5 @@
 // Pavel Tsarenko <tpe2@mail.ru>
 
-
 #if defined(__BORLANDC__)
 //#define HB_CP_UPPER     "ABCDEFG\xC4\xA2" "HIJKLMNOPQRS\xC5\xA0" "Z\xC5\xBD" "TUVW\xC3\x95\xC3\x84\xC3\x96\xC3\x9C" "XY"
 constexpr const char *HB_CP_UPPER = "ABCDEFG\xC4\xA2" "HIJKLMNOPQRS\xC5\xA0" "Z\xC5\xBD" "TUVW\xC3\x95\xC3\x84\xC3\x96\xC3\x9C" "XY";

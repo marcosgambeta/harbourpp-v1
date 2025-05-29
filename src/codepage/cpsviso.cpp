@@ -1,9 +1,6 @@
-//
 // National Collation Support Module (SVISO)
-//
 // Copyright 2008 Viktor Szakats (vszakats.net/harbour)
 // Copyright 2006 Klas Engwall <klas dot engwall at engwall dot com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

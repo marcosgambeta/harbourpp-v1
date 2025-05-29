@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (HU852)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        HU852
 constexpr const char *HB_CP_INFO = "Hungarian CP-852 (sixhu852.obj compatible)"; // #define HB_CP_INFO      "Hungarian CP-852 (sixhu852.obj compatible)"

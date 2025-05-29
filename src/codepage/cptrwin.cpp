@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (TRWIN)
-//
 // Copyright 2006 Bicahi Esgici <esgici@yahoo.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

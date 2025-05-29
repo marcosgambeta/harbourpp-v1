@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (ITISB)
-//
 // Copyright 2002 Antonio Linares <alinares@fivetechsoft.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (FR850M)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        FR850M
 constexpr const char *HB_CP_INFO = "French CP-850 (mdxfre.obj compatible)"; // #define HB_CP_INFO      "French CP-850 (mdxfre.obj compatible)"

@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (SV850M)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        SV850M
 constexpr const char *HB_CP_INFO = "Swedish CP-850 (mdxswe.obj compatible)"; //#define HB_CP_INFO      "Swedish CP-850 (mdxswe.obj compatible)"

@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (IT437)
-//
 // Copyright 2004 Maurilio Longo <maurilio.longo@libero.it>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

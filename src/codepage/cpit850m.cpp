@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (IT850M)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        IT850M
 constexpr const char *HB_CP_INFO = "Italian CP-850 (mdxita.obj compatible)"; // #define HB_CP_INFO      "Italian CP-850 (mdxita.obj compatible)"

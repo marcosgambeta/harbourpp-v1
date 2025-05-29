@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (SKWIN)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        SKWIN
 constexpr const char *HB_CP_INFO = "Slovak Windows-1250"; //#define HB_CP_INFO      "Slovak Windows-1250"

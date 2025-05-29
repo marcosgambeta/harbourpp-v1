@@ -1,8 +1,5 @@
-//
 // Bulgarian MIK <--> Unicode conversion table
-//
 // Copyright 2005 Phil Krylov <phil a t newstar.rinet.ru>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

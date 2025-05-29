@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (NL850)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        NL850
 constexpr const char *HB_CP_INFO = "Dutch CP-850 (ntxdut.obj compatible)"; //#define HB_CP_INFO      "Dutch CP-850 (ntxdut.obj compatible)"

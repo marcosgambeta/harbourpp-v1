@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (LTWIN)
-//
 // Copyright 2003 Mindaugas Kavaliauskas <dbtopas@dbtopas.lt>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

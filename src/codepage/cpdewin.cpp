@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (DEWIN)
-//
 // Copyright 2003 Guenther Steiner <byte-one@aon.at>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

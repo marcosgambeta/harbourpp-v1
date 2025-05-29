@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (BGMIK)
-//
 // Copyright 2005 Rosen Vladimirov <kondor_ltd@dir.bg>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

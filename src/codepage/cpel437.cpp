@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (EL437)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        EL437
 constexpr const char *HB_CP_INFO = "Greek CP-437 (ntxgr437.obj compatible)"; // #define HB_CP_INFO      "Greek CP-437 (ntxgr437.obj compatible)"

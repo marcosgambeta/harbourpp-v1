@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (EL737)
-//
 // Copyright 2004 Pete Dionisopoulos <pete_westg@yahoo.gr>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

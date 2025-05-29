@@ -1,9 +1,6 @@
-//
 // National Collation Support Module (GBK)
-//
 // Copyright 2012 Dongming Wang <wangdongming / at / gmail.com>
 // Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

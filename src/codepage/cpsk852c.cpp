@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (SK852C)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        SK852C
 constexpr const char *HB_CP_INFO = "Slovak CP-852 (ntxsl852.obj compatible)"; //#define HB_CP_INFO      "Slovak CP-852 (ntxsl852.obj compatible)"

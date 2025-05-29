@@ -1,8 +1,5 @@
-//
 // JUS I.B1.002 / ISO-646-YU / YUSCII / CROSCII / SLOSCII <-> Unicode conversion table
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

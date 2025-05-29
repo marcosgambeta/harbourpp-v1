@@ -1,9 +1,6 @@
-//
 // JUS I.B1.003 (Cyrillic script variant of ISO-646-YU for Serbian and Macedonian language)
 // <-> Unicode conversion table
-//
 // Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

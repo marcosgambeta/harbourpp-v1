@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (SK852)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        SK852
 constexpr const char *HB_CP_INFO = "Slovak CP-852"; //#define HB_CP_INFO      "Slovak CP-852"

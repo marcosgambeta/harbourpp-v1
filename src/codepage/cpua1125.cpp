@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (UA1125)
-//
 // Copyright 2009 Pavel Tsarenko <tpe2@mail.ru>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

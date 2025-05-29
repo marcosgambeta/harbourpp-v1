@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (CSWIN)
-//
 // Copyright 2002 Vojtech Obrdlik <vobrdlik@centrum.cz>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

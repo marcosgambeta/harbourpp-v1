@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (IS850)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        IS850
 constexpr const char *HB_CP_INFO = "Icelandic CP-850 (ntxic850.obj compatible)"; // #define HB_CP_INFO      "Icelandic CP-850 (ntxic850.obj compatible)"

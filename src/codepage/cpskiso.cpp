@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (SKISO)
-//
 // Copyright 2007-2010 Viktor Szakats (vszakats.net/harbour)
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        SKISO
 constexpr const char *HB_CP_INFO = "Slovak ISO-8859-2"; //#define HB_CP_INFO      "Slovak ISO-8859-2"

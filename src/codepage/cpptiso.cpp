@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (PTISO)
-//
 // Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

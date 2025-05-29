@@ -1,9 +1,6 @@
-//
 // National Collation Support Module (ES850 - Modern Spanish)
-//
 // Copyright 2008 Viktor Szakats (vszakats.net/harbour)
 // Copyright Antonio Linares <alinares@fivetechsoft.com> (Spanish Windows support)
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,6 @@
-//
 // National Collation Support Module (DE858)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
 // Copyright 2020 Aleksander Czajczynski <hb fki.pl>
-//
 
 #define HB_CP_ID        DE858
 constexpr const char *HB_CP_INFO = "German CP-858"; // #define HB_CP_INFO      "German CP-858"

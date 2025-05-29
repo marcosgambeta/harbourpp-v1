@@ -1,10 +1,6 @@
-//
 // National Collation Support Module (NO865)
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 // This file is generated automatically by cpinfo.prg
-//
 
 #define HB_CP_ID        NO865
 constexpr const char *HB_CP_INFO = "Norwegian CP-865 (ntxnor.obj compatible)"; //#define HB_CP_INFO      "Norwegian CP-865 (ntxnor.obj compatible)"

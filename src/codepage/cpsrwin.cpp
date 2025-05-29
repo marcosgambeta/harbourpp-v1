@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (SRWIN)
-//
 // Copyright 2002 Srdjan Dragojlovic <digikv@yahoo.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

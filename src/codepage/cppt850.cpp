@@ -1,8 +1,5 @@
-//
 // National Collation Support Module (PT850)
-//
 // Copyright 2002 Luiz Rafael Culik Guimaraes <culikr@uol.com.br>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
