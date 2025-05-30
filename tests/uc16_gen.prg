@@ -174,9 +174,12 @@ proc main()
 
 
    cResult += hb_eol()
-   cResult += "#define HB_UCUP_FIRST   0x" + hb_numToHex( nMinUp, 4 ) + hb_eol()
-   cResult += "#define HB_UCUP_LAST    0x" + hb_numToHex( nMaxUp, 4 ) + hb_eol()
-   cResult += "#define HB_UCUP_BITS    " + hb_ntos( nBitUp ) + hb_eol()
+   cResult += "constexpr int HB_UCUP_FIRST = 0x" + hb_numToHex( nMinUp, 4 ) + ;
+      "; // #define HB_UCUP_FIRST   0x" + hb_numToHex( nMinUp, 4 ) + hb_eol()
+   cResult += "constexpr int HB_UCUP_LAST = 0x" + hb_numToHex( nMaxUp, 4 ) + ;
+      "; // #define HB_UCUP_LAST    0x" + hb_numToHex( nMaxUp, 4 ) + hb_eol()
+   cResult += "constexpr int HB_UCUP_BITS = " + hb_ntos( nBitUp ) + ;
+      "; // #define HB_UCUP_BITS    " + hb_ntos( nBitUp ) + hb_eol()
    cResult += hb_eol()
 
    calc_size16( aUpper, nMinUp, nMaxUp, nBitUp, @hVal, @aInd, @nn )
@@ -192,9 +195,12 @@ proc main()
 
 
    cResult += hb_eol()
-   cResult += "#define HB_UCLO_FIRST   0x" + hb_numToHex( nMinLo, 4 ) + hb_eol()
-   cResult += "#define HB_UCLO_LAST    0x" + hb_numToHex( nMaxLo, 4 ) + hb_eol()
-   cResult += "#define HB_UCLO_BITS    " + hb_ntos( nBitLo ) + hb_eol()
+   cResult += "constexpr int HB_UCLO_FIRST = 0x" + hb_numToHex( nMinLo, 4 ) + ;
+      "; // #define HB_UCLO_FIRST   0x" + hb_numToHex( nMinLo, 4 ) + hb_eol()
+   cResult += "constexpr int HB_UCLO_LAST = 0x" + hb_numToHex( nMaxLo, 4 ) + ;
+      "; // #define HB_UCLO_LAST    0x" + hb_numToHex( nMaxLo, 4 ) + hb_eol()
+   cResult += "constexpr int HB_UCLO_BITS = " + hb_ntos( nBitLo ) + ;
+      "; // #define HB_UCLO_BITS    " + hb_ntos( nBitLo ) + hb_eol()
    cResult += hb_eol()
 
    calc_size16( aLower, nMinLo, nMaxLo, nBitLo, @hVal, @aInd, @nn )
@@ -210,9 +216,12 @@ proc main()
 
 
    cResult += hb_eol()
-   cResult += "#define HB_UCFL_FIRST   0x" + hb_numToHex( nMinCh, 4 ) + hb_eol()
-   cResult += "#define HB_UCFL_LAST    0x" + hb_numToHex( nMaxCh, 4 ) + hb_eol()
-   cResult += "#define HB_UCFL_BITS    " + hb_ntos( nBitCh ) + hb_eol()
+   cResult += "constexpr int HB_UCFL_FIRST = 0x" + hb_numToHex( nMinCh, 4 ) + ;
+      "; / #define HB_UCFL_FIRST   0x" + hb_numToHex( nMinCh, 4 ) + hb_eol()
+   cResult += "constexpr int HB_UCFL_LAST = 0x" + hb_numToHex( nMaxCh, 4 ) + ;
+      "; // #define HB_UCFL_LAST    0x" + hb_numToHex( nMaxCh, 4 ) + hb_eol()
+   cResult += "constexpr int HB_UCFL_BITS = " + hb_ntos( nBitCh ) + ;
+      "; // #define HB_UCFL_BITS    " + hb_ntos( nBitCh ) + hb_eol()
    cResult += hb_eol()
 
    calc_size04( aFlags, nMinCh, nMaxCh, nBitCh, @hVal, @aInd, @nn )
