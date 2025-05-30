@@ -72,9 +72,9 @@ static HB_CRITICAL_NEW(s_cdpMtx);
 
 #endif // HB_USE_CPP_MUTEX
 
-#define NUMBER_OF_CHARS 256
+constexpr int NUMBER_OF_CHARS = 256; // #define NUMBER_OF_CHARS 256
 
-#define HB_MAX_CTRL_CODE 0x266B
+constexpr HB_WCHAR HB_MAX_CTRL_CODE = 0x266B; // #define HB_MAX_CTRL_CODE 0x266B
 
 static const HB_WCHAR s_uniCtrls[32] = {0x2007, 0x263A, 0x263B, 0x2665, 0x2666, 0x2663, 0x2660, 0x2022,
                                         0x25D8, 0x25CB, 0x25D9, 0x2642, 0x2640, 0x266A, 0x266B, 0x263C,
