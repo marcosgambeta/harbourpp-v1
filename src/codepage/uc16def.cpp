@@ -4,9 +4,9 @@
 
 #include "hbapi.hpp"
 
-#define HB_UCUP_FIRST   0x0030
-#define HB_UCUP_LAST    0xFF5A
-#define HB_UCUP_BITS    7
+constexpr int HB_UCUP_FIRST = 0x0030; // #define HB_UCUP_FIRST   0x0030
+constexpr int HB_UCUP_LAST = 0xFF5A; // #define HB_UCUP_LAST    0xFF5A
+constexpr int HB_UCUP_BITS = 7; // #define HB_UCUP_BITS    7
 
 static const HB_USHORT s_up_idx[511] =
 {
@@ -463,9 +463,9 @@ static HB_USHORT s_uc_upper(int n)
    return 0;
 }
 
-#define HB_UCLO_FIRST   0x0020
-#define HB_UCLO_LAST    0xFF3A
-#define HB_UCLO_BITS    6
+constexpr int HB_UCLO_FIRST = 0x0020; // #define HB_UCLO_FIRST   0x0020
+constexpr int HB_UCLO_LAST = 0xFF3A; // #define HB_UCLO_LAST    0xFF3A
+constexpr int HB_UCLO_BITS = 6; // #define HB_UCLO_BITS    6
 
 static const HB_USHORT s_lo_idx[1021] =
 {
@@ -928,9 +928,9 @@ static HB_USHORT s_uc_lower(int n)
    return 0;
 }
 
-#define HB_UCFL_FIRST   0x0000
-#define HB_UCFL_LAST    0xFF5A
-#define HB_UCFL_BITS    8
+constexpr int HB_UCFL_FIRST = 0x0000; // #define HB_UCFL_FIRST   0x0000
+constexpr int HB_UCFL_LAST = 0xFF5A; // #define HB_UCFL_LAST    0xFF5A
+constexpr int HB_UCFL_BITS = 8; // #define HB_UCFL_BITS    8
 
 static const HB_BYTE s_ch_idx[256] =
 {
