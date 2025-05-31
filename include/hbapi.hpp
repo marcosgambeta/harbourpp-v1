@@ -60,8 +60,13 @@ HB_EXTERN_BEGIN
 // this definition signals that number of decimal places for double value
 // was not specified at compile time (the value is a result of optimization
 // performed by the compiler)
+#if defined(__cplusplus)
+constexpr int HB_DEFAULT_WIDTH = 255;
+constexpr int HB_DEFAULT_DECIMALS = 255;
+#else
 #define HB_DEFAULT_WIDTH     255
 #define HB_DEFAULT_DECIMALS  255
+#endif
 
 // items types and type checking macros
 // NOTE: maintained for compatibility with C language
