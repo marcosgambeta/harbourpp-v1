@@ -51,6 +51,39 @@ HB_EXTERN_BEGIN
 
 #ifdef _HB_API_INTERNAL_
 
+// TODO: enum ?
+#if defined(__cplusplus)
+constexpr HB_USHORT HB_OO_OP_PLUS = 0;
+constexpr HB_USHORT HB_OO_OP_MINUS = 1;
+constexpr HB_USHORT HB_OO_OP_MULT = 2;
+constexpr HB_USHORT HB_OO_OP_DIVIDE = 3;
+constexpr HB_USHORT HB_OO_OP_MOD = 4;
+constexpr HB_USHORT HB_OO_OP_POWER = 5;
+constexpr HB_USHORT HB_OO_OP_INC = 6;
+constexpr HB_USHORT HB_OO_OP_DEC = 7;
+constexpr HB_USHORT HB_OO_OP_EQUAL = 8;
+constexpr HB_USHORT HB_OO_OP_EXACTEQUAL = 9;
+constexpr HB_USHORT HB_OO_OP_NOTEQUAL = 10;
+constexpr HB_USHORT HB_OO_OP_LESS = 11;
+constexpr HB_USHORT HB_OO_OP_LESSEQUAL = 12;
+constexpr HB_USHORT HB_OO_OP_GREATER = 13;
+constexpr HB_USHORT HB_OO_OP_GREATEREQUAL = 14;
+constexpr HB_USHORT HB_OO_OP_ASSIGN = 15;
+constexpr HB_USHORT HB_OO_OP_INSTRING = 16;
+constexpr HB_USHORT HB_OO_OP_INCLUDE = 17;
+constexpr HB_USHORT HB_OO_OP_NOT = 18;
+constexpr HB_USHORT HB_OO_OP_AND = 19;
+constexpr HB_USHORT HB_OO_OP_OR = 20;
+constexpr HB_USHORT HB_OO_OP_ARRAYINDEX = 21;
+constexpr HB_USHORT HB_OO_OP_ENUMINDEX = 22;
+constexpr HB_USHORT HB_OO_OP_ENUMBASE = 23;
+constexpr HB_USHORT HB_OO_OP_ENUMVALUE = 24;
+constexpr HB_USHORT HB_OO_OP_ENUMSTART = 25;
+constexpr HB_USHORT HB_OO_OP_ENUMSKIP = 26;
+constexpr HB_USHORT HB_OO_OP_ENUMSTOP = 27;
+constexpr HB_USHORT HB_OO_OP_ENUMISFIRST = 28;
+constexpr HB_USHORT HB_OO_OP_ENUMISLAST = 29;
+#else
 #define HB_OO_OP_PLUS         0
 #define HB_OO_OP_MINUS        1
 #define HB_OO_OP_MULT         2
@@ -81,6 +114,7 @@ HB_EXTERN_BEGIN
 #define HB_OO_OP_ENUMSTOP     27
 #define HB_OO_OP_ENUMISFIRST  28
 #define HB_OO_OP_ENUMISLAST   29
+#endif
 
 #define HB_OO_MAX_OPERATOR    29
 
