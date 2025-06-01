@@ -155,9 +155,13 @@ OpenCV2 for Harbour++
 
 ### Contato
 
-Envie sua mensagem para:
+Envie sua mensagem usando uma das opções abaixo:
 
+E-mail:  
 marcosgambeta@outlook.com
+
+Telegram:  
+https://t.me/marcosgambeta
 
 ### Mais informações e conteúdo extra
 
