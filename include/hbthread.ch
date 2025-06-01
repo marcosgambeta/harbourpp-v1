@@ -1,8 +1,5 @@
-//
 // Header file with MT mode constant values
-//
 // Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

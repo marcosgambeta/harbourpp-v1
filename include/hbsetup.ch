@@ -1,8 +1,5 @@
-//
 // Header file for runtime configuration, common for Harbour and C level.
-//
 // Copyright 1999-2009 Viktor Szakats (vszakats.net/harbour)
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

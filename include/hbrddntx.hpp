@@ -1,8 +1,5 @@
-//
 // DBFNTX RDD
-//
 // Copyright 2000 Alexander Kresin <alex@belacy.belgorod.su>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

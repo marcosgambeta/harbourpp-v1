@@ -1,8 +1,5 @@
-//
 // Header file for trace macros and functions.
-//
 // Copyright 1999 Gonzalo Diethelm <gonzalo.diethelm@iname.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

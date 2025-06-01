@@ -1,10 +1,7 @@
-//
 // Startup code using special data segments
-//
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
 // This code uses MSC startup macros created by
 // Paul Tucker <ptucker /at/ sympatico.ca>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

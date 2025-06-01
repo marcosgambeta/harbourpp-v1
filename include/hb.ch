@@ -1,8 +1,5 @@
-//
 // Main Harbour header
-//
 // Copyright 2010-2017 Viktor Szakats (vszakats.net/harbour)
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

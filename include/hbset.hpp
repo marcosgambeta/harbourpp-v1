@@ -1,8 +1,5 @@
-//
 // Header file for the Set API
-//
 // Copyright 1999-2003 David G. Holm <dholm@jsd-llc.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

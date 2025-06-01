@@ -1,8 +1,5 @@
-//
 // Header file for typedef for maindllp.c
-//
 // Copyright 2001-2002 Luiz Rafael Culik <culik@sl.conex.net>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

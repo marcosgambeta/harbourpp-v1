@@ -1,8 +1,5 @@
-//
 // Compiler Expression Optimizer
-//
 // Copyright 1999 Ryszard Glab
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

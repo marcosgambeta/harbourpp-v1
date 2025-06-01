@@ -1,9 +1,6 @@
-//
 // Header file for hb_matherMode() function
-//
 // Copyright 2002 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
 //        Author: Martin Vogel <vogel@inttec.de>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

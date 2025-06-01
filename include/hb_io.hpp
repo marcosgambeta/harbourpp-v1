@@ -1,8 +1,5 @@
-//
 // Platform independent include file to include unistd.h and/or io.h
-//
 // Copyright 2001 {list of individual authors and e-mail addresses}
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

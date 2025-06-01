@@ -1,9 +1,6 @@
-//
 // DBFCDX RDD (ver.2)
-//
 // Copyright 1999 Bruno Cantero <bruno@issnet.net>
 // Copyright 2003 Przemyslaw Czerpak <druzus@acn.waw.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

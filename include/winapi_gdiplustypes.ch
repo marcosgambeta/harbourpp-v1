@@ -1,8 +1,5 @@
-//
 // WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
-//
 // Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
-//
 
 // MIT License
 //

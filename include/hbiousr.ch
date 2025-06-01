@@ -1,8 +1,5 @@
-//
 // IOUSRD - module to create new FILE IO redirectors at .prg level
-//
 // Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

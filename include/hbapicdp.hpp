@@ -1,9 +1,6 @@
-//
 // Header file for the CodePages API
-//
 // Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

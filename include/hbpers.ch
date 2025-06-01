@@ -1,8 +1,5 @@
-//
 // Harbour persistence commands
-//
 // Copyright 2001 Antonio Linares <alinares@fivetech.com>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

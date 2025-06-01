@@ -1,8 +1,5 @@
-//
 // Standard PP rules
-//
 // Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

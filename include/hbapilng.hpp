@@ -1,8 +1,5 @@
-//
 // Header file for the Language API
-//
 // Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

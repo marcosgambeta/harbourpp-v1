@@ -1,8 +1,5 @@
-//
 // Length Prefix Protocol
-//
 // Copyright 2010 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

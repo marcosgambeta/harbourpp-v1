@@ -1,8 +1,5 @@
-//
 // Header file for the Macro compiler
-//
 // Copyright 1999 Ryszard Glab
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

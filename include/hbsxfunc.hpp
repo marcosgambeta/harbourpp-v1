@@ -1,8 +1,5 @@
-//
 // Header file for SIX compatible functions
-//
 // Copyright 2005 Przemyslaw Czerpak <druzus@acn.waw.pl>
-//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
