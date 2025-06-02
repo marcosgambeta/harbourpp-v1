@@ -116,7 +116,11 @@ constexpr HB_USHORT HB_OO_OP_ENUMISLAST = 29;
 #define HB_OO_OP_ENUMISLAST   29
 #endif
 
+#if defined(__cplusplus)
+constexpr HB_USHORT HB_OO_MAX_OPERATOR = 29;
+#else
 #define HB_OO_MAX_OPERATOR    29
+#endif
 
 // initialize Classy/OO system at HVM startup
 extern void hb_clsInit(void);
