@@ -52,9 +52,15 @@ HB_EXTERN_BEGIN
 
 /* Error codes (returned from hb_errLaunch()) */
 
+#if defined(__cplusplus)
+constexpr HB_USHORT E_BREAK = 0xFFFF;
+constexpr HB_USHORT E_RETRY = 1;
+constexpr HB_USHORT E_DEFAULT = 0;
+#else
 #define E_BREAK                         0xFFFF
 #define E_RETRY                         1
 #define E_DEFAULT                       0
+#endif
 
 /* Error flags */
 
