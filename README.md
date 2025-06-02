@@ -20,6 +20,89 @@ This project is a work in progress.
 * C++ compiler
 * C++11 or upper (C++14, C++17, C++20, C++23, ...)
 
+### Compilation
+
+The project is being developed and tested with the GCC (MinGW), Microsoft Visual C++ (MSVC),
+LLVM/Clang C++ and 'Embarcadero C++ 7.x for Win64' (BCC64) compilers.
+
+#### MinGW
+* Set the standard as shown below:  
+set HB_USER_CFLAGS=-std=c++11
+
+##### Examples
+```Batch
+set PATH=C:\MinGW32\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPMINGW32
+set HB_USER_CFLAGS=-std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+```Batch
+set PATH=C:\MinGW64\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPMINGW64
+set HB_USER_CFLAGS=-std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+
+#### Visual C++
+* If necessary, set the standard as per the example below:
+set HB_USER_CFLAGS=/std=c++11
+
+##### Examples
+```Batch
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
+set HB_INSTALL_PREFIX=C:\HBPPMSVC32
+set HB_USER_CFLAGS=/std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+```Batch
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+set HB_INSTALL_PREFIX=C:\HBPPMSVC64
+set HB_USER_CFLAGS=/std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+
+#### LLVM/Clang C++
+* If necessary, set the standard as per the example below:  
+set HB_USER_CFLAGS=-std=c++11
+
+##### Examples
+```Batch
+set PATH=C:\MinGW32\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPCLANG32
+set HB_COMPILER=clang
+win-make install 1>log1.log 2>log2.log
+```
+```Batch
+set PATH=C:\MinGW64\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPCLANG64
+set HB_COMPILER=clang64
+win-make install 1>log1.log 2>log2.log
+```
+
+#### Embarcadero C++ 7.x for Win64
+
+* Using Harbour++ in conjunction with this compiler is a work in progress.
+* Please follow the examples below as a basis for your testing.
+* If you wish, you can use the 'Issues' section to report any problems you encounter.
+* Compiling the libraries in the 'contrib' folder has not yet been tested.
+
+##### Examples
+```Batch
+set PATH=C:\BCC64\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPBCC64
+set HB_BUILD_CONTRIB_DYN=no
+set HB_BUILD_CONTRIBS=no
+set HB_COMPILER=bcc64
+set HB_USER_LDFLAGS=-LC:\BCC64\lib;C:\BCC64\lib\psdk
+set HB_USER_DFLAGS=-LC:\BCC64\lib;C:\BCC64\lib\psdk
+set HB_USER_RESFLAGS=-IC:\BCC64\include\windows\sdk
+win-make install 1>log1.log 2>log2.log
+```
+
+```Batch
+hbmk2 program -ldflag=-LC:\BCC64\lib -ldflag=-LC:\BCC64\lib\psdk
+```
+
 ### Related projects
 
 https://github.com/marcosgambeta/hwguipp  
@@ -36,6 +119,16 @@ libvlc for Harbour++
 
 https://github.com/marcosgambeta/hbopencv2  
 OpenCV2 for Harbour++
+
+### Contact
+
+Send your message using one of the options below:
+
+E-mail:  
+marcosgambeta@outlook.com
+
+Telegram:  
+https://t.me/marcosgambeta
 
 ## Portuguese
 
@@ -136,6 +229,7 @@ win-make install 1>log1.log 2>log2.log
 ```Batch
 hbmk2 program -ldflag=-LC:\BCC64\lib -ldflag=-LC:\BCC64\lib\psdk
 ```
+
 ### Projetos relacionados
 
 https://github.com/marcosgambeta/hwguipp  
