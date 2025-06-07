@@ -64,10 +64,17 @@ constexpr HB_USHORT E_DEFAULT = 0;
 
 /* Error flags */
 
+#if defined(__cplusplus)
+constexpr HB_USHORT EF_NONE = 0;
+constexpr HB_USHORT EF_CANRETRY = 1;
+constexpr HB_USHORT EF_CANSUBSTITUTE = 2;
+constexpr HB_USHORT EF_CANDEFAULT = 4;
+#else
 #define EF_NONE                         0
 #define EF_CANRETRY                     1
 #define EF_CANSUBSTITUTE                2
 #define EF_CANDEFAULT                   4
+#endif
 
 /* oError:Severity */
 
