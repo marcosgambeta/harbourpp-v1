@@ -82,9 +82,15 @@ constexpr HB_USHORT EF_CANDEFAULT = 4;
 
 /* oError:SubSystem (commonly used) */
 
+#if defined(__cplusplus)
+constexpr const char *HB_ERR_SS_BASE = "BASE";
+constexpr const char *HB_ERR_SS_TERMINAL = "TERM";
+constexpr const char *HB_ERR_SS_DBCMD = "DBCMD";
+#else
 #define HB_ERR_SS_BASE                  "BASE"
 #define HB_ERR_SS_TERMINAL              "TERM"
 #define HB_ERR_SS_DBCMD                 "DBCMD"
+#endif
 
 /* oError:GenCode */
 
