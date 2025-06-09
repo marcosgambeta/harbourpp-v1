@@ -98,13 +98,18 @@ constexpr const char *HB_ERR_SS_DBCMD = "DBCMD";
 
 /* Internal error numbers */
 
-#define HB_ERR_IE_NOT_ENOUGH_MEM        1024
-#define HB_ERR_IE_ERR_RECOV_FAIL        1025
-#define HB_ERR_IE_UNREC_ERROR           1026
-#define HB_ERR_IE_GENERIC               1027
+#define HB_ERR_IE_NOT_ENOUGH_MEM        1024 // NOTE: not used in Harbour++ core
+#define HB_ERR_IE_ERR_RECOV_FAIL        1025 // NOTE: not used in Harbour++ core
+#define HB_ERR_IE_UNREC_ERROR           1026 // NOTE: not used in Harbour++ core
+#define HB_ERR_IE_GENERIC               1027 // NOTE: not used in Harbour++ core
 
+#if defined(__cplusplus)
+constexpr HB_ULONG HB_ERR_ARGS_BASEPARAMS = 0xFFFFFFFF;
+constexpr HB_ULONG HB_ERR_ARGS_SELFPARAMS = 0xFFFFFFFE;
+#else
 #define HB_ERR_ARGS_BASEPARAMS          0xFFFFFFFF
 #define HB_ERR_ARGS_SELFPARAMS          0xFFFFFFFE
+#endif
 
 #define HB_ERR_FUNCNAME                 ( ( const char * ) ( HB_PTRUINT ) 1 )
 
