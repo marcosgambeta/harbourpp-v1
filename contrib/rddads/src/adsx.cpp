@@ -129,7 +129,7 @@ static HB_ERRCODE hb_mixErrorRT( ADSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRC
    HB_ERRCODE iRet = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
-      PHB_ITEM pError = hb_errNew();
+      auto pError = hb_errNew();
       hb_errPutGenCode(pError, errGenCode);
       hb_errPutSubCode(pError, errSubCode);
       hb_errPutOsCode(pError, errOsCode);

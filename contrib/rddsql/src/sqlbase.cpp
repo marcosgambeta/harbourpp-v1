@@ -335,7 +335,7 @@ static HB_ERRCODE sqlbaseGoToId(SQLBASEAREAP pArea, PHB_ITEM pItem)
   }
   else
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
     hb_errPutSubCode(pError, EDBF_DATATYPE);
@@ -584,7 +584,7 @@ static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITE
   }
   else
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
     hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));

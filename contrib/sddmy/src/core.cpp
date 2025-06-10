@@ -571,7 +571,7 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
    }
 
    if( bError ) {
-      PHB_ITEM pError = hb_errNew();
+      auto pError = hb_errNew();
       hb_errPutGenCode(pError, EG_DATATYPE);
       hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
       hb_errPutSubCode(pError, EDBF_DATATYPE);

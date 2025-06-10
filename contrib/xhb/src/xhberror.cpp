@@ -304,7 +304,7 @@ HB_FUNC_STATIC(ERRORINIT)
 
 HB_FUNC(XHB_ERRORNEW)
 {
-  PHB_ITEM pError = hb_errNew();
+  auto pError = hb_errNew();
 
   if (HB_ISCHAR(1))
   {
@@ -360,7 +360,7 @@ static void xhb_errRedefineClass(void *cargo)
 
   if (s_nErrObjSize == 0)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     HB_USHORT usClassH = hb_objGetClass(pError);
 
     s_nErrObjSize = hb_arrayLen(pError);

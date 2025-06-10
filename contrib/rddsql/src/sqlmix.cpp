@@ -107,7 +107,7 @@ static HB_ERRCODE sqlmixErrorRT(SQLMIXAREAP pArea, HB_ERRCODE errGenCode, HB_ERR
 
   if (hb_vmRequestQuery() == 0)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, errGenCode);
     hb_errPutSubCode(pError, errSubCode);
     hb_errPutOsCode(pError, errOsCode);
