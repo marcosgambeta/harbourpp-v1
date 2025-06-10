@@ -1041,7 +1041,7 @@ PHB_ITEM hb_errPutArgs(PHB_ITEM pError, HB_ULONG ulArgCount, ...)
 PHB_ITEM hb_errRT_New(HB_USHORT uiSeverity, const char *szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
                       const char *szDescription, const char *szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags)
 {
-  PHB_ITEM pError = hb_errNew();
+  auto pError = hb_errNew();
   hb_errPutSeverity(pError, uiSeverity);
   hb_errPutSubSystem(pError, szSubSystem ? szSubSystem : HB_ERR_SS_BASE);
   hb_errPutGenCode(pError, errGenCode);
@@ -1056,7 +1056,7 @@ PHB_ITEM hb_errRT_New(HB_USHORT uiSeverity, const char *szSubSystem, HB_ERRCODE 
 PHB_ITEM hb_errRT_New_Subst(HB_USHORT uiSeverity, const char *szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
                             const char *szDescription, const char *szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags)
 {
-  PHB_ITEM pError = hb_errNew();
+  auto pError = hb_errNew();
   hb_errPutSeverity(pError, uiSeverity);
   hb_errPutSubSystem(pError, szSubSystem ? szSubSystem : HB_ERR_SS_BASE);
   hb_errPutGenCode(pError, errGenCode);

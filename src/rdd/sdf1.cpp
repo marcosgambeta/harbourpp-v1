@@ -529,7 +529,7 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
   default:
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
     hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
@@ -668,7 +668,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
   if (errCode != Harbour::SUCCESS)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     HB_ERRCODE errGenCode = errCode == EDBF_DATAWIDTH ? EG_DATAWIDTH : EDBF_DATATYPE;
 
     hb_errPutGenCode(pError, errGenCode);
@@ -771,7 +771,7 @@ static HB_ERRCODE hb_sdfGoCold(SDFAREAP pArea)
 
     if (hb_fileWrite(pArea->pFile, pArea->pRecord, nSize, -1) != nSize)
     {
-      PHB_ITEM pError = hb_errNew();
+      auto pError = hb_errNew();
 
       hb_errPutGenCode(pError, EG_WRITE);
       hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_WRITE));
@@ -797,7 +797,7 @@ static HB_ERRCODE hb_sdfGoHot(SDFAREAP pArea)
 
   if (pArea->fReadonly)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_READONLY);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_READONLY));
     hb_errPutSubCode(pError, EDBF_READONLY);

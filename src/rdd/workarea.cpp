@@ -2158,9 +2158,7 @@ static HB_ERRCODE hb_waUnsupported(AREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_waUnsupported(%p)", static_cast<void*>(pArea)));
 #endif
 
-  PHB_ITEM pError;
-
-  pError = hb_errNew();
+  auto pError = hb_errNew();
   hb_errPutGenCode(pError, EG_UNSUPPORTED);
   hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_UNSUPPORTED));
   SELF_ERROR(pArea, pError);
@@ -2264,9 +2262,7 @@ static HB_ERRCODE hb_waRddUnsupported(LPRDDNODE pRDD)
    HB_TRACE(HB_TR_DEBUG, ("hb_waRDDUnsupported(%p)", static_cast<void*>(pRDD)));
 #endif
 
-  PHB_ITEM pError;
-
-  pError = hb_errNew();
+  auto pError = hb_errNew();
   hb_errPutGenCode(pError, EG_UNSUPPORTED);
   hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_UNSUPPORTED));
 

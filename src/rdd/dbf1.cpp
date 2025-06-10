@@ -2568,7 +2568,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   // Any error?
   if (fError)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
     hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
@@ -3081,7 +3081,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   // Exit if any error
   if (errCode != Harbour::SUCCESS)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, hb_dbfGetEGcode(errCode));
     hb_errPutDescription(pError, hb_langDGetErrorDesc(hb_dbfGetEGcode(errCode)));
     hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));

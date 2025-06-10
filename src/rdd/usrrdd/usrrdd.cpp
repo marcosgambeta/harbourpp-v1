@@ -3597,7 +3597,7 @@ static HB_ERRCODE hb_usrErrorRT(AREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE e
 
   if (hb_vmRequestQuery() == 0)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
     hb_errPutGenCode(pError, errGenCode);
     hb_errPutSubCode(pError, errSubCode);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));

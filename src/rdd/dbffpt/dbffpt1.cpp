@@ -100,7 +100,7 @@ static HB_ERRCODE hb_memoErrorRT(FPTAREAP pArea, HB_ERRCODE uiGenCode, HB_ERRCOD
 
   if (hb_vmRequestQuery() == 0)
   {
-    PHB_ITEM pError = hb_errNew();
+    auto pError = hb_errNew();
 
     if (uiGenCode == 0)
     {
