@@ -111,7 +111,11 @@ constexpr HB_ULONG HB_ERR_ARGS_SELFPARAMS = 0xFFFFFFFE;
 #define HB_ERR_ARGS_SELFPARAMS          0xFFFFFFFE
 #endif
 
+#if defined(__cplusplus)
+#define HB_ERR_FUNCNAME                 reinterpret_cast<const char *>(static_cast<HB_PTRUINT>(1))
+#else
 #define HB_ERR_FUNCNAME                 ( ( const char * ) ( HB_PTRUINT ) 1 )
+#endif
 
 /* Standard API */
 
