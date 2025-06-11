@@ -1,9 +1,5 @@
-/*
- * Header file for Advantage Database Server RDD
- *
- * Copyright 1999 Alexander S.Kresin <alex@belacy.belgorod.su>
- *
- */
+// Header file for Advantage Database Server RDD
+// Copyright 1999 Alexander S.Kresin <alex@belacy.belgorod.su>
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -69,9 +65,9 @@
 
 #include "ace.h"
 
-/* Auto-detect ACE version. */
+// Auto-detect ACE version.
 #if   defined(ADS_ROOT_DD_ALIAS)
-   #define _ADS_LIB_VERSION  1110 /* or upper */
+   #define _ADS_LIB_VERSION  1110 // or upper
 #elif defined(ADS_GET_FORMAT_WEB)
    #define _ADS_LIB_VERSION  1100
 #elif defined(ADS_GET_UTF8)
@@ -100,8 +96,8 @@
    #define _ADS_LIB_VERSION  500
 #endif
 
-/* Make sure to not allow a manual override requesting
-   a higher version than the one of ACE. [vszakats] */
+// Make sure to not allow a manual override requesting
+// a higher version than the one of ACE. [vszakats]
 #if ! defined(ADS_LIB_VERSION)
    #define ADS_LIB_VERSION   _ADS_LIB_VERSION
 #elif ADS_LIB_VERSION > _ADS_LIB_VERSION
@@ -112,38 +108,37 @@
 HB_EXTERN_BEGIN
 
 #if ADS_LIB_VERSION >= 600
-/* NOTE: Undocumented ACE function. */
+// NOTE: Undocumented ACE function.
 UNSIGNED32 ENTRYPOINT AdsDeleteFile( ADSHANDLE hConnection, UNSIGNED8 * pucFileName );
 #endif
 
-/* ADS WORKAREA
-   The Workarea Structure of Advantage Database Server RDD */
+// ADS WORKAREA
+// The Workarea Structure of Advantage Database Server RDD
 
 typedef struct _ADSAREA_
 {
    AREA area;
 
-   /* ADS's additions to the workarea structure
-    *
-    * Warning: The above section MUST match WORKAREA exactly!  Any
-    * additions to the structure MUST be added below, as in this
-    * example.
-    */
+   // ADS's additions to the workarea structure
+   //
+   // Warning: The above section MUST match WORKAREA exactly!  Any
+   // additions to the structure MUST be added below, as in this
+   // example.
 
-   LPDBRELINFO lpdbPendingRel;    /* Pointer to parent rel struct */
+   LPDBRELINFO lpdbPendingRel;    // Pointer to parent rel struct
 
-   char *    szDataFileName;      /* Name of data file */
-   HB_ULONG  ulRecordLen;         /* Size of record */
-   HB_ULONG  ulRecNo;             /* Current record */
-   HB_BYTE * pRecord;             /* Buffer of record data */
-   HB_ULONG  maxFieldLen;         /* Max field length in table record */
+   char *    szDataFileName;      // Name of data file
+   HB_ULONG  ulRecordLen;         // Size of record
+   HB_ULONG  ulRecNo;             // Current record
+   HB_BYTE * pRecord;             // Buffer of record data
+   HB_ULONG  maxFieldLen;         // Max field length in table record
 
-   HB_BOOL fPositioned;           /* true if we are not at phantom record */
-   HB_BOOL fShared;               /* Shared file */
-   HB_BOOL fReadonly;             /* Read only file */
-   HB_BOOL fFLocked;              /* true if file is locked */
+   HB_BOOL fPositioned;           // true if we are not at phantom record
+   HB_BOOL fShared;               // Shared file
+   HB_BOOL fReadonly;             // Read only file
+   HB_BOOL fFLocked;              // true if file is locked
 
-   int iFileType;                 /* adt/cdx/ntx/vfp */
+   int iFileType;                 // adt/cdx/ntx/vfp
 
    ADSHANDLE hTable;
    ADSHANDLE hOrdCurrent;
@@ -177,7 +172,7 @@ typedef ADSAREA * ADSAREAP;
 #define HB_ADS_PUTCONNECTION( p, h )  hb_itemPutNInt( ( p ), static_cast< ADSHANDLE >( h ) )
 #define HB_ADS_DEFCONNECTION( h, s )  hb_ads_defConnection( ( h ), ( s ) )
 
-extern int     hb_ads_iFileType;    /* current global setting */
+extern int     hb_ads_iFileType;    // current global setting
 extern int     hb_ads_iLockType;
 extern int     hb_ads_iCheckRights;
 extern int     hb_ads_iCharType;
@@ -199,13 +194,13 @@ extern ADSAREAP   hb_adsGetWorkAreaPointer( void );
    extern char *  hb_adsAnsiToOem( const char * pcString, HB_SIZE nLen );
    extern void    hb_adsOemAnsiFree( char * pcString );
 
-   /* NOTE: Undocumented ACE function. */
+   // NOTE: Undocumented ACE function.
    UNSIGNED32 ENTRYPOINT AdsSetFieldRaw( ADSHANDLE   hObj,
                                          UNSIGNED8 * pucFldName,
                                          UNSIGNED8 * pucBuf,
                                          UNSIGNED32  ulLen );
 
-   /* NOTE: Undocumented ACE function. */
+   // NOTE: Undocumented ACE function.
    UNSIGNED32 ENTRYPOINT AdsGetFieldRaw( ADSHANDLE    hTbl,
                                          UNSIGNED8 *  pucFldName,
                                          UNSIGNED8 *  pucBuf,

@@ -1,9 +1,5 @@
-/*
- * ADS memory index driver
- *
- * Copyright 2007 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+// ADS memory index driver
+// Copyright 2007 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -96,7 +92,7 @@ typedef struct _MIXTAG
   HB_ULONG ulRecMax;
   HB_ULONG ulRecCount;
 
-  PHB_CODEPAGE pCodepage; /* National sort table for character key tags, nullptr otherwise */
+  PHB_CODEPAGE pCodepage; // National sort table for character key tags, nullptr otherwise
 
   HB_ULONG ulKeyNo;
 } MIXTAG, *PMIXTAG;
@@ -107,7 +103,7 @@ typedef struct _ADSXAREA_
 {
   ADSAREA adsarea;
 
-  /* Additional fields for ADSX RDD */
+  // Additional fields for ADSX RDD
 
   PMIXTAG pTagList;
   PMIXTAG pTagCurrent;
@@ -122,7 +118,7 @@ static HB_USHORT s_uiRddIdADSVFPX = static_cast<HB_USHORT>(-1);
 static HB_USHORT s_uiRddIdADSADTX = static_cast<HB_USHORT>(-1);
 static RDDFUNCS adsxSuper;
 
-/* Misc functions */
+// Misc functions
 
 static HB_ERRCODE hb_mixErrorRT(ADSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *filename,
                                 HB_ERRCODE errOsCode, HB_USHORT uiFlags)
@@ -150,7 +146,7 @@ static HB_ERRCODE hb_mixErrorRT(ADSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCO
   return iRet;
 }
 
-/* Clone of ADS RDD function */
+// Clone of ADS RDD function
 static HB_ERRCODE hb_adsUpdateAreaFlags(ADSXAREAP pArea)
 {
   UNSIGNED16 u16Bof, u16Eof, u16Found;
@@ -168,7 +164,7 @@ static HB_ERRCODE hb_adsUpdateAreaFlags(ADSXAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/* Memory Index */
+// Memory Index
 
 static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USHORT uiLen)
 {
@@ -308,7 +304,7 @@ static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, HB_USHORT uiLen, PHB_CODEPAGE
     }
   }
   else
-  { /* This is used to compare keys excluding recno */
+  { // This is used to compare keys excluding recno
     if (i < 0)
     {
       i = -2;
@@ -443,7 +439,7 @@ static PMIXTAG mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM p
   pTag->szKeyExpr = static_cast<char *>(hb_xgrab(hb_itemGetCLen(pKeyExpr) + 1));
   hb_strncpyTrim(pTag->szKeyExpr, hb_itemGetCPtr(pKeyExpr), hb_itemGetCLen(pKeyExpr));
 
-  /* TODO: for expression */
+  // TODO: for expression
   pTag->szForExpr = nullptr;
 
   pTag->pKeyItem = pKeyItem;
@@ -451,7 +447,7 @@ static PMIXTAG mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM p
   pTag->bType = bType;
   pTag->uiLen = uiLen;
 
-  /* Use national support */
+  // Use national support
   if (bType == 'C' && pArea->adsarea.area.cdPage && !HB_CDP_ISBINSORT(pArea->adsarea.area.cdPage))
   {
     pTag->pCodepage = pArea->adsarea.area.cdPage;
@@ -571,7 +567,7 @@ static PMIXTAG mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM p
     hb_adsUpdateAreaFlags(pArea);
   }
 
-  /* QuickSort */
+  // QuickSort
   if (pTag->ulRecCount >= 2)
   {
     mixQSort(pTag->pKeys, 0, pTag->ulRecCount - 1, uiLen, pTag->pCodepage);
@@ -706,7 +702,7 @@ static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate)
         PMIXKEY pKey = mixKeyEval(pTag, pArea);
         mixFindKey(pTag, pKey, &ulKeyPos);
 
-        /* insert key into index */
+        // insert key into index
         if (pTag->ulRecCount == pTag->ulRecMax)
         {
           pTag->pKeys =
@@ -733,12 +729,12 @@ static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate)
           mixFindKey(pTag, pKey, &ulKeyPos);
           if (ulKeyPos == pUpdate[iTag] || ulKeyPos == pUpdate[iTag] + 1)
           {
-            /* assign new key in same position */
+            // assign new key in same position
             pTag->pKeys[pUpdate[iTag]] = pKey;
           }
           else
           {
-            /* move keys and assign new key to new position */
+            // move keys and assign new key to new position
             if (ulKeyPos < pUpdate[iTag])
             {
               memmove(pTag->pKeys + ulKeyPos + 1, pTag->pKeys + ulKeyPos, (pUpdate[iTag] - ulKeyPos) * sizeof(PMIXKEY));
@@ -759,7 +755,7 @@ static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate)
       }
       else
       {
-        /* delete key */
+        // delete key
         mixKeyFree(pKey);
         memmove(pTag->pKeys + pUpdate[iTag], pTag->pKeys + pUpdate[iTag] + 1,
                 (pTag->ulRecCount - pUpdate[iTag]) * sizeof(PMIXKEY));
@@ -772,7 +768,7 @@ static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate)
   hb_xfree(pUpdate);
 }
 
-/* ADSX RDD METHODS */
+// ADSX RDD METHODS
 
 static HB_ERRCODE adsxGoBottom(ADSXAREAP pArea)
 {
@@ -845,7 +841,7 @@ static HB_ERRCODE adsxSeek(ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB
     return SUPER_SEEK(&pArea->adsarea.area, bSoftSeek, pKey, bFindLast);
   }
 
-  /* TODO: pKey type validation, EG_DATATYPE runtime error */
+  // TODO: pKey type validation, EG_DATATYPE runtime error
   uiLen = pArea->pTagCurrent->uiLen;
   pMixKey = mixKeyNew(pKey, bFindLast ? static_cast<HB_ULONG>(-1) : 0, pArea->pTagCurrent->bType, uiLen);
 
@@ -858,8 +854,8 @@ static HB_ERRCODE adsxSeek(ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB
     }
   }
 
-  /* reset any pending relations - I hope ACE make the same and the problem
-     reported in GOTO() does not exist here */
+  // reset any pending relations - I hope ACE make the same and the problem
+  // reported in GOTO() does not exist here
   SELF_RESETREL(&pArea->adsarea);
 
   mixFindKeyLen(pArea->pTagCurrent, pMixKey, uiLen, &ulKeyPos);
@@ -911,7 +907,7 @@ static HB_ERRCODE adsxSkip(ADSXAREAP pArea, HB_LONG lToSkip)
     return SUPER_SKIP(&pArea->adsarea.area, lToSkip);
   }
 
-  /* resolve any pending relations */
+  // resolve any pending relations
   if (pArea->adsarea.lpdbPendingRel)
   {
     SELF_FORCEREL(&pArea->adsarea.area);
@@ -989,7 +985,7 @@ static HB_ERRCODE adsxSkip(ADSXAREAP pArea, HB_LONG lToSkip)
     pArea->adsarea.area.fEof = false;
   }
 
-  /* Force relational movement in child WorkAreas */
+  // Force relational movement in child WorkAreas
   if (pArea->adsarea.area.lpdbRelations)
   {
     SELF_SYNCCHILDREN(&pArea->adsarea.area);
@@ -1190,7 +1186,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
 
   bForADS = bWhileADS = true;
 
-  /* Test key expression */
+  // Test key expression
   bValidExpr = 0;
   AdsIsExprValid(pArea->adsarea.hTable,
                  reinterpret_cast<UNSIGNED8 *>(const_cast<char *>(hb_itemGetCPtr(pOrderInfo->abExpr))), &bValidExpr);
@@ -1198,7 +1194,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
 
   if (pArea->adsarea.area.lpdbOrdCondInfo)
   {
-    /* Test FOR expression */
+    // Test FOR expression
     if (pArea->adsarea.area.lpdbOrdCondInfo->abFor)
     {
       bValidExpr = 0;
@@ -1211,7 +1207,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
       bForADS = false;
     }
 
-    /* Test WHILE expression */
+    // Test WHILE expression
     if (pArea->adsarea.area.lpdbOrdCondInfo->abWhile)
     {
       bValidExpr = 0;
@@ -1233,7 +1229,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
   if (pArea->adsarea.area.lpdbOrdCondInfo && ((bForADS && pArea->adsarea.area.lpdbOrdCondInfo->abFor) ||
                                               (bWhileADS && pArea->adsarea.area.lpdbOrdCondInfo->abWhile)))
   {
-    /* We can use server side indexing to filter records. This improves speed */
+    // We can use server side indexing to filter records. This improves speed
     UNSIGNED32 u32RetVal;
     UNSIGNED8 szKeyExpr[1024];
     UNSIGNED16 usLen = sizeof(szKeyExpr);
@@ -1275,7 +1271,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
 
     pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent = true;
 
-    /* If while condition is already used, remove it from OrdCondInfo */
+    // If while condition is already used, remove it from OrdCondInfo
     if (bWhileADS && pArea->adsarea.area.lpdbOrdCondInfo->abWhile)
     {
       hb_xfree(pArea->adsarea.area.lpdbOrdCondInfo->abWhile);
@@ -1294,7 +1290,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
     }
   }
 
-  /* Obtain key codeblock */
+  // Obtain key codeblock
   if (pOrderInfo->itmCobExpr)
   {
     pKeyItem = hb_itemNew(pOrderInfo->itmCobExpr);
@@ -1313,7 +1309,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
     pArea->adsarea.area.valResult = nullptr;
   }
 
-  /* Test key codeblock on EOF */
+  // Test key codeblock on EOF
   ulRecNo = pArea->adsarea.ulRecNo;
   SELF_GOTO(&pArea->adsarea.area, 0);
   if (SELF_EVALBLOCK(&pArea->adsarea.area, pKeyItem) == Harbour::FAILURE)
@@ -1379,7 +1375,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
 
   if (pArea->adsarea.area.lpdbOrdCondInfo)
   {
-    /* Obtain FOR codeblock */
+    // Obtain FOR codeblock
     if (pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor)
     {
       pForItem = hb_itemNew(pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor);
@@ -1400,7 +1396,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
       pArea->adsarea.area.valResult = nullptr;
     }
 
-    /* Obtain WHILE codeblock */
+    // Obtain WHILE codeblock
     if (pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile)
     {
       pWhileItem = hb_itemNew(pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile);
@@ -1426,7 +1422,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
     }
   }
 
-  /* Test FOR codeblock on EOF */
+  // Test FOR codeblock on EOF
   if (pForItem)
   {
     if (SELF_EVALBLOCK(&pArea->adsarea.area, pForItem) == Harbour::FAILURE)
@@ -1466,11 +1462,11 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
     pArea->adsarea.area.valResult = nullptr;
   }
 
-  /* TODO: WHILE condition is not tested, like in DBFCDX. Why? Compatibility with Clipper? */
+  // TODO: WHILE condition is not tested, like in DBFCDX. Why? Compatibility with Clipper?
 
   SELF_GOTO(&pArea->adsarea.area, ulRecNo);
 
-  /* Set auxiliary index as current for subindexing */
+  // Set auxiliary index as current for subindexing
   if (hIndex)
   {
     pArea->adsarea.hOrdCurrent = hIndex;
@@ -1490,7 +1486,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
     hb_vmDestroyBlockOrMacro(pWhileItem);
   }
 
-  /* Append the tag to the end of list */
+  // Append the tag to the end of list
   if (pArea->pTagList)
   {
     pTag = pArea->pTagList;
@@ -1512,7 +1508,7 @@ static HB_ERRCODE adsxOrderDestroy(ADSXAREAP pArea, LPDBORDERINFO pOrderInfo)
 {
   PMIXTAG pTag, pTag2;
 
-  /* TODO: ADS RDD missing implementation of ordDestroy( nOrder ) */
+  // TODO: ADS RDD missing implementation of ordDestroy( nOrder )
   if (SUPER_ORDDESTROY(&pArea->adsarea.area, pOrderInfo) == Harbour::SUCCESS)
   {
     return Harbour::SUCCESS;
@@ -1555,13 +1551,13 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINF
 {
   PMIXTAG pTag = pArea->pTagCurrent;
 
-  /* resolve any pending relations */
+  // resolve any pending relations
   if (pArea->adsarea.lpdbPendingRel)
   {
     SELF_FORCEREL(&pArea->adsarea.area);
   }
 
-  /* all others need an index handle */
+  // all others need an index handle
   if (uiIndex != DBOI_ORDERCOUNT)
   {
     if (pOrderInfo->itmOrder)
@@ -1647,7 +1643,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINF
     break;
   }
   case DBOI_KEYCOUNT:
-  case DBOI_KEYCOUNTRAW: /* ignore filter but RESPECT SCOPE */
+  case DBOI_KEYCOUNTRAW: // ignore filter but RESPECT SCOPE
     pOrderInfo->itmResult = hb_itemPutNL(pOrderInfo->itmResult, pTag->ulRecCount);
     break;
 
@@ -1995,7 +1991,7 @@ static void hb_adsxRddInit( void * cargo )
        hb_rddRegister("ADSVFPX", RDT_FULL) > 1 ||
 #endif
        hb_rddRegister("ADSADTX", RDT_FULL) > 1 ) {
-      /* try different RDD register order */
+      // try different RDD register order
       hb_rddRegister("ADS",    RDT_FULL);
       hb_rddRegister("ADSNTX", RDT_FULL);
       hb_rddRegister("ADSCDX", RDT_FULL);
@@ -2012,7 +2008,7 @@ static void hb_adsxRddInit( void * cargo )
 #endif
           hb_rddRegister("ADSADTX", RDT_FULL) > 1 ) {
          hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
-         /* not executed, only to force linking ADS RDD */
+         // not executed, only to force linking ADS RDD
          HB_FUNC_EXEC(ADSCDX);
       }
    }
@@ -2034,10 +2030,13 @@ HB_INIT_SYMBOLS_BEGIN( adsx1__InitSymbols )
 { "ADSADTX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSADTX )}, nullptr },
 { "ADSADTX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSADTX_GETFUNCTABLE )}, nullptr }
 HB_INIT_SYMBOLS_END( adsx1__InitSymbols )
-    // clang-format on
+// clang-format on
 
-    HB_CALL_ON_STARTUP_BEGIN(_hb_adsx_rdd_init_) hb_vmAtInit(hb_adsxRddInit, nullptr);
+// clang-format off
+HB_CALL_ON_STARTUP_BEGIN(_hb_adsx_rdd_init_)
+  hb_vmAtInit(hb_adsxRddInit, nullptr);
 HB_CALL_ON_STARTUP_END(_hb_adsx_rdd_init_)
+// clang-format on
 
 // clang-format off
 #if defined(HB_PRAGMA_STARTUP)

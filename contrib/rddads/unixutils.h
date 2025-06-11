@@ -1,1 +1,1 @@
-/* dummy file for ads.h */
+// dummy file for ads.h

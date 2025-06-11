@@ -1,10 +1,6 @@
-/*
- * Advantage Database Server RDD (additional functions)
- *
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour) (cleanups, AdsGetRecordCount())
- * Copyright 2000 Alexander Kresin <alex@belacy.belgorod.su>
- *
- */
+// Advantage Database Server RDD (additional functions)
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour) (cleanups, AdsGetRecordCount())
+// Copyright 2000 Alexander Kresin <alex@belacy.belgorod.su>
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -69,7 +65,7 @@ int hb_ads_iFileType = ADS_CDX;
 int hb_ads_iLockType = ADS_PROPRIETARY_LOCKING;
 int hb_ads_iCheckRights = ADS_CHECKRIGHTS;
 int hb_ads_iCharType = ADS_ANSI;
-HB_BOOL hb_ads_bTestRecLocks = false; /* Debug Implicit locks */
+HB_BOOL hb_ads_bTestRecLocks = false; // Debug Implicit locks
 
 #ifdef ADS_USE_OEM_TRANSLATION
 
@@ -247,7 +243,7 @@ static void hb_ads_setCallBack(PHB_ITEM pCallBack)
 }
 #endif // ! ADS_LINUX
 
-/* Debug Implicit locks Set/Get call */
+// Debug Implicit locks Set/Get call
 HB_FUNC(ADSTESTRECLOCKS)
 {
   hb_retl(hb_ads_bTestRecLocks);
@@ -338,25 +334,25 @@ HB_FUNC(ADSGETCONNECTIONTYPE)
   UNSIGNED16 pusConnectType = 0;
   ADSHANDLE hConnToCheck = HB_ADS_PARCONNECTION(1);
 
-  /* NOTE: Caller can specify a connection. Otherwise use default thread local handle.
-           The thread default handle will continue to be 0 if no AdsConnect60() (Data
-           Dictionary) calls are made. Simple table access uses an implicit connection
-           whose handle we don't see unless you get it from an opened table
-           with AdsGetTableConType(). */
+  // NOTE: Caller can specify a connection. Otherwise use default thread local handle.
+  //       The thread default handle will continue to be 0 if no AdsConnect60() (Data
+  //       Dictionary) calls are made. Simple table access uses an implicit connection
+  //       whose handle we don't see unless you get it from an opened table
+  //       with AdsGetTableConType().
 
   if (hConnToCheck)
   {
-    /* NOTE: This does NOT return the Type of a connection Handle-- it returns whether
-             connected to ADS_REMOTE_SERVER, ADS_AIS_SERVER, or ADS_LOCAL_SERVER. */
+    // NOTE: This does NOT return the Type of a connection Handle-- it returns whether
+    //       connected to ADS_REMOTE_SERVER, ADS_AIS_SERVER, or ADS_LOCAL_SERVER.
 
     if (AdsGetConnectionType(hConnToCheck, &pusConnectType) != AE_SUCCESS)
     {
-      pusConnectType = AE_INVALID_CONNECTION_HANDLE; /* It may have set an error value, or leave as 0. */
+      pusConnectType = AE_INVALID_CONNECTION_HANDLE; // It may have set an error value, or leave as 0.
     }
   }
   else
   {
-    pusConnectType = AE_NO_CONNECTION; /* AE_INVALID_CONNECTION_HANDLE */
+    pusConnectType = AE_NO_CONNECTION; // AE_INVALID_CONNECTION_HANDLE
   }
 
   hb_retni(pusConnectType);
@@ -436,7 +432,7 @@ HB_FUNC(ADSGETSERVERTIME)
     hb_storvc(reinterpret_cast<char *>(pucTimeBuf), -1, 2);
     hb_storvnl(plTime, -1, 3);
   }
-  /* QUESTION: Returning NIL on error. Is this what we want? [vszakats] */
+  // QUESTION: Returning NIL on error. Is this what we want? [vszakats]
 #if HB_TR_LEVEL >= HB_TR_DEBUG
   else
   {
@@ -447,7 +443,7 @@ HB_FUNC(ADSGETSERVERTIME)
 #endif
 }
 
-/* --- */
+// ---
 
 HB_FUNC(ADSISTABLELOCKED)
 {
@@ -551,7 +547,7 @@ HB_FUNC(ADSSETCHARTYPE)
   }
 }
 
-/* Return whether the current table is opened with OEM or ANSI character set. */
+// Return whether the current table is opened with OEM or ANSI character set.
 HB_FUNC(ADSGETTABLECHARTYPE)
 {
   ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -711,13 +707,13 @@ HB_FUNC(ADSGETRECORDCOUNT)
   }
 }
 
-/* 2nd parameter: unsupported Bag Name. */
+// 2nd parameter: unsupported Bag Name.
 HB_FUNC(ADSKEYNO)
 {
   auto pxOrder = hb_param(1, Harbour::Item::ANY);
   auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
-  /* if arg 1 or 3 is bad, toss error */
+  // if arg 1 or 3 is bad, toss error
   if ((pxOrder == nullptr || pxOrder->isString() || pxOrder->isNumber() || pxOrder->isNil()) &&
       (pFilterOption == nullptr || pFilterOption->isNumber()))
   {
@@ -730,9 +726,9 @@ HB_FUNC(ADSKEYNO)
       UNSIGNED16 usFilterOption =
           pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI(pFilterOption)) : ADS_IGNOREFILTERS;
 
-      /* get an Index Handle */
+      // get an Index Handle
       if (pxOrder == nullptr || pxOrder->isNil())
-      { /* didn't pass it in; use current */
+      { // didn't pass it in; use current
         hIndex = pArea->hOrdCurrent;
       }
       else if (pxOrder->isNumber())
@@ -740,12 +736,12 @@ HB_FUNC(ADSKEYNO)
         auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
 
         if (ordNum > 0)
-        { /* otherwise leave hIndex at 0 */
+        { // otherwise leave hIndex at 0
           AdsGetIndexHandleByOrder(pArea->hTable, ordNum, &hIndex);
         }
       }
       else if (hb_itemGetCLen(pxOrder) == 0)
-      { /* passed empty string */
+      { // passed empty string
         hIndex = pArea->hOrdCurrent;
       }
       else
@@ -756,7 +752,7 @@ HB_FUNC(ADSKEYNO)
       }
 
       if (hIndex == 0)
-      { /* no index selected */
+      { // no index selected
         AdsGetRecordNum(pArea->hTable, usFilterOption, &pulKey);
       }
       else
@@ -777,13 +773,13 @@ HB_FUNC(ADSKEYNO)
   }
 }
 
-/* 2nd parameter: unsupported Bag Name. */
+// 2nd parameter: unsupported Bag Name.
 HB_FUNC(ADSKEYCOUNT)
 {
   auto pxOrder = hb_param(1, Harbour::Item::ANY);
   auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
-  /* if arg 1 or 3 is bad, toss error */
+  // if arg 1 or 3 is bad, toss error
   if ((pxOrder == nullptr || pxOrder->isString() || pxOrder->isNumber() || pxOrder->isNil()) &&
       (pFilterOption == nullptr || pFilterOption->isNumber()))
   {
@@ -796,9 +792,9 @@ HB_FUNC(ADSKEYCOUNT)
       UNSIGNED16 usFilterOption =
           pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI(pFilterOption)) : ADS_IGNOREFILTERS;
 
-      /* get an Index Handle */
+      // get an Index Handle
       if (pxOrder == nullptr || pxOrder->isNil())
-      { /* didn't pass it in; use current */
+      { // didn't pass it in; use current
         hIndex = pArea->hOrdCurrent;
       }
       else if (pxOrder->isNumber())
@@ -806,12 +802,12 @@ HB_FUNC(ADSKEYCOUNT)
         auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
 
         if (ordNum > 0)
-        { /* otherwise leave hIndex at 0 */
+        { // otherwise leave hIndex at 0
           AdsGetIndexHandleByOrder(pArea->hTable, ordNum, &hIndex);
         }
       }
       else if (hb_itemGetCLen(pxOrder) == 0)
-      { /* passed empty string */
+      { // passed empty string
         hIndex = pArea->hOrdCurrent;
       }
       else
@@ -822,7 +818,7 @@ HB_FUNC(ADSKEYCOUNT)
       }
 
       if (hIndex == 0)
-      { /* no index selected */
+      { // no index selected
         hIndex = pArea->hTable;
       }
 
@@ -832,8 +828,8 @@ HB_FUNC(ADSKEYCOUNT)
       }
       else
       {
-        /* ADS scope handling is flawed; do our own */
-        /* One more optimization would be to check if there's a fully optimized AOF available so don't walk ours. */
+        // ADS scope handling is flawed; do our own
+        // One more optimization would be to check if there's a fully optimized AOF available so don't walk ours.
 
         UNSIGNED8 pucScope[ADS_MAX_KEY_LENGTH + 1];
         UNSIGNED16 usBufLen = sizeof(pucScope);
@@ -842,16 +838,16 @@ HB_FUNC(ADSKEYCOUNT)
         AdsGetScope(hIndex, ADS_BOTTOM, pucScope, &usBufLen);
 
         if (usBufLen)
-        { /* had a scope */
+        { // had a scope
           AdsGetAOF(pArea->hTable, pucFilter, &usBufLen);
 
           if (usBufLen == 0)
-          { /* had no AOF */
+          { // had no AOF
             AdsGetFilter(pArea->hTable, pucFilter, &usBufLen);
           }
 
           if (usBufLen)
-          { /* had a scope with AOF or filter, walk it. Skips obey filters */
+          { // had a scope with AOF or filter, walk it. Skips obey filters
             HB_ULONG ulRecNo;
             UNSIGNED16 u16eof;
 
@@ -874,7 +870,7 @@ HB_FUNC(ADSKEYCOUNT)
           }
         }
         else
-        { /* no scope set */
+        { // no scope set
           AdsGetRecordCount(hIndex, usFilterOption, &pulKey);
         }
       }
@@ -1128,7 +1124,7 @@ HB_FUNC(ADSISRECORDINAOF)
     UNSIGNED16 bIsInAOF = 0;
 
     hb_retl(AdsIsRecordInAOF(pArea->hTable,
-                             static_cast<UNSIGNED32>(hb_parnl(1)) /* ulRecordNumber */, /* 0 for current record */
+                             static_cast<UNSIGNED32>(hb_parnl(1)) /* ulRecordNumber */, // 0 for current record
                              &bIsInAOF) == AE_SUCCESS &&
             bIsInAOF != 0);
   }
@@ -1138,7 +1134,7 @@ HB_FUNC(ADSISRECORDINAOF)
   }
 }
 
-/* Does current record match any current filter? */
+// Does current record match any current filter?
 HB_FUNC(ADSISRECORDVALID)
 {
   bool bReturn = false;
@@ -1193,7 +1189,7 @@ HB_FUNC(ADSSETAOF)
       UNSIGNED32 ulRetVal = AdsSetAOF(
           pArea->hTable, reinterpret_cast<UNSIGNED8 *>(pucFilter),
           static_cast<UNSIGNED16>(hb_pcount() > 1 ? hb_parni(2)
-                                                  : ADS_RESOLVE_DYNAMIC) /* usResolve */); /* ADS_RESOLVE_IMMEDIATE */
+                                                  : ADS_RESOLVE_DYNAMIC) /* usResolve */); // ADS_RESOLVE_IMMEDIATE
 
       hb_adsOemAnsiFree(pucFilter);
 
@@ -1412,22 +1408,21 @@ HB_FUNC(ADSCONNECT)
 
 HB_FUNC(ADSDISCONNECT)
 {
-  /* NOTE: From ace.hlp:
-   *
-   *       AdsDisconnect() is used to disconnect a connection from the specified server.
-   *       If tables are currently opened, all data is flushed, locks are released,
-   *       and open tables are closed before the disconnect occurs.
-   *
-   *       If zero is passed as the connection handle, all connections on the server
-   *       associated with the user will be disconnected. If AdsDisconnect() is called
-   *       on a connection with a transaction active,  the transaction will be rolled back.
-   */
+  // NOTE: From ace.hlp:
+  //
+  //       AdsDisconnect() is used to disconnect a connection from the specified server.
+  //       If tables are currently opened, all data is flushed, locks are released,
+  //       and open tables are closed before the disconnect occurs.
+  //
+  //       If zero is passed as the connection handle, all connections on the server
+  //       associated with the user will be disconnected. If AdsDisconnect() is called
+  //       on a connection with a transaction active,  the transaction will be rolled back.
 
   ADSHANDLE hConnect = HB_ADS_PARCONNECTION(1);
 
-  /* NOTE: Only allow disconnect of 0 if explicitly passed.
-           The thread default connection handle might be 0 if caller
-           accidentally disconnects twice. */
+  // NOTE: Only allow disconnect of 0 if explicitly passed.
+  //       The thread default connection handle might be 0 if caller
+  //       accidentally disconnects twice.
 
   if ((hConnect != 0 || HB_ISNUM(1)) && AdsDisconnect(hConnect) == AE_SUCCESS)
   {
@@ -1672,7 +1667,7 @@ HB_FUNC(ADSREFRESHRECORD)
   }
 }
 
-/* lSuccess := AdsCopyTable( cTargetFile [, nAdsFilterOption ] ) */
+// lSuccess := AdsCopyTable( cTargetFile [, nAdsFilterOption ] )
 HB_FUNC(ADSCOPYTABLE)
 {
   ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -1683,7 +1678,7 @@ HB_FUNC(ADSCOPYTABLE)
     {
       hb_retl(AdsCopyTable((pArea->hOrdCurrent)
                                ? pArea->hOrdCurrent
-                               : pArea->hTable /* hIndex */, /* If an index is active copy table in indexed order. */
+                               : pArea->hTable /* hIndex */, // If an index is active copy table in indexed order.
                            static_cast<UNSIGNED16>(hb_parnidef(2, ADS_RESPECTFILTERS)) /* usFilterOption */,
                            reinterpret_cast<UNSIGNED8 *>(const_cast<char *>(hb_parc(1))) /* pucFile */) == AE_SUCCESS);
     }
@@ -1762,12 +1757,12 @@ HB_FUNC(ADSREGCALLBACK)
   bool fResult = false;
 
 #if !defined(ADS_LINUX)
-  /* NOTE: current implementation is not thread safe.
-           ADS can register multiple callbacks, but one per thread/connection.
-           To be thread safe, we need multiple connections.
-           The registered function (and its codeblock s_pItmCobCallBack) should
-           NOT make any Advantage Client Engine calls. If it does,
-           it is possible to get error code 6619 "Communication Layer is busy". */
+  // NOTE: current implementation is not thread safe.
+  //       ADS can register multiple callbacks, but one per thread/connection.
+  //       To be thread safe, we need multiple connections.
+  //       The registered function (and its codeblock s_pItmCobCallBack) should
+  //       NOT make any Advantage Client Engine calls. If it does,
+  //       it is possible to get error code 6619 "Communication Layer is busy".
 
   auto pCallBack = hb_param(1, Harbour::Item::EVALITEM);
 
@@ -1813,8 +1808,8 @@ HB_FUNC(ADSISINDEXED)
   hb_retl(pArea && pArea->hOrdCurrent != 0);
 }
 
-/* QUESTION: Shouldn't we generate a NOTABLE/NOARG RTEs like in similar functions? [vszakats] */
-HB_FUNC(ADSISEXPRVALID) /* cExpr */
+// QUESTION: Shouldn't we generate a NOTABLE/NOARG RTEs like in similar functions? [vszakats]
+HB_FUNC(ADSISEXPRVALID) // cExpr
 {
   ADSAREAP pArea = hb_adsGetWorkAreaPointer();
   UNSIGNED16 bValidExpr = 0;
@@ -1828,7 +1823,7 @@ HB_FUNC(ADSISEXPRVALID) /* cExpr */
   hb_retl(bValidExpr != 0);
 }
 
-/* QUESTION: Shouldn't we generate a NOTABLE RTE like in similar functions? [vszakats] */
+// QUESTION: Shouldn't we generate a NOTABLE RTE like in similar functions? [vszakats]
 HB_FUNC(ADSGETNUMINDEXES)
 {
   ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -1842,14 +1837,14 @@ HB_FUNC(ADSGETNUMINDEXES)
   hb_retni(pusCnt);
 }
 
-HB_FUNC(ADSCONNECTION) /* Get/Set func to switch between connections. */
+HB_FUNC(ADSCONNECTION) // Get/Set func to switch between connections.
 {
   HB_ADS_RETCONNECTION(hb_ads_getConnection());
 
   hb_ads_setConnection(HB_ADS_PARCONNECTION(1));
 }
 
-HB_FUNC(ADSISCONNECTIONALIVE) /* Determine if passed or default connection is still valid */
+HB_FUNC(ADSISCONNECTIONALIVE) // Determine if passed or default connection is still valid
 {
 #if ADS_LIB_VERSION >= 800
   UNSIGNED16 bConnectionIsAlive = 0;
@@ -1862,7 +1857,7 @@ HB_FUNC(ADSISCONNECTIONALIVE) /* Determine if passed or default connection is st
 #endif
 }
 
-HB_FUNC(ADSGETHANDLETYPE) /* DD, admin, table */
+HB_FUNC(ADSGETHANDLETYPE) // DD, admin, table
 {
   UNSIGNED16 usType = AE_INVALID_HANDLE;
 
@@ -1870,7 +1865,7 @@ HB_FUNC(ADSGETHANDLETYPE) /* DD, admin, table */
                                                                                            : AE_INVALID_HANDLE);
 }
 
-/* nLastErr := AdsGetLastError([@cLastErr]) */
+// nLastErr := AdsGetLastError([@cLastErr])
 HB_FUNC(ADSGETLASTERROR)
 {
   auto ulLastErr = static_cast<UNSIGNED32>(~AE_SUCCESS);
@@ -1933,11 +1928,9 @@ HB_FUNC(ADSROLLBACK)
   hb_retl(AdsRollbackTransaction(hb_parnl(1) /* hConnect */) == AE_SUCCESS);
 }
 
-/*
-   set the number of records to read ahead, for the current work area
-   Call:    AdsCacheRecords( nRecords )
-   Returns: True if successful
- */
+// set the number of records to read ahead, for the current work area
+// Call:    AdsCacheRecords( nRecords )
+// Returns: True if successful
 HB_FUNC(ADSCACHERECORDS)
 {
   ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -1952,11 +1945,9 @@ HB_FUNC(ADSCACHERECORDS)
   }
 }
 
-/*
-   Reindex all tags of the currently selected table
-   Returns true if successful, false if fails.
-   Error code available by calling AdsGetLastError()
- */
+// Reindex all tags of the currently selected table
+// Returns true if successful, false if fails.
+// Error code available by calling AdsGetLastError()
 HB_FUNC(ADSREINDEX)
 {
   ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -1992,7 +1983,7 @@ HB_FUNC(ADSVERSION)
 
   iPos = static_cast<int>(strlen(szVersion));
   while (--iPos >= 0 && szVersion[iPos] == ' ')
-  { /* remove trailing spaces */
+  { // remove trailing spaces
     szVersion[iPos] = '\0';
   }
 
@@ -2009,7 +2000,7 @@ HB_FUNC(ADSCACHEOPENCURSORS)
   hb_retnl(AdsCacheOpenCursors(static_cast<UNSIGNED16>(hb_parni(1)) /* usOpen */));
 }
 
-/* Use AdsIsEmpty() to determine if the indicated field is NULL for ADTs or empty for DBFs. */
+// Use AdsIsEmpty() to determine if the indicated field is NULL for ADTs or empty for DBFs.
 HB_FUNC(ADSISEMPTY)
 {
   if (HB_ISCHAR(1) || HB_ISNUM(1))
@@ -2068,7 +2059,7 @@ HB_FUNC(ADSISNULL)
   }
 }
 
-HB_FUNC(ADSGETNUMACTIVELINKS) /* Only valid for a DataDict */
+HB_FUNC(ADSGETNUMACTIVELINKS) // Only valid for a DataDict
 {
   UNSIGNED16 pusNumLinks = 0;
 
@@ -2083,7 +2074,7 @@ HB_FUNC(ADSGETNUMACTIVELINKS) /* Only valid for a DataDict */
   hb_retni(pusNumLinks);
 }
 
-/* Please add all-version functions above this block */
+// Please add all-version functions above this block
 
 HB_FUNC(ADSDDCREATEREFINTEGRITY)
 {
@@ -2201,7 +2192,7 @@ HB_FUNC(ADSCONNECT60)
                    reinterpret_cast<UNSIGNED8 *>(const_cast<char *>(hb_parc(4))) /* pucPassword */,
                    static_cast<UNSIGNED32>(hb_parnldef(5, ADS_DEFAULT)) /* ulOptions */, &hConnect) == AE_SUCCESS)
   {
-    hb_ads_setConnection(hConnect); /* set new default */
+    hb_ads_setConnection(hConnect); // set new default
 
     hb_stornint(hConnect, 6);
 
@@ -2270,7 +2261,7 @@ HB_FUNC(ADSDDGETDATABASEPROPERTY)
 
   switch (ulProperty)
   {
-  /* String properties */
+  // String properties
   case ADS_DD_COMMENT:
   case ADS_DD_DEFAULT_TABLE_PATH:
   case ADS_DD_USER_DEFINED_PROP:
@@ -2290,14 +2281,14 @@ HB_FUNC(ADSDDGETDATABASEPROPERTY)
 
     if (AdsDDGetDatabaseProperty(hConnect, ulProperty, static_cast<VOID *>(sBuffer), &ulLength) != AE_SUCCESS)
     {
-      /* TODO: Better error handling. */
+      // TODO: Better error handling.
       sBuffer[0] = '\0';
       ulLength = 0;
     }
     hb_retclen(sBuffer, ulLength);
     break;
   }
-  /* Boolean properties */
+  // Boolean properties
   case ADS_DD_LOG_IN_REQUIRED:
   case ADS_DD_VERIFY_ACCESS_RIGHTS:
   case ADS_DD_ENCRYPT_NEW_TABLE:
@@ -2317,7 +2308,7 @@ HB_FUNC(ADSDDGETDATABASEPROPERTY)
     hb_retl(ulBuffer != 0);
     break;
   }
-  /* Integer properties */
+  // Integer properties
 #if ADS_LIB_VERSION >= 620
   case ADS_DD_VERSION_MAJOR:
   case ADS_DD_VERSION_MINOR: {
@@ -2342,7 +2333,7 @@ HB_FUNC(ADSDDSETDATABASEPROPERTY)
 
   switch (ulProperty)
   {
-  /* String properties (NULL accepted) */
+  // String properties (NULL accepted)
   case ADS_DD_COMMENT:
   case ADS_DD_DEFAULT_TABLE_PATH:
   case ADS_DD_USER_DEFINED_PROP:
@@ -2353,7 +2344,7 @@ HB_FUNC(ADSDDSETDATABASEPROPERTY)
                                         pParam->isString() ? const_cast<char *>(hb_itemGetCPtr(pParam)) : nullptr,
                                         static_cast<UNSIGNED16>(hb_itemGetCLen(pParam)) + 1);
     break;
-    /* String properties (NULL not accepted) */
+    // String properties (NULL not accepted)
 #if ADS_LIB_VERSION >= 710
   case ADS_DD_FTS_DELIMITERS:
   case ADS_DD_FTS_NOISE:
@@ -2364,7 +2355,7 @@ HB_FUNC(ADSDDSETDATABASEPROPERTY)
                                         static_cast<UNSIGNED16>(hb_itemGetCLen(pParam)) + 1);
     break;
 #endif
-    /* Boolean properties */
+    // Boolean properties
 #if ADS_LIB_VERSION >= 600
   case ADS_DD_LOG_IN_REQUIRED:
 #endif
@@ -2386,7 +2377,7 @@ HB_FUNC(ADSDDSETDATABASEPROPERTY)
     ulRetVal = AdsDDSetDatabaseProperty(hConnect, ulProperty, static_cast<VOID *>(&ulBuffer), sizeof(ulBuffer));
     break;
   }
-  /* Integer properties */
+  // Integer properties
 #if ADS_LIB_VERSION >= 610
   case ADS_DD_MAX_FAILED_ATTEMPTS:
   case ADS_DD_INTERNET_SECURITY_LEVEL:
@@ -2440,19 +2431,17 @@ HB_FUNC(ADSDDGETUSERPROPERTY)
 #endif
 }
 
-/*
-   Verify if a username/password combination is valid for this database
-   Call:     AdsTestLogin( cServerPath, nServerTypes, cUserName, cPassword, options,
-                          [nUserProperty, @cBuffer] )
-   Returns:  True if login succeeds
-
-   Notes:    This creates a temporary connection only during the execution of this
-             function, without disturbing the stored one for any existing connection
-
-             If the optional last 3 parameters are supplied, then it queries the
-             requested user property and returns it in the buffer. This is useful
-             for example to get the groups of which the user is a member
- */
+// Verify if a username/password combination is valid for this database
+// Call:     AdsTestLogin( cServerPath, nServerTypes, cUserName, cPassword, options,
+//                        [nUserProperty, @cBuffer] )
+// Returns:  True if login succeeds
+//
+// Notes:    This creates a temporary connection only during the execution of this
+//           function, without disturbing the stored one for any existing connection
+//
+//           If the optional last 3 parameters are supplied, then it queries the
+//           requested user property and returns it in the buffer. This is useful
+//           for example to get the groups of which the user is a member
 HB_FUNC(ADSTESTLOGIN)
 {
 #if ADS_LIB_VERSION >= 600
@@ -2505,11 +2494,11 @@ HB_FUNC(ADSRESTRUCTURETABLE)
 #endif
 }
 
-/* AdsCopyTableContent( szAliasDest [, nAdsFilterOption ] ) --> lSuccess */
+// AdsCopyTableContent( szAliasDest [, nAdsFilterOption ] ) --> lSuccess
 HB_FUNC(ADSCOPYTABLECONTENTS)
 {
 #if ADS_LIB_VERSION >= 600
-  ADSAREAP pArea = hb_adsGetWorkAreaPointer(); /* Source */
+  ADSAREAP pArea = hb_adsGetWorkAreaPointer(); // Source
 
   if (pArea != nullptr)
   {
@@ -2649,7 +2638,7 @@ HB_FUNC(ADSGETSERVERNAME)
     hb_retclen(reinterpret_cast<char *>(buf), usLen);
   }
 #endif
-  /* QUESTION: Design decision or mistake to return NIL on error? [vszakats] */
+  // QUESTION: Design decision or mistake to return NIL on error? [vszakats]
 }
 
 HB_FUNC(ADSCLOSECACHEDTABLES)
@@ -2765,7 +2754,7 @@ HB_FUNC(ADSDDDROPLINK)
   hb_retl(AdsDDDropLink(HB_ADS_PARCONNECTION(1) /* hConnect     */,
                         reinterpret_cast<UNSIGNED8 *>(const_cast<char *>(hb_parcx(2))) /* pucLinkAlias */,
                         static_cast<UNSIGNED16>(hb_parl(3)) /* usDropGlobal */) ==
-          AE_SUCCESS); /* NOTE: Defaults to 0/false for non logical parameters. */
+          AE_SUCCESS); // NOTE: Defaults to 0/false for non logical parameters.
 #else
   hb_retl(false);
 #endif
