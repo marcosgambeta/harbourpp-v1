@@ -196,8 +196,8 @@ static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, 
 static PMIXKEY hb_mixKeyEval(PMIXKEY pKey, PMIXTAG pTag)
 {
   SQLMIXAREAP pArea = pTag->pArea;
-  int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-  PHB_CODEPAGE pCodepage = hb_cdpSelect(pArea->sqlarea.area.cdPage);
+  auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+  auto pCodepage = hb_cdpSelect(pArea->sqlarea.area.cdPage);
 
   if (iCurrArea != pArea->sqlarea.area.uiArea)
   {

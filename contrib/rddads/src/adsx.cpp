@@ -218,8 +218,8 @@ static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USH
 static PMIXKEY mixKeyEval(PMIXTAG pTag, ADSXAREAP pArea)
 {
   PMIXKEY pKey;
-  int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-  PHB_CODEPAGE pCodepage = hb_cdpSelect(pArea->adsarea.area.cdPage);
+  auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+  auto pCodepage = hb_cdpSelect(pArea->adsarea.area.cdPage);
 
   if (iCurrArea != pArea->adsarea.area.uiArea)
   {
@@ -1635,7 +1635,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINF
     break;
 
   case DBOI_KEYVAL: {
-    PHB_CODEPAGE pCodepage = hb_cdpSelect(pArea->adsarea.area.cdPage);
+    auto pCodepage = hb_cdpSelect(pArea->adsarea.area.cdPage);
 
     auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
     hb_cdpSelect(pCodepage);

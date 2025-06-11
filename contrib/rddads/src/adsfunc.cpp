@@ -2513,7 +2513,7 @@ HB_FUNC(ADSCOPYTABLECONTENTS)
 
   if (pArea != nullptr)
   {
-    int iOldArea = hb_rddGetCurrentWorkAreaNumber();
+    auto iOldArea = hb_rddGetCurrentWorkAreaNumber();
 
     if (hb_rddSelectWorkAreaAlias(hb_parcx(1) /* szAliasDest */) == Harbour::SUCCESS)
     {
