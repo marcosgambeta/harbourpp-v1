@@ -64,6 +64,39 @@ For xBase developers, the casting operators used in the Harbour++ source code ar
 The Harbour++ source code use `nullptr` in place of `NULL`, because `nullptr` is safer while `NULL` is ambiguous
 and can result in errors in some contexts.
 
+Info from Google IA:
+
+The nullptr keyword in C++ offers several advantages over using NULL or 0 to represent null pointers:
+
+Type Safety:  
+nullptr has its own type (std::nullptr_t) and cannot be implicitly converted to integral types (except for bool). This prevents accidental type mismatches and errors that can occur with NULL or 0, which are often treated as integers.
+
+Improved Readability:  
+Code using nullptr is more self-explanatory. It clearly indicates the intent to use a null pointer, making the code easier to understand and maintain.
+
+Function Overload Resolution:  
+When passing a null pointer as an argument to overloaded functions, nullptr avoids ambiguity. It ensures the correct overload is called, unlike NULL or 0, which can be interpreted as integers, leading to unexpected behavior. 
+
+Template Specialization:  
+nullptr allows for template specialization, enabling the creation of specific implementations for null pointer cases. This is not possible with NULL or 0.
+
+Compiler Support:  
+Modern compilers provide better diagnostics and error messages when nullptr is used incorrectly, helping developers catch potential issues early in the development process.
+
+Clarity with Auto Variables:  
+nullptr helps avoid ambiguity when using the auto keyword for type deduction. The compiler can correctly deduce the type as a pointer type when nullptr is used.
+
+No Implicit Conversion to Non-Pointer Types:  
+nullptr cannot be unintentionally converted to non-pointer types, reducing the risk of errors.
+
+Consistent Behavior:  
+nullptr ensures consistent behavior when comparing pointers. Comparisons between two nullptr values always behave as expected.
+
+Managed Code Support:  
+nullptr works correctly with both native and managed code, ensuring compatibility in mixed environments.
+
+In summary, nullptr provides a safer, more readable, and less error-prone way to represent null pointers in C++ compared to NULL or 0. It is the recommended approach for modern C++ development.
+
 ## Testing pointers
 
 ```
