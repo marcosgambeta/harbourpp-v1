@@ -113,11 +113,11 @@ constexpr:
 
 Key Differences:  
 
-    \#define is a preprocessor directive, whereas constexpr is a language feature.  
-    \#define performs text substitution, while constexpr performs compile-time evaluation with type checking.  
+    #define is a preprocessor directive, whereas constexpr is a language feature.  
+    #define performs text substitution, while constexpr performs compile-time evaluation with type checking.  
     constexpr is preferred over #define for defining constants due to its safety and type checking.  
-    constexpr functions can be recursive while \#define macros cannot.  
-    \#define can be more flexible in certain contexts, but constexpr is safer and more reliable.  
+    constexpr functions can be recursive while #define macros cannot.  
+    #define can be more flexible in certain contexts, but constexpr is safer and more reliable.  
 
 In summary:  
 constexpr is a modern C++ feature that provides a safer and more reliable alternative to \#define for defining compile-time constants and performing compile-time computations. It is recommended to use constexpr whenever possible to avoid the potential issues associated with \#define.  
