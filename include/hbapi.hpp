@@ -1759,6 +1759,32 @@ extern HB_EXPORT PHB_ITEM hb_hashGetValueAt(PHB_ITEM pHash, HB_SIZE nPos);
 
 extern HB_EXPORT HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos);
 
+#if defined(__cplusplus)
+
+// hash item flags
+constexpr int HB_HASH_AUTOADD_NEVER = 0x00;
+constexpr int HB_HASH_AUTOADD_ACCESS = 0x01;
+constexpr int HB_HASH_AUTOADD_ASSIGN = 0x02;
+constexpr int HB_HASH_AUTOADD_ALWAYS = (HB_HASH_AUTOADD_ACCESS | HB_HASH_AUTOADD_ASSIGN);
+constexpr int HB_HASH_AUTOADD_REFERENCE = HB_HASH_AUTOADD_ALWAYS;
+constexpr int HB_HASH_AUTOADD_MASK = 0x03;
+
+constexpr int HB_HASH_RESORT = 0x08;
+
+constexpr int HB_HASH_IGNORECASE = 0x10;
+constexpr int HB_HASH_BINARY = 0x20;
+constexpr int HB_HASH_KEEPORDER = 0x40;
+
+constexpr int HB_HASH_FLAG_MASK = 0xFFFF;
+constexpr int HB_HASH_FLAG_DEFAULT = (HB_HASH_AUTOADD_ASSIGN | HB_HASH_BINARY | HB_HASH_KEEPORDER);
+
+constexpr int HB_HASH_UNION = 0; // logical OR  on items in two hash tables
+constexpr int HB_HASH_INTERSECT = 1; // logical AND on items in two hash tables
+constexpr int HB_HASH_DIFFERENCE = 2; // logical XOR on items in two hash tables
+constexpr int HB_HASH_REMOVE = 3; // h1 & (h1 ^ h2)
+
+#else
+
 // hash item flags
 #define HB_HASH_AUTOADD_NEVER       0x00
 #define HB_HASH_AUTOADD_ACCESS      0x01
@@ -1780,6 +1806,8 @@ extern HB_EXPORT HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos);
 #define HB_HASH_INTERSECT  1 // logical AND on items in two hash tables
 #define HB_HASH_DIFFERENCE 2 // logical XOR on items in two hash tables
 #define HB_HASH_REMOVE     3 // h1 & (h1 ^ h2)
+
+#endif
 
 // string management
 
