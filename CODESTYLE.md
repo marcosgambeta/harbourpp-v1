@@ -84,6 +84,44 @@ if (p != nullptr)
 
 Whenever possible, the `bool` type (`true` and `false`) is used instead of `HB_BOOL` (`HB TRUE` and `HB_FALSE`).
 
+## \#define vs constexpr
+
+Whenever possible, constexpr is used instead of #define.
+
+Info from Google IA:
+
+Here is a comparison between #define and constexpr:  
+
+\#define:  
+
+    Is a preprocessor directive that performs text substitution before compilation.  
+    Does not perform type checking, making it less safe.  
+    Can be used for various purposes, including conditional compilation and defining constants.  
+    Can lead to unexpected behavior due to its simple text substitution nature.  
+    Macros do not have scope, and they can be replaced anywhere in the code.  
+    It is generally recommended to avoid #define when modern alternatives are available.  
+
+constexpr:  
+
+    Is a keyword that declares a variable or function whose value can be evaluated at compile time.  
+    Provides type safety, as it requires a specific data type.  
+    Can be used to create named compile-time constants.  
+    Can be used for functions that can be evaluated at compile time.  
+    It ensures that the value is determined during the compilation phase.  
+    It can be used in contexts where compile-time constants are required, such as array sizes and template arguments.  
+    constexpr implies const.  
+
+Key Differences:  
+
+    \#define is a preprocessor directive, whereas constexpr is a language feature.  
+    \#define performs text substitution, while constexpr performs compile-time evaluation with type checking.  
+    constexpr is preferred over #define for defining constants due to its safety and type checking.  
+    constexpr functions can be recursive while \#define macros cannot.  
+    \#define can be more flexible in certain contexts, but constexpr is safer and more reliable.  
+
+In summary:  
+constexpr is a modern C++ feature that provides a safer and more reliable alternative to \#define for defining compile-time constants and performing compile-time computations. It is recommended to use constexpr whenever possible to avoid the potential issues associated with \#define.  
+
 ## More info
 
 This document is a work in progress. You can use the section below to discuss about the topics above or related topics:
