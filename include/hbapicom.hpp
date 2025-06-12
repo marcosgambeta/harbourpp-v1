@@ -50,14 +50,29 @@
 
 HB_EXTERN_BEGIN
 
+#if defined(__cplusplus)
+constexpr int HB_COM_PORT_MAX = 256;
+#else
 #define HB_COM_PORT_MAX       256
+#endif
 
+#if defined(__cplusplus)
+constexpr int HB_COM_DEV_NAME_MAX = 64;
+#else
 #define HB_COM_DEV_NAME_MAX   64
+#endif
 
+#if defined(__cplusplus)
+constexpr int HB_COM_ANY = -1;
+constexpr int HB_COM_DISABLED = 0;
+constexpr int HB_COM_ENABLED = 1;
+constexpr int HB_COM_OPEN = 2;
+#else
 #define HB_COM_ANY            -1
 #define HB_COM_DISABLED       0
 #define HB_COM_ENABLED        1
 #define HB_COM_OPEN           2
+#endif
 
 extern HB_EXPORT int hb_comLastNum(void);
 extern HB_EXPORT int hb_comFindPort(const char *pszDevName, HB_BOOL fCreate);
