@@ -58,22 +58,42 @@ HB_EXTERN_BEGIN
 #include "hbgtinfo.ch"
 
 /* maximum length of color string */
+#if defined(__cplusplus)
+constexpr int HB_CLRSTR_LEN = 64;
+#else
 #define HB_CLRSTR_LEN           64
+#endif
 
 /* attributes for color strings, these are the same as the ones in color.ch
    but prefixed with HB_ to avoid collision. */
+#if defined(__cplusplus)
+constexpr int HB_CLR_STANDARD = 0;
+constexpr int HB_CLR_ENHANCED = 1;
+constexpr int HB_CLR_BORDER = 2;
+constexpr int HB_CLR_BACKGROUND = 3;
+constexpr int HB_CLR_UNSELECTED = 4;
+constexpr int HB_CLR_MAX_ = HB_CLR_UNSELECTED;
+#else
 #define HB_CLR_STANDARD         0
 #define HB_CLR_ENHANCED         1
 #define HB_CLR_BORDER           2
 #define HB_CLR_BACKGROUND       3
 #define HB_CLR_UNSELECTED       4
 #define HB_CLR_MAX_             HB_CLR_UNSELECTED
+#endif
 
 /* extended attributes used by core screen buffer */
+#if defined(__cplusplus)
+constexpr HB_BYTE HB_GT_ATTR_BOX = 0x01;
+constexpr HB_BYTE HB_GT_ATTR_SHADOW = 0x02;
+constexpr HB_BYTE HB_GT_ATTR_UNDEF = 0x40;
+constexpr HB_BYTE HB_GT_ATTR_REFRESH = 0x80;
+#else
 #define HB_GT_ATTR_BOX        0x01
 #define HB_GT_ATTR_SHADOW     0x02
 #define HB_GT_ATTR_UNDEF      0x40
 #define HB_GT_ATTR_REFRESH    0x80
+#endif
 
 /* strings for borders (same as box.ch, but defined for use by C) */
 #define _B_SINGLE              "\xDA\xC4\xBF\xB3\xD9\xC4\xC0\xB3"  /* "┌─┐│┘─└│" */
