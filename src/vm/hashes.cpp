@@ -1358,14 +1358,7 @@ PHB_ITEM hb_hashGetDefault(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetDefault(%p)", static_cast<void*>(pHash)));
 #endif
 
-  if (pHash->isHash())
-  {
-    return pHash->hashValue()->pDefault;
-  }
-  else
-  {
-    return nullptr;
-  }
+  return pHash->isHash() ? pHash->hashValue()->pDefault : nullptr;
 }
 
 void hb_hashSetFlags(PHB_ITEM pHash, int iFlags)
