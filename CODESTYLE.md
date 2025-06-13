@@ -64,7 +64,7 @@ For xBase developers, the casting operators used in the Harbour++ source code ar
 The Harbour++ source code use `nullptr` in place of `NULL`, because `nullptr` is safer while `NULL` is ambiguous
 and can result in errors in some contexts.
 
-Info from Google IA:
+Info from Google AI:
 
 The nullptr keyword in C++ offers several advantages over using NULL or 0 to represent null pointers:
 
@@ -121,7 +121,7 @@ Whenever possible, the `bool` type (`true` and `false`) is used instead of `HB_B
 
 Whenever possible, constexpr is used instead of #define.
 
-Info from Google IA:
+Info from Google AI:
 
 Here is a comparison between #define and constexpr:  
 
