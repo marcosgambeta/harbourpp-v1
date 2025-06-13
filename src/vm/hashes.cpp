@@ -1416,12 +1416,5 @@ int hb_hashGetFlags(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetFlags(%p)", static_cast<void*>(pHash)));
 #endif
 
-  if (pHash->isHash())
-  {
-    return pHash->hashValue()->iFlags;
-  }
-  else
-  {
-    return 0;
-  }
+  return pHash->isHash() ? pHash->hashValue()->iFlags : 0;
 }
