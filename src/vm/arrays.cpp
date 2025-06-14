@@ -1821,17 +1821,9 @@ PHB_ITEM hb_arrayFromParams(int iLevel)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  HB_USHORT uiPCount;
 
   HB_ISIZ nBaseOffset = hb_stackBaseProcOffset(iLevel);
-  if (nBaseOffset > 0)
-  {
-    uiPCount = hb_stackItem(nBaseOffset)->symbolParamCnt();
-  }
-  else
-  {
-    uiPCount = 0;
-  }
+  HB_USHORT uiPCount = (nBaseOffset > 0) ? hb_stackItem(nBaseOffset)->symbolParamCnt() : 0;
 
   auto pArray = hb_itemArrayNew(uiPCount);
   for (HB_USHORT uiPos = 1; uiPos <= uiPCount; uiPos++)
