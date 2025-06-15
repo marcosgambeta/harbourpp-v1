@@ -53,9 +53,15 @@ HB_EXTERN_BEGIN
 #define FS_ERROR ( HB_FHANDLE ) F_ERROR
 
 /* File locking flags */
+#if defined(__cplusplus)
+constexpr int FL_LOCK = 0x0000;   /* Lock a region */
+constexpr int FL_UNLOCK = 0x0001;   /* Unlock a region */
+constexpr int FL_MASK = 0x00FF;   /* Mask for lock type */
+#else
 #define FL_LOCK       0x0000   /* Lock a region */
 #define FL_UNLOCK     0x0001   /* Unlock a region */
 #define FL_MASK       0x00FF   /* Mask for lock type */
+#endif
 
 /* Extended file locking flags */
 #define FLX_EXCLUSIVE HB_FLX_EXCLUSIVE  /* Exclusive lock */
