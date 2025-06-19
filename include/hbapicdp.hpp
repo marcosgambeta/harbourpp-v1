@@ -417,12 +417,21 @@ extern HB_EXPORT PHB_CODEPAGE hb_vmCDP(void);
 extern HB_EXPORT void hb_vmSetCDP(PHB_CODEPAGE pCDP);
 
 // character flags
+#if defined(__cplusplus)
+constexpr HB_UCHAR HB_CDP_DIGIT = 0x01;
+constexpr HB_UCHAR HB_CDP_ALPHA = 0x02;
+constexpr HB_UCHAR HB_CDP_LOWER = 0x04;
+constexpr HB_UCHAR HB_CDP_UPPER = 0x08;
+constexpr HB_UCHAR HB_CDP_MULTI1 = 0x10;
+constexpr HB_UCHAR HB_CDP_MULTI2 = 0x20;
+#else
 #define HB_CDP_DIGIT    0x01
 #define HB_CDP_ALPHA    0x02
 #define HB_CDP_LOWER    0x04
 #define HB_CDP_UPPER    0x08
 #define HB_CDP_MULTI1   0x10
 #define HB_CDP_MULTI2   0x20
+#endif
 
 // accented character sorting
 #define HB_CDP_ACSORT_NONE          0     // no special sorting for accented characters
