@@ -49,7 +49,8 @@ static HB_CDP_GET_FUNC(UTF16LE_get)
 {
    HB_SYMBOL_UNUSED(cdp);
 
-   if( *pnIndex + 1 < nLen ) {
+   if( *pnIndex + 1 < nLen )
+   {
       *wc = HB_GET_LE_UINT16(&pSrc[*pnIndex]);
       *pnIndex += 2;
       return true;
@@ -63,7 +64,8 @@ static HB_CDP_PUT_FUNC(UTF16LE_put)
 {
    HB_SYMBOL_UNUSED(cdp);
 
-   if( *pnIndex + 1 < nLen ) {
+   if( *pnIndex + 1 < nLen )
+   {
       HB_PUT_LE_UINT16(&pDst[*pnIndex], wc);
       *pnIndex += 2;
       return true;
@@ -88,18 +90,23 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    cdp->upper = upper = static_cast<HB_UCHAR*>(cdp->buffer) + 0x100;
    cdp->lower = lower = static_cast<HB_UCHAR*>(cdp->buffer) + 0x200;
 
-   for( auto i = 0; i < 0x100; ++i ) {
+   for( auto i = 0; i < 0x100; ++i )
+   {
       flags[i] = 0;
-      if( HB_ISDIGIT(i) ) {
+      if( HB_ISDIGIT(i) )
+      {
          flags[i] |= HB_CDP_DIGIT;
       }
-      if( HB_ISALPHA(i) ) {
+      if( HB_ISALPHA(i) )
+      {
          flags[i] |= HB_CDP_ALPHA;
       }
-      if( HB_ISUPPER(i) ) {
+      if( HB_ISUPPER(i) )
+      {
          flags[i] |= HB_CDP_UPPER;
       }
-      if( HB_ISLOWER(i) ) {
+      if( HB_ISLOWER(i) )
+      {
          flags[i] |= HB_CDP_LOWER;
       }
       upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));

@@ -51,18 +51,22 @@
 static HB_CDP_GET_FUNC(GBK_get)
 {
    *wc = 0;
-   if( *pnIndex < nLen ) {
+   if( *pnIndex < nLen )
+   {
       HB_UCHAR uc = pSrc[(*pnIndex)++];
 
-      if( uc >= (HB_GBK_FIRST >> 8) && uc <= (HB_GBK_LAST >> 8) && *pnIndex < nLen ) {
+      if( uc >= (HB_GBK_FIRST >> 8) && uc <= (HB_GBK_LAST >> 8) && *pnIndex < nLen )
+      {
          *wc = s_gbk_to_ucs16((static_cast<int>(uc) << 8) | static_cast<HB_UCHAR>(pSrc[*pnIndex]) );
-         if( *wc ) {
+         if( *wc )
+         {
             (*pnIndex)++;
             return true;
          }
       }
       *wc = cdp->uniTable->uniCodes[uc];
-      if( *wc == 0 ) {
+      if( *wc == 0 )
+      {
          *wc = uc;
       }
       return true;
@@ -72,21 +76,26 @@ static HB_CDP_GET_FUNC(GBK_get)
 
 static HB_CDP_PUT_FUNC(GBK_put)
 {
-   if( *pnIndex < nLen ) {
+   if( *pnIndex < nLen )
+   {
       HB_USHORT gb18030 = s_ucs16_to_gbk(wc);
 
-      if( gb18030 ) {
-         if( *pnIndex + 1 < nLen ) {
+      if( gb18030 )
+      {
+         if( *pnIndex + 1 < nLen )
+         {
             HB_PUT_BE_UINT16(&pDst[(*pnIndex)], gb18030);
             *pnIndex += 2;
             return true;
          }
       } else {
-         if( cdp->uniTable->uniTrans == nullptr ) {
+         if( cdp->uniTable->uniTrans == nullptr )
+         {
             hb_cdpBuildTransTable(cdp->uniTable);
          }
 
-         if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[wc] ) {
+         if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[wc] )
+         {
             pDst[(*pnIndex)++] = cdp->uniTable->uniTrans[wc];
          } else {
             pDst[(*pnIndex)++] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
@@ -115,18 +124,23 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    cdp->upper = upper = static_cast<HB_UCHAR*>(cdp->buffer) + 0x100;
    cdp->lower = lower = static_cast<HB_UCHAR*>(cdp->buffer) + 0x200;
 
-   for( auto i = 0; i < 0x100; ++i ) {
+   for( auto i = 0; i < 0x100; ++i )
+   {
       flags[i] = 0;
-      if( HB_ISDIGIT(i) ) {
+      if( HB_ISDIGIT(i) )
+      {
          flags[i] |= HB_CDP_DIGIT;
       }
-      if( HB_ISALPHA(i) ) {
+      if( HB_ISALPHA(i) )
+      {
          flags[i] |= HB_CDP_ALPHA;
       }
-      if( HB_ISUPPER(i) ) {
+      if( HB_ISUPPER(i) )
+      {
          flags[i] |= HB_CDP_UPPER;
       }
-      if( HB_ISLOWER(i) ) {
+      if( HB_ISLOWER(i) )
+      {
          flags[i] |= HB_CDP_LOWER;
       }
       upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
@@ -134,10 +148,13 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    }
 
 #if 0
-   for( i = 0; i < 0x10000; ++i ) {
+   for( i = 0; i < 0x10000; ++i )
+   {
       HB_WCHAR wc = s_gbk_to_ucs16(i);
-      if( wc ) {
-         if( i != s_ucs16_to_gbk(wc) ) {
+      if( wc )
+      {
+         if( i != s_ucs16_to_gbk(wc) )
+         {
             printf("irreversible translation: (GBK)%04X -> U+%04X -> (GBK)%04X\r\n", i, wc, s_ucs16_to_gbk(wc));
             fflush(stdout);
          }
