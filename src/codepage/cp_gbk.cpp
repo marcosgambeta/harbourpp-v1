@@ -88,7 +88,9 @@ static HB_CDP_PUT_FUNC(GBK_put)
             *pnIndex += 2;
             return true;
          }
-      } else {
+      }
+      else
+      {
          if( cdp->uniTable->uniTrans == nullptr )
          {
             hb_cdpBuildTransTable(cdp->uniTable);
@@ -97,7 +99,9 @@ static HB_CDP_PUT_FUNC(GBK_put)
          if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[wc] )
          {
             pDst[(*pnIndex)++] = cdp->uniTable->uniTrans[wc];
-         } else {
+         }
+         else
+         {
             pDst[(*pnIndex)++] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
          }
          return true;

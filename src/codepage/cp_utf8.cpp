@@ -178,14 +178,18 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
       if( nLenSecond > nLenFirst )
       {
          iRet = -1;
-      } else if( fExact && nLenSecond < nLenFirst )
+      }
+      else if( fExact && nLenSecond < nLenFirst )
       {
          iRet = 1;
       }
-   } else if( iRet > 0 )
+   }
+   else if( iRet > 0 )
    {
       iRet = 1;
-   } else {
+   }
+   else
+   {
       iRet = -1;
    }
 #endif
@@ -247,7 +251,8 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
       if( nLenSecond > nLenFirst )
       {
          iRet = -1;
-      } else if( fExact && nLenSecond < nLenFirst )
+      }
+      else if( fExact && nLenSecond < nLenFirst )
       {
          iRet = 1;
       }

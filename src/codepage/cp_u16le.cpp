@@ -54,7 +54,9 @@ static HB_CDP_GET_FUNC(UTF16LE_get)
       *wc = HB_GET_LE_UINT16(&pSrc[*pnIndex]);
       *pnIndex += 2;
       return true;
-   } else {
+   }
+   else
+   {
       *wc = 0;
    }
    return false;
