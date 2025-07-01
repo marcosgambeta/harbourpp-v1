@@ -39,7 +39,7 @@ else
          DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui
       endif
       ifeq ($(HB_PLATFORM),win)
-         DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui src/rtl/gtwin src/winapi
+         DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui src/rtl/gtwin
       endif
       ifneq ($(HB_PLATFORM_UNIX),)
          DYNDIRLIST_BASE += src/rtl/gttrm
@@ -65,6 +65,10 @@ else
       endif
       ifneq ($(HB_HAS_ZLIB_LOCAL),)
          DYNDIRLIST_BASE += src/3rd/zlib
+      endif
+
+      ifeq ($(HB_PLATFORM),win)
+         DYNDIRLIST_BASE += src/winapi
       endif
 
       export DYNDIRLIST_BASE
@@ -97,7 +101,7 @@ else
       debug$(HB_COMP_REF)
 
       ifeq ($(HB_PLATFORM),win)
-         DIRS += winapi
+         DIRS += winapi$(HB_COMP_REF)
       endif
 
       ifneq ($(HB_BUILD_DYN),no)
