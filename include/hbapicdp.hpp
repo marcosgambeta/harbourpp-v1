@@ -434,11 +434,19 @@ constexpr HB_UCHAR HB_CDP_MULTI2 = 0x20;
 #endif
 
 // accented character sorting
+#if defined(__cplusplus)
+constexpr unsigned int HB_CDP_ACSORT_NONE = 0; // no special sorting for accented characters
+constexpr unsigned int HB_CDP_ACSORT_EQUAL = 1; // accented characters have the same weight as corresponding unaccented ones
+constexpr unsigned int HB_CDP_ACSORT_INTERLEAVED = 2; // accented characters sort after their unaccented counterparts only
+                                                      // if the unaccented versions of all characters being compared are the
+                                                      // same ( interleaving )
+#else
 #define HB_CDP_ACSORT_NONE          0     // no special sorting for accented characters
 #define HB_CDP_ACSORT_EQUAL         1     // accented characters have the same weight as corresponding unaccented ones
 #define HB_CDP_ACSORT_INTERLEAVED   2     // accented characters sort after their unaccented counterparts only
                                           // if the unaccented versions of all characters being compared are the
                                           // same ( interleaving )
+#endif
 
 // letter case sensitive sorting
 #define HB_CDP_CSSORT_UPLO          0     // upper letters first then lower ones
