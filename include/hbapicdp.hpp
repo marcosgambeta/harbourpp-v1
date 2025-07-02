@@ -464,7 +464,11 @@ constexpr HB_UCHAR HB_CDP_MULTI2 = 0x20;
 // 8 seems to be a little bit redundant and large enough for all encodings.
 // In theory some other encodings may need more bytes but I do not know any
 // one used in practice. [druzus]
+#if defined(__cplusplus)
+constexpr int HB_MAX_CHAR_LEN = 8;
+#else
 #define HB_MAX_CHAR_LEN             8
+#endif
 
 // codepage uses simple binary sorting
 #define HB_CDP_ISBINSORT(cdp)       (((cdp)->type & HB_CDP_TYPE_BINSORT) != 0)
