@@ -449,9 +449,15 @@ constexpr unsigned int HB_CDP_ACSORT_INTERLEAVED = 2; // accented characters sor
 #endif
 
 // letter case sensitive sorting
+#if defined(__cplusplus)
+constexpr unsigned int HB_CDP_CSSORT_UPLO = 0; // upper letters first then lower ones
+constexpr unsigned int HB_CDP_CSSORT_MIXED = 1; // upper and lower letters are mixed
+constexpr unsigned int HB_CDP_CSSORT_IGNORE = 2; // ignore case
+#else
 #define HB_CDP_CSSORT_UPLO          0     // upper letters first then lower ones
 #define HB_CDP_CSSORT_MIXED         1     // upper and lower letters are mixed
 #define HB_CDP_CSSORT_IGNORE        2     // ignore case
+#endif
 
 // byte order
 #define HB_CDP_ENDIAN_NATIVE        0
