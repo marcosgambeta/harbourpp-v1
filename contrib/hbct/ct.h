@@ -51,7 +51,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbapicdp.hpp"
+#include <hbapicdp.hpp>
 #include "hbapierr.hpp"
 #include "error.ch"
 

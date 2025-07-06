@@ -72,7 +72,7 @@
 #include <shellapi.h>
 
 #include <hbgtcore.hpp>
-#include "hbapicdp.hpp"
+#include <hbapicdp.hpp>
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
