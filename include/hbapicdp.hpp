@@ -460,9 +460,15 @@ constexpr unsigned int HB_CDP_CSSORT_IGNORE = 2; // ignore case
 #endif
 
 // byte order
+#if defined(__cplusplus)
+constexpr int HB_CDP_ENDIAN_NATIVE = 0;
+constexpr int HB_CDP_ENDIAN_LITTLE = 1;
+constexpr int HB_CDP_ENDIAN_BIG = 2;
+#else
 #define HB_CDP_ENDIAN_NATIVE        0
 #define HB_CDP_ENDIAN_LITTLE        1
 #define HB_CDP_ENDIAN_BIG           2
+#endif
 
 // codepage types
 #if defined(__cplusplus)
