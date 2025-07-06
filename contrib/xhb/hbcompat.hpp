@@ -49,7 +49,7 @@
 #define HB_COMPAT_H_
 
 #include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 /* xHarbour functions mapped to Harbour ones */
 

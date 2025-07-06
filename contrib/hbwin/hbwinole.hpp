@@ -49,7 +49,7 @@
 #define __HBWINOLE_H
 
 #include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include "hbapicls.hpp"
 #include <hbapierr.hpp>
 #include <hbvm.hpp>

@@ -43,7 +43,7 @@
 // $HB_END_LICENSE$
 
 #include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include "hbapirdd.hpp"
 
 #if defined(HB_OS_WIN)

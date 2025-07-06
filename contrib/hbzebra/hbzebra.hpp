@@ -51,7 +51,7 @@
 #define HB_ZEBRA_H_
 
 #include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 
 #include "hbzebra.ch"

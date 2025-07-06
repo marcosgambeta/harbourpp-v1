@@ -80,7 +80,7 @@
 #include <commdlg.h>
 
 #include <hbapierr.hpp>
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include <hbgtcore.hpp>
 
 #ifndef GRADIENT_FILL_RECT_H

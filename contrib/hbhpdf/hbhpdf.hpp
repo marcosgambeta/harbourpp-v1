@@ -51,7 +51,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 #include "hpdf.h"
 
