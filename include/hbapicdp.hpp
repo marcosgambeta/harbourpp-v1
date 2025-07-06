@@ -465,11 +465,19 @@ constexpr unsigned int HB_CDP_CSSORT_IGNORE = 2; // ignore case
 #define HB_CDP_ENDIAN_BIG           2
 
 // codepage types
+#if defined(__cplusplus)
+constexpr int HB_CDP_TYPE_CUSTOM = 0x0001;
+constexpr int HB_CDP_TYPE_CHARIDX = 0x0002;
+constexpr int HB_CDP_TYPE_CHARUNI = 0x0004;
+constexpr int HB_CDP_TYPE_BINSORT = 0x0008;
+constexpr int HB_CDP_TYPE_UTF8 = 0x0010;
+#else
 #define HB_CDP_TYPE_CUSTOM          0x0001
 #define HB_CDP_TYPE_CHARIDX         0x0002
 #define HB_CDP_TYPE_CHARUNI         0x0004
 #define HB_CDP_TYPE_BINSORT         0x0008
 #define HB_CDP_TYPE_UTF8            0x0010
+#endif
 
 // maximal size of unicode character in 'char' representation for buffers
 // To encode all ISO 10646 Universal Character Set (UCS) values (characters
