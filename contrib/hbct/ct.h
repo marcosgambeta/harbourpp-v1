@@ -52,7 +52,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include <hbapicdp.hpp>
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 #include "error.ch"
 
 #include "ctstr.h"

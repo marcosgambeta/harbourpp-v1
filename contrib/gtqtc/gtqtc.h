@@ -104,7 +104,7 @@
 #include "hbapi.hpp"
 #include <hbgtcore.hpp>
 #include "hbapistr.hpp"
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 #include "hbapiitm.hpp"
 #include <hbvm.hpp>
 #include <hbset.hpp>

@@ -79,7 +79,7 @@
 #include <commctrl.h>
 #include <commdlg.h>
 
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 #include "hbapiitm.hpp"
 #include <hbgtcore.hpp>
 

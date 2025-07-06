@@ -52,7 +52,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 
 #include "hbzebra.ch"
 
