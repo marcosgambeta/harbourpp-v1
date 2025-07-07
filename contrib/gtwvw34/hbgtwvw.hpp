@@ -63,7 +63,7 @@
 #define _WIN32_IE   0x0500
 #endif
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbwapi.hpp"
 #include "hbwinole.hpp"
 

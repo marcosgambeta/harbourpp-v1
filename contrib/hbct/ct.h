@@ -49,7 +49,7 @@
 #ifndef _CT_H
 #define _CT_H  1
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include <hbapiitm.hpp>
 #include <hbapicdp.hpp>
 #include <hbapierr.hpp>

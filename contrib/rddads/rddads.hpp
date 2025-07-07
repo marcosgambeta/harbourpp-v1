@@ -42,7 +42,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include <hbapiitm.hpp>
 #include "hbapirdd.hpp"
 

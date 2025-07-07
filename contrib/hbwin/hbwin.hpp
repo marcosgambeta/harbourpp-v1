@@ -49,7 +49,7 @@
 #ifndef __HBWIN_H
 #define __HBWIN_H
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include <hbwinuni.hpp>
 
 #if defined(HB_OS_WIN)

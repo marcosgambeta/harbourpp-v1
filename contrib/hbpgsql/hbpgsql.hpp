@@ -49,7 +49,7 @@
 #ifndef __HBPGSQL_H
 #define __HBPGSQL_H
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 #include "libpq-fe.h"
 #include "pg_config.h"

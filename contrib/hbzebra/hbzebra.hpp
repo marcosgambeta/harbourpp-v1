@@ -50,7 +50,7 @@
 #ifndef HB_ZEBRA_H_
 #define HB_ZEBRA_H_
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 

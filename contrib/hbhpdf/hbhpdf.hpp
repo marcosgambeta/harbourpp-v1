@@ -49,7 +49,7 @@
 #ifndef __HBHPDF_H
 #define __HBHPDF_H
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbapifs.hpp"
 #include <hbapiitm.hpp>
 

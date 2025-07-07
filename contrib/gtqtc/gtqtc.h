@@ -101,7 +101,7 @@
    #endif
 #endif
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include <hbgtcore.hpp>
 #include "hbapistr.hpp"
 #include <hbapierr.hpp>

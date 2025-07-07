@@ -54,7 +54,7 @@
    #endif
 #endif
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbwapi.hpp"
 #include "hbwinole.hpp"
 
