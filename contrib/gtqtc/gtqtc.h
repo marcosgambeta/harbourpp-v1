@@ -108,7 +108,7 @@
 #include <hbapiitm.hpp>
 #include <hbvm.hpp>
 #include <hbset.hpp>
-#include "inkey.ch"
+#include <inkey.ch>
 #include "hbgfxdef.ch"
 
 #define QTC_KEY_QUEUE_SIZE         4096

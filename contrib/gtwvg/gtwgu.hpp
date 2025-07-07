@@ -78,7 +78,7 @@
 #include <hbapicdp.hpp>
 #include <hbapierr.hpp>
 #include <hbapiitm.hpp>
-#include "inkey.ch"
+#include <inkey.ch>
 #include "error.ch"
 #include <hbvm.hpp>
 #include <hbthread.hpp>

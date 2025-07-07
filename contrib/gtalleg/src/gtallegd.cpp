@@ -58,7 +58,7 @@
 
 #include "ssf.h"
 
-#include "inkey.ch"
+#include <inkey.ch>
 #include "hbgfxdef.ch"
 
 static int s_GtId;
