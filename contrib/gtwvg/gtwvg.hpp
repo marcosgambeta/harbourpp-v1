@@ -69,7 +69,7 @@
 #include <hbapierr.hpp>
 #include <hbapiitm.hpp>
 #include <inkey.ch>
-#include "error.ch"
+#include <error.ch>
 #include <hbvm.hpp>
 #include <hbthread.hpp>
 #include "hbgfxdef.ch"

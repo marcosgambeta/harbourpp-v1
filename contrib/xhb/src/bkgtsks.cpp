@@ -55,7 +55,7 @@
 #include <hbset.hpp>
 #include <hbvm.hpp>
 #include <hbdate.hpp>
-#include "error.ch"
+#include <error.ch>
 
 #if defined(HB_OS_UNIX)
 #if defined(HB_OS_DARWIN)

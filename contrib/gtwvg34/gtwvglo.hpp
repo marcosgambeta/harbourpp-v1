@@ -79,7 +79,7 @@
 #include <hbset.hpp>
 #include <hbinit.hpp>
 #include <inkey.ch>
-#include "error.ch"
+#include <error.ch>
 #include <hbvm.hpp>
 #include <hbthread.hpp>
 #include "hbgfxdef.ch"

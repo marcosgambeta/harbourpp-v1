@@ -25,7 +25,7 @@
 
 #include "directry.ch"
 #include "hbclass.ch"
-#include "error.ch"
+#include <error.ch>
 
 #define I_(x)                 hb_i18n_gettext(x)
 

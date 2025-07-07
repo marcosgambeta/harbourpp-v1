@@ -53,7 +53,7 @@
 #include <hbapiitm.hpp>
 #include <hbapicdp.hpp>
 #include <hbapierr.hpp>
-#include "error.ch"
+#include <error.ch>
 
 #include "ctstr.h"
 #include "ctset.h"
