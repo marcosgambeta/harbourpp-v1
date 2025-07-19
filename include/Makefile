@@ -215,6 +215,7 @@ PRG_HEADERS := \
    winapi_gdiplusimaging.ch \
    winapi_gdipluspixelformats.ch \
    winapi_gdiplustypes.ch \
+   winapi_gl.ch \
    winapi_mmsystem.ch \
    winapi_winbase.ch \
    winapi_windows.ch \

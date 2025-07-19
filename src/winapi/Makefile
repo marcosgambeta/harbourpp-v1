@@ -23,6 +23,7 @@ CPP_SOURCES := \
    winver.cpp \
    gdiplusflat.cpp \
    gdiplusinit.cpp \
+   gl.cpp \
 
 PRG_SOURCES := \
    struct_abc.prg \
