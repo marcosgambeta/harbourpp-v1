@@ -36,6 +36,7 @@
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
+#if 0
 // typedef unsigned int GLenum;
 #define wa_par_GLenum(n) static_cast<GLenum>(hb_parni(n))
 #define wa_ret_GLenum(x) hb_retni(x)
@@ -93,6 +94,7 @@
 #define wa_ret_GLclampd(x) hb_retnd(x)
 
 // typedef void GLvoid;
+#endif
 
 // WINGDIAPI void APIENTRY glAccum(GLenum op,GLfloat value)
 HB_FUNC(WAGLACCUM)

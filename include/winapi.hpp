@@ -354,3 +354,63 @@
 #define wa_vmPushUINT(uMsg)     hb_vmPushInteger(uMsg)
 #define wa_vmPushWPARAM(wParam) hb_vmPushNumInt(wParam)
 #define wa_vmPushLPARAM(lParam) hb_vmPushNumInt(lParam)
+
+// OpenGL
+
+// typedef unsigned int GLenum;
+#define wa_par_GLenum(n) static_cast<GLenum>(hb_parni(n))
+#define wa_ret_GLenum(x) hb_retni(x)
+
+// typedef unsigned char GLboolean;
+#define wa_par_GLboolean(n) static_cast<GLboolean>(hb_parni(n))
+#define wa_ret_GLboolean(x) hb_retni(x)
+
+// typedef unsigned int GLbitfield;
+#define wa_par_GLbitfield(n) static_cast<GLbitfield>(hb_parni(n))
+#define wa_ret_GLbitfield(x) hb_retni(x)
+
+// typedef signed char GLbyte;
+#define wa_par_GLbyte(n) static_cast<GLbyte>(hb_parni(n))
+#define wa_ret_GLbyte(x) hb_retni(x)
+
+// typedef short GLshort;
+#define wa_par_GLshort(n) static_cast<GLshort>(hb_parni(n))
+#define wa_ret_GLshort(x) hb_retni(x)
+
+// typedef int GLint;
+#define wa_par_GLint(n) static_cast<GLint>(hb_parni(n))
+#define wa_ret_GLint(x) hb_retni(x)
+
+// typedef int GLsizei;
+#define wa_par_GLsizei(n) static_cast<GLsizei>(hb_parni(n))
+#define wa_ret_GLsizei(x) hb_retni(x)
+
+// typedef unsigned char GLubyte;
+#define wa_par_GLubyte(n) static_cast<GLubyte>(hb_parni(n))
+#define wa_ret_GLubyte(x) hb_retni(x)
+
+// typedef unsigned short GLushort;
+#define wa_par_GLushort(n) static_cast<GLushort>(hb_parni(n))
+#define wa_ret_GLushort(x) hb_retni(x)
+
+// typedef unsigned int GLuint;
+#define wa_par_GLuint(n) static_cast<GLuint>(hb_parni(n))
+#define wa_ret_GLuint(x) hb_retni(x)
+
+// typedef float GLfloat;
+#define wa_par_GLfloat(n) static_cast<GLfloat>(hb_parnd(n))
+#define wa_ret_GLfloat(x) hb_retnd(x)
+
+// typedef float GLclampf;
+#define wa_par_GLclampf(n) static_cast<GLclampf>(hb_parnd(n))
+#define wa_ret_GLclampf(x) hb_retnd(x)
+
+// typedef double GLdouble;
+#define wa_par_GLdouble(n) static_cast<GLdouble>(hb_parnd(n))
+#define wa_ret_GLdouble(x) hb_retnd(x)
+
+// typedef double GLclampd;
+#define wa_par_GLclampd(n) static_cast<GLclampd>(hb_parnd(n))
+#define wa_ret_GLclampd(x) hb_retnd(x)
+
+// typedef void GLvoid;
