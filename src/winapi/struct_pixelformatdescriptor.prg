@@ -42,9 +42,9 @@ CLASS WAS_PIXELFORMATDESCRIPTOR
    METHOD delete
 
    // WORD nSize
-   ASSIGN nSize(n) INLINE ::setnSize(n)
+   //ASSIGN nSize(n) INLINE ::setnSize(n)
    ACCESS nSize INLINE ::getnSize()
-   METHOD setnSize
+   //METHOD setnSize
    METHOD getnSize
 
    // WORD nVersion
@@ -217,8 +217,10 @@ RETURN
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_NEW)
 {
+  auto obj = new PIXELFORMATDESCRIPTOR();
+  obj->nSize = sizeof(PIXELFORMATDESCRIPTOR);
   auto self = hb_stackSelfItem();
-  hb_objDataPutPtr(self, "_PTR", new PIXELFORMATDESCRIPTOR());
+  hb_objDataPutPtr(self, "_PTR", obj);
   hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
   hb_itemReturn(self);
 }
@@ -238,15 +240,15 @@ HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_DELETE)
 
 // WORD nSize
 
-HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETNSIZE)
-{
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-
-  if (obj != nullptr)
-  {
-    obj->nSize = wa_par_WORD(1);
-  }
-}
+// HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_SETNSIZE)
+// {
+//   auto obj = static_cast<PIXELFORMATDESCRIPTOR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+// 
+//   if (obj != nullptr)
+//   {
+//     obj->nSize = wa_par_WORD(1);
+//   }
+// }
 
 HB_FUNC_STATIC(WAS_PIXELFORMATDESCRIPTOR_GETNSIZE)
 {
