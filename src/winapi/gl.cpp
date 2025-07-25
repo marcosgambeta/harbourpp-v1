@@ -30,6 +30,7 @@
 
 #include <windows.h>
 #include <GL\gl.h>
+#include <vector>
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
@@ -197,12 +198,20 @@ HB_FUNC(WAGLCLEARSTENCIL)
 }
 
 // WINGDIAPI void APIENTRY glClipPlane(GLenum plane,const GLdouble *equation)
-#if 0
 HB_FUNC(WAGLCLIPPLANE)
 {
-  glClipPlane(wa_par_GLenum(1), const GLdouble *equation);
+  std::vector<GLdouble> vec{};
+  auto pArray = hb_param(2, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLdouble>(hb_arrayGetND(pArray, i + 1)));
+    }
+  }
+  glClipPlane(wa_par_GLenum(1), vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3b(GLbyte red,GLbyte green,GLbyte blue)
 HB_FUNC(WAGLCOLOR3B)
@@ -211,12 +220,20 @@ HB_FUNC(WAGLCOLOR3B)
 }
 
 // WINGDIAPI void APIENTRY glColor3bv(const GLbyte *v)
-#if 0
 HB_FUNC(WAGLCOLOR3BV)
 {
-  glColor3bv(const GLbyte *v);
+  std::vector<GLbyte> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLbyte>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  glColor3bv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3d(GLdouble red,GLdouble green,GLdouble blue)
 HB_FUNC(WAGLCOLOR3D)
@@ -225,12 +242,20 @@ HB_FUNC(WAGLCOLOR3D)
 }
 
 // WINGDIAPI void APIENTRY glColor3dv(const GLdouble *v)
-#if 0
 HB_FUNC(WAGLCOLOR3DV)
 {
-  glColor3dv(const GLdouble *v);
+  std::vector<GLdouble> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLdouble>(hb_arrayGetND(pArray, i + 1)));
+    }
+  }
+  glColor3dv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3f(GLfloat red,GLfloat green,GLfloat blue)
 HB_FUNC(WAGLCOLOR3F)
@@ -239,12 +264,20 @@ HB_FUNC(WAGLCOLOR3F)
 }
 
 // WINGDIAPI void APIENTRY glColor3fv(const GLfloat *v)
-#if 0
 HB_FUNC(WAGLCOLOR3FV)
 {
-  glColor3fv(const GLfloat *v);
+  std::vector<GLfloat> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLfloat>(hb_arrayGetND(pArray, i + 1)));
+    }
+  }
+  glColor3fv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3i(GLint red,GLint green,GLint blue)
 HB_FUNC(WAGLCOLOR3I)
@@ -253,12 +286,20 @@ HB_FUNC(WAGLCOLOR3I)
 }
 
 // WINGDIAPI void APIENTRY glColor3iv(const GLint *v)
-#if 0
 HB_FUNC(WAGLCOLOR3IV)
 {
-  glColor3iv(const GLint *v);
+  std::vector<GLint> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLint>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  glColor3iv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3s(GLshort red,GLshort green,GLshort blue)
 HB_FUNC(WAGLCOLOR3S)
@@ -267,12 +308,20 @@ HB_FUNC(WAGLCOLOR3S)
 }
 
 // WINGDIAPI void APIENTRY glColor3sv(const GLshort *v)
-#if 0
 HB_FUNC(WAGLCOLOR3SV)
 {
-  glColor3sv(const GLshort *v);
+  std::vector<GLshort> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLshort>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  glColor3sv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3ub(GLubyte red,GLubyte green,GLubyte blue)
 HB_FUNC(WAGLCOLOR3UB)
@@ -281,12 +330,20 @@ HB_FUNC(WAGLCOLOR3UB)
 }
 
 // WINGDIAPI void APIENTRY glColor3ubv(const GLubyte *v)
-#if 0
 HB_FUNC(WAGLCOLOR3UBV)
 {
-  glColor3ubv(const GLubyte *v);
+  std::vector<GLubyte> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLubyte>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  glColor3ubv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3ui(GLuint red,GLuint green,GLuint blue)
 HB_FUNC(WAGLCOLOR3UI)
@@ -295,12 +352,20 @@ HB_FUNC(WAGLCOLOR3UI)
 }
 
 // WINGDIAPI void APIENTRY glColor3uiv(const GLuint *v)
-#if 0
 HB_FUNC(WAGLCOLOR3UIV)
 {
-  glColor3uiv(const GLuint *v);
+  std::vector<GLuint> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLuint>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  glColor3uiv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor3us(GLushort red,GLushort green,GLushort blue)
 HB_FUNC(WAGLCOLOR3US)
@@ -309,12 +374,20 @@ HB_FUNC(WAGLCOLOR3US)
 }
 
 // WINGDIAPI void APIENTRY glColor3usv(const GLushort *v)
-#if 0
 HB_FUNC(WAGLCOLOR3USV)
 {
-  glColor3usv(const GLushort *v);
+  std::vector<GLushort> vec{};
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  if (pArray != nullptr)
+  {
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for (std::size_t i = 0; i < nLen; i++)
+    {
+      vec.push_back(static_cast<GLushort>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  glColor3usv(vec.data());
 }
-#endif
 
 // WINGDIAPI void APIENTRY glColor4b(GLbyte red,GLbyte green,GLbyte blue,GLbyte alpha)
 HB_FUNC(WAGLCOLOR4B)
