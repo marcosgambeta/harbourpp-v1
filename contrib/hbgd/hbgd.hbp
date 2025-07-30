@@ -14,8 +14,8 @@ hbct.hbc
 -depincpath=gd:/usr/include
 -depincpath=gd:/usr/local/include
 -depincpath=gd:/opt/local/include
--depimplibs=gd:../bin/bgd.dll{!(msvc|mingw)|hbdyn}
--depimplibs=gd:../lib/bgd.lib{(msvc|mingw)&!hbdyn}
+-depimplibs=gd:../bin/libgd.dll{!(msvc|mingw)|hbdyn}
+-depimplibs=gd:../lib/libgd.lib{(msvc|mingw)&!hbdyn}
 
 ${hb_name}.hbx
 
