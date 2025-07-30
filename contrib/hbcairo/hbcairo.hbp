@@ -11,6 +11,7 @@
 -depincpath=cairo:/usr/include/cairo
 -depincpath=cairo:/usr/local/include/cairo
 -depincpath=cairo:/opt/local/include/cairo
+-depimplibs=cairo:../bin/cairo-2.dll
 -depimplibs=cairo:../bin/libcairo-2.dll
 -depimplibd=cairo:cairo
 
