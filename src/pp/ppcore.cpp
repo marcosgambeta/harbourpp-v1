@@ -3222,7 +3222,7 @@ static void hb_pp_defineNew(PHB_PP_STATE pState, PHB_PP_TOKEN pToken, HB_BOOL fD
   }
 }
 
-static HB_BOOL hb_pp_tokenUnQuotedGet(PHB_PP_TOKEN **pTokenPtr, HB_BOOL *pfQuoted, HB_BOOL fFree)
+static bool hb_pp_tokenUnQuotedGet(PHB_PP_TOKEN **pTokenPtr, HB_BOOL *pfQuoted, HB_BOOL fFree)
 {
   PHB_PP_TOKEN pToken = **pTokenPtr;
 
@@ -3258,7 +3258,7 @@ static HB_BOOL hb_pp_tokenUnQuotedGet(PHB_PP_TOKEN **pTokenPtr, HB_BOOL *pfQuote
   return pToken != nullptr;
 }
 
-static HB_BOOL hb_pp_matchMarkerNew(PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr)
+static bool hb_pp_matchMarkerNew(PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr)
 {
   HB_USHORT type = HB_PP_TOKEN_NUL;
   PHB_PP_TOKEN pMarkerId = nullptr, pMTokens = nullptr;
@@ -3421,7 +3421,7 @@ static HB_BOOL hb_pp_matchMarkerNew(PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *p
   return false;
 }
 
-static HB_BOOL hb_pp_matchHasKeywords(PHB_PP_TOKEN pToken)
+static bool hb_pp_matchHasKeywords(PHB_PP_TOKEN pToken)
 {
   /* Now we are strictly Clipper compatible here though the nested
      optional markers which have keywords on deeper levels are not
@@ -3433,7 +3433,7 @@ static HB_BOOL hb_pp_matchHasKeywords(PHB_PP_TOKEN pToken)
   return pToken != nullptr;
 }
 
-static HB_BOOL hb_pp_matchPatternNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr,
+static bool hb_pp_matchPatternNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr,
                                      PHB_PP_TOKEN **pOptional)
 {
   PHB_PP_TOKEN *pLastPtr = nullptr;
@@ -3532,7 +3532,7 @@ static HB_BOOL hb_pp_matchPatternNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPt
   return true;
 }
 
-static HB_BOOL hb_pp_resultMarkerNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr,
+static bool hb_pp_resultMarkerNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr,
                                      HB_BOOL fDump, HB_BOOL fOptional, HB_USHORT *pusPCount, HB_SIZE spaces)
 {
   HB_USHORT type = HB_PP_TOKEN_NUL, rtype;
@@ -3682,7 +3682,7 @@ static HB_BOOL hb_pp_resultMarkerNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPt
   return false;
 }
 
-static HB_BOOL hb_pp_patternCompare(PHB_PP_TOKEN pToken1, PHB_PP_TOKEN pToken2)
+static bool hb_pp_patternCompare(PHB_PP_TOKEN pToken1, PHB_PP_TOKEN pToken2)
 {
   while (pToken1 && pToken2)
   {
