@@ -50,8 +50,8 @@
 src/sqlite3.c
 
 # ORIGIN http://www.sqlite.org/
-# VER    3.50.3
-# URL    https://www.sqlite.org/2025/sqlite-amalgamation-3500300.zip
+# VER    3.50.4
+# URL    https://www.sqlite.org/2025/sqlite-amalgamation-3500400.zip
 # DIFF   sqlite3.diff ( ignored - using original source code )
 #
 # MAP    sqlite3.c
