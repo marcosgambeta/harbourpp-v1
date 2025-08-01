@@ -3222,7 +3222,7 @@ static void hb_pp_defineNew(PHB_PP_STATE pState, PHB_PP_TOKEN pToken, HB_BOOL fD
   }
 }
 
-static bool hb_pp_tokenUnQuotedGet(PHB_PP_TOKEN **pTokenPtr, HB_BOOL *pfQuoted, HB_BOOL fFree)
+static bool hb_pp_tokenUnQuotedGet(PHB_PP_TOKEN **pTokenPtr, bool *pfQuoted, bool fFree)
 {
   PHB_PP_TOKEN pToken = **pTokenPtr;
 
@@ -3262,7 +3262,7 @@ static bool hb_pp_matchMarkerNew(PHB_PP_TOKEN *pTokenPtr, PHB_PP_MARKERLST *pMar
 {
   HB_USHORT type = HB_PP_TOKEN_NUL;
   PHB_PP_TOKEN pMarkerId = nullptr, pMTokens = nullptr;
-  HB_BOOL fQuoted;
+  bool fQuoted;
 
   /* At start pTokenPtr points to '<' token */
 
@@ -3437,7 +3437,7 @@ static bool hb_pp_matchPatternNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPtr, 
                                      PHB_PP_TOKEN **pOptional)
 {
   PHB_PP_TOKEN *pLastPtr = nullptr;
-  HB_BOOL fQuoted = false;
+  bool fQuoted = false;
 
   if (HB_PP_TOKEN_TYPE((*pTokenPtr)->type) == HB_PP_TOKEN_BACKSLASH)
   {
@@ -3537,7 +3537,7 @@ static bool hb_pp_resultMarkerNew(PHB_PP_STATE pState, PHB_PP_TOKEN *pTokenPtr, 
 {
   HB_USHORT type = HB_PP_TOKEN_NUL, rtype;
   PHB_PP_TOKEN pMarkerId = nullptr, pToken;
-  HB_BOOL fQuoted;
+  bool fQuoted;
 
   /* At start pTokenPtr points to '<' token */
   if (hb_pp_tokenUnQuotedGet(&pTokenPtr, &fQuoted, true) && !fQuoted)
@@ -3809,7 +3809,7 @@ static void hb_pp_directiveNew(PHB_PP_STATE pState, PHB_PP_TOKEN pToken, HB_USHO
       if (pResult)
       {
         PHB_PP_TOKEN *pTokenPtr, *pDumpPtr = nullptr, *pOptStart = nullptr;
-        HB_BOOL fQuoted = false;
+        bool fQuoted = false;
 
         if (HB_PP_TOKEN_TYPE(pResult->type) == HB_PP_TOKEN_BACKSLASH)
         {
