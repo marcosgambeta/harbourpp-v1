@@ -128,7 +128,7 @@ static void hb_inetErrRT(void)
   hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-static HB_BOOL hb_inetIsOpen(PHB_SOCKET_STRUCT socket)
+static bool hb_inetIsOpen(PHB_SOCKET_STRUCT socket)
 {
   if (socket->sd == HB_NO_SOCKET)
   {
@@ -150,7 +150,7 @@ static int s_inetGetError(PHB_SOCKET_STRUCT socket)
   return iError;
 }
 
-static HB_BOOL s_inetIsTimeout(PHB_SOCKET_STRUCT socket)
+static bool s_inetIsTimeout(PHB_SOCKET_STRUCT socket)
 {
   return s_inetGetError(socket) == HB_INET_ERR_TIMEOUT;
 }
