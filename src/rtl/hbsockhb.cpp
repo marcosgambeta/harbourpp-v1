@@ -99,7 +99,7 @@
 #include "hbstack.hpp"
 #include "hbsocket.hpp"
 
-static HB_BOOL s_fInit = false;
+static bool s_fInit = false;
 
 /* create new extended socket structure */
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams);
@@ -298,7 +298,7 @@ int hb_sockexRegister(const HB_SOCKET_FILTER *pFilter)
 
 /* helper functions */
 
-static HB_BOOL s_socketaddrParam(int iParam, void **pAddr, unsigned int *puiLen)
+static bool s_socketaddrParam(int iParam, void **pAddr, unsigned int *puiLen)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY);
 
