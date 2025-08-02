@@ -223,7 +223,7 @@ static PHB_ITEM hb_tokenArray(const char *szLine, HB_SIZE nLen, const char *szDe
   return pArray;
 }
 
-static HB_BOOL hb_tokenParam(int iParam, HB_SIZE nSkip, const char **pszLine, HB_SIZE *pnLen, const char **pszDelim,
+static bool hb_tokenParam(int iParam, HB_SIZE nSkip, const char **pszLine, HB_SIZE *pnLen, const char **pszDelim,
                              HB_SIZE *pnDelim, int *piFlags)
 {
   auto szLine = hb_parc(1);
