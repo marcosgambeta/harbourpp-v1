@@ -54,7 +54,7 @@
 #include <hbvm.hpp>
 #include <hbset.hpp>
 #include "hbrddsql.hpp"
-#include "rddsys.ch"
+#include <rddsys.ch>
 #include "hbtrace.hpp"
 
 #define SUPERTABLE (&sqlbaseSuper)

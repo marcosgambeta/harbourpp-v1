@@ -55,7 +55,7 @@
 #include <hbstack.hpp>
 #include <hbdate.hpp>
 
-#include "rddsys.ch"
+#include <rddsys.ch>
 
 #define HARBOUR_MAX_RDD_FILTER_LENGTH 256
 #define MAX_STR_LEN 255

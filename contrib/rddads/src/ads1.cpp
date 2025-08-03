@@ -61,7 +61,7 @@
 #include <hbset.hpp>
 #include <hbstack.hpp>
 
-#include "rddsys.ch"
+#include <rddsys.ch>
 
 static int s_iSetListenerHandle = 0;
 

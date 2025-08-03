@@ -59,7 +59,7 @@
 #include <hbdate.hpp>
 #include <hbset.hpp>
 #include <hbvm.hpp>
-#include "rddsys.ch"
+#include <rddsys.ch>
 
 #include "hbrddsql.hpp"
 

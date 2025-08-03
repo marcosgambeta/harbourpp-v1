@@ -56,7 +56,7 @@
 #include <hbset.hpp>
 #include <hbvm.hpp>
 
-#include "rddsys.ch"
+#include <rddsys.ch>
 
 #ifndef SUPER_ORDDESTROY
 #define SUPER_ORDDESTROY(w, ip) ((*(SUPERTABLE)->orderDestroy)(w, ip))
