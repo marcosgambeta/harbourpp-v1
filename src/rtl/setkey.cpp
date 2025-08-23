@@ -97,7 +97,7 @@ static void hb_setkeyRelease(void *cargo)
 
 static HB_TSD_NEW(s_skData, sizeof(HB_SK_DATA), nullptr, hb_setkeyRelease);
 
-static HB_BOOL sk_testActive(PHB_ITEM pIsActive, int iKeyCode)
+static bool sk_testActive(PHB_ITEM pIsActive, int iKeyCode)
 {
   if (pIsActive)
   {
