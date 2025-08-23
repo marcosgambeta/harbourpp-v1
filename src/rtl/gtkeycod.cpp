@@ -212,7 +212,7 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, PHB_CODEPAGE cdp)
     iKey = '`';
     iFlags |= HB_KF_ALT;
     break;
-  case 299: // Alt + \
+  case 299: /* Alt + \ */
     iKey = '\\';
     iFlags |= HB_KF_ALT;
     break;
