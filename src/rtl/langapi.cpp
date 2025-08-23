@@ -175,7 +175,7 @@ static PHB_LANG_BASE hb_langFindBase(const char *pszID)
   return pBase;
 }
 
-static HB_BOOL hb_langTranslate(const char *szNewId, PHB_LANG lang, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
+static bool hb_langTranslate(const char *szNewId, PHB_LANG lang, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
   if (!szNewId || *szNewId == 0 || !lang || !cdpIn || !cdpOut || cdpIn == cdpOut)
   {
