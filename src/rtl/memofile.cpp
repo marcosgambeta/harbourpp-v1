@@ -95,7 +95,7 @@ HB_FUNC(MEMOREAD)
   hb_memoread(true);
 }
 
-static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
+static bool hb_memowrit(bool bHandleEOF)
 {
   auto pszFileName = hb_parc(1);
   auto pString = hb_param(2, Harbour::Item::STRING);
