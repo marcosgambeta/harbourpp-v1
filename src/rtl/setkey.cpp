@@ -45,11 +45,9 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/*
-   Either way you have to clean up the memory on exit. The best way to
-   do this is to add a hb_setkeyInit() and hb_setkeyExit() function
-   and call them from console.c Init/Exit functions.
- */
+// Either way you have to clean up the memory on exit. The best way to
+// do this is to add a hb_setkeyInit() and hb_setkeyExit() function
+// and call them from console.c Init/Exit functions.
 
 #include "hbapi.hpp"
 #include "hbvm.hpp"
@@ -161,14 +159,14 @@ static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB_I
     }
     else
     {
-      /* Return the previous value */
+      // Return the previous value
 
       if (bReturn)
       {
         hb_itemReturn(sk_list_tmp->pAction);
       }
 
-      /* Free the previous values */
+      // Free the previous values
 
       hb_itemRelease(sk_list_tmp->pAction);
       if (sk_list_tmp->pIsActive)
@@ -176,7 +174,7 @@ static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB_I
         hb_itemRelease(sk_list_tmp->pIsActive);
       }
 
-      /* Set the new values or free the entry */
+      // Set the new values or free the entry
 
       if (pAction)
       {
@@ -185,7 +183,7 @@ static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB_I
       }
       else
       {
-        /* if this is true, then the key found is the first key in the list */
+        // if this is true, then the key found is the first key in the list
         if (sk_list_end == nullptr)
         {
           sk_list_tmp = *sk_list_ptr;
@@ -212,10 +210,10 @@ HB_FUNC(SETKEY)
 
     if (hb_pcount() == 1)
     {
-      /* Get a SETKEY value */
+      // Get a SETKEY value
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
-      /* sk_list_end is not used in this context */
+      // sk_list_end is not used in this context
       sk_list_tmp = sk_findkey(iKeyCode, sk_data->sk_list, &sk_list_end);
 
       if (sk_list_tmp)
@@ -225,7 +223,7 @@ HB_FUNC(SETKEY)
     }
     else
     {
-      /* Set a SETKEY value */
+      // Set a SETKEY value
       sk_add(&sk_data->sk_list, true, iKeyCode, hb_param(2, Harbour::Item::EVALITEM), nullptr);
     }
   }
@@ -241,10 +239,10 @@ HB_FUNC(HB_SETKEY)
 
     if (hb_pcount() == 1)
     {
-      /* Get a SETKEY value */
+      // Get a SETKEY value
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
-      /* sk_list_end is not used in this context */
+      // sk_list_end is not used in this context
       sk_list_tmp = sk_findkey(iKeyCode, sk_data->sk_list, &sk_list_end);
       if (sk_list_tmp == nullptr)
       {
@@ -267,14 +265,14 @@ HB_FUNC(HB_SETKEY)
     }
     else
     {
-      /* Set a SETKEY value */
+      // Set a SETKEY value
       sk_add(&sk_data->sk_list, true, iKeyCode, hb_param(2, Harbour::Item::EVALITEM),
              hb_param(3, Harbour::Item::EVALITEM));
     }
   }
 }
 
-/* Sets the same block for an array of keycodes */
+// Sets the same block for an array of keycodes
 
 HB_FUNC(HB_SETKEYARRAY)
 {
@@ -304,7 +302,7 @@ HB_FUNC(HB_SETKEYGET)
     auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
     PHB_SETKEY sk_list_tmp, sk_list_end;
 
-    /* sk_list_end is not used in this context */
+    // sk_list_end is not used in this context
     sk_list_tmp = sk_findkey(pKeyCode->getNI(), sk_data->sk_list, &sk_list_end);
 
     if (sk_list_tmp)
@@ -325,9 +323,9 @@ HB_FUNC(HB_SETKEYSAVE)
   PHB_SETKEY sk_list_tmp;
   HB_SIZE nItemCount, nItem;
 
-  /* build an multi-dimensional array from existing hot-keys, and return it */
+  // build an multi-dimensional array from existing hot-keys, and return it
 
-  /* count the number of items in the list */
+  // count the number of items in the list
   for (nItemCount = 0, sk_list_tmp = sk_data->sk_list; sk_list_tmp; nItemCount++, sk_list_tmp = sk_list_tmp->next)
   {
     ;
@@ -353,7 +351,7 @@ HB_FUNC(HB_SETKEYSAVE)
   auto pParam = hb_param(1, Harbour::Item::ANY);
   if (pParam)
   {
-    hb_setkeyRelease(sk_data); /* destroy the internal list */
+    hb_setkeyRelease(sk_data); // destroy the internal list
 
     if (pParam->isArray())
     {
@@ -380,7 +378,7 @@ HB_FUNC(HB_SETKEYCHECK)
     auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
     PHB_SETKEY sk_list_tmp, sk_list_end;
 
-    /* sk_list_end is not used in this context */
+    // sk_list_end is not used in this context
     sk_list_tmp = sk_findkey(iKeyCode, sk_data->sk_list, &sk_list_end);
     if (sk_list_tmp == nullptr)
     {
