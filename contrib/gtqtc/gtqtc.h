@@ -353,6 +353,7 @@ struct HB_GTQTC
    bool        fFullScreen;                  // enable/disable fullscreen mode
    bool        fSelectCopy;                  // allow marking texts by mouse left button with shift
    bool        fMsgAlert;                    // redirect Alert() calls to QMessageBox
+   bool        fNoFrame;                     // disable window title and frames
    bool        fRepaint;                     // force internal image repainting
 
    int         iResizeMode;                  // Sets the resizing mode either to FONT or ROWS

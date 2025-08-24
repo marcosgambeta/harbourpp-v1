@@ -2333,16 +2333,50 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_WINTITLE:
-         pInfo->pResult = hb_gt_qtc_itemPutQString(pInfo->pResult, pQTC->wndTitle);
-         if (pInfo->pNewVal && pInfo->pNewVal->isString())
-         {
+        pInfo->pResult = hb_gt_qtc_itemPutQString(pInfo->pResult, pQTC->wndTitle);
+        if (pInfo->pNewVal)
+        {
+          if (HB_IS_STRING(pInfo->pNewVal))
+          {
             hb_gt_qtc_itemGetQString(pInfo->pNewVal, pQTC->wndTitle);
             if (pQTC->qWnd)
             {
-               pQTC->qWnd->setWindowTitle(*pQTC->wndTitle);
+              pQTC->qWnd->setWindowTitle(*pQTC->wndTitle);
             }
-         }
-         break;
+          }
+          else if (HB_IS_LOGICAL(pInfo->pNewVal))
+          {
+            pQTC->fNoFrame = hb_itemGetL(pInfo->pNewVal);
+            if (pQTC->qWnd)
+            {
+              Qt::WindowFlags flags = Qt::CustomizeWindowHint;
+
+              if (pQTC->fNoFrame)
+              {
+                hb_gt_qtc_setWindowFlags(pQTC, /*Qt::WindowTitleHint |
+                                               Qt::WindowSystemMenuHint |*/
+                                               Qt::WindowMinimizeButtonHint |
+                                               Qt::WindowMaximizeButtonHint |
+                                               Qt::WindowCloseButtonHint, false);
+                flags |= Qt::FramelessWindowHint;
+              }
+              else
+              {
+                if (pQTC->iCloseMode < 2)
+                {
+                   flags |= Qt::WindowCloseButtonHint;
+                }
+                if (pQTC->fResizable)
+                {
+                   flags |= Qt::WindowMaximizeButtonHint;
+                }
+                flags |= Qt::WindowMinimizeButtonHint;
+              }
+              hb_gt_qtc_setWindowFlags(pQTC, flags, pQTC->fNoFrame);
+            }
+          }
+        }
+        break;
 
       case HB_GTI_ICONFILE:
          if (pInfo->pNewVal && pInfo->pNewVal->isString())
@@ -4052,48 +4086,60 @@ void QTConsole::keyPressEvent(QKeyEvent * evt)
 
 QTCWindow::QTCWindow(PHB_GTQTC pQTC)
 {
-   Qt::WindowFlags flags = (windowFlags() & Qt::WindowType_Mask) | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::Window;
-   if (pQTC->iCloseMode < 2)
-   {
+  Qt::WindowFlags flags = (windowFlags() & Qt::WindowType_Mask) |
+                           Qt::CustomizeWindowHint              |
+                           Qt::Window;
+  if (pQTC->fNoFrame)
+  {
+    flags |= Qt::FramelessWindowHint;
+  }
+  else
+  {
+    if (pQTC->iCloseMode < 2)
+    {
       flags |= Qt::WindowCloseButtonHint;
-   }
-   if (pQTC->fResizable)
-   {
+    }
+    if (pQTC->fResizable)
+    {
       flags |= Qt::WindowMaximizeButtonHint;
-   }
+    }
+    flags |= Qt::WindowMinimizeButtonHint |
+             Qt::WindowSystemMenuHint |
+             Qt::WindowTitleHint;
+  }
 
-   setWindowFlags(flags);
+  setWindowFlags(flags);
 
-   // set default size used when leaving initial
-   // fullscreen or maximized mode [druzus]
-   resize(pQTC->cellX * pQTC->iCols, pQTC->cellY * pQTC->iRows);
+  // set default size used when leaving initial
+  // fullscreen or maximized mode [druzus]
+  resize(pQTC->cellX * pQTC->iCols, pQTC->cellY * pQTC->iRows);
 
-   if (pQTC->fFullScreen)
-   {
-      setWindowState(windowState() | Qt::WindowFullScreen);
-   }
-   else if (pQTC->fMaximized)
-   {
-      setWindowState(windowState() | Qt::WindowMaximized);
-   }
-   else if (pQTC->fMinimized)
-   {
-      setWindowState(windowState() | Qt::WindowMinimized);
-   }
+  if (pQTC->fFullScreen)
+  {
+    setWindowState(windowState() | Qt::WindowFullScreen);
+  }
+  else if (pQTC->fMaximized)
+  {
+    setWindowState(windowState() | Qt::WindowMaximized);
+  }
+  else if (pQTC->fMinimized)
+  {
+    setWindowState(windowState() | Qt::WindowMinimized);
+  }
 
-   if (pQTC->qIcon)
-   {
-      setWindowIcon(*pQTC->qIcon);
-   }
-   setWindowTitle(*pQTC->wndTitle);
+  if (pQTC->qIcon)
+  {
+    setWindowIcon(*pQTC->qIcon);
+  }
+  setWindowTitle(*pQTC->wndTitle);
 
-   qConsole = new QTConsole(pQTC);
-   setCentralWidget(qConsole);
-   setFocusProxy(qConsole);
-   setFocusPolicy(Qt::StrongFocus);
-   // In windows it helps to keep focus in fullscreen or maximized
-   // windows [druzus]
-   setFocus(Qt::OtherFocusReason);
+  qConsole = new QTConsole(pQTC);
+  setCentralWidget(qConsole);
+  setFocusProxy(qConsole);
+  setFocusPolicy(Qt::StrongFocus);
+  // In windows it helps to keep focus in fullscreen or maximized
+  // windows [druzus]
+  setFocus(Qt::OtherFocusReason);
 }
 
 QTCWindow::~QTCWindow()
