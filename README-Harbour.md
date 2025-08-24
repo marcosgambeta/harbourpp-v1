@@ -1,4 +1,4 @@
-# Welcome to Harbour [![Build Status](https://travis-ci.org/harbour/core.png)](https://travis-ci.org/harbour/core)
+# Welcome to Harbour [![linux-ci](https://github.com/harbour/core/actions/workflows/linux-ci.yml/badge.svg)](https://github.com/harbour/core/actions/workflows/linux-ci.yml) [![windows-ci](https://github.com/harbour/core/actions/workflows/windows-ci.yml/badge.svg)](https://github.com/harbour/core/actions/workflows/windows-ci.yml) [![macos-ci](https://github.com/harbour/core/actions/workflows/macos-ci.yml/badge.svg)](https://github.com/harbour/core/actions/workflows/macos-ci.yml) [![vm1-ci](https://github.com/harbour/core/actions/workflows/vm1-ci.yml/badge.svg)](https://github.com/harbour/core/actions/workflows/vm1-ci.yml) [![vm2-ci](https://github.com/harbour/core/actions/workflows/vm2-ci.yml/badge.svg)](https://github.com/harbour/core/actions/workflows/vm2-ci.yml)
 
 Harbour is the free software implementation of a multi-platform,
 multi-threading, object-oriented, scriptable programming language,
@@ -495,7 +495,6 @@ the build. Make sure to adjust them to your own directories:
     HB_WITH_QT=C:\Qt\include (version 4.5.0 or upper is required)
     HB_WITH_SLANG= (on *nix systems)
     HB_WITH_SQLITE3=C:\sqlite3 (defaults to locally hosted version if not found)
-    HB_WITH_TIFF=C:\libtiff (defaults to locally hosted version if not found)
     HB_WITH_TINYMT=C:\tinymt\tinymt (defaults to locally hosted version)
     HB_WITH_WATT= (on MS-DOS systems)
     HB_WITH_X11= (on *nix systems)
@@ -835,7 +834,7 @@ sensitive.
 
    - `HB_CCPREFIX=[<prefix>]`
 
-     Used with gcc compiler family to specify
+     Used with gcc or clang compiler family to specify
      compiler/linker/archive tool name prefix.
 
    - `HB_CCSUFFIX=[<suffix>]`
@@ -1227,6 +1226,53 @@ call "%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_ia64
 win-make
 ```
 
+```batchfile
+rem MSVC 2022 targeting ARM64
+rem (requires preceding build for native target)
+call "%ProgramFiles(x86)%\Microsoft Visual Studio 17.10\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64
+win-make
+```
+
+```batchfile
+rem Clang distributed by Visual Studio
+set PATH="%ProgramFiles(x86)%\Microsoft Visual Studio 17.10\BuildTools\VC\Tools\Llvm\x64\bin";%PATH%
+win-make
+```
+
+```batchfile
+rem Clang from winlibs.com
+set PATH=C:\winlibs\mingw64\bin;%PATH%
+set HB_COMPILER=clang
+win-make
+```
+
+```batchfile
+rem Clang x86_64 distributed by MSYS2 from cmd
+set PATH=C:\msys64\clang64\bin;%PATH%
+win-make
+```
+
+## on Windows ARM64 hosts
+
+```batchfile
+rem MSVC 2022 for ARM64
+call "%ProgramFiles(x86)%\Microsoft Visual Studio 17.10\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" arm64
+rem set HB_COMPILER=msvcarm64 (may be needed if Clang is also in resulting PATH)
+win-make
+```
+
+```batchfile
+rem Clang/MS ARM64
+set PATH=%ProgramFiles%\Microsoft Visual Studio 17.10\BuildTools\VC\Tools\Llvm\ARM64\bin;%PATH%
+win-make
+```
+
+```batchfile
+rem Clang/MSYS ARM64 called from cmd
+set PATH=C:\msys64\clangarm64\bin;%PATH%
+win-make
+```
+
 ## on MS-DOS hosts
 
 ```batchfile
@@ -1573,15 +1619,16 @@ mailing list.
 * sunpro   - Sun Studio C/C++
 
 ### win
-* mingw    - MinGW GNU C 3.4.2 and above
-* mingw64  - MinGW GNU C x86-64
-* msvc     - Microsoft Visual C++
-* msvc64   - Microsoft Visual C++ x86-64
-* msvcia64 - Microsoft Visual C++ IA-64 (Itanium)
+* mingw      - MinGW GNU C 3.4.2 and above
+* mingw64    - MinGW GNU C x86-64
+* msvc       - Microsoft Visual C++
+* msvc64     - Microsoft Visual C++ x86-64
+* msvcarm    - Microsoft Visual C++ ARM
+* msvcarm64  - Microsoft Visual C++ ARM64
+* msvcia64   - Microsoft Visual C++ IA-64 (Itanium)
+* clang      - Clang (various flavours supported)
 
 ### win (partial support, some features may be missing)
-
-* clang    - Clang
 * watcom   - Open Watcom C/C++
 * bcc      - Borland/CodeGear/Embarcadero C++ 4.x and above
 * bcc64    - Embarcadero C++ 6.5 and above
@@ -1613,6 +1660,7 @@ mailing list.
  :---- | :------- | :---------------- | :---------------------------------------
        | win      | win/bcc           | x86
        | win      | win/bcc64         | x86-64
+       | win      | win/clang         | (CPU cross-builds possible: x86, x86-64, arm64)
        | win      | win/gcc           | x86
        | win      | win/global        | x86
        | win      | win/icc           | x86
@@ -1622,6 +1670,8 @@ mailing list.
        | win      | win/mingw64       | x86-64
        | win      | win/msvc          | x86
        | win      | win/msvc64        | x86-64
+       | win      | win/msvcarm       | arm
+       | win      | win/msvcarm64     | arm64
        | win      | win/msvcia64      | ia64
        | win      | win/pocc          | x86
        | win      | win/pocc64        | x86-64
@@ -1831,8 +1881,6 @@ Supported shells per host platforms:
         * <https://download.qt-project.org/official_releases/qt/>
      * HB_WITH_SQLITE3 - sqlite3 [multiplatform, free, open-source]
         * <https://www.sqlite.org/>
-     * HB_WITH_TIFF - libtiff [multiplatform, free, open-source]
-        * <http://www.libtiff.org/>
      * HB_WITH_TINYMT - TinyMT (Mersenne Twister) [multiplatform, free, open-source]
         * <http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/TINYMT/>
      * HB_WITH_WATT - Watt-32 (TCP/IP sockets) [dos, free, open-source]
@@ -1847,7 +1895,7 @@ Supported shells per host platforms:
         * Search for `w95ws2setup.exe`
             (required for Win95 support to run applications built with Harbour)
      * Windows UNICOWS .dll [win, free, closed-source]
-        * <https://go.microsoft.com/fwlink/?LinkId=14851>
+        * (via web.archive.org)[https://web.archive.org/web/20130305122340/http://download.microsoft.com/download/b/7/5/b75eace3-00e2-4aa0-9a6f-0b6882c71642/unicows.exe]
             (required for Win9x/ME support to run applications built with Harbour in UNICODE mode)
      * Windows UNICOWS runtime/import library [win, free, open-source]
         * <http://libunicows.sourceforge.net/>
@@ -1856,34 +1904,32 @@ Supported shells per host platforms:
 * Tools:
 
      * Git (1.7 or upper) [multiplatform, free, open-source]
-        * <http://git-scm.com/>
-        * <https://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git> (Windows binaries)
-     * GitHub Client [multiplatform, free]
-        * <http://windows.github.com/>
-        * <http://mac.github.com/>
+        * <https://git-scm.com/>
+     * GitHub Desktop Client [multiplatform, free]
+        * <https://github.com/apps/desktop>
      * GNU Bison (grammer paser generator) [multiplatform, free, open-source]
         * Windows binary:
-           * <http://gnuwin32.sourceforge.net/packages/bison.htm>
+           * <https://gnuwin32.sourceforge.net/packages/bison.htm>
                (not verified with current Harbour version)
      * Valgrind (dynamic executable analysis tool) [linux, darwin-x86, free, open-source]
-        * <http://valgrind.org/>
+        * <https://valgrind.org/>
      * ack (programmer grep) [multiplatform, free, open-source]
-        * <http://beyondgrep.com/>
+        * <https://beyondgrep.com/>
      * Uncrustify (source formatter) [multiplatform, free, open-source]
-        * <http://uncrustify.sourceforge.net/>
+        * <https://uncrustify.sourceforge.net/>
      * UPX (executable compressor) [win, dos, *nix, free, open-source]
-        * <http://upx.sourceforge.net/>
+        * <https://upx.sourceforge.net/>
      * Nullsoft Installer [win, free, open-source]
-        * <http://nsis.sourceforge.net/>
+        * <https://nsis.sourceforge.net/>
      * 7-Zip [multiplatform, free, open-source]
-        * <http://www.7-zip.org/>
+        * <https://www.7-zip.org/>
      * Info-ZIP [multiplatform, free, open-source]
         * <http://www.info-zip.org/>
      * bzip2 [multiplatform, free, open-source]
          Windows binary:
-           * <http://www.bzip.org/downloads.html>
+           * <https://gnuwin32.sourceforge.net/packages/bzip2.htm>
      * Chocolatey (Windows package manager) [free, open-source]
-        * <http://chocolatey.org/>
+        * <https://chocolatey.org/>
      * GNU Make
 
         Windows binary + source:
@@ -1929,8 +1975,8 @@ Supported shells per host platforms:
 
      * [Netiquette Guidelines](http://tools.ietf.org/html/rfc1855)
      * [Setting up Git](https://help.github.com/articles/set-up-git)
-     * [Git book](http://git-scm.com/book) [free]
-     * [Git crash course for Subversion users](http://git.or.cz/course/svn.html)
+     * [Git book](https://git-scm.com/book/en/v2) [free]
+     * [Git crash course for Subversion users](https://web.archive.org/web/20220520212103/http://git.or.cz/course/svn.html)
      * Using gettext (.po files)
        * <http://help.transifex.com/features/formats.html#po-files>
        * <http://www.heiner-eichmann.de/autotools/using_gettext.html>
@@ -1950,7 +1996,7 @@ Supported shells per host platforms:
      * [ChangeLog](ChangeLog.txt?raw=true)
      * Comparing [Harbour to xHarbour](doc/xhb-diff.txt?raw=true)
      * CA-Cl*pper 5.3 [online documentation](http://x-hacker.org/ng/53guide/)
-     * Harbour [online documentation](http://harbour.github.io/doc/)
+     * Harbour [online documentation](https://harbour.github.io/doc/)
      * Harbour [internal documents](doc/)
      * [Wikipedia](https://en.wikipedia.org/wiki/Harbour_compiler)
 

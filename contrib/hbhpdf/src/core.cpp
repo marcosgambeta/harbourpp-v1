@@ -257,6 +257,17 @@ HB_FUNC(HPDF_GETCURRENTPAGE)
   hb_retptr(static_cast<void *>(HPDF_GetCurrentPage(hb_HPDF_Doc_par(1))));
 }
 
+/* HPDF_GetPageByIndex( hDoc, nIndex ) --> hPage / NIL */
+HB_FUNC(HPDF_GETPAGEBYINDEX)
+{
+  void *pPage = static_cast<void *>(HPDF_GetPageByIndex(hb_HPDF_Doc_par(1), static_cast<HPDF_UINT>(hb_parni(2))));
+
+  if (pPage)
+  {
+    hb_retptr(pPage);
+  }
+}
+
 /* HPDF_AddPage( hDoc ) --> hPage */
 HB_FUNC(HPDF_ADDPAGE)
 {
