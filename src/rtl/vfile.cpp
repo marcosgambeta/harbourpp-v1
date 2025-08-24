@@ -983,3 +983,20 @@ HB_FUNC(HB_VFLOAD)
     hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
+
+/* hb_vfSave(  <cFileName>, <cFileBody> ) --> <lOK> */
+HB_FUNC(HB_VFSAVE)
+{
+  auto pszFileName = hb_parc(1);
+  auto pszFileBody = hb_parc(2);
+
+  if (pszFileName && pszFileBody)
+  {
+    hb_retl(hb_fileSave(pszFileName, pszFileBody, hb_parclen(2)));
+    hb_fsSetFError(hb_fsError());
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
+}

@@ -1699,3 +1699,31 @@ HB_BYTE *hb_fileLoad(const char *pszFileName, HB_SIZE nMaxSize, HB_SIZE *pnSize)
 
   return pFileBuf;
 }
+
+HB_BOOL hb_fileSave(const char *pszFileName, const void *buffer, HB_SIZE nSize)
+{
+  bool fResult = false;
+  PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr,
+                                  FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE |
+                                  FXO_TRUNCATE | FXO_SHARELOCK,
+                                  nullptr, nullptr);
+  if (pFile != nullptr)
+  {
+    const HB_BYTE *pData = static_cast<const HB_BYTE *>(buffer);
+
+    while (nSize > 0)
+    {
+      HB_SIZE nWritten = hb_fileWrite(pFile, pData, nSize, 0);
+      if (nWritten == 0 || nWritten == static_cast<HB_SIZE>(FS_ERROR))
+      {
+        break;
+      }
+      nSize -= nWritten;
+      pData += nWritten;
+    }
+    fResult = nSize == 0;
+
+    hb_fileClose(pFile);
+  }
+  return fResult;
+}
