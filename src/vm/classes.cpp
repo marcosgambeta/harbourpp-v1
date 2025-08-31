@@ -3135,9 +3135,9 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
 // the same name when executed from a given class message HB_OO_CLSTP_OVERLOADED   1024 : message overload NONVIRTUAL
 // one HB_OO_CLSTP_SYNC         2048 : message synchronized by object or class mutex
 //
-// <pFunction> HB_OO_MSG_METHOD     : \
-//             HB_OO_MSG_ONERROR    :  > Pointer to function
-//             HB_OO_MSG_DESTRUCTOR : /
+// <pFunction> HB_OO_MSG_METHOD     : /* \                      */
+//             HB_OO_MSG_ONERROR    : /*  > Pointer to function */
+//             HB_OO_MSG_DESTRUCTOR : /* /                      */
 //             HB_OO_MSG_INLINE     : Code block
 //             HB_OO_MSG_ASSIGN     :  Index to instance area array 1 based (without offset)
 //             HB_OO_MSG_ACCESS     : /
@@ -3613,16 +3613,16 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
 //
 // <hClass>    Class handle
 // <cMessage>  Message
-// <pFunction> HB_OO_MSG_METHOD     : \
-//             HB_OO_MSG_ONERROR    :  > Pointer to function
-//             HB_OO_MSG_DESTRUCTOR : /
+// <pFunction> HB_OO_MSG_METHOD     : /* \                      */
+//             HB_OO_MSG_ONERROR    : /*  > Pointer to function */
+//             HB_OO_MSG_DESTRUCTOR : /* /                      */
 //             HB_OO_MSG_INLINE     : Code block
-//             HB_OO_MSG_DATA       : \
-//             HB_OO_MSG_ASSIGN     :  > Index to instance area array
-//             HB_OO_MSG_ACCESS     : /
-//             HB_OO_MSG_CLASSDATA  : \
-//             HB_OO_MSG_CLSASSIGN  :  > Index class data array
-//             HB_OO_MSG_CLSACCESS  : /
+//             HB_OO_MSG_DATA       : /* \                               */
+//             HB_OO_MSG_ASSIGN     : /*  > Index to instance area array */
+//             HB_OO_MSG_ACCESS     : /* /                               */
+//             HB_OO_MSG_CLASSDATA  : /* \                         */
+//             HB_OO_MSG_CLSASSIGN  : /*  > Index class data array */
+//             HB_OO_MSG_CLSACCESS  : /* /                         */
 //             HB_OO_MSG_SUPER      : Handle of super class
 //             HB_OO_MSG_DELEGATE   : delegated message symbol
 //
@@ -3632,9 +3632,9 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
 //             HB_OO_MSG_VIRTUAL    : virtual message
 //             HB_OO_MSG_DELEGATE   : delegate method
 //
-// <xInit>     HB_OO_MSG_ACCESS     : \
-//             HB_OO_MSG_CLSACCESS  :   > Optional initializer for DATA
-//             HB_OO_MSG_DATA       :  /
+// <xInit>     HB_OO_MSG_ACCESS     : /* \                                */
+//             HB_OO_MSG_CLSACCESS  : /*  > Optional initializer for DATA */
+//             HB_OO_MSG_DATA       : /* /                                */
 //             HB_OO_MSG_CLASSDATA  : /
 //             HB_OO_MSG_SUPER      : Superclass handle
 //             HB_OO_MSG_ASSIGN     : \ item type restriction in assignment not
