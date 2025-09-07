@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasCOLORMAP()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_COLORMAP
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -84,8 +88,7 @@ HB_FUNC_STATIC(WAS_COLORMAP_DELETE)
 {
   auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -99,8 +102,7 @@ HB_FUNC_STATIC(WAS_COLORMAP_SETFROM)
 {
   auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->from = wa_par_COLORREF(1);
   }
 }
@@ -109,8 +111,7 @@ HB_FUNC_STATIC(WAS_COLORMAP_GETFROM)
 {
   auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_COLORREF(obj->from);
   }
 }
@@ -121,8 +122,7 @@ HB_FUNC_STATIC(WAS_COLORMAP_SETTO)
 {
   auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->to = wa_par_COLORREF(1);
   }
 }
@@ -131,8 +131,7 @@ HB_FUNC_STATIC(WAS_COLORMAP_GETTO)
 {
   auto obj = static_cast<COLORMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_COLORREF(obj->to);
   }
 }

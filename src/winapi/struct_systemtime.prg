@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasSYSTEMTIME()
@@ -99,6 +101,8 @@ PROCEDURE destroyObject() CLASS WAS_SYSTEMTIME
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -119,8 +123,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_DELETE)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -134,8 +137,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWYEAR)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wYear = wa_par_WORD(1);
   }
 }
@@ -144,8 +146,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWYEAR)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wYear);
   }
 }
@@ -156,8 +157,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWMONTH)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wMonth = wa_par_WORD(1);
   }
 }
@@ -166,8 +166,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWMONTH)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wMonth);
   }
 }
@@ -178,8 +177,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWDAYOFWEEK)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wDayOfWeek = wa_par_WORD(1);
   }
 }
@@ -188,8 +186,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWDAYOFWEEK)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wDayOfWeek);
   }
 }
@@ -200,8 +197,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWDAY)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wDay = wa_par_WORD(1);
   }
 }
@@ -210,8 +206,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWDAY)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wDay);
   }
 }
@@ -222,8 +217,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWHOUR)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wHour = wa_par_WORD(1);
   }
 }
@@ -232,8 +226,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWHOUR)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wHour);
   }
 }
@@ -244,8 +237,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWMINUTE)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wMinute = wa_par_WORD(1);
   }
 }
@@ -254,8 +246,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWMINUTE)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wMinute);
   }
 }
@@ -266,8 +257,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWSECOND)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wSecond = wa_par_WORD(1);
   }
 }
@@ -276,8 +266,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWSECOND)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wSecond);
   }
 }
@@ -288,8 +277,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_SETWMILLISECONDS)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wMilliseconds = wa_par_WORD(1);
   }
 }
@@ -298,8 +286,7 @@ HB_FUNC_STATIC(WAS_SYSTEMTIME_GETWMILLISECONDS)
 {
   auto obj = static_cast<SYSTEMTIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wMilliseconds);
   }
 }

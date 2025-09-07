@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasICONINFO()
@@ -81,6 +83,8 @@ PROCEDURE destroyObject() CLASS WAS_ICONINFO
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -101,8 +105,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_DELETE)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -116,8 +119,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETFICON)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fIcon = wa_par_BOOL(1);
   }
 }
@@ -126,8 +128,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETFICON)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->fIcon);
   }
 }
@@ -138,8 +139,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETXHOTSPOT)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->xHotspot = wa_par_DWORD(1);
   }
 }
@@ -148,8 +148,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETXHOTSPOT)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->xHotspot);
   }
 }
@@ -160,8 +159,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETYHOTSPOT)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->yHotspot = wa_par_DWORD(1);
   }
 }
@@ -170,8 +168,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETYHOTSPOT)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->yHotspot);
   }
 }
@@ -182,8 +179,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETHBMMASK)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hbmMask = wa_par_HBITMAP(1);
   }
 }
@@ -192,8 +188,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETHBMMASK)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HBITMAP(obj->hbmMask);
   }
 }
@@ -204,8 +199,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETHBMCOLOR)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hbmColor = wa_par_HBITMAP(1);
   }
 }
@@ -214,8 +208,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETHBMCOLOR)
 {
   auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HBITMAP(obj->hbmColor);
   }
 }

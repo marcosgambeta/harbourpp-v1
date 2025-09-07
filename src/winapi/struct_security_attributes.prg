@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasSECURITY_ATTRIBUTES()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_SECURITY_ATTRIBUTES
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -91,8 +95,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_DELETE)
 {
   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -116,8 +119,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETNLENGTH)
 {
   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->nLength);
   }
 }
@@ -128,8 +130,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETLPSECURITYDESCRIPTOR)
 {
   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lpSecurityDescriptor = wa_par_LPVOID(1); // TODO: SecurityDescriptor is a structure
   }
 }
@@ -138,8 +139,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETLPSECURITYDESCRIPTOR)
 {
   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LPVOID(obj->lpSecurityDescriptor); // TODO: SecurityDescriptor is a structure
   }
 }
@@ -150,8 +150,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETBINHERITHANDLE)
 {
   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bInheritHandle = wa_par_BOOL(1);
   }
 }
@@ -160,8 +159,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETBINHERITHANDLE)
 {
   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->bInheritHandle);
   }
 }

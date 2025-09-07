@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasGRADIENT_TRIANGLE()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_GRADIENT_TRIANGLE
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_DELETE)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX1)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Vertex1 = wa_par_ULONG(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX1)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG(obj->Vertex1);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX2)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Vertex2 = wa_par_ULONG(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX2)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG(obj->Vertex2);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX3)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Vertex3 = wa_par_ULONG(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX3)
 {
   auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG(obj->Vertex3);
   }
 }

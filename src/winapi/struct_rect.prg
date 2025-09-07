@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasRECT()
@@ -75,6 +77,8 @@ PROCEDURE destroyObject() CLASS WAS_RECT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -95,8 +99,7 @@ HB_FUNC_STATIC(WAS_RECT_DELETE)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -110,8 +113,7 @@ HB_FUNC_STATIC(WAS_RECT_SETLEFT)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->left = wa_par_LONG(1);
   }
 }
@@ -120,8 +122,7 @@ HB_FUNC_STATIC(WAS_RECT_GETLEFT)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->left);
   }
 }
@@ -132,8 +133,7 @@ HB_FUNC_STATIC(WAS_RECT_SETTOP)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->top = wa_par_LONG(1);
   }
 }
@@ -142,8 +142,7 @@ HB_FUNC_STATIC(WAS_RECT_GETTOP)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->top);
   }
 }
@@ -154,8 +153,7 @@ HB_FUNC_STATIC(WAS_RECT_SETRIGHT)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->right = wa_par_LONG(1);
   }
 }
@@ -164,8 +162,7 @@ HB_FUNC_STATIC(WAS_RECT_GETRIGHT)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->right);
   }
 }
@@ -176,8 +173,7 @@ HB_FUNC_STATIC(WAS_RECT_SETBOTTOM)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bottom = wa_par_LONG(1);
   }
 }
@@ -186,8 +182,7 @@ HB_FUNC_STATIC(WAS_RECT_GETBOTTOM)
 {
   auto obj = static_cast<RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->bottom);
   }
 }

@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasMONITORINFO()
@@ -67,6 +69,8 @@ PROCEDURE destroyObject() CLASS WAS_MONITORINFO
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -90,8 +94,7 @@ HB_FUNC_STATIC(WAS_MONITORINFO_DELETE)
 {
   auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -115,8 +118,7 @@ HB_FUNC_STATIC(WAS_MONITORINFO_GETCBSIZE)
 {
   auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->cbSize);
   }
 }
@@ -131,8 +133,7 @@ HB_FUNC_STATIC(WAS_MONITORINFO_SETDWFLAGS)
 {
   auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwFlags = wa_par_DWORD(1);
   }
 }
@@ -141,8 +142,7 @@ HB_FUNC_STATIC(WAS_MONITORINFO_GETDWFLAGS)
 {
   auto obj = static_cast<MONITORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwFlags);
   }
 }

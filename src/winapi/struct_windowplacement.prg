@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasWINDOWPLACEMENT()
@@ -77,6 +79,8 @@ PROCEDURE destroyObject() CLASS WAS_WINDOWPLACEMENT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -99,8 +103,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_DELETE)
 {
   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -124,8 +127,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETLENGTH)
 {
   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->length);
   }
 }
@@ -136,8 +138,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETFLAGS)
 {
   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->flags = wa_par_UINT(1);
   }
 }
@@ -146,8 +147,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETFLAGS)
 {
   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->flags);
   }
 }
@@ -158,8 +158,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETSHOWCMD)
 {
   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->showCmd = wa_par_UINT(1);
   }
 }
@@ -168,8 +167,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETSHOWCMD)
 {
   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->showCmd);
   }
 }

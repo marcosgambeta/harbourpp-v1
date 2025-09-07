@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasMEMORYSTATUSEX()
@@ -109,6 +111,8 @@ PROCEDURE destroyObject() CLASS WAS_MEMORYSTATUSEX
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -131,8 +135,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_DELETE)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -158,8 +161,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETDWLENGTH)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwLength);
   }
 }
@@ -170,8 +172,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETDWMEMORYLOAD)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwMemoryLoad = wa_par_DWORD(1);
   }
 }
@@ -180,8 +181,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETDWMEMORYLOAD)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwMemoryLoad);
   }
 }
@@ -192,8 +192,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLTOTALPHYS)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullTotalPhys = wa_par_DWORDLONG(1);
   }
 }
@@ -202,8 +201,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLTOTALPHYS)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullTotalPhys);
   }
 }
@@ -214,8 +212,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLAVAILPHYS)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullAvailPhys = wa_par_DWORDLONG(1);
   }
 }
@@ -224,8 +221,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLAVAILPHYS)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullAvailPhys);
   }
 }
@@ -236,8 +232,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLTOTALPAGEFILE)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullTotalPageFile = wa_par_DWORDLONG(1);
   }
 }
@@ -246,8 +241,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLTOTALPAGEFILE)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullTotalPageFile);
   }
 }
@@ -258,8 +252,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLAVAILPAGEFILE)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullAvailPageFile = wa_par_DWORDLONG(1);
   }
 }
@@ -268,8 +261,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLAVAILPAGEFILE)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullAvailPageFile);
   }
 }
@@ -280,8 +272,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLTOTALVIRTUAL)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullTotalVirtual = wa_par_DWORDLONG(1);
   }
 }
@@ -290,8 +281,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLTOTALVIRTUAL)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullTotalVirtual);
   }
 }
@@ -302,8 +292,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLAVAILVIRTUAL)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullAvailVirtual = wa_par_DWORDLONG(1);
   }
 }
@@ -312,8 +301,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLAVAILVIRTUAL)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullAvailVirtual);
   }
 }
@@ -324,8 +312,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_SETULLAVAILEXTENDEDVIRTUAL)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ullAvailExtendedVirtual = wa_par_DWORDLONG(1);
   }
 }
@@ -334,8 +321,7 @@ HB_FUNC_STATIC(WAS_MEMORYSTATUSEX_GETULLAVAILEXTENDEDVIRTUAL)
 {
   auto obj = static_cast<MEMORYSTATUSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORDLONG(obj->ullAvailExtendedVirtual);
   }
 }

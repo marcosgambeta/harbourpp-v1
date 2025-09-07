@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasFILETIME()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_FILETIME
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -83,8 +87,7 @@ HB_FUNC_STATIC(WAS_FILETIME_DELETE)
 {
   auto obj = static_cast<FILETIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -98,8 +101,7 @@ HB_FUNC_STATIC(WAS_FILETIME_SETDWLOWDATETIME)
 {
   auto obj = static_cast<FILETIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwLowDateTime = wa_par_DWORD(1);
   }
 }
@@ -108,8 +110,7 @@ HB_FUNC_STATIC(WAS_FILETIME_GETDWLOWDATETIME)
 {
   auto obj = static_cast<FILETIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwLowDateTime);
   }
 }
@@ -120,8 +121,7 @@ HB_FUNC_STATIC(WAS_FILETIME_SETDWHIGHDATETIME)
 {
   auto obj = static_cast<FILETIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwHighDateTime = wa_par_DWORD(1);
   }
 }
@@ -130,8 +130,7 @@ HB_FUNC_STATIC(WAS_FILETIME_GETDWHIGHDATETIME)
 {
   auto obj = static_cast<FILETIME *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwHighDateTime);
   }
 }

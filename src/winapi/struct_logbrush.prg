@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasLOGBRUSH()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_LOGBRUSH
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_DELETE)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBSTYLE)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lbStyle = wa_par_UINT(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBSTYLE)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->lbStyle);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBCOLOR)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lbColor = wa_par_COLORREF(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBCOLOR)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_COLORREF(obj->lbColor);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBHATCH)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lbHatch = wa_par_ULONG_PTR(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBHATCH)
 {
   auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->lbHatch);
   }
 }

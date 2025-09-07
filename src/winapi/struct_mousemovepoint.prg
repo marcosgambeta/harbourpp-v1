@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasMOUSEMOVEPOINT()
@@ -75,6 +77,8 @@ PROCEDURE destroyObject() CLASS WAS_MOUSEMOVEPOINT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -95,8 +99,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_DELETE)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -110,8 +113,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETX)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->x = wa_par_int(1);
   }
 }
@@ -120,8 +122,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETX)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_int(obj->x);
   }
 }
@@ -132,8 +133,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETY)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->y = wa_par_int(1);
   }
 }
@@ -142,8 +142,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETY)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_int(obj->y);
   }
 }
@@ -154,8 +153,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETTIME)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->time = wa_par_DWORD(1);
   }
 }
@@ -164,8 +162,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETTIME)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->time);
   }
 }
@@ -176,8 +173,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETDWEXTRAINFO)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwExtraInfo = wa_par_ULONG_PTR(1);
   }
 }
@@ -186,8 +182,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETDWEXTRAINFO)
 {
   auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->dwExtraInfo);
   }
 }

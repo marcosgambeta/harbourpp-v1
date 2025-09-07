@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasNMHDR()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_NMHDR
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_NMHDR_DELETE)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_NMHDR_SETHWNDFROM)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hwndFrom = wa_par_HWND(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_NMHDR_GETHWNDFROM)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HWND(obj->hwndFrom);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_NMHDR_SETIDFROM)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->idFrom = wa_par_UINT_PTR(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_NMHDR_GETIDFROM)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT_PTR(obj->idFrom);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_NMHDR_SETCODE)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->code = wa_par_UINT(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_NMHDR_GETCODE)
 {
   auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->code);
   }
 }

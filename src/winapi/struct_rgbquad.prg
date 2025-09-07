@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasRGBQUAD()
@@ -75,6 +77,8 @@ PROCEDURE destroyObject() CLASS WAS_RGBQUAD
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -95,8 +99,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_DELETE)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -110,8 +113,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBBLUE)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->rgbBlue = wa_par_BYTE(1);
   }
 }
@@ -120,8 +122,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBBLUE)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->rgbBlue);
   }
 }
@@ -132,8 +133,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBGREEN)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->rgbGreen = wa_par_BYTE(1);
   }
 }
@@ -142,8 +142,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBGREEN)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->rgbGreen);
   }
 }
@@ -154,8 +153,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBRED)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->rgbRed = wa_par_BYTE(1);
   }
 }
@@ -164,8 +162,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBRED)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->rgbRed);
   }
 }
@@ -176,8 +173,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBRESERVED)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->rgbReserved = wa_par_BYTE(1);
   }
 }
@@ -186,8 +182,7 @@ HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBRESERVED)
 {
   auto obj = static_cast<RGBQUAD *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->rgbReserved);
   }
 }

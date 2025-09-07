@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasPOINTF()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_POINTF
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -84,8 +88,7 @@ HB_FUNC_STATIC(WAS_POINTF_DELETE)
 {
   auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -99,8 +102,7 @@ HB_FUNC_STATIC(WAS_POINTF_SETX)
 {
   auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->x = wa_par_FLOAT(1);
   }
 }
@@ -109,8 +111,7 @@ HB_FUNC_STATIC(WAS_POINTF_GETX)
 {
   auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_FLOAT(obj->x);
   }
 }
@@ -121,8 +122,7 @@ HB_FUNC_STATIC(WAS_POINTF_SETY)
 {
   auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->y = wa_par_FLOAT(1);
   }
 }
@@ -131,8 +131,7 @@ HB_FUNC_STATIC(WAS_POINTF_GETY)
 {
   auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_FLOAT(obj->y);
   }
 }

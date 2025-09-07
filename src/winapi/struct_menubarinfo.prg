@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasMENUBARINFO()
@@ -86,6 +88,8 @@ PROCEDURE destroyObject() CLASS WAS_MENUBARINFO
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -108,8 +112,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_DELETE)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -133,8 +136,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_GETCBSIZE)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
   }
 }
@@ -148,8 +150,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_SETHMENU)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hMenu = wa_par_HMENU(1);
   }
 }
@@ -158,8 +159,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_GETHMENU)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HMENU(obj->hMenu);
   }
 }
@@ -170,8 +170,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_SETHWNDMENU)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hwndMenu = wa_par_HWND(1);
   }
 }
@@ -180,8 +179,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_GETHWNDMENU)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HWND(obj->hwndMenu);
   }
 }
@@ -192,8 +190,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_SETFBARFOCUSED)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fBarFocused = wa_par_BOOL(1);
   }
 }
@@ -202,8 +199,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_GETFBARFOCUSED)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->fBarFocused);
   }
 }
@@ -214,8 +210,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_SETFFOCUSED)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fFocused = wa_par_BOOL(1);
   }
 }
@@ -224,8 +219,7 @@ HB_FUNC_STATIC(WAS_MENUBARINFO_GETFFOCUSED)
 {
   auto obj = static_cast<MENUBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->fFocused);
   }
 }

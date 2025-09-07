@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasSIZE()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_SIZE
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -83,8 +87,7 @@ HB_FUNC_STATIC(WAS_SIZE_DELETE)
 {
   auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -98,8 +101,7 @@ HB_FUNC_STATIC(WAS_SIZE_SETCX)
 {
   auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->cx = wa_par_LONG(1);
   }
 }
@@ -108,8 +110,7 @@ HB_FUNC_STATIC(WAS_SIZE_GETCX)
 {
   auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->cx);
   }
 }
@@ -120,8 +121,7 @@ HB_FUNC_STATIC(WAS_SIZE_SETCY)
 {
   auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->cy = wa_par_LONG(1);
   }
 }
@@ -130,8 +130,7 @@ HB_FUNC_STATIC(WAS_SIZE_GETCY)
 {
   auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->cy);
   }
 }

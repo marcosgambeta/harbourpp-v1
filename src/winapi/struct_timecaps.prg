@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasTIMECAPS()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_TIMECAPS
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -83,8 +87,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_DELETE)
 {
   auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -98,8 +101,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_SETWPERIODMIN)
 {
   auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wPeriodMin = wa_par_UINT(1);
   }
 }
@@ -108,8 +110,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_GETWPERIODMIN)
 {
   auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->wPeriodMin);
   }
 }
@@ -120,8 +121,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_SETWPERIODMAX)
 {
   auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wPeriodMax = wa_par_UINT(1);
   }
 }
@@ -130,8 +130,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_GETWPERIODMAX)
 {
   auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->wPeriodMax);
   }
 }

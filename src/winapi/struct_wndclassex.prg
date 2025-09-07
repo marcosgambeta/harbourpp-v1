@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasWNDCLASSEX()
@@ -126,6 +128,8 @@ PROCEDURE destroyObject() CLASS WAS_WNDCLASSEX
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -151,11 +155,9 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_DELETE)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
-    if (!IS_INTRESOURCE(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME")))
-    {
-       hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME"));
+  if (obj != nullptr) {
+    if (!IS_INTRESOURCE(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME"))) {
+      hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME"));
     }
     hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME"));
     delete obj;
@@ -183,8 +185,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETCBSIZE)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->cbSize);
   }
 }
@@ -195,8 +196,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETSTYLE)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->style = wa_par_UINT(1);
   }
 }
@@ -205,8 +205,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETSTYLE)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->style);
   }
 }
@@ -217,8 +216,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETLPFNWNDPROC)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lpfnWndProc = wa_par_WNDPROC(1);
   }
 }
@@ -227,8 +225,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETLPFNWNDPROC)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WNDPROC(obj->lpfnWndProc);
   }
 }
@@ -239,8 +236,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETCBCLSEXTRA)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->cbClsExtra = wa_par_int(1);
   }
 }
@@ -249,8 +245,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETCBCLSEXTRA)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_int(obj->cbClsExtra);
   }
 }
@@ -261,8 +256,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETCBWNDEXTRA)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->cbWndExtra = wa_par_int(1);
   }
 }
@@ -271,8 +265,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETCBWNDEXTRA)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_int(obj->cbWndExtra);
   }
 }
@@ -283,8 +276,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETHINSTANCE)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hInstance = wa_par_HINSTANCE(1);
   }
 }
@@ -293,8 +285,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETHINSTANCE)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HINSTANCE(obj->hInstance);
   }
 }
@@ -305,8 +296,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETHICON)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hIcon = wa_par_HICON(1);
   }
 }
@@ -315,8 +305,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETHICON)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HICON(obj->hIcon);
   }
 }
@@ -327,8 +316,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETHCURSOR)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hCursor = wa_par_HCURSOR(1);
   }
 }
@@ -337,8 +325,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETHCURSOR)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HCURSOR(obj->hCursor);
   }
 }
@@ -349,8 +336,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETHBRBACKGROUND)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hbrBackground = wa_par_HBRUSH(1);
   }
 }
@@ -359,8 +345,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETHBRBACKGROUND)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HBRUSH(obj->hbrBackground);
   }
 }
@@ -371,11 +356,9 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETLPSZMENUNAME)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     void *str = hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME");
-    if (str != nullptr && !IS_INTRESOURCE(str))
-    {
+    if (str != nullptr && !IS_INTRESOURCE(str)) {
       hb_strfree(str);
     }
     str = nullptr;
@@ -388,14 +371,10 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETLPSZMENUNAME)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
-    if (!IS_INTRESOURCE(obj->lpszMenuName))
-    {
+  if (obj != nullptr) {
+    if (!IS_INTRESOURCE(obj->lpszMenuName)) {
       HB_RETSTR(obj->lpszMenuName);
-    }
-    else
-    {
+    } else {
       hb_retni(reinterpret_cast<UINT_PTR>(obj->lpszMenuName));
     }
   }
@@ -407,11 +386,9 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETLPSZCLASSNAME)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     void *str = hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME");
-    if (str != nullptr)
-    {
+    if (str != nullptr) {
       hb_strfree(str);
     }
     obj->lpszClassName = HB_PARSTR(1, &str, nullptr);
@@ -423,8 +400,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETLPSZCLASSNAME)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     HB_RETSTR(obj->lpszClassName);
   }
 }
@@ -435,8 +411,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETHICONSM)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hIconSm = wa_par_HICON(1);
   }
 }
@@ -445,8 +420,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_GETHICONSM)
 {
   auto obj = static_cast<WNDCLASSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HICON(obj->hIconSm);
   }
 }

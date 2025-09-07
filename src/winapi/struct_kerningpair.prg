@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasKERNINGPAIR()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_KERNINGPAIR
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_DELETE)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWFIRST)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wFirst = wa_par_WORD(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWFIRST)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wFirst);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWSECOND)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wSecond = wa_par_WORD(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWSECOND)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wSecond);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETIKERNAMOUNT)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->iKernAmount = wa_par_int(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETIKERNAMOUNT)
 {
   auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_int(obj->iKernAmount);
   }
 }

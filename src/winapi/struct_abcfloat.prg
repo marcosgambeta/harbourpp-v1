@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasABCFLOAT()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_ABCFLOAT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_DELETE)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFA)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->abcfA = wa_par_FLOAT(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFA)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_FLOAT(obj->abcfA);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFB)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->abcfB = wa_par_FLOAT(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFB)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_FLOAT(obj->abcfB);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFC)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->abcfC = wa_par_FLOAT(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFC)
 {
   auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_FLOAT(obj->abcfC);
   }
 }

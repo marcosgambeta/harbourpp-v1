@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasPALETTEENTRY()
@@ -79,6 +81,8 @@ PROCEDURE destroyObject() CLASS WAS_PALETTEENTRY
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -99,8 +103,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_DELETE)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -114,8 +117,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPERED)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->peRed = wa_par_BYTE(1);
   }
 }
@@ -124,8 +126,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPERED)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->peRed);
   }
 }
@@ -136,8 +137,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEGREEN)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->peGreen = wa_par_BYTE(1);
   }
 }
@@ -146,8 +146,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEGREEN)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->peGreen);
   }
 }
@@ -158,8 +157,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEBLUE)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->peBlue = wa_par_BYTE(1);
   }
 }
@@ -168,8 +166,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEBLUE)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->peBlue);
   }
 }
@@ -180,8 +177,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEFLAGS)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->peFlags = wa_par_BYTE(1);
   }
 }
@@ -190,8 +186,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEFLAGS)
 {
   auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->peFlags);
   }
 }

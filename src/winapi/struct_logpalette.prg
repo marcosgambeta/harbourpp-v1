@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasLOGPALETTE()
@@ -67,6 +69,8 @@ PROCEDURE destroyObject() CLASS WAS_LOGPALETTE
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -87,8 +91,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_DELETE)
 {
   auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -102,8 +105,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_SETPALVERSION)
 {
   auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->palVersion = wa_par_WORD(1);
   }
 }
@@ -112,8 +114,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_GETPALVERSION)
 {
   auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->palVersion);
   }
 }
@@ -124,8 +125,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_SETPALNUMENTRIES)
 {
   auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->palNumEntries = wa_par_WORD(1);
   }
 }
@@ -134,8 +134,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_GETPALNUMENTRIES)
 {
   auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->palNumEntries);
   }
 }

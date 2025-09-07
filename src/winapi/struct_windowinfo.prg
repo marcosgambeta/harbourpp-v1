@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasWINDOWINFO()
@@ -111,6 +113,8 @@ PROCEDURE destroyObject() CLASS WAS_WINDOWINFO
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -133,8 +137,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_DELETE)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -158,8 +161,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCBSIZE)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
   }
 }
@@ -188,8 +190,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWSTYLE)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwStyle);
   }
 }
@@ -210,8 +211,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWEXSTYLE)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwExStyle);
   }
 }
@@ -232,8 +232,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETDWWINDOWSTATUS)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwWindowStatus);
   }
 }
@@ -254,8 +253,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCXWINDOWBORDERS)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->cxWindowBorders);
   }
 }
@@ -276,8 +274,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETCYWINDOWBORDERS)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->cyWindowBorders);
   }
 }
@@ -298,8 +295,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETATOMWINDOWTYPE)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ATOM(obj->atomWindowType);
   }
 }
@@ -320,8 +316,7 @@ HB_FUNC_STATIC(WAS_WINDOWINFO_GETWCREATORVERSION)
 {
   auto obj = static_cast<WINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wCreatorVersion);
   }
 }

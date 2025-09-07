@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasDCB()
@@ -219,6 +221,8 @@ PROCEDURE destroyObject() CLASS WAS_DCB
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -239,8 +243,7 @@ HB_FUNC_STATIC(WAS_DCB_DELETE)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -254,8 +257,7 @@ HB_FUNC_STATIC(WAS_DCB_SETDCBLENGTH)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->DCBlength = wa_par_DWORD(1);
   }
 }
@@ -264,8 +266,7 @@ HB_FUNC_STATIC(WAS_DCB_GETDCBLENGTH)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->DCBlength);
   }
 }
@@ -276,8 +277,7 @@ HB_FUNC_STATIC(WAS_DCB_SETBAUDRATE)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->BaudRate = wa_par_DWORD(1);
   }
 }
@@ -286,8 +286,7 @@ HB_FUNC_STATIC(WAS_DCB_GETBAUDRATE)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->BaudRate);
   }
 }
@@ -298,8 +297,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFBINARY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fBinary = wa_par_DWORD(1);
   }
 }
@@ -308,8 +306,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFBINARY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fBinary);
   }
 }
@@ -320,8 +317,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFPARITY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fParity = wa_par_DWORD(1);
   }
 }
@@ -330,8 +326,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFPARITY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fParity);
   }
 }
@@ -342,8 +337,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFOUTXCTSFLOW)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fOutxCtsFlow = wa_par_DWORD(1);
   }
 }
@@ -352,8 +346,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFOUTXCTSFLOW)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fOutxCtsFlow);
   }
 }
@@ -364,8 +357,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFOUTXDSRFLOW)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fOutxDsrFlow = wa_par_DWORD(1);
   }
 }
@@ -374,8 +366,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFOUTXDSRFLOW)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fOutxDsrFlow);
   }
 }
@@ -386,8 +377,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFDTRCONTROL)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fDtrControl = wa_par_DWORD(1);
   }
 }
@@ -396,8 +386,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFDTRCONTROL)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fDtrControl);
   }
 }
@@ -408,8 +397,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFDSRSENSITIVITY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fDsrSensitivity = wa_par_DWORD(1);
   }
 }
@@ -418,8 +406,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFDSRSENSITIVITY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fDsrSensitivity);
   }
 }
@@ -430,8 +417,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFTXCONTINUEONXOFF)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fTXContinueOnXoff = wa_par_DWORD(1);
   }
 }
@@ -440,8 +426,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFTXCONTINUEONXOFF)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fTXContinueOnXoff);
   }
 }
@@ -452,8 +437,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFOUTX)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fOutX = wa_par_DWORD(1);
   }
 }
@@ -462,8 +446,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFOUTX)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fOutX);
   }
 }
@@ -474,8 +457,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFINX)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fInX = wa_par_DWORD(1);
   }
 }
@@ -484,8 +466,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFINX)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fInX);
   }
 }
@@ -496,8 +477,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFERRORCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fErrorChar = wa_par_DWORD(1);
   }
 }
@@ -506,8 +486,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFERRORCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fErrorChar);
   }
 }
@@ -518,8 +497,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFNULL)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fNull = wa_par_DWORD(1);
   }
 }
@@ -528,8 +506,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFNULL)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fNull);
   }
 }
@@ -540,8 +517,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFRTSCONTROL)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fRtsControl = wa_par_DWORD(1);
   }
 }
@@ -550,8 +526,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFRTSCONTROL)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fRtsControl);
   }
 }
@@ -562,8 +537,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFABORTONERROR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fAbortOnError = wa_par_DWORD(1);
   }
 }
@@ -572,8 +546,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFABORTONERROR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fAbortOnError);
   }
 }
@@ -584,8 +557,7 @@ HB_FUNC_STATIC(WAS_DCB_SETFDUMMY2)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fDummy2 = wa_par_DWORD(1);
   }
 }
@@ -594,8 +566,7 @@ HB_FUNC_STATIC(WAS_DCB_GETFDUMMY2)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->fDummy2);
   }
 }
@@ -606,8 +577,7 @@ HB_FUNC_STATIC(WAS_DCB_SETWRESERVED)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wReserved = wa_par_WORD(1);
   }
 }
@@ -616,8 +586,7 @@ HB_FUNC_STATIC(WAS_DCB_GETWRESERVED)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wReserved);
   }
 }
@@ -628,8 +597,7 @@ HB_FUNC_STATIC(WAS_DCB_SETXONLIM)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->XonLim = wa_par_WORD(1);
   }
 }
@@ -638,8 +606,7 @@ HB_FUNC_STATIC(WAS_DCB_GETXONLIM)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->XonLim);
   }
 }
@@ -650,8 +617,7 @@ HB_FUNC_STATIC(WAS_DCB_SETXOFFLIM)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->XoffLim = wa_par_WORD(1);
   }
 }
@@ -660,8 +626,7 @@ HB_FUNC_STATIC(WAS_DCB_GETXOFFLIM)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->XoffLim);
   }
 }
@@ -672,8 +637,7 @@ HB_FUNC_STATIC(WAS_DCB_SETBYTESIZE)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ByteSize = wa_par_BYTE(1);
   }
 }
@@ -682,8 +646,7 @@ HB_FUNC_STATIC(WAS_DCB_GETBYTESIZE)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->ByteSize);
   }
 }
@@ -694,8 +657,7 @@ HB_FUNC_STATIC(WAS_DCB_SETPARITY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Parity = wa_par_BYTE(1);
   }
 }
@@ -704,8 +666,7 @@ HB_FUNC_STATIC(WAS_DCB_GETPARITY)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->Parity);
   }
 }
@@ -716,8 +677,7 @@ HB_FUNC_STATIC(WAS_DCB_SETSTOPBITS)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->StopBits = wa_par_BYTE(1);
   }
 }
@@ -726,8 +686,7 @@ HB_FUNC_STATIC(WAS_DCB_GETSTOPBITS)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->StopBits);
   }
 }
@@ -738,8 +697,7 @@ HB_FUNC_STATIC(WAS_DCB_SETXONCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->XonChar = wa_par_char(1);
   }
 }
@@ -748,8 +706,7 @@ HB_FUNC_STATIC(WAS_DCB_GETXONCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_char(obj->XonChar);
   }
 }
@@ -760,8 +717,7 @@ HB_FUNC_STATIC(WAS_DCB_SETXOFFCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->XoffChar = wa_par_char(1);
   }
 }
@@ -770,8 +726,7 @@ HB_FUNC_STATIC(WAS_DCB_GETXOFFCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_char(obj->XoffChar);
   }
 }
@@ -782,8 +737,7 @@ HB_FUNC_STATIC(WAS_DCB_SETERRORCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->ErrorChar = wa_par_char(1);
   }
 }
@@ -792,8 +746,7 @@ HB_FUNC_STATIC(WAS_DCB_GETERRORCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_char(obj->ErrorChar);
   }
 }
@@ -804,8 +757,7 @@ HB_FUNC_STATIC(WAS_DCB_SETEOFCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->EofChar = wa_par_char(1);
   }
 }
@@ -814,8 +766,7 @@ HB_FUNC_STATIC(WAS_DCB_GETEOFCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_char(obj->EofChar);
   }
 }
@@ -826,8 +777,7 @@ HB_FUNC_STATIC(WAS_DCB_SETEVTCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->EvtChar = wa_par_char(1);
   }
 }
@@ -836,8 +786,7 @@ HB_FUNC_STATIC(WAS_DCB_GETEVTCHAR)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_char(obj->EvtChar);
   }
 }
@@ -848,8 +797,7 @@ HB_FUNC_STATIC(WAS_DCB_SETWRESERVED1)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wReserved1 = wa_par_WORD(1);
   }
 }
@@ -858,8 +806,7 @@ HB_FUNC_STATIC(WAS_DCB_GETWRESERVED1)
 {
   auto obj = static_cast<DCB *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->wReserved1);
   }
 }

@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 CLASS WAGPRECT
@@ -72,6 +74,8 @@ PROCEDURE destroyObject() CLASS WAGPRECT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -86,8 +90,7 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC(WAGPRECT_NEW)
 {
-  if (hb_pcount() == 0)
-  {
+  if (hb_pcount() == 0) {
     // Rect()
     auto self = hb_stackSelfItem();
     hb_objDataPutPtr(self, "_PTR", new GpRect());
@@ -104,16 +107,13 @@ HB_FUNC_STATIC(WAGPRECT_NEW)
     hb_itemReturn(self);
   }
 #endif
-  else if (hb_pcount() == 4 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  else if (hb_pcount() == 4 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     // Rect(INT x, INT y, INT width, INT height)
     auto self = hb_stackSelfItem();
     hb_objDataPutPtr(self, "_PTR", new GpRect(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4)));
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -122,8 +122,7 @@ HB_FUNC_STATIC(WAGPRECT_DELETE)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -137,8 +136,7 @@ HB_FUNC_STATIC(WAGPRECT_SETX)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->X = wa_par_INT(1);
   }
 }
@@ -147,8 +145,7 @@ HB_FUNC_STATIC(WAGPRECT_GETX)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_INT(obj->X);
   }
 }
@@ -159,8 +156,7 @@ HB_FUNC_STATIC(WAGPRECT_SETY)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Y = wa_par_INT(1);
   }
 }
@@ -169,8 +165,7 @@ HB_FUNC_STATIC(WAGPRECT_GETY)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_INT(obj->Y);
   }
 }
@@ -181,8 +176,7 @@ HB_FUNC_STATIC(WAGPRECT_SETWIDTH)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Width = wa_par_INT(1);
   }
 }
@@ -191,8 +185,7 @@ HB_FUNC_STATIC(WAGPRECT_GETWIDTH)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_INT(obj->Width);
   }
 }
@@ -203,8 +196,7 @@ HB_FUNC_STATIC(WAGPRECT_SETHEIGHT)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Height = wa_par_INT(1);
   }
 }
@@ -213,8 +205,7 @@ HB_FUNC_STATIC(WAGPRECT_GETHEIGHT)
 {
   auto obj = static_cast<GpRect *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_INT(obj->Height);
   }
 }

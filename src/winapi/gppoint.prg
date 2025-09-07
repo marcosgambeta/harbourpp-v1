@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 CLASS WAGPPOINT
@@ -60,6 +62,8 @@ PROCEDURE destroyObject() CLASS WAGPPOINT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -74,16 +78,13 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC(WAGPPOINT_NEW)
 {
-  if (hb_pcount() == 0)
-  {
+  if (hb_pcount() == 0) {
     // Point()
     auto self = hb_stackSelfItem();
     hb_objDataPutPtr(self, "_PTR", new GpPoint());
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
-  }
-  else if (hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2))
-  {
+  } else if (hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2)) {
     // Point(INT x, INT y)
     auto self = hb_stackSelfItem();
     hb_objDataPutPtr(self, "_PTR", new GpPoint(wa_par_INT(1), wa_par_INT(2)));
@@ -108,8 +109,7 @@ HB_FUNC_STATIC(WAGPPOINT_NEW)
     hb_itemReturn(self);
   }
 #endif
-  else
-  {
+  else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -118,8 +118,7 @@ HB_FUNC_STATIC(WAGPPOINT_DELETE)
 {
   auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -133,8 +132,7 @@ HB_FUNC_STATIC(WAGPPOINT_SETX)
 {
   auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->X = wa_par_INT(1);
   }
 }
@@ -143,8 +141,7 @@ HB_FUNC_STATIC(WAGPPOINT_GETX)
 {
   auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_INT(obj->X);
   }
 }
@@ -155,8 +152,7 @@ HB_FUNC_STATIC(WAGPPOINT_SETY)
 {
   auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->Y = wa_par_INT(1);
   }
 }
@@ -165,8 +161,7 @@ HB_FUNC_STATIC(WAGPPOINT_GETY)
 {
   auto obj = static_cast<GpPoint *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_INT(obj->Y);
   }
 }

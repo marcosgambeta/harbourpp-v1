@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasINITCOMMONCONTROLSEX()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_INITCOMMONCONTROLSEX
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -84,8 +88,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_DELETE)
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -99,8 +102,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWSIZE)
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwSize = wa_par_DWORD(1);
   }
 }
@@ -109,8 +111,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWSIZE)
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwSize);
   }
 }
@@ -121,8 +122,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWICC)
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->dwICC = wa_par_DWORD(1);
   }
 }
@@ -131,8 +131,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWICC)
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->dwICC);
   }
 }

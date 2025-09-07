@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasCURSORINFO()
@@ -72,6 +74,8 @@ PROCEDURE destroyObject() CLASS WAS_CURSORINFO
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -94,8 +98,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_DELETE)
 {
   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -119,8 +122,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_GETCBSIZE)
 {
   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
   }
 }
@@ -131,8 +133,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_SETFLAGS)
 {
   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->flags = wa_par_DWORD(1);
   }
 }
@@ -141,8 +142,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_GETFLAGS)
 {
   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->flags);
   }
 }
@@ -153,8 +153,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_SETHCURSOR)
 {
   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hCursor = wa_par_HCURSOR(1);
   }
 }
@@ -163,8 +162,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_GETHCURSOR)
 {
   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HCURSOR(obj->hCursor);
   }
 }

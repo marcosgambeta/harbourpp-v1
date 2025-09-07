@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasACCEL()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_ACCEL
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_ACCEL_DELETE)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_ACCEL_SETFVIRT)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fVirt = wa_par_BYTE(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_ACCEL_GETFVIRT)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BYTE(obj->fVirt);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_ACCEL_SETKEY)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->key = wa_par_WORD(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_ACCEL_GETKEY)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->key);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_ACCEL_SETCMD)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->cmd = wa_par_WORD(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_ACCEL_GETCMD)
 {
   auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->cmd);
   }
 }

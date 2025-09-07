@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasPAINTSTRUCT()
@@ -79,6 +81,8 @@ PROCEDURE destroyObject() CLASS WAS_PAINTSTRUCT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -99,8 +103,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_DELETE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -114,8 +117,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETHDC)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hdc = wa_par_HDC(1);
   }
 }
@@ -124,8 +126,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETHDC)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HDC(obj->hdc);
   }
 }
@@ -136,8 +137,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFERASE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fErase = wa_par_BOOL(1);
   }
 }
@@ -146,8 +146,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFERASE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->fErase);
   }
 }
@@ -160,8 +159,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFRESTORE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fRestore = wa_par_BOOL(1);
   }
 }
@@ -170,8 +168,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFRESTORE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->fRestore);
   }
 }
@@ -182,8 +179,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_SETFINCUPDATE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->fIncUpdate = wa_par_BOOL(1);
   }
 }
@@ -192,8 +188,7 @@ HB_FUNC_STATIC(WAS_PAINTSTRUCT_GETFINCUPDATE)
 {
   auto obj = static_cast<PAINTSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_BOOL(obj->fIncUpdate);
   }
 }

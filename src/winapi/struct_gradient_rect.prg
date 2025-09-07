@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasGRADIENT_RECT()
@@ -63,6 +65,8 @@ PROCEDURE destroyObject() CLASS WAS_GRADIENT_RECT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -83,8 +87,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_DELETE)
 {
   auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -98,8 +101,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_SETUPPERLEFT)
 {
   auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->UpperLeft = wa_par_ULONG(1);
   }
 }
@@ -108,8 +110,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_GETUPPERLEFT)
 {
   auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG(obj->UpperLeft);
   }
 }
@@ -120,8 +121,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_SETLOWERRIGHT)
 {
   auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->LowerRight = wa_par_ULONG(1);
   }
 }
@@ -130,8 +130,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_GETLOWERRIGHT)
 {
   auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_ULONG(obj->LowerRight);
   }
 }

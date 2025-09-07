@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasMSG()
@@ -89,6 +91,8 @@ PROCEDURE destroyObject() CLASS WAS_MSG
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -109,8 +113,7 @@ HB_FUNC_STATIC(WAS_MSG_DELETE)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -124,8 +127,7 @@ HB_FUNC_STATIC(WAS_MSG_SETHWND)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->hwnd = wa_par_HWND(1);
   }
 }
@@ -134,8 +136,7 @@ HB_FUNC_STATIC(WAS_MSG_GETHWND)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_HWND(obj->hwnd);
   }
 }
@@ -146,8 +147,7 @@ HB_FUNC_STATIC(WAS_MSG_SETMESSAGE)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->message = wa_par_UINT(1);
   }
 }
@@ -156,8 +156,7 @@ HB_FUNC_STATIC(WAS_MSG_GETMESSAGE)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->message);
   }
 }
@@ -168,8 +167,7 @@ HB_FUNC_STATIC(WAS_MSG_SETWPARAM)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->wParam = wa_par_WPARAM(1);
   }
 }
@@ -178,8 +176,7 @@ HB_FUNC_STATIC(WAS_MSG_GETWPARAM)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WPARAM(obj->wParam);
   }
 }
@@ -190,8 +187,7 @@ HB_FUNC_STATIC(WAS_MSG_SETLPARAM)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lParam = wa_par_LPARAM(1);
   }
 }
@@ -200,8 +196,7 @@ HB_FUNC_STATIC(WAS_MSG_GETLPARAM)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LPARAM(obj->lParam);
   }
 }
@@ -212,8 +207,7 @@ HB_FUNC_STATIC(WAS_MSG_SETTIME)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->time = wa_par_DWORD(1);
   }
 }
@@ -222,8 +216,7 @@ HB_FUNC_STATIC(WAS_MSG_GETTIME)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_DWORD(obj->time);
   }
 }
@@ -234,8 +227,7 @@ HB_FUNC_STATIC(WAS_MSG_SETPT)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     // obj->pt = ...; TODO: implementar
   }
 }
@@ -244,9 +236,8 @@ HB_FUNC_STATIC(WAS_MSG_GETPT)
 {
   auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
-    //hb_ret...(obj->pt); TODO: implementar
+  if (obj != nullptr) {
+    // hb_ret...(obj->pt); TODO: implementar
   }
 }
 

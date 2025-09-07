@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasLOGPEN()
@@ -69,6 +71,8 @@ PROCEDURE destroyObject() CLASS WAS_LOGPEN
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -89,8 +93,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_DELETE)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -104,8 +107,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNSTYLE)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lopnStyle = wa_par_UINT(1);
   }
 }
@@ -114,8 +116,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNSTYLE)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_UINT(obj->lopnStyle);
   }
 }
@@ -126,8 +127,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNWIDTH)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lopnWidth.x = hb_parnl(1);
   }
 }
@@ -136,8 +136,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNWIDTH)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     hb_retnl(obj->lopnWidth.x);
   }
 }
@@ -148,8 +147,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNCOLOR)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->lopnColor = wa_par_COLORREF(1);
   }
 }
@@ -158,8 +156,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNCOLOR)
 {
   auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_COLORREF(obj->lopnColor);
   }
 }

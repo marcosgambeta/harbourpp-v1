@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasCOLORADJUSTMENT()
@@ -123,6 +125,8 @@ PROCEDURE destroyObject() CLASS WAS_COLORADJUSTMENT
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -143,8 +147,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_DELETE)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -158,8 +161,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCASIZE)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caSize = wa_par_WORD(1);
   }
 }
@@ -168,8 +170,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCASIZE)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caSize);
   }
 }
@@ -180,8 +181,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAFLAGS)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caFlags = wa_par_WORD(1);
   }
 }
@@ -190,8 +190,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAFLAGS)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caFlags);
   }
 }
@@ -202,8 +201,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAILLUMINANTINDEX)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caIlluminantIndex = wa_par_WORD(1);
   }
 }
@@ -212,8 +210,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAILLUMINANTINDEX)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caIlluminantIndex);
   }
 }
@@ -224,8 +221,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAREDGAMMA)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caRedGamma = wa_par_WORD(1);
   }
 }
@@ -234,8 +230,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAREDGAMMA)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caRedGamma);
   }
 }
@@ -246,8 +241,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAGREENGAMMA)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caGreenGamma = wa_par_WORD(1);
   }
 }
@@ -256,8 +250,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAGREENGAMMA)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caGreenGamma);
   }
 }
@@ -268,8 +261,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCABLUEGAMMA)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caBlueGamma = wa_par_WORD(1);
   }
 }
@@ -278,8 +270,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCABLUEGAMMA)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caBlueGamma);
   }
 }
@@ -290,8 +281,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAREFERENCEBLACK)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caReferenceBlack = wa_par_WORD(1);
   }
 }
@@ -300,8 +290,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAREFERENCEBLACK)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caReferenceBlack);
   }
 }
@@ -312,8 +301,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAREFERENCEWHITE)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caReferenceWhite = wa_par_WORD(1);
   }
 }
@@ -322,8 +310,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAREFERENCEWHITE)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->caReferenceWhite);
   }
 }
@@ -334,8 +321,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCACONTRAST)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caContrast = wa_par_SHORT(1);
   }
 }
@@ -344,8 +330,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCACONTRAST)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_SHORT(obj->caContrast);
   }
 }
@@ -356,8 +341,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCABRIGHTNESS)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caBrightness = wa_par_SHORT(1);
   }
 }
@@ -366,8 +350,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCABRIGHTNESS)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_SHORT(obj->caBrightness);
   }
 }
@@ -378,8 +361,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCACOLORFULNESS)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caColorfulness = wa_par_SHORT(1);
   }
 }
@@ -388,8 +370,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCACOLORFULNESS)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_SHORT(obj->caColorfulness);
   }
 }
@@ -400,8 +381,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_SETCAREDGREENTINT)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->caRedGreenTint = wa_par_SHORT(1);
   }
 }
@@ -410,8 +390,7 @@ HB_FUNC_STATIC(WAS_COLORADJUSTMENT_GETCAREDGREENTINT)
 {
   auto obj = static_cast<COLORADJUSTMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_SHORT(obj->caRedGreenTint);
   }
 }

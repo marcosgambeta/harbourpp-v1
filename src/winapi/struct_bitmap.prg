@@ -28,6 +28,8 @@
 
 // NOTE: source code generated with the help of a code generator
 
+// clang-format off
+
 #include "hbclass.ch"
 
 FUNCTION wasBITMAP()
@@ -95,6 +97,8 @@ PROCEDURE destroyObject() CLASS WAS_BITMAP
    ENDIF
 RETURN
 
+// clang-format on
+
 #pragma BEGINDUMP
 
 #include <windows.h>
@@ -115,8 +119,7 @@ HB_FUNC_STATIC(WAS_BITMAP_DELETE)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
@@ -130,8 +133,7 @@ HB_FUNC_STATIC(WAS_BITMAP_SETBMTYPE)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bmType = wa_par_LONG(1);
   }
 }
@@ -140,8 +142,7 @@ HB_FUNC_STATIC(WAS_BITMAP_GETBMTYPE)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->bmType);
   }
 }
@@ -152,8 +153,7 @@ HB_FUNC_STATIC(WAS_BITMAP_SETBMWIDTH)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bmWidth = wa_par_LONG(1);
   }
 }
@@ -162,8 +162,7 @@ HB_FUNC_STATIC(WAS_BITMAP_GETBMWIDTH)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->bmWidth);
   }
 }
@@ -174,8 +173,7 @@ HB_FUNC_STATIC(WAS_BITMAP_SETBMHEIGHT)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bmHeight = wa_par_LONG(1);
   }
 }
@@ -184,8 +182,7 @@ HB_FUNC_STATIC(WAS_BITMAP_GETBMHEIGHT)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->bmHeight);
   }
 }
@@ -196,8 +193,7 @@ HB_FUNC_STATIC(WAS_BITMAP_SETBMWIDTHBYTES)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bmWidthBytes = wa_par_LONG(1);
   }
 }
@@ -206,8 +202,7 @@ HB_FUNC_STATIC(WAS_BITMAP_GETBMWIDTHBYTES)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_LONG(obj->bmWidthBytes);
   }
 }
@@ -218,8 +213,7 @@ HB_FUNC_STATIC(WAS_BITMAP_SETBMPLANES)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bmPlanes = wa_par_WORD(1);
   }
 }
@@ -228,8 +222,7 @@ HB_FUNC_STATIC(WAS_BITMAP_GETBMPLANES)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->bmPlanes);
   }
 }
@@ -240,8 +233,7 @@ HB_FUNC_STATIC(WAS_BITMAP_SETBMBITSPIXEL)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     obj->bmBitsPixel = wa_par_WORD(1);
   }
 }
@@ -250,8 +242,7 @@ HB_FUNC_STATIC(WAS_BITMAP_GETBMBITSPIXEL)
 {
   auto obj = static_cast<BITMAP *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
-  if (obj != nullptr)
-  {
+  if (obj != nullptr) {
     wa_ret_WORD(obj->bmBitsPixel);
   }
 }
