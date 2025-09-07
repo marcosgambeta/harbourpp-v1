@@ -85,12 +85,10 @@ static HB_CRITICAL_NEW(s_gcMtx);
 #else
 
 #define HB_GC_LOCK()                                                                                                   \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
   } while (false)
 #define HB_GC_UNLOCK()                                                                                                 \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
   } while (false)
 
 #endif // HB_MT_VM
@@ -148,12 +146,10 @@ static HB_PTRUINT s_ulBlocksCheck = 0;
 #define HB_GC_AUTO_DEC() --s_ulBlocks
 #else
 #define HB_GC_AUTO_INC()                                                                                               \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
   } while (false)
 #define HB_GC_AUTO_DEC()                                                                                               \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
   } while (false)
 #endif
 
@@ -176,16 +172,13 @@ static HB_USHORT s_uUsedFlag = HB_GC_USED_FLAG;
 
 static void hb_gcLink(PHB_GARBAGE *pList, PHB_GARBAGE pAlloc)
 {
-  if (*pList)
-  {
+  if (*pList) {
     // add new block at the logical end of list
     pAlloc->pNext = *pList;
     pAlloc->pPrev = (*pList)->pPrev;
     pAlloc->pPrev->pNext = pAlloc;
     (*pList)->pPrev = pAlloc;
-  }
-  else
-  {
+  } else {
     *pList = pAlloc->pNext = pAlloc->pPrev = pAlloc;
   }
 }
@@ -194,11 +187,9 @@ static void hb_gcUnlink(PHB_GARBAGE *pList, PHB_GARBAGE pAlloc)
 {
   pAlloc->pPrev->pNext = pAlloc->pNext;
   pAlloc->pNext->pPrev = pAlloc->pPrev;
-  if (*pList == pAlloc)
-  {
+  if (*pList == pAlloc) {
     *pList = pAlloc->pNext;
-    if (*pList == pAlloc)
-    {
+    if (*pList == pAlloc) {
       *pList = nullptr; // this was the last block
     }
   }
@@ -228,8 +219,7 @@ void *hb_gcAllocRaw(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs)
 
   HB_GC_LOCK();
 #ifdef HB_GC_AUTO
-  if (s_ulBlocks > s_ulBlocksCheck)
-  {
+  if (s_ulBlocks > s_ulBlocksCheck) {
     HB_GC_UNLOCK();
     hb_gcCollectAll(true);
     HB_GC_LOCK();
@@ -246,20 +236,15 @@ void *hb_gcAllocRaw(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs)
 // release a memory block allocated with hb_gcAlloc*()
 void hb_gcFree(void *pBlock)
 {
-  if (pBlock)
-  {
+  if (pBlock) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
     // Don't release the block that will be deleted during finalization
-    if (!(pAlloc->used & HB_GC_DELETE))
-    {
+    if (!(pAlloc->used & HB_GC_DELETE)) {
       HB_GC_LOCK();
-      if (pAlloc->locked)
-      {
+      if (pAlloc->locked) {
         hb_gcUnlink(&s_pLockedBlock, pAlloc);
-      }
-      else
-      {
+      } else {
         hb_gcUnlink(&s_pCurrBlock, pAlloc);
         HB_GC_AUTO_DEC();
       }
@@ -267,9 +252,7 @@ void hb_gcFree(void *pBlock)
 
       HB_GARBAGE_FREE(pAlloc);
     }
-  }
-  else
-  {
+  } else {
     hb_errInternal(HB_EI_XFREENULL, nullptr, nullptr, nullptr);
   }
 }
@@ -291,40 +274,29 @@ void hb_gcRefInc(void *pBlock)
 #undef hb_gcRefFree
 void hb_gcRefFree(void *pBlock)
 {
-  if (pBlock)
-  {
+  if (pBlock) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
-    if (hb_xRefDec(pAlloc))
-    {
+    if (hb_xRefDec(pAlloc)) {
       // Don't release the block that will be deleted during finalization
-      if (!(pAlloc->used & HB_GC_DELETE))
-      {
+      if (!(pAlloc->used & HB_GC_DELETE)) {
         pAlloc->used |= HB_GC_DELETE;
 
         // execute clean-up function
         pAlloc->pFuncs->clear(pBlock);
 
-        if (hb_xRefCount(pAlloc) != 0)
-        {
-          if (pAlloc->used & HB_GC_DELETE)
-          {
+        if (hb_xRefCount(pAlloc) != 0) {
+          if (pAlloc->used & HB_GC_DELETE) {
             pAlloc->used = s_uUsedFlag;
-            if (hb_vmRequestQuery() == 0)
-            {
+            if (hb_vmRequestQuery() == 0) {
               hb_errRT_BASE(EG_DESTRUCTOR, 1301, nullptr, "Reference to freed block", 0);
             }
           }
-        }
-        else
-        {
+        } else {
           HB_GC_LOCK();
-          if (pAlloc->locked)
-          {
+          if (pAlloc->locked) {
             hb_gcUnlink(&s_pLockedBlock, pAlloc);
-          }
-          else
-          {
+          } else {
             hb_gcUnlink(&s_pCurrBlock, pAlloc);
             HB_GC_AUTO_DEC();
           }
@@ -333,9 +305,7 @@ void hb_gcRefFree(void *pBlock)
         }
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errInternal(HB_EI_XFREENULL, nullptr, nullptr, nullptr);
   }
 }
@@ -364,8 +334,7 @@ HB_GARBAGE_FUNC(hb_gcGripMark)
 
 static HB_GARBAGE_FUNC(hb_gcGripRelease)
 {
-  if (static_cast<PHB_ITEM>(Cargo)->isComplex())
-  {
+  if (static_cast<PHB_ITEM>(Cargo)->isComplex()) {
     static_cast<PHB_ITEM>(Cargo)->clear();
   }
 }
@@ -387,8 +356,7 @@ PHB_ITEM hb_gcGripGet(PHB_ITEM pOrigin)
   hb_gcLink(&s_pLockedBlock, pAlloc);
   HB_GC_UNLOCK();
 
-  if (pOrigin)
-  {
+  if (pOrigin) {
     hb_itemCopy(pItem, pOrigin);
   }
 
@@ -404,13 +372,11 @@ void hb_gcGripDrop(PHB_ITEM pItem)
 // outside of Harbour variables
 void *hb_gcLock(void *pBlock)
 {
-  if (pBlock)
-  {
+  if (pBlock) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
     HB_GC_LOCK();
-    if (!pAlloc->locked)
-    {
+    if (!pAlloc->locked) {
       hb_gcUnlink(&s_pCurrBlock, pAlloc);
       hb_gcLink(&s_pLockedBlock, pAlloc);
       HB_GC_AUTO_DEC();
@@ -426,17 +392,13 @@ void *hb_gcLock(void *pBlock)
 // references inside of Harbour variables
 void *hb_gcUnlock(void *pBlock)
 {
-  if (pBlock)
-  {
+  if (pBlock) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
-    if (pAlloc->locked)
-    {
+    if (pAlloc->locked) {
       HB_GC_LOCK();
-      if (pAlloc->locked)
-      {
-        if (--pAlloc->locked == 0)
-        {
+      if (pAlloc->locked) {
+        if (--pAlloc->locked == 0) {
           pAlloc->used = s_uUsedFlag;
 
           hb_gcUnlink(&s_pLockedBlock, pAlloc);
@@ -454,13 +416,10 @@ void hb_gcAttach(void *pBlock)
 {
   PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
-  if (pAlloc->locked)
-  {
+  if (pAlloc->locked) {
     HB_GC_LOCK();
-    if (pAlloc->locked)
-    {
-      if (--pAlloc->locked == 0)
-      {
+    if (pAlloc->locked) {
+      if (--pAlloc->locked == 0) {
         pAlloc->used = s_uUsedFlag;
 
         hb_gcUnlink(&s_pLockedBlock, pAlloc);
@@ -471,8 +430,7 @@ void hb_gcAttach(void *pBlock)
     }
     HB_GC_UNLOCK();
   }
-  if (pAlloc)
-  {
+  if (pAlloc) {
     hb_xRefInc(pAlloc);
   }
 }
@@ -482,8 +440,7 @@ void hb_gcMark(void *pBlock)
 {
   PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
-  if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
-  {
+  if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag) {
     pAlloc->used ^= HB_GC_USED_FLAG; // mark this codeblock as used
     pAlloc->pFuncs->mark(pBlock);
   }
@@ -492,23 +449,16 @@ void hb_gcMark(void *pBlock)
 // Mark a passed item as used so it will be not released by the GC
 void hb_gcItemRef(PHB_ITEM pItem)
 {
-  while (pItem->isByRef())
-  {
-    if (pItem->isEnum())
-    {
+  while (pItem->isByRef()) {
+    if (pItem->isEnum()) {
       return;
-    }
-    else if (pItem->isExtRef())
-    {
+    } else if (pItem->isExtRef()) {
       pItem->item.asExtRef.func->mark(pItem->item.asExtRef.value);
       return;
-    }
-    else if (!pItem->isMemVar() && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0)
-    {
+    } else if (!pItem->isMemVar() && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0) {
       // array item reference
       PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asRefer.BasePtr.array);
-      if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
-      {
+      if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag) {
         // mark this array as used
         pAlloc->used ^= HB_GC_USED_FLAG;
         // mark also all array elements
@@ -519,53 +469,41 @@ void hb_gcItemRef(PHB_ITEM pItem)
     pItem = hb_itemUnRefOnce(pItem);
   }
 
-  if (pItem->isArray())
-  {
+  if (pItem->isArray()) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->arrayValue());
 
     // Check this array only if it was not checked yet
-    if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
-    {
+    if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag) {
       // mark this array as used so it will be no re-checked from
       // other references
       pAlloc->used ^= HB_GC_USED_FLAG;
       // mark also all array elements
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
-  }
-  else if (pItem->isHash())
-  {
+  } else if (pItem->isHash()) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->hashValue());
 
     // Check this hash table only if it was not checked yet
-    if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
-    {
+    if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag) {
       // mark this hash table as used
       pAlloc->used ^= HB_GC_USED_FLAG;
       // mark also all hash elements
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
-  }
-  else if (pItem->isBlock())
-  {
+  } else if (pItem->isBlock()) {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->blockValue());
 
-    if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
-    {
+    if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag) {
       // mark this codeblock as used
       pAlloc->used ^= HB_GC_USED_FLAG;
       // mark as used all detached variables in a codeblock
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
-  }
-  else if (pItem->isPointer())
-  {
-    if (pItem->pointerCollect())
-    {
+  } else if (pItem->isPointer()) {
+    if (pItem->pointerCollect()) {
       PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->pointerValue());
 
-      if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
-      {
+      if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag) {
         // mark this memory block as used
         pAlloc->used ^= HB_GC_USED_FLAG;
         // mark also all internal user blocks attached to this block
@@ -589,12 +527,10 @@ void hb_gcCollectAll(HB_BOOL fForce)
   //         because it can be changed at RT only inside this procedure
   //         when all other threads are stoped by hb_vmSuspendThreads(),
   //         [druzus]
-  if (!s_bCollecting && hb_vmSuspendThreads(fForce))
-  {
+  if (!s_bCollecting && hb_vmSuspendThreads(fForce)) {
     PHB_GARBAGE pAlloc, pDelete;
 
-    if (!s_pCurrBlock || s_bCollecting)
-    {
+    if (!s_pCurrBlock || s_bCollecting) {
       hb_vmResumeThreads();
       return;
     }
@@ -613,11 +549,9 @@ void hb_gcCollectAll(HB_BOOL fForce)
 
     // check list of locked block for blocks referenced from
     // locked block
-    if (s_pLockedBlock)
-    {
+    if (s_pLockedBlock) {
       pAlloc = s_pLockedBlock;
-      do
-      {
+      do {
         pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
         pAlloc = pAlloc->pNext;
       } while (s_pLockedBlock != pAlloc);
@@ -637,21 +571,16 @@ void hb_gcCollectAll(HB_BOOL fForce)
     // deleted block list. [druzus]
 
     pAlloc = nullptr; // for stop condition
-    do
-    {
-      if (s_pCurrBlock->used == s_uUsedFlag)
-      {
+    do {
+      if (s_pCurrBlock->used == s_uUsedFlag) {
         pDelete = s_pCurrBlock;
         pDelete->used |= HB_GC_DELETE | HB_GC_DELETELST;
         hb_gcUnlink(&s_pCurrBlock, pDelete);
         hb_gcLink(&s_pDeletedBlock, pDelete);
         HB_GC_AUTO_DEC();
-      }
-      else
-      {
+      } else {
         // at least one block will not be deleted, set new stop condition
-        if (!pAlloc)
-        {
+        if (!pAlloc) {
           pAlloc = s_pCurrBlock;
         }
         s_pCurrBlock = s_pCurrBlock->pNext;
@@ -666,15 +595,11 @@ void hb_gcCollectAll(HB_BOOL fForce)
 #ifdef HB_GC_AUTO
     // store number of marked blocks for automatic GC activation
     s_ulBlocksMarked = s_ulBlocks;
-    if (s_ulBlocksAuto == 0)
-    {
+    if (s_ulBlocksAuto == 0) {
       s_ulBlocksCheck = HB_GC_AUTO_MAX;
-    }
-    else
-    {
+    } else {
       s_ulBlocksCheck = s_ulBlocksMarked + s_ulBlocksAuto;
-      if (s_ulBlocksCheck <= s_ulBlocksMarked)
-      {
+      if (s_ulBlocksCheck <= s_ulBlocksMarked) {
         s_ulBlocksCheck = HB_GC_AUTO_MAX;
       }
     }
@@ -687,37 +612,30 @@ void hb_gcCollectAll(HB_BOOL fForce)
     hb_vmResumeThreads();
 
     // do we have any deleted blocks?
-    if (s_pDeletedBlock)
-    {
+    if (s_pDeletedBlock) {
       // call a cleanup function
       pAlloc = s_pDeletedBlock;
-      do
-      {
+      do {
         s_pDeletedBlock->pFuncs->clear(HB_BLOCK_PTR(s_pDeletedBlock));
 
         s_pDeletedBlock = s_pDeletedBlock->pNext;
       } while (pAlloc != s_pDeletedBlock);
 
       // release all deleted blocks
-      do
-      {
+      do {
         pDelete = s_pDeletedBlock;
         hb_gcUnlink(&s_pDeletedBlock, pDelete);
-        if (hb_xRefCount(pDelete) != 0)
-        {
+        if (hb_xRefCount(pDelete) != 0) {
           pDelete->used = s_uUsedFlag;
           pDelete->locked = 0;
           HB_GC_LOCK();
           hb_gcLink(&s_pCurrBlock, pDelete);
           HB_GC_AUTO_INC();
           HB_GC_UNLOCK();
-          if (hb_vmRequestQuery() == 0)
-          {
+          if (hb_vmRequestQuery() == 0) {
             hb_errRT_BASE(EG_DESTRUCTOR, 1302, nullptr, "Reference to freed block", 0);
           }
-        }
-        else
-        {
+        } else {
           HB_GARBAGE_FREE(pDelete);
         }
       } while (s_pDeletedBlock);
@@ -732,13 +650,11 @@ void hb_gcCollectAll(HB_BOOL fForce)
 //         does not need additional protection code for MT mode, [druzus]
 void hb_gcReleaseAll(void)
 {
-  if (s_pCurrBlock)
-  {
+  if (s_pCurrBlock) {
     s_bCollecting = true;
 
     PHB_GARBAGE pAlloc = s_pCurrBlock;
-    do
-    {
+    do {
       // call a cleanup function
       s_pCurrBlock->used |= HB_GC_DELETE | HB_GC_DELETELST;
       s_pCurrBlock->pFuncs->clear(HB_BLOCK_PTR(s_pCurrBlock));
@@ -747,8 +663,7 @@ void hb_gcReleaseAll(void)
 
     } while (s_pCurrBlock && pAlloc != s_pCurrBlock);
 
-    do
-    {
+    do {
       HB_TRACE(HB_TR_INFO, ("Release %p", static_cast<void *>(s_pCurrBlock)));
       PHB_GARBAGE pDelete = s_pCurrBlock;
       hb_gcUnlink(&s_pCurrBlock, pDelete);
@@ -800,18 +715,13 @@ HB_FUNC(HB_GCSETAUTO)
 
   HB_GC_LOCK();
   HB_PTRUINT nPrevBlocks = s_ulBlocksAuto;
-  if (fSet)
-  {
+  if (fSet) {
     s_ulBlocksAuto = nBlocks;
-    if (s_ulBlocksAuto == 0)
-    {
+    if (s_ulBlocksAuto == 0) {
       s_ulBlocksCheck = HB_GC_AUTO_MAX;
-    }
-    else
-    {
+    } else {
       s_ulBlocksCheck = s_ulBlocksMarked + s_ulBlocksAuto;
-      if (s_ulBlocksCheck <= s_ulBlocksMarked)
-      {
+      if (s_ulBlocksCheck <= s_ulBlocksMarked) {
         s_ulBlocksCheck = HB_GC_AUTO_MAX;
       }
     }

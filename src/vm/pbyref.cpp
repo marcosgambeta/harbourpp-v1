@@ -55,8 +55,7 @@ HB_FUNC(HB_PISBYREF)
   HB_SIZE nOffset = hb_stackBaseItem()->symbolStackState()->nBaseItem;
   PHB_ITEM pItem = nullptr;
 
-  if (uiParam && uiParam <= hb_stackItem(nOffset)->symbolParamCnt())
-  {
+  if (uiParam && uiParam <= hb_stackItem(nOffset)->symbolParamCnt()) {
     pItem = hb_stackItem(nOffset + 1 + uiParam);
   }
 

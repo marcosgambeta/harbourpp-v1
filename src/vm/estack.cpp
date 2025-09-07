@@ -106,13 +106,11 @@ HB_TLS_ATTR PHB_STACK hb_stack_ptr = nullptr;
 #endif
 
 #define hb_stack_alloc()                                                                                               \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
     hb_stack_ptr = static_cast<PHB_STACK>(hb_xgrab(sizeof(HB_STACK)));                                                 \
   } while (false)
 #define hb_stack_dealloc()                                                                                             \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
     hb_xfree(hb_stack_ptr);                                                                                            \
     hb_stack_ptr = nullptr;                                                                                            \
   } while (false)
@@ -129,18 +127,15 @@ HB_TLS_KEY hb_stack_key;
 #endif
 static volatile auto s_fInited = false;
 #define hb_stack_alloc()                                                                                               \
-  do                                                                                                                   \
-  {                                                                                                                    \
-    if (!s_fInited)                                                                                                    \
-    {                                                                                                                  \
+  do {                                                                                                                 \
+    if (!s_fInited) {                                                                                                  \
       hb_tls_init(hb_stack_key);                                                                                       \
       s_fInited = true;                                                                                                \
     }                                                                                                                  \
     hb_tls_set(hb_stack_key, hb_xgrab(sizeof(HB_STACK)));                                                              \
   } while (false)
 #define hb_stack_dealloc()                                                                                             \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
     hb_xfree(static_cast<void *>(hb_tls_get(hb_stack_key)));                                                           \
     hb_tls_set(hb_stack_key, nullptr);                                                                                 \
   } while (false)
@@ -194,8 +189,7 @@ static void hb_stack_init(PHB_STACK pStack)
   pStack->nItems = STACK_INITHB_ITEMS;
   pStack->pEnd = pStack->pItems + pStack->nItems;
 
-  for (HB_ISIZ n = 0; n < pStack->nItems; ++n)
-  {
+  for (HB_ISIZ n = 0; n < pStack->nItems; ++n) {
     pStack->pItems[n] = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
     pStack->pItems[n]->setType(Harbour::Item::NIL);
   }
@@ -214,12 +208,9 @@ static void hb_stack_destroy_TSD(PHB_STACK pStack)
    HB_TRACE(HB_TR_DEBUG, ("hb_stack_destroy_TSD(%p)", static_cast<void*>(pStack)));
 #endif
 
-  while (pStack->iTSD)
-  {
-    if (pStack->pTSD[pStack->iTSD].pTSD)
-    {
-      if (pStack->pTSD[pStack->iTSD].pTSD->pCleanFunc)
-      {
+  while (pStack->iTSD) {
+    if (pStack->pTSD[pStack->iTSD].pTSD) {
+      if (pStack->pTSD[pStack->iTSD].pTSD->pCleanFunc) {
         pStack->pTSD[pStack->iTSD].pTSD->pCleanFunc(pStack->pTSD[pStack->iTSD].value);
       }
       hb_xfree(pStack->pTSD[pStack->iTSD].value);
@@ -227,8 +218,7 @@ static void hb_stack_destroy_TSD(PHB_STACK pStack)
       pStack->pTSD[pStack->iTSD].pTSD->iHandle = 0;
 #endif
     }
-    if (--pStack->iTSD == 0)
-    {
+    if (--pStack->iTSD == 0) {
       hb_xfree(pStack->pTSD);
       pStack->pTSD = nullptr;
     }
@@ -243,28 +233,24 @@ static void hb_stack_free(PHB_STACK pStack)
 
   hb_stack_destroy_TSD(pStack);
 
-  if (pStack->privates.stack)
-  {
+  if (pStack->privates.stack) {
     hb_xfree(pStack->privates.stack);
     pStack->privates.stack = nullptr;
     pStack->privates.size = pStack->privates.count = pStack->privates.base = 0;
   }
   HB_ISIZ n = pStack->nItems - 1;
-  while (n >= 0)
-  {
+  while (n >= 0) {
     hb_xfree(pStack->pItems[n--]);
   }
   hb_xfree(pStack->pItems);
   pStack->pItems = pStack->pPos = pStack->pBase = nullptr;
   pStack->nItems = 0;
 #if defined(HB_MT_VM)
-  if (pStack->pDirBuffer)
-  {
+  if (pStack->pDirBuffer) {
     hb_xfree(pStack->pDirBuffer);
     pStack->pDirBuffer = nullptr;
   }
-  if (pStack->uiDynH)
-  {
+  if (pStack->uiDynH) {
     hb_xfree(pStack->pDynH);
     pStack->pDynH = nullptr;
     pStack->uiDynH = 0;
@@ -292,18 +278,15 @@ void *hb_stackGetTSD(PHB_TSD pTSD)
   HB_STACK_TLS_PRELOAD
 
 #if defined(HB_MT_VM)
-  if (pTSD->iHandle == 0 || pTSD->iHandle > hb_stack.iTSD || hb_stack.pTSD[pTSD->iHandle].pTSD == nullptr)
-  {
-    if (pTSD->iHandle == 0)
-    {
+  if (pTSD->iHandle == 0 || pTSD->iHandle > hb_stack.iTSD || hb_stack.pTSD[pTSD->iHandle].pTSD == nullptr) {
+    if (pTSD->iHandle == 0) {
 #if defined(HB_USE_CPP_MUTEX)
       TSD_counter.lock();
 #else
       hb_threadEnterCriticalSection(&TSD_counter);
 #endif
       // repeated test protected by mutex to avoid race condition
-      if (pTSD->iHandle == 0)
-      {
+      if (pTSD->iHandle == 0) {
         pTSD->iHandle = ++s_iTSDCounter;
       }
 #if defined(HB_USE_CPP_MUTEX)
@@ -313,23 +296,18 @@ void *hb_stackGetTSD(PHB_TSD pTSD)
 #endif
     }
 
-    if (pTSD->iHandle > hb_stack.iTSD)
-    {
+    if (pTSD->iHandle > hb_stack.iTSD) {
       hb_stack.pTSD =
           static_cast<PHB_TSD_HOLDER>(hb_xrealloc(hb_stack.pTSD, (pTSD->iHandle + 1) * sizeof(HB_TSD_HOLDER)));
       memset(&hb_stack.pTSD[hb_stack.iTSD + 1], 0, (pTSD->iHandle - hb_stack.iTSD) * sizeof(HB_TSD_HOLDER));
       hb_stack.iTSD = pTSD->iHandle;
     }
 #else
-  if (pTSD->iHandle == 0)
-  {
+  if (pTSD->iHandle == 0) {
     HB_SIZE nSize = (hb_stack.iTSD + 2) * sizeof(HB_TSD_HOLDER);
-    if (hb_stack.iTSD == 0)
-    {
+    if (hb_stack.iTSD == 0) {
       hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>(hb_xgrabz(nSize));
-    }
-    else
-    {
+    } else {
       hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>(hb_xrealloc(hb_stack.pTSD, nSize));
     }
     pTSD->iHandle = ++hb_stack.iTSD;
@@ -337,8 +315,7 @@ void *hb_stackGetTSD(PHB_TSD pTSD)
 
     hb_stack.pTSD[pTSD->iHandle].pTSD = pTSD;
     hb_stack.pTSD[pTSD->iHandle].value = hb_xgrabz(pTSD->iSize);
-    if (pTSD->pInitFunc)
-    {
+    if (pTSD->pInitFunc) {
       pTSD->pInitFunc(hb_stack.pTSD[pTSD->iHandle].value);
     }
   }
@@ -368,10 +345,8 @@ void hb_stackReleaseTSD(PHB_TSD pTSD)
 
   HB_STACK_TLS_PRELOAD
 
-  if (pTSD->iHandle && pTSD->iHandle <= hb_stack.iTSD && hb_stack.pTSD[pTSD->iHandle].value)
-  {
-    if (pTSD->pCleanFunc)
-    {
+  if (pTSD->iHandle && pTSD->iHandle <= hb_stack.iTSD && hb_stack.pTSD[pTSD->iHandle].value) {
+    if (pTSD->pCleanFunc) {
       pTSD->pCleanFunc(hb_stack.pTSD[pTSD->iHandle].value);
     }
     hb_xfree(hb_stack.pTSD[pTSD->iHandle].value);
@@ -465,8 +440,7 @@ PHB_DYN_HANDLES hb_stackGetDynHandle(PHB_DYNS pDynSym)
   HB_STACK_TLS_PRELOAD
 
   HB_SYMCNT uiDynSym = pDynSym->uiSymNum;
-  if (uiDynSym > hb_stack.uiDynH)
-  {
+  if (uiDynSym > hb_stack.uiDynH) {
     hb_stack.pDynH = static_cast<PHB_DYN_HANDLES>(hb_xrealloc(hb_stack.pDynH, uiDynSym * sizeof(HB_DYN_HANDLES)));
     memset(&hb_stack.pDynH[hb_stack.uiDynH], 0, (uiDynSym - hb_stack.uiDynH) * sizeof(HB_DYN_HANDLES));
     hb_stack.uiDynH = uiDynSym;
@@ -484,12 +458,9 @@ void hb_stackClearMemvars(HB_SYMCNT uiExcept)
   HB_STACK_TLS_PRELOAD
 
   HB_SYMCNT uiDynSym = hb_stack.uiDynH;
-  while (uiDynSym > 0)
-  {
-    if (uiDynSym-- != uiExcept)
-    {
-      if (hb_stack.pDynH[uiDynSym].pMemvar)
-      {
+  while (uiDynSym > 0) {
+    if (uiDynSym-- != uiExcept) {
+      if (hb_stack.pDynH[uiDynSym].pMemvar) {
         auto pMemvar = static_cast<PHB_ITEM>(hb_stack.pDynH[uiDynSym].pMemvar);
         hb_stack.pDynH[uiDynSym].pMemvar = nullptr;
         hb_memvarValueDecRef(pMemvar);
@@ -598,13 +569,10 @@ void *hb_stackId(void)
 #endif
 
 #if defined(HB_MT_VM)
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
     return static_cast<void *>(&hb_stack);
-  }
-  else
-  {
+  } else {
     return nullptr;
   }
 #else
@@ -624,13 +592,11 @@ void hb_stackPop(void)
 
   HB_STACK_TLS_PRELOAD
 
-  if (--hb_stack.pPos <= hb_stack.pBase)
-  {
+  if (--hb_stack.pPos <= hb_stack.pBase) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
-  if ((*hb_stack.pPos)->isComplex())
-  {
+  if ((*hb_stack.pPos)->isComplex()) {
     (*hb_stack.pPos)->clear();
   }
 }
@@ -644,13 +610,11 @@ void hb_stackPopReturn(void)
 
   HB_STACK_TLS_PRELOAD
 
-  if ((&hb_stack.Return)->isComplex())
-  {
+  if ((&hb_stack.Return)->isComplex()) {
     (&hb_stack.Return)->clear();
   }
 
-  if (--hb_stack.pPos <= hb_stack.pBase)
-  {
+  if (--hb_stack.pPos <= hb_stack.pBase) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
@@ -666,8 +630,7 @@ void hb_stackDec(void)
 
   HB_STACK_TLS_PRELOAD
 
-  if (--hb_stack.pPos <= hb_stack.pBase)
-  {
+  if (--hb_stack.pPos <= hb_stack.pBase) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 }
@@ -681,8 +644,7 @@ void hb_stackDecrease(HB_SIZE nItems)
 
   HB_STACK_TLS_PRELOAD
 
-  if ((hb_stack.pPos -= nItems) <= hb_stack.pBase)
-  {
+  if ((hb_stack.pPos -= nItems) <= hb_stack.pBase) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 }
@@ -697,8 +659,7 @@ void hb_stackPush(void)
   HB_STACK_TLS_PRELOAD
 
   // enough room for another item ?
-  if (++hb_stack.pPos == hb_stack.pEnd)
-  {
+  if (++hb_stack.pPos == hb_stack.pEnd) {
     hb_stackIncrease();
   }
 }
@@ -712,8 +673,7 @@ PHB_ITEM hb_stackAllocItem(void)
 
   HB_STACK_TLS_PRELOAD
 
-  if (++hb_stack.pPos == hb_stack.pEnd)
-  {
+  if (++hb_stack.pPos == hb_stack.pEnd) {
     hb_stackIncrease();
   }
 
@@ -733,8 +693,7 @@ void hb_stackPushReturn(void)
   hb_itemRawMove(*hb_stack.pPos, &hb_stack.Return);
 
   // enough room for another item ?
-  if (++hb_stack.pPos == hb_stack.pEnd)
-  {
+  if (++hb_stack.pPos == hb_stack.pEnd) {
     hb_stackIncrease();
   }
 }
@@ -761,8 +720,7 @@ void hb_stackIncrease(void)
   hb_stack.nItems += STACK_EXPANDHB_ITEMS;
   hb_stack.pEnd = hb_stack.pItems + hb_stack.nItems;
 
-  do
-  {
+  do {
     hb_stack.pItems[nEndIndex] = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
     hb_stack.pItems[nEndIndex]->setType(Harbour::Item::NIL);
   } while (++nEndIndex < hb_stack.nItems);
@@ -773,11 +731,9 @@ void hb_stackRemove(HB_ISIZ nUntilPos)
   HB_STACK_TLS_PRELOAD
   PHB_ITEM *pEnd = hb_stack.pItems + nUntilPos;
 
-  while (hb_stack.pPos > pEnd)
-  {
+  while (hb_stack.pPos > pEnd) {
     --hb_stack.pPos;
-    if ((*hb_stack.pPos)->isComplex())
-    {
+    if ((*hb_stack.pPos)->isComplex()) {
       (*hb_stack.pPos)->clear();
     }
   }
@@ -801,23 +757,18 @@ static void hb_stackDispLocal(void)
   hb_conOutErr(hb_conNewLine(), 0);
   hb_conOutErr("--------------------------", 0);
 
-  for (PHB_ITEM *pBase = hb_stack.pBase; pBase <= hb_stack.pPos; pBase++)
-  {
+  for (PHB_ITEM *pBase = hb_stack.pBase; pBase <= hb_stack.pPos; pBase++) {
     hb_conOutErr(hb_conNewLine(), 0);
 
-    switch (hb_itemType(*pBase))
-    {
+    switch (hb_itemType(*pBase)) {
     case Harbour::Item::NIL:
       hb_snprintf(buffer, sizeof(buffer), HB_I_("NIL "));
       break;
 
     case Harbour::Item::ARRAY:
-      if (hb_arrayIsObject(*pBase))
-      {
+      if (hb_arrayIsObject(*pBase)) {
         hb_snprintf(buffer, sizeof(buffer), HB_I_("OBJECT = %s "), hb_objGetClsName(*pBase));
-      }
-      else
-      {
+      } else {
         hb_snprintf(buffer, sizeof(buffer), HB_I_("ARRAY "));
       }
       break;
@@ -829,15 +780,13 @@ static void hb_stackDispLocal(void)
     case Harbour::Item::DATE: {
       char szDate[9];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("DATE = \"%s\" "), (*pBase)->getDS(szDate));
-    }
-    break;
+    } break;
 
     case Harbour::Item::TIMESTAMP: {
       char szDateTime[24];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("TIMESTAMP = \"%s\" "),
                   hb_timeStampStr(szDateTime, (*pBase)->dateTimeJulian(), (*pBase)->dateTimeTime()));
-    }
-    break;
+    } break;
 
     case Harbour::Item::DOUBLE:
       hb_snprintf(buffer, sizeof(buffer), HB_I_("DOUBLE = %f "), (*pBase)->getND());
@@ -887,8 +836,7 @@ PHB_ITEM hb_stackNewFrame(PHB_STACK_STATE pFrame, HB_USHORT uiParams)
   PHB_ITEM *pBase = hb_stack.pPos - uiParams - 2;
   PHB_ITEM pItem = *pBase; // procedure symbol
 
-  if (!pItem->isSymbol())
-  {
+  if (!pItem->isSymbol()) {
 #if defined(HB_VM_DEBUG)
     hb_stackDispLocal();
 #endif
@@ -915,16 +863,13 @@ PHB_ITEM hb_stackNewFrame(PHB_STACK_STATE pFrame, HB_USHORT uiParams)
 void hb_stackOldFrame(PHB_STACK_STATE pFrame)
 {
   HB_STACK_TLS_PRELOAD
-  if (hb_stack.pPos <= hb_stack.pBase)
-  {
+  if (hb_stack.pPos <= hb_stack.pBase) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
-  do
-  {
+  do {
     --hb_stack.pPos;
-    if ((*hb_stack.pPos)->isComplex())
-    {
+    if ((*hb_stack.pPos)->isComplex()) {
       (*hb_stack.pPos)->clear();
     }
   } while (hb_stack.pPos > hb_stack.pBase);
@@ -938,8 +883,7 @@ void hb_stackOldFrame(PHB_STACK_STATE pFrame)
 PHB_ITEM hb_stackItem(HB_ISIZ nItemPos)
 {
   HB_STACK_TLS_PRELOAD
-  if (nItemPos < 0)
-  {
+  if (nItemPos < 0) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
@@ -950,8 +894,7 @@ PHB_ITEM hb_stackItem(HB_ISIZ nItemPos)
 PHB_ITEM hb_stackItemFromTop(int iFromTop)
 {
   HB_STACK_TLS_PRELOAD
-  if (iFromTop >= 0)
-  {
+  if (iFromTop >= 0) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
@@ -962,8 +905,7 @@ PHB_ITEM hb_stackItemFromTop(int iFromTop)
 PHB_ITEM hb_stackItemFromBase(int iFromBase)
 {
   HB_STACK_TLS_PRELOAD
-  if (iFromBase < 0)
-  {
+  if (iFromBase < 0) {
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
@@ -978,15 +920,13 @@ PHB_ITEM hb_stackLocalVariable(int iLocal)
 
   // if( iLocal <= 0 )
   //    hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
-  if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt())
-  {
+  if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt()) {
     // function with variable number of parameters:
     // FUNCTION foo(a,b,c,...)
     // LOCAL x,y,z
     // number of passed parameters is bigger then number of declared
     // parameters - skip additional parameters only for local variables
-    if (iLocal > pBase->symbolParamDeclCnt())
-    {
+    if (iLocal > pBase->symbolParamDeclCnt()) {
       iLocal += pBase->symbolParamCnt() - pBase->symbolParamDeclCnt();
     }
   }
@@ -1001,15 +941,13 @@ PHB_ITEM hb_stackLocalVariableAt(int *piFromBase)
 
   // if( *piFromBase <= 0 )
   //    hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
-  if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt())
-  {
+  if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt()) {
     // function with variable number of parameters:
     // FUNCTION foo(a,b,c,...)
     // LOCAL x,y,z
     // number of passed parameters is bigger then number of declared
     // parameters - skip additional parameters only for local variables
-    if (*piFromBase > pBase->symbolParamDeclCnt())
-    {
+    if (*piFromBase > pBase->symbolParamDeclCnt()) {
       *piFromBase += pBase->symbolParamCnt() - pBase->symbolParamDeclCnt();
     }
   }
@@ -1060,8 +998,7 @@ HB_ISIZ hb_stackBaseOffset(void)
 HB_ISIZ hb_stackTotalItems(void)
 {
 #if defined(HB_MT_VM)
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
     return hb_stack.nItems;
   }
@@ -1075,8 +1012,7 @@ HB_ISIZ hb_stackTotalItems(void)
 #if defined(HB_MT_VM)
 void *hb_stackAllocator(void)
 {
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
     return hb_stack.allocator;
   }
@@ -1094,11 +1030,9 @@ char *hb_stackDateBuffer(void)
 char *hb_stackDirBuffer(void)
 {
 #if defined(HB_MT_VM)
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
-    if (!hb_stack.pDirBuffer)
-    {
+    if (!hb_stack.pDirBuffer) {
       hb_stack.pDirBuffer = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
     }
     return hb_stack.pDirBuffer;
@@ -1110,8 +1044,7 @@ char *hb_stackDirBuffer(void)
 PHB_IOERRORS hb_stackIOErrors(void)
 {
 #if defined(HB_MT_VM)
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
     return &hb_stack.IOErrors;
   }
@@ -1122,13 +1055,10 @@ PHB_IOERRORS hb_stackIOErrors(void)
 void *hb_stackGetGT(void)
 {
 #if defined(HB_MT_VM)
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
     return hb_stack.hGT;
-  }
-  else
-  {
+  } else {
     return nullptr;
   }
 #else
@@ -1271,8 +1201,7 @@ void hb_stackClearMemvarsBase(void)
 
   PHB_ITEM pBase = *hb_stack.pBase;
 
-  while (pBase->symbolStackState()->nPrivateBase != 0)
-  {
+  while (pBase->symbolStackState()->nPrivateBase != 0) {
     pBase->symbolStackState()->nPrivateBase = 0;
     pBase = *(hb_stack.pItems + pBase->symbolStackState()->nBaseItem);
   }
@@ -1284,8 +1213,7 @@ int hb_stackCallDepth(void)
   HB_ISIZ nOffset = hb_stack.pBase - hb_stack.pItems;
   int iLevel = 0;
 
-  while (nOffset > 0)
-  {
+  while (nOffset > 0) {
     nOffset = (*(hb_stack.pItems + nOffset))->symbolStackState()->nBaseItem;
     ++iLevel;
   }
@@ -1298,17 +1226,13 @@ HB_ISIZ hb_stackBaseProcOffset(int iLevel)
   HB_STACK_TLS_PRELOAD
   HB_ISIZ nOffset = hb_stack.pBase - hb_stack.pItems;
 
-  while (iLevel-- > 0 && nOffset > 0)
-  {
+  while (iLevel-- > 0 && nOffset > 0) {
     nOffset = (*(hb_stack.pItems + nOffset))->symbolStackState()->nBaseItem;
   }
 
-  if (iLevel < 0 && (nOffset > 0 || (*hb_stack.pItems)->isSymbol()))
-  {
+  if (iLevel < 0 && (nOffset > 0 || (*hb_stack.pItems)->isSymbol())) {
     return nOffset;
-  }
-  else
-  {
+  } else {
     return -1;
   }
 }
@@ -1318,12 +1242,10 @@ HB_ISIZ hb_stackBaseSymbolOffset(PHB_SYMB pSymbol)
   HB_STACK_TLS_PRELOAD
   HB_ISIZ nOffset = hb_stack.pBase - hb_stack.pItems;
 
-  while (nOffset > 0)
-  {
+  while (nOffset > 0) {
     PHB_ITEM pItem = hb_stack.pItems[nOffset];
     if (pItem->symbolValue() == pSymbol ||
-        (pSymbol->pDynSym != nullptr && pItem->symbolValue()->pDynSym == pSymbol->pDynSym))
-    {
+        (pSymbol->pDynSym != nullptr && pItem->symbolValue()->pDynSym == pSymbol->pDynSym)) {
       return nOffset;
     }
     nOffset = pItem->symbolStackState()->nBaseItem;
@@ -1338,22 +1260,17 @@ void hb_stackBaseProcInfo(char *szProcName, HB_USHORT *puiProcLine)
   // szProcName should be at least HB_SYMBOL_NAME_LEN + 1 bytes buffer
 
 #if defined(HB_MT_VM)
-  if (!hb_stack_ready())
-  {
+  if (!hb_stack_ready()) {
     szProcName[0] = '\0';
     *puiProcLine = 0;
-  }
-  else
+  } else
 #endif
   {
     HB_STACK_TLS_PRELOAD
-    if (hb_stack.pPos > hb_stack.pBase)
-    {
+    if (hb_stack.pPos > hb_stack.pBase) {
       hb_strncpy(szProcName, (*hb_stack.pBase)->symbolValue()->szName, HB_SYMBOL_NAME_LEN);
       *puiProcLine = (*hb_stack.pBase)->symbolStackState()->uiLineNo;
-    }
-    else
-    {
+    } else {
       szProcName[0] = '\0';
       *puiProcLine = 0;
     }
@@ -1371,8 +1288,7 @@ void hb_stackDispCall(void)
   HB_USHORT uiLine;
   char file[HB_PATH_MAX];
 
-  while (hb_procinfo(iLevel++, buffer, &uiLine, file))
-  {
+  while (hb_procinfo(iLevel++, buffer, &uiLine, file)) {
     auto l = static_cast<int>(strlen(buffer));
     hb_snprintf(buffer + l, sizeof(buffer) - l, "(%hu)%s%s", uiLine, *file ? HB_I_(" in ") : "", file);
     hb_conOutErr("Called from ", 0);
@@ -1394,8 +1310,7 @@ static HB_DYNS_FUNC(hb_stackMemvarScan)
   HB_SYMBOL_UNUSED(Cargo);
 
   pMemvar = hb_dynsymGetMemvar(pDynSymbol);
-  if (pMemvar && pMemvar->isGCItem())
-  {
+  if (pMemvar && pMemvar->isGCItem()) {
     hb_gcItemRef(pMemvar);
   }
 
@@ -1410,11 +1325,9 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
   PHB_PRIVATE_STACK pPrivateStack = &pStack->privates;
   HB_SIZE nCount = pPrivateStack->count;
 
-  while (nCount)
-  {
+  while (nCount) {
     PHB_ITEM pMemvar = pPrivateStack->stack[--nCount].pPrevMemvar;
-    if (pMemvar && pMemvar->isGCItem())
-    {
+    if (pMemvar && pMemvar->isGCItem()) {
       hb_gcItemRef(pMemvar);
     }
   }
@@ -1423,11 +1336,9 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
   {
     HB_SYMCNT uiDynSym = pStack->uiDynH;
 
-    while (uiDynSym > 0)
-    {
+    while (uiDynSym > 0) {
       auto pMemvar = static_cast<PHB_ITEM>(pStack->pDynH[--uiDynSym].pMemvar);
-      if (pMemvar && pMemvar->isGCItem())
-      {
+      if (pMemvar && pMemvar->isGCItem()) {
         hb_gcItemRef(pMemvar);
       }
     }
@@ -1442,13 +1353,10 @@ static void hb_stackIsTsdRef(PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc)
 {
   int iTSD = pStack->iTSD;
 
-  while (iTSD)
-  {
-    if (pStack->pTSD[iTSD].pTSD && pStack->pTSD[iTSD].pTSD->pCleanFunc == pCleanFunc)
-    {
+  while (iTSD) {
+    if (pStack->pTSD[iTSD].pTSD && pStack->pTSD[iTSD].pTSD->pCleanFunc == pCleanFunc) {
       auto pItem = static_cast<PHB_ITEM>(pStack->pTSD[iTSD].value);
-      if (pItem->isGCItem())
-      {
+      if (pItem->isGCItem()) {
         hb_gcItemRef(pItem);
       }
     }
@@ -1466,11 +1374,9 @@ void hb_stackIsStackRef(void *pStackId, PHB_TSD_FUNC pCleanFunc)
 
   auto pStack = static_cast<PHB_STACK>(pStackId);
   HB_ISIZ nCount = pStack->pPos - pStack->pItems;
-  while (nCount > 0)
-  {
+  while (nCount > 0) {
     PHB_ITEM pItem = pStack->pItems[--nCount];
-    if (pItem->isGCItem())
-    {
+    if (pItem->isGCItem()) {
       hb_gcItemRef(pItem);
     }
   }
@@ -1479,8 +1385,7 @@ void hb_stackIsStackRef(void *pStackId, PHB_TSD_FUNC pCleanFunc)
 
   hb_stackIsMemvarRef(pStack);
 
-  if (pCleanFunc)
-  {
+  if (pCleanFunc) {
     hb_stackIsTsdRef(pStack, pCleanFunc);
   }
 
@@ -1497,8 +1402,7 @@ void hb_stackUpdateAllocator(void *pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCoun
   {
     auto pStack = static_cast<PHB_STACK>(pStackId);
 
-    if (pStack->allocator)
-    {
+    if (pStack->allocator) {
       pStack->allocator = pFunc(pStack->allocator, iCount);
     }
   }
@@ -1512,8 +1416,7 @@ void hb_stackUpdateAllocator(void *pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCoun
 PHB_TRACEINFO hb_traceinfo(void)
 {
 #if defined(HB_MT_VM)
-  if (hb_stack_ready())
-  {
+  if (hb_stack_ready()) {
     HB_STACK_TLS_PRELOAD
     return &hb_stack.traceInfo;
   }

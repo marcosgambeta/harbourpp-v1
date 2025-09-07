@@ -57,23 +57,16 @@ HB_FUNC(HB_HASH)
 {
   auto iPCount = hb_pcount();
 
-  if (iPCount & 1)
-  {
+  if (iPCount & 1) {
     hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pHash = hb_hashNew(nullptr);
-    for (auto iParam = 1; iParam <= iPCount; iParam += 2)
-    {
+    for (auto iParam = 1; iParam <= iPCount; iParam += 2) {
       auto pKey = hb_param(iParam, Harbour::Item::HASHKEY);
       auto pValue = hb_param(iParam + 1, Harbour::Item::ANY);
-      if (pKey)
-      {
+      if (pKey) {
         hb_hashAdd(pHash, pKey, pValue);
-      }
-      else
-      {
+      } else {
         hb_errRT_BASE(EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 3, pHash,
                       hb_param(iParam, Harbour::Item::ANY), pValue);
         break;
@@ -88,14 +81,11 @@ HB_FUNC(HB_HHASKEY)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     HB_SIZE nPos;
     hb_retl(hb_hashScanSoft(pHash, pKey, &nPos));
     hb_storns(nPos, 3);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -105,14 +95,11 @@ HB_FUNC(HB_HPOS)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     HB_SIZE nPos;
     hb_hashScan(pHash, pKey, &nPos);
     hb_retns(nPos);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -122,20 +109,14 @@ HB_FUNC(HB_HGET)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     auto pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
-    if (pDest)
-    {
+    if (pDest) {
       hb_itemReturn(pDest);
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pHash, pKey);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -145,24 +126,17 @@ HB_FUNC(HB_HGETDEF)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     auto pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
-    if (pDest)
-    {
+    if (pDest) {
       hb_itemReturn(pDest);
-    }
-    else
-    {
+    } else {
       auto pDefault = hb_param(3, Harbour::Item::ANY);
-      if (pDefault)
-      {
+      if (pDefault) {
         hb_itemReturn(pDefault);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -172,34 +146,27 @@ HB_FUNC(HB_HSETDEF)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     auto pDefault = hb_param(3, Harbour::Item::ANY);
     int iFlags = hb_hashGetFlags(pHash);
 
-    if ((iFlags & HB_HASH_AUTOADD_ACCESS) == 0)
-    {
+    if ((iFlags & HB_HASH_AUTOADD_ACCESS) == 0) {
       hb_hashSetFlags(pHash, HB_HASH_AUTOADD_ACCESS);
     }
 
     auto pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
 
-    if ((iFlags & HB_HASH_AUTOADD_ACCESS) == 0)
-    {
+    if ((iFlags & HB_HASH_AUTOADD_ACCESS) == 0) {
       hb_hashClearFlags(pHash, HB_HASH_AUTOADD_ACCESS);
     }
 
-    if (pDest)
-    {
-      if (pDefault && !hb_itemTypeCmp(pDest, pDefault))
-      {
+    if (pDest) {
+      if (pDefault && !hb_itemTypeCmp(pDest, pDefault)) {
         hb_itemCopy(pDest, pDefault);
       }
       hb_itemReturn(pDest);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -209,14 +176,11 @@ HB_FUNC(HB_HGETREF)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     auto pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
     hb_itemParamStore(3, pDest);
     hb_retl(pDest != nullptr);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -227,13 +191,10 @@ HB_FUNC(HB_HSET)
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
   auto pValue = hb_param(3, Harbour::Item::ANY);
 
-  if (pHash && pKey && pValue)
-  {
+  if (pHash && pKey && pValue) {
     hb_hashAdd(pHash, pKey, pValue);
     hb_itemReturn(pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -243,13 +204,10 @@ HB_FUNC(HB_HDEL)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (pHash && pKey)
-  {
+  if (pHash && pKey) {
     hb_hashDel(pHash, pKey);
     hb_itemReturn(pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -259,20 +217,14 @@ HB_FUNC(HB_HKEYAT)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (pHash && pPos)
-  {
+  if (pHash && pPos) {
     auto pKey = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
-    if (pKey)
-    {
+    if (pKey) {
       hb_itemReturn(pKey);
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -283,28 +235,19 @@ HB_FUNC(HB_HVALUEAT)
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
   auto pValue = hb_param(3, Harbour::Item::ANY);
 
-  if (pHash && pPos)
-  {
+  if (pHash && pPos) {
     auto pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-    if (pItem != nullptr)
-    {
-      if (pValue)
-      {
+    if (pItem != nullptr) {
+      if (pValue) {
         hb_itemCopy(pItem, pValue);
-      }
-      else
-      {
+      } else {
         pValue = pItem;
       }
       hb_itemReturn(pValue);
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -314,34 +257,25 @@ HB_FUNC(HB_HPAIRAT)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (pHash && pPos)
-  {
+  if (pHash && pPos) {
     auto pKey = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
     auto pValue = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-    if (pKey && pValue)
-    {
+    if (pKey && pValue) {
       auto pDstKey = hb_param(3, Harbour::Item::BYREF);
       auto pDstVal = hb_param(4, Harbour::Item::BYREF);
-      if (pDstKey && pDstVal)
-      {
+      if (pDstKey && pDstVal) {
         hb_itemCopy(pDstKey, pKey);
         hb_itemCopy(pDstVal, pValue);
-      }
-      else
-      {
+      } else {
         auto pResult = hb_itemArrayNew(2);
         hb_arraySet(pResult, 1, pKey);
         hb_arraySet(pResult, 2, pValue);
         hb_itemReturnRelease(pResult);
       }
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -351,19 +285,13 @@ HB_FUNC(HB_HDELAT)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (pHash && pPos)
-  {
-    if (hb_hashDelAt(pHash, hb_itemGetNS(pPos)))
-    {
+  if (pHash && pPos) {
+    if (hb_hashDelAt(pHash, hb_itemGetNS(pPos))) {
       hb_itemReturn(pHash);
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 2, pHash, pPos);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -372,12 +300,9 @@ HB_FUNC(HB_HKEYS)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_itemReturnRelease(hb_hashGetKeys(pHash));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -386,12 +311,9 @@ HB_FUNC(HB_HVALUES)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_itemReturnRelease(hb_hashGetValues(pHash));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -400,13 +322,10 @@ HB_FUNC(HB_HCLEAR)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_hashClear(pHash);
     hb_itemReturn(pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -416,20 +335,16 @@ HB_FUNC(HB_HFILL)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pValue = hb_param(2, Harbour::Item::ANY);
 
-  if (pHash && pValue)
-  {
+  if (pHash && pValue) {
     PHB_ITEM pDest;
     HB_SIZE nPos = 0;
 
-    while ((pDest = hb_hashGetValueAt(pHash, ++nPos)) != nullptr)
-    {
+    while ((pDest = hb_hashGetValueAt(pHash, ++nPos)) != nullptr) {
       hb_itemCopy(pDest, pValue);
     }
 
     hb_itemReturn(pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -438,12 +353,9 @@ HB_FUNC(HB_HCLONE)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_hashCloneTo(hb_stackReturnItem(), pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -453,38 +365,29 @@ HB_FUNC(HB_HCOPY)
   auto pSource = hb_param(1, Harbour::Item::HASH);
   auto pDest = hb_param(2, Harbour::Item::HASH);
 
-  if (pSource && pDest)
-  {
-    if (pSource != pDest)
-    {
+  if (pSource && pDest) {
+    if (pSource != pDest) {
       HB_SIZE nLen = hb_hashLen(pSource);
 
       HB_SIZE nStart = hb_parns(3);
-      if (!nStart)
-      {
+      if (!nStart) {
         ++nStart;
       }
       HB_SIZE nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
-      while (nCount--)
-      {
+      while (nCount--) {
         auto pKey = hb_hashGetKeyAt(pSource, nStart);
         auto pValue = hb_hashGetValueAt(pSource, nStart);
-        if (pKey && pValue)
-        {
+        if (pKey && pValue) {
           hb_hashAdd(pDest, pKey, pValue);
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
     }
     hb_itemReturn(pDest);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -494,21 +397,16 @@ HB_FUNC(HB_HMERGE)
   auto pDest = hb_param(1, Harbour::Item::HASH);
   auto pSource = hb_param(2, Harbour::Item::HASH);
 
-  if (pDest && pSource)
-  {
-    if (pSource != pDest)
-    {
+  if (pDest && pSource) {
+    if (pSource != pDest) {
       auto pAction = hb_param(3, Harbour::Item::EVALITEM | Harbour::Item::NUMERIC);
 
-      if (pAction && pAction->isEvalItem())
-      {
+      if (pAction && pAction->isEvalItem()) {
         HB_SIZE nLen = hb_hashLen(pSource), nPos = 0;
-        while (++nPos <= nLen)
-        {
+        while (++nPos <= nLen) {
           auto pKey = hb_hashGetKeyAt(pSource, nPos);
           auto pValue = hb_hashGetValueAt(pSource, nPos);
-          if (pKey && pValue)
-          {
+          if (pKey && pValue) {
             hb_vmPushEvalSym();
             hb_vmPush(pAction);
             hb_vmPush(pKey);
@@ -517,27 +415,20 @@ HB_FUNC(HB_HMERGE)
             hb_vmSend(3);
             {
               auto pReturn = hb_stackReturnItem();
-              if (pReturn->isLogical() && pReturn->getL())
-              {
+              if (pReturn->isLogical() && pReturn->getL()) {
                 hb_hashAdd(pDest, pKey, pValue);
               }
             }
-          }
-          else
-          {
+          } else {
             break;
           }
         }
-      }
-      else
-      {
+      } else {
         hb_hashJoin(pDest, pSource, pAction ? pAction->getNI() : HB_HASH_UNION);
       }
     }
     hb_itemReturn(pDest);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -547,41 +438,33 @@ HB_FUNC(HB_HEVAL)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pBlock = hb_param(2, Harbour::Item::EVALITEM);
 
-  if (pHash && pBlock)
-  {
+  if (pHash && pBlock) {
     HB_SIZE nLen = hb_hashLen(pHash);
 
     HB_SIZE nStart = hb_parns(3);
-    if (!nStart)
-    {
+    if (!nStart) {
       ++nStart;
     }
     HB_SIZE nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
-    while (nCount--)
-    {
+    while (nCount--) {
       auto pKey = hb_hashGetKeyAt(pHash, nStart);
       auto pValue = hb_hashGetValueAt(pHash, nStart);
-      if (pKey && pValue)
-      {
+      if (pKey && pValue) {
         hb_vmPushEvalSym();
         hb_vmPush(pBlock);
         hb_vmPush(pKey);
         hb_vmPush(pValue);
         hb_vmPushSize(nStart);
         hb_vmSend(3);
-      }
-      else
-      {
+      } else {
         break;
       }
       ++nStart;
     }
 
     hb_itemReturn(pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -591,27 +474,22 @@ HB_FUNC(HB_HSCAN)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pValue = hb_param(2, Harbour::Item::ANY);
 
-  if (pHash && pValue)
-  {
+  if (pHash && pValue) {
     bool fExact = hb_parl(5);
     auto fFound = false;
     HB_SIZE nLen = hb_hashLen(pHash);
 
     HB_SIZE nStart = hb_parns(3);
-    if (!nStart)
-    {
+    if (!nStart) {
       ++nStart;
     }
     HB_SIZE nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
-    if (pValue->isEvalItem())
-    {
-      while (nCount--)
-      {
+    if (pValue->isEvalItem()) {
+      while (nCount--) {
         auto pKey = hb_hashGetKeyAt(pHash, nStart);
         auto pVal = hb_hashGetValueAt(pHash, nStart);
-        if (pKey && pValue)
-        {
+        if (pKey && pValue) {
           hb_vmPushEvalSym();
           hb_vmPush(pValue);
           hb_vmPush(pKey);
@@ -620,199 +498,133 @@ HB_FUNC(HB_HSCAN)
           hb_vmSend(3);
           {
             auto pReturn = hb_stackReturnItem();
-            if (pReturn->isLogical() && pReturn->getL())
-            {
+            if (pReturn->isLogical() && pReturn->getL()) {
               fFound = true;
               break;
             }
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isString())
-    {
-      while (nCount--)
-      {
+    } else if (pValue->isString()) {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isString() && hb_itemStrCmp(pItem, pValue, fExact) == 0)
-          {
+        if (pItem != nullptr) {
+          if (pItem->isString() && hb_itemStrCmp(pItem, pValue, fExact) == 0) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isNumInt())
-    {
+    } else if (pValue->isNumInt()) {
       HB_MAXINT nValue = pValue->getNInt();
-      while (nCount--)
-      {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isNumeric() && pItem->getNInt() == nValue && pItem->getND() == static_cast<double>(nValue))
-          {
+        if (pItem != nullptr) {
+          if (pItem->isNumeric() && pItem->getNInt() == nValue && pItem->getND() == static_cast<double>(nValue)) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isNumeric())
-    {
+    } else if (pValue->isNumeric()) {
       auto dValue = pValue->getND();
-      while (nCount--)
-      {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isNumeric() && pItem->getND() == dValue)
-          {
+        if (pItem != nullptr) {
+          if (pItem->isNumeric() && pItem->getND() == dValue) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isDateTime())
-    {
-      while (nCount--)
-      {
+    } else if (pValue->isDateTime()) {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
+        if (pItem != nullptr) {
           if (pItem->isDateTime() && pItem->dateTimeJulian() == pValue->dateTimeJulian() &&
-              (!fExact || pItem->dateTimeTime() == pValue->dateTimeTime()))
-          {
+              (!fExact || pItem->dateTimeTime() == pValue->dateTimeTime())) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isLogical())
-    {
+    } else if (pValue->isLogical()) {
       HB_BOOL fValue = hb_itemGetL(pValue);
-      while (nCount--)
-      {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isLogical() && pItem->getL() == fValue)
-          {
+        if (pItem != nullptr) {
+          if (pItem->isLogical() && pItem->getL() == fValue) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isNil())
-    {
-      while (nCount--)
-      {
+    } else if (pValue->isNil()) {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isNil())
-          {
+        if (pItem != nullptr) {
+          if (pItem->isNil()) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (pValue->isPointer())
-    {
-      while (nCount--)
-      {
+    } else if (pValue->isPointer()) {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isPointer() && pItem->pointerValue() == pValue->pointerValue())
-          {
+        if (pItem != nullptr) {
+          if (pItem->isPointer() && pItem->pointerValue() == pValue->pointerValue()) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (fExact && pValue->isArray())
-    {
-      while (nCount--)
-      {
+    } else if (fExact && pValue->isArray()) {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isArray() && pItem->arrayValue() == pValue->arrayValue())
-          {
+        if (pItem != nullptr) {
+          if (pItem->isArray() && pItem->arrayValue() == pValue->arrayValue()) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
       }
-    }
-    else if (fExact && pValue->isHash())
-    {
-      while (nCount--)
-      {
+    } else if (fExact && pValue->isHash()) {
+      while (nCount--) {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
-        if (pItem != nullptr)
-        {
-          if (pItem->isHash() && pItem->hashValue() == pValue->hashValue())
-          {
+        if (pItem != nullptr) {
+          if (pItem->isHash() && pItem->hashValue() == pValue->hashValue()) {
             fFound = true;
             break;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
         ++nStart;
@@ -820,9 +632,7 @@ HB_FUNC(HB_HSCAN)
     }
 
     hb_retns(fFound ? nStart : 0);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -831,13 +641,10 @@ HB_FUNC(HB_HSORT)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_hashSort(pHash);
     hb_itemReturn(pHash);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -846,32 +653,24 @@ HB_FUNC(HB_HCASEMATCH)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL);
     int iFlags = hb_hashGetFlags(pHash);
 
     hb_retl((iFlags & HB_HASH_IGNORECASE) == 0);
 
-    if (pValue)
-    {
-      if (pValue->getL())
-      {
-        if ((iFlags & HB_HASH_IGNORECASE) != 0)
-        {
+    if (pValue) {
+      if (pValue->getL()) {
+        if ((iFlags & HB_HASH_IGNORECASE) != 0) {
           hb_hashClearFlags(pHash, HB_HASH_IGNORECASE);
           hb_hashSetFlags(pHash, HB_HASH_RESORT);
         }
-      }
-      else if ((iFlags & HB_HASH_IGNORECASE) == 0)
-      {
+      } else if ((iFlags & HB_HASH_IGNORECASE) == 0) {
         hb_hashClearFlags(pHash, HB_HASH_BINARY);
         hb_hashSetFlags(pHash, HB_HASH_IGNORECASE | HB_HASH_RESORT);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -880,32 +679,24 @@ HB_FUNC(HB_HBINARY)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL);
     int iFlags = hb_hashGetFlags(pHash);
 
     hb_retl((iFlags & HB_HASH_BINARY) != 0);
 
-    if (pValue)
-    {
-      if (pValue->getL())
-      {
-        if ((iFlags & HB_HASH_BINARY) == 0)
-        {
+    if (pValue) {
+      if (pValue->getL()) {
+        if ((iFlags & HB_HASH_BINARY) == 0) {
           hb_hashClearFlags(pHash, HB_HASH_IGNORECASE);
           hb_hashSetFlags(pHash, HB_HASH_BINARY | HB_HASH_RESORT);
         }
-      }
-      else if ((iFlags & HB_HASH_BINARY) != 0)
-      {
+      } else if ((iFlags & HB_HASH_BINARY) != 0) {
         hb_hashClearFlags(pHash, HB_HASH_BINARY);
         hb_hashSetFlags(pHash, HB_HASH_RESORT);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -914,47 +705,34 @@ HB_FUNC(HB_HAUTOADD)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL | Harbour::Item::NUMERIC);
     int iOldFlags = hb_hashGetFlags(pHash) & HB_HASH_AUTOADD_MASK;
 
     hb_retni(iOldFlags);
 
-    if (hb_pcount() >= 3)
-    {
+    if (hb_pcount() >= 3) {
       hb_hashSetDefault(pHash, hb_param(3, Harbour::Item::ANY));
     }
 
-    if (pValue)
-    {
-      if (pValue->isLogical())
-      {
-        if (pValue->getL())
-        {
+    if (pValue) {
+      if (pValue->isLogical()) {
+        if (pValue->getL()) {
           hb_hashSetFlags(pHash, hb_hashGetDefault(pHash) ? HB_HASH_AUTOADD_ALWAYS : HB_HASH_AUTOADD_ASSIGN);
-        }
-        else if (iOldFlags)
-        {
+        } else if (iOldFlags) {
           hb_hashClearFlags(pHash, iOldFlags);
         }
-      }
-      else
-      {
+      } else {
         int iNewFlags = pValue->getNI();
-        if ((iNewFlags | iOldFlags) != iNewFlags)
-        {
+        if ((iNewFlags | iOldFlags) != iNewFlags) {
           hb_hashClearFlags(pHash, iOldFlags);
         }
-        if (iNewFlags)
-        {
+        if (iNewFlags) {
           hb_hashSetFlags(pHash, iNewFlags);
         }
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -963,33 +741,24 @@ HB_FUNC(HB_HKEEPORDER)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL);
     int iFlags = hb_hashGetFlags(pHash);
 
     hb_retl((iFlags & HB_HASH_KEEPORDER) != 0);
 
-    if (pValue)
-    {
-      if (pValue->getL())
-      {
-        if ((iFlags & HB_HASH_KEEPORDER) == 0)
-        {
+    if (pValue) {
+      if (pValue->getL()) {
+        if ((iFlags & HB_HASH_KEEPORDER) == 0) {
           hb_hashSetFlags(pHash, HB_HASH_KEEPORDER);
         }
-      }
-      else
-      {
-        if ((iFlags & HB_HASH_KEEPORDER) != 0)
-        {
+      } else {
+        if ((iFlags & HB_HASH_KEEPORDER) != 0) {
           hb_hashClearFlags(pHash, HB_HASH_KEEPORDER);
         }
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -999,16 +768,12 @@ HB_FUNC(HB_HALLOCATE)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pValue = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (pHash && pValue)
-  {
+  if (pHash && pValue) {
     HB_ISIZ nMem = hb_itemGetNS(pValue);
-    if (nMem >= 0)
-    {
+    if (nMem >= 0) {
       hb_hashPreallocate(pHash, nMem);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1017,16 +782,12 @@ HB_FUNC(HB_HDEFAULT)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_itemReturn(hb_hashGetDefault(pHash));
-    if (hb_pcount() > 1)
-    {
+    if (hb_pcount() > 1) {
       hb_hashSetDefault(pHash, hb_param(2, Harbour::Item::ANY));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

@@ -85,22 +85,18 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 {
   void *hDynLib = nullptr;
 
-  if (hb_itemGetCLen(pLibName) > 0)
-  {
+  if (hb_itemGetCLen(pLibName) > 0) {
     int argc = pArgs ? static_cast<int>(hb_arrayLen(pArgs)) : 0;
     const char **argv = nullptr;
 
-    if (argc > 0)
-    {
+    if (argc > 0) {
       argv = static_cast<const char **>(hb_xgrab(sizeof(char *) * argc));
-      for (auto i = 0; i < argc; ++i)
-      {
+      for (auto i = 0; i < argc; ++i) {
         argv[i] = hb_arrayGetCPtr(pArgs, i + 1);
       }
     }
 
-    if (hb_vmLockModuleSymbols())
-    {
+    if (hb_vmLockModuleSymbols()) {
       // use stack address as first level marker
       hb_vmBeginSymbolGroup(static_cast<void *>(hb_stackId()), true);
 #if defined(HB_OS_WIN)
@@ -112,8 +108,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 #elif defined(HB_HAS_DLFCN)
       hDynLib = static_cast<void *>(dlopen(hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL));
 
-      if (!hDynLib)
-      {
+      if (!hDynLib) {
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("hb_libLoad(): dlopen(): %s", dlerror()));
 #endif
@@ -131,14 +126,12 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
       hb_vmUnlockModuleSymbols();
     }
 
-    if (argv)
-    {
+    if (argv) {
       hb_xfree(static_cast<void *>(argv));
     }
   }
 
-  if (hDynLib)
-  {
+  if (hDynLib) {
     auto pLibPtr = static_cast<void **>(hb_gcAllocate(sizeof(void *), &s_gcDynlibFuncs));
     *pLibPtr = hDynLib;
     return hb_itemPutPtrGC(nullptr, pLibPtr);
@@ -152,11 +145,9 @@ HB_BOOL hb_libFree(PHB_ITEM pDynLib)
   auto fResult = false;
   auto pDynLibPtr = static_cast<void **>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
-  if (pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols())
-  {
+  if (pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols()) {
     void *hDynLib = *pDynLibPtr;
-    if (hDynLib)
-    {
+    if (hDynLib) {
       *pDynLibPtr = nullptr;
       hb_vmExitSymbolGroup(hDynLib);
 #if defined(HB_OS_WIN)
@@ -184,8 +175,7 @@ void *hb_libSymAddr(PHB_ITEM pDynLib, const char *pszSymbol)
 {
   void *hDynLib = hb_libHandle(pDynLib);
 
-  if (hDynLib)
-  {
+  if (hDynLib) {
 #if defined(HB_OS_WIN)
     return reinterpret_cast<void *>(GetProcAddress(static_cast<HMODULE>(hDynLib), pszSymbol));
 #elif defined(HB_HAS_DLFCN)
@@ -204,19 +194,16 @@ HB_FUNC(HB_LIBLOAD)
   auto iPCount = hb_pcount();
   PHB_ITEM pArgs = nullptr;
 
-  if (iPCount > 1)
-  {
+  if (iPCount > 1) {
     pArgs = hb_itemArrayNew(iPCount - 1);
-    for (auto i = 2; i <= iPCount; ++i)
-    {
+    for (auto i = 2; i <= iPCount; ++i) {
       hb_arraySet(pArgs, i, hb_param(i, Harbour::Item::ANY));
     }
   }
 
   hb_itemReturnRelease(hb_libLoad(hb_param(1, Harbour::Item::ANY), pArgs));
 
-  if (pArgs)
-  {
+  if (pArgs) {
     hb_itemRelease(pArgs);
   }
 }
@@ -241,16 +228,13 @@ HB_FUNC(HB_LIBGETFUNSYM)
 {
   auto szFuncName = hb_parc(2);
 
-  if (szFuncName != nullptr)
-  {
+  if (szFuncName != nullptr) {
     void *hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));
 
-    if (hDynLib)
-    {
+    if (hDynLib) {
       PHB_SYMB pSym = hb_vmFindFuncSym(szFuncName, hDynLib);
 
-      if (pSym)
-      {
+      if (pSym) {
         hb_itemPutSymbol(hb_stackReturnItem(), pSym);
       }
     }

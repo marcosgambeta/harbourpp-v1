@@ -76,8 +76,7 @@
 HB_EXTERN_BEGIN
 
 #define HB_DLL_MSG_NO_FUNC(func)                                                                                       \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
     MessageBox(nullptr, TEXT("Function '") TEXT(func) TEXT("' not found!"), TEXT(func), MB_OK | MB_ICONERROR);         \
   } while (false)
 
@@ -100,30 +99,24 @@ PHB_FUNC hb_dllGetProcAddress(const char *szProcName)
   static HB_PROC_GET s_pProcGet = nullptr;
   static HMODULE s_hModule = nullptr;
 
-  if (s_hModule == nullptr)
-  {
+  if (s_hModule == nullptr) {
     s_hModule = GetModuleHandle(HB_DLL_NAME);
-    if (s_hModule == nullptr)
-    {
+    if (s_hModule == nullptr) {
       s_hModule = GetModuleHandle(HB_DLL_NAME2);
     }
-    if (s_hModule == nullptr)
-    {
+    if (s_hModule == nullptr) {
       s_hModule = GetModuleHandle(nullptr);
     }
 
-    if (s_hModule != nullptr)
-    {
+    if (s_hModule != nullptr) {
       int i = 5;
 
-      do
-      {
+      do {
         static const char *s_szGetProcAddr = "_dll_hb_vmProcAddress";
         s_pProcGet =
             reinterpret_cast<HB_PROC_GET>(reinterpret_cast<void *>(GetProcAddress(s_hModule, s_szGetProcAddr + i)));
       } while (s_pProcGet == nullptr && (i -= i == 4 ? 3 : 1) >= 0);
-      if (s_pProcGet == nullptr)
-      {
+      if (s_pProcGet == nullptr) {
         HB_DLL_MSG_NO_FUNC("hb_vmProcAddress");
       }
     }
@@ -160,13 +153,10 @@ static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const
 {
   auto pProcessSymbols = reinterpret_cast<HB_VM_PROCESS_SYMBOLS>(hb_dllGetProcAddress("hb_vmProcessSymbols"));
 
-  if (pProcessSymbols)
-  {
+  if (pProcessSymbols) {
     s_pProcessSymbols = pProcessSymbols;
     return s_pProcessSymbols(pSymbols, uiSymbols, szModuleName, ulID, uiPcodeVer);
-  }
-  else
-  {
+  } else {
     s_pProcessSymbols = s_dummy_vmProcessSymbols;
     HB_DLL_MSG_NO_FUNC("hb_vmProcessSymbols");
     return pSymbols;
@@ -189,13 +179,10 @@ static void s_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 {
   auto pExecute = reinterpret_cast<HB_VM_EXECUTE>(hb_dllGetProcAddress("hb_vmExecute"));
 
-  if (pExecute)
-  {
+  if (pExecute) {
     s_pExecute = pExecute;
     s_pExecute(pCode, pSymbols);
-  }
-  else
-  {
+  } else {
     s_pExecute = s_dummy_vmExecute;
     HB_DLL_MSG_NO_FUNC("hb_vmExecute");
   }
