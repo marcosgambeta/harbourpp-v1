@@ -112,7 +112,8 @@ HB_FUNC(WAIMAGELIST_ADDICON)
 // WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Draw(HIMAGELIST himl,int i,HDC hdcDst,int x,int y,UINT fStyle)
 HB_FUNC(WAIMAGELIST_DRAW)
 {
-  wa_ret_BOOL(ImageList_Draw(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_HDC(3), wa_par_int(4), wa_par_int(5), wa_par_UINT(6)));
+  wa_ret_BOOL(
+      ImageList_Draw(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_HDC(3), wa_par_int(4), wa_par_int(5), wa_par_UINT(6)));
 }
 
 // WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Replace(HIMAGELIST himl,int i,HBITMAP hbmImage,HBITMAP hbmMask)
@@ -127,10 +128,12 @@ HB_FUNC(WAIMAGELIST_ADDMASKED)
   wa_ret_int(ImageList_AddMasked(wa_par_HIMAGELIST(1), wa_par_HBITMAP(2), wa_par_COLORREF(3)));
 }
 
-// WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawEx(HIMAGELIST himl,int i,HDC hdcDst,int x,int y,int dx,int dy,COLORREF rgbBk,COLORREF rgbFg,UINT fStyle)
+// WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawEx(HIMAGELIST himl,int i,HDC hdcDst,int x,int y,int dx,int dy,COLORREF
+// rgbBk,COLORREF rgbFg,UINT fStyle)
 HB_FUNC(WAIMAGELIST_DRAWEX)
 {
-  wa_ret_BOOL(ImageList_DrawEx(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_HDC(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_COLORREF(8), wa_par_COLORREF(9), wa_par_UINT(10)));
+  wa_ret_BOOL(ImageList_DrawEx(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_HDC(3), wa_par_int(4), wa_par_int(5),
+                               wa_par_int(6), wa_par_int(7), wa_par_COLORREF(8), wa_par_COLORREF(9), wa_par_UINT(10)));
 }
 
 // WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawIndirect(IMAGELISTDRAWPARAMS *pimldp)
@@ -151,7 +154,8 @@ HB_FUNC(WAIMAGELIST_GETICON)
   wa_ret_HICON(ImageList_GetIcon(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_UINT(3)));
 }
 
-// WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageA(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT uType,UINT uFlags)
+// WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageA(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT
+// uType,UINT uFlags)
 #if 0
 HB_FUNC(WAIMAGELIST_LOADIMAGEA)
 {
@@ -159,7 +163,8 @@ HB_FUNC(WAIMAGELIST_LOADIMAGEA)
 }
 #endif
 
-// WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageW(HINSTANCE hi,LPCWSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT uType,UINT uFlags)
+// WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageW(HINSTANCE hi,LPCWSTR lpbmp,int cx,int cGrow,COLORREF
+// crMask,UINT uType,UINT uFlags)
 #if 0
 HB_FUNC(WAIMAGELIST_LOADIMAGEW)
 {
@@ -170,7 +175,8 @@ HB_FUNC(WAIMAGELIST_LOADIMAGEW)
 HB_FUNC(WAIMAGELIST_LOADIMAGE)
 {
   void *str{};
-  wa_ret_HIMAGELIST(ImageList_LoadImageW(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5), wa_par_UINT(6), wa_par_UINT(7)));
+  wa_ret_HIMAGELIST(ImageList_LoadImageW(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_int(4),
+                                         wa_par_COLORREF(5), wa_par_UINT(6), wa_par_UINT(7)));
   hb_strfree(str);
 }
 
@@ -244,7 +250,8 @@ HB_FUNC(WAIMAGELIST_EXTRACTICON)
 HB_FUNC(WAIMAGELIST_LOADBITMAP)
 {
   void *str2{};
-  wa_ret_HIMAGELIST(ImageList_LoadBitmap(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5)));
+  wa_ret_HIMAGELIST(ImageList_LoadBitmap(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3),
+                                         wa_par_int(4), wa_par_COLORREF(5)));
   hb_strfree(str2);
 }
 
@@ -281,7 +288,8 @@ HB_FUNC(WAIMAGELIST_GETIMAGEINFO)
 // WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Merge(HIMAGELIST himl1,int i1,HIMAGELIST himl2,int i2,int dx,int dy)
 HB_FUNC(WAIMAGELIST_MERGE)
 {
-  wa_ret_HIMAGELIST(ImageList_Merge(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_HIMAGELIST(3), wa_par_int(4), wa_par_int(5), wa_par_int(6)));
+  wa_ret_HIMAGELIST(ImageList_Merge(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_HIMAGELIST(3), wa_par_int(4),
+                                    wa_par_int(5), wa_par_int(6)));
 }
 
 // WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Duplicate(HIMAGELIST himl)
@@ -292,12 +300,15 @@ HB_FUNC(WAIMAGELIST_DUPLICATE)
 
 // WINCOMMCTRLAPI HRESULT WINAPI HIMAGELIST_QueryInterface(HIMAGELIST himl, REFIID riid, void **ppv)
 
-// WINCOMMCTRLAPI HWND WINAPI CreateToolbarEx(HWND hwnd,DWORD ws,UINT wID,int nBitmaps,HINSTANCE hBMInst,UINT_PTR wBMID,LPCTBBUTTON lpButtons,int iNumButtons,int dxButton,int dyButton,int dxBitmap,int dyBitmap,UINT uStructSize)
+// WINCOMMCTRLAPI HWND WINAPI CreateToolbarEx(HWND hwnd,DWORD ws,UINT wID,int nBitmaps,HINSTANCE hBMInst,UINT_PTR
+// wBMID,LPCTBBUTTON lpButtons,int iNumButtons,int dxButton,int dyButton,int dxBitmap,int dyBitmap,UINT uStructSize)
 
-// WINCOMMCTRLAPI HBITMAP WINAPI CreateMappedBitmap(HINSTANCE hInstance,INT_PTR idBitmap,UINT wFlags,LPCOLORMAP lpColorMap,int iNumMaps)
+// WINCOMMCTRLAPI HBITMAP WINAPI CreateMappedBitmap(HINSTANCE hInstance,INT_PTR idBitmap,UINT wFlags,LPCOLORMAP
+// lpColorMap,int iNumMaps)
 HB_FUNC(WACREATEMAPPEDBITMAP)
 {
-  wa_ret_HBITMAP(CreateMappedBitmap(wa_par_HINSTANCE(1),wa_par_INT_PTR(2), wa_par_UINT(3), wa_par_COLORMAP(3), wa_par_int(4)));
+  wa_ret_HBITMAP(
+      CreateMappedBitmap(wa_par_HINSTANCE(1), wa_par_INT_PTR(2), wa_par_UINT(3), wa_par_COLORMAP(3), wa_par_int(4)));
 }
 
 // WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,UINT uFlags)
@@ -346,20 +357,20 @@ HB_FUNC(WACREATESTATUSWINDOW)
   hb_strfree(str);
 }
 
-// WINCOMMCTRLAPI void WINAPI MenuHelp(UINT uMsg,WPARAM wParam,LPARAM lParam,HMENU hMainMenu,HINSTANCE hInst,HWND hwndStatus,UINT *lpwIDs)
+// WINCOMMCTRLAPI void WINAPI MenuHelp(UINT uMsg,WPARAM wParam,LPARAM lParam,HMENU hMainMenu,HINSTANCE hInst,HWND
+// hwndStatus,UINT *lpwIDs)
 HB_FUNC(WAMENUHELP)
 {
   std::vector<UINT> vec{};
   auto pArray = hb_param(7, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<UINT>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
-  MenuHelp(wa_par_UINT(1), wa_par_WPARAM(2), wa_par_LPARAM(3), wa_par_HMENU(4), wa_par_HINSTANCE(5), wa_par_HWND(6), vec.data());
+  MenuHelp(wa_par_UINT(1), wa_par_WPARAM(2), wa_par_LPARAM(3), wa_par_HMENU(4), wa_par_HINSTANCE(5), wa_par_HWND(6),
+           vec.data());
 }
 
 // WINCOMMCTRLAPI WINBOOL WINAPI ShowHideMenuCtl(HWND hWnd,UINT_PTR uFlags,LPINT lpInfo)
@@ -367,11 +378,9 @@ HB_FUNC(WASHOWHIDEMENUCTL)
 {
   std::vector<INT> vec{};
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -383,11 +392,9 @@ HB_FUNC(WAGETEFFECTIVECLIENTRECT)
 {
   std::vector<INT> vec{};
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -412,15 +419,20 @@ HB_FUNC(WALBITEMFROMPT)
   wa_ret_int(LBItemFromPt(wa_par_HWND(1), *wa_par_POINT(2), wa_par_BOOL(3)));
 }
 
-// WINCOMMCTRLAPI HWND WINAPI CreateUpDownControl(DWORD dwStyle,int x,int y,int cx,int cy,HWND hParent,int nID,HINSTANCE hInst,HWND hBuddy,int nUpper,int nLower,int nPos)
+// WINCOMMCTRLAPI HWND WINAPI CreateUpDownControl(DWORD dwStyle,int x,int y,int cx,int cy,HWND hParent,int nID,HINSTANCE
+// hInst,HWND hBuddy,int nUpper,int nLower,int nPos)
 HB_FUNC(WACREATEUPDOWNCONTROL)
 {
-  wa_ret_HWND(CreateUpDownControl(wa_par_DWORD(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HWND(6), wa_par_int(7), wa_par_HINSTANCE(8), wa_par_HWND(9), wa_par_int(10), wa_par_int(11), wa_par_int(12)));
+  wa_ret_HWND(CreateUpDownControl(wa_par_DWORD(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5),
+                                  wa_par_HWND(6), wa_par_int(7), wa_par_HINSTANCE(8), wa_par_HWND(9), wa_par_int(10),
+                                  wa_par_int(11), wa_par_int(12)));
 }
 
-// WINCOMMCTRLAPI HRESULT WINAPI TaskDialogIndirect(const TASKDIALOGCONFIG *pTaskConfig, int *pnButton, int *pnRadioButton, WINBOOL *pfVerificationFlagChecked)
+// WINCOMMCTRLAPI HRESULT WINAPI TaskDialogIndirect(const TASKDIALOGCONFIG *pTaskConfig, int *pnButton, int
+// *pnRadioButton, WINBOOL *pfVerificationFlagChecked)
 
-// WINCOMMCTRLAPI HRESULT WINAPI TaskDialog(HWND hwndOwner, HINSTANCE hInstance, PCWSTR pszWindowTitle, PCWSTR pszMainInstruction, PCWSTR pszContent, TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, PCWSTR pszIcon, int *pnButton)
+// WINCOMMCTRLAPI HRESULT WINAPI TaskDialog(HWND hwndOwner, HINSTANCE hInstance, PCWSTR pszWindowTitle, PCWSTR
+// pszMainInstruction, PCWSTR pszContent, TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, PCWSTR pszIcon, int *pnButton)
 #if 0
 HB_FUNC(WATASKDIALOG)
 {
@@ -494,13 +506,16 @@ HB_FUNC(WATASKDIALOG)
 
 // WINCOMMCTRLAPI WINBOOL WINAPI DPA_Sort(HDPA hdpa, PFNDACOMPARE pfnCompare, LPARAM lParam)
 
-// WINCOMMCTRLAPI HRESULT WINAPI DPA_LoadStream(HDPA *phdpa, PFNDPASTREAM pfn, struct IStream *pstream, void *pvInstData)
+// WINCOMMCTRLAPI HRESULT WINAPI DPA_LoadStream(HDPA *phdpa, PFNDPASTREAM pfn, struct IStream *pstream, void
+// *pvInstData)
 
 // WINCOMMCTRLAPI HRESULT WINAPI DPA_SaveStream(HDPA hdpa, PFNDPASTREAM pfn, struct IStream *pstream, void *pvInstData)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Merge(HDPA hdpaDest, HDPA hdpaSrc, DWORD dwFlags, PFNDACOMPARE pfnCompare, PFNDPAMERGE pfnMerge, LPARAM lParam)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Merge(HDPA hdpaDest, HDPA hdpaSrc, DWORD dwFlags, PFNDACOMPARE pfnCompare,
+// PFNDPAMERGE pfnMerge, LPARAM lParam)
 
-// WINCOMMCTRLAPI int WINAPI DPA_Search(HDPA hdpa, void *pFind, int iStart, PFNDACOMPARE pfnCompare, LPARAM lParam, UINT options)
+// WINCOMMCTRLAPI int WINAPI DPA_Search(HDPA hdpa, void *pFind, int iStart, PFNDACOMPARE pfnCompare, LPARAM lParam, UINT
+// options)
 
 // WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_EnableScrollBar(HWND,int,UINT)
 #if 0

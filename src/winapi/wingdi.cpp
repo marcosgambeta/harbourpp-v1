@@ -64,11 +64,9 @@ HB_FUNC(WAANIMATEPALETTE)
 {
   std::vector<PALETTEENTRY> vec{};
   auto pArray = hb_param(4, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -78,13 +76,15 @@ HB_FUNC(WAANIMATEPALETTE)
 // WINGDIAPI WINBOOL WINAPI Arc(HDC hdc,int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4)
 HB_FUNC(WAARC)
 {
-  wa_ret_BOOL(Arc(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_int(8), wa_par_int(9)));
+  wa_ret_BOOL(Arc(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                  wa_par_int(7), wa_par_int(8), wa_par_int(9)));
 }
 
 // WINGDIAPI WINBOOL WINAPI BitBlt(HDC hdc,int x,int y,int cx,int cy,HDC hdcSrc,int x1,int y1,DWORD rop)
 HB_FUNC(WABITBLT)
 {
-  wa_ret_BOOL(BitBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_DWORD(9)));
+  wa_ret_BOOL(BitBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6),
+                     wa_par_int(7), wa_par_int(8), wa_par_DWORD(9)));
 }
 
 // WINGDIAPI WINBOOL WINAPI CancelDC(HDC hdc)
@@ -96,7 +96,8 @@ HB_FUNC(WACANCELDC)
 // WINGDIAPI WINBOOL WINAPI Chord(HDC hdc,int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4)
 HB_FUNC(WACHORD)
 {
-  wa_ret_BOOL(Chord(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_int(8), wa_par_int(9)));
+  wa_ret_BOOL(Chord(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                    wa_par_int(7), wa_par_int(8), wa_par_int(9)));
 }
 
 // WINGDIAPI int WINAPI ChoosePixelFormat(HDC hdc,CONST PIXELFORMATDESCRIPTOR *ppfd)
@@ -143,7 +144,8 @@ HB_FUNC(WACOPYMETAFILE)
 // WINGDIAPI HBITMAP WINAPI CreateBitmap(int nWidth,int nHeight,UINT nPlanes,UINT nBitCount,CONST VOID *lpBits)
 HB_FUNC(WACREATEBITMAP)
 {
-  wa_ret_HBITMAP(CreateBitmap(wa_par_int(1), wa_par_int(2), wa_par_UINT(3), wa_par_UINT(4), static_cast<CONST VOID *>(hb_parptr(5))));
+  wa_ret_HBITMAP(CreateBitmap(wa_par_int(1), wa_par_int(2), wa_par_UINT(3), wa_par_UINT(4),
+                              static_cast<CONST VOID *>(hb_parptr(5))));
 }
 
 // WINGDIAPI HBITMAP WINAPI CreateBitmapIndirect(CONST BITMAP *pbm)
@@ -180,7 +182,8 @@ HB_FUNC(WACREATECOMPATIBLEDC)
 
 // WINGDIAPI HDC WINAPI CreateDCW(LPCWSTR pwszDriver,LPCWSTR pwszDevice,LPCWSTR pszPort,CONST DEVMODEW *pdm)
 
-// WINGDIAPI HBITMAP WINAPI CreateDIBitmap(HDC hdc,CONST BITMAPINFOHEADER *pbmih,DWORD flInit,CONST VOID *pjBits,CONST BITMAPINFO *pbmi,UINT iUsage)
+// WINGDIAPI HBITMAP WINAPI CreateDIBitmap(HDC hdc,CONST BITMAPINFOHEADER *pbmih,DWORD flInit,CONST VOID *pjBits,CONST
+// BITMAPINFO *pbmi,UINT iUsage)
 
 // WINGDIAPI HBRUSH WINAPI CreateDIBPatternBrush(HGLOBAL h,UINT iUsage)
 HB_FUNC(WACREATEDIBPATTERNBRUSH)
@@ -206,7 +209,9 @@ HB_FUNC(WACREATEELLIPTICRGNINDIRECT)
 
 // WINGDIAPI HFONT WINAPI CreateFontIndirectW(CONST LOGFONTW *lplf)
 
-// WINGDIAPI HFONT WINAPI CreateFontA(int cHeight,int cWidth,int cEscapement,int cOrientation,int cWeight,DWORD bItalic,DWORD bUnderline,DWORD bStrikeOut,DWORD iCharSet,DWORD iOutPrecision,DWORD iClipPrecision,DWORD iQuality,DWORD iPitchAndFamily,LPCSTR pszFaceName)
+// WINGDIAPI HFONT WINAPI CreateFontA(int cHeight,int cWidth,int cEscapement,int cOrientation,int cWeight,DWORD
+// bItalic,DWORD bUnderline,DWORD bStrikeOut,DWORD iCharSet,DWORD iOutPrecision,DWORD iClipPrecision,DWORD
+// iQuality,DWORD iPitchAndFamily,LPCSTR pszFaceName)
 #if 0
 HB_FUNC(WACREATEFONTA)
 {
@@ -214,7 +219,9 @@ HB_FUNC(WACREATEFONTA)
 }
 #endif
 
-// WINGDIAPI HFONT WINAPI CreateFontW(int cHeight,int cWidth,int cEscapement,int cOrientation,int cWeight,DWORD bItalic,DWORD bUnderline,DWORD bStrikeOut,DWORD iCharSet,DWORD iOutPrecision,DWORD iClipPrecision,DWORD iQuality,DWORD iPitchAndFamily,LPCWSTR pszFaceName)
+// WINGDIAPI HFONT WINAPI CreateFontW(int cHeight,int cWidth,int cEscapement,int cOrientation,int cWeight,DWORD
+// bItalic,DWORD bUnderline,DWORD bStrikeOut,DWORD iCharSet,DWORD iOutPrecision,DWORD iClipPrecision,DWORD
+// iQuality,DWORD iPitchAndFamily,LPCWSTR pszFaceName)
 #if 0
 HB_FUNC(WACREATEFONTW)
 {
@@ -225,7 +232,9 @@ HB_FUNC(WACREATEFONTW)
 HB_FUNC(WACREATEFONT)
 {
   void *str14{};
-  wa_ret_HFONT(CreateFontW(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_DWORD(6), wa_par_DWORD(7), wa_par_DWORD(8), wa_par_DWORD(9), wa_par_DWORD(10), wa_par_DWORD(11), wa_par_DWORD(12), wa_par_DWORD(13), HB_PARSTR(14, &str14, nullptr)));
+  wa_ret_HFONT(CreateFontW(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_DWORD(6),
+                           wa_par_DWORD(7), wa_par_DWORD(8), wa_par_DWORD(9), wa_par_DWORD(10), wa_par_DWORD(11),
+                           wa_par_DWORD(12), wa_par_DWORD(13), HB_PARSTR(14, &str14, nullptr)));
   hb_strfree(str14);
 }
 
@@ -285,21 +294,17 @@ HB_FUNC(WACREATEPOLYPOLYGONRGN)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray1 != nullptr)
-  {
+  if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<INT> vec2{};
   auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray2 != nullptr)
-  {
+  if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
     }
   }
@@ -327,7 +332,8 @@ HB_FUNC(WACREATERECTRGNINDIRECT)
 // WINGDIAPI HRGN WINAPI CreateRoundRectRgn(int x1,int y1,int x2,int y2,int w,int h)
 HB_FUNC(WACREATEROUNDRECTRGN)
 {
-  wa_ret_HRGN(CreateRoundRectRgn(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6)));
+  wa_ret_HRGN(
+      CreateRoundRectRgn(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6)));
 }
 
 // WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceA(DWORD fdwHidden,LPCSTR lpszFont,LPCSTR lpszFile,LPCSTR lpszPath)
@@ -338,7 +344,8 @@ HB_FUNC(WACREATESCALABLEFONTRESOURCEA)
 }
 #endif
 
-// WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceW(DWORD fdwHidden,LPCWSTR lpszFont,LPCWSTR lpszFile,LPCWSTR lpszPath)
+// WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceW(DWORD fdwHidden,LPCWSTR lpszFont,LPCWSTR lpszFile,LPCWSTR
+// lpszPath)
 #if 0
 HB_FUNC(WACREATESCALABLEFONTRESOURCEW)
 {
@@ -351,7 +358,8 @@ HB_FUNC(WACREATESCALABLEFONTRESOURCE)
   void *str2{};
   void *str3{};
   void *str4{};
-  wa_ret_BOOL(CreateScalableFontResource(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
+  wa_ret_BOOL(CreateScalableFontResource(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr),
+                                         HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
   hb_strfree(str4);
@@ -387,9 +395,11 @@ HB_FUNC(WADESCRIBEPIXELFORMAT)
   wa_ret_int(DescribePixelFormat(wa_par_HDC(1), wa_par_int(2), wa_par_UINT(3), wa_par_PIXELFORMATDESCRIPTOR(4)));
 }
 
-// WINSPOOLAPI int WINAPI DeviceCapabilitiesA(LPCSTR pDevice,LPCSTR pPort,WORD fwCapability,LPSTR pOutput,CONST DEVMODEA *pDevMode)
+// WINSPOOLAPI int WINAPI DeviceCapabilitiesA(LPCSTR pDevice,LPCSTR pPort,WORD fwCapability,LPSTR pOutput,CONST DEVMODEA
+// *pDevMode)
 
-// WINSPOOLAPI int WINAPI DeviceCapabilitiesW(LPCWSTR pDevice,LPCWSTR pPort,WORD fwCapability,LPWSTR pOutput,CONST DEVMODEW *pDevMode)
+// WINSPOOLAPI int WINAPI DeviceCapabilitiesW(LPCWSTR pDevice,LPCWSTR pPort,WORD fwCapability,LPWSTR pOutput,CONST
+// DEVMODEW *pDevMode)
 
 // WINGDIAPI int WINAPI DrawEscape(HDC hdc,int iEscape,int cjIn,LPCSTR lpIn)
 HB_FUNC(WADRAWESCAPE)
@@ -403,9 +413,11 @@ HB_FUNC(WAELLIPSE)
   wa_ret_BOOL(Ellipse(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5)));
 }
 
-// WINGDIAPI int WINAPI EnumFontFamiliesExA(HDC hdc,LPLOGFONTA lpLogfont,FONTENUMPROCA lpProc,LPARAM lParam,DWORD dwFlags)
+// WINGDIAPI int WINAPI EnumFontFamiliesExA(HDC hdc,LPLOGFONTA lpLogfont,FONTENUMPROCA lpProc,LPARAM lParam,DWORD
+// dwFlags)
 
-// WINGDIAPI int WINAPI EnumFontFamiliesExW(HDC hdc,LPLOGFONTW lpLogfont,FONTENUMPROCW lpProc,LPARAM lParam,DWORD dwFlags)
+// WINGDIAPI int WINAPI EnumFontFamiliesExW(HDC hdc,LPLOGFONTW lpLogfont,FONTENUMPROCW lpProc,LPARAM lParam,DWORD
+// dwFlags)
 
 // WINGDIAPI int WINAPI EnumFontFamiliesA(HDC hdc,LPCSTR lpLogfont,FONTENUMPROCA lpProc,LPARAM lParam)
 #if 0
@@ -474,7 +486,8 @@ HB_FUNC(WAESCAPE)
 // WINGDIAPI int WINAPI ExtEscape(HDC hdc,int iEscape,int cjInput,LPCSTR lpInData,int cjOutput,LPSTR lpOutData)
 HB_FUNC(WAEXTESCAPE)
 {
-  wa_ret_int(ExtEscape(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_LPCSTR(4), wa_par_int(5), const_cast<LPSTR>(hb_parc(6))));
+  wa_ret_int(ExtEscape(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_LPCSTR(4), wa_par_int(5),
+                       const_cast<LPSTR>(hb_parc(6))));
 }
 
 // WINGDIAPI int WINAPI ExcludeClipRect(HDC hdc,int left,int top,int right,int bottom)
@@ -734,21 +747,26 @@ HB_FUNC(WAGETDEVICECAPS)
   wa_ret_int(GetDeviceCaps(wa_par_HDC(1), wa_par_int(2)));
 }
 
-// WINGDIAPI int WINAPI GetDIBits(HDC hdc,HBITMAP hbm,UINT start,UINT cLines,LPVOID lpvBits,LPBITMAPINFO lpbmi,UINT usage)
+// WINGDIAPI int WINAPI GetDIBits(HDC hdc,HBITMAP hbm,UINT start,UINT cLines,LPVOID lpvBits,LPBITMAPINFO lpbmi,UINT
+// usage)
 HB_FUNC(WAGETDIBITS)
 {
-  wa_ret_int(GetDIBits(wa_par_HDC(1), wa_par_HBITMAP(2), wa_par_UINT(3), wa_par_UINT(4), static_cast<LPVOID>(hb_parptr(5)), wa_par_BITMAPINFO(6), wa_par_UINT(7)));
+  wa_ret_int(GetDIBits(wa_par_HDC(1), wa_par_HBITMAP(2), wa_par_UINT(3), wa_par_UINT(4),
+                       static_cast<LPVOID>(hb_parptr(5)), wa_par_BITMAPINFO(6), wa_par_UINT(7)));
 }
 
 // WINGDIAPI DWORD WINAPI GetFontData(HDC hdc,DWORD dwTable,DWORD dwOffset,PVOID pvBuffer,DWORD cjBuffer)
 HB_FUNC(WAGETFONTDATA)
 {
-  wa_ret_DWORD(GetFontData(wa_par_HDC(1), wa_par_DWORD(2), wa_par_DWORD(3), static_cast<PVOID>(hb_parptr(4)), wa_par_DWORD(5)));
+  wa_ret_DWORD(
+      GetFontData(wa_par_HDC(1), wa_par_DWORD(2), wa_par_DWORD(3), static_cast<PVOID>(hb_parptr(4)), wa_par_DWORD(5)));
 }
 
-// WINGDIAPI DWORD WINAPI GetGlyphOutlineA(HDC hdc,UINT uChar,UINT fuFormat,LPGLYPHMETRICS lpgm,DWORD cjBuffer,LPVOID pvBuffer,CONST MAT2 *lpmat2)
+// WINGDIAPI DWORD WINAPI GetGlyphOutlineA(HDC hdc,UINT uChar,UINT fuFormat,LPGLYPHMETRICS lpgm,DWORD cjBuffer,LPVOID
+// pvBuffer,CONST MAT2 *lpmat2)
 
-// WINGDIAPI DWORD WINAPI GetGlyphOutlineW(HDC hdc,UINT uChar,UINT fuFormat,LPGLYPHMETRICS lpgm,DWORD cjBuffer,LPVOID pvBuffer,CONST MAT2 *lpmat2)
+// WINGDIAPI DWORD WINAPI GetGlyphOutlineW(HDC hdc,UINT uChar,UINT fuFormat,LPGLYPHMETRICS lpgm,DWORD cjBuffer,LPVOID
+// pvBuffer,CONST MAT2 *lpmat2)
 
 // WINGDIAPI int WINAPI GetGraphicsMode(HDC hdc)
 HB_FUNC(WAGETGRAPHICSMODE)
@@ -933,7 +951,8 @@ HB_FUNC(WAGETTEXTEXTENTPOINT32)
   hb_strfree(str2);
 }
 
-// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointA(HDC hdc,LPCSTR lpszString,int cchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
+// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointA(HDC hdc,LPCSTR lpszString,int cchString,int nMaxExtent,LPINT
+// lpnFit,LPINT lpnDx,LPSIZE lpSize)
 #if 0
 HB_FUNC(WAGETTEXTEXTENTEXPOINTA)
 {
@@ -945,7 +964,8 @@ HB_FUNC(WAGETTEXTEXTENTEXPOINTA)
 }
 #endif
 
-// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointW(HDC hdc,LPCWSTR lpszString,int cchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
+// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointW(HDC hdc,LPCWSTR lpszString,int cchString,int nMaxExtent,LPINT
+// lpnFit,LPINT lpnDx,LPSIZE lpSize)
 #if 0
 HB_FUNC(WAGETTEXTEXTENTEXPOINTW)
 {
@@ -962,7 +982,8 @@ HB_FUNC(WAGETTEXTEXTENTEXPOINT)
   void *str2{};
   INT lpnFit{};
   INT lpnDx{};
-  wa_ret_BOOL(GetTextExtentExPoint(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), &lpnFit, &lpnDx, wa_par_SIZE(7)));
+  wa_ret_BOOL(GetTextExtentExPoint(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), &lpnFit,
+                                   &lpnDx, wa_par_SIZE(7)));
   wa_stor_INT(lpnFit, 5);
   wa_stor_INT(lpnDx, 6);
   hb_strfree(str2);
@@ -984,9 +1005,11 @@ HB_FUNC(WAGETFONTLANGUAGEINFO)
   wa_ret_DWORD(GetFontLanguageInfo(wa_par_HDC(1)));
 }
 
-// WINGDIAPI DWORD WINAPI GetCharacterPlacementA(HDC hdc,LPCSTR lpString,int nCount,int nMexExtent,LPGCP_RESULTSA lpResults,DWORD dwFlags)
+// WINGDIAPI DWORD WINAPI GetCharacterPlacementA(HDC hdc,LPCSTR lpString,int nCount,int nMexExtent,LPGCP_RESULTSA
+// lpResults,DWORD dwFlags)
 
-// WINGDIAPI DWORD WINAPI GetCharacterPlacementW(HDC hdc,LPCWSTR lpString,int nCount,int nMexExtent,LPGCP_RESULTSW lpResults,DWORD dwFlags)
+// WINGDIAPI DWORD WINAPI GetCharacterPlacementW(HDC hdc,LPCWSTR lpString,int nCount,int nMexExtent,LPGCP_RESULTSW
+// lpResults,DWORD dwFlags)
 
 // WINGDIAPI DWORD WINAPI GetFontUnicodeRanges(HDC hdc,LPGLYPHSET lpgs)
 
@@ -1029,7 +1052,8 @@ HB_FUNC(WAGETTEXTEXTENTPOINTI)
 }
 #endif
 
-// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointI(HDC hdc,LPWORD lpwszString,int cwchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
+// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointI(HDC hdc,LPWORD lpwszString,int cwchString,int nMaxExtent,LPINT
+// lpnFit,LPINT lpnDx,LPSIZE lpSize)
 
 // WINGDIAPI WINBOOL WINAPI GetCharWidthI(HDC hdc,UINT giFirst,UINT cgi,LPWORD pgi,LPINT piWidths)
 
@@ -1138,7 +1162,8 @@ HB_FUNC(WAINVERTRGN)
 // WINGDIAPI WINBOOL WINAPI LineDDA(int xStart,int yStart,int xEnd,int yEnd,LINEDDAPROC lpProc,LPARAM data)
 HB_FUNC(WALINEDDA)
 {
-  wa_ret_BOOL(LineDDA(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_LINEDDAPROC(5), wa_par_LPARAM(6)));
+  wa_ret_BOOL(
+      LineDDA(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_LINEDDAPROC(5), wa_par_LPARAM(6)));
 }
 
 // WINGDIAPI WINBOOL WINAPI LineTo(HDC hdc,int x,int y)
@@ -1147,26 +1172,29 @@ HB_FUNC(WALINETO)
   wa_ret_BOOL(LineTo(wa_par_HDC(1), wa_par_int(2), wa_par_int(3)));
 }
 
-// WINGDIAPI WINBOOL WINAPI MaskBlt(HDC hdcDest,int xDest,int yDest,int width,int height,HDC hdcSrc,int xSrc,int ySrc,HBITMAP hbmMask,int xMask,int yMask,DWORD rop)
+// WINGDIAPI WINBOOL WINAPI MaskBlt(HDC hdcDest,int xDest,int yDest,int width,int height,HDC hdcSrc,int xSrc,int
+// ySrc,HBITMAP hbmMask,int xMask,int yMask,DWORD rop)
 HB_FUNC(WAMASKBLT)
 {
-  wa_ret_BOOL(MaskBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_HBITMAP(9), wa_par_int(10), wa_par_int(11), wa_par_DWORD(12)));
+  wa_ret_BOOL(MaskBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6),
+                      wa_par_int(7), wa_par_int(8), wa_par_HBITMAP(9), wa_par_int(10), wa_par_int(11),
+                      wa_par_DWORD(12)));
 }
 
-// WINGDIAPI WINBOOL WINAPI PlgBlt(HDC hdcDest,CONST POINT *lpPoint,HDC hdcSrc,int xSrc,int ySrc,int width,int height,HBITMAP hbmMask,int xMask,int yMask)
+// WINGDIAPI WINBOOL WINAPI PlgBlt(HDC hdcDest,CONST POINT *lpPoint,HDC hdcSrc,int xSrc,int ySrc,int width,int
+// height,HBITMAP hbmMask,int xMask,int yMask)
 HB_FUNC(WAPLGBLT)
 {
   std::vector<POINT> vec{};
   auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
-  wa_ret_BOOL(PlgBlt(wa_par_HDC(1), vec.data(), wa_par_HDC(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_HBITMAP(8), wa_par_int(9), wa_par_int(10)));
+  wa_ret_BOOL(PlgBlt(wa_par_HDC(1), vec.data(), wa_par_HDC(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                     wa_par_int(7), wa_par_HBITMAP(8), wa_par_int(9), wa_par_int(10)));
 }
 
 // WINGDIAPI int WINAPI OffsetClipRgn(HDC hdc,int x,int y)
@@ -1190,7 +1218,8 @@ HB_FUNC(WAPATBLT)
 // WINGDIAPI WINBOOL WINAPI Pie(HDC hdc,int left,int top,int right,int bottom,int xr1,int yr1,int xr2,int yr2)
 HB_FUNC(WAPIE)
 {
-  wa_ret_BOOL(Pie(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_int(8), wa_par_int(9)));
+  wa_ret_BOOL(Pie(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                  wa_par_int(7), wa_par_int(8), wa_par_int(9)));
 }
 
 // WINGDIAPI WINBOOL WINAPI PlayMetaFile(HDC hdc,HMETAFILE hmf)
@@ -1210,21 +1239,17 @@ HB_FUNC(WAPOLYPOLYGON)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray1 != nullptr)
-  {
+  if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<INT> vec2{};
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if (pArray2 != nullptr)
-  {
+  if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
     }
   }
@@ -1303,7 +1328,8 @@ HB_FUNC(WAREMOVEFONTRESOURCE)
 // WINGDIAPI WINBOOL WINAPI RoundRect(HDC hdc,int left,int top,int right,int bottom,int width,int height)
 HB_FUNC(WAROUNDRECT)
 {
-  wa_ret_BOOL(RoundRect(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7)));
+  wa_ret_BOOL(RoundRect(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                        wa_par_int(7)));
 }
 
 // WINGDIAPI WINBOOL WINAPI ResizePalette(HPALETTE hpal,UINT n)
@@ -1384,16 +1410,21 @@ HB_FUNC(WASETBOUNDSRECT)
   wa_ret_UINT(SetBoundsRect(wa_par_HDC(1), wa_par_RECT(2), wa_par_UINT(3)));
 }
 
-// WINGDIAPI int WINAPI SetDIBits(HDC hdc,HBITMAP hbm,UINT start,UINT cLines,CONST VOID *lpBits,CONST BITMAPINFO *lpbmi,UINT ColorUse)
+// WINGDIAPI int WINAPI SetDIBits(HDC hdc,HBITMAP hbm,UINT start,UINT cLines,CONST VOID *lpBits,CONST BITMAPINFO
+// *lpbmi,UINT ColorUse)
 HB_FUNC(WASETDIBITS)
 {
-  wa_ret_int(SetDIBits(wa_par_HDC(1), wa_par_HBITMAP(2), wa_par_UINT(3), wa_par_UINT(4), static_cast<CONST VOID *>(hb_parptr(5)), wa_par_BITMAPINFO(6), wa_par_UINT(7)));
+  wa_ret_int(SetDIBits(wa_par_HDC(1), wa_par_HBITMAP(2), wa_par_UINT(3), wa_par_UINT(4),
+                       static_cast<CONST VOID *>(hb_parptr(5)), wa_par_BITMAPINFO(6), wa_par_UINT(7)));
 }
 
-// WINGDIAPI int WINAPI SetDIBitsToDevice(HDC hdc,int xDest,int yDest,DWORD w,DWORD h,int xSrc,int ySrc,UINT StartScan,UINT cLines,CONST VOID *lpvBits,CONST BITMAPINFO *lpbmi,UINT ColorUse)
+// WINGDIAPI int WINAPI SetDIBitsToDevice(HDC hdc,int xDest,int yDest,DWORD w,DWORD h,int xSrc,int ySrc,UINT
+// StartScan,UINT cLines,CONST VOID *lpvBits,CONST BITMAPINFO *lpbmi,UINT ColorUse)
 HB_FUNC(WASETDIBITSTODEVICE)
 {
-  wa_ret_int(SetDIBitsToDevice(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_DWORD(4), wa_par_DWORD(5), wa_par_int(6), wa_par_int(7), wa_par_UINT(8), wa_par_UINT(9), static_cast<CONST VOID *>(hb_parptr(10)), wa_par_BITMAPINFO(11), wa_par_UINT(12)));
+  wa_ret_int(SetDIBitsToDevice(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_DWORD(4), wa_par_DWORD(5),
+                               wa_par_int(6), wa_par_int(7), wa_par_UINT(8), wa_par_UINT(9),
+                               static_cast<CONST VOID *>(hb_parptr(10)), wa_par_BITMAPINFO(11), wa_par_UINT(12)));
 }
 
 // WINGDIAPI DWORD WINAPI SetMapperFlags(HDC hdc,DWORD flags)
@@ -1437,11 +1468,9 @@ HB_FUNC(WASETPALETTEENTRIES)
 {
   std::vector<PALETTEENTRY> vec{};
   auto pArray = hb_param(4, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -1472,10 +1501,12 @@ HB_FUNC(WASETPOLYFILLMODE)
   wa_ret_int(SetPolyFillMode(wa_par_HDC(1), wa_par_int(2)));
 }
 
-// WINGDIAPI WINBOOL WINAPI StretchBlt(HDC hdcDest,int xDest,int yDest,int wDest,int hDest,HDC hdcSrc,int xSrc,int ySrc,int wSrc,int hSrc,DWORD rop)
+// WINGDIAPI WINBOOL WINAPI StretchBlt(HDC hdcDest,int xDest,int yDest,int wDest,int hDest,HDC hdcSrc,int xSrc,int
+// ySrc,int wSrc,int hSrc,DWORD rop)
 HB_FUNC(WASTRETCHBLT)
 {
-  wa_ret_BOOL(StretchBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), wa_par_DWORD(11)));
+  wa_ret_BOOL(StretchBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6),
+                         wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), wa_par_DWORD(11)));
 }
 
 // WINGDIAPI WINBOOL WINAPI SetRectRgn(HRGN hrgn,int left,int top,int right,int bottom)
@@ -1484,10 +1515,13 @@ HB_FUNC(WASETRECTRGN)
   wa_ret_BOOL(SetRectRgn(wa_par_HRGN(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5)));
 }
 
-// WINGDIAPI int WINAPI StretchDIBits(HDC hdc,int xDest,int yDest,int DestWidth,int DestHeight,int xSrc,int ySrc,int SrcWidth,int SrcHeight,CONST VOID *lpBits,CONST BITMAPINFO *lpbmi,UINT iUsage,DWORD rop)
+// WINGDIAPI int WINAPI StretchDIBits(HDC hdc,int xDest,int yDest,int DestWidth,int DestHeight,int xSrc,int ySrc,int
+// SrcWidth,int SrcHeight,CONST VOID *lpBits,CONST BITMAPINFO *lpbmi,UINT iUsage,DWORD rop)
 HB_FUNC(WASTRETCHDIBITS)
 {
-  wa_ret_int(StretchDIBits(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), static_cast<CONST VOID *>(hb_parptr(10)), wa_par_BITMAPINFO(11), wa_par_UINT(12), wa_par_DWORD(13)));
+  wa_ret_int(StretchDIBits(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                           wa_par_int(7), wa_par_int(8), wa_par_int(9), static_cast<CONST VOID *>(hb_parptr(10)),
+                           wa_par_BITMAPINFO(11), wa_par_UINT(12), wa_par_DWORD(13)));
 }
 
 // WINGDIAPI int WINAPI SetROP2(HDC hdc,int rop2)
@@ -1552,28 +1586,37 @@ HB_FUNC(WAGDIMARSHALSIZE)
 
 // WINGDIAPI HGDIOBJ WINAPI GdiUnmarshal(PVOID pData, ULONG ulFlags)
 
-// WINGDIAPI WINBOOL WINAPI AlphaBlend(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC hdcSrc,int xoriginSrc,int yoriginSrc,int wSrc,int hSrc,BLENDFUNCTION ftn)
+// WINGDIAPI WINBOOL WINAPI AlphaBlend(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC hdcSrc,int
+// xoriginSrc,int yoriginSrc,int wSrc,int hSrc,BLENDFUNCTION ftn)
 HB_FUNC(WAALPHABLEND)
 {
-  wa_ret_BOOL(AlphaBlend(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), *wa_par_BLENDFUNCTION(11)));
+  wa_ret_BOOL(AlphaBlend(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6),
+                         wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), *wa_par_BLENDFUNCTION(11)));
 }
 
-// WINGDIAPI WINBOOL WINAPI GdiAlphaBlend(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC hdcSrc,int xoriginSrc,int yoriginSrc,int wSrc,int hSrc,BLENDFUNCTION ftn)
+// WINGDIAPI WINBOOL WINAPI GdiAlphaBlend(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC hdcSrc,int
+// xoriginSrc,int yoriginSrc,int wSrc,int hSrc,BLENDFUNCTION ftn)
 HB_FUNC(WAGDIALPHABLEND)
 {
-  wa_ret_BOOL(GdiAlphaBlend(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), *wa_par_BLENDFUNCTION(11)));
+  wa_ret_BOOL(GdiAlphaBlend(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6),
+                            wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), *wa_par_BLENDFUNCTION(11)));
 }
 
-// WINGDIAPI WINBOOL WINAPI TransparentBlt(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC hdcSrc,int xoriginSrc,int yoriginSrc,int wSrc,int hSrc,UINT crTransparent)
+// WINGDIAPI WINBOOL WINAPI TransparentBlt(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC
+// hdcSrc,int xoriginSrc,int yoriginSrc,int wSrc,int hSrc,UINT crTransparent)
 HB_FUNC(WATRANSPARENTBLT)
 {
-  wa_ret_BOOL(TransparentBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), wa_par_UINT(11)));
+  wa_ret_BOOL(TransparentBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6),
+                             wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), wa_par_UINT(11)));
 }
 
-// WINGDIAPI WINBOOL WINAPI GdiTransparentBlt(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC hdcSrc,int xoriginSrc,int yoriginSrc,int wSrc,int hSrc,UINT crTransparent)
+// WINGDIAPI WINBOOL WINAPI GdiTransparentBlt(HDC hdcDest,int xoriginDest,int yoriginDest,int wDest,int hDest,HDC
+// hdcSrc,int xoriginSrc,int yoriginSrc,int wSrc,int hSrc,UINT crTransparent)
 HB_FUNC(WAGDITRANSPARENTBLT)
 {
-  wa_ret_BOOL(GdiTransparentBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10), wa_par_UINT(11)));
+  wa_ret_BOOL(GdiTransparentBlt(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5),
+                                wa_par_HDC(6), wa_par_int(7), wa_par_int(8), wa_par_int(9), wa_par_int(10),
+                                wa_par_UINT(11)));
 }
 
 // WINGDIAPI WINBOOL WINAPI GradientFill(HDC hdc,PTRIVERTEX pVertex,ULONG nVertex,PVOID pMesh,ULONG nMesh,ULONG ulMode)
@@ -1581,11 +1624,9 @@ HB_FUNC(WAGRADIENTFILL)
 {
   std::vector<TRIVERTEX> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray1 != nullptr)
-  {
+  if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec1.push_back(*static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
@@ -1593,47 +1634,40 @@ HB_FUNC(WAGRADIENTFILL)
   std::vector<GRADIENT_TRIANGLE> vec2gt{};
   auto type = 0; // 1=gradient_rect 2=gradient_triangle
   auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
-  if (pArray2 != nullptr)
-  {
+  if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
-      if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT"))
-      {
+      if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT")) {
         type = 1;
         vec2gr.push_back(*static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
-      } else if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE"))
-      {
+      } else if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE")) {
         type = 2;
-        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+        vec2gt.push_back(
+            *static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
       }
     }
   }
-  if (type == 1)
-  {
-    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
-  }
-  else if (type == 2)
-  {
-    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
-  }
-  else
-  {
+  if (type == 1) {
+    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()),
+                             wa_par_ULONG(5), wa_par_ULONG(6)));
+  } else if (type == 2) {
+    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()),
+                             wa_par_ULONG(5), wa_par_ULONG(6)));
+  } else {
     wa_ret_BOOL(FALSE);
   }
 }
 
-// WINGDIAPI WINBOOL WINAPI GdiGradientFill(HDC hdc,PTRIVERTEX pVertex,ULONG nVertex,PVOID pMesh,ULONG nMesh,ULONG ulMode)
+// WINGDIAPI WINBOOL WINAPI GdiGradientFill(HDC hdc,PTRIVERTEX pVertex,ULONG nVertex,PVOID pMesh,ULONG nMesh,ULONG
+// ulMode)
 HB_FUNC(WAGDIGRADIENTFILL)
 {
   std::vector<TRIVERTEX> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray1 != nullptr)
-  {
+  if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec1.push_back(*static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
@@ -1641,33 +1675,27 @@ HB_FUNC(WAGDIGRADIENTFILL)
   std::vector<GRADIENT_TRIANGLE> vec2gt{};
   auto type = 0; // 1=gradient_rect 2=gradient_triangle
   auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
-  if (pArray2 != nullptr)
-  {
+  if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
-      if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT"))
-      {
+      if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT")) {
         type = 1;
         vec2gr.push_back(*static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
-      } else if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE"))
-      {
+      } else if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE")) {
         type = 2;
-        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+        vec2gt.push_back(
+            *static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
       }
     }
   }
-  if (type == 1)
-  {
-    wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
-  }
-  else if (type == 2)
-  {
-    wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
-  }
-  else
-  {
+  if (type == 1) {
+    wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()),
+                                wa_par_ULONG(5), wa_par_ULONG(6)));
+  } else if (type == 2) {
+    wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()),
+                                wa_par_ULONG(5), wa_par_ULONG(6)));
+  } else {
     wa_ret_BOOL(FALSE);
   }
 }
@@ -1729,7 +1757,8 @@ HB_FUNC(WACREATEENHMETAFILE)
 {
   void *str2{};
   void *str4{};
-  wa_ret_HDC(CreateEnhMetaFile(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_RECT(3), HB_PARSTR(4, &str4, nullptr)));
+  wa_ret_HDC(
+      CreateEnhMetaFile(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_RECT(3), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str4);
 }
@@ -1740,10 +1769,12 @@ HB_FUNC(WADELETEENHMETAFILE)
   wa_ret_BOOL(DeleteEnhMetaFile(wa_par_HENHMETAFILE(1)));
 }
 
-// WINGDIAPI WINBOOL WINAPI EnumEnhMetaFile(HDC hdc,HENHMETAFILE hmf,ENHMFENUMPROC lpProc,LPVOID lpParam,CONST RECT *lpRect)
+// WINGDIAPI WINBOOL WINAPI EnumEnhMetaFile(HDC hdc,HENHMETAFILE hmf,ENHMFENUMPROC lpProc,LPVOID lpParam,CONST RECT
+// *lpRect)
 HB_FUNC(WAENUMENHMETAFILE)
 {
-  wa_ret_BOOL(EnumEnhMetaFile(wa_par_HDC(1), wa_par_HENHMETAFILE(2), wa_par_ENHMFENUMPROC(3), static_cast<LPVOID>(hb_parptr(4)), wa_par_RECT(5)));
+  wa_ret_BOOL(EnumEnhMetaFile(wa_par_HDC(1), wa_par_HENHMETAFILE(2), wa_par_ENHMFENUMPROC(3),
+                              static_cast<LPVOID>(hb_parptr(4)), wa_par_RECT(5)));
 }
 
 // WINGDIAPI HENHMETAFILE WINAPI GetEnhMetaFileA(LPCSTR lpName)
@@ -1809,7 +1840,8 @@ HB_FUNC(WAGETENHMETAFILEHEADER)
 }
 #endif
 
-// WINGDIAPI UINT WINAPI GetEnhMetaFilePaletteEntries(HENHMETAFILE hemf,UINT nNumEntries,LPPALETTEENTRY lpPaletteEntries)
+// WINGDIAPI UINT WINAPI GetEnhMetaFilePaletteEntries(HENHMETAFILE hemf,UINT nNumEntries,LPPALETTEENTRY
+// lpPaletteEntries)
 
 // WINGDIAPI UINT WINAPI GetEnhMetaFilePixelFormat(HENHMETAFILE hemf,UINT cbBuffer,PIXELFORMATDESCRIPTOR *ppfd)
 HB_FUNC(WAGETENHMETAFILEPIXELFORMAT)
@@ -1820,7 +1852,8 @@ HB_FUNC(WAGETENHMETAFILEPIXELFORMAT)
 // WINGDIAPI UINT WINAPI GetWinMetaFileBits(HENHMETAFILE hemf,UINT cbData16,LPBYTE pData16,INT iMapMode,HDC hdcRef)
 HB_FUNC(WAGETWINMETAFILEBITS)
 {
-  wa_ret_UINT(GetWinMetaFileBits(wa_par_HENHMETAFILE(1), wa_par_UINT(2), static_cast<LPBYTE>(hb_parptr(3)), wa_par_INT(4), wa_par_HDC(5)));
+  wa_ret_UINT(GetWinMetaFileBits(wa_par_HENHMETAFILE(1), wa_par_UINT(2), static_cast<LPBYTE>(hb_parptr(3)),
+                                 wa_par_INT(4), wa_par_HDC(5)));
 }
 
 // WINGDIAPI WINBOOL WINAPI PlayEnhMetaFile(HDC hdc,HENHMETAFILE hmf,CONST RECT *lprect)
@@ -1837,10 +1870,12 @@ HB_FUNC(WASETENHMETAFILEBITS)
   wa_ret_HENHMETAFILE(SetEnhMetaFileBits(wa_par_UINT(1), static_cast<CONST BYTE *>(hb_parptr(2))));
 }
 
-// WINGDIAPI HENHMETAFILE WINAPI SetWinMetaFileBits(UINT nSize,CONST BYTE *lpMeta16Data,HDC hdcRef,CONST METAFILEPICT *lpMFP)
+// WINGDIAPI HENHMETAFILE WINAPI SetWinMetaFileBits(UINT nSize,CONST BYTE *lpMeta16Data,HDC hdcRef,CONST METAFILEPICT
+// *lpMFP)
 HB_FUNC(WASETWINMETAFILEBITS)
 {
-  wa_ret_HENHMETAFILE(SetWinMetaFileBits(wa_par_UINT(1), static_cast<CONST BYTE *>(hb_parptr(2)), wa_par_HDC(3), wa_par_METAFILEPICT(4)));
+  wa_ret_HENHMETAFILE(SetWinMetaFileBits(wa_par_UINT(1), static_cast<CONST BYTE *>(hb_parptr(2)), wa_par_HDC(3),
+                                         wa_par_METAFILEPICT(4)));
 }
 
 // WINGDIAPI WINBOOL WINAPI GdiComment(HDC hdc,UINT nSize,CONST BYTE *lpData)
@@ -1860,21 +1895,17 @@ HB_FUNC(WAPOLYPOLYLINE)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray1 != nullptr)
-  {
+  if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<DWORD> vec2{};
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if (pArray2 != nullptr)
-  {
+  if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec2.push_back(static_cast<DWORD>(hb_arrayGetND(pArray2, i + 1)));
     }
   }
@@ -1905,7 +1936,8 @@ HB_FUNC(WACOMBINETRANSFORM)
   wa_ret_BOOL(CombineTransform(wa_par_XFORM(1), wa_par_XFORM(2), wa_par_XFORM(3)));
 }
 
-// WINGDIAPI HBITMAP WINAPI CreateDIBSection(HDC hdc,CONST BITMAPINFO *lpbmi,UINT usage,VOID **ppvBits,HANDLE hSection,DWORD offset)
+// WINGDIAPI HBITMAP WINAPI CreateDIBSection(HDC hdc,CONST BITMAPINFO *lpbmi,UINT usage,VOID **ppvBits,HANDLE
+// hSection,DWORD offset)
 
 // WINGDIAPI UINT WINAPI GetDIBColorTable(HDC hdc,UINT iStart,UINT cEntries,RGBQUAD *prgbq)
 
@@ -1968,7 +2000,8 @@ HB_FUNC(WAABORTPATH)
 // WINGDIAPI WINBOOL WINAPI ArcTo(HDC hdc,int left,int top,int right,int bottom,int xr1,int yr1,int xr2,int yr2)
 HB_FUNC(WAARCTO)
 {
-  wa_ret_BOOL(ArcTo(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_int(8), wa_par_int(9)));
+  wa_ret_BOOL(ArcTo(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6),
+                    wa_par_int(7), wa_par_int(8), wa_par_int(9)));
 }
 
 // WINGDIAPI WINBOOL WINAPI BeginPath(HDC hdc)
@@ -2014,21 +2047,17 @@ HB_FUNC(WAPOLYDRAW)
 {
   std::vector<POINT> vec1{};
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray1 != nullptr)
-  {
+  if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec1.push_back(*static_cast<POINT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
   }
   std::vector<BYTE> vec2{};
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if (pArray2 != nullptr)
-  {
+  if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec2.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray2, i + 1)));
     }
   }
@@ -2073,7 +2102,8 @@ HB_FUNC(WAWIDENPATH)
   wa_ret_BOOL(WidenPath(wa_par_HDC(1)));
 }
 
-// WINGDIAPI HPEN WINAPI ExtCreatePen(DWORD iPenStyle,DWORD cWidth,CONST LOGBRUSH *plbrush,DWORD cStyle,CONST DWORD *pstyle)
+// WINGDIAPI HPEN WINAPI ExtCreatePen(DWORD iPenStyle,DWORD cWidth,CONST LOGBRUSH *plbrush,DWORD cStyle,CONST DWORD
+// *pstyle)
 
 // WINGDIAPI WINBOOL WINAPI GetMiterLimit(HDC hdc,PFLOAT plimit)
 HB_FUNC(WAGETMITERLIMIT)
@@ -2130,9 +2160,11 @@ HB_FUNC(WATEXTOUT)
   hb_strfree(str4);
 }
 
-// WINGDIAPI WINBOOL WINAPI ExtTextOutA(HDC hdc,int x,int y,UINT options,CONST RECT *lprect,LPCSTR lpString,UINT c,CONST INT *lpDx)
+// WINGDIAPI WINBOOL WINAPI ExtTextOutA(HDC hdc,int x,int y,UINT options,CONST RECT *lprect,LPCSTR lpString,UINT c,CONST
+// INT *lpDx)
 
-// WINGDIAPI WINBOOL WINAPI ExtTextOutW(HDC hdc,int x,int y,UINT options,CONST RECT *lprect,LPCWSTR lpString,UINT c,CONST INT *lpDx)
+// WINGDIAPI WINBOOL WINAPI ExtTextOutW(HDC hdc,int x,int y,UINT options,CONST RECT *lprect,LPCWSTR lpString,UINT
+// c,CONST INT *lpDx)
 
 // WINGDIAPI WINBOOL WINAPI PolyTextOutA(HDC hdc,CONST POLYTEXTA *ppt,int nstrings)
 
@@ -2225,13 +2257,15 @@ HB_FUNC(WAOFFSETWINDOWORGEX)
 // WINGDIAPI WINBOOL WINAPI ScaleViewportExtEx(HDC hdc,int xn,int dx,int yn,int yd,LPSIZE lpsz)
 HB_FUNC(WASCALEVIEWPORTEXTEX)
 {
-  wa_ret_BOOL(ScaleViewportExtEx(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_SIZE(6)));
+  wa_ret_BOOL(
+      ScaleViewportExtEx(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_SIZE(6)));
 }
 
 // WINGDIAPI WINBOOL WINAPI ScaleWindowExtEx(HDC hdc,int xn,int xd,int yn,int yd,LPSIZE lpsz)
 HB_FUNC(WASCALEWINDOWEXTEX)
 {
-  wa_ret_BOOL(ScaleWindowExtEx(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_SIZE(6)));
+  wa_ret_BOOL(
+      ScaleWindowExtEx(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_SIZE(6)));
 }
 
 // WINGDIAPI WINBOOL WINAPI SetBitmapDimensionEx(HBITMAP hbm,int w,int h,LPSIZE lpsz)
@@ -2402,13 +2436,15 @@ HB_FUNC(WACOLORMATCHTOTARGET)
 // WINGDIAPI WINBOOL WINAPI UpdateICMRegKeyA(DWORD reserved,LPSTR lpszCMID,LPSTR lpszFileName,UINT command)
 HB_FUNC(WAUPDATEICMREGKEYA)
 {
-  wa_ret_BOOL(UpdateICMRegKeyA(wa_par_DWORD(1), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3)), wa_par_UINT(4)));
+  wa_ret_BOOL(
+      UpdateICMRegKeyA(wa_par_DWORD(1), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3)), wa_par_UINT(4)));
 }
 
 // WINGDIAPI WINBOOL WINAPI UpdateICMRegKeyW(DWORD reserved,LPWSTR lpszCMID,LPWSTR lpszFileName,UINT command)
 HB_FUNC(WAUPDATEICMREGKEYW)
 {
-  wa_ret_BOOL(UpdateICMRegKeyW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), wa_par_UINT(4)));
+  wa_ret_BOOL(UpdateICMRegKeyW(wa_par_DWORD(1), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))),
+                               reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), wa_par_UINT(4)));
 }
 
 // WINGDIAPI WINBOOL WINAPI ColorCorrectPalette(HDC hdc,HPALETTE hPal,DWORD deFirst,DWORD num)
@@ -2456,7 +2492,7 @@ HB_FUNC(WAWGLGETCURRENTDC)
 // WINGDIAPI PROC WINAPI wglGetProcAddress(LPCSTR)
 HB_FUNC(WAWGLGETPROCADDRESS)
 {
-  wa_ret_PROC(wglGetProcAddress((LPCSTR) hb_parc(1)));
+  wa_ret_PROC(wglGetProcAddress((LPCSTR)hb_parc(1)));
 }
 
 // WINGDIAPI WINBOOL WINAPI wglMakeCurrent(HDC,HGLRC)

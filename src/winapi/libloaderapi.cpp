@@ -154,23 +154,32 @@ HB_FUNC(WAGETMODULEHANDLEEX)
   hb_strfree(str);
 }
 
-// WINBASEAPI WINBOOL WINAPI EnumResourceLanguagesA(HMODULE hModule,LPCSTR lpType,LPCSTR lpName,ENUMRESLANGPROCA lpEnumFunc,LONG_PTR lParam)
+// WINBASEAPI WINBOOL WINAPI EnumResourceLanguagesA(HMODULE hModule,LPCSTR lpType,LPCSTR lpName,ENUMRESLANGPROCA
+// lpEnumFunc,LONG_PTR lParam)
 
-// WINBASEAPI WINBOOL WINAPI EnumResourceLanguagesW(HMODULE hModule,LPCWSTR lpType,LPCWSTR lpName,ENUMRESLANGPROCW lpEnumFunc,LONG_PTR lParam)
+// WINBASEAPI WINBOOL WINAPI EnumResourceLanguagesW(HMODULE hModule,LPCWSTR lpType,LPCWSTR lpName,ENUMRESLANGPROCW
+// lpEnumFunc,LONG_PTR lParam)
 
-// WINBASEAPI WINBOOL APIENTRY EnumResourceLanguagesExA(HMODULE hModule, LPCSTR lpType, LPCSTR lpName, ENUMRESLANGPROCA lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
+// WINBASEAPI WINBOOL APIENTRY EnumResourceLanguagesExA(HMODULE hModule, LPCSTR lpType, LPCSTR lpName, ENUMRESLANGPROCA
+// lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
 
-// WINBASEAPI WINBOOL APIENTRY EnumResourceLanguagesExW(HMODULE hModule, LPCWSTR lpType, LPCWSTR lpName, ENUMRESLANGPROCW lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
+// WINBASEAPI WINBOOL APIENTRY EnumResourceLanguagesExW(HMODULE hModule, LPCWSTR lpType, LPCWSTR lpName,
+// ENUMRESLANGPROCW lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
 
-// WINBASEAPI WINBOOL WINAPI EnumResourceNamesExA(HMODULE hModule, LPCSTR lpType, ENUMRESNAMEPROCA lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
+// WINBASEAPI WINBOOL WINAPI EnumResourceNamesExA(HMODULE hModule, LPCSTR lpType, ENUMRESNAMEPROCA lpEnumFunc, LONG_PTR
+// lParam, DWORD dwFlags, LANGID LangId)
 
-// WINBASEAPI WINBOOL WINAPI EnumResourceNamesExW(HMODULE hModule, LPCWSTR lpType, ENUMRESNAMEPROCW lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
+// WINBASEAPI WINBOOL WINAPI EnumResourceNamesExW(HMODULE hModule, LPCWSTR lpType, ENUMRESNAMEPROCW lpEnumFunc, LONG_PTR
+// lParam, DWORD dwFlags, LANGID LangId)
 
-// WINBASEAPI WINBOOL WINAPI EnumResourceTypesExA(HMODULE hModule, ENUMRESTYPEPROCA lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
+// WINBASEAPI WINBOOL WINAPI EnumResourceTypesExA(HMODULE hModule, ENUMRESTYPEPROCA lpEnumFunc, LONG_PTR lParam, DWORD
+// dwFlags, LANGID LangId)
 
-// WINBASEAPI WINBOOL WINAPI EnumResourceTypesExW(HMODULE hModule, ENUMRESTYPEPROCW lpEnumFunc, LONG_PTR lParam, DWORD dwFlags, LANGID LangId)
+// WINBASEAPI WINBOOL WINAPI EnumResourceTypesExW(HMODULE hModule, ENUMRESTYPEPROCW lpEnumFunc, LONG_PTR lParam, DWORD
+// dwFlags, LANGID LangId)
 
-// WINBASEAPI WINBOOL WINAPI QueryOptionalDelayLoadedAPI(HMODULE CallerModule, LPCSTR lpDllName, LPCSTR lpProcName, DWORD Reserved)
+// WINBASEAPI WINBOOL WINAPI QueryOptionalDelayLoadedAPI(HMODULE CallerModule, LPCSTR lpDllName, LPCSTR lpProcName,
+// DWORD Reserved)
 
 // WINBASEAPI WINBOOL WINAPI DisableThreadLibraryCalls(HMODULE hLibModule)
 HB_FUNC(WADISABLETHREADLIBRARYCALLS)
@@ -194,7 +203,8 @@ HB_FUNC(WAGETPROCADDRESS)
 
 // WINBASEAPI DWORD WINAPI GetModuleFileNameW(HMODULE hModule, LPWSTR lpFilename, DWORD nSize)
 
-// WINBASEAPI int WINAPI FindStringOrdinal(DWORD dwFindStringOrdinalFlags, LPCWSTR lpStringSource, int cchSource, LPCWSTR lpStringValue, int cchValue, WINBOOL bIgnoreCase)
+// WINBASEAPI int WINAPI FindStringOrdinal(DWORD dwFindStringOrdinalFlags, LPCWSTR lpStringSource, int cchSource,
+// LPCWSTR lpStringValue, int cchValue, WINBOOL bIgnoreCase)
 #if 0 // TODO: Windows 7 or upper
 HB_FUNC(WAFINDSTRINGORDINAL)
 {

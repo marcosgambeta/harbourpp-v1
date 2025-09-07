@@ -35,13 +35,17 @@
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-// DWORD WINAPI VerFindFileA(DWORD uFlags,LPSTR szFileName,LPSTR szWinDir,LPSTR szAppDir,LPSTR szCurDir,PUINT lpuCurDirLen,LPSTR szDestDir,PUINT lpuDestDirLen)
+// DWORD WINAPI VerFindFileA(DWORD uFlags,LPSTR szFileName,LPSTR szWinDir,LPSTR szAppDir,LPSTR szCurDir,PUINT
+// lpuCurDirLen,LPSTR szDestDir,PUINT lpuDestDirLen)
 
-// DWORD WINAPI VerFindFileW(DWORD uFlags,LPWSTR szFileName,LPWSTR szWinDir,LPWSTR szAppDir,LPWSTR szCurDir,PUINT lpuCurDirLen,LPWSTR szDestDir,PUINT lpuDestDirLen)
+// DWORD WINAPI VerFindFileW(DWORD uFlags,LPWSTR szFileName,LPWSTR szWinDir,LPWSTR szAppDir,LPWSTR szCurDir,PUINT
+// lpuCurDirLen,LPWSTR szDestDir,PUINT lpuDestDirLen)
 
-// DWORD WINAPI VerInstallFileA(DWORD uFlags,LPSTR szSrcFileName,LPSTR szDestFileName,LPSTR szSrcDir,LPSTR szDestDir,LPSTR szCurDir,LPSTR szTmpFile,PUINT lpuTmpFileLen)
+// DWORD WINAPI VerInstallFileA(DWORD uFlags,LPSTR szSrcFileName,LPSTR szDestFileName,LPSTR szSrcDir,LPSTR
+// szDestDir,LPSTR szCurDir,LPSTR szTmpFile,PUINT lpuTmpFileLen)
 
-// DWORD WINAPI VerInstallFileW(DWORD uFlags,LPWSTR szSrcFileName,LPWSTR szDestFileName,LPWSTR szSrcDir,LPWSTR szDestDir,LPWSTR szCurDir,LPWSTR szTmpFile,PUINT lpuTmpFileLen)
+// DWORD WINAPI VerInstallFileW(DWORD uFlags,LPWSTR szSrcFileName,LPWSTR szDestFileName,LPWSTR szSrcDir,LPWSTR
+// szDestDir,LPWSTR szCurDir,LPWSTR szTmpFile,PUINT lpuTmpFileLen)
 
 // DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR lptstrFilename,LPDWORD lpdwHandle)
 // DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
@@ -95,7 +99,8 @@ HB_FUNC(WAGETFILEVERSIONINFOW)
 HB_FUNC(WAGETFILEVERSIONINFO)
 {
   void *str1{};
-  wa_ret_BOOL(GetFileVersionInfo(HB_PARSTR(1, &str1, nullptr), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
+  wa_ret_BOOL(GetFileVersionInfo(HB_PARSTR(1, &str1, nullptr), 0, wa_par_DWORD(3),
+                                 static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
   hb_strfree(str1);
 }
 
@@ -107,7 +112,8 @@ HB_FUNC(WAGETFILEVERSIONINFO)
 
 // WINBOOL WINAPI VerQueryValueW(LPCVOID pBlock,LPCWSTR lpSubBlock,LPVOID *lplpBuffer,PUINT puLen)
 
-// BOOL GetFileVersionInfoExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
+// BOOL GetFileVersionInfoExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out]
+// LPVOID lpData)
 #if 0
 HB_FUNC(WAGETFILEVERSIONINFOEXA)
 {
@@ -115,7 +121,8 @@ HB_FUNC(WAGETFILEVERSIONINFOEXA)
 }
 #endif
 
-// BOOL GetFileVersionInfoExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
+// BOOL GetFileVersionInfoExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out]
+// LPVOID lpData)
 #if 0
 HB_FUNC(WAGETFILEVERSIONINFOEXW)
 {

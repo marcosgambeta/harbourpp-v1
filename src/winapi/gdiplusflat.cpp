@@ -39,84 +39,84 @@
 
 #define wa_ret_GpStatus(x) hb_retni(x)
 
-//#define wa_par_REAL(n) hb_parnd(n)
-//#define wa_stor_REAL(x, n) hb_stornd(x, n);
+// #define wa_par_REAL(n) hb_parnd(n)
+// #define wa_stor_REAL(x, n) hb_stornd(x, n);
 
-#define wa_par_ARGB(n) hb_parnl(n) // TODO: check type
+#define wa_par_ARGB(n) hb_parnl(n)          // TODO: check type
 #define wa_stor_ARGB(x, n) hb_stornl(x, n); // TODO: check type
 
-#define wa_par_GpAdjustableArrowCap(n)            static_cast<GpAdjustableArrowCap *>(hb_parptr(n))
-#define wa_par_GpBitmap(n)                        static_cast<GpBitmap *>(hb_parptr(n))
-#define wa_par_GpBrush(n)                         static_cast<GpBrush *>(hb_parptr(n))
-#define wa_par_GpCachedBitmap(n)                  static_cast<GpCachedBitmap *>(hb_parptr(n))
-#define wa_par_GpColorMatrix(n)                   static_cast<ColorMatrix *>(hb_parptr(n))
-#define wa_par_GpColorPalette(n)                  static_cast<ColorPalette *>(hb_parptr(n))
-#define wa_par_GpCustomLineCap(n)                 static_cast<GpCustomLineCap *>(hb_parptr(n))
-#define wa_par_GpEncoderParameters(n)             static_cast<EncoderParameters *>(hb_parptr(n))
-#define wa_par_GpFont(n)                          static_cast<GpFont *>(hb_parptr(n))
-#define wa_par_GpFontCollection(n)                static_cast<GpFontCollection *>(hb_parptr(n))
-#define wa_par_GpFontFamily(n)                    static_cast<GpFontFamily *>(hb_parptr(n))
-#define wa_par_GpGraphics(n)                      static_cast<GpGraphics *>(hb_parptr(n))
-#define wa_par_GpHatch(n)                         static_cast<GpHatch *>(hb_parptr(n))
-#define wa_par_GpImage(n)                         static_cast<GpImage *>(hb_parptr(n))
-#define wa_par_GpImageAttributes(n)               static_cast<GpImageAttributes *>(hb_parptr(n))
-#define wa_par_GpLineGradient(n)                  static_cast<GpLineGradient *>(hb_parptr(n))
-#define wa_par_GpMatrix(n)                        static_cast<GpMatrix *>(hb_parptr(n))
-#define wa_par_GpMetafile(n)                      static_cast<GpMetafile *>(hb_parptr(n))
-#define wa_par_GpPath(n)                          static_cast<GpPath *>(hb_parptr(n))
-#define wa_par_GpPathGradient(n)                  static_cast<GpPathGradient *>(hb_parptr(n))
-#define wa_par_GpPathIterator(n)                  static_cast<GpPathIterator *>(hb_parptr(n))
-#define wa_par_GpPen(n)                           static_cast<GpPen *>(hb_parptr(n))
-#define wa_par_GpPoint(n)                         static_cast<GpPoint *>(wa_get_ptr(n))
-#define wa_par_GpPointF(n)                        static_cast<GpPointF *>(wa_get_ptr(n))
-#define wa_par_GpPropertyItem(n)                  static_cast<PropertyItem *>(hb_parptr(n))
-#define wa_par_GpRect(n)                          static_cast<GpRect *>(wa_get_ptr(n))
-#define wa_par_GpRectF(n)                         static_cast<GpRectF *>(wa_get_ptr(n))
-#define wa_par_GpRegion(n)                        static_cast<GpRegion *>(hb_parptr(n))
-#define wa_par_GpSolidFill(n)                     static_cast<GpSolidFill *>(hb_parptr(n))
-#define wa_par_GpStringFormat(n)                  static_cast<GpStringFormat *>(hb_parptr(n))
-#define wa_par_GpTexture(n)                       static_cast<GpTexture *>(hb_parptr(n))
-#define wa_par_IStream(n)                         static_cast<IStream *>(hb_parptr(n))
-#define wa_par_WmfPlaceableFileHeader(n)          static_cast<WmfPlaceableFileHeader *>(hb_parptr(n))
+#define wa_par_GpAdjustableArrowCap(n) static_cast<GpAdjustableArrowCap *>(hb_parptr(n))
+#define wa_par_GpBitmap(n) static_cast<GpBitmap *>(hb_parptr(n))
+#define wa_par_GpBrush(n) static_cast<GpBrush *>(hb_parptr(n))
+#define wa_par_GpCachedBitmap(n) static_cast<GpCachedBitmap *>(hb_parptr(n))
+#define wa_par_GpColorMatrix(n) static_cast<ColorMatrix *>(hb_parptr(n))
+#define wa_par_GpColorPalette(n) static_cast<ColorPalette *>(hb_parptr(n))
+#define wa_par_GpCustomLineCap(n) static_cast<GpCustomLineCap *>(hb_parptr(n))
+#define wa_par_GpEncoderParameters(n) static_cast<EncoderParameters *>(hb_parptr(n))
+#define wa_par_GpFont(n) static_cast<GpFont *>(hb_parptr(n))
+#define wa_par_GpFontCollection(n) static_cast<GpFontCollection *>(hb_parptr(n))
+#define wa_par_GpFontFamily(n) static_cast<GpFontFamily *>(hb_parptr(n))
+#define wa_par_GpGraphics(n) static_cast<GpGraphics *>(hb_parptr(n))
+#define wa_par_GpHatch(n) static_cast<GpHatch *>(hb_parptr(n))
+#define wa_par_GpImage(n) static_cast<GpImage *>(hb_parptr(n))
+#define wa_par_GpImageAttributes(n) static_cast<GpImageAttributes *>(hb_parptr(n))
+#define wa_par_GpLineGradient(n) static_cast<GpLineGradient *>(hb_parptr(n))
+#define wa_par_GpMatrix(n) static_cast<GpMatrix *>(hb_parptr(n))
+#define wa_par_GpMetafile(n) static_cast<GpMetafile *>(hb_parptr(n))
+#define wa_par_GpPath(n) static_cast<GpPath *>(hb_parptr(n))
+#define wa_par_GpPathGradient(n) static_cast<GpPathGradient *>(hb_parptr(n))
+#define wa_par_GpPathIterator(n) static_cast<GpPathIterator *>(hb_parptr(n))
+#define wa_par_GpPen(n) static_cast<GpPen *>(hb_parptr(n))
+#define wa_par_GpPoint(n) static_cast<GpPoint *>(wa_get_ptr(n))
+#define wa_par_GpPointF(n) static_cast<GpPointF *>(wa_get_ptr(n))
+#define wa_par_GpPropertyItem(n) static_cast<PropertyItem *>(hb_parptr(n))
+#define wa_par_GpRect(n) static_cast<GpRect *>(wa_get_ptr(n))
+#define wa_par_GpRectF(n) static_cast<GpRectF *>(wa_get_ptr(n))
+#define wa_par_GpRegion(n) static_cast<GpRegion *>(hb_parptr(n))
+#define wa_par_GpSolidFill(n) static_cast<GpSolidFill *>(hb_parptr(n))
+#define wa_par_GpStringFormat(n) static_cast<GpStringFormat *>(hb_parptr(n))
+#define wa_par_GpTexture(n) static_cast<GpTexture *>(hb_parptr(n))
+#define wa_par_IStream(n) static_cast<IStream *>(hb_parptr(n))
+#define wa_par_WmfPlaceableFileHeader(n) static_cast<WmfPlaceableFileHeader *>(hb_parptr(n))
 
-#define wa_par_GpColorAdjustType(n)               static_cast<ColorAdjustType>(hb_parni(n))
-#define wa_par_GpColorChannelFlags(n)             static_cast<ColorChannelFlags>(hb_parni(n))
-#define wa_par_GpColorMatrixFlags(n)              static_cast<ColorMatrixFlags>(hb_parni(n))
-#define wa_par_GpCombineMode(n)                   static_cast<CombineMode>(hb_parni(n))
-#define wa_par_GpCompositingMode(n)               static_cast<CompositingMode>(hb_parni(n))
-#define wa_par_GpCompositingQuality(n)            static_cast<CompositingQuality>(hb_parni(n))
-#define wa_par_GpCoordinateSpace(n)               static_cast<GpCoordinateSpace>(hb_parni(n))
-#define wa_par_GpCustomLineCapType(n)             static_cast<CustomLineCapType>(hb_parni(n))
-#define wa_par_GpDashCap(n)                       static_cast<GpDashCap>(hb_parni(n))
-#define wa_par_GpDashStyle(n)                     static_cast<GpDashStyle>(hb_parni(n))
-#define wa_par_GpDitherType(n)                    static_cast<DitherType>(hb_parni(n))
-#define wa_par_GpEmfPlusRecordType(n)             static_cast<EmfPlusRecordType>(hb_parni(n))
-#define wa_par_GpEmfType(n)                       static_cast<EmfType>(hb_parni(n))
-#define wa_par_GpFillMode(n)                      static_cast<GpFillMode>(hb_parni(n))
-#define wa_par_GpFlushIntention(n)                static_cast<GpFlushIntention>(hb_parni(n))
-#define wa_par_GpGraphicsContainer(n)             static_cast<GraphicsContainer>(hb_parni(n))
-#define wa_par_GpGraphicsState(n)                 static_cast<GraphicsState>(hb_parni(n))
-#define wa_par_GpHatchStyle(n)                    static_cast<GpHatchStyle>(hb_parni(n))
-#define wa_par_GpHistogramFormat(n)               static_cast<HistogramFormat>(hb_parni(n))
-#define wa_par_GpInterpolationMode(n)             static_cast<InterpolationMode>(hb_parni(n))
-#define wa_par_GpLinearGradientMode(n)            static_cast<LinearGradientMode>(hb_parni(n))
-#define wa_par_GpLineCap(n)                       static_cast<GpLineCap>(hb_parni(n))
-#define wa_par_GpLineJoin(n)                      static_cast<GpLineJoin>(hb_parni(n))
-#define wa_par_GpMatrixOrder(n)                   static_cast<GpMatrixOrder>(hb_parni(n))
-#define wa_par_GpPaletteType(n)                   static_cast<PaletteType>(hb_parni(n))
-#define wa_par_GpPenAlignment(n)                  static_cast<GpPenAlignment>(hb_parni(n))
-#define wa_par_GpPixelFormat(n)                   static_cast<PixelFormat>(hb_parni(n))
-#define wa_par_GpPixelOffsetMode(n)               static_cast<PixelOffsetMode>(hb_parni(n))
-#define wa_par_GpRotateFlipType(n)                static_cast<RotateFlipType>(hb_parni(n))
-#define wa_par_GpSmoothingMode(n)                 static_cast<SmoothingMode>(hb_parni(n))
-#define wa_par_GpStringAlignment(n)               static_cast<StringAlignment>(hb_parni(n))
-#define wa_par_GpStringDigitSubstitute(n)         static_cast<StringDigitSubstitute>(hb_parni(n))
-#define wa_par_GpStringTrimming(n)                static_cast<StringTrimming>(hb_parni(n))
-#define wa_par_GpTextRenderingHint(n)             static_cast<TextRenderingHint>(hb_parni(n))
-#define wa_par_GpUnit(n)                          static_cast<GpUnit>(hb_parni(n))
-#define wa_par_GpWarpMode(n)                      static_cast<WarpMode>(hb_parni(n))
-#define wa_par_GpWrapMode(n)                      static_cast<GpWrapMode>(hb_parni(n))
-#define wa_par_MetafileFrameUnit(n)               static_cast<MetafileFrameUnit>(hb_parni(n))
+#define wa_par_GpColorAdjustType(n) static_cast<ColorAdjustType>(hb_parni(n))
+#define wa_par_GpColorChannelFlags(n) static_cast<ColorChannelFlags>(hb_parni(n))
+#define wa_par_GpColorMatrixFlags(n) static_cast<ColorMatrixFlags>(hb_parni(n))
+#define wa_par_GpCombineMode(n) static_cast<CombineMode>(hb_parni(n))
+#define wa_par_GpCompositingMode(n) static_cast<CompositingMode>(hb_parni(n))
+#define wa_par_GpCompositingQuality(n) static_cast<CompositingQuality>(hb_parni(n))
+#define wa_par_GpCoordinateSpace(n) static_cast<GpCoordinateSpace>(hb_parni(n))
+#define wa_par_GpCustomLineCapType(n) static_cast<CustomLineCapType>(hb_parni(n))
+#define wa_par_GpDashCap(n) static_cast<GpDashCap>(hb_parni(n))
+#define wa_par_GpDashStyle(n) static_cast<GpDashStyle>(hb_parni(n))
+#define wa_par_GpDitherType(n) static_cast<DitherType>(hb_parni(n))
+#define wa_par_GpEmfPlusRecordType(n) static_cast<EmfPlusRecordType>(hb_parni(n))
+#define wa_par_GpEmfType(n) static_cast<EmfType>(hb_parni(n))
+#define wa_par_GpFillMode(n) static_cast<GpFillMode>(hb_parni(n))
+#define wa_par_GpFlushIntention(n) static_cast<GpFlushIntention>(hb_parni(n))
+#define wa_par_GpGraphicsContainer(n) static_cast<GraphicsContainer>(hb_parni(n))
+#define wa_par_GpGraphicsState(n) static_cast<GraphicsState>(hb_parni(n))
+#define wa_par_GpHatchStyle(n) static_cast<GpHatchStyle>(hb_parni(n))
+#define wa_par_GpHistogramFormat(n) static_cast<HistogramFormat>(hb_parni(n))
+#define wa_par_GpInterpolationMode(n) static_cast<InterpolationMode>(hb_parni(n))
+#define wa_par_GpLinearGradientMode(n) static_cast<LinearGradientMode>(hb_parni(n))
+#define wa_par_GpLineCap(n) static_cast<GpLineCap>(hb_parni(n))
+#define wa_par_GpLineJoin(n) static_cast<GpLineJoin>(hb_parni(n))
+#define wa_par_GpMatrixOrder(n) static_cast<GpMatrixOrder>(hb_parni(n))
+#define wa_par_GpPaletteType(n) static_cast<PaletteType>(hb_parni(n))
+#define wa_par_GpPenAlignment(n) static_cast<GpPenAlignment>(hb_parni(n))
+#define wa_par_GpPixelFormat(n) static_cast<PixelFormat>(hb_parni(n))
+#define wa_par_GpPixelOffsetMode(n) static_cast<PixelOffsetMode>(hb_parni(n))
+#define wa_par_GpRotateFlipType(n) static_cast<RotateFlipType>(hb_parni(n))
+#define wa_par_GpSmoothingMode(n) static_cast<SmoothingMode>(hb_parni(n))
+#define wa_par_GpStringAlignment(n) static_cast<StringAlignment>(hb_parni(n))
+#define wa_par_GpStringDigitSubstitute(n) static_cast<StringDigitSubstitute>(hb_parni(n))
+#define wa_par_GpStringTrimming(n) static_cast<StringTrimming>(hb_parni(n))
+#define wa_par_GpTextRenderingHint(n) static_cast<TextRenderingHint>(hb_parni(n))
+#define wa_par_GpUnit(n) static_cast<GpUnit>(hb_parni(n))
+#define wa_par_GpWarpMode(n) static_cast<WarpMode>(hb_parni(n))
+#define wa_par_GpWrapMode(n) static_cast<GpWrapMode>(hb_parni(n))
+#define wa_par_MetafileFrameUnit(n) static_cast<MetafileFrameUnit>(hb_parni(n))
 
 using namespace Gdiplus;
 using namespace Gdiplus::DllExports;
@@ -241,7 +241,8 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMFILEICM)
 HB_FUNC(WAGDIPCREATEBITMAPFROMSCAN0)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromScan0(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPixelFormat(4), static_cast<BYTE *>(hb_parptr(5)), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromScan0(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPixelFormat(4),
+                                            static_cast<BYTE *>(hb_parptr(5)), &p));
   hb_storptr(p, 6);
 }
 
@@ -257,7 +258,7 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMGRAPHICS)
 HB_FUNC(WAGDIPCREATEBITMAPFROMDIRECTDRAWSURFACE)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromDirectDrawSurface((IDirectDrawSurface7*) hb_parptr(1), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromDirectDrawSurface((IDirectDrawSurface7 *)hb_parptr(1), &p));
   hb_storptr(p, 2);
 }
 
@@ -265,7 +266,8 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMDIRECTDRAWSURFACE)
 HB_FUNC(WAGDIPCREATEBITMAPFROMGDIDIB)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromGdiDib((GDIPCONST BITMAPINFO*) hb_parptr(1), static_cast<VOID *>(hb_parptr(2)), &p));
+  wa_ret_GpStatus(
+      GdipCreateBitmapFromGdiDib((GDIPCONST BITMAPINFO *)hb_parptr(1), static_cast<VOID *>(hb_parptr(2)), &p));
   hb_storptr(p, 3);
 }
 
@@ -315,7 +317,8 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMRESOURCE)
 HB_FUNC(WAGDIPCLONEBITMAPAREA)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCloneBitmapArea(wa_par_REAL(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_GpPixelFormat(5), wa_par_GpBitmap(6), &p));
+  wa_ret_GpStatus(GdipCloneBitmapArea(wa_par_REAL(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4),
+                                      wa_par_GpPixelFormat(5), wa_par_GpBitmap(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -323,14 +326,16 @@ HB_FUNC(WAGDIPCLONEBITMAPAREA)
 HB_FUNC(WAGDIPCLONEBITMAPAREAI)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCloneBitmapAreaI(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_GpPixelFormat(5), wa_par_GpBitmap(6), &p));
+  wa_ret_GpStatus(GdipCloneBitmapAreaI(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4),
+                                       wa_par_GpPixelFormat(5), wa_par_GpBitmap(6), &p));
   hb_storptr(p, 7);
 }
 
 // GpStatus WINGDIPAPI GdipBitmapLockBits(GpBitmap*,GDIPCONST GpRect*,UINT,PixelFormat,BitmapData*)
 HB_FUNC(WAGDIPBITMAPLOCKBITS)
 {
-  wa_ret_GpStatus(GdipBitmapLockBits(wa_par_GpBitmap(1), wa_par_GpRect(2), wa_par_UINT(3), wa_par_GpPixelFormat(4), static_cast<BitmapData *>(hb_parptr(5))));
+  wa_ret_GpStatus(GdipBitmapLockBits(wa_par_GpBitmap(1), wa_par_GpRect(2), wa_par_UINT(3), wa_par_GpPixelFormat(4),
+                                     static_cast<BitmapData *>(hb_parptr(5))));
 }
 
 // GpStatus WINGDIPAPI GdipBitmapUnlockBits(GpBitmap*,BitmapData*)
@@ -655,7 +660,8 @@ HB_FUNC(WAGDIPCREATEFONTFROMLOGFONTW)
 HB_FUNC(WAGDIPCREATEFONT)
 {
   GpFont *p{};
-  wa_ret_GpStatus(GdipCreateFont((GDIPCONST GpFontFamily*) hb_parptr(1), wa_par_REAL(2), wa_par_INT(3), wa_par_GpUnit(4), &p));
+  wa_ret_GpStatus(
+      GdipCreateFont((GDIPCONST GpFontFamily *)hb_parptr(1), wa_par_REAL(2), wa_par_INT(3), wa_par_GpUnit(4), &p));
   hb_storptr(p, 5);
 }
 
@@ -1099,13 +1105,15 @@ HB_FUNC(WAGDIPMULTIPLYWORLDTRANSFORM)
 // GpStatus WINGDIPAPI GdipTranslateWorldTransform(GpGraphics*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPTRANSLATEWORLDTRANSFORM)
 {
-  wa_ret_GpStatus(GdipTranslateWorldTransform(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(
+      GdipTranslateWorldTransform(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipScaleWorldTransform(GpGraphics*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPSCALEWORLDTRANSFORM)
 {
-  wa_ret_GpStatus(GdipScaleWorldTransform(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(
+      GdipScaleWorldTransform(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipRotateWorldTransform(GpGraphics*,REAL,GpMatrixOrder)
@@ -1203,13 +1211,15 @@ HB_FUNC(WAGDIPCREATEHALFTONEPALETTE)
 // GpStatus WINGDIPAPI GdipDrawLine(GpGraphics*,GpPen*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWLINE)
 {
-  wa_ret_GpStatus(GdipDrawLine(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(GdipDrawLine(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                               wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawLineI(GpGraphics*,GpPen*,INT,INT,INT,INT)
 HB_FUNC(WAGDIPDRAWLINEI)
 {
-  wa_ret_GpStatus(GdipDrawLineI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
+  wa_ret_GpStatus(
+      GdipDrawLineI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawLines(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
@@ -1229,25 +1239,29 @@ HB_FUNC(WAGDIPDRAWLINESI)
 // GpStatus WINGDIPAPI GdipDrawArc(GpGraphics*,GpPen*,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWARC)
 {
-  wa_ret_GpStatus(GdipDrawArc(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8)));
+  wa_ret_GpStatus(GdipDrawArc(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                              wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawArcI(GpGraphics*,GpPen*,INT,INT,INT,INT,REAL,REAL)
 HB_FUNC(WAGDIPDRAWARCI)
 {
-  wa_ret_GpStatus(GdipDrawArcI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7), wa_par_REAL(8)));
+  wa_ret_GpStatus(GdipDrawArcI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                               wa_par_INT(6), wa_par_REAL(7), wa_par_REAL(8)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawBezier(GpGraphics*,GpPen*,REAL,REAL,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWBEZIER)
 {
-  wa_ret_GpStatus(GdipDrawBezier(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9), wa_par_REAL(10)));
+  wa_ret_GpStatus(GdipDrawBezier(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                 wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9), wa_par_REAL(10)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawBezierI(GpGraphics*,GpPen*,INT,INT,INT,INT,INT,INT,INT,INT)
 HB_FUNC(WAGDIPDRAWBEZIERI)
 {
-  wa_ret_GpStatus(GdipDrawBezierI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9), wa_par_INT(10)));
+  wa_ret_GpStatus(GdipDrawBezierI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                  wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9), wa_par_INT(10)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawBeziers(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
@@ -1267,13 +1281,15 @@ HB_FUNC(WAGDIPDRAWBEZIERSI)
 // GpStatus WINGDIPAPI GdipDrawRectangle(GpGraphics*,GpPen*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWRECTANGLE)
 {
-  wa_ret_GpStatus(GdipDrawRectangle(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(GdipDrawRectangle(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4),
+                                    wa_par_REAL(5), wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawRectangleI(GpGraphics*,GpPen*,INT,INT,INT,INT)
 HB_FUNC(WAGDIPDRAWRECTANGLEI)
 {
-  wa_ret_GpStatus(GdipDrawRectangleI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
+  wa_ret_GpStatus(GdipDrawRectangleI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                     wa_par_INT(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawRectangles(GpGraphics*,GpPen*,GDIPCONST GpRectF*,INT)
@@ -1293,25 +1309,29 @@ HB_FUNC(WAGDIPDRAWRECTANGLESI)
 // GpStatus WINGDIPAPI GdipDrawEllipse(GpGraphics*,GpPen*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWELLIPSE)
 {
-  wa_ret_GpStatus(GdipDrawEllipse(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(GdipDrawEllipse(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                  wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawEllipseI(GpGraphics*,GpPen*,INT,INT,INT,INT)
 HB_FUNC(WAGDIPDRAWELLIPSEI)
 {
-  wa_ret_GpStatus(GdipDrawEllipseI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
+  wa_ret_GpStatus(GdipDrawEllipseI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                   wa_par_INT(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawPie(GpGraphics*,GpPen*,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWPIE)
 {
-  wa_ret_GpStatus(GdipDrawPie(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8)));
+  wa_ret_GpStatus(GdipDrawPie(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                              wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawPieI(GpGraphics*,GpPen*,INT,INT,INT,INT,REAL,REAL)
 HB_FUNC(WAGDIPDRAWPIEI)
 {
-  wa_ret_GpStatus(GdipDrawPieI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7), wa_par_REAL(8)));
+  wa_ret_GpStatus(GdipDrawPieI(wa_par_GpGraphics(1), wa_par_GpPen(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                               wa_par_INT(6), wa_par_REAL(7), wa_par_REAL(8)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawPolygon(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
@@ -1366,14 +1386,16 @@ HB_FUNC(WAGDIPDRAWCURVE2I)
 HB_FUNC(WAGDIPDRAWCURVE3)
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipDrawCurve3(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipDrawCurve3(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_INT(5),
+                                 wa_par_INT(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawCurve3I(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT,INT,INT,REAL)
 HB_FUNC(WAGDIPDRAWCURVE3I)
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipDrawCurve3I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipDrawCurve3I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_INT(5),
+                                  wa_par_INT(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawClosedCurve(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
@@ -1394,14 +1416,16 @@ HB_FUNC(WAGDIPDRAWCLOSEDCURVEI)
 HB_FUNC(WAGDIPDRAWCLOSEDCURVE2)
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipDrawClosedCurve2(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
+  wa_ret_GpStatus(
+      GdipDrawClosedCurve2(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawClosedCurve2I(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT,REAL)
 HB_FUNC(WAGDIPDRAWCLOSEDCURVE2I)
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipDrawClosedCurve2I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
+  wa_ret_GpStatus(
+      GdipDrawClosedCurve2I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
 }
 
 // GpStatus WINGDIPAPI GdipGraphicsClear(GpGraphics*,ARGB)
@@ -1413,13 +1437,15 @@ HB_FUNC(WAGDIPGRAPHICSCLEAR)
 // GpStatus WINGDIPAPI GdipFillRectangle(GpGraphics*,GpBrush*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPFILLRECTANGLE)
 {
-  wa_ret_GpStatus(GdipFillRectangle(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(GdipFillRectangle(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_REAL(3), wa_par_REAL(4),
+                                    wa_par_REAL(5), wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipFillRectangleI(GpGraphics*,GpBrush*,INT,INT,INT,INT)
 HB_FUNC(WAGDIPFILLRECTANGLEI)
 {
-  wa_ret_GpStatus(GdipFillRectangleI(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
+  wa_ret_GpStatus(GdipFillRectangleI(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_INT(3), wa_par_INT(4),
+                                     wa_par_INT(5), wa_par_INT(6)));
 }
 
 // GpStatus WINGDIPAPI GdipFillRectangles(GpGraphics*,GpBrush*,GDIPCONST GpRectF*,INT)
@@ -1440,14 +1466,16 @@ HB_FUNC(WAGDIPFILLRECTANGLESI)
 HB_FUNC(WAGDIPFILLPOLYGON)
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipFillPolygon(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_GpFillMode(5)));
+  wa_ret_GpStatus(
+      GdipFillPolygon(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_GpFillMode(5)));
 }
 
 // GpStatus WINGDIPAPI GdipFillPolygonI(GpGraphics*,GpBrush*,GDIPCONST GpPoint*,INT,GpFillMode)
 HB_FUNC(WAGDIPFILLPOLYGONI)
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipFillPolygonI(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_GpFillMode(5)));
+  wa_ret_GpStatus(
+      GdipFillPolygonI(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_GpFillMode(5)));
 }
 
 // GpStatus WINGDIPAPI GdipFillPolygon2(GpGraphics*,GpBrush*,GDIPCONST GpPointF*,INT)
@@ -1467,25 +1495,29 @@ HB_FUNC(WAGDIPFILLPOLYGON2I)
 // GpStatus WINGDIPAPI GdipFillEllipse(GpGraphics*,GpBrush*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPFILLELLIPSE)
 {
-  wa_ret_GpStatus(GdipFillEllipse(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(GdipFillEllipse(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_REAL(3), wa_par_REAL(4),
+                                  wa_par_REAL(5), wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipFillEllipseI(GpGraphics*,GpBrush*,INT,INT,INT,INT)
 HB_FUNC(WAGDIPFILLELLIPSEI)
 {
-  wa_ret_GpStatus(GdipFillEllipseI(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
+  wa_ret_GpStatus(GdipFillEllipseI(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                   wa_par_INT(6)));
 }
 
 // GpStatus WINGDIPAPI GdipFillPie(GpGraphics*,GpBrush*,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPFILLPIE)
 {
-  wa_ret_GpStatus(GdipFillPie(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8)));
+  wa_ret_GpStatus(GdipFillPie(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                              wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8)));
 }
 
 // GpStatus WINGDIPAPI GdipFillPieI(GpGraphics*,GpBrush*,INT,INT,INT,INT,REAL,REAL)
 HB_FUNC(WAGDIPFILLPIEI)
 {
-  wa_ret_GpStatus(GdipFillPieI(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7), wa_par_REAL(8)));
+  wa_ret_GpStatus(GdipFillPieI(wa_par_GpGraphics(1), wa_par_GpBrush(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                               wa_par_INT(6), wa_par_REAL(7), wa_par_REAL(8)));
 }
 
 // GpStatus WINGDIPAPI GdipFillPath(GpGraphics*,GpBrush*,GpPath*)
@@ -1512,14 +1544,16 @@ HB_FUNC(WAGDIPFILLCLOSEDCURVEI)
 HB_FUNC(WAGDIPFILLCLOSEDCURVE2)
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipFillClosedCurve2(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_GpFillMode(6)));
+  wa_ret_GpStatus(GdipFillClosedCurve2(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4),
+                                       wa_par_REAL(5), wa_par_GpFillMode(6)));
 }
 
 // GpStatus WINGDIPAPI GdipFillClosedCurve2I(GpGraphics*,GpBrush*,GDIPCONST GpPoint*,INT,REAL,GpFillMode)
 HB_FUNC(WAGDIPFILLCLOSEDCURVE2I)
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipFillClosedCurve2I(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_GpFillMode(6)));
+  wa_ret_GpStatus(GdipFillClosedCurve2I(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4),
+                                        wa_par_REAL(5), wa_par_GpFillMode(6)));
 }
 
 // GpStatus WINGDIPAPI GdipFillRegion(GpGraphics*,GpBrush*,GpRegion*)
@@ -1543,13 +1577,15 @@ HB_FUNC(WAGDIPDRAWIMAGEI)
 // GpStatus WINGDIPAPI GdipDrawImageRect(GpGraphics*,GpImage*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPDRAWIMAGERECT)
 {
-  wa_ret_GpStatus(GdipDrawImageRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(GdipDrawImageRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4),
+                                    wa_par_REAL(5), wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImageRectI(GpGraphics*,GpImage*,INT,INT,INT,INT)
 HB_FUNC(WAGDIPDRAWIMAGERECTI)
 {
-  wa_ret_GpStatus(GdipDrawImageRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6)));
+  wa_ret_GpStatus(GdipDrawImageRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4),
+                                     wa_par_INT(5), wa_par_INT(6)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImagePoints(GpGraphics*,GpImage*,GDIPCONST GpPointF*,INT)
@@ -1569,39 +1605,58 @@ HB_FUNC(WAGDIPDRAWIMAGEPOINTSI)
 // GpStatus WINGDIPAPI GdipDrawImagePointRect(GpGraphics*,GpImage*,REAL,REAL,REAL,REAL,REAL,REAL,GpUnit)
 HB_FUNC(WAGDIPDRAWIMAGEPOINTRECT)
 {
-  wa_ret_GpStatus(GdipDrawImagePointRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpUnit(9)));
+  wa_ret_GpStatus(GdipDrawImagePointRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4),
+                                         wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8),
+                                         wa_par_GpUnit(9)));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImagePointRectI(GpGraphics*,GpImage*,INT,INT,INT,INT,INT,INT,GpUnit)
 HB_FUNC(WAGDIPDRAWIMAGEPOINTRECTI)
 {
-  wa_ret_GpStatus(GdipDrawImagePointRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_GpUnit(9)));
+  wa_ret_GpStatus(GdipDrawImagePointRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4),
+                                          wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8),
+                                          wa_par_GpUnit(9)));
 }
 
-// GpStatus WINGDIPAPI GdipDrawImageRectRect(GpGraphics*,GpImage*,REAL,REAL,REAL,REAL,REAL,REAL,REAL,REAL,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
+// GpStatus WINGDIPAPI
+// GdipDrawImageRectRect(GpGraphics*,GpImage*,REAL,REAL,REAL,REAL,REAL,REAL,REAL,REAL,GpUnit,GDIPCONST
+// GpImageAttributes*,DrawImageAbort,VOID*)
 HB_FUNC(WAGDIPDRAWIMAGERECTRECT) // TODO: parameters 13 and 14
 {
-  wa_ret_GpStatus(GdipDrawImageRectRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9), wa_par_REAL(10), wa_par_GpUnit(11), wa_par_GpImageAttributes(12), nullptr, nullptr));
+  wa_ret_GpStatus(GdipDrawImageRectRect(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_REAL(3), wa_par_REAL(4),
+                                        wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9),
+                                        wa_par_REAL(10), wa_par_GpUnit(11), wa_par_GpImageAttributes(12), nullptr,
+                                        nullptr));
 }
 
-// GpStatus WINGDIPAPI GdipDrawImageRectRectI(GpGraphics*,GpImage*,INT,INT,INT,INT,INT,INT,INT,INT,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
+// GpStatus WINGDIPAPI GdipDrawImageRectRectI(GpGraphics*,GpImage*,INT,INT,INT,INT,INT,INT,INT,INT,GpUnit,GDIPCONST
+// GpImageAttributes*,DrawImageAbort,VOID*)
 HB_FUNC(WAGDIPDRAWIMAGERECTRECTI) // TODO: parameters 13 and 14
 {
-  wa_ret_GpStatus(GdipDrawImageRectRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9), wa_par_INT(10), wa_par_GpUnit(11), wa_par_GpImageAttributes(12), nullptr, nullptr));
+  wa_ret_GpStatus(GdipDrawImageRectRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), wa_par_INT(3), wa_par_INT(4),
+                                         wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9),
+                                         wa_par_INT(10), wa_par_GpUnit(11), wa_par_GpImageAttributes(12), nullptr,
+                                         nullptr));
 }
 
-// GpStatus WINGDIPAPI GdipDrawImagePointsRect(GpGraphics*,GpImage*,GDIPCONST GpPointF*,INT,REAL,REAL,REAL,REAL,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
+// GpStatus WINGDIPAPI GdipDrawImagePointsRect(GpGraphics*,GpImage*,GDIPCONST
+// GpPointF*,INT,REAL,REAL,REAL,REAL,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
 HB_FUNC(WAGDIPDRAWIMAGEPOINTSRECT) // TODO: parameters 11 and 12
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipDrawImagePointsRect(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpUnit(9), wa_par_GpImageAttributes(10), nullptr, nullptr));
+  wa_ret_GpStatus(GdipDrawImagePointsRect(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(4),
+                                          wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8),
+                                          wa_par_GpUnit(9), wa_par_GpImageAttributes(10), nullptr, nullptr));
 }
 
-// GpStatus WINGDIPAPI GdipDrawImagePointsRectI(GpGraphics*,GpImage*,GDIPCONST GpPoint*,INT,INT,INT,INT,INT,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
+// GpStatus WINGDIPAPI GdipDrawImagePointsRectI(GpGraphics*,GpImage*,GDIPCONST
+// GpPoint*,INT,INT,INT,INT,INT,GpUnit,GDIPCONST GpImageAttributes*,DrawImageAbort,VOID*)
 HB_FUNC(WAGDIPDRAWIMAGEPOINTSRECTI) // TODO: parameters 10 and 11
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipDrawImagePointsRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_GpUnit(8), wa_par_GpImageAttributes(9), nullptr, nullptr));
+  wa_ret_GpStatus(GdipDrawImagePointsRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(3),
+                                           wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_GpUnit(8),
+                                           wa_par_GpImageAttributes(9), nullptr, nullptr));
 }
 
 // GpStatus WINGDIPAPI GdipDrawImageFX(GpGraphics*,GpImage*,GpRectF*,GpMatrix*,CGpEffect*,GpImageAttributes*,GpUnit)
@@ -1614,33 +1669,45 @@ HB_FUNC(WAGDIPDRAWIMAGEFX)
 
 #ifdef __cplusplus
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPoint(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST PointF&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPoint(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// PointF&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPointI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Point&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPointI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// Point&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileDestRect(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST RectF&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileDestRect(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// RectF&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileDestRectI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Rect&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileDestRectI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// Rect&,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
 #endif
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPoints(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST PointF*,INT,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPoints(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// PointF*,INT,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPointsI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Point*,INT,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileDestPointsI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// Point*,INT,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
 #ifdef __cplusplus
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPoint(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST PointF&,GDIPCONST RectF&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPoint(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// PointF&,GDIPCONST RectF&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPointI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Point&,GDIPCONST Rect&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPointI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// Point&,GDIPCONST Rect&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestRect(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST RectF&,GDIPCONST RectF&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestRect(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST RectF&,GDIPCONST
+// RectF&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestRectI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Rect&,GDIPCONST Rect&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestRectI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Rect&,GDIPCONST
+// Rect&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPoints(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST PointF*,INT,GDIPCONST RectF&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPoints(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// PointF*,INT,GDIPCONST RectF&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
-// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPointsI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST Point*,INT,GDIPCONST Rect&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
+// GpStatus WINGDIPAPI GdipEnumerateMetafileSrcRectDestPointsI(GpGraphics*,GDIPCONST GpMetafile*,GDIPCONST
+// Point*,INT,GDIPCONST Rect&,Unit,EnumerateMetafileProc,VOID*,GDIPCONST GpImageAttributes*)
 
 #endif
 
@@ -1653,13 +1720,15 @@ HB_FUNC(WAGDIPSETCLIPGRAPHICS)
 // GpStatus WINGDIPAPI GdipSetClipRect(GpGraphics*,REAL,REAL,REAL,REAL,CombineMode)
 HB_FUNC(WAGDIPSETCLIPRECT)
 {
-  wa_ret_GpStatus(GdipSetClipRect(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_GpCombineMode(6)));
+  wa_ret_GpStatus(GdipSetClipRect(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                  wa_par_GpCombineMode(6)));
 }
 
 // GpStatus WINGDIPAPI GdipSetClipRectI(GpGraphics*,INT,INT,INT,INT,CombineMode)
 HB_FUNC(WAGDIPSETCLIPRECTI)
 {
-  wa_ret_GpStatus(GdipSetClipRectI(wa_par_GpGraphics(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_GpCombineMode(6)));
+  wa_ret_GpStatus(GdipSetClipRectI(wa_par_GpGraphics(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                   wa_par_GpCombineMode(6)));
 }
 
 // GpStatus WINGDIPAPI GdipSetClipPath(GpGraphics*,GpPath*,CombineMode)
@@ -1764,7 +1833,8 @@ HB_FUNC(WAGDIPISVISIBLEPOINTI)
 HB_FUNC(WAGDIPISVISIBLERECT)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsVisibleRect(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), &b));
+  wa_ret_GpStatus(
+      GdipIsVisibleRect(wa_par_GpGraphics(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), &b));
   wa_stor_BOOL(b, 6);
 }
 
@@ -1772,7 +1842,8 @@ HB_FUNC(WAGDIPISVISIBLERECT)
 HB_FUNC(WAGDIPISVISIBLERECTI)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsVisibleRectI(wa_par_GpGraphics(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), &b));
+  wa_ret_GpStatus(
+      GdipIsVisibleRectI(wa_par_GpGraphics(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), &b));
   wa_stor_BOOL(b, 6);
 }
 
@@ -1794,7 +1865,8 @@ HB_FUNC(WAGDIPRESTOREGRAPHICS)
 HB_FUNC(WAGDIPBEGINCONTAINER)
 {
   GraphicsContainer gc{};
-  wa_ret_GpStatus(GdipBeginContainer(wa_par_GpGraphics(1), wa_par_GpRectF(2), wa_par_GpRectF(3), wa_par_GpUnit(4), &gc));
+  wa_ret_GpStatus(
+      GdipBeginContainer(wa_par_GpGraphics(1), wa_par_GpRectF(2), wa_par_GpRectF(3), wa_par_GpUnit(4), &gc));
   hb_storni(gc, 5);
 }
 
@@ -1975,25 +2047,29 @@ HB_FUNC(WAGDIPADDPATHLINE2I)
 // GpStatus WINGDIPAPI GdipAddPathArc(GpPath*,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPADDPATHARC)
 {
-  wa_ret_GpStatus(GdipAddPathArc(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipAddPathArc(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                 wa_par_REAL(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathArcI(GpPath*,INT,INT,INT,INT,REAL,REAL)
 HB_FUNC(WAGDIPADDPATHARCI)
 {
-  wa_ret_GpStatus(GdipAddPathArcI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipAddPathArcI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                  wa_par_REAL(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathBezier(GpPath*,REAL,REAL,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPADDPATHBEZIER)
 {
-  wa_ret_GpStatus(GdipAddPathBezier(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9)));
+  wa_ret_GpStatus(GdipAddPathBezier(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                    wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_REAL(9)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathBezierI(GpPath*,INT,INT,INT,INT,INT,INT,INT,INT)
 HB_FUNC(WAGDIPADDPATHBEZIERI)
 {
-  wa_ret_GpStatus(GdipAddPathBezierI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9)));
+  wa_ret_GpStatus(GdipAddPathBezierI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                     wa_par_INT(6), wa_par_INT(7), wa_par_INT(8), wa_par_INT(9)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathBeziers(GpPath*,GDIPCONST GpPointF*,INT)
@@ -2042,14 +2118,16 @@ HB_FUNC(WAGDIPADDPATHCURVE2I)
 HB_FUNC(WAGDIPADDPATHCURVE3)
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipAddPathCurve3(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(
+      GdipAddPathCurve3(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathCurve3I(GpPath*,GDIPCONST GpPoint*,INT,INT,INT,REAL)
 HB_FUNC(WAGDIPADDPATHCURVE3I)
 {
   std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipAddPathCurve3I(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6)));
+  wa_ret_GpStatus(
+      GdipAddPathCurve3I(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathClosedCurve(GpPath*,GDIPCONST GpPointF*,INT)
@@ -2087,7 +2165,8 @@ HB_FUNC(WAGDIPADDPATHCLOSEDCURVE2I)
 // GpStatus WINGDIPAPI GdipAddPathRectangle(GpPath*,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPADDPATHRECTANGLE)
 {
-  wa_ret_GpStatus(GdipAddPathRectangle(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5)));
+  wa_ret_GpStatus(
+      GdipAddPathRectangle(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathRectangleI(GpPath*,INT,INT,INT,INT)
@@ -2125,13 +2204,15 @@ HB_FUNC(WAGDIPADDPATHELLIPSEI)
 // GpStatus WINGDIPAPI GdipAddPathPie(GpPath*,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPADDPATHPIE)
 {
-  wa_ret_GpStatus(GdipAddPathPie(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipAddPathPie(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                 wa_par_REAL(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathPieI(GpPath*,INT,INT,INT,INT,REAL,REAL)
 HB_FUNC(WAGDIPADDPATHPIEI)
 {
-  wa_ret_GpStatus(GdipAddPathPieI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipAddPathPieI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5),
+                                  wa_par_REAL(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipAddPathPolygon(GpPath*,GDIPCONST GpPointF*,INT)
@@ -2154,19 +2235,25 @@ HB_FUNC(WAGDIPADDPATHPATH)
   wa_ret_GpStatus(GdipAddPathPath(wa_par_GpPath(1), wa_par_GpPath(2), wa_par_BOOL(3)));
 }
 
-// GpStatus WINGDIPAPI GdipAddPathString(GpPath*,GDIPCONST WCHAR*,INT,GDIPCONST GpFontFamily*,INT,REAL,GDIPCONST RectF*,GDIPCONST GpStringFormat*)
+// GpStatus WINGDIPAPI GdipAddPathString(GpPath*,GDIPCONST WCHAR*,INT,GDIPCONST GpFontFamily*,INT,REAL,GDIPCONST
+// RectF*,GDIPCONST GpStringFormat*)
 HB_FUNC(WAGDIPADDPATHSTRING)
 {
   void *str{};
-  wa_ret_GpStatus(GdipAddPathString(wa_par_GpPath(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3), wa_par_GpFontFamily(4), wa_par_INT(5), wa_par_REAL(6), wa_par_GpRectF(7), wa_par_GpStringFormat(8)));
+  wa_ret_GpStatus(GdipAddPathString(wa_par_GpPath(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3),
+                                    wa_par_GpFontFamily(4), wa_par_INT(5), wa_par_REAL(6), wa_par_GpRectF(7),
+                                    wa_par_GpStringFormat(8)));
   hb_strfree(str);
 }
 
-// GpStatus WINGDIPAPI GdipAddPathStringI(GpPath*,GDIPCONST WCHAR*,INT,GDIPCONST GpFontFamily*,INT,REAL,GDIPCONST Rect*,GDIPCONST GpStringFormat*)
+// GpStatus WINGDIPAPI GdipAddPathStringI(GpPath*,GDIPCONST WCHAR*,INT,GDIPCONST GpFontFamily*,INT,REAL,GDIPCONST
+// Rect*,GDIPCONST GpStringFormat*)
 HB_FUNC(WAGDIPADDPATHSTRINGI)
 {
   void *str{};
-  wa_ret_GpStatus(GdipAddPathStringI(wa_par_GpPath(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3), wa_par_GpFontFamily(4), wa_par_INT(5), wa_par_REAL(6), wa_par_GpRect(7), wa_par_GpStringFormat(8)));
+  wa_ret_GpStatus(GdipAddPathStringI(wa_par_GpPath(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3),
+                                     wa_par_GpFontFamily(4), wa_par_INT(5), wa_par_REAL(6), wa_par_GpRect(7),
+                                     wa_par_GpStringFormat(8)));
   hb_strfree(str);
 }
 
@@ -2192,7 +2279,8 @@ HB_FUNC(WAGDIPWIDENPATH)
 HB_FUNC(WAGDIPWARPPATH)
 {
   std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
-  wa_ret_GpStatus(GdipWarpPath(wa_par_GpPath(1), wa_par_GpMatrix(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpWarpMode(9), wa_par_REAL(10)));
+  wa_ret_GpStatus(GdipWarpPath(wa_par_GpPath(1), wa_par_GpMatrix(2), vec.data(), wa_par_INT(4), wa_par_REAL(5),
+                               wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpWarpMode(9), wa_par_REAL(10)));
 }
 
 // GpStatus WINGDIPAPI GdipTransformPath(GpPath*,GpMatrix*)
@@ -2233,7 +2321,8 @@ HB_FUNC(WAGDIPISVISIBLEPATHPOINTI)
 HB_FUNC(WAGDIPISOUTLINEVISIBLEPATHPOINT)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsOutlineVisiblePathPoint(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpPen(4), wa_par_GpGraphics(5), &b));
+  wa_ret_GpStatus(GdipIsOutlineVisiblePathPoint(wa_par_GpPath(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpPen(4),
+                                                wa_par_GpGraphics(5), &b));
   wa_stor_BOOL(b, 6);
 }
 
@@ -2241,7 +2330,8 @@ HB_FUNC(WAGDIPISOUTLINEVISIBLEPATHPOINT)
 HB_FUNC(WAGDIPISOUTLINEVISIBLEPATHPOINTI)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsOutlineVisiblePathPointI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPen(4), wa_par_GpGraphics(5), &b));
+  wa_ret_GpStatus(GdipIsOutlineVisiblePathPointI(wa_par_GpPath(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPen(4),
+                                                 wa_par_GpGraphics(5), &b));
   wa_stor_BOOL(b, 6);
 }
 
@@ -2605,22 +2695,27 @@ HB_FUNC(WAGDIPRESETIMAGEATTRIBUTES)
   wa_ret_GpStatus(GdipResetImageAttributes(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2)));
 }
 
-// GpStatus WINGDIPAPI GdipSetImageAttributesColorMatrix(GpImageAttributes*,ColorAdjustType,BOOL,GDIPCONST ColorMatrix*,GDIPCONST ColorMatrix*,ColorMatrixFlags)
+// GpStatus WINGDIPAPI GdipSetImageAttributesColorMatrix(GpImageAttributes*,ColorAdjustType,BOOL,GDIPCONST
+// ColorMatrix*,GDIPCONST ColorMatrix*,ColorMatrixFlags)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESCOLORMATRIX)
 {
-  wa_ret_GpStatus(GdipSetImageAttributesColorMatrix(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_GpColorMatrix(4), wa_par_GpColorMatrix(5), wa_par_GpColorMatrixFlags(6)));
+  wa_ret_GpStatus(GdipSetImageAttributesColorMatrix(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2),
+                                                    wa_par_BOOL(3), wa_par_GpColorMatrix(4), wa_par_GpColorMatrix(5),
+                                                    wa_par_GpColorMatrixFlags(6)));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesThreshold(GpImageAttributes*,ColorAdjustType,BOOL,REAL)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESTHRESHOLD)
 {
-  wa_ret_GpStatus(GdipSetImageAttributesThreshold(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_REAL(4)));
+  wa_ret_GpStatus(GdipSetImageAttributesThreshold(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2),
+                                                  wa_par_BOOL(3), wa_par_REAL(4)));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesGamma(GpImageAttributes*,ColorAdjustType,BOOL,REAL)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESGAMMA)
 {
-  wa_ret_GpStatus(GdipSetImageAttributesGamma(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_REAL(4)));
+  wa_ret_GpStatus(GdipSetImageAttributesGamma(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3),
+                                              wa_par_REAL(4)));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesNoOp(GpImageAttributes*,ColorAdjustType,BOOL)
@@ -2632,43 +2727,48 @@ HB_FUNC(WAGDIPSETIMAGEATTRIBUTESNOOP)
 // GpStatus WINGDIPAPI GdipSetImageAttributesColorKeys(GpImageAttributes*,ColorAdjustType,BOOL,ARGB,ARGB)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESCOLORKEYS)
 {
-  wa_ret_GpStatus(GdipSetImageAttributesColorKeys(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_ARGB(4), wa_par_ARGB(5)));
+  wa_ret_GpStatus(GdipSetImageAttributesColorKeys(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2),
+                                                  wa_par_BOOL(3), wa_par_ARGB(4), wa_par_ARGB(5)));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesOutputChannel(GpImageAttributes*,ColorAdjustType,BOOL,ColorChannelFlags)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESOUTPUTCHANNEL)
 {
-  wa_ret_GpStatus(GdipSetImageAttributesOutputChannel(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_GpColorChannelFlags(4)));
+  wa_ret_GpStatus(GdipSetImageAttributesOutputChannel(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2),
+                                                      wa_par_BOOL(3), wa_par_GpColorChannelFlags(4)));
 }
 
-// GpStatus WINGDIPAPI GdipSetImageAttributesOutputChannelColorProfile(GpImageAttributes*,ColorAdjustType,BOOL,GDIPCONST WCHAR*)
+// GpStatus WINGDIPAPI GdipSetImageAttributesOutputChannelColorProfile(GpImageAttributes*,ColorAdjustType,BOOL,GDIPCONST
+// WCHAR*)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESOUTPUTCHANNELCOLORPROFILE)
 {
   void *str{};
-  wa_ret_GpStatus(GdipSetImageAttributesOutputChannelColorProfile(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), HB_PARSTR(4, &str, nullptr)));
+  wa_ret_GpStatus(GdipSetImageAttributesOutputChannelColorProfile(
+      wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), HB_PARSTR(4, &str, nullptr)));
   hb_strfree(str);
 }
 
-// GpStatus WINGDIPAPI GdipSetImageAttributesRemapTable(GpImageAttributes*,ColorAdjustType,BOOL,UINT,GDIPCONST ColorMap*)
+// GpStatus WINGDIPAPI GdipSetImageAttributesRemapTable(GpImageAttributes*,ColorAdjustType,BOOL,UINT,GDIPCONST
+// ColorMap*)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESREMAPTABLE)
 {
   std::vector<ColorMap> vec{};
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<ColorMap *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
-  wa_ret_GpStatus(GdipSetImageAttributesRemapTable(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2), wa_par_BOOL(3), wa_par_UINT(4), vec.data()));
+  wa_ret_GpStatus(GdipSetImageAttributesRemapTable(wa_par_GpImageAttributes(1), wa_par_GpColorAdjustType(2),
+                                                   wa_par_BOOL(3), wa_par_UINT(4), vec.data()));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesWrapMode(GpImageAttributes*,WrapMode,ARGB,BOOL)
 HB_FUNC(WAGDIPSETIMAGEATTRIBUTESWRAPMODE)
 {
-  wa_ret_GpStatus(GdipSetImageAttributesWrapMode(wa_par_GpImageAttributes(1), wa_par_GpWrapMode(2), wa_par_ARGB(3), wa_par_BOOL(4)));
+  wa_ret_GpStatus(GdipSetImageAttributesWrapMode(wa_par_GpImageAttributes(1), wa_par_GpWrapMode(2), wa_par_ARGB(3),
+                                                 wa_par_BOOL(4)));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesICMMode(GpImageAttributes*,BOOL)
@@ -2682,7 +2782,8 @@ HB_FUNC(WAGDIPSETIMAGEATTRIBUTESICMMODE)
 // GpStatus WINGDIPAPI GdipGetImageAttributesAdjustedPalette(GpImageAttributes*,ColorPalette*,ColorAdjustType)
 HB_FUNC(WAGDIPGETIMAGEATTRIBUTESADJUSTEDPALETTE)
 {
-  wa_ret_GpStatus(GdipGetImageAttributesAdjustedPalette(wa_par_GpImageAttributes(1), wa_par_GpColorPalette(2), wa_par_GpColorAdjustType(3)));
+  wa_ret_GpStatus(GdipGetImageAttributesAdjustedPalette(wa_par_GpImageAttributes(1), wa_par_GpColorPalette(2),
+                                                        wa_par_GpColorAdjustType(3)));
 }
 
 // GpStatus WINGDIPAPI GdipSetImageAttributesCachedBackground(GpImageAttributes*,BOOL)
@@ -2695,11 +2796,13 @@ HB_FUNC(WAGDIPSETIMAGEATTRIBUTESCACHEDBACKGROUND)
 // LinearGradientBrush functions
 ///////////////////////////////////////////////////////////////////////////////
 
-// GpStatus WINGDIPAPI GdipCreateLineBrush(GDIPCONST GpPointF*,GDIPCONST GpPointF*,ARGB,ARGB,GpWrapMode,GpLineGradient**)
+// GpStatus WINGDIPAPI GdipCreateLineBrush(GDIPCONST GpPointF*,GDIPCONST
+// GpPointF*,ARGB,ARGB,GpWrapMode,GpLineGradient**)
 HB_FUNC(WAGDIPCREATELINEBRUSH)
 {
   GpLineGradient *p{};
-  wa_ret_GpStatus(GdipCreateLineBrush(wa_par_GpPointF(1), wa_par_GpPointF(2), wa_par_ARGB(3), wa_par_ARGB(4), wa_par_GpWrapMode(5), &p));
+  wa_ret_GpStatus(GdipCreateLineBrush(wa_par_GpPointF(1), wa_par_GpPointF(2), wa_par_ARGB(3), wa_par_ARGB(4),
+                                      wa_par_GpWrapMode(5), &p));
   hb_storptr(p, 6);
 }
 
@@ -2707,39 +2810,48 @@ HB_FUNC(WAGDIPCREATELINEBRUSH)
 HB_FUNC(WAGDIPCREATELINEBRUSHI)
 {
   GpLineGradient *p{};
-  wa_ret_GpStatus(GdipCreateLineBrushI(wa_par_GpPoint(1), wa_par_GpPoint(2), wa_par_ARGB(3), wa_par_ARGB(4), wa_par_GpWrapMode(5), &p));
+  wa_ret_GpStatus(GdipCreateLineBrushI(wa_par_GpPoint(1), wa_par_GpPoint(2), wa_par_ARGB(3), wa_par_ARGB(4),
+                                       wa_par_GpWrapMode(5), &p));
   hb_storptr(p, 6);
 }
 
-// GpStatus WINGDIPAPI GdipCreateLineBrushFromRect(GDIPCONST GpRectF*,ARGB,ARGB,LinearGradientMode,GpWrapMode,GpLineGradient**)
+// GpStatus WINGDIPAPI GdipCreateLineBrushFromRect(GDIPCONST
+// GpRectF*,ARGB,ARGB,LinearGradientMode,GpWrapMode,GpLineGradient**)
 HB_FUNC(WAGDIPCREATELINEBRUSHFROMRECT)
 {
   GpLineGradient *p{};
-  wa_ret_GpStatus(GdipCreateLineBrushFromRect(wa_par_GpRectF(1), wa_par_ARGB(2), wa_par_ARGB(3), wa_par_GpLinearGradientMode(4), wa_par_GpWrapMode(5), &p));
+  wa_ret_GpStatus(GdipCreateLineBrushFromRect(wa_par_GpRectF(1), wa_par_ARGB(2), wa_par_ARGB(3),
+                                              wa_par_GpLinearGradientMode(4), wa_par_GpWrapMode(5), &p));
   hb_storptr(p, 6);
 }
 
-// GpStatus WINGDIPAPI GdipCreateLineBrushFromRectI(GDIPCONST GpRect*, ARGB, ARGB, LinearGradientMode, GpWrapMode, GpLineGradient**)
+// GpStatus WINGDIPAPI GdipCreateLineBrushFromRectI(GDIPCONST GpRect*, ARGB, ARGB, LinearGradientMode, GpWrapMode,
+// GpLineGradient**)
 HB_FUNC(WAGDIPCREATELINEBRUSHFROMRECTI)
 {
   GpLineGradient *p{};
-  wa_ret_GpStatus(GdipCreateLineBrushFromRectI(wa_par_GpRect(1), wa_par_ARGB(2), wa_par_ARGB(3), wa_par_GpLinearGradientMode(4), wa_par_GpWrapMode(5), &p));
+  wa_ret_GpStatus(GdipCreateLineBrushFromRectI(wa_par_GpRect(1), wa_par_ARGB(2), wa_par_ARGB(3),
+                                               wa_par_GpLinearGradientMode(4), wa_par_GpWrapMode(5), &p));
   hb_storptr(p, 6);
 }
 
-// GpStatus WINGDIPAPI GdipCreateLineBrushFromRectWithAngle(GDIPCONST GpRectF*,ARGB,ARGB,REAL,BOOL,GpWrapMode,GpLineGradient**)
+// GpStatus WINGDIPAPI GdipCreateLineBrushFromRectWithAngle(GDIPCONST
+// GpRectF*,ARGB,ARGB,REAL,BOOL,GpWrapMode,GpLineGradient**)
 HB_FUNC(WAGDIPCREATELINEBRUSHFROMRECTWITHANGLE)
 {
   GpLineGradient *p{};
-  wa_ret_GpStatus(GdipCreateLineBrushFromRectWithAngle(wa_par_GpRectF(1), wa_par_ARGB(2), wa_par_ARGB(3), wa_par_REAL(4), wa_par_BOOL(5), wa_par_GpWrapMode(6), &p));
+  wa_ret_GpStatus(GdipCreateLineBrushFromRectWithAngle(wa_par_GpRectF(1), wa_par_ARGB(2), wa_par_ARGB(3),
+                                                       wa_par_REAL(4), wa_par_BOOL(5), wa_par_GpWrapMode(6), &p));
   hb_storptr(p, 7);
 }
 
-// GpStatus WINGDIPAPI GdipCreateLineBrushFromRectWithAngleI(GDIPCONST GpRect*,ARGB,ARGB,REAL,BOOL,GpWrapMode,GpLineGradient**)
+// GpStatus WINGDIPAPI GdipCreateLineBrushFromRectWithAngleI(GDIPCONST
+// GpRect*,ARGB,ARGB,REAL,BOOL,GpWrapMode,GpLineGradient**)
 HB_FUNC(WAGDIPCREATELINEBRUSHFROMRECTWITHANGLEI)
 {
   GpLineGradient *p{};
-  wa_ret_GpStatus(GdipCreateLineBrushFromRectWithAngleI(wa_par_GpRect(1), wa_par_ARGB(2), wa_par_ARGB(3), wa_par_REAL(4), wa_par_BOOL(5), wa_par_GpWrapMode(6), &p));
+  wa_ret_GpStatus(GdipCreateLineBrushFromRectWithAngleI(wa_par_GpRect(1), wa_par_ARGB(2), wa_par_ARGB(3),
+                                                        wa_par_REAL(4), wa_par_BOOL(5), wa_par_GpWrapMode(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -2884,13 +2996,15 @@ HB_FUNC(WAGDIPMULTIPLYLINETRANSFORM)
 // GpStatus WINGDIPAPI GdipTranslateLineTransform(GpLineGradient*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPTRANSLATELINETRANSFORM)
 {
-  wa_ret_GpStatus(GdipTranslateLineTransform(wa_par_GpLineGradient(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(
+      GdipTranslateLineTransform(wa_par_GpLineGradient(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipScaleLineTransform(GpLineGradient*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPSCALELINETRANSFORM)
 {
-  wa_ret_GpStatus(GdipScaleLineTransform(wa_par_GpLineGradient(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(
+      GdipScaleLineTransform(wa_par_GpLineGradient(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipRotateLineTransform(GpLineGradient*,REAL,GpMatrixOrder)
@@ -2915,7 +3029,8 @@ HB_FUNC(WAGDIPCREATEMATRIX)
 HB_FUNC(WAGDIPCREATEMATRIX2)
 {
   GpMatrix *p{};
-  wa_ret_GpStatus(GdipCreateMatrix2(wa_par_REAL(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), &p));
+  wa_ret_GpStatus(GdipCreateMatrix2(wa_par_REAL(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5),
+                                    wa_par_REAL(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -2952,7 +3067,8 @@ HB_FUNC(WAGDIPDELETEMATRIX)
 // GpStatus WINGDIPAPI GdipSetMatrixElements(GpMatrix*,REAL,REAL,REAL,REAL,REAL,REAL)
 HB_FUNC(WAGDIPSETMATRIXELEMENTS)
 {
-  wa_ret_GpStatus(GdipSetMatrixElements(wa_par_GpMatrix(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7)));
+  wa_ret_GpStatus(GdipSetMatrixElements(wa_par_GpMatrix(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4),
+                                        wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7)));
 }
 
 // GpStatus WINGDIPAPI GdipMultiplyMatrix(GpMatrix*,GpMatrix*,GpMatrixOrder)
@@ -3115,66 +3231,80 @@ HB_FUNC(WAGDIPCREATEMETAFILEFROMSTREAM)
   hb_storptr(p, 2);
 }
 
-// GpStatus WINGDIPAPI GdipRecordMetafile(HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipRecordMetafile(HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST
+// WCHAR*,GpMetafile**)
 HB_FUNC(WAGDIPRECORDMETAFILE)
 {
   GpMetafile *p{};
   void *str{};
-  wa_ret_GpStatus(GdipRecordMetafile(wa_par_HDC(1), wa_par_GpEmfType(2), wa_par_GpRectF(3), wa_par_MetafileFrameUnit(4), HB_PARSTR(5, &str, nullptr), &p));
+  wa_ret_GpStatus(GdipRecordMetafile(wa_par_HDC(1), wa_par_GpEmfType(2), wa_par_GpRectF(3), wa_par_MetafileFrameUnit(4),
+                                     HB_PARSTR(5, &str, nullptr), &p));
   hb_strfree(str);
   hb_storptr(p, 6);
 }
 
-// GpStatus WINGDIPAPI GdipRecordMetafileI(HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipRecordMetafileI(HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST
+// WCHAR*,GpMetafile**)
 HB_FUNC(WAGDIPRECORDMETAFILEI)
 {
   GpMetafile *p{};
   void *str{};
-  wa_ret_GpStatus(GdipRecordMetafileI(wa_par_HDC(1), wa_par_GpEmfType(2), wa_par_GpRect(3), wa_par_MetafileFrameUnit(4), HB_PARSTR(5, &str, nullptr), &p));
+  wa_ret_GpStatus(GdipRecordMetafileI(wa_par_HDC(1), wa_par_GpEmfType(2), wa_par_GpRect(3), wa_par_MetafileFrameUnit(4),
+                                      HB_PARSTR(5, &str, nullptr), &p));
   hb_strfree(str);
   hb_storptr(p, 6);
 }
 
-// GpStatus WINGDIPAPI GdipRecordMetafileFileName(GDIPCONST WCHAR*,HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipRecordMetafileFileName(GDIPCONST WCHAR*,HDC,EmfType,GDIPCONST
+// GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 HB_FUNC(WAGDIPRECORDMETAFILEFILENAME)
 {
   GpMetafile *p{};
   void *str1{};
   void *str2{};
-  wa_ret_GpStatus(GdipRecordMetafileFileName(HB_PARSTR(1, &str1, nullptr), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRectF(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str2, nullptr), &p));
+  wa_ret_GpStatus(GdipRecordMetafileFileName(HB_PARSTR(1, &str1, nullptr), wa_par_HDC(2), wa_par_GpEmfType(3),
+                                             wa_par_GpRectF(4), wa_par_MetafileFrameUnit(5),
+                                             HB_PARSTR(6, &str2, nullptr), &p));
   hb_strfree(str1);
   hb_strfree(str2);
   hb_storptr(p, 7);
 }
 
-// GpStatus WINGDIPAPI GdipRecordMetafileFileNameI(GDIPCONST WCHAR*,HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipRecordMetafileFileNameI(GDIPCONST WCHAR*,HDC,EmfType,GDIPCONST
+// GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 HB_FUNC(WAGDIPRECORDMETAFILEFILENAMEI)
 {
   GpMetafile *p{};
   void *str1{};
   void *str2{};
-  wa_ret_GpStatus(GdipRecordMetafileFileNameI(HB_PARSTR(1, &str1, nullptr), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRect(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str2, nullptr), &p));
+  wa_ret_GpStatus(GdipRecordMetafileFileNameI(HB_PARSTR(1, &str1, nullptr), wa_par_HDC(2), wa_par_GpEmfType(3),
+                                              wa_par_GpRect(4), wa_par_MetafileFrameUnit(5),
+                                              HB_PARSTR(6, &str2, nullptr), &p));
   hb_strfree(str1);
   hb_strfree(str2);
   hb_storptr(p, 7);
 }
 
-// GpStatus WINGDIPAPI GdipRecordMetafileStream(IStream*,HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipRecordMetafileStream(IStream*,HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST
+// WCHAR*,GpMetafile**)
 HB_FUNC(WAGDIPRECORDMETAFILESTREAM)
 {
   GpMetafile *p{};
   void *str{};
-  wa_ret_GpStatus(GdipRecordMetafileStream(wa_par_IStream(1), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRectF(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str, nullptr), &p));
+  wa_ret_GpStatus(GdipRecordMetafileStream(wa_par_IStream(1), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRectF(4),
+                                           wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str, nullptr), &p));
   hb_strfree(str);
   hb_storptr(p, 7);
 }
 
-// GpStatus WINGDIPAPI GdipRecordMetafileStreamI(IStream*,HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipRecordMetafileStreamI(IStream*,HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST
+// WCHAR*,GpMetafile**)
 HB_FUNC(WAGDIPRECORDMETAFILESTREAMI)
 {
   GpMetafile *p{};
   void *str{};
-  wa_ret_GpStatus(GdipRecordMetafileStreamI(wa_par_IStream(1), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRect(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str, nullptr), &p));
+  wa_ret_GpStatus(GdipRecordMetafileStreamI(wa_par_IStream(1), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRect(4),
+                                            wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str, nullptr), &p));
   hb_strfree(str);
   hb_storptr(p, 7);
 }
@@ -3182,7 +3312,8 @@ HB_FUNC(WAGDIPRECORDMETAFILESTREAMI)
 // GpStatus WINGDIPAPI GdipPlayMetafileRecord(GDIPCONST GpMetafile*,EmfPlusRecordType,UINT,UINT,GDIPCONST BYTE*)
 HB_FUNC(WAGDIPPLAYMETAFILERECORD)
 {
-  wa_ret_GpStatus(GdipPlayMetafileRecord(wa_par_GpMetafile(1), wa_par_GpEmfPlusRecordType(2), wa_par_UINT(3), wa_par_UINT(4), static_cast<GDIPCONST BYTE *>(hb_parptr(5))));
+  wa_ret_GpStatus(GdipPlayMetafileRecord(wa_par_GpMetafile(1), wa_par_GpEmfPlusRecordType(2), wa_par_UINT(3),
+                                         wa_par_UINT(4), static_cast<GDIPCONST BYTE *>(hb_parptr(5))));
 }
 
 // GpStatus WINGDIPAPI GdipSetMetafileDownLevelRasterizationLimit(GpMetafile*,UINT)
@@ -3199,7 +3330,8 @@ HB_FUNC(WAGDIPGETMETAFILEDOWNLEVELRASTERIZATIONLIMIT)
   wa_stor_UINT(ui, 2);
 }
 
-// GpStatus WINGDIPAPI GdipConvertToEmfPlus(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,EmfType,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipConvertToEmfPlus(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,EmfType,GDIPCONST
+// WCHAR*,GpMetafile**)
 #if 0
 HB_FUNC(WAGDIPCONVERTTOEMFPLUS)
 {
@@ -3213,7 +3345,8 @@ HB_FUNC(WAGDIPCONVERTTOEMFPLUS)
 }
 #endif
 
-// GpStatus WINGDIPAPI GdipConvertToEmfPlusToFile(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,GDIPCONST WCHAR*,EmfType,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipConvertToEmfPlusToFile(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,GDIPCONST
+// WCHAR*,EmfType,GDIPCONST WCHAR*,GpMetafile**)
 #if 0
 HB_FUNC(WAGDIPCONVERTTOEMFPLUSTOFILE)
 {
@@ -3229,7 +3362,8 @@ HB_FUNC(WAGDIPCONVERTTOEMFPLUSTOFILE)
 }
 #endif
 
-// GpStatus WINGDIPAPI GdipConvertToEmfPlusToStream(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,IStream*,EmfType,GDIPCONST WCHAR*,GpMetafile**)
+// GpStatus WINGDIPAPI GdipConvertToEmfPlusToStream(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,IStream*,EmfType,GDIPCONST
+// WCHAR*,GpMetafile**)
 #if 0
 HB_FUNC(WAGDIPCONVERTTOEMFPLUSTOSTREAM)
 {
@@ -3467,19 +3601,22 @@ HB_FUNC(WAGDIPRESETPATHGRADIENTTRANSFORM)
 // GpStatus WINGDIPAPI GdipMultiplyPathGradientTransform(GpPathGradient*,GDIPCONST GpMatrix*,GpMatrixOrder)
 HB_FUNC(WAGDIPMULTIPLYPATHGRADIENTTRANSFORM)
 {
-  wa_ret_GpStatus(GdipMultiplyPathGradientTransform(wa_par_GpPathGradient(1), wa_par_GpMatrix(2), wa_par_GpMatrixOrder(3)));
+  wa_ret_GpStatus(
+      GdipMultiplyPathGradientTransform(wa_par_GpPathGradient(1), wa_par_GpMatrix(2), wa_par_GpMatrixOrder(3)));
 }
 
 // GpStatus WINGDIPAPI GdipTranslatePathGradientTransform(GpPathGradient*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPTRANSLATEPATHGRADIENTTRANSFORM)
 {
-  wa_ret_GpStatus(GdipTranslatePathGradientTransform(wa_par_GpPathGradient(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(GdipTranslatePathGradientTransform(wa_par_GpPathGradient(1), wa_par_REAL(2), wa_par_REAL(3),
+                                                     wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipScalePathGradientTransform(GpPathGradient*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPSCALEPATHGRADIENTTRANSFORM)
 {
-  wa_ret_GpStatus(GdipScalePathGradientTransform(wa_par_GpPathGradient(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(GdipScalePathGradientTransform(wa_par_GpPathGradient(1), wa_par_REAL(2), wa_par_REAL(3),
+                                                 wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipRotatePathGradientTransform(GpPathGradient*,REAL,GpMatrixOrder)
@@ -3687,7 +3824,8 @@ HB_FUNC(WAGDIPGETPENUNIT)
 // GpStatus WINGDIPAPI GdipSetPenLineCap197819(GpPen*,GpLineCap,GpLineCap,GpDashCap)
 HB_FUNC(WAGDIPSETPENLINECAP197819)
 {
-  wa_ret_GpStatus(GdipSetPenLineCap197819(wa_par_GpPen(1), wa_par_GpLineCap(2), wa_par_GpLineCap(3), wa_par_GpDashCap(4)));
+  wa_ret_GpStatus(
+      GdipSetPenLineCap197819(wa_par_GpPen(1), wa_par_GpLineCap(2), wa_par_GpLineCap(3), wa_par_GpDashCap(4)));
 }
 
 // GpStatus WINGDIPAPI GdipSetPenStartCap(GpPen*,GpLineCap)
@@ -4114,7 +4252,8 @@ HB_FUNC(WAGDIPGETREGIONDATASIZE)
 HB_FUNC(WAGDIPISVISIBLEREGIONPOINT)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsVisibleRegionPoint(wa_par_GpRegion(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpGraphics(4), &b));
+  wa_ret_GpStatus(
+      GdipIsVisibleRegionPoint(wa_par_GpRegion(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpGraphics(4), &b));
   wa_stor_BOOL(b, 5);
 }
 
@@ -4122,7 +4261,8 @@ HB_FUNC(WAGDIPISVISIBLEREGIONPOINT)
 HB_FUNC(WAGDIPISVISIBLEREGIONPOINTI)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsVisibleRegionPointI(wa_par_GpRegion(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpGraphics(4), &b));
+  wa_ret_GpStatus(
+      GdipIsVisibleRegionPointI(wa_par_GpRegion(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpGraphics(4), &b));
   wa_stor_BOOL(b, 5);
 }
 
@@ -4130,7 +4270,8 @@ HB_FUNC(WAGDIPISVISIBLEREGIONPOINTI)
 HB_FUNC(WAGDIPISVISIBLEREGIONRECT)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsVisibleRegionRect(wa_par_GpRegion(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_GpGraphics(6), &b));
+  wa_ret_GpStatus(GdipIsVisibleRegionRect(wa_par_GpRegion(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4),
+                                          wa_par_REAL(5), wa_par_GpGraphics(6), &b));
   wa_stor_BOOL(b, 7);
 }
 
@@ -4138,7 +4279,8 @@ HB_FUNC(WAGDIPISVISIBLEREGIONRECT)
 HB_FUNC(WAGDIPISVISIBLEREGIONRECTI)
 {
   BOOL b{};
-  wa_ret_GpStatus(GdipIsVisibleRegionRectI(wa_par_GpRegion(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_GpGraphics(6), &b));
+  wa_ret_GpStatus(GdipIsVisibleRegionRectI(wa_par_GpRegion(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4),
+                                           wa_par_INT(5), wa_par_GpGraphics(6), &b));
   wa_stor_BOOL(b, 7);
 }
 
@@ -4312,7 +4454,8 @@ HB_FUNC(WAGDIPGETSTRINGFORMATTABSTOPCOUNT)
 // GpStatus WINGDIPAPI GdipSetStringFormatDigitSubstitution(GpStringFormat*,LANGID,StringDigitSubstitute)
 HB_FUNC(WAGDIPSETSTRINGFORMATDIGITSUBSTITUTION)
 {
-  wa_ret_GpStatus(GdipSetStringFormatDigitSubstitution(wa_par_GpStringFormat(1), wa_par_LANGID(2), wa_par_GpStringDigitSubstitute(3)));
+  wa_ret_GpStatus(GdipSetStringFormatDigitSubstitution(wa_par_GpStringFormat(1), wa_par_LANGID(2),
+                                                       wa_par_GpStringDigitSubstitute(3)));
 }
 
 // GpStatus WINGDIPAPI GdipGetStringFormatDigitSubstitution(GDIPCONST GpStringFormat*,LANGID*,StringDigitSubstitute*)
@@ -4338,11 +4481,9 @@ HB_FUNC(WAGDIPSETSTRINGFORMATMEASURABLECHARACTERRANGES)
 {
   std::vector<CharacterRange> vec{};
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<CharacterRange *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -4353,21 +4494,25 @@ HB_FUNC(WAGDIPSETSTRINGFORMATMEASURABLECHARACTERRANGES)
 // Text functions
 ///////////////////////////////////////////////////////////////////////////////
 
-// GpStatus WINGDIPAPI GdipDrawString(GpGraphics*,GDIPCONST WCHAR*,INT,GDIPCONST GpFont*,GDIPCONST RectF*,GDIPCONST GpStringFormat*,GDIPCONST GpBrush*)
+// GpStatus WINGDIPAPI GdipDrawString(GpGraphics*,GDIPCONST WCHAR*,INT,GDIPCONST GpFont*,GDIPCONST RectF*,GDIPCONST
+// GpStringFormat*,GDIPCONST GpBrush*)
 HB_FUNC(WAGDIPDRAWSTRING)
 {
   void *str{};
-  wa_ret_GpStatus(GdipDrawString(wa_par_GpGraphics(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3), wa_par_GpFont(4), wa_par_GpRectF(5), wa_par_GpStringFormat(6), wa_par_GpBrush(7)));
+  wa_ret_GpStatus(GdipDrawString(wa_par_GpGraphics(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3), wa_par_GpFont(4),
+                                 wa_par_GpRectF(5), wa_par_GpStringFormat(6), wa_par_GpBrush(7)));
   hb_strfree(str);
 }
 
-// GpStatus WINGDIPAPI GdipMeasureString(GpGraphics*,GDIPCONST WCHAR*,INT,GDIPCONST GpFont*,GDIPCONST RectF*,GDIPCONST GpStringFormat*,RectF*,INT*,INT*)
+// GpStatus WINGDIPAPI GdipMeasureString(GpGraphics*,GDIPCONST WCHAR*,INT,GDIPCONST GpFont*,GDIPCONST RectF*,GDIPCONST
+// GpStringFormat*,RectF*,INT*,INT*)
 HB_FUNC(WAGDIPMEASURESTRING)
 {
   INT i1{};
   INT i2{};
   void *str{};
-  wa_ret_GpStatus(GdipMeasureString(wa_par_GpGraphics(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3), wa_par_GpFont(4), wa_par_GpRectF(5), wa_par_GpStringFormat(6), wa_par_GpRectF(7), &i1, &i2));
+  wa_ret_GpStatus(GdipMeasureString(wa_par_GpGraphics(1), HB_PARSTR(2, &str, nullptr), wa_par_INT(3), wa_par_GpFont(4),
+                                    wa_par_GpRectF(5), wa_par_GpStringFormat(6), wa_par_GpRectF(7), &i1, &i2));
   hb_strfree(str);
   wa_stor_INT(i1, 8);
   wa_stor_INT(i2, 9);
@@ -4375,13 +4520,16 @@ HB_FUNC(WAGDIPMEASURESTRING)
 
 #ifdef __cplusplus
 
-// GpStatus WINGDIPAPI GdipMeasureCharacterRanges(GpGraphics*,GDIPCONST WCHAR*,INT,GDIPCONST GpFont*,GDIPCONST RectF&,GDIPCONST GpStringFormat*,INT,GpRegion**)
+// GpStatus WINGDIPAPI GdipMeasureCharacterRanges(GpGraphics*,GDIPCONST WCHAR*,INT,GDIPCONST GpFont*,GDIPCONST
+// RectF&,GDIPCONST GpStringFormat*,INT,GpRegion**)
 
 #endif
 
-// GpStatus WINGDIPAPI GdipDrawDriverString(GpGraphics*,GDIPCONST UINT16*,INT,GDIPCONST GpFont*,GDIPCONST GpBrush*,GDIPCONST PointF*,INT,GDIPCONST GpMatrix*)
+// GpStatus WINGDIPAPI GdipDrawDriverString(GpGraphics*,GDIPCONST UINT16*,INT,GDIPCONST GpFont*,GDIPCONST
+// GpBrush*,GDIPCONST PointF*,INT,GDIPCONST GpMatrix*)
 
-// GpStatus WINGDIPAPI GdipMeasureDriverString(GpGraphics*,GDIPCONST UINT16*,INT,GDIPCONST GpFont*,GDIPCONST PointF*,INT,GDIPCONST GpMatrix*,RectF*)
+// GpStatus WINGDIPAPI GdipMeasureDriverString(GpGraphics*,GDIPCONST UINT16*,INT,GDIPCONST GpFont*,GDIPCONST
+// PointF*,INT,GDIPCONST GpMatrix*,RectF*)
 
 ///////////////////////////////////////////////////////////////////////////////
 // TextureBrush functions
@@ -4399,7 +4547,8 @@ HB_FUNC(WAGDIPCREATETEXTURE)
 HB_FUNC(WAGDIPCREATETEXTURE2)
 {
   GpTexture *p{};
-  wa_ret_GpStatus(GdipCreateTexture2(wa_par_GpImage(1), wa_par_GpWrapMode(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), &p));
+  wa_ret_GpStatus(GdipCreateTexture2(wa_par_GpImage(1), wa_par_GpWrapMode(2), wa_par_REAL(3), wa_par_REAL(4),
+                                     wa_par_REAL(5), wa_par_REAL(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -4407,7 +4556,8 @@ HB_FUNC(WAGDIPCREATETEXTURE2)
 HB_FUNC(WAGDIPCREATETEXTURE2I)
 {
   GpTexture *p{};
-  wa_ret_GpStatus(GdipCreateTexture2I(wa_par_GpImage(1), wa_par_GpWrapMode(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), &p));
+  wa_ret_GpStatus(GdipCreateTexture2I(wa_par_GpImage(1), wa_par_GpWrapMode(2), wa_par_INT(3), wa_par_INT(4),
+                                      wa_par_INT(5), wa_par_INT(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -4415,7 +4565,8 @@ HB_FUNC(WAGDIPCREATETEXTURE2I)
 HB_FUNC(WAGDIPCREATETEXTUREIA)
 {
   GpTexture *p{};
-  wa_ret_GpStatus(GdipCreateTextureIA(wa_par_GpImage(1), wa_par_GpImageAttributes(2), wa_par_REAL(3), wa_par_REAL(4), wa_par_REAL(5), wa_par_REAL(6), &p));
+  wa_ret_GpStatus(GdipCreateTextureIA(wa_par_GpImage(1), wa_par_GpImageAttributes(2), wa_par_REAL(3), wa_par_REAL(4),
+                                      wa_par_REAL(5), wa_par_REAL(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -4423,7 +4574,8 @@ HB_FUNC(WAGDIPCREATETEXTUREIA)
 HB_FUNC(WAGDIPCREATETEXTUREIAI)
 {
   GpTexture *p{};
-  wa_ret_GpStatus(GdipCreateTextureIAI(wa_par_GpImage(1), wa_par_GpImageAttributes(2), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), &p));
+  wa_ret_GpStatus(GdipCreateTextureIAI(wa_par_GpImage(1), wa_par_GpImageAttributes(2), wa_par_INT(3), wa_par_INT(4),
+                                       wa_par_INT(5), wa_par_INT(6), &p));
   hb_storptr(p, 7);
 }
 
@@ -4454,13 +4606,15 @@ HB_FUNC(WAGDIPMULTIPLYTEXTURETRANSFORM)
 // GpStatus WINGDIPAPI GdipTranslateTextureTransform(GpTexture*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPTRANSLATETEXTURETRANSFORM)
 {
-  wa_ret_GpStatus(GdipTranslateTextureTransform(wa_par_GpTexture(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(
+      GdipTranslateTextureTransform(wa_par_GpTexture(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipScaleTextureTransform(GpTexture*,REAL,REAL,GpMatrixOrder)
 HB_FUNC(WAGDIPSCALETEXTURETRANSFORM)
 {
-  wa_ret_GpStatus(GdipScaleTextureTransform(wa_par_GpTexture(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
+  wa_ret_GpStatus(
+      GdipScaleTextureTransform(wa_par_GpTexture(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_GpMatrixOrder(4)));
 }
 
 // GpStatus WINGDIPAPI GdipRotateTextureTransform(GpTexture*,REAL,GpMatrixOrder)
@@ -4504,11 +4658,9 @@ HB_FUNC(WAGDIPGETTEXTUREIMAGE)
 static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpPoint> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<GpPoint *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -4518,11 +4670,9 @@ static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray)
 static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpPointF> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<GpPointF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -4532,11 +4682,9 @@ static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray)
 static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpRect> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<GpRect *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -4546,11 +4694,9 @@ static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray)
 static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<GpRectF> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(*static_cast<GpRectF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
   }
@@ -4560,11 +4706,9 @@ static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray)
 static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<REAL> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
     }
   }
@@ -4574,11 +4718,9 @@ static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray)
 static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<ARGB> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray, i + 1)));
     }
   }
@@ -4588,11 +4730,9 @@ static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray)
 static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray)
 {
   std::vector<BYTE> vec{};
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray, i + 1)));
     }
   }

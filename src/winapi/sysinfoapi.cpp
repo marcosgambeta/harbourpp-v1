@@ -40,7 +40,8 @@
 
 // WINBASEAPI WINBOOL WINAPI GetComputerNameExW(COMPUTER_NAME_FORMAT NameType, LPWSTR lpBuffer, LPDWORD nSize)
 
-// WINBASEAPI UINT WINAPI EnumSystemFirmwareTables(DWORD FirmwareTableProviderSignature, PVOID pFirmwareTableEnumBuffer, DWORD BufferSize)
+// WINBASEAPI UINT WINAPI EnumSystemFirmwareTables(DWORD FirmwareTableProviderSignature, PVOID pFirmwareTableEnumBuffer,
+// DWORD BufferSize)
 
 // WINBASEAPI VOID WINAPI GetLocalTime(LPSYSTEMTIME lpSystemTime)
 HB_FUNC(WAGETLOCALTIME)
@@ -48,9 +49,11 @@ HB_FUNC(WAGETLOCALTIME)
   GetLocalTime(wa_par_SYSTEMTIME(1));
 }
 
-// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformation(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer, PDWORD ReturnedLength)
+// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformation(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer, PDWORD
+// ReturnedLength)
 
-// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx(LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType, PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer, PDWORD ReturnedLength)
+// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx(LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType,
+// PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer, PDWORD ReturnedLength)
 #if _WIN32_WINNT >= 0x0601
 #endif
 
@@ -64,12 +67,14 @@ HB_FUNC(WAGETNATIVESYSTEMINFO)
 #if _WIN32_WINNT >= 0x0601
 #endif
 
-// WINBASEAPI WINBOOL WINAPI GetProductInfo(DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion, DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType)
+// WINBASEAPI WINBOOL WINAPI GetProductInfo(DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion,
+// DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType)
 #if _WIN32_WINNT >= 0x0600
 HB_FUNC(WAGETPRODUCTINFO)
 {
   DWORD dwReturnedProductType{};
-  wa_ret_BOOL(GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
+  wa_ret_BOOL(
+      GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
   wa_stor_DWORD(dwReturnedProductType, 5);
 }
 #endif
@@ -78,7 +83,8 @@ HB_FUNC(WAGETPRODUCTINFO)
 
 // WINBASEAPI UINT WINAPI GetSystemDirectoryW(LPWSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI UINT WINAPI GetSystemFirmwareTable(DWORD FirmwareTableProviderSignature, DWORD FirmwareTableID, PVOID pFirmwareTableBuffer, DWORD BufferSize)
+// WINBASEAPI UINT WINAPI GetSystemFirmwareTable(DWORD FirmwareTableProviderSignature, DWORD FirmwareTableID, PVOID
+// pFirmwareTableBuffer, DWORD BufferSize)
 
 // WINBASEAPI VOID WINAPI GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 HB_FUNC(WAGETSYSTEMINFO)
@@ -92,7 +98,8 @@ HB_FUNC(WAGETSYSTEMTIME)
   GetSystemTime(wa_par_SYSTEMTIME(1));
 }
 
-// WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment(PDWORD lpTimeAdjustment, PDWORD lpTimeIncrement, PBOOL lpTimeAdjustmentDisabled)
+// WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment(PDWORD lpTimeAdjustment, PDWORD lpTimeIncrement, PBOOL
+// lpTimeAdjustmentDisabled)
 HB_FUNC(WAGETSYSTEMTIMEADJUSTMENT)
 {
   DWORD TimeAdjustment{};

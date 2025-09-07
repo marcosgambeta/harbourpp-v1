@@ -41,7 +41,8 @@ HB_FUNC(WASETERRORMODE)
   wa_ret_UINT(SetErrorMode(wa_par_UINT(1)));
 }
 
-// WINBASEAPI LPTOP_LEVEL_EXCEPTION_FILTER WINAPI SetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
+// WINBASEAPI LPTOP_LEVEL_EXCEPTION_FILTER WINAPI SetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER
+// lpTopLevelExceptionFilter)
 
 // WINBASEAPI LONG WINAPI UnhandledExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
 
@@ -65,7 +66,8 @@ HB_FUNC(WAGETERRORMODE)
 
 // WINBASEAPI VOID WINAPI RestoreLastError(DWORD dwErrCode)
 
-// WINBASEAPI VOID WINAPI RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, CONST ULONG_PTR *lpArguments)
+// WINBASEAPI VOID WINAPI RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, CONST
+// ULONG_PTR *lpArguments)
 
 // WINBASEAPI DWORD WINAPI GetLastError(VOID)
 HB_FUNC(WAGETLASTERROR)

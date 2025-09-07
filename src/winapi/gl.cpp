@@ -135,10 +135,12 @@ HB_FUNC(WAGLBINDTEXTURE)
   glBindTexture(wa_par_GLenum(1), wa_par_GLuint(2));
 }
 
-// WINGDIAPI void APIENTRY glBitmap(GLsizei width,GLsizei height,GLfloat xorig,GLfloat yorig,GLfloat xmove,GLfloat ymove,const GLubyte *bitmap)
+// WINGDIAPI void APIENTRY glBitmap(GLsizei width,GLsizei height,GLfloat xorig,GLfloat yorig,GLfloat xmove,GLfloat
+// ymove,const GLubyte *bitmap)
 HB_FUNC(WAGLBITMAP)
 {
-  glBitmap(wa_par_GLsizei(1), wa_par_GLsizei(2), wa_par_GLfloat(3), wa_par_GLfloat(4), wa_par_GLfloat(5), wa_par_GLfloat(6), static_cast<const GLubyte *>(hb_parptr(7)));
+  glBitmap(wa_par_GLsizei(1), wa_par_GLsizei(2), wa_par_GLfloat(3), wa_par_GLfloat(4), wa_par_GLfloat(5),
+           wa_par_GLfloat(6), static_cast<const GLubyte *>(hb_parptr(7)));
 }
 
 // WINGDIAPI void APIENTRY glBlendFunc(GLenum sfactor,GLenum dfactor)
@@ -202,11 +204,9 @@ HB_FUNC(WAGLCLIPPLANE)
 {
   std::vector<GLdouble> vec{};
   auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLdouble>(hb_arrayGetND(pArray, i + 1)));
     }
   }
@@ -224,11 +224,9 @@ HB_FUNC(WAGLCOLOR3BV)
 {
   std::vector<GLbyte> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLbyte>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -246,11 +244,9 @@ HB_FUNC(WAGLCOLOR3DV)
 {
   std::vector<GLdouble> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLdouble>(hb_arrayGetND(pArray, i + 1)));
     }
   }
@@ -268,11 +264,9 @@ HB_FUNC(WAGLCOLOR3FV)
 {
   std::vector<GLfloat> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLfloat>(hb_arrayGetND(pArray, i + 1)));
     }
   }
@@ -290,11 +284,9 @@ HB_FUNC(WAGLCOLOR3IV)
 {
   std::vector<GLint> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLint>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -312,11 +304,9 @@ HB_FUNC(WAGLCOLOR3SV)
 {
   std::vector<GLshort> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLshort>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -334,11 +324,9 @@ HB_FUNC(WAGLCOLOR3UBV)
 {
   std::vector<GLubyte> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLubyte>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -356,11 +344,9 @@ HB_FUNC(WAGLCOLOR3UIV)
 {
   std::vector<GLuint> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLuint>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -378,11 +364,9 @@ HB_FUNC(WAGLCOLOR3USV)
 {
   std::vector<GLushort> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLushort>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -400,11 +384,9 @@ HB_FUNC(WAGLCOLOR4BV)
 {
   std::vector<GLbyte> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLbyte>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -422,11 +404,9 @@ HB_FUNC(WAGLCOLOR4DV)
 {
   std::vector<GLdouble> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLdouble>(hb_arrayGetND(pArray, i + 1)));
     }
   }
@@ -444,11 +424,9 @@ HB_FUNC(WAGLCOLOR4FV)
 {
   std::vector<GLfloat> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLfloat>(hb_arrayGetND(pArray, i + 1)));
     }
   }
@@ -466,11 +444,9 @@ HB_FUNC(WAGLCOLOR4IV)
 {
   std::vector<GLint> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLint>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -488,11 +464,9 @@ HB_FUNC(WAGLCOLOR4SV)
 {
   std::vector<GLshort> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLshort>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -510,11 +484,9 @@ HB_FUNC(WAGLCOLOR4UBV)
 {
   std::vector<GLubyte> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLubyte>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -532,11 +504,9 @@ HB_FUNC(WAGLCOLOR4UIV)
 {
   std::vector<GLuint> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLuint>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -554,11 +524,9 @@ HB_FUNC(WAGLCOLOR4USV)
 {
   std::vector<GLushort> vec{};
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if (pArray != nullptr)
-  {
+  if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
-    for (std::size_t i = 0; i < nLen; i++)
-    {
+    for (std::size_t i = 0; i < nLen; i++) {
       vec.push_back(static_cast<GLushort>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
@@ -591,28 +559,35 @@ HB_FUNC(WAGLCOPYPIXELS)
   glCopyPixels(wa_par_GLint(1), wa_par_GLint(2), wa_par_GLsizei(3), wa_par_GLsizei(4), wa_par_GLenum(5));
 }
 
-// WINGDIAPI void APIENTRY glCopyTexImage1D(GLenum target,GLint level,GLenum internalFormat,GLint x,GLint y,GLsizei width,GLint border)
+// WINGDIAPI void APIENTRY glCopyTexImage1D(GLenum target,GLint level,GLenum internalFormat,GLint x,GLint y,GLsizei
+// width,GLint border)
 HB_FUNC(WAGLCOPYTEXIMAGE1D)
 {
-  glCopyTexImage1D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLenum(3), wa_par_GLint(4), wa_par_GLint(5), wa_par_GLsizei(6), wa_par_GLint(7));
+  glCopyTexImage1D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLenum(3), wa_par_GLint(4), wa_par_GLint(5),
+                   wa_par_GLsizei(6), wa_par_GLint(7));
 }
 
-// WINGDIAPI void APIENTRY glCopyTexImage2D(GLenum target,GLint level,GLenum internalFormat,GLint x,GLint y,GLsizei width,GLsizei height,GLint border)
+// WINGDIAPI void APIENTRY glCopyTexImage2D(GLenum target,GLint level,GLenum internalFormat,GLint x,GLint y,GLsizei
+// width,GLsizei height,GLint border)
 HB_FUNC(WAGLCOPYTEXIMAGE2D)
 {
-  glCopyTexImage2D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLenum(3), wa_par_GLint(4), wa_par_GLint(5), wa_par_GLsizei(6), wa_par_GLsizei(7), wa_par_GLint(8));
+  glCopyTexImage2D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLenum(3), wa_par_GLint(4), wa_par_GLint(5),
+                   wa_par_GLsizei(6), wa_par_GLsizei(7), wa_par_GLint(8));
 }
 
 // WINGDIAPI void APIENTRY glCopyTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLint x,GLint y,GLsizei width)
 HB_FUNC(WAGLCOPYTEXSUBIMAGE1D)
 {
-  glCopyTexSubImage1D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLint(3), wa_par_GLint(4), wa_par_GLint(5), wa_par_GLsizei(6));
+  glCopyTexSubImage1D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLint(3), wa_par_GLint(4), wa_par_GLint(5),
+                      wa_par_GLsizei(6));
 }
 
-// WINGDIAPI void APIENTRY glCopyTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint x,GLint y,GLsizei width,GLsizei height)
+// WINGDIAPI void APIENTRY glCopyTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint x,GLint
+// y,GLsizei width,GLsizei height)
 HB_FUNC(WAGLCOPYTEXSUBIMAGE2D)
 {
-  glCopyTexSubImage2D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLint(3), wa_par_GLint(4), wa_par_GLint(5), wa_par_GLint(6), wa_par_GLsizei(7), wa_par_GLsizei(8));
+  glCopyTexSubImage2D(wa_par_GLenum(1), wa_par_GLint(2), wa_par_GLint(3), wa_par_GLint(4), wa_par_GLint(5),
+                      wa_par_GLint(6), wa_par_GLsizei(7), wa_par_GLsizei(8));
 }
 
 // WINGDIAPI void APIENTRY glCullFace(GLenum mode)
@@ -873,10 +848,12 @@ HB_FUNC(WAGLFRONTFACE)
   glFrontFace(wa_par_GLenum(1));
 }
 
-// WINGDIAPI void APIENTRY glFrustum(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble zNear,GLdouble zFar)
+// WINGDIAPI void APIENTRY glFrustum(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble zNear,GLdouble
+// zFar)
 HB_FUNC(WAGLFRUSTUM)
 {
-  glFrustum(wa_par_GLdouble(1), wa_par_GLdouble(2), wa_par_GLdouble(3), wa_par_GLdouble(4), wa_par_GLdouble(5), wa_par_GLdouble(6));
+  glFrustum(wa_par_GLdouble(1), wa_par_GLdouble(2), wa_par_GLdouble(3), wa_par_GLdouble(4), wa_par_GLdouble(5),
+            wa_par_GLdouble(6));
 }
 
 // WINGDIAPI GLuint APIENTRY glGenLists(GLsizei range)
@@ -1353,7 +1330,8 @@ HB_FUNC(WAGLLOGICOP)
   glLogicOp(wa_par_GLenum(1));
 }
 
-// WINGDIAPI void APIENTRY glMap1d(GLenum target,GLdouble u1,GLdouble u2,GLint stride,GLint order,const GLdouble *points)
+// WINGDIAPI void APIENTRY glMap1d(GLenum target,GLdouble u1,GLdouble u2,GLint stride,GLint order,const GLdouble
+// *points)
 #if 0
 HB_FUNC(WAGLMAP1D)
 {
@@ -1369,7 +1347,8 @@ HB_FUNC(WAGLMAP1F)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glMap2d(GLenum target,GLdouble u1,GLdouble u2,GLint ustride,GLint uorder,GLdouble v1,GLdouble v2,GLint vstride,GLint vorder,const GLdouble *points)
+// WINGDIAPI void APIENTRY glMap2d(GLenum target,GLdouble u1,GLdouble u2,GLint ustride,GLint uorder,GLdouble v1,GLdouble
+// v2,GLint vstride,GLint vorder,const GLdouble *points)
 #if 0
 HB_FUNC(WAGLMAP2D)
 {
@@ -1377,7 +1356,8 @@ HB_FUNC(WAGLMAP2D)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glMap2f(GLenum target,GLfloat u1,GLfloat u2,GLint ustride,GLint uorder,GLfloat v1,GLfloat v2,GLint vstride,GLint vorder,const GLfloat *points)
+// WINGDIAPI void APIENTRY glMap2f(GLenum target,GLfloat u1,GLfloat u2,GLint ustride,GLint uorder,GLfloat v1,GLfloat
+// v2,GLint vstride,GLint vorder,const GLfloat *points)
 #if 0
 HB_FUNC(WAGLMAP2F)
 {
@@ -1400,13 +1380,15 @@ HB_FUNC(WAGLMAPGRID1F)
 // WINGDIAPI void APIENTRY glMapGrid2d(GLint un,GLdouble u1,GLdouble u2,GLint vn,GLdouble v1,GLdouble v2)
 HB_FUNC(WAGLMAPGRID2D)
 {
-  glMapGrid2d(wa_par_GLint(1), wa_par_GLdouble(2), wa_par_GLdouble(3), wa_par_GLint(4), wa_par_GLdouble(5), wa_par_GLdouble(6));
+  glMapGrid2d(wa_par_GLint(1), wa_par_GLdouble(2), wa_par_GLdouble(3), wa_par_GLint(4), wa_par_GLdouble(5),
+              wa_par_GLdouble(6));
 }
 
 // WINGDIAPI void APIENTRY glMapGrid2f(GLint un,GLfloat u1,GLfloat u2,GLint vn,GLfloat v1,GLfloat v2)
 HB_FUNC(WAGLMAPGRID2F)
 {
-  glMapGrid2f(wa_par_GLint(1), wa_par_GLfloat(2), wa_par_GLfloat(3), wa_par_GLint(4), wa_par_GLfloat(5), wa_par_GLfloat(6));
+  glMapGrid2f(wa_par_GLint(1), wa_par_GLfloat(2), wa_par_GLfloat(3), wa_par_GLint(4), wa_par_GLfloat(5),
+              wa_par_GLfloat(6));
 }
 
 // WINGDIAPI void APIENTRY glMaterialf(GLenum face,GLenum pname,GLfloat param)
@@ -1543,10 +1525,12 @@ HB_FUNC(WAGLNORMALPOINTER)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glOrtho(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble zNear,GLdouble zFar)
+// WINGDIAPI void APIENTRY glOrtho(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble zNear,GLdouble
+// zFar)
 HB_FUNC(WAGLORTHO)
 {
-  glOrtho(wa_par_GLdouble(1), wa_par_GLdouble(2), wa_par_GLdouble(3), wa_par_GLdouble(4), wa_par_GLdouble(5), wa_par_GLdouble(6));
+  glOrtho(wa_par_GLdouble(1), wa_par_GLdouble(2), wa_par_GLdouble(3), wa_par_GLdouble(4), wa_par_GLdouble(5),
+          wa_par_GLdouble(6));
 }
 
 // WINGDIAPI void APIENTRY glPassThrough(GLfloat token)
@@ -1865,7 +1849,8 @@ HB_FUNC(WAGLREADBUFFER)
   glReadBuffer(wa_par_GLenum(1));
 }
 
-// WINGDIAPI void APIENTRY glReadPixels(GLint x,GLint y,GLsizei width,GLsizei height,GLenum format,GLenum type,GLvoid *pixels)
+// WINGDIAPI void APIENTRY glReadPixels(GLint x,GLint y,GLsizei width,GLsizei height,GLenum format,GLenum type,GLvoid
+// *pixels)
 #if 0
 HB_FUNC(WAGLREADPIXELS)
 {
@@ -2299,7 +2284,8 @@ HB_FUNC(WAGLTEXGENIV)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glTexImage1D(GLenum target,GLint level,GLint internalformat,GLsizei width,GLint border,GLenum format,GLenum type,const GLvoid *pixels)
+// WINGDIAPI void APIENTRY glTexImage1D(GLenum target,GLint level,GLint internalformat,GLsizei width,GLint border,GLenum
+// format,GLenum type,const GLvoid *pixels)
 #if 0
 HB_FUNC(WAGLTEXIMAGE1D)
 {
@@ -2307,7 +2293,8 @@ HB_FUNC(WAGLTEXIMAGE1D)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glTexImage2D(GLenum target,GLint level,GLint internalformat,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const GLvoid *pixels)
+// WINGDIAPI void APIENTRY glTexImage2D(GLenum target,GLint level,GLint internalformat,GLsizei width,GLsizei
+// height,GLint border,GLenum format,GLenum type,const GLvoid *pixels)
 #if 0
 HB_FUNC(WAGLTEXIMAGE2D)
 {
@@ -2343,7 +2330,8 @@ HB_FUNC(WAGLTEXPARAMETERIV)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLenum type,const GLvoid *pixels)
+// WINGDIAPI void APIENTRY glTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLenum
+// type,const GLvoid *pixels)
 #if 0
 HB_FUNC(WAGLTEXSUBIMAGE1D)
 {
@@ -2351,7 +2339,8 @@ HB_FUNC(WAGLTEXSUBIMAGE1D)
 }
 #endif
 
-// WINGDIAPI void APIENTRY glTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const GLvoid *pixels)
+// WINGDIAPI void APIENTRY glTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei
+// height,GLenum format,GLenum type,const GLvoid *pixels)
 #if 0
 HB_FUNC(WAGLTEXSUBIMAGE2D)
 {
@@ -2555,18 +2544,19 @@ HB_FUNC(WAGLVIEWPORT)
 
 // typedef void (APIENTRY *PFNGLARRAYELEMENTEXTPROC)(GLint i);
 // typedef void (APIENTRY *PFNGLDRAWARRAYSEXTPROC)(GLenum mode,GLint first,GLsizei count);
-// typedef void (APIENTRY *PFNGLVERTEXPOINTEREXTPROC)(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid *pointer);
-// typedef void (APIENTRY *PFNGLNORMALPOINTEREXTPROC)(GLenum type,GLsizei stride,GLsizei count,const GLvoid *pointer);
-// typedef void (APIENTRY *PFNGLCOLORPOINTEREXTPROC)(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid *pointer);
-// typedef void (APIENTRY *PFNGLINDEXPOINTEREXTPROC)(GLenum type,GLsizei stride,GLsizei count,const GLvoid *pointer);
-// typedef void (APIENTRY *PFNGLTEXCOORDPOINTEREXTPROC)(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid *pointer);
-// typedef void (APIENTRY *PFNGLEDGEFLAGPOINTEREXTPROC)(GLsizei stride,GLsizei count,const GLboolean *pointer);
-// typedef void (APIENTRY *PFNGLGETPOINTERVEXTPROC)(GLenum pname,GLvoid **params);
-// typedef void (APIENTRY *PFNGLARRAYELEMENTARRAYEXTPROC)(GLenum mode,GLsizei count,const GLvoid *pi);
-// typedef void (APIENTRY *PFNGLDRAWRANGEELEMENTSWINPROC)(GLenum mode,GLuint start,GLuint end,GLsizei count,GLenum type,const GLvoid *indices);
-// typedef void (APIENTRY *PFNGLADDSWAPHINTRECTWINPROC)(GLint x,GLint y,GLsizei width,GLsizei height);
-// typedef void (APIENTRY *PFNGLCOLORTABLEEXTPROC)(GLenum target,GLenum internalFormat,GLsizei width,GLenum format,GLenum type,const GLvoid *data);
-// typedef void (APIENTRY *PFNGLCOLORSUBTABLEEXTPROC)(GLenum target,GLsizei start,GLsizei count,GLenum format,GLenum type,const GLvoid *data);
-// typedef void (APIENTRY *PFNGLGETCOLORTABLEEXTPROC)(GLenum target,GLenum format,GLenum type,GLvoid *data);
-// typedef void (APIENTRY *PFNGLGETCOLORTABLEPARAMETERIVEXTPROC)(GLenum target,GLenum pname,GLint *params);
-// typedef void (APIENTRY *PFNGLGETCOLORTABLEPARAMETERFVEXTPROC)(GLenum target,GLenum pname,GLfloat *params);
+// typedef void (APIENTRY *PFNGLVERTEXPOINTEREXTPROC)(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid
+// *pointer); typedef void (APIENTRY *PFNGLNORMALPOINTEREXTPROC)(GLenum type,GLsizei stride,GLsizei count,const GLvoid
+// *pointer); typedef void (APIENTRY *PFNGLCOLORPOINTEREXTPROC)(GLint size,GLenum type,GLsizei stride,GLsizei
+// count,const GLvoid *pointer); typedef void (APIENTRY *PFNGLINDEXPOINTEREXTPROC)(GLenum type,GLsizei stride,GLsizei
+// count,const GLvoid *pointer); typedef void (APIENTRY *PFNGLTEXCOORDPOINTEREXTPROC)(GLint size,GLenum type,GLsizei
+// stride,GLsizei count,const GLvoid *pointer); typedef void (APIENTRY *PFNGLEDGEFLAGPOINTEREXTPROC)(GLsizei
+// stride,GLsizei count,const GLboolean *pointer); typedef void (APIENTRY *PFNGLGETPOINTERVEXTPROC)(GLenum pname,GLvoid
+// **params); typedef void (APIENTRY *PFNGLARRAYELEMENTARRAYEXTPROC)(GLenum mode,GLsizei count,const GLvoid *pi);
+// typedef void (APIENTRY *PFNGLDRAWRANGEELEMENTSWINPROC)(GLenum mode,GLuint start,GLuint end,GLsizei count,GLenum
+// type,const GLvoid *indices); typedef void (APIENTRY *PFNGLADDSWAPHINTRECTWINPROC)(GLint x,GLint y,GLsizei
+// width,GLsizei height); typedef void (APIENTRY *PFNGLCOLORTABLEEXTPROC)(GLenum target,GLenum internalFormat,GLsizei
+// width,GLenum format,GLenum type,const GLvoid *data); typedef void (APIENTRY *PFNGLCOLORSUBTABLEEXTPROC)(GLenum
+// target,GLsizei start,GLsizei count,GLenum format,GLenum type,const GLvoid *data); typedef void (APIENTRY
+// *PFNGLGETCOLORTABLEEXTPROC)(GLenum target,GLenum format,GLenum type,GLvoid *data); typedef void (APIENTRY
+// *PFNGLGETCOLORTABLEPARAMETERIVEXTPROC)(GLenum target,GLenum pname,GLint *params); typedef void (APIENTRY
+// *PFNGLGETCOLORTABLEPARAMETERFVEXTPROC)(GLenum target,GLenum pname,GLfloat *params);

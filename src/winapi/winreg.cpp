@@ -161,9 +161,11 @@ HB_FUNC(WAREGCREATEKEY)
   hb_strfree(str);
 }
 
-// WINADVAPI LONG WINAPI RegCreateKeyExA(HKEY hKey,LPCSTR lpSubKey,DWORD Reserved,LPSTR lpClass,DWORD dwOptions,REGSAM samDesired,LPSECURITY_ATTRIBUTES lpSecurityAttributes,PHKEY phkResult,LPDWORD lpdwDisposition)
+// WINADVAPI LONG WINAPI RegCreateKeyExA(HKEY hKey,LPCSTR lpSubKey,DWORD Reserved,LPSTR lpClass,DWORD dwOptions,REGSAM
+// samDesired,LPSECURITY_ATTRIBUTES lpSecurityAttributes,PHKEY phkResult,LPDWORD lpdwDisposition)
 
-// WINADVAPI LONG WINAPI RegCreateKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD Reserved,LPWSTR lpClass,DWORD dwOptions,REGSAM samDesired,LPSECURITY_ATTRIBUTES lpSecurityAttributes,PHKEY phkResult,LPDWORD lpdwDisposition)
+// WINADVAPI LONG WINAPI RegCreateKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD Reserved,LPWSTR lpClass,DWORD dwOptions,REGSAM
+// samDesired,LPSECURITY_ATTRIBUTES lpSecurityAttributes,PHKEY phkResult,LPDWORD lpdwDisposition)
 
 // WINADVAPI LONG WINAPI RegDeleteKeyA(HKEY hKey,LPCSTR lpSubKey)
 #if 0
@@ -272,16 +274,21 @@ HB_FUNC(WAREGENUMKEYW) // TODO: fix
 
 HB_FUNC(WAREGENUMKEY) // TODO: fix
 {
-  wa_ret_LONG(RegEnumKey(wa_par_HKEY(1), wa_par_DWORD(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))), wa_par_DWORD(4)));
+  wa_ret_LONG(RegEnumKey(wa_par_HKEY(1), wa_par_DWORD(2), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(3))),
+                         wa_par_DWORD(4)));
 }
 
-// WINADVAPI LONG WINAPI RegEnumKeyExA(HKEY hKey,DWORD dwIndex,LPSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPSTR lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime)
+// WINADVAPI LONG WINAPI RegEnumKeyExA(HKEY hKey,DWORD dwIndex,LPSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPSTR
+// lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime)
 
-// WINADVAPI LONG WINAPI RegEnumKeyExW(HKEY hKey,DWORD dwIndex,LPWSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPWSTR lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime)
+// WINADVAPI LONG WINAPI RegEnumKeyExW(HKEY hKey,DWORD dwIndex,LPWSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPWSTR
+// lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime)
 
-// WINADVAPI LONG WINAPI RegEnumValueA(HKEY hKey,DWORD dwIndex,LPSTR lpValueName,LPDWORD lpcchValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData)
+// WINADVAPI LONG WINAPI RegEnumValueA(HKEY hKey,DWORD dwIndex,LPSTR lpValueName,LPDWORD lpcchValueName,LPDWORD
+// lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData)
 
-// WINADVAPI LONG WINAPI RegEnumValueW(HKEY hKey,DWORD dwIndex,LPWSTR lpValueName,LPDWORD lpcchValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData)
+// WINADVAPI LONG WINAPI RegEnumValueW(HKEY hKey,DWORD dwIndex,LPWSTR lpValueName,LPDWORD lpcchValueName,LPDWORD
+// lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData)
 
 // WINADVAPI LONG WINAPI RegFlushKey(HKEY hKey)
 HB_FUNC(WAREGFLUSHKEY)
@@ -289,7 +296,8 @@ HB_FUNC(WAREGFLUSHKEY)
   wa_ret_LONG(RegFlushKey(wa_par_HKEY(1)));
 }
 
-// WINADVAPI LONG WINAPI RegGetKeySecurity(HKEY hKey,SECURITY_INFORMATION SecurityInformation,PSECURITY_DESCRIPTOR pSecurityDescriptor,LPDWORD lpcbSecurityDescriptor)
+// WINADVAPI LONG WINAPI RegGetKeySecurity(HKEY hKey,SECURITY_INFORMATION SecurityInformation,PSECURITY_DESCRIPTOR
+// pSecurityDescriptor,LPDWORD lpcbSecurityDescriptor)
 
 // WINADVAPI LONG WINAPI RegLoadKeyA(HKEY hKey,LPCSTR lpSubKey,LPCSTR lpFile)
 #if 0
@@ -316,10 +324,12 @@ HB_FUNC(WAREGLOADKEY)
   hb_strfree(str3);
 }
 
-// WINADVAPI LONG WINAPI RegNotifyChangeKeyValue(HKEY hKey,WINBOOL bWatchSubtree,DWORD dwNotifyFilter,HANDLE hEvent,WINBOOL fAsynchronous)
+// WINADVAPI LONG WINAPI RegNotifyChangeKeyValue(HKEY hKey,WINBOOL bWatchSubtree,DWORD dwNotifyFilter,HANDLE
+// hEvent,WINBOOL fAsynchronous)
 HB_FUNC(WAREGNOTIFYCHANGEKEYVALUE)
 {
-  wa_ret_LONG(RegNotifyChangeKeyValue(wa_par_HKEY(1), wa_par_BOOL(2), wa_par_DWORD(3), wa_par_HANDLE(4), wa_par_BOOL(5)));
+  wa_ret_LONG(
+      RegNotifyChangeKeyValue(wa_par_HKEY(1), wa_par_BOOL(2), wa_par_DWORD(3), wa_par_HANDLE(4), wa_par_BOOL(5)));
 }
 
 // WINADVAPI LONG WINAPI RegOpenKeyA(HKEY hKey,LPCSTR lpSubKey,PHKEY phkResult)
@@ -380,21 +390,29 @@ HB_FUNC(WAREGOPENKEYEX)
   hb_strfree(str);
 }
 
-// WINADVAPI LONG WINAPI RegQueryInfoKeyA(HKEY hKey,LPSTR lpClass,LPDWORD lpcchClass,LPDWORD lpReserved,LPDWORD lpcSubKeys,LPDWORD lpcbMaxSubKeyLen,LPDWORD lpcbMaxClassLen,LPDWORD lpcValues,LPDWORD lpcbMaxValueNameLen,LPDWORD lpcbMaxValueLen,LPDWORD lpcbSecurityDescriptor,PFILETIME lpftLastWriteTime)
+// WINADVAPI LONG WINAPI RegQueryInfoKeyA(HKEY hKey,LPSTR lpClass,LPDWORD lpcchClass,LPDWORD lpReserved,LPDWORD
+// lpcSubKeys,LPDWORD lpcbMaxSubKeyLen,LPDWORD lpcbMaxClassLen,LPDWORD lpcValues,LPDWORD lpcbMaxValueNameLen,LPDWORD
+// lpcbMaxValueLen,LPDWORD lpcbSecurityDescriptor,PFILETIME lpftLastWriteTime)
 
-// WINADVAPI LONG WINAPI RegQueryInfoKeyW(HKEY hKey,LPWSTR lpClass,LPDWORD lpcchClass,LPDWORD lpReserved,LPDWORD lpcSubKeys,LPDWORD lpcbMaxSubKeyLen,LPDWORD lpcbMaxClassLen,LPDWORD lpcValues,LPDWORD lpcbMaxValueNameLen,LPDWORD lpcbMaxValueLen,LPDWORD lpcbSecurityDescriptor,PFILETIME lpftLastWriteTime)
+// WINADVAPI LONG WINAPI RegQueryInfoKeyW(HKEY hKey,LPWSTR lpClass,LPDWORD lpcchClass,LPDWORD lpReserved,LPDWORD
+// lpcSubKeys,LPDWORD lpcbMaxSubKeyLen,LPDWORD lpcbMaxClassLen,LPDWORD lpcValues,LPDWORD lpcbMaxValueNameLen,LPDWORD
+// lpcbMaxValueLen,LPDWORD lpcbSecurityDescriptor,PFILETIME lpftLastWriteTime)
 
 // WINADVAPI LONG WINAPI RegQueryValueA(HKEY hKey,LPCSTR lpSubKey,LPSTR lpData,PLONG lpcbData)
 
 // WINADVAPI LONG WINAPI RegQueryValueW(HKEY hKey,LPCWSTR lpSubKey,LPWSTR lpData,PLONG lpcbData)
 
-// WINADVAPI LONG WINAPI RegQueryMultipleValuesA(HKEY hKey,PVALENTA val_list,DWORD num_vals,LPSTR lpValueBuf,LPDWORD ldwTotsize)
+// WINADVAPI LONG WINAPI RegQueryMultipleValuesA(HKEY hKey,PVALENTA val_list,DWORD num_vals,LPSTR lpValueBuf,LPDWORD
+// ldwTotsize)
 
-// WINADVAPI LONG WINAPI RegQueryMultipleValuesW(HKEY hKey,PVALENTW val_list,DWORD num_vals,LPWSTR lpValueBuf,LPDWORD ldwTotsize)
+// WINADVAPI LONG WINAPI RegQueryMultipleValuesW(HKEY hKey,PVALENTW val_list,DWORD num_vals,LPWSTR lpValueBuf,LPDWORD
+// ldwTotsize)
 
-// WINADVAPI LONG WINAPI RegQueryValueExA(HKEY hKey,LPCSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData)
+// WINADVAPI LONG WINAPI RegQueryValueExA(HKEY hKey,LPCSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE
+// lpData,LPDWORD lpcbData)
 
-// WINADVAPI LONG WINAPI RegQueryValueExW(HKEY hKey,LPCWSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData)
+// WINADVAPI LONG WINAPI RegQueryValueExW(HKEY hKey,LPCWSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE
+// lpData,LPDWORD lpcbData)
 
 // WINADVAPI LONG WINAPI RegReplaceKeyA(HKEY hKey,LPCSTR lpSubKey,LPCSTR lpNewFile,LPCSTR lpOldFile)
 #if 0
@@ -417,7 +435,8 @@ HB_FUNC(WAREGREPLACEKEY)
   void *str2{};
   void *str3{};
   void *str4{};
-  wa_ret_LONG(RegReplaceKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
+  wa_ret_LONG(RegReplaceKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr),
+                            HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
   hb_strfree(str4);
@@ -450,7 +469,8 @@ HB_FUNC(WAREGRESTOREKEY)
 
 // WINADVAPI LONG WINAPI RegSaveKeyW(HKEY hKey,LPCWSTR lpFile,LPSECURITY_ATTRIBUTES lpSecurityAttributes)
 
-// WINADVAPI LONG WINAPI RegSetKeySecurity(HKEY hKey,SECURITY_INFORMATION SecurityInformation,PSECURITY_DESCRIPTOR pSecurityDescriptor)
+// WINADVAPI LONG WINAPI RegSetKeySecurity(HKEY hKey,SECURITY_INFORMATION SecurityInformation,PSECURITY_DESCRIPTOR
+// pSecurityDescriptor)
 
 // WINADVAPI LONG WINAPI RegSetValueA(HKEY hKey,LPCSTR lpSubKey,DWORD dwType,LPCSTR lpData,DWORD cbData)
 #if 0
@@ -472,14 +492,17 @@ HB_FUNC(WAREGSETVALUE)
 {
   void *str2{};
   void *str4{};
-  wa_ret_LONG(RegSetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5)));
+  wa_ret_LONG(RegSetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3), HB_PARSTR(4, &str4, nullptr),
+                          wa_par_DWORD(5)));
   hb_strfree(str2);
   hb_strfree(str4);
 }
 
-// WINADVAPI LONG WINAPI RegSetValueExA(HKEY hKey,LPCSTR lpValueName,DWORD Reserved,DWORD dwType,CONST BYTE *lpData,DWORD cbData)
+// WINADVAPI LONG WINAPI RegSetValueExA(HKEY hKey,LPCSTR lpValueName,DWORD Reserved,DWORD dwType,CONST BYTE
+// *lpData,DWORD cbData)
 
-// WINADVAPI LONG WINAPI RegSetValueExW(HKEY hKey,LPCWSTR lpValueName,DWORD Reserved,DWORD dwType,CONST BYTE *lpData,DWORD cbData)
+// WINADVAPI LONG WINAPI RegSetValueExW(HKEY hKey,LPCWSTR lpValueName,DWORD Reserved,DWORD dwType,CONST BYTE
+// *lpData,DWORD cbData)
 
 // WINADVAPI LONG WINAPI RegUnLoadKeyA(HKEY hKey,LPCSTR lpSubKey)
 #if 0
@@ -504,7 +527,8 @@ HB_FUNC(WAREGUNLOADKEY)
   hb_strfree(str2);
 }
 
-// WINADVAPI LONG WINAPI RegGetValueA(HKEY hkey,LPCSTR lpSubKey,LPCSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData)
+// WINADVAPI LONG WINAPI RegGetValueA(HKEY hkey,LPCSTR lpSubKey,LPCSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID
+// pvData,LPDWORD pcbData)
 #if 0
 HB_FUNC(WAREGGETVALUEA)
 {
@@ -516,7 +540,8 @@ HB_FUNC(WAREGGETVALUEA)
 }
 #endif
 
-// WINADVAPI LONG WINAPI RegGetValueW(HKEY hkey,LPCWSTR lpSubKey,LPCWSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData)
+// WINADVAPI LONG WINAPI RegGetValueW(HKEY hkey,LPCWSTR lpSubKey,LPCWSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID
+// pvData,LPDWORD pcbData)
 #if 0
 HB_FUNC(WAREGGETVALUEW)
 {
@@ -534,14 +559,16 @@ HB_FUNC(WAREGGETVALUE)
   void *str3{};
   DWORD Type{};
   DWORD Data{};
-  wa_ret_LONG(RegGetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
+  wa_ret_LONG(RegGetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4),
+                          &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
   wa_stor_DWORD(Type, 5);
   wa_stor_DWORD(Data, 7);
   hb_strfree(str2);
   hb_strfree(str3);
 }
 
-// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown)
+// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL
+// bForceAppsClosed,WINBOOL bRebootAfterShutdown)
 #if 0
 HB_FUNC(WAINITIATESYSTEMSHUTDOWNA) // TODO: fix
 {
@@ -549,7 +576,8 @@ HB_FUNC(WAINITIATESYSTEMSHUTDOWNA) // TODO: fix
 }
 #endif
 
-// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown)
+// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL
+// bForceAppsClosed,WINBOOL bRebootAfterShutdown)
 #if 0
 HB_FUNC(WAINITIATESYSTEMSHUTDOWNW) // TODO: fix
 {
@@ -559,7 +587,9 @@ HB_FUNC(WAINITIATESYSTEMSHUTDOWNW) // TODO: fix
 
 HB_FUNC(WAINITIATESYSTEMSHUTDOWN) // TODO: fix
 {
-  wa_ret_BOOL(InitiateSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5)));
+  wa_ret_BOOL(InitiateSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))),
+                                     reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3),
+                                     hb_parl(4), hb_parl(5)));
 }
 
 // WINADVAPI WINBOOL WINAPI AbortSystemShutdownA(LPSTR lpMachineName)
@@ -583,7 +613,8 @@ HB_FUNC(WAABORTSYSTEMSHUTDOWN) // TODO: fix
   wa_ret_BOOL(AbortSystemShutdown(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1)))));
 }
 
-// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
+// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL
+// bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
 #if 0
 HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXA) // TODO: fix
 {
@@ -591,7 +622,8 @@ HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXA) // TODO: fix
 }
 #endif
 
-// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
+// WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL
+// bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
 #if 0
 HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXW) // TODO: fix
 {
@@ -601,7 +633,9 @@ HB_FUNC(WAINITIATESYSTEMSHUTDOWNEXW) // TODO: fix
 
 HB_FUNC(WAINITIATESYSTEMSHUTDOWNEX) // TODO: fix
 {
-  wa_ret_BOOL(InitiateSystemShutdownEx(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3), hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
+  wa_ret_BOOL(InitiateSystemShutdownEx(reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(1))),
+                                       reinterpret_cast<LPWSTR>(const_cast<char *>(hb_parc(2))), wa_par_DWORD(3),
+                                       hb_parl(4), hb_parl(5), wa_par_DWORD(6)));
 }
 
 // WINADVAPI LONG WINAPI RegSaveKeyExA(HKEY hKey,LPCSTR lpFile,LPSECURITY_ATTRIBUTES lpSecurityAttributes,DWORD Flags)
@@ -639,13 +673,19 @@ HB_FUNC(WAREGCOPYTREE)
   hb_strfree(str);
 }
 
-// WINADVAPI LONG WINAPI RegCreateKeyTransactedA(HKEY hKey, LPCSTR lpSubKey, DWORD Reserved, LPSTR lpClass, DWORD dwOptions, REGSAM samDesired, const LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD lpdwDisposition, HANDLE hTransaction, PVOID pExtendedParemeter)
+// WINADVAPI LONG WINAPI RegCreateKeyTransactedA(HKEY hKey, LPCSTR lpSubKey, DWORD Reserved, LPSTR lpClass, DWORD
+// dwOptions, REGSAM samDesired, const LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD
+// lpdwDisposition, HANDLE hTransaction, PVOID pExtendedParemeter)
 
-// WINADVAPI LONG WINAPI RegCreateKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, DWORD Reserved, LPWSTR lpClass, DWORD dwOptions, REGSAM samDesired, const LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD lpdwDisposition, HANDLE hTransaction, PVOID pExtendedParemeter)
+// WINADVAPI LONG WINAPI RegCreateKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, DWORD Reserved, LPWSTR lpClass, DWORD
+// dwOptions, REGSAM samDesired, const LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD
+// lpdwDisposition, HANDLE hTransaction, PVOID pExtendedParemeter)
 
-// WINADVAPI LONG WINAPI RegDeleteKeyTransactedA(HKEY hKey, LPCSTR lpSubKey, REGSAM samDesired, DWORD Reserved, HANDLE hTransaction, PVOID pExtendedParameter)
+// WINADVAPI LONG WINAPI RegDeleteKeyTransactedA(HKEY hKey, LPCSTR lpSubKey, REGSAM samDesired, DWORD Reserved, HANDLE
+// hTransaction, PVOID pExtendedParameter)
 
-// WINADVAPI LONG WINAPI RegDeleteKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, REGSAM samDesired, DWORD Reserved, HANDLE hTransaction, PVOID pExtendedParameter)
+// WINADVAPI LONG WINAPI RegDeleteKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, REGSAM samDesired, DWORD Reserved, HANDLE
+// hTransaction, PVOID pExtendedParameter)
 
 // WINADVAPI LONG WINAPI RegDeleteKeyValueA(HKEY hKey, LPCSTR lpSubKey, LPCSTR lpValueName)
 #if 0
@@ -705,7 +745,8 @@ HB_FUNC(WAREGDISABLEPREDEFINEDCACHEEX)
 }
 #endif
 
-// WINADVAPI LONG WINAPI RegLoadAppKeyA(LPCSTR lpFile, PHKEY phkResult, REGSAM samDesired, DWORD dwOptions, DWORD Reserved)
+// WINADVAPI LONG WINAPI RegLoadAppKeyA(LPCSTR lpFile, PHKEY phkResult, REGSAM samDesired, DWORD dwOptions, DWORD
+// Reserved)
 #if 0
 HB_FUNC(WAREGLOADAPPKEYA)
 {
@@ -715,7 +756,8 @@ HB_FUNC(WAREGLOADAPPKEYA)
 }
 #endif
 
-// WINADVAPI LONG WINAPI RegLoadAppKeyW(LPCWSTR lpFile, PHKEY phkResult, REGSAM samDesired, DWORD dwOptions, DWORD Reserved)
+// WINADVAPI LONG WINAPI RegLoadAppKeyW(LPCWSTR lpFile, PHKEY phkResult, REGSAM samDesired, DWORD dwOptions, DWORD
+// Reserved)
 #if 0
 HB_FUNC(WAREGLOADAPPKEYW)
 {
@@ -729,23 +771,32 @@ HB_FUNC(WAREGLOADAPPKEY)
 {
   void *str{};
   HKEY hkResult{};
-  wa_ret_LONG(RegLoadAppKey(HB_PARSTR(1, &str, nullptr), &hkResult, wa_par_REGSAM(3), wa_par_DWORD(4), wa_par_DWORD(5)));
+  wa_ret_LONG(
+      RegLoadAppKey(HB_PARSTR(1, &str, nullptr), &hkResult, wa_par_REGSAM(3), wa_par_DWORD(4), wa_par_DWORD(5)));
   hb_storptr(hkResult, 2);
   hb_strfree(str);
 }
 
-// WINADVAPI LONG WINAPI RegLoadMUIStringA(HKEY hKey, LPCSTR pszValue, LPSTR pszOutBuf, DWORD cbOutBuf, LPDWORD pcbData, DWORD Flags, LPCSTR pszDirectory)
+// WINADVAPI LONG WINAPI RegLoadMUIStringA(HKEY hKey, LPCSTR pszValue, LPSTR pszOutBuf, DWORD cbOutBuf, LPDWORD pcbData,
+// DWORD Flags, LPCSTR pszDirectory)
 
-// WINADVAPI LONG WINAPI RegLoadMUIStringW(HKEY hKey, LPCWSTR pszValue, LPWSTR pszOutBuf, DWORD cbOutBuf, LPDWORD pcbData, DWORD Flags, LPCWSTR pszDirectory)
+// WINADVAPI LONG WINAPI RegLoadMUIStringW(HKEY hKey, LPCWSTR pszValue, LPWSTR pszOutBuf, DWORD cbOutBuf, LPDWORD
+// pcbData, DWORD Flags, LPCWSTR pszDirectory)
 
-// WINADVAPI LONG WINAPI RegOpenKeyTransactedA(HKEY hKey, LPCSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, PHKEY phkResult, HANDLE hTransaction, PVOID pExtendedParameter)
+// WINADVAPI LONG WINAPI RegOpenKeyTransactedA(HKEY hKey, LPCSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, PHKEY
+// phkResult, HANDLE hTransaction, PVOID pExtendedParameter)
 
-// WINADVAPI LONG WINAPI RegOpenKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, PHKEY phkResult, HANDLE hTransaction, PVOID pExtendedParameter)
+// WINADVAPI LONG WINAPI RegOpenKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, PHKEY
+// phkResult, HANDLE hTransaction, PVOID pExtendedParameter)
 
-// WINADVAPI LONG WINAPI RegSetKeyValueA(HKEY hKey, LPCSTR lpSubKey, LPCSTR lpValueName, DWORD dwType, LPCVOID lpData, DWORD cbData)
+// WINADVAPI LONG WINAPI RegSetKeyValueA(HKEY hKey, LPCSTR lpSubKey, LPCSTR lpValueName, DWORD dwType, LPCVOID lpData,
+// DWORD cbData)
 
-// WINADVAPI LONG WINAPI RegSetKeyValueW(HKEY hKey, LPCWSTR lpSubKey, LPCWSTR lpValueName, DWORD dwType, LPCVOID lpData, DWORD cbData)
+// WINADVAPI LONG WINAPI RegSetKeyValueW(HKEY hKey, LPCWSTR lpSubKey, LPCWSTR lpValueName, DWORD dwType, LPCVOID lpData,
+// DWORD cbData)
 
-// WINADVAPI DWORD WINAPI InitiateShutdownA(LPSTR lpMachineName, LPSTR lpMessage, DWORD dwGracePeriod, DWORD dwShutdownFlags, DWORD dwReason)
+// WINADVAPI DWORD WINAPI InitiateShutdownA(LPSTR lpMachineName, LPSTR lpMessage, DWORD dwGracePeriod, DWORD
+// dwShutdownFlags, DWORD dwReason)
 
-// WINADVAPI DWORD WINAPI InitiateShutdownW(LPWSTR lpMachineName, LPWSTR lpMessage, DWORD dwGracePeriod, DWORD dwShutdownFlags, DWORD dwReason)
+// WINADVAPI DWORD WINAPI InitiateShutdownW(LPWSTR lpMachineName, LPWSTR lpMessage, DWORD dwGracePeriod, DWORD
+// dwShutdownFlags, DWORD dwReason)
