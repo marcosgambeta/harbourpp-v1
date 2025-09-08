@@ -62,15 +62,11 @@ static const char *s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE *pnPad)
   auto szPad = hb_parc(3);
 
   *pnPad = 1;
-  if (szPad == nullptr)
-  {
+  if (szPad == nullptr) {
     szPad = " ";
-  }
-  else if (cdp)
-  {
+  } else if (cdp) {
     *pnPad = hb_cdpTextPos(cdp, szPad, hb_parclen(3), 1);
-    if (*pnPad == 0)
-    {
+    if (*pnPad == 0) {
       szPad = "";
     }
   }
@@ -85,97 +81,76 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
 {
   HB_ISIZ nLen = hb_parns(2);
 
-  if (nLen > 0)
-  {
+  if (nLen > 0) {
     auto pItem = hb_param(1, Harbour::Item::ANY);
 
-    if (pItem && pItem->isString() && static_cast<HB_SIZE>(nLen) == hb_cdpItemLen(cdp, pItem))
-    {
+    if (pItem && pItem->isString() && static_cast<HB_SIZE>(nLen) == hb_cdpItemLen(cdp, pItem)) {
       hb_itemReturn(pItem);
-    }
-    else
-    {
+    } else {
       HB_SIZE nSize;
       HB_BOOL bFreeReq;
       char *szText = hb_itemPadConv(pItem, &nSize, &bFreeReq);
 
-      if (szText != nullptr)
-      {
-        if (cdp)
-        {
+      if (szText != nullptr) {
+        if (cdp) {
           HB_SIZE nText = nLen;
           nLen = hb_cdpTextPosEx(cdp, szText, nSize, &nText);
           nLen += nText;
         }
 
-        if (static_cast<HB_SIZE>(nLen) > nSize)
-        {
+        if (static_cast<HB_SIZE>(nLen) > nSize) {
           HB_SIZE nPad = 0;
           const char *szPad = s_hb_padGet(cdp, &nPad);
           char *szResult;
 
-          switch (iMode)
-          {
+          switch (iMode) {
           case HB_PAD_L:
-            if (nPad > 1)
-            {
+            if (nPad > 1) {
               HB_SIZE nRep = (static_cast<HB_SIZE>(nLen) - nSize), nPos = 0;
               nLen += nRep * (nPad - 1);
               szResult = static_cast<char *>(hb_xgrab(nLen + 1));
-              while (nRep--)
-              {
+              while (nRep--) {
                 hb_xmemcpy(szResult + nPos, szPad, nPad);
                 nPos += nPad;
               }
               hb_xmemcpy(szResult + nPos, szText, nSize);
-            }
-            else
-            {
+            } else {
               szResult = static_cast<char *>(hb_xgrab(nLen + 1));
               hb_xmemset(szResult, szPad[0], static_cast<HB_SIZE>(nLen) - nSize);
               hb_xmemcpy(szResult + static_cast<HB_SIZE>(nLen) - nSize, szText, nSize);
             }
             break;
           case HB_PAD_R:
-            if (nPad > 1)
-            {
+            if (nPad > 1) {
               nLen += (nLen - nSize) * (nPad - 1);
               szResult = static_cast<char *>(hb_xgrab(nLen + 1));
               hb_xmemcpy(szResult, szText, nSize);
-              while (nSize < static_cast<HB_SIZE>(nLen))
-              {
+              while (nSize < static_cast<HB_SIZE>(nLen)) {
                 hb_xmemcpy(szResult + nSize, szPad, nPad);
                 nSize += nPad;
               }
-            }
-            else
-            {
+            } else {
               szResult = static_cast<char *>(hb_xgrab(nLen + 1));
               hb_xmemcpy(szResult, szText, nSize);
               hb_xmemset(szResult + nSize, szPad[0], static_cast<HB_SIZE>(nLen) - nSize);
             }
             break;
           default: // HB_PAD_C
-            if (nPad > 1)
-            {
+            if (nPad > 1) {
               HB_SIZE nRep = (static_cast<HB_SIZE>(nLen) - nSize) >> 1, nPos = 0;
               nLen += (nLen - nSize) * (nPad - 1);
               szResult = static_cast<char *>(hb_xgrab(nLen + 1));
-              while (nRep--)
-              {
+              while (nRep--) {
                 hb_xmemcpy(szResult + nPos, szPad, nPad);
                 nPos += nPad;
               }
               hb_xmemcpy(szResult + nPos, szText, nSize);
               nSize += nPos;
-              while (nSize < static_cast<HB_SIZE>(nLen))
-              {
+              while (nSize < static_cast<HB_SIZE>(nLen)) {
                 hb_xmemcpy(szResult + nSize, szPad, nPad);
                 nSize += nPad;
               }
-            }
-            else
-            {
+            } else {
               szResult = static_cast<char *>(hb_xgrab(nLen + 1));
               nPad = (static_cast<HB_SIZE>(nLen) - nSize) >> 1;
               hb_xmemset(szResult, szPad[0], nPad);
@@ -185,31 +160,21 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
             break;
           }
           hb_retclen_buffer(szResult, static_cast<HB_SIZE>(nLen));
-          if (bFreeReq)
-          {
+          if (bFreeReq) {
             hb_xfree(szText);
           }
-        }
-        else
-        {
-          if (bFreeReq)
-          {
+        } else {
+          if (bFreeReq) {
             hb_retclen_buffer(szText, static_cast<HB_SIZE>(nLen));
-          }
-          else
-          {
+          } else {
             hb_retclen(szText, nLen);
           }
         }
-      }
-      else
-      {
+      } else {
         hb_retc_null();
       }
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
@@ -219,8 +184,7 @@ HB_FUNC(PADL)
 {
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCHARIDX(cdp))
-  {
+  if (!HB_CDP_ISCHARIDX(cdp)) {
     cdp = nullptr;
   }
 
@@ -236,8 +200,7 @@ HB_FUNC(HB_UPADL)
 {
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCUSTOM(cdp))
-  {
+  if (!HB_CDP_ISCUSTOM(cdp)) {
     cdp = nullptr;
   }
 
@@ -249,8 +212,7 @@ HB_FUNC(PADR)
 {
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCHARIDX(cdp))
-  {
+  if (!HB_CDP_ISCHARIDX(cdp)) {
     cdp = nullptr;
   }
 
@@ -266,8 +228,7 @@ HB_FUNC(HB_UPADR)
 {
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCUSTOM(cdp))
-  {
+  if (!HB_CDP_ISCUSTOM(cdp)) {
     cdp = nullptr;
   }
 
@@ -279,8 +240,7 @@ HB_FUNC(PADC)
 {
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCHARIDX(cdp))
-  {
+  if (!HB_CDP_ISCHARIDX(cdp)) {
     cdp = nullptr;
   }
 
@@ -296,8 +256,7 @@ HB_FUNC(HB_UPADC)
 {
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCUSTOM(cdp))
-  {
+  if (!HB_CDP_ISCUSTOM(cdp)) {
     cdp = nullptr;
   }
 

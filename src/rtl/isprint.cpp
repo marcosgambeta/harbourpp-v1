@@ -60,8 +60,7 @@ HB_BOOL hb_printerIsReady(const char *pszPrinterName)
   //       [vszakats]
 
   {
-    if (pszPrinterName == nullptr)
-    {
+    if (pszPrinterName == nullptr) {
 #if defined(HB_OS_UNIX)
       pszPrinterName = "/dev/lp0";
 #else
@@ -72,8 +71,7 @@ HB_BOOL hb_printerIsReady(const char *pszPrinterName)
     PHB_FILE pFile =
         hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
     bIsPrinter = (pFile != nullptr);
-    if (bIsPrinter)
-    {
+    if (bIsPrinter) {
       hb_fileClose(pFile);
     }
   }

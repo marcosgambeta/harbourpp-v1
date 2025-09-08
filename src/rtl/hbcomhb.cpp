@@ -221,20 +221,15 @@ HB_FUNC(HB_COMRECV)
   char *pBuffer;
   HB_SIZE nLen;
 
-  if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen))
-  {
-    if (HB_ISNUM(3))
-    {
+  if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
+    if (HB_ISNUM(3)) {
       long lRead = hb_parnl(3);
-      if (lRead >= 0 && lRead < static_cast<long>(nLen))
-      {
+      if (lRead >= 0 && lRead < static_cast<long>(nLen)) {
         nLen = lRead;
       }
     }
     hb_retnl(hb_comRecv(hb_parni(1), pBuffer, static_cast<long>(nLen), hb_parnint(4)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -243,12 +238,10 @@ HB_FUNC(HB_COMSEND)
 {
   auto lLen = static_cast<long>(hb_parclen(2));
 
-  if (HB_ISNUM(3))
-  {
+  if (HB_ISNUM(3)) {
     long lParam = hb_parnl(3);
 
-    if (lParam >= 0 && lParam < lLen)
-    {
+    if (lParam >= 0 && lParam < lLen) {
       lLen = lParam;
     }
   }

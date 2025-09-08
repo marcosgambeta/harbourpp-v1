@@ -63,8 +63,7 @@ const char *hb_gt_szCharMapFileDefault = "/etc/harbour/hb-charmap.def";
 
 static void chrmap_init(int *piTransTbl)
 {
-  for (auto i = 0; i < 256; ++i)
-  {
+  for (auto i = 0; i < 256; ++i) {
     piTransTbl[i] = HB_CHRMAP(i < 128 ? 1 : 0, i);
   }
 
@@ -73,8 +72,7 @@ static void chrmap_init(int *piTransTbl)
 
 static void chrmap_dotctrl(int *piTransTbl)
 {
-  for (auto i = 0; i < 32; ++i)
-  {
+  for (auto i = 0; i < 32; ++i) {
     piTransTbl[i] = piTransTbl[i + 128] = HB_CHRMAP(1, '.');
   }
 }
@@ -159,8 +157,7 @@ static void chrmap_acscbox(int *piTransTbl)
 
 static void skip_blank(char **buf)
 {
-  while (**buf != '\0' && **buf == ' ')
-  {
+  while (**buf != '\0' && **buf == ' ') {
     ++(*buf);
   }
 }
@@ -169,26 +166,20 @@ static int get_val(char **buf)
 {
   int n = -1;
 
-  if ((*buf)[0] == '\'' && (*buf)[1] != '\0' && (*buf)[2] == '\'')
-  {
+  if ((*buf)[0] == '\'' && (*buf)[1] != '\0' && (*buf)[2] == '\'') {
     n = (*buf)[1] & 0xff;
     *buf += 3;
-  }
-  else if ((*buf)[0] == '0' && ((*buf)[1] == 'x' || (*buf)[1] == 'X'))
-  {
+  } else if ((*buf)[0] == '0' && ((*buf)[1] == 'x' || (*buf)[1] == 'X')) {
     n = 0;
     *buf += 2;
-    for (; (**buf >= '0' && **buf <= '9') || (**buf >= 'A' && **buf <= 'F') || (**buf >= 'a' && **buf <= 'f'); ++(*buf))
-    {
+    for (; (**buf >= '0' && **buf <= '9') || (**buf >= 'A' && **buf <= 'F') || (**buf >= 'a' && **buf <= 'f');
+         ++(*buf)) {
       char c = **buf | 0x20;
       n = (n << 4) + c - (c > '9' ? ('a' - 10) : '0');
     }
-  }
-  else if (**buf >= '0' && **buf <= '9')
-  {
+  } else if (**buf >= '0' && **buf <= '9') {
     n = 0;
-    for (; (**buf >= '0' && **buf <= '9'); ++(*buf))
-    {
+    for (; (**buf >= '0' && **buf <= '9'); ++(*buf)) {
       n = n * 10 + (**buf - '0');
     }
   }
@@ -201,17 +192,14 @@ static int parse_line(char *buf, int *from, int *to, char *op, int *val, int *mo
   int ret = 0, ina = 0;
 
   s = buf;
-  while (*s != '\0')
-  {
-    switch (*s)
-    {
+  while (*s != '\0') {
+    switch (*s) {
     case '\t':
       *s = ' ';
       break;
     case '\'':
       ina ^= 1;
-      if (ina)
-      {
+      if (ina) {
         ++s;
       }
       break;
@@ -221,8 +209,7 @@ static int parse_line(char *buf, int *from, int *to, char *op, int *val, int *mo
       *s = '\0';
       break;
     }
-    if (*s != '\0')
-    {
+    if (*s != '\0') {
       ++s;
     }
   }
@@ -230,55 +217,43 @@ static int parse_line(char *buf, int *from, int *to, char *op, int *val, int *mo
   s = buf;
   skip_blank(&s);
 
-  if (*s == '@')
-  {
+  if (*s == '@') {
     char *s2;
     ++s;
     s2 = buf;
-    while (*s != '\0' && *s != ' ')
-    {
+    while (*s != '\0' && *s != ' ') {
       *s2++ = *s++;
     }
     *s2 = '\0';
     ret = strlen(buf) > 0 ? 2 : -1;
-  }
-  else if (*s != '\0')
-  {
+  } else if (*s != '\0') {
     ret = *from = *to = *val = *mod = -1;
     *op = '=';
 
     *from = get_val(&s);
-    if (*from >= 0)
-    {
-      if (*s == '-')
-      {
+    if (*from >= 0) {
+      if (*s == '-') {
         ++s;
         *to = get_val(&s);
-      }
-      else
-      {
+      } else {
         *to = *from;
       }
     }
 
-    if (*to >= 0 && *s == ':' && s[1] == ' ')
-    {
+    if (*to >= 0 && *s == ':' && s[1] == ' ') {
       ++s;
       skip_blank(&s);
       if (*s == '*' &&
-          (s[1] == '+' || s[1] == '-' || s[1] == '&' || s[1] == '|' || s[1] == '^' || s[1] == '=' || s[1] == ' '))
-      {
+          (s[1] == '+' || s[1] == '-' || s[1] == '&' || s[1] == '|' || s[1] == '^' || s[1] == '=' || s[1] == ' ')) {
         *op = s[1];
         s += 2;
       }
       *val = *op == ' ' ? 0 : get_val(&s);
-      if (*val >= 0)
-      {
+      if (*val >= 0) {
         skip_blank(&s);
         *mod = get_val(&s);
         skip_blank(&s);
-        if (*mod >= 0 && *mod <= 5 && *s == '\0')
-        {
+        if (*mod >= 0 && *mod <= 5 && *s == '\0') {
           ret = 1;
         }
       }
@@ -297,57 +272,41 @@ static int chrmap_parse(FILE *fp, const char *pszTerm, int *nTransTbl, const cha
   fgetpos(fp, &pos);
   (void)fseek(fp, 0, SEEK_SET); // TODO: C++ cast
 
-  while (!feof(fp) && isTerm < 2)
-  {
+  while (!feof(fp) && isTerm < 2) {
     char buf[256];
     ++line;
-    if (fgets(buf, sizeof(buf), fp) != nullptr)
-    {
+    if (fgets(buf, sizeof(buf), fp) != nullptr) {
       n = 0;
-      if (*buf == ':')
-      {
-        if (isTerm == 1)
-        {
+      if (*buf == ':') {
+        if (isTerm == 1) {
           isTerm = 2;
-        }
-        else
-        {
+        } else {
           *buf = '|';
           s = buf;
-          while (*s != '\0' && *s != ' ' && *s != '\t' && *s != '\n' && *s != '\r')
-          {
+          while (*s != '\0' && *s != ' ' && *s != '\t' && *s != '\n' && *s != '\r') {
             ++s;
           }
           *s = '\0';
           s = buf;
           i = static_cast<int>(strlen(pszTerm));
-          while (isTerm == 0 && (s = strstr(s + 1, pszTerm)) != nullptr)
-          {
-            if (*(s - 1) == '|' && (s[i] == '|' || s[i] == '\0'))
-            {
+          while (isTerm == 0 && (s = strstr(s + 1, pszTerm)) != nullptr) {
+            if (*(s - 1) == '|' && (s[i] == '|' || s[i] == '\0')) {
               isTerm = 1;
             }
           }
         }
-      }
-      else if (isTerm == 1)
-      {
+      } else if (isTerm == 1) {
         n = parse_line(buf, &from, &to, &op, &val, &mod);
       }
 
-      if (n == 2)
-      {
+      if (n == 2) {
         chrmap_parse(fp, buf, nTransTbl, pszFile);
-      }
-      else if (n == 1)
-      {
+      } else if (n == 1) {
 #if 0
             printf("line: %3d\tfrom=%d, to=%d, op='%c', val=%d, mod=%d\n", line, from, to, op, val, mod);
 #endif
-        for (i = from; i <= to; ++i)
-        {
-          switch (op)
-          {
+        for (i = from; i <= to; ++i) {
+          switch (op) {
           case '|':
             nTransTbl[i] = (i | val);
             break;
@@ -374,9 +333,7 @@ static int chrmap_parse(FILE *fp, const char *pszTerm, int *nTransTbl, const cha
           }
           nTransTbl[i] |= mod << 16;
         }
-      }
-      else if (n == -1)
-      {
+      } else if (n == -1) {
         fprintf(stderr, "file: %s, parse error at line: %d\n", pszFile, line);
       }
     }
@@ -392,24 +349,19 @@ static int hb_gt_chrmapread(const char *pszFile, const char *pszTerm, int *nTran
   int isTerm = -1;
   auto fp = hb_fopen(pszFile, "r");
 
-  if (fp != nullptr)
-  {
+  if (fp != nullptr) {
     char buf[256], *ptr, *pTerm;
 
     hb_strncpy(buf, pszTerm, sizeof(buf) - 1);
     isTerm = 0;
     pTerm = buf;
-    while (pTerm)
-    {
-      if ((ptr = strchr(pTerm, '/')) != nullptr)
-      {
+    while (pTerm) {
+      if ((ptr = strchr(pTerm, '/')) != nullptr) {
         *ptr++ = '\0';
       }
 
-      if (*pTerm)
-      {
-        if (chrmap_parse(fp, pTerm, nTransTbl, pszFile) > 0)
-        {
+      if (*pTerm) {
+        if (chrmap_parse(fp, pTerm, nTransTbl, pszFile) > 0) {
           isTerm = 1;
         }
       }
@@ -428,66 +380,51 @@ int hb_gt_chrmapinit(int *piTransTbl, const char *pszTerm, HB_BOOL fSetACSC)
 
   chrmap_init(piTransTbl);
 
-  if (pszTerm == nullptr || *pszTerm == '\0')
-  {
+  if (pszTerm == nullptr || *pszTerm == '\0') {
     pszTerm = pszFree = hb_getenv("HB_TERM");
   }
-  if (pszTerm == nullptr || *pszTerm == '\0')
-  {
-    if (pszFree)
-    {
+  if (pszTerm == nullptr || *pszTerm == '\0') {
+    if (pszFree) {
       hb_xfree(pszFree);
     }
     pszTerm = pszFree = hb_getenv("TERM");
   }
 
-  if (pszTerm != nullptr && *pszTerm != '\0')
-  {
+  if (pszTerm != nullptr && *pszTerm != '\0') {
     char *pszFile = hb_getenv("HB_CHARMAP");
 
-    if (pszFile != nullptr && *pszFile != '\0')
-    {
+    if (pszFile != nullptr && *pszFile != '\0') {
       nRet = hb_gt_chrmapread(pszFile, pszTerm, piTransTbl);
     }
-    if (nRet == -1)
-    {
+    if (nRet == -1) {
       char szFile[HB_PATH_MAX];
-      if (pszFile)
-      {
+      if (pszFile) {
         hb_xfree(pszFile);
       }
       pszFile = hb_getenv("HB_ROOT");
-      if (pszFile != nullptr && sizeof(szFile) > strlen(pszFile) + strlen(hb_gt_szCharMapFileDefault))
-      {
+      if (pszFile != nullptr && sizeof(szFile) > strlen(pszFile) + strlen(hb_gt_szCharMapFileDefault)) {
         hb_strncpy(szFile, pszFile, sizeof(szFile) - 1);
         hb_strncat(szFile, hb_gt_szCharMapFileDefault, sizeof(szFile) - 1);
         nRet = hb_gt_chrmapread(szFile, pszTerm, piTransTbl);
       }
     }
-    if (pszFile)
-    {
+    if (pszFile) {
       hb_xfree(pszFile);
     }
-    if (nRet == -1)
-    {
+    if (nRet == -1) {
       nRet = hb_gt_chrmapread(hb_gt_szCharMapFileDefault, pszTerm, piTransTbl);
     }
   }
 
-  if (pszFree)
-  {
+  if (pszFree) {
     hb_xfree(pszFree);
   }
 
-  if (nRet == -1)
-  {
+  if (nRet == -1) {
     chrmap_dotctrl(piTransTbl);
-    if (fSetACSC)
-    {
+    if (fSetACSC) {
       chrmap_acscbox(piTransTbl);
-    }
-    else
-    {
+    } else {
       chrmap_ascictrl(piTransTbl);
     }
   }

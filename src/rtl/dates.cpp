@@ -64,40 +64,32 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
 
   // Determine the maximum size of the formatted date string
   auto size = static_cast<int>(strlen(szDateFormat));
-  if (size > 10)
-  {
+  if (size > 10) {
     size = 10;
   }
 
-  if (szDate != nullptr && strlen(szDate) == 8)
-  { // A valid date is always 8 characters
+  if (szDate != nullptr && strlen(szDate) == 8) { // A valid date is always 8 characters
     auto used_d = false;
     auto used_m = false;
     auto used_y = false;
     format_count = 0;
     const char *szPtr = szDateFormat;
 
-    while (format_count < size)
-    {
+    while (format_count < size) {
       int digit = HB_TOUPPER(static_cast<HB_UCHAR>(*szPtr));
       szPtr++;
       digit_count = 1;
-      while (HB_TOUPPER(static_cast<HB_UCHAR>(*szPtr)) == digit && format_count < size)
-      {
+      while (HB_TOUPPER(static_cast<HB_UCHAR>(*szPtr)) == digit && format_count < size) {
         szPtr++;
-        if (format_count + digit_count < size)
-        {
+        if (format_count + digit_count < size) {
           digit_count++;
         }
       }
-      switch (digit)
-      {
+      switch (digit) {
       case 'D':
-        switch (digit_count)
-        {
+        switch (digit_count) {
         case 4:
-          if (!used_d && format_count < size)
-          {
+          if (!used_d && format_count < size) {
 #if 0
                         szFormattedDate[format_count++] = '0';
 #endif
@@ -106,8 +98,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
           }
           // fallthrough
         case 3:
-          if (!used_d && format_count < size)
-          {
+          if (!used_d && format_count < size) {
 #if 0
                         szFormattedDate[format_count++] = '0';
 #endif
@@ -116,20 +107,17 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
           }
           // fallthrough
         case 2:
-          if (!used_d && format_count < size)
-          {
+          if (!used_d && format_count < size) {
             szFormattedDate[format_count++] = szDate[6];
             digit_count--;
           }
           // fallthrough
         default:
-          if (!used_d && format_count < size)
-          {
+          if (!used_d && format_count < size) {
             szFormattedDate[format_count++] = szDate[7];
             digit_count--;
           }
-          while (digit_count-- > 0 && format_count < size)
-          {
+          while (digit_count-- > 0 && format_count < size) {
             szFormattedDate[format_count++] = static_cast<char>(digit);
           }
         }
@@ -137,11 +125,9 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
         break;
 
       case 'M':
-        switch (digit_count)
-        {
+        switch (digit_count) {
         case 4:
-          if (!used_m && format_count < size)
-          {
+          if (!used_m && format_count < size) {
 #if 0
                         szFormattedDate[format_count++] = '0';
 #endif
@@ -150,8 +136,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
           }
           // fallthrough
         case 3:
-          if (!used_m && format_count < size)
-          {
+          if (!used_m && format_count < size) {
 #if 0
                         szFormattedDate[format_count++] = '0';
 #endif
@@ -160,20 +145,17 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
           }
           // fallthrough
         case 2:
-          if (!used_m && format_count < size)
-          {
+          if (!used_m && format_count < size) {
             szFormattedDate[format_count++] = szDate[4];
             digit_count--;
           }
           // fallthrough
         default:
-          if (!used_m && format_count < size)
-          {
+          if (!used_m && format_count < size) {
             szFormattedDate[format_count++] = szDate[5];
             digit_count--;
           }
-          while (digit_count-- > 0 && format_count < size)
-          {
+          while (digit_count-- > 0 && format_count < size) {
             szFormattedDate[format_count++] = static_cast<char>(digit);
           }
         }
@@ -181,37 +163,31 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
         break;
 
       case 'Y':
-        switch (digit_count)
-        {
+        switch (digit_count) {
         case 4:
-          if (!used_y && format_count < size)
-          {
+          if (!used_y && format_count < size) {
             szFormattedDate[format_count++] = szDate[0];
             digit_count--;
           }
           // fallthrough
         case 3:
-          if (!used_y && format_count < size)
-          {
+          if (!used_y && format_count < size) {
             szFormattedDate[format_count++] = szDate[1];
             digit_count--;
           }
           // fallthrough
         case 2:
-          if (!used_y && format_count < size)
-          {
+          if (!used_y && format_count < size) {
             szFormattedDate[format_count++] = szDate[2];
             digit_count--;
           }
           // fallthrough
         default:
-          if (!used_y && format_count < size)
-          {
+          if (!used_y && format_count < size) {
             szFormattedDate[format_count++] = szDate[3];
             digit_count--;
           }
-          while (digit_count-- > 0 && format_count < size)
-          {
+          while (digit_count-- > 0 && format_count < size) {
             szFormattedDate[format_count++] = static_cast<char>(digit);
           }
         }
@@ -219,23 +195,18 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
         break;
 
       default:
-        while (digit_count-- > 0 && format_count < size)
-        {
+        while (digit_count-- > 0 && format_count < size) {
           szFormattedDate[format_count++] = static_cast<char>(digit);
         }
       }
     }
-  }
-  else
-  {
+  } else {
     // Not a valid date string, so return a blank date with separators
     format_count = size; // size is either 8 or 10
     hb_strncpy(szFormattedDate, szDateFormat, size);
 
-    for (digit_count = 0; digit_count < size; digit_count++)
-    {
-      switch (szFormattedDate[digit_count])
-      {
+    for (digit_count = 0; digit_count < size; digit_count++) {
+      switch (szFormattedDate[digit_count]) {
       case 'D':
       case 'd':
       case 'M':
@@ -261,74 +232,52 @@ static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long
   int d_value = 0, m_value = 0, y_value = 0;
   int iSize = 0;
 
-  if (szDate != nullptr)
-  {
+  if (szDate != nullptr) {
     int d_pos = 0, m_pos = 0, y_pos = 0;
     int count, digit, non_digit, used;
 
-    if (!szDateFormat)
-    {
+    if (!szDateFormat) {
       szDateFormat = hb_setGetDateFormat();
     }
     auto size = static_cast<int>(strlen(szDateFormat));
 
-    for (count = used = 0; count < size && used < 3; count++)
-    {
-      switch (szDateFormat[count])
-      {
+    for (count = used = 0; count < size && used < 3; count++) {
+      switch (szDateFormat[count]) {
       case 'D':
       case 'd':
-        if (d_pos == 0)
-        {
+        if (d_pos == 0) {
           ++used;
-          if (m_pos == 0 && y_pos == 0)
-          {
+          if (m_pos == 0 && y_pos == 0) {
             d_pos = 1;
-          }
-          else if (m_pos == 0 || y_pos == 0)
-          {
+          } else if (m_pos == 0 || y_pos == 0) {
             d_pos = 2;
-          }
-          else
-          {
+          } else {
             d_pos = 3;
           }
         }
         break;
       case 'M':
       case 'm':
-        if (m_pos == 0)
-        {
+        if (m_pos == 0) {
           ++used;
-          if (d_pos == 0 && y_pos == 0)
-          {
+          if (d_pos == 0 && y_pos == 0) {
             m_pos = 1;
-          }
-          else if (d_pos == 0 || y_pos == 0)
-          {
+          } else if (d_pos == 0 || y_pos == 0) {
             m_pos = 2;
-          }
-          else
-          {
+          } else {
             m_pos = 3;
           }
         }
         break;
       case 'Y':
       case 'y':
-        if (y_pos == 0)
-        {
+        if (y_pos == 0) {
           ++used;
-          if (m_pos == 0 && d_pos == 0)
-          {
+          if (m_pos == 0 && d_pos == 0) {
             y_pos = 1;
-          }
-          else if (m_pos == 0 || d_pos == 0)
-          {
+          } else if (m_pos == 0 || d_pos == 0) {
             y_pos = 2;
-          }
-          else
-          {
+          } else {
             y_pos = 3;
           }
         }
@@ -339,40 +288,29 @@ static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long
     // they are not to be treated as date field separators
     non_digit = 1;
     size = static_cast<int>(strlen(szDate));
-    for (count = used = 0; count < size; count++)
-    {
+    for (count = used = 0; count < size; count++) {
       digit = szDate[count];
-      if (HB_ISDIGIT(digit))
-      {
+      if (HB_ISDIGIT(digit)) {
         // Process the digit for the current date field
-        if (d_pos == 1)
-        {
+        if (d_pos == 1) {
           d_value = (d_value * 10) + digit - '0';
-        }
-        else if (m_pos == 1)
-        {
+        } else if (m_pos == 1) {
           m_value = (m_value * 10) + digit - '0';
-        }
-        else if (y_pos == 1)
-        {
+        } else if (y_pos == 1) {
           y_value = (y_value * 10) + digit - '0';
         }
         // Treat the next non-digit as a date field separator
         non_digit = 0;
-      }
-      else
-      {
+      } else {
         // Process the non-digit
-        if (non_digit == 0)
-        {
+        if (non_digit == 0) {
           // Only move to the next date field on the first
           // consecutive non-digit that is encountered
           non_digit = 1;
           d_pos--;
           m_pos--;
           y_pos--;
-          if (++used >= 3)
-          {
+          if (++used >= 3) {
             break;
           }
         }
@@ -423,21 +361,16 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
 
   auto size = static_cast<int>(hb_strnlen(szTimeFormat, 16));
   iPM = i12 = 0;
-  for (i = 0; i < size; ++i)
-  {
-    if (HB_TOUPPER(szTimeFormat[i]) == 'P')
-    {
-      if (iHour >= 12)
-      {
+  for (i = 0; i < size; ++i) {
+    if (HB_TOUPPER(szTimeFormat[i]) == 'P') {
+      if (iHour >= 12) {
         iPM = 1;
         iHour -= 12;
       }
-      if (iHour == 0)
-      {
+      if (iHour == 0) {
         iHour += 12;
       }
-      if (iHour < 10)
-      {
+      if (iHour < 10) {
         i12 = 1;
       }
       break;
@@ -445,31 +378,24 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
   }
 
   i = 0;
-  while (i < size)
-  {
+  while (i < size) {
     int count = -i;
     int ch = HB_TOUPPER(szTimeFormat[i]);
     ++i;
-    while (ch == HB_TOUPPER(szTimeFormat[i]) && i < size)
-    {
+    while (ch == HB_TOUPPER(szTimeFormat[i]) && i < size) {
       ++i;
     }
     count += i;
-    switch (ch)
-    {
+    switch (ch) {
     case 'H':
       value = iHour;
-      if (count == 2 && value >= 0)
-      {
-        if (i12)
-        {
+      if (count == 2 && value >= 0) {
+        if (i12) {
           *szTimeBuffer++ = ' ';
           --count;
         }
         digits = count;
-      }
-      else
-      {
+      } else {
         digits = 1;
       }
       iHour = -1;
@@ -488,8 +414,7 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
       value = iMSec;
       iMSec = -1;
       digits = count > 4 ? 1 : count;
-      switch (digits)
-      {
+      switch (digits) {
       case 4:
         value *= 10;
         break;
@@ -502,11 +427,9 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
       }
       break;
     case 'P':
-      if (iPM >= 0)
-      {
+      if (iPM >= 0) {
         *szTimeBuffer++ = iPM ? 'P' : 'A';
-        if (--count)
-        {
+        if (--count) {
           *szTimeBuffer++ = 'M';
           --count;
         }
@@ -516,19 +439,16 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
     default:
       digits = value = 0;
     }
-    if (digits && value >= 0)
-    {
+    if (digits && value >= 0) {
       skip = digits;
       count -= digits;
-      do
-      {
+      do {
         szTimeBuffer[--digits] = static_cast<char>('0' + value % 10);
         value /= 10;
       } while (digits);
       szTimeBuffer += skip;
     }
-    while (count--)
-    {
+    while (count--) {
       *szTimeBuffer++ = static_cast<char>(ch);
     }
   }
@@ -553,8 +473,7 @@ char *hb_timeStampFormat(char *szBuffer, const char *szDateFormat, const char *s
   hb_dateDecStr(szDate, lJulian);
   hb_dateFormat(szDate, szBuffer, szDateFormat);
   szTimeBuffer = szBuffer + strlen(szBuffer);
-  if (*szBuffer)
-  {
+  if (*szBuffer) {
     *szTimeBuffer++ = ' ';
   }
   hb_timeFormat(szTimeBuffer, szTimeFormat, lMilliSec);
@@ -567,26 +486,22 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeUnformat(%s, %s)", szTime, szTimeFormat));
 #endif
 
-  if (!szTime)
-  {
+  if (!szTime) {
     return 0;
   }
 
   int iHour, iMinutes, iSeconds, iMSec, iPM;
   int i, count, *pValue;
 
-  if (!szTimeFormat)
-  {
+  if (!szTimeFormat) {
     szTimeFormat = hb_setGetTimeFormat();
   }
 
   auto size = static_cast<int>(hb_strnlen(szTime, hb_strnlen(szTimeFormat, 16)));
   iHour = iMinutes = iSeconds = iMSec = iPM = -1;
   int prec = 0;
-  for (i = count = 0; i < size && szTime[count]; ++i)
-  {
-    switch (szTimeFormat[i])
-    {
+  for (i = count = 0; i < size && szTime[count]; ++i) {
+    switch (szTimeFormat[i]) {
     case 'H':
     case 'h':
       pValue = &iHour;
@@ -605,19 +520,14 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
       break;
     case 'P':
     case 'p':
-      if (iPM < 0)
-      {
+      if (iPM < 0) {
         while (szTime[count] && !HB_ISDIGIT(szTime[count]) && szTime[count] != 'P' && szTime[count] != 'p' &&
-               szTime[count] != 'A' && szTime[count] != 'a')
-        {
+               szTime[count] != 'A' && szTime[count] != 'a') {
           ++count;
         }
-        if (szTime[count] == 'P' || szTime[count] == 'p')
-        {
+        if (szTime[count] == 'P' || szTime[count] == 'p') {
           iPM = 1;
-        }
-        else if (szTime[count] == 'A' || szTime[count] == 'a')
-        {
+        } else if (szTime[count] == 'A' || szTime[count] == 'a') {
           iPM = 0;
         }
       }
@@ -625,76 +535,52 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
     default:
       pValue = nullptr;
     }
-    if (pValue && *pValue < 0)
-    {
+    if (pValue && *pValue < 0) {
       *pValue = 0;
-      while (szTime[count] && !HB_ISDIGIT(szTime[count]))
-      {
+      while (szTime[count] && !HB_ISDIGIT(szTime[count])) {
         ++count;
       }
-      while (HB_ISDIGIT(szTime[count]))
-      {
+      while (HB_ISDIGIT(szTime[count])) {
         *pValue = *pValue * 10 + (szTime[count] - '0');
         ++count;
-        if (pValue == &iMSec)
-        {
+        if (pValue == &iMSec) {
           ++prec;
         }
       }
     }
   }
-  if (iHour < 0)
-  {
+  if (iHour < 0) {
     iHour = 0;
   }
-  if (iMinutes < 0)
-  {
+  if (iMinutes < 0) {
     iMinutes = 0;
   }
-  if (iSeconds < 0)
-  {
+  if (iSeconds < 0) {
     iSeconds = 0;
   }
-  if (iMSec < 0)
-  {
+  if (iMSec < 0) {
     iMSec = 0;
-  }
-  else if (iMSec > 0)
-  {
-    if (prec > 3)
-    {
-      do
-      {
+  } else if (iMSec > 0) {
+    if (prec > 3) {
+      do {
         iMSec /= 10;
       } while (--prec > 3);
-    }
-    else
-    {
-      while (prec++ < 3)
-      {
+    } else {
+      while (prec++ < 3) {
         iMSec *= 10;
       }
     }
   }
-  if (iPM > 0)
-  {
-    if (iHour == 0)
-    {
+  if (iPM > 0) {
+    if (iHour == 0) {
       iHour = 24; // wrong time
-    }
-    else if (iHour != 12)
-    {
+    } else if (iHour != 12) {
       iHour += 12;
     }
-  }
-  else if (iPM == 0)
-  {
-    if (iHour == 0)
-    {
+  } else if (iPM == 0) {
+    if (iHour == 0) {
       iHour = 24; // wrong time
-    }
-    else if (iHour == 12)
-    {
+    } else if (iHour == 12) {
       iHour = 0;
     }
   }
@@ -709,17 +595,13 @@ void hb_timeStampUnformat(const char *szDateTime, const char *szDateFormat, cons
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  if (szDateTime != nullptr)
-  {
-    if (!szDateFormat)
-    {
+  if (szDateTime != nullptr) {
+    if (!szDateFormat) {
       szDateFormat = hb_setGetDateFormat();
     }
     int size = hb_dateUnformatRaw(szDateTime, szDateFormat, plJulian);
     *plMilliSec = hb_timeUnformat(szDateTime + size, szTimeFormat);
-  }
-  else
-  {
+  } else {
     *plJulian = *plMilliSec = 0;
   }
 }

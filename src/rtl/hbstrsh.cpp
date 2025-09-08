@@ -53,51 +53,36 @@ HB_FUNC(HB_STRSHRINK)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     HB_ISIZ nShrinkBy = hb_parnldef(2, 1);
 
-    if (nShrinkBy > 0)
-    {
+    if (nShrinkBy > 0) {
       auto pszText = pText->getCPtr();
       HB_ISIZ nText = pText->getCLen();
       HB_ISIZ nLen;
       auto cdp = hb_vmCDP();
 
-      if (HB_CDP_ISCHARIDX(cdp))
-      {
+      if (HB_CDP_ISCHARIDX(cdp)) {
         nLen = hb_cdpTextLen(cdp, pszText, nText);
-      }
-      else
-      {
+      } else {
         nLen = nText;
       }
 
-      if (nShrinkBy < nLen)
-      {
-        if (HB_CDP_ISCHARIDX(cdp))
-        {
+      if (nShrinkBy < nLen) {
+        if (HB_CDP_ISCHARIDX(cdp)) {
           nLen = hb_cdpTextPos(cdp, pszText, nText, nLen - nShrinkBy);
-        }
-        else
-        {
+        } else {
           nLen -= nShrinkBy;
         }
-      }
-      else
-      {
+      } else {
         nLen = 0;
       }
 
       hb_retclen(pszText, nLen);
-    }
-    else
-    {
+    } else {
       hb_itemReturn(pText);
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }

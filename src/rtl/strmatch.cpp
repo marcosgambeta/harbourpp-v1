@@ -57,15 +57,12 @@ HB_BOOL hb_strMatchRegExp(const char *szString, const char *szPattern)
   PHB_REGEX pRegEx;
 
   pRegEx = hb_regexCompile(szPattern, strlen(szPattern), HBREG_EXTENDED);
-  if (pRegEx)
-  {
+  if (pRegEx) {
     HB_BOOL fMatch;
     fMatch = hb_regexMatch(pRegEx, szString, strlen(szString), true);
     hb_regexFree(pRegEx);
     return fMatch;
-  }
-  else
-  {
+  } else {
     return hb_strMatchWildExact(szString, szPattern);
   }
 }

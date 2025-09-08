@@ -55,22 +55,16 @@ HB_FUNC(INT)
 {
   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-  if (pNumber)
-  {
-    if (pNumber->isNumInt())
-    {
+  if (pNumber) {
+    if (pNumber->isNumInt()) {
       hb_itemReturn(pNumber);
-    }
-    else
-    {
+    } else {
       int iWidth;
 
       hb_itemGetNLen(pNumber, &iWidth, nullptr);
       hb_retnlen(hb_numInt(pNumber->getND()), iWidth, 0);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1090, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -79,8 +73,7 @@ HB_FUNC(ROUND)
 {
   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-  if (pNumber && HB_ISNUM(2))
-  {
+  if (pNumber && HB_ISNUM(2)) {
     auto iDec = hb_parni(2);
 
 #ifdef HB_CLP_STRICT
@@ -89,18 +82,13 @@ HB_FUNC(ROUND)
     // when SET FIXED is ON [druzus]
     hb_retndlen(hb_numRound(pNumber->getND(), iDec), 0, HB_MAX(iDec, 0));
 #else
-    if (iDec == 0 && pNumber->isNumInt())
-    {
+    if (iDec == 0 && pNumber->isNumInt()) {
       hb_retnint(pNumber->getNInt());
-    }
-    else
-    {
+    } else {
       hb_retnlen(hb_numRound(pNumber->getND(), iDec), 0, HB_MAX(iDec, 0));
     }
 #endif
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1094, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

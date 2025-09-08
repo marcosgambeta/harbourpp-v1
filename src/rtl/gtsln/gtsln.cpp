@@ -116,8 +116,7 @@ static void sigwinch_handler(int iSig)
 
 static void hb_sln_colorTrans(void)
 {
-  for (auto i = 0; i < 256; i++)
-  {
+  for (auto i = 0; i < 256; i++) {
     int fg = (i & 0x0F);
     // bit 7 is a blinking attribute - not used when console is not in
     // UTF-8 mode because we are using it for changing into ACSC
@@ -207,19 +206,16 @@ static void hb_sln_setACSCtrans(void)
   HB_SLN_BUILD_RAWCHAR(chArrow[3], '^', 0);
 
   // init an alternate chars table
-  if ((p = reinterpret_cast<unsigned char *>(SLtt_Graphics_Char_Pairs)))
-  {
+  if ((p = reinterpret_cast<unsigned char *>(SLtt_Graphics_Char_Pairs))) {
     SLsmg_Char_Type SLch;
     int i, len = strlen(reinterpret_cast<char *>(p));
 
     memset(&SLch, 0, sizeof(SLsmg_Char_Type));
-    for (i = 0; i < len; i += 2)
-    {
+    for (i = 0; i < len; i += 2) {
       unsigned char ch = *p++;
       HB_SLN_BUILD_RAWCHAR(SLch, *p++, 0);
       HB_SLN_SET_ACSC(SLch);
-      switch (ch)
-      {
+      switch (ch) {
 #ifdef HB_SLN_UNICODE
       case SLSMG_HLINE_CHAR_TERM:
         s_outputTab[196] = SLch;
@@ -351,18 +347,14 @@ static void hb_sln_setACSCtrans(void)
     }
 
     HB_SLN_BUILD_RAWCHAR(SLch, 0, 0);
-    for (i = 0; i < 3 && !HB_SLN_IS_CHAR(SLch); i++)
-    {
+    for (i = 0; i < 3 && !HB_SLN_IS_CHAR(SLch); i++) {
       SLch = chBoard[i];
     }
-    if (!HB_SLN_IS_CHAR(SLch))
-    {
+    if (!HB_SLN_IS_CHAR(SLch)) {
       HB_SLN_BUILD_RAWCHAR(SLch, '#', 0);
     }
-    for (i = 0; i < 3; i++)
-    {
-      if (!HB_SLN_IS_CHAR(chBoard[i]))
-      {
+    for (i = 0; i < 3; i++) {
+      if (!HB_SLN_IS_CHAR(chBoard[i])) {
         chBoard[i] = SLch;
       }
     }
@@ -384,8 +376,7 @@ static void hb_sln_setACSCtrans(void)
     //   SLSMG_DTEE_CHAR_TERM = 'v'
     // Below it's a hack for this version of slang which fix the
     // problem.
-    if (SLSMG_UTEE_CHAR_TERM == 'v')
-    {
+    if (SLSMG_UTEE_CHAR_TERM == 'v') {
       SLch = s_outputTab[193];
       s_outputTab[193] = s_outputTab[194];
       s_outputTab[194] = SLch;
@@ -404,20 +395,14 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
   PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
 
   // build a conversion chars table
-  for (auto i = 0; i < 256; i++)
-  {
-    if (i < 32)
-    {
+  for (auto i = 0; i < 256; i++) {
+    if (i < 32) {
       // under Unix control-chars are not visible in a general meaning
       HB_SLN_BUILD_RAWCHAR(s_outputTab[i], '.', 0);
-    }
-    else if (i >= 128)
-    {
+    } else if (i >= 128) {
       HB_SLN_BUILD_RAWCHAR(s_outputTab[i], i, 0);
       HB_SLN_SET_ACSC(s_outputTab[i]);
-    }
-    else
-    {
+    } else {
       HB_SLN_BUILD_RAWCHAR(s_outputTab[i], i, 0);
     }
   }
@@ -425,27 +410,22 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
   hb_sln_setACSCtrans();
 
   // QUESTION: do we have double, single-double, ... frames under xterm ?
-  if (hb_sln_UnderXterm)
-  {
+  if (hb_sln_UnderXterm) {
     hb_sln_setSingleBox();
   }
 
   memcpy(s_outboxTab, s_outputTab, sizeof(s_outputTab));
 
-  if (cdpHost)
-  {
-    for (auto i = 0; i < 256; ++i)
-    {
-      if (hb_cdpIsAlpha(cdpHost, i))
-      {
+  if (cdpHost) {
+    for (auto i = 0; i < 256; ++i) {
+      if (hb_cdpIsAlpha(cdpHost, i)) {
 #ifdef HB_SLN_UNICODE
         int iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<HB_UCHAR>(i)));
 #else
         int iDst = hb_cdpTranslateDispChar(i, cdpHost, cdpTerm);
 #endif
         HB_SLN_BUILD_RAWCHAR(s_outputTab[i], iDst, 0);
-        if (fBox)
-        {
+        if (fBox) {
           s_outboxTab[i] = s_outputTab[i];
         }
       }
@@ -459,20 +439,17 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
   PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
   const char *p;
 
-  for (auto i = 0; i < 256; i++)
-  {
+  for (auto i = 0; i < 256; i++) {
     hb_sln_inputTab[i] = static_cast<unsigned char>(hb_cdpTranslateChar(i, cdpTerm, cdpHost));
   }
 
   // init national chars
   p = getenv(hb_NationCharsEnvName);
-  if (p)
-  {
+  if (p) {
     int len = strlen(p) >> 1;
 
     // no more than 128 National chars are allowed
-    if (len > 128)
-    {
+    if (len > 128) {
       len = 128;
     }
 
@@ -480,8 +457,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
     hb_sln_convKDeadKeys[0] = static_cast<unsigned char>(len);
 
     len <<= 1;
-    for (auto i = 0; i < len; i += 2)
-    {
+    for (auto i = 0; i < len; i += 2) {
       int ch = static_cast<unsigned char>(p[i + 1]);
       hb_sln_convKDeadKeys[i + 1] = static_cast<unsigned char>(p[i]);
       hb_sln_convKDeadKeys[i + 2] = ch;
@@ -498,23 +474,19 @@ static void hb_sln_SetCursorStyle(int iStyle)
    HB_TRACE(HB_TR_DEBUG, ("hb_sln_SetCursorStyle(%d)", iStyle));
 #endif
 
-  if (s_iCursorStyle == SC_UNAVAIL)
-  {
+  if (s_iCursorStyle == SC_UNAVAIL) {
     return;
   }
 
-  if (s_iCursorStyle >= SC_NONE && s_iCursorStyle <= SC_SPECIAL2)
-  {
+  if (s_iCursorStyle >= SC_NONE && s_iCursorStyle <= SC_SPECIAL2) {
     SLtt_set_cursor_visibility(iStyle != SC_NONE);
 
     // NOTE: cursor appearance works only under linux console
-    if (hb_sln_UnderLinuxConsole && s_iCursorStyle != iStyle)
-    {
+    if (hb_sln_UnderLinuxConsole && s_iCursorStyle != iStyle) {
       // keyseq to define cursor shape under linux console
       char cursDefseq[] = {27, '[', '?', '1', 'c', 0};
 
-      switch (iStyle)
-      {
+      switch (iStyle) {
       case SC_NONE:
         cursDefseq[3] = '1';
         break;
@@ -547,13 +519,11 @@ static void hb_sln_SetCursorStyle(int iStyle)
 #ifdef HB_SLN_UTF8
 static int hb_sln_isUTF8(int iStdOut, int iStdIn)
 {
-  if (isatty(iStdOut) && isatty(iStdIn))
-  {
+  if (isatty(iStdOut) && isatty(iStdIn)) {
     const char *szBuf = "\r\303\255\033[6n\r  \r";
     int len = strlen(szBuf);
 
-    if (write(iStdOut, szBuf, len) == len)
-    {
+    if (write(iStdOut, szBuf, len) == len) {
       char rdbuf[64];
       int i, j, n, d, y, x;
 
@@ -561,62 +531,47 @@ static int hb_sln_isUTF8(int iStdOut, int iStdIn)
       // wait up to 2 seconds for answer
       HB_MAXINT timeout = 2000;
       HB_MAXUINT timer = hb_timerInit(timeout);
-      for (;;)
-      {
+      for (;;) {
         // looking for cursor position in "\033[%d;%dR"
-        while (j < n && rdbuf[j] != '\033')
-        {
+        while (j < n && rdbuf[j] != '\033') {
           ++j;
         }
-        if (n - j >= 6)
-        {
+        if (n - j >= 6) {
           i = j + 1;
-          if (rdbuf[i] == '[')
-          {
+          if (rdbuf[i] == '[') {
             y = 0;
             d = ++i;
-            while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9')
-            {
+            while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9') {
               y = y * 10 + (rdbuf[i++] - '0');
             }
-            if (i < n && i > d && rdbuf[i] == ';')
-            {
+            if (i < n && i > d && rdbuf[i] == ';') {
               x = 0;
               d = ++i;
-              while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9')
-              {
+              while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9') {
                 x = x * 10 + (rdbuf[i++] - '0');
               }
-              if (i < n && i > d && rdbuf[i] == 'R')
-              {
+              if (i < n && i > d && rdbuf[i] == 'R') {
                 return x == 2 ? 1 : 0;
               }
             }
           }
-          if (i < n)
-          {
+          if (i < n) {
             j = i;
             continue;
           }
         }
-        if (n == sizeof(rdbuf))
-        {
+        if (n == sizeof(rdbuf)) {
           break;
         }
 
-        if ((timeout = hb_timerTest(timeout, &timer)) == 0)
-        {
+        if ((timeout = hb_timerTest(timeout, &timer)) == 0) {
           break;
-        }
-        else
-        {
-          if (hb_fsCanRead(iStdIn, timeout) <= 0)
-          {
+        } else {
+          if (hb_fsCanRead(iStdIn, timeout) <= 0) {
             break;
           }
           i = read(iStdIn, rdbuf + n, sizeof(rdbuf) - n);
-          if (i <= 0)
-          {
+          if (i <= 0) {
             break;
           }
           n += i;
@@ -656,15 +611,12 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   SLtt_get_terminfo();
 
   // initialize higher-level Slang routines
-  if (SLkp_init() != -1)
-  {
+  if (SLkp_init() != -1) {
     // initialize a terminal stuff and a Slang
     // keyboard subsystem for the first time
-    if (hb_sln_Init_Terminal(0))
-    {
+    if (hb_sln_Init_Terminal(0)) {
       // fix an OutStd()/OutErr() output
-      if (!s_fStdOutTTY && s_fStdInTTY)
-      {
+      if (!s_fStdOutTTY && s_fStdInTTY) {
         SLang_TT_Write_FD = SLang_TT_Read_FD;
       }
 
@@ -677,8 +629,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #endif
 #endif
       // initialize a screen handling subsytem
-      if (SLsmg_init_smg() != -1)
-      {
+      if (SLsmg_init_smg() != -1) {
         // install window resize handler
         SLsignal(SIGWINCH, sigwinch_handler);
 
@@ -694,8 +645,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
         // out a current cursor state
 
         // turn on a cursor visibility
-        if (SLtt_set_cursor_visibility(1) == -1)
-        {
+        if (SLtt_set_cursor_visibility(1) == -1) {
           s_iCursorStyle = SC_UNAVAIL;
         }
 
@@ -719,13 +669,10 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #ifdef HB_SLN_UNICODE
         hb_sln_Is_Unicode = SLsmg_Is_Unicode;
 #endif
-        if (hb_sln_Is_Unicode)
-        {
+        if (hb_sln_Is_Unicode) {
           SLtt_Blink_Mode = 1;
           SLtt_Use_Blink_For_ACS = 1;
-        }
-        else
-        {
+        } else {
           SLtt_Blink_Mode = 0;
           SLtt_Use_Blink_For_ACS = 0;
         }
@@ -735,8 +682,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
         // initialize conversion tables
         hb_sln_colorTrans();
-        if (!hb_sln_Is_Unicode)
-        {
+        if (!hb_sln_Is_Unicode) {
           hb_sln_setCharTrans(pGT, true);
           hb_sln_setKeyTrans(pGT);
         }
@@ -760,8 +706,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
     }
   }
 
-  if (!gt_Inited)
-  {
+  if (!gt_Inited) {
     // something went wrong - restore default settings
     SLang_reset_tty();
     hb_errInternal(9997, "Internal error: screen driver initialization failure", nullptr, nullptr);
@@ -788,8 +733,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
 #endif
 
   // restore a standard bell frequency and duration
-  if (hb_sln_UnderLinuxConsole)
-  {
+  if (hb_sln_UnderLinuxConsole) {
     SLtt_write_string(const_cast<char *>("\033[10]"));
     SLtt_write_string(const_cast<char *>("\033[11]"));
     SLtt_flush_output();
@@ -870,8 +814,7 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
   // TODO: Implement this for other consoles than linux ?
 
-  if (hb_sln_UnderLinuxConsole)
-  {
+  if (hb_sln_UnderLinuxConsole) {
     char escstr[64];
 
     dFrequency = HB_MIN(HB_MAX(0.0, dFrequency), 32767.0);
@@ -880,14 +823,11 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
     hb_snprintf(escstr, 63, "\033[11;%d]", static_cast<int>(dDuration * 1000.0 / 18.2));
     SLtt_write_string(escstr);
     SLtt_flush_output();
-  }
-  else
-  {
+  } else {
     SLtt_beep();
   }
 
-  if (hb_sln_UnderLinuxConsole)
-  {
+  if (hb_sln_UnderLinuxConsole) {
     // The conversion from Clipper (DOS) timer tick units to
     // milliseconds is * 1000.0 / 18.2.
     dDuration /= 18.2;
@@ -905,8 +845,7 @@ static const char *hb_gt_sln_Version(PHB_GT pGT, int iType) // FuncTable
 
   HB_SYMBOL_UNUSED(pGT);
 
-  if (iType == 0)
-  {
+  if (iType == 0) {
     return HB_GT_DRVNAME(HB_GT_NAME);
   }
 
@@ -924,10 +863,8 @@ static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT) // FuncTable
 {
   HB_SYMBOL_UNUSED(pGT);
 
-  if (!s_bSuspended)
-  {
-    if (SLsmg_suspend_smg() != -1)
-    {
+  if (!s_bSuspended) {
+    if (SLsmg_suspend_smg() != -1) {
       SLang_reset_tty();
       s_bSuspended = true;
     }
@@ -942,8 +879,7 @@ static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT) // FuncTable
 {
   HB_SYMBOL_UNUSED(pGT);
 
-  if (s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal(1) != -1)
-  {
+  if (s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal(1) != -1) {
     SLsmg_refresh(); // reinitialize a terminal
 #if defined(HB_HAS_GPM)
     hb_gt_sln_mouse_FixTrash();
@@ -983,8 +919,7 @@ static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
 #endif
 
-  switch (iType)
-  {
+  switch (iType) {
   case HB_GTI_ISSCREENPOS:
   case HB_GTI_KBDSUPPORT:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
@@ -996,8 +931,7 @@ static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_ESCDELAY:
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_sln_escDelay);
-    if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
-    {
+    if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hb_sln_escDelay = pInfo->pNewVal->getNI();
     }
     break;
@@ -1014,10 +948,8 @@ static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
 {
-  if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox))
-  {
-    if (!hb_sln_Is_Unicode)
-    {
+  if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
+    if (!hb_sln_Is_Unicode) {
       hb_sln_setCharTrans(pGT, fBox);
     }
     return true;
@@ -1029,10 +961,8 @@ static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
 
 static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
 {
-  if (HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP))
-  {
-    if (!hb_sln_Is_Unicode)
-    {
+  if (HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP)) {
+    if (!hb_sln_Is_Unicode) {
       hb_sln_setKeyTrans(pGT);
     }
     return true;
@@ -1048,19 +978,15 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
 #endif
 
-  if (s_fActive)
-  {
+  if (s_fActive) {
     SLsmg_Char_Type SLchar;
     int iColor;
     HB_BYTE bAttr;
 
-    if (hb_sln_Is_Unicode)
-    {
+    if (hb_sln_Is_Unicode) {
       HB_USHORT usChar;
-      while (iSize-- > 0)
-      {
-        if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar))
-        {
+      while (iSize-- > 0) {
+        if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar)) {
           break;
         }
         SLsmg_gotorc(iRow, iCol);
@@ -1075,14 +1001,10 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
         SLsmg_write_raw(&SLchar, 1);
         ++iCol;
       }
-    }
-    else
-    {
+    } else {
       HB_UCHAR uc;
-      while (iSize-- > 0)
-      {
-        if (!HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, false))
-        {
+      while (iSize-- > 0) {
+        if (!HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, false)) {
           break;
         }
         SLsmg_gotorc(iRow, iCol);
@@ -1103,13 +1025,11 @@ static void hb_gt_sln_Refresh(PHB_GT pGT) // FuncTable
 #endif
 
   HB_GTSUPER_REFRESH(pGT);
-  if (s_fActive)
-  {
+  if (s_fActive) {
     int iRow, iCol, iStyle;
 
     HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
-    if (iStyle != SC_NONE && (iRow < 0 || iCol < 0 || iRow >= SLtt_Screen_Rows || iCol >= SLtt_Screen_Cols))
-    {
+    if (iStyle != SC_NONE && (iRow < 0 || iCol < 0 || iRow >= SLtt_Screen_Rows || iCol >= SLtt_Screen_Cols)) {
       iStyle = SC_NONE;
     }
     SLsmg_gotorc(iRow, iCol);

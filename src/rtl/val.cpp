@@ -54,8 +54,7 @@ static void hb_val(HB_BOOL fExt)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     auto szText = pText->getCPtr();
     auto iLen = static_cast<int>(pText->getCLen());
     HB_MAXINT lValue;
@@ -64,40 +63,29 @@ static void hb_val(HB_BOOL fExt)
     int iWidth;
     bool fDbl = hb_valStrnToNum(szText, iLen, &lValue, &dValue, &iDec, &iWidth);
 
-    if (fExt)
-    {
+    if (fExt) {
       iLen = hb_parnidef(2, iLen);
 
-      if (fDbl && iDec > 0)
-      {
+      if (fDbl && iDec > 0) {
         iLen -= iDec + 1;
       }
 
-      if (iLen > iWidth)
-      {
+      if (iLen > iWidth) {
         iWidth = iLen;
-      }
-      else if (iLen > 0)
-      {
-        while (iWidth > iLen && *szText == ' ')
-        {
+      } else if (iLen > 0) {
+        while (iWidth > iLen && *szText == ' ') {
           iWidth--;
           szText++;
         }
       }
     }
 
-    if (fDbl)
-    {
+    if (fDbl) {
       hb_retndlen(dValue, iWidth, iDec);
-    }
-    else
-    {
+    } else {
       hb_retnintlen(lValue, iWidth);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1098, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

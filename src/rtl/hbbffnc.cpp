@@ -51,12 +51,9 @@
 
 static const HB_BLOWFISH *hb_bf_keyparam(void)
 {
-  if (hb_parclen(1) == sizeof(HB_BLOWFISH))
-  {
+  if (hb_parclen(1) == sizeof(HB_BLOWFISH)) {
     return reinterpret_cast<const HB_BLOWFISH *>(hb_parc(1));
-  }
-  else
-  {
+  } else {
     return nullptr;
   }
 }
@@ -66,8 +63,7 @@ HB_FUNC(HB_BLOWFISHKEY)
 {
   auto iLen = static_cast<int>(hb_parclen(1));
 
-  if (iLen)
-  {
+  if (iLen) {
     HB_BLOWFISH bf;
     hb_blowfishInit(&bf, hb_parc(1), iLen);
     hb_retclen(reinterpret_cast<const char *>(&bf), sizeof(HB_BLOWFISH));
@@ -84,12 +80,10 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
   const HB_BLOWFISH *bf = hb_bf_keyparam();
   auto pData = hb_param(2, Harbour::Item::STRING);
 
-  if (bf && pData)
-  {
+  if (bf && pData) {
     auto nLen = pData->getCLen();
 
-    if (nLen)
-    {
+    if (nLen) {
       bool fRaw = hb_parl(3);
       HB_SIZE nSize;
 
@@ -100,12 +94,10 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
       auto pszData = static_cast<char *>(hb_xgrab(nSize + 1));
       memcpy(pszData, pData->getCPtr(), nLen);
       memset(pszData + nLen, '\0', nSize - nLen);
-      if (!fRaw)
-      {
+      if (!fRaw) {
         pszData[nSize - 1] = static_cast<char>(nSize - nLen);
       }
-      for (nLen = 0; nLen < nSize; nLen += 8)
-      {
+      for (nLen = 0; nLen < nSize; nLen += 8) {
         HB_U32 xl, xr;
         xl = HB_GET_BE_UINT32(&pszData[nLen]);
         xr = HB_GET_BE_UINT32(&pszData[nLen + 4]);
@@ -114,9 +106,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
         HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);
       }
       hb_retclen_buffer(pszData, nSize);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -132,19 +122,16 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
   const HB_BLOWFISH *bf = hb_bf_keyparam();
   auto pData = hb_param(2, Harbour::Item::STRING);
 
-  if (bf && pData)
-  {
+  if (bf && pData) {
     auto nSize = pData->getCLen();
 
-    if (nSize >= 8 && (nSize & 0x07) == 0)
-    {
+    if (nSize >= 8 && (nSize & 0x07) == 0) {
       bool fRaw = hb_parl(3);
       HB_SIZE nLen;
 
       auto pszData = static_cast<char *>(hb_xgrab(nSize + (fRaw ? 1 : 0)));
       auto pszSource = pData->getCPtr();
-      for (nLen = 0; nLen < nSize; nLen += 8)
-      {
+      for (nLen = 0; nLen < nSize; nLen += 8) {
         HB_U32 xl, xr;
         xl = HB_GET_BE_UINT32(&pszSource[nLen]);
         xr = HB_GET_BE_UINT32(&pszSource[nLen + 4]);
@@ -152,22 +139,16 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
         HB_PUT_BE_UINT32(&pszData[nLen], xl);
         HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);
       }
-      if (!fRaw)
-      {
+      if (!fRaw) {
         nSize = static_cast<unsigned char>(pszData[nSize - 1]);
         nLen -= ((nSize - 1) & ~0x07) == 0 ? nSize : nLen;
       }
-      if (nLen)
-      {
+      if (nLen) {
         hb_retclen_buffer(pszData, nLen);
-      }
-      else
-      {
+      } else {
         hb_xfree(pszData);
       }
-    }
-    else if (nSize == 0)
-    {
+    } else if (nSize == 0) {
       hb_retc_null();
     }
   }
@@ -181,11 +162,9 @@ static void hb_bf_initvect(HB_BYTE *vect)
   auto pszVect = hb_parc(3);
   auto iLen = static_cast<int>(hb_parclen(3));
 
-  for (auto i = 0; i < HB_BF_CIPHERBLOCK; ++i)
-  {
+  for (auto i = 0; i < HB_BF_CIPHERBLOCK; ++i) {
     vect[i] = static_cast<HB_BYTE>(i);
-    if (iLen > 0)
-    {
+    if (iLen > 0) {
       vect[i] ^= static_cast<HB_BYTE>(pszVect[i % iLen]);
     }
   }
@@ -211,31 +190,25 @@ HB_FUNC(HB_BLOWFISHENCRYPT_CFB)
   const HB_BLOWFISH *bf = hb_bf_keyparam();
   auto pData = hb_param(2, Harbour::Item::STRING);
 
-  if (bf && pData)
-  {
+  if (bf && pData) {
     auto nLen = pData->getCLen();
 
-    if (nLen)
-    {
+    if (nLen) {
       auto pszSource = pData->getCPtr();
       auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
       HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
       hb_bf_initvect(vect);
 
-      for (HB_SIZE n = 0; n < nLen; ++n)
-      {
+      for (HB_SIZE n = 0; n < nLen; ++n) {
         auto i = static_cast<int>(n & (HB_BF_CIPHERBLOCK - 1));
-        if (i == 0)
-        {
+        if (i == 0) {
           hb_bf_encode(bf, vect);
         }
         pszData[n] = (vect[i] ^= pszSource[n]);
       }
       hb_retclen_buffer(pszData, nLen);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -250,32 +223,26 @@ HB_FUNC(HB_BLOWFISHDECRYPT_CFB)
   const HB_BLOWFISH *bf = hb_bf_keyparam();
   auto pData = hb_param(2, Harbour::Item::STRING);
 
-  if (bf && pData)
-  {
+  if (bf && pData) {
     auto nLen = pData->getCLen();
 
-    if (nLen)
-    {
+    if (nLen) {
       auto pszSource = pData->getCPtr();
       auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
       HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
       hb_bf_initvect(vect);
 
-      for (HB_SIZE n = 0; n < nLen; ++n)
-      {
+      for (HB_SIZE n = 0; n < nLen; ++n) {
         auto i = static_cast<int>(n & (HB_BF_CIPHERBLOCK - 1));
-        if (i == 0)
-        {
+        if (i == 0) {
           hb_bf_encode(bf, vect);
         }
         pszData[n] = (vect[i] ^ pszSource[n]);
         vect[i] = pszSource[n];
       }
       hb_retclen_buffer(pszData, nLen);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

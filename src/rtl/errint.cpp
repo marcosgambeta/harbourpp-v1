@@ -58,8 +58,7 @@ void hb_errInternal(HB_ERRCODE errCode, const char *szText, const char *szPar1, 
   // release console settings
   hb_conRelease();
 
-  if (hb_cmdargCheck("ERRGPF"))
-  {
+  if (hb_cmdargCheck("ERRGPF")) {
 #if defined(_MSC_VER) && _MSC_VER >= 1800
 #pragma warning(push)
 #pragma warning(disable : 6011)

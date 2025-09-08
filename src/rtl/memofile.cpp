@@ -57,30 +57,22 @@ static void hb_memoread(HB_BOOL bHandleEOF)
 {
   auto pszFileName = hb_parc(1);
 
-  if (pszFileName)
-  {
+  if (pszFileName) {
     HB_SIZE nSize;
     auto pBuffer = reinterpret_cast<char *>(hb_fileLoad(pszFileName, 0, &nSize));
 
-    if (pBuffer)
-    {
+    if (pBuffer) {
       // Don't read the file terminating EOF character
-      if (bHandleEOF && nSize > 0)
-      {
-        if (pBuffer[nSize - 1] == HB_CHAR_EOF)
-        {
+      if (bHandleEOF && nSize > 0) {
+        if (pBuffer[nSize - 1] == HB_CHAR_EOF) {
           --nSize;
         }
       }
       hb_retclen_buffer(pBuffer, nSize);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
@@ -101,22 +93,18 @@ static bool hb_memowrit(bool bHandleEOF)
   auto pString = hb_param(2, Harbour::Item::STRING);
   HB_BOOL bRetVal = false;
 
-  if (pszFileName && pString)
-  {
+  if (pszFileName && pString) {
     PHB_FILE pFile =
         hb_fileExtOpen(pszFileName, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_SHARELOCK,
                        nullptr, nullptr);
 
-    if (pFile != nullptr)
-    {
+    if (pFile != nullptr) {
       auto nSize = pString->getCLen();
       auto pData = pString->getCPtr();
 
-      while (nSize > 0)
-      {
+      while (nSize > 0) {
         HB_SIZE nWritten = hb_fileWrite(pFile, pData, nSize, 0);
-        if (nWritten == 0 || nWritten == static_cast<HB_SIZE>(FS_ERROR))
-        {
+        if (nWritten == 0 || nWritten == static_cast<HB_SIZE>(FS_ERROR)) {
           break;
         }
         nSize -= nWritten;
@@ -126,8 +114,7 @@ static bool hb_memowrit(bool bHandleEOF)
 
       // NOTE: CA-Cl*pper will add the EOF even if the write failed. [vszakats]
       // NOTE: CA-Cl*pper will not return .F. when the EOF could not be written. [vszakats]
-      if (bHandleEOF && bRetVal)
-      { // if true, then write EOF
+      if (bHandleEOF && bRetVal) { // if true, then write EOF
         char cEOF = HB_CHAR_EOF;
         hb_fileWrite(pFile, &cEOF, sizeof(char), -1);
       }

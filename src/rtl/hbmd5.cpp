@@ -133,8 +133,7 @@ static void hb_md5go(MD5_BUF *md5)
   memcpy(A, md5->accum, sizeof(A));
 
   /* fill buffer */
-  for (i = 0, ptr = md5->buf; i < 16; i++, ptr += 4)
-  {
+  for (i = 0, ptr = md5->buf; i < 16; i++, ptr += 4) {
     X[i] = HB_GET_LE_UINT32(ptr);
   }
 
@@ -222,10 +221,8 @@ static void hb_md5accinit(HB_U32 accum[])
 
 static void hb_md5val(HB_U32 accum[], char *md5val)
 {
-  for (auto i = 0; i < 4; i++)
-  {
-    for (auto n = 0; n < 4; n++)
-    {
+  for (auto i = 0; i < 4; i++) {
+    for (auto n = 0; n < 4; n++) {
       *md5val++ = static_cast<char>((accum[i] >> (n << 3)) & 0xFF);
     }
   }
@@ -240,43 +237,37 @@ static void hb_md5_count(const void *data, HB_SIZE nLen, char *digest, const voi
 
   /* perform startup procedures */
   hb_md5accinit(md5.accum);
-  if (init_block)
-  {
+  if (init_block) {
     memcpy(md5.buf, init_block, 64);
     hb_md5go(&md5);
   }
   /* count full 512-bit blocks in data*/
   n = nLen >> 6;
   /* process full blocks */
-  for (i = 0; i < n; i++, ucdata += 64)
-  {
+  for (i = 0; i < n; i++, ucdata += 64) {
     memcpy(md5.buf, ucdata, 64);
     hb_md5go(&md5);
   }
-  if (init_block)
-  {
+  if (init_block) {
     nLen += 64;
   }
   /* prepare additional block(s) */
   memset(buf, 0, sizeof(buf));
   n = nLen & 63;
-  if (n)
-  {
+  if (n) {
     memcpy(buf, ucdata, n);
   }
   buf[n] = 0x80;
   /* count bits length */
   i = 56;
-  if (n >= 56)
-  {
+  if (n >= 56) {
     i += 64;
     memcpy(md5.buf, buf, 64);
     hb_md5go(&md5);
   }
   buf[i++] = static_cast<HB_UCHAR>((nLen << 3) & 0xF8);
   nLen >>= 5;
-  for (n = 7; n; --n)
-  {
+  for (n = 7; n; --n) {
     buf[i++] = static_cast<HB_UCHAR>(nLen & 0xFF);
     nLen >>= 8;
   }
@@ -304,24 +295,19 @@ void hb_hmac_md5(const void *key, HB_SIZE nKeyLen, const void *message, HB_SIZE 
   int i;
 
   memset(init_block, 0, sizeof(init_block));
-  if (nKeyLen <= sizeof(init_block))
-  {
+  if (nKeyLen <= sizeof(init_block)) {
     memcpy(init_block, key, nKeyLen);
-  }
-  else
-  {
+  } else {
     hb_md5(key, nKeyLen, init_block);
   }
 
-  for (i = 0; i < static_cast<int>(sizeof(init_block)); ++i)
-  {
+  for (i = 0; i < static_cast<int>(sizeof(init_block)); ++i) {
     init_block[i] ^= IPAD;
   }
 
   hb_md5_count(message, nMsgLen, digest, init_block);
 
-  for (i = 0; i < static_cast<int>(sizeof(init_block)); ++i)
-  {
+  for (i = 0; i < static_cast<int>(sizeof(init_block)); ++i) {
     init_block[i] ^= IPAD ^ OPAD;
   }
 
@@ -338,8 +324,7 @@ HB_BOOL hb_md5file(const char *pszFileName, char *digest)
 {
   PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr,
                                   FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr);
-  if (pFile != nullptr)
-  {
+  if (pFile != nullptr) {
     MD5_BUF md5;
     HB_SIZE n;
     int i;
@@ -349,51 +334,43 @@ HB_BOOL hb_md5file(const char *pszFileName, char *digest)
 
     hb_md5accinit(md5.accum);
     n = hb_fileRead(pFile, readbuf, MAX_FBUF, -1);
-    if (n == static_cast<HB_SIZE>(FS_ERROR))
-    {
+    if (n == static_cast<HB_SIZE>(FS_ERROR)) {
       n = 0;
     }
     flen += n;
-    while (n == MAX_FBUF)
-    {
-      for (i = 0; i < (MAX_FBUF >> 6); i++)
-      {
+    while (n == MAX_FBUF) {
+      for (i = 0; i < (MAX_FBUF >> 6); i++) {
         memcpy(md5.buf, readbuf + (i << 6), 64);
         hb_md5go(&md5);
       }
       n = hb_fileRead(pFile, readbuf, MAX_FBUF, -1);
-      if (n == static_cast<HB_SIZE>(FS_ERROR))
-      {
+      if (n == static_cast<HB_SIZE>(FS_ERROR)) {
         n = 0;
       }
       flen += n;
     }
     hb_fileClose(pFile);
     i = 0;
-    while (n > 64)
-    {
+    while (n > 64) {
       memcpy(md5.buf, readbuf + i, 64);
       hb_md5go(&md5);
       i += 64;
       n -= 64;
     }
     memset(buf, 0, sizeof(buf));
-    if (n)
-    {
+    if (n) {
       memcpy(buf, readbuf + i, n);
     }
     buf[n] = 0x80;
     i = 56;
-    if (n >= 56)
-    {
+    if (n >= 56) {
       i += 64;
       memcpy(md5.buf, buf, 64);
       hb_md5go(&md5);
     }
     buf[i++] = static_cast<HB_UCHAR>((flen << 3) & 0xF8);
     flen >>= 5;
-    for (n = 7; n; --n)
-    {
+    for (n = 7; n; --n) {
       buf[i++] = static_cast<HB_UCHAR>(flen & 0xFF);
       flen >>= 8;
     }
@@ -411,36 +388,27 @@ HB_FUNC(HB_MD5) /* Considered insecure. Use SHA256 or higher instead. */
 {
   auto pszStr = hb_parc(1);
 
-  if (pszStr)
-  {
+  if (pszStr) {
     auto nLen = hb_parclen(1);
     char dststr[16];
 
     hb_md5(pszStr, nLen, dststr);
 
-    if (!hb_parl(2))
-    {
+    if (!hb_parl(2)) {
       char digest[(sizeof(dststr) * 2) + 1];
       hb_strtohex(dststr, sizeof(dststr), digest);
       hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
-    }
-    else
-    {
+    } else {
       hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
     }
-    if (!hb_parl(2))
-    {
+    if (!hb_parl(2)) {
       char digest[(sizeof(dststr) * 2) + 1];
       hb_strtohex(dststr, sizeof(dststr), digest);
       hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
-    }
-    else
-    {
+    } else {
       hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null(); /* return empty string on wrong call */
   }
 }
@@ -450,21 +418,15 @@ HB_FUNC(HB_MD5FILE) /* Considered insecure. Use SHA256 or higher instead. */
   auto pszFileName = hb_parc(1);
   char dststr[16];
 
-  if (pszFileName && hb_md5file(pszFileName, dststr))
-  {
-    if (!hb_parl(2))
-    {
+  if (pszFileName && hb_md5file(pszFileName, dststr)) {
+    if (!hb_parl(2)) {
       char digest[(sizeof(dststr) * 2) + 1];
       hb_strtohex(dststr, sizeof(dststr), digest);
       hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
-    }
-    else
-    {
+    } else {
       hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null(); /* return empty string on wrong call */
   }
 }
@@ -475,14 +437,11 @@ HB_FUNC(HB_HMAC_MD5)
 
   hb_hmac_md5(hb_parcx(2), hb_parclen(2), hb_parcx(1), hb_parclen(1), dststr);
 
-  if (!hb_parl(3))
-  {
+  if (!hb_parl(3)) {
     char digest[(sizeof(dststr) * 2) + 1];
     hb_strtohex(dststr, sizeof(dststr), digest);
     hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
-  }
-  else
-  {
+  } else {
     hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
   }
 }

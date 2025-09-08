@@ -59,20 +59,14 @@ static HB_SIZE hb_strMemotran(char *pszResult, const char *pszString, HB_SIZE nS
   HB_SIZE nStringPos = 0;
   HB_SIZE nResultPos = 0;
 
-  while (nStringPos < nStringLen)
-  {
-    if (pszString[nStringPos] == HB_CHAR_HARD1 && pszString[nStringPos + 1] == HB_CHAR_HARD2)
-    {
+  while (nStringPos < nStringLen) {
+    if (pszString[nStringPos] == HB_CHAR_HARD1 && pszString[nStringPos + 1] == HB_CHAR_HARD2) {
       pszResult[nResultPos++] = cHardCR;
       nStringPos += 2;
-    }
-    else if (pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2)
-    {
+    } else if (pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2) {
       pszResult[nResultPos++] = cSoftCR;
       nStringPos += 2;
-    }
-    else
-    {
+    } else {
       pszResult[nResultPos++] = pszString[nStringPos++];
     }
   }
@@ -86,8 +80,7 @@ HB_FUNC(MEMOTRAN)
 {
   auto pString = hb_param(1, Harbour::Item::STRING);
 
-  if (pString)
-  {
+  if (pString) {
     auto nLen = pString->getCLen();
     auto pszResult = static_cast<char *>(hb_xgrab(nLen + 1));
     const char *pszRepl;
@@ -95,8 +88,7 @@ HB_FUNC(MEMOTRAN)
     char cSoftCR = ' ';
 
     pszRepl = hb_parc(2);
-    if (pszRepl)
-    {
+    if (pszRepl) {
       cHardCR = *pszRepl;
     }
 
@@ -107,16 +99,13 @@ HB_FUNC(MEMOTRAN)
     if (pszRepl)
 #endif
       pszRepl = hb_parc(3);
-    if (pszRepl)
-    {
+    if (pszRepl) {
       cSoftCR = *pszRepl;
     }
 
     nLen = hb_strMemotran(pszResult, pString->getCPtr(), nLen, cHardCR, cSoftCR);
     hb_retclen_buffer(pszResult, nLen);
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }

@@ -63,8 +63,7 @@ HB_FUNC(VERSION)
 
 HB_FUNC(HB_VERSION)
 {
-  switch (hb_parni(1))
-  {
+  switch (hb_parni(1)) {
   case HB_VERSION_URL_BASE:
     hb_retc_const("https://github.com/harbour/core/");
     break;
@@ -113,22 +112,18 @@ HB_FUNC(HB_VERSION)
   case HB_VERSION_BUILD_DATE_STR:
     hb_retc_buffer(hb_verBuildDate());
     break;
-  case HB_VERSION_BUILD_DATE:
-  {
+  case HB_VERSION_BUILD_DATE: {
     char *pszBuildDate = hb_verBuildDate();
 
-    if (strlen(pszBuildDate) >= 11)
-    {
+    if (strlen(pszBuildDate) >= 11) {
       static const char *s_months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
       char szDate[9];
 
       szDate[4] = szDate[5] = '0';
 
-      for (auto iMonth = 11; iMonth >= 0; iMonth--)
-      {
-        if (memcmp(pszBuildDate, s_months[iMonth], 3) == 0)
-        {
+      for (auto iMonth = 11; iMonth >= 0; iMonth--) {
+        if (memcmp(pszBuildDate, s_months[iMonth], 3) == 0) {
           hb_snprintf(szDate + 4, 3, "%02d", iMonth + 1);
           break;
         }
@@ -140,17 +135,14 @@ HB_FUNC(HB_VERSION)
       szDate[8] = '\0';
 
       hb_retds(szDate);
-    }
-    else
-    {
+    } else {
       hb_retds(nullptr);
     }
 
     hb_xfree(pszBuildDate);
     break;
   }
-  case HB_VERSION_BUILD_TIME:
-  {
+  case HB_VERSION_BUILD_TIME: {
     char *pszBuildDate = hb_verBuildDate();
     hb_retc(strlen(pszBuildDate) >= 20 ? pszBuildDate + 12 : nullptr);
     hb_xfree(pszBuildDate);

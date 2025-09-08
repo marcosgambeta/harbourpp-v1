@@ -63,8 +63,7 @@ HB_BOOL hb_fsLink(const char *pszExisting, const char *pszNewFile)
 {
   auto fResult = false;
 
-  if (pszExisting && pszNewFile)
-  {
+  if (pszExisting && pszNewFile) {
     hb_vmUnlock();
 
 #if defined(HB_OS_WIN)
@@ -76,12 +75,10 @@ HB_BOOL hb_fsLink(const char *pszExisting, const char *pszNewFile)
     fResult = CreateHardLink(lpFileName, lpExistingFileName, nullptr) != 0;
     hb_fsSetIOError(fResult, 0);
 
-    if (lpFileNameFree)
-    {
+    if (lpFileNameFree) {
       hb_xfree(lpFileNameFree);
     }
-    if (lpExistingFileNameFree)
-    {
+    if (lpExistingFileNameFree) {
       hb_xfree(lpExistingFileNameFree);
     }
 #elif defined(HB_OS_UNIX)
@@ -94,12 +91,10 @@ HB_BOOL hb_fsLink(const char *pszExisting, const char *pszNewFile)
       fResult = (link(pszExisting, pszNewFile) == 0);
       hb_fsSetIOError(fResult, 0);
 
-      if (pszExistingFree)
-      {
+      if (pszExistingFree) {
         hb_xfree(pszExistingFree);
       }
-      if (pszNewFileFree)
-      {
+      if (pszNewFileFree) {
         hb_xfree(pszNewFileFree);
       }
     }
@@ -111,9 +106,7 @@ HB_BOOL hb_fsLink(const char *pszExisting, const char *pszNewFile)
 #endif
 
     hb_vmLock();
-  }
-  else
-  {
+  } else {
     hb_fsSetError(2);
     fResult = false;
   }
@@ -125,8 +118,7 @@ HB_BOOL hb_fsLinkSym(const char *pszTarget, const char *pszNewFile)
 {
   auto fResult = false;
 
-  if (pszTarget && pszNewFile)
-  {
+  if (pszTarget && pszNewFile) {
     hb_vmUnlock();
 
 #if defined(HB_OS_WIN)
@@ -139,18 +131,15 @@ HB_BOOL hb_fsLinkSym(const char *pszTarget, const char *pszNewFile)
 #define SYMBOLIC_LINK_FLAG_DIRECTORY 0x1
 #endif
 
-      if (!s_pCreateSymbolicLink)
-      {
+      if (!s_pCreateSymbolicLink) {
         HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
-        if (hModule)
-        {
+        if (hModule) {
           s_pCreateSymbolicLink = reinterpret_cast<_HB_CREATESYMBOLICLINK>(
               reinterpret_cast<void *>(HB_WINAPI_GETPROCADDRESST(hModule, "CreateSymbolicLink")));
         }
       }
 
-      if (s_pCreateSymbolicLink)
-      {
+      if (s_pCreateSymbolicLink) {
         LPTSTR lpSymlinkFileNameFree;
         LPCTSTR lpSymlinkFileName = HB_FSNAMECONV(pszNewFile, &lpSymlinkFileNameFree);
         LPTSTR lpTargetFileNameFree;
@@ -163,17 +152,13 @@ HB_BOOL hb_fsLinkSym(const char *pszTarget, const char *pszNewFile)
             s_pCreateSymbolicLink(lpSymlinkFileName, lpTargetFileName, fDir ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0) != 0;
         hb_fsSetIOError(fResult, 0);
 
-        if (lpSymlinkFileNameFree)
-        {
+        if (lpSymlinkFileNameFree) {
           hb_xfree(lpSymlinkFileNameFree);
         }
-        if (lpTargetFileNameFree)
-        {
+        if (lpTargetFileNameFree) {
           hb_xfree(lpTargetFileNameFree);
         }
-      }
-      else
-      {
+      } else {
         hb_fsSetError(1);
         fResult = false;
       }
@@ -188,12 +173,10 @@ HB_BOOL hb_fsLinkSym(const char *pszTarget, const char *pszNewFile)
       fResult = (symlink(pszTarget, pszNewFile) == 0);
       hb_fsSetIOError(fResult, 0);
 
-      if (pszTargetFree)
-      {
+      if (pszTargetFree) {
         hb_xfree(pszTargetFree);
       }
-      if (pszNewFileFree)
-      {
+      if (pszNewFileFree) {
         hb_xfree(pszNewFileFree);
       }
     }
@@ -205,9 +188,7 @@ HB_BOOL hb_fsLinkSym(const char *pszTarget, const char *pszNewFile)
 #endif
 
     hb_vmLock();
-  }
-  else
-  {
+  } else {
     hb_fsSetError(2);
     fResult = false;
   }
@@ -220,8 +201,7 @@ char *hb_fsLinkRead(const char *pszFile)
 {
   char *pszLink = nullptr;
 
-  if (pszFile)
-  {
+  if (pszFile) {
     hb_vmUnlock();
 
 #if defined(HB_OS_WIN)
@@ -249,18 +229,15 @@ char *hb_fsLinkRead(const char *pszFile)
 #define FILE_NAME_OPENED 0x8
 #endif
 
-      if (!s_pGetFinalPathNameByHandle)
-      {
+      if (!s_pGetFinalPathNameByHandle) {
         HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
-        if (hModule)
-        {
+        if (hModule) {
           s_pGetFinalPathNameByHandle = reinterpret_cast<_HB_GETFINALPATHNAMEBYHANDLE>(
               reinterpret_cast<void *>(HB_WINAPI_GETPROCADDRESST(hModule, "GetFinalPathNameByHandle")));
         }
       }
 
-      if (s_pGetFinalPathNameByHandle)
-      {
+      if (s_pGetFinalPathNameByHandle) {
         LPTSTR lpFileNameFree;
         LPCTSTR lpFileName = HB_FSNAMECONV(pszFile, &lpFileNameFree);
 
@@ -271,37 +248,27 @@ char *hb_fsLinkRead(const char *pszFile)
             CreateFile(lpFileName, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
                        fDir ? (FILE_ATTRIBUTE_DIRECTORY | FILE_FLAG_BACKUP_SEMANTICS) : FILE_ATTRIBUTE_NORMAL, nullptr);
 
-        if (hFile == INVALID_HANDLE_VALUE)
-        {
+        if (hFile == INVALID_HANDLE_VALUE) {
           hb_fsSetIOError(false, 0);
-        }
-        else
-        {
+        } else {
           TCHAR lpLink[HB_PATH_MAX];
           DWORD size = s_pGetFinalPathNameByHandle(hFile, lpLink, HB_PATH_MAX, VOLUME_NAME_DOS);
-          if (size < HB_PATH_MAX)
-          {
-            if (size > 0)
-            {
+          if (size < HB_PATH_MAX) {
+            if (size > 0) {
               lpLink[size] = TEXT('\0');
               pszLink = HB_OSSTRDUP(lpLink);
             }
 
             hb_fsSetIOError(true, 0);
-          }
-          else
-          {
+          } else {
             hb_fsSetError(9);
           }
         }
 
-        if (lpFileNameFree)
-        {
+        if (lpFileNameFree) {
           hb_xfree(lpFileNameFree);
         }
-      }
-      else
-      {
+      } else {
         hb_fsSetError(1);
       }
     }
@@ -313,20 +280,16 @@ char *hb_fsLinkRead(const char *pszFile)
       pszLink = static_cast<char *>(hb_xgrab(HB_PATH_MAX + 1));
       size_t size = readlink(pszFile, pszLink, HB_PATH_MAX);
       hb_fsSetIOError(size != static_cast<size_t>(-1), 0);
-      if (size == static_cast<size_t>(-1))
-      {
+      if (size == static_cast<size_t>(-1)) {
         hb_xfree(pszLink);
         pszLink = nullptr;
-      }
-      else
-      {
+      } else {
         pszLink[size] = '\0';
         // Convert from OS codepage
         pszLink = const_cast<char *>(hb_osDecodeCP(pszLink, nullptr, nullptr));
       }
 
-      if (pszFileFree)
-      {
+      if (pszFileFree) {
         hb_xfree(pszFileFree);
       }
     }
@@ -337,9 +300,7 @@ char *hb_fsLinkRead(const char *pszFile)
 #endif
 
     hb_vmLock();
-  }
-  else
-  {
+  } else {
     hb_fsSetError(2);
   }
 
@@ -353,8 +314,7 @@ HB_FUNC(HB_FLINK)
   auto pszExisting = hb_parc(1);
   auto pszNewFile = hb_parc(2);
 
-  if (pszExisting && pszNewFile)
-  {
+  if (pszExisting && pszNewFile) {
     fResult = hb_fsLink(pszExisting, pszNewFile);
     uiError = hb_fsError();
   }
@@ -369,8 +329,7 @@ HB_FUNC(HB_FLINKSYM)
   auto pszTarget = hb_parc(1);
   auto pszNewFile = hb_parc(2);
 
-  if (pszTarget && pszNewFile)
-  {
+  if (pszTarget && pszNewFile) {
     fResult = hb_fsLinkSym(pszTarget, pszNewFile);
     uiError = hb_fsError();
   }
@@ -384,8 +343,7 @@ HB_FUNC(HB_FLINKREAD)
   char *pszResult = nullptr;
   auto pszFile = hb_parc(1);
 
-  if (pszFile)
-  {
+  if (pszFile) {
     pszResult = hb_fsLinkRead(pszFile);
     uiError = hb_fsError();
   }

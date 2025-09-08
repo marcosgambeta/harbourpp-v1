@@ -53,19 +53,15 @@ HB_FUNC(HB_ASCIIUPPER)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     auto pszText = pText->getCPtr();
     auto nLen = pText->getCLen();
 
-    for (HB_SIZE u = 0; u < nLen; u++)
-    {
-      if (HB_ISLOWER(pszText[u]))
-      {
+    for (HB_SIZE u = 0; u < nLen; u++) {
+      if (HB_ISLOWER(pszText[u])) {
         char *pszBuff = pText->getC();
 
-        do
-        {
+        do {
           pszBuff[u] = HB_TOUPPER(pszBuff[u]);
         } while (++u < nLen);
         hb_retclen_buffer(pszBuff, nLen);
@@ -73,9 +69,7 @@ HB_FUNC(HB_ASCIIUPPER)
       }
     }
     hb_itemReturn(pText);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -84,19 +78,15 @@ HB_FUNC(HB_ASCIILOWER)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     auto pszText = pText->getCPtr();
     auto nLen = pText->getCLen();
 
-    for (HB_SIZE u = 0; u < nLen; u++)
-    {
-      if (HB_ISUPPER(pszText[u]))
-      {
+    for (HB_SIZE u = 0; u < nLen; u++) {
+      if (HB_ISUPPER(pszText[u])) {
         char *pszBuff = pText->getC();
 
-        do
-        {
+        do {
           pszBuff[u] = HB_TOLOWER(pszBuff[u]);
         } while (++u < nLen);
         hb_retclen_buffer(pszBuff, nLen);
@@ -104,9 +94,7 @@ HB_FUNC(HB_ASCIILOWER)
       }
     }
     hb_itemReturn(pText);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

@@ -58,14 +58,12 @@ static void hb_trace_message(char *buffer, HB_SIZE nSize, int iParam, int iCount
 
   buffer[0] = '\0';
 
-  while (iParam <= iCount && nSize > 1)
-  {
+  while (iParam <= iCount && nSize > 1) {
     char *pszString;
     HB_SIZE nLen;
     HB_BOOL fFree;
 
-    if (iParam > iFirst)
-    {
+    if (iParam > iFirst) {
       *buffer++ = ' ';
       --nSize;
     }
@@ -74,8 +72,7 @@ static void hb_trace_message(char *buffer, HB_SIZE nSize, int iParam, int iCount
     nLen = strlen(buffer);
     nSize -= nLen;
     buffer += nLen;
-    if (fFree)
-    {
+    if (fFree) {
       hb_xfree(pszString);
     }
     iParam++;
@@ -116,11 +113,9 @@ HB_FUNC(HB_TRACELOGLEVEL)
 {
   int iOldLevel = s_traceLogLevel;
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto iLevel = hb_parni(1);
-    if (iLevel >= HB_TR_ALWAYS && iLevel < HB_TR_LAST)
-    {
+    if (iLevel >= HB_TR_ALWAYS && iLevel < HB_TR_LAST) {
       s_traceLogLevel = iLevel;
     }
   }
@@ -141,12 +136,10 @@ HB_FUNC(HB_TRACELOG)
 
 HB_FUNC(HB_TRACELOGAT)
 {
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto iLevel = hb_parni(1);
 
-    if (iLevel <= hb_tr_level())
-    {
+    if (iLevel <= hb_tr_level()) {
       char message[1024];
       char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char file[HB_PATH_MAX];
@@ -163,8 +156,7 @@ HB_FUNC(HB_TRACESTRING)
 {
   auto iPCount = hb_pcount();
 
-  if (iPCount > 0)
-  {
+  if (iPCount > 0) {
     char message[1024];
     hb_trace_message(message, sizeof(message) - 1, 1, iPCount);
     HB_TRACE(HB_TR_ALWAYS, ("%s", message));

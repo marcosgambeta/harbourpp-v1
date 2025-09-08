@@ -128,15 +128,12 @@ static struct termios s_saved_TIO, s_curr_TIO;
 #if defined(SIGTTOU)
 static void sig_handler(int iSigNo)
 {
-  switch (iSigNo)
-  {
+  switch (iSigNo) {
 #ifdef SIGCHLD
-  case SIGCHLD:
-  {
+  case SIGCHLD: {
     int e = errno, stat;
     pid_t pid;
-    do
-    {
+    do {
       pid = waitpid(-1, &stat, WNOHANG);
     } while (pid > 0);
     errno = e;
@@ -184,8 +181,7 @@ static void sig_handler(int iSigNo)
 
 static void hb_gt_pca_termFlush(void)
 {
-  if (s_iOutBufIndex > 0)
-  {
+  if (s_iOutBufIndex > 0) {
     hb_fsWriteLarge(s_hFilenoStdout, s_sOutBuf, s_iOutBufIndex);
     s_iOutBufIndex = 0;
   }
@@ -193,18 +189,14 @@ static void hb_gt_pca_termFlush(void)
 
 static void hb_gt_pca_termOut(const char *szStr, int iLen)
 {
-  if (s_iOutBufSize)
-  {
-    while (iLen > 0)
-    {
+  if (s_iOutBufSize) {
+    while (iLen > 0) {
       int i;
-      if (s_iOutBufSize == s_iOutBufIndex)
-      {
+      if (s_iOutBufSize == s_iOutBufIndex) {
         hb_gt_pca_termFlush();
       }
       i = s_iOutBufSize - s_iOutBufIndex;
-      if (i > iLen)
-      {
+      if (i > iLen) {
         i = iLen;
       }
       memcpy(s_sOutBuf + s_iOutBufIndex, szStr, i);
@@ -221,8 +213,7 @@ static void hb_gt_pca_AnsiSetAutoMargin(int iAM)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetAutoMargin(%d)", iAM));
 #endif
 
-  if (iAM != s_iAM)
-  {
+  if (iAM != s_iAM) {
     // disabled until I'll find good PC-ANSI terminal documentation with
     // detail Auto Margin and Auto Line Wrapping description, [druzus]
 #if 0
@@ -244,8 +235,7 @@ static void hb_gt_pca_AnsiGetCurPos(int *iRow, int *iCol)
 
   static auto s_fIsAnswer = true;
 
-  if (s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole)
-  {
+  if (s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole) {
     char rdbuf[64];
     int i, j, n, d, y, x;
 
@@ -257,85 +247,66 @@ static void hb_gt_pca_AnsiGetCurPos(int *iRow, int *iCol)
     // wait up to 2 seconds for answer
     HB_MAXINT timeout = 2000;
     HB_MAXUINT timer = hb_timerInit(timeout);
-    for (;;)
-    {
+    for (;;) {
       // looking for cursor position in "\033[%d;%dR"
-      while (j < n && rdbuf[j] != '\033')
-      {
+      while (j < n && rdbuf[j] != '\033') {
         ++j;
       }
-      if (n - j >= 6)
-      {
+      if (n - j >= 6) {
         i = j + 1;
-        if (rdbuf[i] == '[')
-        {
+        if (rdbuf[i] == '[') {
           y = 0;
           d = ++i;
-          while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9')
-          {
+          while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9') {
             y = y * 10 + (rdbuf[i++] - '0');
           }
-          if (i < n && i > d && rdbuf[i] == ';')
-          {
+          if (i < n && i > d && rdbuf[i] == ';') {
             x = 0;
             d = ++i;
-            while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9')
-            {
+            while (i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9') {
               x = x * 10 + (rdbuf[i++] - '0');
             }
-            if (i < n && i > d && rdbuf[i] == 'R')
-            {
+            if (i < n && i > d && rdbuf[i] == 'R') {
               s_fIsAnswer = true;
               break;
             }
           }
         }
-        if (i < n)
-        {
+        if (i < n) {
           j = i;
           continue;
         }
       }
-      if (n == static_cast<int>(sizeof(rdbuf)))
-      {
+      if (n == static_cast<int>(sizeof(rdbuf))) {
         break;
       }
 
-      if ((timeout = hb_timerTest(timeout, &timer)) == 0)
-      {
+      if ((timeout = hb_timerTest(timeout, &timer)) == 0) {
         break;
-      }
-      else
-      {
+      } else {
 #if defined(HB_HAS_TERMIOS)
-        if (hb_fsCanRead(s_hFilenoStdin, timeout) <= 0)
-        {
+        if (hb_fsCanRead(s_hFilenoStdin, timeout) <= 0) {
           break;
         }
         i = read(s_hFilenoStdin, rdbuf + n, sizeof(rdbuf) - n);
 #else
         i = getc(stdin);
-        if (i > 0)
-        {
+        if (i > 0) {
           rdbuf[n] = static_cast<char>(i);
           i = 1;
         }
 #endif
-        if (i <= 0)
-        {
+        if (i <= 0) {
           break;
         }
         n += i;
       }
     }
 
-    if (s_fIsAnswer)
-    {
+    if (s_fIsAnswer) {
       *iRow = y - 1;
       *iCol = x - 1;
-    }
-    else
-    {
+    } else {
       *iRow = *iCol = -1;
     }
   }
@@ -347,8 +318,7 @@ static void hb_gt_pca_AnsiSetCursorPos(int iRow, int iCol)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetCursorPos(%d, %d)", iRow, iCol));
 #endif
 
-  if (s_iRow != iRow || s_iCol != iCol)
-  {
+  if (s_iRow != iRow || s_iCol != iCol) {
     char buff[16];
     hb_snprintf(buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1);
     hb_gt_pca_termOut(buff, static_cast<int>(strlen(buff)));
@@ -363,8 +333,7 @@ static void hb_gt_pca_AnsiSetCursorStyle(int iStyle)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetCursorStyle(%d)", iStyle));
 #endif
 
-  if (s_iCursorStyle != iStyle)
-  {
+  if (s_iCursorStyle != iStyle) {
     hb_gt_pca_termOut((iStyle == SC_NONE ? "\x1B[?25l" : "\x1B[?25h"), 6);
     s_iCursorStyle = iStyle;
   }
@@ -376,8 +345,7 @@ static void hb_gt_pca_AnsiSetAttributes(int iAttr)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetAttributes(%d)", iAttr));
 #endif
 
-  if (s_iCurrentSGR != iAttr)
-  {
+  if (s_iCurrentSGR != iAttr) {
     int i, bg, fg, bold, blink;
     char buff[16];
 
@@ -390,17 +358,14 @@ static void hb_gt_pca_AnsiSetAttributes(int iAttr)
     bold = (iAttr & 0x08) ? 1 : 0;
     blink = (iAttr & 0x80) ? 1 : 0;
 
-    if (s_iCurrentSGR == -1)
-    {
+    if (s_iCurrentSGR == -1) {
       buff[i++] = '0';
       buff[i++] = ';';
-      if (bold)
-      {
+      if (bold) {
         buff[i++] = '1';
         buff[i++] = ';';
       }
-      if (blink)
-      {
+      if (blink) {
         buff[i++] = '5';
         buff[i++] = ';';
       }
@@ -414,38 +379,30 @@ static void hb_gt_pca_AnsiSetAttributes(int iAttr)
       s_iBlink = blink;
       s_iFgColor = fg;
       s_iBgColor = bg;
-    }
-    else
-    {
-      if (s_iBold != bold)
-      {
-        if (!bold)
-        {
+    } else {
+      if (s_iBold != bold) {
+        if (!bold) {
           buff[i++] = '2';
         }
         buff[i++] = '1';
         buff[i++] = ';';
         s_iBold = bold;
       }
-      if (s_iBlink != blink)
-      {
-        if (!blink)
-        {
+      if (s_iBlink != blink) {
+        if (!blink) {
           buff[i++] = '2';
         }
         buff[i++] = '5';
         buff[i++] = ';';
         s_iBlink = blink;
       }
-      if (s_iFgColor != fg)
-      {
+      if (s_iFgColor != fg) {
         buff[i++] = '3';
         buff[i++] = '0' + static_cast<char>(fg);
         buff[i++] = ';';
         s_iFgColor = fg;
       }
-      if (s_iBgColor != bg)
-      {
+      if (s_iBgColor != bg) {
         buff[i++] = '4';
         buff[i++] = '0' + static_cast<char>(bg);
         buff[i++] = ';';
@@ -454,8 +411,7 @@ static void hb_gt_pca_AnsiSetAttributes(int iAttr)
       buff[i - 1] = 'm';
     }
     s_iCurrentSGR = iAttr;
-    if (i > 2)
-    {
+    if (i > 2) {
       hb_gt_pca_termOut(buff, i);
     }
   }
@@ -509,8 +465,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 // SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(HB_HAS_TERMIOS) && defined(SA_NOCLDSTOP)
   s_fRestTTY = false;
-  if (s_bStdinConsole)
-  {
+  if (s_bStdinConsole) {
 #if defined(SIGTTOU)
     struct sigaction act, old;
 
@@ -556,12 +511,10 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   }
 
 #ifdef TIOCGWINSZ
-  if (s_bStdoutConsole)
-  {
+  if (s_bStdoutConsole) {
     struct winsize win;
 
-    if (ioctl(hFilenoStdout, TIOCGWINSZ, reinterpret_cast<char *>(&win)) != -1)
-    {
+    if (ioctl(hFilenoStdout, TIOCGWINSZ, reinterpret_cast<char *>(&win)) != -1) {
       iRows = win.ws_row;
       iCols = win.ws_col;
     }
@@ -569,8 +522,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #endif
 #endif
 
-  if (s_iOutBufSize == 0)
-  {
+  if (s_iOutBufSize == 0) {
     s_iOutBufIndex = 0;
     s_iOutBufSize = 16384;
     s_sOutBuf = static_cast<char *>(hb_xgrab(s_iOutBufSize));
@@ -600,23 +552,19 @@ static void hb_gt_pca_Exit(PHB_GT pGT) // FuncTable
   HB_GTSUPER_EXIT(pGT);
 
 #if defined(HB_HAS_TERMIOS)
-  if (s_fRestTTY)
-  {
+  if (s_fRestTTY) {
     tcsetattr(s_hFilenoStdin, TCSANOW, &s_saved_TIO);
   }
 #endif
-  if (s_iLineBufSize > 0)
-  {
+  if (s_iLineBufSize > 0) {
     hb_xfree(s_sLineBuf);
     s_iLineBufSize = 0;
   }
-  if (s_nTransBufSize > 0)
-  {
+  if (s_nTransBufSize > 0) {
     hb_xfree(s_sTransBuf);
     s_nTransBufSize = 0;
   }
-  if (s_iOutBufSize > 0)
-  {
+  if (s_iOutBufSize > 0) {
     hb_xfree(s_sOutBuf);
     s_iOutBufSize = s_iOutBufIndex = 0;
   }
@@ -635,47 +583,37 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
   int ch = 0;
 
 #if defined(HB_HAS_TERMIOS)
-  if (hb_fsCanRead(s_hFilenoStdin, 0) > 0)
-  {
+  if (hb_fsCanRead(s_hFilenoStdin, 0) > 0) {
     HB_BYTE bChar;
-    if (hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1)
-    {
+    if (hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1) {
       ch = bChar;
     }
   }
 #elif defined(_MSC_VER)
-  if (s_bStdinConsole)
-  {
-    if (_kbhit())
-    {
+  if (s_bStdinConsole) {
+    if (_kbhit()) {
       ch = _getch();
-      if ((ch == 0 || ch == 224) && _kbhit())
-      {
+      if ((ch == 0 || ch == 224) && _kbhit()) {
         // It was a function key lead-in code, so read the actual
         // function key and then offset it by 256
         ch = _getch();
-        if (ch != -1)
-        {
+        if (ch != -1) {
           ch += 256;
         }
       }
       ch = hb_gt_dos_keyCodeTranslate(ch, 0, HB_GTSELF_CPIN(pGT));
     }
-  }
-  else if (!_eof(static_cast<int>(s_hFilenoStdin)))
-  {
+  } else if (!_eof(static_cast<int>(s_hFilenoStdin))) {
     HB_BYTE bChar;
-    if (_read(static_cast<int>(s_hFilenoStdin), &bChar, 1) == 1)
-    {
+    if (_read(static_cast<int>(s_hFilenoStdin), &bChar, 1) == 1) {
       ch = bChar;
     }
   }
 #elif defined(HB_OS_WIN)
-  if (!s_bStdinConsole || WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000)
-  {
+  if (!s_bStdinConsole ||
+      WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000) {
     HB_BYTE bChar;
-    if (hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1)
-    {
+    if (hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1) {
       ch = bChar;
     }
   }
@@ -685,11 +623,9 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
   }
 #endif
 
-  if (ch)
-  {
+  if (ch) {
     int u = HB_GTSELF_KEYTRANS(pGT, ch);
-    if (u)
-    {
+    if (u) {
       ch = HB_INKEY_NEW_UNICODE(u);
     }
   }
@@ -713,8 +649,7 @@ static void hb_gt_pca_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
   // succession leading to BEL hell on the terminal
 
   double dCurrentSeconds = hb_dateSeconds();
-  if (dCurrentSeconds < s_dLastSeconds || dCurrentSeconds - s_dLastSeconds > 0.5)
-  {
+  if (dCurrentSeconds < s_dLastSeconds || dCurrentSeconds - s_dLastSeconds > 0.5) {
     hb_gt_pca_termOut(s_szBell, 1);
     s_dLastSeconds = dCurrentSeconds;
     hb_gt_pca_termFlush();
@@ -743,8 +678,7 @@ static const char *hb_gt_pca_Version(PHB_GT pGT, int iType) // FuncTable
 
   HB_SYMBOL_UNUSED(pGT);
 
-  if (iType == 0)
-  {
+  if (iType == 0) {
     return HB_GT_DRVNAME(HB_GT_NAME);
   }
 
@@ -759,8 +693,7 @@ static HB_BOOL hb_gt_pca_Suspend(PHB_GT pGT) // FuncTable
 
   HB_SYMBOL_UNUSED(pGT);
 #if defined(HB_HAS_TERMIOS)
-  if (s_fRestTTY)
-  {
+  if (s_fRestTTY) {
     tcsetattr(s_hFilenoStdin, TCSANOW, &s_saved_TIO);
   }
 #endif
@@ -777,8 +710,7 @@ static HB_BOOL hb_gt_pca_Resume(PHB_GT pGT) // FuncTable
 
   HB_SYMBOL_UNUSED(pGT);
 #if defined(HB_HAS_TERMIOS)
-  if (s_fRestTTY)
-  {
+  if (s_fRestTTY) {
     tcsetattr(s_hFilenoStdin, TCSANOW, &s_curr_TIO);
   }
 #endif
@@ -794,8 +726,7 @@ static HB_BOOL hb_gt_pca_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox)));
 #endif
 
-  if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox))
-  {
+  if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
     s_cdpTerm = HB_GTSELF_TERMCP(pGT);
     s_cdpHost = HB_GTSELF_HOSTCP(pGT);
     s_fDispTrans = s_cdpTerm && s_cdpHost && s_cdpTerm != s_cdpHost;
@@ -815,28 +746,20 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   HB_USHORT usChar;
   int iLen = 0, iColor2 = 0;
 
-  while (iSize--)
-  {
-    if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iLen, &iColor, &bAttr, &usChar))
-    {
+  while (iSize--) {
+    if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iLen, &iColor, &bAttr, &usChar)) {
       break;
     }
 
-    if (iLen == 0)
-    {
+    if (iLen == 0) {
       iColor2 = iColor;
-    }
-    else if (iColor2 != iColor)
-    {
-      if (s_fDispTrans)
-      {
+    } else if (iColor2 != iColor) {
+      if (s_fDispTrans) {
         HB_SIZE nLen = iLen;
         const char *buffer =
             hb_cdpnDup3(s_sLineBuf, nLen, s_sTransBuf, &nLen, &s_sTransBuf, &s_nTransBufSize, s_cdpHost, s_cdpTerm);
         hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, buffer, static_cast<int>(nLen));
-      }
-      else
-      {
+      } else {
         hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, s_sLineBuf, iLen);
       }
 
@@ -844,23 +767,18 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
       iLen = 0;
       iColor2 = iColor;
     }
-    if (usChar < 32 || usChar == 127)
-    {
+    if (usChar < 32 || usChar == 127) {
       usChar = '.';
     }
     s_sLineBuf[iLen++] = static_cast<char>(usChar);
   }
-  if (iLen)
-  {
-    if (s_fDispTrans)
-    {
+  if (iLen) {
+    if (s_fDispTrans) {
       HB_SIZE nLen = iLen;
       const char *buffer =
           hb_cdpnDup3(s_sLineBuf, nLen, s_sTransBuf, &nLen, &s_sTransBuf, &s_nTransBufSize, s_cdpHost, s_cdpTerm);
       hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, buffer, static_cast<int>(nLen));
-    }
-    else
-    {
+    } else {
       hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, s_sLineBuf, iLen);
     }
   }
@@ -876,13 +794,10 @@ static void hb_gt_pca_Refresh(PHB_GT pGT) // FuncTable
 
   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
 
-  if (s_iLineBufSize == 0)
-  {
+  if (s_iLineBufSize == 0) {
     s_sLineBuf = static_cast<char *>(hb_xgrab(iWidth));
     s_iLineBufSize = iWidth;
-  }
-  else if (s_iLineBufSize != iWidth)
-  {
+  } else if (s_iLineBufSize != iWidth) {
     s_sLineBuf = static_cast<char *>(hb_xrealloc(s_sLineBuf, iWidth));
     s_iLineBufSize = iWidth;
   }
@@ -890,14 +805,10 @@ static void hb_gt_pca_Refresh(PHB_GT pGT) // FuncTable
   HB_GTSUPER_REFRESH(pGT);
 
   HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
-  if (iStyle != SC_NONE)
-  {
-    if (iRow >= 0 && iCol >= 0 && iRow < iHeight && iCol < iWidth)
-    {
+  if (iStyle != SC_NONE) {
+    if (iRow >= 0 && iCol >= 0 && iRow < iHeight && iCol < iWidth) {
       hb_gt_pca_AnsiSetCursorPos(iRow, iCol);
-    }
-    else
-    {
+    } else {
       iStyle = SC_NONE;
     }
   }
@@ -911,8 +822,7 @@ static HB_BOOL hb_gt_pca_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
 #endif
 
-  switch (iType)
-  {
+  switch (iType) {
   case HB_GTI_ISSCREENPOS:
   case HB_GTI_KBDSUPPORT:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, true);

@@ -75,8 +75,7 @@
 
 HB_FOFFSET hb_fsFSize(const char *pszFileName, HB_BOOL bUseDirEntry)
 {
-  if (bUseDirEntry)
-  {
+  if (bUseDirEntry) {
 #if defined(HB_OS_WIN)
     LPTSTR lpFree;
     LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
@@ -84,12 +83,10 @@ HB_FOFFSET hb_fsFSize(const char *pszFileName, HB_BOOL bUseDirEntry)
     bool fResult = GetFileAttributesEx(lpFileName, GetFileExInfoStandard, &attrex) &&
                    (attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
     hb_fsSetIOError(fResult, 0);
-    if (lpFree)
-    {
+    if (lpFree) {
       hb_xfree(lpFree);
     }
-    if (fResult)
-    {
+    if (fResult) {
       return static_cast<HB_FOFFSET>(attrex.nFileSizeLow) + (static_cast<HB_FOFFSET>(attrex.nFileSizeHigh) << 32);
     }
 #elif defined(HB_USE_LARGEFILE64)
@@ -101,12 +98,10 @@ HB_FOFFSET hb_fsFSize(const char *pszFileName, HB_BOOL bUseDirEntry)
     bool fResult = stat64(pszFileName, &statbuf) == 0;
     hb_fsSetIOError(fResult, 0);
     hb_vmLock();
-    if (pszFree)
-    {
+    if (pszFree) {
       hb_xfree(pszFree);
     }
-    if (fResult)
-    {
+    if (fResult) {
       return static_cast<HB_FOFFSET>(statbuf.st_size);
     }
 #else
@@ -118,22 +113,17 @@ HB_FOFFSET hb_fsFSize(const char *pszFileName, HB_BOOL bUseDirEntry)
     bool fResult = stat(const_cast<char *>(pszFileName), &statbuf) == 0;
     hb_fsSetIOError(fResult, 0);
     hb_vmLock();
-    if (pszFree)
-    {
+    if (pszFree) {
       hb_xfree(pszFree);
     }
-    if (fResult)
-    {
+    if (fResult) {
       return static_cast<HB_FOFFSET>(statbuf.st_size);
     }
 #endif
-  }
-  else
-  {
+  } else {
     HB_FHANDLE hFileHandle = hb_fsOpen(pszFileName, FO_READ | FO_COMPAT);
 
-    if (hFileHandle != FS_ERROR)
-    {
+    if (hFileHandle != FS_ERROR) {
       HB_FOFFSET nPos = hb_fsSeekLarge(hFileHandle, 0, FS_END);
       hb_fsClose(hFileHandle);
       return nPos;

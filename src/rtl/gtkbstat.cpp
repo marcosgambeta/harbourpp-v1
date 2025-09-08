@@ -58,71 +58,54 @@ int hb_gt_winapi_getKbdState(void)
   BYTE kbState[256];
   int iKbdState = 0;
 
-  if (GetKeyboardState(kbState))
-  {
-    if (kbState[VK_SHIFT] & 0x80)
-    {
+  if (GetKeyboardState(kbState)) {
+    if (kbState[VK_SHIFT] & 0x80) {
       iKbdState |= HB_GTI_KBD_SHIFT;
     }
-    if (kbState[VK_CONTROL] & 0x80)
-    {
+    if (kbState[VK_CONTROL] & 0x80) {
       iKbdState |= HB_GTI_KBD_CTRL;
     }
-    if (kbState[VK_MENU] & 0x80)
-    {
+    if (kbState[VK_MENU] & 0x80) {
       iKbdState |= HB_GTI_KBD_ALT;
     }
-    if (kbState[VK_LWIN] & 0x80)
-    {
+    if (kbState[VK_LWIN] & 0x80) {
       iKbdState |= HB_GTI_KBD_LWIN;
     }
-    if (kbState[VK_RWIN] & 0x80)
-    {
+    if (kbState[VK_RWIN] & 0x80) {
       iKbdState |= HB_GTI_KBD_RWIN;
     }
-    if (kbState[VK_APPS] & 0x80)
-    {
+    if (kbState[VK_APPS] & 0x80) {
       iKbdState |= HB_GTI_KBD_MENU;
     }
-    if (kbState[VK_SCROLL] & 0x01)
-    {
+    if (kbState[VK_SCROLL] & 0x01) {
       iKbdState |= HB_GTI_KBD_SCROLOCK;
     }
-    if (kbState[VK_NUMLOCK] & 0x01)
-    {
+    if (kbState[VK_NUMLOCK] & 0x01) {
       iKbdState |= HB_GTI_KBD_NUMLOCK;
     }
-    if (kbState[VK_CAPITAL] & 0x01)
-    {
+    if (kbState[VK_CAPITAL] & 0x01) {
       iKbdState |= HB_GTI_KBD_CAPSLOCK;
     }
-    if (kbState[VK_INSERT] & 0x01)
-    {
+    if (kbState[VK_INSERT] & 0x01) {
       iKbdState |= HB_GTI_KBD_INSERT;
     }
 
-    if (kbState[VK_LSHIFT] & 0x80)
-    {
+    if (kbState[VK_LSHIFT] & 0x80) {
       iKbdState |= HB_GTI_KBD_LSHIFT;
     }
-    if (kbState[VK_RSHIFT] & 0x80)
-    {
+    if (kbState[VK_RSHIFT] & 0x80) {
       iKbdState |= HB_GTI_KBD_RSHIFT;
     }
-    if (kbState[VK_LCONTROL] & 0x80)
-    {
+    if (kbState[VK_LCONTROL] & 0x80) {
       iKbdState |= HB_GTI_KBD_LCTRL;
     }
-    if (kbState[VK_RCONTROL] & 0x80)
-    {
+    if (kbState[VK_RCONTROL] & 0x80) {
       iKbdState |= HB_GTI_KBD_RCTRL;
     }
-    if (kbState[VK_LMENU] & 0x80)
-    {
+    if (kbState[VK_LMENU] & 0x80) {
       iKbdState |= HB_GTI_KBD_LALT;
     }
-    if (kbState[VK_RMENU] & 0x80)
-    {
+    if (kbState[VK_RMENU] & 0x80) {
       iKbdState |= HB_GTI_KBD_RALT;
     }
   }
@@ -134,8 +117,7 @@ void hb_gt_winapi_setKbdState(int iKbdState)
 {
   BYTE kbState[256];
 
-  if (GetKeyboardState(kbState))
-  {
+  if (GetKeyboardState(kbState)) {
     kbState[VK_SHIFT] = (iKbdState & HB_GTI_KBD_SHIFT) ? 0x80 : 0;
     kbState[VK_CONTROL] = (iKbdState & HB_GTI_KBD_CTRL) ? 0x80 : 0;
     kbState[VK_MENU] = (iKbdState & HB_GTI_KBD_ALT) ? 0x80 : 0;

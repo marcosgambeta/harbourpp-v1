@@ -64,8 +64,7 @@ HB_BOOL hb_mouseIsPresent(void)
   auto fPresent = false;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     fPresent = HB_GTSELF_MOUSEISPRESENT(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -81,8 +80,7 @@ HB_BOOL hb_mouseGetCursor(void)
   auto fVisible = false;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     fVisible = HB_GTSELF_MOUSEGETCURSOR(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -96,8 +94,7 @@ void hb_mouseSetCursor(HB_BOOL fVisible)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSESETCURSOR(pGT, fVisible);
     hb_gt_BaseFree(pGT);
   }
@@ -112,8 +109,7 @@ int hb_mouseCol(void)
   int iCol = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     iCol = HB_GTSELF_MOUSECOL(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -129,8 +125,7 @@ int hb_mouseRow(void)
   int iRow = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     iRow = HB_GTSELF_MOUSEROW(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -144,8 +139,7 @@ void hb_mouseGetPos(int *piRow, int *piCol)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSEGETPOS(pGT, piRow, piCol);
     hb_gt_BaseFree(pGT);
   }
@@ -158,8 +152,7 @@ void hb_mouseSetPos(int iRow, int iCol)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSESETPOS(pGT, iRow, iCol);
     hb_gt_BaseFree(pGT);
   }
@@ -172,8 +165,7 @@ void hb_mouseSetBounds(int iTop, int iLeft, int iBottom, int iRight)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSESETBOUNDS(pGT, iTop, iLeft, iBottom, iRight);
     hb_gt_BaseFree(pGT);
   }
@@ -186,8 +178,7 @@ void hb_mouseGetBounds(int *piTop, int *piLeft, int *piBottom, int *piRight)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSEGETBOUNDS(pGT, piTop, piLeft, piBottom, piRight);
     hb_gt_BaseFree(pGT);
   }
@@ -202,8 +193,7 @@ int hb_mouseStorageSize(void)
   int iSize = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     iSize = HB_GTSELF_MOUSESTORAGESIZE(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -217,8 +207,7 @@ void hb_mouseSaveState(void *pBuffer)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSESAVESTATE(pGT, pBuffer);
     hb_gt_BaseFree(pGT);
   }
@@ -231,8 +220,7 @@ void hb_mouseRestoreState(const void *pBuffer)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSERESTORESTATE(pGT, pBuffer);
     hb_gt_BaseFree(pGT);
   }
@@ -247,8 +235,7 @@ int hb_mouseGetDoubleClickSpeed(void)
   int iSpeed = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     iSpeed = HB_GTSELF_MOUSEGETDOUBLECLICKSPEED(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -262,8 +249,7 @@ void hb_mouseSetDoubleClickSpeed(int iSpeed)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     HB_GTSELF_MOUSESETDOUBLECLICKSPEED(pGT, iSpeed);
     hb_gt_BaseFree(pGT);
   }
@@ -278,8 +264,7 @@ int hb_mouseCountButton(void)
   int iButtons = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     iButtons = HB_GTSELF_MOUSECOUNTBUTTON(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -295,8 +280,7 @@ HB_BOOL hb_mouseButtonState(int iButton)
   auto fPressed = false;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     fPressed = HB_GTSELF_MOUSEBUTTONSTATE(pGT, iButton);
     hb_gt_BaseFree(pGT);
   }
@@ -312,8 +296,7 @@ HB_BOOL hb_mouseButtonPressed(int iButton, int *piRow, int *piCol)
   auto fPressed = false;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     fPressed = HB_GTSELF_MOUSEBUTTONPRESSED(pGT, iButton, piRow, piCol);
     hb_gt_BaseFree(pGT);
   }
@@ -329,8 +312,7 @@ HB_BOOL hb_mouseButtonReleased(int iButton, int *piRow, int *piCol)
   auto fReleased = false;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     fReleased = HB_GTSELF_MOUSEBUTTONRELEASED(pGT, iButton, piRow, piCol);
     hb_gt_BaseFree(pGT);
   }
@@ -346,8 +328,7 @@ int hb_mouseReadKey(int iEventMask)
   int iKey = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT)
-  {
+  if (pGT) {
     iKey = HB_GTSELF_MOUSEREADKEY(pGT, iEventMask);
     hb_gt_BaseFree(pGT);
   }

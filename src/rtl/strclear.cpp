@@ -56,18 +56,14 @@ HB_FUNC(HB_STRCLEAR)
   //       it's possible that it contains copy of passed item [druzus]
   hb_retl(false);
 
-  if (pItem && HB_ISBYREF(1))
-  {
+  if (pItem && HB_ISBYREF(1)) {
     auto pszPtr = pItem->getCPtr();
     char *pBuffer;
     HB_SIZE nSize;
-    if (hb_itemGetWriteCL(pItem, &pBuffer, &nSize))
-    {
+    if (hb_itemGetWriteCL(pItem, &pBuffer, &nSize)) {
       memset(pBuffer, '\0', nSize + 1);
       hb_retl(pszPtr == pBuffer);
-    }
-    else
-    {
+    } else {
       hb_retl(false);
     }
   }

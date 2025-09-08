@@ -53,23 +53,18 @@
 
 static HB_SIZE utf8pos(const char *szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos)
 {
-  if (nUTF8Pos > 0 && nUTF8Pos <= nLen)
-  {
+  if (nUTF8Pos > 0 && nUTF8Pos <= nLen) {
     HB_SIZE n1, n2;
     HB_WCHAR uc;
     int n = 0;
 
-    for (n1 = n2 = 0; n1 < nLen;)
-    {
-      if (hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(szUTF8[n1]), &n, &uc))
-      {
+    for (n1 = n2 = 0; n1 < nLen;) {
+      if (hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(szUTF8[n1]), &n, &uc)) {
         ++n1;
       }
 
-      if (n == 0)
-      {
-        if (--nUTF8Pos == 0)
-        {
+      if (n == 0) {
+        if (--nUTF8Pos == 0) {
           return n2 + 1;
         }
         n2 = n1;
@@ -85,8 +80,7 @@ HB_FUNC(HB_CDPSELECT)
 
   hb_retc(hb_cdpID());
 
-  if (id)
-  {
+  if (id) {
     hb_cdpSelectID(id);
   }
 }
@@ -95,12 +89,9 @@ HB_FUNC(HB_CDPEXISTS)
 {
   auto id = hb_parc(1);
 
-  if (id)
-  {
+  if (id) {
     hb_retl(hb_cdpFind(id) != nullptr);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -125,17 +116,12 @@ HB_FUNC(HB_CDPISCHARIDX)
   PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
   auto fResult = false;
 
-  if (cdp)
-  {
+  if (cdp) {
     fResult = HB_CDP_ISCHARIDX(cdp);
-    if (HB_CDP_ISCUSTOM(cdp) && HB_ISLOG(2))
-    {
-      if (hb_parl(2))
-      {
+    if (HB_CDP_ISCUSTOM(cdp) && HB_ISLOG(2)) {
+      if (hb_parl(2)) {
         cdp->type |= HB_CDP_TYPE_CHARIDX;
-      }
-      else
-      {
+      } else {
         cdp->type &= ~HB_CDP_TYPE_CHARIDX;
       }
     }
@@ -159,16 +145,14 @@ HB_FUNC(HB_CDPLIST)
   const char **list = hb_cdpList();
 
   HB_ISIZ nPos = 0;
-  while (list[nPos])
-  {
+  while (list[nPos]) {
     ++nPos;
   }
 
   hb_reta(nPos);
 
   nPos = 0;
-  while (list[nPos])
-  {
+  while (list[nPos]) {
     hb_storvc(list[nPos], -1, nPos + 1);
     ++nPos;
   }
@@ -188,38 +172,29 @@ HB_FUNC(HB_TRANSLATE)
   auto szIdIn = hb_parc(2);
   auto szIdOut = hb_parc(3);
 
-  if (nLen)
-  {
+  if (nLen) {
     PHB_CODEPAGE cdpIn = szIdIn ? hb_cdpFindExt(szIdIn) : hb_vmCDP();
     PHB_CODEPAGE cdpOut = szIdOut ? hb_cdpFindExt(szIdOut) : hb_vmCDP();
 
     if (cdpIn && cdpOut && cdpIn != cdpOut &&
-        (cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM(cdpIn) || HB_CDP_ISCUSTOM(cdpOut)))
-    {
+        (cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM(cdpIn) || HB_CDP_ISCUSTOM(cdpOut))) {
       char *szResult = hb_cdpnDup(hb_parc(1), &nLen, cdpIn, cdpOut);
       hb_retclen_buffer(szResult, nLen);
-    }
-    else
-    {
+    } else {
       hb_itemReturn(hb_param(1, Harbour::Item::STRING));
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
 
 HB_FUNC(HB_UTF8CHR)
 {
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     char utf8Char[HB_MAX_CHAR_LEN];
     int iLen = hb_cdpU16CharToUTF8(utf8Char, static_cast<HB_WCHAR>(hb_parni(1)));
     hb_retclen(utf8Char, iLen);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -228,29 +203,23 @@ HB_FUNC(HB_UTF8ASC)
 {
   auto pszString = hb_parc(1);
 
-  if (pszString)
-  {
+  if (pszString) {
     auto nLen = hb_parclen(1);
     HB_WCHAR wc = 0;
     int n = 0;
 
-    while (nLen)
-    {
-      if (!hb_cdpUTF8ToU16NextChar(static_cast<unsigned char>(*pszString), &n, &wc))
-      {
+    while (nLen) {
+      if (!hb_cdpUTF8ToU16NextChar(static_cast<unsigned char>(*pszString), &n, &wc)) {
         break;
       }
-      if (n == 0)
-      {
+      if (n == 0) {
         break;
       }
       pszString++;
       nLen--;
     }
     hb_retnint(wc);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -261,20 +230,15 @@ HB_FUNC(HB_STRTOUTF8)
   HB_SIZE nDest = 0;
   char *szDest = nullptr;
 
-  if (nLen)
-  {
+  if (nLen) {
     auto szCP = hb_parc(2);
     PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
-    if (cdp)
-    {
-      if (hb_cdpIsUTF8(cdp))
-      {
+    if (cdp) {
+      if (hb_cdpIsUTF8(cdp)) {
         hb_itemReturn(hb_param(1, Harbour::Item::STRING));
         return;
-      }
-      else
-      {
+      } else {
         auto szString = hb_parc(1);
         nDest = hb_cdpStrAsUTF8Len(cdp, szString, nLen, 0);
         szDest = static_cast<char *>(hb_xgrab(nDest + 1));
@@ -282,12 +246,9 @@ HB_FUNC(HB_STRTOUTF8)
       }
     }
   }
-  if (szDest != nullptr)
-  {
+  if (szDest != nullptr) {
     hb_retclen_buffer(szDest, nDest);
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
@@ -296,26 +257,20 @@ HB_FUNC(HB_UTF8TOSTR)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr)
-  {
+  if (szString != nullptr) {
     auto nLen = hb_parclen(1);
     HB_SIZE nDest = 0;
     char *szDest = nullptr;
 
-    if (nLen)
-    {
+    if (nLen) {
       auto szCP = hb_parc(2);
       PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
-      if (cdp)
-      {
-        if (hb_cdpIsUTF8(cdp))
-        {
+      if (cdp) {
+        if (hb_cdpIsUTF8(cdp)) {
           hb_itemReturn(hb_param(1, Harbour::Item::STRING));
           return;
-        }
-        else
-        {
+        } else {
           szString = hb_parc(1);
           nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
           szDest = static_cast<char *>(hb_xgrab(nDest + 1));
@@ -324,17 +279,12 @@ HB_FUNC(HB_UTF8TOSTR)
       }
     }
 
-    if (szDest != nullptr)
-    {
+    if (szDest != nullptr) {
       hb_retclen_buffer(szDest, nDest);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -344,24 +294,18 @@ HB_FUNC(HB_UTF8AT)
   auto pSub = hb_param(1, Harbour::Item::STRING);
   auto pText = hb_param(2, Harbour::Item::STRING);
 
-  if (pText && pSub)
-  {
+  if (pText && pSub) {
     auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parnsdef(3, 1);
     HB_SIZE nEnd = hb_parnsdef(4, nTextLength); // nTextLength can be > UTF8 len. No problem.
 
-    if (nEnd < nStart)
-    {
+    if (nEnd < nStart) {
       hb_retns(0);
+    } else {
+      hb_retns(
+          hb_cdpUTF8StringAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), nTextLength, nStart, nEnd, false));
     }
-    else
-    {
-      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), nTextLength,
-                                  nStart, nEnd, false));
-    }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -375,24 +319,17 @@ HB_FUNC(HB_UTF8RAT)
   auto pSub = hb_param(1, Harbour::Item::STRING);
   auto pText = hb_param(2, Harbour::Item::STRING);
 
-  if (pText && pSub)
-  {
+  if (pText && pSub) {
     auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parnsdef(3, 1);
     HB_SIZE nEnd = hb_parnsdef(4, nTextLength); // nTextLength can be > UTF8 len. No problem.
 
-    if (nEnd < nStart)
-    {
+    if (nEnd < nStart) {
       hb_retns(0);
+    } else {
+      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), nTextLength, nStart, nEnd, true));
     }
-    else
-    {
-      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), nTextLength,
-                                  nStart, nEnd, true));
-    }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -402,42 +339,31 @@ HB_FUNC(HB_UTF8SUBSTR)
   auto szString = hb_parc(1);
   auto iPCount = hb_pcount();
 
-  if (szString != nullptr && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))))
-  {
+  if (szString != nullptr && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3))))) {
     char *szDest = nullptr;
     auto nLen = hb_parclen(1);
     HB_SIZE nDest = 0;
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? static_cast<HB_ISIZ>(nLen) : hb_parns(3);
 
-    if (nFrom < 0)
-    {
+    if (nFrom < 0) {
       nFrom += hb_cdpUTF8StringLength(szString, nLen);
-      if (nFrom < 0)
-      {
+      if (nFrom < 0) {
         nFrom = 0;
       }
-    }
-    else if (nFrom)
-    {
+    } else if (nFrom) {
       --nFrom;
     }
 
-    if (nLen > static_cast<HB_SIZE>(nFrom) && nCount > 0)
-    {
+    if (nLen > static_cast<HB_SIZE>(nFrom) && nCount > 0) {
       szDest = hb_cdpUTF8StringSubstr(szString, nLen, nFrom, nCount, &nDest);
     }
-    if (szDest != nullptr)
-    {
+    if (szDest != nullptr) {
       hb_retclen_buffer(szDest, nDest);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -446,28 +372,21 @@ HB_FUNC(HB_UTF8LEFT)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr && HB_ISNUM(2))
-  {
+  if (szString != nullptr && HB_ISNUM(2)) {
     HB_ISIZ nLenReq = hb_parns(2);
     HB_SIZE nDest = 0;
     char *szDest = nullptr;
 
-    if (nLenReq > 0)
-    {
+    if (nLenReq > 0) {
       szDest = hb_cdpUTF8StringSubstr(szString, hb_parclen(1), 0, nLenReq, &nDest);
     }
 
-    if (szDest != nullptr)
-    {
+    if (szDest != nullptr) {
       hb_retclen_buffer(szDest, nDest);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -476,34 +395,26 @@ HB_FUNC(HB_UTF8RIGHT)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr && HB_ISNUM(2))
-  {
+  if (szString != nullptr && HB_ISNUM(2)) {
     HB_ISIZ nLenReq = hb_parns(2), nFrom;
     auto nLen = hb_parclen(1);
     HB_SIZE nDest = 0;
     char *szDest = nullptr;
 
-    if (nLen && nLenReq > 0)
-    {
+    if (nLen && nLenReq > 0) {
       nFrom = hb_cdpUTF8StringLength(szString, nLen) - nLenReq;
-      if (nFrom < 0)
-      {
+      if (nFrom < 0) {
         nFrom = 0;
       }
       szDest = hb_cdpUTF8StringSubstr(szString, nLen, nFrom, nLenReq, &nDest);
     }
 
-    if (szDest != nullptr)
-    {
+    if (szDest != nullptr) {
       hb_retclen_buffer(szDest, nDest);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -512,22 +423,16 @@ HB_FUNC(HB_UTF8PEEK)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr && HB_ISNUM(2))
-  {
+  if (szString != nullptr && HB_ISNUM(2)) {
     HB_SIZE nPos = hb_parns(2);
     auto nLen = hb_parclen(1);
 
-    if (nPos > 0 && nPos <= nLen)
-    {
+    if (nPos > 0 && nPos <= nLen) {
       hb_retnint(hb_cdpUTF8StringPeek(szString, nLen, nPos - 1));
-    }
-    else
-    {
+    } else {
       hb_retni(0);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -536,15 +441,13 @@ HB_FUNC(HB_UTF8POKE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (pText && HB_ISNUM(2) && HB_ISNUM(3)) {
     auto szString = pText->getCPtr();
     auto nLen = pText->getCLen();
     HB_SIZE nPos;
 
     nPos = utf8pos(szString, nLen, hb_parns(2));
-    if (nPos)
-    {
+    if (nPos) {
 
       --nPos;
       auto uc = static_cast<HB_WCHAR>(hb_parni(3));
@@ -553,35 +456,26 @@ HB_FUNC(HB_UTF8POKE)
       HB_WCHAR uc2;
       hb_cdpUTF8ToU16NextChar(szString[nPos], &n2, &uc2);
       ++n2;
-      if (n == n2)
-      {
+      if (n == n2) {
         char *szText;
-        if (hb_itemGetWriteCL(pText, &szText, &nLen) && nPos + n <= nLen)
-        {
+        if (hb_itemGetWriteCL(pText, &szText, &nLen) && nPos + n <= nLen) {
           hb_cdpU16CharToUTF8(&szText[nPos], uc);
         }
         hb_itemReturn(pText);
-      }
-      else
-      {
+      } else {
         auto szResult = static_cast<char *>(hb_xgrab(nLen - n2 + n + 1));
         memcpy(szResult, szString, nPos);
         hb_cdpU16CharToUTF8(&szResult[nPos], uc);
         memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
-        if (HB_ISBYREF(1))
-        {
+        if (HB_ISBYREF(1)) {
           hb_storclen(szResult, nLen - n2 + n, 1);
         }
         hb_retclen_buffer(szResult, nLen - n2 + n);
       }
-    }
-    else
-    {
+    } else {
       hb_itemReturn(pText);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -591,62 +485,45 @@ HB_FUNC(HB_UTF8STUFF)
   auto szText = hb_parc(1);
   auto szIns = hb_parc(4);
 
-  if (szText != nullptr && szIns != nullptr && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (szText != nullptr && szIns != nullptr && HB_ISNUM(2) && HB_ISNUM(3)) {
     auto nLen = hb_parclen(1);
     HB_SIZE nPos = hb_parns(2);
     HB_SIZE nDel = hb_parns(3);
     auto nIns = hb_parclen(4);
     HB_SIZE nTot;
 
-    if (nPos)
-    {
+    if (nPos) {
       nPos = utf8pos(szText, nLen, nPos);
-      if (nPos == 0)
-      {
+      if (nPos == 0) {
         nPos = nLen;
-      }
-      else
-      {
+      } else {
         nPos--;
       }
     }
-    if (nDel)
-    {
-      if (nPos < nLen)
-      {
+    if (nDel) {
+      if (nPos < nLen) {
         nDel = utf8pos(szText + nPos, nLen - nPos, nDel + 1);
-        if (nDel == 0)
-        {
+        if (nDel == 0) {
           nDel = nLen - nPos;
-        }
-        else
-        {
+        } else {
           nDel--;
         }
-      }
-      else
-      {
+      } else {
         nDel = 0;
       }
     }
 
-    if ((nTot = nLen + nIns - nDel) > 0)
-    {
+    if ((nTot = nLen + nIns - nDel) > 0) {
       auto szResult = static_cast<char *>(hb_xgrab(nTot + 1));
 
       hb_xmemcpy(szResult, szText, nPos);
       hb_xmemcpy(szResult + nPos, szIns, nIns);
       hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - (nPos + nDel));
       hb_retclen_buffer(szResult, nTot);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -655,12 +532,9 @@ HB_FUNC(HB_UTF8LEN)
 {
   auto szText = hb_parc(1);
 
-  if (szText != nullptr)
-  {
+  if (szText != nullptr) {
     hb_retnint(hb_cdpUTF8StringLength(szText, hb_parclen(1)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

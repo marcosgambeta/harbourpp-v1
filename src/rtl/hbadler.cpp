@@ -58,48 +58,30 @@
     s1 += buf[i];                                                                                                      \
     s2 += s1;                                                                                                          \
   }
-#define LOOP_DO2(buf, i)                                                                                               \
-  {                                                                                                                    \
-    LOOP_DO1(buf, i) LOOP_DO1(buf, i + 1)                                                                              \
-  }
-#define LOOP_DO4(buf, i)                                                                                               \
-  {                                                                                                                    \
-    LOOP_DO2(buf, i) LOOP_DO2(buf, i + 2)                                                                              \
-  }
-#define LOOP_DO8(buf, i)                                                                                               \
-  {                                                                                                                    \
-    LOOP_DO4(buf, i) LOOP_DO4(buf, i + 4)                                                                              \
-  }
-#define LOOP_DO16(buf, i)                                                                                              \
-  {                                                                                                                    \
-    LOOP_DO8(buf, i) LOOP_DO8(buf, i + 8)                                                                              \
-  }
+#define LOOP_DO2(buf, i) {LOOP_DO1(buf, i) LOOP_DO1(buf, i + 1)}
+#define LOOP_DO4(buf, i) {LOOP_DO2(buf, i) LOOP_DO2(buf, i + 2)}
+#define LOOP_DO8(buf, i) {LOOP_DO4(buf, i) LOOP_DO4(buf, i + 4)}
+#define LOOP_DO16(buf, i) {LOOP_DO8(buf, i) LOOP_DO8(buf, i + 8)}
 
 HB_U32 hb_adler32(HB_U32 adler, const void *buf, HB_SIZE len)
 {
   HB_U32 s1 = adler & 0xffff;
   HB_U32 s2 = (adler >> 16) & 0xffff;
 
-  if (buf && len)
-  {
+  if (buf && len) {
     auto ucbuf = static_cast<const unsigned char *>(buf);
-    do
-    {
+    do {
       HB_ISIZ n = len < NMAX ? len : NMAX;
       len -= n;
-      if (n >= 16)
-      {
-        do
-        {
+      if (n >= 16) {
+        do {
           LOOP_DO16(ucbuf, 0)
           ucbuf += 16;
           n -= 16;
         } while (n >= 16);
       }
-      if (n)
-      {
-        do
-        {
+      if (n) {
+        do {
           s1 += *ucbuf++;
           s2 += s1;
         } while (--n);
@@ -116,12 +98,9 @@ HB_FUNC(HB_ADLER32)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr)
-  {
+  if (szString != nullptr) {
     hb_retnint(hb_adler32(static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

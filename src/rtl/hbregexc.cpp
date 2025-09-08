@@ -105,8 +105,7 @@ PHB_REGEX hb_regexCompile(const char *szRegEx, HB_SIZE nLen, int iFlags)
   pRegEx->fFree = true;
   pRegEx->iFlags = iFlags;
 
-  if ((s_reg_comp)(pRegEx, szRegEx) != 0)
-  {
+  if ((s_reg_comp)(pRegEx, szRegEx) != 0) {
     hb_gcFree(pRegEx);
     pRegEx = nullptr;
   }
@@ -119,34 +118,25 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
   PHB_REGEX pRegEx = nullptr;
   HB_BOOL fArgError = true;
 
-  if (pRegExItm)
-  {
-    if (pRegExItm->isPointer())
-    {
+  if (pRegExItm) {
+    if (pRegExItm->isPointer()) {
       pRegEx = static_cast<PHB_REGEX>(hb_itemGetPtrGC(pRegExItm, &s_gcRegexFuncs));
-      if (pRegEx)
-      {
+      if (pRegEx) {
         fArgError = false;
       }
-    }
-    else if (pRegExItm->isString())
-    {
+    } else if (pRegExItm->isString()) {
       auto nLen = pRegExItm->getCLen();
       auto szRegEx = pRegExItm->getCPtr();
-      if (nLen > 0)
-      {
+      if (nLen > 0) {
         fArgError = false;
         pRegEx = hb_regexCompile(szRegEx, nLen, iFlags);
       }
     }
   }
 
-  if (fArgError)
-  {
+  if (fArgError) {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm);
-  }
-  else if (!pRegEx)
-  { // hb_regexCompile() failed
+  } else if (!pRegEx) { // hb_regexCompile() failed
     hb_errRT_BASE_SubstR(EG_ARG, 3015, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm);
   }
 
@@ -155,8 +145,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
 
 void hb_regexFree(PHB_REGEX pRegEx)
 {
-  if (pRegEx && pRegEx->fFree)
-  {
+  if (pRegEx && pRegEx->fFree) {
     (s_reg_free)(pRegEx);
     hb_gcFree(pRegEx);
   }

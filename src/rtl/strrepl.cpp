@@ -57,13 +57,11 @@ HB_FUNC(HB_STRREPLACE)
   auto pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY |
                               (HB_ISNIL(3) ? Harbour::Item::HASH : Harbour::Item::NIL));
 
-  if (pText && pSrc)
-  {
+  if (pText && pSrc) {
     auto nText = pText->getCLen();
     HB_SIZE nSrc = hb_itemSize(pSrc);
 
-    if (nText > 0 && nSrc > 0)
-    {
+    if (nText > 0 && nSrc > 0) {
       auto pDst = hb_param(3, Harbour::Item::STRING | Harbour::Item::ARRAY);
       const char *pszDst = pDst && pDst->isString() ? pDst->getCPtr() : nullptr;
       const char *pszSrc = pSrc->isString() ? pSrc->getCPtr() : nullptr;
@@ -75,131 +73,91 @@ HB_FUNC(HB_STRREPLACE)
       HB_SIZE nDst, nSize, nPos, nAt, nSkip, nTmp;
 
       nDst = hb_itemSize(pSrc->isHash() ? pSrc : pDst);
-      if (nText > 1024)
-      {
+      if (nText > 1024) {
         ptrOpt = static_cast<HB_SIZE *>(hb_xgrabz(256 * sizeof(HB_SIZE)));
-        for (nAt = 0; nAt < nSrc; ++nAt)
-        {
+        for (nAt = 0; nAt < nSrc; ++nAt) {
           HB_UCHAR uc;
 
-          if (pszSrc)
-          {
+          if (pszSrc) {
             uc = static_cast<HB_UCHAR>(pszSrc[nAt]);
-          }
-          else
-          {
+          } else {
             PHB_ITEM pItem = pSrc->isHash() ? hb_hashGetKeyAt(pSrc, nAt + 1) : hb_arrayGetItemPtr(pSrc, nAt + 1);
-            if (hb_itemGetCLen(pItem) == 0)
-            {
+            if (hb_itemGetCLen(pItem) == 0) {
               continue;
             }
             uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pItem)[0]);
           }
-          if (ptrOpt[uc] == 0)
-          {
+          if (ptrOpt[uc] == 0) {
             ptrOpt[uc] = nAt + 1;
-          }
-          else if (pszSrc == nullptr)
-          {
+          } else if (pszSrc == nullptr) {
             fNext = true;
           }
         }
       }
 
       nSize = nPos = nSkip = 0;
-      while (nPos < nText)
-      {
-        if (ptrOpt)
-        {
+      while (nPos < nText) {
+        if (ptrOpt) {
           nAt = ptrOpt[static_cast<HB_UCHAR>(pszText[nPos])];
-          if (nAt == 0 || pszSrc)
-          {
+          if (nAt == 0 || pszSrc) {
             nSkip = 1;
-          }
-          else
-          {
-            for (; nAt <= nSrc; ++nAt)
-            {
-              if (pSrc->isHash())
-              {
+          } else {
+            for (; nAt <= nSrc; ++nAt) {
+              if (pSrc->isHash()) {
                 pDst = hb_hashGetKeyAt(pSrc, nAt);
                 nSkip = hb_itemGetCLen(pDst);
                 ptr = hb_itemGetCPtr(pDst);
-              }
-              else
-              {
+              } else {
                 nSkip = hb_arrayGetCLen(pSrc, nAt);
                 ptr = hb_arrayGetCPtr(pSrc, nAt);
               }
-              if (nSkip > 0 && nSkip <= nText - nPos && memcmp(pszText + nPos, ptr, nSkip) == 0)
-              {
+              if (nSkip > 0 && nSkip <= nText - nPos && memcmp(pszText + nPos, ptr, nSkip) == 0) {
                 break;
               }
-              if (!fNext)
-              {
+              if (!fNext) {
                 nAt = nSrc;
               }
             }
-            if (nAt > nSrc)
-            {
+            if (nAt > nSrc) {
               nAt = 0;
               nSkip = 1;
             }
           }
-        }
-        else if (pszSrc)
-        {
+        } else if (pszSrc) {
           ptr = static_cast<const char *>(memchr(pszSrc, static_cast<HB_UCHAR>(pszText[nPos]), nSrc));
           nAt = ptr ? ptr - pszSrc + 1 : 0;
           nSkip = 1;
-        }
-        else
-        {
-          for (nAt = 1; nAt <= nSrc; ++nAt)
-          {
-            if (pSrc->isHash())
-            {
+        } else {
+          for (nAt = 1; nAt <= nSrc; ++nAt) {
+            if (pSrc->isHash()) {
               pDst = hb_hashGetKeyAt(pSrc, nAt);
               nSkip = hb_itemGetCLen(pDst);
               ptr = hb_itemGetCPtr(pDst);
-            }
-            else
-            {
+            } else {
               nSkip = hb_arrayGetCLen(pSrc, nAt);
               ptr = hb_arrayGetCPtr(pSrc, nAt);
             }
-            if (nSkip > 0 && nSkip <= nText - nPos && memcmp(pszText + nPos, ptr, nSkip) == 0)
-            {
+            if (nSkip > 0 && nSkip <= nText - nPos && memcmp(pszText + nPos, ptr, nSkip) == 0) {
               break;
             }
           }
-          if (nAt > nSrc)
-          {
+          if (nAt > nSrc) {
             nAt = 0;
             nSkip = 1;
           }
         }
 
-        if (pszResult)
-        {
-          if (nAt != 0)
-          {
-            if (nAt <= nDst)
-            {
-              if (pszDst)
-              {
+        if (pszResult) {
+          if (nAt != 0) {
+            if (nAt <= nDst) {
+              if (pszDst) {
                 pszResult[nSize++] = pszDst[nAt - 1];
-              }
-              else
-              {
-                if (pSrc->isHash())
-                {
+              } else {
+                if (pSrc->isHash()) {
                   pDst = hb_hashGetValueAt(pSrc, nAt);
                   nTmp = hb_itemGetCLen(pDst);
                   ptr = hb_itemGetCPtr(pDst);
-                }
-                else
-                {
+                } else {
                   nTmp = hb_arrayGetCLen(pDst, nAt);
                   ptr = hb_arrayGetCPtr(pDst, nAt);
                 }
@@ -207,58 +165,39 @@ HB_FUNC(HB_STRREPLACE)
                 nSize += nTmp;
               }
             }
-          }
-          else
-          {
+          } else {
             pszResult[nSize++] = pszText[nPos];
           }
           nPos += nSkip;
-        }
-        else
-        {
-          if (nAt != 0)
-          {
-            if (nAt <= nDst)
-            {
-              if (pszDst)
-              {
+        } else {
+          if (nAt != 0) {
+            if (nAt <= nDst) {
+              if (pszDst) {
                 nSize++;
-              }
-              else if (pSrc->isHash())
-              {
+              } else if (pSrc->isHash()) {
                 nSize += hb_itemGetCLen(hb_hashGetValueAt(pSrc, nAt));
-              }
-              else
-              {
+              } else {
                 nSize += hb_arrayGetCLen(pDst, nAt);
               }
             }
-          }
-          else
-          {
+          } else {
             nSize++;
           }
           nPos += nSkip;
-          if (nPos == nText)
-          {
+          if (nPos == nText) {
             pszResult = static_cast<char *>(hb_xgrab(nSize + 1));
             nSize = nPos = 0;
           }
         }
       }
-      if (ptrOpt)
-      {
+      if (ptrOpt) {
         hb_xfree(ptrOpt);
       }
       hb_retclen_buffer(pszResult, nSize);
-    }
-    else
-    {
+    } else {
       hb_itemReturn(pText);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

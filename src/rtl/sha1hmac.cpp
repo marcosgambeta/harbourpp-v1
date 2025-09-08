@@ -89,15 +89,13 @@ extern "C"
      * Is the total key length (current data and any previous data)
      * longer than the hash block length?
      */
-    if (ctx->hashkey != 0 || (keylen + ctx->keylen) > HMAC_SHA1_BLOCK_LENGTH)
-    {
+    if (ctx->hashkey != 0 || (keylen + ctx->keylen) > HMAC_SHA1_BLOCK_LENGTH) {
       /*
        * Looks like the key data exceeds the hash block length,
        * so that means we use a hash of the key as the key data
        * instead.
        */
-      if (ctx->hashkey == 0)
-      {
+      if (ctx->hashkey == 0) {
         /*
          * Ah, we haven't started hashing the key
          * data yet, so we must init. the hash
@@ -111,8 +109,7 @@ extern "C"
         hb_SHA1_Init(&ctx->shactx);
 
         /* If there's any previous key data, use it */
-        if (ctx->keylen > 0)
-        {
+        if (ctx->keylen > 0) {
           hb_SHA1_Update(&ctx->shactx, &(ctx->key[0]), ctx->keylen);
         }
 
@@ -124,9 +121,7 @@ extern "C"
       }
       /* Now feed the latest key data to the has monster */
       hb_SHA1_Update(&ctx->shactx, key, keylen);
-    }
-    else
-    {
+    } else {
       /*
        * Key data length hasn't yet exceeded the hash
        * block length (HMAC_SHA1_BLOCK_LENGTH), so theres
@@ -144,16 +139,14 @@ extern "C"
     unsigned int i;
 
     /* Did we end up hashing the key? */
-    if (ctx->hashkey)
-    {
+    if (ctx->hashkey) {
       memset(&(ctx->key[0]), ZERO_BYTE, HMAC_SHA1_BLOCK_LENGTH);
       /* Yes, so finish up and copy the key data */
       hb_SHA1_Final(&(ctx->key[0]), &ctx->shactx);
       /* ctx->keylen was already set correctly */
     }
     /* Pad the key if necessary with zero bytes */
-    if ((i = HMAC_SHA1_BLOCK_LENGTH - ctx->keylen) > 0)
-    {
+    if ((i = HMAC_SHA1_BLOCK_LENGTH - ctx->keylen) > 0) {
       memset(&(ctx->key[ctx->keylen]), ZERO_BYTE, i);
     }
 
@@ -162,8 +155,7 @@ extern "C"
 
     /* Precompute the respective pads XORed with the key */
     key = &(ctx->key[0]);
-    for (i = 0; i < ctx->keylen; i++, key++)
-    {
+    for (i = 0; i < ctx->keylen; i++, key++) {
       /* XOR the key byte with the appropriate pad filler byte */
       *ipad++ ^= *key;
       *opad++ ^= *key;

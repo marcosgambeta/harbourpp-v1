@@ -53,8 +53,7 @@
 // converts an ASCII code to a character value
 HB_FUNC(CHR)
 {
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     // NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
     //       Chr() cases where the passed parameter is a constant which
     //       can be divided by 256 but it's not zero, in this case it
@@ -68,20 +67,15 @@ HB_FUNC(CHR)
     hb_retclen(szChar, 1);
 #else
     auto cdp = hb_vmCDP();
-    if (HB_CDP_ISCHARUNI(cdp))
-    {
+    if (HB_CDP_ISCHARUNI(cdp)) {
       char szChar[HB_MAX_CHAR_LEN];
       HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
       hb_retclen(szChar, nLen);
-    }
-    else
-    {
+    } else {
       hb_retclen(hb_szAscii[hb_parni(1) & 0xFF], 1);
     }
 #endif
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -91,23 +85,17 @@ HB_FUNC(ASC)
 {
   auto szValue = hb_parc(1);
 
-  if (szValue != nullptr)
-  {
+  if (szValue != nullptr) {
     int iChar;
     auto cdp = hb_vmCDP();
-    if (HB_CDP_ISCHARUNI(cdp))
-    {
+    if (HB_CDP_ISCHARUNI(cdp)) {
       iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
-    }
-    else
-    {
+    } else {
       iChar = static_cast<HB_UCHAR>(szValue[0]);
     }
 
     hb_retni(iChar);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

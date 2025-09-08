@@ -50,8 +50,7 @@
 
 static bool hb_numParam(int iParam, HB_MAXINT *plNum)
 {
-  if (HB_ISNUM(iParam))
-  {
+  if (HB_ISNUM(iParam)) {
     *plNum = hb_parnint(iParam);
     return true;
   }
@@ -64,8 +63,7 @@ HB_FUNC(HB_BYTESWAPI)
 {
   HB_MAXINT lValue;
 
-  if (hb_numParam(1, &lValue))
-  {
+  if (hb_numParam(1, &lValue)) {
     auto iVal = static_cast<HB_I16>(HB_SWAP_UINT16(lValue));
     hb_retnint(iVal);
   }
@@ -75,8 +73,7 @@ HB_FUNC(HB_BYTESWAPW)
 {
   HB_MAXINT lValue;
 
-  if (hb_numParam(1, &lValue))
-  {
+  if (hb_numParam(1, &lValue)) {
     auto uiVal = static_cast<HB_U16>(HB_SWAP_UINT16(lValue));
     hb_retnint(uiVal);
   }
@@ -86,8 +83,7 @@ HB_FUNC(HB_BYTESWAPL)
 {
   HB_MAXINT lValue;
 
-  if (hb_numParam(1, &lValue))
-  {
+  if (hb_numParam(1, &lValue)) {
     auto iVal = static_cast<HB_I32>(HB_SWAP_UINT32(lValue));
     hb_retnint(iVal);
   }
@@ -97,8 +93,7 @@ HB_FUNC(HB_BYTESWAPU)
 {
   HB_MAXINT lValue;
 
-  if (hb_numParam(1, &lValue))
-  {
+  if (hb_numParam(1, &lValue)) {
     auto uiVal = static_cast<HB_U32>(HB_SWAP_UINT32(lValue));
     hb_retnint(uiVal);
   }
@@ -108,8 +103,7 @@ HB_FUNC(HB_BYTESWAPLL)
 {
   HB_MAXINT lValue;
 
-  if (hb_numParam(1, &lValue))
-  {
+  if (hb_numParam(1, &lValue)) {
 #if defined(HB_LONG_LONG_OFF)
     auto iVal = static_cast<HB_MAXINT>(HB_SWAP_UINT32(lValue));
 #else

@@ -58,7 +58,7 @@
 
 #include "hbiousr.ch"
 
-#define HB_FILE_ERR_UNSUPPORTED  ((HB_ERRCODE)FS_ERROR)
+#define HB_FILE_ERR_UNSUPPORTED ((HB_ERRCODE)FS_ERROR)
 
 struct _HB_IOUSR
 {
@@ -81,8 +81,7 @@ using HB_FILE = _HB_FILE;
 
 static HB_CRITICAL_NEW(s_iousrMtx);
 #define HB_IOUSR_LOCK()                                                                                                \
-  do                                                                                                                   \
-  {                                                                                                                    \
+  do {                                                                                                                 \
   hb_threadEnterCriticalSection(&s_iousrMtx)
 #define HB_IOUSR_UNLOCK()                                                                                              \
   hb_threadLeaveCriticalSection(&s_iousrMtx);                                                                          \
@@ -96,8 +95,7 @@ static void s_errRT_IOUSR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const ch
 {
   auto pError = hb_errRT_New(ES_ERROR, "IOUSR", errGenCode, errSubCode, szDescription, HB_ERR_FUNCNAME, 0, EF_NONE);
   PHB_ITEM pArray = hb_arrayBaseParams();
-  if (pArray)
-  {
+  if (pArray) {
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
   }
@@ -109,8 +107,7 @@ static void s_iousrFreeAll(void *cargo)
 {
   HB_SYMBOL_UNUSED(cargo);
 
-  while (s_iCount > 0)
-  {
+  while (s_iCount > 0) {
     PHB_IOUSR pIO = s_ioUsrs[--s_iCount];
     hb_xfree(pIO->prefix);
     hb_xfree(pIO);
@@ -132,17 +129,13 @@ static PHB_IOUSR s_iousrAddNew(const char *pszPrefix)
   HB_IOUSR_LOCK();
 
   int iCount = s_iCount;
-  while (--iCount >= 0)
-  {
-    if (hb_stricmp(pszPrefix, s_ioUsrs[iCount]->prefix) == 0)
-    {
+  while (--iCount >= 0) {
+    if (hb_stricmp(pszPrefix, s_ioUsrs[iCount]->prefix) == 0) {
       break;
     }
   }
-  if (iCount < 0)
-  {
-    if (s_iCount == 0)
-    {
+  if (iCount < 0) {
+    if (s_iCount == 0) {
       hb_vmAtQuit(s_iousrFreeAll, nullptr);
     }
     pIO = static_cast<PHB_IOUSR>(hb_xgrabz(sizeof(HB_IOUSR)));
@@ -156,7 +149,7 @@ static PHB_IOUSR s_iousrAddNew(const char *pszPrefix)
   return pIO;
 }
 
-#define s_hasMethod(pIO, iMethod) ((pIO)->prg_funcs[(iMethod)-1] != nullptr)
+#define s_hasMethod(pIO, iMethod) ((pIO)->prg_funcs[(iMethod) - 1] != nullptr)
 
 #define s_getUsrIO(p) (static_cast<PHB_IOUSR>(HB_UNCONST(p)))
 
@@ -171,17 +164,13 @@ static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char *pszFileName)
   PHB_IOUSR pIO = s_getUsrIO(pFuncs);
   auto fResult = false;
 
-  if (hb_strnicmp(pszFileName, pIO->prefix, pIO->prefix_len) == 0)
-  {
-    if (s_hasMethod(pIO, IOUSR_ACCEPT))
-    {
+  if (hb_strnicmp(pszFileName, pIO->prefix, pIO->prefix_len) == 0) {
+    if (s_hasMethod(pIO, IOUSR_ACCEPT)) {
       s_pushMethod(pIO, IOUSR_ACCEPT);
       hb_vmPushString(pszFileName, strlen(pszFileName));
       hb_vmDo(1);
       fResult = hb_parl(-1);
-    }
-    else if (pIO->prefix_len > 0)
-    {
+    } else if (pIO->prefix_len > 0) {
       fResult = true;
     }
   }
@@ -290,8 +279,7 @@ static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char *pszFileName, lon
   hb_vmDo(3);
 
   bool fResult = hb_parl(-1);
-  if (fResult)
-  {
+  if (fResult) {
     *plJulian = hb_stackItemFromBase(iOffset)->getNL();
     *plMillisec = hb_stackItemFromBase(iOffset + 1)->getNL();
   }
@@ -325,8 +313,7 @@ static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char *pszFileName, HB_
   hb_vmDo(2);
 
   bool fResult = hb_parl(-1);
-  if (fResult)
-  {
+  if (fResult) {
     *pnAttr = static_cast<HB_FATTR>(hb_stackItemFromBase(iOffset)->getNL());
   }
   hb_stackPop();
@@ -382,37 +369,27 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char *pszName, const cha
 
   s_pushMethod(pIO, IOUSR_OPEN);
   hb_vmPushString(pszName, strlen(pszName));
-  if (pszDefExt)
-  {
+  if (pszDefExt) {
     hb_vmPushString(pszDefExt, strlen(pszDefExt));
-  }
-  else
-  {
+  } else {
     hb_vmPushNil();
   }
   hb_vmPushInteger(nExFlags);
-  if (pPaths)
-  {
+  if (pPaths) {
     hb_vmPushString(pPaths, strlen(pPaths));
-  }
-  else
-  {
+  } else {
     hb_vmPushNil();
   }
-  if (pError)
-  {
+  if (pError) {
     hb_vmPush(pError);
-  }
-  else
-  {
+  } else {
     hb_vmPushNil();
   }
 
   hb_vmDo(5);
 
   auto pFileItm = hb_stackReturnItem();
-  if (!pFileItm->isNil())
-  {
+  if (!pFileItm->isNil()) {
     pFile = s_fileNew(pIO, hb_itemNew(pFileItm));
   }
 
@@ -467,11 +444,9 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void *data, HB_SIZE nSize, HB_MAXINT t
   hb_vmDo(4);
 
   HB_SIZE nResult = hb_parns(-1);
-  if (nResult > 0)
-  {
+  if (nResult > 0) {
     nSize = hb_stackItemFromBase(iOffset)->getCLen();
-    if (nResult > nSize)
-    {
+    if (nResult > nSize) {
       nResult = nSize;
     }
     memcpy(data, hb_stackItemFromBase(iOffset)->getCPtr(), nSize);
@@ -509,11 +484,9 @@ static HB_SIZE s_fileReadAt(PHB_FILE pFile, void *buffer, HB_SIZE nSize, HB_FOFF
   hb_vmDo(4);
 
   HB_SIZE nResult = hb_parns(-1);
-  if (nResult > 0)
-  {
+  if (nResult > 0) {
     nSize = hb_stackItemFromBase(iOffset)->getCLen();
-    if (nResult > nSize)
-    {
+    if (nResult > nSize) {
       nResult = nSize;
     }
     memcpy(buffer, hb_stackItemFromBase(iOffset)->getCPtr(), nSize);
@@ -597,8 +570,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
   s_pushMethod(pIO, IOUSR_CONFIGURE);
   hb_vmPush(pFile->pFileItm);
   hb_vmPushInteger(iIndex);
-  if (pValue != nullptr)
-  {
+  if (pValue != nullptr) {
     hb_vmPush(pValue);
   }
   hb_vmDo(pValue != nullptr ? 3 : 2);
@@ -638,61 +610,47 @@ HB_FUNC(IOUSR_REGISTER)
   auto pMthItm = hb_param(1, Harbour::Item::ARRAY);
   auto pszPrefix = hb_parc(2);
 
-  if (pMthItm && pszPrefix && *pszPrefix)
-  {
+  if (pMthItm && pszPrefix && *pszPrefix) {
     HB_SIZE nMethods = hb_arrayLen(pMthItm), nAt;
 
-    if (nMethods > HB_MIN(IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT))
-    {
+    if (nMethods > HB_MIN(IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT)) {
       nMethods = HB_MIN(IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT);
     }
 
-    for (nAt = 1; nAt <= nMethods; ++nAt)
-    {
+    for (nAt = 1; nAt <= nMethods; ++nAt) {
       auto pSymItm = hb_arrayGetItemPtr(pMthItm, nAt);
 
-      if (!pSymItm->isNil() && !pSymItm->isSymbol())
-      {
+      if (!pSymItm->isNil() && !pSymItm->isSymbol()) {
         break;
       }
     }
 
-    if (nAt > nMethods)
-    {
+    if (nAt > nMethods) {
       PHB_IOUSR pIO = s_iousrAddNew(pszPrefix);
 
-      if (pIO != nullptr)
-      {
+      if (pIO != nullptr) {
         const HB_FILE_FUNC *pDummyFunc;
         HB_FILE_FUNC *pFunction;
 
         pDummyFunc = &s_fileFuncs.Accept;
         pFunction = &pIO->funcs.Accept;
-        for (nAt = 1; nAt <= nMethods; ++nAt, pDummyFunc++, pFunction++)
-        {
+        for (nAt = 1; nAt <= nMethods; ++nAt, pDummyFunc++, pFunction++) {
           pIO->prg_funcs[nAt - 1] = hb_arrayGetSymbol(pMthItm, nAt);
-          if (nAt == 1 || pIO->prg_funcs[nAt - 1] != nullptr)
-          {
+          if (nAt == 1 || pIO->prg_funcs[nAt - 1] != nullptr) {
             *pFunction = *pDummyFunc;
           }
         }
-        if (!hb_fileRegisterPart(&pIO->funcs))
-        {
+        if (!hb_fileRegisterPart(&pIO->funcs)) {
           pIO = nullptr;
         }
       }
-      if (pIO == nullptr)
-      {
+      if (pIO == nullptr) {
         s_errRT_IOUSR(EG_ARG, 1003, pszPrefix);
       }
-    }
-    else
-    {
+    } else {
       s_errRT_IOUSR(EG_ARG, 1002, pszPrefix);
     }
-  }
-  else
-  {
+  } else {
     s_errRT_IOUSR(EG_ARG, 1001, "Argument error");
   }
 }
@@ -702,11 +660,9 @@ HB_FUNC(IOUSR_SETERROR)
 {
   HB_ERRCODE errCodePrev = hb_fsError();
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto errCodeNew = static_cast<HB_ERRCODE>(hb_parni(1));
-    if (errCodeNew != 0)
-    {
+    if (errCodeNew != 0) {
       errCodeNew += static_cast<HB_ERRCODE>(hb_parni(2));
     }
     hb_fsSetError(errCodeNew);

@@ -55,14 +55,11 @@ HB_FUNC(LOWER)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     auto nLen = pText->getCLen();
     char *pszBuffer = hb_cdpnDupLower(hb_vmCDP(), pText->getCPtr(), &nLen);
     hb_retclen_buffer(pszBuffer, nLen);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -72,14 +69,11 @@ HB_FUNC(UPPER)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     auto nLen = pText->getCLen();
     char *pszBuffer = hb_cdpnDupUpper(hb_vmCDP(), pText->getCPtr(), &nLen);
     hb_retclen_buffer(pszBuffer, nLen);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

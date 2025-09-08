@@ -63,8 +63,7 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, PHB_CODEPAGE cdp)
   iFlags &= (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT);
 
   // Perform key translations
-  switch (iKey)
-  {
+  switch (iKey) {
   case 0:
   case -1: // No key available
     return 0;
@@ -622,25 +621,18 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, PHB_CODEPAGE cdp)
     break;
 
   default:
-    if (iKey >= 0 && iKey < 32 && (iFlags & HB_KF_CTRL) != 0)
-    {
+    if (iKey >= 0 && iKey < 32 && (iFlags & HB_KF_CTRL) != 0) {
       iFlags |= HB_KF_CTRL;
       iKey += 'A' - 1;
-    }
-    else if (iKey <= 255 && (iKey >= 128 || (iFlags & (HB_KF_CTRL | HB_KF_ALT)) == 0))
-    {
-      if (cdp)
-      {
+    } else if (iKey <= 255 && (iKey >= 128 || (iFlags & (HB_KF_CTRL | HB_KF_ALT)) == 0)) {
+      if (cdp) {
         int uc = hb_cdpGetWC(cdp, static_cast<HB_UCHAR>(iKey), 0);
-        if (uc)
-        {
+        if (uc) {
           return HB_INKEY_NEW_UNICODEF(uc, iFlags);
         }
       }
       return HB_INKEY_NEW_CHARF(iKey, iFlags);
-    }
-    else
-    {
+    } else {
       return iKey;
     }
   }

@@ -54,8 +54,7 @@ HB_FUNC(__DEFPATH)
   const char *szDefault = hb_setGetDefault();
   int size = 0;
 
-  if (szDefault != nullptr)
-  {
+  if (szDefault != nullptr) {
     // Leave enough space to append a path delimiter
     hb_strncpy(buffer, szDefault, sizeof(buffer) - 1);
     size = static_cast<int>(strlen(buffer));
@@ -72,20 +71,15 @@ HB_FUNC(__DEFPATH)
   // for DOS compatible operating systems while preventing it from being
   // with a Unix compatible OS.
 #ifdef HB_OS_HAS_DRIVE_LETTER
-  if (size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR && buffer[size - 1] != HB_OS_DRIVE_DELIM_CHR)
-  {
-    if (size == 1)
-    {
+  if (size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR && buffer[size - 1] != HB_OS_DRIVE_DELIM_CHR) {
+    if (size == 1) {
       buffer[size++] = HB_OS_DRIVE_DELIM_CHR;
-    }
-    else
-    {
+    } else {
       buffer[size++] = HB_OS_PATH_DELIM_CHR;
     }
   }
 #else
-  if (size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR)
-  {
+  if (size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR) {
     buffer[size++] = HB_OS_PATH_DELIM_CHR;
   }
 #endif

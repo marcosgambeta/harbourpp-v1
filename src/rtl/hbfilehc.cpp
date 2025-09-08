@@ -91,8 +91,7 @@ HB_FUNC(HB_FNAMEEXTSETDEF)
 {
   char szPath[HB_PATH_MAX];
   PHB_FNAME pFilepath = hb_fsFNameSplit(hb_parcx(1));
-  if (!pFilepath->szExtension)
-  {
+  if (!pFilepath->szExtension) {
     pFilepath->szExtension = hb_parc(2);
   }
   hb_retc(hb_fsFNameMerge(szPath, pFilepath));

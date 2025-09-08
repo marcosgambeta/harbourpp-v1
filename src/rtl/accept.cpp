@@ -81,53 +81,42 @@ HB_FUNC(__ACCEPT)
   int input = 0;
 
   // cPrompt(s) passed ?
-  if (hb_pcount() >= 1)
-  {
+  if (hb_pcount() >= 1) {
     HB_FUNC_EXEC(QOUT);
   }
 
   szAcceptResult[0] = '\0';
 
-  while (input != K_ENTER && hb_vmRequestQuery() == 0)
-  {
+  while (input != K_ENTER && hb_vmRequestQuery() == 0) {
     // Wait forever, for keyboard events only
     input = hb_inkey(true, 0.0, INKEY_KEYBOARD);
-    switch (input)
-    {
+    switch (input) {
     case K_BS:
     case K_LEFT:
-      if (nLen > 0)
-      {
+      if (nLen > 0) {
         nChar = hb_cdpTextLen(cdp, szAcceptResult, nLen);
-        if (nChar > 0)
-        {
+        if (nChar > 0) {
           nLen = hb_cdpTextPos(cdp, szAcceptResult, nLen, nChar - 1);
-        }
-        else
-        {
+        } else {
           nLen = 0;
         }
 
         szKey[0] = HB_CHAR_BS;
 
         nChar = 1;
-      }
-      else
-      {
+      } else {
         nChar = 0;
       }
       break;
 
     default:
       nChar = hb_inkeyKeyString(input, szKey, sizeof(szKey));
-      if (nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN)
-      {
+      if (nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN) {
         memcpy(&szAcceptResult[nLen], szKey, nChar);
         nLen += nChar;
       }
     }
-    if (nChar > 0)
-    {
+    if (nChar > 0) {
       hb_conOutAlt(szKey, nChar);
     }
   }

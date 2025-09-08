@@ -83,8 +83,7 @@ HB_FUNC(HB_ANSITOOEM)
 #else
     hb_itemReturn(pString);
 #endif
-  else
-  {
+  else {
     hb_retc_null();
   }
 }
@@ -115,8 +114,7 @@ HB_FUNC(HB_OEMTOANSI)
 #else
     hb_itemReturn(pString);
 #endif
-  else
-  {
+  else {
     hb_retc_null();
   }
 }

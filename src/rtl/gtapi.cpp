@@ -70,8 +70,7 @@ HB_ERRCODE hb_gtInit(HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHAND
   hb_gtStartupInit();
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT == nullptr)
-  {
+  if (pGT == nullptr) {
     return Harbour::FAILURE;
   }
 
@@ -105,10 +104,8 @@ HB_ERRCODE hb_gtLock(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_LOCK(pGT))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_LOCK(pGT)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -125,8 +122,7 @@ HB_ERRCODE hb_gtUnlock(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_UNLOCK(pGT);
     errCode = Harbour::SUCCESS;
     hb_gt_BaseFree(pGT);
@@ -143,8 +139,7 @@ int hb_gtReadKey(int iEventMask)
   int iKey = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iKey = HB_GTSELF_READKEY(pGT, iEventMask);
     hb_gt_BaseFree(pGT);
   }
@@ -158,8 +153,7 @@ HB_ERRCODE hb_gtBox(int iTop, int iLeft, int iBottom, int iRight, const char *sz
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, HB_GTSELF_GETCOLOR(pGT));
     HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
     HB_GTSELF_FLUSH(pGT);
@@ -176,10 +170,8 @@ HB_ERRCODE hb_gtBoxEx(int iTop, int iLeft, int iBottom, int iRight, const char *
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (iColor == -1)
-    {
+  if (pGT != nullptr) {
+    if (iColor == -1) {
       iColor = HB_GTSELF_GETCOLOR(pGT);
     }
     HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor);
@@ -198,8 +190,7 @@ HB_ERRCODE hb_gtBoxD(int iTop, int iLeft, int iBottom, int iRight)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_BOXD(pGT, iTop, iLeft, iBottom, iRight, nullptr, HB_GTSELF_GETCOLOR(pGT));
     HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
     HB_GTSELF_FLUSH(pGT);
@@ -216,8 +207,7 @@ HB_ERRCODE hb_gtBoxS(int iTop, int iLeft, int iBottom, int iRight)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_BOXS(pGT, iTop, iLeft, iBottom, iRight, nullptr, HB_GTSELF_GETCOLOR(pGT));
     HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
     HB_GTSELF_FLUSH(pGT);
@@ -234,10 +224,8 @@ HB_ERRCODE hb_gtDrawBox(int iTop, int iLeft, int iBottom, int iRight, const char
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (iColor == -1)
-    {
+  if (pGT != nullptr) {
+    if (iColor == -1) {
       iColor = HB_GTSELF_GETCOLOR(pGT);
     }
 
@@ -256,8 +244,7 @@ HB_ERRCODE hb_gtColorSelect(int iColorIndex)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_COLORSELECT(pGT, iColorIndex);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -272,8 +259,7 @@ HB_ERRCODE hb_gtDispBegin(void)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_DISPBEGIN(pGT);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -290,8 +276,7 @@ int hb_gtDispCount(void)
   int iCount = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iCount = HB_GTSELF_DISPCOUNT(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -305,8 +290,7 @@ HB_ERRCODE hb_gtDispEnd(void)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_DISPEND(pGT);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -324,10 +308,8 @@ HB_ERRCODE hb_gtPreExt(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_PREEXT(pGT))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_PREEXT(pGT)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -344,10 +326,8 @@ HB_ERRCODE hb_gtPostExt(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_POSTEXT(pGT))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_POSTEXT(pGT)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -367,8 +347,7 @@ HB_ERRCODE hb_gtGetColorStr(char *pszColorString)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_GETCOLORSTR(pGT, pszColorString);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -386,8 +365,7 @@ int hb_gtColorToN(const char *szColorString)
   int iColor = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iColor = HB_GTSELF_COLORNUM(pGT, szColorString);
     hb_gt_BaseFree(pGT);
   }
@@ -401,8 +379,7 @@ HB_ERRCODE hb_gtColorsToString(int *pColors, int iColorCount, char *pszColorStri
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_COLORSTOSTRING(pGT, pColors, iColorCount, pszColorString, iBufSize);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -418,8 +395,7 @@ HB_ERRCODE hb_gtSetColorStr(const char *szColorString)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETCOLORSTR(pGT, szColorString);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -434,8 +410,7 @@ HB_ERRCODE hb_gtGetCursor(int *piCursorStyle)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     *piCursorStyle = HB_GTSELF_GETCURSORSTYLE(pGT);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -451,8 +426,7 @@ HB_ERRCODE hb_gtSetCursor(int iCursorStyle)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETCURSORSTYLE(pGT, iCursorStyle);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -468,8 +442,7 @@ HB_ERRCODE hb_gtGetPos(int *piRow, int *piCol)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_GETPOS(pGT, piRow, piCol);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -485,8 +458,7 @@ HB_ERRCODE hb_gtGetPosEx(int *piRow, int *piCol)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_GETPOS(pGT, piRow, piCol);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -505,8 +477,7 @@ HB_ERRCODE hb_gtSetPos(int iRow, int iCol)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETPOS(pGT, iRow, iCol);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -524,13 +495,10 @@ int hb_gtMaxCol(void)
   int iMaxCol;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iMaxCol = HB_GTSELF_MAXCOL(pGT);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     iMaxCol = 79;
   }
 
@@ -546,13 +514,10 @@ int hb_gtMaxRow(void)
   int iMaxRow;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iMaxRow = HB_GTSELF_MAXROW(pGT);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     iMaxRow = 24;
   }
 
@@ -566,8 +531,7 @@ HB_ERRCODE hb_gtScrDim(int *piHeight, int *piWidth)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_GETSIZE(pGT, piHeight, piWidth);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -583,8 +547,7 @@ HB_ERRCODE hb_gtSetSnowFlag(HB_BOOL fNoSnow)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETSNOWFLAG(pGT, fNoSnow);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -599,8 +562,7 @@ HB_ERRCODE hb_gtRectSize(int iTop, int iLeft, int iBottom, int iRight, HB_SIZE *
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     *pulBuffSize = HB_GTSELF_RECTSIZE(pGT, iTop, iLeft, iBottom, iRight);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -618,8 +580,7 @@ HB_BOOL hb_gtIsColor(void)
   auto fColor = true;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     fColor = HB_GTSELF_ISCOLOR(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -633,8 +594,7 @@ HB_ERRCODE hb_gtRepChar(int iRow, int iCol, HB_USHORT usChar, HB_SIZE nCount)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_REPLICATE(pGT, iRow, iCol, HB_GTSELF_GETCOLOR(pGT), 0, usChar, nCount);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -650,8 +610,7 @@ HB_ERRCODE hb_gtSave(int iTop, int iLeft, int iBottom, int iRight, void *pScrBuf
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SAVE(pGT, iTop, iLeft, iBottom, iRight, pScrBuff);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -666,8 +625,7 @@ HB_ERRCODE hb_gtRest(int iTop, int iLeft, int iBottom, int iRight, const void *p
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_REST(pGT, iTop, iLeft, iBottom, iRight, pScrBuff);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -685,10 +643,8 @@ HB_ERRCODE hb_gtGetChar(int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_US
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_GETCHAR(pGT, iRow, iCol, piColor, pbAttr, pusChar))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_GETCHAR(pGT, iRow, iCol, piColor, pbAttr, pusChar)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -705,10 +661,8 @@ HB_ERRCODE hb_gtPutChar(int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -725,10 +679,8 @@ HB_ERRCODE hb_gtBeginWrite(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_LOCK(pGT))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_LOCK(pGT)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -744,8 +696,7 @@ HB_ERRCODE hb_gtEndWrite(void)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_FLUSH(pGT);
     HB_GTSELF_UNLOCK(pGT);
     hb_gt_BaseFree(pGT);
@@ -761,8 +712,7 @@ HB_ERRCODE hb_gtGetBlink(HB_BOOL *bpBlink)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     *bpBlink = HB_GTSELF_GETBLINK(pGT);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -778,8 +728,7 @@ HB_ERRCODE hb_gtSetBlink(HB_BOOL fBlink)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETBLINK(pGT, fBlink);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -796,10 +745,8 @@ HB_ERRCODE hb_gtSetMode(int iRows, int iCols)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_SETMODE(pGT, iRows, iCols))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_SETMODE(pGT, iRows, iCols)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -814,10 +761,8 @@ HB_ERRCODE hb_gtPutText(int iRow, int iCol, const char *szStr, HB_SIZE nLength, 
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (iColor == -1)
-    {
+  if (pGT != nullptr) {
+    if (iColor == -1) {
       iColor = HB_GTSELF_GETCOLOR(pGT);
     }
 
@@ -837,8 +782,7 @@ HB_ERRCODE hb_gtWriteAt(int iRow, int iCol, const char *szStr, HB_SIZE nLength)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_WRITEAT(pGT, iRow, iCol, szStr, nLength);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -854,8 +798,7 @@ HB_ERRCODE hb_gtWrite(const char *szStr, HB_SIZE nLength)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_WRITE(pGT, szStr, nLength);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -871,8 +814,7 @@ HB_ERRCODE hb_gtWriteCon(const char *szStr, HB_SIZE nLength)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_WRITECON(pGT, szStr, nLength);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -888,8 +830,7 @@ HB_ERRCODE hb_gtScroll(int iTop, int iLeft, int iBottom, int iRight, int iRows, 
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SCROLL(pGT, iTop, iLeft, iBottom, iRight, HB_GTSELF_GETCOLOR(pGT), ' ', iRows, iCols);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -905,14 +846,11 @@ HB_ERRCODE hb_gtScrollEx(int iTop, int iLeft, int iBottom, int iRight, int iColo
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (iColor == -1)
-    {
+  if (pGT != nullptr) {
+    if (iColor == -1) {
       iColor = HB_GTSELF_GETCOLOR(pGT);
     }
-    if (iChar < 0)
-    {
+    if (iChar < 0) {
       iChar = HB_GTSELF_GETCLEARCHAR(pGT);
     }
     HB_GTSELF_SCROLL(pGT, iTop, iLeft, iBottom, iRight, iColor, static_cast<HB_USHORT>(iChar), iRows, iCols);
@@ -930,11 +868,9 @@ HB_ERRCODE hb_gtScrollUp(int iRows)
    HB_TRACE(HB_TR_DEBUG, ("hb_gtScrollUp(%d)", iRows));
 #endif
 
-  if (iRows != 0)
-  {
+  if (iRows != 0) {
     PHB_GT pGT = hb_gt_Base();
-    if (pGT != nullptr)
-    {
+    if (pGT != nullptr) {
       HB_GTSELF_SCROLLUP(pGT, iRows, HB_GTSELF_GETCOLOR(pGT), ' ');
       HB_GTSELF_FLUSH(pGT);
       hb_gt_BaseFree(pGT);
@@ -951,8 +887,7 @@ HB_ERRCODE hb_gtDrawShadow(int iTop, int iLeft, int iBottom, int iRight, int iCo
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_DRAWSHADOW(pGT, iTop, iLeft, iBottom, iRight, iColor);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -968,8 +903,7 @@ HB_ERRCODE hb_gtTone(double dFrequency, double dDuration)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_TONE(pGT, dFrequency, dDuration);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -986,8 +920,7 @@ const char *hb_gtVersion(int iType)
   const char *szVersion = "";
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     szVersion = HB_GTSELF_VERSION(pGT, iType);
     hb_gt_BaseFree(pGT);
   }
@@ -1001,8 +934,7 @@ HB_ERRCODE hb_gtSetAttribute(int iTop, int iLeft, int iBottom, int iRight, int i
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETATTRIBUTE(pGT, iTop, iLeft, iBottom, iRight, iColor);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -1021,10 +953,8 @@ HB_ERRCODE hb_gtSuspend(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_SUSPEND(pGT))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_SUSPEND(pGT)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1041,10 +971,8 @@ HB_ERRCODE hb_gtResume(void)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_RESUME(pGT))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_RESUME(pGT)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1059,13 +987,10 @@ HB_ERRCODE hb_gtOutStd(const char *szStr, HB_SIZE nLen)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_OUTSTD(pGT, szStr, nLen);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     hb_fsWriteLarge(static_cast<HB_FHANDLE>(HB_STDOUT_HANDLE), szStr, nLen);
   }
 
@@ -1079,13 +1004,10 @@ HB_ERRCODE hb_gtOutErr(const char *szStr, HB_SIZE nLen)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_OUTERR(pGT, szStr, nLen);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     hb_fsWriteLarge(static_cast<HB_FHANDLE>(HB_STDERR_HANDLE), szStr, nLen);
   }
 
@@ -1101,10 +1023,8 @@ HB_ERRCODE hb_gtSetDispCP(const char *pszTermCDP, const char *pszHostCDP, HB_BOO
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1121,10 +1041,8 @@ HB_ERRCODE hb_gtSetKeyCP(const char *pszTermCDP, const char *pszHostCDP)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_SETKEYCP(pGT, pszTermCDP, pszHostCDP))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_SETKEYCP(pGT, pszTermCDP, pszHostCDP)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1141,8 +1059,7 @@ PHB_CODEPAGE hb_gtHostCP(void)
   PHB_CODEPAGE cdp = nullptr;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     cdp = HB_GTSELF_HOSTCP(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -1158,8 +1075,7 @@ PHB_CODEPAGE hb_gtBoxCP(void)
   PHB_CODEPAGE cdp = nullptr;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     cdp = HB_GTSELF_BOXCP(pGT);
     hb_gt_BaseFree(pGT);
   }
@@ -1175,10 +1091,8 @@ HB_ERRCODE hb_gtInfo(int iType, PHB_GT_INFO pInfo)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_INFO(pGT, iType, pInfo))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_INFO(pGT, iType, pInfo)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1195,8 +1109,7 @@ int hb_gtAlert(PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh,
   int iResult = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iResult = HB_GTSELF_ALERT(pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay);
     hb_gt_BaseFree(pGT);
   }
@@ -1212,8 +1125,7 @@ int hb_gtSetFlag(int iType, int iNewValue)
   int iFlag = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iFlag = HB_GTSELF_SETFLAG(pGT, iType, iNewValue);
     hb_gt_BaseFree(pGT);
   }
@@ -1229,13 +1141,10 @@ int hb_gtGetCurrColor(void)
   int iColor;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iColor = HB_GTSELF_GETCOLOR(pGT);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     iColor = 0x07;
   }
 
@@ -1251,13 +1160,10 @@ int hb_gtGetClearColor(void)
   int iColor;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iColor = HB_GTSELF_GETCLEARCOLOR(pGT);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     iColor = 0x07;
   }
 
@@ -1271,8 +1177,7 @@ HB_ERRCODE hb_gtSetClearColor(int iColor)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETCLEARCOLOR(pGT, iColor);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -1289,13 +1194,10 @@ HB_USHORT hb_gtGetClearChar(void)
   HB_USHORT usChar;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     usChar = HB_GTSELF_GETCLEARCHAR(pGT);
     hb_gt_BaseFree(pGT);
-  }
-  else
-  {
+  } else {
     usChar = static_cast<HB_USHORT>(' ');
   }
 
@@ -1309,8 +1211,7 @@ HB_ERRCODE hb_gtSetClearChar(HB_USHORT usChar)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_SETCLEARCHAR(pGT, usChar);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -1327,10 +1228,8 @@ HB_ERRCODE hb_gtGetScrChar(int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, piColor, pbAttr, pusChar))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, piColor, pbAttr, pusChar)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1347,10 +1246,8 @@ HB_ERRCODE hb_gtPutScrChar(int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USH
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
-    if (HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, iColor, bAttr, usChar))
-    {
+  if (pGT != nullptr) {
+    if (HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, iColor, bAttr, usChar)) {
       errCode = Harbour::SUCCESS;
     }
     hb_gt_BaseFree(pGT);
@@ -1365,8 +1262,7 @@ HB_ERRCODE hb_gtFlush(void)
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
     return Harbour::SUCCESS;
@@ -1383,8 +1279,7 @@ int hb_gtGfxPrimitive(int iType, int iTop, int iLeft, int iBottom, int iRight, i
   int iResult = 0;
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     iResult = HB_GTSELF_GFXPRIMITIVE(pGT, iType, iTop, iLeft, iBottom, iRight, iColor);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);
@@ -1399,8 +1294,7 @@ HB_ERRCODE hb_gtGfxText(int iTop, int iLeft, const char *cBuf, int iColor, int i
 #endif
 
   PHB_GT pGT = hb_gt_Base();
-  if (pGT != nullptr)
-  {
+  if (pGT != nullptr) {
     HB_GTSELF_GFXTEXT(pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth);
     HB_GTSELF_FLUSH(pGT);
     hb_gt_BaseFree(pGT);

@@ -60,13 +60,11 @@ PHB_LPP hb_lppCreate(HB_SOCKET sd)
 
 void hb_lppDestroy(PHB_LPP pSocket)
 {
-  if (pSocket->pSendBuffer)
-  {
+  if (pSocket->pSendBuffer) {
     hb_xfree(pSocket->pSendBuffer);
   }
 
-  if (pSocket->pRecvBuffer)
-  {
+  if (pSocket->pRecvBuffer) {
     hb_xfree(pSocket->pRecvBuffer);
   }
 
@@ -88,8 +86,7 @@ HB_BOOL hb_lppSend(PHB_LPP pSocket, const void *data, HB_SIZE len, HB_MAXINT tim
   HB_MAXUINT timer;
   long lSend;
 
-  if (!pSocket->pSendBuffer)
-  {
+  if (!pSocket->pSendBuffer) {
     pSocket->pSendBuffer = static_cast<char *>(hb_xgrab(len + 4));
     HB_PUT_LE_UINT32(pSocket->pSendBuffer, len);
     hb_xmemcpy(pSocket->pSendBuffer + 4, data, len);
@@ -99,33 +96,26 @@ HB_BOOL hb_lppSend(PHB_LPP pSocket, const void *data, HB_SIZE len, HB_MAXINT tim
 
   timer = hb_timerInit(timeout);
 
-  for (;;)
-  {
-    if (pSocket->nSendLen - pSocket->nSendPos < static_cast<HB_SIZE>(LONG_MAX))
-    {
+  for (;;) {
+    if (pSocket->nSendLen - pSocket->nSendPos < static_cast<HB_SIZE>(LONG_MAX)) {
       lSend = static_cast<long>(pSocket->nSendLen - pSocket->nSendPos);
-    }
-    else
-    {
+    } else {
       lSend = LONG_MAX;
     }
 
     lSend = hb_socketSend(pSocket->sd, pSocket->pSendBuffer + pSocket->nSendPos, lSend, 0, timeout);
-    if (lSend == -1)
-    {
+    if (lSend == -1) {
       pSocket->iError = hb_socketGetError();
       return false;
     }
     pSocket->nSendPos += lSend;
-    if (pSocket->nSendPos == pSocket->nSendLen)
-    {
+    if (pSocket->nSendPos == pSocket->nSendLen) {
       hb_xfree(pSocket->pSendBuffer);
       pSocket->pSendBuffer = nullptr;
       pSocket->iError = 0;
       return true;
     }
-    if ((timeout = hb_timerTest(timeout, &timer)) == 0)
-    {
+    if ((timeout = hb_timerTest(timeout, &timer)) == 0) {
       pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
       return false;
     }
@@ -137,8 +127,7 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void **data, HB_SIZE *len, HB_MAXINT timeout
   HB_MAXUINT timer;
   long lRecv;
 
-  if (!pSocket->pRecvBuffer)
-  {
+  if (!pSocket->pRecvBuffer) {
     pSocket->pRecvBuffer = static_cast<char *>(hb_xgrab(4));
     pSocket->nRecvLen = 0;
     pSocket->fRecvHasSize = false;
@@ -146,35 +135,28 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void **data, HB_SIZE *len, HB_MAXINT timeout
 
   timer = hb_timerInit(timeout);
 
-  for (;;)
-  {
-    if (!pSocket->fRecvHasSize)
-    {
+  for (;;) {
+    if (!pSocket->fRecvHasSize) {
       lRecv = static_cast<long>(4 - pSocket->nRecvLen);
       lRecv = hb_socketRecv(pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout);
-      if (lRecv == -1)
-      {
+      if (lRecv == -1) {
         pSocket->iError = hb_socketGetError();
         return false;
-      }
-      else if (lRecv == 0)
-      {
+      } else if (lRecv == 0) {
         // peer closed connection
         pSocket->iError = 0;
         return false;
       }
 
       pSocket->nRecvLen += lRecv;
-      if (pSocket->nRecvLen < 4)
-      {
+      if (pSocket->nRecvLen < 4) {
         pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
         return false;
       }
 
       pSocket->nRecvSize = HB_GET_UINT32(pSocket->pRecvBuffer);
 
-      if (pSocket->nLimit && pSocket->nRecvSize > pSocket->nLimit)
-      {
+      if (pSocket->nLimit && pSocket->nRecvSize > pSocket->nLimit) {
         // protection against remote memory exhaust attack
         pSocket->iError = HB_LPP_ERR_TOOLARGE;
         hb_xfree(pSocket->pRecvBuffer);
@@ -184,45 +166,36 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void **data, HB_SIZE *len, HB_MAXINT timeout
 
       pSocket->nRecvLen = 0;
       pSocket->fRecvHasSize = true;
-      if (pSocket->nRecvSize != 4)
-      {
+      if (pSocket->nRecvSize != 4) {
         pSocket->pRecvBuffer = static_cast<char *>(hb_xrealloc(pSocket->pRecvBuffer, pSocket->nRecvSize));
       }
     }
 
-    if (pSocket->nRecvSize - pSocket->nRecvLen < static_cast<HB_SIZE>(LONG_MAX))
-    {
+    if (pSocket->nRecvSize - pSocket->nRecvLen < static_cast<HB_SIZE>(LONG_MAX)) {
       lRecv = static_cast<long>(pSocket->nRecvSize - pSocket->nRecvLen);
-    }
-    else
-    {
+    } else {
       lRecv = LONG_MAX;
     }
 
     lRecv = hb_socketRecv(pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout);
-    if (lRecv == -1)
-    {
+    if (lRecv == -1) {
       pSocket->iError = hb_socketGetError();
       return false;
-    }
-    else if (lRecv == 0)
-    {
+    } else if (lRecv == 0) {
       // peer closed connection
       pSocket->iError = 0;
       return false;
     }
 
     pSocket->nRecvLen += lRecv;
-    if (pSocket->nRecvSize == pSocket->nRecvLen)
-    {
+    if (pSocket->nRecvSize == pSocket->nRecvLen) {
       *data = pSocket->pRecvBuffer;
       *len = pSocket->nRecvLen;
       pSocket->pRecvBuffer = nullptr;
       pSocket->iError = 0;
       return true;
     }
-    if ((timeout = hb_timerTest(timeout, &timer)) == 0)
-    {
+    if ((timeout = hb_timerTest(timeout, &timer)) == 0) {
       pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
       return false;
     }

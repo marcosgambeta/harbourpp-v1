@@ -54,11 +54,9 @@ HB_FUNC(BIN2W)
   auto pItem = hb_param(1, Harbour::Item::STRING);
   HB_U16 uiResult = 0;
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     auto nLen = pItem->getCLen();
-    if (nLen)
-    {
+    if (nLen) {
       auto pszString = pItem->getCPtr();
       uiResult = HB_GET_LE_INT16(pszString);
     }
@@ -71,11 +69,9 @@ HB_FUNC(BIN2I)
   auto pItem = hb_param(1, Harbour::Item::STRING);
   HB_I16 iResult = 0;
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     auto nLen = pItem->getCLen();
-    if (nLen)
-    {
+    if (nLen) {
       auto pszString = pItem->getCPtr();
       iResult = HB_GET_LE_UINT16(pszString);
     }
@@ -88,18 +84,13 @@ HB_FUNC(BIN2L)
   auto pItem = hb_param(1, Harbour::Item::STRING);
   HB_I32 iResult = 0;
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     auto nLen = pItem->getCLen();
-    if (nLen)
-    {
+    if (nLen) {
       auto pszString = pItem->getCPtr();
-      if (nLen >= 3)
-      {
+      if (nLen >= 3) {
         iResult = HB_GET_LE_INT32(pszString);
-      }
-      else
-      {
+      } else {
         iResult = HB_GET_LE_UINT16(pszString);
       }
     }

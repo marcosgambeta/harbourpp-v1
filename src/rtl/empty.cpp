@@ -52,8 +52,7 @@ HB_FUNC(EMPTY)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  switch (hb_itemType(pItem))
-  {
+  switch (hb_itemType(pItem)) {
   case Harbour::Item::ARRAY:
     hb_retl(hb_arrayLen(pItem) == 0);
     break;
@@ -83,8 +82,7 @@ HB_FUNC(EMPTY)
     hb_retl(pItem->getDL() == 0);
     break;
 
-  case Harbour::Item::TIMESTAMP:
-  {
+  case Harbour::Item::TIMESTAMP: {
     long lDate, lTime;
     pItem->getTDT(&lDate, &lTime);
     hb_retl(lDate == 0 && lTime == 0);
@@ -103,11 +101,9 @@ HB_FUNC(EMPTY)
     hb_retl(pItem->getPtr() == nullptr);
     break;
 
-  case Harbour::Item::SYMBOL:
-  {
+  case Harbour::Item::SYMBOL: {
     PHB_SYMB pSym = pItem->getSymbol();
-    if (pSym && (pSym->scope.value & HB_FS_DEFERRED) && pSym->pDynSym)
-    {
+    if (pSym && (pSym->scope.value & HB_FS_DEFERRED) && pSym->pDynSym) {
       pSym = hb_dynsymSymbol(pSym->pDynSym);
     }
     hb_retl(pSym == nullptr || pSym->value.pFunPtr == nullptr);

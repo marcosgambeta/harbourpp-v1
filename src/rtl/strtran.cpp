@@ -61,20 +61,17 @@ HB_FUNC(STRTRAN)
   auto pText = hb_param(1, Harbour::Item::STRING);
   auto pSeek = hb_param(2, Harbour::Item::STRING);
 
-  if (pText && pSeek)
-  {
+  if (pText && pSeek) {
     HB_SIZE nStart, nCount;
 
     nStart = hb_parnsdef(4, 1);
     nCount = hb_parnsdef(5, -1);
 
-    if (nStart && nCount)
-    {
+    if (nStart && nCount) {
       auto nText = pText->getCLen();
       auto nSeek = pSeek->getCLen();
 
-      if (nSeek && nSeek <= nText && nStart > 0)
-      {
+      if (nSeek && nSeek <= nText && nStart > 0) {
         auto pReplace = hb_param(3, Harbour::Item::STRING);
         auto nReplace = hb_itemGetCLen(pReplace);
         auto szReplace = hb_itemGetCPtr(pReplace);
@@ -85,86 +82,62 @@ HB_FUNC(STRTRAN)
         HB_SIZE nT = 0;
         HB_SIZE nS = 0;
 
-        while (nT < nText && nText - nT >= nSeek - nS)
-        {
-          if (szText[nT] == szSeek[nS])
-          {
+        while (nT < nText && nText - nT >= nSeek - nS) {
+          if (szText[nT] == szSeek[nS]) {
             ++nT;
-            if (++nS == nSeek)
-            {
-              if (++nFound >= nStart)
-              {
+            if (++nS == nSeek) {
+              if (++nFound >= nStart) {
                 nReplaced++;
-                if (--nCount == 0)
-                {
+                if (--nCount == 0) {
                   nT = nText;
                 }
               }
               nS = 0;
             }
-          }
-          else if (nS)
-          {
+          } else if (nS) {
             nT -= nS - 1;
             nS = 0;
-          }
-          else
-          {
+          } else {
             ++nT;
           }
         }
 
-        if (nReplaced)
-        {
+        if (nReplaced) {
           HB_SIZE nLength = nText;
 
-          if (nSeek > nReplace)
-          {
+          if (nSeek > nReplace) {
             nLength -= (nSeek - nReplace) * nReplaced;
-          }
-          else
-          {
+          } else {
             nLength += (nReplace - nSeek) * nReplaced;
           }
 
-          if (nLength)
-          {
+          if (nLength) {
             auto szResult = static_cast<char *>(hb_xgrab(nLength + 1));
             char *szPtr = szResult;
 
             nFound -= nReplaced;
             nT = nS = 0;
-            do
-            {
-              if (nReplaced && szText[nT] == szSeek[nS])
-              {
+            do {
+              if (nReplaced && szText[nT] == szSeek[nS]) {
                 ++nT;
-                if (++nS == nSeek)
-                {
+                if (++nS == nSeek) {
                   const char *szCopy;
 
-                  if (nFound)
-                  {
+                  if (nFound) {
                     nFound--;
                     szCopy = szSeek;
-                  }
-                  else
-                  {
+                  } else {
                     nReplaced--;
                     szCopy = szReplace;
                     nS = nReplace;
                   }
-                  while (nS)
-                  {
+                  while (nS) {
                     *szPtr++ = *szCopy++;
                     --nS;
                   }
                 }
-              }
-              else
-              {
-                if (nS)
-                {
+              } else {
+                if (nS) {
                   nT -= nS;
                   nS = 0;
                 }
@@ -173,29 +146,19 @@ HB_FUNC(STRTRAN)
             } while (nT < nText);
 
             hb_retclen_buffer(szResult, nLength);
-          }
-          else
-          {
+          } else {
             hb_retc_null();
           }
-        }
-        else
-        {
+        } else {
           hb_itemReturn(pText);
         }
-      }
-      else
-      {
+      } else {
         hb_itemReturn(pText);
       }
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     // NOTE: Undocumented but existing Clipper Run-time error [vszakats]
 #ifdef HB_CLP_STRICT
     hb_errRT_BASE_SubstR(EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, 0);

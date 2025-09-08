@@ -52,8 +52,7 @@ HB_FUNC(HB_DEFAULT)
 {
   auto pDefault = hb_param(2, Harbour::Item::ANY);
 
-  if (pDefault && !hb_itemTypeCmp(hb_param(1, Harbour::Item::ANY), pDefault))
-  {
+  if (pDefault && !hb_itemTypeCmp(hb_param(1, Harbour::Item::ANY), pDefault)) {
     hb_itemParamStore(1, pDefault);
   }
 }
@@ -63,8 +62,7 @@ HB_FUNC(HB_DEFAULTVALUE)
   auto pParam = hb_param(1, Harbour::Item::ANY);
   auto pDefault = hb_param(2, Harbour::Item::ANY);
 
-  if (pDefault && !hb_itemTypeCmp(pParam, pDefault))
-  {
+  if (pDefault && !hb_itemTypeCmp(pParam, pDefault)) {
     pParam = pDefault;
   }
 
@@ -75,8 +73,7 @@ HB_FUNC(HB_DEFAULTVALUE)
 // Not recommended for new code.
 HB_FUNC(__DEFAULTNIL)
 {
-  if (hb_pcount() >= 2 && hb_param(1, Harbour::Item::ANY)->isNil())
-  {
+  if (hb_pcount() >= 2 && hb_param(1, Harbour::Item::ANY)->isNil()) {
     hb_itemParamStore(1, hb_param(2, Harbour::Item::ANY));
   }
 }

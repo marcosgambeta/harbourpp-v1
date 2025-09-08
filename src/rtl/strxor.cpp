@@ -53,8 +53,7 @@ HB_FUNC(HB_STRXOR)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     PHB_ITEM pItem2;
     HB_SIZE n;
     char *pRet;
@@ -62,51 +61,39 @@ HB_FUNC(HB_STRXOR)
     auto pStr1 = pItem->getCPtr();
     auto nLen1 = pItem->getCLen();
 
-    if ((pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr)
-    {
+    if ((pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr) {
       auto nLen2 = pItem2->getCLen();
-      if (nLen2)
-      {
+      if (nLen2) {
         auto pStr2 = pItem2->getCPtr();
         HB_SIZE n2;
 
         pRet = static_cast<char *>(hb_xgrab(nLen1 + 1));
         memcpy(pRet, pStr1, nLen1 + 1);
         n2 = 0;
-        for (n = 0; n < nLen1; n++)
-        {
+        for (n = 0; n < nLen1; n++) {
           pRet[n] ^= pStr2[n2];
-          if (++n2 == nLen2)
-          {
+          if (++n2 == nLen2) {
             n2 = 0;
           }
         }
         hb_retclen_buffer(pRet, nLen1);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(pItem);
       }
 
       return;
-    }
-    else if ((pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr)
-    {
+    } else if ((pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr) {
       auto bChar = static_cast<char>(pItem2->getNI());
 
-      if (bChar)
-      {
+      if (bChar) {
         pRet = static_cast<char *>(hb_xgrab(nLen1 + 1));
         memcpy(pRet, pStr1, nLen1 + 1);
-        for (n = 0; n < nLen1; n++)
-        {
+        for (n = 0; n < nLen1; n++) {
           pRet[n] ^= bChar;
         }
 
         hb_retclen_buffer(pRet, nLen1);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(pItem);
       }
 

@@ -61,17 +61,13 @@ HB_FUNC(HB_HMAC_SHA1)
     auto nCount = hb_parclen(2);
     HB_SIZE nDone = 0;
 
-    while (nCount)
-    {
+    while (nCount) {
       unsigned int uiChunk;
 
-      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
-      {
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
-      }
-      else
-      {
+      } else {
         uiChunk = static_cast<unsigned int>(nCount);
         nCount = 0;
       }
@@ -93,17 +89,13 @@ HB_FUNC(HB_HMAC_SHA1)
     auto nCount = hb_parclen(1);
     HB_SIZE nDone = 0;
 
-    while (nCount)
-    {
+    while (nCount) {
       unsigned int uiChunk;
 
-      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
-      {
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
-      }
-      else
-      {
+      } else {
         uiChunk = static_cast<unsigned int>(nCount);
         nCount = 0;
       }
@@ -119,14 +111,11 @@ HB_FUNC(HB_HMAC_SHA1)
   hb_HMAC_SHA1_EndMessage(mac, &ctx);
   hb_HMAC_SHA1_Done(&ctx);
 
-  if (!hb_parl(3))
-  {
+  if (!hb_parl(3)) {
     char hex[(sizeof(mac) * 2) + 1];
     hb_strtohex(reinterpret_cast<char *>(mac), sizeof(mac), hex);
     hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-  }
-  else
-  {
+  } else {
     hb_retclen(reinterpret_cast<char *>(mac), sizeof(mac));
   }
 }

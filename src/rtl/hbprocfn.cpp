@@ -60,8 +60,7 @@ HB_FUNC(HB_PROCESSOPEN)
 
   if (szName != nullptr && (pStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) &&
       (HB_ISLOG(5) || HB_ISNIL(5)) && (HB_ISBYREF(6) || HB_ISNIL(6)) &&
-      (!pStdIn || (pStdIn != pStdOut && pStdIn != pStdErr)))
-  {
+      (!pStdIn || (pStdIn != pStdOut && pStdIn != pStdErr))) {
     bool fDetach = hb_parl(5);
     HB_FHANDLE hStdIn, *phStdIn, hStdOut, *phStdOut, hStdErr, *phStdErr;
     HB_ULONG ulPID;
@@ -72,26 +71,20 @@ HB_FUNC(HB_PROCESSOPEN)
 
     HB_FHANDLE hProcess = hb_fsProcessOpen(szName, phStdIn, phStdOut, phStdErr, fDetach, &ulPID);
     hb_fsSetFError(hb_fsError());
-    if (hProcess != FS_ERROR)
-    {
-      if (phStdIn)
-      {
+    if (hProcess != FS_ERROR) {
+      if (phStdIn) {
         hb_stornint(static_cast<HB_NHANDLE>(*phStdIn), 2);
       }
-      if (phStdOut)
-      {
+      if (phStdOut) {
         hb_stornint(static_cast<HB_NHANDLE>(*phStdOut), 3);
       }
-      if (phStdErr && phStdOut != phStdErr)
-      {
+      if (phStdErr && phStdOut != phStdErr) {
         hb_stornint(static_cast<HB_NHANDLE>(*phStdErr), 4);
       }
       hb_stornint(ulPID, 6);
     }
     hb_retnint(static_cast<HB_NHANDLE>(hProcess));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -100,14 +93,11 @@ HB_FUNC(HB_PROCESSVALUE)
 {
   HB_FHANDLE hProcess = hb_numToHandle(hb_parnint(1));
 
-  if (hProcess != 0 && hProcess != FS_ERROR && (hb_pcount() < 2 || HB_ISLOG(2)))
-  {
+  if (hProcess != 0 && hProcess != FS_ERROR && (hb_pcount() < 2 || HB_ISLOG(2))) {
     int iResult = hb_fsProcessValue(hProcess, hb_pcount() < 2 || hb_parl(2));
     hb_fsSetFError(hb_fsError());
     hb_retni(iResult);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -116,14 +106,11 @@ HB_FUNC(HB_PROCESSCLOSE)
 {
   HB_FHANDLE hProcess = hb_numToHandle(hb_parnint(1));
 
-  if (hProcess != 0 && hProcess != FS_ERROR && (hb_pcount() < 2 || HB_ISLOG(2)))
-  {
+  if (hProcess != 0 && hProcess != FS_ERROR && (hb_pcount() < 2 || HB_ISLOG(2))) {
     bool fResult = hb_fsProcessClose(hProcess, hb_pcount() < 2 || hb_parl(2));
     hb_fsSetFError(hb_fsError());
     hb_retl(fResult);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -138,8 +125,7 @@ HB_FUNC(HB_PROCESSRUN)
   bool fDetach = hb_parl(5);
 
   if (szName != nullptr && (szStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) &&
-      (HB_ISLOG(5) || HB_ISNIL(5)))
-  {
+      (HB_ISLOG(5) || HB_ISNIL(5))) {
     HB_SIZE nStdOut, nStdErr;
     char *pStdOutBuf, *pStdErrBuf;
     char **pStdOutPtr, **pStdErrPtr;
@@ -152,34 +138,24 @@ HB_FUNC(HB_PROCESSRUN)
     int iResult = hb_fsProcessRun(szName, szStdIn, hb_parclen(2), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach);
     hb_fsSetFError(hb_fsError());
 
-    if (pStdOutBuf)
-    {
-      if (!hb_storclen_buffer(pStdOutBuf, nStdOut, 3))
-      {
+    if (pStdOutBuf) {
+      if (!hb_storclen_buffer(pStdOutBuf, nStdOut, 3)) {
         hb_xfree(pStdOutBuf);
       }
-    }
-    else if (pStdOut)
-    {
+    } else if (pStdOut) {
       hb_storc(nullptr, 3);
     }
 
-    if (pStdErrBuf)
-    {
-      if (!hb_storclen_buffer(pStdErrBuf, nStdErr, 4))
-      {
+    if (pStdErrBuf) {
+      if (!hb_storclen_buffer(pStdErrBuf, nStdErr, 4)) {
         hb_xfree(pStdErrBuf);
       }
-    }
-    else if (pStdErr && pStdOut != pStdErr)
-    {
+    } else if (pStdErr && pStdOut != pStdErr) {
       hb_storc(nullptr, 4);
     }
 
     hb_retni(iResult);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

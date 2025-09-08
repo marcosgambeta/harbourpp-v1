@@ -52,44 +52,35 @@ HB_FUNC(HB_STRISUTF8)
   auto nLen = hb_parclen(1);
   auto fUtf8 = false;
 
-  if (nLen > 0)
-  {
+  if (nLen > 0) {
     auto szText = hb_parc(1);
 
-    do
-    {
+    do {
       char c = *szText++;
 
-      if (c & 0x80)
-      {
+      if (c & 0x80) {
         int i = 0;
 
-        while ((c <<= 1) & 0x80)
-        {
+        while ((c <<= 1) & 0x80) {
           ++i;
         }
-        if (i == 0 || static_cast<HB_SIZE>(i) >= nLen)
-        {
+        if (i == 0 || static_cast<HB_SIZE>(i) >= nLen) {
           break;
         }
         nLen -= i;
-        do
-        {
-          if ((*szText++ & 0xC0) != 0x80)
-          {
+        do {
+          if ((*szText++ & 0xC0) != 0x80) {
             break;
           }
         } while (--i);
-        if (i != 0)
-        {
+        if (i != 0) {
           break;
         }
 
         fUtf8 = true;
       }
     } while (--nLen);
-    if (nLen != 0)
-    {
+    if (nLen != 0) {
       fUtf8 = false;
     }
   }

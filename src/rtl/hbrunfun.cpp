@@ -60,12 +60,10 @@ HB_FUNC(HB_RUN)
 {
   auto pszCommand = hb_parc(1);
 
-  if (pszCommand)
-  {
+  if (pszCommand) {
     int iResult = -1;
 
-    if (hb_gtSuspend() == Harbour::SUCCESS)
-    {
+    if (hb_gtSuspend() == Harbour::SUCCESS) {
 #if defined(HB_OS_WIN)
       LPTSTR lpCommand = HB_CHARDUP(pszCommand);
       iResult = HB_WINAPI_SYSTEM(lpCommand);
@@ -75,8 +73,7 @@ HB_FUNC(HB_RUN)
 
       iResult = system(hb_osEncodeCP(pszCommand, &pszFree, nullptr));
 
-      if (pszFree)
-      {
+      if (pszFree) {
         hb_xfree(pszFree);
       }
 #endif
@@ -84,9 +81,7 @@ HB_FUNC(HB_RUN)
       hb_gtResume();
     }
     hb_retni(iResult);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

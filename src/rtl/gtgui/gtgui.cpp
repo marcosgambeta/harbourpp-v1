@@ -84,24 +84,18 @@ static const _HB_BUTTON_ID s_buttons[] = {{"OK", 2, 0x0001},        {"QUIT", 4, 
 
 static int hb_gt_gui_optionId(const char *pszOption)
 {
-  if (pszOption)
-  {
-    while (HB_ISSPACE(*pszOption))
-    {
+  if (pszOption) {
+    while (HB_ISSPACE(*pszOption)) {
       pszOption++;
     }
     HB_SIZE nSize = strlen(pszOption);
-    while (nSize > 0 && HB_ISSPACE(pszOption[nSize - 1]))
-    {
+    while (nSize > 0 && HB_ISSPACE(pszOption[nSize - 1])) {
       nSize--;
     }
 
-    if (nSize >= 2 && nSize <= 9)
-    {
-      for (auto i = 0; i < static_cast<int>(_HB_BUTTON_COUNT); ++i)
-      {
-        if (nSize == s_buttons[i].len && hb_strnicmp(s_buttons[i].name, pszOption, nSize) == 0)
-        {
+    if (nSize >= 2 && nSize <= 9) {
+      for (auto i = 0; i < static_cast<int>(_HB_BUTTON_COUNT); ++i) {
+        if (nSize == s_buttons[i].len && hb_strnicmp(s_buttons[i].name, pszOption, nSize) == 0) {
           return s_buttons[i].id;
         }
       }
@@ -114,8 +108,7 @@ static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
 {
   int iButton = 0;
 
-  switch (id)
-  {
+  switch (id) {
   case IDOK:
     iButton = 0x0001;
     break;
@@ -148,15 +141,12 @@ static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
     break;
 #endif
   }
-  if (iButton)
-  {
+  if (iButton) {
     auto iOptions = static_cast<int>(hb_arrayLen(pOptions));
 
-    for (auto i = 1; i <= iOptions; ++i)
-    {
+    for (auto i = 1; i <= iOptions; ++i) {
       id = hb_gt_gui_optionId(hb_arrayGetCPtr(pOptions, i));
-      if (iButton == id || (iOptions == 1 && iType == id))
-      {
+      if (iButton == id || (iOptions == 1 && iType == id)) {
         return i;
       }
     }
@@ -171,18 +161,15 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
   LPCTSTR lpText = HB_ITEMGETSTR(pMessage, &hText, nullptr);
   int iRet, iOptions = pOptions ? static_cast<int>(hb_arrayLen(pOptions)) : 0;
 
-  if (lpText && iOptions > 0)
-  {
+  if (lpText && iOptions > 0) {
     int iType = 0;
     UINT uType;
 
-    for (auto i = 1; i <= iOptions; ++i)
-    {
+    for (auto i = 1; i <= iOptions; ++i) {
       iType |= hb_gt_gui_optionId(hb_arrayGetCPtr(pOptions, i));
     }
 
-    switch (iType)
-    {
+    switch (iType) {
     case 0x01:
       uType = MB_OK;
       break;
@@ -218,9 +205,7 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 
     iRet = MessageBox(nullptr, lpText, TEXT(""), uType);
     iRet = hb_gt_gui_optionPos(iRet, iType, pOptions);
-  }
-  else
-  {
+  } else {
     iRet = HB_GTSUPER_ALERT(pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay);
   }
 
@@ -241,8 +226,7 @@ static const char *hb_gt_gui_Version(PHB_GT pGT, int iType) // FuncTable
 
   HB_SYMBOL_UNUSED(pGT);
 
-  if (iType == 0)
-  {
+  if (iType == 0) {
     return HB_GT_DRVNAME(HB_GT_NAME);
   }
 
@@ -274,22 +258,17 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
 #endif
 
-  switch (iType)
-  {
+  switch (iType) {
 #if defined(HB_OS_WIN)
   case HB_GTI_CLIPBOARDDATA:
-    if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING)
-    {
+    if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING) {
 #if defined(UNICODE)
       hb_gt_winapi_setClipboard(CF_UNICODETEXT, pInfo->pNewVal);
 #else
       hb_gt_winapi_setClipboard(CF_TEXT, pInfo->pNewVal);
 #endif
-    }
-    else
-    {
-      if (pInfo->pResult == nullptr)
-      {
+    } else {
+      if (pInfo->pResult == nullptr) {
         pInfo->pResult = hb_itemNew(nullptr);
       }
 #if defined(UNICODE)
@@ -302,8 +281,7 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_KBDSHIFTS:
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
-    if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
-    {
+    if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
     }
     break;

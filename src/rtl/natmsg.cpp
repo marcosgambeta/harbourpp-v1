@@ -83,25 +83,19 @@ HB_FUNC(__NATISAFFIRM)
   auto nLen = hb_parclen(1);
   HB_BOOL fIS = false;
 
-  if (nLen > 0)
-  {
+  if (nLen > 0) {
     const char *szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
     HB_SIZE nStr = 0;
 
-    while (szYesNo[nStr] && szYesNo[nStr] != '/')
-    {
+    while (szYesNo[nStr] && szYesNo[nStr] != '/') {
       ++nStr;
     }
 
-    if (nStr && nLen >= nStr)
-    {
+    if (nStr && nLen >= nStr) {
       auto cdp = hb_vmCDP();
-      if (cdp)
-      {
+      if (cdp) {
         fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
-      }
-      else
-      {
+      } else {
         fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
       }
     }
@@ -114,29 +108,22 @@ HB_FUNC(__NATISNEGATIVE)
   auto nLen = hb_parclen(1);
   HB_BOOL fIS = false;
 
-  if (nLen > 0)
-  {
+  if (nLen > 0) {
     const char *szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
     HB_SIZE nStr;
 
-    while (*szYesNo)
-    {
-      if (*szYesNo++ == '/')
-      {
+    while (*szYesNo) {
+      if (*szYesNo++ == '/') {
         break;
       }
     }
     nStr = strlen(szYesNo);
 
-    if (nStr && nLen >= nStr)
-    {
+    if (nStr && nLen >= nStr) {
       auto cdp = hb_vmCDP();
-      if (cdp)
-      {
+      if (cdp) {
         fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
-      }
-      else
-      {
+      } else {
         fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
       }
     }
@@ -146,17 +133,12 @@ HB_FUNC(__NATISNEGATIVE)
 
 HB_FUNC(__NATMSG)
 {
-  if (hb_pcount() == 0)
-  {
+  if (hb_pcount() == 0) {
     /* TODO: Replace this with Language API call. */
     hb_retc_const("Invalid argument");
-  }
-  else if (HB_ISNUM(1))
-  {
+  } else if (HB_ISNUM(1)) {
     hb_retc_const(hb_nationGetMsg(hb_parni(1)));
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }

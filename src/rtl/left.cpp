@@ -57,36 +57,25 @@ HB_FUNC(LEFT)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText && HB_ISNUM(2))
-  {
+  if (pText && HB_ISNUM(2)) {
     HB_ISIZ nLen = hb_parns(2);
-    if (nLen <= 0)
-    {
+    if (nLen <= 0) {
       hb_retc_null();
-    }
-    else
-    {
+    } else {
       auto nText = pText->getCLen();
-      if (static_cast<HB_SIZE>(nLen) < nText)
-      {
+      if (static_cast<HB_SIZE>(nLen) < nText) {
         auto cdp = hb_vmCDP();
-        if (HB_CDP_ISCHARIDX(cdp))
-        {
+        if (HB_CDP_ISCHARIDX(cdp)) {
           nLen = hb_cdpTextPos(cdp, pText->getCPtr(), nText, nLen);
         }
       }
-      if (static_cast<HB_SIZE>(nLen) >= nText)
-      {
+      if (static_cast<HB_SIZE>(nLen) >= nText) {
         hb_itemReturn(pText);
-      }
-      else
-      {
+      } else {
         hb_retclen(pText->getCPtr(), nLen);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -96,13 +85,10 @@ HB_FUNC(HB_LEFTEQ)
   auto pItem1 = hb_param(1, Harbour::Item::STRING);
   auto pItem2 = hb_param(2, Harbour::Item::STRING);
 
-  if (pItem1 && pItem2)
-  {
-    hb_retl(hb_cdpcmp(pItem1->getCPtr(), pItem1->getCLen(), pItem2->getCPtr(), pItem2->getCLen(),
-                      hb_vmCDP(), false) == 0);
-  }
-  else
-  {
+  if (pItem1 && pItem2) {
+    hb_retl(hb_cdpcmp(pItem1->getCPtr(), pItem1->getCLen(), pItem2->getCPtr(), pItem2->getCLen(), hb_vmCDP(), false) ==
+            0);
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -112,13 +98,10 @@ HB_FUNC(HB_LEFTEQI)
   auto pItem1 = hb_param(1, Harbour::Item::STRING);
   auto pItem2 = hb_param(2, Harbour::Item::STRING);
 
-  if (pItem1 && pItem2)
-  {
-    hb_retl(hb_cdpicmp(pItem1->getCPtr(), pItem1->getCLen(), pItem2->getCPtr(), pItem2->getCLen(),
-                       hb_vmCDP(), false) == 0);
-  }
-  else
-  {
+  if (pItem1 && pItem2) {
+    hb_retl(hb_cdpicmp(pItem1->getCPtr(), pItem1->getCLen(), pItem2->getCPtr(), pItem2->getCLen(), hb_vmCDP(), false) ==
+            0);
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

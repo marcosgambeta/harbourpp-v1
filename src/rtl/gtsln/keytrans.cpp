@@ -205,68 +205,68 @@ static int KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
                                        {SL_KEY_ALT('8') | (ALTL_PRESSED << 16), K_ALT_8},
                                        {SL_KEY_ALT('9') | (ALTL_PRESSED << 16), K_ALT_9},
 #else
-                                        {'A' | (ALTL_PRESSED << 16), K_ALT_A},
-                                        {'B' | (ALTL_PRESSED << 16), K_ALT_B},
-                                        {'C' | (ALTL_PRESSED << 16), K_ALT_C},
-                                        {'D' | (ALTL_PRESSED << 16), K_ALT_D},
-                                        {'E' | (ALTL_PRESSED << 16), K_ALT_E},
-                                        {'F' | (ALTL_PRESSED << 16), K_ALT_F},
-                                        {'G' | (ALTL_PRESSED << 16), K_ALT_G},
-                                        {'H' | (ALTL_PRESSED << 16), K_ALT_H},
-                                        {'I' | (ALTL_PRESSED << 16), K_ALT_I},
-                                        {'J' | (ALTL_PRESSED << 16), K_ALT_J},
-                                        {'K' | (ALTL_PRESSED << 16), K_ALT_K},
-                                        {'L' | (ALTL_PRESSED << 16), K_ALT_L},
-                                        {'M' | (ALTL_PRESSED << 16), K_ALT_M},
-                                        {'N' | (ALTL_PRESSED << 16), K_ALT_N},
-                                        {'O' | (ALTL_PRESSED << 16), K_ALT_O},
-                                        {'P' | (ALTL_PRESSED << 16), K_ALT_P},
-                                        {'Q' | (ALTL_PRESSED << 16), K_ALT_Q},
-                                        {'R' | (ALTL_PRESSED << 16), K_ALT_R},
-                                        {'S' | (ALTL_PRESSED << 16), K_ALT_S},
-                                        {'T' | (ALTL_PRESSED << 16), K_ALT_T},
-                                        {'U' | (ALTL_PRESSED << 16), K_ALT_U},
-                                        {'V' | (ALTL_PRESSED << 16), K_ALT_V},
-                                        {'W' | (ALTL_PRESSED << 16), K_ALT_W},
-                                        {'X' | (ALTL_PRESSED << 16), K_ALT_X},
-                                        {'Y' | (ALTL_PRESSED << 16), K_ALT_Y},
-                                        {'Z' | (ALTL_PRESSED << 16), K_ALT_Z},
-                                        {'a' | (ALTL_PRESSED << 16), K_ALT_A},
-                                        {'b' | (ALTL_PRESSED << 16), K_ALT_B},
-                                        {'c' | (ALTL_PRESSED << 16), K_ALT_C},
-                                        {'d' | (ALTL_PRESSED << 16), K_ALT_D},
-                                        {'e' | (ALTL_PRESSED << 16), K_ALT_E},
-                                        {'f' | (ALTL_PRESSED << 16), K_ALT_F},
-                                        {'g' | (ALTL_PRESSED << 16), K_ALT_G},
-                                        {'h' | (ALTL_PRESSED << 16), K_ALT_H},
-                                        {'i' | (ALTL_PRESSED << 16), K_ALT_I},
-                                        {'j' | (ALTL_PRESSED << 16), K_ALT_J},
-                                        {'k' | (ALTL_PRESSED << 16), K_ALT_K},
-                                        {'l' | (ALTL_PRESSED << 16), K_ALT_L},
-                                        {'m' | (ALTL_PRESSED << 16), K_ALT_M},
-                                        {'n' | (ALTL_PRESSED << 16), K_ALT_N},
-                                        {'o' | (ALTL_PRESSED << 16), K_ALT_O},
-                                        {'p' | (ALTL_PRESSED << 16), K_ALT_P},
-                                        {'q' | (ALTL_PRESSED << 16), K_ALT_Q},
-                                        {'r' | (ALTL_PRESSED << 16), K_ALT_R},
-                                        {'s' | (ALTL_PRESSED << 16), K_ALT_S},
-                                        {'t' | (ALTL_PRESSED << 16), K_ALT_T},
-                                        {'u' | (ALTL_PRESSED << 16), K_ALT_U},
-                                        {'v' | (ALTL_PRESSED << 16), K_ALT_V},
-                                        {'w' | (ALTL_PRESSED << 16), K_ALT_W},
-                                        {'x' | (ALTL_PRESSED << 16), K_ALT_X},
-                                        {'y' | (ALTL_PRESSED << 16), K_ALT_Y},
-                                        {'z' | (ALTL_PRESSED << 16), K_ALT_Z},
-                                        {'0' | (ALTL_PRESSED << 16), K_ALT_0},
-                                        {'1' | (ALTL_PRESSED << 16), K_ALT_1},
-                                        {'2' | (ALTL_PRESSED << 16), K_ALT_2},
-                                        {'3' | (ALTL_PRESSED << 16), K_ALT_3},
-                                        {'4' | (ALTL_PRESSED << 16), K_ALT_4},
-                                        {'5' | (ALTL_PRESSED << 16), K_ALT_5},
-                                        {'6' | (ALTL_PRESSED << 16), K_ALT_6},
-                                        {'7' | (ALTL_PRESSED << 16), K_ALT_7},
-                                        {'8' | (ALTL_PRESSED << 16), K_ALT_8},
-                                        {'9' | (ALTL_PRESSED << 16), K_ALT_9},
+                                       {'A' | (ALTL_PRESSED << 16), K_ALT_A},
+                                       {'B' | (ALTL_PRESSED << 16), K_ALT_B},
+                                       {'C' | (ALTL_PRESSED << 16), K_ALT_C},
+                                       {'D' | (ALTL_PRESSED << 16), K_ALT_D},
+                                       {'E' | (ALTL_PRESSED << 16), K_ALT_E},
+                                       {'F' | (ALTL_PRESSED << 16), K_ALT_F},
+                                       {'G' | (ALTL_PRESSED << 16), K_ALT_G},
+                                       {'H' | (ALTL_PRESSED << 16), K_ALT_H},
+                                       {'I' | (ALTL_PRESSED << 16), K_ALT_I},
+                                       {'J' | (ALTL_PRESSED << 16), K_ALT_J},
+                                       {'K' | (ALTL_PRESSED << 16), K_ALT_K},
+                                       {'L' | (ALTL_PRESSED << 16), K_ALT_L},
+                                       {'M' | (ALTL_PRESSED << 16), K_ALT_M},
+                                       {'N' | (ALTL_PRESSED << 16), K_ALT_N},
+                                       {'O' | (ALTL_PRESSED << 16), K_ALT_O},
+                                       {'P' | (ALTL_PRESSED << 16), K_ALT_P},
+                                       {'Q' | (ALTL_PRESSED << 16), K_ALT_Q},
+                                       {'R' | (ALTL_PRESSED << 16), K_ALT_R},
+                                       {'S' | (ALTL_PRESSED << 16), K_ALT_S},
+                                       {'T' | (ALTL_PRESSED << 16), K_ALT_T},
+                                       {'U' | (ALTL_PRESSED << 16), K_ALT_U},
+                                       {'V' | (ALTL_PRESSED << 16), K_ALT_V},
+                                       {'W' | (ALTL_PRESSED << 16), K_ALT_W},
+                                       {'X' | (ALTL_PRESSED << 16), K_ALT_X},
+                                       {'Y' | (ALTL_PRESSED << 16), K_ALT_Y},
+                                       {'Z' | (ALTL_PRESSED << 16), K_ALT_Z},
+                                       {'a' | (ALTL_PRESSED << 16), K_ALT_A},
+                                       {'b' | (ALTL_PRESSED << 16), K_ALT_B},
+                                       {'c' | (ALTL_PRESSED << 16), K_ALT_C},
+                                       {'d' | (ALTL_PRESSED << 16), K_ALT_D},
+                                       {'e' | (ALTL_PRESSED << 16), K_ALT_E},
+                                       {'f' | (ALTL_PRESSED << 16), K_ALT_F},
+                                       {'g' | (ALTL_PRESSED << 16), K_ALT_G},
+                                       {'h' | (ALTL_PRESSED << 16), K_ALT_H},
+                                       {'i' | (ALTL_PRESSED << 16), K_ALT_I},
+                                       {'j' | (ALTL_PRESSED << 16), K_ALT_J},
+                                       {'k' | (ALTL_PRESSED << 16), K_ALT_K},
+                                       {'l' | (ALTL_PRESSED << 16), K_ALT_L},
+                                       {'m' | (ALTL_PRESSED << 16), K_ALT_M},
+                                       {'n' | (ALTL_PRESSED << 16), K_ALT_N},
+                                       {'o' | (ALTL_PRESSED << 16), K_ALT_O},
+                                       {'p' | (ALTL_PRESSED << 16), K_ALT_P},
+                                       {'q' | (ALTL_PRESSED << 16), K_ALT_Q},
+                                       {'r' | (ALTL_PRESSED << 16), K_ALT_R},
+                                       {'s' | (ALTL_PRESSED << 16), K_ALT_S},
+                                       {'t' | (ALTL_PRESSED << 16), K_ALT_T},
+                                       {'u' | (ALTL_PRESSED << 16), K_ALT_U},
+                                       {'v' | (ALTL_PRESSED << 16), K_ALT_V},
+                                       {'w' | (ALTL_PRESSED << 16), K_ALT_W},
+                                       {'x' | (ALTL_PRESSED << 16), K_ALT_X},
+                                       {'y' | (ALTL_PRESSED << 16), K_ALT_Y},
+                                       {'z' | (ALTL_PRESSED << 16), K_ALT_Z},
+                                       {'0' | (ALTL_PRESSED << 16), K_ALT_0},
+                                       {'1' | (ALTL_PRESSED << 16), K_ALT_1},
+                                       {'2' | (ALTL_PRESSED << 16), K_ALT_2},
+                                       {'3' | (ALTL_PRESSED << 16), K_ALT_3},
+                                       {'4' | (ALTL_PRESSED << 16), K_ALT_4},
+                                       {'5' | (ALTL_PRESSED << 16), K_ALT_5},
+                                       {'6' | (ALTL_PRESSED << 16), K_ALT_6},
+                                       {'7' | (ALTL_PRESSED << 16), K_ALT_7},
+                                       {'8' | (ALTL_PRESSED << 16), K_ALT_8},
+                                       {'9' | (ALTL_PRESSED << 16), K_ALT_9},
 #endif
 #endif
 
@@ -384,22 +384,18 @@ static int KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
 // a very simple sort algorithm
 static void hb_sln_SortKeyTranslationTable(void)
 {
-  for (auto i = 0; i < (static_cast<int>(KeyTranslationTableSize) - 1); i++)
-  {
+  for (auto i = 0; i < (static_cast<int>(KeyTranslationTableSize) - 1); i++) {
     int min = i;
 
-    for (int j = i + 1; j < static_cast<int>(KeyTranslationTableSize); j++)
-    {
-      if (KeyTranslationTable[j][0] < KeyTranslationTable[min][0])
-      {
+    for (int j = i + 1; j < static_cast<int>(KeyTranslationTableSize); j++) {
+      if (KeyTranslationTable[j][0] < KeyTranslationTable[min][0]) {
         min = j;
       }
     }
 
     int KeyTmp[2];
 
-    if (min > i)
-    {
+    if (min > i) {
       KeyTmp[0] = KeyTranslationTable[i][0];
       KeyTmp[1] = KeyTranslationTable[i][1];
 
@@ -423,28 +419,21 @@ static void hb_sln_SortKeyTranslationTable(void)
 // standard binary search
 static int hb_sln_FindKeyTranslation(int SlangKey)
 {
-  if ((SlangKey >= KeyTranslationTable[0][0]) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]))
-  {
+  if ((SlangKey >= KeyTranslationTable[0][0]) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0])) {
     int Start = 0, Stop = KeyTranslationTableSize - 1;
 
-    while (Start <= Stop)
-    {
+    while (Start <= Stop) {
       int CurPos = (Start + Stop) / 2;
 
 #if 0
          fprintf(stderr, "%d %d %d\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1]);
 #endif
 
-      if (SlangKey == KeyTranslationTable[CurPos][0])
-      {
+      if (SlangKey == KeyTranslationTable[CurPos][0]) {
         return KeyTranslationTable[CurPos][1];
-      }
-      else if (SlangKey < KeyTranslationTable[CurPos][0])
-      {
+      } else if (SlangKey < KeyTranslationTable[CurPos][0]) {
         Stop = CurPos - 1;
-      }
-      else if (SlangKey > KeyTranslationTable[CurPos][0])
-      {
+      } else if (SlangKey > KeyTranslationTable[CurPos][0]) {
         Start = CurPos + 1;
       }
     }

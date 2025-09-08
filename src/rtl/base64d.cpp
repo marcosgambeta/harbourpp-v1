@@ -60,8 +60,7 @@ static signed char base64_decode_value(int value_in)
       26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51};
 
   value_in -= 43;
-  if (value_in < 0 || value_in >= static_cast<int>(HB_SIZEOFARRAY(s_decoding)))
-  {
+  if (value_in < 0 || value_in >= static_cast<int>(HB_SIZEOFARRAY(s_decoding))) {
     return -1;
   }
 
@@ -75,22 +74,17 @@ static HB_SIZE base64_decode_block(const char *code_in, const HB_SIZE length_in,
   char *pszPlainchar = pszPlainttextOut;
   signed char fragment;
 
-  for (;;)
-  {
-    do
-    {
-      if (codechar == code_end)
-      {
+  for (;;) {
+    do {
+      if (codechar == code_end) {
         return pszPlainchar - pszPlainttextOut;
       }
       fragment = base64_decode_value(*codechar++);
     } while (fragment < 0);
     *pszPlainchar = (fragment & 0x03F) << 2;
 
-    do
-    {
-      if (codechar == code_end)
-      {
+    do {
+      if (codechar == code_end) {
         return pszPlainchar - pszPlainttextOut;
       }
       fragment = base64_decode_value(*codechar++);
@@ -98,10 +92,8 @@ static HB_SIZE base64_decode_block(const char *code_in, const HB_SIZE length_in,
     *pszPlainchar++ |= (fragment & 0x030) >> 4;
     *pszPlainchar = (fragment & 0x00F) << 4;
 
-    do
-    {
-      if (codechar == code_end)
-      {
+    do {
+      if (codechar == code_end) {
         return pszPlainchar - pszPlainttextOut;
       }
       fragment = base64_decode_value(*codechar++);
@@ -109,10 +101,8 @@ static HB_SIZE base64_decode_block(const char *code_in, const HB_SIZE length_in,
     *pszPlainchar++ |= (fragment & 0x03C) >> 2;
     *pszPlainchar = (fragment & 0x003) << 6;
 
-    do
-    {
-      if (codechar == code_end)
-      {
+    do {
+      if (codechar == code_end) {
         return pszPlainchar - pszPlainttextOut;
       }
       fragment = base64_decode_value(*codechar++);
@@ -125,16 +115,13 @@ HB_FUNC(HB_BASE64DECODE)
 {
   auto nSrcLen = hb_parclen(1);
 
-  if (nSrcLen > 0)
-  {
+  if (nSrcLen > 0) {
     HB_SIZE nDstLen = (((nSrcLen * 3) / 4) + 1) * sizeof(char);
     auto code = static_cast<char *>(hb_xgrab(nDstLen));
 
     nDstLen = base64_decode_block(hb_parcx(1), nSrcLen, code);
     hb_retclen_buffer(code, nDstLen);
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }

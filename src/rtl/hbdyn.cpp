@@ -71,8 +71,7 @@ using PHB_DYNADDR = void (*)(void);
 
 static int hb_hbtoctype(int iHarbourType)
 {
-  switch (iHarbourType)
-  {
+  switch (iHarbourType) {
   case Harbour::Item::NIL:
     return HB_DYN_CTYPE_VOID;
 
@@ -127,8 +126,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 {
   HB_U64 r;
 
-  switch (pArg->iType)
-  {
+  switch (pArg->iType) {
   case HB_DYN_CTYPE_BOOL:
     pArg->value.t.n64 = hb_itemGetL(pParam);
     r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
@@ -198,8 +196,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
-  case HB_DYN_CTYPE_STRUCTURE:
-  {
+  case HB_DYN_CTYPE_STRUCTURE: {
     auto nLen = hb_itemGetCLen(pParam);
     pArg->hString = hb_xgrab(nLen + sizeof(char));
     pArg->bRawBuffer = true;
@@ -211,31 +208,26 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
   }
   case HB_DYN_CTYPE_CHAR_PTR:
 
-    switch (pArg->iEncoding)
-    {
-    case HB_DYN_ENC_ASCII:
-    {
+    switch (pArg->iEncoding) {
+    case HB_DYN_ENC_ASCII: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
       r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF8:
-    {
+    case HB_DYN_ENC_UTF8: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
       r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF16:
-    {
+    case HB_DYN_ENC_UTF16: {
       HB_SIZE nLen;
       const HB_WCHAR *s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
       r = reinterpret_cast<HB_PTRUINT>(hb_wstrunshare(&pArg->hString, s, nLen));
       break;
     }
-    default:
-    {
+    default: {
       auto nLen = hb_itemGetCLen(pParam);
       pArg->hString = hb_xgrab(nLen + sizeof(char));
       pArg->bRawBuffer = true;
@@ -275,8 +267,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 
 static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
-  switch (iRetType)
-  {
+  switch (iRetType) {
   case HB_DYN_CTYPE_VOID:
     hb_itemClear(pItem);
     break;
@@ -334,56 +325,40 @@ static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
-    if (nLen == -1)
-    {
+    if (nLen == -1) {
       hb_itemPutC(pItem, reinterpret_cast<const char *>(value.t.n64));
-    }
-    else
-    {
+    } else {
       hb_itemPutCL(pItem, reinterpret_cast<const char *>(value.t.n64), nLen);
     }
     break;
 
   case HB_DYN_CTYPE_CHAR_PTR:
-    switch (iEncoding)
-    {
+    switch (iEncoding) {
     case HB_DYN_ENC_ASCII:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutStr(pItem, hb_setGetOSCP(), reinterpret_cast<const char *>(value.t.n64));
-      }
-      else
-      {
+      } else {
         hb_itemPutStrLen(pItem, hb_setGetOSCP(), reinterpret_cast<const char *>(value.t.n64), nLen);
       }
       break;
     case HB_DYN_ENC_UTF8:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutStrUTF8(pItem, reinterpret_cast<const char *>(value.t.n64));
-      }
-      else
-      {
+      } else {
         hb_itemPutStrLenUTF8(pItem, reinterpret_cast<const char *>(value.t.n64), nLen);
       }
       break;
     case HB_DYN_ENC_UTF16:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutStrU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR *>(value.t.n64));
-      }
-      else
-      {
+      } else {
         hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR *>(value.t.n64), nLen);
       }
       break;
     default:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutC(pItem, reinterpret_cast<const char *>(value.t.n64));
-      }
-      else
-      {
+      } else {
         hb_itemPutCL(pItem, reinterpret_cast<const char *>(value.t.n64), nLen);
       }
     }
@@ -444,10 +419,8 @@ static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL
                                HB_U64, HB_U64, HB_U64, HB_U64)
 
 #define HB_DYN_FUN_CALL(pcount, _ret_, _type_)                                                                         \
-  do                                                                                                                   \
-  {                                                                                                                    \
-    switch (pcount)                                                                                                    \
-    {                                                                                                                  \
+  do {                                                                                                                 \
+    switch (pcount) {                                                                                                  \
     case 0:                                                                                                            \
       ret.t._ret_ = ((_type_##P00) * pFunction)();                                                                     \
       break;                                                                                                           \
@@ -547,8 +520,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   *b64 = false;
   *r2 = 0;
 
-  switch (pArg->iType)
-  {
+  switch (pArg->iType) {
   case HB_DYN_CTYPE_BOOL:
     pArg->value.t.n32 = hb_itemGetL(pParam);
     *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
@@ -597,12 +569,9 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   case HB_DYN_CTYPE_LLONG:
 #if !defined(HB_LONG_LONG_OFF)
     pArg->value.t.n64 = hb_itemGetNInt(pParam);
-    if (pArg->bByRef)
-    {
+    if (pArg->bByRef) {
       *r1 = reinterpret_cast<HB_U32>(&pArg->value.t.n64);
-    }
-    else
-    {
+    } else {
       *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
       *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
       *b64 = true;
@@ -618,12 +587,9 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
 #else
     pArg->value.t.n64 = static_cast<HB_ULONGLONG>(hb_itemGetNInt(pParam));
 #endif
-    if (pArg->bByRef)
-    {
+    if (pArg->bByRef) {
       *r1 = reinterpret_cast<HB_U32>(&pArg->value.t.n64);
-    }
-    else
-    {
+    } else {
       *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
       *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
       *b64 = true;
@@ -638,12 +604,9 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
 
   case HB_DYN_CTYPE_DOUBLE:
     pArg->value.t.nDB = hb_itemGetND(pParam);
-    if (pArg->bByRef)
-    {
+    if (pArg->bByRef) {
       *r1 = reinterpret_cast<HB_U32>(&pArg->value.t.nDB);
-    }
-    else
-    {
+    } else {
 #if !defined(HB_LONG_LONG_OFF)
       *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
       *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
@@ -653,8 +616,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
-  case HB_DYN_CTYPE_STRUCTURE:
-  {
+  case HB_DYN_CTYPE_STRUCTURE: {
     auto nLen = hb_itemGetCLen(pParam);
     pArg->hString = hb_xgrab(nLen + sizeof(char));
     pArg->bRawBuffer = true;
@@ -666,31 +628,26 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   }
   case HB_DYN_CTYPE_CHAR_PTR:
 
-    switch (pArg->iEncoding)
-    {
-    case HB_DYN_ENC_ASCII:
-    {
+    switch (pArg->iEncoding) {
+    case HB_DYN_ENC_ASCII: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
       *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF8:
-    {
+    case HB_DYN_ENC_UTF8: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
       *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF16:
-    {
+    case HB_DYN_ENC_UTF16: {
       HB_SIZE nLen;
       const HB_WCHAR *s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
       *r1 = reinterpret_cast<HB_U32>(hb_wstrunshare(&pArg->hString, s, nLen));
       break;
     }
-    default:
-    {
+    default: {
       auto nLen = hb_itemGetCLen(pParam);
       pArg->hString = hb_xgrab(nLen + sizeof(char));
       pArg->bRawBuffer = true;
@@ -728,8 +685,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
 
 static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
-  switch (iRetType)
-  {
+  switch (iRetType) {
   case HB_DYN_CTYPE_VOID:
     hb_itemClear(pItem);
     break;
@@ -791,57 +747,41 @@ static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
-    if (nLen == -1)
-    {
+    if (nLen == -1) {
       hb_itemPutC(pItem, reinterpret_cast<const char *>(value.t.n32));
-    }
-    else
-    {
+    } else {
       hb_itemPutCL(pItem, reinterpret_cast<const char *>(value.t.n32), nLen);
     }
     break;
 
   case HB_DYN_CTYPE_CHAR_PTR:
 
-    switch (iEncoding)
-    {
+    switch (iEncoding) {
     case HB_DYN_ENC_ASCII:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutStr(pItem, hb_setGetOSCP(), reinterpret_cast<const char *>(value.t.n32));
-      }
-      else
-      {
+      } else {
         hb_itemPutStrLen(pItem, hb_setGetOSCP(), reinterpret_cast<const char *>(value.t.n32), nLen);
       }
       break;
     case HB_DYN_ENC_UTF8:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutStrUTF8(pItem, reinterpret_cast<const char *>(value.t.n32));
-      }
-      else
-      {
+      } else {
         hb_itemPutStrLenUTF8(pItem, reinterpret_cast<const char *>(value.t.n32), nLen);
       }
       break;
     case HB_DYN_ENC_UTF16:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutStrU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR *>(value.t.n32));
-      }
-      else
-      {
+      } else {
         hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR *>(value.t.n32), nLen);
       }
       break;
     default:
-      if (nLen == -1)
-      {
+      if (nLen == -1) {
         hb_itemPutC(pItem, reinterpret_cast<const char *>(value.t.n32));
-      }
-      else
-      {
+      } else {
         hb_itemPutCL(pItem, reinterpret_cast<const char *>(value.t.n32), nLen);
       }
     }
@@ -942,10 +882,8 @@ static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL
                                 HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32)
 
 #define HB_DYN_FUN_CALL(pcount, _ret_, _type_)                                                                         \
-  do                                                                                                                   \
-  {                                                                                                                    \
-    switch (pcount)                                                                                                    \
-    {                                                                                                                  \
+  do {                                                                                                                 \
+    switch (pcount) {                                                                                                  \
     case 0:                                                                                                            \
       ret.t._ret_ = ((_type_##P00) * pFunction)();                                                                     \
       break;                                                                                                           \
@@ -1127,8 +1065,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 {
   auto pFunction = reinterpret_cast<PHB_DYNADDR>(pFunctionRaw);
 
-  if (!pFunction)
-  {
+  if (!pFunction) {
     return;
   }
 
@@ -1140,8 +1077,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
     iParams -= iFirst - 1;
 
-    if (iParams <= _DYNEXEC_MAXPARAM)
-    {
+    if (iParams <= _DYNEXEC_MAXPARAM) {
       int iRetTypeRaw;
       HB_DYNVAL ret;
       HB_DYNARG *pArg;
@@ -1151,47 +1087,34 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
       ret.t.n64 = 0;
 
-      if (iRetType == HB_DYN_CTYPE_DOUBLE)
-      {
+      if (iRetType == HB_DYN_CTYPE_DOUBLE) {
         iRetTypeRaw = _RETTYPERAW_DOUBLE;
-      }
-      else if (iRetType == HB_DYN_CTYPE_FLOAT)
-      {
+      } else if (iRetType == HB_DYN_CTYPE_FLOAT) {
         iRetTypeRaw = _RETTYPERAW_FLOAT;
-      }
-      else
-      {
+      } else {
         iRetTypeRaw = _RETTYPERAW_INT64;
       }
 
-      if (iParams)
-      {
+      if (iParams) {
         pArg = static_cast<HB_DYNARG *>(hb_xgrabz(iParams * sizeof(HB_DYNARG)));
-      }
-      else
-      {
+      } else {
         pArg = nullptr;
       }
 
-      for (tmp = 0; tmp < iParams; ++tmp)
-      {
+      for (tmp = 0; tmp < iParams; ++tmp) {
         auto pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
-        if (piArgFlags)
-        {
+        if (piArgFlags) {
           pArg[tmp].iType = piArgFlags[tmp] & _MASK_CTYPE;
           pArg[tmp].iEncoding = piArgFlags[tmp] & _MASK_ENCODING;
           pArg[tmp].iOptions = piArgFlags[tmp] & _MASK_OPTIONS;
-        }
-        else
-        {
+        } else {
           pArg[tmp].iType = HB_DYN_CTYPE_DEFAULT;
           pArg[tmp].iEncoding = iEncoding;
           pArg[tmp].iOptions = iOptions;
         }
 
-        if (pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT)
-        {
+        if (pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT) {
           pArg[tmp].iType = hb_hbtoctype(HB_ITEM_TYPE(pParam));
         }
 
@@ -1200,8 +1123,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
         rawpar[tmp] = hb_u64par(pParam, &pArg[tmp]);
       }
 
-      switch (iRetTypeRaw)
-      {
+      switch (iRetTypeRaw) {
       case _RETTYPERAW_INT64:
         HB_DYN_FUN_CALL(iParams, n64, FX64_64);
         break;
@@ -1215,10 +1137,8 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
       hb_u64ret(hb_stackReturnItem(), iRetType, iEncoding, ret, -1);
 
-      for (tmp = 0; tmp < iParams; ++tmp)
-      {
-        if (pArg[tmp].bByRef)
-        {
+      for (tmp = 0; tmp < iParams; ++tmp) {
+        if (pArg[tmp].bByRef) {
           auto pItem = hb_itemNew(nullptr);
 
           hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
@@ -1230,23 +1150,17 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
           hb_itemRelease(pItem);
         }
 
-        if (pArg[tmp].bRawBuffer)
-        {
+        if (pArg[tmp].bRawBuffer) {
           hb_xfree(pArg[tmp].hString);
-        }
-        else
-        {
+        } else {
           hb_strfree(pArg[tmp].hString);
         }
       }
 
-      if (pArg)
-      {
+      if (pArg) {
         hb_xfree(pArg);
       }
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
   }
@@ -1259,8 +1173,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
     iParams -= iFirst - 1;
 
-    if (iParams <= _DYNEXEC_MAXPARAM)
-    {
+    if (iParams <= _DYNEXEC_MAXPARAM) {
       int iRetTypeRaw;
       HB_DYNVAL ret;
       HB_DYNARG *pArg;
@@ -1275,55 +1188,40 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
       memset(&ret, 0, sizeof(ret));
 #endif
 
-      if (iRetType == HB_DYN_CTYPE_DOUBLE)
-      {
+      if (iRetType == HB_DYN_CTYPE_DOUBLE) {
         iRetTypeRaw = _RETTYPERAW_DOUBLE;
-      }
-      else if (iRetType == HB_DYN_CTYPE_FLOAT)
-      {
+      } else if (iRetType == HB_DYN_CTYPE_FLOAT) {
         iRetTypeRaw = _RETTYPERAW_FLOAT;
-      }
-      else if (iRetType == HB_DYN_CTYPE_LLONG || iRetType == HB_DYN_CTYPE_LLONG_UNSIGNED)
-      {
+      } else if (iRetType == HB_DYN_CTYPE_LLONG || iRetType == HB_DYN_CTYPE_LLONG_UNSIGNED) {
         iRetTypeRaw = _RETTYPERAW_INT64;
-      }
-      else
-      {
+      } else {
         iRetTypeRaw = _RETTYPERAW_INT32;
       }
 
-      if (iParams)
-      {
+      if (iParams) {
         pArg = static_cast<HB_DYNARG *>(hb_xgrabz(iParams * sizeof(HB_DYNARG)));
-      }
-      else
-      {
+      } else {
         pArg = nullptr;
       }
 
-      for (tmp = 0; tmp < iParams; ++tmp)
-      {
+      for (tmp = 0; tmp < iParams; ++tmp) {
         auto pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
         HB_U32 r1;
         HB_U32 r2;
         auto b64 = false;
 
-        if (piArgFlags)
-        {
+        if (piArgFlags) {
           pArg[tmp].iType = piArgFlags[tmp] & _MASK_CTYPE;
           pArg[tmp].iEncoding = piArgFlags[tmp] & _MASK_ENCODING;
           pArg[tmp].iOptions = piArgFlags[tmp] & _MASK_OPTIONS;
-        }
-        else
-        {
+        } else {
           pArg[tmp].iType = HB_DYN_CTYPE_DEFAULT;
           pArg[tmp].iEncoding = iEncoding;
           pArg[tmp].iOptions = iOptions;
         }
 
-        if (pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT)
-        {
+        if (pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT) {
           pArg[tmp].iType = hb_hbtoctype(HB_ITEM_TYPE(pParam));
         }
 
@@ -1332,18 +1230,15 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
         hb_u32par(pParam, &pArg[tmp], &r1, &r2, &b64);
 
         rawpar[iParamsRaw++] = r1;
-        if (b64)
-        {
+        if (b64) {
           rawpar[iParamsRaw++] = r2;
         }
       }
 
-      switch (iCallConv)
-      {
+      switch (iCallConv) {
 #if defined(HB_OS_WIN)
       case HB_DYN_CALLCONV_STDCALL:
-        switch (iRetTypeRaw)
-        {
+        switch (iRetTypeRaw) {
         case _RETTYPERAW_INT32:
           HB_DYN_FUN_CALL(iParamsRaw, n32, FX86_S32);
           break;
@@ -1360,8 +1255,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
         break;
 #endif
       default: // HB_DYN_CALLCONV_CDECL
-        switch (iRetTypeRaw)
-        {
+        switch (iRetTypeRaw) {
         case _RETTYPERAW_INT32:
           HB_DYN_FUN_CALL(iParamsRaw, n32, FX86_C32);
           break;
@@ -1382,10 +1276,8 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
       hb_u32ret(hb_stackReturnItem(), iRetType, iEncoding, ret, -1);
 
-      for (tmp = 0; tmp < iParams; ++tmp)
-      {
-        if (pArg[tmp].bByRef)
-        {
+      for (tmp = 0; tmp < iParams; ++tmp) {
+        if (pArg[tmp].bByRef) {
           auto pItem = hb_itemNew(nullptr);
 
           hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
@@ -1397,23 +1289,17 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
           hb_itemRelease(pItem);
         }
 
-        if (pArg[tmp].bRawBuffer)
-        {
+        if (pArg[tmp].bRawBuffer) {
           hb_xfree(pArg[tmp].hString);
-        }
-        else
-        {
+        } else {
           hb_strfree(pArg[tmp].hString);
         }
       }
 
-      if (pArg)
-      {
+      if (pArg) {
         hb_xfree(pArg);
       }
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
   }

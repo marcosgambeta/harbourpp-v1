@@ -61,12 +61,10 @@ HB_FUNC(FKLABEL)
 {
   auto pPar1 = hb_param(1, Harbour::Item::NUMERIC);
 
-  if (pPar1)
-  {
+  if (pPar1) {
     auto iFKey = pPar1->getNI();
 
-    if (iFKey > 0 && iFKey <= 40)
-    {
+    if (iFKey > 0 && iFKey <= 40) {
       char szName[4];
       hb_snprintf(szName, sizeof(szName), "F%d", iFKey);
       hb_retc(szName);

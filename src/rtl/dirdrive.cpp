@@ -50,24 +50,18 @@
 
 HB_FUNC(HB_DIRCREATE)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     hb_retni(hb_fsMkDir(hb_parc(1)) ? 0 : hb_fsError());
-  }
-  else
-  {
+  } else {
     hb_retni(F_ERROR);
   }
 }
 
 HB_FUNC(HB_DIRDELETE)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     hb_retni(hb_fsRmDir(hb_parc(1)) ? 0 : hb_fsError());
-  }
-  else
-  {
+  } else {
     hb_retni(F_ERROR);
   }
 }
@@ -78,12 +72,9 @@ HB_FUNC(HB_DIRDELETE)
 
 HB_FUNC(DIRCHANGE)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     hb_retni(hb_fsChDir(hb_parc(1)) ? 0 : hb_fsError());
-  }
-  else
-  {
+  } else {
     hb_retni(F_ERROR);
   }
 }
@@ -103,14 +94,10 @@ HB_FUNC(ISDISK)
   auto fResult = false;
   auto szDrive = hb_parc(1);
 
-  if (szDrive != nullptr)
-  {
-    if (*szDrive >= 'A' && *szDrive <= 'Z')
-    {
+  if (szDrive != nullptr) {
+    if (*szDrive >= 'A' && *szDrive <= 'Z') {
       fResult = hb_fsIsDrv(*szDrive - 'A') == 0;
-    }
-    else if (*szDrive >= 'a' && *szDrive <= 'z')
-    {
+    } else if (*szDrive >= 'a' && *szDrive <= 'z') {
       fResult = hb_fsIsDrv(*szDrive - 'a') == 0;
     }
   }
@@ -122,14 +109,10 @@ HB_FUNC(DISKCHANGE)
   auto fResult = false;
   auto szDrive = hb_parc(1);
 
-  if (szDrive != nullptr)
-  {
-    if (*szDrive >= 'A' && *szDrive <= 'Z')
-    {
+  if (szDrive != nullptr) {
+    if (*szDrive >= 'A' && *szDrive <= 'Z') {
       fResult = hb_fsChDrv(*szDrive - 'A') == 0;
-    }
-    else if (*szDrive >= 'a' && *szDrive <= 'z')
-    {
+    } else if (*szDrive >= 'a' && *szDrive <= 'z') {
       fResult = hb_fsChDrv(*szDrive - 'a') == 0;
     }
   }

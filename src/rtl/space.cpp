@@ -55,12 +55,10 @@ HB_FUNC(SPACE)
 {
   auto pItem = hb_param(1, Harbour::Item::NUMERIC);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     HB_ISIZ nLen = hb_itemGetNS(pItem);
 
-    if (nLen > 0)
-    {
+    if (nLen > 0) {
       auto szResult = static_cast<char *>(hb_xgrab(nLen + 1));
 
 // NOTE: String overflow could never occur since a string can
@@ -72,14 +70,10 @@ HB_FUNC(SPACE)
 
       hb_xmemset(szResult, ' ', nLen);
       hb_retclen_buffer(szResult, nLen);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1105, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

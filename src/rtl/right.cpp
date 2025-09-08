@@ -57,44 +57,30 @@ HB_FUNC(RIGHT)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText && HB_ISNUM(2))
-  {
+  if (pText && HB_ISNUM(2)) {
     HB_ISIZ nLen = hb_parns(2);
-    if (nLen <= 0)
-    {
+    if (nLen <= 0) {
       hb_retc_null();
-    }
-    else
-    {
+    } else {
       auto nText = pText->getCLen();
-      if (static_cast<HB_SIZE>(nLen) < nText)
-      {
+      if (static_cast<HB_SIZE>(nLen) < nText) {
         auto cdp = hb_vmCDP();
-        if (HB_CDP_ISCHARIDX(cdp))
-        {
+        if (HB_CDP_ISCHARIDX(cdp)) {
           HB_SIZE nChars = hb_cdpTextLen(cdp, pText->getCPtr(), nText);
-          if (nChars > static_cast<HB_SIZE>(nLen))
-          {
+          if (nChars > static_cast<HB_SIZE>(nLen)) {
             nLen = nText - hb_cdpTextPos(cdp, pText->getCPtr(), nText, nChars - nLen);
-          }
-          else
-          {
+          } else {
             nLen = nText;
           }
         }
       }
-      if (static_cast<HB_SIZE>(nLen) >= nText)
-      {
+      if (static_cast<HB_SIZE>(nLen) >= nText) {
         hb_itemReturn(pText);
-      }
-      else
-      {
+      } else {
         hb_retclen(pText->getCPtr() + nText - nLen, nLen);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null(); // Clipper doesn't error
   }
 }

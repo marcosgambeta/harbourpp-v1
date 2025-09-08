@@ -56,25 +56,19 @@ HB_FUNC(HB_UTF8TOSTRBOX)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr)
-  {
+  if (szString != nullptr) {
     auto nLen = hb_parclen(1);
     HB_SIZE nDest = 0;
     char *szDest = nullptr;
 
-    if (nLen)
-    {
+    if (nLen) {
       PHB_CODEPAGE cdp = hb_gtBoxCP();
 
-      if (cdp)
-      {
-        if (hb_cdpIsUTF8(cdp))
-        {
+      if (cdp) {
+        if (hb_cdpIsUTF8(cdp)) {
           hb_itemReturn(hb_param(1, Harbour::Item::STRING));
           return;
-        }
-        else
-        {
+        } else {
           szString = hb_parc(1);
           nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
           szDest = static_cast<char *>(hb_xgrab(nDest + 1));
@@ -83,17 +77,12 @@ HB_FUNC(HB_UTF8TOSTRBOX)
       }
     }
 
-    if (szDest != nullptr)
-    {
+    if (szDest != nullptr) {
       hb_retclen_buffer(szDest, nDest);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

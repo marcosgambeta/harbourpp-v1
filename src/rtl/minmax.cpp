@@ -56,62 +56,41 @@ HB_FUNC(MAX)
   auto p1 = hb_param(1, Harbour::Item::ANY);
   auto p2 = hb_param(2, Harbour::Item::ANY);
 
-  if (p1 && p2)
-  {
-    if (p1->isNumInt() && p2->isNumInt())
-    {
+  if (p1 && p2) {
+    if (p1->isNumInt() && p2->isNumInt()) {
       HB_MAXINT l1 = p1->getNInt();
       HB_MAXINT l2 = p2->getNInt();
-      if (l1 >= l2)
-      {
+      if (l1 >= l2) {
         hb_itemReturn(p1);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(p2);
       }
       return;
-    }
-    else if (p1->isNumeric() && p2->isNumeric())
-    {
+    } else if (p1->isNumeric() && p2->isNumeric()) {
       auto d1 = p1->getND();
       auto d2 = p2->getND();
-      if (d1 >= d2)
-      {
+      if (d1 >= d2) {
         hb_itemReturn(p1);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(p2);
       }
       return;
-    }
-    else if (p1->isLogical() && p2->isLogical())
-    {
+    } else if (p1->isLogical() && p2->isLogical()) {
       HB_BOOL b1 = p1->getL();
       HB_BOOL b2 = p2->getL();
       hb_retl(b1 >= b2 ? b1 : b2);
       return;
-    }
-    else if (p1->isDate() && p2->isDate())
-    {
+    } else if (p1->isDate() && p2->isDate()) {
       long l1 = p1->getDL();
       long l2 = p2->getDL();
       hb_retdl(l1 >= l2 ? l1 : l2);
       return;
-    }
-    else if (p1->isDateTime() && p2->isDateTime())
-    {
-      if (p1->isDate() && p1->getDL() == p2->getDL())
-      {
+    } else if (p1->isDateTime() && p2->isDateTime()) {
+      if (p1->isDate() && p1->getDL() == p2->getDL()) {
         hb_itemReturn(p1);
-      }
-      else if (p2->isDate() && p1->getDL() == p2->getDL())
-      {
+      } else if (p2->isDate() && p1->getDL() == p2->getDL()) {
         hb_itemReturn(p2);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(p1->getTD() >= p2->getTD() ? p1 : p2);
       }
       return;
@@ -127,63 +106,42 @@ HB_FUNC(MIN)
   auto p1 = hb_param(1, Harbour::Item::ANY);
   auto p2 = hb_param(2, Harbour::Item::ANY);
 
-  if (p1 && p2)
-  {
-    if (p1->isNumInt() && p2->isNumInt())
-    {
+  if (p1 && p2) {
+    if (p1->isNumInt() && p2->isNumInt()) {
       HB_MAXINT l1 = p1->getNInt();
       HB_MAXINT l2 = p2->getNInt();
-      if (l1 <= l2)
-      {
+      if (l1 <= l2) {
         hb_itemReturn(p1);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(p2);
       }
       return;
-    }
-    else if (p1->isNumeric() && p2->isNumeric())
-    {
+    } else if (p1->isNumeric() && p2->isNumeric()) {
       auto d1 = p1->getND();
       auto d2 = p2->getND();
-      if (d1 <= d2)
-      {
+      if (d1 <= d2) {
         hb_itemReturn(p1);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(p2);
       }
       return;
-    }
-    else if (p1->isLogical() && p2->isLogical())
-    {
+    } else if (p1->isLogical() && p2->isLogical()) {
       HB_BOOL b1 = p1->getL();
       HB_BOOL b2 = p2->getL();
       hb_retl(b1 <= b2 ? b1 : b2);
       return;
-    }
-    else if (p1->isDate() && p2->isDate())
-    {
+    } else if (p1->isDate() && p2->isDate()) {
       long l1 = p1->getDL();
       long l2 = p2->getDL();
 
       hb_retdl(l1 <= l2 ? l1 : l2);
       return;
-    }
-    else if (p1->isDateTime() && p2->isDateTime())
-    {
-      if (p1->isDate() && p1->getDL() == p2->getDL())
-      {
+    } else if (p1->isDateTime() && p2->isDateTime()) {
+      if (p1->isDate() && p1->getDL() == p2->getDL()) {
         hb_itemReturn(p1);
-      }
-      else if (p2->isDate() && p1->getDL() == p2->getDL())
-      {
+      } else if (p2->isDate() && p1->getDL() == p2->getDL()) {
         hb_itemReturn(p2);
-      }
-      else
-      {
+      } else {
         hb_itemReturn(p1->getTD() <= p2->getTD() ? p1 : p2);
       }
       return;

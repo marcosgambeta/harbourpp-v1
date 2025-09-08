@@ -148,20 +148,14 @@ HB_FUNC(HB_ISNULL)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem != nullptr)
-  {
-    if (pItem->isString())
-    {
+  if (pItem != nullptr) {
+    if (pItem->isString()) {
       hb_retl(pItem->getCLen() == 0);
       return;
-    }
-    else if (pItem->isArray())
-    {
+    } else if (pItem->isArray()) {
       hb_retl(hb_arrayLen(pItem) == 0);
       return;
-    }
-    else if (pItem->isHash())
-    {
+    } else if (pItem->isHash()) {
       hb_retl(hb_hashLen(pItem) == 0);
       return;
     }
