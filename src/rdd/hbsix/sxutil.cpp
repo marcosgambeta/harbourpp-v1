@@ -56,8 +56,7 @@ HB_FUNC(SX_SLIMFAST)
 {
   auto szExp = hb_parc(1);
 
-  if (szExp != nullptr && *szExp)
-  {
+  if (szExp != nullptr && *szExp) {
     char *szDst, cQuote = 0, c;
     HB_SIZE nDst;
 
@@ -65,20 +64,13 @@ HB_FUNC(SX_SLIMFAST)
     szExp = szDst;
     nDst = 0;
 
-    while ((c = *szExp++) != 0)
-    {
-      if (c == cQuote)
-      {
+    while ((c = *szExp++) != 0) {
+      if (c == cQuote) {
         cQuote = 0;
-      }
-      else if (!cQuote)
-      {
-        if (c == '"' || c == '\'')
-        {
+      } else if (!cQuote) {
+        if (c == '"' || c == '\'') {
           cQuote = c;
-        }
-        else if (c == ' ' && nDst && szDst[nDst - 1] == ' ')
-        {
+        } else if (c == ' ' && nDst && szDst[nDst - 1] == ' ') {
           continue;
         }
       }
@@ -86,9 +78,7 @@ HB_FUNC(SX_SLIMFAST)
     }
 
     hb_retclen_buffer(szDst, nDst);
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
@@ -99,8 +89,7 @@ HB_FUNC(SX_WILDMATCH)
   auto szValue = hb_parc(2);
   auto fMatch = false;
 
-  if (szPattern != nullptr && szPattern[0] && szValue != nullptr)
-  {
+  if (szPattern != nullptr && szPattern[0] && szValue != nullptr) {
     fMatch = hb_strMatchWild(szValue, szPattern);
   }
 
@@ -114,8 +103,7 @@ HB_FUNC(SX_WILDMATCH)
 
 HB_FUNC(SX_VERSION)
 {
-  switch (hb_parni(1))
-  {
+  switch (hb_parni(1)) {
   case 1:
     hb_retds(HB_SX_DAY);
     break;

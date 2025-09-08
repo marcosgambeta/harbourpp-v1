@@ -90,19 +90,14 @@ static bool hb_sxOrdParam(LPDBORDERINFO pInfo)
 {
   memset(pInfo, 0, sizeof(DBORDERINFO));
 
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     pInfo->itmOrder = hb_param(1, Harbour::Item::STRING);
     pInfo->atomBagName = hb_param(2, Harbour::Item::STRING);
-  }
-  else if (HB_ISNUM(1))
-  {
+  } else if (HB_ISNUM(1)) {
     pInfo->itmOrder = hb_param(1, Harbour::Item::NUMERIC);
-    if (!HB_ISNIL(2))
-    { /* hb_pcount() > 2 */
+    if (!HB_ISNIL(2)) { /* hb_pcount() > 2 */
       pInfo->atomBagName = hb_param(2, Harbour::Item::NUMERIC);
-      if (hb_parni(2) <= 0)
-      {
+      if (hb_parni(2) <= 0) {
         return false;
       }
     }
@@ -115,12 +110,10 @@ HB_FUNC(SX_TAGORDER)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   int iOrder = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &Info);
       iOrder = hb_itemGetNI(Info.itmResult);
@@ -140,29 +133,23 @@ HB_FUNC(SX_TAGNO)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   int iBagOrder = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutNI(nullptr, 0);
-      if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS) {
         int iOrder = hb_itemGetNI(Info.itmResult);
-        if (iOrder)
-        {
+        if (iOrder) {
           Info.itmOrder = hb_itemPutNI(nullptr, iOrder);
           Info.atomBagName = nullptr;
           hb_itemClear(Info.itmResult);
-          if (SELF_ORDINFO(pArea, DBOI_FULLPATH, &Info) == Harbour::SUCCESS && hb_itemGetCLen(Info.itmResult) > 0)
-          {
+          if (SELF_ORDINFO(pArea, DBOI_FULLPATH, &Info) == Harbour::SUCCESS && hb_itemGetCLen(Info.itmResult) > 0) {
             Info.atomBagName = Info.itmResult;
             Info.itmResult = Info.itmOrder;
             Info.itmOrder = nullptr;
             hb_itemClear(Info.itmResult);
-            if (SELF_ORDINFO(pArea, DBOI_BAGORDER, &Info) == Harbour::SUCCESS)
-            {
+            if (SELF_ORDINFO(pArea, DBOI_BAGORDER, &Info) == Harbour::SUCCESS) {
               iBagOrder = iOrder - hb_itemGetNI(Info.itmResult) + 1;
             }
             Info.itmOrder = Info.atomBagName;
@@ -181,17 +168,14 @@ HB_FUNC(SX_FREEZE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       auto fResult = false;
       Info.itmNewVal = hb_itemPutL(nullptr, true);
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == Harbour::SUCCESS) {
         fResult = Info.itmResult->isLogical() && Info.itmResult->getL();
       }
       hb_itemRelease(Info.itmNewVal);
@@ -205,17 +189,14 @@ HB_FUNC(SX_WARM)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       auto fResult = false;
       Info.itmNewVal = hb_itemPutL(nullptr, false);
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS) {
         fResult = Info.itmResult->isLogical() && !Info.itmResult->getL();
       }
       hb_itemRelease(Info.itmNewVal);
@@ -229,17 +210,14 @@ HB_FUNC(SX_CHILL)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       auto fResult = false;
       Info.itmNewVal = hb_itemPutL(nullptr, true);
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS) {
         fResult = Info.itmResult->isLogical() && Info.itmResult->getL();
       }
       hb_itemRelease(Info.itmNewVal);
@@ -261,26 +239,21 @@ HB_FUNC(SX_THERMOMETER)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   int iTemperature = -1;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       int i;
       Info.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &Info);
       i = hb_itemGetNI(Info.itmResult);
-      if (i)
-      {
+      if (i) {
         static const HB_USHORT s_iStates[] = {DBOI_CUSTOM, DBOI_CHGONLY, DBOI_PARTIAL};
         iTemperature = 4;
-        for (i = 0; i < 3; ++i, --iTemperature)
-        {
+        for (i = 0; i < 3; ++i, --iTemperature) {
           hb_itemClear(Info.itmResult);
           if (SELF_ORDINFO(pArea, s_iStates[i], &Info) == Harbour::SUCCESS && Info.itmResult->isLogical() &&
-              Info.itmResult->getL())
-          {
+              Info.itmResult->getL()) {
             break;
           }
         }
@@ -296,20 +269,16 @@ HB_FUNC(SX_CLRSCOPE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       auto iScope = hb_parnidef(1, 2);
       Info.itmResult = hb_itemNew(nullptr);
-      if (iScope)
-      {
+      if (iScope) {
         SELF_ORDINFO(pArea, DBOI_SCOPEBOTTOMCLEAR, &Info);
       }
-      if (iScope == 0 || iScope == 2)
-      {
+      if (iScope == 0 || iScope == 2) {
         SELF_ORDINFO(pArea, DBOI_SCOPETOPCLEAR, &Info);
       }
       hb_itemRelease(Info.itmResult);
@@ -321,16 +290,13 @@ HB_FUNC(SX_SETSCOPE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
 
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       auto iScope = hb_parni(1);
       Info.itmResult = hb_itemNew(nullptr);
-      if (!HB_ISNIL(2))
-      {
+      if (!HB_ISNIL(2)) {
         Info.itmNewVal = hb_param(2, Harbour::Item::ANY);
       }
       SELF_ORDINFO(pArea, static_cast<HB_USHORT>(iScope ? DBOI_SCOPEBOTTOM : DBOI_SCOPETOP), &Info);
@@ -344,8 +310,7 @@ HB_FUNC(SX_ISREINDEX)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fReindex = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_ISREINDEX, &Info);
@@ -361,8 +326,7 @@ HB_FUNC(SX_STEP)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   HB_LONG lStep = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_EVALSTEP, &Info);
@@ -378,8 +342,7 @@ HB_FUNC(SX_KEYSINCLUDED)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   HB_ULONG ulKeys = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_KEYSINCLUDED, &Info);
@@ -394,8 +357,7 @@ HB_FUNC(SX_I_INDEXNAME)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_I_BAGNAME, &Info);
@@ -410,8 +372,7 @@ HB_FUNC(SX_I_TAGNAME)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_I_TAGNAME, &Info);
@@ -427,8 +388,7 @@ HB_FUNC(SX_INDEXCOUNT)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   int iCount = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_BAGCOUNT, &Info);
@@ -443,17 +403,13 @@ HB_FUNC(SX_INDEXNAME)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_FULLPATH, &Info);
       hb_itemReturnRelease(Info.itmResult);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -464,19 +420,15 @@ HB_FUNC(SX_INDEXTYPE)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   int iType = DBOI_TYPE_UNDEF;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
-      if (hb_pcount() == 1 && HB_ISCHAR(1))
-      {
+    if (hb_sxOrdParam(&Info)) {
+      if (hb_pcount() == 1 && HB_ISCHAR(1)) {
         Info.atomBagName = Info.itmOrder;
         Info.itmOrder = nullptr;
       }
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_INDEXTYPE, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_INDEXTYPE, &Info) == Harbour::SUCCESS) {
         iType = Info.itmResult->getNI();
       }
       hb_itemRelease(Info.itmResult);
@@ -489,14 +441,11 @@ HB_FUNC(SX_DESCEND)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_ISDESC, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_ISDESC, &Info) == Harbour::SUCCESS) {
         Info.itmNewVal = hb_itemPutL(nullptr, !hb_itemGetL(Info.itmResult));
         SELF_ORDINFO(pArea, DBOI_ISDESC, &Info);
         hb_itemRelease(Info.itmNewVal);
@@ -511,11 +460,9 @@ HB_FUNC(SX_KEYADD)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fResult = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutL(nullptr, false);
       Info.itmNewVal = hb_param(3, Harbour::Item::ANY);
       SELF_ORDINFO(pArea, DBOI_KEYADD, &Info);
@@ -531,11 +478,9 @@ HB_FUNC(SX_KEYDROP)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fResult = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutL(nullptr, false);
       Info.itmNewVal = hb_param(3, Harbour::Item::ANY);
       SELF_ORDINFO(pArea, DBOI_KEYDELETE, &Info);
@@ -550,11 +495,9 @@ HB_FUNC(SX_KEYDATA)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_KEYVAL, &Info);
       hb_itemReturnRelease(Info.itmResult);
@@ -568,12 +511,9 @@ HB_FUNC(SX_KEYSKIP)
   auto fResult = false;
   HB_BOOL fBEof = false;
 
-  if (pArea != nullptr)
-  {
-    if (SELF_SKIPRAW(pArea, hb_parnldef(1, 1)) == Harbour::SUCCESS)
-    {
-      if (SELF_EOF(pArea, &fBEof) == Harbour::SUCCESS && !fBEof)
-      {
+  if (pArea != nullptr) {
+    if (SELF_SKIPRAW(pArea, hb_parnldef(1, 1)) == Harbour::SUCCESS) {
+      if (SELF_EOF(pArea, &fBEof) == Harbour::SUCCESS && !fBEof) {
         fResult = SELF_BOF(pArea, &fBEof) == Harbour::SUCCESS && !fBEof;
       }
     }
@@ -586,11 +526,9 @@ HB_FUNC(SX_KEYCOUNT)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   HB_ULONG ulKeys = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_KEYCOUNT, &Info);
       ulKeys = hb_itemGetNL(Info.itmResult);
@@ -606,11 +544,9 @@ HB_FUNC(SX_KEYNO)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   HB_ULONG ulKeyNo = 0;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_POSITION, &Info);
       ulKeyNo = hb_itemGetNL(Info.itmResult);
@@ -626,11 +562,9 @@ HB_FUNC(SX_KEYGOTO)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fResult = false;
 
-  if (pArea && hb_parnl(3) != 0)
-  {
+  if (pArea && hb_parnl(3) != 0) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmNewVal = hb_param(3, Harbour::Item::NUMERIC);
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_POSITION, &Info);
@@ -646,8 +580,7 @@ HB_FUNC(SX_SKIPUNIQUE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info{};
     Info.itmNewVal = hb_param(1, Harbour::Item::ANY);
     Info.itmResult = hb_itemNew(nullptr);
@@ -661,15 +594,12 @@ HB_FUNC(SX_SEEKLAST)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   HB_BOOL fFound = false;
 
-  if (pArea && hb_pcount() > 0)
-  {
+  if (pArea && hb_pcount() > 0) {
     auto pKey = hb_param(1, Harbour::Item::ANY);
     bool bSoftSeek = hb_parl(2);
 
-    if (SELF_SEEK(pArea, bSoftSeek, pKey, true) == Harbour::SUCCESS)
-    {
-      if (SELF_FOUND(pArea, &fFound) != Harbour::SUCCESS)
-      {
+    if (SELF_SEEK(pArea, bSoftSeek, pKey, true) == Harbour::SUCCESS) {
+      if (SELF_FOUND(pArea, &fFound) != Harbour::SUCCESS) {
         fFound = false;
       }
     }
@@ -681,11 +611,9 @@ HB_FUNC(SX_TAGUNIQUE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO(pArea, DBOI_UNIQUE, &Info);
       hb_itemReturnRelease(Info.itmResult);
@@ -700,47 +628,36 @@ HB_FUNC(SX_WILDSEEK)
   bool fCont = hb_parl(2);
   auto fFound = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     int iOrder = 0;
 
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
 
-    if (szPattern != nullptr && szPattern[0])
-    {
-      if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS)
-      {
+    if (szPattern != nullptr && szPattern[0]) {
+      if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS) {
         iOrder = Info.itmResult->getNI();
       }
     }
-    if (iOrder > 0)
-    {
+    if (iOrder > 0) {
       HB_ERRCODE errCode = Harbour::SUCCESS;
-      if (!fCont)
-      {
+      if (!fCont) {
         errCode = SELF_GOTOP(pArea);
-        if (errCode == Harbour::SUCCESS)
-        {
+        if (errCode == Harbour::SUCCESS) {
           errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &Info);
-          if (errCode == Harbour::SUCCESS)
-          {
+          if (errCode == Harbour::SUCCESS) {
             auto szKey = hb_itemGetCPtr(Info.itmResult);
             fFound = hb_strMatchWild(szKey, szPattern);
           }
         }
       }
-      if (!fFound && errCode == Harbour::SUCCESS)
-      {
+      if (!fFound && errCode == Harbour::SUCCESS) {
         Info.itmNewVal = hb_param(1, Harbour::Item::STRING);
-        if (SELF_ORDINFO(pArea, DBOI_SKIPWILD, &Info) == Harbour::SUCCESS)
-        {
+        if (SELF_ORDINFO(pArea, DBOI_SKIPWILD, &Info) == Harbour::SUCCESS) {
           fFound = Info.itmResult->isLogical() && Info.itmResult->getL();
         }
       }
-    }
-    else
-    {
+    } else {
       SELF_GOTO(pArea, 0);
     }
     hb_itemRelease(Info.itmResult);
@@ -754,15 +671,12 @@ HB_FUNC(SX_ROXLOCK)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fLocked = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmNewVal = hb_itemPutL(nullptr, true);
       Info.itmResult = hb_itemPutL(nullptr, false);
-      if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS) {
         fLocked = hb_itemGetL(Info.itmResult);
       }
       hb_itemRelease(Info.itmNewVal);
@@ -776,11 +690,9 @@ HB_FUNC(SX_ROXUNLOCK)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmNewVal = hb_itemPutL(nullptr, false);
       Info.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO(pArea, DBOI_READLOCK, &Info);
@@ -795,14 +707,11 @@ HB_FUNC(SX_ISMYROX)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fLocked = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS) {
         fLocked = hb_itemGetL(Info.itmResult);
       }
       hb_itemRelease(Info.itmResult);
@@ -816,25 +725,19 @@ HB_FUNC(SX_ISROXLOCK)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fLocked = false;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
-      if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS) {
         fLocked = hb_itemGetL(Info.itmResult);
       }
-      if (!fLocked)
-      {
+      if (!fLocked) {
         Info.itmNewVal = hb_itemPutL(nullptr, true);
-        if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS)
-        {
+        if (SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS) {
           fLocked = hb_itemGetL(Info.itmResult);
         }
-        if (fLocked)
-        {
+        if (fLocked) {
           hb_itemPutL(Info.itmNewVal, false);
           SELF_ORDINFO(pArea, DBOI_READLOCK, &Info);
         }
@@ -851,15 +754,12 @@ HB_FUNC(SX_SORTOPTION)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fUseCurrent = true;
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     DBORDERINFO Info;
-    if (hb_sxOrdParam(&Info))
-    {
+    if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemNew(nullptr);
       Info.itmNewVal = hb_param(1, Harbour::Item::LOGICAL);
-      if (SELF_ORDINFO(pArea, DBOI_USECURRENT, &Info) == Harbour::SUCCESS)
-      {
+      if (SELF_ORDINFO(pArea, DBOI_USECURRENT, &Info) == Harbour::SUCCESS) {
         fUseCurrent = hb_itemGetL(Info.itmResult);
       }
       hb_itemRelease(Info.itmResult);

@@ -62,30 +62,24 @@ static bool hb_sxSemName(char *szFileName)
   auto szName = hb_parc(1);
   auto fResult = false;
 
-  if (szName != nullptr && szName[0])
-  {
+  if (szName != nullptr && szName[0]) {
     hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);
     szFileName[HB_PATH_MAX - 1] = '\0';
     fResult = true;
-  }
-  else
-  {
+  } else {
     auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-    if (pArea != nullptr)
-    {
+    if (pArea != nullptr) {
       DBORDERINFO pOrderInfo{};
 
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::NUMERIC);
-      if (pOrderInfo.itmOrder && pOrderInfo.itmOrder->getNI() == 0)
-      {
+      if (pOrderInfo.itmOrder && pOrderInfo.itmOrder->getNI() == 0) {
         pOrderInfo.itmOrder = nullptr;
       }
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo);
       szName = hb_itemGetCPtr(pOrderInfo.itmResult);
-      if (szName != nullptr && szName[0])
-      {
+      if (szName != nullptr && szName[0]) {
         hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);
         szFileName[HB_PATH_MAX - 1] = '\0';
         fResult = true;
@@ -102,31 +96,24 @@ static PHB_FILE hb_sxSemOpen(char *szFileName, HB_BOOL *pfNewFile)
   PHB_FILE pFile;
   int i = 0;
 
-  do
-  {
+  do {
     pFile = hb_fileExtOpen(szFileName, ".sem",
                            FO_READWRITE | FO_EXCLUSIVE | FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME, nullptr, nullptr);
-    if (pFile != nullptr)
-    {
+    if (pFile != nullptr) {
       break;
     }
 
-    if (pfNewFile)
-    {
+    if (pfNewFile) {
       pFile = hb_fileExtOpen(szFileName, ".sem",
                              FXO_UNIQUE | FO_READWRITE | FO_EXCLUSIVE | FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME,
                              nullptr, nullptr);
-      if (pFile != nullptr)
-      {
+      if (pFile != nullptr) {
         *pfNewFile = HB_TRUE;
         break;
       }
-    }
-    else
-    {
+    } else {
       HB_ERRCODE errCode = hb_fsError();
-      if (errCode != 5 && errCode != 32 && errCode != 33)
-      {
+      if (errCode != 5 && errCode != 32 && errCode != 33) {
         break;
       }
     }
@@ -143,42 +130,31 @@ HB_FUNC(SX_MAKESEM)
   int iUsers = -1;
   HB_BOOL fError = false, fNewFile = false;
 
-  if (hb_sxSemName(szFileName))
-  {
+  if (hb_sxSemName(szFileName)) {
     PHB_FILE pFile = hb_sxSemOpen(szFileName, &fNewFile);
 
-    if (pFile != nullptr)
-    {
+    if (pFile != nullptr) {
       HB_BYTE buffer[2];
 
-      if (fNewFile)
-      {
+      if (fNewFile) {
         iUsers = 1;
-      }
-      else
-      {
-        if (hb_fileReadAt(pFile, buffer, 2, 0) != 2)
-        {
+      } else {
+        if (hb_fileReadAt(pFile, buffer, 2, 0) != 2) {
           fError = true;
-        }
-        else
-        {
+        } else {
           iUsers = HB_GET_LE_INT16(buffer) + 1;
         }
       }
-      if (!fError)
-      {
+      if (!fError) {
         HB_PUT_LE_UINT16(buffer, iUsers);
-        if (hb_fileWriteAt(pFile, buffer, 2, 0) != 2)
-        {
+        if (hb_fileWriteAt(pFile, buffer, 2, 0) != 2) {
           fError = true;
         }
       }
       hb_fileClose(pFile);
     }
   }
-  if (fError)
-  {
+  if (fError) {
     iUsers = -1;
   }
   hb_retni(iUsers);
@@ -189,22 +165,18 @@ HB_FUNC(SX_KILLSEM)
   char szFileName[HB_PATH_MAX];
   int iUsers = -1;
 
-  if (hb_sxSemName(szFileName))
-  {
+  if (hb_sxSemName(szFileName)) {
     PHB_FILE pFile = hb_sxSemOpen(szFileName, nullptr);
 
-    if (pFile != nullptr)
-    {
+    if (pFile != nullptr) {
       HB_BYTE buffer[2];
-      if (hb_fileReadAt(pFile, buffer, 2, 0) == 2)
-      {
+      if (hb_fileReadAt(pFile, buffer, 2, 0) == 2) {
         iUsers = HB_GET_LE_INT16(buffer) - 1;
         HB_PUT_LE_UINT16(buffer, iUsers);
         hb_fileWriteAt(pFile, buffer, 2, 0);
       }
       hb_fileClose(pFile);
-      if (iUsers == 0)
-      {
+      if (iUsers == 0) {
         hb_fileDelete(szFileName);
       }
     }
@@ -217,11 +189,9 @@ HB_FUNC(SX_ISSEM)
   char szFileName[HB_PATH_MAX];
   PHB_FILE pFile = nullptr;
 
-  if (hb_sxSemName(szFileName))
-  {
+  if (hb_sxSemName(szFileName)) {
     pFile = hb_sxSemOpen(szFileName, nullptr);
-    if (pFile != nullptr)
-    {
+    if (pFile != nullptr) {
       hb_fileClose(pFile);
     }
   }

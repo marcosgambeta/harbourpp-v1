@@ -59,39 +59,27 @@ HB_FUNC(HB_DBDETACH)
   AREAP pArea = nullptr;
   int iArea;
 
-  if (!pAlias || pAlias->isNil())
-  {
+  if (!pAlias || pAlias->isNil()) {
     pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  }
-  else if (pAlias->isString())
-  {
+  } else if (pAlias->isString()) {
     auto szAlias = pAlias->getCPtr();
     hb_rddGetAliasNumber(szAlias, &iArea);
-    if (iArea > 0)
-    {
+    if (iArea > 0) {
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
     }
-  }
-  else if (pAlias->isNumber())
-  {
+  } else if (pAlias->isNumber()) {
     iArea = pAlias->getNI();
-    if (iArea > 0)
-    {
+    if (iArea > 0) {
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
     return;
   }
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     hb_retl(hb_rddDetachArea(pArea, pCargo) == Harbour::SUCCESS);
-  }
-  else
-  {
+  } else {
     hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
   }
 }
@@ -100,39 +88,31 @@ HB_FUNC(HB_DBDETACH)
 //          --> <lSuccess>
 HB_FUNC(HB_DBREQUEST)
 {
-  if (HB_ISNIL(1) || HB_ISCHAR(1))
-  {
+  if (HB_ISNIL(1) || HB_ISCHAR(1)) {
     auto szAlias = hb_parc(1);
     bool fNewArea = hb_parl(2);
     PHB_ITEM pCargo = HB_ISBYREF(3) ? hb_itemNew(nullptr) : nullptr;
     HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
 
-    if (HB_ISNUM(4))
-    {
+    if (HB_ISNUM(4)) {
       double dTimeOut = hb_parnd(4);
       ulMilliSec = dTimeOut > 0 ? static_cast<HB_ULONG>(dTimeOut * 1000) : 0;
-    }
-    else if (!hb_parl(4))
-    {
+    } else if (!hb_parl(4)) {
       ulMilliSec = 0;
     }
 
     auto pArea = hb_rddRequestArea(szAlias, pCargo, fNewArea, ulMilliSec);
-    if (pArea != nullptr)
-    {
+    if (pArea != nullptr) {
       hb_rddSelectWorkAreaNumber(pArea->uiArea);
     }
 
-    if (pCargo)
-    {
+    if (pCargo) {
       hb_itemParamStoreForward(3, pCargo);
       hb_itemRelease(pCargo);
     }
 
     hb_retl(pArea != nullptr);
-  }
-  else
-  {
+  } else {
     hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
   }
 }

@@ -63,8 +63,7 @@ static HB_U32 hb_sxInitSeed(const char *pKeyVal, HB_U16 *puiKey)
 {
   HB_U32 ulSeed = 0;
 
-  for (auto i = 0; i < 7; i++)
-  {
+  for (auto i = 0; i < 7; i++) {
     ulSeed = (((ulSeed >> 16) + (ulSeed << 16)) * 17) + HB_GET_LE_UINT16(&pKeyVal[i]);
   }
   ulSeed |= 1;
@@ -97,16 +96,14 @@ void hb_sxEnCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLe
   int i;
 
   ulSeed = hb_sxInitSeed(pKeyVal, &uiKey);
-  for (nPos = 0, i = 0; nPos < nLen; nPos++)
-  {
+  for (nPos = 0, i = 0; nPos < nLen; nPos++) {
     HB_UCHAR ucChar, ucShft;
 
     ucChar = static_cast<HB_UCHAR>(pSrc[nPos]);
     ucShft = static_cast<HB_UCHAR>(uiKey & 0x07);
     pDst[nPos] = ((ucChar >> ucShft) + (ucChar << (8 - ucShft)) + (uiKey & 0xFF));
     ulSeed = hb_sxNextSeed(ulSeed, &pKeyVal[i], &uiKey);
-    if (++i == 7)
-    {
+    if (++i == 7) {
       i = 0;
     }
   }
@@ -120,16 +117,14 @@ void hb_sxDeCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLe
   int i;
 
   ulSeed = hb_sxInitSeed(pKeyVal, &uiKey);
-  for (nPos = 0, i = 0; nPos < nLen; nPos++)
-  {
+  for (nPos = 0, i = 0; nPos < nLen; nPos++) {
     HB_UCHAR ucChar, ucShft;
 
     ucChar = static_cast<HB_UCHAR>(pSrc[nPos]) - (uiKey & 0xFF);
     ucShft = static_cast<HB_UCHAR>(uiKey & 0x07);
     pDst[nPos] = ((ucChar << ucShft) + (ucChar >> (8 - ucShft)));
     ulSeed = hb_sxNextSeed(ulSeed, &pKeyVal[i], &uiKey);
-    if (++i == 7)
-    {
+    if (++i == 7) {
       i = 0;
     }
   }
@@ -140,34 +135,27 @@ static bool _hb_sxGetKey(PHB_ITEM pKeyItem, char *pKeyVal)
   auto fResult = false;
   PHB_ITEM pItem = nullptr;
 
-  if (!(hb_itemType(pKeyItem) & Harbour::Item::STRING))
-  {
+  if (!(hb_itemType(pKeyItem) & Harbour::Item::STRING)) {
     auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-    if (pArea != nullptr)
-    {
+    if (pArea != nullptr) {
       pItem = hb_itemNew(nullptr);
-      if (SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS)
-      {
+      if (SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS) {
         pKeyItem = pItem;
       }
     }
   }
-  if (hb_itemType(pKeyItem) & Harbour::Item::STRING)
-  {
+  if (hb_itemType(pKeyItem) & Harbour::Item::STRING) {
     auto nKey = pKeyItem->getCLen();
-    if (nKey)
-    {
+    if (nKey) {
       memcpy(pKeyVal, pKeyItem->getCPtr(), HB_MIN(nKey, 8));
     }
-    if (nKey < 8)
-    {
+    if (nKey < 8) {
       memset(pKeyVal + nKey, 0, 8 - nKey);
     }
     fResult = true;
   }
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_itemRelease(pItem);
   }
   return fResult;
@@ -175,20 +163,16 @@ static bool _hb_sxGetKey(PHB_ITEM pKeyItem, char *pKeyVal)
 
 HB_FUNC(SX_ENCRYPT)
 {
-  if (hb_pcount() > 0)
-  {
+  if (hb_pcount() > 0) {
     char keyBuf[8];
     auto nLen = hb_parclen(1);
 
-    if (nLen > 0 && _hb_sxGetKey(hb_param(2, Harbour::Item::ANY), keyBuf))
-    {
+    if (nLen > 0 && _hb_sxGetKey(hb_param(2, Harbour::Item::ANY), keyBuf)) {
       auto pDst = static_cast<char *>(hb_xgrab(nLen + 1));
       hb_sxEnCrypt(hb_parc(1), pDst, keyBuf, nLen);
       pDst[nLen] = 0;
       hb_retclen_buffer(pDst, nLen);
-    }
-    else
-    {
+    } else {
       hb_itemReturn(hb_param(1, Harbour::Item::ANY));
     }
   }
@@ -196,20 +180,16 @@ HB_FUNC(SX_ENCRYPT)
 
 HB_FUNC(SX_DECRYPT)
 {
-  if (hb_pcount() > 0)
-  {
+  if (hb_pcount() > 0) {
     char keyBuf[8];
     auto nLen = hb_parclen(1);
 
-    if (nLen > 0 && _hb_sxGetKey(hb_param(2, Harbour::Item::ANY), keyBuf))
-    {
+    if (nLen > 0 && _hb_sxGetKey(hb_param(2, Harbour::Item::ANY), keyBuf)) {
       auto pDst = static_cast<char *>(hb_xgrab(nLen + 1));
       hb_sxDeCrypt(hb_parc(1), pDst, keyBuf, nLen);
       pDst[nLen] = 0;
       hb_retclen_buffer(pDst, nLen);
-    }
-    else
-    {
+    } else {
       hb_itemReturn(hb_param(1, Harbour::Item::ANY));
     }
   }

@@ -71,8 +71,7 @@ using PHB_FILEBUF = HB_FILEBUF *;
 
 static void hb_flushFBuffer(PHB_FILEBUF pFileBuf)
 {
-  if (pFileBuf->nPos > 0)
-  {
+  if (pFileBuf->nPos > 0) {
     hb_fileWrite(pFileBuf->pFile, pFileBuf->pBuf, pFileBuf->nPos, -1);
     pFileBuf->nPos = 0;
   }
@@ -80,8 +79,7 @@ static void hb_flushFBuffer(PHB_FILEBUF pFileBuf)
 
 static void hb_addToFBuffer(PHB_FILEBUF pFileBuf, char ch)
 {
-  if (pFileBuf->nPos == pFileBuf->nSize)
-  {
+  if (pFileBuf->nPos == pFileBuf->nSize) {
     hb_flushFBuffer(pFileBuf);
   }
   pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(ch);
@@ -91,10 +89,8 @@ static void hb_addStrnToFBuffer(PHB_FILEBUF pFileBuf, const char *str, HB_SIZE n
 {
   HB_SIZE nPos = 0;
 
-  while (nPos < nSize)
-  {
-    if (pFileBuf->nPos == pFileBuf->nSize)
-    {
+  while (nPos < nSize) {
+    if (pFileBuf->nPos == pFileBuf->nSize) {
       hb_flushFBuffer(pFileBuf);
     }
     pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(str[nPos++]);
@@ -103,10 +99,8 @@ static void hb_addStrnToFBuffer(PHB_FILEBUF pFileBuf, const char *str, HB_SIZE n
 
 static void hb_addStrToFBuffer(PHB_FILEBUF pFileBuf, const char *szStr)
 {
-  while (*szStr)
-  {
-    if (pFileBuf->nPos == pFileBuf->nSize)
-    {
+  while (*szStr) {
+    if (pFileBuf->nPos == pFileBuf->nSize) {
       hb_flushFBuffer(pFileBuf);
     }
     pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(*szStr++);
@@ -116,8 +110,7 @@ static void hb_addStrToFBuffer(PHB_FILEBUF pFileBuf, const char *szStr)
 static void hb_destroyFBuffer(PHB_FILEBUF pFileBuf)
 {
   hb_flushFBuffer(pFileBuf);
-  if (pFileBuf->pBuf)
-  {
+  if (pFileBuf->pBuf) {
     hb_xfree(pFileBuf->pBuf);
   }
   hb_xfree(pFileBuf);
@@ -137,33 +130,25 @@ static PHB_FILEBUF hb_createFBuffer(PHB_FILE pFile, HB_SIZE nSize)
 // Export field value into the buffer in SQL format
 static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char *szDelim, const char *szEsc)
 {
-  switch (hb_itemType(pValue))
-  {
+  switch (hb_itemType(pValue)) {
   case Harbour::Item::STRING:
-  case Harbour::Item::MEMO:
-  {
+  case Harbour::Item::MEMO: {
     auto nLen = pValue->getCLen();
     HB_SIZE nCnt = 0;
     auto szVal = pValue->getCPtr();
 
     hb_addStrToFBuffer(pFileBuf, szDelim);
-    while (nLen && HB_ISSPACE(szVal[nLen - 1]))
-    {
+    while (nLen && HB_ISSPACE(szVal[nLen - 1])) {
       nLen--;
     }
 
-    while (*szVal && nCnt++ < nLen)
-    {
-      if (*szVal == *szDelim || *szVal == *szEsc)
-      {
+    while (*szVal && nCnt++ < nLen) {
+      if (*szVal == *szDelim || *szVal == *szEsc) {
         hb_addToFBuffer(pFileBuf, *szEsc);
       }
-      if (static_cast<HB_UCHAR>(*szVal) >= 32)
-      {
+      if (static_cast<HB_UCHAR>(*szVal) >= 32) {
         hb_addToFBuffer(pFileBuf, *szVal);
-      }
-      else
-      {
+      } else {
 #if 0
                printf("%d %c", *szVal, *szVal);
 #endif
@@ -174,18 +159,14 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     break;
   }
 
-  case Harbour::Item::DATE:
-  {
+  case Harbour::Item::DATE: {
     char szDate[9];
 
     hb_addStrToFBuffer(pFileBuf, szDelim);
     pValue->getDS(szDate);
-    if (szDate[0] == ' ')
-    {
+    if (szDate[0] == ' ') {
       hb_addStrToFBuffer(pFileBuf, "0100-01-01");
-    }
-    else
-    {
+    } else {
       hb_addStrnToFBuffer(pFileBuf, &szDate[0], 4);
       hb_addToFBuffer(pFileBuf, '-');
       hb_addStrnToFBuffer(pFileBuf, &szDate[4], 2);
@@ -196,8 +177,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     break;
   }
 
-  case Harbour::Item::TIMESTAMP:
-  {
+  case Harbour::Item::TIMESTAMP: {
     long lDate, lTime;
     char szDateTime[24];
 
@@ -217,25 +197,20 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
 
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG:
-  case Harbour::Item::DOUBLE:
-  {
+  case Harbour::Item::DOUBLE: {
     char szResult[HB_MAX_DOUBLE_LENGTH];
     int iSize, iWidth, iDec;
 
     hb_itemGetNLen(pValue, &iWidth, &iDec);
     iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
-    if (hb_itemStrBuf(szResult, pValue, iSize, iDec))
-    {
+    if (hb_itemStrBuf(szResult, pValue, iSize, iDec)) {
       int iPos = 0;
-      while (iSize && HB_ISSPACE(szResult[iPos]))
-      {
+      while (iSize && HB_ISSPACE(szResult[iPos])) {
         iPos++;
         iSize--;
       }
       hb_addStrnToFBuffer(pFileBuf, &szResult[iPos], iSize);
-    }
-    else
-    {
+    } else {
       hb_addToFBuffer(pFileBuf, '0');
     }
     break;
@@ -263,59 +238,47 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
   HB_BOOL fEof = true;
   HB_BOOL fNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 
-  if (SELF_FIELDCOUNT(pArea, &uiFields) != Harbour::SUCCESS)
-  {
+  if (SELF_FIELDCOUNT(pArea, &uiFields) != Harbour::SUCCESS) {
     return 0;
   }
 
-  if (fInsert && szTable)
-  {
+  if (fInsert && szTable) {
     szInsert = hb_xstrcpy(nullptr, "INSERT INTO ", szTable, " VALUES ( ", nullptr);
   }
 
   pFileBuf = hb_createFBuffer(pFile, HB_FILE_BUF_SIZE);
   pTmp = hb_itemNew(nullptr);
 
-  while (llNext-- > 0)
-  {
-    if (pWhile)
-    {
-      if (SELF_EVALBLOCK(pArea, pWhile) != Harbour::SUCCESS || !hb_itemGetL(pArea->valResult))
-      {
+  while (llNext-- > 0) {
+    if (pWhile) {
+      if (SELF_EVALBLOCK(pArea, pWhile) != Harbour::SUCCESS || !hb_itemGetL(pArea->valResult)) {
         break;
       }
     }
 
-    if (SELF_EOF(pArea, &fEof) != Harbour::SUCCESS || fEof)
-    {
+    if (SELF_EOF(pArea, &fEof) != Harbour::SUCCESS || fEof) {
       break;
     }
 
-    if (pFor)
-    {
-      if (SELF_EVALBLOCK(pArea, pFor) != Harbour::SUCCESS)
-      {
+    if (pFor) {
+      if (SELF_EVALBLOCK(pArea, pFor) != Harbour::SUCCESS) {
         break;
       }
     }
-    if (!pFor || hb_itemGetL(pArea->valResult))
-    {
+    if (!pFor || hb_itemGetL(pArea->valResult)) {
       ++ulRecords;
 
-      if (szInsert != nullptr)
-      {
+      if (szInsert != nullptr) {
         hb_addStrToFBuffer(pFileBuf, szInsert);
       }
 
-      if (fRecno)
-      {
+      if (fRecno) {
         HB_ULONG ulRec = ulRecords;
         char szRecno[13], *szVal;
 
         szVal = szRecno + sizeof(szRecno);
         *--szVal = 0;
-        do
-        {
+        do {
           *--szVal = static_cast<char>(ulRec % 10) + '0';
           ulRec /= 10;
         } while (ulRec);
@@ -323,51 +286,40 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
         hb_addStrToFBuffer(pFileBuf, szSep);
       }
 
-      if (fNoFieldPassed)
-      {
-        for (ui = 1; ui <= uiFields; ui++)
-        {
-          if (SELF_GETVALUE(pArea, ui, pTmp) != Harbour::SUCCESS)
-          {
+      if (fNoFieldPassed) {
+        for (ui = 1; ui <= uiFields; ui++) {
+          if (SELF_GETVALUE(pArea, ui, pTmp) != Harbour::SUCCESS) {
             break;
           }
-          if (fWriteSep)
-          {
+          if (fWriteSep) {
             hb_addStrToFBuffer(pFileBuf, szSep);
           }
           fWriteSep = hb_exportBufSqlVar(pFileBuf, pTmp, szDelim, szEsc);
         }
-        if (ui <= uiFields)
-        {
+        if (ui <= uiFields) {
           break;
         }
-      }
-      else
-      {
+      } else {
         // TODO: exporting only some fields
       }
 
-      if (szInsert != nullptr)
-      {
+      if (szInsert != nullptr) {
         hb_addStrToFBuffer(pFileBuf, " );");
       }
       hb_addStrToFBuffer(pFileBuf, szNewLine);
       fWriteSep = false;
     }
 
-    if (SELF_SKIP(pArea, 1) != Harbour::SUCCESS)
-    {
+    if (SELF_SKIP(pArea, 1) != Harbour::SUCCESS) {
       break;
     }
 
-    if ((llNext % 10000) == 0)
-    {
+    if ((llNext % 10000) == 0) {
       hb_inkeyPoll();
     }
   }
 
-  if (szInsert != nullptr)
-  {
+  if (szInsert != nullptr) {
     hb_xfree(szInsert);
   }
   hb_destroyFBuffer(pFileBuf);
@@ -388,8 +340,7 @@ HB_FUNC(__DBSQL)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  if (pArea != nullptr)
-  {
+  if (pArea != nullptr) {
     HB_BOOL fExport = hb_parl(1);
     auto szFileName = hb_parc(2);
     auto szTable = hb_parc(3);
@@ -409,35 +360,26 @@ HB_FUNC(__DBSQL)
     HB_ERRCODE errCode;
     PHB_FILE pFile;
 
-    if (!szFileName)
-    {
+    if (!szFileName) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
-    }
-    else if (fExport)
-    { // COPY TO SQL
+    } else if (fExport) { // COPY TO SQL
       PHB_ITEM pError = nullptr;
       HB_BOOL fRetry;
 
       // Try to create Dat file
-      do
-      {
+      do {
         pFile = hb_fileExtOpen(
             szFileName, nullptr,
             (fAppend ? 0 : FXO_TRUNCATE) | FO_READWRITE | FO_EXCLUSIVE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError);
-        if (pFile == nullptr)
-        {
-          if (!pError)
-          {
+        if (pFile == nullptr) {
+          if (!pError) {
             pError = hb_errNew();
             hb_errPutSeverity(pError, ES_ERROR);
-            if (fAppend)
-            {
+            if (fAppend) {
               hb_errPutGenCode(pError, EG_OPEN);
               hb_errPutSubCode(pError, EDBF_OPEN_DBF);
               hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_OPEN));
-            }
-            else
-            {
+            } else {
               hb_errPutGenCode(pError, EG_CREATE);
               hb_errPutSubCode(pError, EDBF_CREATE_DBF);
               hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_CREATE));
@@ -448,54 +390,39 @@ HB_FUNC(__DBSQL)
             hb_errPutOsCode(pError, hb_fsError());
           }
           fRetry = hb_errLaunch(pError) == E_RETRY;
-        }
-        else
-        {
+        } else {
           fRetry = false;
         }
       } while (fRetry);
 
-      if (pError)
-      {
+      if (pError) {
         hb_itemRelease(pError);
       }
 
-      if (pFile != nullptr)
-      {
-        if (fAppend)
-        {
+      if (pFile != nullptr) {
+        if (fAppend) {
           hb_fileSeek(pFile, 0, FS_END);
         }
 
         errCode = Harbour::SUCCESS;
-        if (pRecord)
-        {
+        if (pRecord) {
           errCode = SELF_GOTOID(pArea, pRecord);
-        }
-        else if (pNext)
-        {
+        } else if (pNext) {
           llNext = pNext->getNInt();
-        }
-        else if (!fRest)
-        {
+        } else if (!fRest) {
           errCode = SELF_GOTOP(pArea);
         }
 
-        if (errCode == Harbour::SUCCESS)
-        {
+        if (errCode == Harbour::SUCCESS) {
           hb_retnint(
               hb_db2Sql(pArea, pFields, llNext, pWhile, pFor, szDelim, szSep, szEsc, szTable, pFile, fInsert, fRecno));
         }
         hb_fileClose(pFile);
       }
-    }
-    else
-    {
+    } else {
       // TODO: import code
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
   }
 }
