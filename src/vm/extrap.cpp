@@ -72,12 +72,7 @@
 #endif
 
 #if defined(HB_SIGNAL_EXCEPTION_HANDLER)
-#if defined(__GLIBC__) && defined(__GLIBC_MINOR__) && (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 34)
-static HB_BYTE *s_signal_stack[32768];
-#else
-static HB_BYTE
-    *s_signal_stack[SIGSTKSZ]; // TODO: error: size of array ‘s_signal_stack’ is not an integral constant-expression
-#endif
+static void *s_signal_stack = nullptr;
 #endif
 
 #if defined(HB_OS_WIN)
@@ -360,7 +355,10 @@ void hb_vmSetExceptionHandler(void)
 #elif defined(HB_SIGNAL_EXCEPTION_HANDLER)
   {
     stack_t ss;
-    ss.ss_sp = static_cast<void *>(s_signal_stack);
+    if (s_signal_stack == nullptr) {
+      s_signal_stack = hb_xgrab(SIGSTKSZ);
+    }
+    ss.ss_sp = s_signal_stack;
     ss.ss_size = SIGSTKSZ;
     ss.ss_flags = 0;
     // set alternative stack for SIGSEGV executed on stack overflow
@@ -384,21 +382,16 @@ void hb_vmSetExceptionHandler(void)
 void hb_vmUnsetExceptionHandler(void)
 {
 #if defined(HB_SIGNAL_EXCEPTION_HANDLER)
-  {
-    // we are using static buffer for alternative stack so we do not
-    // have to deallocate it to free the memory on application exit
-#if 0
-      stack_t ss, oss;
-      ss.ss_sp = nullptr;
-      ss.ss_size = SIGSTKSZ;
-      ss.ss_flags = SS_DISABLE;
-      // set alternative stack for SIGSEGV executed on stack overflow
-      if( sigaltstack(&ss, &oss) == 0 ) {
-         if( oss.ss_sp && SS_DISABLE ) {
-            free(oss.ss_sp);
-         }
-      }
-#endif
+  stack_t ss, oss;
+  ss.ss_sp = nullptr;
+  ss.ss_size = SIGSTKSZ;
+  ss.ss_flags = SS_DISABLE;
+  // set alternative stack for SIGSEGV executed on stack overflow
+  if (sigaltstack(&ss, &oss) == 0) {
+    if (s_signal_stack != nullptr) {
+      hb_xfree(s_signal_stack);
+      s_signal_stack = nullptr;
+    }
   }
 #endif
 }
