@@ -61,8 +61,7 @@ static PHB_HASH_ITEM hb_hashItemNew(HB_SIZE nKey, const void *pKey, const void *
 
 static void hb_hashItemDelete(PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem)
 {
-  if (pTable->pDeleteItemFunc)
-  {
+  if (pTable->pDeleteItemFunc) {
     (pTable->pDeleteItemFunc)(pTable, pItem->KeyPtr, pItem->ValPtr);
   }
   hb_xfree(pItem);
@@ -97,13 +96,10 @@ void hb_hashTableKill(PHB_HASH_TABLE pTable)
 {
   HB_SIZE nSize = 0;
 
-  while (nSize < pTable->nTableSize)
-  {
-    if (pTable->pItems[nSize])
-    {
+  while (nSize < pTable->nTableSize) {
+    if (pTable->pItems[nSize]) {
       PHB_HASH_ITEM pItem = pTable->pItems[nSize];
-      while (pItem)
-      {
+      while (pItem) {
         PHB_HASH_ITEM pFree = pItem;
         pItem = pItem->next;
         hb_hashItemDelete(pTable, pFree);
@@ -121,36 +117,28 @@ PHB_HASH_TABLE hb_hashTableResize(PHB_HASH_TABLE pTable, HB_SIZE nNewSize)
   PHB_HASH_TABLE pNew;
   HB_SIZE nSize = 0;
 
-  if (nNewSize == 0)
-  {
+  if (nNewSize == 0) {
     nNewSize = 2 * pTable->nTableSize + 1;
   }
   pNew = hb_hashTableCreate(nNewSize, pTable->pKeyFunc, pTable->pDeleteItemFunc, pTable->pCompFunc);
 
-  while (nSize < pTable->nTableSize)
-  {
-    if (pTable->pItems[nSize])
-    {
+  while (nSize < pTable->nTableSize) {
+    if (pTable->pItems[nSize]) {
       PHB_HASH_ITEM pItem = pTable->pItems[nSize];
 
-      while (pItem)
-      {
+      while (pItem) {
         HB_SIZE nKey;
         PHB_HASH_ITEM pNewItem, pNext;
 
         pNext = pItem->next;
         nKey = (pTable->pKeyFunc)(pNew, pItem->KeyPtr, pItem->ValPtr);
         pNewItem = pNew->pItems[nKey];
-        if (pNewItem)
-        {
-          while (pNewItem->next)
-          {
+        if (pNewItem) {
+          while (pNewItem->next) {
             pNewItem = pNewItem->next;
           }
           pNewItem->next = pItem;
-        }
-        else
-        {
+        } else {
           pNew->pItems[nKey] = pItem;
           ++pNew->nUsed;
         }
@@ -176,16 +164,12 @@ HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void *pKey, const void *pVa
 
   nKey = (pTable->pKeyFunc)(pTable, pKey, pValue);
   pItem = pTable->pItems[nKey];
-  if (pItem != nullptr)
-  {
-    while (pItem->next)
-    {
+  if (pItem != nullptr) {
+    while (pItem->next) {
       pItem = pItem->next;
     }
     pItem->next = hb_hashItemNew(nKey, pKey, pValue);
-  }
-  else
-  {
+  } else {
     pTable->pItems[nKey] = hb_hashItemNew(nKey, pKey, pValue);
     ++pTable->nUsed;
   }
@@ -203,15 +187,12 @@ const void *hb_hashTableFind(PHB_HASH_TABLE pTable, const void *pKey)
 
   nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
   pItem = pTable->pItems[nKey];
-  if (pItem != nullptr)
-  {
-    while (pItem && ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) != 0))
-    {
+  if (pItem != nullptr) {
+    while (pItem && ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) != 0)) {
       pItem = pItem->next;
     }
 
-    if (pItem != nullptr)
-    {
+    if (pItem != nullptr) {
       pFound = pItem->ValPtr;
     }
   }
@@ -230,25 +211,18 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void *pKey)
   auto bFound = false;
 
   nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
-  if (nKey > pTable->nTableSize)
-  {
+  if (nKey > pTable->nTableSize) {
     return false;
   }
 
   pItem = pTable->pItems[nKey];
-  while (pItem && !bFound)
-  {
-    if ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) == 0)
-    {
-      if (pPrev)
-      {
+  while (pItem && !bFound) {
+    if ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) == 0) {
+      if (pPrev) {
         pPrev->next = pItem->next;
-      }
-      else
-      {
+      } else {
         pTable->pItems[nKey] = pItem->next;
-        if (!pItem->next)
-        {
+        if (!pItem->next) {
           --pTable->nUsed;
           pTable->pItems[nKey] = nullptr;
         }
@@ -256,9 +230,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void *pKey)
       --pTable->nCount;
       hb_hashItemDelete(pTable, pItem);
       bFound = true;
-    }
-    else
-    {
+    } else {
       pPrev = pItem;
       pItem = pItem->next;
     }

@@ -57,12 +57,10 @@ static void preBmBc(const char *needle, HB_ISIZ m, HB_ISIZ bmBc[])
 {
   HB_ISIZ i;
 
-  for (i = 0; i < ASIZE; ++i)
-  {
+  for (i = 0; i < ASIZE; ++i) {
     bmBc[i] = m;
   }
-  for (i = 0; i < m - 1; ++i)
-  {
+  for (i = 0; i < m - 1; ++i) {
     bmBc[static_cast<HB_UCHAR>(needle[i])] = m - i - 1;
   }
 }
@@ -74,21 +72,15 @@ static void suffixes(const char *needle, HB_ISIZ m, HB_ISIZ *suff)
   f = 0; // NOTE: Fix added by me [vszakats]
   suff[m - 1] = m;
   g = m - 1;
-  for (i = m - 2; i >= 0; --i)
-  {
-    if (i > g && suff[i + m - 1 - f] < i - g)
-    {
+  for (i = m - 2; i >= 0; --i) {
+    if (i > g && suff[i + m - 1 - f] < i - g) {
       suff[i] = suff[i + m - 1 - f];
-    }
-    else
-    {
-      if (i < g)
-      {
+    } else {
+      if (i < g) {
         g = i;
       }
       f = i;
-      while (g >= 0 && needle[g] == needle[g + m - 1 - f])
-      {
+      while (g >= 0 && needle[g] == needle[g + m - 1 - f]) {
         --g;
       }
       suff[i] = f - g;
@@ -103,29 +95,23 @@ static void preBmGs(const char *needle, HB_ISIZ m, HB_ISIZ bmGs[])
 
   suffixes(needle, m, suff);
 
-  for (i = 0; i < m; ++i)
-  {
+  for (i = 0; i < m; ++i) {
     bmGs[i] = m;
   }
 
   j = 0;
 
-  for (i = m - 1; i >= 0; --i)
-  {
-    if (suff[i] == i + 1)
-    {
-      for (; j < m - 1 - i; ++j)
-      {
-        if (bmGs[j] == m)
-        {
+  for (i = m - 1; i >= 0; --i) {
+    if (suff[i] == i + 1) {
+      for (; j < m - 1 - i; ++j) {
+        if (bmGs[j] == m) {
           bmGs[j] = m - 1 - i;
         }
       }
     }
   }
 
-  for (i = 0; i <= m - 2; ++i)
-  {
+  for (i = 0; i <= m - 2; ++i) {
     bmGs[m - 1 - suff[i]] = m - 1 - i;
   }
 
@@ -147,42 +133,32 @@ HB_ISIZ hb_strAtTBM(const char *needle, HB_ISIZ m, const char *haystack, HB_ISIZ
   // Searching
   j = u = 0;
   shift = m;
-  while (j <= n - m)
-  {
+  while (j <= n - m) {
     HB_ISIZ i = m - 1;
-    while (i >= 0 && needle[i] == haystack[i + j])
-    {
+    while (i >= 0 && needle[i] == haystack[i + j]) {
       --i;
-      if (u != 0 && i == m - 1 - shift)
-      {
+      if (u != 0 && i == m - 1 - shift) {
         i -= u;
       }
     }
 
-    if (i < 0)
-    {
+    if (i < 0) {
       r = j + 1;
       break;
 #if 0 // To continue search
          shift = bmGs[0];
          u = m - shift;
 #endif
-    }
-    else
-    {
+    } else {
       v = m - 1 - i;
       turboShift = u - v;
       bcShift = bmBc[static_cast<HB_UCHAR>(haystack[i + j])] - m + 1 + i;
       shift = HB_MAX(turboShift, bcShift);
       shift = HB_MAX(shift, bmGs[i]);
-      if (shift == bmGs[i])
-      {
+      if (shift == bmGs[i]) {
         u = HB_MIN(m - shift, v);
-      }
-      else
-      {
-        if (turboShift < bcShift)
-        {
+      } else {
+        if (turboShift < bcShift) {
           shift = HB_MAX(shift, u + 1);
         }
         u = 0;

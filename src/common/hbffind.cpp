@@ -130,66 +130,52 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
 #if defined(HB_OS_WIN)
 
   nAttr = 0;
-  if (raw_attr & FILE_ATTRIBUTE_ARCHIVE)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_ARCHIVE) {
     nAttr |= HB_FA_ARCHIVE;
   }
-  if (raw_attr & FILE_ATTRIBUTE_DIRECTORY)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_DIRECTORY) {
     nAttr |= HB_FA_DIRECTORY;
   }
-  if (raw_attr & FILE_ATTRIBUTE_HIDDEN)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_HIDDEN) {
     nAttr |= HB_FA_HIDDEN;
   }
-  if (raw_attr & FILE_ATTRIBUTE_READONLY)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_READONLY) {
     nAttr |= HB_FA_READONLY;
   }
-  if (raw_attr & FILE_ATTRIBUTE_SYSTEM)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_SYSTEM) {
     nAttr |= HB_FA_SYSTEM;
   }
-  if (raw_attr & FILE_ATTRIBUTE_NORMAL)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_NORMAL) {
     nAttr |= HB_FA_NORMAL;
   }
 
   // Note that FILE_ATTRIBUTE_NORMAL is not needed
   // HB_FA_DEVICE not supported
   // HB_FA_VOLCOMP needs to be checked
-  if (raw_attr & FILE_ATTRIBUTE_ENCRYPTED)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_ENCRYPTED) {
     nAttr |= HB_FA_ENCRYPTED;
   }
-  if (raw_attr & FILE_ATTRIBUTE_TEMPORARY)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_TEMPORARY) {
     nAttr |= HB_FA_TEMPORARY;
   }
-  if (raw_attr & FILE_ATTRIBUTE_SPARSE_FILE)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_SPARSE_FILE) {
     nAttr |= HB_FA_SPARSE;
   }
-  if (raw_attr & FILE_ATTRIBUTE_REPARSE_POINT)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_REPARSE_POINT) {
     nAttr |= HB_FA_REPARSE;
   }
-  if (raw_attr & FILE_ATTRIBUTE_COMPRESSED)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_COMPRESSED) {
     nAttr |= HB_FA_COMPRESSED;
   }
-  if (raw_attr & FILE_ATTRIBUTE_OFFLINE)
-  {
+  if (raw_attr & FILE_ATTRIBUTE_OFFLINE) {
     nAttr |= HB_FA_OFFLINE;
   }
   // FILE_ATTRIBUTE_NOT_CONTENT_INDEXED
   // not defined in some older winnt.h
-  if (raw_attr & 0x00002000)
-  {
+  if (raw_attr & 0x00002000) {
     nAttr |= HB_FA_NOTINDEXED;
   }
-  if (raw_attr & 0x00008000)
-  {
+  if (raw_attr & 0x00008000) {
     nAttr |= HB_FA_VOLCOMP;
   }
 
@@ -202,33 +188,26 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
           ((raw_attr & S_IRUSR) ? HB_FA_RUSR : 0) | ((raw_attr & S_ISVTX) ? HB_FA_SVTX : 0) |
           ((raw_attr & S_ISGID) ? HB_FA_SGID : 0) | ((raw_attr & S_ISUID) ? HB_FA_SUID : 0);
 
-  if (S_ISREG(raw_attr))
-  {
+  if (S_ISREG(raw_attr)) {
     nAttr |= HB_FA_FILE;
   }
-  if (S_ISDIR(raw_attr))
-  {
+  if (S_ISDIR(raw_attr)) {
     nAttr |= HB_FA_DIRECTORY;
   }
-  if (S_ISLNK(raw_attr))
-  {
+  if (S_ISLNK(raw_attr)) {
     nAttr |= HB_FA_LINK;
   }
-  if (S_ISCHR(raw_attr))
-  {
+  if (S_ISCHR(raw_attr)) {
     nAttr |= HB_FA_CHRDEVICE;
   }
-  if (S_ISBLK(raw_attr))
-  {
+  if (S_ISBLK(raw_attr)) {
     nAttr |= HB_FA_BLKDEVICE;
   }
-  if (S_ISFIFO(raw_attr))
-  {
+  if (S_ISFIFO(raw_attr)) {
     nAttr |= HB_FA_FIFO;
   }
 #if !defined(HB_OS_VXWORKS)
-  if (S_ISSOCK(raw_attr))
-  {
+  if (S_ISSOCK(raw_attr)) {
     nAttr |= HB_FA_SOCKET;
   }
 #endif
@@ -255,64 +234,50 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
 
   raw_attr = 0;
 
-  if (nAttr & HB_FA_ARCHIVE)
-  {
+  if (nAttr & HB_FA_ARCHIVE) {
     raw_attr |= FILE_ATTRIBUTE_ARCHIVE;
   }
-  if (nAttr & HB_FA_DIRECTORY)
-  {
+  if (nAttr & HB_FA_DIRECTORY) {
     raw_attr |= FILE_ATTRIBUTE_DIRECTORY;
   }
-  if (nAttr & HB_FA_HIDDEN)
-  {
+  if (nAttr & HB_FA_HIDDEN) {
     raw_attr |= FILE_ATTRIBUTE_HIDDEN;
   }
-  if (nAttr & HB_FA_READONLY)
-  {
+  if (nAttr & HB_FA_READONLY) {
     raw_attr |= FILE_ATTRIBUTE_READONLY;
   }
-  if (nAttr & HB_FA_SYSTEM)
-  {
+  if (nAttr & HB_FA_SYSTEM) {
     raw_attr |= FILE_ATTRIBUTE_SYSTEM;
   }
-  if (nAttr & HB_FA_NORMAL)
-  {
+  if (nAttr & HB_FA_NORMAL) {
     raw_attr |= FILE_ATTRIBUTE_NORMAL;
   }
 
   // Note that FILE_ATTRIBUTE_NORMAL is not needed
   // HB_FA_DEVICE not supported
   // HB_FA_VOLCOMP needs to be checked
-  if (nAttr & HB_FA_ENCRYPTED)
-  {
+  if (nAttr & HB_FA_ENCRYPTED) {
     raw_attr |= FILE_ATTRIBUTE_ENCRYPTED;
   }
-  if (nAttr & HB_FA_TEMPORARY)
-  {
+  if (nAttr & HB_FA_TEMPORARY) {
     raw_attr |= FILE_ATTRIBUTE_TEMPORARY;
   }
-  if (nAttr & HB_FA_SPARSE)
-  {
+  if (nAttr & HB_FA_SPARSE) {
     raw_attr |= FILE_ATTRIBUTE_SPARSE_FILE;
   }
-  if (nAttr & HB_FA_REPARSE)
-  {
+  if (nAttr & HB_FA_REPARSE) {
     raw_attr |= FILE_ATTRIBUTE_REPARSE_POINT;
   }
-  if (nAttr & HB_FA_COMPRESSED)
-  {
+  if (nAttr & HB_FA_COMPRESSED) {
     raw_attr |= FILE_ATTRIBUTE_COMPRESSED;
   }
-  if (nAttr & HB_FA_OFFLINE)
-  {
+  if (nAttr & HB_FA_OFFLINE) {
     raw_attr |= FILE_ATTRIBUTE_OFFLINE;
   }
-  if (nAttr & HB_FA_NOTINDEXED)
-  {
+  if (nAttr & HB_FA_NOTINDEXED) {
     raw_attr |= 0x00002000; // FILE_ATTRIBUTE_NOT_CONTENT_INDEXED not defined in some older winnt.h
   }
-  if (nAttr & HB_FA_VOLCOMP)
-  {
+  if (nAttr & HB_FA_VOLCOMP) {
     raw_attr |= 0x00008000;
   }
 
@@ -320,32 +285,25 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
 
   raw_attr = HB_FA_POSIX_ATTR(nAttr);
 
-  if (nAttr & HB_FA_FILE)
-  {
+  if (nAttr & HB_FA_FILE) {
     raw_attr |= S_IFREG;
   }
-  if (nAttr & HB_FA_DIRECTORY)
-  {
+  if (nAttr & HB_FA_DIRECTORY) {
     raw_attr |= S_IFDIR;
   }
-  if (nAttr & HB_FA_LINK)
-  {
+  if (nAttr & HB_FA_LINK) {
     raw_attr |= S_IFLNK;
   }
-  if (nAttr & HB_FA_CHRDEVICE)
-  {
+  if (nAttr & HB_FA_CHRDEVICE) {
     raw_attr |= S_IFCHR;
   }
-  if (nAttr & HB_FA_BLKDEVICE)
-  {
+  if (nAttr & HB_FA_BLKDEVICE) {
     raw_attr |= S_IFBLK;
   }
-  if (nAttr & HB_FA_FIFO)
-  {
+  if (nAttr & HB_FA_FIFO) {
     raw_attr |= S_IFIFO;
   }
-  if (nAttr & HB_FA_SOCKET)
-  {
+  if (nAttr & HB_FA_SOCKET) {
     raw_attr |= S_IFSOCK;
   }
 
@@ -372,10 +330,8 @@ HB_FATTR hb_fsAttrEncode(const char *szAttr)
   char ch;
   HB_FATTR nAttr = 0;
 
-  while ((ch = static_cast<char>(HB_TOUPPER(*pos))) != '\0')
-  {
-    switch (ch)
-    {
+  while ((ch = static_cast<char>(HB_TOUPPER(*pos))) != '\0') {
+    switch (ch) {
     case 'R':
       nAttr |= HB_FA_READONLY;
       break;
@@ -419,32 +375,25 @@ char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
   char *ptr = szAttr;
 
   // Using the same order as CA-Cl*pper did: RHSVDA.
-  if (nAttr & HB_FA_READONLY)
-  {
+  if (nAttr & HB_FA_READONLY) {
     *ptr++ = 'R';
   }
-  if (nAttr & HB_FA_HIDDEN)
-  {
+  if (nAttr & HB_FA_HIDDEN) {
     *ptr++ = 'H';
   }
-  if (nAttr & HB_FA_SYSTEM)
-  {
+  if (nAttr & HB_FA_SYSTEM) {
     *ptr++ = 'S';
   }
-  if (nAttr & HB_FA_ARCHIVE)
-  {
+  if (nAttr & HB_FA_ARCHIVE) {
     *ptr++ = 'A';
   }
-  if (nAttr & HB_FA_DIRECTORY)
-  {
+  if (nAttr & HB_FA_DIRECTORY) {
     *ptr++ = 'D';
   }
-  if (nAttr & HB_FA_LABEL)
-  {
+  if (nAttr & HB_FA_LABEL) {
     *ptr++ = 'V';
   }
-  if (nAttr & HB_FA_LINK)
-  {
+  if (nAttr & HB_FA_LINK) {
     *ptr++ = 'L';
   }
 
@@ -489,71 +438,57 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
     bFound = false;
 
-    if ((ffind->attrmask & HB_FA_LABEL) != 0 && !info->fLabelDone)
-    {
+    if ((ffind->attrmask & HB_FA_LABEL) != 0 && !info->fLabelDone) {
       TCHAR lpVolName[HB_PATH_MAX];
       LPTSTR lpFileMask = nullptr;
       char *mask = nullptr;
 
       info->fLabelDone = true;
 
-      if (ffind->pszFileMask && *ffind->pszFileMask)
-      {
+      if (ffind->pszFileMask && *ffind->pszFileMask) {
         PHB_FNAME pFileName = hb_fsFNameSplit(ffind->pszFileMask);
-        if (pFileName->szName && pFileName->szName[0])
-        {
+        if (pFileName->szName && pFileName->szName[0]) {
           mask = hb_strdup(pFileName->szName);
         }
         if (pFileName->szPath && pFileName->szPath[0] &&
-            (pFileName->szPath[1] || pFileName->szPath[0] != HB_OS_PATH_DELIM_CHR))
-        {
+            (pFileName->szPath[1] || pFileName->szPath[0] != HB_OS_PATH_DELIM_CHR)) {
           lpFileMask = HB_CHARDUP(pFileName->szPath);
         }
         hb_xfree(pFileName);
       }
       bFound = GetVolumeInformation(lpFileMask, lpVolName, HB_SIZEOFARRAY(lpVolName), nullptr, nullptr, nullptr,
                                     nullptr, 0) != 0;
-      if (bFound)
-      {
+      if (bFound) {
         HB_OSSTRDUP2(lpVolName, ffind->szName, sizeof(ffind->szName) - 1);
-        if (mask && *mask && !hb_strMatchFile(ffind->szName, mask))
-        {
+        if (mask && *mask && !hb_strMatchFile(ffind->szName, mask)) {
           ffind->szName[0] = '\0';
           bFound = false;
         }
       }
-      if (lpFileMask)
-      {
+      if (lpFileMask) {
         hb_xfree(lpFileMask);
       }
-      if (mask)
-      {
+      if (mask) {
         hb_xfree(mask);
       }
     }
 
-    if (!bFound && (ffind->attrmask & (HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY)) != HB_FA_LABEL)
-    {
-      if (ffind->bFirst)
-      {
+    if (!bFound && (ffind->attrmask & (HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY)) != HB_FA_LABEL) {
+      if (ffind->bFirst) {
         LPTSTR lpFileMask = HB_CHARDUP(ffind->pszFileMask);
         ffind->bFirst = false;
         info->dwAttr = static_cast<DWORD>(hb_fsAttrToRaw(ffind->attrmask));
         info->hFindFile = FindFirstFile(lpFileMask, &info->pFindFileData);
         hb_xfree(lpFileMask);
 
-        if ((info->hFindFile != INVALID_HANDLE_VALUE) && _HB_WIN_MATCH())
-        {
+        if ((info->hFindFile != INVALID_HANDLE_VALUE) && _HB_WIN_MATCH()) {
           bFound = true;
         }
       }
 
-      if (!bFound && info->hFindFile != INVALID_HANDLE_VALUE)
-      {
-        while (FindNextFile(info->hFindFile, &info->pFindFileData))
-        {
-          if (_HB_WIN_MATCH())
-          {
+      if (!bFound && info->hFindFile != INVALID_HANDLE_VALUE) {
+        while (FindNextFile(info->hFindFile, &info->pFindFileData)) {
+          if (_HB_WIN_MATCH()) {
             bFound = true;
             break;
           }
@@ -562,16 +497,12 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
       // Fill Harbour found file info
 
-      if (bFound)
-      {
+      if (bFound) {
         HB_OSSTRDUP2(info->pFindFileData.cFileName, ffind->szName, sizeof(ffind->szName) - 1);
 
-        if (info->pFindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-        {
+        if (info->pFindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
           ffind->size = 0;
-        }
-        else
-        {
+        } else {
           ffind->size = static_cast<HB_FOFFSET>(info->pFindFileData.nFileSizeLow) +
                         (static_cast<HB_FOFFSET>(info->pFindFileData.nFileSizeHigh) << 32);
         }
@@ -585,8 +516,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
           FILETIME ft;
           SYSTEMTIME time;
 
-          if (FileTimeToLocalFileTime(&info->pFindFileData.ftLastWriteTime, &ft) && FileTimeToSystemTime(&ft, &time))
-          {
+          if (FileTimeToLocalFileTime(&info->pFindFileData.ftLastWriteTime, &ft) && FileTimeToSystemTime(&ft, &time)) {
             iYear = time.wYear;
             iMonth = time.wMonth;
             iDay = time.wDay;
@@ -612,28 +542,23 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
     // TODO: HB_FA_LABEL handling
 
-    if (ffind->bFirst)
-    {
+    if (ffind->bFirst) {
       char *pos;
 
       ffind->bFirst = false;
 
       hb_strncpy(dirname, ffind->pszFileMask, sizeof(dirname) - 1);
       pos = strrchr(dirname, HB_OS_PATH_DELIM_CHR);
-      if (pos)
-      {
+      if (pos) {
         hb_strncpy(info->pattern, pos + 1, sizeof(info->pattern) - 1);
         *(pos + 1) = '\0';
-      }
-      else
-      {
+      } else {
         hb_strncpy(info->pattern, dirname, sizeof(info->pattern) - 1);
         dirname[0] = '.';
         dirname[1] = HB_OS_PATH_DELIM_CHR;
         dirname[2] = '\0';
       }
-      if (info->pattern[0] == '.')
-      {
+      if (info->pattern[0] == '.') {
         ffind->attrmask |= HB_FA_HIDDEN;
       }
 
@@ -645,12 +570,9 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
       hb_strncpy(info->path, dirname, sizeof(info->path) - 1);
     }
 
-    if (info->dir && info->pattern[0] != '\0')
-    {
-      while ((info->entry = readdir(info->dir)) != nullptr)
-      {
-        if (hb_strMatchFile(info->entry->d_name, info->pattern))
-        {
+    if (info->dir && info->pattern[0] != '\0') {
+      while ((info->entry = readdir(info->dir)) != nullptr) {
+        if (hb_strMatchFile(info->entry->d_name, info->pattern)) {
           bFound = true;
           break;
         }
@@ -658,8 +580,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
     }
 
     // Fill Harbour found file info
-    if (bFound)
-    {
+    if (bFound) {
       hb_strncpy(dirname, info->path, sizeof(dirname) - 1);
       hb_strncat(dirname, info->entry->d_name, sizeof(dirname) - 1);
       {
@@ -667,33 +588,25 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
         struct tm lt;
 #if defined(HB_USE_LARGEFILE64)
         struct stat64 sStat, sStatL;
-        if (lstat64(dirname, &sStat) == 0)
-        {
-          if (S_ISLNK(sStat.st_mode) && (ffind->attrmask & HB_FA_LINK) == 0)
-          {
-            if (stat64(dirname, &sStatL) == 0)
-            {
+        if (lstat64(dirname, &sStat) == 0) {
+          if (S_ISLNK(sStat.st_mode) && (ffind->attrmask & HB_FA_LINK) == 0) {
+            if (stat64(dirname, &sStatL) == 0) {
               memcpy(&sStat, &sStatL, sizeof(sStat));
             }
             nAttr |= HB_FA_LINK;
           }
 #else
         struct stat sStat, sStatL;
-        if (lstat(dirname, &sStat) == 0)
-        {
-          if (S_ISLNK(sStat.st_mode) && (ffind->attrmask & HB_FA_LINK) == 0)
-          {
-            if (stat(dirname, &sStatL) == 0)
-            {
+        if (lstat(dirname, &sStat) == 0) {
+          if (S_ISLNK(sStat.st_mode) && (ffind->attrmask & HB_FA_LINK) == 0) {
+            if (stat(dirname, &sStatL) == 0) {
               memcpy(&sStat, &sStatL, sizeof(sStat));
             }
             nAttr |= HB_FA_LINK;
           }
 #endif
-          if (info->entry->d_name[0] == '.')
-          {
-            if (info->entry->d_name[1] && (info->entry->d_name[1] != '.' || info->entry->d_name[2]))
-            {
+          if (info->entry->d_name[0] == '.') {
+            if (info->entry->d_name[1] && (info->entry->d_name[1] != '.' || info->entry->d_name[2])) {
               nAttr |= HB_FA_HIDDEN;
             }
           }
@@ -727,9 +640,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
           iMSec = sStat.st_mtimensec / 1000000;
 #endif
 #endif
-        }
-        else
-        {
+        } else {
           bFound = false;
         }
       }
@@ -764,8 +675,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
   // Fill common Harbour found file info
 
-  if (bFound)
-  {
+  if (bFound) {
     // Do the conversions common for all platforms
     ffind->szName[sizeof(ffind->szName) - 1] = '\0';
 
@@ -776,8 +686,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
       HB_SIZE nSize = sizeof(ffind->szName);
       const char *pszResult = hb_osDecodeCP(ffind->szName, &pszFree, &nSize);
 
-      if (pszFree)
-      {
+      if (pszFree) {
         hb_strncpy(ffind->szName, pszResult, sizeof(ffind->szName) - 1);
         hb_xfree(pszFree);
       }
@@ -816,8 +725,7 @@ PHB_FFIND hb_fsFindFirst(const char *pszFileMask, HB_FATTR attrmask)
 
   // Find first/next matching file
 
-  if (hb_fsFindNext(ffind))
-  {
+  if (hb_fsFindNext(ffind)) {
     return ffind;
   }
 
@@ -833,15 +741,13 @@ PHB_FFIND hb_fsFindFirst(const char *pszFileMask, HB_FATTR attrmask)
 
 HB_BOOL hb_fsFindNext(PHB_FFIND ffind)
 {
-  while (hb_fsFindNextLow(ffind))
-  {
+  while (hb_fsFindNextLow(ffind)) {
     // Filter the result to stay MS-DOS and CA-Cl*pper compatible.
 
     if (!(((ffind->attrmask & HB_FA_HIDDEN) == 0 && (ffind->attr & HB_FA_HIDDEN) != 0) ||
           ((ffind->attrmask & HB_FA_SYSTEM) == 0 && (ffind->attr & HB_FA_SYSTEM) != 0) ||
           ((ffind->attrmask & HB_FA_LABEL) == 0 && (ffind->attr & HB_FA_LABEL) != 0) ||
-          ((ffind->attrmask & HB_FA_DIRECTORY) == 0 && (ffind->attr & HB_FA_DIRECTORY) != 0)))
-    {
+          ((ffind->attrmask & HB_FA_DIRECTORY) == 0 && (ffind->attr & HB_FA_DIRECTORY) != 0))) {
       return true;
     }
   }
@@ -851,34 +757,28 @@ HB_BOOL hb_fsFindNext(PHB_FFIND ffind)
 
 void hb_fsFindClose(PHB_FFIND ffind)
 {
-  if (ffind)
-  {
-    if (ffind->pszFree)
-    {
+  if (ffind) {
+    if (ffind->pszFree) {
       hb_xfree(ffind->pszFree);
     }
 
     // Do platform dependent cleanup
 
-    if (ffind->info)
-    {
+    if (ffind->info) {
       auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
-      if (!ffind->bFirst)
-      {
+      if (!ffind->bFirst) {
         hb_vmUnlock();
 
 #if defined(HB_OS_WIN)
 
-        if (info->hFindFile != INVALID_HANDLE_VALUE)
-        {
+        if (info->hFindFile != INVALID_HANDLE_VALUE) {
           FindClose(info->hFindFile);
         }
 
 #elif defined(HB_OS_UNIX)
 
-        if (info->dir)
-        {
+        if (info->dir) {
           closedir(info->dir);
         }
 
