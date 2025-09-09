@@ -1,5 +1,6 @@
 #include "hbapilng.hpp"
 
+// clang-format off
 static HB_LANG s_lang =
 {
    {
@@ -143,6 +144,7 @@ static HB_LANG s_lang =
       "N"
    }
 };
+// clang-format on
 
-#define HB_LANG_ID      EN /* ISO ID in uppercase */
+#define HB_LANG_ID EN /* ISO ID in uppercase */
 #include "hbmsgreg.hpp"

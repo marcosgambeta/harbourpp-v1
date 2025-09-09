@@ -2,6 +2,7 @@
 
 #include "hbapilng.hpp"
 
+// clang-format off
 static HB_LANG s_lang =
 {
    {
@@ -145,6 +146,7 @@ static HB_LANG s_lang =
       "Ο"
    }
 };
+// clang-format on
 
-#define HB_LANG_ID      EL
+#define HB_LANG_ID EL
 #include "hbmsgreg.hpp"
