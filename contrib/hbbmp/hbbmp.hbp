@@ -7,4 +7,6 @@
 
 ${hb_name}.hbx
 
-core.c
+src/core.c
+
+-i.
