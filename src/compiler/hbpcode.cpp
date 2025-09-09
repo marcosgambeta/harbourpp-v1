@@ -76,8 +76,7 @@ static HB_PSIZE_FUNC(hb_p_localname)
 
   HB_SYMBOL_UNUSED(cargo);
   nPCodePos += 3;
-  while (pFunc->pCode[nPCodePos++])
-  {
+  while (pFunc->pCode[nPCodePos++]) {
     ;
   }
 
@@ -90,8 +89,7 @@ static HB_PSIZE_FUNC(hb_p_modulename)
 
   HB_SYMBOL_UNUSED(cargo);
   nPCodePos++;
-  while (pFunc->pCode[nPCodePos++])
-  {
+  while (pFunc->pCode[nPCodePos++]) {
     ;
   }
 
@@ -104,8 +102,7 @@ static HB_PSIZE_FUNC(hb_p_staticname)
 
   HB_SYMBOL_UNUSED(cargo);
   nPCodePos += 4;
-  while (pFunc->pCode[nPCodePos++])
-  {
+  while (pFunc->pCode[nPCodePos++]) {
     ;
   }
 
@@ -505,16 +502,13 @@ HB_ISIZ hb_compPCodeSize(PHB_HFUNC pFunc, HB_SIZE nOffset)
   HB_ISIZ nSize = 0;
   HB_BYTE opcode = pFunc->pCode[nOffset];
 
-  if (opcode < HB_P_LAST_PCODE)
-  {
+  if (opcode < HB_P_LAST_PCODE) {
     nSize = hb_comp_pcode_len[opcode];
 
-    if (nSize == 0)
-    {
+    if (nSize == 0) {
       PHB_PCODE_FUNC pCall = s_psize_table[opcode];
 
-      if (pCall != nullptr)
-      {
+      if (pCall != nullptr) {
         nSize = pCall(pFunc, nOffset, nullptr);
       }
     }
@@ -531,28 +525,22 @@ void hb_compPCodeEval(PHB_HFUNC pFunc, const PHB_PCODE_FUNC *pFunctions, void *c
   assert(sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE);
   assert(sizeof(s_psize_table) / sizeof(PHB_PCODE_FUNC) == HB_P_LAST_PCODE);
 
-  while (nPos < pFunc->nPCodePos)
-  {
+  while (nPos < pFunc->nPCodePos) {
     HB_BYTE opcode = pFunc->pCode[nPos];
-    if (opcode < HB_P_LAST_PCODE)
-    {
+    if (opcode < HB_P_LAST_PCODE) {
       PHB_PCODE_FUNC pCall = pFunctions[opcode];
       nSkip = pCall ? pCall(pFunc, nPos, cargo) : 0;
-      if (nSkip == 0)
-      {
+      if (nSkip == 0) {
         nSkip = hb_comp_pcode_len[opcode];
-        if (nSkip == 0)
-        {
+        if (nSkip == 0) {
           pCall = s_psize_table[opcode];
-          if (pCall != nullptr)
-          {
+          if (pCall != nullptr) {
             nSkip = pCall(pFunc, nPos, nullptr);
           }
         }
       }
 
-      if (nSkip == 0)
-      {
+      if (nSkip == 0) {
         char szOpcode[16];
         ++nPos;
         hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
@@ -570,9 +558,7 @@ void hb_compPCodeEval(PHB_HFUNC pFunc, const PHB_PCODE_FUNC *pFunctions, void *c
          }
 #endif
       nPos += nSkip;
-    }
-    else
-    {
+    } else {
       char szOpcode[16];
       ++nPos;
       hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
@@ -588,23 +574,16 @@ void hb_compPCodeTrace(PHB_HFUNC pFunc, const PHB_PCODE_FUNC *pFunctions, void *
   // Make sure that table is correct
   assert(sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE);
 
-  while (nPos < pFunc->nPCodePos)
-  {
+  while (nPos < pFunc->nPCodePos) {
     HB_BYTE opcode = pFunc->pCode[nPos];
-    if (opcode < HB_P_LAST_PCODE)
-    {
+    if (opcode < HB_P_LAST_PCODE) {
       PHB_PCODE_FUNC pCall = pFunctions[opcode];
-      if (pCall)
-      {
+      if (pCall) {
         nPos = pCall(pFunc, nPos, cargo);
-      }
-      else
-      {
+      } else {
         nPos += hb_comp_pcode_len[opcode];
       }
-    }
-    else
-    {
+    } else {
       char szOpcode[16];
       ++nPos;
       hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
@@ -617,14 +596,11 @@ void hb_compGenPCode1(HB_BYTE byte, HB_COMP_DECL)
 {
   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
-  if (!pFunc->pCode)
-  { // has been created the memory block to hold the pcode ?
+  if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
-  }
-  else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 1)
-  {
+  } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 1) {
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
@@ -635,14 +611,11 @@ void hb_compGenPCode2(HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL)
 {
   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
-  if (!pFunc->pCode)
-  { // has been created the memory block to hold the pcode ?
+  if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
-  }
-  else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 2)
-  {
+  } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 2) {
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
@@ -654,14 +627,11 @@ void hb_compGenPCode3(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL)
 {
   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
-  if (!pFunc->pCode)
-  { // has been created the memory block to hold the pcode ?
+  if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
-  }
-  else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 3)
-  {
+  } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 3) {
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
@@ -674,14 +644,11 @@ void hb_compGenPCode4(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte4
 {
   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
-  if (!pFunc->pCode)
-  { // has been created the memory block to hold the pcode ?
+  if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
-  }
-  else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 4)
-  {
+  } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 4) {
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
@@ -695,14 +662,11 @@ void hb_compGenPCodeN(const HB_BYTE *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
 {
   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
-  if (!pFunc->pCode)
-  { // has been created the memory block to hold the pcode ?
+  if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
     pFunc->nPCodeSize = ((nSize / HB_PCODE_CHUNK) + 1) * HB_PCODE_CHUNK;
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(pFunc->nPCodeSize));
     pFunc->nPCodePos = 0;
-  }
-  else if (pFunc->nPCodePos + nSize > pFunc->nPCodeSize)
-  {
+  } else if (pFunc->nPCodePos + nSize > pFunc->nPCodeSize) {
     // not enough free space in pcode buffer - increase it
     pFunc->nPCodeSize += (((nSize / HB_PCODE_CHUNK) + 1) * HB_PCODE_CHUNK);
     pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));

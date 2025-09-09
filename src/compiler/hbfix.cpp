@@ -71,8 +71,7 @@ static HB_FIX_FUNC(hb_p_pushblock)
   HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
 
   // fix local variable's reference
-  while (wVar--)
-  {
+  while (wVar--) {
     HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
     pLocal[0] = HB_LOBYTE(wLocal);
     pLocal[1] = HB_HIBYTE(wLocal);
@@ -95,8 +94,7 @@ static HB_FIX_FUNC(hb_p_pushblocklarge)
   HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
 
   // fix local variable's reference
-  while (wVar--)
-  {
+  while (wVar--) {
     HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
     pLocal[0] = HB_LOBYTE(wLocal);
     pLocal[1] = HB_HIBYTE(wLocal);

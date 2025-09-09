@@ -120,59 +120,41 @@ HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *szFuncCall, int iArgs)
   // SECO() is not allowed because of Clipper function Seconds()
   // however SECO32() is a valid name.
 
-  if (iLen < 4)
-  {
+  if (iLen < 4) {
     iLen = 4;
   }
-  do
-  {
+  do {
     uiMiddle = (uiFirst + uiLast) >> 1;
     iCmp = strncmp(szFuncCall, s_stdFunc[uiMiddle].cFuncName, iLen);
-    if (iCmp <= 0)
-    {
+    if (iCmp <= 0) {
       uiLast = uiMiddle;
-    }
-    else
-    {
+    } else {
       uiFirst = uiMiddle + 1;
     }
   } while (uiFirst < uiLast);
 
-  if (uiFirst != uiMiddle)
-  {
+  if (uiFirst != uiMiddle) {
     iCmp = strncmp(szFuncCall, s_stdFunc[uiFirst].cFuncName, iLen);
   }
 
-  if (iCmp == 0)
-  {
+  if (iCmp == 0) {
     const HB_FUNCINFO *pFunc = &s_stdFunc[uiFirst];
 
-    if ((pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam) || (pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam))
-    {
+    if ((pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam) || (pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam)) {
       char szMsg[64];
 
-      if (HB_COMP_ISSUPPORTED(HB_COMPFLAG_HARBOUR))
-      {
-        if (pFunc->iMinParam == pFunc->iMaxParam)
-        {
+      if (HB_COMP_ISSUPPORTED(HB_COMPFLAG_HARBOUR)) {
+        if (pFunc->iMinParam == pFunc->iMaxParam) {
           hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected: %i", iArgs, pFunc->iMinParam);
-        }
-        else if (pFunc->iMaxParam == -1)
-        {
+        } else if (pFunc->iMaxParam == -1) {
           hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected at least: %i", iArgs, pFunc->iMinParam);
-        }
-        else if (pFunc->iMinParam == -1)
-        {
+        } else if (pFunc->iMinParam == -1) {
           hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected less than: %i", iArgs, pFunc->iMaxParam);
-        }
-        else
-        {
+        } else {
           hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected from: %i to: %i", iArgs, pFunc->iMinParam,
                       pFunc->iMaxParam);
         }
-      }
-      else
-      {
+      } else {
         szMsg[0] = '\0';
       }
 

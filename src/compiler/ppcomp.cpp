@@ -56,12 +56,9 @@ static void hb_pp_ErrorGen(void *cargo, const char *const szMsgTable[], char cPr
 
   HB_COMP_PARAM->currLine = hb_pp_line(HB_COMP_PARAM->pLex->pPP);
   HB_COMP_PARAM->currModule = hb_pp_fileName(HB_COMP_PARAM->pLex->pPP);
-  if (cPrefix == 'W')
-  {
+  if (cPrefix == 'W') {
     hb_compGenWarning(HB_COMP_PARAM, szMsgTable, cPrefix, iErrorCode, szParam1, szParam2);
-  }
-  else
-  {
+  } else {
     hb_compGenError(HB_COMP_PARAM, szMsgTable, cPrefix, iErrorCode, szParam1, szParam2);
   }
   HB_COMP_PARAM->fError = false;
@@ -88,16 +85,13 @@ static void hb_pp_hb_inLine(void *cargo, char *szFunc, char *pBuffer, HB_SIZE nS
 {
   HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
 
-  if (HB_COMP_PARAM->iLanguage != HB_LANG_C)
-  {
+  if (HB_COMP_PARAM->iLanguage != HB_LANG_C) {
     int iCurrLine = HB_COMP_PARAM->currLine;
     HB_COMP_PARAM->currLine = iLine;
     hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_REQUIRES_C, nullptr, nullptr);
     HB_COMP_PARAM->fError = false;
     HB_COMP_PARAM->currLine = iCurrLine;
-  }
-  else
-  {
+  } else {
     PHB_HINLINE pInline =
         hb_compInlineAdd(HB_COMP_PARAM, hb_compIdentifierNew(HB_COMP_PARAM, szFunc, HB_IDENT_COPY), iLine);
     pInline->pCode = static_cast<HB_BYTE *>(hb_xgrab(nSize + 1));
@@ -115,145 +109,106 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piVa
   int iValue = *piValue;
 
   auto i = static_cast<int>(strlen(szSwitch));
-  if (i > 1 && (static_cast<int>(szSwitch[i - 1] - '0')) == iValue)
-  {
+  if (i > 1 && (static_cast<int>(szSwitch[i - 1] - '0')) == iValue) {
     --i;
   }
 
-  if (i == 1)
-  {
-    switch (szSwitch[0])
-    {
+  if (i == 1) {
+    switch (szSwitch[0]) {
     case 'a':
     case 'A':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fAutoMemvarAssume = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fAutoMemvarAssume ? 1 : 0;
       }
       break;
 
     case 'b':
     case 'B':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fDebugInfo = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fDebugInfo ? 1 : 0;
       }
       break;
 
     case 'j':
     case 'J':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fI18n = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fI18n ? 1 : 0;
       }
       break;
 
     case 'l':
     case 'L':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fLineNumbers = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fLineNumbers ? 1 : 0;
       }
       break;
 
     case 'n':
     case 'N':
-      if (fSet)
-      {
+      if (fSet) {
         fError = true;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->iStartProc;
       }
       break;
 
     case 'p':
     case 'P':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fPPO = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fPPO ? 1 : 0;
       }
       break;
 
     case 'q':
     case 'Q':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fQuiet = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fQuiet ? 1 : 0;
       }
       break;
 
     case 'v':
     case 'V':
-      if (fSet)
-      {
+      if (fSet) {
         HB_COMP_PARAM->fForceMemvars = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fForceMemvars ? 1 : 0;
       }
       break;
 
     case 'w':
     case 'W':
-      if (fSet)
-      {
-        if (iValue >= 0 && iValue <= 3)
-        {
+      if (fSet) {
+        if (iValue >= 0 && iValue <= 3) {
           HB_COMP_PARAM->iWarnings = iValue;
-        }
-        else
-        {
+        } else {
           fError = true;
         }
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->iWarnings;
       }
       break;
 
     case 'z':
     case 'Z':
-      if (fSet)
-      {
-        if (iValue)
-        {
+      if (fSet) {
+        if (iValue) {
           HB_COMP_PARAM->supported &= ~HB_COMPFLAG_SHORTCUTS;
-        }
-        else
-        {
+        } else {
           HB_COMP_PARAM->supported |= HB_COMPFLAG_SHORTCUTS;
         }
-      }
-      else
-      {
+      } else {
         iValue = (HB_COMP_PARAM->supported & HB_COMPFLAG_SHORTCUTS) ? 0 : 1;
       }
       break;
@@ -261,35 +216,25 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piVa
     default:
       fError = true;
     }
-  }
-  else if (i == 2)
-  {
-    if (szSwitch[0] == 'k' || szSwitch[0] == 'K')
-    {
+  } else if (i == 2) {
+    if (szSwitch[0] == 'k' || szSwitch[0] == 'K') {
       int iFlag = 0;
       // -k? parameters are case sensitive
-      switch (szSwitch[1])
-      {
+      switch (szSwitch[1]) {
       case '?':
-        if (fSet)
-        {
+        if (fSet) {
           HB_COMP_PARAM->supported = iValue;
-        }
-        else
-        {
+        } else {
           iValue = HB_COMP_PARAM->supported;
         }
         break;
       case 'c':
       case 'C':
-        if (fSet)
-        {
+        if (fSet) {
           // clear all flags - minimal set of features
           HB_COMP_PARAM->supported &= HB_COMPFLAG_SHORTCUTS;
           HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP | HB_COMPFLAG_MACROTEXT;
-        }
-        else
-        {
+        } else {
           iValue = (HB_COMP_PARAM->supported & ~HB_COMPFLAG_SHORTCUTS) == (HB_COMPFLAG_OPTJUMP | HB_COMPFLAG_MACROTEXT)
                        ? 1
                        : 0;
@@ -336,94 +281,58 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piVa
       default:
         fError = true;
       }
-      if (!fError && iFlag)
-      {
-        if (fSet)
-        {
-          if (iValue)
-          {
+      if (!fError && iFlag) {
+        if (fSet) {
+          if (iValue) {
             HB_COMP_PARAM->supported |= iFlag;
-          }
-          else
-          {
+          } else {
             HB_COMP_PARAM->supported &= ~iFlag;
           }
-        }
-        else
-        {
-          if (iValue)
-          {
+        } else {
+          if (iValue) {
             iValue = (HB_COMP_PARAM->supported & iFlag) ? 0 : 1;
-          }
-          else
-          {
+          } else {
             iValue = (HB_COMP_PARAM->supported & iFlag) ? 1 : 0;
           }
         }
       }
-    }
-    else if (hb_strnicmp(szSwitch, "gc", 2) == 0)
-    {
-      if (fSet)
-      {
+    } else if (hb_strnicmp(szSwitch, "gc", 2) == 0) {
+      if (fSet) {
         if (iValue == HB_COMPGENC_REALCODE || iValue == HB_COMPGENC_VERBOSE || iValue == HB_COMPGENC_NORMAL ||
-            iValue == HB_COMPGENC_COMPACT)
-        {
+            iValue == HB_COMPGENC_COMPACT) {
           HB_COMP_PARAM->iGenCOutput = iValue;
         }
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->iGenCOutput;
       }
-    }
-    else if (hb_strnicmp(szSwitch, "es", 2) == 0)
-    {
-      if (fSet)
-      {
-        if (iValue == HB_EXITLEVEL_DEFAULT || iValue == HB_EXITLEVEL_SETEXIT || iValue == HB_EXITLEVEL_DELTARGET)
-        {
+    } else if (hb_strnicmp(szSwitch, "es", 2) == 0) {
+      if (fSet) {
+        if (iValue == HB_EXITLEVEL_DEFAULT || iValue == HB_EXITLEVEL_SETEXIT || iValue == HB_EXITLEVEL_DELTARGET) {
           HB_COMP_PARAM->iExitLevel = iValue;
         }
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->iExitLevel;
       }
-    }
-    else if (hb_stricmp(szSwitch, "p+") == 0)
-    {
-      if (fSet)
-      {
+    } else if (hb_stricmp(szSwitch, "p+") == 0) {
+      if (fSet) {
         HB_COMP_PARAM->fPPT = iValue != 0;
-      }
-      else
-      {
+      } else {
         iValue = HB_COMP_PARAM->fPPT ? 1 : 0;
       }
-    }
-    else
-    {
+    } else {
       fError = true;
     }
   }
   // xHarbour extension
-  else if (i >= 4 && hb_strnicmp(szSwitch, "TEXTHIDDEN", i) == 0)
-  {
-    if (fSet)
-    {
-      if (iValue >= 0 && iValue <= 1)
-      {
+  else if (i >= 4 && hb_strnicmp(szSwitch, "TEXTHIDDEN", i) == 0) {
+    if (fSet) {
+      if (iValue >= 0 && iValue <= 1) {
         HB_COMP_PARAM->iHidden = iValue;
       }
-    }
-    else
-    {
+    } else {
       iValue = HB_COMP_PARAM->iHidden;
     }
-  }
-  else
-  {
+  } else {
     fError = true;
   }
 
@@ -437,16 +346,13 @@ static void hb_pp_fileIncluded(void *cargo, const char *szFileName)
   HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
 
   PHB_INCLST *pIncFilePtr = &HB_COMP_PARAM->incfiles;
-  while (*pIncFilePtr)
-  {
+  while (*pIncFilePtr) {
 #if defined(HB_OS_UNIX)
-    if (strcmp((*pIncFilePtr)->szFileName, szFileName) == 0)
-    {
+    if (strcmp((*pIncFilePtr)->szFileName, szFileName) == 0) {
       return;
     }
 #else
-    if (hb_stricmp((*pIncFilePtr)->szFileName, szFileName) == 0)
-    {
+    if (hb_stricmp((*pIncFilePtr)->szFileName, szFileName) == 0) {
       return;
     }
 #endif
@@ -466,27 +372,20 @@ void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
    HB_TRACE(HB_TR_DEBUG, ("hb_compInitPP()"));
 #endif
 
-  if (HB_COMP_PARAM->pLex->pPP)
-  {
+  if (HB_COMP_PARAM->pLex->pPP) {
     hb_pp_init(HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->fQuiet, HB_COMP_PARAM->fGauge, HB_COMP_PARAM->iMaxTransCycles,
                HB_COMP_PARAM, pOpenFunc, nullptr, hb_pp_ErrorGen, hb_pp_Disp, hb_pp_PragmaDump,
                HB_COMP_ISSUPPORTED(HB_COMPFLAG_HB_INLINE) ? hb_pp_hb_inLine : nullptr, hb_pp_CompilerSwitch);
 
-    if (HB_COMP_PARAM->iTraceInclude)
-    {
+    if (HB_COMP_PARAM->iTraceInclude) {
       hb_pp_setIncFunc(HB_COMP_PARAM->pLex->pPP, hb_pp_fileIncluded);
     }
 
-    if (!HB_COMP_PARAM->szStdCh)
-    {
+    if (!HB_COMP_PARAM->szStdCh) {
       hb_pp_setStdRules(HB_COMP_PARAM->pLex->pPP);
-    }
-    else if (HB_COMP_PARAM->szStdCh[0] > ' ')
-    {
+    } else if (HB_COMP_PARAM->szStdCh[0] > ' ') {
       hb_pp_readRules(HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdCh);
-    }
-    else if (!HB_COMP_PARAM->fQuiet)
-    {
+    } else if (!HB_COMP_PARAM->fQuiet) {
       hb_compOutStd(HB_COMP_PARAM, "Standard command definitions excluded.\n");
     }
 
@@ -496,12 +395,10 @@ void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
     hb_compChkSetDefines(HB_COMP_PARAM);
 
     // add extended definitions files (-u+<file>)
-    if (HB_COMP_PARAM->iStdChExt > 0)
-    {
+    if (HB_COMP_PARAM->iStdChExt > 0) {
       int i = 0;
 
-      while (i < HB_COMP_PARAM->iStdChExt)
-      {
+      while (i < HB_COMP_PARAM->iStdChExt) {
         hb_pp_readRules(HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdChExt[i++]);
       }
     }

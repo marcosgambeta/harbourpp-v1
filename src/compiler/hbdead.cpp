@@ -75,15 +75,11 @@ static void hb_compCodeTraceAddJump(PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos)
   // for easier detecting bugs in generated PCODE
 
   // if( nPCodePos < pInfo->nPCodeSize && pInfo->pCodeMark[nPCodePos] == 0 )
-  if (pInfo->pCodeMark[nPCodePos] == 0)
-  {
-    if (pInfo->nJumpSize == 0)
-    {
+  if (pInfo->pCodeMark[nPCodePos] == 0) {
+    if (pInfo->nJumpSize == 0) {
       pInfo->nJumpSize = HB_JUMPADDR_ALLOC;
       pInfo->pnJumps = static_cast<HB_SIZE *>(hb_xgrab(pInfo->nJumpSize * sizeof(HB_SIZE)));
-    }
-    else if (pInfo->nJumpSize == pInfo->nJumpCount)
-    {
+    } else if (pInfo->nJumpSize == pInfo->nJumpCount) {
       pInfo->nJumpSize += HB_JUMPADDR_ALLOC;
       pInfo->pnJumps = static_cast<HB_SIZE *>(hb_xrealloc(pInfo->pnJumps, pInfo->nJumpSize * sizeof(HB_SIZE)));
     }
@@ -94,16 +90,13 @@ static void hb_compCodeTraceAddJump(PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos)
 
 static HB_SIZE hb_compCodeTraceNextPos(PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos)
 {
-  if (nPCodePos < pInfo->nPCodeSize && pInfo->pCodeMark[nPCodePos] == 0)
-  {
+  if (nPCodePos < pInfo->nPCodeSize && pInfo->pCodeMark[nPCodePos] == 0) {
     return nPCodePos;
   }
 
-  while (pInfo->nJumpPos < pInfo->nJumpCount)
-  {
+  while (pInfo->nJumpPos < pInfo->nJumpCount) {
     nPCodePos = pInfo->pnJumps[pInfo->nJumpPos++];
-    if (pInfo->pCodeMark[nPCodePos] == 1)
-    {
+    if (pInfo->pCodeMark[nPCodePos] == 1) {
       return nPCodePos;
     }
   }
@@ -226,8 +219,7 @@ static HB_CODETRACE_FUNC(hb_p_seqbegin)
 
   // this is a hack for -gc3 output - it's not really necessary
   // for pure PCODE evaluation
-  if (pFunc->pCode[nRecoverPos] != HB_P_SEQEND && pFunc->pCode[nRecoverPos - 4] == HB_P_SEQEND)
-  {
+  if (pFunc->pCode[nRecoverPos] != HB_P_SEQEND && pFunc->pCode[nRecoverPos - 4] == HB_P_SEQEND) {
     hb_compCodeTraceAddJump(cargo, nRecoverPos - 4);
   }
 
@@ -251,10 +243,8 @@ static HB_CODETRACE_FUNC(hb_p_switch)
   HB_SIZE nStart = nPCodePos, nNewPos;
 
   nPCodePos += 3;
-  for (us = 0; us < usCases; ++us)
-  {
-    switch (pFunc->pCode[nPCodePos])
-    {
+  for (us = 0; us < usCases; ++us) {
+    switch (pFunc->pCode[nPCodePos]) {
     case HB_P_PUSHBYTE:
       nPCodePos += 2;
       break;
@@ -283,8 +273,7 @@ static HB_CODETRACE_FUNC(hb_p_switch)
       nPCodePos++;
       break;
     }
-    switch (pFunc->pCode[nPCodePos])
-    {
+    switch (pFunc->pCode[nPCodePos]) {
     case HB_P_JUMPNEAR:
       nNewPos = nPCodePos + static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
       nPCodePos += 2;
@@ -519,8 +508,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
   const PHB_CODETRACE_FUNC *pFuncTable = s_codeTraceFuncTable;
 
-  if (!HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) || pFunc->nPCodePos < 2)
-  {
+  if (!HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) || pFunc->nPCodePos < 2) {
     return;
   }
 
@@ -538,22 +526,16 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
 
   hb_compPCodeTrace(pFunc, reinterpret_cast<const PHB_PCODE_FUNC *>(pFuncTable), static_cast<void *>(&code_info));
 
-  if (code_info.fFinished)
-  {
+  if (code_info.fFinished) {
     HB_SIZE nPos = 0, nCount = 0;
     HB_BYTE bLastCode = HB_P_LAST_PCODE;
 
-    do
-    {
-      if (code_info.pCodeMark[nPos] == 0)
-      {
+    do {
+      if (code_info.pCodeMark[nPos] == 0) {
         ++nCount;
-      }
-      else
-      {
+      } else {
         bLastCode = pFunc->pCode[nPos];
-        if (nCount)
-        {
+        if (nCount) {
           hb_compNOOPfill(pFunc, nPos - nCount, nCount, false, true);
           nCount = 0;
         }
@@ -561,14 +543,12 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
     } while (++nPos < code_info.nPCodeSize);
 
     // do not strip the last HB_P_ENDBLOCK / HB_P_ENDPROC marker
-    if (nCount > 0 && bLastCode != (pFunc->szName ? HB_P_ENDPROC : HB_P_ENDBLOCK))
-    {
+    if (nCount > 0 && bLastCode != (pFunc->szName ? HB_P_ENDPROC : HB_P_ENDBLOCK)) {
       --nPos;
       --nCount;
     }
 
-    if (nCount > 0)
-    {
+    if (nCount > 0) {
       // We cannot simply decrease size of the generated PCODE here
       // because jumps or noops tables may point to the this area
       // and we will have to update also the jump table, [druzus]
@@ -582,8 +562,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
   }
 
   hb_xfree(code_info.pCodeMark);
-  if (code_info.pnJumps)
-  {
+  if (code_info.pnJumps) {
     hb_xfree(code_info.pnJumps);
   }
 }
