@@ -7,6 +7,6 @@
 
 ${hb_name}.hbx
 
-src/core.c
+src/core.cpp
 
 -i.
