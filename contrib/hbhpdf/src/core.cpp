@@ -50,8 +50,7 @@ static HB_GARBAGE_FUNC(hb_HPDF_Doc_release)
   auto ph = static_cast<void **>(Cargo);
 
   /* Check if pointer is not nullptr to avoid multiple freeing */
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     /* Destroy the object */
     HPDF_Free(static_cast<HPDF_Doc>(*ph));
 
@@ -86,8 +85,7 @@ HB_FUNC(HPDF_FREE)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcHPDF_DocFuncs, 1));
 
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     /* Destroy the object */
     HPDF_Free(static_cast<HPDF_Doc>(*ph)); /* TODO: C++ cast */
 
@@ -122,8 +120,7 @@ HB_FUNC(HPDF_SAVETOFILE)
 
   hb_retnl(static_cast<long>(HPDF_SaveToFile(hb_HPDF_Doc_par(1), pszFileName)));
 
-  if (pszFree)
-  {
+  if (pszFree) {
     hb_xfree(pszFree);
   }
 }
@@ -146,8 +143,7 @@ HB_FUNC(HPDF_READFROMSTREAM)
 {
   auto size = static_cast<HPDF_UINT32>(hb_parclen(2));
 
-  if (size < 1024)
-  {
+  if (size < 1024) {
     size = 1024;
   }
 
@@ -155,8 +151,7 @@ HB_FUNC(HPDF_READFROMSTREAM)
 
   hb_retnl(static_cast<long>(HPDF_ReadFromStream(hb_HPDF_Doc_par(1), buffer, &size)));
 
-  if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-  {
+  if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
     hb_xfree(buffer);
   }
 }
@@ -262,8 +257,7 @@ HB_FUNC(HPDF_GETPAGEBYINDEX)
 {
   void *pPage = static_cast<void *>(HPDF_GetPageByIndex(hb_HPDF_Doc_par(1), static_cast<HPDF_UINT>(hb_parni(2))));
 
-  if (pPage)
-  {
+  if (pPage) {
     hb_retptr(pPage);
   }
 }
@@ -860,8 +854,7 @@ HB_FUNC(HPDF_PAGE_SETDASH)
   HPDF_DashMode dash;
   auto nPtns = hb_parni(3);
 
-  for (auto i = 0; i < nPtns; i++)
-  {
+  for (auto i = 0; i < nPtns; i++) {
     dash.ptn[i] = static_cast<HPDF_UINT16>(hb_parvni(2, i + 1));
   }
 
@@ -1484,8 +1477,7 @@ HB_FUNC(HPDF_GETCONTENTS)
 #if HB_HPDF_VERS(2, 2, 0)
   auto size = static_cast<HPDF_UINT32>(hb_parclen(2));
 
-  if (size < 1024)
-  {
+  if (size < 1024) {
     size = 1024;
   }
 
@@ -1493,8 +1485,7 @@ HB_FUNC(HPDF_GETCONTENTS)
 
   hb_retnl(static_cast<long>(HPDF_GetContents(hb_HPDF_Doc_par(1), buffer, &size)));
 
-  if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-  {
+  if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
     hb_xfree(buffer);
   }
 #else

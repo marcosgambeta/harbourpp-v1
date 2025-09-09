@@ -55,13 +55,11 @@ HB_FUNC(HPDF_LOADTYPE1FONTFROMFILE)
 
   hb_retc(HPDF_LoadType1FontFromFile(hb_HPDF_Doc_par(1), pszFileName1, pszFileName2));
 
-  if (pszFree1)
-  {
+  if (pszFree1) {
     hb_xfree(pszFree1);
   }
 
-  if (pszFree2)
-  {
+  if (pszFree2) {
     hb_xfree(pszFree2);
   }
 }
@@ -74,8 +72,7 @@ HB_FUNC(HPDF_LOADTTFONTFROMFILE)
 
   hb_retc(HPDF_LoadTTFontFromFile(hb_HPDF_Doc_par(1), pszFileName, hb_parl(3) ? HPDF_TRUE : HPDF_FALSE));
 
-  if (pszFree)
-  {
+  if (pszFree) {
     hb_xfree(pszFree);
   }
 }
@@ -88,8 +85,7 @@ HB_FUNC(HPDF_LOADTTFONTFROMFILE2)
 
   hb_retc(HPDF_LoadTTFontFromFile2(hb_HPDF_Doc_par(1), pszFileName, hb_parni(3), hb_parl(4) ? HPDF_TRUE : HPDF_FALSE));
 
-  if (pszFree)
-  {
+  if (pszFree) {
     hb_xfree(pszFree);
   }
 }

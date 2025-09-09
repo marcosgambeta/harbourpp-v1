@@ -151,12 +151,9 @@ HB_FUNC(HPDF_IMAGE_GETCOLORSPACE)
 {
   auto image = static_cast<HPDF_Image>(hb_parptr(1));
 
-  if (image)
-  {
+  if (image) {
     hb_retc(HPDF_Image_GetColorSpace(image));
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
