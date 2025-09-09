@@ -57,25 +57,19 @@ HB_FUNC(XHB_RTRIM)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     HB_SIZE nLen;
     auto szText = hb_itemGetCPtr(pText);
 
     auto nSrc = hb_itemGetCLen(pText);
     nLen = hb_strRTrimLen(szText, nSrc, hb_parl(2));
 
-    if (nLen == nSrc)
-    {
+    if (nLen == nSrc) {
       hb_itemReturn(pText);
-    }
-    else
-    {
+    } else {
       hb_retclen(szText, nLen);
     }
-  }
-  else
-  {
+  } else {
     /* NOTE: "TRIM" is correct here [vszakats] */
     hb_errRT_BASE_SubstR(EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS);
   }
@@ -92,8 +86,7 @@ HB_FUNC(XHB_ALLTRIM)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
 
-  if (pText)
-  {
+  if (pText) {
     HB_SIZE nLen;
     auto szText = hb_itemGetCPtr(pText);
 
@@ -101,17 +94,12 @@ HB_FUNC(XHB_ALLTRIM)
     nLen = hb_strRTrimLen(szText, nSrc, hb_parl(2));
     szText = hb_strLTrim(szText, &nLen);
 
-    if (nLen == nSrc)
-    {
+    if (nLen == nSrc) {
       hb_itemReturn(pText);
-    }
-    else
-    {
+    } else {
       hb_retclen(szText, nLen);
     }
-  }
-  else
-  {
+  } else {
 #ifdef HB_COMPAT_C53
     /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT

@@ -55,16 +55,12 @@ static int hb_inkeyKeyXHB(int iKey)
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyXHB(%d)", iKey));
 #endif
 
-  if (HB_INKEY_ISEXT(iKey))
-  {
+  if (HB_INKEY_ISEXT(iKey)) {
     int iFlags = HB_INKEY_FLAGS(iKey), iValue = HB_INKEY_VALUE(iKey);
 
-    if (HB_INKEY_ISKEY(iKey))
-    {
-      if ((iFlags & (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT)) == HB_KF_SHIFT && iValue >= 0 && iValue < 32)
-      {
-        switch (iValue)
-        {
+    if (HB_INKEY_ISKEY(iKey)) {
+      if ((iFlags & (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT)) == HB_KF_SHIFT && iValue >= 0 && iValue < 32) {
+        switch (iValue) {
         case HB_KX_LEFT:
           return XHB_K_SH_LEFT;
         case HB_KX_UP:
@@ -90,16 +86,11 @@ static int hb_inkeyKeyXHB(int iKey)
         }
       }
     }
-    if (HB_INKEY_ISKEY(iKey) || HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE(iKey))
-    {
-      if ((iFlags & (HB_KF_CTRL | HB_KF_ALT)) == HB_KF_CTRL)
-      {
-        if (iValue >= 'A' && iValue <= 'Z')
-        {
+    if (HB_INKEY_ISKEY(iKey) || HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE(iKey)) {
+      if ((iFlags & (HB_KF_CTRL | HB_KF_ALT)) == HB_KF_CTRL) {
+        if (iValue >= 'A' && iValue <= 'Z') {
           return 512 + (iValue - 'A') + 1;
-        }
-        else if (iValue >= 'a' && iValue <= 'z')
-        {
+        } else if (iValue >= 'a' && iValue <= 'z') {
           return 512 + (iValue - 'a') + 1;
         }
       }

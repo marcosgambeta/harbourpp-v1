@@ -60,40 +60,31 @@ HB_FUNC(XHB_HASHERROR)
   const char *szMessage = hb_itemGetSymbol(hb_stackBaseItem())->szName;
   auto iPCount = hb_pcount();
 
-  if (iPCount == 1)
-  {
-    if (szMessage[0] == '_')
-    { /* ASSIGN */
+  if (iPCount == 1) {
+    if (szMessage[0] == '_') { /* ASSIGN */
       auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage + 1);
       PHB_ITEM pDest = hb_hashGetItemPtr(hb_stackSelfItem(), pIndex, HB_HASH_AUTOADD_ASSIGN);
       hb_stackPop();
-      if (pDest)
-      {
+      if (pDest) {
         auto pValue = hb_param(1, Harbour::Item::ANY);
         hb_itemCopyFromRef(pDest, pValue);
         hb_itemReturn(pValue);
         return;
       }
     }
-  }
-  else if (iPCount == 0)
-  { /* ACCESS */
+  } else if (iPCount == 0) { /* ACCESS */
     auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage);
     PHB_ITEM pValue = hb_hashGetItemPtr(hb_stackSelfItem(), pIndex, HB_HASH_AUTOADD_ACCESS);
     hb_stackPop();
-    if (pValue)
-    {
+    if (pValue) {
       hb_itemReturn(pValue);
       return;
     }
   }
 
-  if (szMessage[0] == '_')
-  {
+  if (szMessage[0] == '_') {
     hb_errRT_BASE_SubstR(EG_NOVARMETHOD, 1005, nullptr, szMessage + 1, HB_ERR_ARGS_SELFPARAMS);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_NOMETHOD, 1004, nullptr, szMessage, HB_ERR_ARGS_SELFPARAMS);
   }
 }
@@ -103,19 +94,13 @@ HB_FUNC(XHB_INCLUDE)
   auto pSelf = hb_stackSelfItem();
   auto pKey = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isArray())
-  {
+  if (pSelf->isArray()) {
     hb_retl(hb_arrayScan(pSelf, pKey, nullptr, nullptr, true) != 0);
-  }
-  else if (pSelf->isHash() && (pKey->isHashKey() || hb_hashLen(pKey) == 1))
-  {
+  } else if (pSelf->isHash() && (pKey->isHashKey() || hb_hashLen(pKey) == 1)) {
     hb_retl(hb_hashScan(pSelf, pKey, nullptr));
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -126,27 +111,19 @@ HB_FUNC(XHB_EEQUAL)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue == static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) == dValue);
-  }
-  else if (pSelf->isBlock() && pValue->isBlock())
-  {
+  } else if (pSelf->isBlock() && pValue->isBlock()) {
     hb_retl(hb_codeblockId(pSelf) == hb_codeblockId(pValue));
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1070, nullptr, "==", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -157,27 +134,19 @@ HB_FUNC(XHB_EQUAL)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue == static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) == dValue);
-  }
-  else if (pSelf->isHash() && pValue->isHash())
-  {
+  } else if (pSelf->isHash() && pValue->isHash()) {
     hb_retl(hb_hashId(pSelf) == hb_hashId(pValue));
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1071, nullptr, "=", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -188,27 +157,19 @@ HB_FUNC(XHB_NOTEQUAL)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue != static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) != dValue);
-  }
-  else if (pSelf->isHash() && pValue->isHash())
-  {
+  } else if (pSelf->isHash() && pValue->isHash()) {
     hb_retl(hb_hashId(pSelf) != hb_hashId(pValue));
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1072, nullptr, "<>", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -219,23 +180,17 @@ HB_FUNC(XHB_LESS)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue < static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) < dValue);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1073, nullptr, "<", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -246,23 +201,17 @@ HB_FUNC(XHB_LESSEQ)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue <= static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) <= dValue);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1074, nullptr, "<=", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -273,23 +222,17 @@ HB_FUNC(XHB_GREATER)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue > static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) > dValue);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1075, nullptr, ">", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -300,23 +243,17 @@ HB_FUNC(XHB_GREATEREQ)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue >= static_cast<double>(uc));
-  }
-  else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) >= dValue);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1076, nullptr, ">=", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -335,100 +272,64 @@ HB_FUNC(XHB_INDEX)
   auto pSelf = hb_stackSelfItem();
   auto pIndex = hb_param(1, Harbour::Item::ANY);
 
-  if (hb_pcount() == 2)
-  { /* ASSIGN */
+  if (hb_pcount() == 2) { /* ASSIGN */
     auto pValue = hb_param(2, Harbour::Item::ANY);
-    if (pIndex->isNumeric())
-    {
+    if (pIndex->isNumeric()) {
       HB_SIZE nIndex = hb_itemGetNS(pIndex);
-      if (pSelf->isArray())
-      {
+      if (pSelf->isArray()) {
         HB_SIZE nLen = hb_arrayLen(pSelf);
-        if (XHB_IS_VALID_INDEX(nIndex, nLen))
-        {
+        if (XHB_IS_VALID_INDEX(nIndex, nLen)) {
           hb_itemMoveRef(hb_arrayGetItemPtr(pSelf, nIndex), pValue);
-        }
-        else
-        {
+        } else {
           hb_errRT_BASE(EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
         }
-      }
-      else if (pSelf->isString())
-      {
+      } else if (pSelf->isString()) {
         HB_SIZE nLen = hb_itemGetCLen(pSelf);
-        if (XHB_IS_VALID_INDEX(nIndex, nLen))
-        {
+        if (XHB_IS_VALID_INDEX(nIndex, nLen)) {
           char cValue = pValue->isString() ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
-          if (nLen == 1)
-          {
+          if (nLen == 1) {
             hb_itemPutCL(pSelf, &cValue, 1);
-          }
-          else
-          {
+          } else {
             char *pszText;
-            if (hb_itemGetWriteCL(pSelf, &pszText, &nLen) && nIndex > 0 && nIndex <= nLen)
-            {
+            if (hb_itemGetWriteCL(pSelf, &pszText, &nLen) && nIndex > 0 && nIndex <= nLen) {
               pszText[nIndex - 1] = cValue;
             }
           }
-        }
-        else
-        {
+        } else {
           hb_errRT_BASE(EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
         }
-      }
-      else
-      {
+      } else {
         hb_errRT_BASE(EG_ARG, 1069, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
       }
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_ARG, 1069, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
     }
 
     hb_itemReturn(pSelf);
-  }
-  else
-  { /* ACCESS */
-    if (pIndex->isNumeric())
-    {
+  } else { /* ACCESS */
+    if (pIndex->isNumeric()) {
       HB_SIZE nIndex = hb_itemGetNS(pIndex);
-      if (pSelf->isArray())
-      {
+      if (pSelf->isArray()) {
         HB_SIZE nLen = hb_arrayLen(pSelf);
-        if (XHB_IS_VALID_INDEX(nIndex, nLen))
-        {
+        if (XHB_IS_VALID_INDEX(nIndex, nLen)) {
           hb_itemReturn(hb_arrayGetItemPtr(pSelf, nIndex));
-        }
-        else
-        {
+        } else {
           hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);
         }
-      }
-      else if (pSelf->isString())
-      {
+      } else if (pSelf->isString()) {
         HB_SIZE nLen = hb_itemGetCLen(pSelf);
-        if (XHB_IS_VALID_INDEX(nIndex, nLen))
-        {
+        if (XHB_IS_VALID_INDEX(nIndex, nLen)) {
           hb_retclen(hb_itemGetCPtr(pSelf) + nIndex - 1, 1);
-        }
-        else
-        {
+        } else {
           hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);
         }
-      }
-      else
-      {
+      } else {
         hb_errRT_BASE(EG_ARG, 1068, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);
       }
-    }
-    else
-    {
+    } else {
       PHB_ITEM pResult =
           hb_errRT_BASE_Subst(EG_ARG, 1068, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);
-      if (pResult)
-      {
+      if (pResult) {
         hb_itemReturnRelease(pResult);
       }
     }
@@ -440,30 +341,22 @@ HB_FUNC(XHB_PLUS)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retnlen(dValue + uc, 0, iDec);
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     uc += static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
-  }
-  else if (pSelf->isHash() && pValue->isHash())
-  {
+  } else if (pSelf->isHash() && pValue->isHash()) {
     PHB_ITEM pHash = hb_hashClone(pSelf);
     hb_hashJoin(pHash, pValue, HB_HASH_UNION);
     hb_itemReturnRelease(pHash);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1081, nullptr, "+", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -474,30 +367,22 @@ HB_FUNC(XHB_MINUS)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retnlen(dValue - uc, 0, iDec);
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     uc -= static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
-  }
-  else if (pSelf->isHash() && pValue->isHash())
-  {
+  } else if (pSelf->isHash() && pValue->isHash()) {
     PHB_ITEM pHash = hb_hashClone(pSelf);
     hb_hashRemove(pHash, pValue);
     hb_itemReturnRelease(pHash);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1082, nullptr, "-", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -507,20 +392,14 @@ HB_FUNC(XHB_INC)
 {
   auto pSelf = hb_stackSelfItem();
 
-  if (pSelf->isNumeric())
-  {
+  if (pSelf->isNumeric()) {
     hb_retnd(hb_itemGetND(pSelf) + 1);
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1)
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1) {
     HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]) + 1;
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1086, nullptr, "++", 1, pSelf);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -530,20 +409,14 @@ HB_FUNC(XHB_DEC)
 {
   auto pSelf = hb_stackSelfItem();
 
-  if (pSelf->isNumeric())
-  {
+  if (pSelf->isNumeric()) {
     hb_retnd(hb_itemGetND(pSelf) - 1);
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1)
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1) {
     HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]) - 1;
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1087, nullptr, "--", 1, pSelf);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -554,31 +427,23 @@ HB_FUNC(XHB_MULT)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retndlen(dValue * uc, 0, iDec);
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pValue, &iDec);
     hb_retndlen(static_cast<double>(uc) * dValue, 0, iDec);
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1)
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1) {
     auto uc1 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto uc2 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     hb_retnint(uc1 * uc2);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1083, nullptr, "*", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -589,47 +454,33 @@ HB_FUNC(XHB_DIV)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
-    if (uc == 0)
-    {
+    if (uc == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue);
-      if (pResult)
-      {
+      if (pResult) {
         hb_itemReturnRelease(pResult);
       }
-    }
-    else
-    {
+    } else {
       hb_retnd(hb_itemGetND(pSelf) / uc);
     }
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue &&
-           (pValue->isNumeric() || hb_itemGetCLen(pValue) == 1))
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue &&
+             (pValue->isNumeric() || hb_itemGetCLen(pValue) == 1)) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     double dDivisor = pValue->isNumeric() ? hb_itemGetND(pValue)
-                                            : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
+                                          : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
 
-    if (dDivisor == 0)
-    {
+    if (dDivisor == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue);
-      if (pResult)
-      {
+      if (pResult) {
         hb_itemReturnRelease(pResult);
       }
-    }
-    else
-    {
+    } else {
       hb_retnd(static_cast<double>(uc) / dDivisor);
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1084, nullptr, "/", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -640,47 +491,33 @@ HB_FUNC(XHB_MOD)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
-    if (uc == 0)
-    {
+    if (uc == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue);
-      if (pResult)
-      {
+      if (pResult) {
         hb_itemReturnRelease(pResult);
       }
-    }
-    else
-    {
+    } else {
       hb_retnd(fmod(hb_itemGetND(pSelf), static_cast<double>(uc)));
     }
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue &&
-           (pValue->isNumeric() || hb_itemGetCLen(pValue) == 1))
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue &&
+             (pValue->isNumeric() || hb_itemGetCLen(pValue) == 1)) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     double dDivisor = pValue->isNumeric() ? hb_itemGetND(pValue)
-                                            : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
+                                          : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
 
-    if (dDivisor == 0)
-    {
+    if (dDivisor == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue);
-      if (pResult)
-      {
+      if (pResult) {
         hb_itemReturnRelease(pResult);
       }
-    }
-    else
-    {
+    } else {
       hb_retnd(fmod(static_cast<double>(uc), dDivisor));
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1085, nullptr, "%", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }
@@ -691,27 +528,19 @@ HB_FUNC(XHB_POW)
   auto pSelf = hb_stackSelfItem();
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
-  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1)
-  {
+  if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     hb_retnd(pow(hb_itemGetND(pSelf), static_cast<double>(uc)));
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric())
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     hb_retnd(pow(static_cast<double>(uc), hb_itemGetND(pValue)));
-  }
-  else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1)
-  {
+  } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1) {
     auto uc1 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
     auto uc2 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
     hb_retnd(pow(static_cast<double>(uc1), static_cast<double>(uc2)));
-  }
-  else
-  {
+  } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1088, nullptr, "^", 2, pSelf, pValue);
-    if (pResult)
-    {
+    if (pResult) {
       hb_itemReturnRelease(pResult);
     }
   }

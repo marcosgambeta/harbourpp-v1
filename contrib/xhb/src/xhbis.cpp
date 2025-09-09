@@ -93,12 +93,9 @@ HB_FUNC(ISALNUM)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr)
-  {
+  if (szString != nullptr) {
     hb_retl(HB_ISALNUM(static_cast<HB_BYTE>(*szString)));
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -112,12 +109,9 @@ HB_FUNC(ISSPACE)
 {
   auto szString = hb_parc(1);
 
-  if (szString != nullptr)
-  {
+  if (szString != nullptr) {
     hb_retl(HB_ISSPACE(static_cast<HB_BYTE>(*szString)));
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }

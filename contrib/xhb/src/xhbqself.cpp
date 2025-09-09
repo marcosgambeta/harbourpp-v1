@@ -60,23 +60,19 @@ HB_FUNC(HB_QSELF)
 {
   HB_ISIZ nOffset = hb_stackBaseProcOffset(1);
 
-  if (nOffset > 0)
-  {
+  if (nOffset > 0) {
     PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
 
-    if (nOffset > 0 && pSelf->isBlock())
-    {
+    if (nOffset > 0 && pSelf->isBlock()) {
       static PHB_SYMB s_pSymEval = nullptr;
 
-      if (s_pSymEval == nullptr)
-      {
+      if (s_pSymEval == nullptr) {
         hb_vmPushEvalSym();
         s_pSymEval = hb_itemGetSymbol(hb_stackItemFromTop(-1));
         hb_stackPop();
       }
 
-      if (s_pSymEval && hb_itemGetSymbol(hb_stackItem(nOffset)) == s_pSymEval)
-      {
+      if (s_pSymEval && hb_itemGetSymbol(hb_stackItem(nOffset)) == s_pSymEval) {
         pSelf = hb_stackItem(hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem + 1);
       }
     }

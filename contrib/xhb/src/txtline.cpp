@@ -76,45 +76,34 @@ static void hb_readLine(const char *szText, HB_SIZE nTextLen, HB_SIZE nLineLen, 
   nCurrCol = 0;
   nLastBlk = 0;
 
-  if (nTextLen == 0)
-  {
+  if (nTextLen == 0) {
     *pnEnd = -1;
     *pbEOF = HB_TRUE;
     return;
   }
 
-  if (nTabLen == 0)
-  {
+  if (nTabLen == 0) {
     nTabLen = 4;
   }
 
-  for (nPos = 0; nPos < nTextLen; nPos++)
-  {
+  for (nPos = 0; nPos < nTextLen; nPos++) {
     /* Check for line terminators */
-    for (nPosTerm = 0; nPosTerm < nTerms; nPosTerm++)
-    {
-      if (szText[nPos] == pTerm[nPosTerm][0] && (nPos + pnTermSizes[nPosTerm] - 1) < nTextLen)
-      {
+    for (nPosTerm = 0; nPosTerm < nTerms; nPosTerm++) {
+      if (szText[nPos] == pTerm[nPosTerm][0] && (nPos + pnTermSizes[nPosTerm] - 1) < nTextLen) {
         *pbFound = HB_TRUE;
 
-        for (nPosition = 1; nPosition < pnTermSizes[nPosTerm]; nPosition++)
-        {
-          if (pTerm[nPosTerm][nPosition] != szText[nPos + nPosition])
-          {
+        for (nPosition = 1; nPosition < pnTermSizes[nPosTerm]; nPosition++) {
+          if (pTerm[nPosTerm][nPosition] != szText[nPos + nPosition]) {
             *pbFound = HB_FALSE;
             break;
           }
         }
 
-        if (*pbFound)
-        {
-          if (nPos == 0)
-          {
+        if (*pbFound) {
+          if (nPos == 0) {
             *pnEnd = -1;
             *pnEndOffset = pnTermSizes[nPosTerm];
-          }
-          else
-          {
+          } else {
             *pnEnd = nPos - 1;
             *pnEndOffset = nPos + pnTermSizes[nPosTerm];
           }
@@ -123,12 +112,9 @@ static void hb_readLine(const char *szText, HB_SIZE nTextLen, HB_SIZE nLineLen, 
       }
     }
 
-    if (szText[nPos] == HB_CHAR_HT)
-    {
+    if (szText[nPos] == HB_CHAR_HT) {
       nCurrCol += nTabLen - (nCurrCol % nTabLen);
-    }
-    else if (szText[nPos] == HB_CHAR_SOFT1 && szText[nPos + 1] == HB_CHAR_SOFT2)
-    {
+    } else if (szText[nPos] == HB_CHAR_SOFT1 && szText[nPos + 1] == HB_CHAR_SOFT2) {
 /* Clipper does NOT consider SOFT CR as a word separator - WHY?
    Should we not fix that? */
 #if 0
@@ -136,33 +122,25 @@ static void hb_readLine(const char *szText, HB_SIZE nTextLen, HB_SIZE nLineLen, 
 #endif
 
       nPos++;
-    }
-    else
-    {
+    } else {
       nCurrCol++;
     }
 
-    if (*pbFound)
-    {
+    if (*pbFound) {
       break;
     }
 
-    if (szText[nPos] == ' ' || szText[nPos] == HB_CHAR_HT)
-    {
+    if (szText[nPos] == ' ' || szText[nPos] == HB_CHAR_HT) {
       nLastBlk = nPos;
     }
 
-    if (nCurrCol > nLineLen)
-    {
-      if (!bWrap || nLastBlk == 0)
-      {
+    if (nCurrCol > nLineLen) {
+      if (!bWrap || nLastBlk == 0) {
         *pnEnd = nPos - 1;
         *pnEndOffset = nPos;
         bBreak = 1;
         break;
-      }
-      else if (bWrap && nLastBlk != 0)
-      {
+      } else if (bWrap && nLastBlk != 0) {
         *pnEnd = nLastBlk;
         *pnEndOffset = nLastBlk + 1;
         bBreak = 1;
@@ -171,8 +149,7 @@ static void hb_readLine(const char *szText, HB_SIZE nTextLen, HB_SIZE nLineLen, 
     }
   }
 
-  if (!*pbFound && !bBreak)
-  {
+  if (!*pbFound && !bBreak) {
     *pnEnd = nTextLen - 1;
     *pnEndOffset = nTextLen - 1;
     *pbEOF = HB_TRUE;
@@ -183,19 +160,13 @@ static HB_ISIZ hb_tabexpand(const char *szString, char *szRet, HB_ISIZ nEnd, HB_
 {
   HB_ISIZ nPos, nSpAdded = 0;
 
-  for (nPos = 0; nPos <= nEnd; nPos++)
-  {
-    if (szString[nPos] == HB_CHAR_HT)
-    {
+  for (nPos = 0; nPos <= nEnd; nPos++) {
+    if (szString[nPos] == HB_CHAR_HT) {
       nSpAdded += (nTabLen > 0 ? nTabLen - ((nPos + nSpAdded) % nTabLen) - 1 : 0);
-    }
-    else if ((nPos < nEnd && szString[nPos] == HB_CHAR_SOFT1 && szString[nPos + 1] == HB_CHAR_SOFT2) ||
-             szString[nPos] == HB_CHAR_LF)
-    {
+    } else if ((nPos < nEnd && szString[nPos] == HB_CHAR_SOFT1 && szString[nPos + 1] == HB_CHAR_SOFT2) ||
+               szString[nPos] == HB_CHAR_LF) {
       nSpAdded--;
-    }
-    else
-    {
+    } else {
       *(szRet + nPos + nSpAdded) = *(szString + nPos);
     }
   }
@@ -211,20 +182,15 @@ HB_FUNC(HB_TABEXPAND)
   HB_SIZE nTabCount = 0;
   HB_ISIZ nPos;
 
-  for (nPos = 0; nPos < nStrLen; nPos++)
-  {
-    if (szText[nPos] == HB_CHAR_HT)
-    {
+  for (nPos = 0; nPos < nStrLen; nPos++) {
+    if (szText[nPos] == HB_CHAR_HT) {
       ++nTabCount;
     }
   }
 
-  if (nStrLen == 0 || nTabCount == 0 || nTabLen == 0)
-  {
+  if (nStrLen == 0 || nTabCount == 0 || nTabLen == 0) {
     hb_retc(szText);
-  }
-  else
-  {
+  } else {
     HB_ISIZ nSize;
     nSize = nStrLen + nTabCount * (nTabLen - 1);
     auto szRet = static_cast<char *>(hb_xgrab(nSize + 1));
@@ -251,8 +217,7 @@ HB_FUNC(HB_READLINE)
   HB_ISIZ nEnd;
   HB_BOOL bAlloc_Term1 = false;
 
-  if (!HB_ISCHAR(1))
-  {
+  if (!HB_ISCHAR(1)) {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 9, hb_paramError(1), hb_paramError(2),
                          hb_paramError(3), hb_paramError(4), hb_paramError(5), hb_paramError(6), hb_paramError(7),
                          hb_paramError(8), hb_paramError(9), hb_paramError(10));
@@ -264,10 +229,8 @@ HB_FUNC(HB_READLINE)
 
   nStartOffset = hb_parns(6);
 
-  if (!(HB_ISARRAY(2) || HB_ISCHAR(2)))
-  {
-    if (!hb_setGetCPtr(HB_SET_EOL))
-    {
+  if (!(HB_ISARRAY(2) || HB_ISCHAR(2))) {
+    if (!hb_setGetCPtr(HB_SET_EOL)) {
       auto pEOL = hb_itemNew(nullptr);
       hb_itemPutC(pEOL, hb_conNewLine());
       hb_setSetItem(HB_SET_EOL, pEOL);
@@ -276,31 +239,25 @@ HB_FUNC(HB_READLINE)
 
     pTerm1 = hb_itemPutC(nullptr, hb_setGetCPtr(HB_SET_EOL));
     bAlloc_Term1 = true;
-  }
-  else
-  {
+  } else {
     pTerm1 = hb_param(2, Harbour::Item::ANY);
   }
 
   auto pOpt = hb_itemNew(nullptr);
 
-  if (pTerm1->isArray())
-  {
+  if (pTerm1->isArray()) {
     HB_SIZE i;
 
     nTerms = hb_arrayLen(pTerm1);
     pTerm = static_cast<const char **>(hb_xgrab(sizeof(char *) * nTerms));
     pnTermSizes = static_cast<HB_SIZE *>(hb_xgrab(sizeof(HB_SIZE) * nTerms));
 
-    for (i = 0; i < nTerms; i++)
-    {
+    for (i = 0; i < nTerms; i++) {
       hb_arrayGet(pTerm1, i + 1, pOpt);
       pTerm[i] = hb_itemGetCPtr(pOpt);
       pnTermSizes[i] = hb_itemGetCLen(pOpt);
     }
-  }
-  else
-  {
+  } else {
     pTerm = static_cast<const char **>(hb_xgrab(sizeof(char *)));
     pnTermSizes = static_cast<HB_SIZE *>(hb_xgrab(sizeof(HB_SIZE) * 1));
     pTerm[0] = hb_itemGetCPtr(pTerm1);
@@ -320,8 +277,7 @@ HB_FUNC(HB_READLINE)
   hb_storns(nEnd + nStartOffset + 1, 9);
   hb_storns(nEndOffset + nStartOffset + 1, 10);
 
-  if (bAlloc_Term1)
-  {
+  if (bAlloc_Term1) {
     hb_itemRelease(pTerm1);
   }
 

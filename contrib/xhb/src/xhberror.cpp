@@ -70,7 +70,7 @@ static HB_SIZE s_nErrProcLine = 0;
 static HB_SIZE s_nErrProcModule = 0;
 static HB_SIZE s_nErrCallStack = 0;
 
-static HB_SYMB s_symXhbErrorNew = {"XHB_ERRORNEW", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( XHB_ERRORNEW)}, nullptr};
+static HB_SYMB s_symXhbErrorNew = {"XHB_ERRORNEW", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(XHB_ERRORNEW)}, nullptr};
 #ifdef XHB_ERROR_OVERLOAD_ERRORNEW
 static HB_SYMB s_symErrorNew = {"ERRORNEW", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(XHB_ERRORNEW)}, nullptr};
 #endif
@@ -88,8 +88,7 @@ const char *hb_errGetProcName(PHB_ITEM pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetProcName(%p)", pError));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -100,8 +99,7 @@ PHB_ITEM hb_errPutProcName(PHB_ITEM pError, const char *szProcName)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutProcName(%p, %s)", pError, szProcName));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -114,8 +112,7 @@ HB_UINT hb_errGetProcLine(PHB_ITEM pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetProcLine(%p)", pError));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -126,8 +123,7 @@ PHB_ITEM hb_errPutProcLine(PHB_ITEM pError, HB_UINT uiProcLine)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutProcLine(%p, %u)", pError, uiProcLine));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -140,8 +136,7 @@ const char *hb_errGetModuleName(PHB_ITEM pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetModuleName(%p)", pError));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -152,8 +147,7 @@ PHB_ITEM hb_errPutModuleName(PHB_ITEM pError, const char *szModuleName)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutModuleName(%p, %s)", pError, szModuleName));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -166,8 +160,7 @@ PHB_ITEM hb_errGetCallStack(PHB_ITEM pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetCallStack(%p)", pError));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -178,8 +171,7 @@ PHB_ITEM hb_errPutCallStack(PHB_ITEM pError, PHB_ITEM pCallStack)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutCallStack(%p, %p)", pError, pCallStack));
 
-  if (hb_arrayLen(pError) < s_nErrProcName)
-  {
+  if (hb_arrayLen(pError) < s_nErrProcName) {
     s_xhbErrorResize(pError);
   }
 
@@ -197,8 +189,7 @@ HB_FUNC_STATIC(_PROCNAME)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && pItem->isString())
-  {
+  if (pItem && pItem->isString()) {
     hb_errPutProcName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }
 
@@ -214,8 +205,7 @@ HB_FUNC_STATIC(_PROCLINE)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && pItem->isNumeric())
-  {
+  if (pItem && pItem->isNumeric()) {
     hb_errPutProcLine(hb_stackSelfItem(), static_cast<HB_UINT>(hb_itemGetNI(pItem)));
   }
 
@@ -231,8 +221,7 @@ HB_FUNC_STATIC(_MODULENAME)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && pItem->isString())
-  {
+  if (pItem && pItem->isString()) {
     hb_errPutModuleName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }
 
@@ -248,8 +237,7 @@ HB_FUNC_STATIC(_AASTACK)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && pItem->isArray())
-  {
+  if (pItem && pItem->isArray()) {
     hb_errPutCallStack(hb_stackSelfItem(), pItem);
   }
 
@@ -260,8 +248,7 @@ HB_FUNC_STATIC(ERRORINIT)
 {
   auto pError = hb_stackSelfItem();
 
-  if (s_nErrObjSize != 0)
-  {
+  if (s_nErrObjSize != 0) {
     auto pStack = hb_itemArrayNew(0);
     PHB_ITEM pItem = nullptr;
     char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
@@ -270,22 +257,17 @@ HB_FUNC_STATIC(ERRORINIT)
     auto iLevel = 0;
 
     /* start with 1 instead of 0 to skip this method */
-    while (hb_procinfo(++iLevel, szProcName, &uiProcLine, szProcFile))
-    {
-      if (!pItem)
-      {
+    while (hb_procinfo(++iLevel, szProcName, &uiProcLine, szProcFile)) {
+      if (!pItem) {
         if (strcmp(szProcName, "ERRORNEW") == 0 || strcmp(szProcName, "XHB_ERRORNEW") == 0 ||
-            strcmp(szProcName, "__ERRRT_BASE") == 0 || strcmp(szProcName, "__ERRRT_SBASE") == 0)
-        {
+            strcmp(szProcName, "__ERRRT_BASE") == 0 || strcmp(szProcName, "__ERRRT_SBASE") == 0) {
           continue;
         }
         hb_errPutProcName(pError, szProcName);
         hb_errPutProcLine(pError, uiProcLine);
         hb_errPutModuleName(pError, szProcFile);
         pItem = hb_itemArrayNew(3);
-      }
-      else
-      {
+      } else {
         hb_arrayNew(pItem, 3);
       }
 
@@ -306,48 +288,39 @@ HB_FUNC(XHB_ERRORNEW)
 {
   auto pError = hb_errNew();
 
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     hb_errPutSubSystem(pError, hb_parc(1));
   }
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     hb_errPutGenCode(pError, static_cast<HB_ERRCODE>(hb_parni(2)));
   }
 
-  if (HB_ISNUM(3))
-  {
+  if (HB_ISNUM(3)) {
     hb_errPutSubCode(pError, static_cast<HB_ERRCODE>(hb_parni(3)));
   }
 
-  if (HB_ISCHAR(4))
-  {
+  if (HB_ISCHAR(4)) {
     hb_errPutOperation(pError, hb_parc(4));
   }
 
-  if (HB_ISCHAR(5))
-  {
+  if (HB_ISCHAR(5)) {
     hb_errPutDescription(pError, hb_parc(5));
   }
 
-  if (HB_ISARRAY(6))
-  {
+  if (HB_ISARRAY(6)) {
     hb_errPutArgsArray(pError, hb_param(6, Harbour::Item::ARRAY));
   }
 
-  if (HB_ISCHAR(7))
-  {
+  if (HB_ISCHAR(7)) {
     hb_errPutModuleName(pError, hb_parc(7));
   }
 
-  if (HB_ISCHAR(8))
-  {
+  if (HB_ISCHAR(8)) {
     hb_errPutProcName(pError, hb_parc(8));
   }
 
-  if (HB_ISNUM(9))
-  {
+  if (HB_ISNUM(9)) {
     hb_errPutProcLine(pError, hb_parni(9));
   }
 
@@ -358,8 +331,7 @@ static void xhb_errRedefineClass(void *cargo)
 {
   HB_SYMBOL_UNUSED(cargo);
 
-  if (s_nErrObjSize == 0)
-  {
+  if (s_nErrObjSize == 0) {
     auto pError = hb_errNew();
     HB_USHORT usClassH = hb_objGetClass(pError);
 
@@ -393,8 +365,7 @@ static void xhb_errRedefineClass(void *cargo)
 #ifdef XHB_ERROR_OVERLOAD_ERRORNEW
     {
       auto pDynSym = hb_dynsymFind("ERRORNEW");
-      if (pDynSym)
-      {
+      if (pDynSym) {
         s_symErrorNew.pDynSym = pDynSym;
         pDynSym->pSymbol = &s_symErrorNew;
         hb_vmSetDynFunc(pDynSym);

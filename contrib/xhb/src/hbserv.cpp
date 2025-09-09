@@ -136,8 +136,7 @@ static void s_signalHandler(int sig, siginfo_t *info, void *v)
   hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
   /* avoid working if PRG signal handling has been disabled */
-  if (!bSignalEnabled)
-  {
+  if (!bSignalEnabled) {
     hb_threadLeaveCriticalSection(&s_ServiceMutex);
     return;
   }
@@ -147,12 +146,10 @@ static void s_signalHandler(int sig, siginfo_t *info, void *v)
   /* subsig not necessary */
   auto uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
 
-  while (nPos > 0)
-  {
+  while (nPos > 0) {
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
     auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
-    if (uiMask & uiSig)
-    {
+    if (uiMask & uiSig) {
       int iRet;
 
       /* we don't unlock the mutex now, even if it is
@@ -189,8 +186,7 @@ static void s_signalHandler(int sig, siginfo_t *info, void *v)
       hb_itemRelease(pRet);
       hb_itemRelease(pExecArray);
 
-      switch (iRet)
-      {
+      switch (iRet) {
       case HB_SERVICE_HANDLED:
         bSignalEnabled = true;
         hb_threadLeaveCriticalSection(&s_ServiceMutex);
@@ -277,16 +273,14 @@ static void *s_signalListener(void *my_stack)
   pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, nullptr);
   pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, nullptr);
 
-  for (;;)
-  {
+  for (;;) {
     /* allow safe cancelation */
     HB_STACK_UNLOCK;
 
     /* reset signal handling; this is done here (so I don't
        mangle with pthread_ calls, and I don't hold mutexes),
        and just once (doing it twice would be useless). */
-    if (bFirst)
-    {
+    if (bFirst) {
       pthread_sigmask(SIG_SETMASK, &passall, nullptr);
       bFirst = false;
     }
@@ -383,8 +377,7 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
   hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
   /* avoid working if PRG signal handling has been disabled */
-  if (!bSignalEnabled)
-  {
+  if (!bSignalEnabled) {
     hb_threadLeaveCriticalSection(&s_ServiceMutex);
     return EXCEPTION_EXECUTE_HANDLER;
   }
@@ -394,12 +387,10 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
   /* subsig not necessary */
   auto uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
 
-  while (nPos > 0)
-  {
+  while (nPos > 0) {
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
     auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
-    if ((uiMask & uiSig) == uiSig)
-    {
+    if ((uiMask & uiSig) == uiSig) {
       int iRet;
 
       /* we don't unlock the mutex now, even if it is
@@ -426,12 +417,9 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
       /* could be meaningless, but does not matter here */
       hb_arraySetNI(pRet, HB_SERVICE_OSERROR, GetLastError());
 
-      if (type == 0)
-      { /* exception */
+      if (type == 0) { /* exception */
         hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, static_cast<void *>(exc->ExceptionAddress));
-      }
-      else
-      {
+      } else {
         hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, nullptr);
       }
 
@@ -445,8 +433,7 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
       hb_itemRelease(pRet);
       hb_itemRelease(pExecArray);
 
-      switch (iRet)
-      {
+      switch (iRet) {
       case HB_SERVICE_HANDLED:
         bSignalEnabled = true;
         hb_threadLeaveCriticalSection(&s_ServiceMutex);
@@ -480,15 +467,13 @@ static LRESULT CALLBACK s_MsgFilterFunc(int nCode, WPARAM wParam, LPARAM lParam)
 {
   PMSG msg;
 
-  if (nCode < 0)
-  {
+  if (nCode < 0) {
     return CallNextHookEx(s_hMsgHook, nCode, wParam, lParam);
   }
 
   msg = (PMSG)lParam;
 
-  switch (msg->message)
-  {
+  switch (msg->message) {
   case WM_USER:
   case WM_USER + 1:
   case WM_USER + 2:
@@ -514,8 +499,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine(DWORD dwCtrlType)
 
   /* we need a new stack: this is NOT an hb thread. */
 
-  if (TlsGetValue(hb_dwCurrentStack) == 0)
-  {
+  if (TlsGetValue(hb_dwCurrentStack) == 0) {
     pStack = hb_threadCreateStack(GetCurrentThreadId());
     pStack->th_h = GetCurrentThread();
     TlsSetValue(hb_dwCurrentStack, static_cast<void *>(pStack));
@@ -525,8 +509,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine(DWORD dwCtrlType)
   s_signalHandler(2, dwCtrlType, nullptr);
 
 #ifdef HB_THREAD_SUPPORT
-  if (pStack)
-  {
+  if (pStack) {
     hb_threadDestroyStack(pStack);
   }
 #endif
@@ -626,8 +609,7 @@ static void s_serviceSetDflSig(void)
 
 #ifdef HB_OS_WIN
   SetUnhandledExceptionFilter(nullptr);
-  if (s_hMsgHook != nullptr)
-  {
+  if (s_hMsgHook != nullptr) {
     UnhookWindowsHookEx(s_hMsgHook);
     s_hMsgHook = nullptr;
   }
@@ -643,10 +625,8 @@ static int s_translateSignal(HB_UINT sig, HB_UINT subsig)
 {
   auto i = 0;
 
-  while (s_sigTable[i].sig != 0 || s_sigTable[i].subsig != 0 || s_sigTable[i].translated != 0)
-  {
-    if (s_sigTable[i].sig == sig && (s_sigTable[i].subsig == subsig || s_sigTable[i].subsig == 0))
-    {
+  while (s_sigTable[i].sig != 0 || s_sigTable[i].subsig != 0 || s_sigTable[i].translated != 0) {
+    if (s_sigTable[i].sig == sig && (s_sigTable[i].subsig == subsig || s_sigTable[i].subsig == 0)) {
       return s_sigTable[i].translated;
     }
     i++;
@@ -699,8 +679,7 @@ HB_FUNC(HB_STARTSERVICE)
 {
 #ifdef HB_THREAD_SUPPORT
   int iCount = hb_threadCountStacks();
-  if (iCount > 2 || (sp_hooks == nullptr && iCount > 1))
-  {
+  if (iCount > 2 || (sp_hooks == nullptr && iCount > 1)) {
     /* TODO: Right error code here */
     hb_errRT_BASE_SubstR(EG_ARG, 3012, "Service must be started before starting threads", nullptr, 0);
     return;
@@ -710,12 +689,10 @@ HB_FUNC(HB_STARTSERVICE)
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
   {
     /* Iconic? */
-    if (hb_parl(1))
-    {
+    if (hb_parl(1)) {
       int pid = fork();
 
-      if (pid != 0)
-      {
+      if (pid != 0) {
         hb_vmRequestQuit();
         return;
       }
@@ -735,15 +712,13 @@ HB_FUNC(HB_STARTSERVICE)
 
 /* in windows, we just detach from console */
 #ifdef HB_OS_WIN
-  if (hb_parl(1))
-  {
+  if (hb_parl(1)) {
     FreeConsole();
   }
 #endif
 
   /* Initialize only if the service has not yet been initialized */
-  if (sp_hooks == nullptr)
-  {
+  if (sp_hooks == nullptr) {
     s_signalHandlersInit();
   }
 }
@@ -763,8 +738,7 @@ HB_BOOL hb_isService(void)
  */
 void hb_serviceExit(void)
 {
-  if (sp_hooks != nullptr)
-  {
+  if (sp_hooks != nullptr) {
     /* reset default signal handling */
     s_serviceSetDflSig();
     hb_itemRelease(sp_hooks);
@@ -796,8 +770,7 @@ HB_FUNC(HB_SERVICELOOP)
   /* This is just here to trigger our internal hook routine, if the
      final application does not any message handling.
    */
-  if (!PeekMessage(&msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE))
-  {
+  if (!PeekMessage(&msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE)) {
     PeekMessage(&msg, nullptr, WM_USER, WM_USER + 3, PM_REMOVE);
   }
 #endif
@@ -810,8 +783,7 @@ HB_FUNC(HB_PUSHSIGNALHANDLER)
   auto iMask = hb_parni(1);
   auto pFunc = hb_param(2, Harbour::Item::ANY);
 
-  if (pFunc == nullptr || iMask == 0 || (!pFunc->isPointer() && !pFunc->isString() && !pFunc->isBlock()))
-  {
+  if (pFunc == nullptr || iMask == 0 || (!pFunc->isPointer() && !pFunc->isString() && !pFunc->isBlock())) {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, "Wrong parameter count/type", nullptr, 2, hb_param(1, Harbour::Item::ANY),
                          hb_param(2, Harbour::Item::ANY));
     return;
@@ -822,8 +794,7 @@ HB_FUNC(HB_PUSHSIGNALHANDLER)
   hb_arraySet(pHandEntry, 2, pFunc);
 
   /* if the hook is not initialized, initialize it */
-  if (sp_hooks == nullptr)
-  {
+  if (sp_hooks == nullptr) {
     s_signalHandlersInit();
   }
 
@@ -840,32 +811,25 @@ HB_FUNC(HB_POPSIGNALHANDLER)
 {
   int nLen;
 
-  if (sp_hooks != nullptr)
-  {
+  if (sp_hooks != nullptr) {
     hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
     nLen = hb_arrayLen(sp_hooks);
-    if (nLen > 0)
-    {
+    if (nLen > 0) {
       hb_arrayDel(sp_hooks, nLen);
       hb_arrayDel(sp_hooks, nLen - 1);
       hb_arraySize(sp_hooks, nLen - 2);
       hb_retl(true);
-      if (hb_arrayLen(sp_hooks) == 0)
-      {
+      if (hb_arrayLen(sp_hooks) == 0) {
         hb_itemRelease(sp_hooks);
         sp_hooks = nullptr; /* So it can be reinitilized */
       }
-    }
-    else
-    {
+    } else {
       hb_retl(false);
     }
 
     hb_threadLeaveCriticalSection(&s_ServiceMutex);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -882,11 +846,9 @@ HB_FUNC(HB_SIGNALDESC)
   auto iSig = hb_parni(1);
   auto iSubSig = hb_parni(2);
 
-  switch (iSig)
-  {
+  switch (iSig) {
   case SIGSEGV:
-    switch (iSubSig)
-    {
+    switch (iSubSig) {
 #if !defined(HB_OS_BSD)
     case SEGV_MAPERR:
       hb_retc_const("Segmentation fault: address not mapped to object");
@@ -901,8 +863,7 @@ HB_FUNC(HB_SIGNALDESC)
     }
 
   case SIGILL:
-    switch (iSubSig)
-    {
+    switch (iSubSig) {
 #if !defined(HB_OS_BSD)
     case ILL_ILLOPC:
       hb_retc_const("Illegal operation: illegal opcode");
@@ -935,8 +896,7 @@ HB_FUNC(HB_SIGNALDESC)
     }
 
   case SIGFPE:
-    switch (iSubSig)
-    {
+    switch (iSubSig) {
 #if !defined(HB_OS_DARWIN)
     case FPE_INTDIV:
       hb_retc_const("Floating point: integer divide by zero");
@@ -1009,12 +969,10 @@ HB_FUNC(HB_SIGNALDESC)
 
   auto iSig = hb_parni(1);
 
-  if (iSig == 0)
-  { /* exception */
+  if (iSig == 0) { /* exception */
     auto dwSubSig = static_cast<DWORD>(hb_parnl(2));
 
-    switch (dwSubSig)
-    {
+    switch (dwSubSig) {
     case EXCEPTION_ACCESS_VIOLATION:
       hb_retc_const("Memory read/write access violation");
       return;

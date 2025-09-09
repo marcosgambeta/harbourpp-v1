@@ -70,15 +70,12 @@ HB_FUNC(HB_SYSLOGOPEN)
 
   /* Ok, we compiled under NT, but we must not use this function
      when RUNNING on a win98. */
-  if (hb_iswinnt())
-  {
+  if (hb_iswinnt()) {
     void *hSourceName;
     s_RegHandle = RegisterEventSource(nullptr, HB_PARSTRDEF(1, &hSourceName, nullptr));
     hb_strfree(hSourceName);
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 #else
@@ -100,13 +97,10 @@ HB_FUNC(HB_SYSLOGCLOSE)
 
 #if (WINVER >= 0x0400)
 
-  if (hb_iswinnt())
-  {
+  if (hb_iswinnt()) {
     DeregisterEventSource(s_RegHandle);
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 #else
@@ -126,13 +120,11 @@ HB_FUNC(HB_SYSLOGMESSAGE)
 #if defined(HB_OS_WIN)
 
 #if (WINVER >= 0x0400)
-  if (hb_iswinnt())
-  {
+  if (hb_iswinnt()) {
     WORD logval;
     void *hMsg;
     LPCTSTR lpMsg = HB_PARSTRDEF(1, &hMsg, nullptr);
-    switch (hb_parni(2))
-    {
+    switch (hb_parni(2)) {
     case HB_LOG_CRITICAL:
       logval = EVENTLOG_ERROR_TYPE;
       break;
@@ -162,9 +154,7 @@ HB_FUNC(HB_SYSLOGMESSAGE)
                 : false);
 
     hb_strfree(hMsg);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 #else
@@ -175,8 +165,7 @@ HB_FUNC(HB_SYSLOGMESSAGE)
 
   int logval;
 
-  switch (hb_parni(2))
-  {
+  switch (hb_parni(2)) {
   case HB_LOG_CRITICAL:
     logval = LOG_CRIT;
     break;

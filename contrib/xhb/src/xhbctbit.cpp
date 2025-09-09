@@ -52,29 +52,20 @@ static HB_ULONG hb_hextonum(const char *cHex)
   HB_ULONG ulNum = 0;
   char c;
 
-  while (*cHex == ' ')
-  {
+  while (*cHex == ' ') {
     cHex++;
   }
 
-  while ((c = *cHex++) != 0)
-  {
+  while ((c = *cHex++) != 0) {
     ulNum <<= 4;
 
-    if (c >= '0' && c <= '9')
-    {
+    if (c >= '0' && c <= '9') {
       ulNum += c - '0';
-    }
-    else if (c >= 'A' && c <= 'F')
-    {
+    } else if (c >= 'A' && c <= 'F') {
       ulNum += c - ('A' + 10);
-    }
-    else if (c >= 'a' && c <= 'f')
-    {
+    } else if (c >= 'a' && c <= 'f') {
       ulNum += c - ('a' + 10);
-    }
-    else
-    {
+    } else {
       ulNum = 0;
       break;
     }
@@ -87,12 +78,9 @@ static HB_LONG __getparam(int iParam)
 {
   auto szHexNum = hb_parc(iParam);
 
-  if (szHexNum)
-  {
+  if (szHexNum) {
     return static_cast<HB_LONG>(hb_hextonum(szHexNum));
-  }
-  else
-  {
+  } else {
     return hb_parnl(iParam);
   }
 }
@@ -123,8 +111,7 @@ static void sizeofbits(HB_USHORT *pusBytes, HB_LONG *plPattern, HB_LONG *plTestM
 {
   *pusBytes = (HB_ISNIL(1) || hb_parni(1) == 0) ? sizeof(int) * 8 : static_cast<HB_USHORT>(hb_parni(1));
 
-  if (*pusBytes > sizeof(HB_LONG) * 8)
-  {
+  if (*pusBytes > sizeof(HB_LONG) * 8) {
     *pusBytes = *pusBytes % (sizeof(HB_LONG) * 8);
   }
 
@@ -135,8 +122,7 @@ static void sizeofbits(HB_USHORT *pusBytes, HB_LONG *plPattern, HB_LONG *plTestM
 
 static HB_LONG __numfun(int iPCount, HB_LONG (*operation)(HB_LONG wNum1, HB_LONG wNum2), HB_BOOL *pbOk)
 {
-  if ((HB_ISNUM(1) || HB_ISNIL(1)) && (HB_ISNUM(2) || HB_ISCHAR(2)))
-  {
+  if ((HB_ISNUM(1) || HB_ISNIL(1)) && (HB_ISNUM(2) || HB_ISCHAR(2))) {
     HB_LONG lNum1 = __getparam(2);
     HB_LONG lNumOp = 0;
     HB_LONG lPattern, lTestMSB;
@@ -144,22 +130,15 @@ static HB_LONG __numfun(int iPCount, HB_LONG (*operation)(HB_LONG wNum1, HB_LONG
 
     sizeofbits(&usBytes, &lPattern, &lTestMSB);
 
-    if (iPCount == 2)
-    {
+    if (iPCount == 2) {
       lNumOp = (*operation)(lNum1, 0); /* If unary operation: NOT */
-    }
-    else
-    {
+    } else {
       int iFor;
 
-      for (iFor = 3; iFor <= iPCount; iFor++)
-      {
-        if (HB_ISNUM(iFor) || HB_ISCHAR(iFor))
-        {
+      for (iFor = 3; iFor <= iPCount; iFor++) {
+        if (HB_ISNUM(iFor) || HB_ISCHAR(iFor)) {
           lNumOp = (*operation)(lNum1, __getparam(iFor)); /* Call to operation: AND, OR, XOR */
-        }
-        else
-        {
+        } else {
           *pbOk = HB_FALSE;
           return 0;
         }
@@ -181,8 +160,7 @@ HB_FUNC(NUMANDX)
   HB_BOOL bOk;
   HB_LONG lNumOp = __numfun(hb_pcount(), __numand, &bOk);
 
-  if (bOk)
-  {
+  if (bOk) {
     hb_retnl(lNumOp);
   }
 }
@@ -192,8 +170,7 @@ HB_FUNC(NUMORX)
   HB_BOOL bOk;
   HB_LONG lNumOp = __numfun(hb_pcount(), __numor, &bOk);
 
-  if (bOk)
-  {
+  if (bOk) {
     hb_retnl(lNumOp);
   }
 }
@@ -203,8 +180,7 @@ HB_FUNC(NUMXORX)
   HB_BOOL bOk;
   HB_LONG lNumOp = __numfun(3, __numxor, &bOk);
 
-  if (bOk)
-  {
+  if (bOk) {
     hb_retnl(lNumOp);
   }
 }
@@ -214,16 +190,14 @@ HB_FUNC(NUMNOTX)
   HB_BOOL bOk;
   HB_LONG lNumOp = __numfun(2, __numnot, &bOk);
 
-  if (bOk)
-  {
+  if (bOk) {
     hb_retnl(lNumOp);
   }
 }
 
 HB_FUNC(NUMROLX)
 {
-  if (HB_ISNUM(2) || HB_ISCHAR(2))
-  {
+  if (HB_ISNUM(2) || HB_ISCHAR(2)) {
     HB_LONG lNum1, lNumBak, lPattern, lTestRol;
     HB_USHORT usBytes, usFor;
 
@@ -236,15 +210,11 @@ HB_FUNC(NUMROLX)
 
     lNumBak = lNum1 & lPattern; /* lNumBak contain the section to doesn't ROL */
 
-    for (usFor = 1; usFor <= usNum2; usFor++)
-    {
-      if (lNum1 & lTestRol)
-      { /* Test if MSB is ON */
+    for (usFor = 1; usFor <= usNum2; usFor++) {
+      if (lNum1 & lTestRol) { /* Test if MSB is ON */
         lNum1 <<= 1;
         lNum1 |= 1; /* Simulate that the MSB move to LSB */
-      }
-      else
-      {
+      } else {
         lNum1 <<= 1;
       }
     }
@@ -255,8 +225,7 @@ HB_FUNC(NUMROLX)
 
 HB_FUNC(NUMMIRRX)
 {
-  if (HB_ISNUM(2) || HB_ISCHAR(2))
-  {
+  if (HB_ISNUM(2) || HB_ISCHAR(2)) {
     HB_LONG lNum1, lPattern, lTestMSB, lNumBak, lMirror = 0;
     HB_USHORT usBytes, usFor;
 
@@ -266,15 +235,11 @@ HB_FUNC(NUMMIRRX)
 
     lNumBak = lNum1 & lPattern;
 
-    for (usFor = 1; usFor <= usBytes; usFor++)
-    {
-      if (lNum1 & 1)
-      {
+    for (usFor = 1; usFor <= usBytes; usFor++) {
+      if (lNum1 & 1) {
         lMirror <<= 1; /* if the LSB of lNum1 == 1 then */
         lMirror |= 1;  /* set the LSB of lMirror = 1 */
-      }
-      else
-      {
+      } else {
         lMirror <<= 1;
       }
 

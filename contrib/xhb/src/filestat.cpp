@@ -89,8 +89,7 @@ HB_FUNC(FILESTATS)
   long lcDate = 0, lcTime = 0, lmDate = 0, lmTime = 0;
 
   /* Parameter checking */
-  if (hb_parclen(1) == 0)
-  {
+  if (hb_parclen(1) == 0) {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
     return;
   }
@@ -115,68 +114,53 @@ HB_FUNC(FILESTATS)
       char *pszAttr = szAttr;
 
       /* See which attribs are applicable */
-      if (statbuf.st_uid == geteuid())
-      {
+      if (statbuf.st_uid == geteuid()) {
         usAttr = ((statbuf.st_mode & S_IRUSR) ? 1 << 2 : 0) | ((statbuf.st_mode & S_IWUSR) ? 1 << 1 : 0) |
                  ((statbuf.st_mode & S_IXUSR) ? 1 : 0);
-      }
-      else if (statbuf.st_gid == getegid())
-      {
+      } else if (statbuf.st_gid == getegid()) {
         usAttr = ((statbuf.st_mode & S_IRGRP) ? 1 << 2 : 0) | ((statbuf.st_mode & S_IWGRP) ? 1 << 1 : 0) |
                  ((statbuf.st_mode & S_IXGRP) ? 1 : 0);
-      }
-      else
-      {
+      } else {
         usAttr = ((statbuf.st_mode & S_IROTH) ? 1 << 2 : 0) | ((statbuf.st_mode & S_IWOTH) ? 1 << 1 : 0) |
                  ((statbuf.st_mode & S_IXOTH) ? 1 : 0);
       }
 
       /* Standard characters */
-      if ((usAttr & 4) == 0)
-      { /* Hidden (cannot read) */
+      if ((usAttr & 4) == 0) { /* Hidden (cannot read) */
         ushbAttr |= HB_FA_HIDDEN;
       }
 
-      if ((usAttr & 2) == 0)
-      { /* read only (cannot write) */
+      if ((usAttr & 2) == 0) { /* read only (cannot write) */
         ushbAttr |= HB_FA_READONLY;
       }
 
-      if ((usAttr & 1) == 1)
-      { /* executable? (xbit) */
+      if ((usAttr & 1) == 1) { /* executable? (xbit) */
         ushbAttr |= HB_FA_SYSTEM;
       }
 
       /* Extension characters */
 
-      if ((statbuf.st_mode & S_IFLNK) == S_IFLNK)
-      {
+      if ((statbuf.st_mode & S_IFLNK) == S_IFLNK) {
         *pszAttr++ = 'Z'; /* xHarbour extension */
       }
 
-      if ((statbuf.st_mode & S_IFSOCK) == S_IFSOCK)
-      {
+      if ((statbuf.st_mode & S_IFSOCK) == S_IFSOCK) {
         *pszAttr++ = 'K'; /* xHarbour extension */
       }
 
       /* device */
-      if ((statbuf.st_mode & S_IFBLK) == S_IFBLK || (statbuf.st_mode & S_IFCHR) == S_IFCHR)
-      {
+      if ((statbuf.st_mode & S_IFBLK) == S_IFBLK || (statbuf.st_mode & S_IFCHR) == S_IFCHR) {
         ushbAttr |= HB_FA_DEVICE; /* xHarbour extension */
       }
 
-      if ((statbuf.st_mode & S_IFIFO) == S_IFIFO)
-      {
+      if ((statbuf.st_mode & S_IFIFO) == S_IFIFO) {
         *pszAttr++ = 'Y'; /* xHarbour extension */
       }
 
-      if (S_ISDIR(statbuf.st_mode))
-      {
+      if (S_ISDIR(statbuf.st_mode)) {
         ushbAttr |= HB_FA_DIRECTORY; /* xHarbour extension */
         /* Give the ARCHIVE if readwrite, not executable and not special */
-      }
-      else if (S_ISREG(statbuf.st_mode) && ushbAttr == 0)
-      {
+      } else if (S_ISREG(statbuf.st_mode) && ushbAttr == 0) {
         ushbAttr |= HB_FA_ARCHIVE;
       }
 
@@ -219,39 +203,31 @@ HB_FUNC(FILESTATS)
 
     /* Get attributes... */
     dwAttribs = GetFileAttributes(lpFileName);
-    if (dwAttribs != INVALID_FILE_ATTRIBUTES)
-    {
+    if (dwAttribs != INVALID_FILE_ATTRIBUTES) {
       HANDLE hFind;
 
       hb_fsAttrDecode(hb_fsAttrFromRaw(dwAttribs), szAttr);
 
       /* If file existed, do a find-first */
       hFind = FindFirstFile(lpFileName, &ffind);
-      if (hFind != INVALID_HANDLE_VALUE)
-      {
+      if (hFind != INVALID_HANDLE_VALUE) {
         FindClose(hFind);
 
         /* get file times and work them out */
         llSize = static_cast<HB_FOFFSET>(ffind.nFileSizeLow) + (static_cast<HB_FOFFSET>(ffind.nFileSizeHigh) << 32);
 
-        if (FileTimeToLocalFileTime(&ffind.ftCreationTime, &filetime) && FileTimeToSystemTime(&filetime, &time))
-        {
+        if (FileTimeToLocalFileTime(&ffind.ftCreationTime, &filetime) && FileTimeToSystemTime(&filetime, &time)) {
           lcDate = hb_dateEncode(time.wYear, time.wMonth, time.wDay);
           lcTime = time.wHour * 3600 + time.wMinute * 60 + time.wSecond;
-        }
-        else
-        {
+        } else {
           lcDate = hb_dateEncode(0, 0, 0);
           lcTime = 0;
         }
 
-        if (FileTimeToLocalFileTime(&ffind.ftLastAccessTime, &filetime) && FileTimeToSystemTime(&filetime, &time))
-        {
+        if (FileTimeToLocalFileTime(&ffind.ftLastAccessTime, &filetime) && FileTimeToSystemTime(&filetime, &time)) {
           lmDate = hb_dateEncode(time.wYear, time.wMonth, time.wDay);
           lmTime = time.wHour * 3600 + time.wMinute * 60 + time.wSecond;
-        }
-        else
-        {
+        } else {
           lcDate = hb_dateEncode(0, 0, 0);
           lcTime = 0;
         }
@@ -267,8 +243,7 @@ HB_FUNC(FILESTATS)
   {
     PHB_FFIND findinfo = hb_fsFindFirst(hb_parc(1), HB_FA_ALL);
 
-    if (findinfo)
-    {
+    if (findinfo) {
       hb_fsAttrDecode(findinfo->attr, szAttr);
       llSize = static_cast<HB_FOFFSET>(findinfo->size);
       lcDate = findinfo->lDate;
@@ -286,8 +261,7 @@ HB_FUNC(FILESTATS)
 
   hb_fsSetIOError(fResult, 0);
 
-  if (fResult)
-  {
+  if (fResult) {
     hb_storc(szAttr, 2);
     hb_stornint(llSize, 3);
     hb_stordl(lcDate, 4);
@@ -296,9 +270,7 @@ HB_FUNC(FILESTATS)
     hb_stornint(lmTime, 7);
 
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }

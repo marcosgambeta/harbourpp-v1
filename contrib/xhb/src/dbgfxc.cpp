@@ -66,8 +66,7 @@ HB_BOOL hb_ToOutDebugOnOff(HB_BOOL bOnOff)
 
 void hb_ToOutDebug(const char *sTraceMsg, ...)
 {
-  if (sTraceMsg && s_bToOutputDebug)
-  {
+  if (sTraceMsg && s_bToOutputDebug) {
     char buffer[1024];
     va_list ap;
 
@@ -97,31 +96,23 @@ HB_BOOL hb_EmptyLogFile(HB_BOOL bOnOff)
 
 void hb_ToLogFile(const char *sFile, const char *sTraceMsg, ...)
 {
-  if (s_bToLogFile)
-  {
+  if (s_bToLogFile) {
     FILE *hFile;
 
-    if (sFile == nullptr)
-    {
-      if (s_bEmptyLogFile)
-      {
+    if (sFile == nullptr) {
+      if (s_bEmptyLogFile) {
         s_bEmptyLogFile = false;
 
         /* Empty the file if it exists. */
         hFile = hb_fopen("logfile.log", "w");
-      }
-      else
-      {
+      } else {
         hFile = hb_fopen("logfile.log", "a");
       }
-    }
-    else
-    {
+    } else {
       hFile = hb_fopen(sFile, "a");
     }
 
-    if (hFile)
-    {
+    if (hFile) {
       va_list ap;
 
       va_start(ap, sTraceMsg);

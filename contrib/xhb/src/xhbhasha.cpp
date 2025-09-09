@@ -85,23 +85,15 @@ HB_FUNC(HAAGETKEYAT)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (!pHash || !pPos)
-  {
+  if (!pHash || !pPos) {
     s_errRT_hashArg();
-  }
-  else if (!s_isHashAA(pHash))
-  {
+  } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
-  }
-  else
-  {
+  } else {
     PHB_ITEM pItem = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
-    if (pItem != nullptr)
-    {
+    if (pItem != nullptr) {
       hb_itemReturn(pItem);
-    }
-    else
-    {
+    } else {
       s_errRT_hashBound();
     }
   }
@@ -113,23 +105,15 @@ HB_FUNC(HAAGETVALUEAT)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (!pHash || !pPos)
-  {
+  if (!pHash || !pPos) {
     s_errRT_hashArg();
-  }
-  else if (!s_isHashAA(pHash))
-  {
+  } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
-  }
-  else
-  {
+  } else {
     PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-    if (pItem != nullptr)
-    {
+    if (pItem != nullptr) {
       hb_itemReturn(pItem);
-    }
-    else
-    {
+    } else {
       s_errRT_hashBound();
     }
   }
@@ -142,23 +126,15 @@ HB_FUNC(HAASETVALUEAT)
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
   auto pValue = hb_param(3, Harbour::Item::ANY);
 
-  if (!pHash || !pPos || !pValue)
-  {
+  if (!pHash || !pPos || !pValue) {
     s_errRT_hashArg();
-  }
-  else if (!s_isHashAA(pHash))
-  {
+  } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
-  }
-  else
-  {
+  } else {
     PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-    if (pItem != nullptr)
-    {
+    if (pItem != nullptr) {
       hb_itemCopy(pItem, pValue);
-    }
-    else
-    {
+    } else {
       s_errRT_hashBound();
     }
   }
@@ -170,16 +146,11 @@ HB_FUNC(HAADELAT)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (!pHash || !pPos)
-  {
+  if (!pHash || !pPos) {
     s_errRT_hashArg();
-  }
-  else if (!s_isHashAA(pHash))
-  {
+  } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
-  }
-  else if (!hb_hashDelAt(pHash, hb_itemGetNS(pPos)))
-  {
+  } else if (!hb_hashDelAt(pHash, hb_itemGetNS(pPos))) {
     s_errRT_hashBound();
   }
 }
@@ -190,16 +161,11 @@ HB_FUNC(HAAGETPOS)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
-  if (!pHash || !pKey)
-  {
+  if (!pHash || !pKey) {
     s_errRT_hashArg();
-  }
-  else if (!s_isHashAA(pHash))
-  {
+  } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
-  }
-  else
-  {
+  } else {
     HB_SIZE nPos;
     hb_hashScan(pHash, pKey, &nPos);
     hb_retns(nPos);
@@ -211,13 +177,10 @@ HB_FUNC(HAAGETREALPOS)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     HB_SIZE nPos = hb_parns(2);
     hb_retns(s_isHashAA(pHash) && nPos > 0 && nPos <= hb_hashLen(pHash) ? nPos : 0);
-  }
-  else
-  {
+  } else {
     s_errRT_hashArg();
   }
 }
@@ -227,19 +190,15 @@ HB_FUNC(HGETVAAPOS)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     HB_SIZE n, nLen = hb_hashLen(pHash);
     auto pArray = hb_itemArrayNew(nLen);
 
-    for (n = 1; n <= nLen; ++n)
-    {
+    for (n = 1; n <= nLen; ++n) {
       hb_arraySetNS(pArray, n, n);
     }
     hb_itemReturnRelease(pArray);
-  }
-  else
-  {
+  } else {
     s_errRT_hashArg();
   }
 }
@@ -250,20 +209,14 @@ HB_FUNC(HSETAACOMPATIBILITY)
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pValue = hb_param(2, Harbour::Item::LOGICAL);
 
-  if (pHash && pValue && hb_hashLen(pHash) == 0)
-  {
-    if (hb_itemGetL(pValue))
-    {
+  if (pHash && pValue && hb_hashLen(pHash) == 0) {
+    if (hb_itemGetL(pValue)) {
       hb_hashSetFlags(pHash, HB_HASH_KEEPORDER);
-    }
-    else
-    {
+    } else {
       hb_hashClearFlags(pHash, HB_HASH_KEEPORDER);
     }
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     s_errRT_hashArg();
   }
 }
@@ -273,12 +226,9 @@ HB_FUNC(HGETAACOMPATIBILITY)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
 
-  if (pHash)
-  {
+  if (pHash) {
     hb_retl(s_isHashAA(pHash));
-  }
-  else
-  {
+  } else {
     s_errRT_hashArg();
   }
 }

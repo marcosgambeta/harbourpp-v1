@@ -114,35 +114,25 @@ HB_FUNC(HB_VMMODE)
 HB_FUNC(XHB__KEYBOARD)
 {
   /* Clear the typeahead buffer without reallocating the keyboard buffer */
-  if (!hb_parl(2))
-  {
+  if (!hb_parl(2)) {
     hb_inkeyReset();
   }
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     hb_inkeyPut(hb_parni(1));
-  }
-  else if (HB_ISCHAR(1))
-  {
+  } else if (HB_ISCHAR(1)) {
     hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
-  }
-  else if (HB_ISARRAY(1))
-  {
+  } else if (HB_ISARRAY(1)) {
     auto pArray = hb_param(1, Harbour::Item::ARRAY);
     HB_SIZE nIndex;
     HB_SIZE nElements = hb_arrayLen(pArray);
 
-    for (nIndex = 1; nIndex <= nElements; nIndex++)
-    {
+    for (nIndex = 1; nIndex <= nElements; nIndex++) {
       auto pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
-      if (pItem->isNumber())
-      {
+      if (pItem->isNumber()) {
         hb_inkeyPut(hb_itemGetNI(pItem));
-      }
-      else if (pItem->isString())
-      {
+      } else if (pItem->isString()) {
         hb_inkeySetText(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false);
       }
     }
@@ -154,14 +144,11 @@ HB_FUNC(HB_CREATELEN8)
   char buffer[8];
   HB_MAXINT nValue;
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     nValue = hb_parnint(1);
     HB_PUT_LE_UINT64(buffer, nValue);
     hb_retclen(buffer, 8);
-  }
-  else if (HB_ISBYREF(1) && HB_ISNUM(2))
-  {
+  } else if (HB_ISBYREF(1) && HB_ISNUM(2)) {
     nValue = hb_parnint(2);
     HB_PUT_LE_UINT64(buffer, nValue);
     hb_storclen(buffer, 8, 1);
@@ -172,12 +159,9 @@ HB_FUNC(HB_GETLEN8)
 {
   auto buffer = hb_parc(1);
 
-  if (buffer && hb_parclen(1) >= 8)
-  {
+  if (buffer && hb_parclen(1) >= 8) {
     hb_retnint(HB_GET_LE_UINT64(buffer));
-  }
-  else
-  {
+  } else {
     hb_retni(-1);
   }
 }
@@ -186,8 +170,7 @@ HB_FUNC(HB_DESERIALBEGIN)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_itemReturn(pItem);
   }
 }
@@ -200,13 +183,10 @@ HB_FUNC(HB_F_EOF)
 {
   HB_ERRCODE uiError = 6;
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
     uiError = hb_fsError();
-  }
-  else
-  {
+  } else {
     hb_retl(true);
   }
 
@@ -221,16 +201,12 @@ HB_FUNC(CURDIRX)
   int iCurDrv = hb_fsCurDrv();
   int iDrv;
 
-  if (pDrv && hb_parclen(1) > 0)
-  {
+  if (pDrv && hb_parclen(1) > 0) {
     iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
-    if (iDrv != iCurDrv)
-    {
+    if (iDrv != iCurDrv) {
       hb_fsChDrv(iDrv);
     }
-  }
-  else
-  {
+  } else {
     iDrv = iCurDrv;
   }
 
@@ -268,31 +244,22 @@ HB_FUNC(__SENDRAWMSG)
 
 HB_FUNC(HB_EXEC)
 {
-  if (HB_ISSYMBOL(1))
-  {
+  if (HB_ISSYMBOL(1)) {
     HB_BOOL fSend = false;
     int iParams = hb_pcount() - 1;
 
-    if (iParams >= 1)
-    {
+    if (iParams >= 1) {
       fSend = iParams > 1 && !hb_param(2, Harbour::Item::ANY)->isNil();
       iParams--;
-    }
-    else
-    {
+    } else {
       hb_vmPushNil();
     }
-    if (fSend)
-    {
+    if (fSend) {
       hb_vmSend(static_cast<HB_USHORT>(iParams));
-    }
-    else
-    {
+    } else {
       hb_vmDo(static_cast<HB_USHORT>(iParams));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -302,12 +269,9 @@ HB_FUNC_EXTERN(NETNAME);
 
 HB_FUNC(XHB_NETNAME)
 {
-  if (hb_parni(1) == 1)
-  {
+  if (hb_parni(1) == 1) {
     HB_FUNC_EXEC(HB_USERNAME);
-  }
-  else
-  {
+  } else {
     HB_FUNC_EXEC(NETNAME);
   }
 }
@@ -317,12 +281,9 @@ HB_FUNC_EXTERN(MEMOWRIT);
 
 HB_FUNC(XHB_MEMOWRIT)
 {
-  if (HB_ISLOG(3) && !hb_parl(3))
-  {
+  if (HB_ISLOG(3) && !hb_parl(3)) {
     HB_FUNC_EXEC(HB_MEMOWRIT);
-  }
-  else
-  {
+  } else {
     HB_FUNC_EXEC(MEMOWRIT);
   }
 }
