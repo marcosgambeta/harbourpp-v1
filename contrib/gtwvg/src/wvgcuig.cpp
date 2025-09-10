@@ -107,47 +107,35 @@ HB_FUNC(WVG_CLEARGUIOBJECTS)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
 
-  if (pWVT->gObjs)
-  {
+  if (pWVT->gObjs) {
     PHB_GOBJS gObj;
 
-    while (pWVT->gObjs)
-    {
+    while (pWVT->gObjs) {
       gObj = pWVT->gObjs->gObjNext;
 
-      if (pWVT->gObjs->hText)
-      {
+      if (pWVT->gObjs->hText) {
         hb_strfree(pWVT->gObjs->hText);
       }
-      if (pWVT->gObjs->hFont != nullptr)
-      {
-        if (pWVT->gObjs->bDestroyFont)
-        {
+      if (pWVT->gObjs->hFont != nullptr) {
+        if (pWVT->gObjs->bDestroyFont) {
           DeleteObject(pWVT->gObjs->hFont);
         }
       }
-      if (pWVT->gObjs->hPen)
-      {
-        if (pWVT->gObjs->bDestroyPen)
-        {
+      if (pWVT->gObjs->hPen) {
+        if (pWVT->gObjs->bDestroyPen) {
           DeleteObject(pWVT->gObjs->hPen);
         }
       }
-      if (pWVT->gObjs->hBrush)
-      {
-        if (pWVT->gObjs->bDestroyBrush)
-        {
+      if (pWVT->gObjs->hBrush) {
+        if (pWVT->gObjs->bDestroyBrush) {
           DeleteObject(pWVT->gObjs->hBrush);
         }
       }
-      if (pWVT->gObjs->bBlock)
-      {
+      if (pWVT->gObjs->bBlock) {
         hb_itemRelease(pWVT->gObjs->bBlock);
       }
-      if (pWVT->gObjs->pPicture)
-      {
-        if (pWVT->gObjs->bDestroyPicture)
-        {
+      if (pWVT->gObjs->pPicture) {
+        if (pWVT->gObjs->bDestroyPicture) {
           HB_VTBL(pWVT->gObjs->pPicture)->Release(HB_THIS(pWVT->gObjs->pPicture));
         }
       }
@@ -164,21 +152,16 @@ HB_FUNC(WVG_SETGOBJSTATE)
   int iHandle = hb_parni(1);
   int iOState = 0;
 
-  if (iHandle && pWVT->gObjs)
-  {
+  if (iHandle && pWVT->gObjs) {
     PHB_GOBJS gObj = pWVT->gObjs;
 
-    while (gObj)
-    {
-      if (iHandle == gObj->iHandle)
-      {
+    while (gObj) {
+      if (iHandle == gObj->iHandle) {
         iOState = gObj->iState;
 
-        if (HB_ISNUM(2))
-        {
+        if (HB_ISNUM(2)) {
           int iState = hb_parni(2);
-          if (iOState != iState && iState > 0 && iState <= 4)
-          {
+          if (iOState != iState && iState > 0 && iState <= 4) {
             gObj->iState = iState;
             hb_wvg_RefreshRect(pWVT, gObj);
           }
@@ -198,57 +181,44 @@ HB_FUNC(WVG_SETGOBJDATA)
   int iHandle = hb_parni(1);
   HB_BOOL bSuccess = false;
 
-  if (iHandle)
-  {
+  if (iHandle) {
     PHB_GOBJS gObj = pWVT->gObjs;
 
-    while (gObj)
-    {
-      if (iHandle == gObj->iHandle)
-      {
+    while (gObj) {
+      if (iHandle == gObj->iHandle) {
         int iDataType = hb_parni(2);
 
         bSuccess = true;
 
-        switch (iDataType)
-        {
+        switch (iDataType) {
         case GOBJ_OBJDATA_TEXT:
-          if (gObj->hText)
-          {
+          if (gObj->hText) {
             hb_strfree(gObj->hText);
           }
           gObj->lpText = HB_PARSTR(3, &gObj->hText, nullptr);
           break;
         case GOBJ_OBJDATA_PICTUREEX:
-          if (HB_ISNUM(3))
-          {
+          if (HB_ISNUM(3)) {
             gObj->pPicture = (IPicture *)(HB_PTRUINT)hb_parni(3);
           }
           break;
         case GOBJ_OBJDATA_PICTURE:
-          if (HB_ISNUM(3) && hb_parni(3) <= WVT_PICTURES_MAX)
-          {
+          if (HB_ISNUM(3) && hb_parni(3) <= WVT_PICTURES_MAX) {
             gObj->pPicture = pWVT->pGUI->pPicture[hb_parni(3) - 1];
           }
           break;
-        case GOBJ_OBJDATA_IMAGE:
-        {
+        case GOBJ_OBJDATA_IMAGE: {
           IPicture *iPicture = nullptr;
 
-          if (HB_ISNUM(3))
-          {
-            if (hb_parni(3) <= WVT_PICTURES_MAX)
-            {
+          if (HB_ISNUM(3)) {
+            if (hb_parni(3) <= WVT_PICTURES_MAX) {
               iPicture = pWVT->pGUI->pPicture[hb_parni(3) - 1];
-            }  
-          }
-          else
-          {
+            }
+          } else {
             void *hPic;
             iPicture = hb_wvt_gtLoadPicture(HB_PARSTR(3, &hPic, nullptr));
             hb_strfree(hPic);
-            if (!iPicture)
-            {
+            if (!iPicture) {
               void *hRes;
               void *hSec;
               iPicture = hb_wvt_gtLoadPictureFromResource(HB_PARSTR(3, &hRes, nullptr), HB_PARSTR(4, &hSec, nullptr));
@@ -256,10 +226,8 @@ HB_FUNC(WVG_SETGOBJDATA)
               hb_strfree(hSec);
             }
           }
-          if (iPicture)
-          {
-            if (gObj->bDestroyPicture && gObj->pPicture)
-            {
+          if (iPicture) {
+            if (gObj->bDestroyPicture && gObj->pPicture) {
               HB_VTBL(gObj->pPicture)->Release(HB_THIS(gObj->pPicture));
             }
             gObj->pPicture = iPicture;
@@ -268,36 +236,30 @@ HB_FUNC(WVG_SETGOBJDATA)
           break;
         }
         case GOBJ_OBJDATA_HFONT:
-          if (gObj->hFont && gObj->bDestroyFont)
-          {
+          if (gObj->hFont && gObj->bDestroyFont) {
             DeleteObject(gObj->hFont);
           }
           gObj->hFont = (HFONT)(HB_PTRUINT)hb_parnint(3);
           gObj->bDestroyFont = false;
           break;
         case GOBJ_OBJDATA_HPEN:
-          if (gObj->hPen && gObj->bDestroyPen)
-          {
+          if (gObj->hPen && gObj->bDestroyPen) {
             DeleteObject(gObj->hPen);
           }
           gObj->hPen = (HPEN)(HB_PTRUINT)hb_parnint(3);
           gObj->bDestroyPen = false;
           break;
         case GOBJ_OBJDATA_HBRUSH:
-          if (gObj->hBrush && gObj->bDestroyBrush)
-          {
+          if (gObj->hBrush && gObj->bDestroyBrush) {
             DeleteObject(gObj->hBrush);
           }
           gObj->hBrush = (HBRUSH)(HB_PTRUINT)hb_parnint(3);
           gObj->bDestroyBrush = true;
           break;
         case GOBJ_OBJDATA_COLORTEXT:
-          if (HB_ISNUM(3))
-          {
+          if (HB_ISNUM(3)) {
             gObj->crRGBText = (COLORREF)(HB_PTRUINT)hb_parnint(3);
-          }
-          else
-          {
+          } else {
             bSuccess = false;
           }
           break;
@@ -305,8 +267,7 @@ HB_FUNC(WVG_SETGOBJDATA)
           gObj->crRGBBk = (COLORREF)(HB_PTRUINT)hb_parnint(3);
           break;
         case GOBJ_OBJDATA_BLOCK:
-          if (gObj->bBlock)
-          {
+          if (gObj->bBlock) {
             hb_itemRelease(gObj->bBlock);
           }
           gObj->bBlock = hb_itemNew(hb_param(3, Harbour::Item::BLOCK));
@@ -315,11 +276,10 @@ HB_FUNC(WVG_SETGOBJDATA)
           bSuccess = false;
           break;
         }
-        if (bSuccess)
-        {
+        if (bSuccess) {
           hb_wvg_RefreshRect(pWVT, gObj);
         }
-        
+
         hb_retl(bSuccess);
         return;
       }
@@ -616,8 +576,7 @@ HB_FUNC(WVG_LABEL)
   hb_strfree(hText);
 
   hFont = CreateFontIndirect(&lf);
-  if (hFont)
-  {
+  if (hFont) {
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
     gObj->iObjType = GOBJ_OBJTYPE_LABEL;
@@ -680,16 +639,13 @@ static void hb_wvg_Label(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop)
 {
   HFONT hOldFont;
 
-  if (gObj->crRGBBk != (COLORREF)0)
-  {
+  if (gObj->crRGBBk != (COLORREF)0) {
     SetBkColor(pWVT->hdc, gObj->crRGBBk);
     SetBkMode(pWVT->hdc, OPAQUE);
-  }
-  else
-  {
+  } else {
     SetBkMode(pWVT->hdc, TRANSPARENT);
   }
-  
+
   SetTextColor(pWVT->hdc, gObj->crRGBText);
   SetTextAlign(pWVT->hdc, gObj->iAlign);
 
@@ -730,8 +686,7 @@ HB_FUNC(WVG_LABELEX2)
   hb_strfree(hText);
 
   hFont = CreateFontIndirect(&lf);
-  if (hFont)
-  {
+  if (hFont) {
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
     gObj->iObjType = GOBJ_OBJTYPE_LABEL_EX2;
@@ -773,8 +728,7 @@ static void hb_wvg_LabelEx2(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
 
   x = iLeft;
 
-  switch (gObj->iAlign)
-  {
+  switch (gObj->iAlign) {
   case 0:
     iAlignH = TA_LEFT;
     break;
@@ -832,13 +786,10 @@ HB_FUNC(WVG_OUTLINE)
   gObj->iStyle = hb_parni(7); // iShape
   gObj->crRGB = (COLORREF)hb_parnl(8);
 
-  if (gObj->iWidth > 0)
-  {
+  if (gObj->iWidth > 0) {
     gObj->hPen = CreatePen(gObj->iWidth, gObj->iStyle, gObj->crRGB);
     gObj->bDestroyPen = true;
-  }
-  else
-  {
+  } else {
     gObj->hPen = pWVT->pGUI->penBlack;
     gObj->bDestroyPen = false;
   }
@@ -865,13 +816,10 @@ HB_FUNC(WVG_OUTLINEEX)
   gObj->aOffset.iBottom = hb_parvni(5, 3);
   gObj->aOffset.iRight = hb_parvni(5, 4);
 
-  if (pWVT->pGUI->hUserPens[hb_parni(6) - 1])
-  {
+  if (pWVT->pGUI->hUserPens[hb_parni(6) - 1]) {
     gObj->hPen = pWVT->pGUI->hUserPens[hb_parni(6) - 1];
     gObj->bDestroyPen = false;
-  }
-  else
-  {
+  } else {
     gObj->hPen = pWVT->pGUI->penBlack;
     gObj->bDestroyPen = false;
   }
@@ -972,16 +920,13 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
   int x = iLeft;
   int y = iTop;
 
-  switch (gObj->iAlign)
-  {
+  switch (gObj->iAlign) {
   case 0:                   // Center
     if (gObj->iOrient == 0) // Horizontal
     {
       iOffset = (iBottom - iTop) / 2;
       y = iTop + iOffset;
-    }
-    else
-    {
+    } else {
       iOffset = (iRight - iLeft) / 2;
       x = iLeft + iOffset;
     }
@@ -994,11 +939,9 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
     if (gObj->iFormat == 0 || gObj->iFormat == 1) // Raised/Recessed
     {
       y = iBottom - 1;
-    }
-    else
-    {
+    } else {
       y = iBottom;
-    }  
+    }
     break;
 
   case 3: // Left
@@ -1008,9 +951,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
     if (gObj->iFormat == 0 || gObj->iFormat == 1) // Raised/Recessed
     {
       x = iRight - 1;
-    }
-    else
-    {
+    } else {
       x = iRight;
     }
     break;
@@ -1019,8 +960,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
   hPen = gObj->hPen;
   hOldPen = (HPEN)SelectObject(hdc, gObj->hPen);
 
-  switch (gObj->iFormat)
-  {
+  switch (gObj->iFormat) {
   case 0:                   // Raised
     if (gObj->iOrient == 0) // Horizontal
     {
@@ -1030,8 +970,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
       SelectObject(hdc, hPen);
       MoveToEx(hdc, x, y + 1, nullptr);
       LineTo(hdc, iRight, y + 1);
-    }
-    else // Vertical
+    } else // Vertical
     {
       SelectObject(hdc, pWVT->pGUI->penWhite);
       MoveToEx(hdc, x, y, nullptr);
@@ -1051,8 +990,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
       SelectObject(hdc, pWVT->pGUI->penWhite);
       MoveToEx(hdc, x, y + 1, nullptr);
       LineTo(hdc, iRight, y + 1);
-    }
-    else // Vertical
+    } else // Vertical
     {
       SelectObject(hdc, hPen);
       MoveToEx(hdc, x, y, nullptr);
@@ -1069,8 +1007,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
       SelectObject(hdc, hPen);
       MoveToEx(hdc, x, y, nullptr);
       LineTo(hdc, iRight, y);
-    }
-    else // Vertical
+    } else // Vertical
     {
       SelectObject(hdc, hPen);
       MoveToEx(hdc, x, y, nullptr);
@@ -1204,8 +1141,7 @@ HB_FUNC(WVG_COLORRECT)
 {
   HBRUSH hBrush = CreateSolidBrush((COLORREF)hb_parnint(6));
 
-  if (hBrush)
-  {
+  if (hBrush) {
     PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
@@ -1242,8 +1178,7 @@ HB_FUNC(WVG_SHADEDRECT)
 {
   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
 
-  if (pWVT->pGUI->hMSImg32)
-  {
+  if (pWVT->pGUI->hMSImg32) {
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
     gObj->iObjType = GOBJ_OBJTYPE_SHADEDRECT;
@@ -1320,8 +1255,7 @@ HB_FUNC(WVG_TEXTBOX)
 
   gObj->lpText = HB_PARSTR(6, &gObj->hText, nullptr);
 
-  switch (hb_parni(7))
-  {
+  switch (hb_parni(7)) {
   case 0:
     iAlignH = DT_LEFT;
     break;
@@ -1353,12 +1287,9 @@ static void hb_wvg_TextBox(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
 
   SetTextAlign(hdc, TA_TOP | TA_LEFT | TA_NOUPDATECP);
   SetTextColor(hdc, gObj->crRGBText);
-  if (gObj->crRGBBk == (COLORREF)0)
-  {
+  if (gObj->crRGBBk == (COLORREF)0) {
     SetBkMode(hdc, TRANSPARENT);
-  }
-  else
-  {
+  } else {
     SetBkMode(hdc, OPAQUE);
     SetBkColor(hdc, gObj->crRGBBk);
   }
@@ -1370,8 +1301,7 @@ static void hb_wvg_TextBox(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
 // wvg_Picture(nTop, nLeft, nBottom, nRight, aPxlOff, nSlot, lDoNotScale) --> NIL
 HB_FUNC(WVG_PICTURE)
 {
-  if (HB_ISNUM(6) && hb_parni(6) <= WVT_PICTURES_MAX)
-  {
+  if (HB_ISNUM(6) && hb_parni(6) <= WVT_PICTURES_MAX) {
     PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
@@ -1393,17 +1323,14 @@ HB_FUNC(WVG_PICTURE)
 
     gObj->gObjNext = pWVT->gObjs;
     pWVT->gObjs = gObj;
-  }
-  else
-  {
+  } else {
     hb_retni(0);
-  }  
+  }
 }
 
 HB_FUNC(WVG_PICTUREEX)
 {
-  if (HB_ISNUM(6))
-  {
+  if (HB_ISNUM(6)) {
     PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
@@ -1425,9 +1352,7 @@ HB_FUNC(WVG_PICTUREEX)
 
     gObj->gObjNext = pWVT->gObjs;
     pWVT->gObjs = gObj;
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 }
@@ -1439,22 +1364,18 @@ HB_FUNC(WVG_IMAGE)
   int iSource = hb_parni(6);
   IPicture *iPicture = nullptr;
 
-  if (iSource == 0)
-  {
+  if (iSource == 0) {
     hb_retni(0);
     return;
   }
 
-  switch (iSource)
-  {
+  switch (iSource) {
   case GOBJ_IMAGESOURCE_SLOT:
-    if (HB_ISNUM(7) && hb_parni(7) <= WVT_PICTURES_MAX)
-    {
+    if (HB_ISNUM(7) && hb_parni(7) <= WVT_PICTURES_MAX) {
       iPicture = pWVT->pGUI->pPicture[hb_parni(7) - 1];
     }
     break;
-  case GOBJ_IMAGESOURCE_RESOURCE:
-  {
+  case GOBJ_IMAGESOURCE_RESOURCE: {
     void *hPic;
     void *hRes;
     iPicture = hb_wvt_gtLoadPictureFromResource(HB_PARSTR(7, &hPic, nullptr), HB_PARSTR(8, &hRes, nullptr));
@@ -1462,8 +1383,7 @@ HB_FUNC(WVG_IMAGE)
     hb_strfree(hRes);
     break;
   }
-  case GOBJ_IMAGESOURCE_FILE:
-  {
+  case GOBJ_IMAGESOURCE_FILE: {
     void *hPic;
     iPicture = hb_wvt_gtLoadPicture(HB_PARSTR(7, &hPic, nullptr));
     hb_strfree(hPic);
@@ -1471,8 +1391,7 @@ HB_FUNC(WVG_IMAGE)
   }
   }
 
-  if (iPicture)
-  {
+  if (iPicture) {
     HB_GOBJS *gObj = hb_wvg_ObjectNew(pWVT);
 
     gObj->iObjType = GOBJ_OBJTYPE_PICTURE;
@@ -1490,20 +1409,15 @@ HB_FUNC(WVG_IMAGE)
     gObj->pPicture = iPicture;
     gObj->iData = (hb_parl(9) ? 1 : 0);
 
-    if (iSource == GOBJ_IMAGESOURCE_SLOT)
-    {
+    if (iSource == GOBJ_IMAGESOURCE_SLOT) {
       gObj->bDestroyPicture = false;
-    }
-    else
-    {
+    } else {
       gObj->bDestroyPicture = true;
     }
 
     gObj->gObjNext = pWVT->gObjs;
     pWVT->gObjs = gObj;
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 }
@@ -1518,8 +1432,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
   HDC hdc = pWVT->hGuiDC;
   IPicture *iPicture = gObj->pPicture;
 
-  if (iPicture)
-  {
+  if (iPicture) {
     HB_VTBL(iPicture)->get_Width(HB_THIS_(iPicture) & lWidth);
     HB_VTBL(iPicture)->get_Height(HB_THIS_(iPicture) & lHeight);
 
@@ -1528,18 +1441,14 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
     wd = iRight - iLeft + 1;
     ht = iBottom - iTop + 1;
 
-    if (gObj->iData == 1)
-    {
+    if (gObj->iData == 1) {
       int iWd, iHt;
 
-      if (lHeight > lWidth)
-      {
+      if (lHeight > lWidth) {
         iWd = (int)((double)ht * lWidth / lHeight);
         iWd = HB_MIN(iWd, wd);
         iHt = (int)((double)iWd * lHeight / lWidth);
-      }
-      else
-      {
+      } else {
         iHt = (int)((double)wd * lHeight / lWidth);
         iHt = HB_MIN(iHt, ht);
         iWd = (int)((double)iHt * lWidth / lHeight);
@@ -1594,20 +1503,17 @@ static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
   PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);
   HB_ISIZ iTabs = hb_arrayLen(pCols);
 
-  if (iTabs > 0)
-  {
+  if (iTabs > 0) {
     int iTop = hb_arrayGetNI(pArray, 1) * (int)pWVT->PTEXTSIZE.y;
     int iBottom = ((hb_arrayGetNI(pArray, 2) + 1) * (int)pWVT->PTEXTSIZE.y) - 1;
 
-    if ((iTop >= uRect->top && iTop <= uRect->bottom) || (iBottom >= uRect->top && iBottom <= uRect->bottom))
-    {
+    if ((iTop >= uRect->top && iTop <= uRect->bottom) || (iBottom >= uRect->top && iBottom <= uRect->bottom)) {
       int x;
       HDC hdc = pWVT->hGuiDC;
       HB_ISIZ i;
 
       SelectObject(hdc, pWVT->currentPen);
-      for (i = 1; i <= iTabs; ++i)
-      {
+      for (i = 1; i <= iTabs; ++i) {
         x = hb_arrayGetNI(pCols, i) * pWVT->PTEXTSIZE.x;
         MoveToEx(hdc, x, iTop, nullptr);
         LineTo(hdc, x, iBottom);
@@ -1618,8 +1524,7 @@ static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
       // perhaps we can avoid drawing on the image ???
       hdc = pWVT->hdc;
       SelectObject(hdc, pWVT->currentPen);
-      for (i = 1; i <= iTabs; ++i)
-      {
+      for (i = 1; i <= iTabs; ++i) {
         x = hb_arrayGetNI(pCols, i) * pWVT->PTEXTSIZE.x;
         MoveToEx(hdc, x, iTop, nullptr);
         LineTo(hdc, x, iBottom);
@@ -1640,15 +1545,13 @@ static void hb_wvg_GridHorz(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
   int iTop = iAtRow * pWVT->PTEXTSIZE.y;
   int iBottom = (iAtRow + iRows) * pWVT->PTEXTSIZE.y; // do not add 1
 
-  if (uRect->left > iRight || uRect->top > iBottom || uRect->bottom < iTop || uRect->right < iLeft)
-  {
+  if (uRect->left > iRight || uRect->top > iBottom || uRect->bottom < iTop || uRect->right < iLeft) {
     return;
   }
-  
+
   hdc = pWVT->hdc;
   SelectObject(hdc, pWVT->currentPen);
-  for (i = 0; i < iRows; ++i, ++iAtRow)
-  {
+  for (i = 0; i < iRows; ++i, ++iAtRow) {
     y = iAtRow * pWVT->PTEXTSIZE.y;
     MoveToEx(hdc, iLeft, y, nullptr);
     LineTo(hdc, iRight, y);
@@ -1656,8 +1559,7 @@ static void hb_wvg_GridHorz(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
 
   hdc = pWVT->hGuiDC;
   SelectObject(hdc, pWVT->currentPen);
-  for (i = 0; i < iRows; ++i, ++iAtRow)
-  {
+  for (i = 0; i < iRows; ++i, ++iAtRow) {
     y = iAtRow * pWVT->PTEXTSIZE.y;
     MoveToEx(hdc, iLeft, y, nullptr);
     LineTo(hdc, iRight, y);
@@ -1670,17 +1572,13 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 {
   PHB_GOBJS gObj = pWVT->gObjs;
 
-  while (gObj)
-  {
-    if (gObj->iState == GOBJ_OBJSTATE_ENABLED)
-    {
+  while (gObj) {
+    if (gObj->iState == GOBJ_OBJSTATE_ENABLED) {
       int iTop = 0, iLeft = 0, iBottom = 0, iRight = 0;
       int iObjType = 0;
 
-      if (gObj->iObjType == GOBJ_OBJTYPE_OBJECT)
-      {
-        if (hb_vmRequestReenter())
-        {
+      if (gObj->iObjType == GOBJ_OBJTYPE_OBJECT) {
+        if (hb_vmRequestReenter()) {
           PHB_ITEM pArray;
 
           hb_vmPushEvalSym();
@@ -1689,34 +1587,25 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 
           pArray = hb_param(-1, Harbour::Item::ARRAY);
 
-          if (pArray && hb_arrayLen(pArray) >= 3)
-          {
+          if (pArray && hb_arrayLen(pArray) >= 3) {
             iObjType = gObj->iData;
 
-            if (iObjType == GOBJ_OBJTYPE_GRIDVERT)
-            {
-              if (hb_arrayGetNI(pArray, 4) > 0)
-              {
+            if (iObjType == GOBJ_OBJTYPE_GRIDVERT) {
+              if (hb_arrayGetNI(pArray, 4) > 0) {
                 hb_wvg_GridVert(pWVT, pArray, uRect);
-              }  
-            }
-            else if (iObjType == GOBJ_OBJTYPE_GRIDHORZ)
-            {
+              }
+            } else if (iObjType == GOBJ_OBJTYPE_GRIDHORZ) {
               hb_wvg_GridHorz(pWVT, pArray, uRect);
-            }
-            else
-            {
+            } else {
               // Take care of offsets 5th element
               iTop = pWVT->PTEXTSIZE.y * hb_arrayGetNI(pArray, 1);
               iLeft = pWVT->PTEXTSIZE.x * hb_arrayGetNI(pArray, 2);
               iBottom = (pWVT->PTEXTSIZE.y * (hb_arrayGetNI(pArray, 3) + 1)) - 1;
               iRight = (pWVT->PTEXTSIZE.x * (hb_arrayGetNI(pArray, 4) + 1)) - 1;
             }
-          }
-          else
-          {
+          } else {
             iObjType = 0;
-          }  
+          }
 
 // CAREFUL
 #if 0
@@ -1728,9 +1617,7 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 #endif
           hb_vmRequestRestore();
         }
-      }
-      else
-      {
+      } else {
         iObjType = gObj->iObjType;
 
         iTop = (pWVT->PTEXTSIZE.y * gObj->iTop) + gObj->aOffset.iTop;
@@ -1739,26 +1626,19 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
         iRight = (pWVT->PTEXTSIZE.x * (gObj->iRight + 1)) - 1 + gObj->aOffset.iRight;
       }
 
-      switch (iObjType)
-      {
+      switch (iObjType) {
       case GOBJ_OBJTYPE_BOXRAISED:
       case GOBJ_OBJTYPE_BOXRECESSED:
       case GOBJ_OBJTYPE_BOXGET:
       case GOBJ_OBJTYPE_BOXGROUP:
       case GOBJ_OBJTYPE_BOXGROUPRAISED:
         if (uRect->left > (iRight + 2) || uRect->top > (iBottom + 2) || uRect->bottom < (iTop - 2) ||
-            uRect->right < (iLeft - 2))
-        {
+            uRect->right < (iLeft - 2)) {
           // It is outside of the boundaries
-        }
-        else if (uRect->left >= iLeft && uRect->right <= iRight && uRect->top >= iTop && uRect->bottom <= iBottom)
-        {
+        } else if (uRect->left >= iLeft && uRect->right <= iRight && uRect->top >= iTop && uRect->bottom <= iBottom) {
           // It is inside of the boundaries
-        }
-        else
-        {
-          switch (iObjType)
-          {
+        } else {
+          switch (iObjType) {
           case GOBJ_OBJTYPE_BOXRAISED:
             hb_wvg_BoxRaised(pWVT, iLeft - 1, iTop - 1, iRight + 1, iBottom + 1);
             break;
@@ -1787,14 +1667,10 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
       case GOBJ_OBJTYPE_COLORRECT:
       case GOBJ_OBJTYPE_SHADEDRECT:
       case GOBJ_OBJTYPE_TEXTBOX:
-        if (uRect->left > iRight || uRect->top > iBottom || uRect->bottom < iTop || uRect->right < iLeft)
-        {
+        if (uRect->left > iRight || uRect->top > iBottom || uRect->bottom < iTop || uRect->right < iLeft) {
           // Nothing to do
-        }
-        else
-        {
-          switch (iObjType)
-          {
+        } else {
+          switch (iObjType) {
           case GOBJ_OBJTYPE_LINE:
           case GOBJ_OBJTYPE_LINEEX:
             hb_wvg_Line(pWVT, gObj, iLeft, iTop, iRight, iBottom);
@@ -1840,8 +1716,7 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 #endif
       {
         hb_wvg_Label(pWVT, gObj, iLeft, iTop);
-      }
-      break;
+      } break;
 
       case GOBJ_OBJTYPE_LABEL_EX2:
         hb_wvg_LabelEx2(pWVT, gObj, iLeft, iTop, iRight, iBottom);
@@ -1849,18 +1724,13 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 
       case GOBJ_OBJTYPE_OUTLINE:
       case GOBJ_OBJTYPE_OUTLINEEX:
-        if (uRect->left > iRight || uRect->top > iBottom || uRect->bottom < iTop || uRect->right < iLeft)
-        {
+        if (uRect->left > iRight || uRect->top > iBottom || uRect->bottom < iTop || uRect->right < iLeft) {
           // It is outside of the boundaries
-        }
-        else if (uRect->left >= iLeft && uRect->right <= iRight && uRect->top >= iTop && uRect->bottom <= iBottom)
-        {
+        } else if (uRect->left >= iLeft && uRect->right <= iRight && uRect->top >= iTop && uRect->bottom <= iBottom) {
           // It is inside of the boundaries
-        }
-        else
-        {
+        } else {
           hb_wvg_Outline(pWVT, gObj, iLeft - 1, iTop - 1, iRight + 1, iBottom + 1);
-        }  
+        }
         break;
       }
     }

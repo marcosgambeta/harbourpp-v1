@@ -119,11 +119,10 @@ HB_FUNC(WVT_CHOOSEFONT)
   LOGFONT lf;    // = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
   LONG PointSize = 0;
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     PointSize = -MulDiv((LONG)hb_parnl(2), GetDeviceCaps(_s->hdc, LOGPIXELSY), 72);
   }
-  
+
   lf.lfHeight = PointSize;
   lf.lfWidth = hb_parni(3);
   lf.lfWeight = hb_parni(4);
@@ -133,8 +132,7 @@ HB_FUNC(WVT_CHOOSEFONT)
   lf.lfCharSet = DEFAULT_CHARSET;
   lf.lfQuality = (BYTE)hb_parnidef(5, DEFAULT_QUALITY);
   lf.lfPitchAndFamily = FF_DONTCARE;
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     void *hText;
     HB_STRNCPY(lf.lfFaceName, HB_PARSTR(1, &hText, nullptr), HB_SIZEOFARRAY(lf.lfFaceName) - 1);
     hb_strfree(hText);
@@ -142,22 +140,21 @@ HB_FUNC(WVT_CHOOSEFONT)
 
   cf.lStructSize = sizeof(CHOOSEFONT);
   cf.hwndOwner = _s->hWnd;
-  cf.hDC = (HDC)nullptr;
+  cf.hDC = (HDC) nullptr;
   cf.lpLogFont = &lf;
   cf.iPointSize = 0;
   cf.Flags = CF_SCREENFONTS | CF_EFFECTS | CF_SHOWHELP | CF_INITTOLOGFONTSTRUCT;
   cf.rgbColors = RGB(0, 0, 0);
   cf.lCustData = 0L;
-  cf.lpfnHook = (LPCFHOOKPROC)nullptr;
-  cf.lpTemplateName = (LPTSTR)nullptr;
-  cf.hInstance = (HINSTANCE)nullptr;
-  cf.lpszStyle = (LPTSTR)nullptr;
+  cf.lpfnHook = (LPCFHOOKPROC) nullptr;
+  cf.lpTemplateName = (LPTSTR) nullptr;
+  cf.hInstance = (HINSTANCE) nullptr;
+  cf.lpszStyle = (LPTSTR) nullptr;
   cf.nFontType = SCREEN_FONTTYPE;
   cf.nSizeMin = 0;
   cf.nSizeMax = 0;
 
-  if (ChooseFont(&cf))
-  {
+  if (ChooseFont(&cf)) {
     auto ary = hb_itemNew(nullptr);
     hb_arrayNew(ary, 9);
 
@@ -174,9 +171,7 @@ HB_FUNC(WVT_CHOOSEFONT)
     hb_arraySetNI(ary, 9, cf.rgbColors);
 
     hb_itemReturnRelease(ary);
-  }
-  else
-  {
+  } else {
     auto ary = hb_itemNew(nullptr);
     hb_arrayNew(ary, 9);
 
@@ -205,25 +200,21 @@ HB_FUNC(WVT_CHOOSECOLOR)
   COLORREF crCustClr[16];
   int i;
 
-  for (i = 0; i < 16; i++)
-  {
+  for (i = 0; i < 16; i++) {
     crCustClr[i] = (HB_ISARRAY(2) ? (COLORREF)hb_parvnl(2, i + 1) : GetSysColor(COLOR_BTNFACE));
   }
-  
+
   cc.lStructSize = sizeof(CHOOSECOLOR);
   cc.hwndOwner = _s->hWnd;
   cc.rgbResult = (COLORREF)hb_parnl(1);
   cc.lpCustColors = crCustClr;
   cc.Flags = (WORD)hb_parnldef(3, CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN);
 
-  if (ChooseColor(&cc))
-  {
+  if (ChooseColor(&cc)) {
     hb_retnl(cc.rgbResult);
-  }
-  else
-  {
+  } else {
     hb_retnl(-1);
-  }  
+  }
 }
 
 //
@@ -251,11 +242,10 @@ HB_FUNC(WVT_SETTOOLTIPACTIVE)
 
   HB_BOOL bActive = _s->bToolTipActive;
 
-  if (HB_ISLOG(1))
-  {
+  if (HB_ISLOG(1)) {
     _s->bToolTipActive = hb_parl(1);
   }
-  
+
   hb_retl(bActive);
 }
 
@@ -269,8 +259,7 @@ HB_FUNC(WVT_SETTOOLTIP)
   POINT xy = {0, 0};
   int iTop, iLeft, iBottom, iRight;
 
-  if (!_s->bToolTipActive)
-  {
+  if (!_s->bToolTipActive) {
     return;
   }
 
@@ -279,8 +268,7 @@ HB_FUNC(WVT_SETTOOLTIP)
   ti.hwnd = _s->hWnd;
   ti.uId = 100000;
 
-  if (SendMessage(_s->hWndTT, TTM_GETTOOLINFO, 0, (LPARAM)&ti))
-  {
+  if (SendMessage(_s->hWndTT, TTM_GETTOOLINFO, 0, (LPARAM)&ti)) {
     void *hText;
 
     xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -312,8 +300,7 @@ HB_FUNC(WVT_SETTOOLTIPTEXT)
   ti.hwnd = _s->hWnd;
   ti.uId = 100000;
 
-  if (SendMessage(_s->hWndTT, TTM_GETTOOLINFO, 0, (LPARAM)&ti))
-  {
+  if (SendMessage(_s->hWndTT, TTM_GETTOOLINFO, 0, (LPARAM)&ti)) {
     void *hText;
     ti.lpszText = (LPTSTR)HB_PARSTR(1, &hText, nullptr);
     SendMessage(_s->hWndTT, TTM_UPDATETIPTEXT, 0, (LPARAM)&ti);
@@ -341,11 +328,10 @@ HB_FUNC(WVT_SETTOOLTIPWIDTH)
 
   int iTipWidth = (int)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0);
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     SendMessage(_s->hWndTT, TTM_SETMAXTIPWIDTH, 0, (LPARAM)(HB_PTRUINT)hb_parnint(1));
   }
-  
+
   hb_retni(iTipWidth);
 }
 
@@ -355,11 +341,10 @@ HB_FUNC(WVT_SETTOOLTIPBKCOLOR)
 
   COLORREF cr = (COLORREF)SendMessage(_s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0);
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     SendMessage(_s->hWndTT, TTM_SETTIPBKCOLOR, (WPARAM)(COLORREF)hb_parnl(1), 0);
   }
-  
+
   hb_retnl((COLORREF)cr);
 }
 
@@ -369,11 +354,10 @@ HB_FUNC(WVT_SETTOOLTIPTEXTCOLOR)
 
   COLORREF cr = (COLORREF)SendMessage(_s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0);
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     SendMessage(_s->hWndTT, TTM_SETTIPTEXTCOLOR, (WPARAM)(COLORREF)hb_parnl(1), 0);
   }
-  
+
   hb_retnl((COLORREF)cr);
 }
 
@@ -385,16 +369,14 @@ HB_FUNC(WVT_SETTOOLTIPTITLE)
 
   int iIcon;
 
-  if (HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(2)) {
     void *hText;
 
     iIcon = hb_parni(1);
-    if (iIcon > 3)
-    {
+    if (iIcon > 3) {
       iIcon = 0;
     }
-    
+
     SendMessage(_s->hWndTT, TTM_SETTITLE, (WPARAM)iIcon, (LPARAM)HB_PARSTR(2, &hText, nullptr));
     hb_strfree(hText);
   }
@@ -429,11 +411,10 @@ HB_FUNC(WVT_SETGUI)
 
   HB_BOOL bGui = _s->bGui;
 
-  if (HB_ISLOG(1))
-  {
+  if (HB_ISLOG(1)) {
     _s->bGui = hb_parl(1);
   }
-  
+
   hb_retl(bGui);
 }
 
@@ -445,14 +426,11 @@ HB_FUNC(WVT_SETMOUSEPOS)
 
   xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
-  if (ClientToScreen(_s->hWnd, &xy))
-  {
+  if (ClientToScreen(_s->hWnd, &xy)) {
     hb_retl(SetCursorPos(xy.x, xy.y + (_s->PTEXTSIZE.y / 2)));
-  }
-  else
-  {
+  } else {
     hb_retl(false);
-  }  
+  }
 }
 
 HB_FUNC(WVT_GETPAINTRECT)
@@ -476,8 +454,7 @@ HB_FUNC(WVT_SETPOINTER)
   int iCursor = hb_parni(1);
   HCURSOR hCursor;
 
-  switch (iCursor)
-  {
+  switch (iCursor) {
   case 1:
     hCursor = LoadCursor(nullptr, IDC_ARROW);
     break;
@@ -547,8 +524,7 @@ HB_FUNC(WVT_SETPOINTER)
     break;
   }
 
-#if !defined(HB_ARCH_64BIT) &&                                                                                         \
-    ((defined(_MSC_VER) && (_MSC_VER <= 1200)))
+#if !defined(HB_ARCH_64BIT) && ((defined(_MSC_VER) && (_MSC_VER <= 1200)))
   SetClassLong(_s->hWnd, GCLP_HCURSOR, (DWORD)hCursor);
 #else
   SetClassLongPtr(_s->hWnd, GCLP_HCURSOR, (LONG_PTR)hCursor);
@@ -561,11 +537,10 @@ HB_FUNC(WVT_SETMOUSEMOVE)
 
   HB_BOOL bMouseMove = _s->MouseMove;
 
-  if (HB_ISLOG(1))
-  {
+  if (HB_ISLOG(1)) {
     _s->MouseMove = hb_parl(1);
   }
-  
+
   hb_retl(bMouseMove);
 }
 
@@ -623,8 +598,7 @@ HB_FUNC(WVT_SETMENU)
   width += (int)(wi.right - wi.left - ci.right);
   height += (int)(wi.bottom - wi.top - ci.bottom);
 
-  if (_s->CentreWindow && SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0))
-  {
+  if (_s->CentreWindow && SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0)) {
     wi.left = rc.left + ((rc.right - rc.left - width) / 2);
     wi.top = rc.top + ((rc.bottom - rc.top - height) / 2);
   }
@@ -638,8 +612,7 @@ HB_FUNC(WVT_SETPOPUPMENU)
   HMENU hPopup = _s->hPopup;
 
   _s->hPopup = (HMENU)(HB_PTRUINT)hb_parnint(1);
-  if (hPopup)
-  {
+  if (hPopup) {
     hb_retnint((HB_PTRUINT)hPopup);
   }
 }
@@ -684,8 +657,7 @@ HB_FUNC(WVT_SETLASTMENUEVENT)
 
   int iEvent = _s->LastMenuEvent;
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     _s->LastMenuEvent = hb_parni(1);
   }
 
@@ -698,11 +670,10 @@ HB_FUNC(WVT_SETMENUKEYEVENT)
 
   int iOldEvent = _s->MenuKeyEvent;
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     _s->MenuKeyEvent = hb_parni(1);
   }
-  
+
   hb_retni(iOldEvent);
 }
 
@@ -719,11 +690,10 @@ HB_FUNC(WVT_ENABLESHORTCUTS)
 
   HB_BOOL bWas = _s->EnableShortCuts;
 
-  if (HB_ISLOG(1))
-  {
+  if (HB_ISLOG(1)) {
     _s->EnableShortCuts = hb_parl(1);
   }
-  
+
   hb_retl(bWas);
 }
 
@@ -787,8 +757,8 @@ HB_FUNC(WVT_TRACKPOPUPMENU)
 
   GetCursorPos(&xy);
 
-  hb_retnl(
-      TrackPopupMenu((HMENU)(HB_PTRUINT)hb_parnint(1), TPM_CENTERALIGN | TPM_RETURNCMD, xy.x, xy.y, 0, _s->hWnd, nullptr));
+  hb_retnl(TrackPopupMenu((HMENU)(HB_PTRUINT)hb_parnint(1), TPM_CENTERALIGN | TPM_RETURNCMD, xy.x, xy.y, 0, _s->hWnd,
+                          nullptr));
 }
 
 HB_FUNC(WVT_GETMENU)
@@ -815,57 +785,44 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
   int iResource = hb_parni(4);
 
   // check if we still have room for a new dialog
-  for (iIndex = 0; iIndex < WVT_DLGML_MAX; iIndex++)
-  {
-    if (_s->hDlgModeless[iIndex] == nullptr)
-    {
+  for (iIndex = 0; iIndex < WVT_DLGML_MAX; iIndex++) {
+    if (_s->hDlgModeless[iIndex] == nullptr) {
       break;
-    }  
+    }
   }
 
-  if (iIndex >= WVT_DLGML_MAX)
-  {
+  if (iIndex >= WVT_DLGML_MAX) {
     // no more room
     hb_retnint(0);
     return;
   }
 
-  if (pFirst->isBlock())
-  {
+  if (pFirst->isBlock()) {
     // pFunc is pointing to stored code block (later)
     pFunc = hb_itemNew(pFirst);
     iType = 2;
-  }
-  else if (hb_itemType(pFirst) == Harbour::Item::STRING)
-  {
+  } else if (hb_itemType(pFirst) == Harbour::Item::STRING) {
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
-    if (pExecSym)
-    {
+    if (pExecSym) {
       pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
     }
     iType = 1;
   }
 
   {
-    if (HB_ISNUM(3))
-    {
+    if (HB_ISNUM(3)) {
       void *hTemplate;
       hDlg = CreateDialogIndirect((HINSTANCE)wvg_hInstance(), (LPDLGTEMPLATE)HB_PARSTR(1, &hTemplate, nullptr),
                                   hb_parl(2) ? _s->hWnd : nullptr, (DLGPROC)(HB_PTRUINT)hb_parnint(3));
       hb_strfree(hTemplate);
-    }
-    else
-    {
-      switch (iResource)
-      {
-      case 0:
-      {
+    } else {
+      switch (iResource) {
+      case 0: {
         void *hTemplate;
-        hDlg = CreateDialog((HINSTANCE)wvg_hInstance(), HB_PARSTR(1, &hTemplate, nullptr), hb_parl(2) ? _s->hWnd : nullptr,
-                            hb_wvt_gtDlgProcMLess);
+        hDlg = CreateDialog((HINSTANCE)wvg_hInstance(), HB_PARSTR(1, &hTemplate, nullptr),
+                            hb_parl(2) ? _s->hWnd : nullptr, hb_wvt_gtDlgProcMLess);
         hb_strfree(hTemplate);
-      }
-      break;
+      } break;
 
       case 1:
         hDlg = CreateDialog((HINSTANCE)wvg_hInstance(), MAKEINTRESOURCE((WORD)hb_parni(1)),
@@ -874,42 +831,34 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 
       case 2:
         // argument 1 is already unicode compliant, so no conversion
-        hDlg = CreateDialogIndirect((HINSTANCE)wvg_hInstance(), (LPDLGTEMPLATE)hb_parc(1), hb_parl(2) ? _s->hWnd : nullptr,
-                                    hb_wvt_gtDlgProcMLess);
+        hDlg = CreateDialogIndirect((HINSTANCE)wvg_hInstance(), (LPDLGTEMPLATE)hb_parc(1),
+                                    hb_parl(2) ? _s->hWnd : nullptr, hb_wvt_gtDlgProcMLess);
         break;
       }
     }
 
-    if (hDlg)
-    {
+    if (hDlg) {
       _s->hDlgModeless[iIndex] = hDlg;
 
-      if (pFunc)
-      {
+      if (pFunc) {
         // if codeblock, store the codeblock and lock it there
-        if (pFirst->isBlock())
-        {
+        if (pFirst->isBlock()) {
           _s->pcbFunc[iIndex] = pFunc;
         }
-        
+
         _s->pFunc[iIndex] = pFunc;
         _s->iType[iIndex] = iType;
-      }
-      else
-      {
+      } else {
         _s->pFunc[iIndex] = nullptr;
         _s->iType[iIndex] = 0;
       }
       SendMessage(hDlg, WM_INITDIALOG, 0, 0);
-    }
-    else
-    {
+    } else {
       // if codeblock item created earlier, release it
-      if (iType == 2 && pFunc)
-      {
+      if (iType == 2 && pFunc) {
         hb_itemRelease(pFunc);
       }
-      
+
       _s->hDlgModeless[iIndex] = nullptr;
     }
   }
@@ -930,23 +879,19 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   HWND hParent = HB_ISNUM(5) ? (HWND)(HB_PTRUINT)hb_parnint(5) : _s->hWnd;
 
   // check if we still have room for a new dialog
-  for (iIndex = 0; iIndex < WVT_DLGMD_MAX; iIndex++)
-  {
-    if (_s->hDlgModal[iIndex] == nullptr)
-    {
+  for (iIndex = 0; iIndex < WVT_DLGMD_MAX; iIndex++) {
+    if (_s->hDlgModal[iIndex] == nullptr) {
       break;
-    }  
+    }
   }
 
-  if (iIndex >= WVT_DLGMD_MAX)
-  {
+  if (iIndex >= WVT_DLGMD_MAX) {
     // no more room
     hb_retnint(0);
     return;
   }
 
-  if (pFirst->isBlock())
-  {
+  if (pFirst->isBlock()) {
     // pFunc is pointing to stored code block (later)
 
     _s->pcbFuncModal[iIndex] = hb_itemNew(pFirst);
@@ -954,28 +899,22 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
     pFunc = _s->pcbFuncModal[iIndex];
     _s->pFuncModal[iIndex] = pFunc;
     _s->iTypeModal[iIndex] = 2;
-  }
-  else if (hb_itemType(pFirst) == Harbour::Item::STRING)
-  {
+  } else if (hb_itemType(pFirst) == Harbour::Item::STRING) {
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
-    if (pExecSym)
-    {
+    if (pExecSym) {
       pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
     }
     _s->pFuncModal[iIndex] = pFunc;
     _s->iTypeModal[iIndex] = 1;
   }
 
-  switch (iResource)
-  {
-  case 0:
-  {
+  switch (iResource) {
+  case 0: {
     void *hTemplate;
-    iResult = DialogBoxParam((HINSTANCE)wvg_hInstance(), HB_PARSTR(1, &hTemplate, nullptr), hParent, hb_wvt_gtDlgProcModal,
-                             (LPARAM)(DWORD)iIndex + 1);
+    iResult = DialogBoxParam((HINSTANCE)wvg_hInstance(), HB_PARSTR(1, &hTemplate, nullptr), hParent,
+                             hb_wvt_gtDlgProcModal, (LPARAM)(DWORD)iIndex + 1);
     hb_strfree(hTemplate);
-  }
-  break;
+  } break;
 
   case 1:
     iResult = DialogBoxParam((HINSTANCE)wvg_hInstance(), MAKEINTRESOURCE((WORD)hb_parni(1)), hParent,
@@ -1030,20 +969,16 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
   *p++ = (short)0;               // Menu (ignored for now.)
   *p++ = (short)0x00;            // Class also ignored
 
-  if (hb_parinfa(1, 11) == Harbour::Item::STRING)
-  {
+  if (hb_parinfa(1, 11) == Harbour::Item::STRING) {
     nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(1, 11));
     p += nchar;
-  }
-  else
-  {
+  } else {
     *p++ = 0;
   }
-  
+
   // add in the wPointSize and szFontName here iff the DS_SETFONT bit on
 
-  if ((lStyle & DS_SETFONT))
-  {
+  if ((lStyle & DS_SETFONT)) {
     *p++ = (short)hb_parvni(1, 12);
     *p++ = (short)hb_parvni(1, 13);
     *p++ = (short)hb_parvni(1, 14);
@@ -1052,8 +987,7 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
     p += nchar;
   }
 
-  for (i = 1; i <= nItems; i++)
-  {
+  for (i = 1; i <= nItems; i++) {
     // make sure each item starts on a DWORD boundary
     p = lpwAlign(p);
 
@@ -1074,24 +1008,18 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
     *p++ = LOWORD(hb_parvnl(9, i)); // id
     *p++ = HIWORD(hb_parvnl(9, i)); // id
 
-    if (hb_parinfa(10, i) == Harbour::Item::STRING)
-    {
+    if (hb_parinfa(10, i) == Harbour::Item::STRING) {
       nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(10, i)); // class
       p += nchar;
-    }
-    else
-    {
+    } else {
       *p++ = 0xFFFF;
       *p++ = (WORD)hb_parvni(10, i);
     }
 
-    if (hb_parinfa(11, i) == Harbour::Item::STRING)
-    {
+    if (hb_parinfa(11, i) == Harbour::Item::STRING) {
       nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(11, i)); //  text
       p += nchar;
-    }
-    else
-    {
+    } else {
       *p++ = 0xFFFF;
       *p++ = (WORD)hb_parvni(11, i);
     }
@@ -1122,8 +1050,7 @@ int nCopyAnsiToWideChar(LPWORD lpWCStr, LPCSTR lpAnsiIn)
 {
   int nChar = 0;
 
-  do
-  {
+  do {
     *lpWCStr++ = (WORD)*lpAnsiIn;
     nChar++;
   } while (*lpAnsiIn++);
@@ -1176,31 +1103,25 @@ HB_FUNC(WVT_DLGSETICON)
 {
   HICON hIcon;
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     hIcon = LoadIcon((HINSTANCE)wvg_hInstance(), MAKEINTRESOURCE(hb_parni(2)));
-  }
-  else
-  {
+  } else {
     void *cIcon;
-    hIcon = (HICON)LoadImage((HINSTANCE)nullptr, HB_PARSTR(2, &cIcon, nullptr), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
-    if (!hIcon)
-    {
+    hIcon = (HICON)LoadImage((HINSTANCE) nullptr, HB_PARSTR(2, &cIcon, nullptr), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+    if (!hIcon) {
       hIcon = (HICON)LoadImage(GetModuleHandle(nullptr), HB_PARSTR(2, &cIcon, nullptr), IMAGE_ICON, 0, 0, 0);
-    }  
+    }
     hb_strfree(cIcon);
   }
 
-  if (hIcon)
-  {
+  if (hIcon) {
     SendMessage((HWND)(HB_PTRUINT)hb_parnint(1), WM_SETICON, ICON_SMALL, (LPARAM)hIcon); // Set Title Bar ICON
     SendMessage((HWND)(HB_PTRUINT)hb_parnint(1), WM_SETICON, ICON_BIG, (LPARAM)hIcon);   // Set Task List Icon
   }
 
-  if (hIcon)
-  {
+  if (hIcon) {
     hb_retnint((HB_PTRUINT)hIcon);
-  }  
+  }
 }
 
 HB_FUNC(WVT_GETFONTHANDLE)
@@ -1210,10 +1131,9 @@ HB_FUNC(WVT_GETFONTHANDLE)
   HFONT hFont = 0;
   int iSlot = hb_parni(1) - 1;
 
-  if (iSlot >= 0 && iSlot < WVT_PICTURES_MAX)
-  {
+  if (iSlot >= 0 && iSlot < WVT_PICTURES_MAX) {
     hFont = _s->pGUI->hUserFonts[iSlot];
-  }  
+  }
 
   hb_retnint((HB_PTRUINT)hFont);
 }
@@ -1224,8 +1144,7 @@ HB_FUNC(WVT_GETFONTHANDLE)
 
 HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT *rc)
 {
-  if (aRect->isArray() && hb_arrayLen(aRect) == 4)
-  {
+  if (aRect->isArray() && hb_arrayLen(aRect) == 4) {
     rc->left = hb_arrayGetNL(aRect, 1);
     rc->top = hb_arrayGetNL(aRect, 2);
     rc->right = hb_arrayGetNL(aRect, 3);
@@ -1249,8 +1168,7 @@ PHB_ITEM wvt_Rect2Array(RECT *rc)
 
 HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT *pt)
 {
-  if (aPoint->isArray() && hb_arrayLen(aPoint) == 2)
-  {
+  if (aPoint->isArray() && hb_arrayLen(aPoint) == 2) {
     pt->x = hb_arrayGetNL(aPoint, 1);
     pt->y = hb_arrayGetNL(aPoint, 2);
     return true;
@@ -1270,8 +1188,7 @@ PHB_ITEM wvt_Point2Array(POINT *pt)
 
 HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE *siz)
 {
-  if (aSize->isArray() && hb_arrayLen(aSize) == 2)
-  {
+  if (aSize->isArray() && hb_arrayLen(aSize) == 2) {
     siz->cx = hb_arrayGetNL(aSize, 1);
     siz->cy = hb_arrayGetNL(aSize, 2);
     return true;
