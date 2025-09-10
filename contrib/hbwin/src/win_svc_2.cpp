@@ -56,24 +56,18 @@ HB_FUNC(WIN_SERVICEINSTALL)
 
   TCHAR lpPathBuffer[MAX_PATH];
 
-  if (lpPath == nullptr)
-  {
-    if (GetModuleFileName(nullptr, lpPathBuffer, HB_SIZEOFARRAY(lpPathBuffer)))
-    {
+  if (lpPath == nullptr) {
+    if (GetModuleFileName(nullptr, lpPathBuffer, HB_SIZEOFARRAY(lpPathBuffer))) {
       lpPath = lpPathBuffer;
-    }
-    else
-    {
+    } else {
       hbwapi_SetLastError(GetLastError());
     }
   }
 
-  if (lpPath)
-  {
+  if (lpPath) {
     SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
-    if (schSCM)
-    {
+    if (schSCM) {
       SC_HANDLE schSrv;
 
       void *hServiceName;
@@ -97,13 +91,12 @@ HB_FUNC(WIN_SERVICEINSTALL)
                              nullptr,                                                  // no load ordering group
                              nullptr,                                                  // no tag identifier
                              nullptr,                                                  // no dependencies
-                             lpAccountName, // default: LocalSystem account
-                             lpPassword);   // default: no password
+                             lpAccountName,                                            // default: LocalSystem account
+                             lpPassword);                                              // default: no password
 
       hbwapi_SetLastError(GetLastError());
 
-      if (schSrv)
-      {
+      if (schSrv) {
         bRetVal = true;
 
         CloseServiceHandle(schSrv);
@@ -115,9 +108,7 @@ HB_FUNC(WIN_SERVICEINSTALL)
       hb_strfree(hPassword);
 
       CloseServiceHandle(schSCM);
-    }
-    else
-    {
+    } else {
       hbwapi_SetLastError(GetLastError());
     }
   }
@@ -133,22 +124,17 @@ HB_FUNC(WIN_SERVICEDELETE)
 
   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
-  if (schSCM)
-  {
+  if (schSCM) {
     void *hServiceName;
 
     SC_HANDLE schSrv = OpenService(schSCM, HB_PARSTRDEF(1, &hServiceName, nullptr), SERVICE_ALL_ACCESS);
 
-    if (schSrv)
-    {
-      if (hb_parl(2))
-      { // Check if service is up and stop it
+    if (schSrv) {
+      if (hb_parl(2)) { // Check if service is up and stop it
         SERVICE_STATUS ssStatus;
 
-        if (ControlService(schSrv, SERVICE_CONTROL_STOP, &ssStatus))
-        {
-          while (ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus(schSrv, &ssStatus))
-          {
+        if (ControlService(schSrv, SERVICE_CONTROL_STOP, &ssStatus)) {
+          while (ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus(schSrv, &ssStatus)) {
             hb_idleSleep(1.0);
           }
         }
@@ -158,18 +144,14 @@ HB_FUNC(WIN_SERVICEDELETE)
       hbwapi_SetLastError(GetLastError());
 
       CloseServiceHandle(schSrv);
-    }
-    else
-    {
+    } else {
       hbwapi_SetLastError(GetLastError());
     }
 
     hb_strfree(hServiceName);
 
     CloseServiceHandle(schSCM);
-  }
-  else
-  {
+  } else {
     hbwapi_SetLastError(GetLastError());
   }
   hb_retl(bRetVal);
@@ -181,31 +163,25 @@ HB_FUNC(WIN_SERVICECONTROL)
 
   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
-  if (schSCM)
-  {
+  if (schSCM) {
     void *hServiceName;
 
     SC_HANDLE schSrv = OpenService(schSCM, HB_PARSTRDEF(1, &hServiceName, nullptr), SERVICE_ALL_ACCESS);
 
-    if (schSrv)
-    {
+    if (schSrv) {
       SERVICE_STATUS ssStatus{};
       bRetVal = static_cast<HB_BOOL>(ControlService(schSrv, static_cast<DWORD>(hb_parnl(2)), &ssStatus));
       hbwapi_SetLastError(GetLastError());
 
       CloseServiceHandle(schSrv);
-    }
-    else
-    {
+    } else {
       hbwapi_SetLastError(GetLastError());
     }
 
     hb_strfree(hServiceName);
 
     CloseServiceHandle(schSCM);
-  }
-  else
-  {
+  } else {
     hbwapi_SetLastError(GetLastError());
   }
   hb_retl(bRetVal);
@@ -217,31 +193,25 @@ HB_FUNC(WIN_SERVICERUN)
 
   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
-  if (schSCM)
-  {
+  if (schSCM) {
     void *hServiceName;
 
     SC_HANDLE schSrv = OpenService(schSCM, HB_PARSTRDEF(1, &hServiceName, nullptr), SERVICE_ALL_ACCESS);
 
-    if (schSrv)
-    {
+    if (schSrv) {
       DWORD dwArgs, pos;
       void **hArgs;
       LPCTSTR *lpArgs;
 
-      if (hb_pcount() >= 2)
-      {
+      if (hb_pcount() >= 2) {
         dwArgs = hb_pcount() - 1;
         hArgs = static_cast<void **>(hb_xgrab(dwArgs * sizeof(void *)));
         lpArgs = static_cast<LPCTSTR *>(hb_xgrab(dwArgs * sizeof(LPCTSTR)));
 
-        for (pos = 0; pos < dwArgs; ++pos)
-        {
+        for (pos = 0; pos < dwArgs; ++pos) {
           lpArgs[pos] = HB_PARSTRDEF(pos + 2, &hArgs[pos], nullptr);
         }
-      }
-      else
-      {
+      } else {
         dwArgs = 0;
         hArgs = nullptr;
         lpArgs = nullptr;
@@ -250,10 +220,8 @@ HB_FUNC(WIN_SERVICERUN)
       bRetVal = static_cast<HB_BOOL>(StartService(schSrv, dwArgs, lpArgs));
       hbwapi_SetLastError(GetLastError());
 
-      if (hArgs)
-      {
-        for (pos = 0; pos < dwArgs; ++pos)
-        {
+      if (hArgs) {
+        for (pos = 0; pos < dwArgs; ++pos) {
           hb_strfree(hArgs[pos]);
         }
 
@@ -262,18 +230,14 @@ HB_FUNC(WIN_SERVICERUN)
       }
 
       CloseServiceHandle(schSrv);
-    }
-    else
-    {
+    } else {
       hbwapi_SetLastError(GetLastError());
     }
 
     hb_strfree(hServiceName);
 
     CloseServiceHandle(schSCM);
-  }
-  else
-  {
+  } else {
     hbwapi_SetLastError(GetLastError());
   }
   hb_retl(bRetVal);

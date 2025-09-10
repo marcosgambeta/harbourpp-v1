@@ -73,32 +73,23 @@ HB_FUNC(WAPI_FORMATMESSAGE)
 
   auto dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
 
-  if (HB_ISBYREF(5))
-  {
+  if (HB_ISBYREF(5)) {
     nSize = hb_parns(6);
-    if ((dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0)
-    {
-      if (nSize == 0 && !HB_ISNUM(6))
-      {
+    if ((dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0) {
+      if (nSize == 0 && !HB_ISNUM(6)) {
         nSize = hb_parclen(5);
       }
-      if (nSize > 0)
-      {
+      if (nSize > 0) {
         lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
-      }
-      else
-      {
+      } else {
         dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
       }
     }
-  }
-  else
-  {
+  } else {
     dwFlags = static_cast<DWORD>(~FORMAT_MESSAGE_ALLOCATE_BUFFER);
   }
 
-  if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER)
-  {
+  if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) {
     lpBuffer = reinterpret_cast<LPTSTR>(&lpAllocBuff);
   }
 
@@ -111,25 +102,18 @@ HB_FUNC(WAPI_FORMATMESSAGE)
   hbwapi_SetLastError(GetLastError());
   hb_retnl(dwRetVal);
 
-  if (lpBuffer)
-  {
-    if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER)
-    {
+  if (lpBuffer) {
+    if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) {
       lpBuffer = lpAllocBuff;
-    }
-    else
-    {
+    } else {
       lpBuffer[nSize - 1] = '\0';
     }
 
     HB_STORSTR(dwRetVal ? lpBuffer : nullptr, 5);
 
-    if (lpAllocBuff)
-    {
+    if (lpAllocBuff) {
       LocalFree(lpAllocBuff);
-    }
-    else if (lpBuffer)
-    {
+    } else if (lpBuffer) {
       hb_xfree(lpBuffer);
     }
   }
@@ -161,17 +145,14 @@ HB_FUNC(WAPI_QUERYDOSDEVICE)
 
   dwResult = QueryDosDevice(HB_PARSTR(1, &hDeviceName, nullptr), lpTargetPath, TARGET_PATH_BUFFER_SIZE);
   hbwapi_SetLastError(GetLastError());
-  if (dwResult)
-  {
+  if (dwResult) {
     auto pArray = hb_itemArrayNew(0);
     PHB_ITEM pItem = nullptr;
     DWORD dwPos, dwStart;
 
     dwPos = dwStart = 0;
-    while (lpTargetPath[dwPos])
-    {
-      if (!lpTargetPath[++dwPos])
-      {
+    while (lpTargetPath[dwPos]) {
+      if (!lpTargetPath[++dwPos]) {
         pItem = HB_ITEMPUTSTRLEN(pItem, lpTargetPath + dwStart, dwPos - dwStart - 1);
         hb_arrayAdd(pArray, pItem);
         dwStart = ++dwPos;
@@ -179,9 +160,7 @@ HB_FUNC(WAPI_QUERYDOSDEVICE)
     }
     hb_itemRelease(pItem);
     hb_itemReturnRelease(pArray);
-  }
-  else
-  {
+  } else {
     hb_reta(0);
   }
 

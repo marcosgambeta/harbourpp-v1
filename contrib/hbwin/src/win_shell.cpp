@@ -95,30 +95,24 @@ HB_FUNC(WIN_SHELLNOTIFYICON)
   tnid.hWnd = hbwapi_par_raw_HWND(1);
   tnid.uID = hbwapi_par_UINT(2);
   tnid.uCallbackMessage = hbwapi_par_UINT(3);
-  if (tnid.uCallbackMessage)
-  {
+  if (tnid.uCallbackMessage) {
     tnid.uFlags = NIF_MESSAGE;
   }
   tnid.hIcon = hbwapi_par_raw_HICON(4);
-  if (tnid.hIcon)
-  {
+  if (tnid.hIcon) {
     tnid.uFlags |= NIF_ICON;
   }
-  if (HB_ITEMCOPYSTR(hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY(tnid.szTip)) > 0)
-  {
+  if (HB_ITEMCOPYSTR(hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY(tnid.szTip)) > 0) {
     tnid.uFlags |= NIF_TIP;
   }
 
 #if defined(NIF_INFO) // did the headers provide Windows 2000 features?
-  if (hb_iswin2k())
-  { // are we running on Windows 2000 or above?
-    if (HB_ITEMCOPYSTR(hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY(tnid.szInfo)) > 0)
-    {
+  if (hb_iswin2k()) { // are we running on Windows 2000 or above?
+    if (HB_ITEMCOPYSTR(hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY(tnid.szInfo)) > 0) {
       tnid.uFlags |= NIF_INFO;
     }
     HB_WIN_V_UNION(tnid, uTimeout) = static_cast<UINT>(hb_parni(8));
-    if (HB_ITEMCOPYSTR(hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY(tnid.szInfoTitle)) > 0)
-    {
+    if (HB_ITEMCOPYSTR(hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY(tnid.szInfoTitle)) > 0) {
       tnid.uFlags |= NIF_INFO;
     }
     tnid.dwInfoFlags = static_cast<DWORD>(hb_parnl(10));
@@ -162,49 +156,37 @@ static LPTSTR s_StringList(int iParam)
   PHB_ITEM pArrItem;
   LPTSTR lpStr = nullptr;
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     HB_SIZE nLen, nSize, nTotal, n, n1;
 
-    if (pItem->isArray())
-    {
+    if (pItem->isArray()) {
       nSize = hb_arrayLen(pItem);
-      for (n = nLen = 0; n < nSize; ++n)
-      {
+      for (n = nLen = 0; n < nSize; ++n) {
         pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
-        if (pArrItem->isString())
-        {
+        if (pArrItem->isString()) {
           n1 = HB_ITEMCOPYSTR(pArrItem, nullptr, 0);
-          if (n1)
-          {
+          if (n1) {
             nLen += n1 + 1;
           }
         }
       }
-      if (nLen)
-      {
+      if (nLen) {
         nTotal = nLen + 1;
         lpStr = static_cast<LPTSTR>(hb_xgrab(nTotal * sizeof(TCHAR)));
-        for (n = nLen = 0; n < nSize; ++n)
-        {
+        for (n = nLen = 0; n < nSize; ++n) {
           pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
-          if (pArrItem->isString())
-          {
+          if (pArrItem->isString()) {
             n1 = HB_ITEMCOPYSTR(pArrItem, lpStr + nLen, nTotal - nLen);
-            if (n1)
-            {
+            if (n1) {
               nLen += n1 + 1;
             }
           }
         }
         lpStr[nLen] = 0;
       }
-    }
-    else
-    {
+    } else {
       nLen = HB_ITEMCOPYSTR(pItem, nullptr, 0);
-      if (nLen)
-      {
+      if (nLen) {
         lpStr = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
         HB_ITEMCOPYSTR(pItem, lpStr, nLen);
         lpStr[nLen] = 0;
@@ -238,35 +220,29 @@ HB_FUNC(WIN_SHFILEOPERATION)
 
   hb_storl(fop.fAnyOperationsAborted, 6);
 
-  if (fop.pFrom)
-  {
+  if (fop.pFrom) {
     hb_xfree(static_cast<void *>(const_cast<LPWSTR>(fop.pFrom)));
   }
 
-  if (fop.pTo)
-  {
+  if (fop.pTo) {
     hb_xfree(static_cast<void *>(const_cast<LPWSTR>(fop.pTo)));
   }
 
   hb_strfree(hProgressTitle);
 
-  if ((fop.fFlags & FOF_WANTMAPPINGHANDLE) != 0)
-  {
+  if ((fop.fFlags & FOF_WANTMAPPINGHANDLE) != 0) {
     auto hm = static_cast<HANDLETOMAPPINGS *>(fop.hNameMappings);
     auto pArray = hb_param(7, Harbour::Item::ARRAY);
 
     // Process hNameMappings
-    if (hm)
-    {
-      if (pArray)
-      {
+    if (hm) {
+      if (pArray) {
         auto pTempItem = hb_itemNew(nullptr);
         LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
 
         hb_arraySize(pArray, hm->uNumberOfMappings);
 
-        for (UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp)
-        {
+        for (UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp) {
           hb_arrayNew(pTempItem, 2);
 
           // always returns UNICODE on NT and upper systems
@@ -280,9 +256,7 @@ HB_FUNC(WIN_SHFILEOPERATION)
       }
 
       SHFreeNameMappings(hm);
-    }
-    else if (pArray)
-    {
+    } else if (pArray) {
       hb_arraySize(pArray, 0);
     }
   }

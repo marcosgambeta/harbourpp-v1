@@ -60,24 +60,20 @@ HB_FUNC(WIN_LOADRESOURCE)
   // Set default return value
   hb_retc_null();
 
-  if (hb_winmainArgGet(&hInstance, nullptr, nullptr))
-  {
+  if (hb_winmainArgGet(&hInstance, nullptr, nullptr)) {
     void *hName;
     void *hType;
 
     HRSRC hRes = FindResource(static_cast<HMODULE>(hInstance), HB_PARSTRDEF(1, &hName, nullptr),
                               HB_PARSTRDEF(2, &hType, nullptr));
 
-    if (hRes)
-    {
+    if (hRes) {
       HGLOBAL hMem = LoadResource(nullptr, hRes);
 
-      if (hMem)
-      {
+      if (hMem) {
         void *pMem = LockResource(hMem);
 
-        if (pMem)
-        {
+        if (pMem) {
           hb_retclen(static_cast<char *>(pMem), SizeofResource(nullptr, hRes));
         }
       }
@@ -96,16 +92,13 @@ HB_FUNC(WIN_GETCOMMANDLINEPARAM)
 
   // Skip application path
   pos = 0;
-  while (lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos])))
-  {
-    if (lpCmdLine[pos] == '"')
-    {
+  while (lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos]))) {
+    if (lpCmdLine[pos] == '"') {
       fQuote = !fQuote;
     }
     pos++;
   }
-  while (HB_ISSPACE(lpCmdLine[pos]))
-  {
+  while (HB_ISSPACE(lpCmdLine[pos])) {
     pos++;
   }
 
@@ -202,14 +195,11 @@ HB_FUNC(WIN_SYSREFRESH)
   // or until the user clicks the mouse or presses a key.
 
   if (MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec),
-                                QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1)
-  {
+                                QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1) {
     MSG msg;
 
-    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-    {
-      switch (msg.message)
-      {
+    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+      switch (msg.message) {
       case WM_CLOSE:
         CloseHandle(hDummyEvent);
         hb_retni(1);
@@ -243,11 +233,9 @@ HB_FUNC(WIN_QPCOUNTER2SEC)
 {
   static HB_MAXDBL s_dFrequence = 0;
 
-  if (s_dFrequence == 0)
-  {
+  if (s_dFrequence == 0) {
     LARGE_INTEGER frequency;
-    if (!QueryPerformanceFrequency(&frequency))
-    {
+    if (!QueryPerformanceFrequency(&frequency)) {
       hb_retnd(0);
       return;
     }

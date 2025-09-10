@@ -59,18 +59,14 @@ static TCHAR s_lpServiceName[256];
 // Control handler function
 static VOID WINAPI hbwin_SvcControlHandler(DWORD fdwControl)
 {
-  if (s_pHarbourControlFunc)
-  {
-    if (hb_vmRequestReenterExt())
-    {
+  if (s_pHarbourControlFunc) {
+    if (hb_vmRequestReenterExt()) {
       hb_vmPushEvalSym();
       hb_vmPush(s_pHarbourControlFunc);
       hb_vmPushNumInt(static_cast<HB_MAXINT>(fdwControl));
       hb_vmSend(1);
       hb_vmRequestRestore();
-    }
-    else
-    {
+    } else {
 #if 0
          HB_TRACE(HB_TR_DEBUG, ("HVM stack not available"));
 #endif
@@ -78,8 +74,7 @@ static VOID WINAPI hbwin_SvcControlHandler(DWORD fdwControl)
     return;
   }
 
-  switch (fdwControl)
-  {
+  switch (fdwControl) {
   case SERVICE_CONTROL_STOP:
     s_ServiceStatus.dwWin32ExitCode = 0;
     s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
@@ -109,16 +104,12 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
 
   s_hStatus = RegisterServiceCtrlHandler(s_lpServiceName, static_cast<LPHANDLER_FUNCTION>(hbwin_SvcControlHandler));
 
-  if (s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0))
-  {
-    if (s_pHarbourEntryFunc != nullptr)
-    {
-      if (hb_vmRequestReenterExt())
-      {
+  if (s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0)) {
+    if (s_pHarbourEntryFunc != nullptr) {
+      if (hb_vmRequestReenterExt()) {
         int iArgCount = 0;
 
-        if (!s_pHarbourControlFunc)
-        {
+        if (!s_pHarbourControlFunc) {
           // We report the running status to SCM.
           s_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
           SetServiceStatus(s_hStatus, &s_ServiceStatus);
@@ -127,17 +118,13 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
         hb_vmPushEvalSym();
         hb_vmPush(s_pHarbourEntryFunc);
 
-        for (DWORD i = 1; i < dwArgc; ++i)
-        {
+        for (DWORD i = 1; i < dwArgc; ++i) {
           auto pItem = hb_stackAllocItem();
 
           HB_ITEMPUTSTR(pItem, lpszArgv[i]);
-          if (hb_cmdargIsInternal(hb_itemGetCPtr(pItem), nullptr))
-          {
+          if (hb_cmdargIsInternal(hb_itemGetCPtr(pItem), nullptr)) {
             hb_stackPop();
-          }
-          else
-          {
+          } else {
             ++iArgCount;
           }
         }
@@ -145,23 +132,17 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
         hb_vmSend(static_cast<HB_USHORT>(iArgCount));
 
         hb_vmRequestRestore();
-      }
-      else
-      {
+      } else {
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("HVM stack not available"));
 #endif
       }
-    }
-    else
-    {
+    } else {
 #if 0
          HB_TRACE(HB_TR_DEBUG, ("Harbour service entry function not found"));
 #endif
     }
-  }
-  else
-  {
+  } else {
 #if 0
       HB_TRACE(HB_TR_DEBUG, ("Error registering service"));
 #endif
@@ -206,29 +187,25 @@ HB_FUNC(WIN_SERVICESTART)
 
   HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), s_lpServiceName, HB_SIZEOFARRAY(s_lpServiceName));
 
-  if (s_pHarbourEntryFunc)
-  {
+  if (s_pHarbourEntryFunc) {
     hb_itemRelease(s_pHarbourEntryFunc);
     s_pHarbourEntryFunc = nullptr;
   }
 
   auto pEntryFunc = hb_param(2, Harbour::Item::EVALITEM);
 
-  if (pEntryFunc)
-  {
+  if (pEntryFunc) {
     s_pHarbourEntryFunc = hb_itemNew(pEntryFunc);
   }
 
-  if (s_pHarbourControlFunc)
-  {
+  if (s_pHarbourControlFunc) {
     hb_itemRelease(s_pHarbourControlFunc);
     s_pHarbourControlFunc = nullptr;
   }
 
   pEntryFunc = hb_param(3, Harbour::Item::EVALITEM);
 
-  if (pEntryFunc)
-  {
+  if (pEntryFunc) {
     s_pHarbourControlFunc = hb_itemNew(pEntryFunc);
   }
 

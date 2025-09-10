@@ -56,8 +56,7 @@ HB_FUNC(WCE_SMSSENDMESSAGE) // cMessage, cNumber
   // Set default return value
   hb_retnl(-1);
 
-  if (hr == ERROR_SUCCESS)
-  {
+  if (hr == ERROR_SUCCESS) {
     SMS_ADDRESS smsaDestination;
 
     void *hMessage;
@@ -69,8 +68,7 @@ HB_FUNC(WCE_SMSSENDMESSAGE) // cMessage, cNumber
     LPCTSTR sztMessage = HB_PARSTRDEF(1, &hMessage, &nMessageLen);
     LPCTSTR sztPhoneNumber = HB_PARSTRDEF(2, &hPhoneNumber, &nPhoneNumberLen);
 
-    if (nPhoneNumberLen <= HB_SIZEOFARRAY(smsaDestination.ptsAddress))
-    {
+    if (nPhoneNumberLen <= HB_SIZEOFARRAY(smsaDestination.ptsAddress)) {
       TEXT_PROVIDER_SPECIFIC_DATA tpsd;
       SMS_MESSAGE_ID smsmidMessageID = 0;
 
