@@ -120,11 +120,9 @@ HB_FUNC(WVW_EBCREATE)
   DWORD dwStyle;
   auto pData = hb_getWvwData();
 
-  if (pWindowData->hEBfont == nullptr)
-  {
+  if (pWindowData->hEBfont == nullptr) {
     pWindowData->hEBfont = CreateFontIndirect(&pData->s_lfEB);
-    if (pWindowData->hEBfont == nullptr)
-    {
+    if (pWindowData->hEBfont == nullptr) {
       hb_retnl(0);
       return;
     }
@@ -135,8 +133,7 @@ HB_FUNC(WVW_EBCREATE)
   iOffBottom = !HB_ISNIL(12) ? hb_parvni(12, 3) : 0;
   iOffRight = !HB_ISNIL(12) ? hb_parvni(12, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -152,28 +149,21 @@ HB_FUNC(WVW_EBCREATE)
   iRight = xy.x - 1 + iOffRight;
 
   uiEBid = LastControlId(usWinNum, WVW_CONTROL_EDITBOX);
-  if (uiEBid == 0)
-  {
+  if (uiEBid == 0) {
     uiEBid = WVW_ID_BASE_EDITBOX;
-  }
-  else
-  {
+  } else {
     uiEBid++;
   }
 
   dwStyle = WS_BORDER | WS_GROUP | WS_TABSTOP | dwMoreStyle;
 
-  if ((bEBType & WVW_EB_MULTILINE) == WVW_EB_MULTILINE)
-  {
+  if ((bEBType & WVW_EB_MULTILINE) == WVW_EB_MULTILINE) {
     dwStyle |= ES_AUTOVSCROLL | ES_MULTILINE | ES_WANTRETURN | WS_BORDER | WS_VSCROLL;
-  }
-  else
-  {
+  } else {
     dwStyle |= ES_AUTOHSCROLL;
   }
 
-  if (pWindowData->CodePage == OEM_CHARSET)
-  {
+  if (pWindowData->CodePage == OEM_CHARSET) {
     dwStyle |= ES_OEMCONVERT;
   }
 
@@ -184,15 +174,13 @@ HB_FUNC(WVW_EBCREATE)
                      iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, hWndParent, reinterpret_cast<HMENU>(uiEBid),
                      static_cast<HINSTANCE>(hInstance), static_cast<LPVOID>(nullptr));
 
-  if (hWndEB)
-  {
+  if (hWndEB) {
     RECT rXB{};
     RECT rOffXB{};
     /* USHORT i; */
     BOOL bFromOEM = (pWindowData->CodePage == OEM_CHARSET);
 
-    if (bFromOEM)
-    {
+    if (bFromOEM) {
       auto ulLen = static_cast<ULONG>(strlen(lpszText));
       auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
       OemToChar(lpszText, lpszTextANSI);
@@ -201,13 +189,11 @@ HB_FUNC(WVW_EBCREATE)
 
     SendMessage(static_cast<HWND>(hWndEB), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(lpszText));
 
-    if (bFromOEM)
-    {
+    if (bFromOEM) {
       hb_xfree(lpszText);
     }
 
-    if (usMaxChar > 0)
-    {
+    if (usMaxChar > 0) {
       SendMessage(static_cast<HWND>(hWndEB), EM_LIMITTEXT, static_cast<WPARAM>(usMaxChar), 0);
     }
 
@@ -231,9 +217,7 @@ HB_FUNC(WVW_EBCREATE)
     SendMessage(hWndEB, WM_SETFONT, reinterpret_cast<WPARAM>(pWindowData->hEBfont), static_cast<LPARAM>(TRUE));
 
     hb_retnl(static_cast<LONG>(uiEBid));
-  }
-  else
-  {
+  } else {
     hb_retnl(0);
   }
 }
@@ -249,34 +233,27 @@ HB_FUNC(WVW_EBDESTROY)
   CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
   auto pcdPrev = static_cast<CONTROL_DATA *>(nullptr);
 
-  while (pcd)
-  {
-    if (pcd->byCtrlClass == WVW_CONTROL_EDITBOX && pcd->uiCtrlid == uiEBid)
-    {
+  while (pcd) {
+    if (pcd->byCtrlClass == WVW_CONTROL_EDITBOX && pcd->uiCtrlid == uiEBid) {
       break;
     }
 
     pcdPrev = pcd;
     pcd = pcd->pNext;
   }
-  if (pcd == nullptr)
-  {
+  if (pcd == nullptr) {
     return;
   }
 
   DestroyWindow(pcd->hWndCtrl);
 
-  if (pcdPrev == nullptr)
-  {
+  if (pcdPrev == nullptr) {
     pWindowData->pcdCtrlList = pcd->pNext;
-  }
-  else
-  {
+  } else {
     pcdPrev->pNext = pcd->pNext;
   }
 
-  if (pcd->phiCodeBlock)
-  {
+  if (pcd->phiCodeBlock) {
     hb_itemRelease(pcd->phiCodeBlock);
   }
 
@@ -293,12 +270,9 @@ HB_FUNC(WVW_EBSETFOCUS)
   byte bStyle;
   auto hWndEB = FindControlHandle(usWinNum, WVW_CONTROL_EDITBOX, uiCtrlId, &bStyle);
 
-  if (hWndEB)
-  {
+  if (hWndEB) {
     hb_retl(SetFocus(hWndEB) != nullptr);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -331,17 +305,13 @@ HB_FUNC(WVW_EBENABLE)
   auto hWndEB = FindControlHandle(usWinNum, WVW_CONTROL_EDITBOX, uiCtrlId, &bStyle);
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hWndEB)
-  {
+  if (hWndEB) {
     hb_retl(EnableWindow(hWndEB, bEnable) == 0);
 
-    if (!bEnable)
-    {
+    if (!bEnable) {
       SetFocus(pWindowData->hWnd);
     }
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -360,19 +330,15 @@ HB_FUNC(WVW_EBEDITABLE)
   byte bStyle;
   auto hWndEB = FindControlHandle(usWinNum, WVW_CONTROL_EDITBOX, uiCtrlId, &bStyle);
 
-  if (hWndEB)
-  {
+  if (hWndEB) {
     auto dwStyle = static_cast<DWORD>(GetWindowLong(hWndEB, GWL_STYLE));
 
     hb_retl(!((dwStyle & ES_READONLY) == ES_READONLY));
 
-    if (!HB_ISNIL(3))
-    {
+    if (!HB_ISNIL(3)) {
       SendMessage(static_cast<HWND>(hWndEB), EM_SETREADONLY, static_cast<WPARAM>(!bEditable), 0);
     }
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -392,8 +358,7 @@ HB_FUNC(WVW_EBSETCODEBLOCK)
   auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
   BOOL bOldSetting = pData->s_bRecurseCBlock;
 
-  if (!phiCodeBlock || pcd == nullptr || pcd->bBusy)
-  {
+  if (!phiCodeBlock || pcd == nullptr || pcd->bBusy) {
     hb_retl(false);
     return;
   }
@@ -401,8 +366,7 @@ HB_FUNC(WVW_EBSETCODEBLOCK)
   pData->s_bRecurseCBlock = FALSE;
   pcd->bBusy = TRUE;
 
-  if (pcd->phiCodeBlock)
-  {
+  if (pcd->phiCodeBlock) {
     hb_itemRelease(pcd->phiCodeBlock);
   }
 
@@ -441,24 +405,19 @@ HB_FUNC(WVW_EBSETFONT)
 
   pData->s_lfEB.lfQuality = HB_ISNIL(6) ? pData->s_lfEB.lfQuality : static_cast<BYTE>(hb_parni(6));
   pData->s_lfEB.lfPitchAndFamily = FF_DONTCARE;
-  if (HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(2)) {
     strcpy(pData->s_lfEB.lfFaceName, hb_parcx(2));
   }
 
-  if (pWindowData->hEBfont)
-  {
+  if (pWindowData->hEBfont) {
     HFONT hOldFont = pWindowData->hEBfont;
     auto hFont = CreateFontIndirect(&pData->s_lfEB);
-    if (hFont)
-    {
+    if (hFont) {
       CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
 
-      while (pcd)
-      {
+      while (pcd) {
         if ((pcd->byCtrlClass == WVW_CONTROL_EDITBOX) &&
-            (reinterpret_cast<HFONT>(SendMessage(pcd->hWndCtrl, WM_GETFONT, 0, 0)) == hOldFont))
-        {
+            (reinterpret_cast<HFONT>(SendMessage(pcd->hWndCtrl, WM_GETFONT, 0, 0)) == hOldFont)) {
           SendMessage(pcd->hWndCtrl, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
         }
 
@@ -467,9 +426,7 @@ HB_FUNC(WVW_EBSETFONT)
 
       pWindowData->hEBfont = hFont;
       DeleteObject(static_cast<HFONT>(hOldFont));
-    }
-    else
-    {
+    } else {
       retval = FALSE;
     }
   }
@@ -489,8 +446,7 @@ HB_FUNC(WVW_EBISMULTILINE)
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid);
   BOOL bMultiline;
 
-  if (pcd == nullptr)
-  {
+  if (pcd == nullptr) {
     hb_retl(false);
     return;
   }
@@ -521,14 +477,12 @@ HB_FUNC(WVW_EBGETTEXT)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   BOOL bToOEM = (pWindowData->CodePage == OEM_CHARSET);
 
-  if (pcd == nullptr)
-  {
+  if (pcd == nullptr) {
     hb_retl(false);
     return;
   }
 
-  if (bSoftBreak)
-  {
+  if (bSoftBreak) {
     SendMessage(static_cast<HWND>(pcd->hWndCtrl), EM_FMTLINES, static_cast<WPARAM>(TRUE), 0);
   }
 
@@ -538,16 +492,13 @@ HB_FUNC(WVW_EBGETTEXT)
 
   SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_GETTEXT, usLen, reinterpret_cast<LPARAM>(lpszTextANSI));
 
-  if (bToOEM)
-  {
+  if (bToOEM) {
     auto ulLen = static_cast<ULONG>(strlen(lpszTextANSI));
     auto lpszText = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
     CharToOem(lpszTextANSI, lpszText);
     hb_retc(lpszText);
     hb_xfree(lpszText);
-  }
-  else
-  {
+  } else {
     hb_retc(lpszTextANSI);
   }
 
@@ -568,14 +519,12 @@ HB_FUNC(WVW_EBSETTEXT)
   LPTSTR lpszText = const_cast<LPTSTR>(hb_parcx(3));
   BOOL bFromOEM = (pWindowData->CodePage == OEM_CHARSET);
 
-  if (pcd == nullptr)
-  {
+  if (pcd == nullptr) {
     hb_retl(false);
     return;
   }
 
-  if (bFromOEM)
-  {
+  if (bFromOEM) {
     auto ulLen = static_cast<ULONG>(strlen(lpszText));
     auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
     OemToChar(lpszText, lpszTextANSI);
@@ -584,8 +533,7 @@ HB_FUNC(WVW_EBSETTEXT)
 
   bRetval = SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(lpszText));
 
-  if (bFromOEM)
-  {
+  if (bFromOEM) {
     hb_xfree(lpszText);
   }
 
@@ -606,8 +554,7 @@ HB_FUNC(WVW_EBGETSEL)
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid);
   DWORD dwStart, dwEnd;
 
-  if (pcd == nullptr)
-  {
+  if (pcd == nullptr) {
     hb_retl(false);
     return;
   }
@@ -615,12 +562,10 @@ HB_FUNC(WVW_EBGETSEL)
   SendMessage(static_cast<HWND>(pcd->hWndCtrl), EM_GETSEL, reinterpret_cast<WPARAM>(&dwStart),
               reinterpret_cast<LPARAM>(&dwEnd));
 
-  if (HB_ISBYREF(3))
-  {
+  if (HB_ISBYREF(3)) {
     hb_stornl(dwStart, 3);
   }
-  if (HB_ISBYREF(4))
-  {
+  if (HB_ISBYREF(4)) {
     hb_stornl(dwEnd, 4);
   }
   hb_retl(true);
@@ -643,8 +588,7 @@ HB_FUNC(WVW_EBSETSEL)
   auto dwStart = static_cast<DWORD>(HB_ISNUM(3) ? hb_parnl(3) : 0);
   auto dwEnd = static_cast<DWORD>(HB_ISNUM(4) ? hb_parnl(4) : 0);
 
-  if (pcd == nullptr)
-  {
+  if (pcd == nullptr) {
     hb_retl(false);
     return;
   }
@@ -687,20 +631,15 @@ HB_FUNC(WVW_STCREATE)
   int iBox = HB_ISNUM(10) ? hb_parni(10) : 0;
   HFONT hFont = nullptr;
 
-  if (iBox > 0)
-  {
+  if (iBox > 0) {
     iStyle |= iBox;
   }
 
-  if (HB_ISNUM(8))
-  {
+  if (HB_ISNUM(8)) {
     hFont = reinterpret_cast<HFONT>(HB_PARHANDLE(8));
-  }
-  else if (pWindowData->hSTfont == nullptr)
-  {
+  } else if (pWindowData->hSTfont == nullptr) {
     pWindowData->hSTfont = CreateFontIndirect(&pData->s_lfST);
-    if (pWindowData->hSTfont == nullptr)
-    {
+    if (pWindowData->hSTfont == nullptr) {
       hb_retnl(0);
       return;
     }
@@ -712,8 +651,7 @@ HB_FUNC(WVW_STCREATE)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -729,12 +667,9 @@ HB_FUNC(WVW_STCREATE)
   iRight = xy.x - 1 + iOffRight;
 
   uiCBid = LastControlId(usWinNum, WVW_CONTROL_STATIC);
-  if (uiCBid == 0)
-  {
+  if (uiCBid == 0) {
     uiCBid = WVW_ID_BASE_STATIC;
-  }
-  else
-  {
+  } else {
     uiCBid++;
   }
 
@@ -745,25 +680,18 @@ HB_FUNC(WVW_STCREATE)
                           iBottom - iTop + 1, hWndParent, reinterpret_cast<HMENU>(uiCBid),
                           static_cast<HINSTANCE>(hInstance), static_cast<LPVOID>(nullptr));
 
-  if (hWndCB)
-  {
-    if (HB_ISCHAR(5))
-    {
+  if (hWndCB) {
+    if (HB_ISCHAR(5)) {
       SendMessage(hWndCB, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(hb_parc(5)));
     }
-    if (hFont)
-    {
+    if (hFont) {
       SendMessage(hWndCB, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
-    }
-    else
-    {
+    } else {
       SendMessage(hWndCB, WM_SETFONT, reinterpret_cast<WPARAM>(pWindowData->hSTfont), static_cast<LPARAM>(TRUE));
     }
     hb_retnl(static_cast<LONG>(uiCBid));
     HB_STOREHANDLE(hWndCB, 9);
-  }
-  else
-  {
+  } else {
     hb_retnl(0);
   }
 }
@@ -772,14 +700,11 @@ HB_FUNC(WVW_STSETTEXT)
 {
   auto hWndCB = reinterpret_cast<HWND>(HB_PARHANDLE(2));
 
-  if (hWndCB)
-  {
+  if (hWndCB) {
 
     SetWindowText(static_cast<HWND>(hWndCB), static_cast<LPCTSTR>(hb_parc(3)));
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -803,24 +728,19 @@ HB_FUNC(WVW_STSETFONT)
 
   pData->s_lfST.lfQuality = HB_ISNIL(6) ? pData->s_lfST.lfQuality : static_cast<BYTE>(hb_parni(6));
   pData->s_lfST.lfPitchAndFamily = FF_DONTCARE;
-  if (HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(2)) {
     strcpy(pData->s_lfST.lfFaceName, hb_parcx(2));
   }
 
-  if (pWindowData->hSTfont)
-  {
+  if (pWindowData->hSTfont) {
     HFONT hOldFont = pWindowData->hSTfont;
     auto hFont = CreateFontIndirect(&pData->s_lfST);
-    if (hFont)
-    {
+    if (hFont) {
       CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
 
-      while (pcd)
-      {
+      while (pcd) {
         if ((pcd->byCtrlClass == WVW_CONTROL_STATIC) &&
-            (reinterpret_cast<HFONT>(SendMessage(pcd->hWndCtrl, WM_GETFONT, 0, 0)) == hOldFont))
-        {
+            (reinterpret_cast<HFONT>(SendMessage(pcd->hWndCtrl, WM_GETFONT, 0, 0)) == hOldFont)) {
           SendMessage(pcd->hWndCtrl, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
         }
 
@@ -829,9 +749,7 @@ HB_FUNC(WVW_STSETFONT)
 
       pWindowData->hSTfont = hFont;
       DeleteObject(static_cast<HFONT>(hOldFont));
-    }
-    else
-    {
+    } else {
       retval = FALSE;
     }
   }

@@ -87,35 +87,27 @@ HB_FUNC(WVW_APPENDMENU)
   int iLen;
   LPCTSTR lpszCaption;
 
-  if (!(hb_parni(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni(3) >= WVW_ID_BASE_PUSHBUTTON))
-  {
+  if (!(hb_parni(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni(3) >= WVW_ID_BASE_PUSHBUTTON)) {
     MessageBox(nullptr, TEXT("Menu Command Id too high. Potential conflict with pushbutton"), hb_gt_wvw_GetAppName(),
                MB_ICONERROR);
     hb_retl(false);
     return;
   }
 
-  if (HB_ISCHAR(4))
-  {
+  if (HB_ISCHAR(4)) {
     iLen = hb_parclen(4);
-    if (iLen > 0 && iLen < 256)
-    {
+    if (iLen > 0 && iLen < 256) {
       lpszCaption = hb_parcx(4);
-      for (auto i = 0; i < iLen; i++)
-      {
+      for (auto i = 0; i < iLen; i++) {
         ucBuf[i] = (*lpszCaption == '~') ? '&' : *lpszCaption;
         lpszCaption++;
       }
       ucBuf[iLen] = '\0';
       lpszCaption = ucBuf;
-    }
-    else
-    {
+    } else {
       lpszCaption = hb_parcx(4);
     }
-  }
-  else
-  {
+  } else {
     lpszCaption = reinterpret_cast<LPCTSTR>(hb_parni(4));
   }
 
@@ -159,8 +151,7 @@ HB_FUNC(WVW_SETMENUKEYEVENT)
   auto usWinNum = WVW_WHICH_WINDOW;
   int iEvent = 0;
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     iEvent = hb_parnl(2);
   }
 
@@ -182,28 +173,22 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
   char szResname[_MAX_PATH + 1];
   int iWidth, iHeight;
 
-  if (!HB_ISNIL(4))
-  {
-    if (HB_ISNUM(4))
-    {
+  if (!HB_ISNIL(4)) {
+    if (HB_ISNUM(4)) {
       sprintf(szResname, "?%u", hb_parni(4));
 
       hBitmapUnchecked = FindBitmapHandle(szResname, &iWidth, &iHeight);
 
-      if (!hBitmapUnchecked)
-      {
+      if (!hBitmapUnchecked) {
         hBitmapUnchecked = static_cast<HBITMAP>(
             LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(4)))),
                       IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         AddBitmapHandle(szResname, hBitmapUnchecked, iWidth, iHeight);
       }
-    }
-    else
-    {
+    } else {
       hBitmapUnchecked = FindBitmapHandle(hb_parcx(4), &iWidth, &iHeight);
 
-      if (!hBitmapUnchecked)
-      {
+      if (!hBitmapUnchecked) {
         hBitmapUnchecked = static_cast<HBITMAP>(
             LoadImage(hb_getWvwData()->hInstance, hb_parcx(4), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         AddBitmapHandle(hb_parcx(4), hBitmapUnchecked, iWidth, iHeight);
@@ -211,28 +196,22 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
     }
   }
 
-  if (!HB_ISNIL(5))
-  {
-    if (HB_ISNUM(5))
-    {
+  if (!HB_ISNIL(5)) {
+    if (HB_ISNUM(5)) {
       sprintf(szResname, "?%u", hb_parni(5));
 
       hBitmapChecked = FindBitmapHandle(szResname, &iWidth, &iHeight);
 
-      if (!hBitmapChecked)
-      {
+      if (!hBitmapChecked) {
         hBitmapChecked = static_cast<HBITMAP>(
             LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(5)))),
                       IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         AddBitmapHandle(szResname, hBitmapChecked, iWidth, iHeight);
       }
-    }
-    else
-    {
+    } else {
       hBitmapChecked = FindBitmapHandle(hb_parcx(5), &iWidth, &iHeight);
 
-      if (!hBitmapChecked)
-      {
+      if (!hBitmapChecked) {
         hBitmapChecked = static_cast<HBITMAP>(
             LoadImage(hb_getWvwData()->hInstance, hb_parcx(5), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         AddBitmapHandle(hb_parcx(5), hBitmapChecked, iWidth, iHeight);
@@ -240,13 +219,10 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
     }
   }
 
-  if (!HB_ISNIL(2))
-  {
+  if (!HB_ISNIL(2)) {
     SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni(2), MF_BYCOMMAND,
                        static_cast<HBITMAP>(hBitmapUnchecked), static_cast<HBITMAP>(hBitmapChecked));
-  }
-  else
-  {
+  } else {
     SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni(3), MF_BYPOSITION,
                        static_cast<HBITMAP>(hBitmapUnchecked), static_cast<HBITMAP>(hBitmapChecked));
   }
@@ -306,16 +282,14 @@ HB_FUNC(WVW_NOSYSMENU)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   HMENU hMenu = GetSystemMenu(pWindowData->hWnd, FALSE);
 
-  if (hMenu)
-  {
+  if (hMenu) {
     DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
     DeleteMenu(hMenu, SC_MINIMIZE, MF_BYCOMMAND);
     DeleteMenu(hMenu, SC_SIZE, MF_BYCOMMAND);
     DeleteMenu(hMenu, SC_MOVE, MF_BYCOMMAND);
     DeleteMenu(hMenu, SC_RESTORE, MF_BYCOMMAND);
     DeleteMenu(hMenu, SC_NEXTWINDOW, MF_BYCOMMAND);
-    if (lRemoveClose)
-    {
+    if (lRemoveClose) {
       DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
       DeleteMenu(hMenu, 0, MF_BYPOSITION);
     }

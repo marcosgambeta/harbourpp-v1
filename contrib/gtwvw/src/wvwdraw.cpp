@@ -85,8 +85,7 @@ HB_FUNC(WVW_DRAWLABELOBJ)
   iOffBottom = !HB_ISNIL(12) ? hb_parvni(12, 3) : 0;
   iOffRight = !HB_ISNIL(12) ? hb_parvni(12, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -115,8 +114,7 @@ HB_FUNC(WVW_DRAWLABELOBJ)
   x = iLeft;
   y = iTop;
 
-  switch (iAlignHorz)
-  {
+  switch (iAlignHorz) {
   case 0:
     iAlignH = TA_LEFT;
     break;
@@ -132,8 +130,7 @@ HB_FUNC(WVW_DRAWLABELOBJ)
 
   iAlignV = TA_TOP;
 
-  switch (iAlignVert)
-  {
+  switch (iAlignVert) {
   case 1:
     y = iBottom - sz.cy;
     break;
@@ -179,8 +176,7 @@ HB_FUNC(WVW_DRAWTOOLBUTTONSTATE)
   auto usBottom = static_cast<USHORT>(hb_parni(4));
   auto usRight = static_cast<USHORT>(hb_parni(5));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -195,8 +191,7 @@ HB_FUNC(WVW_DRAWTOOLBUTTONSTATE)
   iBottom = xy.y - 1 + hb_parvni(6, 3);
   iRight = xy.x - 1 + hb_parvni(6, 4);
 
-  switch (iState)
-  {
+  switch (iState) {
   case 0:
     SelectObject(pWindowData->hdc, s_sApp->penGray);
 
@@ -271,8 +266,7 @@ HB_FUNC(WVW_DRAWSCROLLBUTTON)
   auto usBottom = static_cast<USHORT>(hb_parni(4));
   auto usRight = static_cast<USHORT>(hb_parni(5));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -292,18 +286,14 @@ HB_FUNC(WVW_DRAWSCROLLBUTTON)
 
   iHeight = iBottom - iTop + 1;
 
-  if (bDepressed)
-  {
+  if (bDepressed) {
     hb_gt_wvwDrawBoxRecessed(usWinNum, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2, FALSE);
-  }
-  else
-  {
+  } else {
     hb_gt_wvwDrawBoxRaised(usWinNum, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2, FALSE);
   }
   SelectObject(pWindowData->hdc, s_sApp->solidBrush);
 
-  switch (hb_parni(7))
-  {
+  switch (hb_parni(7)) {
   case 1:
     xy.y = iTop + iOff - 1;
     xy.x = iLeft + ((iRight - iLeft + 1) / 2);
@@ -374,8 +364,7 @@ HB_FUNC(WVW_DRAWSCROLLTHUMBVERT)
 
   auto usTabTop = static_cast<USHORT>(hb_parni(7));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
     hb_wvw_HBFUNCPrologue(usWinNum, &usTabTop, nullptr, nullptr, nullptr);
   }
@@ -430,8 +419,7 @@ HB_FUNC(WVW_DRAWSCROLLTHUMBHORZ)
   auto usRight = static_cast<USHORT>(hb_parni(5));
   auto usThumbLeft = static_cast<USHORT>(hb_parni(7));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
     hb_wvw_HBFUNCPrologue(usWinNum, nullptr, &usThumbLeft, nullptr, nullptr);
   }
@@ -536,8 +524,7 @@ HB_FUNC(WVW_DRAWSHADEDRECT)
   auto usBottom = static_cast<USHORT>(hb_parni(4));
   auto usRight = static_cast<USHORT>(hb_parni(5));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -606,8 +593,7 @@ HB_FUNC(WVW_DRAWTEXTBOX)
   auto usBottom = static_cast<USHORT>(hb_parni(4));
   auto usRight = static_cast<USHORT>(hb_parni(5));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -622,8 +608,7 @@ HB_FUNC(WVW_DRAWTEXTBOX)
   iBottom = xy.y - 1 + hb_parvni(6, 3);
   iRight = xy.x - 1 + hb_parvni(6, 4);
 
-  switch (iAlignHorz)
-  {
+  switch (iAlignHorz) {
   case 0:
     iAlignH = DT_LEFT;
     break;
@@ -685,8 +670,7 @@ HB_FUNC(WVW_DRAWPROGRESSBAR)
   RECT rc{};
   POINT xy{};
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -706,37 +690,28 @@ HB_FUNC(WVW_DRAWPROGRESSBAR)
   bVertical = HB_ISNIL(11) ? FALSE : hb_parl(11);
   iDirection = HB_ISNIL(12) ? 0 : hb_parni(12);
 
-  if (bVertical)
-  {
-    if (iDirection == 0)
-    {
+  if (bVertical) {
+    if (iDirection == 0) {
       iBarUpto = iTop + ((iBottom - iTop) * iPercent / 100);
       rc.top = iTop;
       rc.left = iLeft;
       rc.bottom = iBarUpto;
       rc.right = iRight;
-    }
-    else
-    {
+    } else {
       iBarUpto = iBottom - ((iBottom - iTop) * iPercent / 100);
       rc.top = iBarUpto;
       rc.left = iLeft;
       rc.bottom = iBottom;
       rc.right = iRight;
     }
-  }
-  else
-  {
-    if (iDirection == 0)
-    {
+  } else {
+    if (iDirection == 0) {
       iBarUpto = iLeft + ((iRight - iLeft) * iPercent / 100);
       rc.top = iTop;
       rc.left = iLeft;
       rc.bottom = iBottom;
       rc.right = iBarUpto;
-    }
-    else
-    {
+    } else {
       iBarUpto = iRight - ((iRight - iLeft) * iPercent / 100);
       rc.top = iTop;
       rc.left = iBarUpto;
@@ -745,12 +720,9 @@ HB_FUNC(WVW_DRAWPROGRESSBAR)
     }
   }
 
-  if (bImage)
-  {
+  if (bImage) {
     hb_gt_wvwDrawImage(usWinNum, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(10), FALSE);
-  }
-  else
-  {
+  } else {
     crBarColor = HB_ISNIL(9) ? hb_gt_wvwGetColorData(0) : static_cast<COLORREF>(hb_parnl(9));
 
     lb.lbStyle = BS_SOLID;
@@ -798,8 +770,7 @@ HB_FUNC(WVW_DRAWBOXGET)
   iOffBottom = !HB_ISNIL(5) ? hb_parvni(5, 3) : 0;
   iOffRight = !HB_ISNIL(5) ? hb_parvni(5, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usRow, &usCol, nullptr, nullptr);
   }
 
@@ -882,8 +853,7 @@ HB_FUNC(WVW_DRAWBOXGET_XP)
   iOffBottom = !HB_ISNIL(5) ? hb_parvni(5, 3) : 0;
   iOffRight = !HB_ISNIL(5) ? hb_parvni(5, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usRow, &usCol, nullptr, nullptr);
   }
 
@@ -946,27 +916,21 @@ HB_FUNC(WVW_DRAWBOXRAISED)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
-  if (bTight)
-  {
+  if (bTight) {
     iOTop = 2;
     iOLeft = 2;
     iOBottom = -1;
     iORight = -1;
-  }
-  else if (bUseArray)
-  {
+  } else if (bUseArray) {
     iOTop = hb_parvni(6, 1) - 1;
     iOLeft = hb_parvni(6, 2) - 1;
     iOBottom = hb_parvni(6, 3);
     iORight = hb_parvni(6, 4);
-  }
-  else
-  {
+  } else {
     iOTop = -1;
     iOLeft = -1;
     iOBottom = 0;
@@ -1019,27 +983,21 @@ HB_FUNC(WVW_DRAWBOXRECESSED)
   int iOLeft, iOTop, iORight, iOBottom;
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
-  if (bTight)
-  {
+  if (bTight) {
     iOTop = 2;
     iOLeft = 2;
     iOBottom = -1;
     iORight = -1;
-  }
-  else if (bUseArray)
-  {
+  } else if (bUseArray) {
     iOTop = hb_parvni(6, 1) - 1;
     iOLeft = hb_parvni(6, 2) - 1;
     iOBottom = hb_parvni(6, 3);
     iORight = hb_parvni(6, 4);
-  }
-  else
-  {
+  } else {
     iOTop = -1;
     iOLeft = -1;
     iOBottom = 0;
@@ -1090,8 +1048,7 @@ HB_FUNC(WVW_DRAWBOXGROUP)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1155,8 +1112,7 @@ HB_FUNC(WVW_DRAWBOXGROUPRAISED)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1246,27 +1202,21 @@ HB_FUNC(WVW_DRAWIMAGE)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
-  if (bTight)
-  {
+  if (bTight) {
     iOTop = 2 + 1;
     iOLeft = 2 + 1;
     iOBottom = -1;
     iORight = -1;
-  }
-  else if (bUseArray)
-  {
+  } else if (bUseArray) {
     iOTop = hb_parvni(7, 1);
     iOLeft = hb_parvni(7, 2);
     iOBottom = hb_parvni(7, 3);
     iORight = hb_parvni(7, 4);
-  }
-  else
-  {
+  } else {
     iOTop = iOLeft = iOBottom = iORight = 0;
   }
 
@@ -1274,17 +1224,13 @@ HB_FUNC(WVW_DRAWIMAGE)
   iTop = xy.y + iOTop;
   iLeft = xy.x + iOLeft;
 
-  if (bActRight || bActBottom)
-  {
+  if (bActRight || bActBottom) {
     if ((!HB_ISNUM(6) && !GetImageDimension(hb_parcx(6), &iImgWidth, &iImgHeight)) ||
-        (HB_ISNUM(6) && !GetIPictDimension(s_sApp->iPicture[hb_parni(6) - 1], &iImgWidth, &iImgHeight)))
-    {
+        (HB_ISNUM(6) && !GetIPictDimension(s_sApp->iPicture[hb_parni(6) - 1], &iImgWidth, &iImgHeight))) {
 
       bActRight = FALSE;
       bActBottom = FALSE;
-    }
-    else if (bActRight && bActBottom)
-    {
+    } else if (bActRight && bActBottom) {
       iRight = iLeft + iImgWidth - 1;
       iBottom = iTop + iImgHeight - 1;
     }
@@ -1294,29 +1240,23 @@ HB_FUNC(WVW_DRAWIMAGE)
 
   xy.y -= pWindowData->byLineSpacing;
 
-  if (!bActBottom)
-  {
+  if (!bActBottom) {
     iBottom = xy.y - 1 + iOBottom;
   }
 
-  if (!bActRight)
-  {
+  if (!bActRight) {
     iRight = xy.x - 1 + iORight;
   }
 
-  if ((bActBottom || bActRight) && !(bActBottom && bActRight))
-  {
+  if ((bActBottom || bActRight) && !(bActBottom && bActRight)) {
     int iDispWidth, iDispHeight;
-    if (bActRight)
-    {
+    if (bActRight) {
       /* right corner (width) must be proportional to height */
 
       iDispHeight = iBottom - iTop + 1;
       iDispWidth = static_cast<int>(static_cast<float>(iImgWidth) / iImgHeight * iDispHeight);
       iRight = iLeft + iDispWidth - 1;
-    }
-    else
-    {
+    } else {
       /* bottom corner (height) must be proportional to width */
 
       iDispWidth = iRight - iLeft + 1;
@@ -1325,13 +1265,10 @@ HB_FUNC(WVW_DRAWIMAGE)
     }
   }
 
-  if (HB_ISNUM(6))
-  {
+  if (HB_ISNUM(6)) {
     bResult = hb_gt_wvwRenderPicture(usWinNum, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1,
                                      s_sApp->iPicture[hb_parni(6) - 1], bTransparent);
-  }
-  else
-  {
+  } else {
     bResult = hb_gt_wvwDrawImage(usWinNum, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, hb_parcx(6),
                                  bTransparent);
   }
@@ -1383,27 +1320,21 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
   IPicture *pPic;
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
-  if (bTight)
-  {
+  if (bTight) {
     iOTop = 2 + 1;
     iOLeft = 2 + 1;
     iOBottom = -1;
     iORight = -1;
-  }
-  else if (bUseArray)
-  {
+  } else if (bUseArray) {
     iOTop = hb_parvni(7, 1);
     iOLeft = hb_parvni(7, 2);
     iOBottom = hb_parvni(7, 3);
     iORight = hb_parvni(7, 4);
-  }
-  else
-  {
+  } else {
     iOTop = iOLeft = iOBottom = iORight = 0;
   }
 
@@ -1415,17 +1346,13 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
   iImgWidth = 0;
   iImgHeight = 0;
 
-  if (!HB_ISNUM(6))
-  {
+  if (!HB_ISNUM(6)) {
     pPic = rr_LoadPictureFromResource(hb_parcx(6), 0, &lImgWidth, &lImgHeight);
 
-    if (pPic == nullptr)
-    {
+    if (pPic == nullptr) {
       pPic = rr_LoadPicture(hb_parcx(6), &lImgWidth, &lImgHeight);
     }
-  }
-  else
-  {
+  } else {
     pPic = rr_LoadPictureFromResource(nullptr, hb_parni(6), &lImgWidth, &lImgHeight);
   }
 
@@ -1434,21 +1361,16 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
    lImgHeight = iImgHeight;
 #endif
 
-  if (pPic == nullptr)
-  {
+  if (pPic == nullptr) {
     hb_retl(bResult);
   }
 
-  if (bActRight || bActBottom)
-  {
+  if (bActRight || bActBottom) {
 
-    if (!GetIPictDimension(pPic, &iImgWidth, &iImgHeight))
-    {
+    if (!GetIPictDimension(pPic, &iImgWidth, &iImgHeight)) {
       bActRight = FALSE;
       bActBottom = FALSE;
-    }
-    else if (bActRight && bActBottom)
-    {
+    } else if (bActRight && bActBottom) {
       iRight = iLeft + iImgWidth;
       iBottom = iTop + iImgHeight;
     }
@@ -1458,29 +1380,23 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
 
   xy.y -= pWindowData->byLineSpacing;
 
-  if (!bActBottom)
-  {
+  if (!bActBottom) {
     iBottom = xy.y - 1 + iOBottom;
   }
 
-  if (!bActRight)
-  {
+  if (!bActRight) {
     iRight = xy.x - 1 + iORight;
   }
 
-  if ((bActBottom || bActRight) && !(bActBottom && bActRight))
-  {
+  if ((bActBottom || bActRight) && !(bActBottom && bActRight)) {
     int iDispWidth, iDispHeight;
-    if (bActRight)
-    {
+    if (bActRight) {
       /* right corner (width) must be proportional to height */
 
       iDispHeight = iBottom - iTop + 1;
       iDispWidth = static_cast<int>(static_cast<float>(iImgWidth) / iImgHeight * iDispHeight);
       iRight = iLeft + iDispWidth - 1;
-    }
-    else
-    {
+    } else {
       /* bottom corner (height) must be proportional to width */
 
       iDispWidth = iRight - iLeft + 1;
@@ -1511,8 +1427,7 @@ HB_FUNC(WVW_DRAWLABEL)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usRow, &usCol, nullptr, nullptr);
   }
 
@@ -1535,8 +1450,7 @@ HB_FUNC(WVW_DRAWLABEL)
   strcpy(logfont.lfFaceName, (HB_ISNIL(9) ? pWindowData->fontFace : hb_parcx(9)));
 
   auto hFont = CreateFontIndirect(&logfont);
-  if (hFont)
-  {
+  if (hFont) {
     xy = hb_gt_wvwGetXYFromColRow(pWindowData, usCol, usRow);
 
     COLORREF oldBkColor =
@@ -1581,8 +1495,7 @@ HB_FUNC(WVW_DRAWOUTLINE)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1597,24 +1510,19 @@ HB_FUNC(WVW_DRAWOUTLINE)
   iBottom = xy.y;
   iRight = xy.x;
 
-  if (HB_ISNUM(6))
-  {
+  if (HB_ISNUM(6)) {
     hPen = CreatePen(hb_parni(6), 0, (HB_ISNIL(8) ? 0 : static_cast<COLORREF>(hb_parnl(8))));
-    if (hPen)
-    {
+    if (hPen) {
       hOldPen = static_cast<HPEN>(SelectObject(pWindowData->hdc, hPen));
     }
-  }
-  else
-  {
+  } else {
     /* hPen = 0; */
     SelectObject(pWindowData->hdc, s_sApp->penBlack);
   }
 
   hb_gt_wvwDrawOutline(usWinNum, iTop, iLeft, iBottom, iRight);
 
-  if (hPen)
-  {
+  if (hPen) {
     SelectObject(pWindowData->hdc, hOldPen);
     DeleteObject(hPen);
   }
@@ -1653,8 +1561,7 @@ HB_FUNC(WVW_DRAWLINE)
   iOffBottom = !HB_ISNIL(12) ? hb_parvni(12, 3) : 0;
   iOffRight = !HB_ISNIL(12) ? hb_parvni(12, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1679,16 +1586,12 @@ HB_FUNC(WVW_DRAWLINE)
   x = iLeft;
   y = iTop;
 
-  switch (iAlign)
-  {
-  case 0: /* Center      */
-    if (iOrient == 0)
-    { /* Horizontal  */
+  switch (iAlign) {
+  case 0:               /* Center      */
+    if (iOrient == 0) { /* Horizontal  */
       iOffset = ((iBottom - iTop) / 2);
       y = iTop + iOffset;
-    }
-    else
-    {
+    } else {
       iOffset = ((iRight - iLeft) / 2);
       x = iLeft + iOffset;
     }
@@ -1698,12 +1601,9 @@ HB_FUNC(WVW_DRAWLINE)
     break;
 
   case 2: /* bottom   */
-    if (iFormat == 0 || iFormat == 1)
-    {
+    if (iFormat == 0 || iFormat == 1) {
       y = iBottom - 1;
-    }
-    else
-    {
+    } else {
       y = iBottom;
     }
     break;
@@ -1712,12 +1612,9 @@ HB_FUNC(WVW_DRAWLINE)
     break;
 
   case 4: /* Right    */
-    if (iFormat == 0 || iFormat == 1)
-    {
+    if (iFormat == 0 || iFormat == 1) {
       x = iRight - 1;
-    }
-    else
-    {
+    } else {
       x = iRight;
     }
     break;
@@ -1726,20 +1623,16 @@ HB_FUNC(WVW_DRAWLINE)
   auto hPen = CreatePen(iStyle, iThick, cr);
   auto hOldPen = static_cast<HPEN>(SelectObject(pWindowData->hdc, hPen));
 
-  switch (iFormat)
-  {
-  case 0: /* Raised        */
-    if (iOrient == 0)
-    { /*  Horizontal   */
+  switch (iFormat) {
+  case 0:               /* Raised        */
+    if (iOrient == 0) { /*  Horizontal   */
       SelectObject(pWindowData->hdc, s_sApp->penWhite);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, iRight, y);
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y + 1, nullptr);
       LineTo(pWindowData->hdc, iRight, y + 1);
-    }
-    else
-    { /*  Vertical     */
+    } else { /*  Vertical     */
       SelectObject(pWindowData->hdc, s_sApp->penWhite);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, x, iBottom);
@@ -1749,18 +1642,15 @@ HB_FUNC(WVW_DRAWLINE)
     }
     break;
 
-  case 1: /* Recessed       */
-    if (iOrient == 0)
-    { /* Horizontal     */
+  case 1:               /* Recessed       */
+    if (iOrient == 0) { /* Horizontal     */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, iRight, y);
       SelectObject(pWindowData->hdc, s_sApp->penWhite);
       MoveToEx(pWindowData->hdc, x, y + 1, nullptr);
       LineTo(pWindowData->hdc, iRight, y + 1);
-    }
-    else
-    { /*  Vertical      */
+    } else { /*  Vertical      */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, x, iBottom);
@@ -1770,15 +1660,12 @@ HB_FUNC(WVW_DRAWLINE)
     }
     break;
 
-  case 2: /* Plain          */
-    if (iOrient == 0)
-    { /* Horizontal     */
+  case 2:               /* Plain          */
+    if (iOrient == 0) { /* Horizontal     */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, iRight, y);
-    }
-    else
-    { /*  Vertical      */
+    } else { /*  Vertical      */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, x, iBottom);
@@ -1815,8 +1702,7 @@ HB_FUNC(WVW_DRAWELLIPSE)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1862,8 +1748,7 @@ HB_FUNC(WVW_DRAWRECTANGLE)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1880,12 +1765,9 @@ HB_FUNC(WVW_DRAWRECTANGLE)
 
   SelectObject(pWindowData->hdc, s_sApp->currentBrush);
   /* Ref.: 28454 - Marson de Paula - 2007-11-27 */
-  if (bUsaCurrentPen)
-  {
+  if (bUsaCurrentPen) {
     SelectObject(pWindowData->hdc, s_sApp->currentPen);
-  }
-  else
-  {
+  } else {
     SelectObject(pWindowData->hdc, s_sApp->penBlack);
   }
 
@@ -1921,8 +1803,7 @@ HB_FUNC(WVW_DRAWROUNDRECT)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -1968,8 +1849,7 @@ HB_FUNC(WVW_DRAWFOCUSRECT)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -2013,8 +1893,7 @@ HB_FUNC(WVW_DRAWCOLORRECT)
   iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
   iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -2031,8 +1910,7 @@ HB_FUNC(WVW_DRAWCOLORRECT)
 
   auto hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(7)));
 
-  if (hBrush)
-  {
+  if (hBrush) {
     hb_retl(FillRect(pWindowData->hdc, &rc, hBrush));
 
     SelectObject(pWindowMainData->hdc, static_cast<HBRUSH>(s_sApp->OriginalBrush));
@@ -2059,23 +1937,20 @@ HB_FUNC(WVW_DRAWGRIDHORZ)
   auto usLeft = static_cast<USHORT>(hb_parni(3));
   auto usRight = static_cast<USHORT>(hb_parni(4));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usAtRow, &usLeft, nullptr, &usRight);
   }
 
   iLeft = (usLeft * pWindowData->PTEXTSIZE.x);
   iRight = (((usRight + 1) * pWindowData->PTEXTSIZE.x) - 1);
 
-  if (s_sApp->gridPen == nullptr)
-  {
+  if (s_sApp->gridPen == nullptr) {
     s_sApp->gridPen = CreatePen(0, 0, GetSysColor(COLOR_BTNFACE));
   }
 
   SelectObject(pWindowData->hdc, s_sApp->gridPen);
 
-  for (auto i = 0; i < iRows; i++)
-  {
+  for (auto i = 0; i < iRows; i++) {
     y = ((usAtRow)*hb_wvw_LineHeight(pWindowData));
 
     y += pWindowData->usTBHeight;
@@ -2111,8 +1986,7 @@ HB_FUNC(WVW_DRAWGRIDVERT)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (!iTabs)
-  {
+  if (!iTabs) {
     hb_retl(false);
   }
 
@@ -2125,8 +1999,7 @@ HB_FUNC(WVW_DRAWGRIDVERT)
 
   auto usTop = static_cast<USHORT>(hb_parni(2));
   auto usBottom = static_cast<USHORT>(hb_parni(3));
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, nullptr, &usBottom, nullptr);
   }
 
@@ -2137,18 +2010,15 @@ HB_FUNC(WVW_DRAWGRIDVERT)
   iTop = (usTop * iCharHeight) + pWindowData->usTBHeight + iOffTop;
   iBottom = ((usBottom + 1) * iCharHeight) - 1 + pWindowData->usTBHeight + iOffBottom;
 
-  if (s_sApp->gridPen == nullptr)
-  {
+  if (s_sApp->gridPen == nullptr) {
     s_sApp->gridPen = CreatePen(0, 0, GetSysColor(COLOR_BTNFACE));
   }
 
   SelectObject(pWindowData->hdc, s_sApp->gridPen);
 
-  for (auto i = 1; i <= iTabs; i++)
-  {
+  for (auto i = 1; i <= iTabs; i++) {
     usCol = static_cast<USHORT>(hb_parvni(4, i));
-    if (hb_gt_wvw_GetMainCoordMode())
-    {
+    if (hb_gt_wvw_GetMainCoordMode()) {
       usCol -= pWindowData->usColOfs;
     }
 
@@ -2197,8 +2067,7 @@ HB_FUNC(WVW_DRAWBUTTON)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -2229,8 +2098,7 @@ HB_FUNC(WVW_DRAWBUTTON)
   SelectObject(pWindowMainData->hdc, static_cast<HBRUSH>(s_sApp->OriginalBrush));
   DeleteObject(hBrush);
 
-  switch (iFormat)
-  {
+  switch (iFormat) {
   case 1:
     hb_gt_wvwDrawBoxRecessed(pWindowData->byWinId, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1, FALSE);
     break;
@@ -2246,8 +2114,7 @@ HB_FUNC(WVW_DRAWBUTTON)
     break;
   }
 
-  if (bText)
-  {
+  if (bText) {
     SelectObject(pWindowData->hdc, GetStockObject(DEFAULT_GUI_FONT));
 
     GetTextExtentPoint32(pWindowData->hdc, hb_parcx(6), strlen(hb_parcx(6)), &sz);
@@ -2256,17 +2123,13 @@ HB_FUNC(WVW_DRAWBUTTON)
 
     xy.x = iLeft + ((iRight - iLeft + 1) / 2);
 
-    if (bImage)
-    {
+    if (bImage) {
       xy.y = (iBottom - 2 - iTextHeight);
-    }
-    else
-    {
+    } else {
       xy.y = iTop + ((iBottom - iTop + 1 - iTextHeight) / 2);
     }
 
-    if (iFormat == 1)
-    {
+    if (iFormat == 1) {
       xy.x = xy.x + 2;
       xy.y = xy.y + 2;
     }
@@ -2282,26 +2145,20 @@ HB_FUNC(WVW_DRAWBUTTON)
     SetTextColor(pWindowData->hdc, oldTextColor);
     SetBkMode(pWindowData->hdc, oldBkMode);
     SetTextAlign(pWindowData->hdc, oldTextAlign);
-  }
-  else
-  {
+  } else {
     iTextHeight = -1;
   }
 
-  if (bImage)
-  {
+  if (bImage) {
     iImageWidth = (iRight - iLeft + 1 - 8);
 
     iImageHeight = (iBottom - iTop + 1 - 8 - iTextHeight);
 
-    if (HB_ISNUM(7))
-    {
+    if (HB_ISNUM(7)) {
       iPicture = s_sApp->iPicture[hb_parni(7) - 1];
 
       hb_gt_wvwRenderPicture(usWinNum, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, iPicture, FALSE);
-    }
-    else
-    {
+    } else {
       hb_gt_wvwDrawImage(usWinNum, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parcx(7), FALSE);
     }
   }
@@ -2326,15 +2183,13 @@ HB_FUNC(WVW_DRAWSTATUSBAR)
 
   iNext = 0;
 
-  for (auto i = 0; i < iPanels; i++)
-  {
+  for (auto i = 0; i < iPanels; i++) {
     usTop = static_cast<USHORT>(hb_parvni(3, iNext + 1));
     usLeft = static_cast<USHORT>(hb_parvni(3, iNext + 2));
     usBottom = static_cast<USHORT>(hb_parvni(3, iNext + 3));
     usRight = static_cast<USHORT>(hb_parvni(3, iNext + 4));
 
-    if (hb_gt_wvw_GetMainCoordMode())
-    {
+    if (hb_gt_wvw_GetMainCoordMode()) {
       hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
     }
 
@@ -2371,8 +2226,7 @@ HB_FUNC(WVW_DRAWSTATUSBAR)
   usTop = static_cast<USHORT>(hb_parvni(3, (4 * iPanels) - 1));
   usLeft = static_cast<USHORT>(hb_parvni(3, 4 * iPanels));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, nullptr, nullptr);
   }
 
@@ -2428,34 +2282,26 @@ HB_FUNC(WVW_DRAWPICTURE)
   BOOL bUseArray = HB_ISARRAY(7);
   int iOLeft, iOTop, iORight, iOBottom;
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
-  if (bTight)
-  {
+  if (bTight) {
     iOTop = 2 + 1;
     iOLeft = 2 + 1;
     iOBottom = -1;
     iORight = -1;
-  }
-  else if (bUseArray)
-  {
+  } else if (bUseArray) {
     iOTop = hb_parvni(7, 1);
     iOLeft = hb_parvni(7, 2);
     iOBottom = hb_parvni(7, 3);
     iORight = hb_parvni(7, 4);
-  }
-  else
-  {
+  } else {
     iOTop = iOLeft = iOBottom = iORight = 0;
   }
 
-  if (iSlot < WVW_PICTURES_MAX)
-  {
-    if (s_sApp->iPicture[iSlot])
-    {
+  if (iSlot < WVW_PICTURES_MAX) {
+    if (s_sApp->iPicture[iSlot]) {
       xy = hb_gt_wvwGetXYFromColRow(pWindowData, usLeft, usTop);
       iTop = xy.y + iOTop;
       iLeft = xy.x + iOLeft;
@@ -2488,13 +2334,11 @@ HB_FUNC(WVW_DRAWLABELEX)
   auto usTop = static_cast<USHORT>(hb_parni(2));
   auto usLeft = static_cast<USHORT>(hb_parni(3));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, nullptr, nullptr);
   }
 
-  if (s_sApp->hUserFonts[iSlot])
-  {
+  if (s_sApp->hUserFonts[iSlot]) {
     xy = hb_gt_wvwGetXYFromColRow(pWindowData, usLeft, usTop);
 
     oldBkColor =
@@ -2539,8 +2383,7 @@ HB_FUNC(WVW_DRAWLINEEX)
   auto usBottom = static_cast<USHORT>(hb_parni(4));
   auto usRight = static_cast<USHORT>(hb_parni(5));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -2559,16 +2402,12 @@ HB_FUNC(WVW_DRAWLINEEX)
   x = iLeft;
   y = iTop;
 
-  switch (iAlign)
-  {
-  case 0: /* Center       */
-    if (iOrient == 0)
-    { /* Horizontal   */
+  switch (iAlign) {
+  case 0:               /* Center       */
+    if (iOrient == 0) { /* Horizontal   */
       iOffset = ((iBottom - iTop) / 2);
       y = iTop + iOffset;
-    }
-    else
-    {
+    } else {
       iOffset = ((iRight - iLeft) / 2);
       x = iLeft + iOffset;
     }
@@ -2577,13 +2416,10 @@ HB_FUNC(WVW_DRAWLINEEX)
   case 1: /* Top     */
     break;
 
-  case 2: /* bottom  */
-    if (iFormat == 0 || iFormat == 1)
-    { /* Raised/Recessd */
+  case 2:                               /* bottom  */
+    if (iFormat == 0 || iFormat == 1) { /* Raised/Recessd */
       y = iBottom - 1;
-    }
-    else
-    {
+    } else {
       y = iBottom;
     }
     break;
@@ -2591,13 +2427,10 @@ HB_FUNC(WVW_DRAWLINEEX)
   case 3: /* Left    */
     break;
 
-  case 4: /* Right   */
-    if (iFormat == 0 || iFormat == 1)
-    { /* Raised/Recessd */
+  case 4:                               /* Right   */
+    if (iFormat == 0 || iFormat == 1) { /* Raised/Recessd */
       x = iRight - 1;
-    }
-    else
-    {
+    } else {
       x = iRight;
     }
     break;
@@ -2605,20 +2438,16 @@ HB_FUNC(WVW_DRAWLINEEX)
 
   hPen = s_sApp->hUserPens[iSlot];
 
-  switch (iFormat)
-  {
-  case 0: /* Raised       */
-    if (iOrient == 0)
-    { /*  Horizontal  */
+  switch (iFormat) {
+  case 0:               /* Raised       */
+    if (iOrient == 0) { /*  Horizontal  */
       SelectObject(pWindowData->hdc, s_sApp->penWhite);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, iRight, y);
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y + 1, nullptr);
       LineTo(pWindowData->hdc, iRight, y + 1);
-    }
-    else
-    { /*  Vertical    */
+    } else { /*  Vertical    */
       SelectObject(pWindowData->hdc, s_sApp->penWhite);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, x, iBottom);
@@ -2628,18 +2457,15 @@ HB_FUNC(WVW_DRAWLINEEX)
     }
     break;
 
-  case 1: /* Recessed    */
-    if (iOrient == 0)
-    { /* Horizontal  */
+  case 1:               /* Recessed    */
+    if (iOrient == 0) { /* Horizontal  */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, iRight, y);
       SelectObject(pWindowData->hdc, s_sApp->penWhite);
       MoveToEx(pWindowData->hdc, x, y + 1, nullptr);
       LineTo(pWindowData->hdc, iRight, y + 1);
-    }
-    else
-    { /*  Vertical   */
+    } else { /*  Vertical   */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, x, iBottom);
@@ -2649,15 +2475,12 @@ HB_FUNC(WVW_DRAWLINEEX)
     }
     break;
 
-  case 2: /* Plain      */
-    if (iOrient == 0)
-    { /* Horizontal */
+  case 2:               /* Plain      */
+    if (iOrient == 0) { /* Horizontal */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, iRight, y);
-    }
-    else
-    { /*  Vertical  */
+    } else { /*  Vertical  */
       SelectObject(pWindowData->hdc, hPen);
       MoveToEx(pWindowData->hdc, x, y, nullptr);
       LineTo(pWindowData->hdc, x, iBottom);
@@ -2687,8 +2510,7 @@ HB_FUNC(WVW_DRAWOUTLINEEX)
   auto usBottom = static_cast<USHORT>(hb_parni(4));
   auto usRight = static_cast<USHORT>(hb_parni(5));
 
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
@@ -2700,12 +2522,9 @@ HB_FUNC(WVW_DRAWOUTLINEEX)
   iBottom = xy.y;
   iRight = xy.x;
 
-  if (s_sApp->hUserPens[iSlot])
-  {
+  if (s_sApp->hUserPens[iSlot]) {
     SelectObject(pWindowData->hdc, s_sApp->hUserPens[iSlot]);
-  }
-  else
-  {
+  } else {
     SelectObject(pWindowData->hdc, s_sApp->penBlack);
   }
 
