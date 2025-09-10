@@ -50,8 +50,7 @@
 
 HB_FUNC(TABEXPAND)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sRetLen;
@@ -63,61 +62,42 @@ HB_FUNC(TABEXPAND)
     HB_SIZE sIndex, sLineIndex;
     HB_SIZE sTabCnt = 0;
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       sTabWidth = hb_parns(2);
     }
-    if (static_cast<HB_ISIZ>(sTabWidth) <= 0)
-    {
+    if (static_cast<HB_ISIZ>(sTabWidth) <= 0) {
       sTabWidth = 8;
     }
 
-    if (HB_ISNUM(3))
-    {
+    if (HB_ISNUM(3)) {
       cFill = static_cast<char>(hb_parnl(3) % 256);
-    }
-    else if (hb_parclen(3) > 0)
-    {
+    } else if (hb_parclen(3) > 0) {
       cFill = hb_parc(3)[0];
-    }
-    else
-    {
+    } else {
       cFill = 0x20;
     }
 
-    if (HB_ISCHAR(4) && hb_parclen(4) > 0)
-    {
+    if (HB_ISCHAR(4) && hb_parclen(4) > 0) {
       pcNewLine = hb_parc(4);
       sNewLineLen = hb_parclen(4);
-    }
-    else
-    {
+    } else {
       pcNewLine = hb_conNewLine();
       sNewLineLen = 0;
-      while (*(pcNewLine + sNewLineLen) != 0x00)
-      {
+      while (*(pcNewLine + sNewLineLen) != 0x00) {
         sNewLineLen++;
       }
     }
-    if (sNewLineLen > 0)
-    {
+    if (sNewLineLen > 0) {
       cCR = *(pcNewLine);
-    }
-    else
-    {
+    } else {
       cCR = 13;
     }
 
-    if (HB_ISNUM(5))
-    {
+    if (HB_ISNUM(5)) {
       cTab = static_cast<char>(hb_parnl(5) % 256);
-    }
-    else if (hb_parclen(5) > 0)
-    {
+    } else if (hb_parclen(5) > 0) {
       cTab = hb_parc(5)[0];
-    }
-    else
-    {
+    } else {
       cTab = 0x09;
     }
 
@@ -125,15 +105,12 @@ HB_FUNC(TABEXPAND)
 
     // estimate maximum return length by assuming that EVERY tab char
     // can be replaced by at most <nTabWidth> characters
-    for (sIndex = 0; sIndex < sStrLen; sIndex++)
-    {
-      if (*(pcString + sIndex) == cTab)
-      {
+    for (sIndex = 0; sIndex < sStrLen; sIndex++) {
+      if (*(pcString + sIndex) == cTab) {
         sTabCnt++;
       }
     }
-    if (sTabCnt == 0)
-    {
+    if (sTabCnt == 0) {
       hb_retclen(pcString, sStrLen);
       return;
     }
@@ -143,59 +120,44 @@ HB_FUNC(TABEXPAND)
     sIndex = 0;
     sRetLen = 0;
     sLineIndex = 0;
-    while (sTabCnt > 0)
-    {
+    while (sTabCnt > 0) {
       auto cChar = static_cast<char>(*(pcString + sIndex));
 
-      if (cChar == cTab)
-      {
+      if (cChar == cTab) {
         // tab character
 
-        for (HB_SIZE sFillIndex = sTabWidth - (sLineIndex % sTabWidth); sFillIndex > 0; sFillIndex--)
-        {
+        for (HB_SIZE sFillIndex = sTabWidth - (sLineIndex % sTabWidth); sFillIndex > 0; sFillIndex--) {
           *(pcRet + sRetLen) = cFill;
           sRetLen++;
           sLineIndex++;
         }
         sTabCnt--;
         sIndex++;
-      }
-      else if (cChar == HB_CHAR_SOFT1)
-      {
+      } else if (cChar == HB_CHAR_SOFT1) {
         // soft carriage return
         *(pcRet + sRetLen) = HB_CHAR_SOFT1;
         sRetLen++;
         sIndex++;
-        if (iIgnore141)
-        {
+        if (iIgnore141) {
           sLineIndex++;
-        }
-        else
-        {
+        } else {
           sLineIndex = 0;
         }
-      }
-      else if (cChar == cCR)
-      {
+      } else if (cChar == cCR) {
         // newline string ?
         if (sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen &&
-            ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex)
-        {
+            ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex) {
           hb_xmemcpy(pcRet + sRetLen, pcString + sIndex, sNewLineLen);
           sRetLen += sNewLineLen;
           sIndex += sNewLineLen;
           sLineIndex = 0;
-        }
-        else
-        {
+        } else {
           *(pcRet + sRetLen) = cCR;
           sRetLen++;
           sIndex++;
           sLineIndex++;
         }
-      }
-      else
-      {
+      } else {
         *(pcRet + sRetLen) = *(pcString + sIndex);
         sRetLen++;
         sIndex++;
@@ -207,24 +169,18 @@ HB_FUNC(TABEXPAND)
     sRetLen += sStrLen - sIndex;
     hb_retclen(pcRet, sRetLen);
     hb_xfree(pcRet);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABEXPAND, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -232,8 +188,7 @@ HB_FUNC(TABEXPAND)
 
 HB_FUNC(TABPACK)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sRetLen;
@@ -243,64 +198,45 @@ HB_FUNC(TABPACK)
     int iIgnore141;
     HB_SIZE sIndex, sTabIndex, sFillCount;
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       sTabWidth = hb_parns(2);
     }
-    if (static_cast<HB_ISIZ>(sTabWidth) <= 0)
-    {
+    if (static_cast<HB_ISIZ>(sTabWidth) <= 0) {
       sTabWidth = 8;
     }
 
-    if (HB_ISNUM(3))
-    {
+    if (HB_ISNUM(3)) {
       cFill = static_cast<char>(hb_parnl(3) % 256);
-    }
-    else if (hb_parclen(3) > 0)
-    {
+    } else if (hb_parclen(3) > 0) {
       cFill = hb_parc(3)[0];
-    }
-    else
-    {
+    } else {
       cFill = 0x20;
     }
 
     auto sNewLineLen = hb_parclen(4);
-    if (sNewLineLen > 0)
-    {
+    if (sNewLineLen > 0) {
       pcNewLine = hb_parc(4);
-    }
-    else
-    {
+    } else {
       pcNewLine = hb_conNewLine();
       sNewLineLen = strlen(pcNewLine);
     }
-    if (sNewLineLen > 0)
-    {
+    if (sNewLineLen > 0) {
       cCR = *(pcNewLine);
-    }
-    else
-    {
+    } else {
       cCR = 13;
     }
 
-    if (HB_ISNUM(5))
-    {
+    if (HB_ISNUM(5)) {
       cTab = static_cast<char>(hb_parnl(5) % 256);
-    }
-    else if (hb_parclen(5) > 0)
-    {
+    } else if (hb_parclen(5) > 0) {
       cTab = hb_parc(5)[0];
-    }
-    else
-    {
+    } else {
       cTab = 0x09;
     }
 
     iIgnore141 = hb_parldef(6, 0);
 
-    if (sStrLen == 0)
-    {
+    if (sStrLen == 0) {
       hb_retc_null();
       return;
     }
@@ -314,45 +250,35 @@ HB_FUNC(TABPACK)
     sTabIndex = 0;
     sFillCount = 0;
 
-    while (sIndex < sStrLen)
-    {
+    while (sIndex < sStrLen) {
       auto cChar = static_cast<char>(*(pcString + sIndex));
 
-      if (cChar == cFill)
-      {
-        if (sTabIndex == sTabWidth - 1)
-        {
+      if (cChar == cFill) {
+        if (sTabIndex == sTabWidth - 1) {
           // we have just found the last character of a tabstop
           *(pcRet + sRetLen) = cTab;
           sRetLen++;
           sFillCount = 0;
           sTabIndex = 0;
           sIndex++;
-        }
-        else
-        {
+        } else {
           sFillCount++;
           sTabIndex++;
           sIndex++;
         }
-      }
-      else if (cChar == cTab)
-      {
+      } else if (cChar == cTab) {
         *(pcRet + sRetLen) = cTab;
         sRetLen++;
         // discard any fill characters before the tabstop
         sFillCount = 0;
         sTabIndex = 0;
         sIndex++;
-      }
-      else if (cChar == HB_CHAR_SOFT1 && !iIgnore141)
-      {
+      } else if (cChar == HB_CHAR_SOFT1 && !iIgnore141) {
         // soft carriage return
 
         // eventually not enough fill chars to fill a tab,
         // so copy them verbatim
-        for (; sFillCount > 0; sFillCount--)
-        {
+        for (; sFillCount > 0; sFillCount--) {
           *(pcRet + sRetLen) = cFill;
           sRetLen++;
         }
@@ -360,17 +286,13 @@ HB_FUNC(TABPACK)
         sRetLen++;
         sTabIndex = 0;
         sIndex++;
-      }
-      else if (cChar == cCR)
-      {
+      } else if (cChar == cCR) {
         // newline string ?
         if (sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen &&
-            ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex)
-        {
+            ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex) {
           // eventually not enough fill chars to fill a tab,
           // so copy them verbatim
-          for (; sFillCount > 0; sFillCount--)
-          {
+          for (; sFillCount > 0; sFillCount--) {
             *(pcRet + sRetLen) = cFill;
             sRetLen++;
           }
@@ -378,26 +300,20 @@ HB_FUNC(TABPACK)
           sRetLen += sNewLineLen;
           sIndex += sNewLineLen;
           sTabIndex = 0;
-        }
-        else
-        {
+        } else {
           *(pcRet + sRetLen) = cCR;
           sRetLen++;
           sIndex++;
           sTabIndex = 0;
         }
-      }
-      else
-      {
+      } else {
         // eventually not enough fill chars to fill a tab,
         // so copy them verbatim
-        for (; sFillCount > 0; sFillCount--)
-        {
+        for (; sFillCount > 0; sFillCount--) {
           *(pcRet + sRetLen) = cFill;
           sRetLen++;
           sTabIndex++;
-          if (sTabIndex == sTabWidth - 1)
-          {
+          if (sTabIndex == sTabWidth - 1) {
             sTabIndex = 0;
           }
         }
@@ -405,38 +321,30 @@ HB_FUNC(TABPACK)
         sRetLen++;
         sIndex++;
         sTabIndex++;
-        if (sTabIndex == sTabWidth - 1)
-        {
+        if (sTabIndex == sTabWidth - 1) {
           sTabIndex = 0;
         }
       }
     }
     // copy rest
-    for (; sFillCount > 0; sFillCount--)
-    {
+    for (; sFillCount > 0; sFillCount--) {
       *(pcRet + sRetLen) = cFill;
       sRetLen++;
     }
     hb_retclen(pcRet, sRetLen);
     hb_xfree(pcRet);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

@@ -62,46 +62,35 @@ static void do_charswap(int iSwitch)
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
   // param check
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sRetIndex = 0;
     int iShift, iMod;
     const char *pcSub;
 
-    if (sStrLen == 0)
-    {
-      if (iNoRet)
-      {
+    if (sStrLen == 0) {
+      if (iNoRet) {
         hb_ret();
-      }
-      else
-      {
+      } else {
         hb_retc_null();
       }
       return;
     }
 
-    if (iSwitch == DO_CHARSWAP_WORDSWAP)
-    {
+    if (iSwitch == DO_CHARSWAP_WORDSWAP) {
       iShift = 4;
-      if (hb_parl(2))
-      {
+      if (hb_parl(2)) {
         iSwitch = DO_CHARSWAP_WORDSWAP_CHARSWAP;
       }
-    }
-    else
-    {
+    } else {
       iShift = 2;
     }
 
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
 
-    for (pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift)
-    {
-      switch (iSwitch)
-      {
+    for (pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift) {
+      switch (iSwitch) {
       case DO_CHARSWAP_WORDSWAP:
         pcRet[sRetIndex++] = pcSub[2];
         pcRet[sRetIndex++] = pcSub[3];
@@ -120,62 +109,44 @@ static void do_charswap(int iSwitch)
     }
 
     // copy rest of string
-    if (iSwitch == DO_CHARSWAP_WORDSWAP || iSwitch == DO_CHARSWAP_WORDSWAP_CHARSWAP)
-    {
+    if (iSwitch == DO_CHARSWAP_WORDSWAP || iSwitch == DO_CHARSWAP_WORDSWAP_CHARSWAP) {
       iMod = sStrLen % 4;
-    }
-    else
-    {
+    } else {
       iMod = sStrLen % 2;
     }
 
-    for (pcSub = pcString + sStrLen - iMod; pcSub < pcString + sStrLen; pcSub++)
-    {
+    for (pcSub = pcString + sStrLen - iMod; pcSub < pcString + sStrLen; pcSub++) {
       pcRet[sRetIndex++] = *pcSub;
     }
 
     // return string
     hb_storclen(pcRet, sRetIndex, 1);
 
-    if (iNoRet)
-    {
+    if (iNoRet) {
       hb_retl(false);
-    }
-    else
-    {
+    } else {
       hb_retclen(pcRet, sRetIndex);
     }
     hb_xfree(pcRet);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
-      if (iSwitch == DO_CHARSWAP_CHARSWAP)
-      {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
+      if (iSwitch == DO_CHARSWAP_CHARSWAP) {
         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSWAP, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-      else
-      {
+      } else {
         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_WORDSWAP, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_retl(false);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

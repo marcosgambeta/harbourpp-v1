@@ -50,32 +50,24 @@
 
 HB_FUNC(ASCIISUM)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrSize = hb_parclen(1);
     HB_MAXUINT ulResult = 0;
-    for (HB_SIZE sPos = 0; sPos < sStrSize; sPos++)
-    {
+    for (HB_SIZE sPos = 0; sPos < sStrSize; sPos++) {
       ulResult += static_cast<HB_MAXUINT>(pcString[sPos]);
     }
     hb_retnint(ulResult);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ASCIISUM, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retnint(0);
     }
   }

@@ -60,115 +60,77 @@ HB_FUNC(BLANK)
   HB_BOOL bRef = HB_ISBYREF(1);
   HB_BOOL bRet = !ct_getref();
 
-  if (!pItem)
-  {
-    if (bRet)
-    {
+  if (!pItem) {
+    if (bRet) {
       hb_retl(false);
     }
-  }
-  else if (pItem->isTimeStamp())
-  {
-    if (bRef)
-    {
+  } else if (pItem->isTimeStamp()) {
+    if (bRef) {
       hb_stortdt(0, 0, 1);
     }
-    if (bRet)
-    {
+    if (bRet) {
       hb_rettdt(0, 0);
     }
-  }
-  else if (pItem->isDate())
-  {
-    if (bRef)
-    {
+  } else if (pItem->isDate()) {
+    if (bRef) {
       hb_stordl(0, 1);
     }
-    if (bRet)
-    {
+    if (bRet) {
       hb_retdl(0);
     }
-  }
-  else if (pItem->isNumber())
-  {
-    if (bRef)
-    {
+  } else if (pItem->isNumber()) {
+    if (bRef) {
       hb_stornl(0, 1);
     }
-    if (bRet)
-    {
+    if (bRet) {
       hb_retnl(0);
     }
-  }
-  else if (pItem->isString())
-  {
+  } else if (pItem->isString()) {
     auto pMode = hb_param(2, Harbour::Item::LOGICAL);
 
-    if (pMode && hb_itemGetL(pMode))
-    {
+    if (pMode && hb_itemGetL(pMode)) {
       auto nLen = hb_itemGetCLen(pItem);
       auto szResult = static_cast<char *>(hb_xgrab(nLen + 1));
 
-      if (nLen > 0)
-      {
+      if (nLen > 0) {
         hb_xmemset(szResult, ' ', nLen);
       }
-      if (bRef)
-      {
+      if (bRef) {
         hb_storclen(szResult, nLen, 1);
       }
-      if (bRet)
-      {
+      if (bRet) {
         hb_retclen_buffer(szResult, nLen);
-      }
-      else
-      {
+      } else {
         hb_xfree(szResult);
       }
-    }
-    else
-    {
-      if (bRef)
-      {
+    } else {
+      if (bRef) {
         hb_storc(nullptr, 1);
       }
-      if (bRet)
-      {
+      if (bRet) {
         hb_retc_null();
       }
     }
-  }
-  else if (pItem->isArray())
-  {
-    if (bRef)
-    {
+  } else if (pItem->isArray()) {
+    if (bRef) {
       hb_arraySize(pItem, 0);
     }
-    if (bRet)
-    {
+    if (bRet) {
       hb_reta(0);
     }
-  }
-  else if (pItem->isLogical())
-  {
-    if (bRef)
-    {
+  } else if (pItem->isLogical()) {
+    if (bRef) {
       hb_storl(false, 1);
     }
-    if (bRet)
-    {
+    if (bRet) {
+      hb_retl(false);
+    }
+  } else {
+    if (bRet) {
       hb_retl(false);
     }
   }
-  else
-  {
-    if (bRet)
-    {
-      hb_retl(false);
-    }
-  }
-  if (!bRet)
-  {
+  if (!bRet) {
     hb_ret();
   }
 }

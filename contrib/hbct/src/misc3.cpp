@@ -56,37 +56,29 @@ HB_FUNC(KBDSTAT)
 
   hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
 
-  if (gtInfo.pResult)
-  {
+  if (gtInfo.pResult) {
     auto iState = hb_itemGetNI(gtInfo.pResult);
 
     hb_itemRelease(gtInfo.pResult);
-    if (iState & HB_GTI_KBD_SHIFT)
-    {
+    if (iState & HB_GTI_KBD_SHIFT) {
       iRet |= 0x01;
     }
-    if (iState & HB_GTI_KBD_CTRL)
-    {
+    if (iState & HB_GTI_KBD_CTRL) {
       iRet |= 0x04;
     }
-    if (iState & HB_GTI_KBD_ALT)
-    {
+    if (iState & HB_GTI_KBD_ALT) {
       iRet |= 0x08;
     }
-    if (iState & HB_GTI_KBD_SCROLOCK)
-    {
+    if (iState & HB_GTI_KBD_SCROLOCK) {
       iRet |= 0x10;
     }
-    if (iState & HB_GTI_KBD_NUMLOCK)
-    {
+    if (iState & HB_GTI_KBD_NUMLOCK) {
       iRet |= 0x20;
     }
-    if (iState & HB_GTI_KBD_CAPSLOCK)
-    {
+    if (iState & HB_GTI_KBD_CAPSLOCK) {
       iRet |= 0x40;
     }
-    if (iState & HB_GTI_KBD_INSERT)
-    {
+    if (iState & HB_GTI_KBD_INSERT) {
       iRet |= 0x80;
     }
   }

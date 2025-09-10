@@ -103,20 +103,15 @@ const char *ct_at_exact_forward(const char *pcString, HB_SIZE sStrLen, const cha
 
   HB_SIZE sPos;
 
-  if (sMatchLen == 0 || sStrLen < sMatchLen)
-  {
+  if (sMatchLen == 0 || sStrLen < sMatchLen) {
     return nullptr;
   }
 
   sPos = hb_strAt(pcMatch, sMatchLen, pcString, sStrLen);
-  if (sPos == 0)
-  {
+  if (sPos == 0) {
     return nullptr;
-  }
-  else
-  {
-    if (psMatchStrLen != nullptr)
-    {
+  } else {
+    if (psMatchStrLen != nullptr) {
       *psMatchStrLen = sMatchLen;
     }
     return pcString + sPos - 1;
@@ -134,25 +129,19 @@ const char *ct_at_exact_backward(const char *pcString, HB_SIZE sStrLen, const ch
   HB_SIZE sIndex;
   const char *pcRet;
 
-  if (sMatchLen == 0 || sStrLen < sMatchLen)
-  {
+  if (sMatchLen == 0 || sStrLen < sMatchLen) {
     return nullptr;
   }
 
-  for (pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet--)
-  {
-    for (sIndex = 0; sIndex < sMatchLen; sIndex++)
-    {
-      if (*(pcRet + sIndex) != *(pcMatch + sIndex))
-      {
+  for (pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet--) {
+    for (sIndex = 0; sIndex < sMatchLen; sIndex++) {
+      if (*(pcRet + sIndex) != *(pcMatch + sIndex)) {
         break;
       }
     }
-    if (sIndex == sMatchLen)
-    {
+    if (sIndex == sMatchLen) {
       // last match found
-      if (psMatchStrLen != nullptr)
-      {
+      if (psMatchStrLen != nullptr) {
         *psMatchStrLen = sMatchLen;
       }
       return pcRet;
@@ -173,27 +162,21 @@ const char *ct_at_wildcard_forward(const char *pcString, HB_SIZE sStrLen, const 
   HB_SIZE sIndex;
   const char *pcRet, *pcStop;
 
-  if (sMatchLen == 0 || sStrLen < sMatchLen)
-  {
+  if (sMatchLen == 0 || sStrLen < sMatchLen) {
     return nullptr;
   }
 
   pcStop = pcString + sStrLen - sMatchLen;
-  for (pcRet = pcString; pcRet < pcStop; pcRet++)
-  {
-    for (sIndex = 0; sIndex < sMatchLen; sIndex++)
-    {
+  for (pcRet = pcString; pcRet < pcStop; pcRet++) {
+    for (sIndex = 0; sIndex < sMatchLen; sIndex++) {
       char c = *(pcMatch + sIndex);
 
-      if (c != cWildCard && c != *(pcRet + sIndex))
-      {
+      if (c != cWildCard && c != *(pcRet + sIndex)) {
         break;
       }
     }
-    if (sIndex == sMatchLen)
-    {
-      if (psMatchStrLen != nullptr)
-      {
+    if (sIndex == sMatchLen) {
+      if (psMatchStrLen != nullptr) {
         *psMatchStrLen = sMatchLen;
       }
       return pcRet;
@@ -214,27 +197,21 @@ const char *ct_at_wildcard_backward(const char *pcString, HB_SIZE sStrLen, const
   HB_SIZE sIndex;
   const char *pcRet;
 
-  if (sMatchLen == 0 || sStrLen < sMatchLen)
-  {
+  if (sMatchLen == 0 || sStrLen < sMatchLen) {
     return nullptr;
   }
 
-  for (pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet--)
-  {
-    for (sIndex = 0; sIndex < sMatchLen; sIndex++)
-    {
+  for (pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet--) {
+    for (sIndex = 0; sIndex < sMatchLen; sIndex++) {
       char c = *(pcMatch + sIndex);
 
-      if (c != cWildCard && c != *(pcRet + sIndex))
-      {
+      if (c != cWildCard && c != *(pcRet + sIndex)) {
         break;
       }
     }
-    if (sIndex == sMatchLen)
-    {
+    if (sIndex == sMatchLen) {
       // last match found
-      if (psMatchStrLen != nullptr)
-      {
+      if (psMatchStrLen != nullptr) {
         *psMatchStrLen = sMatchLen;
       }
       return pcRet;
@@ -256,21 +233,16 @@ const char *ct_at_charset_forward(const char *pcString, HB_SIZE sStrLen, const c
 
   *(psMatchedCharPos) = sCharSetLen;
 
-  if (sCharSetLen == 0 || sStrLen == 0)
-  {
+  if (sCharSetLen == 0 || sStrLen == 0) {
     return nullptr;
   }
 
   pcStop1 = pcString + sStrLen;
   pcStop2 = pcCharSet + sCharSetLen;
-  for (pcRet = pcString; pcRet < pcStop1; pcRet++)
-  {
-    for (pcSet = pcCharSet; pcSet < pcStop2; pcSet++)
-    {
-      if (*pcSet == *pcRet)
-      {
-        if (psMatchedCharPos != nullptr)
-        {
+  for (pcRet = pcString; pcRet < pcStop1; pcRet++) {
+    for (pcSet = pcCharSet; pcSet < pcStop2; pcSet++) {
+      if (*pcSet == *pcRet) {
+        if (psMatchedCharPos != nullptr) {
           *psMatchedCharPos = pcSet - pcCharSet;
         }
         return pcRet;
@@ -293,20 +265,15 @@ const char *ct_at_charset_backward(const char *pcString, HB_SIZE sStrLen, const 
 
   *(psMatchedCharPos) = sCharSetLen;
 
-  if (sCharSetLen == 0 || sStrLen == 0)
-  {
+  if (sCharSetLen == 0 || sStrLen == 0) {
     return nullptr;
   }
 
   pcStop = pcCharSet + sCharSetLen;
-  for (pcRet = pcString + sStrLen - 1; pcRet >= pcString; pcRet--)
-  {
-    for (pcSet = pcCharSet; pcSet < pcStop; pcSet++)
-    {
-      if (*pcSet == *pcRet)
-      {
-        if (psMatchedCharPos != nullptr)
-        {
+  for (pcRet = pcString + sStrLen - 1; pcRet >= pcString; pcRet--) {
+    for (pcSet = pcCharSet; pcSet < pcStop; pcSet++) {
+      if (*pcSet == *pcRet) {
+        if (psMatchedCharPos != nullptr) {
           *psMatchedCharPos = pcSet - pcCharSet;
         }
         return pcRet;
@@ -345,16 +312,12 @@ HB_FUNC(CSETREF)
 {
   hb_retl(ct_getref());
 
-  if (HB_ISLOG(1))
-  {
+  if (HB_ISLOG(1)) {
     ct_setref(hb_parl(1));
-  }
-  else if (hb_pcount() > 0)
-  { // 1 params, but is not logical !
+  } else if (hb_pcount() > 0) { // 1 params, but is not logical !
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETREF, nullptr, HB_ERR_FUNCNAME, 0,
                EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
     }
@@ -389,16 +352,12 @@ HB_FUNC(CSETATMUPA)
 {
   hb_retl(ct_getatmupa());
 
-  if (HB_ISLOG(1))
-  {
+  if (HB_ISLOG(1)) {
     ct_setatmupa(hb_parl(1));
-  }
-  else if (hb_pcount() > 0)
-  { // 1 params, but is not logical !
+  } else if (hb_pcount() > 0) { // 1 params, but is not logical !
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETATMUPA, nullptr, HB_ERR_FUNCNAME, 0,
                EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
     }
@@ -457,20 +416,15 @@ HB_FUNC(SETATLIKE)
 
   // set new mode if first parameter is CT_SETATLIKE_EXACT (==0)
   // or CT_SETATLIKE_WILDCARD (==1)
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto iNewMode = hb_parni(1);
 
-    if (iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD)
-    {
+    if (iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD) {
       ct_setatlike(iNewMode);
-    }
-    else
-    {
+    } else {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
@@ -478,32 +432,24 @@ HB_FUNC(SETATLIKE)
   }
 
   // set new wildcard character, if HB_ISCHAR(2) but ! HB_ISBYREF(2)
-  if (HB_ISCHAR(2))
-  {
-    if (HB_ISBYREF(2))
-    {
+  if (HB_ISCHAR(2)) {
+    if (HB_ISBYREF(2)) {
       // new behaviour: store the current wildcard char in second parameter
       char cResult;
 
       cResult = ct_getatlikechar();
       hb_storclen(&cResult, 1, 2);
-    }
-    else
-    {
+    } else {
       auto pcNewChar = hb_parc(2);
 
-      if (hb_parclen(2) > 0)
-      {
+      if (hb_parclen(2) > 0) {
         ct_setatlikechar(*pcNewChar);
       }
     }
-  }
-  else if (hb_pcount() > 1)
-  { // more than 2 params, but second is not string !
+  } else if (hb_pcount() > 1) { // more than 2 params, but second is not string !
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0,
                EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
     }

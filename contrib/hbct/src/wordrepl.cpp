@@ -57,8 +57,7 @@ HB_FUNC(WORDREPL)
   HB_SIZE sSearchLen, sReplaceLen;
 
   // param check
-  if ((sSearchLen = hb_parclen(1)) / 2 > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) / 2 > 0)
-  {
+  if ((sSearchLen = hb_parclen(1)) / 2 > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) / 2 > 0) {
     // get parameters
     auto pcSearch = hb_parc(1);
     auto pcString = hb_parc(2);
@@ -69,48 +68,37 @@ HB_FUNC(WORDREPL)
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
     hb_xmemcpy(pcRet, pcString, sStrLen);
 
-    for (HB_SIZE sIndex = 0; sIndex < (sSearchLen & 0xFFFFFFFE); sIndex += 2)
-    {
+    for (HB_SIZE sIndex = 0; sIndex < (sSearchLen & 0xFFFFFFFE); sIndex += 2) {
 
       HB_SIZE sMatchStrLen;
       const char *pc;
       HB_SIZE sReplIndex = sIndex;
 
-      if (sReplIndex > (sReplaceLen & 0xFFFFFFFE))
-      {
+      if (sReplIndex > (sReplaceLen & 0xFFFFFFFE)) {
         sReplIndex = (sReplaceLen & 0xFFFFFFFE);
       }
 
       pc = pcString;
-      while ((pc = ct_at_exact_forward(pc, sStrLen - (pc - pcString), pcSearch + sIndex, 2, &sMatchStrLen)) != nullptr)
-      {
-        if (iMode)
-        {
+      while ((pc = ct_at_exact_forward(pc, sStrLen - (pc - pcString), pcSearch + sIndex, 2, &sMatchStrLen)) !=
+             nullptr) {
+        if (iMode) {
           // always replace
           *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
           *(pcRet + (pc - pcString) + 1) = *(pcReplace + sReplIndex + 1);
 
-          if (iMultiPass)
-          {
+          if (iMultiPass) {
             pc++;
-          }
-          else
-          {
+          } else {
             pc += 2;
           }
-        }
-        else
-        {
+        } else {
           // replace only if pc is an even position
-          if (((pc - pcString) % 2) == 0)
-          {
+          if (((pc - pcString) % 2) == 0) {
             *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
             *(pcRet + (pc - pcString) + 1) = *(pcReplace + sReplIndex + 1);
             // parse pcString in steps of two characters
             pc += 2;
-          }
-          else
-          {
+          } else {
             // we are on an odd position, so add only 1 to pc
             pc++;
           }
@@ -121,41 +109,28 @@ HB_FUNC(WORDREPL)
     // return string
     hb_storclen(pcRet, sStrLen, 2);
 
-    if (iNoRet)
-    {
+    if (iNoRet) {
       hb_retl(false);
       hb_xfree(pcRet);
-    }
-    else
-    {
+    } else {
       hb_retclen_buffer(pcRet, sStrLen);
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_WORDREPL, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_retl(false);
-    }
-    else if (HB_ISCHAR(2))
-    {
+    } else if (HB_ISCHAR(2)) {
       hb_retclen(hb_parc(2), hb_parclen(2));
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

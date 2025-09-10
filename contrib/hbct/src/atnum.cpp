@@ -58,8 +58,7 @@
 // helper function
 static void do_atnum(int iSwitch)
 {
-  if (HB_ISCHAR(1) && HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(1) && HB_ISCHAR(2)) {
     auto pcStringToMatch = hb_parc(1);
     auto sStrToMatchLen = hb_parclen(1);
     auto pcString = hb_parc(2);
@@ -72,17 +71,13 @@ static void do_atnum(int iSwitch)
     HB_SIZE nCounter;
     const char *pc = nullptr;
 
-    if (sIgnore >= sStrLen)
-    {
-      switch (iSwitch)
-      {
-      case DO_ATNUM_AFTERATNUM:
-      {
+    if (sIgnore >= sStrLen) {
+      switch (iSwitch) {
+      case DO_ATNUM_AFTERATNUM: {
         // AFTERATNUM
         int iArgErrorMode = ct_getargerrormode();
 
-        if (iArgErrorMode != CT_ARGERR_IGNORE)
-        {
+        if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_AFTERATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                    EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
         }
@@ -90,13 +85,11 @@ static void do_atnum(int iSwitch)
         hb_retc_null();
         break;
       }
-      case DO_ATNUM_BEFORATNUM:
-      {
+      case DO_ATNUM_BEFORATNUM: {
         // BEFORATNUM
         int iArgErrorMode = ct_getargerrormode();
 
-        if (iArgErrorMode != CT_ARGERR_IGNORE)
-        {
+        if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_BEFORATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                    EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
         }
@@ -104,13 +97,11 @@ static void do_atnum(int iSwitch)
         hb_retc_null();
         break;
       }
-      case DO_ATNUM_ATNUM:
-      {
+      case DO_ATNUM_ATNUM: {
         // ATNUM
         int iArgErrorMode = ct_getargerrormode();
 
-        if (iArgErrorMode != CT_ARGERR_IGNORE)
-        {
+        if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                    EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
         }
@@ -120,16 +111,13 @@ static void do_atnum(int iSwitch)
       }
       }
       return;
-    }
-    else
-    {
+    } else {
       pcString += sIgnore;
       sStrLen -= sIgnore;
     }
 
     // nth match or last match ?
-    if (HB_ISNUM(3) && (nCounter = hb_parns(3)) != 0)
-    {
+    if (HB_ISNUM(3) && (nCounter = hb_parns(3)) != 0) {
       // find the <nCounter>th match
       const char *pcSubStr;
       HB_SIZE sSubStrLen;
@@ -138,10 +126,8 @@ static void do_atnum(int iSwitch)
       pcSubStr = pcString;
       sSubStrLen = sStrLen;
 
-      while (nMatchCounter < nCounter)
-      {
-        switch (iAtLike)
-        {
+      while (nMatchCounter < nCounter) {
+        switch (iAtLike) {
         case CT_SETATLIKE_EXACT:
           pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
           break;
@@ -154,12 +140,10 @@ static void do_atnum(int iSwitch)
           pc = nullptr;
         }
 
-        if (pc == nullptr)
-        {
+        if (pc == nullptr) {
           // no match found; if this happens at this point,
           // there are no <nCounter> matches, so return an empty string
-          switch (iSwitch)
-          {
+          switch (iSwitch) {
           case DO_ATNUM_AFTERATNUM:
           case DO_ATNUM_BEFORATNUM:
             // AFTERATNUM
@@ -176,23 +160,17 @@ static void do_atnum(int iSwitch)
         }
         nMatchCounter++;
 
-        if (iMultiPass)
-        {
+        if (iMultiPass) {
           pcSubStr = pc + 1;
-        }
-        else
-        {
+        } else {
           pcSubStr = pc + sMatchStrLen;
         }
         sSubStrLen = sStrLen - (pcSubStr - pcString);
       }
-    }
-    else
-    {
+    } else {
       // we have to find the last match and return the
       // string after that last match
-      switch (iAtLike)
-      {
+      switch (iAtLike) {
       case CT_SETATLIKE_EXACT:
         pc = ct_at_exact_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
         break;
@@ -204,11 +182,9 @@ static void do_atnum(int iSwitch)
       default:
         pc = nullptr;
       }
-      if (pc == nullptr)
-      {
+      if (pc == nullptr) {
         // no matches found
-        switch (iSwitch)
-        {
+        switch (iSwitch) {
         case DO_ATNUM_AFTERATNUM:
         case DO_ATNUM_BEFORATNUM:
           // AFTERATNUM
@@ -225,16 +201,12 @@ static void do_atnum(int iSwitch)
       }
     }
 
-    switch (iSwitch)
-    {
+    switch (iSwitch) {
     case DO_ATNUM_AFTERATNUM:
       // AFTERATNUM
-      if (pc + sMatchStrLen >= pcString + sStrLen)
-      {
+      if (pc + sMatchStrLen >= pcString + sStrLen) {
         hb_retc_null();
-      }
-      else
-      {
+      } else {
         hb_retclen(pc + sMatchStrLen, sStrLen - (pc + sMatchStrLen - pcString));
       }
       break;
@@ -249,53 +221,40 @@ static void do_atnum(int iSwitch)
       hb_retns(pc - (pcString - sIgnore) + 1);
       break;
     }
-  }
-  else
-  {
-    switch (iSwitch)
-    {
+  } else {
+    switch (iSwitch) {
     case DO_ATNUM_AFTERATNUM:
-    case DO_ATNUM_BEFORATNUM:
-    {
+    case DO_ATNUM_BEFORATNUM: {
       // AFTERATNUM
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                 iSwitch == DO_ATNUM_AFTERATNUM ? CT_ERROR_AFTERATNUM : CT_ERROR_BEFORATNUM, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if (pSubst != nullptr)
-      {
+      if (pSubst != nullptr) {
         hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
         hb_retc_null();
       }
       break;
     }
-    case DO_ATNUM_ATNUM:
-    {
+    case DO_ATNUM_ATNUM: {
       // ATNUM
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME,
                                 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if (pSubst != nullptr)
-      {
+      if (pSubst != nullptr) {
         hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
         hb_retns(0);
       }
       break;

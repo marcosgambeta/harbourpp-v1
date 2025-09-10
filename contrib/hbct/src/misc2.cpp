@@ -56,58 +56,38 @@ HB_FUNC(COMPLEMENT)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem != nullptr)
-  {
-    if (pItem->isString())
-    {
+  if (pItem != nullptr) {
+    if (pItem->isString()) {
       auto nLen = hb_itemGetCLen(pItem);
 
-      if (nLen > 0)
-      {
+      if (nLen > 0) {
         auto szSrc = hb_itemGetCPtr(pItem);
         auto szBuffer = static_cast<char *>(hb_xgrab(nLen + 1));
 
-        for (HB_SIZE nPos = 0; nPos < nLen; nPos++)
-        {
+        for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
           szBuffer[nPos] = ~szSrc[nPos];
         }
         hb_retclen_buffer(szBuffer, nLen);
-      }
-      else
-      {
+      } else {
         hb_retc_null();
       }
-    }
-    else if (pItem->isDate())
-    {
+    } else if (pItem->isDate()) {
       hb_retdl(4537847 - hb_itemGetDL(pItem));
-    }
-    else if (pItem->isTimeStamp())
-    {
+    } else if (pItem->isTimeStamp()) {
       hb_rettd(4537847.0 - hb_itemGetTD(pItem));
-    }
-    else if (pItem->isNumInt())
-    {
+    } else if (pItem->isNumInt()) {
       hb_retnint(-hb_itemGetNInt(pItem));
-    }
-    else if (pItem->isNumeric())
-    {
+    } else if (pItem->isNumeric()) {
       int iWidth, iDec;
       auto dValue = hb_itemGetND(pItem);
       hb_itemGetNLen(pItem, &iWidth, &iDec);
       hb_retndlen(-dValue, iWidth, iDec);
-    }
-    else if (pItem->isLogical())
-    {
+    } else if (pItem->isLogical()) {
       hb_retl(!hb_itemGetL(pItem));
-    }
-    else
-    {
+    } else {
       hb_ret();
     }
-  }
-  else
-  {
+  } else {
     hb_ret();
   }
 }

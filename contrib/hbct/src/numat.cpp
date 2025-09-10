@@ -50,8 +50,7 @@
 
 HB_FUNC(NUMAT)
 {
-  if (HB_ISCHAR(1) && HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(1) && HB_ISCHAR(2)) {
     auto pcStringToMatch = hb_parc(1);
     auto sStrToMatchLen = hb_parclen(1);
     auto pcString = hb_parc(2);
@@ -66,21 +65,17 @@ HB_FUNC(NUMAT)
     // eventually ignore some characters
     sIgnore = hb_parnsdef(3, 0);
 
-    if (sIgnore >= sStrLen)
-    {
+    if (sIgnore >= sStrLen) {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
       hb_retni(0);
       return;
-    }
-    else
-    {
+    } else {
       pcString += sIgnore;
       sStrLen -= sIgnore;
     }
@@ -89,10 +84,8 @@ HB_FUNC(NUMAT)
     pcSubStr = pcString;
     sSubStrLen = sStrLen;
 
-    do
-    {
-      switch (iAtLike)
-      {
+    do {
+      switch (iAtLike) {
       case CT_SETATLIKE_EXACT:
         pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
         break;
@@ -105,36 +98,27 @@ HB_FUNC(NUMAT)
         pc = nullptr;
       }
       nCounter++;
-      if (iMultiPass)
-      {
+      if (iMultiPass) {
         pcSubStr = pc + 1;
-      }
-      else
-      {
+      } else {
         pcSubStr = pc + sMatchStrLen;
       }
       sSubStrLen = sStrLen - (pcSubStr - pcString);
     } while (pc != nullptr);
 
     hb_retns(nCounter - 1);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retni(0);
     }
   }

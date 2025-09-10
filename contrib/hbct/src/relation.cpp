@@ -50,8 +50,7 @@
 
 HB_FUNC(CHARRELA)
 {
-  if (HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4))
-  {
+  if (HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4)) {
     auto pcStringToMatch1 = hb_parc(1);
     auto sStrToMatchLen1 = hb_parclen(1);
     auto pcString1 = hb_parc(2);
@@ -66,8 +65,7 @@ HB_FUNC(CHARRELA)
     HB_SIZE sMatchStrLen;
 
     // check for empty strings
-    if (sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0)
-    {
+    if (sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0) {
       hb_retns(0);
       return;
     }
@@ -78,57 +76,41 @@ HB_FUNC(CHARRELA)
     // NOTE: this algorithm is not the best since the search that gave
     // the larger relative position in the step before is repeated;
     // try a search algorithm alternating between both strings
-    while (sOffset1 < sStrLen1 && sOffset2 < sStrLen2)
-    {
+    while (sOffset1 < sStrLen1 && sOffset2 < sStrLen2) {
       pc1 = ct_at_exact_forward(pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1,
                                 &sMatchStrLen);
       pc2 = ct_at_exact_forward(pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2,
                                 &sMatchStrLen);
-      if (pc1 != nullptr && pc2 != nullptr)
-      {
-        if (pc1 - pcString1 == pc2 - pcString2)
-        {
+      if (pc1 != nullptr && pc2 != nullptr) {
+        if (pc1 - pcString1 == pc2 - pcString2) {
           // correlation found
           hb_retns((pc1 - pcString1) + 1);
           return;
-        }
-        else
-        {
-          if (pc1 - pcString1 > pc2 - pcString2)
-          {
+        } else {
+          if (pc1 - pcString1 > pc2 - pcString2) {
             sOffset1 = sOffset2 = pc1 - pcString1;
-          }
-          else
-          {
+          } else {
             sOffset1 = sOffset2 = pc2 - pcString2;
           }
         }
-      }
-      else
-      {
+      } else {
         sOffset1 = sOffset2 = sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2;
       }
     }
 
     hb_retns(0);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARRELA, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retns(0);
     }
   }
@@ -138,8 +120,7 @@ HB_FUNC(CHARRELREP)
 {
   int iNoRet = ct_getref() && HB_ISBYREF(4);
 
-  if (HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) && HB_ISCHAR(5))
-  {
+  if (HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) && HB_ISCHAR(5)) {
     auto pcStringToMatch1 = hb_parc(1);
     auto sStrToMatchLen1 = hb_parclen(1);
     auto pcString1 = hb_parc(2);
@@ -155,14 +136,10 @@ HB_FUNC(CHARRELREP)
     HB_SIZE sMatchStrLen;
 
     // check for empty strings
-    if (sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0 || sReplaceLen == 0 || sStrLen2 == 0)
-    {
-      if (iNoRet)
-      {
+    if (sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0 || sReplaceLen == 0 || sStrLen2 == 0) {
+      if (iNoRet) {
         hb_ret();
-      }
-      else
-      {
+      } else {
         hb_retclen(pcString2, sStrLen2);
       }
       return;
@@ -177,88 +154,64 @@ HB_FUNC(CHARRELREP)
     // NOTE: this algorithm is not the best since the search that gave
     // the larger relative position in the step before is repeated;
     // try a search algorithm alternating between both strings
-    while (sOffset1 < sStrLen1 && sOffset2 < sStrLen2)
-    {
+    while (sOffset1 < sStrLen1 && sOffset2 < sStrLen2) {
       pc1 = ct_at_exact_forward(pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1,
                                 &sMatchStrLen);
       pc2 = ct_at_exact_forward(pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2,
                                 &sMatchStrLen);
-      if (pc1 != nullptr && pc2 != nullptr)
-      {
-        if (pc1 - pcString1 == pc2 - pcString2)
-        {
+      if (pc1 != nullptr && pc2 != nullptr) {
+        if (pc1 - pcString1 == pc2 - pcString2) {
           // correlation found -> start replacement
 
-          for (HB_SIZE sCurr = 1; sCurr <= sStrToMatchLen1; sCurr++)
-          {
+          for (HB_SIZE sCurr = 1; sCurr <= sStrToMatchLen1; sCurr++) {
             // check if pcString2 is long enough
-            if ((pc2 - pcString2) + sCurr >= sStrLen2)
-            {
+            if ((pc2 - pcString2) + sCurr >= sStrLen2) {
               HB_SIZE sStr2Offset, sReplOffset;
 
               sStr2Offset = sStrToMatchLen2 < sCurr ? sStrToMatchLen2 : sCurr;
               sReplOffset = sReplaceLen < sCurr ? sReplaceLen : sCurr;
 
               // do the characters in pcString2 and pcStrToMatch2 match ?
-              if (*(pc2 + sCurr - 1) == *(pcStringToMatch2 + sStr2Offset - 1))
-              {
+              if (*(pc2 + sCurr - 1) == *(pcStringToMatch2 + sStr2Offset - 1)) {
                 *(pcRet + (pc2 - pcString2) + sCurr - 1) = *(pcReplace + sReplOffset - 1);
               }
             }
           }
           sOffset1 = sOffset2 = (pc1 - pcString1) + 1;
-        }
-        else
-        {
-          if (pc1 - pcString1 > pc2 - pcString2)
-          {
+        } else {
+          if (pc1 - pcString1 > pc2 - pcString2) {
             sOffset1 = sOffset2 = pc1 - pcString1;
-          }
-          else
-          {
+          } else {
             sOffset1 = sOffset2 = pc2 - pcString2;
           }
         }
-      }
-      else
-      {
+      } else {
         sOffset1 = sOffset2 = sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2;
       }
     }
 
     hb_storclen(pcRet, sStrLen2, 4);
 
-    if (iNoRet)
-    {
+    if (iNoRet) {
       hb_xfree(pcRet);
       hb_ret();
-    }
-    else
-    {
+    } else {
       hb_retclen_buffer(pcRet, sStrLen2);
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARRELREP, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_ret();
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

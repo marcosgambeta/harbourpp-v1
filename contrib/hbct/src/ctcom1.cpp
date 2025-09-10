@@ -54,15 +54,11 @@ static int hb_ctComCharParam(int iParam)
 {
   auto pszParam = hb_parc(iParam);
 
-  if (pszParam)
-  {
-    if (hb_parclen(iParam) > 0)
-    {
+  if (pszParam) {
+    if (hb_parclen(iParam) > 0) {
       return static_cast<unsigned char>(pszParam[0]);
     }
-  }
-  else if (HB_ISNUM(iParam))
-  {
+  } else if (HB_ISNUM(iParam)) {
     return static_cast<unsigned char>(hb_parni(iParam));
   }
 
@@ -74,12 +70,9 @@ static void hb_ctComTestMSR(int iLine)
   HB_BOOL fResult;
   int iMSR;
 
-  if (hb_comMSR(hb_parni(1), &iMSR) != -1)
-  {
+  if (hb_comMSR(hb_parni(1), &iMSR) != -1) {
     fResult = (iMSR & iLine) != 0;
-  }
-  else
-  {
+  } else {
     fResult = false;
   }
 
@@ -139,14 +132,10 @@ HB_FUNC(COM_RTS)
 {
   int iMCR, iClr = 0, iSet = 0;
 
-  if (HB_ISLOG(2))
-  {
-    if (hb_parl(2))
-    {
+  if (HB_ISLOG(2)) {
+    if (hb_parl(2)) {
       iSet = HB_COM_MCR_RTS;
-    }
-    else
-    {
+    } else {
       iClr = HB_COM_MCR_RTS;
     }
   }
@@ -159,14 +148,10 @@ HB_FUNC(COM_DTR)
 {
   int iMCR, iClr = 0, iSet = 0;
 
-  if (HB_ISLOG(2))
-  {
-    if (hb_parl(2))
-    {
+  if (HB_ISLOG(2)) {
+    if (hb_parl(2)) {
       iSet = HB_COM_MCR_DTR;
-    }
-    else
-    {
+    } else {
       iClr = HB_COM_MCR_DTR;
     }
   }
@@ -179,18 +164,14 @@ HB_FUNC(COM_MCR)
 {
   int iMCR, iClr, iSet;
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     iClr = 0xff;
     iSet = hb_parni(2) & 0xff;
-  }
-  else
-  {
+  } else {
     iClr = iSet = 0;
   }
 
-  if (hb_comMCR(hb_parni(1), &iMCR, iClr, iSet) == -1)
-  {
+  if (hb_comMCR(hb_parni(1), &iMCR, iClr, iSet) == -1) {
     iMCR = MCR_ERROR;
   }
 
@@ -202,8 +183,7 @@ HB_FUNC(COM_MSR)
 {
   int iMSR;
 
-  if (hb_comMSR(hb_parni(1), &iMSR) == -1)
-  {
+  if (hb_comMSR(hb_parni(1), &iMSR) == -1) {
     iMSR = MSR_ERROR;
   }
 
@@ -215,8 +195,7 @@ HB_FUNC(COM_LSR)
 {
   int iLSR;
 
-  if (hb_comLSR(hb_parni(1), &iLSR) == -1)
-  {
+  if (hb_comLSR(hb_parni(1), &iLSR) == -1) {
     iLSR = LSR_ERROR;
   }
 
@@ -236,16 +215,13 @@ HB_FUNC(COM_HARD)
   int iFlow, iMask;
   HB_BOOL fResult = false;
 
-  if (hb_comFlowControl(iPort, &iFlow, -1) != -1)
-  {
+  if (hb_comFlowControl(iPort, &iFlow, -1) != -1) {
     iMask = hb_parl(3) ? (HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR) : (HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS);
     fResult = (iFlow & iMask) == iMask;
 
-    if (HB_ISLOG(2))
-    {
+    if (HB_ISLOG(2)) {
       iFlow &= ~(HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR | HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS);
-      if (hb_parl(2))
-      {
+      if (hb_parl(2)) {
         iFlow |= iMask;
       }
       hb_comFlowControl(iPort, nullptr, iFlow);
@@ -261,25 +237,19 @@ HB_FUNC(COM_SOFT)
   int iFlow, iMask;
   HB_BOOL fResult = false;
 
-  if (hb_comFlowControl(iPort, &iFlow, -1) != -1)
-  {
+  if (hb_comFlowControl(iPort, &iFlow, -1) != -1) {
     iMask = (HB_COM_FLOW_XON | HB_COM_FLOW_XOFF);
     fResult = (iFlow & iMask) == iMask;
 
-    if (HB_ISLOG(2))
-    {
-      if (hb_parl(2))
-      {
+    if (HB_ISLOG(2)) {
+      if (hb_parl(2)) {
         iFlow |= iMask;
-      }
-      else
-      {
+      } else {
         iFlow &= ~iMask;
       }
       hb_comFlowControl(iPort, nullptr, iFlow);
     }
-    if (hb_pcount() > 2)
-    {
+    if (hb_pcount() > 2) {
       hb_comFlowChars(iPort, hb_ctComCharParam(3), hb_ctComCharParam(4));
     }
   }
@@ -293,14 +263,12 @@ HB_FUNC(COM_SOFT_R)
   auto iPort = hb_parni(1);
   int iMode;
 
-  if (HB_ISLOG(2))
-  {
+  if (HB_ISLOG(2)) {
     hb_comFlowSet(iPort, HB_COM_FL_SOFT | (hb_parl(2) ? HB_COM_FL_OOFF : HB_COM_FL_OON));
   }
 
   iMode = hb_comOutputState(iPort);
-  if (iMode > 0)
-  {
+  if (iMode > 0) {
     fResult = (iMode & HB_COM_TX_XOFF) != 0;
   }
 
@@ -313,8 +281,7 @@ HB_FUNC(COM_SOFT_S)
   HB_BOOL fResult = false;
   int iMode = hb_comInputState(hb_parni(1));
 
-  if (iMode > 0)
-  {
+  if (iMode > 0) {
     fResult = (iMode & HB_COM_RX_XOFF) != 0;
   }
 
@@ -338,22 +305,17 @@ HB_FUNC(COM_SMODE)
 {
   int iMode = hb_comOutputState(hb_parni(1)), iResult = 0;
 
-  if (iMode > 0)
-  {
-    if (iMode & HB_COM_TX_EMPTY)
-    {
+  if (iMode > 0) {
+    if (iMode & HB_COM_TX_EMPTY) {
       iResult |= SMODE_EMPTY;
     }
-    if (iMode & HB_COM_TX_XOFF)
-    {
+    if (iMode & HB_COM_TX_XOFF) {
       iResult |= SMODE_SOFT;
     }
-    if (iMode & (HB_COM_TX_CTS | HB_COM_TX_DSR | HB_COM_TX_DCD))
-    {
+    if (iMode & (HB_COM_TX_CTS | HB_COM_TX_DSR | HB_COM_TX_DCD)) {
       iResult |= SMODE_HARD;
     }
-    if (iMode & HB_COM_TX_RFLUSH)
-    {
+    if (iMode & HB_COM_TX_RFLUSH) {
       iResult |= SMODE_RFLUSH;
     }
   }
@@ -426,48 +388,33 @@ HB_FUNC(COM_READ)
 
   // TODO: add support for <lNoDelete>
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     lLen = hb_parnl(2);
-  }
-  else
-  {
+  } else {
     lLen = hb_comInputCount(iPort);
-    if (lLen < static_cast<long>(sizeof(buffer) >> 1))
-    {
+    if (lLen < static_cast<long>(sizeof(buffer) >> 1)) {
       lLen = sizeof(buffer);
-    }
-    else
-    {
+    } else {
       lLen <<= 2;
     }
   }
-  if (lLen <= static_cast<long>(sizeof(buffer)))
-  {
+  if (lLen <= static_cast<long>(sizeof(buffer))) {
     data = buffer;
-  }
-  else
-  {
+  } else {
     data = static_cast<char *>(hb_xgrab(lLen + 1));
   }
 
   lRecv = hb_comRecv(iPort, buffer, lLen, 0);
-  if (lRecv < 0)
-  {
+  if (lRecv < 0) {
     lRecv = 0;
   }
 
-  if (data == buffer)
-  {
+  if (data == buffer) {
     hb_retclen(data, lRecv);
-  }
-  else if (lLen > 16 && (lLen >> 2) > lRecv)
-  {
+  } else if (lLen > 16 && (lLen >> 2) > lRecv) {
     hb_retclen(data, lRecv);
     hb_xfree(data);
-  }
-  else
-  {
+  } else {
     hb_retclen_buffer(data, lRecv);
   }
 }
@@ -481,22 +428,17 @@ HB_FUNC(COM_SEND)
 
   // TODO: add automatic drain call for ports open without send buffer
 
-  if (data)
-  {
+  if (data) {
     lLen = static_cast<long>(hb_parclen(2));
-  }
-  else if (HB_ISNUM(2))
-  {
+  } else if (HB_ISNUM(2)) {
     buffer = static_cast<unsigned char>(hb_parni(2));
     data = &buffer;
     lLen = 1;
   }
 
-  if (lLen)
-  {
+  if (lLen) {
     long lResult = hb_comSend(hb_parni(1), data, lLen, 0);
-    if (lResult > 0)
-    {
+    if (lResult > 0) {
       lLen -= lResult;
     }
   }
@@ -542,8 +484,7 @@ HB_FUNC(COM_DEVNAME)
   char buffer[HB_COM_DEV_NAME_MAX];
 
   hb_retc(hb_comGetDevice(iPort, buffer, sizeof(buffer)));
-  if (szDevName)
-  {
+  if (szDevName) {
     hb_comSetDevice(iPort, szDevName);
   }
 }

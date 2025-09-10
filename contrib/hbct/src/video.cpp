@@ -60,29 +60,22 @@ HB_FUNC(VGAPALETTE)
 {
   int attr;
 
-  if (hb_pcount() < 4)
-  {
+  if (hb_pcount() < 4) {
     // Resetting palette registers to default values is not supported yet
     hb_retl(false);
     return;
   }
 
   auto color_string = hb_parc(1);
-  if (color_string)
-  {
+  if (color_string) {
     attr = hb_gtColorToN(color_string);
-  }
-  else if (HB_ISNUM(1))
-  {
+  } else if (HB_ISNUM(1)) {
     attr = hb_parni(1);
-  }
-  else
-  {
+  } else {
     attr = -1;
   }
 
-  if (attr < 0 || attr >= 16)
-  {
+  if (attr < 0 || attr >= 16) {
     // An invalid argument
     hb_retl(false);
     return;
@@ -111,20 +104,16 @@ HB_FUNC(SETFONT)
   int count = 256;
   int height = 16;
 
-  if (!area)
-  {
+  if (!area) {
     area = 1;
   }
-  if (HB_ISNUM(3))
-  {
+  if (HB_ISNUM(3)) {
     offset = hb_parni(3);
   }
-  if (HB_ISNUM(4))
-  {
+  if (HB_ISNUM(4)) {
     count = hb_parni(4);
   }
-  if (HB_ISLOG(3) && hb_parl(3) && count != 0)
-  {
+  if (HB_ISLOG(3) && hb_parl(3) && count != 0) {
     height = len / count;
   }
 

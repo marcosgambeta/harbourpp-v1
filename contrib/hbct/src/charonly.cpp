@@ -62,8 +62,7 @@
 static void do_charonly(int iSwitch)
 {
   // param check
-  if (HB_ISCHAR(1) && HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(1) && HB_ISCHAR(2)) {
     auto pcString = hb_parc(2);
     auto sStrLen = hb_parclen(2);
     auto pcOnlySet = hb_parc(1);
@@ -72,12 +71,10 @@ static void do_charonly(int iSwitch)
     int iShift;
 
     // check for zero-length strings
-    switch (iSwitch)
-    {
+    switch (iSwitch) {
     case DO_CHARONLY_CHARONLY:
     case DO_CHARONLY_WORDONLY:
-      if (sStrLen == 0 || sOnlySetLen == 0)
-      {
+      if (sStrLen == 0 || sOnlySetLen == 0) {
         hb_retc_null();
         return;
       }
@@ -85,64 +82,51 @@ static void do_charonly(int iSwitch)
 
     case DO_CHARONLY_CHARREM:
     case DO_CHARONLY_WORDREM:
-      if (sStrLen == 0)
-      {
+      if (sStrLen == 0) {
         hb_retc_null();
         return;
       }
-      if (sOnlySetLen == 0)
-      {
+      if (sOnlySetLen == 0) {
         hb_retclen(pcString, sStrLen);
         return;
       }
       break;
     }
 
-    if (iSwitch == DO_CHARONLY_WORDONLY || iSwitch == DO_CHARONLY_WORDREM)
-    {
+    if (iSwitch == DO_CHARONLY_WORDONLY || iSwitch == DO_CHARONLY_WORDREM) {
       iShift = 2;
-    }
-    else
-    {
+    } else {
       iShift = 1;
     }
 
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
 
-    for (const char *pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift)
-    {
+    for (const char *pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift) {
       const char *pc = ct_at_exact_forward(pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr);
       HB_BOOL fBool = (pc != nullptr && ((pc - pcOnlySet) % iShift) == 0);
       if (fBool ? iSwitch == DO_CHARONLY_CHARONLY || iSwitch == DO_CHARONLY_WORDONLY
-                : iSwitch == DO_CHARONLY_CHARREM || iSwitch == DO_CHARONLY_WORDREM)
-      {
-        for (pc = pcSub; pc < pcSub + iShift; pc++)
-        {
+                : iSwitch == DO_CHARONLY_CHARREM || iSwitch == DO_CHARONLY_WORDREM) {
+        for (pc = pcSub; pc < pcSub + iShift; pc++) {
           pcRet[sRetStrLen++] = *pc;
         }
       }
     }
 
-    // copy last character if string length is odd 
-    if (iShift == 2 && sStrLen % 2 == 1)
-    {
+    // copy last character if string length is odd
+    if (iShift == 2 && sStrLen % 2 == 1) {
       pcRet[sRetStrLen++] = pcString[sStrLen - 1];
     }
 
     hb_retclen(pcRet, sRetStrLen);
     hb_xfree(pcRet);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       int iError = 0;
 
-      switch (iSwitch)
-      {
+      switch (iSwitch) {
       case DO_CHARONLY_CHARONLY:
         iError = CT_ERROR_CHARONLY;
         break;
@@ -163,12 +147,9 @@ static void do_charonly(int iSwitch)
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

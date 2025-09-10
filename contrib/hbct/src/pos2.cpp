@@ -52,34 +52,25 @@ HB_FUNC(POSCHAR)
 {
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  if (hb_parclen(1) > 0)
-  {
-    if (hb_parclen(2) > 0 || HB_ISNUM(2))
-    {
+  if (hb_parclen(1) > 0) {
+    if (hb_parclen(2) > 0 || HB_ISNUM(2)) {
       auto pcString = hb_parc(1);
       auto sStrLen = hb_parclen(1);
       char cReplace;
       HB_SIZE sPosition;
 
-      if (HB_ISCHAR(2))
-      {
+      if (HB_ISCHAR(2)) {
         cReplace = *(hb_parc(2));
-      }
-      else
-      {
+      } else {
         cReplace = static_cast<char>(hb_parns(2) % 256);
       }
 
-      if (HB_ISNUM(3))
-      {
+      if (HB_ISNUM(3)) {
         sPosition = hb_parns(3);
-        if (sPosition == 0)
-        {
+        if (sPosition == 0) {
           sPosition = sStrLen;
         }
-      }
-      else
-      {
+      } else {
         sPosition = sStrLen;
       }
 
@@ -89,62 +80,43 @@ HB_FUNC(POSCHAR)
 
       hb_storclen(pcRet, sStrLen, 1);
 
-      if (iNoRet)
-      {
+      if (iNoRet) {
         hb_ret();
         hb_xfree(pcRet);
-      }
-      else
-      {
+      } else {
         hb_retclen_buffer(pcRet, sStrLen);
       }
-    }
-    else
-    {
+    } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSCHAR, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if (pSubst != nullptr)
-      {
+      if (pSubst != nullptr) {
         hb_itemReturnRelease(pSubst);
-      }
-      else if (iNoRet)
-      {
+      } else if (iNoRet) {
         hb_ret();
-      }
-      else
-      {
+      } else {
         hb_retclen(hb_parc(1), hb_parclen(1));
       }
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSCHAR, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_ret();
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -152,28 +124,22 @@ HB_FUNC(POSCHAR)
 
 HB_FUNC(POSDEL)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sStartPos;
     HB_SIZE sDelLen = hb_parnsdef(3, 1);
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       sStartPos = hb_parns(2);
-      if (sStartPos == 0 || sStartPos > sStrLen - sDelLen + 1)
-      {
+      if (sStartPos == 0 || sStartPos > sStrLen - sDelLen + 1) {
         sStartPos = sStrLen - sDelLen + 1;
       }
-    }
-    else
-    {
+    } else {
       sStartPos = sStrLen - sDelLen + 1;
     }
 
-    if (sStrLen <= sDelLen)
-    {
+    if (sStrLen <= sDelLen) {
       hb_retc_null();
       return;
     }
@@ -181,36 +147,28 @@ HB_FUNC(POSDEL)
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen - sDelLen + 1));
 
     // copy first part
-    if (sStartPos > 1)
-    {
+    if (sStartPos > 1) {
       hb_xmemcpy(pcRet, pcString, sStartPos - 1);
     }
 
     // copy second part
-    if (sStrLen > (sStartPos - 1 + sDelLen))
-    {
+    if (sStrLen > (sStartPos - 1 + sDelLen)) {
       hb_xmemcpy(pcRet + sStartPos - 1, pcString + sStartPos - 1 + sDelLen, sStrLen - (sStartPos - 1 + sDelLen));
     }
 
     hb_retclen_buffer(pcRet, sStrLen - sDelLen);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSDEL, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -218,38 +176,30 @@ HB_FUNC(POSDEL)
 
 HB_FUNC(POSINS)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sInsLen;
 
-    if ((sInsLen = hb_parclen(2)) > 0)
-    {
+    if ((sInsLen = hb_parclen(2)) > 0) {
       HB_SIZE sStartPos;
 
       auto pcInsert = hb_parc(2);
 
-      if (HB_ISNUM(3))
-      {
+      if (HB_ISNUM(3)) {
         sStartPos = hb_parns(3);
-        if (sStartPos == 0)
-        {
+        if (sStartPos == 0) {
           sStartPos = sStrLen;
         }
-      }
-      else
-      {
+      } else {
         sStartPos = sStrLen;
       }
 
       // check for false sStartPos
-      if (sStartPos > sStrLen + 1)
-      {
+      if (sStartPos > sStrLen + 1) {
         int iArgErrorMode = ct_getargerrormode();
 
-        if (iArgErrorMode != CT_ARGERR_IGNORE)
-        {
+        if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSINS, nullptr, HB_ERR_FUNCNAME, 0,
                    EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
         }
@@ -261,8 +211,7 @@ HB_FUNC(POSINS)
       auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + sInsLen + 1));
 
       // copy first part
-      if (sStartPos > 1)
-      {
+      if (sStartPos > 1) {
         hb_xmemcpy(pcRet, pcString, sStartPos - 1);
       }
 
@@ -270,35 +219,26 @@ HB_FUNC(POSINS)
       hb_xmemcpy(pcRet + sStartPos - 1, pcInsert, sInsLen);
 
       // copy second part
-      if (sStrLen > (sStartPos - 1))
-      {
+      if (sStrLen > (sStartPos - 1)) {
         hb_xmemcpy(pcRet + sStartPos - 1 + sInsLen, pcString + sStartPos - 1, sStrLen - (sStartPos - 1));
       }
 
       hb_retclen_buffer(pcRet, sStrLen + sInsLen);
-    }
-    else
-    {
+    } else {
       hb_retclen(pcString, sStrLen);
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSINS, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }
@@ -308,82 +248,61 @@ HB_FUNC(POSREPL)
 {
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sReplLen;
 
-    if ((sReplLen = hb_parclen(2)) > 0)
-    {
+    if ((sReplLen = hb_parclen(2)) > 0) {
       HB_SIZE sStartPos;
       HB_SIZE sRetLen;
 
       auto pcReplace = hb_parc(2);
 
-      if (HB_ISNUM(3))
-      {
+      if (HB_ISNUM(3)) {
         sStartPos = hb_parns(3);
-        if (sStartPos == 0)
-        {
-          if (sReplLen > sStrLen)
-          {
+        if (sStartPos == 0) {
+          if (sReplLen > sStrLen) {
             sStartPos = 1;
-          }
-          else
-          {
+          } else {
             sStartPos = sStrLen - sReplLen + 1;
           }
         }
-      }
-      else
-      {
-        if (sReplLen > sStrLen)
-        {
+      } else {
+        if (sReplLen > sStrLen) {
           sStartPos = 1;
-        }
-        else
-        {
+        } else {
           sStartPos = sStrLen - sReplLen + 1;
         }
       }
 
       // check for false sStartPos
-      if (sStartPos > sStrLen + 1)
-      {
+      if (sStartPos > sStrLen + 1) {
         int iArgErrorMode = ct_getargerrormode();
 
-        if (iArgErrorMode != CT_ARGERR_IGNORE)
-        {
+        if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSREPL, nullptr, HB_ERR_FUNCNAME, 0,
                    EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
         }
 
-        if (iNoRet)
-        {
+        if (iNoRet) {
           hb_ret();
-        }
-        else
-        {
+        } else {
           hb_retclen(pcString, sStrLen);
         }
         return;
       }
 
-      if (sStrLen > (sStartPos + sReplLen - 1))
-      {
+      if (sStrLen > (sStartPos + sReplLen - 1)) {
         sRetLen = sStrLen;
-      }
-      else
-      {
+      } else {
         sRetLen = sStartPos + sReplLen - 1;
       }
 
       auto pcRet = static_cast<char *>(hb_xgrab(sRetLen + 1));
 
       // copy first part
-      if (sStartPos > 1)
-      {
+      if (sStartPos > 1) {
         hb_xmemcpy(pcRet, pcString, sStartPos - 1);
       }
 
@@ -391,70 +310,50 @@ HB_FUNC(POSREPL)
       hb_xmemcpy(pcRet + sStartPos - 1, pcReplace, sReplLen);
 
       // copy second part
-      if (sStrLen > (sStartPos - 1 + sReplLen))
-      {
+      if (sStrLen > (sStartPos - 1 + sReplLen)) {
         hb_xmemcpy(pcRet + sStartPos - 1 + sReplLen, pcString + sStartPos - 1 + sReplLen,
                    sStrLen - (sStartPos - 1 + sReplLen));
       }
 
       hb_storclen(pcRet, sRetLen, 1);
 
-      if (iNoRet)
-      {
+      if (iNoRet) {
         hb_xfree(pcRet);
         hb_ret();
-      }
-      else
-      {
+      } else {
         hb_retclen_buffer(pcRet, sRetLen);
       }
-    }
-    else
-    {
+    } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSREPL, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if (pSubst != nullptr)
-      {
+      if (pSubst != nullptr) {
         hb_itemReturnRelease(pSubst);
-      }
-      else if (iNoRet)
-      {
+      } else if (iNoRet) {
         hb_ret();
-      }
-      else
-      {
+      } else {
         hb_retclen(pcString, sStrLen);
       }
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSREPL, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_ret();
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

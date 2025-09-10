@@ -58,14 +58,11 @@ HB_FUNC(FTOC)
 
 HB_FUNC(CTOF)
 {
-  if (hb_parclen(1) >= sizeof(double))
-  {
+  if (hb_parclen(1) >= sizeof(double)) {
     auto buf = hb_parc(1);
 
     hb_retnd(HB_GET_LE_DOUBLE(buf));
-  }
-  else
-  {
+  } else {
     hb_retnd(0.0);
   }
 }

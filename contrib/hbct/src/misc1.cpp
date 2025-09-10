@@ -55,31 +55,21 @@ HB_FUNC(XTOC)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem != nullptr)
-  {
-    if (pItem->isDate())
-    {
+  if (pItem != nullptr) {
+    if (pItem->isDate()) {
       char szDate[9];
       hb_retc(hb_itemGetDS(pItem, szDate));
-    }
-    else if (pItem->isTimeStamp())
-    {
+    } else if (pItem->isTimeStamp()) {
       char szDateTime[18];
       hb_retc(hb_itemGetTS(pItem, szDateTime));
-    }
-    else if (pItem->isNumeric())
-    {
+    } else if (pItem->isNumeric()) {
       char buf[sizeof(double)];
       auto d = hb_parnd(1);
       HB_PUT_LE_DOUBLE(buf, d);
       hb_retclen(buf, sizeof(buf));
-    }
-    else if (pItem->isLogical())
-    {
+    } else if (pItem->isLogical()) {
       hb_retclen(hb_itemGetL(pItem) ? "T" : "F", 1);
-    }
-    else
-    {
+    } else {
       hb_itemReturn(pItem);
     }
   }

@@ -52,52 +52,37 @@ HB_FUNC(CHARSPREAD)
 {
   auto nLen = hb_parclen(1);
 
-  if (nLen == 0)
-  {
+  if (nLen == 0) {
     hb_retc_null();
-  }
-  else
-  {
+  } else {
     HB_ISIZ nSize = hb_parns(2);
 
-    if (nSize < 0 || static_cast<HB_SIZE>(nSize) <= nLen)
-    {
+    if (nSize < 0 || static_cast<HB_SIZE>(nSize) <= nLen) {
       hb_itemReturn(hb_param(1, Harbour::Item::ANY));
-    }
-    else
-    {
+    } else {
       auto szText = hb_parc(1);
       char cDelim = ' ';
       HB_ISIZ nTokens = 0;
       HB_SIZE nPos;
 
-      if (HB_ISCHAR(3))
-      {
+      if (HB_ISCHAR(3)) {
         cDelim = hb_parc(3)[0];
-      }
-      else if (HB_ISNUM(3))
-      {
+      } else if (HB_ISNUM(3)) {
         cDelim = static_cast<char>(hb_parni(3));
       }
 
-      for (nPos = 0; nPos < nLen; ++nPos)
-      {
-        if (szText[nPos] == cDelim)
-        {
+      for (nPos = 0; nPos < nLen; ++nPos) {
+        if (szText[nPos] == cDelim) {
           nTokens++;
-          while (nPos + 1 < nLen && szText[nPos + 1] == cDelim)
-          {
+          while (nPos + 1 < nLen && szText[nPos + 1] == cDelim) {
             ++nPos;
           }
         }
       }
 
-      if (nTokens == 0)
-      {
+      if (nTokens == 0) {
         hb_itemReturn(hb_param(1, Harbour::Item::ANY));
-      }
-      else
-      {
+      } else {
         HB_ISIZ iRepl, iRest, iFirst;
         HB_SIZE nDst, nRest;
 
@@ -107,29 +92,22 @@ HB_FUNC(CHARSPREAD)
         iFirst = (iRest + 1) >> 1;
         iRest >>= 1;
         auto szDest = static_cast<char *>(hb_xgrab(nSize + 1));
-        for (nDst = nPos = 0; nPos < nLen; ++nPos)
-        {
+        for (nDst = nPos = 0; nPos < nLen; ++nPos) {
           szDest[nDst++] = szText[nPos];
-          if (szText[nPos] == cDelim)
-          {
+          if (szText[nPos] == cDelim) {
             HB_ISIZ i;
 
-            while (nPos + 1 < nLen && szText[nPos + 1] == cDelim)
-            {
+            while (nPos + 1 < nLen && szText[nPos + 1] == cDelim) {
               szDest[nDst++] = szText[++nPos];
             }
             i = iRepl;
-            if (iFirst)
-            {
+            if (iFirst) {
               --iFirst;
               ++i;
-            }
-            else if (nTokens <= iRest)
-            {
+            } else if (nTokens <= iRest) {
               ++i;
             }
-            while (--i >= 0)
-            {
+            while (--i >= 0) {
               szDest[nDst++] = cDelim;
             }
             nTokens--;

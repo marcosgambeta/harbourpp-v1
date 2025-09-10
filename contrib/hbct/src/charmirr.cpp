@@ -54,30 +54,24 @@ HB_FUNC(CHARMIRR)
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
   // param check
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     const char *pc1;
     auto sStrLen = hb_parclen(1);
     char *pc2;
     int iDontMirrorSpaces = hb_parldef(2, 0);
 
-    if (sStrLen == 0)
-    {
+    if (sStrLen == 0) {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIRR, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if (iNoRet)
-      {
+      if (iNoRet) {
         hb_retl(false);
-      }
-      else
-      {
+      } else {
         hb_retc_null();
       }
       return;
@@ -86,11 +80,9 @@ HB_FUNC(CHARMIRR)
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
 
     pc1 = pcString + sStrLen - 1;
-    if (iDontMirrorSpaces)
-    {
+    if (iDontMirrorSpaces) {
       pc2 = pcRet + sStrLen - 1;
-      while (pc1 >= pcString && *pc1 == 0x20)
-      {
+      while (pc1 >= pcString && *pc1 == 0x20) {
         *pc2 = 0x20;
         pc1--;
         pc2--;
@@ -98,8 +90,7 @@ HB_FUNC(CHARMIRR)
     }
 
     pc2 = pcRet;
-    for (; pc1 >= pcString; pc1--)
-    {
+    for (; pc1 >= pcString; pc1--) {
       *pc2 = *pc1;
       pc2++;
     }
@@ -107,37 +98,26 @@ HB_FUNC(CHARMIRR)
     // return string
     hb_storclen(pcRet, sStrLen, 1);
 
-    if (iNoRet)
-    {
+    if (iNoRet) {
       hb_retl(false);
       hb_xfree(pcRet);
-    }
-    else
-    {
+    } else {
       hb_retclen_buffer(pcRet, sStrLen);
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIRR, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_retl(false);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

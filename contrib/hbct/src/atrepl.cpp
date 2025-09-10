@@ -50,8 +50,7 @@
 
 HB_FUNC(ATREPL)
 {
-  if (HB_ISCHAR(1) && HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(1) && HB_ISCHAR(2)) {
     auto pcStringToMatch = hb_parc(1);
     auto nStrToMatchLen = hb_parclen(1);
     auto pcString = hb_parc(2);
@@ -72,12 +71,10 @@ HB_FUNC(ATREPL)
     // eventually ignore some characters
     nIgnore = hb_parns(6);
 
-    if (nIgnore >= nStrLen)
-    {
+    if (nIgnore >= nStrLen) {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATREPL, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
@@ -97,13 +94,11 @@ HB_FUNC(ATREPL)
     nCounter = hb_parns(4);
 
     // little trick:
-    if (iReplaceMode == 0 && nCounter == 0)
-    {
+    if (iReplaceMode == 0 && nCounter == 0) {
       nCounter = HB_SIZE_MAX;
     }
 
-    if (nCounter != 0)
-    {
+    if (nCounter != 0) {
       // depending on iReplaceMode: replace all occurrences including the nth one
       // or only the nth occurrence
       // NOTE: if iReplaceMode = false and the nth occurrence does not exist,
@@ -119,10 +114,8 @@ HB_FUNC(ATREPL)
       pcRetSubStr = pcRetStr + nIgnore;
       sRetSubStrLen = nRetStrLen - nIgnore;
 
-      while (nMatchCounter < nCounter)
-      {
-        switch (iAtLike)
-        {
+      while (nMatchCounter < nCounter) {
+        switch (iAtLike) {
         case CT_SETATLIKE_EXACT:
           pc = const_cast<char *>(
               ct_at_exact_forward(pcRetSubStr, sRetSubStrLen, pcStringToMatch, nStrToMatchLen, &nMatchStrLen));
@@ -137,8 +130,7 @@ HB_FUNC(ATREPL)
           pc = nullptr;
         }
 
-        if (pc == nullptr)
-        {
+        if (pc == nullptr) {
           hb_retclen_buffer(pcRetStr, nRetStrLen);
           return;
         }
@@ -146,10 +138,8 @@ HB_FUNC(ATREPL)
         nMatchCounter++;
 
         // replace match ?
-        if (iReplaceMode == 0 || nMatchCounter == nCounter)
-        {
-          if (nMatchStrLen < nReplaceLen)
-          {
+        if (iReplaceMode == 0 || nMatchCounter == nCounter) {
+          if (nMatchStrLen < nReplaceLen) {
             // pcRetStr grows, so realloc memory
             // save pc pointer
             HB_SIZE sPCPos = pc - pcRetStr;
@@ -158,50 +148,37 @@ HB_FUNC(ATREPL)
             pc = pcRetStr + sPCPos;
           }
 
-          if (nReplaceLen != nMatchStrLen)
-          {
+          if (nReplaceLen != nMatchStrLen) {
             memmove(pc + nReplaceLen, pc + nMatchStrLen, nRetStrLen - ((pc + nMatchStrLen) - pcRetStr));
           }
-          if (nReplaceLen > 0)
-          {
+          if (nReplaceLen > 0) {
             hb_xmemcpy(pc, pcReplacement, nReplaceLen);
           }
 
-          if (iMultiPass)
-          {
+          if (iMultiPass) {
             pcRetSubStr = pc + 1;
-          }
-          else
-          {
+          } else {
             pcRetSubStr = pc + nReplaceLen;
           }
 
           nRetStrLen += nReplaceLen - nMatchStrLen;
-        }
-        else
-        {
-          if (iMultiPass)
-          {
+        } else {
+          if (iMultiPass) {
             pcRetSubStr = pc + 1;
-          }
-          else
-          {
+          } else {
             pcRetSubStr = pc + nMatchStrLen;
           }
         }
         sRetSubStrLen = nRetStrLen - (pcRetSubStr - pcRetStr);
       }
-    }
-    else
-    {
+    } else {
       // find and replace last match
       nRetStrLen = nStrLen;
       pcRetStr = static_cast<char *>(hb_xgrab(nRetStrLen + 1));
       hb_xmemcpy(pcRetStr, pcString, nRetStrLen);
 
       // we have to find the last match and replace it
-      switch (iAtLike)
-      {
+      switch (iAtLike) {
       case CT_SETATLIKE_EXACT:
         pc = const_cast<char *>(ct_at_exact_backward(pcRetStr + nIgnore, nRetStrLen - nIgnore, pcStringToMatch,
                                                      nStrToMatchLen, &nMatchStrLen));
@@ -216,15 +193,13 @@ HB_FUNC(ATREPL)
         pc = nullptr;
       }
 
-      if (pc == nullptr)
-      {
+      if (pc == nullptr) {
         hb_retclen_buffer(pcRetStr, nRetStrLen);
         return;
       }
 
       // replace match
-      if (nMatchStrLen < nReplaceLen)
-      {
+      if (nMatchStrLen < nReplaceLen) {
         // pcRetStr grows, so realloc memory
         // save pc pointer
         HB_SIZE sPCPos = pc - pcRetStr;
@@ -233,12 +208,10 @@ HB_FUNC(ATREPL)
         pc = pcRetStr + sPCPos;
       }
 
-      if (nReplaceLen != nMatchStrLen)
-      {
+      if (nReplaceLen != nMatchStrLen) {
         memmove(pc + nReplaceLen, pc + nMatchStrLen, nRetStrLen - ((pc + nMatchStrLen) - pcRetStr));
       }
-      if (nReplaceLen > 0)
-      {
+      if (nReplaceLen > 0) {
         hb_xmemcpy(pc, pcReplacement, nReplaceLen);
       }
 
@@ -246,24 +219,18 @@ HB_FUNC(ATREPL)
     }
 
     hb_retclen_buffer(pcRetStr, nRetStrLen);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATREPL, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retclen(hb_parc(2), hb_parclen(2));
     }
   }

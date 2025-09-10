@@ -58,48 +58,34 @@ HB_FUNC(CTON)
   auto szNumber = hb_parc(1);
   auto iBase = hb_parnidef(2, 10);
 
-  if (szNumber && iBase >= 2 && iBase <= 36)
-  {
+  if (szNumber && iBase >= 2 && iBase <= 36) {
     HB_MAXUINT nValue = 0, nMax;
 #ifdef HB_CT3_STRICT32
     nMax = UINT32_MAX;
 #else
     HB_BOOL fStrict = HB_ISLOG(3);
-    if (fStrict)
-    {
+    if (fStrict) {
       nMax = UINT32_MAX;
-    }
-    else
-    {
+    } else {
       nMax = UINT64_MAX;
     }
 #endif
 
-    for (;;)
-    {
+    for (;;) {
       int iDigit = static_cast<HB_UCHAR>(*szNumber++);
-      if (iDigit >= '0' && iDigit <= '9')
-      {
+      if (iDigit >= '0' && iDigit <= '9') {
         iDigit -= '0';
-      }
-      else if (iDigit >= 'A' && iDigit <= 'Z')
-      {
+      } else if (iDigit >= 'A' && iDigit <= 'Z') {
         iDigit -= 'A' - 10;
-      }
-      else if (iDigit >= 'a' && iDigit <= 'z')
-      {
+      } else if (iDigit >= 'a' && iDigit <= 'z') {
         iDigit -= 'a' - 10;
-      }
-      else
-      {
+      } else {
         break;
       }
-      if (iDigit >= iBase)
-      {
+      if (iDigit >= iBase) {
         break;
       }
-      if (nValue > (nMax - iDigit) / iBase)
-      {
+      if (nValue > (nMax - iDigit) / iBase) {
         nValue = 0;
         break;
       }
@@ -108,38 +94,25 @@ HB_FUNC(CTON)
 
 #ifdef HB_CT3_STRICT32
     // test shows that this is exact CT3 behavior
-    if (static_cast<HB_I32>(nValue) >= 0 || hb_parl(3))
-    {
+    if (static_cast<HB_I32>(nValue) >= 0 || hb_parl(3)) {
       hb_retnl(static_cast<HB_I32>(nValue));
-    }
-    else
-    {
+    } else {
       hb_retnd(static_cast<HB_U32>(nValue));
     }
 #else
-    if (fStrict)
-    {
-      if (hb_parl(3))
-      {
+    if (fStrict) {
+      if (hb_parl(3)) {
         hb_retnint(static_cast<HB_I32>(nValue));
-      }
-      else
-      {
+      } else {
         hb_retnint(static_cast<HB_U32>(nValue));
       }
-    }
-    else if (static_cast<HB_MAXINT>(nValue) < 0)
-    {
+    } else if (static_cast<HB_MAXINT>(nValue) < 0) {
       hb_retnd(static_cast<double>(nValue));
-    }
-    else
-    {
+    } else {
       hb_retnint(nValue);
     }
 #endif
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 }
@@ -151,25 +124,19 @@ HB_FUNC(NTOC)
   auto iBase = hb_parnidef(2, 10);
   auto iLen = hb_parni(3);
 
-  if (iLen < 0 || iLen > static_cast<int>(sizeof(szBuffer)))
-  {
+  if (iLen < 0 || iLen > static_cast<int>(sizeof(szBuffer))) {
     iLen = sizeof(szBuffer);
   }
 
-  if (iBase >= 2 && iBase <= 36 && ct_numParam(1, &nValue))
-  {
+  if (iBase >= 2 && iBase <= 36 && ct_numParam(1, &nValue)) {
     auto uValue = static_cast<HB_MAXUINT>(nValue);
     int i;
 
     i = iLen == 0 ? static_cast<int>(sizeof(szBuffer)) : iLen;
-    do
-    {
-      if (--i < 0)
-      {
+    do {
+      if (--i < 0) {
         break;
-      }
-      else
-      {
+      } else {
         int iDigit = uValue % iBase;
         uValue /= iBase;
         iDigit += iDigit < 10 ? '0' : ('A' - 10);
@@ -177,29 +144,22 @@ HB_FUNC(NTOC)
       }
     } while (uValue != 0);
 
-    if (i >= 0)
-    {
-      if (iLen == 0)
-      {
+    if (i >= 0) {
+      if (iLen == 0) {
         iLen = sizeof(szBuffer) - i;
-      }
-      else
-      {
+      } else {
         auto szPad = hb_parc(4);
         char cPad = szPad ? szPad[0] : static_cast<char>(hb_parnidef(4, ' '));
 
-        while (i > 0)
-        {
+        while (i > 0) {
           szBuffer[--i] = cPad;
         }
       }
       pszResult = &szBuffer[i];
     }
   }
-  if (pszResult == nullptr)
-  {
-    if (iLen == 0)
-    {
+  if (pszResult == nullptr) {
+    if (iLen == 0) {
       iLen = 1;
     }
     memset(szBuffer, '*', iLen);

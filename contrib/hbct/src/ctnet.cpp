@@ -100,8 +100,7 @@ static HB_BOOL hb_IsNetShared(const char *szLocalDevice)
   hb_vmUnlock();
   dwResult = WNetGetConnection(lpLocalDevice, lpRemoteDevice, &dwLen);
   hb_vmLock();
-  if (lpFree)
-  {
+  if (lpFree) {
     hb_xfree(lpFree);
   }
 
@@ -131,8 +130,7 @@ HB_FUNC(NETPRINTER)
 #if defined(HB_OS_WIN)
   const char *cPrn = hb_setGetCPtr(HB_SET_PRINTFILE); // query default local printer port.
 
-  if (!cPrn || !*cPrn || hb_stricmp(cPrn, "PRN") == 0)
-  {
+  if (!cPrn || !*cPrn || hb_stricmp(cPrn, "PRN") == 0) {
     cPrn = "LPT1";
   }
   hb_retl(hb_IsNetShared(cPrn));
@@ -146,8 +144,7 @@ HB_FUNC(NETDISK)
 #if defined(HB_OS_WIN)
   auto pszDrive = hb_parc(1);
 
-  if (pszDrive)
-  {
+  if (pszDrive) {
     char szDrive[3];
 
     szDrive[0] = pszDrive[0];
@@ -155,8 +152,7 @@ HB_FUNC(NETDISK)
     szDrive[2] = '\0';
 
     hb_retl(hb_IsNetShared(szDrive));
-  }
-  else
+  } else
 #endif
     hb_retl(false);
 }
@@ -191,19 +187,13 @@ HB_FUNC(NETRMTNAME)
   DWORD dwSize = 0;
   LPCTSTR lpLocalName = HB_PARSTRDEF(1, &hLocalDev, nullptr);
 
-  if (WNetGetConnection(lpLocalName, lpRemoteDevice, &dwSize) == ERROR_MORE_DATA)
-  {
-    if (dwSize > 0 && dwSize <= dwLen && WNetGetConnection(lpLocalName, lpRemoteDevice, &dwSize) == NO_ERROR)
-    {
+  if (WNetGetConnection(lpLocalName, lpRemoteDevice, &dwSize) == ERROR_MORE_DATA) {
+    if (dwSize > 0 && dwSize <= dwLen && WNetGetConnection(lpLocalName, lpRemoteDevice, &dwSize) == NO_ERROR) {
       HB_RETSTRLEN(lpRemoteDevice, static_cast<HB_SIZE>(dwSize - 1));
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 
@@ -222,12 +212,10 @@ HB_FUNC(NETWORK)
 
   dwResult = WNetGetProviderName(WNNC_NET_MSNET, lpProviderName, &dwLen);
 
-  if (dwResult != NO_ERROR)
-  {
+  if (dwResult != NO_ERROR) {
     dwResult = WNetGetProviderName(WNNC_NET_LANMAN, lpProviderName, &dwLen);
 
-    if (dwResult != NO_ERROR)
-    {
+    if (dwResult != NO_ERROR) {
       dwResult = WNetGetProviderName(WNNC_NET_NETWARE, lpProviderName, &dwLen);
     }
   }

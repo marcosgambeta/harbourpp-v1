@@ -69,39 +69,27 @@ HB_USHORT ct_error(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSu
       hb_errRT_New(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
   // Build the array from the passed arguments.
-  if (ulArgCount == 0)
-  {
+  if (ulArgCount == 0) {
     pArray = nullptr;
-  }
-  else if (ulArgCount == HB_ERR_ARGS_BASEPARAMS)
-  {
-    if (hb_pcount() == 0)
-    {
+  } else if (ulArgCount == HB_ERR_ARGS_BASEPARAMS) {
+    if (hb_pcount() == 0) {
       pArray = nullptr;
-    }
-    else
-    {
+    } else {
       pArray = hb_arrayBaseParams();
     }
-  }
-  else if (ulArgCount == HB_ERR_ARGS_SELFPARAMS)
-  {
+  } else if (ulArgCount == HB_ERR_ARGS_SELFPARAMS) {
     pArray = hb_arraySelfParams();
-  }
-  else
-  {
+  } else {
     pArray = hb_itemArrayNew(ulArgCount);
 
     va_start(va, ulArgCount);
-    for (HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++)
-    {
+    for (HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++) {
       hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
     }
     va_end(va);
   }
 
-  if (pArray)
-  {
+  if (pArray) {
     // Assign the new array to the object data item.
     hb_vmPushSymbol(hb_dynsymGetSymbol("_ARGS"));
     hb_vmPush(pError);
@@ -140,39 +128,27 @@ PHB_ITEM ct_error_subst(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE 
                               uiFlags);
 
   // Build the array from the passed arguments.
-  if (ulArgCount == 0)
-  {
+  if (ulArgCount == 0) {
     pArray = nullptr;
-  }
-  else if (ulArgCount == HB_ERR_ARGS_BASEPARAMS)
-  {
-    if (hb_pcount() == 0)
-    {
+  } else if (ulArgCount == HB_ERR_ARGS_BASEPARAMS) {
+    if (hb_pcount() == 0) {
       pArray = nullptr;
-    }
-    else
-    {
+    } else {
       pArray = hb_arrayBaseParams();
     }
-  }
-  else if (ulArgCount == HB_ERR_ARGS_SELFPARAMS)
-  {
+  } else if (ulArgCount == HB_ERR_ARGS_SELFPARAMS) {
     pArray = hb_arraySelfParams();
-  }
-  else
-  {
+  } else {
     pArray = hb_itemArrayNew(ulArgCount);
 
     va_start(va, ulArgCount);
-    for (HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++)
-    {
+    for (HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++) {
       hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
     }
     va_end(va);
   }
 
-  if (pArray)
-  {
+  if (pArray) {
     // Assign the new array to the object data item.
     hb_vmPushSymbol(hb_dynsymGetSymbol("_ARGS"));
     hb_vmPush(pError);
@@ -215,32 +191,24 @@ HB_FUNC(CSETARGERR)
 {
   hb_retni(ct_getargerrormode());
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto iNewMode = hb_parni(1);
 
     if (iNewMode == CT_ARGERR_WHOCARES || iNewMode == CT_ARGERR_WARNING || iNewMode == CT_ARGERR_ERROR ||
-        iNewMode == CT_ARGERR_CATASTROPHIC || iNewMode == CT_ARGERR_IGNORE)
-    {
+        iNewMode == CT_ARGERR_CATASTROPHIC || iNewMode == CT_ARGERR_IGNORE) {
       ct_setargerrormode(hb_parni(1));
-    }
-    else
-    {
+    } else {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
     }
-  }
-  else if (hb_pcount() > 0)
-  { // more than one param but not integer
+  } else if (hb_pcount() > 0) { // more than one param but not integer
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
                EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
     }
@@ -252,8 +220,7 @@ static int s_initialized = 0; // TODO: make this thread safe
 
 HB_FUNC(CTCINIT)
 {
-  if (s_initialized == 0)
-  {
+  if (s_initialized == 0) {
     int iSuccess;
 
     iSuccess = ct_str_init();

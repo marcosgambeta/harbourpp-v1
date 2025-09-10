@@ -57,53 +57,37 @@
 // helper function
 static void do_ascpos(int iSwitch)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto sStrSize = hb_parclen(1);
     auto pcString = reinterpret_cast<const HB_BYTE *>(hb_parc(1));
     HB_SIZE sPos = hb_parnsdef(2, sStrSize);
 
-    if (sPos == 0 || sPos > sStrSize)
-    {
+    if (sPos == 0 || sPos > sStrSize) {
       hb_retni(0);
-    }
-    else
-    {
-      if (iSwitch == DO_ASCPOS_VALPOS)
-      {
-        if (HB_ISDIGIT(static_cast<HB_UCHAR>(pcString[sPos - 1])))
-        {
+    } else {
+      if (iSwitch == DO_ASCPOS_VALPOS) {
+        if (HB_ISDIGIT(static_cast<HB_UCHAR>(pcString[sPos - 1]))) {
           hb_retni(pcString[sPos - 1] - '0');
-        }
-        else
-        {
+        } else {
           hb_retni(0);
         }
-      }
-      else
-      {
+      } else {
         hb_retni(pcString[sPos - 1]);
       }
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                               iSwitch == DO_ASCPOS_VALPOS ? CT_ERROR_VALPOS : CT_ERROR_ASCPOS, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retni(0);
     }
   }

@@ -61,12 +61,9 @@
 
 HB_FUNC(DIRMAKE)
 {
-  if (hb_fsMkDir(hb_parcx(1)))
-  {
+  if (hb_fsMkDir(hb_parcx(1))) {
     hb_retni(0);
-  }
-  else
-  {
+  } else {
     hb_retnint(-static_cast<HB_MAXINT>(hb_fsOsError()));
   }
 }
@@ -77,17 +74,13 @@ HB_FUNC(DIRNAME)
   auto pszDrive = hb_parc(1);
   int iDrive = 0;
 
-  if (pszDrive)
-  {
+  if (pszDrive) {
     auto uc = static_cast<HB_UCHAR>(*pszDrive);
     // some network drivers (f.e. NETX from Novell NetWare) allow
     // to create drives after 'Z' letter.
-    if (uc >= 'A' && uc < 'A' + 32)
-    {
+    if (uc >= 'A' && uc < 'A' + 32) {
       iDrive = uc - ('A' - 1);
-    }
-    else if (uc >= 'a' && uc < 'a' + 32)
-    {
+    } else if (uc >= 'a' && uc < 'a' + 32) {
       iDrive = uc - ('a' - 1);
     }
   }
@@ -108,13 +101,11 @@ HB_FUNC(DRIVETYPE)
 
   hb_strncpy(pszDrive, hb_parcx(1), nSize);
 
-  if (strstr(pszDrive, ":") == nullptr)
-  {
+  if (strstr(pszDrive, ":") == nullptr) {
     hb_strncat(pszDrive, ":", nSize);
   }
 
-  if (strstr(pszDrive, "\\") == nullptr)
-  {
+  if (strstr(pszDrive, "\\") == nullptr) {
     hb_strncat(pszDrive, "\\", nSize);
   }
 
@@ -122,14 +113,12 @@ HB_FUNC(DRIVETYPE)
   hb_vmUnlock();
   uiType = GetDriveType(lpDrive);
   hb_vmLock();
-  if (lpFree)
-  {
+  if (lpFree) {
     hb_xfree(lpFree);
   }
   hb_xfree(pszDrive);
 
-  switch (uiType)
-  {
+  switch (uiType) {
   case DRIVE_RAMDISK:
     uiType = 0; // RAM Drive - Clipper compatible
     break;
@@ -185,24 +174,20 @@ HB_FUNC(VOLUME)
   HB_BOOL bReturn = false;
 
 #if defined(HB_OS_WIN)
-  if (!ct_getsafety())
-  {
+  if (!ct_getsafety()) {
     const char *pszRoot = nullptr;
     const char *pszVolName = nullptr;
     char szRootBuf[4], szVolNameBuf[12];
     LPCTSTR lpRoot, lpVolName;
     LPTSTR lpRootFree = nullptr, lpVolNameFree = nullptr;
 
-    if (hb_parclen(1) > 0)
-    {
+    if (hb_parclen(1) > 0) {
       PHB_FNAME fname = hb_fsFNameSplit(hb_parc(1));
 
-      if (fname->szPath)
-      {
+      if (fname->szPath) {
         pszRoot = hb_strncpy(szRootBuf, fname->szPath, sizeof(szRootBuf) - 1);
       }
-      if (fname->szName)
-      {
+      if (fname->szName) {
         pszVolName = hb_strncpy(szVolNameBuf, fname->szName, sizeof(szVolNameBuf) - 1);
       }
       hb_xfree(fname);
@@ -213,12 +198,10 @@ HB_FUNC(VOLUME)
     hb_vmUnlock();
     bReturn = SetVolumeLabel(lpRoot, lpVolName) != 0;
     hb_vmLock();
-    if (lpRootFree)
-    {
+    if (lpRootFree) {
       hb_xfree(lpRootFree);
     }
-    if (lpVolNameFree)
-    {
+    if (lpVolNameFree) {
       hb_xfree(lpVolNameFree);
     }
   }
@@ -251,12 +234,9 @@ HB_FUNC(VOLSERIAL)
                            nullptr,                         // MaxComponentLength
                            nullptr,                         // FileSystemFlags
                            nullptr,                         // FileSystemName
-                           0))
-  { // FileSystemSize
+                           0)) {                            // FileSystemSize
     hb_retnint(dwSerial);
-  }
-  else
-  {
+  } else {
     hb_retni(-1);
   }
 
@@ -268,8 +248,7 @@ HB_FUNC(VOLSERIAL)
 
 HB_FUNC(TRUENAME)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
 #if defined(HB_OS_WIN)
     void *hFile;
     TCHAR buffer[MAX_PATH + 1];
@@ -283,9 +262,7 @@ HB_FUNC(TRUENAME)
 #else
     hb_retc(hb_parc(1));
 #endif
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }

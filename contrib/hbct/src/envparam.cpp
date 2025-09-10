@@ -66,20 +66,16 @@ HB_FUNC(ENVPARAM)
   char *const *pEnviron = environ, *const * pEnv;
   char *pResult = nullptr, *pDst;
 
-  if (pEnviron)
-  {
+  if (pEnviron) {
     HB_SIZE nSize = 0;
 
-    for (pEnv = pEnviron; *pEnv; pEnv++)
-    {
+    for (pEnv = pEnviron; *pEnv; pEnv++) {
       nSize += strlen(*pEnv) + 2;
     }
 
-    if (nSize > 0)
-    {
+    if (nSize > 0) {
       pResult = static_cast<char *>(hb_xgrab((nSize + 1) * sizeof(char)));
-      for (pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++)
-      {
+      for (pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++) {
         HB_SIZE n = strlen(*pEnv);
         memcpy(pDst, *pEnv, n);
         pDst += n;
@@ -90,12 +86,9 @@ HB_FUNC(ENVPARAM)
     }
   }
 
-  if (pResult)
-  {
+  if (pResult) {
     hb_retc_buffer(const_cast<char *>(hb_osDecodeCP(pResult, nullptr, nullptr)));
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 #elif defined(HB_OS_WIN)
@@ -103,25 +96,19 @@ HB_FUNC(ENVPARAM)
   LPTSTR lpResult = nullptr;
   HB_SIZE nSize = 0;
 
-  if (lpEnviron)
-  {
-    for (lpEnv = lpEnviron; *lpEnv; lpEnv++)
-    {
-      while (*++lpEnv)
-      {
+  if (lpEnviron) {
+    for (lpEnv = lpEnviron; *lpEnv; lpEnv++) {
+      while (*++lpEnv) {
         ++nSize;
       }
       nSize += 3;
     }
-    if (nSize > 0)
-    {
+    if (nSize > 0) {
       LPTSTR lpDst;
 
       lpResult = static_cast<LPTSTR>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
-      for (lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++)
-      {
-        do
-        {
+      for (lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++) {
+        do {
           *lpDst++ = *lpEnv++;
         } while (*lpEnv);
         *lpDst++ = '\r';
@@ -132,13 +119,10 @@ HB_FUNC(ENVPARAM)
     FreeEnvironmentStrings(lpEnviron);
   }
 
-  if (lpResult)
-  {
+  if (lpResult) {
     HB_RETSTRLEN(lpResult, nSize);
     hb_xfree(lpResult);
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 #else

@@ -58,64 +58,51 @@
 static void do_charone(int iSwitch)
 {
   // param check
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     const char *pcString;
     const char *pcDeleteSet;
     HB_SIZE sStrLen;
     HB_SIZE sDeleteSetLen;
 
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       pcString = hb_parc(2);
       sStrLen = hb_parclen(2);
       pcDeleteSet = hb_parc(1);
       sDeleteSetLen = hb_parclen(1);
-    }
-    else
-    {
+    } else {
       pcString = hb_parc(1);
       sStrLen = hb_parclen(1);
       pcDeleteSet = nullptr;
       sDeleteSetLen = 0;
     }
 
-    switch (iSwitch)
-    {
+    switch (iSwitch) {
     case DO_CHARONE_CHARONE:
-      if (sStrLen > 1)
-      {
+      if (sStrLen > 1) {
         HB_SIZE sRetStrLen = 0;
         char cCurrent = *pcString;
 
         auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
         // copy first char
         pcRet[sRetStrLen++] = cCurrent;
-        for (const char *pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++)
-        {
-          if (*pcSub != cCurrent)
-          {
+        for (const char *pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++) {
+          if (*pcSub != cCurrent) {
             cCurrent = *pcSub;
             pcRet[sRetStrLen++] = cCurrent;
-          }
-          else if (pcDeleteSet != nullptr && !ct_at_exact_forward(pcDeleteSet, sDeleteSetLen, pcSub, 1, nullptr))
-          {
+          } else if (pcDeleteSet != nullptr && !ct_at_exact_forward(pcDeleteSet, sDeleteSetLen, pcSub, 1, nullptr)) {
             pcRet[sRetStrLen++] = cCurrent;
           }
         }
         hb_retclen(pcRet, sRetStrLen);
         hb_xfree(pcRet);
-      }
-      else
-      {
+      } else {
         // algorithm does nothing to 1-char-strings
         hb_retclen(pcString, sStrLen);
       }
       break;
 
     case DO_CHARONE_WORDONE:
-      if (sStrLen > 3 && (pcDeleteSet == nullptr || sDeleteSetLen >= 2))
-      {
+      if (sStrLen > 3 && (pcDeleteSet == nullptr || sDeleteSetLen >= 2)) {
         HB_SIZE sRetStrLen = 0;
         char cCurrent1 = pcString[0];
         char cCurrent2 = pcString[1];
@@ -125,29 +112,23 @@ static void do_charone(int iSwitch)
         pcRet[sRetStrLen++] = cCurrent1;
         pcRet[sRetStrLen++] = cCurrent2;
 
-        for (const char *pcSub = pcString + 2; pcSub < pcString + sStrLen - 1; pcSub += 2)
-        {
-          if (!(pcSub[0] == cCurrent1 && pcSub[1] == cCurrent2))
-          {
+        for (const char *pcSub = pcString + 2; pcSub < pcString + sStrLen - 1; pcSub += 2) {
+          if (!(pcSub[0] == cCurrent1 && pcSub[1] == cCurrent2)) {
             cCurrent1 = pcSub[0];
             cCurrent2 = pcSub[1];
             pcRet[sRetStrLen++] = cCurrent1;
             pcRet[sRetStrLen++] = cCurrent2;
-          }
-          else if (pcDeleteSet != nullptr)
-          {
+          } else if (pcDeleteSet != nullptr) {
             const char *pc = nullptr;
             const char *pStart = pcDeleteSet;
             HB_SIZE sLen = sDeleteSetLen;
 
             while (sLen >= 2 && (pc = ct_at_exact_forward(pStart, sLen, pcSub, 2, nullptr)) != 0 &&
-                   (pc - pcDeleteSet) % 2 == 1)
-            {
+                   (pc - pcDeleteSet) % 2 == 1) {
               pStart = pc + 1;
               sLen = sDeleteSetLen - (pStart - pcDeleteSet);
             }
-            if (pc == nullptr)
-            {
+            if (pc == nullptr) {
               pcRet[sRetStrLen++] = cCurrent1;
               pcRet[sRetStrLen++] = cCurrent2;
             }
@@ -155,39 +136,30 @@ static void do_charone(int iSwitch)
         }
 
         // copy last character if string length is odd
-        if (sStrLen & 1)
-        {
+        if (sStrLen & 1) {
           pcRet[sRetStrLen++] = pcString[sStrLen - 1];
         }
 
         hb_retclen(pcRet, sRetStrLen);
         hb_xfree(pcRet);
-      }
-      else
-      {
+      } else {
         // algorithm does nothing to 3-char-strings
         hb_retclen(pcString, sStrLen);
       }
       break;
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                               iSwitch == DO_CHARONE_CHARONE ? CT_ERROR_CHARONE : CT_ERROR_WORDONE, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

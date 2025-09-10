@@ -51,19 +51,16 @@
 
 HB_FUNC(CHARMIX)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcString1 = hb_parc(1);
     const char *pcString2;
     auto sLen1 = hb_parclen(1);
     HB_SIZE sLen2, sPos2, sResultPos;
 
-    if (sLen1 == 0)
-    {
+    if (sLen1 == 0) {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
@@ -72,16 +69,13 @@ HB_FUNC(CHARMIX)
       return;
     }
 
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       pcString2 = hb_parc(2);
       sLen2 = hb_parclen(2);
-      if (sLen2 == 0)
-      {
+      if (sLen2 == 0) {
         int iArgErrorMode = ct_getargerrormode();
 
-        if (iArgErrorMode != CT_ARGERR_IGNORE)
-        {
+        if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME, 0,
                    EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
         }
@@ -89,9 +83,7 @@ HB_FUNC(CHARMIX)
         hb_retclen(pcString1, sLen1);
         return;
       }
-    }
-    else
-    {
+    } else {
       pcString2 = " "; // NOTE: The original CT3 uses " " as 2nd string
                        // if the 2nd param is not a string !
       sLen2 = 1;
@@ -99,32 +91,25 @@ HB_FUNC(CHARMIX)
 
     auto pcResult = static_cast<char *>(hb_xgrab(sLen1 * 2 + 1));
     sPos2 = sResultPos = 0;
-    for (HB_SIZE sPos1 = 0; sPos1 < sLen1;)
-    {
+    for (HB_SIZE sPos1 = 0; sPos1 < sLen1;) {
       pcResult[sResultPos++] = pcString1[sPos1++];
       pcResult[sResultPos++] = pcString2[sPos2++];
       sPos2 %= sLen2;
     }
 
     hb_retclen_buffer(pcResult, sLen1 * 2);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME,
                               0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

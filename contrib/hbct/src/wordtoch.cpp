@@ -56,8 +56,7 @@ HB_FUNC(WORDTOCHAR)
   iMultiPass = ct_getatmupa();
 
   // param check
-  if ((sSearchLen = hb_parclen(1)) / 2 > 0 && (sStrLen = hb_parclen(2)) / 2 > 0 && (sReplaceLen = hb_parclen(3)) > 0)
-  {
+  if ((sSearchLen = hb_parclen(1)) / 2 > 0 && (sStrLen = hb_parclen(2)) / 2 > 0 && (sReplaceLen = hb_parclen(3)) > 0) {
     // get parameters
     auto pcSearch = hb_parc(1);
     auto pcString = hb_parc(2);
@@ -72,8 +71,7 @@ HB_FUNC(WORDTOCHAR)
 
     *pcRet = *pcString; // copy first char
 
-    do
-    {
+    do {
       HB_SIZE sMatchStrLen;
       const char *pc;
       HB_SIZE sReplIndex;
@@ -82,23 +80,18 @@ HB_FUNC(WORDTOCHAR)
 
       if (!iNoReplace &&
           ((pc = ct_at_exact_forward(pcSearch, sSearchLen, pcRet + sRetIndex, 2, &sMatchStrLen)) != nullptr) &&
-          (((sReplIndex = (pc - pcSearch)) & 1) != 1))
-      {
+          (((sReplIndex = (pc - pcSearch)) & 1) != 1)) {
         sReplIndex /= 2;
-        if (sReplIndex >= sReplaceLen)
-        {
+        if (sReplIndex >= sReplaceLen) {
           sReplIndex = sReplaceLen - 1;
         }
 
         *(pcRet + sRetIndex) = *(pcReplace + sReplIndex);
 
-        if (!iMultiPass)
-        {
+        if (!iMultiPass) {
           iNoReplace = 1; // just copy next char without searching & replacing
         }
-      }
-      else
-      {
+      } else {
         iNoReplace = 0;
         sRetIndex++;
       }
@@ -108,28 +101,20 @@ HB_FUNC(WORDTOCHAR)
     // return string
     hb_retclen(pcRet, sRetIndex + 1);
     hb_xfree(pcRet);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_WORDTOCHAR, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (HB_ISCHAR(2))
-    {
+    } else if (HB_ISCHAR(2)) {
       hb_retclen(hb_parc(2), hb_parclen(2));
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

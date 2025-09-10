@@ -53,31 +53,25 @@ HB_FUNC(ADDASCII)
   // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     auto pcSource = hb_parc(1);
     auto sLen = hb_parclen(1);
     HB_SIZE sPos = hb_parnsdef(3, sLen);
     HB_LONG lValue;
     int iCarryOver;
 
-    if (sPos > sLen || !HB_ISNUM(2) || sLen == 0)
-    {
+    if (sPos > sLen || !HB_ISNUM(2) || sLen == 0) {
       int iArgErrorMode = ct_getargerrormode();
 
-      if (iArgErrorMode != CT_ARGERR_IGNORE)
-      {
+      if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ADDASCII, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
       // return string unchanged
-      if (iNoRet)
-      {
+      if (iNoRet) {
         hb_retl(false);
-      }
-      else
-      {
+      } else {
         hb_retclen(pcSource, sLen);
       }
 
@@ -90,63 +84,45 @@ HB_FUNC(ADDASCII)
     lValue = hb_parnl(2);
     iCarryOver = hb_parldef(4, 0);
 
-    if (iCarryOver)
-    {
-      for (HB_SIZE sCurrent = sPos; sCurrent > 0 && lValue != 0; sCurrent--)
-      {
+    if (iCarryOver) {
+      for (HB_SIZE sCurrent = sPos; sCurrent > 0 && lValue != 0; sCurrent--) {
         HB_LONG lResult = static_cast<HB_LONG>(pcSource[sCurrent - 1]) + (lValue % 256);
 
         lValue /= 256;
-        if (lResult > 255)
-        {
+        if (lResult > 255) {
           lValue++;
-        }
-        else if (lResult < 0)
-        {
+        } else if (lResult < 0) {
           lValue--;
         }
 
         pcResult[sCurrent - 1] = static_cast<char>(lResult % 256);
       }
-    }
-    else
-    {
+    } else {
       pcResult[sPos - 1] = static_cast<char>((static_cast<HB_LONG>(pcResult[sPos - 1]) + lValue) % 256);
     }
 
     hb_storclen(pcResult, sLen, 1);
 
-    if (iNoRet)
-    {
+    if (iNoRet) {
       hb_retl(false);
       hb_xfree(pcResult);
-    }
-    else
-    {
+    } else {
       hb_retclen_buffer(pcResult, sLen);
     }
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ADDASCII, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else if (iNoRet)
-    {
+    } else if (iNoRet) {
       hb_retl(false);
-    }
-    else
-    {
+    } else {
       hb_retc_null();
     }
   }

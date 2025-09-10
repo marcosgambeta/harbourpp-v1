@@ -62,33 +62,25 @@ static void do_pos1(int iSwitch)
       (iSwitch != DO_POS1_POSRANGE ||  // that's the only condition for all functions _except_ PosRange()
        (iSwitch == DO_POS1_POSRANGE && // In addition, PosRange() needs ..
         HB_ISCHAR(2) &&                // .. string as 2nd ..
-        HB_ISCHAR(3))))
-  { // .. and 3rd param
+        HB_ISCHAR(3)))) {              // .. and 3rd param
     const unsigned char *puc;
     unsigned char ucChar1 = ' ', ucChar2 = ' ';
     int iMode;
     HB_SIZE sIgnore;
     int iParamShift = 0;
 
-    if (iSwitch == DO_POS1_POSRANGE)
-    {
-      if (hb_parclen(1) == 0)
-      {
+    if (iSwitch == DO_POS1_POSRANGE) {
+      if (hb_parclen(1) == 0) {
         hb_retns(0);
         return;
-      }
-      else
-      {
+      } else {
         ucChar1 = *(hb_parc(1));
       }
 
-      if (hb_parclen(2) == 0)
-      {
+      if (hb_parclen(2) == 0) {
         hb_retns(0);
         return;
-      }
-      else
-      {
+      } else {
         ucChar2 = *(hb_parc(2));
       }
 
@@ -101,12 +93,10 @@ static void do_pos1(int iSwitch)
     iMode = hb_parldef(iParamShift + 2, 0);
     sIgnore = hb_parnsdef(iParamShift + 3, 0);
 
-    for (puc = pcString + sIgnore; puc < pcString + sStrLen; puc++)
-    {
+    for (puc = pcString + sIgnore; puc < pcString + sStrLen; puc++) {
       int iDoRet = 0;
 
-      switch (iSwitch)
-      {
+      switch (iSwitch) {
       case DO_POS1_POSALPHA:
         iDoRet = hb_charIsAlpha(static_cast<HB_UCHAR>(*puc));
         break;
@@ -124,25 +114,20 @@ static void do_pos1(int iSwitch)
         break;
       }
 
-      if ((iMode && !iDoRet) || (!iMode && iDoRet))
-      {
+      if ((iMode && !iDoRet) || (!iMode && iDoRet)) {
         hb_retns(puc - pcString + 1);
         return;
       }
     }
     hb_retns(0);
-  }
-  else
-  {
+  } else {
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
-    if (iArgErrorMode != CT_ARGERR_IGNORE)
-    {
+    if (iArgErrorMode != CT_ARGERR_IGNORE) {
       HB_ERRCODE iError = 0;
 
-      switch (iSwitch)
-      {
+      switch (iSwitch) {
       case DO_POS1_POSALPHA:
         iError = CT_ERROR_POSALPHA;
         break;
@@ -163,12 +148,9 @@ static void do_pos1(int iSwitch)
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
-    if (pSubst != nullptr)
-    {
+    if (pSubst != nullptr) {
       hb_itemReturnRelease(pSubst);
-    }
-    else
-    {
+    } else {
       hb_retns(0);
     }
   }

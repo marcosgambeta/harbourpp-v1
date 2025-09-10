@@ -54,20 +54,14 @@ static int hb_ctColorParam(int iParam, int iDefault)
 {
   int iColor;
 
-  if (HB_ISNUM(iParam))
-  {
+  if (HB_ISNUM(iParam)) {
     iColor = hb_parni(iParam);
-  }
-  else if (hb_parclen(iParam) > 0)
-  {
+  } else if (hb_parclen(iParam) > 0) {
     iColor = hb_gtColorToN(hb_parc(iParam));
-    if (iColor == -1)
-    {
+    if (iColor == -1) {
       iColor = iDefault;
     }
-  }
-  else
-  {
+  } else {
     iColor = iDefault;
   }
 
@@ -88,8 +82,7 @@ HB_FUNC(SETCLEARA)
 {
   int iColor = hb_ctColorParam(1, -1);
 
-  if (iColor >= 0)
-  {
+  if (iColor >= 0) {
     hb_gtSetClearColor(iColor);
   }
 
@@ -100,22 +93,16 @@ HB_FUNC(SETCLEARB)
 {
   HB_USHORT usNew;
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto iChar = hb_parni(1);
     auto cdp = hb_vmCDP();
-    if (!HB_CDP_ISCHARUNI(cdp))
-    {
+    if (!HB_CDP_ISCHARUNI(cdp)) {
       iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
     }
     usNew = static_cast<HB_USHORT>(iChar);
-  }
-  else if (HB_ISCHAR(1))
-  {
+  } else if (HB_ISCHAR(1)) {
     usNew = hb_cdpTextGetU16(hb_vmCDP(), hb_parc(1), hb_parclen(1));
-  }
-  else
-  {
+  } else {
     usNew = ' '; // CT uses 255 => U+00A0 in CP437
   }
 
@@ -129,11 +116,9 @@ HB_FUNC(GETCLEARB)
   int iChar = hb_gtGetClearChar();
   auto cdp = hb_vmCDP();
 
-  if (!HB_CDP_ISCHARUNI(cdp))
-  {
+  if (!HB_CDP_ISCHARUNI(cdp)) {
     HB_UCHAR uc = hb_cdpGetUC(cdp, static_cast<HB_WCHAR>(iChar), 0);
-    if (uc)
-    {
+    if (uc) {
       iChar = uc;
     }
   }
@@ -153,12 +138,9 @@ HB_FUNC(WSETMOVE)
 
 HB_FUNC(WSTEP)
 {
-  if (HB_ISNUM(1) && HB_ISNUM(2))
-  {
+  if (HB_ISNUM(1) && HB_ISNUM(2)) {
     hb_retni(hb_ctwSetMoveStep(hb_parni(1), hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_retni(-1);
   }
 }
@@ -232,29 +214,23 @@ HB_FUNC(WBOX)
   auto pszBoxFrame = hb_parc(1);
   int iColor;
 
-  if (pszBoxFrame)
-  {
+  if (pszBoxFrame) {
     auto nLen = hb_parclen(1);
     HB_SIZE nIndex = 0, nSize = 0;
     PHB_CODEPAGE cdp = hb_gtBoxCP();
 
-    while (nSize < HB_SIZEOFARRAY(szBoxBuf) - 1 && HB_CDPCHAR_GET(cdp, pszBoxFrame, nLen, &nIndex, &wc))
-    {
+    while (nSize < HB_SIZEOFARRAY(szBoxBuf) - 1 && HB_CDPCHAR_GET(cdp, pszBoxFrame, nLen, &nIndex, &wc)) {
       szBoxBuf[nSize++] = wc;
     }
     szBoxBuf[nSize] = 0;
-  }
-  else
-  {
+  } else {
     auto iFrame = hb_parni(1);
 
-    if (iFrame < 0 || iFrame > 15)
-    {
+    if (iFrame < 0 || iFrame > 15) {
       iFrame = 0;
     }
     memcpy(szBoxBuf, s_pWBoxFrames[iFrame], 9 * sizeof(HB_WCHAR));
-    if ((iFrame & 4) == 0)
-    {
+    if ((iFrame & 4) == 0) {
       szBoxBuf[8] = hb_gtGetClearChar();
     }
     szBoxBuf[9] = '\0';
@@ -269,16 +245,13 @@ HB_FUNC(WFORMAT)
   int iWindow = hb_ctwCurrentWindow();
   int iTop, iLeft, iBottom, iRight;
 
-  if (hb_pcount() == 0)
-  {
+  if (hb_pcount() == 0) {
     hb_ctwGetFormatCords(iWindow, true, &iTop, &iLeft, &iBottom, &iRight);
     iTop = -iTop;
     iLeft = -iLeft;
     iBottom = -iBottom;
     iRight = -iRight;
-  }
-  else
-  {
+  } else {
     iTop = hb_parni(1);
     iLeft = hb_parni(2);
     iBottom = hb_parni(3);
@@ -363,13 +336,10 @@ HB_FUNC(WMOVE)
 
 HB_FUNC(CTWLASTKEY)
 {
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     auto iNewKey = hb_parni(1);
     hb_retni(hb_ctwLastKey(&iNewKey));
-  }
-  else
-  {
+  } else {
     hb_retni(hb_ctwLastKey(nullptr));
   }
 }
@@ -379,28 +349,22 @@ HB_FUNC(CTWLASTKEY)
 
 HB_FUNC(HBCT_MAXROW) // Return the maximum screen/window row number (zero origin)
 {
-  if (hb_parl(1))
-  {
+  if (hb_parl(1)) {
     int iRows, iCols;
     hb_gtScrDim(&iRows, &iCols);
     hb_retni(iRows - 1);
-  }
-  else
-  {
+  } else {
     hb_retni(hb_gtMaxRow());
   }
 }
 
 HB_FUNC(HBCT_MAXCOL) // Return the maximum screen/window column number (zero origin)
 {
-  if (hb_parl(1))
-  {
+  if (hb_parl(1)) {
     int iRows, iCols;
     hb_gtScrDim(&iRows, &iCols);
     hb_retni(iCols - 1);
-  }
-  else
-  {
+  } else {
     hb_retni(hb_gtMaxCol());
   }
 }
@@ -417,12 +381,9 @@ HB_FUNC(WALIAS)
 
   // 255 is original CT3 limit,
   // Harbour CTWIN does not have such internal limits
-  if (iWindow >= 0 && iWindow <= 255)
-  {
+  if (iWindow >= 0 && iWindow <= 255) {
     iWindow = hb_ctwChangeWindowHandle(iWindow);
-  }
-  else
-  {
+  } else {
     iWindow = -1;
   }
 
@@ -443,30 +404,21 @@ HB_FUNC(WLIST)
   int iWindows, iFrom;
 
   iWindows = hb_ctwGetWindowStack(&piStack);
-  if (iWindows < 0)
-  {
+  if (iWindows < 0) {
     hb_retc_null();
-  }
-  else if (iWindows == 0)
-  {
+  } else if (iWindows == 0) {
     hb_retclen("\000", 1);
-  }
-  else
-  {
+  } else {
     auto pszWindows = static_cast<char *>(hb_xgrab(iWindows + 2));
 
     iFrom = 0;
-    if (hb_ctwCurrentWindow() == 0)
-    {
+    if (hb_ctwCurrentWindow() == 0) {
       pszWindows[iWindows] = 0;
-    }
-    else
-    {
+    } else {
       pszWindows[iFrom++] = 0;
     }
 
-    for (auto i = 0; i < iWindows; ++i)
-    {
+    for (auto i = 0; i < iWindows; ++i) {
       pszWindows[iFrom + i] = static_cast<char>(piStack[i]);
     }
 
