@@ -56,8 +56,7 @@ static char _ean13_checksum(const char *szCode)
 {
   int sum = 0;
 
-  for (auto i = 0; i < 12; i++)
-  {
+  for (auto i = 0; i < 12; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 3 : 1);
   }
   return '0' + (10000 - sum) % 10;
@@ -67,8 +66,7 @@ static char _ean8_checksum(const char *szCode)
 {
   int sum = 0;
 
-  for (auto i = 0; i < 7; i++)
-  {
+  for (auto i = 0; i < 7; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
   }
   return '0' + (10000 - sum) % 10;
@@ -78,8 +76,7 @@ static char _upca_checksum(const char *szCode)
 {
   int sum = 0;
 
-  for (auto i = 0; i < 11; i++)
-  {
+  for (auto i = 0; i < 11; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
   }
   return '0' + (10000 - sum) % 10;
@@ -93,30 +90,23 @@ static char _upce_checksum(const char *szCode)
   szExp[0] = '0';
   szExp[1] = szCode[0];
   szExp[2] = szCode[1];
-  if (szCode[5] == '0' || szCode[5] == '1' || szCode[5] == '2')
-  {
+  if (szCode[5] == '0' || szCode[5] == '1' || szCode[5] == '2') {
     szExp[3] = szCode[5];
     szExp[4] = szExp[5] = szExp[6] = szExp[7] = '0';
     szExp[8] = szCode[2];
     szExp[9] = szCode[3];
     szExp[10] = szCode[4];
-  }
-  else if (szCode[5] == '3')
-  {
+  } else if (szCode[5] == '3') {
     szExp[3] = szCode[2];
     szExp[4] = szExp[5] = szExp[6] = szExp[7] = szExp[8] = '0';
     szExp[9] = szCode[3];
     szExp[10] = szCode[4];
-  }
-  else if (szCode[5] == '4')
-  {
+  } else if (szCode[5] == '4') {
     szExp[3] = szCode[2];
     szExp[4] = szCode[3];
     szExp[5] = szExp[6] = szExp[7] = szExp[8] = szExp[9] = '0';
     szExp[10] = szCode[4];
-  }
-  else
-  {
+  } else {
     szExp[3] = szCode[2];
     szExp[4] = szCode[3];
     szExp[5] = szCode[4];
@@ -136,32 +126,25 @@ PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int iFlags)
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_EAN13;
 
-  if (iLen != 12 && iLen != 13)
-  {
+  if (iLen != 12 && iLen != 13) {
     pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
     return pZebra;
   }
 
-  for (i = 0; i < iLen; i++)
-  {
-    if (szCode[i] < '0' || szCode[i] > '9')
-    {
+  for (i = 0; i < iLen; i++) {
+    if (szCode[i] < '0' || szCode[i] > '9') {
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
     }
   }
 
-  if (iLen == 12)
-  {
+  if (iLen == 12) {
     pZebra->szCode = static_cast<char *>(hb_xgrab(14));
     hb_xmemcpy(pZebra->szCode, szCode, 12);
     pZebra->szCode[12] = _ean13_checksum(szCode);
     pZebra->szCode[13] = '\0';
-  }
-  else
-  {
-    if (szCode[12] != _ean13_checksum(szCode))
-    {
+  } else {
+    if (szCode[12] != _ean13_checksum(szCode)) {
       pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
       return pZebra;
     }
@@ -175,22 +158,17 @@ PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int iFlags)
 
   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3); /* start */
 
-  for (i = 1; i <= 6; i++)
-  {
-    if (s_first[szCode[0] - '0'] & (1 << (i - 1)))
-    {
+  for (i = 1; i <= 6; i++) {
+    if (s_first[szCode[0] - '0'] & (1 << (i - 1))) {
       hb_bitbuffer_cat_int(pZebra->pBits, s_gcode[szCode[i] - '0'], 7);
-    }
-    else
-    {
+    } else {
       hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
     }
   }
 
   hb_bitbuffer_cat_int(pZebra->pBits, 10, 5); /* middle */
 
-  for (i = 7; i <= 12; i++)
-  {
+  for (i = 7; i <= 12; i++) {
     hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'], 7);
   }
 
@@ -209,32 +187,25 @@ PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int iFlags)
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_EAN8;
 
-  if (iLen != 7 && iLen != 8)
-  {
+  if (iLen != 7 && iLen != 8) {
     pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
     return pZebra;
   }
 
-  for (i = 0; i < iLen; i++)
-  {
-    if (szCode[i] < '0' || szCode[i] > '9')
-    {
+  for (i = 0; i < iLen; i++) {
+    if (szCode[i] < '0' || szCode[i] > '9') {
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
     }
   }
 
-  if (iLen == 7)
-  {
+  if (iLen == 7) {
     pZebra->szCode = static_cast<char *>(hb_xgrab(9));
     hb_xmemcpy(pZebra->szCode, szCode, 7);
     pZebra->szCode[7] = _ean8_checksum(szCode);
     pZebra->szCode[8] = '\0';
-  }
-  else
-  {
-    if (szCode[7] != _ean8_checksum(szCode))
-    {
+  } else {
+    if (szCode[7] != _ean8_checksum(szCode)) {
       pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
       return pZebra;
     }
@@ -248,15 +219,13 @@ PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int iFlags)
 
   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3); /* start */
 
-  for (i = 0; i < 4; i++)
-  {
+  for (i = 0; i < 4; i++) {
     hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
   }
 
   hb_bitbuffer_cat_int(pZebra->pBits, 10, 5); /* middle */
 
-  for (i = 4; i < 8; i++)
-  {
+  for (i = 4; i < 8; i++) {
     hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'], 7);
   }
 
@@ -274,32 +243,25 @@ PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int iFlags)
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_UPCA;
 
-  if (iLen != 11 && iLen != 12)
-  {
+  if (iLen != 11 && iLen != 12) {
     pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
     return pZebra;
   }
 
-  for (i = 0; i < iLen; i++)
-  {
-    if (szCode[i] < '0' || szCode[i] > '9')
-    {
+  for (i = 0; i < iLen; i++) {
+    if (szCode[i] < '0' || szCode[i] > '9') {
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
     }
   }
 
-  if (iLen == 11)
-  {
+  if (iLen == 11) {
     pZebra->szCode = static_cast<char *>(hb_xgrab(13));
     hb_xmemcpy(pZebra->szCode, szCode, 11);
     pZebra->szCode[11] = _upca_checksum(szCode);
     pZebra->szCode[12] = '\0';
-  }
-  else
-  {
-    if (szCode[11] != _upca_checksum(szCode))
-    {
+  } else {
+    if (szCode[11] != _upca_checksum(szCode)) {
       pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
       return pZebra;
     }
@@ -313,15 +275,13 @@ PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int iFlags)
 
   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3); /* start */
 
-  for (i = 0; i < 6; i++)
-  {
+  for (i = 0; i < 6; i++) {
     hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
   }
 
   hb_bitbuffer_cat_int(pZebra->pBits, 10, 5); /* middle */
 
-  for (i = 6; i < 12; i++)
-  {
+  for (i = 6; i < 12; i++) {
     hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'], 7);
   }
 
@@ -340,32 +300,25 @@ PHB_ZEBRA hb_zebra_create_upce(const char *szCode, HB_SIZE nLen, int iFlags)
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_UPCE;
 
-  if (iLen != 6 && iLen != 7)
-  {
+  if (iLen != 6 && iLen != 7) {
     pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
     return pZebra;
   }
 
-  for (i = 0; i < iLen; i++)
-  {
-    if (szCode[i] < '0' || szCode[i] > '9')
-    {
+  for (i = 0; i < iLen; i++) {
+    if (szCode[i] < '0' || szCode[i] > '9') {
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
     }
   }
 
-  if (iLen == 6)
-  {
+  if (iLen == 6) {
     pZebra->szCode = static_cast<char *>(hb_xgrab(8));
     hb_xmemcpy(pZebra->szCode, szCode, 6);
     pZebra->szCode[6] = _upce_checksum(szCode);
     pZebra->szCode[7] = '\0';
-  }
-  else
-  {
-    if (szCode[6] != _upce_checksum(szCode))
-    {
+  } else {
+    if (szCode[6] != _upce_checksum(szCode)) {
       pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
       return pZebra;
     }
@@ -380,14 +333,10 @@ PHB_ZEBRA hb_zebra_create_upce(const char *szCode, HB_SIZE nLen, int iFlags)
 
   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3); /* start */
 
-  for (i = 0; i < 6; i++)
-  {
-    if (sumcode & (1 << i))
-    {
+  for (i = 0; i < 6; i++) {
+    if (sumcode & (1 << i)) {
       hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
-    }
-    else
-    {
+    } else {
       hb_bitbuffer_cat_int(pZebra->pBits, s_gcode[szCode[i] - '0'], 7);
     }
   }
@@ -399,12 +348,9 @@ HB_FUNC(HB_ZEBRA_CREATE_EAN13)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_zebra_ret(hb_zebra_create_ean13(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -413,12 +359,9 @@ HB_FUNC(HB_ZEBRA_CREATE_EAN8)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_zebra_ret(hb_zebra_create_ean8(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -427,12 +370,9 @@ HB_FUNC(HB_ZEBRA_CREATE_UPCA)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_zebra_ret(hb_zebra_create_upca(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -441,12 +381,9 @@ HB_FUNC(HB_ZEBRA_CREATE_UPCE)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_zebra_ret(hb_zebra_create_upce(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

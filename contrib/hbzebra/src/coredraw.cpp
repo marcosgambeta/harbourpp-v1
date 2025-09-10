@@ -65,8 +65,7 @@ int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, do
 
   HB_SYMBOL_UNUSED(iFlags);
 
-  if (pZebra->iError != 0)
-  {
+  if (pZebra->iError != 0) {
     return HB_ZEBRA_ERROR_INVALIDZEBRA;
   }
 
@@ -75,13 +74,10 @@ int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, do
   dLast = dX;
   nCount = 0;
   i = 0;
-  for (HB_SIZE n = 0; n < nLen; n++)
-  {
+  for (HB_SIZE n = 0; n < nLen; n++) {
     bool fBit = hb_bitbuffer_get(pZebra->pBits, n);
-    if (fBit != fLastBit)
-    {
-      if (fLastBit && pCallback)
-      {
+    if (fBit != fLastBit) {
+      if (fLastBit && pCallback) {
         pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
       }
 
@@ -90,12 +86,9 @@ int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, do
       fLastBit = fBit;
     }
     nCount++;
-    if (++i == iCol)
-    {
-      if (nCount)
-      {
-        if (fBit && pCallback)
-        {
+    if (++i == iCol) {
+      if (nCount) {
+        if (fBit && pCallback) {
           pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
         }
         nCount = 0;
@@ -103,14 +96,12 @@ int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, do
       i = 0;
       dY += dHeight;
       dLast = dX;
-      if (n + 1 < nLen)
-      {
+      if (n + 1 < nLen) {
         fLastBit = hb_bitbuffer_get(pZebra->pBits, n + 1);
       }
     }
   }
-  if (fLastBit && nCount && pCallback)
-  {
+  if (fLastBit && nCount && pCallback) {
     pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
   }
 
@@ -119,8 +110,7 @@ int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, do
 
 static void hb_zebra_draw_codeblock_callback(void *pDrawBlock, double dX, double dY, double dWidth, double dHeight)
 {
-  if (pDrawBlock && static_cast<PHB_ITEM>(pDrawBlock)->isBlock() && hb_vmRequestReenter())
-  {
+  if (pDrawBlock && static_cast<PHB_ITEM>(pDrawBlock)->isBlock() && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
     hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
     hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);
@@ -142,28 +132,23 @@ HB_FUNC(HB_ZEBRA_DRAW)
 {
   auto pZebra = hb_zebra_param(1);
 
-  if (pZebra)
-  {
+  if (pZebra) {
     auto pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
-    if (pDrawBlock)
-    {
+    if (pDrawBlock) {
       hb_retni(
           hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
   }
 }
 
-int hb_zebra_getsize(PHB_ZEBRA pZebra, int *piWidth, int * piHeight)
+int hb_zebra_getsize(PHB_ZEBRA pZebra, int *piWidth, int *piHeight)
 {
   HB_SIZE n, nLen;
   int iRow, iCol, iMaxCol = pZebra->iCol, iWidth, iHeight;
 
-  if (pZebra->iError != 0)
-  {
+  if (pZebra->iError != 0) {
     *piWidth = *piHeight = 0;
     return HB_ZEBRA_ERROR_INVALIDZEBRA;
   }
@@ -171,21 +156,16 @@ int hb_zebra_getsize(PHB_ZEBRA pZebra, int *piWidth, int * piHeight)
   nLen = hb_bitbuffer_len(pZebra->pBits);
   iWidth = iHeight = 0;
   iCol = iRow = 1;
-  for (n = 0; n < nLen; n++)
-  {
-    if (hb_bitbuffer_get(pZebra->pBits, n))
-    {
-      if (iCol > iWidth)
-      {
+  for (n = 0; n < nLen; n++) {
+    if (hb_bitbuffer_get(pZebra->pBits, n)) {
+      if (iCol > iWidth) {
         iWidth = iCol;
       }
-      if (iRow > iHeight)
-      {
+      if (iRow > iHeight) {
         iHeight = iRow;
       }
     }
-    if (iCol++ == iMaxCol)
-    {
+    if (iCol++ == iMaxCol) {
       ++iRow;
       iCol = 1;
     }
@@ -201,8 +181,7 @@ HB_FUNC(HB_ZEBRA_GETSIZE)
 {
   auto pZebra = hb_zebra_param(1);
 
-  if (pZebra)
-  {
+  if (pZebra) {
     int iWidth, iHeight;
 
     hb_retni(hb_zebra_getsize(pZebra, &iWidth, &iHeight));
@@ -212,92 +191,83 @@ HB_FUNC(HB_ZEBRA_GETSIZE)
 }
 
 /* NOTE: caller must free the returned bitmap pointer if not NULL */
-unsigned char * hb_zebra_getbitmap( PHB_ZEBRA pZebra, int iAlign, HB_BOOL fBottomUp,
-                                    HB_SIZE * pnSize, int * piWidth, int * piHeight,
-                                    int iScaleX, int iScaleY, int iBorder )
+unsigned char *hb_zebra_getbitmap(PHB_ZEBRA pZebra, int iAlign, HB_BOOL fBottomUp, HB_SIZE *pnSize, int *piWidth,
+                                  int *piHeight, int iScaleX, int iScaleY, int iBorder)
 {
-   unsigned char * pBitMap = NULL;
-   HB_SIZE nSize = 0;
-   int iWidth, iHeight;
+  unsigned char *pBitMap = NULL;
+  HB_SIZE nSize = 0;
+  int iWidth, iHeight;
 
-   if( hb_zebra_getsize( pZebra, &iWidth, &iHeight ) == 0 &&
-                         iWidth != 0 && iHeight != 0 )
-   {
-      HB_SIZE nLen = hb_bitbuffer_len( pZebra->pBits ), n;
-      int iLineBits, iLineOffset, iMaxCol, iCol;
+  if (hb_zebra_getsize(pZebra, &iWidth, &iHeight) == 0 && iWidth != 0 && iHeight != 0) {
+    HB_SIZE nLen = hb_bitbuffer_len(pZebra->pBits), n;
+    int iLineBits, iLineOffset, iMaxCol, iCol;
 
-      if( iAlign < 1 || iAlign > 64 || ( iAlign & ( iAlign - 1 ) ) != 0 )
-         iAlign = 8;
-      if( iScaleX < 1 )
-         iScaleX = 1;
-      if( iScaleY < 1 )
-         iScaleY = 1;
-      if( iBorder < 0 )
-         iBorder = 0;
-      iWidth = iWidth * iScaleX + ( iBorder << 1 );
-      iHeight = iHeight * iScaleY + ( iBorder << 1 );
-      iLineBits = ( iWidth + ( iAlign - 1 ) ) & ~( iAlign - 1 );
-      nSize = ( iLineBits * iHeight + 0x07 ) >> 3;
-      if( nLen > ( nSize << 3 ) )
-         nLen = nSize << 3;
-      pBitMap = ( unsigned char * ) hb_xgrab( nSize + 1 );
+    if (iAlign < 1 || iAlign > 64 || (iAlign & (iAlign - 1)) != 0)
+      iAlign = 8;
+    if (iScaleX < 1)
+      iScaleX = 1;
+    if (iScaleY < 1)
+      iScaleY = 1;
+    if (iBorder < 0)
+      iBorder = 0;
+    iWidth = iWidth * iScaleX + (iBorder << 1);
+    iHeight = iHeight * iScaleY + (iBorder << 1);
+    iLineBits = (iWidth + (iAlign - 1)) & ~(iAlign - 1);
+    nSize = (iLineBits * iHeight + 0x07) >> 3;
+    if (nLen > (nSize << 3))
+      nLen = nSize << 3;
+    pBitMap = (unsigned char *)hb_xgrab(nSize + 1);
 
-      iMaxCol = pZebra->iCol;
-      iCol = 0;
-      if( fBottomUp )
-         iLineOffset = iLineBits * ( iHeight - iBorder - 1 );
-      else
-         iLineOffset = iLineBits * iBorder;
+    iMaxCol = pZebra->iCol;
+    iCol = 0;
+    if (fBottomUp)
+      iLineOffset = iLineBits * (iHeight - iBorder - 1);
+    else
+      iLineOffset = iLineBits * iBorder;
 
-      memset( pBitMap, 0, nSize );
-      for( n = 0; n < nLen; n++ )
-      {
-         if( hb_bitbuffer_get( pZebra->pBits, n ) )
-         {
-            int iBitPos = iLineOffset + iCol * iScaleX + iBorder, iX, iY;
-            for( iY = 0; iY < iScaleY; ++iY )
-            {
-               for( iX = 0; iX < iScaleX; ++iX )
-               {
-                  unsigned char * ptr = pBitMap + ( ( iBitPos + iX ) >> 3 );
-                  *ptr |= 0x80 >> ( ( iBitPos + iX ) & 0x07 );
-               }
-               iBitPos += fBottomUp ? - iLineBits : iLineBits;
-            }
-         }
-         if( ++iCol == iMaxCol )
-         {
-            iCol = 0;
-            iLineOffset += ( fBottomUp ? - iLineBits : iLineBits ) * iScaleY;
-         }
+    memset(pBitMap, 0, nSize);
+    for (n = 0; n < nLen; n++) {
+      if (hb_bitbuffer_get(pZebra->pBits, n)) {
+        int iBitPos = iLineOffset + iCol * iScaleX + iBorder, iX, iY;
+        for (iY = 0; iY < iScaleY; ++iY) {
+          for (iX = 0; iX < iScaleX; ++iX) {
+            unsigned char *ptr = pBitMap + ((iBitPos + iX) >> 3);
+            *ptr |= 0x80 >> ((iBitPos + iX) & 0x07);
+          }
+          iBitPos += fBottomUp ? -iLineBits : iLineBits;
+        }
       }
-   }
+      if (++iCol == iMaxCol) {
+        iCol = 0;
+        iLineOffset += (fBottomUp ? -iLineBits : iLineBits) * iScaleY;
+      }
+    }
+  }
 
-   *pnSize = nSize;
-   *piWidth = iWidth;
-   *piHeight = iHeight;
+  *pnSize = nSize;
+  *piWidth = iWidth;
+  *piHeight = iHeight;
 
-   return pBitMap;
+  return pBitMap;
 }
 
-/* hb_zebra_getbitmap( <hZebra>, <nAlign>=8, <lBottomUp>=.F., @<nWidth>, @<nHeight>, <nScaleX>, <nScaleY>, <nBorder> ) -> <cBitMap> | NIL */
-HB_FUNC( HB_ZEBRA_GETBITMAP )
+/* hb_zebra_getbitmap( <hZebra>, <nAlign>=8, <lBottomUp>=.F., @<nWidth>, @<nHeight>, <nScaleX>, <nScaleY>, <nBorder> )
+ * -> <cBitMap> | NIL */
+HB_FUNC(HB_ZEBRA_GETBITMAP)
 {
-   PHB_ZEBRA pZebra = hb_zebra_param( 1 );
+  PHB_ZEBRA pZebra = hb_zebra_param(1);
 
-   if( pZebra )
-   {
-      HB_SIZE nSize;
-      int iWidth, iHeight;
-      unsigned char * pBitMap = hb_zebra_getbitmap( pZebra, hb_parni( 2 ), hb_parl( 3 ),
-                                                    &nSize, &iWidth, &iHeight,
-                                                    hb_parni( 6 ), hb_parni( 7 ), hb_parni( 8 ) );
+  if (pZebra) {
+    HB_SIZE nSize;
+    int iWidth, iHeight;
+    unsigned char *pBitMap = hb_zebra_getbitmap(pZebra, hb_parni(2), hb_parl(3), &nSize, &iWidth, &iHeight, hb_parni(6),
+                                                hb_parni(7), hb_parni(8));
 
-      hb_storni( iWidth, 4 );
-      hb_storni( iHeight, 5 );
-      if( pBitMap )
-         hb_retclen_buffer( ( char * ) pBitMap, nSize );
-      else
-         hb_retc_null();
-   }
+    hb_storni(iWidth, 4);
+    hb_storni(iHeight, 5);
+    if (pBitMap)
+      hb_retclen_buffer((char *)pBitMap, nSize);
+    else
+      hb_retc_null();
+  }
 }

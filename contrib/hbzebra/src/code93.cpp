@@ -102,19 +102,13 @@ static int _code93_charno(char ch)
 {
   static const char *s_symbols = "-. $/+%";
 
-  if ('0' <= ch && ch <= '9')
-  {
+  if ('0' <= ch && ch <= '9') {
     return ch - '0';
-  }
-  else if ('A' <= ch && ch <= 'Z')
-  {
+  } else if ('A' <= ch && ch <= 'Z') {
     return ch - 'A' + 10;
-  }
-  else
-  {
+  } else {
     const char *ptr = strchr(s_symbols, ch);
-    if (ptr && *ptr)
-    {
+    if (ptr && *ptr) {
       return static_cast<int>(ptr - s_symbols + 36);
     }
   }
@@ -134,15 +128,12 @@ PHB_ZEBRA hb_zebra_create_code93(const char *szCode, HB_SIZE nLen, int iFlags)
 
   j = 0;
   k = 0;
-  for (i = 0; i < iLen; i++)
-  {
-    if (static_cast<unsigned char>(szCode[i]) >= 128)
-    {
+  for (i = 0; i < iLen; i++) {
+    if (static_cast<unsigned char>(szCode[i]) >= 128) {
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
     }
-    if (szCode[i] >= ' ' && szCode[i] <= 126)
-    {
+    if (szCode[i] >= ' ' && szCode[i] <= 126) {
       j++;
     }
 
@@ -151,10 +142,8 @@ PHB_ZEBRA hb_zebra_create_code93(const char *szCode, HB_SIZE nLen, int iFlags)
 
   pZebra->szCode = static_cast<char *>(hb_xgrab(j + 1));
   j = 0;
-  for (i = 0; i < iLen; i++)
-  {
-    if (szCode[i] >= 32 && szCode[i] <= 126)
-    {
+  for (i = 0; i < iLen; i++) {
+    if (szCode[i] >= 32 && szCode[i] <= 126) {
       pZebra->szCode[j++] = szCode[i];
     }
   }
@@ -170,63 +159,42 @@ PHB_ZEBRA hb_zebra_create_code93(const char *szCode, HB_SIZE nLen, int iFlags)
   csum = 0;
   ksum = 0;
   k++;
-  for (i = 0; i < iLen; i++)
-  {
+  for (i = 0; i < iLen; i++) {
     int no = _code93_charno(szCode[i]);
-    if (no >= 0)
-    {
+    if (no >= 0) {
       hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
       hb_bitbuffer_cat_int(pZebra->pBits, s_code[no], 7);
       hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
       ksum += ((k % 15) ? k % 15 : 15) * no;
       k--;
       csum += ((k % 20) ? k % 20 : 20) * no;
-    }
-    else
-    {
+    } else {
       int no1 = 0, no2 = 0;
-      if (szCode[i] >= 1 && szCode[i] <= 26)
-      {
+      if (szCode[i] >= 1 && szCode[i] <= 26) {
         no1 = 43; /* ($) */
         no2 = szCode[i] - 1 + 10;
-      }
-      else if (szCode[i] >= '!' && szCode[i] <= ':')
-      {
+      } else if (szCode[i] >= '!' && szCode[i] <= ':') {
         no1 = 45; /* (/) */
         no2 = szCode[i] - '!' + 10;
-      }
-      else if (szCode[i] >= 'a' && szCode[i] <= 'z')
-      {
+      } else if (szCode[i] >= 'a' && szCode[i] <= 'z') {
         no1 = 46; /* (+) */
         no2 = szCode[i] - 'a' + 10;
-      }
-      else if (szCode[i] >= 27 && szCode[i] <= 31)
-      {
+      } else if (szCode[i] >= 27 && szCode[i] <= 31) {
         no1 = 44; /* (%) */
         no2 = szCode[i] - 27 + 10;
-      }
-      else if (szCode[i] >= '[' && szCode[i] <= '_')
-      {
+      } else if (szCode[i] >= '[' && szCode[i] <= '_') {
         no1 = 44; /* (%) */
         no2 = szCode[i] - '[' + 15;
-      }
-      else if (szCode[i] >= '{' && static_cast<unsigned char>(szCode[i]) <= 127)
-      {
+      } else if (szCode[i] >= '{' && static_cast<unsigned char>(szCode[i]) <= 127) {
         no1 = 44; /* (%) */
         no2 = szCode[i] - '{' + 20;
-      }
-      else if (szCode[i] == '\0')
-      {
+      } else if (szCode[i] == '\0') {
         no1 = 44; /* (%) */
         no2 = 30; /* U */
-      }
-      else if (szCode[i] == '@')
-      {
+      } else if (szCode[i] == '@') {
         no1 = 44; /* (%) */
         no2 = 31; /* V */
-      }
-      else if (szCode[i] == '`')
-      {
+      } else if (szCode[i] == '`') {
         no1 = 44; /* (%) */
         no2 = 32; /* W */
       }
@@ -267,12 +235,9 @@ HB_FUNC(HB_ZEBRA_CREATE_CODE93)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  if (pItem != nullptr)
-  {
+  if (pItem != nullptr) {
     hb_zebra_ret(hb_zebra_create_code93(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
