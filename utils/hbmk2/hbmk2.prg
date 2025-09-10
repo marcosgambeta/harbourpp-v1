@@ -1821,11 +1821,12 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          { {|| iif((tmp1 := FindInPath("icl.exe")) != NIL .AND. "itanium" $ Lower(tmp1), tmp1, NIL) }, "iccia64" }, ;
          { {|| FindInPath("icl.exe") }, "icc"    }, ;
          { {|| FindInPath("tcc.exe") }, "tcc"    }, ;
-         { {|| FindInPath("dmc.exe") }, "dmc"    } }
+         { {|| FindInPath("dmc.exe") }, "dmc"    }, ;
+         { {|| FindInPath("zig.exe") }, "zig"    } }
 #endif
       aCOMPSUP := { ;
-         "mingw", "msvc", "clang", "clang-cl", "bcc", "icc", "tcc", ;
-         "mingw64", "msvc64", "msvcia64", "clang64", "clang-cl64", "bcc64", "iccia64" }
+         "mingw", "msvc", "clang", "clang-cl", "zig", "bcc", "icc", "tcc", ;
+         "mingw64", "msvc64", "msvcia64", "clang64", "clang-cl64", "zig64", "bcc64", "iccia64" }
       l_aLIBHBGT := { "gtwin", "gtwvt", "gtgui" }
       hbmk[_HBMK_cGTDEFAULT] := "gtwin"
       hbmk[_HBMK_cDynLibPrefix] := ""
@@ -4076,6 +4077,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
            ( hbmk[_HBMK_cPLAT] == "win" .AND. hbmk[_HBMK_cCOMP] == "mingw64" ) .OR. ;
            ( hbmk[_HBMK_cPLAT] == "win" .AND. hbmk[_HBMK_cCOMP] == "clang" ) .OR. ;
            ( hbmk[_HBMK_cPLAT] == "win" .AND. hbmk[_HBMK_cCOMP] == "clang64" ) .OR. ;
+           ( hbmk[_HBMK_cPLAT] == "win" .AND. hbmk[_HBMK_cCOMP] == "zig" ) .OR. ;
+           ( hbmk[_HBMK_cPLAT] == "win" .AND. hbmk[_HBMK_cCOMP] == "zig64" ) .OR. ;
            ( hbmk[_HBMK_cPLAT] == "win" .AND. hbmk[_HBMK_cCOMP] == "tcc" )
 
          hbmk[_HBMK_nCmd_FNF] := _FNF_FWDSLASH
@@ -4091,6 +4094,10 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          CASE hbmk[_HBMK_cCOMP] == "clang"
             cBin_CompCPP := hbmk[_HBMK_cCCPREFIX] + "clang++" + hbmk[_HBMK_cCCSUFFIX] + hbmk[_HBMK_cCCEXT]
             cBin_CompC := iif(hbmk[_HBMK_lCPP] != NIL .AND. hbmk[_HBMK_lCPP], cBin_CompCPP, hbmk[_HBMK_cCCPREFIX] + "clang" + hbmk[_HBMK_cCCSUFFIX] + hbmk[_HBMK_cCCEXT])
+         CASE hbmk[_HBMK_cCOMP] == "zig"
+            cBin_CompCPP := hbmk[_HBMK_cCCPREFIX] + "zig" + hbmk[_HBMK_cCCEXT] + " c++" + hbmk[_HBMK_cCCSUFFIX]
+            cBin_CompC := iif(hbmk[_HBMK_lCPP] != NIL .AND. hbmk[_HBMK_lCPP], cBin_CompCPP, hbmk[_HBMK_cCCPREFIX] + "zig" + hbmk[_HBMK_cCCEXT] + " cc" + hbmk[_HBMK_cCCSUFFIX])
+            cObjExt := ".obj" // TODO: temporary solution for object extension
          CASE hbmk[_HBMK_cCOMP] == "tcc"
             cBin_CompCPP := "tcc.exe"
             cBin_CompC := cBin_CompCPP
