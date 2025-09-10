@@ -64,16 +64,13 @@ HB_FUNC(WVW_SETTOOLTIPACTIVE)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hb_retl(wvw_win->fToolTipActive);
 
-    if (HB_ISLOG(2))
-    {
+    if (HB_ISLOG(2)) {
       wvw_win->fToolTipActive = hb_parl(2);
 
-      if (wvw_win->fToolTipActive && wvw_win->hWndTT == nullptr)
-      {
+      if (wvw_win->fToolTipActive && wvw_win->hWndTT == nullptr) {
         hb_gt_wvw_CreateToolTipWindow(wvw_win);
       }
     }
@@ -92,8 +89,7 @@ HB_FUNC(WVW_SETTOOLTIP)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win && wvw_win->fToolTipActive)
-  {
+  if (wvw_win && wvw_win->fToolTipActive) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -106,8 +102,7 @@ HB_FUNC(WVW_SETTOOLTIP)
     ti.hwnd = wvw_win->hWnd;
     ti.uId = WVW_ID_BASE_TOOLTIP + wvw_win->nWinId;
 
-    if (SendMessage(wvw_win->hWndTT, TTM_GETTOOLINFO, 0, reinterpret_cast<LPARAM>(&ti)))
-    {
+    if (SendMessage(wvw_win->hWndTT, TTM_GETTOOLINFO, 0, reinterpret_cast<LPARAM>(&ti))) {
       void *hText;
 
       POINT xy;
@@ -139,15 +134,13 @@ HB_FUNC(WVW_SETTOOLTIPTEXT)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     TOOLINFO ti;
     ti.cbSize = sizeof(ti);
     ti.hwnd = wvw_win->hWnd;
     ti.uId = 100000;
 
-    if (SendMessage(wvw_win->hWndTT, TTM_GETTOOLINFO, 0, reinterpret_cast<LPARAM>(&ti)))
-    {
+    if (SendMessage(wvw_win->hWndTT, TTM_GETTOOLINFO, 0, reinterpret_cast<LPARAM>(&ti))) {
       void *hText;
       ti.lpszText = static_cast<LPTSTR>(HB_UNCONST(HB_PARSTRDEF(2, &hText, nullptr)));
       SendMessage(wvw_win->hWndTT, TTM_UPDATETIPTEXT, 0, reinterpret_cast<LPARAM>(&ti));
@@ -162,8 +155,7 @@ HB_FUNC(WVW_SETTOOLTIPMARGIN)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     RECT rc;
     rc.left = hb_parni(3);
     rc.top = hb_parni(2);
@@ -180,12 +172,10 @@ HB_FUNC(WVW_SETTOOLTIPWIDTH)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hb_retni(static_cast<int>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       SendMessage(wvw_win->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(hb_parni(2)));
     }
 
@@ -200,12 +190,10 @@ HB_FUNC(WVW_SETTOOLTIPBKCOLOR)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       SendMessage(wvw_win->hWndTT, TTM_SETTIPBKCOLOR, static_cast<WPARAM>(hbwapi_par_COLORREF(2)), 0);
     }
 
@@ -220,12 +208,10 @@ HB_FUNC(WVW_SETTOOLTIPTEXTCOLOR)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       SendMessage(wvw_win->hWndTT, TTM_SETTIPTEXTCOLOR, static_cast<WPARAM>(hbwapi_par_COLORREF(2)), 0);
     }
 
@@ -240,13 +226,11 @@ HB_FUNC(WVW_SETTOOLTIPTITLE)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win && HB_ISCHAR(3))
-  {
+  if (wvw_win && HB_ISCHAR(3)) {
     void *hText;
 
     auto iIcon = hb_parni(2);
-    if (iIcon > 3)
-    {
+    if (iIcon > 3) {
       iIcon = 0;
     }
 
@@ -262,8 +246,7 @@ HB_FUNC(WVW_GETTOOLTIPWIDTH)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hb_retni(static_cast<int>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
     return;
   }
@@ -276,8 +259,7 @@ HB_FUNC(WVW_GETTOOLTIPBKCOLOR)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
     return;
   }
@@ -290,8 +272,7 @@ HB_FUNC(WVW_GETTOOLTIPTEXTCOLOR)
 #if _WIN32_IE > 0x400
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));
     return;
   }

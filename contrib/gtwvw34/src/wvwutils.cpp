@@ -90,8 +90,7 @@ HB_FUNC(WVW_GBCREATE)
 
   HWND hWnd = nullptr;
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -109,9 +108,7 @@ HB_FUNC(WVW_GBCREATE)
                                     hb_parl(11) /* bMap3Dcolors */,
                                     BS_TEXT | BS_GROUPBOX | WS_OVERLAPPED | hb_parni(13) /* nStyle */, &hWnd));
     hb_strfree(hCaption);
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 
@@ -128,8 +125,7 @@ HB_FUNC(WVW_RBCREATE)
 
   HWND hWnd = nullptr;
 
-  if (wvw_win && HB_ISEVALITEM(8))
-  {
+  if (wvw_win && HB_ISEVALITEM(8)) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -147,9 +143,7 @@ HB_FUNC(WVW_RBCREATE)
                                     hb_parl(11) /* bMap3Dcolors */, BS_AUTORADIOBUTTON | hb_parni(13) /* nStyle */,
                                     &hWnd));
     hb_strfree(hCaption);
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 
@@ -162,38 +156,30 @@ HB_FUNC(WVW_SETCONTROLTEXT)
 
   auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
 
-  if (hWnd)
-  {
+  if (hWnd) {
     void *hText;
     SetWindowText(hWnd, HB_PARSTRDEF(3, &hText, nullptr));
     hb_strfree(hText);
 
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
 
 HB_FUNC(WVW_MOUSE_COL)
 {
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     auto wvw_top = hb_gt_wvw_win_top();
 
-    if (wvw_top)
-    {
+    if (wvw_top) {
       hb_retni(hb_gt_wvw_GetMouseX(wvw_top) + hb_gt_wvw_ColOfs(wvw_top));
       return;
     }
-  }
-  else
-  {
+  } else {
     auto wvw_win = hb_gt_wvw_win_cur();
 
-    if (wvw_win)
-    {
+    if (wvw_win) {
       hb_retni(hb_gt_wvw_GetMouseX(wvw_win));
       return;
     }
@@ -204,22 +190,17 @@ HB_FUNC(WVW_MOUSE_COL)
 
 HB_FUNC(WVW_MOUSE_ROW)
 {
-  if (hb_gt_wvw_GetMainCoordMode())
-  {
+  if (hb_gt_wvw_GetMainCoordMode()) {
     auto wvw_top = hb_gt_wvw_win_top();
 
-    if (wvw_top)
-    {
+    if (wvw_top) {
       hb_retni(hb_gt_wvw_GetMouseY(wvw_top) + hb_gt_wvw_RowOfs(wvw_top));
       return;
     }
-  }
-  else
-  {
+  } else {
     auto wvw_win = hb_gt_wvw_win_cur();
 
-    if (wvw_win)
-    {
+    if (wvw_win) {
       hb_retni(hb_gt_wvw_GetMouseY(wvw_win));
       return;
     }
@@ -233,8 +214,7 @@ HB_FUNC(WVW_ADDTOOLTIPEX) /* changed by MAG */
   auto wvw = hb_gt_wvw();
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw && wvw_win)
-  {
+  if (wvw && wvw_win) {
     int iStyle = TTS_ALWAYSTIP;
     INITCOMMONCONTROLSEX icex{};
 
@@ -242,8 +222,7 @@ HB_FUNC(WVW_ADDTOOLTIPEX) /* changed by MAG */
     icex.dwSize = sizeof(icex);
     icex.dwICC = ICC_BAR_CLASSES;
 
-    if (!InitCommonControlsEx(&icex))
-    {
+    if (!InitCommonControlsEx(&icex)) {
     }
 
 #if 0
@@ -252,13 +231,11 @@ HB_FUNC(WVW_ADDTOOLTIPEX) /* changed by MAG */
       }
 #endif
 
-    if (!wvw->hWndTT)
-    {
+    if (!wvw->hWndTT) {
       wvw->hWndTT = CreateWindow(TOOLTIPS_CLASS, nullptr, iStyle, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
                                  CW_USEDEFAULT, nullptr, nullptr, GetModuleHandle(nullptr), nullptr);
     }
-    if (wvw->hWndTT)
-    {
+    if (wvw->hWndTT) {
       void *hText;
 
       TOOLINFO ti{};
@@ -287,24 +264,20 @@ HB_FUNC(WVW_CREATEIMAGELIST)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-  if (pArray)
-  {
+  if (pArray) {
     auto ulLen = static_cast<int>(hb_arrayLen(pArray));
 
     HIMAGELIST himl =
         ImageList_Create(hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parnidef(5, ILC_COLOR)), ulLen, hb_parni(4));
 
-    for (auto ul = 1; ul <= ulLen; ++ul)
-    {
+    for (auto ul = 1; ul <= ulLen; ++ul) {
       auto hbmp = static_cast<HBITMAP>(hbwapi_arrayGet_HANDLE(pArray, ul));
       ImageList_Add(himl, hbmp, nullptr);
       DeleteObject(hbmp);
     }
 
     hbwapi_ret_raw_HANDLE(himl);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_raw_HANDLE(nullptr);
   }
 }
@@ -337,54 +310,43 @@ HB_FUNC(WVW_OPENIMAGE)
 {
   HGLOBAL hG = nullptr;
 
-  if (hb_parl(2) /* lString */)
-  {
+  if (hb_parl(2) /* lString */) {
     auto nFileSize = static_cast<SIZE_T>(hb_parclen(1));
     hG = GlobalAlloc(GPTR, nFileSize);
-    if (hG)
-    {
+    if (hG) {
       memcpy(hG, hb_parcx(1), nFileSize);
     }
-  }
-  else
-  {
+  } else {
     PHB_FILE fhnd =
         hb_fileExtOpen(hb_parcx(1), nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
-    if (fhnd)
-    {
+    if (fhnd) {
       auto nFileSize = static_cast<SIZE_T>(hb_fileSize(fhnd));
       hG = GlobalAlloc(GPTR, nFileSize);
-      if (hG)
-      {
+      if (hG) {
         hb_fileReadAt(fhnd, hG, nFileSize, 0);
       }
       hb_fileClose(fhnd);
     }
   }
 
-  if (hG)
-  {
+  if (hG) {
     IPicture *pPicture = nullptr;
     IStream *pStream = nullptr;
 
-    if (CreateStreamOnHGlobal(hG, FALSE, &pStream) == S_OK && pStream)
-    {
+    if (CreateStreamOnHGlobal(hG, FALSE, &pStream) == S_OK && pStream) {
       OleLoadPicture(pStream, 0, FALSE, HB_ID_REF(IID_IPicture), reinterpret_cast<LPVOID *>(&pPicture));
       HB_VTBL(pStream)->Release(HB_THIS(pStream));
     }
 
     GlobalFree(hG);
 
-    if (pPicture)
-    {
+    if (pPicture) {
       HBITMAP hBitmap = nullptr;
 
-      if (HB_VTBL(pPicture)->get_Handle(HB_THIS_(pPicture) reinterpret_cast<OLE_HANDLE *>(&hBitmap)) == S_OK && hBitmap)
-      {
+      if (HB_VTBL(pPicture)->get_Handle(HB_THIS_(pPicture) reinterpret_cast<OLE_HANDLE *>(&hBitmap)) == S_OK &&
+          hBitmap) {
         hbwapi_ret_raw_HANDLE(CopyImage(hBitmap, IMAGE_BITMAP, 0, 0, LR_COPYRETURNORG));
-      }
-      else
-      {
+      } else {
         hbwapi_ret_raw_HANDLE(nullptr);
       }
 
@@ -404,8 +366,7 @@ HB_FUNC(WVW_OPENBITMAP)
 
   HBITMAP hbm = nullptr;
 
-  if (fhnd)
-  {
+  if (fhnd) {
     BITMAPFILEHEADER bmfh;
     BITMAPINFOHEADER bmih;
     HGLOBAL hmem1;
@@ -415,8 +376,7 @@ HB_FUNC(WVW_OPENBITMAP)
 
     /* Allocate memory for the BITMAPINFO structure. */
     hmem1 = GlobalAlloc(GHND, sizeof(BITMAPINFOHEADER) + (static_cast<SIZE_T>(1) << bmih.biBitCount) * sizeof(RGBQUAD));
-    if (hmem1)
-    {
+    if (hmem1) {
       HGLOBAL hmem2;
 
       auto lpbmi = static_cast<LPBITMAPINFO>(GlobalLock(hmem1));
@@ -437,8 +397,7 @@ HB_FUNC(WVW_OPENBITMAP)
 
       /* Retrieve the color table.
          1 << bmih.biBitCount == 2 ^ bmih.biBitCount */
-      switch (bmih.biBitCount)
-      {
+      switch (bmih.biBitCount) {
       case 1:
       case 4:
       case 8:
@@ -447,8 +406,7 @@ HB_FUNC(WVW_OPENBITMAP)
 
       case 16:
       case 32:
-        if (bmih.biCompression == BI_BITFIELDS)
-        {
+        if (bmih.biCompression == BI_BITFIELDS) {
           hb_fileRead(fhnd, lpbmi->bmiColors, 3 * sizeof(RGBQUAD), -1);
         }
         break;
@@ -459,8 +417,7 @@ HB_FUNC(WVW_OPENBITMAP)
 
       /* Allocate memory for the required number of bytes. */
       hmem2 = GlobalAlloc(GHND, (bmfh.bfSize - bmfh.bfOffBits));
-      if (hmem2)
-      {
+      if (hmem2) {
         HDC hDC = hbwapi_par_raw_HDC(2);
 
         LPVOID lpvBits = GlobalLock(hmem2);
@@ -468,16 +425,14 @@ HB_FUNC(WVW_OPENBITMAP)
         /* Retrieve the bitmap data. */
         hb_fileRead(fhnd, lpvBits, bmfh.bfSize - bmfh.bfOffBits, -1);
 
-        if (!hDC)
-        {
+        if (!hDC) {
           hDC = GetDC(0);
         }
 
         /* Create a bitmap from the data stored in the .bmp file.  */
         hbm = CreateDIBitmap(hDC, &bmih, CBM_INIT, lpvBits, lpbmi, DIB_RGB_COLORS);
 
-        if (!hbwapi_is_HANDLE(2))
-        {
+        if (!hbwapi_is_HANDLE(2)) {
           ReleaseDC(0, hDC);
         }
 
@@ -504,8 +459,7 @@ HB_FUNC(WVW_CREATEFONT)
   auto wvw = hb_gt_wvw();
   auto wvw_top = hb_gt_wvw_win_top();
 
-  if (wvw && wvw_top)
-  {
+  if (wvw && wvw_top) {
     LOGFONT lf{};
 
     lf.lfEscapement = hb_parnl(10) * 10;
@@ -522,20 +476,15 @@ HB_FUNC(WVW_CREATEFONT)
     lf.lfHeight = hb_parnldef(2, wvw_top->fontHeight);
     lf.lfWidth = hb_parnldef(3, wvw_top->fontWidth < 0 ? -wvw_top->fontWidth : wvw_top->fontWidth);
 
-    if (HB_ISCHAR(1))
-    {
+    if (HB_ISCHAR(1)) {
       HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName));
       wvw_top->fontFace[HB_SIZEOFARRAY(lf.lfFaceName) - 1] = TEXT('\0');
-    }
-    else
-    {
+    } else {
       HB_STRNCPY(lf.lfFaceName, wvw_top->fontFace, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
     }
 
     hbwapi_ret_raw_HANDLE(CreateFontIndirect(&lf));
-  }
-  else
-  {
+  } else {
     hbwapi_ret_raw_HANDLE(nullptr);
   }
 }
@@ -562,8 +511,7 @@ HB_FUNC(WVW_SELECTFONT)
   cf.nSizeMax = 0;
 
   /* Display the CHOOSEFONT common-dialog box. */
-  if (ChooseFont(&cf))
-  {
+  if (ChooseFont(&cf)) {
     auto aMetr = hb_itemArrayNew(9);
 
     /* Create a logical font based on the user's selection and
@@ -588,12 +536,10 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     auto iBitmapType = hb_parni(2);
 
-    if (iBitmapType == 0)
-    {
+    if (iBitmapType == 0) {
       TBADDBITMAP tbab;
 
       tbab.hInst = nullptr;
@@ -601,13 +547,10 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
 
       hb_retni(static_cast<int>(
           SendMessage(wvw_win->hToolBar, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<WPARAM>(&tbab))));
-    }
-    else
-    { /* system bitmap */
+    } else { /* system bitmap */
       int iOffset;
 
-      switch (iBitmapType)
-      {
+      switch (iBitmapType) {
       case 1:
         iOffset = wvw_win->iStartStdBitmap;
         break;
@@ -623,9 +566,7 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
 
       hb_retnint(static_cast<HB_UINT>(hb_parni(4)) + iOffset);
     }
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 }
@@ -642,12 +583,9 @@ HB_FUNC(WVW_DRAWBITMAP)
 
   SelectObject(hDCmem, hBitmap);
   GetObject(hBitmap, sizeof(bm), static_cast<LPVOID>(&bm));
-  if (nWidthDest && (nWidthDest != bm.bmWidth || nHeightDest != bm.bmHeight))
-  {
+  if (nWidthDest && (nWidthDest != bm.bmWidth || nHeightDest != bm.bmHeight)) {
     StretchBlt(hDC, hb_parni(4), hb_parni(5), nWidthDest, nHeightDest, hDCmem, 0, 0, bm.bmWidth, bm.bmHeight, dwraster);
-  }
-  else
-  {
+  } else {
     BitBlt(hDC, hb_parni(4), hb_parni(5), bm.bmWidth, bm.bmHeight, hDCmem, 0, 0, dwraster);
   }
 
@@ -663,12 +601,9 @@ HB_FUNC(WVW_WINDOW2BITMAP)
   HBITMAP hBitmap;
   RECT rc;
 
-  if (fFull)
-  {
+  if (fFull) {
     GetWindowRect(hWnd, &rc);
-  }
-  else
-  {
+  } else {
     GetClientRect(hWnd, &rc);
   }
 
@@ -708,17 +643,13 @@ HB_FUNC(WVW_SETMAXBMCACHE)
 {
   auto wvw = hb_gt_wvw();
 
-  if (wvw)
-  {
+  if (wvw) {
     hb_retni(wvw->a.iMaxBMcache);
 
-    if (HB_ISNUM(1))
-    {
+    if (HB_ISNUM(1)) {
       wvw->a.iMaxBMcache = HB_MAX(hb_parni(1), 0);
     }
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 }
@@ -753,14 +684,11 @@ HB_FUNC(WVW_SETTIMER)
   auto wvw = hb_gt_wvw();
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw && wvw->a.pSymWVW_TIMER && wvw_win)
-  {
+  if (wvw && wvw->a.pSymWVW_TIMER && wvw_win) {
     SetTimer(wvw_win->hWnd, WVW_ID_BASE_TIMER + wvw_win->nWinId, hbwapi_par_UINT(2), nullptr);
 
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -775,14 +703,11 @@ HB_FUNC(WVW_KILLTIMER) /* 2004-06-02: WARNING: WVT is slightly different */
   auto wvw = hb_gt_wvw();
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw && wvw->a.pSymWVW_TIMER && wvw_win)
-  {
+  if (wvw && wvw->a.pSymWVW_TIMER && wvw_win) {
     KillTimer(wvw_win->hWnd, WVW_ID_BASE_TIMER + wvw_win->nWinId);
 
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -803,8 +728,7 @@ HB_FUNC(WVW_GETPAINTRECT)
   auto info = hb_itemArrayNew(4);
   RECT rc{};
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     rc = wvw_win->rPaintPending;
   }
 
@@ -820,12 +744,10 @@ HB_FUNC(WVW_SETPOINTER)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     HCURSOR hCursor;
 
-    switch (hb_parni(2))
-    {
+    switch (hb_parni(2)) {
     case 1:
       hCursor = LoadCursor(nullptr, IDC_ARROW);
       break;
@@ -894,10 +816,8 @@ HB_FUNC(WVW_LOADPICTURE)
 
   auto fResult = false;
 
-  if (wvw && pPicture && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture)))
-  {
-    if (wvw->a.pPicture[iSlot])
-    {
+  if (wvw && pPicture && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
+    if (wvw->a.pPicture[iSlot]) {
       hb_gt_wvw_DestroyPicture(wvw->a.pPicture[iSlot]);
     }
 
@@ -920,8 +840,7 @@ HB_FUNC(WVW_LOADFONT)
 
   int iSlot = hb_parni(1) - 1;
 
-  if (wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts)))
-  {
+  if (wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts))) {
     LOGFONT lf;
 
     lf.lfEscapement = hb_parnl(11) * 10;
@@ -938,21 +857,16 @@ HB_FUNC(WVW_LOADFONT)
     lf.lfHeight = hb_parnldef(3, wvw_top->fontHeight);
     lf.lfWidth = hb_parnldef(4, wvw_top->fontWidth < 0 ? -wvw_top->fontWidth : wvw_top->fontWidth);
 
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName));
       wvw_top->fontFace[HB_SIZEOFARRAY(lf.lfFaceName) - 1] = TEXT('\0');
-    }
-    else
-    {
+    } else {
       HB_STRNCPY(lf.lfFaceName, wvw_top->fontFace, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
     }
 
     auto hFont = CreateFontIndirect(&lf);
-    if (hFont)
-    {
-      if (wvw->a.hUserFonts[iSlot])
-      {
+    if (hFont) {
+      if (wvw->a.hUserFonts[iSlot]) {
         DeleteObject(wvw->a.hUserFonts[iSlot]);
       }
 
@@ -975,14 +889,11 @@ HB_FUNC(WVW_LOADPEN)
 
   int iSlot = hb_parni(1) - 1;
 
-  if (wvw && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens)))
-  {
+  if (wvw && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
     auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
 
-    if (hPen)
-    {
-      if (wvw->a.hUserPens[iSlot])
-      {
+    if (hPen) {
+      if (wvw->a.hUserPens[iSlot]) {
         DeleteObject(wvw->a.hUserPens[iSlot]);
       }
 
@@ -1013,12 +924,10 @@ HB_FUNC(WVW_CHOOSEFONT)
   LOGFONT lf{};
   auto iPointSize = 0;
 
-  if (wvw && wvw_top)
-  {
+  if (wvw && wvw_top) {
     CHOOSEFONT cf{};
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       iPointSize = -MulDiv(hb_parni(2), GetDeviceCaps(wvw_top->hdc, LOGPIXELSY), 72);
     }
 
@@ -1032,8 +941,7 @@ HB_FUNC(WVW_CHOOSEFONT)
     lf.lfQuality = static_cast<BYTE>(hb_parnidef(5, DEFAULT_QUALITY));
     lf.lfPitchAndFamily = FF_DONTCARE;
 
-    if (HB_ISCHAR(1))
-    {
+    if (HB_ISCHAR(1)) {
       HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName));
       lf.lfFaceName[HB_SIZEOFARRAY(lf.lfFaceName) - 1] = TEXT('\0');
     }
@@ -1054,12 +962,9 @@ HB_FUNC(WVW_CHOOSEFONT)
     cf.nSizeMin = 0;
     cf.nSizeMax = 0;
 
-    if (ChooseFont(&cf))
-    {
+    if (ChooseFont(&cf)) {
       iPointSize = -MulDiv(lf.lfHeight, 72, GetDeviceCaps(wvw_top->hdc, LOGPIXELSY));
-    }
-    else
-    {
+    } else {
       iPointSize = 0;
       memset(&lf, 0, sizeof(lf));
     }
@@ -1090,8 +995,7 @@ HB_FUNC(WVW_SETMOUSEPOS)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     POINT xy;
 
     auto iRow = hb_parni(2);
@@ -1101,8 +1005,7 @@ HB_FUNC(WVW_SETMOUSEPOS)
 
     xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iCol, iRow);
 
-    if (ClientToScreen(wvw_win->hWnd, &xy))
-    {
+    if (ClientToScreen(wvw_win->hWnd, &xy)) {
       hb_retl(SetCursorPos(xy.x, xy.y + (wvw_win->PTEXTSIZE.y / 2)));
       return;
     }
@@ -1131,8 +1034,7 @@ HB_FUNC(WVW_FILLRECTANGLE)
   auto wvw_win = hb_gt_wvw_win_par();
   auto wvw_zer = hb_gt_wvw_win(0);
 
-  if (wvw && wvw_win)
-  {
+  if (wvw && wvw_win) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -1175,16 +1077,13 @@ HB_FUNC(WVW_FILLRECTANGLE)
 
     FillRect(wvw_win->hdc, &rcXY, hBrush);
 
-    if (!fUseBrush)
-    {
+    if (!fUseBrush) {
       SelectObject(wvw_zer->hdc, wvw->a.OriginalBrush);
       DeleteObject(hBrush);
     }
 
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -1225,19 +1124,15 @@ HB_FUNC(WVW_DLGSETICON)
 {
   HICON hIcon = nullptr;
 
-  if (HB_ISNUM(2))
-  {
+  if (HB_ISNUM(2)) {
     hIcon = LoadIcon(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(2)));
-  }
-  else
-  {
+  } else {
     void *hName;
     hIcon = static_cast<HICON>(LoadImage(nullptr, HB_PARSTRDEF(2, &hName, nullptr), IMAGE_ICON, 0, 0, LR_LOADFROMFILE));
     hb_strfree(hName);
   }
 
-  if (hIcon)
-  {
+  if (hIcon) {
     SendMessage(hbwapi_par_raw_HWND(1), WM_SETICON, ICON_SMALL,
                 reinterpret_cast<LPARAM>(hIcon));                                               /* Set Title Bar ICON */
     SendMessage(hbwapi_par_raw_HWND(1), WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(hIcon)); /* Set Task List Icon */
@@ -1258,54 +1153,41 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
   auto wvw = hb_gt_wvw();
   auto wvw_zer = hb_gt_wvw_win(0);
 
-  if (wvw && wvw_zer)
-  {
+  if (wvw && wvw_zer) {
     int iIndex;
 
     /* check if we still have room for a new dialog */
-    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)); iIndex++)
-    {
-      if (wvw->a.hDlgModeless[iIndex] == nullptr)
-      {
+    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)); iIndex++) {
+      if (wvw->a.hDlgModeless[iIndex] == nullptr) {
         break;
       }
     }
 
-    if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)))
-    {
+    if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless))) {
       auto pFirst = hb_param(3, Harbour::Item::ANY);
       PHB_ITEM pFunc = nullptr;
       HWND hDlg = nullptr;
       auto iType = 0;
       auto iResource = hb_parni(4);
 
-      if (pFirst->isEvalItem())
-      {
+      if (pFirst->isEvalItem()) {
         /* pFunc is pointing to stored code block (later) */
         pFunc = hb_itemNew(pFirst);
         iType = 2;
-      }
-      else if (pFirst->isString())
-      {
+      } else if (pFirst->isString()) {
         auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
-        if (pExecSym)
-        {
+        if (pExecSym) {
           pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
         }
         iType = 1;
       }
 
-      if (HB_ISNUM(3))
-      {
+      if (HB_ISNUM(3)) {
         hDlg = CreateDialogIndirect(GetModuleHandle(nullptr), reinterpret_cast<LPCDLGTEMPLATE>(hb_parc(1)),
                                     hb_parl(2) ? wvw_zer->hWnd : nullptr, hbwapi_par_raw_DLGPROC(3));
-      }
-      else
-      {
-        switch (iResource)
-        {
-        case 0:
-        {
+      } else {
+        switch (iResource) {
+        case 0: {
           void *hText;
           hDlg = CreateDialog(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr),
                               hb_parl(2) ? wvw_zer->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
@@ -1325,25 +1207,18 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
         }
       }
 
-      if (hDlg)
-      {
+      if (hDlg) {
         wvw->a.hDlgModeless[iIndex] = hDlg;
-        if (pFunc)
-        {
+        if (pFunc) {
           wvw->a.pFunc[iIndex] = pFunc;
           wvw->a.iType[iIndex] = iType;
-        }
-        else
-        {
+        } else {
           wvw->a.pFunc[iIndex] = nullptr;
           wvw->a.iType[iIndex] = 0;
         }
         SendMessage(hDlg, WM_INITDIALOG, 0, 0);
-      }
-      else
-      {
-        if (iType == 2 && pFunc)
-        {
+      } else {
+        if (iType == 2 && pFunc) {
           hb_itemRelease(pFunc);
         }
 
@@ -1363,42 +1238,33 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
   auto wvw = hb_gt_wvw();
   auto wvw_zer = hb_gt_wvw_win(0);
 
-  if (wvw && wvw_zer)
-  {
+  if (wvw && wvw_zer) {
     int iIndex;
 
     /* check if we still have room for a new dialog */
-    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)); iIndex++)
-    {
-      if (wvw->a.hDlgModal[iIndex] == nullptr)
-      {
+    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)); iIndex++) {
+      if (wvw->a.hDlgModal[iIndex] == nullptr) {
         break;
       }
     }
 
-    if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)))
-    {
+    if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal))) {
       auto pFirst = hb_param(3, Harbour::Item::ANY);
       auto iResource = hb_parni(4);
       INT_PTR iResult = 0;
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : wvw_zer->hWnd;
 
-      if (pFirst->isEvalItem())
-      {
+      if (pFirst->isEvalItem()) {
         wvw->a.pFuncModal[iIndex] = hb_itemNew(pFirst);
         wvw->a.iTypeModal[iIndex] = 2;
-      }
-      else if (pFirst->isString())
-      {
+      } else if (pFirst->isString()) {
         auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         wvw->a.pFuncModal[iIndex] = pExecSym ? reinterpret_cast<PHB_ITEM>(pExecSym) : nullptr;
         wvw->a.iTypeModal[iIndex] = 1;
       }
 
-      switch (iResource)
-      {
-      case 0:
-      {
+      switch (iResource) {
+      case 0: {
         void *hText;
         iResult = DialogBoxParam(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr), hParent,
                                  reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcModal),
@@ -1439,8 +1305,7 @@ HB_FUNC(WVW_SAVESCREEN)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -1488,8 +1353,7 @@ HB_FUNC(WVW_RESTSCREEN)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -1515,33 +1379,25 @@ HB_FUNC(WVW_RESTSCREEN)
 
     auto hBmp =
         static_cast<HBITMAP>(SelectObject(wvw_win->hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(6, 3))));
-    if (hBmp)
-    {
-      if (iWidth == hb_parvni(6, 1) && iHeight == hb_parvni(6, 2))
-      {
-        if (BitBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, SRCCOPY))
-        {
+    if (hBmp) {
+      if (iWidth == hb_parvni(6, 1) && iHeight == hb_parvni(6, 2)) {
+        if (BitBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, SRCCOPY)) {
           fResult = true;
         }
-      }
-      else if (StretchBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, hb_parvni(6, 1),
-                          hb_parvni(6, 2), SRCCOPY))
-      {
+      } else if (StretchBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, hb_parvni(6, 1),
+                            hb_parvni(6, 2), SRCCOPY)) {
         fResult = true;
       }
 
       SelectObject(wvw_win->hCompDC, hBmp);
 
-      if (!hb_parl(7) /* fDoNotDestroyBMP */)
-      {
+      if (!hb_parl(7) /* fDoNotDestroyBMP */) {
         DeleteObject(static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(6, 3)));
       }
     }
 
     hb_retl(fResult);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -1554,8 +1410,7 @@ HB_FUNC(WVW_SETFONT)
 
   auto fResult = false;
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     void *hFontFace = nullptr;
     LPCTSTR fontFace = HB_ISCHAR(2) ? HB_PARSTR(2, &hFontFace, nullptr) : wvw_win->fontFace;
     auto height = hb_parnidef(3, wvw_win->fontHeight);
@@ -1566,8 +1421,7 @@ HB_FUNC(WVW_SETFONT)
     auto hFont = hb_gt_wvw_GetFont(fontFace, height, width, Bold, Quality, wvw_win->CodePage);
 
     /* make sure the font could actually be created */
-    if (hFont)
-    {
+    if (hFont) {
       /* make sure that the font  will fit inside the
        * window with the current wvw_win->ROWS and wvw_win->COLS setting
        *
@@ -1579,8 +1433,7 @@ HB_FUNC(WVW_SETFONT)
        * x TODO: I THINK I am I to keep it, am I?
        */
 
-      if (hb_gt_wvw_ValidWindowSize(wvw_win, wvw_win->ROWS, wvw_win->COLS, hFont, width, nullptr, nullptr))
-      {
+      if (hb_gt_wvw_ValidWindowSize(wvw_win, wvw_win->ROWS, wvw_win->COLS, hFont, width, nullptr, nullptr)) {
         size_t size;
 
         wvw_win->fontHeight = height;
@@ -1589,13 +1442,11 @@ HB_FUNC(WVW_SETFONT)
         wvw_win->fontQuality = Quality;
 
         size = HB_STRLEN(fontFace);
-        if (size > 0 && (size < HB_SIZEOFARRAY(wvw_win->fontFace) - 1))
-        {
+        if (size > 0 && (size < HB_SIZEOFARRAY(wvw_win->fontFace) - 1)) {
           HB_STRNCPY(wvw_win->fontFace, fontFace, HB_SIZEOFARRAY(wvw_win->fontFace) - 1);
         }
 
-        if (wvw_win->hWnd)
-        {
+        if (wvw_win->hWnd) {
           /* resize the window based on new fonts */
           hb_gt_wvw_ResetWindowSize(wvw_win, wvw_win->hWnd);
 
@@ -1618,23 +1469,17 @@ HB_FUNC(WVW_SETICON)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     void *hName;
 
-    if (HB_ISNUM(2) && HB_ISCHAR(3))
-    {
+    if (HB_ISNUM(2) && HB_ISCHAR(3)) {
       hbwapi_ret_raw_HANDLE(hb_gt_wvw_SetWindowIcon(wvw_win, hb_parni(2), HB_PARSTRDEF(3, &hName, nullptr)));
-    }
-    else
-    {
+    } else {
       hbwapi_ret_raw_HANDLE(hb_gt_wvw_SetWindowIconFromFile(wvw_win, HB_PARSTRDEF(2, &hName, nullptr)));
     }
 
     hb_strfree(hName);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_raw_HANDLE(nullptr);
   }
 }
@@ -1661,12 +1506,9 @@ HB_FUNC(WVW_SETCODEPAGE)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hb_retni(hb_gt_wvw_SetCodePage(wvw_win, hb_parni(2)));
-  }
-  else
-  {
+  } else {
     hb_retni(0);
   }
 }
@@ -1678,21 +1520,17 @@ HB_FUNC(WVW_CENTERWINDOW)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hb_retl(wvw_win->CentreWindow);
 
     wvw_win->CentreWindow = hb_parldef(2, true);
 
-    if (hb_parl(3) /* fPaint */)
-    {
+    if (hb_parl(3) /* fPaint */) {
       ShowWindow(wvw_win->hWnd, IsZoomed(wvw_win->hWnd) ? SW_MAXIMIZE : SW_RESTORE);
 
       hb_gt_wvw_ResetWindowSize(wvw_win, wvw_win->hWnd);
     }
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -1701,17 +1539,13 @@ HB_FUNC(WVW_SETMOUSEMOVE)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     hb_retl(wvw_win->MouseMove);
 
-    if (HB_ISLOG(2))
-    {
+    if (HB_ISLOG(2)) {
       wvw_win->MouseMove = hb_parl(2);
     }
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
@@ -1723,8 +1557,7 @@ HB_FUNC(WVW_GETXYFROMROWCOL)
   auto aRet = hb_itemArrayNew(2);
   POINT xy{};
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     xy = hb_gt_wvw_GetXYFromColRow(wvw_win, hb_parni(3), hb_parni(2));
   }
 
@@ -1745,8 +1578,7 @@ HB_FUNC(WVW_GETROWCOLFROMXY)
   auto aRet = hb_itemArrayNew(2);
   POINT xy{};
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     xy = hb_gt_wvw_GetColRowFromXY(wvw_win, hb_parni(2), hb_parni(3));
   }
 
@@ -1762,8 +1594,7 @@ HB_FUNC(WVW_GETFONTINFO)
 
   auto aRet = hb_itemArrayNew(7);
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     HB_ARRAYSETSTR(aRet, 1, wvw_win->fontFace);
     hb_arraySetNL(aRet, 2, wvw_win->fontHeight);
     hb_arraySetNL(aRet, 3, wvw_win->fontWidth);
@@ -1771,9 +1602,7 @@ HB_FUNC(WVW_GETFONTINFO)
     hb_arraySetNI(aRet, 5, wvw_win->fontQuality);
     hb_arraySetNL(aRet, 6, wvw_win->PTEXTSIZE.y);
     hb_arraySetNL(aRet, 7, wvw_win->PTEXTSIZE.x);
-  }
-  else
-  {
+  } else {
     hb_arraySetC(aRet, 1, nullptr);
     hb_arraySetNL(aRet, 2, 0);
     hb_arraySetNL(aRet, 3, 0);
@@ -1798,14 +1627,10 @@ HB_FUNC(WVW_MAXIMIZE)
   auto wvw = hb_gt_wvw();
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw && wvw_win)
-  {
-    if (wvw->a.pSymWVW_SIZE)
-    {
+  if (wvw && wvw_win) {
+    if (wvw->a.pSymWVW_SIZE) {
       ShowWindow(wvw_win->hWnd, SW_MAXIMIZE); /* app seems to be ready to handle the maximized window */
-    }
-    else
-    {
+    } else {
       ShowWindow(wvw_win->hWnd, SW_RESTORE); /* the old, default behaviour as in GTWVT */
     }
   }
@@ -1824,8 +1649,7 @@ HB_FUNC(WVW_RESTORE)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw_win)
-  {
+  if (wvw_win) {
     ShowWindow(wvw_win->hWnd, SW_RESTORE);
   }
 }

@@ -56,8 +56,7 @@ HB_FUNC(WVW_STCREATE)
   auto wvw = hb_gt_wvw();
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw && wvw_win)
-  {
+  if (wvw && wvw_win) {
     bool fBorder = hb_parl(7);
     auto iWidth = hb_parni(4);
     auto iTop = hb_parni(2);
@@ -69,20 +68,15 @@ HB_FUNC(WVW_STCREATE)
 
     DWORD iStyle = fBorder ? WS_BORDER : 0;
 
-    if (iBox > 0)
-    {
+    if (iBox > 0) {
       iStyle |= iBox;
     }
 
-    if (HB_ISNUM(8))
-    {
+    if (HB_ISNUM(8)) {
       hFont = hbwapi_par_raw_HFONT(8);
-    }
-    else if (wvw_win->hSTfont == nullptr)
-    {
+    } else if (wvw_win->hSTfont == nullptr) {
       wvw_win->hSTfont = CreateFontIndirect(&wvw->lfST);
-      if (wvw_win->hSTfont == nullptr)
-      {
+      if (wvw_win->hSTfont == nullptr) {
         hbwapi_stor_HANDLE(nullptr, 9);
         hb_retni(0);
         return;
@@ -107,12 +101,9 @@ HB_FUNC(WVW_STCREATE)
     iRight = xy.x - 1 + iOffRight;
 
     int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_STATIC);
-    if (nCtrlId == 0)
-    {
+    if (nCtrlId == 0) {
       nCtrlId = WVW_ID_BASE_STATIC;
-    }
-    else
-    {
+    } else {
       nCtrlId++;
     }
 
@@ -121,21 +112,16 @@ HB_FUNC(WVW_STCREATE)
                        iTop, iRight - iLeft + 1, iBottom - iTop + 1, wvw_win->hWnd,
                        reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
 
-    if (hWnd)
-    {
-      if (HB_ISCHAR(5))
-      {
+    if (hWnd) {
+      if (HB_ISCHAR(5)) {
         void *hText;
         SendMessage(hWnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(HB_PARSTR(5, &hText, nullptr)));
         hb_strfree(hText);
       }
 
-      if (hFont)
-      {
+      if (hFont) {
         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
-      }
-      else
-      {
+      } else {
         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(wvw_win->hSTfont), static_cast<LPARAM>(TRUE));
       }
 
@@ -154,8 +140,7 @@ HB_FUNC(WVW_STSETFONT)
   auto wvw = hb_gt_wvw();
   auto wvw_win = hb_gt_wvw_win_par();
 
-  if (wvw && wvw_win)
-  {
+  if (wvw && wvw_win) {
     auto fResult = true;
 
     wvw->lfST.lfHeight = hb_parnldef(3, wvw_win->fontHeight - 2);
@@ -170,25 +155,20 @@ HB_FUNC(WVW_STSETFONT)
     wvw->lfST.lfCharSet = DEFAULT_CHARSET;
     wvw->lfST.lfPitchAndFamily = FF_DONTCARE;
 
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfST.lfFaceName, HB_SIZEOFARRAY(wvw->lfST.lfFaceName));
       wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfST.lfFaceName) - 1] = TEXT('\0');
     }
 
-    if (wvw_win->hSTfont)
-    {
+    if (wvw_win->hSTfont) {
       HFONT hOldFont = wvw_win->hSTfont;
       auto hFont = CreateFontIndirect(&wvw->lfST);
-      if (hFont)
-      {
+      if (hFont) {
         auto wvw_ctl = wvw_win->ctlList;
 
-        while (wvw_ctl)
-        {
+        while (wvw_ctl) {
           if (wvw_ctl->nClass == WVW_CONTROL_STATIC &&
-              reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont)
-          {
+              reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont) {
             SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
           }
 
@@ -197,17 +177,13 @@ HB_FUNC(WVW_STSETFONT)
 
         wvw_win->hSTfont = hFont;
         DeleteObject(hOldFont);
-      }
-      else
-      {
+      } else {
         fResult = false;
       }
     }
 
     hb_retl(fResult);
-  }
-  else
-  {
+  } else {
     hb_retl(false);
   }
 }
