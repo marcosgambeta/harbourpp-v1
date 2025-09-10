@@ -56,32 +56,24 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
 {
   PHB_SYMB pSymbol;
 
-  if (message == WM_INITDIALOG && lParam)
-  {
+  if (message == WM_INITDIALOG && lParam) {
     pSymbol = reinterpret_cast<PHB_SYMB>(lParam);
     SetWindowLongPtr(hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol));
-  }
-  else
-  {
+  } else {
     pSymbol = reinterpret_cast<PHB_SYMB>(GetWindowLongPtr(hDlg, GWLP_USERDATA));
   }
 
-  if (pSymbol)
-  {
+  if (pSymbol) {
     hb_vmPushSymbol(pSymbol);
     hb_vmPushNil();
     hb_vmPushPointer(hDlg);
     hb_vmPushNumInt(message);
 
-    if (message == WM_COMMAND)
-    {
+    if (message == WM_COMMAND) {
       hb_vmPushNumInt(wParam);
-      if (HIWORD(wParam) == 0 || HIWORD(wParam) == 1)
-      {
+      if (HIWORD(wParam) == 0 || HIWORD(wParam) == 1) {
         hb_vmPushNumInt(lParam);
-      }
-      else
-      {
+      } else {
         hbwapi_vmPush_HANDLE(reinterpret_cast<HWND>(lParam));
       }
       // TODO: rethink this. Called proc can do this on its own,
@@ -90,9 +82,7 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
       hb_vmPushInteger(static_cast<int>(HIWORD(wParam)));
       hb_vmPushInteger(static_cast<int>(LOWORD(wParam)));
       hb_vmDo(6);
-    }
-    else
-    {
+    } else {
       hb_vmPushNumInt(wParam);
       hb_vmPushNumInt(lParam);
       hb_vmDo(4);
@@ -192,8 +182,7 @@ HB_FUNC(WAPI_SENDDLGITEMMESSAGE) // NOTE: unsafe function, may corrupt memory
 
   LRESULT result;
 
-  if (szText)
-  {
+  if (szText) {
     szText = HB_STRUNSHARE(&hText, szText, nLen);
   }
 
@@ -202,12 +191,9 @@ HB_FUNC(WAPI_SENDDLGITEMMESSAGE) // NOTE: unsafe function, may corrupt memory
   hbwapi_SetLastError(GetLastError());
   hb_retnint(result);
 
-  if (szText)
-  {
+  if (szText) {
     HB_STORSTRLEN(szText, nLen, 5);
-  }
-  else
-  {
+  } else {
     hb_storc(nullptr, 5);
   }
 
@@ -266,15 +252,13 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
   *p++ = static_cast<short>(0);               // Menu (ignored for now.)
   *p++ = static_cast<short>(0x00);            // Class also ignored
 
-  if (hb_parinfa(1, 11) == Harbour::Item::STRING)
-  {
+  if (hb_parinfa(1, 11) == Harbour::Item::STRING) {
     void *hText;
     LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 11, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
     nchar = hb_wstrnlen(szText, nchar);
 
-    if (nchar > 256)
-    {
+    if (nchar > 256) {
       nchar = 256;
     }
 
@@ -282,16 +266,13 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     p += nchar + 1;
 
     hb_strfree(hText);
-  }
-  else
-  {
+  } else {
     *p++ = 0;
   }
 
   // add in the wPointSize and szFontName here iff the DS_SETFONT bit on
 
-  if ((lStyle & DS_SETFONT) != 0)
-  {
+  if ((lStyle & DS_SETFONT) != 0) {
     void *hText;
     LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 15, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
@@ -301,8 +282,7 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
 
     nchar = hb_wstrnlen(szText, nchar);
 
-    if (nchar > 256)
-    {
+    if (nchar > 256) {
       nchar = 256;
     }
 
@@ -312,8 +292,7 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     hb_strfree(hText);
   }
 
-  for (WORD i = 1; i <= nItems; i++)
-  {
+  for (WORD i = 1; i <= nItems; i++) {
     // make sure each item starts on a DWORD boundary
     p = s_AlignOnDWORD(p);
 
@@ -334,15 +313,13 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     *p++ = LOWORD(hb_parvnl(9, i)); // id
     *p++ = HIWORD(hb_parvnl(9, i)); // id
 
-    if (hb_parinfa(10, i) == Harbour::Item::STRING)
-    {
+    if (hb_parinfa(10, i) == Harbour::Item::STRING) {
       void *hText;
       LPCWSTR szText = hb_parastr_u16(10, i, HB_CDP_ENDIAN_NATIVE, &hText, &nchar);
 
       nchar = hb_wstrnlen(szText, nchar);
 
-      if (nchar > 256)
-      {
+      if (nchar > 256) {
         nchar = 256;
       }
 
@@ -350,22 +327,18 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
       p += nchar + 1;
 
       hb_strfree(hText);
-    }
-    else
-    {
+    } else {
       *p++ = 0xFFFF;
       *p++ = static_cast<WORD>(hb_parvni(10, i));
     }
 
-    if (hb_parinfa(11, i) == Harbour::Item::STRING)
-    {
+    if (hb_parinfa(11, i) == Harbour::Item::STRING) {
       void *hText;
       LPCWSTR szText = hb_parastr_u16(11, i, HB_CDP_ENDIAN_NATIVE, &hText, &nchar);
 
       nchar = hb_wstrnlen(szText, nchar);
 
-      if (nchar > 256)
-      {
+      if (nchar > 256) {
         nchar = 256;
       }
 
@@ -373,9 +346,7 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
       p += nchar + 1;
 
       hb_strfree(hText);
-    }
-    else
-    {
+    } else {
       *p++ = 0xFFFF;
       *p++ = static_cast<WORD>(hb_parvni(11, i));
     }
@@ -383,8 +354,7 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     *p++ = 0x00; // extras (in array 12)
 
     // 768 is the maximum size of one item
-    if ((reinterpret_cast<HB_PTRUINT>(p) - reinterpret_cast<HB_PTRUINT>(pdlgtemplate)) > _BUFFERSIZE - 768)
-    {
+    if ((reinterpret_cast<HB_PTRUINT>(p) - reinterpret_cast<HB_PTRUINT>(pdlgtemplate)) > _BUFFERSIZE - 768) {
       nItems = i;
       break;
     }

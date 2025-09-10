@@ -89,10 +89,8 @@ HB_FUNC(WAPI_SHELLEXECUTE_WAIT)
   ShExecInfo.hInstApp = nullptr;
   retVal = ShellExecuteEx(&ShExecInfo);
   hb_retl(retVal);
-  while (WaitForSingleObject(ShExecInfo.hProcess, 1000) != WAIT_OBJECT_0)
-  {
-    while (PeekMessage(&msg, static_cast<HWND>(nullptr), 0, 0, PM_REMOVE))
-    {
+  while (WaitForSingleObject(ShExecInfo.hProcess, 1000) != WAIT_OBJECT_0) {
+    while (PeekMessage(&msg, static_cast<HWND>(nullptr), 0, 0, PM_REMOVE)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }
@@ -109,13 +107,11 @@ HB_FUNC(WAPI_ISUSERANADMIN)
 
   HMODULE hLib = hbwapi_LoadLibrarySystem(TEXT("shell32.dll"));
 
-  if (hLib)
-  {
+  if (hLib) {
     typedef int(WINAPI * ISUSERANADMIN)(void);
     auto pIsUserAnAdmin =
         reinterpret_cast<ISUSERANADMIN>(reinterpret_cast<void *>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin")));
-    if (pIsUserAnAdmin)
-    {
+    if (pIsUserAnAdmin) {
       bResult = (pIsUserAnAdmin)();
     }
 

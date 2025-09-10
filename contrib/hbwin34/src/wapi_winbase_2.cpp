@@ -71,37 +71,27 @@ HB_FUNC(WAPI_FORMATMESSAGE)
 
   auto dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
 
-  if (HB_ISBYREF(5))
-  {
+  if (HB_ISBYREF(5)) {
     nSize = hb_parns(6);
-    if ((dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0)
-    {
-      if (nSize == 0 && !HB_ISNUM(6))
-      {
+    if ((dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0) {
+      if (nSize == 0 && !HB_ISNUM(6)) {
         nSize = hb_parclen(5);
       }
-      if (nSize > 0)
-      {
+      if (nSize > 0) {
         lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
-      }
-      else
-      {
+      } else {
         dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
       }
     }
-  }
-  else
-  {
+  } else {
     dwFlags = static_cast<DWORD>(~FORMAT_MESSAGE_ALLOCATE_BUFFER);
   }
 
-  if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER)
-  {
+  if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) {
     lpBuffer = reinterpret_cast<LPTSTR>(&lpAllocBuff);
   }
 
-  if (lpBuffer)
-  {
+  if (lpBuffer) {
     DWORD dwRetVal =
         FormatMessage(dwFlags, HB_ISCHAR(2) ? static_cast<LPCVOID>(HB_PARSTR(2, &hSource, nullptr)) : hb_parptr(2),
                       HB_ISNUM(3) ? static_cast<DWORD>(hb_parnl(3)) : hbwapi_GetLastError() /* dwMessageId */,
@@ -111,33 +101,24 @@ HB_FUNC(WAPI_FORMATMESSAGE)
     hbwapi_SetLastError(GetLastError());
     hb_retnint(dwRetVal);
 
-    if (lpBuffer)
-    {
-      if (dwRetVal && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER))
-      {
+    if (lpBuffer) {
+      if (dwRetVal && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER)) {
         lpBuffer = lpAllocBuff;
-      }
-      else
-      {
+      } else {
         lpBuffer[nSize - 1] = '\0';
       }
 
       HB_STORSTR(dwRetVal ? lpBuffer : nullptr, 5);
 
-      if (lpAllocBuff)
-      {
+      if (lpAllocBuff) {
         LocalFree(lpAllocBuff);
-      }
-      else if (lpBuffer && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0)
-      {
+      } else if (lpBuffer && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0) {
         hb_xfree(lpBuffer);
       }
     }
 
     hb_strfree(hSource);
-  }
-  else
-  {
+  } else {
     hb_storc(nullptr, 5);
     hbwapi_SetLastError(ERROR_EMPTY);
     hb_retnint(-1);

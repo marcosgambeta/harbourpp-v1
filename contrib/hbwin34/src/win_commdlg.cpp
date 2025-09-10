@@ -67,15 +67,13 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
   bool fInit = false;
   PHB_ITEM pBlock;
 
-  if (msg == WM_INITDIALOG)
-  {
+  if (msg == WM_INITDIALOG) {
     auto cc = reinterpret_cast<CHOOSECOLOR *>(lParam);
     SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<PHB_ITEM>(cc->lCustData)));
     fInit = true;
   }
 
-  if ((pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter())
-  {
+  if ((pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter()) {
     PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
     auto pMsg = hb_itemPutNInt(nullptr, msg);
     auto pLPa = hb_itemPutNInt(nullptr, wParam);
@@ -90,16 +88,13 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
     hb_itemRelease(pLPa);
     hb_itemRelease(pWPa);
 
-    if (msg == WM_NCDESTROY)
-    {
+    if (msg == WM_NCDESTROY) {
       RemoveProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_);
       hb_itemRelease(pBlock);
     }
 
     hb_vmRequestRestore();
-  }
-  else
-  {
+  } else {
     res = 0;
   }
 
@@ -112,8 +107,7 @@ HB_FUNC(WIN_CHOOSECOLOR)
 
   void *hTpl;
 
-  for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); ++i)
-  {
+  for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); ++i) {
     crCustClr[i] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
   }
 
@@ -128,12 +122,9 @@ HB_FUNC(WIN_CHOOSECOLOR)
   cc.lpfnHook = cc.lCustData ? CCHookProc : nullptr;
   cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
 
-  if (ChooseColor(&cc))
-  {
+  if (ChooseColor(&cc)) {
     hbwapi_ret_COLORREF(cc.rgbResult);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_COLORREF(-1);
   }
 

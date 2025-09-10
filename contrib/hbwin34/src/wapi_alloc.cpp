@@ -58,8 +58,7 @@ static HB_GARBAGE_FUNC(s_gc_HDC_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     // Destroy the object
     DeleteDC(static_cast<HDC>(*ph));
 
@@ -72,16 +71,13 @@ static const HB_GC_FUNCS s_gc_HDC_funcs = {s_gc_HDC_release, hb_gcDummyMark};
 
 void hbwapi_ret_HDC(HDC p)
 {
-  if (p)
-  {
+  if (p) {
     auto ph = static_cast<void **>(hb_gcAllocate(sizeof(HDC), &s_gc_HDC_funcs));
 
     *ph = p;
 
     hb_retptrGC(ph);
-  }
-  else
-  {
+  } else {
     hb_retptr(nullptr);
   }
 }
@@ -103,8 +99,7 @@ static HB_GARBAGE_FUNC(s_gc_HPEN_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     // Destroy the object
     DeleteObject(static_cast<HPEN>(*ph));
 
@@ -117,16 +112,13 @@ static const HB_GC_FUNCS s_gc_HPEN_funcs = {s_gc_HPEN_release, hb_gcDummyMark};
 
 void hbwapi_ret_HPEN(HPEN p)
 {
-  if (p)
-  {
+  if (p) {
     auto ph = static_cast<void **>(hb_gcAllocate(sizeof(HPEN), &s_gc_HPEN_funcs));
 
     *ph = p;
 
     hb_retptrGC(ph);
-  }
-  else
-  {
+  } else {
     hb_retptr(nullptr);
   }
 }
@@ -148,8 +140,7 @@ static HB_GARBAGE_FUNC(s_gc_HBRUSH_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     // Destroy the object
     DeleteObject(static_cast<HBRUSH>(*ph));
 
@@ -162,16 +153,13 @@ static const HB_GC_FUNCS s_gc_HBRUSH_funcs = {s_gc_HBRUSH_release, hb_gcDummyMar
 
 void hbwapi_ret_HBRUSH(HBRUSH p)
 {
-  if (p)
-  {
+  if (p) {
     auto ph = static_cast<void **>(hb_gcAllocate(sizeof(HBRUSH), &s_gc_HBRUSH_funcs));
 
     *ph = p;
 
     hb_retptrGC(ph);
-  }
-  else
-  {
+  } else {
     hb_retptr(nullptr);
   }
 }
@@ -193,8 +181,7 @@ static HB_GARBAGE_FUNC(s_gc_HFONT_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     // Destroy the object
     DeleteObject(static_cast<HFONT>(*ph));
 
@@ -207,16 +194,13 @@ static const HB_GC_FUNCS s_gc_HFONT_funcs = {s_gc_HFONT_release, hb_gcDummyMark}
 
 void hbwapi_ret_HFONT(HFONT p)
 {
-  if (p)
-  {
+  if (p) {
     auto ph = static_cast<void **>(hb_gcAllocate(sizeof(HFONT), &s_gc_HFONT_funcs));
 
     *ph = p;
 
     hb_retptrGC(ph);
-  }
-  else
-  {
+  } else {
     hb_retptr(nullptr);
   }
 }
@@ -238,8 +222,7 @@ static HB_GARBAGE_FUNC(s_gc_PDEVMODE_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     // Destroy the object
     hb_xfree(*ph);
 
@@ -252,16 +235,13 @@ static const HB_GC_FUNCS s_gc_PDEVMODE_funcs = {s_gc_PDEVMODE_release, hb_gcDumm
 
 void hbwapi_ret_PDEVMODE(PDEVMODE p)
 {
-  if (p)
-  {
+  if (p) {
     auto ph = static_cast<void **>(hb_gcAllocate(sizeof(PDEVMODE), &s_gc_PDEVMODE_funcs));
 
     *ph = p;
 
     hb_retptrGC(ph);
-  }
-  else
-  {
+  } else {
     hb_retptr(nullptr);
   }
 }
@@ -280,32 +260,19 @@ PDEVMODE hbwapi_par_PDEVMODE(int iParam)
 
 HB_FUNC(__WAPI_TYPE)
 {
-  if (hbwapi_is_HDC(1))
-  {
+  if (hbwapi_is_HDC(1)) {
     hb_retc_const("HDC");
-  }
-  else if (hbwapi_is_HPEN(1))
-  {
+  } else if (hbwapi_is_HPEN(1)) {
     hb_retc_const("HPEN");
-  }
-  else if (hbwapi_is_HBRUSH(1))
-  {
+  } else if (hbwapi_is_HBRUSH(1)) {
     hb_retc_const("HBRUSH");
-  }
-  else if (hbwapi_is_HFONT(1))
-  {
+  } else if (hbwapi_is_HFONT(1)) {
     hb_retc_const("HFONT");
-  }
-  else if (hbwapi_is_PDEVMODE(1))
-  {
+  } else if (hbwapi_is_PDEVMODE(1)) {
     hb_retc_const("PDEVMODE");
-  }
-  else if (HB_ISPOINTER(1))
-  {
+  } else if (HB_ISPOINTER(1)) {
     hb_retc_const("HANDLE");
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
@@ -317,8 +284,7 @@ HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
 {
   hb_retni(s_iDbgUnsafeMode);
 
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     s_iDbgUnsafeMode = hb_parni(1);
   }
 }
@@ -327,15 +293,12 @@ HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
 // on .prg level, so make them visible.
 static HB_BOOL s_handle_trace(int n)
 {
-  if (hb_vmInternalsEnabled())
-  {
-    switch (s_iDbgUnsafeMode)
-    {
+  if (hb_vmInternalsEnabled()) {
+    switch (s_iDbgUnsafeMode) {
     case 0:
       return false;
     case 1:
-    case 2:
-    {
+    case 2: {
       char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char file[HB_PATH_MAX];
       HB_USHORT line;
@@ -344,17 +307,14 @@ static HB_BOOL s_handle_trace(int n)
 
       HB_TRACE(HB_TR_ALWAYS, ("%s:%s:%i: __hbwapi_par*_handle(%d)", file, procname, line, n));
 
-      if (s_iDbgUnsafeMode == 2)
-      {
+      if (s_iDbgUnsafeMode == 2) {
         hb_errRT_BASE(EG_ARG, 19000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
     }
     }
 
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
@@ -367,11 +327,9 @@ HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
 void *__hbwapi_par_handle(int n)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
-  if (HB_ISNUM(n))
-  {
+  if (HB_ISNUM(n)) {
     return s_handle_trace(n) ? static_cast<void *>(static_cast<HB_PTRUINT>(hb_parnint(n))) : nullptr;
-  }
-  else
+  } else
 #endif
     return hb_parptr(n);
 }
@@ -379,11 +337,9 @@ void *__hbwapi_par_handle(int n)
 void *__hbwapi_parv_handle(int n, int i)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
-  if (HB_ISNUM(n))
-  {
+  if (HB_ISNUM(n)) {
     return s_handle_trace(n) ? static_cast<void *>(static_cast<HB_PTRUINT>(hb_parvnint(n, i))) : nullptr;
-  }
-  else
+  } else
 #endif
     return hb_parvptr(n, i);
 }
@@ -391,11 +347,9 @@ void *__hbwapi_parv_handle(int n, int i)
 void *hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
-  if (pItem && pItem->isNumeric())
-  {
+  if (pItem && pItem->isNumeric()) {
     return static_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pItem)));
-  }
-  else
+  } else
 #endif
     return hb_itemGetPtr(pItem);
 }

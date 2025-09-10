@@ -66,19 +66,15 @@ HB_FUNC(WAPI_SETWINDOWPOS)
 {
   HWND hWndInsertAfter = nullptr;
 
-  if (hbwapi_is_HANDLE(2))
-  {
+  if (hbwapi_is_HANDLE(2)) {
     hWndInsertAfter = hbwapi_par_raw_HWND(2);
-  }
-  else if (HB_ISNUM(2))
-  {
+  } else if (HB_ISNUM(2)) {
     // Do not delete this, it will be active if
     // numeric pointers are not accepted above
     hWndInsertAfter = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(2)));
 
     if (!(hWndInsertAfter == HWND_TOP || hWndInsertAfter == HWND_BOTTOM || hWndInsertAfter == HWND_TOPMOST ||
-          hWndInsertAfter == HWND_NOTOPMOST))
-    {
+          hWndInsertAfter == HWND_NOTOPMOST)) {
       hWndInsertAfter = nullptr;
     }
   }
@@ -140,8 +136,7 @@ static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCap
                                           IN WORD wLanguageId, IN DWORD dwMilliseconds);
   static auto s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);
 
-  if (s_pMessageBoxTimeout == reinterpret_cast<_HB_MSGBOXTOUT>(-1))
-  {
+  if (s_pMessageBoxTimeout == reinterpret_cast<_HB_MSGBOXTOUT>(-1)) {
     HMODULE hModule = GetModuleHandle(TEXT("user32.dll"));
     s_pMessageBoxTimeout =
         hModule == nullptr ? nullptr
@@ -225,17 +220,14 @@ HB_FUNC(WAPI_DRAWTEXT)
   HDC hDC = hbwapi_par_HDC(1);
   RECT rc;
 
-  if (hDC && hbwapi_par_RECT(&rc, 3, true))
-  {
+  if (hDC && hbwapi_par_RECT(&rc, 3, true)) {
     void *hText;
     HB_SIZE nTextLen;
     LPCTSTR lpText = HB_PARSTR(2, &hText, &nTextLen);
     hbwapi_ret_NI(DrawText(hDC, lpText, static_cast<int>(nTextLen), &rc, hbwapi_par_UINT(4)));
     hb_strfree(hText);
     hbwapi_stor_RECT(&rc, 3);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -291,8 +283,7 @@ HB_FUNC(WAPI_GETSCROLLINFO)
 {
   BOOL bSuccess;
 
-  if (HB_ISBYREF(3) && hb_parclen(3) == sizeof(SCROLLINFO))
-  {
+  if (HB_ISBYREF(3) && hb_parclen(3) == sizeof(SCROLLINFO)) {
     SCROLLINFO si;
 
     memcpy(&si, hbwapi_par_raw_STRUCT(3), sizeof(si));
@@ -302,17 +293,12 @@ HB_FUNC(WAPI_GETSCROLLINFO)
 
     hbwapi_SetLastError(GetLastError());
 
-    if (bSuccess)
-    {
+    if (bSuccess) {
       hb_storclen(reinterpret_cast<char *>(&si), sizeof(si), 3);
-    }
-    else
-    {
+    } else {
       hb_storc(nullptr, 3);
     }
-  }
-  else
-  {
+  } else {
     bSuccess = false;
     hb_storc(nullptr, 3);
   }
@@ -529,12 +515,9 @@ HB_FUNC(WAPI_CHECKMENUITEM)
 {
   DWORD dwResult = CheckMenuItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
   hbwapi_SetLastError(GetLastError());
-  if (dwResult == static_cast<DWORD>(-1))
-  {
+  if (dwResult == static_cast<DWORD>(-1)) {
     hbwapi_ret_NI(-1);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_DWORD(dwResult);
   }
 }
@@ -577,47 +560,32 @@ HB_FUNC(WAPI_INSERTMENU)
   void *hNewItemStr;
   LPCTSTR lpNewItem = HB_PARSTR(5, &hNewItemStr, nullptr);
 
-  if ((uFlags & MF_POPUP) == MF_POPUP)
-  {
+  if ((uFlags & MF_POPUP) == MF_POPUP) {
     uIDNewItem = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HMENU(4));
-  }
-  else
-  {
+  } else {
     if (HB_ISPOINTER(4)) // NOTE: assumes that pointer cannot be numeric
     {
       uFlags |= MF_POPUP;
       uIDNewItem = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HMENU(4));
-    }
-    else
-    {
+    } else {
       uIDNewItem = static_cast<UINT_PTR>(hb_parnint(4));
     }
   }
 
-  if ((uFlags & MF_SEPARATOR) == 0)
-  {
-    if (lpNewItem)
-    {
+  if ((uFlags & MF_SEPARATOR) == 0) {
+    if (lpNewItem) {
       uFlags |= MF_STRING;
-    }
-    else if (HB_ISNUM(5))
-    {
+    } else if (HB_ISNUM(5)) {
       lpNewItem = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(5)));
-      if (lpNewItem)
-      {
+      if (lpNewItem) {
         uFlags |= MF_OWNERDRAW;
       }
-    }
-    else if (hbwapi_is_HANDLE(5))
-    {
+    } else if (hbwapi_is_HANDLE(5)) {
       lpNewItem = reinterpret_cast<LPCTSTR>(hbwapi_par_raw_HBITMAP(5));
-      if (lpNewItem)
-      {
+      if (lpNewItem) {
         uFlags |= MF_BITMAP;
       }
-    }
-    else if (hb_pcount() <= 3)
-    {
+    } else if (hb_pcount() <= 3) {
       uFlags |= MF_SEPARATOR;
     }
   }
@@ -636,47 +604,32 @@ HB_FUNC(WAPI_APPENDMENU)
   void *hNewItemStr;
   LPCTSTR lpNewItem = HB_PARSTR(4, &hNewItemStr, nullptr);
 
-  if ((uFlags & MF_POPUP) == MF_POPUP)
-  {
+  if ((uFlags & MF_POPUP) == MF_POPUP) {
     uIDNewItem = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HMENU(3));
-  }
-  else
-  {
+  } else {
     if (HB_ISPOINTER(3)) // NOTE: assumes that pointer cannot be numeric
     {
       uFlags |= MF_POPUP;
       uIDNewItem = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HMENU(3));
-    }
-    else
-    {
+    } else {
       uIDNewItem = static_cast<UINT_PTR>(hb_parnint(3));
     }
   }
 
-  if ((uFlags & MF_SEPARATOR) == 0)
-  {
-    if (lpNewItem)
-    {
+  if ((uFlags & MF_SEPARATOR) == 0) {
+    if (lpNewItem) {
       uFlags |= MF_STRING;
-    }
-    else if (HB_ISNUM(4))
-    {
+    } else if (HB_ISNUM(4)) {
       lpNewItem = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(4)));
-      if (lpNewItem)
-      {
+      if (lpNewItem) {
         uFlags |= MF_OWNERDRAW;
       }
-    }
-    else if (hbwapi_is_HANDLE(4))
-    {
+    } else if (hbwapi_is_HANDLE(4)) {
       lpNewItem = reinterpret_cast<LPCTSTR>(hbwapi_par_raw_HBITMAP(4));
-      if (lpNewItem)
-      {
+      if (lpNewItem) {
         uFlags |= MF_BITMAP;
       }
-    }
-    else if (hb_pcount() <= 2)
-    {
+    } else if (hb_pcount() <= 2) {
       uFlags |= MF_SEPARATOR;
     }
   }
@@ -724,12 +677,9 @@ HB_FUNC(WAPI_GETMENUSTATE)
 {
   UINT uiResult = GetMenuState(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
   hbwapi_SetLastError(GetLastError());
-  if (uiResult == static_cast<UINT>(-1))
-  {
+  if (uiResult == static_cast<UINT>(-1)) {
     hbwapi_ret_NI(-1);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_UINT(uiResult);
   }
 }
@@ -745,12 +695,9 @@ HB_FUNC(WAPI_GETMENUITEMID)
 {
   UINT uiResult = GetMenuItemID(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2));
   hbwapi_SetLastError(GetLastError());
-  if (uiResult == static_cast<UINT>(-1))
-  {
+  if (uiResult == static_cast<UINT>(-1)) {
     hbwapi_ret_NI(-1);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_UINT(uiResult);
   }
 }
@@ -768,12 +715,9 @@ HB_FUNC(WAPI_GETMENUDEFAULTITEM)
   UINT uiResult = GetMenuDefaultItem(hbwapi_par_raw_HMENU(1), HB_ISNUM(2) ? hbwapi_par_INT(2) : hbwapi_par_BOOL(2),
                                      hbwapi_par_UINT(3));
   hbwapi_SetLastError(GetLastError());
-  if (uiResult == static_cast<UINT>(-1))
-  {
+  if (uiResult == static_cast<UINT>(-1)) {
     hbwapi_ret_NI(-1);
-  }
-  else
-  {
+  } else {
     hbwapi_ret_UINT(uiResult);
   }
 }
@@ -785,12 +729,10 @@ HB_FUNC(WAPI_CREATEACCELERATORTABLE)
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
   int iEntries = pArray ? static_cast<int>(hb_arrayLen(pArray)) : 0;
 
-  if (iEntries > 0)
-  {
+  if (iEntries > 0) {
     auto lpAccel = static_cast<LPACCEL>(hb_xgrab(sizeof(ACCEL) * iEntries));
 
-    for (auto i = 0; i < iEntries; ++i)
-    {
+    for (auto i = 0; i < iEntries; ++i) {
       auto pAccItem = hb_arrayGetItemPtr(pArray, i + 1);
 
       lpAccel[i].fVirt = static_cast<BYTE>(hb_arrayGetNI(pAccItem, 1));
@@ -800,9 +742,7 @@ HB_FUNC(WAPI_CREATEACCELERATORTABLE)
     hAccel = CreateAcceleratorTable(lpAccel, iEntries);
     hbwapi_SetLastError(GetLastError());
     hb_xfree(lpAccel);
-  }
-  else
-  {
+  } else {
     hbwapi_SetLastError(ERROR_INVALID_PARAMETER);
   }
   hbwapi_ret_raw_HACCEL(hAccel);
@@ -933,8 +873,7 @@ HB_FUNC(WAPI_SETWINDOWLONGPTR)
   auto iIndex = hb_parni(2);
   LONG_PTR nRetVal;
 
-  switch (iIndex)
-  {
+  switch (iIndex) {
   case GWLP_WNDPROC:
   case GWLP_HINSTANCE:
   case GWLP_HWNDPARENT:
@@ -950,8 +889,7 @@ HB_FUNC(WAPI_SETWINDOWLONGPTR)
   nRetVal = SetWindowLongPtr(hbwapi_par_raw_HWND(1), iIndex, nRetVal);
   hbwapi_SetLastError(GetLastError());
 
-  switch (iIndex)
-  {
+  switch (iIndex) {
   case GWLP_WNDPROC:
   case GWLP_HINSTANCE:
   case GWLP_HWNDPARENT:
@@ -971,8 +909,7 @@ HB_FUNC(WAPI_GETWINDOWLONGPTR)
   LONG_PTR nRetVal = GetWindowLongPtr(hbwapi_par_raw_HWND(1), iIndex);
   hbwapi_SetLastError(GetLastError());
 
-  switch (iIndex)
-  {
+  switch (iIndex) {
   case GWLP_WNDPROC:
   case GWLP_HINSTANCE:
   case GWLP_HWNDPARENT:
@@ -1013,8 +950,7 @@ HB_FUNC(WAPI_POSTMESSAGE) // NOTE: unsafe function, may write past buffer
   HB_SIZE nLen;
   LPCTSTR szText = HB_PARSTR(4, &hText, &nLen);
 
-  if (szText)
-  {
+  if (szText) {
     szText = HB_STRUNSHARE(&hText, szText, nLen);
   }
 
@@ -1032,8 +968,7 @@ HB_FUNC(WAPI_SENDNOTIFYMESSAGE) // NOTE: unsafe function, may write past buffer
   HB_SIZE nLen;
   LPCTSTR szText = HB_PARSTR(4, &hText, &nLen);
 
-  if (szText)
-  {
+  if (szText) {
     szText = HB_STRUNSHARE(&hText, szText, nLen);
   }
 
@@ -1051,8 +986,7 @@ HB_FUNC(WAPI_SENDMESSAGE) // NOTE: unsafe function, may write past buffer
   HB_SIZE nLen;
   LPCTSTR szText = HB_PARSTR(4, &hText, &nLen);
 
-  if (szText)
-  {
+  if (szText) {
     szText = HB_STRUNSHARE(&hText, szText, nLen);
   }
 
@@ -1061,12 +995,9 @@ HB_FUNC(WAPI_SENDMESSAGE) // NOTE: unsafe function, may write past buffer
   hbwapi_SetLastError(GetLastError());
   hb_retnint(result);
 
-  if (szText)
-  {
+  if (szText) {
     HB_STORSTRLEN(szText, nLen, 4);
-  }
-  else
-  {
+  } else {
     hb_storc(nullptr, 4);
   }
 
@@ -1080,8 +1011,7 @@ HB_FUNC(WAPI_SENDMESSAGETIMEOUT) // NOTE: unsafe function, may write past buffer
   LPCTSTR szText = HB_PARSTR(4, &hText, &nLen);
   DWORD_PTR pdwResult = 0;
 
-  if (szText)
-  {
+  if (szText) {
     szText = HB_STRUNSHARE(&hText, szText, nLen);
   }
 
@@ -1091,12 +1021,9 @@ HB_FUNC(WAPI_SENDMESSAGETIMEOUT) // NOTE: unsafe function, may write past buffer
   hbwapi_SetLastError(GetLastError());
   hb_retnint(result);
 
-  if (szText)
-  {
+  if (szText) {
     HB_STORSTRLEN(szText, nLen, 4);
-  }
-  else
-  {
+  } else {
     hb_storc(nullptr, 4);
   }
 
@@ -1230,8 +1157,7 @@ HB_FUNC(WAPI_GETICONINFO) // TODO: added support to return hash instead of array
   hbwapi_arraySet_HANDLE(aInfo, 4, ii.hbmMask);
   hbwapi_arraySet_HANDLE(aInfo, 5, ii.hbmColor);
 
-  if (!hb_itemParamStoreRelease(2, aInfo))
-  {
+  if (!hb_itemParamStoreRelease(2, aInfo)) {
     hb_itemRelease(aInfo);
   }
 }

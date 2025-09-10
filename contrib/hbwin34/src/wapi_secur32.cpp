@@ -62,24 +62,20 @@ HB_FUNC(WAPI_GETUSERNAMEEX)
   SetLastError(ERROR_SUCCESS); // This API call fails to reset the error code on success
   bool fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
   hbwapi_SetLastError(dwError = GetLastError());
-  if (!fResult && dwError == ERROR_MORE_DATA)
-  {
+  if (!fResult && dwError == ERROR_MORE_DATA) {
     pBuffer = static_cast<LPTSTR>(hb_xrealloc(pBuffer, nLen * sizeof(TCHAR)));
     fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
     hbwapi_SetLastError(dwError = GetLastError());
   }
-  if (dwError != ERROR_SUCCESS)
-  {
+  if (dwError != ERROR_SUCCESS) {
     fResult = false;
   }
-  if (fResult)
-  {
+  if (fResult) {
     HB_STORSTRLEN(pBuffer, nLen, 2);
   }
   hb_xfree(pBuffer);
 
-  if (!fResult)
-  {
+  if (!fResult) {
     hb_storc(nullptr, 2);
   }
 

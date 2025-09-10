@@ -60,8 +60,7 @@ HB_FUNC(WIN_LOADRESOURCE)
   // Set default return value
   hb_retc_null();
 
-  if (hb_winmainArgGet(&hInstance, nullptr, nullptr))
-  {
+  if (hb_winmainArgGet(&hInstance, nullptr, nullptr)) {
     HRSRC hRes;
 
     LPCTSTR szName;
@@ -70,38 +69,29 @@ HB_FUNC(WIN_LOADRESOURCE)
     void *hName;
     void *hType;
 
-    if (HB_ISNUM(1))
-    {
+    if (HB_ISNUM(1)) {
       szName = MAKEINTRESOURCE(hbwapi_par_INT(1));
       hName = nullptr;
-    }
-    else
-    {
+    } else {
       szName = HB_PARSTRDEF(1, &hName, nullptr);
     }
 
-    if (HB_ISNUM(2))
-    {
+    if (HB_ISNUM(2)) {
       szType = MAKEINTRESOURCE(hbwapi_par_INT(2));
       hType = nullptr;
-    }
-    else
-    {
+    } else {
       szType = HB_PARSTRDEF(2, &hType, nullptr);
     }
 
     hRes = FindResource(static_cast<HMODULE>(hInstance), szName, szType);
 
-    if (hRes)
-    {
+    if (hRes) {
       HGLOBAL hMem = LoadResource(nullptr, hRes);
 
-      if (hMem)
-      {
+      if (hMem) {
         void *pMem = LockResource(hMem);
 
-        if (pMem)
-        {
+        if (pMem) {
           hb_retclen(static_cast<char *>(pMem), SizeofResource(nullptr, hRes));
         }
       }
@@ -120,16 +110,13 @@ HB_FUNC(WIN_GETCOMMANDLINEPARAM)
 
   // Skip application path
   pos = 0;
-  while (lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos])))
-  {
-    if (lpCmdLine[pos] == '"')
-    {
+  while (lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos]))) {
+    if (lpCmdLine[pos] == '"') {
       fQuote = !fQuote;
     }
     pos++;
   }
-  while (HB_ISSPACE(lpCmdLine[pos]))
-  {
+  while (HB_ISSPACE(lpCmdLine[pos])) {
     pos++;
   }
 
@@ -190,22 +177,18 @@ HB_FUNC(WIN_SYSREFRESH)
 {
   HANDLE hDummyEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 
-  if (hDummyEvent)
-  {
+  if (hDummyEvent) {
     auto dwMsec = static_cast<DWORD>(hb_parnl(1));
 
     // Begin the operation and continue until it is complete
     // or until the user clicks the mouse or presses a key.
 
     if (MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec),
-                                  QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1)
-    {
+                                  QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1) {
       MSG msg;
 
-      while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-      {
-        switch (msg.message)
-        {
+      while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+        switch (msg.message) {
         case WM_CLOSE:
           CloseHandle(hDummyEvent);
           hb_retni(1);
@@ -241,11 +224,9 @@ HB_FUNC(WIN_QPCOUNTER2SEC)
 {
   static HB_MAXDBL s_dFrequence = 0;
 
-  if (s_dFrequence == 0)
-  {
+  if (s_dFrequence == 0) {
     LARGE_INTEGER frequency;
-    if (!QueryPerformanceFrequency(&frequency))
-    {
+    if (!QueryPerformanceFrequency(&frequency)) {
       hb_retnd(0);
       return;
     }

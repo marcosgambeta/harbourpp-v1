@@ -53,8 +53,7 @@ HB_SIZE hbwapi_tstrlen(const TCHAR *pText)
 
   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrlen(%p)", static_cast<const void *>(pText)));
 
-  while (pText[nLen] != TEXT('\0'))
-  {
+  while (pText[nLen] != TEXT('\0')) {
     ++nLen;
   }
 
@@ -84,14 +83,12 @@ TCHAR *hbwapi_tstrncat(TCHAR *pDest, const TCHAR *pSource, HB_SIZE nLen)
 
   pDest[nLen] = TEXT('\0');
 
-  while (nLen && *pDest)
-  {
+  while (nLen && *pDest) {
     pDest++;
     nLen--;
   }
 
-  while (nLen && (*pDest++ = *pSource++) != TEXT('\0'))
-  {
+  while (nLen && (*pDest++ = *pSource++) != TEXT('\0')) {
     nLen--;
   }
 
@@ -102,10 +99,8 @@ static TCHAR *hbwapi_FileNameAtSystemDir(const TCHAR *pFileName)
 {
   UINT nLen = GetSystemDirectory(nullptr, 0);
 
-  if (nLen)
-  {
-    if (pFileName)
-    {
+  if (nLen) {
+    if (pFileName) {
       nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
     }
 
@@ -113,16 +108,13 @@ static TCHAR *hbwapi_FileNameAtSystemDir(const TCHAR *pFileName)
 
     GetSystemDirectory(buffer, nLen);
 
-    if (pFileName)
-    {
+    if (pFileName) {
       hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
       hbwapi_tstrncat(buffer, pFileName, nLen - 1);
     }
 
     return buffer;
-  }
-  else
-  {
+  } else {
     return hbwapi_tstrdup(pFileName);
   }
 }
@@ -137,16 +129,12 @@ static TCHAR *hbwapi_FileNameAtSystemDir(const TCHAR *pFileName)
 //    https://support.microsoft.com/kb/2533623
 static HB_BOOL hbwapi_has_search_system32()
 {
-  if (hb_iswin8())
-  {
+  if (hb_iswin8()) {
     return true;
-  }
-  else
-  {
+  } else {
     HMODULE hKernel32 = GetModuleHandle(TEXT("kernel32.dll"));
 
-    if (hKernel32)
-    {
+    if (hKernel32) {
       return HB_WINAPI_GETPROCADDRESS(hKernel32, "AddDllDirectory") != nullptr; // Detect KB2533623
     }
   }
@@ -170,8 +158,7 @@ HMODULE hbwapi_LoadLibrarySystemVM(const char *szFileName)
 
   HMODULE h = hbwapi_LoadLibrarySystem(HB_FSNAMECONV(szFileName, &lpFree));
 
-  if (lpFree)
-  {
+  if (lpFree) {
     hb_xfree(lpFree);
   }
 
@@ -187,8 +174,7 @@ HINSTANCE hbwapi_Instance(void)
 
 HKEY hbwapi_get_HKEY(HB_PTRUINT nKey)
 {
-  switch (nKey)
-  {
+  switch (nKey) {
   case 1:
     return static_cast<HKEY>(HKEY_CLASSES_ROOT);
   // NOTE: In xHarbour, zero value means HKEY_LOCAL_MACHINE.

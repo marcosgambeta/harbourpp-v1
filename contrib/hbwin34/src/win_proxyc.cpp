@@ -55,37 +55,28 @@ HB_FUNC(__WIN_PROXYDETECT)
 
   bool fDetect = true;
 
-  if (WinHttpGetIEProxyConfigForCurrentUser(&ieproxy))
-  {
-    if (ieproxy.lpszAutoConfigUrl != nullptr)
-    {
+  if (WinHttpGetIEProxyConfigForCurrentUser(&ieproxy)) {
+    if (ieproxy.lpszAutoConfigUrl != nullptr) {
       options.lpszAutoConfigUrl = ieproxy.lpszAutoConfigUrl;
-    }
-    else
-    {
+    } else {
       fDetect = ieproxy.fAutoDetect;
     }
   }
 
-  if (fDetect)
-  {
+  if (fDetect) {
     HINTERNET hSession =
         WinHttpOpen(nullptr, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
 
-    if (hSession != nullptr)
-    {
+    if (hSession != nullptr) {
       WINHTTP_PROXY_INFO proxy{};
 
       void *hURL;
       LPCTSTR pURL = HB_PARSTRDEF(1, &hURL, nullptr);
       DWORD dwError;
 
-      if (options.lpszAutoConfigUrl != nullptr)
-      {
+      if (options.lpszAutoConfigUrl != nullptr) {
         options.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
-      }
-      else
-      {
+      } else {
         options.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
         options.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DNS_A;
 #if defined(HBWIN_USE_WINHTTP_DHCP)
@@ -99,68 +90,53 @@ HB_FUNC(__WIN_PROXYDETECT)
       fDetect = WinHttpGetProxyForUrl(hSession, pURL, &options, &proxy);
       hbwapi_SetLastError(dwError = GetLastError());
 
-      if (!fDetect && dwError == ERROR_WINHTTP_LOGIN_FAILURE)
-      {
+      if (!fDetect && dwError == ERROR_WINHTTP_LOGIN_FAILURE) {
         options.fAutoLogonIfChallenged = TRUE;
 
         fDetect = WinHttpGetProxyForUrl(hSession, pURL, &options, &proxy);
         hbwapi_SetLastError(GetLastError());
       }
 
-      if (fDetect)
-      {
-        if (proxy.dwAccessType == WINHTTP_ACCESS_TYPE_NO_PROXY)
-        {
+      if (fDetect) {
+        if (proxy.dwAccessType == WINHTTP_ACCESS_TYPE_NO_PROXY) {
           hb_retc_null();
           hb_storc(nullptr, 2);
-        }
-        else
-        {
+        } else {
           HB_RETSTR(proxy.lpszProxy);
           HB_STORSTR(proxy.lpszProxyBypass, 2);
         }
-      }
-      else
-      {
+      } else {
         fDetect = false;
       }
 
-      if (proxy.lpszProxy != nullptr)
-      {
+      if (proxy.lpszProxy != nullptr) {
         GlobalFree(proxy.lpszProxy);
       }
-      if (proxy.lpszProxyBypass != nullptr)
-      {
+      if (proxy.lpszProxyBypass != nullptr) {
         GlobalFree(proxy.lpszProxyBypass);
       }
 
       hb_strfree(hURL);
 
       WinHttpCloseHandle(hSession);
-    }
-    else
-    {
+    } else {
       fDetect = false;
     }
   }
 
-  if (!fDetect)
-  {
+  if (!fDetect) {
     hbwapi_SetLastError(GetLastError());
     HB_RETSTR(ieproxy.lpszProxy);
     HB_STORSTR(ieproxy.lpszProxyBypass, 2);
   }
 
-  if (ieproxy.lpszAutoConfigUrl != nullptr)
-  {
+  if (ieproxy.lpszAutoConfigUrl != nullptr) {
     GlobalFree(ieproxy.lpszAutoConfigUrl);
   }
-  if (ieproxy.lpszProxy != nullptr)
-  {
+  if (ieproxy.lpszProxy != nullptr) {
     GlobalFree(ieproxy.lpszProxy);
   }
-  if (ieproxy.lpszProxyBypass != nullptr)
-  {
+  if (ieproxy.lpszProxyBypass != nullptr) {
     GlobalFree(ieproxy.lpszProxyBypass);
   }
 }

@@ -131,7 +131,8 @@ HB_FUNC(WAPI_IMAGELIST_DRAW)
                               hbwapi_par_INT(5), hbwapi_par_UINT(6)));
 }
 
-// BOOL ImageList_DrawEx(HIMAGELIST himl, int i, HDC hdcDst, int x, int y, int dx, int dy, COLORREF rgbBk, COLORREF * rgbFg, UINT fStyle);
+// BOOL ImageList_DrawEx(HIMAGELIST himl, int i, HDC hdcDst, int x, int y, int dx, int dy, COLORREF rgbBk, COLORREF *
+// rgbFg, UINT fStyle);
 HB_FUNC(WAPI_IMAGELIST_DRAWEX)
 {
   hbwapi_ret_L(ImageList_DrawEx(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), hbwapi_par_raw_HDC(3),
@@ -189,12 +190,9 @@ HB_FUNC(WAPI_IMAGELIST_GETICONSIZE)
   int cx;
   int cy;
 
-  if (ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy))
-  {
+  if (ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy)) {
     hb_retl(true);
-  }
-  else
-  {
+  } else {
     cx = cy = 0;
     hb_retl(false);
   }
@@ -214,28 +212,23 @@ HB_FUNC(WAPI_IMAGELIST_GETIMAGEINFO)
 {
   IMAGEINFO ii;
 
-  if (ImageList_GetImageInfo(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), &ii))
-  {
+  if (ImageList_GetImageInfo(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), &ii)) {
     hb_retclen(reinterpret_cast<char *>(&ii), sizeof(ii));
-  }
-  else
-  {
+  } else {
     hb_retc_null();
   }
 }
 
-// HIMAGELIST ImageList_LoadImage(HINSTANCE hi, LPCTSTR lpbmp, int cx, int cGrow, COLORREF crMask, UINT uType, UINT * uFlags);
+// HIMAGELIST ImageList_LoadImage(HINSTANCE hi, LPCTSTR lpbmp, int cx, int cGrow, COLORREF crMask, UINT uType, UINT *
+// uFlags);
 HB_FUNC(WAPI_IMAGELIST_LOADIMAGE)
 {
   void *hImage = nullptr;
   LPCTSTR image;
 
-  if (HB_ISCHAR(2))
-  {
+  if (HB_ISCHAR(2)) {
     image = HB_PARSTRDEF(2, &hImage, nullptr);
-  }
-  else
-  {
+  } else {
     image = MAKEINTRESOURCE(hbwapi_par_INT(2));
   }
 
@@ -245,7 +238,7 @@ HB_FUNC(WAPI_IMAGELIST_LOADIMAGE)
   hb_strfree(hImage);
 }
 
-// HIMAGELIST ImageList_Merge(HIMAGELIST himl1, int i1, HIMAGELIST himl2, int i2, int dx, int dy); 
+// HIMAGELIST ImageList_Merge(HIMAGELIST himl1, int i1, HIMAGELIST himl2, int i2, int dx, int dy);
 HB_FUNC(WAPI_IMAGELIST_MERGE)
 {
   hbwapi_ret_raw_HANDLE(ImageList_Merge(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), hbwapi_par_raw_HIMAGELIST(3),
@@ -475,8 +468,7 @@ HB_FUNC(WAPI_TABCTRL_SETITEMEXTRA)
 // (int)SNDMSG(hwnd, TCM_ADJUSTRECT, (WPARAM)(BOOL)(bLarger), (LPARAM)(RECT FAR *)prc)
 HB_FUNC(WAPI_TABCTRL_ADJUSTRECT)
 {
-  if (HB_ISARRAY(3))
-  {
+  if (HB_ISARRAY(3)) {
     RECT rc;
 
     rc.left = hb_parvnl(3, 1);

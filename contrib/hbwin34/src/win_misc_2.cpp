@@ -71,8 +71,7 @@ HB_FUNC(WIN_RUNDETACHED)
                     nullptr,                                            // Use parent's starting directory
                     &si,                                                // Pointer to STARTUPINFO structure
                     &pi)                                                // Pointer to PROCESS_INFORMATION structure
-  )
-  {
+  ) {
     hb_retl(true);
 
     hb_stornint(pi.dwProcessId, 3);
@@ -80,9 +79,7 @@ HB_FUNC(WIN_RUNDETACHED)
     // Close process and thread handles.
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
-  }
-  else
-  {
+  } else {
     hb_stornint(-1, 3);
     hb_retl(false);
   }
