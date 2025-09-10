@@ -53,8 +53,7 @@ static HB_GARBAGE_FUNC(s_RSA_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     // Destroy the object
     RSA_free(static_cast<RSA *>(*ph));
 
@@ -80,8 +79,7 @@ void hb_RSA_par_remove(int iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcRSA_funcs, iParam));
 
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
     *ph = nullptr;
   }
 }
@@ -97,12 +95,9 @@ HB_FUNC(RSA_SIZE)
 {
   auto rsa = hb_RSA_par(1);
 
-  if (rsa != nullptr)
-  {
+  if (rsa != nullptr) {
     hb_retni(RSA_size(rsa));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -111,8 +106,7 @@ HB_FUNC(RSA_PUBLIC_ENCRYPT)
 {
   auto rsa = hb_RSA_par(1);
 
-  if (rsa != nullptr)
-  {
+  if (rsa != nullptr) {
     auto from = reinterpret_cast<const unsigned char *>(hb_parcx(2));
     auto flen = static_cast<int>(hb_parclen(2));
     int padding = hb_parnidef(4, RSA_PKCS1_PADDING);
@@ -120,25 +114,19 @@ HB_FUNC(RSA_PUBLIC_ENCRYPT)
     auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
 
     int ret = RSA_public_encrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
-    if (ret > 0)
-    {
-      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3))
-      {
+    if (ret > 0) {
+      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3)) {
         ret = 0;
       }
     }
-    if (ret <= 0)
-    {
-      if (buffer)
-      {
+    if (ret <= 0) {
+      if (buffer) {
         hb_xfree(buffer);
       }
       hb_storc(nullptr, 3);
     }
     hb_retni(ret);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -147,8 +135,7 @@ HB_FUNC(RSA_PRIVATE_DECRYPT)
 {
   auto rsa = hb_RSA_par(1);
 
-  if (rsa != nullptr)
-  {
+  if (rsa != nullptr) {
     auto from = reinterpret_cast<const unsigned char *>(hb_parcx(2));
     auto flen = static_cast<int>(hb_parclen(2));
     int padding = hb_parnidef(4, RSA_PKCS1_PADDING);
@@ -156,26 +143,20 @@ HB_FUNC(RSA_PRIVATE_DECRYPT)
     auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
 
     int ret = RSA_private_decrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
-    if (ret > 0)
-    {
+    if (ret > 0) {
       buffer = static_cast<unsigned char *>(hb_xrealloc(buffer, ret + 1));
-      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3))
-      {
+      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3)) {
         ret = 0;
       }
     }
-    if (ret <= 0)
-    {
-      if (buffer)
-      {
+    if (ret <= 0) {
+      if (buffer) {
         hb_xfree(buffer);
       }
       hb_storc(nullptr, 3);
     }
     hb_retni(ret);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -184,8 +165,7 @@ HB_FUNC(RSA_PRIVATE_ENCRYPT)
 {
   auto rsa = hb_RSA_par(1);
 
-  if (rsa != nullptr)
-  {
+  if (rsa != nullptr) {
     auto from = reinterpret_cast<const unsigned char *>(hb_parcx(2));
     auto flen = static_cast<int>(hb_parclen(2));
     int padding = hb_parnidef(4, RSA_PKCS1_PADDING);
@@ -193,25 +173,19 @@ HB_FUNC(RSA_PRIVATE_ENCRYPT)
     auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
 
     int ret = RSA_private_encrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
-    if (ret > 0)
-    {
-      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3))
-      {
+    if (ret > 0) {
+      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3)) {
         ret = 0;
       }
     }
-    if (ret <= 0)
-    {
-      if (buffer)
-      {
+    if (ret <= 0) {
+      if (buffer) {
         hb_xfree(buffer);
       }
       hb_storc(nullptr, 3);
     }
     hb_retni(ret);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -220,8 +194,7 @@ HB_FUNC(RSA_PUBLIC_DECRYPT)
 {
   auto rsa = hb_RSA_par(1);
 
-  if (rsa != nullptr)
-  {
+  if (rsa != nullptr) {
     auto from = reinterpret_cast<const unsigned char *>(hb_parcx(2));
     auto flen = static_cast<int>(hb_parclen(2));
     int padding = hb_parnidef(4, RSA_PKCS1_PADDING);
@@ -229,26 +202,20 @@ HB_FUNC(RSA_PUBLIC_DECRYPT)
     auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
 
     int ret = RSA_public_decrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
-    if (ret > 0)
-    {
+    if (ret > 0) {
       buffer = static_cast<unsigned char *>(hb_xrealloc(buffer, ret + 1));
-      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3))
-      {
+      if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), ret, 3)) {
         ret = 0;
       }
     }
-    if (ret <= 0)
-    {
-      if (buffer)
-      {
+    if (ret <= 0) {
+      if (buffer) {
         hb_xfree(buffer);
       }
       hb_storc(nullptr, 3);
     }
     hb_retni(ret);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

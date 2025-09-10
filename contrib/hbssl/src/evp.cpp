@@ -79,12 +79,9 @@ HB_FUNC(EVP_PKEY_FREE)
 {
   auto pKey = hb_param(1, Harbour::Item::POINTER);
 
-  if (pKey != nullptr)
-  {
+  if (pKey != nullptr) {
     hb_EVP_PKEY_free(pKey);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -94,8 +91,7 @@ HB_FUNC(EVP_BYTESTOKEY)
   auto cipher = hb_EVP_CIPHER_par(1);
   auto md = hb_EVP_MD_par(2);
 
-  if (cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8))
-  {
+  if (cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8)) {
     unsigned char key[EVP_MAX_KEY_LENGTH];
     unsigned char iv[EVP_MAX_IV_LENGTH];
 
@@ -109,9 +105,7 @@ HB_FUNC(EVP_BYTESTOKEY)
 
     hb_storclen(reinterpret_cast<char *>(key), EVP_CIPHER_key_length(cipher), 6);
     hb_storclen(reinterpret_cast<char *>(iv), EVP_CIPHER_iv_length(cipher), 7);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

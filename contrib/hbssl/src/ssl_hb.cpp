@@ -51,12 +51,10 @@
 
 HB_FUNC(HB_SSL_READ_ALL)
 {
-  if (hb_SSL_is(1))
-  {
+  if (hb_SSL_is(1)) {
     auto ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr)
-    {
+    if (ssl != nullptr) {
       auto iMax = hb_parnidef(3, INT_MAX);
       auto iTimeout = hb_parnidef(4, -1);
       auto iBufferSize = hb_parnidef(5, 80);
@@ -65,30 +63,23 @@ HB_FUNC(HB_SSL_READ_ALL)
       auto iAllocated = 0;
       char *retval = nullptr;
 
-      for (;;)
-      {
+      for (;;) {
         char buffer[1];
         int iLen;
         int sd = SSL_get_rfd(ssl);
 
-        if (SSL_pending(ssl) || (sd >= 0 && hb_socketSelectRead(static_cast<HB_SOCKET>(sd), iTimeout)))
-        {
+        if (SSL_pending(ssl) || (sd >= 0 && hb_socketSelectRead(static_cast<HB_SOCKET>(sd), iTimeout))) {
           iLen = SSL_read(ssl, buffer, 1);
 
-          if (iLen == SSL_ERROR_WANT_READ)
-          {
+          if (iLen == SSL_ERROR_WANT_READ) {
             continue;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
 
-        if (iLen <= 0)
-        {
-          if (retval)
-          {
+        if (iLen <= 0) {
+          if (retval) {
             hb_xfree(retval);
           }
 
@@ -97,49 +88,39 @@ HB_FUNC(HB_SSL_READ_ALL)
           return;
         }
 
-        if (iPos == iAllocated)
-        {
+        if (iPos == iAllocated) {
           iAllocated += iBufferSize;
           retval = static_cast<char *>(hb_xrealloc(retval, iAllocated));
         }
 
         retval[iPos++] = buffer[0];
 
-        if (iPos == iMax)
-        {
+        if (iPos == iMax) {
           break;
         }
       }
 
-      if (retval)
-      {
-        if (!hb_storclen_buffer(retval, iPos, 2))
-        {
+      if (retval) {
+        if (!hb_storclen_buffer(retval, iPos, 2)) {
           hb_xfree(retval);
         }
-      }
-      else
-      {
+      } else {
         hb_storc(nullptr, 2);
       }
 
       hb_retni(iPos);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(HB_SSL_READ_LINE)
 {
-  if (hb_SSL_is(1))
-  {
+  if (hb_SSL_is(1)) {
     auto ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr)
-    {
+    if (ssl != nullptr) {
       auto iMax = hb_parnidef(3, INT_MAX);
       auto iTimeout = hb_parnidef(4, -1);
       auto iBufferSize = hb_parnidef(5, 80);
@@ -148,77 +129,58 @@ HB_FUNC(HB_SSL_READ_LINE)
       auto iAllocated = 0;
       char *retval = nullptr;
 
-      for (;;)
-      {
+      for (;;) {
         char buffer[1];
         int iLen;
         int sd = SSL_get_rfd(ssl);
 
-        if (SSL_pending(ssl) || (sd >= 0 && hb_socketSelectRead(static_cast<HB_SOCKET>(sd), iTimeout)))
-        {
+        if (SSL_pending(ssl) || (sd >= 0 && hb_socketSelectRead(static_cast<HB_SOCKET>(sd), iTimeout))) {
           iLen = SSL_read(ssl, buffer, 1);
 
-          if (iLen == SSL_ERROR_WANT_READ)
-          {
+          if (iLen == SSL_ERROR_WANT_READ) {
             continue;
           }
-        }
-        else
-        {
+        } else {
           break;
         }
 
-        if (iLen <= 0)
-        {
-          if (retval)
-          {
+        if (iLen <= 0) {
+          if (retval) {
             hb_xfree(retval);
           }
 
           hb_storc(nullptr, 2);
           hb_retni(iLen);
           return;
-        }
-        else if (buffer[0] == '\r')
-        {
+        } else if (buffer[0] == '\r') {
           continue;
-        }
-        else if (buffer[0] == '\n')
-        {
+        } else if (buffer[0] == '\n') {
           break;
         }
 
-        if (iPos == iAllocated)
-        {
+        if (iPos == iAllocated) {
           iAllocated += iBufferSize;
           retval = static_cast<char *>(hb_xrealloc(retval, iAllocated));
         }
 
         retval[iPos++] = buffer[0];
 
-        if (iPos == iMax)
-        {
+        if (iPos == iMax) {
           break;
         }
       }
 
-      if (retval)
-      {
-        if (!hb_storclen_buffer(retval, iPos, 2))
-        {
+      if (retval) {
+        if (!hb_storclen_buffer(retval, iPos, 2)) {
           hb_xfree(retval);
         }
-      }
-      else
-      {
+      } else {
         hb_storc(nullptr, 2);
       }
 
       hb_retni(iPos);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

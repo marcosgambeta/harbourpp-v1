@@ -95,31 +95,24 @@ static void hb_inetStartSSL(HB_BOOL fServer)
   auto pItem = hb_param(1, Harbour::Item::POINTER);
   HB_SOCKET sd = hb_znetInetFD(pItem, true);
 
-  if (sd != HB_NO_SOCKET)
-  {
-    if (hb_SSL_is(2))
-    {
+  if (sd != HB_NO_SOCKET) {
+    if (hb_SSL_is(2)) {
       int iResult = -2;
       auto ssl = hb_SSL_par(2);
 
-      if (ssl != nullptr)
-      {
+      if (ssl != nullptr) {
         HB_MAXINT timeout = HB_ISNUM(3) ? hb_parnint(3) : hb_znetInetTimeout(pItem, false);
         auto pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult);
-        if (pStream != nullptr)
-        {
+        if (pStream != nullptr) {
           if (!hb_znetInetInitialize(pItem, reinterpret_cast<PHB_ZNETSTREAM>(pStream), hb_inetReadSSL, hb_inetWriteSSL,
-                                     hb_inetFlushSSL, hb_inetCloseSSL, hb_inetErrorSSL, hb_inetErrStrSSL))
-          {
+                                     hb_inetFlushSSL, hb_inetCloseSSL, hb_inetErrorSSL, hb_inetErrStrSSL)) {
             hb_ssl_socketClose(pStream);
             iResult = -3;
           }
         }
       }
       hb_retni(iResult);
-    }
-    else
-    {
+    } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
   }

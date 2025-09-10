@@ -70,8 +70,7 @@ static HB_GARBAGE_FUNC(X509_release)
   auto ph = static_cast<PHB_X509>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && ph->pX509)
-  {
+  if (ph && ph->pX509) {
     // Destroy the object
     X509_free(static_cast<X509 *>(ph->pX509));
 
@@ -96,48 +95,37 @@ X509 *hb_X509_par(int iParam)
 
 void hb_X509_ret(X509 *x509)
 {
-  if (x509 != nullptr)
-  {
+  if (x509 != nullptr) {
     auto ph = static_cast<PHB_X509>(hb_gcAllocate(sizeof(HB_X509), &s_gcX509_funcs));
     ph->pX509 = x509;
     hb_retptrGC(static_cast<void *>(ph));
-  }
-  else
-  {
+  } else {
     hb_ret();
   }
 }
 
 HB_FUNC(X509_GET_SUBJECT_NAME)
 {
-  if (hb_X509_is(1))
-  {
+  if (hb_X509_is(1)) {
     auto x509 = hb_X509_par(1);
 
-    if (x509 != nullptr)
-    {
+    if (x509 != nullptr) {
       hb_retptr(X509_get_subject_name(x509));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(X509_GET_ISSUER_NAME)
 {
-  if (hb_X509_is(1))
-  {
+  if (hb_X509_is(1)) {
     auto x509 = hb_X509_par(1);
 
-    if (x509 != nullptr)
-    {
+    if (x509 != nullptr) {
       hb_retptr(X509_get_issuer_name(x509));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -148,14 +136,11 @@ HB_FUNC(X509_NAME_ONELINE)
     OPENSSL_VERSION_NUMBER >= 0x1000000FL // NOTE: Compilation error when tried with 1.0.0beta5
   auto x509_name = static_cast<X509_NAME *>(hb_parptr(1));
 
-  if (x509_name != nullptr)
-  {
+  if (x509_name != nullptr) {
     char buffer[1024];
     X509_NAME_oneline(x509_name, buffer, sizeof(buffer));
     hb_retc(buffer);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #endif
@@ -163,17 +148,13 @@ HB_FUNC(X509_NAME_ONELINE)
 
 HB_FUNC(X509_GET_PUBKEY)
 {
-  if (hb_X509_is(1))
-  {
+  if (hb_X509_is(1)) {
     auto x509 = hb_X509_par(1);
 
-    if (x509 != nullptr)
-    {
+    if (x509 != nullptr) {
       hb_EVP_PKEY_ret(X509_get_pubkey(x509));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }

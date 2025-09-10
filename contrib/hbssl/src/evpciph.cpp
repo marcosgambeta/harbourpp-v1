@@ -59,8 +59,7 @@ static HB_GARBAGE_FUNC(EVP_CIPHER_CTX_release)
   auto ph = static_cast<void **>(Cargo);
 
   // Check if pointer is not nullptr to avoid multiple freeing
-  if (ph && *ph)
-  {
+  if (ph && *ph) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     EVP_CIPHER_CTX_free(static_cast<EVP_CIPHER_CTX *>(*ph));
 #else
@@ -97,13 +96,11 @@ const EVP_CIPHER *hb_EVP_CIPHER_par(int iParam)
 {
   const EVP_CIPHER *p;
 
-  if (HB_ISCHAR(iParam))
-  {
+  if (HB_ISCHAR(iParam)) {
     return EVP_get_cipherbyname(hb_parc(iParam));
   }
 
-  switch (hb_parni(iParam))
-  {
+  switch (hb_parni(iParam)) {
   case HB_EVP_CIPHER_ENC_NULL:
     p = EVP_enc_null();
     break;
@@ -465,442 +462,272 @@ static int hb_EVP_CIPHER_ptr_to_id(const EVP_CIPHER *p)
 {
   int n;
 
-  if (p == EVP_enc_null())
-  {
+  if (p == EVP_enc_null()) {
     n = HB_EVP_CIPHER_ENC_NULL;
   }
 #ifndef OPENSSL_NO_DES
-  else if (p == EVP_des_ecb())
-  {
+  else if (p == EVP_des_ecb()) {
     n = HB_EVP_CIPHER_DES_ECB;
-  }
-  else if (p == EVP_des_ede())
-  {
+  } else if (p == EVP_des_ede()) {
     n = HB_EVP_CIPHER_DES_EDE;
-  }
-  else if (p == EVP_des_ede3())
-  {
+  } else if (p == EVP_des_ede3()) {
     n = HB_EVP_CIPHER_DES_EDE3;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-  else if (p == EVP_des_ede_ecb())
-  {
+  else if (p == EVP_des_ede_ecb()) {
     n = HB_EVP_CIPHER_DES_EDE_ECB;
-  }
-  else if (p == EVP_des_ede3_ecb())
-  {
+  } else if (p == EVP_des_ede3_ecb()) {
     n = HB_EVP_CIPHER_DES_EDE3_ECB;
   }
 #endif
-  else if (p == EVP_des_cfb())
-  {
+  else if (p == EVP_des_cfb()) {
     n = HB_EVP_CIPHER_DES_CFB;
-  }
-  else if (p == EVP_des_ede_cfb())
-  {
+  } else if (p == EVP_des_ede_cfb()) {
     n = HB_EVP_CIPHER_DES_EDE_CFB;
-  }
-  else if (p == EVP_des_ede3_cfb())
-  {
+  } else if (p == EVP_des_ede3_cfb()) {
     n = HB_EVP_CIPHER_DES_EDE3_CFB;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_des_cfb64())
-  {
+  else if (p == EVP_des_cfb64()) {
     n = HB_EVP_CIPHER_DES_CFB64;
-  }
-  else if (p == EVP_des_cfb1())
-  {
+  } else if (p == EVP_des_cfb1()) {
     n = HB_EVP_CIPHER_DES_CFB1;
-  }
-  else if (p == EVP_des_cfb8())
-  {
+  } else if (p == EVP_des_cfb8()) {
     n = HB_EVP_CIPHER_DES_CFB8;
-  }
-  else if (p == EVP_des_ede_cfb64())
-  {
+  } else if (p == EVP_des_ede_cfb64()) {
     n = HB_EVP_CIPHER_DES_EDE_CFB64;
-  }
-  else if (p == EVP_des_ede3_cfb64())
-  {
+  } else if (p == EVP_des_ede3_cfb64()) {
     n = HB_EVP_CIPHER_DES_EDE3_CFB64;
-  }
-  else if (p == EVP_des_ede3_cfb1())
-  {
+  } else if (p == EVP_des_ede3_cfb1()) {
     n = HB_EVP_CIPHER_DES_EDE3_CFB1;
-  }
-  else if (p == EVP_des_ede3_cfb8())
-  {
+  } else if (p == EVP_des_ede3_cfb8()) {
     n = HB_EVP_CIPHER_DES_EDE3_CFB8;
   }
 #endif
-  else if (p == EVP_des_ofb())
-  {
+  else if (p == EVP_des_ofb()) {
     n = HB_EVP_CIPHER_DES_OFB;
-  }
-  else if (p == EVP_des_ede_ofb())
-  {
+  } else if (p == EVP_des_ede_ofb()) {
     n = HB_EVP_CIPHER_DES_EDE_OFB;
-  }
-  else if (p == EVP_des_ede3_ofb())
-  {
+  } else if (p == EVP_des_ede3_ofb()) {
     n = HB_EVP_CIPHER_DES_EDE3_OFB;
-  }
-  else if (p == EVP_des_cbc())
-  {
+  } else if (p == EVP_des_cbc()) {
     n = HB_EVP_CIPHER_DES_CBC;
-  }
-  else if (p == EVP_des_ede_cbc())
-  {
+  } else if (p == EVP_des_ede_cbc()) {
     n = HB_EVP_CIPHER_DES_EDE_CBC;
-  }
-  else if (p == EVP_des_ede3_cbc())
-  {
+  } else if (p == EVP_des_ede3_cbc()) {
     n = HB_EVP_CIPHER_DES_EDE3_CBC;
-  }
-  else if (p == EVP_desx_cbc())
-  {
+  } else if (p == EVP_desx_cbc()) {
     n = HB_EVP_CIPHER_DESX_CBC;
   }
 #endif
 #ifndef OPENSSL_NO_RC4
-  else if (p == EVP_rc4())
-  {
+  else if (p == EVP_rc4()) {
     n = HB_EVP_CIPHER_RC4;
-  }
-  else if (p == EVP_rc4_40())
-  {
+  } else if (p == EVP_rc4_40()) {
     n = HB_EVP_CIPHER_RC4_40;
   }
 #endif
 #ifndef OPENSSL_NO_IDEA
-  else if (p == EVP_idea_ecb())
-  {
+  else if (p == EVP_idea_ecb()) {
     n = HB_EVP_CIPHER_IDEA_ECB;
-  }
-  else if (p == EVP_idea_cfb64())
-  {
+  } else if (p == EVP_idea_cfb64()) {
     n = HB_EVP_CIPHER_IDEA_CFB64;
-  }
-  else if (p == EVP_idea_cfb())
-  {
+  } else if (p == EVP_idea_cfb()) {
     n = HB_EVP_CIPHER_IDEA_CFB;
-  }
-  else if (p == EVP_idea_ofb())
-  {
+  } else if (p == EVP_idea_ofb()) {
     n = HB_EVP_CIPHER_IDEA_OFB;
-  }
-  else if (p == EVP_idea_cbc())
-  {
+  } else if (p == EVP_idea_cbc()) {
     n = HB_EVP_CIPHER_IDEA_CBC;
   }
 #endif
 #ifndef OPENSSL_NO_RC2
-  else if (p == EVP_rc2_ecb())
-  {
+  else if (p == EVP_rc2_ecb()) {
     n = HB_EVP_CIPHER_RC2_ECB;
-  }
-  else if (p == EVP_rc2_cbc())
-  {
+  } else if (p == EVP_rc2_cbc()) {
     n = HB_EVP_CIPHER_RC2_CBC;
-  }
-  else if (p == EVP_rc2_40_cbc())
-  {
+  } else if (p == EVP_rc2_40_cbc()) {
     n = HB_EVP_CIPHER_RC2_40_CBC;
-  }
-  else if (p == EVP_rc2_64_cbc())
-  {
+  } else if (p == EVP_rc2_64_cbc()) {
     n = HB_EVP_CIPHER_RC2_64_CBC;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_rc2_cfb64())
-  {
+  else if (p == EVP_rc2_cfb64()) {
     n = HB_EVP_CIPHER_RC2_CFB64;
   }
 #endif
-  else if (p == EVP_rc2_cfb())
-  {
+  else if (p == EVP_rc2_cfb()) {
     n = HB_EVP_CIPHER_RC2_CFB;
-  }
-  else if (p == EVP_rc2_ofb())
-  {
+  } else if (p == EVP_rc2_ofb()) {
     n = HB_EVP_CIPHER_RC2_OFB;
   }
 #endif
 #ifndef OPENSSL_NO_BF
-  else if (p == EVP_bf_ecb())
-  {
+  else if (p == EVP_bf_ecb()) {
     n = HB_EVP_CIPHER_BF_ECB;
-  }
-  else if (p == EVP_bf_cbc())
-  {
+  } else if (p == EVP_bf_cbc()) {
     n = HB_EVP_CIPHER_BF_CBC;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_bf_cfb64())
-  {
+  else if (p == EVP_bf_cfb64()) {
     n = HB_EVP_CIPHER_BF_CFB64;
   }
 #endif
-  else if (p == EVP_bf_cfb())
-  {
+  else if (p == EVP_bf_cfb()) {
     n = HB_EVP_CIPHER_BF_CFB;
-  }
-  else if (p == EVP_bf_ofb())
-  {
+  } else if (p == EVP_bf_ofb()) {
     n = HB_EVP_CIPHER_BF_OFB;
   }
 #endif
 #ifndef OPENSSL_NO_CAST
-  else if (p == EVP_cast5_ecb())
-  {
+  else if (p == EVP_cast5_ecb()) {
     n = HB_EVP_CIPHER_CAST5_ECB;
-  }
-  else if (p == EVP_cast5_cbc())
-  {
+  } else if (p == EVP_cast5_cbc()) {
     n = HB_EVP_CIPHER_CAST5_CBC;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_cast5_cfb64())
-  {
+  else if (p == EVP_cast5_cfb64()) {
     n = HB_EVP_CIPHER_CAST5_CFB64;
   }
 #endif
-  else if (p == EVP_cast5_cfb())
-  {
+  else if (p == EVP_cast5_cfb()) {
     n = HB_EVP_CIPHER_CAST5_CFB;
-  }
-  else if (p == EVP_cast5_ofb())
-  {
+  } else if (p == EVP_cast5_ofb()) {
     n = HB_EVP_CIPHER_CAST5_OFB;
   }
 #endif
 #ifndef OPENSSL_NO_RC5
-  else if (p == EVP_rc5_32_12_16_cbc())
-  {
+  else if (p == EVP_rc5_32_12_16_cbc()) {
     n = HB_EVP_CIPHER_RC5_32_12_16_CBC;
-  }
-  else if (p == EVP_rc5_32_12_16_ecb())
-  {
+  } else if (p == EVP_rc5_32_12_16_ecb()) {
     n = HB_EVP_CIPHER_RC5_32_12_16_ECB;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_rc5_32_12_16_cfb64())
-  {
+  else if (p == EVP_rc5_32_12_16_cfb64()) {
     n = HB_EVP_CIPHER_RC5_32_12_16_CFB64;
   }
 #endif
-  else if (p == EVP_rc5_32_12_16_cfb())
-  {
+  else if (p == EVP_rc5_32_12_16_cfb()) {
     n = HB_EVP_CIPHER_RC5_32_12_16_CFB;
-  }
-  else if (p == EVP_rc5_32_12_16_ofb())
-  {
+  } else if (p == EVP_rc5_32_12_16_ofb()) {
     n = HB_EVP_CIPHER_RC5_32_12_16_OFB;
   }
 #endif
 #ifndef OPENSSL_NO_AES
-  else if (p == EVP_aes_128_ecb())
-  {
+  else if (p == EVP_aes_128_ecb()) {
     n = HB_EVP_CIPHER_AES_128_ECB;
-  }
-  else if (p == EVP_aes_128_cbc())
-  {
+  } else if (p == EVP_aes_128_cbc()) {
     n = HB_EVP_CIPHER_AES_128_CBC;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_aes_128_cfb1())
-  {
+  else if (p == EVP_aes_128_cfb1()) {
     n = HB_EVP_CIPHER_AES_128_CFB1;
-  }
-  else if (p == EVP_aes_128_cfb8())
-  {
+  } else if (p == EVP_aes_128_cfb8()) {
     n = HB_EVP_CIPHER_AES_128_CFB8;
-  }
-  else if (p == EVP_aes_128_cfb128())
-  {
+  } else if (p == EVP_aes_128_cfb128()) {
     n = HB_EVP_CIPHER_AES_128_CFB128;
   }
 #endif
-  else if (p == EVP_aes_128_cfb())
-  {
+  else if (p == EVP_aes_128_cfb()) {
     n = HB_EVP_CIPHER_AES_128_CFB;
-  }
-  else if (p == EVP_aes_128_ofb())
-  {
+  } else if (p == EVP_aes_128_ofb()) {
     n = HB_EVP_CIPHER_AES_128_OFB;
-  }
-  else if (p == EVP_aes_192_ecb())
-  {
+  } else if (p == EVP_aes_192_ecb()) {
     n = HB_EVP_CIPHER_AES_192_ECB;
-  }
-  else if (p == EVP_aes_192_cbc())
-  {
+  } else if (p == EVP_aes_192_cbc()) {
     n = HB_EVP_CIPHER_AES_192_CBC;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_aes_192_cfb1())
-  {
+  else if (p == EVP_aes_192_cfb1()) {
     n = HB_EVP_CIPHER_AES_192_CFB1;
-  }
-  else if (p == EVP_aes_192_cfb8())
-  {
+  } else if (p == EVP_aes_192_cfb8()) {
     n = HB_EVP_CIPHER_AES_192_CFB8;
-  }
-  else if (p == EVP_aes_192_cfb128())
-  {
+  } else if (p == EVP_aes_192_cfb128()) {
     n = HB_EVP_CIPHER_AES_192_CFB128;
   }
 #endif
-  else if (p == EVP_aes_192_cfb())
-  {
+  else if (p == EVP_aes_192_cfb()) {
     n = HB_EVP_CIPHER_AES_192_CFB;
-  }
-  else if (p == EVP_aes_192_ofb())
-  {
+  } else if (p == EVP_aes_192_ofb()) {
     n = HB_EVP_CIPHER_AES_192_OFB;
-  }
-  else if (p == EVP_aes_256_ecb())
-  {
+  } else if (p == EVP_aes_256_ecb()) {
     n = HB_EVP_CIPHER_AES_256_ECB;
-  }
-  else if (p == EVP_aes_256_cbc())
-  {
+  } else if (p == EVP_aes_256_cbc()) {
     n = HB_EVP_CIPHER_AES_256_CBC;
   }
 #if OPENSSL_VERSION_NUMBER >= 0x00907050L
-  else if (p == EVP_aes_256_cfb1())
-  {
+  else if (p == EVP_aes_256_cfb1()) {
     n = HB_EVP_CIPHER_AES_256_CFB1;
-  }
-  else if (p == EVP_aes_256_cfb8())
-  {
+  } else if (p == EVP_aes_256_cfb8()) {
     n = HB_EVP_CIPHER_AES_256_CFB8;
-  }
-  else if (p == EVP_aes_256_cfb128())
-  {
+  } else if (p == EVP_aes_256_cfb128()) {
     n = HB_EVP_CIPHER_AES_256_CFB128;
   }
 #endif
-  else if (p == EVP_aes_256_cfb())
-  {
+  else if (p == EVP_aes_256_cfb()) {
     n = HB_EVP_CIPHER_AES_256_CFB;
-  }
-  else if (p == EVP_aes_256_ofb())
-  {
+  } else if (p == EVP_aes_256_ofb()) {
     n = HB_EVP_CIPHER_AES_256_OFB;
   }
 #endif
 #ifndef OPENSSL_NO_CAMELLIA
-  else if (p == EVP_camellia_128_ecb())
-  {
+  else if (p == EVP_camellia_128_ecb()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_ECB;
-  }
-  else if (p == EVP_camellia_128_cbc())
-  {
+  } else if (p == EVP_camellia_128_cbc()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_CBC;
-  }
-  else if (p == EVP_camellia_128_cfb1())
-  {
+  } else if (p == EVP_camellia_128_cfb1()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB1;
-  }
-  else if (p == EVP_camellia_128_cfb8())
-  {
+  } else if (p == EVP_camellia_128_cfb8()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB8;
-  }
-  else if (p == EVP_camellia_128_cfb128())
-  {
+  } else if (p == EVP_camellia_128_cfb128()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB128;
-  }
-  else if (p == EVP_camellia_128_cfb())
-  {
+  } else if (p == EVP_camellia_128_cfb()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_CFB;
-  }
-  else if (p == EVP_camellia_128_ofb())
-  {
+  } else if (p == EVP_camellia_128_ofb()) {
     n = HB_EVP_CIPHER_CAMELLIA_128_OFB;
-  }
-  else if (p == EVP_camellia_192_ecb())
-  {
+  } else if (p == EVP_camellia_192_ecb()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_ECB;
-  }
-  else if (p == EVP_camellia_192_cbc())
-  {
+  } else if (p == EVP_camellia_192_cbc()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_CBC;
-  }
-  else if (p == EVP_camellia_192_cfb1())
-  {
+  } else if (p == EVP_camellia_192_cfb1()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB1;
-  }
-  else if (p == EVP_camellia_192_cfb8())
-  {
+  } else if (p == EVP_camellia_192_cfb8()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB8;
-  }
-  else if (p == EVP_camellia_192_cfb128())
-  {
+  } else if (p == EVP_camellia_192_cfb128()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB128;
-  }
-  else if (p == EVP_camellia_192_cfb())
-  {
+  } else if (p == EVP_camellia_192_cfb()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_CFB;
-  }
-  else if (p == EVP_camellia_192_ofb())
-  {
+  } else if (p == EVP_camellia_192_ofb()) {
     n = HB_EVP_CIPHER_CAMELLIA_192_OFB;
-  }
-  else if (p == EVP_camellia_256_ecb())
-  {
+  } else if (p == EVP_camellia_256_ecb()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_ECB;
-  }
-  else if (p == EVP_camellia_256_cbc())
-  {
+  } else if (p == EVP_camellia_256_cbc()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_CBC;
-  }
-  else if (p == EVP_camellia_256_cfb1())
-  {
+  } else if (p == EVP_camellia_256_cfb1()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB1;
-  }
-  else if (p == EVP_camellia_256_cfb8())
-  {
+  } else if (p == EVP_camellia_256_cfb8()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB8;
-  }
-  else if (p == EVP_camellia_256_cfb128())
-  {
+  } else if (p == EVP_camellia_256_cfb128()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB128;
-  }
-  else if (p == EVP_camellia_256_cfb())
-  {
+  } else if (p == EVP_camellia_256_cfb()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_CFB;
-  }
-  else if (p == EVP_camellia_256_ofb())
-  {
+  } else if (p == EVP_camellia_256_ofb()) {
     n = HB_EVP_CIPHER_CAMELLIA_256_OFB;
   }
 #endif
 #ifndef OPENSSL_NO_SEED
-  else if (p == EVP_seed_ecb())
-  {
+  else if (p == EVP_seed_ecb()) {
     n = HB_EVP_CIPHER_SEED_ECB;
-  }
-  else if (p == EVP_seed_cbc())
-  {
+  } else if (p == EVP_seed_cbc()) {
     n = HB_EVP_CIPHER_SEED_CBC;
-  }
-  else if (p == EVP_seed_cfb128())
-  {
+  } else if (p == EVP_seed_cfb128()) {
     n = HB_EVP_CIPHER_SEED_CFB128;
-  }
-  else if (p == EVP_seed_cfb())
-  {
+  } else if (p == EVP_seed_cfb()) {
     n = HB_EVP_CIPHER_SEED_CFB;
-  }
-  else if (p == EVP_seed_ofb())
-  {
+  } else if (p == EVP_seed_ofb()) {
     n = HB_EVP_CIPHER_SEED_OFB;
   }
 #endif
-  else
-  {
+  else {
     n = HB_EVP_CIPHER_UNSUPPORTED;
   }
 
@@ -909,24 +736,18 @@ static int hb_EVP_CIPHER_ptr_to_id(const EVP_CIPHER *p)
 
 HB_FUNC(EVP_GET_CIPHERBYNAME)
 {
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     hb_retni(hb_EVP_CIPHER_ptr_to_id(EVP_get_cipherbyname(hb_parc(1))));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_GET_CIPHERBYNID)
 {
-  if (HB_ISNUM(1))
-  {
+  if (HB_ISNUM(1)) {
     hb_retni(hb_EVP_CIPHER_ptr_to_id(EVP_get_cipherbynid(hb_parni(1))));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1005,12 +826,10 @@ HB_FUNC_TRANSLATE(HB_EVP_CIPHER_CTX_CREATE, EVP_CIPHER_CTX_NEW)
 
 HB_FUNC(EVP_CIPHER_CTX_RESET)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
     (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20700000L)
       hb_retni(EVP_CIPHER_CTX_reset(ctx));
@@ -1018,9 +837,7 @@ HB_FUNC(EVP_CIPHER_CTX_RESET)
       hb_retni(EVP_CIPHER_CTX_cleanup(ctx));
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1030,92 +847,72 @@ HB_FUNC_TRANSLATE(EVP_CIPHER_CTX_CLEANUP, EVP_CIPHER_CTX_RESET)
 
 HB_FUNC(EVP_CIPHER_CTX_SET_PADDING)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_CIPHER_CTX_set_padding(ctx, hb_parni(2)));
 #else
       hb_retni(0);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHER_CTX_KEY_LENGTH)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       hb_retni(EVP_CIPHER_CTX_key_length(ctx));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHER_CTX_SET_KEY_LENGTH)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       hb_retni(EVP_CIPHER_CTX_set_key_length(ctx, hb_parni(2)));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHER_CTX_CTRL)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       // NOTE: 4th param doesn't have a 'const' qualifier. This is a setter
       //       function, so even if we do a copy, what sort of allocation
       //       routine to use? [vszakats]
       hb_retni(EVP_CIPHER_CTX_ctrl(ctx, hb_parni(2), hb_parni(3), static_cast<void *>(const_cast<char *>(hb_parc(4)))));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHER_CTX_CIPHER)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       hb_retni(hb_EVP_CIPHER_ptr_to_id(EVP_CIPHER_CTX_cipher(ctx)));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1124,18 +921,14 @@ HB_FUNC(EVP_ENCRYPTINIT)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       hb_retni(EVP_EncryptInit(ctx, cipher, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)),
                                reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(4))));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1144,12 +937,10 @@ HB_FUNC(EVP_ENCRYPTINIT_EX)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_EncryptInit_ex(ctx, cipher, static_cast<ENGINE *>(hb_parptr(3)),
                                   reinterpret_cast<const unsigned char *>(hb_parc(4)),
@@ -1158,103 +949,79 @@ HB_FUNC(EVP_ENCRYPTINIT_EX)
       hb_retni(0);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_ENCRYPTUPDATE)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_EncryptUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                                  static_cast<int>(hb_parclen(3))));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_ENCRYPTFINAL)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_EncryptFinal(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_ENCRYPTFINAL_EX)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_EncryptFinal_ex(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
@@ -1263,9 +1030,7 @@ HB_FUNC(EVP_ENCRYPTFINAL_EX)
       hb_storc(nullptr, 2);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1274,18 +1039,14 @@ HB_FUNC(EVP_DECRYPTINIT)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       hb_retni(EVP_DecryptInit(ctx, cipher, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)),
                                reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(4))));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1294,12 +1055,10 @@ HB_FUNC(EVP_DECRYPTINIT_EX)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_DecryptInit_ex(ctx, cipher, static_cast<ENGINE *>(hb_parptr(3)),
                                   reinterpret_cast<const unsigned char *>(hb_parc(4)),
@@ -1308,103 +1067,79 @@ HB_FUNC(EVP_DECRYPTINIT_EX)
       hb_retni(0);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_DECRYPTUPDATE)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_DecryptUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                                  static_cast<int>(hb_parclen(3))));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_DECRYPTFINAL)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_DecryptFinal(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_DECRYPTFINAL_EX)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_DecryptFinal_ex(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
@@ -1413,9 +1148,7 @@ HB_FUNC(EVP_DECRYPTFINAL_EX)
       hb_storc(nullptr, 2);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1424,18 +1157,14 @@ HB_FUNC(EVP_CIPHERINIT)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       hb_retni(EVP_CipherInit(ctx, cipher, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)),
                               reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(4)), hb_parni(5)));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1444,12 +1173,10 @@ HB_FUNC(EVP_CIPHERINIT_EX)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_CipherInit_ex(ctx, cipher, static_cast<ENGINE *>(hb_parptr(3)),
                                  reinterpret_cast<const unsigned char *>(hb_parc(4)),
@@ -1458,103 +1185,79 @@ HB_FUNC(EVP_CIPHERINIT_EX)
       hb_retni(0);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHERUPDATE)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_CipherUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                                 static_cast<int>(hb_parclen(3))));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHERFINAL)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_CipherFinal(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_CIPHERFINAL_EX)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_CipherFinal_ex(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
@@ -1563,9 +1266,7 @@ HB_FUNC(EVP_CIPHERFINAL_EX)
       hb_storc(nullptr, 2);
 #endif
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1574,40 +1275,31 @@ HB_FUNC(EVP_SEALINIT)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       auto npubk = 0;
       PHB_ITEM pArray = nullptr;
       EVP_PKEY *pkey1 = nullptr;
 
-      if (HB_ISARRAY(5))
-      {
+      if (HB_ISARRAY(5)) {
         int tmp;
 
         npubk = static_cast<int>(hb_arrayLen(pArray = hb_param(5, Harbour::Item::ARRAY)));
-        for (tmp = 1; tmp <= npubk; ++tmp)
-        {
-          if (hb_EVP_PKEY_get(hb_arrayGetItemPtr(pArray, tmp)) == nullptr)
-          {
+        for (tmp = 1; tmp <= npubk; ++tmp) {
+          if (hb_EVP_PKEY_get(hb_arrayGetItemPtr(pArray, tmp)) == nullptr) {
             npubk = 0;
             break;
           }
         }
-      }
-      else if (HB_ISPOINTER(5))
-      {
-        if ((pkey1 = hb_EVP_PKEY_par(5)) != nullptr)
-        {
+      } else if (HB_ISPOINTER(5)) {
+        if ((pkey1 = hb_EVP_PKEY_par(5)) != nullptr) {
           npubk = 1;
         }
       }
 
-      if (npubk > 0)
-      {
+      if (npubk > 0) {
         auto ek = static_cast<unsigned char **>(hb_xgrab(sizeof(unsigned char *) * npubk));
         auto ekl = static_cast<int *>(hb_xgrab(sizeof(int) * npubk));
         int ivl = EVP_CIPHER_iv_length(cipher);
@@ -1616,8 +1308,7 @@ HB_FUNC(EVP_SEALINIT)
         auto pubk = static_cast<EVP_PKEY **>(hb_xgrab(sizeof(EVP_PKEY *) * npubk + 1));
         int tmp;
 
-        for (tmp = 0; tmp < npubk; ++tmp)
-        {
+        for (tmp = 0; tmp < npubk; ++tmp) {
           pubk[tmp] = pkey1 ? pkey1 : hb_EVP_PKEY_get(hb_arrayGetItemPtr(pArray, tmp + 1));
           ek[tmp] = static_cast<unsigned char *>(hb_xgrab(EVP_PKEY_size(pubk[tmp]) + 1));
           ekl[tmp] = 0;
@@ -1627,23 +1318,18 @@ HB_FUNC(EVP_SEALINIT)
 
         auto pPKEY = hb_itemArrayNew(npubk);
 
-        for (tmp = 0; tmp < npubk; tmp++)
-        {
+        for (tmp = 0; tmp < npubk; tmp++) {
           hb_arraySetCLPtr(pPKEY, tmp + 1, reinterpret_cast<char *>(ek[tmp]), ekl[tmp]);
         }
 
         hb_itemParamStoreForward(3, pPKEY);
         hb_itemRelease(pPKEY);
 
-        if (iv)
-        {
-          if (!hb_storclen_buffer(reinterpret_cast<char *>(iv), ivl, 4))
-          {
+        if (iv) {
+          if (!hb_storclen_buffer(reinterpret_cast<char *>(iv), ivl, 4)) {
             hb_xfree(iv);
           }
-        }
-        else
-        {
+        } else {
           hb_stor(4);
         }
 
@@ -1652,55 +1338,43 @@ HB_FUNC(EVP_SEALINIT)
         hb_xfree(pubk);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_SEALUPDATE)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_SealUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                               static_cast<int>(hb_parclen(3))));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_SEALFINAL)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
@@ -1711,22 +1385,16 @@ HB_FUNC(EVP_SEALFINAL)
       hb_retni(1);
 #endif
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1735,13 +1403,11 @@ HB_FUNC(EVP_OPENINIT)
 {
   auto cipher = hb_EVP_CIPHER_par(2);
 
-  if (hb_EVP_CIPHER_CTX_is(1) && cipher)
-  {
+  if (hb_EVP_CIPHER_CTX_is(1) && cipher) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
     EVP_PKEY *priv = hb_EVP_PKEY_par(5);
 
-    if (ctx != nullptr && priv != nullptr)
-    {
+    if (ctx != nullptr && priv != nullptr) {
       hb_retni(EVP_OpenInit(ctx, static_cast<HB_SSL_CONST EVP_CIPHER *>(cipher),
                             reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                             static_cast<int>(hb_parclen(3)),
@@ -1750,76 +1416,58 @@ HB_FUNC(EVP_OPENINIT)
                                 : nullptr,
                             priv));
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_OPENUPDATE)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_OpenUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(3)),
                               static_cast<int>(hb_parclen(3))));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(EVP_OPENFINAL)
 {
-  if (hb_EVP_CIPHER_CTX_is(1))
-  {
+  if (hb_EVP_CIPHER_CTX_is(1)) {
     auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
-    if (ctx != nullptr)
-    {
+    if (ctx != nullptr) {
       int size = EVP_CIPHER_CTX_block_size(ctx);
       auto buffer = static_cast<unsigned char *>(hb_xgrab(size + 1));
 
       hb_retni(EVP_OpenFinal(ctx, buffer, &size));
 
-      if (size > 0)
-      {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2))
-        {
+      if (size > 0) {
+        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), size, 2)) {
           hb_xfree(buffer);
         }
-      }
-      else
-      {
+      } else {
         hb_xfree(buffer);
         hb_storc(nullptr, 2);
       }
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
