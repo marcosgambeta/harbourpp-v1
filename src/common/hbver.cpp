@@ -1031,6 +1031,12 @@ char *hb_verBuildDate(void)
 #endif
 
   auto pszDate = static_cast<char *>(hb_xgrab(64));
+// TODO:
+// error: expansion of date or time macro is not reproducible [-Werror,-Wdate-time]
+#if defined(__ZIGCOMPILER__)
+  hb_snprintf(pszDate, 64, "%s %s", "", "");
+#else
   hb_snprintf(pszDate, 64, "%s %s", __DATE__, __TIME__);
+#endif
   return pszDate;
 }
