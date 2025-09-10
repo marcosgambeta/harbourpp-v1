@@ -103,6 +103,31 @@ win-make install 1>log1.log 2>log2.log
 hbmk2 program -ldflag=-LC:\BCC64\lib -ldflag=-LC:\BCC64\lib\psdk
 ```
 
+#### ZIG toolchain
+
+Work in progress. Can be tested only in Windows and only with the Harbour++ core.
+
+hbmk2 compile only single .prg files.
+
+##### Examples
+
+Download and extract the ZIG toolchain:  
+https://ziglang.org/download/0.15.1/zig-x86-windows-0.15.1.zip
+
+```Batch
+set PATH=C:\zig-x86-windows-0.15.1;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPZIG32
+set HB_BUILD_DYN=no
+set HB_BUILD_CONTRIB_DYN=no
+set HB_BUILD_CONTRIBS=no
+set HB_COMPILER=zig
+win-make install 1>log1.log 2>log2.log
+```
+
+```Batch
+hbmk2 file.prg
+```
+
 ### Related projects
 
 https://github.com/marcosgambeta/hwguipp  
@@ -228,6 +253,31 @@ win-make install 1>log1.log 2>log2.log
 
 ```Batch
 hbmk2 program -ldflag=-LC:\BCC64\lib -ldflag=-LC:\BCC64\lib\psdk
+```
+
+#### ZIG toolchain
+
+Trabalho em progresso. Pode ser usado somente no Windows e somente com o núcleo do Harbour++.
+
+hbmk2 compila apenas arquivos .prg individuais.
+
+##### Exemplos
+
+Baixe e extraia o ZIG toolchain:  
+https://ziglang.org/download/0.15.1/zig-x86-windows-0.15.1.zip
+
+```Batch
+set PATH=C:\zig-x86-windows-0.15.1;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPZIG32
+set HB_BUILD_DYN=no
+set HB_BUILD_CONTRIB_DYN=no
+set HB_BUILD_CONTRIBS=no
+set HB_COMPILER=zig
+win-make install 1>log1.log 2>log2.log
+```
+
+```Batch
+hbmk2 file.prg
 ```
 
 ### Projetos relacionados
