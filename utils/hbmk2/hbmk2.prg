@@ -906,9 +906,9 @@ STATIC FUNCTION hbmk_new(lShellMode)
    hbmk[_HBMK_lIGNOREERROR] := .F.
    hbmk[_HBMK_lIMPLIB] := .F.
    hbmk[_HBMK_lHBCPPMM] := .F.
-   hbmk[_HBMK_hDEP] := { => }
-   hbmk[_HBMK_hAUTOHBC] := { => }
-   hbmk[_HBMK_hAUTOHBCFOUND] := { => }
+   hbmk[_HBMK_hDEP] := {=>}
+   hbmk[_HBMK_hAUTOHBC] := {=>}
+   hbmk[_HBMK_hAUTOHBCFOUND] := {=>}
    hbmk[_HBMK_aDEPTHBC] := {}
    hbmk[_HBMK_lDEPIMPLIB] := .T.
 
@@ -918,10 +918,10 @@ STATIC FUNCTION hbmk_new(lShellMode)
    hbmk[_HBMK_lBLDFLGC] := .F.
    hbmk[_HBMK_lBLDFLGL] := .F.
 
-   hbmk[_HBMK_hPLUGINHRB] := { => }
-   hbmk[_HBMK_hPLUGINVars] := { => }
+   hbmk[_HBMK_hPLUGINHRB] := {=>}
+   hbmk[_HBMK_hPLUGINVars] := {=>}
    hbmk[_HBMK_aPLUGINPars] := {}
-   hbmk[_HBMK_hPLUGINExt] := { => }
+   hbmk[_HBMK_hPLUGINExt] := {=>}
 
    hb_HCaseMatch(hbmk[_HBMK_hPLUGINExt], .F.)
 
@@ -936,8 +936,8 @@ STATIC FUNCTION hbmk_new(lShellMode)
    hbmk[_HBMK_nScr_Esc] := NIL
    hbmk[_HBMK_nCmd_FNF] := NIL
 
-   hbmk[_HBMK_hDEPTSDIR] := { => }
-   hbmk[_HBMK_hDEPTMACRO] := { => }
+   hbmk[_HBMK_hDEPTSDIR] := {=>}
+   hbmk[_HBMK_hDEPTMACRO] := {=>}
 
    hbmk[_HBMK_lInstForce] := .F.
    hbmk[_HBMK_lAutoHBM] := .T.
@@ -965,7 +965,7 @@ STATIC PROCEDURE hbmk_init_stage2(hbmk)
    hbmk[_HBMK_aCH] := {}
    hbmk[_HBMK_aC] := {}
    hbmk[_HBMK_aCPP] := {}
-   hbmk[_HBMK_hDEPTS] := { => }
+   hbmk[_HBMK_hDEPTS] := {=>}
    hbmk[_HBMK_aOPTPRG] := {}
    hbmk[_HBMK_aOPTC] := {}
    hbmk[_HBMK_aOPTCUSER] := {}
@@ -7974,7 +7974,7 @@ STATIC FUNCTION getNewestTime(hbmk, cFile, hFiles, lCMode)
    LOCAL aFile, tTime
 
    IF hFiles == NIL
-      hFiles := { => }
+      hFiles := {=>}
    ENDIF
    s_getFilesDep( hbmk, cFile, hFiles, hb_FNameDir(cFile), .F., lCMode )
    tTime := s_getNewestTime(cFile, hFiles)
@@ -8722,7 +8722,7 @@ STATIC PROCEDURE PlugIn_Load(hbmk, cFileName)
       ENDIF
 
       IF !Empty(hrb)
-         hbmk[_HBMK_hPLUGINVars][cFileName] := { => }
+         hbmk[_HBMK_hPLUGINVars][cFileName] := {=>}
          IF !PlugIn_call_low( hbmk, cFileName, hrb, PlugIn_make_ctx( hbmk, "init", hbmk[_HBMK_hPLUGINVars][cFileName] ) )
             /* Do not call plugin any further if initialization returned error */
             IF hbmk[_HBMK_lInfo]
@@ -12377,7 +12377,7 @@ STATIC PROCEDURE ShowFunctionProviders( hbmk, aFunction, lGenericFind )
    LOCAL aLib
    LOCAL tmp, tmp1
 
-   LOCAL hNeeded := { => }
+   LOCAL hNeeded := {=>}
 
    LOCAL bAdd := ;
       {| cFunction |
@@ -12505,7 +12505,7 @@ STATIC FUNCTION ExtractHarbourSymbols( cString )
 
 STATIC FUNCTION GetListOfFunctionsKnown( hbmk, lIncludeCore )
 
-   LOCAL hAll := { => }
+   LOCAL hAll := {=>}
    LOCAL aFile
 
    hb_HCaseMatch( hAll, .F. )
@@ -12615,7 +12615,7 @@ STATIC FUNCTION __hb_extern_get_list(hbmk, cInputName, cBin_LibHBX, cOpt_LibHBX,
             IF !Empty(pRegex := hb_regexComp( cLibHBX_Regex, .T., .T. ))
                aResult := hb_regexAll( pRegex, StrTran(cStdOut, Chr(13)),,,,, .T. )
                aExtern := {}
-               hExtern := { => }
+               hExtern := {=>}
                FOR EACH tmp IN aResult
                   tmp[2] := hb_asciiUpper( tmp[2] )
                   IF !tmp[2] $ hExtern
@@ -12651,7 +12651,7 @@ STATIC PROCEDURE __hb_extern_get_exception_list(cInputName, /* @ */ aInclude, /*
 
    aInclude := {}
    aExclude := {}
-   hDynamic := { => }
+   hDynamic := {=>}
 
    IF !Empty(cFile := MemoRead(cInputName))
       IF !Empty(pRegex := hb_regexComp( R_( "[\s]" + _HB_FUNC_INCLUDE_ + "[\s]([a-zA-Z0-9_].[^ \t\n\r]*)" ), .T., .T. ))
@@ -12795,7 +12795,7 @@ STATIC FUNCTION hbmk_CoreHeaderFiles()
 #if defined(HBMK_WITH_BUILTIN_HEADERS_TOP) .OR. defined(HBMK_WITH_BUILTIN_HEADERS_ALL)
 
    IF t_hHeaders == NIL
-      t_hHeaders := { => }
+      t_hHeaders := {=>}
 
       /* command to store header files in hash array */
       #command ADD HEADER TO <hash> FILE <(cFile)> => ;
@@ -12908,11 +12908,11 @@ STATIC FUNCTION hbsh()
 
    IF t_hbsh == NIL
       t_hbsh := Array( _HBSH_MAX_ )
-      t_hbsh[_HBSH_hLibExt]          := { => }
-      t_hbsh[_HBSH_hCH]              := { => }
-      t_hbsh[_HBSH_hOPTPRG]          := { => }
-      t_hbsh[_HBSH_hINCPATH]         := { => }
-      t_hbsh[_HBSH_hCHCORE]          := { => }
+      t_hbsh[_HBSH_hLibExt]          := {=>}
+      t_hbsh[_HBSH_hCH]              := {=>}
+      t_hbsh[_HBSH_hOPTPRG]          := {=>}
+      t_hbsh[_HBSH_hINCPATH]         := {=>}
+      t_hbsh[_HBSH_hCHCORE]          := {=>}
       t_hbsh[_HBSH_nCol]             := 0
       t_hbsh[_HBSH_aHistory]         := {}
       t_hbsh[_HBSH_lPreserveHistory] := .T.
@@ -13451,7 +13451,7 @@ STATIC PROCEDURE list(context)
 
 STATIC FUNCTION __hbshell_plugins()
 
-   LOCAL hPlugins := { => }
+   LOCAL hPlugins := {=>}
    LOCAL cDir
    LOCAL cExt
    LOCAL file
@@ -14502,7 +14502,7 @@ STATIC PROCEDURE convert_xhp_to_hbp( hbmk, cSrcName, cDstName )
    LOCAL aValue
    LOCAL cFile
 
-   LOCAL hLIBPATH := { => }
+   LOCAL hLIBPATH := {=>}
 
    LOCAL cMAIN := NIL
 
