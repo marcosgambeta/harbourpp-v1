@@ -40,9 +40,9 @@
 {HBMK_HAS_QT5}-depcontrol=qt5:${HB_WITH_QT}
 {HBMK_HAS_QT5&HB_BUILD_3RDEXT='no'}-depoptional=qt5:no
 {HBMK_HAS_QT5}-depoptional=qt5:yes
-{HBMK_HAS_QT5}-depincpath=qt5:/usr/include/x86_64-linux-gnu/qt5{linux}
-{HBMK_HAS_QT5}-depincpath=qt5:/usr/local/opt/qt5/include{darwin}
-{HBMK_HAS_QT5}-depincpath=qt5:/usr/local/include/qt5{bsd}
+{HBMK_HAS_QT5&linux}-depincpath=qt5:/usr/include/x86_64-linux-gnu/qt5
+{HBMK_HAS_QT5&darwin}-depincpath=qt5:/usr/local/opt/qt5/include
+{HBMK_HAS_QT5&bsd}-depincpath=qt5:/usr/local/include/qt5
 {HBMK_HAS_QT5}-depfinish=qt5
 
 {HBMK_HAS_QT6}-deppkgname=qt6:qt6
@@ -50,9 +50,9 @@
 {HBMK_HAS_QT6}-depcontrol=qt6:${HB_WITH_QT}
 {HBMK_HAS_QT6&HB_BUILD_3RDEXT='no'}-depoptional=qt6:no
 {HBMK_HAS_QT6}-depoptional=qt6:yes
-{HBMK_HAS_QT6}-depincpath=qt6:/usr/include/x86_64-linux-gnu/qt6{linux}
-{HBMK_HAS_QT6}-depincpath=qt6:/usr/local/opt/qt6/include{darwin}
-{HBMK_HAS_QT6}-depincpath=qt6:/usr/local/include/qt6{bsd}
+{HBMK_HAS_QT6&linux}-depincpath=qt6:/usr/include/x86_64-linux-gnu/qt6
+{HBMK_HAS_QT6&darwin}-depincpath=qt6:/usr/local/opt/qt6/include
+{HBMK_HAS_QT6&bsd}-depincpath=qt6:/usr/local/include/qt6
 {HBMK_HAS_QT6}-depfinish=qt6
 
 {HB_QT_SOUND='yes'}-cflag+=-DHB_QT_SOUND
