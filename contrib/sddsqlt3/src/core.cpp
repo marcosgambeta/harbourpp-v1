@@ -99,8 +99,7 @@ static void hb_sqlt3dd_init(void *cargo)
   sqlite3_initialize();
 #endif
 
-  if (!hb_sddRegister(&s_sqlt3dd))
-  {
+  if (!hb_sddRegister(&s_sqlt3dd)) {
     hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
   }
 }
@@ -122,13 +121,20 @@ HB_FUNC(HB_SDDSQLITE3_REGISTER)
 /* force SQLBASE linking */
 HB_FUNC_TRANSLATE(SDDSQLITE3, SQLBASE)
 
-HB_INIT_SYMBOLS_BEGIN(sqlt3dd__InitSymbols){"SDDSQLITE3", {HB_FS_PUBLIC}, {HB_FUNCNAME(SDDSQLITE3)}, nullptr},
-    HB_INIT_SYMBOLS_END(sqlt3dd__InitSymbols)
+// clang-format off
+HB_INIT_SYMBOLS_BEGIN(sqlt3dd__InitSymbols)
+{"SDDSQLITE3", {HB_FS_PUBLIC}, {HB_FUNCNAME(SDDSQLITE3)}, nullptr},
+HB_INIT_SYMBOLS_END(sqlt3dd__InitSymbols)
+    // clang-format on
 
-        HB_CALL_ON_STARTUP_BEGIN(_hb_sqlt3dd_init_) hb_vmAtInit(hb_sqlt3dd_init, nullptr);
+    // clang-format off
+HB_CALL_ON_STARTUP_BEGIN(_hb_sqlt3dd_init_)
+hb_vmAtInit(hb_sqlt3dd_init, nullptr);
 hb_vmAtExit(hb_sqlt3dd_exit, nullptr);
 HB_CALL_ON_STARTUP_END(_hb_sqlt3dd_init_)
+// clang-format on
 
+// clang-format off
 #if defined(HB_PRAGMA_STARTUP)
 #pragma startup sqlt3dd__InitSymbols
 #pragma startup _hb_sqlt3dd_init_
@@ -138,6 +144,7 @@ HB_CALL_ON_STARTUP_END(_hb_sqlt3dd_init_)
   HB_DATASEG_FUNC(_hb_sqlt3dd_init_)
 #include "hbiniseg.hpp"
 #endif
+// clang-format on
 
 /* --- */
 static HB_USHORT hb_errRT_SQLT3DD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
@@ -155,21 +162,17 @@ static char *sqlite3GetError(sqlite3 *pDb, HB_ERRCODE *pErrCode)
   char *szRet;
   int iNativeErr;
 
-  if (pDb)
-  {
+  if (pDb) {
     PHB_ITEM pRet = S_HB_ITEMPUTSTR(nullptr, sqlite3_errmsg(pDb));
     szRet = hb_strdup(hb_itemGetCPtr(pRet));
     hb_itemRelease(pRet);
     iNativeErr = sqlite3_errcode(pDb);
-  }
-  else
-  {
+  } else {
     szRet = hb_strdup("Could not get the error message");
     iNativeErr = 9999;
   }
 
-  if (pErrCode)
-  {
+  if (pErrCode) {
     *pErrCode = static_cast<HB_ERRCODE>(iNativeErr);
   }
 
@@ -182,42 +185,34 @@ static HB_USHORT sqlite3DeclType(sqlite3_stmt *st, HB_USHORT uiIndex)
   /* the order of comparisons below is important to replicate
    * type precedence used by SQLITE3
    */
-  if (szDeclType != nullptr)
-  {
+  if (szDeclType != nullptr) {
     HB_SIZE nLen = strlen(szDeclType);
 
-    if (hb_strAtI("INT", 3, szDeclType, nLen) != 0)
-    {
+    if (hb_strAtI("INT", 3, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::INTEGER;
     }
     if (hb_strAtI("CHAR", 4, szDeclType, nLen) != 0 || hb_strAtI("TEXT", 4, szDeclType, nLen) != 0 ||
-        hb_strAtI("CLOB", 4, szDeclType, nLen) != 0)
-    {
+        hb_strAtI("CLOB", 4, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::STRING;
     }
-    if (hb_strAtI("BLOB", 4, szDeclType, nLen) != 0)
-    {
+    if (hb_strAtI("BLOB", 4, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::ANY;
     }
     if (hb_strAtI("REAL", 4, szDeclType, nLen) != 0 || hb_strAtI("FLOA", 4, szDeclType, nLen) != 0 ||
-        hb_strAtI("DOUB", 4, szDeclType, nLen) != 0)
-    {
+        hb_strAtI("DOUB", 4, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::LONG; /* logically HB_FT_DOUBLE, what was the idea? */
     }
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
     /* types not handled in a specific way by SQLITE3
      * but anyway we should try to look at declarations
      */
-    if (hb_strAtI("TIME", 4, szDeclType, nLen) != 0)
-    {
+    if (hb_strAtI("TIME", 4, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::TIMESTAMP;
     }
-    if (hb_strAtI("DATE", 4, szDeclType, nLen) != 0)
-    {
+    if (hb_strAtI("DATE", 4, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::DATE;
     }
-    if (hb_strAtI("NUME", 4, szDeclType, nLen) != 0 || hb_strAtI("NUMB", 4, szDeclType, nLen) != 0)
-    {
+    if (hb_strAtI("NUME", 4, szDeclType, nLen) != 0 || hb_strAtI("NUMB", 4, szDeclType, nLen) != 0) {
       return Harbour::DB::Field::LONG;
     }
 #endif
@@ -226,8 +221,7 @@ static HB_USHORT sqlite3DeclType(sqlite3_stmt *st, HB_USHORT uiIndex)
 #ifdef HB_SQLT3_MAP_UNDECLARED_TYPES_AS_ANY
   return Harbour::DB::Field::ANY;
 #else
-  switch (sqlite3_column_type(st, uiIndex))
-  {
+  switch (sqlite3_column_type(st, uiIndex)) {
   case SQLITE_TEXT:
     return Harbour::DB::Field::STRING;
 
@@ -253,8 +247,7 @@ static void sqlite3DeclStru(sqlite3_stmt *st, HB_USHORT uiIndex, HB_USHORT *puiL
 {
   const char *szDeclType = sqlite3_column_decltype(st, uiIndex);
 
-  if (szDeclType != nullptr)
-  {
+  if (szDeclType != nullptr) {
     HB_SIZE nLen = strlen(szDeclType);
     HB_SIZE nAt;
     int iOverflow;
@@ -265,30 +258,22 @@ static void sqlite3DeclStru(sqlite3_stmt *st, HB_USHORT uiIndex, HB_USHORT *puiL
      * try some really stupid guesswork on schema...
      */
 
-    if ((nAt = hb_strAt("(", 1, szDeclType, nLen)) > 0)
-    {
-      if (puiLen)
-      {
+    if ((nAt = hb_strAt("(", 1, szDeclType, nLen)) > 0) {
+      if (puiLen) {
         iRetLen = hb_strValInt(szDeclType + nAt, &iOverflow);
-        if (!puiDec || (iRetLen > 0 && iRetLen < 100))
-        {
+        if (!puiDec || (iRetLen > 0 && iRetLen < 100)) {
           *puiLen = static_cast<HB_USHORT>(iRetLen);
         }
       }
 
-      if (!puiDec)
-      {
+      if (!puiDec) {
         return;
       }
 
-      if (*puiLen < 2)
-      {
+      if (*puiLen < 2) {
         *puiDec = 0;
-      }
-      else if (puiLen && (nAt = hb_strAt(",", 1, szDeclType + nAt, nLen - nAt - 1)) > 0)
-      {
-        if ((iRetLen = hb_strValInt(szDeclType + nAt, &iOverflow)) > 0)
-        {
+      } else if (puiLen && (nAt = hb_strAt(",", 1, szDeclType + nAt, nLen - nAt - 1)) > 0) {
+        if ((iRetLen = hb_strValInt(szDeclType + nAt, &iOverflow)) > 0) {
           *puiDec = static_cast<HB_USHORT>(HB_MIN(*puiLen - 1, iRetLen));
 
           /* SQL column declaration doesn't include space for
@@ -296,9 +281,7 @@ static void sqlite3DeclStru(sqlite3_stmt *st, HB_USHORT uiIndex, HB_USHORT *puiL
            */
 
           *puiLen = static_cast<HB_USHORT>(++iRetLen);
-        }
-        else if (iRetLen == 0)
-        {
+        } else if (iRetLen == 0) {
           *puiDec = 0;
         }
       }
@@ -313,13 +296,10 @@ static HB_ERRCODE sqlite3Connect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
   sqlite3 *db;
   void *hConn;
 
-  if (sqlite3_open(S_HB_ARRAYGETSTR(pItem, 2, &hConn, nullptr), &db) == SQLITE_OK)
-  {
+  if (sqlite3_open(S_HB_ARRAYGETSTR(pItem, 2, &hConn, nullptr), &db) == SQLITE_OK) {
     pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
     (static_cast<SDDCONN *>(pConnection->pSDDConn))->pDb = db;
-  }
-  else
-  {
+  } else {
     sqlite3_close(db);
   }
 
@@ -333,8 +313,7 @@ static HB_ERRCODE sqlite3Disconnect(SQLDDCONNECTION *pConnection)
   HB_ERRCODE errCode = sqlite3_close((static_cast<SDDCONN *>(pConnection->pSDDConn))->pDb) == SQLITE_OK
                            ? Harbour::SUCCESS
                            : Harbour::FAILURE;
-  if (errCode == Harbour::SUCCESS)
-  {
+  if (errCode == Harbour::SUCCESS) {
     hb_xfree(pConnection->pSDDConn);
   }
 
@@ -351,16 +330,13 @@ static HB_ERRCODE sqlite3Execute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
   char *pszErrMsg = nullptr;
 
   if (sqlite3_get_table(pDb, S_HB_ITEMGETSTR(pItem, &hStatement, nullptr), &pResult, &iRow, &iCol, &pszErrMsg) !=
-      SQLITE_OK)
-  {
+      SQLITE_OK) {
     hb_strfree(hStatement);
     hb_xfree(sqlite3GetError(pDb, &errCode));
     hb_errRT_SQLT3DD(EG_OPEN, ESQLDD_STMTALLOC, pszErrMsg, hb_itemGetCPtr(pItem), errCode);
     hb_xfree(pszErrMsg);
     return Harbour::FAILURE;
-  }
-  else
-  {
+  } else {
     hb_strfree(hStatement);
   }
 
@@ -394,8 +370,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
   char *szError;
   HB_ERRCODE errCode;
 
-  if (result != SQLITE_OK)
-  {
+  if (result != SQLITE_OK) {
     hb_strfree(hQuery);
     hb_itemRelease(pItem);
     szError = sqlite3GetError(pDb, &errCode);
@@ -403,21 +378,16 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
     sqlite3_finalize(st);
     hb_xfree(szError);
     return Harbour::FAILURE;
-  }
-  else
-  {
+  } else {
     hb_strfree(hQuery);
     hb_itemRelease(pItem);
   }
 
   int iStatus;
 
-  if ((iStatus = sqlite3_step(st)) == SQLITE_DONE)
-  {
+  if ((iStatus = sqlite3_step(st)) == SQLITE_DONE) {
     pArea->fFetched = true;
-  }
-  else if (iStatus != SQLITE_ROW)
-  {
+  } else if (iStatus != SQLITE_ROW) {
     szError = sqlite3GetError(pDb, &errCode);
     hb_errRT_SQLT3DD(EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode);
     sqlite3_finalize(st);
@@ -432,8 +402,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
   errCode = 0;
   bool bError = false;
   auto pItemEof = hb_itemArrayNew(uiFields);
-  for (HB_USHORT uiIndex = 0; uiIndex < uiFields; ++uiIndex)
-  {
+  for (HB_USHORT uiIndex = 0; uiIndex < uiFields; ++uiIndex) {
     DBFIELDINFO dbFieldInfo{};
 #ifdef HB_SQLT3_FIELDNAME_STRICT
     HB_SIZE nPos;
@@ -442,11 +411,9 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
 
 #ifdef HB_SQLT3_FIELDNAME_STRICT
     /* WA->T.FIELD syntax is not valid, but FieldPos("t.field") is OK */
-    if ((nPos = hb_strAt(".", 1, hb_itemGetCPtr(pName), hb_itemGetCLen(pName))) != 0)
-    {
+    if ((nPos = hb_strAt(".", 1, hb_itemGetCPtr(pName), hb_itemGetCLen(pName))) != 0) {
       dbFieldInfo.atomName = hb_itemGetCPtr(pName) + nPos;
-    }
-    else
+    } else
 #endif
     {
       dbFieldInfo.atomName = hb_itemGetCPtr(pName);
@@ -461,10 +428,8 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
        better. For better results, update apps to untie UI metrics from
        any database field/value widths. [vszakats] */
 
-    switch (dbFieldInfo.uiType)
-    {
-    case Harbour::DB::Field::STRING:
-    {
+    switch (dbFieldInfo.uiType) {
+    case Harbour::DB::Field::STRING: {
       HB_SIZE nSize = hb_cdpUTF8StringLength(reinterpret_cast<const char *>(sqlite3_column_text(st, uiIndex)),
                                              sqlite3_column_bytes(st, uiIndex));
 
@@ -523,20 +488,17 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
       bError = true;
     }
 
-    if (!bError)
-    {
+    if (!bError) {
       bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
     }
 
-    if (bError)
-    {
+    if (bError) {
       break;
     }
   }
   hb_itemRelease(pName);
 
-  if (bError)
-  {
+  if (bError) {
     hb_itemRelease(pItemEof);
     sqlite3_finalize(st);
     hb_errRT_SQLT3DD(EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, errCode);
@@ -560,10 +522,8 @@ static HB_ERRCODE sqlite3Close(SQLBASEAREAP pArea)
 {
   auto pSDDData = static_cast<SDDDATA *>(pArea->pSDDData);
 
-  if (pSDDData)
-  {
-    if (pSDDData->pStmt)
-    {
+  if (pSDDData) {
+    if (pSDDData->pStmt) {
       sqlite3_finalize(pSDDData->pStmt);
     }
 
@@ -577,20 +537,16 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 {
   sqlite3_stmt *st = (static_cast<SDDDATA *>(pArea->pSDDData))->pStmt;
 
-  while (ulRecNo > pArea->ulRecCount && !pArea->fFetched)
-  {
+  while (ulRecNo > pArea->ulRecCount && !pArea->fFetched) {
     auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
-    for (HB_USHORT ui = 0; ui < pArea->area.uiFieldCount; ++ui)
-    {
+    for (HB_USHORT ui = 0; ui < pArea->area.uiFieldCount; ++ui) {
       PHB_ITEM pItem = nullptr;
       LPFIELD pField = pArea->area.lpFields + ui;
       HB_USHORT uiType = pField->uiType;
 
-      if (uiType == Harbour::DB::Field::ANY)
-      {
-        switch (sqlite3_column_type(st, ui))
-        {
+      if (uiType == Harbour::DB::Field::ANY) {
+        switch (sqlite3_column_type(st, ui)) {
         case SQLITE_TEXT:
           uiType = Harbour::DB::Field::STRING;
           break;
@@ -606,8 +562,7 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
         }
       }
 
-      switch (uiType)
-      {
+      switch (uiType) {
       case Harbour::DB::Field::STRING:
         pItem = S_HB_ITEMPUTSTR(nullptr, reinterpret_cast<const char *>(sqlite3_column_text(st, ui)));
         break;
@@ -623,8 +578,7 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
       case Harbour::DB::Field::DATE:
-        if (sqlite3_column_bytes(st, ui) >= 10)
-        {
+        if (sqlite3_column_bytes(st, ui) >= 10) {
           char szDate[9];
           auto pValue = static_cast<const char *>(sqlite3_column_text(st, ui));
           szDate[0] = pValue[0];
@@ -637,16 +591,13 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
           szDate[7] = pValue[9];
           szDate[8] = '\0';
           pItem = hb_itemPutDS(nullptr, szDate);
-        }
-        else if (sqlite3_column_bytes(st, ui) == 8)
-        {
+        } else if (sqlite3_column_bytes(st, ui) == 8) {
           pItem = hb_itemPutDS(nullptr, static_cast<const char *>(sqlite3_column_text(st, ui)));
         }
         break;
 
       case Harbour::DB::Field::TIMESTAMP:
-        if (sqlite3_column_bytes(st, ui) >= 10)
-        {
+        if (sqlite3_column_bytes(st, ui) >= 10) {
           long lDate, lTime;
           auto pValue = static_cast<const char *>(sqlite3_column_text(st, ui));
           hb_timeStampStrGetDT(pValue, &lDate, &lTime);
@@ -660,14 +611,12 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
         break;
       }
 
-      if (pItem != nullptr)
-      {
+      if (pItem != nullptr) {
         hb_arraySetForward(pArray, ui + 1, pItem);
         hb_itemRelease(pItem);
       }
     }
-    if (pArea->ulRecCount + 1 >= pArea->ulRecMax)
-    {
+    if (pArea->ulRecCount + 1 >= pArea->ulRecMax) {
       pArea->pRow =
           static_cast<void **>(hb_xrealloc(pArea->pRow, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(void *)));
       pArea->pRowFlags = static_cast<HB_BYTE *>(
@@ -679,21 +628,17 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
     pArea->pRow[pArea->ulRecCount] = pArray;
     pArea->pRowFlags[pArea->ulRecCount] = SQLDD_FLAG_CACHED;
 
-    if (sqlite3_step(st) != SQLITE_ROW)
-    {
+    if (sqlite3_step(st) != SQLITE_ROW) {
       pArea->fFetched = true;
       break;
     }
   }
 
-  if (ulRecNo == 0 || ulRecNo > pArea->ulRecCount)
-  {
+  if (ulRecNo == 0 || ulRecNo > pArea->ulRecCount) {
     pArea->pRecord = pArea->pRow[0];
     pArea->bRecordFlags = pArea->pRowFlags[0];
     pArea->fPositioned = false;
-  }
-  else
-  {
+  } else {
     pArea->pRecord = pArea->pRow[ulRecNo];
     pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
     pArea->fPositioned = true;
