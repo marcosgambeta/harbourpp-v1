@@ -1825,8 +1825,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          { {|| FindInPath("zig.exe") }, "zig"    } }
 #endif
       aCOMPSUP := { ;
-         "mingw", "msvc", "clang", "clang-cl", "zig", "bcc", "icc", "tcc", ;
-         "mingw64", "msvc64", "msvcia64", "clang64", "clang-cl64", "zig64", "bcc64", "iccia64" }
+         "mingw", "msvc", "clang", "clang-cl", "icx", "zig", "bcc", "icc", "tcc", ;
+         "mingw64", "msvc64", "msvcia64", "clang64", "clang-cl64", "icx64", "zig64", "bcc64", "iccia64" }
       l_aLIBHBGT := { "gtwin", "gtwvt", "gtgui" }
       hbmk[_HBMK_cGTDEFAULT] := "gtwin"
       hbmk[_HBMK_cDynLibPrefix] := ""
@@ -2112,7 +2112,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             hbmk[_HBMK_nCOMPVer] := 34
          ENDCASE
 
-      CASE ( hbmk[_HBMK_cPLAT] == "win" .AND. HBMK_ISCOMP("msvc|msvc64|msvcia64|clang-cl|clang-cl64|icc|iccia64") )
+      CASE ( hbmk[_HBMK_cPLAT] == "win" .AND. HBMK_ISCOMP("msvc|msvc64|msvcia64|clang-cl|clang-cl64|icx|icx64|icc|iccia64") )
 
          /* Compatibility with Harbour GNU Make system */
          IF hbmk[_HBMK_cCOMP] == "msvcarm" .AND. "clarm.exe" $ cPath_CompC
@@ -4478,7 +4478,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          l_aLIBSHAREDPOST := { "hbmainstd", "hbmainwin" }
          l_aLIBSYS := ArrayAJoin( { l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC } )
 
-      CASE ( hbmk[_HBMK_cPLAT] == "win" .AND. HBMK_ISCOMP("msvc|msvc64|msvcia64|clang-cl|clang-cl64|icc|iccia64") )
+      CASE ( hbmk[_HBMK_cPLAT] == "win" .AND. HBMK_ISCOMP("msvc|msvc64|msvcia64|clang-cl|clang-cl64|icx|icx64|icc|iccia64") )
 
          hbmk[_HBMK_nCmd_FNF] := _FNF_BCKSLASH
          #if defined(__PLATFORM__UNIX)
@@ -4521,6 +4521,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          IF HBMK_ISCOMP("icc|iccia64")
             cBin_Lib := "xilib.exe"
             cBin_CompC := "icl.exe"
+            cBin_Link := "xilink.exe"
+            cBin_Dyn := cBin_Link
+         ELSEIF HBMK_ISCOMP("icx|icx64")
+            cBin_Lib := "xilib.exe"
+            cBin_CompC := "icx.exe"
             cBin_Link := "xilink.exe"
             cBin_Dyn := cBin_Link
          ELSE
