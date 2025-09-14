@@ -70,487 +70,489 @@
  */
 HB_FUNC(BM_DBSEEKWILD)
 {
-   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+  auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr ) {
-      auto szPattern = hb_parc(1);
+  if (pArea != nullptr) {
+    auto szPattern = hb_parc(1);
 
-      if( szPattern ) {
-         HB_BOOL fSoft  = hb_parldef(2, hb_setGetSoftSeek());
-         HB_BOOL fBack  = hb_parl(3);
-         HB_BOOL fCont  = hb_parl(4);
-         HB_BOOL fAll   = hb_parl(5);
-         HB_BOOL fFound = false;
+    if (szPattern) {
+      HB_BOOL fSoft = hb_parldef(2, hb_setGetSoftSeek());
+      HB_BOOL fBack = hb_parl(3);
+      HB_BOOL fCont = hb_parl(4);
+      HB_BOOL fAll = hb_parl(5);
+      HB_BOOL fFound = false;
 
-         PHB_ITEM pArray = nullptr;
+      PHB_ITEM pArray = nullptr;
 
-         if( fAll ) {
-            pArray = hb_itemArrayNew(0);
-            fCont = false;
-         }
-
-         DBORDERINFO OrderInfo{};
-         OrderInfo.itmResult = hb_itemNew(nullptr);
-
-         HB_ERRCODE errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &OrderInfo);
-         int iOrder = 0;
-         if( errCode == Harbour::SUCCESS ) {
-            iOrder = hb_itemGetNI(OrderInfo.itmResult);
-         }
-
-         if( iOrder != 0 ) {
-            OrderInfo.itmNewVal = OrderInfo.itmResult;
-            hb_itemPutL(OrderInfo.itmNewVal, true);
-            HB_BOOL fUnlock;
-            if( SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo) == Harbour::SUCCESS ) {
-               fUnlock = hb_itemGetL(OrderInfo.itmResult);
-            } else {
-               fUnlock = false;
-            }
-            OrderInfo.itmNewVal = nullptr;
-
-            if( !fCont ) {
-               if( fBack ) {
-                  errCode = SELF_GOBOTTOM(pArea);
-               } else {
-                  errCode = SELF_GOTOP(pArea);
-               }
-
-               if( errCode == Harbour::SUCCESS ) {
-                  errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
-                  if( errCode == Harbour::SUCCESS ) {
-                     fFound = hb_strMatchWild(hb_itemGetCPtr(OrderInfo.itmResult), szPattern);
-                  }
-               }
-            }
-
-            if( !fFound && errCode == Harbour::SUCCESS ) {
-               OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
-               errCode = SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo);
-               if( errCode == Harbour::SUCCESS ) {
-                  fFound = hb_itemGetL(OrderInfo.itmResult);
-               }
-            }
-
-            if( fAll && errCode == Harbour::SUCCESS ) {
-               OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
-               do {
-                  errCode = SELF_RECID(pArea, OrderInfo.itmResult);
-                  if( errCode != Harbour::SUCCESS ) {
-                     break;
-                  }
-                  hb_arrayAddForward(pArray, OrderInfo.itmResult);
-                  errCode = SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo);
-                  if( errCode == Harbour::SUCCESS ) {
-                     fFound = hb_itemGetL(OrderInfo.itmResult);
-                  } else {
-                     fFound = false;
-                  }
-               } while( fFound );
-            }
-            if( fUnlock ) {
-               OrderInfo.itmNewVal = OrderInfo.itmResult;
-               hb_itemPutL(OrderInfo.itmNewVal, false);
-               SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo);
-            }
-         }
-
-         hb_itemRelease(OrderInfo.itmResult);
-
-         if( !fFound && !fSoft && errCode == Harbour::SUCCESS ) {
-            SELF_GOTO(pArea, 0);
-         }
-
-         if( pArray ) {
-            hb_itemReturnRelease(pArray);
-         } else {
-            hb_retl(fFound);
-         }
-      } else {
-         hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+      if (fAll) {
+        pArray = hb_itemArrayNew(0);
+        fCont = false;
       }
-   } else {
-      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
-   }
+
+      DBORDERINFO OrderInfo{};
+      OrderInfo.itmResult = hb_itemNew(nullptr);
+
+      HB_ERRCODE errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &OrderInfo);
+      int iOrder = 0;
+      if (errCode == Harbour::SUCCESS) {
+        iOrder = hb_itemGetNI(OrderInfo.itmResult);
+      }
+
+      if (iOrder != 0) {
+        OrderInfo.itmNewVal = OrderInfo.itmResult;
+        hb_itemPutL(OrderInfo.itmNewVal, true);
+        HB_BOOL fUnlock;
+        if (SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo) == Harbour::SUCCESS) {
+          fUnlock = hb_itemGetL(OrderInfo.itmResult);
+        } else {
+          fUnlock = false;
+        }
+        OrderInfo.itmNewVal = nullptr;
+
+        if (!fCont) {
+          if (fBack) {
+            errCode = SELF_GOBOTTOM(pArea);
+          } else {
+            errCode = SELF_GOTOP(pArea);
+          }
+
+          if (errCode == Harbour::SUCCESS) {
+            errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
+            if (errCode == Harbour::SUCCESS) {
+              fFound = hb_strMatchWild(hb_itemGetCPtr(OrderInfo.itmResult), szPattern);
+            }
+          }
+        }
+
+        if (!fFound && errCode == Harbour::SUCCESS) {
+          OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
+          errCode = SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo);
+          if (errCode == Harbour::SUCCESS) {
+            fFound = hb_itemGetL(OrderInfo.itmResult);
+          }
+        }
+
+        if (fAll && errCode == Harbour::SUCCESS) {
+          OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
+          do {
+            errCode = SELF_RECID(pArea, OrderInfo.itmResult);
+            if (errCode != Harbour::SUCCESS) {
+              break;
+            }
+            hb_arrayAddForward(pArray, OrderInfo.itmResult);
+            errCode = SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo);
+            if (errCode == Harbour::SUCCESS) {
+              fFound = hb_itemGetL(OrderInfo.itmResult);
+            } else {
+              fFound = false;
+            }
+          } while (fFound);
+        }
+        if (fUnlock) {
+          OrderInfo.itmNewVal = OrderInfo.itmResult;
+          hb_itemPutL(OrderInfo.itmNewVal, false);
+          SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo);
+        }
+      }
+
+      hb_itemRelease(OrderInfo.itmResult);
+
+      if (!fFound && !fSoft && errCode == Harbour::SUCCESS) {
+        SELF_GOTO(pArea, 0);
+      }
+
+      if (pArray) {
+        hb_itemReturnRelease(pArray);
+      } else {
+        hb_retl(fFound);
+      }
+    } else {
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+    }
+  } else {
+    hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
+  }
 }
 
 HB_FUNC(BM_TURBO)
 {
-   hb_retl(false);
+  hb_retl(false);
 }
 
 struct BM_FILTER
 {
-   HB_U32 maxrec;
-   HB_U32 map[1];
+  HB_U32 maxrec;
+  HB_U32 map[1];
 };
 
 using PBM_FILTER = BM_FILTER *;
 
-#define BM_GETFILTER( p )  (( PBM_FILTER ) ( p )->dbfi.lpvCargo )
-#define BM_ITEMSIZE( n )   ( ( ( n ) + 31 ) >> 5 )
-#define BM_BYTESIZE( n )   ( ( ( ( n ) + 31 ) >> 5 ) * sizeof(HB_U32) )
+#define BM_GETFILTER(p) ((PBM_FILTER)(p)->dbfi.lpvCargo)
+#define BM_ITEMSIZE(n) (((n) + 31) >> 5)
+#define BM_BYTESIZE(n) ((((n) + 31) >> 5) * sizeof(HB_U32))
 
-#define BM_SETREC(p, r)  \
-   do { if( (r) > 0 && (r) <= (p)->maxrec ) \
-           ( p )->map[( ( r ) - 1 ) >> 5] |= ( 1 << ( ( ( r ) - 1 ) & 0x1f ) ); \
-   } while( 0 )
+#define BM_SETREC(p, r)                                                                                                \
+  do {                                                                                                                 \
+    if ((r) > 0 && (r) <= (p)->maxrec)                                                                                 \
+      (p)->map[((r) - 1) >> 5] |= (1 << (((r) - 1) & 0x1f));                                                           \
+  } while (0)
 
-#define BM_CLRREC(p, r)  \
-   do { if( (r) > 0 && (r) <= (p)->maxrec ) \
-           ( p )->map[( ( r ) - 1 ) >> 5] &= ~( 1 << ( ( ( r ) - 1 ) & 0x1f ) ); \
-   } while( 0 )
+#define BM_CLRREC(p, r)                                                                                                \
+  do {                                                                                                                 \
+    if ((r) > 0 && (r) <= (p)->maxrec)                                                                                 \
+      (p)->map[((r) - 1) >> 5] &= ~(1 << (((r) - 1) & 0x1f));                                                          \
+  } while (0)
 
-#define BM_GETREC(p, r)  ( ( ( r ) > 0 && ( r ) <= ( p )->maxrec ) && \
-                             ( ( p )->map[( ( r ) - 1 ) >> 5] & ( 1 << ( ( ( r ) - 1 ) & 0x1f ) ) ) != 0 )
+#define BM_GETREC(p, r) (((r) > 0 && (r) <= (p)->maxrec) && ((p)->map[((r) - 1) >> 5] & (1 << (((r) - 1) & 0x1f))) != 0)
 
-#define SUPERTABLE  ( hb_bmGetRdd( pArea->rddID ) )
+#define SUPERTABLE (hb_bmGetRdd(pArea->rddID))
 
-#define BM_RDD_MAX  8
+#define BM_RDD_MAX 8
 
 static HB_USHORT s_uiRdds[BM_RDD_MAX];
 static int s_iRddCount = 0;
 
 static void hb_bmSetRdd(HB_USHORT uiRddId)
 {
-   if( s_iRddCount < BM_RDD_MAX ) {
-      s_uiRdds[s_iRddCount++] = uiRddId;
-   }
+  if (s_iRddCount < BM_RDD_MAX) {
+    s_uiRdds[s_iRddCount++] = uiRddId;
+  }
 }
 
-static const RDDFUNCS * hb_bmGetRdd(HB_USHORT uiRddId)
+static const RDDFUNCS *hb_bmGetRdd(HB_USHORT uiRddId)
 {
-   for( auto i = 0; i < s_iRddCount; ++i ) {
-      if( hb_rddIsDerivedFrom(uiRddId, s_uiRdds[i]) ) {
-         return &(hb_rddGetNode(s_uiRdds[i])->pSuperTable);
-      }
-   }
-   return nullptr;
+  for (auto i = 0; i < s_iRddCount; ++i) {
+    if (hb_rddIsDerivedFrom(uiRddId, s_uiRdds[i])) {
+      return &(hb_rddGetNode(s_uiRdds[i])->pSuperTable);
+    }
+  }
+  return nullptr;
 }
 
 static void hb_bmResetFilterOpt(AREAP pArea)
 {
-   DBORDERINFO OrderInfo{};
-   SELF_ORDINFO(pArea, DBOI_RESETPOS, &OrderInfo);
-   if( OrderInfo.itmResult ) {
-      hb_itemRelease(OrderInfo.itmResult);
-   }
+  DBORDERINFO OrderInfo{};
+  SELF_ORDINFO(pArea, DBOI_RESETPOS, &OrderInfo);
+  if (OrderInfo.itmResult) {
+    hb_itemRelease(OrderInfo.itmResult);
+  }
 }
 
 static HB_BOOL hb_bmCheckRecordFilter(AREAP pArea, HB_ULONG ulRecNo)
 {
-   HB_BOOL lResult = false;
-   HB_BOOL fDeleted = hb_setGetDeleted();
+  HB_BOOL lResult = false;
+  HB_BOOL fDeleted = hb_setGetDeleted();
 
-   if( pArea->dbfi.itmCobExpr || fDeleted ) {
-      HB_ULONG ulRec;
+  if (pArea->dbfi.itmCobExpr || fDeleted) {
+    HB_ULONG ulRec;
 
-      if( SELF_RECNO(pArea, &ulRec) == Harbour::SUCCESS ) {
-         if( ulRec != ulRecNo ) {
-            SELF_GOTO(pArea, ulRecNo);
-         }
-
-         if( fDeleted ) {
-            SELF_DELETED(pArea, &lResult);
-         }
-
-         if( !lResult && pArea->dbfi.itmCobExpr ) {
-            auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
-            lResult = pResult->isLogical() && !hb_itemGetL(pResult);
-         }
+    if (SELF_RECNO(pArea, &ulRec) == Harbour::SUCCESS) {
+      if (ulRec != ulRecNo) {
+        SELF_GOTO(pArea, ulRecNo);
       }
-   }
 
-   return !lResult;
+      if (fDeleted) {
+        SELF_DELETED(pArea, &lResult);
+      }
+
+      if (!lResult && pArea->dbfi.itmCobExpr) {
+        auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
+        lResult = pResult->isLogical() && !hb_itemGetL(pResult);
+      }
+    }
+  }
+
+  return !lResult;
 }
 
 static AREAP hb_bmGetCurrentWorkArea(void)
 {
-   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+  auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( !pArea ) {
-      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
-   } else if( hb_bmGetRdd(pArea->rddID) == nullptr ) {
-      hb_errRT_DBCMD(EG_UNSUPPORTED, EDBF_UNSUPPORTED, nullptr, HB_ERR_FUNCNAME);
-      pArea = nullptr;
-   }
+  if (!pArea) {
+    hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
+  } else if (hb_bmGetRdd(pArea->rddID) == nullptr) {
+    hb_errRT_DBCMD(EG_UNSUPPORTED, EDBF_UNSUPPORTED, nullptr, HB_ERR_FUNCNAME);
+    pArea = nullptr;
+  }
 
-   return pArea;
+  return pArea;
 }
 
 static PHB_ITEM hb_bmGetArrayParam(int iParam)
 {
-   auto pArray = hb_param(iParam, Harbour::Item::ARRAY);
+  auto pArray = hb_param(iParam, Harbour::Item::ARRAY);
 
-   if( !pArray ) {
-      hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
-   }
+  if (!pArray) {
+    hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+  }
 
-   return pArray;
+  return pArray;
 }
 
 static PBM_FILTER hb_bmCreate(AREAP pArea, HB_BOOL fFull)
 {
-   PBM_FILTER pBM = nullptr;
-   HB_ULONG ulRecCount;
+  PBM_FILTER pBM = nullptr;
+  HB_ULONG ulRecCount;
 
-   if( SELF_RECCOUNT(pArea, &ulRecCount) == Harbour::SUCCESS ) {
-      HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecCount);
-      pBM = static_cast<PBM_FILTER>(memset(hb_xgrab(nSize), fFull ? 0xFF : 0x00, nSize));
-      pBM->maxrec = static_cast<HB_U32>(ulRecCount);
-   }
+  if (SELF_RECCOUNT(pArea, &ulRecCount) == Harbour::SUCCESS) {
+    HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecCount);
+    pBM = static_cast<PBM_FILTER>(memset(hb_xgrab(nSize), fFull ? 0xFF : 0x00, nSize));
+    pBM->maxrec = static_cast<HB_U32>(ulRecCount);
+  }
 
-   return pBM;
+  return pBM;
 }
 
 HB_FUNC(BM_DBGETFILTERARRAY)
 {
-   auto pArea = hb_bmGetCurrentWorkArea();
+  auto pArea = hb_bmGetCurrentWorkArea();
 
-   if( pArea != nullptr ) {
-      PBM_FILTER pBM = BM_GETFILTER(pArea);
-      auto pArray = hb_itemArrayNew(0);
+  if (pArea != nullptr) {
+    PBM_FILTER pBM = BM_GETFILTER(pArea);
+    auto pArray = hb_itemArrayNew(0);
 
-      if( pBM && pArea->dbfi.fOptimized ) {
-         HB_ULONG ulItems = BM_ITEMSIZE(pBM->maxrec);
-         HB_ULONG ulRecNo;
+    if (pBM && pArea->dbfi.fOptimized) {
+      HB_ULONG ulItems = BM_ITEMSIZE(pBM->maxrec);
+      HB_ULONG ulRecNo;
 
-         if( SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS ) {
-            auto pItem = hb_itemNew(nullptr);
+      if (SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS) {
+        auto pItem = hb_itemNew(nullptr);
 
-            for( HB_ULONG ul = 0; ul < ulItems; ul++ ) {
-               if( pBM->map[ul] ) {
-                  HB_U32 nBits = pBM->map[ul];
-                  HB_ULONG ulRec = ul << 5;
+        for (HB_ULONG ul = 0; ul < ulItems; ul++) {
+          if (pBM->map[ul]) {
+            HB_U32 nBits = pBM->map[ul];
+            HB_ULONG ulRec = ul << 5;
 
-                  do {
-                     ++ulRec;
-                     if( nBits & 1 ) {
-                        if( hb_bmCheckRecordFilter(pArea, ulRec) ) {
-                           hb_arrayAddForward(pArray, hb_itemPutNL(pItem, ulRec));
-                        }
-                     }
-                     nBits >>= 1;
-                  } while( nBits );
-               }
-            }
-            hb_itemRelease(pItem);
+            do {
+              ++ulRec;
+              if (nBits & 1) {
+                if (hb_bmCheckRecordFilter(pArea, ulRec)) {
+                  hb_arrayAddForward(pArray, hb_itemPutNL(pItem, ulRec));
+                }
+              }
+              nBits >>= 1;
+            } while (nBits);
+          }
+        }
+        hb_itemRelease(pItem);
 
-            SELF_GOTO(pArea, ulRecNo);
-         }
+        SELF_GOTO(pArea, ulRecNo);
       }
-      hb_itemReturnRelease(pArray);
-   }
+    }
+    hb_itemReturnRelease(pArray);
+  }
 }
 
 HB_FUNC(BM_DBSETFILTERARRAY)
 {
-   auto pArea = hb_bmGetCurrentWorkArea();
+  auto pArea = hb_bmGetCurrentWorkArea();
 
-   if( pArea != nullptr ) {
-      auto pArray = hb_bmGetArrayParam(1);
+  if (pArea != nullptr) {
+    auto pArray = hb_bmGetArrayParam(1);
 
-      if( pArray ) {
-         if( SELF_CLEARFILTER(pArea) == Harbour::SUCCESS ) {
-            PBM_FILTER pBM = hb_bmCreate(pArea, false);
+    if (pArray) {
+      if (SELF_CLEARFILTER(pArea) == Harbour::SUCCESS) {
+        PBM_FILTER pBM = hb_bmCreate(pArea, false);
 
-            if( pBM ) {
-               pArea->dbfi.lpvCargo   = pBM;
-               pArea->dbfi.fOptimized = true;
-               pArea->dbfi.fFilter    = true;
+        if (pBM) {
+          pArea->dbfi.lpvCargo = pBM;
+          pArea->dbfi.fOptimized = true;
+          pArea->dbfi.fFilter = true;
 
-               for( HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos-- ) {
-                  auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
-                  BM_SETREC(pBM, ulRec);
-               }
-            }
-         }
+          for (HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos--) {
+            auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
+            BM_SETREC(pBM, ulRec);
+          }
+        }
       }
-   }
+    }
+  }
 }
 
 HB_FUNC(BM_DBSETFILTERARRAYADD)
 {
-   auto pArea = hb_bmGetCurrentWorkArea();
+  auto pArea = hb_bmGetCurrentWorkArea();
 
-   if( pArea && pArea->dbfi.fOptimized ) {
-      auto pArray = hb_bmGetArrayParam(1);
+  if (pArea && pArea->dbfi.fOptimized) {
+    auto pArray = hb_bmGetArrayParam(1);
 
-      if( pArray ) {
-         PBM_FILTER pBM = BM_GETFILTER(pArea);
+    if (pArray) {
+      PBM_FILTER pBM = BM_GETFILTER(pArea);
 
-         if( pBM ) {
-            for( HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos-- ) {
-               auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
-               BM_SETREC(pBM, ulRec);
-            }
-            hb_bmResetFilterOpt(pArea);
-         }
+      if (pBM) {
+        for (HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos--) {
+          auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
+          BM_SETREC(pBM, ulRec);
+        }
+        hb_bmResetFilterOpt(pArea);
       }
-   }
+    }
+  }
 }
 
 HB_FUNC(BM_DBSETFILTERARRAYDEL)
 {
-   auto pArea = hb_bmGetCurrentWorkArea();
+  auto pArea = hb_bmGetCurrentWorkArea();
 
-   if( pArea && pArea->dbfi.fOptimized ) {
-      auto pArray = hb_bmGetArrayParam(1);
+  if (pArea && pArea->dbfi.fOptimized) {
+    auto pArray = hb_bmGetArrayParam(1);
 
-      if( pArray ) {
-         PBM_FILTER pBM = BM_GETFILTER(pArea);
+    if (pArray) {
+      PBM_FILTER pBM = BM_GETFILTER(pArea);
 
-         if( pBM ) {
-            for( HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos-- ) {
-               auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
-               BM_CLRREC(pBM, ulRec);
-            }
-            hb_bmResetFilterOpt(pArea);
-         }
+      if (pBM) {
+        for (HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos--) {
+          auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
+          BM_CLRREC(pBM, ulRec);
+        }
+        hb_bmResetFilterOpt(pArea);
       }
-   }
+    }
+  }
 }
 
 static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
 {
-   PBM_FILTER pBM = BM_GETFILTER(pArea);
-   HB_BOOL fResult = true;
-   HB_ULONG ulRecNo = 0;
+  PBM_FILTER pBM = BM_GETFILTER(pArea);
+  HB_BOOL fResult = true;
+  HB_ULONG ulRecNo = 0;
 
-   if( pBM ) {
-      SELF_RECNO(pArea, &ulRecNo);
-      if( !fUpdate && !BM_GETREC(pBM, ulRecNo) ) {
-         return false;
-      }
-   }
+  if (pBM) {
+    SELF_RECNO(pArea, &ulRecNo);
+    if (!fUpdate && !BM_GETREC(pBM, ulRecNo)) {
+      return false;
+    }
+  }
 
-   if( pArea->dbfi.itmCobExpr ) {
-      auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
-      fResult = !pResult->isLogical() || hb_itemGetL(pResult);
-   }
-   if( fResult && hb_setGetDeleted() ) {
-      SELF_DELETED(pArea, &fResult);
-      fResult = !fResult;
-   }
+  if (pArea->dbfi.itmCobExpr) {
+    auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
+    fResult = !pResult->isLogical() || hb_itemGetL(pResult);
+  }
+  if (fResult && hb_setGetDeleted()) {
+    SELF_DELETED(pArea, &fResult);
+    fResult = !fResult;
+  }
 
-   if( pBM ) {
-      if( ulRecNo > pBM->maxrec && fResult ) {
-         HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecNo);
-         HB_SIZE nOldSize = sizeof(BM_FILTER) + BM_BYTESIZE(pBM->maxrec);
-         if( nSize > nOldSize ) {
-            pArea->dbfi.lpvCargo = pBM = static_cast<PBM_FILTER>(hb_xrealloc(pBM, nSize));
-            memset(reinterpret_cast<HB_BYTE*>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
-         }
-         pBM->maxrec = static_cast<HB_U32>(ulRecNo);
+  if (pBM) {
+    if (ulRecNo > pBM->maxrec && fResult) {
+      HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecNo);
+      HB_SIZE nOldSize = sizeof(BM_FILTER) + BM_BYTESIZE(pBM->maxrec);
+      if (nSize > nOldSize) {
+        pArea->dbfi.lpvCargo = pBM = static_cast<PBM_FILTER>(hb_xrealloc(pBM, nSize));
+        memset(reinterpret_cast<HB_BYTE *>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
       }
-      if( fResult ) {
-         BM_SETREC(pBM, ulRecNo);
-      } else {
-         BM_CLRREC(pBM, ulRecNo);
-      }
-   }
-   return fResult;
+      pBM->maxrec = static_cast<HB_U32>(ulRecNo);
+    }
+    if (fResult) {
+      BM_SETREC(pBM, ulRecNo);
+    } else {
+      BM_CLRREC(pBM, ulRecNo);
+    }
+  }
+  return fResult;
 }
 
 static HB_ERRCODE hb_bmSkipFilter(AREAP pArea, HB_LONG lUpDown)
 {
-   if( !hb_setGetDeleted() && pArea->dbfi.itmCobExpr == nullptr && !BM_GETFILTER(pArea) ) {
-      return Harbour::SUCCESS;
-   }
+  if (!hb_setGetDeleted() && pArea->dbfi.itmCobExpr == nullptr && !BM_GETFILTER(pArea)) {
+    return Harbour::SUCCESS;
+  }
 
-   lUpDown = (lUpDown < 0  ? -1 : 1);
-   HB_BOOL fBottom = pArea->fBottom;
-   HB_ERRCODE errCode;
-   while( !pArea->fBof && !pArea->fEof && !hb_bmEvalFilter(pArea, false) ) {
-      errCode = SELF_SKIPRAW(pArea, lUpDown);
-      if( errCode != Harbour::SUCCESS ) {
-         return errCode;
-      }
-   }
+  lUpDown = (lUpDown < 0 ? -1 : 1);
+  HB_BOOL fBottom = pArea->fBottom;
+  HB_ERRCODE errCode;
+  while (!pArea->fBof && !pArea->fEof && !hb_bmEvalFilter(pArea, false)) {
+    errCode = SELF_SKIPRAW(pArea, lUpDown);
+    if (errCode != Harbour::SUCCESS) {
+      return errCode;
+    }
+  }
 
-   if( pArea->fBof && lUpDown < 0 ) {
-      if( fBottom ) {
-         errCode = SELF_GOTO(pArea, 0);
-      } else {
-         errCode = SELF_GOTOP(pArea);
-         pArea->fBof = true;
-      }
-   } else {
-      errCode = Harbour::SUCCESS;
-   }
+  if (pArea->fBof && lUpDown < 0) {
+    if (fBottom) {
+      errCode = SELF_GOTO(pArea, 0);
+    } else {
+      errCode = SELF_GOTOP(pArea);
+      pArea->fBof = true;
+    }
+  } else {
+    errCode = Harbour::SUCCESS;
+  }
 
-   return errCode;
+  return errCode;
 }
 
-static HB_ERRCODE hb_bmPutRec(AREAP pArea, const HB_BYTE * pBuffer)
+static HB_ERRCODE hb_bmPutRec(AREAP pArea, const HB_BYTE *pBuffer)
 {
-   HB_ERRCODE errCode = SUPER_PUTREC(pArea, pBuffer);
+  HB_ERRCODE errCode = SUPER_PUTREC(pArea, pBuffer);
 
-   if( pBuffer == nullptr && errCode == Harbour::SUCCESS && BM_GETFILTER(pArea) ) {
-      hb_bmEvalFilter(pArea, true);
-   }
+  if (pBuffer == nullptr && errCode == Harbour::SUCCESS && BM_GETFILTER(pArea)) {
+    hb_bmEvalFilter(pArea, true);
+  }
 
-   return errCode;
+  return errCode;
 }
 
-static HB_ERRCODE hb_bmCountScope(AREAP pArea, void * pPtr, HB_LONG * plRec)
+static HB_ERRCODE hb_bmCountScope(AREAP pArea, void *pPtr, HB_LONG *plRec)
 {
-   if( pPtr == nullptr ) {
-      PBM_FILTER pBM = BM_GETFILTER(pArea);
+  if (pPtr == nullptr) {
+    PBM_FILTER pBM = BM_GETFILTER(pArea);
 
-      if( pBM && pArea->dbfi.fFilter && !BM_GETREC(pBM, static_cast<HB_ULONG>(*plRec))) {
-         *plRec = 0;
-      }
+    if (pBM && pArea->dbfi.fFilter && !BM_GETREC(pBM, static_cast<HB_ULONG>(*plRec))) {
+      *plRec = 0;
+    }
 
-      return Harbour::SUCCESS;
-   }
-   return SUPER_COUNTSCOPE(pArea, pPtr, plRec);
+    return Harbour::SUCCESS;
+  }
+  return SUPER_COUNTSCOPE(pArea, pPtr, plRec);
 }
 
 static HB_ERRCODE hb_bmClearFilter(AREAP pArea)
 {
-   HB_ERRCODE errCode = SUPER_CLEARFILTER(pArea);
+  HB_ERRCODE errCode = SUPER_CLEARFILTER(pArea);
 
-   if( pArea->dbfi.lpvCargo ) {
-      hb_xfree(pArea->dbfi.lpvCargo);
-      pArea->dbfi.lpvCargo = nullptr;
-   }
+  if (pArea->dbfi.lpvCargo) {
+    hb_xfree(pArea->dbfi.lpvCargo);
+    pArea->dbfi.lpvCargo = nullptr;
+  }
 
-   return errCode;
+  return errCode;
 }
 
 static HB_ERRCODE hb_bmSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
 {
-   HB_ERRCODE errCode = SUPER_SETFILTER(pArea, pFilterInfo);
+  HB_ERRCODE errCode = SUPER_SETFILTER(pArea, pFilterInfo);
 
-   if( errCode == Harbour::SUCCESS ) {
-      if( hb_setGetOptimize() ) {
-         PBM_FILTER pBM = hb_bmCreate(pArea, true);
+  if (errCode == Harbour::SUCCESS) {
+    if (hb_setGetOptimize()) {
+      PBM_FILTER pBM = hb_bmCreate(pArea, true);
 
-         if( pBM ) {
-            pArea->dbfi.lpvCargo   = pBM;
-            pArea->dbfi.fOptimized = true;
-            pArea->dbfi.fFilter    = true;
+      if (pBM) {
+        pArea->dbfi.lpvCargo = pBM;
+        pArea->dbfi.fOptimized = true;
+        pArea->dbfi.fFilter = true;
 
-            if( hb_setGetForceOpt() ) {
-               HB_ULONG ulRecNo;
+        if (hb_setGetForceOpt()) {
+          HB_ULONG ulRecNo;
 
-               if( SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS ) {
-                  HB_ULONG ulRec;
+          if (SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS) {
+            HB_ULONG ulRec;
 
-                  for( ulRec = 1; ulRec <= pBM->maxrec; ulRec++ ) {
-                     SELF_GOTO(pArea, ulRec);
-                     hb_bmEvalFilter(pArea, true);
-                  }
-                  SELF_GOTO(pArea, ulRecNo);
-               }
+            for (ulRec = 1; ulRec <= pBM->maxrec; ulRec++) {
+              SELF_GOTO(pArea, ulRec);
+              hb_bmEvalFilter(pArea, true);
             }
-         }
+            SELF_GOTO(pArea, ulRecNo);
+          }
+        }
       }
-   }
-   return errCode;
+    }
+  }
+  return errCode;
 }
 
+// clang-format off
 static const RDDFUNCS bmTable =
 {
    /* Movement and positioning methods */
@@ -677,90 +679,96 @@ static const RDDFUNCS bmTable =
    /* Special and reserved methods */
    ( DBENTRYP_SVP )   nullptr               /* WhoCares */
 };
+// clang-format on
 
-static void hb_bmGetFuncTable(const char * szSuper)
+static void hb_bmGetFuncTable(const char *szSuper)
 {
-   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   auto pSuperTable = static_cast<RDDFUNCS*>(hb_parptr(3));
-   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
+  auto pSuperTable = static_cast<RDDFUNCS *>(hb_parptr(3));
+  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, static_cast<void*>(puiCount), pTable, pSuperTable, uiRddId, puiSuperRddId));
 #endif
 
-   if( puiCount && pTable && pSuperTable && puiSuperRddId ) {
-      *puiCount = RDDFUNCSCOUNT;
-      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &bmTable, pSuperTable, szSuper, puiSuperRddId);
-      if( errCode == Harbour::SUCCESS ) {
-         hb_bmSetRdd(uiRddId);
-      }
-      hb_retni(errCode);
-   } else {
-      hb_retni(Harbour::FAILURE);
-   }
+  if (puiCount && pTable && pSuperTable && puiSuperRddId) {
+    *puiCount = RDDFUNCSCOUNT;
+    HB_ERRCODE errCode = hb_rddInheritEx(pTable, &bmTable, pSuperTable, szSuper, puiSuperRddId);
+    if (errCode == Harbour::SUCCESS) {
+      hb_bmSetRdd(uiRddId);
+    }
+    hb_retni(errCode);
+  } else {
+    hb_retni(Harbour::FAILURE);
+  }
 }
 
-static void hb_bmRddInit(void * cargo)
+static void hb_bmRddInit(void *cargo)
 {
-   HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(cargo);
 
-   HB_BOOL fError = hb_rddRegister("DBF", RDT_FULL) > 1;
-   if( !fError ) {
-      hb_rddRegister("DBFFPT", RDT_FULL);
-      if( hb_rddRegister("DBFCDX", RDT_FULL) <= 1 ) {
-         if( hb_rddRegister("BMDBFCDX", RDT_FULL) > 1 ) {
-            fError = true;
-         }
+  HB_BOOL fError = hb_rddRegister("DBF", RDT_FULL) > 1;
+  if (!fError) {
+    hb_rddRegister("DBFFPT", RDT_FULL);
+    if (hb_rddRegister("DBFCDX", RDT_FULL) <= 1) {
+      if (hb_rddRegister("BMDBFCDX", RDT_FULL) > 1) {
+        fError = true;
       }
-      if( !fError && hb_rddRegister("DBFNTX", RDT_FULL) <= 1 ) {
-         if( hb_rddRegister("BMDBFNTX", RDT_FULL) > 1 ) {
-            fError = true;
-         }
+    }
+    if (!fError && hb_rddRegister("DBFNTX", RDT_FULL) <= 1) {
+      if (hb_rddRegister("BMDBFNTX", RDT_FULL) > 1) {
+        fError = true;
       }
-      if( !fError && hb_rddRegister("DBFNSX", RDT_FULL) <= 1 ) {
-         if( hb_rddRegister("BMDBFNSX", RDT_FULL) > 1 ) {
-            fError = true;
-         }
+    }
+    if (!fError && hb_rddRegister("DBFNSX", RDT_FULL) <= 1) {
+      if (hb_rddRegister("BMDBFNSX", RDT_FULL) > 1) {
+        fError = true;
       }
-   }
+    }
+  }
 
-   if( fError ) {
-      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
-   }
+  if (fError) {
+    hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
+  }
 }
 
 HB_FUNC(_BMDBF)
 {
-   ;
+  ;
 }
 
 HB_FUNC_STATIC(BMDBFCDX_GETFUNCTABLE)
 {
-   hb_bmGetFuncTable("DBFCDX");
+  hb_bmGetFuncTable("DBFCDX");
 }
 
 HB_FUNC_STATIC(BMDBFNTX_GETFUNCTABLE)
 {
-   hb_bmGetFuncTable("DBFNTX");
+  hb_bmGetFuncTable("DBFNTX");
 }
 
 HB_FUNC_STATIC(BMDBFNSX_GETFUNCTABLE)
 {
-   hb_bmGetFuncTable("DBFNSX");
+  hb_bmGetFuncTable("DBFNSX");
 }
 
+// clang-format off
 HB_INIT_SYMBOLS_BEGIN(_hb_bm_InitSymbols_)
 { "BMDBFCDX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( BMDBFCDX_GETFUNCTABLE )}, nullptr },
 { "BMDBFNTX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( BMDBFNTX_GETFUNCTABLE )}, nullptr },
 { "BMDBFNSX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( BMDBFNSX_GETFUNCTABLE )}, nullptr }
 HB_INIT_SYMBOLS_END(_hb_bm_InitSymbols_)
+    // clang-format on
 
+    // clang-format off
 HB_CALL_ON_STARTUP_BEGIN(_hb_bm_rdd_init_)
    hb_vmAtInit(hb_bmRddInit, nullptr);
 HB_CALL_ON_STARTUP_END(_hb_bm_rdd_init_)
+// clang-format on
 
+// clang-format off
 #if defined(HB_PRAGMA_STARTUP)
 #  pragma startup _hb_bm_InitSymbols_
 #  pragma startup _hb_bm_rdd_init_
@@ -769,3 +777,4 @@ HB_CALL_ON_STARTUP_END(_hb_bm_rdd_init_)
                               HB_DATASEG_FUNC(_hb_bm_rdd_init_)
    #include "hbiniseg.hpp"
 #endif
+// clang-format on
