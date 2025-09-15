@@ -303,13 +303,13 @@ EXTERNAL hbmk_KEYW
 #define _WORKDIR_BASE_          ".hbmk"
 #define _WORKDIR_DEF_           ( _WORKDIR_BASE_ + hb_ps() + hbmk[_HBMK_cPLAT] + hb_ps() + hbmk[_HBMK_cCOMP] )
 
-#define _BCC_BIN_DETECT()       FindInPath( "bcc32c.exe" )
+#define _BCC_BIN_DETECT()       FindInPath("bcc32c.exe")
 
 #define HB_ISALPHA(c)           hb_asciiIsAlpha(c)
 #define HB_ISFIRSTIDCHAR( c )   ( HB_ISALPHA(c) .OR. ( c ) == "_" )
 #define HB_ISNEXTIDCHAR( c )    ( HB_ISFIRSTIDCHAR( c ) .OR. hb_asciiIsDigit( c ) )
 
-#define LEFTEQUAL( l, r )       ( Left(l, Len(r)) == r )
+#define LEFTEQUAL(l, r)         ( Left(l, Len(r)) == r )
 
 /* Logic (hack) to automatically add some libs to their
    right place in the liblist. In case of 'unicows' lib,
@@ -555,10 +555,10 @@ EXTERNAL hbmk_KEYW
 #define _EXIT_DEEPPROJNESTING   30
 #define _EXIT_STOP              50
 
-#define HBMK_IS_IN( str, list ) ( "|" + ( str ) + "|" $ "|" + ( list ) + "|" )
+#define HBMK_IS_IN(str, list) ( "|" + ( str ) + "|" $ "|" + ( list ) + "|" )
 
-#define HBMK_ISPLAT(list)       HBMK_IS_IN( hbmk[_HBMK_cPLAT], list )
-#define HBMK_ISCOMP(list)       HBMK_IS_IN( hbmk[_HBMK_cCOMP], list )
+#define HBMK_ISPLAT(list)       HBMK_IS_IN(hbmk[_HBMK_cPLAT], list)
+#define HBMK_ISCOMP(list)       HBMK_IS_IN(hbmk[_HBMK_cCOMP], list)
 
 #define PathMakeAbsolute(cPathR, cPathA) hb_PathJoin(cPathA, cPathR)
 
@@ -1845,7 +1845,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       RETURN _EXIT_UNKNPLAT
    ENDCASE
 
-   hbmk[_HBMK_aLIBCOREGTDEF] := ArrayJoin( aLIB_BASE_GT, l_aLIBHBGT )
+   hbmk[_HBMK_aLIBCOREGTDEF] := ArrayJoin(aLIB_BASE_GT, l_aLIBHBGT)
    hbmk[_HBMK_aLIBCOREGT] := hbmk[_HBMK_aLIBCOREGTDEF]
 
    // Setup GUI state for Harbour default
@@ -1918,8 +1918,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          IF Len(aCOMPSUP) == 1
             hbmk[_HBMK_cCOMP] := aCOMPSUP[1]
          ELSEIF HBMK_ISPLAT("darwin|bsd|hpux|sunos|beos|qnx|android|vxworks|linux|cygwin|minix|aix") .OR. hbmk[_HBMK_cCOMP] == "bld"
-            hbmk[_HBMK_cCOMP] := hb_Version( HB_VERSION_BUILD_COMP )
-            IF AScan( aCOMPSUP, {| tmp | tmp == hbmk[_HBMK_cCOMP] } ) == 0
+            hbmk[_HBMK_cCOMP] := hb_Version(HB_VERSION_BUILD_COMP)
+            IF AScan(aCOMPSUP, {| tmp | tmp == hbmk[_HBMK_cCOMP] }) == 0
                hbmk[_HBMK_cCOMP] := NIL
             ENDIF
          ELSE
@@ -1966,7 +1966,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   hbmk[_HBMK_cCOMP] := aCOMPDET_EMBED[tmp][_COMPDETE_cCOMP]
                   hbmk[_HBMK_cCCPREFIX] := aCOMPDET_EMBED[tmp][_COMPDETE_cCCPREFIX]
                   hbmk[_HBMK_cCCPATH] := cPath_CompC
-                  IF HB_ISBLOCK( aCOMPDET_EMBED[tmp][_COMPDETE_bSetup] )
+                  IF HB_ISBLOCK(aCOMPDET_EMBED[tmp][_COMPDETE_bSetup])
                      Eval(aCOMPDET_EMBED[tmp][_COMPDETE_bSetup], hbmk[_HBMK_cPLAT], hbmk[_HBMK_cCOMP], cPath_CompC)
                   ENDIF
                   EXIT
@@ -1986,7 +1986,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             RETURN _EXIT_UNKNCOMP
          ENDIF
       ELSE
-         IF AScan( aCOMPSUP, {| tmp | tmp == hbmk[_HBMK_cCOMP] } ) == 0
+         IF AScan(aCOMPSUP, {| tmp | tmp == hbmk[_HBMK_cCOMP] }) == 0
             _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Compiler value unknown: %1$s"), hbmk[_HBMK_cCOMP]))
             RETURN _EXIT_UNKNCOMP
          ENDIF
@@ -1997,7 +1997,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                !Empty(cPath_CompC := Eval(aCOMPDET_EMBED[tmp][_COMPDETE_bBlock], aCOMPDET_EMBED[tmp][_COMPDETE_cCCPREFIX], aCOMPDET_EMBED[tmp][_COMPDETE_cCCPATH]))
                hbmk[_HBMK_cCCPATH] := cPath_CompC
                hbmk[_HBMK_cCCPREFIX] := aCOMPDET_EMBED[tmp][_COMPDETE_cCCPREFIX]
-               IF HB_ISBLOCK( aCOMPDET_EMBED[tmp][_COMPDETE_bSetup] )
+               IF HB_ISBLOCK(aCOMPDET_EMBED[tmp][_COMPDETE_bSetup])
                   Eval(aCOMPDET_EMBED[tmp][_COMPDETE_bSetup], hbmk[_HBMK_cPLAT], hbmk[_HBMK_cCOMP], cPath_CompC)
                ENDIF
                EXIT
@@ -2176,7 +2176,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
    // Process command-line
 
-   hbmk_init_stage2( hbmk )
+   hbmk_init_stage2(hbmk)
 
    hbmk[_HBMK_lHARDEN] := HBMK_ISPLAT("win") // TODO: later enable this for all platforms
 
@@ -2295,7 +2295,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       CASE Left(cParamL, 5)  == "-env:"
 
          IF !Empty(aParam[_PAR_cFileName])
-            ProcEnvOption( SubStr(cParam, 5 + 1) )
+            ProcEnvOption(SubStr(cParam, 5 + 1))
          ENDIF
 
       CASE cParamL == "-quiet"           ; hbmk[_HBMK_lQuiet] := .T. ; hbmk[_HBMK_lInfo] := .F.
@@ -2321,7 +2321,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             hbmk[_HBMK_lStopAfterHarbour] := .F.
             lStopAfterCComp := .F.
             hbmk[_HBMK_lCreateLib] := .F.
-            Set_lCreateDyn( hbmk, .F. )
+            Set_lCreateDyn(hbmk, .F.)
             hbmk[_HBMK_lCreateImpLib] := .F.
          ENDIF
 
@@ -2332,7 +2332,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             hbmk[_HBMK_lStopAfterHarbour] := .F.
             lStopAfterCComp := .T.
             hbmk[_HBMK_lCreateLib] := .T.
-            Set_lCreateDyn( hbmk, .F. )
+            Set_lCreateDyn(hbmk, .F.)
             hbmk[_HBMK_lCreateImpLib] := .F.
          ENDIF
 
@@ -2343,7 +2343,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             hbmk[_HBMK_lStopAfterHarbour] := .F.
             lStopAfterCComp := .T.
             hbmk[_HBMK_lCreateLib] := .F.
-            Set_lCreateDyn( hbmk, .T. )
+            Set_lCreateDyn(hbmk, .T.)
             hbmk[_HBMK_lCreateImpLib] := .F.
             hbmk[_HBMK_lDynVM] := .F.
             l_lNOHBLIB := .T.
@@ -2356,7 +2356,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             hbmk[_HBMK_lStopAfterHarbour] := .F.
             lStopAfterCComp := .T.
             hbmk[_HBMK_lCreateLib] := .F.
-            Set_lCreateDyn( hbmk, .T. )
+            Set_lCreateDyn(hbmk, .T.)
             hbmk[_HBMK_lCreateImpLib] := .F.
             hbmk[_HBMK_lDynVM] := .T.
             l_lNOHBLIB := .F.
@@ -2369,7 +2369,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             hbmk[_HBMK_lContainer] := .T.
             hbmk[_HBMK_lStopAfterInit] := .T.
             hbmk[_HBMK_lCreateLib] := .F.
-            Set_lCreateDyn( hbmk, .F. )
+            Set_lCreateDyn(hbmk, .F.)
             hbmk[_HBMK_lCreateImpLib] := .F.
          ENDIF
 
@@ -2658,8 +2658,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       CASE Left(cParamL, Len("-jobs=")) == "-jobs="
 
          cParam := SubStr(cParam, Len("-jobs=") + 1)
-         IF hb_mtvm() .AND. Val( cParam ) > 0
-            l_nJOBS := Val( cParam )
+         IF hb_mtvm() .AND. Val(cParam) > 0
+            l_nJOBS := Val(cParam)
          ENDIF
 
          HB_SYMBOL_UNUSED(l_nJOBS)
@@ -2724,11 +2724,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                ENDIF
             ENDIF
             IF !Empty(cParam) .AND. !Lower(cParam) == "gtnul"
-               IF AScan( hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cParam) } ) == 0 .AND. ;
-                  AScan( hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cParam) } ) == 0
+               IF AScan(hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cParam) }) == 0 .AND. ;
+                  AScan(hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cParam) }) == 0
                   AAddNotEmpty(hbmk[_HBMK_aLIBUSERGT], hb_DirSepToOS( cParam ))
                ENDIF
-               IF AScan( hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(cParam) } ) == 0
+               IF AScan(hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(cParam) }) == 0
                   AAddNotEmpty(hbmk[_HBMK_aGT], hb_DirSepToOS( cParam ))
                ENDIF
             ENDIF
@@ -2874,7 +2874,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             FOR EACH tmp IN hb_ATokens( cParam, ";" ) // intentionally not using hb_osPathListSeparator() to keep value portable
                IF !Empty(tmp)
                   tmp := hb_DirSepDel(PathMakeAbsolute(hb_DirSepToOS(tmp), aParam[_PAR_cFileName]))
-                  IF CheckParamLibPath( hbmk, tmp )
+                  IF CheckParamLibPath(hbmk, tmp)
                      IF ( _MACRO_LATE_PREFIX + _MACRO_OPEN ) $ tmp .OR. hb_DirExists(tmp)
                         AAdd(hbmk[_HBMK_aLIBPATH], tmp)
                      ENDIF
@@ -2896,7 +2896,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             // -instfile=[<group>:] will delete all previous files added to that group
             FOR EACH tmp1 IN hbmk[_HBMK_aINSTFILE] DESCEND
                IF tmp1[1] == tmp
-                  hb_ADel( hbmk[_HBMK_aINSTFILE], tmp1:__enumIndex(), .T. )
+                  hb_ADel(hbmk[_HBMK_aINSTFILE], tmp1:__enumIndex(), .T.)
                ENDIF
             NEXT
          ENDIF
@@ -3105,7 +3105,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       CASE Left(cParamL, Len("-plugin=")) == "-plugin="
 
          cParam := PathMakeAbsolute(hb_DirSepToOS(MacroProc(hbmk, SubStr(cParam, Len("-plugin=") + 1), aParam[_PAR_cFileName])), aParam[_PAR_cFileName])
-         IF ( tmp := FindInPathPlugIn( cParam ) ) != NIL
+         IF ( tmp := FindInPathPlugIn(cParam) ) != NIL
             PlugIn_Load(hbmk, tmp)
          ELSE
             IF hbmk[_HBMK_lInfo]
@@ -3163,7 +3163,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                NEXT
             ENDIF
 
-            hbmk[_HBMK_hAUTOHBC][AllTrim( StrTran(tmp, "\", "/") )] := cParam
+            hbmk[_HBMK_hAUTOHBC][AllTrim(StrTran(tmp, "\", "/"))] := cParam
          ENDIF
 
       CASE Left(cParam, Len("-deppkgname=")) == "-deppkgname="
@@ -3177,7 +3177,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
          cParam := MacroProc(hbmk, SubStr(cParam, Len("-depkeyhead=") + 1), aParam[_PAR_cFileName])
          IF dep_split_arg(hbmk, cParam, @cParam, @tmp)
-            AAddNew( hbmk[_HBMK_hDEP][cParam][_HBMKDEP_aKeyHeader], AllTrim( StrTran(tmp, "\", "/") ) )
+            AAddNew( hbmk[_HBMK_hDEP][cParam][_HBMKDEP_aKeyHeader], AllTrim(StrTran(tmp, "\", "/")) )
          ENDIF
 
       CASE Left(cParam, Len("-depoptional=")) == "-depoptional="
@@ -3242,7 +3242,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          cParam := MacroProc(hbmk, SubStr(cParam, Len("-depfinish=") + 1), aParam[_PAR_cFileName])
          IF !Empty(cParam)
             IF cParam $ hbmk[_HBMK_hDEP]
-               dep_try_detection( hbmk, hbmk[_HBMK_hDEP][cParam] )
+               dep_try_detection(hbmk, hbmk[_HBMK_hDEP][cParam])
             ELSE
                _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Unknown dependency name: %1$s"), ParamToString(aParam)))
             ENDIF
@@ -3325,7 +3325,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       CASE hb_FNameExt(cParamL) == ".hrb"
 
          cParam := PathMakeAbsolute(hb_DirSepToOS(MacroProc(hbmk, cParam, aParam[_PAR_cFileName])), aParam[_PAR_cFileName])
-         IF ( tmp := FindInPathPlugIn( cParam ) ) != NIL
+         IF ( tmp := FindInPathPlugIn(cParam) ) != NIL
             PlugIn_Load(hbmk, tmp)
          ELSE
             IF hbmk[_HBMK_lInfo]
@@ -3464,7 +3464,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          cCommand := ;
             FNameEscape(hb_DirSepAdd(hb_DirSepToOS(hbmk[_HBMK_cHB_INSTALL_BIN])) + cBin_CompPRG + cBinExt, hbmk[_HBMK_nCmd_Esc]) + ;
             iif(Empty(hbmk[_HBMK_aOPTPRG]), "", " " + ArrayToList(hbmk[_HBMK_aOPTPRG]))
-         hb_processRun( AllTrim( cCommand ) )
+         hb_processRun(AllTrim(cCommand))
       ENDIF
       RETURN _EXIT_OK
    ENDIF
@@ -3501,8 +3501,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       cExt := hb_FNameExt(hbmk[_HBMK_cPROGNAME])
       tmp1 := hbmk_TARGETTYPE(hbmk)
       IF ( Lower(cExt) == ".exe" .AND. tmp1 == "hbexe" ) .OR. ;
-         ( Lower(cExt) == ".dll" .AND. HBMK_IS_IN( tmp1, "hbdyn|hbdynvm" ) ) .OR. ;
-         ( HBMK_IS_IN( Lower(cExt), ".lib|.a" ) .AND. HBMK_IS_IN( tmp1, "hblib|hbimplib" ) )
+         ( Lower(cExt) == ".dll" .AND. HBMK_IS_IN(tmp1, "hbdyn|hbdynvm") ) .OR. ;
+         ( HBMK_IS_IN(Lower(cExt), ".lib|.a") .AND. HBMK_IS_IN(tmp1, "hblib|hbimplib") )
          _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Non-portable output filename: %1$s. Delete '%2$s' extension."), iif(aParamPROGNAME != NIL, ParamToString(aParamPROGNAME), hbmk[_HBMK_cPROGNAME]), cExt))
       ENDIF
    ENDIF
@@ -3536,7 +3536,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                RETURN _EXIT_WORKDIRCREATE
             ENDIF
             #if !defined(__PLATFORM__UNIX)
-               tmp := hb_AtI( _WORKDIR_BASE_ + hb_ps(), hbmk[_HBMK_cWorkDir] + hb_ps() )
+               tmp := hb_AtI(_WORKDIR_BASE_ + hb_ps(), hbmk[_HBMK_cWorkDir] + hb_ps())
                IF tmp > 0
                   hb_FSetAttr( Left(hbmk[_HBMK_cWorkDir], tmp - 1) + _WORKDIR_BASE_, FC_HIDDEN )
                ENDIF
@@ -3586,7 +3586,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
       // Process any package requirements
       FOR EACH tmp IN hbmk[_HBMK_hDEP]
-         dep_try_detection( hbmk, tmp )
+         dep_try_detection(hbmk, tmp)
       NEXT
    ENDIF
 
@@ -3597,7 +3597,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       ENDIF
 
       // Merge user libs from command-line and envvar. Command-line has priority.
-      hbmk[_HBMK_aLIBUSER] := ArrayAJoin( { hbmk[_HBMK_aLIBUSERGT], hbmk[_HBMK_aLIBUSER] } )
+      hbmk[_HBMK_aLIBUSER] := ArrayAJoin({ hbmk[_HBMK_aLIBUSERGT], hbmk[_HBMK_aLIBUSER] })
 
       IF hbmk[_HBMK_cPLAT] == "darwin"
          FOR EACH tmp IN hbmk[_HBMK_aLIBUSERFWK]
@@ -3679,11 +3679,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       // Assemble library list
 
       IF !Empty(hbmk[_HBMK_cGT]) .AND. !( Lower(hbmk[_HBMK_cGT]) == "gtnul" )
-         IF AScan( hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(hbmk[_HBMK_cGT]) } ) == 0 .AND. ;
-            AScan( hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(hbmk[_HBMK_cGT]) } ) == 0
+         IF AScan(hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(hbmk[_HBMK_cGT]) }) == 0 .AND. ;
+            AScan(hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(hbmk[_HBMK_cGT]) }) == 0
             AAdd(hbmk[_HBMK_aLIBUSERGT], hbmk[_HBMK_cGT])
          ENDIF
-         IF AScan( hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(hbmk[_HBMK_cGT]) } ) == 0
+         IF AScan(hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(hbmk[_HBMK_cGT]) }) == 0
             AAddNotEmpty(hbmk[_HBMK_aGT], hbmk[_HBMK_cGT])
          ENDIF
       ENDIF
@@ -3708,7 +3708,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          hbmk[_HBMK_aLIBCOREGT] := {}
       ENDIF
 
-      #define _HBLIB_FULLPATH( cName )  ( hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_LIB]) + hb_ps() + cLibLibPrefix + cName + cLibLibExt )
+      #define _HBLIB_FULLPATH(cName)  ( hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_LIB]) + hb_ps() + cLibLibPrefix + cName + cLibLibExt )
 
       cLibHBX_Regex := R_( "[\s]_?HB_FUN_([A-Z0-9_]*)[\s]" )
 
@@ -3861,8 +3861,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ELSE
             cOpt_CompC += " {LC}"
          ENDIF
-         AAddNotEmpty( hbmk[_HBMK_aOPTCX], gcc_opt_lngc_fill( hbmk ) )
-         AAddNotEmpty( hbmk[_HBMK_aOPTCPPX], gcc_opt_lngcpp_fill( hbmk ) )
+         AAddNotEmpty( hbmk[_HBMK_aOPTCX], gcc_opt_lngc_fill(hbmk) )
+         AAddNotEmpty( hbmk[_HBMK_aOPTCPPX], gcc_opt_lngcpp_fill(hbmk) )
          cBin_Dyn := cBin_CompC
          IF hbmk[_HBMK_cPLAT] == "darwin"
             cOpt_Dyn := "-dynamiclib -o {OD} {FD} {DL} {LO} {LS}" // NOTE: -single_module is now the default in ld/libtool.
@@ -3963,7 +3963,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
          // Always inherit/reproduce some flags from self
          FOR EACH tmp IN { "-mlp64", "-mlp32", "-m64", "-m32" }
-            IF tmp $ hb_Version( HB_VERSION_FLAG_C )
+            IF tmp $ hb_Version(HB_VERSION_FLAG_C)
                AAddNew( hbmk[_HBMK_aOPTC], tmp )
                AAddNew( hbmk[_HBMK_aOPTL], tmp )
                AAddNew( hbmk[_HBMK_aOPTD], tmp )
@@ -4006,14 +4006,14 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                AAddNew( hbmk[_HBMK_aLIBPATH], "/usr/pkg/lib" )
             ENDCASE
 
-            IF !Empty(cLIB_BASE_PCRE) .AND. !hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_PCRE ) )
+            IF !Empty(cLIB_BASE_PCRE) .AND. !hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_PCRE) )
                IF hbmk[_HBMK_cPLAT] == "bsd"
                  AAddNew( hbmk[_HBMK_aLIBPATH], "/usr/local/lib" )
                ENDIF
                AAdd(l_aLIBSYS, "pcre")
                cLIB_BASE_PCRE := NIL
             ENDIF
-            IF !Empty(cLIB_BASE_ZLIB) .AND. !hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_ZLIB ) )
+            IF !Empty(cLIB_BASE_ZLIB) .AND. !hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_ZLIB) )
                AAdd(l_aLIBSYS, "z")
                cLIB_BASE_ZLIB := NIL
             ENDIF
@@ -4175,8 +4175,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ELSE
             cOpt_CompC += " {LC}"
          ENDIF
-         AAddNotEmpty( hbmk[_HBMK_aOPTCX], gcc_opt_lngc_fill( hbmk ) )
-         AAddNotEmpty( hbmk[_HBMK_aOPTCPPX], gcc_opt_lngcpp_fill( hbmk ) )
+         AAddNotEmpty( hbmk[_HBMK_aOPTCX], gcc_opt_lngc_fill(hbmk) )
+         AAddNotEmpty( hbmk[_HBMK_aOPTCPPX], gcc_opt_lngcpp_fill(hbmk) )
          cBin_Dyn := cBin_CompC
          cOpt_Dyn := "-shared -o {OD} {LO} {FD} {IM} {DL} {LS}"
          IF !hbmk[_HBMK_cCOMP] == "tcc"
@@ -4266,7 +4266,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             AAdd(hbmk[_HBMK_aOPTC], "-DUNICODE")
             AAdd(hbmk[_HBMK_aOPTC], "-D_UNICODE")
          ENDIF
-         l_aLIBSYS := ArrayAJoin( { l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC } )
+         l_aLIBSYS := ArrayAJoin({ l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC })
          DO CASE
          CASE _HBMODE_IS_XHB(hbmk[_HBMK_nHBMODE])
             // NOTE: Newer xHarbour versions use "-x.y.z" version numbers.
@@ -4370,7 +4370,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
          IF _HBMODE_IS_XHB(hbmk[_HBMK_nHBMODE])
             // Adding weird hack for xHarbour to make it possible to force ST C mode.
-            IF AScan( hbmk[_HBMK_aOPTC], {| tmp | tmp == "-tW" } ) == 0
+            IF AScan(hbmk[_HBMK_aOPTC], {| tmp | tmp == "-tW" }) == 0
                AAdd(hbmk[_HBMK_aOPTC], "-tWM")
             ELSE
                IF hbmk[_HBMK_cCOMP] == "bcc64"
@@ -4476,7 +4476,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             l_aLIBSHARED := { cHarbourDyn + cDL_Version_Alter + "-x64" + cLibExt }
          ENDIF
          l_aLIBSHAREDPOST := { "hbmainstd", "hbmainwin" }
-         l_aLIBSYS := ArrayAJoin( { l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC } )
+         l_aLIBSYS := ArrayAJoin({ l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC })
 
       CASE ( hbmk[_HBMK_cPLAT] == "win" .AND. HBMK_ISCOMP("msvc|msvc64|msvcia64|clang-cl|clang-cl64|icx|icx64|icc|iccia64") )
 
@@ -4644,7 +4644,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                ENDIF
             ENDIF
          ENDIF
-         l_aLIBSYS := ArrayAJoin( { l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC } )
+         l_aLIBSYS := ArrayAJoin({ l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC })
          l_aLIBSHARED := { cHarbourDyn + cDL_Version_Alter + hbmk_DYNSUFFIX( hbmk ) + cLibExt }
          l_aLIBSHAREDPOST := { "hbmainstd", "hbmainwin" }
 
@@ -4765,11 +4765,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                AAdd(l_aLIBSYS, "resolv")
             ENDCASE
 
-            IF !Empty(cLIB_BASE_PCRE) .AND. !hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_PCRE ) )
+            IF !Empty(cLIB_BASE_PCRE) .AND. !hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_PCRE) )
                AAdd(l_aLIBSYS, "pcre")
                cLIB_BASE_PCRE := NIL
             ENDIF
-            IF !Empty(cLIB_BASE_ZLIB) .AND. !hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_ZLIB ) )
+            IF !Empty(cLIB_BASE_ZLIB) .AND. !hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_ZLIB) )
                AAdd(l_aLIBSYS, "z")
                cLIB_BASE_ZLIB := NIL
             ENDIF
@@ -4892,11 +4892,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
          // Add system libraries
          IF !hbmk[_HBMK_lSHARED]
-            IF !Empty(cLIB_BASE_PCRE) .AND. !hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_PCRE ) )
+            IF !Empty(cLIB_BASE_PCRE) .AND. !hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_PCRE) )
                AAdd(l_aLIBSYS, "pcre")
                cLIB_BASE_PCRE := NIL
             ENDIF
-            IF !Empty(cLIB_BASE_ZLIB) .AND. !hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_ZLIB ) )
+            IF !Empty(cLIB_BASE_ZLIB) .AND. !hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_ZLIB) )
                AAdd(l_aLIBSYS, "z")
                cLIB_BASE_ZLIB := NIL
             ENDIF
@@ -4925,7 +4925,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
    // Call plugins
 
-   IF !PlugIn_Execute_All( hbmk, "pre_all" )
+   IF !PlugIn_Execute_All(hbmk, "pre_all")
       IF hbmk[_HBMK_lBEEP]
          DoBeep( .F. )
       ENDIF
@@ -5096,7 +5096,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       ( hbmk[_HBMK_lCreatePPO] .AND. hbmk[_HBMK_lStopAfterHarbour] )        // or in preprocessor mode
 
       IF !hbmk[_HBMK_lDumpInfo]
-         PlugIn_Execute_All( hbmk, "pre_prg" )
+         PlugIn_Execute_All(hbmk, "pre_prg")
       ENDIF
 
       // Incremental
@@ -5115,7 +5115,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDCASE
          l_aPRG_TO_DO := {}
          FOR EACH tmp IN hbmk[_HBMK_aPRG]
-            IF LEFTEQUAL( tmp, "@" ) .AND. Lower(hb_FNameExt(tmp)) == ".clp"
+            IF LEFTEQUAL(tmp, "@") .AND. Lower(hb_FNameExt(tmp)) == ".clp"
                tmp3 := SubStr(tmp, 1 + 1)
             ELSE
                tmp3 := tmp
@@ -5167,7 +5167,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
    // Delete all lib paths which contain late-evaluation macros.
    FOR EACH tmp IN hbmk[_HBMK_aLIBPATH] DESCEND
       IF ( _MACRO_LATE_PREFIX + _MACRO_OPEN ) $ tmp
-         hb_ADel( hbmk[_HBMK_aLIBPATH], tmp:__enumIndex(), .T. )
+         hb_ADel(hbmk[_HBMK_aLIBPATH], tmp:__enumIndex(), .T.)
       ENDIF
    NEXT
 
@@ -5217,7 +5217,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
    // Creating implibs requested in dependency specification
 
-   IF !hbmk[_HBMK_lStopAfterInit] .AND. HB_ISBLOCK( bBlk_ImpLib )
+   IF !hbmk[_HBMK_lStopAfterInit] .AND. HB_ISBLOCK(bBlk_ImpLib)
       FOR EACH tmp IN hbmk[_HBMK_hDEP]
          IF tmp[_HBMKDEP_lFound] .AND. !Empty(tmp[_HBMKDEP_aIMPLIBSRC])
             DoIMPLIB(hbmk, bBlk_ImpLib, cLibLibPrefix, cLibLibExt, tmp[_HBMKDEP_aIMPLIBSRC], tmp[_HBMKDEP_cIMPLIBDST], "depimplib", !hbmk[_HBMK_lDEPIMPLIB])
@@ -5256,12 +5256,12 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          aThreads := {}
          FOR EACH aTO_DO IN ArraySplit( l_aPRG_TO_DO, l_nJOBS )
 
-            aCommand := ArrayAJoin( { ;
+            aCommand := ArrayAJoin({ ;
                { iif(hbmk[_HBMK_lCreateLib] .OR. hbmk[_HBMK_lCreateDyn], "-n1", "-n2") }, ;
                aTO_DO, ;
-               iif(hbmk[_HBMK_lBLDFLGP], { hb_Version( HB_VERSION_FLAG_PRG ) }, {}), ;
+               iif(hbmk[_HBMK_lBLDFLGP], { hb_Version(HB_VERSION_FLAG_PRG) }, {}), ;
                ListToArray( iif(Empty(GetEnv("HB_USER_PRGFLAGS")), "", " " + GetEnv("HB_USER_PRGFLAGS")) ), ;
-               hbmk[_HBMK_aOPTPRG] } )
+               hbmk[_HBMK_aOPTPRG] })
 
             IF hbmk[_HBMK_lTRACE]
                IF !hbmk[_HBMK_lQuiet]
@@ -5302,7 +5302,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          NEXT
 
          FOR EACH thread IN aThreads
-            hb_threadJoin( thread[1], @tmp )
+            hb_threadJoin(thread[1], @tmp)
             IF tmp != 0
                IF Len(aThreads) > 1
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running Harbour compiler job #%1$d. %2$d"), thread:__enumIndex(), tmp))
@@ -5338,11 +5338,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                FNameEscape(hb_DirSepAdd(hb_DirSepToOS(hbmk[_HBMK_cHB_INSTALL_BIN])) + cBin_CompPRG + cBinExt, hbmk[_HBMK_nCmd_Esc]) + ;
                " " + iif(hbmk[_HBMK_lCreateLib] .OR. hbmk[_HBMK_lCreateDyn], "-n1", iif(hbmk[_HBMK_nHBMODE] != _HBMODE_NATIVE, "-n", "-n2")) + ;
                " " + iif(_HBMODE_IS_XHB(hbmk[_HBMK_nHBMODE] ), FNameEscape(tmp, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]), tmp) + ;
-               iif(hbmk[_HBMK_lBLDFLGP], " " + hb_Version( HB_VERSION_FLAG_PRG ), "") + ;
+               iif(hbmk[_HBMK_lBLDFLGP], " " + hb_Version(HB_VERSION_FLAG_PRG), "") + ;
                iif(Empty(GetEnv("HB_USER_PRGFLAGS")), "", " " + GetEnv("HB_USER_PRGFLAGS")) + ;
                iif(Empty(hbmk[_HBMK_aOPTPRG]), "", " " + ArrayToList(hbmk[_HBMK_aOPTPRG]))
 
-            cCommand := AllTrim( cCommand )
+            cCommand := AllTrim(cCommand)
 
             IF hbmk[_HBMK_lTRACE]
                IF !hbmk[_HBMK_lQuiet]
@@ -5351,7 +5351,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                OutStd(cCommand + _OUT_EOL)
             ENDIF
 
-            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp1 := hb_processRun( cCommand ) ) != 0
+            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp1 := hb_processRun(cCommand) ) != 0
                _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running Harbour compiler. %1$d"), tmp1))
                IF !hbmk[_HBMK_lQuiet]
                   OutErr(cCommand + _OUT_EOL)
@@ -5376,14 +5376,14 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
          // Do entry function detection on platform required and supported
          IF !hbmk[_HBMK_lDONTEXEC] .AND. !lStopAfterCComp .AND. l_cMAIN == NIL
-            tmp := iif(HBMK_IS_IN( Lower(hb_FNameExt(hbmk[_HBMK_cFIRST])), ".prg|.hb|.clp" ) .OR. Empty(hb_FNameExt(hbmk[_HBMK_cFIRST])), FNameDirExtSet( hbmk[_HBMK_cFIRST], hbmk[_HBMK_cWorkDir], ".cpp" ), hbmk[_HBMK_cFIRST])
+            tmp := iif(HBMK_IS_IN(Lower(hb_FNameExt(hbmk[_HBMK_cFIRST])), ".prg|.hb|.clp") .OR. Empty(hb_FNameExt(hbmk[_HBMK_cFIRST])), FNameDirExtSet( hbmk[_HBMK_cFIRST], hbmk[_HBMK_cWorkDir], ".cpp" ), hbmk[_HBMK_cFIRST])
             IF !Empty(tmp := getFirstFunc(hbmk, tmp))
                l_cMAIN := tmp
             ENDIF
          ENDIF
 
          lHBMAINDLLP := lStopAfterCComp .AND. hbmk[_HBMK_lCreateDyn] .AND. ;
-                        AScan( hbmk[_HBMK_aLIBUSER], {| tmp | hb_FileMatch( tmp, "hbmaindllp" ) } ) > 0
+                        AScan(hbmk[_HBMK_aLIBUSER], {| tmp | hb_FileMatch(tmp, "hbmaindllp") }) > 0
 
          /* HACK: Override entry point requested by user or detected by us,
                   and override the GT if requested by user. */
@@ -5673,10 +5673,10 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
 
          IF !hbmk[_HBMK_lSHARED]
-            IF !Empty(cLIB_BASE_PCRE) .AND. hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_PCRE ) )
+            IF !Empty(cLIB_BASE_PCRE) .AND. hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_PCRE) )
                AAdd(l_aLIBSYS, cLIB_BASE_PCRE)
             ENDIF
-            IF !Empty(cLIB_BASE_ZLIB) .AND. hb_FileExists( _HBLIB_FULLPATH( cLIB_BASE_ZLIB ) )
+            IF !Empty(cLIB_BASE_ZLIB) .AND. hb_FileExists( _HBLIB_FULLPATH(cLIB_BASE_ZLIB) )
                AAdd(l_aLIBSYS, cLIB_BASE_ZLIB)
             ENDIF
          ENDIF
@@ -5690,7 +5690,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                         This will ensure that we can build shared mode binaries
                         even when static libs are not installed (typically on *nix systems).
                         [vszakats] */
-               FOR EACH tmp IN ArrayAJoin( { aLIB_BASE_CPLR, aLIB_BASE_DEBUG } )
+               FOR EACH tmp IN ArrayAJoin({ aLIB_BASE_CPLR, aLIB_BASE_DEBUG })
                   IF hb_FileExists( _HBLIB_FULLPATH(tmp) )
                      AAdd(l_aLIBHB, tmp)
                   ENDIF
@@ -5699,7 +5699,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                l_aLIBHB := {}
             ENDIF
          ELSE
-            l_aLIBHB := ArrayAJoin( { ;
+            l_aLIBHB := ArrayAJoin({ ;
                aLIB_BASE_EXTERN, ;
                aLIB_BASE_DEBUG, ;
                iif(hbmk[_HBMK_lMT], aLIB_BASE_1_MT, aLIB_BASE_1), ;
@@ -5707,7 +5707,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                iif(hbmk[_HBMK_lNULRDD], aLIB_BASE_NULRDD, iif(hbmk[_HBMK_lMT], aLIB_BASE_RDD_MT, aLIB_BASE_RDD)), ;
                l_aLIBHBBASE_2, ;
                iif(hbmk[_HBMK_lMT], aLIB_BASE_3_MT, aLIB_BASE_3), ;
-               l_aLIBSTATICPOST } )
+               l_aLIBSTATICPOST })
          ENDIF
       ELSE
          lHBMAINDLLP := .F.
@@ -5726,8 +5726,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       IF l_cLIBSELF != NIL
          tmp1 := FNameNameGetNoExt( l_cLIBSELF )
          FOR EACH tmp IN hbmk[_HBMK_aLIBUSER] DESCEND
-            IF hb_FileMatch( hb_FNameName(tmp), tmp1 )
-               hb_ADel( hbmk[_HBMK_aLIBUSER], tmp:__enumIndex(), .T. )
+            IF hb_FileMatch(hb_FNameName(tmp), tmp1)
+               hb_ADel(hbmk[_HBMK_aLIBUSER], tmp:__enumIndex(), .T.)
             ENDIF
          NEXT
       ENDIF
@@ -5736,8 +5736,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       FOR EACH tmp2 IN hbmk[_HBMK_aLIBFILTEROUT]
          FOR EACH tmp1 IN { hbmk[_HBMK_aLIBUSER], l_aLIB3RD, hbmk[_HBMK_aLIBUSERSYSPRE], l_aLIBSYS, hbmk[_HBMK_aLIBUSERSYS] }
             FOR EACH tmp IN tmp1 DESCEND
-               IF hb_FileMatch( tmp, tmp2 )
-                  hb_ADel( tmp1, tmp:__enumIndex(), .T. )
+               IF hb_FileMatch(tmp, tmp2)
+                  hb_ADel(tmp1, tmp:__enumIndex(), .T.)
                ENDIF
             NEXT
          NEXT
@@ -5768,7 +5768,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       #endif
 
       // Merge lib lists.
-      l_aLIBRAW := ArrayAJoin( { hbmk[_HBMK_aLIBUSER], l_aLIBHB, l_aLIB3RD, hbmk[_HBMK_aLIBUSERSYSPRE], l_aLIBSYS, hbmk[_HBMK_aLIBUSERSYS] } )
+      l_aLIBRAW := ArrayAJoin({ hbmk[_HBMK_aLIBUSER], l_aLIBHB, l_aLIB3RD, hbmk[_HBMK_aLIBUSERSYSPRE], l_aLIBSYS, hbmk[_HBMK_aLIBUSERSYS] })
       // Dress lib names.
       l_aLIB := {}
       l_aLIBA := {}
@@ -5776,7 +5776,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       IF hbmk[_HBMK_lSHARED] .AND. !Empty(l_aLIBSHARED)
          // Do not link Harbour dynamic/static libs when in '-hbdyn -shared' mode
          IF !( hbmk[_HBMK_lCreateDyn] .AND. !hbmk[_HBMK_lDynVM] ) .OR. lHBMAINDLLP
-            l_aLIBRAW := ArrayJoin( l_aLIBSHARED, l_aLIBRAW )
+            l_aLIBRAW := ArrayJoin(l_aLIBSHARED, l_aLIBRAW)
             ListCookLib(hbmk, l_aLIB, l_aLIBA, l_aLIBSHARED, NIL)
          ENDIF
       ENDIF
@@ -5788,9 +5788,9 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   [vszakats] */
          l_aOBJ := {}
       ELSE
-         l_aOBJ := ListDirExt( ArrayAJoin( { hbmk[_HBMK_aPRG], hbmk[_HBMK_aC], hbmk[_HBMK_aCPP] } ), hbmk[_HBMK_cWorkDir], cObjExt, .T. )
+         l_aOBJ := ListDirExt( ArrayAJoin({ hbmk[_HBMK_aPRG], hbmk[_HBMK_aC], hbmk[_HBMK_aCPP]} ), hbmk[_HBMK_cWorkDir], cObjExt, .T. )
       ENDIF
-      hbmk[_HBMK_aOBJUSER] := ListCook( hbmk[_HBMK_aOBJUSER], cObjExt )
+      hbmk[_HBMK_aOBJUSER] := ListCook(hbmk[_HBMK_aOBJUSER], cObjExt)
 
       IF hbmk[_HBMK_lINC] .AND. !hbmk[_HBMK_lREBUILD] .AND. !hbmk[_HBMK_lCLEAN]
          l_aRESSRC_TO_DO := {}
@@ -5832,7 +5832,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                hbmk[_HBMK_cHBL] := PathMakeAbsolute(hbmk[_HBMK_cHBL], tmp)
             ENDIF
 
-            MakeHBL( hbmk, hbmk[_HBMK_cHBL] )
+            MakeHBL(hbmk, hbmk[_HBMK_cHBL])
          ENDIF
       ENDIF
 
@@ -5901,7 +5901,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
       IF Len(l_aRESSRC_TO_DO) > 0 .AND. !Empty(cBin_Res) .AND. !hbmk[_HBMK_lCLEAN]
 
-         PlugIn_Execute_All( hbmk, "pre_res" )
+         PlugIn_Execute_All(hbmk, "pre_res")
 
          IF hbmk[_HBMK_lINC] .AND. !hbmk[_HBMK_lQuiet]
             _hbmk_OutStd(hbmk, I_("Compiling resources..."))
@@ -5923,7 +5923,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                hReplace["{IR}"] := FNameEscape(tmp, nOpt_Esc, nOpt_FNF)
                hReplace["{OS}"] := FNameEscape(FNameDirExtSet(tmp, hbmk[_HBMK_cWorkDir], cResExt), nOpt_Esc, nOpt_FNF)
 
-               cCommand := cBin_Res + " " + AllTrim( hb_StrReplace(cOpt_Res, hReplace) )
+               cCommand := cBin_Res + " " + AllTrim(hb_StrReplace(cOpt_Res, hReplace))
 
                IF hbmk[_HBMK_lTRACE]
                   IF !hbmk[_HBMK_lQuiet]
@@ -5932,7 +5932,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   OutStd(cCommand + _OUT_EOL)
                ENDIF
 
-               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp1 := hb_processRun( cCommand ) ) != 0
+               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp1 := hb_processRun(cCommand) ) != 0
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running resource compiler. %1$d"), tmp1))
                   IF !hbmk[_HBMK_lQuiet]
                      OutErr(cCommand + _OUT_EOL)
@@ -5946,7 +5946,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ELSE
             hReplace["{LR}"] := ArrayToList(l_aRESSRC_TO_DO, NIL, nOpt_Esc, nOpt_FNF)
 
-            cOpt_Res := AllTrim( hb_StrReplace(cOpt_Res, hReplace) )
+            cOpt_Res := AllTrim(hb_StrReplace(cOpt_Res, hReplace))
 
             // Handle moving the whole command-line to a script, if requested.
             cScriptFile := NIL
@@ -5974,7 +5974,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                ENDIF
             ENDIF
 
-            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun( cCommand ) ) != 0
+            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun(cCommand) ) != 0
                _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running resource compiler. %1$d"), tmp))
                IF !hbmk[_HBMK_lQuiet]
                   OutErr(cCommand + _OUT_EOL)
@@ -5996,7 +5996,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             l_aPRG_TO_DO := {}
 
             FOR EACH tmp IN hbmk[_HBMK_aPRG]
-               IF LEFTEQUAL( tmp, "@" ) .AND. Lower(hb_FNameExt(tmp)) == ".clp"
+               IF LEFTEQUAL(tmp, "@") .AND. Lower(hb_FNameExt(tmp)) == ".clp"
                   tmp3 := SubStr(tmp, 2)
                ELSE
                   tmp3 := tmp
@@ -6019,19 +6019,19 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
       ENDIF
 
-      PlugIn_Execute_All( hbmk, "pre_c" )
+      PlugIn_Execute_All(hbmk, "pre_c")
 
       IF !hbmk[_HBMK_lCLEAN]
 
          FOR EACH tmp3 IN { _CCOMP_PASS_C, _CCOMP_PASS_CPP }
 
             IF tmp3 == _CCOMP_PASS_C
-               //l_aCGEN_TO_DO := ArrayJoin( ListDirExt( l_aPRG_TO_DO, hbmk[_HBMK_cWorkDir], ".c", .T. ), l_aC_TO_DO )
+               //l_aCGEN_TO_DO := ArrayJoin(ListDirExt( l_aPRG_TO_DO, hbmk[_HBMK_cWorkDir], ".c", .T. ), l_aC_TO_DO)
                l_aCGEN_TO_DO := l_aC_TO_DO
                cBin_CompCGEN := cBin_CompC
             ELSE
                //l_aCGEN_TO_DO := AClone(l_aCPP_TO_DO)
-               l_aCGEN_TO_DO := ArrayJoin( ListDirExt( l_aPRG_TO_DO, hbmk[_HBMK_cWorkDir], ".cpp", .T. ), l_aCPP_TO_DO )
+               l_aCGEN_TO_DO := ArrayJoin(ListDirExt( l_aPRG_TO_DO, hbmk[_HBMK_cWorkDir], ".cpp", .T. ), l_aCPP_TO_DO)
                cBin_CompCGEN := cBin_CompCPP
             ENDIF
 
@@ -6058,7 +6058,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
                   // TODO: eliminate recursive macros from hbmk[_HBMK_aOPTC]
                   cOpt_CompCPass := StrTran(cOpt_CompCPass, "{FC}", ;
-                     iif(hbmk[_HBMK_lBLDFLGC], hb_Version( HB_VERSION_FLAG_C ) + " ", "") + ;
+                     iif(hbmk[_HBMK_lBLDFLGC], hb_Version(HB_VERSION_FLAG_C) + " ", "") + ;
                      iif(tmp3 == _CCOMP_PASS_C, FilterFlags(GetEnv("HB_USER_CFLAGS")), GetEnv("HB_USER_CFLAGS")) + ;
                      iif(Empty(hbmk[_HBMK_aOPTC]), "", " " + ArrayToList(hbmk[_HBMK_aOPTC])) + ;
                      iif(Empty(tmp4), "", " " + ArrayToList(tmp4)) + ;
@@ -6083,7 +6083,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                      NEXT
 
                      FOR EACH thread IN aThreads
-                        hb_threadJoin( thread, @tmp )
+                        hb_threadJoin(thread, @tmp)
                         IF !tmp
                            IF !hbmk[_HBMK_lIGNOREERROR]
                               hbmk[_HBMK_nExitCode] := _EXIT_COMPC
@@ -6120,7 +6120,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                            hReplace["{LC}"] := ArrayToList(aTO_DO, NIL, nOpt_Esc, nOpt_FNF)
                         ENDIF
 
-                        cOpt_CompCLoop := AllTrim( hb_StrReplace(cOpt_CompCPass, hReplace) )
+                        cOpt_CompCLoop := AllTrim(hb_StrReplace(cOpt_CompCPass, hReplace))
 
                         // Handle moving the whole command-line to a script, if requested.
                         cScriptFile := NIL
@@ -6173,7 +6173,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                      NEXT
 
                      FOR EACH thread IN aThreads
-                        hb_threadJoin( thread[1], @tmp )
+                        hb_threadJoin(thread[1], @tmp)
                         IF tmp != 0
                            IF Len(aThreads) > 1
                               _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running C/C++ compiler job #%1$d. %2$d"), thread:__enumIndex(), tmp))
@@ -6218,7 +6218,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
                lTargetUpToDate := .T.
                IF lTargetUpToDate
-                  FOR EACH tmp IN ArrayAJoin( { l_aOBJ, hbmk[_HBMK_aOBJUSER], l_aOBJA, ListDirExt( ArrayAJoin( { hbmk[_HBMK_aRESSRC], hbmk[_HBMK_aRESCMP] } ), hbmk[_HBMK_cWorkDir], cResExt, .F. ) } )
+                  FOR EACH tmp IN ArrayAJoin({ l_aOBJ, hbmk[_HBMK_aOBJUSER], l_aOBJA, ListDirExt( ArrayAJoin({ hbmk[_HBMK_aRESSRC], hbmk[_HBMK_aRESCMP] }), hbmk[_HBMK_cWorkDir], cResExt, .F. ) })
                      IF hbmk[_HBMK_lDEBUGINC]
                         _hbmk_OutStd(hbmk, hb_StrFormat("debuginc: EXEDEP %1$s", tmp))
                      ENDIF
@@ -6281,7 +6281,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             DO CASE
             CASE !lStopAfterCComp .AND. !Empty(cBin_Link)
 
-               PlugIn_Execute_All( hbmk, "pre_link" )
+               PlugIn_Execute_All(hbmk, "pre_link")
 
                IF ( hbmk[_HBMK_lINC] .AND. !hbmk[_HBMK_lQuiet] ) .OR. hbmk[_HBMK_lInfo]
                   _hbmk_OutStd(hbmk, hb_StrFormat(I_("Linking... %1$s"), hbmk[_HBMK_cPROGNAME]))
@@ -6294,11 +6294,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
                // TODO: eliminate recursive macros from hbmk[_HBMK_aOPTL]
                cOpt_Link := StrTran(cOpt_Link, "{FL}", ;
-                  iif(hbmk[_HBMK_lBLDFLGL], hb_Version( HB_VERSION_FLAG_LINKER ) + " ", "") + ;
+                  iif(hbmk[_HBMK_lBLDFLGL], hb_Version(HB_VERSION_FLAG_LINKER) + " ", "") + ;
                   GetEnv("HB_USER_LDFLAGS") + ;
                   iif(Empty(hbmk[_HBMK_aOPTL]), "", " " + ArrayToList(hbmk[_HBMK_aOPTL])))
 
-               cOpt_Link := AllTrim( hb_StrReplace(cOpt_Link, { ;
+               cOpt_Link := AllTrim(hb_StrReplace(cOpt_Link, { ;
                   "{LO}" => ArrayToList(ArrayJoin(l_aOBJ, hbmk[_HBMK_aOBJUSER]), NIL, nOpt_Esc, nOpt_FNF, cObjPrefix), ;
                   "{LS}" => ArrayToList(ArrayJoin(ListDirExt(hbmk[_HBMK_aRESSRC], hbmk[_HBMK_cWorkDir], cResExt), hbmk[_HBMK_aRESCMP]), NIL, nOpt_Esc, nOpt_FNF, cResPrefix), ;
                   "{LA}" => ArrayToList(l_aOBJA, NIL, nOpt_Esc, nOpt_FNF), ;
@@ -6310,7 +6310,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   "{OM}" => FNameEscape(hb_FNameExtSet(hbmk[_HBMK_cPROGNAME], ".map"), nOpt_Esc, nOpt_FNF), ;
                   "{OI}" => FNameEscape(l_cIMPLIBNAME, nOpt_Esc, nOpt_FNF), ;
                   "{DL}" => ArrayToList(hbmk[_HBMK_aLIBPATH], cLibPathSep, nOpt_Esc, nOpt_FNF, cLibPathPrefix), ;
-                  "{DB}" => hbmk[_HBMK_cHB_INSTALL_BIN] }) )
+                  "{DB}" => hbmk[_HBMK_cHB_INSTALL_BIN] }))
 
                // Handle moving the whole command-line to a script, if requested.
                cScriptFile := NIL
@@ -6338,7 +6338,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   ENDIF
                ENDIF
 
-               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hbmk_hb_processRunCatch( cCommand, @cStdOutErr ) ) != 0
+               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hbmk_hb_processRunCatch(cCommand, @cStdOutErr) ) != 0
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running linker. %1$d"), tmp))
                   IF !hbmk[_HBMK_lQuiet]
                      OutErr(cCommand + _OUT_EOL)
@@ -6389,7 +6389,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
             CASE lStopAfterCComp .AND. hbmk[_HBMK_lCreateDyn] .AND. !Empty(cBin_Dyn)
 
-               PlugIn_Execute_All( hbmk, "pre_link" )
+               PlugIn_Execute_All(hbmk, "pre_link")
 
                IF ( hbmk[_HBMK_lINC] .AND. !hbmk[_HBMK_lQuiet] ) .OR. hbmk[_HBMK_lInfo]
                   _hbmk_OutStd(hbmk, hb_StrFormat(I_("Creating dynamic library... %1$s"), hbmk[_HBMK_cPROGNAME]))
@@ -6400,7 +6400,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                nOpt_Esc := iif("{SCRIPT}" $ cOpt_Dyn, hbmk[_HBMK_nScr_Esc], hbmk[_HBMK_nCmd_Esc])
                nOpt_FNF := iif("{SCRIPT}" $ cOpt_Dyn, hbmk[_HBMK_nScr_FNF], hbmk[_HBMK_nCmd_FNF])
 
-               aOBJLIST := ArrayJoin( l_aOBJ, hbmk[_HBMK_aOBJUSER] )
+               aOBJLIST := ArrayJoin(l_aOBJ, hbmk[_HBMK_aOBJUSER])
                tmp := ArrayToList(aOBJLIST, NIL, nOpt_Esc, nOpt_FNF, cDynObjPrefix)
 
                cScriptFile := NIL
@@ -6420,7 +6420,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                cOpt_Dyn := StrTran(cOpt_Dyn, "{FD}", ;
                   GetEnv("HB_USER_DFLAGS") + " " + ArrayToList(hbmk[_HBMK_aOPTD]))
 
-               cOpt_Dyn := AllTrim( hb_StrReplace(cOpt_Dyn, { ;
+               cOpt_Dyn := AllTrim(hb_StrReplace(cOpt_Dyn, { ;
                   "{LO}" => tmp, ;
                   "{LS}" => ArrayToList(ArrayJoin(ListDirExt(hbmk[_HBMK_aRESSRC], hbmk[_HBMK_cWorkDir], cResExt), hbmk[_HBMK_aRESCMP]), NIL, nOpt_Esc, nOpt_FNF, cResPrefix), ;
                   "{LL}" => ArrayToList(l_aLIB, NIL, nOpt_Esc, nOpt_FNF, cLibPrefix), ;
@@ -6431,7 +6431,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   "{OM}" => FNameEscape(hb_FNameExtSet(hbmk[_HBMK_cPROGNAME], ".map"), nOpt_Esc, nOpt_FNF), ;
                   "{OI}" => FNameEscape(l_cIMPLIBNAME, nOpt_Esc, nOpt_FNF), ;
                   "{DL}" => ArrayToList(hbmk[_HBMK_aLIBPATH], cLibPathSep, nOpt_Esc, nOpt_FNF, cLibPathPrefix), ;
-                  "{DB}" => hbmk[_HBMK_cHB_INSTALL_BIN] }) )
+                  "{DB}" => hbmk[_HBMK_cHB_INSTALL_BIN] }))
 
                // Handle moving the whole command-line to a script, if requested.
                IF Empty(cScriptFile) .AND. "{SCRIPT}" $ cOpt_Dyn
@@ -6458,7 +6458,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   ENDIF
                ENDIF
 
-               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hbmk_hb_processRunCatch( cCommand, @cStdOutErr ) ) != 0
+               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hbmk_hb_processRunCatch(cCommand, @cStdOutErr) ) != 0
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running dynamic lib link command. %1$d"), tmp))
                   IF !hbmk[_HBMK_lQuiet]
                      OutErr(cCommand + _OUT_EOL)
@@ -6484,7 +6484,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
             CASE lStopAfterCComp .AND. hbmk[_HBMK_lCreateLib] .AND. !Empty(cBin_Lib)
 
-               PlugIn_Execute_All( hbmk, "pre_lib" )
+               PlugIn_Execute_All(hbmk, "pre_lib")
 
                IF ( hbmk[_HBMK_lINC] .AND. !hbmk[_HBMK_lQuiet] ) .OR. hbmk[_HBMK_lInfo]
                   _hbmk_OutStd(hbmk, hb_StrFormat(I_("Creating static library... %1$s"), hbmk[_HBMK_cPROGNAME]))
@@ -6495,14 +6495,14 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                nOpt_Esc := iif("{SCRIPT}" $ cOpt_Lib, hbmk[_HBMK_nScr_Esc], hbmk[_HBMK_nCmd_Esc])
                nOpt_FNF := iif("{SCRIPT}" $ cOpt_Lib, hbmk[_HBMK_nScr_FNF], hbmk[_HBMK_nCmd_FNF])
 
-               cOpt_Lib := AllTrim( hb_StrReplace(cOpt_Lib, { ;
+               cOpt_Lib := AllTrim(hb_StrReplace(cOpt_Lib, { ;
                   "{FA}" => GetEnv("HB_USER_AFLAGS") + " " + ArrayToList(hbmk[_HBMK_aOPTA]), ;
                   "{LO}" => ArrayToList(ArrayJoin(l_aOBJ, hbmk[_HBMK_aOBJUSER]), NIL, nOpt_Esc, nOpt_FNF, cLibObjPrefix), ;
                   "{LL}" => ArrayToList(l_aLIB, NIL, nOpt_Esc, nOpt_FNF, cLibPrefix), ;
                   "{LB}" => ArrayToList(l_aLIBA, NIL, nOpt_Esc, nOpt_FNF), ;
                   "{OL}" => FNameEscape(hbmk[_HBMK_cPROGNAME], nOpt_Esc, nOpt_FNF), ;
                   "{DL}" => ArrayToList(hbmk[_HBMK_aLIBPATH], cLibPathSep, nOpt_Esc, nOpt_FNF, cLibPathPrefix), ;
-                  "{DB}" => hbmk[_HBMK_cHB_INSTALL_BIN] }) )
+                  "{DB}" => hbmk[_HBMK_cHB_INSTALL_BIN] }))
 
                // Handle moving the whole command-line to a script, if requested.
                cScriptFile := NIL
@@ -6530,7 +6530,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   ENDIF
                ENDIF
 
-               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun( cCommand ) ) != 0
+               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun(cCommand) ) != 0
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running lib command. %1$d"), tmp))
                   IF !hbmk[_HBMK_lQuiet]
                      OutErr(cCommand + _OUT_EOL)
@@ -6557,10 +6557,10 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   the switches and hunt for finding any useful
                   root reason for this behavior.
                   Try '-hbdyn rddado.hbp' for an example. */
-               mk_extern( hbmk, iif(Empty(l_cIMPLIBNAME), hbmk[_HBMK_cPROGNAME], l_cIMPLIBNAME), cBin_LibHBX, cOpt_LibHBX, cLibHBX_Regex, hbmk[_HBMK_cHBX] )
+               mk_extern(hbmk, iif(Empty(l_cIMPLIBNAME), hbmk[_HBMK_cPROGNAME], l_cIMPLIBNAME), cBin_LibHBX, cOpt_LibHBX, cLibHBX_Regex, hbmk[_HBMK_cHBX])
             ENDIF
 
-            DoLink( hbmk )
+            DoLink(hbmk)
             IF !lTargetUpToDate .OR. hbmk[_HBMK_lInstForce]
                FOR EACH tmp IN hbmk[_HBMK_aLINK]
                   hb_AIns( hbmk[_HBMK_aINSTFILE], 1, { "", tmp }, .T. )
@@ -6585,7 +6585,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       ( hbmk[_HBMK_lCreateHRB] .AND. hbmk[_HBMK_lStopAfterHarbour] ) .OR. ;
       ( hbmk[_HBMK_lCreatePPO] .AND. hbmk[_HBMK_lStopAfterHarbour] )
 
-      PlugIn_Execute_All( hbmk, "pre_cleanup" )
+      PlugIn_Execute_All(hbmk, "pre_cleanup")
 
       IF hbmk[_HBMK_lCLEAN]
          FErase(hbmk[_HBMK_cPROGNAME])
@@ -6656,9 +6656,9 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
 
             cCommand := ;
                cBin_Post + " " + ;
-               AllTrim( hb_StrReplace(cOpt_Post, { ;
+               AllTrim(hb_StrReplace(cOpt_Post, { ;
                   "{OB}" => FNameEscape(hbmk[_HBMK_cPROGNAME], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]), ;
-                  "{OI}" => iif(l_cIMPLIBNAME == NIL, "", FNameEscape(l_cIMPLIBNAME, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF])) }) ) // for implib post-process command
+                  "{OI}" => iif(l_cIMPLIBNAME == NIL, "", FNameEscape(l_cIMPLIBNAME, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF])) })) // for implib post-process command
 
             IF hbmk[_HBMK_lTRACE]
                IF !hbmk[_HBMK_lQuiet]
@@ -6667,7 +6667,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                OutStd(cCommand + _OUT_EOL)
             ENDIF
 
-            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun( cCommand ) ) != 0
+            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun(cCommand) ) != 0
                _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Running post processor command. %1$d:"), tmp))
                IF !hbmk[_HBMK_lQuiet]
                   OutErr(cCommand + _OUT_EOL)
@@ -6724,7 +6724,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             ENDCASE
 
             cOpt_Cprs := StrTran(cOpt_Cprs, "{OB}", FNameEscape(hbmk[_HBMK_cPROGNAME], nOpt_Esc, nOpt_FNF))
-            cOpt_Cprs := AllTrim( cOpt_Cprs )
+            cOpt_Cprs := AllTrim(cOpt_Cprs)
 
             cCommand := cBin_Cprs + " " + cOpt_Cprs
 
@@ -6735,7 +6735,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                OutStd(cCommand + _OUT_EOL)
             ENDIF
 
-            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun( cCommand ) ) != 0
+            IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun(cCommand) ) != 0
                _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Running compression command. %1$d:"), tmp))
                IF !hbmk[_HBMK_lQuiet]
                   OutErr(cCommand + _OUT_EOL)
@@ -6750,12 +6750,12 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             DO CASE
             CASE HBMK_ISPLAT("win")
                DO CASE
-               CASE ( cBin_Sign := FindInPath( "signtool.exe" ) ) != NIL // in MS Windows SDK
+               CASE ( cBin_Sign := FindInPath("signtool.exe") ) != NIL // in MS Windows SDK
                   cOpt_Sign := "sign {FS} -f {ID} -p {PW} -t {UT} {OB}"
-                  IF AScan( hbmk[_HBMK_aOPTS], {| tmp | HBMK_IS_IN( Lower(tmp), "-v|/v" ) } ) == 0
+                  IF AScan(hbmk[_HBMK_aOPTS], {| tmp | HBMK_IS_IN( Lower(tmp), "-v|/v" ) }) == 0
                      AAdd(hbmk[_HBMK_aOPTS], "-q")
                   ENDIF
-               CASE ( cBin_Sign := FindInPath( "posign.exe" ) ) != NIL // in Pelles C 7.00.0 or newer
+               CASE ( cBin_Sign := FindInPath("posign.exe") ) != NIL // in Pelles C 7.00.0 or newer
                   cBin_Sign := "posign.exe"
                   cOpt_Sign := "{FS} -pfx:{ID} -pwd:{PW} -timeurl:{UT} {OB}"
                OTHERWISE
@@ -6779,9 +6779,9 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   "{OB}" => FNameEscape(hbmk[_HBMK_cPROGNAME], nOpt_Esc, nOpt_FNF), ;
                   "{PW}" => cOpt_SignPass }
 
-               cCommand := cBin_Sign + " " + AllTrim( hb_StrReplace(cOpt_Sign, hReplace) )
+               cCommand := cBin_Sign + " " + AllTrim(hb_StrReplace(cOpt_Sign, hReplace))
                hReplace["{PW}"] := iif(Empty(cOpt_SignPass), "", "***")
-               tmp1     := cBin_Sign + " " + AllTrim( hb_StrReplace(cOpt_Sign, hReplace) )
+               tmp1     := cBin_Sign + " " + AllTrim(hb_StrReplace(cOpt_Sign, hReplace))
 
                IF hbmk[_HBMK_lTRACE]
                   IF !hbmk[_HBMK_lQuiet]
@@ -6790,7 +6790,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   OutStd(tmp1 + _OUT_EOL)
                ENDIF
 
-               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun( cCommand ) ) != 0
+               IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp := hb_processRun(cCommand) ) != 0
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Running code sign command. %1$d:"), tmp))
                   IF !hbmk[_HBMK_lQuiet]
                      OutStd(tmp1 + _OUT_EOL)
@@ -6806,10 +6806,10 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          DoInstCopy( hbmk )
       ENDIF
 
-      PlugIn_Execute_All( hbmk, "post_build" )
+      PlugIn_Execute_All(hbmk, "post_build")
    ENDIF
 
-   PlugIn_Execute_All( hbmk, "post_all" )
+   PlugIn_Execute_All(hbmk, "post_all")
 
    IF hbmk[_HBMK_lDEBUGTIME]
       _hbmk_OutStd(hbmk, hb_StrFormat(I_("Running time: %1$ds"), Round((hb_MilliSeconds() - nStart) / 1000, 1)))
@@ -6841,7 +6841,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          OutStd(cCommand + _OUT_EOL)
       ENDIF
       IF !hbmk[_HBMK_lDONTEXEC]
-         hbmk[_HBMK_nExitCode] := hb_run( cCommand )
+         hbmk[_HBMK_nExitCode] := hb_run(cCommand)
       ENDIF
    ENDIF
 
@@ -6861,7 +6861,7 @@ STATIC FUNCTION LaunchCommand(cCommand)
 
    RETURN cCommand
 
-STATIC PROCEDURE ProcEnvOption( cValue )
+STATIC PROCEDURE ProcEnvOption(cValue)
 
    LOCAL tmp
 
@@ -6924,7 +6924,7 @@ STATIC PROCEDURE AAddWithWarning(hbmk, aArray, cOption, aParam, lNew)
       "w-dup", ; // bcc
       "w-dpl" } // bcc (for libs)
 
-   IF AScan( sc_aWarning, {| tmp | Lower(tmp) $ Lower(cOption) } ) > 0
+   IF AScan(sc_aWarning, {| tmp | Lower(tmp) $ Lower(cOption) }) > 0
       _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Dangerous low-level option not recommended: %1$s"), ParamToString(aParam)))
    ENDIF
 
@@ -6942,33 +6942,33 @@ STATIC FUNCTION CheckParamInc(hbmk, cPath)
    LOCAL cComp
 #endif
 
-   cPath := hb_DirSepDel( hb_PathNormalize(cPath) )
+   cPath := hb_DirSepDel(hb_PathNormalize(cPath))
 
    // check against Harbour core header directory
-   IF hb_FileMatch( cPath, hbmk[_HBMK_cHB_INSTALL_INC] )
+   IF hb_FileMatch(cPath, hbmk[_HBMK_cHB_INSTALL_INC])
       RETURN .F.
    ENDIF
 
 #if !defined(__PLATFORM__UNIX)
    // check against any directory under embedded compiler directory
-   cComp := hb_DirSepDel( hb_PathNormalize(hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_PFX]) + _HBMK_SPECDIR_COMP) )
-   IF hb_FileMatch( Left(cPath, Len(cComp)), cComp )
+   cComp := hb_DirSepDel(hb_PathNormalize(hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_PFX]) + _HBMK_SPECDIR_COMP))
+   IF hb_FileMatch(Left(cPath, Len(cComp)), cComp)
       RETURN .F.
    ENDIF
 #endif
 
    RETURN .T.
 
-STATIC FUNCTION CheckParamLibPath( hbmk, cPath )
+STATIC FUNCTION CheckParamLibPath(hbmk, cPath)
 
 #if !defined(__PLATFORM__UNIX)
    LOCAL cComp
 #endif
 
-   cPath := hb_DirSepDel( hb_PathNormalize(cPath) )
+   cPath := hb_DirSepDel(hb_PathNormalize(cPath))
 
    // check against Harbour core lib directory
-   IF hb_FileMatch( cPath, hbmk[_HBMK_cHB_INSTALL_LIB] )
+   IF hb_FileMatch(cPath, hbmk[_HBMK_cHB_INSTALL_LIB])
       RETURN .F.
    ENDIF
 
@@ -6976,14 +6976,14 @@ STATIC FUNCTION CheckParamLibPath( hbmk, cPath )
       (non multi-compiler/platform) location. It is even more
       dangerous than above. */
    IF !hbmk[_HBMK_lSysLoc] .AND. ;
-      hb_FileMatch( cPath, hb_PathNormalize(hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_PFX]) + "lib") )
+      hb_FileMatch(cPath, hb_PathNormalize(hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_PFX]) + "lib"))
       RETURN .F.
    ENDIF
 
 #if !defined(__PLATFORM__UNIX)
    // check against any directory under embedded compiler directory
-   cComp := hb_DirSepDel( hb_PathNormalize(hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_PFX]) + _HBMK_SPECDIR_COMP) )
-   IF hb_FileMatch( Left(cPath, Len(cComp)), cComp )
+   cComp := hb_DirSepDel(hb_PathNormalize(hb_DirSepAdd(hbmk[_HBMK_cHB_INSTALL_PFX]) + _HBMK_SPECDIR_COMP))
+   IF hb_FileMatch(Left(cPath, Len(cComp)), cComp)
       RETURN .F.
    ENDIF
 #endif
@@ -6999,8 +6999,8 @@ STATIC FUNCTION CheckParamLib(hbmk, cLibName, lHBC, aParam)
 
    // detect path in libname (non-portable)
    IF !Empty(hb_FNameDir(cLibName))
-      cOpt := hb_DirSepDel( hb_FNameDir(cLibName) )
-      IF CheckParamLibPath( hbmk, cOpt )
+      cOpt := hb_DirSepDel(hb_FNameDir(cLibName))
+      IF CheckParamLibPath(hbmk, cOpt)
          cSuggestion += iif(lHBC, "'" + "libpaths=", "-L") + cOpt + iif(lHBC, "'", "")
       ENDIF
    ENDIF
@@ -7019,7 +7019,7 @@ STATIC FUNCTION CheckParamLib(hbmk, cLibName, lHBC, aParam)
          cOpt := SubStr(cOpt, 4)
       ENDIF
       // never suggest core libs
-      IF AScan( hbmk[_HBMK_aLIB_BASE_WARN], {| tmp | Lower(tmp) == Lower(cOpt) } ) > 0
+      IF AScan(hbmk[_HBMK_aLIB_BASE_WARN], {| tmp | Lower(tmp) == Lower(cOpt) }) > 0
          cOpt := ""
       ENDIF
       IF !Empty(cOpt)
@@ -7050,7 +7050,7 @@ STATIC FUNCTION CheckParamLib(hbmk, cLibName, lHBC, aParam)
 
    cLibName := Lower(hb_FNameName(cLibName))
 
-   IF AScan( hbmk[_HBMK_aLIB_BASE_WARN], {| tmp | Lower(tmp) == cLibName } ) > 0
+   IF AScan(hbmk[_HBMK_aLIB_BASE_WARN], {| tmp | Lower(tmp) == cLibName }) > 0
       _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Ignoring explicitly specified core library: %1$s (in option %2$s)"), cLibName, ParamToString(aParam)))
       RETURN .F.
    ENDIF
@@ -7091,7 +7091,7 @@ STATIC FUNCTION hbmk_hb_FileExists( cFileName )
 /* NOTE: We store -hbdyn objects in different dirs by default as - for Windows
          platforms - they're always built using different compilation options
          than normal targets. [vszakats] */
-STATIC PROCEDURE Set_lCreateDyn( hbmk, lValue )
+STATIC PROCEDURE Set_lCreateDyn(hbmk, lValue)
 
    hbmk[_HBMK_lCreateDyn] := lValue
 
@@ -7103,7 +7103,7 @@ STATIC PROCEDURE Set_lCreateDyn( hbmk, lValue )
 
    RETURN
 
-STATIC FUNCTION gcc_opt_lngc_fill( hbmk )
+STATIC FUNCTION gcc_opt_lngc_fill(hbmk)
 
    DO CASE
    CASE HBMK_ISCOMP("gcc|gccarm|gccomf|mingw|mingw64|mingwarm|icc|icc64|clang|clang64")
@@ -7121,7 +7121,7 @@ STATIC FUNCTION gcc_opt_lngc_fill( hbmk )
 
    RETURN ""
 
-STATIC FUNCTION gcc_opt_lngcpp_fill( hbmk )
+STATIC FUNCTION gcc_opt_lngcpp_fill(hbmk)
 
    DO CASE
    CASE HBMK_ISCOMP("gcc|gccarm|gccomf|mingw|mingw64|mingwarm|clang|clang64")
@@ -7229,12 +7229,12 @@ STATIC FUNCTION DoLinkDelete(hbmk)
 
    RETURN .T.
 
-STATIC FUNCTION DoLink( hbmk )
+STATIC FUNCTION DoLink(hbmk)
 
    LOCAL tmp
 
    FOR EACH tmp IN hbmk[_HBMK_aLINK]
-      IF hb_FLinkSym( tmp[2], tmp[1] ) == F_ERROR
+      IF hb_FLinkSym(tmp[2], tmp[1]) == F_ERROR
          _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Failed creating symbolic link %1$s to %2$s"), tmp[1], tmp[2]))
       ELSE
          _hbmk_OutStd(hbmk, hb_StrFormat(I_("Created symbolic link %1$s to %2$s"), tmp[1], tmp[2]))
@@ -7252,7 +7252,7 @@ STATIC FUNCTION DoIMPLIB(hbmk, bBlk_ImpLib, cLibLibPrefix, cLibLibExt, aIMPLIBSR
    LOCAL aToDelete
    LOCAL lRetVal := .F.
 
-   IF HB_ISBLOCK( bBlk_ImpLib )
+   IF HB_ISBLOCK(bBlk_ImpLib)
       IF !Empty(aIMPLIBSRC)
          hb_default(@lDoSrc, .F.)
          aToDelete := {}
@@ -7372,7 +7372,7 @@ STATIC PROCEDURE DoInstCopy( hbmk )
                      ++nCopied
                      IF cLink != NIL
                         FErase(cDestFileName)
-                        IF hb_FLinkSym( cLink, cDestFileName ) == F_ERROR
+                        IF hb_FLinkSym(cLink, cDestFileName) == F_ERROR
                            _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Copying symbolic link %1$s to %2$s failed with %3$d."), cInstFile, cDestFileName, FError()))
                         ELSEIF hbmk[_HBMK_lInfo]
                            _hbmk_OutStd(hbmk, hb_StrFormat(I_("Copied symbolic link %1$s to %2$s"), cInstFile, cDestFileName))
@@ -7475,7 +7475,7 @@ STATIC FUNCTION CompileCLoop( hbmk, aTO_DO, cBin_CompC, cOpt_CompC, hReplace, cO
       hReplace["{IC}"] := FNameEscape(tmp, nOpt_Esc, nOpt_FNF)
       hReplace["{OO}"] := FNameEscape(cOutputFile, nOpt_Esc, nOpt_FNF)
 
-      cCommand := cBin_CompC + " " + AllTrim( hb_StrReplace(cOpt_CompC, hReplace) )
+      cCommand := cBin_CompC + " " + AllTrim(hb_StrReplace(cOpt_CompC, hReplace))
 
       IF hbmk[_HBMK_lTRACE]
          IF !hbmk[_HBMK_lQuiet]
@@ -7488,7 +7488,7 @@ STATIC FUNCTION CompileCLoop( hbmk, aTO_DO, cBin_CompC, cOpt_CompC, hReplace, cO
          OutStd(cCommand + _OUT_EOL)
       ENDIF
 
-      IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp1 := hb_processRun( cCommand ) ) != 0
+      IF !hbmk[_HBMK_lDONTEXEC] .AND. ( tmp1 := hb_processRun(cCommand) ) != 0
          IF nJobs > 1
             _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Running C/C++ compiler job #%1$d. %2$d"), nJob, tmp1))
          ELSE
@@ -7601,12 +7601,12 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
          _hbmk_OutStd(hbmk, hb_StrFormat("debuginc: Calling Harbour compiler to detect dependencies of %1$s", cFileName))
       ENDIF
 
-      aCommand := ArrayAJoin( { { "-q0", "-sm" }, ;
-                                { iif(hbmk[_HBMK_lCreateLib] .OR. hbmk[_HBMK_lCreateDyn], "-n1", "-n2") }, ;
-                                { cFileName }, ;
-                                iif(hbmk[_HBMK_lBLDFLGP], { hb_Version( HB_VERSION_FLAG_PRG ) }, {}), ;
-                                ListToArray( iif(Empty(GetEnv("HB_USER_PRGFLAGS")), "", " " + GetEnv("HB_USER_PRGFLAGS")) ), ;
-                                hbmk[_HBMK_aOPTPRG] } )
+      aCommand := ArrayAJoin({ { "-q0", "-sm" }, ;
+                               { iif(hbmk[_HBMK_lCreateLib] .OR. hbmk[_HBMK_lCreateDyn], "-n1", "-n2") }, ;
+                               { cFileName }, ;
+                               iif(hbmk[_HBMK_lBLDFLGP], { hb_Version( HB_VERSION_FLAG_PRG ) }, {}), ;
+                               ListToArray( iif(Empty(GetEnv("HB_USER_PRGFLAGS")), "", " " + GetEnv("HB_USER_PRGFLAGS")) ), ;
+                               hbmk[_HBMK_aOPTPRG] })
 
       IF !HB_ISSTRING(tmp := hbmk_hb_compileBuf(hbmk, "harbour", aCommand))
          RETURN .F.
@@ -7617,7 +7617,7 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
          IF !Empty(cModule)
             FOR EACH cDependency IN hb_ATokens( cModule, " " )
                IF ( cDependency:__enumIndex() > 1 .OR. ; // Skip own (module) name
-                    ( LEFTEQUAL( cFileName, "@" ) .AND. cExt == ".clp" ) ) .AND. ;
+                    ( LEFTEQUAL(cFileName, "@") .AND. cExt == ".clp" ) ) .AND. ;
                     !Empty(cDependency)
                   IF hbmk[_HBMK_lDEBUGINC]
                      _hbmk_OutStd(hbmk, hb_StrFormat("debuginc: HEADER (NATIVE) %1$s", cDependency))
@@ -7629,7 +7629,7 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
                   ENDIF
                   IF cDependency $ hbmk[_HBMK_hAUTOHBC]
                      hbmk[_HBMK_hAUTOHBCFOUND][cDependency] := hbmk[_HBMK_hAUTOHBC][cDependency]
-                     hb_HDel( hbmk[_HBMK_hAUTOHBC], cDependency )
+                     hb_HDel(hbmk[_HBMK_hAUTOHBC], cDependency)
                   ENDIF
                ENDIF
             NEXT
@@ -7649,7 +7649,7 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
          GetEnv("HB_USER_CFLAGS") + ;
          " " + ArrayToList(hbmk[_HBMK_aOPTC]) + ;
          " " + ArrayToList(hbmk[_HBMK_aOPTCUSER]) + ;
-         " " + cFileName,, @tmp )
+         " " + cFileName,, @tmp)
 
       tmp := StrTran(tmp, Chr(13))
       tmp := StrTran(tmp, " \" + Chr(10))
@@ -7670,7 +7670,7 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
          ENDIF
       NEXT
    ELSE
-      IF !lCMode .AND. LEFTEQUAL( cFileName, "@" ) .AND. cExt == ".clp"
+      IF !lCMode .AND. LEFTEQUAL(cFileName, "@") .AND. cExt == ".clp"
          FOR EACH cDependency IN clpfile_read(SubStr(cFileName, 2))
             IF !Empty(cDependency)
                IF hbmk[_HBMK_lDEBUGINC]
@@ -7736,11 +7736,11 @@ STATIC FUNCTION s_getIncludedFiles( hbmk, cFile, cParentDir, lCMode )
       cFileBody := MemoRead(cFile)
 
       IF !Empty(cFileBody)
-         FOR EACH tmp IN hb_regexAll( t_pRegexInclude, cFileBody, ;
-                                      /* lCaseSensitive */, ;
-                                      /* lNewLine */, NIL, ;
-                                      /* nGetMatch */, ;
-                                      .T. /* lOnlyMatch */ )
+         FOR EACH tmp IN hb_regexAll(t_pRegexInclude, cFileBody, ;
+                                     /* lCaseSensitive */, ;
+                                     /* lNewLine */, NIL, ;
+                                     /* nGetMatch */, ;
+                                     .T. /* lOnlyMatch */)
             cHeader := tmp[2]
             lSystemHeader := ( Left(cHeader, 1) == "<" )
             cHeader := SubStr(cHeader, 2, Len(cHeader) - 2)
@@ -7850,7 +7850,7 @@ STATIC FUNCTION s_getIncludedFiles( hbmk, cFile, cParentDir, lCMode )
 
             IF !lCMode .AND. cHeader $ hbmk[_HBMK_hAUTOHBC]
                hbmk[_HBMK_hAUTOHBCFOUND][cHeader] := hbmk[_HBMK_hAUTOHBC][cHeader]
-               hb_HDel( hbmk[_HBMK_hAUTOHBC], cHeader )
+               hb_HDel(hbmk[_HBMK_hAUTOHBC], cHeader)
             ENDIF
 
             IF ( cHeader := FindHeader( hbmk, cHeader, cParentDir, lSystemHeader, lSystemHeader ) ) != NIL
@@ -7867,11 +7867,11 @@ STATIC FUNCTION s_getIncludedFiles( hbmk, cFile, cParentDir, lCMode )
          NEXT
 
          IF !lCMode
-            FOR EACH tmp IN hb_regexAll( t_pRegexRequire, cFileBody, ;
-                                         /* lCaseSensitive */, ;
-                                         /* lNewLine */, NIL, ;
-                                         /* nGetMatch */, ;
-                                         .T. /* lOnlyMatch */ )
+            FOR EACH tmp IN hb_regexAll(t_pRegexRequire, cFileBody, ;
+                                        /* lCaseSensitive */, ;
+                                        /* lNewLine */, NIL, ;
+                                        /* nGetMatch */, ;
+                                        .T. /* lOnlyMatch */)
                cHeader := tmp[2]
                cHeader := SubStr(cHeader, 2, Len(cHeader) - 2)
                hbmk[_HBMK_hAUTOHBCFOUND]["." + cHeader] := hb_FNameExtSet(cHeader, ".hbc")
@@ -8054,7 +8054,7 @@ STATIC FUNCTION deplst_read(hbmk, hDeps, cFileName)
 
    FOR EACH cLine IN hb_ATokens( cFileBody, Chr(10) )
       ++nLine
-      cLine := AllTrim( cLine )
+      cLine := AllTrim(cLine)
       IF cLine == "\" .OR. Right(cLine, 2) == " \"
          cList += Left(cLine, Len(cLine) - 1)
       ELSE
@@ -8082,7 +8082,7 @@ STATIC FUNCTION deplst_add(hDeps, cList)
 
    IF !Empty(cList)
       n := At( ": ", cList )
-      IF n != 0 .AND. !Empty(cFile := AllTrim( Left(cList, n - 1) ))
+      IF n != 0 .AND. !Empty(cFile := AllTrim(Left(cList, n - 1)))
          aList := hb_ATokens( SubStr(cList, n + 1) )
          IF cFile $ hDeps
             AMerge(hDeps[cFile], aList)
@@ -8334,7 +8334,7 @@ STATIC PROCEDURE dep_try_detection(hbmk, dep)
    RETURN
 
 // Try '*-config' and 'pkg-config *' detection
-STATIC FUNCTION dep_try_pkg_detection( hbmk, dep )
+STATIC FUNCTION dep_try_pkg_detection(hbmk, dep)
 
    LOCAL cStdOut
    LOCAL cStdErr
@@ -8354,39 +8354,39 @@ STATIC FUNCTION dep_try_pkg_detection( hbmk, dep )
 
       IF !Empty(cName)
          IF !dep[_HBMKDEP_lFound]
-            cName := AllTrim( cName )
+            cName := AllTrim(cName)
 
-            hb_processRun( "pkg-config --libs --cflags " + cName,, @cStdOut, @cStdErr )
-            hb_processRun( "pkg-config --modversion " + cName,, @cVersion, @cStdErr )
+            hb_processRun("pkg-config --libs --cflags " + cName,, @cStdOut, @cStdErr)
+            hb_processRun("pkg-config --modversion " + cName,, @cVersion, @cStdErr)
             IF Empty(cStdOut)
-               hb_processRun( cName + "-config --libs --cflags",, @cStdOut, @cStdErr )
-               hb_processRun( cName + "-config --version",, @cVersion, @cStdErr )
+               hb_processRun(cName + "-config --libs --cflags",, @cStdOut, @cStdErr)
+               hb_processRun(cName + "-config --version",, @cVersion, @cStdErr)
             ENDIF
 #if defined(__PLATFORM__DARWIN)
             // Homebrew
             IF Empty(cStdOut)
                IF hb_vfExists( tmp := "/usr/local/bin/pkg-config" )
-                  hb_processRun( tmp + " --libs --cflags " + cName,, @cStdOut, @cStdErr )
-                  hb_processRun( tmp + " --modversion " + cName,, @cVersion, @cStdErr )
+                  hb_processRun(tmp + " --libs --cflags " + cName,, @cStdOut, @cStdErr)
+                  hb_processRun(tmp + " --modversion " + cName,, @cVersion, @cStdErr)
                ENDIF
             ENDIF
             IF Empty(cStdOut)
                IF hb_vfExists( tmp := "/usr/local/bin/" + cName + "-config" )
-                  hb_processRun( tmp + " --libs --cflags",, @cStdOut, @cStdErr )
-                  hb_processRun( tmp + " --version",, @cVersion, @cStdErr )
+                  hb_processRun(tmp + " --libs --cflags",, @cStdOut, @cStdErr)
+                  hb_processRun(tmp + " --version",, @cVersion, @cStdErr)
                ENDIF
             ENDIF
             // MacPorts/DarwinPorts
             IF Empty(cStdOut)
                IF hb_vfExists( tmp := "/opt/local/bin/pkg-config" )
-                  hb_processRun( tmp + " --libs --cflags " + cName,, @cStdOut, @cStdErr )
-                  hb_processRun( tmp + " --modversion " + cName,, @cVersion, @cStdErr )
+                  hb_processRun(tmp + " --libs --cflags " + cName,, @cStdOut, @cStdErr)
+                  hb_processRun(tmp + " --modversion " + cName,, @cVersion, @cStdErr)
                ENDIF
             ENDIF
             IF Empty(cStdOut)
                IF hb_vfExists( tmp := "/opt/local/bin/" + cName + "-config" )
-                  hb_processRun( tmp + " --libs --cflags",, @cStdOut, @cStdErr )
-                  hb_processRun( tmp + " --version",, @cVersion, @cStdErr )
+                  hb_processRun(tmp + " --libs --cflags",, @cStdOut, @cStdErr)
+                  hb_processRun(tmp + " --version",, @cVersion, @cStdErr)
                ENDIF
             ENDIF
 #endif
@@ -8398,7 +8398,7 @@ STATIC FUNCTION dep_try_pkg_detection( hbmk, dep )
                   cVersion := "unrecognized version"
                ENDIF
 
-               cStdOut := StrTran(StrTran( cStdOut, Chr(13) ), Chr(10), " ")
+               cStdOut := StrTran(StrTran(cStdOut, Chr(13)), Chr(10), " ")
 
                FOR EACH cItem IN hb_ATokens( cStdOut,, .T. )
                   IF hb_LeftEq( cItem, "-I" )
@@ -8420,9 +8420,9 @@ STATIC FUNCTION dep_try_pkg_detection( hbmk, dep )
                         ENDIF
                      CASE hb_LeftEq( cItem, "-L" )
                         cItem := SubStr(cItem, Len("-L") + 1)
-                        AAdd(hbmk[_HBMK_aLIBPATH], hb_DirSepDel( hb_DirSepToOS( cItem ) ))
+                        AAdd(hbmk[_HBMK_aLIBPATH], hb_DirSepDel(hb_DirSepToOS( cItem )))
                      CASE hb_LeftEq( cItem, "-I" )
-                        cItem := hb_DirSepDel( hb_DirSepToOS( SubStr(cItem, Len("-I") + 1) ) )
+                        cItem := hb_DirSepDel(hb_DirSepToOS( SubStr(cItem, Len("-I") + 1) ))
                         IF Empty(cIncludeDir)
                            cIncludeDir := cItem
                         ENDIF
@@ -8455,7 +8455,7 @@ STATIC FUNCTION dep_try_pkg_detection( hbmk, dep )
    RETURN .F.
 
 // Try detection by header
-STATIC FUNCTION dep_try_header_detection( hbmk, dep )
+STATIC FUNCTION dep_try_header_detection(hbmk, dep)
 
    LOCAL aINCPATH
    LOCAL cDirOri
@@ -8473,7 +8473,7 @@ STATIC FUNCTION dep_try_header_detection( hbmk, dep )
             cDir := iif(aINCPATH:__enumIndex() == 1, dep[_HBMKDEP_cINCROOT], "") + cDirOri
             FOR EACH cFileName IN dep[_HBMKDEP_aKeyHeader]
                IF HeaderExists( cDir, cFileName ) != NIL
-                  dep[_HBMKDEP_cFound] := hb_DirSepDel( hb_DirSepToOS( cDir ) )
+                  dep[_HBMKDEP_cFound] := hb_DirSepDel(hb_DirSepToOS( cDir ))
                   hbmk[_HBMK_hDEPTSDIR][dep[_HBMKDEP_cFound]] := NIL
                   // Adjust implib source names with component path
                   FOR EACH tmp IN dep[_HBMKDEP_aIMPLIBSRC]
@@ -8484,7 +8484,7 @@ STATIC FUNCTION dep_try_header_detection( hbmk, dep )
                   IF hbmk[_HBMK_lDEBUGDEPD]
                      _hbmk_OutStd(hbmk, hb_StrFormat("debugdepd: REQ %1$s: found by %2$s header at %3$s %4$s", dep[_HBMKDEP_cName], hb_DirSepToOS(cFileName), dep[_HBMKDEP_cFound], iif(dep[_HBMKDEP_lFoundLOCAL], "(local)", "")))
                   ENDIF
-                  AAddNew( hbmk[_HBMK_aINCPATH], hb_DirSepDel( hb_DirSepToOS( cDir ) ) )
+                  AAddNew( hbmk[_HBMK_aINCPATH], hb_DirSepDel(hb_DirSepToOS( cDir )) )
                   AAdd(hbmk[_HBMK_aOPTC], "-D" + hb_StrFormat(_HBMK_HAS_TPL, StrToDefine(dep[_HBMKDEP_cName])))
                   hbmk[_HBMK_hDEPTMACRO][hb_StrFormat(_HBMK_HAS_TPL, StrToDefine(dep[_HBMKDEP_cName]))] := NIL
                   hbmk[_HBMK_hDEPTMACRO][hb_StrFormat(_HBMK_DIR_TPL, StrToDefine(dep[_HBMKDEP_cName]))] := hb_DirSepDel(hb_DirSepToOS(cDir))
@@ -8520,7 +8520,7 @@ STATIC FUNCTION AMerge(aDst, aSrc)
    LOCAL item
 
    FOR EACH item IN aSrc
-      IF hb_AScan( aDst, item,,, .T. ) == 0
+      IF hb_AScan(aDst, item,,, .T.) == 0
          AAdd(aDst, item)
       ENDIF
    NEXT
@@ -8661,11 +8661,11 @@ STATIC FUNCTION LibExists( hbmk, cDir, cLib, cLibPrefix, cLibExt )
    RETURN NIL
 
 #if !defined(__PLATFORM__UNIX)
-STATIC FUNCTION FindInSamePath( cFileName, cFileName2, cPath )
+STATIC FUNCTION FindInSamePath(cFileName, cFileName2, cPath)
 
    LOCAL cDir, cName, cExt
 
-   cFileName := FindInPath( cFileName, cPath )
+   cFileName := FindInPath(cFileName, cPath)
 
    IF !Empty(cFileName)
 
@@ -8780,13 +8780,13 @@ FUNCTION hbmk_ArrayToList(array, cSeparator)
 
    RETURN cString
 
-STATIC FUNCTION ctx_to_hbmk( ctx )
+STATIC FUNCTION ctx_to_hbmk(ctx)
 
    LOCAL hbmk
 
    LOCAL cSecToken := hbmk_SecToken()
 
-   IF HB_ISHASH( ctx ) .AND. cSecToken $ ctx
+   IF HB_ISHASH(ctx) .AND. cSecToken $ ctx
       hbmk := ctx[cSecToken]
       IF HB_ISARRAY( hbmk ) .AND. Len(hbmk) == _HBMK_MAX_
          RETURN hbmk
@@ -8797,7 +8797,7 @@ STATIC FUNCTION ctx_to_hbmk( ctx )
 
 FUNCTION hbmk_FNameEscape(ctx, cFileName)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk == NIL
 #ifdef HB_LEGACY_LEVEL4
@@ -8813,7 +8813,7 @@ FUNCTION hbmk_FNameEscape(ctx, cFileName)
 
 FUNCTION hbmk_OutStdRaw( ctx, ... )
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk == NIL .OR. hbmk[_HBMK_lDumpInfo]
       RETURN NIL
@@ -8823,7 +8823,7 @@ FUNCTION hbmk_OutStdRaw( ctx, ... )
 
 FUNCTION hbmk_OutErrRaw( ctx, ... )
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk == NIL .OR. hbmk[_HBMK_lDumpInfo]
       RETURN NIL
@@ -8833,7 +8833,7 @@ FUNCTION hbmk_OutErrRaw( ctx, ... )
 
 FUNCTION hbmk_OutStd(ctx, cText)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL
       RETURN _hbmk_OutStd(hbmk, hb_StrFormat(I_("plugin: %1$s"), cText))
@@ -8843,7 +8843,7 @@ FUNCTION hbmk_OutStd(ctx, cText)
 
 FUNCTION hbmk_OutErr(ctx, cText)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL
       RETURN _hbmk_OutErr(hbmk, hb_StrFormat(I_("plugin: %1$s"), cText))
@@ -8853,7 +8853,7 @@ FUNCTION hbmk_OutErr(ctx, cText)
 
 FUNCTION hbmk_PathFromWorkdirToCWD(ctx)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(hbmk[_HBMK_cWorkDir])
       RETURN hb_DirSepAdd(hb_PathRelativize(hb_PathNormalize(PathMakeAbsolute(hbmk[_HBMK_cWorkDir], hb_cwd())), hb_cwd(), .T.))
@@ -8863,7 +8863,7 @@ FUNCTION hbmk_PathFromWorkdirToCWD(ctx)
 
 FUNCTION hbmk_Macro( ctx, cString )
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cString)
       RETURN MacroProc(hbmk, cString)
@@ -8873,7 +8873,7 @@ FUNCTION hbmk_Macro( ctx, cString )
 
 FUNCTION hbmk_PathSepToTarget( ctx, cFileName )
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       RETURN PathSepToTarget( hbmk, cFileName )
@@ -8883,7 +8883,7 @@ FUNCTION hbmk_PathSepToTarget( ctx, cFileName )
 
 PROCEDURE hbmk_AddInput_PRG(ctx, cFileName)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       AAdd(hbmk[_HBMK_aPRG], hb_DirSepToOS( cFileName ))
@@ -8894,7 +8894,7 @@ PROCEDURE hbmk_AddInput_PRG(ctx, cFileName)
 
 PROCEDURE hbmk_AddInput_C(ctx, cFileName)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       AAdd(hbmk[_HBMK_aC], hb_DirSepToOS( cFileName ))
@@ -8905,7 +8905,7 @@ PROCEDURE hbmk_AddInput_C(ctx, cFileName)
 
 PROCEDURE hbmk_AddInput_CPP( ctx, cFileName )
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       AAdd(hbmk[_HBMK_aCPP], hb_DirSepToOS( cFileName ))
@@ -8916,7 +8916,7 @@ PROCEDURE hbmk_AddInput_CPP( ctx, cFileName )
 
 PROCEDURE hbmk_AddInput_RC(ctx, cFileName)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       AAdd(hbmk[_HBMK_aRESSRC], hb_DirSepToOS( cFileName ))
@@ -8924,9 +8924,9 @@ PROCEDURE hbmk_AddInput_RC(ctx, cFileName)
 
    RETURN
 
-PROCEDURE hbmk_AddInput_OBJ( ctx, cFileName )
+PROCEDURE hbmk_AddInput_OBJ(ctx, cFileName)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       AAdd(hbmk[_HBMK_aOBJUSER], hb_DirSepToOS( cFileName ))
@@ -8936,7 +8936,7 @@ PROCEDURE hbmk_AddInput_OBJ( ctx, cFileName )
 
 PROCEDURE hbmk_AddInput_INSTFILE(ctx, cFileName, cGroup)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cFileName)
       hb_default(@cGroup, "")
@@ -8945,9 +8945,9 @@ PROCEDURE hbmk_AddInput_INSTFILE(ctx, cFileName, cGroup)
 
    RETURN
 
-FUNCTION hbmk_Register_Input_File_Extension( ctx, cExt )
+FUNCTION hbmk_Register_Input_File_Extension(ctx, cExt)
 
-   LOCAL hbmk := ctx_to_hbmk( ctx )
+   LOCAL hbmk := ctx_to_hbmk(ctx)
 
    IF hbmk != NIL .AND. HB_ISSTRING(cExt)
       IF !Empty(cExt)
@@ -8968,13 +8968,13 @@ STATIC FUNCTION hbmk_SecToken()
    STATIC s_cToken
    STATIC s_mutexToken := hb_mutexCreate()
 
-   hb_mutexLock( s_mutexToken )
+   hb_mutexLock(s_mutexToken)
 
    IF s_cToken == NIL
       s_cToken := "c" + hb_base64Encode(hb_ntos(hb_rand32()))
    ENDIF
 
-   hb_mutexUnlock( s_mutexToken )
+   hb_mutexUnlock(s_mutexToken)
 
    RETURN s_cToken
 
@@ -9030,7 +9030,7 @@ STATIC FUNCTION PlugIn_call_low( hbmk, cName, hrb, ctx )
    LOCAL oError
    LOCAL lSuccess := .T.
 
-   BEGIN SEQUENCE WITH {| oError | oError:cargo := { ProcName(1), ProcLine(1) }, Break( oError ) }
+   BEGIN SEQUENCE WITH {| oError | oError:cargo := { ProcName(1), ProcLine(1) }, Break(oError) }
       xResult := hb_hrbDo( hrb, ctx )
       IF !Empty(xResult)
          IF hbmk[_HBMK_lInfo]
@@ -9048,7 +9048,7 @@ STATIC FUNCTION PlugIn_call_low( hbmk, cName, hrb, ctx )
 
    RETURN lSuccess
 
-STATIC FUNCTION PlugIn_Execute_All( hbmk, cState )
+STATIC FUNCTION PlugIn_Execute_All(hbmk, cState)
 
    LOCAL hrb
    LOCAL ctx
@@ -9089,7 +9089,7 @@ STATIC FUNCTION hbmk_ErrorMessage(oError)
 
    RETURN cMessage
 
-STATIC FUNCTION FindInPathPlugIn( /* @ */ cFileName )
+STATIC FUNCTION FindInPathPlugIn(/* @ */ cFileName)
 
    LOCAL cDir
    LOCAL cName
@@ -9107,9 +9107,9 @@ STATIC FUNCTION FindInPathPlugIn( /* @ */ cFileName )
 
    cFileName := hb_FNameMerge(cDir, cName, cExt)
 
-   RETURN FindInPath( cFileName )
+   RETURN FindInPath(cFileName)
 
-STATIC FUNCTION FindInPath( cFileName, xPath, aExtDef )
+STATIC FUNCTION FindInPath(cFileName, xPath, aExtDef)
 
    LOCAL cDir
    LOCAL cName
@@ -9127,7 +9127,7 @@ STATIC FUNCTION FindInPath( cFileName, xPath, aExtDef )
       aExt := { cExt }
       IF Empty(cExt)
          FOR EACH cExt IN aExtDef
-            IF AScan( aExt, {| tmp | hb_FileMatch( tmp, cExt ) } ) == 0
+            IF AScan(aExt, {| tmp | hb_FileMatch(tmp, cExt) }) == 0
                AAdd(aExt, cExt)
             ENDIF
          NEXT
@@ -9188,7 +9188,7 @@ STATIC FUNCTION ArrayJoinNoClone(arraySrc1, arraySrc2)
    RETURN ACopy( arraySrc2, arraySrc1, , , nLen1 + 1 )
 #endif
 
-STATIC FUNCTION ArrayJoin( arraySrc1, arraySrc2 )
+STATIC FUNCTION ArrayJoin(arraySrc1, arraySrc2)
 
    LOCAL arrayNew := AClone(arraySrc1)
    LOCAL nLen1 := Len(arrayNew)
@@ -9197,7 +9197,7 @@ STATIC FUNCTION ArrayJoin( arraySrc1, arraySrc2 )
 
    RETURN ACopy( arraySrc2, arrayNew, , , nLen1 + 1 )
 
-STATIC FUNCTION ArrayAJoin( arrayList )
+STATIC FUNCTION ArrayAJoin(arrayList)
 
    LOCAL array := AClone(arrayList[1])
    LOCAL tmp
@@ -9236,7 +9236,7 @@ STATIC FUNCTION ArraySplit( arrayIn, nChunksReq )
          IF nChunkPos == 0
             AAdd(arrayOut, {})
          ENDIF
-         AAdd(ATail( arrayOut ), item)
+         AAdd(ATail(arrayOut), item)
          IF ++nChunkPos == nChunkSize .AND. Len(arrayOut) < nChunksReq
             nChunkPos := 0
          ENDIF
@@ -9249,7 +9249,7 @@ STATIC FUNCTION ArraySplit( arrayIn, nChunksReq )
 
 STATIC FUNCTION AAddNewNotEmpty( array, xItem )
 
-   IF !Empty(xItem) .AND. AScan( array, {| tmp | tmp == xItem } ) == 0
+   IF !Empty(xItem) .AND. AScan(array, {| tmp | tmp == xItem }) == 0
       AAdd(array, xItem)
    ENDIF
 
@@ -9258,7 +9258,7 @@ STATIC FUNCTION AAddNewNotEmpty( array, xItem )
 #if 0
 STATIC FUNCTION AAddNewAtTop( array, xItem )
 
-   IF AScan( array, {| tmp | tmp == xItem } ) == 0
+   IF AScan(array, {| tmp | tmp == xItem }) == 0
       hb_AIns( array, 1, xItem, .T. )
    ENDIF
 
@@ -9267,7 +9267,7 @@ STATIC FUNCTION AAddNewAtTop( array, xItem )
 
 STATIC FUNCTION AAddNew( array, xItem )
 
-   IF AScan( array, {| tmp | tmp == xItem } ) == 0
+   IF AScan(array, {| tmp | tmp == xItem }) == 0
       AAdd(array, xItem)
    ENDIF
 
@@ -9275,7 +9275,7 @@ STATIC FUNCTION AAddNew( array, xItem )
 
 STATIC FUNCTION AAddNewINST( array, xItem, lToTop )
 
-   IF AScan( array, {| tmp | tmp[1] == xItem[1] .AND. tmp[2] == xItem[2] } ) == 0
+   IF AScan(array, {| tmp | tmp[1] == xItem[1] .AND. tmp[2] == xItem[2] }) == 0
       IF lToTop != NIL .AND. lToTop
          hb_AIns( array, 1, xItem, .T. )
       ELSE
@@ -9408,7 +9408,7 @@ STATIC FUNCTION FN_CookLib(cLibName, cPrefix, cExtNew)
    RETURN hb_FNameMerge(cDir, cName, cExt)
 
 // Append optional prefix and optional extension to all members
-STATIC FUNCTION ListCook( arraySrc, cExtNew )
+STATIC FUNCTION ListCook(arraySrc, cExtNew)
 
    LOCAL array := AClone(arraySrc)
    LOCAL cItem
@@ -9702,7 +9702,7 @@ STATIC FUNCTION HBC_Find(hbmk, cFile, nNesting)
    RETURN ""
 
 // shell dependent, but let's assume the platform default is used
-STATIC FUNCTION EnvNotation( cEnvName )
+STATIC FUNCTION EnvNotation(cEnvName)
 #if defined(__PLATFORM__WINDOWS)
    RETURN "%" + cEnvName + "%"
 #else
@@ -9807,7 +9807,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
 
    FOR EACH cLine IN hb_ATokens( cFile, _CHR_EOL )
 
-      cLineOri := cLine := AllTrim( ArchCompFilter( hbmk, AllTrim( cLine ), cFileName ) )
+      cLineOri := cLine := AllTrim(ArchCompFilter( hbmk, AllTrim(cLine), cFileName ))
 
       #define _PAR_NEW_HBC()  _PAR_NEW( cLineOri, cFileName, cLine:__enumIndex() )
 
@@ -9997,7 +9997,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
                ENDIF
 
                IF lFound
-                  hbmk[_HBMK_hAUTOHBC][AllTrim( StrTran(cName, "\", "/") )] := cItem
+                  hbmk[_HBMK_hAUTOHBC][AllTrim(StrTran(cName, "\", "/"))] := cItem
                ELSE
                   _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Cannot find %1$s (referenced from %2$s)"), tmp1, cFileName))
                ENDIF
@@ -10009,7 +10009,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
             cItem := MacroProc(hbmk, StrStripQuote(cItem), cFileName)
             IF !Empty(cItem)
                cItem := hb_DirSepDel(hb_PathNormalize(PathMakeAbsolute(hb_DirSepToOS(cItem), hb_FNameDir(cFileName))))
-               IF CheckParamLibPath( hbmk, cItem )
+               IF CheckParamLibPath(hbmk, cItem)
                   IF ( _MACRO_LATE_PREFIX + _MACRO_OPEN ) $ cItem .OR. hb_DirExists(cItem)
                      AAddNew( hbmk[_HBMK_aLIBPATH], cItem )
                   ENDIF
@@ -10174,7 +10174,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
          OTHERWISE ; InvalidOptionValue(hbmk, _PAR_NEW_HBC())
          ENDCASE
 
-      CASE Lower(Left(cLine, Len("nulrdd="))) == "nulrdd="       ; cLine := SubStr(cLine, Len( "nulrdd="       ) + 1)
+      CASE Lower(Left(cLine, Len("nulrdd="))) == "nulrdd="       ; cLine := SubStr(cLine, Len("nulrdd=") + 1)
          DO CASE
          CASE ValueIsT(cLine) ; hbmk[_HBMK_lNULRDD] := .T.
          CASE ValueIsF(cLine) ; hbmk[_HBMK_lNULRDD] := .F.
@@ -10286,7 +10286,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
       CASE Lower(Left(cLine, Len("plugins="))) == "plugins="      ; cLine := SubStr(cLine, Len("plugins=") + 1)
 
          cLine := hb_PathNormalize(PathMakeAbsolute(hb_DirSepToOS(MacroProc(hbmk, cLine, cFileName)), hb_FNameDir(cFileName)))
-         IF ( tmp := FindInPathPlugIn( cLine ) ) != NIL
+         IF ( tmp := FindInPathPlugIn(cLine) ) != NIL
             PlugIn_Load(hbmk, tmp)
          ELSE
             IF hbmk[_HBMK_lInfo]
@@ -10304,11 +10304,11 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
                cLine := NIL
             ENDIF
             IF !Empty(cLine) .AND. !( Lower(cLine) == "gtnul" )
-               IF AScan( hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cLine) } ) == 0 .AND. ;
-                  AScan( hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cLine) } ) == 0
+               IF AScan(hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cLine) }) == 0 .AND. ;
+                  AScan(hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cLine) }) == 0
                   AAddNotEmpty( hbmk[_HBMK_aLIBUSERGT], hb_DirSepToOS( cLine ) )
                ENDIF
-               IF AScan( hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(cLine) } ) == 0
+               IF AScan(hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(cLine) }) == 0
                   AAddNotEmpty( hbmk[_HBMK_aGT], hb_DirSepToOS( cLine ) )
                ENDIF
             ENDIF
@@ -10323,11 +10323,11 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
                ENDIF
             ENDIF
             IF !Empty(cLine) .AND. !( Lower(cLine) == "gtnul" )
-               IF AScan( hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cLine) } ) == 0 .AND. ;
-                  AScan( hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cLine) } ) == 0
+               IF AScan(hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cLine) }) == 0 .AND. ;
+                  AScan(hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cLine) }) == 0
                   AAddNotEmpty( hbmk[_HBMK_aLIBUSERGT], hb_DirSepToOS( cLine ) )
                ENDIF
-               IF AScan( hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(cLine) } ) == 0
+               IF AScan(hbmk[_HBMK_aGT], {| tmp | Lower(tmp) == Lower(cLine) }) == 0
                   AAddNotEmpty( hbmk[_HBMK_aGT], hb_DirSepToOS( cLine ) )
                ENDIF
             ENDIF
@@ -10335,7 +10335,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
 
       CASE Lower(Left(cLine, Len("env="))) == "env="          ; cLine := SubStr(cLine, Len("env=") + 1)
 
-         ProcEnvOption( cLine )
+         ProcEnvOption(cLine)
 
       CASE Lower(Left(cLine, Len("deppkgname="))) == "deppkgname="   ; cLine := SubStr(cLine, Len("deppkgname=") + 1)
 
@@ -10348,7 +10348,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
 
          IF dep_split_arg(hbmk, cLine, @cName, @cLine)
             FOR EACH cItem IN hb_ATokens( cLine,, .T. )
-               AAddNewNotEmpty( hbmk[_HBMK_hDEP][cName][_HBMKDEP_aKeyHeader], AllTrim( StrTran(MacroProc(hbmk, cItem, cFileName), "\", "/") ) )
+               AAddNewNotEmpty( hbmk[_HBMK_hDEP][cName][_HBMKDEP_aKeyHeader], AllTrim(StrTran(MacroProc(hbmk, cItem, cFileName), "\", "/")) )
             NEXT
          ENDIF
 
@@ -10365,7 +10365,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
       CASE Lower(Left(cLine, Len("depcontrol="))) == "depcontrol="   ; cLine := SubStr(cLine, Len("depcontrol=") + 1)
 
          IF dep_split_arg(hbmk, cLine, @cName, @cLine)
-            hbmk[_HBMK_hDEP][cName][_HBMKDEP_cControl] := AllTrim( MacroProc(hbmk, cLine, cFileName) )
+            hbmk[_HBMK_hDEP][cName][_HBMKDEP_cControl] := AllTrim(MacroProc(hbmk, cLine, cFileName))
             AAddNew( hbmk[_HBMK_hDEP][cName][_HBMKDEP_aINCPATH], _HBMK_DEP_CTRL_MARKER )
          ENDIF
 
@@ -10410,7 +10410,7 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
          cLine := MacroProc(hbmk, cLine, cFileName)
          IF !Empty(cLine)
             IF cLine $ hbmk[_HBMK_hDEP]
-               dep_try_detection( hbmk, hbmk[_HBMK_hDEP][cLine] )
+               dep_try_detection(hbmk, hbmk[_HBMK_hDEP][cLine])
             ELSE
                _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: Unknown dependency name: %1$s"), ParamToString(_PAR_NEW_HBC())))
             ENDIF
@@ -10467,8 +10467,8 @@ STATIC FUNCTION HBC_ProcessOne(hbmk, cFileName, nNestingLevel)
 STATIC FUNCTION IsGTRequested(hbmk, cWhichGT)
    // Check if it is a core/user GT.
    RETURN ;
-      AScan( hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cWhichGT) } ) > 0 .OR. ;
-      AScan( hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cWhichGT) } ) > 0
+      AScan(hbmk[_HBMK_aLIBCOREGT], {| tmp | Lower(tmp) == Lower(cWhichGT) }) > 0 .OR. ;
+      AScan(hbmk[_HBMK_aLIBUSERGT], {| tmp | Lower(tmp) == Lower(cWhichGT) }) > 0
 
 STATIC FUNCTION StrStripQuote(cString)
 
@@ -10524,7 +10524,7 @@ STATIC FUNCTION hbmk_builtin_Is( cFileName )
 
    cFileName := hb_FNameNameExt(cFileName)
 
-   RETURN LEFTEQUAL( cFileName, _HBMK_BUILTIN_FILENAME_MARKER_ ) .AND. Len(cFileName) > Len(_HBMK_BUILTIN_FILENAME_MARKER_)
+   RETURN LEFTEQUAL(cFileName, _HBMK_BUILTIN_FILENAME_MARKER_) .AND. Len(cFileName) > Len(_HBMK_BUILTIN_FILENAME_MARKER_)
 
 STATIC FUNCTION hbmk_builtin_Exists( cFileName )
 
@@ -10628,7 +10628,7 @@ STATIC FUNCTION HBM_Load(hbmk, aParams, cFileName, nNestingLevel, lProcHBP, cPar
                            IF lFound
                               aArgs := AClone(hbmk[_HBMK_aArgs])
                               aArgs[hbmk[_HBMK_nArgTarget]] := cHBP
-                              nResult := __hbmk( aArgs, hbmk[_HBMK_nArgTarget], hbmk[_HBMK_nLevel] + 1, @hbmk[_HBMK_lPause] )
+                              nResult := __hbmk(aArgs, hbmk[_HBMK_nArgTarget], hbmk[_HBMK_nLevel] + 1, @hbmk[_HBMK_lPause])
                               IF nResult != _EXIT_OK .AND. ;
                                  nResult != _EXIT_STOP
                                  RETURN nResult
@@ -10769,7 +10769,7 @@ STATIC FUNCTION ArchCompFilter( hbmk, cItem, cFileName )
          // Evaluate filter
          BEGIN SEQUENCE WITH __BreakBlock()
             bFilter := &( "{| hbmk, cFileName |" + cFilterHarb + "}" )
-            IF HB_ISLOGICAL( xResult := Eval(bFilter, hbmk, cFileName) ) .AND. xResult
+            IF HB_ISLOGICAL(xResult := Eval(bFilter, hbmk, cFileName)) .AND. xResult
                cRetVal := cItem
             ENDIF
          RECOVER
@@ -10807,7 +10807,7 @@ STATIC FUNCTION MacroProc(hbmk, cString, cFileName, cMacroPrefix)
       cMacro := SubStr(cString, nStart + Len(_CMDSUBST_OPEN), nEnd - nStart - Len(_CMDSUBST_OPEN))
       cStdOut := ""
       IF !Empty(cMacro)
-         hb_processRun( cMacro,, @cStdOut )
+         hb_processRun(cMacro,, @cStdOut)
          cStdOut := StrTran(StrTran(cStdOut, Chr(13)), Chr(10), " ")
       ENDIF
       cString := Left(cString, nStart - 1) + cStdOut + SubStr(cString, nEnd + Len(_CMDSUBST_CLOSE))
@@ -10878,9 +10878,9 @@ STATIC FUNCTION MacroGet( hbmk, cMacro, cFileName )
    CASE "hb_ver"
       IF hbmk[_HBMK_nHBMODE] == _HBMODE_NATIVE
          cMacro := ;
-            hb_NumToHex( hb_Version( HB_VERSION_MAJOR ), 2 ) + ;
-            hb_NumToHex( hb_Version( HB_VERSION_MINOR ), 2 ) + ;
-            hb_NumToHex( hb_Version( HB_VERSION_RELEASE ), 2 )
+            hb_NumToHex( hb_Version(HB_VERSION_MAJOR), 2 ) + ;
+            hb_NumToHex( hb_Version(HB_VERSION_MINOR), 2 ) + ;
+            hb_NumToHex( hb_Version(HB_VERSION_RELEASE), 2 )
       ELSE
          cMacro := hb_NumToHex( Abs( hbmk[_HBMK_nHBMODE] ), 6 )
       ENDIF
@@ -10888,10 +10888,10 @@ STATIC FUNCTION MacroGet( hbmk, cMacro, cFileName )
    CASE "hb_verstr"
       IF hbmk[_HBMK_nHBMODE] == _HBMODE_NATIVE
          cMacro := ;
-            hb_ntos( hb_Version( HB_VERSION_MAJOR ) ) + "." + ;
-            hb_ntos( hb_Version( HB_VERSION_MINOR ) ) + "." + ;
-            hb_ntos( hb_Version( HB_VERSION_RELEASE ) ) + ;
-            hb_Version( HB_VERSION_STATUS )
+            hb_ntos( hb_Version(HB_VERSION_MAJOR) ) + "." + ;
+            hb_ntos( hb_Version(HB_VERSION_MINOR) ) + "." + ;
+            hb_ntos( hb_Version(HB_VERSION_RELEASE) ) + ;
+            hb_Version(HB_VERSION_STATUS)
       ELSE
          cMacro := ;
             hb_ntos(hb_bitAnd(hb_bitShift(Abs(hbmk[_HBMK_nHBMODE]), -16), 0xFF)) + "." + ;
@@ -10900,19 +10900,19 @@ STATIC FUNCTION MacroGet( hbmk, cMacro, cFileName )
       ENDIF
       EXIT
    CASE "hb_major"
-      cMacro := hb_ntos( hb_Version( HB_VERSION_MAJOR ) ) ; EXIT
+      cMacro := hb_ntos( hb_Version(HB_VERSION_MAJOR) ) ; EXIT
    CASE "hb_minor"
-      cMacro := hb_ntos( hb_Version( HB_VERSION_MINOR ) ) ; EXIT
+      cMacro := hb_ntos( hb_Version(HB_VERSION_MINOR) ) ; EXIT
    CASE "hb_release"
-      cMacro := hb_ntos( hb_Version( HB_VERSION_RELEASE ) ) ; EXIT
+      cMacro := hb_ntos( hb_Version(HB_VERSION_RELEASE) ) ; EXIT
    CASE "hb_status"
-      cMacro := hb_Version( HB_VERSION_STATUS ) ; EXIT
+      cMacro := hb_Version(HB_VERSION_STATUS) ; EXIT
    CASE "hb_revision"
-      cMacro := hb_ntos( hb_Version( HB_VERSION_REVISION ) ) ; EXIT
+      cMacro := hb_ntos( hb_Version(HB_VERSION_REVISION) ) ; EXIT
    CASE "hb_host_plat"
-      cMacro := hb_Version( HB_VERSION_PLATFORM ) ; EXIT
+      cMacro := hb_Version(HB_VERSION_PLATFORM) ; EXIT
    CASE "hb_host_plat_unix"
-      cMacro := iif(hb_Version( HB_VERSION_UNIX_COMPAT ), "1", "") ; EXIT
+      cMacro := iif(hb_Version(HB_VERSION_UNIX_COMPAT), "1", "") ; EXIT
    CASE "hb_bin"
       cMacro := hbmk[_HBMK_cHB_INSTALL_BIN] ; EXIT
    CASE "hb_lib"
@@ -11007,8 +11007,8 @@ STATIC FUNCTION getFirstFunc(hbmk, cFile)
       hb_FNameSplit(cFile, NIL, NIL, @cExt)
       IF cExt == ".c"
          FOR EACH cLine IN hb_ATokens( StrTran(hb_MemoRead(cFile), Chr(13), Chr(10)), Chr(10) )
-            cLine := AllTrim( cLine )
-            IF LEFTEQUAL( cLine, '{ "' ) .AND. "HB_FS_FIRST" $ cLine .AND. !( "HB_FS_STATIC" $ cLine )
+            cLine := AllTrim(cLine)
+            IF LEFTEQUAL(cLine, '{ "') .AND. "HB_FS_FIRST" $ cLine .AND. !( "HB_FS_STATIC" $ cLine )
                n := 4
                WHILE ( c := SubStr(cLine, n++, 1) ) != Chr(34)
                   cFuncName += c
@@ -11018,10 +11018,10 @@ STATIC FUNCTION getFirstFunc(hbmk, cFile)
          NEXT
       ELSEIF Lower(cExt) == ".cpp" .OR. Lower(cExt) == ".cc" .OR. Lower(cExt) == ".cxx" .OR. Lower(cExt) == ".cx"
          // do nothing
-      ELSEIF !Empty(cExecNM := FindInPath( hbmk[_HBMK_cCCPREFIX] + "nm" ))
+      ELSEIF !Empty(cExecNM := FindInPath(hbmk[_HBMK_cCCPREFIX] + "nm"))
          cFuncList := ""
-         hb_processRun( cExecNM + " " + FNameEscape(cFile, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]) + ;
-            " -g -n" + iif(hbmk[_HBMK_cCOMP] == "darwin", "", " --defined-only -C"),, @cFuncList )
+         hb_processRun(cExecNM + " " + FNameEscape(cFile, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]) + ;
+            " -g -n" + iif(hbmk[_HBMK_cCOMP] == "darwin", "", " --defined-only -C"),, @cFuncList)
          IF ( n := At( " T HB_FUN_", cFuncList ) ) != 0
             n += 10
          ELSEIF ( n := At( " T _HB_FUN_", cFuncList ) ) != 0
@@ -11032,7 +11032,7 @@ STATIC FUNCTION getFirstFunc(hbmk, cFile)
                      hb_asciiIsDigit( c ) .OR. hb_asciiIsAlpha(c)
                IF c == "x" .AND. IsHexDigit( SubStr(cFuncList, n, 1) ) .AND. ;
                                  IsHexDigit( SubStr(cFuncList, n + 1, 1) )
-                  c := hb_HexToNum( SubStr(cFuncList, n, 2) )
+                  c := hb_HexToNum(SubStr(cFuncList, n, 2))
                   n += 2
                ENDIF
                cFuncName += c
@@ -11050,8 +11050,8 @@ STATIC PROCEDURE PlatformPRGFlags( hbmk, aOPTPRG )
    LOCAL cMacro
    LOCAL nPos
 
-   IF !hbmk[_HBMK_cPLAT] == hb_Version( HB_VERSION_BUILD_PLAT ) .OR. ;
-      !hbmk[_HBMK_cCOMP] == hb_Version( HB_VERSION_BUILD_COMP )
+   IF !hbmk[_HBMK_cPLAT] == hb_Version(HB_VERSION_BUILD_PLAT) .OR. ;
+      !hbmk[_HBMK_cCOMP] == hb_Version(HB_VERSION_BUILD_COMP)
 
       aUn := {}
       aDf := {}
@@ -11179,9 +11179,9 @@ STATIC PROCEDURE PlatformPRGFlags( hbmk, aOPTPRG )
 
       // Delete macros present in both lists
       FOR EACH cMacro IN aUn DESCEND
-         IF ( nPos := AScan( aDf, {| tmp | tmp == cMacro } ) ) > 0
-            hb_ADel( aUn, cMacro:__enumIndex(), .T. )
-            hb_ADel( aDf, nPos, .T. )
+         IF ( nPos := AScan(aDf, {| tmp | tmp == cMacro }) ) > 0
+            hb_ADel(aUn, cMacro:__enumIndex(), .T.)
+            hb_ADel(aDf, nPos, .T.)
          ENDIF
       NEXT
 
@@ -11242,7 +11242,7 @@ STATIC PROCEDURE rtlnk_libtrans( aLibList )
       IF Upper( cLib ) $ s_hTrans
          cLib := s_hTrans[Upper( cLib )]
          IF cLib == NIL
-            hb_ADel( aLibList, cLib:__enumIndex(), .T. )
+            hb_ADel(aLibList, cLib:__enumIndex(), .T.)
          ENDIF
       ENDIF
    NEXT
@@ -11282,7 +11282,7 @@ STATIC PROCEDURE rtlnk_filetrans( aFileList )
       IF Upper( cFile ) $ s_hTrans
          cFile := s_hTrans[Upper( cFile )]
          IF cFile == NIL
-            hb_ADel( aFileList, cFile:__enumIndex(), .T. )
+            hb_ADel(aFileList, cFile:__enumIndex(), .T.)
          ENDIF
       ENDIF
    NEXT
@@ -11318,10 +11318,10 @@ STATIC FUNCTION rtlnk_read(cFileName, aPrevFiles)
    ENDIF
 
    // protection against recursive calls
-   IF AScan( aPrevFiles, {| x | x == cFileName } ) == 0
-      IF ( hFile := FOpen( cFileName ) ) != F_ERROR
+   IF AScan(aPrevFiles, {| x | x == cFileName }) == 0
+      IF ( hFile := FOpen(cFileName) ) != F_ERROR
          cFileBody := Space(FSeek(hFile, 0, FS_END))
-         FSeek( hFile, 0, FS_SET )
+         FSeek(hFile, 0, FS_SET)
          IF FRead(hFile, @cFileBody, hb_BLen(cFileBody)) != hb_BLen(cFileBody)
             cFileBody := NIL
          ENDIF
@@ -11358,11 +11358,11 @@ STATIC FUNCTION rtlnk_process( hbmk, cCommands, cFileOut, aFileList, aLibList, a
    hb_default(@aPrevFiles, {})
 
    FOR EACH cLine IN hb_ATokens( cCommands, Chr(10) )
-      cLine := AllTrim( cLine )
+      cLine := AllTrim(cLine)
       IF !Empty(cLine)
          FOR EACH cWord IN rtlnk_tokens( cLine )
             DO CASE
-            CASE LEFTEQUAL( cWord, "#" )
+            CASE LEFTEQUAL(cWord, "#")
                EXIT
             CASE nMode == RTLNK_MODE_OUT
                cFileOut := hb_DirSepToOS( cWord )
@@ -11372,7 +11372,7 @@ STATIC FUNCTION rtlnk_process( hbmk, cCommands, cFileOut, aFileList, aLibList, a
                nMode := RTLNK_MODE_FILENEXT
             CASE nMode == RTLNK_MODE_FILE
                IF !( cWord == "," )
-                  IF AScan( aFileList, {| x | x == cWord } ) == 0
+                  IF AScan(aFileList, {| x | x == cWord }) == 0
                      AAdd(aFileList, hb_DirSepToOS( cWord ))
                   ENDIF
                   nMode := RTLNK_MODE_FILENEXT
@@ -11398,7 +11398,7 @@ STATIC FUNCTION rtlnk_process( hbmk, cCommands, cFileOut, aFileList, aLibList, a
                CASE nMode == RTLNK_MODE_SKIPNEXT
                   nMode := RTLNK_MODE_SKIP
                ENDCASE
-            CASE LEFTEQUAL( cWord, "@" )
+            CASE LEFTEQUAL(cWord, "@")
                cWord := SubStr(cWord, 2)
                cCommands := rtlnk_read(@cWord, aPrevFiles)
                IF cCommands == NIL
@@ -11412,28 +11412,28 @@ STATIC FUNCTION rtlnk_process( hbmk, cCommands, cFileOut, aFileList, aLibList, a
                cWord := Upper( cWord )
                IF Len(cWord) >= 2
                   DO CASE
-                  CASE LEFTEQUAL( "OUTPUT", cWord )
+                  CASE LEFTEQUAL("OUTPUT", cWord)
                      nMode := RTLNK_MODE_OUT
-                  CASE LEFTEQUAL( "FILE", cWord )
+                  CASE LEFTEQUAL("FILE", cWord)
                      nMode := RTLNK_MODE_FILE
-                  CASE LEFTEQUAL( "LIBRARY", cWord )
+                  CASE LEFTEQUAL("LIBRARY", cWord)
                      nMode := RTLNK_MODE_LIB
-                  CASE LEFTEQUAL( "MODULE", cWord ) .OR. ;
-                       LEFTEQUAL( "EXCLUDE", cWord ) .OR. ;
-                       LEFTEQUAL( "REFER", cWord ) .OR. ;
-                       LEFTEQUAL( "INTO", cWord )
+                  CASE LEFTEQUAL("MODULE", cWord) .OR. ;
+                       LEFTEQUAL("EXCLUDE", cWord) .OR. ;
+                       LEFTEQUAL("REFER", cWord) .OR. ;
+                       LEFTEQUAL("INTO", cWord)
                      nMode := RTLNK_MODE_SKIP
                   // Blinker extension
-                  CASE LEFTEQUAL( "BLINKER", cWord )
+                  CASE LEFTEQUAL("BLINKER", cWord)
                      // skip Blinker commands
                      EXIT
-                  CASE LEFTEQUAL( "ECHO", cWord )
+                  CASE LEFTEQUAL("ECHO", cWord)
                      _hbmk_OutStd(hbmk, hb_StrFormat(I_("Blinker ECHO: %1$s"), SubStr(cLine, 6)))
                      EXIT
-                  CASE LEFTEQUAL( "MAP", cWord )
+                  CASE LEFTEQUAL("MAP", cWord)
                      hbmk[_HBMK_lMAP] := .T.
                      EXIT
-                  CASE LEFTEQUAL( "NOBELL", cWord )
+                  CASE LEFTEQUAL("NOBELL", cWord)
                      hbmk[_HBMK_lBEEP] := .F.
                      EXIT
                   OTHERWISE // TODO: add other Blinker commands
@@ -11540,7 +11540,7 @@ STATIC PROCEDURE UpdatePO( hbmk, aPOTIN )
 
 // .hbl generation
 
-STATIC PROCEDURE MakeHBL( hbmk, cHBL )
+STATIC PROCEDURE MakeHBL(hbmk, cHBL)
 
    LOCAL cPO
    LOCAL tPO
@@ -11577,7 +11577,7 @@ STATIC PROCEDURE MakeHBL( hbmk, cHBL )
             IF hbmk[_HBMK_lDEBUGI18N]
                _hbmk_OutStd(hbmk, hb_StrFormat("po: %1$s -> %2$s", ArrayToList(aPO_TO_DO), StrTran(cHBL, _LNG_MARKER, cLNG)))
             ENDIF
-            GenHBL( hbmk, aPO_TO_DO, StrTran(cHBL, _LNG_MARKER, cLNG) )
+            GenHBL(hbmk, aPO_TO_DO, StrTran(cHBL, _LNG_MARKER, cLNG))
             AAdd(aNew, cLNG)
          ENDIF
       NEXT
@@ -11613,7 +11613,7 @@ STATIC FUNCTION LoadPOTFiles( hbmk, aFiles, cFileBase, lIgnoreError )
    FOR EACH cFileName IN aFiles
       aTrans2 := __i18n_potArrayLoad(cFileName, @cErrorMsg)
       IF aTrans2 != NIL
-         __i18n_potArrayJoin( aTrans, aTrans2, @hIndex )
+         __i18n_potArrayJoin(aTrans, aTrans2, @hIndex)
       ELSE
          IF !lIgnoreError
             _hbmk_OutErr(hbmk, hb_StrFormat(I_(".pot error: %1$s"), cErrorMsg))
@@ -11628,7 +11628,7 @@ STATIC FUNCTION LoadPOTFiles( hbmk, aFiles, cFileBase, lIgnoreError )
 
    RETURN aTrans
 
-STATIC FUNCTION LoadPOTFilesAsHash( hbmk, aFiles )
+STATIC FUNCTION LoadPOTFilesAsHash(hbmk, aFiles)
 
    LOCAL cErrorMsg
    LOCAL hTrans
@@ -11642,7 +11642,7 @@ STATIC FUNCTION LoadPOTFilesAsHash( hbmk, aFiles )
          IF hbmk[_HBMK_lDEBUGI18N]
             _hbmk_OutStd(hbmk, hb_StrFormat("LoadPOTFilesAsHash(): %1$s", cFileName))
          ENDIF
-         hTrans := __i18n_potArrayToHash( aTrans,, hTrans )
+         hTrans := __i18n_potArrayToHash(aTrans,, hTrans)
       ELSE
          _hbmk_OutErr(hbmk, hb_StrFormat(I_("Warning: %1$s"), cErrorMsg))
       ENDIF
@@ -11666,7 +11666,7 @@ STATIC PROCEDURE POTMerge(hbmk, aFiles, cFileBase, cFileOut)
 STATIC PROCEDURE AutoTrans( hbmk, cFileIn, aFiles, cFileOut )
 
    LOCAL cErrorMsg
-   LOCAL hTrans := LoadPOTFilesAsHash( hbmk, aFiles )
+   LOCAL hTrans := LoadPOTFilesAsHash(hbmk, aFiles)
 
    IF hTrans != NIL
       IF !__i18n_potArraySave(cFileOut, ;
@@ -11678,7 +11678,7 @@ STATIC PROCEDURE AutoTrans( hbmk, cFileIn, aFiles, cFileOut )
 
    RETURN
 
-STATIC FUNCTION GenHBL( hbmk, aFiles, cFileOut, lEmpty )
+STATIC FUNCTION GenHBL(hbmk, aFiles, cFileOut, lEmpty)
 
    LOCAL cHBLBody
    LOCAL pI18N
@@ -11708,7 +11708,7 @@ STATIC FUNCTION win_implib_command(hbmk, cCommand, cSourceDLL, cTargetLib, cFlag
 
    hb_default(@cFlags, "")
 
-   cCommand := AllTrim( hb_StrReplace(cCommand, { ;
+   cCommand := AllTrim(hb_StrReplace(cCommand, { ;
       "{FI}" => cFlags, ;
       "{ID}" => FNameEscape(cSourceDLL, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]), ;
       "{OL}" => FNameEscape(cTargetLib, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF])}))
@@ -11720,13 +11720,13 @@ STATIC FUNCTION win_implib_command(hbmk, cCommand, cSourceDLL, cTargetLib, cFlag
       OutStd(cCommand + _OUT_EOL)
    ENDIF
 
-   RETURN iif(hb_processRun( cCommand ) == 0, _HBMK_IMPLIB_OK, _HBMK_IMPLIB_FAILED)
+   RETURN iif(hb_processRun(cCommand) == 0, _HBMK_IMPLIB_OK, _HBMK_IMPLIB_FAILED)
 
 #define _COFF_LIB_SIGNATURE "!<arch>"
 
 STATIC FUNCTION IsCOFFLib(cFileName)
 
-   LOCAL fhnd := FOpen( cFileName, FO_READ )
+   LOCAL fhnd := FOpen(cFileName, FO_READ)
    LOCAL cBuffer
 
    IF fhnd != F_ERROR
@@ -11744,7 +11744,7 @@ STATIC FUNCTION IsCOFFLib(cFileName)
 
 STATIC FUNCTION IsOMFLib(cFileName)
 
-   LOCAL fhnd := FOpen( cFileName, FO_READ )
+   LOCAL fhnd := FOpen(cFileName, FO_READ)
    LOCAL cBuffer
 
    IF fhnd != F_ERROR
@@ -11906,7 +11906,7 @@ STATIC FUNCTION win_implib_command_msvc(hbmk, cCommand, cSourceDLL, cTargetLib, 
 
    nResult := _HBMK_IMPLIB_FAILED
 
-   IF hb_processRun( cCommandDump,, @cExports ) == 0
+   IF hb_processRun(cCommandDump,, @cExports) == 0
 
       cFuncList := ;
          "LIBRARY " + Chr(34) + hb_FNameNameExt(cSourceDLL) + Chr(34) + hb_eol() + ;
@@ -12020,7 +12020,7 @@ STATIC FUNCTION VCSID(hbmk, cDir, cVCSHEAD, /* @ */ cType)
          tmp := At( Chr(10), cStdOut )
          IF tmp > 0
             cStdOut := Left(cStdOut, tmp - 1)
-            cResult := hb_ntos( Val( AllTrim( StrTran(cStdOut, Chr(34)) ) ) + 1 )
+            cResult := hb_ntos( Val(AllTrim(StrTran(cStdOut, Chr(34)))) + 1 )
          ENDIF
       ENDIF
    ENDSWITCH
@@ -12034,7 +12034,7 @@ STATIC FUNCTION VCSID(hbmk, cDir, cVCSHEAD, /* @ */ cType)
          OutStd(cCommand + _OUT_EOL)
       ENDIF
 
-      hb_processRun( cCommand,, @cStdOut )
+      hb_processRun(cCommand,, @cStdOut)
 
       SWITCH nType
       CASE _VCS_SVN
@@ -12049,7 +12049,7 @@ STATIC FUNCTION VCSID(hbmk, cDir, cVCSHEAD, /* @ */ cType)
          tmp := At( Chr(10), cStdOut )
          IF tmp > 0
             cStdOut := Left(cStdOut, tmp - 1)
-            cResult := AllTrim( StrTran(cStdOut, "changeset:") )
+            cResult := AllTrim(StrTran(cStdOut, "changeset:"))
          ENDIF
          EXIT
       CASE _VCS_BAZAAR
@@ -12079,7 +12079,7 @@ STATIC FUNCTION VCSID(hbmk, cDir, cVCSHEAD, /* @ */ cType)
           */
          tmp := At( "checkout:", cStdOut )
          IF tmp > 0
-            cStdOut := LTrim( SubStr(cStdOut, tmp + Len("checkout:")) )
+            cStdOut := LTrim(SubStr(cStdOut, tmp + Len("checkout:")))
             tmp := At( " ", cStdOut )
             IF tmp > 0
                cResult := Left(cStdOut, tmp - 1)
@@ -12100,7 +12100,7 @@ STATIC FUNCTION VCSID(hbmk, cDir, cVCSHEAD, /* @ */ cType)
           */
          tmp := At( "Revision:", cStdOut )
          IF tmp > 0
-            cStdOut := StrTran(LTrim( SubStr(cStdOut, tmp + Len("Revision:")) ), Chr(13))
+            cStdOut := StrTran(LTrim(SubStr(cStdOut, tmp + Len("Revision:"))), Chr(13))
             tmp := At( Chr(10), cStdOut )
             IF tmp > 0
                cResult := Left(cStdOut, tmp - 1)
@@ -12220,7 +12220,7 @@ FUNCTION hbmk_KEYW( hbmk, cFileName, cKeyword, cValue, cOperator )
       RETURN .T.
    ENDIF
 
-   IF !HBMK_IS_IN( cKeyword, ;
+   IF !HBMK_IS_IN(cKeyword, ;
       "|win" + ;
       "|bsd|hpux|sunos|beos|qnx|android|vxworks|linux|darwin|cygwin|minix|aix" + ;
       "|msvc|msvc64|msvcia64|msvcarm" + ;
@@ -12229,7 +12229,7 @@ FUNCTION hbmk_KEYW( hbmk, cFileName, cKeyword, cValue, cOperator )
       "|gcc|gccomf" + ;
       "|hblib|hbdyn|hbdynvm|hbimplib|hbexe" + ;
       "|icc|iccia64|clang|clang64|open64|sunpro|diab|pcc" + ;
-      "|x86|x86_64|ia64|arm|mips|sh" )
+      "|x86|x86_64|ia64|arm|mips|sh")
 
       // handle pseudo-functions
       IF cOperator == "=" .AND. cValue != NIL
@@ -12262,18 +12262,18 @@ STATIC PROCEDURE ParseCOMPPLATCPU( hbmk, cString, nMainTarget )
    IF Len(aToken) == 1
       IF !Empty(cString)
          SWITCH nMainTarget
-         CASE _TARG_PLAT ; hbmk[_HBMK_cPLAT] := AllTrim( cString ) ; EXIT
-         CASE _TARG_COMP ; hbmk[_HBMK_cCOMP] := AllTrim( cString ) ; EXIT
-         CASE _TARG_CPU  ; hbmk[_HBMK_cCPU]  := AllTrim( cString ) ; EXIT
+         CASE _TARG_PLAT ; hbmk[_HBMK_cPLAT] := AllTrim(cString) ; EXIT
+         CASE _TARG_COMP ; hbmk[_HBMK_cCOMP] := AllTrim(cString) ; EXIT
+         CASE _TARG_CPU  ; hbmk[_HBMK_cCPU]  := AllTrim(cString) ; EXIT
          ENDSWITCH
       ENDIF
    ELSE
       FOR EACH cToken IN aToken
          IF !Empty(cToken)
             SWITCH cToken:__enumIndex()
-            CASE 1 ; hbmk[_HBMK_cPLAT] := AllTrim( cToken ) ; EXIT
-            CASE 2 ; hbmk[_HBMK_cCOMP] := AllTrim( cToken ) ; EXIT
-            CASE 3 ; hbmk[_HBMK_cCPU]  := AllTrim( cToken ) ; EXIT
+            CASE 1 ; hbmk[_HBMK_cPLAT] := AllTrim(cToken) ; EXIT
+            CASE 2 ; hbmk[_HBMK_cCOMP] := AllTrim(cToken) ; EXIT
+            CASE 3 ; hbmk[_HBMK_cCPU]  := AllTrim(cToken) ; EXIT
             ENDSWITCH
             IF cToken:__enumIndex() > 3
                EXIT
@@ -12348,7 +12348,7 @@ STATIC FUNCTION hbmk_hb_processRunFile(cCommand, cTempFile)
 
    LOCAL nResult
 
-   nResult := hb_processRun( cCommand )
+   nResult := hb_processRun(cCommand)
 
    IF !Empty(cTempFile)
       FErase(cTempFile)
@@ -12356,13 +12356,13 @@ STATIC FUNCTION hbmk_hb_processRunFile(cCommand, cTempFile)
 
    RETURN nResult
 
-STATIC FUNCTION hbmk_hb_processRunCatch( cCommand, /* @ */ cStdOutErr )
+STATIC FUNCTION hbmk_hb_processRunCatch(cCommand, /* @ */ cStdOutErr)
 
    LOCAL nExitCode
 
    cStdOutErr := ""
 
-   nExitCode := hb_processRun( cCommand,, @cStdOutErr, @cStdOutErr )
+   nExitCode := hb_processRun(cCommand,, @cStdOutErr, @cStdOutErr)
 
    IF nExitCode != 0
       OutErr(cStdOutErr)
@@ -12376,7 +12376,7 @@ STATIC FUNCTION hbmk_hb_processRunCatch( cCommand, /* @ */ cStdOutErr )
    lGenericFind == .T.: generic function finder (supports core functions and partial matches, different output) */
 STATIC PROCEDURE ShowFunctionProviders( hbmk, aFunction, lGenericFind )
 
-   LOCAL hAll := GetListOfFunctionsKnown( hbmk, lGenericFind )
+   LOCAL hAll := GetListOfFunctionsKnown(hbmk, lGenericFind)
    LOCAL cFunction
    LOCAL lFound
    LOCAL aLib
@@ -12404,14 +12404,14 @@ STATIC PROCEDURE ShowFunctionProviders( hbmk, aFunction, lGenericFind )
       ENDIF
       IF lGenericFind
          FOR EACH tmp1 IN hAll
-            IF hb_WildMatchI( "*" + cFunction + "*", tmp1:__enumKey() )
+            IF hb_WildMatchI("*" + cFunction + "*", tmp1:__enumKey())
                Eval(bAdd, tmp1:__enumKey())
                lFound := .T.
             ENDIF
          NEXT
       ENDIF
       IF lFound
-         hb_ADel( aFunction, cFunction:__enumIndex(), .T. )
+         hb_ADel(aFunction, cFunction:__enumIndex(), .T.)
       ENDIF
    NEXT
 
@@ -12420,7 +12420,7 @@ STATIC PROCEDURE ShowFunctionProviders( hbmk, aFunction, lGenericFind )
          OutStd(I_("No matches") + _OUT_EOL)
       ELSE
          FOR EACH tmp IN hNeeded
-            aLib := LibReferenceToOption( hbmk, tmp:__enumKey() )
+            aLib := LibReferenceToOption(hbmk, tmp:__enumKey())
             OutStd(hb_StrFormat(I_("%1$s %2$s:"), aLib[1], iif(aLib[2], I_("(installed)"), I_("(not installed)"))) + _OUT_EOL)
             FOR EACH tmp1 IN tmp
                OutStd("   " + tmp1 + "()" + _OUT_EOL)
@@ -12436,7 +12436,7 @@ STATIC PROCEDURE ShowFunctionProviders( hbmk, aFunction, lGenericFind )
       ENDIF
 
       FOR EACH tmp IN hNeeded
-         aLib := LibReferenceToOption( hbmk, tmp:__enumKey() )
+         aLib := LibReferenceToOption(hbmk, tmp:__enumKey())
          _hbmk_OutStd(hbmk, hb_StrFormat( ;
             iif(aLib[2], ;
                I_("Hint: Add option '%1$s' for missing function(s): %2$s"), ;
@@ -12453,7 +12453,7 @@ STATIC PROCEDURE ShowFunctionProviders( hbmk, aFunction, lGenericFind )
 
    RETURN
 
-STATIC FUNCTION LibReferenceToOption( hbmk, cLib )
+STATIC FUNCTION LibReferenceToOption(hbmk, cLib)
 
    LOCAL lInstalled
 
@@ -12496,8 +12496,8 @@ STATIC FUNCTION ExtractHarbourSymbols( cString )
 
    IF !Empty(pRegex := hb_regexComp( R_( "HB_FUN_([A-Z_][A-Z_0-9]*)" ), .T., .T. ))
       FOR EACH cLine IN hb_ATokens( StrTran(cString, Chr(13), Chr(10)), Chr(10) )
-         IF AScan( sc_aException, {| tmp | tmp $ Lower(cLine) } ) == 0
-            FOR EACH tmp IN hb_regexAll( pRegex, cLine,,,,, .T. )
+         IF AScan(sc_aException, {| tmp | tmp $ Lower(cLine) }) == 0
+            FOR EACH tmp IN hb_regexAll(pRegex, cLine,,,,, .T.)
                AAddNew( aList, tmp[2] )
             NEXT
          ENDIF
@@ -12508,12 +12508,12 @@ STATIC FUNCTION ExtractHarbourSymbols( cString )
 
    RETURN aList
 
-STATIC FUNCTION GetListOfFunctionsKnown( hbmk, lIncludeCore )
+STATIC FUNCTION GetListOfFunctionsKnown(hbmk, lIncludeCore)
 
    LOCAL hAll := {=>}
    LOCAL aFile
 
-   hb_HCaseMatch( hAll, .F. )
+   hb_HCaseMatch(hAll, .F.)
 
    FOR EACH aFile IN Directory(hb_DirBase() + "*.hbr")
       // FIXME: To handle function names present in multiple containers
@@ -12539,7 +12539,7 @@ STATIC PROCEDURE GetListOfFunctionsKnownWalkDir( cDir, cRoot, hAll, cName )
 
    cDir := hb_DirSepAdd(hb_DirSepToOS(cDir))
 
-   FOR EACH aFile IN hb_DirScan( cDir, "*.hbx" )
+   FOR EACH aFile IN hb_DirScan(cDir, "*.hbx")
       GetListOfFunctionsKnownLoadHBX( cDir + aFile[F_NAME], cRoot, hAll, cName )
    NEXT
 
@@ -12563,7 +12563,7 @@ STATIC PROCEDURE GetListOfFunctionsKnownLoadHBX( cFileName, cRoot, hAll, cName )
          R_( "ANNOUNCE ([a-zA-Z0-9_]*)$" ) }
 
          IF !Empty(pRegex := hb_regexComp( cFilter, .T., .T. ))
-            FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
+            FOR EACH tmp IN hb_regexAll(pRegex, StrTran(cFile, Chr(13)),,,,, .T.)
                IF tmp[2] $ hAll
                   hAll[tmp[2]] += "," + cName
                ELSE
@@ -12576,12 +12576,12 @@ STATIC PROCEDURE GetListOfFunctionsKnownLoadHBX( cFileName, cRoot, hAll, cName )
 
    RETURN
 
-STATIC FUNCTION mk_extern( hbmk, cInputName, cBin_LibHBX, cOpt_LibHBX, cLibHBX_Regex, cOutputName )
+STATIC FUNCTION mk_extern(hbmk, cInputName, cBin_LibHBX, cOpt_LibHBX, cLibHBX_Regex, cOutputName)
 
    LOCAL aExtern
 
    IF ( aExtern := __hb_extern_get_list(hbmk, cInputName, cBin_LibHBX, cOpt_LibHBX, cLibHBX_Regex) ) != NIL
-      __hb_extern_gen( hbmk, aExtern, cOutputName )
+      __hb_extern_gen(hbmk, aExtern, cOutputName)
       RETURN .T.
    ENDIF
 
@@ -12613,12 +12613,12 @@ STATIC FUNCTION __hb_extern_get_list(hbmk, cInputName, cBin_LibHBX, cOpt_LibHBX,
             "{LI}" => FNameEscape(cInputName, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]), ;
             "{OT}" => FNameEscape(cTempFile, hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]) })
 
-         IF hb_processRun( cBin_LibHBX + " " + cOpt_LibHBX,, @cStdOut, @cStdErr ) == 0
+         IF hb_processRun(cBin_LibHBX + " " + cOpt_LibHBX,, @cStdOut, @cStdErr) == 0
             IF !Empty(cTempFile)
                cStdOut := MemoRead(cTempFile)
             ENDIF
             IF !Empty(pRegex := hb_regexComp( cLibHBX_Regex, .T., .T. ))
-               aResult := hb_regexAll( pRegex, StrTran(cStdOut, Chr(13)),,,,, .T. )
+               aResult := hb_regexAll(pRegex, StrTran(cStdOut, Chr(13)),,,,, .T.)
                aExtern := {}
                hExtern := {=>}
                FOR EACH tmp IN aResult
@@ -12660,17 +12660,17 @@ STATIC PROCEDURE __hb_extern_get_exception_list(cInputName, /* @ */ aInclude, /*
 
    IF !Empty(cFile := MemoRead(cInputName))
       IF !Empty(pRegex := hb_regexComp( R_( "[\s]" + _HB_FUNC_INCLUDE_ + "[\s]([a-zA-Z0-9_].[^ \t\n\r]*)" ), .T., .T. ))
-         FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
+         FOR EACH tmp IN hb_regexAll(pRegex, StrTran(cFile, Chr(13)),,,,, .T.)
             AAdd(aInclude, tmp[2])
          NEXT
       ENDIF
       IF !Empty(pRegex := hb_regexComp( R_( "[\s]" + _HB_FUNC_EXCLUDE_ + "[\s]([a-zA-Z0-9_].[^ \t\n\r]*)" ), .T., .T. ))
-         FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
+         FOR EACH tmp IN hb_regexAll(pRegex, StrTran(cFile, Chr(13)),,,,, .T.)
             AAdd(aExclude, tmp[2])
          NEXT
       ENDIF
       IF !Empty(pRegex := hb_regexComp( R_( "^DYNAMIC ([a-zA-Z0-9_]*)$" ), .T., .T. ))
-         FOR EACH tmp IN hb_regexAll( pRegex, StrTran(cFile, Chr(13)),,,,, .T. )
+         FOR EACH tmp IN hb_regexAll(pRegex, StrTran(cFile, Chr(13)),,,,, .T.)
             hDynamic[Upper( tmp[2] )] := tmp[2]
          NEXT
       ENDIF
@@ -12678,7 +12678,7 @@ STATIC PROCEDURE __hb_extern_get_exception_list(cInputName, /* @ */ aInclude, /*
 
    RETURN
 
-STATIC FUNCTION __hb_extern_gen( hbmk, aFuncList, cOutputName )
+STATIC FUNCTION __hb_extern_gen(hbmk, aFuncList, cOutputName)
 
    LOCAL aExtern
    LOCAL cExtern
@@ -12753,15 +12753,15 @@ STATIC FUNCTION __hb_extern_gen( hbmk, aFuncList, cOutputName )
    ELSE
       aExtern := {}
       FOR EACH tmp IN aFuncList
-         IF AScan( aInclude, {| flt | hb_WildMatchI( flt, tmp, .T. ) } ) > 0
+         IF AScan(aInclude, {| flt | hb_WildMatchI(flt, tmp, .T.) }) > 0
             AAdd(aExtern, tmp)
          ENDIF
       NEXT
    ENDIF
    FOR EACH tmp IN aExtern
-      IF !hb_WildMatch( "HB_GT_*_DEFAULT", tmp, .T. ) .AND. ;
-         !hb_WildMatch( _HB_SELF_PREFIX + "*" + _HB_SELF_SUFFIX, tmp, .T. ) .AND. ;
-         AScan( aExclude, {| flt | hb_WildMatchI( flt, tmp, .T. ) } ) == 0
+      IF !hb_WildMatch("HB_GT_*_DEFAULT", tmp, .T.) .AND. ;
+         !hb_WildMatch(_HB_SELF_PREFIX + "*" + _HB_SELF_SUFFIX, tmp, .T.) .AND. ;
+         AScan(aExclude, {| flt | hb_WildMatchI(flt, tmp, .T.) }) == 0
          cExtern += "DYNAMIC " + hb_HGetDef(hDynamic, tmp, tmp) + hb_eol()
       ENDIF
    NEXT
@@ -12888,7 +12888,7 @@ STATIC FUNCTION hbmk_CoreHeaderFiles()
       ADD HEADER TO t_hHeaders FILE "simpleio.ch"
 #endif
 
-      hb_HCaseMatch( t_hHeaders, .T. )
+      hb_HCaseMatch(t_hHeaders, .T.)
    ENDIF
 
 #endif
@@ -12928,7 +12928,7 @@ STATIC FUNCTION hbsh()
 
    RETURN t_hbsh
 
-STATIC PROCEDURE __hbshell( cFile, ... )
+STATIC PROCEDURE __hbshell(cFile, ...)
 
    LOCAL hbsh := hbsh()
 
@@ -12943,7 +12943,7 @@ STATIC PROCEDURE __hbshell( cFile, ... )
    LOCAL cFileOri
 
    // get this before doing anything else
-   LOCAL lDebug := hb_argCheck( "debug" ) .OR. Right(Lower(hb_FNameName(hb_argv(0))), 1) == "d"
+   LOCAL lDebug := hb_argCheck("debug") .OR. Right(Lower(hb_FNameName(hb_argv(0))), 1) == "d"
 
    #if !__pragma(b)
       IF !lDebug
@@ -13017,15 +13017,15 @@ STATIC PROCEDURE __hbshell( cFile, ... )
 
    // Detect Harbour dir layout
 
-   hbmk_init_stage2( hbmk )
+   hbmk_init_stage2(hbmk)
    IF !hbmk_harbour_dirlayout_detect( hbmk, .T. )
       IF __hbshell_CanLoadDyn()
          _hbmk_OutErr(hbmk, I_(e"Warning: Failed to detect Harbour.\nRun this tool from its original location inside the Harbour installation."))
       ENDIF
    ENDIF
-   hbmk[_HBMK_cCOMP] := hb_Version( HB_VERSION_BUILD_COMP )
-   hbmk[_HBMK_cPLAT] := hb_Version( HB_VERSION_BUILD_PLAT )
-   hbmk[_HBMK_cCPU] := hb_Version( HB_VERSION_CPU )
+   hbmk[_HBMK_cCOMP] := hb_Version(HB_VERSION_BUILD_COMP)
+   hbmk[_HBMK_cPLAT] := hb_Version(HB_VERSION_BUILD_PLAT)
+   hbmk[_HBMK_cCPU] := hb_Version(HB_VERSION_CPU)
    hbmk_harbour_dirlayout_init( hbmk )
 
    __hbshell_ext_static_init()
@@ -13060,7 +13060,7 @@ STATIC PROCEDURE __hbshell( cFile, ... )
       __hbshell_ext_init( aExtension )
       __hbshell_prompt( hb_AParams() )
 
-   ELSEIF !Empty(cFile := FindInPath( cFileOri := cFile,, { ".hb", ".hrb" } ))
+   ELSEIF !Empty(cFile := FindInPath(cFileOri := cFile,, { ".hb", ".hrb" }))
 
       cExt := Lower(hb_FNameExt(cFile))
 
@@ -13134,7 +13134,7 @@ STATIC PROCEDURE __hbshell( cFile, ... )
             cFile)
 
          IF cFile == NIL
-            ErrorLevel( _EXIT_COMPPRG )
+            ErrorLevel(_EXIT_COMPPRG)
             EXIT
          ENDIF
 
@@ -13163,7 +13163,7 @@ STATIC FUNCTION __hbshell_FileSig(cFile)
    LOCAL cBuff, cSig, cExt
 
    cExt := ".hb"
-   hFile := FOpen( cFile, FO_READ )
+   hFile := FOpen(cFile, FO_READ)
    IF hFile != F_ERROR
       cSig := hb_hrbSignature()
       cBuff := Space(hb_BLen(cSig))
@@ -13240,11 +13240,11 @@ STATIC PROCEDURE __hbshell_LoadExtFromSource(aExtension, cFileName)
    hb_cdpSelect(tmp)
 
    IF !Empty(pRegex)
-      FOR EACH tmp IN hb_regexAll( pRegex, cFile, ;
-                                   /* lCaseSensitive */, ;
-                                   /* lNewLine */, NIL, ;
-                                   /* nGetMatch */, ;
-                                   .T. /* lOnlyMatch */ )
+      FOR EACH tmp IN hb_regexAll(pRegex, cFile, ;
+                                  /* lCaseSensitive */, ;
+                                  /* lNewLine */, NIL, ;
+                                  /* nGetMatch */, ;
+                                  .T. /* lOnlyMatch */)
          AAdd(aExtension, SubStr(tmp[2], 2, Len(tmp[2]) - 2))
       NEXT
    ENDIF
@@ -13262,8 +13262,8 @@ STATIC PROCEDURE __hbshell_ext_static_init()
    nCount := __dynsCount()
    FOR tmp := 1 TO nCount
       cName := __dynsGetName(tmp)
-      IF LEFTEQUAL( cName, "__HBEXTERN__" ) .AND. ;
-         !HBMK_IS_IN( cName, "__HBEXTERN__HBCPAGE__" )
+      IF LEFTEQUAL(cName, "__HBEXTERN__") .AND. ;
+         !HBMK_IS_IN(cName, "__HBEXTERN__HBCPAGE__")
          hbsh[_HBSH_hLibExt][Lower(SubStr(cName, Len("__HBEXTERN__") + 1, Len(cName) - Len("__HBEXTERN__") - Len("__")))] := NIL
       ENDIF
    NEXT
@@ -13350,10 +13350,10 @@ FUNCTION hbshell_ext_unload(cName)
    LOCAL hbsh := hbsh()
 
    IF HB_ISSTRING(cName) .AND. cName $ hbsh[_HBSH_hLibExt] .AND. hbsh[_HBSH_hLibExt][cName] != NIL
-      hb_HDel( hbsh[_HBSH_hINCPATH], cName )
-      hb_HDel( hbsh[_HBSH_hCH], cName )
-      hb_HDel( hbsh[_HBSH_hOPTPRG], cName )
-      hb_HDel( hbsh[_HBSH_hLibExt], cName )
+      hb_HDel(hbsh[_HBSH_hINCPATH], cName)
+      hb_HDel(hbsh[_HBSH_hCH], cName)
+      hb_HDel(hbsh[_HBSH_hOPTPRG], cName)
+      hb_HDel(hbsh[_HBSH_hLibExt], cName)
       RETURN .T.
    ENDIF
 
@@ -13506,7 +13506,7 @@ STATIC FUNCTION __hbshell_plugins_load(hPlugins, aParams)
       IF !Empty(cFile)
          BEGIN SEQUENCE WITH __BreakBlock()
             plugin[_PLUGIN_hHRB] := hb_hrbLoad(HB_HRB_BIND_FORCELOCAL, cFile)
-            IF Empty(hHRBEntry := hb_hrbGetFunSym( plugin[_PLUGIN_hHRB], "__hbshell_plugin" ))
+            IF Empty(hHRBEntry := hb_hrbGetFunSym(plugin[_PLUGIN_hHRB], "__hbshell_plugin"))
                plugin[_PLUGIN_hHRB] := NIL
             ENDIF
          RECOVER USING oError
@@ -13677,7 +13677,7 @@ STATIC PROCEDURE __hbshell_prompt( aParams, aCommand )
       hb_DispOutAt( nMaxRow, 0, cPrompt := cDomain + "." )
 
       GetList := { Get():New( nMaxRow, Len(cPrompt), {| v | iif(PCount() == 0, cLine, cLine := v) }, "cLine", "@KS" + hb_ntos( nMaxCol - Len(cPrompt) + 1 ) ) }
-      ATail( GetList ):display()
+      ATail(GetList):display()
 
       SetCursor( iif(ReadInsert(), SC_INSERT, SC_NORMAL) )
 
@@ -13693,7 +13693,7 @@ STATIC PROCEDURE __hbshell_prompt( aParams, aCommand )
       bKeyResize := SetKey( HB_K_RESIZE, ;
          {|| lResize := .T., hb_keyPut( K_ENTER ) } )
 
-      ReadModal( GetList )
+      ReadModal(GetList)
 
       SetKey( K_DOWN, bKeyDown )
       SetKey( K_UP, bKeyUp )
@@ -13707,24 +13707,24 @@ STATIC PROCEDURE __hbshell_prompt( aParams, aCommand )
             cLine := NIL
          ENDIF
          IF nMaxRow != MaxRow() .OR. nMaxCol != MaxCol()
-            hb_Scroll( nMaxRow, 0 )
+            hb_Scroll(nMaxRow, 0)
          ENDIF
          LOOP
       ENDIF
 
-      IF Empty(hbsh[_HBSH_aHistory]) .OR. !ATail( hbsh[_HBSH_aHistory] ) == cLine
+      IF Empty(hbsh[_HBSH_aHistory]) .OR. !ATail(hbsh[_HBSH_aHistory]) == cLine
          IF Len(hbsh[_HBSH_aHistory]) < HB_HISTORY_LEN
             AAdd(hbsh[_HBSH_aHistory], cLine)
          ELSE
-            ADel( hbsh[_HBSH_aHistory], 1 )
+            ADel(hbsh[_HBSH_aHistory], 1)
             hbsh[_HBSH_aHistory][Len(hbsh[_HBSH_aHistory])] := cLine
          ENDIF
       ENDIF
       nHistIndex := Len(hbsh[_HBSH_aHistory]) + 1
 
-      cCommand := AllTrim( cLine, " " )
+      cCommand := AllTrim(cLine, " ")
       cLine := NIL
-      hb_Scroll( nMaxRow, 0 )
+      hb_Scroll(nMaxRow, 0)
       __hbshell_Info( cCommand )
 
       IF !Empty(cCommand)
@@ -13745,7 +13745,7 @@ STATIC PROCEDURE __hbshell_prompt( aParams, aCommand )
             ENDIF
 
             IF hbsh[_HBSH_nRow] >= MaxRow()
-               hb_Scroll( 3, 0, MaxRow(), MaxCol(), 1 )
+               hb_Scroll(3, 0, MaxRow(), MaxCol(), 1)
                hbsh[_HBSH_nRow] := MaxRow() - 1
             ENDIF
          ENDIF
@@ -13774,14 +13774,14 @@ STATIC FUNCTION __hbshell_GetHidden()
    nSavedRow := Row()
 
    AAdd(GetList, hb_Get():New( Row(), Col(), {| v | iif(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ))
-   ATail( GetList ):hideInput( .T. )
-   ATail( GetList ):postBlock := {|| !Empty(cPassword) }
-   ATail( GetList ):display()
+   ATail(GetList):hideInput( .T. )
+   ATail(GetList):postBlock := {|| !Empty(cPassword) }
+   ATail(GetList):display()
 
    SetCursor( iif(ReadInsert(), SC_INSERT, SC_NORMAL) )
    bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
 
-   ReadModal( GetList )
+   ReadModal(GetList)
 
    // Positions the cursor on the line previously saved
    SetPos( nSavedRow, MaxCol() - 1 )
@@ -13789,7 +13789,7 @@ STATIC FUNCTION __hbshell_GetHidden()
 
    QQOut( hb_eol() )
 
-   RETURN AllTrim( cPassword )
+   RETURN AllTrim(cPassword)
 
 STATIC PROCEDURE __hbshell_Info( cCommand )
 
@@ -13825,7 +13825,7 @@ STATIC PROCEDURE __hbshell_Info( cCommand )
 STATIC FUNCTION __hbshell_CanLoadDyn()
    /* Can load them only in -shared builds on Windows,
       because dynlibs are built against harbour.dll. */
-   RETURN hb_Version( HB_VERSION_UNIX_COMPAT ) .OR. hb_Version( HB_VERSION_SHARED )
+   RETURN hb_Version(HB_VERSION_UNIX_COMPAT) .OR. hb_Version(HB_VERSION_SHARED)
 
 STATIC PROCEDURE __hbshell_Err( oError, cCommand )
 
@@ -13850,7 +13850,7 @@ STATIC PROCEDURE __hbshell_Err( oError, cCommand )
 
    Alert( cMessage )
 
-   Break( oError )
+   Break(oError)
 
 STATIC PROCEDURE __hbshell_Exec(cCommand)
 
@@ -13957,8 +13957,8 @@ STATIC PROCEDURE __hbshell_HistorySave()
    IF hbsh[_HBSH_lWasLoad] .AND. hbsh[_HBSH_lPreserveHistory]
       cHistory := ""
       FOR EACH cLine IN hbsh[_HBSH_aHistory]
-         IF !Lower(AllTrim( cLine )) == "quit"
-            cHistory += AllTrim( cLine ) + hb_eol()
+         IF !Lower(AllTrim(cLine)) == "quit"
+            cHistory += AllTrim(cLine) + hb_eol()
          ENDIF
       NEXT
       IF !hb_DirExists(cDir := __hbshell_ConfigDir())
@@ -13983,12 +13983,12 @@ DYNAMIC win_regDelete
 
 STATIC FUNCTION __hbshell_win_reg_self(lRegister, lAllUser)
 
-   IF !hb_IsFunction( "__HBEXTERN__HBWIN__" ) .AND. ;
+   IF !hb_IsFunction("__HBEXTERN__HBWIN__") .AND. ;
       !hbshell_ext_load("hbwin")
       RETURN .F.
    ENDIF
-   IF !hb_IsFunction( "win_regWrite" ) .OR. ;
-      !hb_IsFunction( "win_regDelete" )
+   IF !hb_IsFunction("win_regWrite") .OR. ;
+      !hb_IsFunction("win_regDelete")
       RETURN .F.
    ENDIF
 
@@ -13996,7 +13996,7 @@ STATIC FUNCTION __hbshell_win_reg_self(lRegister, lAllUser)
 
 STATIC FUNCTION __hbshell_win_reg_app( lRegister, lAllUser, cAppPath )
 
-   LOCAL cHive := iif(HB_ISLOGICAL( lAllUser ) .AND. lAllUser, "HKEY_CLASSES_ROOT", "HKEY_CURRENT_USER\Software\Classes")
+   LOCAL cHive := iif(HB_ISLOGICAL(lAllUser) .AND. lAllUser, "HKEY_CLASSES_ROOT", "HKEY_CURRENT_USER\Software\Classes")
    LOCAL lSuccess := .T.
    LOCAL tmp
 
@@ -14163,7 +14163,7 @@ FUNCTION hbshell_uninclude(cName)
       cName := Lower(cName)
 
       IF cName $ hbsh[_HBSH_hCHCORE]
-         hb_HDel( hbsh[_HBSH_hCHCORE], cName )
+         hb_HDel(hbsh[_HBSH_hCHCORE], cName)
          RETURN .T.
       ENDIF
    ENDIF
@@ -14264,8 +14264,8 @@ STATIC PROCEDURE convert_hbmake_to_hbp( hbmk, cSrcName, cDstName )
    FOR EACH cLine IN hb_ATokens( cSrc, Chr(10) )
       tmp := At( " =", cLine )
       IF tmp > 0
-         cSetting := AllTrim( Left(cLine, tmp - 1) )
-         cValue := AllTrim( SubStr(cLine, tmp + Len(" =")) )
+         cSetting := AllTrim(Left(cLine, tmp - 1))
+         cValue := AllTrim(SubStr(cLine, tmp + Len(" =")))
          aValue := hb_ATokens( cValue )
          IF !Empty(cValue)
             SWITCH cSetting
@@ -14332,9 +14332,9 @@ STATIC PROCEDURE convert_hbmake_to_hbp( hbmk, cSrcName, cDstName )
                EXIT
             CASE "TOPMODULE"
                IF !cValue == cMAIN
-                  tmp := AScan( aDst, {| tmp | tmp == cValue } )
+                  tmp := AScan(aDst, {| tmp | tmp == cValue })
                   IF tmp > 0
-                     hb_ADel( aDst, tmp, .T. )
+                     hb_ADel(aDst, tmp, .T.)
                      hb_AIns( aDst, 1, cValue, .T. )
                   ENDIF
                ENDIF
@@ -14408,8 +14408,8 @@ STATIC PROCEDURE convert_xbp_to_hbp( hbmk, cSrcName, cDstName )
       ELSEIF lGlobalSection
          tmp := At( " =", cLine )
          IF tmp > 0
-            cSetting := AllTrim( Left(cLine, tmp - 1) )
-            cValue := AllTrim( SubStr(cLine, tmp + Len(" =")) )
+            cSetting := AllTrim(Left(cLine, tmp - 1))
+            cValue := AllTrim(SubStr(cLine, tmp + Len(" =")))
             aValue := hb_ATokens( cValue )
             IF !Empty(cValue)
                SWITCH cSetting
@@ -14533,7 +14533,7 @@ STATIC PROCEDURE convert_xhp_to_hbp( hbmk, cSrcName, cDstName )
       ELSEIF lFileSection
          tmp := At( "=", cLine )
          IF tmp > 0
-            cFile := AllTrim( Left(cLine, tmp - 1) )
+            cFile := AllTrim(Left(cLine, tmp - 1))
             SWITCH Lower(hb_FNameExt(cFile))
             CASE ".c"
             CASE ".prg"
@@ -14577,8 +14577,8 @@ STATIC PROCEDURE convert_xhp_to_hbp( hbmk, cSrcName, cDstName )
             ENDSWITCH
          ENDIF
       ELSEIF ( tmp := At( "=", cLine ) ) > 0
-         cSetting := AllTrim( Left(cLine, tmp - 1) )
-         cValue := AllTrim( SubStr(cLine, tmp + Len("=")) )
+         cSetting := AllTrim(Left(cLine, tmp - 1))
+         cValue := AllTrim(SubStr(cLine, tmp + Len("=")))
          aValue := hb_ATokens( cValue )
          IF !Empty(cValue)
             SWITCH cSetting
@@ -14640,20 +14640,20 @@ STATIC PROCEDURE convert_xhp_to_hbp( hbmk, cSrcName, cDstName )
 
    RETURN
 
-STATIC PROCEDURE find_harbour_function( hbmk, aArgs, cSelf )
+STATIC PROCEDURE find_harbour_function(hbmk, aArgs, cSelf)
 
    LOCAL cArg
 
-   hbmk_init_stage2( hbmk )
+   hbmk_init_stage2(hbmk)
    hbmk_harbour_dirlayout_detect( hbmk, .T. )
-   hbmk[_HBMK_cCOMP] := hb_Version( HB_VERSION_BUILD_COMP )
-   hbmk[_HBMK_cPLAT] := hb_Version( HB_VERSION_BUILD_PLAT )
-   hbmk[_HBMK_cCPU] := hb_Version( HB_VERSION_CPU )
+   hbmk[_HBMK_cCOMP] := hb_Version(HB_VERSION_BUILD_COMP)
+   hbmk[_HBMK_cPLAT] := hb_Version(HB_VERSION_BUILD_PLAT)
+   hbmk[_HBMK_cCPU] := hb_Version(HB_VERSION_CPU)
    hbmk_harbour_dirlayout_init( hbmk )
 
    FOR EACH cArg IN aArgs DESCEND
       IF cArg == cSelf
-         hb_ADel( aArgs, cArg:__enumIndex(), .T. )
+         hb_ADel(aArgs, cArg:__enumIndex(), .T.)
       ENDIF
    NEXT
 
@@ -14696,9 +14696,9 @@ STATIC PROCEDURE SetUILang(hbmk, cUILNG)
       aLang := AAddNew( { cUILNG }, Left(cUILNG, 2) )
       AAdd(aLang, Left(cUILNG, 2) + "*")
       FOR EACH cLang IN aLang
-         #define _LANG_TO_HBL( cLang )  hb_DirSepAdd(hb_DirBase()) + _SELF_NAME_ + "." + StrTran(cLang, "-", "_") + ".hbl"
+         #define _LANG_TO_HBL(cLang)  hb_DirSepAdd(hb_DirBase()) + _SELF_NAME_ + "." + StrTran(cLang, "-", "_") + ".hbl"
          IF "*" $ cLang
-            IF Empty(aFile := Directory(_LANG_TO_HBL( cLang )))
+            IF Empty(aFile := Directory(_LANG_TO_HBL(cLang)))
                cFileName := NIL
             ELSE
                ASort(aFile,,, {| tmp, tmp1 | tmp[F_NAME] < tmp1[F_NAME] })
@@ -14706,11 +14706,11 @@ STATIC PROCEDURE SetUILang(hbmk, cUILNG)
                cLang := StrTran(SubStr(hb_FNameExt(hb_FNameName(cFileName)), 2), "_", "-")
             ENDIF
          ELSE
-            cFileName := _LANG_TO_HBL( cLang )
+            cFileName := _LANG_TO_HBL(cLang)
          ENDIF
-         IF !Empty(cFileName) .AND. hb_i18n_Check( cFile := hb_MemoRead(cFileName) )
+         IF !Empty(cFileName) .AND. hb_i18n_Check(cFile := hb_MemoRead(cFileName))
             hb_i18n_Set( hb_i18n_RestoreTable(cFile) )
-            BEGIN SEQUENCE WITH {| oError | Break( oError ) }
+            BEGIN SEQUENCE WITH {| oError | Break(oError) }
                hb_langSelect( hbmk[_HBMK_cUILNG] := cLang )
             END // SEQUENCE
             EXIT
@@ -14767,10 +14767,10 @@ STATIC FUNCTION ToMarkdown(cText, cStyle)
    IF HB_ISSTRING(cStyle)
       SWITCH cStyle
       CASE "strong"
-         cText := "**" + AllTrim( cText ) + "**"
+         cText := "**" + AllTrim(cText) + "**"
          EXIT
       CASE "url"
-         cText := "<" + AllTrim( cText ) + ">"
+         cText := "<" + AllTrim(cText) + ">"
          EXIT
       ENDSWITCH
    ENDIF
@@ -14807,14 +14807,14 @@ STATIC PROCEDURE ShowHeader( hbmk )
       hb_SetTermCP( "UTF8EX" ) // UTF-8 output for Markdown
       cText := ToMarkdown(cText)
    ELSE
-      IF !hb_FIsDevice(1 /* stdout */) .OR. HB_ISBLOCK( hbmk[_HBMK_bOut] )
+      IF !hb_FIsDevice(1 /* stdout */) .OR. HB_ISBLOCK(hbmk[_HBMK_bOut])
          hb_SetTermCP( "UTF8EX" ) // UTF-8 output when redirected or directly writing to file
       ENDIF
       cText := StrTran(cText, e"\n", _OUT_EOL)
    ENDIF
    Eval(hbmk[_HBMK_bOut], cText)
 
-   cText := hb_Version( HB_VERSION_URL_BASE )
+   cText := hb_Version(HB_VERSION_URL_BASE)
    IF hbmk[_HBMK_lMarkdown]
       cText := ToMarkdown(cText, "url") + ToMarkdown(e"\n")
    ELSE
@@ -15544,7 +15544,7 @@ STATIC PROCEDURE ShowHelp( hbmk, lMore, lLong )
       I_("You can use key <Alt+V> in interactive Harbour shell to paste text from the clipboard."), ;
       hb_StrFormat(I_("Values marked with [*] may be host platform and/or configuration " + ;
          "dependent. This help was generated on '%1$s' host platform."), ;
-         Lower(hb_Version( HB_VERSION_PLATFORM ))) }
+         Lower(hb_Version(HB_VERSION_PLATFORM))) }
    // FIXME: hb.ch is only included at interactive shell prompt, not in scripts.
 
    LOCAL aHdr_Desc := { ;
