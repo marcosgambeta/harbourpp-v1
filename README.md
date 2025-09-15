@@ -130,7 +130,7 @@ hbmk2 file.prg
 
 #### icx - Intel oneAPI compiler
 
-To learn about the compiler and download binaries:  
+To learn more about the compiler and download binaries:  
 https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html  
 
 Note: work in progress. Can be tested only in Windows.
@@ -139,7 +139,7 @@ Note: work in progress. Can be tested only in Windows.
 
 ```Batch
 call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" ia32
-set HB_INSTALL_PREFIX=%CD%\builds\icx32
+set HB_INSTALL_PREFIX=C:\HBPPICX32
 set HB_BUILD_DYN=no
 set HB_BUILD_CONTRIB_DYN=no
 set HB_COMPILER=icx
@@ -150,6 +150,21 @@ pause
 ```Batch
 hbmk2 file.prg -comp=icx
 hbmk2 project.hbp -comp=icx
+```
+
+```Batch
+call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" intel64
+set HB_INSTALL_PREFIX=C:\HBPPICX64
+set HB_BUILD_DYN=no
+set HB_BUILD_CONTRIB_DYN=no
+set HB_COMPILER=icx64
+win-make install 1>log1.log 2>log2.log
+pause
+```
+
+```Batch
+hbmk2 file.prg -comp=icx64
+hbmk2 project.hbp -comp=icx64
 ```
 
 ### Related projects
@@ -306,7 +321,7 @@ hbmk2 file.prg
 
 #### icx - Intel oneAPI compiler
 
-Para aprender sobre o compilador e baixar binários:  
+Para aprender mais sobre o compilador e baixar binários:  
 https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html  
 
 Nota: trabalho em progresso. Pode ser testado somente no Windows.
@@ -326,6 +341,21 @@ pause
 ```Batch
 hbmk2 file.prg -comp=icx
 hbmk2 project.hbp -comp=icx
+```
+
+```Batch
+call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" intel64
+set HB_INSTALL_PREFIX=C:\HBPPICX64
+set HB_BUILD_DYN=no
+set HB_BUILD_CONTRIB_DYN=no
+set HB_COMPILER=icx64
+win-make install 1>log1.log 2>log2.log
+pause
+```
+
+```Batch
+hbmk2 file.prg -comp=icx64
+hbmk2 project.hbp -comp=icx64
 ```
 
 ### Projetos relacionados
