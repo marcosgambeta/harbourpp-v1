@@ -729,6 +729,14 @@ char *hb_verCompiler(void)
   iVerMinor = iVerMajor % 100;
   iVerPatch = 0;
 
+#elif defined(__INTEL_LLVM_COMPILER)
+
+  pszName = "Intel(R) oneAPI DPC++/C++";
+
+  iVerMajor = __INTEL_LLVM_COMPILER / 100;
+  iVerMinor = (__INTEL_LLVM_COMPILER % 100) / 10;
+  iVerPatch = 0;
+
 #elif defined(__INTEL_COMPILER)
 
   pszName = "Intel(R) C";
