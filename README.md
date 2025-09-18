@@ -138,7 +138,7 @@ Note: work in progress. Can be tested only in Windows.
 ##### Examples
 
 ```Batch
-call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" ia32
+call "C:\Program Files (x86)\Intel\oneAPI\compiler\<version>\env\vars.bat" ia32
 set HB_INSTALL_PREFIX=C:\HBPPICX32
 set HB_BUILD_DYN=no
 set HB_BUILD_CONTRIB_DYN=no
@@ -153,7 +153,7 @@ hbmk2 project.hbp -comp=icx
 ```
 
 ```Batch
-call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" intel64
+call "C:\Program Files (x86)\Intel\oneAPI\compiler\<version>\env\vars.bat" intel64
 set HB_INSTALL_PREFIX=C:\HBPPICX64
 set HB_BUILD_DYN=no
 set HB_BUILD_CONTRIB_DYN=no
@@ -329,7 +329,7 @@ Nota: trabalho em progresso. Pode ser testado somente no Windows.
 ##### Exemplos
 
 ```Batch
-call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" ia32
+call "C:\Program Files (x86)\Intel\oneAPI\compiler\<version>\env\vars.bat" ia32
 set HB_INSTALL_PREFIX=C:\HBPPICX32
 set HB_BUILD_DYN=no
 set HB_BUILD_CONTRIB_DYN=no
@@ -344,7 +344,7 @@ hbmk2 project.hbp -comp=icx
 ```
 
 ```Batch
-call "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\env\vars.bat" intel64
+call "C:\Program Files (x86)\Intel\oneAPI\compiler\<version>\env\vars.bat" intel64
 set HB_INSTALL_PREFIX=C:\HBPPICX64
 set HB_BUILD_DYN=no
 set HB_BUILD_CONTRIB_DYN=no
