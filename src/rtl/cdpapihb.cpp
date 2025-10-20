@@ -55,20 +55,14 @@ static HB_SIZE utf8pos(const char *szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos)
 {
   if (nUTF8Pos > 0 && nUTF8Pos <= nLen) {
     HB_SIZE n1, n2;
-    HB_WCHAR uc;
-    int n = 0;
+    HB_WCHAR32 wc;
 
     for (n1 = n2 = 0; n1 < nLen;) {
-      if (hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(szUTF8[n1]), &n, &uc)) {
-        ++n1;
+      hb_cdpUTF8GetU32(szUTF8, nLen, &n1, &wc);
+      if (--nUTF8Pos == 0) {
+        return n2 + 1;
       }
-
-      if (n == 0) {
-        if (--nUTF8Pos == 0) {
-          return n2 + 1;
-        }
-        n2 = n1;
-      }
+      n2 = n1;
     }
   }
   return 0;
@@ -131,8 +125,7 @@ HB_FUNC(HB_CDPISCHARIDX)
 
 HB_FUNC(HB_CDPCHARMAX)
 {
-  hb_retnl(
-      (1 << (static_cast<int>(hb_cdpIsUTF8(hb_cdpFindExt(hb_parc(1))) ? sizeof(HB_WCHAR) : sizeof(HB_UCHAR)) * 8)) - 1);
+  hb_retnl((1 << (static_cast<int>(hb_cdpIsUTF8(hb_cdpFindExt(hb_parc(1))) ? sizeof(HB_WCHAR) : sizeof(HB_UCHAR)) * 8)) - 1);
 }
 
 HB_FUNC(HB_CDPISUTF8)
@@ -192,7 +185,8 @@ HB_FUNC(HB_UTF8CHR)
 {
   if (HB_ISNUM(1)) {
     char utf8Char[HB_MAX_CHAR_LEN];
-    int iLen = hb_cdpU16CharToUTF8(utf8Char, static_cast<HB_WCHAR>(hb_parni(1)));
+
+    int iLen = hb_cdpU32CharToUTF8(utf8Char, static_cast<HB_WCHAR32>(hb_parni(1)));
     hb_retclen(utf8Char, iLen);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -205,19 +199,10 @@ HB_FUNC(HB_UTF8ASC)
 
   if (pszString) {
     auto nLen = hb_parclen(1);
-    HB_WCHAR wc = 0;
-    int n = 0;
+    HB_SIZE nIndex = 0;
+    HB_WCHAR32 wc = 0;
 
-    while (nLen) {
-      if (!hb_cdpUTF8ToU16NextChar(static_cast<unsigned char>(*pszString), &n, &wc)) {
-        break;
-      }
-      if (n == 0) {
-        break;
-      }
-      pszString++;
-      nLen--;
-    }
+    hb_cdpUTF8GetU32(pszString, nLen, &nIndex, &wc);
     hb_retnint(wc);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -448,29 +433,31 @@ HB_FUNC(HB_UTF8POKE)
 
     nPos = utf8pos(szString, nLen, hb_parns(2));
     if (nPos) {
+      HB_WCHAR32 uc, uc2;
+      HB_SIZE nDstLen = 0;
+      int n;
 
       --nPos;
-      auto uc = static_cast<HB_WCHAR>(hb_parni(3));
-      int n = hb_cdpUTF8CharSize(uc);
-      int n2 = 0;
-      HB_WCHAR uc2;
-      hb_cdpUTF8ToU16NextChar(szString[nPos], &n2, &uc2);
-      ++n2;
-      if (n == n2) {
+      uc = static_cast<HB_WCHAR32>(hb_parni(3));
+      n = hb_cdpUTF8CharSize(uc);
+
+      hb_cdpUTF8GetU32(&szString[nPos], nLen - nPos, &nDstLen, &uc2);
+      if (n == (int)nDstLen) {
         char *szText;
         if (hb_itemGetWriteCL(pText, &szText, &nLen) && nPos + n <= nLen) {
-          hb_cdpU16CharToUTF8(&szText[nPos], uc);
+          hb_cdpU32CharToUTF8(&szText[nPos], uc);
         }
         hb_itemReturn(pText);
       } else {
-        auto szResult = static_cast<char *>(hb_xgrab(nLen - n2 + n + 1));
+        auto szResult = static_cast<char *>(hb_xgrab(nLen - nDstLen + n + 1));
+
         memcpy(szResult, szString, nPos);
-        hb_cdpU16CharToUTF8(&szResult[nPos], uc);
-        memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
+        hb_cdpU32CharToUTF8(&szResult[nPos], uc);
+        memcpy(szResult + nPos + n, szString + nPos + nDstLen, nLen - nPos - nDstLen);
         if (HB_ISBYREF(1)) {
-          hb_storclen(szResult, nLen - n2 + n, 1);
+          hb_storclen(szResult, nLen - nDstLen + n, 1);
         }
-        hb_retclen_buffer(szResult, nLen - n2 + n);
+        hb_retclen_buffer(szResult, nLen - nDstLen + n);
       }
     } else {
       hb_itemReturn(pText);
@@ -542,4 +529,5 @@ HB_FUNC(HB_UTF8LEN)
 // none of numeric parameters in StrTran() (4-th and 5-th) refers to
 // character position in string so we do not need to create new
 // hb_utf8StrTran() but we can safely use normal StrTran() function
+
 HB_FUNC_TRANSLATE(HB_UTF8STRTRAN, STRTRAN)

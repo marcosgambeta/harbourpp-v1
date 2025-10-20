@@ -55,30 +55,13 @@
 
 static HB_CDP_GET_FUNC(UTF8_get)
 {
-   HB_SIZE nIndex = *pnIndex;
-   int n = 0;
-
-   HB_SYMBOL_UNUSED(cdp);
-
-   *wc = 0;
-   while( nIndex < nLen )
-   {
-      if( hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(pSrc[nIndex]), &n, wc) )
-      {
-         ++nIndex;
-      }
-      if( n == 0 )
-      {
-         *pnIndex = nIndex;
-         return true;
-      }
-   }
-   if( n != 0 )
-   {
-      *pnIndex = nIndex;
-      return true;
-   }
-   return false;
+  HB_SYMBOL_UNUSED(cdp);
+  if (*pnIndex < nLen) {
+    hb_cdpUTF8GetU16(pSrc, nLen, pnIndex, wc);
+    return true;
+  }
+  *wc = 0;
+  return false;
 }
 
 static HB_CDP_PUT_FUNC(UTF8_put)
