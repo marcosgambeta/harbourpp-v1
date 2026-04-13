@@ -50,10 +50,14 @@
 #ifndef HB_QTC_H_
 #define HB_QTC_H_
 
-#define HB_GT_NAME  QTC
+#define HB_GT_NAME QTC
 
 #include <QtCore/QThread>
-#include <QtCore/QMutex>
+#if QT_VERSION >= 0x060000
+  #include <QtCore/QRecursiveMutex>
+#else
+  #include <QtCore/QMutex>
+#endif
 
 #include <QtGui/QFont>
 #include <QtGui/QColor>
@@ -64,41 +68,36 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QFontDatabase>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x060000
-   #include <QtGui/QAction>
-   #include <QtWidgets/QAbstractButton>
-   #include <QtWidgets/QApplication>
-   #include <QtWidgets/QMainWindow>
-   #include <QtWidgets/QMessageBox>
-   #include <QtWidgets/QWidget>
-   #ifdef HB_QT_SOUND
-      #include <QtMultimedia/QSound>
-   #endif
-#elif QT_VERSION >= 0x050000
-   #include <QtGui/QScreen>
-   #include <QtWidgets/QAbstractButton>
-   #include <QtWidgets/QAction>
-   #include <QtWidgets/QApplication>
-   #include <QtWidgets/QDesktopWidget>
-   #include <QtWidgets/QMainWindow>
-   #include <QtWidgets/QMessageBox>
-   #include <QtWidgets/QWidget>
-   #ifdef HB_QT_SOUND
-      #include <QtMultimedia/QSound>
-   #endif
+#if QT_VERSION >= 0x050000
+#include <QtGui/QScreen>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QAbstractButton>
+#if QT_VERSION < 0x060000
+  #include <QtWidgets/QAction>
+  #include <QtWidgets/QDesktopWidget>
 #else
-   #include <QtGui/QAbstractButton>
-   #include <QtGui/QAction>
-   #include <QtGui/QApplication>
-   #include <QtGui/QDesktopWidget>
-   #include <QtGui/QMainWindow>
-   #include <QtGui/QMessageBox>
-   #include <QtGui/QWidget>
-   #ifdef HB_QT_SOUND
-      #include <QtGui/QSound>
-   #endif
+  #include <QtGui/QAction>
+#endif
+#ifdef HB_QT_SOUND
+  #include <QtMultimedia/QSound>
+#endif
+#else
+#include <QtGui/QApplication>
+#include <QtGui/QMainWindow>
+#include <QtGui/QWidget>
+#include <QtGui/QMessageBox>
+#include <QtGui/QAbstractButton>
+#include <QtGui/QAction>
+#include <QtGui/QDesktopWidget>
+#ifdef HB_QT_SOUND
+  #include <QtGui/QSound>
+#endif
 #endif
 
 #include <hbapi.hpp>
@@ -116,7 +115,7 @@
 #define QTC_DEFAULT_COLS           80
 #define QTC_DEFAULT_FONT_HEIGHT    20
 #define QTC_DEFAULT_FONT_WIDTH     0
-#define QTC_DEFAULT_FONT_WEIGHT    HB_GTI_FONTW_BOLD
+#define QTC_DEFAULT_FONT_WEIGHT    HB_GTI_FONTW_NORMAL
 #define QTC_DEFAULT_FONT_ATTRIBUTE 0
 #define QTC_DEFAULT_FONT_NAME      "Courier New"
 
@@ -137,8 +136,8 @@
 #define YELLOW                qRgb(0xFF, 0xFF, 0x55)
 #define WHITE                 qRgb(0xFF, 0xFF, 0xFF)
 
-#define QTC_RGB2NUM(r)      (qRed(r) | (qGreen(r)<<8) | (qBlue(r)<<16))
-#define QTC_NUM2RGB(c)      qRgb((c)&0xFF, (((c)>>8)&0xFF), (((c)>>16)&0xFF))
+#define QTC_RGB2NUM(r)        (qRed(r) | (qGreen(r)<<8) | (qBlue(r)<<16))
+#define QTC_NUM2RGB(c)        qRgb((c)&0xFF, (((c)>>8)&0xFF), (((c)>>16)&0xFF))
 
 // Box char unicode values
 #define HB_BOXCH_ARROW_R            0x0010 // ARROW RIGHT
@@ -178,6 +177,7 @@
 #define HB_BOXCH_SNG_HOR            0x2500 // BOX DRAWINGS LIGHT HORIZONTAL (Single Horizontal bar)
 #define HB_BOXCH_SNG_VRT            0x2502 // BOX DRAWINGS LIGHT VERTICAL (Single Vertical bar)
 
+
 #define HB_BOXCH_SNG_L_DBL_T        0x2552 // BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE (Single left double top angle)
 #define HB_BOXCH_SNG_T_DBL_D        0x2565 // BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE (Single top with double junction down)
 #define HB_BOXCH_SNG_R_DBL_T        0x2556 // BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE (Single right double top angle)
@@ -189,6 +189,7 @@
 #define HB_BOXCH_SNG_V_DBL_L        0x255E // BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE (Single Vertical double left junction)
 #define HB_BOXCH_SNG_V_DBL_R        0x2561 // BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE (Single vertical double right junction)
 #define HB_BOXCH_SNG_DBL_CRS        0x256A // BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE (Single cross (double horizontal)
+
 
 #define HB_BOXCH_DBL_L_SNG_T        0x2553 // BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE (Double left single top angle)
 #define HB_BOXCH_DBL_T_SNG_D        0x2564 // BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE (Double top single junction down)
@@ -208,7 +209,7 @@
 #define HB_BOXCH_FULL_R             0x2590 // RIGHT HALF BLOCK
 #define HB_BOXCH_FULL_T             0x2580 // UPPER HALF BLOCK
 
-#define HB_BOXCH_FILLER1            0x2591 // LIGHT SHADE
+#define HB_BOXCH_FILLER1            0x2591 // LIGHT SHADE 
 #define HB_BOXCH_FILLER2            0x2592 // MEDIUM SHADE
 #define HB_BOXCH_FILLER3            0x2593 // DARK SHADE
 
@@ -238,7 +239,7 @@
 #define HB_BOXCH_RC_VSCRL_RU        0xE052 // USER VERTICAL SCROLL (RIGHT-UP)
 #define HB_BOXCH_RC_VSCRL_L         0xE053 // USER VERTICAL SCROLL (LEFT)
 #define HB_BOXCH_RC_VSCRL_R         0xE054 // USER VERTICAL SCROLL (RIGHT)
-#define HB_BOXCH_RC_HSCRL           0xE055 // USER HORIZONTAL SCROLL 
+#define HB_BOXCH_RC_HSCRL           0xE055 // USER HORIZONTAL SCROLL
 
 #define HB_BOXCH_RC_0               0xE056 // USER BIG 0
 #define HB_BOXCH_RC_1               0xE057 // USER BIG 1
@@ -255,7 +256,7 @@
 
 #define HB_BOXCH_RC_BOX_ML          0xE062 // USER BOX MIDDLE LEFT
 #define HB_BOXCH_RC_BOX_MR          0xE063 // USER BOX MIDDLE RIGHT
-#define HB_BOXCH_RC_HWND_L          0xE064 // USER WINDOW HANDLE LEFT
+#define HB_BOXCH_RC_HWND_L          0xE064 // USER WINDOW HANDLE LEFT 
 #define HB_BOXCH_RC_HWND_R          0xE065 // USER WINDOW HANDLE RIGHT
 #define HB_BOXCH_RC_BOX_TL          0xE066 // USER BOX TOP LEFT
 #define HB_BOXCH_RC_BOX_T           0xE067 // USER BOX TOP
@@ -316,7 +317,7 @@ struct HB_GTQTC
 
    // TOCHECK: porque HB_BOOL ?
    HB_BOOL     lastCursorType;               // previous cursor type
-   int         lastCursorCol;                // previous cursor position (column)
+   int         lastCursorCol;                // previous cursor position (column) 
    int         lastCursorRow;                // previous cursor position (row)
 
    int         mousePosX;                    // the last mouse X pixel position in window
@@ -340,7 +341,7 @@ struct HB_GTQTC
 
    QBitmap *   boxImage[HB_BOXCH_TRANS_MAX];   // bitmaps with box drawing characters
    HB_UCHAR    boxIndex[HB_BOXCH_TRANS_COUNT]; // indexes to bitmap array
-   int         boxCount;                         // number of defined box characters
+   int         boxCount;                       // number of defined box characters
 
    QIcon *     qIcon;                        // application icon
    QString *   wndTitle;                     // window title
@@ -387,20 +388,20 @@ public:
    void repaintChars(const QRect & rx);
 
 protected:
-   void inputMethodEvent(QInputMethodEvent * evt);
-   void keyPressEvent(QKeyEvent * evt);
-   void keyReleaseEvent(QKeyEvent * evt);
-   void mousePressEvent(QMouseEvent * evt);
-   void mouseMoveEvent(QMouseEvent * evt);
-   void mouseReleaseEvent(QMouseEvent * evt);
-   void mouseDoubleClickEvent(QMouseEvent * evt);
-   void paintEvent(QPaintEvent * evt);
-   void resizeEvent(QResizeEvent * evt);
-   void wheelEvent(QWheelEvent * evt);
-   void timerEvent(QTimerEvent * evt);
-   void focusInEvent(QFocusEvent * evt);
-   void focusOutEvent(QFocusEvent * evt);
-   bool event(QEvent * evt);
+   void inputMethodEvent(QInputMethodEvent *evt);
+   void keyPressEvent(QKeyEvent *evt);
+   void keyReleaseEvent(QKeyEvent *evt);
+   void mousePressEvent(QMouseEvent *evt);
+   void mouseMoveEvent(QMouseEvent *evt);
+   void mouseReleaseEvent(QMouseEvent *evt);
+   void mouseDoubleClickEvent(QMouseEvent *evt);
+   void paintEvent(QPaintEvent *evt);
+   void resizeEvent(QResizeEvent *evt);
+   void wheelEvent(QWheelEvent *evt);
+   void timerEvent(QTimerEvent *evt);
+   void focusInEvent(QFocusEvent *evt);
+   void focusOutEvent(QFocusEvent *evt);
+   bool event(QEvent *evt);
 };
 
 class QTCWindow : public QMainWindow
@@ -411,14 +412,12 @@ public:
    QTCWindow(PHB_GTQTC pQTC);
    virtual ~QTCWindow();
 
-   QTConsole * qConsole;
+   QTConsole *qConsole;
    void setWindowSize();
    void setResizing();
 
 protected:
-   void closeEvent(QCloseEvent * evt);
+   void closeEvent(QCloseEvent *evt);
 };
 
 #endif // HB_QTC_H_
-
-// TODO: review code under #ifdef
