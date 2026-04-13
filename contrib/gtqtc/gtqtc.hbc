@@ -33,6 +33,7 @@ gt=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
 
 {(allwin|os2)|HBMK_HAS_QT4}libpaths=${HBMK_DIR_QT4}/../lib
 {(allwin|os2)|HBMK_HAS_QT5}libpaths=${HBMK_DIR_QT5}/../lib
+{(allwin|os2)|HBMK_HAS_QT5}libpaths=${HBMK_DIR_QT5}/../../lib
 {(allwin|os2)|HBMK_HAS_QT6}libpaths=${HBMK_DIR_QT6}/../lib
 {bsd&HBMK_HAS_QT4}libpaths=/usr/local/lib/qt4
 {bsd&HBMK_HAS_QT5}libpaths=/usr/local/lib/qt5
