@@ -186,16 +186,30 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
   } else if (HB_ISOPTSEP(*szSwPtr)) {
     ++szSwPtr;
     switch (HB_TOUPPER(*szSwPtr)) {
-    case 'A':
-      ++szSwPtr;
-      if (*szSwPtr == '-') {
-        ++szSwPtr;
+    //case 'A':
+    //  ++szSwPtr;
+    //  if (*szSwPtr == '-') {
+    //    ++szSwPtr;
+    //    HB_COMP_PARAM->fAutoMemvarAssume = false;
+    //  } else {
+    //    HB_COMP_PARAM->fAutoMemvarAssume = true;
+    //  }
+    //  break;
+    case 'A': {
+      char *szOption = hb_compChkOptionDup(szSwPtr);
+
+      if (strcmp(szOption, "ALA") == 0) {
+        HB_COMP_PARAM->fAllowLocalAfter = true;
+        szSwPtr += 3;
+      } else if (strcmp(szOption, "A-") == 0) {
         HB_COMP_PARAM->fAutoMemvarAssume = false;
+        szSwPtr += 2;
       } else {
         HB_COMP_PARAM->fAutoMemvarAssume = true;
       }
+      hb_xfree(szOption);
       break;
-
+    }
     case 'B': {
       char *szOption = hb_compChkOptionDup(szSwPtr);
 

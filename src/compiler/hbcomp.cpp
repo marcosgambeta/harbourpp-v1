@@ -246,6 +246,7 @@ PHB_COMP hb_comp_new(void)
     pComp->fSingleModule = false;
     pComp->fError = false;
     pComp->fINCLUDE = true;
+    pComp->fAllowLocalAfter = false;  // allow local after executable statements
 
     pComp->iSyntaxCheckOnly = 0; // syntax check only
     pComp->iStartProc = 0;       // no implicit starting procedure

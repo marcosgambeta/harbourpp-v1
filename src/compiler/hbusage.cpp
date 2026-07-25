@@ -53,12 +53,13 @@
 void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {
 #ifdef YYDEBUG
-  std::array<std::string, 46> options =
+  std::array<std::string, 47> options =
 #else
-  std::array<std::string, 45> options =
+  std::array<std::string, 46> options =
 #endif
   {
       "\nOptions:  -a               automatic memvar declaration",
+      "\n          -ala             allow local after executable statements",
       "\n          -b               debug info",
       "\n          -build           display detailed version info",
       "\n          -credits         display credits",

@@ -848,6 +848,7 @@ typedef struct _HB_COMP
    HB_BOOL           fNoArchDefs;         /* do not define architecture dependent macros: __PLATFORM__*, __ARCH??BIT__, __*_ENDIAN__ */
    HB_BOOL           fMeaningful;         /* do not generate warnings about meaningless expression usage */
    HB_BOOL           fINCLUDE;            /* use INCLUDE envvar as header path (default) */
+   HB_BOOL           fAllowLocalAfter;    /* allow LOCAL after executable statements */
 } HB_COMP, * PHB_COMP;
 
 typedef struct

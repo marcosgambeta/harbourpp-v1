@@ -357,7 +357,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
     const char *szVarScope;
     switch (HB_COMP_PARAM->iVarScope) {
     case HB_VSCOMP_LOCAL:
-      szVarScope = "LOCAL";
+      szVarScope = HB_COMP_PARAM->fAllowLocalAfter ? nullptr : "LOCAL";
       break;
     case HB_VSCOMP_STATIC:
     case HB_VSCOMP_TH_STATIC:
