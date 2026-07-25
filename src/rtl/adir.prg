@@ -49,25 +49,16 @@
 
 FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
-   LOCAL aDir
-   LOCAL nDirLen
-   LOCAL nDirPos
-   LOCAL nNameLen
-   LOCAL nSizeLen
-   LOCAL nDateLen
-   LOCAL nTimeLen
-   LOCAL nAttrLen
-   LOCAL aFileInfo
-   LOCAL cDir
-   LOCAL cName
-   LOCAL cExt
-
    // CA-Cl*pper would fail on this case.
    IF !hb_IsString(cFileMask)
       RETURN 0
    ENDIF
 
    // If no drive/dir specified, use the SET DEFAULT setting.
+
+   LOCAL cDir
+   LOCAL cName
+   LOCAL cExt
 
    hb_FNameSplit(cFileMask, @cDir, @cName, @cExt)
 
@@ -76,6 +67,12 @@ FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
    ENDIF
 
    //
+
+   LOCAL nNameLen
+   LOCAL nSizeLen
+   LOCAL nDateLen
+   LOCAL nTimeLen
+   LOCAL nAttrLen
 
    IF hb_IsArray(aName)
       nNameLen := Len(aName)
@@ -95,8 +92,11 @@ FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    //
 
-   aDir := Directory(cFileMask, IIf(hb_IsArray(aAttr), "HSD", NIL))
-   nDirLen := Len(aDir)
+   LOCAL aDir := Directory(cFileMask, IIf(hb_IsArray(aAttr), "HSD", NIL))
+   LOCAL nDirLen := Len(aDir)
+
+   LOCAL nDirPos
+   LOCAL aFileInfo
 
    FOR nDirPos := 1 TO nDirLen
 
