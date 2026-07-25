@@ -8,6 +8,8 @@ ifneq ($(HB_PLATFORM),wce)
    endif
 endif
 
+HB_PRGFLAGS += -ala
+
 CPP_SOURCES := \
    abs.cpp \
    accept.cpp \
