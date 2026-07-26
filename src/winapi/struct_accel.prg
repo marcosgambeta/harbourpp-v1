@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_ACCEL_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_ACCEL_NEW)
 
 HB_FUNC_STATIC(WAS_ACCEL_DELETE)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_ACCEL_DELETE)
 
 HB_FUNC_STATIC(WAS_ACCEL_SETFVIRT)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->fVirt = wa_par_BYTE(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_ACCEL_SETFVIRT)
 
 HB_FUNC_STATIC(WAS_ACCEL_GETFVIRT)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->fVirt);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_ACCEL_GETFVIRT)
 
 HB_FUNC_STATIC(WAS_ACCEL_SETKEY)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->key = wa_par_WORD(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_ACCEL_SETKEY)
 
 HB_FUNC_STATIC(WAS_ACCEL_GETKEY)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->key);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_ACCEL_GETKEY)
 
 HB_FUNC_STATIC(WAS_ACCEL_SETCMD)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->cmd = wa_par_WORD(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_ACCEL_SETCMD)
 
 HB_FUNC_STATIC(WAS_ACCEL_GETCMD)
 {
-  auto obj = static_cast<ACCEL *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->cmd);

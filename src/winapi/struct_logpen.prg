@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_LOGPEN_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_NEW)
 
 HB_FUNC_STATIC(WAS_LOGPEN_DELETE)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_DELETE)
 
 HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNSTYLE)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lopnStyle = wa_par_UINT(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNSTYLE)
 
 HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNSTYLE)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->lopnStyle);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNSTYLE)
 
 HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNWIDTH)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lopnWidth.x = hb_parnl(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNWIDTH)
 
 HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNWIDTH)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_retnl(obj->lopnWidth.x);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNWIDTH)
 
 HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNCOLOR)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lopnColor = wa_par_COLORREF(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNCOLOR)
 
 HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNCOLOR)
 {
-  auto obj = static_cast<LOGPEN *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLORREF(obj->lopnColor);

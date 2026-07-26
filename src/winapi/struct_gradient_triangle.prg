@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_NEW)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_DELETE)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_DELETE)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX1)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Vertex1 = wa_par_ULONG(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX1)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX1)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG(obj->Vertex1);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX1)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX2)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Vertex2 = wa_par_ULONG(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX2)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX2)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG(obj->Vertex2);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX2)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX3)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Vertex3 = wa_par_ULONG(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_SETVERTEX3)
 
 HB_FUNC_STATIC(WAS_GRADIENT_TRIANGLE_GETVERTEX3)
 {
-  auto obj = static_cast<GRADIENT_TRIANGLE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG(obj->Vertex3);

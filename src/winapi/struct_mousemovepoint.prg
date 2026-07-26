@@ -87,6 +87,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -97,7 +99,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_NEW)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_DELETE)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -111,7 +113,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_DELETE)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETX)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->x = wa_par_int(1);
@@ -120,7 +122,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETX)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETX)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->x);
@@ -131,7 +133,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETX)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETY)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->y = wa_par_int(1);
@@ -140,7 +142,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETY)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETY)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->y);
@@ -151,7 +153,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETY)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETTIME)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->time = wa_par_DWORD(1);
@@ -160,7 +162,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETTIME)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETTIME)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->time);
@@ -171,7 +173,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETTIME)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETDWEXTRAINFO)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwExtraInfo = wa_par_ULONG_PTR(1);
@@ -180,7 +182,7 @@ HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_SETDWEXTRAINFO)
 
 HB_FUNC_STATIC(WAS_MOUSEMOVEPOINT_GETDWEXTRAINFO)
 {
-  auto obj = static_cast<MOUSEMOVEPOINT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->dwExtraInfo);

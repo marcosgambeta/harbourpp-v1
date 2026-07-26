@@ -99,6 +99,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_XFORM_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -109,7 +111,7 @@ HB_FUNC_STATIC(WAS_XFORM_NEW)
 
 HB_FUNC_STATIC(WAS_XFORM_DELETE)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -123,7 +125,7 @@ HB_FUNC_STATIC(WAS_XFORM_DELETE)
 
 HB_FUNC_STATIC(WAS_XFORM_SETEM11)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->eM11 = wa_par_FLOAT(1);
@@ -132,7 +134,7 @@ HB_FUNC_STATIC(WAS_XFORM_SETEM11)
 
 HB_FUNC_STATIC(WAS_XFORM_GETEM11)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->eM11);
@@ -143,7 +145,7 @@ HB_FUNC_STATIC(WAS_XFORM_GETEM11)
 
 HB_FUNC_STATIC(WAS_XFORM_SETEM12)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->eM12 = wa_par_FLOAT(1);
@@ -152,7 +154,7 @@ HB_FUNC_STATIC(WAS_XFORM_SETEM12)
 
 HB_FUNC_STATIC(WAS_XFORM_GETEM12)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->eM12);
@@ -163,7 +165,7 @@ HB_FUNC_STATIC(WAS_XFORM_GETEM12)
 
 HB_FUNC_STATIC(WAS_XFORM_SETEM21)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->eM21 = wa_par_FLOAT(1);
@@ -172,7 +174,7 @@ HB_FUNC_STATIC(WAS_XFORM_SETEM21)
 
 HB_FUNC_STATIC(WAS_XFORM_GETEM21)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->eM21);
@@ -183,7 +185,7 @@ HB_FUNC_STATIC(WAS_XFORM_GETEM21)
 
 HB_FUNC_STATIC(WAS_XFORM_SETEM22)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->eM22 = wa_par_FLOAT(1);
@@ -192,7 +194,7 @@ HB_FUNC_STATIC(WAS_XFORM_SETEM22)
 
 HB_FUNC_STATIC(WAS_XFORM_GETEM22)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->eM22);
@@ -203,7 +205,7 @@ HB_FUNC_STATIC(WAS_XFORM_GETEM22)
 
 HB_FUNC_STATIC(WAS_XFORM_SETEDX)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->eDx = wa_par_FLOAT(1);
@@ -212,7 +214,7 @@ HB_FUNC_STATIC(WAS_XFORM_SETEDX)
 
 HB_FUNC_STATIC(WAS_XFORM_GETEDX)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->eDx);
@@ -223,7 +225,7 @@ HB_FUNC_STATIC(WAS_XFORM_GETEDX)
 
 HB_FUNC_STATIC(WAS_XFORM_SETEDY)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->eDy = wa_par_FLOAT(1);
@@ -232,7 +234,7 @@ HB_FUNC_STATIC(WAS_XFORM_SETEDY)
 
 HB_FUNC_STATIC(WAS_XFORM_GETEDY)
 {
-  auto obj = static_cast<XFORM *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->eDy);

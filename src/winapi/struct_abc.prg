@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_ABC_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_ABC_NEW)
 
 HB_FUNC_STATIC(WAS_ABC_DELETE)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_ABC_DELETE)
 
 HB_FUNC_STATIC(WAS_ABC_SETABCA)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->abcA = wa_par_int(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_ABC_SETABCA)
 
 HB_FUNC_STATIC(WAS_ABC_GETABCA)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->abcA);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_ABC_GETABCA)
 
 HB_FUNC_STATIC(WAS_ABC_SETABCB)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->abcB = wa_par_UINT(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_ABC_SETABCB)
 
 HB_FUNC_STATIC(WAS_ABC_GETABCB)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->abcB);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_ABC_GETABCB)
 
 HB_FUNC_STATIC(WAS_ABC_SETABCC)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->abcC = wa_par_int(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_ABC_SETABCC)
 
 HB_FUNC_STATIC(WAS_ABC_GETABCC)
 {
-  auto obj = static_cast<ABC *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->abcC);

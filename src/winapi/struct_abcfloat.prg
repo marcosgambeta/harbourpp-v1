@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_ABCFLOAT_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_NEW)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_DELETE)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_DELETE)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFA)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->abcfA = wa_par_FLOAT(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFA)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFA)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->abcfA);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFA)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFB)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->abcfB = wa_par_FLOAT(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFB)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFB)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->abcfB);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFB)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFC)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->abcfC = wa_par_FLOAT(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFC)
 
 HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFC)
 {
-  auto obj = static_cast<ABCFLOAT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->abcfC);

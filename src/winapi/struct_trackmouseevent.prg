@@ -87,6 +87,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_NEW)
 {
   auto obj = new TRACKMOUSEEVENT();
@@ -99,7 +101,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_NEW)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_DELETE)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -113,7 +115,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_DELETE)
 
 // HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETCBSIZE)
 // {
-//   auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -123,7 +125,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_DELETE)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETCBSIZE)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWFLAGS)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwFlags = wa_par_DWORD(1);
@@ -143,7 +145,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETDWFLAGS)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwFlags);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETHWNDTRACK)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hwndTrack = wa_par_HWND(1);
@@ -163,7 +165,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETHWNDTRACK)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETHWNDTRACK)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HWND(obj->hwndTrack);
@@ -174,7 +176,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETHWNDTRACK)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWHOVERTIME)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwHoverTime = wa_par_DWORD(1);
@@ -183,7 +185,7 @@ HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_SETDWHOVERTIME)
 
 HB_FUNC_STATIC(WAS_TRACKMOUSEEVENT_GETDWHOVERTIME)
 {
-  auto obj = static_cast<TRACKMOUSEEVENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwHoverTime);

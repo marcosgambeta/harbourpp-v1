@@ -75,6 +75,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_GRADIENT_RECT_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -85,7 +87,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_NEW)
 
 HB_FUNC_STATIC(WAS_GRADIENT_RECT_DELETE)
 {
-  auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -99,7 +101,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_DELETE)
 
 HB_FUNC_STATIC(WAS_GRADIENT_RECT_SETUPPERLEFT)
 {
-  auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->UpperLeft = wa_par_ULONG(1);
@@ -108,7 +110,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_SETUPPERLEFT)
 
 HB_FUNC_STATIC(WAS_GRADIENT_RECT_GETUPPERLEFT)
 {
-  auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG(obj->UpperLeft);
@@ -119,7 +121,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_GETUPPERLEFT)
 
 HB_FUNC_STATIC(WAS_GRADIENT_RECT_SETLOWERRIGHT)
 {
-  auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->LowerRight = wa_par_ULONG(1);
@@ -128,7 +130,7 @@ HB_FUNC_STATIC(WAS_GRADIENT_RECT_SETLOWERRIGHT)
 
 HB_FUNC_STATIC(WAS_GRADIENT_RECT_GETLOWERRIGHT)
 {
-  auto obj = static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG(obj->LowerRight);

@@ -126,6 +126,8 @@ RETURN
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_NEW)
 {
   auto obj = new UPDATELAYEREDWINDOWINFO();
@@ -138,7 +140,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_NEW)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_DELETE)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -152,7 +154,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -162,7 +164,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETCBSIZE)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
@@ -173,7 +175,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETHDCDST)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hdcDst = wa_par_HDC(1);
@@ -182,7 +184,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETHDCDST)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETHDCDST)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HDC(obj->hdcDst);
@@ -193,7 +195,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETHDCDST)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPPTDST)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->pptDst = wa_par_POINT(1);
@@ -202,7 +204,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPPTDST)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPPTDST)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_retptr(const_cast<POINT *>(obj->pptDst));
@@ -213,7 +215,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPPTDST)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPSIZE)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->psize = wa_par_SIZE(1);
@@ -222,7 +224,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPSIZE)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPSIZE)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_retptr(const_cast<SIZE *>(obj->psize));
@@ -233,7 +235,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPSIZE)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETHDCSRC)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hdcSrc = wa_par_HDC(1);
@@ -242,7 +244,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETHDCSRC)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETHDCSRC)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HDC(obj->hdcSrc);
@@ -253,7 +255,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETHDCSRC)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPPTSRC)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->pptSrc = wa_par_POINT(1);
@@ -262,7 +264,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPPTSRC)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPPTSRC)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_retptr(const_cast<POINT *>(obj->pptSrc));
@@ -273,7 +275,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPPTSRC)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETCRKEY)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->crKey = wa_par_COLORREF(1);
@@ -282,7 +284,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETCRKEY)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETCRKEY)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLORREF(obj->crKey);
@@ -293,7 +295,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETCRKEY)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPBLEND)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->pblend = wa_par_BLENDFUNCTION(1);
@@ -302,7 +304,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPBLEND)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPBLEND)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_retptr(const_cast<BLENDFUNCTION *>(obj->pblend));
@@ -313,7 +315,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPBLEND)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETDWFLAGS)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwFlags = wa_par_DWORD(1);
@@ -322,7 +324,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETDWFLAGS)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwFlags);
@@ -333,7 +335,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPRCDIRTY)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->prcDirty = wa_par_RECT(1);
@@ -342,7 +344,7 @@ HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_SETPRCDIRTY)
 
 HB_FUNC_STATIC(WAS_UPDATELAYEREDWINDOWINFO_GETPRCDIRTY)
 {
-  auto obj = static_cast<UPDATELAYEREDWINDOWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_retptr(const_cast<RECT *>(obj->prcDirty));

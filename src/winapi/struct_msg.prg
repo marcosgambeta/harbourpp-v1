@@ -101,6 +101,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_MSG_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -111,7 +113,7 @@ HB_FUNC_STATIC(WAS_MSG_NEW)
 
 HB_FUNC_STATIC(WAS_MSG_DELETE)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_MSG_DELETE)
 
 HB_FUNC_STATIC(WAS_MSG_SETHWND)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hwnd = wa_par_HWND(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_MSG_SETHWND)
 
 HB_FUNC_STATIC(WAS_MSG_GETHWND)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HWND(obj->hwnd);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_MSG_GETHWND)
 
 HB_FUNC_STATIC(WAS_MSG_SETMESSAGE)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->message = wa_par_UINT(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_MSG_SETMESSAGE)
 
 HB_FUNC_STATIC(WAS_MSG_GETMESSAGE)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->message);
@@ -165,7 +167,7 @@ HB_FUNC_STATIC(WAS_MSG_GETMESSAGE)
 
 HB_FUNC_STATIC(WAS_MSG_SETWPARAM)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wParam = wa_par_WPARAM(1);
@@ -174,7 +176,7 @@ HB_FUNC_STATIC(WAS_MSG_SETWPARAM)
 
 HB_FUNC_STATIC(WAS_MSG_GETWPARAM)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WPARAM(obj->wParam);
@@ -185,7 +187,7 @@ HB_FUNC_STATIC(WAS_MSG_GETWPARAM)
 
 HB_FUNC_STATIC(WAS_MSG_SETLPARAM)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lParam = wa_par_LPARAM(1);
@@ -194,7 +196,7 @@ HB_FUNC_STATIC(WAS_MSG_SETLPARAM)
 
 HB_FUNC_STATIC(WAS_MSG_GETLPARAM)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LPARAM(obj->lParam);
@@ -205,7 +207,7 @@ HB_FUNC_STATIC(WAS_MSG_GETLPARAM)
 
 HB_FUNC_STATIC(WAS_MSG_SETTIME)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->time = wa_par_DWORD(1);
@@ -214,7 +216,7 @@ HB_FUNC_STATIC(WAS_MSG_SETTIME)
 
 HB_FUNC_STATIC(WAS_MSG_GETTIME)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->time);
@@ -225,7 +227,7 @@ HB_FUNC_STATIC(WAS_MSG_GETTIME)
 
 HB_FUNC_STATIC(WAS_MSG_SETPT)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     // obj->pt = ...; TODO: implementar
@@ -234,7 +236,7 @@ HB_FUNC_STATIC(WAS_MSG_SETPT)
 
 HB_FUNC_STATIC(WAS_MSG_GETPT)
 {
-  auto obj = static_cast<MSG *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     // hb_ret...(obj->pt); TODO: implementar

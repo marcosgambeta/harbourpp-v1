@@ -76,6 +76,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -86,7 +88,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_NEW)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_DELETE)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -100,7 +102,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_DELETE)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWSIZE)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwSize = wa_par_DWORD(1);
@@ -109,7 +111,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWSIZE)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWSIZE)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwSize);
@@ -120,7 +122,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWSIZE)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWICC)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwICC = wa_par_DWORD(1);
@@ -129,7 +131,7 @@ HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_SETDWICC)
 
 HB_FUNC_STATIC(WAS_INITCOMMONCONTROLSEX_GETDWICC)
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwICC);

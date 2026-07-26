@@ -76,6 +76,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_POINTF_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -86,7 +88,7 @@ HB_FUNC_STATIC(WAS_POINTF_NEW)
 
 HB_FUNC_STATIC(WAS_POINTF_DELETE)
 {
-  auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -100,7 +102,7 @@ HB_FUNC_STATIC(WAS_POINTF_DELETE)
 
 HB_FUNC_STATIC(WAS_POINTF_SETX)
 {
-  auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->x = wa_par_FLOAT(1);
@@ -109,7 +111,7 @@ HB_FUNC_STATIC(WAS_POINTF_SETX)
 
 HB_FUNC_STATIC(WAS_POINTF_GETX)
 {
-  auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->x);
@@ -120,7 +122,7 @@ HB_FUNC_STATIC(WAS_POINTF_GETX)
 
 HB_FUNC_STATIC(WAS_POINTF_SETY)
 {
-  auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->y = wa_par_FLOAT(1);
@@ -129,7 +131,7 @@ HB_FUNC_STATIC(WAS_POINTF_SETY)
 
 HB_FUNC_STATIC(WAS_POINTF_GETY)
 {
-  auto obj = static_cast<POINTF *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_FLOAT(obj->y);

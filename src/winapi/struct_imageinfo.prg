@@ -90,6 +90,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_IMAGEINFO_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -100,7 +102,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_NEW)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_DELETE)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMIMAGE)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hbmImage = wa_par_HBITMAP(1);
@@ -123,7 +125,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMIMAGE)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMIMAGE)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HBITMAP(obj->hbmImage);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMIMAGE)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMMASK)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hbmMask = wa_par_HBITMAP(1);
@@ -143,7 +145,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETHBMMASK)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMMASK)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HBITMAP(obj->hbmMask);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_GETHBMMASK)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED1)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Unused1 = wa_par_int(1);
@@ -163,7 +165,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED1)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETUNUSED1)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->Unused1);
@@ -174,7 +176,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_GETUNUSED1)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED2)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Unused2 = wa_par_int(1);
@@ -183,7 +185,7 @@ HB_FUNC_STATIC(WAS_IMAGEINFO_SETUNUSED2)
 
 HB_FUNC_STATIC(WAS_IMAGEINFO_GETUNUSED2)
 {
-  auto obj = static_cast<IMAGEINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->Unused2);

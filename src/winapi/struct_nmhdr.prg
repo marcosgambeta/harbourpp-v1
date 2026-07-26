@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_NMHDR_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_NMHDR_NEW)
 
 HB_FUNC_STATIC(WAS_NMHDR_DELETE)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_NMHDR_DELETE)
 
 HB_FUNC_STATIC(WAS_NMHDR_SETHWNDFROM)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hwndFrom = wa_par_HWND(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_NMHDR_SETHWNDFROM)
 
 HB_FUNC_STATIC(WAS_NMHDR_GETHWNDFROM)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HWND(obj->hwndFrom);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_NMHDR_GETHWNDFROM)
 
 HB_FUNC_STATIC(WAS_NMHDR_SETIDFROM)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->idFrom = wa_par_UINT_PTR(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_NMHDR_SETIDFROM)
 
 HB_FUNC_STATIC(WAS_NMHDR_GETIDFROM)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT_PTR(obj->idFrom);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_NMHDR_GETIDFROM)
 
 HB_FUNC_STATIC(WAS_NMHDR_SETCODE)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->code = wa_par_UINT(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_NMHDR_SETCODE)
 
 HB_FUNC_STATIC(WAS_NMHDR_GETCODE)
 {
-  auto obj = static_cast<NMHDR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->code);

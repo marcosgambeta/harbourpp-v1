@@ -93,6 +93,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_FLASHWINFO_NEW)
 {
   auto obj = new FLASHWINFO();
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_NEW)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_DELETE)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -119,7 +121,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_FLASHWINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -129,7 +131,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETCBSIZE)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->cbSize);
@@ -140,7 +142,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETHWND)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hwnd = wa_par_HWND(1);
@@ -149,7 +151,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETHWND)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETHWND)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HWND(obj->hwnd);
@@ -160,7 +162,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETHWND)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWFLAGS)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwFlags = wa_par_DWORD(1);
@@ -169,7 +171,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETDWFLAGS)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwFlags);
@@ -180,7 +182,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETDWFLAGS)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETUCOUNT)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->uCount = wa_par_UINT(1);
@@ -189,7 +191,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETUCOUNT)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETUCOUNT)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->uCount);
@@ -200,7 +202,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_GETUCOUNT)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWTIMEOUT)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwTimeout = wa_par_DWORD(1);
@@ -209,7 +211,7 @@ HB_FUNC_STATIC(WAS_FLASHWINFO_SETDWTIMEOUT)
 
 HB_FUNC_STATIC(WAS_FLASHWINFO_GETDWTIMEOUT)
 {
-  auto obj = static_cast<FLASHWINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwTimeout);

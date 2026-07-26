@@ -127,6 +127,8 @@ RETURN
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_WNDCLASS_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -139,7 +141,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_NEW)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_DELETE)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     if (!IS_INTRESOURCE(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME"))) {
@@ -159,7 +161,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_DELETE)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETSTYLE)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->style = wa_par_UINT(1);
@@ -168,7 +170,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETSTYLE)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETSTYLE)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->style);
@@ -179,7 +181,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETSTYLE)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETLPFNWNDPROC)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lpfnWndProc = wa_par_WNDPROC(1);
@@ -188,7 +190,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETLPFNWNDPROC)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETLPFNWNDPROC)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WNDPROC(obj->lpfnWndProc);
@@ -199,7 +201,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETLPFNWNDPROC)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETCBCLSEXTRA)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->cbClsExtra = wa_par_int(1);
@@ -208,7 +210,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETCBCLSEXTRA)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETCBCLSEXTRA)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->cbClsExtra);
@@ -219,7 +221,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETCBCLSEXTRA)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETCBWNDEXTRA)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->cbWndExtra = wa_par_int(1);
@@ -228,7 +230,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETCBWNDEXTRA)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETCBWNDEXTRA)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->cbWndExtra);
@@ -239,7 +241,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETCBWNDEXTRA)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETHINSTANCE)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hInstance = wa_par_HINSTANCE(1);
@@ -248,7 +250,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETHINSTANCE)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETHINSTANCE)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HINSTANCE(obj->hInstance);
@@ -259,7 +261,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETHINSTANCE)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETHICON)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hIcon = wa_par_HICON(1);
@@ -268,7 +270,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETHICON)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETHICON)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HICON(obj->hIcon);
@@ -279,7 +281,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETHICON)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETHCURSOR)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hCursor = wa_par_HCURSOR(1);
@@ -288,7 +290,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETHCURSOR)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETHCURSOR)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HCURSOR(obj->hCursor);
@@ -299,7 +301,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETHCURSOR)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETHBRBACKGROUND)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hbrBackground = wa_par_HBRUSH(1);
@@ -308,7 +310,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETHBRBACKGROUND)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETHBRBACKGROUND)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HBRUSH(obj->hbrBackground);
@@ -319,7 +321,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETHBRBACKGROUND)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETLPSZMENUNAME)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     void *str = hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME");
@@ -334,7 +336,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETLPSZMENUNAME)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETLPSZMENUNAME)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     if (!IS_INTRESOURCE(obj->lpszMenuName)) {
@@ -349,7 +351,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_GETLPSZMENUNAME)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_SETLPSZCLASSNAME)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     void *str = hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME");
@@ -363,7 +365,7 @@ HB_FUNC_STATIC(WAS_WNDCLASS_SETLPSZCLASSNAME)
 
 HB_FUNC_STATIC(WAS_WNDCLASS_GETLPSZCLASSNAME)
 {
-  auto obj = static_cast<WNDCLASS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     HB_RETSTR(obj->lpszClassName);

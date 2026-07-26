@@ -87,6 +87,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -97,7 +99,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_NEW)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_DELETE)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -111,7 +113,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_DELETE)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETBLENDOP)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->BlendOp = wa_par_BYTE(1);
@@ -120,7 +122,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETBLENDOP)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETBLENDOP)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->BlendOp);
@@ -131,7 +133,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETBLENDOP)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETBLENDFLAGS)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->BlendFlags = wa_par_BYTE(1);
@@ -140,7 +142,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETBLENDFLAGS)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETBLENDFLAGS)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->BlendFlags);
@@ -151,7 +153,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETBLENDFLAGS)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETSOURCECONSTANTALPHA)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->SourceConstantAlpha = wa_par_BYTE(1);
@@ -160,7 +162,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETSOURCECONSTANTALPHA)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETSOURCECONSTANTALPHA)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->SourceConstantAlpha);
@@ -171,7 +173,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETSOURCECONSTANTALPHA)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETALPHAFORMAT)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->AlphaFormat = wa_par_BYTE(1);
@@ -180,7 +182,7 @@ HB_FUNC_STATIC(WAS_BLENDFUNCTION_SETALPHAFORMAT)
 
 HB_FUNC_STATIC(WAS_BLENDFUNCTION_GETALPHAFORMAT)
 {
-  auto obj = static_cast<BLENDFUNCTION *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->AlphaFormat);

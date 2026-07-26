@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_LOGBRUSH_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_NEW)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_DELETE)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_DELETE)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBSTYLE)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lbStyle = wa_par_UINT(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBSTYLE)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBSTYLE)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->lbStyle);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBSTYLE)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBCOLOR)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lbColor = wa_par_COLORREF(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBCOLOR)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBCOLOR)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLORREF(obj->lbColor);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBCOLOR)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBHATCH)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lbHatch = wa_par_ULONG_PTR(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBHATCH)
 
 HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBHATCH)
 {
-  auto obj = static_cast<LOGBRUSH *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->lbHatch);

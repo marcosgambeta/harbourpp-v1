@@ -93,6 +93,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_ICONINFO_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -103,7 +105,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_NEW)
 
 HB_FUNC_STATIC(WAS_ICONINFO_DELETE)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -117,7 +119,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_ICONINFO_SETFICON)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->fIcon = wa_par_BOOL(1);
@@ -126,7 +128,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETFICON)
 
 HB_FUNC_STATIC(WAS_ICONINFO_GETFICON)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BOOL(obj->fIcon);
@@ -137,7 +139,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETFICON)
 
 HB_FUNC_STATIC(WAS_ICONINFO_SETXHOTSPOT)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->xHotspot = wa_par_DWORD(1);
@@ -146,7 +148,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETXHOTSPOT)
 
 HB_FUNC_STATIC(WAS_ICONINFO_GETXHOTSPOT)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->xHotspot);
@@ -157,7 +159,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETXHOTSPOT)
 
 HB_FUNC_STATIC(WAS_ICONINFO_SETYHOTSPOT)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->yHotspot = wa_par_DWORD(1);
@@ -166,7 +168,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETYHOTSPOT)
 
 HB_FUNC_STATIC(WAS_ICONINFO_GETYHOTSPOT)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->yHotspot);
@@ -177,7 +179,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETYHOTSPOT)
 
 HB_FUNC_STATIC(WAS_ICONINFO_SETHBMMASK)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hbmMask = wa_par_HBITMAP(1);
@@ -186,7 +188,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETHBMMASK)
 
 HB_FUNC_STATIC(WAS_ICONINFO_GETHBMMASK)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HBITMAP(obj->hbmMask);
@@ -197,7 +199,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_GETHBMMASK)
 
 HB_FUNC_STATIC(WAS_ICONINFO_SETHBMCOLOR)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hbmColor = wa_par_HBITMAP(1);
@@ -206,7 +208,7 @@ HB_FUNC_STATIC(WAS_ICONINFO_SETHBMCOLOR)
 
 HB_FUNC_STATIC(WAS_ICONINFO_GETHBMCOLOR)
 {
-  auto obj = static_cast<ICONINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HBITMAP(obj->hbmColor);

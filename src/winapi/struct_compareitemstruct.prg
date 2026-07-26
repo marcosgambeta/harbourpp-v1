@@ -111,6 +111,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -121,7 +123,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_NEW)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_DELETE)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -135,7 +137,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_DELETE)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETCTLTYPE)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->CtlType = wa_par_UINT(1);
@@ -144,7 +146,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETCTLTYPE)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->CtlType);
@@ -155,7 +157,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETCTLID)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->CtlID = wa_par_UINT(1);
@@ -164,7 +166,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETCTLID)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETCTLID)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->CtlID);
@@ -175,7 +177,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETCTLID)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETHWNDITEM)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hwndItem = wa_par_HWND(1);
@@ -184,7 +186,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETHWNDITEM)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HWND(obj->hwndItem);
@@ -195,7 +197,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMID1)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->itemID1 = wa_par_UINT(1);
@@ -204,7 +206,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMID1)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMID1)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->itemID1);
@@ -215,7 +217,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMID1)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMDATA1)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->itemData1 = wa_par_ULONG_PTR(1);
@@ -224,7 +226,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMDATA1)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMDATA1)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->itemData1);
@@ -235,7 +237,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMDATA1)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMID2)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->itemID2 = wa_par_UINT(1);
@@ -244,7 +246,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMID2)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMID2)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->itemID2);
@@ -255,7 +257,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMID2)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMDATA2)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->itemData2 = wa_par_ULONG_PTR(1);
@@ -264,7 +266,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETITEMDATA2)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMDATA2)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->itemData2);
@@ -275,7 +277,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETITEMDATA2)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETDWLOCALEID)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwLocaleId = wa_par_DWORD(1);
@@ -284,7 +286,7 @@ HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_SETDWLOCALEID)
 
 HB_FUNC_STATIC(WAS_COMPAREITEMSTRUCT_GETDWLOCALEID)
 {
-  auto obj = static_cast<COMPAREITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwLocaleId);

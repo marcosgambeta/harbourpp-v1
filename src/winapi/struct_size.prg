@@ -75,6 +75,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_SIZE_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -85,7 +87,7 @@ HB_FUNC_STATIC(WAS_SIZE_NEW)
 
 HB_FUNC_STATIC(WAS_SIZE_DELETE)
 {
-  auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -99,7 +101,7 @@ HB_FUNC_STATIC(WAS_SIZE_DELETE)
 
 HB_FUNC_STATIC(WAS_SIZE_SETCX)
 {
-  auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->cx = wa_par_LONG(1);
@@ -108,7 +110,7 @@ HB_FUNC_STATIC(WAS_SIZE_SETCX)
 
 HB_FUNC_STATIC(WAS_SIZE_GETCX)
 {
-  auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LONG(obj->cx);
@@ -119,7 +121,7 @@ HB_FUNC_STATIC(WAS_SIZE_GETCX)
 
 HB_FUNC_STATIC(WAS_SIZE_SETCY)
 {
-  auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->cy = wa_par_LONG(1);
@@ -128,7 +130,7 @@ HB_FUNC_STATIC(WAS_SIZE_SETCY)
 
 HB_FUNC_STATIC(WAS_SIZE_GETCY)
 {
-  auto obj = static_cast<SIZE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LONG(obj->cy);

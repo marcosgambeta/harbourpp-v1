@@ -93,6 +93,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -103,7 +105,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_NEW)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_DELETE)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -117,7 +119,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_DELETE)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLTYPE)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->CtlType = wa_par_UINT(1);
@@ -126,7 +128,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLTYPE)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->CtlType);
@@ -137,7 +139,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLTYPE)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->CtlID = wa_par_UINT(1);
@@ -146,7 +148,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETCTLID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->CtlID);
@@ -157,7 +159,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETCTLID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->itemID = wa_par_UINT(1);
@@ -166,7 +168,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETITEMID)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->itemID);
@@ -177,7 +179,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETITEMID)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETHWNDITEM)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hwndItem = wa_par_HWND(1);
@@ -186,7 +188,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETHWNDITEM)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HWND(obj->hwndItem);
@@ -197,7 +199,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETHWNDITEM)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMDATA)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->itemData = wa_par_ULONG_PTR(1);
@@ -206,7 +208,7 @@ HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_SETITEMDATA)
 
 HB_FUNC_STATIC(WAS_DELETEITEMSTRUCT_GETITEMDATA)
 {
-  auto obj = static_cast<DELETEITEMSTRUCT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->itemData);

@@ -78,6 +78,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_TITLEBARINFO_NEW)
 {
   auto obj = new TITLEBARINFO();
@@ -90,7 +92,7 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_NEW)
 
 HB_FUNC_STATIC(WAS_TITLEBARINFO_DELETE)
 {
-  auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -104,7 +106,7 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_TITLEBARINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_TITLEBARINFO_GETCBSIZE)
 {
-  auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
@@ -128,7 +130,7 @@ HB_FUNC_STATIC(WAS_TITLEBARINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_TITLEBARINFO_GETRGSTATE)
 {
-  auto obj = static_cast<TITLEBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_reta(6);

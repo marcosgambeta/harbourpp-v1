@@ -105,6 +105,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_SCROLLINFO_NEW)
 {
   auto obj = new SCROLLINFO();
@@ -117,7 +119,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_NEW)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_DELETE)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -131,7 +133,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_SCROLLINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -141,7 +143,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETCBSIZE)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->cbSize);
@@ -152,7 +154,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_SETFMASK)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->fMask = wa_par_UINT(1);
@@ -161,7 +163,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_SETFMASK)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETFMASK)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->fMask);
@@ -172,7 +174,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_GETFMASK)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_SETNMIN)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->nMin = wa_par_int(1);
@@ -181,7 +183,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_SETNMIN)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETNMIN)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->nMin);
@@ -192,7 +194,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_GETNMIN)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_SETNMAX)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->nMax = wa_par_int(1);
@@ -201,7 +203,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_SETNMAX)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETNMAX)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->nMax);
@@ -212,7 +214,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_GETNMAX)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_SETNPAGE)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->nPage = wa_par_UINT(1);
@@ -221,7 +223,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_SETNPAGE)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETNPAGE)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->nPage);
@@ -232,7 +234,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_GETNPAGE)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_SETNPOS)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->nPos = wa_par_int(1);
@@ -241,7 +243,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_SETNPOS)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETNPOS)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->nPos);
@@ -252,7 +254,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_GETNPOS)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_SETNTRACKPOS)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->nTrackPos = wa_par_int(1);
@@ -261,7 +263,7 @@ HB_FUNC_STATIC(WAS_SCROLLINFO_SETNTRACKPOS)
 
 HB_FUNC_STATIC(WAS_SCROLLINFO_GETNTRACKPOS)
 {
-  auto obj = static_cast<SCROLLINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->nTrackPos);

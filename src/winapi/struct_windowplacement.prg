@@ -89,6 +89,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_NEW)
 {
   auto obj = new WINDOWPLACEMENT();
@@ -101,7 +103,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_NEW)
 
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_DELETE)
 {
-  auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -115,7 +117,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_DELETE)
 
 // HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETLENGTH)
 // {
-//   auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_DELETE)
 
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETLENGTH)
 {
-  auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->length);
@@ -136,7 +138,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETLENGTH)
 
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETFLAGS)
 {
-  auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->flags = wa_par_UINT(1);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETFLAGS)
 
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETFLAGS)
 {
-  auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->flags);
@@ -156,7 +158,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETFLAGS)
 
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETSHOWCMD)
 {
-  auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->showCmd = wa_par_UINT(1);
@@ -165,7 +167,7 @@ HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_SETSHOWCMD)
 
 HB_FUNC_STATIC(WAS_WINDOWPLACEMENT_GETSHOWCMD)
 {
-  auto obj = static_cast<WINDOWPLACEMENT *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->showCmd);

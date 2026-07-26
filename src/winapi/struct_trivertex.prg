@@ -99,6 +99,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_TRIVERTEX_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -109,7 +111,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_NEW)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_DELETE)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -123,7 +125,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_DELETE)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_SETX)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->x = wa_par_LONG(1);
@@ -132,7 +134,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_SETX)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_GETX)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LONG(obj->x);
@@ -143,7 +145,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_GETX)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_SETY)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->y = wa_par_LONG(1);
@@ -152,7 +154,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_SETY)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_GETY)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LONG(obj->y);
@@ -163,7 +165,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_GETY)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_SETRED)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Red = wa_par_COLOR16(1);
@@ -172,7 +174,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_SETRED)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_GETRED)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLOR16(obj->Red);
@@ -183,7 +185,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_GETRED)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_SETGREEN)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Green = wa_par_COLOR16(1);
@@ -192,7 +194,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_SETGREEN)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_GETGREEN)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLOR16(obj->Green);
@@ -203,7 +205,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_GETGREEN)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_SETBLUE)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Blue = wa_par_COLOR16(1);
@@ -212,7 +214,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_SETBLUE)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_GETBLUE)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLOR16(obj->Blue);
@@ -223,7 +225,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_GETBLUE)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_SETALPHA)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->Alpha = wa_par_COLOR16(1);
@@ -232,7 +234,7 @@ HB_FUNC_STATIC(WAS_TRIVERTEX_SETALPHA)
 
 HB_FUNC_STATIC(WAS_TRIVERTEX_GETALPHA)
 {
-  auto obj = static_cast<TRIVERTEX *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_COLOR16(obj->Alpha);

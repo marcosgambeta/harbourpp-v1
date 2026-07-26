@@ -97,6 +97,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_NEW)
 {
   auto obj = new SCROLLBARINFO();
@@ -109,7 +111,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_NEW)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_DELETE)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -123,7 +125,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -133,7 +135,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETCBSIZE)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
@@ -147,7 +149,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETDXYLINEBUTTON)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dxyLineButton = wa_par_int(1);
@@ -156,7 +158,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETDXYLINEBUTTON)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETDXYLINEBUTTON)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->dxyLineButton);
@@ -167,7 +169,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETDXYLINEBUTTON)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBTOP)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->xyThumbTop = wa_par_int(1);
@@ -176,7 +178,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBTOP)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBTOP)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->xyThumbTop);
@@ -187,7 +189,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBTOP)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBBOTTOM)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->xyThumbBottom = wa_par_int(1);
@@ -196,7 +198,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_SETXYTHUMBBOTTOM)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBBOTTOM)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->xyThumbBottom);
@@ -209,7 +211,7 @@ HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETXYTHUMBBOTTOM)
 
 HB_FUNC_STATIC(WAS_SCROLLBARINFO_GETRGSTATE)
 {
-  auto obj = static_cast<SCROLLBARINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     hb_reta(6);

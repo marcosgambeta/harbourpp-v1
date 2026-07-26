@@ -67,6 +67,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<BITMAPINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_BITMAPINFO_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -77,7 +79,7 @@ HB_FUNC_STATIC(WAS_BITMAPINFO_NEW)
 
 HB_FUNC_STATIC(WAS_BITMAPINFO_DELETE)
 {
-  auto obj = static_cast<BITMAPINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;

@@ -79,6 +79,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_LOGPALETTE_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -89,7 +91,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_NEW)
 
 HB_FUNC_STATIC(WAS_LOGPALETTE_DELETE)
 {
-  auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -103,7 +105,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_DELETE)
 
 HB_FUNC_STATIC(WAS_LOGPALETTE_SETPALVERSION)
 {
-  auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->palVersion = wa_par_WORD(1);
@@ -112,7 +114,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_SETPALVERSION)
 
 HB_FUNC_STATIC(WAS_LOGPALETTE_GETPALVERSION)
 {
-  auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->palVersion);
@@ -123,7 +125,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_GETPALVERSION)
 
 HB_FUNC_STATIC(WAS_LOGPALETTE_SETPALNUMENTRIES)
 {
-  auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->palNumEntries = wa_par_WORD(1);
@@ -132,7 +134,7 @@ HB_FUNC_STATIC(WAS_LOGPALETTE_SETPALNUMENTRIES)
 
 HB_FUNC_STATIC(WAS_LOGPALETTE_GETPALNUMENTRIES)
 {
-  auto obj = static_cast<LOGPALETTE *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->palNumEntries);

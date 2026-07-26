@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_NEW)
 {
   auto obj = new SECURITY_ATTRIBUTES();
@@ -93,7 +95,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_NEW)
 
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_DELETE)
 {
-  auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -107,7 +109,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_DELETE)
 
 // HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETNLENGTH)
 // {
-//   auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -117,7 +119,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_DELETE)
 
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETNLENGTH)
 {
-  auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->nLength);
@@ -128,7 +130,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETNLENGTH)
 
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETLPSECURITYDESCRIPTOR)
 {
-  auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lpSecurityDescriptor = wa_par_LPVOID(1); // TODO: SecurityDescriptor is a structure
@@ -137,7 +139,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETLPSECURITYDESCRIPTOR)
 
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETLPSECURITYDESCRIPTOR)
 {
-  auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LPVOID(obj->lpSecurityDescriptor); // TODO: SecurityDescriptor is a structure
@@ -148,7 +150,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETLPSECURITYDESCRIPTOR)
 
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETBINHERITHANDLE)
 {
-  auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->bInheritHandle = wa_par_BOOL(1);
@@ -157,7 +159,7 @@ HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_SETBINHERITHANDLE)
 
 HB_FUNC_STATIC(WAS_SECURITY_ATTRIBUTES_GETBINHERITHANDLE)
 {
-  auto obj = static_cast<SECURITY_ATTRIBUTES *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BOOL(obj->bInheritHandle);

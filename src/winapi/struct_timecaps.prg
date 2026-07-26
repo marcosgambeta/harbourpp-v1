@@ -75,6 +75,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_TIMECAPS_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -85,7 +87,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_NEW)
 
 HB_FUNC_STATIC(WAS_TIMECAPS_DELETE)
 {
-  auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -99,7 +101,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_DELETE)
 
 HB_FUNC_STATIC(WAS_TIMECAPS_SETWPERIODMIN)
 {
-  auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wPeriodMin = wa_par_UINT(1);
@@ -108,7 +110,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_SETWPERIODMIN)
 
 HB_FUNC_STATIC(WAS_TIMECAPS_GETWPERIODMIN)
 {
-  auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->wPeriodMin);
@@ -119,7 +121,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_GETWPERIODMIN)
 
 HB_FUNC_STATIC(WAS_TIMECAPS_SETWPERIODMAX)
 {
-  auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wPeriodMax = wa_par_UINT(1);
@@ -128,7 +130,7 @@ HB_FUNC_STATIC(WAS_TIMECAPS_SETWPERIODMAX)
 
 HB_FUNC_STATIC(WAS_TIMECAPS_GETWPERIODMAX)
 {
-  auto obj = static_cast<TIMECAPS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->wPeriodMax);

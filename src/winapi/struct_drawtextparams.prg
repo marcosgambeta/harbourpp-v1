@@ -93,6 +93,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_NEW)
 {
   auto obj = new DRAWTEXTPARAMS();
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_NEW)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_DELETE)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -119,7 +121,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_DELETE)
 
 // HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETCBSIZE)
 // {
-//   auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -129,7 +131,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_DELETE)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETCBSIZE)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->cbSize);
@@ -140,7 +142,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETITABLENGTH)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->iTabLength = wa_par_int(1);
@@ -149,7 +151,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETITABLENGTH)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETITABLENGTH)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->iTabLength);
@@ -160,7 +162,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETITABLENGTH)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETILEFTMARGIN)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->iLeftMargin = wa_par_int(1);
@@ -169,7 +171,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETILEFTMARGIN)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETILEFTMARGIN)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->iLeftMargin);
@@ -180,7 +182,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETILEFTMARGIN)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETIRIGHTMARGIN)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->iRightMargin = wa_par_int(1);
@@ -189,7 +191,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETIRIGHTMARGIN)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETIRIGHTMARGIN)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->iRightMargin);
@@ -200,7 +202,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETIRIGHTMARGIN)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETUILENGTHDRAWN)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->uiLengthDrawn = wa_par_UINT(1);
@@ -209,7 +211,7 @@ HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_SETUILENGTHDRAWN)
 
 HB_FUNC_STATIC(WAS_DRAWTEXTPARAMS_GETUILENGTHDRAWN)
 {
-  auto obj = static_cast<DRAWTEXTPARAMS *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->uiLengthDrawn);

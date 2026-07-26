@@ -91,6 +91,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_PALETTEENTRY_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -101,7 +103,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_NEW)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_DELETE)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -115,7 +117,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_DELETE)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPERED)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->peRed = wa_par_BYTE(1);
@@ -124,7 +126,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPERED)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPERED)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->peRed);
@@ -135,7 +137,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPERED)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEGREEN)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->peGreen = wa_par_BYTE(1);
@@ -144,7 +146,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEGREEN)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEGREEN)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->peGreen);
@@ -155,7 +157,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEGREEN)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEBLUE)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->peBlue = wa_par_BYTE(1);
@@ -164,7 +166,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEBLUE)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEBLUE)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->peBlue);
@@ -175,7 +177,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEBLUE)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEFLAGS)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->peFlags = wa_par_BYTE(1);
@@ -184,7 +186,7 @@ HB_FUNC_STATIC(WAS_PALETTEENTRY_SETPEFLAGS)
 
 HB_FUNC_STATIC(WAS_PALETTEENTRY_GETPEFLAGS)
 {
-  auto obj = static_cast<PALETTEENTRY *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_BYTE(obj->peFlags);

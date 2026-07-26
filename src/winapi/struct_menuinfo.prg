@@ -106,6 +106,8 @@ RETURN
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_MENUINFO_NEW)
 {
   auto obj = new MENUINFO();
@@ -118,7 +120,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_NEW)
 
 HB_FUNC_STATIC(WAS_MENUINFO_DELETE)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -132,7 +134,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_MENUINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -142,7 +144,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETCBSIZE)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
@@ -153,7 +155,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_MENUINFO_SETFMASK)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->fMask = wa_par_DWORD(1);
@@ -162,7 +164,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_SETFMASK)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETFMASK)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->fMask);
@@ -173,7 +175,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_GETFMASK)
 
 HB_FUNC_STATIC(WAS_MENUINFO_SETDWSTYLE)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwStyle = wa_par_DWORD(1);
@@ -182,7 +184,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_SETDWSTYLE)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETDWSTYLE)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwStyle);
@@ -193,7 +195,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_GETDWSTYLE)
 
 HB_FUNC_STATIC(WAS_MENUINFO_SETCYMAX)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->cyMax = wa_par_UINT(1);
@@ -202,7 +204,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_SETCYMAX)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETCYMAX)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_UINT(obj->cyMax);
@@ -213,7 +215,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_GETCYMAX)
 
 HB_FUNC_STATIC(WAS_MENUINFO_SETHBRBACK)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hbrBack = wa_par_HBRUSH(1);
@@ -222,7 +224,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_SETHBRBACK)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETHBRBACK)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HBRUSH(obj->hbrBack);
@@ -233,7 +235,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_GETHBRBACK)
 
 HB_FUNC_STATIC(WAS_MENUINFO_SETDWCONTEXTHELPID)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwContextHelpID = wa_par_DWORD(1);
@@ -242,7 +244,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_SETDWCONTEXTHELPID)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETDWCONTEXTHELPID)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwContextHelpID);
@@ -253,7 +255,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_GETDWCONTEXTHELPID)
 
 HB_FUNC_STATIC(WAS_MENUINFO_SETDWMENUDATA)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwMenuData = wa_par_ULONG_PTR(1);
@@ -262,7 +264,7 @@ HB_FUNC_STATIC(WAS_MENUINFO_SETDWMENUDATA)
 
 HB_FUNC_STATIC(WAS_MENUINFO_GETDWMENUDATA)
 {
-  auto obj = static_cast<MENUINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_ULONG_PTR(obj->dwMenuData);

@@ -81,6 +81,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_KERNINGPAIR_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -91,7 +93,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_NEW)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_DELETE)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -105,7 +107,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_DELETE)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWFIRST)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wFirst = wa_par_WORD(1);
@@ -114,7 +116,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWFIRST)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWFIRST)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->wFirst);
@@ -125,7 +127,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWFIRST)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWSECOND)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wSecond = wa_par_WORD(1);
@@ -134,7 +136,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWSECOND)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWSECOND)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->wSecond);
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWSECOND)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_SETIKERNAMOUNT)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->iKernAmount = wa_par_int(1);
@@ -154,7 +156,7 @@ HB_FUNC_STATIC(WAS_KERNINGPAIR_SETIKERNAMOUNT)
 
 HB_FUNC_STATIC(WAS_KERNINGPAIR_GETIKERNAMOUNT)
 {
-  auto obj = static_cast<KERNINGPAIR *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_int(obj->iKernAmount);

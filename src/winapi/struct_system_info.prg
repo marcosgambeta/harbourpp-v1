@@ -135,6 +135,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_NEW)
 {
   auto self = hb_stackSelfItem();
@@ -145,7 +147,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_NEW)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_DELETE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -159,7 +161,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_DELETE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWOEMID)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwOemId = wa_par_DWORD(1);
@@ -168,7 +170,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWOEMID)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWOEMID)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwOemId);
@@ -179,7 +181,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWOEMID)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWPROCESSORARCHITECTURE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wProcessorArchitecture = wa_par_WORD(1);
@@ -188,7 +190,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWPROCESSORARCHITECTURE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWPROCESSORARCHITECTURE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->wProcessorArchitecture);
@@ -199,7 +201,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWPROCESSORARCHITECTURE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWRESERVED)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wReserved = wa_par_WORD(1);
@@ -208,7 +210,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWRESERVED)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWRESERVED)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->wReserved);
@@ -219,7 +221,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWRESERVED)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWPAGESIZE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwPageSize = wa_par_DWORD(1);
@@ -228,7 +230,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWPAGESIZE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWPAGESIZE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwPageSize);
@@ -239,7 +241,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWPAGESIZE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETLPMINIMUMAPPLICATIONADDRESS)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lpMinimumApplicationAddress = wa_par_LPVOID(1);
@@ -248,7 +250,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETLPMINIMUMAPPLICATIONADDRESS)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETLPMINIMUMAPPLICATIONADDRESS)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LPVOID(obj->lpMinimumApplicationAddress);
@@ -259,7 +261,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETLPMINIMUMAPPLICATIONADDRESS)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETLPMAXIMUMAPPLICATIONADDRESS)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->lpMaximumApplicationAddress = wa_par_LPVOID(1);
@@ -268,7 +270,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETLPMAXIMUMAPPLICATIONADDRESS)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETLPMAXIMUMAPPLICATIONADDRESS)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_LPVOID(obj->lpMaximumApplicationAddress);
@@ -279,7 +281,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETLPMAXIMUMAPPLICATIONADDRESS)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWACTIVEPROCESSORMASK)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwActiveProcessorMask = wa_par_DWORD_PTR(1);
@@ -288,7 +290,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWACTIVEPROCESSORMASK)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWACTIVEPROCESSORMASK)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD_PTR(obj->dwActiveProcessorMask);
@@ -299,7 +301,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWACTIVEPROCESSORMASK)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWNUMBEROFPROCESSORS)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwNumberOfProcessors = wa_par_DWORD(1);
@@ -308,7 +310,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWNUMBEROFPROCESSORS)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWNUMBEROFPROCESSORS)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwNumberOfProcessors);
@@ -319,7 +321,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWNUMBEROFPROCESSORS)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWPROCESSORTYPE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwProcessorType = wa_par_DWORD(1);
@@ -328,7 +330,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWPROCESSORTYPE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWPROCESSORTYPE)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwProcessorType);
@@ -339,7 +341,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWPROCESSORTYPE)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWALLOCATIONGRANULARITY)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->dwAllocationGranularity = wa_par_DWORD(1);
@@ -348,7 +350,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETDWALLOCATIONGRANULARITY)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWALLOCATIONGRANULARITY)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->dwAllocationGranularity);
@@ -359,7 +361,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETDWALLOCATIONGRANULARITY)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWPROCESSORLEVEL)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wProcessorLevel = wa_par_WORD(1);
@@ -368,7 +370,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWPROCESSORLEVEL)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWPROCESSORLEVEL)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->wProcessorLevel);
@@ -379,7 +381,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWPROCESSORLEVEL)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWPROCESSORREVISION)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->wProcessorRevision = wa_par_WORD(1);
@@ -388,7 +390,7 @@ HB_FUNC_STATIC(WAS_SYSTEM_INFO_SETWPROCESSORREVISION)
 
 HB_FUNC_STATIC(WAS_SYSTEM_INFO_GETWPROCESSORREVISION)
 {
-  auto obj = static_cast<SYSTEM_INFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_WORD(obj->wProcessorRevision);

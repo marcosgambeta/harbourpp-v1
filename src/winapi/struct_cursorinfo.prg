@@ -84,6 +84,8 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
+#define GET_PTR_FROM_SELF(obj) auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"))
+
 HB_FUNC_STATIC(WAS_CURSORINFO_NEW)
 {
   auto obj = new CURSORINFO();
@@ -96,7 +98,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_NEW)
 
 HB_FUNC_STATIC(WAS_CURSORINFO_DELETE)
 {
-  auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     delete obj;
@@ -110,7 +112,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_DELETE)
 
 // HB_FUNC_STATIC(WAS_CURSORINFO_SETCBSIZE)
 // {
-//   auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//   GET_PTR_FROM_SELF(obj);
 //
 //   if (obj != nullptr)
 //   {
@@ -120,7 +122,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_DELETE)
 
 HB_FUNC_STATIC(WAS_CURSORINFO_GETCBSIZE)
 {
-  auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->cbSize);
@@ -131,7 +133,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_GETCBSIZE)
 
 HB_FUNC_STATIC(WAS_CURSORINFO_SETFLAGS)
 {
-  auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->flags = wa_par_DWORD(1);
@@ -140,7 +142,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_SETFLAGS)
 
 HB_FUNC_STATIC(WAS_CURSORINFO_GETFLAGS)
 {
-  auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_DWORD(obj->flags);
@@ -151,7 +153,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_GETFLAGS)
 
 HB_FUNC_STATIC(WAS_CURSORINFO_SETHCURSOR)
 {
-  auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     obj->hCursor = wa_par_HCURSOR(1);
@@ -160,7 +162,7 @@ HB_FUNC_STATIC(WAS_CURSORINFO_SETHCURSOR)
 
 HB_FUNC_STATIC(WAS_CURSORINFO_GETHCURSOR)
 {
-  auto obj = static_cast<CURSORINFO *>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  GET_PTR_FROM_SELF(obj);
 
   if (obj != nullptr) {
     wa_ret_HCURSOR(obj->hCursor);
