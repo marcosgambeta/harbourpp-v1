@@ -20,6 +20,6 @@ PROCEDURE Main()
 
    FOR i := 1 TO n
       ? aName[i], aSize[i], aDate[i], aTime[i], aAttr[i]
-   NEXT n
+   NEXT i
 
 RETURN
