@@ -2,11 +2,11 @@ ROOT := ../../
 
 include $(TOP)$(ROOT)config/global.mk
 
-ifneq ($(HB_PLATFORM),wce)
-   ifneq ($(HB_COMPILER),pcc)
+#ifneq ($(HB_PLATFORM),wce) (deprecated)
+#   ifneq ($(HB_COMPILER),pcc) (deprecated)
       HB_PRGFLAGS += -gc3
-   endif
-endif
+#   endif
+#endif
 
 HB_PRGFLAGS += -ala
 
@@ -212,12 +212,12 @@ CPP_SOURCES := \
    xhelp.cpp \
    xsavescr.cpp \
 
-#   gtapi.cpp \
-#   gtchrmap.cpp \
-#   gtclip.cpp \
-#   gtkbstat.cpp \
-#   gtkeycod.cpp \
-#   gttone.cpp \
+#   gtapi.cpp \ (moved to gtl)
+#   gtchrmap.cpp \ (moved to gtl)
+#   gtclip.cpp \ (moved to gtl)
+#   gtkbstat.cpp \ (moved to gtl)
+#   gtkeycod.cpp \ (moved to gtl)
+#   gttone.cpp \ (moved to gtl)
 
 PRG_SOURCES := \
    achoice.prg \
@@ -299,16 +299,16 @@ LIBNAME := hbrtl
 
 DIRS := \
 
-#   gtcgi \
-#   gtcrs \
-#   gtgui \
-#   gtpca \
-#   gtsln \
-#   gtstd \
-#   gttrm \
-#   gtwin \
-#   gtwvt \
-#   gtxwc \
+#   gtcgi \ (moved to gtl)
+#   gtcrs \ (moved to gtl)
+#   gtgui \ (moved to gtl)
+#   gtpca \ (moved to gtl)
+#   gtsln \ (moved to gtl)
+#   gtstd \ (moved to gtl)
+#   gttrm \ (moved to gtl)
+#   gtwin \ (moved to gtl)
+#   gtwvt \ (moved to gtl)
+#   gtxwc \ (moved to gtl)
 
 HB_CFLAGS += -D_HB_API_INTERNAL_
 
