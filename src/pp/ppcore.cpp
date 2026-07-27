@@ -247,8 +247,8 @@ static void hb_pp_operatorsFree(PHB_PP_OPERATOR pOperators, int iOperators)
   PHB_PP_OPERATOR pOperator = pOperators;
 
   while (--iOperators >= 0) {
-    hb_xfree(HB_UNCONST(pOperator->name));
-    hb_xfree(HB_UNCONST(pOperator->value));
+    hb_xfree(const_cast<char *>(pOperator->name));
+    hb_xfree(const_cast<char *>(pOperator->value));
     ++pOperator;
   }
   hb_xfree(pOperators);
@@ -357,7 +357,7 @@ static void hb_membufAddStr(PHB_MEM_BUFFER pBuffer, const char *szText)
 static void hb_pp_tokenFree(PHB_PP_TOKEN pToken)
 {
   if (HB_PP_TOKEN_ALLOC(pToken->type)) {
-    hb_xfree(HB_UNCONST(pToken->value));
+    hb_xfree(const_cast<char *>(pToken->value));
   }
   if (HB_PP_TOKEN_TYPE(pToken->type) == HB_PP_MMARKER_RESTRICT ||
       HB_PP_TOKEN_TYPE(pToken->type) == HB_PP_MMARKER_OPTIONAL ||
@@ -476,7 +476,7 @@ static PHB_PP_TOKEN hb_pp_tokenNew(const char *value, HB_SIZE nLen, HB_SIZE nSpa
 static void hb_pp_tokenSetValue(PHB_PP_TOKEN pToken, const char *value, HB_SIZE nLen)
 {
   if (HB_PP_TOKEN_ALLOC(pToken->type)) {
-    hb_xfree(HB_UNCONST(pToken->value));
+    hb_xfree(const_cast<char *>(pToken->value));
   }
   if (nLen <= 1) {
     pToken->value = hb_szAscii[nLen ? static_cast<HB_UCHAR>(value[0]) : 0];
@@ -1826,7 +1826,7 @@ static void hb_pp_FileFree(PHB_PP_STATE pState, PHB_PP_FILE pFile, PHB_PP_CLOSE_
   }
 
   if (pFile->fFree && pFile->pLineBuf) {
-    hb_xfree(HB_UNCONST(pFile->pLineBuf));
+    hb_xfree(const_cast<char *>(pFile->pLineBuf));
   }
 
   hb_pp_tokenListFree(&pFile->pTokenList);
@@ -5327,7 +5327,7 @@ void hb_pp_tokenUpper(PHB_PP_TOKEN pToken)
     if (pToken->len <= 1) {
       HB_UCHAR ucVal = pToken->len ? static_cast<HB_UCHAR>(pToken->value[1]) : 0;
       if (HB_PP_TOKEN_ALLOC(pToken->type)) {
-        hb_xfree(HB_UNCONST(pToken->value));
+        hb_xfree(const_cast<char *>(pToken->value));
         pToken->type |= HB_PP_TOKEN_STATIC;
       }
       pToken->value = hb_szAscii[ucVal];
@@ -5336,9 +5336,9 @@ void hb_pp_tokenUpper(PHB_PP_TOKEN pToken)
         pToken->value = static_cast<char *>(memcpy(hb_xgrab(pToken->len + 1), pToken->value + 1, pToken->len));
         pToken->type &= ~HB_PP_TOKEN_STATIC;
       } else {
-        memmove(HB_UNCONST(pToken->value), pToken->value + 1, pToken->len);
+        memmove(const_cast<char *>(pToken->value), pToken->value + 1, pToken->len);
       }
-      (static_cast<char *>(HB_UNCONST(pToken->value)))[pToken->len] = '\0';
+      (static_cast<char *>(const_cast<char *>(pToken->value)))[pToken->len] = '\0';
     }
   } else if (pToken->len > 1) {
     if (!HB_PP_TOKEN_ALLOC(pToken->type)) {
@@ -5349,19 +5349,19 @@ void hb_pp_tokenUpper(PHB_PP_TOKEN pToken)
     }
     if (HB_PP_TOKEN_TYPE(pToken->type) == HB_PP_TOKEN_KEYWORD && pToken->len > HB_SYMBOL_NAME_LEN) {
       pToken->len = HB_SYMBOL_NAME_LEN;
-      (static_cast<char *>(HB_UNCONST(pToken->value)))[HB_SYMBOL_NAME_LEN] = '\0';
+      (static_cast<char *>(const_cast<char *>(pToken->value)))[HB_SYMBOL_NAME_LEN] = '\0';
     }
   }
 
   if (pToken->len <= 1) {
     HB_UCHAR ucVal = static_cast<HB_UCHAR>(HB_PP_UPPER(pToken->value[0]));
     if (HB_PP_TOKEN_ALLOC(pToken->type)) {
-      hb_xfree(HB_UNCONST(pToken->value));
+      hb_xfree(const_cast<char *>(pToken->value));
       pToken->type |= HB_PP_TOKEN_STATIC;
     }
     pToken->value = hb_szAscii[ucVal];
   } else {
-    hb_strupr(static_cast<char *>(HB_UNCONST(pToken->value)));
+    hb_strupr(static_cast<char *>(const_cast<char *>(pToken->value)));
   }
 }
 
