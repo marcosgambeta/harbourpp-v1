@@ -18,6 +18,7 @@ else
       DYNDIRLIST_BASE := \
          src/common \
          src/pp \
+         src/gtl \
          src/rtl \
          src/macro \
          src/lang \
@@ -31,26 +32,26 @@ else
          src/rdd/hbsix \
          src/rdd/hsx \
          src/rdd/usrrdd \
-         src/rtl/gtcgi \
-         src/rtl/gtpca \
-         src/rtl/gtstd
+         src/gtl/gtcgi \
+         src/gtl/gtpca \
+         src/gtl/gtstd
 
       ifeq ($(HB_PLATFORM),wce)
-         DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui
+         DYNDIRLIST_BASE += src/gtl/gtwvt src/gtl/gtgui
       endif
       ifeq ($(HB_PLATFORM),win)
-         DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui src/rtl/gtwin
+         DYNDIRLIST_BASE += src/gtl/gtwvt src/gtl/gtgui src/gtl/gtwin
       endif
       ifneq ($(HB_PLATFORM_UNIX),)
-         DYNDIRLIST_BASE += src/rtl/gttrm
+         DYNDIRLIST_BASE += src/gtl/gttrm
          ifneq ($(HB_HAS_CURSES),)
-            DYNDIRLIST_BASE += src/rtl/gtcrs
+            DYNDIRLIST_BASE += src/gtl/gtcrs
          endif
          ifneq ($(HB_HAS_SLANG),)
-            DYNDIRLIST_BASE += src/rtl/gtsln
+            DYNDIRLIST_BASE += src/gtl/gtsln
          endif
          ifneq ($(HB_HAS_X11),)
-            DYNDIRLIST_BASE += src/rtl/gtxwc
+            DYNDIRLIST_BASE += src/gtl/gtxwc
          endif
       endif
       ifeq ($(HB_COMPILER),watcom)
@@ -92,6 +93,7 @@ else
       compiler \
       $(HB_COMP_DIR) \
       vm$(HB_COMP_RF2) \
+	  gtl$(HB_COMP_REF) \
       rtl$(HB_COMP_REF) \
       macro \
       codepage \
@@ -107,9 +109,9 @@ else
       ifneq ($(HB_BUILD_DYN),no)
          #DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm}
          ifeq ($(HB_PLATFORM),win)
-            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm,winapi}
+            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,gtl,rtl,vm,winapi}
 		 else  	
-            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm}
+            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,gtl,rtl,vm}
          endif
       endif
 

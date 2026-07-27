@@ -57,11 +57,13 @@ else
       hbextern \
       hbdebug \
       $(_HB_VM) \
+      hbgtl \
       hbrtl \
       hblang \
       hbcpage \
       $(HB_GT_LIBS) \
       $(_HB_RDD) \
+      hbgtl \
       hbrtl \
       $(_HB_VM) \
       hbmacro \

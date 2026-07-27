@@ -63,7 +63,6 @@ CPP_SOURCES := \
    fstemp.cpp \
    gete.cpp \
    gt.cpp \
-   gtapi.cpp \
    gtchrmap.cpp \
    gtclip.cpp \
    gtfunc.cpp \
@@ -218,6 +217,8 @@ CPP_SOURCES := \
    xhelp.cpp \
    xsavescr.cpp \
 
+#   gtapi.cpp \
+
 PRG_SOURCES := \
    achoice.prg \
    adir.prg \
@@ -297,16 +298,17 @@ PRG_SOURCES := \
 LIBNAME := hbrtl
 
 DIRS := \
-   gtcgi \
-   gtcrs \
-   gtgui \
-   gtpca \
-   gtsln \
-   gtstd \
-   gttrm \
-   gtwin \
-   gtwvt \
-   gtxwc \
+
+#   gtcgi \
+#   gtcrs \
+#   gtgui \
+#   gtpca \
+#   gtsln \
+#   gtstd \
+#   gttrm \
+#   gtwin \
+#   gtwvt \
+#   gtxwc \
 
 HB_CFLAGS += -D_HB_API_INTERNAL_
 
