@@ -12,7 +12,10 @@ HB_PRGFLAGS += -ala
 
 CPP_SOURCES := \
    gtapi.cpp \
+   gtchrmap.cpp \
    gtclip.cpp \
+   gtkbstat.cpp \
+   gtkeycod.cpp \
    gttone.cpp \
 
 PRG_SOURCES := \

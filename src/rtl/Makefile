@@ -63,10 +63,7 @@ CPP_SOURCES := \
    fstemp.cpp \
    gete.cpp \
    gt.cpp \
-   gtchrmap.cpp \
    gtfunc.cpp \
-   gtkbstat.cpp \
-   gtkeycod.cpp \
    gtsys.cpp \
    gx.cpp \
    hardcr.cpp \
@@ -216,7 +213,10 @@ CPP_SOURCES := \
    xsavescr.cpp \
 
 #   gtapi.cpp \
+#   gtchrmap.cpp \
 #   gtclip.cpp \
+#   gtkbstat.cpp \
+#   gtkeycod.cpp \
 #   gttone.cpp \
 
 PRG_SOURCES := \
