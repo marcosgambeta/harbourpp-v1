@@ -64,12 +64,10 @@ CPP_SOURCES := \
    gete.cpp \
    gt.cpp \
    gtchrmap.cpp \
-   gtclip.cpp \
    gtfunc.cpp \
    gtkbstat.cpp \
    gtkeycod.cpp \
    gtsys.cpp \
-   gttone.cpp \
    gx.cpp \
    hardcr.cpp \
    hbadler.cpp \
@@ -218,6 +216,8 @@ CPP_SOURCES := \
    xsavescr.cpp \
 
 #   gtapi.cpp \
+#   gtclip.cpp \
+#   gttone.cpp \
 
 PRG_SOURCES := \
    achoice.prg \

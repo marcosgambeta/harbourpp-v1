@@ -12,6 +12,8 @@ HB_PRGFLAGS += -ala
 
 CPP_SOURCES := \
    gtapi.cpp \
+   gtclip.cpp \
+   gttone.cpp \
 
 PRG_SOURCES := \
 
