@@ -62,10 +62,6 @@ CPP_SOURCES := \
    fssize.cpp \
    fstemp.cpp \
    gete.cpp \
-   gt.cpp \
-   gtfunc.cpp \
-   gtsys.cpp \
-   gx.cpp \
    hardcr.cpp \
    hbadler.cpp \
    hbascii.cpp \
@@ -212,12 +208,16 @@ CPP_SOURCES := \
    xhelp.cpp \
    xsavescr.cpp \
 
+#   gt.cpp \ (moved to gtl)
 #   gtapi.cpp \ (moved to gtl)
 #   gtchrmap.cpp \ (moved to gtl)
 #   gtclip.cpp \ (moved to gtl)
+#   gtfunc.cpp \ (moved to gtl)
 #   gtkbstat.cpp \ (moved to gtl)
 #   gtkeycod.cpp \ (moved to gtl)
+#   gtsys.cpp \ (moved to gtl)
 #   gttone.cpp \ (moved to gtl)
+#   gx.cpp \ (moved to gtl)
 
 PRG_SOURCES := \
    achoice.prg \

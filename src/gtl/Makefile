@@ -11,12 +11,16 @@ endif
 HB_PRGFLAGS += -ala
 
 CPP_SOURCES := \
+   gt.cpp \
    gtapi.cpp \
    gtchrmap.cpp \
    gtclip.cpp \
+   gtfunc.cpp \
    gtkbstat.cpp \
    gtkeycod.cpp \
+   gtsys.cpp \
    gttone.cpp \
+   gx.cpp \
 
 PRG_SOURCES := \
 
