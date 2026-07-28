@@ -91,6 +91,21 @@ typedef struct _HB_HCLASS
 } HB_HCLASS, * PHB_HCLASS;
 
 /* locals, static, public variables support */
+#if defined(__cplusplus)
+struct _HB_HVAR
+{
+   const char *   szName;           /* variable name */
+   const char *   szAlias;          /* variable alias namespace */
+   int            iUsed;            /* number of times used */
+   int            iDeclLine;        /* declaration line number */
+   HB_USHORT      uiFlags;          /* optional flags, f.e. THREAD STATIC */
+   HB_BYTE        cType;            /* optional strong typing */
+   PHB_HCLASS     pClass;
+   struct _HB_HVAR * pNext;            /* pointer to next defined variable */
+};
+using HB_HVAR = _HB_HVAR;
+using PHB_HVAR = HB_HVAR *; // deprecated in core code
+#else
 typedef struct _HB_HVAR
 {
    const char *   szName;           /* variable name */
@@ -102,6 +117,7 @@ typedef struct _HB_HVAR
    PHB_HCLASS     pClass;
    struct _HB_HVAR * pNext;            /* pointer to next defined variable */
 } HB_HVAR, * PHB_HVAR;
+#endif
 
 /* local variables declared in a codeblock */
 typedef struct HB_CBVAR_
@@ -499,12 +515,12 @@ typedef struct _HB_HFUNC
    HB_USHORT    funFlags;                 /* some flags we may need */
    HB_USHORT    wParamCount;              /* number of declared parameters */
    HB_USHORT    wParamNum;                /* current parameter number */
-   PHB_HVAR     pLocals;                  /* pointer to local variables list */
-   PHB_HVAR     pStatics;                 /* pointer to static variables list */
-   PHB_HVAR     pFields;                  /* pointer to fields variables list */
-   PHB_HVAR     pMemvars;                 /* pointer to memvar variables list */
-   PHB_HVAR     pDetached;                /* pointer to detached local variables list */
-   PHB_HVAR     pPrivates;                /* pointer to private variables list */
+   HB_HVAR *    pLocals;                  /* pointer to local variables list */
+   HB_HVAR *    pStatics;                 /* pointer to static variables list */
+   HB_HVAR *    pFields;                  /* pointer to fields variables list */
+   HB_HVAR *    pMemvars;                 /* pointer to memvar variables list */
+   HB_HVAR *    pDetached;                /* pointer to detached local variables list */
+   HB_HVAR *    pPrivates;                /* pointer to private variables list */
    HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
    HB_SIZE      nPCodeSize;               /* total memory size for pcode */
    HB_SIZE      nPCodePos;                /* actual pcode offset */

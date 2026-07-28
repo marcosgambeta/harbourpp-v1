@@ -123,7 +123,7 @@ extern HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *, int);
 
 extern PHB_VARTYPE hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char * szFromClass);
 extern void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarType); // add a new param, local, static variable to a function definition or a public or private
-extern PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, int * piScope);
+extern HB_HVAR *hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, int * piScope);
 extern const char * hb_compLocalVariableName(PHB_HFUNC pFunc, HB_USHORT wVar); // returns the name of local variable
 extern const char * hb_compStaticVariableName(HB_COMP_DECL, HB_USHORT wVar); // returns the name of static variable
 

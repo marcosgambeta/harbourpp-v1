@@ -308,7 +308,7 @@ const char *hb_compSymbolName(HB_COMP_DECL, HB_USHORT uiSymbol)
   return nullptr;
 }
 
-static void hb_compCheckDuplVars(HB_COMP_DECL, PHB_HVAR pVar, const char *szVarName)
+static void hb_compCheckDuplVars(HB_COMP_DECL, HB_HVAR *pVar, const char *szVarName)
 {
   while (pVar) {
     if (!strcmp(pVar->szName, szVarName)) {
@@ -320,7 +320,7 @@ static void hb_compCheckDuplVars(HB_COMP_DECL, PHB_HVAR pVar, const char *szVarN
   }
 }
 
-static HB_USHORT hb_compVarListAdd(PHB_HVAR *pVarLst, PHB_HVAR pVar)
+static HB_USHORT hb_compVarListAdd(HB_HVAR **pVarLst, HB_HVAR *pVar)
 {
   HB_USHORT uiVar = 1;
 
@@ -404,7 +404,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
 
   hb_compCheckDuplVars(HB_COMP_PARAM, pFunc->pLocals, szVarName);
 
-  auto pVar = static_cast<PHB_HVAR>(hb_xgrab(sizeof(HB_HVAR)));
+  auto pVar = static_cast<HB_HVAR *>(hb_xgrab(sizeof(HB_HVAR)));
   pVar->szName = szVarName;
   pVar->szAlias = nullptr;
   pVar->uiFlags = 0;
@@ -465,7 +465,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
       hb_compGenPCode4(HB_P_PARAMETER, HB_LOBYTE(wPos), HB_HIBYTE(wPos), HB_LOBYTE(pFunc->wParamNum), HB_COMP_PARAM);
 
       if (HB_COMP_PARAM->iWarnings >= 3 && bFreeVar) {
-        PHB_HVAR pMemVar = pFunc->pMemvars;
+        HB_HVAR *pMemVar = pFunc->pMemvars;
         while (pMemVar && strcmp(pMemVar->szName, pVar->szName) != 0) {
           pMemVar = pMemVar->pNext;
         }
@@ -489,7 +489,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
       pSym->cScope |= HB_FS_MEMVAR;
 
       if (HB_COMP_PARAM->iWarnings >= 3 && bFreeVar) {
-        PHB_HVAR pMemVar = pFunc->pMemvars;
+        HB_HVAR *pMemVar = pFunc->pMemvars;
         while (pMemVar && strcmp(pMemVar->szName, pVar->szName) != 0) {
           pMemVar = pMemVar->pNext;
         }
@@ -555,7 +555,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
 
 void hb_compFieldSetAlias(HB_COMP_DECL, const char *szAlias, int iField)
 {
-  PHB_HVAR pVar = HB_COMP_PARAM->functions.pLast->pFields;
+  HB_HVAR *pVar = HB_COMP_PARAM->functions.pLast->pFields;
   while (iField-- && pVar) {
     pVar = pVar->pNext;
   }
@@ -572,7 +572,7 @@ void hb_compFieldSetAlias(HB_COMP_DECL, const char *szAlias, int iField)
 int hb_compFieldsCount(HB_COMP_DECL)
 {
   int iFields = 0;
-  PHB_HVAR pVar = HB_COMP_PARAM->functions.pLast->pFields;
+  HB_HVAR *pVar = HB_COMP_PARAM->functions.pLast->pFields;
 
   while (pVar) {
     ++iFields;
@@ -582,7 +582,7 @@ int hb_compFieldsCount(HB_COMP_DECL)
   return iFields;
 }
 
-static PHB_HVAR hb_compVariableGet(PHB_HVAR pVars, const char *szVarName, int *piPos)
+static HB_HVAR *hb_compVariableGet(HB_HVAR *pVars, const char *szVarName, int *piPos)
 {
   int iVar = 1;
 
@@ -599,7 +599,7 @@ static PHB_HVAR hb_compVariableGet(PHB_HVAR pVars, const char *szVarName, int *p
 }
 
 // returns variable pointer if defined or nullptr
-static PHB_HVAR hb_compVariableGetVar(PHB_HVAR pVars, HB_USHORT wOrder)
+static HB_HVAR *hb_compVariableGetVar(HB_HVAR *pVars, HB_USHORT wOrder)
 {
   while (pVars && --wOrder) {
     pVars = pVars->pNext;
@@ -608,7 +608,7 @@ static PHB_HVAR hb_compVariableGetVar(PHB_HVAR pVars, HB_USHORT wOrder)
 }
 
 // returns the order + 1 of a variable if defined or zero
-static HB_USHORT hb_compVariableGetPos(PHB_HVAR pVars, const char *szVarName)
+static HB_USHORT hb_compVariableGetPos(HB_HVAR *pVars, const char *szVarName)
 {
   HB_USHORT wVar = 1;
 
@@ -623,7 +623,7 @@ static HB_USHORT hb_compVariableGetPos(PHB_HVAR pVars, const char *szVarName)
   return 0;
 }
 
-PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char *szVarName, int *piPos, int *piScope)
+HB_HVAR *hb_compVariableFind(HB_COMP_DECL, const char *szVarName, int *piPos, int *piScope)
 {
   int iPos = 0, iScope = 0;
 
@@ -649,7 +649,7 @@ PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char *szVarName, int *piPos, in
   auto fStatic = false;
   auto fBlock = false;
   auto fGlobal = false;
-  PHB_HVAR pVar = nullptr;
+  HB_HVAR *pVar = nullptr;
   int iLevel = 0;
 
   while (pFunc) {
@@ -699,7 +699,7 @@ PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char *szVarName, int *piPos, in
             szVarName = pVar->szName;
 
             // this variable was not referenced yet - add it to the list
-            pVar = static_cast<PHB_HVAR>(hb_xgrab(sizeof(HB_HVAR)));
+            pVar = static_cast<HB_HVAR *>(hb_xgrab(sizeof(HB_HVAR)));
 
             pVar->szName = szVarName;
             pVar->szAlias = nullptr;
@@ -802,7 +802,7 @@ const char *hb_compLocalVariableName(PHB_HFUNC pFunc, HB_USHORT wVar)
   if (pFunc->wParamCount && !(pFunc->funFlags & HB_FUNF_USES_LOCAL_PARAMS)) {
     wVar -= pFunc->wParamCount;
   }
-  PHB_HVAR pVar = hb_compVariableGetVar(pFunc->pLocals, wVar);
+  HB_HVAR *pVar = hb_compVariableGetVar(pFunc->pLocals, wVar);
 
   return pVar ? pVar->szName : nullptr;
 }
@@ -814,7 +814,7 @@ const char *hb_compStaticVariableName(HB_COMP_DECL, HB_USHORT wVar)
   while (pTmp->pNext && pTmp->pNext->iStaticsBase < wVar) {
     pTmp = pTmp->pNext;
   }
-  PHB_HVAR pVar = hb_compVariableGetVar(pTmp->pStatics, static_cast<HB_USHORT>(wVar - pTmp->iStaticsBase));
+  HB_HVAR *pVar = hb_compVariableGetVar(pTmp->pStatics, static_cast<HB_USHORT>(wVar - pTmp->iStaticsBase));
 
   return pVar ? pVar->szName : nullptr;
 }
@@ -1601,9 +1601,9 @@ static void hb_compOptimizeFrames(HB_COMP_DECL, PHB_HFUNC pFunc)
         memmove(pFunc->pCode + 5, pFunc->pCode + 8, pFunc->nPCodePos - 5);
       } else { // Check Global Statics.
 #if 0
-            PHB_HVAR pVar = pFunc->pStatics;
+            HB_HVAR *pVar = pFunc->pStatics;
 #endif
-        PHB_HVAR pVar = HB_COMP_PARAM->functions.pFirst->pStatics;
+        HB_HVAR *pVar = HB_COMP_PARAM->functions.pFirst->pStatics;
 
         while (pVar) {
 #if 0
@@ -1624,7 +1624,7 @@ static void hb_compOptimizeFrames(HB_COMP_DECL, PHB_HFUNC pFunc)
       }
     }
   } else if (pFunc->pCode[0] == HB_P_FRAME && pFunc->pCode[3] == HB_P_SFRAME) {
-    PHB_HVAR pLocal;
+    HB_HVAR *pLocal;
     int iLocals = 0, iOffset = 0;
     auto bSkipFRAME = false;
     auto bSkipSFRAME = false;
@@ -1730,7 +1730,7 @@ static void hb_compFinalizeFunction(HB_COMP_DECL) // fixes all last defined func
     hb_compLoopKill(pFunc);
 
     if (HB_COMP_PARAM->iWarnings && (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0) {
-      PHB_HVAR pVar;
+      HB_HVAR *pVar;
 
       pVar = pFunc->pLocals;
       while (pVar) {
@@ -1813,7 +1813,7 @@ static PHB_HFUNC hb_compFunctionKill(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
   PHB_HFUNC pNext = pFunc->pNext;
   PHB_ENUMERATOR pEVar;
-  PHB_HVAR pVar;
+  HB_HVAR *pVar;
 
   hb_compRTVariableKill(HB_COMP_PARAM, pFunc);
   hb_compSwitchKill(HB_COMP_PARAM, pFunc);
@@ -2433,7 +2433,7 @@ static void hb_compGenVariablePCode(HB_COMP_DECL, HB_BYTE bPCode, const char *sz
 
 // Generate a pcode for a field variable
 
-static void hb_compGenFieldPCode(HB_COMP_DECL, HB_BYTE bPCode, PHB_HVAR pField)
+static void hb_compGenFieldPCode(HB_COMP_DECL, HB_BYTE bPCode, HB_HVAR *pField)
 {
   if (pField->szAlias) {
     // the alias was specified in FIELD declaration
@@ -2533,7 +2533,7 @@ void hb_compGenPopVar(const char *szVarName,
 {
   int iVar, iScope;
 
-  PHB_HVAR pVar = hb_compVariableFind(HB_COMP_PARAM, szVarName, &iVar, &iScope);
+  HB_HVAR *pVar = hb_compVariableFind(HB_COMP_PARAM, szVarName, &iVar, &iScope);
   if (pVar) {
     if (HB_COMP_PARAM->functions.pLast->iEarlyEvalPass == 1) {
       hb_compCheckEarlyMacroEval(HB_COMP_PARAM, szVarName, iScope);
@@ -2613,7 +2613,7 @@ void hb_compGenPushVar(const char *szVarName, HB_COMP_DECL)
 {
   int iVar, iScope;
 
-  PHB_HVAR pVar = hb_compVariableFind(HB_COMP_PARAM, szVarName, &iVar, &iScope);
+  HB_HVAR *pVar = hb_compVariableFind(HB_COMP_PARAM, szVarName, &iVar, &iScope);
   if (pVar) {
     if (HB_COMP_PARAM->functions.pLast->iEarlyEvalPass == 1) {
       hb_compCheckEarlyMacroEval(HB_COMP_PARAM, szVarName, iScope);
@@ -2671,7 +2671,7 @@ void hb_compGenPushVarRef(
 {
   int iVar, iScope;
 
-  PHB_HVAR pVar = hb_compVariableFind(HB_COMP_PARAM, szVarName, &iVar, &iScope);
+  HB_HVAR *pVar = hb_compVariableFind(HB_COMP_PARAM, szVarName, &iVar, &iScope);
   if (pVar) {
     if (HB_COMP_PARAM->functions.pLast->iEarlyEvalPass == 1) {
       hb_compCheckEarlyMacroEval(HB_COMP_PARAM, szVarName, iScope);
@@ -3201,7 +3201,7 @@ static void hb_compStaticDefThreadSet(HB_COMP_DECL)
 {
   if (HB_COMP_PARAM->pInitFunc) {
     HB_USHORT uiCount = 0;
-    PHB_HVAR pVar;
+    HB_HVAR *pVar;
 
     PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
     while (pFunc) {
@@ -3346,7 +3346,7 @@ void hb_compCodeBlockEnd(HB_COMP_DECL)
 
   // Count the number of referenced local variables
   HB_USHORT wLocalsLen = 0;
-  PHB_HVAR pVar = pCodeblock->pDetached;
+  HB_HVAR *pVar = pCodeblock->pDetached;
   HB_USHORT wLocals = 0; // number of referenced local variables
   while (pVar) {
     if (HB_COMP_PARAM->fDebugInfo) {
@@ -3462,7 +3462,7 @@ void hb_compCodeBlockStop(HB_COMP_DECL)
   hb_compGenPCodeN(pCodeblock->pCode, pCodeblock->nPCodePos, HB_COMP_PARAM);
 
   if (HB_COMP_PARAM->iWarnings) {
-    PHB_HVAR pVar = pCodeblock->pLocals;
+    HB_HVAR *pVar = pCodeblock->pLocals;
     // find the function that owns the codeblock
     PHB_HFUNC pFunc = pCodeblock->pOwner;
     while (pFunc->pOwner) {
@@ -3498,12 +3498,12 @@ void hb_compCodeBlockRewind(HB_COMP_DECL)
     pCodeblock->nJumps = 0;
   }
   while (pCodeblock->pDetached) {
-    PHB_HVAR pVar = pCodeblock->pDetached;
+    HB_HVAR *pVar = pCodeblock->pDetached;
     pCodeblock->pDetached = pVar->pNext;
     hb_xfree(pVar);
   }
   while (pCodeblock->pLocals) {
-    PHB_HVAR pVar = pCodeblock->pLocals;
+    HB_HVAR *pVar = pCodeblock->pLocals;
     pCodeblock->pLocals = pVar->pNext;
     hb_xfree(pVar);
   }

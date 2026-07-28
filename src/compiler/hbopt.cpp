@@ -1271,7 +1271,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, PHB_HFUNC pFunc, PHB_OP
 
     if (iCheck != 0 &&
         (isLocal = hb_compLocalGetNumber(&pFunc->pCode[nPos])) > static_cast<HB_SHORT>(pFunc->wParamCount)) {
-      PHB_HVAR pVar = pFunc->pLocals;
+      HB_HVAR *pVar = pFunc->pLocals;
 
       for (HB_SHORT is = 1; is < isLocal; is++) {
         pVar = pVar->pNext;
@@ -1404,7 +1404,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
   assert(HB_P_LAST_PCODE == 181);
 
   HB_USHORT usLocalCount = 0;
-  PHB_HVAR pVar = pFunc->pLocals;
+  HB_HVAR *pVar = pFunc->pLocals;
   while (pVar) {
     pVar = pVar->pNext;
     usLocalCount++;
@@ -1501,7 +1501,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
 
     if (fBool) {
       usIndex = usLocalCount = 0;
-      PHB_HVAR *ppVar = &pFunc->pLocals;
+      HB_HVAR **ppVar = &pFunc->pLocals;
       pVar = pFunc->pLocals;
       while (pVar) {
         if (usLocalCount < pFunc->wParamCount || pLocals[usLocalCount].bFlags != 0) {
