@@ -26,11 +26,6 @@ STATIC s_lNoAlert
 
 FUNCTION Alert(cMessage, aOptions, cColorNorm)
 
-   LOCAL cColorHigh
-   LOCAL aOptionsOK
-   LOCAL cOption
-   LOCAL nPos
-
 #ifdef HB_CLP_UNDOC
 
    IF s_lNoAlert == NIL
@@ -49,15 +44,19 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
 
    cMessage := StrTran(cMessage, ";", Chr(10))
 
+   LOCAL cColorHigh
+
    IF !hb_IsString(cColorNorm) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex(cColorNorm, CLR_STANDARD)
+      LOCAL nPos
       cColorHigh := hb_StrReplace(IIf((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
    ENDIF
 
-   aOptionsOK := {}
+   LOCAL cOption
+   LOCAL aOptionsOK := {}
    FOR EACH cOption IN hb_defaultValue(aOptions, {})
       IF hb_IsString(cOption) .AND. !Empty(cOption)
          AAdd(aOptionsOK, cOption)
@@ -80,12 +79,6 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
 
 FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
-   LOCAL cMessage
-   LOCAL cColorHigh
-   LOCAL aOptionsOK
-   LOCAL cString
-   LOCAL nPos
-
 #ifdef HB_CLP_UNDOC
 
    IF s_lNoAlert == NIL
@@ -101,6 +94,9 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    IF PCount() == 0
       RETURN NIL
    ENDIF
+
+   LOCAL cMessage
+   LOCAL cString
 
    DO CASE
    CASE hb_IsArray(xMessage)
@@ -119,15 +115,18 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
       cMessage := hb_CStr(xMessage)
    ENDCASE
 
+   LOCAL cColorHigh
+
    IF !hb_IsString(cColorNorm) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex(cColorNorm, CLR_STANDARD)
+      LOCAL nPos
       cColorHigh := hb_StrReplace(IIf((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
    ENDIF
 
-   aOptionsOK := {}
+   LOCAL aOptionsOK := {}
    FOR EACH cString IN hb_defaultValue(aOptions, {})
       IF hb_IsString(cString) .AND. !Empty(cString)
          AAdd(aOptionsOK, cString)
