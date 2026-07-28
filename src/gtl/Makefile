@@ -21,6 +21,8 @@ CPP_SOURCES := \
    gtsys.cpp \
    gttone.cpp \
    gx.cpp \
+   hbgtcore.cpp \
+   xsavescr.cpp \
 
 PRG_SOURCES := \
 

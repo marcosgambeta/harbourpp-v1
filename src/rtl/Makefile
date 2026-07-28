@@ -79,7 +79,6 @@ CPP_SOURCES := \
    hbfeof.cpp \
    hbfile.cpp \
    hbfilehc.cpp \
-   hbgtcore.cpp \
    hbhex.cpp \
    hbi18n1.cpp \
    hbinet.cpp \
@@ -206,7 +205,6 @@ CPP_SOURCES := \
    vfile.cpp \
    word.cpp \
    xhelp.cpp \
-   xsavescr.cpp \
 
 #   gt.cpp \ (moved to gtl)
 #   gtapi.cpp \ (moved to gtl)
@@ -218,6 +216,8 @@ CPP_SOURCES := \
 #   gtsys.cpp \ (moved to gtl)
 #   gttone.cpp \ (moved to gtl)
 #   gx.cpp \ (moved to gtl)
+#   hbgtcore.cpp \ (moved to gtl)
+#   xsavescr.cpp \ (moved to gtl)
 
 PRG_SOURCES := \
    achoice.prg \
