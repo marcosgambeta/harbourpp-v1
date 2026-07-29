@@ -2801,11 +2801,12 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
   HB_USHORT uiCount, uiLen;
   auto fRawBlob = false;
   DBFFIELD *pThisField;
-  HB_FNAME *pFileName;
   PHB_ITEM pItem = nullptr, pError;
   char szFileName[HB_PATH_MAX];
 
   pArea->lpdbOpenInfo = pCreateInfo;
+
+  HB_FNAME *pFileName;
 
   if (!pArea->fTemporary) {
     pFileName = hb_fsFNameSplit(pCreateInfo->abName);
@@ -3772,7 +3773,6 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
   HB_USHORT uiFields, uiCount, uiSkip, uiDecimals, uiLen, uiFlags, uiFlagsMask;
   auto fRawBlob = false;
   PHB_ITEM pError, pItem;
-  HB_FNAME *pFileName;
   HB_BYTE *pBuffer;
   LPDBFFIELD pField;
   DBFIELDINFO dbFieldInfo;
@@ -3845,7 +3845,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
   uiFlags = (pArea->fReadonly ? FO_READ : FO_READWRITE) | (pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE);
   pError = nullptr;
 
-  pFileName = hb_fsFNameSplit(szFileName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
   // Add default file name extension if necessary
   if (!pFileName->szExtension && hb_setGetDefExtension()) {
     hb_itemClear(pItem);
@@ -5900,7 +5900,6 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
   char szFileName[HB_PATH_MAX];
   const char *szExt;
   PHB_ITEM pFileExt = nullptr;
-  HB_FNAME *pFileName;
   auto fTable = false;
   auto fResult = false;
 
@@ -5914,7 +5913,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
     fTable = true;
   }
 
-  pFileName = hb_fsFNameSplit(szFile);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szFile);
 
   if (!pFileName->szExtension && (!fTable || hb_setGetDefExtension())) {
     // Add default extension if missing
@@ -5975,7 +5974,6 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
 
   char szFileName[HB_PATH_MAX];
   PHB_ITEM pFileExt = nullptr;
-  HB_FNAME *pFileName;
   auto fTable = false;
 
   auto szFile = hb_itemGetCPtr(pItemIndex);
@@ -5987,7 +5985,7 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
     fTable = true;
   }
 
-  pFileName = hb_fsFNameSplit(szFile);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szFile);
 
   if (!pFileName->szExtension && (!fTable || hb_setGetDefExtension())) {
     pFileExt = hb_itemPutNil(pFileExt);
@@ -6015,7 +6013,6 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
   char szFileName[HB_PATH_MAX];
   const char *szExt;
   PHB_ITEM pFileExt = nullptr;
-  HB_FNAME *pFileName;
   auto fTable = false;
   auto fResult = false;
 
@@ -6029,7 +6026,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
     fTable = true;
   }
 
-  pFileName = hb_fsFNameSplit(szFile);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szFile);
 
   if (!pFileName->szExtension && (!fTable || hb_setGetDefExtension())) {
     // Add default extension if missing
@@ -6045,13 +6042,12 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
   // Use hb_fileExists() first to locate table which can be in different path
   if (szFile[0] && hb_fileExists(szFileName, szFileName)) {
     char szFileNew[HB_PATH_MAX];
-    HB_FNAME *pFileNameNew;
 
     // hb_fsFNameSplit() repeated intentionally to respect
     // the path set by hb_FileExists()
     pFileName = hb_fsFNameSplit(szFileName);
 
-    pFileNameNew = hb_fsFNameSplit(szFile);
+    HB_FNAME *pFileNameNew = hb_fsFNameSplit(szFile);
     if (!pFileNameNew->szExtension && (!fTable || hb_setGetDefExtension())) {
       // Add default extension if missing
       pFileExt = hb_itemPutNil(pFileExt);

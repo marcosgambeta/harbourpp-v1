@@ -1306,7 +1306,6 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 
   PHB_ITEM pError = nullptr;
   auto fRetry = false;
-  HB_FNAME *pFileName;
   char szFileName[HB_PATH_MAX];
 
   pArea->fShared = false;   // pCreateInfo->fShared;
@@ -1321,7 +1320,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
     pArea->area.cdPage = hb_vmCDP();
   }
 
-  pFileName = hb_fsFNameSplit(pCreateInfo->abName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(pCreateInfo->abName);
   if (hb_setGetDefExtension() && !pFileName->szExtension) {
     auto pItem = hb_itemNew(nullptr);
     if (SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) == Harbour::SUCCESS) {
@@ -1398,7 +1397,6 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 #endif
 
   PHB_ITEM pError = nullptr;
-  HB_FNAME *pFileName;
   HB_USHORT uiFlags;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
@@ -1418,7 +1416,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   uiFlags = (pArea->fReadonly ? FO_READ : FO_READWRITE) | (pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE);
 
-  pFileName = hb_fsFNameSplit(pOpenInfo->abName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(pOpenInfo->abName);
   // Add default file name extension if necessary
   if (hb_setGetDefExtension() && !pFileName->szExtension) {
     auto pFileExt = hb_itemNew(nullptr);

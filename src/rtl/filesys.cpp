@@ -3804,7 +3804,6 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
 
   if (fTrim || fEncodeCP || cDirSep != HB_OS_PATH_DELIM_CHR || iFileCase != HB_SET_CASE_MIXED ||
       iDirCase != HB_SET_CASE_MIXED) {
-    HB_FNAME *pFileName;
     HB_SIZE nLen;
     char *pszPath = nullptr, *pszName = nullptr, *pszExt = nullptr;
 
@@ -3822,7 +3821,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
       }
     }
 
-    pFileName = hb_fsFNameSplit(pszFileName);
+    HB_FNAME *pFileName = hb_fsFNameSplit(pszFileName);
 
     // strip trailing and leading spaces
     if (fTrim) {
@@ -3931,7 +3930,6 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
 
   if (fTrim || cDirSep != HB_OS_PATH_DELIM_CHR || iFileCase != HB_SET_CASE_MIXED || iDirCase != HB_SET_CASE_MIXED) {
     char *pszPath = nullptr, *pszName = nullptr, *pszExt = nullptr;
-    HB_FNAME *pFileName;
 
     pszFileName = pszBuffer = hb_strncpy(static_cast<char *>(hb_xgrab(HB_PATH_MAX)), pszFileName, HB_PATH_MAX - 1);
 
@@ -3945,7 +3943,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
       }
     }
 
-    pFileName = hb_fsFNameSplit(pszBuffer);
+    HB_FNAME *pFileName = hb_fsFNameSplit(pszBuffer);
 
     // strip trailing and leading spaces
     if (fTrim) {

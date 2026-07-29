@@ -56,7 +56,6 @@ HB_BOOL hb_spFile(const char *pszFileName, char *pszRetPath)
 
   char *pszPath;
   HB_BOOL bIsFile = false;
-  HB_FNAME *pFilepath;
 
   if (pszRetPath) {
     pszPath = pszRetPath;
@@ -64,7 +63,7 @@ HB_BOOL hb_spFile(const char *pszFileName, char *pszRetPath)
     pszPath = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
   }
 
-  pFilepath = hb_fsFNameSplit(pszFileName);
+  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
 
   if (pFilepath->szPath) {
     hb_fsFNameMerge(pszPath, pFilepath);

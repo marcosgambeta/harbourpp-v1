@@ -4448,11 +4448,10 @@ static bool hb_cdxIndexLoad(LPCDXINDEX pIndex, char *szBaseName)
 // create index file name
 static void hb_cdxCreateFName(CDXAREAP pArea, const char *szBagName, bool *fProd, char *szFileName, char *szBaseName)
 {
-  HB_FNAME *pFileName;
   PHB_ITEM pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
-  pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
   if (szBaseName != nullptr) {
     if (pFileName->szName) {
@@ -4508,9 +4507,8 @@ static void hb_cdxOrdListClear(CDXAREAP pArea, bool fAll, LPCDXINDEX pKeepInd)
 
     if (!fAll) {
       // TODO: we have to control this on open
-      HB_FNAME *pFileNameDbf, *pFileNameCdx;
-      pFileNameDbf = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
-      pFileNameCdx = hb_fsFNameSplit(pArea->lpIndexes->szFileName);
+      HB_FNAME *pFileNameDbf = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
+      HB_FNAME *pFileNameCdx = hb_fsFNameSplit(pArea->lpIndexes->szFileName);
       fAll = hb_stricmp(pFileNameDbf->szName ? pFileNameDbf->szName : "",
                         pFileNameCdx->szName ? pFileNameCdx->szName : "") != 0;
       if (!fAll) {
@@ -4543,9 +4541,8 @@ static void hb_cdxOrdListClear(CDXAREAP pArea, bool fAll, LPCDXINDEX pKeepInd)
 static LPCDXINDEX hb_cdxFindBag(CDXAREAP pArea, const char *szBagName)
 {
   LPCDXINDEX pIndex;
-  HB_FNAME *pFileName;
 
-  pFileName = hb_fsFNameSplit(szBagName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szBagName);
   pIndex = pArea->lpIndexes;
   while (pIndex) {
     HB_FNAME *pIndexName = hb_fsFNameSplit(pIndex->szFileName);

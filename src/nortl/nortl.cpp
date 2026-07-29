@@ -529,8 +529,6 @@ const char *hb_fsNameConv(const char *szFileName, char **pszFree)
 {
   if (s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR || s_iFileCase != HB_SET_CASE_MIXED ||
       s_iDirCase != HB_SET_CASE_MIXED) {
-    HB_FNAME *pFileName;
-
     if (pszFree) {
       szFileName = *pszFree = hb_strncpy(static_cast<char *>(hb_xgrab(HB_PATH_MAX)), szFileName, HB_PATH_MAX - 1);
     }
@@ -545,7 +543,7 @@ const char *hb_fsNameConv(const char *szFileName, char **pszFree)
       }
     }
 
-    pFileName = hb_fsFNameSplit(szFileName);
+    HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
 
     /* strip trailing and leading spaces */
     if (s_fFnTrim) {
@@ -618,8 +616,6 @@ HB_WCHAR *hb_fsNameConvU16(const char *szFileName)
 
   if (s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR || s_iFileCase != HB_SET_CASE_MIXED ||
       s_iDirCase != HB_SET_CASE_MIXED) {
-    HB_FNAME *pFileName;
-
     szFileName = pszBuffer = hb_strncpy(static_cast<char *>(hb_xgrab(HB_PATH_MAX)), szFileName, HB_PATH_MAX - 1);
 
     if (s_cDirSep != HB_OS_PATH_DELIM_CHR) {
@@ -632,7 +628,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *szFileName)
       }
     }
 
-    pFileName = hb_fsFNameSplit(szFileName);
+    HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
 
     /* strip trailing and leading spaces */
     if (s_fFnTrim) {

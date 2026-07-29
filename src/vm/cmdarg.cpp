@@ -595,7 +595,6 @@ char *hb_cmdargBaseProgName(void)
   char *pszProgName = hb_cmdargProgName();
   if (pszProgName) {
     HB_FNAME *pFileName = hb_fsFNameSplit(pszProgName);
-
     pszBaseProgName = hb_strdup(pFileName->szName);
     hb_xfree(pFileName);
     hb_xfree(pszProgName);

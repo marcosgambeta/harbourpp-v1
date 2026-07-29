@@ -4904,9 +4904,8 @@ void hb_pp_readRules(PHB_PP_STATE pState, const char *szRulesFile)
 {
   char szFileName[HB_PATH_MAX];
   PHB_PP_FILE pFile = pState->pFile;
-  HB_FNAME *pFileName;
 
-  pFileName = hb_fsFNameSplit(szRulesFile);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szRulesFile);
   if (!pFileName->szExtension) {
     pFileName->szExtension = ".ch";
   }

@@ -728,9 +728,7 @@ int main(int argc, char *argv[])
     if (hb_pp_inFile(pState, szFile, true, nullptr, true)) {
       if (fWrite) {
         char szFileName[HB_PATH_MAX];
-        HB_FNAME *pFileName;
-
-        pFileName = hb_fsFNameSplit(szFile);
+        HB_FNAME *pFileName = hb_fsFNameSplit(szFile);
         pFileName->szExtension = ".ppo";
         hb_fsFNameMerge(szFileName, pFileName);
         hb_xfree(pFileName);

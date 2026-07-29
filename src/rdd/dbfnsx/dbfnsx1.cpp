@@ -3562,11 +3562,10 @@ static HB_ERRCODE hb_nsxTagSpaceFree(LPTAGINFO pTag)
  */
 static void hb_nsxCreateFName(NSXAREAP pArea, const char *szBagName, bool *fProd, char *szFileName, char *szTagName)
 {
-  HB_FNAME *pFileName;
   PHB_ITEM pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
-  pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
   if (szTagName != nullptr) {
     if (pFileName->szName) {
@@ -3618,9 +3617,8 @@ static void hb_nsxCreateFName(NSXAREAP pArea, const char *szBagName, bool *fProd
 static LPNSXINDEX hb_nsxFindBag(NSXAREAP pArea, const char *szBagName)
 {
   LPNSXINDEX pIndex;
-  HB_FNAME *pSeek;
 
-  pSeek = hb_fsFNameSplit(szBagName);
+  HB_FNAME *pSeek = hb_fsFNameSplit(szBagName);
   if (!pSeek->szName) {
     pSeek->szName = "";
   }

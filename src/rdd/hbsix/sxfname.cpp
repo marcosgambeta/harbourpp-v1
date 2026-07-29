@@ -56,12 +56,11 @@ HB_FUNC(SX_FNAMEPARSER)
 
   if (szFileName != nullptr) {
     char szPathBuf[HB_PATH_MAX];
-    HB_FNAME *pFileName;
     HB_SIZE nLen;
     char *pszFree;
 
     szFileName = hb_fsNameConv(szFileName, &pszFree);
-    pFileName = hb_fsFNameSplit(szFileName);
+    HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
     if (pszFree) {
       hb_xfree(pszFree);
     }

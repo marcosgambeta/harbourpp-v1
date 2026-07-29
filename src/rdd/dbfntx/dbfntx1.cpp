@@ -3357,11 +3357,10 @@ static HB_ERRCODE hb_ntxTagSpaceFree(LPTAGINFO pTag)
  */
 static void hb_ntxCreateFName(NTXAREAP pArea, const char *szBagName, bool *fProd, char *szFileName, char *szTagName)
 {
-  HB_FNAME *pFileName;
   PHB_ITEM pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
-  pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
   if (szTagName != nullptr) {
     if (pFileName->szName) {
@@ -3411,9 +3410,8 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char *szBagName, bool *fProd
 static LPNTXINDEX hb_ntxFindBag(NTXAREAP pArea, const char *szBagName)
 {
   LPNTXINDEX pIndex;
-  HB_FNAME *pSeek;
 
-  pSeek = hb_fsFNameSplit(szBagName);
+  HB_FNAME *pSeek = hb_fsFNameSplit(szBagName);
   if (!pSeek->szName) {
     pSeek->szName = "";
   }
