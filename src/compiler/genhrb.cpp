@@ -34,7 +34,7 @@ constexpr HB_BYTE SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound fu
 static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
 {
   PHB_HFUNC pFunc;
-  PHB_HSYMBOL pSym;
+  HB_HSYMBOL *pSym;
   HB_SIZE nSize;
 
   *pulSymbols = *pulFunctions = 0;
@@ -80,7 +80,7 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
   HB_PUT_LE_UINT32(ptr, ulSymbols); // number of symbols
   ptr += 4;
   // generate the symbol table
-  PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst;
+  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
   HB_SIZE nLen;
   while (pSym) {
     nLen = strlen(pSym->szName) + 1;

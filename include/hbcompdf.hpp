@@ -607,6 +607,18 @@ typedef struct
 } HB_HINLINE_LIST;
 
 /* compiler symbol support structure */
+#if defined(__cplusplus)
+struct _HB_HSYMBOL
+{
+   const char *   szName;     /* the name of the symbol */
+   HB_SYMBOLSCOPE cScope;     /* the scope of the symbol */
+   int            iFunc;      /* is it a function name (TRUE) or memvar (FALSE) */
+   PHB_HFUNC      pFunc;
+   struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */
+};
+using HB_HSYMBOL = _HB_HSYMBOL;
+using PHB_HSYMBOL = HB_HSYMBOL *; // deprecated in core code
+#else
 typedef struct _HB_HSYMBOL
 {
    const char *   szName;     /* the name of the symbol */
@@ -615,12 +627,13 @@ typedef struct _HB_HSYMBOL
    PHB_HFUNC      pFunc;
    struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */
 } HB_HSYMBOL, * PHB_HSYMBOL;
+#endif
 
 /* symbol table support structures */
 typedef struct
 {
-   PHB_HSYMBOL pFirst;          /* pointer to the first defined symbol */
-   PHB_HSYMBOL pLast;           /* pointer to the last defined symbol */
+   HB_HSYMBOL *pFirst;          /* pointer to the first defined symbol */
+   HB_HSYMBOL *pLast;           /* pointer to the last defined symbol */
    int         iCount;          /* number of defined symbols */
 } HB_HSYMBOL_LIST;
 

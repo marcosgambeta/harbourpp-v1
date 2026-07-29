@@ -143,7 +143,7 @@ static void hb_compGenCStdHeaders(HB_COMP_DECL, FILE *yyc, bool fHbInLine)
   }
 }
 
-static void hb_compFuncUsed(HB_COMP_DECL, PHB_HSYMBOL pSym)
+static void hb_compFuncUsed(HB_COMP_DECL, HB_HSYMBOL *pSym)
 {
   if ((pSym->cScope & HB_FS_USED) == 0) {
     hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_STATIC_FUNC_UNUSED, pSym->szName, nullptr);
@@ -191,7 +191,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     pFunc = pFunc->pNext;
   }
 
-  PHB_HSYMBOL pSym;
+  HB_HSYMBOL *pSym;
   PHB_HINLINE pInline;
   auto fHasHbInline = false;
 

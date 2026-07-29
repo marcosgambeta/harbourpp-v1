@@ -241,9 +241,9 @@ static int hb_compReadClpFile(HB_COMP_DECL, const char *szClpFile)
 
 // --- ACTIONS ---
 
-static PHB_HSYMBOL hb_compSymbolAdd(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, HB_BOOL bFunction)
+static HB_HSYMBOL *hb_compSymbolAdd(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, HB_BOOL bFunction)
 {
-  auto pSym = static_cast<PHB_HSYMBOL>(hb_xgrab(sizeof(HB_HSYMBOL)));
+  auto pSym = static_cast<HB_HSYMBOL *>(hb_xgrab(sizeof(HB_HSYMBOL)));
 
   pSym->szName = szSymbolName;
   pSym->cScope = 0;
@@ -266,9 +266,9 @@ static PHB_HSYMBOL hb_compSymbolAdd(HB_COMP_DECL, const char *szSymbolName, HB_U
   return pSym;
 }
 
-static PHB_HSYMBOL hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, HB_BOOL bFunction)
+static HB_HSYMBOL *hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, HB_BOOL bFunction)
 {
-  PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst;
+  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
   HB_USHORT wCnt = 0;
   int iFunc = bFunction ? HB_COMP_PARAM->iModulesCount : 0;
 
@@ -297,7 +297,7 @@ static PHB_HSYMBOL hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_
 
 const char *hb_compSymbolName(HB_COMP_DECL, HB_USHORT uiSymbol)
 {
-  PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst;
+  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
 
   while (pSym) {
     if (uiSymbol-- == 0) {
@@ -432,7 +432,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
   auto bFreeVar = true;
 
   if (HB_COMP_PARAM->iVarScope & HB_VSCOMP_MEMVAR) {
-    PHB_HSYMBOL pSym;
+    HB_HSYMBOL *pSym;
     HB_USHORT wPos;
 
     if (HB_COMP_PARAM->fAutoMemvarAssume || HB_COMP_PARAM->iVarScope == HB_VSCOMP_MEMVAR) {
@@ -1973,7 +1973,7 @@ static void hb_compUpdateFunctionNames(HB_COMP_DECL)
 
     while (pFunc) {
       if ((pFunc->cScope & (HB_FS_STATIC | HB_FS_INITEXIT)) != 0) {
-        PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst, pFuncSym = nullptr;
+        HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst, *pFuncSym = nullptr;
         auto fExists = false;
 
         while (pSym) {
@@ -2022,7 +2022,7 @@ static bool hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, bool fError)
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FUNC_DUPL, pFunc->szName, nullptr);
     }
   } else if (!hb_compCheckReservedNames(HB_COMP_PARAM, pFunc->szName, fError)) {
-    PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, pFunc->szName, nullptr, HB_SYM_FUNCNAME);
+    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, pFunc->szName, nullptr, HB_SYM_FUNCNAME);
     if (!pSym) {
       pSym = hb_compSymbolAdd(HB_COMP_PARAM, pFunc->szName, nullptr, HB_SYM_FUNCNAME);
     }
@@ -2108,7 +2108,7 @@ static void hb_compAnnounce(HB_COMP_DECL, const char *szFunName)
     pFunc = hb_compFunctionNew(HB_COMP_PARAM, szFunName, HB_FS_LOCAL);
     pFunc->funFlags |= HB_FUNF_PROCEDURE;
 
-    PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
+    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
     if (!pSym) {
       pSym = hb_compSymbolAdd(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
     }
@@ -2125,7 +2125,7 @@ static void hb_compAnnounce(HB_COMP_DECL, const char *szFunName)
 
 void hb_compFunctionMarkStatic(HB_COMP_DECL, const char *szFunName)
 {
-  PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
+  HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
 
   if (pSym) {
     if ((pSym->cScope & (HB_FS_DEFERRED | HB_FS_LOCAL)) == 0) {
@@ -2137,7 +2137,7 @@ void hb_compFunctionMarkStatic(HB_COMP_DECL, const char *szFunName)
 PHB_HINLINE hb_compInlineAdd(HB_COMP_DECL, const char *szFunName, int iLine)
 {
   if (szFunName != nullptr) {
-    PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
+    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
     if (!pSym) {
       pSym = hb_compSymbolAdd(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
     }
@@ -2170,7 +2170,7 @@ static void hb_compExternGen(HB_COMP_DECL)
 
   while (HB_COMP_PARAM->externs) {
     HB_SYMBOLSCOPE cScope = HB_COMP_PARAM->externs->cScope;
-    PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, HB_COMP_PARAM->externs->szName, nullptr, HB_SYM_FUNCNAME);
+    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, HB_COMP_PARAM->externs->szName, nullptr, HB_SYM_FUNCNAME);
 
     if (pSym) {
       pSym->cScope |= cScope;
@@ -2379,7 +2379,7 @@ static void hb_compGenVarPCode(HB_BYTE bPCode, const char *szVarName, HB_COMP_DE
 
   // Check if this variable name is placed into the symbol table
 
-  PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wVar, HB_SYM_MEMVAR);
+  HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wVar, HB_SYM_MEMVAR);
   if (!pSym) {
     pSym = hb_compSymbolAdd(HB_COMP_PARAM, szVarName, &wVar, HB_SYM_MEMVAR);
   }
@@ -2460,7 +2460,7 @@ void hb_compGenMessage(const char *szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
   HB_USHORT wSym;
 
   if (szMsgName != nullptr) {
-    PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szMsgName, &wSym, HB_SYM_MSGNAME);
+    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szMsgName, &wSym, HB_SYM_MSGNAME);
     if (!pSym) { // the symbol was not found on the symbol table
       pSym = hb_compSymbolAdd(HB_COMP_PARAM, szMsgName, &wSym, HB_SYM_MSGNAME);
     }
@@ -2822,7 +2822,7 @@ void hb_compGenPushFunCall(const char *szFunName, int iFlags, HB_COMP_DECL)
 
   HB_USHORT wSym;
 
-  PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, &wSym, HB_SYM_FUNCNAME);
+  HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, &wSym, HB_SYM_FUNCNAME);
   if (!pSym) {
     pSym = hb_compSymbolAdd(HB_COMP_PARAM, szFunName, &wSym, HB_SYM_FUNCNAME);
   }
@@ -2848,7 +2848,7 @@ void hb_compGenPushSymbol(const char *szSymbolName, HB_BOOL bFunction, HB_COMP_D
 {
   HB_USHORT wSym;
 
-  PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szSymbolName, &wSym, bFunction);
+  HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szSymbolName, &wSym, bFunction);
   if (!pSym) {
     pSym = hb_compSymbolAdd(HB_COMP_PARAM, szSymbolName, &wSym, bFunction);
   }
@@ -3605,7 +3605,7 @@ static void hb_compOutputFile(HB_COMP_DECL)
 
 static void hb_compAddInitFunc(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
-  PHB_HSYMBOL pSym = hb_compSymbolAdd(HB_COMP_PARAM, pFunc->szName, nullptr, HB_SYM_FUNCNAME);
+  HB_HSYMBOL *pSym = hb_compSymbolAdd(HB_COMP_PARAM, pFunc->szName, nullptr, HB_SYM_FUNCNAME);
 
   pSym->cScope |= pFunc->cScope;
   pSym->pFunc = pFunc;
@@ -3705,7 +3705,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
   }
 
   while (HB_COMP_PARAM->symbols.pFirst) {
-    PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst;
+    HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
     HB_COMP_PARAM->symbols.pFirst = pSym->pNext;
     hb_xfree(pSym);
   }
@@ -4133,7 +4133,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
       }
 
       if (szFirstFunction != nullptr) {
-        PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFirstFunction, nullptr, HB_SYM_FUNCNAME);
+        HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szFirstFunction, nullptr, HB_SYM_FUNCNAME);
         if (pSym) {
           pSym->cScope |= HB_FS_FIRST;
         }
