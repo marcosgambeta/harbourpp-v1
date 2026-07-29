@@ -63,7 +63,7 @@ HB_BOOL hb_spFile(const char *pszFileName, char *pszRetPath)
     pszPath = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
   }
 
-  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
+  auto pFilepath = hb_fsFNameSplit(pszFileName);
 
   if (pFilepath->szPath) {
     hb_fsFNameMerge(pszPath, pFilepath);
@@ -120,7 +120,7 @@ HB_BOOL hb_spFileExists(const char *pszFileName, char *pszRetPath)
     pszPath = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
   }
 
-  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
+  auto pFilepath = hb_fsFNameSplit(pszFileName);
 
   auto bIsFile = false;
 
@@ -187,7 +187,7 @@ HB_FHANDLE hb_spCreate(const char *pszFileName, HB_FATTR ulAttr)
 #endif
 
   char szPath[HB_PATH_MAX];
-  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
+  auto pFilepath = hb_fsFNameSplit(pszFileName);
   if (!pFilepath->szPath) {
     pFilepath->szPath = hb_setGetDefault();
   }
@@ -203,7 +203,7 @@ HB_FHANDLE hb_spCreateEx(const char *pszFileName, HB_FATTR ulAttr, HB_USHORT uiF
 #endif
 
   char szPath[HB_PATH_MAX];
-  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
+  auto pFilepath = hb_fsFNameSplit(pszFileName);
   if (!pFilepath->szPath) {
     pFilepath->szPath = hb_setGetDefault();
   }

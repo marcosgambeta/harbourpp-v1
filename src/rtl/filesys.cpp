@@ -3566,7 +3566,7 @@ char *hb_fsExtName(const char *pszFileName, const char *pDefExt, HB_FATTR nExFla
 
   auto szPath = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
 
-  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
+  auto pFilepath = hb_fsFNameSplit(pszFileName);
 
   if (pDefExt && ((nExFlags & FXO_FORCEEXT) || !pFilepath->szExtension)) {
     pFilepath->szExtension = pDefExt;
@@ -3821,7 +3821,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
       }
     }
 
-    HB_FNAME *pFileName = hb_fsFNameSplit(pszFileName);
+    auto pFileName = hb_fsFNameSplit(pszFileName);
 
     // strip trailing and leading spaces
     if (fTrim) {
@@ -3943,7 +3943,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
       }
     }
 
-    HB_FNAME *pFileName = hb_fsFNameSplit(pszBuffer);
+    auto pFileName = hb_fsFNameSplit(pszBuffer);
 
     // strip trailing and leading spaces
     if (fTrim) {
@@ -4015,7 +4015,7 @@ void hb_fsBaseDirBuff(char *pszBuffer)
   char *pszBaseName = hb_cmdargProgName();
 
   if (pszBaseName) {
-    HB_FNAME *pFileName = hb_fsFNameSplit(pszBaseName);
+    auto pFileName = hb_fsFNameSplit(pszBaseName);
     pFileName->szName = nullptr;
     pFileName->szExtension = nullptr;
     hb_fsFNameMerge(pszBuffer, pFileName);

@@ -446,7 +446,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
       info->fLabelDone = true;
 
       if (ffind->pszFileMask && *ffind->pszFileMask) {
-        HB_FNAME *pFileName = hb_fsFNameSplit(ffind->pszFileMask);
+        auto pFileName = hb_fsFNameSplit(ffind->pszFileMask);
         if (pFileName->szName && pFileName->szName[0]) {
           mask = hb_strdup(pFileName->szName);
         }

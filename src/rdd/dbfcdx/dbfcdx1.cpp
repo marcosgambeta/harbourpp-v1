@@ -4451,7 +4451,7 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char *szBagName, bool *fProd
   PHB_ITEM pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
+  auto pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
   if (szBaseName != nullptr) {
     if (pFileName->szName) {
@@ -4476,7 +4476,7 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char *szBagName, bool *fProd
     } else if (!fName) {
       *fProd = true;
     } else {
-      HB_FNAME *pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
+      auto pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
       *fProd = pTableFileName->szName && hb_stricmp(pTableFileName->szName, pFileName->szName) == 0;
       if (*fProd && pFileName->szExtension && !pExt) {
@@ -4507,8 +4507,8 @@ static void hb_cdxOrdListClear(CDXAREAP pArea, bool fAll, LPCDXINDEX pKeepInd)
 
     if (!fAll) {
       // TODO: we have to control this on open
-      HB_FNAME *pFileNameDbf = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
-      HB_FNAME *pFileNameCdx = hb_fsFNameSplit(pArea->lpIndexes->szFileName);
+      auto pFileNameDbf = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
+      auto pFileNameCdx = hb_fsFNameSplit(pArea->lpIndexes->szFileName);
       fAll = hb_stricmp(pFileNameDbf->szName ? pFileNameDbf->szName : "",
                         pFileNameCdx->szName ? pFileNameCdx->szName : "") != 0;
       if (!fAll) {
@@ -4542,10 +4542,10 @@ static LPCDXINDEX hb_cdxFindBag(CDXAREAP pArea, const char *szBagName)
 {
   LPCDXINDEX pIndex;
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(szBagName);
+  auto pFileName = hb_fsFNameSplit(szBagName);
   pIndex = pArea->lpIndexes;
   while (pIndex) {
-    HB_FNAME *pIndexName = hb_fsFNameSplit(pIndex->szFileName);
+    auto pIndexName = hb_fsFNameSplit(pIndex->szFileName);
     bool fFound = (pFileName->szName ? pIndexName->szName && !hb_stricmp(pIndexName->szName, pFileName->szName)
                                      : !pIndexName->szName) &&
                   (!pFileName->szPath || (pIndexName->szPath && !hb_stricmp(pIndexName->szPath, pFileName->szPath))) &&
@@ -7488,7 +7488,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
   case DBOI_BAGNAME:
     if (pTag != nullptr) {
-      HB_FNAME *pFileName = hb_fsFNameSplit(pTag->pIndex->szFileName);
+      auto pFileName = hb_fsFNameSplit(pTag->pIndex->szFileName);
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
       hb_xfree(pFileName);
     } else {

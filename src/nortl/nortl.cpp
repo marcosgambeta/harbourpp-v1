@@ -543,7 +543,7 @@ const char *hb_fsNameConv(const char *szFileName, char **pszFree)
       }
     }
 
-    HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
+    auto pFileName = hb_fsFNameSplit(szFileName);
 
     /* strip trailing and leading spaces */
     if (s_fFnTrim) {
@@ -628,7 +628,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *szFileName)
       }
     }
 
-    HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
+    auto pFileName = hb_fsFNameSplit(szFileName);
 
     /* strip trailing and leading spaces */
     if (s_fFnTrim) {

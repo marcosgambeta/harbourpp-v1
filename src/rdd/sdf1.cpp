@@ -1007,7 +1007,7 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
     pArea->area.cdPage = hb_vmCDP();
   }
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(pCreateInfo->abName);
+  auto pFileName = hb_fsFNameSplit(pCreateInfo->abName);
   if (hb_setGetDefExtension() && !pFileName->szExtension) {
     auto pItem = hb_itemNew(nullptr);
     if (SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) == Harbour::SUCCESS) {
@@ -1091,7 +1091,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   uiFlags = (pArea->fReadonly ? FO_READ : FO_READWRITE) | (pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE);
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(pOpenInfo->abName);
+  auto pFileName = hb_fsFNameSplit(pOpenInfo->abName);
   // Add default file name extension if necessary
   if (hb_setGetDefExtension() && !pFileName->szExtension) {
     auto pFileExt = hb_itemNew(nullptr);

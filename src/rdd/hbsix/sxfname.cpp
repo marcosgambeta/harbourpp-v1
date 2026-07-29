@@ -60,7 +60,7 @@ HB_FUNC(SX_FNAMEPARSER)
     char *pszFree;
 
     szFileName = hb_fsNameConv(szFileName, &pszFree);
-    HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
+    auto pFileName = hb_fsFNameSplit(szFileName);
     if (pszFree) {
       hb_xfree(pszFree);
     }

@@ -3571,7 +3571,7 @@ static HB_ERRCODE hb_fptOpenMemFile(FPTAREAP pArea, LPDBOPENINFO pOpenInfo)
   }
 
   // create file name
-  HB_FNAME *pFileName = hb_fsFNameSplit(pOpenInfo->abName);
+  auto pFileName = hb_fsFNameSplit(pOpenInfo->abName);
   if (!pFileName->szExtension) {
     auto pItem = hb_itemNew(nullptr);
     if (SELF_INFO(&pArea->area, DBI_MEMOEXT, pItem) == Harbour::SUCCESS) {
@@ -4086,7 +4086,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   switch (uiIndex) {
   case DBI_MEMOEXT:
     if (pArea->fHasMemo && pArea->pMemoFile) {
-      HB_FNAME *pFileName = hb_fsFNameSplit(pArea->szMemoFileName);
+      auto pFileName = hb_fsFNameSplit(pArea->szMemoFileName);
       hb_itemPutC(pItem, pFileName->szExtension);
       hb_xfree(pFileName);
     } else {

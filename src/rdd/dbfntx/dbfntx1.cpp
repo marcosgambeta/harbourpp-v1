@@ -3360,7 +3360,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char *szBagName, bool *fProd
   PHB_ITEM pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
+  auto pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
   if (szTagName != nullptr) {
     if (pFileName->szName) {
@@ -3385,7 +3385,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char *szBagName, bool *fProd
     } else if (!fName) {
       *fProd = true;
     } else {
-      HB_FNAME *pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
+      auto pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
       *fProd = pTableFileName->szName && hb_stricmp(pTableFileName->szName, pFileName->szName) == 0;
       if (*fProd && pFileName->szExtension && !pExt) {
@@ -3411,7 +3411,7 @@ static LPNTXINDEX hb_ntxFindBag(NTXAREAP pArea, const char *szBagName)
 {
   LPNTXINDEX pIndex;
 
-  HB_FNAME *pSeek = hb_fsFNameSplit(szBagName);
+  auto pSeek = hb_fsFNameSplit(szBagName);
   if (!pSeek->szName) {
     pSeek->szName = "";
   }
@@ -3419,7 +3419,7 @@ static LPNTXINDEX hb_ntxFindBag(NTXAREAP pArea, const char *szBagName)
   pIndex = pArea->lpIndexes;
   while (pIndex) {
     auto fFound = false;
-    HB_FNAME *pName = hb_fsFNameSplit(pIndex->IndexName);
+    auto pName = hb_fsFNameSplit(pIndex->IndexName);
     if (!pName->szName) {
       pName->szName = "";
     }
@@ -6504,7 +6504,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag->KeyExpr);
       break;
     case DBOI_BAGNAME: {
-      HB_FNAME *pFileName = hb_fsFNameSplit(pTag->pIndex->IndexName);
+      auto pFileName = hb_fsFNameSplit(pTag->pIndex->IndexName);
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
       hb_xfree(pFileName);
       break;
