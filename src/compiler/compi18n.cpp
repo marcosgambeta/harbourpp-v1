@@ -47,9 +47,9 @@
 
 #include "hbcomp.hpp"
 
-static PHB_I18NTABLE hb_compI18nCreate(void)
+static HB_I18NTABLE *hb_compI18nCreate(void)
 {
-  auto pI18n = static_cast<PHB_I18NTABLE>(hb_xgrab(sizeof(HB_I18NTABLE)));
+  auto pI18n = static_cast<HB_I18NTABLE *>(hb_xgrab(sizeof(HB_I18NTABLE)));
   pI18n->pString = nullptr;
   pI18n->uiCount = 0;
   pI18n->uiAllocated = 0;
@@ -58,7 +58,7 @@ static PHB_I18NTABLE hb_compI18nCreate(void)
 
 void hb_compI18nFree(HB_COMP_DECL)
 {
-  PHB_I18NTABLE pI18n = HB_COMP_PARAM->pI18n;
+  HB_I18NTABLE *pI18n = HB_COMP_PARAM->pI18n;
 
   if (pI18n) {
     if (pI18n->pString) {
@@ -91,7 +91,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, con
   if (!HB_COMP_PARAM->pI18n) {
     HB_COMP_PARAM->pI18n = hb_compI18nCreate();
   }
-  PHB_I18NTABLE pI18n = HB_COMP_PARAM->pI18n;
+  HB_I18NTABLE *pI18n = HB_COMP_PARAM->pI18n;
 
   szText = hb_compIdentifierNew(HB_COMP_PARAM, szText, HB_IDENT_COPY);
   if (szContext != nullptr) {
@@ -241,7 +241,7 @@ static char *hb_compI18nFileName(char *szBuffer, const char *szFileName)
 
 HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
 {
-  PHB_I18NTABLE pI18n = HB_COMP_PARAM->pI18n;
+  HB_I18NTABLE *pI18n = HB_COMP_PARAM->pI18n;
   if (!pI18n) {
     return false;
   }

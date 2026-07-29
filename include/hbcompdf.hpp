@@ -746,12 +746,23 @@ typedef struct _HB_I18NSTRING
    HB_UINT        uiPosCount;
 } HB_I18NSTRING, * PHB_I18NSTRING;
 
+#if defined(__cplusplus)
+struct _HB_I18NTABLE
+{
+   PHB_I18NSTRING    pString;
+   HB_ULONG          uiCount;
+   HB_ULONG          uiAllocated;
+};
+using HB_I18NTABLE = _HB_I18NTABLE;
+using PHB_I18NTABLE = HB_I18NTABLE *; // deprecated in core code
+#else
 typedef struct _HB_I18NTABLE
 {
    PHB_I18NSTRING    pString;
    HB_ULONG          uiCount;
    HB_ULONG          uiAllocated;
 } HB_I18NTABLE, * PHB_I18NTABLE;
+#endif
 
 typedef struct _HB_COMP_LEX
 {
