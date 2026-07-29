@@ -14,7 +14,7 @@ if appropriate, implemented in Harbour++.
 To help the migration of the applications, the series 1 of Harbour++ (versions 1.#.#)
 will keep the most compatibility possible with CA-Clipper/Harbour commands, classes and functions.
 
-This project is a work in progress.
+The transition to C++ is a work in progress. The current source code is stable and used in production.
 
 ### Requisites
 * C++ compiler
@@ -205,7 +205,7 @@ estão sendo revisados e, conforme o caso, implementados no Harbour++.
 Para facilitar a adaptação das aplicações, a série 1 do Harbour++ (versões 1.#.#) manterá
 o máximo possível de compatibilidade com os comandos, classes e funções do CA-Clipper/Harbour.
 
-Este projeto é um trabalho em progresso.
+A transição para C++ está em andamento. O código-fonte atual é estável e utilizado em produção.
 
 ### Requisitos
 * Compilador C++
