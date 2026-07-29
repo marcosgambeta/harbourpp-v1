@@ -553,12 +553,23 @@ typedef struct _HB_HFUNC
 } HB_HFUNC, * PHB_HFUNC;
 
 /* structure to hold PP #define variables passed as command-line parameters */
+#if defined(__cplusplus)
+struct _HB_PPDEFINE
+{
+   char * szName;                         /* name of PP #define variable */
+   const char * szValue;                  /* value of PP #define variable */
+   struct _HB_PPDEFINE * pNext;           /* pointer to the next var */
+};
+using HB_PPDEFINE = _HB_PPDEFINE;
+using PHB_PPDEFINE = HB_PPDEFINE *; // deprecated in core code
+#else
 typedef struct _HB_PPDEFINE
 {
    char * szName;                         /* name of PP #define variable */
    const char * szValue;                  /* value of PP #define variable */
    struct _HB_PPDEFINE * pNext;           /* pointer to the next var */
 } HB_PPDEFINE, * PHB_PPDEFINE;
+#endif
 
 /* structure to hold an INLINE block of source */
 typedef struct _HB_HINLINE
@@ -784,7 +795,7 @@ typedef struct _HB_COMP
    PHB_MODULE        modules;
    PHB_VARTYPE       pVarType;
    PHB_INCLST        incfiles;
-   PHB_PPDEFINE      ppdefines;
+   HB_PPDEFINE *     ppdefines;
 
    PHB_HDECLARED     pFirstDeclared;
    PHB_HDECLARED     pLastDeclared;

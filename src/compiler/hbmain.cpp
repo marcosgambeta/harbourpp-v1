@@ -3687,7 +3687,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
   }
 
   while (HB_COMP_PARAM->ppdefines) {
-    PHB_PPDEFINE pDefine = HB_COMP_PARAM->ppdefines;
+    HB_PPDEFINE *pDefine = HB_COMP_PARAM->ppdefines;
 
     HB_COMP_PARAM->ppdefines = pDefine->pNext;
     hb_xfree(pDefine->szName);

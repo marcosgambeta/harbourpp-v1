@@ -92,12 +92,12 @@ static const char *hb_compChkAddDefine(HB_COMP_DECL, const char *szSwitch, bool 
       szValue = s_szUndefineMarker;
     }
 
-    PHB_PPDEFINE *pDefinePtr = &HB_COMP_PARAM->ppdefines;
+    HB_PPDEFINE **pDefinePtr = &HB_COMP_PARAM->ppdefines;
     while (*pDefinePtr != nullptr && strcmp((*pDefinePtr)->szName, szDefine) != 0) {
       pDefinePtr = &(*pDefinePtr)->pNext;
     }
     if (*pDefinePtr == nullptr) {
-      *pDefinePtr = static_cast<PHB_PPDEFINE>(hb_xgrab(sizeof(HB_PPDEFINE)));
+      *pDefinePtr = static_cast<HB_PPDEFINE *>(hb_xgrab(sizeof(HB_PPDEFINE)));
       (*pDefinePtr)->pNext = nullptr;
     } else {
       hb_xfree((*pDefinePtr)->szName);
@@ -819,7 +819,7 @@ void hb_compChkAddIncPaths(HB_COMP_DECL)
 
 void hb_compChkSetDefines(HB_COMP_DECL)
 {
-  PHB_PPDEFINE pDefine = HB_COMP_PARAM->ppdefines;
+  HB_PPDEFINE *pDefine = HB_COMP_PARAM->ppdefines;
 
   while (pDefine) {
     if (pDefine->szValue == s_szUndefineMarker) {
