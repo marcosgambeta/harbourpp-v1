@@ -721,7 +721,7 @@ HB_FUNC(TIP_FILENAMEMIMETYPE)
 
    if( fname )
    {
-      HB_FNAME *pFileName = hb_fsFNameSplit(fname);
+      auto pFileName = hb_fsFNameSplit(fname);
       const char * ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
       hb_xfree(pFileName);
 
@@ -749,7 +749,7 @@ HB_FUNC(TIP_FILEMIMETYPE)
       {
          auto fname = hb_itemGetCPtr(pFile);
 
-         HB_FNAME *pFileName = hb_fsFNameSplit(fname);
+         auto pFileName = hb_fsFNameSplit(fname);
          PHB_FILE fileIn;
 
          ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;

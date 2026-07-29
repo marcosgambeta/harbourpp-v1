@@ -394,7 +394,7 @@ static ADSHANDLE hb_adsFindBag(ADSAREAP pArea, const char *szBagName)
   UNSIGNED16 u16Option, u16Count, u16len;
   ADSHANDLE hIndex = 0, hOrder;
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(szBagName);
+  auto pFileName = hb_fsFNameSplit(szBagName);
   if (pFileName->szPath) {
     u16Option = ADS_FULLPATHNAME;
   } else if (pFileName->szExtension) {
@@ -4992,7 +4992,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
     fTable = true;
   }
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(szFile);
+  auto pFileName = hb_fsFNameSplit(szFile);
 
   if (!pFileName->szExtension) {
     // Add default extension if missing
@@ -5066,7 +5066,7 @@ static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
     fTable = true;
   }
 
-  HB_FNAME *pFileName = hb_fsFNameSplit(szFile);
+  auto pFileName = hb_fsFNameSplit(szFile);
 
   if (!pFileName->szExtension) {
     pFileExt = hb_itemPutC(nullptr, nullptr);

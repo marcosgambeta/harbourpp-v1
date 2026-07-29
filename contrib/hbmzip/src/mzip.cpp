@@ -1328,7 +1328,7 @@ static int hb_zipDeleteFile(const char * szZipFile, const char * szFileMask)
       return UNZ_ERRNO;
    }
 
-   HB_FNAME *pFileName = hb_fsFNameSplit(szZipFile);
+   auto pFileName = hb_fsFNameSplit(szZipFile);
    PHB_FILE pFile = hb_fileCreateTemp(pFileName->szPath, nullptr, FC_NORMAL, szTempFile);
    zipFile hZip = nullptr;
    if( pFile != nullptr ) {
