@@ -735,6 +735,20 @@ typedef struct _HB_I18NPOS
    HB_UINT        uiLine;
 } HB_I18NPOS, *PHB_I18NPOS;
 
+#if defined(__cplusplus)
+struct _HB_I18NSTRING
+{
+   const char *   szText;
+   const char *   szContext;
+   const char *   szPlurals[ HB_I18N_PLURAL_MAX ];
+   HB_UINT        uiPlurals;
+   HB_I18NPOS     pPos;
+   HB_I18NPOS *   pPosLst;
+   HB_UINT        uiPosCount;
+};
+using HB_I18NSTRING = _HB_I18NSTRING;
+using PHB_I18NSTRING = HB_I18NSTRING *; // deprecated in core code
+#else
 typedef struct _HB_I18NSTRING
 {
    const char *   szText;
@@ -745,11 +759,12 @@ typedef struct _HB_I18NSTRING
    HB_I18NPOS *   pPosLst;
    HB_UINT        uiPosCount;
 } HB_I18NSTRING, * PHB_I18NSTRING;
+#endif
 
 #if defined(__cplusplus)
 struct _HB_I18NTABLE
 {
-   PHB_I18NSTRING    pString;
+   HB_I18NSTRING *   pString;
    HB_ULONG          uiCount;
    HB_ULONG          uiAllocated;
 };
@@ -758,7 +773,7 @@ using PHB_I18NTABLE = HB_I18NTABLE *; // deprecated in core code
 #else
 typedef struct _HB_I18NTABLE
 {
-   PHB_I18NSTRING    pString;
+   HB_I18NSTRING *   pString;
    HB_ULONG          uiCount;
    HB_ULONG          uiAllocated;
 } HB_I18NTABLE, * PHB_I18NTABLE;

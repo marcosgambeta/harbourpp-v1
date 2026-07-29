@@ -74,7 +74,7 @@ void hb_compI18nFree(HB_COMP_DECL)
   }
 }
 
-static int hb_compI18nCompare(PHB_I18NSTRING pString, const char *pText, const char *pContext)
+static int hb_compI18nCompare(HB_I18NSTRING *pString, const char *pText, const char *pContext)
 {
   int i = pString->szText == pText ? 0 : pString->szText > pText ? 1 : -1;
 
@@ -85,7 +85,7 @@ static int hb_compI18nCompare(PHB_I18NSTRING pString, const char *pText, const c
   return i;
 }
 
-static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, const char *szContext,
+static HB_I18NSTRING *hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, const char *szContext,
                                            const char *szModule, HB_UINT uiLine)
 {
   if (!HB_COMP_PARAM->pI18n) {
@@ -102,9 +102,9 @@ static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, con
     if (pI18n->pString) {
       pI18n->uiAllocated += 32;
       pI18n->pString =
-          static_cast<PHB_I18NSTRING>(hb_xrealloc(pI18n->pString, sizeof(HB_I18NSTRING) * pI18n->uiAllocated));
+          static_cast<HB_I18NSTRING *>(hb_xrealloc(pI18n->pString, sizeof(HB_I18NSTRING) * pI18n->uiAllocated));
     } else {
-      pI18n->pString = static_cast<PHB_I18NSTRING>(hb_xgrab(sizeof(HB_I18NSTRING) * 32));
+      pI18n->pString = static_cast<HB_I18NSTRING *>(hb_xgrab(sizeof(HB_I18NSTRING) * 32));
       pI18n->uiAllocated = 32;
     }
   }
@@ -112,7 +112,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, con
   HB_UINT uiLeft = 0;
   HB_UINT uiRight = pI18n->uiCount;
 
-  PHB_I18NSTRING pString;
+  HB_I18NSTRING *pString;
 
   while (uiLeft < uiRight) {
     HB_UINT uiMiddle = (uiLeft + uiRight) >> 1;
@@ -164,7 +164,7 @@ void hb_compI18nAdd(HB_COMP_DECL, const char *szText, const char *szContext, con
 void hb_compI18nAddPlural(HB_COMP_DECL, const char **szTexts, HB_ULONG ulCount, const char *szContext,
                           const char *szModule, HB_UINT uiLine)
 {
-  PHB_I18NSTRING pString = hb_compI18nAddSingle(HB_COMP_PARAM, szTexts[0], szContext, szModule, uiLine);
+  HB_I18NSTRING *pString = hb_compI18nAddSingle(HB_COMP_PARAM, szTexts[0], szContext, szModule, uiLine);
 
   if (ulCount == 1) {
     // set the same string as plural form to mark it as plural text
@@ -296,7 +296,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
   hb_xfree(szText);
 
   for (HB_UINT uiIndex = 0; uiIndex < pI18n->uiCount; uiIndex++) {
-    PHB_I18NSTRING pString = &pI18n->pString[uiIndex];
+    HB_I18NSTRING *pString = &pI18n->pString[uiIndex];
 
     fprintf(file, "#: %s:%u", hb_compI18nFileName(szFileName, pString->pPos.szFile), pString->pPos.uiLine);
 
