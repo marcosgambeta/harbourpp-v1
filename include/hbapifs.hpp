@@ -250,6 +250,17 @@ extern HB_EXPORT int        hb_fsCanWrite    ( HB_FHANDLE hFileHandle, HB_MAXINT
 #define HB_MAX_FILE_EXT       10
 
 /* FileName support */
+#if defined(__cplusplus)
+struct HB_FNAME
+{
+   const char * szPath;
+   const char * szName;
+   const char * szExtension;
+   const char * szDrive;
+   char   szBuffer[ HB_PATH_MAX + HB_MAX_DRIVE_LENGTH + 6 ];
+};
+using PHB_FNAME = HB_FNAME *; // deprecated in core code
+#else
 typedef struct
 {
    const char * szPath;
@@ -258,9 +269,10 @@ typedef struct
    const char * szDrive;
    char   szBuffer[ HB_PATH_MAX + HB_MAX_DRIVE_LENGTH + 6 ];
 } HB_FNAME, * PHB_FNAME;
+#endif
 
-extern HB_EXPORT PHB_FNAME  hb_fsFNameSplit( const char * pszFileName ); /* Split given filename into path, name and extension */
-extern HB_EXPORT char *     hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName ); /* This function joins path, name and extension into a string with a filename */
+extern HB_EXPORT HB_FNAME  *hb_fsFNameSplit( const char * pszFileName ); /* Split given filename into path, name and extension */
+extern HB_EXPORT char *     hb_fsFNameMerge( char * pszFileName, HB_FNAME *pFileName ); /* This function joins path, name and extension into a string with a filename */
 
 /* Searchable path support */
 typedef struct _HB_PATHNAMES

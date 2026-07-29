@@ -130,7 +130,7 @@ void hb_fsFreeSearchPath(HB_PATHNAMES *pSearchList)
 }
 
 // Split given filename into path, name and extension, plus determine drive
-PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
+HB_FNAME *hb_fsFNameSplit(const char *pszFileName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameSplit(%s)", pszFileName));
@@ -140,7 +140,7 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
 #endif
 
   // Grab memory, set defaults
-  auto pFileName = static_cast<PHB_FNAME>(hb_xgrab(sizeof(HB_FNAME)));
+  auto pFileName = static_cast<HB_FNAME *>(hb_xgrab(sizeof(HB_FNAME)));
 
   pFileName->szPath = pFileName->szName = pFileName->szExtension = pFileName->szDrive = nullptr;
 
@@ -218,7 +218,7 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
 //       but it will be changed in the future.
 
 // This function joins path, name and extension into a string with a filename
-char *hb_fsFNameMerge(char *pszFileName, PHB_FNAME pFileName)
+char *hb_fsFNameMerge(char *pszFileName, HB_FNAME *pFileName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameMerge(%p, %p)", static_cast<void*>(pszFileName), static_cast<void*>(pFileName)));

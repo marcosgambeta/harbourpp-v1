@@ -323,7 +323,7 @@ void hb_cmdargUpdate(void)
   if (s_argc > 0) {
     // NOTE: try to create absolute path from s_argv[0] if necessary
     {
-      PHB_FNAME pFName = hb_fsFNameSplit(s_argv[0]);
+      HB_FNAME *pFName = hb_fsFNameSplit(s_argv[0]);
       auto fInPath = false;
 
       if (!pFName->szPath) {
@@ -594,7 +594,7 @@ char *hb_cmdargBaseProgName(void)
 
   char *pszProgName = hb_cmdargProgName();
   if (pszProgName) {
-    PHB_FNAME pFileName = hb_fsFNameSplit(pszProgName);
+    HB_FNAME *pFileName = hb_fsFNameSplit(pszProgName);
 
     pszBaseProgName = hb_strdup(pFileName->szName);
     hb_xfree(pFileName);

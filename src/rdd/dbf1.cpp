@@ -2801,7 +2801,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
   HB_USHORT uiCount, uiLen;
   auto fRawBlob = false;
   DBFFIELD *pThisField;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   PHB_ITEM pItem = nullptr, pError;
   char szFileName[HB_PATH_MAX];
 
@@ -3772,7 +3772,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
   HB_USHORT uiFields, uiCount, uiSkip, uiDecimals, uiLen, uiFlags, uiFlagsMask;
   auto fRawBlob = false;
   PHB_ITEM pError, pItem;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   HB_BYTE *pBuffer;
   LPDBFFIELD pField;
   DBFIELDINFO dbFieldInfo;
@@ -5900,7 +5900,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
   char szFileName[HB_PATH_MAX];
   const char *szExt;
   PHB_ITEM pFileExt = nullptr;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   auto fTable = false;
   auto fResult = false;
 
@@ -5975,7 +5975,7 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
 
   char szFileName[HB_PATH_MAX];
   PHB_ITEM pFileExt = nullptr;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   auto fTable = false;
 
   auto szFile = hb_itemGetCPtr(pItemIndex);
@@ -6015,7 +6015,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
   char szFileName[HB_PATH_MAX];
   const char *szExt;
   PHB_ITEM pFileExt = nullptr;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   auto fTable = false;
   auto fResult = false;
 
@@ -6045,7 +6045,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
   // Use hb_fileExists() first to locate table which can be in different path
   if (szFile[0] && hb_fileExists(szFileName, szFileName)) {
     char szFileNew[HB_PATH_MAX];
-    PHB_FNAME pFileNameNew;
+    HB_FNAME *pFileNameNew;
 
     // hb_fsFNameSplit() repeated intentionally to respect
     // the path set by hb_FileExists()

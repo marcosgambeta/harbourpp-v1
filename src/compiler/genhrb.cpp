@@ -124,7 +124,7 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
   }
 }
 
-void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
+void hb_compGenPortObj(HB_COMP_DECL, HB_FNAME *pFileName)
 {
   if (!pFileName->szExtension) {
     pFileName->szExtension = ".hrb";

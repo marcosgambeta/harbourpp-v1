@@ -170,7 +170,7 @@ static int hb_compReadClpFile(HB_COMP_DECL, const char *szClpFile)
 {
   int iStatus = EXIT_SUCCESS;
 
-  PHB_FNAME pFileName = hb_fsFNameSplit(szClpFile);
+  HB_FNAME *pFileName = hb_fsFNameSplit(szClpFile);
   char szFile[HB_PATH_MAX];
   if (!pFileName->szExtension) {
     pFileName->szExtension = ".clp";
@@ -3565,7 +3565,7 @@ static void hb_compGenOutput(HB_COMP_DECL, int iLanguage)
 
 static void hb_compPpoFile(HB_COMP_DECL, const char *szPrg, const char *szExt, char *szPpoName)
 {
-  PHB_FNAME pFilePpo = hb_fsFNameSplit(szPrg);
+  HB_FNAME *pFilePpo = hb_fsFNameSplit(szPrg);
 
   pFilePpo->szExtension = szExt;
   if (HB_COMP_PARAM->pPpoPath) {
@@ -3862,7 +3862,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
 #endif
 
   char buffer[HB_PATH_MAX * 2 + 80];
-  PHB_FNAME pFileName = nullptr;
+  HB_FNAME *pFileName = nullptr;
   auto fGenCode = true;
 
   HB_COMP_SWITCHES switches;

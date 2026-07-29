@@ -3566,7 +3566,7 @@ char *hb_fsExtName(const char *pszFileName, const char *pDefExt, HB_FATTR nExFla
 
   auto szPath = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
 
-  PHB_FNAME pFilepath = hb_fsFNameSplit(pszFileName);
+  HB_FNAME *pFilepath = hb_fsFNameSplit(pszFileName);
 
   if (pDefExt && ((nExFlags & FXO_FORCEEXT) || !pFilepath->szExtension)) {
     pFilepath->szExtension = pDefExt;
@@ -3804,7 +3804,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
 
   if (fTrim || fEncodeCP || cDirSep != HB_OS_PATH_DELIM_CHR || iFileCase != HB_SET_CASE_MIXED ||
       iDirCase != HB_SET_CASE_MIXED) {
-    PHB_FNAME pFileName;
+    HB_FNAME *pFileName;
     HB_SIZE nLen;
     char *pszPath = nullptr, *pszName = nullptr, *pszExt = nullptr;
 
@@ -3931,7 +3931,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
 
   if (fTrim || cDirSep != HB_OS_PATH_DELIM_CHR || iFileCase != HB_SET_CASE_MIXED || iDirCase != HB_SET_CASE_MIXED) {
     char *pszPath = nullptr, *pszName = nullptr, *pszExt = nullptr;
-    PHB_FNAME pFileName;
+    HB_FNAME *pFileName;
 
     pszFileName = pszBuffer = hb_strncpy(static_cast<char *>(hb_xgrab(HB_PATH_MAX)), pszFileName, HB_PATH_MAX - 1);
 
@@ -4017,7 +4017,7 @@ void hb_fsBaseDirBuff(char *pszBuffer)
   char *pszBaseName = hb_cmdargProgName();
 
   if (pszBaseName) {
-    PHB_FNAME pFileName = hb_fsFNameSplit(pszBaseName);
+    HB_FNAME *pFileName = hb_fsFNameSplit(pszBaseName);
     pFileName->szName = nullptr;
     pFileName->szExtension = nullptr;
     hb_fsFNameMerge(pszBuffer, pFileName);

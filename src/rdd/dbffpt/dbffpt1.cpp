@@ -3353,7 +3353,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
 
   if (pCreateInfo) {
     char szFileName[HB_PATH_MAX];
-    PHB_FNAME pFileName;
+    HB_FNAME *pFileName;
     PHB_ITEM pError = nullptr, pItem = nullptr;
     auto bRetry = false;
 
@@ -3558,7 +3558,7 @@ static HB_ERRCODE hb_fptOpenMemFile(FPTAREAP pArea, LPDBOPENINFO pOpenInfo)
 #endif
 
   char szFileName[HB_PATH_MAX];
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   PHB_ITEM pError;
   HB_FATTR nFlags;
   auto bRetry = false;
@@ -4087,7 +4087,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   switch (uiIndex) {
   case DBI_MEMOEXT:
     if (pArea->fHasMemo && pArea->pMemoFile) {
-      PHB_FNAME pFileName;
+      HB_FNAME *pFileName;
 
       pFileName = hb_fsFNameSplit(pArea->szMemoFileName);
       hb_itemPutC(pItem, pFileName->szExtension);

@@ -150,7 +150,7 @@ static void hb_compFuncUsed(HB_COMP_DECL, PHB_HSYMBOL pSym)
   }
 }
 
-void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) // generates the C++ language output
+void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ language output
 {
   char szFileName[HB_PATH_MAX];
   hb_fsFNameMerge(szFileName, pFileName);

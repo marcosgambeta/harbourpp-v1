@@ -806,10 +806,10 @@ typedef struct _HB_COMP
    PHB_HFUNC         pInitFunc;
    PHB_HFUNC         pLineFunc;
    PHB_HFUNC         pDeclFunc;
-   PHB_FNAME         pFileName;
-   PHB_FNAME         pOutPath;
-   PHB_FNAME         pPpoPath;
-   PHB_FNAME         pI18nFileName;
+   HB_FNAME *        pFileName;
+   HB_FNAME *        pOutPath;
+   HB_FNAME *        pPpoPath;
+   HB_FNAME *        pI18nFileName;
    PHB_I18NTABLE     pI18n;
    HB_BOOL           fI18n;
 

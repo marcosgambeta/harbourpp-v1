@@ -379,7 +379,7 @@ static char *hb_fsFileFind(const char *pszFileMask)
 
   if ((ffind = hb_fsFindFirst(pszFileMask, HB_FA_ALL)) != nullptr) {
     char pszFileName[HB_PATH_MAX];
-    PHB_FNAME pFileName = hb_fsFNameSplit(pszFileMask);
+    HB_FNAME *pFileName = hb_fsFNameSplit(pszFileMask);
     pFileName->szName = ffind->szName;
     pFileName->szExtension = nullptr;
     hb_fsFNameMerge(pszFileName, pFileName);
@@ -397,7 +397,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, in
   int iResult = 0;
 
   char szToCheck[HB_PATH_MAX];
-  PHB_FNAME pFileName = hb_fsFNameSplit(pszFileName);
+  HB_FNAME *pFileName = hb_fsFNameSplit(pszFileName);
 
   if (!pFileName->szName) {
     static const char *s_szNames[] = {"ChangeLog.txt", "CHANGES.txt", nullptr};
@@ -728,7 +728,7 @@ int main(int argc, char *argv[])
     if (hb_pp_inFile(pState, szFile, true, nullptr, true)) {
       if (fWrite) {
         char szFileName[HB_PATH_MAX];
-        PHB_FNAME pFileName;
+        HB_FNAME *pFileName;
 
         pFileName = hb_fsFNameSplit(szFile);
         pFileName->szExtension = ".ppo";

@@ -1306,7 +1306,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 
   PHB_ITEM pError = nullptr;
   auto fRetry = false;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   char szFileName[HB_PATH_MAX];
 
   pArea->fShared = false;   // pCreateInfo->fShared;
@@ -1398,7 +1398,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 #endif
 
   PHB_ITEM pError = nullptr;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
   HB_USHORT uiFlags;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];

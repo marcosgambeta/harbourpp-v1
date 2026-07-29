@@ -133,7 +133,7 @@ static const char *hb_compChkOptionGet(const char *szSwitch, char **pszResult, b
   return szSwitch + nLen;
 }
 
-static const char *hb_compChkOptionFName(const char *szSwitch, PHB_FNAME *pResult, bool fEnv)
+static const char *hb_compChkOptionFName(const char *szSwitch, HB_FNAME **pResult, bool fEnv)
 {
   HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
 

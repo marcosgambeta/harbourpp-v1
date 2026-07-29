@@ -1707,7 +1707,7 @@ static PHB_PP_FILE hb_pp_FileNew(PHB_PP_STATE pState, const char *szFileName, HB
     }
 
     if (iAction == HB_PP_OPEN_FILE) {
-      PHB_FNAME pFileName = hb_fsFNameSplit(szFileName);
+      HB_FNAME *pFileName = hb_fsFNameSplit(szFileName);
       auto fNested = false;
 
       pFileName->szName = szFileName;
@@ -1728,7 +1728,7 @@ static PHB_PP_FILE hb_pp_FileNew(PHB_PP_STATE pState, const char *szFileName, HB
             pFile = pFile->pPrev;
           }
           if (szFirstFName != nullptr) {
-            PHB_FNAME pFirstFName = hb_fsFNameSplit(szFirstFName);
+            HB_FNAME *pFirstFName = hb_fsFNameSplit(szFirstFName);
             pFileName->szPath = pFirstFName->szPath;
             hb_fsFNameMerge(szFileNameBuf, pFileName);
             hb_xfree(pFirstFName);
@@ -4904,7 +4904,7 @@ void hb_pp_readRules(PHB_PP_STATE pState, const char *szRulesFile)
 {
   char szFileName[HB_PATH_MAX];
   PHB_PP_FILE pFile = pState->pFile;
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
 
   pFileName = hb_fsFNameSplit(szRulesFile);
   if (!pFileName->szExtension) {
