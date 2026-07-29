@@ -66,7 +66,7 @@ HB_FUNC(EXECNAME)
    {
       if( !hb_parl(1) )
       {
-         PHB_FNAME pFileName = hb_fsFNameSplit(pszBaseName);
+         HB_FNAME *pFileName = hb_fsFNameSplit(pszBaseName);
 
          if( pFileName->szPath )
          {

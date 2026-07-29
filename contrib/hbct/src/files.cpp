@@ -223,7 +223,7 @@ HB_FUNC(FILEDELETE)
     nAttr &= ~HB_FA_DIRECTORY;
 
     if ((ffind = hb_fsFindFirst(pszDirSpec, nAttr)) != nullptr) {
-      PHB_FNAME pFilepath;
+      HB_FNAME *pFilepath;
 
       pFilepath = hb_fsFNameSplit(pszDirSpec);
       pFilepath->szExtension = nullptr;

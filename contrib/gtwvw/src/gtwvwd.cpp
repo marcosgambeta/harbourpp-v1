@@ -6727,7 +6727,7 @@ HB_FUNC(WVW_NOPENWINDOW)
   INT iParentWin =
       (HB_ISNIL(7) ? (s_pWvwData->s_bMainCoordMode ? s_pWvwData->s_usNumWindows - 1 : s_pWvwData->s_usCurWindow)
                    : (static_cast<INT>(hb_parni(7))));
-  PHB_FNAME pFileName;
+  HB_FNAME *pFileName;
 
   if (s_pWvwData->s_usNumWindows == 0) {
     hb_retni(0);

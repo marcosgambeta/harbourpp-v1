@@ -80,7 +80,7 @@ static auto s_iXtermPid = 0;
 static void debugInit(void)
 {
   int iFifoResult;
-  PHB_FNAME pFileName = nullptr;
+  HB_FNAME *pFileName = nullptr;
   char szDebugName[128];
 
   if (!s_iUseDebugName) {

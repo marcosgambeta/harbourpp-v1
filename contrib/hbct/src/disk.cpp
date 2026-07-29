@@ -182,7 +182,7 @@ HB_FUNC(VOLUME)
     LPTSTR lpRootFree = nullptr, lpVolNameFree = nullptr;
 
     if (hb_parclen(1) > 0) {
-      PHB_FNAME fname = hb_fsFNameSplit(hb_parc(1));
+      HB_FNAME *fname = hb_fsFNameSplit(hb_parc(1));
 
       if (fname->szPath) {
         pszRoot = hb_strncpy(szRootBuf, fname->szPath, sizeof(szRootBuf) - 1);
