@@ -61,7 +61,7 @@ HB_MAXINT hb_verRevision(void)
 /*
  * functions to create .c files with rules defined in given PP context
  */
-static int hb_pp_writeTokenCount(PHB_PP_TOKEN pToken)
+static int hb_pp_writeTokenCount(HB_PP_TOKEN *pToken)
 {
   int iToken = 0;
 
@@ -72,7 +72,7 @@ static int hb_pp_writeTokenCount(PHB_PP_TOKEN pToken)
   return iToken;
 }
 
-static void hb_pp_writeToken(FILE *fout, PHB_PP_TOKEN pToken, const char *szName, int iToken, bool fLast)
+static void hb_pp_writeToken(FILE *fout, HB_PP_TOKEN *pToken, const char *szName, int iToken, bool fLast)
 {
   while (pToken) {
     int iOptional = hb_pp_writeTokenCount(pToken->pMTokens);
@@ -104,7 +104,7 @@ static void hb_pp_writeToken(FILE *fout, PHB_PP_TOKEN pToken, const char *szName
   }
 }
 
-static void hb_pp_writeTokenList(FILE *fout, PHB_PP_TOKEN pTokenLst, const char *szName)
+static void hb_pp_writeTokenList(FILE *fout, HB_PP_TOKEN *pTokenLst, const char *szName)
 {
   int iTokens;
 

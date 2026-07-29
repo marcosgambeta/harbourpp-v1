@@ -3184,7 +3184,7 @@ void hb_macroLexDelete( PHB_MACRO pMacro )
 
 int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 {
-   PHB_PP_TOKEN pToken = hb_pp_lexGet( ( PHB_PP_STATE ) pMacro->pLex );
+   HB_PP_TOKEN *pToken = hb_pp_lexGet( ( PHB_PP_STATE ) pMacro->pLex );
 
    if( ! pToken )
       return 0;

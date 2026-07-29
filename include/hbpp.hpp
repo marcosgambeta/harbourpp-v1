@@ -377,6 +377,21 @@ typedef HB_PP_MSG_FUNC_( ( * PHB_PP_MSG_FUNC ) );
                                       HB_PP_TOKEN_TYPE(t) != HB_PP_TOKEN_LOGICAL )
 #endif
 
+#if defined(__cplusplus)
+struct _HB_PP_TOKEN
+{
+   struct _HB_PP_TOKEN * pNext;     // next token pointer
+   struct _HB_PP_TOKEN * pMTokens;  // restrict or optional marker token(s)
+
+   const char * value;              // token value
+   HB_SIZE   len;                   // token value length
+   HB_SIZE   spaces;                // leading spaces for stringify
+   HB_USHORT type;                  // token type, see HB_PP_TOKEN_*
+   HB_USHORT index;                 // index to match marker or 0
+};
+using HB_PP_TOKEN = _HB_PP_TOKEN;
+using PHB_PP_TOKEN = HB_PP_TOKEN *; // deprecated in core code
+#else
 typedef struct _HB_PP_TOKEN
 {
    struct _HB_PP_TOKEN * pNext;     // next token pointer
@@ -389,7 +404,7 @@ typedef struct _HB_PP_TOKEN
    HB_USHORT index;                 // index to match marker or 0
 }
 HB_PP_TOKEN, * PHB_PP_TOKEN;
-
+#endif
 
 #ifdef _HB_PP_INTERNAL
 
@@ -456,16 +471,16 @@ HB_PP_TOKEN, * PHB_PP_TOKEN;
 typedef struct _HB_PP_RESULT
 {
    struct _HB_PP_RESULT * pNext;
-   PHB_PP_TOKEN   pFirstToken;
-   PHB_PP_TOKEN   pNextExpr;
+   HB_PP_TOKEN *  pFirstToken;
+   HB_PP_TOKEN *  pNextExpr;
 }
 HB_PP_RESULT, * PHB_PP_RESULT;
 
 typedef struct _HB_PP_MARKERPTR
 {
    struct _HB_PP_MARKERPTR * pNext;
-   PHB_PP_TOKEN   pToken;
-   PHB_PP_TOKEN   pMTokens;
+   HB_PP_TOKEN *  pToken;
+   HB_PP_TOKEN *  pMTokens;
    HB_USHORT      type;
 }
 HB_PP_MARKERPTR, * PHB_PP_MARKERPTR;
@@ -491,20 +506,20 @@ HB_PP_MARKER, * PHB_PP_MARKER;
 typedef struct _HB_PP_RULE
 {
    struct _HB_PP_RULE * pPrev;      // previous rule
-   PHB_PP_TOKEN   pMatch;           // match pattern or NULL
-   PHB_PP_TOKEN   pResult;          // result pattern or NULL
+   HB_PP_TOKEN *  pMatch;           // match pattern or NULL
+   HB_PP_TOKEN *  pResult;          // result pattern or NULL
    HB_USHORT      mode;             // comparison mode HB_PP_CMP_*
    HB_USHORT      markers;          // number of markers in marker table
    // filled when pattern matches for substitution, cleared after
    PHB_PP_MARKER  pMarkers;         // marker table
-   PHB_PP_TOKEN   pNextExpr;        // next expression after match pattern
+   HB_PP_TOKEN *  pNextExpr;        // next expression after match pattern
 }
 HB_PP_RULE, * PHB_PP_RULE;
 
 typedef struct _HB_PP_DEFRULE
 {
-   PHB_PP_TOKEN   pMatch;
-   PHB_PP_TOKEN   pResult;
+   HB_PP_TOKEN *  pMatch;
+   HB_PP_TOKEN *  pResult;
    HB_USHORT      mode;
    HB_USHORT      markers;
    HB_ULONG       repeatbits;
@@ -532,7 +547,7 @@ typedef struct _HB_PP_FILE
 {
    char *   szFileName;            // input file name
    FILE *   file_in;               // input file handle
-   PHB_PP_TOKEN pTokenList;        // current line decoded to tokens
+   HB_PP_TOKEN * pTokenList;       // current line decoded to tokens
    int      iCurrentLine;          // current line in file
    int      iLastLine;             // last non empty generated line
    int      iLastDisp;             // last shown line number
@@ -561,8 +576,8 @@ typedef struct
    int            iCommands;        // number of rules in pCommands
    HB_BYTE        pMap[ HB_PP_HASHID_MAX ]; // translation map
 
-   PHB_PP_TOKEN   pTokenOut;        // preprocessed tokens
-   PHB_PP_TOKEN * pNextTokenPtr;    // pointer to the last NULL pointer in token list
+   HB_PP_TOKEN *  pTokenOut;        // preprocessed tokens
+   HB_PP_TOKEN ** pNextTokenPtr;    // pointer to the last NULL pointer in token list
 
    PHB_MEM_BUFFER pDumpBuffer;      // buffer for dump output
    PHB_MEM_BUFFER pOutputBuffer;    // buffer for preprocessed line
@@ -603,8 +618,8 @@ typedef struct
    HB_BOOL   fCanNextLine;          // ';' token found and we do not know yet if it's command separator or line concatenator
    HB_BOOL   fDirective;            // # directives is parsed
    HB_BOOL   fNewStatement;         // set to HB_TRUE at line beginning or after each ';' token
-   PHB_PP_TOKEN   pFuncOut;         // function used for each line in HB_PP_STREAM_* dumping
-   PHB_PP_TOKEN   pFuncEnd;         // end function for HB_PP_STREAM_* dumping
+   HB_PP_TOKEN *  pFuncOut;         // function used for each line in HB_PP_STREAM_* dumping
+   HB_PP_TOKEN *  pFuncEnd;         // end function for HB_PP_STREAM_* dumping
    PHB_MEM_BUFFER pStreamBuffer;    // buffer for stream output
    int       iStreamDump;           // stream output, see HB_PP_STREAM_*
    int       iDumpLine;             // line where current dump output begins
@@ -673,13 +688,13 @@ extern HB_EXPORT void    hb_pp_delDefine( PHB_PP_STATE pState, const char * szDe
 extern HB_EXPORT HB_BOOL hb_pp_lasterror( PHB_PP_STATE pState );
 extern HB_EXPORT int     hb_pp_errorCount( PHB_PP_STATE pState );
 
-extern HB_EXPORT void    hb_pp_tokenUpper( PHB_PP_TOKEN pToken );
-extern HB_EXPORT void    hb_pp_tokenToString( PHB_PP_STATE pState, PHB_PP_TOKEN pToken );
-extern HB_EXPORT char *  hb_pp_tokenBlockString( PHB_PP_STATE pState, PHB_PP_TOKEN pToken, int * piType, HB_SIZE * pnLen );
+extern HB_EXPORT void    hb_pp_tokenUpper( HB_PP_TOKEN *pToken );
+extern HB_EXPORT void    hb_pp_tokenToString( PHB_PP_STATE pState, HB_PP_TOKEN *pToken );
+extern HB_EXPORT char *  hb_pp_tokenBlockString( PHB_PP_STATE pState, HB_PP_TOKEN *pToken, int * piType, HB_SIZE * pnLen );
 extern HB_EXPORT PHB_PP_STATE hb_pp_lexNew( const char * pString, HB_SIZE nLen );
-extern HB_EXPORT PHB_PP_TOKEN hb_pp_lexGet( PHB_PP_STATE pState );
-extern HB_EXPORT PHB_PP_TOKEN hb_pp_tokenGet( PHB_PP_STATE pState );
-extern HB_EXPORT HB_BOOL hb_pp_tokenNextExp( PHB_PP_TOKEN * pTokenPtr );
+extern HB_EXPORT HB_PP_TOKEN *hb_pp_lexGet( PHB_PP_STATE pState );
+extern HB_EXPORT HB_PP_TOKEN *hb_pp_tokenGet( PHB_PP_STATE pState );
+extern HB_EXPORT HB_BOOL hb_pp_tokenNextExp( HB_PP_TOKEN **pTokenPtr );
 
 // PP lib helper functions
 extern PHB_PP_STATE hb_pp_Param( int iParam );

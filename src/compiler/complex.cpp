@@ -198,7 +198,7 @@ static const HB_LEX_KEY s_typetable[] =
 };
 // clang-format on
 
-static int hb_comp_asType(PHB_PP_TOKEN pToken, bool fArray)
+static int hb_comp_asType(HB_PP_TOKEN *pToken, bool fArray)
 {
   if (pToken && HB_PP_TOKEN_TYPE(pToken->type) == HB_PP_TOKEN_KEYWORD) {
     const HB_LEX_KEY *pKey = s_typetable;
@@ -216,7 +216,7 @@ static int hb_comp_asType(PHB_PP_TOKEN pToken, bool fArray)
   return 0;
 }
 
-static int hb_comp_keywordType(PHB_PP_TOKEN pToken)
+static int hb_comp_keywordType(HB_PP_TOKEN *pToken)
 {
   const HB_LEX_KEY *pKey = s_keytable;
   int i = HB_SIZEOFARRAY(s_keytable);
@@ -236,7 +236,7 @@ static int hb_comp_keywordType(PHB_PP_TOKEN pToken)
   return IDENTIFIER;
 }
 
-static const char *hb_comp_tokenIdentifer(HB_COMP_DECL, PHB_PP_TOKEN pToken)
+static const char *hb_comp_tokenIdentifer(HB_COMP_DECL, HB_PP_TOKEN *pToken)
 {
   if (HB_PP_TOKEN_ALLOC(pToken->type)) {
     pToken->value = hb_compIdentifierNew(HB_COMP_PARAM, pToken->value, HB_IDENT_FREE);
@@ -246,7 +246,7 @@ static const char *hb_comp_tokenIdentifer(HB_COMP_DECL, PHB_PP_TOKEN pToken)
   return pToken->value;
 }
 
-static const char *hb_comp_tokenString(YYSTYPE *yylval_ptr, HB_COMP_DECL, PHB_PP_TOKEN pToken)
+static const char *hb_comp_tokenString(YYSTYPE *yylval_ptr, HB_COMP_DECL, HB_PP_TOKEN *pToken)
 {
   yylval_ptr->valChar.length = pToken->len;
   yylval_ptr->valChar.string = const_cast<char *>(pToken->value);
@@ -264,7 +264,7 @@ static const char *hb_comp_tokenString(YYSTYPE *yylval_ptr, HB_COMP_DECL, PHB_PP
 }
 
 #if defined(HB_COMPAT_FOXPRO) || 1
-static bool hb_comp_timeDecode(PHB_PP_TOKEN pTime, long *plTime)
+static bool hb_comp_timeDecode(HB_PP_TOKEN *pTime, long *plTime)
 {
   HB_MAXINT lHour, lMinute, lMilliSec;
   double dNumber;
@@ -340,7 +340,7 @@ static bool hb_comp_timeDecode(PHB_PP_TOKEN pTime, long *plTime)
   return true;
 }
 
-static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken, YYSTYPE *yylval_ptr)
+static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE *yylval_ptr)
 {
   // TODO: decode datetime in VFP strict date form:
   //    {^YYYY/MM/DD[,][HH[:MM[:SS][.CCC]][A|P]]}
@@ -352,8 +352,8 @@ static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken, YYSTYPE
   //    { ^ <YEAR> <sep:/.-> <MONTH> <sep:/.-> <DAY> [[<sep2:,>]
   //      [ <HOUR> [ : <MIN> [ : <SEC> [ . <FRAQ> ] ] ] [AM|PP] ] }
 
-  PHB_PP_TOKEN pYear = pToken->pNext->pNext;
-  PHB_PP_TOKEN pMonth, pDay, pTime = nullptr;
+  HB_PP_TOKEN *pYear = pToken->pNext->pNext;
+  HB_PP_TOKEN *pMonth, *pDay, *pTime = nullptr;
   HB_MAXINT lYear = 0, lMonth = 0, lDay = 0;
   double dNumber;
   int iDec, iWidth, iType = 0;
@@ -469,7 +469,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
     }
   }
 
-  PHB_PP_TOKEN pToken = hb_pp_tokenGet(pLex->pPP);
+  HB_PP_TOKEN *pToken = hb_pp_tokenGet(pLex->pPP);
 
   if (pLex->fEol) {
     pLex->fEol = false;
@@ -888,7 +888,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 
     case FOR:
       if (pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext)) {
-        PHB_PP_TOKEN pNext = pToken->pNext;
+        HB_PP_TOKEN *pNext = pToken->pNext;
 
         if (HB_PP_TOKEN_TYPE(pNext->type) == HB_PP_TOKEN_KEYWORD && pNext->pNext &&
             HB_PP_TOKEN_TYPE(pNext->pNext->type) == HB_PP_TOKEN_KEYWORD && hb_stricmp("EACH", pNext->value) == 0) {
@@ -1046,7 +1046,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
         hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, "IF", nullptr);
       } else if (pToken->pNext && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_PB) {
         if (pLex->iState == LOOKUP) {
-          PHB_PP_TOKEN pNext = pToken->pNext->pNext; // COND EXP
+          HB_PP_TOKEN *pNext = pToken->pNext->pNext; // COND EXP
 
           pLex->iState = IF;
           if (hb_pp_tokenNextExp(&pNext)) {   // TRUE EXP
@@ -1188,7 +1188,7 @@ void hb_compParserRun(HB_COMP_DECL)
 
   while (!HB_COMP_PARAM->fExit && HB_COMP_PARAM->iErrorCount == 0) {
     if (HB_COMP_PARAM->fSingleModule) {
-      PHB_PP_TOKEN pToken = hb_pp_tokenGet(HB_COMP_PARAM->pLex->pPP);
+      HB_PP_TOKEN *pToken = hb_pp_tokenGet(HB_COMP_PARAM->pLex->pPP);
       if (!pToken) {
         break;
       }
