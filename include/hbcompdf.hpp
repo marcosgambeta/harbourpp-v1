@@ -729,11 +729,21 @@ typedef struct HB_MACRO_      /* a macro compiled pcode container */
 
 #define HB_I18N_PLURAL_MAX    8
 
+#if defined(__cplusplus)
+struct _HB_I18NPOS
+{
+   const char *   szFile;
+   HB_UINT        uiLine;
+};
+using HB_I18NPOS = _HB_I18NPOS;
+using PHB_I18NPOS = HB_I18NPOS *; // deprecated in core code
+#else
 typedef struct _HB_I18NPOS
 {
    const char *   szFile;
    HB_UINT        uiLine;
 } HB_I18NPOS, *PHB_I18NPOS;
+#endif
 
 #if defined(__cplusplus)
 struct _HB_I18NSTRING

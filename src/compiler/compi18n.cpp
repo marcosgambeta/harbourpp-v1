@@ -123,12 +123,12 @@ static HB_I18NSTRING *hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, con
 
       if (pString->uiPosCount) {
         pString->pPosLst =
-            static_cast<PHB_I18NPOS>(hb_xrealloc(pString->pPosLst, (pString->uiPosCount + 1) * sizeof(HB_I18NPOS)));
+            static_cast<HB_I18NPOS *>(hb_xrealloc(pString->pPosLst, (pString->uiPosCount + 1) * sizeof(HB_I18NPOS)));
         pString->pPosLst[pString->uiPosCount].uiLine = uiLine;
         pString->pPosLst[pString->uiPosCount].szFile = szModule;
         pString->uiPosCount++;
       } else {
-        pString->pPosLst = static_cast<PHB_I18NPOS>(hb_xgrab(sizeof(HB_I18NPOS)));
+        pString->pPosLst = static_cast<HB_I18NPOS *>(hb_xgrab(sizeof(HB_I18NPOS)));
         pString->pPosLst[0].uiLine = uiLine;
         pString->pPosLst[0].szFile = szModule;
         pString->uiPosCount = 1;
