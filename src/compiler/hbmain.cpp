@@ -2560,12 +2560,11 @@ void hb_compGenPopVar(const char *szVarName,
       // Static variable
       hb_compGenPCode3(HB_P_POPSTATIC, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
       {
-        HB_HFUNC *pFunc;
         // Check if we are generating a pop code for static variable
         // initialization function - if YES then we have to switch to a function
         // where the static variable was declared
 
-        pFunc = HB_COMP_PARAM->functions.pLast;
+        HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
         if ((HB_COMP_PARAM->functions.pLast->cScope & HB_FS_INITEXIT) == HB_FS_INITEXIT) {
           pFunc = pFunc->pOwner;
         }
@@ -3286,9 +3285,7 @@ static void hb_compLineNumberDefEnd(HB_COMP_DECL)
 
 void hb_compCodeBlockStart(HB_COMP_DECL, int iEarlyEvalPass)
 {
-  HB_HFUNC *pBlock;
-
-  pBlock = hb_compFunctionNew(HB_COMP_PARAM, nullptr, HB_FS_STATIC | HB_FS_LOCAL);
+  HB_HFUNC *pBlock = hb_compFunctionNew(HB_COMP_PARAM, nullptr, HB_FS_STATIC | HB_FS_LOCAL);
   pBlock->pOwner = HB_COMP_PARAM->functions.pLast;
   pBlock->iEarlyEvalPass = iEarlyEvalPass;
 
@@ -4112,9 +4109,8 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
     if (HB_COMP_PARAM->iSyntaxCheckOnly == 0 && fGenCode && HB_COMP_PARAM->iErrorCount == 0) {
       const char *szFirstFunction = nullptr;
       int iFunctionCount = 0;
-      HB_HFUNC *pFunc;
 
-      pFunc = HB_COMP_PARAM->functions.pFirst;
+      HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
 
       while (pFunc && !HB_COMP_PARAM->fExit) {
         // skip pseudo function frames used in automatically included

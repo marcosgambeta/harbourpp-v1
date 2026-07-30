@@ -33,15 +33,11 @@ constexpr HB_BYTE SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound fu
 
 static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
 {
-  HB_HFUNC *pFunc;
-  HB_HSYMBOL *pSym;
-  HB_SIZE nSize;
-
   *pulSymbols = *pulFunctions = 0;
 
   // count total size
-  nSize = 10; // signature[4] + version[2] + symbols_number[4]
-  pSym = HB_COMP_PARAM->symbols.pFirst;
+  HB_SIZE nSize = 10; // signature[4] + version[2] + symbols_number[4]
+  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
   while (pSym) {
     (*pulSymbols)++;
     nSize += strlen(pSym->szName) + 3; // \0 + symscope[1] + symtype[1]
@@ -49,7 +45,7 @@ static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulF
   }
   nSize += 4; // functions_number[4]
   // Generate functions data
-  pFunc = HB_COMP_PARAM->functions.pFirst;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
   while (pFunc) {
     if ((pFunc->funFlags & HB_FUNF_FILE_DECL) == 0) {
       (*pulFunctions)++;
