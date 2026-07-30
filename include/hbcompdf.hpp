@@ -70,6 +70,20 @@ typedef enum
 struct _HB_HCLASS;    /* forward declaration */
 
 /* Declared Function/Method support structure */
+#if defined(__cplusplus)
+struct _HB_HDECLARED
+{
+   const char *          szName;              /* the name of the symbol */
+   HB_BYTE               cType;
+   HB_USHORT             iParamCount;
+   HB_BYTE *             cParamTypes;
+   struct _HB_HCLASS * pClass;
+   struct _HB_HCLASS ** pParamClasses;
+   struct _HB_HDECLARED * pNext;               /* pointer to the next declared function */
+};
+using HB_HDECLARED = _HB_HDECLARED;
+using PHB_HDECLARED = HB_HDECLARED *; // deprecated in core code
+#else
 typedef struct _HB_HDECLARED
 {
    const char *          szName;              /* the name of the symbol */
@@ -80,13 +94,14 @@ typedef struct _HB_HDECLARED
    struct _HB_HCLASS ** pParamClasses;
    struct _HB_HDECLARED * pNext;               /* pointer to the next declared function */
 } HB_HDECLARED, * PHB_HDECLARED;
+#endif
 
 /* Declared Class support structure */
 typedef struct _HB_HCLASS
 {
    const char *       szName;
-   PHB_HDECLARED      pMethod;
-   PHB_HDECLARED      pLastMethod;
+   HB_HDECLARED *     pMethod;
+   HB_HDECLARED *     pLastMethod;
    struct _HB_HCLASS * pNext;
 } HB_HCLASS, * PHB_HCLASS;
 
@@ -894,9 +909,9 @@ typedef struct _HB_COMP
    PHB_INCLST        incfiles;
    HB_PPDEFINE *     ppdefines;
 
-   PHB_HDECLARED     pFirstDeclared;
-   PHB_HDECLARED     pLastDeclared;
-   PHB_HDECLARED     pLastMethod;
+   HB_HDECLARED *    pFirstDeclared;
+   HB_HDECLARED *    pLastDeclared;
+   HB_HDECLARED *    pLastMethod;
    PHB_HCLASS        pFirstClass;
    PHB_HCLASS        pLastClass;
 

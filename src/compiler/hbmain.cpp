@@ -938,7 +938,7 @@ void hb_compPushMacroText(HB_COMP_DECL, const char *szText, HB_SIZE nLen, HB_BOO
 static void hb_compDeclaredReset(HB_COMP_DECL)
 {
   while (HB_COMP_PARAM->pFirstDeclared) {
-    PHB_HDECLARED pDeclared = HB_COMP_PARAM->pFirstDeclared;
+    HB_HDECLARED *pDeclared = HB_COMP_PARAM->pFirstDeclared;
     HB_COMP_PARAM->pFirstDeclared = pDeclared->pNext;
     if (pDeclared->cParamTypes) {
       hb_xfree(pDeclared->cParamTypes);
@@ -954,7 +954,7 @@ static void hb_compDeclaredReset(HB_COMP_DECL)
     PHB_HCLASS pClass = HB_COMP_PARAM->pFirstClass;
     HB_COMP_PARAM->pFirstClass = pClass->pNext;
     while (pClass->pMethod) {
-      PHB_HDECLARED pDeclared = pClass->pMethod;
+      HB_HDECLARED *pDeclared = pClass->pMethod;
       pClass->pMethod = pDeclared->pNext;
       if (pDeclared->cParamTypes) {
         hb_xfree(pDeclared->cParamTypes);
@@ -1019,17 +1019,17 @@ PHB_HCLASS hb_compClassAdd(HB_COMP_DECL, const char *szClassName, const char *sz
   HB_COMP_PARAM->pLastClass = pClass;
 
   // Auto declaration for the Class Function.
-  PHB_HDECLARED pDeclared = hb_compDeclaredAdd(HB_COMP_PARAM, szClassFunc ? szClassFunc : szClassName);
+  HB_HDECLARED *pDeclared = hb_compDeclaredAdd(HB_COMP_PARAM, szClassFunc ? szClassFunc : szClassName);
   pDeclared->cType = 'S';
   pDeclared->pClass = pClass;
 
   return pClass;
 }
 
-PHB_HDECLARED hb_compMethodFind(PHB_HCLASS pClass, const char *szMethodName)
+HB_HDECLARED *hb_compMethodFind(PHB_HCLASS pClass, const char *szMethodName)
 {
   if (pClass) {
-    PHB_HDECLARED pMethod = pClass->pMethod;
+    HB_HDECLARED *pMethod = pClass->pMethod;
 
     while (pMethod) {
       if (!strcmp(pMethod->szName, szMethodName)) {
@@ -1042,7 +1042,7 @@ PHB_HDECLARED hb_compMethodFind(PHB_HCLASS pClass, const char *szMethodName)
   return nullptr;
 }
 
-PHB_HDECLARED hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *szMethodName)
+HB_HDECLARED *hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *szMethodName)
 {
   if (HB_COMP_PARAM->iWarnings < 3) {
     return nullptr;
@@ -1061,7 +1061,7 @@ PHB_HDECLARED hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *szMe
    printf("\nDeclaring Method: %s of Class: %s Pointer: %li\n", szMethodName, pClass->szName, pClass);
 #endif
 
-  PHB_HDECLARED pMethod;
+  HB_HDECLARED *pMethod;
 
   if ((pMethod = hb_compMethodFind(pClass, szMethodName)) != nullptr) {
     hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_DUP_DECLARATION, "method", szMethodName);
@@ -1080,7 +1080,7 @@ PHB_HDECLARED hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *szMe
     return pMethod;
   }
 
-  pMethod = static_cast<PHB_HDECLARED>(hb_xgrab(sizeof(HB_HDECLARED)));
+  pMethod = static_cast<HB_HDECLARED *>(hb_xgrab(sizeof(HB_HDECLARED)));
 
   pMethod->szName = szMethodName;
   pMethod->cType = ' '; // Not known yet
@@ -1106,9 +1106,9 @@ PHB_HDECLARED hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *szMe
 // and sets its position in the symbol table.
 // NOTE: symbol's position number starts from 0
 
-static PHB_HDECLARED hb_compDeclaredFind(HB_COMP_DECL, const char *szDeclaredName)
+static HB_HDECLARED *hb_compDeclaredFind(HB_COMP_DECL, const char *szDeclaredName)
 {
-  PHB_HDECLARED pSym = HB_COMP_PARAM->pFirstDeclared;
+  HB_HDECLARED *pSym = HB_COMP_PARAM->pFirstDeclared;
 
   while (pSym) {
     if (!strcmp(pSym->szName, szDeclaredName)) {
@@ -1119,7 +1119,7 @@ static PHB_HDECLARED hb_compDeclaredFind(HB_COMP_DECL, const char *szDeclaredNam
   return nullptr;
 }
 
-PHB_HDECLARED hb_compDeclaredAdd(HB_COMP_DECL, const char *szDeclaredName)
+HB_HDECLARED *hb_compDeclaredAdd(HB_COMP_DECL, const char *szDeclaredName)
 {
   if (HB_COMP_PARAM->iWarnings < 3) {
     return nullptr;
@@ -1129,7 +1129,7 @@ PHB_HDECLARED hb_compDeclaredAdd(HB_COMP_DECL, const char *szDeclaredName)
    printf("\nDeclaring Function: %s\n", szDeclaredName, nullptr);
 #endif
 
-  PHB_HDECLARED pDeclared;
+  HB_HDECLARED *pDeclared;
 
   if ((pDeclared = hb_compDeclaredFind(HB_COMP_PARAM, szDeclaredName)) != nullptr) {
     hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_DUP_DECLARATION, "function", szDeclaredName);
@@ -1149,7 +1149,7 @@ PHB_HDECLARED hb_compDeclaredAdd(HB_COMP_DECL, const char *szDeclaredName)
     return pDeclared;
   }
 
-  pDeclared = static_cast<PHB_HDECLARED>(hb_xgrab(sizeof(HB_HDECLARED)));
+  pDeclared = static_cast<HB_HDECLARED *>(hb_xgrab(sizeof(HB_HDECLARED)));
 
   pDeclared->szName = szDeclaredName;
   pDeclared->cType = ' '; // Not known yet
@@ -1180,7 +1180,7 @@ void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYP
   // Either a Declared Function Parameter or a Declared Method Parameter.
   if (HB_COMP_PARAM->szDeclaredFun) {
     // Find the Declared Function owner of this parameter.
-    PHB_HDECLARED pDeclared = hb_compDeclaredFind(HB_COMP_PARAM, HB_COMP_PARAM->szDeclaredFun);
+    HB_HDECLARED *pDeclared = hb_compDeclaredFind(HB_COMP_PARAM, HB_COMP_PARAM->szDeclaredFun);
 
     if (pDeclared) {
       pDeclared->iParamCount++;
