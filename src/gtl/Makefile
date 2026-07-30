@@ -11,6 +11,7 @@ endif
 HB_PRGFLAGS += -ala
 
 CPP_SOURCES := \
+   box.cpp \
    gt.cpp \
    gtapi.cpp \
    gtchrmap.cpp \

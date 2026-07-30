@@ -20,7 +20,6 @@ CPP_SOURCES := \
    base64c.cpp \
    base64d.cpp \
    binnum.cpp \
-   box.cpp \
    cdpapi.cpp \
    cdpapihb.cpp \
    cdpbox.cpp \
@@ -206,6 +205,7 @@ CPP_SOURCES := \
    word.cpp \
    xhelp.cpp \
 
+#   box.cpp \ (moved to gtl)
 #   gt.cpp \ (moved to gtl)
 #   gtapi.cpp \ (moved to gtl)
 #   gtchrmap.cpp \ (moved to gtl)
