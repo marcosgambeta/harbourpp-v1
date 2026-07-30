@@ -474,8 +474,8 @@ CompTimeStr : LITERAL {
             }
             | LITERAL '+' LITERAL {
                {
-                  char szFileName[ HB_PATH_MAX ];
-                  hb_strncat( hb_strncpy( szFileName, $1.string, sizeof( szFileName ) - 1 ), $3.string, sizeof( szFileName ) - 1 );
+                  char szFileName[HB_PATH_MAX];
+                  hb_strncat( hb_strncpy( szFileName, $1.string, sizeof(szFileName) - 1 ), $3.string, sizeof(szFileName) - 1 );
                   hb_compModuleAdd( HB_COMP_PARAM, hb_compIdentifierNew( HB_COMP_PARAM, szFileName, HB_IDENT_COPY ), HB_FALSE );
                   if( $1.dealloc )
                   {
@@ -1282,7 +1282,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                if( HB_COMP_PARAM->pLastMethod )
                {
                   HB_HCLASS *pClass;
-                  char       szSetData[ HB_SYMBOL_NAME_LEN + 1 ];
+                  char       szSetData[HB_SYMBOL_NAME_LEN + 1];
                   int        iLen;
                   HB_BYTE    cVarType = $3->cVarType;
 
@@ -1307,20 +1307,20 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                   iLen = ( int ) strlen( $1 );
                   if( iLen >= HB_SYMBOL_NAME_LEN )
                      iLen = HB_SYMBOL_NAME_LEN - 1;
-                  szSetData[ 0 ] = '_';
+                  szSetData[0] = '_';
                   memcpy( szSetData + 1, $1, iLen );
-                  szSetData[ iLen + 1 ] = '\0';
+                  szSetData[iLen + 1] = '\0';
 
                   HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_PARAM, HB_COMP_PARAM->pLastClass,
                      hb_compIdentifierNew( HB_COMP_PARAM, szSetData, HB_IDENT_COPY ) );
                   HB_COMP_PARAM->pLastMethod->cType = cVarType;
                   HB_COMP_PARAM->pLastMethod->iParamCount = 1;
 
-                  HB_COMP_PARAM->pLastMethod->cParamTypes = ( HB_BYTE * ) hb_xgrab( 1 );
-                  HB_COMP_PARAM->pLastMethod->pParamClasses = ( HB_HCLASS ** ) hb_xgrab( sizeof( HB_HCLASS ) );
+                  HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE *>(hb_xgrab(1));
+                  HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<HB_HCLASS **>(hb_xgrab(sizeof(HB_HCLASS)));
 
-                  HB_COMP_PARAM->pLastMethod->cParamTypes[ 0 ] = cVarType;
-                  HB_COMP_PARAM->pLastMethod->pParamClasses[ 0 ] = pClass;
+                  HB_COMP_PARAM->pLastMethod->cParamTypes[0] = cVarType;
+                  HB_COMP_PARAM->pLastMethod->pParamClasses[0] = pClass;
 
                   if( HB_TOUPPER( cVarType ) == 'S' )
                   {
@@ -2037,7 +2037,7 @@ Crlf       : '\n'       { HB_COMP_PARAM->fError = HB_FALSE; }
  */
 static void hb_compLoopStart( HB_COMP_DECL, HB_BOOL fCanLoop )
 {
-   PHB_LOOPEXIT pLoop = ( PHB_LOOPEXIT ) hb_xgrab( sizeof( HB_LOOPEXIT ) );
+   PHB_LOOPEXIT pLoop = static_cast<PHB_LOOPEXIT>(hb_xgrab(sizeof(HB_LOOPEXIT)));
    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    if( pFunc->pLoops )
@@ -2141,7 +2141,7 @@ static void hb_compLoopLoop( HB_COMP_DECL )
       {
          HB_USHORT wWithObjectCnt = pLast->wWithObjectCnt;
 
-         pLoop = ( PHB_LOOPEXIT ) hb_xgrab( sizeof( HB_LOOPEXIT ) );
+         pLoop = static_cast<PHB_LOOPEXIT>(hb_xgrab(sizeof(HB_LOOPEXIT)));
          pLoop->pLoopList = NULL;
          while( pLast->pLoopList )
             pLast = pLast->pLoopList;
@@ -2197,7 +2197,7 @@ static void hb_compLoopExit( HB_COMP_DECL )
       {
          HB_USHORT wWithObjectCnt = pLast->wWithObjectCnt;
 
-         pLoop = ( PHB_LOOPEXIT ) hb_xgrab( sizeof( HB_LOOPEXIT ) );
+         pLoop = static_cast<PHB_LOOPEXIT>(hb_xgrab(sizeof(HB_LOOPEXIT)));
          pLoop->pExitList = NULL;
          while( pLast->pExitList )
             pLast = pLast->pExitList;
@@ -2299,7 +2299,7 @@ void hb_compLoopKill( HB_HFUNC *pFunc )
 
 static void * hb_compElseIfGen( HB_COMP_DECL, void * pFirst, HB_SIZE nOffset )
 {
-   PHB_ELSEIF pElseIf = ( PHB_ELSEIF ) hb_xgrab( sizeof( HB_ELSEIF ) ), pLast;
+   PHB_ELSEIF pElseIf = static_cast<PHB_ELSEIF>(hb_xgrab(sizeof(HB_ELSEIF))), pLast;
    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pElseIf->nOffset = nOffset;
@@ -2361,7 +2361,7 @@ void hb_compElseIfKill( HB_HFUNC *pFunc )
 
 static void hb_compRTVariableAdd( HB_COMP_DECL, PHB_EXPR pVar, HB_BOOL bPopInitValue )
 {
-   PHB_RTVAR pRTvar = ( PHB_RTVAR ) hb_xgrab( sizeof( HB_RTVAR ) );
+   PHB_RTVAR pRTvar = static_cast<PHB_RTVAR>(hb_xgrab(sizeof(HB_RTVAR)));
    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pRTvar->pVar = pVar;
@@ -2499,7 +2499,7 @@ static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDi
    pEnumVar = HB_COMP_PARAM->functions.pLast->pEnum;
    if( pEnumVar == NULL )
    {
-      HB_COMP_PARAM->functions.pLast->pEnum = ( PHB_ENUMERATOR ) hb_xgrab( sizeof( HB_ENUMERATOR ) );
+      HB_COMP_PARAM->functions.pLast->pEnum = static_cast<PHB_ENUMERATOR>(hb_xgrab(sizeof(HB_ENUMERATOR)));
       pEnumVar = HB_COMP_PARAM->functions.pLast->pEnum;
    }
    else
@@ -2521,7 +2521,7 @@ static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDi
          pLast = pEnumVar;
          pEnumVar = pEnumVar->pNext;
       }
-      pLast->pNext = ( PHB_ENUMERATOR ) hb_xgrab( sizeof( HB_ENUMERATOR ) );
+      pLast->pNext = static_cast<PHB_ENUMERATOR>(hb_xgrab(sizeof(HB_ENUMERATOR)));
       pEnumVar = pLast->pNext;
    }
    pEnumVar->szName      = szVarName;
@@ -2636,7 +2636,7 @@ static void hb_compEnumEnd( HB_COMP_DECL, PHB_EXPR pExpr )
 
 static void hb_compSwitchStart( HB_COMP_DECL, PHB_EXPR pExpr )
 {
-   PHB_SWITCHCMD pSwitch = ( PHB_SWITCHCMD ) hb_xgrab( sizeof( HB_SWITCHCMD ) );
+   PHB_SWITCHCMD pSwitch = static_cast<PHB_SWITCHCMD>(hb_xgrab(sizeof(HB_SWITCHCMD)));
    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pSwitch->pCases = NULL;
@@ -2658,7 +2658,7 @@ static void hb_compSwitchAdd( HB_COMP_DECL, PHB_EXPR pExpr )
    if( pExpr )
    {
       /* normal CASE */
-      pCase = ( PHB_SWITCHCASE ) hb_xgrab( sizeof( HB_SWITCHCASE ) );
+      pCase = static_cast<PHB_SWITCHCASE>(hb_xgrab(sizeof(HB_SWITCHCASE)));
       pCase->nOffset = pFunc->nPCodePos;
       pCase->pNext = NULL;
       pCase->pExpr = pExpr = hb_compExprReduce( pExpr, HB_COMP_PARAM );
@@ -2884,7 +2884,7 @@ static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr )
    if( pExpr->value.asMessage.szMessage &&
        pExpr->value.asMessage.pObject &&
        pExpr->value.asMessage.pObject->ExprType == HB_ET_VARIABLE &&
-       pExpr->value.asMessage.szMessage[ 0 ] == '_' &&
+       pExpr->value.asMessage.szMessage[0] == '_' &&
        strncmp( "__ENUM", pExpr->value.asMessage.szMessage, 6 ) == 0 )
    {
       const char * szMessage = pExpr->value.asMessage.szMessage + 6;
@@ -2981,7 +2981,7 @@ HB_BOOL hb_compCheckUnclosedStru( HB_COMP_DECL, HB_HFUNC *pFunc )
 
 void yyerror( HB_COMP_DECL, const char * s )
 {
-   if( ! HB_COMP_PARAM->pLex->lasttok || HB_COMP_PARAM->pLex->lasttok[ 0 ] == '\n' )
+   if( ! HB_COMP_PARAM->pLex->lasttok || HB_COMP_PARAM->pLex->lasttok[0] == '\n' )
    {
       if( HB_COMP_PARAM->iErrorCount == 0 || ! hb_pp_eof( HB_COMP_PARAM->pLex->pPP ) )
          hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INCOMPLETE_STMT, NULL, NULL );
