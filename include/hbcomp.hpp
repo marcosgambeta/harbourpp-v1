@@ -121,8 +121,8 @@ extern void hb_compFunctionMarkStatic(HB_COMP_DECL, const char * szFunName);
 extern HB_EXPORT_INT const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int * piFlags);
 extern HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *, int);
 
-extern PHB_VARTYPE hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char * szFromClass);
-extern void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarType); // add a new param, local, static variable to a function definition or a public or private
+extern HB_VARTYPE *hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char * szFromClass);
+extern void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, HB_VARTYPE *pVarType); // add a new param, local, static variable to a function definition or a public or private
 extern HB_HVAR *hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, int * piScope);
 extern const char * hb_compLocalVariableName(HB_HFUNC *pFunc, HB_USHORT wVar); // returns the name of local variable
 extern const char * hb_compStaticVariableName(HB_COMP_DECL, HB_USHORT wVar); // returns the name of static variable
@@ -139,7 +139,7 @@ extern HB_HCLASS *hb_compClassAdd(HB_COMP_DECL, const char *, const char *);
 extern HB_HCLASS *hb_compClassFind(HB_COMP_DECL, const char *);
 extern HB_HDECLARED *hb_compMethodAdd(HB_COMP_DECL, HB_HCLASS *pClass, const char *);
 extern HB_HDECLARED *hb_compMethodFind(HB_HCLASS *pClass, const char *);
-extern void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarType);
+extern void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char * szVarName, HB_VARTYPE *pVarType);
 
 extern void hb_compGenBreak(HB_COMP_DECL); // generate code for BREAK statement
 

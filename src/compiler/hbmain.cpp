@@ -333,7 +333,7 @@ static HB_USHORT hb_compVarListAdd(HB_HVAR **pVarLst, HB_HVAR *pVar)
   return uiVar;
 }
 
-void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarType)
+void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarType)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
@@ -1169,7 +1169,7 @@ HB_HDECLARED *hb_compDeclaredAdd(HB_COMP_DECL, const char *szDeclaredName)
   return pDeclared;
 }
 
-void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarType)
+void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarType)
 {
   // Nothing to do since no warnings requested.
   if (HB_COMP_PARAM->iWarnings < 3) {
@@ -1237,10 +1237,10 @@ void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYP
   }
 }
 
-PHB_VARTYPE hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char *szFromClass)
+HB_VARTYPE *hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char *szFromClass)
 {
-  PHB_VARTYPE pVT = HB_COMP_PARAM->pVarType;
-  PHB_VARTYPE *ppVT = &(HB_COMP_PARAM->pVarType);
+  HB_VARTYPE *pVT = HB_COMP_PARAM->pVarType;
+  HB_VARTYPE **ppVT = &(HB_COMP_PARAM->pVarType);
 
   while (pVT) {
     if (pVT->cVarType == cVarType && ((!pVT->szFromClass && !szFromClass) ||
@@ -1254,7 +1254,7 @@ PHB_VARTYPE hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char *szFrom
 
   // Add to the end of list. I hope it will help the most usual type (' ', nullptr)
   // to be in the beginning of the list, and it will be found faster. [Mindaugas]
-  pVT = static_cast<PHB_VARTYPE>(hb_xgrab(sizeof(HB_VARTYPE)));
+  pVT = static_cast<HB_VARTYPE *>(hb_xgrab(sizeof(HB_VARTYPE)));
   pVT->pNext = nullptr;
   pVT->cVarType = cVarType;
   pVT->szFromClass = szFromClass;

@@ -296,7 +296,7 @@ void hb_comp_free(PHB_COMP pComp)
   }
 
   while (pComp->pVarType) {
-    PHB_VARTYPE pVarType = pComp->pVarType;
+    HB_VARTYPE *pVarType = pComp->pVarType;
 
     pComp->pVarType = pComp->pVarType->pNext;
     hb_xfree(pVarType);

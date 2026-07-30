@@ -200,7 +200,7 @@ union YYSTYPE
       HB_SIZE  length;
       int      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
-   PHB_VARTYPE asVarType;
+   HB_VARTYPE *asVarType;
 
 #line 206 "harboury.h" /* yacc.c:1909  */
 };

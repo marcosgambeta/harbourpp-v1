@@ -155,12 +155,23 @@ typedef struct HB_CBVAR_
    struct HB_CBVAR_ * pNext;
 } HB_CBVAR, * PHB_CBVAR;
 
+#if defined(__cplusplus)
+struct _HB_VARTYPE
+{
+   struct _HB_VARTYPE *   pNext;
+   HB_BYTE                cVarType;
+   const char *           szFromClass;
+};
+using HB_VARTYPE = _HB_VARTYPE;
+using PHB_VARTYPE = HB_VARTYPE *; // deprecated in core code
+#else
 typedef struct _HB_VARTYPE
 {
    struct _HB_VARTYPE *   pNext;
    HB_BYTE                cVarType;
    const char *           szFromClass;
 } HB_VARTYPE, * PHB_VARTYPE;
+#endif
 
 /* value types seen at language level
  */
@@ -917,7 +928,7 @@ typedef struct _HB_COMP
    HB_HINLINE_LIST   inlines;
    PHB_HEXTERN       externs;
    PHB_MODULE        modules;
-   PHB_VARTYPE       pVarType;
+   HB_VARTYPE *      pVarType;
    PHB_INCLST        incfiles;
    HB_PPDEFINE *     ppdefines;
 

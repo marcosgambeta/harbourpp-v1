@@ -158,7 +158,7 @@ static void hb_compDebugStart( void ) { }
       HB_SIZE  length;
       int      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
-   PHB_VARTYPE asVarType;
+   HB_VARTYPE *asVarType;
 }
 
 %{
