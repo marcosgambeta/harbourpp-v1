@@ -1281,7 +1281,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
              {
                if( HB_COMP_PARAM->pLastMethod )
                {
-                  PHB_HCLASS pClass;
+                  HB_HCLASS *pClass;
                   char       szSetData[ HB_SYMBOL_NAME_LEN + 1 ];
                   int        iLen;
                   HB_BYTE    cVarType = $3->cVarType;
@@ -1317,7 +1317,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                   HB_COMP_PARAM->pLastMethod->iParamCount = 1;
 
                   HB_COMP_PARAM->pLastMethod->cParamTypes = ( HB_BYTE * ) hb_xgrab( 1 );
-                  HB_COMP_PARAM->pLastMethod->pParamClasses = ( PHB_HCLASS * ) hb_xgrab( sizeof( HB_HCLASS ) );
+                  HB_COMP_PARAM->pLastMethod->pParamClasses = ( HB_HCLASS ** ) hb_xgrab( sizeof( HB_HCLASS ) );
 
                   HB_COMP_PARAM->pLastMethod->cParamTypes[ 0 ] = cVarType;
                   HB_COMP_PARAM->pLastMethod->pParamClasses[ 0 ] = pClass;

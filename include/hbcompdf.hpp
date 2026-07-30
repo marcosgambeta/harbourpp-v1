@@ -97,6 +97,17 @@ typedef struct _HB_HDECLARED
 #endif
 
 /* Declared Class support structure */
+#if defined(__cplusplus)
+struct _HB_HCLASS
+{
+   const char *       szName;
+   HB_HDECLARED *     pMethod;
+   HB_HDECLARED *     pLastMethod;
+   struct _HB_HCLASS * pNext;
+};
+using HB_HCLASS = _HB_HCLASS;
+using PHB_HCLASS = HB_HCLASS *; // deprecated in core code
+#else
 typedef struct _HB_HCLASS
 {
    const char *       szName;
@@ -104,6 +115,7 @@ typedef struct _HB_HCLASS
    HB_HDECLARED *     pLastMethod;
    struct _HB_HCLASS * pNext;
 } HB_HCLASS, * PHB_HCLASS;
+#endif
 
 /* locals, static, public variables support */
 #if defined(__cplusplus)
@@ -115,7 +127,7 @@ struct _HB_HVAR
    int            iDeclLine;        /* declaration line number */
    HB_USHORT      uiFlags;          /* optional flags, f.e. THREAD STATIC */
    HB_BYTE        cType;            /* optional strong typing */
-   PHB_HCLASS     pClass;
+   HB_HCLASS *    pClass;
    struct _HB_HVAR * pNext;            /* pointer to next defined variable */
 };
 using HB_HVAR = _HB_HVAR;
@@ -129,7 +141,7 @@ typedef struct _HB_HVAR
    int            iDeclLine;        /* declaration line number */
    HB_USHORT      uiFlags;          /* optional flags, f.e. THREAD STATIC */
    HB_BYTE        cType;            /* optional strong typing */
-   PHB_HCLASS     pClass;
+   HB_HCLASS *    pClass;
    struct _HB_HVAR * pNext;            /* pointer to next defined variable */
 } HB_HVAR, * PHB_HVAR;
 #endif
@@ -912,8 +924,8 @@ typedef struct _HB_COMP
    HB_HDECLARED *    pFirstDeclared;
    HB_HDECLARED *    pLastDeclared;
    HB_HDECLARED *    pLastMethod;
-   PHB_HCLASS        pFirstClass;
-   PHB_HCLASS        pLastClass;
+   HB_HCLASS *       pFirstClass;
+   HB_HCLASS *       pLastClass;
 
    HB_HFUNC *        pInitFunc;
    HB_HFUNC *        pLineFunc;

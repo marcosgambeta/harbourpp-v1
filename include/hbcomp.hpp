@@ -135,10 +135,10 @@ extern const char * hb_compSymbolName(HB_COMP_DECL, HB_USHORT); // returns a sym
 
 extern HB_HDECLARED *hb_compDeclaredAdd(HB_COMP_DECL, const char *);
 
-extern PHB_HCLASS hb_compClassAdd(HB_COMP_DECL, const char *, const char *);
-extern PHB_HCLASS hb_compClassFind(HB_COMP_DECL, const char *);
-extern HB_HDECLARED *hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *);
-extern HB_HDECLARED *hb_compMethodFind(PHB_HCLASS pClass, const char *);
+extern HB_HCLASS *hb_compClassAdd(HB_COMP_DECL, const char *, const char *);
+extern HB_HCLASS *hb_compClassFind(HB_COMP_DECL, const char *);
+extern HB_HDECLARED *hb_compMethodAdd(HB_COMP_DECL, HB_HCLASS *pClass, const char *);
+extern HB_HDECLARED *hb_compMethodFind(HB_HCLASS *pClass, const char *);
 extern void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarType);
 
 extern void hb_compGenBreak(HB_COMP_DECL); // generate code for BREAK statement

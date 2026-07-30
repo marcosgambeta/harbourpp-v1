@@ -951,7 +951,7 @@ static void hb_compDeclaredReset(HB_COMP_DECL)
   HB_COMP_PARAM->pLastDeclared = nullptr;
 
   while (HB_COMP_PARAM->pFirstClass) {
-    PHB_HCLASS pClass = HB_COMP_PARAM->pFirstClass;
+    HB_HCLASS *pClass = HB_COMP_PARAM->pFirstClass;
     HB_COMP_PARAM->pFirstClass = pClass->pNext;
     while (pClass->pMethod) {
       HB_HDECLARED *pDeclared = pClass->pMethod;
@@ -970,9 +970,9 @@ static void hb_compDeclaredReset(HB_COMP_DECL)
   HB_COMP_PARAM->pLastMethod = nullptr;
 }
 
-PHB_HCLASS hb_compClassFind(HB_COMP_DECL, const char *szClassName)
+HB_HCLASS *hb_compClassFind(HB_COMP_DECL, const char *szClassName)
 {
-  PHB_HCLASS pClass = HB_COMP_PARAM->pFirstClass;
+  HB_HCLASS *pClass = HB_COMP_PARAM->pFirstClass;
 
   if (HB_COMP_PARAM->iWarnings < 3) {
     return nullptr;
@@ -987,7 +987,7 @@ PHB_HCLASS hb_compClassFind(HB_COMP_DECL, const char *szClassName)
   return nullptr;
 }
 
-PHB_HCLASS hb_compClassAdd(HB_COMP_DECL, const char *szClassName, const char *szClassFunc)
+HB_HCLASS *hb_compClassAdd(HB_COMP_DECL, const char *szClassName, const char *szClassFunc)
 {
 #if 0
    printf("Declaring Class: %s\n", szClassName);
@@ -997,14 +997,14 @@ PHB_HCLASS hb_compClassAdd(HB_COMP_DECL, const char *szClassName, const char *sz
     return nullptr;
   }
 
-  PHB_HCLASS pClass;
+  HB_HCLASS *pClass;
 
   if ((pClass = hb_compClassFind(HB_COMP_PARAM, szClassName)) != nullptr) {
     hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_DUP_DECLARATION, "class", szClassName);
     return pClass;
   }
 
-  pClass = static_cast<PHB_HCLASS>(hb_xgrab(sizeof(HB_HCLASS)));
+  pClass = static_cast<HB_HCLASS *>(hb_xgrab(sizeof(HB_HCLASS)));
 
   pClass->szName = szClassName;
   pClass->pMethod = nullptr;
@@ -1026,7 +1026,7 @@ PHB_HCLASS hb_compClassAdd(HB_COMP_DECL, const char *szClassName, const char *sz
   return pClass;
 }
 
-HB_HDECLARED *hb_compMethodFind(PHB_HCLASS pClass, const char *szMethodName)
+HB_HDECLARED *hb_compMethodFind(HB_HCLASS *pClass, const char *szMethodName)
 {
   if (pClass) {
     HB_HDECLARED *pMethod = pClass->pMethod;
@@ -1042,7 +1042,7 @@ HB_HDECLARED *hb_compMethodFind(PHB_HCLASS pClass, const char *szMethodName)
   return nullptr;
 }
 
-HB_HDECLARED *hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char *szMethodName)
+HB_HDECLARED *hb_compMethodAdd(HB_COMP_DECL, HB_HCLASS *pClass, const char *szMethodName)
 {
   if (HB_COMP_PARAM->iWarnings < 3) {
     return nullptr;
@@ -1187,11 +1187,11 @@ void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYP
 
       if (pDeclared->cParamTypes) {
         pDeclared->cParamTypes = static_cast<HB_BYTE *>(hb_xrealloc(pDeclared->cParamTypes, pDeclared->iParamCount));
-        pDeclared->pParamClasses = static_cast<PHB_HCLASS *>(
-            hb_xrealloc(pDeclared->pParamClasses, pDeclared->iParamCount * sizeof(PHB_HCLASS)));
+        pDeclared->pParamClasses = static_cast<HB_HCLASS **>(
+            hb_xrealloc(pDeclared->pParamClasses, pDeclared->iParamCount * sizeof(HB_HCLASS *)));
       } else {
         pDeclared->cParamTypes = static_cast<HB_BYTE *>(hb_xgrab(1));
-        pDeclared->pParamClasses = static_cast<PHB_HCLASS *>(hb_xgrab(sizeof(PHB_HCLASS)));
+        pDeclared->pParamClasses = static_cast<HB_HCLASS **>(hb_xgrab(sizeof(HB_HCLASS *)));
       }
 
       pDeclared->cParamTypes[pDeclared->iParamCount - 1] = pVarType->cVarType;
@@ -1217,11 +1217,11 @@ void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYP
     if (HB_COMP_PARAM->pLastMethod->cParamTypes) {
       HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE *>(
           hb_xrealloc(HB_COMP_PARAM->pLastMethod->cParamTypes, HB_COMP_PARAM->pLastMethod->iParamCount));
-      HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS *>(hb_xrealloc(
+      HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<HB_HCLASS **>(hb_xrealloc(
           HB_COMP_PARAM->pLastMethod->pParamClasses, HB_COMP_PARAM->pLastMethod->iParamCount * sizeof(HB_HCLASS)));
     } else {
       HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE *>(hb_xgrab(1));
-      HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS *>(hb_xgrab(sizeof(HB_HCLASS)));
+      HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<HB_HCLASS **>(hb_xgrab(sizeof(HB_HCLASS)));
     }
 
     HB_COMP_PARAM->pLastMethod->cParamTypes[HB_COMP_PARAM->pLastMethod->iParamCount - 1] = pVarType->cVarType;
