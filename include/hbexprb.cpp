@@ -2045,7 +2045,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
         else if (pSelf->value.asFunCall.pFunName->value.asSymbol.funcid == HB_F_PISBYREF && usCount == 1 &&
                  pSelf->value.asFunCall.pParms->value.asList.pExprList->ExprType == HB_ET_VARREF)
         {
-          PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+          HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
           int iVar, iScope;
 
           hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asFunCall.pParms->value.asList.pExprList->value.asSymbol.name,

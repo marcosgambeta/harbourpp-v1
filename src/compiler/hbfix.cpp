@@ -327,7 +327,7 @@ static const PHB_FIX_FUNC s_fixlocals_table[] =
 };
 // clang-format on
 
-void hb_compFixFuncPCode(HB_COMP_DECL, PHB_HFUNC pFunc)
+void hb_compFixFuncPCode(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   const PHB_FIX_FUNC *pFuncTable = s_fixlocals_table;
 

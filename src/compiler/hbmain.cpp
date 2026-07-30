@@ -36,7 +36,7 @@
 #include "hbset.hpp"
 
 static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer, int iStartLine);
-static bool hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, bool fError);
+static bool hb_compRegisterFunc(HB_COMP_DECL, HB_HFUNC *pFunc, bool fError);
 
 // *************************************************************************
 
@@ -335,7 +335,7 @@ static HB_USHORT hb_compVarListAdd(HB_HVAR **pVarLst, HB_HVAR *pVar)
 
 void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarType)
 {
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
   if ((pFunc->funFlags & HB_FUNF_FILE_DECL) != 0 &&
       (HB_COMP_PARAM->iVarScope == HB_VSCOMP_LOCAL ||
@@ -639,13 +639,13 @@ HB_HVAR *hb_compVariableFind(HB_COMP_DECL, const char *szVarName, int *piPos, in
   }
 
   // check current function/codeblock variables
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
-  PHB_HFUNC pGlobal = (HB_COMP_PARAM->pDeclFunc && HB_COMP_PARAM->pDeclFunc != pFunc &&
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
+  HB_HFUNC *pGlobal = (HB_COMP_PARAM->pDeclFunc && HB_COMP_PARAM->pDeclFunc != pFunc &&
                        (HB_COMP_PARAM->pDeclFunc->funFlags & HB_FUNF_FILE_DECL))
                           ? HB_COMP_PARAM->pDeclFunc
                           : nullptr;
 
-  PHB_HFUNC pOutBlock = nullptr;
+  HB_HFUNC *pOutBlock = nullptr;
   auto fStatic = false;
   auto fBlock = false;
   auto fGlobal = false;
@@ -797,7 +797,7 @@ HB_HVAR *hb_compVariableFind(HB_COMP_DECL, const char *szVarName, int *piPos, in
 }
 
 // return local variable name using its order after final fixing
-const char *hb_compLocalVariableName(PHB_HFUNC pFunc, HB_USHORT wVar)
+const char *hb_compLocalVariableName(HB_HFUNC *pFunc, HB_USHORT wVar)
 {
   if (pFunc->wParamCount && !(pFunc->funFlags & HB_FUNF_USES_LOCAL_PARAMS)) {
     wVar -= pFunc->wParamCount;
@@ -809,7 +809,7 @@ const char *hb_compLocalVariableName(PHB_HFUNC pFunc, HB_USHORT wVar)
 
 const char *hb_compStaticVariableName(HB_COMP_DECL, HB_USHORT wVar)
 {
-  PHB_HFUNC pTmp = HB_COMP_PARAM->functions.pFirst;
+  HB_HFUNC *pTmp = HB_COMP_PARAM->functions.pFirst;
 
   while (pTmp->pNext && pTmp->pNext->iStaticsBase < wVar) {
     pTmp = pTmp->pNext;
@@ -1572,7 +1572,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
   }
 }
 
-static void hb_compOptimizeFrames(HB_COMP_DECL, PHB_HFUNC pFunc)
+static void hb_compOptimizeFrames(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   if (pFunc == nullptr) {
     return;
@@ -1712,7 +1712,7 @@ static void hb_compWarnUnusedVar(HB_COMP_DECL, const char *szFuncName, const cha
 
 static void hb_compFinalizeFunction(HB_COMP_DECL) // fixes all last defined function returns jumps offsets
 {
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
   if (pFunc) {
     if ((pFunc->funFlags & HB_FUNF_WITH_RETURN) == 0) {
@@ -1780,9 +1780,9 @@ static void hb_compFinalizeFunction(HB_COMP_DECL) // fixes all last defined func
 
 // This function creates and initializes the HB_HFUNC structure
 
-static PHB_HFUNC hb_compFunctionNew(HB_COMP_DECL, const char *szName, HB_SYMBOLSCOPE cScope)
+static HB_HFUNC *hb_compFunctionNew(HB_COMP_DECL, const char *szName, HB_SYMBOLSCOPE cScope)
 {
-  auto pFunc = static_cast<PHB_HFUNC>(hb_xgrabz(sizeof(HB_HFUNC)));
+  auto pFunc = static_cast<HB_HFUNC *>(hb_xgrabz(sizeof(HB_HFUNC)));
 
   pFunc->szName = szName;
   pFunc->cScope = cScope;
@@ -1809,9 +1809,9 @@ static PHB_HINLINE hb_compInlineNew(HB_COMP_DECL, const char *szName, int iLine)
 }
 
 // NOTE: Names of variables and functions are released in hbident.c on exit
-static PHB_HFUNC hb_compFunctionKill(HB_COMP_DECL, PHB_HFUNC pFunc)
+static HB_HFUNC *hb_compFunctionKill(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
-  PHB_HFUNC pNext = pFunc->pNext;
+  HB_HFUNC *pNext = pFunc->pNext;
   PHB_ENUMERATOR pEVar;
   HB_HVAR *pVar;
 
@@ -1910,10 +1910,10 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
   }
 }
 
-static void hb_compAddFunc(HB_COMP_DECL, PHB_HFUNC pFunc)
+static void hb_compAddFunc(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   while (HB_COMP_PARAM->functions.pLast && !HB_COMP_PARAM->functions.pLast->szName) {
-    PHB_HFUNC pBlock = HB_COMP_PARAM->functions.pLast;
+    HB_HFUNC *pBlock = HB_COMP_PARAM->functions.pLast;
     HB_COMP_PARAM->functions.pLast = pBlock->pOwner;
     hb_compFunctionKill(HB_COMP_PARAM, pBlock);
   }
@@ -1927,9 +1927,9 @@ static void hb_compAddFunc(HB_COMP_DECL, PHB_HFUNC pFunc)
   HB_COMP_PARAM->functions.iCount++;
 }
 
-static PHB_HFUNC hb_compFunctionFind(HB_COMP_DECL, const char *szName, HB_BOOL fLocal)
+static HB_HFUNC *hb_compFunctionFind(HB_COMP_DECL, const char *szName, HB_BOOL fLocal)
 {
-  PHB_HFUNC pFunc;
+  HB_HFUNC *pFunc;
 
   if (HB_COMP_PARAM->iModulesCount <= 1) {
     pFunc = HB_COMP_PARAM->functions.pFirst;
@@ -1955,7 +1955,7 @@ static PHB_HFUNC hb_compFunctionFind(HB_COMP_DECL, const char *szName, HB_BOOL f
 
 static bool hb_compIsModuleFunc(HB_COMP_DECL, const char *szFunctionName)
 {
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
 
   while (pFunc) {
     if ((pFunc->cScope & HB_FS_STATIC) == 0 && hb_stricmp(pFunc->szName, szFunctionName) == 0) {
@@ -1969,7 +1969,7 @@ static bool hb_compIsModuleFunc(HB_COMP_DECL, const char *szFunctionName)
 static void hb_compUpdateFunctionNames(HB_COMP_DECL)
 {
   if (HB_COMP_PARAM->iModulesCount > 1) {
-    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
 
     while (pFunc) {
       if ((pFunc->cScope & (HB_FS_STATIC | HB_FS_INITEXIT)) != 0) {
@@ -2014,7 +2014,7 @@ static bool hb_compCheckReservedNames(HB_COMP_DECL, const char *szFunName, bool 
   }
 }
 
-static bool hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, bool fError)
+static bool hb_compRegisterFunc(HB_COMP_DECL, HB_HFUNC *pFunc, bool fError)
 {
   if (hb_compFunctionFind(HB_COMP_PARAM, pFunc->szName, (pFunc->cScope & HB_FS_STATIC) != 0)) {
     // The name of a function/procedure is already defined
@@ -2055,7 +2055,7 @@ void hb_compFunctionAdd(HB_COMP_DECL, const char *szFunName, HB_SYMBOLSCOPE cSco
     szFunName = hb_compIdentifierNew(HB_COMP_PARAM, szNewName, HB_IDENT_COPY);
   }
 
-  PHB_HFUNC pFunc = hb_compFunctionNew(HB_COMP_PARAM, szFunName, cScope);
+  HB_HFUNC *pFunc = hb_compFunctionNew(HB_COMP_PARAM, szFunName, cScope);
   pFunc->funFlags |= iType;
 
   if ((iType & HB_FUNF_FILE_DECL) == 0) {
@@ -2094,7 +2094,7 @@ static void hb_compAnnounce(HB_COMP_DECL, const char *szFunName)
 
   hb_compCheckReservedNames(HB_COMP_PARAM, szFunName, true);
 
-  PHB_HFUNC pFunc = hb_compFunctionFind(HB_COMP_PARAM, szFunName, false);
+  HB_HFUNC *pFunc = hb_compFunctionFind(HB_COMP_PARAM, szFunName, false);
   if (pFunc) {
     // there is a function/procedure defined already - ANNOUNCEd procedure
     // have to be a public symbol - check if existing symbol is public
@@ -2184,7 +2184,7 @@ static void hb_compExternGen(HB_COMP_DECL)
   }
 }
 
-static void hb_compNOOPadd(PHB_HFUNC pFunc, HB_SIZE nPos)
+static void hb_compNOOPadd(HB_HFUNC *pFunc, HB_SIZE nPos)
 {
   pFunc->pCode[nPos] = HB_P_NOOP;
 
@@ -2198,7 +2198,7 @@ static void hb_compNOOPadd(PHB_HFUNC pFunc, HB_SIZE nPos)
 
 static void hb_compPrepareJumps(HB_COMP_DECL)
 {
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
   if (pFunc->nJumps) {
     pFunc->pJumps = static_cast<HB_SIZE *>(hb_xrealloc(pFunc->pJumps, sizeof(HB_SIZE) * (pFunc->nJumps + 1)));
@@ -2291,7 +2291,7 @@ void hb_compLinePush(HB_COMP_DECL) // generates the pcode with the currently com
 void hb_compStatmentStart(HB_COMP_DECL)
 {
   if ((HB_COMP_PARAM->functions.pLast->funFlags & HB_FUNF_STATEMENTS) == 0) {
-    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
     if ((pFunc->funFlags & HB_FUNF_FILE_DECL) != 0) {
       if (HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc(HB_COMP_PARAM, pFunc, false)) {
@@ -2357,7 +2357,7 @@ void hb_compGenStaticName(const char * szVarName, HB_COMP_DECL)
          hb_compStaticDefStart(HB_COMP_PARAM);
          bGlobal = 1;
       }
-      PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+      HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
       int iVar = hb_compStaticGetPos(szVarName, pFunc);
 
       hb_compGenPCode4(HB_P_STATICNAME, bGlobal, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
@@ -2560,7 +2560,7 @@ void hb_compGenPopVar(const char *szVarName,
       // Static variable
       hb_compGenPCode3(HB_P_POPSTATIC, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
       {
-        PHB_HFUNC pFunc;
+        HB_HFUNC *pFunc;
         // Check if we are generating a pop code for static variable
         // initialization function - if YES then we have to switch to a function
         // where the static variable was declared
@@ -2949,7 +2949,7 @@ void hb_compGenPushString(const char *szText, HB_SIZE nStrLen, HB_COMP_DECL)
   }
 }
 
-void hb_compNOOPfill(PHB_HFUNC pFunc, HB_SIZE nFrom, HB_ISIZ nCount, HB_BOOL fPop, HB_BOOL fCheck)
+void hb_compNOOPfill(HB_HFUNC *pFunc, HB_SIZE nFrom, HB_ISIZ nCount, HB_BOOL fPop, HB_BOOL fCheck)
 {
   while (nCount--) {
     if (fPop) {
@@ -2978,7 +2978,7 @@ void hb_compNOOPfill(PHB_HFUNC pFunc, HB_SIZE nFrom, HB_ISIZ nCount, HB_BOOL fPo
 
 static void hb_compRemovePCODE(HB_COMP_DECL, HB_SIZE nPos, HB_SIZE nCount, HB_BOOL fCanMove)
 {
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
   if (HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) || !fCanMove) {
 
@@ -3004,7 +3004,7 @@ static void hb_compRemovePCODE(HB_COMP_DECL, HB_SIZE nPos, HB_SIZE nCount, HB_BO
   }
 }
 
-HB_BOOL hb_compHasJump(PHB_HFUNC pFunc, HB_SIZE nPos)
+HB_BOOL hb_compHasJump(HB_HFUNC *pFunc, HB_SIZE nPos)
 {
   for (HB_SIZE nJump = 0; nJump < pFunc->nJumps; nJump++) {
     HB_SIZE nJumpAddr = pFunc->pJumps[nJump];
@@ -3203,7 +3203,7 @@ static void hb_compStaticDefThreadSet(HB_COMP_DECL)
     HB_USHORT uiCount = 0;
     HB_HVAR *pVar;
 
-    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
     while (pFunc) {
       pVar = pFunc->pStatics;
       while (pVar) {
@@ -3286,7 +3286,7 @@ static void hb_compLineNumberDefEnd(HB_COMP_DECL)
 
 void hb_compCodeBlockStart(HB_COMP_DECL, int iEarlyEvalPass)
 {
-  PHB_HFUNC pBlock;
+  HB_HFUNC *pBlock;
 
   pBlock = hb_compFunctionNew(HB_COMP_PARAM, nullptr, HB_FS_STATIC | HB_FS_LOCAL);
   pBlock->pOwner = HB_COMP_PARAM->functions.pLast;
@@ -3297,7 +3297,7 @@ void hb_compCodeBlockStart(HB_COMP_DECL, int iEarlyEvalPass)
 
 void hb_compCodeBlockEnd(HB_COMP_DECL)
 {
-  PHB_HFUNC pCodeblock = HB_COMP_PARAM->functions.pLast; // pointer to the current codeblock
+  HB_HFUNC *pCodeblock = HB_COMP_PARAM->functions.pLast; // pointer to the current codeblock
 
   // Check if the extended codeblock has return statement
   if ((pCodeblock->funFlags & HB_FUNF_EXTBLOCK)) {
@@ -3328,7 +3328,7 @@ void hb_compCodeBlockEnd(HB_COMP_DECL)
   HB_COMP_PARAM->functions.pLast = pCodeblock->pOwner;
 
   // find the function that owns the codeblock
-  PHB_HFUNC pFunc = pCodeblock->pOwner; // pointer to a function that owns a codeblock
+  HB_HFUNC *pFunc = pCodeblock->pOwner; // pointer to a function that owns a codeblock
   const char *pFuncName = pFunc->szName;
   while (pFunc->pOwner) {
     pFunc = pFunc->pOwner;
@@ -3453,7 +3453,7 @@ void hb_compCodeBlockEnd(HB_COMP_DECL)
 
 void hb_compCodeBlockStop(HB_COMP_DECL)
 {
-  PHB_HFUNC pCodeblock = HB_COMP_PARAM->functions.pLast; // pointer to the current codeblock
+  HB_HFUNC *pCodeblock = HB_COMP_PARAM->functions.pLast; // pointer to the current codeblock
 
   // return to pcode buffer of function/codeblock in which the current
   // codeblock was defined
@@ -3464,7 +3464,7 @@ void hb_compCodeBlockStop(HB_COMP_DECL)
   if (HB_COMP_PARAM->iWarnings) {
     HB_HVAR *pVar = pCodeblock->pLocals;
     // find the function that owns the codeblock
-    PHB_HFUNC pFunc = pCodeblock->pOwner;
+    HB_HFUNC *pFunc = pCodeblock->pOwner;
     while (pFunc->pOwner) {
       pFunc = pFunc->pOwner;
     }
@@ -3482,7 +3482,7 @@ void hb_compCodeBlockStop(HB_COMP_DECL)
 
 void hb_compCodeBlockRewind(HB_COMP_DECL)
 {
-  PHB_HFUNC pCodeblock = HB_COMP_PARAM->functions.pLast; // pointer to the current codeblock
+  HB_HFUNC *pCodeblock = HB_COMP_PARAM->functions.pLast; // pointer to the current codeblock
   pCodeblock->nPCodePos = 0;
 
   // Release the NOOP array.
@@ -3603,7 +3603,7 @@ static void hb_compOutputFile(HB_COMP_DECL)
   }
 }
 
-static void hb_compAddInitFunc(HB_COMP_DECL, PHB_HFUNC pFunc)
+static void hb_compAddInitFunc(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   HB_HSYMBOL *pSym = hb_compSymbolAdd(HB_COMP_PARAM, pFunc->szName, nullptr, HB_SYM_FUNCNAME);
 
@@ -3645,7 +3645,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
   }
 
   while (HB_COMP_PARAM->functions.pLast && !HB_COMP_PARAM->functions.pLast->szName) {
-    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
     HB_COMP_PARAM->functions.pLast = pFunc->pOwner;
     hb_compFunctionKill(HB_COMP_PARAM, pFunc);
   }
@@ -3657,7 +3657,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
   HB_COMP_PARAM->pInitFunc = nullptr;
 
   if (HB_COMP_PARAM->functions.pFirst) {
-    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
 
     while (pFunc) {
       pFunc = hb_compFunctionKill(HB_COMP_PARAM, pFunc);
@@ -4112,7 +4112,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
     if (HB_COMP_PARAM->iSyntaxCheckOnly == 0 && fGenCode && HB_COMP_PARAM->iErrorCount == 0) {
       const char *szFirstFunction = nullptr;
       int iFunctionCount = 0;
-      PHB_HFUNC pFunc;
+      HB_HFUNC *pFunc;
 
       pFunc = HB_COMP_PARAM->functions.pFirst;
 

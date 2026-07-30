@@ -828,7 +828,7 @@ static const PHB_OPT_FUNC s_opt_table[] =
 };
 // clang-format on
 
-void hb_compOptimizePCode(HB_COMP_DECL, PHB_HFUNC pFunc)
+void hb_compOptimizePCode(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   const PHB_OPT_FUNC *pFuncTable = s_opt_table;
 
@@ -942,7 +942,7 @@ static HB_ISIZ hb_compJumpGetOffset(HB_BYTE *pCode)
   return 0;
 }
 
-static void hb_compPCodeEnumScanLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
+static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
   HB_SIZE nPos = 0, nLastPos = 0;
   HB_SHORT isVar = 0;
@@ -1068,7 +1068,7 @@ static void hb_compPCodeEnumScanLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
   }
 }
 
-static void hb_compPCodeEnumSelfifyLocal(PHB_HFUNC pFunc, HB_SHORT isLocal)
+static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, HB_SHORT isLocal)
 {
   HB_SIZE nPos = 0, nLastPos = 0;
 
@@ -1111,7 +1111,7 @@ static void hb_compPCodeEnumSelfifyLocal(PHB_HFUNC pFunc, HB_SHORT isLocal)
   }
 }
 
-static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYTE *pMap, HB_SHORT isLocal,
+static int hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, HB_BYTE *pMap, HB_SHORT isLocal,
                                            bool fCanBreak)
 {
   for (;;) {
@@ -1195,7 +1195,7 @@ static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYT
   return 0;
 }
 
-static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
+static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
   HB_USHORT usLine = 0;
 
@@ -1313,7 +1313,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, PHB_HFUNC pFunc, PHB_OP
   hb_xfree(pMap);
 }
 
-static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
+static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
   HB_SIZE nPos = 0;
 
@@ -1394,7 +1394,7 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
 
 void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
 {
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
   // Many (perhaps ALL) functions of pcode trace optimization depends on pcodes.
   // Please, check these functions if new pcode is added, or existing changed.

@@ -2038,7 +2038,7 @@ Crlf       : '\n'       { HB_COMP_PARAM->fError = HB_FALSE; }
 static void hb_compLoopStart( HB_COMP_DECL, HB_BOOL fCanLoop )
 {
    PHB_LOOPEXIT pLoop = ( PHB_LOOPEXIT ) hb_xgrab( sizeof( HB_LOOPEXIT ) );
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    if( pFunc->pLoops )
    {
@@ -2067,7 +2067,7 @@ static void hb_compLoopStart( HB_COMP_DECL, HB_BOOL fCanLoop )
 static long hb_compLoopCount( HB_COMP_DECL )
 {
    PHB_LOOPEXIT pLastLoop, pLastExit, pLoop;
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
    long lCount = 0;
 
    pLastLoop = pLastExit = NULL;
@@ -2106,7 +2106,7 @@ static long hb_compLoopCount( HB_COMP_DECL )
 static void hb_compLoopLoop( HB_COMP_DECL )
 {
    PHB_LOOPEXIT pLast = NULL, pLoop;
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pLoop = pFunc->pLoops;
    while( pLoop )
@@ -2164,7 +2164,7 @@ static void hb_compLoopLoop( HB_COMP_DECL )
  */
 static void hb_compLoopExit( HB_COMP_DECL )
 {
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    if( ! pFunc->pLoops )
    {
@@ -2220,7 +2220,7 @@ static void hb_compLoopExit( HB_COMP_DECL )
  */
 static void hb_compLoopHere( HB_COMP_DECL )
 {
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
    PHB_LOOPEXIT pLoop = pFunc->pLoops, pFree, pLast;
 
    if( pLoop )
@@ -2246,7 +2246,7 @@ static void hb_compLoopHere( HB_COMP_DECL )
  */
 static void hb_compLoopEnd( HB_COMP_DECL )
 {
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
    PHB_LOOPEXIT pLoop = pFunc->pLoops, pLast = pFunc->pLoops, pExit, pFree;
 
    if( pLoop )
@@ -2273,7 +2273,7 @@ static void hb_compLoopEnd( HB_COMP_DECL )
    }
 }
 
-void hb_compLoopKill( PHB_HFUNC pFunc )
+void hb_compLoopKill( HB_HFUNC *pFunc )
 {
    PHB_LOOPEXIT pLoop, pFree;
 
@@ -2300,7 +2300,7 @@ void hb_compLoopKill( PHB_HFUNC pFunc )
 static void * hb_compElseIfGen( HB_COMP_DECL, void * pFirst, HB_SIZE nOffset )
 {
    PHB_ELSEIF pElseIf = ( PHB_ELSEIF ) hb_xgrab( sizeof( HB_ELSEIF ) ), pLast;
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pElseIf->nOffset = nOffset;
    pElseIf->pPrev   = NULL;
@@ -2341,7 +2341,7 @@ static void hb_compElseIfFix( HB_COMP_DECL, void * pFixElseIfs )
    }
 }
 
-void hb_compElseIfKill( PHB_HFUNC pFunc )
+void hb_compElseIfKill( HB_HFUNC *pFunc )
 {
    PHB_ELSEIF pFix;
    PHB_ELSEIF pDel;
@@ -2362,7 +2362,7 @@ void hb_compElseIfKill( PHB_HFUNC pFunc )
 static void hb_compRTVariableAdd( HB_COMP_DECL, PHB_EXPR pVar, HB_BOOL bPopInitValue )
 {
    PHB_RTVAR pRTvar = ( PHB_RTVAR ) hb_xgrab( sizeof( HB_RTVAR ) );
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pRTvar->pVar = pVar;
    pRTvar->bPopValue = bPopInitValue;
@@ -2384,7 +2384,7 @@ static void hb_compRTVariableAdd( HB_COMP_DECL, PHB_EXPR pVar, HB_BOOL bPopInitV
 static void hb_compRTVariableGen( HB_COMP_DECL, const char * szCreateFun )
 {
    HB_USHORT usCount = 0;
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
    PHB_RTVAR pVar = pFunc->rtvars;
    PHB_RTVAR pDel;
 
@@ -2421,7 +2421,7 @@ static void hb_compRTVariableGen( HB_COMP_DECL, const char * szCreateFun )
    pFunc->rtvars = NULL;
 }
 
-void hb_compRTVariableKill( HB_COMP_DECL, PHB_HFUNC pFunc )
+void hb_compRTVariableKill( HB_COMP_DECL, HB_HFUNC *pFunc )
 {
    PHB_RTVAR pVar;
 
@@ -2637,7 +2637,7 @@ static void hb_compEnumEnd( HB_COMP_DECL, PHB_EXPR pExpr )
 static void hb_compSwitchStart( HB_COMP_DECL, PHB_EXPR pExpr )
 {
    PHB_SWITCHCMD pSwitch = ( PHB_SWITCHCMD ) hb_xgrab( sizeof( HB_SWITCHCMD ) );
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pSwitch->pCases = NULL;
    pSwitch->pLast  = NULL;
@@ -2651,7 +2651,7 @@ static void hb_compSwitchStart( HB_COMP_DECL, PHB_EXPR pExpr )
 static void hb_compSwitchAdd( HB_COMP_DECL, PHB_EXPR pExpr )
 {
    PHB_SWITCHCASE pCase;
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
    pFunc->funFlags &= ~HB_FUNF_BREAK_CODE;
 
@@ -2721,7 +2721,7 @@ static void hb_compSwitchAdd( HB_COMP_DECL, PHB_EXPR pExpr )
 
 static void hb_compSwitchEnd( HB_COMP_DECL )
 {
-   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
    PHB_SWITCHCMD pSwitch = pFunc->pSwitch;
    PHB_EXPR pExpr = pSwitch->pExpr;
    PHB_SWITCHCASE pCase, pTmp;
@@ -2823,7 +2823,7 @@ static void hb_compSwitchEnd( HB_COMP_DECL )
 
 /* Release all switch statements
 */
-void hb_compSwitchKill( HB_COMP_DECL, PHB_HFUNC pFunc )
+void hb_compSwitchKill( HB_COMP_DECL, HB_HFUNC *pFunc )
 {
    PHB_SWITCHCASE pCase;
    PHB_SWITCHCMD pSwitch;
@@ -2929,7 +2929,7 @@ static void hb_compErrUnclosed( HB_COMP_DECL, const char * szStru )
 
 /* ************************************************************************* */
 
-HB_BOOL hb_compCheckUnclosedStru( HB_COMP_DECL, PHB_HFUNC pFunc )
+HB_BOOL hb_compCheckUnclosedStru( HB_COMP_DECL, HB_HFUNC *pFunc )
 {
    HB_BOOL fUnclosed = HB_TRUE;
 

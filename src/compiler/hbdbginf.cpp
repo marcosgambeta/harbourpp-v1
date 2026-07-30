@@ -54,7 +54,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
   HB_ULONG ulLine;
   const char *pszModuleName = "", *ptr;
 
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
 
   while (pFunc) {
     if ((pFunc->funFlags & HB_FUNF_FILE_DECL) == 0) {

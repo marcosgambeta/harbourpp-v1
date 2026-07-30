@@ -166,7 +166,7 @@ void hb_compGenError(HB_COMP_DECL, const char *const szErrors[], char cPrefix, i
                      const char *szError2)
 {
   if (!HB_COMP_PARAM->fExit && (cPrefix == 'F' || !HB_COMP_PARAM->fError)) {
-    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
+    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
 
     hb_compDispMessage(HB_COMP_PARAM, cPrefix, iError, szErrors[iError - 1], szError1, szError2);
 

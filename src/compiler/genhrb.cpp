@@ -33,7 +33,7 @@ constexpr HB_BYTE SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound fu
 
 static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
 {
-  PHB_HFUNC pFunc;
+  HB_HFUNC *pFunc;
   HB_HSYMBOL *pSym;
   HB_SIZE nSize;
 
@@ -109,7 +109,7 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
   HB_PUT_LE_UINT32(ptr, ulFunctions); // number of functions
   ptr += 4;
   // generate functions data
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
   while (pFunc) {
     if ((pFunc->funFlags & HB_FUNF_FILE_DECL) == 0) {
       nLen = strlen(pFunc->szName) + 1;

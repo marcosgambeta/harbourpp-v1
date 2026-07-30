@@ -26,8 +26,8 @@
 #include "hbassert.hpp"
 #include <string>
 
-static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE *yyc);
-static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE *yyc);
+static void hb_compGenCReadable(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc);
+static void hb_compGenCCompact(HB_HFUNC *pFunc, FILE *yyc);
 static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, bool fStrip, int iFuncSuffix);
 static void hb_writeEndInit(HB_COMP_DECL, FILE *yyc, const char *szModulname, const char *szSourceFile);
 
@@ -185,7 +185,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     hb_xfree(szHrb);
   }
 
-  PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
+  HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pFirst;
   while (pFunc && ((pFunc->funFlags & HB_FUNF_FILE_DECL) != 0 || pFunc == HB_COMP_PARAM->pInitFunc ||
                    pFunc == HB_COMP_PARAM->pLineFunc)) {
     pFunc = pFunc->pNext;
@@ -461,7 +461,7 @@ static void hb_compGenCByteStr(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
   }
 }
 
-static void hb_compGenCLocalName(PHB_HFUNC pFunc, int iLocal, HB_SIZE nPCodePos, PHB_GENC_INFO cargo)
+static void hb_compGenCLocalName(HB_HFUNC *pFunc, int iLocal, HB_SIZE nPCodePos, PHB_GENC_INFO cargo)
 {
   // Variable with negative order are local variables
   // referenced in a codeblock -handle it with care
@@ -2454,7 +2454,7 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
 };
 // clang-format on
 
-static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE *yyc)
+static void hb_compGenCReadable(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc)
 {
   const PHB_GENC_FUNC *pFuncTable = s_verbose_table;
 
@@ -2477,7 +2477,7 @@ static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE *yyc)
   fprintf(yyc, "   hb_vmExecute(pcode, symbols);\n}\n");
 }
 
-static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE *yyc)
+static void hb_compGenCCompact(HB_HFUNC *pFunc, FILE *yyc)
 {
   fprintf(yyc, "{\n\tstatic const HB_BYTE pcode[] =\n\t{\n\t\t");
 

@@ -139,7 +139,7 @@ static void hb_gencc_copyLocals(FILE *yyc, int iLocal1, int iLocal2)
   }
 }
 
-static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo,
+static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo,
                                        const char *szFunc)
 {
   if (HB_GENC_GETLABEL(nPCodePos + 1) == 0) {
@@ -193,7 +193,7 @@ static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE 
   return 1;
 }
 
-static int hb_gencc_checkNumAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
+static int hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -276,7 +276,7 @@ static int hb_gencc_checkNumAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCod
   return 0;
 }
 
-static int hb_gencc_checkPlusAhead(PHB_HFUNC pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
+static int hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -2098,7 +2098,7 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
 };
 // clang-format on
 
-void hb_compGenCRealCode(HB_COMP_DECL, PHB_HFUNC pFunc, FILE *yyc)
+void hb_compGenCRealCode(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc)
 {
   const PHB_GENC_FUNC *pFuncTable = s_verbose_table;
   HB_LABEL_INFO label_info;

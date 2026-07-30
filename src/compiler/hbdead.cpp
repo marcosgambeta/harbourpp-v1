@@ -504,7 +504,7 @@ static const PHB_CODETRACE_FUNC s_codeTraceFuncTable[] =
 };
 // clang-format on
 
-void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
+void hb_compCodeTraceMarkDead(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   const PHB_CODETRACE_FUNC *pFuncTable = s_codeTraceFuncTable;
 

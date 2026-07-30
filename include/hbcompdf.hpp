@@ -508,6 +508,53 @@ typedef struct HB_RTVAR_
 } HB_RTVAR, * PHB_RTVAR;
 
 /* structure to hold a Clipper defined function */
+#if defined(__cplusplus)
+struct _HB_HFUNC
+{
+   const char * szName;                   /* name of a defined Clipper function */
+   HB_SYMBOLSCOPE cScope;                 /* scope of a defined Clipper function */
+   HB_USHORT    funFlags;                 /* some flags we may need */
+   HB_USHORT    wParamCount;              /* number of declared parameters */
+   HB_USHORT    wParamNum;                /* current parameter number */
+   HB_HVAR *    pLocals;                  /* pointer to local variables list */
+   HB_HVAR *    pStatics;                 /* pointer to static variables list */
+   HB_HVAR *    pFields;                  /* pointer to fields variables list */
+   HB_HVAR *    pMemvars;                 /* pointer to memvar variables list */
+   HB_HVAR *    pDetached;                /* pointer to detached local variables list */
+   HB_HVAR *    pPrivates;                /* pointer to private variables list */
+   HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
+   HB_SIZE      nPCodeSize;               /* total memory size for pcode */
+   HB_SIZE      nPCodePos;                /* actual pcode offset */
+   HB_SIZE *    pNOOPs;                   /* pointer to the NOOP array */
+   HB_SIZE *    pJumps;                   /* pointer to the Jumps array */
+   HB_SIZE      nNOOPs;                   /* NOOPs Counter */
+   HB_SIZE      nJumps;                   /* Jumps Counter */
+   int          iStaticsBase;             /* base for this function statics */
+   int          iFuncSuffix;              /* function suffix for multiple static functions with the same name */
+   int          iEarlyEvalPass;           /* !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited */
+   HB_BOOL      fVParams;                 /* HB_TRUE if variable number of parameters is used */
+   HB_BOOL      bError;                   /* error during function compilation */
+   HB_BOOL      bBlock;                   /* HB_TRUE if simple codeblock body is compiled */
+   struct _HB_HFUNC * pOwner;             /* pointer to the function/procedure that owns the codeblock */
+   struct _HB_HFUNC * pNext;              /* pointer to the next defined function */
+   PHB_ENUMERATOR    pEnum;               /* pointer to FOR EACH variables */
+   PHB_LOOPEXIT      pLoops;
+   PHB_SWITCHCMD     pSwitch;
+   PHB_ELSEIF        elseif;
+   PHB_RTVAR         rtvars;
+   HB_USHORT         wSeqBegCounter;
+   HB_USHORT         wSeqCounter;
+   HB_USHORT         wAlwaysCounter;
+   HB_USHORT         wForCounter;
+   HB_USHORT         wIfCounter;
+   HB_USHORT         wWhileCounter;
+   HB_USHORT         wCaseCounter;
+   HB_USHORT         wSwitchCounter;
+   HB_USHORT         wWithObjectCnt;
+};
+using HB_HFUNC = _HB_HFUNC;
+using PHB_HFUNC = HB_HFUNC *;
+#else
 typedef struct _HB_HFUNC
 {
    const char * szName;                   /* name of a defined Clipper function */
@@ -551,6 +598,7 @@ typedef struct _HB_HFUNC
    HB_USHORT         wSwitchCounter;
    HB_USHORT         wWithObjectCnt;
 } HB_HFUNC, * PHB_HFUNC;
+#endif
 
 /* structure to hold PP #define variables passed as command-line parameters */
 #if defined(__cplusplus)
@@ -593,8 +641,8 @@ typedef struct _HB_HFUNCALL
 /* structure to control all Clipper defined functions */
 typedef struct
 {
-   PHB_HFUNC pFirst;            /* pointer to the first defined function */
-   PHB_HFUNC pLast;             /* pointer to the last defined function */
+   HB_HFUNC *pFirst;            /* pointer to the first defined function */
+   HB_HFUNC *pLast;             /* pointer to the last defined function */
    int       iCount;            /* number of defined functions */
 } HB_HFUNCTION_LIST;
 
@@ -613,7 +661,7 @@ struct _HB_HSYMBOL
    const char *   szName;     /* the name of the symbol */
    HB_SYMBOLSCOPE cScope;     /* the scope of the symbol */
    int            iFunc;      /* is it a function name (TRUE) or memvar (FALSE) */
-   PHB_HFUNC      pFunc;
+   HB_HFUNC *     pFunc;
    struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */
 };
 using HB_HSYMBOL = _HB_HSYMBOL;
@@ -624,7 +672,7 @@ typedef struct _HB_HSYMBOL
    const char *   szName;     /* the name of the symbol */
    HB_SYMBOLSCOPE cScope;     /* the scope of the symbol */
    int            iFunc;      /* is it a function name (TRUE) or memvar (FALSE) */
-   PHB_HFUNC      pFunc;
+   HB_HFUNC *     pFunc;
    struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */
 } HB_HSYMBOL, * PHB_HSYMBOL;
 #endif
@@ -654,7 +702,7 @@ typedef struct _HB_MODULE
 
 /* definitions for hb_compPCodeEval() support */
 typedef void * PHB_VOID;
-#define HB_PCODE_FUNC( func, type ) HB_SIZE func( PHB_HFUNC pFunc, HB_SIZE nPCodePos, type cargo )
+#define HB_PCODE_FUNC( func, type ) HB_SIZE func( HB_HFUNC *pFunc, HB_SIZE nPCodePos, type cargo )
 typedef HB_PCODE_FUNC( ( * PHB_PCODE_FUNC ), PHB_VOID );
 
 typedef struct _HB_DEBUGINFO
@@ -852,9 +900,9 @@ typedef struct _HB_COMP
    PHB_HCLASS        pFirstClass;
    PHB_HCLASS        pLastClass;
 
-   PHB_HFUNC         pInitFunc;
-   PHB_HFUNC         pLineFunc;
-   PHB_HFUNC         pDeclFunc;
+   HB_HFUNC *        pInitFunc;
+   HB_HFUNC *        pLineFunc;
+   HB_HFUNC *        pDeclFunc;
    HB_FNAME *        pFileName;
    HB_FNAME *        pOutPath;
    HB_FNAME *        pPpoPath;

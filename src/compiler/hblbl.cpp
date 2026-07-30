@@ -363,7 +363,7 @@ static const PHB_LABEL_FUNC s_GenLabelFuncTable[] =
 };
 // clang-format on
 
-void hb_compGenLabelTable(PHB_HFUNC pFunc, PHB_LABEL_INFO label_info)
+void hb_compGenLabelTable(HB_HFUNC *pFunc, PHB_LABEL_INFO label_info)
 {
   const PHB_LABEL_FUNC *pFuncTable = s_GenLabelFuncTable;
 
