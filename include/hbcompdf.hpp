@@ -658,6 +658,19 @@ typedef struct _HB_PPDEFINE
 #endif
 
 /* structure to hold an INLINE block of source */
+#if defined(__cplusplus)
+struct _HB_HINLINE
+{
+   const char * szName;                   /* name of a inline function */
+   HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
+   HB_SIZE      nPCodeSize;               /* total memory size for pcode */
+   const char * szFileName;               /* Source file name */
+   int          iLine;                    /* Source line number */
+   struct _HB_HINLINE * pNext;               /* pointer to the next defined inline */
+};
+using HB_HINLINE = _HB_HINLINE;
+using PHB_HINLINE = HB_HINLINE *; // deprecated in core code
+#else
 typedef struct _HB_HINLINE
 {
    const char * szName;                   /* name of a inline function */
@@ -667,6 +680,7 @@ typedef struct _HB_HINLINE
    int          iLine;                    /* Source line number */
    struct _HB_HINLINE * pNext;               /* pointer to the next defined inline */
 } HB_HINLINE, * PHB_HINLINE;
+#endif
 
 /* structure to hold a called functions */
 typedef struct _HB_HFUNCALL

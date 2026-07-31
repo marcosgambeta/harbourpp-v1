@@ -1794,9 +1794,9 @@ static HB_HFUNC *hb_compFunctionNew(HB_COMP_DECL, const char *szName, HB_SYMBOLS
   return pFunc;
 }
 
-static PHB_HINLINE hb_compInlineNew(HB_COMP_DECL, const char *szName, int iLine)
+static HB_HINLINE *hb_compInlineNew(HB_COMP_DECL, const char *szName, int iLine)
 {
-  auto pInline = static_cast<PHB_HINLINE>(hb_xgrab(sizeof(HB_HINLINE)));
+  auto pInline = static_cast<HB_HINLINE *>(hb_xgrab(sizeof(HB_HINLINE)));
 
   pInline->szName = szName;
   pInline->pCode = nullptr;
@@ -2134,7 +2134,7 @@ void hb_compFunctionMarkStatic(HB_COMP_DECL, const char *szFunName)
   }
 }
 
-PHB_HINLINE hb_compInlineAdd(HB_COMP_DECL, const char *szFunName, int iLine)
+HB_HINLINE *hb_compInlineAdd(HB_COMP_DECL, const char *szFunName, int iLine)
 {
   if (szFunName != nullptr) {
     HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
@@ -2143,7 +2143,7 @@ PHB_HINLINE hb_compInlineAdd(HB_COMP_DECL, const char *szFunName, int iLine)
     }
     pSym->cScope |= HB_FS_STATIC | HB_FS_LOCAL;
   }
-  PHB_HINLINE pInline = hb_compInlineNew(pComp, szFunName, iLine);
+  HB_HINLINE *pInline = hb_compInlineNew(pComp, szFunName, iLine);
 
   if (HB_COMP_PARAM->inlines.iCount == 0) {
     HB_COMP_PARAM->inlines.pFirst = pInline;
@@ -3692,7 +3692,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
   }
 
   while (HB_COMP_PARAM->inlines.pFirst) {
-    PHB_HINLINE pInline = HB_COMP_PARAM->inlines.pFirst;
+    HB_HINLINE *pInline = HB_COMP_PARAM->inlines.pFirst;
 
     HB_COMP_PARAM->inlines.pFirst = pInline->pNext;
     if (pInline->pCode) {

@@ -48,7 +48,7 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
 static void hb_compDumpFindCFunc(HB_COMP_DECL)
 {
-  PHB_HINLINE pInline = HB_COMP_PARAM->inlines.pFirst;
+  HB_HINLINE *pInline = HB_COMP_PARAM->inlines.pFirst;
   while (pInline) {
     if (pInline->pCode && !pInline->szName) {
       const char *pszCCode = reinterpret_cast<const char *>(pInline->pCode);
@@ -192,7 +192,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
   }
 
   HB_HSYMBOL *pSym;
-  PHB_HINLINE pInline;
+  HB_HINLINE *pInline;
   auto fHasHbInline = false;
 
   if (pFunc) {
