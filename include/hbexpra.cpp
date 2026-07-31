@@ -157,7 +157,7 @@ PHB_EXPR hb_compExprNewFunCall(PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL)
         if (szMessage)
         {
           int iCount = (int)hb_compExprParamListLen(pParms);
-          PHB_ENUMERATOR pForVar, pEnumVar = NULL;
+          HB_ENUMERATOR *pForVar, *pEnumVar = NULL;
 
           pForVar = HB_COMP_PARAM->functions.pLast->pEnum;
 

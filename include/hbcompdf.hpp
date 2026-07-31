@@ -490,12 +490,23 @@ typedef struct HB_EXPR_
    struct HB_EXPR_ * pNext;   /* next expression in the list of expressions */
 } HB_EXPR, * PHB_EXPR;
 
+#if defined(__cplusplus)
+struct HB_ENUMERATOR_
+{
+   const char * szName;
+   int iForEachDir;     /* 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant) */
+   struct HB_ENUMERATOR_ *pNext;
+};
+using HB_ENUMERATOR = HB_ENUMERATOR_;
+using PHB_ENUMERATOR = HB_ENUMERATOR *; /* support structure for FOR EACH statements */ // PHB_ENUMERATOR deprecated in core code
+#else
 typedef struct HB_ENUMERATOR_
 {
    const char * szName;
    int iForEachDir;     /* 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant) */
    struct HB_ENUMERATOR_ *pNext;
 } HB_ENUMERATOR, * PHB_ENUMERATOR; /* support structure for FOR EACH statements */
+#endif
 
 /* support structure for else if pcode fixups */
 typedef struct HB_ELSEIF_
@@ -575,7 +586,7 @@ struct _HB_HFUNC
    HB_BOOL      bBlock;                   /* HB_TRUE if simple codeblock body is compiled */
    struct _HB_HFUNC * pOwner;             /* pointer to the function/procedure that owns the codeblock */
    struct _HB_HFUNC * pNext;              /* pointer to the next defined function */
-   PHB_ENUMERATOR    pEnum;               /* pointer to FOR EACH variables */
+   HB_ENUMERATOR *   pEnum;               /* pointer to FOR EACH variables */
    PHB_LOOPEXIT      pLoops;
    PHB_SWITCHCMD     pSwitch;
    PHB_ELSEIF        elseif;
@@ -621,7 +632,7 @@ typedef struct _HB_HFUNC
    HB_BOOL      bBlock;                   /* HB_TRUE if simple codeblock body is compiled */
    struct _HB_HFUNC * pOwner;             /* pointer to the function/procedure that owns the codeblock */
    struct _HB_HFUNC * pNext;              /* pointer to the next defined function */
-   PHB_ENUMERATOR    pEnum;               /* pointer to FOR EACH variables */
+   HB_ENUMERATOR *   pEnum;               /* pointer to FOR EACH variables */
    PHB_LOOPEXIT      pLoops;
    PHB_SWITCHCMD     pSwitch;
    PHB_ELSEIF        elseif;

@@ -2494,18 +2494,18 @@ static void hb_compVariableDim( const char * szName, PHB_EXPR pInitValue, HB_COM
 
 static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDir )
 {
-   PHB_ENUMERATOR pEnumVar;
+   HB_ENUMERATOR *pEnumVar;
 
    pEnumVar = HB_COMP_PARAM->functions.pLast->pEnum;
    if( pEnumVar == NULL )
    {
-      HB_COMP_PARAM->functions.pLast->pEnum = static_cast<PHB_ENUMERATOR>(hb_xgrab(sizeof(HB_ENUMERATOR)));
+      HB_COMP_PARAM->functions.pLast->pEnum = static_cast<HB_ENUMERATOR *>(hb_xgrab(sizeof(HB_ENUMERATOR)));
       pEnumVar = HB_COMP_PARAM->functions.pLast->pEnum;
    }
    else
    {
       HB_BOOL bWarn = HB_TRUE;
-      PHB_ENUMERATOR pLast = pEnumVar;
+      HB_ENUMERATOR *pLast = pEnumVar;
 
       while( pEnumVar )
       {
@@ -2521,7 +2521,7 @@ static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDi
          pLast = pEnumVar;
          pEnumVar = pEnumVar->pNext;
       }
-      pLast->pNext = static_cast<PHB_ENUMERATOR>(hb_xgrab(sizeof(HB_ENUMERATOR)));
+      pLast->pNext = static_cast<HB_ENUMERATOR *>(hb_xgrab(sizeof(HB_ENUMERATOR)));
       pEnumVar = pLast->pNext;
    }
    pEnumVar->szName      = szVarName;
@@ -2531,7 +2531,7 @@ static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDi
 
 static HB_BOOL hb_compForEachVarError( HB_COMP_DECL, const char *szVarName, int * piDir )
 {
-   PHB_ENUMERATOR pEnumVar;
+   HB_ENUMERATOR *pEnumVar;
 
    pEnumVar = HB_COMP_PARAM->functions.pLast->pEnum;
    if( pEnumVar && ! HB_COMP_PARAM->functions.pLast->bBlock )
@@ -2559,7 +2559,7 @@ static HB_BOOL hb_compForEachVarError( HB_COMP_DECL, const char *szVarName, int 
 
 static void hb_compForEnd( HB_COMP_DECL, const char *szVar )
 {
-   PHB_ENUMERATOR * pEnumVar;
+   HB_ENUMERATOR **pEnumVar;
 
    HB_SYMBOL_UNUSED( szVar );
 

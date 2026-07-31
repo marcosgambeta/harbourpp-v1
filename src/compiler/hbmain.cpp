@@ -1812,7 +1812,7 @@ static HB_HINLINE *hb_compInlineNew(HB_COMP_DECL, const char *szName, int iLine)
 static HB_HFUNC *hb_compFunctionKill(HB_COMP_DECL, HB_HFUNC *pFunc)
 {
   HB_HFUNC *pNext = pFunc->pNext;
-  PHB_ENUMERATOR pEVar;
+  HB_ENUMERATOR *pEVar;
   HB_HVAR *pVar;
 
   hb_compRTVariableKill(HB_COMP_PARAM, pFunc);
