@@ -2578,12 +2578,16 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          CASE SubStr(cParamL, 5 + 1) == "iso14" ; hbmk[_HBMK_cCPP] := "iso14"
          CASE SubStr(cParamL, 5 + 1) == "iso17" ; hbmk[_HBMK_cCPP] := "iso17"
          CASE SubStr(cParamL, 5 + 1) == "iso20" ; hbmk[_HBMK_cCPP] := "iso20"
+         CASE SubStr(cParamL, 5 + 1) == "iso23" ; hbmk[_HBMK_cCPP] := "iso23"
+         CASE SubStr(cParamL, 5 + 1) == "iso26" ; hbmk[_HBMK_cCPP] := "iso26"
          CASE SubStr(cParamL, 5 + 1) == "gnu98" ; hbmk[_HBMK_cCPP] := "gnu98"
          CASE SubStr(cParamL, 5 + 1) == "gnu0x" ; hbmk[_HBMK_cCPP] := "gnu0x"
          CASE SubStr(cParamL, 5 + 1) == "gnu11" ; hbmk[_HBMK_cCPP] := "gnu11"
          CASE SubStr(cParamL, 5 + 1) == "gnu14" ; hbmk[_HBMK_cCPP] := "gnu14"
          CASE SubStr(cParamL, 5 + 1) == "gnu17" ; hbmk[_HBMK_cCPP] := "gnu17"
          CASE SubStr(cParamL, 5 + 1) == "gnu20" ; hbmk[_HBMK_cCPP] := "gnu20"
+         CASE SubStr(cParamL, 5 + 1) == "gnu23" ; hbmk[_HBMK_cCPP] := "gnu23"
+         CASE SubStr(cParamL, 5 + 1) == "gnu26" ; hbmk[_HBMK_cCPP] := "gnu26"
          CASE SubStr(cParamL, 5 + 1) == ""      ; hbmk[_HBMK_cCPP] := ""
          OTHERWISE                                ; InvalidOptionValue(hbmk, aParam)
          ENDCASE
@@ -7133,12 +7137,16 @@ STATIC FUNCTION gcc_opt_lngcpp_fill(hbmk)
       CASE "iso14" ; RETURN "-std=c++14" // aka c++1y
       CASE "iso17" ; RETURN "-std=c++17" // aka c++1z
       CASE "iso20" ; RETURN "-std=c++20" // aka c++2a
+      CASE "iso23" ; RETURN "-std=c++23" // aka c++2b
+      CASE "iso26" ; RETURN "-std=c++26" // aka c++2c
       CASE "gnu98" ; RETURN "-std=gnu++98"
       CASE "gnu0x" ; RETURN "-std=gnu++0x"
       CASE "gnu11" ; RETURN "-std=gnu++11"
       CASE "gnu14" ; RETURN "-std=gnu++14"
       CASE "gnu17" ; RETURN "-std=gnu++17"
       CASE "gnu20" ; RETURN "-std=gnu++20"
+      CASE "gnu23" ; RETURN "-std=gnu++23"
+      CASE "gnu26" ; RETURN "-std=gnu++26"
       ENDSWITCH
 
    CASE HBMK_ISCOMP("icc|icc64")
@@ -16003,6 +16011,9 @@ STATIC FUNCTION FilterFlags(cFlags) // TODO: find a better solution
    cFlags := StrTran(cFlags, "-std=c++17", "")
    cFlags := StrTran(cFlags, "-std=c++20", "")
    cFlags := StrTran(cFlags, "-std=c++23", "")
+   cFlags := StrTran(cFlags, "-std=c++26", "")
+   cFlags := StrTran(cFlags, "-std=c++2a", "")
+   cFlags := StrTran(cFlags, "-std=c++2b", "")
    cFlags := StrTran(cFlags, "-std=c++2c", "")
 
    RETURN cFlags
