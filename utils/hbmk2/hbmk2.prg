@@ -2662,6 +2662,16 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       CASE Left(cParamL, Len("-jobs=")) == "-jobs="
 
          cParam := SubStr(cParam, Len("-jobs=") + 1)
+         IF cParam == "allcores"
+#if defined(__PLATFORM__WINDOWS)
+            // Work only for MS-Windows.
+            cParam := GetEnv("NUMBER_OF_PROCESSORS")
+#else
+            // TODO: How to get the number of cores in others OS ?
+            cParam := "1"
+#endif
+         ENDIF
+         //
          IF hb_mtvm() .AND. Val(cParam) > 0
             l_nJOBS := Val(cParam)
          ENDIF
