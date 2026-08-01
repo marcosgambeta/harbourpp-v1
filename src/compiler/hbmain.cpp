@@ -1893,6 +1893,7 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
     szExternName = "__GET";
   }
 
+#if 0 // old code for reference (to be deleted)
   HB_HEXTERN **pExtern = &HB_COMP_PARAM->externs;
   while (*pExtern) {
     if (strcmp((*pExtern)->szName, szExternName) == 0) {
@@ -1908,6 +1909,22 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
     (*pExtern)->cScope = cScope;
     (*pExtern)->pNext = nullptr;
   }
+#else
+  auto found = false;
+  for (auto item : HB_COMP_PARAM->externs) {
+    if (strcmp(item->szName, szExternName) == 0) {
+      found = true;
+      item->cScope |= cScope;
+      break;
+    }
+  }
+  if (!found) {
+    auto pExtern = static_cast<HB_HEXTERN *>(hb_xgrab(sizeof(HB_HEXTERN)));
+    pExtern->szName = szExternName;
+    pExtern->cScope = cScope;
+    HB_COMP_PARAM->externs.push_front(pExtern);
+  }
+#endif
 }
 
 static void hb_compAddFunc(HB_COMP_DECL, HB_HFUNC *pFunc)
@@ -2164,6 +2181,7 @@ void hb_compGenBreak(HB_COMP_DECL)
 }
 
 // generates the symbols for the EXTERN names
+#if 0 // old code for reference (to be deleted)
 static void hb_compExternGen(HB_COMP_DECL)
 {
   HB_HEXTERN *pDelete;
@@ -2183,6 +2201,22 @@ static void hb_compExternGen(HB_COMP_DECL)
     hb_xfree(pDelete);
   }
 }
+#else
+static void hb_compExternGen(HB_COMP_DECL)
+{
+  for (auto item : HB_COMP_PARAM->externs) {
+    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, item->szName, nullptr, HB_SYM_FUNCNAME);
+    if (pSym) {
+      pSym->cScope |= item->cScope;
+    } else if ((item->cScope & HB_FS_DEFERRED) == 0) {
+      pSym = hb_compSymbolAdd(HB_COMP_PARAM, item->szName, nullptr, HB_SYM_FUNCNAME);
+      pSym->cScope |= item->cScope;
+    }
+    hb_xfree(item);
+  }
+  HB_COMP_PARAM->externs.clear();
+}
+#endif
 
 static void hb_compNOOPadd(HB_HFUNC *pFunc, HB_SIZE nPos)
 {
@@ -3662,12 +3696,18 @@ void hb_compCompileEnd(HB_COMP_DECL)
     HB_COMP_PARAM->functions.pFirst = nullptr;
   }
 
+#if 0 // old code for reference (to be deleted)
   while (HB_COMP_PARAM->externs) {
     HB_HEXTERN *pExtern = HB_COMP_PARAM->externs;
-
     HB_COMP_PARAM->externs = pExtern->pNext;
     hb_xfree(pExtern);
   }
+#else
+  for (auto item : HB_COMP_PARAM->externs) {
+    hb_xfree(item);
+  }
+  HB_COMP_PARAM->externs.clear();
+#endif
 
   while (HB_COMP_PARAM->modules) {
     PHB_MODULE pModule = HB_COMP_PARAM->modules;

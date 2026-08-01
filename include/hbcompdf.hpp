@@ -48,6 +48,11 @@
 #include "hbpp.hpp"
 #include "hbhash.hpp"
 
+#if defined(__cplusplus)
+#include <iostream>
+#include <forward_list>
+#endif
+
 HB_EXTERN_BEGIN
 
 /* compiler related declarations */
@@ -753,12 +758,12 @@ struct _HB_HEXTERN
 {
    const char * szName;         /* name of the extern function */
    HB_SYMBOLSCOPE cScope;       /* the scope of the function */
-   struct _HB_HEXTERN * pNext;
+   //struct _HB_HEXTERN * pNext; (deprecated)
 };
 using HB_HEXTERN = _HB_HEXTERN;
 using PHB_HEXTERN = HB_HEXTERN *; /* support structure for extern symbols */ // PHB_HEXTERN deprecated in core code
 #else
-typedef struct _HB_HEXTERN
+typedef struct _HB_HEXTERN // deprecated
 {
    const char * szName;         /* name of the extern function */
    HB_SYMBOLSCOPE cScope;       /* the scope of the function */
@@ -962,7 +967,8 @@ typedef struct _HB_COMP
    HB_HFUNCTION_LIST functions;
    HB_HSYMBOL_LIST   symbols;
    HB_HINLINE_LIST   inlines;
-   HB_HEXTERN *      externs;
+   // HB_HEXTERN *      externs; (changed to std::forward_list)
+   std::forward_list<HB_HEXTERN *> externs;
    PHB_MODULE        modules;
    HB_VARTYPE *      pVarType;
    PHB_INCLST        incfiles;
