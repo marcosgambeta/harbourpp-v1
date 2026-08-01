@@ -1893,7 +1893,7 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
     szExternName = "__GET";
   }
 
-  PHB_HEXTERN *pExtern = &HB_COMP_PARAM->externs;
+  HB_HEXTERN **pExtern = &HB_COMP_PARAM->externs;
   while (*pExtern) {
     if (strcmp((*pExtern)->szName, szExternName) == 0) {
       break;
@@ -1903,7 +1903,7 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
   if (*pExtern) {
     (*pExtern)->cScope |= cScope;
   } else {
-    *pExtern = static_cast<PHB_HEXTERN>(hb_xgrab(sizeof(HB_HEXTERN)));
+    *pExtern = static_cast<HB_HEXTERN *>(hb_xgrab(sizeof(HB_HEXTERN)));
     (*pExtern)->szName = szExternName;
     (*pExtern)->cScope = cScope;
     (*pExtern)->pNext = nullptr;
@@ -2166,7 +2166,7 @@ void hb_compGenBreak(HB_COMP_DECL)
 // generates the symbols for the EXTERN names
 static void hb_compExternGen(HB_COMP_DECL)
 {
-  PHB_HEXTERN pDelete;
+  HB_HEXTERN *pDelete;
 
   while (HB_COMP_PARAM->externs) {
     HB_SYMBOLSCOPE cScope = HB_COMP_PARAM->externs->cScope;
@@ -3663,7 +3663,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
   }
 
   while (HB_COMP_PARAM->externs) {
-    PHB_HEXTERN pExtern = HB_COMP_PARAM->externs;
+    HB_HEXTERN *pExtern = HB_COMP_PARAM->externs;
 
     HB_COMP_PARAM->externs = pExtern->pNext;
     hb_xfree(pExtern);

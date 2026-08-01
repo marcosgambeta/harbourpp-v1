@@ -748,12 +748,23 @@ typedef struct
    int         iCount;          /* number of defined symbols */
 } HB_HSYMBOL_LIST;
 
+#if defined(__cplusplus)
+struct _HB_HEXTERN
+{
+   const char * szName;         /* name of the extern function */
+   HB_SYMBOLSCOPE cScope;       /* the scope of the function */
+   struct _HB_HEXTERN * pNext;
+};
+using HB_HEXTERN = _HB_HEXTERN;
+using PHB_HEXTERN = HB_HEXTERN *; /* support structure for extern symbols */ // PHB_HEXTERN deprecated in core code
+#else
 typedef struct _HB_HEXTERN
 {
    const char * szName;         /* name of the extern function */
    HB_SYMBOLSCOPE cScope;       /* the scope of the function */
    struct _HB_HEXTERN * pNext;
 } HB_HEXTERN, * PHB_HEXTERN;      /* support structure for extern symbols */
+#endif
 /* as they have to be placed on the symbol table later than the first public symbol */
 
 typedef struct _HB_MODULE
@@ -951,7 +962,7 @@ typedef struct _HB_COMP
    HB_HFUNCTION_LIST functions;
    HB_HSYMBOL_LIST   symbols;
    HB_HINLINE_LIST   inlines;
-   PHB_HEXTERN       externs;
+   HB_HEXTERN *      externs;
    PHB_MODULE        modules;
    HB_VARTYPE *      pVarType;
    PHB_INCLST        incfiles;
