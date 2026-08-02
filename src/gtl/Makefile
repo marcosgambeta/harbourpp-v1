@@ -23,9 +23,16 @@ CPP_SOURCES := \
    gttone.cpp \
    gx.cpp \
    hbgtcore.cpp \
+   maxrow.cpp \
+   saverest.cpp \
+   scroll.cpp \
+   scrrow.cpp \
+   setpos.cpp \
+   setposbs.cpp \
    xsavescr.cpp \
 
 PRG_SOURCES := \
+   savebuff.prg \
 
 LIBNAME := hbgtl
 

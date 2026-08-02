@@ -103,7 +103,6 @@ CPP_SOURCES := \
    lennum.cpp \
    libnamec.cpp \
    math.cpp \
-   maxrow.cpp \
    memofile.cpp \
    minmax.cpp \
    mlcfunc.cpp \
@@ -128,15 +127,10 @@ CPP_SOURCES := \
    rtlshort.cpp \
    run.cpp \
    samples.cpp \
-   saverest.cpp \
-   scroll.cpp \
-   scrrow.cpp \
    seconds.cpp \
    setcolor.cpp \
    setcurs.cpp \
    setkey.cpp \
-   setpos.cpp \
-   setposbs.cpp \
    sha1.cpp \
    sha1hmac.cpp \
    sha2.cpp \
@@ -218,6 +212,12 @@ CPP_SOURCES := \
 #   gttone.cpp \ (moved to gtl)
 #   gx.cpp \ (moved to gtl)
 #   hbgtcore.cpp \ (moved to gtl)
+#   maxrow.cpp \ (moved to gtl)
+#   saverest.cpp \ (moved to gtl)
+#   scroll.cpp \ (moved to gtl)
+#   scrrow.cpp \ (moved to gtl)
+#   setpos.cpp \ (moved to gtl)
+#   setposbs.cpp \ (moved to gtl)
 #   xsavescr.cpp \ (moved to gtl)
 
 PRG_SOURCES := \
@@ -262,7 +262,6 @@ PRG_SOURCES := \
    radiogrp.prg \
    readkey.prg \
    readvar.prg \
-   savebuff.prg \
    scrollbr.prg \
    setfunc.prg \
    setta.prg \
@@ -296,6 +295,8 @@ PRG_SOURCES := \
 #   dirscan.prg \ (moved to fsl)
 #   hbfilehi.prg \ (moved to fsl)
 #   vfilehi.prg \ (moved to fsl)
+
+#   savebuff.prg \ (moved to gtl)
 
 LIBNAME := hbrtl
 
