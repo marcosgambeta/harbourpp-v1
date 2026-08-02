@@ -19,6 +19,7 @@ else
          src/common \
          src/pp \
          src/gtl \
+         src/fsl \
          src/rtl \
          src/macro \
          src/lang \
@@ -93,7 +94,8 @@ else
       compiler \
       $(HB_COMP_DIR) \
       vm$(HB_COMP_RF2) \
-	  gtl$(HB_COMP_REF) \
+      gtl$(HB_COMP_REF) \
+      fsl$(HB_COMP_REF) \
       rtl$(HB_COMP_REF) \
       macro \
       codepage \
@@ -109,9 +111,9 @@ else
       ifneq ($(HB_BUILD_DYN),no)
          #DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm}
          ifeq ($(HB_PLATFORM),win)
-            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,gtl,rtl,vm,winapi}
-		 else  	
-            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,gtl,rtl,vm}
+            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,gtl,fsl,rtl,vm,winapi}
+         else
+            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,gtl,fsl,rtl,vm}
          endif
       endif
 

@@ -1635,14 +1635,14 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       aLIB_BASE_EXTERN  := { "hbextern" }
       aLIB_BASE_DEBUG   := { "hbdebug" }
       IF .T. .OR. (hbmk[_HBMK_nHBMODE] >= _HBMODE_HB10 .AND. hbmk[_HBMK_nHBMODE] <= _HBMODE_HB30)
-         aLIB_BASE_1    := { "hbvm", "hbgtl", "hbrtl", "hblang", "hbcpage" }
-         aLIB_BASE_1_MT    := iif(hbmk[_HBMK_nHBMODE] != _HBMODE_HB10, { "hbvmmt", "hbgtl", "hbrtl", "hblang", "hbcpage" }, aLIB_BASE_1)
+         aLIB_BASE_1    := { "hbvm", "hbfsl", "hbgtl", "hbrtl", "hblang", "hbcpage" }
+         aLIB_BASE_1_MT    := iif(hbmk[_HBMK_nHBMODE] != _HBMODE_HB10, { "hbvmmt", "hbfsl", "hbgtl", "hbrtl", "hblang", "hbcpage" }, aLIB_BASE_1)
       ELSE
          aLIB_BASE_1    := { "hbvm", "hbrtl", "hbnat" }
-         aLIB_BASE_1_MT    := iif(hbmk[_HBMK_nHBMODE] != _HBMODE_HB10, { "hbvmmt", "hbgtl", "hbrtl", "hbnat" }, aLIB_BASE_1)
+         aLIB_BASE_1_MT    := iif(hbmk[_HBMK_nHBMODE] != _HBMODE_HB10, { "hbvmmt", "hbfsl", "hbgtl", "hbrtl", "hbnat" }, aLIB_BASE_1)
       ENDIF
-      aLIB_BASE_2       := { "hbgtl", "hbrtl", "hbvm" }
-      aLIB_BASE_2_MT    := iif(hbmk[_HBMK_nHBMODE] != _HBMODE_HB10, { "hbgtl", "hbrtl", "hbvmmt" }, aLIB_BASE_2)
+      aLIB_BASE_2       := { "hbfsl", "hbgtl", "hbrtl", "hbvm" }
+      aLIB_BASE_2_MT    := iif(hbmk[_HBMK_nHBMODE] != _HBMODE_HB10, { "hbfsl", "hbgtl", "hbrtl", "hbvmmt" }, aLIB_BASE_2)
       aLIB_BASE_GT      := { "gtcgi", "gtpca", "gtstd" }
       aLIB_BASE_NULRDD  := { "hbnulrdd" }
       // Double 'hbrdd' is required for linkers which otherwise need lib grouping.

@@ -33,6 +33,7 @@ HB_DYN_LIBS := \
    hbcommon \
    hbpp \
    hbgtl \
+   hbfsl \
    hbrtl \
    hbmacro \
    hblang \

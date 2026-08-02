@@ -28,7 +28,6 @@ CPP_SOURCES := \
    chruni.cpp \
    colorind.cpp \
    console.cpp \
-   copyfile.cpp \
    cputime.cpp \
    datec.cpp \
    dates.cpp \
@@ -37,29 +36,14 @@ CPP_SOURCES := \
    defpath.cpp \
    defpathu.cpp \
    descend.cpp \
-   dirdrive.cpp \
-   direct.cpp \
-   diskspac.cpp \
-   disksphb.cpp \
    do.cpp \
    empty.cpp \
    errapi.cpp \
    errapiu.cpp \
    errint.cpp \
    errintlo.cpp \
-   file.cpp \
-   filebuf.cpp \
-   filebufd.cpp \
-   filehb.cpp \
-   filesys.cpp \
    fkmax.cpp \
    fmhb.cpp \
-   fnsplit.cpp \
-   fscopy.cpp \
-   fserr.cpp \
-   fslink.cpp \
-   fssize.cpp \
-   fstemp.cpp \
    gete.cpp \
    hardcr.cpp \
    hbadler.cpp \
@@ -75,9 +59,6 @@ CPP_SOURCES := \
    hbdef.cpp \
    hbdyn.cpp \
    hbdynhb.cpp \
-   hbfeof.cpp \
-   hbfile.cpp \
-   hbfilehc.cpp \
    hbhex.cpp \
    hbi18n1.cpp \
    hbinet.cpp \
@@ -112,7 +93,6 @@ CPP_SOURCES := \
    idle.cpp \
    inkey.cpp \
    inkeyapi.cpp \
-   iousr.cpp \
    is.cpp \
    isprint.cpp \
    itemseri.cpp \
@@ -141,8 +121,6 @@ CPP_SOURCES := \
    oldclear.cpp \
    pad.cpp \
    padx.cpp \
-   philes.cpp \
-   philes53.cpp \
    rat.cpp \
    replic.cpp \
    right.cpp \
@@ -167,7 +145,6 @@ CPP_SOURCES := \
    shadowu.cpp \
    soundex.cpp \
    space.cpp \
-   spfiles.cpp \
    str.cpp \
    strc.cpp \
    strcase.cpp \
@@ -201,9 +178,33 @@ CPP_SOURCES := \
    valtostr.cpp \
    valtype.cpp \
    version.cpp \
-   vfile.cpp \
    word.cpp \
    xhelp.cpp \
+
+#   copyfile.cpp \ (moved to fsl)
+#   dirdrive.cpp \ (moved to fsl)
+#   direct.cpp \ (moved to fsl)
+#   diskspac.cpp \ (moved to fsl)
+#   disksphb.cpp \ (moved to fsl)
+#   file.cpp \ (moved to fsl)
+#   filebuf.cpp \ (moved to fsl)
+#   filebufd.cpp \ (moved to fsl)
+#   filehb.cpp \ (moved to fsl)
+#   filesys.cpp \ (moved to fsl)
+#   fnsplit.cpp \ (moved to fsl)
+#   fscopy.cpp \ (moved to fsl)
+#   fserr.cpp \ (moved to fsl)
+#   fslink.cpp \ (moved to fsl)
+#   fssize.cpp \ (moved to fsl)
+#   fstemp.cpp \ (moved to fsl)
+#   hbfeof.cpp \ (moved to fsl)
+#   hbfile.cpp \ (moved to fsl)
+#   hbfilehc.cpp \ (moved to fsl)
+#   iousr.cpp \ (moved to fsl)
+#   philes.cpp \ (moved to fsl)
+#   philes53.cpp \ (moved to fsl)
+#   spfiles.cpp \ (moved to fsl)
+#   vfile.cpp \ (moved to fsl)
 
 #   box.cpp \ (moved to gtl)
 #   gt.cpp \ (moved to gtl)
@@ -221,7 +222,6 @@ CPP_SOURCES := \
 
 PRG_SOURCES := \
    achoice.prg \
-   adir.prg \
    alert.prg \
    altd.prg \
    browdb.prg \
@@ -232,7 +232,6 @@ PRG_SOURCES := \
    dbedit.prg \
    devoutp.prg \
    dircmd.prg \
-   dirscan.prg \
    einstv52.prg \
    einstvar.prg \
    einstvau.prg \
@@ -243,7 +242,6 @@ PRG_SOURCES := \
    getsyshb.prg \
    gui.prg \
    hbdoc.prg \
-   hbfilehi.prg \
    hbi18n2.prg \
    hbini.prg \
    input.prg \
@@ -292,8 +290,12 @@ PRG_SOURCES := \
    ttopbar.prg \
    typefile.prg \
    valtoexp.prg \
-   vfilehi.prg \
    wait.prg \
+
+#   adir.prg \ (moved to fsl)
+#   dirscan.prg \ (moved to fsl)
+#   hbfilehi.prg \ (moved to fsl)
+#   vfilehi.prg \ (moved to fsl)
 
 LIBNAME := hbrtl
 

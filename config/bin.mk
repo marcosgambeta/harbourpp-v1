@@ -58,12 +58,14 @@ else
       hbdebug \
       $(_HB_VM) \
       hbgtl \
+      hbfsl \
       hbrtl \
       hblang \
       hbcpage \
       $(HB_GT_LIBS) \
       $(_HB_RDD) \
       hbgtl \
+      hbfsl \
       hbrtl \
       $(_HB_VM) \
       hbmacro \
