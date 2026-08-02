@@ -772,12 +772,23 @@ typedef struct _HB_HEXTERN // deprecated
 #endif
 /* as they have to be placed on the symbol table later than the first public symbol */
 
+#if defined(__cplusplus)
+struct _HB_MODULE
+{
+   const char *         szName;
+   HB_BOOL              force;  /* force module compilation */
+   struct _HB_MODULE *  pNext;
+};
+using HB_MODULE = _HB_MODULE;
+using PHB_MODULE = HB_MODULE *; // deprecated in core code
+#else
 typedef struct _HB_MODULE
 {
    const char *         szName;
    HB_BOOL              force;  /* force module compilation */
    struct _HB_MODULE *  pNext;
 } HB_MODULE, * PHB_MODULE;
+#endif
 
 /* definitions for hb_compPCodeEval() support */
 typedef void * PHB_VOID;

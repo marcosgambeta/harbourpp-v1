@@ -3652,7 +3652,7 @@ void hb_compModuleAdd(HB_COMP_DECL, const char *szModuleName, HB_BOOL fForce)
 #endif
 
   if (!HB_COMP_PARAM->fSingleModule || fForce) {
-    PHB_MODULE *pModule = &HB_COMP_PARAM->modules;
+    HB_MODULE **pModule = &HB_COMP_PARAM->modules;
 
     while (*pModule) {
       if (hb_stricmp((*pModule)->szName, szModuleName) == 0) {
@@ -3661,7 +3661,7 @@ void hb_compModuleAdd(HB_COMP_DECL, const char *szModuleName, HB_BOOL fForce)
       pModule = &(*pModule)->pNext;
     }
 
-    *pModule = static_cast<PHB_MODULE>(hb_xgrab(sizeof(HB_MODULE)));
+    *pModule = static_cast<HB_MODULE *>(hb_xgrab(sizeof(HB_MODULE)));
     (*pModule)->szName = szModuleName;
     (*pModule)->force = fForce;
     (*pModule)->pNext = nullptr;
@@ -3710,7 +3710,7 @@ void hb_compCompileEnd(HB_COMP_DECL)
 #endif
 
   while (HB_COMP_PARAM->modules) {
-    PHB_MODULE pModule = HB_COMP_PARAM->modules;
+    HB_MODULE *pModule = HB_COMP_PARAM->modules;
 
     HB_COMP_PARAM->modules = pModule->pNext;
     hb_xfree(pModule);
@@ -3917,7 +3917,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
     }
   }
 
-  PHB_MODULE pModule = HB_COMP_PARAM->modules;
+  HB_MODULE *pModule = HB_COMP_PARAM->modules;
   while (iStatus == EXIT_SUCCESS && !HB_COMP_PARAM->fExit && (pModule || szBuffer)) {
     char szFileName[HB_PATH_MAX]; // filename to parse
     auto fSkip = false;

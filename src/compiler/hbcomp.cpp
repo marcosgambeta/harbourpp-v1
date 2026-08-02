@@ -289,7 +289,7 @@ void hb_comp_free(PHB_COMP pComp)
   }
 
   while (pComp->modules) {
-    PHB_MODULE pModule = pComp->modules;
+    HB_MODULE *pModule = pComp->modules;
 
     pComp->modules = pComp->modules->pNext;
     hb_xfree(pModule);
