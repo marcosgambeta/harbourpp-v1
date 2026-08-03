@@ -422,32 +422,27 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarTyp
   auto bFreeVar = true;
 
   if (HB_COMP_PARAM->iVarScope & HB_VSCOMP_MEMVAR) {
-    HB_HSYMBOL *pSym;
-    HB_USHORT wPos;
-
     if (HB_COMP_PARAM->fAutoMemvarAssume || HB_COMP_PARAM->iVarScope == HB_VSCOMP_MEMVAR) {
       // add this variable to the list of MEMVAR variables
-
       if (pFunc->pMemvars) {
         hb_compCheckDuplVars(HB_COMP_PARAM, pFunc->pMemvars, szVarName);
       }
-
       hb_compVarListAdd(&pFunc->pMemvars, pVar);
       bFreeVar = false;
     }
 
     switch (HB_COMP_PARAM->iVarScope) {
-    case HB_VSCOMP_MEMVAR:
+    case HB_VSCOMP_MEMVAR: {
       // variable declared in MEMVAR statement
       break;
-
-    case (HB_VSCOMP_PARAMETER | HB_VSCOMP_PRIVATE):
+    }
+    case (HB_VSCOMP_PARAMETER | HB_VSCOMP_PRIVATE): {
       if (++pFunc->wParamNum > pFunc->wParamCount) {
         pFunc->wParamCount = pFunc->wParamNum;
       }
-
-      pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR); // check if symbol exists already
-      if (!pSym) {
+      HB_USHORT wPos;
+      auto pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR); // check if symbol exists already
+      if (pSym == nullptr) {
         pSym = hb_compSymbolAdd(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR);
       }
       pSym->cScope |= HB_FS_MEMVAR;
@@ -470,10 +465,11 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarTyp
         hb_xfree(pVar);
       }
       break;
-
-    case HB_VSCOMP_PRIVATE:
-      pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR); // check if symbol exists already
-      if (!pSym) {
+    }
+    case HB_VSCOMP_PRIVATE: {
+      HB_USHORT wPos;
+      auto pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR); // check if symbol exists already
+      if (pSym == nullptr) {
         pSym = hb_compSymbolAdd(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR);
       }
       pSym->cScope |= HB_FS_MEMVAR;
@@ -494,10 +490,11 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarTyp
         hb_xfree(pVar);
       }
       break;
-
-    case HB_VSCOMP_PUBLIC:
-      pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR); // check if symbol exists already
-      if (!pSym) {
+    }
+    case HB_VSCOMP_PUBLIC: {
+      HB_USHORT wPos;
+      auto pSym = hb_compSymbolFind(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR); // check if symbol exists already
+      if (pSym == nullptr) {
         pSym = hb_compSymbolAdd(HB_COMP_PARAM, szVarName, &wPos, HB_SYM_MEMVAR);
       }
       pSym->cScope |= HB_FS_MEMVAR;
@@ -505,6 +502,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarTyp
         hb_xfree(pVar);
       }
       break;
+    }
     }
   } else {
     switch (HB_COMP_PARAM->iVarScope) {
@@ -522,18 +520,19 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, HB_VARTYPE *pVarTyp
       }
       break;
     }
-
-    case HB_VSCOMP_TH_STATIC:
+    case HB_VSCOMP_TH_STATIC: {
       pVar->uiFlags = HB_VSCOMP_THREAD;
       // fallthrough
-    case HB_VSCOMP_STATIC:
+    }
+    case HB_VSCOMP_STATIC: {
       ++HB_COMP_PARAM->iStaticCnt;
       hb_compVarListAdd(&pFunc->pStatics, pVar);
       break;
-
-    case HB_VSCOMP_FIELD:
+    }
+    case HB_VSCOMP_FIELD: {
       hb_compVarListAdd(&pFunc->pFields, pVar);
       break;
+    }
     }
   }
 }
