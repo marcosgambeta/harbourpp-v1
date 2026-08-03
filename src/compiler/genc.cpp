@@ -25,6 +25,7 @@
 #include "hbdate.hpp"
 #include "hbassert.hpp"
 #include <string>
+#include <vector>
 
 static void hb_compGenCReadable(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc);
 static void hb_compGenCCompact(HB_HFUNC *pFunc, FILE *yyc);
@@ -191,7 +192,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     pFunc = pFunc->pNext;
   }
 
-  HB_HSYMBOL *pSym;
+  //HB_HSYMBOL *pSym; (not used)
   HB_HINLINE *pInline;
   auto fHasHbInline = false;
 
@@ -214,8 +215,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     fprintf(yyc, "\n\n");
 
     // write functions prototypes
-    pSym = HB_COMP_PARAM->symbols.pFirst;
-    while (pSym) {
+    for (auto pSym : HB_COMP_PARAM->symbols) {
       if (pSym->iFunc) {
         if (pSym->szName[0] == '(') {
           fprintf(yyc, "HB_FUNC_INIT%s();\n", !memcmp(pSym->szName + 1, "_INITLINES", 10) ? "LINES" : "STATICS");
@@ -235,7 +235,6 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
           hb_compGenCFunc(yyc, "HB_FUNC_EXTERN(%s);\n", pSym->szName, false, 0);
         }
       }
-      pSym = pSym->pNext;
     }
 
     // writes the symbol table
@@ -254,8 +253,8 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     }
     fprintf(yyc, "\n\nHB_INIT_SYMBOLS_BEGIN(hb_vm_SymbolInit_%s)\n", szFileName);
 
-    pSym = HB_COMP_PARAM->symbols.pFirst;
-    while (pSym) {
+    std::size_t count = 0;
+    for (auto pSym : HB_COMP_PARAM->symbols) {
       if (pSym->szName[0] == '(') {
         // Since the normal function cannot be INIT and EXIT at the same time
         // we are using these two bits to mark the special function used to
@@ -310,11 +309,10 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
         }
       }
 
-      if (pSym != HB_COMP_PARAM->symbols.pLast) {
+      ++count;
+      if (count != HB_COMP_PARAM->symbols.size()) { // TODO: optimize
         fprintf(yyc, ",\n");
       }
-
-      pSym = pSym->pNext;
     }
 
     hb_writeEndInit(HB_COMP_PARAM, yyc, szFileName, HB_COMP_PARAM->szFile);

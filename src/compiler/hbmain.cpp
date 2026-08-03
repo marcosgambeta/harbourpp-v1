@@ -34,6 +34,8 @@
 
 #include "hbcomp.hpp"
 #include "hbset.hpp"
+#include <iostream>
+#include <vector>
 
 static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer, int iStartLine);
 static bool hb_compRegisterFunc(HB_COMP_DECL, HB_HFUNC *pFunc, bool fError);
@@ -249,18 +251,11 @@ static HB_HSYMBOL *hb_compSymbolAdd(HB_COMP_DECL, const char *szSymbolName, HB_U
   pSym->cScope = 0;
   pSym->iFunc = bFunction ? HB_COMP_PARAM->iModulesCount : 0;
   pSym->pFunc = nullptr;
-  pSym->pNext = nullptr;
 
-  if (!HB_COMP_PARAM->symbols.iCount) {
-    HB_COMP_PARAM->symbols.pFirst = HB_COMP_PARAM->symbols.pLast = pSym;
-  } else {
-    HB_COMP_PARAM->symbols.pLast->pNext = pSym;
-    HB_COMP_PARAM->symbols.pLast = pSym;
-  }
-  HB_COMP_PARAM->symbols.iCount++;
+  HB_COMP_PARAM->symbols.push_back(pSym);
 
   if (pwPos) {
-    *pwPos = static_cast<HB_USHORT>(HB_COMP_PARAM->symbols.iCount - 1); // position number starts form 0
+    *pwPos = static_cast<HB_USHORT>(HB_COMP_PARAM->symbols.size() - 1); // position number starts form 0
   }
 
   return pSym;
@@ -268,11 +263,10 @@ static HB_HSYMBOL *hb_compSymbolAdd(HB_COMP_DECL, const char *szSymbolName, HB_U
 
 static HB_HSYMBOL *hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, HB_BOOL bFunction)
 {
-  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
   HB_USHORT wCnt = 0;
   int iFunc = bFunction ? HB_COMP_PARAM->iModulesCount : 0;
 
-  while (pSym) {
+  for (auto pSym : HB_COMP_PARAM->symbols) {
     if (!strcmp(pSym->szName, szSymbolName)) {
       if (iFunc == pSym->iFunc) {
         if (pwPos) {
@@ -281,7 +275,6 @@ static HB_HSYMBOL *hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_
         return pSym;
       }
     }
-    pSym = pSym->pNext;
     ++wCnt;
   }
 
@@ -297,13 +290,10 @@ static HB_HSYMBOL *hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_
 
 const char *hb_compSymbolName(HB_COMP_DECL, HB_USHORT uiSymbol)
 {
-  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
-
-  while (pSym) {
+  for (auto pSym : HB_COMP_PARAM->symbols) { // TODO: optimize
     if (uiSymbol-- == 0) {
       return pSym->szName;
     }
-    pSym = pSym->pNext;
   }
   return nullptr;
 }
@@ -1893,23 +1883,6 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
     szExternName = "__GET";
   }
 
-#if 0 // old code for reference (to be deleted)
-  HB_HEXTERN **pExtern = &HB_COMP_PARAM->externs;
-  while (*pExtern) {
-    if (strcmp((*pExtern)->szName, szExternName) == 0) {
-      break;
-    }
-    pExtern = &(*pExtern)->pNext;
-  }
-  if (*pExtern) {
-    (*pExtern)->cScope |= cScope;
-  } else {
-    *pExtern = static_cast<HB_HEXTERN *>(hb_xgrab(sizeof(HB_HEXTERN)));
-    (*pExtern)->szName = szExternName;
-    (*pExtern)->cScope = cScope;
-    (*pExtern)->pNext = nullptr;
-  }
-#else
   auto found = false;
   for (auto item : HB_COMP_PARAM->externs) {
     if (strcmp(item->szName, szExternName) == 0) {
@@ -1924,7 +1897,6 @@ void hb_compExternAdd(HB_COMP_DECL, const char *szExternName, HB_SYMBOLSCOPE cSc
     pExtern->cScope = cScope;
     HB_COMP_PARAM->externs.push_front(pExtern);
   }
-#endif
 }
 
 static void hb_compAddFunc(HB_COMP_DECL, HB_HFUNC *pFunc)
@@ -1990,10 +1962,10 @@ static void hb_compUpdateFunctionNames(HB_COMP_DECL)
 
     while (pFunc) {
       if ((pFunc->cScope & (HB_FS_STATIC | HB_FS_INITEXIT)) != 0) {
-        HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst, *pFuncSym = nullptr;
+        HB_HSYMBOL *pFuncSym = nullptr;
         auto fExists = false;
 
-        while (pSym) {
+        for (auto pSym : HB_COMP_PARAM->symbols) {
           if (pSym->iFunc) {
             if (pSym->pFunc == pFunc) {
               pFuncSym = pSym;
@@ -2007,7 +1979,6 @@ static void hb_compUpdateFunctionNames(HB_COMP_DECL)
               break;
             }
           }
-          pSym = pSym->pNext;
         }
       }
       pFunc = pFunc->pNext;
@@ -2181,27 +2152,6 @@ void hb_compGenBreak(HB_COMP_DECL)
 }
 
 // generates the symbols for the EXTERN names
-#if 0 // old code for reference (to be deleted)
-static void hb_compExternGen(HB_COMP_DECL)
-{
-  HB_HEXTERN *pDelete;
-
-  while (HB_COMP_PARAM->externs) {
-    HB_SYMBOLSCOPE cScope = HB_COMP_PARAM->externs->cScope;
-    HB_HSYMBOL *pSym = hb_compSymbolFind(HB_COMP_PARAM, HB_COMP_PARAM->externs->szName, nullptr, HB_SYM_FUNCNAME);
-
-    if (pSym) {
-      pSym->cScope |= cScope;
-    } else if ((cScope & HB_FS_DEFERRED) == 0) {
-      pSym = hb_compSymbolAdd(HB_COMP_PARAM, HB_COMP_PARAM->externs->szName, nullptr, HB_SYM_FUNCNAME);
-      pSym->cScope |= cScope;
-    }
-    pDelete = HB_COMP_PARAM->externs;
-    HB_COMP_PARAM->externs = HB_COMP_PARAM->externs->pNext;
-    hb_xfree(pDelete);
-  }
-}
-#else
 static void hb_compExternGen(HB_COMP_DECL)
 {
   for (auto item : HB_COMP_PARAM->externs) {
@@ -2216,7 +2166,6 @@ static void hb_compExternGen(HB_COMP_DECL)
   }
   HB_COMP_PARAM->externs.clear();
 }
-#endif
 
 static void hb_compNOOPadd(HB_HFUNC *pFunc, HB_SIZE nPos)
 {
@@ -3551,9 +3500,10 @@ static void hb_compInitVars(HB_COMP_DECL)
   HB_COMP_PARAM->szAnnounce = nullptr;
   HB_COMP_PARAM->fSwitchCase = false;
 
-  HB_COMP_PARAM->symbols.iCount = 0;
-  HB_COMP_PARAM->symbols.pFirst = nullptr;
-  HB_COMP_PARAM->symbols.pLast = nullptr;
+  //HB_COMP_PARAM->symbols.iCount = 0; (deprecated)
+  //HB_COMP_PARAM->symbols.pFirst = nullptr; (deprecated)
+  //HB_COMP_PARAM->symbols.pLast = nullptr; (deprecated)
+  HB_COMP_PARAM->symbols.clear();
   HB_COMP_PARAM->pInitFunc = nullptr;
   HB_COMP_PARAM->pLineFunc = nullptr;
   HB_COMP_PARAM->pDeclFunc = nullptr;
@@ -3696,18 +3646,10 @@ void hb_compCompileEnd(HB_COMP_DECL)
     HB_COMP_PARAM->functions.pFirst = nullptr;
   }
 
-#if 0 // old code for reference (to be deleted)
-  while (HB_COMP_PARAM->externs) {
-    HB_HEXTERN *pExtern = HB_COMP_PARAM->externs;
-    HB_COMP_PARAM->externs = pExtern->pNext;
-    hb_xfree(pExtern);
-  }
-#else
   for (auto item : HB_COMP_PARAM->externs) {
     hb_xfree(item);
   }
   HB_COMP_PARAM->externs.clear();
-#endif
 
   while (HB_COMP_PARAM->modules) {
     HB_MODULE *pModule = HB_COMP_PARAM->modules;
@@ -3741,11 +3683,10 @@ void hb_compCompileEnd(HB_COMP_DECL)
     hb_xfree(pInline);
   }
 
-  while (HB_COMP_PARAM->symbols.pFirst) {
-    HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
-    HB_COMP_PARAM->symbols.pFirst = pSym->pNext;
+  for (auto pSym : HB_COMP_PARAM->symbols) {
     hb_xfree(pSym);
   }
+  HB_COMP_PARAM->symbols.clear();
 
   hb_compDeclaredReset(HB_COMP_PARAM);
 }

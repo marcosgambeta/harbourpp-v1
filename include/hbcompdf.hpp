@@ -51,6 +51,7 @@
 #if defined(__cplusplus)
 #include <iostream>
 #include <forward_list>
+#include <vector>
 #endif
 
 HB_EXTERN_BEGIN
@@ -730,7 +731,7 @@ struct _HB_HSYMBOL
    HB_SYMBOLSCOPE cScope;     /* the scope of the symbol */
    int            iFunc;      /* is it a function name (TRUE) or memvar (FALSE) */
    HB_HFUNC *     pFunc;
-   struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */
+   //struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */ (depprecated)
 };
 using HB_HSYMBOL = _HB_HSYMBOL;
 using PHB_HSYMBOL = HB_HSYMBOL *; // deprecated in core code
@@ -746,7 +747,7 @@ typedef struct _HB_HSYMBOL
 #endif
 
 /* symbol table support structures */
-typedef struct
+typedef struct // deprecated (changed to std::vector)
 {
    HB_HSYMBOL *pFirst;          /* pointer to the first defined symbol */
    HB_HSYMBOL *pLast;           /* pointer to the last defined symbol */
@@ -976,7 +977,8 @@ typedef struct _HB_COMP
 
    PHB_HASH_TABLE    pIdentifiers;
    HB_HFUNCTION_LIST functions;
-   HB_HSYMBOL_LIST   symbols;
+   // HB_HSYMBOL_LIST   symbols; (changed to std::vector)
+   std::vector<HB_HSYMBOL *> symbols;
    HB_HINLINE_LIST   inlines;
    // HB_HEXTERN *      externs; (changed to std::forward_list)
    std::forward_list<HB_HEXTERN *> externs;

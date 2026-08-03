@@ -25,6 +25,7 @@
 
 #include "hbcomp.hpp"
 #include <string>
+#include <vector>
 
 constexpr HB_BYTE SYM_NOLINK = 0;   // #define SYM_NOLINK 0 // symbol does not have to be linked
 constexpr HB_BYTE SYM_FUNC = 1;     // #define SYM_FUNC 1 // function defined in this module
@@ -37,11 +38,9 @@ static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulF
 
   // count total size
   HB_SIZE nSize = 10; // signature[4] + version[2] + symbols_number[4]
-  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
-  while (pSym) {
+  for (auto pSym : HB_COMP_PARAM->symbols) {
     (*pulSymbols)++;
     nSize += strlen(pSym->szName) + 3; // \0 + symscope[1] + symtype[1]
-    pSym = pSym->pNext;
   }
   nSize += 4; // functions_number[4]
   // Generate functions data
@@ -76,9 +75,8 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
   HB_PUT_LE_UINT32(ptr, ulSymbols); // number of symbols
   ptr += 4;
   // generate the symbol table
-  HB_HSYMBOL *pSym = HB_COMP_PARAM->symbols.pFirst;
   HB_SIZE nLen;
-  while (pSym) {
+  for (auto pSym : HB_COMP_PARAM->symbols) {
     nLen = strlen(pSym->szName) + 1;
     memcpy(ptr, pSym->szName, nLen);
     ptr += nLen;
@@ -99,7 +97,6 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
     } else {
       *ptr++ = SYM_NOLINK; // other symbol
     }
-    pSym = pSym->pNext;
   }
 
   HB_PUT_LE_UINT32(ptr, ulFunctions); // number of functions
