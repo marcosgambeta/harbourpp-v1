@@ -683,7 +683,7 @@ struct _HB_HINLINE
    HB_SIZE      nPCodeSize;               /* total memory size for pcode */
    const char * szFileName;               /* Source file name */
    int          iLine;                    /* Source line number */
-   struct _HB_HINLINE * pNext;               /* pointer to the next defined inline */
+   //struct _HB_HINLINE * pNext;               /* pointer to the next defined inline */ (deprecated)
 };
 using HB_HINLINE = _HB_HINLINE;
 using PHB_HINLINE = HB_HINLINE *; // deprecated in core code
@@ -716,7 +716,7 @@ typedef struct
 } HB_HFUNCTION_LIST;
 
 /* structure to control all Clipper defined functions */
-typedef struct
+typedef struct // deprecated (changed to std::vector)
 {
    PHB_HINLINE pFirst;        /* pointer to the first defined inline */
    PHB_HINLINE pLast;         /* pointer to the last defined inline */
@@ -979,7 +979,8 @@ typedef struct _HB_COMP
    HB_HFUNCTION_LIST functions;
    // HB_HSYMBOL_LIST   symbols; (changed to std::vector)
    std::vector<HB_HSYMBOL *> symbols;
-   HB_HINLINE_LIST   inlines;
+   //HB_HINLINE_LIST   inlines; (changed to std::vector)
+   std::vector<HB_HINLINE *> inlines;
    // HB_HEXTERN *      externs; (changed to std::forward_list)
    std::forward_list<HB_HEXTERN *> externs;
    PHB_MODULE        modules;

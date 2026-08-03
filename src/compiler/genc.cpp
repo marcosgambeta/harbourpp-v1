@@ -49,8 +49,7 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
 static void hb_compDumpFindCFunc(HB_COMP_DECL)
 {
-  HB_HINLINE *pInline = HB_COMP_PARAM->inlines.pFirst;
-  while (pInline) {
+  for (auto pInline : HB_COMP_PARAM->inlines) {
     if (pInline->pCode && !pInline->szName) {
       const char *pszCCode = reinterpret_cast<const char *>(pInline->pCode);
       char ch;
@@ -115,7 +114,6 @@ static void hb_compDumpFindCFunc(HB_COMP_DECL)
         }
       }
     }
-    pInline = pInline->pNext;
   }
 }
 
@@ -193,7 +191,6 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
   }
 
   //HB_HSYMBOL *pSym; (not used)
-  HB_HINLINE *pInline;
   auto fHasHbInline = false;
 
   if (pFunc) {
@@ -201,13 +198,11 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
 
     hb_compDumpFindCFunc(HB_COMP_PARAM);
 
-    pInline = HB_COMP_PARAM->inlines.pFirst;
-    while (pInline) {
+    for (auto pInline : HB_COMP_PARAM->inlines) {
       if (pInline->szName) {
         fHasHbInline = true;
         break;
       }
-      pInline = pInline->pNext;
     }
 
     hb_compGenCStdHeaders(HB_COMP_PARAM, yyc, fHasHbInline);
@@ -350,8 +345,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     }
 
     // Generate C++ inline functions
-    pInline = HB_COMP_PARAM->inlines.pFirst;
-    while (pInline) {
+    for (auto pInline : HB_COMP_PARAM->inlines) {
       if (pInline->pCode) {
         fprintf(yyc, "#line %i ", pInline->iLine);
         hb_compGenCString(yyc, reinterpret_cast<const HB_BYTE *>(pInline->szFileName), strlen(pInline->szFileName));
@@ -363,11 +357,9 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
 
         fprintf(yyc, "%s", pInline->pCode);
       }
-      pInline = pInline->pNext;
     }
   } else {
-    pInline = HB_COMP_PARAM->inlines.pFirst;
-    while (pInline) {
+    for (auto pInline : HB_COMP_PARAM->inlines) {
       if (pInline->pCode) {
         if (!fHasHbInline) {
           hb_compGenCStdHeaders(HB_COMP_PARAM, yyc, false);
@@ -383,7 +375,6 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
 
         fprintf(yyc, "%s", pInline->pCode);
       }
-      pInline = pInline->pNext;
     }
     if (!fHasHbInline) {
       fprintf(yyc, "\n/* Empty source file */\n");

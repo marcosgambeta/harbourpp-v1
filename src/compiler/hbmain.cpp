@@ -1790,7 +1790,6 @@ static HB_HINLINE *hb_compInlineNew(HB_COMP_DECL, const char *szName, int iLine)
   pInline->szName = szName;
   pInline->pCode = nullptr;
   pInline->nPCodeSize = 0;
-  pInline->pNext = nullptr;
   pInline->szFileName = hb_compIdentifierNew(HB_COMP_PARAM, hb_pp_fileName(HB_COMP_PARAM->pLex->pPP), HB_IDENT_COPY);
   pInline->iLine = iLine;
 
@@ -2132,15 +2131,7 @@ HB_HINLINE *hb_compInlineAdd(HB_COMP_DECL, const char *szFunName, int iLine)
   }
   HB_HINLINE *pInline = hb_compInlineNew(pComp, szFunName, iLine);
 
-  if (HB_COMP_PARAM->inlines.iCount == 0) {
-    HB_COMP_PARAM->inlines.pFirst = pInline;
-    HB_COMP_PARAM->inlines.pLast = pInline;
-  } else {
-    HB_COMP_PARAM->inlines.pLast->pNext = pInline;
-    HB_COMP_PARAM->inlines.pLast = pInline;
-  }
-
-  HB_COMP_PARAM->inlines.iCount++;
+  HB_COMP_PARAM->inlines.push_back(pInline);
 
   return pInline;
 }
@@ -3510,9 +3501,7 @@ static void hb_compInitVars(HB_COMP_DECL)
   HB_COMP_PARAM->iStaticCnt = 0;
   HB_COMP_PARAM->iVarScope = HB_VSCOMP_LOCAL;
 
-  HB_COMP_PARAM->inlines.iCount = 0;
-  HB_COMP_PARAM->inlines.pFirst = nullptr;
-  HB_COMP_PARAM->inlines.pLast = nullptr;
+  HB_COMP_PARAM->inlines.clear();
 
   HB_COMP_PARAM->szFile = nullptr;
 
@@ -3672,15 +3661,13 @@ void hb_compCompileEnd(HB_COMP_DECL)
     hb_xfree(pDefine);
   }
 
-  while (HB_COMP_PARAM->inlines.pFirst) {
-    HB_HINLINE *pInline = HB_COMP_PARAM->inlines.pFirst;
-
-    HB_COMP_PARAM->inlines.pFirst = pInline->pNext;
+  for (auto pInline : HB_COMP_PARAM->inlines) {
     if (pInline->pCode) {
       hb_xfree(pInline->pCode);
     }
     hb_xfree(pInline);
   }
+  HB_COMP_PARAM->inlines.clear();
 
   for (auto pSym : HB_COMP_PARAM->symbols) {
     hb_xfree(pSym);
