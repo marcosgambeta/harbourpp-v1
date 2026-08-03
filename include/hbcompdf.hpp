@@ -56,53 +56,53 @@
 
 HB_EXTERN_BEGIN
 
-/* compiler related declarations */
+// compiler related declarations
 
-/* Output types */
+// Output types
 typedef enum
 {
-   HB_LANG_C,                      /* C language (by default) <file.c> */
-   HB_LANG_PORT_OBJ,               /* Portable objects <file.hrb> */
-   HB_LANG_PORT_OBJ_BUF            /* Portable objects in memory buffer */
-} HB_LANGUAGES;                    /* supported Harbour output languages */
+   HB_LANG_C,                      // C language (by default) <file.c>
+   HB_LANG_PORT_OBJ,               // Portable objects <file.hrb>
+   HB_LANG_PORT_OBJ_BUF            // Portable objects in memory buffer
+} HB_LANGUAGES;                    // supported Harbour output languages
 
-/* Error message format modes */
+// Error message format modes
 typedef enum
 {
    HB_ERRORFMT_CLIPPER,
    HB_ERRORFMT_IDE
 } HB_ERRORFMT;
 
-struct _HB_HCLASS;    /* forward declaration */
+struct _HB_HCLASS;    // forward declaration
 
-/* Declared Function/Method support structure */
+// Declared Function/Method support structure
 #if defined(__cplusplus)
 struct _HB_HDECLARED
 {
-   const char *          szName;              /* the name of the symbol */
+   const char *          szName;              // the name of the symbol
    HB_BYTE               cType;
    HB_USHORT             iParamCount;
    HB_BYTE *             cParamTypes;
    struct _HB_HCLASS * pClass;
    struct _HB_HCLASS ** pParamClasses;
-   struct _HB_HDECLARED * pNext;               /* pointer to the next declared function */
+   struct _HB_HDECLARED * pNext;               // pointer to the next declared function
 };
 using HB_HDECLARED = _HB_HDECLARED;
 using PHB_HDECLARED = HB_HDECLARED *; // deprecated in core code
 #else
 typedef struct _HB_HDECLARED
 {
-   const char *          szName;              /* the name of the symbol */
+   const char *          szName;              // the name of the symbol
    HB_BYTE               cType;
    HB_USHORT             iParamCount;
    HB_BYTE *             cParamTypes;
    struct _HB_HCLASS * pClass;
    struct _HB_HCLASS ** pParamClasses;
-   struct _HB_HDECLARED * pNext;               /* pointer to the next declared function */
+   struct _HB_HDECLARED * pNext;               // pointer to the next declared function
 } HB_HDECLARED, * PHB_HDECLARED;
 #endif
 
-/* Declared Class support structure */
+// Declared Class support structure
 #if defined(__cplusplus)
 struct _HB_HCLASS
 {
@@ -123,36 +123,36 @@ typedef struct _HB_HCLASS
 } HB_HCLASS, * PHB_HCLASS;
 #endif
 
-/* locals, static, public variables support */
+// locals, static, public variables support
 #if defined(__cplusplus)
 struct _HB_HVAR
 {
-   const char *   szName;           /* variable name */
-   const char *   szAlias;          /* variable alias namespace */
-   int            iUsed;            /* number of times used */
-   int            iDeclLine;        /* declaration line number */
-   HB_USHORT      uiFlags;          /* optional flags, f.e. THREAD STATIC */
-   HB_BYTE        cType;            /* optional strong typing */
+   const char *   szName;           // variable name
+   const char *   szAlias;          // variable alias namespace
+   int            iUsed;            // number of times used
+   int            iDeclLine;        // declaration line number
+   HB_USHORT      uiFlags;          // optional flags, f.e. THREAD STATIC
+   HB_BYTE        cType;            // optional strong typing
    HB_HCLASS *    pClass;
-   struct _HB_HVAR * pNext;            /* pointer to next defined variable */
+   struct _HB_HVAR * pNext;            // pointer to next defined variable
 };
 using HB_HVAR = _HB_HVAR;
 using PHB_HVAR = HB_HVAR *; // deprecated in core code
 #else
 typedef struct _HB_HVAR
 {
-   const char *   szName;           /* variable name */
-   const char *   szAlias;          /* variable alias namespace */
-   int            iUsed;            /* number of times used */
-   int            iDeclLine;        /* declaration line number */
-   HB_USHORT      uiFlags;          /* optional flags, f.e. THREAD STATIC */
-   HB_BYTE        cType;            /* optional strong typing */
+   const char *   szName;           // variable name
+   const char *   szAlias;          // variable alias namespace
+   int            iUsed;            // number of times used
+   int            iDeclLine;        // declaration line number
+   HB_USHORT      uiFlags;          // optional flags, f.e. THREAD STATIC
+   HB_BYTE        cType;            // optional strong typing
    HB_HCLASS *    pClass;
-   struct _HB_HVAR * pNext;            /* pointer to next defined variable */
+   struct _HB_HVAR * pNext;            // pointer to next defined variable
 } HB_HVAR, * PHB_HVAR;
 #endif
 
-/* local variables declared in a codeblock */
+// local variables declared in a codeblock
 typedef struct HB_CBVAR_
 {
    const char * szName;
@@ -179,8 +179,7 @@ typedef struct _HB_VARTYPE
 } HB_VARTYPE, * PHB_VARTYPE;
 #endif
 
-/* value types seen at language level
- */
+// value types seen at language level
 #define HB_EV_UNKNOWN     0x0000
 #define HB_EV_NIL         0x0001
 #define HB_EV_NUMERIC     0x0002
@@ -196,48 +195,44 @@ typedef struct _HB_VARTYPE
 #define HB_EV_TIMESTAMP   0x0800
 #define HB_EV_HASH        0x1000
 
-/* messages sent to expressions
- */
+// messages sent to expressions
 typedef enum
 {
-   HB_EA_REDUCE = 0,    /* reduce the expression into optimized one */
-   HB_EA_ARRAY_AT,      /* check if the expression can be used as array */
-   HB_EA_ARRAY_INDEX,   /* check if the expression can be used as index */
-   HB_EA_LVALUE,        /* check if the expression can be used as lvalue (left side of an assignment) */
-   HB_EA_PUSH_PCODE,    /* generate the pcodes to push the value of expression */
-   HB_EA_POP_PCODE,     /* generate the pcodes to pop the value of expression */
-   HB_EA_PUSH_POP,      /* generate the pcodes to push and pop the expression */
-   HB_EA_STATEMENT,     /* generate the pcodes for a statement */
-   HB_EA_DELETE         /* delete components of the expression */
+   HB_EA_REDUCE = 0,    // reduce the expression into optimized one
+   HB_EA_ARRAY_AT,      // check if the expression can be used as array
+   HB_EA_ARRAY_INDEX,   // check if the expression can be used as index
+   HB_EA_LVALUE,        // check if the expression can be used as lvalue (left side of an assignment)
+   HB_EA_PUSH_PCODE,    // generate the pcodes to push the value of expression
+   HB_EA_POP_PCODE,     // generate the pcodes to pop the value of expression
+   HB_EA_PUSH_POP,      // generate the pcodes to push and pop the expression
+   HB_EA_STATEMENT,     // generate the pcodes for a statement
+   HB_EA_DELETE         // delete components of the expression
 } HB_EXPR_MESSAGE;
 
-/* additional definitions used to distinguish numeric expressions
- */
+// additional definitions used to distinguish numeric expressions
 #define HB_ET_LONG     1
 #define HB_ET_DOUBLE   2
 
-/* additional definitions used to distinguish macro expressions
- */
-#define HB_ET_MACRO_VAR       0x0001   /* &variable */
-#define HB_ET_MACRO_SYMBOL    0x0002   /* &fimcall() */
-#define HB_ET_MACRO_ALIASED   0x0004   /* &alias->&variable */
-#define HB_ET_MACRO_EXPR      0x0008   /* &( expr ) */
-#define HB_ET_MACRO_LIST      0x0010   /* &variable used as in literal arrays or function call argument. */
-#define HB_ET_MACRO_PARE      0x0020   /* &variable used as parenthesized expressions. */
-#define HB_ET_MACRO_REFER     0x0040   /* &macro used in @ (pass by reference) */
-#define HB_ET_MACRO_ASSIGN    0x0080   /* o:&msgname := value */
+// additional definitions used to distinguish macro expressions
+#define HB_ET_MACRO_VAR       0x0001   // &variable
+#define HB_ET_MACRO_SYMBOL    0x0002   // &fimcall()
+#define HB_ET_MACRO_ALIASED   0x0004   // &alias->&variable
+#define HB_ET_MACRO_EXPR      0x0008   // &( expr )
+#define HB_ET_MACRO_LIST      0x0010   // &variable used as in literal arrays or function call argument.
+#define HB_ET_MACRO_PARE      0x0020   // &variable used as parenthesized expressions.
+#define HB_ET_MACRO_REFER     0x0040   // &macro used in @ (pass by reference)
+#define HB_ET_MACRO_ASSIGN    0x0080   // o:&msgname := value
 #define HB_ET_MACRO_NOLIST    ( HB_ET_MACRO_SYMBOL | HB_ET_MACRO_ALIASED | \
                                 HB_ET_MACRO_ASSIGN | HB_ET_MACRO_PARE | \
                                 HB_ET_MACRO_REFER )
 #define HB_ET_MACRO_NOPARE    ( HB_ET_MACRO_SYMBOL | HB_ET_MACRO_ALIASED | \
                                 HB_ET_MACRO_ASSIGN | HB_ET_MACRO_REFER )
 
-/* types of expressions
- * NOTE: the order of these definition is important - change it carefully
- *    All types <= HB_ET_FUNREF are constant values
- *    All types <= HB_ET_VARIABLE are a simple values
- *    All types > HB_ET_VARIABLE are operators
- */
+// types of expressions
+// NOTE: the order of these definition is important - change it carefully
+//    All types <= HB_ET_FUNREF are constant values
+//    All types <= HB_ET_VARIABLE are a simple values
+//    All types > HB_ET_VARIABLE are operators
 typedef enum
 {
    HB_ET_NONE = 0,
@@ -267,21 +262,21 @@ typedef enum
    HB_ET_SEND,
    HB_ET_FUNNAME,
    HB_ET_ALIAS,
-   HB_ET_RTVAR,      /* PRIVATE or PUBLIC declaration of variable */
+   HB_ET_RTVAR,      // PRIVATE or PUBLIC declaration of variable
    HB_ET_VARIABLE,
-   HB_EO_POSTINC,    /* post-operators -> lowest precedence */
+   HB_EO_POSTINC,    // post-operators -> lowest precedence
    HB_EO_POSTDEC,
-   HB_EO_ASSIGN,     /* assignments */
+   HB_EO_ASSIGN,     // assignments
    HB_EO_PLUSEQ,
    HB_EO_MINUSEQ,
    HB_EO_MULTEQ,
    HB_EO_DIVEQ,
    HB_EO_MODEQ,
    HB_EO_EXPEQ,
-   HB_EO_OR,         /* logical operators */
+   HB_EO_OR,         // logical operators
    HB_EO_AND,
    HB_EO_NOT,
-   HB_EO_EQUAL,      /* relational operators */
+   HB_EO_EQUAL,      // relational operators
    HB_EO_EQ,
    HB_EO_NE,
    HB_EO_IN,
@@ -289,15 +284,15 @@ typedef enum
    HB_EO_GT,
    HB_EO_LE,
    HB_EO_GE,
-   HB_EO_PLUS,       /* addition */
+   HB_EO_PLUS,       // addition
    HB_EO_MINUS,
-   HB_EO_MULT,       /* multiple */
+   HB_EO_MULT,       // multiple
    HB_EO_DIV,
    HB_EO_MOD,
    HB_EO_POWER,
-   HB_EO_NEGATE,     /* sign operator */
+   HB_EO_NEGATE,     // sign operator
    HB_EO_PREINC,
-   HB_EO_PREDEC      /* pre-operators -> the highest precedence */
+   HB_EO_PREDEC      // pre-operators -> the highest precedence
 } HB_EXPR_OPERATOR;
 
 #define HB_EXPR_COUNT   ( HB_EO_PREDEC + 1 )
@@ -408,121 +403,121 @@ typedef struct HB_EXPR_
 {
    union
    {
-      HB_BOOL asLogical;      /* logical value */
+      HB_BOOL asLogical;      // logical value
       struct
       {
-         const char * name;   /* variable/function name */
-         HB_FUNC_ID funcid;   /* function ID */
-         int flags;           /* function flags */
+         const char * name;   // variable/function name
+         HB_FUNC_ID funcid;   // function ID
+         int flags;           // function flags
       } asSymbol;
       struct
       {
-         char * string;       /* literal strings */
-         HB_BOOL dealloc;     /* automatically deallocate on expression deletion */
+         char * string;       // literal strings
+         HB_BOOL dealloc;     // automatically deallocate on expression deletion
       } asString;
       struct
       {
-         struct HB_EXPR_ * pMacro;  /* macro variable */
-         const char * szName;       /* variable name */
-      } asRTVar;                 /* PUBLIC or PRIVATE variable declaration */
+         struct HB_EXPR_ * pMacro;  // macro variable
+         const char * szName;       // variable name
+      } asRTVar;                 // PUBLIC or PRIVATE variable declaration
       struct
       {
-         struct HB_EXPR_ * pVar;    /* variable */
-         struct HB_EXPR_ * pExpr;   /* expression */
-      } asSetGet;                /* IIF( <var>==NIL, <expr>, <expr>:=<var> ) */
+         struct HB_EXPR_ * pVar;    // variable
+         struct HB_EXPR_ * pExpr;   // expression
+      } asSetGet;                // IIF( <var>==NIL, <expr>, <expr>:=<var> )
       struct
       {
          union {
-            HB_MAXINT l;            /* long value */
-            double    d;            /* double value */
+            HB_MAXINT l;            // long value
+            double    d;            // double value
          } val;
-         unsigned char bWidth;   /* unsigned char used intentionally */
-         unsigned char bDec;     /* unsigned char used intentionally */
-         unsigned char NumType;  /* used to distinguish LONG and DOUBLE */
+         unsigned char bWidth;   // unsigned char used intentionally
+         unsigned char bDec;     // unsigned char used intentionally 
+         unsigned char NumType;  // used to distinguish LONG and DOUBLE
       } asNum;
       struct
       {
-         long  lDate;            /* Julian date */
-         long  lTime;            /* time in milliseconds */
+         long  lDate;            // Julian date
+         long  lTime;            // time in milliseconds
       } asDate;
       struct
       {
-         const char * szMacro;         /* identifier after the macro operator */
-         struct HB_EXPR_ * pExprList;  /* list elements if &(...) was used */
-         HB_USHORT SubType;            /* context in which macro is used */
-         unsigned char cMacroOp;       /* macro operator */
+         const char * szMacro;         // identifier after the macro operator
+         struct HB_EXPR_ * pExprList;  // list elements if &(...) was used
+         HB_USHORT SubType;            // context in which macro is used
+         unsigned char cMacroOp;       // macro operator
       } asMacro;
       struct
       {
-         struct HB_EXPR_ * pExprList;  /* list elements */
-         struct HB_EXPR_ * pIndex;     /* array index, others */
-         HB_BOOL  reference;           /* push array item by reference or pass variable parameters to called function or method */
+         struct HB_EXPR_ * pExprList;  // list elements
+         struct HB_EXPR_ * pIndex;     // array index, others
+         HB_BOOL  reference;           // push array item by reference or pass variable parameters to called function or method
       } asList;
       struct
       {
-         struct HB_EXPR_ * pExprList;  /* list elements */
-         PHB_CBVAR pLocals;            /* list of local variables */
-         char * string;                /* source code of a codeblock */
-         HB_USHORT flags;              /* HB_BLOCK_* */
+         struct HB_EXPR_ * pExprList;  // list elements
+         PHB_CBVAR pLocals;            // list of local variables
+         char * string;                // source code of a codeblock
+         HB_USHORT flags;              // HB_BLOCK_*
       } asCodeblock;
       struct
       {
-         struct HB_EXPR_ * pAlias;     /* alias expression */
-         struct HB_EXPR_ * pVar;       /* aliased variable or macro */
-         struct HB_EXPR_ * pExpList;   /* aliased expression list */
+         struct HB_EXPR_ * pAlias;     // alias expression
+         struct HB_EXPR_ * pVar;       // aliased variable or macro
+         struct HB_EXPR_ * pExpList;   // aliased expression list
       } asAlias;
       struct
       {
-         struct HB_EXPR_ * pFunName;   /* function name */
-         struct HB_EXPR_ * pParms;     /* function call parameters */
+         struct HB_EXPR_ * pFunName;   // function name
+         struct HB_EXPR_ * pParms;     // function call parameters
       } asFunCall;
       struct
       {
-         struct HB_EXPR_ * pObject;    /* object */
-         struct HB_EXPR_ * pParms;     /* method parameters */
-         const char * szMessage;       /* message as string */
-         struct HB_EXPR_ * pMessage;   /* message as macro */
+         struct HB_EXPR_ * pObject;    // object
+         struct HB_EXPR_ * pParms;     // method parameters
+         const char * szMessage;       // message as string
+         struct HB_EXPR_ * pMessage;   // message as macro
       } asMessage;
       struct
       {
-         struct HB_EXPR_ * pLeft;      /* object */
-         struct HB_EXPR_ * pRight;     /* object */
+         struct HB_EXPR_ * pLeft;      // object
+         struct HB_EXPR_ * pRight;     // object
       } asOperator;
       struct HB_EXPR_ * asReference;
    } value;
    HB_SIZE     nLength;
-   HB_EXPRTYPE ExprType;      /* internal expression type */
-   HB_USHORT   ValType;       /* language level value type */
-   struct HB_EXPR_ * pNext;   /* next expression in the list of expressions */
+   HB_EXPRTYPE ExprType;      // internal expression type
+   HB_USHORT   ValType;       // language level value type
+   struct HB_EXPR_ * pNext;   // next expression in the list of expressions
 } HB_EXPR, * PHB_EXPR;
 
 #if defined(__cplusplus)
 struct HB_ENUMERATOR_
 {
    const char * szName;
-   int iForEachDir;     /* 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant) */
+   int iForEachDir;     // 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant)
    struct HB_ENUMERATOR_ *pNext;
 };
 using HB_ENUMERATOR = HB_ENUMERATOR_;
-using PHB_ENUMERATOR = HB_ENUMERATOR *; /* support structure for FOR EACH statements */ // PHB_ENUMERATOR deprecated in core code
+using PHB_ENUMERATOR = HB_ENUMERATOR *; // support structure for FOR EACH statements // PHB_ENUMERATOR deprecated in core code
 #else
 typedef struct HB_ENUMERATOR_
 {
    const char * szName;
-   int iForEachDir;     /* 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant) */
+   int iForEachDir;     // 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant)
    struct HB_ENUMERATOR_ *pNext;
-} HB_ENUMERATOR, * PHB_ENUMERATOR; /* support structure for FOR EACH statements */
+} HB_ENUMERATOR, * PHB_ENUMERATOR; // support structure for FOR EACH statements
 #endif
 
-/* support structure for else if pcode fixups */
+// support structure for else if pcode fixups
 typedef struct HB_ELSEIF_
 {
    HB_SIZE  nOffset;
-   struct   HB_ELSEIF_ * pElseif;   /* next ELSEIF in the current IF statement */
-   struct   HB_ELSEIF_ * pPrev;     /* previous IF statement */
+   struct   HB_ELSEIF_ * pElseif;   // next ELSEIF in the current IF statement
+   struct   HB_ELSEIF_ * pPrev;     // previous IF statement
 } HB_ELSEIF, * PHB_ELSEIF;
 
-/* support structure for EXIT and LOOP statements */
+// support structure for EXIT and LOOP statements
 typedef struct HB_LOOPEXIT_
 {
    HB_SIZE   nOffset;
@@ -535,7 +530,7 @@ typedef struct HB_LOOPEXIT_
    struct HB_LOOPEXIT_ * pNext;
 } HB_LOOPEXIT, * PHB_LOOPEXIT;
 
-/* support structure for SWITCH statement */
+// support structure for SWITCH statement
 typedef struct HB_SWITCHCASE_
 {
    HB_SIZE nOffset;
@@ -553,7 +548,7 @@ typedef struct HB_SWITCHCMD_
    struct HB_SWITCHCMD_ * pPrev;
 } HB_SWITCHCMD, * PHB_SWITCHCMD;
 
-/* support structure for PUBLIC and PRIVATE statements */
+// support structure for PUBLIC and PRIVATE statements
 typedef struct HB_RTVAR_
 {
    PHB_EXPR pVar;
@@ -562,37 +557,37 @@ typedef struct HB_RTVAR_
    struct HB_RTVAR_ * pPrev;
 } HB_RTVAR, * PHB_RTVAR;
 
-/* structure to hold a Clipper defined function */
+// structure to hold a Clipper defined function
 #if defined(__cplusplus)
 struct _HB_HFUNC
 {
-   const char * szName;                   /* name of a defined Clipper function */
-   HB_SYMBOLSCOPE cScope;                 /* scope of a defined Clipper function */
-   HB_USHORT    funFlags;                 /* some flags we may need */
-   HB_USHORT    wParamCount;              /* number of declared parameters */
-   HB_USHORT    wParamNum;                /* current parameter number */
-   HB_HVAR *    pLocals;                  /* pointer to local variables list */
-   HB_HVAR *    pStatics;                 /* pointer to static variables list */
-   HB_HVAR *    pFields;                  /* pointer to fields variables list */
-   HB_HVAR *    pMemvars;                 /* pointer to memvar variables list */
-   HB_HVAR *    pDetached;                /* pointer to detached local variables list */
-   HB_HVAR *    pPrivates;                /* pointer to private variables list */
-   HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
-   HB_SIZE      nPCodeSize;               /* total memory size for pcode */
-   HB_SIZE      nPCodePos;                /* actual pcode offset */
-   HB_SIZE *    pNOOPs;                   /* pointer to the NOOP array */
-   HB_SIZE *    pJumps;                   /* pointer to the Jumps array */
-   HB_SIZE      nNOOPs;                   /* NOOPs Counter */
-   HB_SIZE      nJumps;                   /* Jumps Counter */
-   int          iStaticsBase;             /* base for this function statics */
-   int          iFuncSuffix;              /* function suffix for multiple static functions with the same name */
-   int          iEarlyEvalPass;           /* !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited */
-   HB_BOOL      fVParams;                 /* HB_TRUE if variable number of parameters is used */
-   HB_BOOL      bError;                   /* error during function compilation */
-   HB_BOOL      bBlock;                   /* HB_TRUE if simple codeblock body is compiled */
-   struct _HB_HFUNC * pOwner;             /* pointer to the function/procedure that owns the codeblock */
-   struct _HB_HFUNC * pNext;              /* pointer to the next defined function */
-   HB_ENUMERATOR *   pEnum;               /* pointer to FOR EACH variables */
+   const char * szName;                   // name of a defined Clipper function
+   HB_SYMBOLSCOPE cScope;                 // scope of a defined Clipper function
+   HB_USHORT    funFlags;                 // some flags we may need
+   HB_USHORT    wParamCount;              // number of declared parameters
+   HB_USHORT    wParamNum;                // current parameter number
+   HB_HVAR *    pLocals;                  // pointer to local variables list
+   HB_HVAR *    pStatics;                 // pointer to static variables list
+   HB_HVAR *    pFields;                  // pointer to fields variables list
+   HB_HVAR *    pMemvars;                 // pointer to memvar variables list
+   HB_HVAR *    pDetached;                // pointer to detached local variables list
+   HB_HVAR *    pPrivates;                // pointer to private variables list
+   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   HB_SIZE      nPCodeSize;               // total memory size for pcode
+   HB_SIZE      nPCodePos;                // actual pcode offset
+   HB_SIZE *    pNOOPs;                   // pointer to the NOOP array
+   HB_SIZE *    pJumps;                   // pointer to the Jumps array
+   HB_SIZE      nNOOPs;                   // NOOPs Counter
+   HB_SIZE      nJumps;                   // Jumps Counter
+   int          iStaticsBase;             // base for this function statics
+   int          iFuncSuffix;              // function suffix for multiple static functions with the same name
+   int          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited 
+   HB_BOOL      fVParams;                 // HB_TRUE if variable number of parameters is used
+   HB_BOOL      bError;                   // error during function compilation
+   HB_BOOL      bBlock;                   // HB_TRUE if simple codeblock body is compiled
+   struct _HB_HFUNC * pOwner;             // pointer to the function/procedure that owns the codeblock
+   struct _HB_HFUNC * pNext;              // pointer to the next defined function
+   HB_ENUMERATOR *   pEnum;               // pointer to FOR EACH variables
    PHB_LOOPEXIT      pLoops;
    PHB_SWITCHCMD     pSwitch;
    PHB_ELSEIF        elseif;
@@ -612,33 +607,33 @@ using PHB_HFUNC = HB_HFUNC *;
 #else
 typedef struct _HB_HFUNC
 {
-   const char * szName;                   /* name of a defined Clipper function */
-   HB_SYMBOLSCOPE cScope;                 /* scope of a defined Clipper function */
-   HB_USHORT    funFlags;                 /* some flags we may need */
-   HB_USHORT    wParamCount;              /* number of declared parameters */
-   HB_USHORT    wParamNum;                /* current parameter number */
-   HB_HVAR *    pLocals;                  /* pointer to local variables list */
-   HB_HVAR *    pStatics;                 /* pointer to static variables list */
-   HB_HVAR *    pFields;                  /* pointer to fields variables list */
-   HB_HVAR *    pMemvars;                 /* pointer to memvar variables list */
-   HB_HVAR *    pDetached;                /* pointer to detached local variables list */
-   HB_HVAR *    pPrivates;                /* pointer to private variables list */
-   HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
-   HB_SIZE      nPCodeSize;               /* total memory size for pcode */
-   HB_SIZE      nPCodePos;                /* actual pcode offset */
-   HB_SIZE *    pNOOPs;                   /* pointer to the NOOP array */
-   HB_SIZE *    pJumps;                   /* pointer to the Jumps array */
-   HB_SIZE      nNOOPs;                   /* NOOPs Counter */
-   HB_SIZE      nJumps;                   /* Jumps Counter */
-   int          iStaticsBase;             /* base for this function statics */
-   int          iFuncSuffix;              /* function suffix for multiple static functions with the same name */
-   int          iEarlyEvalPass;           /* !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited */
-   HB_BOOL      fVParams;                 /* HB_TRUE if variable number of parameters is used */
-   HB_BOOL      bError;                   /* error during function compilation */
-   HB_BOOL      bBlock;                   /* HB_TRUE if simple codeblock body is compiled */
-   struct _HB_HFUNC * pOwner;             /* pointer to the function/procedure that owns the codeblock */
-   struct _HB_HFUNC * pNext;              /* pointer to the next defined function */
-   HB_ENUMERATOR *   pEnum;               /* pointer to FOR EACH variables */
+   const char * szName;                   // name of a defined Clipper function
+   HB_SYMBOLSCOPE cScope;                 // scope of a defined Clipper function
+   HB_USHORT    funFlags;                 // some flags we may need
+   HB_USHORT    wParamCount;              // number of declared parameters
+   HB_USHORT    wParamNum;                // current parameter number
+   HB_HVAR *    pLocals;                  // pointer to local variables list
+   HB_HVAR *    pStatics;                 // pointer to static variables list
+   HB_HVAR *    pFields;                  // pointer to fields variables list
+   HB_HVAR *    pMemvars;                 // pointer to memvar variables list
+   HB_HVAR *    pDetached;                // pointer to detached local variables list
+   HB_HVAR *    pPrivates;                // pointer to private variables list
+   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   HB_SIZE      nPCodeSize;               // total memory size for pcode
+   HB_SIZE      nPCodePos;                // actual pcode offset
+   HB_SIZE *    pNOOPs;                   // pointer to the NOOP array
+   HB_SIZE *    pJumps;                   // pointer to the Jumps array
+   HB_SIZE      nNOOPs;                   // NOOPs Counter
+   HB_SIZE      nJumps;                   // Jumps Counter
+   int          iStaticsBase;             // base for this function statics
+   int          iFuncSuffix;              // function suffix for multiple static functions with the same name
+   int          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited
+   HB_BOOL      fVParams;                 // HB_TRUE if variable number of parameters is used
+   HB_BOOL      bError;                   // error during function compilation
+   HB_BOOL      bBlock;                   // HB_TRUE if simple codeblock body is compiled
+   struct _HB_HFUNC * pOwner;             // pointer to the function/procedure that owns the codeblock
+   struct _HB_HFUNC * pNext;              // pointer to the next defined function
+   HB_ENUMERATOR *   pEnum;               // pointer to FOR EACH variables
    PHB_LOOPEXIT      pLoops;
    PHB_SWITCHCMD     pSwitch;
    PHB_ELSEIF        elseif;
@@ -655,129 +650,129 @@ typedef struct _HB_HFUNC
 } HB_HFUNC, * PHB_HFUNC;
 #endif
 
-/* structure to hold PP #define variables passed as command-line parameters */
+// structure to hold PP #define variables passed as command-line parameters
 #if defined(__cplusplus)
 struct _HB_PPDEFINE
 {
-   char * szName;                         /* name of PP #define variable */
-   const char * szValue;                  /* value of PP #define variable */
-   struct _HB_PPDEFINE * pNext;           /* pointer to the next var */
+   char * szName;                         // name of PP #define variable
+   const char * szValue;                  // value of PP #define variable
+   struct _HB_PPDEFINE * pNext;           // pointer to the next var
 };
 using HB_PPDEFINE = _HB_PPDEFINE;
 using PHB_PPDEFINE = HB_PPDEFINE *; // deprecated in core code
 #else
 typedef struct _HB_PPDEFINE
 {
-   char * szName;                         /* name of PP #define variable */
-   const char * szValue;                  /* value of PP #define variable */
-   struct _HB_PPDEFINE * pNext;           /* pointer to the next var */
+   char * szName;                         // name of PP #define variable
+   const char * szValue;                  // value of PP #define variable
+   struct _HB_PPDEFINE * pNext;           // pointer to the next var
 } HB_PPDEFINE, * PHB_PPDEFINE;
 #endif
 
-/* structure to hold an INLINE block of source */
+// structure to hold an INLINE block of source
 #if defined(__cplusplus)
 struct _HB_HINLINE
 {
-   const char * szName;                   /* name of a inline function */
-   HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
-   HB_SIZE      nPCodeSize;               /* total memory size for pcode */
-   const char * szFileName;               /* Source file name */
-   int          iLine;                    /* Source line number */
-   //struct _HB_HINLINE * pNext;               /* pointer to the next defined inline */ (deprecated)
+   const char * szName;                   // name of a inline function
+   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   HB_SIZE      nPCodeSize;               // total memory size for pcode
+   const char * szFileName;               // Source file name
+   int          iLine;                    // Source line number
+   //struct _HB_HINLINE * pNext;               // pointer to the next defined inline (deprecated)
 };
 using HB_HINLINE = _HB_HINLINE;
 using PHB_HINLINE = HB_HINLINE *; // deprecated in core code
 #else
 typedef struct _HB_HINLINE
 {
-   const char * szName;                   /* name of a inline function */
-   HB_BYTE *    pCode;                    /* pointer to a memory block where pcode is stored */
-   HB_SIZE      nPCodeSize;               /* total memory size for pcode */
-   const char * szFileName;               /* Source file name */
-   int          iLine;                    /* Source line number */
-   struct _HB_HINLINE * pNext;               /* pointer to the next defined inline */
+   const char * szName;                   // name of a inline function
+   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   HB_SIZE      nPCodeSize;               // total memory size for pcode
+   const char * szFileName;               // Source file name
+   int          iLine;                    // Source line number
+   struct _HB_HINLINE * pNext;               // pointer to the next defined inline
 } HB_HINLINE, * PHB_HINLINE;
 #endif
 
-/* structure to hold a called functions */
+// structure to hold a called functions
 typedef struct _HB_HFUNCALL
 {
-   const char * szName;                   /* name of a called function */
-   HB_SYMBOLSCOPE cScope;                 /* the scope of the function */
-   struct _HB_HFUNCALL * pNext;              /* pointer to the next called function */
+   const char * szName;                   // name of a called function
+   HB_SYMBOLSCOPE cScope;                 // the scope of the function
+   struct _HB_HFUNCALL * pNext;              // pointer to the next called function
 } HB_HFUNCALL, PHB_HFUNCALL;
 
-/* structure to control all Clipper defined functions */
+// structure to control all Clipper defined functions
 typedef struct
 {
-   HB_HFUNC *pFirst;            /* pointer to the first defined function */
-   HB_HFUNC *pLast;             /* pointer to the last defined function */
-   int       iCount;            /* number of defined functions */
+   HB_HFUNC *pFirst;            // pointer to the first defined function
+   HB_HFUNC *pLast;             // pointer to the last defined function
+   int       iCount;            // number of defined functions
 } HB_HFUNCTION_LIST;
 
-/* structure to control all Clipper defined functions */
+// structure to control all Clipper defined functions
 typedef struct // deprecated (changed to std::vector)
 {
-   PHB_HINLINE pFirst;        /* pointer to the first defined inline */
-   PHB_HINLINE pLast;         /* pointer to the last defined inline */
-   int         iCount;        /* number of defined inlines */
+   PHB_HINLINE pFirst;        // pointer to the first defined inline
+   PHB_HINLINE pLast;         // pointer to the last defined inline
+   int         iCount;        // number of defined inlines
 } HB_HINLINE_LIST;
 
-/* compiler symbol support structure */
+// compiler symbol support structure
 #if defined(__cplusplus)
 struct _HB_HSYMBOL
 {
-   const char *   szName;     /* the name of the symbol */
-   HB_SYMBOLSCOPE cScope;     /* the scope of the symbol */
-   int            iFunc;      /* is it a function name (TRUE) or memvar (FALSE) */
+   const char *   szName;     // the name of the symbol
+   HB_SYMBOLSCOPE cScope;     // the scope of the symbol
+   int            iFunc;      // is it a function name (TRUE) or memvar (FALSE)
    HB_HFUNC *     pFunc;
-   //struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */ (depprecated)
+   //struct _HB_HSYMBOL * pNext; // pointer to the next defined symbol (depprecated)
 };
 using HB_HSYMBOL = _HB_HSYMBOL;
 using PHB_HSYMBOL = HB_HSYMBOL *; // deprecated in core code
 #else
 typedef struct _HB_HSYMBOL
 {
-   const char *   szName;     /* the name of the symbol */
-   HB_SYMBOLSCOPE cScope;     /* the scope of the symbol */
-   int            iFunc;      /* is it a function name (TRUE) or memvar (FALSE) */
+   const char *   szName;     // the name of the symbol
+   HB_SYMBOLSCOPE cScope;     // the scope of the symbol
+   int            iFunc;      // is it a function name (TRUE) or memvar (FALSE)
    HB_HFUNC *     pFunc;
-   struct _HB_HSYMBOL * pNext; /* pointer to the next defined symbol */
+   struct _HB_HSYMBOL * pNext; // pointer to the next defined symbol
 } HB_HSYMBOL, * PHB_HSYMBOL;
 #endif
 
-/* symbol table support structures */
+// symbol table support structures
 typedef struct // deprecated (changed to std::vector)
 {
-   HB_HSYMBOL *pFirst;          /* pointer to the first defined symbol */
-   HB_HSYMBOL *pLast;           /* pointer to the last defined symbol */
-   int         iCount;          /* number of defined symbols */
+   HB_HSYMBOL *pFirst;          // pointer to the first defined symbol
+   HB_HSYMBOL *pLast;           // pointer to the last defined symbol
+   int         iCount;          // number of defined symbols
 } HB_HSYMBOL_LIST;
 
 #if defined(__cplusplus)
 struct _HB_HEXTERN
 {
-   const char * szName;         /* name of the extern function */
-   HB_SYMBOLSCOPE cScope;       /* the scope of the function */
+   const char * szName;         // name of the extern function
+   HB_SYMBOLSCOPE cScope;       // the scope of the function
    //struct _HB_HEXTERN * pNext; (deprecated)
 };
 using HB_HEXTERN = _HB_HEXTERN;
-using PHB_HEXTERN = HB_HEXTERN *; /* support structure for extern symbols */ // PHB_HEXTERN deprecated in core code
+using PHB_HEXTERN = HB_HEXTERN *; // support structure for extern symbols // PHB_HEXTERN deprecated in core code
 #else
 typedef struct _HB_HEXTERN // deprecated
 {
-   const char * szName;         /* name of the extern function */
-   HB_SYMBOLSCOPE cScope;       /* the scope of the function */
+   const char * szName;         // name of the extern function
+   HB_SYMBOLSCOPE cScope;       // the scope of the function
    struct _HB_HEXTERN * pNext;
-} HB_HEXTERN, * PHB_HEXTERN;      /* support structure for extern symbols */
+} HB_HEXTERN, * PHB_HEXTERN;      // support structure for extern symbols
 #endif
-/* as they have to be placed on the symbol table later than the first public symbol */
+// as they have to be placed on the symbol table later than the first public symbol
 
 #if defined(__cplusplus)
 struct _HB_MODULE
 {
    const char *         szName;
-   HB_BOOL              force;  /* force module compilation */
+   HB_BOOL              force;  // force module compilation
    struct _HB_MODULE *  pNext;
 };
 using HB_MODULE = _HB_MODULE;
@@ -786,12 +781,12 @@ using PHB_MODULE = HB_MODULE *; // deprecated in core code
 typedef struct _HB_MODULE
 {
    const char *         szName;
-   HB_BOOL              force;  /* force module compilation */
+   HB_BOOL              force;  // force module compilation
    struct _HB_MODULE *  pNext;
 } HB_MODULE, * PHB_MODULE;
 #endif
 
-/* definitions for hb_compPCodeEval() support */
+// definitions for hb_compPCodeEval() support
 typedef void * PHB_VOID;
 #define HB_PCODE_FUNC( func, type ) HB_SIZE func( HB_HFUNC *pFunc, HB_SIZE nPCodePos, type cargo )
 typedef HB_PCODE_FUNC( ( * PHB_PCODE_FUNC ), PHB_VOID );
@@ -827,9 +822,9 @@ struct _HB_COMP_FUNCS;
 
 typedef struct _HB_COMMON
 {
-   /* common to macro compiler members */
-   int    mode;               /* HB_MODE_* */
-   int    supported;          /* various flags for supported capabilities */
+   // common to macro compiler members
+   int    mode;               // HB_MODE_*
+   int    supported;          // various flags for supported capabilities
    const struct _HB_COMP_FUNCS * funcs;
 } HB_COMMON, * PHB_COMMON;
 
@@ -841,36 +836,36 @@ typedef struct _HB_COMMON
 #define HB_COMP_PARAM         pMacro
 #define HB_COMP_DECL          PHB_MACRO HB_COMP_PARAM
 
-typedef struct HB_PCODE_INFO_ /* compiled pcode container for macro compiler */
+typedef struct HB_PCODE_INFO_ // compiled pcode container for macro compiler
 {
-   HB_BYTE * pCode;        /* pointer to a memory block where pcode is stored */
-   HB_SIZE nPCodeSize;     /* total memory size for pcode */
-   HB_SIZE nPCodePos;      /* actual pcode offset */
-   HB_BOOL fVParams;       /* function/codeblock with variable parameters */
+   HB_BYTE * pCode;        // pointer to a memory block where pcode is stored
+   HB_SIZE nPCodeSize;     // total memory size for pcode
+   HB_SIZE nPCodePos;      // actual pcode offset
+   HB_BOOL fVParams;       // function/codeblock with variable parameters
    PHB_CBVAR pLocals;
    struct HB_PCODE_INFO_ * pPrev;
 } HB_PCODE_INFO, * PHB_PCODE_INFO;
 
-typedef struct HB_MACRO_      /* a macro compiled pcode container */
+typedef struct HB_MACRO_      // a macro compiled pcode container
 {
-   /* common to compiler members */
-   int      mode;             /* HB_MODE_* */
-   int      supported;        /* various flags for supported capabilities */
+   // common to compiler members
+   int      mode;             // HB_MODE_*
+   int      supported;        // various flags for supported capabilities
    const struct _HB_COMP_FUNCS * funcs;
 
-   /* macro compiler only members */
-   const char * string;       /* compiled string */
-   HB_SIZE  length;           /* length of the string */
-   int      Flags;            /* some flags we may need */
-   int      status;           /* status of compilation */
-   PHB_ITEM pError;           /* error object returned from the parser */
-   PHB_PCODE_INFO pCodeInfo;  /* pointer to pcode buffer and info */
-   void *   pLex;             /* lexer buffer pointer */
-   void *   pExprLst;         /* list with allocated expressions */
-   void *   pIdentLst;        /* list with allocated identifiers */
-   int      exprType;         /* type of successfully compiled expression */
-   HB_USHORT uiListElements;  /* number of elements in macro list expression */
-   HB_USHORT uiNameLen;       /* the maximum symbol name length */
+   // macro compiler only members
+   const char * string;       // compiled string
+   HB_SIZE  length;           // length of the string
+   int      Flags;            // some flags we may need
+   int      status;           // status of compilation
+   PHB_ITEM pError;           // error object returned from the parser
+   PHB_PCODE_INFO pCodeInfo;  // pointer to pcode buffer and info
+   void *   pLex;             // lexer buffer pointer
+   void *   pExprLst;         // list with allocated expressions
+   void *   pIdentLst;        // list with allocated identifiers
+   int      exprType;         // type of successfully compiled expression
+   HB_USHORT uiListElements;  // number of elements in macro list expression
+   HB_USHORT uiNameLen;       // the maximum symbol name length
    HB_PCODE_INFO pCodeInfoBuffer;
 } HB_MACRO;
 
@@ -966,12 +961,12 @@ typedef struct _HB_INCLST
 
 typedef struct _HB_COMP
 {
-   /* common to macro compiler members */
-   int    mode;            /* HB_MODE_* */
-   int    supported;       /* various flags for supported capabilities */
+   // common to macro compiler members
+   int    mode;            // HB_MODE_*
+   int    supported;       // various flags for supported capabilities
    const struct _HB_COMP_FUNCS * funcs;
 
-   /* compiler only members */
+   // compiler only members
    PHB_COMP_LEX      pLex;
    PHB_EXPRLST       pExprLst;
 
@@ -1009,64 +1004,64 @@ typedef struct _HB_COMP
    PHB_PP_MSG_FUNC   outMsgFunc;
    void *            cargo;
 
-   HB_SIZE           nOutBufSize;         /* memory output buffer size */
-   HB_BYTE *         pOutBuf;             /* memory output buffer address */
+   HB_SIZE           nOutBufSize;         // memory output buffer size
+   HB_BYTE *         pOutBuf;             // memory output buffer address
 
-   int               lastLine;            /* last generated in PCODE line number */
-   int               currLine;            /* currently compiled line number */
-   const char *      lastModule;          /* last generated in PCODE module name */
-   const char *      currModule;          /* currently compiled module name */
+   int               lastLine;            // last generated in PCODE line number
+   int               currLine;            // currently compiled line number
+   const char *      lastModule;          // last generated in PCODE module name
+   const char *      currModule;          // currently compiled module name
 
    const char *      szAnnounce;
    const char *      szDeclaredFun;
-   const char *      szFile;              /* Source file name of compiled module */
-   char *            szDepExt;            /* destination file extension used in decencies list */
-   char *            szStdCh;             /* standard definitions file name (-u) */
-   char **           szStdChExt;          /* extended definitions file names (-u+<file>) */
-   int               iStdChExt;           /* number of extended definition files (-u+<file>) */
+   const char *      szFile;              // Source file name of compiled module
+   char *            szDepExt;            // destination file extension used in decencies list
+   char *            szStdCh;             // standard definitions file name (-u)
+   char **           szStdChExt;          // extended definitions file names (-u+<file>)
+   int               iStdChExt;           // number of extended definition files (-u+<file>)
 
-   HB_BYTE           cDataListType;       /* current declared variable list type */
+   HB_BYTE           cDataListType;       // current declared variable list type
 
    int               iErrorCount;
-   int               iModulesCount;       /* number of compiled .prg modules */
-   int               iStartProc;          /* holds if we need to create the starting procedure */
-   int               iMaxTransCycles;     /* maximum translate cycles in PP (-r=<n>) */
-   int               iHidden;             /* hide strings */
-   int               iWarnings;           /* enable parse warnings */
-   int               iExitLevel;          /* holds if there was any warning during the compilation process */
-   int               iStaticCnt;          /* number of defined statics variables on the PRG */
-   int               iVarScope;           /* holds the scope for next variables to be defined */
-   int               iLanguage;           /* default Harbour generated output language */
-   int               iGenCOutput;         /* C code generation should be verbose (use comments) or not */
-   int               ilastLineErr;        /* line number with last syntax error */
-   int               iTraceInclude;       /* trace included files and generate dependencies list */
-   int               iSyntaxCheckOnly;    /* syntax check only */
-   int               iErrorFmt;           /* error message formatting mode (default: Clipper) */
+   int               iModulesCount;       // number of compiled .prg modules
+   int               iStartProc;          // holds if we need to create the starting procedure
+   int               iMaxTransCycles;     // maximum translate cycles in PP (-r=<n>)
+   int               iHidden;             // hide strings
+   int               iWarnings;           // enable parse warnings
+   int               iExitLevel;          // holds if there was any warning during the compilation process
+   int               iStaticCnt;          // number of defined statics variables on the PRG
+   int               iVarScope;           // holds the scope for next variables to be defined
+   int               iLanguage;           // default Harbour generated output language
+   int               iGenCOutput;         // C code generation should be verbose (use comments) or not
+   int               ilastLineErr;        // line number with last syntax error
+   int               iTraceInclude;       // trace included files and generate dependencies list
+   int               iSyntaxCheckOnly;    // syntax check only
+   int               iErrorFmt;           // error message formatting mode (default: Clipper)
 
-   HB_BOOL           fQuiet;              /* be quiet during compilation (-q) */
-   HB_BOOL           fGauge;              /* hide line counter gauge (-ql) */
-   HB_BOOL           fFullQuiet;          /* be quiet during compilation disable all messages */
-   HB_BOOL           fExit;               /* force breaking compilation process */
-   HB_BOOL           fPPO;                /* flag indicating, is .ppo output needed */
-   HB_BOOL           fPPT;                /* flag indicating, is .ppt output needed */
-   HB_BOOL           fLineNumbers;        /* holds if we need pcodes with line numbers */
-   HB_BOOL           fAnyWarning;         /* holds if there was any warning during the compilation process */
-   HB_BOOL           fAutoMemvarAssume;   /* holds if undeclared variables are automatically assumed MEMVAR (-a)*/
-   HB_BOOL           fForceMemvars;       /* holds if memvars are assumed when accessing undeclared variable (-v)*/
-   HB_BOOL           fDebugInfo;          /* holds if generate debugger required info */
-   HB_BOOL           fHideSource;         /* do not embed original source filename into generated source code */
-   HB_BOOL           fNoStartUp;          /* C code generation embed HB_FS_FIRST or not */
-   HB_BOOL           fCredits;            /* print credits */
-   HB_BOOL           fBuildInfo;          /* print build info */
-   HB_BOOL           fLogo;               /* print logo */
-   HB_BOOL           fSwitchCase;         /* generate PCODE for CASE value of SWITCH statement */
-   HB_BOOL           fDescend;            /* add descendant FOR EACH iterators */
-   HB_BOOL           fSingleModule;       /* do not automatically compile DO...[WITH...] external modules (-m) */
-   HB_BOOL           fError;              /* error appeared during compilation */
-   HB_BOOL           fNoArchDefs;         /* do not define architecture dependent macros: __PLATFORM__*, __ARCH??BIT__, __*_ENDIAN__ */
-   HB_BOOL           fMeaningful;         /* do not generate warnings about meaningless expression usage */
-   HB_BOOL           fINCLUDE;            /* use INCLUDE envvar as header path (default) */
-   HB_BOOL           fAllowLocalAfter;    /* allow LOCAL after executable statements */
+   HB_BOOL           fQuiet;              // be quiet during compilation (-q)
+   HB_BOOL           fGauge;              // hide line counter gauge (-ql)
+   HB_BOOL           fFullQuiet;          // be quiet during compilation disable all messages
+   HB_BOOL           fExit;               // force breaking compilation process
+   HB_BOOL           fPPO;                // flag indicating, is .ppo output needed
+   HB_BOOL           fPPT;                // flag indicating, is .ppt output needed
+   HB_BOOL           fLineNumbers;        // holds if we need pcodes with line numbers
+   HB_BOOL           fAnyWarning;         // holds if there was any warning during the compilation process
+   HB_BOOL           fAutoMemvarAssume;   // holds if undeclared variables are automatically assumed MEMVAR (-a)
+   HB_BOOL           fForceMemvars;       // holds if memvars are assumed when accessing undeclared variable (-v)
+   HB_BOOL           fDebugInfo;          // holds if generate debugger required info
+   HB_BOOL           fHideSource;         // do not embed original source filename into generated source code
+   HB_BOOL           fNoStartUp;          // C code generation embed HB_FS_FIRST or not
+   HB_BOOL           fCredits;            // print credits
+   HB_BOOL           fBuildInfo;          // print build info
+   HB_BOOL           fLogo;               // print logo
+   HB_BOOL           fSwitchCase;         // generate PCODE for CASE value of SWITCH statement
+   HB_BOOL           fDescend;            // add descendant FOR EACH iterators
+   HB_BOOL           fSingleModule;       // do not automatically compile DO...[WITH...] external modules (-m)
+   HB_BOOL           fError;              // error appeared during compilation
+   HB_BOOL           fNoArchDefs;         // do not define architecture dependent macros: __PLATFORM__*, __ARCH??BIT__, __*_ENDIAN__
+   HB_BOOL           fMeaningful;         // do not generate warnings about meaningless expression usage
+   HB_BOOL           fINCLUDE;            // use INCLUDE envvar as header path (default)
+   HB_BOOL           fAllowLocalAfter;    // allow LOCAL after executable statements
 } HB_COMP, * PHB_COMP;
 
 typedef struct
@@ -1109,14 +1104,14 @@ typedef struct _HB_COMP_FUNCS
 #define HB_PCODE_DATA         ( HB_MACRO_DATA->pCodeInfo )
 
 
-/* Support for traversing of linked list */
+// Support for traversing of linked list
 #define HB_COMP_CARGO_FUNC( proc )   void proc( HB_COMP_DECL, void * cargo )
 typedef HB_COMP_CARGO_FUNC( ( * PHB_COMP_CARGO_FUNC ) );
 
 #define HB_COMP_CARGO2_FUNC( proc )  void proc( HB_COMP_DECL, void * cargo, void * dummy )
 typedef HB_COMP_CARGO2_FUNC( ( * PHB_COMP_CARGO2_FUNC ) );
 
-/* pcode chunks bytes size */
+// pcode chunks bytes size
 #define HB_PCODE_CHUNK   100
 
 
