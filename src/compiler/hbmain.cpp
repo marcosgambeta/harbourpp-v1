@@ -261,7 +261,7 @@ static HB_HSYMBOL *hb_compSymbolAdd(HB_COMP_DECL, const char *szSymbolName, HB_U
   return pSym;
 }
 
-static HB_HSYMBOL *hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, HB_BOOL bFunction)
+static HB_HSYMBOL *hb_compSymbolFind(HB_COMP_DECL, const char *szSymbolName, HB_USHORT *pwPos, bool bFunction)
 {
   HB_USHORT wCnt = 0;
   int iFunc = bFunction ? HB_COMP_PARAM->iModulesCount : 0;
