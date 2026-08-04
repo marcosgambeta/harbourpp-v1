@@ -1284,7 +1284,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                   HB_HCLASS *pClass;
                   char       szSetData[HB_SYMBOL_NAME_LEN + 1];
                   int        iLen;
-                  HB_BYTE    cVarType = $3->cVarType;
+                  uint8_t    cVarType = $3->cVarType;
 
                   /* List Type overrides if exists. */
                   if( HB_COMP_PARAM->cDataListType )
@@ -1316,7 +1316,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                   HB_COMP_PARAM->pLastMethod->cType = cVarType;
                   HB_COMP_PARAM->pLastMethod->iParamCount = 1;
 
-                  HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE *>(hb_xgrab(1));
+                  HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<uint8_t *>(hb_xgrab(1));
                   HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<HB_HCLASS **>(hb_xgrab(sizeof(HB_HCLASS)));
 
                   HB_COMP_PARAM->pLastMethod->cParamTypes[0] = cVarType;
@@ -1629,7 +1629,7 @@ ForNext    : FOR LValue ForAssign Expression          /* 1  2  3  4 */
                   HB_COMP_EXPR_FREE( hb_compExprGenPush( $7, HB_COMP_PARAM ) );   /* end */
                   if( iSign )
                   {
-                     hb_compGenPCode1( ( HB_BYTE ) ( iSign > 0 ? HB_P_GREATER : HB_P_LESS ), HB_COMP_PARAM );
+                     hb_compGenPCode1( ( uint8_t ) ( iSign > 0 ? HB_P_GREATER : HB_P_LESS ), HB_COMP_PARAM );
                      if( $<asExpr>8 )
                         HB_COMP_EXPR_FREE( $<asExpr>8 );
                   }
@@ -2405,7 +2405,7 @@ static void hb_compRTVariableGen( HB_COMP_DECL, const char * szCreateFun )
    if( usCount > 255 )
       hb_compGenPCode3( HB_P_DO, HB_LOBYTE( usCount ), HB_HIBYTE( usCount ), HB_COMP_PARAM );
    else
-      hb_compGenPCode2( HB_P_DOSHORT, ( HB_BYTE ) usCount, HB_COMP_PARAM );
+      hb_compGenPCode2( HB_P_DOSHORT, ( uint8_t ) usCount, HB_COMP_PARAM );
 
    /* pop initial values */
    while( pVar )
@@ -2603,7 +2603,7 @@ static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int
    }
    else
    {
-      hb_compGenPCode3( HB_P_ENUMSTART, ( HB_BYTE ) ( nLen & 0xFF ), ( HB_BYTE ) ( descend > 0 ? 1 : 0 ), HB_COMP_PARAM );
+      hb_compGenPCode3( HB_P_ENUMSTART, ( uint8_t ) ( nLen & 0xFF ), ( uint8_t ) ( descend > 0 ? 1 : 0 ), HB_COMP_PARAM );
    }
 }
 

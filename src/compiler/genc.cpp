@@ -348,7 +348,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
     for (auto pInline : HB_COMP_PARAM->inlines) {
       if (pInline->pCode) {
         fprintf(yyc, "#line %i ", pInline->iLine);
-        hb_compGenCString(yyc, reinterpret_cast<const HB_BYTE *>(pInline->szFileName), strlen(pInline->szFileName));
+        hb_compGenCString(yyc, reinterpret_cast<const uint8_t *>(pInline->szFileName), strlen(pInline->szFileName));
         fprintf(yyc, "\n");
 
         if (pInline->szName) {
@@ -366,7 +366,7 @@ void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *pFileName) // generates the C++ lan
           fHasHbInline = true;
         }
         fprintf(yyc, "#line %i ", pInline->iLine);
-        hb_compGenCString(yyc, reinterpret_cast<const HB_BYTE *>(pInline->szFileName), strlen(pInline->szFileName));
+        hb_compGenCString(yyc, reinterpret_cast<const uint8_t *>(pInline->szFileName), strlen(pInline->szFileName));
         fprintf(yyc, "\n");
 
         if (pInline->szName) {
@@ -394,7 +394,7 @@ static void hb_writeEndInit(HB_COMP_DECL, FILE *yyc, const char *szModulname, co
   if (HB_COMP_PARAM->fHideSource) {
     szSourceFile = "";
   }
-  hb_compGenCString(yyc, reinterpret_cast<const HB_BYTE *>(szSourceFile), strlen(szSourceFile));
+  hb_compGenCString(yyc, reinterpret_cast<const uint8_t *>(szSourceFile), strlen(szSourceFile));
   fprintf(yyc, ", 0x%lx, 0x%04x)\n\n", 0L, HB_PCODE_VER);
 
   fprintf(yyc,
@@ -436,16 +436,16 @@ static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, b
   }
 }
 
-static void hb_compGenCByteStr(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
+static void hb_compGenCByteStr(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
 {
   for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
-    auto uchr = static_cast<HB_BYTE>(pText[nPos]);
+    auto uchr = static_cast<uint8_t>(pText[nPos]);
     // NOTE: After optimization some Chr(n) can be converted
     //    into a string containing non-printable characters.
     //
     // TODO: add switch to use hexadecimal format "%#04x"
     fprintf(yyc,
-            (uchr < static_cast<HB_BYTE>(' ') || uchr >= 127 || uchr == '\\' || uchr == '\'') ? "%i, " : "\'%c\', ",
+            (uchr < static_cast<uint8_t>(' ') || uchr >= 127 || uchr == '\\' || uchr == '\'') ? "%i, " : "\'%c\', ",
             uchr);
   }
 }
@@ -1373,19 +1373,19 @@ static HB_GENC_FUNC(hb_p_pushdouble)
 {
   fprintf(cargo->yyc, "\tHB_P_PUSHDOUBLE,");
   ++nPCodePos;
-  for (auto i = 0; i < static_cast<int>(sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE)); ++i) {
+  for (auto i = 0; i < static_cast<int>(sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t)); ++i) {
     fprintf(cargo->yyc, " %u,", static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + i]));
   }
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %.*f, %u, %u",
-            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(HB_BYTE)]),
+            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(uint8_t)]),
             HB_PCODE_MKDOUBLE(&pFunc->pCode[nPCodePos]),
             static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double)]),
-            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(HB_BYTE)]));
+            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(uint8_t)]));
   }
   fprintf(cargo->yyc, "\n");
 
-  return sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1;
+  return sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t) + 1;
 }
 
 static HB_GENC_FUNC(hb_p_pushfield)
@@ -2456,7 +2456,7 @@ static void hb_compGenCReadable(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc)
   genc_info.bVerbose = (HB_COMP_PARAM->iGenCOutput == HB_COMPGENC_VERBOSE);
   genc_info.yyc = yyc;
 
-  fprintf(yyc, "{\n   static const HB_BYTE pcode[] =\n   {\n");
+  fprintf(yyc, "{\n   static const uint8_t pcode[] =\n   {\n");
   hb_compPCodeEval(pFunc, reinterpret_cast<const PHB_PCODE_FUNC *>(pFuncTable), static_cast<void *>(&genc_info));
 
   if (genc_info.bVerbose) {
@@ -2468,7 +2468,7 @@ static void hb_compGenCReadable(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc)
 
 static void hb_compGenCCompact(HB_HFUNC *pFunc, FILE *yyc)
 {
-  fprintf(yyc, "{\n\tstatic const HB_BYTE pcode[] =\n\t{\n\t\t");
+  fprintf(yyc, "{\n\tstatic const uint8_t pcode[] =\n\t{\n\t\t");
 
   HB_SIZE nPCodePos = 0;
   int nChar = 0;

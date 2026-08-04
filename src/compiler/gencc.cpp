@@ -68,11 +68,11 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
     fprintf(cargo->yyc, "\t#error: \"" s "\"\n");                                                                      \
   } while (false)
 
-void hb_compGenCString(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
+void hb_compGenCString(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
 {
   fputc('"', yyc);
   for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
-    auto uchr = static_cast<HB_BYTE>(pText[nPos]);
+    auto uchr = static_cast<uint8_t>(pText[nPos]);
     // NOTE: After optimization some Chr(n) can be converted
     //       into a string containing non-printable characters.
     //
@@ -80,13 +80,13 @@ void hb_compGenCString(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
     // are part of ANSI C standard
     if (uchr == '"' || uchr == '\\' || uchr == '?') {
       fprintf(yyc, "\\%c", uchr);
-    } else if (uchr < static_cast<HB_BYTE>(' ') || uchr >= 127) {
-      HB_BYTE uchrnext = nPos < nLen - 1 ? pText[nPos + 1] : 0;
+    } else if (uchr < static_cast<uint8_t>(' ') || uchr >= 127) {
+      uint8_t uchrnext = nPos < nLen - 1 ? pText[nPos + 1] : 0;
 
       fprintf(yyc, "\\x%02X%s", uchr,
-              (uchrnext >= static_cast<HB_BYTE>('0') && uchrnext <= static_cast<HB_BYTE>('9')) ||
-                      (uchrnext >= static_cast<HB_BYTE>('a') && uchrnext <= static_cast<HB_BYTE>('z')) ||
-                      (uchrnext >= static_cast<HB_BYTE>('A') && uchrnext <= static_cast<HB_BYTE>('Z'))
+              (uchrnext >= static_cast<uint8_t>('0') && uchrnext <= static_cast<uint8_t>('9')) ||
+                      (uchrnext >= static_cast<uint8_t>('a') && uchrnext <= static_cast<uint8_t>('z')) ||
+                      (uchrnext >= static_cast<uint8_t>('A') && uchrnext <= static_cast<uint8_t>('Z'))
                   ? "\" \""
                   : "");
     } else {
@@ -96,7 +96,7 @@ void hb_compGenCString(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
   fputc('"', yyc);
 }
 
-static void hb_compGenCStrData(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen, int iMethod)
+static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, int iMethod)
 {
 #ifdef __HB_CSTRING_SIZE_MAX
 #if __HB_CSTRING_SIZE_MAX - 0 < 1
@@ -930,7 +930,7 @@ static HB_GENC_FUNC(hb_p_pushblockshort)
   uint16_t usSize = pFunc->pCode[nPCodePos + 1] - 2;
   nPCodePos += 2;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[%hu] = {", usSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const uint8_t codeblock[%hu] = {", usSize);
 
   for (uint16_t us = 0; us < usSize; ++us) {
     if ((us & 0x0f) == 0) {
@@ -954,7 +954,7 @@ static HB_GENC_FUNC(hb_p_pushblock)
   uint16_t usSize = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]) - 3;
   nPCodePos += 3;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[%hu] = {", usSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const uint8_t codeblock[%hu] = {", usSize);
 
   for (uint16_t us = 0; us < usSize; ++us) {
     if ((us & 0x0f) == 0) {
@@ -978,7 +978,7 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
   HB_SIZE nSize = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]) - 4;
   nPCodePos += 4;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[%" HB_PFS "u] = {", nSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const uint8_t codeblock[%" HB_PFS "u] = {", nSize);
 
   for (HB_SIZE ul = 0; ul < nSize; ++ul) {
     if ((ul & 0x0f) == 0) {
@@ -1001,21 +1001,21 @@ static HB_GENC_FUNC(hb_p_pushdouble)
 
 #if 0
    fprintf(cargo->yyc, "\thb_xvmPushDouble(%.*f, %u, %u);\n",
-           pFunc->pCode[nPCodePos + 1 + sizeof(double) + sizeof(HB_BYTE)] + 1,
+           pFunc->pCode[nPCodePos + 1 + sizeof(double) + sizeof(uint8_t)] + 1,
            HB_PCODE_MKDOUBLE(&pFunc->pCode[nPCodePos + 1]),
            pFunc->pCode[nPCodePos + 1 + sizeof(double)],
-           pFunc->pCode[nPCodePos + 1 + sizeof(double) + sizeof(HB_BYTE)]);
+           pFunc->pCode[nPCodePos + 1 + sizeof(double) + sizeof(uint8_t)]);
 #else
   // This version keeps double calculation compatible with RT FL functions
   fprintf(cargo->yyc, "\thb_xvmPushDouble(* ( double * ) "); // TODO: C++ cast
   {
     double d = HB_PCODE_MKDOUBLE(&pFunc->pCode[nPCodePos + 1]);
-    hb_compGenCString(cargo->yyc, reinterpret_cast<const HB_BYTE *>(&d), sizeof(double));
+    hb_compGenCString(cargo->yyc, reinterpret_cast<const uint8_t *>(&d), sizeof(double));
   }
   fprintf(cargo->yyc, ", %u, %u);\n", pFunc->pCode[nPCodePos + 1 + sizeof(double)],
-          pFunc->pCode[nPCodePos + 1 + sizeof(double) + sizeof(HB_BYTE)]);
+          pFunc->pCode[nPCodePos + 1 + sizeof(double) + sizeof(uint8_t)]);
 #endif
-  return sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1;
+  return sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t) + 1;
 }
 
 static HB_GENC_FUNC(hb_p_pushfield)
@@ -1157,7 +1157,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
   if (iSkip > 0) {
     int iDone = 0;
     while (iDone < iSkip) {
-      HB_BYTE opcode = pFunc->pCode[nPCodePos + 9 + iDone];
+      uint8_t opcode = pFunc->pCode[nPCodePos + 9 + iDone];
       if (opcode >= HB_P_LAST_PCODE) {
         break;
       }
@@ -1457,7 +1457,7 @@ static HB_GENC_FUNC(hb_p_threadstatics)
   uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
   HB_SIZE nSize = static_cast<HB_SIZE>(w) << 1;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE statics[%" HB_PFS "u] = {", nSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const uint8_t statics[%" HB_PFS "u] = {", nSize);
 
   for (HB_SIZE ul = 0; ul < nSize; ++ul) {
     if ((ul & 0x0f) == 0) {

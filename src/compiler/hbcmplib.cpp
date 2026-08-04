@@ -190,7 +190,7 @@ HB_FUNC(HB_COMPILEBUF)
   PHB_PP_OPEN_FUNC pOpenFunc;
   PHB_PP_MSG_FUNC pMsgFunc;
   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
-  HB_BYTE *pBuffer;
+  uint8_t *pBuffer;
   HB_SIZE nLen;
   int iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc);
   hb_xfree(static_cast<void *>(argv));
@@ -211,7 +211,7 @@ HB_FUNC(HB_COMPILEFROMBUF)
     PHB_PP_OPEN_FUNC pOpenFunc;
     PHB_PP_MSG_FUNC pMsgFunc;
     hb_compGenArgList(2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
-    HB_BYTE *pBuffer;
+    uint8_t *pBuffer;
     HB_SIZE nLen;
     int iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc);
     hb_xfree(static_cast<void *>(argv));

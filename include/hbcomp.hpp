@@ -121,7 +121,7 @@ extern void hb_compFunctionMarkStatic(HB_COMP_DECL, const char * szFunName);
 extern HB_EXPORT_INT const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int * piFlags);
 extern HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *, int);
 
-extern HB_VARTYPE *hb_compVarTypeNew(HB_COMP_DECL, HB_BYTE cVarType, const char * szFromClass);
+extern HB_VARTYPE *hb_compVarTypeNew(HB_COMP_DECL, uint8_t cVarType, const char * szFromClass);
 extern void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, HB_VARTYPE *pVarType); // add a new param, local, static variable to a function definition or a public or private
 extern HB_HVAR *hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, int * piScope);
 extern const char * hb_compLocalVariableName(HB_HFUNC *pFunc, uint16_t wVar); // returns the name of local variable
@@ -171,7 +171,7 @@ extern void hb_compGenMessage(const char * szMsgName, HB_BOOL bIsObject, HB_COMP
 extern void hb_compGenMessageData(const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL); // generates an underscore-symbol name for a data assignment
 extern void hb_compGenPopVar(const char * szVarName, HB_COMP_DECL); // generates the pcode to pop a value from the virtual machine stack onto a variable
 extern void hb_compGenPopMemvar(const char * szVarName, HB_COMP_DECL); // generates the pcode to pop a value from the virtual machine stack onto a memvar variable
-extern void hb_compGenPushDouble(double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COMP_DECL); // Pushes a number on the virtual machine stack
+extern void hb_compGenPushDouble(double dNumber, uint8_t bWidth, uint8_t bDec, HB_COMP_DECL); // Pushes a number on the virtual machine stack
 extern void hb_compGenPushFunCall(const char *, int, HB_COMP_DECL); // generates the pcode to push function's call
 extern void hb_compGenPushFunSym(const char *, int, HB_COMP_DECL); // generates the pcode to push function's symbol
 extern void hb_compGenPushFunRef(const char *, HB_COMP_DECL); // generates the pcode to push function's reference symbol
@@ -188,11 +188,11 @@ extern void hb_compGenPushString(const char * szText, HB_SIZE nLen, HB_COMP_DECL
 extern void hb_compGenPushSymbol(const char * szSymbolName, HB_BOOL bFunction, HB_COMP_DECL); // Pushes a symbol on to the Virtual machine stack
 extern void hb_compGenPushAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, const char * szAlias, HB_MAXINT nWorkarea, HB_COMP_DECL);
 extern void hb_compGenPopAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, const char * szAlias, HB_MAXINT nWorkarea, HB_COMP_DECL);
-extern void hb_compGenPCode1(HB_BYTE, HB_COMP_DECL); // generates 1 byte of pcode
-extern void hb_compGenPCode2(HB_BYTE, HB_BYTE, HB_COMP_DECL); // generates 2 bytes of pcode + flag for optional StrongType().
-extern void hb_compGenPCode3(HB_BYTE, HB_BYTE, HB_BYTE, HB_COMP_DECL); // generates 3 bytes of pcode + flag for optional StrongType()
-extern void hb_compGenPCode4(HB_BYTE, HB_BYTE, HB_BYTE, HB_BYTE, HB_COMP_DECL); // generates 4 bytes of pcode + flag for optional StrongType()
-extern void hb_compGenPCodeN(const HB_BYTE * pBuffer, HB_SIZE nSize, HB_COMP_DECL); // copy bytes to a pcode buffer + flag for optional StrongType()
+extern void hb_compGenPCode1(uint8_t, HB_COMP_DECL); // generates 1 byte of pcode
+extern void hb_compGenPCode2(uint8_t, uint8_t, HB_COMP_DECL); // generates 2 bytes of pcode + flag for optional StrongType().
+extern void hb_compGenPCode3(uint8_t, uint8_t, uint8_t, HB_COMP_DECL); // generates 3 bytes of pcode + flag for optional StrongType()
+extern void hb_compGenPCode4(uint8_t, uint8_t, uint8_t, uint8_t, HB_COMP_DECL); // generates 4 bytes of pcode + flag for optional StrongType()
+extern void hb_compGenPCodeN(const uint8_t * pBuffer, HB_SIZE nSize, HB_COMP_DECL); // copy bytes to a pcode buffer + flag for optional StrongType()
 
 extern HB_SIZE hb_compSequenceBegin(HB_COMP_DECL);
 extern HB_SIZE hb_compSequenceEnd(HB_COMP_DECL);
@@ -241,7 +241,7 @@ extern HB_BOOL hb_compCheckUnclosedStru(HB_COMP_DECL, HB_HFUNC *);
 #define HB_GEN_FUNC4(func, p1, p2, p3, p4) hb_compGen##func(p1, p2, p3, p4, HB_COMP_PARAM)
 
 extern int hb_compMain(int argc, const char * const argv[]);
-extern int hb_compMainExt(int argc, const char * const argv[], HB_BYTE ** pBufPtr, HB_SIZE * pnSize, const char * szSource, int iStartLine, void * cargo, PHB_PP_OPEN_FUNC pOpenFunc, PHB_PP_MSG_FUNC pMsgFunc);
+extern int hb_compMainExt(int argc, const char * const argv[], uint8_t ** pBufPtr, HB_SIZE * pnSize, const char * szSource, int iStartLine, void * cargo, PHB_PP_OPEN_FUNC pOpenFunc, PHB_PP_MSG_FUNC pMsgFunc);
 extern void hb_compOutStd(HB_COMP_DECL, const char * szMessage);
 extern void hb_compOutErr(HB_COMP_DECL, const char * szMessage);
 
@@ -305,10 +305,10 @@ extern void hb_compStripFuncLines(HB_COMP_DECL, HB_HFUNC *pFunc);
 extern void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *); // generates the C++ language output
 extern void hb_compGenPortObj(HB_COMP_DECL, HB_FNAME *); // generates the portable objects
 
-extern void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize); // generates the portable objects to memory buffer
+extern void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t ** pBufPtr, HB_SIZE * pnSize); // generates the portable objects to memory buffer
 
 extern void hb_compGenCRealCode(HB_COMP_DECL, HB_HFUNC *pFunc, FILE * yyc);
-extern void hb_compGenCString(FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen);
+extern void hb_compGenCString(FILE * yyc, const uint8_t * pText, HB_SIZE nLen);
 
 // hbident.cpp
 extern const char * hb_compIdentifierNew(HB_COMP_DECL, const char * szName, int iType); // create the reusable identifier
@@ -327,7 +327,7 @@ extern const char * const hb_comp_szErrors[];
 extern const char * const hb_comp_szWarnings[];
 
 // table with PCODEs' length
-extern const HB_BYTE hb_comp_pcode_len[];
+extern const uint8_t hb_comp_pcode_len[];
 
 // identifier types for hb_compIdentifierNew()
 #define HB_IDENT_STATIC       0
@@ -372,13 +372,13 @@ extern const HB_BYTE hb_comp_pcode_len[];
 #define HB_MACRO_GENFLAGS   HB_COMPFLAG_RT_MACRO
 #elif !defined(HB_COMMON_SUPPORT)
 #if defined(__cplusplus)
-#define HB_MACRO_GENFLAGS   (((static_cast<HB_BYTE>(HB_COMP_PARAM->supported)) & \
+#define HB_MACRO_GENFLAGS   (((static_cast<uint8_t>(HB_COMP_PARAM->supported)) & \
                             (HB_COMPFLAG_HARBOUR | HB_COMPFLAG_XBASE | HB_COMPFLAG_SHORTCUTS | \
                             HB_COMPFLAG_ARRSTR | HB_COMPFLAG_EXTOPT | HB_COMPFLAG_RT_MACRO)) | \
                             ((HB_COMP_PARAM->supported & \
                             HB_COMPFLAG_HARBOUR) == 0 ? HB_COMPFLAG_SHORTCUTS : 0))
 #else
-#define HB_MACRO_GENFLAGS   (((( HB_BYTE ) HB_COMP_PARAM->supported) & \
+#define HB_MACRO_GENFLAGS   (((( uint8_t ) HB_COMP_PARAM->supported) & \
                             (HB_COMPFLAG_HARBOUR | HB_COMPFLAG_XBASE | HB_COMPFLAG_SHORTCUTS | \
                             HB_COMPFLAG_ARRSTR | HB_COMPFLAG_EXTOPT | HB_COMPFLAG_RT_MACRO)) | \
                             ((HB_COMP_PARAM->supported & \

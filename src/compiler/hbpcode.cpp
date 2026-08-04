@@ -116,7 +116,7 @@ static HB_PSIZE_FUNC(hb_p_threadstatics)
 }
 
 // clang-format off
-const HB_BYTE hb_comp_pcode_len[] = {
+const uint8_t hb_comp_pcode_len[] = {
    1,        // HB_P_AND                   
    1,        // HB_P_ARRAYPUSH             
    1,        // HB_P_ARRAYPOP              
@@ -220,7 +220,7 @@ const HB_BYTE hb_comp_pcode_len[] = {
    3,        // HB_P_PUSHMEMVAR            
    3,        // HB_P_PUSHMEMVARREF         
    1,        // HB_P_PUSHNIL               
-   1 + sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE),        // HB_P_PUSHDOUBLE            
+   1 + sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t),        // HB_P_PUSHDOUBLE            
    1,        // HB_P_PUSHSELF              
    3,        // HB_P_PUSHSTATIC            
    3,        // HB_P_PUSHSTATICREF         
@@ -500,7 +500,7 @@ static PHB_PCODE_FUNC s_psize_table[] =
 HB_ISIZ hb_compPCodeSize(HB_HFUNC *pFunc, HB_SIZE nOffset)
 {
   HB_ISIZ nSize = 0;
-  HB_BYTE opcode = pFunc->pCode[nOffset];
+  uint8_t opcode = pFunc->pCode[nOffset];
 
   if (opcode < HB_P_LAST_PCODE) {
     nSize = hb_comp_pcode_len[opcode];
@@ -526,7 +526,7 @@ void hb_compPCodeEval(HB_HFUNC *pFunc, const PHB_PCODE_FUNC *pFunctions, void *c
   assert(sizeof(s_psize_table) / sizeof(PHB_PCODE_FUNC) == HB_P_LAST_PCODE);
 
   while (nPos < pFunc->nPCodePos) {
-    HB_BYTE opcode = pFunc->pCode[nPos];
+    uint8_t opcode = pFunc->pCode[nPos];
     if (opcode < HB_P_LAST_PCODE) {
       PHB_PCODE_FUNC pCall = pFunctions[opcode];
       nSkip = pCall ? pCall(pFunc, nPos, cargo) : 0;
@@ -575,7 +575,7 @@ void hb_compPCodeTrace(HB_HFUNC *pFunc, const PHB_PCODE_FUNC *pFunctions, void *
   assert(sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE);
 
   while (nPos < pFunc->nPCodePos) {
-    HB_BYTE opcode = pFunc->pCode[nPos];
+    uint8_t opcode = pFunc->pCode[nPos];
     if (opcode < HB_P_LAST_PCODE) {
       PHB_PCODE_FUNC pCall = pFunctions[opcode];
       if (pCall) {
@@ -592,47 +592,47 @@ void hb_compPCodeTrace(HB_HFUNC *pFunc, const PHB_PCODE_FUNC *pFunctions, void *
   }
 }
 
-void hb_compGenPCode1(HB_BYTE byte, HB_COMP_DECL)
+void hb_compGenPCode1(uint8_t byte, HB_COMP_DECL)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
   if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
   } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 1) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte;
 }
 
-void hb_compGenPCode2(HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL)
+void hb_compGenPCode2(uint8_t byte1, uint8_t byte2, HB_COMP_DECL)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
   if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
   } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 2) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte1;
   pFunc->pCode[pFunc->nPCodePos++] = byte2;
 }
 
-void hb_compGenPCode3(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL)
+void hb_compGenPCode3(uint8_t byte1, uint8_t byte2, uint8_t byte3, HB_COMP_DECL)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
   if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
   } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 3) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte1;
@@ -640,16 +640,16 @@ void hb_compGenPCode3(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL)
   pFunc->pCode[pFunc->nPCodePos++] = byte3;
 }
 
-void hb_compGenPCode4(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte4, HB_COMP_DECL)
+void hb_compGenPCode4(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, HB_COMP_DECL)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
   if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xgrab(HB_PCODE_CHUNK));
     pFunc->nPCodeSize = HB_PCODE_CHUNK;
     pFunc->nPCodePos = 0;
   } else if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 4) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte1;
@@ -658,18 +658,18 @@ void hb_compGenPCode4(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte4
   pFunc->pCode[pFunc->nPCodePos++] = byte4;
 }
 
-void hb_compGenPCodeN(const HB_BYTE *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
+void hb_compGenPCodeN(const uint8_t *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 
   if (!pFunc->pCode) { // has been created the memory block to hold the pcode ?
     pFunc->nPCodeSize = ((nSize / HB_PCODE_CHUNK) + 1) * HB_PCODE_CHUNK;
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xgrab(pFunc->nPCodeSize));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xgrab(pFunc->nPCodeSize));
     pFunc->nPCodePos = 0;
   } else if (pFunc->nPCodePos + nSize > pFunc->nPCodeSize) {
     // not enough free space in pcode buffer - increase it
     pFunc->nPCodeSize += (((nSize / HB_PCODE_CHUNK) + 1) * HB_PCODE_CHUNK);
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));
   }
 
   memcpy(pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize);

@@ -27,10 +27,10 @@
 #include <string>
 #include <vector>
 
-constexpr HB_BYTE SYM_NOLINK = 0;   // #define SYM_NOLINK 0 // symbol does not have to be linked
-constexpr HB_BYTE SYM_FUNC = 1;     // #define SYM_FUNC 1 // function defined in this module
-constexpr HB_BYTE SYM_EXTERN = 2;   // #define SYM_EXTERN 2 // function defined in other module
-constexpr HB_BYTE SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound function
+constexpr uint8_t SYM_NOLINK = 0;   // #define SYM_NOLINK 0 // symbol does not have to be linked
+constexpr uint8_t SYM_FUNC = 1;     // #define SYM_FUNC 1 // function defined in this module
+constexpr uint8_t SYM_EXTERN = 2;   // #define SYM_EXTERN 2 // function defined in other module
+constexpr uint8_t SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound function
 
 static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
 {
@@ -56,13 +56,13 @@ static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulF
   return nSize;
 }
 
-void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
+void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t **pBufPtr, HB_SIZE *pnSize)
 {
   HB_ULONG ulSymbols, ulFunctions;
   *pnSize = hb_compHrbSize(HB_COMP_PARAM, &ulSymbols, &ulFunctions);
   // additional 0 byte is for passing buffer directly as string item
-  HB_BYTE *ptr;
-  ptr = *pBufPtr = static_cast<HB_BYTE *>(hb_xgrab(*pnSize + 1));
+  uint8_t *ptr;
+  ptr = *pBufPtr = static_cast<uint8_t *>(hb_xgrab(*pnSize + 1));
 
   // signature
   *ptr++ = 0xC0;
@@ -86,7 +86,7 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE **pBufPtr, HB_SIZE *pnSize)
     //        .hrb file is loaded but we should create new format
     //        for .hrb files in which this field will have at least
     //        16-bit [druzus]
-    *ptr++ = static_cast<HB_BYTE>(pSym->cScope);
+    *ptr++ = static_cast<uint8_t>(pSym->cScope);
     // symbol type
     if (pSym->cScope & HB_FS_LOCAL) {
       *ptr++ = SYM_FUNC; // function defined in this module
@@ -139,7 +139,7 @@ void hb_compGenPortObj(HB_COMP_DECL, HB_FNAME *pFileName)
     hb_compOutStd(HB_COMP_PARAM, buffer.data());
   }
 
-  HB_BYTE *pHrbBody;
+  uint8_t *pHrbBody;
   HB_SIZE nSize;
   hb_compGenBufPortObj(HB_COMP_PARAM, &pHrbBody, &nSize);
 

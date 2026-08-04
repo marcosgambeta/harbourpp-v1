@@ -111,7 +111,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
               // the caller will want to use the returned buffer as
               // parameter to hb_compGenPushString(). [druzus]
               pInfo->ulAllocated = ((ulLine >> 3) + 0x100) & 0xFFFFFF00L;
-              pInfo->pLineMap = static_cast<HB_BYTE *>(hb_xgrabz(pInfo->ulAllocated + 1));
+              pInfo->pLineMap = static_cast<uint8_t *>(hb_xgrabz(pInfo->ulAllocated + 1));
               pInfo->pNext = pLineInfo;
               pLineInfo = pInfo;
             }
@@ -119,7 +119,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
           nOffset = ulLine >> 3;
           if (pInfo->ulAllocated <= nOffset) {
             HB_ULONG ulNewSize = ((ulLine >> 3) + 0x100) & 0xFFFFFF00L;
-            pInfo->pLineMap = static_cast<HB_BYTE *>(hb_xrealloc(pInfo->pLineMap, ulNewSize + 1));
+            pInfo->pLineMap = static_cast<uint8_t *>(hb_xrealloc(pInfo->pLineMap, ulNewSize + 1));
             memset(pInfo->pLineMap + pInfo->ulAllocated, 0, ulNewSize - pInfo->ulAllocated + 1);
             pInfo->ulAllocated = ulNewSize;
           }

@@ -63,7 +63,7 @@ using PHB_FIX_FUNC = HB_FIX_FUNC_ *;
 
 static HB_FIX_FUNC(hb_p_pushblock)
 {
-  HB_BYTE *pLocal = &pFunc->pCode[nPCodePos + 7];
+  uint8_t *pLocal = &pFunc->pCode[nPCodePos + 7];
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -86,7 +86,7 @@ static HB_FIX_FUNC(hb_p_pushblock)
 
 static HB_FIX_FUNC(hb_p_pushblocklarge)
 {
-  HB_BYTE *pLocal = &pFunc->pCode[nPCodePos + 8];
+  uint8_t *pLocal = &pFunc->pCode[nPCodePos + 8];
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -109,7 +109,7 @@ static HB_FIX_FUNC(hb_p_pushblocklarge)
 
 static HB_FIX_FUNC(hb_p_localfix)
 {
-  HB_BYTE *pVar = &pFunc->pCode[nPCodePos + 1];
+  uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
   HB_SHORT iVar = HB_PCODE_MKSHORT(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
