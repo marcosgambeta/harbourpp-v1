@@ -80,9 +80,9 @@ struct _HB_HCLASS;    // forward declaration
 struct _HB_HDECLARED
 {
    const char *          szName;              // the name of the symbol
-   HB_BYTE               cType;
+   uint8_t               cType;
    uint16_t iParamCount;
-   HB_BYTE *             cParamTypes;
+   uint8_t *             cParamTypes;
    struct _HB_HCLASS * pClass;
    struct _HB_HCLASS ** pParamClasses;
    struct _HB_HDECLARED * pNext;               // pointer to the next declared function
@@ -93,9 +93,9 @@ using PHB_HDECLARED = HB_HDECLARED *; // deprecated in core code
 typedef struct _HB_HDECLARED
 {
    const char *          szName;              // the name of the symbol
-   HB_BYTE               cType;
+   uint8_t               cType;
    uint16_t iParamCount;
-   HB_BYTE *             cParamTypes;
+   uint8_t *             cParamTypes;
    struct _HB_HCLASS * pClass;
    struct _HB_HCLASS ** pParamClasses;
    struct _HB_HDECLARED * pNext;               // pointer to the next declared function
@@ -132,7 +132,7 @@ struct _HB_HVAR
    int            iUsed;            // number of times used
    int            iDeclLine;        // declaration line number
    uint16_t uiFlags;          // optional flags, f.e. THREAD STATIC
-   HB_BYTE        cType;            // optional strong typing
+   uint8_t        cType;            // optional strong typing
    HB_HCLASS *    pClass;
    struct _HB_HVAR * pNext;            // pointer to next defined variable
 };
@@ -146,7 +146,7 @@ typedef struct _HB_HVAR
    int            iUsed;            // number of times used
    int            iDeclLine;        // declaration line number
    uint16_t uiFlags;          // optional flags, f.e. THREAD STATIC
-   HB_BYTE        cType;            // optional strong typing
+   uint8_t        cType;            // optional strong typing
    HB_HCLASS *    pClass;
    struct _HB_HVAR * pNext;            // pointer to next defined variable
 } HB_HVAR, * PHB_HVAR;
@@ -156,7 +156,7 @@ typedef struct _HB_HVAR
 typedef struct HB_CBVAR_
 {
    const char * szName;
-   HB_BYTE bType;
+   uint8_t bType;
    HB_BOOL bUsed;
    struct HB_CBVAR_ * pNext;
 } HB_CBVAR, * PHB_CBVAR;
@@ -165,7 +165,7 @@ typedef struct HB_CBVAR_
 struct _HB_VARTYPE
 {
    struct _HB_VARTYPE *   pNext;
-   HB_BYTE                cVarType;
+   uint8_t                cVarType;
    const char *           szFromClass;
 };
 using HB_VARTYPE = _HB_VARTYPE;
@@ -174,7 +174,7 @@ using PHB_VARTYPE = HB_VARTYPE *; // deprecated in core code
 typedef struct _HB_VARTYPE
 {
    struct _HB_VARTYPE *   pNext;
-   HB_BYTE                cVarType;
+   uint8_t                cVarType;
    const char *           szFromClass;
 } HB_VARTYPE, * PHB_VARTYPE;
 #endif
@@ -572,7 +572,7 @@ struct _HB_HFUNC
    HB_HVAR *    pMemvars;                 // pointer to memvar variables list
    HB_HVAR *    pDetached;                // pointer to detached local variables list
    HB_HVAR *    pPrivates;                // pointer to private variables list
-   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
    HB_SIZE      nPCodeSize;               // total memory size for pcode
    HB_SIZE      nPCodePos;                // actual pcode offset
    HB_SIZE *    pNOOPs;                   // pointer to the NOOP array
@@ -618,7 +618,7 @@ typedef struct _HB_HFUNC
    HB_HVAR *    pMemvars;                 // pointer to memvar variables list
    HB_HVAR *    pDetached;                // pointer to detached local variables list
    HB_HVAR *    pPrivates;                // pointer to private variables list
-   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
    HB_SIZE      nPCodeSize;               // total memory size for pcode
    HB_SIZE      nPCodePos;                // actual pcode offset
    HB_SIZE *    pNOOPs;                   // pointer to the NOOP array
@@ -674,7 +674,7 @@ typedef struct _HB_PPDEFINE
 struct _HB_HINLINE
 {
    const char * szName;                   // name of a inline function
-   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
    HB_SIZE      nPCodeSize;               // total memory size for pcode
    const char * szFileName;               // Source file name
    int          iLine;                    // Source line number
@@ -686,7 +686,7 @@ using PHB_HINLINE = HB_HINLINE *; // deprecated in core code
 typedef struct _HB_HINLINE
 {
    const char * szName;                   // name of a inline function
-   HB_BYTE *    pCode;                    // pointer to a memory block where pcode is stored
+   uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
    HB_SIZE      nPCodeSize;               // total memory size for pcode
    const char * szFileName;               // Source file name
    int          iLine;                    // Source line number
@@ -797,7 +797,7 @@ typedef struct _HB_DEBUGINFO
    HB_ULONG  ulFirstLine;
    HB_ULONG  ulLastLine;
    HB_ULONG  ulAllocated;
-   HB_BYTE * pLineMap;
+   uint8_t * pLineMap;
    struct _HB_DEBUGINFO * pNext;
 } HB_DEBUGINFO, * PHB_DEBUGINFO;
 
@@ -838,7 +838,7 @@ typedef struct _HB_COMMON
 
 typedef struct HB_PCODE_INFO_ // compiled pcode container for macro compiler
 {
-   HB_BYTE * pCode;        // pointer to a memory block where pcode is stored
+   uint8_t * pCode;        // pointer to a memory block where pcode is stored
    HB_SIZE nPCodeSize;     // total memory size for pcode
    HB_SIZE nPCodePos;      // actual pcode offset
    HB_BOOL fVParams;       // function/codeblock with variable parameters
@@ -1005,7 +1005,7 @@ typedef struct _HB_COMP
    void *            cargo;
 
    HB_SIZE           nOutBufSize;         // memory output buffer size
-   HB_BYTE *         pOutBuf;             // memory output buffer address
+   uint8_t *         pOutBuf;             // memory output buffer address
 
    int               lastLine;            // last generated in PCODE line number
    int               currLine;            // currently compiled line number
@@ -1020,7 +1020,7 @@ typedef struct _HB_COMP
    char **           szStdChExt;          // extended definitions file names (-u+<file>)
    int               iStdChExt;           // number of extended definition files (-u+<file>)
 
-   HB_BYTE           cDataListType;       // current declared variable list type
+   uint8_t           cDataListType;       // current declared variable list type
 
    int               iErrorCount;
    int               iModulesCount;       // number of compiled .prg modules
