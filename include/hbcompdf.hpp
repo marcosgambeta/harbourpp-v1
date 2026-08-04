@@ -81,7 +81,7 @@ struct _HB_HDECLARED
 {
    const char *          szName;              // the name of the symbol
    HB_BYTE               cType;
-   HB_USHORT             iParamCount;
+   uint16_t iParamCount;
    HB_BYTE *             cParamTypes;
    struct _HB_HCLASS * pClass;
    struct _HB_HCLASS ** pParamClasses;
@@ -94,7 +94,7 @@ typedef struct _HB_HDECLARED
 {
    const char *          szName;              // the name of the symbol
    HB_BYTE               cType;
-   HB_USHORT             iParamCount;
+   uint16_t iParamCount;
    HB_BYTE *             cParamTypes;
    struct _HB_HCLASS * pClass;
    struct _HB_HCLASS ** pParamClasses;
@@ -131,7 +131,7 @@ struct _HB_HVAR
    const char *   szAlias;          // variable alias namespace
    int            iUsed;            // number of times used
    int            iDeclLine;        // declaration line number
-   HB_USHORT      uiFlags;          // optional flags, f.e. THREAD STATIC
+   uint16_t uiFlags;          // optional flags, f.e. THREAD STATIC
    HB_BYTE        cType;            // optional strong typing
    HB_HCLASS *    pClass;
    struct _HB_HVAR * pNext;            // pointer to next defined variable
@@ -145,7 +145,7 @@ typedef struct _HB_HVAR
    const char *   szAlias;          // variable alias namespace
    int            iUsed;            // number of times used
    int            iDeclLine;        // declaration line number
-   HB_USHORT      uiFlags;          // optional flags, f.e. THREAD STATIC
+   uint16_t uiFlags;          // optional flags, f.e. THREAD STATIC
    HB_BYTE        cType;            // optional strong typing
    HB_HCLASS *    pClass;
    struct _HB_HVAR * pNext;            // pointer to next defined variable
@@ -397,7 +397,7 @@ typedef enum
 #define HB_FN_RESERVED  1
 #define HB_FN_MULTIARG  2
 
-typedef HB_USHORT HB_EXPRTYPE;
+typedef uint16_t HB_EXPRTYPE;
 
 typedef struct HB_EXPR_
 {
@@ -444,7 +444,7 @@ typedef struct HB_EXPR_
       {
          const char * szMacro;         // identifier after the macro operator
          struct HB_EXPR_ * pExprList;  // list elements if &(...) was used
-         HB_USHORT SubType;            // context in which macro is used
+         uint16_t SubType;            // context in which macro is used
          unsigned char cMacroOp;       // macro operator
       } asMacro;
       struct
@@ -458,7 +458,7 @@ typedef struct HB_EXPR_
          struct HB_EXPR_ * pExprList;  // list elements
          PHB_CBVAR pLocals;            // list of local variables
          char * string;                // source code of a codeblock
-         HB_USHORT flags;              // HB_BLOCK_*
+         uint16_t flags;              // HB_BLOCK_*
       } asCodeblock;
       struct
       {
@@ -487,7 +487,7 @@ typedef struct HB_EXPR_
    } value;
    HB_SIZE     nLength;
    HB_EXPRTYPE ExprType;      // internal expression type
-   HB_USHORT   ValType;       // language level value type
+   uint16_t ValType;       // language level value type
    struct HB_EXPR_ * pNext;   // next expression in the list of expressions
 } HB_EXPR, * PHB_EXPR;
 
@@ -522,9 +522,9 @@ typedef struct HB_LOOPEXIT_
 {
    HB_SIZE   nOffset;
    HB_BOOL   fCanLoop;
-   HB_USHORT wSeqCounter;
-   HB_USHORT wAlwaysCounter;
-   HB_USHORT wWithObjectCnt;
+   uint16_t wSeqCounter;
+   uint16_t wAlwaysCounter;
+   uint16_t wWithObjectCnt;
    struct HB_LOOPEXIT_ * pLoopList;
    struct HB_LOOPEXIT_ * pExitList;
    struct HB_LOOPEXIT_ * pNext;
@@ -563,9 +563,9 @@ struct _HB_HFUNC
 {
    const char * szName;                   // name of a defined Clipper function
    HB_SYMBOLSCOPE cScope;                 // scope of a defined Clipper function
-   HB_USHORT    funFlags;                 // some flags we may need
-   HB_USHORT    wParamCount;              // number of declared parameters
-   HB_USHORT    wParamNum;                // current parameter number
+   uint16_t funFlags;                 // some flags we may need
+   uint16_t wParamCount;              // number of declared parameters
+   uint16_t wParamNum;                // current parameter number
    HB_HVAR *    pLocals;                  // pointer to local variables list
    HB_HVAR *    pStatics;                 // pointer to static variables list
    HB_HVAR *    pFields;                  // pointer to fields variables list
@@ -592,15 +592,15 @@ struct _HB_HFUNC
    PHB_SWITCHCMD     pSwitch;
    PHB_ELSEIF        elseif;
    PHB_RTVAR         rtvars;
-   HB_USHORT         wSeqBegCounter;
-   HB_USHORT         wSeqCounter;
-   HB_USHORT         wAlwaysCounter;
-   HB_USHORT         wForCounter;
-   HB_USHORT         wIfCounter;
-   HB_USHORT         wWhileCounter;
-   HB_USHORT         wCaseCounter;
-   HB_USHORT         wSwitchCounter;
-   HB_USHORT         wWithObjectCnt;
+   uint16_t wSeqBegCounter;
+   uint16_t wSeqCounter;
+   uint16_t wAlwaysCounter;
+   uint16_t wForCounter;
+   uint16_t wIfCounter;
+   uint16_t wWhileCounter;
+   uint16_t wCaseCounter;
+   uint16_t wSwitchCounter;
+   uint16_t wWithObjectCnt;
 };
 using HB_HFUNC = _HB_HFUNC;
 using PHB_HFUNC = HB_HFUNC *;
@@ -609,9 +609,9 @@ typedef struct _HB_HFUNC
 {
    const char * szName;                   // name of a defined Clipper function
    HB_SYMBOLSCOPE cScope;                 // scope of a defined Clipper function
-   HB_USHORT    funFlags;                 // some flags we may need
-   HB_USHORT    wParamCount;              // number of declared parameters
-   HB_USHORT    wParamNum;                // current parameter number
+   uint16_t funFlags;                 // some flags we may need
+   uint16_t wParamCount;              // number of declared parameters
+   uint16_t wParamNum;                // current parameter number
    HB_HVAR *    pLocals;                  // pointer to local variables list
    HB_HVAR *    pStatics;                 // pointer to static variables list
    HB_HVAR *    pFields;                  // pointer to fields variables list
@@ -638,15 +638,15 @@ typedef struct _HB_HFUNC
    PHB_SWITCHCMD     pSwitch;
    PHB_ELSEIF        elseif;
    PHB_RTVAR         rtvars;
-   HB_USHORT         wSeqBegCounter;
-   HB_USHORT         wSeqCounter;
-   HB_USHORT         wAlwaysCounter;
-   HB_USHORT         wForCounter;
-   HB_USHORT         wIfCounter;
-   HB_USHORT         wWhileCounter;
-   HB_USHORT         wCaseCounter;
-   HB_USHORT         wSwitchCounter;
-   HB_USHORT         wWithObjectCnt;
+   uint16_t wSeqBegCounter;
+   uint16_t wSeqCounter;
+   uint16_t wAlwaysCounter;
+   uint16_t wForCounter;
+   uint16_t wIfCounter;
+   uint16_t wWhileCounter;
+   uint16_t wCaseCounter;
+   uint16_t wSwitchCounter;
+   uint16_t wWithObjectCnt;
 } HB_HFUNC, * PHB_HFUNC;
 #endif
 
@@ -864,8 +864,8 @@ typedef struct HB_MACRO_      // a macro compiled pcode container
    void *   pExprLst;         // list with allocated expressions
    void *   pIdentLst;        // list with allocated identifiers
    int      exprType;         // type of successfully compiled expression
-   HB_USHORT uiListElements;  // number of elements in macro list expression
-   HB_USHORT uiNameLen;       // the maximum symbol name length
+   uint16_t uiListElements;  // number of elements in macro list expression
+   uint16_t uiNameLen;       // the maximum symbol name length
    HB_PCODE_INFO pCodeInfoBuffer;
 } HB_MACRO;
 
