@@ -239,7 +239,7 @@ static HB_CODETRACE_FUNC(hb_p_seqend)
 
 static HB_CODETRACE_FUNC(hb_p_switch)
 {
-  HB_USHORT usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), us;
+  uint16_t usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), us;
   HB_SIZE nStart = nPCodePos, nNewPos;
 
   nPCodePos += 3;

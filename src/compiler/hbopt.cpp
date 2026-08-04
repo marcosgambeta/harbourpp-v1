@@ -531,13 +531,13 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
 
 static HB_OPT_FUNC(hb_p_switch)
 {
-  HB_USHORT usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  uint16_t usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
   HB_SIZE nStart = nPCodePos;
 
   HB_SYMBOL_UNUSED(cargo);
 
   nPCodePos += 3;
-  for (HB_USHORT us = 0; us < usCases; ++us) {
+  for (uint16_t us = 0; us < usCases; ++us) {
     switch (pFunc->pCode[nPCodePos]) {
     case HB_P_PUSHBYTE:
       nPCodePos += 2;
@@ -1042,7 +1042,7 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
     case HB_P_PUSHBLOCK:
     case HB_P_PUSHBLOCKLARGE: {
       HB_BYTE *pCode = &pFunc->pCode[nPos + 5];
-      HB_USHORT usVarCount;
+      uint16_t usVarCount;
 
       if (pFunc->pCode[nPos] == HB_P_PUSHBLOCKLARGE) {
         pCode++;
@@ -1050,7 +1050,7 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 
       usVarCount = HB_PCODE_MKUSHORT(pCode);
       while (usVarCount--) {
-        HB_USHORT usVar;
+        uint16_t usVar;
         pCode += 2;
         usVar = HB_PCODE_MKUSHORT(pCode);
         if (usVar > 0) {
@@ -1172,10 +1172,10 @@ static int hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, HB_BYT
         return 1;
       }
     } else if (pFunc->pCode[nPos] == HB_P_SWITCH) { // Switch is multi-place jump
-      HB_USHORT usCount = HB_PCODE_MKUSHORT(pFunc->pCode + nPos + 1);
+      uint16_t usCount = HB_PCODE_MKUSHORT(pFunc->pCode + nPos + 1);
 
       nPos += 3;
-      for (HB_USHORT us = 0; us < usCount; us++) {
+      for (uint16_t us = 0; us < usCount; us++) {
         if (hb_compPCodeTraceAssignedUnused(pFunc, nPos, pMap, isLocal, fCanBreak)) {
           return 1;
         }
@@ -1197,7 +1197,7 @@ static int hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, HB_BYT
 
 static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
-  HB_USHORT usLine = 0;
+  uint16_t usLine = 0;
 
   auto pMap = static_cast<HB_BYTE *>(hb_xgrab(pFunc->nPCodePos));
 
@@ -1363,7 +1363,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
     case HB_P_PUSHBLOCK:
     case HB_P_PUSHBLOCKLARGE: {
       HB_BYTE *pVar = &pFunc->pCode[nPos + 5];
-      HB_USHORT usVarCount;
+      uint16_t usVarCount;
 
       if (pFunc->pCode[nPos] == HB_P_PUSHBLOCKLARGE) {
         pVar++;
@@ -1403,7 +1403,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
 
   assert(HB_P_LAST_PCODE == 181);
 
-  HB_USHORT usLocalCount = 0;
+  uint16_t usLocalCount = 0;
   HB_HVAR *pVar = pFunc->pLocals;
   while (pVar) {
     pVar = pVar->pNext;
@@ -1432,7 +1432,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
   hb_compPCodeEnumScanLocals(pFunc, pLocals);
 
   // Check
-  HB_USHORT usIndex = 0;
+  uint16_t usIndex = 0;
   pVar = pFunc->pLocals;
   while (pVar) {
     // Compiler and optimizer should have the same opinion about variable usage

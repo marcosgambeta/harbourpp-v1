@@ -464,7 +464,7 @@ static void hb_compGenCLocalName(HB_HFUNC *pFunc, int iLocal, HB_SIZE nPCodePos,
       fprintf(cargo->yyc, "\t/* codeblockvar%i */", iLocal);
     }
   } else {
-    const char *szName = hb_compLocalVariableName(pFunc, static_cast<HB_USHORT>(iLocal));
+    const char *szName = hb_compLocalVariableName(pFunc, static_cast<uint16_t>(iLocal));
 
     if (szName != nullptr) {
       fprintf(cargo->yyc, "\t/* %s */", szName);
@@ -474,7 +474,7 @@ static void hb_compGenCLocalName(HB_HFUNC *pFunc, int iLocal, HB_SIZE nPCodePos,
   }
 }
 
-static void hb_compGenCStaticName(HB_USHORT uiStatic, PHB_GENC_INFO cargo)
+static void hb_compGenCStaticName(uint16_t uiStatic, PHB_GENC_INFO cargo)
 {
   const char *szName = hb_compStaticVariableName(cargo->HB_COMP_PARAM, uiStatic);
 
@@ -1282,14 +1282,14 @@ static HB_GENC_FUNC(hb_p_pushblock)
   }
   fprintf(cargo->yyc, "\n");
 
-  HB_USHORT w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]);
+  uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 3], pFunc->pCode[nPCodePos + 4]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local parameters (%u)", w);
   }
   fprintf(cargo->yyc, "\n");
 
-  HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
+  uint16_t wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 5], pFunc->pCode[nPCodePos + 6]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local variables (%u)", wVar);
@@ -1331,14 +1331,14 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
   }
   fprintf(cargo->yyc, "\n");
 
-  HB_USHORT w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]);
+  uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 4], pFunc->pCode[nPCodePos + 5]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local parameters (%u)", w);
   }
   fprintf(cargo->yyc, "\n");
 
-  HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
+  uint16_t wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 6], pFunc->pCode[nPCodePos + 7]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local variables (%u)", wVar);
@@ -1542,7 +1542,7 @@ static HB_GENC_FUNC(hb_p_pushstaticref)
 
 static HB_GENC_FUNC(hb_p_pushstrshort)
 {
-  HB_USHORT wLen = pFunc->pCode[nPCodePos + 1];
+  uint16_t wLen = pFunc->pCode[nPCodePos + 1];
 
   fprintf(cargo->yyc, "\tHB_P_PUSHSTRSHORT, %u,", pFunc->pCode[nPCodePos + 1]);
 
@@ -1560,7 +1560,7 @@ static HB_GENC_FUNC(hb_p_pushstrshort)
 
 static HB_GENC_FUNC(hb_p_pushstr)
 {
-  HB_USHORT wLen = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  uint16_t wLen = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
 
   fprintf(cargo->yyc, "\tHB_P_PUSHSTR, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
 
@@ -1597,7 +1597,7 @@ static HB_GENC_FUNC(hb_p_pushstrlarge)
 
 static HB_GENC_FUNC(hb_p_pushstrhidden)
 {
-  HB_USHORT wLen = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 2]);
+  uint16_t wLen = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 2]);
 
   fprintf(cargo->yyc, "\tHB_P_PUSHSTRHIDDEN, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3]);
@@ -1824,7 +1824,7 @@ static HB_GENC_FUNC(hb_p_staticname)
 
 static HB_GENC_FUNC(hb_p_threadstatics)
 {
-  HB_USHORT w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
 
   fprintf(cargo->yyc, "\tHB_P_THREADSTATICS, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
@@ -1833,7 +1833,7 @@ static HB_GENC_FUNC(hb_p_threadstatics)
   fprintf(cargo->yyc, "\n");
 
   nPCodePos += 3;
-  for (HB_USHORT u = 0; u < w; ++u) {
+  for (uint16_t u = 0; u < w; ++u) {
     fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos], pFunc->pCode[nPCodePos + 1]);
     if (cargo->bVerbose) {
       hb_compGenCStaticName(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos]), cargo);

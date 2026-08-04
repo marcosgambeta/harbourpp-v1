@@ -68,11 +68,11 @@ static HB_FIX_FUNC(hb_p_pushblock)
   HB_SYMBOL_UNUSED(cargo);
 
   // opcode + codeblock size + number of parameters + number of local variables
-  HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
+  uint16_t wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
 
   // fix local variable's reference
   while (wVar--) {
-    HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
+    uint16_t wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
     pLocal[0] = HB_LOBYTE(wLocal);
     pLocal[1] = HB_HIBYTE(wLocal);
     pLocal += 2;
@@ -91,11 +91,11 @@ static HB_FIX_FUNC(hb_p_pushblocklarge)
   HB_SYMBOL_UNUSED(cargo);
 
   // opcode + codeblock size + number of parameters + number of local variables
-  HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
+  uint16_t wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
 
   // fix local variable's reference
   while (wVar--) {
-    HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
+    uint16_t wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
     pLocal[0] = HB_LOBYTE(wLocal);
     pLocal[1] = HB_HIBYTE(wLocal);
     pLocal += 2;
