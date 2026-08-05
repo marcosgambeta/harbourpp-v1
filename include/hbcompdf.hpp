@@ -880,7 +880,7 @@ typedef struct HB_MACRO_      // a macro compiled pcode container
 struct _HB_I18NPOS
 {
    const char *   szFile;
-   HB_UINT        uiLine;
+   uint32_t        uiLine;
 };
 using HB_I18NPOS = _HB_I18NPOS;
 using PHB_I18NPOS = HB_I18NPOS *; // deprecated in core code
@@ -888,7 +888,7 @@ using PHB_I18NPOS = HB_I18NPOS *; // deprecated in core code
 typedef struct _HB_I18NPOS
 {
    const char *   szFile;
-   HB_UINT        uiLine;
+   uint32_t        uiLine;
 } HB_I18NPOS, *PHB_I18NPOS;
 #endif
 
@@ -898,10 +898,10 @@ struct _HB_I18NSTRING
    const char *   szText;
    const char *   szContext;
    const char *   szPlurals[ HB_I18N_PLURAL_MAX ];
-   HB_UINT        uiPlurals;
+   uint32_t        uiPlurals;
    HB_I18NPOS     pPos;
    HB_I18NPOS *   pPosLst;
-   HB_UINT        uiPosCount;
+   uint32_t        uiPosCount;
 };
 using HB_I18NSTRING = _HB_I18NSTRING;
 using PHB_I18NSTRING = HB_I18NSTRING *; // deprecated in core code
@@ -911,10 +911,10 @@ typedef struct _HB_I18NSTRING
    const char *   szText;
    const char *   szContext;
    const char *   szPlurals[ HB_I18N_PLURAL_MAX ];
-   HB_UINT        uiPlurals;
+   uint32_t        uiPlurals;
    HB_I18NPOS     pPos;
    HB_I18NPOS *   pPosLst;
-   HB_UINT        uiPosCount;
+   uint32_t        uiPosCount;
 } HB_I18NSTRING, * PHB_I18NSTRING;
 #endif
 
