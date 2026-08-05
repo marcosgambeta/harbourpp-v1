@@ -155,14 +155,14 @@ const char * const hb_comp_szWarnings[] =
 };
 // clang-format on
 
-static void hb_compDispMessage(HB_COMP_DECL, char cPrefix, int iValue, const char *szText, const char *szPar1,
+static void hb_compDispMessage(HB_COMP_DECL, char cPrefix, int32_t iValue, const char *szText, const char *szPar1,
                                const char *szPar2)
 {
   HB_COMP_PARAM->outMsgFunc(HB_COMP_PARAM, HB_COMP_PARAM->iErrorFmt, HB_COMP_PARAM->currLine, HB_COMP_PARAM->currModule,
                             cPrefix, iValue, szText, szPar1, szPar2);
 }
 
-void hb_compGenError(HB_COMP_DECL, const char *const szErrors[], char cPrefix, int iError, const char *szError1,
+void hb_compGenError(HB_COMP_DECL, const char *const szErrors[], char cPrefix, int32_t iError, const char *szError1,
                      const char *szError2)
 {
   if (!HB_COMP_PARAM->fExit && (cPrefix == 'F' || !HB_COMP_PARAM->fError)) {
@@ -183,12 +183,12 @@ void hb_compGenError(HB_COMP_DECL, const char *const szErrors[], char cPrefix, i
   }
 }
 
-void hb_compGenWarning(HB_COMP_DECL, const char *const szWarnings[], char cPrefix, int iWarning, const char *szWarning1,
+void hb_compGenWarning(HB_COMP_DECL, const char *const szWarnings[], char cPrefix, int32_t iWarning, const char *szWarning1,
                        const char *szWarning2)
 {
   const char *szText = szWarnings[iWarning - 1];
 
-  if (!HB_COMP_PARAM->fExit && (static_cast<int>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings)) {
+  if (!HB_COMP_PARAM->fExit && (static_cast<int32_t>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings)) {
     hb_compDispMessage(HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2);
 
     HB_COMP_PARAM->fAnyWarning = true; // report warnings at exit

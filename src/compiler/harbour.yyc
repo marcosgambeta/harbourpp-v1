@@ -159,10 +159,10 @@ static void hb_compRTVariableGen( HB_COMP_DECL, const char * );
 static PHB_EXPR hb_compArrayDimPush( PHB_EXPR pInitValue, HB_COMP_DECL );
 static void hb_compVariableDim( const char *, PHB_EXPR, HB_COMP_DECL );
 
-static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDir );
+static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int32_t iForEachDir );
 static void hb_compForEnd( HB_COMP_DECL, const char *szVarName );
-static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int descend );
-static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int descend );
+static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int32_t descend );
+static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int32_t descend );
 static void hb_compEnumEnd( HB_COMP_DECL, PHB_EXPR pExpr );
 
 static void hb_compSwitchStart( HB_COMP_DECL, PHB_EXPR );
@@ -172,7 +172,7 @@ static void hb_compSwitchEnd( HB_COMP_DECL );
 static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr );
 static PHB_EXPR hb_compCheckPassByRef( HB_COMP_DECL, PHB_EXPR pExpr );
 
-static void hb_compErrStru( HB_COMP_DECL, int iError );
+static void hb_compErrStru( HB_COMP_DECL, int32_t iError );
 static void hb_compErrUnclosed( HB_COMP_DECL, const char * szStru );
 
 #ifdef HB_YYDEBUG
@@ -214,7 +214,7 @@ static void hb_compDebugStart( void ) { }
 # define YYDEBUG 0
 #endif
 #if YYDEBUG
-extern int hb_comp_yydebug;
+extern int32_t hb_comp_yydebug;
 #endif
 
 /* Token type.  */
@@ -343,7 +343,7 @@ union YYSTYPE
 #line 125 "harbour.y" /* yacc.c:355  */
 
    const char * string; /* to hold a string returned by lex */
-   int     iNumber;     /* to hold a temporary integer number */
+   int32_t     iNumber;     /* to hold a temporary integer number */
    HB_SIZE sNumber;     /* to hold a temporary HB_SIZE values */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    HB_BOOL bTrue;
@@ -375,7 +375,7 @@ union YYSTYPE
    {
       char *   string;
       HB_SIZE  length;
-      int      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
+      int32_t      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
    HB_VARTYPE *asVarType;
 
@@ -387,7 +387,7 @@ union YYSTYPE
 
 
 
-int hb_comp_yyparse (PHB_COMP pComp);
+int32_t hb_comp_yyparse (PHB_COMP pComp);
 
 #endif /* !YY_HB_COMP_YY_HARBOURY_H_INCLUDED  */
 
@@ -397,7 +397,7 @@ int hb_comp_yyparse (PHB_COMP pComp);
 /* This must be placed after the above union - the union is
  * typedef-ined to YYSTYPE
  */
-extern int  yylex( YYSTYPE *, HB_COMP_DECL );    /* main lex token function, called by yyparse() */
+extern int32_t  yylex( YYSTYPE *, HB_COMP_DECL );    /* main lex token function, called by yyparse() */
 extern void yyerror( HB_COMP_DECL, const char * );     /* parsing error management function */
 
 #line 404 "harboury.c" /* yacc.c:358  */
@@ -3131,7 +3131,7 @@ do {                                                                      \
 `----------------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, PHB_COMP pComp)
+yy_symbol_value_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, PHB_COMP pComp)
 {
   FILE *yyo = yyoutput;
   YYUSE (yyo);
@@ -3151,7 +3151,7 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
 `--------------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, PHB_COMP pComp)
+yy_symbol_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, PHB_COMP pComp)
 {
   YYFPRINTF (yyoutput, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
@@ -3171,7 +3171,7 @@ yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)
   YYFPRINTF (stderr, "Stack now");
   for (; yybottom <= yytop; yybottom++)
     {
-      int yybot = *yybottom;
+      int32_t yybot = *yybottom;
       YYFPRINTF (stderr, " %d", yybot);
     }
   YYFPRINTF (stderr, "\n");
@@ -3189,11 +3189,11 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule, PHB_COMP pComp)
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int32_t yyrule, PHB_COMP pComp)
 {
   unsigned long int yylno = yyrline[yyrule];
-  int yynrhs = yyr2[yyrule];
-  int yyi;
+  int32_t yynrhs = yyr2[yyrule];
+  int32_t yyi;
   YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
              yyrule - 1, yylno);
   /* The symbols being reduced.  */
@@ -3338,7 +3338,7 @@ yytnamerr (char *yyres, const char *yystr)
    required number of bytes is too large to store.  */
 static int
 yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
-                yytype_int16 *yyssp, int yytoken)
+                yytype_int16 *yyssp, int32_t yytoken)
 {
   YYSIZE_T yysize0 = yytnamerr (YY_NULLPTR, yytname[yytoken]);
   YYSIZE_T yysize = yysize0;
@@ -3349,7 +3349,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
   char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
   /* Number of reported tokens (one for the "unexpected", one per
      "expected"). */
-  int yycount = 0;
+  int32_t yycount = 0;
 
   /* There are many possibilities here to consider:
      - If this state is a consistent state with a default action, then
@@ -3376,18 +3376,18 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
   */
   if (yytoken != YYEMPTY)
     {
-      int yyn = yypact[*yyssp];
+      int32_t yyn = yypact[*yyssp];
       yyarg[yycount++] = yytname[yytoken];
       if (!yypact_value_is_default (yyn))
         {
           /* Start YYX at -YYN if negative to avoid negative indexes in
              YYCHECK.  In other words, skip the first -YYN actions for
              this state because they are default actions.  */
-          int yyxbegin = yyn < 0 ? -yyn : 0;
+          int32_t yyxbegin = yyn < 0 ? -yyn : 0;
           /* Stay within bounds of both yycheck and yytname.  */
-          int yychecklim = YYLAST - yyn + 1;
-          int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-          int yyx;
+          int32_t yychecklim = YYLAST - yyn + 1;
+          int32_t yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
+          int32_t yyx;
 
           for (yyx = yyxbegin; yyx < yyxend; ++yyx)
             if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR
@@ -3447,7 +3447,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
      produced a string with the wrong number of "%s"s.  */
   {
     char *yyp = *yymsg;
-    int yyi = 0;
+    int32_t yyi = 0;
     while ((*yyp = *yyformat) != '\0')
       if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
         {
@@ -3469,7 +3469,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, PHB_COMP pComp)
+yydestruct (const char *yymsg, int32_t yytype, YYSTYPE *yyvaluep, PHB_COMP pComp)
 {
   YYUSE (yyvaluep);
   YYUSE (pComp);
@@ -3520,11 +3520,11 @@ YY_INITIAL_VALUE (static YYSTYPE yyval_default;)
 YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
     /* Number of syntax errors so far.  */
-    int yynerrs;
+    int32_t yynerrs;
 
-    int yystate;
+    int32_t yystate;
     /* Number of tokens to shift before error messages enabled.  */
-    int yyerrstatus;
+    int32_t yyerrstatus;
 
     /* The stacks and their tools:
        'yyss': related to states.
@@ -3545,10 +3545,10 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
     YYSIZE_T yystacksize;
 
-  int yyn;
-  int yyresult;
+  int32_t yyn;
+  int32_t yyresult;
   /* Lookahead token as an internal (translated) token number.  */
-  int yytoken = 0;
+  int32_t yytoken = 0;
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
@@ -3564,7 +3564,7 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
   /* The number of symbols on the RHS of the reduced rule.
      Keep to zero when no symbol should be popped.  */
-  int yylen = 0;
+  int32_t yylen = 0;
 
   yyssp = yyss = yyssa;
   yyvsp = yyvs = yyvsa;
@@ -3769,7 +3769,7 @@ yyreduce:
 
   case 16:
 #line 313 "harbour.y" /* yacc.c:1646  */
-    { HB_COMP_PARAM->currLine = ( int ) (yyvsp[-1].valLong).lNumber;
+    { HB_COMP_PARAM->currLine = ( int32_t ) (yyvsp[-1].valLong).lNumber;
                     HB_COMP_PARAM->pLex->fEol = HB_FALSE; }
 #line 3774 "harboury.c" /* yacc.c:1646  */
     break;
@@ -3777,7 +3777,7 @@ yyreduce:
   case 17:
 #line 316 "harbour.y" /* yacc.c:1646  */
     { HB_COMP_PARAM->currModule = hb_compIdentifierNew( HB_COMP_PARAM, (yyvsp[-1].valChar).string, (yyvsp[-1].valChar).dealloc ? HB_IDENT_FREE : HB_IDENT_STATIC );
-                    HB_COMP_PARAM->currLine = ( int ) (yyvsp[-2].valLong).lNumber;
+                    HB_COMP_PARAM->currLine = ( int32_t ) (yyvsp[-2].valLong).lNumber;
                     HB_COMP_PARAM->pLex->fEol = HB_FALSE;
                     (yyvsp[-1].valChar).dealloc = HB_FALSE; }
 #line 3783 "harboury.c" /* yacc.c:1646  */
@@ -3786,7 +3786,7 @@ yyreduce:
   case 18:
 #line 321 "harbour.y" /* yacc.c:1646  */
     { HB_COMP_PARAM->currModule = hb_compIdentifierNew( HB_COMP_PARAM, (yyvsp[-1].valChar).string, (yyvsp[-1].valChar).dealloc ? HB_IDENT_FREE : HB_IDENT_STATIC );
-                    HB_COMP_PARAM->currLine = ( int ) (yyvsp[-4].valLong).lNumber;
+                    HB_COMP_PARAM->currLine = ( int32_t ) (yyvsp[-4].valLong).lNumber;
                     HB_COMP_PARAM->pLex->fEol = HB_FALSE;
                     if( (yyvsp[-3].valChar).dealloc ) { hb_xfree( (yyvsp[-3].valChar).string ); (yyvsp[-3].valChar).dealloc = HB_FALSE; }
                     (yyvsp[-1].valChar).dealloc = HB_FALSE; }
@@ -5766,7 +5766,7 @@ yyreduce:
                {
                   HB_HCLASS *pClass;
                   char       szSetData[HB_SYMBOL_NAME_LEN + 1];
-                  int        iLen;
+                  int32_t        iLen;
                   uint8_t    cVarType = (yyvsp[0].asVarType)->cVarType;
 
                   /* List Type overrides if exists. */
@@ -5787,7 +5787,7 @@ yyreduce:
                   else
                      pClass = NULL;
 
-                  iLen = ( int ) strlen( (yyvsp[-2].string) );
+                  iLen = ( int32_t ) strlen( (yyvsp[-2].string) );
                   if( iLen >= HB_SYMBOL_NAME_LEN )
                      iLen = HB_SYMBOL_NAME_LEN - 1;
                   szSetData[0] = '_';
@@ -6246,7 +6246,7 @@ yyreduce:
   case 550:
 #line 1607 "harbour.y" /* yacc.c:1646  */
     {
-                  int iSign, iLine;
+                  int32_t iSign, iLine;
 
                   hb_compLoopHere( HB_COMP_PARAM );
 
@@ -6837,7 +6837,7 @@ yyerrlab:
                                         yyssp, yytoken)
       {
         char const *yymsgp = YY_("syntax error");
-        int yysyntax_error_status;
+        int32_t yysyntax_error_status;
         yysyntax_error_status = YYSYNTAX_ERROR;
         if (yysyntax_error_status == 0)
           yymsgp = yymsg;
@@ -7489,7 +7489,7 @@ static void hb_compVariableDim( const char * szName, PHB_EXPR pInitValue, HB_COM
    }
 }
 
-static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDir )
+static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int32_t iForEachDir )
 {
    HB_ENUMERATOR *pEnumVar;
 
@@ -7526,7 +7526,7 @@ static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDi
    pEnumVar->pNext       = NULL;
 }
 
-static HB_BOOL hb_compForEachVarError( HB_COMP_DECL, const char *szVarName, int * piDir )
+static HB_BOOL hb_compForEachVarError( HB_COMP_DECL, const char *szVarName, int32_t * piDir )
 {
    HB_ENUMERATOR *pEnumVar;
 
@@ -7582,7 +7582,7 @@ static HB_COMP_CARGO2_FUNC( hb_compEnumEvalStart )
    hb_compExprGenPush( ( PHB_EXPR ) cargo, HB_COMP_PARAM );  /* variable */
 }
 
-static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int descend )
+static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int32_t descend )
 {
    HB_SIZE nLen;
 
@@ -7604,7 +7604,7 @@ static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int
    }
 }
 
-static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int descend )
+static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int32_t descend )
 {
    HB_SYMBOL_UNUSED( pExpr );
    if( descend > 0 )
@@ -7723,7 +7723,7 @@ static void hb_compSwitchEnd( HB_COMP_DECL )
    PHB_EXPR pExpr = pSwitch->pExpr;
    PHB_SWITCHCASE pCase, pTmp;
    HB_SIZE nExitPos, nCountPos;
-   int iCount = 0;
+   int32_t iCount = 0;
 
    /* skip switch pcode if there was no EXIT in the last CASE
     * or in the DEFAULT case
@@ -7893,7 +7893,7 @@ static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr )
           strcmp( "ISFIRST", szMessage ) == 0 ||
           strcmp( "ISLAST",  szMessage ) == 0 )
       {
-         int iDir = 0;
+         int32_t iDir = 0;
          if( ! hb_compForEachVarError( HB_COMP_PARAM, pExpr->value.asMessage.pObject->value.asSymbol.name, &iDir ) )
          {
             pExpr->value.asMessage.pObject->ExprType = HB_ET_VARREF;
@@ -7913,7 +7913,7 @@ static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr )
    return pExpr;
 }
 
-static void hb_compErrStru( HB_COMP_DECL, int iError )
+static void hb_compErrStru( HB_COMP_DECL, int32_t iError )
 {
    hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', iError, NULL, NULL );
 }

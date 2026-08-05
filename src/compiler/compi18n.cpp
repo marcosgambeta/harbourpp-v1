@@ -74,9 +74,9 @@ void hb_compI18nFree(HB_COMP_DECL)
   }
 }
 
-static int hb_compI18nCompare(HB_I18NSTRING *pString, const char *pText, const char *pContext)
+static int32_t hb_compI18nCompare(HB_I18NSTRING *pString, const char *pText, const char *pContext)
 {
-  int i = pString->szText == pText ? 0 : pString->szText > pText ? 1 : -1;
+  int32_t i = pString->szText == pText ? 0 : pString->szText > pText ? 1 : -1;
 
   if (i == 0 && pString->szContext != pContext) {
     i = pString->szContext > pContext ? 1 : -1;
@@ -116,7 +116,7 @@ static HB_I18NSTRING *hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, con
 
   while (uiLeft < uiRight) {
     HB_UINT uiMiddle = (uiLeft + uiRight) >> 1;
-    int iCompare = hb_compI18nCompare(&pI18n->pString[uiMiddle], szText, szContext);
+    int32_t iCompare = hb_compI18nCompare(&pI18n->pString[uiMiddle], szText, szContext);
 
     if (iCompare == 0) {
       pString = &pI18n->pString[uiMiddle];

@@ -89,10 +89,10 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
 
         if (ulLine != 0) {
           if (!pInfo) {
-            int i;
+            int32_t i;
 
             ptr = strrchr(pszModuleName, ':');
-            i = ptr ? static_cast<int>(ptr - pszModuleName) : static_cast<int>(strlen(pszModuleName));
+            i = ptr ? static_cast<int32_t>(ptr - pszModuleName) : static_cast<int32_t>(strlen(pszModuleName));
 
             pInfo = pLineInfo;
             while (pInfo != nullptr) {

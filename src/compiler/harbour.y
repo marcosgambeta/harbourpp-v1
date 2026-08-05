@@ -92,10 +92,10 @@ static void hb_compRTVariableGen( HB_COMP_DECL, const char * );
 static PHB_EXPR hb_compArrayDimPush( PHB_EXPR pInitValue, HB_COMP_DECL );
 static void hb_compVariableDim( const char *, PHB_EXPR, HB_COMP_DECL );
 
-static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDir );
+static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int32_t iForEachDir );
 static void hb_compForEnd( HB_COMP_DECL, const char *szVarName );
-static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int descend );
-static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int descend );
+static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int32_t descend );
+static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int32_t descend );
 static void hb_compEnumEnd( HB_COMP_DECL, PHB_EXPR pExpr );
 
 static void hb_compSwitchStart( HB_COMP_DECL, PHB_EXPR );
@@ -105,7 +105,7 @@ static void hb_compSwitchEnd( HB_COMP_DECL );
 static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr );
 static PHB_EXPR hb_compCheckPassByRef( HB_COMP_DECL, PHB_EXPR pExpr );
 
-static void hb_compErrStru( HB_COMP_DECL, int iError );
+static void hb_compErrStru( HB_COMP_DECL, int32_t iError );
 static void hb_compErrUnclosed( HB_COMP_DECL, const char * szStru );
 
 #ifdef HB_YYDEBUG
@@ -124,7 +124,7 @@ static void hb_compDebugStart( void ) { }
 %union                  /* special structure used by lex and yacc to share info */
 {
    const char * string; /* to hold a string returned by lex */
-   int     iNumber;     /* to hold a temporary integer number */
+   int32_t     iNumber;     /* to hold a temporary integer number */
    HB_SIZE sNumber;     /* to hold a temporary HB_SIZE values */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    HB_BOOL bTrue;
@@ -156,7 +156,7 @@ static void hb_compDebugStart( void ) { }
    {
       char *   string;
       HB_SIZE  length;
-      int      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
+      int32_t      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
    HB_VARTYPE *asVarType;
 }
@@ -165,7 +165,7 @@ static void hb_compDebugStart( void ) { }
 /* This must be placed after the above union - the union is
  * typedef-ined to YYSTYPE
  */
-extern int  yylex( YYSTYPE *, HB_COMP_DECL );    /* main lex token function, called by yyparse() */
+extern int32_t  yylex( YYSTYPE *, HB_COMP_DECL );    /* main lex token function, called by yyparse() */
 extern void yyerror( HB_COMP_DECL, const char * );     /* parsing error management function */
 %}
 
@@ -310,16 +310,16 @@ Source     : Crlf
            ;
 
 Line       : LINE NUM_LONG Crlf
-                  { HB_COMP_PARAM->currLine = ( int ) $2.lNumber;
+                  { HB_COMP_PARAM->currLine = ( int32_t ) $2.lNumber;
                     HB_COMP_PARAM->pLex->fEol = HB_FALSE; }
            | LINE NUM_LONG LITERAL Crlf
                   { HB_COMP_PARAM->currModule = hb_compIdentifierNew( HB_COMP_PARAM, $3.string, $3.dealloc ? HB_IDENT_FREE : HB_IDENT_STATIC );
-                    HB_COMP_PARAM->currLine = ( int ) $2.lNumber;
+                    HB_COMP_PARAM->currLine = ( int32_t ) $2.lNumber;
                     HB_COMP_PARAM->pLex->fEol = HB_FALSE;
                     $3.dealloc = HB_FALSE; }
            | LINE NUM_LONG LITERAL '@' LITERAL Crlf   /* Xbase++ style */
                   { HB_COMP_PARAM->currModule = hb_compIdentifierNew( HB_COMP_PARAM, $5.string, $5.dealloc ? HB_IDENT_FREE : HB_IDENT_STATIC );
-                    HB_COMP_PARAM->currLine = ( int ) $2.lNumber;
+                    HB_COMP_PARAM->currLine = ( int32_t ) $2.lNumber;
                     HB_COMP_PARAM->pLex->fEol = HB_FALSE;
                     if( $3.dealloc ) { hb_xfree( $3.string ); $3.dealloc = HB_FALSE; }
                     $5.dealloc = HB_FALSE; }
@@ -1283,7 +1283,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                {
                   HB_HCLASS *pClass;
                   char       szSetData[HB_SYMBOL_NAME_LEN + 1];
-                  int        iLen;
+                  int32_t        iLen;
                   uint8_t    cVarType = $3->cVarType;
 
                   /* List Type overrides if exists. */
@@ -1304,7 +1304,7 @@ DecData    : IdentName { HB_COMP_PARAM->pLastMethod = hb_compMethodAdd( HB_COMP_
                   else
                      pClass = NULL;
 
-                  iLen = ( int ) strlen( $1 );
+                  iLen = ( int32_t ) strlen( $1 );
                   if( iLen >= HB_SYMBOL_NAME_LEN )
                      iLen = HB_SYMBOL_NAME_LEN - 1;
                   szSetData[0] = '_';
@@ -1605,7 +1605,7 @@ ForNext    : FOR LValue ForAssign Expression          /* 1  2  3  4 */
                }
              ForStatements                            /* 12 */
                {
-                  int iSign, iLine;
+                  int32_t iSign, iLine;
 
                   hb_compLoopHere( HB_COMP_PARAM );
 
@@ -2492,7 +2492,7 @@ static void hb_compVariableDim( const char * szName, PHB_EXPR pInitValue, HB_COM
    }
 }
 
-static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDir )
+static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int32_t iForEachDir )
 {
    HB_ENUMERATOR *pEnumVar;
 
@@ -2529,7 +2529,7 @@ static void hb_compForStart( HB_COMP_DECL, const char *szVarName, int iForEachDi
    pEnumVar->pNext       = NULL;
 }
 
-static HB_BOOL hb_compForEachVarError( HB_COMP_DECL, const char *szVarName, int * piDir )
+static HB_BOOL hb_compForEachVarError( HB_COMP_DECL, const char *szVarName, int32_t * piDir )
 {
    HB_ENUMERATOR *pEnumVar;
 
@@ -2585,7 +2585,7 @@ static HB_COMP_CARGO2_FUNC( hb_compEnumEvalStart )
    hb_compExprGenPush( ( PHB_EXPR ) cargo, HB_COMP_PARAM );  /* variable */
 }
 
-static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int descend )
+static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int32_t descend )
 {
    HB_SIZE nLen;
 
@@ -2607,7 +2607,7 @@ static void hb_compEnumStart( HB_COMP_DECL, PHB_EXPR pVars, PHB_EXPR pExprs, int
    }
 }
 
-static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int descend )
+static void hb_compEnumNext( HB_COMP_DECL, PHB_EXPR pExpr, int32_t descend )
 {
    HB_SYMBOL_UNUSED( pExpr );
    if( descend > 0 )
@@ -2726,7 +2726,7 @@ static void hb_compSwitchEnd( HB_COMP_DECL )
    PHB_EXPR pExpr = pSwitch->pExpr;
    PHB_SWITCHCASE pCase, pTmp;
    HB_SIZE nExitPos, nCountPos;
-   int iCount = 0;
+   int32_t iCount = 0;
 
    /* skip switch pcode if there was no EXIT in the last CASE
     * or in the DEFAULT case
@@ -2896,7 +2896,7 @@ static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr )
           strcmp( "ISFIRST", szMessage ) == 0 ||
           strcmp( "ISLAST",  szMessage ) == 0 )
       {
-         int iDir = 0;
+         int32_t iDir = 0;
          if( ! hb_compForEachVarError( HB_COMP_PARAM, pExpr->value.asMessage.pObject->value.asSymbol.name, &iDir ) )
          {
             pExpr->value.asMessage.pObject->ExprType = HB_ET_VARREF;
@@ -2916,7 +2916,7 @@ static PHB_EXPR hb_compCheckMethod( HB_COMP_DECL, PHB_EXPR pExpr )
    return pExpr;
 }
 
-static void hb_compErrStru( HB_COMP_DECL, int iError )
+static void hb_compErrStru( HB_COMP_DECL, int32_t iError )
 {
    hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', iError, NULL, NULL );
 }

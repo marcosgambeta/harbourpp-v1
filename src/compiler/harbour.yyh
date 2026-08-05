@@ -37,7 +37,7 @@
 # define YYDEBUG 0
 #endif
 #if YYDEBUG
-extern int hb_comp_yydebug;
+extern int32_t hb_comp_yydebug;
 #endif
 
 /* Token type.  */
@@ -166,7 +166,7 @@ union YYSTYPE
 #line 125 "harbour.y" /* yacc.c:1909  */
 
    const char * string; /* to hold a string returned by lex */
-   int     iNumber;     /* to hold a temporary integer number */
+   int32_t     iNumber;     /* to hold a temporary integer number */
    HB_SIZE sNumber;     /* to hold a temporary HB_SIZE values */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    HB_BOOL bTrue;
@@ -198,7 +198,7 @@ union YYSTYPE
    {
       char *   string;
       HB_SIZE  length;
-      int      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
+      int32_t      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
    HB_VARTYPE *asVarType;
 
@@ -210,6 +210,6 @@ union YYSTYPE
 
 
 
-int hb_comp_yyparse (PHB_COMP pComp);
+int32_t hb_comp_yyparse (PHB_COMP pComp);
 
 #endif /* !YY_HB_COMP_YY_HARBOURY_H_INCLUDED  */

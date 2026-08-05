@@ -96,7 +96,7 @@ void hb_compGenCString(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
   fputc('"', yyc);
 }
 
-static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, int iMethod)
+static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, int32_t iMethod)
 {
 #ifdef __HB_CSTRING_SIZE_MAX
 #if __HB_CSTRING_SIZE_MAX - 0 < 1
@@ -109,7 +109,7 @@ static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, in
       if ((nPos & 0x0F) == 0) {
         fprintf(yyc, "\n\t\t");
       }
-      fprintf(yyc, "%d,", static_cast<int>(pText[nPos]));
+      fprintf(yyc, "%d,", static_cast<int32_t>(pText[nPos]));
     }
     fprintf(yyc, "0 };\n\t\thb_xvmPushString");
     if (iMethod < 0) {
@@ -132,20 +132,20 @@ static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, in
   }
 }
 
-static void hb_gencc_copyLocals(FILE *yyc, int iLocal1, int iLocal2)
+static void hb_gencc_copyLocals(FILE *yyc, int32_t iLocal1, int32_t iLocal2)
 {
   if (iLocal1 != iLocal2) {
     fprintf(yyc, "\thb_xvmCopyLocals(%d, %d);\n", iLocal1, iLocal2);
   }
 }
 
-static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo,
+static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo,
                                        const char *szFunc)
 {
   if (HB_GENC_GETLABEL(nPCodePos + 1) == 0) {
     HB_ISIZ nOffset = 0;
     auto fNot = false;
-    int iSize = 0;
+    int32_t iSize = 0;
 
     switch (pFunc->pCode[nPCodePos + 1]) {
     case HB_P_JUMPFALSENEAR:
@@ -193,7 +193,7 @@ static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE 
   return 1;
 }
 
-static int hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
+static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -276,7 +276,7 @@ static int hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCod
   return 0;
 }
 
-static int hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
+static int32_t hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -795,7 +795,7 @@ static HB_GENC_FUNC(hb_p_plus)
 {
   HB_GENC_LABEL();
 
-  int iSkip = hb_gencc_checkPlusAhead(pFunc, nPCodePos + 1, cargo);
+  int32_t iSkip = hb_gencc_checkPlusAhead(pFunc, nPCodePos + 1, cargo);
 
   if (iSkip != 0) {
     return 1 + iSkip;
@@ -1028,11 +1028,11 @@ static HB_GENC_FUNC(hb_p_pushfield)
 
 static HB_GENC_FUNC(hb_p_pushbyte)
 {
-  int iVal = static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
+  int32_t iVal = static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
 
   HB_GENC_LABEL();
 
-  int iSkip = hb_gencc_checkNumAhead(iVal, pFunc, nPCodePos + 2, cargo);
+  int32_t iSkip = hb_gencc_checkNumAhead(iVal, pFunc, nPCodePos + 2, cargo);
 
   if (iSkip == 0) {
     fprintf(cargo->yyc, "\thb_xvmPushInteger(%d);\n", iVal);
@@ -1042,11 +1042,11 @@ static HB_GENC_FUNC(hb_p_pushbyte)
 
 static HB_GENC_FUNC(hb_p_pushint)
 {
-  int iVal = HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]);
+  int32_t iVal = HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]);
 
   HB_GENC_LABEL();
 
-  int iSkip = hb_gencc_checkNumAhead(iVal, pFunc, nPCodePos + 3, cargo);
+  int32_t iSkip = hb_gencc_checkNumAhead(iVal, pFunc, nPCodePos + 3, cargo);
 
   if (iSkip == 0) {
     fprintf(cargo->yyc, "\thb_xvmPushInteger(%d);\n", iVal);
@@ -1111,7 +1111,7 @@ static HB_GENC_FUNC(hb_p_pushlong)
 
   HB_GENC_LABEL();
 
-  int iSkip = hb_gencc_checkNumAhead(lVal, pFunc, nPCodePos + 5, cargo);
+  int32_t iSkip = hb_gencc_checkNumAhead(lVal, pFunc, nPCodePos + 5, cargo);
 
   if (iSkip == 0) {
     fprintf(cargo->yyc, "#if INT_MAX >= INT32_MAX\n");
@@ -1141,7 +1141,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
 #else
   HB_LONGLONG llVal;
   char szBuf[24];
-  int iSkip;
+  int32_t iSkip;
 
   HB_GENC_LABEL();
 
@@ -1155,13 +1155,13 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
   fprintf(cargo->yyc, "#else\n");
   fprintf(cargo->yyc, "\thb_xvmPushLongLong(HB_LL(%s));\n", hb_numToStr(szBuf, sizeof(szBuf), llVal));
   if (iSkip > 0) {
-    int iDone = 0;
+    int32_t iDone = 0;
     while (iDone < iSkip) {
       uint8_t opcode = pFunc->pCode[nPCodePos + 9 + iDone];
       if (opcode >= HB_P_LAST_PCODE) {
         break;
       }
-      iDone += static_cast<int>(cargo->pFuncTable[opcode](pFunc, nPCodePos + 9 + iDone, cargo));
+      iDone += static_cast<int32_t>(cargo->pFuncTable[opcode](pFunc, nPCodePos + 9 + iDone, cargo));
     }
     if (iDone != iSkip) {
       HB_GENC_ERROR("PCODE mismatch");
@@ -1491,7 +1491,7 @@ static HB_GENC_FUNC(hb_p_true)
 static HB_GENC_FUNC(hb_p_one)
 {
   HB_GENC_LABEL();
-  int iSkip = hb_gencc_checkNumAhead(1, pFunc, nPCodePos + 1, cargo);
+  int32_t iSkip = hb_gencc_checkNumAhead(1, pFunc, nPCodePos + 1, cargo);
   if (iSkip == 0) {
     fprintf(cargo->yyc, "\thb_xvmPushInteger(1);\n");
   }
@@ -1501,7 +1501,7 @@ static HB_GENC_FUNC(hb_p_one)
 static HB_GENC_FUNC(hb_p_zero)
 {
   HB_GENC_LABEL();
-  int iSkip = hb_gencc_checkNumAhead(0, pFunc, nPCodePos + 1, cargo);
+  int32_t iSkip = hb_gencc_checkNumAhead(0, pFunc, nPCodePos + 1, cargo);
   if (iSkip == 0) {
     fprintf(cargo->yyc, "\thb_xvmPushInteger(0);\n");
   }
@@ -1697,7 +1697,7 @@ static HB_GENC_FUNC(hb_p_localaddint)
 
 static HB_GENC_FUNC(hb_p_localinc)
 {
-  int iLocal = HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]);
+  int32_t iLocal = HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]);
 
   HB_GENC_LABEL();
 

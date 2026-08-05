@@ -180,7 +180,7 @@ static HB_OPT_FUNC(hb_p_false)
   case HB_P_JUMPTRUE:
   case HB_P_JUMPTRUEFAR:
     if (!hb_compHasJump(pFunc, nPCodePos + 1)) {
-      int iCount = 1;
+      int32_t iCount = 1;
 
       switch (pFunc->pCode[nPCodePos + 1]) {
       case HB_P_JUMPFALSENEAR:
@@ -229,7 +229,7 @@ static HB_OPT_FUNC(hb_p_true)
   case HB_P_JUMPFALSE:
   case HB_P_JUMPFALSEFAR:
     if (!hb_compHasJump(pFunc, nPCodePos + 1)) {
-      int iCount = 1;
+      int32_t iCount = 1;
 
       switch (pFunc->pCode[nPCodePos + 1]) {
       case HB_P_JUMPTRUENEAR:
@@ -642,7 +642,7 @@ static HB_OPT_FUNC(hb_p_endproc)
 // clang-format off
 static const PHB_OPT_FUNC s_opt_table[] =
 {
-   nullptr,                    // HB_P_AND                   
+   nullptr,                    // HB_P_AND
    nullptr,                    // HB_P_ARRAYPUSH             
    nullptr,                    // HB_P_ARRAYPOP              
    nullptr,                    // HB_P_ARRAYDIM              
@@ -1111,7 +1111,7 @@ static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, HB_SHORT isLocal)
   }
 }
 
-static int hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, uint8_t *pMap, HB_SHORT isLocal,
+static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, uint8_t *pMap, HB_SHORT isLocal,
                                            bool fCanBreak)
 {
   for (;;) {
@@ -1205,7 +1205,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
 
   while (nPos < pFunc->nPCodePos) {
     HB_SHORT isLocal;
-    int iCheck = 0;
+    int32_t iCheck = 0;
 
     if (pFunc->pCode[nPos] == HB_P_POPLOCAL || pFunc->pCode[nPos] == HB_P_POPLOCALNEAR) {
       // skip pop NIL (var := NIL), to allow force garbage collection

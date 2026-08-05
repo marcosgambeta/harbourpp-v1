@@ -129,8 +129,8 @@ struct _HB_HVAR
 {
    const char *   szName;           // variable name
    const char *   szAlias;          // variable alias namespace
-   int            iUsed;            // number of times used
-   int            iDeclLine;        // declaration line number
+   int32_t            iUsed;            // number of times used
+   int32_t            iDeclLine;        // declaration line number
    uint16_t uiFlags;          // optional flags, f.e. THREAD STATIC
    uint8_t        cType;            // optional strong typing
    HB_HCLASS *    pClass;
@@ -143,8 +143,8 @@ typedef struct _HB_HVAR
 {
    const char *   szName;           // variable name
    const char *   szAlias;          // variable alias namespace
-   int            iUsed;            // number of times used
-   int            iDeclLine;        // declaration line number
+   int32_t            iUsed;            // number of times used
+   int32_t            iDeclLine;        // declaration line number
    uint16_t uiFlags;          // optional flags, f.e. THREAD STATIC
    uint8_t        cType;            // optional strong typing
    HB_HCLASS *    pClass;
@@ -408,7 +408,7 @@ typedef struct HB_EXPR_
       {
          const char * name;   // variable/function name
          HB_FUNC_ID funcid;   // function ID
-         int flags;           // function flags
+         int32_t flags;           // function flags
       } asSymbol;
       struct
       {
@@ -495,7 +495,7 @@ typedef struct HB_EXPR_
 struct HB_ENUMERATOR_
 {
    const char * szName;
-   int iForEachDir;     // 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant)
+   int32_t iForEachDir;     // 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant)
    struct HB_ENUMERATOR_ *pNext;
 };
 using HB_ENUMERATOR = HB_ENUMERATOR_;
@@ -504,7 +504,7 @@ using PHB_ENUMERATOR = HB_ENUMERATOR *; // support structure for FOR EACH statem
 typedef struct HB_ENUMERATOR_
 {
    const char * szName;
-   int iForEachDir;     // 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant)
+   int32_t iForEachDir;     // 0 - standard FOR/NEXT, 1(-1) FOR EACH(descendant)
    struct HB_ENUMERATOR_ *pNext;
 } HB_ENUMERATOR, * PHB_ENUMERATOR; // support structure for FOR EACH statements
 #endif
@@ -579,9 +579,9 @@ struct _HB_HFUNC
    HB_SIZE *    pJumps;                   // pointer to the Jumps array
    HB_SIZE      nNOOPs;                   // NOOPs Counter
    HB_SIZE      nJumps;                   // Jumps Counter
-   int          iStaticsBase;             // base for this function statics
-   int          iFuncSuffix;              // function suffix for multiple static functions with the same name
-   int          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited 
+   int32_t          iStaticsBase;             // base for this function statics
+   int32_t          iFuncSuffix;              // function suffix for multiple static functions with the same name
+   int32_t          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited
    HB_BOOL      fVParams;                 // HB_TRUE if variable number of parameters is used
    HB_BOOL      bError;                   // error during function compilation
    HB_BOOL      bBlock;                   // HB_TRUE if simple codeblock body is compiled
@@ -625,9 +625,9 @@ typedef struct _HB_HFUNC
    HB_SIZE *    pJumps;                   // pointer to the Jumps array
    HB_SIZE      nNOOPs;                   // NOOPs Counter
    HB_SIZE      nJumps;                   // Jumps Counter
-   int          iStaticsBase;             // base for this function statics
-   int          iFuncSuffix;              // function suffix for multiple static functions with the same name
-   int          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited
+   int32_t          iStaticsBase;             // base for this function statics
+   int32_t          iFuncSuffix;              // function suffix for multiple static functions with the same name
+   int32_t          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited
    HB_BOOL      fVParams;                 // HB_TRUE if variable number of parameters is used
    HB_BOOL      bError;                   // error during function compilation
    HB_BOOL      bBlock;                   // HB_TRUE if simple codeblock body is compiled
@@ -677,7 +677,7 @@ struct _HB_HINLINE
    uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
    HB_SIZE      nPCodeSize;               // total memory size for pcode
    const char * szFileName;               // Source file name
-   int          iLine;                    // Source line number
+   int32_t          iLine;                    // Source line number
    //struct _HB_HINLINE * pNext;               // pointer to the next defined inline (deprecated)
 };
 using HB_HINLINE = _HB_HINLINE;
@@ -689,7 +689,7 @@ typedef struct _HB_HINLINE
    uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
    HB_SIZE      nPCodeSize;               // total memory size for pcode
    const char * szFileName;               // Source file name
-   int          iLine;                    // Source line number
+   int32_t          iLine;                    // Source line number
    struct _HB_HINLINE * pNext;               // pointer to the next defined inline
 } HB_HINLINE, * PHB_HINLINE;
 #endif
@@ -707,7 +707,7 @@ typedef struct
 {
    HB_HFUNC *pFirst;            // pointer to the first defined function
    HB_HFUNC *pLast;             // pointer to the last defined function
-   int       iCount;            // number of defined functions
+   int32_t       iCount;            // number of defined functions
 } HB_HFUNCTION_LIST;
 
 // structure to control all Clipper defined functions
@@ -715,7 +715,7 @@ typedef struct // deprecated (changed to std::vector)
 {
    PHB_HINLINE pFirst;        // pointer to the first defined inline
    PHB_HINLINE pLast;         // pointer to the last defined inline
-   int         iCount;        // number of defined inlines
+   int32_t         iCount;        // number of defined inlines
 } HB_HINLINE_LIST;
 
 // compiler symbol support structure
@@ -724,7 +724,7 @@ struct _HB_HSYMBOL
 {
    const char *   szName;     // the name of the symbol
    HB_SYMBOLSCOPE cScope;     // the scope of the symbol
-   int            iFunc;      // is it a function name (TRUE) or memvar (FALSE)
+   int32_t            iFunc;      // is it a function name (TRUE) or memvar (FALSE)
    HB_HFUNC *     pFunc;
    //struct _HB_HSYMBOL * pNext; // pointer to the next defined symbol (depprecated)
 };
@@ -735,7 +735,7 @@ typedef struct _HB_HSYMBOL
 {
    const char *   szName;     // the name of the symbol
    HB_SYMBOLSCOPE cScope;     // the scope of the symbol
-   int            iFunc;      // is it a function name (TRUE) or memvar (FALSE)
+   int32_t            iFunc;      // is it a function name (TRUE) or memvar (FALSE)
    HB_HFUNC *     pFunc;
    struct _HB_HSYMBOL * pNext; // pointer to the next defined symbol
 } HB_HSYMBOL, * PHB_HSYMBOL;
@@ -746,7 +746,7 @@ typedef struct // deprecated (changed to std::vector)
 {
    HB_HSYMBOL *pFirst;          // pointer to the first defined symbol
    HB_HSYMBOL *pLast;           // pointer to the last defined symbol
-   int         iCount;          // number of defined symbols
+   int32_t         iCount;          // number of defined symbols
 } HB_HSYMBOL_LIST;
 
 #if defined(__cplusplus)
@@ -808,7 +808,7 @@ typedef struct _HB_LABEL_INFO
    HB_BOOL   fSetSeqBegin;
    HB_BOOL   fCondJump;
    HB_BOOL   fEndRequest;
-   int       iNestedBlock;
+   int32_t       iNestedBlock;
    HB_SIZE * pnLabels;
    const PHB_PCODE_FUNC * pFuncTable;
 } HB_LABEL_INFO, * PHB_LABEL_INFO;
@@ -823,8 +823,8 @@ struct _HB_COMP_FUNCS;
 typedef struct _HB_COMMON
 {
    // common to macro compiler members
-   int    mode;               // HB_MODE_*
-   int    supported;          // various flags for supported capabilities
+   int32_t    mode;               // HB_MODE_*
+   int32_t    supported;          // various flags for supported capabilities
    const struct _HB_COMP_FUNCS * funcs;
 } HB_COMMON, * PHB_COMMON;
 
@@ -849,21 +849,21 @@ typedef struct HB_PCODE_INFO_ // compiled pcode container for macro compiler
 typedef struct HB_MACRO_      // a macro compiled pcode container
 {
    // common to compiler members
-   int      mode;             // HB_MODE_*
-   int      supported;        // various flags for supported capabilities
+   int32_t      mode;             // HB_MODE_*
+   int32_t      supported;        // various flags for supported capabilities
    const struct _HB_COMP_FUNCS * funcs;
 
    // macro compiler only members
    const char * string;       // compiled string
    HB_SIZE  length;           // length of the string
-   int      Flags;            // some flags we may need
-   int      status;           // status of compilation
+   int32_t      Flags;            // some flags we may need
+   int32_t      status;           // status of compilation
    PHB_ITEM pError;           // error object returned from the parser
    PHB_PCODE_INFO pCodeInfo;  // pointer to pcode buffer and info
    void *   pLex;             // lexer buffer pointer
    void *   pExprLst;         // list with allocated expressions
    void *   pIdentLst;        // list with allocated identifiers
-   int      exprType;         // type of successfully compiled expression
+   int32_t      exprType;         // type of successfully compiled expression
    uint16_t uiListElements;  // number of elements in macro list expression
    uint16_t uiNameLen;       // the maximum symbol name length
    HB_PCODE_INFO pCodeInfoBuffer;
@@ -939,9 +939,9 @@ typedef struct _HB_I18NTABLE
 typedef struct _HB_COMP_LEX
 {
    PHB_PP_STATE   pPP;
-   int            iState;
-   int            iClose;
-   int            iScope;
+   int32_t            iState;
+   int32_t            iClose;
+   int32_t            iScope;
    HB_BOOL        fEol;
    const char *   lasttok;
 } HB_COMP_LEX, * PHB_COMP_LEX;
@@ -962,8 +962,8 @@ typedef struct _HB_INCLST
 typedef struct _HB_COMP
 {
    // common to macro compiler members
-   int    mode;            // HB_MODE_*
-   int    supported;       // various flags for supported capabilities
+   int32_t    mode;            // HB_MODE_*
+   int32_t    supported;       // various flags for supported capabilities
    const struct _HB_COMP_FUNCS * funcs;
 
    // compiler only members
@@ -1007,8 +1007,8 @@ typedef struct _HB_COMP
    HB_SIZE           nOutBufSize;         // memory output buffer size
    uint8_t *         pOutBuf;             // memory output buffer address
 
-   int               lastLine;            // last generated in PCODE line number
-   int               currLine;            // currently compiled line number
+   int32_t               lastLine;            // last generated in PCODE line number
+   int32_t               currLine;            // currently compiled line number
    const char *      lastModule;          // last generated in PCODE module name
    const char *      currModule;          // currently compiled module name
 
@@ -1018,25 +1018,25 @@ typedef struct _HB_COMP
    char *            szDepExt;            // destination file extension used in decencies list
    char *            szStdCh;             // standard definitions file name (-u)
    char **           szStdChExt;          // extended definitions file names (-u+<file>)
-   int               iStdChExt;           // number of extended definition files (-u+<file>)
+   int32_t               iStdChExt;           // number of extended definition files (-u+<file>)
 
    uint8_t           cDataListType;       // current declared variable list type
 
-   int               iErrorCount;
-   int               iModulesCount;       // number of compiled .prg modules
-   int               iStartProc;          // holds if we need to create the starting procedure
-   int               iMaxTransCycles;     // maximum translate cycles in PP (-r=<n>)
-   int               iHidden;             // hide strings
-   int               iWarnings;           // enable parse warnings
-   int               iExitLevel;          // holds if there was any warning during the compilation process
-   int               iStaticCnt;          // number of defined statics variables on the PRG
-   int               iVarScope;           // holds the scope for next variables to be defined
-   int               iLanguage;           // default Harbour generated output language
-   int               iGenCOutput;         // C code generation should be verbose (use comments) or not
-   int               ilastLineErr;        // line number with last syntax error
-   int               iTraceInclude;       // trace included files and generate dependencies list
-   int               iSyntaxCheckOnly;    // syntax check only
-   int               iErrorFmt;           // error message formatting mode (default: Clipper)
+   int32_t               iErrorCount;
+   int32_t               iModulesCount;       // number of compiled .prg modules
+   int32_t               iStartProc;          // holds if we need to create the starting procedure
+   int32_t               iMaxTransCycles;     // maximum translate cycles in PP (-r=<n>)
+   int32_t               iHidden;             // hide strings
+   int32_t               iWarnings;           // enable parse warnings
+   int32_t               iExitLevel;          // holds if there was any warning during the compilation process
+   int32_t               iStaticCnt;          // number of defined statics variables on the PRG
+   int32_t               iVarScope;           // holds the scope for next variables to be defined
+   int32_t               iLanguage;           // default Harbour generated output language
+   int32_t               iGenCOutput;         // C code generation should be verbose (use comments) or not
+   int32_t               ilastLineErr;        // line number with last syntax error
+   int32_t               iTraceInclude;       // trace included files and generate dependencies list
+   int32_t               iSyntaxCheckOnly;    // syntax check only
+   int32_t               iErrorFmt;           // error message formatting mode (default: Clipper)
 
    HB_BOOL           fQuiet;              // be quiet during compilation (-q)
    HB_BOOL           fGauge;              // hide line counter gauge (-ql)
@@ -1075,12 +1075,12 @@ typedef struct
    HB_BOOL  fPPT;
    HB_BOOL  fQuiet;
    HB_BOOL  fForceMemvars;
-   int      iStartProc;
-   int      iWarnings;
-   int      iGenCOutput;
-   int      iExitLevel;
-   int      iHidden;
-   int      supported;
+   int32_t      iStartProc;
+   int32_t      iWarnings;
+   int32_t      iGenCOutput;
+   int32_t      iExitLevel;
+   int32_t     iHidden;
+   int32_t      supported;
 } HB_COMP_SWITCHES, * PHB_COMP_SWITCHES;
 
 extern PHB_COMP hb_comp_new( void );

@@ -120,7 +120,7 @@ static HB_EXPR_FUNC(hb_compExprUseNegate);
 #if defined(HB_MACRO_SUPPORT)
 static void hb_compExprCodeblockPush(PHB_EXPR, HB_COMP_DECL);
 #else
-static HB_BOOL hb_compExprCodeblockPush(PHB_EXPR, int, HB_COMP_DECL);
+static HB_BOOL hb_compExprCodeblockPush(PHB_EXPR, int32_t, HB_COMP_DECL);
 static void hb_compExprCodeblockEarly(PHB_EXPR, HB_COMP_DECL);
 static void hb_compExprCodeblockExtPush(PHB_EXPR pSelf, HB_COMP_DECL);
 #endif
@@ -1213,7 +1213,7 @@ static HB_EXPR_FUNC(hb_compExprUseArrayAt)
     if (pSelf->value.asList.pExprList->ExprType == HB_ET_VARIABLE)
     {
 #if !defined(HB_MACRO_SUPPORT)
-      int iScope;
+      int32_t iScope;
       hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asList.pExprList->value.asSymbol.name, NULL, &iScope);
       if (iScope == HB_VS_UNDECLARED)
       {
@@ -1827,7 +1827,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
         case HB_F_I18N_NGETTEXT_NOOP:
         case HB_F_I18N_NGETTEXT_STRICT: {
           PHB_EXPR pCount = NULL, pBadParam = NULL, pArg;
-          int iWarning = 0;
+          int32_t iWarning = 0;
           const char *szExpect = NULL;
           const char *szContext = NULL;
           HB_BOOL fStrict, fNoop, fPlural;
@@ -1928,7 +1928,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
             else
             {
               char buf[16];
-              hb_snprintf(buf, sizeof(buf), "%d", (int)usCount + (pCount ? 1 : 0) + (szContext ? 1 : 0));
+              hb_snprintf(buf, sizeof(buf), "%d", (int32_t)usCount + (pCount ? 1 : 0) + (szContext ? 1 : 0));
               hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_PARAM_COUNT, buf,
                                 fPlural ? "2 or 3" : "1 or 2");
             }
@@ -2046,7 +2046,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
                  pSelf->value.asFunCall.pParms->value.asList.pExprList->ExprType == HB_ET_VARREF)
         {
           HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
-          int iVar, iScope;
+          int32_t iVar, iScope;
 
           hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asFunCall.pParms->value.asList.pExprList->value.asSymbol.name,
                               &iVar, &iScope);
@@ -2615,7 +2615,7 @@ static HB_EXPR_FUNC(hb_compExprUseSend)
     if (pSelf->value.asMessage.pParms) /* Is it a method call ? */
     {
       HB_BOOL fArgsList = HB_FALSE;
-      int iParms = (int)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf->value.asMessage.pParms);
+      int32_t iParms = (int32_t)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf->value.asMessage.pParms);
 
       hb_compExprPushSendPush(pSelf, HB_COMP_PARAM);
       if (iParms)
@@ -4384,7 +4384,7 @@ static HB_EXPR_FUNC(hb_compExprUsePreDec)
 #if defined(HB_MACRO_SUPPORT)
 static void hb_compExprCodeblockPush(PHB_EXPR pSelf, HB_COMP_DECL)
 #else
-static HB_BOOL hb_compExprCodeblockPush(PHB_EXPR pSelf, int iEarlyEvalPass, HB_COMP_DECL)
+static HB_BOOL hb_compExprCodeblockPush(PHB_EXPR pSelf, int32_t iEarlyEvalPass, HB_COMP_DECL)
 #endif
 {
   PHB_EXPR pExpr, pNext;
@@ -4792,7 +4792,7 @@ static void hb_compExprPushOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
 #if defined(HB_MACRO_SUPPORT)
       {
 #else
-      int iVar, iScope;
+      int32_t iVar, iScope;
 
       hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asOperator.pLeft->value.asSymbol.name, &iVar, &iScope);
       if (iScope != HB_VS_LOCAL_FIELD && iScope != HB_VS_GLOBAL_FIELD && iScope != HB_VS_UNDECLARED)
@@ -4943,7 +4943,7 @@ static void hb_compExprUseOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
 #if defined(HB_MACRO_SUPPORT)
       {
 #else
-      int iVar, iScope;
+      int32_t iVar, iScope;
 
       hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asOperator.pLeft->value.asSymbol.name, &iVar, &iScope);
       if (iScope != HB_VS_LOCAL_FIELD && iScope != HB_VS_GLOBAL_FIELD && iScope != HB_VS_UNDECLARED)
@@ -5051,7 +5051,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
 #if !defined(HB_MACRO_SUPPORT)
     else if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE)
     {
-      int iVar, iScope;
+      int32_t iVar, iScope;
 
       hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asOperator.pLeft->value.asSymbol.name, &iVar, &iScope);
       if (iScope != HB_VS_LOCAL_FIELD && iScope != HB_VS_GLOBAL_FIELD && iScope != HB_VS_UNDECLARED)
@@ -5164,7 +5164,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
 #if !defined(HB_MACRO_SUPPORT)
     else if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE)
     {
-      int iVar, iScope;
+      int32_t iVar, iScope;
 
       hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asOperator.pLeft->value.asSymbol.name, &iVar, &iScope);
       if (iScope != HB_VS_LOCAL_FIELD && iScope != HB_VS_GLOBAL_FIELD && iScope != HB_VS_UNDECLARED)
@@ -5262,7 +5262,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
 #if !defined(HB_MACRO_SUPPORT)
     else if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE)
     {
-      int iVar, iScope;
+      int32_t iVar, iScope;
 
       hb_compVariableFind(HB_COMP_PARAM, pSelf->value.asOperator.pLeft->value.asSymbol.name, &iVar, &iScope);
       if (iScope != HB_VS_LOCAL_FIELD && iScope != HB_VS_GLOBAL_FIELD && iScope != HB_VS_UNDECLARED)
@@ -5409,7 +5409,7 @@ static PHB_EXPR hb_compExprReduceAliasString(PHB_EXPR pExpr, PHB_EXPR pAlias, HB
 
 static HB_BOOL hb_compExprIsMemvarAlias(const char *szAlias)
 {
-  int iLen = (int)strlen(szAlias);
+  int32_t iLen = (int32_t)strlen(szAlias);
 
   /* @M-> @MEMVAR-> or @MEMVA-> or @MEMV-> */
   return (iLen == 1 || (iLen >= 4 && iLen <= 6)) && memcmp(szAlias, "MEMVAR", iLen) == 0;

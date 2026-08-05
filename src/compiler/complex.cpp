@@ -69,23 +69,23 @@
    HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_RIGHT_CB ||                                                              \
    (HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_SEND && (t)->spaces == 0 && !HB_PP_LEX_SELF(t)))
 
-constexpr int LOOKUP = 0;         // #define LOOKUP 0
-constexpr int OPERATOR = -2;      // #define OPERATOR -2
-constexpr int LSEPARATOR = -3;    // #define LSEPARATOR -3
-constexpr int RSEPARATOR = -4;    // #define RSEPARATOR -4
-constexpr int LINDEX = -5;        // #define LINDEX -5
-constexpr int RINDEX = -6;        // #define RINDEX -6
-constexpr int LARRAY = -7;        // #define LARRAY -7
-constexpr int RARRAY = -8;        // #define RARRAY -8
-constexpr int AS_TYPE = -9;       // #define AS_TYPE -9
-constexpr int DECLARE_TYPE = -10; // #define DECLARE_TYPE -10
+constexpr int32_t LOOKUP = 0;         // #define LOOKUP 0
+constexpr int32_t OPERATOR = -2;      // #define OPERATOR -2
+constexpr int32_t LSEPARATOR = -3;    // #define LSEPARATOR -3
+constexpr int32_t RSEPARATOR = -4;    // #define RSEPARATOR -4
+constexpr int32_t LINDEX = -5;        // #define LINDEX -5
+constexpr int32_t RINDEX = -6;        // #define RINDEX -6
+constexpr int32_t LARRAY = -7;        // #define LARRAY -7
+constexpr int32_t RARRAY = -8;        // #define RARRAY -8
+constexpr int32_t AS_TYPE = -9;       // #define AS_TYPE -9
+constexpr int32_t DECLARE_TYPE = -10; // #define DECLARE_TYPE -10
 
 struct HB_LEX_KEY
 {
   const char *value; // keyword name
   HB_SIZE minlen;    // minimal length
   HB_SIZE maxlen;    // maximal length
-  int type;          // terminal symbol code
+  int32_t type;          // terminal symbol code
 };
 
 // clang-format off
@@ -147,24 +147,24 @@ static const HB_LEX_KEY s_keytable[] =
 };
 // clang-format on
 
-constexpr int _AS_ARRAY = 1;     // #define _AS_ARRAY 1
-constexpr int _AS_BLOCK = 2;     // #define _AS_BLOCK 2
-constexpr int _AS_CHARACTER = 3; // #define _AS_CHARACTER 3
-constexpr int _AS_CLASS = 4;     // #define _AS_CLASS 4
-constexpr int _AS_DATE = 5;      // #define _AS_DATE 5
-constexpr int _AS_DATETIME = 5;  // #define _AS_DATETIME 5
-constexpr int _AS_HASH = 9;      // #define _AS_HASH 9
-constexpr int _AS_LOGICAL = 6;   // #define _AS_LOGICAL 6
-constexpr int _AS_NUMERIC = 7;   // #define _AS_NUMERIC 7
-constexpr int _AS_OBJECT = 8;    // #define _AS_OBJECT 8
-constexpr int _AS_POINTER = 9;   // #define _AS_POINTER 9
-constexpr int _AS_SYMBOL = 9;    // #define _AS_SYMBOL 9
-constexpr int _AS_VARIANT = 9;   // #define _AS_VARIANT 9
+constexpr int32_t _AS_ARRAY = 1;     // #define _AS_ARRAY 1
+constexpr int32_t _AS_BLOCK = 2;     // #define _AS_BLOCK 2
+constexpr int32_t _AS_CHARACTER = 3; // #define _AS_CHARACTER 3
+constexpr int32_t _AS_CLASS = 4;     // #define _AS_CLASS 4
+constexpr int32_t _AS_DATE = 5;      // #define _AS_DATE 5
+constexpr int32_t _AS_DATETIME = 5;  // #define _AS_DATETIME 5
+constexpr int32_t _AS_HASH = 9;      // #define _AS_HASH 9
+constexpr int32_t _AS_LOGICAL = 6;   // #define _AS_LOGICAL 6
+constexpr int32_t _AS_NUMERIC = 7;   // #define _AS_NUMERIC 7
+constexpr int32_t _AS_OBJECT = 8;    // #define _AS_OBJECT 8
+constexpr int32_t _AS_POINTER = 9;   // #define _AS_POINTER 9
+constexpr int32_t _AS_SYMBOL = 9;    // #define _AS_SYMBOL 9
+constexpr int32_t _AS_VARIANT = 9;   // #define _AS_VARIANT 9
 
-static const int s_asTypes[] = {0,       AS_ARRAY,   AS_BLOCK,   AS_CHARACTER, AS_CLASS,
+static const int32_t s_asTypes[] = {0,       AS_ARRAY,   AS_BLOCK,   AS_CHARACTER, AS_CLASS,
                                 AS_DATE, AS_LOGICAL, AS_NUMERIC, AS_OBJECT,    AS_VARIANT};
 
-static const int s_asArrayTypes[] = {0,
+static const int32_t s_asArrayTypes[] = {0,
                                      AS_ARRAY_ARRAY,
                                      AS_BLOCK_ARRAY,
                                      AS_CHARACTER_ARRAY,
@@ -198,11 +198,11 @@ static const HB_LEX_KEY s_typetable[] =
 };
 // clang-format on
 
-static int hb_comp_asType(HB_PP_TOKEN *pToken, bool fArray)
+static int32_t hb_comp_asType(HB_PP_TOKEN *pToken, bool fArray)
 {
   if (pToken && HB_PP_TOKEN_TYPE(pToken->type) == HB_PP_TOKEN_KEYWORD) {
     const HB_LEX_KEY *pKey = s_typetable;
-    int i = HB_SIZEOFARRAY(s_typetable);
+    int32_t i = HB_SIZEOFARRAY(s_typetable);
 
     hb_pp_tokenUpper(pToken);
     do {
@@ -216,10 +216,10 @@ static int hb_comp_asType(HB_PP_TOKEN *pToken, bool fArray)
   return 0;
 }
 
-static int hb_comp_keywordType(HB_PP_TOKEN *pToken)
+static int32_t hb_comp_keywordType(HB_PP_TOKEN *pToken)
 {
   const HB_LEX_KEY *pKey = s_keytable;
-  int i = HB_SIZEOFARRAY(s_keytable);
+  int32_t i = HB_SIZEOFARRAY(s_keytable);
 
   do {
     if (pKey->minlen <= pToken->len && pToken->len <= pKey->maxlen &&
@@ -268,7 +268,7 @@ static bool hb_comp_timeDecode(HB_PP_TOKEN *pTime, long *plTime)
 {
   HB_MAXINT lHour, lMinute, lMilliSec;
   double dNumber;
-  int iDec, iWidth;
+  int32_t iDec, iWidth;
 
   if (!pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
       hb_compStrToNum(pTime->value, pTime->len, &lHour, &dNumber, &iDec, &iWidth) || lHour < 0 || lHour >= 24) {
@@ -340,7 +340,7 @@ static bool hb_comp_timeDecode(HB_PP_TOKEN *pTime, long *plTime)
   return true;
 }
 
-static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE *yylval_ptr)
+static int32_t hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE *yylval_ptr)
 {
   // TODO: decode datetime in VFP strict date form:
   //    {^YYYY/MM/DD[,][HH[:MM[:SS][.CCC]][A|P]]}
@@ -356,7 +356,7 @@ static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE
   HB_PP_TOKEN *pMonth, *pDay, *pTime = nullptr;
   HB_MAXINT lYear = 0, lMonth = 0, lDay = 0;
   double dNumber;
-  int iDec, iWidth, iType = 0;
+  int32_t iDec, iWidth, iType = 0;
   long lDate = 0, lTime = 0;
 
   if (pYear && HB_PP_TOKEN_TYPE(pYear->type) == HB_PP_TOKEN_NUMBER && pYear->pNext) {
@@ -390,7 +390,7 @@ static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE
     }
 
     if (pTime) {
-      lDate = hb_dateEncode(static_cast<int>(lYear), static_cast<int>(lMonth), static_cast<int>(lDay));
+      lDate = hb_dateEncode(static_cast<int32_t>(lYear), static_cast<int32_t>(lMonth), static_cast<int32_t>(lDay));
       if (lDate != 0 || (lYear == 0 && lMonth == 0 && lDay == 0)) {
         iType = NUM_DATE;
         if (HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_RIGHT_CB) {
@@ -423,7 +423,7 @@ static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE
 }
 #endif
 
-static int hb_comp_funcStart(HB_COMP_DECL, YYSTYPE *yylval_ptr)
+static int32_t hb_comp_funcStart(HB_COMP_DECL, YYSTYPE *yylval_ptr)
 {
   HB_COMP_PARAM->pLex->iClose =
       HB_COMP_PARAM->functions.pLast->wIfCounter + HB_COMP_PARAM->functions.pLast->wForCounter +
@@ -444,9 +444,9 @@ static int hb_comp_funcStart(HB_COMP_DECL, YYSTYPE *yylval_ptr)
   return HB_COMP_PARAM->pLex->iState;
 }
 
-extern int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL);
+extern int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL);
 
-int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
+int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 {
   PHB_COMP_LEX pLex = HB_COMP_PARAM->pLex;
 
@@ -465,7 +465,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
         pLex->iClose = -1;
         return ';';
       }
-      return (pLex->iClose & 1) ? ';' : static_cast<int>(ENDERR);
+      return (pLex->iClose & 1) ? ';' : static_cast<int32_t>(ENDERR);
     }
   }
 
@@ -494,7 +494,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
   case HB_PP_TOKEN_NUMBER: {
     HB_MAXINT lNumber;
     double dNumber;
-    int iDec, iWidth;
+    int32_t iDec, iWidth;
 
     pLex->iState = LITERAL;
     if (hb_compStrToNum(pToken->value, pToken->len, &lNumber, &dNumber, &iDec, &iWidth)) {
@@ -509,7 +509,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
     }
   }
   case HB_PP_TOKEN_DATE: {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
 
     pLex->iState = LITERAL;
     if (pToken->value[0] == '0' && (pToken->value[1] == 'D' || pToken->value[1] == 'd')) {
@@ -597,7 +597,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       }
 #if defined(HB_COMPAT_FOXPRO) || 1
       else if (HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_POWER) {
-        int iType = hb_comp_dayTimeDecode(pLex, pToken, yylval_ptr);
+        int32_t iType = hb_comp_dayTimeDecode(pLex, pToken, yylval_ptr);
         if (iType) {
           return iType;
         }
@@ -746,7 +746,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
     return static_cast<HB_UCHAR>(pToken->value[0]);
 
   case HB_PP_TOKEN_KEYWORD: {
-    int iType;
+    int32_t iType;
     hb_pp_tokenUpper(pToken);
     iType = hb_comp_keywordType(pToken);
     pLex->lasttok = yylval_ptr->string = hb_comp_tokenIdentifer(HB_COMP_PARAM, pToken);
@@ -1103,13 +1103,13 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       break;
 
     case AS_TYPE: {
-      int iAs = hb_comp_asType(pToken->pNext, false);
+      int32_t iAs = hb_comp_asType(pToken->pNext, false);
       if (iAs) {
         pLex->iState = DECLARE_TYPE;
         pToken = hb_pp_tokenGet(pLex->pPP);
         if (iAs == AS_ARRAY && pToken->pNext && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD &&
             hb_stricmp("OF", pToken->pNext->value) == 0) {
-          int iAsArray = hb_comp_asType(pToken->pNext->pNext, true);
+          int32_t iAsArray = hb_comp_asType(pToken->pNext->pNext, true);
           if (iAsArray) {
             hb_pp_tokenGet(pLex->pPP);
             hb_pp_tokenGet(pLex->pPP);
@@ -1183,7 +1183,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 
 void hb_compParserRun(HB_COMP_DECL)
 {
-  int iToken;
+  int32_t iToken;
   YYSTYPE yylval;
 
   while (!HB_COMP_PARAM->fExit && HB_COMP_PARAM->iErrorCount == 0) {

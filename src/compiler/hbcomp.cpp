@@ -152,7 +152,7 @@ static void hb_compErrorDuplVar(HB_COMP_DECL, const char *szVarName)
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_VAR_DUPL, szVarName, nullptr);
 }
 
-static void hb_compOutMsg(void *cargo, int iErrorFmt, int iLine, const char *szModule, char cPrefix, int iValue,
+static void hb_compOutMsg(void *cargo, int32_t iErrorFmt, int32_t iLine, const char *szModule, char cPrefix, int32_t iValue,
                           const char *szText, const char *szPar1, const char *szPar2)
 {
   char buffer[512];

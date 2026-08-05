@@ -28,7 +28,7 @@
 #define HB_IDENT_TABLE_SIZE 509UL
 
 // create a new identifier or return the existing one
-const char *hb_compIdentifierNew(HB_COMP_DECL, const char *szName, int iType)
+const char *hb_compIdentifierNew(HB_COMP_DECL, const char *szName, int32_t iType)
 {
   const char *szIdent =
       static_cast<const char *>(hb_hashTableFind(HB_COMP_PARAM->pIdentifiers, static_cast<const void *>(szName)));

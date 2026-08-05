@@ -134,7 +134,7 @@ PHB_EXPR hb_compExprNewFunCall(PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL)
 
 #if !defined(HB_MACRO_SUPPORT) && defined(HB_USE_ENUM_FUNCTIONS)
     {
-      int iLen = strlen(pName->value.asSymbol.name);
+      int32_t iLen = strlen(pName->value.asSymbol.name);
       if (iLen >= 10 && iLen <= 14 && memcmp("HB_ENUM", pName->value.asSymbol.name, 7) == 0)
       {
         const char *szMessage = pName->value.asSymbol.name + 7;
@@ -156,7 +156,7 @@ PHB_EXPR hb_compExprNewFunCall(PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL)
 
         if (szMessage)
         {
-          int iCount = (int)hb_compExprParamListLen(pParms);
+          int32_t iCount = (int32_t)hb_compExprParamListLen(pParms);
           HB_ENUMERATOR *pForVar, *pEnumVar = NULL;
 
           pForVar = HB_COMP_PARAM->functions.pLast->pEnum;

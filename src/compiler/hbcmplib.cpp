@@ -48,7 +48,7 @@
 #include "hbcomp.hpp"
 #include <cstddef>
 
-static void s_pp_msg(void *cargo, int iErrorFmt, int iLine, const char *szModule, char cPrefix, int iValue,
+static void s_pp_msg(void *cargo, int32_t iErrorFmt, int32_t iLine, const char *szModule, char cPrefix, int32_t iValue,
                      const char *szText, const char *szPar1, const char *szPar2)
 {
   HB_SYMBOL_UNUSED(cargo);
@@ -70,7 +70,7 @@ static void s_pp_msg(void *cargo, int iErrorFmt, int iLine, const char *szModule
   }
 }
 
-static int s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_BOOL fSysFile, HB_BOOL fBinary,
+static int32_t s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_BOOL fSysFile, HB_BOOL fBinary,
                          HB_PATHNAMES *pIncludePaths, HB_BOOL *pfNested, FILE **file_ptr, const char **pBufPtr,
                          HB_SIZE *pnLen, HB_BOOL *pfFree)
 {
@@ -104,7 +104,7 @@ static int s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_BOOL
   return HB_PP_OPEN_FILE;
 }
 
-static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***pArgV, PHB_ITEM *pIncItem,
+static void hb_compGenArgList(int32_t iFirst, int32_t iLast, int32_t *pArgC, const char ***pArgV, PHB_ITEM *pIncItem,
                               PHB_PP_OPEN_FUNC *pOpenFunc, PHB_PP_MSG_FUNC *pMsgFunc)
 {
   if (pMsgFunc) {
@@ -127,9 +127,9 @@ static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***p
   }
 
   PHB_ITEM pParam;
-  int argc = 1;
+  int32_t argc = 1;
 
-  for (int i = iFirst; i <= iLast; ++i) {
+  for (int32_t i = iFirst; i <= iLast; ++i) {
     pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
     if (pParam) {
       if (HB_IS_ARRAY(pParam)) {
@@ -149,7 +149,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***p
 
   auto argv = static_cast<const char **>(hb_xgrab(sizeof(char *) * (argc + 1)));
   argc = 0;
-  for (int i = iFirst; i <= iLast; ++i) {
+  for (int32_t i = iFirst; i <= iLast; ++i) {
     pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
     if (pParam) {
       if (HB_IS_ARRAY(pParam)) {
@@ -172,7 +172,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***p
 
 HB_FUNC(HB_COMPILE)
 {
-  int argc;
+  int32_t argc;
   const char **argv;
   PHB_ITEM pIncItem;
   PHB_PP_OPEN_FUNC pOpenFunc;
@@ -184,7 +184,7 @@ HB_FUNC(HB_COMPILE)
 
 HB_FUNC(HB_COMPILEBUF)
 {
-  int argc;
+  int32_t argc;
   const char **argv;
   PHB_ITEM pIncItem;
   PHB_PP_OPEN_FUNC pOpenFunc;
@@ -192,7 +192,7 @@ HB_FUNC(HB_COMPILEBUF)
   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
   uint8_t *pBuffer;
   HB_SIZE nLen;
-  int iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc);
+  int32_t iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc);
   hb_xfree(static_cast<void *>(argv));
 
   if (iResult == EXIT_SUCCESS && pBuffer) {
@@ -205,7 +205,7 @@ HB_FUNC(HB_COMPILEFROMBUF)
   auto szSource = hb_parc(1);
 
   if (szSource != nullptr) {
-    int argc;
+    int32_t argc;
     const char **argv;
     PHB_ITEM pIncItem;
     PHB_PP_OPEN_FUNC pOpenFunc;
@@ -213,7 +213,7 @@ HB_FUNC(HB_COMPILEFROMBUF)
     hb_compGenArgList(2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
     uint8_t *pBuffer;
     HB_SIZE nLen;
-    int iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc);
+    int32_t iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc);
     hb_xfree(static_cast<void *>(argv));
 
     if (iResult == EXIT_SUCCESS && pBuffer) {

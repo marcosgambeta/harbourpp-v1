@@ -430,7 +430,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
     case 'K':
       ++szSwPtr;
       while (*szSwPtr && !HB_COMP_PARAM->fExit) {
-        int ch = HB_TOUPPER(*szSwPtr);
+        int32_t ch = HB_TOUPPER(*szSwPtr);
 
         ++szSwPtr;
         switch (ch) {
@@ -642,7 +642,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
       ++szSwPtr;
       if (szSwPtr[0] == ':') {
         if (HB_ISDIGIT(szSwPtr[1])) {
-          int iCycles = 0;
+          int32_t iCycles = 0;
           ++szSwPtr;
           while (HB_ISDIGIT(*szSwPtr)) {
             iCycles = iCycles * 10 + *szSwPtr++ - '0';
@@ -734,7 +734,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
 #ifdef YYDEBUG
     case 'Y':
       ++szSwPtr;
-      extern int hb_comp_yydebug;
+      extern int32_t hb_comp_yydebug;
       hb_comp_yydebug = true;
       break;
 #endif
@@ -764,7 +764,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
 }
 
 // check command-line parameters
-void hb_compChkCommandLine(HB_COMP_DECL, int argc, const char *const argv[])
+void hb_compChkCommandLine(HB_COMP_DECL, int32_t argc, const char *const argv[])
 {
   for (auto i = 1; i < argc && !HB_COMP_PARAM->fExit; ++i) {
     const char *szSwitch = argv[i];
