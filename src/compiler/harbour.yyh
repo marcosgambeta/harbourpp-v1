@@ -210,6 +210,6 @@ union YYSTYPE
 
 
 
-int32_t hb_comp_yyparse (PHB_COMP pComp);
+int32_t hb_comp_yyparse (HB_COMP *pComp);
 
 #endif /* !YY_HB_COMP_YY_HARBOURY_H_INCLUDED  */

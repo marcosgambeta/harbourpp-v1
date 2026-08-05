@@ -872,7 +872,7 @@ typedef struct HB_MACRO_      // a macro compiled pcode container
 #else
 
 #define HB_COMP_PARAM         pComp
-#define HB_COMP_DECL          PHB_COMP HB_COMP_PARAM
+#define HB_COMP_DECL          HB_COMP *HB_COMP_PARAM
 
 #define HB_I18N_PLURAL_MAX    8
 
@@ -959,6 +959,114 @@ typedef struct _HB_INCLST
    char szFileName[ 1 ];
 } HB_INCLST, * PHB_INCLST;
 
+#if defined(__cplusplus)
+struct _HB_COMP
+{
+   // common to macro compiler members
+   int32_t    mode;            // HB_MODE_*
+   int32_t    supported;       // various flags for supported capabilities
+   const struct _HB_COMP_FUNCS * funcs;
+
+   // compiler only members
+   PHB_COMP_LEX      pLex;
+   PHB_EXPRLST       pExprLst;
+
+   PHB_HASH_TABLE    pIdentifiers;
+   HB_HFUNCTION_LIST functions;
+   // HB_HSYMBOL_LIST   symbols; (changed to std::vector)
+   std::vector<HB_HSYMBOL *> symbols;
+   //HB_HINLINE_LIST   inlines; (changed to std::vector)
+   std::vector<HB_HINLINE *> inlines;
+   // HB_HEXTERN *      externs; (changed to std::forward_list)
+   std::forward_list<HB_HEXTERN *> externs;
+   PHB_MODULE        modules;
+   HB_VARTYPE *      pVarType;
+   PHB_INCLST        incfiles;
+   HB_PPDEFINE *     ppdefines;
+
+   HB_HDECLARED *    pFirstDeclared;
+   HB_HDECLARED *    pLastDeclared;
+   HB_HDECLARED *    pLastMethod;
+   HB_HCLASS *       pFirstClass;
+   HB_HCLASS *       pLastClass;
+
+   HB_HFUNC *        pInitFunc;
+   HB_HFUNC *        pLineFunc;
+   HB_HFUNC *        pDeclFunc;
+   HB_FNAME *        pFileName;
+   HB_FNAME *        pOutPath;
+   HB_FNAME *        pPpoPath;
+   HB_FNAME *        pI18nFileName;
+   PHB_I18NTABLE     pI18n;
+   HB_BOOL           fI18n;
+
+   void              ( * outStdFunc ) ( void *, const char * );
+   void              ( * outErrFunc ) ( void *, const char * );
+   PHB_PP_MSG_FUNC   outMsgFunc;
+   void *            cargo;
+
+   HB_SIZE           nOutBufSize;         // memory output buffer size
+   uint8_t *         pOutBuf;             // memory output buffer address
+
+   int32_t               lastLine;            // last generated in PCODE line number
+   int32_t               currLine;            // currently compiled line number
+   const char *      lastModule;          // last generated in PCODE module name
+   const char *      currModule;          // currently compiled module name
+
+   const char *      szAnnounce;
+   const char *      szDeclaredFun;
+   const char *      szFile;              // Source file name of compiled module
+   char *            szDepExt;            // destination file extension used in decencies list
+   char *            szStdCh;             // standard definitions file name (-u)
+   char **           szStdChExt;          // extended definitions file names (-u+<file>)
+   int32_t               iStdChExt;           // number of extended definition files (-u+<file>)
+
+   uint8_t           cDataListType;       // current declared variable list type
+
+   int32_t               iErrorCount;
+   int32_t               iModulesCount;       // number of compiled .prg modules
+   int32_t               iStartProc;          // holds if we need to create the starting procedure
+   int32_t               iMaxTransCycles;     // maximum translate cycles in PP (-r=<n>)
+   int32_t               iHidden;             // hide strings
+   int32_t               iWarnings;           // enable parse warnings
+   int32_t               iExitLevel;          // holds if there was any warning during the compilation process
+   int32_t               iStaticCnt;          // number of defined statics variables on the PRG
+   int32_t               iVarScope;           // holds the scope for next variables to be defined
+   int32_t               iLanguage;           // default Harbour generated output language
+   int32_t               iGenCOutput;         // C code generation should be verbose (use comments) or not
+   int32_t               ilastLineErr;        // line number with last syntax error
+   int32_t               iTraceInclude;       // trace included files and generate dependencies list
+   int32_t               iSyntaxCheckOnly;    // syntax check only
+   int32_t               iErrorFmt;           // error message formatting mode (default: Clipper)
+
+   HB_BOOL           fQuiet;              // be quiet during compilation (-q)
+   HB_BOOL           fGauge;              // hide line counter gauge (-ql)
+   HB_BOOL           fFullQuiet;          // be quiet during compilation disable all messages
+   HB_BOOL           fExit;               // force breaking compilation process
+   HB_BOOL           fPPO;                // flag indicating, is .ppo output needed
+   HB_BOOL           fPPT;                // flag indicating, is .ppt output needed
+   HB_BOOL           fLineNumbers;        // holds if we need pcodes with line numbers
+   HB_BOOL           fAnyWarning;         // holds if there was any warning during the compilation process
+   HB_BOOL           fAutoMemvarAssume;   // holds if undeclared variables are automatically assumed MEMVAR (-a)
+   HB_BOOL           fForceMemvars;       // holds if memvars are assumed when accessing undeclared variable (-v)
+   HB_BOOL           fDebugInfo;          // holds if generate debugger required info
+   HB_BOOL           fHideSource;         // do not embed original source filename into generated source code
+   HB_BOOL           fNoStartUp;          // C code generation embed HB_FS_FIRST or not
+   HB_BOOL           fCredits;            // print credits
+   HB_BOOL           fBuildInfo;          // print build info
+   HB_BOOL           fLogo;               // print logo
+   HB_BOOL           fSwitchCase;         // generate PCODE for CASE value of SWITCH statement
+   HB_BOOL           fDescend;            // add descendant FOR EACH iterators
+   HB_BOOL           fSingleModule;       // do not automatically compile DO...[WITH...] external modules (-m)
+   HB_BOOL           fError;              // error appeared during compilation
+   HB_BOOL           fNoArchDefs;         // do not define architecture dependent macros: __PLATFORM__*, __ARCH??BIT__, __*_ENDIAN__
+   HB_BOOL           fMeaningful;         // do not generate warnings about meaningless expression usage
+   HB_BOOL           fINCLUDE;            // use INCLUDE envvar as header path (default)
+   HB_BOOL           fAllowLocalAfter;    // allow LOCAL after executable statements
+};
+using HB_COMP = _HB_COMP;
+using PHB_COMP = HB_COMP *; // PHB_COMP deprecated in core code
+#else
 typedef struct _HB_COMP
 {
    // common to macro compiler members
@@ -1063,6 +1171,7 @@ typedef struct _HB_COMP
    HB_BOOL           fINCLUDE;            // use INCLUDE envvar as header path (default)
    HB_BOOL           fAllowLocalAfter;    // allow LOCAL after executable statements
 } HB_COMP, * PHB_COMP;
+#endif
 
 typedef struct
 {
@@ -1083,8 +1192,8 @@ typedef struct
    int32_t      supported;
 } HB_COMP_SWITCHES, * PHB_COMP_SWITCHES;
 
-extern PHB_COMP hb_comp_new( void );
-extern void hb_comp_free( PHB_COMP );
+extern HB_COMP *hb_comp_new( void );
+extern void hb_comp_free( HB_COMP * );
 
 #endif // ! HB_MACRO_SUPPORT
 

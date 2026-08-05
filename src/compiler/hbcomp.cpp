@@ -166,7 +166,7 @@ static void hb_compOutMsg(void *cargo, int32_t iErrorFmt, int32_t iLine, const c
       hb_snprintf(buffer, sizeof(buffer), "\n%s:%s ", szModule, szPar2);
     }
 
-    hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
+    hb_compOutErr(static_cast<HB_COMP *>(cargo), buffer);
   }
 
   if (iErrorFmt == HB_ERRORFMT_CLIPPER) {
@@ -175,10 +175,10 @@ static void hb_compOutMsg(void *cargo, int32_t iErrorFmt, int32_t iLine, const c
     hb_snprintf(buffer, sizeof(buffer), "%s %c%04i  ", cPrefix == 'W' ? "warning" : "error", cPrefix, iValue);
   }
 
-  hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
+  hb_compOutErr(static_cast<HB_COMP *>(cargo), buffer);
   hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
-  hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
-  hb_compOutErr(static_cast<PHB_COMP>(cargo), "\n");
+  hb_compOutErr(static_cast<HB_COMP *>(cargo), buffer);
+  hb_compOutErr(static_cast<HB_COMP *>(cargo), "\n");
 }
 
 void hb_compOutStd(HB_COMP_DECL, const char *szMessage)
@@ -210,13 +210,13 @@ static const HB_COMP_FUNCS s_comp_funcs = {
     hb_compErrorType, hb_compErrorSyntax, hb_compErrorDuplVar,
 };
 
-PHB_COMP hb_comp_new(void)
+HB_COMP *hb_comp_new(void)
 {
-  PHB_COMP pComp = nullptr;
+  HB_COMP *pComp = nullptr;
   PHB_PP_STATE pPP = hb_pp_new();
 
   if (pPP) {
-    pComp = static_cast<PHB_COMP>(hb_xgrabz(sizeof(HB_COMP)));
+    pComp = static_cast<HB_COMP *>(hb_xgrabz(sizeof(HB_COMP)));
     pComp->pLex = static_cast<PHB_COMP_LEX>(hb_xgrabz(sizeof(HB_COMP_LEX)));
 
     // initialize default settings
@@ -264,7 +264,7 @@ PHB_COMP hb_comp_new(void)
   return pComp;
 }
 
-void hb_comp_free(PHB_COMP pComp)
+void hb_comp_free(HB_COMP *pComp)
 {
   hb_compI18nFree(pComp);
   hb_compCompileEnd(pComp);

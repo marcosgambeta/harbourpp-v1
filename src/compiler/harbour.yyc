@@ -387,7 +387,7 @@ union YYSTYPE
 
 
 
-int32_t hb_comp_yyparse (PHB_COMP pComp);
+int32_t hb_comp_yyparse (HB_COMP *pComp);
 
 #endif /* !YY_HB_COMP_YY_HARBOURY_H_INCLUDED  */
 
@@ -3131,7 +3131,7 @@ do {                                                                      \
 `----------------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, PHB_COMP pComp)
+yy_symbol_value_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, HB_COMP *pComp)
 {
   FILE *yyo = yyoutput;
   YYUSE (yyo);
@@ -3151,7 +3151,7 @@ yy_symbol_value_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyv
 `--------------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, PHB_COMP pComp)
+yy_symbol_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, HB_COMP *pComp)
 {
   YYFPRINTF (yyoutput, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
@@ -3189,7 +3189,7 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int32_t yyrule, PHB_COMP pComp)
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int32_t yyrule, HB_COMP *pComp)
 {
   unsigned long int yylno = yyrline[yyrule];
   int32_t yynrhs = yyr2[yyrule];
@@ -3469,7 +3469,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int32_t yytype, YYSTYPE *yyvaluep, PHB_COMP pComp)
+yydestruct (const char *yymsg, int32_t yytype, YYSTYPE *yyvaluep, HB_COMP *pComp)
 {
   YYUSE (yyvaluep);
   YYUSE (pComp);
@@ -3507,7 +3507,7 @@ yydestruct (const char *yymsg, int32_t yytype, YYSTYPE *yyvaluep, PHB_COMP pComp
 `----------*/
 
 int
-yyparse (PHB_COMP pComp)
+yyparse (HB_COMP *pComp)
 {
 /* The lookahead symbol.  */
 int yychar;

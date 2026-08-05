@@ -50,7 +50,7 @@
 static void hb_pp_ErrorGen(void *cargo, const char *const szMsgTable[], char cPrefix, int32_t iErrorCode,
                            const char *szParam1, const char *szParam2)
 {
-  HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
+  HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
   int32_t iCurrLine = HB_COMP_PARAM->currLine;
   const char *currModule = HB_COMP_PARAM->currModule;
 
@@ -68,13 +68,13 @@ static void hb_pp_ErrorGen(void *cargo, const char *const szMsgTable[], char cPr
 
 static void hb_pp_Disp(void *cargo, const char *szMessage)
 {
-  HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
+  HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
   hb_compOutStd(HB_COMP_PARAM, szMessage);
 }
 
 static void hb_pp_PragmaDump(void *cargo, char *pBuffer, HB_SIZE nSize, int32_t iLine)
 {
-  HB_HINLINE *pInline = hb_compInlineAdd(static_cast<PHB_COMP>(cargo), nullptr, iLine);
+  HB_HINLINE *pInline = hb_compInlineAdd(static_cast<HB_COMP *>(cargo), nullptr, iLine);
   pInline->pCode = static_cast<uint8_t *>(hb_xgrab(nSize + 1));
   memcpy(pInline->pCode, pBuffer, nSize);
   pInline->pCode[nSize] = '\0';
@@ -83,7 +83,7 @@ static void hb_pp_PragmaDump(void *cargo, char *pBuffer, HB_SIZE nSize, int32_t 
 
 static void hb_pp_hb_inLine(void *cargo, char *szFunc, char *pBuffer, HB_SIZE nSize, int32_t iLine)
 {
-  HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
+  HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
 
   if (HB_COMP_PARAM->iLanguage != HB_LANG_C) {
     int32_t iCurrLine = HB_COMP_PARAM->currLine;
@@ -103,7 +103,7 @@ static void hb_pp_hb_inLine(void *cargo, char *szFunc, char *pBuffer, HB_SIZE nS
 
 static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int32_t *piValue, HB_BOOL fSet)
 {
-  HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
+  HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
   auto fError = false;
 
   int32_t iValue = *piValue;
@@ -343,7 +343,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int32_t *
 
 static void hb_pp_fileIncluded(void *cargo, const char *szFileName)
 {
-  HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
+  HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
 
   PHB_INCLST *pIncFilePtr = &HB_COMP_PARAM->incfiles;
   while (*pIncFilePtr) {

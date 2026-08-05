@@ -68,7 +68,7 @@ static HB_STRIP_FUNC(hb_p_line)
     hb_compNOOPfill(pFunc, nPCodePos, 3, false, false);
     break;
   default:
-    if (!(static_cast<PHB_COMP>(cargo))->fDebugInfo) {
+    if (!(static_cast<HB_COMP *>(cargo))->fDebugInfo) {
       HB_SIZE nNewPos = nPCodePos;
       switch (pFunc->pCode[nPCodePos + 3]) {
       case HB_P_JUMPNEAR:

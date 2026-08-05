@@ -1,6 +1,6 @@
 %pure-parser
-%parse-param { PHB_COMP pComp }
-%lex-param   { PHB_COMP pComp }
+%parse-param { HB_COMP *pComp }
+%lex-param   { HB_COMP *pComp }
 %name-prefix "hb_comp_yy"
 %{
 /*
