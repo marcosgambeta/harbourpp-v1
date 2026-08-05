@@ -127,12 +127,12 @@ static void hb_compExprCodeblockExtPush(PHB_EXPR pSelf, HB_COMP_DECL);
 
 static void hb_compExprPushSendPop(PHB_EXPR pSelf, HB_COMP_DECL);
 static void hb_compExprPushSendPush(PHB_EXPR pSelf, HB_COMP_DECL);
-static void hb_compExprPushOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL);
-static void hb_compExprUseOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL);
-static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL);
-static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL);
-static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL);
-static void hb_compExprUseAliasMacro(PHB_EXPR pAliasedVar, HB_BYTE bAction, HB_COMP_DECL);
+static void hb_compExprPushOperEq(PHB_EXPR pSelf, uint8_t bOpEq, HB_COMP_DECL);
+static void hb_compExprUseOperEq(PHB_EXPR pSelf, uint8_t bOpEq, HB_COMP_DECL);
+static void hb_compExprPushPreOp(PHB_EXPR pSelf, uint8_t bOper, HB_COMP_DECL);
+static void hb_compExprPushPostOp(PHB_EXPR pSelf, uint8_t bOper, HB_COMP_DECL);
+static void hb_compExprUsePreOp(PHB_EXPR pSelf, uint8_t bOper, HB_COMP_DECL);
+static void hb_compExprUseAliasMacro(PHB_EXPR pAliasedVar, uint8_t bAction, HB_COMP_DECL);
 static PHB_EXPR hb_compExprReduceList(PHB_EXPR pExpr, HB_COMP_DECL);
 static PHB_EXPR hb_compExprReduceAliasString(PHB_EXPR pExpr, PHB_EXPR pAlias, HB_COMP_DECL);
 static HB_BOOL hb_compExprIsMemvarAlias(const char *szAlias);
@@ -542,7 +542,7 @@ static HB_EXPR_FUNC(hb_compExprUseArray)
     break;
 
   case HB_EA_PUSH_PCODE: {
-    HB_USHORT usItems = (HB_USHORT)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf);
+    uint16_t usItems = (uint16_t)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf);
 
     if (usItems == 0)
     {
@@ -633,7 +633,7 @@ static HB_EXPR_FUNC(hb_compExprUseHash)
     break;
 
   case HB_EA_PUSH_PCODE: {
-    HB_USHORT usItems = (HB_USHORT)(pSelf->nLength >> 1);
+    uint16_t usItems = (uint16_t)(pSelf->nLength >> 1);
     /* NOTE: direct type change */
     pSelf->ExprType = HB_ET_ARGLIST;
     HB_EXPR_USE(pSelf, HB_EA_PUSH_PCODE);
@@ -1148,7 +1148,7 @@ static HB_EXPR_FUNC(hb_compExprUseMacroArgList)
 
   case HB_EA_PUSH_PCODE: {
     PHB_EXPR pExpr = pSelf->value.asList.pExprList;
-    HB_USHORT usItems = 0;
+    uint16_t usItems = 0;
 
     while (pExpr)
     {
@@ -1574,7 +1574,7 @@ static HB_EXPR_FUNC(hb_compExprUseMacro)
         HB_GEN_FUNC1(PCode1, HB_P_MACROPUSH);
 
       /* Always add byte to pcode indicating requested macro compiler flag. */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)HB_MACRO_GENFLAGS);
+      HB_GEN_FUNC1(PCode1, (uint8_t)HB_MACRO_GENFLAGS);
     }
     break;
 
@@ -1625,7 +1625,7 @@ static HB_EXPR_FUNC(hb_compExprUseMacro)
       HB_GEN_FUNC1(PCode1, HB_P_MACROPOP);
 
       /* Always add byte to pcode indicating requested macro compiler flag. */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)HB_MACRO_GENFLAGS);
+      HB_GEN_FUNC1(PCode1, (uint8_t)HB_MACRO_GENFLAGS);
     }
     break;
 
@@ -1657,7 +1657,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
     {
       HB_FUNC_ID funcID = pSelf->value.asFunCall.pFunName->value.asSymbol.funcid;
       PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
-      HB_USHORT usCount = (HB_USHORT)hb_compExprParamListLen(pParms);
+      uint16_t usCount = (uint16_t)hb_compExprParamListLen(pParms);
 
 #ifndef HB_MACRO_SUPPORT
       if (hb_compFunCallCheck(HB_COMP_PARAM, pSelf->value.asFunCall.pFunName->value.asSymbol.name, usCount))
@@ -2007,14 +2007,14 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
 
   case HB_EA_PUSH_PCODE: {
     HB_BOOL fArgsList = HB_FALSE;
-    HB_USHORT usCount = 0;
+    uint16_t usCount = 0;
 
     /* NOTE: pParms will be NULL in 'DO procname' (if there is
      * no WITH keyword)
      */
     if (pSelf->value.asFunCall.pParms)
     {
-      usCount = (HB_USHORT)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf->value.asFunCall.pParms);
+      usCount = (uint16_t)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf->value.asFunCall.pParms);
       fArgsList = pSelf->value.asFunCall.pParms->ExprType == HB_ET_MACROARGLIST;
     }
 
@@ -2052,7 +2052,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
                               &iVar, &iScope);
 
           if (pFunc->wParamCount && (pFunc->funFlags & HB_FUNF_USES_LOCAL_PARAMS) != 0 && iScope == HB_VS_LOCAL_VAR &&
-              (HB_USHORT)iVar <= pFunc->wParamCount)
+              (uint16_t)iVar <= pFunc->wParamCount)
           {
             HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pParms);
             pSelf->value.asFunCall.pParms = hb_compExprNewLong(iVar, HB_COMP_PARAM);
@@ -2084,7 +2084,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
     else if (usCount > 255)
       HB_GEN_FUNC3(PCode3, HB_P_FUNCTION, HB_LOBYTE(usCount), HB_HIBYTE(usCount));
     else
-      HB_GEN_FUNC2(PCode2, HB_P_FUNCTIONSHORT, (HB_BYTE)usCount);
+      HB_GEN_FUNC2(PCode2, HB_P_FUNCTIONSHORT, (uint8_t)usCount);
     break;
   }
   case HB_EA_POP_PCODE:
@@ -2093,11 +2093,11 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
   case HB_EA_PUSH_POP:
   case HB_EA_STATEMENT: {
     HB_BOOL fArgsList = HB_FALSE;
-    HB_USHORT usCount = 0;
+    uint16_t usCount = 0;
 
     if (pSelf->value.asFunCall.pParms)
     {
-      usCount = (HB_USHORT)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf->value.asFunCall.pParms);
+      usCount = (uint16_t)hb_compExprParamListCheck(HB_COMP_PARAM, pSelf->value.asFunCall.pParms);
       fArgsList = pSelf->value.asFunCall.pParms->ExprType == HB_ET_MACROARGLIST;
     }
 
@@ -2132,7 +2132,7 @@ static HB_EXPR_FUNC(hb_compExprUseFunCall)
     else if (usCount > 255)
       HB_GEN_FUNC3(PCode3, HB_P_DO, HB_LOBYTE(usCount), HB_HIBYTE(usCount));
     else
-      HB_GEN_FUNC2(PCode2, HB_P_DOSHORT, (HB_BYTE)usCount);
+      HB_GEN_FUNC2(PCode2, HB_P_DOSHORT, (uint8_t)usCount);
     break;
   }
   case HB_EA_DELETE:
@@ -2633,7 +2633,7 @@ static HB_EXPR_FUNC(hb_compExprUseSend)
       else if (iParms > 255)
         HB_GEN_FUNC3(PCode3, HB_P_SEND, HB_LOBYTE(iParms), HB_HIBYTE(iParms));
       else
-        HB_GEN_FUNC2(PCode2, HB_P_SENDSHORT, (HB_BYTE)iParms);
+        HB_GEN_FUNC2(PCode2, HB_P_SENDSHORT, (uint8_t)iParms);
     }
     else
     {
@@ -4483,7 +4483,7 @@ static HB_BOOL hb_compExprCodeblockPush(PHB_EXPR pSelf, int32_t iEarlyEvalPass, 
 #if !defined(HB_MACRO_SUPPORT)
 static void hb_compExprCodeblockExtPush(PHB_EXPR pSelf, HB_COMP_DECL)
 {
-  hb_compGenPCodeN((HB_BYTE *)pSelf->value.asCodeblock.string, pSelf->nLength, HB_COMP_PARAM);
+  hb_compGenPCodeN((uint8_t *)pSelf->value.asCodeblock.string, pSelf->nLength, HB_COMP_PARAM);
 }
 
 static void hb_compExprCodeblockEarly(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -4618,7 +4618,7 @@ static void hb_compExprPushSendPush(PHB_EXPR pSelf, HB_COMP_DECL)
   }
 }
 
-static void hb_compExprPushSendPopPush(PHB_EXPR pObj, PHB_EXPR pValue, HB_BOOL fPreOp, HB_BYTE bOper, HB_COMP_DECL)
+static void hb_compExprPushSendPopPush(PHB_EXPR pObj, PHB_EXPR pValue, HB_BOOL fPreOp, uint8_t bOper, HB_COMP_DECL)
 {
   if (HB_SUPPORT_HARBOUR)
   {
@@ -4701,9 +4701,9 @@ static void hb_compExprPushSendPopPush(PHB_EXPR pObj, PHB_EXPR pValue, HB_BOOL f
  *   be changed
  */
 
-static void hb_compExprPushOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
+static void hb_compExprPushOperEq(PHB_EXPR pSelf, uint8_t bOpEq, HB_COMP_DECL)
 {
-  HB_BYTE bNewOp;
+  uint8_t bNewOp;
 
   if (HB_SUPPORT_HARBOUR)
   {
@@ -4760,7 +4760,7 @@ static void hb_compExprPushOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
   {
     if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_MACRO)
     {
-      HB_USHORT usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
+      uint16_t usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
       if (usType & HB_ET_MACRO_VAR)
       {
         /* NOTE: direct type change */
@@ -4806,7 +4806,7 @@ static void hb_compExprPushOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
 
             if (bOpEq != HB_P_MINUS || iIncrement >= -INT16_MAX)
             {
-              HB_BYTE buffer[5];
+              uint8_t buffer[5];
 
               if (bOpEq == HB_P_MINUS)
                 iIncrement = -iIncrement;
@@ -4850,9 +4850,9 @@ static void hb_compExprPushOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
 /* Generates pcodes for <operator>= syntax
  * used standalone as a statement (it cannot leave the value on the stack)
  */
-static void hb_compExprUseOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
+static void hb_compExprUseOperEq(PHB_EXPR pSelf, uint8_t bOpEq, HB_COMP_DECL)
 {
-  HB_BYTE bNewOp;
+  uint8_t bNewOp;
 
   if (HB_SUPPORT_HARBOUR)
   {
@@ -4911,7 +4911,7 @@ static void hb_compExprUseOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
   {
     if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_MACRO)
     {
-      HB_USHORT usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
+      uint16_t usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
       if (usType & HB_ET_MACRO_VAR)
       {
         /* NOTE: direct type change */
@@ -4957,7 +4957,7 @@ static void hb_compExprUseOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
 
             if (bOpEq != HB_P_MINUS || iIncrement >= -INT16_MAX)
             {
-              HB_BYTE buffer[5];
+              uint8_t buffer[5];
 
               if (bOpEq == HB_P_MINUS)
                 iIncrement = -iIncrement;
@@ -4996,7 +4996,7 @@ static void hb_compExprUseOperEq(PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL)
 
 /* Generates the pcodes for pre- increment/decrement expressions
  */
-static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
+static void hb_compExprPushPreOp(PHB_EXPR pSelf, uint8_t bOper, HB_COMP_DECL)
 {
   /* NOTE: an object instance variable needs special handling
    */
@@ -5008,7 +5008,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       hb_compExprPushSendPop(pSelf->value.asOperator.pLeft, HB_COMP_PARAM);
       HB_GEN_FUNC1(PCode1, HB_P_PUSHOVARREF);
       /* increase/decrease operation, leave unreferenced value on stack */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)((bOper == HB_P_INC) ? HB_P_INCEQ : HB_P_DECEQ));
+      HB_GEN_FUNC1(PCode1, (uint8_t)((bOper == HB_P_INC) ? HB_P_INCEQ : HB_P_DECEQ));
     }
     else
 #endif
@@ -5022,7 +5022,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
     if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_MACRO &&
         pSelf->value.asOperator.pLeft->value.asMacro.SubType & HB_ET_MACRO_VAR)
     {
-      HB_USHORT usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
+      uint16_t usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
       /* NOTE: direct type change */
       pSelf->value.asOperator.pLeft->value.asMacro.SubType |= HB_ET_MACRO_REFER;
       HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
@@ -5030,7 +5030,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       pSelf->value.asOperator.pLeft->value.asMacro.SubType = usType;
 
       /* increase/decrease operation, leave unreferenced value on stack */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQ : HB_P_DECEQ));
+      HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQ : HB_P_DECEQ));
       return;
     }
 #ifdef HB_USE_ARRAYAT_REF
@@ -5044,7 +5044,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       pSelf->value.asOperator.pLeft->value.asList.reference = HB_FALSE;
 
       /* increase/decrease operation, leave unreferenced value on stack */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQ : HB_P_DECEQ));
+      HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQ : HB_P_DECEQ));
       return;
     }
 #endif
@@ -5074,7 +5074,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
           /* NOTE: direct type change */
           pSelf->value.asOperator.pLeft->ExprType = HB_ET_VARREF;
           HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
-          HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQ : HB_P_DECEQ));
+          HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQ : HB_P_DECEQ));
           /* NOTE: restore original expression type */
           pSelf->value.asOperator.pLeft->ExprType = HB_ET_VARIABLE;
         }
@@ -5096,7 +5096,7 @@ static void hb_compExprPushPreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
 
 /* Generates the pcodes for post- increment/decrement expressions
  */
-static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
+static void hb_compExprPushPostOp(PHB_EXPR pSelf, uint8_t bOper, HB_COMP_DECL)
 {
   /* NOTE: an object instance variable needs special handling
    */
@@ -5113,7 +5113,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
        */
       HB_GEN_FUNC1(PCode1, HB_P_DUPLUNREF);
       /* increment/decrement the value */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)((bOper == HB_P_INC) ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+      HB_GEN_FUNC1(PCode1, (uint8_t)((bOper == HB_P_INC) ? HB_P_INCEQPOP : HB_P_DECEQPOP));
     }
     else
 #endif
@@ -5127,7 +5127,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
     if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_MACRO &&
         pSelf->value.asOperator.pLeft->value.asMacro.SubType & HB_ET_MACRO_VAR)
     {
-      HB_USHORT usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
+      uint16_t usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
       /* NOTE: direct type change */
       pSelf->value.asOperator.pLeft->value.asMacro.SubType |= HB_ET_MACRO_REFER;
       HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
@@ -5139,7 +5139,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
        */
       HB_GEN_FUNC1(PCode1, HB_P_DUPLUNREF);
       /* increase/decrease operation */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+      HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
       return;
     }
 #ifdef HB_USE_ARRAYAT_REF
@@ -5157,7 +5157,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
        */
       HB_GEN_FUNC1(PCode1, HB_P_DUPLUNREF);
       /* increase/decrease operation */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+      HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
       return;
     }
 #endif
@@ -5173,7 +5173,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
         {
           /* Push current value */
           HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
-          HB_GEN_FUNC3(PCode3, (HB_BYTE)(bOper == HB_P_INC ? HB_P_LOCALINC : HB_P_LOCALDEC), HB_LOBYTE(iVar),
+          HB_GEN_FUNC3(PCode3, (uint8_t)(bOper == HB_P_INC ? HB_P_LOCALINC : HB_P_LOCALDEC), HB_LOBYTE(iVar),
                        HB_HIBYTE(iVar));
         }
         else
@@ -5182,7 +5182,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
           pSelf->value.asOperator.pLeft->ExprType = HB_ET_VARREF;
           HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
           HB_GEN_FUNC1(PCode1, HB_P_DUPLUNREF);
-          HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+          HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
           /* NOTE: restore original expression type */
           pSelf->value.asOperator.pLeft->ExprType = HB_ET_VARIABLE;
         }
@@ -5205,7 +5205,7 @@ static void hb_compExprPushPostOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
 /* Generates the pcodes for increment/decrement operations
  * used standalone as a statement
  */
-static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
+static void hb_compExprUsePreOp(PHB_EXPR pSelf, uint8_t bOper, HB_COMP_DECL)
 {
   /* NOTE: an object instance variable needs special handling
    */
@@ -5218,7 +5218,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       hb_compExprPushSendPop(pSelf->value.asOperator.pLeft, HB_COMP_PARAM);
       HB_GEN_FUNC1(PCode1, HB_P_PUSHOVARREF);
       /* increment/decrement the value */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)((bOper == HB_P_INC) ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+      HB_GEN_FUNC1(PCode1, (uint8_t)((bOper == HB_P_INC) ? HB_P_INCEQPOP : HB_P_DECEQPOP));
     }
     else
 #endif
@@ -5234,7 +5234,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
     if (pSelf->value.asOperator.pLeft->ExprType == HB_ET_MACRO &&
         pSelf->value.asOperator.pLeft->value.asMacro.SubType & HB_ET_MACRO_VAR)
     {
-      HB_USHORT usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
+      uint16_t usType = pSelf->value.asOperator.pLeft->value.asMacro.SubType;
       /* NOTE: direct type change */
       pSelf->value.asOperator.pLeft->value.asMacro.SubType |= HB_ET_MACRO_REFER;
       HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
@@ -5242,7 +5242,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       pSelf->value.asOperator.pLeft->value.asMacro.SubType = usType;
 
       /* increase/decrease operation */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+      HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
       return;
     }
 #ifdef HB_USE_ARRAYAT_REF
@@ -5255,7 +5255,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
       pSelf->value.asOperator.pLeft->value.asList.reference = HB_FALSE;
       /* increase/decrease operation */
-      HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+      HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
       return;
     }
 #endif
@@ -5269,7 +5269,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
       {
         if (iScope == HB_VS_LOCAL_VAR)
         {
-          HB_GEN_FUNC3(PCode3, (HB_BYTE)(bOper == HB_P_INC ? HB_P_LOCALINC : HB_P_LOCALDEC), HB_LOBYTE(iVar),
+          HB_GEN_FUNC3(PCode3, (uint8_t)(bOper == HB_P_INC ? HB_P_LOCALINC : HB_P_LOCALDEC), HB_LOBYTE(iVar),
                        HB_HIBYTE(iVar));
         }
         else
@@ -5277,7 +5277,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
           /* NOTE: direct type change */
           pSelf->value.asOperator.pLeft->ExprType = HB_ET_VARREF;
           HB_EXPR_USE(pSelf->value.asOperator.pLeft, HB_EA_PUSH_PCODE);
-          HB_GEN_FUNC1(PCode1, (HB_BYTE)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
+          HB_GEN_FUNC1(PCode1, (uint8_t)(bOper == HB_P_INC ? HB_P_INCEQPOP : HB_P_DECEQPOP));
           /* NOTE: restore original expression type */
           pSelf->value.asOperator.pLeft->ExprType = HB_ET_VARIABLE;
         }
@@ -5299,7 +5299,7 @@ static void hb_compExprUsePreOp(PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL)
  * the left or right side of the alias operator
  * expression->&macro or &macro->expression or &macro->&macro
  */
-static void hb_compExprUseAliasMacro(PHB_EXPR pAliasedVar, HB_BYTE bAction, HB_COMP_DECL)
+static void hb_compExprUseAliasMacro(PHB_EXPR pAliasedVar, uint8_t bAction, HB_COMP_DECL)
 {
   PHB_EXPR pAlias, pVar;
 
@@ -5339,7 +5339,7 @@ static void hb_compExprUseAliasMacro(PHB_EXPR pAliasedVar, HB_BYTE bAction, HB_C
     HB_GEN_FUNC1(PCode1, HB_P_MACROPOPALIASED);
 
   /* Always add byte to pcode indicating requested macro compiler flag. */
-  HB_GEN_FUNC1(PCode1, (HB_BYTE)HB_MACRO_GENFLAGS);
+  HB_GEN_FUNC1(PCode1, (uint8_t)HB_MACRO_GENFLAGS);
 }
 
 /* Reduces the list of expressions
