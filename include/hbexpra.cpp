@@ -252,7 +252,7 @@ PHB_EXPR hb_compExprNewFunCall(PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL)
 
       if (pArg->ExprType == HB_ET_ARRAYAT)
       {
-        HB_USHORT uiCount;
+        uint16_t uiCount;
 
         /* replace:
            _GET_( a[1], "a[1]", , , )
@@ -671,7 +671,7 @@ PHB_EXPR hb_compExprAssignStatic(PHB_EXPR pLeftExpr, PHB_EXPR pRightExpr, HB_COM
   return pExpr;
 }
 
-PHB_EXPR hb_compExprSetCodeblockBody(PHB_EXPR pExpr, HB_BYTE *pCode, HB_SIZE nLen)
+PHB_EXPR hb_compExprSetCodeblockBody(PHB_EXPR pExpr, uint8_t *pCode, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprSetCodeblockBody(%p,%p,%" HB_PFS "u)", ( void * ) pExpr, ( void * ) pCode, nLen ) );
