@@ -340,7 +340,7 @@ static bool hb_comp_timeDecode(HB_PP_TOKEN *pTime, long *plTime)
   return true;
 }
 
-static int32_t hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, HB_PP_TOKEN *pToken, YYSTYPE *yylval_ptr)
+static int32_t hb_comp_dayTimeDecode(HB_COMP_LEX *pLex, HB_PP_TOKEN *pToken, YYSTYPE *yylval_ptr)
 {
   // TODO: decode datetime in VFP strict date form:
   //    {^YYYY/MM/DD[,][HH[:MM[:SS][.CCC]][A|P]]}
@@ -448,7 +448,7 @@ extern int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL);
 
 int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 {
-  PHB_COMP_LEX pLex = HB_COMP_PARAM->pLex;
+  HB_COMP_LEX *pLex = HB_COMP_PARAM->pLex;
 
   if (!HB_COMP_PARAM->fExit) {
     if (pLex->iClose < 0) {

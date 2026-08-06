@@ -936,6 +936,19 @@ typedef struct _HB_I18NTABLE
 } HB_I18NTABLE, * PHB_I18NTABLE;
 #endif
 
+#if defined(__cplusplus)
+struct _HB_COMP_LEX
+{
+   PHB_PP_STATE   pPP;
+   int32_t            iState;
+   int32_t            iClose;
+   int32_t            iScope;
+   HB_BOOL        fEol;
+   const char *   lasttok;
+};
+using HB_COMP_LEX = _HB_COMP_LEX;
+using PHB_COMP_LEX = HB_COMP_LEX *; // deprecated in core code
+#else
 typedef struct _HB_COMP_LEX
 {
    PHB_PP_STATE   pPP;
@@ -945,6 +958,7 @@ typedef struct _HB_COMP_LEX
    HB_BOOL        fEol;
    const char *   lasttok;
 } HB_COMP_LEX, * PHB_COMP_LEX;
+#endif
 
 typedef struct _HB_EXPRLST
 {
@@ -968,7 +982,7 @@ struct _HB_COMP
    const struct _HB_COMP_FUNCS * funcs;
 
    // compiler only members
-   PHB_COMP_LEX      pLex;
+   HB_COMP_LEX *     pLex;
    PHB_EXPRLST       pExprLst;
 
    PHB_HASH_TABLE    pIdentifiers;
@@ -1075,7 +1089,7 @@ typedef struct _HB_COMP
    const struct _HB_COMP_FUNCS * funcs;
 
    // compiler only members
-   PHB_COMP_LEX      pLex;
+   HB_COMP_LEX *     pLex;
    PHB_EXPRLST       pExprLst;
 
    PHB_HASH_TABLE    pIdentifiers;

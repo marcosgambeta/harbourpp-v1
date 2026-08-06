@@ -217,7 +217,7 @@ HB_COMP *hb_comp_new(void)
 
   if (pPP) {
     pComp = static_cast<HB_COMP *>(hb_xgrabz(sizeof(HB_COMP)));
-    pComp->pLex = static_cast<PHB_COMP_LEX>(hb_xgrabz(sizeof(HB_COMP_LEX)));
+    pComp->pLex = static_cast<HB_COMP_LEX *>(hb_xgrabz(sizeof(HB_COMP_LEX)));
 
     // initialize default settings
     pComp->mode = HB_MODE_COMPILER;
