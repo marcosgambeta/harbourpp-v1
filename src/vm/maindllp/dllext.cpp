@@ -57,7 +57,7 @@
     MessageBox(nullptr, TEXT("Function '") TEXT(func) TEXT("' not found!"), TEXT(func), MB_OK | MB_ICONERROR);         \
   } while (false)
 
-int hb_pcount(void)
+int32_t hb_pcount(void)
 {
   static HB_PCOUNT s_pcount = nullptr;
 
@@ -71,7 +71,7 @@ int hb_pcount(void)
   return s_pcount ? s_pcount() : 0;
 }
 
-HB_ULONG hb_parinfo(int iParam)
+HB_ULONG hb_parinfo(int32_t iParam)
 {
   static HB_PARINFO s_parinfo = nullptr;
 
@@ -84,7 +84,7 @@ HB_ULONG hb_parinfo(int iParam)
   return s_parinfo ? s_parinfo(iParam) : 0;
 }
 
-HB_SIZE hb_parinfa(int iParam, HB_SIZE nArrayIndex)
+HB_SIZE hb_parinfa(int32_t iParam, HB_SIZE nArrayIndex)
 {
   static HB_PARINFA s_parinfa = nullptr;
 
@@ -97,7 +97,7 @@ HB_SIZE hb_parinfa(int iParam, HB_SIZE nArrayIndex)
   return s_parinfa ? s_parinfa(iParam, nArrayIndex) : 0;
 }
 
-PHB_ITEM hb_param(int iParam, long lMask)
+PHB_ITEM hb_param(int32_t iParam, long lMask)
 {
   static HB_PARAM s_param = nullptr;
 
@@ -111,7 +111,7 @@ PHB_ITEM hb_param(int iParam, long lMask)
   return s_param ? s_param(iParam, lMask) : nullptr;
 }
 
-PHB_ITEM hb_paramError(int iParam)
+PHB_ITEM hb_paramError(int32_t iParam)
 {
   static HB_PARAMERROR s_paramError = nullptr;
 
@@ -125,7 +125,7 @@ PHB_ITEM hb_paramError(int iParam)
   return s_paramError ? s_paramError(iParam) : nullptr;
 }
 
-HB_BOOL hb_extIsNil(int iParam)
+HB_BOOL hb_extIsNil(int32_t iParam)
 {
   static HB_EXTISPARAM s_extIsNil = nullptr;
 
@@ -139,7 +139,7 @@ HB_BOOL hb_extIsNil(int iParam)
   return s_extIsNil ? s_extIsNil(iParam) : FALSE;
 }
 
-HB_BOOL hb_extIsArray(int iParam)
+HB_BOOL hb_extIsArray(int32_t iParam)
 {
   static HB_EXTISPARAM s_extIsArray = nullptr;
 
@@ -153,7 +153,7 @@ HB_BOOL hb_extIsArray(int iParam)
   return s_extIsArray ? s_extIsArray(iParam) : FALSE;
 }
 
-HB_BOOL hb_extIsObject(int iParam)
+HB_BOOL hb_extIsObject(int32_t iParam)
 {
   static HB_EXTISPARAM s_extIsObject = nullptr;
 
@@ -231,7 +231,7 @@ void hb_retds(const char *szDate)
   }
 }
 
-void hb_retd(int iYear, int iMonth, int iDay)
+void hb_retd(int32_t iYear, int32_t iMonth, int32_t iDay)
 {
   static HB_RETD s_retd = nullptr;
 
@@ -263,7 +263,7 @@ void hb_retdl(long lJulian)
   }
 }
 
-void hb_retl(int iValue)
+void hb_retl(int32_t iValue)
 {
   static HB_RETL s_retl = nullptr;
 
@@ -295,7 +295,7 @@ void hb_retnd(double dNumber)
   }
 }
 
-void hb_retni(int iNumber)
+void hb_retni(int32_t iNumber)
 {
   static HB_RETNI s_retni = nullptr;
 
@@ -327,7 +327,7 @@ void hb_retnl(long lNumber)
   }
 }
 
-void hb_retnlen(double dNumber, int iWidth, int iDec)
+void hb_retnlen(double dNumber, int32_t iWidth, int32_t iDec)
 {
   static HB_RETNLEN s_retnlen = nullptr;
 
@@ -343,7 +343,7 @@ void hb_retnlen(double dNumber, int iWidth, int iDec)
   }
 }
 
-void hb_retndlen(double dNumber, int iWidth, int iDec)
+void hb_retndlen(double dNumber, int32_t iWidth, int32_t iDec)
 {
   static HB_RETNDLEN s_retndlen = nullptr;
 
@@ -359,7 +359,7 @@ void hb_retndlen(double dNumber, int iWidth, int iDec)
   }
 }
 
-void hb_retnilen(int iNumber, int iWidth)
+void hb_retnilen(int32_t iNumber, int32_t iWidth)
 {
   static HB_RETNILEN s_retnilen = nullptr;
 
@@ -375,7 +375,7 @@ void hb_retnilen(int iNumber, int iWidth)
   }
 }
 
-void hb_retnllen(long lNumber, int iWidth)
+void hb_retnllen(long lNumber, int32_t iWidth)
 {
   static HB_RETNLLEN s_retnllen = nullptr;
 
@@ -407,7 +407,7 @@ void hb_reta(HB_SIZE nLen)
   }
 }
 
-const char *hb_parvc(int iParam, ...)
+const char *hb_parvc(int32_t iParam, ...)
 {
   static HB_PARVC s_parvc = nullptr;
 
@@ -434,7 +434,7 @@ const char *hb_parvc(int iParam, ...)
   return nullptr;
 }
 
-HB_SIZE hb_parvclen(int iParam, ...)
+HB_SIZE hb_parvclen(int32_t iParam, ...)
 {
   static HB_PARVCLEN s_parvclen = nullptr;
 
@@ -461,7 +461,7 @@ HB_SIZE hb_parvclen(int iParam, ...)
   return 0;
 }
 
-HB_SIZE hb_parvcsiz(int iParam, ...)
+HB_SIZE hb_parvcsiz(int32_t iParam, ...)
 {
   static HB_PARVCSIZ s_parvcsiz = nullptr;
 
@@ -488,7 +488,7 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
   return 0;
 }
 
-const char *hb_parvds(int iParam, ...)
+const char *hb_parvds(int32_t iParam, ...)
 {
   static HB_PARVDS s_parvds = nullptr;
 
@@ -515,7 +515,7 @@ const char *hb_parvds(int iParam, ...)
   return "        ";
 }
 
-char *hb_parvdsbuff(char *szDate, int iParam, ...)
+char *hb_parvdsbuff(char *szDate, int32_t iParam, ...)
 {
   static HB_PARVDSBUFF s_parvdsbuff = nullptr;
 
@@ -542,7 +542,7 @@ char *hb_parvdsbuff(char *szDate, int iParam, ...)
   return szDate;
 }
 
-int hb_parvl(int iParam, ...)
+int32_t hb_parvl(int32_t iParam, ...)
 {
   static HB_PARVL s_parvl = nullptr;
 
@@ -569,7 +569,7 @@ int hb_parvl(int iParam, ...)
   return 0;
 }
 
-double hb_parvnd(int iParam, ...)
+double hb_parvnd(int32_t iParam, ...)
 {
   static HB_PARVND s_parvnd = nullptr;
 
@@ -596,7 +596,7 @@ double hb_parvnd(int iParam, ...)
   return 0;
 }
 
-int hb_parvni(int iParam, ...)
+int32_t hb_parvni(int32_t iParam, ...)
 {
   static HB_PARVNI s_parvni = nullptr;
 
@@ -623,7 +623,7 @@ int hb_parvni(int iParam, ...)
   return 0;
 }
 
-long hb_parvnl(int iParam, ...)
+long hb_parvnl(int32_t iParam, ...)
 {
   static HB_PARVNL s_parvnl = nullptr;
 
@@ -650,7 +650,7 @@ long hb_parvnl(int iParam, ...)
   return 0;
 }
 
-int hb_storvc(const char *szText, int iParam, ...)
+int32_t hb_storvc(const char *szText, int32_t iParam, ...)
 {
   static HB_STORVC s_storvc = nullptr;
 
@@ -677,7 +677,7 @@ int hb_storvc(const char *szText, int iParam, ...)
   return 0;
 }
 
-int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
+int32_t hb_storvclen(const char *szText, HB_SIZE nLen, int32_t iParam, ...)
 {
   static HB_STORVCLEN s_storvclen = nullptr;
 
@@ -704,7 +704,7 @@ int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
   return 0;
 }
 
-int hb_storvds(const char *szDate, int iParam, ...)
+int32_t hb_storvds(const char *szDate, int32_t iParam, ...)
 {
   static HB_STORVDS s_storvds = nullptr;
 
@@ -731,7 +731,7 @@ int hb_storvds(const char *szDate, int iParam, ...)
   return 0;
 }
 
-int hb_storvl(int iLogical, int iParam, ...)
+int32_t hb_storvl(int32_t iLogical, int32_t iParam, ...)
 {
   static HB_STORVL s_storvl = nullptr;
 
@@ -758,7 +758,7 @@ int hb_storvl(int iLogical, int iParam, ...)
   return 0;
 }
 
-int hb_storvni(int iValue, int iParam, ...)
+int32_t hb_storvni(int32_t iValue, int32_t iParam, ...)
 {
   static HB_STORVNI s_storvni = nullptr;
 
@@ -785,7 +785,7 @@ int hb_storvni(int iValue, int iParam, ...)
   return 0;
 }
 
-int hb_storvnl(long lValue, int iParam, ...)
+int32_t hb_storvnl(long lValue, int32_t iParam, ...)
 {
   static HB_STORVNL s_storvnl = nullptr;
 
@@ -812,7 +812,7 @@ int hb_storvnl(long lValue, int iParam, ...)
   return 0;
 }
 
-int hb_storvnd(double dNumber, int iParam, ...)
+int32_t hb_storvnd(double dNumber, int32_t iParam, ...)
 {
   static HB_STORVND s_storvnd = nullptr;
 

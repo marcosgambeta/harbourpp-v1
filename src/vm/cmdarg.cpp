@@ -61,7 +61,7 @@
 #include "hbverbld.h"
 
 // Command-line argument management
-static int s_argc = 0;
+static int32_t s_argc = 0;
 static char **s_argv = nullptr;
 
 #if !defined(HB_OS_WIN)
@@ -80,7 +80,7 @@ static LPSTR *s_lpArgVStr = nullptr;
 
 static HANDLE s_hInstance = 0;
 static HANDLE s_hPrevInstance = 0;
-static int s_iCmdShow = 0;
+static int32_t s_iCmdShow = 0;
 static auto s_WinMainParam = false;
 
 #define HB_WINARG_ALLOC(n) HeapAlloc(GetProcessHeap(), 0, (n))
@@ -100,7 +100,7 @@ void hb_winmainArgVBuild(void)
   LPCTSTR lpCmdLine = GetCommandLine();
   LPTSTR *lpArgV = nullptr;
   HB_SIZE nSize = 0;
-  int iArgC = -1;
+  int32_t iArgC = -1;
 
   LPTSTR lpDst;
   LPTSTR lpArg;
@@ -240,7 +240,7 @@ void hb_winmainArgVFree(void)
   }
 }
 
-void hb_winmainArgInit(void *hInstance, void *hPrevInstance, int iCmdShow)
+void hb_winmainArgInit(void *hInstance, void *hPrevInstance, int32_t iCmdShow)
 {
   s_hInstance = static_cast<HANDLE>(hInstance);
   s_hPrevInstance = static_cast<HANDLE>(hPrevInstance);
@@ -248,7 +248,7 @@ void hb_winmainArgInit(void *hInstance, void *hPrevInstance, int iCmdShow)
   s_WinMainParam = true;
 }
 
-HB_BOOL hb_winmainArgGet(void *phInstance, void *phPrevInstance, int *piCmdShow)
+HB_BOOL hb_winmainArgGet(void *phInstance, void *phPrevInstance, int32_t *piCmdShow)
 {
   if (phInstance) {
     *(static_cast<HANDLE *>(phInstance)) = s_hInstance;
@@ -265,7 +265,7 @@ HB_BOOL hb_winmainArgGet(void *phInstance, void *phPrevInstance, int *piCmdShow)
 
 #endif
 
-void hb_cmdargInit(int argc, char *argv[])
+void hb_cmdargInit(int32_t argc, char *argv[])
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cmdargInit(%d, %p)", argc, static_cast<void*>(argv)));
@@ -286,7 +286,7 @@ void hb_cmdargInit(int argc, char *argv[])
   }
 }
 
-int hb_cmdargARGC(void)
+int32_t hb_cmdargARGC(void)
 {
   return s_argc;
 }
@@ -296,14 +296,14 @@ char **hb_cmdargARGV(void)
   return s_argv;
 }
 
-const char *hb_cmdargARGVN(int argc)
+const char *hb_cmdargARGVN(int32_t argc)
 {
   return argc >= 0 && argc < s_argc ? s_argv[argc] : nullptr;
 }
 
 // NOTE: Pointer must be freed with hb_xfree() if not nullptr
 
-static char *hb_cmdargDup(int argc)
+static char *hb_cmdargDup(int32_t argc)
 {
 #if defined(HB_OS_WIN)
   if (s_lpArgV) {
@@ -390,9 +390,9 @@ void hb_cmdargUpdate(void)
 
 // places application parameters on the HVM stack
 
-int hb_cmdargPushArgs(void)
+int32_t hb_cmdargPushArgs(void)
 {
-  int iArgCount = 0;
+  int32_t iArgCount = 0;
 
   for (auto i = 1; i < s_argc; i++) {
     // Filter out any parameters beginning with //, like //INFO
@@ -412,7 +412,7 @@ int hb_cmdargPushArgs(void)
   return iArgCount;
 }
 
-HB_BOOL hb_cmdargIsInternal(const char *szArg, int *piLen)
+HB_BOOL hb_cmdargIsInternal(const char *szArg, int32_t *piLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cmdargIsInternal(%s, %p)", szArg, static_cast<void*>(piLen)));
@@ -444,7 +444,7 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
    HB_TRACE(HB_TR_DEBUG, ("hb_cmdargGet(%s, %d)", pszName, static_cast<int>(bRetValue)));
 #endif
 
-  int iPrefixLen;
+  int32_t iPrefixLen;
 
   // Check the command-line first
 
@@ -563,7 +563,7 @@ char *hb_cmdargString(const char *pszName)
   return hb_cmdargGet(pszName, true);
 }
 
-int hb_cmdargNum(const char *pszName)
+int32_t hb_cmdargNum(const char *pszName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cmdargNum(%s)", pszName));
@@ -571,7 +571,7 @@ int hb_cmdargNum(const char *pszName)
 
   char *pszValue = hb_cmdargGet(pszName, true);
   if (pszValue) {
-    int iValue = atoi(pszValue);
+    int32_t iValue = atoi(pszValue);
     hb_xfree(pszValue);
     return iValue;
   } else {
@@ -653,7 +653,7 @@ HB_FUNC(HB_ARGV)
 
 HB_FUNC(HB_ARGSHIFT)
 {
-  int iArg = 1;
+  int32_t iArg = 1;
 
   if (hb_parl(1)) {
     while (iArg < s_argc) {
@@ -686,7 +686,7 @@ HB_FUNC(HB_ARGSHIFT)
 HB_FUNC(HB_ACMDLINE)
 {
   if (s_argc > 1) {
-    int iLen = s_argc - 1;
+    int32_t iLen = s_argc - 1;
     auto pArray = hb_itemArrayNew(iLen);
 
     for (auto iPos = 1; iPos <= iLen; ++iPos) {
@@ -703,7 +703,7 @@ HB_FUNC(HB_CMDLINE)
 {
   if (s_argc > 1) {
     HB_SIZE nLen = 0;
-    int iArg;
+    int32_t iArg;
 
 #if defined(HB_OS_WIN)
     if (s_lpArgV) {
@@ -759,7 +759,7 @@ HB_FUNC(HB_CMDLINE)
 void hb_cmdargProcess(void)
 {
 #if 0
-   int iHandles;
+   int32_t iHandles;
 #endif
 
   if (hb_cmdargCheck("INFO")) {

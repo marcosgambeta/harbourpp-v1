@@ -148,7 +148,7 @@ HB_FUNC(HB_HSETDEF)
 
   if (pHash && pKey) {
     auto pDefault = hb_param(3, Harbour::Item::ANY);
-    int iFlags = hb_hashGetFlags(pHash);
+    int32_t iFlags = hb_hashGetFlags(pHash);
 
     if ((iFlags & HB_HASH_AUTOADD_ACCESS) == 0) {
       hb_hashSetFlags(pHash, HB_HASH_AUTOADD_ACCESS);
@@ -655,7 +655,7 @@ HB_FUNC(HB_HCASEMATCH)
 
   if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL);
-    int iFlags = hb_hashGetFlags(pHash);
+    int32_t iFlags = hb_hashGetFlags(pHash);
 
     hb_retl((iFlags & HB_HASH_IGNORECASE) == 0);
 
@@ -681,7 +681,7 @@ HB_FUNC(HB_HBINARY)
 
   if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL);
-    int iFlags = hb_hashGetFlags(pHash);
+    int32_t iFlags = hb_hashGetFlags(pHash);
 
     hb_retl((iFlags & HB_HASH_BINARY) != 0);
 
@@ -707,7 +707,7 @@ HB_FUNC(HB_HAUTOADD)
 
   if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL | Harbour::Item::NUMERIC);
-    int iOldFlags = hb_hashGetFlags(pHash) & HB_HASH_AUTOADD_MASK;
+    int32_t iOldFlags = hb_hashGetFlags(pHash) & HB_HASH_AUTOADD_MASK;
 
     hb_retni(iOldFlags);
 
@@ -723,7 +723,7 @@ HB_FUNC(HB_HAUTOADD)
           hb_hashClearFlags(pHash, iOldFlags);
         }
       } else {
-        int iNewFlags = pValue->getNI();
+        int32_t iNewFlags = pValue->getNI();
         if ((iNewFlags | iOldFlags) != iNewFlags) {
           hb_hashClearFlags(pHash, iOldFlags);
         }
@@ -743,7 +743,7 @@ HB_FUNC(HB_HKEEPORDER)
 
   if (pHash) {
     auto pValue = hb_param(2, Harbour::Item::LOGICAL);
-    int iFlags = hb_hashGetFlags(pHash);
+    int32_t iFlags = hb_hashGetFlags(pHash);
 
     hb_retl((iFlags & HB_HASH_KEEPORDER) != 0);
 

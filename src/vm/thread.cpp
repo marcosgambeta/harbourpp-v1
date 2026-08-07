@@ -123,7 +123,7 @@ static volatile auto s_fThreadInit = false;
 
 static PHB_ITEM s_pOnceMutex = nullptr;
 
-static int s_waiting_for_threads = 0;
+static int32_t s_waiting_for_threads = 0;
 
 #if defined(HB_PTHREAD_API)
 static void hb_threadTimeInit(struct timespec *ts, HB_ULONG ulMilliSec)
@@ -738,7 +738,7 @@ HB_THREAD_HANDLE hb_threadCreate(HB_THREAD_ID *th_id, PHB_THREAD_STARTFUNC start
   }
 #else
   {
-    int iTODO_MT;
+    int32_t iTODO_MT;
   }
   *th_id = static_cast<HB_THREAD_ID>(0);
   th_h = static_cast<HB_THREAD_HANDLE>(0);
@@ -764,7 +764,7 @@ HB_BOOL hb_threadJoin(HB_THREAD_HANDLE th_h)
   return false;
 #else
   {
-    int iTODO_MT;
+    int32_t iTODO_MT;
   }
   return false;
 #endif
@@ -784,7 +784,7 @@ HB_BOOL hb_threadDetach(HB_THREAD_HANDLE th_h)
   return CloseHandle(th_h) != 0;
 #else
   {
-    int iTODO_MT;
+    int32_t iTODO_MT;
   }
   return false;
 #endif
@@ -974,7 +974,7 @@ PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
     pThread->pSet = hb_setClone(hb_stackSetStruct());
 
     if ((ulAttr & HB_THREAD_INHERIT_MEMVARS) != 0) {
-      int iScope = 0;
+      int32_t iScope = 0;
       if ((ulAttr & HB_THREAD_INHERIT_PUBLIC) != 0) {
         iScope |= HB_MV_PUBLIC;
       }
@@ -998,7 +998,7 @@ PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
   return pThread;
 }
 
-static PHB_THREADSTATE hb_thParam(int iParam, int iPos)
+static PHB_THREADSTATE hb_thParam(int32_t iParam, int32_t iPos)
 {
   auto pThread = static_cast<PHB_THREADSTATE>(hb_parvptrGC(&s_gcThreadFuncs, iParam, iPos));
 
@@ -1189,10 +1189,10 @@ HB_FUNC(HB_THREADISMAIN)
 }
 
 #if defined(HB_MT_VM)
-static int hb_threadWait(PHB_THREADSTATE *pThreads, int iThreads, bool fAll, HB_ULONG ulMilliSec)
+static int32_t hb_threadWait(PHB_THREADSTATE *pThreads, int32_t iThreads, bool fAll, HB_ULONG ulMilliSec)
 {
-  int iFinished;
-  int iResult = 0;
+  int32_t iFinished;
+  int32_t iResult = 0;
   bool fExit = ulMilliSec == 0;
 
 #if defined(HB_PTHREAD_API)
@@ -1215,7 +1215,7 @@ static int hb_threadWait(PHB_THREADSTATE *pThreads, int iThreads, bool fAll, HB_
 
   HB_CRITICAL_LOCK(s_thread_mtx);
   for (;;) {
-    for (int i = iFinished = 0; i < iThreads; ++i) {
+    for (int32_t i = iFinished = 0; i < iThreads; ++i) {
       if (pThreads[i]->fFinished) {
         iFinished++;
         if (!fAll) {
@@ -1349,13 +1349,13 @@ HB_FUNC(HB_THREADWAIT)
   HB_STACK_TLS_PRELOAD
   HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
   PHB_THREADSTATE pAlloc[HB_THREAD_WAIT_ALLOC];
-  int iThreads = -1;
+  int32_t iThreads = -1;
 
   PHB_THREADSTATE *pThreads = pAlloc;
   if (HB_ISARRAY(1)) {
     auto pArray = hb_param(1, Harbour::Item::ARRAY);
     auto iLen = static_cast<int>(hb_arrayLen(pArray));
-    int i;
+    int32_t i;
 
     for (i = iThreads = 0; i < iLen; ++i) {
       PHB_THREADSTATE pThread = hb_thParam(1, i + 1);
@@ -1509,10 +1509,10 @@ HB_FUNC(HB_THREADONCEINIT)
 
 struct _HB_MUTEX
 {
-  int lock_count;
-  int lockers;
-  int waiters;
-  int syncsignals;
+  int32_t lock_count;
+  int32_t lockers;
+  int32_t waiters;
+  int32_t syncsignals;
   PHB_ITEM events;
   HB_THREAD_ID owner;
   HB_RAWCRITICAL_T mutex;
@@ -1639,7 +1639,7 @@ static PHB_MUTEX hb_mutexPtr(PHB_ITEM pItem)
   return static_cast<PHB_MUTEX>(hb_itemGetPtrGC(pItem, &s_gcMutexFuncs));
 }
 
-static PHB_ITEM hb_mutexParam(int iParam)
+static PHB_ITEM hb_mutexParam(int32_t iParam)
 {
   auto pItem = hb_param(iParam, Harbour::Item::POINTER);
 
@@ -1689,7 +1689,7 @@ void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
     HB_CRITICAL_LOCK(pMutex->mutex);
 
     if (pMutex->waiters) {
-      int iCount = pMutex->waiters - pMutex->syncsignals;
+      int32_t iCount = pMutex->waiters - pMutex->syncsignals;
 
       if (iCount == 1) {
         HB_COND_SIGNAL(pMutex->cond_w);
@@ -1719,7 +1719,7 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
   }
 
   if (pMutex) {
-    int lock_count = 0;
+    int32_t lock_count = 0;
 
     hb_vmUnlock();
 
@@ -2031,7 +2031,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
         hb_arraySize(pMutex->events, hb_arrayLen(pMutex->events) + 1);
       }
     } else if (pMutex->waiters) {
-      int iCount = pMutex->waiters;
+      int32_t iCount = pMutex->waiters;
       HB_ULONG ulLen;
 
       if (pMutex->events) {
@@ -2047,7 +2047,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
       }
       if (iCount > 0) {
         if (pNotifier && !pNotifier->isNil()) {
-          int iSet = iCount;
+          int32_t iSet = iCount;
           do {
             hb_arraySet(pMutex->events, ++ulLen, pNotifier);
           } while (--iSet);
@@ -2076,13 +2076,13 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
         }
       } else if (pMutex->waiters) {
         auto iLen = static_cast<int>(hb_arrayLen(pMutex->events));
-        int iCount = pMutex->waiters - iLen;
+        int32_t iCount = pMutex->waiters - iLen;
 
         if (iCount > 0) {
           hb_vmLockForce();
           hb_arraySize(pMutex->events, iLen + iCount);
           if (pNotifier && !pNotifier->isNil()) {
-            int iSet = iCount;
+            int32_t iSet = iCount;
             do {
               hb_arraySet(pMutex->events, ++iLen, pNotifier);
             } while (--iSet);
@@ -2121,7 +2121,7 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
     }
 #else
     HB_STACK_TLS_PRELOAD
-    int lock_count = 0;
+    int32_t lock_count = 0;
 
     hb_vmUnlock();
     HB_CRITICAL_LOCK(pMutex->mutex);
@@ -2227,7 +2227,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
     }
 #else
     HB_STACK_TLS_PRELOAD
-    int lock_count = 0;
+    int32_t lock_count = 0;
 
     hb_vmUnlock();
     HB_CRITICAL_LOCK(pMutex->mutex);

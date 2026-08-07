@@ -115,7 +115,7 @@ PHB_FUNC hb_vmProcAddress(const char *szFuncName)
 
   uint32_t uiFirst = 0;
   uint32_t uiLast = HB_SIZEOFARRAY(s_funcTable), uiMiddle;
-  int iCmp;
+  int32_t iCmp;
 
   do {
     uiMiddle = (uiFirst + uiLast) >> 1;

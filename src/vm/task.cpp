@@ -128,7 +128,7 @@ struct _HB_TASKCOND;
 
 struct _HB_TASKINFO // TODO: HB_BOOL -> bool
 {
-  int id;
+  int32_t id;
   HB_TASKSTATE state;
   HB_BOOL detached;
   HB_BOOL stop;
@@ -150,8 +150,8 @@ struct _HB_TASKINFO // TODO: HB_BOOL -> bool
 
   void *data;
 
-  int joiners;
-  int locked;
+  int32_t joiners;
+  int32_t locked;
 
   struct _HB_TASKINFO *joining;
   struct _HB_TASKMTX *locking;
@@ -170,7 +170,7 @@ using PHB_TASKINFO = HB_TASKINFO *;
 
 struct _HB_TASKMTX
 {
-  int count;
+  int32_t count;
   PHB_TASKINFO task;
   PHB_TASKINFO lockers;
   struct _HB_TASKMTX *next;
@@ -197,7 +197,7 @@ static PHB_TASKINFO s_mainTask = nullptr;
 static PHB_TASKCOND s_condList = nullptr;
 static PHB_TASKMTX s_mutexList = nullptr;
 
-static int s_iTaskID = 0;
+static int32_t s_iTaskID = 0;
 
 static HB_MAXINT hb_taskTimeStop(unsigned long ulMilliSec)
 {
@@ -558,7 +558,7 @@ void *hb_taskSelf(void)
 }
 
 // return given task number
-int hb_taskID(void *pTask)
+int32_t hb_taskID(void *pTask)
 {
   return (static_cast<PHB_TASKINFO>(pTask))->id;
 }
@@ -748,10 +748,10 @@ void hb_taskDestroy(void *pTaskPtr)
 }
 
 // wait for given task termination
-int hb_taskJoin(void *pTaskPtr, unsigned long ulMilliSec, void **pResult)
+int32_t hb_taskJoin(void *pTaskPtr, unsigned long ulMilliSec, void **pResult)
 {
   auto pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
-  int result = 0;
+  int32_t result = 0;
 
   if (pTask != s_mainTask && pTask != s_currTask) {
     if ((pTask->state == TASK_INIT || pTask->state == TASK_RUNNING) && ulMilliSec > 0) {
@@ -797,7 +797,7 @@ void hb_taskQuit(void *result)
 }
 
 // (try to) lock given mutex
-int hb_taskLock(void **pMutexPtr, unsigned long ulMilliSec)
+int32_t hb_taskLock(void **pMutexPtr, unsigned long ulMilliSec)
 {
   PHB_TASKMTX pMutex;
 
@@ -943,7 +943,7 @@ void hb_taskBroadcast(void **pCondPtr)
   }
 }
 
-int hb_taskWait(void **pCondPtr, void **pMutexPtr, unsigned long ulMilliSec)
+int32_t hb_taskWait(void **pCondPtr, void **pMutexPtr, unsigned long ulMilliSec)
 {
   auto pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
 
@@ -977,7 +977,7 @@ int hb_taskWait(void **pCondPtr, void **pMutexPtr, unsigned long ulMilliSec)
 
   // unlock mutex with recursive locks if any
   pCond->mutex = pMutex;
-  int iCount = pMutex->count;
+  int32_t iCount = pMutex->count;
   pMutex->task = nullptr;
   pMutex->count = 0;
   s_currTask->locked--;

@@ -487,7 +487,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
     }
 
     if (pExecSym) {
-      int iPCount = 0;
+      int32_t iPCount = 0;
 
       hb_vmPushSymbol(pExecSym);
       if (pSelf) {

@@ -95,7 +95,7 @@ static HB_SIZE hb_hrbCheckSig(const char *szBody, HB_SIZE nBodySize)
   return (nBodySize > sizeof(s_szHead) && memcmp(s_szHead, szBody, sizeof(s_szHead)) == 0) ? sizeof(s_szHead) : 0;
 }
 
-static int hb_hrbReadHead(const char *szBody, HB_SIZE nBodySize, HB_SIZE *pnBodyOffset)
+static int32_t hb_hrbReadHead(const char *szBody, HB_SIZE nBodySize, HB_SIZE *pnBodyOffset)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hrbReadHead(%p,%" HB_PFS "u,%p)", static_cast<const void*>(szBody), nBodySize, static_cast<void*>(pnBodyOffset)));
@@ -189,7 +189,7 @@ static void hb_hrbInitStatic(PHRB_BODY pHrbBody)
   }
 }
 
-static void hb_hrbInit(PHRB_BODY pHrbBody, int iPCount, PHB_ITEM *pParams)
+static void hb_hrbInit(PHRB_BODY pHrbBody, int32_t iPCount, PHB_ITEM *pParams)
 {
   if (pHrbBody->fInit) {
     if (hb_vmRequestReenter()) {
@@ -289,7 +289,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
     uint16_t usBind = (usMode & HB_HRB_BIND_MODEMASK);
 
     HB_SIZE nBodyOffset = 0;
-    int iVersion = hb_hrbReadHead(szHrbBody, nBodySize, &nBodyOffset);
+    int32_t iVersion = hb_hrbReadHead(szHrbBody, nBodySize, &nBodyOffset);
 
     if (iVersion == 0) {
       hb_errRT_BASE(EG_CORRUPTION, 9995, nullptr, HB_ERR_FUNCNAME, 0);
@@ -536,7 +536,7 @@ static PHRB_BODY hb_hrbLoadFromFile(const char *szHrb, uint16_t usMode)
   return pHrbBody;
 }
 
-static void hb_hrbDo(PHRB_BODY pHrbBody, int iPCount, PHB_ITEM *pParams)
+static void hb_hrbDo(PHRB_BODY pHrbBody, int32_t iPCount, PHB_ITEM *pParams)
 {
   PHB_ITEM pRetVal = nullptr;
 
@@ -575,7 +575,7 @@ static HB_GARBAGE_FUNC(hb_hrb_Destructor)
 
 static const HB_GC_FUNCS s_gcHrbFuncs = {hb_hrb_Destructor, hb_gcDummyMark};
 
-static PHRB_BODY hb_hrbParam(int iParam)
+static PHRB_BODY hb_hrbParam(int32_t iParam)
 {
   auto pHrbPtr = static_cast<PHRB_BODY *>(hb_parptrGC(&s_gcHrbFuncs, iParam));
 
@@ -620,7 +620,7 @@ HB_FUNC(HB_HRBRUN)
     }
 
     if (pHrbBody) {
-      int iPCount = hb_pcount() - nParam;
+      int32_t iPCount = hb_pcount() - nParam;
       PHB_ITEM *pParams = nullptr;
 
       if (iPCount > 0) {
@@ -668,7 +668,7 @@ HB_FUNC(HB_HRBLOAD)
     }
 
     if (pHrbBody) {
-      int iPCount = hb_pcount() - nParam;
+      int32_t iPCount = hb_pcount() - nParam;
       PHB_ITEM *pParams = nullptr;
 
       if (iPCount > 0) {
@@ -695,7 +695,7 @@ HB_FUNC(HB_HRBDO)
   PHRB_BODY pHrbBody = hb_hrbParam(1);
 
   if (pHrbBody) {
-    int iPCount = hb_pcount() - 1;
+    int32_t iPCount = hb_pcount() - 1;
     PHB_ITEM *pParams = nullptr;
 
     if (iPCount > 0) {

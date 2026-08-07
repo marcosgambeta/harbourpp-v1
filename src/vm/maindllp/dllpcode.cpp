@@ -109,7 +109,7 @@ PHB_FUNC hb_dllGetProcAddress(const char *szProcName)
     }
 
     if (s_hModule != nullptr) {
-      int i = 5;
+      int32_t i = 5;
 
       do {
         static const char *s_szGetProcAddr = "_dll_hb_vmProcAddress";

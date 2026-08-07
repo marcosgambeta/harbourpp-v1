@@ -68,24 +68,24 @@
 
 static void hb_macroFlagsInit(void *pFlags)
 {
-  *(static_cast<int *>(pFlags)) = HB_SM_DEFAULT;
+  *(static_cast<int32_t *>(pFlags)) = HB_SM_DEFAULT;
 }
 
 static HB_TSD_NEW(s_macroFlags, sizeof(int), hb_macroFlagsInit, nullptr);
 
-static int hb_macroFlags(void)
+static int32_t hb_macroFlags(void)
 {
-  return *(static_cast<int *>(hb_stackGetTSD(&s_macroFlags)));
+  return *(static_cast<int32_t *>(hb_stackGetTSD(&s_macroFlags)));
 }
 
-static void hb_macroFlagsSet(int flag)
+static void hb_macroFlagsSet(int32_t flag)
 {
-  *(static_cast<int *>(hb_stackGetTSD(&s_macroFlags))) = flag;
+  *(static_cast<int32_t *>(hb_stackGetTSD(&s_macroFlags))) = flag;
 }
 
 #else
 
-static int s_macroFlags = HB_SM_DEFAULT;
+static int32_t s_macroFlags = HB_SM_DEFAULT;
 #define hb_macroFlags() s_macroFlags
 #define hb_macroFlagsSet(f)                                                                                            \
   do {                                                                                                                 \
@@ -105,7 +105,7 @@ static int s_macroFlags = HB_SM_DEFAULT;
 // 'szString'  - a string to compile
 // 'iFlag' - specifies if compiled code should generate pcodes either for push
 //    operation (for example: var :=&macro) or for pop operation (&macro :=var)
-static int hb_macroParse(PHB_MACRO pMacro)
+static int32_t hb_macroParse(PHB_MACRO pMacro)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroParse(%p)", static_cast<void*>(pMacro)));
@@ -392,7 +392,7 @@ static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
 // iContext contains HB_P_MACROPUSHPARE if a macro is used inside a codeblock
 // Eval({|| &macro })
 
-void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
+void hb_macroGetValue(PHB_ITEM pItem, int32_t iContext, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroGetValue(%p)", static_cast<void*>(pItem)));
@@ -441,7 +441,7 @@ void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
       }
     }
 
-    int iStatus = hb_macroParse(&struMacro);
+    int32_t iStatus = hb_macroParse(&struMacro);
 
     if (iStatus == HB_MACRO_OK && (struMacro.status & HB_MACRO_CONT)) {
       hb_stackPop(); // remove compiled string
@@ -468,7 +468,7 @@ void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
 //   This will be called when macro variable or macro expression is
 // placed on the left side of the assignment
 // POP operation
-void hb_macroSetValue(PHB_ITEM pItem, int flags)
+void hb_macroSetValue(PHB_ITEM pItem, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroSetValue(%p)", static_cast<void*>(pItem)));
@@ -486,7 +486,7 @@ void hb_macroSetValue(PHB_ITEM pItem, int flags)
     struMacro.string = pItem->stringValue();
     struMacro.length = pItem->stringLength();
 
-    int iStatus = hb_macroParse(&struMacro);
+    int32_t iStatus = hb_macroParse(&struMacro);
 
     if (iStatus == HB_MACRO_OK && (struMacro.status & HB_MACRO_CONT)) {
       hb_stackPop(); // remove compiled string
@@ -524,7 +524,7 @@ void hb_macroPushReference(PHB_ITEM pItem)
     struMacro.string = pItem->stringValue();
     struMacro.length = pItem->stringLength();
 
-    int iStatus = hb_macroParse(&struMacro);
+    int32_t iStatus = hb_macroParse(&struMacro);
 
     if (iStatus == HB_MACRO_OK && (struMacro.status & HB_MACRO_CONT)) {
       hb_stackPop(); // remove compiled string
@@ -549,7 +549,7 @@ void hb_macroPushReference(PHB_ITEM pItem)
 //    &("M + M->M + M")
 //    instead of
 //    &("M + M") -> &("M + M")
-static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iSupported)
+static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t iFlag, int32_t iSupported)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -573,7 +573,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
     struMacro.string = szString;
     struMacro.length = nLen;
 
-    int iStatus = hb_macroParse(&struMacro);
+    int32_t iStatus = hb_macroParse(&struMacro);
 
     hb_stackPop(); // remove compiled variable name
     hb_stackPop(); // remove compiled alias
@@ -599,7 +599,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
     struMacro.string = pVar->stringValue();
     struMacro.length = pVar->stringLength();
 
-    int iStatus = hb_macroParse(&struMacro);
+    int32_t iStatus = hb_macroParse(&struMacro);
 
     if (iStatus == HB_MACRO_OK && (struMacro.status & HB_MACRO_CONT)) {
       hb_stackPop(); // remove compiled string
@@ -616,7 +616,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
 // pops a value from the stack
 //    &alias->var := any
 //    alias->&var := any
-void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int flags)
+void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPopAliasedValue(%p, %p)", static_cast<void*>(pAlias), static_cast<void*>(pVar)));
@@ -629,7 +629,7 @@ void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int flags)
 // pushes a value onto the stack
 //    any := &alias->var
 //    any := alias->&var
-void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int flags)
+void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPushAliasedValue(%p, %p)", static_cast<void*>(pAlias), static_cast<void*>(pVar)));
@@ -738,7 +738,7 @@ PHB_MACRO hb_macroCompile(const char *szString)
   pMacro->string = szString;
   pMacro->length = strlen(szString);
 
-  int iStatus = hb_macroParse(pMacro);
+  int32_t iStatus = hb_macroParse(pMacro);
   if (!(iStatus == HB_MACRO_OK && (pMacro->status & HB_MACRO_CONT))) {
     hb_macroDelete(pMacro);
     pMacro = nullptr;
@@ -779,7 +779,7 @@ HB_FUNC(HB_MACROBLOCK)
   }
 }
 
-static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea, bool fMemVar)
+static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int32_t iWorkArea, bool fMemVar)
 {
   uint8_t byBuf[23 + sizeof(PHB_DYNS) + sizeof(PHB_DYNS)];
   uint8_t bPushPcode;
@@ -796,7 +796,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
     bPopPcode = HB_P_MPOPMEMVAR;
   }
 
-  int i = 0;
+  int32_t i = 0;
 
   byBuf[i++] = HB_P_PUSHLOCALNEAR;
   byBuf[i++] = 1;
@@ -804,7 +804,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
   byBuf[i++] = HB_P_EXACTLYEQUAL;
 
   byBuf[i++] = HB_P_JUMPFALSENEAR;
-  int n = i++;
+  int32_t n = i++;
 
   if (iWorkArea != 0) {
     byBuf[i++] = HB_P_PUSHLONG;
@@ -1011,7 +1011,7 @@ const char *hb_macroGetType(PHB_ITEM pItem)
     struMacro.string = pItem->stringValue();
     struMacro.length = pItem->stringLength();
 
-    int iStatus = hb_macroParse(&struMacro);
+    int32_t iStatus = hb_macroParse(&struMacro);
 
     if (iStatus == HB_MACRO_OK) {
       // passed string was successfully compiled
@@ -1077,9 +1077,9 @@ const char *hb_macroGetType(PHB_ITEM pItem)
 
 // Set macro capabilities if flag > 0 or get current macro capabilities
 // if flag == 0
-int hb_macroSetMacro(HB_BOOL fSet, int flag)
+int32_t hb_macroSetMacro(HB_BOOL fSet, int32_t flag)
 {
-  int currentFlags = hb_macroFlags();
+  int32_t currentFlags = hb_macroFlags();
 
   if (flag > 0) {
     if (fSet) {
@@ -1127,9 +1127,9 @@ HB_FUNC(HB_SETMACRO)
 // -
 
 // returns the order + 1 of a variable if defined or zero
-int hb_macroLocalVarGetPos(const char *szVarName, HB_COMP_DECL)
+int32_t hb_macroLocalVarGetPos(const char *szVarName, HB_COMP_DECL)
 {
-  int iVar = 1;
+  int32_t iVar = 1;
   PHB_CBVAR pVars = HB_PCODE_DATA->pLocals;
 
   while (pVars) {
@@ -1363,7 +1363,7 @@ void hb_macroGenMessageData(const char *szMsg, HB_BOOL bIsObject, HB_COMP_DECL)
 // generates the pcode to pop a value from the virtual machine stack onto a variable
 void hb_macroGenPopVar(const char *szVarName, HB_COMP_DECL)
 {
-  int iVar = hb_macroLocalVarGetPos(szVarName, HB_COMP_PARAM);
+  int32_t iVar = hb_macroLocalVarGetPos(szVarName, HB_COMP_PARAM);
   if (iVar) {
     // this is a codeblock parameter
     hb_macroGenPCode3(HB_P_POPLOCAL, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
@@ -1423,7 +1423,7 @@ void hb_macroGenPopAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, co
 // machine stack
 void hb_macroGenPushVar(const char *szVarName, HB_COMP_DECL)
 {
-  int iVar = hb_macroLocalVarGetPos(szVarName, HB_COMP_PARAM);
+  int32_t iVar = hb_macroLocalVarGetPos(szVarName, HB_COMP_PARAM);
   if (iVar) {
     // this is a codeblock parameter
     hb_macroGenPCode3(HB_P_PUSHLOCAL, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
@@ -1435,7 +1435,7 @@ void hb_macroGenPushVar(const char *szVarName, HB_COMP_DECL)
 // generates the pcode to push a variable by reference to the virtual machine stack
 void hb_macroGenPushVarRef(const char *szVarName, HB_COMP_DECL)
 {
-  int iVar = hb_macroLocalVarGetPos(szVarName, HB_COMP_PARAM);
+  int32_t iVar = hb_macroLocalVarGetPos(szVarName, HB_COMP_PARAM);
   if (iVar) {
     hb_macroGenPCode3(HB_P_PUSHLOCALREF, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
   } else {
@@ -1490,7 +1490,7 @@ void hb_macroGenPushAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, c
 }
 
 // pushes a logical value on the virtual machine stack ,
-void hb_macroGenPushLogical(int iTrueFalse, HB_COMP_DECL)
+void hb_macroGenPushLogical(int32_t iTrueFalse, HB_COMP_DECL)
 {
   if (iTrueFalse) {
     hb_macroGenPCode1(HB_P_TRUE, HB_COMP_PARAM);
@@ -1512,7 +1512,7 @@ void hb_macroGenPushDouble(double dNumber, uint8_t bWidth, uint8_t bDec, HB_COMP
   hb_macroGenPCodeN(pBuffer, 1 + sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t), HB_COMP_PARAM);
 }
 
-void hb_macroGenPushFunSym(const char *szFunName, int iFlags, HB_COMP_DECL)
+void hb_macroGenPushFunSym(const char *szFunName, int32_t iFlags, HB_COMP_DECL)
 {
   if ((iFlags & HB_FN_RESERVED) == 0) {
     HB_MACRO_DATA->status |= HB_MACRO_UDF; // this is used in hb_macroGetType
@@ -1520,7 +1520,7 @@ void hb_macroGenPushFunSym(const char *szFunName, int iFlags, HB_COMP_DECL)
   hb_macroGenPushSymbol(szFunName, true, HB_COMP_PARAM);
 }
 
-void hb_macroGenPushFunCall(const char *szFunName, int iFlags, HB_COMP_DECL)
+void hb_macroGenPushFunCall(const char *szFunName, int32_t iFlags, HB_COMP_DECL)
 {
   hb_macroGenPushFunSym(szFunName, iFlags, HB_COMP_PARAM);
   hb_macroGenPCode1(HB_P_PUSHNIL, HB_COMP_PARAM);
@@ -1612,7 +1612,7 @@ void hb_macroGenPCodeN(const uint8_t *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
 
 // -
 
-void hb_macroError(int iError, HB_COMP_DECL)
+void hb_macroError(int32_t iError, HB_COMP_DECL)
 {
   HB_MACRO_DATA->status |= iError;
   HB_MACRO_DATA->status &= ~HB_MACRO_CONT; // clear CONT bit

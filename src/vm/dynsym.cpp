@@ -160,7 +160,7 @@ static PHB_DYNS hb_dynsymPos(const char *szName, HB_SYMCNT *puiPos)
   HB_SYMCNT uiMiddle = uiLast >> 1;
 
   while (uiFirst < uiLast) {
-    int iCmp = strcmp(s_pDynItems[uiMiddle].pDynSym->pSymbol->szName, szName);
+    int32_t iCmp = strcmp(s_pDynItems[uiMiddle].pDynSym->pSymbol->szName, szName);
 
     if (iCmp == 0) {
       *puiPos = uiMiddle;
@@ -214,7 +214,7 @@ PHB_DYNS hb_dynsymFind(const char *szName)
 
   while (uiFirst < uiLast) {
     HB_SYMCNT uiMiddle = (uiFirst + uiLast) >> 1;
-    int iCmp = strcmp(s_pDynItems[uiMiddle].pDynSym->pSymbol->szName, szName);
+    int32_t iCmp = strcmp(s_pDynItems[uiMiddle].pDynSym->pSymbol->szName, szName);
 
     if (iCmp == 0) {
       HB_DYNSYM_UNLOCK();
@@ -386,7 +386,7 @@ PHB_DYNS hb_dynsymGet(const char *szName) // finds and creates a symbol if not f
   // make a copy as we may get a const string, then turn it to uppercase
   // NOTE: This block is optimized for speed [vszakats]
   {
-    int iLen = HB_SYMBOL_NAME_LEN;
+    int32_t iLen = HB_SYMBOL_NAME_LEN;
     char *pDest = szUprName;
 
     do {
@@ -416,7 +416,7 @@ PHB_DYNS hb_dynsymFindName(const char *szName) // finds a symbol
   // make a copy as we may get a const string, then turn it to uppercase
   // NOTE: This block is optimized for speed [vszakats]
   {
-    int iLen = HB_SYMBOL_NAME_LEN;
+    int32_t iLen = HB_SYMBOL_NAME_LEN;
     char *pDest = szUprName;
 
     do {
@@ -508,7 +508,7 @@ void hb_dynsymSetMemvar(PHB_DYNS pDynSym, PHB_ITEM pMemvar)
   hb_dynsymHandles(pDynSym)->pMemvar = static_cast<void *>(pMemvar);
 }
 
-int hb_dynsymAreaHandle(PHB_DYNS pDynSym)
+int32_t hb_dynsymAreaHandle(PHB_DYNS pDynSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymAreaHandle(%p)", static_cast<void*>(pDynSym)));
@@ -517,7 +517,7 @@ int hb_dynsymAreaHandle(PHB_DYNS pDynSym)
   return hb_dynsymHandles(pDynSym)->uiArea;
 }
 
-void hb_dynsymSetAreaHandle(PHB_DYNS pDynSym, int iArea)
+void hb_dynsymSetAreaHandle(PHB_DYNS pDynSym, int32_t iArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymSetAreaHandle(%p, %d)", static_cast<void*>(pDynSym), iArea));
@@ -790,7 +790,7 @@ HB_FUNC(__DYNSP2NAME)
 }
 
 // internal function used to debug dynamic symbol integrity
-static int hb_dynsymVerify(void)
+static int32_t hb_dynsymVerify(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymVerify()"));
@@ -799,12 +799,12 @@ static int hb_dynsymVerify(void)
   HB_DYNSYM_LOCK();
 
   HB_SYMCNT uiPos = 0;
-  int iResult = 0;
+  int32_t iResult = 0;
 
   while (iResult == 0 && uiPos < s_uiDynSymbols) {
     PHB_DYNS pDynSym = s_pDynItems[uiPos].pDynSym;
     HB_SYMCNT uiAt;
-    int iCmp;
+    int32_t iCmp;
 
     if (uiPos > 0 && (iCmp = strcmp(s_pDynItems[uiPos - 1].pDynSym->pSymbol->szName, pDynSym->pSymbol->szName)) <= 0) {
       iResult = iCmp == 0 ? -1 : -2;

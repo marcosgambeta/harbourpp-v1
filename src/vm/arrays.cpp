@@ -521,7 +521,7 @@ HB_BOOL hb_arrayGetL(PHB_ITEM pArray, HB_SIZE nIndex)
   return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getL() : false;
 }
 
-int hb_arrayGetNI(PHB_ITEM pArray, HB_SIZE nIndex)
+int32_t hb_arrayGetNI(PHB_ITEM pArray, HB_SIZE nIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayGetNI(%p, %" HB_PFS "u)", static_cast<void*>(pArray), nIndex));
@@ -721,7 +721,7 @@ HB_BOOL hb_arraySetL(PHB_ITEM pArray, HB_SIZE nIndex, HB_BOOL fValue)
   }
 }
 
-HB_BOOL hb_arraySetNI(PHB_ITEM pArray, HB_SIZE nIndex, int iNumber)
+HB_BOOL hb_arraySetNI(PHB_ITEM pArray, HB_SIZE nIndex, int32_t iNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arraySetNI(%p, %" HB_PFS "u, %d)", static_cast<void*>(pArray), nIndex, iNumber));
@@ -1514,7 +1514,7 @@ PHB_ITEM hb_arrayFromStack(uint16_t uiLen)
   return pArray;
 }
 
-PHB_ITEM hb_arrayFromParams(int iLevel)
+PHB_ITEM hb_arrayFromParams(int32_t iLevel)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayFromParams(%d)", iLevel));

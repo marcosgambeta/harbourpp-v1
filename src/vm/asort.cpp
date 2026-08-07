@@ -106,8 +106,8 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     // NOTE: For non-matching types CA-Cl*pper sorts always like this:
     //       Array/Object Block String Logical Date Numeric NIL [jlalin]
 
-    int iWeight1;
-    int iWeight2;
+    int32_t iWeight1;
+    int32_t iWeight2;
 
     if (pItem1->isArray()) { // TODO: switch ?
       iWeight1 = 1;

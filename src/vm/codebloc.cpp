@@ -164,7 +164,7 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
     do {
       // Swap the current value of local variable with the reference to this
       // value.
-      int iLocal = HB_PCODE_MKUSHORT(pLocalPosTable);
+      int32_t iLocal = HB_PCODE_MKUSHORT(pLocalPosTable);
       pLocal = hb_stackLocalVariable(iLocal);
       pLocalPosTable += 2;
 
@@ -247,7 +247,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 }
 
 // Get local variable referenced in a codeblock
-PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos)
+PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos));
@@ -260,7 +260,7 @@ PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos)
 }
 
 // Get local variable passed by reference
-PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int iItemPos)
+PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetRef(%p, %d)", static_cast<void*>(pCBlock), iItemPos));

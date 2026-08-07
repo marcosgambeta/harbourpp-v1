@@ -86,7 +86,7 @@ std::mutex TSD_counter;
 #else
 static HB_CRITICAL_NEW(TSD_counter);
 #endif
-static int s_iTSDCounter = 0;
+static int32_t s_iTSDCounter = 0;
 
 #ifdef HB_USE_TLS
 
@@ -484,21 +484,21 @@ void hb_stackSetQuitState(uint16_t uiState)
 }
 
 #undef hb_stackUnlock
-int hb_stackUnlock(void)
+int32_t hb_stackUnlock(void)
 {
   HB_STACK_TLS_PRELOAD
   return ++hb_stack.iUnlocked;
 }
 
 #undef hb_stackLock
-int hb_stackLock(void)
+int32_t hb_stackLock(void)
 {
   HB_STACK_TLS_PRELOAD
   return --hb_stack.iUnlocked;
 }
 
 #undef hb_stackLockCount
-int hb_stackLockCount(void)
+int32_t hb_stackLockCount(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stack.iUnlocked;
@@ -507,7 +507,7 @@ int hb_stackLockCount(void)
 #endif // HB_MT_VM
 
 #undef hb_stackKeyPolls
-int *hb_stackKeyPolls(void)
+int32_t *hb_stackKeyPolls(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackKeyPolls()"));
@@ -891,7 +891,7 @@ PHB_ITEM hb_stackItem(HB_ISIZ nItemPos)
 }
 
 #undef hb_stackItemFromTop
-PHB_ITEM hb_stackItemFromTop(int iFromTop)
+PHB_ITEM hb_stackItemFromTop(int32_t iFromTop)
 {
   HB_STACK_TLS_PRELOAD
   if (iFromTop >= 0) {
@@ -902,7 +902,7 @@ PHB_ITEM hb_stackItemFromTop(int iFromTop)
 }
 
 #undef hb_stackItemFromBase
-PHB_ITEM hb_stackItemFromBase(int iFromBase)
+PHB_ITEM hb_stackItemFromBase(int32_t iFromBase)
 {
   HB_STACK_TLS_PRELOAD
   if (iFromBase < 0) {
@@ -913,7 +913,7 @@ PHB_ITEM hb_stackItemFromBase(int iFromBase)
 }
 
 #undef hb_stackLocalVariable
-PHB_ITEM hb_stackLocalVariable(int iLocal)
+PHB_ITEM hb_stackLocalVariable(int32_t iLocal)
 {
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pBase = *hb_stack.pBase;
@@ -934,7 +934,7 @@ PHB_ITEM hb_stackLocalVariable(int iLocal)
 }
 
 #undef hb_stackLocalVariableAt
-PHB_ITEM hb_stackLocalVariableAt(int *piFromBase)
+PHB_ITEM hb_stackLocalVariableAt(int32_t *piFromBase)
 {
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pBase = *hb_stack.pBase;
@@ -1207,11 +1207,11 @@ void hb_stackClearMemvarsBase(void)
   }
 }
 
-int hb_stackCallDepth(void)
+int32_t hb_stackCallDepth(void)
 {
   HB_STACK_TLS_PRELOAD
   HB_ISIZ nOffset = hb_stack.pBase - hb_stack.pItems;
-  int iLevel = 0;
+  int32_t iLevel = 0;
 
   while (nOffset > 0) {
     nOffset = (*(hb_stack.pItems + nOffset))->symbolStackState()->nBaseItem;
@@ -1221,7 +1221,7 @@ int hb_stackCallDepth(void)
   return iLevel;
 }
 
-HB_ISIZ hb_stackBaseProcOffset(int iLevel)
+HB_ISIZ hb_stackBaseProcOffset(int32_t iLevel)
 {
   HB_STACK_TLS_PRELOAD
   HB_ISIZ nOffset = hb_stack.pBase - hb_stack.pItems;
@@ -1283,7 +1283,7 @@ void hb_stackDispCall(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_stackDispCall()"));
 #endif
 
-  int iLevel = 0;
+  int32_t iLevel = 0;
   char buffer[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 + 10]; // additional 10 bytes for line info (%hu) overhead
   uint16_t uiLine;
   char file[HB_PATH_MAX];
@@ -1351,7 +1351,7 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
 // Mark all thread static variables
 static void hb_stackIsTsdRef(PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc)
 {
-  int iTSD = pStack->iTSD;
+  int32_t iTSD = pStack->iTSD;
 
   while (iTSD) {
     if (pStack->pTSD[iTSD].pTSD && pStack->pTSD[iTSD].pTSD->pCleanFunc == pCleanFunc) {
@@ -1392,7 +1392,7 @@ void hb_stackIsStackRef(void *pStackId, PHB_TSD_FUNC pCleanFunc)
   hb_gtIsGtRef(pStack->hGT);
 }
 
-void hb_stackUpdateAllocator(void *pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCount)
+void hb_stackUpdateAllocator(void *pStackId, PHB_ALLOCUPDT_FUNC pFunc, int32_t iCount)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackUpdateAllocator(%p, %p, %d)", pStackId, reinterpret_cast<void*>(pFunc), iCount));
@@ -1424,7 +1424,7 @@ PHB_TRACEINFO hb_traceinfo(void)
   return &s_traceInfo;
 }
 
-void hb_traceset(int level, const char *file, int line, const char *proc)
+void hb_traceset(int32_t level, const char *file, int32_t line, const char *proc)
 {
   PHB_TRACEINFO pTrace = hb_traceinfo();
 

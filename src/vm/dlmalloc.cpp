@@ -952,14 +952,14 @@ extern "C"
   DLMALLOC_EXPORT void *dlmemalign(size_t, size_t);
 
   /*
-    int posix_memalign(void** pp, size_t alignment, size_t n);
+    int32_t posix_memalign(void** pp, size_t alignment, size_t n);
     Allocates a chunk of n bytes, aligned in accord with the alignment
     argument. Differs from memalign only in that it (1) assigns the
     allocated memory to *pp rather than returning it, (2) fails and
     returns EINVAL if the alignment is not a power of two (3) fails and
     returns ENOMEM if memory cannot be allocated.
   */
-  DLMALLOC_EXPORT int dlposix_memalign(void **, size_t, size_t);
+  DLMALLOC_EXPORT int32_t dlposix_memalign(void **, size_t, size_t);
 
   /*
     valloc(size_t n);
@@ -969,7 +969,7 @@ extern "C"
   DLMALLOC_EXPORT void *dlvalloc(size_t);
 
   /*
-    mallopt(int parameter_number, int parameter_value)
+    mallopt(int32_t parameter_number, int32_t parameter_value)
     Sets tunable parameters The format is to provide a
     (parameter-number, parameter-value) pair.  mallopt then sets the
     corresponding parameter to the argument value if it can (i.e., so
@@ -990,7 +990,7 @@ extern "C"
     M_GRANULARITY        -2     page size   any power of 2 >= page size
     M_MMAP_THRESHOLD     -3      256*1024   any   (or 0 if no MMAP support)
   */
-  DLMALLOC_EXPORT int dlmallopt(int, int);
+  DLMALLOC_EXPORT int32_t dlmallopt(int, int);
 
   /*
     malloc_footprint();
@@ -1061,7 +1061,7 @@ extern "C"
 
     For example, to count the number of in-use chunks with size greater
     than 1000, you could write:
-    static int count = 0;
+    static int32_t count = 0;
     void count_chunks(void* start, void* end, size_t used, void* arg) {
       if (used >= 1000) ++count;
     }
@@ -1133,11 +1133,11 @@ extern "C"
     but the number is not known at compile time, and some of the nodes
     may later need to be freed. For example:
 
-    struct Node { int item; struct Node* next; };
+    struct Node { int32_t item; struct Node* next; };
 
     struct Node* build_list() {
       struct Node** pool;
-      int n = read_number_of_nodes_needed();
+      int32_t n = read_number_of_nodes_needed();
       if (n <= 0) return 0;
       pool = (struct Node**)(independent_calloc(n, sizeof(struct Node), 0);
       if (pool == 0) die();
@@ -1188,7 +1188,7 @@ extern "C"
     struct Foot { ... }
 
     void send_message(char* msg) {
-      int msglen = strlen(msg);
+      int32_t msglen = strlen(msg);
       size_t sizes[3] = { sizeof(struct Head), msglen, sizeof(struct Foot) };
       void* chunks[3];
       if (independent_comalloc(3, sizes, chunks) == 0)
@@ -1248,7 +1248,7 @@ extern "C"
 
     Malloc_trim returns 1 if it actually released any memory, else 0.
   */
-  DLMALLOC_EXPORT int dlmalloc_trim(size_t);
+  DLMALLOC_EXPORT int32_t dlmalloc_trim(size_t);
 
   /*
     malloc_stats();
@@ -1308,7 +1308,7 @@ extern "C"
     compiling with a different DEFAULT_GRANULARITY or dynamically
     setting with mallopt(M_GRANULARITY, value).
   */
-  DLMALLOC_EXPORT mspace create_mspace(size_t capacity, int locked);
+  DLMALLOC_EXPORT mspace create_mspace(size_t capacity, int32_t locked);
 
   /*
     destroy_mspace destroys the given space, and attempts to return all
@@ -1327,7 +1327,7 @@ extern "C"
     Destroying this space will deallocate all additionally allocated
     space (if possible) but not the initial base.
   */
-  DLMALLOC_EXPORT mspace create_mspace_with_base(void *base, size_t capacity, int locked);
+  DLMALLOC_EXPORT mspace create_mspace_with_base(void *base, size_t capacity, int32_t locked);
 
   /*
     mspace_track_large_chunks controls whether requests for large chunks
@@ -1340,7 +1340,7 @@ extern "C"
     allocated using this space.  The function returns the previous
     setting.
   */
-  DLMALLOC_EXPORT int mspace_track_large_chunks(mspace msp, int enable);
+  DLMALLOC_EXPORT int32_t mspace_track_large_chunks(mspace msp, int32_t enable);
 
   /*
     mspace_malloc behaves as malloc, but operates within
@@ -1428,12 +1428,12 @@ extern "C"
     mspace_trim behaves as malloc_trim, but
     operates within the given space.
   */
-  DLMALLOC_EXPORT int mspace_trim(mspace msp, size_t pad);
+  DLMALLOC_EXPORT int32_t mspace_trim(mspace msp, size_t pad);
 
   /*
     An alias for mallopt.
   */
-  DLMALLOC_EXPORT int mspace_mallopt(int, int);
+  DLMALLOC_EXPORT int32_t mspace_mallopt(int, int);
 
 #endif /* MSPACES */
 
@@ -1679,7 +1679,7 @@ extern size_t getpagesize();
    is unlikely to be needed, but is supplied just in case.
 */
 #define MMAP_FLAGS (MAP_PRIVATE)
-static int dev_zero_fd = -1; /* Cached file descriptor for /dev/zero. */
+static int32_t dev_zero_fd = -1; /* Cached file descriptor for /dev/zero. */
 #define MMAP_DEFAULT(s)                                                                                                \
   ((dev_zero_fd < 0) ? (dev_zero_fd = open("/dev/zero", O_RDWR), mmap(0, (s), MMAP_PROT, MMAP_FLAGS, dev_zero_fd, 0))  \
                      : mmap(0, (s), MMAP_PROT, MMAP_FLAGS, dev_zero_fd, 0))
@@ -1708,7 +1708,7 @@ static FORCEINLINE void *os2direct_mmap(size_t size)
 }
 
 /* This function supports releasing coalesced segments */
-static FORCEINLINE int os2munmap(void *ptr, size_t size)
+static FORCEINLINE int32_t os2munmap(void *ptr, size_t size)
 {
   while (size)
   {
@@ -1746,7 +1746,7 @@ static FORCEINLINE void *win32direct_mmap(size_t size)
 }
 
 /* This function supports releasing coalesed segments */
-static FORCEINLINE int win32munmap(void *ptr, size_t size)
+static FORCEINLINE int32_t win32munmap(void *ptr, size_t size)
 {
   MEMORY_BASIC_INFORMATION minfo;
   char *cptr = (char *)ptr;
@@ -1889,7 +1889,7 @@ static FORCEINLINE int win32munmap(void *ptr, size_t size)
 /* #define TRY_LOCK(lk) ... */
 /* static MLOCK_T malloc_global_mutex = ... */
 
-static FORCEINLINE int user_acquire_lock(HB_SPINLOCK_R *lk)
+static FORCEINLINE int32_t user_acquire_lock(HB_SPINLOCK_R *lk)
 {
   HB_SPINLOCK_ACQUIRE_R(lk);
   return 0;
@@ -1920,20 +1920,20 @@ static MLOCK_T malloc_global_mutex = HB_SPINLOCK_INITVAL_R;
 
 #elif (defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)))
 /* Custom spin locks for older gcc on x86 */
-static FORCEINLINE int x86_cas_lock(int *sl)
+static FORCEINLINE int32_t x86_cas_lock(int32_t *sl)
 {
-  int ret;
-  int val = 1;
-  int cmp = 0;
+  int32_t ret;
+  int32_t val = 1;
+  int32_t cmp = 0;
   __asm__ __volatile__("lock; cmpxchgl %1, %2" : "=a"(ret) : "r"(val), "m"(*(sl)), "0"(cmp) : "memory", "cc");
   return ret;
 }
 
-static FORCEINLINE void x86_clear_lock(int *sl)
+static FORCEINLINE void x86_clear_lock(int32_t *sl)
 {
   assert(*sl != 0);
-  int prev = 0;
-  int ret;
+  int32_t prev = 0;
+  int32_t ret;
   __asm__ __volatile__("lock; xchgl %0, %1" : "=r"(ret) : "m"(*(sl)), "0"(prev) : "memory");
 }
 
@@ -1961,10 +1961,10 @@ static FORCEINLINE void x86_clear_lock(int *sl)
 
 #if !defined(USE_RECURSIVE_LOCKS) || USE_RECURSIVE_LOCKS == 0
 /* Plain spin locks use single word (embedded in malloc_states) */
-static int spin_acquire_lock(int *sl)
+static int32_t spin_acquire_lock(int32_t *sl)
 {
-  int spins = 0;
-  while (*(volatile int *)sl != 0 || CAS_LOCK(sl))
+  int32_t spins = 0;
+  while (*(volatile int32_t *)sl != 0 || CAS_LOCK(sl))
   {
     if ((++spins & SPINS_PER_YIELD) == 0)
     {
@@ -2001,7 +2001,7 @@ static MLOCK_T malloc_global_mutex = 0;
 
 struct malloc_recursive_lock
 {
-  int sl;
+  int32_t sl;
   uint32_t c;
   THREAD_ID_T threadid;
 };
@@ -2018,13 +2018,13 @@ static FORCEINLINE void recursive_release_lock(MLOCK_T *lk)
   }
 }
 
-static FORCEINLINE int recursive_acquire_lock(MLOCK_T *lk)
+static FORCEINLINE int32_t recursive_acquire_lock(MLOCK_T *lk)
 {
   THREAD_ID_T mythreadid = CURRENT_THREAD;
-  int spins = 0;
+  int32_t spins = 0;
   for (;;)
   {
-    if (*((volatile int *)(&lk->sl)) == 0)
+    if (*((volatile int32_t *)(&lk->sl)) == 0)
     {
       if (!CAS_LOCK(&lk->sl))
       {
@@ -2045,10 +2045,10 @@ static FORCEINLINE int recursive_acquire_lock(MLOCK_T *lk)
   }
 }
 
-static FORCEINLINE int recursive_try_lock(MLOCK_T *lk)
+static FORCEINLINE int32_t recursive_try_lock(MLOCK_T *lk)
 {
   THREAD_ID_T mythreadid = CURRENT_THREAD;
-  if (*((volatile int *)(&lk->sl)) == 0)
+  if (*((volatile int32_t *)(&lk->sl)) == 0)
   {
     if (!CAS_LOCK(&lk->sl))
     {
@@ -2114,14 +2114,14 @@ static void init_malloc_global_mutex(void)
 #if defined(USE_RECURSIVE_LOCKS) && USE_RECURSIVE_LOCKS != 0 && defined(linux) && !defined(PTHREAD_MUTEX_RECURSIVE)
 /* Cope with old-style linux recursive lock initialization by adding */
 /* skipped internal declaration from pthread.h */
-extern int pthread_mutexattr_setkind_np __P((pthread_mutexattr_t * __attr, int __kind));
+extern int32_t pthread_mutexattr_setkind_np __P((pthread_mutexattr_t * __attr, int32_t __kind));
 #define PTHREAD_MUTEX_RECURSIVE PTHREAD_MUTEX_RECURSIVE_NP
 #define pthread_mutexattr_settype(x, y) pthread_mutexattr_setkind_np(x, y)
 #endif /* USE_RECURSIVE_LOCKS ... */
 
 static MLOCK_T malloc_global_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static int pthread_init_lock(MLOCK_T *lk)
+static int32_t pthread_init_lock(MLOCK_T *lk)
 {
   pthread_mutexattr_t attr;
   if (pthread_mutexattr_init(&attr))
@@ -2804,7 +2804,7 @@ static msegmentptr segment_holding(mstate m, char *addr)
 }
 
 /* Return true if segment contains a segment link */
-static int has_segment_link(mstate m, msegmentptr ss)
+static int32_t has_segment_link(mstate m, msegmentptr ss)
 {
   msegmentptr sp = &m->seg;
   for (;;)
@@ -2867,7 +2867,7 @@ static int has_segment_link(mstate m, msegmentptr ss)
 #if PROCEED_ON_ERROR
 
 /* A count of the number of corruption errors causing resets */
-int malloc_corruption_error_count;
+int32_t malloc_corruption_error_count;
 
 /* default corruption action */
 static void reset_on_error(mstate m);
@@ -2916,7 +2916,7 @@ static void do_check_tree(mstate m, tchunkptr t);
 static void do_check_treebin(mstate m, bindex_t i);
 static void do_check_smallbin(mstate m, bindex_t i);
 static void do_check_malloc_state(mstate m);
-static int bin_find(mstate m, mchunkptr x);
+static int32_t bin_find(mstate m, mchunkptr x);
 static size_t traverse_and_check(mstate m);
 #endif /* DEBUG */
 
@@ -3203,7 +3203,7 @@ static void post_fork_child(void)
 #endif /* LOCK_AT_FORK */
 
 /* Initialize mparams */
-static int init_mparams(void)
+static int32_t init_mparams(void)
 {
 #ifdef NEED_GLOBAL_LOCK_INIT
   if (malloc_global_mutex_status <= 0)
@@ -3261,7 +3261,7 @@ static int init_mparams(void)
 
     {
 #if USE_DEV_RANDOM
-      int fd;
+      int32_t fd;
       unsigned char buf[sizeof(size_t)];
       /* Try to use /dev/urandom, else fall back on using time */
       if ((fd = open("/dev/urandom", O_RDONLY)) >= 0 && read(fd, buf, sizeof(buf)) == sizeof(buf))
@@ -3290,7 +3290,7 @@ static int init_mparams(void)
 }
 
 /* support for mallopt */
-static int change_mparam(int param_number, int value)
+static int32_t change_mparam(int32_t param_number, int32_t value)
 {
   size_t val;
   ensure_initialization();
@@ -3471,7 +3471,7 @@ static void do_check_treebin(mstate m, bindex_t i)
 {
   tbinptr *tb = treebin_at(m, i);
   tchunkptr t = *tb;
-  int empty = (m->treemap & (1U << i)) == 0;
+  int32_t empty = (m->treemap & (1U << i)) == 0;
   if (t == 0)
     assert(empty);
   if (!empty)
@@ -3506,7 +3506,7 @@ static void do_check_smallbin(mstate m, bindex_t i)
 }
 
 /* Find x in a bin. Used in other check functions. */
-static int bin_find(mstate m, mchunkptr x)
+static int32_t bin_find(mstate m, mchunkptr x)
 {
   size_t size = chunksize(x);
   if (is_small(size))
@@ -4053,7 +4053,7 @@ static void *mmap_alloc(mstate m, size_t nb)
 }
 
 /* Realloc using mmap */
-static mchunkptr mmap_resize(mstate m, mchunkptr oldp, size_t nb, int flags)
+static mchunkptr mmap_resize(mstate m, mchunkptr oldp, size_t nb, int32_t flags)
 {
   size_t oldsize = chunksize(oldp);
   (void)flags;      /* placate people compiling -Wunused */
@@ -4123,7 +4123,7 @@ static void init_bins(mstate m)
 /* default corruption action */
 static void reset_on_error(mstate m)
 {
-  int i;
+  int32_t i;
   ++malloc_corruption_error_count;
   /* Reinitialize fields to forget about all memory */
   m->smallmap = m->treemap = 0;
@@ -4200,7 +4200,7 @@ static void add_segment(mstate m, char *tbase, size_t tsize, flag_t mmapped)
   msegmentptr ss = (msegmentptr)(chunk2mem(sp));
   mchunkptr tnext = chunk_plus_offset(sp, ssize);
   mchunkptr p = tnext;
-  int nfences = 0;
+  int32_t nfences = 0;
 
   /* reset top to new space */
   init_top(m, (mchunkptr)tbase, tsize - TOP_FOOT_SIZE);
@@ -4477,7 +4477,7 @@ static void *sys_alloc(mstate m, size_t nb)
 static size_t release_unused_segments(mstate m)
 {
   size_t released = 0;
-  int nsegs = 0;
+  int32_t nsegs = 0;
   msegmentptr pred = &m->seg;
   msegmentptr sp = pred->next;
   while (sp != 0)
@@ -4529,7 +4529,7 @@ static size_t release_unused_segments(mstate m)
   return released;
 }
 
-static int sys_trim(mstate m, size_t pad)
+static int32_t sys_trim(mstate m, size_t pad)
 {
   size_t released = 0;
   ensure_initialization();
@@ -5121,7 +5121,7 @@ void *dlcalloc(size_t n_elements, size_t elem_size)
 /* ------------ Internal support for realloc, memalign, etc -------------- */
 
 /* Try to realloc; only in-place unless can_move true */
-static mchunkptr try_realloc_chunk(mstate m, mchunkptr p, size_t nb, int can_move)
+static mchunkptr try_realloc_chunk(mstate m, mchunkptr p, size_t nb, int32_t can_move)
 {
   mchunkptr newp = 0;
   size_t oldsize = chunksize(p);
@@ -5304,7 +5304,7 @@ static void *internal_memalign(mstate m, size_t alignment, size_t bytes)
     bit 0 set if all elements are same size (using sizes[0])
     bit 1 set if elements should be zeroed
 */
-static void **ialloc(mstate m, size_t n_elements, size_t *sizes, int opts, void *chunks[])
+static void **ialloc(mstate m, size_t n_elements, size_t *sizes, int32_t opts, void *chunks[])
 {
 
   size_t element_size;   /* chunksize of each element, if all same */
@@ -5643,7 +5643,7 @@ void *dlmemalign(size_t alignment, size_t bytes)
   return internal_memalign(gm, alignment, bytes);
 }
 
-int dlposix_memalign(void **pp, size_t alignment, size_t bytes)
+int32_t dlposix_memalign(void **pp, size_t alignment, size_t bytes)
 {
   void *mem = 0;
   if (alignment == MALLOC_ALIGNMENT)
@@ -5714,9 +5714,9 @@ void dlmalloc_inspect_all(void (*handler)(void *start, void *end, size_t used_by
 }
 #endif /* MALLOC_INSPECT_ALL */
 
-int dlmalloc_trim(size_t pad)
+int32_t dlmalloc_trim(size_t pad)
 {
-  int result = 0;
+  int32_t result = 0;
   ensure_initialization();
   if (!PREACTION(gm))
   {
@@ -5768,7 +5768,7 @@ void dlmalloc_stats(void)
 }
 #endif /* NO_MALLOC_STATS */
 
-int dlmallopt(int param_number, int value)
+int32_t dlmallopt(int32_t param_number, int32_t value)
 {
   return change_mparam(param_number, value);
 }
@@ -5814,7 +5814,7 @@ static mstate init_user_mstate(char *tbase, size_t tsize)
   return m;
 }
 
-mspace create_mspace(size_t capacity, int locked)
+mspace create_mspace(size_t capacity, int32_t locked)
 {
   mstate m = 0;
   size_t msize;
@@ -5835,7 +5835,7 @@ mspace create_mspace(size_t capacity, int locked)
   return (mspace)m;
 }
 
-mspace create_mspace_with_base(void *base, size_t capacity, int locked)
+mspace create_mspace_with_base(void *base, size_t capacity, int32_t locked)
 {
   mstate m = 0;
   size_t msize;
@@ -5850,9 +5850,9 @@ mspace create_mspace_with_base(void *base, size_t capacity, int locked)
   return (mspace)m;
 }
 
-int mspace_track_large_chunks(mspace msp, int enable)
+int32_t mspace_track_large_chunks(mspace msp, int32_t enable)
 {
-  int ret = 0;
+  int32_t ret = 0;
   mstate ms = (mstate)msp;
   if (!PREACTION(ms))
   {
@@ -6331,9 +6331,9 @@ void mspace_inspect_all(mspace msp, void (*handler)(void *start, void *end, size
 }
 #endif /* MALLOC_INSPECT_ALL */
 
-int mspace_trim(mspace msp, size_t pad)
+int32_t mspace_trim(mspace msp, size_t pad)
 {
-  int result = 0;
+  int32_t result = 0;
   mstate ms = (mstate)msp;
   if (ok_magic(ms))
   {
@@ -6455,7 +6455,7 @@ size_t mspace_usable_size(const void *mem)
   return 0;
 }
 
-int mspace_mallopt(int param_number, int value)
+int32_t mspace_mallopt(int32_t param_number, int32_t value)
 {
   return change_mparam(param_number, value);
 }
@@ -6500,10 +6500,10 @@ int mspace_mallopt(int param_number, int value)
 
   #define MAX_POOL_ENTRIES 100
   #define MINIMUM_MORECORE_SIZE  (64 * 1024U)
-  static int next_os_pool;
+  static int32_t next_os_pool;
   void *our_os_pools[MAX_POOL_ENTRIES];
 
-  void *osMoreCore(int size)
+  void *osMoreCore(int32_t size)
   {
     void *ptr = 0;
     static void *sbrk_top = 0;

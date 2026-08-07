@@ -50,12 +50,12 @@
 
 HB_EXTERN_BEGIN
 #if defined(__MINGW32__)
-int _CRT_glob = 0;
+int32_t _CRT_glob = 0;
 #endif
 
 HB_EXTERN_END
 
-int main(int argc, char *argv[])
+int main(int32_t argc, char *argv[])
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("main(%d, %p)", argc, static_cast<void*>(argv)));

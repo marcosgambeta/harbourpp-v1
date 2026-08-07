@@ -77,7 +77,7 @@ struct _HB_BASEHASH
   HB_SIZE *pnPos;      // the sort order for HB_HASH_KEEPORDER
   HB_SIZE nSize;       // size of allocated pair array
   HB_SIZE nLen;        // number of used items in pair array
-  int iFlags;          // hash item flags
+  int32_t iFlags;          // hash item flags
 };
 
 using HB_BASEHASH = _HB_BASEHASH;
@@ -162,7 +162,7 @@ static HB_GARBAGE_FUNC(hb_hashGarbageMark)
 
 static const HB_GC_FUNCS s_gcHashFuncs = {hb_hashGarbageRelease, hb_hashGarbageMark};
 
-static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
+static int32_t hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int32_t iFlags)
 {
   if (pKey1->isString()) {
     if (pKey2->isString()) {
@@ -230,7 +230,7 @@ static void hb_hashResort(PHB_BASEHASH pBaseHash)
 
 static void hb_hashSortDo(PHB_BASEHASH pBaseHash)
 {
-  int iFlags = pBaseHash->iFlags;
+  int32_t iFlags = pBaseHash->iFlags;
 
   if (pBaseHash->pnPos) {
     HB_SIZE *pnPos = pBaseHash->pnPos;
@@ -242,7 +242,7 @@ static void hb_hashSortDo(PHB_BASEHASH pBaseHash)
 
       while (nLeft < nRight) {
         HB_SIZE nMiddle = (nLeft + nRight) >> 1;
-        int i = hb_hashItemCmp(&pBaseHash->pPairs[pnPos[nMiddle]].key, pKey, iFlags);
+        int32_t i = hb_hashItemCmp(&pBaseHash->pPairs[pnPos[nMiddle]].key, pKey, iFlags);
         if (i > 0) {
           nRight = nMiddle;
         } else {
@@ -278,7 +278,7 @@ static void hb_hashSortDo(PHB_BASEHASH pBaseHash)
 
 static bool hb_hashFind(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE *pnPos)
 {
-  int iFlags = pBaseHash->iFlags;
+  int32_t iFlags = pBaseHash->iFlags;
 
   if (iFlags & HB_HASH_RESORT) {
     hb_hashSortDo(pBaseHash);
@@ -289,7 +289,7 @@ static bool hb_hashFind(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE *pnPos)
 
   while (nLeft < nRight) {
     HB_SIZE nMiddle = (nLeft + nRight) >> 1;
-    int i =
+    int32_t i =
         hb_hashItemCmp(&pBaseHash->pPairs[pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle].key, pKey, iFlags);
     if (i == 0) {
       *pnPos = pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle;
@@ -588,7 +588,7 @@ void hb_hashSort(PHB_ITEM pHash)
   }
 }
 
-PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int iFlags)
+PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int32_t iFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetItemPtr(%p,%p,%d)", static_cast<void*>(pHash), static_cast<void*>(pKey), iFlags));
@@ -977,7 +977,7 @@ PHB_ITEM hb_hashClone(PHB_ITEM pHash)
   return hb_hashCloneTo(hb_itemNew(nullptr), pHash);
 }
 
-void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
+void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int32_t iType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashJoin(%p,%p,%d)", static_cast<void*>(pDest), static_cast<void*>(pSource), iType));
@@ -1126,7 +1126,7 @@ PHB_ITEM hb_hashGetDefault(PHB_ITEM pHash)
   return pHash->isHash() ? pHash->hashValue()->pDefault : nullptr;
 }
 
-void hb_hashSetFlags(PHB_ITEM pHash, int iFlags)
+void hb_hashSetFlags(PHB_ITEM pHash, int32_t iFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashSetFlags(%p,%d)", static_cast<void*>(pHash), iFlags));
@@ -1147,7 +1147,7 @@ void hb_hashSetFlags(PHB_ITEM pHash, int iFlags)
   }
 }
 
-void hb_hashClearFlags(PHB_ITEM pHash, int iFlags)
+void hb_hashClearFlags(PHB_ITEM pHash, int32_t iFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashClearFlags(%p,%d)", static_cast<void*>(pHash), iFlags));
@@ -1163,7 +1163,7 @@ void hb_hashClearFlags(PHB_ITEM pHash, int iFlags)
   }
 }
 
-int hb_hashGetFlags(PHB_ITEM pHash)
+int32_t hb_hashGetFlags(PHB_ITEM pHash)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetFlags(%p)", static_cast<void*>(pHash)));

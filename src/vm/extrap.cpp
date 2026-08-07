@@ -80,7 +80,7 @@ static void *s_signal_stack = nullptr;
 static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pExceptionInfo)
 {
   char errmsg[8192];
-  int errmsglen = sizeof(errmsg) - 1;
+  int32_t errmsglen = sizeof(errmsg) - 1;
   errmsg[0] = '\0';
 
 #if defined(HB_OS_WIN_64) && defined(HB_CPU_X86_64)
@@ -304,7 +304,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
 
 #elif defined(HB_SIGNAL_EXCEPTION_HANDLER)
 
-static void hb_signalExceptionHandler(int sig, siginfo_t *si, void *ucp)
+static void hb_signalExceptionHandler(int32_t sig, siginfo_t *si, void *ucp)
 {
   char buffer[32];
   const char *signame;
@@ -364,7 +364,7 @@ void hb_vmSetExceptionHandler(void)
     // set alternative stack for SIGSEGV executed on stack overflow
     if (sigaltstack(&ss, nullptr) == 0) {
       struct sigaction act;
-      int sigs[] = {SIGSEGV, SIGILL, SIGFPE, SIGBUS, 0};
+      int32_t sigs[] = {SIGSEGV, SIGILL, SIGFPE, SIGBUS, 0};
 
       // Ignore SIGPIPEs so they don't kill us.
       signal(SIGPIPE, SIG_IGN);

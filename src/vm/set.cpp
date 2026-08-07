@@ -63,7 +63,7 @@
 
 struct HB_SET_LISTENER_
 {
-  int listener;
+  int32_t listener;
   HB_SET_LISTENER_CALLBACK *callback;
   struct HB_SET_LISTENER_ *next;
 };
@@ -75,7 +75,7 @@ struct HB_SET_LISTENER_LST
 {
   PHB_SET_LISTENER first;
   PHB_SET_LISTENER last;
-  int counter;
+  int32_t counter;
 };
 
 using PHB_SET_LISTENER_LST = HB_SET_LISTENER_LST *;
@@ -130,7 +130,7 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
   return bLogical;
 }
 
-static int set_number(PHB_ITEM pItem, int iOldValue)
+static int32_t set_number(PHB_ITEM pItem, int32_t iOldValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("set_number(%p, %d)", static_cast<void*>(pItem), iOldValue));
@@ -197,7 +197,7 @@ static const char *is_devicename(const char *szFileName)
 #if defined(HB_OS_WIN)
     const char *szDevices[] = {"NUL",  "PRN",  "CON",  "LPT1", "LPT2", "LPT3", "COM1", "COM2",
                                "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9"};
-    int iSkip = 0;
+    int32_t iSkip = 0;
 
     if ((szFileName[0] == '\\' || szFileName[0] == '/') && (szFileName[1] == '\\' || szFileName[1] == '/')) {
       if (szFileName[2] == '.' && (szFileName[3] == '\\' || szFileName[3] == '/')) {
@@ -207,7 +207,7 @@ static const char *is_devicename(const char *szFileName)
         }
       }
       if (szFileName[2] != '\\' && szFileName[2] != '/') {
-        int iFrom, iTo;
+        int32_t iFrom, iTo;
         for (iFrom = 2, iTo = 0; szFileName[iFrom]; ++iFrom) {
           if (szFileName[iFrom] == '\\' || szFileName[iFrom] == '/') {
             if (iTo++) {
@@ -222,7 +222,7 @@ static const char *is_devicename(const char *szFileName)
     }
     auto iLen = static_cast<int>(strlen(szFileName + iSkip));
     if (iLen >= 3 && iLen <= 4) {
-      int iFrom, iTo;
+      int32_t iFrom, iTo;
 
       if (iLen == 3) {
         iFrom = 0;
@@ -389,11 +389,11 @@ static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend
   *set_value = szFileName;
 }
 
-int hb_setUpdateEpoch(int iYear)
+int32_t hb_setUpdateEpoch(int32_t iYear)
 {
   if (iYear >= 0 && iYear < 100) {
-    int iEpoch = hb_setGetEpoch();
-    int iCentury = iEpoch / 100;
+    int32_t iEpoch = hb_setGetEpoch();
+    int32_t iCentury = iEpoch / 100;
 
     if (iYear < iEpoch % 100) {
       ++iCentury;
@@ -413,14 +413,14 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
   // if the setting changed, adjust the current date format to use
   // the correct number of year digits.
   if (old_century_setting != new_century_setting) {
-    int y_start, y_stop;
+    int32_t y_start, y_stop;
 
     // Convert to upper case and determine where year is
     y_start = y_stop = -1;
     char *szDateFormat = pSet->HB_SET_DATEFORMAT;
     auto size = static_cast<int>(strlen(szDateFormat));
     for (auto count = 0; count < size; count++) {
-      int digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[count]));
+      int32_t digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[count]));
       if (digit == 'Y') {
         if (y_start == -1) {
           y_start = count;
@@ -437,7 +437,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
     } else if (y_stop < 0) {
       y_stop = size; // All digits are year digits
     }
-    int y_size = y_stop - y_start;
+    int32_t y_size = y_stop - y_start;
     // Calculate size of new format
     size -= y_size;
     if (new_century_setting) {
@@ -594,7 +594,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutC(pResult, pSet->HB_SET_DATEFORMAT);
     if (pArg1 != nullptr) {
       char *value = pSet->HB_SET_DATEFORMAT = set_string(pArg1, pSet->HB_SET_DATEFORMAT);
-      int year = 0;
+      int32_t year = 0;
       while (*value) {
         if (*value == 'Y' || *value == 'y') {
           year++;
@@ -926,7 +926,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
           hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
         }
       } else if (pArg1->isNumeric()) {
-        int iValue = set_number(pArg1, pSet->HB_SET_FILECASE);
+        int32_t iValue = set_number(pArg1, pSet->HB_SET_FILECASE);
         if (iValue == HB_SET_CASE_LOWER || iValue == HB_SET_CASE_UPPER || iValue == HB_SET_CASE_MIXED) {
           pSet->HB_SET_FILECASE = iValue;
         } else {
@@ -951,7 +951,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
           hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
         }
       } else if (pArg1->isNumeric()) {
-        int iValue = set_number(pArg1, pSet->HB_SET_DIRCASE);
+        int32_t iValue = set_number(pArg1, pSet->HB_SET_DIRCASE);
         if (iValue == HB_SET_CASE_LOWER || iValue == HB_SET_CASE_UPPER || iValue == HB_SET_CASE_MIXED) {
           pSet->HB_SET_DIRCASE = iValue;
         } else {
@@ -1316,7 +1316,7 @@ PHB_SET_STRUCT hb_setClone(PHB_SET_STRUCT pSrc)
   return pSet;
 }
 
-int hb_setListenerAdd(HB_SET_LISTENER_CALLBACK *callback)
+int32_t hb_setListenerAdd(HB_SET_LISTENER_CALLBACK *callback)
 {
   HB_STACK_TLS_PRELOAD
   PHB_SET_STRUCT pSet = hb_stackSetStruct();
@@ -1356,7 +1356,7 @@ void hb_setListenerNotify(HB_set_enum set, HB_set_listener_enum when)
   }
 }
 
-int hb_setListenerRemove(int listener)
+int32_t hb_setListenerRemove(int32_t listener)
 {
   HB_STACK_TLS_PRELOAD
   auto pList = static_cast<PHB_SET_LISTENER_LST>(hb_stackSetStruct()->hb_set_listener);
@@ -1393,7 +1393,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
   if (pItem != nullptr) {
     PHB_SET_STRUCT pSet = hb_stackSetStruct();
     char *szValue;
-    int iValue;
+    int32_t iValue;
 
     hb_setListenerNotify(set_specifier, HB_SET_LISTENER_BEFORE);
 
@@ -1759,7 +1759,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       break;
     case HB_SET_DATEFORMAT:
       if (pItem->isString()) {
-        int iYear = 0;
+        int32_t iYear = 0;
 
         szValue = hb_strndup(pItem->getCPtr(), USHRT_MAX);
         if (pSet->HB_SET_DATEFORMAT) {
@@ -2180,7 +2180,7 @@ const char *hb_setGetCPtr(HB_set_enum set_specifier)
   return nullptr;
 }
 
-int hb_setGetNI(HB_set_enum set_specifier)
+int32_t hb_setGetNI(HB_set_enum set_specifier)
 {
   HB_STACK_TLS_PRELOAD
   PHB_SET_STRUCT pSet = hb_stackSetStruct();
@@ -2333,13 +2333,13 @@ HB_BOOL hb_setGetAutOpen(void)
   return hb_stackSetStruct()->HB_SET_AUTOPEN;
 }
 
-int hb_setGetAutOrder(void)
+int32_t hb_setGetAutOrder(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_AUTORDER;
 }
 
-int hb_setGetAutoShare(void)
+int32_t hb_setGetAutoShare(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_AUTOSHARE;
@@ -2393,7 +2393,7 @@ HB_BOOL hb_setGetDebug(void)
   return hb_stackSetStruct()->HB_SET_DEBUG;
 }
 
-int hb_setGetDecimals(void)
+int32_t hb_setGetDecimals(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_DECIMALS;
@@ -2435,7 +2435,7 @@ HB_BOOL hb_setGetEOF(void)
   return hb_stackSetStruct()->HB_SET_EOF;
 }
 
-int hb_setGetEpoch(void)
+int32_t hb_setGetEpoch(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_EPOCH;
@@ -2447,7 +2447,7 @@ HB_BOOL hb_setGetEscape(void)
   return hb_stackSetStruct()->HB_SET_ESCAPE;
 }
 
-int hb_setGetEventMask(void)
+int32_t hb_setGetEventMask(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_EVENTMASK;
@@ -2513,13 +2513,13 @@ const char *hb_setGetPath(void)
   return hb_stackSetStruct()->HB_SET_PATH;
 }
 
-int hb_setGetMargin(void)
+int32_t hb_setGetMargin(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_MARGIN;
 }
 
-int hb_setGetMBlockSize(void)
+int32_t hb_setGetMBlockSize(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_MBLOCKSIZE;
@@ -2531,7 +2531,7 @@ HB_BOOL hb_setGetMCenter(void)
   return hb_stackSetStruct()->HB_SET_MCENTER;
 }
 
-int hb_setGetMessage(void)
+int32_t hb_setGetMessage(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_MESSAGE;
@@ -2585,7 +2585,7 @@ HB_BOOL hb_setGetStrictRead(void)
   return hb_stackSetStruct()->HB_SET_STRICTREAD;
 }
 
-int hb_setGetTypeAhead(void)
+int32_t hb_setGetTypeAhead(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_TYPEAHEAD;
@@ -2597,37 +2597,37 @@ HB_BOOL hb_setGetUnique(void)
   return hb_stackSetStruct()->HB_SET_UNIQUE;
 }
 
-int hb_setGetFileCase(void)
+int32_t hb_setGetFileCase(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_FILECASE;
 }
 
-void hb_setSetFileCase(int iFileCase)
+void hb_setSetFileCase(int32_t iFileCase)
 {
   HB_STACK_TLS_PRELOAD
   hb_stackSetStruct()->HB_SET_FILECASE = iFileCase;
 }
 
-int hb_setGetDirCase(void)
+int32_t hb_setGetDirCase(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_DIRCASE;
 }
 
-void hb_setSetDirCase(int iDirCase)
+void hb_setSetDirCase(int32_t iDirCase)
 {
   HB_STACK_TLS_PRELOAD
   hb_stackSetStruct()->HB_SET_DIRCASE = iDirCase;
 }
 
-int hb_setGetDirSeparator(void)
+int32_t hb_setGetDirSeparator(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_DIRSEPARATOR;
 }
 
-void hb_setSetDirSeparator(int iSeparator)
+void hb_setSetDirSeparator(int32_t iSeparator)
 {
   HB_STACK_TLS_PRELOAD
   hb_stackSetStruct()->HB_SET_DIRSEPARATOR = iSeparator;
@@ -2645,7 +2645,7 @@ void hb_setSetTrimFileName(HB_BOOL fTrim)
   hb_stackSetStruct()->HB_SET_TRIMFILENAME = fTrim;
 }
 
-int hb_setGetVideoMode(void)
+int32_t hb_setGetVideoMode(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_VIDEOMODE;
@@ -2657,7 +2657,7 @@ HB_BOOL hb_setGetWrap(void)
   return hb_stackSetStruct()->HB_SET_WRAP;
 }
 
-int hb_setGetDBFLockScheme(void)
+int32_t hb_setGetDBFLockScheme(void)
 {
   HB_STACK_TLS_PRELOAD
   return hb_stackSetStruct()->HB_SET_DBFLOCKSCHEME;
@@ -2960,7 +2960,7 @@ char *hb_osStrU16Decode2(const HB_WCHAR *pszNameW, char *pszBuffer, HB_SIZE nSiz
 }
 #endif
 
-PHB_FILE hb_setGetPrinterHandle(int iType)
+PHB_FILE hb_setGetPrinterHandle(int32_t iType)
 {
   HB_STACK_TLS_PRELOAD
   PHB_SET_STRUCT pSet = hb_stackSetStruct();

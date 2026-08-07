@@ -191,7 +191,7 @@ struct CLASS
 
 using PCLASS = CLASS *;
 
-constexpr int BUCKETBITS = 2;                       // #define BUCKETBITS 2
+constexpr int32_t BUCKETBITS = 2;                       // #define BUCKETBITS 2
 constexpr HB_SYMCNT BUCKETSIZE = (1 << BUCKETBITS); // #define BUCKETSIZE (1 << BUCKETBITS)
 #define BUCKETMASK (BUCKETSIZE - 1)                 // not used
 #define HASHBITS 3
@@ -2336,7 +2336,7 @@ HB_BOOL hb_objDataGetL(PHB_ITEM pObject, const char *szMsg)
   }
 }
 
-PHB_ITEM hb_objDataPutNI(PHB_ITEM pObject, const char *szMsg, int value)
+PHB_ITEM hb_objDataPutNI(PHB_ITEM pObject, const char *szMsg, int32_t value)
 {
   hb_vmPushSymbol(hb_dynsymGet(szMsg)->pSymbol);
   hb_vmPush(pObject);
@@ -2348,7 +2348,7 @@ PHB_ITEM hb_objDataPutNI(PHB_ITEM pObject, const char *szMsg, int value)
   }
 }
 
-int hb_objDataGetNI(PHB_ITEM pObject, const char *szMsg)
+int32_t hb_objDataGetNI(PHB_ITEM pObject, const char *szMsg)
 {
   hb_vmPushSymbol(hb_dynsymGet(szMsg)->pSymbol);
   hb_vmPush(pObject);
@@ -2487,7 +2487,7 @@ PHB_ITEM hb_objCloneTo(PHB_ITEM pDest, PHB_ITEM pObject)
 }
 
 // send message which allows to set execution context for debugger
-void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int iParamOffset)
+void hb_dbg_objSendMessage(int32_t iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int32_t iParamOffset)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -2497,7 +2497,7 @@ void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, 
 
     // set requested sender class and method id for scope verification
     if (iProcLevel > 0) {
-      int iLevel = hb_stackCallDepth();
+      int32_t iLevel = hb_stackCallDepth();
       if (iProcLevel < iLevel) {
         HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel - iProcLevel);
         if (nOffset > 0) {
@@ -4043,7 +4043,7 @@ HB_FUNC_STATIC(msgClassName)
   }
 }
 
-static int hb_methodType(PMETHOD pMethod)
+static int32_t hb_methodType(PMETHOD pMethod)
 {
   PHB_SYMB pFuncSym = pMethod->pFuncSym;
 

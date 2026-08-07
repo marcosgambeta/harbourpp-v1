@@ -75,7 +75,7 @@
 
 struct mv_PUBLIC_var_info
 {
-  int iPos;
+  int32_t iPos;
   HB_BOOL bFound; // TODO: bool
   PHB_DYNS pDynSym;
 };
@@ -85,10 +85,10 @@ struct mv_memvarArray_info
   PHB_ITEM pArray;
   PHB_DYNS *pDyns;
   HB_SIZE nCount;
-  int iScope;
+  int32_t iScope;
 };
 
-static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM pValue);
+static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int32_t iScope, PHB_ITEM pValue);
 
 static PHB_ITEM hb_memvarValueNew(void)
 {
@@ -485,7 +485,7 @@ static PHB_DYNS hb_memvarFindSymbol(const char *szArg, HB_SIZE nLen)
 
   if (nLen && szArg && *szArg) {
     char szUprName[HB_SYMBOL_NAME_LEN + 1];
-    int iSize = 0;
+    int32_t iSize = 0;
 
     do {
       char cChar = *szArg++;
@@ -573,7 +573,7 @@ char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen)
 //          passed scope
 // pValue - optional item used to initialize the value of created variable
 //          or nullptr
-void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue)
+void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int32_t iScope, PHB_ITEM pValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarCreateFromItem(%p, %d, %p)", static_cast<void*>(pMemvar), iScope, static_cast<void*>(pValue)));
@@ -598,7 +598,7 @@ void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue)
   }
 }
 
-static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM pValue)
+static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int32_t iScope, PHB_ITEM pValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarCreateFromDynSymbol(%p, %d, %p)", static_cast<void*>(pDynVar), iScope, static_cast<void*>(pValue)));
@@ -698,7 +698,7 @@ static void hb_memvarReleaseWithMask(const char *szMask, bool bInclude)
 }
 
 // Checks if passed dynamic symbol is a variable and returns its scope
-static int hb_memvarScopeGet(PHB_DYNS pDynVar)
+static int32_t hb_memvarScopeGet(PHB_DYNS pDynVar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarScopeGet(%p)", static_cast<void*>(pDynVar)));
@@ -724,7 +724,7 @@ static int hb_memvarScopeGet(PHB_DYNS pDynVar)
 }
 
 // This function checks the scope of passed variable name
-int hb_memvarScope(const char *szVarName, HB_SIZE nLength)
+int32_t hb_memvarScope(const char *szVarName, HB_SIZE nLength)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarScope(%s, %" HB_PFS "u)", szVarName, nLength));
@@ -781,18 +781,18 @@ void hb_memvarsClear(HB_BOOL fAll)
 static HB_DYNS_FUNC(hb_memvarCountPublics)
 {
   if (hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC) {
-    (*(static_cast<int *>(Cargo)))++;
+    (*(static_cast<int32_t *>(Cargo)))++;
   }
 
   return true;
 }
 
-static HB_SIZE hb_memvarGetBaseOffset(int iProcLevel)
+static HB_SIZE hb_memvarGetBaseOffset(int32_t iProcLevel)
 {
   HB_STACK_TLS_PRELOAD
 
   if (iProcLevel > 0) {
-    int iLevel = hb_stackCallDepth();
+    int32_t iLevel = hb_stackCallDepth();
     if (iProcLevel < iLevel) {
       HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel - iProcLevel - 1);
       if (nOffset > 0) {
@@ -805,14 +805,14 @@ static HB_SIZE hb_memvarGetBaseOffset(int iProcLevel)
 }
 
 // Count the number of variables with given scope
-static HB_ISIZ hb_memvarCount(int iScope, int iLevel)
+static HB_ISIZ hb_memvarCount(int32_t iScope, int32_t iLevel)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarCount(%d,%d)", iScope, iLevel));
 #endif
 
   if (iScope == HB_MV_PUBLIC) {
-    int iPublicCnt = 0;
+    int32_t iPublicCnt = 0;
 
     hb_dynsymProtectEval(hb_memvarCountPublics, static_cast<void *>(&iPublicCnt));
     return iPublicCnt;
@@ -851,7 +851,7 @@ static HB_DYNS_FUNC(hb_memvarFindPublicByPos)
 // not found). It fills also the pointer to the variable name
 // Both pointers points to existing and used data - they shouldn't be
 // deallocated.
-static PHB_ITEM hb_memvarDebugVariable(int iScope, int iPos, const char **pszName)
+static PHB_ITEM hb_memvarDebugVariable(int32_t iScope, int32_t iPos, const char **pszName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarDebugVariable(%d, %d, %p)", iScope, iPos, static_cast<const void*>(pszName)));
@@ -901,7 +901,7 @@ static HB_DYNS_FUNC(hb_memvarCountVisible)
   return true;
 }
 
-PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
+PHB_ITEM hb_memvarSaveInArray(int32_t iScope, HB_BOOL fCopy)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -966,7 +966,7 @@ void hb_memvarRestoreFromArray(PHB_ITEM pArray)
 
 // -
 
-static const char *hb_memvarGetMask(int iParam)
+static const char *hb_memvarGetMask(int32_t iParam)
 {
   auto pszMask = hb_parc(iParam);
 
@@ -1068,7 +1068,7 @@ HB_FUNC(__MVRELEASE)
 HB_FUNC(__MVSCOPE)
 {
   HB_STACK_TLS_PRELOAD
-  int iMemvar = HB_MV_ERROR;
+  int32_t iMemvar = HB_MV_ERROR;
 
   if (hb_pcount()) {
     auto pVarName = hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL);
@@ -1252,7 +1252,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
       if (pMemvar->isString()) {
         // Store the closing zero byte, too
         HB_SIZE nLen = pMemvar->getCLen() + 1;
-        int iOverFlow = 0;
+        int32_t iOverFlow = 0;
 
         // Clipper supports only 64 KiB strings
         if (nLen > USHRT_MAX) {
@@ -1268,8 +1268,8 @@ static HB_DYNS_FUNC(hb_memvarSave)
         }
       } else if (pMemvar->isNumeric()) {
         auto dNumber = pMemvar->getND();
-        int iWidth;
-        int iDec;
+        int32_t iWidth;
+        int32_t iDec;
         hb_itemGetNLen(pMemvar, &iWidth, &iDec);
         buffer[11] = 'N' + 128;
 #ifdef HB_CLP_STRICT

@@ -129,7 +129,7 @@ HB_FUNC(PROCFILE)
 // NOTE: szName size must be an at least:
 //       HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 [vszakats]
 #define HB_PROCBUF_LEN (HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 4)
-char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
+char *hb_procname(int32_t iLevel, char *szName, HB_BOOL fMethodName)
 {
   HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel);
 
@@ -180,7 +180,7 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
 //          HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5
 //       szFile size must be an at least:
 //          HB_PATH_MAX
-HB_BOOL hb_procinfo(int iLevel, char *szName, uint16_t *puiLine, char *szFile)
+HB_BOOL hb_procinfo(int32_t iLevel, char *szName, uint16_t *puiLine, char *szFile)
 {
   HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel);
 

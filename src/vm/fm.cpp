@@ -347,10 +347,10 @@ static HB_FORCEINLINE void hb_counterIncrement(volatile HB_COUNTER *p)
   HB_FM_UNLOCK();
 }
 #define HB_ATOM_INC(p) hb_counterIncrement(p)
-static HB_FORCEINLINE int hb_counterDecrement(volatile HB_COUNTER *p)
+static HB_FORCEINLINE int32_t hb_counterDecrement(volatile HB_COUNTER *p)
 {
   HB_FM_LOCK();
-  int iResult = --(*p) != 0;
+  int32_t iResult = --(*p) != 0;
   HB_FM_UNLOCK();
   return iResult;
 }
@@ -372,7 +372,7 @@ static HB_FORCEINLINE int hb_counterDecrement(volatile HB_COUNTER *p)
 
 struct HB_MSPACE
 {
-  int count;
+  int32_t count;
   mspace ms;
 };
 
@@ -403,7 +403,7 @@ static PHB_MSPACE hb_mspace_alloc(void)
     s_mspool[0].ms = s_gm;
     return &s_mspool[0];
   } else {
-    int imin = 0;
+    int32_t imin = 0;
     for (auto i = 1; i < HB_MSPACE_COUNT; ++i) {
       if (s_mspool[i].count < s_mspool[imin].count) {
         imin = i;
@@ -417,7 +417,7 @@ static PHB_MSPACE hb_mspace_alloc(void)
   }
 }
 
-static void *hb_mspace_update(void *pAlloc, int iCount)
+static void *hb_mspace_update(void *pAlloc, int32_t iCount)
 {
   auto pm = static_cast<PHB_MSPACE>(pAlloc);
 
@@ -503,7 +503,7 @@ void hb_xclean(void)
       mspace_trim(s_gm, 0);
     }
 
-    int i, imax, icount;
+    int32_t i, imax, icount;
 
     for (i = imax = icount = 0; i < HB_MSPACE_COUNT; ++i) {
       if (s_mspool[i].ms) {
@@ -1171,7 +1171,7 @@ void hb_xexit(void) // Deinitialize fixed memory subsystem
     if (s_nMemoryBlocks) {
       if (hLog) {
         char szTime[9];
-        int iYear, iMonth, iDay;
+        int32_t iYear, iMonth, iDay;
 
         hb_dateToday(&iYear, &iMonth, &iDay);
         hb_dateTimeStr(szTime);
@@ -1253,7 +1253,7 @@ void hb_xexit(void) // Deinitialize fixed memory subsystem
 
 #endif
 
-HB_SIZE hb_xquery(int iMode)
+HB_SIZE hb_xquery(int32_t iMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xquery(%d)", iMode));

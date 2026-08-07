@@ -153,7 +153,7 @@ HB_FUNC(__DBGVMSTKGLIST)
 
 // hb_stackLen(<nProcLevel>) --> <nVars>
 // Returns params plus locals amount of the nProcLevel function
-static HB_ISIZ hb_stackLen(int iLevel)
+static HB_ISIZ hb_stackLen(int32_t iLevel)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackLen()"));
@@ -218,7 +218,7 @@ HB_FUNC(__DBGVMSTKLLIST)
 HB_FUNC(__DBGVMLOCALLIST)
 {
   if (hb_vmInternalsEnabled()) {
-    int iLevel = hb_parni(1) + 1;
+    int32_t iLevel = hb_parni(1) + 1;
 
     HB_ISIZ nBaseOffset = hb_stackBaseOffset();
     while (--iLevel > 0 && nBaseOffset > 1) {
@@ -257,7 +257,7 @@ HB_FUNC(__DBGVMPARLLIST)
   }
 }
 
-PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
+PHB_ITEM hb_dbg_vmVarLGet(int32_t iLevel, int32_t iLocal)
 {
   HB_ISIZ nBaseOffset = hb_stackBaseOffset();
   while (iLevel-- > 0 && nBaseOffset > 1) {
@@ -295,7 +295,7 @@ PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
 HB_FUNC(__DBGVMVARLGET)
 {
   if (hb_vmInternalsEnabled()) {
-    int iLevel = hb_parni(1) + 1;
+    int32_t iLevel = hb_parni(1) + 1;
     auto iLocal = hb_parni(2);
     PHB_ITEM pLocal = hb_dbg_vmVarLGet(iLevel, iLocal);
 
@@ -310,7 +310,7 @@ HB_FUNC(__DBGVMVARLGET)
 HB_FUNC(__DBGVMVARLSET)
 {
   if (hb_vmInternalsEnabled()) {
-    int iLevel = hb_parni(1) + 1;
+    int32_t iLevel = hb_parni(1) + 1;
     auto iLocal = hb_parni(2);
 
     HB_ISIZ nBaseOffset = hb_stackBaseOffset();

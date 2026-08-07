@@ -57,7 +57,7 @@
 // NOTE: iParam = -1 can be used to access the return value.
 // NOTE: iParam = 0 can be used to access the SELF object.
 
-PHB_ITEM hb_param(int iParam, long lMask)
+PHB_ITEM hb_param(int32_t iParam, long lMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_param(%d, %ld)", iParam, lMask));
@@ -83,7 +83,7 @@ PHB_ITEM hb_param(int iParam, long lMask)
   return nullptr;
 }
 
-PHB_ITEM hb_paramError(int iParam)
+PHB_ITEM hb_paramError(int32_t iParam)
 {
   static HB_ITEM s_NIL;
 
@@ -97,7 +97,7 @@ PHB_ITEM hb_paramError(int iParam)
   return pParam;
 }
 
-HB_ULONG hb_parinfo(int iParam)
+HB_ULONG hb_parinfo(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parinfo(%d)", iParam));
@@ -123,7 +123,7 @@ HB_ULONG hb_parinfo(int iParam)
   }
 }
 
-HB_SIZE hb_parinfa(int iParamNum, HB_SIZE nArrayIndex)
+HB_SIZE hb_parinfa(int32_t iParamNum, HB_SIZE nArrayIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parinfa(%d, %" HB_PFS "u)", iParamNum, nArrayIndex));
@@ -142,7 +142,7 @@ HB_SIZE hb_parinfa(int iParamNum, HB_SIZE nArrayIndex)
   }
 }
 
-HB_BOOL hb_extIsNil(int iParam)
+HB_BOOL hb_extIsNil(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_extIsNil(%d)", iParam));
@@ -169,7 +169,7 @@ HB_BOOL hb_extIsNil(int iParam)
 // function to be called from pcode DLLs to detect if the extend system
 // is going to use an array item
 
-HB_BOOL hb_extIsArray(int iParam)
+HB_BOOL hb_extIsArray(int32_t iParam)
 {
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pItem;
@@ -192,7 +192,7 @@ HB_BOOL hb_extIsArray(int iParam)
 // function to be called from pcode DLLs to detect if the extend system
 // is going to use an object item
 
-HB_BOOL hb_extIsObject(int iParam)
+HB_BOOL hb_extIsObject(int32_t iParam)
 {
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pItem;
@@ -215,7 +215,7 @@ HB_BOOL hb_extIsObject(int iParam)
 // NOTE: Caller should not modify the buffer returned by this function.
 //       [vszakats]
 
-const char *hb_parc(int iParam)
+const char *hb_parc(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parc(%d)", iParam));
@@ -238,7 +238,7 @@ const char *hb_parc(int iParam)
   return nullptr;
 }
 
-const char *hb_parcx(int iParam)
+const char *hb_parcx(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parcx(%d)", iParam));
@@ -261,7 +261,7 @@ const char *hb_parcx(int iParam)
   return "";
 }
 
-HB_SIZE hb_parclen(int iParam)
+HB_SIZE hb_parclen(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parclen(%d)", iParam));
@@ -288,7 +288,7 @@ HB_SIZE hb_parclen(int iParam)
 //       terminating zero byte, and it only works for parameters passed by
 //       reference. [vszakats]
 
-HB_SIZE hb_parcsiz(int iParam)
+HB_SIZE hb_parcsiz(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parcsiz(%d)", iParam));
@@ -317,7 +317,7 @@ HB_SIZE hb_parcsiz(int iParam)
 // NOTE: Using hb_stackDateBuffer() a temporary date buffer guaranties
 //       good behavior when multithreading.
 
-const char *hb_pards(int iParam)
+const char *hb_pards(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pards(%d)", iParam));
@@ -342,7 +342,7 @@ const char *hb_pards(int iParam)
 
 // NOTE: szDate must be a 9 chars wide buffer. [vszakats]
 
-char *hb_pardsbuff(char *szDate, int iParam)
+char *hb_pardsbuff(char *szDate, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pardsbuff(%p, %d)", static_cast<void*>(szDate), iParam));
@@ -367,7 +367,7 @@ char *hb_pardsbuff(char *szDate, int iParam)
 
 // retrieve a date as long integer - number of days from Julian's day
 
-long hb_pardl(int iParam)
+long hb_pardl(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pardl(%d)", iParam));
@@ -390,7 +390,7 @@ long hb_pardl(int iParam)
   return hb_itemGetDL(nullptr);
 }
 
-double hb_partd(int iParam)
+double hb_partd(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_partd(%d)", iParam));
@@ -413,7 +413,7 @@ double hb_partd(int iParam)
   return 0;
 }
 
-HB_BOOL hb_partdt(long *plJulian, long *plMilliSec, int iParam)
+HB_BOOL hb_partdt(long *plJulian, long *plMilliSec, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_partdt(%p,%p,%d)", static_cast<void*>(plJulian), static_cast<void*>(plMilliSec), iParam));
@@ -438,7 +438,7 @@ HB_BOOL hb_partdt(long *plJulian, long *plMilliSec, int iParam)
   return false;
 }
 
-int hb_parl(int iParam)
+int32_t hb_parl(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parl(%d)", iParam));
@@ -461,7 +461,7 @@ int hb_parl(int iParam)
   return 0;
 }
 
-int hb_parldef(int iParam, int iDefValue)
+int32_t hb_parldef(int32_t iParam, int32_t iDefValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parldef(%d,%d)", iParam, iDefValue));
@@ -484,7 +484,7 @@ int hb_parldef(int iParam, int iDefValue)
   return iDefValue;
 }
 
-double hb_parnd(int iParam)
+double hb_parnd(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnd(%d)", iParam));
@@ -511,7 +511,7 @@ double hb_parnd(int iParam)
   return 0;
 }
 
-int hb_parni(int iParam)
+int32_t hb_parni(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parni(%d)", iParam));
@@ -538,7 +538,7 @@ int hb_parni(int iParam)
   return 0;
 }
 
-int hb_parnidef(int iParam, int iDefValue)
+int32_t hb_parnidef(int32_t iParam, int32_t iDefValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parni(%d, %d)", iParam, iDefValue));
@@ -565,7 +565,7 @@ int hb_parnidef(int iParam, int iDefValue)
   return iDefValue;
 }
 
-long hb_parnl(int iParam)
+long hb_parnl(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnl(%d)", iParam));
@@ -592,7 +592,7 @@ long hb_parnl(int iParam)
   return 0;
 }
 
-long hb_parnldef(int iParam, long lDefValue)
+long hb_parnldef(int32_t iParam, long lDefValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnldef(%d, %ld)", iParam, lDefValue));
@@ -619,7 +619,7 @@ long hb_parnldef(int iParam, long lDefValue)
   return lDefValue;
 }
 
-HB_ISIZ hb_parns(int iParam)
+HB_ISIZ hb_parns(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parns(%d)", iParam));
@@ -646,7 +646,7 @@ HB_ISIZ hb_parns(int iParam)
   return 0;
 }
 
-HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue)
+HB_ISIZ hb_parnsdef(int32_t iParam, HB_ISIZ nDefValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnsdef(%d, %" HB_PFS "d)", iParam, nDefValue));
@@ -674,7 +674,7 @@ HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_LONGLONG hb_parnll(int iParam)
+HB_LONGLONG hb_parnll(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnll(%d)", iParam));
@@ -702,7 +702,7 @@ HB_LONGLONG hb_parnll(int iParam)
 }
 #endif
 
-HB_MAXINT hb_parnint(int iParam)
+HB_MAXINT hb_parnint(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnint(%d)", iParam));
@@ -729,7 +729,7 @@ HB_MAXINT hb_parnint(int iParam)
   return 0;
 }
 
-HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue)
+HB_MAXINT hb_parnintdef(int32_t iParam, HB_MAXINT nDefValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnintdef(%d, %" PFHL "d)", iParam, nDefValue));
@@ -756,7 +756,7 @@ HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue)
   return nDefValue;
 }
 
-void *hb_parptr(int iParam)
+void *hb_parptr(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parptr(%d)", iParam));
@@ -779,7 +779,7 @@ void *hb_parptr(int iParam)
   return nullptr;
 }
 
-void *hb_parptrx(int iParam)
+void *hb_parptrx(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parptrx(%d)", iParam));
@@ -808,7 +808,7 @@ void *hb_parptrx(int iParam)
   return nullptr;
 }
 
-void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam)
+void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parptrGC(%p,%d)", static_cast<const void*>(pFuncs), iParam));
@@ -834,7 +834,7 @@ void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam)
 // NOTE: Caller should not modify the buffer returned by this function.
 //       [vszakats]
 
-const char *hb_parvc(int iParam, ...)
+const char *hb_parvc(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvc(%d, ...)", iParam));
@@ -867,7 +867,7 @@ const char *hb_parvc(int iParam, ...)
   return nullptr;
 }
 
-const char *hb_parvcx(int iParam, ...)
+const char *hb_parvcx(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvcx(%d, ...)", iParam));
@@ -899,7 +899,7 @@ const char *hb_parvcx(int iParam, ...)
   return "";
 }
 
-HB_SIZE hb_parvclen(int iParam, ...)
+HB_SIZE hb_parvclen(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvclen(%d, ...)", iParam));
@@ -935,7 +935,7 @@ HB_SIZE hb_parvclen(int iParam, ...)
 //       terminating zero byte, and it only works for parameters passed by
 //       reference. [vszakats]
 
-HB_SIZE hb_parvcsiz(int iParam, ...)
+HB_SIZE hb_parvcsiz(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvcsiz(%d, ...)", iParam));
@@ -973,7 +973,7 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
 // NOTE: Using hb_stackDateBuffer() a temporary date buffer guaranties
 //       good behavior when multithreading. */
 
-const char *hb_parvds(int iParam, ...)
+const char *hb_parvds(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvds(%d, ...)", iParam));
@@ -1007,7 +1007,7 @@ const char *hb_parvds(int iParam, ...)
 
 // NOTE: szDate must be a 9 chars wide buffer. [vszakats]
 
-char *hb_parvdsbuff(char *szDate, int iParam, ...)
+char *hb_parvdsbuff(char *szDate, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvdsbuff(%p, %d, ...)", static_cast<void*>(szDate), iParam));
@@ -1041,7 +1041,7 @@ char *hb_parvdsbuff(char *szDate, int iParam, ...)
 
 // retrieve a date as long integer - number of days from Julian's day
 
-long hb_parvdl(int iParam, ...)
+long hb_parvdl(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvdl(%d, ...)", iParam));
@@ -1073,7 +1073,7 @@ long hb_parvdl(int iParam, ...)
   return hb_itemGetDL(nullptr);
 }
 
-double hb_parvtd(int iParam, ...)
+double hb_parvtd(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvtd(%d, ...)", iParam));
@@ -1105,7 +1105,7 @@ double hb_parvtd(int iParam, ...)
   return 0;
 }
 
-HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec, int iParam, ...)
+HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvtdt(%p,%p,%d, ...)", static_cast<void*>(plJulian), static_cast<void*>(plMilliSec), iParam));
@@ -1139,7 +1139,7 @@ HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec, int iParam, ...)
   return false;
 }
 
-int hb_parvl(int iParam, ...)
+int32_t hb_parvl(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvl(%d, ...)", iParam));
@@ -1177,7 +1177,7 @@ int hb_parvl(int iParam, ...)
   return 0;
 }
 
-double hb_parvnd(int iParam, ...)
+double hb_parvnd(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvnd(%d, ...)", iParam));
@@ -1213,7 +1213,7 @@ double hb_parvnd(int iParam, ...)
   return 0;
 }
 
-int hb_parvni(int iParam, ...)
+int32_t hb_parvni(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvni(%d, ...)", iParam));
@@ -1249,7 +1249,7 @@ int hb_parvni(int iParam, ...)
   return 0;
 }
 
-long hb_parvnl(int iParam, ...)
+long hb_parvnl(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvnl(%d, ...)", iParam));
@@ -1288,7 +1288,7 @@ long hb_parvnl(int iParam, ...)
   return 0;
 }
 
-HB_ISIZ hb_parvns(int iParam, ...)
+HB_ISIZ hb_parvns(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvns(%d, ...)", iParam));
@@ -1325,7 +1325,7 @@ HB_ISIZ hb_parvns(int iParam, ...)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_LONGLONG hb_parvnll(int iParam, ...)
+HB_LONGLONG hb_parvnll(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvnll(%d, ...)", iParam));
@@ -1362,7 +1362,7 @@ HB_LONGLONG hb_parvnll(int iParam, ...)
 }
 #endif
 
-HB_MAXINT hb_parvnint(int iParam, ...)
+HB_MAXINT hb_parvnint(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvnint(%d, ...)", iParam));
@@ -1398,7 +1398,7 @@ HB_MAXINT hb_parvnint(int iParam, ...)
   return 0;
 }
 
-void *hb_parvptr(int iParam, ...)
+void *hb_parvptr(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvptr(%d, ...)", iParam));
@@ -1430,7 +1430,7 @@ void *hb_parvptr(int iParam, ...)
   return nullptr;
 }
 
-void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...)
+void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvptrGC(%p,%d, ...)", static_cast<const void*>(pFuncs), iParam));
@@ -1580,7 +1580,7 @@ void hb_retds(const char *szDate)
 }
 
 #undef hb_retd
-void hb_retd(int iYear, int iMonth, int iDay)
+void hb_retd(int32_t iYear, int32_t iMonth, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retd(%04i, %02i, %02i)", iYear, iMonth, iDay));
@@ -1624,7 +1624,7 @@ void hb_rettdt(long lJulian, long lMilliSec)
 }
 
 #undef hb_retl
-void hb_retl(int iLogical)
+void hb_retl(int32_t iLogical)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retl(%d)", iLogical));
@@ -1646,7 +1646,7 @@ void hb_retnd(double dNumber)
 }
 
 #undef hb_retni
-void hb_retni(int iNumber)
+void hb_retni(int32_t iNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retni(%d)", iNumber));
@@ -1703,7 +1703,7 @@ void hb_retnint(HB_MAXINT nNumber)
 }
 
 #undef hb_retnlen
-void hb_retnlen(double dNumber, int iWidth, int iDec)
+void hb_retnlen(double dNumber, int32_t iWidth, int32_t iDec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnlen(%lf, %d, %d)", dNumber, iWidth, iDec));
@@ -1714,7 +1714,7 @@ void hb_retnlen(double dNumber, int iWidth, int iDec)
 }
 
 #undef hb_retndlen
-void hb_retndlen(double dNumber, int iWidth, int iDec)
+void hb_retndlen(double dNumber, int32_t iWidth, int32_t iDec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retndlen(%lf, %d, %d)", dNumber, iWidth, iDec));
@@ -1725,7 +1725,7 @@ void hb_retndlen(double dNumber, int iWidth, int iDec)
 }
 
 #undef hb_retnilen
-void hb_retnilen(int iNumber, int iWidth)
+void hb_retnilen(int32_t iNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnilen(%d, %d)", iNumber, iWidth));
@@ -1736,7 +1736,7 @@ void hb_retnilen(int iNumber, int iWidth)
 }
 
 #undef hb_retnllen
-void hb_retnllen(long lNumber, int iWidth)
+void hb_retnllen(long lNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnllen(%ld, %d)", lNumber, iWidth));
@@ -1748,7 +1748,7 @@ void hb_retnllen(long lNumber, int iWidth)
 
 #ifndef HB_LONG_LONG_OFF
 #undef hb_retnlllen
-void hb_retnlllen(HB_LONGLONG llNumber, int iWidth)
+void hb_retnlllen(HB_LONGLONG llNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnlllen(%" PFLL "d, %d)", llNumber, iWidth));
@@ -1760,7 +1760,7 @@ void hb_retnlllen(HB_LONGLONG llNumber, int iWidth)
 #endif
 
 #undef hb_retnintlen
-void hb_retnintlen(HB_MAXINT nNumber, int iWidth)
+void hb_retnintlen(HB_MAXINT nNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnintlen(%" PFHL "d, %d)", nNumber, iWidth));
@@ -1792,7 +1792,7 @@ void hb_retptrGC(void *pointer)
   hb_itemPutPtrGC(hb_stackReturnItem(), pointer);
 }
 
-int hb_stor(int iParam)
+int32_t hb_stor(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stor(%d)", iParam));
@@ -1815,7 +1815,7 @@ int hb_stor(int iParam)
   return 0;
 }
 
-int hb_storc(const char *szText, int iParam)
+int32_t hb_storc(const char *szText, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storc(%s, %d)", szText, iParam));
@@ -1838,7 +1838,7 @@ int hb_storc(const char *szText, int iParam)
   return 0;
 }
 
-int hb_storclen(const char *szText, HB_SIZE nLen, int iParam)
+int32_t hb_storclen(const char *szText, HB_SIZE nLen, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam));
@@ -1861,7 +1861,7 @@ int hb_storclen(const char *szText, HB_SIZE nLen, int iParam)
   return 0;
 }
 
-int hb_storclen_buffer(char *szText, HB_SIZE nLen, int iParam)
+int32_t hb_storclen_buffer(char *szText, HB_SIZE nLen, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam));
@@ -1886,7 +1886,7 @@ int hb_storclen_buffer(char *szText, HB_SIZE nLen, int iParam)
 
 // szDate must have YYYYMMDD format
 
-int hb_stords(const char *szDate, int iParam)
+int32_t hb_stords(const char *szDate, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stords(%s, %d)", szDate, iParam));
@@ -1909,7 +1909,7 @@ int hb_stords(const char *szDate, int iParam)
   return 0;
 }
 
-int hb_stordl(long lJulian, int iParam)
+int32_t hb_stordl(long lJulian, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stordl(%ld, %d)", lJulian, iParam));
@@ -1932,7 +1932,7 @@ int hb_stordl(long lJulian, int iParam)
   return 0;
 }
 
-int hb_stortd(double dTimeStamp, int iParam)
+int32_t hb_stortd(double dTimeStamp, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stortd(%lf, %d)", dTimeStamp, iParam));
@@ -1955,7 +1955,7 @@ int hb_stortd(double dTimeStamp, int iParam)
   return 0;
 }
 
-int hb_stortdt(long lJulian, long lMilliSec, int iParam)
+int32_t hb_stortdt(long lJulian, long lMilliSec, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stortd(%ld, %ld, %d)", lJulian, lMilliSec, iParam));
@@ -1978,7 +1978,7 @@ int hb_stortdt(long lJulian, long lMilliSec, int iParam)
   return 0;
 }
 
-int hb_storl(int iLogical, int iParam)
+int32_t hb_storl(int32_t iLogical, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storl(%d, %d)", iLogical, iParam));
@@ -2001,7 +2001,7 @@ int hb_storl(int iLogical, int iParam)
   return 0;
 }
 
-int hb_storni(int iValue, int iParam)
+int32_t hb_storni(int32_t iValue, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storni(%d, %d)", iValue, iParam));
@@ -2024,7 +2024,7 @@ int hb_storni(int iValue, int iParam)
   return 0;
 }
 
-int hb_stornl(long lValue, int iParam)
+int32_t hb_stornl(long lValue, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stornl(%ld, %d)", lValue, iParam));
@@ -2047,7 +2047,7 @@ int hb_stornl(long lValue, int iParam)
   return 0;
 }
 
-int hb_storns(HB_ISIZ nValue, int iParam)
+int32_t hb_storns(HB_ISIZ nValue, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storns(%" HB_PFS "d, %d)", nValue, iParam));
@@ -2071,7 +2071,7 @@ int hb_storns(HB_ISIZ nValue, int iParam)
 }
 
 #ifndef HB_LONG_LONG_OFF
-int hb_stornll(HB_LONGLONG llValue, int iParam)
+int32_t hb_stornll(HB_LONGLONG llValue, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stornll(%" PFLL "d, %d)", llValue, iParam));
@@ -2095,7 +2095,7 @@ int hb_stornll(HB_LONGLONG llValue, int iParam)
 }
 #endif
 
-int hb_stornint(HB_MAXINT nValue, int iParam)
+int32_t hb_stornint(HB_MAXINT nValue, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stornint(%" PFHL "d, %d)", nValue, iParam));
@@ -2118,7 +2118,7 @@ int hb_stornint(HB_MAXINT nValue, int iParam)
   return 0;
 }
 
-int hb_stornd(double dNumber, int iParam)
+int32_t hb_stornd(double dNumber, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stornd(%lf, %d)", dNumber, iParam));
@@ -2141,7 +2141,7 @@ int hb_stornd(double dNumber, int iParam)
   return 0;
 }
 
-int hb_storptr(void *pointer, int iParam)
+int32_t hb_storptr(void *pointer, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storptr(%p, %d)", pointer, iParam));
@@ -2164,7 +2164,7 @@ int hb_storptr(void *pointer, int iParam)
   return 0;
 }
 
-int hb_storptrGC(void *pointer, int iParam)
+int32_t hb_storptrGC(void *pointer, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storptrGC(%p, %d)", pointer, iParam));
@@ -2190,7 +2190,7 @@ int hb_storptrGC(void *pointer, int iParam)
 // hb_storv*() similar to hb_stor*() but they accepts optional array index
 // just like Cl*pper's _stor*() functions
 
-int hb_storvc(const char *szText, int iParam, ...)
+int32_t hb_storvc(const char *szText, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvc(%s, %d, ...)", szText, iParam));
@@ -2207,7 +2207,7 @@ int hb_storvc(const char *szText, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetC(pItem, va_arg(va, HB_SIZE), szText) ? 1 : 0;
@@ -2222,7 +2222,7 @@ int hb_storvc(const char *szText, int iParam, ...)
   return 0;
 }
 
-int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
+int32_t hb_storvclen(const char *szText, HB_SIZE nLen, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam));
@@ -2239,7 +2239,7 @@ int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetCL(pItem, va_arg(va, HB_SIZE), szText, nLen) ? 1 : 0;
@@ -2254,7 +2254,7 @@ int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
   return 0;
 }
 
-int hb_storvclen_buffer(char *szText, HB_SIZE nLen, int iParam, ...)
+int32_t hb_storvclen_buffer(char *szText, HB_SIZE nLen, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam));
@@ -2271,7 +2271,7 @@ int hb_storvclen_buffer(char *szText, HB_SIZE nLen, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetCLPtr(pItem, va_arg(va, HB_SIZE), szText, nLen) ? 1 : 0;
@@ -2288,7 +2288,7 @@ int hb_storvclen_buffer(char *szText, HB_SIZE nLen, int iParam, ...)
 
 // szDate must have YYYYMMDD format
 
-int hb_storvds(const char *szDate, int iParam, ...)
+int32_t hb_storvds(const char *szDate, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvds(%s, %d, ...)", szDate, iParam));
@@ -2305,7 +2305,7 @@ int hb_storvds(const char *szDate, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetDS(pItem, va_arg(va, HB_SIZE), szDate) ? 1 : 0;
@@ -2320,7 +2320,7 @@ int hb_storvds(const char *szDate, int iParam, ...)
   return 0;
 }
 
-int hb_storvdl(long lJulian, int iParam, ...)
+int32_t hb_storvdl(long lJulian, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvdl(%ld, %d, ...)", lJulian, iParam));
@@ -2337,7 +2337,7 @@ int hb_storvdl(long lJulian, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetDL(pItem, va_arg(va, HB_SIZE), lJulian) ? 1 : 0;
@@ -2352,7 +2352,7 @@ int hb_storvdl(long lJulian, int iParam, ...)
   return 0;
 }
 
-int hb_storvtd(double dTimeStamp, int iParam, ...)
+int32_t hb_storvtd(double dTimeStamp, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvtd(%lf, %d, ...)", dTimeStamp, iParam));
@@ -2369,7 +2369,7 @@ int hb_storvtd(double dTimeStamp, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetTD(pItem, va_arg(va, HB_SIZE), dTimeStamp) ? 1 : 0;
@@ -2384,7 +2384,7 @@ int hb_storvtd(double dTimeStamp, int iParam, ...)
   return 0;
 }
 
-int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...)
+int32_t hb_storvtdt(long lJulian, long lMilliSec, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvtd(%ld, %ld, %d, ...)", lJulian, lMilliSec, iParam));
@@ -2401,7 +2401,7 @@ int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetTDT(pItem, va_arg(va, HB_SIZE), lJulian, lMilliSec) ? 1 : 0;
@@ -2416,7 +2416,7 @@ int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...)
   return 0;
 }
 
-int hb_storvl(int iLogical, int iParam, ...)
+int32_t hb_storvl(int32_t iLogical, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvl(%d, %d, ...)", iLogical, iParam));
@@ -2433,7 +2433,7 @@ int hb_storvl(int iLogical, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetL(pItem, va_arg(va, HB_SIZE), iLogical ? true : false) ? 1 : 0;
@@ -2448,7 +2448,7 @@ int hb_storvl(int iLogical, int iParam, ...)
   return 0;
 }
 
-int hb_storvni(int iValue, int iParam, ...)
+int32_t hb_storvni(int32_t iValue, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvni(%d, %d, ...)", iValue, iParam));
@@ -2465,7 +2465,7 @@ int hb_storvni(int iValue, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetNI(pItem, va_arg(va, HB_SIZE), iValue) ? 1 : 0;
@@ -2480,7 +2480,7 @@ int hb_storvni(int iValue, int iParam, ...)
   return 0;
 }
 
-int hb_storvnl(long lValue, int iParam, ...)
+int32_t hb_storvnl(long lValue, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvnl(%ld, %d, ...)", lValue, iParam));
@@ -2497,7 +2497,7 @@ int hb_storvnl(long lValue, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetNL(pItem, va_arg(va, HB_SIZE), lValue) ? 1 : 0;
@@ -2512,7 +2512,7 @@ int hb_storvnl(long lValue, int iParam, ...)
   return 0;
 }
 
-int hb_storvns(HB_ISIZ nValue, int iParam, ...)
+int32_t hb_storvns(HB_ISIZ nValue, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvns(%" HB_PFS "d, %d, ...)", nValue, iParam));
@@ -2529,7 +2529,7 @@ int hb_storvns(HB_ISIZ nValue, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetNS(pItem, va_arg(va, HB_SIZE), nValue) ? 1 : 0;
@@ -2545,7 +2545,7 @@ int hb_storvns(HB_ISIZ nValue, int iParam, ...)
 }
 
 #ifndef HB_LONG_LONG_OFF
-int hb_storvnll(HB_LONGLONG llValue, int iParam, ...)
+int32_t hb_storvnll(HB_LONGLONG llValue, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvnll(%" PFLL "d, %d, ...)", llValue, iParam));
@@ -2562,7 +2562,7 @@ int hb_storvnll(HB_LONGLONG llValue, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetNLL(pItem, va_arg(va, HB_SIZE), llValue) ? 1 : 0;
@@ -2578,7 +2578,7 @@ int hb_storvnll(HB_LONGLONG llValue, int iParam, ...)
 }
 #endif
 
-int hb_storvnint(HB_MAXINT nValue, int iParam, ...)
+int32_t hb_storvnint(HB_MAXINT nValue, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvnint(%" PFHL "d, %d, ...)", nValue, iParam));
@@ -2595,7 +2595,7 @@ int hb_storvnint(HB_MAXINT nValue, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetNInt(pItem, va_arg(va, HB_SIZE), nValue) ? 1 : 0;
@@ -2610,7 +2610,7 @@ int hb_storvnint(HB_MAXINT nValue, int iParam, ...)
   return 0;
 }
 
-int hb_storvnd(double dNumber, int iParam, ...)
+int32_t hb_storvnd(double dNumber, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvnd(%lf, %d, ...)", dNumber, iParam));
@@ -2627,7 +2627,7 @@ int hb_storvnd(double dNumber, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetND(pItem, va_arg(va, HB_SIZE), dNumber) ? 1 : 0;
@@ -2642,7 +2642,7 @@ int hb_storvnd(double dNumber, int iParam, ...)
   return 0;
 }
 
-int hb_storvptr(void *pointer, int iParam, ...)
+int32_t hb_storvptr(void *pointer, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvptr(%p, %d, ...)", pointer, iParam));
@@ -2659,7 +2659,7 @@ int hb_storvptr(void *pointer, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetPtr(pItem, va_arg(va, HB_SIZE), pointer) ? 1 : 0;
@@ -2674,7 +2674,7 @@ int hb_storvptr(void *pointer, int iParam, ...)
   return 0;
 }
 
-int hb_storvptrGC(void *pointer, int iParam, ...)
+int32_t hb_storvptrGC(void *pointer, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvptrGC(%p, %d, ...)", pointer, iParam));
@@ -2691,7 +2691,7 @@ int hb_storvptrGC(void *pointer, int iParam, ...)
     }
 
     if (pItem->isArray()) {
-      int iRetVal;
+      int32_t iRetVal;
       va_list va;
       va_start(va, iParam);
       iRetVal = hb_arraySetPtrGC(pItem, va_arg(va, HB_SIZE), pointer) ? 1 : 0;
@@ -2707,7 +2707,7 @@ int hb_storvptrGC(void *pointer, int iParam, ...)
 }
 
 #undef hb_pcount
-int hb_pcount(void)
+int32_t hb_pcount(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pcount()"));

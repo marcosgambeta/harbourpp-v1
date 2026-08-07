@@ -893,7 +893,7 @@ HB_EXPORT double _HB_ITEM::getND() // equivalent to hb_itemGetND
   }
 }
 
-int hb_itemGetNI(PHB_ITEM pItem)
+int32_t hb_itemGetNI(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetNI(%p)", static_cast<void*>(pItem)));
@@ -912,7 +912,7 @@ int hb_itemGetNI(PHB_ITEM pItem)
   return 0;
 }
 
-HB_EXPORT int _HB_ITEM::getNI() // equivalent to hb_itemGetNI
+HB_EXPORT int32_t _HB_ITEM::getNI() // equivalent to hb_itemGetNI
 {
   if (this->isInteger()) {
     return this->integerValue();
@@ -1146,7 +1146,7 @@ PHB_ITEM hb_itemPutDS(PHB_ITEM pItem, const char *szDate)
   return pItem;
 }
 
-PHB_ITEM hb_itemPutD(PHB_ITEM pItem, int iYear, int iMonth, int iDay)
+PHB_ITEM hb_itemPutD(PHB_ITEM pItem, int32_t iYear, int32_t iMonth, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutD(%p, %04i, %02i, %02i)", static_cast<void*>(pItem), iYear, iMonth, iDay));
@@ -1308,7 +1308,7 @@ PHB_ITEM hb_itemPutND(PHB_ITEM pItem, double dNumber)
   return pItem;
 }
 
-PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
+PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int32_t iNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNI(%p, %d)", static_cast<void*>(pItem), iNumber));
@@ -1329,7 +1329,7 @@ PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
   return pItem;
 }
 
-HB_EXPORT PHB_ITEM _HB_ITEM::putNI(int iNumber) // equivalent to hb_itemPutNI
+HB_EXPORT PHB_ITEM _HB_ITEM::putNI(int32_t iNumber) // equivalent to hb_itemPutNI
 {
   if (this->isComplex()) {
     this->clear();
@@ -1464,7 +1464,7 @@ PHB_ITEM hb_itemPutNInt(PHB_ITEM pItem, HB_MAXINT nNumber)
   return pItem;
 }
 
-PHB_ITEM hb_itemPutNIntLen(PHB_ITEM pItem, HB_MAXINT nNumber, int iWidth)
+PHB_ITEM hb_itemPutNIntLen(PHB_ITEM pItem, HB_MAXINT nNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNIntLen(%p, %" PFHL "d, %d)", static_cast<void*>(pItem), nNumber, iWidth));
@@ -1481,7 +1481,7 @@ PHB_ITEM hb_itemPutNIntLen(PHB_ITEM pItem, HB_MAXINT nNumber, int iWidth)
   }
 }
 
-PHB_ITEM hb_itemPutNLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
+PHB_ITEM hb_itemPutNLen(PHB_ITEM pItem, double dNumber, int32_t iWidth, int32_t iDec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNLen(%p, %lf, %d, %d)", static_cast<void*>(pItem), dNumber, iWidth, iDec));
@@ -1507,7 +1507,7 @@ PHB_ITEM hb_itemPutNLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
   return hb_itemPutNDLen(pItem, dNumber, iWidth, iDec);
 }
 
-PHB_ITEM hb_itemPutNDLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
+PHB_ITEM hb_itemPutNDLen(PHB_ITEM pItem, double dNumber, int32_t iWidth, int32_t iDec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNDLen(%p, %lf, %d, %d)", static_cast<void*>(pItem), dNumber, iWidth, iDec));
@@ -1538,7 +1538,7 @@ PHB_ITEM hb_itemPutNDLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
   return pItem;
 }
 
-PHB_ITEM hb_itemPutNDDec(PHB_ITEM pItem, double dNumber, int iDec)
+PHB_ITEM hb_itemPutNDDec(PHB_ITEM pItem, double dNumber, int32_t iDec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNDDec(%p, %lf, %i)", static_cast<void*>(pItem), dNumber, iDec));
@@ -1567,7 +1567,7 @@ PHB_ITEM hb_itemPutNDDec(PHB_ITEM pItem, double dNumber, int iDec)
   return pItem;
 }
 
-double hb_itemGetNDDec(PHB_ITEM pItem, int *piDec)
+double hb_itemGetNDDec(PHB_ITEM pItem, int32_t *piDec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetNDDec(%p,%p)", static_cast<void*>(pItem), static_cast<void*>(piDec)));
@@ -1588,7 +1588,7 @@ double hb_itemGetNDDec(PHB_ITEM pItem, int *piDec)
   return 0.0;
 }
 
-PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int iNumber, int iWidth)
+PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int32_t iNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNILen(%p, %d, %d)", static_cast<void*>(pItem), iNumber, iWidth));
@@ -1613,7 +1613,7 @@ PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int iNumber, int iWidth)
   return pItem;
 }
 
-PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
+PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNLLen(%p, %ld, %d)", static_cast<void*>(pItem), lNumber, iWidth));
@@ -1649,7 +1649,7 @@ PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
 }
 
 #ifndef HB_LONG_LONG_OFF
-PHB_ITEM hb_itemPutNLLLen(PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth)
+PHB_ITEM hb_itemPutNLLLen(PHB_ITEM pItem, HB_LONGLONG llNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNLLLen(%p, %" PFLL "d, %d)", static_cast<void*>(pItem), llNumber, iWidth));
@@ -1685,7 +1685,7 @@ PHB_ITEM hb_itemPutNLLLen(PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth)
 }
 #endif
 
-PHB_ITEM hb_itemPutNumType(PHB_ITEM pItem, double dNumber, int iDec, int iType1, int iType2)
+PHB_ITEM hb_itemPutNumType(PHB_ITEM pItem, double dNumber, int32_t iDec, int32_t iType1, int32_t iType2)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNumType(%p, %lf, %d, %i, %i)", static_cast<void*>(pItem), dNumber, iDec, iType1, iType2));
@@ -1797,7 +1797,7 @@ PHB_ITEM hb_itemPutSymbol(PHB_ITEM pItem, PHB_SYMB pSym)
   return pItem;
 }
 
-void hb_itemGetNLen(PHB_ITEM pItem, int *piWidth, int *piDecimal)
+void hb_itemGetNLen(PHB_ITEM pItem, int32_t *piWidth, int32_t *piDecimal)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetNLen(%p, %p, %p)", static_cast<void*>(pItem), static_cast<void*>(piWidth), static_cast<void*>(piDecimal)));
@@ -2635,7 +2635,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
 // For compatible types compare pItem1 with pItem2 setting piResult
 // to -1, 0 or 1 if pItem1 is <, == or > then pItem2 and return true
 // otherwise return false.
-HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int *piResult)
+HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int32_t *piResult)
 {
   auto fResult = false;
 
@@ -2716,7 +2716,7 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
 // Internal API, not standard Clipper
 
 // Check whether two strings are equal (0), smaller (-1), or greater (1)
-int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
+int32_t hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemStrCmp(%p, %p, %d)", static_cast<void*>(pFirst), static_cast<void*>(pSecond), static_cast<int>(bForceExact)));
@@ -2747,7 +2747,7 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   HB_SIZE nMinLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-  int iRet = 0; // Current status
+  int32_t iRet = 0; // Current status
 
   // Both strings not empty
   if (nMinLen) {
@@ -2790,7 +2790,7 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 }
 
 // Check whether two strings are equal (0), smaller (-1), or greater (1), ignore case
-int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
+int32_t hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemStrICmp(%p, %p, %d)", static_cast<void*>(pFirst), static_cast<void*>(pSecond), static_cast<int>(bForceExact)));
@@ -2817,7 +2817,7 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   HB_SIZE nMinLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-  int iRet = 0; // Current status
+  int32_t iRet = 0; // Current status
 
   // Both strings not empty
   if (nMinLen) {
@@ -2826,8 +2826,8 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
       iRet = hb_cdpicmp(szFirst, nLenFirst, szSecond, nLenSecond, cdp, bForceExact);
     } else {
       do {
-        int i1 = HB_TOUPPER(static_cast<HB_UCHAR>(*szFirst));
-        int i2 = HB_TOUPPER(static_cast<HB_UCHAR>(*szSecond));
+        int32_t i1 = HB_TOUPPER(static_cast<HB_UCHAR>(*szFirst));
+        int32_t i2 = HB_TOUPPER(static_cast<HB_UCHAR>(*szSecond));
         if (i1 != i2) {
           iRet = (i1 < i2) ? -1 : 1;
           break;
@@ -2863,13 +2863,13 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
 // converts a numeric to a string with optional width & precision.
 
-HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
+HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int32_t iSize, int32_t iDec)
 {
   if (iDec < 0) {
     iDec = 0;
   }
 
-  int iPos, iDot;
+  int32_t iPos, iDot;
 
   if (iDec > 0) {
     iPos = iDot = iSize - iDec - 1;
@@ -2888,7 +2888,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
       iPos = -1;
     } else {
       double dInt, dFract, dDig, doBase = 10.0;
-      int iPrec, iFirst = -1;
+      int32_t iPrec, iFirst = -1;
 
 #if 0
          dNumber = hb_numRound(dNumber, iDec);
@@ -2940,7 +2940,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
       // now try to round the results and set 0 in places over defined
       // precision, the same is done by Clipper
       if (iPos >= 0) {
-        int iZer;
+        int32_t iZer;
 
         if (iFirst < 0) {
           iZer = 0;
@@ -3067,7 +3067,7 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
   if (pNumber) {
     // Default to the width and number of decimals specified by the item,
     // with a limit of 90 integer places, plus one space for the sign.
-    int iWidth, iDec;
+    int32_t iWidth, iDec;
 
     hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
@@ -3100,7 +3100,7 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
       }
     }
 
-    int iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
+    int32_t iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
 
     if (iSize > 0) {
       szResult = static_cast<char *>(hb_xgrab(iSize + 1));
@@ -3205,7 +3205,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     break;
 
   case Harbour::Item::POINTER: {
-    int size = (sizeof(void *) << 1) + 3; // n bytes for address + 0x + \0
+    int32_t size = (sizeof(void *) << 1) + 3; // n bytes for address + 0x + \0
     auto addr = reinterpret_cast<HB_PTRUINT>(pItem->getPtr());
 
     *nLen = size - 1;
@@ -3251,7 +3251,7 @@ char *hb_itemPadConv(PHB_ITEM pItem, HB_SIZE *pnSize, HB_BOOL *bFreeReq)
     case Harbour::Item::DOUBLE:
     case Harbour::Item::INTEGER:
     case Harbour::Item::LONG: {
-      int i;
+      int32_t i;
       char *buffer = hb_itemString(pItem, pnSize, bFreeReq);
 
       // remove leading spaces if any, a little bit redundant but
@@ -3261,7 +3261,7 @@ char *hb_itemPadConv(PHB_ITEM pItem, HB_SIZE *pnSize, HB_BOOL *bFreeReq)
       }
 
       if (i > 0) {
-        int j = 0;
+        int32_t j = 0;
         *pnSize -= i;
         do {
           buffer[j++] = buffer[i];
