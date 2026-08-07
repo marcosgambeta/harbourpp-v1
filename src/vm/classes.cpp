@@ -1386,7 +1386,7 @@ PHB_SYMB hb_clsFuncSym(uint16_t uiClass)
 const char *hb_clsMethodName(uint16_t uiClass, uint16_t uiMethod)
 {
   if (uiClass && uiClass <= s_uiClasses &&
-      static_cast<HB_UINT>(uiMethod) < static_cast<HB_UINT>(hb_clsMthNum(s_pClasses[uiClass]))) {
+      static_cast<uint32_t>(uiMethod) < static_cast<uint32_t>(hb_clsMthNum(s_pClasses[uiClass]))) {
     PMETHOD pMethod = s_pClasses[uiClass]->pMethods + uiMethod;
     if (pMethod->pMessage) {
       return pMethod->pMessage->pSymbol->szName;
