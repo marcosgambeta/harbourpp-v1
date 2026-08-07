@@ -1496,7 +1496,7 @@ PHB_ITEM hb_arrayClone(PHB_ITEM pArray)
   return hb_arrayCloneTo(hb_itemNew(nullptr), pArray);
 }
 
-PHB_ITEM hb_arrayFromStack(HB_USHORT uiLen)
+PHB_ITEM hb_arrayFromStack(uint16_t uiLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayFromStack(%hu)", uiLen));
@@ -1507,7 +1507,7 @@ PHB_ITEM hb_arrayFromStack(HB_USHORT uiLen)
 
   hb_arrayNew(pArray, uiLen);
 
-  for (HB_USHORT uiPos = 1; uiPos <= uiLen; uiPos++) {
+  for (uint16_t uiPos = 1; uiPos <= uiLen; uiPos++) {
     hb_arraySet(pArray, uiPos, hb_stackItemFromTop(uiPos - uiLen - 1));
   }
 
@@ -1523,10 +1523,10 @@ PHB_ITEM hb_arrayFromParams(int iLevel)
   HB_STACK_TLS_PRELOAD
 
   HB_ISIZ nBaseOffset = hb_stackBaseProcOffset(iLevel);
-  HB_USHORT uiPCount = (nBaseOffset > 0) ? hb_stackItem(nBaseOffset)->symbolParamCnt() : 0;
+  uint16_t uiPCount = (nBaseOffset > 0) ? hb_stackItem(nBaseOffset)->symbolParamCnt() : 0;
 
   auto pArray = hb_itemArrayNew(uiPCount);
-  for (HB_USHORT uiPos = 1; uiPos <= uiPCount; uiPos++) {
+  for (uint16_t uiPos = 1; uiPos <= uiPCount; uiPos++) {
     hb_arraySet(pArray, uiPos, hb_stackItem(nBaseOffset + uiPos + 1));
   }
 
@@ -1542,11 +1542,11 @@ PHB_ITEM hb_arrayBaseParams(void)
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_itemNew(nullptr);
-  HB_USHORT uiPCount = hb_stackBaseItem()->symbolParamCnt();
+  uint16_t uiPCount = hb_stackBaseItem()->symbolParamCnt();
 
   hb_arrayNew(pArray, uiPCount);
 
-  for (HB_USHORT uiPos = 1; uiPos <= uiPCount; uiPos++) {
+  for (uint16_t uiPos = 1; uiPos <= uiPCount; uiPos++) {
     hb_arraySet(pArray, uiPos, hb_stackItemFromBase(uiPos));
   }
 
@@ -1562,11 +1562,11 @@ PHB_ITEM hb_arraySelfParams(void)
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_itemNew(nullptr);
-  HB_USHORT uiPCount = hb_stackBaseItem()->symbolParamCnt();
+  uint16_t uiPCount = hb_stackBaseItem()->symbolParamCnt();
 
   hb_arrayNew(pArray, uiPCount + 1);
 
-  for (HB_USHORT uiPos = 0; uiPos <= uiPCount; uiPos++) {
+  for (uint16_t uiPos = 0; uiPos <= uiPCount; uiPos++) {
     hb_arraySet(pArray, uiPos + 1, hb_stackItemFromBase(uiPos));
   }
 

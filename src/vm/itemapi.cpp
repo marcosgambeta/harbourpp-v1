@@ -77,7 +77,7 @@ PHB_ITEM hb_itemNew(PHB_ITEM pNull)
   return hb_gcGripGet(pNull);
 }
 
-PHB_ITEM hb_itemParam(HB_USHORT uiParam)
+PHB_ITEM hb_itemParam(uint16_t uiParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemParam(%hu)", uiParam));
@@ -91,7 +91,7 @@ PHB_ITEM hb_itemParam(HB_USHORT uiParam)
 
 // Internal Item API. Use this with care.
 
-PHB_ITEM hb_itemParamPtr(HB_USHORT uiParam, long lMask)
+PHB_ITEM hb_itemParamPtr(uint16_t uiParam, long lMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemParamPtr(%hu, %ld)", uiParam, lMask));
@@ -100,7 +100,7 @@ PHB_ITEM hb_itemParamPtr(HB_USHORT uiParam, long lMask)
   return hb_param(static_cast<int>(uiParam), lMask);
 }
 
-HB_BOOL hb_itemParamStore(HB_USHORT uiParam, PHB_ITEM pItem)
+HB_BOOL hb_itemParamStore(uint16_t uiParam, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemParamStore(%hu, %p)", uiParam, static_cast<void*>(pItem)));
@@ -121,7 +121,7 @@ HB_BOOL hb_itemParamStore(HB_USHORT uiParam, PHB_ITEM pItem)
   return false;
 }
 
-HB_BOOL hb_itemParamStoreForward(HB_USHORT uiParam, PHB_ITEM pItem)
+HB_BOOL hb_itemParamStoreForward(uint16_t uiParam, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemParamStoreForward(%hu, %p)", uiParam, static_cast<void*>(pItem)));
@@ -142,7 +142,7 @@ HB_BOOL hb_itemParamStoreForward(HB_USHORT uiParam, PHB_ITEM pItem)
   return false;
 }
 
-HB_BOOL hb_itemParamStoreRelease(HB_USHORT uiParam, PHB_ITEM pItem)
+HB_BOOL hb_itemParamStoreRelease(uint16_t uiParam, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemParamStoreRelease(%hu, %p)", uiParam, static_cast<void*>(pItem)));
@@ -164,14 +164,14 @@ HB_BOOL hb_itemParamStoreRelease(HB_USHORT uiParam, PHB_ITEM pItem)
   return false;
 }
 
-HB_USHORT hb_itemPCount(void)
+uint16_t hb_itemPCount(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPCount()"));
 #endif
 
   HB_STACK_TLS_PRELOAD
-  return static_cast<HB_USHORT>(hb_pcount());
+  return static_cast<uint16_t>(hb_pcount());
 }
 
 HB_BOOL hb_itemRelease(PHB_ITEM pItem)
@@ -1302,7 +1302,7 @@ PHB_ITEM hb_itemPutND(PHB_ITEM pItem, double dNumber)
 
   pItem->setType(Harbour::Item::DOUBLE);
   pItem->setDoubleLength(HB_DBL_LENGTH(dNumber));
-  pItem->setDoubleDecimal(static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS));
+  pItem->setDoubleDecimal(static_cast<uint16_t>(hb_stackSetStruct()->HB_SET_DECIMALS));
   pItem->setDoubleValue(dNumber);
 
   return pItem;
@@ -1531,8 +1531,8 @@ PHB_ITEM hb_itemPutNDLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
   }
 
   pItem->setType(Harbour::Item::DOUBLE);
-  pItem->setDoubleLength(static_cast<HB_USHORT>(iWidth));
-  pItem->setDoubleDecimal(static_cast<HB_USHORT>(iDec));
+  pItem->setDoubleLength(static_cast<uint16_t>(iWidth));
+  pItem->setDoubleDecimal(static_cast<uint16_t>(iDec));
   pItem->setDoubleValue(dNumber);
 
   return pItem;
@@ -1557,9 +1557,9 @@ PHB_ITEM hb_itemPutNDDec(PHB_ITEM pItem, double dNumber, int iDec)
 
   if (iDec == HB_DEFAULT_DECIMALS) {
     HB_STACK_TLS_PRELOAD
-    pItem->setDoubleDecimal(static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS));
+    pItem->setDoubleDecimal(static_cast<uint16_t>(hb_stackSetStruct()->HB_SET_DECIMALS));
   } else {
-    pItem->setDoubleDecimal(static_cast<HB_USHORT>(iDec));
+    pItem->setDoubleDecimal(static_cast<uint16_t>(iDec));
   }
 
   pItem->setDoubleValue(dNumber);
@@ -1607,7 +1607,7 @@ PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int iNumber, int iWidth)
   }
 
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->setIntegerLength(static_cast<HB_USHORT>(iWidth));
+  pItem->setIntegerLength(static_cast<uint16_t>(iWidth));
   pItem->setIntegerValue(iNumber);
 
   return pItem;
@@ -1634,7 +1634,7 @@ PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
 
   pItem->setType(Harbour::Item::INTEGER);
   pItem->setIntegerValue(static_cast<int>(lNumber));
-  pItem->setIntegerLength(static_cast<HB_USHORT>(iWidth));
+  pItem->setIntegerLength(static_cast<uint16_t>(iWidth));
 #else
   if (iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH) {
     iWidth = HB_LONG_LENGTH(lNumber);
@@ -1670,7 +1670,7 @@ PHB_ITEM hb_itemPutNLLLen(PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth)
 
   pItem->setType(Harbour::Item::LONG);
   pItem->setLongValue(static_cast<HB_MAXINT>(llNumber));
-  pItem->setLongLength(static_cast<HB_USHORT>(iWidth));
+  pItem->setLongLength(static_cast<uint16_t>(iWidth));
 #else
   pItem->setType(Harbour::Item::DOUBLE);
   pItem->setDoubleValue(static_cast<double>(llNumber));

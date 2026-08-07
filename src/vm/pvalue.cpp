@@ -52,7 +52,7 @@
 
 HB_FUNC(HB_PVALUE)
 {
-  auto uiParam = static_cast<HB_USHORT>(hb_parni(1));
+  auto uiParam = static_cast<uint16_t>(hb_parni(1));
   HB_ISIZ nOffset = hb_stackBaseItem()->symbolStackState()->nBaseItem;
 
   if (uiParam && uiParam <= hb_stackItem(nOffset)->symbolParamCnt()) {

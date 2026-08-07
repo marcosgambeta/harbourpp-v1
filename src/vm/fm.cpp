@@ -262,8 +262,8 @@ static auto s_fInitedFM = false;
 struct _HB_MEMINFO
 {
   HB_U32 u32Signature;
-  HB_USHORT uiProcLine;
-  HB_USHORT uiReserved;
+  uint16_t uiProcLine;
+  uint16_t uiReserved;
   HB_SIZE nSize;
   char szProcName[HB_SYMBOL_NAME_LEN + 1];
   struct _HB_MEMINFO *pPrevBlock;
@@ -1039,7 +1039,7 @@ HB_SIZE hb_xsize(void *pMem) // returns the size of an allocated memory block
 // NOTE: Debug function, it will always return nullptr when HB_FM_STATISTICS is
 //       not defined, don't use it for final code
 
-const char *hb_xinfo(void *pMem, HB_USHORT *puiLine)
+const char *hb_xinfo(void *pMem, uint16_t *puiLine)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xinfo(%p,%p)", pMem, puiLine));
@@ -1153,7 +1153,7 @@ void hb_xexit(void) // Deinitialize fixed memory subsystem
   if (s_nMemoryBlocks || hb_cmdargCheck("INFO")) {
     char membuffer[HB_MAX_MEM2STR_BLOCK * 2 + 1]; // multiplied by 2 to allow hex format
     PHB_MEMINFO pMemBlock;
-    HB_USHORT ui;
+    uint16_t ui;
     char buffer[100];
     FILE *hLog = nullptr;
 

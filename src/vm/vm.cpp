@@ -50,7 +50,7 @@
 
 #include "hbapi.hpp"
 
-HB_VMHANDLE hb_xvalloc(HB_SIZE nSize, HB_USHORT nFlags)
+HB_VMHANDLE hb_xvalloc(HB_SIZE nSize, uint16_t nFlags)
 {
   // TODO
   HB_SYMBOL_UNUSED(nSize);
@@ -64,7 +64,7 @@ void hb_xvfree(HB_VMHANDLE h)
   HB_SYMBOL_UNUSED(h);
 }
 
-HB_VMHANDLE hb_xvrealloc(HB_VMHANDLE h, HB_SIZE nSize, HB_USHORT nFlags)
+HB_VMHANDLE hb_xvrealloc(HB_VMHANDLE h, HB_SIZE nSize, uint16_t nFlags)
 {
   // TODO
   HB_SYMBOL_UNUSED(h);

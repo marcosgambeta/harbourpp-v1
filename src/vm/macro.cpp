@@ -1656,13 +1656,13 @@ void hb_macroCodeBlockEnd(HB_COMP_DECL)
 
   // Count the number of codeblock parameters
   PHB_CBVAR pVar = pCodeblock->pLocals;
-  HB_USHORT usParms = 0; // number of codeblock parameters
+  uint16_t usParms = 0; // number of codeblock parameters
   while (pVar) {
     pVar = pVar->pNext;
     ++usParms;
   }
 
-  // NOTE: 6 = HB_P_MPUSHBLOCK + HB_USHORT(size) + HB_USHORT(wParams) + _ENDBLOCK
+  // NOTE: 6 = HB_P_MPUSHBLOCK + uint16_t(size) + uint16_t(wParams) + _ENDBLOCK
   // runtime compiled codeblock cannot reference local variables defined in a
   // function
 

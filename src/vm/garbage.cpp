@@ -94,15 +94,15 @@ static HB_CRITICAL_NEW(s_gcMtx);
 #endif // HB_MT_VM
 
 // holder of memory block information
-// NOTE: HB_USHORT is used intentionally to fill up the structure to
+// NOTE: uint16_t is used intentionally to fill up the structure to
 // full 16 bytes (on 16/32-bit environment)
 struct HB_GARBAGE_
 {
   struct HB_GARBAGE_ *pNext; // next memory block
   struct HB_GARBAGE_ *pPrev; // previous memory block
   const HB_GC_FUNCS *pFuncs; // cleanup function called before memory releasing
-  HB_USHORT locked;          // locking counter
-  HB_USHORT used;            // used/unused block
+  uint16_t locked;          // locking counter
+  uint16_t used;            // used/unused block
 };
 
 using HB_GARBAGE = HB_GARBAGE_;
@@ -168,7 +168,7 @@ static auto volatile s_bCollecting = false;
 
 // flag for used/unused blocks - the meaning of the HB_GC_USED_FLAG bit
 // is reversed on every collecting attempt
-static HB_USHORT s_uUsedFlag = HB_GC_USED_FLAG;
+static uint16_t s_uUsedFlag = HB_GC_USED_FLAG;
 
 static void hb_gcLink(PHB_GARBAGE *pList, PHB_GARBAGE pAlloc)
 {

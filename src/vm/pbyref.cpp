@@ -51,7 +51,7 @@
 
 HB_FUNC(HB_PISBYREF)
 {
-  auto uiParam = static_cast<HB_USHORT>(hb_parni(1));
+  auto uiParam = static_cast<uint16_t>(hb_parni(1));
   HB_SIZE nOffset = hb_stackBaseItem()->symbolStackState()->nBaseItem;
   PHB_ITEM pItem = nullptr;
 

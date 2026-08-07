@@ -523,7 +523,7 @@ void hb_dynsymSetAreaHandle(PHB_DYNS pDynSym, int iArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymSetAreaHandle(%p, %d)", static_cast<void*>(pDynSym), iArea));
 #endif
 
-  hb_dynsymHandles(pDynSym)->uiArea = static_cast<HB_USHORT>(iArea);
+  hb_dynsymHandles(pDynSym)->uiArea = static_cast<uint16_t>(iArea);
 }
 
 static PHB_DYNS hb_dynsymGetByIndex(HB_LONG lIndex)

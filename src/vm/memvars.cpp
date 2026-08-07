@@ -1419,9 +1419,9 @@ HB_FUNC(__MVRESTORE)
       while (hb_fileRead(fhnd, buffer, HB_MEM_REC_LEN, -1) == HB_MEM_REC_LEN) {
         // FoxPro does not add 128 to item type: 'N', 'C', 'D', 'L'
         // CA-Cl*pper respects it and read such files so we also should.
-        auto uiType = static_cast<HB_USHORT>(buffer[11] & 0x7f);
-        auto uiWidth = static_cast<HB_USHORT>(buffer[16]);
-        auto uiDec = static_cast<HB_USHORT>(buffer[17]);
+        auto uiType = static_cast<uint16_t>(buffer[11] & 0x7f);
+        auto uiWidth = static_cast<uint16_t>(buffer[16]);
+        auto uiDec = static_cast<uint16_t>(buffer[17]);
 
         // protect against corrupted files
         buffer[10] = '\0';

@@ -83,10 +83,10 @@ HB_EXTERN_BEGIN
 typedef PHB_FUNC (*HB_PROC_GET)(const char *szFuncName);
 
 // hb_vmProcessSymbols()
-typedef PHB_SYMB (*HB_VM_PROCESS_SYMBOLS)(PHB_SYMB pModuleSymbols, HB_USHORT uiModuleSymbols, const char *szModuleName,
-                                          HB_ULONG ulID, HB_USHORT uiPcodeVer);
-static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID,
-                                   HB_USHORT uiPcodeVer);
+typedef PHB_SYMB (*HB_VM_PROCESS_SYMBOLS)(PHB_SYMB pModuleSymbols, uint16_t uiModuleSymbols, const char *szModuleName,
+                                          HB_ULONG ulID, uint16_t uiPcodeVer);
+static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID,
+                                   uint16_t uiPcodeVer);
 static HB_VM_PROCESS_SYMBOLS s_pProcessSymbols = s_vmProcessSymbols;
 
 // hb_vmExecute()
@@ -138,8 +138,8 @@ BOOL WINAPI HB_DLL_ENTRY_POINT(HINSTANCE hInstance, DWORD dwReason, PVOID pvRese
   return TRUE;
 }
 
-static PHB_SYMB s_dummy_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName,
-                                         HB_ULONG ulID, HB_USHORT uiPcodeVer)
+static PHB_SYMB s_dummy_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName,
+                                         HB_ULONG ulID, uint16_t uiPcodeVer)
 {
   HB_SYMBOL_UNUSED(uiSymbols);
   HB_SYMBOL_UNUSED(szModuleName);
@@ -148,8 +148,8 @@ static PHB_SYMB s_dummy_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols,
   return pSymbols;
 }
 
-static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID,
-                                   HB_USHORT uiPcodeVer)
+static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID,
+                                   uint16_t uiPcodeVer)
 {
   auto pProcessSymbols = reinterpret_cast<HB_VM_PROCESS_SYMBOLS>(hb_dllGetProcAddress("hb_vmProcessSymbols"));
 
@@ -163,8 +163,8 @@ static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const
   }
 }
 
-PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID,
-                             HB_USHORT uiPcodeVer)
+PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID,
+                             uint16_t uiPcodeVer)
 {
   return s_pProcessSymbols(pSymbols, uiSymbols, szModuleName, ulID, uiPcodeVer);
 }

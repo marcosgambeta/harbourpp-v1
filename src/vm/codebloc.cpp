@@ -97,7 +97,7 @@ static HB_GARBAGE_FUNC(hb_codeblockGarbageMark)
 
   if (pCBlock->uiLocals) {
     PHB_ITEM pLocals = pCBlock->pLocals;
-    HB_USHORT uiLocals = pCBlock->uiLocals;
+    uint16_t uiLocals = pCBlock->uiLocals;
 
     do {
       hb_gcItemRef(&pLocals[uiLocals]);
@@ -118,7 +118,7 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs = {
 // pSymbols    -> a pointer to the module symbol table
 //
 // Note: pLocalPosTable cannot be used if uiLocals is ZERO
-PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, HB_USHORT uiLocals, const HB_BYTE *pLocalPosTable,
+PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, uint16_t uiLocals, const HB_BYTE *pLocalPosTable,
                               PHB_SYMB pSymbols, HB_SIZE nLen)
 {
 #if 0
@@ -150,7 +150,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, HB_USHORT uiLocals, const 
     // NOTE: if a codeblock will be created by macro compiler then
     // uiLocal have to be ZERO
     // uiLocal will be also ZERO if it is a nested codeblock
-    HB_USHORT ui = 1;
+    uint16_t ui = 1;
     PHB_ITEM pLocal;
 
     // Create a table that will store the values of local variables
