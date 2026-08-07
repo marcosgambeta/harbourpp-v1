@@ -118,7 +118,7 @@ static int hb_macroParse(PHB_MACRO pMacro)
   pMacro->pCodeInfo->fVParams = false;
   pMacro->pCodeInfo->pLocals = nullptr;
   pMacro->pCodeInfo->pPrev = nullptr;
-  pMacro->pCodeInfo->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_SIZE));
+  pMacro->pCodeInfo->pCode = static_cast<uint8_t *>(hb_xgrab(HB_PCODE_SIZE));
 
   // reset the type of compiled expression - this should be filled after
   // successfully compilation
@@ -781,9 +781,9 @@ HB_FUNC(HB_MACROBLOCK)
 
 static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea, bool fMemVar)
 {
-  HB_BYTE byBuf[23 + sizeof(PHB_DYNS) + sizeof(PHB_DYNS)];
-  HB_BYTE bPushPcode;
-  HB_BYTE bPopPcode;
+  uint8_t byBuf[23 + sizeof(PHB_DYNS) + sizeof(PHB_DYNS)];
+  uint8_t bPushPcode;
+  uint8_t bPopPcode;
 
   if (iWorkArea != 0) {
     bPushPcode = HB_P_MPUSHALIASEDFIELD;
@@ -816,7 +816,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
   i += sizeof(PHB_DYNS);
   byBuf[i++] = HB_P_ENDBLOCK;
 
-  byBuf[n] = static_cast<HB_BYTE>(i - n + 1);
+  byBuf[n] = static_cast<uint8_t>(i - n + 1);
 
   byBuf[i++] = HB_P_PUSHLOCALNEAR;
   byBuf[i++] = 1;
@@ -1211,7 +1211,7 @@ HB_SIZE hb_macroGenJumpTrue(HB_ISIZ nOffset, HB_COMP_DECL)
 
 void hb_macroGenJumpThere(HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL)
 {
-  HB_BYTE *pCode = HB_PCODE_DATA->pCode;
+  uint8_t *pCode = HB_PCODE_DATA->pCode;
   HB_ISIZ nOffset = nTo - nFrom + 1;
 
   if (HB_LIM_INT24(nOffset)) {
@@ -1227,9 +1227,9 @@ void hb_macroGenJumpHere(HB_SIZE nOffset, HB_COMP_DECL)
 }
 
 // Function generates pcode for passed memvar name
-static void hb_macroMemvarGenPCode(HB_BYTE bPCode, const char *szVarName, HB_COMP_DECL)
+static void hb_macroMemvarGenPCode(uint8_t bPCode, const char *szVarName, HB_COMP_DECL)
 {
-  HB_BYTE byBuf[sizeof(PHB_DYNS) + 1];
+  uint8_t byBuf[sizeof(PHB_DYNS) + 1];
   PHB_DYNS pSym;
 
   if (HB_MACRO_DATA->Flags & HB_MACRO_GEN_TYPE) {
@@ -1254,7 +1254,7 @@ static void hb_macroMemvarGenPCode(HB_BYTE bPCode, const char *szVarName, HB_COM
 // generates the pcode to push a symbol on the virtual machine stack
 void hb_macroGenPushSymbol(const char *szSymbolName, HB_BOOL bFunction, HB_COMP_DECL)
 {
-  HB_BYTE byBuf[sizeof(PHB_DYNS) + 1];
+  uint8_t byBuf[sizeof(PHB_DYNS) + 1];
   PHB_DYNS pSym;
 
   if (HB_MACRO_DATA->Flags & HB_MACRO_GEN_TYPE) {
@@ -1289,16 +1289,16 @@ void hb_macroGenPushLong(HB_MAXINT nNumber, HB_COMP_DECL)
   } else if (nNumber == 1) {
     hb_macroGenPCode1(HB_P_ONE, HB_COMP_PARAM);
   } else if (HB_LIM_INT8(nNumber)) {
-    hb_macroGenPCode2(HB_P_PUSHBYTE, static_cast<HB_BYTE>(nNumber), HB_COMP_PARAM);
+    hb_macroGenPCode2(HB_P_PUSHBYTE, static_cast<uint8_t>(nNumber), HB_COMP_PARAM);
   } else if (HB_LIM_INT16(nNumber)) {
     hb_macroGenPCode3(HB_P_PUSHINT, HB_LOBYTE(nNumber), HB_HIBYTE(nNumber), HB_COMP_PARAM);
   } else if (HB_LIM_INT32(nNumber)) {
-    HB_BYTE pBuffer[5];
+    uint8_t pBuffer[5];
     pBuffer[0] = HB_P_PUSHLONG;
     HB_PUT_LE_UINT32(pBuffer + 1, nNumber);
     hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
   } else {
-    HB_BYTE pBuffer[9];
+    uint8_t pBuffer[9];
     pBuffer[0] = HB_P_PUSHLONGLONG;
     HB_PUT_LE_UINT64(pBuffer + 1, nNumber);
     hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
@@ -1308,7 +1308,7 @@ void hb_macroGenPushLong(HB_MAXINT nNumber, HB_COMP_DECL)
 // generates the pcode to push a date on the virtual machine stack
 void hb_macroGenPushDate(long lDate, HB_COMP_DECL)
 {
-  HB_BYTE pBuffer[5];
+  uint8_t pBuffer[5];
   pBuffer[0] = HB_P_PUSHDATE;
   HB_PUT_LE_UINT32(pBuffer + 1, lDate);
   hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
@@ -1317,7 +1317,7 @@ void hb_macroGenPushDate(long lDate, HB_COMP_DECL)
 // generates the pcode to push a timestamp on the virtual machine stack
 void hb_macroGenPushTimeStamp(long lDate, long lTime, HB_COMP_DECL)
 {
-  HB_BYTE pBuffer[9];
+  uint8_t pBuffer[9];
   pBuffer[0] = HB_P_PUSHTIMESTAMP;
   HB_PUT_LE_UINT32(pBuffer + 1, lDate);
   HB_PUT_LE_UINT32(pBuffer + 5, lTime);
@@ -1328,7 +1328,7 @@ void hb_macroGenPushTimeStamp(long lDate, long lTime, HB_COMP_DECL)
 void hb_macroGenMessage(const char *szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 {
   if (szMsgName != nullptr) {
-    HB_BYTE byBuf[sizeof(PHB_DYNS) + 1];
+    uint8_t byBuf[sizeof(PHB_DYNS) + 1];
 
     // Find the address of passed symbol - create the symbol if doesn't exist
     auto pSym = hb_dynsymGetCase(szMsgName);
@@ -1500,16 +1500,16 @@ void hb_macroGenPushLogical(int iTrueFalse, HB_COMP_DECL)
 }
 
 // generates the pcode to push a double number on the virtual machine stack
-void hb_macroGenPushDouble(double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COMP_DECL)
+void hb_macroGenPushDouble(double dNumber, uint8_t bWidth, uint8_t bDec, HB_COMP_DECL)
 {
-  HB_BYTE pBuffer[sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1];
+  uint8_t pBuffer[sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t) + 1];
 
   pBuffer[0] = HB_P_PUSHDOUBLE;
   HB_PUT_LE_DOUBLE(&(pBuffer[1]), dNumber);
   pBuffer[1 + sizeof(double)] = bWidth;
-  pBuffer[1 + sizeof(double) + sizeof(HB_BYTE)] = bDec;
+  pBuffer[1 + sizeof(double) + sizeof(uint8_t)] = bDec;
 
-  hb_macroGenPCodeN(pBuffer, 1 + sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE), HB_COMP_PARAM);
+  hb_macroGenPCodeN(pBuffer, 1 + sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t), HB_COMP_PARAM);
 }
 
 void hb_macroGenPushFunSym(const char *szFunName, int iFlags, HB_COMP_DECL)
@@ -1540,41 +1540,41 @@ void hb_macroGenPushString(const char *szText, HB_SIZE nStrLen, HB_COMP_DECL)
     } else {
       hb_macroGenPCode4(HB_P_MPUSHSTRLARGE, HB_LOBYTE(nStrLen), HB_HIBYTE(nStrLen), HB_ULBYTE(nStrLen), HB_COMP_PARAM);
     }
-    hb_macroGenPCodeN(reinterpret_cast<const HB_BYTE *>(szText), nStrLen, HB_COMP_PARAM);
+    hb_macroGenPCodeN(reinterpret_cast<const uint8_t *>(szText), nStrLen, HB_COMP_PARAM);
   } else {
     hb_macroError(HB_MACRO_TOO_COMPLEX, HB_COMP_PARAM);
   }
 }
 
-void hb_macroGenPCode1(HB_BYTE byte, HB_COMP_DECL)
+void hb_macroGenPCode1(uint8_t byte, HB_COMP_DECL)
 {
   PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
   if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 1) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte;
 }
 
-void hb_macroGenPCode2(HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL)
+void hb_macroGenPCode2(uint8_t byte1, uint8_t byte2, HB_COMP_DECL)
 {
   PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
   if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 2) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte1;
   pFunc->pCode[pFunc->nPCodePos++] = byte2;
 }
 
-void hb_macroGenPCode3(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL)
+void hb_macroGenPCode3(uint8_t byte1, uint8_t byte2, uint8_t byte3, HB_COMP_DECL)
 {
   PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
   if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 3) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte1;
@@ -1582,12 +1582,12 @@ void hb_macroGenPCode3(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL
   pFunc->pCode[pFunc->nPCodePos++] = byte3;
 }
 
-void hb_macroGenPCode4(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte4, HB_COMP_DECL)
+void hb_macroGenPCode4(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, HB_COMP_DECL)
 {
   PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
   if ((pFunc->nPCodeSize - pFunc->nPCodePos) < 4) {
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
   }
 
   pFunc->pCode[pFunc->nPCodePos++] = byte1;
@@ -1596,14 +1596,14 @@ void hb_macroGenPCode4(HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte
   pFunc->pCode[pFunc->nPCodePos++] = byte4;
 }
 
-void hb_macroGenPCodeN(const HB_BYTE *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
+void hb_macroGenPCodeN(const uint8_t *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
 {
   PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
   if (pFunc->nPCodePos + nSize > pFunc->nPCodeSize) {
     // not enough free space in pcode buffer - increase it
     pFunc->nPCodeSize += (((nSize / HB_PCODE_SIZE) + 1) * HB_PCODE_SIZE);
-    pFunc->pCode = static_cast<HB_BYTE *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));
+    pFunc->pCode = static_cast<uint8_t *>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));
   }
 
   memcpy(pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize);
@@ -1627,7 +1627,7 @@ void hb_macroCodeBlockStart(HB_COMP_DECL)
 
   auto pCB = static_cast<PHB_PCODE_INFO>(hb_xgrab(sizeof(HB_PCODE_INFO)));
 
-  pCB->pCode = static_cast<HB_BYTE *>(hb_xgrab(HB_PCODE_SIZE));
+  pCB->pCode = static_cast<uint8_t *>(hb_xgrab(HB_PCODE_SIZE));
   pCB->nPCodeSize = HB_PCODE_SIZE;
   pCB->nPCodePos = 0;
   pCB->fVParams = false;

@@ -285,12 +285,12 @@ using PHB_MEMINFO = HB_MEMINFO *;
 #define HB_MEMINFO_SIZE (s_fStatistic ? sizeof(HB_MEMINFO) + HB_COUNTER_OFFSET : HB_COUNTER_OFFSET)
 #define HB_MEMSIG_SIZE sizeof(HB_U32)
 
-#define HB_FM_GETSIG(p, n) HB_GET_UINT32(static_cast<HB_BYTE *>(p) + (n))
-#define HB_FM_SETSIG(p, n) HB_PUT_UINT32(static_cast<HB_BYTE *>(p) + (n), HB_MEMINFO_SIGNATURE)
-#define HB_FM_CLRSIG(p, n) HB_PUT_UINT32(static_cast<HB_BYTE *>(p) + (n), 0)
+#define HB_FM_GETSIG(p, n) HB_GET_UINT32(static_cast<uint8_t *>(p) + (n))
+#define HB_FM_SETSIG(p, n) HB_PUT_UINT32(static_cast<uint8_t *>(p) + (n), HB_MEMINFO_SIGNATURE)
+#define HB_FM_CLRSIG(p, n) HB_PUT_UINT32(static_cast<uint8_t *>(p) + (n), 0)
 
 #define HB_ALLOC_SIZE(n) ((n) + (s_fStatistic ? _HB_MEMINFO_SIZE + HB_MEMSIG_SIZE : HB_COUNTER_OFFSET))
-#define HB_FM_PTR(p) (static_cast<PHB_MEMINFO>(static_cast<HB_BYTE *>(p) - HB_MEMINFO_SIZE))
+#define HB_FM_PTR(p) (static_cast<PHB_MEMINFO>(static_cast<uint8_t *>(p) - HB_MEMINFO_SIZE))
 
 #define HB_FM_BLOCKSIZE(p) (s_fStatistic ? HB_FM_PTR(pMem)->nSize : 0)
 
@@ -322,7 +322,7 @@ using PHB_MEMINFO = void *;
 
 #endif // HB_FM_STATISTICS
 
-#define HB_MEM_PTR(p) (static_cast<void *>(static_cast<HB_BYTE *>(p) + HB_MEMINFO_SIZE))
+#define HB_MEM_PTR(p) (static_cast<void *>(static_cast<uint8_t *>(p) + HB_MEMINFO_SIZE))
 
 #if !defined(HB_MT_VM)
 
@@ -814,7 +814,7 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) // reallocates memory
 #ifdef HB_PARANOID_MEM_CHECK
     memset(pMemBlock, HB_MEMFILER, HB_ALLOC_SIZE(nMemSize));
     if (nSize > nMemSize && pMem) {
-      memset(static_cast<HB_BYTE *>(HB_MEM_PTR(pMem)) + nMemSize, HB_MEMFILER, nSize - nMemSize);
+      memset(static_cast<uint8_t *>(HB_MEM_PTR(pMem)) + nMemSize, HB_MEMFILER, nSize - nMemSize);
     }
 #endif
     free(pMemBlock);
@@ -1109,7 +1109,7 @@ void hb_xinit(void) // Initialize fixed memory subsystem
 #ifdef HB_FM_STATISTICS
 static char *hb_mem2str(char *membuffer, void *pMem, HB_SIZE nSize)
 {
-  auto cMem = static_cast<HB_BYTE *>(pMem);
+  auto cMem = static_cast<uint8_t *>(pMem);
   HB_SIZE nIndex;
 
   HB_SIZE nPrintable = 0;
@@ -1132,8 +1132,8 @@ static char *hb_mem2str(char *membuffer, void *pMem, HB_SIZE nSize)
   } else {
     // format as hex
     for (nIndex = 0; nIndex < nSize; nIndex++) {
-      HB_BYTE hinibble = cMem[nIndex] >> 4;
-      HB_BYTE lownibble = cMem[nIndex] & 0x0F;
+      uint8_t hinibble = cMem[nIndex] >> 4;
+      uint8_t lownibble = cMem[nIndex] & 0x0F;
       membuffer[nIndex * 2] = hinibble <= 9 ? ('0' + hinibble) : ('A' + hinibble - 10);
       membuffer[nIndex * 2 + 1] = lownibble <= 9 ? ('0' + lownibble) : ('A' + lownibble - 10);
     }

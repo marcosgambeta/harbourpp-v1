@@ -115,11 +115,11 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #define HB_GARBAGE_SIZE sizeof(HB_GARBAGE)
 #endif
 
-#define HB_GC_PTR(p) (reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE *>(p) - HB_GARBAGE_SIZE))
+#define HB_GC_PTR(p) (reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<uint8_t *>(p) - HB_GARBAGE_SIZE))
 
 #endif // !defined(HB_GC_PTR)
 
-#define HB_BLOCK_PTR(p) (static_cast<void *>(reinterpret_cast<HB_BYTE *>(p) + HB_GARBAGE_SIZE))
+#define HB_BLOCK_PTR(p) (static_cast<void *>(reinterpret_cast<uint8_t *>(p) + HB_GARBAGE_SIZE))
 
 // we may use a cache later
 #define HB_GARBAGE_NEW(nSize) (static_cast<PHB_GARBAGE>(hb_xgrab(HB_GARBAGE_SIZE + (nSize))))

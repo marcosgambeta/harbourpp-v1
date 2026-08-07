@@ -63,7 +63,7 @@ struct HB_DYNF
 {
   char *szName;           // Name of the function
   HB_PCODEFUNC pcodeFunc; // Dynamic function info
-  HB_BYTE *pCode;         // P-code
+  uint8_t *pCode;         // P-code
 };
 
 using PHB_DYNF = HB_DYNF *;
@@ -342,7 +342,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
       do {
         ch = *buffer++ = szHrbBody[nBodyOffset++];
       } while (ch);
-      pSymRead[ul].scope.value = static_cast<HB_BYTE>(szHrbBody[nBodyOffset++]);
+      pSymRead[ul].scope.value = static_cast<uint8_t>(szHrbBody[nBodyOffset++]);
       pSymRead[ul].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(static_cast<HB_PTRUINT>(szHrbBody[nBodyOffset++]));
       pSymRead[ul].pDynSym = nullptr;
 
@@ -389,7 +389,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
         }
 
         // Copy function body
-        pDynFunc[ul].pCode = static_cast<HB_BYTE *>(hb_xgrab(nSize));
+        pDynFunc[ul].pCode = static_cast<uint8_t *>(hb_xgrab(nSize));
         memcpy(reinterpret_cast<char *>(pDynFunc[ul].pCode), szHrbBody + nBodyOffset, nSize);
         nBodyOffset += nSize;
 
@@ -521,7 +521,7 @@ static PHRB_BODY hb_hrbLoadFromFile(const char *szHrb, uint16_t usMode)
 
   if (pFile != nullptr) {
     HB_SIZE nBodySize;
-    HB_BYTE *pBuffer = hb_fileLoadData(pFile, 0, &nBodySize);
+    uint8_t *pBuffer = hb_fileLoadData(pFile, 0, &nBodySize);
 
     hb_fileClose(pFile);
 

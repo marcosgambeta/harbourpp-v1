@@ -1219,7 +1219,7 @@ struct MEMVARSAVE_CARGO
 {
   const char *pszMask;
   HB_BOOL bIncludeMask; // TODO: bool
-  HB_BYTE *buffer;
+  uint8_t *buffer;
   PHB_FILE fhnd;
 };
 
@@ -1229,7 +1229,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
 {
   const char *pszMask = (static_cast<MEMVARSAVE_CARGO *>(Cargo))->pszMask;
   bool bIncludeMask = (static_cast<MEMVARSAVE_CARGO *>(Cargo))->bIncludeMask;
-  HB_BYTE *buffer = (static_cast<MEMVARSAVE_CARGO *>(Cargo))->buffer;
+  uint8_t *buffer = (static_cast<MEMVARSAVE_CARGO *>(Cargo))->buffer;
   PHB_FILE fhnd = (static_cast<MEMVARSAVE_CARGO *>(Cargo))->fhnd;
 
   // NOTE: Harbour name lengths are not limited, but the .mem file
@@ -1274,12 +1274,12 @@ static HB_DYNS_FUNC(hb_memvarSave)
         buffer[11] = 'N' + 128;
 #ifdef HB_CLP_STRICT
         // NOTE: This is the buggy, but fully CA-Cl*pper compatible method. [vszakats]
-        buffer[16] = static_cast<HB_BYTE>(iWidth) + (pMemvar->isDouble() ? static_cast<HB_BYTE>(iDec + 1) : 0);
+        buffer[16] = static_cast<uint8_t>(iWidth) + (pMemvar->isDouble() ? static_cast<uint8_t>(iDec + 1) : 0);
 #else
         // NOTE: This would be the correct method, but Clipper is buggy here. [vszakats]
-        buffer[16] = static_cast<HB_BYTE>(iWidth) + (iDec == 0 ? 0 : static_cast<HB_BYTE>(iDec + 1));
+        buffer[16] = static_cast<uint8_t>(iWidth) + (iDec == 0 ? 0 : static_cast<uint8_t>(iDec + 1));
 #endif
-        buffer[17] = static_cast<HB_BYTE>(iDec);
+        buffer[17] = static_cast<uint8_t>(iDec);
         HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
         hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
       } else if (pMemvar->isDate()) {
@@ -1331,7 +1331,7 @@ HB_FUNC(__MVSAVE)
     } while (fhnd == nullptr);
 
     if (fhnd != nullptr) {
-      HB_BYTE buffer[HB_MEM_REC_LEN + HB_MEM_NUM_LEN];
+      uint8_t buffer[HB_MEM_REC_LEN + HB_MEM_NUM_LEN];
 
       MEMVARSAVE_CARGO msc;
       msc.pszMask = hb_memvarGetMask(2);
@@ -1413,7 +1413,7 @@ HB_FUNC(__MVRESTORE)
       bool bIncludeMask = hb_parldef(4, true);
 #endif
 
-      HB_BYTE buffer[HB_MEM_REC_LEN];
+      uint8_t buffer[HB_MEM_REC_LEN];
       PHB_ITEM pItem = nullptr;
 
       while (hb_fileRead(fhnd, buffer, HB_MEM_REC_LEN, -1) == HB_MEM_REC_LEN) {
@@ -1430,7 +1430,7 @@ HB_FUNC(__MVRESTORE)
         switch (uiType) {
         case 'C': {
           uiWidth += uiDec * 256;
-          auto pbyString = static_cast<HB_BYTE *>(hb_xgrab(uiWidth));
+          auto pbyString = static_cast<uint8_t *>(hb_xgrab(uiWidth));
 
           if (hb_fileRead(fhnd, pbyString, uiWidth, -1) == static_cast<HB_SIZE>(uiWidth)) {
             pItem = hb_itemPutCLPtr(pItem, reinterpret_cast<char *>(pbyString), uiWidth - 1);
@@ -1443,7 +1443,7 @@ HB_FUNC(__MVRESTORE)
         }
 
         case 'N': {
-          HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
+          uint8_t pbyNumber[HB_MEM_NUM_LEN];
 
           if (hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN) {
             pItem = hb_itemPutNLen(pItem, HB_GET_LE_DOUBLE(pbyNumber), uiWidth - (uiDec ? (uiDec + 1) : 0), uiDec);
@@ -1455,7 +1455,7 @@ HB_FUNC(__MVRESTORE)
         }
 
         case 'D': {
-          HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
+          uint8_t pbyNumber[HB_MEM_NUM_LEN];
 
           if (hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN) {
             pItem = hb_itemPutDL(pItem, static_cast<long>(HB_GET_LE_DOUBLE(pbyNumber)));
@@ -1467,7 +1467,7 @@ HB_FUNC(__MVRESTORE)
         }
 
         case 'T': {
-          HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
+          uint8_t pbyNumber[HB_MEM_NUM_LEN];
 
           if (hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN) {
             pItem = hb_itemPutTD(pItem, HB_GET_LE_DOUBLE(pbyNumber));
@@ -1479,7 +1479,7 @@ HB_FUNC(__MVRESTORE)
         }
 
         case 'L': {
-          HB_BYTE pbyLogical[1];
+          uint8_t pbyLogical[1];
 
           if (hb_fileRead(fhnd, pbyLogical, 1, -1) == 1) {
             pItem = hb_itemPutL(pItem, pbyLogical[0] != 0);

@@ -56,7 +56,7 @@
 // Dummy returning NIL for buggy code which may store references
 // to freed by GC codeblock in .prg destructors and then (after
 // catching RT EG_DESTRUCTOR error) try to execute them
-static const HB_BYTE s_pCode[2] = {HB_P_PUSHNIL, HB_P_ENDBLOCK};
+static const uint8_t s_pCode[2] = {HB_P_PUSHNIL, HB_P_ENDBLOCK};
 
 // Release all allocated memory when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
@@ -118,7 +118,7 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs = {
 // pSymbols    -> a pointer to the module symbol table
 //
 // Note: pLocalPosTable cannot be used if uiLocals is ZERO
-PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, uint16_t uiLocals, const HB_BYTE *pLocalPosTable,
+PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable,
                               PHB_SYMB pSymbols, HB_SIZE nLen)
 {
 #if 0
@@ -126,7 +126,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, uint16_t uiLocals, const H
 #endif
 
   HB_STACK_TLS_PRELOAD
-  const HB_BYTE *pCode;
+  const uint8_t *pCode;
 
   // Allocate memory for code block body and detach items hb_gcAllocRaw()
   // to be safe for automatic GC activation in hb_xgrab() without
@@ -136,7 +136,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, uint16_t uiLocals, const H
     // The codeblock pcode is stored in dynamically allocated memory that
     // can be deallocated after creation of a codeblock. We have to duplicate
     // the passed buffer
-    pCode = static_cast<const HB_BYTE *>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
+    pCode = static_cast<const uint8_t *>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
   } else {
     // The codeblock pcode is stored in static segment.
     // The only allowed operation on a codeblock is evaluating it then
@@ -210,7 +210,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, uint16_t uiLocals, const H
   return pCBlock;
 }
 
-PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE *pBuffer, HB_SIZE nLen)
+PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), nLen));
@@ -226,7 +226,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE *pBuffer, HB_SIZE nLen)
   // to be safe for automatic GC activation in hb_xgrab() without
   // calling hb_gcLock()/hb_gcUnlock(). [druzus]
 
-  auto pCode = static_cast<HB_BYTE *>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
+  auto pCode = static_cast<uint8_t *>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
 
   auto pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
   auto pBase = hb_stackBaseItem();

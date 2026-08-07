@@ -90,8 +90,8 @@ static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const 
 static HB_VM_PROCESS_SYMBOLS s_pProcessSymbols = s_vmProcessSymbols;
 
 // hb_vmExecute()
-typedef void (*HB_VM_EXECUTE)(const HB_BYTE *pCode, PHB_SYMB pSymbols);
-static void s_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols);
+typedef void (*HB_VM_EXECUTE)(const uint8_t *pCode, PHB_SYMB pSymbols);
+static void s_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols);
 static HB_VM_EXECUTE s_pExecute = s_vmExecute;
 
 PHB_FUNC hb_dllGetProcAddress(const char *szProcName)
@@ -169,13 +169,13 @@ PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *
   return s_pProcessSymbols(pSymbols, uiSymbols, szModuleName, ulID, uiPcodeVer);
 }
 
-static void s_dummy_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
+static void s_dummy_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 {
   HB_SYMBOL_UNUSED(pCode);
   HB_SYMBOL_UNUSED(pSymbols);
 }
 
-static void s_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
+static void s_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 {
   auto pExecute = reinterpret_cast<HB_VM_EXECUTE>(hb_dllGetProcAddress("hb_vmExecute"));
 
@@ -188,7 +188,7 @@ static void s_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
   }
 }
 
-void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
+void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 {
   s_pExecute(pCode, pSymbols);
 }
