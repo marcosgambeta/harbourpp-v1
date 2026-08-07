@@ -2002,7 +2002,7 @@ static MLOCK_T malloc_global_mutex = 0;
 struct malloc_recursive_lock
 {
   int sl;
-  unsigned int c;
+  uint32_t c;
   THREAD_ID_T threadid;
 };
 
@@ -2300,9 +2300,9 @@ struct malloc_chunk
 typedef struct malloc_chunk mchunk;
 typedef struct malloc_chunk *mchunkptr;
 typedef struct malloc_chunk *sbinptr; /* The type of bins of chunks */
-typedef unsigned int bindex_t;        /* Described below */
-typedef unsigned int binmap_t;        /* Described below */
-typedef unsigned int flag_t;          /* The type of various bit flag sets */
+typedef uint32_t bindex_t;        /* Described below */
+typedef uint32_t binmap_t;        /* Described below */
+typedef uint32_t flag_t;          /* The type of various bit flag sets */
 
 /* ------------------- Chunks sizes and alignments ----------------------- */
 
@@ -2942,7 +2942,7 @@ static size_t traverse_and_check(mstate m);
       I = NTREEBINS - 1;                                                                                               \
     else                                                                                                               \
     {                                                                                                                  \
-      unsigned int K = _bit_scan_reverse(X);                                                                           \
+      uint32_t K = _bit_scan_reverse(X);                                                                           \
       I = (bindex_t)((K << 1) + ((S >> (K + (TREEBIN_SHIFT - 1)) & 1)));                                               \
     }                                                                                                                  \
   }
@@ -2951,14 +2951,14 @@ static size_t traverse_and_check(mstate m);
     (defined(__i386__) || defined(__x86_64__))
 #define compute_tree_index(S, I)                                                                                       \
   {                                                                                                                    \
-    unsigned int X = S >> TREEBIN_SHIFT;                                                                               \
+    uint32_t X = S >> TREEBIN_SHIFT;                                                                               \
     if (X == 0)                                                                                                        \
       I = 0;                                                                                                           \
     else if (X > 0xFFFF)                                                                                               \
       I = NTREEBINS - 1;                                                                                               \
     else                                                                                                               \
     {                                                                                                                  \
-      unsigned int K = (unsigned)sizeof(X) * __CHAR_BIT__ - 1 - (unsigned)__builtin_clz(X);                            \
+      uint32_t K = (unsigned)sizeof(X) * __CHAR_BIT__ - 1 - (unsigned)__builtin_clz(X);                            \
       I = (bindex_t)((K << 1) + ((S >> (K + (TREEBIN_SHIFT - 1)) & 1)));                                               \
     }                                                                                                                  \
   }
@@ -2973,7 +2973,7 @@ static size_t traverse_and_check(mstate m);
       I = NTREEBINS - 1;                                                                                               \
     else                                                                                                               \
     {                                                                                                                  \
-      unsigned int K;                                                                                                  \
+      uint32_t K;                                                                                                  \
       _BitScanReverse((DWORD *)&K, (DWORD)X);                                                                          \
       I = (bindex_t)((K << 1) + ((S >> (K + (TREEBIN_SHIFT - 1)) & 1)));                                               \
     }                                                                                                                  \
@@ -2989,9 +2989,9 @@ static size_t traverse_and_check(mstate m);
       I = NTREEBINS - 1;                                                                                               \
     else                                                                                                               \
     {                                                                                                                  \
-      unsigned int Y = (unsigned int)X;                                                                                \
-      unsigned int N = ((Y - 0x100) >> 16) & 8;                                                                        \
-      unsigned int K = (((Y <<= N) - 0x1000) >> 16) & 4;                                                               \
+      uint32_t Y = (uint32_t)X;                                                                                \
+      uint32_t N = ((Y - 0x100) >> 16) & 8;                                                                        \
+      uint32_t K = (((Y <<= N) - 0x1000) >> 16) & 4;                                                               \
       N += K;                                                                                                          \
       N += K = (((Y <<= K) - 0x4000) >> 16) & 2;                                                                       \
       K = 14 - N + ((Y <<= K) >> 15);                                                                                  \
@@ -3040,7 +3040,7 @@ static size_t traverse_and_check(mstate m);
     (defined(__i386__) || defined(__x86_64__))
 #define compute_bit2idx(X, I)                                                                                          \
   {                                                                                                                    \
-    unsigned int J;                                                                                                    \
+    uint32_t J;                                                                                                    \
     J = __builtin_ctz(X);                                                                                              \
     I = (bindex_t)J;                                                                                                   \
   }
@@ -3048,7 +3048,7 @@ static size_t traverse_and_check(mstate m);
 #elif defined(__INTEL_COMPILER)
 #define compute_bit2idx(X, I)                                                                                          \
   {                                                                                                                    \
-    unsigned int J;                                                                                                    \
+    uint32_t J;                                                                                                    \
     J = _bit_scan_forward(X);                                                                                          \
     I = (bindex_t)J;                                                                                                   \
   }
@@ -3056,7 +3056,7 @@ static size_t traverse_and_check(mstate m);
 #elif defined(_MSC_VER) && _MSC_VER >= 1300 && !defined(__clang__)
 #define compute_bit2idx(X, I)                                                                                          \
   {                                                                                                                    \
-    unsigned int J;                                                                                                    \
+    uint32_t J;                                                                                                    \
     _BitScanForward((DWORD *)&J, X);                                                                                   \
     I = (bindex_t)J;                                                                                                   \
   }
@@ -3067,9 +3067,9 @@ static size_t traverse_and_check(mstate m);
 #else
 #define compute_bit2idx(X, I)                                                                                          \
   {                                                                                                                    \
-    unsigned int Y = X - 1;                                                                                            \
-    unsigned int K = Y >> (16 - 4) & 16;                                                                               \
-    unsigned int N = K;                                                                                                \
+    uint32_t Y = X - 1;                                                                                            \
+    uint32_t K = Y >> (16 - 4) & 16;                                                                               \
+    uint32_t N = K;                                                                                                \
     Y >>= K;                                                                                                           \
     N += K = Y >> (8 - 3) & 8;                                                                                         \
     Y >>= K;                                                                                                           \
@@ -3483,7 +3483,7 @@ static void do_check_smallbin(mstate m, bindex_t i)
 {
   sbinptr b = smallbin_at(m, i);
   mchunkptr p = b->bk;
-  unsigned int empty = (m->smallmap & (1U << i)) == 0;
+  uint32_t empty = (m->smallmap & (1U << i)) == 0;
   if (p == b)
     assert(empty);
   if (!empty)

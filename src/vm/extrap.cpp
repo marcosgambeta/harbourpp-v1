@@ -222,7 +222,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
         hb_strncat(errmsg, buf, errmsglen);
       }
       hb_strncat(errmsg, "\n    SS:ESP:", errmsglen);
-      auto sc = reinterpret_cast<unsigned int *>(pCtx->Esp);
+      auto sc = reinterpret_cast<uint32_t *>(pCtx->Esp);
       for (auto i = 0; i < 16; i++) {
         // FIXME: Unsafe function.
         if (IsBadReadPtr(sc, 4)) {
@@ -234,25 +234,25 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
       hb_strncat(errmsg, "\n\n", errmsglen);
       hb_strncat(errmsg, "    C stack:\n", errmsglen);
       hb_strncat(errmsg, "    EIP:     EBP:       Frame: OldEBP, RetAddr, Params...\n", errmsglen);
-      unsigned int eip = pCtx->Eip;
-      auto ebp = reinterpret_cast<unsigned int *>(pCtx->Ebp);
+      uint32_t eip = pCtx->Eip;
+      auto ebp = reinterpret_cast<uint32_t *>(pCtx->Ebp);
       // FIXME: Unsafe function.
       if (!IsBadWritePtr(ebp, 8)) {
         for (auto i = 0; i < 20; i++) {
           // FIXME: Unsafe function.
-          if (reinterpret_cast<unsigned int>(ebp) % 4 != 0 || IsBadWritePtr(ebp, 40) ||
-              reinterpret_cast<unsigned int>(ebp) >= ebp[0]) {
+          if (reinterpret_cast<uint32_t>(ebp) % 4 != 0 || IsBadWritePtr(ebp, 40) ||
+              reinterpret_cast<uint32_t>(ebp) >= ebp[0]) {
             break;
           }
           hb_snprintf(buf, sizeof(buf), "    %08X %08X  ", static_cast<int>(eip), reinterpret_cast<int>(ebp));
           hb_strncat(errmsg, buf, errmsglen);
-          for (unsigned int j = 0; j < 10 && reinterpret_cast<unsigned int>(ebp + j) < ebp[0]; j++) {
+          for (uint32_t j = 0; j < 10 && reinterpret_cast<uint32_t>(ebp + j) < ebp[0]; j++) {
             hb_snprintf(buf, sizeof(buf), " %08X", ebp[j]);
             hb_strncat(errmsg, buf, errmsglen);
           }
           hb_strncat(errmsg, "\n", errmsglen);
           eip = ebp[1];
-          ebp = reinterpret_cast<unsigned int *>(ebp[0]);
+          ebp = reinterpret_cast<uint32_t *>(ebp[0]);
         }
         hb_strncat(errmsg, "\n", errmsglen);
       }

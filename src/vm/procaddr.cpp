@@ -113,8 +113,8 @@ PHB_FUNC hb_vmProcAddress(const char *szFuncName)
       {"hb_xgrab", reinterpret_cast<PHB_FUNC>(hb_xgrab)},
       {"hb_xrealloc", reinterpret_cast<PHB_FUNC>(hb_xrealloc)}};
 
-  unsigned int uiFirst = 0;
-  unsigned int uiLast = HB_SIZEOFARRAY(s_funcTable), uiMiddle;
+  uint32_t uiFirst = 0;
+  uint32_t uiLast = HB_SIZEOFARRAY(s_funcTable), uiMiddle;
   int iCmp;
 
   do {
