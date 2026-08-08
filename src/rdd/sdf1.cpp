@@ -61,7 +61,7 @@
 #define SUPERTABLE (&sdfSuper)
 
 static RDDFUNCS sdfSuper;
-static const HB_USHORT s_uiNumLength[9] = {0, 4, 6, 8, 11, 13, 16, 18, 20};
+static const uint16_t s_uiNumLength[9] = {0, 4, 6, 8, 11, 13, 16, 18, 20};
 
 static void hb_sdfInitArea(SDFAREAP pArea, char *szFileName)
 {
@@ -76,7 +76,7 @@ static void hb_sdfInitArea(SDFAREAP pArea, char *szFileName)
     szEol = hb_conNewLine();
   }
   pArea->szEol = hb_strdup(szEol);
-  pArea->uiEolLen = static_cast<HB_USHORT>(strlen(szEol));
+  pArea->uiEolLen = static_cast<uint16_t>(strlen(szEol));
   pArea->fAnyEol = (szEol[0] == '\n' || szEol[0] == '\r') &&
                    (pArea->uiEolLen == 1 ||
                     (pArea->uiEolLen == 2 && szEol[0] != szEol[1] && (szEol[1] == '\n' || szEol[1] == '\r')));
@@ -397,7 +397,7 @@ static HB_ERRCODE hb_sdfRecall(SDFAREAP pArea)
 }
 
 // Obtain the current value of a field.
-static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -495,7 +495,7 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 }
 
 // Assign a value to a field.
-static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -724,7 +724,7 @@ static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
 }
 
 // Retrieve information about the current table/driver.
-static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -889,7 +889,7 @@ static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 }
 
 // Establish the extent of the array of fields for a WorkArea.
-static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, HB_USHORT uiFieldExtent)
+static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, uint16_t uiFieldExtent)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent));
@@ -901,7 +901,7 @@ static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, HB_USHORT uiFieldExtent)
 
   // Alloc field offsets array
   if (uiFieldExtent) {
-    pArea->pFieldOffset = static_cast<HB_USHORT *>(hb_xgrabz(uiFieldExtent * sizeof(HB_USHORT)));
+    pArea->pFieldOffset = static_cast<uint16_t *>(hb_xgrabz(uiFieldExtent * sizeof(uint16_t)));
   }
 
   return Harbour::SUCCESS;
@@ -927,7 +927,7 @@ static HB_ERRCODE hb_sdfNewArea(SDFAREAP pArea)
 }
 
 // Retrieve the size of the WorkArea structure.
-static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, uint16_t *uiSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfStrucSize(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
@@ -1072,7 +1072,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 #endif
 
   PHB_ITEM pError = nullptr;
-  HB_USHORT uiFlags;
+  uint16_t uiFlags;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
@@ -1158,7 +1158,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 }
 
 // Retrieve information about the current driver.
-static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
@@ -1291,7 +1291,7 @@ HB_FUNC(SDF)
 
 HB_FUNC_STATIC(SDF_GETFUNCTABLE)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
 
 #if 0

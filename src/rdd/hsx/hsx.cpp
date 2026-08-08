@@ -321,7 +321,7 @@ struct _HSXINFO
 {
   int iHandle;            /* HSX handle */
   HB_ULONG ulRecCount;    /* number of records */
-  HB_USHORT uiRecordSize; /* record size in bytes */
+  uint16_t uiRecordSize; /* record size in bytes */
   HB_BOOL fIgnoreCase;    /* ignore case */
   int iFilterType;        /* character filter */
   HB_BOOL fUseHash;       /* use Hash functions for alphas */
@@ -701,7 +701,7 @@ static int hb_hsxHdrFlush(int iHandle)
   }
 
   if (pHSX->fHdrChanged) {
-    HB_USHORT uiBits = 0, uiSize = pHSX->uiRecordSize;
+    uint16_t uiBits = 0, uiSize = pHSX->uiRecordSize;
     HSXHEADERBUF buffer;
 
     while (uiSize >>= 1) {
@@ -783,7 +783,7 @@ static int hb_hsxHdrRead(int iHandle)
   }
 
   pHSX->ulRecCount = HB_GET_LE_UINT32(buffer.header.recCount);
-  pHSX->uiRecordSize = static_cast<HB_USHORT>(HB_GET_LE_UINT32(buffer.header.recSize));
+  pHSX->uiRecordSize = static_cast<uint16_t>(HB_GET_LE_UINT32(buffer.header.recSize));
   pHSX->fIgnoreCase = HB_GET_LE_UINT16(buffer.header.ignoreCase) != 0;
   pHSX->iFilterType = HB_GET_LE_UINT16(buffer.header.filterType);
   pHSX->fUseHash = HB_GET_LE_UINT32(buffer.header.hashLetters) != 0;
@@ -1427,7 +1427,7 @@ static int hb_hsxCreate(const char *szFile, int iBufSize, int iKeySize, HB_BOOL 
   const char *szExpr = nullptr;
   PHB_ITEM pKeyExpr = nullptr;
   HB_ULONG ulBufSize;
-  HB_USHORT uiRecordSize;
+  uint16_t uiRecordSize;
   LPHSXINFO pHSX;
   PHB_FILE pFile;
   int iRetVal;
@@ -1453,7 +1453,7 @@ static int hb_hsxCreate(const char *szFile, int iBufSize, int iKeySize, HB_BOOL 
   } else if (ulBufSize > HSXMAXBUF_LEN) {
     ulBufSize = HSXMAXBUF_LEN;
   }
-  uiRecordSize = static_cast<HB_USHORT>(0x08) << iKeySize;
+  uiRecordSize = static_cast<uint16_t>(0x08) << iKeySize;
   ulBufSize /= uiRecordSize;
   if (ulBufSize == 0) {
     ulBufSize = 1;

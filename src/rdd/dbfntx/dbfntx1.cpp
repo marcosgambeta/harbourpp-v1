@@ -153,7 +153,7 @@ static HB_ULONG s_wrNO = 0;
 #endif
 
 static RDDFUNCS ntxSuper;
-static HB_USHORT s_uiRddId;
+static uint16_t s_uiRddId;
 
 /* temporary casts to suppress 32/64-bit Windows warnings */
 #define HB_SHORTCAST HB_SHORT
@@ -189,28 +189,28 @@ static HB_USHORT s_uiRddId;
 
 #else
 
-static HB_USHORT hb_ntxGetKeyCount(LPPAGEINFO pPage)
+static uint16_t hb_ntxGetKeyCount(LPPAGEINFO pPage)
 {
   const char *ptr = hb_ntxPageBuffer(pPage);
 
   return HB_GET_LE_UINT16(ptr);
 }
 
-static void hb_ntxSetKeyCount(LPPAGEINFO pPage, HB_USHORT uiKeys)
+static void hb_ntxSetKeyCount(LPPAGEINFO pPage, uint16_t uiKeys)
 {
   char *ptr = hb_ntxPageBuffer(pPage);
 
   HB_PUT_LE_UINT16(ptr, uiKeys);
 }
 
-static HB_USHORT hb_ntxGetKeyOffset(LPPAGEINFO pPage, HB_SHORT iKey)
+static uint16_t hb_ntxGetKeyOffset(LPPAGEINFO pPage, HB_SHORT iKey)
 {
   const char *ptr = hb_ntxPageBuffer(pPage) + 2 + (iKey << 1);
 
   return HB_GET_LE_UINT16(ptr);
 }
 
-static void hb_ntxSetKeyOffset(LPPAGEINFO pPage, HB_SHORT iKey, HB_USHORT uiOffset)
+static void hb_ntxSetKeyOffset(LPPAGEINFO pPage, HB_SHORT iKey, uint16_t uiOffset)
 {
   char *ptr = hb_ntxPageBuffer(pPage) + 2 + (iKey << 1);
 
@@ -261,7 +261,7 @@ static HB_ULONG hb_ntxGetKeyRec(LPPAGEINFO pPage, HB_SHORT iKey)
  * generate Run-Time error
  */
 static HB_ERRCODE hb_ntxErrorRT(NTXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szFileName,
-                                HB_ERRCODE errOsCode, HB_USHORT uiFlags, PHB_ITEM *pErrorPtr)
+                                HB_ERRCODE errOsCode, uint16_t uiFlags, PHB_ITEM *pErrorPtr)
 {
   HB_ERRCODE iRet = Harbour::FAILURE;
 
@@ -296,7 +296,7 @@ static HB_ERRCODE hb_ntxErrorRT(NTXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCOD
 /*
  * convert numeric item into NTX key value
  */
-static char *hb_ntxNumToStr(PHB_ITEM pItem, char *szBuffer, HB_USHORT length, HB_USHORT dec)
+static char *hb_ntxNumToStr(PHB_ITEM pItem, char *szBuffer, uint16_t length, uint16_t dec)
 {
   char *ptr = szBuffer;
 
@@ -326,7 +326,7 @@ static char *hb_ntxNumToStr(PHB_ITEM pItem, char *szBuffer, HB_USHORT length, HB
 /*
  * convert numeric NTX key value into item
  */
-static PHB_ITEM hb_ntxStrToNum(PHB_ITEM pItem, const char *szKeyVal, HB_USHORT length, HB_USHORT dec)
+static PHB_ITEM hb_ntxStrToNum(PHB_ITEM pItem, const char *szKeyVal, uint16_t length, uint16_t dec)
 {
   char szBuffer[NTX_MAX_KEY + 1];
   const char *ptr = szKeyVal;
@@ -433,7 +433,7 @@ static HB_BYTE hb_ntxItemTypeCmp(HB_BYTE bType)
  *       for scope key evaluation
  */
 static LPKEYINFO hb_ntxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, LPTAGINFO pTag, bool fTrans,
-                                  HB_USHORT *puiLen)
+                                  uint16_t *puiLen)
 {
   HB_SIZE len;
 
@@ -461,7 +461,7 @@ static LPKEYINFO hb_ntxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     if (len < static_cast<HB_SIZE>(pTag->KeyLength)) {
       memset(pKey->key + len, ' ', pTag->KeyLength - len);
       if (puiLen) {
-        *puiLen = static_cast<HB_USHORT>(len);
+        *puiLen = static_cast<uint16_t>(len);
       }
     }
     pKey->key[pTag->KeyLength] = '\0';
@@ -749,7 +749,7 @@ static bool hb_ntxKeyInScope(LPTAGINFO pTag, LPKEYINFO pKey)
 /*
  * clear top or bottom scope
  */
-static void hb_ntxTagClearScope(LPTAGINFO pTag, HB_USHORT nScope)
+static void hb_ntxTagClearScope(LPTAGINFO pTag, uint16_t nScope)
 {
   NTXAREAP pArea = pTag->pIndex->pArea;
   PHB_NTXSCOPE pScope;
@@ -781,7 +781,7 @@ static void hb_ntxTagClearScope(LPTAGINFO pTag, HB_USHORT nScope)
 /*
  * set top or bottom scope
  */
-static void hb_ntxTagSetScope(LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem)
+static void hb_ntxTagSetScope(LPTAGINFO pTag, uint16_t nScope, PHB_ITEM pItem)
 {
   NTXAREAP pArea = pTag->pIndex->pArea;
   PHB_ITEM pScopeVal;
@@ -822,7 +822,7 @@ static void hb_ntxTagSetScope(LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem)
 /*
  * get top or bottom scope item
  */
-static void hb_ntxTagGetScope(LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem)
+static void hb_ntxTagGetScope(LPTAGINFO pTag, uint16_t nScope, PHB_ITEM pItem)
 {
   NTXAREAP pArea = pTag->pIndex->pArea;
   PHB_NTXSCOPE pScope;
@@ -906,7 +906,7 @@ static void hb_ntxPageCheckKeys(LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int 
 {
   int i;
 
-  for (HB_USHORT u = 1; u < pPage->uiKeys; u++) {
+  for (uint16_t u = 1; u < pPage->uiKeys; u++) {
     i = hb_ntxValCompare(pTag, hb_ntxGetKeyVal(pPage, u - 1), pTag->KeyLength, hb_ntxGetKeyVal(pPage, u),
                          pTag->KeyLength, true);
     if (!pTag->AscendKey) {
@@ -1008,7 +1008,7 @@ static void hb_ntxDiscardBuffers(LPNTXINDEX pIndex)
  */
 static void hb_ntxTagUpdateFlags(LPTAGINFO pTag)
 {
-  HB_USHORT uiSignature = pTag->Signature;
+  uint16_t uiSignature = pTag->Signature;
 
   pTag->Custom = (uiSignature & NTX_FLAG_CUSTOM) != 0;
   pTag->ChgOnly = (uiSignature & NTX_FLAG_CHGONLY) != 0;
@@ -1257,9 +1257,9 @@ static LPPAGEINFO hb_ntxPageLoad(LPTAGINFO pTag, HB_ULONG ulPage)
  */
 static void hb_ntxPageInit(LPTAGINFO pTag, LPPAGEINFO pPage)
 {
-  HB_USHORT o = (pTag->MaxKeys + 2) << 1;
+  uint16_t o = (pTag->MaxKeys + 2) << 1;
 
-  for (HB_USHORT u = 0; u <= pTag->MaxKeys; u++, o += pTag->KeyLength + 8) {
+  for (uint16_t u = 0; u <= pTag->MaxKeys; u++, o += pTag->KeyLength + 8) {
     hb_ntxSetKeyOffset(pPage, u, o);
   }
   hb_ntxSetKeyPage(pPage, 0, 0);
@@ -1366,7 +1366,7 @@ static HB_ULONG hb_ntxPageGetFree(LPTAGINFO pTag)
  * create the new tag structure
  */
 static LPTAGINFO hb_ntxTagNew(LPNTXINDEX pIndex, const char *szTagName, bool fTagName, const char *szKeyExpr,
-                              PHB_ITEM pKeyExpr, HB_BYTE bKeyType, HB_USHORT uiKeyLen, HB_USHORT uiKeyDec,
+                              PHB_ITEM pKeyExpr, HB_BYTE bKeyType, uint16_t uiKeyLen, uint16_t uiKeyDec,
                               const char *szForExpr, PHB_ITEM pForExpr, bool fAscendKey, bool fUnique, bool fCustom,
                               bool fSortRec)
 {
@@ -1494,7 +1494,7 @@ static LPTAGINFO hb_ntxTagLoad(LPNTXINDEX pIndex, HB_ULONG ulBlock, const char *
   LPNTXHEADER lpNTX = reinterpret_cast<LPNTXHEADER>(buffer);
   LPTAGINFO pTag;
   PHB_ITEM pKeyExp, pForExp = nullptr;
-  HB_USHORT usType;
+  uint16_t usType;
   auto fName = false;
 
   usType = HB_GET_LE_UINT16(lpNTX->type);
@@ -1753,7 +1753,7 @@ static HB_ERRCODE hb_ntxIndexHeaderSave(LPNTXINDEX pIndex)
   if (pIndex->Compound) {
     LPCTXHEADER lpCTX = reinterpret_cast<LPCTXHEADER>(pIndex->HeaderBuff);
     int iSize = pIndex->Update ? NTXBLOCKSIZE : 16;
-    HB_USHORT type;
+    uint16_t type;
 
     type = NTX_FLAG_COMPOUND | (pIndex->LargeFile ? NTX_FLAG_LARGEFILE : 0);
 
@@ -1778,7 +1778,7 @@ static HB_ERRCODE hb_ntxIndexHeaderSave(LPNTXINDEX pIndex)
 static HB_ERRCODE hb_ntxIndexLoad(LPNTXINDEX pIndex, const char *szTagName)
 {
   LPTAGINFO pTag;
-  HB_USHORT type;
+  uint16_t type;
 
   if (!pIndex->fValidHeader) {
     if (!pIndex->HeaderBuff) {
@@ -1840,7 +1840,7 @@ static HB_ERRCODE hb_ntxIndexLoad(LPNTXINDEX pIndex, const char *szTagName)
  */
 static HB_ERRCODE hb_ntxIndexHeaderRead(LPNTXINDEX pIndex)
 {
-  HB_USHORT type;
+  uint16_t type;
 
   if (!pIndex->HeaderBuff) {
     pIndex->HeaderBuff = static_cast<HB_BYTE *>(hb_xgrab(NTXBLOCKSIZE));
@@ -1859,7 +1859,7 @@ static HB_ERRCODE hb_ntxIndexHeaderRead(LPNTXINDEX pIndex)
     LPCTXHEADER lpCTX = reinterpret_cast<LPCTXHEADER>(pIndex->HeaderBuff);
     HB_ULONG ulVersion, ulNext;
 #if 0
-      HB_USHORT usTags = HB_GET_LE_UINT16(lpCTX->ntags);
+      uint16_t usTags = HB_GET_LE_UINT16(lpCTX->ntags);
 #endif
 
     ulVersion = HB_GET_LE_UINT32(lpCTX->version);
@@ -2135,7 +2135,7 @@ static bool hb_ntxTagUnLockWrite(LPTAGINFO pTag)
 /*
  * retrive key from page
  */
-static void hb_ntxPageGetKey(LPPAGEINFO pPage, HB_USHORT uiKey, LPKEYINFO pKey, HB_USHORT uiLen)
+static void hb_ntxPageGetKey(LPPAGEINFO pPage, uint16_t uiKey, LPKEYINFO pKey, uint16_t uiLen)
 {
   if (uiKey < pPage->uiKeys) {
     memcpy(pKey->key, hb_ntxGetKeyVal(pPage, uiKey), uiLen);
@@ -2149,7 +2149,7 @@ static void hb_ntxPageGetKey(LPPAGEINFO pPage, HB_USHORT uiKey, LPKEYINFO pKey, 
 /*
  * set next page and key in page path
  */
-static void hb_ntxTagSetPageStack(LPTAGINFO pTag, HB_ULONG ulPage, HB_USHORT uiKey)
+static void hb_ntxTagSetPageStack(LPTAGINFO pTag, HB_ULONG ulPage, uint16_t uiKey)
 {
   if (pTag->stackLevel == pTag->stackSize) {
     if (pTag->stackSize == 0) {
@@ -2418,7 +2418,7 @@ static bool hb_ntxPageFindRecNo(LPPAGEINFO pPage, int *iStart, HB_ULONG ulRecno)
 /*
  * set page path to given key in tag
  */
-static bool hb_ntxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, HB_USHORT uiLen)
+static bool hb_ntxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, uint16_t uiLen)
 {
   LPPAGEINFO pPage = nullptr;
   HB_ULONG ulPage = 0, ulRecNo = 0;
@@ -2503,7 +2503,7 @@ static bool hb_ntxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, HB_USHORT uiLen)
 /*
  * set key in the given tag page
  */
-static void hb_ntxPageKeySet(LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT uiPos, HB_ULONG ulPage, HB_ULONG ulRec,
+static void hb_ntxPageKeySet(LPTAGINFO pTag, LPPAGEINFO pPage, uint16_t uiPos, HB_ULONG ulPage, HB_ULONG ulRec,
                              const char *keyVal)
 {
   hb_ntxSetKeyPage(pPage, uiPos, ulPage);
@@ -2515,13 +2515,13 @@ static void hb_ntxPageKeySet(LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT uiPos, 
 /*
  * add key to tag page
  */
-static void hb_ntxPageKeyAdd(LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT uiPos, HB_ULONG ulPage, HB_ULONG ulRec,
+static void hb_ntxPageKeyAdd(LPTAGINFO pTag, LPPAGEINFO pPage, uint16_t uiPos, HB_ULONG ulPage, HB_ULONG ulRec,
                              const char *keyVal)
 {
-  HB_USHORT ntmp = hb_ntxGetKeyOffset(pPage, pPage->uiKeys + 1);
+  uint16_t ntmp = hb_ntxGetKeyOffset(pPage, pPage->uiKeys + 1);
 
   /* TODO?: update to keep last key pointer fixed */
-  for (HB_USHORT u = pPage->uiKeys + 1; u > uiPos; u--) {
+  for (uint16_t u = pPage->uiKeys + 1; u > uiPos; u--) {
     hb_ntxSetKeyOffset(pPage, u, hb_ntxGetKeyOffset(pPage, u - 1));
   }
   hb_ntxSetKeyOffset(pPage, uiPos, ntmp);
@@ -2536,12 +2536,12 @@ static void hb_ntxPageKeyAdd(LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT uiPos, 
 /*
  * del key from the page
  */
-static void hb_ntxPageKeyDel(LPPAGEINFO pPage, HB_USHORT uiPos)
+static void hb_ntxPageKeyDel(LPPAGEINFO pPage, uint16_t uiPos)
 {
-  HB_USHORT ntmp = hb_ntxGetKeyOffset(pPage, uiPos);
+  uint16_t ntmp = hb_ntxGetKeyOffset(pPage, uiPos);
 
   /* TODO?: update to keep last key pointer fixed */
-  for (HB_USHORT u = uiPos; u < pPage->uiKeys; u++) {
+  for (uint16_t u = uiPos; u < pPage->uiKeys; u++) {
     hb_ntxSetKeyOffset(pPage, u, hb_ntxGetKeyOffset(pPage, u + 1));
   }
   hb_ntxSetKeyOffset(pPage, pPage->uiKeys, ntmp);
@@ -2553,11 +2553,11 @@ static void hb_ntxPageKeyDel(LPPAGEINFO pPage, HB_USHORT uiPos)
 /*
  * split single page into two and return key to the new one
  */
-static LPKEYINFO hb_ntxPageSplit(LPTAGINFO pTag, LPPAGEINFO pPage, LPKEYINFO pKey, HB_USHORT uiPos)
+static LPKEYINFO hb_ntxPageSplit(LPTAGINFO pTag, LPPAGEINFO pPage, LPKEYINFO pKey, uint16_t uiPos)
 {
   LPPAGEINFO pNewPage = hb_ntxPageNew(pTag, false);
   LPKEYINFO pKeyNew;
-  HB_USHORT uiKeys = pPage->uiKeys + 1, uiLen = pTag->KeyLength + 8, i, j, u, uiHalf;
+  uint16_t uiKeys = pPage->uiKeys + 1, uiLen = pTag->KeyLength + 8, i, j, u, uiHalf;
   HB_ULONG ulPage;
 
   if (!pNewPage) {
@@ -2624,16 +2624,16 @@ static LPKEYINFO hb_ntxPageSplit(LPTAGINFO pTag, LPPAGEINFO pPage, LPKEYINFO pKe
 /*
  * join two neighbour pages and update the parent page key
  */
-static void hb_ntxPageJoin(LPTAGINFO pTag, LPPAGEINFO pBasePage, HB_USHORT uiPos, LPPAGEINFO pFirst, LPPAGEINFO pLast)
+static void hb_ntxPageJoin(LPTAGINFO pTag, LPPAGEINFO pBasePage, uint16_t uiPos, LPPAGEINFO pFirst, LPPAGEINFO pLast)
 {
-  HB_USHORT uiLen = pTag->KeyLength + 8;
+  uint16_t uiLen = pTag->KeyLength + 8;
 
   hb_ntxSetKeyRec(pFirst, pFirst->uiKeys, hb_ntxGetKeyRec(pBasePage, uiPos));
   memcpy(hb_ntxGetKeyVal(pFirst, pFirst->uiKeys), hb_ntxGetKeyVal(pBasePage, uiPos), pTag->KeyLength);
   pFirst->uiKeys++;
   hb_ntxPageKeyDel(pBasePage, uiPos);
   hb_ntxSetKeyPage(pBasePage, uiPos, pFirst->Page);
-  for (HB_USHORT i = 0; i < pLast->uiKeys; i++) {
+  for (uint16_t i = 0; i < pLast->uiKeys; i++) {
     memcpy(hb_ntxGetKeyPtr(pFirst, pFirst->uiKeys), hb_ntxGetKeyPtr(pLast, i), uiLen);
     pFirst->uiKeys++;
   }
@@ -2650,10 +2650,10 @@ static void hb_ntxPageJoin(LPTAGINFO pTag, LPPAGEINFO pBasePage, HB_USHORT uiPos
 /*
  * balance keys in two neighbour pages and update the parent page key
  */
-static void hb_ntxBalancePages(LPTAGINFO pTag, LPPAGEINFO pBasePage, HB_USHORT uiPos, LPPAGEINFO pFirst,
+static void hb_ntxBalancePages(LPTAGINFO pTag, LPPAGEINFO pBasePage, uint16_t uiPos, LPPAGEINFO pFirst,
                                LPPAGEINFO pLast)
 {
-  HB_USHORT uiLen = pTag->KeyLength + 8, n;
+  uint16_t uiLen = pTag->KeyLength + 8, n;
   int i, j, iMove = ((pFirst->uiKeys + pLast->uiKeys + 1) >> 1) - pFirst->uiKeys;
 
   /*
@@ -2798,7 +2798,7 @@ static bool hb_ntxTagKeyAdd(LPTAGINFO pTag, LPKEYINFO pKey)
 #if defined(HB_NTX_STRONG_BALANCE)
       if (iLevel > 0) {
         LPPAGEINFO pBasePage;
-        HB_USHORT uiFirst, uiLast, uiBaseKey;
+        uint16_t uiFirst, uiLast, uiBaseKey;
         pBasePage = hb_ntxPageLoad(pTag, pTag->stack[iLevel - 1].page);
         if (!pBasePage) {
           hb_ntxPageRelease(pTag, pPage);
@@ -2938,7 +2938,7 @@ static bool hb_ntxTagKeyDel(LPTAGINFO pTag, LPKEYINFO pKey)
 
   while (iLevel > 0) {
     if (pPage->uiKeys < (pTag->MaxKeys >> 1)) {
-      HB_USHORT uiFirst, uiLast, uiBaseKey;
+      uint16_t uiFirst, uiLast, uiBaseKey;
 
       pBasePage = hb_ntxPageLoad(pTag, pTag->stack[iLevel - 1].page);
       if (!pBasePage) {
@@ -3151,7 +3151,7 @@ static HB_ULONG hb_ntxPageCountKeys(LPTAGINFO pTag, HB_ULONG ulPage)
   }
 
   ulKeys = pPage->uiKeys;
-  for (HB_USHORT u = 0; u <= pPage->uiKeys; u++) {
+  for (uint16_t u = 0; u <= pPage->uiKeys; u++) {
     ulPage = hb_ntxGetKeyPage(pPage, u);
     if (ulPage) {
       ulKeys += hb_ntxPageCountKeys(pTag, ulPage);
@@ -3314,7 +3314,7 @@ static bool hb_ntxTagPagesFree(LPTAGINFO pTag, HB_ULONG ulPage)
   LPPAGEINFO pPage = hb_ntxPageLoad(pTag, ulPage);
   bool fOK = pPage != nullptr;
 
-  for (HB_USHORT u = 0; fOK && u <= pPage->uiKeys; u++) {
+  for (uint16_t u = 0; fOK && u <= pPage->uiKeys; u++) {
     ulPage = hb_ntxGetKeyPage(pPage, u);
     if (ulPage) {
       fOK = hb_ntxTagPagesFree(pTag, ulPage);
@@ -3530,11 +3530,11 @@ static int hb_ntxFindTagNum(NTXAREAP pArea, LPTAGINFO pTag)
 {
   if (pArea->fSetTagNumbers) {
     LPNTXINDEX pIndex = pArea->lpIndexes;
-    HB_USHORT uiNum = 0;
+    uint16_t uiNum = 0;
 
     pTag->uiNumber = 0;
     while (pIndex) {
-      for (HB_USHORT i = 0; i < pIndex->iTags; i++) {
+      for (uint16_t i = 0; i < pIndex->iTags; i++) {
         pIndex->lpTags[i]->uiNumber = ++uiNum;
       }
       pIndex = pIndex->pNext;
@@ -4817,7 +4817,7 @@ static void hb_ntxSortOut(LPNTXSORTINFO pSort)
   auto fNext = false;
   LPTAGINFO pTag = pSort->pTag;
   HB_ULONG ulPage, ulRec, ulKey;
-  HB_USHORT uiHalf;
+  uint16_t uiHalf;
   HB_BYTE *pKeyVal;
   int iLen = pSort->keyLen, iLevel;
 
@@ -5366,7 +5366,7 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
     HB_ERRCODE retval = Harbour::SUCCESS;
     auto fEOF = false;
     auto fLast = false;
-    HB_USHORT uiLen;
+    uint16_t uiLen;
     HB_ULONG ulRec;
 
     if (pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped) {
@@ -5744,7 +5744,7 @@ static HB_ERRCODE hb_ntxClose(NTXAREAP pArea)
 /*
  * Retrieve the size of the WorkArea structure.
  */
-static HB_ERRCODE hb_ntxStructSize(NTXAREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE hb_ntxStructSize(NTXAREAP pArea, uint16_t *uiSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxStructSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
@@ -6184,8 +6184,8 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
         }
       }
     }
-    pTag = hb_ntxTagNew(pIndex, szTagName, fTagName, szKey, pKeyExp, bType, static_cast<HB_USHORT>(iLen),
-                        static_cast<HB_USHORT>(iDec), szFor, pForExp, fAscend, pOrderInfo->fUnique, fCustom,
+    pTag = hb_ntxTagNew(pIndex, szTagName, fTagName, szKey, pKeyExp, bType, static_cast<uint16_t>(iLen),
+                        static_cast<uint16_t>(iDec), szFor, pForExp, fAscend, pOrderInfo->fUnique, fCustom,
                         pData->fSortRecNo);
     pTag->Partial = (pArea->dbfarea.area.lpdbOrdCondInfo && !pArea->dbfarea.area.lpdbOrdCondInfo->fAll);
 
@@ -6321,7 +6321,7 @@ static HB_ERRCODE hb_ntxOrderDestroy(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
   return errCode;
 }
 
-static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo)
+static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pInfo)));
@@ -7200,7 +7200,7 @@ static HB_ERRCODE hb_ntxCountScope(NTXAREAP pArea, void *pPtr, HB_LONG *plRecNo)
 #define hb_ntxExists nullptr
 #define hb_ntxRename nullptr
 
-static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
@@ -7396,10 +7396,10 @@ HB_FUNC_TRANSLATE(DBFNTX, _DBF)
 
 HB_FUNC_STATIC(DBFNTX_GETFUNCTABLE)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
+  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
   if (pTable) {
     if (puiCount) {

@@ -266,17 +266,17 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
    HB_TRACE(HB_TR_DEBUG, ("hb_waCreateFields(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pStruct)));
 #endif
 
-  HB_USHORT uiItems;
+  uint16_t uiItems;
   HB_ERRCODE errCode = Harbour::SUCCESS;
   DBFIELDINFO dbFieldInfo;
 
-  uiItems = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+  uiItems = static_cast<uint16_t>(hb_arrayLen(pStruct));
   if (SELF_SETFIELDEXTENT(pArea, uiItems) != Harbour::SUCCESS) {
     return Harbour::FAILURE;
   }
 
-  for (HB_USHORT uiCount = 0; uiCount < uiItems; uiCount++) {
-    HB_USHORT uiLen, uiDec;
+  for (uint16_t uiCount = 0; uiCount < uiItems; uiCount++) {
+    uint16_t uiLen, uiDec;
     int iData;
 
     dbFieldInfo.uiTypeExtended = 0;
@@ -286,12 +286,12 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
     if (iData < 0) {
       iData = 0;
     }
-    uiLen = dbFieldInfo.uiLen = static_cast<HB_USHORT>(iData);
+    uiLen = dbFieldInfo.uiLen = static_cast<uint16_t>(iData);
     iData = hb_arrayGetNI(pFieldDesc, DBS_DEC);
     if (iData < 0) {
       iData = 0;
     }
-    uiDec = static_cast<HB_USHORT>(iData);
+    uiDec = static_cast<uint16_t>(iData);
     dbFieldInfo.uiDec = 0;
     auto szType = hb_arrayGetCPtr(pFieldDesc, DBS_TYPE);
     iData = HB_TOUPPER(*szType);
@@ -379,7 +379,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
     case '2':
     case '4':
       dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
-      dbFieldInfo.uiLen = static_cast<HB_USHORT>(iData - '0');
+      dbFieldInfo.uiLen = static_cast<uint16_t>(iData - '0');
       dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
       break;
 
@@ -505,7 +505,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 }
 
 // Determine the number of fields in the WorkArea.
-static HB_ERRCODE hb_waFieldCount(AREAP pArea, HB_USHORT *uiFields)
+static HB_ERRCODE hb_waFieldCount(AREAP pArea, uint16_t *uiFields)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waFieldCount(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiFields)));
@@ -516,7 +516,7 @@ static HB_ERRCODE hb_waFieldCount(AREAP pArea, HB_USHORT *uiFields)
 }
 
 // Retrieve information about a field.
-static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiType, PHB_ITEM pItem)
+static HB_ERRCODE hb_waFieldInfo(AREAP pArea, uint16_t uiIndex, uint16_t uiType, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waFieldInfo(%p, %hu, %hu, %p)", static_cast<void*>(pArea), uiIndex, uiType, static_cast<void*>(pItem)));
@@ -535,7 +535,7 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTyp
     break;
 
   case DBS_TYPE: {
-    HB_USHORT uiFlags = 0;
+    uint16_t uiFlags = 0;
     char szType[8];
     char cType;
     int iLen = 0;
@@ -689,7 +689,7 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTyp
 }
 
 // Determine the name associated with a field number.
-static HB_ERRCODE hb_waFieldName(AREAP pArea, HB_USHORT uiIndex, char *szName)
+static HB_ERRCODE hb_waFieldName(AREAP pArea, uint16_t uiIndex, char *szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waFieldName(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(szName)));
@@ -707,7 +707,7 @@ static HB_ERRCODE hb_waFieldName(AREAP pArea, HB_USHORT uiIndex, char *szName)
 }
 
 // Establish the extent of the array of fields for a WorkArea.
-static HB_ERRCODE hb_waSetFieldExtent(AREAP pArea, HB_USHORT uiFieldExtent)
+static HB_ERRCODE hb_waSetFieldExtent(AREAP pArea, uint16_t uiFieldExtent)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waSetFieldExtent(%p, %hu)", static_cast<void*>(pArea), uiFieldExtent));
@@ -762,7 +762,7 @@ static HB_ERRCODE hb_waClose(AREAP pArea)
 }
 
 // Retrieve information about the current driver.
-static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -800,7 +800,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
   case DBI_CHILDCOUNT: {
     LPDBRELINFO lpdbRelations = pArea->lpdbRelations;
-    HB_USHORT uiCount = 0;
+    uint16_t uiCount = 0;
     while (lpdbRelations) {
       uiCount++;
       lpdbRelations = lpdbRelations->lpdbriNext;
@@ -902,7 +902,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
 // Retrieve information about the current order that SELF could not.
 // Called by SELF_ORDINFO() if uiIndex is not supported.
-static HB_ERRCODE hb_waOrderInfo(AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo)
+static HB_ERRCODE hb_waOrderInfo(AREAP pArea, uint16_t uiIndex, LPDBORDERINFO pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waOrderInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pInfo)));
@@ -1007,7 +1007,7 @@ static HB_ERRCODE hb_waRelease(AREAP pArea)
 }
 
 // Retrieve the size of the WorkArea structure.
-static HB_ERRCODE hb_waStructSize(AREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE hb_waStructSize(AREAP pArea, uint16_t *uiSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waStrucSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
@@ -1310,7 +1310,7 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
 
     pItem = hb_itemNew(nullptr);
     pTransItem = pTransInfo->lpTransItems;
-    for (HB_USHORT uiCount = pTransInfo->uiItemCount; uiCount; --uiCount) {
+    for (uint16_t uiCount = pTransInfo->uiItemCount; uiCount; --uiCount) {
       errCode = SELF_GETVALUE(pArea, pTransItem->uiSource, pItem);
       if (errCode != Harbour::SUCCESS) {
         break;
@@ -1427,14 +1427,14 @@ static HB_ERRCODE hb_waClearRel(AREAP pArea)
 }
 
 // Obtain the workarea number of the specified relation.
-static HB_ERRCODE hb_waRelArea(AREAP pArea, HB_USHORT uiRelNo, HB_USHORT *pRelArea)
+static HB_ERRCODE hb_waRelArea(AREAP pArea, uint16_t uiRelNo, uint16_t *pRelArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waRelArea(%p, %hu, %p)", static_cast<void*>(pArea), uiRelNo, static_cast<void*>(pRelArea)));
 #endif
 
   LPDBRELINFO lpdbRelations;
-  HB_USHORT uiIndex = 1;
+  uint16_t uiIndex = 1;
 
   *pRelArea = 0;
   lpdbRelations = pArea->lpdbRelations;
@@ -1516,14 +1516,14 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
 }
 
 // Obtain the character expression of the specified relation.
-static HB_ERRCODE hb_waRelText(AREAP pArea, HB_USHORT uiRelNo, PHB_ITEM pExpr)
+static HB_ERRCODE hb_waRelText(AREAP pArea, uint16_t uiRelNo, PHB_ITEM pExpr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waRelText(%p, %hu, %p)", static_cast<void*>(pArea), uiRelNo, static_cast<void*>(pExpr)));
 #endif
 
   LPDBRELINFO lpdbRelations;
-  HB_USHORT uiIndex = 1;
+  uint16_t uiIndex = 1;
 
   lpdbRelations = pArea->lpdbRelations;
 
@@ -1783,7 +1783,7 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
 }
 
 // RDD info
-static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnection, PHB_ITEM pItem)
+static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnection, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnection, static_cast<void*>(pItem)));
@@ -1938,7 +1938,7 @@ static HB_ERRCODE hb_waUnsupported_L(AREAP pArea, HB_LONG p1)
   return hb_waUnsupported(pArea);
 }
 
-static HB_ERRCODE hb_waUnsupported_SL(AREAP pArea, HB_USHORT p1, HB_LONG p2)
+static HB_ERRCODE hb_waUnsupported_SL(AREAP pArea, uint16_t p1, HB_LONG p2)
 {
   HB_SYMBOL_UNUSED(p1);
   HB_SYMBOL_UNUSED(p2);
@@ -1946,7 +1946,7 @@ static HB_ERRCODE hb_waUnsupported_SL(AREAP pArea, HB_USHORT p1, HB_LONG p2)
   return hb_waUnsupported(pArea);
 }
 
-static HB_ERRCODE hb_waUnsupported_SV(AREAP pArea, HB_USHORT p1, void *p2)
+static HB_ERRCODE hb_waUnsupported_SV(AREAP pArea, uint16_t p1, void *p2)
 {
   HB_SYMBOL_UNUSED(p1);
   HB_SYMBOL_UNUSED(p2);
@@ -1987,7 +1987,7 @@ static HB_ERRCODE hb_waUnsupported_BVB(AREAP pArea, HB_BOOL p1, void *p2, HB_BOO
   return hb_waUnsupported(pArea);
 }
 
-static HB_ERRCODE hb_waUnsupported_SVS(AREAP pArea, HB_USHORT p1, void *p2, HB_USHORT p3)
+static HB_ERRCODE hb_waUnsupported_SVS(AREAP pArea, uint16_t p1, void *p2, uint16_t p3)
 {
   HB_SYMBOL_UNUSED(p1);
   HB_SYMBOL_UNUSED(p2);
@@ -1996,7 +1996,7 @@ static HB_ERRCODE hb_waUnsupported_SVS(AREAP pArea, HB_USHORT p1, void *p2, HB_U
   return hb_waUnsupported(pArea);
 }
 
-static HB_ERRCODE hb_waUnsupported_VSV(AREAP pArea, void *p1, HB_USHORT p2, void *p3)
+static HB_ERRCODE hb_waUnsupported_VSV(AREAP pArea, void *p1, uint16_t p2, void *p3)
 {
   HB_SYMBOL_UNUSED(p1);
   HB_SYMBOL_UNUSED(p2);
@@ -2193,15 +2193,15 @@ std::mutex rddMtx;
 static HB_CRITICAL_NEW(s_rddMtx);
 #endif
 static LPRDDNODE *s_RddList = nullptr; // Registered RDDs pool
-static HB_USHORT s_uiRddMax = 0;       // Size of RDD pool
-static HB_USHORT s_uiRddCount = 0;     // Number of registered RDD
+static uint16_t s_uiRddMax = 0;       // Size of RDD pool
+static uint16_t s_uiRddCount = 0;     // Number of registered RDD
 
 static HB_RDDACCEPT *s_rddRedirAccept = nullptr;
-static HB_USHORT s_uiRddRedirMax = 0;
-static HB_USHORT s_uiRddRedirCount = 0;
+static uint16_t s_uiRddRedirMax = 0;
+static uint16_t s_uiRddRedirCount = 0;
 
 // Get RDD node pointer
-LPRDDNODE hb_rddGetNode(HB_USHORT uiNode)
+LPRDDNODE hb_rddGetNode(uint16_t uiNode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetNode(%hu)", uiNode));
@@ -2210,13 +2210,13 @@ LPRDDNODE hb_rddGetNode(HB_USHORT uiNode)
   return uiNode < s_uiRddCount ? s_RddList[uiNode] : nullptr;
 }
 
-PHB_ITEM hb_rddList(HB_USHORT uiType)
+PHB_ITEM hb_rddList(uint16_t uiType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddList(%hu)", uiType));
 #endif
 
-  HB_USHORT uiCount, uiIndex, uiRdds;
+  uint16_t uiCount, uiIndex, uiRdds;
 
   for (uiCount = uiRdds = 0; uiCount < s_uiRddCount; ++uiCount) {
     if (uiType == 0 || s_RddList[uiCount]->uiType == uiType) {
@@ -2234,13 +2234,13 @@ PHB_ITEM hb_rddList(HB_USHORT uiType)
 }
 
 // Find a RDD node.
-LPRDDNODE hb_rddFindNode(const char *szDriver, HB_USHORT *uiIndex)
+LPRDDNODE hb_rddFindNode(const char *szDriver, uint16_t *uiIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFindNode(%s, %p)", szDriver, static_cast<void*>(uiIndex)));
 #endif
 
-  for (HB_USHORT uiCount = 0; uiCount < s_uiRddCount; uiCount++) {
+  for (uint16_t uiCount = 0; uiCount < s_uiRddCount; uiCount++) {
     LPRDDNODE pNode = s_RddList[uiCount];
     if (strcmp(pNode->szName, szDriver) == 0) { // Matched RDD
       if (uiIndex) {
@@ -2263,7 +2263,7 @@ LPRDDNODE hb_rddFindFileNode(LPRDDNODE pRddNode, const char *szFileName)
 #endif
 
   if (szFileName != nullptr && szFileName[0] && s_uiRddRedirCount) {
-    for (HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++) {
+    for (uint16_t uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++) {
       LPRDDNODE pNode = s_rddRedirAccept[uiCount](pRddNode, szFileName);
       if (pNode) {
         return pNode;
@@ -2290,7 +2290,7 @@ void hb_rddSetFileRedirector(HB_RDDACCEPT funcAccept, HB_BOOL fEnable)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddSetFileRedirector(%p, %d)", static_cast<void*>(funcAccept), fEnable));
 #endif
 
-  HB_USHORT uiFree;
+  uint16_t uiFree;
 
 #if defined(HB_USE_CPP_MUTEX)
   rddMtx.lock();
@@ -2298,7 +2298,7 @@ void hb_rddSetFileRedirector(HB_RDDACCEPT funcAccept, HB_BOOL fEnable)
   hb_threadEnterCriticalSection(&s_rddMtx);
 #endif
   uiFree = s_uiRddRedirCount + 1;
-  for (HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++) {
+  for (uint16_t uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++) {
     if (s_rddRedirAccept[uiCount] == funcAccept) {
       if (!fEnable) {
         s_rddRedirAccept[uiCount] = hb_rddDummyFileAccept;
@@ -2336,7 +2336,7 @@ void hb_rddShutDown(void)
   hb_rddCloseDetachedAreas();
 
   if (s_uiRddCount > 0) {
-    for (HB_USHORT uiCount = 0; uiCount < s_uiRddCount; uiCount++) {
+    for (uint16_t uiCount = 0; uiCount < s_uiRddCount; uiCount++) {
       if (s_RddList[uiCount]->pTable.exit != nullptr) {
         SELF_EXIT(s_RddList[uiCount]);
       }
@@ -2354,14 +2354,14 @@ void hb_rddShutDown(void)
 }
 
 // Register a RDD driver.
-int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
+int hb_rddRegister(const char *szDriver, uint16_t uiType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddRegister(%s, %hu)", szDriver, uiType));
 #endif
 
   char szGetFuncTable[HB_RDD_MAX_DRIVERNAME_LEN + 14];
-  HB_USHORT uiFunctions = 0;
+  uint16_t uiFunctions = 0;
   int iResult;
 
   if (hb_rddFindNode(szDriver, nullptr)) { // Duplicated RDD
@@ -2381,7 +2381,7 @@ int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
   hb_strncpy(pRddNewNode->szName, szDriver, sizeof(pRddNewNode->szName) - 1);
   pRddNewNode->uiType = uiType;
   pRddNewNode->rddID = s_uiRddCount;
-  pRddNewNode->rddSuperID = static_cast<HB_USHORT>(-1);
+  pRddNewNode->rddSuperID = static_cast<uint16_t>(-1);
 
   // Call <szDriver>_GETFUNCTABLE()
   hb_vmPushDynSym(pGetFuncTable);
@@ -2434,7 +2434,7 @@ int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
 // pSuperTable - a current table in a RDDNODE
 // szDrvName - a driver name that will be inherited
 HB_ERRCODE hb_rddInheritEx(RDDFUNCS *pTable, const RDDFUNCS *pSubTable, RDDFUNCS *pSuperTable, const char *szDrvName,
-                           HB_USHORT *puiSuperRddId)
+                           uint16_t *puiSuperRddId)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddInheritEx(%p, %p, %p, %s, %p)", static_cast<void*>(pTable), static_cast<const void*>(pSubTable), static_cast<void*>(pSuperTable), szDrvName, static_cast<void*>(puiSuperRddId)));
@@ -2454,7 +2454,7 @@ HB_ERRCODE hb_rddInheritEx(RDDFUNCS *pTable, const RDDFUNCS *pSubTable, RDDFUNCS
     memcpy(pTable, &waTable, sizeof(RDDFUNCS));
     memcpy(pSuperTable, &waTable, sizeof(RDDFUNCS));
     if (puiSuperRddId) {
-      *puiSuperRddId = static_cast<HB_USHORT>(-1);
+      *puiSuperRddId = static_cast<uint16_t>(-1);
     }
   } else {
     char szSuperName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
@@ -2475,7 +2475,7 @@ HB_ERRCODE hb_rddInheritEx(RDDFUNCS *pTable, const RDDFUNCS *pSubTable, RDDFUNCS
   // Copy the non nullptr entries from pSubTable into pTable
   pFunction = reinterpret_cast<DBENTRYP_V *>(pTable);
   pSubFunction = reinterpret_cast<const DBENTRYP_V *>(pSubTable);
-  for (HB_USHORT uiCount = 0; uiCount < RDDFUNCSCOUNT; uiCount++) {
+  for (uint16_t uiCount = 0; uiCount < RDDFUNCSCOUNT; uiCount++) {
     if (*pSubFunction) {
       *pFunction = *pSubFunction;
     }
@@ -2494,7 +2494,7 @@ HB_ERRCODE hb_rddInherit(RDDFUNCS *pTable, const RDDFUNCS *pSubTable, RDDFUNCS *
   return hb_rddInheritEx(pTable, pSubTable, pSuperTable, szDrvName, nullptr);
 }
 
-HB_BOOL hb_rddIsDerivedFrom(HB_USHORT uiRddID, HB_USHORT uiSuperRddID)
+HB_BOOL hb_rddIsDerivedFrom(uint16_t uiRddID, uint16_t uiSuperRddID)
 {
   if (uiRddID == uiSuperRddID) {
     return true;

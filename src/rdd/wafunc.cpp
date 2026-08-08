@@ -91,7 +91,7 @@ HB_ERRCODE hb_rddVerifyAliasName(const char *szAlias)
 }
 
 // Prepares a new WorkArea node.
-void *hb_rddNewAreaNode(LPRDDNODE pRddNode, HB_USHORT uiRddID)
+void *hb_rddNewAreaNode(LPRDDNODE pRddNode, uint16_t uiRddID)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddNewAreaNode(%p,%hu)", static_cast<void*>(pRddNode), uiRddID));
@@ -100,7 +100,7 @@ void *hb_rddNewAreaNode(LPRDDNODE pRddNode, HB_USHORT uiRddID)
   AREAP pArea;
 
   if (pRddNode->uiAreaSize == 0) { // Calculate the size of WorkArea
-    HB_USHORT uiSize;
+    uint16_t uiSize;
 
     pArea = static_cast<AREAP>(hb_xgrabz(sizeof(AREA)));
     pArea->lprfsHost = &pRddNode->pTable;
@@ -176,7 +176,7 @@ void *hb_rddAllocWorkAreaAlias(const char *szAlias, int iArea)
 }
 
 // Find a field index by name
-HB_USHORT hb_rddFieldIndex(AREAP pArea, const char *szName)
+uint16_t hb_rddFieldIndex(AREAP pArea, const char *szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFieldIndex(%p, %s)", static_cast<void*>(pArea), szName));
@@ -204,7 +204,7 @@ HB_USHORT hb_rddFieldIndex(AREAP pArea, const char *szName)
       auto pDynSym = hb_dynsymFind(szFieldName);
       if (pDynSym) {
         LPFIELD pField = pArea->lpFields;
-        HB_USHORT uiCount = 0;
+        uint16_t uiCount = 0;
 
         while (pField) {
           ++uiCount;
@@ -221,7 +221,7 @@ HB_USHORT hb_rddFieldIndex(AREAP pArea, const char *szName)
 
 // find a field expression index, this function strips _FIELD->, FIELD->,
 // alias-> prefixes
-HB_USHORT hb_rddFieldExpIndex(AREAP pArea, const char *szField)
+uint16_t hb_rddFieldExpIndex(AREAP pArea, const char *szField)
 {
   while (HB_ISSPACE(*szField)) {
     ++szField;
@@ -412,7 +412,7 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   if (pArea != nullptr) {
-    HB_USHORT uiField = 1;
+    uint16_t uiField = 1;
     LPFIELD pField = pArea->lpFields;
     PHB_DYNS pDynSym = pFieldSymbol->pDynSym;
 
@@ -436,7 +436,7 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   if (pArea != nullptr) {
-    HB_USHORT uiField = 1;
+    uint16_t uiField = 1;
     LPFIELD pField = pArea->lpFields;
     PHB_DYNS pDynSym = pFieldSymbol->pDynSym;
 
@@ -508,7 +508,7 @@ HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return errCode;
 }
 
-HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHORT uiArea, const char *szAlias,
+HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, uint16_t uiArea, const char *szAlias,
                            HB_BOOL fShared, HB_BOOL fReadonly, const char *szCpId, HB_ULONG ulConnection,
                            PHB_ITEM pStruct, PHB_ITEM pDelim)
 {
@@ -581,13 +581,13 @@ HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHO
   return errCode;
 }
 
-HB_ERRCODE hb_rddCreateTable(const char *szFileName, const char *szDriver, HB_USHORT uiArea, const char *szAlias,
+HB_ERRCODE hb_rddCreateTable(const char *szFileName, const char *szDriver, uint16_t uiArea, const char *szAlias,
                              HB_BOOL fKeepOpen, const char *szCpId, HB_ULONG ulConnection, PHB_ITEM pStruct,
                              PHB_ITEM pDelim)
 {
   DBOPENINFO pInfo;
   HB_ERRCODE errCode;
-  HB_USHORT uiPrevArea;
+  uint16_t uiPrevArea;
 
   if (!szFileName) {
     hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -648,7 +648,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char *szDriver, const char *szAlias, cons
 {
   char szDriverBuffer[HB_RDD_MAX_DRIVERNAME_LEN + 1];
   DBOPENINFO pInfo;
-  HB_USHORT uiPrevArea;
+  uint16_t uiPrevArea;
 
   uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
@@ -699,12 +699,12 @@ HB_ERRCODE hb_rddCreateTableTemp(const char *szDriver, const char *szAlias, cons
   return errCode;
 }
 
-static void hb_fldStructure(AREAP pArea, HB_USHORT uiField, HB_USHORT uiSize, PHB_ITEM pField)
+static void hb_fldStructure(AREAP pArea, uint16_t uiField, uint16_t uiSize, PHB_ITEM pField)
 {
 #ifdef DBS_FLAG
-  static const HB_USHORT s_uiActions[] = {DBS_NAME, DBS_TYPE, DBS_LEN, DBS_DEC, DBS_FLAG};
+  static const uint16_t s_uiActions[] = {DBS_NAME, DBS_TYPE, DBS_LEN, DBS_DEC, DBS_FLAG};
 #else
-  static const HB_USHORT s_uiActions[] = {DBS_NAME, DBS_TYPE, DBS_LEN, DBS_DEC};
+  static const uint16_t s_uiActions[] = {DBS_NAME, DBS_TYPE, DBS_LEN, DBS_DEC};
 #endif
 
   if (uiSize == 0 || uiSize > HB_SIZEOFARRAY(s_uiActions)) {
@@ -712,25 +712,25 @@ static void hb_fldStructure(AREAP pArea, HB_USHORT uiField, HB_USHORT uiSize, PH
   }
 
   hb_arrayNew(pField, uiSize);
-  for (HB_USHORT uiCount = 0; uiCount < uiSize; ++uiCount) {
+  for (uint16_t uiCount = 0; uiCount < uiSize; ++uiCount) {
     SELF_FIELDINFO(pArea, uiField, s_uiActions[uiCount], hb_arrayGetItemPtr(pField, uiCount + 1));
   }
 }
 
-void hb_tblStructure(AREAP pArea, PHB_ITEM pStruct, HB_USHORT uiSize)
+void hb_tblStructure(AREAP pArea, PHB_ITEM pStruct, uint16_t uiSize)
 {
-  HB_USHORT uiFields;
+  uint16_t uiFields;
 
   if (SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS) {
     if (hb_arraySize(pStruct, uiFields)) {
-      for (HB_USHORT uiCount = 1; uiCount <= uiFields; ++uiCount) {
+      for (uint16_t uiCount = 1; uiCount <= uiFields; ++uiCount) {
         hb_fldStructure(pArea, uiCount, uiSize, hb_arrayGetItemPtr(pStruct, uiCount));
       }
     }
   }
 }
 
-static const char *hb_dbTransFieldPos(PHB_ITEM pFields, HB_USHORT uiField)
+static const char *hb_dbTransFieldPos(PHB_ITEM pFields, uint16_t uiField)
 {
   const char *szField = nullptr;
 
@@ -774,7 +774,7 @@ HB_ERRCODE hb_dbTransCounters(LPDBTRANSINFO lpdbTransInfo)
 {
   auto pItem = hb_itemNew(nullptr);
 
-  for (HB_USHORT uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount) {
+  for (uint16_t uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount) {
     LPDBTRANSITEM lpdbTransItem = &lpdbTransInfo->lpTransItems[uiCount];
 
     if (SELF_FIELDINFO(lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_COUNTER, pItem) == Harbour::SUCCESS &&
@@ -794,7 +794,7 @@ HB_ERRCODE hb_dbTransCounters(LPDBTRANSINFO lpdbTransInfo)
 HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTransInfo, PHB_ITEM *pStruct,
                             PHB_ITEM pFields)
 {
-  HB_USHORT uiFields, uiSize, uiCount, uiPosSrc, uiPosDst, uiSizeSrc, uiSizeDst;
+  uint16_t uiFields, uiSize, uiCount, uiPosSrc, uiPosDst, uiSizeSrc, uiSizeDst;
   const char *szField;
   auto fAll = false;
 
@@ -817,7 +817,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
     return Harbour::FAILURE;
   }
   if (hb_itemType(pFields) & Harbour::Item::ARRAY) {
-    uiFields = static_cast<HB_USHORT>(hb_arrayLen(pFields));
+    uiFields = static_cast<uint16_t>(hb_arrayLen(pFields));
     if (uiFields) {
       uiSize = uiFields;
     }
@@ -851,7 +851,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
           fAll = false;
         }
         if (uiPosDst) {
-          HB_USHORT ui;
+          uint16_t ui;
 
           // check for replicated field names in source area
           for (ui = 0; ui < uiSize; ++ui) {
@@ -868,7 +868,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
       hb_itemRelease(pItem);
     } else {
       hb_tblStructure(lpaSource, *pStruct, 0);
-      uiSize = static_cast<HB_USHORT>(hb_arrayLen(*pStruct));
+      uiSize = static_cast<uint16_t>(hb_arrayLen(*pStruct));
       for (uiCount = 0; uiCount < uiSize; ++uiCount) {
         lpdbTransInfo->lpTransItems[uiCount].uiSource = lpdbTransInfo->lpTransItems[uiCount].uiDest = uiCount + 1;
       }
@@ -970,7 +970,7 @@ HB_ERRCODE hb_rddTransRecords(AREAP pArea, const char *szFileName, const char *s
   AREAP lpaClose = nullptr;
   PHB_ITEM pStruct = nullptr;
   DBTRANSINFO dbTransInfo{};
-  HB_USHORT uiPrevArea;
+  uint16_t uiPrevArea;
   HB_ERRCODE errCode;
 
   uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
@@ -998,8 +998,8 @@ HB_ERRCODE hb_rddTransRecords(AREAP pArea, const char *szFileName, const char *s
 
       // revert area and items
       dbTransInfo.lpaDest = dbTransInfo.lpaSource;
-      for (HB_USHORT uiCount = 0; uiCount < dbTransInfo.uiItemCount; ++uiCount) {
-        HB_USHORT uiSwap = dbTransInfo.lpTransItems[uiCount].uiSource;
+      for (uint16_t uiCount = 0; uiCount < dbTransInfo.uiItemCount; ++uiCount) {
+        uint16_t uiSwap = dbTransInfo.lpTransItems[uiCount].uiSource;
         dbTransInfo.lpTransItems[uiCount].uiSource = dbTransInfo.lpTransItems[uiCount].uiDest;
         dbTransInfo.lpTransItems[uiCount].uiDest = uiSwap;
       }
@@ -1074,7 +1074,7 @@ static HB_ERRCODE hb_rddCloseParentRel(AREAP pArea, void *pChildArea)
 {
   if (pArea->lpdbRelations) {
     LPDBRELINFO *lpdbRelationPtr = &pArea->lpdbRelations;
-    HB_USHORT uiArea = (static_cast<AREAP>(pChildArea))->uiArea;
+    uint16_t uiArea = (static_cast<AREAP>(pChildArea))->uiArea;
 
     do {
       LPDBRELINFO lpdbRelation = *lpdbRelationPtr;
@@ -1110,7 +1110,7 @@ HB_ERRCODE hb_rddCloseAllParentRelations(AREAP pArea)
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   if (pArea->uiParents > 0) {
-    HB_USHORT uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
+    uint16_t uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
     errCode = hb_rddIterateWorkAreas(hb_rddCloseParentRel, pArea);
     hb_rddSelectWorkAreaNumber(uiArea);
   }
@@ -1136,7 +1136,7 @@ HB_ERRCODE hb_rddEvalWA(PHB_ITEM pBlock)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddEvalWA(%p)", static_cast<void*>(pBlock)));
 #endif
 
-  HB_USHORT uiArea;
+  uint16_t uiArea;
 
   uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
   HB_ERRCODE errCode = hb_rddIterateWorkAreas(hb_rddEvalWABlock, pBlock);

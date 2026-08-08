@@ -297,7 +297,7 @@ static int hb_LZSSxRead(PHB_LZSSX_COMPR pCompr)
 static HB_BOOL hb_LZSSxDecode(PHB_LZSSX_COMPR pCompr)
 {
   HB_BOOL fResult = true;
-  HB_USHORT itemMask;
+  uint16_t itemMask;
   int offset, length, rbufidx, c, h;
 
   rbufidx = RBUFLENGTH - MAXLENGTH;
@@ -311,7 +311,7 @@ static HB_BOOL hb_LZSSxDecode(PHB_LZSSX_COMPR pCompr)
         break;
       }
       /* simple trick to reduce number of shift operations */
-      itemMask = static_cast<HB_USHORT>(c | 0xff00);
+      itemMask = static_cast<uint16_t>(c | 0xff00);
     }
     if ((c = hb_LZSSxRead(pCompr)) == -1) {
       break;

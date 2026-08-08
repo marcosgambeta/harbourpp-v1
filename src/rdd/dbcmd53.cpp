@@ -276,7 +276,7 @@ HB_FUNC(DBINFO)
     if (pIndex) {
       PHB_ITEM pInfo = hb_itemParam(2);
 
-      SELF_INFO(pArea, static_cast<HB_USHORT>(pIndex->getNI()), pInfo);
+      SELF_INFO(pArea, static_cast<uint16_t>(pIndex->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBINFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -303,7 +303,7 @@ HB_FUNC(DBORDERINFO)
       pOrderInfo.itmResult = hb_itemNew(nullptr);
       pOrderInfo.itmCobExpr = nullptr;
       pOrderInfo.fAllTags = false;
-      SELF_ORDINFO(pArea, static_cast<HB_USHORT>(pType->getNI()), &pOrderInfo);
+      SELF_ORDINFO(pArea, static_cast<uint16_t>(pType->getNI()), &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -318,13 +318,13 @@ HB_FUNC(DBFIELDINFO)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr) {
-    HB_USHORT uiFields, uiIndex;
+    uint16_t uiFields, uiIndex;
     auto pType = hb_param(1, Harbour::Item::NUMERIC);
     uiIndex = static_cast<HB_FIELDNO>(hb_parni(2));
     if (pType && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex > 0 && uiIndex <= uiFields) {
       auto pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
 
-      SELF_FIELDINFO(pArea, uiIndex, static_cast<HB_USHORT>(pType->getNI()), pInfo);
+      SELF_FIELDINFO(pArea, uiIndex, static_cast<uint16_t>(pType->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -344,7 +344,7 @@ HB_FUNC(DBRECORDINFO)
     if (pType) {
       PHB_ITEM pInfo = hb_itemParam(3);
 
-      SELF_RECINFO(pArea, pRecNo, static_cast<HB_USHORT>(pType->getNI()), pInfo);
+      SELF_RECINFO(pArea, pRecNo, static_cast<uint16_t>(pType->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
     } else
       hb_errRT_DBCMD(EG_ARG, EDBCMD_INFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -359,7 +359,7 @@ HB_FUNC(DBFILEGET)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr) {
-    HB_USHORT uiFields, uiIndex;
+    uint16_t uiFields, uiIndex;
     auto szField = hb_parc(1);
 
     if (szField != nullptr) {
@@ -371,7 +371,7 @@ HB_FUNC(DBFILEGET)
     auto pMode = hb_param(3, Harbour::Item::NUMERIC);
     if (uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS &&
         uiIndex <= uiFields) {
-      hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(pMode->getNI())) ==
+      hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<uint16_t>(pMode->getNI())) ==
               Harbour::SUCCESS);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBFILEGETBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -387,7 +387,7 @@ HB_FUNC(DBFILEPUT)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr) {
-    HB_USHORT uiFields, uiIndex;
+    uint16_t uiFields, uiIndex;
     auto szField = hb_parc(1);
 
     if (szField != nullptr) {
@@ -397,7 +397,7 @@ HB_FUNC(DBFILEPUT)
     }
     if (uiIndex > 0 && hb_parclen(2) > 0 && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS &&
         uiIndex <= uiFields) {
-      hb_retl(SELF_PUTVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_parni(3))) == Harbour::SUCCESS);
+      hb_retl(SELF_PUTVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<uint16_t>(hb_parni(3))) == Harbour::SUCCESS);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBFILEPUTBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
     }

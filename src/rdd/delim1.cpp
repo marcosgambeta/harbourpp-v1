@@ -62,7 +62,7 @@
 #define SUPERTABLE (&delimSuper)
 
 static RDDFUNCS delimSuper;
-static const HB_USHORT s_uiNumLength[9] = {0, 4, 6, 8, 11, 13, 16, 18, 20};
+static const uint16_t s_uiNumLength[9] = {0, 4, 6, 8, 11, 13, 16, 18, 20};
 
 static void hb_delimInitArea(DELIMAREAP pArea, char *szFileName)
 {
@@ -77,7 +77,7 @@ static void hb_delimInitArea(DELIMAREAP pArea, char *szFileName)
     szEol = hb_conNewLine();
   }
   pArea->szEol = hb_strdup(szEol);
-  pArea->uiEolLen = static_cast<HB_USHORT>(strlen(szEol));
+  pArea->uiEolLen = static_cast<uint16_t>(strlen(szEol));
   pArea->fAnyEol = (szEol[0] == '\n' || szEol[0] == '\r') &&
                    (pArea->uiEolLen == 1 ||
                     (pArea->uiEolLen == 2 && szEol[0] != szEol[1] && (szEol[1] == '\n' || szEol[1] == '\r')));
@@ -122,7 +122,7 @@ static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
   const char *pszFieldName;
   HB_BYTE *pBuffer;
   HB_SIZE nSize, nS;
-  HB_USHORT uiCount;
+  uint16_t uiCount;
 
   nSize = 0;
   pBuffer = pArea->pBuffer;
@@ -171,7 +171,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
 #endif
 
   HB_SIZE nSize;
-  HB_USHORT uiLen;
+  uint16_t uiLen;
   LPFIELD pField;
   HB_BYTE *pBuffer;
 
@@ -180,7 +180,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
 
   pBuffer = pArea->pBuffer;
   nSize = 0;
-  for (HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
+  for (uint16_t uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
     HB_BYTE *pFieldBuf;
     pField = pArea->area.lpFields + uiField;
     pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField];
@@ -322,14 +322,14 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
   // clear the record buffer
   hb_delimClearRecordBuffer(pArea);
 
-  for (HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
+  for (uint16_t uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
     LPFIELD pField = pArea->area.lpFields + uiField;
-    HB_USHORT uiType = pField->uiType;
+    uint16_t uiType = pField->uiType;
 
     if (uiType == Harbour::DB::Field::STRING || uiType == Harbour::DB::Field::LOGICAL ||
         uiType == Harbour::DB::Field::DATE || uiType == Harbour::DB::Field::TIMESTAMP ||
         uiType == Harbour::DB::Field::LONG) {
-      HB_USHORT uiLen = pField->uiLen, uiSize = 0;
+      uint16_t uiLen = pField->uiLen, uiSize = 0;
       HB_BYTE *pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField], buffer[256];
       char cStop;
 
@@ -644,7 +644,7 @@ static HB_ERRCODE hb_delimRecall(DELIMAREAP pArea)
 }
 
 // Obtain the current value of a field.
-static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -742,7 +742,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 }
 
 // Assign a value to a field.
-static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -961,7 +961,7 @@ static HB_ERRCODE hb_delimFlush(DELIMAREAP pArea)
 }
 
 // Retrieve information about the current table/driver.
-static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -1087,7 +1087,7 @@ static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimAddField(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo)));
 #endif
 
-  HB_USHORT uiDelim = 0;
+  uint16_t uiDelim = 0;
 
   switch (pFieldInfo->uiType) {
   case Harbour::DB::Field::STRING:
@@ -1196,7 +1196,7 @@ static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
 }
 
 // Establish the extent of the array of fields for a WorkArea.
-static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExtent)
+static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, uint16_t uiFieldExtent)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent));
@@ -1208,7 +1208,7 @@ static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExte
 
   // Alloc field offsets array
   if (uiFieldExtent) {
-    pArea->pFieldOffset = static_cast<HB_USHORT *>(hb_xgrabz(uiFieldExtent * sizeof(HB_USHORT)));
+    pArea->pFieldOffset = static_cast<uint16_t *>(hb_xgrabz(uiFieldExtent * sizeof(uint16_t)));
   }
 
   return Harbour::SUCCESS;
@@ -1240,7 +1240,7 @@ static HB_ERRCODE hb_delimNewArea(DELIMAREAP pArea)
 }
 
 // Retrieve the size of the WorkArea structure.
-static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, uint16_t *uiSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimStrucSize(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
@@ -1397,7 +1397,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 #endif
 
   PHB_ITEM pError = nullptr;
-  HB_USHORT uiFlags;
+  uint16_t uiFlags;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
@@ -1521,7 +1521,7 @@ static HB_ERRCODE hb_delimExit(LPRDDNODE pRDD)
 }
 
 // Retrieve information about the current driver.
-static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
@@ -1548,11 +1548,11 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
   }
   case RDDI_SETHEADER: {
     LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
-    HB_USHORT uiSetHeader = pData->uiSetHeader;
+    uint16_t uiSetHeader = pData->uiSetHeader;
     if (pItem->isNumeric()) {
       int iMode = pItem->getNI();
       if (iMode == 0 || iMode == 1) {
-        pData->uiSetHeader = static_cast<HB_USHORT>(iMode);
+        pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }
     }
     hb_itemPutNI(pItem, uiSetHeader);
@@ -1675,7 +1675,7 @@ HB_FUNC(DELIM)
 
 HB_FUNC_STATIC(DELIM_GETFUNCTABLE)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
 
 #if 0

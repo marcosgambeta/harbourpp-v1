@@ -87,14 +87,14 @@
 // temporary cast to suppress 32/64-bit Windows warnings
 #define HB_ULONGCAST HB_ULONG
 
-static HB_USHORT s_uiRddIdBLOB = static_cast<HB_USHORT>(-1);
-static HB_USHORT s_uiRddIdFPT = static_cast<HB_USHORT>(-1);
+static uint16_t s_uiRddIdBLOB = static_cast<uint16_t>(-1);
+static uint16_t s_uiRddIdFPT = static_cast<uint16_t>(-1);
 
 static RDDFUNCS fptSuper;
 
 // generate Run-Time error
 static HB_ERRCODE hb_memoErrorRT(FPTAREAP pArea, HB_ERRCODE uiGenCode, HB_ERRCODE uiSubCode, const char *szFileName,
-                                 HB_ERRCODE uiOsCode, HB_USHORT uiFlags)
+                                 HB_ERRCODE uiOsCode, uint16_t uiFlags)
 {
   HB_ERRCODE errCode = Harbour::FAILURE;
 
@@ -126,7 +126,7 @@ static HB_ERRCODE hb_memoErrorRT(FPTAREAP pArea, HB_ERRCODE uiGenCode, HB_ERRCOD
   return errCode;
 }
 
-static const char *hb_memoDefaultFileExt(int iType, HB_USHORT uiRdd)
+static const char *hb_memoDefaultFileExt(int iType, uint16_t uiRdd)
 {
   if (uiRdd == s_uiRddIdBLOB) {
     return DBV_MEMOEXT;
@@ -428,11 +428,11 @@ static void hb_fptPackGCitems(LPMEMOGCTABLE pGCtable)
       j++;
     }
   }
-  pGCtable->usItems = static_cast<HB_USHORT>(j);
+  pGCtable->usItems = static_cast<uint16_t>(j);
 }
 
 // Write proper header into modified GC free memo blocks.
-static HB_ERRCODE hb_fptWriteGCitems(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, HB_USHORT usItem)
+static HB_ERRCODE hb_fptWriteGCitems(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, uint16_t usItem)
 {
   FPTBLOCK fptBlock;
   HB_ERRCODE errCode = Harbour::SUCCESS;
@@ -672,7 +672,7 @@ static HB_ERRCODE hb_fptReadGCdata(FPTAREAP pArea, LPMEMOGCTABLE pGCtable)
           hb_xfree(bPageBuf);
           return EDBF_CORRUPT;
         }
-        pGCtable->usMaxItem = static_cast<HB_USHORT>((pGCtable->ulSize - 2) >> 3);
+        pGCtable->usMaxItem = static_cast<uint16_t>((pGCtable->ulSize - 2) >> 3);
         pGCtable->usItems = (HB_GET_LE_UINT16(bPageBuf) - 3) >> 2;
 
         pGCtable->pGCitems = static_cast<LPMEMOGCITEM>(
@@ -706,13 +706,13 @@ static HB_ERRCODE hb_fptWriteGCdata(FPTAREAP pArea, LPMEMOGCTABLE pGCtable)
     int i, j;
 
     if (pGCtable->bType == DB_MEMOVER_SIX) {
-      HB_USHORT usItems = HB_MIN(pGCtable->usItems, pGCtable->usMaxItem);
+      uint16_t usItems = HB_MIN(pGCtable->usItems, pGCtable->usMaxItem);
       HB_PUT_LE_UINT16(pGCtable->fptHeader.nGCitems, usItems);
       memset(pGCtable->fptHeader.reserved2, 0, sizeof(pGCtable->fptHeader.reserved2));
       j = pGCtable->usItems - usItems;
       for (i = j; i < pGCtable->usItems; i++) {
         HB_PUT_LE_UINT16(&pGCtable->fptHeader.reserved2[(i - j) * 6],
-                         (static_cast<HB_USHORT>(pGCtable->pGCitems[i].ulSize)));
+                         (static_cast<uint16_t>(pGCtable->pGCitems[i].ulSize)));
         HB_PUT_LE_UINT32(&pGCtable->fptHeader.reserved2[(i - j) * 6 + 2], pGCtable->pGCitems[i].ulOffset);
       }
     } else if (pGCtable->bType == DB_MEMOVER_FLEX) {
@@ -744,13 +744,13 @@ static HB_ERRCODE hb_fptWriteGCdata(FPTAREAP pArea, LPMEMOGCTABLE pGCtable)
       }
       if (pGCtable->ulDirPage && pGCtable->bChanged > 1) {
         FPTBLOCK fptBlock;
-        HB_USHORT usItems = HB_MIN(pGCtable->usItems, pGCtable->usMaxItem);
+        uint16_t usItems = HB_MIN(pGCtable->usItems, pGCtable->usMaxItem);
 
         HB_PUT_BE_UINT32(fptBlock.type, FPTIT_FLEX_GC);
         HB_PUT_BE_UINT32(fptBlock.size, pGCtable->ulSize);
         auto bPageBuf = static_cast<HB_BYTE *>(hb_xgrab(pGCtable->ulSize));
         memset(bPageBuf, 0xAD, pGCtable->ulSize);
-        HB_PUT_LE_UINT16(bPageBuf, (static_cast<HB_USHORT>(usItems) << 2) + 3);
+        HB_PUT_LE_UINT16(bPageBuf, (static_cast<uint16_t>(usItems) << 2) + 3);
         j = pGCtable->usItems - usItems;
         for (i = j; i < pGCtable->usItems; i++) {
           HB_PUT_LE_UINT32(&bPageBuf[(i - j) * 8 + 2], pGCtable->pGCitems[i].ulOffset * pArea->ulMemoBlockSize);
@@ -763,7 +763,7 @@ static HB_ERRCODE hb_fptWriteGCdata(FPTAREAP pArea, LPMEMOGCTABLE pGCtable)
         } else if (pGCtable->ulRevPage) {
           for (i = j; i < pGCtable->usItems; i++) {
             HB_PUT_LE_UINT32(&bPageBuf[(i - j) * 8 + 2],
-                             (static_cast<HB_USHORT>(pGCtable->pGCitems[i].ulSize) * pArea->ulMemoBlockSize));
+                             (static_cast<uint16_t>(pGCtable->pGCitems[i].ulSize) * pArea->ulMemoBlockSize));
             HB_PUT_LE_UINT32(&bPageBuf[(i - j) * 8 + 6], pGCtable->pGCitems[i].ulOffset * pArea->ulMemoBlockSize);
           }
           if (hb_fileWriteAt(pArea->pMemoFile, &fptBlock, sizeof(FPTBLOCK), pGCtable->ulRevPage) != sizeof(FPTBLOCK) ||
@@ -802,7 +802,7 @@ static HB_ERRCODE hb_fptWriteGCdata(FPTAREAP pArea, LPMEMOGCTABLE pGCtable)
 }
 
 // Return the size of memo.
-static HB_ULONG hb_fptGetMemoLen(FPTAREAP pArea, HB_USHORT uiIndex)
+static HB_ULONG hb_fptGetMemoLen(FPTAREAP pArea, uint16_t uiIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetMemoLen(%p, %hu)", static_cast<void*>(pArea), uiIndex));
@@ -843,7 +843,7 @@ static HB_ULONG hb_fptGetMemoLen(FPTAREAP pArea, HB_USHORT uiIndex)
 }
 
 // Return the type of memo.
-static const char *hb_fptGetMemoType(FPTAREAP pArea, HB_USHORT uiIndex)
+static const char *hb_fptGetMemoType(FPTAREAP pArea, uint16_t uiIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetMemoType(%p, %hu)", static_cast<void*>(pArea), uiIndex));
@@ -1002,7 +1002,7 @@ static HB_ULONG hb_fptCountSMTItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
 // Calculate the size of SMT memo data
 static HB_ERRCODE hb_fptCountSMTDataLength(FPTAREAP pArea, HB_FOFFSET *pfOffset)
 {
-  HB_USHORT uiSize;
+  uint16_t uiSize;
   HB_BYTE buffer[2];
 
   if (hb_fileReadAt(pArea->pMemoFile, buffer, 1, *pfOffset) != 1) {
@@ -1017,7 +1017,7 @@ static HB_ERRCODE hb_fptCountSMTDataLength(FPTAREAP pArea, HB_FOFFSET *pfOffset)
     }
     *pfOffset += 2;
     uiSize = HB_GET_LE_UINT16(buffer);
-    for (HB_USHORT u = 0; u < uiSize; u++) {
+    for (uint16_t u = 0; u < uiSize; u++) {
       HB_ERRCODE errCode = hb_fptCountSMTDataLength(pArea, pfOffset);
       if (errCode != Harbour::SUCCESS) {
         return errCode;
@@ -1526,7 +1526,7 @@ static HB_ERRCODE hb_fptReadSixItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYTE
 
   ulLen = SIX_ITEM_BUFSIZE;
   if (bBufEnd - (*pbMemoBuf) >= static_cast<HB_LONG>(ulLen)) {
-    HB_USHORT usType = HB_GET_LE_UINT16(&(*pbMemoBuf)[0]);
+    uint16_t usType = HB_GET_LE_UINT16(&(*pbMemoBuf)[0]);
     switch (usType) {
     case FPTIT_SIX_LNUM:
       hb_itemPutNL(pItem, static_cast<long>(HB_GET_LE_UINT32(&(*pbMemoBuf)[6])));
@@ -1669,7 +1669,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
   case Harbour::Item::ARRAY:
     ulLen = hb_arrayLen(pItem) & 0xFFFF;
     *(*bBufPtr)++ = FPTIT_FLEXAR_ARAY;
-    HB_PUT_LE_UINT16(*bBufPtr, static_cast<HB_USHORT>(ulLen));
+    HB_PUT_LE_UINT16(*bBufPtr, static_cast<uint16_t>(ulLen));
     *bBufPtr += 2;
     for (u = 1; u <= ulLen; u++) {
       hb_fptStoreFlexItem(pArea, hb_arrayGetItemPtr(pItem, u), bBufPtr, iTrans);
@@ -1699,7 +1699,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
         }
         memcpy(*bBufPtr + 2, pItem->getCPtr(), ulLen);
       }
-      HB_PUT_LE_UINT16(*bBufPtr, static_cast<HB_USHORT>(ulLen));
+      HB_PUT_LE_UINT16(*bBufPtr, static_cast<uint16_t>(ulLen));
       *bBufPtr += ulLen + 2;
     }
     break;
@@ -1893,7 +1893,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYT
     break;
   case FPTIT_FLEXAR_USHORT:
     if (bBufEnd - (*pbMemoBuf) >= 2) {
-      hb_itemPutNInt(pItem, static_cast<HB_USHORT>(HB_GET_LE_UINT16(*pbMemoBuf)));
+      hb_itemPutNInt(pItem, static_cast<uint16_t>(HB_GET_LE_UINT16(*pbMemoBuf)));
       *pbMemoBuf += 2;
     } else {
       errCode = EDBF_CORRUPT;
@@ -1901,7 +1901,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYT
     break;
   case FPTIT_FLEXAR_USHORT1:
     if (bBufEnd - (*pbMemoBuf) >= 3) {
-      hb_itemPutNIntLen(pItem, static_cast<HB_USHORT>(HB_GET_LE_UINT16(*pbMemoBuf)), (*pbMemoBuf)[2]);
+      hb_itemPutNIntLen(pItem, static_cast<uint16_t>(HB_GET_LE_UINT16(*pbMemoBuf)), (*pbMemoBuf)[2]);
       *pbMemoBuf += 3;
     } else {
       errCode = EDBF_CORRUPT;
@@ -1912,9 +1912,9 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYT
       int iLen = (*pbMemoBuf)[2], iDec = (*pbMemoBuf)[3];
       if (iDec) {
         iLen -= iDec + 1;
-        hb_itemPutNDLen(pItem, static_cast<HB_USHORT>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen, iDec);
+        hb_itemPutNDLen(pItem, static_cast<uint16_t>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen, iDec);
       } else {
-        hb_itemPutNIntLen(pItem, static_cast<HB_USHORT>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen);
+        hb_itemPutNIntLen(pItem, static_cast<uint16_t>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen);
       }
       *pbMemoBuf += 4;
     } else {
@@ -2136,7 +2136,7 @@ static HB_ERRCODE hb_fptReadRawBlock(FPTAREAP pArea, HB_BYTE *bBuffer, PHB_FILE 
 }
 
 static HB_ERRCODE hb_fptReadBlobBlock(FPTAREAP pArea, PHB_ITEM pItem, PHB_FILE pFile, HB_ULONG ulBlock,
-                                      HB_USHORT uiMode)
+                                      uint16_t uiMode)
 {
   HB_ULONG ulSize;
   HB_BYTE buffer[4];
@@ -2205,7 +2205,7 @@ static HB_ERRCODE hb_fptReadSMTBlock(FPTAREAP pArea, PHB_ITEM pItem, HB_ULONG ul
 }
 
 // Read fpt vartype memos.
-static HB_ERRCODE hb_fptGetMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem, PHB_FILE pFile, HB_ULONG ulBlock,
+static HB_ERRCODE hb_fptGetMemo(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem, PHB_FILE pFile, HB_ULONG ulBlock,
                                 HB_ULONG ulStart, HB_ULONG ulCount, int iTrans)
 {
 #if 0
@@ -2527,7 +2527,7 @@ static HB_ERRCODE hb_fptWriteMemo(FPTAREAP pArea, HB_ULONG ulBlock, HB_ULONG ulS
 }
 
 // Assign a value to the specified memo field.
-static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem, HB_ULONG *pulBlock, int iTrans)
+static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem, HB_ULONG *pulBlock, int iTrans)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptPutMemo(%p, %hu, %p, %p)", pArea, uiIndex, pItem, pulBlock));
@@ -2689,7 +2689,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
 
 #ifdef HB_MEMO_SAFELOCK
 // Check if memo field has any data
-static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
+static bool hb_fptHasMemoData(FPTAREAP pArea, uint16_t uiIndex)
 {
   if (--uiIndex < pArea->area.uiFieldCount) {
     LPFIELD pField = pArea->area.lpFields + uiIndex;
@@ -2697,7 +2697,7 @@ static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
     if (pField->uiType == Harbour::DB::Field::ANY) {
       if (pField->uiLen >= 6) {
         HB_BYTE *pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiIndex];
-        HB_USHORT uiType = HB_GET_LE_UINT16(pFieldBuf + pField->uiLen - 2);
+        uint16_t uiType = HB_GET_LE_UINT16(pFieldBuf + pField->uiLen - 2);
 
         switch (uiType) {
         case HB_VF_ARRAY:
@@ -2714,7 +2714,7 @@ static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
     } else if (pField->uiType == Harbour::DB::Field::MEMO || pField->uiType == Harbour::DB::Field::IMAGE ||
                pField->uiType == Harbour::DB::Field::BLOB || pField->uiType == Harbour::DB::Field::OLE) {
       HB_BYTE *pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiIndex];
-      HB_USHORT uiLen = pField->uiLen;
+      uint16_t uiLen = pField->uiLen;
 
       if (uiLen == 4) {
         return HB_GET_LE_UINT32(pFieldBuf) != 0;
@@ -2736,7 +2736,7 @@ static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
 }
 #endif
 
-static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, bool *fUnLock)
+static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, uint16_t uiIndex, bool *fUnLock)
 {
   HB_ERRCODE errCode;
   HB_BOOL fLocked;
@@ -2786,7 +2786,7 @@ static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, bool *fUn
   return errCode;
 }
 
-static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem, PHB_FILE pFile)
+static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem, PHB_FILE pFile)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetVarField(%p, %hu, %p, %p)", pArea, uiIndex, pItem, pFile));
@@ -2800,7 +2800,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
   pField = pArea->area.lpFields + uiIndex - 1;
 
   if (pField->uiType == Harbour::DB::Field::ANY) {
-    HB_USHORT uiType;
+    uint16_t uiType;
 
     errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
     if (errCode != Harbour::SUCCESS) {
@@ -2844,7 +2844,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
           pString = pPtr = pAlloc = static_cast<char *>(hb_xgrab(ulLen + 1));
 
           if (pField->uiLen > 6) {
-            HB_USHORT uiVLen = pField->uiLen - 6;
+            uint16_t uiVLen = pField->uiLen - 6;
             memcpy(pPtr, pFieldBuf, uiVLen);
             ulSize -= uiVLen;
             pPtr += uiVLen;
@@ -2956,7 +2956,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
   return errCode;
 }
 
-static HB_ERRCODE hb_fptGetVarFile(FPTAREAP pArea, HB_ULONG ulBlock, const char *szFile, HB_USHORT uiMode, int iTrans)
+static HB_ERRCODE hb_fptGetVarFile(FPTAREAP pArea, HB_ULONG ulBlock, const char *szFile, uint16_t uiMode, int iTrans)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetVarFile(%p, %lu, %s, %hu, %d)", pArea, ulBlock, szFile, uiMode, iTrans));
@@ -3031,7 +3031,7 @@ static HB_ULONG hb_fptPutVarFile(FPTAREAP pArea, HB_ULONG ulBlock, const char *s
   return ulBlock;
 }
 
-static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptPutVarField(%p, %hu, %p)", pArea, uiIndex, pItem));
@@ -3104,7 +3104,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       HB_BYTE buffer[11], *pAlloc = nullptr, *pbTmp;
       const HB_BYTE *pBlock = nullptr;
       HB_ULONG ulOldBlock = 0, ulOldSize = 0, ulNewSize = 0;
-      HB_USHORT uiType = HB_GET_LE_UINT16(pFieldBuf + pField->uiLen - 2);
+      uint16_t uiType = HB_GET_LE_UINT16(pFieldBuf + pField->uiLen - 2);
 
       if ((uiType <= HB_VF_CHAR && uiType > pField->uiLen - 2) || (uiType == HB_VF_DNUM && pField->uiLen <= 12) ||
           uiType == HB_VF_ARRAY || uiType == HB_VF_BLOB || uiType == HB_VF_BLOBCOMPRESS ||
@@ -3175,7 +3175,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
             nLen = HB_VF_CHAR;
           }
         }
-        uiType = static_cast<HB_USHORT>(nLen);
+        uiType = static_cast<uint16_t>(nLen);
         if (uiType <= pField->uiLen - 2) {
           memcpy(pFieldBuf, pBlock, uiType);
         } else {
@@ -3250,7 +3250,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
 
 // Retrieve the size of the WorkArea structure.
 // ( DBENTRYP_SP )    hb_fptStructSize
-static HB_ERRCODE hb_fptStructSize(FPTAREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE hb_fptStructSize(FPTAREAP pArea, uint16_t *uiSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptStrucSize(%p, %p)", pArea, uiSize));
@@ -3263,7 +3263,7 @@ static HB_ERRCODE hb_fptStructSize(FPTAREAP pArea, HB_USHORT *uiSize)
 
 // Obtain the length of a field value.
 // ( DBENTRYP_SVL )   hb_fptGetVarLen
-static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, HB_USHORT uiIndex, HB_ULONG *pLength)
+static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, uint16_t uiIndex, HB_ULONG *pLength)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetVarLen(%p, %hu, %p)", pArea, uiIndex, pLength));
@@ -3295,7 +3295,7 @@ static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, HB_USHORT uiIndex, HB_ULONG *p
 
 // Obtain the current value of a field.
 // ( DBENTRYP_SI )    hb_fptGetValue
-static HB_ERRCODE hb_fptGetValue(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_fptGetValue(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetValue(%p, %hu, %p)", pArea, uiIndex, pItem));
@@ -3318,7 +3318,7 @@ static HB_ERRCODE hb_fptGetValue(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
 // Assign a value to a field.
 // ( DBENTRYP_SI )    hb_fptPutValue
-static HB_ERRCODE hb_fptPutValue(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_fptPutValue(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptPutValue(%p, %hu, %p)", pArea, uiIndex, pItem));
@@ -3385,7 +3385,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
           hb_itemRelease(pItem);
           return Harbour::FAILURE;
         }
-        pArea->uiMemoVersion = static_cast<HB_USHORT>(hb_itemGetNI(pItem));
+        pArea->uiMemoVersion = static_cast<uint16_t>(hb_itemGetNI(pItem));
       } else {
         pArea->uiMemoVersion = DB_MEMOVER_STD;
       }
@@ -3501,7 +3501,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
 
 // BLOB2FILE - retrieve memo contents into file
 // ( DBENTRYP_SCCS )  hb_fptGetValueFile
-static HB_ERRCODE hb_fptGetValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const char *szFile, HB_USHORT uiMode)
+static HB_ERRCODE hb_fptGetValueFile(FPTAREAP pArea, uint16_t uiIndex, const char *szFile, uint16_t uiMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetValueFile(%p, %hu, %s, %hu)", pArea, uiIndex, szFile, uiMode));
@@ -3644,7 +3644,7 @@ static HB_ERRCODE hb_fptOpenMemFile(FPTAREAP pArea, LPDBOPENINFO pOpenInfo)
         }
         // Check for compatibility with Clipper 5.3/FlexFile3 malformed memo headers
         if (pArea->uiMemoVersion != DB_MEMOVER_SIX && memcmp(fptHeader.signature2, "FlexFile3\003", 10) == 0) {
-          HB_USHORT usSize = HB_GET_LE_UINT16(fptHeader.flexSize);
+          uint16_t usSize = HB_GET_LE_UINT16(fptHeader.flexSize);
           pArea->uiMemoVersion = DB_MEMOVER_FLEX;
           if (usSize != 0 && (pArea->ulMemoBlockSize == 0 || pArea->area.rddID == s_uiRddIdBLOB)) {
             pArea->ulMemoBlockSize = usSize;
@@ -3665,7 +3665,7 @@ static HB_ERRCODE hb_fptOpenMemFile(FPTAREAP pArea, LPDBOPENINFO pOpenInfo)
 
 // FILE2BLOB - store file contents in MEMO
 // ( DBENTRYP_SCCS )   hb_fptPutValueFile
-static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const char *szFile, HB_USHORT uiMode)
+static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, uint16_t uiIndex, const char *szFile, uint16_t uiMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptPutValueFile(%p, %hu, %s, %hu)", pArea, uiIndex, szFile, uiMode));
@@ -3781,7 +3781,7 @@ static HB_ERRCODE hb_fptDoPackRec(FPTAREAP pArea)
   HB_FOFFSET pos, from, size;
 
   // TODO: implement memo pack operation
-  for (HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
+  for (uint16_t uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
     LPFIELD pField = pArea->area.lpFields + uiField;
 
     if (pField->uiType == Harbour::DB::Field::MEMO || pField->uiType == Harbour::DB::Field::IMAGE ||
@@ -4077,7 +4077,7 @@ static HB_ERRCODE hb_fptPack(FPTAREAP pArea)
 
 // Retrieve information about the current driver.
 // ( DBENTRYP_SI )    hb_fptInfo
-static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptInfo(%p, %hu, %p)", pArea, uiIndex, pItem));
@@ -4155,7 +4155,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       auto szFile = hb_arrayGetCPtr(pItem, 2);
 
       if (ulBlock && szFile && *szFile) {
-        errCode = hb_fptGetVarFile(pArea, ulBlock, szFile, static_cast<HB_USHORT>(hb_arrayGetNI(pItem, 3)),
+        errCode = hb_fptGetVarFile(pArea, ulBlock, szFile, static_cast<uint16_t>(hb_arrayGetNI(pItem, 3)),
                                    FPT_DIRECT_TRANS(pArea));
       }
     }
@@ -4289,7 +4289,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
 // Retrieve information about a field.
 // ( DBENTRYP_SSI )   hb_fptFieldInfo
-static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT uiType, PHB_ITEM pItem)
+static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, uint16_t uiIndex, uint16_t uiType, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptFieldInfo(%p, %hu, %hu, %p)", pArea, uiIndex, uiType, pItem));
@@ -4371,7 +4371,7 @@ static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
 
 // Retrieve (set) information about RDD
 // ( DBENTRYP_RSLV )   hb_fptRddInfo
-static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fptRddInfo(%p, %hu, %lu, %p)", pRDD, uiIndex, ulConnect, pItem));
@@ -4631,15 +4631,15 @@ HB_FUNC(DBFBLOB)
   ;
 }
 
-static void hb_dbffptRegisterRDD(HB_USHORT *pusRddId)
+static void hb_dbffptRegisterRDD(uint16_t *pusRddId)
 {
   RDDFUNCS *pTable;
-  HB_USHORT *puiCount, uiRddId, *puiSuperRddId;
+  uint16_t *puiCount, uiRddId, *puiSuperRddId;
 
-  puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  puiCount = static_cast<uint16_t *>(hb_parptr(1));
   pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-  puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
+  uiRddId = static_cast<uint16_t>(hb_parni(4));
+  puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("DBFFPT_GETFUNCTABLE(%p, %p)", puiCount, pTable));

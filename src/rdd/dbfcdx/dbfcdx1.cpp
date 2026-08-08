@@ -123,7 +123,7 @@ static int hb_cdxPageRootSplit(LPCDXPAGE pPage);
 // free create index structure
 static void hb_cdxSortFree(LPCDXSORTINFO pSort);
 
-static HB_USHORT s_uiRddId = static_cast<HB_USHORT>(-1);
+static uint16_t s_uiRddId = static_cast<uint16_t>(-1);
 
 static RDDFUNCS cdxSuper;
 
@@ -184,7 +184,7 @@ static void hb_cdxErrInternal(const char *szMsg)
 
 // generate Run-Time error
 static HB_ERRCODE hb_cdxErrorRT(CDXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *filename,
-                                HB_ERRCODE errOsCode, HB_USHORT uiFlags, PHB_ITEM *pErrorPtr)
+                                HB_ERRCODE errOsCode, uint16_t uiFlags, PHB_ITEM *pErrorPtr)
 {
   HB_ERRCODE iRet = Harbour::FAILURE;
 
@@ -229,7 +229,7 @@ static void hb_cdxMakeSortTab(CDXAREAP pArea)
 }
 
 // create new index key
-static LPCDXKEY hb_cdxKeyNew(HB_USHORT uiLen)
+static LPCDXKEY hb_cdxKeyNew(uint16_t uiLen)
 {
   auto pKey = static_cast<LPCDXKEY>(hb_xgrabz(sizeof(CDXKEY) + uiLen));
   pKey->len = uiLen;
@@ -256,7 +256,7 @@ static LPCDXKEY hb_cdxKeyCopy(LPCDXKEY pKeyDest, LPCDXKEY pKey)
 }
 
 // store bytes value in index key
-static LPCDXKEY hb_cdxKeyPut(LPCDXKEY pKey, const HB_BYTE *pbVal, HB_USHORT uiLen, HB_ULONG ulRec)
+static LPCDXKEY hb_cdxKeyPut(LPCDXKEY pKey, const HB_BYTE *pbVal, uint16_t uiLen, HB_ULONG ulRec)
 {
   if (pbVal == nullptr) {
     uiLen = 0;
@@ -281,7 +281,7 @@ static LPCDXKEY hb_cdxKeyPut(LPCDXKEY pKey, const HB_BYTE *pbVal, HB_USHORT uiLe
 }
 
 // store string value in index key
-static LPCDXKEY hb_cdxKeyPutCL(LPCDXKEY pKey, const char *pText, HB_SIZE nLen, HB_ULONG ulRec, HB_USHORT uiKeyLen,
+static LPCDXKEY hb_cdxKeyPutCL(LPCDXKEY pKey, const char *pText, HB_SIZE nLen, HB_ULONG ulRec, uint16_t uiKeyLen,
                                int iMode)
 {
   if (!pKey) {
@@ -301,7 +301,7 @@ static LPCDXKEY hb_cdxKeyPutCL(LPCDXKEY pKey, const char *pText, HB_SIZE nLen, H
   }
   pKey->val[uiKeyLen] = '\0';
 
-  pKey->mode = static_cast<HB_USHORT>(iMode);
+  pKey->mode = static_cast<uint16_t>(iMode);
   pKey->rec = ulRec;
 
   return pKey;
@@ -459,7 +459,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
     if (iMode != CDX_CMP_EXACT && nLen < nDestLen) {
       nDestLen = nLen;
     }
-    pKey = hb_cdxKeyPutCL(pKey, pText, nLen, ulRec, static_cast<HB_USHORT>(nDestLen), iMode);
+    pKey = hb_cdxKeyPutCL(pKey, pText, nLen, ulRec, static_cast<uint16_t>(nDestLen), iMode);
     if (pFree) {
       hb_xfree(pFree);
     }
@@ -504,8 +504,8 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
     break;
   }
 
-  pKey = hb_cdxKeyPut(pKey, ptr, static_cast<HB_USHORT>(nLen), ulRec);
-  pKey->mode = static_cast<HB_USHORT>(iMode);
+  pKey = hb_cdxKeyPut(pKey, ptr, static_cast<uint16_t>(nLen), ulRec);
+  pKey->mode = static_cast<uint16_t>(iMode);
 
   return pKey;
 }
@@ -667,7 +667,7 @@ static bool hb_cdxBottomScope(LPCDXTAG pTag)
 }
 
 // clear top or bottom scope
-static void hb_cdxTagClearScope(LPCDXTAG pTag, HB_USHORT nScope)
+static void hb_cdxTagClearScope(LPCDXTAG pTag, uint16_t nScope)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxTagClearScope(%p, %hu)", static_cast<void*>(pTag), nScope));
@@ -704,7 +704,7 @@ static void hb_cdxTagClearScope(LPCDXTAG pTag, HB_USHORT nScope)
 }
 
 // set top or bottom scope
-static void hb_cdxTagSetScope(LPCDXTAG pTag, HB_USHORT nScope, PHB_ITEM pItem)
+static void hb_cdxTagSetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
 {
   CDXAREAP pArea = pTag->pIndex->pArea;
   PHB_ITEM pScopeVal;
@@ -747,7 +747,7 @@ static void hb_cdxTagSetScope(LPCDXTAG pTag, HB_USHORT nScope, PHB_ITEM pItem)
   }
 }
 
-static void hb_cdxTagGetScope(LPCDXTAG pTag, HB_USHORT nScope, PHB_ITEM pItem)
+static void hb_cdxTagGetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
 {
   CDXAREAP pArea = pTag->pIndex->pArea;
   PHB_ITEM *pScope;
@@ -1730,7 +1730,7 @@ static void hb_cdxPageLeafInitSpace(LPCDXPAGE pPage)
   pPage->ReqByte = bBits > 12 ? 5 : (bBits > 8 ? 4 : 3);
   pPage->RNBits = (pPage->ReqByte << 3) - (bBits << 1);
   pPage->DCBits = pPage->TCBits = bBits;
-  pPage->DCMask = pPage->TCMask = static_cast<HB_USHORT>(HB_CDXBITMASK(bBits));
+  pPage->DCMask = pPage->TCMask = static_cast<uint16_t>(HB_CDXBITMASK(bBits));
   pPage->RNMask = HB_CDXBITMASK(pPage->RNBits);
   pPage->iFree = pPage->TagParent->pIndex->uiPageLen - CDX_EXT_HEADSIZE;
 }
@@ -2072,8 +2072,8 @@ static void hb_cdxPageLoad(LPCDXPAGE pPage)
       pPage->DCMask = pPage->node.extNode.dupMask;
       pPage->TCMask = pPage->node.extNode.trlMask;
     } else {
-      pPage->DCMask = static_cast<HB_USHORT>(HB_CDXBITMASK(pPage->DCBits));
-      pPage->TCMask = static_cast<HB_USHORT>(HB_CDXBITMASK(pPage->TCBits));
+      pPage->DCMask = static_cast<uint16_t>(HB_CDXBITMASK(pPage->DCBits));
+      pPage->TCMask = static_cast<uint16_t>(HB_CDXBITMASK(pPage->TCBits));
     }
     pPage->RNMask = HB_GET_LE_UINT32(pPage->node.extNode.recMask);
     pPage->ReqByte = pPage->node.extNode.keyBytes;
@@ -3065,7 +3065,7 @@ static int hb_cdxPageKeyInsert(LPCDXPAGE pPage, LPCDXKEY pKey)
 // Store Tag header to index files
 static void hb_cdxTagHeaderStore(LPCDXTAG pTag)
 {
-  HB_USHORT uiKeyLen, uiForLen;
+  uint16_t uiKeyLen, uiForLen;
   CDXTAGHEADER tagHeader;
 
   if (!pTag->TagChanged) {
@@ -3122,8 +3122,8 @@ static void hb_cdxTagHeaderStore(LPCDXTAG pTag)
     tagHeader.ignoreCase = 1;
   }
 
-  uiKeyLen = pTag->KeyExpr == nullptr ? 0 : static_cast<HB_USHORT>(strlen(pTag->KeyExpr));
-  uiForLen = pTag->ForExpr == nullptr ? 0 : static_cast<HB_USHORT>(strlen(pTag->ForExpr));
+  uiKeyLen = pTag->KeyExpr == nullptr ? 0 : static_cast<uint16_t>(strlen(pTag->KeyExpr));
+  uiForLen = pTag->ForExpr == nullptr ? 0 : static_cast<uint16_t>(strlen(pTag->ForExpr));
 
   if (uiKeyLen + uiForLen > CDX_HEADEREXPLEN - 2) {
     hb_cdxErrorRT(pTag->pIndex->pArea, EG_DATAWIDTH, EDBF_KEYLENGTH, nullptr, 0, 0, nullptr);
@@ -3151,7 +3151,7 @@ static bool hb_cdxIsTemplateFunc(const char *szKeyExpr)
 }
 #endif
 
-static bool hb_cdxSetPageSize(LPCDXINDEX pIndex, bool fLargeFile, HB_USHORT uiPageSize, HB_USHORT uiHeaderSize)
+static bool hb_cdxSetPageSize(LPCDXINDEX pIndex, bool fLargeFile, uint16_t uiPageSize, uint16_t uiHeaderSize)
 {
   if (uiPageSize >= CDX_PAGELEN && uiPageSize <= CDX_PAGELEN_MAX && ((uiPageSize - 1) & uiPageSize) == 0 &&
       uiHeaderSize == CDX_HEADERLEN) {
@@ -3179,7 +3179,7 @@ static bool hb_cdxSetPageSize(LPCDXINDEX pIndex, bool fLargeFile, HB_USHORT uiPa
 static void hb_cdxTagLoad(LPCDXTAG pTag)
 {
   CDXTAGHEADER tagHeader;
-  HB_USHORT uiForPos, uiForLen, uiKeyPos, uiKeyLen;
+  uint16_t uiForPos, uiForLen, uiKeyPos, uiKeyLen;
   HB_ULONG ulRecNo;
 
   // read the page from a file
@@ -3194,7 +3194,7 @@ static void hb_cdxTagLoad(LPCDXTAG pTag)
 
   if (pTag->TagBlock == 0) {
     auto fLargeFile = false;
-    HB_USHORT uiPageLen = CDX_PAGELEN, uiHeaderLen = CDX_HEADERLEN;
+    uint16_t uiPageLen = CDX_PAGELEN, uiHeaderLen = CDX_HEADERLEN;
     HB_U32 u32Sig = HB_GET_BE_UINT32(tagHeader.signature);
 
     if (u32Sig == CDX_HARBOUR_SIGNATURE || u32Sig == HB_SWAP_UINT32(CDX_HARBOUR_SIGNATURE)) {
@@ -4142,7 +4142,7 @@ static void hb_cdxReorderTagList(LPCDXTAG *TagListPtr)
 
 // create new order header, store it and then make an order
 static LPCDXTAG hb_cdxIndexCreateTag(bool fStruct, LPCDXINDEX pIndex, const char *szTagName, const char *szKeyExp,
-                                     PHB_ITEM pKeyItem, HB_BYTE bType, HB_USHORT uiLen, const char *szForExp,
+                                     PHB_ITEM pKeyItem, HB_BYTE bType, uint16_t uiLen, const char *szForExp,
                                      PHB_ITEM pForItem, bool fAscnd, bool fUniq, bool fNoCase, bool fCustom,
                                      bool fReindex)
 {
@@ -4255,7 +4255,7 @@ static void hb_cdxIndexDelTag(LPCDXINDEX pIndex, const char *szTagName)
 
 // add tag to order bag
 static LPCDXTAG hb_cdxIndexAddTag(LPCDXINDEX pIndex, const char *szTagName, const char *szKeyExp, PHB_ITEM pKeyItem,
-                                  HB_BYTE bType, HB_USHORT uiLen, const char *szForExp, PHB_ITEM pForItem, bool fAscend,
+                                  HB_BYTE bType, uint16_t uiLen, const char *szForExp, PHB_ITEM pForItem, bool fAscend,
                                   bool fUnique, bool fNoCase, bool fCustom, bool fReindex)
 {
   LPCDXTAG pTag, *pTagPtr;
@@ -4320,7 +4320,7 @@ static void hb_cdxIndexReindex(LPCDXINDEX pIndex)
 
 static void hb_cdxIndexInit(LPCDXINDEX pIndex)
 {
-  HB_USHORT uiPageSize = DBFAREA_DATA(&pIndex->pArea->dbfarea)->uiIndexPageSize;
+  uint16_t uiPageSize = DBFAREA_DATA(&pIndex->pArea->dbfarea)->uiIndexPageSize;
   auto fLargeFile = false;
 
   if (uiPageSize < CDX_PAGELEN) {
@@ -4562,7 +4562,7 @@ static LPCDXINDEX hb_cdxFindBag(CDXAREAP pArea, const char *szBagName)
 }
 
 // get Tag by number
-static LPCDXTAG hb_cdxGetTagByNumber(CDXAREAP pArea, HB_USHORT uiTag)
+static LPCDXTAG hb_cdxGetTagByNumber(CDXAREAP pArea, uint16_t uiTag)
 {
   LPCDXTAG pTag = nullptr;
   LPCDXINDEX pIndex = pArea->lpIndexes;
@@ -4580,9 +4580,9 @@ static LPCDXTAG hb_cdxGetTagByNumber(CDXAREAP pArea, HB_USHORT uiTag)
 }
 
 // get Tag number
-static HB_USHORT hb_cdxGetTagNumber(CDXAREAP pArea, LPCDXTAG pFindTag)
+static uint16_t hb_cdxGetTagNumber(CDXAREAP pArea, LPCDXTAG pFindTag)
 {
-  HB_USHORT uiTag = 0;
+  uint16_t uiTag = 0;
   LPCDXTAG pTag = nullptr;
   LPCDXINDEX pIndex = pArea->lpIndexes;
 
@@ -4606,7 +4606,7 @@ static HB_USHORT hb_cdxGetTagNumber(CDXAREAP pArea, LPCDXTAG pFindTag)
 }
 
 // find Tag in tag list
-static LPCDXTAG hb_cdxFindTag(CDXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagItem, HB_USHORT *puiTag)
+static LPCDXTAG hb_cdxFindTag(CDXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagItem, uint16_t *puiTag)
 {
   LPCDXTAG pTag = nullptr;
   int iTag = 0, iFind = 0;
@@ -4661,7 +4661,7 @@ static LPCDXTAG hb_cdxFindTag(CDXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagIt
     } else if (fBag) {
       *puiTag = hb_cdxGetTagNumber(pArea, pTag);
     } else {
-      *puiTag = static_cast<HB_USHORT>(iTag);
+      *puiTag = static_cast<uint16_t>(iTag);
     }
   }
 
@@ -4992,7 +4992,7 @@ static bool hb_cdxDBOISkipWild(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB
                        CDX_CMP_PREFIX) == -iStop) {
     LPCDXKEY pKey;
 
-    pKey = hb_cdxKeyPut(nullptr, reinterpret_cast<const HB_BYTE *>(szPattern), static_cast<HB_USHORT>(iFixed),
+    pKey = hb_cdxKeyPut(nullptr, reinterpret_cast<const HB_BYTE *>(szPattern), static_cast<uint16_t>(iFixed),
                         pTag->UsrAscend ? CDX_IGNORE_REC_NUM : CDX_MAX_REC_NUM);
     pKey->mode = CDX_CMP_PREFIX;
     if (!hb_cdxTagKeyFind(pTag, pKey)) {
@@ -6467,7 +6467,7 @@ static HB_ERRCODE hb_cdxOpen(CDXAREAP pArea, LPDBOPENINFO pOpenInfo)
 
 // ( DBENTRYP_SP )    hb_cdxStructSize
 // Retrieve the size of the WorkArea structure.
-static HB_ERRCODE hb_cdxStructSize(CDXAREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE hb_cdxStructSize(CDXAREAP pArea, uint16_t *uiSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxStrucSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
@@ -6734,7 +6734,7 @@ static HB_ERRCODE hb_cdxOrderListRebuild(CDXAREAP pArea)
 #endif
 
   LPCDXINDEX pIndex, *pIndexPtr;
-  HB_USHORT uiPrevTag;
+  uint16_t uiPrevTag;
 
   if (FAST_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
@@ -6799,7 +6799,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   const char *szFor = nullptr;
   LPCDXINDEX pIndex;
   LPCDXTAG pTag;
-  HB_USHORT uiLen;
+  uint16_t uiLen;
   HB_BYTE bType;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
@@ -6862,7 +6862,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     if (nLen > USHRT_MAX) {
       nLen = USHRT_MAX;
     }
-    uiLen = static_cast<HB_USHORT>(nLen);
+    uiLen = static_cast<uint16_t>(nLen);
     break;
   }
   default:
@@ -7130,7 +7130,7 @@ static HB_ERRCODE hb_cdxOrderDestroy(CDXAREAP pArea, LPDBORDERINFO pOrderInfo)
 
   LPCDXINDEX pIndex, pIndexTmp;
   LPCDXTAG pTag;
-  HB_USHORT uiTag;
+  uint16_t uiTag;
 
   if (FAST_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
@@ -7186,14 +7186,14 @@ static HB_ERRCODE hb_cdxOrderDestroy(CDXAREAP pArea, LPDBORDERINFO pOrderInfo)
 
 // ( DBENTRYP_SVOI )  hb_cdxOrderInfo
 // Provides information about order management.
-static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo)
+static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxOrderInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pInfo)));
 #endif
 
   LPCDXTAG pTag;
-  HB_USHORT uiTag = 0;
+  uint16_t uiTag = 0;
 
   switch (uiIndex) {
   case DBOI_STRICTREAD:
@@ -7947,7 +7947,7 @@ static HB_ERRCODE hb_cdxSetFilter(CDXAREAP pArea, LPDBFILTERINFO pFilterInfo)
 
 // Retrieve (set) information about RDD
 // ( DBENTRYP_RSLV )   hb_fptFieldInfo
-static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
@@ -8631,7 +8631,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
   if (ulRecCount == 0) {
     hb_cdxTagEmptyIndex(pTag);
   } else {
-    HB_USHORT uiSaveTag = pArea->uiTag;
+    uint16_t uiSaveTag = pArea->uiTag;
     HB_ULONG ulStartRec = 0, ulNextCount = 0;
     auto fDirectRead = false;
     auto fUseFilter = false;
@@ -9009,10 +9009,10 @@ static const RDDFUNCS cdxTable = {
 
 HB_FUNC_STATIC(_GETFUNCTABLE)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
+  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, (HB_CDXRDD "_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));

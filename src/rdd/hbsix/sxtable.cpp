@@ -290,7 +290,7 @@ HB_FUNC(SX_SETPASS)
        * with RDD name and connection number.
        */
       LPRDDNODE pRDDNode;
-      HB_USHORT uiRddID;
+      uint16_t uiRddID;
       const char *szDriver;
 
       if (iPCount == 2) { /* no RDD parameter, use default */
@@ -405,7 +405,7 @@ HB_FUNC(SX_TURBOAREA)
 HB_FUNC(SX_SETTURBO)
 {
   LPRDDNODE pRDDNode;
-  HB_USHORT uiRddID;
+  uint16_t uiRddID;
 
   auto szDriver = hb_parc(2);
   if (!szDriver) { /* no VIA RDD parameter, use default */
