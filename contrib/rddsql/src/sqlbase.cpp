@@ -405,8 +405,8 @@ static HB_ERRCODE sqlbaseAppend(SQLBASEAREAP pArea, HB_BOOL bUnLockAll)
   if (pArea->ulRecCount + 1 >= pArea->ulRecMax) {
     pArea->pRow =
         static_cast<void **>(hb_xrealloc(pArea->pRow, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(void *)));
-    pArea->pRowFlags = static_cast<HB_BYTE *>(
-        hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(HB_BYTE)));
+    pArea->pRowFlags = static_cast<uint8_t *>(
+        hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(uint8_t)));
     pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
   }
 
@@ -582,7 +582,7 @@ static HB_ERRCODE sqlbaseZap(SQLBASEAREAP pArea)
   pArea->ulRecNo = 0;
 
   pArea->pRow = static_cast<void **>(hb_xrealloc(pArea->pRow, SQLDD_ROWSET_RESIZE * sizeof(void *)));
-  pArea->pRowFlags = static_cast<HB_BYTE *>(hb_xrealloc(pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof(HB_BYTE)));
+  pArea->pRowFlags = static_cast<uint8_t *>(hb_xrealloc(pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof(uint8_t)));
   pArea->ulRecMax = SQLDD_ROWSET_RESIZE;
 
   pArea->fFetched = true;
@@ -726,7 +726,7 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
   pArea->ulRecCount = 0;
 
   pArea->pRow = static_cast<void **>(hb_xgrab(SQLDD_ROWSET_RESIZE * sizeof(void *)));
-  pArea->pRowFlags = static_cast<HB_BYTE *>(hb_xgrab(SQLDD_ROWSET_RESIZE * sizeof(HB_BYTE)));
+  pArea->pRowFlags = static_cast<uint8_t *>(hb_xgrab(SQLDD_ROWSET_RESIZE * sizeof(uint8_t)));
   pArea->ulRecMax = SQLDD_ROWSET_RESIZE;
 
   pArea->pRow[0] = pItemEof;

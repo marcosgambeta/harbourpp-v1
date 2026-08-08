@@ -87,7 +87,7 @@ static bool addToContext(pgCopyContext *context, const char c)
 
     context->position = 0;
   }
-  context->buffer[context->position++] = static_cast<HB_BYTE>(c);
+  context->buffer[context->position++] = static_cast<uint8_t>(c);
 
   return true;
 }
@@ -109,7 +109,7 @@ static bool addStrToContext(pgCopyContext *context, const char *str)
 
       context->position = 0;
     }
-    context->buffer[context->position++] = static_cast<HB_BYTE>(*str++);
+    context->buffer[context->position++] = static_cast<uint8_t>(*str++);
   }
 
   return true;
@@ -133,7 +133,7 @@ static bool addStrnToContext(pgCopyContext *context, const char *str, HB_SIZE si
 
       context->position = 0;
     }
-    context->buffer[context->position++] = static_cast<HB_BYTE>(str[nSize++]);
+    context->buffer[context->position++] = static_cast<uint8_t>(str[nSize++]);
   }
 
   return true;

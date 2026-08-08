@@ -492,8 +492,8 @@ extern HB_EXPORT IPicture *    hb_wvt_gtLoadPictureFromResource(LPCTSTR resource
 extern HB_EXPORT HB_BOOL       hb_wvt_gtRenderPicture(int x1, int y1, int wd, int ht, IPicture * iPicture, HB_BOOL bDoNotScale);
 extern HB_EXPORT HB_BOOL       hb_wvt_gtDestroyPicture(IPicture *iPicture);
 extern HB_EXPORT HB_BOOL       hb_wvt_DrawImage(HDC hdc, int x1, int y1, int wd, int ht, LPCTSTR image, HB_BOOL bDoNotScale);
-extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE *sBuffer, HB_BYTE *sAttrib);
-extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE *sBuffer, HB_BYTE *sAttrib);
+extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, uint8_t *sBuffer, uint8_t *sAttrib);
+extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, uint8_t *sBuffer, uint8_t *sAttrib);
 
 extern HB_EXPORT LPWORD        lpwAlign(LPWORD lpIn);
 extern HB_EXPORT int           nCopyAnsiToWideChar(LPWORD lpWCStr, LPCSTR lpAnsiIn);

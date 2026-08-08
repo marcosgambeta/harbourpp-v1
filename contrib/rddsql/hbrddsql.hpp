@@ -85,10 +85,10 @@ typedef struct _SQLBASEAREA
    HB_ULONG ulRecMax;                        /* Size of pRow, pRowFlags buffer */
 
    void **   pRow;                           /* array of native pointers or cached PHB_ITEM */
-   HB_BYTE * pRowFlags;
+   uint8_t * pRowFlags;
 
    void *  pRecord;                          /* current record */
-   HB_BYTE bRecordFlags;
+   uint8_t bRecordFlags;
 
    HB_BOOL fFetched;
    HB_BOOL fPositioned;
@@ -120,8 +120,8 @@ typedef struct _SQLDDCONNECTION
 typedef struct _MIXKEY
 {
    HB_ULONG rec;
-   HB_BYTE  notnul;
-   HB_BYTE  val[ 1 ];
+   uint8_t  notnul;
+   uint8_t  val[ 1 ];
 } MIXKEY, * PMIXKEY;
 
 
@@ -152,7 +152,7 @@ typedef struct _MIXTAG
    PHB_ITEM             pKeyItem;
    PHB_ITEM             pForItem;
 
-   HB_BYTE      bType;
+   uint8_t      bType;
    unsigned int uiKeyLen;                    /* Length of key */
    unsigned int uiTotalLen;                  /* Total length of key structure */
 

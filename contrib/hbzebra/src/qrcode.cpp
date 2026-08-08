@@ -468,7 +468,7 @@ static PHB_BITBUFFER _qr_interlace(PHB_BITBUFFER pData, unsigned char *pECC, int
   const QRVERSION *pVersion = &s_version[iVersion - 1];
   const QRLEVEL *pLevel = &(pVersion->level[iLevel]);
   PHB_BITBUFFER pRet;
-  HB_BYTE *pDataBuf, *pRetBuf;
+  uint8_t *pDataBuf, *pRetBuf;
   unsigned int uiDst, uiSrc, uiPos, uiBlock;
 
   pRet = hb_bitbuffer_create();
@@ -716,7 +716,7 @@ static unsigned char *_qr_checksum(PHB_BITBUFFER pData, int iVersion, int iLevel
 {
   const QRVERSION *pVersion = &s_version[iVersion - 1];
   const QRLEVEL *pLevel = &(pVersion->level[iLevel]);
-  HB_BYTE *pDataBuf = hb_bitbuffer_buffer(pData);
+  uint8_t *pDataBuf = hb_bitbuffer_buffer(pData);
   int i, j, iBits, iMod, iPoly, iECCLen, iIndex;
   unsigned char *pECCPtr, ui, ui2;
 

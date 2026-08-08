@@ -447,11 +447,11 @@ static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, bool 
        *     or for DOS, we'll mostly request unavailable resolutions
        */
       if( AL_SCREEN_W != s_byFontWidth * s_iScrWidth ) {
-         ixFP = static_cast<HB_BYTE>(AL_SCREEN_W / s_iScrWidth) * 2;
+         ixFP = static_cast<uint8_t>(AL_SCREEN_W / s_iScrWidth) * 2;
       }
 
       if( AL_SCREEN_H != s_byFontSize * s_iScrHeight ) {
-         iyFP = static_cast<HB_BYTE>(AL_SCREEN_H / s_iScrHeight);
+         iyFP = static_cast<uint8_t>(AL_SCREEN_H / s_iScrHeight);
          if( iyFP & 1 ) {
             iyFP--;
          }
@@ -1067,7 +1067,7 @@ static void hb_gt_alleg_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // Fun
 #endif
 
    int      iColor;
-   HB_BYTE  bAttr;
+   uint8_t  bAttr;
    HB_UCHAR uc;
 
    if( s_fInit ) {

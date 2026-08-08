@@ -61,40 +61,40 @@ HB_EXTERN_BEGIN
 
 typedef struct _HB_BMPHEADER
 {
-   HB_BYTE  signature   [ 2 ];      /* "BM" */
-   HB_BYTE  file_size   [ 4 ];      /* the size of the BMP file in bytes */
-   HB_BYTE  reserved1   [ 2 ];      /* reserved, depends on the application, if created manually can be 0 */
-   HB_BYTE  reserved2   [ 2 ];      /* reserved, depends on the application, if created manually can be 0 */
-   HB_BYTE  bmpoffset   [ 4 ];      /* the offset of the byte where the bitmap image data (pixel array) can be found */
+   uint8_t  signature   [ 2 ];      /* "BM" */
+   uint8_t  file_size   [ 4 ];      /* the size of the BMP file in bytes */
+   uint8_t  reserved1   [ 2 ];      /* reserved, depends on the application, if created manually can be 0 */
+   uint8_t  reserved2   [ 2 ];      /* reserved, depends on the application, if created manually can be 0 */
+   uint8_t  bmpoffset   [ 4 ];      /* the offset of the byte where the bitmap image data (pixel array) can be found */
 
-   HB_BYTE  headersize  [ 4 ];      /* the size of this header, in bytes (40) */
-   HB_BYTE  width       [ 4 ];      /* the bitmap width in pixels (signed integer) */
-   HB_BYTE  height      [ 4 ];      /* the bitmap height in pixels (signed integer) */
-   HB_BYTE  planes      [ 2 ];      /* the number of color planes (must be 1) */
-   HB_BYTE  bitsperpixel[ 2 ];      /* the number of bits per pixel (color depth): 1, 4, 8, 16, 24 or 32 */
-   HB_BYTE  compression [ 4 ];      /* the compression method, 0 uncompressed */
-   HB_BYTE  bitmapsize  [ 4 ];      /* the image size (the size of the raw bitmap data), 0 can be used for uncompressed bitmaps */
-   HB_BYTE  hresolution [ 4 ];      /* the horizontal resolution of the image (pixel per metre, signed integer) */
-   HB_BYTE  vresolution [ 4 ];      /* the vertical resolution of the image (pixel per metre, signed integer) */
-   HB_BYTE  clrused     [ 4 ];      /* the number of colors in the color palette, or 0 to default to 2^n */
-   HB_BYTE  clrimportant[ 4 ];      /* the number of important colors used, or 0 when every color is important; generally ignored */
+   uint8_t  headersize  [ 4 ];      /* the size of this header, in bytes (40) */
+   uint8_t  width       [ 4 ];      /* the bitmap width in pixels (signed integer) */
+   uint8_t  height      [ 4 ];      /* the bitmap height in pixels (signed integer) */
+   uint8_t  planes      [ 2 ];      /* the number of color planes (must be 1) */
+   uint8_t  bitsperpixel[ 2 ];      /* the number of bits per pixel (color depth): 1, 4, 8, 16, 24 or 32 */
+   uint8_t  compression [ 4 ];      /* the compression method, 0 uncompressed */
+   uint8_t  bitmapsize  [ 4 ];      /* the image size (the size of the raw bitmap data), 0 can be used for uncompressed bitmaps */
+   uint8_t  hresolution [ 4 ];      /* the horizontal resolution of the image (pixel per metre, signed integer) */
+   uint8_t  vresolution [ 4 ];      /* the vertical resolution of the image (pixel per metre, signed integer) */
+   uint8_t  clrused     [ 4 ];      /* the number of colors in the color palette, or 0 to default to 2^n */
+   uint8_t  clrimportant[ 4 ];      /* the number of important colors used, or 0 when every color is important; generally ignored */
 } HB_BMPHEADER, * PHB_BMPHEADER;
 
 typedef struct _HB_BMPOS2HEADER
 {
-   HB_BYTE  headersize  [ 4 ];      /* the size of this header, in bytes (12) */
-   HB_BYTE  width       [ 2 ];      /* the bitmap width in pixels (signed integer) */
-   HB_BYTE  height      [ 2 ];      /* the bitmap height in pixels (signed integer) */
-   HB_BYTE  planes      [ 2 ];      /* the number of color planes (must be 1) */
-   HB_BYTE  bitsperpixel[ 2 ];      /* the number of bits per pixel (color depth): 1, 4, 8, 16, 24 or 32 */
+   uint8_t  headersize  [ 4 ];      /* the size of this header, in bytes (12) */
+   uint8_t  width       [ 2 ];      /* the bitmap width in pixels (signed integer) */
+   uint8_t  height      [ 2 ];      /* the bitmap height in pixels (signed integer) */
+   uint8_t  planes      [ 2 ];      /* the number of color planes (must be 1) */
+   uint8_t  bitsperpixel[ 2 ];      /* the number of bits per pixel (color depth): 1, 4, 8, 16, 24 or 32 */
 } HB_BMPOS2HEADER, * PHB_BMPOS2HEADER;
 
 typedef struct _HB_BMPPALETTEITM
 {
-   HB_BYTE  blue;
-   HB_BYTE  green;
-   HB_BYTE  red;
-   HB_BYTE  alpha;
+   uint8_t  blue;
+   uint8_t  green;
+   uint8_t  red;
+   uint8_t  alpha;
 } HB_BMPPALETTEITM, * PHB_BMPPALETTEITM;
 
 typedef struct _HB_BMPINFO
@@ -108,16 +108,16 @@ typedef struct _HB_BMPINFO
    int      depth;
    int      clrused;
    HB_BMPPALETTEITM palette[ 256 ];
-   HB_BYTE* data;
+   uint8_t* data;
 } HB_BMPINFO, * PHB_BMPINFO;
 
 extern HB_EXPORT PHB_BMPINFO  hb_bmp_new( int width, int height, int depth, int dpi, int * piError );
-extern HB_EXPORT PHB_BMPINFO  hb_bmp_frombitmap( const HB_BYTE * bitmap, int align, int width, int height, int depth, int dpi, const int * palette, int colors, int * piError );
+extern HB_EXPORT PHB_BMPINFO  hb_bmp_frombitmap( const uint8_t * bitmap, int align, int width, int height, int depth, int dpi, const int * palette, int colors, int * piError );
 extern HB_EXPORT PHB_BMPINFO  hb_bmp_copy( PHB_BMPINFO pBMP );
-extern HB_EXPORT PHB_BMPINFO  hb_bmp_decode( const HB_BYTE * data, HB_SIZE size, int * piError );
-extern HB_EXPORT HB_BYTE *    hb_bmp_encode( PHB_BMPINFO pBMP, HB_SIZE * pnSsize );
+extern HB_EXPORT PHB_BMPINFO  hb_bmp_decode( const uint8_t * data, HB_SIZE size, int * piError );
+extern HB_EXPORT uint8_t *    hb_bmp_encode( PHB_BMPINFO pBMP, HB_SIZE * pnSsize );
 extern HB_EXPORT void         hb_bmp_free( PHB_BMPINFO pBMP );
-extern HB_EXPORT HB_BYTE *    hb_bmp_bitmapptr( PHB_BMPINFO pBMP, HB_SIZE * pnSize );
+extern HB_EXPORT uint8_t *    hb_bmp_bitmapptr( PHB_BMPINFO pBMP, HB_SIZE * pnSize );
 extern HB_EXPORT void         hb_bmp_seterror( PHB_BMPINFO pBMP, int error );
 extern HB_EXPORT int          hb_bmp_error( PHB_BMPINFO pBMP );
 extern HB_EXPORT int          hb_bmp_width( PHB_BMPINFO pBMP );

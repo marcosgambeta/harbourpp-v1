@@ -63,7 +63,7 @@
 #define _JPEG_CS_RGB 2
 #define _JPEG_CS_CMYK 3
 
-static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
+static int hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
                              int *piBPC)
 {
   HB_SIZE nPos = 0;
@@ -71,8 +71,8 @@ static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *pi
   HB_U16 tag;
   HB_U16 height = 0;
   HB_U16 width = 0;
-  HB_BYTE colorspace = 0;
-  HB_BYTE bpc = 0;
+  uint8_t colorspace = 0;
+  uint8_t bpc = 0;
 
   if (piHeight) {
     *piHeight = static_cast<int>(height);
@@ -197,7 +197,7 @@ static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *pi
 
 typedef struct
 {
-  const HB_BYTE *buffer;
+  const uint8_t *buffer;
   HB_SIZE nLen;
   HB_SIZE nPos;
   HB_BOOL bOk;
@@ -215,7 +215,7 @@ static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 le
   hb_png_read_data->bOk = (length == pos);
 }
 
-static int hb_png_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
+static int hb_png_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
                             int *piBPC)
 {
   png_structp png_ptr;
@@ -328,12 +328,12 @@ HB_FUNC(WIN_BITMAPDIMENSIONS)
 
     bRetVal = true;
   } else if (iType == HB_WIN_BITMAP_JPEG) {
-    bRetVal = (hb_jpeg_get_param(static_cast<const HB_BYTE *>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) ==
+    bRetVal = (hb_jpeg_get_param(static_cast<const uint8_t *>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) ==
                _JPEG_RET_OK);
   }
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
   else if (iType == HB_WIN_BITMAP_PNG) {
-    bRetVal = (hb_png_get_param(static_cast<const HB_BYTE *>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) ==
+    bRetVal = (hb_png_get_param(static_cast<const uint8_t *>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) ==
                _PNG_RET_OK);
   }
 #endif

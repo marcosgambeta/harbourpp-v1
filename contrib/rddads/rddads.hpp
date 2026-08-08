@@ -130,7 +130,7 @@ typedef struct _ADSAREA_
    char *    szDataFileName;      // Name of data file
    HB_ULONG  ulRecordLen;         // Size of record
    HB_ULONG  ulRecNo;             // Current record
-   HB_BYTE * pRecord;             // Buffer of record data
+   uint8_t * pRecord;             // Buffer of record data
    HB_ULONG  maxFieldLen;         // Max field length in table record
 
    HB_BOOL fPositioned;           // true if we are not at phantom record

@@ -113,12 +113,12 @@ PHB_BMPINFO hb_bmp_new( int width, int height, int depth, int dpi, int * piError
       pBMP->clrused  = 0;
       pBMP->rowlen   = rowlen;
       pBMP->fromtop  = fromtop;
-      pBMP->data     = ( HB_BYTE * ) hb_xgrabz( rowlen * height );
+      pBMP->data     = ( uint8_t * ) hb_xgrabz( rowlen * height );
    }
    return pBMP;
 }
 
-PHB_BMPINFO hb_bmp_frombitmap( const HB_BYTE * bitmap, int align,
+PHB_BMPINFO hb_bmp_frombitmap( const uint8_t * bitmap, int align,
                                int width, int height, int depth, int dpi,
                                const int * palette, int colors, int * piError )
 {
@@ -155,7 +155,7 @@ PHB_BMPINFO hb_bmp_frombitmap( const HB_BYTE * bitmap, int align,
             maskb = ( 0x01 << shift ) - 1;
             for( row = 0; row < height; ++row )
             {
-               HB_BYTE * rowdst = pBMP->data + pBMP->rowlen * row;
+               uint8_t * rowdst = pBMP->data + pBMP->rowlen * row;
                int offset = row * rowbits;
                for( col = 0; col < width; ++col, offset += depth )
                   rowdst[ col >> shift ] |= ( ( bitmap[ offset >> shift ] >>
@@ -189,7 +189,7 @@ PHB_BMPINFO hb_bmp_copy( PHB_BMPINFO pBMP )
    PHB_BMPINFO pBMPnew = ( PHB_BMPINFO ) hb_xgrab( sizeof( HB_BMPINFO ) );
 
    memcpy( pBMPnew, pBMP, sizeof( HB_BMPINFO ) );
-   pBMPnew->data = ( HB_BYTE * ) hb_xgrab( pBMP->rowlen * pBMP->height );
+   pBMPnew->data = ( uint8_t * ) hb_xgrab( pBMP->rowlen * pBMP->height );
    memcpy( pBMPnew->data, pBMP->data, pBMP->rowlen * pBMP->height );
 
    pBMPnew->error = 0;
@@ -197,7 +197,7 @@ PHB_BMPINFO hb_bmp_copy( PHB_BMPINFO pBMP )
    return pBMPnew;
 }
 
-HB_BYTE * hb_bmp_bitmapptr( PHB_BMPINFO pBMP, HB_SIZE * pnSize )
+uint8_t * hb_bmp_bitmapptr( PHB_BMPINFO pBMP, HB_SIZE * pnSize )
 {
    if( pnSize )
       *pnSize = pBMP->rowlen * pBMP->height;
@@ -340,7 +340,7 @@ HB_BOOL hb_bmp_putpixel( PHB_BMPINFO pBMP, int x, int y, HB_MAXINT clr )
    {
       int index = ( ( ( pBMP->fromtop ? y : pBMP->height - y - 1 ) *
                       pBMP->rowlen ) << 3 ) + ( x * pBMP->depth );
-      HB_BYTE * ptr = &pBMP->data[ index >> 3 ];
+      uint8_t * ptr = &pBMP->data[ index >> 3 ];
       int shift = -1;
 
       switch( pBMP->depth )
@@ -355,7 +355,7 @@ HB_BOOL hb_bmp_putpixel( PHB_BMPINFO pBMP, int x, int y, HB_MAXINT clr )
             shift = ( 0x01 ^ ( x & 0x01 ) ) << 2;
             break;
          case 8:
-            *ptr = ( HB_BYTE ) clr;
+            *ptr = ( uint8_t ) clr;
             break;
          case 16:
             HB_PUT_LE_UINT16( ptr, clr );
@@ -368,7 +368,7 @@ HB_BOOL hb_bmp_putpixel( PHB_BMPINFO pBMP, int x, int y, HB_MAXINT clr )
             break;
       }
       if( shift >= 0 )
-         *ptr = ( HB_BYTE ) ( ( *ptr & ~( ( ( 0x01 << pBMP->depth ) - 1 ) << shift ) ) | ( clr << shift ) );
+         *ptr = ( uint8_t ) ( ( *ptr & ~( ( ( 0x01 << pBMP->depth ) - 1 ) << shift ) ) | ( clr << shift ) );
       pBMP->error = 0;
    }
    return pBMP->error == 0;
@@ -384,7 +384,7 @@ HB_MAXINT hb_bmp_getpixel( PHB_BMPINFO pBMP, int x, int y )
    {
       int index = ( ( ( pBMP->fromtop ? y : pBMP->height - y - 1 ) *
                       pBMP->rowlen ) << 3 ) + ( x * pBMP->depth );
-      HB_BYTE * ptr = &pBMP->data[ index >> 3 ];
+      uint8_t * ptr = &pBMP->data[ index >> 3 ];
       int shift = -1;
 
       switch( pBMP->depth )
@@ -531,7 +531,7 @@ void hb_bmp_rect( PHB_BMPINFO pBMP, int x, int y, int width, int height, HB_MAXI
    }
 }
 
-PHB_BMPINFO hb_bmp_decode( const HB_BYTE * data, HB_SIZE size, int * piError )
+PHB_BMPINFO hb_bmp_decode( const uint8_t * data, HB_SIZE size, int * piError )
 {
    PHB_BMPINFO pBMP = NULL;
    int iError = 0;
@@ -609,7 +609,7 @@ PHB_BMPINFO hb_bmp_decode( const HB_BYTE * data, HB_SIZE size, int * piError )
             pBMP = hb_bmp_new( width, fromtop ? -height : height, depth, dpi, &iError );
             if( pBMP )
             {
-               const HB_BYTE * ptr = data + HB_BMP_FILEHEADER_SIZE + headersize;
+               const uint8_t * ptr = data + HB_BMP_FILEHEADER_SIZE + headersize;
                int idx, unused = 0;
                for( idx = 0; idx < clrused; ++idx )
                {
@@ -640,11 +640,11 @@ PHB_BMPINFO hb_bmp_decode( const HB_BYTE * data, HB_SIZE size, int * piError )
    return pBMP;
 }
 
-HB_BYTE * hb_bmp_encode( PHB_BMPINFO pBMP, HB_SIZE * pnSize )
+uint8_t * hb_bmp_encode( PHB_BMPINFO pBMP, HB_SIZE * pnSize )
 {
    int clrused, bmpoffset, bmpsize, file_size, idx, height, dpi;
    PHB_BMPHEADER header;
-   HB_BYTE * data, * ptr;
+   uint8_t * data, * ptr;
 
    /* always allocate area for whole palette for programs which
     * do not check number of used colors in BMP header
@@ -668,7 +668,7 @@ HB_BYTE * hb_bmp_encode( PHB_BMPINFO pBMP, HB_SIZE * pnSize )
    */
    clrused = 0;
 
-   data = ( HB_BYTE * ) hb_xgrab( file_size + 1 );
+   data = ( uint8_t * ) hb_xgrab( file_size + 1 );
    memset( data, 0, sizeof( HB_BMPHEADER ) );
 
    header = ( PHB_BMPHEADER ) data;
@@ -780,7 +780,7 @@ HB_FUNC( HB_BMP_NEW )
 /* hb_bmp_frombitmap( <cBitMap>, <nAlign>, <nWidth>, <nHeight>, [<nDepth>=1], [<nDPI>=72], [<aPalette>], [@<nError>] ) -> <pBMP> | NIL */
 HB_FUNC( HB_BMP_FROMBITMAP )
 {
-   const HB_BYTE * bitmap = ( const HB_BYTE * ) hb_parc( 1 );
+   const uint8_t * bitmap = ( const uint8_t * ) hb_parc( 1 );
    int align = hb_parni( 2 ), width = hb_parni( 3 ), height = hb_parni( 4 ),
        depth = hb_parni( 5 ), dpi = hb_parni( 6 ),
        iError = 0;
@@ -837,7 +837,7 @@ HB_FUNC( HB_BMP_DECODE )
    if( data )
    {
       int iError = 0;
-      PHB_BMPINFO pBMP = hb_bmp_decode( ( const HB_BYTE * ) data, hb_parclen( 1 ), &iError );
+      PHB_BMPINFO pBMP = hb_bmp_decode( ( const uint8_t * ) data, hb_parclen( 1 ), &iError );
       hb_storni( iError, 2 );
       hb_bmpReturn( pBMP );
    }
@@ -852,7 +852,7 @@ HB_FUNC( HB_BMP_ENCODE )
    if( pBMP )
    {
       HB_SIZE size;
-      HB_BYTE * data = hb_bmp_encode( pBMP, &size );
+      uint8_t * data = hb_bmp_encode( pBMP, &size );
 
       hb_retclen_buffer( ( char * ) data, size );
    }
@@ -966,7 +966,7 @@ HB_FUNC( HB_BMP_LOAD )
    {
       int iError = 0;
       HB_SIZE size;
-      HB_BYTE * data = hb_fileLoad( pszFileName, 0x1000000, &size );
+      uint8_t * data = hb_fileLoad( pszFileName, 0x1000000, &size );
       if( data )
       {
          PHB_BMPINFO pBMP = hb_bmp_decode( data, size, &iError );
@@ -992,7 +992,7 @@ HB_FUNC( HB_BMP_SAVE )
       if( pszFileName )
       {
          HB_SIZE size;
-         HB_BYTE * data = hb_bmp_encode( pBMP, &size );
+         uint8_t * data = hb_bmp_encode( pBMP, &size );
          HB_BOOL fResult = hb_fileSave( pszFileName, data, size );
          if( ! fResult )
             hb_bmp_seterror( pBMP, HB_BMP_ERROR_FILEWRITE );

@@ -133,7 +133,7 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
   HB_UINT uiSize = 0, uiMemberSize;
-  HB_BYTE cShift;
+  uint8_t cShift;
   HB_UINT uiPad;
 
   for (nIndex = 0; nIndex < nLen; nIndex++) {
@@ -230,7 +230,7 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
     if (uiSize) {
       uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
 
-      if ((cShift = static_cast<HB_BYTE>(uiSize % uiPad)) > 0) {
+      if ((cShift = static_cast<uint8_t>(uiSize % uiPad)) > 0) {
         uiSize += uiPad - cShift;
       }
     }
@@ -242,7 +242,7 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
 #endif
   }
 
-  if ((cShift = static_cast<HB_BYTE>(uiSize % uiAlign)) > 0) {
+  if ((cShift = static_cast<uint8_t>(uiSize % uiAlign)) > 0) {
     uiSize += uiAlign - cShift;
   }
 
@@ -262,7 +262,7 @@ HB_FUNC(HB_SIZEOFCSTRUCTURE)
     HB_UINT uiAlign;
 
     if (pAlign) {
-      uiAlign = static_cast<HB_BYTE>(pAlign->item.asInteger.value);
+      uiAlign = static_cast<uint8_t>(pAlign->item.asInteger.value);
     } else {
       uiAlign = 8;
     }
@@ -273,14 +273,14 @@ HB_FUNC(HB_SIZEOFCSTRUCTURE)
   }
 }
 
-static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, HB_UINT *puiSize)
+static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, HB_UINT *puiSize)
 {
   PHB_BASEARRAY pBaseVar = aVar->item.asArray.value;
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
   HB_UINT uiOffset = 0, uiMemberSize;
-  HB_BYTE cShift;
+  uint8_t cShift;
 
   *puiSize = SizeOfCStructure(aDef, uiAlign);
 
@@ -288,7 +288,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
    printf("Size: %i\n", *puiSize);
 #endif
 
-  auto Buffer = static_cast<HB_BYTE *>(hb_xgrab(*puiSize + 1));
+  auto Buffer = static_cast<uint8_t *>(hb_xgrab(*puiSize + 1));
 
   for (nIndex = 0; nIndex < nLen; nIndex++) {
 #if 0
@@ -459,7 +459,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
     if (uiOffset) {
       HB_UINT uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
 
-      if ((cShift = static_cast<HB_BYTE>(uiOffset % uiPad)) > 0) {
+      if ((cShift = static_cast<uint8_t>(uiOffset % uiPad)) > 0) {
         uiOffset += uiPad - cShift;
       }
     }
@@ -480,10 +480,10 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
 
     case CTYPE_UNSIGNED_CHAR: /* unsigned char */
       if ((pBaseVar->pItems + nIndex)->type) {
-        *(static_cast<HB_BYTE *>(Buffer + uiOffset)) =
-            static_cast<HB_BYTE>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+        *(static_cast<uint8_t *>(Buffer + uiOffset)) =
+            static_cast<uint8_t>((pBaseVar->pItems + nIndex)->item.asInteger.value);
       } else {
-        *(static_cast<HB_BYTE *>(Buffer + uiOffset)) = 0;
+        *(static_cast<uint8_t *>(Buffer + uiOffset)) = 0;
       }
       break;
 
@@ -516,27 +516,27 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
     case CTYPE_UNSIGNED_CHAR_PTR: /* unsigned char * */
       switch ((pBaseVar->pItems + nIndex)->type) {
       case Harbour::Item::STRING:
-        *((HB_BYTE **)(Buffer + uiOffset)) =
-            reinterpret_cast<HB_BYTE *>((pBaseVar->pItems + nIndex)->item.asString.value);
+        *((uint8_t **)(Buffer + uiOffset)) =
+            reinterpret_cast<uint8_t *>((pBaseVar->pItems + nIndex)->item.asString.value);
         break;
 
       case Harbour::Item::POINTER:
-        *((HB_BYTE **)(Buffer + uiOffset)) = static_cast<HB_BYTE *>((pBaseVar->pItems + nIndex)->item.asPointer.value);
+        *((uint8_t **)(Buffer + uiOffset)) = static_cast<uint8_t *>((pBaseVar->pItems + nIndex)->item.asPointer.value);
         break;
 
 #if UINT_MAX == ULONG_MAX
       case Harbour::Item::INTEGER:
-        *((HB_BYTE **)(Buffer + uiOffset)) =
-            reinterpret_cast<HB_BYTE *>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
+        *((uint8_t **)(Buffer + uiOffset)) =
+            reinterpret_cast<uint8_t *>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
         break;
 #endif
       case Harbour::Item::LONG:
-        *((HB_BYTE **)(Buffer + uiOffset)) =
-            reinterpret_cast<HB_BYTE *>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
+        *((uint8_t **)(Buffer + uiOffset)) =
+            reinterpret_cast<uint8_t *>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
         break;
 
       default:
-        *((HB_BYTE **)(Buffer + uiOffset)) = nullptr;
+        *((uint8_t **)(Buffer + uiOffset)) = nullptr;
         break;
       }
       break;
@@ -953,10 +953,10 @@ HB_FUNC(HB_ARRAYTOSTRUCTURE)
   if (aVar && aDef) {
     HB_UINT uiSize;
     HB_UINT uiAlign;
-    HB_BYTE *Buffer;
+    uint8_t *Buffer;
 
     if (pAlign) {
-      uiAlign = static_cast<HB_BYTE>(pAlign->item.asInteger.value);
+      uiAlign = static_cast<uint8_t>(pAlign->item.asInteger.value);
     } else {
       uiAlign = 8;
     }
@@ -969,14 +969,14 @@ HB_FUNC(HB_ARRAYTOSTRUCTURE)
   }
 }
 
-static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM aDef, HB_UINT uiAlign,
+static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM aDef, HB_UINT uiAlign,
                                  HB_BOOL bAdoptNested, PHB_ITEM pRet)
 {
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
   HB_UINT uiOffset, uiMemberSize;
-  HB_BYTE cShift;
+  uint8_t cShift;
 #if 0
    auto pRet = hb_itemNew(nullptr);
 #endif
@@ -1082,7 +1082,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
     if (uiOffset) {
       HB_UINT uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
 
-      if ((cShift = static_cast<HB_BYTE>(uiOffset % uiPad)) > 0) {
+      if ((cShift = static_cast<uint8_t>(uiOffset % uiPad)) > 0) {
         uiOffset += uiPad - cShift;
       }
 
@@ -1105,7 +1105,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
       break;
 
     case CTYPE_UNSIGNED_CHAR: /* unsigned char */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, (int)*(static_cast<HB_BYTE *>(Buffer + uiOffset)));
+      hb_itemPutNI(pBaseVar->pItems + nIndex, (int)*(static_cast<uint8_t *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_CHAR_PTR: /* char * */
@@ -1259,7 +1259,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
                TraceLog(nullptr, "Before Devalue\n");
 #endif
 
-        hb_itemPutCRawStatic(pInternalBuffer, reinterpret_cast<char *>(static_cast<HB_BYTE *>(Buffer + uiOffset)),
+        hb_itemPutCRawStatic(pInternalBuffer, reinterpret_cast<char *>(static_cast<uint8_t *>(Buffer + uiOffset)),
                              uiNestedSize);
 
         hb_objSendMsg(pStructure, "DEVALUE", 1, &Adopt);
@@ -1294,12 +1294,12 @@ HB_FUNC(HB_STRUCTURETOARRAY)
   auto pRet = hb_param(5, Harbour::Item::ARRAY);
 
   if (Structure && aDef) {
-    auto Buffer = reinterpret_cast<HB_BYTE *>(Structure->item.asString.value);
+    auto Buffer = reinterpret_cast<uint8_t *>(Structure->item.asString.value);
     HB_UINT uiAlign;
     HB_BOOL bAdopt;
 
     if (pAlign) {
-      uiAlign = static_cast<HB_BYTE>(pAlign->item.asInteger.value);
+      uiAlign = static_cast<uint8_t>(pAlign->item.asInteger.value);
     } else {
       uiAlign = 8;
     }

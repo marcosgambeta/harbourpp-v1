@@ -62,7 +62,7 @@ HB_FUNC(FT_SAVEATT)
          while( iCol <= iRight )
          {
             int       iColor;
-            HB_BYTE   bAttr;
+            uint8_t   bAttr;
             uint16_t usChar;
             hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
             *pBuffer++ = static_cast<char>(iColor);
@@ -142,7 +142,7 @@ HB_FUNC(FT_RESTATT)
             while( nLen && iCol <= iRight )
             {
                int       iColor;
-               HB_BYTE   bAttr;
+               uint8_t   bAttr;
                uint16_t usChar;
                hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
                iColor = static_cast<HB_UCHAR>(*pAttrib++);

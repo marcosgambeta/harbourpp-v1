@@ -78,7 +78,7 @@ struct _HB_FILE
    int            iBlockSize;
 
    bz_stream      bz2;
-   HB_BYTE        buffer[HB_BZ2_BUFSIZE];
+   uint8_t        buffer[HB_BZ2_BUFSIZE];
 };
 
 using HB_FILE = _HB_FILE;

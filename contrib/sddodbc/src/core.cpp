@@ -617,7 +617,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
   pArea->ulRecMax = SQLDD_ROWSET_INIT;
 
   pArea->pRow = static_cast<void **>(hb_xgrab(SQLDD_ROWSET_INIT * sizeof(void *)));
-  pArea->pRowFlags = static_cast<HB_BYTE *>(hb_xgrab(SQLDD_ROWSET_INIT * sizeof(HB_BYTE)));
+  pArea->pRowFlags = static_cast<uint8_t *>(hb_xgrab(SQLDD_ROWSET_INIT * sizeof(uint8_t)));
 
   pArea->pRow[0] = pItemEof;
   pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
@@ -802,8 +802,8 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
     if (pArea->ulRecCount + 1 >= pArea->ulRecMax) {
       pArea->pRow =
           static_cast<void **>(hb_xrealloc(pArea->pRow, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(void *)));
-      pArea->pRowFlags = static_cast<HB_BYTE *>(
-          hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(HB_BYTE)));
+      pArea->pRowFlags = static_cast<uint8_t *>(
+          hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(uint8_t)));
       pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
     }
 

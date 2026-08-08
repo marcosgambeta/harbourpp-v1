@@ -55,7 +55,7 @@ HB_FUNC(SCREENATTR)
 {
   int iRow, iCol;
   int iColor;
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
 
   hb_gtGetPos(&iRow, &iCol);
@@ -100,7 +100,7 @@ HB_FUNC(SCREENMIX)
 
     if (iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol()) {
       int iColor;
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
       HB_WCHAR wc;
       PHB_CODEPAGE cdp = hb_gtHostCP();
@@ -156,7 +156,7 @@ HB_FUNC(SAYSCREEN)
       i = iCol;
       for (;;) {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
         HB_WCHAR wc;
         if (hb_gtGetChar(iRow, i, &iColor, &bAttr, &usChar) != Harbour::SUCCESS) {
@@ -269,7 +269,7 @@ HB_FUNC(INVERTWIN)
       int iCol = iLeft;
       while (iCol <= iRight) {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
 
         hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
@@ -315,7 +315,7 @@ HB_FUNC(UNTEXTWIN)
       int iCol = iLeft;
       while (iCol <= iRight) {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
 
         hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
@@ -355,7 +355,7 @@ HB_FUNC(CHARWIN)
       int iCol = iLeft;
       while (iCol <= iRight) {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
 
         hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
@@ -393,7 +393,7 @@ HB_FUNC(COLORWIN)
       int iCol = iLeft;
       while (iCol <= iRight) {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
 
         hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
@@ -423,7 +423,7 @@ HB_FUNC(SCREENTEXT) // HB_EXTENSION
       int iCol = iLeft;
       while (iCol <= iRight) {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
         hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
         *szText++ = static_cast<char>(usChar);
@@ -458,7 +458,7 @@ HB_FUNC(COLORREPL)
     int iCol = 0;
     while (iCol <= iMaxCol) {
       int iColor;
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
 
       hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar);

@@ -305,7 +305,7 @@ HB_FUNC(WIN_PRINTFILERAW)
           PHB_FILE pFile =
               hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
           if (pFile != nullptr) {
-            auto pbyBuffer = static_cast<HB_BYTE *>(hb_xgrab(HB_PRINT_BUFFER_SIZE));
+            auto pbyBuffer = static_cast<uint8_t *>(hb_xgrab(HB_PRINT_BUFFER_SIZE));
             HB_SIZE nRead;
 
             nResult = 1;
@@ -380,7 +380,7 @@ HB_FUNC(WIN_PRINTDATARAW)
 
       if (StartDocPrinter(hPrinter, 1, reinterpret_cast<LPBYTE>(&DocInfo)) != 0) {
         if (StartPagePrinter(hPrinter) != 0) {
-          auto pbData = reinterpret_cast<HB_BYTE *>(const_cast<char *>(hb_parc(2)));
+          auto pbData = reinterpret_cast<uint8_t *>(const_cast<char *>(hb_parc(2)));
           auto nLen = hb_parclen(2);
 
           nResult = 0;

@@ -3060,7 +3060,7 @@ void QTConsole::copySelection()
   for (iRow = rc.top(); iRow <= rc.bottom(); ++iRow) {
     for (iCol = rc.left(); iCol <= rc.right(); ++iCol) {
       int iColor;
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
 
       if (!HB_GTSELF_GETSCRCHAR(pQTC->pGT, iRow, iCol, &iColor, &bAttr, &usChar)) {
@@ -3082,7 +3082,7 @@ void QTConsole::copySelection()
 void QTConsole::repaintChars(const QRect &rx)
 {
   int iRow, iColor, iTextColor = 0;
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
   bool bClrBkg = (pQTC->fontAttribute & HB_GTI_FONTA_CLRBKG) != 0;
   bool bFixMetric = (pQTC->fontAttribute & HB_GTI_FONTA_FIXMETRIC) != 0;
@@ -3214,7 +3214,7 @@ void QTConsole::paintEvent(QPaintEvent *evt)
       /* RasterOp operations are not supported in macOS,
        * use foreground cell color like hardware VGA cursor
        */
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
       int iColor;
 

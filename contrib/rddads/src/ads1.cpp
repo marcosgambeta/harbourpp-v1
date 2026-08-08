@@ -2041,7 +2041,7 @@ static HB_ERRCODE adsFlush(ADSAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE adsGetRec(ADSAREAP pArea, HB_BYTE **pBuffer)
+static HB_ERRCODE adsGetRec(ADSAREAP pArea, uint8_t **pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsGetRec(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
@@ -2073,7 +2073,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 #endif
 
   LPFIELD pField;
-  HB_BYTE *pBuffer = pArea->pRecord;
+  uint8_t *pBuffer = pArea->pRecord;
   UNSIGNED32 u32Length;
   UNSIGNED32 u32RetVal;
 
@@ -2456,7 +2456,7 @@ static HB_ERRCODE adsGoCold(ADSAREAP pArea)
 
 #define adsGoHot nullptr
 
-static HB_ERRCODE adsPutRec(ADSAREAP pArea, const HB_BYTE *pBuffer)
+static HB_ERRCODE adsPutRec(ADSAREAP pArea, const uint8_t *pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsGetRec(%p, %p)", static_cast<void*>(pArea), static_cast<const void*>(pBuffer)));
@@ -2480,7 +2480,7 @@ static HB_ERRCODE adsPutRec(ADSAREAP pArea, const HB_BYTE *pBuffer)
     }
   }
 
-  u32Result = AdsSetRecord(pArea->hTable, static_cast<UNSIGNED8 *>(const_cast<HB_BYTE *>(pBuffer)), u32Len);
+  u32Result = AdsSetRecord(pArea->hTable, static_cast<UNSIGNED8 *>(const_cast<uint8_t *>(pBuffer)), u32Len);
 
   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
@@ -2493,7 +2493,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 
   LPFIELD pField;
   HB_SIZE nLen;
-  HB_BYTE *szText;
+  uint8_t *szText;
   bool bTypeError = true;
   UNSIGNED32 u32RetVal = 0;
 
@@ -3149,7 +3149,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
   pArea->ulRecordLen = u32Length;
   // Alloc record buffer - because it's also used for some extended types
   // conversion it has to be at least 25 bytes size
-  pArea->pRecord = static_cast<HB_BYTE *>(hb_xgrab(HB_MAX(pArea->ulRecordLen, pArea->maxFieldLen) + 1));
+  pArea->pRecord = static_cast<uint8_t *>(hb_xgrab(HB_MAX(pArea->ulRecordLen, pArea->maxFieldLen) + 1));
 
   return SELF_GOTOP(&pArea->area);
 }
@@ -3654,7 +3654,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
   pArea->ulRecordLen = u32Length;
   // Alloc record buffer - because it's also used for some extended types
   // conversion it has to be at least 25 bytes size
-  pArea->pRecord = static_cast<HB_BYTE *>(hb_xgrab(HB_MAX(pArea->ulRecordLen, pArea->maxFieldLen) + 1));
+  pArea->pRecord = static_cast<uint8_t *>(hb_xgrab(HB_MAX(pArea->ulRecordLen, pArea->maxFieldLen) + 1));
 
   // If successful call SUPER_OPEN to finish system jobs
   if (SUPER_OPEN(&pArea->area, pOpenInfo) == Harbour::FAILURE) {
@@ -3687,7 +3687,7 @@ static HB_ERRCODE adsStructSize(ADSAREAP pArea, uint16_t *StructSize)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE adsSysName(ADSAREAP pArea, HB_BYTE *pBuffer)
+static HB_ERRCODE adsSysName(ADSAREAP pArea, uint8_t *pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsSysName(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));

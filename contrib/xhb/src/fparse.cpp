@@ -212,7 +212,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char *szText, int iDelimiter, i
   }
 }
 
-static char **hb_tokensplit(const char *string, HB_BYTE delimiter, int iCharCount, int *iWord)
+static char **hb_tokensplit(const char *string, uint8_t delimiter, int iCharCount, int *iWord)
 {
   char *bufptr;
   char **token_list;
@@ -225,8 +225,8 @@ static char **hb_tokensplit(const char *string, HB_BYTE delimiter, int iCharCoun
   bufptr = buffer;
 
   while (*string) {
-    if (static_cast<HB_BYTE>(*string) == delimiter) {
-      while (static_cast<HB_BYTE>(*string) == delimiter) {
+    if (static_cast<uint8_t>(*string) == delimiter) {
+      while (static_cast<uint8_t>(*string) == delimiter) {
         string++;
       }
 
@@ -296,7 +296,7 @@ HB_FUNC(FPARSE)
   auto pDelim = hb_param(2, Harbour::Item::STRING);
   int iToken;
   auto iCharCount = 0;
-  HB_BYTE nByte;
+  uint8_t nByte;
 
   /* file parameter correctly passed */
   if (!pSrc) {
@@ -319,7 +319,7 @@ HB_FUNC(FPARSE)
   }
 
   /* default delimiter to comma */
-  nByte = pDelim ? static_cast<HB_BYTE>(hb_itemGetCPtr(pDelim)[0]) : static_cast<HB_BYTE>(',');
+  nByte = pDelim ? static_cast<uint8_t>(hb_itemGetCPtr(pDelim)[0]) : static_cast<uint8_t>(',');
 
   /* the main array */
   auto pArray = hb_itemArrayNew(0);
@@ -366,7 +366,7 @@ HB_FUNC(FPARSEEX)
   auto pSrc = hb_param(1, Harbour::Item::STRING);
   auto pDelim = hb_param(2, Harbour::Item::STRING);
   auto iCharCount = 0;
-  HB_BYTE nByte;
+  uint8_t nByte;
 
   /* file parameter correctly passed */
   if (!pSrc) {
@@ -389,7 +389,7 @@ HB_FUNC(FPARSEEX)
   }
 
   /* default delimiter to comma */
-  nByte = pDelim ? static_cast<HB_BYTE>(hb_itemGetCPtr(pDelim)[0]) : static_cast<HB_BYTE>(',');
+  nByte = pDelim ? static_cast<uint8_t>(hb_itemGetCPtr(pDelim)[0]) : static_cast<uint8_t>(',');
 
   /* the main array */
   auto pArray = hb_itemArrayNew(0);
@@ -423,7 +423,7 @@ HB_FUNC(FWORDCOUNT)
 {
   auto pSrc = hb_param(1, Harbour::Item::STRING);
   auto iCharCount = 0;
-  HB_BYTE nByte = ' ';
+  uint8_t nByte = ' ';
   HB_SIZE nWordCount = 0;
 
   /* file parameter correctly passed */

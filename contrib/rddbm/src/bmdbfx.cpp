@@ -440,7 +440,7 @@ static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
       HB_SIZE nOldSize = sizeof(BM_FILTER) + BM_BYTESIZE(pBM->maxrec);
       if (nSize > nOldSize) {
         pArea->dbfi.lpvCargo = pBM = static_cast<PBM_FILTER>(hb_xrealloc(pBM, nSize));
-        memset(reinterpret_cast<HB_BYTE *>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
+        memset(reinterpret_cast<uint8_t *>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
       }
       pBM->maxrec = static_cast<HB_U32>(ulRecNo);
     }
@@ -483,7 +483,7 @@ static HB_ERRCODE hb_bmSkipFilter(AREAP pArea, HB_LONG lUpDown)
   return errCode;
 }
 
-static HB_ERRCODE hb_bmPutRec(AREAP pArea, const HB_BYTE *pBuffer)
+static HB_ERRCODE hb_bmPutRec(AREAP pArea, const uint8_t *pBuffer)
 {
   HB_ERRCODE errCode = SUPER_PUTREC(pArea, pBuffer);
 

@@ -83,7 +83,7 @@ typedef struct _HB_FILE
    int            iLevel;
 
    z_stream       gz;
-   HB_BYTE        buffer[HB_GZIP_BUFSIZE];
+   uint8_t        buffer[HB_GZIP_BUFSIZE];
 }
 HB_FILE;
 

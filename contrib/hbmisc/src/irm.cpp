@@ -18,7 +18,7 @@
 
 typedef struct
 {
-   HB_BYTE * pBits;
+   uint8_t * pBits;
    HB_ULONG  ulSize;       /* in bits */
    HB_ULONG  ulAlloc;      /* in bits */
 } HB_IRMMAP, * PHB_IRMMAP;
@@ -33,7 +33,7 @@ PHB_IRMMAP hb_irmMapAlloc(HB_ULONG ulSize)
 
    pMap->ulSize  = ulSize;
    pMap->ulAlloc = ( ulSize + 7 ) & ~7UL;
-   pMap->pBits   = static_cast<HB_BYTE*>(hb_xgrab(pMap->ulAlloc >> 3));
+   pMap->pBits   = static_cast<uint8_t*>(hb_xgrab(pMap->ulAlloc >> 3));
    memset(pMap->pBits, 0, pMap->ulAlloc >> 3);
    return pMap;
 }
@@ -106,7 +106,7 @@ HB_ULONG hb_irmMapNext( PHB_IRMMAP pMap, HB_ULONG ulRecNo )
 
 HB_ULONG hb_irmMapCount( PHB_IRMMAP pMap )
 {
-   static const HB_BYTE s_bitcnt[] =
+   static const uint8_t s_bitcnt[] =
    {
       0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
       1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,

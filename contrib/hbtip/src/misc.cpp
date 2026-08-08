@@ -115,7 +115,7 @@ HB_FUNC(TIP_HTMLSPECIALCHARS)
 
          while( nPos < nLen )
          {
-            auto cElem = static_cast<HB_BYTE>(pszData[nPos]);
+            auto cElem = static_cast<uint8_t>(pszData[nPos]);
 
             if( cElem == '&' )
             {
@@ -219,7 +219,7 @@ HB_FUNC(TIP_JSONSPECIALCHARS)
 
          while( nPos < nLen )
          {
-            auto cElem = static_cast<HB_BYTE>(pszData[nPos]);
+            auto cElem = static_cast<uint8_t>(pszData[nPos]);
 
             if( cElem == '"' )
             {

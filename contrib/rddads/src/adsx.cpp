@@ -73,7 +73,7 @@
 typedef struct _MIXKEY
 {
   HB_ULONG rec;
-  HB_BYTE val[1];
+  uint8_t val[1];
 } MIXKEY, *PMIXKEY;
 
 typedef struct _MIXTAG
@@ -85,7 +85,7 @@ typedef struct _MIXTAG
   char *szForExpr;
   PHB_ITEM pKeyItem;
   PHB_ITEM pForItem;
-  HB_BYTE bType;
+  uint8_t bType;
   uint16_t uiLen;
 
   PMIXKEY *pKeys;
@@ -163,10 +163,10 @@ static HB_ERRCODE hb_adsUpdateAreaFlags(ADSXAREAP pArea)
 
 // Memory Index
 
-static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, uint16_t uiLen)
+static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, uint8_t bType, uint16_t uiLen)
 {
   double dbl;
-  HB_BYTE buf[8];
+  uint8_t buf[8];
 
   auto pKey = static_cast<PMIXKEY>(hb_xgrab(sizeof(HB_ULONG) + uiLen));
   pKey->rec = ulRecNo;
@@ -196,7 +196,7 @@ static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, uint16
     break;
 
   case 'L':
-    pKey->val[0] = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
+    pKey->val[0] = static_cast<uint8_t>(hb_itemGetL(pItem) ? 'T' : 'F');
     break;
 
   default:
@@ -376,7 +376,7 @@ static int mixCompareKey(PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, uint16_t
 }
 
 static PMIXTAG mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem,
-                            PHB_ITEM pWhileItem, HB_BYTE bType, uint16_t uiLen, ADSXAREAP pArea)
+                            PHB_ITEM pWhileItem, uint8_t bType, uint16_t uiLen, ADSXAREAP pArea)
 {
   PMIXKEY pKey;
   LPDBORDERCONDINFO pOrdCondInfo = pArea->adsarea.area.lpdbOrdCondInfo;
@@ -934,7 +934,7 @@ static HB_ERRCODE adsxStructSize(ADSXAREAP pArea, uint16_t *StructSize)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE adsxSysName(ADSXAREAP pArea, HB_BYTE *pBuffer)
+static HB_ERRCODE adsxSysName(ADSXAREAP pArea, uint8_t *pBuffer)
 {
   UNSIGNED16 u16TableType;
   UNSIGNED32 u32RetVal;
@@ -1003,7 +1003,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
   PHB_ITEM pKeyItem, pForItem = nullptr, pWhileItem = nullptr, pResult;
   HB_ULONG ulRecNo;
   uint16_t uiLen;
-  HB_BYTE bType;
+  uint8_t bType;
   UNSIGNED16 bValidExpr;
   bool bKeyADS, bForADS, bWhileADS;
   ADSHANDLE hIndex = (ADSHANDLE)0;

@@ -651,7 +651,7 @@ static int hb_ctw_CreateWindow(PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom,
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_CreateWindow(%p,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pCTW), iTop, iLeft, iBottom, iRight, static_cast<int>(fClear), iColor, static_cast<int>(fVisible)));
 #endif
 
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
   int iRow, iCol, iHeight, iWidth, iTmp;
   long lIndex;
@@ -759,7 +759,7 @@ static int hb_ctw_CreateWindow(PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom,
         bAttr = 0;
       }
       pWnd->screenBuffer[lIndex].c.usChar = usChar;
-      pWnd->screenBuffer[lIndex].c.bColor = static_cast<HB_BYTE>(iColor);
+      pWnd->screenBuffer[lIndex].c.bColor = static_cast<uint8_t>(iColor);
       pWnd->screenBuffer[lIndex].c.bAttr = 0;
       ++lIndex;
     }
@@ -1800,7 +1800,7 @@ static void hb_ctw_gt_GetScrCursor(PHB_GT pGT, int *piRow, int *piCol, int *piSt
   }
 }
 
-static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
+static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetScrChar(%p,%d,%d,%p,%p,%p)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1855,7 +1855,7 @@ static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int iRow, int iCol, int *piColor
   return true;
 }
 
-static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_UCHAR *puChar,
+static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, HB_UCHAR *puChar,
                                   HB_BOOL fTerm)
 {
 #if 0
@@ -1891,7 +1891,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, 
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
+static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetChar(%p,%d,%d,%p,%p,%p)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1922,7 +1922,7 @@ static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, H
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
+static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iColor, static_cast<int>(bAttr), static_cast<int>(usChar)));
@@ -1951,7 +1951,7 @@ static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_
             int iShadow = pCTW->pShadowMap[lIndex] & ~HB_CTW_SHADOW_MASK;
             if( pCTW->windows[iShadow]->iShadowAttr >= 0 && pCTW->windows[iShadow]->iShadowAttr == iColor ) {
                int iClr;
-               HB_BYTE bAtr;
+               uint8_t bAtr;
                uint16_t usCh;
                if( HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iClr, &bAtr, &usCh) ) {
                   if( usCh == usChar && iClr == iColor ) {
@@ -1989,7 +1989,7 @@ static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_
       long lIndex = static_cast<long>(iWndRow) * pWnd->iWidth + iWndCol;
 
       pWnd->screenBuffer[lIndex].c.usChar = usChar;
-      pWnd->screenBuffer[lIndex].c.bColor = static_cast<HB_BYTE>(iColor);
+      pWnd->screenBuffer[lIndex].c.bColor = static_cast<uint8_t>(iColor);
       pWnd->screenBuffer[lIndex].c.bAttr = bAttr;
       if (!pWnd->fHidden) {
         if (iCurrWindow == 0 || (iRow >= pCTW->iBoardTop && iRow <= pCTW->iBoardBottom && iCol >= pCTW->iBoardLeft &&
@@ -2310,7 +2310,7 @@ static HB_U32 hb_ctw_gt_cellValue(PHB_GT pGT, int iRow, int iCol)
 
   cell.uiValue = 0;
   HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &cell.c.bAttr, &cell.c.usChar);
-  cell.c.bColor = static_cast<HB_BYTE>(iColor);
+  cell.c.bColor = static_cast<uint8_t>(iColor);
 
   return cell.uiValue;
 }

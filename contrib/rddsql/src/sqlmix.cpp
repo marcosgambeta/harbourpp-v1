@@ -66,25 +66,25 @@
 #define SUPERTABLE (&sqlmixSuper)
 
 #define MIX_KEY(tag, node, index)                                                                                      \
-  ((PMIXKEY) & (reinterpret_cast<HB_BYTE *>(                                                                           \
+  ((PMIXKEY) & (reinterpret_cast<uint8_t *>(                                                                           \
                    node))[((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (index) * (tag)->uiTotalLen])
 
 #define MIX_COPY_KEYS_INTERNAL(tag, node, dst, src, count)                                                             \
-  memmove((reinterpret_cast<HB_BYTE *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+  memmove((reinterpret_cast<uint8_t *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
               (dst) * (tag)->uiTotalLen,                                                                               \
-          (reinterpret_cast<HB_BYTE *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+          (reinterpret_cast<uint8_t *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
               (src) * (tag)->uiTotalLen,                                                                               \
           (count) * (tag)->uiTotalLen)
 
 #define MIX_COPY_KEYS_EXTERNAL(tag, ndst, dst, nsrc, src, count)                                                       \
-  memmove((reinterpret_cast<HB_BYTE *>(ndst)) + ((ndst)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+  memmove((reinterpret_cast<uint8_t *>(ndst)) + ((ndst)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
               (dst) * (tag)->uiTotalLen,                                                                               \
-          (reinterpret_cast<HB_BYTE *>(nsrc)) + ((nsrc)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+          (reinterpret_cast<uint8_t *>(nsrc)) + ((nsrc)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
               (src) * (tag)->uiTotalLen,                                                                               \
           (count) * (tag)->uiTotalLen)
 
 #define MIX_ASSIGN_KEY(tag, node, dst, src)                                                                            \
-  memmove((reinterpret_cast<HB_BYTE *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+  memmove((reinterpret_cast<uint8_t *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
               (dst) * (tag)->uiTotalLen,                                                                               \
           (src), (tag)->uiTotalLen)
 
@@ -144,7 +144,7 @@ static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, 
   pKey->notnul = 1;
 
   double dbl;
-  HB_BYTE buf[8];
+  uint8_t buf[8];
 
   // TODO: check valtype
   switch (pTag->bType) {
@@ -176,7 +176,7 @@ static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, 
     break;
 
   case 'L':
-    pKey->val[0] = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
+    pKey->val[0] = static_cast<uint8_t>(hb_itemGetL(pItem) ? 'T' : 'F');
     break;
 
   default:
@@ -696,7 +696,7 @@ static HB_BOOL hb_mixTagDelKey(PMIXTAG pTag, PMIXKEY pKey)
 }
 
 static PMIXTAG hb_mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem,
-                               PHB_ITEM pWhileItem, HB_BYTE bType, unsigned int uiKeyLen, SQLMIXAREAP pArea)
+                               PHB_ITEM pWhileItem, uint8_t bType, unsigned int uiKeyLen, SQLMIXAREAP pArea)
 {
   PMIXKEY pKey = nullptr;
   LPDBORDERCONDINFO pOrdCondInfo = pArea->sqlarea.area.lpdbOrdCondInfo;
@@ -1481,7 +1481,7 @@ static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrde
   pArea->sqlarea.area.valResult = nullptr;
 
   uint16_t uiLen;
-  HB_BYTE bType;
+  uint8_t bType;
 
   switch (hb_itemType(pResult)) {
   case Harbour::Item::STRING:

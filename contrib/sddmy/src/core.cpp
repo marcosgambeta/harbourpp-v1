@@ -390,7 +390,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
   pArea->ulRecMax = pArea->ulRecCount + 1;
 
   pArea->pRow = static_cast<void **>(hb_xgrab((pArea->ulRecCount + 1) * sizeof(void *)));
-  pArea->pRowFlags = static_cast<HB_BYTE *>(hb_xgrabz((pArea->ulRecCount + 1) * sizeof(HB_BYTE)));
+  pArea->pRowFlags = static_cast<uint8_t *>(hb_xgrabz((pArea->ulRecCount + 1) * sizeof(uint8_t)));
 
   void **pRow = pArea->pRow;
 

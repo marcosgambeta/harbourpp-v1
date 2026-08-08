@@ -166,13 +166,13 @@ static void hb_gt_wvw_mouse_vSetPos(PWVW_WIN wvw_win, int iRow, int iCol);
 static int hb_gt_wvw_vDispCount(PWVW_WIN wvw_win);
 static void hb_gt_wvw_vDispBegin(PWVW_WIN wvw_win);
 static void hb_gt_wvw_vDispEnd(PWVW_WIN wvw_win);
-static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar,
+static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar,
                                  HB_SIZE nLen);
 static bool hb_gt_wvw_vSetMode(PWVW_WIN wvw_win, int iRow, int iCol);
 static void hb_gt_wvw_vSetPos(PWVW_WIN wvw_win, int iRow, int iCol);
-static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar);
-static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar);
-static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar);
+static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar);
+static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar);
+static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar);
 static bool hb_gt_wvw_vCheckPos(PWVW_WIN wvw_win, int iRow, int iCol, long *plIndex);
 static void hb_gt_wvw_vGetSize(PWVW_WIN wvw_win, int *piRows, int *piCols);
 
@@ -607,7 +607,7 @@ static int hb_gt_wvw_DispCount(PHB_GT pGT)
   return hb_gt_wvw_vDispCount(s_wvw->pWin[s_wvw->iNumWindows - 1]);
 }
 
-static void hb_gt_wvw_Replicate(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar,
+static void hb_gt_wvw_Replicate(PHB_GT pGT, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar,
                                 HB_SIZE nLen)
 {
 #if 0
@@ -638,7 +638,7 @@ static void hb_gt_wvw_vPutText(PWVW_WIN wvw_win, int iTop, int iLeft, int iBotto
         break;
       } else {
         wvw_win->screenBuffer[index].c.usChar = pbyBuffer[j++];
-        wvw_win->screenBuffer[index].c.bColor = static_cast<HB_BYTE>(iColor);
+        wvw_win->screenBuffer[index].c.bColor = static_cast<uint8_t>(iColor);
         wvw_win->screenBuffer[index].c.bAttr = 0;
         index++;
       }
@@ -722,7 +722,7 @@ static void hb_gt_wvw_SetAttribute(PHB_GT pGT, int iTop, int iLeft, int iBottom,
   while (iTop <= iBottom) {
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
       int iColorOld;
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
 
       if (!hb_gt_wvw_vGetChar(wvw_win, iTop, iCol, &iColorOld, &bAttr, &usChar)) {
@@ -855,7 +855,7 @@ static void hb_gt_wvw_usBox(PHB_GT pGT, PWVW_WIN wvw_win, int iTop, int iLeft, i
         hb_gt_wvw_vPutCharX(wvw_win, iTop++, iLeft, iColor, HB_GT_ATTR_BOX, szBoxW[3]);
       }
     } else {
-      HB_BYTE bAttr = HB_GT_ATTR_BOX;
+      uint8_t bAttr = HB_GT_ATTR_BOX;
 
       int iRows = (iBottom > iMaxRow ? iMaxRow + 1 : iBottom) - (iTop < 0 ? -1 : iTop) - 1;
       int iCols = (iRight > iMaxCol ? iMaxCol + 1 : iRight) - (iLeft < 0 ? -1 : iLeft) - 1;
@@ -1973,7 +1973,7 @@ static bool hb_gt_wvwAllocSpBuffer(PWVW_WIN wvw_win, int iCol, int iRow)
 
   for (HB_SIZE i = 0; i < wvw_win->BUFFERSIZE; ++i) {
     wvw_win->screenBuffer[i].c.usChar = TEXT(' ');
-    wvw_win->screenBuffer[i].c.bColor = static_cast<HB_BYTE>(iColor);
+    wvw_win->screenBuffer[i].c.bColor = static_cast<uint8_t>(iColor);
     wvw_win->screenBuffer[i].c.bAttr = 0;
   }
 
@@ -4764,7 +4764,7 @@ static void hb_gt_wvw_vDispEnd(PWVW_WIN wvw_win)
   }
 }
 
-static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar,
+static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar,
                                  HB_SIZE nLen)
 {
   int iColSav;
@@ -4795,7 +4795,7 @@ static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColo
   hb_gt_wvw_SetInvalidRect(wvw_win, iColSav, iRow, iCol, iRow);
 }
 
-static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
+static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
   long lIndex;
 
@@ -4810,7 +4810,7 @@ static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColo
   }
 }
 
-static HB_BOOL hb_gt_wvw_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
+static HB_BOOL hb_gt_wvw_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
   PWVW_WIN wvw_win = s_wvw->pWin[s_wvw->iNumWindows - 1];
 
@@ -4818,20 +4818,20 @@ static HB_BOOL hb_gt_wvw_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, H
 
   return hb_gt_wvw_vGetChar(wvw_win, iRow, iCol, piColor, pbAttr, pusChar);
 }
-static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
+static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
   if (hb_gt_wvw_vPutChar(wvw_win, iRow, iCol, iColor, bAttr, usChar)) {
     hb_gt_wvw_SetInvalidRect(wvw_win, iCol, iRow, iCol, iRow);
   }
 }
 
-static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
+static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
   long lIndex;
 
   if (hb_gt_wvw_vCheckPos(wvw_win, iRow, iCol, &lIndex)) {
     wvw_win->screenBuffer[lIndex].c.usChar = usChar;
-    wvw_win->screenBuffer[lIndex].c.bColor = static_cast<HB_BYTE>(iColor);
+    wvw_win->screenBuffer[lIndex].c.bColor = static_cast<uint8_t>(iColor);
     wvw_win->screenBuffer[lIndex].c.bAttr = bAttr;
 
     return true;
@@ -4840,7 +4840,7 @@ static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor,
   }
 }
 
-static HB_BOOL hb_gt_wvw_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
+static HB_BOOL hb_gt_wvw_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
   PWVW_WIN wvw_win = s_wvw->pWin[s_wvw->iNumWindows - 1];
 
@@ -4893,7 +4893,7 @@ static void hb_gt_wvw_GetSize(PHB_GT pGT, int *piRows, int *piCols)
 
 static void hb_gt_wvw_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, void *pBuffer)
 {
-  auto pbyBuffer = static_cast<HB_BYTE *>(pBuffer);
+  auto pbyBuffer = static_cast<uint8_t *>(pBuffer);
 #if defined(UNICODE)
   PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 #endif
@@ -4908,7 +4908,7 @@ static void hb_gt_wvw_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
   while (iTop <= iBottom) {
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
       int iColor;
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
 
       if (!HB_GTSELF_GETCHAR(pGT, iTop, iCol, &iColor, &bAttr, &usChar)) {
@@ -4920,16 +4920,16 @@ static void hb_gt_wvw_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 #if defined(UNICODE)
       if (pGT->fVgaCell) {
         *pbyBuffer++ = hb_cdpGetChar(cdp, usChar);
-        *pbyBuffer++ = static_cast<HB_BYTE>(iColor);
+        *pbyBuffer++ = static_cast<uint8_t>(iColor);
       } else {
         HB_PUT_LE_UINT16(pbyBuffer, usChar);
         pbyBuffer += 2;
-        *pbyBuffer++ = static_cast<HB_BYTE>(iColor);
+        *pbyBuffer++ = static_cast<uint8_t>(iColor);
         *pbyBuffer++ = bAttr;
       }
 #else
-      *pbyBuffer++ = static_cast<HB_BYTE>(usChar);
-      *pbyBuffer++ = static_cast<HB_BYTE>(iColor);
+      *pbyBuffer++ = static_cast<uint8_t>(usChar);
+      *pbyBuffer++ = static_cast<uint8_t>(iColor);
 #endif
     }
     ++iTop;
@@ -4940,7 +4940,7 @@ static void hb_gt_wvw_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 
 static void hb_gt_wvw_Rest(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, const void *pBuffer)
 {
-  auto pbyBuffer = static_cast<const HB_BYTE *>(pBuffer);
+  auto pbyBuffer = static_cast<const uint8_t *>(pBuffer);
 #if defined(UNICODE)
   PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 #endif
@@ -4961,7 +4961,7 @@ static void hb_gt_wvw_Rest(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
   while (iTop <= iBottom) {
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
       int iColor;
-      HB_BYTE bAttr;
+      uint8_t bAttr;
       uint16_t usChar;
 
 #if defined(UNICODE)
@@ -6302,7 +6302,7 @@ HB_FUNC(WVW_ADDROWS)
 
       for (HB_SIZE i = nBufStart; i < nBufStop; ++i) {
         wvw_win->screenBuffer[i].c.usChar = TEXT(' ');
-        wvw_win->screenBuffer[i].c.bColor = static_cast<HB_BYTE>(iColor);
+        wvw_win->screenBuffer[i].c.bColor = static_cast<uint8_t>(iColor);
         wvw_win->screenBuffer[i].c.bAttr = 0;
       }
     }

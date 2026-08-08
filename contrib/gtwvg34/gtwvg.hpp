@@ -303,8 +303,8 @@ using PHB_GTWVG = HB_GTWVG *;
 extern HB_EXPORT POINT         hb_wvt_gtGetXYFromColRow( int col, int row );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPicture( const char * pszFileName );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPictureFromResource( LPCTSTR resource, LPCTSTR section );
-extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib);
-extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib);
+extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, uint8_t * sBuffer, uint8_t * sAttrib);
+extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, uint8_t * sBuffer, uint8_t * sAttrib);
 
 extern HB_EXPORT PHB_GTWVT     hb_wvt_gtGetWVT( void );
 

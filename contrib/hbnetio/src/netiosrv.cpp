@@ -376,7 +376,7 @@ static PHB_CONSRV s_consrvNew(PHB_SOCKEX sock, const char * szRootPath, HB_BOOL 
 
 static HB_BOOL s_srvRecvAll(PHB_CONSRV conn, void * buffer, long len)
 {
-   auto ptr = static_cast<HB_BYTE*>(buffer);
+   auto ptr = static_cast<uint8_t*>(buffer);
    long lRead = 0, l;
    HB_MAXINT timeout = conn->timeout;
    HB_MAXUINT timer = hb_timerInit(timeout);
@@ -400,7 +400,7 @@ static HB_BOOL s_srvRecvAll(PHB_CONSRV conn, void * buffer, long len)
 
 static HB_BOOL s_srvSendAll(PHB_CONSRV conn, void * buffer, long len)
 {
-   auto ptr = static_cast<HB_BYTE*>(buffer);
+   auto ptr = static_cast<uint8_t*>(buffer);
    long lSent = 0;
 
    if( !conn->mutex || hb_threadMutexLock(conn->mutex) )
@@ -746,7 +746,7 @@ static HB_BOOL s_netio_login_accept(PHB_CONSRV conn)
 {
    if( conn && conn->sock && !conn->stop && !conn->login )
    {
-      HB_BYTE msgbuf[NETIO_MSGLEN];
+      uint8_t msgbuf[NETIO_MSGLEN];
 
       if( s_srvRecvAll(conn, msgbuf, NETIO_MSGLEN) && HB_GET_LE_INT32(msgbuf) == NETIO_LOGIN )
       {
@@ -800,8 +800,8 @@ HB_FUNC(NETIO_SERVER)
 
       for( ;; )
       {
-         HB_BYTE buffer[2048], * ptr = nullptr, * msg;
-         HB_BYTE msgbuf[NETIO_MSGLEN];
+         uint8_t buffer[2048], * ptr = nullptr, * msg;
+         uint8_t msgbuf[NETIO_MSGLEN];
          bool fNoAnswer = false;
          HB_ERRCODE errCode = 0, errFsCode;
          long len = 0, size, size2;
@@ -840,7 +840,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -883,7 +883,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -922,7 +922,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( HB_MAX(size, size2) + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(HB_MAX(size, size2) + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(HB_MAX(size, size2) + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -970,7 +970,7 @@ HB_FUNC(NETIO_SERVER)
                            {
                               hb_xfree(ptr);
                            }
-                           ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(itmSize + NETIO_MSGLEN));
+                           ptr = msg = static_cast<uint8_t*>(hb_xgrab(itmSize + NETIO_MSGLEN));
                         }
                         if( itmData )
                         {
@@ -1002,7 +1002,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -1035,7 +1035,7 @@ HB_FUNC(NETIO_SERVER)
                               {
                                  hb_xfree(ptr);
                               }
-                              ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(len + NETIO_MSGLEN));
+                              ptr = msg = static_cast<uint8_t*>(hb_xgrab(len + NETIO_MSGLEN));
                            }
                            memcpy(msg + NETIO_MSGLEN, pszTarget, len);
                            hb_xfree(pszTarget);
@@ -1067,7 +1067,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( HB_MAX(size, size2) + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(HB_MAX(size, size2) + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(HB_MAX(size, size2) + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -1128,7 +1128,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -1170,7 +1170,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -1221,7 +1221,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + conn->rootPathLen + 1));
                   }
                   msg[size] = '\0';
                   if( !s_srvRecvAll(conn, msg, size) )
@@ -1284,7 +1284,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size > static_cast<long>(sizeof(buffer) - NETIO_MSGLEN) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + NETIO_MSGLEN));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + NETIO_MSGLEN));
                   }
                   if( !s_srvRecvAll(conn, msg, size) )
                   {
@@ -1333,7 +1333,7 @@ HB_FUNC(NETIO_SERVER)
                               {
                                  hb_xfree(ptr);
                               }
-                              ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(itmSize + NETIO_MSGLEN));
+                              ptr = msg = static_cast<uint8_t*>(hb_xgrab(itmSize + NETIO_MSGLEN));
                            }
                            else
                            {
@@ -1385,7 +1385,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size > static_cast<long>(sizeof(buffer) - NETIO_MSGLEN) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + NETIO_MSGLEN));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size + NETIO_MSGLEN));
                   }
                   pFile = s_srvFileGet(conn, iFileNo);
                   if( pFile == nullptr )
@@ -1437,7 +1437,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size > static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size));
                   }
                   if( !s_srvRecvAll(conn, msg, size) )
                   {
@@ -1661,7 +1661,7 @@ HB_FUNC(NETIO_SERVER)
                {
                   if( size > static_cast<long>(sizeof(buffer)) )
                   {
-                     ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size));
+                     ptr = msg = static_cast<uint8_t*>(hb_xgrab(size));
                   }
                   if( !s_srvRecvAll(conn, msg, size) )
                   {
@@ -1813,7 +1813,7 @@ HB_FUNC(NETIO_SERVER)
                                        {
                                           hb_xfree(ptr);
                                        }
-                                       ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(itmSize + NETIO_MSGLEN));
+                                       ptr = msg = static_cast<uint8_t*>(hb_xgrab(itmSize + NETIO_MSGLEN));
                                     }
                                     memcpy(msg + NETIO_MSGLEN, itmData, itmSize);
                                     hb_xfree(itmData);

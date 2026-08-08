@@ -337,7 +337,7 @@ HB_FUNC(SCREENSTR) // TODO: Unicode support
       int iC = iCol;
       do {
         int iColor;
-        HB_BYTE bAttr;
+        uint8_t bAttr;
         uint16_t usChar;
         hb_gtGetChar(iRow, iC, &iColor, &bAttr, &usChar);
         *szText++ = static_cast<char>(usChar);

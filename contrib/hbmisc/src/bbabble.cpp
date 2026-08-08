@@ -72,8 +72,8 @@ HB_FUNC(BUBBLEBABBLEENCODE)
 
    for( i = 0;; i += 2 )
    {
-      HB_BYTE byte1;
-      HB_BYTE byte2;
+      uint8_t byte1;
+      uint8_t byte2;
 
       if( i >= nInputLen )
       {

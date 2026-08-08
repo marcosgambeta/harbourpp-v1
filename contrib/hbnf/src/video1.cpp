@@ -91,7 +91,7 @@ HB_FUNC( FT_REVATTR )
          while( iCol <= iRight )
          {
             int       iColor;
-            HB_BYTE   bAttr;
+            uint8_t   bAttr;
             uint16_t usChar;
             hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
             iColor = (iColor << 4) | (iColor >> 4);
@@ -111,7 +111,7 @@ HB_FUNC( FT_REVCHR )
    auto iCol = hb_parni(2);
 
    int       iColor;
-   HB_BYTE   bAttr;
+   uint8_t   bAttr;
    uint16_t usChar;
 
    hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar);
