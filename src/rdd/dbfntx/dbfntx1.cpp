@@ -157,7 +157,7 @@ static uint16_t s_uiRddId;
 
 /* temporary casts to suppress 32/64-bit Windows warnings */
 #define HB_SHORTCAST HB_SHORT
-#define HB_USHORTCAST HB_USHORT
+#define HB_USHORTCAST uint16_t
 #define HB_INTCAST int
 
 #define hb_ntxKeyFree(K) hb_xfree(K)
