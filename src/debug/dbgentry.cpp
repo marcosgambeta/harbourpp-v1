@@ -551,7 +551,7 @@ void hb_dbgEntry(int nMode, int nLine, const char *szName, int nIndex, PHB_ITEM 
   char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
   auto infoPtr = reinterpret_cast<HB_DEBUGINFO **>(hb_stackDebugInfo());
   HB_DEBUGINFO *info = *infoPtr;
-  HB_USHORT uiLine;
+  uint16_t uiLine;
 
   if (info == HB_DBGINFO_DISABLE)
   {
