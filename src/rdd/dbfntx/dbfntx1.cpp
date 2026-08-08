@@ -156,7 +156,7 @@ static RDDFUNCS ntxSuper;
 static uint16_t s_uiRddId;
 
 /* temporary casts to suppress 32/64-bit Windows warnings */
-#define HB_SHORTCAST HB_SHORT
+#define HB_SHORTCAST int16_t
 #define HB_USHORTCAST uint16_t
 #define HB_INTCAST int
 
@@ -203,52 +203,52 @@ static void hb_ntxSetKeyCount(LPPAGEINFO pPage, uint16_t uiKeys)
   HB_PUT_LE_UINT16(ptr, uiKeys);
 }
 
-static uint16_t hb_ntxGetKeyOffset(LPPAGEINFO pPage, HB_SHORT iKey)
+static uint16_t hb_ntxGetKeyOffset(LPPAGEINFO pPage, int16_t iKey)
 {
   const char *ptr = hb_ntxPageBuffer(pPage) + 2 + (iKey << 1);
 
   return HB_GET_LE_UINT16(ptr);
 }
 
-static void hb_ntxSetKeyOffset(LPPAGEINFO pPage, HB_SHORT iKey, uint16_t uiOffset)
+static void hb_ntxSetKeyOffset(LPPAGEINFO pPage, int16_t iKey, uint16_t uiOffset)
 {
   char *ptr = hb_ntxPageBuffer(pPage) + 2 + (iKey << 1);
 
   HB_PUT_LE_UINT16(ptr, uiOffset);
 }
 
-static char *hb_ntxGetKeyPtr(LPPAGEINFO pPage, HB_SHORT iKey)
+static char *hb_ntxGetKeyPtr(LPPAGEINFO pPage, int16_t iKey)
 {
   return hb_ntxPageBuffer(pPage) + hb_ntxGetKeyOffset(pPage, iKey);
 }
 
-static HB_ULONG hb_ntxGetKeyPage(LPPAGEINFO pPage, HB_SHORT iKey)
+static HB_ULONG hb_ntxGetKeyPage(LPPAGEINFO pPage, int16_t iKey)
 {
   const char *ptr = hb_ntxGetKeyPtr(pPage, iKey);
 
   return HB_GET_LE_UINT32(ptr);
 }
 
-static void hb_ntxSetKeyPage(LPPAGEINFO pPage, HB_SHORT iKey, HB_ULONG ulPage)
+static void hb_ntxSetKeyPage(LPPAGEINFO pPage, int16_t iKey, HB_ULONG ulPage)
 {
   char *ptr = hb_ntxGetKeyPtr(pPage, iKey);
 
   HB_PUT_LE_UINT32(ptr, ulPage);
 }
 
-static char *hb_ntxGetKeyVal(LPPAGEINFO pPage, HB_SHORT iKey)
+static char *hb_ntxGetKeyVal(LPPAGEINFO pPage, int16_t iKey)
 {
   return hb_ntxGetKeyPtr(pPage, iKey) + 8;
 }
 
-static void hb_ntxSetKeyRec(LPPAGEINFO pPage, HB_SHORT iKey, HB_ULONG ulRec)
+static void hb_ntxSetKeyRec(LPPAGEINFO pPage, int16_t iKey, HB_ULONG ulRec)
 {
   char *ptr = hb_ntxGetKeyPtr(pPage, iKey) + 4;
 
   HB_PUT_LE_UINT32(ptr, ulRec);
 }
 
-static HB_ULONG hb_ntxGetKeyRec(LPPAGEINFO pPage, HB_SHORT iKey)
+static HB_ULONG hb_ntxGetKeyRec(LPPAGEINFO pPage, int16_t iKey)
 {
   const char *ptr = hb_ntxGetKeyPtr(pPage, iKey) + 4;
 
@@ -2271,7 +2271,7 @@ static bool hb_ntxTagNextKey(LPTAGINFO pTag)
     if (!pPage) {
       return false;
     }
-    if (pTag->stack[iLevel].ikey < static_cast<HB_SHORT>(pPage->uiKeys)) {
+    if (pTag->stack[iLevel].ikey < static_cast<int16_t>(pPage->uiKeys)) {
       ulPage = hb_ntxGetKeyPage(pPage, pTag->stack[iLevel].ikey + 1);
     }
     if (ulPage || pTag->stack[iLevel].ikey + 1 < pPage->uiKeys) {
@@ -2290,7 +2290,7 @@ static bool hb_ntxTagNextKey(LPTAGINFO pTag)
         if (!pPage) {
           return false;
         }
-        if (pTag->stack[iLevel].ikey < static_cast<HB_SHORT>(pPage->uiKeys)) {
+        if (pTag->stack[iLevel].ikey < static_cast<int16_t>(pPage->uiKeys)) {
           break;
         }
       }
@@ -2359,7 +2359,7 @@ static bool hb_ntxTagPrevKey(LPTAGINFO pTag)
 /*
  * find a key value in page
  */
-static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char *key, HB_SHORT keylen, bool fNext,
+static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char *key, int16_t keylen, bool fNext,
                              HB_ULONG ulRecNo, bool *fStop)
 {
   int iLast = -1, iBegin = 0, iEnd = pPage->uiKeys - 1;
@@ -2769,7 +2769,7 @@ static bool hb_ntxTagKeyAdd(LPTAGINFO pTag, LPKEYINFO pKey)
         return false;
       }
       iLevel = pTag->stackLevel - 1;
-      if (pTag->stack[iLevel].ikey < static_cast<HB_SHORT>(pPage->uiKeys)) {
+      if (pTag->stack[iLevel].ikey < static_cast<int16_t>(pPage->uiKeys)) {
         pTag->stack[iLevel].ikey++;
       }
     }

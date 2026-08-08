@@ -170,8 +170,8 @@ static CDXDBGTIME hb_cdxGetTime()
 #ifdef HB_CDX_DBGUPDT
 static HB_ULONG cdxWriteNO = 0;
 static HB_ULONG cdxReadNO = 0;
-static HB_SHORT cdxStackSize = 0;
-static HB_SHORT cdxTmpStackSize = 0;
+static int16_t cdxStackSize = 0;
+static int16_t cdxTmpStackSize = 0;
 #endif
 
 // internal DBFCDX function
@@ -1316,8 +1316,8 @@ static HB_BYTE *hb_cdxPageGetKeyVal(LPCDXPAGE pPage, int iKey)
       pPage->bufKeyNum = 0;
     }
     if (pPage->bufKeyNum == 0) {
-      pPage->bufKeyPos = static_cast<HB_SHORT>(pPage->TagParent->pIndex->uiPageLen - CDX_EXT_HEADSIZE);
-      pPage->bufKeyLen = static_cast<HB_SHORT>(iLen);
+      pPage->bufKeyPos = static_cast<int16_t>(pPage->TagParent->pIndex->uiPageLen - CDX_EXT_HEADSIZE);
+      pPage->bufKeyLen = static_cast<int16_t>(iLen);
     }
     while (pPage->bufKeyNum <= iKey) {
       int iPos, iTmp, iTrl, iDup;
@@ -1328,7 +1328,7 @@ static HB_BYTE *hb_cdxPageGetKeyVal(LPCDXPAGE pPage, int iKey)
       iDup = (pPage->bufKeyNum == 0) ? 0 : (iTmp & pPage->DCMask);
       iTrl = (iTmp >> pPage->DCBits) & pPage->TCMask;
       if ((iTmp = iLen - iDup - iTrl) > 0) {
-        pPage->bufKeyPos -= static_cast<HB_SHORT>(iTmp);
+        pPage->bufKeyPos -= static_cast<int16_t>(iTmp);
         memcpy(&pKeyVal[iDup], &hb_cdxPageExtKeyPool(pPage)[pPage->bufKeyPos], iTmp);
       }
 #ifdef HB_CDX_DBGCODE
@@ -1341,7 +1341,7 @@ static HB_BYTE *hb_cdxPageGetKeyVal(LPCDXPAGE pPage, int iKey)
       if (iTrl > 0 && (iTmp = pPage->bufKeyLen - iLen + iTrl) > 0) {
         memset(&pKeyVal[iLen - iTrl], bTrail, iTmp);
       }
-      pPage->bufKeyLen = static_cast<HB_SHORT>(iLen - iTrl);
+      pPage->bufKeyLen = static_cast<int16_t>(iLen - iTrl);
       pPage->bufKeyNum++;
 #if 0
          fprintf(stderr, "\r\npPage->Page=%lx, iKey=%d, iLen=%d, iDup=%d, iTrl=%d, ulRec=%d, val[%s]", pPage->Page, pPage->bufKeyNum - 1, iLen, iDup, iTrl, HB_GET_LE_UINT32(&hb_cdxPageExtKeyPool(pPage)[iPos]), pKeyVal);
@@ -1780,7 +1780,7 @@ static void hb_cdxPageCalcLeafSpace(LPCDXPAGE pPage, HB_BYTE *pKeyBuf, int iKeys
     } else if (iSize > pPage->iFree) {
       break;
     }
-    pPage->iFree -= static_cast<HB_SHORT>(iSize);
+    pPage->iFree -= static_cast<int16_t>(iSize);
     pPage->iKeys++;
   }
 }
@@ -1849,7 +1849,7 @@ static int hb_cdxPageLeafDelKey(LPCDXPAGE pPage)
     HB_PUT_LE_UINT16(&pPage->pKeyBuf[iPos], iDup);
     iSpc += iDup;
   }
-  pPage->iFree += static_cast<HB_SHORT>(iSpc);
+  pPage->iFree += static_cast<int16_t>(iSpc);
   if (--pPage->iKeys > iKey) {
     memmove(&pPage->pKeyBuf[iKey * iLen], &pPage->pKeyBuf[(iKey + 1) * iLen], (pPage->iKeys - iKey) * iLen);
   }
@@ -1965,7 +1965,7 @@ static int hb_cdxPageLeafAddKey(LPCDXPAGE pPage, LPCDXKEY pKey)
     pPage->RNBits += 8;
     iSpc += pPage->iKeys;
   }
-  pPage->iFree -= static_cast<HB_SHORT>(iSpc);
+  pPage->iFree -= static_cast<int16_t>(iSpc);
   pPage->fBufChanged = pPage->fChanged = true;
 #ifdef HB_CDX_DBGCODE_EXT
   hb_cdxPageCheckKeys(pPage);
@@ -8151,7 +8151,7 @@ static void hb_cdxSortAddNodeKey(LPCDXSORTINFO pSort, int iLevel, HB_BYTE *pKeyV
     if (iTmp > 0) {
       memcpy(&hb_cdxPageExtKeyPool(pPage)[pPage->iFree + iPos - iTmp], &pKeyVal[iDup], iTmp);
     }
-    pPage->iFree -= static_cast<HB_SHORT>(iTmp + pPage->ReqByte);
+    pPage->iFree -= static_cast<int16_t>(iTmp + pPage->ReqByte);
     pPage->iKeys++;
 #ifdef HB_CDX_DBGCODE_EXT
     hb_cdxPageCheckDupTrlRaw(pSort->NodeList[iLevel]);

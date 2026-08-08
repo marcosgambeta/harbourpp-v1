@@ -1377,7 +1377,7 @@ static HB_ULONG hb_fptCountSixItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
     ulSize = SIX_ITEM_BUFSIZE;
     ulLen = static_cast<HB_ULONGCAST>(hb_arrayLen(pItem));
     if (pArea->uiMemoVersion == DB_MEMOVER_SIX) {
-      // only 2 bytes (HB_SHORT) for SIX compatibility
+      // only 2 bytes (int16_t) for SIX compatibility
       ulLen = HB_MIN(ulLen, 0xFFFF);
     }
     for (u = 1; u <= ulLen; u++) {
@@ -1387,7 +1387,7 @@ static HB_ULONG hb_fptCountSixItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
   case Harbour::Item::MEMO:
   case Harbour::Item::STRING:
     ulSize = SIX_ITEM_BUFSIZE;
-    // only 2 bytes (HB_SHORT) for SIX compatibility
+    // only 2 bytes (int16_t) for SIX compatibility
     u = pArea->uiMemoVersion == DB_MEMOVER_SIX ? 0xFFFF : ULONG_MAX;
     if (iTrans == FPT_TRANS_UNICODE) {
       ulLen = static_cast<HB_ULONGCAST>(hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_LITTLE, nullptr, u)) * sizeof(HB_WCHAR);
@@ -1428,7 +1428,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
     HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_ARRAY);
     ulLen = static_cast<HB_ULONGCAST>(hb_arrayLen(pItem));
     if (pArea->uiMemoVersion == DB_MEMOVER_SIX) {
-      // only 2 bytes (HB_SHORT) for SIX compatibility
+      // only 2 bytes (int16_t) for SIX compatibility
       ulLen = HB_MIN(ulLen, 0xFFFF);
     }
     HB_PUT_LE_UINT32(&(*bBufPtr)[2], ulLen);
@@ -1484,7 +1484,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
     HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_CHAR);
-    // only 2 bytes (HB_SHORT) for SIX compatibility
+    // only 2 bytes (int16_t) for SIX compatibility
     u = pArea->uiMemoVersion == DB_MEMOVER_SIX ? 0xFFFF : ULONG_MAX;
     if (iTrans == FPT_TRANS_UNICODE) {
       ulLen = static_cast<HB_ULONGCAST>(hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_LITTLE, nullptr, u));
@@ -1548,7 +1548,7 @@ static HB_ERRCODE hb_fptReadSixItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYTE
     case FPTIT_SIX_CHAR:
       ulLen = HB_GET_LE_UINT32(&(*pbMemoBuf)[2]);
       if (pArea->uiMemoVersion == DB_MEMOVER_SIX) {
-        ulLen &= 0xFFFF; // only 2 bytes (HB_SHORT) for SIX compatibility
+        ulLen &= 0xFFFF; // only 2 bytes (int16_t) for SIX compatibility
       }
       (*pbMemoBuf) += SIX_ITEM_BUFSIZE;
       if (bBufEnd - (*pbMemoBuf) >= static_cast<HB_LONG>(ulLen)) {
@@ -1578,7 +1578,7 @@ static HB_ERRCODE hb_fptReadSixItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYTE
     case FPTIT_SIX_ARRAY:
       ulLen = HB_GET_LE_UINT32(&(*pbMemoBuf)[2]);
       if (pArea->uiMemoVersion == DB_MEMOVER_SIX) {
-        ulLen &= 0xFFFF; // only 2 bytes (HB_SHORT) for SIX compatibility
+        ulLen &= 0xFFFF; // only 2 bytes (int16_t) for SIX compatibility
       }
       (*pbMemoBuf) += SIX_ITEM_BUFSIZE;
       hb_arrayNew(pItem, ulLen);
@@ -1863,7 +1863,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYT
     break;
   case FPTIT_FLEXAR_SHORT:
     if (bBufEnd - (*pbMemoBuf) >= 2) {
-      hb_itemPutNI(pItem, static_cast<HB_SHORT>(HB_GET_LE_UINT16(*pbMemoBuf)));
+      hb_itemPutNI(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(*pbMemoBuf)));
       *pbMemoBuf += 2;
     } else {
       errCode = EDBF_CORRUPT;
@@ -1871,7 +1871,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYT
     break;
   case FPTIT_FLEXAR_SHORT1:
     if (bBufEnd - (*pbMemoBuf) >= 3) {
-      hb_itemPutNILen(pItem, static_cast<HB_SHORT>(HB_GET_LE_UINT16(*pbMemoBuf)), (*pbMemoBuf)[2]);
+      hb_itemPutNILen(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(*pbMemoBuf)), (*pbMemoBuf)[2]);
       *pbMemoBuf += 3;
     } else {
       errCode = EDBF_CORRUPT;
@@ -1882,9 +1882,9 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, HB_BYTE **pbMemoBuf, HB_BYT
       int iLen = (*pbMemoBuf)[2], iDec = (*pbMemoBuf)[3];
       if (iDec) {
         iLen -= iDec + 1;
-        hb_itemPutNDLen(pItem, static_cast<HB_SHORT>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen, iDec);
+        hb_itemPutNDLen(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen, iDec);
       } else {
-        hb_itemPutNILen(pItem, static_cast<HB_SHORT>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen);
+        hb_itemPutNILen(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(*pbMemoBuf)), iLen);
       }
       *pbMemoBuf += 4;
     } else {

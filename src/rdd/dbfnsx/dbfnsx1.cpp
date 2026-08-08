@@ -2477,7 +2477,7 @@ static bool hb_nsxTagNextKey(LPTAGINFO pTag)
         if (!pPage) {
           return false;
         }
-        if (pPage->uiKeys && pTag->stack[iLevel].ikey < static_cast<HB_SHORT>(pPage->uiKeys)) {
+        if (pPage->uiKeys && pTag->stack[iLevel].ikey < static_cast<int16_t>(pPage->uiKeys)) {
           if (!pTag->stack[iLevel].value) {
             pTag->stack[iLevel].value = static_cast<HB_UCHAR *>(hb_xgrab(pTag->KeyLength));
           }
@@ -2558,7 +2558,7 @@ static bool hb_nsxTagPrevKey(LPTAGINFO pTag)
 /*
  * find a key value in page
  */
-static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR *key, HB_SHORT keylen, int mode, bool fLast,
+static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR *key, int16_t keylen, int mode, bool fLast,
                              HB_ULONG ulRecNo, bool *fStop)
 {
   int iBegin, iEnd, iLast, k, i;
@@ -3022,7 +3022,7 @@ static bool hb_nsxTagKeyAdd(LPTAGINFO pTag, LPKEYINFO pKey)
     if (!pPage) {
       return false;
     }
-    if (pTag->stack[pTag->stackLevel - 1].ikey < static_cast<HB_SHORT>(pPage->uiKeys)) {
+    if (pTag->stack[pTag->stackLevel - 1].ikey < static_cast<int16_t>(pPage->uiKeys)) {
       pTag->stack[pTag->stackLevel - 1].ikey++;
     }
   }
@@ -3898,7 +3898,7 @@ static bool hb_nsxOrdKeyGoto(LPTAGINFO pTag, HB_ULONG ulKeyNo)
             --iLevel;
             ulKeyNo -= iKey;
           } else {
-            pTag->stack[iLevel].ikey -= static_cast<HB_SHORT>(ulKeyNo);
+            pTag->stack[iLevel].ikey -= static_cast<int16_t>(ulKeyNo);
             ulKeyNo = 0;
           }
         } else {
@@ -3942,7 +3942,7 @@ static bool hb_nsxOrdKeyGoto(LPTAGINFO pTag, HB_ULONG ulKeyNo)
             --iLevel;
             ulKeyNo -= iKey;
           } else {
-            pTag->stack[iLevel].ikey += static_cast<HB_SHORT>(ulKeyNo);
+            pTag->stack[iLevel].ikey += static_cast<int16_t>(ulKeyNo);
             ulKeyNo = 0;
           }
         }

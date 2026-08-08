@@ -1066,7 +1066,7 @@ void hb_dbfPutMemoBlock(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG ulBlock)
   if (pArea->area.lpFields[uiIndex].uiLen == 4) {
     HB_PUT_LE_UINT32(&pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock);
   } else {
-    for (HB_SHORT iCount = 9; iCount >= 0; iCount--) {
+    for (int16_t iCount = 9; iCount >= 0; iCount--) {
       if (ulBlock > 0) {
         pArea->pRecord[pArea->pFieldOffset[uiIndex] + iCount] = static_cast<HB_BYTE>(ulBlock % 10) + '0';
         ulBlock /= 10;
@@ -1161,7 +1161,7 @@ HB_ERRCODE hb_dbfSetMemoData(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG ulBlock,
       HB_PUT_LE_UINT32(pSMTFiled->length, ulSize);
       HB_PUT_LE_UINT32(pSMTFiled->block, ulBlock);
     } else {
-      for (HB_SHORT iCount = 9; iCount >= 0; iCount--) {
+      for (int16_t iCount = 9; iCount >= 0; iCount--) {
         if (ulBlock > 0) {
           pArea->pRecord[pArea->pFieldOffset[uiIndex] + iCount] = static_cast<HB_BYTE>(ulBlock % 10) + '0';
           ulBlock /= 10;
@@ -4875,7 +4875,7 @@ static HB_ERRCODE hb_dbfSortReadRec(LPDBSORTREC pSortRec, PHB_ITEM pValue)
     hb_arraySize(pValue, pSortRec->pSortInfo->uiItemCount);
   }
 
-  for (HB_SHORT uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; uiCount++) {
+  for (int16_t uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; uiCount++) {
     auto pItem = hb_arrayGetItemPtr(pValue, uiCount + 1);
     uint16_t uiField = pSortRec->pSortInfo->lpdbsItem[uiCount].uiField;
     if (SELF_GETVALUE(pArea, uiField, pItem) != Harbour::SUCCESS) {
