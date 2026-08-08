@@ -2699,7 +2699,7 @@ static void hb_gt_crs_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 
   if (s_ioBase) {
     int iColor;
-    HB_BYTE bAttr;
+    uint8_t bAttr;
     HB_UCHAR uc;
     chtype ch;
 

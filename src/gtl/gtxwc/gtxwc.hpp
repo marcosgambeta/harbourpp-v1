@@ -293,7 +293,7 @@ struct XWC_CharTrans
     XRectangle *rect;
     uint16_t ch16;
   } u;
-  HB_BYTE size;
+  uint8_t size;
   bool inverse;
 };
 

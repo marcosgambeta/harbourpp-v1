@@ -634,7 +634,7 @@ HB_ERRCODE hb_gtRest(int iTop, int iLeft, int iBottom, int iRight, const void *p
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_gtGetChar(int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
+HB_ERRCODE hb_gtGetChar(int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtGetChar(%d, %d, %p, %p, %p)", iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -652,7 +652,7 @@ HB_ERRCODE hb_gtGetChar(int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint1
   return errCode;
 }
 
-HB_ERRCODE hb_gtPutChar(int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
+HB_ERRCODE hb_gtPutChar(int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtPutChar(%d, %d, %d, %u, %hu)", iRow, iCol, iColor, bAttr, usChar));
@@ -1219,7 +1219,7 @@ HB_ERRCODE hb_gtSetClearChar(uint16_t usChar)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_gtGetScrChar(int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
+HB_ERRCODE hb_gtGetScrChar(int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtGetScrChar(%d, %d, %p, %p, %p)", iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1237,7 +1237,7 @@ HB_ERRCODE hb_gtGetScrChar(int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, ui
   return errCode;
 }
 
-HB_ERRCODE hb_gtPutScrChar(int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
+HB_ERRCODE hb_gtPutScrChar(int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtPutScrChar(%d, %d, %d, %d, %hu)", iRow, iCol, iColor, static_cast<int>(bAttr), usChar));

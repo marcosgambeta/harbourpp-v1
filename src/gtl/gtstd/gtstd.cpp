@@ -344,7 +344,7 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 
 #if defined(HB_HAS_TERMIOS)
   if (hb_fsCanRead(pGTSTD->hStdin, 0) > 0) {
-    HB_BYTE bChar;
+    uint8_t bChar;
     if (hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1) {
       ch = bChar;
     }
@@ -364,14 +364,14 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
       ch = hb_gt_dos_keyCodeTranslate(ch, 0, HB_GTSELF_CPIN(pGT));
     }
   } else if (!_eof(static_cast<int>(pGTSTD->hStdin))) {
-    HB_BYTE bChar;
+    uint8_t bChar;
     if (_read(static_cast<int>(pGTSTD->hStdin), &bChar, 1) == 1) {
       ch = bChar;
     }
   }
 #elif defined(HB_OS_WIN)
   if (!pGTSTD->fStdinConsole) {
-    HB_BYTE bChar;
+    uint8_t bChar;
     if (hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1) {
       ch = bChar;
     }
@@ -381,7 +381,7 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
     while (PeekConsoleInput(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(pGTSTD->hStdin)), &ir, 1, &dwEvents) &&
            dwEvents == 1) {
       if (ir.EventType == KEY_EVENT && ir.Event.KeyEvent.bKeyDown) {
-        HB_BYTE bChar;
+        uint8_t bChar;
         if (hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1) {
           ch = bChar;
         }
@@ -393,7 +393,7 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 #else
   {
     if (!pGTSTD->fStdinConsole) {
-      HB_BYTE bChar;
+      uint8_t bChar;
       if (hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1) {
         ch = bChar;
       }
@@ -535,7 +535,7 @@ static void hb_gt_std_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
 static void hb_gt_std_DispLine(PHB_GT pGT, int iRow, int iFrom, int iSize)
 {
   int iColor;
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
   int iCol, iLastCol, iAll;
   HB_SIZE nLen, nI;
@@ -581,7 +581,7 @@ static void hb_gt_std_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 #endif
 
   int iColor;
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
   int iLineFeed, iBackSpace, iMin;
 

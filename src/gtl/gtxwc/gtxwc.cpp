@@ -3066,7 +3066,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
         while (top <= bottom) {
           for (left = wnd->markLeft; left <= right; ++left) {
             int iColor;
-            HB_BYTE bAttr;
+            uint8_t bAttr;
             uint16_t usChar;
 
             if (!HB_GTSELF_GETSCRCHAR(wnd->pGT, top, left, &iColor, &bAttr, &usChar)) {
@@ -3462,7 +3462,7 @@ static bool hb_gt_xwc_AllocColor(PXWND_DEF wnd, XColor *pColor)
     double dDiff, dDistance;
 
     auto colorTable = static_cast<XColor *>(hb_xgrab(iCMapSize * sizeof(XColor)));
-    auto checkTable = static_cast<HB_BYTE *>(hb_xgrab(iCMapSize * sizeof(HB_BYTE)));
+    auto checkTable = static_cast<uint8_t *>(hb_xgrab(iCMapSize * sizeof(uint8_t)));
     for (i = 0; i < iCMapSize; i++) {
       colorTable[i].pixel = static_cast<HB_GT_PIXELTYPE>(i);
       checkTable[i] = false;
@@ -3551,7 +3551,7 @@ static bool hb_gt_xwc_setPalette(PXWND_DEF wnd)
 
 // ***********************************************************************
 
-static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, HB_BYTE color, uint16_t *usChBuf, int len)
+static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, uint8_t color, uint16_t *usChBuf, int len)
 {
   if (wnd->fClearBkg) {
     XSetForeground(wnd->dpy, wnd->gc, wnd->colors[color >> 4].pixel);
@@ -3570,7 +3570,7 @@ static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, HB_BYTE color,
 
 // ***********************************************************************
 
-static HB_U32 hb_gt_xwc_HashCurrChar(HB_BYTE attr, HB_BYTE color, uint16_t chr)
+static HB_U32 hb_gt_xwc_HashCurrChar(uint8_t attr, uint8_t color, uint16_t chr)
 {
   return (static_cast<HB_U32>(attr) << 24) | (static_cast<HB_U32>(color) << 16) | static_cast<HB_U32>(chr);
 }
@@ -3580,7 +3580,7 @@ static HB_U32 hb_gt_xwc_HashCurrChar(HB_BYTE attr, HB_BYTE color, uint16_t chr)
 static void hb_gt_xwc_RepaintChar(PXWND_DEF wnd, int colStart, int rowStart, int colStop, int rowStop)
 {
   uint16_t irow, startCol = 0, basex, basey, nsize;
-  HB_BYTE oldColor = 0, color, attr;
+  uint8_t oldColor = 0, color, attr;
   uint16_t usCh16, usChBuf[XWC_MAX_COLS];
   HB_U32 u32Curr = 0xFFFFFFFF;
   int i, iColor;
@@ -3620,7 +3620,7 @@ static void hb_gt_xwc_RepaintChar(PXWND_DEF wnd, int colStart, int rowStart, int
         attr = 0;
         usCh16 = ' ';
       } else {
-        color = static_cast<HB_BYTE>(iColor);
+        color = static_cast<uint8_t>(iColor);
         if (wnd->fMarkMode && irow >= wnd->markTop && irow <= wnd->markBottom && icol >= wnd->markLeft &&
             icol <= wnd->markRight) {
           color = (color << 4) | (color >> 4);
@@ -3880,7 +3880,7 @@ static void hb_gt_xwc_UpdateCursor(PXWND_DEF wnd)
       }
       if (size) {
         int color;
-        HB_BYTE attr;
+        uint8_t attr;
         uint16_t usChar;
 
         HB_GTSELF_GETSCRCHAR(wnd->pGT, wnd->row, wnd->col, &color, &attr, &usChar);
@@ -5807,7 +5807,7 @@ static void hb_gt_xwc_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
       else if( !wnd->fData ) {
          int iDefColor = HB_GTSELF_GETCOLOR(pGT);
          int iColor;
-         HB_BYTE bAttr;
+         uint8_t bAttr;
          uint16_t usChar;
 
          while( iSize-- ) {

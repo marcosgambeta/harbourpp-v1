@@ -95,9 +95,9 @@
   do                                                                                                                   \
   {                                                                                                                    \
     SLsmg_Char_Type *outTab = ((attr) & HB_GT_ATTR_BOX) ? s_outboxTab : s_outputTab;                                   \
-    (slch).color = outTab[(HB_BYTE)(ch)].color | s_colorTab[(HB_BYTE)(clr)];                                           \
+    (slch).color = outTab[(uint8_t)(ch)].color | s_colorTab[(uint8_t)(clr)];                                           \
     (slch).nchars = 1;                                                                                                 \
-    (slch).wchars[0] = outTab[(HB_BYTE)(ch)].wchars[0];                                                                \
+    (slch).wchars[0] = outTab[(uint8_t)(ch)].wchars[0];                                                                \
   } while (false)
 
 #define HB_SLN_BUILD_RAWCHAR(slch, ch, attr)                                                                           \
@@ -144,7 +144,7 @@ using SLsmg_Char_Type = unsigned short;
 #define HB_SLN_BUILD_CHAR(slch, ch, clr, attr)                                                                         \
   do                                                                                                                   \
   {                                                                                                                    \
-    (slch) = (((attr) & HB_GT_ATTR_BOX) ? s_outboxTab : s_outputTab)[(HB_BYTE)(ch)] | s_colorTab[(HB_BYTE)(clr)];      \
+    (slch) = (((attr) & HB_GT_ATTR_BOX) ? s_outboxTab : s_outputTab)[(uint8_t)(ch)] | s_colorTab[(uint8_t)(clr)];      \
   } while (false)
 
 #define HB_SLN_BUILD_RAWCHAR(slch, ch, attr)                                                                           \

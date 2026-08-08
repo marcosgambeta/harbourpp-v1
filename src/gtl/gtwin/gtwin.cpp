@@ -437,7 +437,7 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
 
 #if !defined(UNICODE)
   PHB_CODEPAGE cdp;
-  HB_BYTE bxAttr;
+  uint8_t bxAttr;
 #endif
 
 #if !defined(UNICODE)
@@ -2029,7 +2029,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
   if (iSize > 0 && s_pCharInfoScreen && iRow < static_cast<int>(_GetScreenHeight()) &&
       iCol < static_cast<int>(_GetScreenWidth())) {
     int iColor;
-    HB_BYTE bAttr;
+    uint8_t bAttr;
     int iFirst = iCol;
     int i = (iRow * _GetScreenWidth() + iCol);
 

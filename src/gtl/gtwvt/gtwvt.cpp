@@ -2115,7 +2115,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
         for (n = 0, row = rect.top; row <= rect.bottom; row++) {
           for (col = rect.left; col <= rect.right; col++) {
             int iColor;
-            HB_BYTE bAttr;
+            uint8_t bAttr;
             uint16_t usChar;
 
             if (!HB_GTSELF_GETSCRCHAR(pWVT->pGT, row, col, &iColor, &bAttr, &usChar)) {
@@ -2634,7 +2634,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT)
 {
   int iRow;
   int iColor, iOldColor = 0;
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   bool fFixMetric = (pWVT->fontAttribute & HB_GTI_FONTA_FIXMETRIC) != 0;
 
 #if !defined(UNICODE)

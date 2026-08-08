@@ -3657,7 +3657,7 @@ static void hb_gt_trm_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
 #endif
 
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
   int iLen = 0;
   int iChars = 0;

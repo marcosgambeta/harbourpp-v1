@@ -428,7 +428,7 @@ static void hb_gt_pca_AnsiPutStr(int iRow, int iCol, int iColor, const char *szS
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiPutStr(%d,%d,%d,%p,%d)", iRow, iCol, iColor, static_cast<const void*>(szStr), iLen));
 #endif
 
-  hb_gt_pca_AnsiSetAttributes(static_cast<HB_BYTE>(iColor));
+  hb_gt_pca_AnsiSetAttributes(static_cast<uint8_t>(iColor));
   hb_gt_pca_AnsiSetCursorPos(iRow, iCol);
   hb_gt_pca_AnsiSetAutoMargin(0);
   hb_gt_pca_termOut(szStr, iLen);
@@ -584,7 +584,7 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 
 #if defined(HB_HAS_TERMIOS)
   if (hb_fsCanRead(s_hFilenoStdin, 0) > 0) {
-    HB_BYTE bChar;
+    uint8_t bChar;
     if (hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1) {
       ch = bChar;
     }
@@ -604,7 +604,7 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
       ch = hb_gt_dos_keyCodeTranslate(ch, 0, HB_GTSELF_CPIN(pGT));
     }
   } else if (!_eof(static_cast<int>(s_hFilenoStdin))) {
-    HB_BYTE bChar;
+    uint8_t bChar;
     if (_read(static_cast<int>(s_hFilenoStdin), &bChar, 1) == 1) {
       ch = bChar;
     }
@@ -612,7 +612,7 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 #elif defined(HB_OS_WIN)
   if (!s_bStdinConsole ||
       WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000) {
-    HB_BYTE bChar;
+    uint8_t bChar;
     if (hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1) {
       ch = bChar;
     }
@@ -742,7 +742,7 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 #endif
 
   int iColor;
-  HB_BYTE bAttr;
+  uint8_t bAttr;
   uint16_t usChar;
   int iLen = 0, iColor2 = 0;
 
