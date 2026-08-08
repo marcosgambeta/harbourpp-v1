@@ -114,7 +114,7 @@ void *hb_xgrab(HB_SIZE nSize) /* allocates fixed memory, exits on failure */
     s_pMemBlocks = static_cast<PHB_MEMINFO>(pMem);
     (static_cast<PHB_MEMINFO>(pMem))->nSize = nSize;
     (static_cast<PHB_MEMINFO>(pMem))->Signature = HB_MEMINFO_SIGNATURE;
-    HB_PUT_LE_UINT32((static_cast<HB_BYTE *>(pMem)) + HB_MEMINFO_SIZE + nSize, HB_MEMINFO_SIGNATURE);
+    HB_PUT_LE_UINT32((static_cast<uint8_t *>(pMem)) + HB_MEMINFO_SIZE + nSize, HB_MEMINFO_SIGNATURE);
 
     s_nMemoryConsumed += nSize;
     if (s_nMemoryMaxConsumed < s_nMemoryConsumed) {
@@ -124,7 +124,7 @@ void *hb_xgrab(HB_SIZE nSize) /* allocates fixed memory, exits on failure */
     if (s_nMemoryMaxBlocks < s_nMemoryBlocks) {
       s_nMemoryMaxBlocks = s_nMemoryBlocks;
     }
-    pMem = static_cast<HB_BYTE *>(pMem) + HB_MEMINFO_SIZE;
+    pMem = static_cast<uint8_t *>(pMem) + HB_MEMINFO_SIZE;
   } else
 #else
   pMem = malloc(nSize);
@@ -153,18 +153,18 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
     return hb_xgrab(nSize);
   }
 
-  pMemBlock = static_cast<PHB_MEMINFO>((static_cast<HB_BYTE *>(pMem) - HB_MEMINFO_SIZE));
+  pMemBlock = static_cast<PHB_MEMINFO>((static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE));
   nMemSize = pMemBlock->nSize;
 
   if (pMemBlock->Signature != HB_MEMINFO_SIGNATURE) {
     hb_errInternal(HB_EI_XREALLOCINV, "hb_xrealloc called with an invalid pointer", nullptr, nullptr);
   }
 
-  if (HB_GET_LE_UINT32((static_cast<HB_BYTE *>(pMem)) + nMemSize) != HB_MEMINFO_SIGNATURE) {
+  if (HB_GET_LE_UINT32((static_cast<uint8_t *>(pMem)) + nMemSize) != HB_MEMINFO_SIGNATURE) {
     hb_errInternal(HB_EI_XMEMOVERFLOW, "Memory buffer overflow", nullptr, nullptr);
   }
 
-  HB_PUT_LE_UINT32((static_cast<HB_BYTE *>(pMem)) + nMemSize, 0);
+  HB_PUT_LE_UINT32((static_cast<uint8_t *>(pMem)) + nMemSize, 0);
 
   pResult = realloc(pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
   if (pResult) {
@@ -184,8 +184,8 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
     }
 
     (static_cast<PHB_MEMINFO>(pResult))->nSize = nSize; /* size of the memory block */
-    HB_PUT_LE_UINT32((static_cast<HB_BYTE *>(pResult)) + nSize + HB_MEMINFO_SIZE, HB_MEMINFO_SIGNATURE);
-    pResult = static_cast<HB_BYTE *>(pResult) + HB_MEMINFO_SIZE;
+    HB_PUT_LE_UINT32((static_cast<uint8_t *>(pResult)) + nSize + HB_MEMINFO_SIZE, HB_MEMINFO_SIGNATURE);
+    pResult = static_cast<uint8_t *>(pResult) + HB_MEMINFO_SIZE;
   }
 #else
   void *pResult = realloc(pMem, nSize);
@@ -202,13 +202,13 @@ void hb_xfree(void *pMem) /* frees fixed memory */
 {
   if (pMem) {
 #ifdef HB_FM_STATISTICS
-    PHB_MEMINFO pMemBlock = static_cast<PHB_MEMINFO>((static_cast<HB_BYTE *>(pMem) - HB_MEMINFO_SIZE));
+    PHB_MEMINFO pMemBlock = static_cast<PHB_MEMINFO>((static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE));
 
     if (pMemBlock->Signature != HB_MEMINFO_SIGNATURE) {
       hb_errInternal(HB_EI_XFREEINV, "hb_xfree called with an invalid pointer", nullptr, nullptr);
     }
 
-    if (HB_GET_LE_UINT32((static_cast<HB_BYTE *>(pMem)) + pMemBlock->nSize) != HB_MEMINFO_SIGNATURE) {
+    if (HB_GET_LE_UINT32((static_cast<uint8_t *>(pMem)) + pMemBlock->nSize) != HB_MEMINFO_SIGNATURE) {
       hb_errInternal(HB_EI_XMEMOVERFLOW, "Memory buffer overflow", nullptr, nullptr);
     }
 
@@ -225,8 +225,8 @@ void hb_xfree(void *pMem) /* frees fixed memory */
     }
 
     pMemBlock->Signature = 0;
-    HB_PUT_LE_UINT32((static_cast<HB_BYTE *>(pMem)) + pMemBlock->nSize, 0);
-    pMem = static_cast<HB_BYTE *>(pMem) - HB_MEMINFO_SIZE;
+    HB_PUT_LE_UINT32((static_cast<uint8_t *>(pMem)) + pMemBlock->nSize, 0);
+    pMem = static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE;
 #endif
     free(pMem);
   } else {
@@ -261,7 +261,7 @@ HB_SIZE hb_xquery(int iMode)
 #ifdef HB_FM_STATISTICS
 static char *hb_memToStr(char *szBuffer, void *pMem, HB_SIZE nSize)
 {
-  unsigned char *byMem = static_cast<HB_BYTE *>(pMem);
+  unsigned char *byMem = static_cast<uint8_t *>(pMem);
   char *pDest = szBuffer;
   int iSize, iPrintable;
 
