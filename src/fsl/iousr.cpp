@@ -274,8 +274,8 @@ static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char *pszFileName, lon
 
   s_pushMethod(pIO, IOUSR_TIMEGET);
   hb_vmPushString(pszFileName, strlen(pszFileName));
-  hb_xvmPushLocalByRef(static_cast<HB_SHORT>(iOffset));
-  hb_xvmPushLocalByRef(static_cast<HB_SHORT>(iOffset + 1));
+  hb_xvmPushLocalByRef(static_cast<int16_t>(iOffset));
+  hb_xvmPushLocalByRef(static_cast<int16_t>(iOffset + 1));
   hb_vmDo(3);
 
   bool fResult = hb_parl(-1);
@@ -309,7 +309,7 @@ static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char *pszFileName, HB_
 
   s_pushMethod(pIO, IOUSR_ATTRGET);
   hb_vmPushString(pszFileName, strlen(pszFileName));
-  hb_xvmPushLocalByRef(static_cast<HB_SHORT>(iOffset));
+  hb_xvmPushLocalByRef(static_cast<int16_t>(iOffset));
   hb_vmDo(2);
 
   bool fResult = hb_parl(-1);
@@ -438,7 +438,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void *data, HB_SIZE nSize, HB_MAXINT t
 
   s_pushMethod(pIO, IOUSR_READ);
   hb_vmPush(pFile->pFileItm);
-  hb_xvmPushLocalByRef(static_cast<HB_SHORT>(iOffset));
+  hb_xvmPushLocalByRef(static_cast<int16_t>(iOffset));
   hb_vmPushSize(nSize);
   hb_vmPushNumInt(timeout);
   hb_vmDo(4);
@@ -478,7 +478,7 @@ static HB_SIZE s_fileReadAt(PHB_FILE pFile, void *buffer, HB_SIZE nSize, HB_FOFF
 
   s_pushMethod(pIO, IOUSR_READAT);
   hb_vmPush(pFile->pFileItm);
-  hb_xvmPushLocalByRef(static_cast<HB_SHORT>(iOffset));
+  hb_xvmPushLocalByRef(static_cast<int16_t>(iOffset));
   hb_vmPushSize(nSize);
   hb_vmPushNumInt(static_cast<HB_MAXINT>(nOffset));
   hb_vmDo(4);
