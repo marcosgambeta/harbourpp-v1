@@ -134,7 +134,7 @@ HB_FUNC(SX_MAKESEM)
     PHB_FILE pFile = hb_sxSemOpen(szFileName, &fNewFile);
 
     if (pFile != nullptr) {
-      HB_BYTE buffer[2];
+      uint8_t buffer[2];
 
       if (fNewFile) {
         iUsers = 1;
@@ -169,7 +169,7 @@ HB_FUNC(SX_KILLSEM)
     PHB_FILE pFile = hb_sxSemOpen(szFileName, nullptr);
 
     if (pFile != nullptr) {
-      HB_BYTE buffer[2];
+      uint8_t buffer[2];
       if (hb_fileReadAt(pFile, buffer, 2, 0) == 2) {
         iUsers = HB_GET_LE_INT16(buffer) - 1;
         HB_PUT_LE_UINT16(buffer, iUsers);

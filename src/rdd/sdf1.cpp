@@ -82,7 +82,7 @@ static void hb_sdfInitArea(SDFAREAP pArea, char *szFileName)
                     (pArea->uiEolLen == 2 && szEol[0] != szEol[1] && (szEol[1] == '\n' || szEol[1] == '\r')));
 
   // allocate record buffer, one additional byte is for deleted flag
-  pArea->pRecord = static_cast<HB_BYTE *>(hb_xgrab(pArea->uiRecordLen + pArea->uiEolLen + 1));
+  pArea->pRecord = static_cast<uint8_t *>(hb_xgrab(pArea->uiRecordLen + pArea->uiEolLen + 1));
   // pseudo deleted flag
   *pArea->pRecord++ = ' ';
   memcpy(pArea->pRecord + pArea->uiRecordLen, pArea->szEol, pArea->uiEolLen);
@@ -93,7 +93,7 @@ static void hb_sdfInitArea(SDFAREAP pArea, char *szFileName)
     if (pArea->nBufferSize < 8192) {
       pArea->nBufferSize = 8192;
     }
-    pArea->pBuffer = static_cast<HB_BYTE *>(hb_xgrab(pArea->nBufferSize));
+    pArea->pBuffer = static_cast<uint8_t *>(hb_xgrab(pArea->nBufferSize));
   }
   pArea->ulRecCount = 0;
   pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;
@@ -442,7 +442,7 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
 
   case Harbour::DB::Field::TIMESTAMP: {
     long lJulian, lMilliSec;
-    HB_BYTE *pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
+    uint8_t *pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
 
     bChar = pFieldPtr[pField->uiLen];
     pFieldPtr[pField->uiLen] = 0;
@@ -597,7 +597,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
 }
 
 // Replace the current record.
-static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, HB_BYTE *pBuffer)
+static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, uint8_t *pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
@@ -618,7 +618,7 @@ static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, HB_BYTE *pBuffer)
 }
 
 // Retrieve current record buffer
-static HB_ERRCODE hb_sdfGetRec(SDFAREAP pArea, HB_BYTE **pBufferPtr)
+static HB_ERRCODE hb_sdfGetRec(SDFAREAP pArea, uint8_t **pBufferPtr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBufferPtr)));

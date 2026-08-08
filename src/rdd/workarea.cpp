@@ -1265,7 +1265,7 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
 #endif
 
   HB_BOOL bDeleted;
-  HB_BYTE *pRecord;
+  uint8_t *pRecord;
   HB_ERRCODE errCode;
 
   if (pTransInfo->uiFlags & DBTF_MATCH && pTransInfo->uiFlags & DBTF_PUTREC) {

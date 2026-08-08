@@ -535,7 +535,7 @@ static LPKEYINFO hb_nsxKeyCopy(LPKEYINFO pKeyDest, LPKEYINFO pKey, int keylen)
 /*
  * get NSX key type for given item
  */
-static HB_BYTE hb_nsxItemType(PHB_ITEM pItem)
+static uint8_t hb_nsxItemType(PHB_ITEM pItem)
 {
   switch (hb_itemType(pItem)) {
   case Harbour::Item::STRING:
@@ -564,7 +564,7 @@ static HB_BYTE hb_nsxItemType(PHB_ITEM pItem)
 /*
  * convert NSX (Clipper) type of key expression to internal one
  */
-static HB_UCHAR hb_nsxKeyType(uint16_t uiType, HB_BYTE *pbTrail)
+static HB_UCHAR hb_nsxKeyType(uint16_t uiType, uint8_t *pbTrail)
 {
   switch (uiType) {
   case NSX_TYPE_LNUM:
@@ -1593,7 +1593,7 @@ static bool hb_nsxIsTemplateFunc(const char *szKeyExpr)
  * create the new tag structure
  */
 static LPTAGINFO hb_nsxTagNew(LPNSXINDEX pIndex, const char *szTagName, const char *szKeyExpr, PHB_ITEM pKeyExpr,
-                              HB_UCHAR ucKeyType, uint16_t uiKeyLen, HB_BYTE bTrail, const char *szForExpr,
+                              HB_UCHAR ucKeyType, uint16_t uiKeyLen, uint8_t bTrail, const char *szForExpr,
                               PHB_ITEM pForExpr, bool fAscendKey, bool fUnique, bool fCustom)
 {
   auto pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
@@ -1940,7 +1940,7 @@ static HB_ERRCODE hb_nsxIndexHeaderSave(LPNSXINDEX pIndex)
  */
 static HB_ERRCODE hb_nsxIndexLoad(LPNSXINDEX pIndex)
 {
-  HB_BYTE signature;
+  uint8_t signature;
 
   if (!pIndex->fValidHeader) {
     if (!hb_nsxBlockRead(pIndex, 0, &pIndex->HeaderBuff, NSX_PAGELEN)) {
@@ -3467,7 +3467,7 @@ static bool hb_nsxCurKeyRefresh(LPTAGINFO pTag)
     return false;
   } else if (pTag->stackLevel == 0 || pTag->CurKeyInfo->rec != pArea->dbfarea.ulRecNo) {
     bool fValidBuf = pArea->dbfarea.fValidBuffer;
-    HB_BYTE buf[NSX_MAXKEYLEN];
+    uint8_t buf[NSX_MAXKEYLEN];
     auto fBuf = false;
     LPKEYINFO pKey = nullptr;
     /* Try to find previous if it's key for the same record */
@@ -4638,7 +4638,7 @@ static HB_ULONG hb_nsxOrdScopeEval(LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void
   if (hb_nsxTagLockRead(pTag)) {
     hb_nsxTagGoTop(pTag);
     while (!pTag->TagEOF) {
-      pFunc(pTag->CurKeyInfo->rec, static_cast<HB_BYTE *>(pTag->CurKeyInfo->val), ulLen, pParam);
+      pFunc(pTag->CurKeyInfo->rec, static_cast<uint8_t *>(pTag->CurKeyInfo->val), ulLen, pParam);
       ulCount++;
       hb_nsxTagSkipNext(pTag);
     }
@@ -5410,7 +5410,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
     HB_ULONG ulStartRec = 0, ulNextCount = 0;
     auto fDirectRead = false;
     auto fUseFilter = false;
-    HB_BYTE *pSaveRecBuff = pArea->dbfarea.pRecord;
+    uint8_t *pSaveRecBuff = pArea->dbfarea.pRecord;
     char szBuffer[NSX_MAXKEYLEN];
     int iRecBuff = 0, iRecBufSize, iRec;
     double d;
@@ -6133,7 +6133,7 @@ static HB_ERRCODE hb_nsxOpen(NSXAREAP pArea, LPDBOPENINFO pOpenInfo)
       hb_itemRelease(pItem);
       return errCode;
     }
-    pArea->dbfarea.bLockType = static_cast<HB_BYTE>(pItem->getNI());
+    pArea->dbfarea.bLockType = static_cast<uint8_t>(pItem->getNI());
     hb_itemRelease(pItem);
     if (pArea->dbfarea.bLockType == 0) {
       pArea->dbfarea.bLockType = DB_DBFLOCK_CLIPPER;
@@ -6225,7 +6225,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   auto fCustom = false;
   auto fTemporary = false;
   auto fExclusive = false;
-  HB_BYTE bType, bTrail;
+  uint8_t bType, bTrail;
 
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
   if (errCode != Harbour::SUCCESS) {

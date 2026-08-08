@@ -164,14 +164,14 @@
 struct _HB_LZSSX_COMPR
 {
   PHB_FILE pInput;
-  HB_BYTE *inBuffer;
+  uint8_t *inBuffer;
   HB_SIZE inBuffSize;
   HB_SIZE inBuffPos;
   HB_SIZE inBuffRead;
   HB_BOOL fInFree;
 
   PHB_FILE pOutput;
-  HB_BYTE *outBuffer;
+  uint8_t *outBuffer;
   HB_SIZE outBuffSize;
   HB_SIZE outBuffPos;
   HB_BOOL fOutFree;
@@ -203,8 +203,8 @@ static void hb_LZSSxExit(PHB_LZSSX_COMPR pCompr)
   hb_xfree(pCompr);
 }
 
-static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const HB_BYTE *pSrcBuf, HB_SIZE nSrcBuf, PHB_FILE pOutput,
-                                    HB_BYTE *pDstBuf, HB_SIZE nDstBuf)
+static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const uint8_t *pSrcBuf, HB_SIZE nSrcBuf, PHB_FILE pOutput,
+                                    uint8_t *pDstBuf, HB_SIZE nDstBuf)
 {
   auto pCompr = static_cast<PHB_LZSSX_COMPR>(hb_xgrab(sizeof(HB_LZSSX_COMPR)));
 
@@ -216,7 +216,7 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const HB_BYTE *pSrcBuf, HB_
   }
 
   pCompr->pInput = pInput;
-  pCompr->inBuffer = const_cast<HB_BYTE *>(pSrcBuf);
+  pCompr->inBuffer = const_cast<uint8_t *>(pSrcBuf);
   pCompr->inBuffSize = nSrcBuf;
   pCompr->inBuffPos = 0;
   pCompr->inBuffRead = (pInput == nullptr) ? nSrcBuf : 0;
@@ -232,10 +232,10 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const HB_BYTE *pSrcBuf, HB_
   pCompr->fContinue = false;
 
   if (pCompr->fInFree) {
-    pCompr->inBuffer = static_cast<HB_BYTE *>(hb_xgrab(nDstBuf));
+    pCompr->inBuffer = static_cast<uint8_t *>(hb_xgrab(nDstBuf));
   }
   if (pCompr->fOutFree) {
-    pCompr->outBuffer = static_cast<HB_BYTE *>(hb_xgrab(nDstBuf));
+    pCompr->outBuffer = static_cast<uint8_t *>(hb_xgrab(nDstBuf));
   }
 
   /* initialize the ring buffer with spaces, because SIX uses
@@ -542,8 +542,8 @@ HB_BOOL hb_LZSSxCompressMem(const char *pSrcBuf, HB_SIZE nSrcLen, char *pDstBuf,
   PHB_LZSSX_COMPR pCompr;
   HB_SIZE nSize;
 
-  pCompr = hb_LZSSxInit(nullptr, reinterpret_cast<const HB_BYTE *>(pSrcBuf), nSrcLen, nullptr,
-                        reinterpret_cast<HB_BYTE *>(pDstBuf), nDstLen);
+  pCompr = hb_LZSSxInit(nullptr, reinterpret_cast<const uint8_t *>(pSrcBuf), nSrcLen, nullptr,
+                        reinterpret_cast<uint8_t *>(pDstBuf), nDstLen);
   nSize = hb_LZSSxEncode(pCompr);
   hb_LZSSxExit(pCompr);
   if (pnSize) {
@@ -557,8 +557,8 @@ HB_BOOL hb_LZSSxDecompressMem(const char *pSrcBuf, HB_SIZE nSrcLen, char *pDstBu
   PHB_LZSSX_COMPR pCompr;
   HB_BOOL fResult;
 
-  pCompr = hb_LZSSxInit(nullptr, reinterpret_cast<const HB_BYTE *>(pSrcBuf), nSrcLen, nullptr,
-                        reinterpret_cast<HB_BYTE *>(pDstBuf), nDstLen);
+  pCompr = hb_LZSSxInit(nullptr, reinterpret_cast<const uint8_t *>(pSrcBuf), nSrcLen, nullptr,
+                        reinterpret_cast<uint8_t *>(pDstBuf), nDstLen);
   fResult = hb_LZSSxDecode(pCompr);
   hb_LZSSxExit(pCompr);
   return fResult;
@@ -608,7 +608,7 @@ HB_FUNC(SX_FCOMPRESS)
          */
         HB_SIZE nSize = static_cast<HB_SIZE>(hb_fileSize(pInput));
         if (hb_fileSeek(pInput, 0, FS_SET) == 0) {
-          HB_BYTE buf[4];
+          uint8_t buf[4];
           HB_PUT_LE_UINT32(buf, nSize);
           if (hb_fileWrite(pOutput, buf, 4, -1) == 4) {
             fRet = hb_LZSSxCompressFile(pInput, pOutput, nullptr);

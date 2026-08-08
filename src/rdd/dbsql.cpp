@@ -61,7 +61,7 @@
 struct _HB_FILEBUF
 {
   PHB_FILE pFile;
-  HB_BYTE *pBuf;
+  uint8_t *pBuf;
   HB_SIZE nSize;
   HB_SIZE nPos;
 };
@@ -82,7 +82,7 @@ static void hb_addToFBuffer(PHB_FILEBUF pFileBuf, char ch)
   if (pFileBuf->nPos == pFileBuf->nSize) {
     hb_flushFBuffer(pFileBuf);
   }
-  pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(ch);
+  pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<uint8_t>(ch);
 }
 
 static void hb_addStrnToFBuffer(PHB_FILEBUF pFileBuf, const char *str, HB_SIZE nSize)
@@ -93,7 +93,7 @@ static void hb_addStrnToFBuffer(PHB_FILEBUF pFileBuf, const char *str, HB_SIZE n
     if (pFileBuf->nPos == pFileBuf->nSize) {
       hb_flushFBuffer(pFileBuf);
     }
-    pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(str[nPos++]);
+    pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<uint8_t>(str[nPos++]);
   }
 }
 
@@ -103,7 +103,7 @@ static void hb_addStrToFBuffer(PHB_FILEBUF pFileBuf, const char *szStr)
     if (pFileBuf->nPos == pFileBuf->nSize) {
       hb_flushFBuffer(pFileBuf);
     }
-    pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(*szStr++);
+    pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<uint8_t>(*szStr++);
   }
 }
 
@@ -121,7 +121,7 @@ static PHB_FILEBUF hb_createFBuffer(PHB_FILE pFile, HB_SIZE nSize)
   auto pFileBuf = static_cast<PHB_FILEBUF>(hb_xgrab(sizeof(HB_FILEBUF)));
 
   pFileBuf->pFile = pFile;
-  pFileBuf->pBuf = static_cast<HB_BYTE *>(hb_xgrab(nSize));
+  pFileBuf->pBuf = static_cast<uint8_t *>(hb_xgrab(nSize));
   pFileBuf->nSize = nSize;
   pFileBuf->nPos = 0;
   return pFileBuf;

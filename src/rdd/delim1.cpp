@@ -83,7 +83,7 @@ static void hb_delimInitArea(DELIMAREAP pArea, char *szFileName)
                     (pArea->uiEolLen == 2 && szEol[0] != szEol[1] && (szEol[1] == '\n' || szEol[1] == '\r')));
 
   // allocate record buffer, one additional byte is for deleted flag
-  pArea->pRecord = static_cast<HB_BYTE *>(hb_xgrab(pArea->uiRecordLen + 1));
+  pArea->pRecord = static_cast<uint8_t *>(hb_xgrab(pArea->uiRecordLen + 1));
   // pseudo deleted flag
   *pArea->pRecord++ = ' ';
 
@@ -92,7 +92,7 @@ static void hb_delimInitArea(DELIMAREAP pArea, char *szFileName)
   if (pArea->fReadonly && pArea->nBufferSize < 8192) {
     pArea->nBufferSize = 8192;
   }
-  pArea->pBuffer = static_cast<HB_BYTE *>(hb_xgrab(pArea->nBufferSize));
+  pArea->pBuffer = static_cast<uint8_t *>(hb_xgrab(pArea->nBufferSize));
 
   pArea->ulRecCount = 0;
   pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;
@@ -120,7 +120,7 @@ static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
 {
   HB_ERRCODE errCode = Harbour::SUCCESS;
   const char *pszFieldName;
-  HB_BYTE *pBuffer;
+  uint8_t *pBuffer;
   HB_SIZE nSize, nS;
   uint16_t uiCount;
 
@@ -134,7 +134,7 @@ static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
   if (nSize > 0) {
     nSize += pArea->uiEolLen - 1;
     if (nSize > pArea->nBufferSize) {
-      pBuffer = static_cast<HB_BYTE *>(hb_xgrab(nSize));
+      pBuffer = static_cast<uint8_t *>(hb_xgrab(nSize));
     }
 
     nSize = 0;
@@ -173,7 +173,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
   HB_SIZE nSize;
   uint16_t uiLen;
   LPFIELD pField;
-  HB_BYTE *pBuffer;
+  uint8_t *pBuffer;
 
   // mark the read buffer as empty
   pArea->nBufferRead = pArea->nBufferIndex = 0;
@@ -181,7 +181,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
   pBuffer = pArea->pBuffer;
   nSize = 0;
   for (uint16_t uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField) {
-    HB_BYTE *pFieldBuf;
+    uint8_t *pFieldBuf;
     pField = pArea->area.lpFields + uiField;
     pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField];
     if (nSize) {
@@ -330,7 +330,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
         uiType == Harbour::DB::Field::DATE || uiType == Harbour::DB::Field::TIMESTAMP ||
         uiType == Harbour::DB::Field::LONG) {
       uint16_t uiLen = pField->uiLen, uiSize = 0;
-      HB_BYTE *pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField], buffer[256];
+      uint8_t *pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField], buffer[256];
       char cStop;
 
       ch = hb_delimNextChar(pArea);
@@ -358,14 +358,14 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
           (pField->uiType == Harbour::DB::Field::TIMESTAMP && cStop == pArea->cDelim)) {
         while (ch >= 0 && ch != cStop) {
           if (uiSize < uiLen) {
-            pFieldBuf[uiSize++] = static_cast<HB_BYTE>(ch);
+            pFieldBuf[uiSize++] = static_cast<uint8_t>(ch);
           }
           ch = hb_delimNextChar(pArea);
         }
       } else {
         while (ch >= 0 && ch != cStop && uiSize < uiLen) {
           if (uiSize < sizeof(buffer) - 1) {
-            buffer[uiSize++] = static_cast<HB_BYTE>(ch);
+            buffer[uiSize++] = static_cast<uint8_t>(ch);
           }
           ch = hb_delimNextChar(pArea);
         }
@@ -689,7 +689,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM 
 
   case Harbour::DB::Field::TIMESTAMP: {
     long lJulian, lMilliSec;
-    HB_BYTE *pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
+    uint8_t *pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
 
     bChar = pFieldPtr[pField->uiLen];
     pFieldPtr[pField->uiLen] = 0;
@@ -843,7 +843,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM 
 }
 
 // Replace the current record.
-static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, HB_BYTE *pBuffer)
+static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, uint8_t *pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
@@ -864,7 +864,7 @@ static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, HB_BYTE *pBuffer)
 }
 
 // Retrieve current record buffer
-static HB_ERRCODE hb_delimGetRec(DELIMAREAP pArea, HB_BYTE **pBufferPtr)
+static HB_ERRCODE hb_delimGetRec(DELIMAREAP pArea, uint8_t **pBufferPtr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBufferPtr)));

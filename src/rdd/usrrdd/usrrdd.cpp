@@ -62,7 +62,7 @@
 #include "hbusrrdd.ch"
 
 #define SELF_USRNODE(w) (s_pUsrRddNodes[(w)->rddID])
-#define SELF_USRDATA(w) (reinterpret_cast<LPUSRRDDDATA>(reinterpret_cast<HB_BYTE *>(w) + SELF_USRNODE(w)->uiDataOffset))
+#define SELF_USRDATA(w) (reinterpret_cast<LPUSRRDDDATA>(reinterpret_cast<uint8_t *>(w) + SELF_USRNODE(w)->uiDataOffset))
 
 #undef _SUPERTABLE
 #define _SUPERTABLE(w) (SELF_USRNODE(w)->pSuperTable)
@@ -1366,7 +1366,7 @@ static HB_ERRCODE hb_usrGoHot(AREAP pArea)
   return hb_usrReturn();
 }
 
-static HB_ERRCODE hb_usrPutRec(AREAP pArea, const HB_BYTE *pBuffer)
+static HB_ERRCODE hb_usrPutRec(AREAP pArea, const uint8_t *pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_usrPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<const void*>(pBuffer)));
@@ -1383,7 +1383,7 @@ static HB_ERRCODE hb_usrPutRec(AREAP pArea, const HB_BYTE *pBuffer)
   return hb_usrReturn();
 }
 
-static HB_ERRCODE hb_usrGetRec(AREAP pArea, HB_BYTE **pBuffer)
+static HB_ERRCODE hb_usrGetRec(AREAP pArea, uint8_t **pBuffer)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_usrGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
@@ -1402,9 +1402,9 @@ static HB_ERRCODE hb_usrGetRec(AREAP pArea, HB_BYTE **pBuffer)
 
   auto pItem = hb_stackItemFromBase(nOffset);
   if (pItem->isString()) {
-    *pBuffer = reinterpret_cast<HB_BYTE *>(const_cast<char *>(pItem->getCPtr()));
+    *pBuffer = reinterpret_cast<uint8_t *>(const_cast<char *>(pItem->getCPtr()));
   } else {
-    *pBuffer = static_cast<HB_BYTE *>(pItem->getPtr());
+    *pBuffer = static_cast<uint8_t *>(pItem->getPtr());
   }
   hb_stackPop();
 
@@ -3589,9 +3589,9 @@ HB_FUNC_UR_SUPER(PUTREC)
 
   if (pArea != nullptr) {
     if (HB_ISPOINTER(2)) {
-      hb_retni(SUPER_PUTREC(pArea, static_cast<const HB_BYTE *>(hb_parptr(2))));
+      hb_retni(SUPER_PUTREC(pArea, static_cast<const uint8_t *>(hb_parptr(2))));
     } else if (HB_ISCHAR(2)) {
-      hb_retni(SUPER_PUTREC(pArea, reinterpret_cast<const HB_BYTE *>(hb_parc(2))));
+      hb_retni(SUPER_PUTREC(pArea, reinterpret_cast<const uint8_t *>(hb_parc(2))));
     } else {
       hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
       hb_retni(Harbour::FAILURE);
@@ -3604,7 +3604,7 @@ HB_FUNC_UR_SUPER(GETREC)
   AREAP pArea = hb_usrGetAreaParam(2);
 
   if (pArea != nullptr) {
-    HB_BYTE *pBuffer;
+    uint8_t *pBuffer;
 
     hb_retni(SUPER_GETREC(pArea, &pBuffer));
     hb_storptr(pBuffer, 2);
