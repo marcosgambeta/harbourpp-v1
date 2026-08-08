@@ -301,7 +301,7 @@ static HB_BOOL s_handle_trace(int n)
     case 2: {
       char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char file[HB_PATH_MAX];
-      HB_USHORT line;
+      uint16_t line;
 
       hb_procinfo(0, procname, &line, file);
 

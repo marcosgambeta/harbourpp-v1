@@ -47,7 +47,7 @@ struct amfContext
 };
 
 static bool amf3_encode(amfContext *context, PHB_ITEM pItem);
-extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
+extern HB_BOOL hbamf_is_cls_externalizable(uint16_t uiClass);
 
 static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
 {
@@ -873,7 +873,7 @@ static int amf3_serialize_class_def(amfContext *context, PHB_ITEM pClass)
 /* Get an object's class def. */
 static PHB_ITEM class_def_from_class(/* amfContext * context, */ PHB_ITEM pItem)
 {
-  HB_USHORT uiClass;
+  uint16_t uiClass;
   PHB_ITEM pClass;
 
   /* get Harbour's class id/handle */
@@ -1339,20 +1339,20 @@ HB_FUNC(AMF3_FROMWA)
   auto pFields = hb_param(3, Harbour::Item::ARRAY);
   HB_ULONG nCount = hb_parnldef(4, 0);
   bool str_rtrim = hb_parldef(5, true);
-  auto nPkg = static_cast<HB_USHORT>(hb_parnidef(6, 0));
+  auto nPkg = static_cast<uint16_t>(hb_parnidef(6, 0));
   amfContext *outer_context = static_cast<amfContext *>(hb_parptr(7));
 
   DBORDERINFO pInfo;
   int iOrd;
-  HB_USHORT uiFields;
+  uint16_t uiFields;
   HB_ULONG uiRecCount = 0;
   HB_ULONG uiRecNo = 0;
   bool bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
   HB_BOOL bEof = false;
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   PHB_ITEM pItem;
-  HB_USHORT uiFieldCopy = 0; /* GCC knows better (warns) */
-  HB_USHORT uiIter;
+  uint16_t uiFieldCopy = 0; /* GCC knows better (warns) */
+  uint16_t uiIter;
   amfContext *context;
   bool bPredictLen = (!pWhile && !pFor);
 
@@ -1453,7 +1453,7 @@ HB_FUNC(AMF3_FROMWA)
 
     if (!bNoFieldPassed)
     {
-      uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
+      uiFieldCopy = static_cast<uint16_t>(hb_arrayLen(pFields));
 
       for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
       {
@@ -1505,7 +1505,7 @@ HB_FUNC(AMF3_FROMWA)
           auto szName = static_cast<char *>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
           pField = hb_itemNew(nullptr);
           szName[0] = '\0';
-          SELF_FIELDNAME(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), szName);
+          SELF_FIELDNAME(pArea, static_cast<uint16_t>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), szName);
           hb_itemPutCPtr(pField, szName);
           hb_arraySet(pFieldNames, uiIter, pField);
           hb_itemRelease(pField);
@@ -1548,7 +1548,7 @@ HB_FUNC(AMF3_FROMWA)
             for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
             {
               SELF_GETVALUE(pArea,
-                            static_cast<HB_USHORT>(
+                            static_cast<uint16_t>(
                                 hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI(pFields, uiIter) */,
                             pItem);
               amf3_encode(context, pItem);
@@ -1578,7 +1578,7 @@ HB_FUNC(AMF3_FROMWA)
           {
             for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
             {
-              SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), pValue);
+              SELF_GETVALUE(pArea, static_cast<uint16_t>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), pValue);
               amf3_serialize_string(context, hb_arrayGetItemPtr(pFieldNames, uiIter));
               amf3_encode(context, pValue);
             }

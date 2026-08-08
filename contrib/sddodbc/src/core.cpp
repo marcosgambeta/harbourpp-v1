@@ -176,12 +176,12 @@ HB_CALL_ON_STARTUP_END(_hb_odbcdd_init_)
 
 /* --- */
 
-static HB_USHORT hb_errRT_ODBCDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+static uint16_t hb_errRT_ODBCDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                                  const char *szOperation, HB_ERRCODE errOsCode)
 {
   auto pError =
       hb_errRT_New(ES_ERROR, "SDDODBC", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
-  HB_USHORT uiAction = hb_errLaunch(pError);
+  uint16_t uiAction = hb_errLaunch(pError);
   hb_itemRelease(pError);
   return uiAction;
 }
@@ -403,7 +403,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
     return Harbour::FAILURE;
   }
 
-  auto uiFields = static_cast<HB_USHORT>(iNameLen);
+  auto uiFields = static_cast<uint16_t>(iNameLen);
   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
   auto pItemEof = hb_itemArrayNew(uiFields);
@@ -415,7 +415,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
 
   errCode = 0;
   bool bError = false;
-  for (HB_USHORT uiIndex = 0; uiIndex < uiFields; uiIndex++) {
+  for (uint16_t uiIndex = 0; uiIndex < uiFields; uiIndex++) {
     SQLTCHAR cName[256];
     SQLSMALLINT iDataType;
     SQLULEN uiSize;
@@ -442,15 +442,15 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
 
     /*
        We do mapping of many SQL types to one Harbour field type here, so, we need store
-       real SQL type in uiTypeExtended. SQL types are signed, so, HB_USHORT type casting
+       real SQL type in uiTypeExtended. SQL types are signed, so, uint16_t type casting
        is a little hackish. We need to remember use this casting also in expressions like
        this:
-          if( pField->uiTypeExtended == static_cast<HB_USHORT>(SQL_BIGINT) )
+          if( pField->uiTypeExtended == static_cast<uint16_t>(SQL_BIGINT) )
        or introduce our own unsigned SQL types.
        [Mindaugas]
      */
-    dbFieldInfo.uiTypeExtended = static_cast<HB_USHORT>(iDataType);
-    dbFieldInfo.uiLen = static_cast<HB_USHORT>(uiSize);
+    dbFieldInfo.uiTypeExtended = static_cast<uint16_t>(iDataType);
+    dbFieldInfo.uiLen = static_cast<uint16_t>(uiSize);
     dbFieldInfo.uiDec = iDec;
     if (iNull == SQL_NULLABLE) {
       dbFieldInfo.uiFlags |= HB_FF_NULLABLE;
@@ -656,7 +656,7 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
   SQLLEN iLen;
   PHB_ITEM pArray, pItem;
   LPFIELD pField;
-  HB_USHORT ui;
+  uint16_t ui;
 
   while (ulRecNo > pArea->ulRecCount && !pArea->fFetched) {
     if (!SQL_SUCCEEDED(SQLFetch(hStmt))) {
@@ -710,7 +710,7 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
       case Harbour::DB::Field::INTEGER:
 #if ODBCVER >= 0x0300
-        if (pField->uiTypeExtended == static_cast<HB_USHORT>(SQL_BIGINT)) {
+        if (pField->uiTypeExtended == static_cast<uint16_t>(SQL_BIGINT)) {
           HB_I64 val = 0;
           /* NOTE: SQL_C_SBIGINT not available before ODBC 3.0 */
           if (SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_SBIGINT, &val, sizeof(val), &iLen))) {

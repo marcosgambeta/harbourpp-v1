@@ -206,7 +206,7 @@ static const MIME_ENTRY s_mimeTable[] =
 typedef struct tag_mime_ext
 {
    const char * pattern;   /* Extension to match */
-   HB_USHORT    flags;     /* flags for confrontation */
+   uint16_t    flags;     /* flags for confrontation */
    const char * mime_type; /* MIME type if complete */
 } EXT_MIME_ENTRY;
 

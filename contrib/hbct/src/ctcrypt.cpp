@@ -63,17 +63,17 @@ HB_FUNC(CRYPT)
 
     auto pbyResult = static_cast<HB_BYTE *>(hb_xgrab(nStringLen + 1));
 
-    HB_USHORT uiCount2 =
-        ((static_cast<HB_USHORT>(pbyCrypt[nCryptPos] + static_cast<HB_USHORT>(pbyCrypt[nCryptPos + 1] * 256))) &
+    uint16_t uiCount2 =
+        ((static_cast<uint16_t>(pbyCrypt[nCryptPos] + static_cast<uint16_t>(pbyCrypt[nCryptPos + 1] * 256))) &
          0xFFFF) ^
-        (static_cast<HB_USHORT>(nCryptLen) & 0xFFFF);
-    HB_USHORT uiCount1 = 0xAAAA;
+        (static_cast<uint16_t>(nCryptLen) & 0xFFFF);
+    uint16_t uiCount1 = 0xAAAA;
 
     for (HB_SIZE nStringPos = 0; nStringPos < nStringLen;) {
-      HB_USHORT uiTmpCount1 = uiCount1;
-      HB_USHORT uiTmpCount2 = uiCount2;
+      uint16_t uiTmpCount1 = uiCount1;
+      uint16_t uiTmpCount2 = uiCount2;
       HB_BYTE byte = pbyString[nStringPos] ^ pbyCrypt[nCryptPos++];
-      HB_USHORT tmp;
+      uint16_t tmp;
 
       uiTmpCount2 = HB_MKUSHORT((HB_LOBYTE(uiTmpCount2) ^ HB_HIBYTE(uiTmpCount2)), HB_HIBYTE(uiTmpCount2));
 

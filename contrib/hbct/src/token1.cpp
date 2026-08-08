@@ -356,7 +356,7 @@ static void do_token1(int iSwitch)
       }
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
-        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKEN, nullptr, HB_ERR_FUNCNAME,
+        pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKEN, nullptr, HB_ERR_FUNCNAME,
                                 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
@@ -375,7 +375,7 @@ static void do_token1(int iSwitch)
       int iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
-        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+        pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
                                 iSwitch == DO_TOKEN1_TOKENLOWER ? CT_ERROR_TOKENLOWER : CT_ERROR_TOKENUPPER, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
@@ -395,7 +395,7 @@ static void do_token1(int iSwitch)
       int iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
-        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+        pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
                                 iSwitch == DO_TOKEN1_NUMTOKEN ? CT_ERROR_NUMTOKEN : CT_ERROR_ATTOKEN, nullptr,
                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }

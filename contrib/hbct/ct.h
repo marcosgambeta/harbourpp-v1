@@ -95,11 +95,11 @@ extern void ct_charop( int iMode );
 extern HB_BOOL ct_numParam( int iParam, HB_MAXINT * plNum );
 
 // CT subsystem error throwing functions
-extern HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
-                           const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, HB_USHORT uiFlags, HB_ULONG uiArgCount, ... );
+extern uint16_t ct_error( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
+                           const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, uint16_t uiFlags, HB_ULONG uiArgCount, ... );
 
-extern PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
-                                const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, HB_USHORT uiFlags, HB_ULONG uiArgCount, ... );
+extern PHB_ITEM ct_error_subst( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
+                                const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, uint16_t uiFlags, HB_ULONG uiArgCount, ... );
 
 // set argument error behaviour
 extern void ct_setargerrormode( int iMode );

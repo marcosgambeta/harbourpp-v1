@@ -151,14 +151,14 @@ void nxs_partial_scramble(const unsigned char *source, unsigned char *cipher, HB
                           HB_SIZE keylen)
 {
   HB_SIZE pos;
-  HB_USHORT kpos;
+  uint16_t kpos;
 
   pos = 0;
   kpos = 0;
   while (pos + kpos < len) {
     cipher[pos + scramble[kpos]] = source[pos + kpos];
     kpos++;
-    if (kpos >= static_cast<HB_USHORT>(keylen)) {
+    if (kpos >= static_cast<uint16_t>(keylen)) {
       kpos = 0;
       pos += keylen;
     }
@@ -194,7 +194,7 @@ void nxs_unscramble(unsigned char *cipher, HB_SIZE cipherlen, const unsigned cha
 void nxs_partial_unscramble(unsigned char *cipher, HB_ISIZ *scramble, HB_SIZE len, HB_SIZE keylen)
 {
   HB_SIZE pos;
-  HB_USHORT kpos;
+  uint16_t kpos;
   unsigned char buf[NXS_MAX_KEYLEN];
 
   pos = 0;
@@ -202,7 +202,7 @@ void nxs_partial_unscramble(unsigned char *cipher, HB_ISIZ *scramble, HB_SIZE le
   while (pos + kpos < len) {
     buf[kpos] = cipher[pos + scramble[kpos]];
     kpos++;
-    if (kpos >= static_cast<HB_USHORT>(keylen)) {
+    if (kpos >= static_cast<uint16_t>(keylen)) {
       memcpy(cipher + pos, buf, keylen);
       kpos = 0;
       pos += keylen;
@@ -215,7 +215,7 @@ void nxs_partial_unscramble(unsigned char *cipher, HB_ISIZ *scramble, HB_SIZE le
 void nxs_xorcode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char *key, HB_SIZE keylen)
 {
   HB_SIZE pos = 0;
-  HB_USHORT keypos = 0;
+  uint16_t keypos = 0;
   unsigned char c_bitrest;
 
   c_bitrest = cipher[0] >> 5;
@@ -223,7 +223,7 @@ void nxs_xorcode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char *
   while (pos < cipherlen) {
     cipher[pos] <<= 3;
 
-    if (keypos == static_cast<HB_USHORT>(keylen) - 1 || pos == cipherlen - 1) {
+    if (keypos == static_cast<uint16_t>(keylen) - 1 || pos == cipherlen - 1) {
       cipher[pos] |= c_bitrest;
     } else {
       cipher[pos] |= cipher[pos + 1] >> 5;
@@ -233,7 +233,7 @@ void nxs_xorcode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char *
     keypos++;
     pos++;
 
-    if (keypos == static_cast<HB_USHORT>(keylen)) {
+    if (keypos == static_cast<uint16_t>(keylen)) {
       keypos = 0;
       c_bitrest = cipher[pos] >> 5;
     }
@@ -243,12 +243,12 @@ void nxs_xorcode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char *
 void nxs_xordecode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char *key, HB_SIZE keylen)
 {
   HB_SIZE pos = 0;
-  HB_USHORT keypos = 0;
+  uint16_t keypos = 0;
   unsigned char c_bitleft;
 
   /* A very short block? */
   if (keylen > cipherlen - pos) {
-    keylen = static_cast<HB_USHORT>(cipherlen - pos);
+    keylen = static_cast<uint16_t>(cipherlen - pos);
   }
 
   c_bitleft = (cipher[keylen - 1] ^ key[keylen - 1]) << 5;
@@ -266,11 +266,11 @@ void nxs_xordecode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char
     keypos++;
     pos++;
 
-    if (keypos == static_cast<HB_USHORT>(keylen)) {
+    if (keypos == static_cast<uint16_t>(keylen)) {
       keypos = 0;
       /* last block */
       if (keylen > cipherlen - pos) {
-        keylen = static_cast<HB_USHORT>(cipherlen - pos);
+        keylen = static_cast<uint16_t>(cipherlen - pos);
       }
 
       c_bitleft = (cipher[pos + keylen - 1] ^ key[keylen - 1]) << 5;

@@ -652,7 +652,7 @@ static int hb_ctw_CreateWindow(PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom,
 #endif
 
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   int iRow, iCol, iHeight, iWidth, iTmp;
   long lIndex;
 
@@ -1800,7 +1800,7 @@ static void hb_ctw_gt_GetScrCursor(PHB_GT pGT, int *piRow, int *piCol, int *piSt
   }
 }
 
-static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_USHORT *pusChar)
+static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetScrChar(%p,%d,%d,%p,%p,%p)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1862,7 +1862,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, 
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetScrUC(%p,%d,%d,%p,%p,%p,%d)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(puChar), fTerm));
 #endif
 
-  HB_USHORT usChar;
+  uint16_t usChar;
 
   if (hb_ctw_gt_GetScrChar(pGT, iRow, iCol, piColor, pbAttr, &usChar)) {
     HB_UCHAR uc = 0;
@@ -1891,7 +1891,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, 
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_USHORT *pusChar)
+static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetChar(%p,%d,%d,%p,%p,%p)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1922,7 +1922,7 @@ static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, H
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar)
+static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iColor, static_cast<int>(bAttr), static_cast<int>(usChar)));
@@ -1952,7 +1952,7 @@ static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_
             if( pCTW->windows[iShadow]->iShadowAttr >= 0 && pCTW->windows[iShadow]->iShadowAttr == iColor ) {
                int iClr;
                HB_BYTE bAtr;
-               HB_USHORT usCh;
+               uint16_t usCh;
                if( HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iClr, &bAtr, &usCh) ) {
                   if( usCh == usChar && iClr == iColor ) {
                      return true;

@@ -83,7 +83,7 @@ static HB_ERRCODE mysqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
 static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE mysqlClose(SQLBASEAREAP pArea);
 static HB_ERRCODE mysqlGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
-static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem);
+static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem);
 
 static SDDNODE s_mysqldd = {nullptr,
                             "MYSQL",
@@ -140,11 +140,11 @@ HB_CALL_ON_STARTUP_END(_hb_mysqldd_init_)
 
 /* --- */
 
-static HB_USHORT hb_errRT_MySQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+static uint16_t hb_errRT_MySQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                                   const char *szOperation, HB_ERRCODE errOsCode)
 {
   auto pError = hb_errRT_New(ES_ERROR, "SDDMY", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
-  HB_USHORT uiAction = hb_errLaunch(pError);
+  uint16_t uiAction = hb_errLaunch(pError);
   hb_itemRelease(pError);
   return uiAction;
 }
@@ -232,7 +232,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
     return Harbour::FAILURE;
   }
 
-  auto uiFields = static_cast<HB_USHORT>(mysql_num_fields(pSDDData->pResult));
+  auto uiFields = static_cast<uint16_t>(mysql_num_fields(pSDDData->pResult));
   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
   auto pItemEof = hb_itemArrayNew(uiFields);
@@ -242,12 +242,12 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
   HB_ERRCODE errCode = 0;
 
   bool bError = false;
-  for (HB_USHORT uiCount = 0; uiCount < uiFields; uiCount++) {
+  for (uint16_t uiCount = 0; uiCount < uiFields; uiCount++) {
     pMyField = mysql_fetch_field_direct(pSDDData->pResult, uiCount);
 
     DBFIELDINFO dbFieldInfo{};
     dbFieldInfo.atomName = pMyField->name;
-    dbFieldInfo.uiLen = static_cast<HB_USHORT>(pMyField->length);
+    dbFieldInfo.uiLen = static_cast<uint16_t>(pMyField->length);
 
     switch (pMyField->type) {
     case MYSQL_TYPE_TINY:
@@ -266,7 +266,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
     case MYSQL_TYPE_FLOAT:
     case MYSQL_TYPE_DOUBLE:
       dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
-      dbFieldInfo.uiDec = static_cast<HB_USHORT>(pMyField->decimals);
+      dbFieldInfo.uiDec = static_cast<uint16_t>(pMyField->decimals);
       break;
 
     case MYSQL_TYPE_STRING:
@@ -445,7 +445,7 @@ static HB_ERRCODE mysqlGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   auto pSDDData = static_cast<SDDDATA *>(pArea->pSDDData);
 

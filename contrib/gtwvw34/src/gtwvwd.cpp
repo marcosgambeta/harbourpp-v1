@@ -166,13 +166,13 @@ static void hb_gt_wvw_mouse_vSetPos(PWVW_WIN wvw_win, int iRow, int iCol);
 static int hb_gt_wvw_vDispCount(PWVW_WIN wvw_win);
 static void hb_gt_wvw_vDispBegin(PWVW_WIN wvw_win);
 static void hb_gt_wvw_vDispEnd(PWVW_WIN wvw_win);
-static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar,
+static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar,
                                  HB_SIZE nLen);
 static bool hb_gt_wvw_vSetMode(PWVW_WIN wvw_win, int iRow, int iCol);
 static void hb_gt_wvw_vSetPos(PWVW_WIN wvw_win, int iRow, int iCol);
-static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_USHORT *pusChar);
-static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar);
-static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar);
+static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar);
+static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar);
+static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar);
 static bool hb_gt_wvw_vCheckPos(PWVW_WIN wvw_win, int iRow, int iCol, long *plIndex);
 static void hb_gt_wvw_vGetSize(PWVW_WIN wvw_win, int *piRows, int *piCols);
 
@@ -607,7 +607,7 @@ static int hb_gt_wvw_DispCount(PHB_GT pGT)
   return hb_gt_wvw_vDispCount(s_wvw->pWin[s_wvw->iNumWindows - 1]);
 }
 
-static void hb_gt_wvw_Replicate(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar,
+static void hb_gt_wvw_Replicate(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar,
                                 HB_SIZE nLen)
 {
 #if 0
@@ -723,7 +723,7 @@ static void hb_gt_wvw_SetAttribute(PHB_GT pGT, int iTop, int iLeft, int iBottom,
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
       int iColorOld;
       HB_BYTE bAttr;
-      HB_USHORT usChar;
+      uint16_t usChar;
 
       if (!hb_gt_wvw_vGetChar(wvw_win, iTop, iCol, &iColorOld, &bAttr, &usChar)) {
         break;
@@ -917,7 +917,7 @@ static void hb_gt_wvw_Box(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRig
   hb_gt_wvw_FUNCEpilogue();
 }
 
-static void hb_gt_wvw_HorizLine(PHB_GT pGT, int iRow, int iLeft, int iRight, HB_USHORT usChar, int iColor)
+static void hb_gt_wvw_HorizLine(PHB_GT pGT, int iRow, int iLeft, int iRight, uint16_t usChar, int iColor)
 {
   int iWidth;
 
@@ -959,7 +959,7 @@ static void hb_gt_wvw_HorizLine(PHB_GT pGT, int iRow, int iLeft, int iRight, HB_
   hb_gt_wvw_FUNCEpilogue();
 }
 
-static void hb_gt_wvw_VertLine(PHB_GT pGT, int iCol, int iTop, int iBottom, HB_USHORT usChar, int iColor)
+static void hb_gt_wvw_VertLine(PHB_GT pGT, int iCol, int iTop, int iBottom, uint16_t usChar, int iColor)
 {
   int iWidth;
   int iHeight;
@@ -4764,7 +4764,7 @@ static void hb_gt_wvw_vDispEnd(PWVW_WIN wvw_win)
   }
 }
 
-static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar,
+static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar,
                                  HB_SIZE nLen)
 {
   int iColSav;
@@ -4795,7 +4795,7 @@ static void hb_gt_wvw_vReplicate(PWVW_WIN wvw_win, int iRow, int iCol, int iColo
   hb_gt_wvw_SetInvalidRect(wvw_win, iColSav, iRow, iCol, iRow);
 }
 
-static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_USHORT *pusChar)
+static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
 {
   long lIndex;
 
@@ -4810,7 +4810,7 @@ static bool hb_gt_wvw_vGetChar(PWVW_WIN wvw_win, int iRow, int iCol, int *piColo
   }
 }
 
-static HB_BOOL hb_gt_wvw_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, HB_USHORT *pusChar)
+static HB_BOOL hb_gt_wvw_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, HB_BYTE *pbAttr, uint16_t *pusChar)
 {
   PWVW_WIN wvw_win = s_wvw->pWin[s_wvw->iNumWindows - 1];
 
@@ -4818,14 +4818,14 @@ static HB_BOOL hb_gt_wvw_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, H
 
   return hb_gt_wvw_vGetChar(wvw_win, iRow, iCol, piColor, pbAttr, pusChar);
 }
-static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar)
+static void hb_gt_wvw_vPutCharX(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
 {
   if (hb_gt_wvw_vPutChar(wvw_win, iRow, iCol, iColor, bAttr, usChar)) {
     hb_gt_wvw_SetInvalidRect(wvw_win, iCol, iRow, iCol, iRow);
   }
 }
 
-static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar)
+static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
 {
   long lIndex;
 
@@ -4840,7 +4840,7 @@ static bool hb_gt_wvw_vPutChar(PWVW_WIN wvw_win, int iRow, int iCol, int iColor,
   }
 }
 
-static HB_BOOL hb_gt_wvw_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar)
+static HB_BOOL hb_gt_wvw_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
 {
   PWVW_WIN wvw_win = s_wvw->pWin[s_wvw->iNumWindows - 1];
 
@@ -4909,7 +4909,7 @@ static void hb_gt_wvw_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
       int iColor;
       HB_BYTE bAttr;
-      HB_USHORT usChar;
+      uint16_t usChar;
 
       if (!HB_GTSELF_GETCHAR(pGT, iTop, iCol, &iColor, &bAttr, &usChar)) {
         usChar = HB_GTSELF_GETCLEARCHAR(pGT);
@@ -4962,7 +4962,7 @@ static void hb_gt_wvw_Rest(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
       int iColor;
       HB_BYTE bAttr;
-      HB_USHORT usChar;
+      uint16_t usChar;
 
 #if defined(UNICODE)
       if (pGT->fVgaCell) {

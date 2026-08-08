@@ -238,7 +238,7 @@ typedef struct
   DWORD dwCookie;
   IID rriid;
   PHB_ITEM pItemHandler;
-  HB_USHORT uiClass;
+  uint16_t uiClass;
 } ISink;
 
 static HRESULT STDMETHODCALLTYPE QueryInterface(IDispatch *lpThis, REFIID riid, void **ppRet)

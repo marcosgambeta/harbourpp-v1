@@ -262,7 +262,7 @@ static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char * pszDirName) /
    return hb_fileDirRemove(s_bz2io_name(pszDirName, nullptr));
 }
 
-static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType) // FileFunc
+static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uint16_t uiType) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -538,7 +538,7 @@ static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset) // FileFunc
    return false;
 }
 
-static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags) // FileFunc
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, uint16_t uiFlags) // FileFunc
 {
    if( (uiFlags == FS_SET && nOffset == pFile->seek_pos) || (uiFlags == FS_RELATIVE && nOffset == 0) ) {
       hb_fsSetError(0);

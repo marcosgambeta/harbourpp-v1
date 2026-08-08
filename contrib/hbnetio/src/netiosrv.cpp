@@ -810,7 +810,7 @@ HB_FUNC(NETIO_SERVER)
          HB_FATTR ulAttr;
          HB_U32 uiMsg;
          HB_FATTR nFlags;
-         HB_USHORT uiFlags;
+         uint16_t uiFlags;
          char * szExt;
          PHB_FILE pFile;
          HB_FOFFSET llOffset, llSize;
@@ -1706,7 +1706,7 @@ HB_FUNC(NETIO_SERVER)
                            if( hb_vmRequestReenter() )
                            {
                               HB_SIZE nSize = size - size2;
-                              HB_USHORT uiPCount = 0;
+                              uint16_t uiPCount = 0;
                               HB_BOOL fSend = false;
 
                               iStreamID = 0;

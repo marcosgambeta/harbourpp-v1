@@ -52,7 +52,7 @@
 #include <hbvm.hpp>
 #include "hboo.ch"
 
-HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass)
+HB_BOOL hbamf_is_cls_externalizable(uint16_t uiClass)
 {
   auto pSymbol = hb_dynsymGet("__CLSMSGTYPE");
   bool result = false;

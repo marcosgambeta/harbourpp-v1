@@ -298,8 +298,8 @@ struct HB_GTQTC
 
    QChar *     textLine;                     // buffer for text line
 
-   HB_USHORT   iRows;                        // number of displayable rows in window
-   HB_USHORT   iCols;                        // number of displayable columns in window
+   uint16_t   iRows;                        // number of displayable rows in window
+   uint16_t   iCols;                        // number of displayable columns in window
 
    int         iNewPosX;                     // requested windows x position on the screen
    int         iNewPosY;                     // requested windows y position on the screen

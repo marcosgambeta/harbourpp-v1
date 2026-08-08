@@ -53,14 +53,14 @@
 
 // throwing a CT-subsystem error without value substitution
 // - function adapted from errorapi.c
-HB_USHORT ct_error(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
-                   const char *szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ...)
+uint16_t ct_error(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+                   const char *szOperation, HB_ERRCODE errOsCode, uint16_t uiFlags, HB_ULONG ulArgCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
 #endif
 
-  HB_USHORT uiAction;
+  uint16_t uiAction;
 
   PHB_ITEM pArray;
   va_list va;
@@ -111,8 +111,8 @@ HB_USHORT ct_error(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSu
 
 // throwing a CT-subsystem error with value substitution
 // - function adapted from errorapi.c
-PHB_ITEM ct_error_subst(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
-                        const char *szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ...)
+PHB_ITEM ct_error_subst(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+                        const char *szOperation, HB_ERRCODE errOsCode, uint16_t uiFlags, HB_ULONG ulArgCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
@@ -201,7 +201,7 @@ HB_FUNC(CSETARGERR)
       int iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
-        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
+        ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
     }
@@ -209,7 +209,7 @@ HB_FUNC(CSETARGERR)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
+      ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
                EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
     }
   }

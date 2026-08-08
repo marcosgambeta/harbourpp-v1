@@ -208,7 +208,7 @@ static QBitmap *hb_gt_qtc_defineBoxButtonR(int cellx, int celly)
   return qBitMap;
 }
 
-static QBitmap *hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, HB_USHORT usCh)
+static QBitmap *hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, uint16_t usCh)
 {
   QBitmap *qBitMap = nullptr;
   int cellx = pQTC->cellX;
@@ -1242,9 +1242,9 @@ static QBitmap *hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, HB_USHORT usCh)
   return qBitMap;
 }
 
-static QBitmap *hb_gt_qtc_getBoxChar(PHB_GTQTC pQTC, HB_USHORT *puc16)
+static QBitmap *hb_gt_qtc_getBoxChar(PHB_GTQTC pQTC, uint16_t *puc16)
 {
-  HB_USHORT uc16 = *puc16;
+  uint16_t uc16 = *puc16;
   int iPos, iTrans;
 
   if ((pQTC->fontAttribute & HB_GTI_FONTA_DRAWBOX) == 0) {
@@ -2179,7 +2179,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->cellY * pQTC->iRows);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
-      HB_GTSELF_SETMODE(pGT, static_cast<HB_USHORT>(iVal / pQTC->cellY), pQTC->iCols);
+      HB_GTSELF_SETMODE(pGT, static_cast<uint16_t>(iVal / pQTC->cellY), pQTC->iCols);
     }
     break;
 
@@ -2187,7 +2187,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->cellX * pQTC->iCols);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
-      HB_GTSELF_SETMODE(pGT, pQTC->iRows, static_cast<HB_USHORT>(iVal / pQTC->cellX));
+      HB_GTSELF_SETMODE(pGT, pQTC->iRows, static_cast<uint16_t>(iVal / pQTC->cellX));
     }
     break;
 
@@ -3061,7 +3061,7 @@ void QTConsole::copySelection()
     for (iCol = rc.left(); iCol <= rc.right(); ++iCol) {
       int iColor;
       HB_BYTE bAttr;
-      HB_USHORT usChar;
+      uint16_t usChar;
 
       if (!HB_GTSELF_GETSCRCHAR(pQTC->pGT, iRow, iCol, &iColor, &bAttr, &usChar)) {
         break;
@@ -3083,7 +3083,7 @@ void QTConsole::repaintChars(const QRect &rx)
 {
   int iRow, iColor, iTextColor = 0;
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   bool bClrBkg = (pQTC->fontAttribute & HB_GTI_FONTA_CLRBKG) != 0;
   bool bFixMetric = (pQTC->fontAttribute & HB_GTI_FONTA_FIXMETRIC) != 0;
   QRect rc = hb_gt_qtc_pixelToCell(pQTC, rx);
@@ -3215,7 +3215,7 @@ void QTConsole::paintEvent(QPaintEvent *evt)
        * use foreground cell color like hardware VGA cursor
        */
       HB_BYTE bAttr;
-      HB_USHORT usChar;
+      uint16_t usChar;
       int iColor;
 
       if (HB_GTSELF_GETSCRCHAR(pQTC->pGT, pQTC->cursorRow, pQTC->cursorCol, &iColor, &bAttr, &usChar)) {

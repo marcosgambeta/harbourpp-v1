@@ -68,7 +68,7 @@ static void do_charevod(int iSwitch)
       int iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
-        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+        ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
                  iSwitch == DO_CHAREVOD_CHAREVEN ? CT_ERROR_CHAREVEN : CT_ERROR_CHARODD, nullptr, HB_ERR_FUNCNAME, 0,
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
@@ -102,7 +102,7 @@ static void do_charevod(int iSwitch)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
                               iSwitch == DO_CHAREVOD_CHAREVEN ? CT_ERROR_CHAREVEN : CT_ERROR_CHARODD, nullptr,
                               HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }

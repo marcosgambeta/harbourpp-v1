@@ -147,12 +147,12 @@ HB_CALL_ON_STARTUP_END(_hb_sqlt3dd_init_)
 // clang-format on
 
 /* --- */
-static HB_USHORT hb_errRT_SQLT3DD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+static uint16_t hb_errRT_SQLT3DD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                                   const char *szOperation, HB_ERRCODE errOsCode)
 {
   auto pError =
       hb_errRT_New(ES_ERROR, "SDDSQLITE3", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
-  HB_USHORT uiAction = hb_errLaunch(pError);
+  uint16_t uiAction = hb_errLaunch(pError);
   hb_itemRelease(pError);
   return uiAction;
 }
@@ -179,7 +179,7 @@ static char *sqlite3GetError(sqlite3 *pDb, HB_ERRCODE *pErrCode)
   return szRet;
 }
 
-static HB_USHORT sqlite3DeclType(sqlite3_stmt *st, HB_USHORT uiIndex)
+static uint16_t sqlite3DeclType(sqlite3_stmt *st, uint16_t uiIndex)
 {
   const char *szDeclType = sqlite3_column_decltype(st, uiIndex);
   /* the order of comparisons below is important to replicate
@@ -243,7 +243,7 @@ static HB_USHORT sqlite3DeclType(sqlite3_stmt *st, HB_USHORT uiIndex)
 }
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
-static void sqlite3DeclStru(sqlite3_stmt *st, HB_USHORT uiIndex, HB_USHORT *puiLen, HB_USHORT *puiDec)
+static void sqlite3DeclStru(sqlite3_stmt *st, uint16_t uiIndex, uint16_t *puiLen, uint16_t *puiDec)
 {
   const char *szDeclType = sqlite3_column_decltype(st, uiIndex);
 
@@ -262,7 +262,7 @@ static void sqlite3DeclStru(sqlite3_stmt *st, HB_USHORT uiIndex, HB_USHORT *puiL
       if (puiLen) {
         iRetLen = hb_strValInt(szDeclType + nAt, &iOverflow);
         if (!puiDec || (iRetLen > 0 && iRetLen < 100)) {
-          *puiLen = static_cast<HB_USHORT>(iRetLen);
+          *puiLen = static_cast<uint16_t>(iRetLen);
         }
       }
 
@@ -274,13 +274,13 @@ static void sqlite3DeclStru(sqlite3_stmt *st, HB_USHORT uiIndex, HB_USHORT *puiL
         *puiDec = 0;
       } else if (puiLen && (nAt = hb_strAt(",", 1, szDeclType + nAt, nLen - nAt - 1)) > 0) {
         if ((iRetLen = hb_strValInt(szDeclType + nAt, &iOverflow)) > 0) {
-          *puiDec = static_cast<HB_USHORT>(HB_MIN(*puiLen - 1, iRetLen));
+          *puiDec = static_cast<uint16_t>(HB_MIN(*puiLen - 1, iRetLen));
 
           /* SQL column declaration doesn't include space for
            * decimal separator, while xBase stores it.
            */
 
-          *puiLen = static_cast<HB_USHORT>(++iRetLen);
+          *puiLen = static_cast<uint16_t>(++iRetLen);
         } else if (iRetLen == 0) {
           *puiDec = 0;
         }
@@ -395,14 +395,14 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
     return Harbour::FAILURE;
   }
 
-  auto uiFields = static_cast<HB_USHORT>(sqlite3_column_count(st));
+  auto uiFields = static_cast<uint16_t>(sqlite3_column_count(st));
   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
   PHB_ITEM pName = nullptr;
   errCode = 0;
   bool bError = false;
   auto pItemEof = hb_itemArrayNew(uiFields);
-  for (HB_USHORT uiIndex = 0; uiIndex < uiFields; ++uiIndex) {
+  for (uint16_t uiIndex = 0; uiIndex < uiFields; ++uiIndex) {
     DBFIELDINFO dbFieldInfo{};
 #ifdef HB_SQLT3_FIELDNAME_STRICT
     HB_SIZE nPos;
@@ -438,12 +438,12 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
          for mostly used character sets. Yet seems better to use
          hb_cdpUTF8StringLength() */
 
-      HB_USHORT uiRetLen = 10;
+      uint16_t uiRetLen = 10;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
       sqlite3DeclStru(st, uiIndex, &uiRetLen, nullptr);
 #endif
-      dbFieldInfo.uiLen = static_cast<HB_USHORT>(HB_MAX(nSize, static_cast<HB_SIZE>(uiRetLen)));
+      dbFieldInfo.uiLen = static_cast<uint16_t>(HB_MAX(nSize, static_cast<HB_SIZE>(uiRetLen)));
       auto pStr = static_cast<char *>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
       memset(pStr, ' ', dbFieldInfo.uiLen);
       hb_itemPutCLPtr(pItem, pStr, dbFieldInfo.uiLen);
@@ -461,7 +461,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
 
     case Harbour::DB::Field::LONG:
       dbFieldInfo.uiLen = 20;
-      dbFieldInfo.uiDec = static_cast<HB_USHORT>(hb_setGetDecimals());
+      dbFieldInfo.uiDec = static_cast<uint16_t>(hb_setGetDecimals());
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
       sqlite3DeclStru(st, uiIndex, &dbFieldInfo.uiLen, &dbFieldInfo.uiDec);
 #endif
@@ -540,10 +540,10 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
   while (ulRecNo > pArea->ulRecCount && !pArea->fFetched) {
     auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
-    for (HB_USHORT ui = 0; ui < pArea->area.uiFieldCount; ++ui) {
+    for (uint16_t ui = 0; ui < pArea->area.uiFieldCount; ++ui) {
       PHB_ITEM pItem = nullptr;
       LPFIELD pField = pArea->area.lpFields + ui;
-      HB_USHORT uiType = pField->uiType;
+      uint16_t uiType = pField->uiType;
 
       if (uiType == Harbour::DB::Field::ANY) {
         switch (sqlite3_column_type(st, ui)) {

@@ -86,7 +86,7 @@ HB_FUNC(AMFSTDIO_READ)
   auto pszLenPrefix = static_cast<char *>(hb_xgrab(5));
   char *pszBuf;
   char *pszTmp = pszLenPrefix;
-  HB_USHORT nBytes;
+  uint16_t nBytes;
   int nTotal = 0;
   int nLen;
   int nToRead;
@@ -97,7 +97,7 @@ HB_FUNC(AMFSTDIO_READ)
   while (nTotal < 4)
   {
     nToRead = (s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal);
-    nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
+    nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<uint16_t>(nToRead));
     if (!nBytes)
     {
       hb_xfree(pszStrIn);
@@ -136,7 +136,7 @@ HB_FUNC(AMFSTDIO_READ)
     {
       nToRead = (s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal);
     }
-    nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
+    nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<uint16_t>(nToRead));
 
     countCheck(nBytes, nFlowCtrl);
 

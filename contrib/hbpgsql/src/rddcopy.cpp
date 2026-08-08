@@ -316,12 +316,12 @@ HB_FUNC(HB_PQCOPYFROMWA)
     HB_ULONG nCount = hb_parnldef(6, 0);
     bool str_rtrim = hb_parldef(7, true);
     HB_ULONG nBufLen = hb_parnldef(8, 1);
-    HB_USHORT uiFields;
+    uint16_t uiFields;
     HB_ULONG uiRecCount = 0;
     bool bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
     HB_BOOL bEof = false;
-    HB_USHORT uiFieldCopy = 0;
-    HB_USHORT uiIter;
+    uint16_t uiFieldCopy = 0;
+    uint16_t uiIter;
     char *szInit;
     char *szFields = nullptr;
     char *szTmp;
@@ -345,7 +345,7 @@ HB_FUNC(HB_PQCOPYFROMWA)
       szFields = static_cast<char *>(hb_xgrab(sizeof(char) * 2));
       szFields[0] = '(';
       szFields[1] = '\0';
-      uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
+      uiFieldCopy = static_cast<uint16_t>(hb_arrayLen(pFields));
 
       for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
       {
@@ -437,7 +437,7 @@ HB_FUNC(HB_PQCOPYFROMWA)
         {
           for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
           {
-            if (SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem) !=
+            if (SELF_GETVALUE(pArea, static_cast<uint16_t>(hb_arrayGetNI(pFields, uiIter)), pItem) !=
                     Harbour::SUCCESS ||
                 !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                 !addStrToContext(context, uiIter == uiFieldCopy ? "\n" : sc_szDelim))

@@ -106,10 +106,10 @@ static HB_BOOL s_bEnabled = false;
 static HB_BOOL s_bIamBackground = false;
 
 /* current task to be executed */
-static HB_USHORT s_uiBackgroundTask = 0;
+static uint16_t s_uiBackgroundTask = 0;
 
 /* number of tasks in the list */
-static HB_USHORT s_uiBackgroundMaxTask = 0;
+static uint16_t s_uiBackgroundMaxTask = 0;
 #else
 
 #define s_ulBackgroundID HB_VM_STACK.ulBackgroundID

@@ -992,7 +992,7 @@ void hb_oleItemToVariantEx(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pOb
 }
 
 static void hb_oleSafeArrayToItem(PHB_ITEM pItem, SAFEARRAY *pSafeArray, int iDims, int iDim, long *plIndex, VARTYPE vt,
-                                  HB_USHORT uiClass)
+                                  uint16_t uiClass)
 {
   long lFrom, lTo;
 
@@ -1033,7 +1033,7 @@ static void hb_oleSafeArrayToItem(PHB_ITEM pItem, SAFEARRAY *pSafeArray, int iDi
   }
 }
 
-void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch *pdispVal, HB_USHORT uiClass)
+void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch *pdispVal, uint16_t uiClass)
 {
   if (pdispVal) {
     if (hb_vmRequestReenter()) {
@@ -1070,7 +1070,7 @@ void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch *pdispVal, HB_USHORT uiClass
   }
 }
 
-void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, HB_USHORT uiClass)
+void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, uint16_t uiClass)
 {
   if (V_VT(pVariant) == (VT_VARIANT | VT_BYREF)) {
     pVariant = V_VARIANTREF(pVariant);
@@ -1499,7 +1499,7 @@ typedef struct
 } HB_OLE_PARAM_REF;
 
 HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPPARAMS *pParams, VARIANT *pVarResult,
-                         HB_OLEOBJ_FUNC pObjFunc, HB_USHORT uiClass)
+                         HB_OLEOBJ_FUNC pObjFunc, uint16_t uiClass)
 {
   if (!pSym && pObject->isSymbol()) {
     pSym = hb_itemGetSymbol(pObject);
@@ -1545,9 +1545,9 @@ HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPP
     }
 
     if (pObject && !pObject->isHash()) {
-      hb_vmSend(static_cast<HB_USHORT>(iParams));
+      hb_vmSend(static_cast<uint16_t>(iParams));
     } else {
-      hb_vmProc(static_cast<HB_USHORT>(iParams));
+      hb_vmProc(static_cast<uint16_t>(iParams));
     }
 
     if (pVarResult) {
@@ -1662,7 +1662,7 @@ static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, PHB_ITEM 
   return lOleError;
 }
 
-static void PutParams(DISPPARAMS *dispparam, HB_UINT uiOffset, HB_USHORT uiClass)
+static void PutParams(DISPPARAMS *dispparam, HB_UINT uiOffset, uint16_t uiClass)
 {
   VARIANTARG *pRefs = &dispparam->rgvarg[dispparam->cArgs];
   PHB_ITEM pItem = nullptr;
@@ -1673,7 +1673,7 @@ static void PutParams(DISPPARAMS *dispparam, HB_UINT uiOffset, HB_USHORT uiClass
   }
 
   for (uiArg = dispparam->cNamedArgs; uiArg < dispparam->cArgs; uiArg++) {
-    auto uiParam = static_cast<HB_USHORT>(uiOffset + dispparam->cArgs - uiArg);
+    auto uiParam = static_cast<uint16_t>(uiOffset + dispparam->cArgs - uiArg);
 
     if (HB_ISBYREF(uiParam)) {
       if (!pItem) {
@@ -1894,7 +1894,7 @@ HB_FUNC(__OLEENUMNEXT)
 
     VariantInit(&variant);
     if (HB_VTBL(pEnum)->Next(HB_THIS_(pEnum) 1, &variant, nullptr) == S_OK) {
-      hb_oleVariantToItemEx(hb_stackReturnItem(), &variant, static_cast<HB_USHORT>(hb_parni(3)));
+      hb_oleVariantToItemEx(hb_stackReturnItem(), &variant, static_cast<uint16_t>(hb_parni(3)));
       VariantClear(&variant);
       fResult = true;
     }
@@ -2057,7 +2057,7 @@ HB_FUNC(WIN_OLEAUTO___ONERROR)
   EXCEPINFO excep;
   UINT uiArgErr;
   HRESULT lOleError;
-  HB_USHORT uiClass;
+  uint16_t uiClass;
 
   hb_oleInit();
 
@@ -2210,7 +2210,7 @@ HB_FUNC(WIN_OLEAUTO___OPINDEX)
   UINT uiArgErr;
   HRESULT lOleError;
   bool fAssign;
-  HB_USHORT uiClass;
+  uint16_t uiClass;
 
   hb_oleInit();
 
@@ -2318,7 +2318,7 @@ HB_FUNC(__OLEGETNAMEID)
 
 static void hb_oleInvokeCall(WORD wFlags)
 {
-  HB_USHORT uiOffset = 0;
+  uint16_t uiOffset = 0;
   IDispatch *pDisp;
 
   auto pObject = hb_stackSelfItem();
@@ -2334,7 +2334,7 @@ static void hb_oleInvokeCall(WORD wFlags)
     EXCEPINFO excep;
     UINT uiArgErr;
     HRESULT lOleError;
-    HB_USHORT uiClass;
+    uint16_t uiClass;
     OLECHAR *pwszMethod;
     void *hMethod;
 

@@ -94,14 +94,14 @@
 #define MIX_COPY_CHILDS_EXTERNAL(tag, ndst, dst, nsrc, src, count)                                                     \
   memmove(&((ndst)->Child[(dst)]), &((nsrc)->Child[(src)]), (count) * sizeof(void *))
 
-static HB_USHORT s_uiRddIdSQLMIX = static_cast<HB_USHORT>(-1);
+static uint16_t s_uiRddIdSQLMIX = static_cast<uint16_t>(-1);
 
 static RDDFUNCS sqlmixSuper;
 
 // --- Misc functions ---
 
 static HB_ERRCODE sqlmixErrorRT(SQLMIXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, char *filename,
-                                HB_ERRCODE errOsCode, HB_USHORT uiFlags)
+                                HB_ERRCODE errOsCode, uint16_t uiFlags)
 {
   HB_ERRCODE iRet = Harbour::FAILURE;
 
@@ -1421,7 +1421,7 @@ static HB_ERRCODE sqlmixClose(SQLMIXAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sqlmixStructSize(SQLMIXAREAP pArea, HB_USHORT *StructSize)
+static HB_ERRCODE sqlmixStructSize(SQLMIXAREAP pArea, uint16_t *StructSize)
 {
   HB_SYMBOL_UNUSED(pArea);
   *StructSize = sizeof(SQLMIXAREA);
@@ -1480,14 +1480,14 @@ static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrde
   PHB_ITEM pResult = pArea->sqlarea.area.valResult;
   pArea->sqlarea.area.valResult = nullptr;
 
-  HB_USHORT uiLen;
+  uint16_t uiLen;
   HB_BYTE bType;
 
   switch (hb_itemType(pResult)) {
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
     bType = 'C';
-    uiLen = static_cast<HB_USHORT>(hb_itemGetCLen(pResult));
+    uiLen = static_cast<uint16_t>(hb_itemGetCLen(pResult));
     if (uiLen > MIX_MAXKEYLEN) {
       uiLen = MIX_MAXKEYLEN;
     }
@@ -1613,10 +1613,10 @@ static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrde
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pOrderInfo)
+static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO pOrderInfo)
 {
   PMIXTAG pTag;
-  HB_USHORT uiTag = 0;
+  uint16_t uiTag = 0;
 
   switch (uiIndex) {
   case DBOI_EVALSTEP:
@@ -1975,10 +1975,10 @@ HB_FUNC_TRANSLATE(SQLMIX, SQLBASE)
 
 HB_FUNC_STATIC(SQLMIX_GETFUNCTABLE)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
+  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
   if (pTable) {
     if (puiCount) {

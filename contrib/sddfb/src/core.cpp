@@ -130,11 +130,11 @@ HB_CALL_ON_STARTUP_END(_hb_firebirddd_init_)
 // clang-format on
 
 /* --- */
-static HB_USHORT hb_errRT_FirebirdDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+static uint16_t hb_errRT_FirebirdDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                                      const char *szOperation, HB_ERRCODE errOsCode)
 {
   auto pError = hb_errRT_New(ES_ERROR, "SDDFB", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
-  HB_USHORT uiAction = hb_errLaunch(pError);
+  uint16_t uiAction = hb_errLaunch(pError);
   hb_itemRelease(pError);
   return uiAction;
 }
@@ -248,7 +248,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
     return Harbour::FAILURE;
   }
 
-  HB_USHORT uiFields;
+  uint16_t uiFields;
 
   if (pSqlda->sqld > pSqlda->sqln) {
     uiFields = pSqlda->sqld;
@@ -276,7 +276,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
 
   auto pItemEof = hb_itemArrayNew(uiFields);
 
-  HB_USHORT uiCount;
+  uint16_t uiCount;
   XSQLVAR *pVar;
   bool bError = false;
   PHB_ITEM pItem;
@@ -438,7 +438,7 @@ static HB_ERRCODE fbGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
   ISC_STATUS lErr;
   ISC_STATUS_ARRAY status;
-  HB_USHORT ui;
+  uint16_t ui;
   XSQLVAR *pVar;
   short iType;
 

@@ -1240,7 +1240,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
           for (icol = left; icol <= right; icol++) {
             int iColor;
             HB_BYTE bAttr;
-            HB_USHORT usChar;
+            uint16_t usChar;
 
             if (!HB_GTSELF_GETSCRCHAR(pWVT->pGT, irow, icol, &iColor, &bAttr, &usChar)) {
               break;
@@ -1800,7 +1800,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT, RECT updateRect)
 
     while (iCol <= rcRect.right) {
 #if defined(UNICODE)
-      HB_USHORT usChar;
+      uint16_t usChar;
       if (!HB_GTSELF_GETSCRCHAR(pWVT->pGT, iRow, iCol, &iColor, &bAttr, &usChar)) {
         break;
       }
@@ -2690,7 +2690,7 @@ static HB_BOOL hb_gt_wvt_SetMode(PHB_GT pGT, int iRow, int iCol)
 
 // ---
 
-static HB_BOOL hb_gt_wvt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar)
+static HB_BOOL hb_gt_wvt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar)
 {
   if (HB_GTSUPER_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar)) {
     PHB_GTWVT pWVT = HB_GTWVT_GET(pGT);

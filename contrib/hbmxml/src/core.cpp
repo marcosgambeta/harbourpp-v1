@@ -1186,7 +1186,7 @@ static void sax_cb(mxml_node_t * node, mxml_sax_event_t event, void * data)
 
       if( pCallback && hb_vmRequestReenter() )
       {
-         HB_USHORT uPCount = 2;
+         uint16_t uPCount = 2;
 
          hb_vmPushEvalSym();
          hb_vmPush(pCallback);

@@ -92,7 +92,7 @@ HB_FUNC( FT_REVATTR )
          {
             int       iColor;
             HB_BYTE   bAttr;
-            HB_USHORT usChar;
+            uint16_t usChar;
             hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
             iColor = (iColor << 4) | (iColor >> 4);
             hb_gtPutChar(iTop, iCol, iColor, bAttr, usChar);
@@ -112,7 +112,7 @@ HB_FUNC( FT_REVCHR )
 
    int       iColor;
    HB_BYTE   bAttr;
-   HB_USHORT usChar;
+   uint16_t usChar;
 
    hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar);
    iColor = (iColor << 4) | (iColor >> 4);

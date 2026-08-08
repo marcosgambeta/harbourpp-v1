@@ -230,7 +230,7 @@ struct ISink
   DWORD dwCookie;
   IID rriid;
   PHB_ITEM pItemHandler;
-  HB_USHORT uiClass;
+  uint16_t uiClass;
 };
 
 static HRESULT STDMETHODCALLTYPE QueryInterface(IDispatch *lpThis, REFIID riid, void **ppRet)

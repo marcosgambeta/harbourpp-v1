@@ -52,7 +52,7 @@
 
 HB_FUNC(PRINTSTAT)
 {
-  auto uiPort = static_cast<HB_USHORT>(hb_parnidef(1, 1));
+  auto uiPort = static_cast<uint16_t>(hb_parnidef(1, 1));
   int Status = 0;
 
   HB_SYMBOL_UNUSED(uiPort);
@@ -64,7 +64,7 @@ HB_FUNC(PRINTREADY)
 {
   char szLPT[8];
 
-  hb_snprintf(szLPT, sizeof(szLPT), "LPT%hu", static_cast<HB_USHORT>(hb_parnidef(1, 1)));
+  hb_snprintf(szLPT, sizeof(szLPT), "LPT%hu", static_cast<uint16_t>(hb_parnidef(1, 1)));
 
   hb_retl(hb_printerIsReady(szLPT));
 }

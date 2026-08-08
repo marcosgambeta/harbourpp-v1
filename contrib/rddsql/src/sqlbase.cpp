@@ -61,7 +61,7 @@
 
 #define CONNECTION_LIST_EXPAND 4
 
-static HB_USHORT s_rddidSQLBASE = 0;
+static uint16_t s_rddidSQLBASE = 0;
 
 static SQLDDCONNECTION **s_pConnection = nullptr;
 static HB_ULONG s_ulConnectionCount = 0;
@@ -125,8 +125,8 @@ static HB_ERRCODE sddExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
 static HB_ERRCODE sddOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE sddClose(SQLBASEAREAP pArea);
 static HB_ERRCODE sddGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
-static HB_ERRCODE sddGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem);
-static HB_ERRCODE sddGetVarLen(SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_ULONG *pLength);
+static HB_ERRCODE sddGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem);
+static HB_ERRCODE sddGetVarLen(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ULONG *pLength);
 
 static const SDDNODE s_sddNull = {nullptr,
                                   "NULL",
@@ -191,7 +191,7 @@ static HB_ERRCODE sddGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sddGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE sddGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   HB_SYMBOL_UNUSED(pArea);
   HB_SYMBOL_UNUSED(uiIndex);
@@ -200,7 +200,7 @@ static HB_ERRCODE sddGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
   return Harbour::FAILURE;
 }
 
-static HB_ERRCODE sddGetVarLen(SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_ULONG *pLength)
+static HB_ERRCODE sddGetVarLen(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ULONG *pLength)
 {
   HB_SYMBOL_UNUSED(pArea);
   HB_SYMBOL_UNUSED(uiIndex);
@@ -437,7 +437,7 @@ static HB_ERRCODE sqlbaseDeleted(SQLBASEAREAP pArea, HB_BOOL *pDeleted)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sqlbaseGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE sqlbaseGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   if (uiIndex == 0 || uiIndex > pArea->area.uiFieldCount) {
     return Harbour::FAILURE;
@@ -450,7 +450,7 @@ static HB_ERRCODE sqlbaseGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITE
   return pArea->pSDD->GetValue(pArea, uiIndex, pItem);
 }
 
-static HB_ERRCODE sqlbaseGetVarLen(SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_ULONG *pLength)
+static HB_ERRCODE sqlbaseGetVarLen(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ULONG *pLength)
 {
   // TODO: should we use this code?
 #if 0
@@ -481,7 +481,7 @@ static HB_ERRCODE sqlbaseGoHot(SQLBASEAREAP pArea)
 {
   auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
   auto pItem = hb_itemNew(nullptr);
-  for (HB_USHORT us = 1; us <= pArea->area.uiFieldCount; us++) {
+  for (uint16_t us = 1; us <= pArea->area.uiFieldCount; us++) {
     if (SELF_GETVALUE(&pArea->area, us, pItem) == Harbour::SUCCESS) {
       hb_arraySetForward(pArray, us, pItem);
     }
@@ -493,7 +493,7 @@ static HB_ERRCODE sqlbaseGoHot(SQLBASEAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   if (uiIndex == 0 || uiIndex > pArea->area.uiFieldCount) {
     return Harbour::FAILURE;
@@ -652,7 +652,7 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
   PHB_ITEM pItem;
 
   bool bError = false;
-  for (HB_USHORT uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++) {
+  for (uint16_t uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++) {
     LPFIELD pField = pArea->area.lpFields + uiCount;
 
     switch (pField->uiType) {
@@ -741,7 +741,7 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
   return SELF_GOTOP(&pArea->area);
 }
 
-static HB_ERRCODE sqlbaseInfo(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE sqlbaseInfo(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   switch (uiIndex) {
   case DBI_QUERY:
@@ -790,7 +790,7 @@ static HB_ERRCODE sqlbaseOpen(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
   return SELF_GOTOP(&pArea->area);
 }
 
-static HB_ERRCODE sqlbaseStructSize(SQLBASEAREAP pArea, HB_USHORT *uiSize)
+static HB_ERRCODE sqlbaseStructSize(SQLBASEAREAP pArea, uint16_t *uiSize)
 {
   HB_SYMBOL_UNUSED(pArea);
   *uiSize = sizeof(SQLBASEAREA);
@@ -892,7 +892,7 @@ static HB_ERRCODE sqlbaseExit(LPRDDNODE pRDD)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
   HB_SYMBOL_UNUSED(pRDD);
 
@@ -1153,9 +1153,9 @@ HB_FUNC(SQLBASE)
 
 HB_FUNC_STATIC(SQLBASE_GETFUNCTABLE)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
 
   if (pTable) {
     if (puiCount) {

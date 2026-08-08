@@ -93,7 +93,7 @@ static HB_ERRCODE pgsqlDisconnect(SQLDDCONNECTION *pConnection);
 static HB_ERRCODE pgsqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
 static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE pgsqlClose(SQLBASEAREAP pArea);
-static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem);
+static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem);
 
 static SDDNODE s_pgsqldd = {nullptr,
                             "POSTGRESQL",
@@ -149,11 +149,11 @@ HB_CALL_ON_STARTUP_END(_hb_sddpostgre_init_)
 
 /* --- */
 
-static HB_USHORT hb_errRT_PostgreSQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+static uint16_t hb_errRT_PostgreSQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                                        const char *szOperation, HB_ERRCODE errOsCode)
 {
   auto pError = hb_errRT_New(ES_ERROR, "SDDPG", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
-  HB_USHORT uiAction = hb_errLaunch(pError);
+  uint16_t uiAction = hb_errLaunch(pError);
   hb_itemRelease(pError);
   return uiAction;
 }
@@ -245,14 +245,14 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
 
   pSDDData->pResult = pResult;
 
-  auto uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
+  auto uiFields = static_cast<uint16_t>(PQnfields(pResult));
   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
   auto pItemEof = hb_itemArrayNew(uiFields);
   auto pItem = hb_itemNew(nullptr);
 
   bool bError = false;
-  for (HB_USHORT uiCount = 0; uiCount < uiFields; uiCount++) {
+  for (uint16_t uiCount = 0; uiCount < uiFields; uiCount++) {
     DBFIELDINFO dbFieldInfo{};
     dbFieldInfo.atomName = PQfname(pResult, static_cast<int>(uiCount));
 
@@ -260,7 +260,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
     case BPCHAROID:
     case VARCHAROID:
       dbFieldInfo.uiType = Harbour::DB::Field::STRING;
-      dbFieldInfo.uiLen = static_cast<HB_USHORT>(PQfmod(pResult, uiCount)) - 4;
+      dbFieldInfo.uiLen = static_cast<uint16_t>(PQfmod(pResult, uiCount)) - 4;
       break;
 
     case TEXTOID:
@@ -326,7 +326,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
     case BITOID:
     case VARBITOID:
       dbFieldInfo.uiType = Harbour::DB::Field::STRING;
-      dbFieldInfo.uiLen = static_cast<HB_USHORT>(PQfsize(pResult, uiCount));
+      dbFieldInfo.uiLen = static_cast<uint16_t>(PQfsize(pResult, uiCount));
       break;
 
     case TIMEOID:
@@ -462,7 +462,7 @@ static HB_ERRCODE pgsqlClose(SQLBASEAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   auto pSDDData = static_cast<SDDDATA *>(pArea->pSDDData);
 

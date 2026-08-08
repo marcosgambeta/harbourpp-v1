@@ -338,7 +338,7 @@ HB_FUNC(SCREENSTR) // TODO: Unicode support
       do {
         int iColor;
         HB_BYTE bAttr;
-        HB_USHORT usChar;
+        uint16_t usChar;
         hb_gtGetChar(iRow, iC, &iColor, &bAttr, &usChar);
         *szText++ = static_cast<char>(usChar);
         *szText++ = static_cast<char>(iColor);
@@ -378,7 +378,7 @@ HB_FUNC(STRSCREEN) // TODO: Unicode support
       do {
         int iC = iCol;
         do {
-          HB_USHORT usChar = static_cast<HB_UCHAR>(*szText++);
+          uint16_t usChar = static_cast<HB_UCHAR>(*szText++);
           int iColor = static_cast<HB_UCHAR>(*szText++);
           hb_gtPutChar(iRow, iC, iColor, 0, usChar);
           nLen -= 2;

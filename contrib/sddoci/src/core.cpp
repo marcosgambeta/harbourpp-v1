@@ -177,12 +177,12 @@ HB_CALL_ON_STARTUP_END(_hb_ocidd_init_)
 
 /* --- */
 
-static HB_USHORT hb_errRT_OCIDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+static uint16_t hb_errRT_OCIDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                                 const char *szOperation, HB_ERRCODE errOsCode)
 {
   auto pError =
       hb_errRT_New(ES_ERROR, "SDDOCI", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
-  HB_USHORT uiAction = hb_errLaunch(pError);
+  uint16_t uiAction = hb_errLaunch(pError);
   hb_itemRelease(pError);
   return uiAction;
 }
@@ -314,7 +314,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
 
   OCI_Resultset *rs = OCI_GetResultset(st);
 
-  auto uiFields = static_cast<HB_USHORT>(OCI_GetColumnCount(rs));
+  auto uiFields = static_cast<uint16_t>(OCI_GetColumnCount(rs));
   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
   auto pItemEof = hb_itemArrayNew(uiFields);
@@ -326,7 +326,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
 
   errCode = 0;
   bool bError = false;
-  for (HB_USHORT uiIndex = 0; uiIndex < uiFields; ++uiIndex) {
+  for (uint16_t uiIndex = 0; uiIndex < uiFields; ++uiIndex) {
     OCI_Column *col = OCI_GetColumn(rs, uiIndex + 1);
 
     if (!col) {
@@ -352,8 +352,8 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
       dbFieldInfo.uiFlags |= HB_FF_NULLABLE;
     }
 
-    dbFieldInfo.uiLen = static_cast<HB_USHORT>(uiSize);
-    dbFieldInfo.uiDec = static_cast<HB_USHORT>(iDec);
+    dbFieldInfo.uiLen = static_cast<uint16_t>(uiSize);
+    dbFieldInfo.uiDec = static_cast<uint16_t>(iDec);
 
 #if 0
       HB_TRACE(HB_TR_ALWAYS, ("field: name=%s type=%d len=%d dec=%d nullable=%d %d %d %d %d", dbFieldInfo.atomName, uiDataType, uiSize, iDec, bNullable, OCI_ColumnGetScale(col), OCI_ColumnGetPrecision(col), OCI_ColumnGetFractionalPrecision(col), OCI_ColumnGetLeadingPrecision(col)));
@@ -368,12 +368,12 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
       dbFieldInfo.uiType = Harbour::DB::Field::LONG;
       /* For plain 'NUMERIC', precision is zero and scale is -127 */
       if (OCI_ColumnGetPrecision(col) > 0) {
-        dbFieldInfo.uiLen = static_cast<HB_USHORT>(OCI_ColumnGetPrecision(col));
+        dbFieldInfo.uiLen = static_cast<uint16_t>(OCI_ColumnGetPrecision(col));
       }
       if (OCI_ColumnGetScale(col) >= 0) {
-        dbFieldInfo.uiDec = static_cast<HB_USHORT>(OCI_ColumnGetScale(col));
+        dbFieldInfo.uiDec = static_cast<uint16_t>(OCI_ColumnGetScale(col));
       } else {
-        dbFieldInfo.uiDec = static_cast<HB_USHORT>(hb_setGetDecimals());
+        dbFieldInfo.uiDec = static_cast<uint16_t>(hb_setGetDecimals());
       }
       break;
 
@@ -515,7 +515,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
     PHB_ITEM pItem = nullptr;
 
-    for (HB_USHORT ui = 1; ui <= pArea->area.uiFieldCount; ++ui) {
+    for (uint16_t ui = 1; ui <= pArea->area.uiFieldCount; ++ui) {
       LPFIELD pField = pArea->area.lpFields + ui - 1;
 
       switch (pField->uiType) {

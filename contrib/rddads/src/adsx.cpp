@@ -86,7 +86,7 @@ typedef struct _MIXTAG
   PHB_ITEM pKeyItem;
   PHB_ITEM pForItem;
   HB_BYTE bType;
-  HB_USHORT uiLen;
+  uint16_t uiLen;
 
   PMIXKEY *pKeys;
   HB_ULONG ulRecMax;
@@ -109,19 +109,19 @@ typedef struct _ADSXAREA_
   PMIXTAG pTagCurrent;
 } ADSXAREA, *ADSXAREAP;
 
-static HB_USHORT s_uiRddIdADSX = static_cast<HB_USHORT>(-1);
-static HB_USHORT s_uiRddIdADSNTXX = static_cast<HB_USHORT>(-1);
-static HB_USHORT s_uiRddIdADSCDXX = static_cast<HB_USHORT>(-1);
+static uint16_t s_uiRddIdADSX = static_cast<uint16_t>(-1);
+static uint16_t s_uiRddIdADSNTXX = static_cast<uint16_t>(-1);
+static uint16_t s_uiRddIdADSCDXX = static_cast<uint16_t>(-1);
 #if ADS_LIB_VERSION >= 900
-static HB_USHORT s_uiRddIdADSVFPX = static_cast<HB_USHORT>(-1);
+static uint16_t s_uiRddIdADSVFPX = static_cast<uint16_t>(-1);
 #endif
-static HB_USHORT s_uiRddIdADSADTX = static_cast<HB_USHORT>(-1);
+static uint16_t s_uiRddIdADSADTX = static_cast<uint16_t>(-1);
 static RDDFUNCS adsxSuper;
 
 // Misc functions
 
 static HB_ERRCODE hb_mixErrorRT(ADSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *filename,
-                                HB_ERRCODE errOsCode, HB_USHORT uiFlags)
+                                HB_ERRCODE errOsCode, uint16_t uiFlags)
 {
   HB_ERRCODE iRet = Harbour::FAILURE;
 
@@ -163,7 +163,7 @@ static HB_ERRCODE hb_adsUpdateAreaFlags(ADSXAREAP pArea)
 
 // Memory Index
 
-static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USHORT uiLen)
+static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, uint16_t uiLen)
 {
   double dbl;
   HB_BYTE buf[8];
@@ -259,7 +259,7 @@ static void mixKeyFree(PMIXKEY pKey)
   hb_xfree(pKey);
 }
 
-static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, HB_USHORT uiLen, PHB_CODEPAGE pCodepage)
+static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, PHB_CODEPAGE pCodepage)
 {
   int i;
 
@@ -288,7 +288,7 @@ static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, HB_USHORT uiLen, PHB_CODEPAGE
   return i;
 }
 
-static void mixQSort(PMIXKEY *pKeys, HB_ULONG left, HB_ULONG right, HB_USHORT uiLen, PHB_CODEPAGE pCodepage)
+static void mixQSort(PMIXKEY *pKeys, HB_ULONG left, HB_ULONG right, uint16_t uiLen, PHB_CODEPAGE pCodepage)
 {
   HB_ULONG l, r;
   PMIXKEY x, h;
@@ -324,7 +324,7 @@ static void mixQSort(PMIXKEY *pKeys, HB_ULONG left, HB_ULONG right, HB_USHORT ui
   }
 }
 
-static PMIXKEY mixFindKeyLen(PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_ULONG *ulKeyPos)
+static PMIXKEY mixFindKeyLen(PMIXTAG pTag, PMIXKEY pKey, uint16_t uiLen, HB_ULONG *ulKeyPos)
 {
   HB_ULONG l, r;
   int i = 1;
@@ -370,13 +370,13 @@ static PMIXKEY mixFindKey(PMIXTAG pTag, PMIXKEY pKey, HB_ULONG *ulKeyPos)
   return mixFindKeyLen(pTag, pKey, pTag->uiLen, ulKeyPos);
 }
 
-static int mixCompareKey(PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, HB_USHORT uiLen)
+static int mixCompareKey(PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, uint16_t uiLen)
 {
   return mixQSortCompare(pTag->pKeys[ulKeyPos], pKey, uiLen, pTag->pCodepage);
 }
 
 static PMIXTAG mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem,
-                            PHB_ITEM pWhileItem, HB_BYTE bType, HB_USHORT uiLen, ADSXAREAP pArea)
+                            PHB_ITEM pWhileItem, HB_BYTE bType, uint16_t uiLen, ADSXAREAP pArea)
 {
   PMIXKEY pKey;
   LPDBORDERCONDINFO pOrdCondInfo = pArea->adsarea.area.lpdbOrdCondInfo;
@@ -715,7 +715,7 @@ static HB_ERRCODE adsxGoTop(ADSXAREAP pArea)
 static HB_ERRCODE adsxSeek(ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_BOOL bFindLast)
 {
   PMIXKEY pMixKey;
-  HB_USHORT uiLen;
+  uint16_t uiLen;
   HB_ULONG ulKeyPos, ulRecNo;
   HB_ERRCODE errCode;
   bool fFound = false;
@@ -731,7 +731,7 @@ static HB_ERRCODE adsxSeek(ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB
   if (pArea->pTagCurrent->bType == 'C') {
     auto nLen = hb_itemGetCLen(pKey);
     if (nLen < static_cast<HB_SIZE>(uiLen)) {
-      uiLen = static_cast<HB_USHORT>(nLen);
+      uiLen = static_cast<uint16_t>(nLen);
     }
   }
 
@@ -848,7 +848,7 @@ static HB_ERRCODE adsxSkip(ADSXAREAP pArea, HB_LONG lToSkip)
   return errCode;
 }
 
-static HB_ERRCODE adsxPutValue(ADSXAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE adsxPutValue(ADSXAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 {
   PMIXUPDATE pUpdate;
   HB_ERRCODE errCode;
@@ -926,7 +926,7 @@ static HB_ERRCODE adsxOpen(ADSXAREAP pArea, LPDBOPENINFO pOpenInfo)
   return Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsxStructSize(ADSXAREAP pArea, HB_USHORT *StructSize)
+static HB_ERRCODE adsxStructSize(ADSXAREAP pArea, uint16_t *StructSize)
 {
   HB_SYMBOL_UNUSED(pArea);
 
@@ -1002,7 +1002,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
   PMIXTAG pTagNew, pTag;
   PHB_ITEM pKeyItem, pForItem = nullptr, pWhileItem = nullptr, pResult;
   HB_ULONG ulRecNo;
-  HB_USHORT uiLen;
+  uint16_t uiLen;
   HB_BYTE bType;
   UNSIGNED16 bValidExpr;
   bool bKeyADS, bForADS, bWhileADS;
@@ -1131,7 +1131,7 @@ static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInf
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
     bType = 'C';
-    uiLen = static_cast<HB_USHORT>(hb_itemGetCLen(pResult));
+    uiLen = static_cast<uint16_t>(hb_itemGetCLen(pResult));
     if (uiLen > MIX_MAXKEYLEN) {
       uiLen = MIX_MAXKEYLEN;
     }
@@ -1309,7 +1309,7 @@ static HB_ERRCODE adsxOrderDestroy(ADSXAREAP pArea, LPDBORDERINFO pOrderInfo)
   }
 }
 
-static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pOrderInfo)
+static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO pOrderInfo)
 {
   PMIXTAG pTag = pArea->pTagCurrent;
 
@@ -1632,12 +1632,12 @@ static RDDFUNCS adsxTable = { nullptr,
                               nullptr };
 // clang-format on
 
-static void adsxRegisterRDD(HB_USHORT *pusRddId, const char *szRddName)
+static void adsxRegisterRDD(uint16_t *pusRddId, const char *szRddName)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
+  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
   if (pTable) {
     HB_ERRCODE errCode;

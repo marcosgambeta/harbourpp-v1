@@ -136,7 +136,7 @@ struct _HB_FILE
 {
    const HB_FILE_FUNCS * pFuncs;
    PHB_CONCLI conn;
-   HB_USHORT  fd;
+   uint16_t  fd;
 };
 
 using HB_FILE = _HB_FILE;
@@ -1832,7 +1832,7 @@ static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char * pszDirName)
    return fResult;
 }
 
-static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType)
+static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uint16_t uiType)
 {
    double dResult = 0.0;
 
@@ -2421,7 +2421,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, 
       HB_PUT_LE_UINT16(&msgbuf[4], pFile->fd);
       HB_PUT_LE_UINT64(&msgbuf[6], ulStart);
       HB_PUT_LE_UINT64(&msgbuf[14], ulLen);
-      HB_PUT_LE_UINT16(&msgbuf[22], static_cast<HB_USHORT>(iType));
+      HB_PUT_LE_UINT16(&msgbuf[22], static_cast<uint16_t>(iType));
 #if NETIO_MSGLEN > 24
       memset(msgbuf + 24, '\0', sizeof(msgbuf) - 24);
 #endif
@@ -2445,7 +2445,7 @@ static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, 
       HB_PUT_LE_UINT16(&msgbuf[4], pFile->fd);
       HB_PUT_LE_UINT64(&msgbuf[6], ulStart);
       HB_PUT_LE_UINT64(&msgbuf[14], ulLen);
-      HB_PUT_LE_UINT16(&msgbuf[22], static_cast<HB_USHORT>(iType));
+      HB_PUT_LE_UINT16(&msgbuf[22], static_cast<uint16_t>(iType));
 #if NETIO_MSGLEN > 24
       memset(msgbuf + 24, '\0', sizeof(msgbuf) - 24);
 #endif
@@ -2613,7 +2613,7 @@ static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET llOffset)
    return fResult;
 }
 
-static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET llOffset, HB_USHORT uiFlags)
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET llOffset, uint16_t uiFlags)
 {
    HB_FOFFSET llResult = 0;
 

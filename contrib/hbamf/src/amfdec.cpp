@@ -35,7 +35,7 @@ struct amfContext
 };
 
 static bool amf3_getItem(amfContext *context, PHB_ITEM pItem);
-extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
+extern HB_BOOL hbamf_is_cls_externalizable(uint16_t uiClass);
 
 static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
 {
@@ -621,7 +621,7 @@ static bool amf3_deserialize_byte_array(amfContext *context, PHB_ITEM pItem)
 /* Get an object's class def - nearly a copy/paste from decoder */
 static PHB_ITEM class_def_from_classname(/* amfContext * context, */ PHB_ITEM pClassName)
 {
-  HB_USHORT uiClass;
+  uint16_t uiClass;
   PHB_ITEM pClass;
   char *pszBuffer = hb_itemGetC(pClassName);
   auto nLen = hb_itemGetCLen(pClassName);
@@ -1338,7 +1338,7 @@ HB_FUNC(AMF3_DECODE)
     hb_vmPush(context->obj_ref);
     hb_vmPush(context->str_ref);
     hb_vmPush(context->class_ref);
-    hb_vmSend(static_cast<HB_USHORT>(3));
+    hb_vmSend(static_cast<uint16_t>(3));
   }
 #endif
 

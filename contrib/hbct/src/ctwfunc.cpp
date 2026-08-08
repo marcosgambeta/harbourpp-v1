@@ -91,7 +91,7 @@ HB_FUNC(SETCLEARA)
 
 HB_FUNC(SETCLEARB)
 {
-  HB_USHORT usNew;
+  uint16_t usNew;
 
   if (HB_ISNUM(1)) {
     auto iChar = hb_parni(1);
@@ -99,7 +99,7 @@ HB_FUNC(SETCLEARB)
     if (!HB_CDP_ISCHARUNI(cdp)) {
       iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
     }
-    usNew = static_cast<HB_USHORT>(iChar);
+    usNew = static_cast<uint16_t>(iChar);
   } else if (HB_ISCHAR(1)) {
     usNew = hb_cdpTextGetU16(hb_vmCDP(), hb_parc(1), hb_parclen(1));
   } else {

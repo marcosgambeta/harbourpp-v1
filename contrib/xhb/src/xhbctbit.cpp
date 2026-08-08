@@ -107,9 +107,9 @@ static HB_LONG __numnot(HB_LONG lNum1, HB_LONG lNum2)
   return ~lNum1;
 }
 
-static void sizeofbits(HB_USHORT *pusBytes, HB_LONG *plPattern, HB_LONG *plTestMSB)
+static void sizeofbits(uint16_t *pusBytes, HB_LONG *plPattern, HB_LONG *plTestMSB)
 {
-  *pusBytes = (HB_ISNIL(1) || hb_parni(1) == 0) ? sizeof(int) * 8 : static_cast<HB_USHORT>(hb_parni(1));
+  *pusBytes = (HB_ISNIL(1) || hb_parni(1) == 0) ? sizeof(int) * 8 : static_cast<uint16_t>(hb_parni(1));
 
   if (*pusBytes > sizeof(HB_LONG) * 8) {
     *pusBytes = *pusBytes % (sizeof(HB_LONG) * 8);
@@ -126,7 +126,7 @@ static HB_LONG __numfun(int iPCount, HB_LONG (*operation)(HB_LONG wNum1, HB_LONG
     HB_LONG lNum1 = __getparam(2);
     HB_LONG lNumOp = 0;
     HB_LONG lPattern, lTestMSB;
-    HB_USHORT usBytes;
+    uint16_t usBytes;
 
     sizeofbits(&usBytes, &lPattern, &lTestMSB);
 
@@ -199,10 +199,10 @@ HB_FUNC(NUMROLX)
 {
   if (HB_ISNUM(2) || HB_ISCHAR(2)) {
     HB_LONG lNum1, lNumBak, lPattern, lTestRol;
-    HB_USHORT usBytes, usFor;
+    uint16_t usBytes, usFor;
 
     lNum1 = __getparam(2);                               /* Number to do ROL */
-    auto usNum2 = static_cast<HB_USHORT>(__getparam(3)); /* Iterations */
+    auto usNum2 = static_cast<uint16_t>(__getparam(3)); /* Iterations */
 
     sizeofbits(&usBytes, &lPattern, &lTestRol);
 
@@ -227,7 +227,7 @@ HB_FUNC(NUMMIRRX)
 {
   if (HB_ISNUM(2) || HB_ISCHAR(2)) {
     HB_LONG lNum1, lPattern, lTestMSB, lNumBak, lMirror = 0;
-    HB_USHORT usBytes, usFor;
+    uint16_t usBytes, usFor;
 
     lNum1 = __getparam(2);
 

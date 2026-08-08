@@ -116,7 +116,7 @@ HB_UINT hb_errGetProcLine(PHB_ITEM pError)
     s_xhbErrorResize(pError);
   }
 
-  return static_cast<HB_USHORT>(hb_arrayGetNI(pError, s_nErrProcLine));
+  return static_cast<uint16_t>(hb_arrayGetNI(pError, s_nErrProcLine));
 }
 
 PHB_ITEM hb_errPutProcLine(PHB_ITEM pError, HB_UINT uiProcLine)
@@ -253,7 +253,7 @@ HB_FUNC_STATIC(ERRORINIT)
     PHB_ITEM pItem = nullptr;
     char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
     char szProcFile[HB_PATH_MAX];
-    HB_USHORT uiProcLine;
+    uint16_t uiProcLine;
     auto iLevel = 0;
 
     /* start with 1 instead of 0 to skip this method */
@@ -333,7 +333,7 @@ static void xhb_errRedefineClass(void *cargo)
 
   if (s_nErrObjSize == 0) {
     auto pError = hb_errNew();
-    HB_USHORT usClassH = hb_objGetClass(pError);
+    uint16_t usClassH = hb_objGetClass(pError);
 
     s_nErrObjSize = hb_arrayLen(pError);
 

@@ -332,7 +332,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
 {
   PHB_DYNS pDynSym;
   PHB_ITEM pAction;
-  HB_USHORT uiClass = 0;
+  uint16_t uiClass = 0;
 
   HB_SYMBOL_UNUSED(lcid);
   HB_SYMBOL_UNUSED(pExcepInfo);

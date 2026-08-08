@@ -72,7 +72,7 @@ HB_FUNC(CURDRIVE)
       {
          while( hb_fsChDrv( iDrive ) != 0 )
          {
-            HB_USHORT uiAction = hb_errRT_BASE_Ext1(EG_OPEN, 6001, "Operating system error", HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY, HB_ERR_ARGS_BASEPARAMS);
+            uint16_t uiAction = hb_errRT_BASE_Ext1(EG_OPEN, 6001, "Operating system error", HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY, HB_ERR_ARGS_BASEPARAMS);
             if( uiAction != E_RETRY )
                break;
          }

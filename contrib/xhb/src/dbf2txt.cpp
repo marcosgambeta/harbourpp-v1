@@ -159,8 +159,8 @@ HB_FUNC(DBF2TEXT)
   /* Export DBF content to text file */
 
   HB_ISIZ nSepLen;
-  HB_USHORT uiFields = 0;
-  HB_USHORT ui;
+  uint16_t uiFields = 0;
+  uint16_t ui;
   HB_BOOL bWriteSep = false;
 
   HB_BOOL bEof = true;
@@ -222,8 +222,8 @@ HB_FUNC(DBF2TEXT)
         }
         /* Only requested fields are exported here */
       } else {
-        auto uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
-        HB_USHORT uiItter;
+        auto uiFieldCopy = static_cast<uint16_t>(hb_arrayLen(pFields));
+        uint16_t uiItter;
 
         for (uiItter = 1; uiItter <= uiFieldCopy; uiItter++) {
           auto szFieldName = hb_arrayGetCPtr(pFields, uiItter);
@@ -235,7 +235,7 @@ HB_FUNC(DBF2TEXT)
                 hb_fsWriteLarge(handle, cSep, nSepLen);
               }
 
-              SELF_GETVALUE(pArea, static_cast<HB_USHORT>(iPos), pTmp);
+              SELF_GETVALUE(pArea, static_cast<uint16_t>(iPos), pTmp);
               bWriteSep = hb_ExportVar(handle, pTmp, cDelim, cdp);
               hb_itemClear(pTmp);
             }

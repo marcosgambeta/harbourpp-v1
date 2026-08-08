@@ -209,17 +209,17 @@ using PBM_FILTER = BM_FILTER *;
 
 #define BM_RDD_MAX 8
 
-static HB_USHORT s_uiRdds[BM_RDD_MAX];
+static uint16_t s_uiRdds[BM_RDD_MAX];
 static int s_iRddCount = 0;
 
-static void hb_bmSetRdd(HB_USHORT uiRddId)
+static void hb_bmSetRdd(uint16_t uiRddId)
 {
   if (s_iRddCount < BM_RDD_MAX) {
     s_uiRdds[s_iRddCount++] = uiRddId;
   }
 }
 
-static const RDDFUNCS *hb_bmGetRdd(HB_USHORT uiRddId)
+static const RDDFUNCS *hb_bmGetRdd(uint16_t uiRddId)
 {
   for (auto i = 0; i < s_iRddCount; ++i) {
     if (hb_rddIsDerivedFrom(uiRddId, s_uiRdds[i])) {
@@ -683,11 +683,11 @@ static const RDDFUNCS bmTable =
 
 static void hb_bmGetFuncTable(const char *szSuper)
 {
-  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
   auto pSuperTable = static_cast<RDDFUNCS *>(hb_parptr(3));
-  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
+  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, static_cast<void*>(puiCount), pTable, pSuperTable, uiRddId, puiSuperRddId));

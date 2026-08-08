@@ -94,7 +94,7 @@ HB_FUNC(SIN)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SIN, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_SIN, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -129,7 +129,7 @@ HB_FUNC(COS)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_COS, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_COS, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -164,7 +164,7 @@ HB_FUNC(TAN)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TAN, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TAN, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -196,7 +196,7 @@ HB_FUNC(COT)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_COT, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_COT, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -231,7 +231,7 @@ HB_FUNC(ASIN)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ASIN, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ASIN, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -266,7 +266,7 @@ HB_FUNC(ACOS)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ACOS, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ACOS, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -308,7 +308,7 @@ HB_FUNC(ATAN)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATAN, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ATAN, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -355,7 +355,7 @@ HB_FUNC(ATN2)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATN2, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ATN2, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -396,7 +396,7 @@ HB_FUNC(SINH)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SINH, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_SINH, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -433,7 +433,7 @@ HB_FUNC(COSH)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_COSH, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_COSH, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -474,7 +474,7 @@ HB_FUNC(TANH)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TANH, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TANH, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -498,7 +498,7 @@ HB_FUNC(RTOD)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RTOD, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_RTOD, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 
@@ -522,7 +522,7 @@ HB_FUNC(DTOR)
     int iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_DTOR, nullptr, HB_ERR_FUNCNAME, 0,
+      pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_DTOR, nullptr, HB_ERR_FUNCNAME, 0,
                               EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
     }
 

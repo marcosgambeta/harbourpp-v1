@@ -69,7 +69,7 @@ LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS *ExceptionInfo)
 
   if (s_pFuncSymbol && hb_vmRequestReenter()) {
     PHB_ITEM pException = nullptr;
-    HB_USHORT uiParams = 0;
+    uint16_t uiParams = 0;
 
     if (s_pHbCStructDyn) {
       hb_vmPushSymbol(hb_dynsymSymbol(s_pHbCStructDyn));

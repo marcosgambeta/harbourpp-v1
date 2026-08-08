@@ -94,7 +94,7 @@ void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE *s
     for (icol = left; icol <= right; icol++) {
       int iColor;
       HB_BYTE bAttr;
-      HB_USHORT usChar;
+      uint16_t usChar;
 
       if (hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == HB_FAILURE) {
         break;

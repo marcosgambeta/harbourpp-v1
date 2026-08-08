@@ -91,14 +91,14 @@ typedef struct _HB_MEMFS_INODE
    char *       szName;
    unsigned int uiCount;
    unsigned int uiCountRead, uiCountWrite;
-   HB_USHORT    uiDeny;
+   uint16_t    uiDeny;
 } HB_MEMFS_INODE, * PHB_MEMFS_INODE;
 
 typedef struct _HB_MEMFS_FILE
 {
    PHB_MEMFS_INODE pInode;
    HB_FOFFSET      llPos;
-   HB_USHORT       uiFlags;
+   uint16_t       uiFlags;
 } HB_MEMFS_FILE, * PHB_MEMFS_FILE;
 
 typedef struct _HB_MEMFS_FS
@@ -442,7 +442,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory(const char * pszDirSpec, const char *
    return pDirArray;
 }
 
-HB_MEMFS_EXPORT HB_FHANDLE hb_memfsOpen(const char * szName, HB_USHORT uiFlags)
+HB_MEMFS_EXPORT HB_FHANDLE hb_memfsOpen(const char * szName, uint16_t uiFlags)
 {
    PHB_MEMFS_FILE pFile = nullptr;
    HB_FHANDLE     hFile;
@@ -767,7 +767,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsTruncAt(HB_FHANDLE hFile, HB_FOFFSET llOffset)
    return true;
 }
 
-HB_MEMFS_EXPORT HB_FOFFSET hb_memfsSeek(HB_FHANDLE hFile, HB_FOFFSET llOffset, HB_USHORT uiFlags)
+HB_MEMFS_EXPORT HB_FOFFSET hb_memfsSeek(HB_FHANDLE hFile, HB_FOFFSET llOffset, uint16_t uiFlags)
 {
    PHB_MEMFS_FILE  pFile;
    PHB_MEMFS_INODE pInode;
@@ -937,7 +937,7 @@ static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char * pszDirName)
    return false;
 }
 
-static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType)
+static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uint16_t uiType)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszDirName);
@@ -1013,7 +1013,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * szName, const cha
 {
    HB_FHANDLE hFile;
    char       szNameNew[HB_PATH_MAX];
-   HB_USHORT  uiFlags;
+   uint16_t  uiFlags;
 
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pPaths);
@@ -1110,7 +1110,7 @@ static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET llOffset)
    return hb_memfsTruncAt(pFile->hFile, llOffset);
 }
 
-static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
    return hb_memfsSeek(pFile->hFile, nOffset, uiFlags);
 }
