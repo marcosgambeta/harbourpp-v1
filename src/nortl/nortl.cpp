@@ -507,7 +507,7 @@ void hb_vmUnlock(void)
 {
 }
 
-void hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
+void hb_fsSetIOError(HB_BOOL fResult, uint16_t uiOperation)
 {
   HB_SYMBOL_UNUSED(fResult);
   HB_SYMBOL_UNUSED(uiOperation);
