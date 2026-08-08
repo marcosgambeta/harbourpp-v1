@@ -1467,9 +1467,9 @@ HB_SIZE hb_fileResult(HB_SIZE nSize)
 
 #define HB_FILELOAD_BUFFERSIZE 65536
 
-HB_BYTE *hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE *pnSize)
+uint8_t *hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE *pnSize)
 {
-  HB_BYTE *pFileBuf = nullptr;
+  uint8_t *pFileBuf = nullptr;
   HB_SIZE nSize = 0, nRead, nBufSize;
   HB_FOFFSET nFileSize = hb_fileSize(pFile);
 
@@ -1483,7 +1483,7 @@ HB_BYTE *hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE *pnSize)
             break;
           }
         }
-        pFileBuf = static_cast<HB_BYTE *>(hb_xrealloc(pFileBuf, nBufSize));
+        pFileBuf = static_cast<uint8_t *>(hb_xrealloc(pFileBuf, nBufSize));
       }
       nRead = hb_fileRead(pFile, pFileBuf + nSize, nBufSize - nSize, -1);
       if (nRead == 0 || nRead == static_cast<HB_SIZE>(FS_ERROR)) {
@@ -1497,7 +1497,7 @@ HB_BYTE *hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE *pnSize)
       nBufSize = nMaxSize;
     }
 
-    pFileBuf = static_cast<HB_BYTE *>(hb_xgrab(nBufSize + 1));
+    pFileBuf = static_cast<uint8_t *>(hb_xgrab(nBufSize + 1));
     do {
       nRead = hb_fileReadAt(pFile, pFileBuf + nSize, nBufSize - nSize, nSize);
       if (nRead == 0 || nRead == static_cast<HB_SIZE>(FS_ERROR)) {
@@ -1508,7 +1508,7 @@ HB_BYTE *hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE *pnSize)
   }
 
   if (nSize > 0) {
-    pFileBuf = static_cast<HB_BYTE *>(hb_xrealloc(pFileBuf, nSize + 1));
+    pFileBuf = static_cast<uint8_t *>(hb_xrealloc(pFileBuf, nSize + 1));
     pFileBuf[nSize] = '\0';
   } else if (pFileBuf) {
     hb_xfree(pFileBuf);
@@ -1522,9 +1522,9 @@ HB_BYTE *hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE *pnSize)
   return pFileBuf;
 }
 
-HB_BYTE *hb_fileLoad(const char *pszFileName, HB_SIZE nMaxSize, HB_SIZE *pnSize)
+uint8_t *hb_fileLoad(const char *pszFileName, HB_SIZE nMaxSize, HB_SIZE *pnSize)
 {
-  HB_BYTE *pFileBuf = nullptr;
+  uint8_t *pFileBuf = nullptr;
   PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr,
                                   FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr);
 
@@ -1544,7 +1544,7 @@ HB_BOOL hb_fileSave(const char *pszFileName, const void *buffer, HB_SIZE nSize)
   PHB_FILE pFile = hb_fileExtOpen(
       pszFileName, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_SHARELOCK, nullptr, nullptr);
   if (pFile != nullptr) {
-    const HB_BYTE *pData = static_cast<const HB_BYTE *>(buffer);
+    const uint8_t *pData = static_cast<const uint8_t *>(buffer);
 
     while (nSize > 0) {
       HB_SIZE nWritten = hb_fileWrite(pFile, pData, nSize, 0);

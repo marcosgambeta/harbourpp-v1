@@ -1220,7 +1220,7 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void *buffer, HB_SIZE nSize
           dwToWrite = 4096;
         }
         fResult =
-            WriteFile(hPipe, static_cast<const HB_BYTE *>(buffer) + nWritten, dwToWrite, &dwWritten, nullptr) != 0;
+            WriteFile(hPipe, static_cast<const uint8_t *>(buffer) + nWritten, dwToWrite, &dwWritten, nullptr) != 0;
         if (fResult) {
           nWritten += static_cast<HB_SIZE>(dwWritten);
         } else if (nWritten == 0) {
