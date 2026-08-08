@@ -1866,7 +1866,7 @@ HB_BOOL hb_compExprReduceINT(PHB_EXPR pSelf, HB_COMP_DECL)
   return false;
 }
 
-HB_BOOL hb_compExprReduceSTOT(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
+HB_BOOL hb_compExprReduceSTOT(PHB_EXPR pSelf, uint16_t usCount, HB_COMP_DECL)
 {
   PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
   PHB_EXPR pArg = pParms ? pParms->value.asList.pExprList : nullptr;
@@ -1894,7 +1894,7 @@ HB_BOOL hb_compExprReduceSTOT(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
   return false;
 }
 
-HB_BOOL hb_compExprReduceSTOD(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
+HB_BOOL hb_compExprReduceSTOD(PHB_EXPR pSelf, uint16_t usCount, HB_COMP_DECL)
 {
   PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
   PHB_EXPR pArg = pParms ? pParms->value.asList.pExprList : nullptr;
