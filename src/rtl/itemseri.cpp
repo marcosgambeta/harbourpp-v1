@@ -455,7 +455,7 @@ static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn,
 {
   HB_SIZE nSize, nLen, u;
   HB_MAXINT lVal;
-  HB_USHORT uiClass;
+  uint16_t uiClass;
   const char *szVal;
 
   if (pItem->isByRef()) {
@@ -784,7 +784,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
       HB_PUT_LE_UINT32(&pBuffer[nOffset], nRef);
       nOffset += 4;
     } else {
-      HB_USHORT uiClass = hb_objGetClass(pItem);
+      uint16_t uiClass = hb_objGetClass(pItem);
       if (uiClass) {
         const char *szClass = hb_clsName(uiClass), *szFunc = hb_clsFuncName(uiClass);
         if (szClass != nullptr && szFunc != nullptr) {
@@ -1530,7 +1530,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
     hb_hashSetFlags(pItem, HB_HASH_KEEPORDER | HB_HASH_RESORT);
     break;
   case HB_SERIAL_XHB_O: {
-    HB_USHORT uiClass;
+    uint16_t uiClass;
 
     nLen = static_cast<HB_SIZE>(HB_GET_BE_UINT64(&pBuffer[nOffset]));
     /* deserialize :className */
@@ -1568,7 +1568,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
     break;
   }
   case HB_SERIAL_XHB_Q: {
-    HB_USHORT uiClass;
+    uint16_t uiClass;
 
     nPad = static_cast<HB_SIZE>(HB_GET_BE_UINT64(&pBuffer[nOffset])) + nOffset + 8;
     /* deserialize :className */

@@ -376,11 +376,11 @@ HB_FUNC(QOUT)
       if (pPrnPos->col > static_cast<int>(sizeof(buf))) {
         auto pBuf = static_cast<char *>(hb_xgrab(pPrnPos->col));
         memset(pBuf, ' ', pPrnPos->col);
-        hb_fileWrite(pFile, pBuf, static_cast<HB_USHORT>(pPrnPos->col), -1);
+        hb_fileWrite(pFile, pBuf, static_cast<uint16_t>(pPrnPos->col), -1);
         hb_xfree(pBuf);
       } else {
         memset(buf, ' ', pPrnPos->col);
-        hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(pPrnPos->col), -1);
+        hb_fileWrite(pFile, buf, static_cast<uint16_t>(pPrnPos->col), -1);
       }
     }
   }
@@ -443,7 +443,7 @@ static void hb_conDevPos(int iRow, int iCol)
 
         while (pPrnPos->row < iPRow) {
           if (iPtr + s_iCrLfLen > static_cast<int>(sizeof(buf))) {
-            hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(iPtr), -1);
+            hb_fileWrite(pFile, buf, static_cast<uint16_t>(iPtr), -1);
             iPtr = 0;
           }
           memcpy(&buf[iPtr], s_szCrLf, s_iCrLfLen);
@@ -458,7 +458,7 @@ static void hb_conDevPos(int iRow, int iCol)
 
       while (pPrnPos->col < iPCol) {
         if (iPtr == static_cast<int>(sizeof(buf))) {
-          hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(iPtr), -1);
+          hb_fileWrite(pFile, buf, static_cast<uint16_t>(iPtr), -1);
           iPtr = 0;
         }
         buf[iPtr++] = ' ';
@@ -466,7 +466,7 @@ static void hb_conDevPos(int iRow, int iCol)
       }
 
       if (iPtr) {
-        hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(iPtr), -1);
+        hb_fileWrite(pFile, buf, static_cast<uint16_t>(iPtr), -1);
       }
     }
   } else {

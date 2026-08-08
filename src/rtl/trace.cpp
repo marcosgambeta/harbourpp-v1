@@ -127,7 +127,7 @@ HB_FUNC(HB_TRACELOG)
   char message[1024];
   char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
   char file[HB_PATH_MAX];
-  HB_USHORT line;
+  uint16_t line;
 
   hb_trace_message(message, sizeof(message) - 1, 1, hb_pcount());
   hb_procinfo(1, procname, &line, file);
@@ -143,7 +143,7 @@ HB_FUNC(HB_TRACELOGAT)
       char message[1024];
       char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char file[HB_PATH_MAX];
-      HB_USHORT line;
+      uint16_t line;
 
       hb_trace_message(message, sizeof(message) - 1, 2, hb_pcount());
       hb_procinfo(1, procname, &line, file);

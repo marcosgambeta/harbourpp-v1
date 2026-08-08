@@ -70,7 +70,7 @@ HB_FUNC(__XHELP)
       hb_vmPush(hb_stackItemFromBase(iParam));
     }
 
-    hb_vmProc(static_cast<HB_USHORT>(iPCount));
+    hb_vmProc(static_cast<uint16_t>(iPCount));
     // NOTE: Leave the return value as it is.
   }
 }

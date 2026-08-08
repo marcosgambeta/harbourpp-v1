@@ -59,7 +59,7 @@
 
 HB_FUNC(DO)
 {
-  auto uiPCount = static_cast<HB_USHORT>(hb_pcount());
+  auto uiPCount = static_cast<uint16_t>(hb_pcount());
   PHB_ITEM pSelf = nullptr;
 
   if (uiPCount > 0) {
@@ -90,14 +90,14 @@ HB_FUNC(DO)
       hb_vmPushNil();
     }
 
-    for (HB_USHORT uiParam = 2; uiParam <= uiPCount; ++uiParam) {
+    for (uint16_t uiParam = 2; uiParam <= uiPCount; ++uiParam) {
       hb_vmPush(hb_stackItemFromBase(uiParam));
     }
 
     if (pSelf) {
-      hb_vmSend(static_cast<HB_USHORT>(uiPCount - 1));
+      hb_vmSend(static_cast<uint16_t>(uiPCount - 1));
     } else {
-      hb_vmProc(static_cast<HB_USHORT>(uiPCount - 1));
+      hb_vmProc(static_cast<uint16_t>(uiPCount - 1));
     }
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

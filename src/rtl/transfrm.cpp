@@ -85,7 +85,7 @@ HB_FUNC(TRANSFORM)
     auto szPic = pPic->getCPtr();
     auto nPicLen = pPic->getCLen();
     HB_SIZE nPicPos = 0;
-    HB_USHORT uiPicFlags; // Function flags
+    uint16_t uiPicFlags; // Function flags
 
     HB_SIZE nParamS = 0; // To avoid GCC -O2 warning
     char cParamL = '\0'; // To avoid GCC -O2 warning

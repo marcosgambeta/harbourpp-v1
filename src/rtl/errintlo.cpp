@@ -125,7 +125,7 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar
 
   if (fStack && hb_stackTotalItems()) {
     int iLevel = 0;
-    HB_USHORT uiLine;
+    uint16_t uiLine;
     while (hb_procinfo(iLevel++, buffer, &uiLine, file)) {
       char msg[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32];
 

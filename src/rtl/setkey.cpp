@@ -344,8 +344,8 @@ HB_FUNC(HB_SETKEYCHECK)
 
     if (sk_list_tmp) {
       if (sk_testActive(sk_list_tmp->pIsActive, iKeyCode)) {
-        auto uiPCount = static_cast<HB_USHORT>(hb_pcount());
-        HB_USHORT uiParam;
+        auto uiPCount = static_cast<uint16_t>(hb_pcount());
+        uint16_t uiParam;
 
         hb_vmPushEvalSym();
         hb_vmPush(sk_list_tmp->pAction);
