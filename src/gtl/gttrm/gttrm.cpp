@@ -1339,7 +1339,7 @@ again:
     }
 #else
     if (nKey >= 32 && nKey <= 255 && pTerm->fUTF8 && pTerm->cdpIn) {
-      HB_USHORT uc = 0;
+      uint16_t uc = 0;
       n = i = 0;
       if (hb_cdpGetFromUTF8(pTerm->cdpIn, static_cast<HB_UCHAR>(nKey), &n, &uc)) {
         while (n > 0) {
@@ -3539,7 +3539,7 @@ static HB_BOOL hb_gt_trm_Resume(PHB_GT pGT) // FuncTable
   return true;
 }
 
-static void hb_gt_trm_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar,
+static void hb_gt_trm_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, uint16_t usChar,
                              int iRows, int iCols) // FuncTable
 {
 #if 0
@@ -3658,7 +3658,7 @@ static void hb_gt_trm_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 #endif
 
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   int iLen = 0;
   int iChars = 0;
   int iAttribute = 0;

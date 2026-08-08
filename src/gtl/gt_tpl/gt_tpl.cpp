@@ -131,7 +131,7 @@ static void hb_gt_tpl_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 
   int iColor;
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
 
   while (iSize--) {
     if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar))

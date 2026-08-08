@@ -743,7 +743,7 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 
   int iColor;
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   int iLen = 0, iColor2 = 0;
 
   while (iSize--) {

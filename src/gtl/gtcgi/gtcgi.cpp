@@ -194,7 +194,7 @@ static const char *hb_gt_cgi_Version(PHB_GT pGT, int iType) // FuncTable
   return "Harbour++ Terminal: Raw stream console";
 }
 
-static void hb_gt_cgi_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar,
+static void hb_gt_cgi_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, uint16_t usChar,
                              int iRows, int iCols) // FuncTable
 {
 #if 0
@@ -332,7 +332,7 @@ static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 
   int iColor;
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   int iLineFeed, iHeight, iWidth, iLen;
 
   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);

@@ -91,7 +91,7 @@ void hb_gtWPos(HB_GT_WND *wnd, HB_GT_RECT *rect)
   HB_SYMBOL_UNUSED(rect);
 }
 
-HB_BOOL hb_gtWVis(HB_GT_WND *wnd, HB_USHORT iStatus) // USHORT in CA-Cl*pper [vszakats]
+HB_BOOL hb_gtWVis(HB_GT_WND *wnd, uint16_t iStatus) // USHORT in CA-Cl*pper [vszakats]
 {
   // TODO:
 

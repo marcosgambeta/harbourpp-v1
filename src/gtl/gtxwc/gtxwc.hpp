@@ -79,7 +79,7 @@
 //**********************************************************
 // Utility functions
 using HB_GT_PIXELTYPE = unsigned long;
-using HB_GT_CELLTYPE = HB_USHORT;
+using HB_GT_CELLTYPE = uint16_t;
 
 #define XWC_CHAR_QUEUE_SIZE 128
 #define XWC_CHAR_BUFFER 1024
@@ -291,7 +291,7 @@ struct XWC_CharTrans
     XPoint *pts;
     XSegment *seg;
     XRectangle *rect;
-    HB_USHORT ch16;
+    uint16_t ch16;
   } u;
   HB_BYTE size;
   bool inverse;

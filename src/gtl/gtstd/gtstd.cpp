@@ -507,7 +507,7 @@ static HB_BOOL hb_gt_std_Resume(PHB_GT pGT) // FuncTable
   return HB_GTSUPER_RESUME(pGT);
 }
 
-static void hb_gt_std_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar,
+static void hb_gt_std_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, uint16_t usChar,
                              int iRows, int iCols) // FuncTable
 {
 #if 0
@@ -536,7 +536,7 @@ static void hb_gt_std_DispLine(PHB_GT pGT, int iRow, int iFrom, int iSize)
 {
   int iColor;
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   int iCol, iLastCol, iAll;
   HB_SIZE nLen, nI;
   PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
@@ -582,7 +582,7 @@ static void hb_gt_std_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 
   int iColor;
   HB_BYTE bAttr;
-  HB_USHORT usChar;
+  uint16_t usChar;
   int iLineFeed, iBackSpace, iMin;
 
   iLineFeed = iBackSpace = 0;

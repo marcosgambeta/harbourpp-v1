@@ -492,7 +492,7 @@ static HBITMAP hb_gt_wvt_DefineBoxButtonR(PHB_GTWVT pWVT, int cellx, int celly)
   return hBitMap;
 }
 
-static HBITMAP hb_gt_wvt_DefineBoxChar(PHB_GTWVT pWVT, HB_USHORT usCh)
+static HBITMAP hb_gt_wvt_DefineBoxChar(PHB_GTWVT pWVT, uint16_t usCh)
 {
   HBITMAP hBitMap = nullptr;
   int cellx = pWVT->PTEXTSIZE.x;
@@ -1344,9 +1344,9 @@ static void hb_gt_wvt_ResetBoxCharBitmaps(PHB_GTWVT pWVT)
 
 // ***********************************************************************
 
-static HBITMAP hb_gt_wvt_GetBoxChar(PHB_GTWVT pWVT, HB_USHORT *puc16)
+static HBITMAP hb_gt_wvt_GetBoxChar(PHB_GTWVT pWVT, uint16_t *puc16)
 {
-  HB_USHORT uc16 = *puc16;
+  uint16_t uc16 = *puc16;
   int iPos, iTrans;
 
   if ((pWVT->fontAttribute & HB_GTI_FONTA_DRAWBOX) == 0) {
@@ -2116,7 +2116,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
           for (col = rect.left; col <= rect.right; col++) {
             int iColor;
             HB_BYTE bAttr;
-            HB_USHORT usChar;
+            uint16_t usChar;
 
             if (!HB_GTSELF_GETSCRCHAR(pWVT->pGT, row, col, &iColor, &bAttr, &usChar)) {
               break;
@@ -2709,7 +2709,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT)
     while (iCol <= rcRect.right) {
 #if defined(UNICODE)
       HBITMAP hBitMap;
-      HB_USHORT usChar;
+      uint16_t usChar;
 
       if (!HB_GTSELF_GETSCRCHAR(pWVT->pGT, iRow, iCol, &iColor, &bAttr, &usChar)) {
         break;

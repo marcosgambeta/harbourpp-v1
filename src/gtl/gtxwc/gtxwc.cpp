@@ -188,12 +188,12 @@ struct XWND_DEF
   bool fRefresh;
 
   // window size in character cells
-  HB_USHORT cols;
-  HB_USHORT rows;
+  uint16_t cols;
+  uint16_t rows;
 
   // window size in pixels
-  HB_USHORT width;
-  HB_USHORT height;
+  uint16_t width;
+  uint16_t height;
 
   int iNewPosX;
   int iNewPosY;
@@ -204,10 +204,10 @@ struct XWND_DEF
 
   // Set to true when Windows is resized
   bool fWinResize;
-  HB_USHORT newWidth;
-  HB_USHORT newHeight;
-  HB_USHORT oldWidth;
-  HB_USHORT oldHeight;
+  uint16_t newWidth;
+  uint16_t newHeight;
+  uint16_t oldWidth;
+  uint16_t oldHeight;
 
   int iCloseMode;
   bool fResizable;
@@ -461,7 +461,7 @@ static int hb_gt_xwc_DefineBoxButtonR(XSegment *segs, int cellx, int celly)
   return 5;
 }
 
-static bool hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTrans *bxCh)
+static bool hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, uint16_t usCh, XWC_CharTrans *bxCh)
 {
   union HB_XWC_CHDEF {
     XSegment segs[XWC_MAX_CHAR_SEGS];
@@ -2317,7 +2317,7 @@ static void hb_gt_xwc_ResetCharTrans(PXWND_DEF wnd)
 
 // ***********************************************************************
 
-static XWC_CharTrans *hb_gt_xwc_GetBoxChar(PXWND_DEF wnd, HB_USHORT uc16)
+static XWC_CharTrans *hb_gt_xwc_GetBoxChar(PXWND_DEF wnd, uint16_t uc16)
 {
   int iPos, iTrans;
 
@@ -3067,7 +3067,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
           for (left = wnd->markLeft; left <= right; ++left) {
             int iColor;
             HB_BYTE bAttr;
-            HB_USHORT usChar;
+            uint16_t usChar;
 
             if (!HB_GTSELF_GETSCRCHAR(wnd->pGT, top, left, &iColor, &bAttr, &usChar)) {
               break;
@@ -3551,7 +3551,7 @@ static bool hb_gt_xwc_setPalette(PXWND_DEF wnd)
 
 // ***********************************************************************
 
-static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, HB_BYTE color, HB_USHORT *usChBuf, int len)
+static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, HB_BYTE color, uint16_t *usChBuf, int len)
 {
   if (wnd->fClearBkg) {
     XSetForeground(wnd->dpy, wnd->gc, wnd->colors[color >> 4].pixel);
@@ -3570,7 +3570,7 @@ static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, HB_BYTE color,
 
 // ***********************************************************************
 
-static HB_U32 hb_gt_xwc_HashCurrChar(HB_BYTE attr, HB_BYTE color, HB_USHORT chr)
+static HB_U32 hb_gt_xwc_HashCurrChar(HB_BYTE attr, HB_BYTE color, uint16_t chr)
 {
   return (static_cast<HB_U32>(attr) << 24) | (static_cast<HB_U32>(color) << 16) | static_cast<HB_U32>(chr);
 }
@@ -3579,9 +3579,9 @@ static HB_U32 hb_gt_xwc_HashCurrChar(HB_BYTE attr, HB_BYTE color, HB_USHORT chr)
 
 static void hb_gt_xwc_RepaintChar(PXWND_DEF wnd, int colStart, int rowStart, int colStop, int rowStop)
 {
-  HB_USHORT irow, startCol = 0, basex, basey, nsize;
+  uint16_t irow, startCol = 0, basex, basey, nsize;
   HB_BYTE oldColor = 0, color, attr;
-  HB_USHORT usCh16, usChBuf[XWC_MAX_COLS];
+  uint16_t usCh16, usChBuf[XWC_MAX_COLS];
   HB_U32 u32Curr = 0xFFFFFFFF;
   int i, iColor;
   XWC_CharTrans *chTrans;
@@ -3605,7 +3605,7 @@ static void hb_gt_xwc_RepaintChar(PXWND_DEF wnd, int colStart, int rowStart, int
   }
 
   for (irow = rowStart; irow <= rowStop; irow++) {
-    HB_USHORT icol, len;
+    uint16_t icol, len;
     int scridx;
 
     icol = colStart;
@@ -3855,7 +3855,7 @@ static void hb_gt_xwc_UpdateCursor(PXWND_DEF wnd)
       hb_gt_xwc_RestoreArea(wnd, wnd->lastCursorCol, wnd->lastCursorRow, wnd->lastCursorCol, wnd->lastCursorRow);
     }
     if (cursorType != SC_NONE) {
-      HB_USHORT basex = wnd->col * wnd->fontWidth, basey = wnd->row * wnd->fontHeight, size;
+      uint16_t basex = wnd->col * wnd->fontWidth, basey = wnd->row * wnd->fontHeight, size;
 
       switch (cursorType) {
       case SC_NORMAL:
@@ -3881,7 +3881,7 @@ static void hb_gt_xwc_UpdateCursor(PXWND_DEF wnd)
       if (size) {
         int color;
         HB_BYTE attr;
-        HB_USHORT usChar;
+        uint16_t usChar;
 
         HB_GTSELF_GETSCRCHAR(wnd->pGT, wnd->row, wnd->col, &color, &attr, &usChar);
         XSetForeground(wnd->dpy, wnd->gc, wnd->colors[color & 0x0f].pixel);
@@ -3944,7 +3944,7 @@ static void hb_gt_xwc_UpdateChr(PXWND_DEF wnd)
 
 // ***********************************************************************
 
-static bool hb_gt_xwc_SetScrBuff(PXWND_DEF wnd, HB_USHORT cols, HB_USHORT rows)
+static bool hb_gt_xwc_SetScrBuff(PXWND_DEF wnd, uint16_t cols, uint16_t rows)
 {
   if (rows <= XWC_MAX_ROWS && cols <= XWC_MAX_COLS &&
       (wnd->cols != cols || wnd->rows != rows || wnd->pCurrScr == nullptr)) {
@@ -3993,7 +3993,7 @@ static bool hb_gt_xwc_CreatePixmap(PXWND_DEF wnd)
 
 // ***********************************************************************
 
-static void hb_gt_xwc_ResizeRequest(PXWND_DEF wnd, HB_USHORT cols, HB_USHORT rows)
+static void hb_gt_xwc_ResizeRequest(PXWND_DEF wnd, uint16_t cols, uint16_t rows)
 {
   unsigned width, height;
 
@@ -4008,7 +4008,7 @@ static void hb_gt_xwc_ResizeRequest(PXWND_DEF wnd, HB_USHORT cols, HB_USHORT row
 static void hb_gt_xwc_UpdateSize(PXWND_DEF wnd)
 {
   if (wnd->fWinResize) {
-    HB_USHORT rows, cols;
+    uint16_t rows, cols;
 
     wnd->fWinResize = false;
 
@@ -5808,7 +5808,7 @@ static void hb_gt_xwc_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
          int iDefColor = HB_GTSELF_GETCOLOR(pGT);
          int iColor;
          HB_BYTE bAttr;
-         HB_USHORT usChar;
+         uint16_t usChar;
 
          while( iSize-- ) {
             if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) ) {

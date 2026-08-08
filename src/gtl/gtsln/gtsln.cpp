@@ -120,7 +120,7 @@ static void hb_sln_colorTrans(void)
     int fg = (i & 0x0F);
     // bit 7 is a blinking attribute - not used when console is not in
     // UTF-8 mode because we are using it for changing into ACSC
-    // In SLANG 2.0 the character attributes are hold in HB_USHORT not HB_BYTE
+    // In SLANG 2.0 the character attributes are hold in uint16_t not HB_BYTE
     // so we can use all colors, blinking bit and ACSC switch without
     // any problems also when console is not in UTF-8 mode.
 #ifdef HB_SLN_UTF8 // slang 2.0
@@ -657,7 +657,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
         // to switch into ACSC because we can display all supported
         // characters using it's UNICODE values so we can use
         // blink bit as in Clipper.
-        // In SLANG 2.0 the character attributes are hold in HB_USHORT
+        // In SLANG 2.0 the character attributes are hold in uint16_t
         // not HB_BYTE so we can use all colors, blinking bit and ACSC
         // switch without any problems also when console is not in
         // UTF-8 mode.
@@ -984,7 +984,7 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
     HB_BYTE bAttr;
 
     if (hb_sln_Is_Unicode) {
-      HB_USHORT usChar;
+      uint16_t usChar;
       while (iSize-- > 0) {
         if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar)) {
           break;
