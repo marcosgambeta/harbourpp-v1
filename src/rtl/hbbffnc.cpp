@@ -157,20 +157,20 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
 // BlowFish encryption using CFB (cipher feedback) mode instead
 // of ECB (electronic codebook) mode with ANSI X.923 padding
 
-static void hb_bf_initvect(HB_BYTE *vect)
+static void hb_bf_initvect(uint8_t *vect)
 {
   auto pszVect = hb_parc(3);
   auto iLen = static_cast<int>(hb_parclen(3));
 
   for (auto i = 0; i < HB_BF_CIPHERBLOCK; ++i) {
-    vect[i] = static_cast<HB_BYTE>(i);
+    vect[i] = static_cast<uint8_t>(i);
     if (iLen > 0) {
-      vect[i] ^= static_cast<HB_BYTE>(pszVect[i % iLen]);
+      vect[i] ^= static_cast<uint8_t>(pszVect[i % iLen]);
     }
   }
 }
 
-static void hb_bf_encode(const HB_BLOWFISH *bf, HB_BYTE *vect)
+static void hb_bf_encode(const HB_BLOWFISH *bf, uint8_t *vect)
 {
   HB_U32 xl, xr;
 
@@ -196,7 +196,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT_CFB)
     if (nLen) {
       auto pszSource = pData->getCPtr();
       auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
-      HB_BYTE vect[HB_BF_CIPHERBLOCK];
+      uint8_t vect[HB_BF_CIPHERBLOCK];
 
       hb_bf_initvect(vect);
 
@@ -229,7 +229,7 @@ HB_FUNC(HB_BLOWFISHDECRYPT_CFB)
     if (nLen) {
       auto pszSource = pData->getCPtr();
       auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
-      HB_BYTE vect[HB_BF_CIPHERBLOCK];
+      uint8_t vect[HB_BF_CIPHERBLOCK];
 
       hb_bf_initvect(vect);
 

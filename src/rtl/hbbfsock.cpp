@@ -64,11 +64,11 @@ struct HB_SOCKEX_BF
   PHB_SOCKEX sock;
 
   HB_BLOWFISH bf;
-  HB_BYTE encryptkey[HB_BF_CIPHERBLOCK];
-  HB_BYTE decryptkey[HB_BF_CIPHERBLOCK];
-  HB_BYTE encounter[HB_BF_CIPHERBLOCK];
-  HB_BYTE decounter[HB_BF_CIPHERBLOCK];
-  HB_BYTE buffer[HB_BFSOCK_WRBUFSIZE];
+  uint8_t encryptkey[HB_BF_CIPHERBLOCK];
+  uint8_t decryptkey[HB_BF_CIPHERBLOCK];
+  uint8_t encounter[HB_BF_CIPHERBLOCK];
+  uint8_t decounter[HB_BF_CIPHERBLOCK];
+  uint8_t buffer[HB_BFSOCK_WRBUFSIZE];
   long inbuffer;
   int encoded;
   int decoded;
@@ -76,7 +76,7 @@ struct HB_SOCKEX_BF
 
 using PHB_SOCKEX_BF = HB_SOCKEX_BF *;
 
-static void s_bf_hash(const HB_BLOWFISH *bf, HB_BYTE *vect, HB_BYTE *counter)
+static void s_bf_hash(const HB_BLOWFISH *bf, uint8_t *vect, uint8_t *counter)
 {
   HB_U32 xl, xr, cl, cr;
 
@@ -145,7 +145,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeo
   } else {
     lRecv = hb_sockexRead(pBF->sock, data, len, timeout);
     if (lRecv > 0) {
-      auto pData = static_cast<HB_BYTE *>(data);
+      auto pData = static_cast<uint8_t *>(data);
 
       for (long l = 0; l < lRecv; ++l) {
         if ((pBF->decoded & (HB_BF_CIPHERBLOCK - 1)) == 0) {
@@ -162,7 +162,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeo
 static long s_sockexWrite(PHB_SOCKEX pSock, const void *data, long len, HB_MAXINT timeout)
 {
   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
-  auto pData = static_cast<const HB_BYTE *>(data);
+  auto pData = static_cast<const uint8_t *>(data);
   long lWritten = 0, lDone;
 
   for (lDone = 0; lDone < len; ++lDone) {
@@ -286,7 +286,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
     hb_socekxParamsGetStd(pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr);
     if (keylen > 0) {
       auto pBF = static_cast<PHB_SOCKEX_BF>(hb_xgrabz(sizeof(HB_SOCKEX_BF)));
-      auto pVect = static_cast<const HB_BYTE *>(ivlen > 0 ? iv : nullptr);
+      auto pVect = static_cast<const uint8_t *>(ivlen > 0 ? iv : nullptr);
       int i;
 
       hb_blowfishInit(&pBF->bf, keydata, keylen);
@@ -294,7 +294,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
         if (pVect && ivlen > 0) {
           pBF->encounter[i] = pBF->decounter[i] = pVect[i % ivlen];
         } else {
-          pBF->encounter[i] = pBF->decounter[i] = static_cast<HB_BYTE>(i);
+          pBF->encounter[i] = pBF->decounter[i] = static_cast<uint8_t>(i);
         }
       }
 

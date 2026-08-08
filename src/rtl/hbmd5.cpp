@@ -82,7 +82,7 @@
 struct MD5_BUF
 {
   HB_U32 accum[4];
-  HB_BYTE buf[64];
+  uint8_t buf[64];
 };
 
 /*
@@ -126,7 +126,7 @@ static const HB_U32 T[64] = {
 static void hb_md5go(MD5_BUF *md5)
 {
   HB_U32 X[16], A[4];
-  HB_BYTE *ptr;
+  uint8_t *ptr;
   int i;
 
   /* copy accumulators first */
@@ -330,7 +330,7 @@ HB_BOOL hb_md5file(const char *pszFileName, char *digest)
     int i;
     HB_FOFFSET flen = 0;
     HB_UCHAR buf[128];
-    auto readbuf = static_cast<HB_BYTE *>(hb_xgrab(MAX_FBUF));
+    auto readbuf = static_cast<uint8_t *>(hb_xgrab(MAX_FBUF));
 
     hb_md5accinit(md5.accum);
     n = hb_fileRead(pFile, readbuf, MAX_FBUF, -1);

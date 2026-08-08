@@ -80,8 +80,8 @@ struct HB_SOCKEX_Z
   z_stream z_read;
   z_stream z_write;
 
-  HB_BYTE *rdbuf;
-  HB_BYTE *wrbuf;
+  uint8_t *rdbuf;
+  uint8_t *wrbuf;
 };
 
 using PHB_SOCKEX_Z = HB_SOCKEX_Z *;
@@ -145,7 +145,7 @@ static int s_zsock_inbuffer(PHB_SOCKEX pSock)
       if (pSock->readahead <= 0) {
         pSock->readahead = HB_ZSOCK_READAHEAD;
       }
-      pSock->buffer = static_cast<HB_BYTE *>(hb_xgrab(pSock->readahead));
+      pSock->buffer = static_cast<uint8_t *>(hb_xgrab(pSock->readahead));
     }
 
     pZ->z_read.next_out = static_cast<Bytef *>(pSock->buffer);
@@ -474,7 +474,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
         if (inflateInit2(&pZ->z_read, windowBitsIn) == Z_OK) {
           pZ->fDecompressIn = true;
-          pZ->rdbuf = static_cast<HB_BYTE *>(hb_xgrab(HB_ZSOCK_RDBUFSIZE));
+          pZ->rdbuf = static_cast<uint8_t *>(hb_xgrab(HB_ZSOCK_RDBUFSIZE));
         } else {
           level = HB_ZLIB_COMPRESSION_DISABLE;
         }
@@ -486,7 +486,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
         if (deflateInit2(&pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy) == Z_OK) {
           pZ->fCompressOut = true;
-          pZ->wrbuf = static_cast<HB_BYTE *>(hb_xgrab(HB_ZSOCK_WRBUFSIZE));
+          pZ->wrbuf = static_cast<uint8_t *>(hb_xgrab(HB_ZSOCK_WRBUFSIZE));
           pZ->z_write.next_out = static_cast<Bytef *>(pZ->wrbuf);
           pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
         } else {

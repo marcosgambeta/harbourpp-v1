@@ -489,7 +489,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeo
     if (len == 0 || pSock->sd == HB_NO_SOCKET) {
       return lRead;
     }
-    data = static_cast<HB_BYTE *>(data) + lRead;
+    data = static_cast<uint8_t *>(data) + lRead;
     timeout = 0;
   } else if (pSock->sd == HB_NO_SOCKET) {
     hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
@@ -535,7 +535,7 @@ static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
       if (pSock->readahead <= 0) {
         pSock->readahead = HB_ZNET_READAHEAD;
       }
-      pSock->buffer = static_cast<HB_BYTE *>(hb_xgrab(pSock->readahead));
+      pSock->buffer = static_cast<uint8_t *>(hb_xgrab(pSock->readahead));
     }
     len = hb_znetRead(HB_ZNET_GET(pSock), pSock->sd, pSock->buffer, pSock->readahead, 0);
     if (len > 0) {
