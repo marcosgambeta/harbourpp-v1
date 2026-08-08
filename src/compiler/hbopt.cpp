@@ -56,7 +56,7 @@ using PHB_OPT_FUNC = HB_OPT_FUNC_ *;
 static HB_OPT_FUNC(hb_p_poplocal)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  HB_SHORT iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKSHORT(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -71,7 +71,7 @@ static HB_OPT_FUNC(hb_p_poplocal)
 static HB_OPT_FUNC(hb_p_pushlocal)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  HB_SHORT iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKSHORT(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -112,7 +112,7 @@ static HB_OPT_FUNC(hb_p_pushlocalnear)
 static HB_OPT_FUNC(hb_p_localaddint)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  HB_SHORT iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKSHORT(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -850,7 +850,7 @@ void hb_compOptimizePCode(HB_COMP_DECL, HB_HFUNC *pFunc)
 
 struct HB_OPT_LOCAL
 {
-  HB_SHORT isNumber;
+  int16_t isNumber;
   uint8_t bFlags;
 };
 
@@ -880,7 +880,7 @@ static bool hb_compIsUncondJump(uint8_t bPCode)
 }
 
 #if 0
-static HB_SHORT hb_compIsLocalOp(uint8_t bCode)
+static int16_t hb_compIsLocalOp(uint8_t bCode)
 {
    return bCode == HB_P_POPLOCAL ||
           bCode == HB_P_POPLOCALNEAR ||
@@ -895,7 +895,7 @@ static HB_SHORT hb_compIsLocalOp(uint8_t bCode)
 }
 #endif
 
-static HB_SHORT hb_compLocalGetNumber(uint8_t *pCode)
+static int16_t hb_compLocalGetNumber(uint8_t *pCode)
 {
   switch (*pCode) {
   case HB_P_POPLOCALNEAR:
@@ -945,7 +945,7 @@ static HB_ISIZ hb_compJumpGetOffset(uint8_t *pCode)
 static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
   HB_SIZE nPos = 0, nLastPos = 0;
-  HB_SHORT isVar = 0;
+  int16_t isVar = 0;
   auto fWasJump = false;
 
   while (nPos < pFunc->nPCodePos) {
@@ -1068,7 +1068,7 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
   }
 }
 
-static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, HB_SHORT isLocal)
+static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, int16_t isLocal)
 {
   HB_SIZE nPos = 0, nLastPos = 0;
 
@@ -1111,7 +1111,7 @@ static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, HB_SHORT isLocal)
   }
 }
 
-static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, uint8_t *pMap, HB_SHORT isLocal,
+static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, uint8_t *pMap, int16_t isLocal,
                                            bool fCanBreak)
 {
   for (;;) {
@@ -1204,7 +1204,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
   HB_SIZE nPos = 0, nLastPos = 0;
 
   while (nPos < pFunc->nPCodePos) {
-    HB_SHORT isLocal;
+    int16_t isLocal;
     int32_t iCheck = 0;
 
     if (pFunc->pCode[nPos] == HB_P_POPLOCAL || pFunc->pCode[nPos] == HB_P_POPLOCALNEAR) {
@@ -1270,10 +1270,10 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
     }
 
     if (iCheck != 0 &&
-        (isLocal = hb_compLocalGetNumber(&pFunc->pCode[nPos])) > static_cast<HB_SHORT>(pFunc->wParamCount)) {
+        (isLocal = hb_compLocalGetNumber(&pFunc->pCode[nPos])) > static_cast<int16_t>(pFunc->wParamCount)) {
       HB_HVAR *pVar = pFunc->pLocals;
 
-      for (HB_SHORT is = 1; is < isLocal; is++) {
+      for (int16_t is = 1; is < isLocal; is++) {
         pVar = pVar->pNext;
       }
 
@@ -1323,7 +1323,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
     case HB_P_PUSHLOCALNEAR:
     case HB_P_LOCALNEARADDINT: {
       uint8_t *pVar = &pFunc->pCode[nPos + 1];
-      HB_SHORT isVar = static_cast<signed char>(pVar[0]);
+      int16_t isVar = static_cast<signed char>(pVar[0]);
 
       if (isVar > 0 && pLocals[isVar - 1].isNumber != isVar) {
         isVar = pLocals[isVar - 1].isNumber;
@@ -1346,7 +1346,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
     case HB_P_LOCALINC:
     case HB_P_LOCALINCPUSH: {
       uint8_t *pVar = &pFunc->pCode[nPos + 1];
-      HB_SHORT isVar = HB_PCODE_MKSHORT(pVar);
+      int16_t isVar = HB_PCODE_MKSHORT(pVar);
 
       if (isVar > 0 && pLocals[isVar - 1].isNumber != isVar) {
         isVar = pLocals[isVar - 1].isNumber;
@@ -1371,7 +1371,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
 
       usVarCount = HB_PCODE_MKUSHORT(pVar);
       while (usVarCount--) {
-        HB_SHORT isVar;
+        int16_t isVar;
 
         pVar += 2;
         isVar = HB_PCODE_MKSHORT(pVar);
