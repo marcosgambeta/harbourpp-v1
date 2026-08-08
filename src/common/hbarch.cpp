@@ -64,7 +64,7 @@
 #define HB_EXPONENT_MASK ((1 << HB_EXPONENT_BITS) - 1)
 #define HB_EXPONENT_ADD 0x3ff
 
-void hb_put_ieee754(HB_BYTE *ptr, double d)
+void hb_put_ieee754(uint8_t *ptr, double d)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_put_ieee754(%p, %f)", static_cast<void*>(ptr), d));
@@ -104,7 +104,7 @@ void hb_put_ieee754(HB_BYTE *ptr, double d)
 #endif
 }
 
-double hb_get_ieee754(const HB_BYTE *ptr)
+double hb_get_ieee754(const uint8_t *ptr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_get_ieee754(%p)", static_cast<const void*>(ptr)));
@@ -142,7 +142,7 @@ double hb_get_ieee754(const HB_BYTE *ptr)
 #endif
 }
 
-void hb_put_ord_ieee754(HB_BYTE *ptr, double d)
+void hb_put_ord_ieee754(uint8_t *ptr, double d)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_put_ord_ieee754(%p, %f)", static_cast<void*>(ptr), d));
@@ -171,7 +171,7 @@ void hb_put_ord_ieee754(HB_BYTE *ptr, double d)
   HB_PUT_BE_UINT32(ptr + 4, l1);
 }
 
-double hb_get_ord_ieee754(const HB_BYTE *ptr)
+double hb_get_ord_ieee754(const uint8_t *ptr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_get_ord_ieee754(%p)", static_cast<const void*>(ptr)));
@@ -198,7 +198,7 @@ double hb_get_ord_ieee754(const HB_BYTE *ptr)
 // I added function hb_get_rev_double() and hb_get_std_double() because
 // some compilers does not like construction used by in HB_GET_LE_DOUBLE()
 // macro => d = { ... }
-double hb_get_rev_double(const HB_BYTE *ptr)
+double hb_get_rev_double(const uint8_t *ptr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_get_rev_double(%p)", static_cast<const void*>(ptr)));
@@ -210,7 +210,7 @@ double hb_get_rev_double(const HB_BYTE *ptr)
 #else
     union {
       double dbl;
-      HB_BYTE buffer[8];
+      uint8_t buffer[8];
     } u;
 
     u.buffer[0] = ptr[7];
@@ -227,7 +227,7 @@ double hb_get_rev_double(const HB_BYTE *ptr)
   }
 }
 
-double hb_get_std_double(const HB_BYTE *ptr)
+double hb_get_std_double(const uint8_t *ptr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_get_std_double(%p)", static_cast<const void*>(ptr)));
@@ -239,7 +239,7 @@ double hb_get_std_double(const HB_BYTE *ptr)
 #else
     union {
       double dbl;
-      HB_BYTE buffer[8];
+      uint8_t buffer[8];
     } u;
 
     u.buffer[0] = ptr[0];
@@ -262,7 +262,7 @@ double hb_get_std_double(const HB_BYTE *ptr)
 // 64 but integer values. So the convert them to/from 'double'
 // values. They are necessary for extracting such number from PCODE,
 // databases or serialization streams in RPC
-double hb_get_le_uint64(const HB_BYTE *ptr)
+double hb_get_le_uint64(const uint8_t *ptr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_get_le_uint64(%p)", static_cast<const void*>(ptr)));
@@ -273,7 +273,7 @@ double hb_get_le_uint64(const HB_BYTE *ptr)
   return ldexp(static_cast<double>(l2), 32) + static_cast<double>(l1);
 }
 
-double hb_get_le_int64(const HB_BYTE *ptr)
+double hb_get_le_int64(const uint8_t *ptr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_get_le_int64(%p)", static_cast<const void*>(ptr)));
@@ -284,7 +284,7 @@ double hb_get_le_int64(const HB_BYTE *ptr)
   return ldexp(static_cast<double>(l2), 32) + static_cast<double>(l1);
 }
 
-void hb_put_le_uint64(const HB_BYTE *ptr, double d)
+void hb_put_le_uint64(const uint8_t *ptr, double d)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_put_le_uint64(%p)", static_cast<const void*>(ptr)));

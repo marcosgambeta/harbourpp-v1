@@ -121,7 +121,7 @@ static const char * s_OperTable[HB_EXPR_COUNT] = {
 //    HB_ET_NONE is used for invalid syntax, e.g. var := var1 += 2
 
 // clang-format off
-static const HB_BYTE s_PrecedTable[HB_EXPR_COUNT] = {
+static const uint8_t s_PrecedTable[HB_EXPR_COUNT] = {
    HB_ET_NIL,                 // HB_ET_NONE = 0,
    HB_ET_NIL,                 // HB_ET_NIL,
    HB_ET_NIL,                 // HB_ET_NUMERIC,
@@ -296,7 +296,7 @@ PHB_EXPR hb_compExprNewEmpty(HB_COMP_DECL)
   return HB_COMP_EXPR_NEW(HB_ET_NONE);
 }
 
-PHB_EXPR hb_compExprNewDouble(double dValue, HB_BYTE ucWidth, HB_BYTE ucDec, HB_COMP_DECL)
+PHB_EXPR hb_compExprNewDouble(double dValue, uint8_t ucWidth, uint8_t ucDec, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewDouble(%f, %i, %p)", dValue, ucDec, static_cast<void*>(HB_COMP_PARAM)));
@@ -1105,7 +1105,7 @@ void hb_compExprDelOperator(PHB_EXPR pExpr, HB_COMP_DECL)
 // Sets the argument of an operation found previously
 PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
 {
-  HB_BYTE ucRight = s_PrecedTable[pItem->ExprType];
+  uint8_t ucRight = s_PrecedTable[pItem->ExprType];
 
   if (ucRight == HB_ET_NIL) {
     // the right side of an operator is an ordinary value
@@ -1127,7 +1127,7 @@ PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
     // e.g. a := 2 + b * 3
     //   We have to set the proper order of evaluation using
     // precedence rules
-    HB_BYTE ucLeft = s_PrecedTable[pExpr->ExprType];
+    uint8_t ucLeft = s_PrecedTable[pExpr->ExprType];
     if (ucLeft < ucRight || (ucLeft == ucRight && HB_COMP_ISSUPPORTED(HB_COMPFLAG_SHORTCUTS) &&
                              (ucLeft == HB_EO_OR || ucLeft == HB_EO_AND))) {
       // Left operator has a lower precedence then the right one
@@ -1287,7 +1287,7 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
 }
 
 // Create a new declaration for codeblock local variable
-static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, HB_BYTE bType)
+static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, uint8_t bType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprCBVarNew(%s)", szVarName));
@@ -1302,7 +1302,7 @@ static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, HB_BYTE bType)
 }
 
 // Add a new local variable declaration
-PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char *szVarName, HB_BYTE bType, HB_COMP_DECL)
+PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char *szVarName, uint8_t bType, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprCBVarAdd(%s)", szVarName));

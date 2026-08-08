@@ -168,7 +168,7 @@ PHB_EXPR hb_compExprReduceDiv(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pRight = pSelf->value.asOperator.pRight;
 
   if (pLeft->ExprType == HB_ET_NUMERIC && pRight->ExprType == HB_ET_NUMERIC) {
-    HB_BYTE bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
+    uint8_t bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
 
     switch (bType) {
     case HB_ET_LONG:
@@ -242,7 +242,7 @@ PHB_EXPR hb_compExprReduceMult(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pRight = pSelf->value.asOperator.pRight;
 
   if (pLeft->ExprType == HB_ET_NUMERIC && pRight->ExprType == HB_ET_NUMERIC) {
-    HB_BYTE bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
+    uint8_t bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
 
     switch (bType) {
     case HB_ET_LONG: {
@@ -298,7 +298,7 @@ PHB_EXPR hb_compExprReducePower(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pRight = pSelf->value.asOperator.pRight;
 
   if (pLeft->ExprType == HB_ET_NUMERIC && pRight->ExprType == HB_ET_NUMERIC) {
-    HB_BYTE bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
+    uint8_t bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
 
     switch (bType) {
     case HB_ET_LONG:
@@ -384,7 +384,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pRight = pSelf->value.asOperator.pRight;
 
   if (pLeft->ExprType == HB_ET_NUMERIC && pRight->ExprType == HB_ET_NUMERIC) {
-    HB_BYTE bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
+    uint8_t bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
 
     switch (bType) {
     case HB_ET_LONG: {
@@ -577,7 +577,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
 
   if (pLeft->ExprType == HB_ET_NUMERIC) {
     if (pRight->ExprType == HB_ET_NUMERIC) {
-      HB_BYTE bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
+      uint8_t bType = (pLeft->value.asNum.NumType & pRight->value.asNum.NumType);
 
       switch (bType) {
       case HB_ET_LONG: {
@@ -2035,7 +2035,7 @@ HB_BOOL hb_compExprReduceMIN(PHB_EXPR pSelf, HB_COMP_DECL)
   if (pFirst->ExprType == pNext->ExprType) {
 
     if (pFirst->ExprType == HB_ET_NUMERIC) {
-      HB_BYTE bType = (pFirst->value.asNum.NumType & pNext->value.asNum.NumType);
+      uint8_t bType = (pFirst->value.asNum.NumType & pNext->value.asNum.NumType);
 
       switch (bType) {
       case HB_ET_LONG:
@@ -2100,7 +2100,7 @@ HB_BOOL hb_compExprReduceMAX(PHB_EXPR pSelf, HB_COMP_DECL)
   if (pFirst->ExprType == pNext->ExprType) {
 
     if (pFirst->ExprType == HB_ET_NUMERIC) {
-      HB_BYTE bType = (pFirst->value.asNum.NumType & pNext->value.asNum.NumType);
+      uint8_t bType = (pFirst->value.asNum.NumType & pNext->value.asNum.NumType);
 
       switch (bType) {
       case HB_ET_LONG:
