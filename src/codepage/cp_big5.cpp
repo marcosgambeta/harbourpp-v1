@@ -77,7 +77,7 @@ static HB_CDP_PUT_FUNC(BIG5_put)
 {
    if( *pnIndex < nLen )
    {
-      HB_USHORT b5 = s_ucs16_to_big5(wc);
+      uint16_t b5 = s_ucs16_to_big5(wc);
 
       if( b5 )
       {
@@ -111,7 +111,7 @@ static HB_CDP_PUT_FUNC(BIG5_put)
 
 static HB_CDP_LEN_FUNC(BIG5_len)
 {
-   HB_USHORT b5 = s_ucs16_to_big5(wc);
+   uint16_t b5 = s_ucs16_to_big5(wc);
 
    HB_SYMBOL_UNUSED(cdp);
 

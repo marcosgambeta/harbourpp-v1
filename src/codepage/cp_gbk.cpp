@@ -78,7 +78,7 @@ static HB_CDP_PUT_FUNC(GBK_put)
 {
    if( *pnIndex < nLen )
    {
-      HB_USHORT gb18030 = s_ucs16_to_gbk(wc);
+      uint16_t gb18030 = s_ucs16_to_gbk(wc);
 
       if( gb18030 )
       {
@@ -112,7 +112,7 @@ static HB_CDP_PUT_FUNC(GBK_put)
 
 static HB_CDP_LEN_FUNC(GBK_len)
 {
-   HB_USHORT gb18030 = s_ucs16_to_gbk(wc);
+   uint16_t gb18030 = s_ucs16_to_gbk(wc);
 
    HB_SYMBOL_UNUSED(cdp);
 

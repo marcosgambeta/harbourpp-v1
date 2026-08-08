@@ -140,7 +140,7 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
       }
       if( wc1 != wc2 )
       {
-         HB_USHORT us1 = s_uniSort[wc1], us2 = s_uniSort[wc2];
+         uint16_t us1 = s_uniSort[wc1], us2 = s_uniSort[wc2];
          if( us1 != us2 )
          {
             iRet = us1 < us2 ? -1 : 1;
@@ -206,7 +206,7 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
       }
       if( wc1 != wc2 )
       {
-         HB_USHORT us1 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc1)], us2 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc2)];
+         uint16_t us1 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc1)], us2 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc2)];
          if( us1 != us2 )
          {
             iRet = us1 < us2 ? -1 : 1;

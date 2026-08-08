@@ -8,7 +8,7 @@ constexpr int HB_UCUP_FIRST = 0x0030; // #define HB_UCUP_FIRST   0x0030
 constexpr int HB_UCUP_LAST = 0xFF5A; // #define HB_UCUP_LAST    0xFF5A
 constexpr int HB_UCUP_BITS = 7; // #define HB_UCUP_BITS    7
 
-static const HB_USHORT s_up_idx[511] =
+static const uint16_t s_up_idx[511] =
 {
    0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
    0x0008, 0x0009, 0x000A, 0x0005, 0x0005, 0x0005, 0x0005, 0x0005,
@@ -76,7 +76,7 @@ static const HB_USHORT s_up_idx[511] =
    0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0017
 };
 
-static const HB_USHORT s_up_val[2987] =
+static const uint16_t s_up_val[2987] =
 {
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -454,7 +454,7 @@ static const HB_USHORT s_up_val[2987] =
    0xFF38, 0xFF39, 0xFF3A
 };
 
-static HB_USHORT s_uc_upper(int n)
+static uint16_t s_uc_upper(int n)
 {
    n -= HB_UCUP_FIRST;
    if( n >= 0 && n <= (HB_UCUP_LAST - HB_UCUP_FIRST) )
@@ -468,7 +468,7 @@ constexpr int HB_UCLO_FIRST = 0x0020; // #define HB_UCLO_FIRST   0x0020
 constexpr int HB_UCLO_LAST = 0xFF3A; // #define HB_UCLO_LAST    0xFF3A
 constexpr int HB_UCLO_BITS = 6; // #define HB_UCLO_BITS    6
 
-static const HB_USHORT s_lo_idx[1021] =
+static const uint16_t s_lo_idx[1021] =
 {
    0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
    0x0008, 0x0001, 0x0001, 0x0001, 0x0001, 0x0009, 0x000A, 0x000B,
@@ -600,7 +600,7 @@ static const HB_USHORT s_lo_idx[1021] =
    0x0001, 0x0001, 0x0001, 0x0001, 0x0027
 };
 
-static const HB_USHORT s_lo_val[2523] =
+static const uint16_t s_lo_val[2523] =
 {
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -920,7 +920,7 @@ static const HB_USHORT s_lo_val[2523] =
    0xFF58, 0xFF59, 0xFF5A
 };
 
-static HB_USHORT s_uc_lower(int n)
+static uint16_t s_uc_lower(int n)
 {
    n -= HB_UCLO_FIRST;
    if( n >= 0 && n <= (HB_UCLO_LAST - HB_UCLO_FIRST) )
