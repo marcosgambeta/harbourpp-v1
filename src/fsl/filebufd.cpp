@@ -114,7 +114,7 @@ static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char *pszDirName)
   return false;
 }
 
-static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, HB_USHORT uiType)
+static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, uint16_t uiType)
 {
   HB_SYMBOL_UNUSED(pFuncs);
   HB_SYMBOL_UNUSED(pszDirName);
@@ -284,7 +284,7 @@ static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset)
   return false;
 }
 
-static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
   HB_SYMBOL_UNUSED(pFile);
   HB_SYMBOL_UNUSED(nOffset);

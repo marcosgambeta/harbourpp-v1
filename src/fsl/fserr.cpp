@@ -198,7 +198,7 @@ void hb_fsSetError(HB_ERRCODE uiError)
 }
 
 // set error code for last operation
-void hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
+void hb_fsSetIOError(HB_BOOL fResult, uint16_t uiOperation)
 {
   // TODO: implement it
   HB_SYMBOL_UNUSED(uiOperation);

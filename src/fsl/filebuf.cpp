@@ -368,7 +368,7 @@ static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char *pszDirName)
   return hb_fsRmDir(pszDirName);
 }
 
-static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, HB_USHORT uiType)
+static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, uint16_t uiType)
 {
   HB_SYMBOL_UNUSED(pFuncs);
   return hb_fsDiskSpace(pszDirName, uiType);
@@ -682,7 +682,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
     hb_threadLeaveCriticalSection(&s_lockMtx);
 #endif
     if (fLockFS) {
-      hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<HB_USHORT>(iType));
+      hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<uint16_t>(iType));
 #if defined(HB_USE_CPP_MUTEX)
       lockMtx.lock();
 #else
@@ -717,7 +717,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
         iType &= ~FLX_SHARED;
       }
 #endif
-      fResult = hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<HB_USHORT>(iType));
+      fResult = hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<uint16_t>(iType));
       if (!fResult) {
 #if defined(HB_USE_CPP_MUTEX)
         lockMtx.lock();
@@ -764,7 +764,7 @@ static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
     iResult = 1;
 #endif
   } else {
-    iResult = hb_fsLockTest(pFile->hFile, nStart, nLen, static_cast<HB_USHORT>(iType));
+    iResult = hb_fsLockTest(pFile->hFile, nStart, nLen, static_cast<uint16_t>(iType));
   }
 
   hb_vmLock();
@@ -799,7 +799,7 @@ static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset)
   return hb_fsTruncAt(pFile->hFile, nOffset);
 }
 
-static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
   return hb_fsSeekLarge(pFile->hFile, nOffset, uiFlags);
 }
@@ -929,7 +929,7 @@ static HB_BOOL s_fileposTruncAt(PHB_FILE pFilePos, HB_FOFFSET nOffset)
   return false;
 }
 
-static HB_FOFFSET s_fileposSeek(PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHORT uiFlags)
+static HB_FOFFSET s_fileposSeek(PHB_FILE pFilePos, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
   if (uiFlags & FS_END) {
     nOffset += pFilePos->pFuncs->Size(pFilePos);
@@ -1152,7 +1152,7 @@ HB_BOOL hb_fileDirRemove(const char *pszDirName)
   return hb_fsRmDir(pszDirName);
 }
 
-double hb_fileDirSpace(const char *pszDirName, HB_USHORT uiType)
+double hb_fileDirSpace(const char *pszDirName, uint16_t uiType)
 {
   int i = s_fileFindDrv(pszDirName);
 
@@ -1338,7 +1338,7 @@ HB_BOOL hb_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset)
   return pFile->pFuncs->TruncAt(pFile, nOffset);
 }
 
-HB_FOFFSET hb_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
+HB_FOFFSET hb_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
   return pFile->pFuncs->Seek(pFile, nOffset, uiFlags);
 }

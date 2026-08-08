@@ -59,7 +59,7 @@ HB_FUNC(FOPEN)
   auto szFile = hb_parc(1);
 
   if (szFile != nullptr) {
-    hb_retnint(static_cast<HB_NHANDLE>(hb_fsOpen(szFile, static_cast<HB_USHORT>(hb_parnidef(2, FO_READ | FO_COMPAT)))));
+    hb_retnint(static_cast<HB_NHANDLE>(hb_fsOpen(szFile, static_cast<uint16_t>(hb_parnidef(2, FO_READ | FO_COMPAT)))));
     hb_fsSetFError(hb_fsError());
   } else {
     hb_fsSetFError(0);
@@ -87,7 +87,7 @@ HB_FUNC(HB_FCREATE)
 
   if (szFile != nullptr) {
     hb_retnint(static_cast<HB_NHANDLE>(
-        hb_fsCreateEx(szFile, hb_parnidef(2, FC_NORMAL), static_cast<HB_USHORT>(hb_parnidef(3, FO_COMPAT)))));
+        hb_fsCreateEx(szFile, hb_parnidef(2, FC_NORMAL), static_cast<uint16_t>(hb_parnidef(3, FO_COMPAT)))));
     hb_fsSetFError(hb_fsError());
   } else {
     hb_retni(F_ERROR);
@@ -200,7 +200,7 @@ HB_FUNC(FSEEK)
 
   if (HB_ISNUM(1) && HB_ISNUM(2)) {
     hb_retnint(
-        hb_fsSeekLarge(hb_numToHandle(hb_parnint(1)), hb_parnint(2), static_cast<HB_USHORT>(hb_parnidef(3, FS_SET))));
+        hb_fsSeekLarge(hb_numToHandle(hb_parnint(1)), hb_parnint(2), static_cast<uint16_t>(hb_parnidef(3, FS_SET))));
     uiError = hb_fsError();
   } else {
     hb_retni(0);
@@ -301,7 +301,7 @@ HB_FUNC(HB_CURDRIVE)
 
     if (iDrive >= 0) {
       while (hb_fsChDrv(iDrive) != 0) {
-        HB_USHORT uiAction = hb_errRT_BASE_Ext1(EG_OPEN, 6001, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY,
+        uint16_t uiAction = hb_errRT_BASE_Ext1(EG_OPEN, 6001, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY,
                                                 HB_ERR_ARGS_BASEPARAMS);
         if (uiAction != E_RETRY) {
           break;
@@ -371,7 +371,7 @@ HB_FUNC(HB_FLOCK)
   if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     fResult = hb_fsLockLarge(hb_numToHandle(hb_parnint(1)), static_cast<HB_FOFFSET>(hb_parnint(2)),
                              static_cast<HB_FOFFSET>(hb_parnint(3)),
-                             FL_LOCK | (static_cast<HB_USHORT>(hb_parni(4)) & ~FL_MASK));
+                             FL_LOCK | (static_cast<uint16_t>(hb_parni(4)) & ~FL_MASK));
     uiError = hb_fsError();
   }
   hb_fsSetFError(uiError);

@@ -65,7 +65,7 @@
 #include "hbwinuni.hpp"
 #endif
 
-double hb_fsDiskSpace(const char *pszPath, HB_USHORT uiType)
+double hb_fsDiskSpace(const char *pszPath, uint16_t uiType)
 {
   char szPathBuf[2];
   double dSpace = 0.0;
@@ -196,7 +196,7 @@ double hb_fsDiskSpace(const char *pszPath, HB_USHORT uiType)
 HB_FUNC(HB_DISKSPACE)
 {
   auto pszPath = hb_parc(1);
-  auto uiType = static_cast<HB_USHORT>(hb_parnidef(2, HB_DISK_AVAIL));
+  auto uiType = static_cast<uint16_t>(hb_parnidef(2, HB_DISK_AVAIL));
 
 #ifdef HB_OS_HAS_DRIVE_LETTER
   char szPathBuf[4];

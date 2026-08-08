@@ -165,7 +165,7 @@ HB_BOOL hb_spFileExists(const char *pszFileName, char *pszRetPath)
   return bIsFile;
 }
 
-HB_FHANDLE hb_spOpen(const char *pszFileName, HB_USHORT uiFlags)
+HB_FHANDLE hb_spOpen(const char *pszFileName, uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_spOpen(%p, %hu)", static_cast<const void*>(pszFileName), uiFlags));
@@ -196,7 +196,7 @@ HB_FHANDLE hb_spCreate(const char *pszFileName, HB_FATTR ulAttr)
   return hb_fsCreate(szPath, ulAttr);
 }
 
-HB_FHANDLE hb_spCreateEx(const char *pszFileName, HB_FATTR ulAttr, HB_USHORT uiFlags)
+HB_FHANDLE hb_spCreateEx(const char *pszFileName, HB_FATTR ulAttr, uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_spCreateEx(%p, %u, %hu)", static_cast<const void*>(pszFileName), ulAttr, uiFlags));

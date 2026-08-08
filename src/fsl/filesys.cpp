@@ -345,7 +345,7 @@ static HANDLE DosToWinHandle(HB_FHANDLE fHandle)
   return reinterpret_cast<HANDLE>(fHandle);
 }
 
-static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, DWORD *dwMode, DWORD *dwShare,
+static void convert_open_flags(bool fCreate, HB_FATTR nAttr, uint16_t uiFlags, DWORD *dwMode, DWORD *dwShare,
                                DWORD *dwCreat, DWORD *dwAttr)
 {
   if (fCreate) {
@@ -415,7 +415,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
 
 #else
 
-static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, int *flags, unsigned *mode, int *share,
+static void convert_open_flags(bool fCreate, HB_FATTR nAttr, uint16_t uiFlags, int *flags, unsigned *mode, int *share,
                                int *attr)
 {
 #if 0
@@ -510,14 +510,14 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
 }
 #endif
 
-static HB_USHORT convert_seek_flags(HB_USHORT uiFlags)
+static uint16_t convert_seek_flags(uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("convert_seek_flags(%hu)", uiFlags));
 #endif
 
   // by default FS_SET is set
-  HB_USHORT result_flags = SEEK_SET;
+  uint16_t result_flags = SEEK_SET;
 
   if (uiFlags & FS_RELATIVE) {
     result_flags = SEEK_CUR;
@@ -1285,7 +1285,7 @@ HB_FHANDLE hb_fsCreate(const char *pszFileName, HB_FATTR nAttr)
   return hb_fsOpenEx(pszFileName, FO_READWRITE | FO_CREAT | FO_TRUNC | FO_EXCLUSIVE, nAttr);
 }
 
-HB_FHANDLE hb_fsCreateEx(const char *pszFileName, HB_FATTR nAttr, HB_USHORT uiFlags)
+HB_FHANDLE hb_fsCreateEx(const char *pszFileName, HB_FATTR nAttr, uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsCreateEx(%s, %u, %hu)", pszFileName, nAttr, uiFlags));
@@ -1296,7 +1296,7 @@ HB_FHANDLE hb_fsCreateEx(const char *pszFileName, HB_FATTR nAttr, HB_USHORT uiFl
   return hb_fsOpenEx(pszFileName, FO_READWRITE | FO_CREAT | FO_TRUNC | uiFlags, nAttr);
 }
 
-HB_FHANDLE hb_fsOpen(const char *pszFileName, HB_USHORT uiFlags)
+HB_FHANDLE hb_fsOpen(const char *pszFileName, uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsOpen(%s, %hu)", pszFileName, uiFlags));
@@ -1305,7 +1305,7 @@ HB_FHANDLE hb_fsOpen(const char *pszFileName, HB_USHORT uiFlags)
   return hb_fsOpenEx(pszFileName, uiFlags, FC_NORMAL);
 }
 
-HB_FHANDLE hb_fsOpenEx(const char *pszFileName, HB_USHORT uiFlags, HB_FATTR nAttr)
+HB_FHANDLE hb_fsOpenEx(const char *pszFileName, uint16_t uiFlags, HB_FATTR nAttr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsOpenEx(%s, %hu, %u)", pszFileName, uiFlags, nAttr));
@@ -1812,13 +1812,13 @@ HB_BOOL hb_fsSetAttr(const char *pszFileName, HB_FATTR nAttr)
   return fResult;
 }
 
-HB_USHORT hb_fsRead(HB_FHANDLE hFileHandle, void *pBuff, HB_USHORT uiCount)
+uint16_t hb_fsRead(HB_FHANDLE hFileHandle, void *pBuff, uint16_t uiCount)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsRead(%p, %p, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, uiCount));
 #endif
 
-  HB_USHORT uiRead;
+  uint16_t uiRead;
 
   hb_vmUnlock();
 
@@ -1830,13 +1830,13 @@ HB_USHORT hb_fsRead(HB_FHANDLE hFileHandle, void *pBuff, HB_USHORT uiCount)
     bResult = ReadFile(DosToWinHandle(hFileHandle), pBuff, static_cast<DWORD>(uiCount), &dwRead, nullptr);
     hb_fsSetIOError(bResult != 0, 0);
 
-    uiRead = bResult ? static_cast<HB_USHORT>(dwRead) : 0;
+    uiRead = bResult ? static_cast<uint16_t>(dwRead) : 0;
   }
 #else
   {
     long lRead;
     HB_FAILURE_RETRY(lRead, read(hFileHandle, pBuff, uiCount));
-    uiRead = lRead == -1 ? 0 : static_cast<HB_USHORT>(lRead);
+    uiRead = lRead == -1 ? 0 : static_cast<uint16_t>(lRead);
   }
 #endif
 
@@ -1845,13 +1845,13 @@ HB_USHORT hb_fsRead(HB_FHANDLE hFileHandle, void *pBuff, HB_USHORT uiCount)
   return uiRead;
 }
 
-HB_USHORT hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, HB_USHORT uiCount)
+uint16_t hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, uint16_t uiCount)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsWrite(%p, %p, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, uiCount));
 #endif
 
-  HB_USHORT uiWritten = 0;
+  uint16_t uiWritten = 0;
 
   hb_vmUnlock();
 
@@ -1862,7 +1862,7 @@ HB_USHORT hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, HB_USHORT uiCoun
     if (uiCount) {
       DWORD dwWritten = 0;
       bResult = WriteFile(DosToWinHandle(hFileHandle), pBuff, uiCount, &dwWritten, nullptr);
-      uiWritten = bResult ? static_cast<HB_USHORT>(dwWritten) : 0;
+      uiWritten = bResult ? static_cast<uint16_t>(dwWritten) : 0;
     } else {
       bResult = SetEndOfFile(DosToWinHandle(hFileHandle));
     }
@@ -1872,7 +1872,7 @@ HB_USHORT hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, HB_USHORT uiCoun
   if (uiCount) {
     long lWritten;
     HB_FAILURE_RETRY(lWritten, write(hFileHandle, pBuff, uiCount));
-    uiWritten = lWritten == -1 ? 0 : static_cast<HB_USHORT>(lWritten);
+    uiWritten = lWritten == -1 ? 0 : static_cast<uint16_t>(lWritten);
   } else {
     int iResult;
 #if defined(HB_USE_LARGEFILE64)
@@ -2424,7 +2424,7 @@ void hb_fsCommit(HB_FHANDLE hFileHandle)
   hb_vmLock();
 }
 
-HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, HB_USHORT uiMode)
+HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, uint16_t uiMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsLock(%p, %lu, %lu, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), ulStart, ulLength, uiMode));
@@ -2569,7 +2569,7 @@ HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, H
   return fResult;
 }
 
-HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, HB_USHORT uiMode)
+HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, uint16_t uiMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsLockLarge(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nStart, nLength, uiMode));
@@ -2670,7 +2670,7 @@ HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLe
   return fResult;
 }
 
-int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, HB_USHORT uiMode)
+int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, uint16_t uiMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsLockTest(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nStart, nLength, uiMode));
@@ -2715,14 +2715,14 @@ int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength,
   return iResult;
 }
 
-HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags)
+HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSeek(%p, %ld, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), lOffset, uiFlags));
 #endif
 
   HB_ULONG ulPos;
-  HB_USHORT nFlags;
+  uint16_t nFlags;
 
   nFlags = convert_seek_flags(uiFlags);
 
@@ -2777,7 +2777,7 @@ HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags)
   return ulPos;
 }
 
-HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT uiFlags)
+HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSeekLarge(%p, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nOffset, uiFlags));
@@ -2787,7 +2787,7 @@ HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT 
 
 #if defined(HB_OS_WIN)
   {
-    HB_USHORT nFlags = convert_seek_flags(uiFlags);
+    uint16_t nFlags = convert_seek_flags(uiFlags);
 
     auto ulOffsetLow = static_cast<ULONG>(nOffset & 0xFFFFFFFF);
     auto ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
@@ -2820,7 +2820,7 @@ HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT 
   }
 #elif defined(HB_USE_LARGEFILE64)
   {
-    HB_USHORT nFlags = convert_seek_flags(uiFlags);
+    uint16_t nFlags = convert_seek_flags(uiFlags);
 
     hb_vmUnlock();
     if (nOffset < 0 && nFlags == SEEK_SET) {
@@ -3626,7 +3626,7 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
 #endif
 
   HB_FHANDLE hFile;
-  HB_USHORT uiFlags;
+  uint16_t uiFlags;
   const char *szPath;
   char *szFree = nullptr;
 
@@ -3651,7 +3651,7 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
     szPath = pszFileName;
   }
 
-  uiFlags = static_cast<HB_USHORT>(nExFlags & 0xff);
+  uiFlags = static_cast<uint16_t>(nExFlags & 0xff);
   if (nExFlags & (FXO_TRUNCATE | FXO_APPEND | FXO_UNIQUE)) {
     uiFlags |= FO_CREAT;
     if (nExFlags & FXO_UNIQUE) {
@@ -3684,7 +3684,7 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
     hb_vmLock();
     if (iResult != 0)
 #else
-    HB_USHORT uiLock;
+    uint16_t uiLock;
     if ((uiFlags & (FO_READ | FO_WRITE | FO_READWRITE)) == FO_READ ||
         (uiFlags & (FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE)) == 0) {
       uiLock = FL_LOCK | FLX_SHARED;
