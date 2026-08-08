@@ -9185,7 +9185,7 @@ void hb_xvmParameter(PHB_SYMB pSymbol, int32_t iParams)
   hb_memvarNewParameter(pSymbol, hb_stackItemFromBase(iParams));
 }
 
-void hb_xvmPushLocal(HB_SHORT iLocal)
+void hb_xvmPushLocal(int16_t iLocal)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLocal(%hd)", iLocal));
@@ -9194,7 +9194,7 @@ void hb_xvmPushLocal(HB_SHORT iLocal)
   hb_vmPushLocal(iLocal);
 }
 
-void hb_xvmPushLocalByRef(HB_SHORT iLocal)
+void hb_xvmPushLocalByRef(int16_t iLocal)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLocalByRef(%hd)", iLocal));
@@ -9203,7 +9203,7 @@ void hb_xvmPushLocalByRef(HB_SHORT iLocal)
   hb_vmPushLocalByRef(iLocal);
 }
 
-void hb_xvmPopLocal(HB_SHORT iLocal)
+void hb_xvmPopLocal(int16_t iLocal)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPopLocal(%hd)", iLocal));
