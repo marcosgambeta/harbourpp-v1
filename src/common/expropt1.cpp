@@ -194,23 +194,23 @@ const char *hb_compExprDescription(PHB_EXPR pExpr)
   }
 }
 
-int hb_compExprType(PHB_EXPR pExpr)
+int32_t hb_compExprType(PHB_EXPR pExpr)
 {
   return static_cast<int>(pExpr->ExprType);
 }
 
-int hb_compExprIsInteger(PHB_EXPR pExpr)
+int32_t hb_compExprIsInteger(PHB_EXPR pExpr)
 {
   return pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG &&
          HB_LIM_INT16(pExpr->value.asNum.val.l);
 }
 
-int hb_compExprIsLong(PHB_EXPR pExpr)
+int32_t hb_compExprIsLong(PHB_EXPR pExpr)
 {
   return pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG;
 }
 
-int hb_compExprIsString(PHB_EXPR pExpr)
+int32_t hb_compExprIsString(PHB_EXPR pExpr)
 {
   return pExpr->ExprType == HB_ET_STRING;
 }
@@ -231,7 +231,7 @@ HB_SIZE hb_compExprAsStringLen(PHB_EXPR pExpr)
   return 0;
 }
 
-int hb_compExprAsNumSign(PHB_EXPR pExpr)
+int32_t hb_compExprAsNumSign(PHB_EXPR pExpr)
 {
   if (pExpr->ExprType == HB_ET_NUMERIC) {
     if (pExpr->value.asNum.NumType == HB_ET_DOUBLE) {
@@ -251,7 +251,7 @@ int hb_compExprAsNumSign(PHB_EXPR pExpr)
   return 0;
 }
 
-int hb_compExprAsInteger(PHB_EXPR pExpr)
+int32_t hb_compExprAsInteger(PHB_EXPR pExpr)
 {
   if (pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG) {
     return static_cast<int>(pExpr->value.asNum.val.l);
@@ -439,7 +439,7 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
   return pHashList;
 }
 
-PHB_EXPR hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int iFlags, HB_COMP_DECL)
+PHB_EXPR hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int32_t iFlags, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewCodeBlock(%s,%" HB_PFS "u,%d,%p)", string ? string : "(null)", nLen, iFlags, static_cast<void*>(HB_COMP_PARAM)));
@@ -473,7 +473,7 @@ PHB_EXPR hb_compExprAddCodeblockExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
   return pList;
 }
 
-PHB_EXPR hb_compExprNewLogical(int iValue, HB_COMP_DECL)
+PHB_EXPR hb_compExprNewLogical(int32_t iValue, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewLogical(%i,%p)", iValue, static_cast<void*>(HB_COMP_PARAM)));
@@ -1055,13 +1055,13 @@ PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
   if (pNegExpr->ExprType == HB_ET_NUMERIC) {
     if (pNegExpr->value.asNum.NumType == HB_ET_DOUBLE) {
       pNegExpr->value.asNum.val.d = -pNegExpr->value.asNum.val.d;
-      pNegExpr->value.asNum.bWidth = static_cast<HB_UCHAR>(HB_DBL_LENGTH(pNegExpr->value.asNum.val.d));
+      pNegExpr->value.asNum.bWidth = static_cast<uint8_t>(HB_DBL_LENGTH(pNegExpr->value.asNum.val.d));
     } else {
 #if - HB_VMLONG_MAX > HB_VMLONG_MIN
       if (pNegExpr->value.asNum.val.l < -HB_VMLONG_MAX) {
         pNegExpr->value.asNum.NumType = HB_ET_DOUBLE;
         pNegExpr->value.asNum.val.d = -static_cast<double>(pNegExpr->value.asNum.val.l);
-        pNegExpr->value.asNum.bWidth = static_cast<HB_UCHAR>(HB_DBL_LENGTH(pNegExpr->value.asNum.val.d));
+        pNegExpr->value.asNum.bWidth = static_cast<uint8_t>(HB_DBL_LENGTH(pNegExpr->value.asNum.val.d));
         pNegExpr->value.asNum.bDec = 0;
       } else
 #endif

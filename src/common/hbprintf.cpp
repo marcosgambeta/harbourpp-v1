@@ -169,8 +169,8 @@
 #define _x_longlong long
 #define _x_ulonglong unsigned long
 #endif
-#define _x_int int
-#define _x_uint unsigned int
+#define _x_int int32_t
+#define _x_uint uint32_t
 #define _x_ulong unsigned long
 #define _x_long long
 #define _x_intmax_t intmax_t
@@ -181,7 +181,7 @@
 #define _x_str char *
 #define _x_wchar wchar_t
 #define _x_wstr _x_wchar *
-#define _x_intptr int *
+#define _x_intptr int32_t *
 
 #define v_x_int 1
 #define v_x_uint 2
@@ -221,14 +221,14 @@ union x_type {
 
 struct v_param
 {
-  int id;
+  int32_t id;
   x_type value;
 };
 
 struct v_paramlst
 {
-  int maxarg;
-  int size;
+  int32_t maxarg;
+  int32_t size;
   bool repeat;
   v_param *arglst;
 };
@@ -254,7 +254,7 @@ struct v_paramlst
     if (n == 0) {                                                                                                      \
       result = va_arg(va, type);                                                                                       \
     } else {                                                                                                           \
-      int count = (n);                                                                                                 \
+      int32_t count = (n);                                                                                                 \
       va_list ap;                                                                                                      \
       va_start(ap, format);                                                                                            \
       do {                                                                                                             \
@@ -269,7 +269,7 @@ struct v_paramlst
 
 #define va_arg_n(va, type, n) (n == 0 ? va_arg(va, type) : va_arg_get(n, &params, v##type)->value.as##type)
 
-static v_param *va_arg_get(int iArg, v_paramlst *plst, int iType)
+static v_param *va_arg_get(int32_t iArg, v_paramlst *plst, int32_t iType)
 {
   if (plst->maxarg == 0) {
     plst->repeat = true;
@@ -280,7 +280,7 @@ static v_param *va_arg_get(int iArg, v_paramlst *plst, int iType)
       plst->maxarg = iArg;
     }
     if (iArg > plst->size) {
-      int prev_size = plst->size;
+      int32_t prev_size = plst->size;
 
       plst->size = iArg + _ARGBUF_ALLOC;
       if (prev_size == _ARGBUF_SIZE) {
@@ -364,7 +364,7 @@ _x_long_dbl _hb_modfl(_x_long_dbl x, _x_long_dbl *p)
 }
 #endif
 
-static char get_decimal(char c, const char **format, int *result)
+static char get_decimal(char c, const char **format, int32_t *result)
 {
   *result = c - '0';
   while ((c = *(*format)++) >= '0' && c <= '9') {
@@ -374,10 +374,10 @@ static char get_decimal(char c, const char **format, int *result)
   return c;
 }
 
-static size_t put_octal(char *buffer, size_t bufsize, size_t size, uintmax_t value, int flags, int width, int precision)
+static size_t put_octal(char *buffer, size_t bufsize, size_t size, uintmax_t value, int32_t flags, int32_t width, int32_t precision)
 {
   uintmax_t v = value;
-  int nums = 0;
+  int32_t nums = 0;
 
   while (v) {
     ++nums;
@@ -402,7 +402,7 @@ static size_t put_octal(char *buffer, size_t bufsize, size_t size, uintmax_t val
     }
   }
   if (nums) {
-    int n = nums;
+    int32_t n = nums;
     do {
       char c = static_cast<char>(value & 0x7) + '0';
       value >>= 3;
@@ -424,11 +424,11 @@ static size_t put_octal(char *buffer, size_t bufsize, size_t size, uintmax_t val
   return size;
 }
 
-static size_t put_dec(char *buffer, size_t bufsize, size_t size, uintmax_t value, int flags, int width, int precision,
-                      int sign)
+static size_t put_dec(char *buffer, size_t bufsize, size_t size, uintmax_t value, int32_t flags, int32_t width, int32_t precision,
+                      int32_t sign)
 {
   uintmax_t v = value;
-  int nums = 0;
+  int32_t nums = 0;
 
   while (v) {
     ++nums;
@@ -463,7 +463,7 @@ static size_t put_dec(char *buffer, size_t bufsize, size_t size, uintmax_t value
     ++size;
   }
   if (nums) {
-    int n = nums;
+    int32_t n = nums;
     do {
       char c = static_cast<char>(value % 10) + '0';
       value /= 10;
@@ -486,10 +486,10 @@ static size_t put_dec(char *buffer, size_t bufsize, size_t size, uintmax_t value
 }
 
 #ifndef __NO_DOUBLE__
-static size_t put_dbl(char *buffer, size_t bufsize, size_t size, _x_long_dbl value, int flags, int width, int precision)
+static size_t put_dbl(char *buffer, size_t bufsize, size_t size, _x_long_dbl value, int32_t flags, int32_t width, int32_t precision)
 {
   _x_long_dbl dInt, dFract;
-  int sign, nums = 0, n;
+  int32_t sign, nums = 0, n;
   char c;
 
   if (precision < 0) {
@@ -590,11 +590,11 @@ static size_t put_dbl(char *buffer, size_t bufsize, size_t size, _x_long_dbl val
 }
 #endif
 
-static size_t put_hex(char *buffer, size_t bufsize, size_t size, uintmax_t value, int flags, int width, int precision,
-                      int upper)
+static size_t put_hex(char *buffer, size_t bufsize, size_t size, uintmax_t value, int32_t flags, int32_t width, int32_t precision,
+                      int32_t upper)
 {
   uintmax_t v = value;
-  int nums = 0;
+  int32_t nums = 0;
 
   while (v) {
     ++nums;
@@ -639,7 +639,7 @@ static size_t put_hex(char *buffer, size_t bufsize, size_t size, uintmax_t value
     }
   }
   if (nums) {
-    int n = nums;
+    int32_t n = nums;
     do {
       char c = static_cast<char>(value & 0x0f) + '0';
       if (c > '9') {
@@ -664,9 +664,9 @@ static size_t put_hex(char *buffer, size_t bufsize, size_t size, uintmax_t value
   return size;
 }
 
-static int _hb_strnlen(const char *str, int len)
+static int32_t _hb_strnlen(const char *str, int32_t len)
 {
-  int i = 0;
+  int32_t i = 0;
 
   while (len-- && *str++) {
     ++i;
@@ -675,7 +675,7 @@ static int _hb_strnlen(const char *str, int len)
   return i;
 }
 
-static size_t put_str(char *buffer, size_t bufsize, size_t size, const _x_str str, int flags, int width, int precision)
+static size_t put_str(char *buffer, size_t bufsize, size_t size, const _x_str str, int32_t flags, int32_t width, int32_t precision)
 {
   if (!str) {
     str = "(null)";
@@ -714,8 +714,8 @@ static size_t put_str(char *buffer, size_t bufsize, size_t size, const _x_str st
   return size;
 }
 
-static size_t put_wstr(char *buffer, size_t bufsize, size_t size, const _x_wstr wstr, int flags, int width,
-                       int precision)
+static size_t put_wstr(char *buffer, size_t bufsize, size_t size, const _x_wstr wstr, int32_t flags, int32_t width,
+                       int32_t precision)
 {
   const _x_wchar wstr_null[] = {'(', 'n', 'u', 'l', 'l', ')', 0};
 
@@ -729,7 +729,7 @@ static size_t put_wstr(char *buffer, size_t bufsize, size_t size, const _x_wstr 
       ++precision;
     }
   } else if (precision > 0) {
-    int precision_ori = precision;
+    int32_t precision_ori = precision;
     precision = 0;
     while (precision < precision_ori && wstr[precision]) {
       ++precision;
@@ -764,16 +764,16 @@ static size_t put_wstr(char *buffer, size_t bufsize, size_t size, const _x_wstr 
   return size;
 }
 
-int hb_printf_params(const char *format)
+int32_t hb_printf_params(const char *format)
 {
-  int iParam = 0, iMax = 0;
+  int32_t iParam = 0, iMax = 0;
   char c;
 
   do {
     c = *format++;
     if (c == '%') {
       const char *pattern = format;
-      int value, param = 0;
+      int32_t value, param = 0;
 
       c = *format++;
       if (c != 0 && c != '%') {
@@ -933,7 +933,7 @@ int hb_printf_params(const char *format)
   return iParam > iMax ? iParam : iMax;
 }
 
-int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
+int32_t hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
 {
   va_list args;
   size_t size;
@@ -971,7 +971,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
         if (c != 0 && c != '%') {
           // decode pattern
           v_param argval;
-          int param = 0, flags = 0, width = -1, precision = -1, length, value, stop = 0;
+          int32_t param = 0, flags = 0, width = -1, precision = -1, length, value, stop = 0;
 
           // parameter position
           if (c >= '0' && c <= '9') {
@@ -1245,7 +1245,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               size = put_str(buffer, bufsize, size, argval.value.as_x_str, flags, width, precision);
             }
             continue;
-          case 'n': // store current result size in int * arg
+          case 'n': // store current result size in int32_t * arg
             // This is very danger feature in *printf() functions
             // family very often used by hackers to create buffer
             // overflows. It can also cause unintentional memory
@@ -1299,9 +1299,9 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
 #undef _HB_SNPRINTF_ADD_EOS
 
 // NOTE: The full size of the buffer is expected as nSize. [vszakats]
-int hb_vsnprintf(char *buffer, size_t nSize, const char *format, va_list arglist)
+int32_t hb_vsnprintf(char *buffer, size_t nSize, const char *format, va_list arglist)
 {
-  int result;
+  int32_t result;
 
 #if defined(_MSC_VER) && _MSC_VER >= 1400
   result = _vsnprintf_s(buffer, nSize, _TRUNCATE, format, arglist);
@@ -1323,10 +1323,10 @@ int hb_vsnprintf(char *buffer, size_t nSize, const char *format, va_list arglist
 
 #endif // HB_USE_CRTL_SNPRINTF
 
-int hb_snprintf(char *buffer, size_t bufsize, const char *format, ...)
+int32_t hb_snprintf(char *buffer, size_t bufsize, const char *format, ...)
 {
   va_list ap;
-  int iResult;
+  int32_t iResult;
 
   va_start(ap, format);
   iResult = hb_vsnprintf(buffer, bufsize, format, ap);

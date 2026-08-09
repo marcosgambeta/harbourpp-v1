@@ -98,7 +98,7 @@ char *hb_getenv(const char *szName)
   return pszBuffer;
 }
 
-HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int nSize)
+HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int32_t nSize)
 {
   auto fRetVal = false;
 
@@ -222,7 +222,7 @@ HB_BOOL hb_setenv(const char *szName, const char *szValue)
   // then please simply added C compiler with necessary OS/version checking
   // to the above #elif ... to eliminate warning [druzus]
 
-  int iTODO;
+  int32_t iTODO;
 
   HB_SYMBOL_UNUSED(szValue);
 

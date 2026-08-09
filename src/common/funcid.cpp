@@ -50,8 +50,8 @@
 struct _HB_FUNCID
 {
   const char *szFuncName;
-  int iMinLen;
-  int flags;
+  int32_t iMinLen;
+  int32_t flags;
   HB_FUNC_ID funcID;
 };
 
@@ -154,10 +154,10 @@ static _HB_FUNCID s_funcId[] =
 };
 // clang-format on
 
-const char *hb_compGetFuncID(const char *szFuncName, HB_FUNC_ID *pFunID, int *piFlags)
+const char *hb_compGetFuncID(const char *szFuncName, HB_FUNC_ID *pFunID, int32_t *piFlags)
 {
-  unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_funcId) - 1, uiMiddle;
-  int i;
+  uint32_t uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_funcId) - 1, uiMiddle;
+  int32_t i;
 
   do {
     uiMiddle = (uiFirst + uiLast) >> 1;

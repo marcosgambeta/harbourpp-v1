@@ -62,7 +62,7 @@ static HB_SIZE hb_wcnlen(const wchar_t *szText, HB_SIZE nCount)
   return nLen;
 }
 
-int hb_wctomblen(const wchar_t *szText)
+int32_t hb_wctomblen(const wchar_t *szText)
 {
   return WideCharToMultiByte(CP_ACP, 0, szText, -1, nullptr, 0, nullptr, nullptr) - 1;
 }
@@ -81,7 +81,7 @@ void hb_mbntowccpy(wchar_t *dstW, const char *srcA, HB_SIZE nLen)
 
 wchar_t *hb_mbtowc(const char *srcA)
 {
-  int length = MultiByteToWideChar(CP_ACP, 0, srcA, -1, nullptr, 0);
+  int32_t length = MultiByteToWideChar(CP_ACP, 0, srcA, -1, nullptr, 0);
   auto dstW = static_cast<wchar_t *>(hb_xgrab(length * sizeof(wchar_t)));
   MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, length);
   return dstW;
@@ -89,7 +89,7 @@ wchar_t *hb_mbtowc(const char *srcA)
 
 char *hb_wctomb(const wchar_t *srcW)
 {
-  int length = WideCharToMultiByte(CP_ACP, 0, srcW, -1, nullptr, 0, nullptr, nullptr);
+  int32_t length = WideCharToMultiByte(CP_ACP, 0, srcW, -1, nullptr, 0, nullptr, nullptr);
   auto dstA = static_cast<char *>(hb_xgrab(length));
   WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, length, nullptr, nullptr);
   return dstA;
@@ -98,7 +98,7 @@ char *hb_wctomb(const wchar_t *srcW)
 wchar_t *hb_mbntowc(const char *srcA, HB_SIZE nLen)
 {
   nLen = hb_strnlen(srcA, nLen);
-  int length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), nullptr, 0);
+  int32_t length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), nullptr, 0);
   auto dstW = static_cast<wchar_t *>(hb_xgrab((length + 1) * sizeof(wchar_t)));
   MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), dstW, length);
   dstW[length] = L'\0';
@@ -108,7 +108,7 @@ wchar_t *hb_mbntowc(const char *srcA, HB_SIZE nLen)
 char *hb_wcntomb(const wchar_t *srcW, HB_SIZE nLen)
 {
   nLen = hb_wcnlen(srcW, nLen);
-  int length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
+  int32_t length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
   auto dstA = static_cast<char *>(hb_xgrab(length + 1));
   WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), dstA, length, nullptr, nullptr);
   dstA[length] = '\0';

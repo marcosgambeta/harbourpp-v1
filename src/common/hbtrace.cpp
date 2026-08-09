@@ -70,10 +70,10 @@
 #endif
 #endif
 
-static int s_enabled = 1;
-static int s_level = -1;
-static int s_flush = -1;
-static int s_sysout = -1;
+static int32_t s_enabled = 1;
+static int32_t s_level = -1;
+static int32_t s_flush = -1;
+static int32_t s_sysout = -1;
 static const char *s_mode = "w";
 
 static FILE *s_fp = nullptr;
@@ -81,9 +81,9 @@ static FILE *s_fp = nullptr;
 static const char *s_slevel[HB_TR_LAST] = {"HB_TR_ALWAYS",  "HB_TR_FATAL", "HB_TR_ERROR",
                                            "HB_TR_WARNING", "HB_TR_INFO",  "HB_TR_DEBUG"};
 
-int hb_tracestate(int new_state)
+int32_t hb_tracestate(int32_t new_state)
 {
-  int old_state = s_enabled;
+  int32_t old_state = s_enabled;
 
   if (new_state == 0 || new_state == 1) {
     s_enabled = new_state;
@@ -92,9 +92,9 @@ int hb_tracestate(int new_state)
   return old_state;
 }
 
-int hb_tracelevel(int new_level)
+int32_t hb_tracelevel(int32_t new_level)
 {
-  int old_level = hb_tr_level();
+  int32_t old_level = hb_tr_level();
 
   if (new_level >= HB_TR_ALWAYS && new_level < HB_TR_LAST) {
     s_level = new_level;
@@ -138,9 +138,9 @@ HB_BOOL hb_tracefile(const char *szFile)
   return false;
 }
 
-int hb_traceflush(int new_flush)
+int32_t hb_traceflush(int32_t new_flush)
 {
-  int old_flush = HB_MAX(s_flush, 0);
+  int32_t old_flush = HB_MAX(s_flush, 0);
 
   if (new_flush == 0 || new_flush == 1) {
     s_flush = new_flush;
@@ -149,9 +149,9 @@ int hb_traceflush(int new_flush)
   return old_flush;
 }
 
-int hb_tracesysout(int new_sysout)
+int32_t hb_tracesysout(int32_t new_sysout)
 {
-  int old_sysout = HB_MAX(s_sysout, 0);
+  int32_t old_sysout = HB_MAX(s_sysout, 0);
 
   if (new_sysout == 0 || new_sysout == 1) {
     s_sysout = new_sysout;
@@ -160,11 +160,11 @@ int hb_tracesysout(int new_sysout)
   return old_sysout;
 }
 
-int hb_tr_level(void)
+int32_t hb_tr_level(void)
 {
   if (s_level == -1) {
     char env[HB_PATH_MAX];
-    int enabled = s_enabled;
+    int32_t enabled = s_enabled;
 
     // protection against recursive or concurrent calls
     s_enabled = 0;
@@ -184,7 +184,7 @@ int hb_tr_level(void)
     }
 
     if (hb_getenv_buffer("HB_TR_LEVEL", env, sizeof(env)) && env[0] != '\0') {
-      int i;
+      int32_t i;
 
       for (i = 0; i < HB_TR_LAST; ++i) {
         if (hb_stricmp(env, s_slevel[i]) == 0 || hb_stricmp(env, s_slevel[i] + 6) == 0) {
@@ -208,7 +208,7 @@ int hb_tr_level(void)
   return s_level;
 }
 
-static void hb_tracelog_(int level, const char *file, int line, const char *proc, const char *fmt, va_list ap)
+static void hb_tracelog_(int32_t level, const char *file, int32_t line, const char *proc, const char *fmt, va_list ap)
 {
   const char *pszLevel;
 
@@ -270,7 +270,7 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
     }
 #else
     {
-      int slevel;
+      int32_t slevel;
 
       switch (level) {
       case HB_TR_ALWAYS:
@@ -323,7 +323,7 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
   }
 }
 
-void hb_tracelog(int level, const char *file, int line, const char *proc, const char *fmt, ...)
+void hb_tracelog(int32_t level, const char *file, int32_t line, const char *proc, const char *fmt, ...)
 {
   // If tracing is disabled, do nothing.
   if (s_enabled && level <= hb_tr_level()) {

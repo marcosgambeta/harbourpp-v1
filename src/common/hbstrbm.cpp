@@ -61,7 +61,7 @@ static void preBmBc(const char *needle, HB_ISIZ m, HB_ISIZ bmBc[])
     bmBc[i] = m;
   }
   for (i = 0; i < m - 1; ++i) {
-    bmBc[static_cast<HB_UCHAR>(needle[i])] = m - i - 1;
+    bmBc[static_cast<uint8_t>(needle[i])] = m - i - 1;
   }
 }
 
@@ -152,7 +152,7 @@ HB_ISIZ hb_strAtTBM(const char *needle, HB_ISIZ m, const char *haystack, HB_ISIZ
     } else {
       v = m - 1 - i;
       turboShift = u - v;
-      bcShift = bmBc[static_cast<HB_UCHAR>(haystack[i + j])] - m + 1 + i;
+      bcShift = bmBc[static_cast<uint8_t>(haystack[i + j])] - m + 1 + i;
       shift = HB_MAX(turboShift, bcShift);
       shift = HB_MAX(shift, bmGs[i]);
       if (shift == bmGs[i]) {

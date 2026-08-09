@@ -266,7 +266,7 @@ PHB_EXPR hb_compExprReduceMult(PHB_EXPR pSelf, HB_COMP_DECL)
       pSelf->value.asNum.val.d = pLeft->value.asNum.val.d * pRight->value.asNum.val.d;
       pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
       pSelf->value.asNum.bDec =
-          static_cast<HB_UCHAR>(HB_MIN(pLeft->value.asNum.bDec + pRight->value.asNum.bDec, HB_DEFAULT_DECIMALS));
+          static_cast<uint8_t>(HB_MIN(pLeft->value.asNum.bDec + pRight->value.asNum.bDec, HB_DEFAULT_DECIMALS));
       pSelf->value.asNum.NumType = HB_ET_DOUBLE;
       break;
 
@@ -1648,7 +1648,7 @@ HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
 
   if (pArg->ExprType == HB_ET_NUMERIC) {
     if (HB_SUPPORT_USERCP) {
-      int iVal = pArg->value.asNum.NumType == HB_ET_LONG ? static_cast<int>(pArg->value.asNum.val.l)
+      int32_t iVal = pArg->value.asNum.NumType == HB_ET_LONG ? static_cast<int>(pArg->value.asNum.val.l)
                                                          : static_cast<int>(pArg->value.asNum.val.d);
       fDoOpt = iVal >= 0 && iVal <= 127;
     } else {
@@ -1812,8 +1812,8 @@ HB_BOOL hb_compExprReduceASC(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pArg = pParms->value.asList.pExprList;
 
   if (pArg->ExprType == HB_ET_STRING &&
-      (!HB_SUPPORT_USERCP || static_cast<HB_UCHAR>(pArg->value.asString.string[0]) <= 127)) {
-    PHB_EXPR pExpr = hb_compExprNewLong(static_cast<HB_UCHAR>(pArg->value.asString.string[0]), HB_COMP_PARAM);
+      (!HB_SUPPORT_USERCP || static_cast<uint8_t>(pArg->value.asString.string[0]) <= 127)) {
+    PHB_EXPR pExpr = hb_compExprNewLong(static_cast<uint8_t>(pArg->value.asString.string[0]), HB_COMP_PARAM);
     HB_COMP_EXPR_FREE(pParms);
     HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
     memcpy(pSelf, pExpr, sizeof(HB_EXPR));
@@ -1829,7 +1829,7 @@ HB_BOOL hb_compExprReduceBCODE(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pArg = pParms->value.asList.pExprList;
 
   if (pArg->ExprType == HB_ET_STRING) {
-    PHB_EXPR pExpr = hb_compExprNewLong(static_cast<HB_UCHAR>(pArg->value.asString.string[0]), HB_COMP_PARAM);
+    PHB_EXPR pExpr = hb_compExprNewLong(static_cast<uint8_t>(pArg->value.asString.string[0]), HB_COMP_PARAM);
     HB_COMP_EXPR_FREE(pParms);
     HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
     memcpy(pSelf, pExpr, sizeof(HB_EXPR));

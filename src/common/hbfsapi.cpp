@@ -249,7 +249,7 @@ char *hb_fsFNameMerge(char *pszFileName, HB_FNAME *pFileName)
     // If we have a path, append a path separator to the path if there
     // was none.
     if (pszFileName[0] != '\0' && (pszName || pFileName->szExtension)) {
-      int iLen = static_cast<int>(strlen(pszFileName)) - 1;
+      int32_t iLen = static_cast<int>(strlen(pszFileName)) - 1;
 
       if (iLen < HB_PATH_MAX - 1 - 2 && pszFileName[iLen] != cDirSep &&
           strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen]) == nullptr) {
@@ -317,7 +317,7 @@ HB_BOOL hb_fsNameExists(const char *pszFileName)
       fExist = stat(pszFileName, &statbuf) == 0;
 #endif
 #else
-      int iTODO; // To force warning
+      int32_t iTODO; // To force warning
 #endif
     }
 
@@ -365,7 +365,7 @@ HB_BOOL hb_fsFileExists(const char *pszFileName)
       fExist = stat(pszFileName, &statbuf) == 0 && S_ISREG(statbuf.st_mode);
 #endif
 #else
-      int iTODO; // To force warning
+      int32_t iTODO; // To force warning
 #endif
     }
 
@@ -413,7 +413,7 @@ HB_BOOL hb_fsDirExists(const char *pszDirName)
       fExist = stat(pszDirName, &statbuf) == 0 && S_ISDIR(statbuf.st_mode);
 #endif
 #else
-      int iTODO; // To force warning
+      int32_t iTODO; // To force warning
 #endif
     }
 

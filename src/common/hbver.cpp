@@ -188,9 +188,9 @@ const char *hb_verHostCPU(void)
   return hb_verCPU();
 }
 
-int hb_verHostBitWidth(void)
+int32_t hb_verHostBitWidth(void)
 {
-  int nBits;
+  int32_t nBits;
 
 // Inherit the bit width we're building for
 #if defined(HB_ARCH_64BIT)
@@ -261,9 +261,9 @@ static auto s_fWin7 = false;
 static auto s_fWinVista = false;
 static auto s_fWin2K3 = false;
 static auto s_fWin2K = false;
-static int s_iWinNT = 0;
-static int s_iWin9x = 0;
-static int s_iWine = 0;
+static int32_t s_iWinNT = 0;
+static int32_t s_iWin9x = 0;
+static int32_t s_iWine = 0;
 
 static auto s_fVerInfoInit = true;
 
@@ -490,7 +490,7 @@ char *hb_verPlatform(void)
   return pszPlatform;
 }
 
-HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
+HB_BOOL hb_iswinver(int32_t iMajor, int32_t iMinor, int32_t iType, HB_BOOL fOrUpper)
 {
 #if defined(HB_OS_WIN)
   if (s_hb_winVerifyVersionInit()) {
@@ -542,7 +542,7 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
   return false;
 }
 
-HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
+HB_BOOL hb_iswinsp(int32_t iServicePackMajor, HB_BOOL fOrUpper)
 {
 #if defined(HB_OS_WIN)
   if (s_hb_winVerifyVersionInit()) {
@@ -565,7 +565,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
   return false;
 }
 
-int hb_iswine(void)
+int32_t hb_iswine(void)
 {
 #if defined(HB_OS_WIN)
   if (!s_fWinVerInit) {
@@ -661,7 +661,7 @@ HB_BOOL hb_iswin2k(void)
 #endif
 }
 
-int hb_iswinnt(void)
+int32_t hb_iswinnt(void)
 {
 #if defined(HB_OS_WIN)
   if (!s_fWinVerInit) {
@@ -673,7 +673,7 @@ int hb_iswinnt(void)
 #endif
 }
 
-int hb_iswin9x(void)
+int32_t hb_iswin9x(void)
 {
 #if defined(HB_OS_WIN)
   if (!s_fWinVerInit) {
@@ -702,11 +702,11 @@ char *hb_verCompiler(void)
 
   const char *pszName;
   char szSub[64];
-  int iVerMajor;
-  int iVerMinor;
-  int iVerPatch;
-  int iVerMicro = 0;
-  int iElements = 0;
+  int32_t iVerMajor;
+  int32_t iVerMinor;
+  int32_t iVerPatch;
+  int32_t iVerMicro = 0;
+  int32_t iElements = 0;
 
   auto pszCompiler = static_cast<char *>(hb_xgrab(COMPILER_BUF_SIZE));
   szSub[0] = '\0';

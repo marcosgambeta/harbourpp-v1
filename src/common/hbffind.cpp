@@ -410,14 +410,14 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 {
   auto bFound = false;
 
-  int iYear = 0;
-  int iMonth = 0;
-  int iDay = 0;
+  int32_t iYear = 0;
+  int32_t iMonth = 0;
+  int32_t iDay = 0;
 
-  int iHour = 0;
-  int iMin = 0;
-  int iSec = 0;
-  int iMSec = 0;
+  int32_t iHour = 0;
+  int32_t iMin = 0;
+  int32_t iSec = 0;
+  int32_t iMSec = 0;
 
   HB_FATTR raw_attr = 0, nAttr = 0;
 
@@ -651,7 +651,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 #else
 
   {
-    int iTODO; // TODO: for given platform
+    int32_t iTODO; // TODO: for given platform
 
 #if 0
       HB_SYMBOL_UNUSED(ffind);
@@ -785,7 +785,7 @@ void hb_fsFindClose(PHB_FFIND ffind)
 #else
         {
           // Intentionally do nothing
-          int iTODO; // TODO: for given platform
+          int32_t iTODO; // TODO: for given platform
         }
 #endif
 

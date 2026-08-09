@@ -70,7 +70,7 @@ void hb_put_ieee754(uint8_t *ptr, double d)
    HB_TRACE(HB_TR_DEBUG, ("hb_put_ieee754(%p, %f)", static_cast<void*>(ptr), d));
 #endif
 
-  int iExp, iSig;
+  int32_t iExp, iSig;
 
 #if defined(HB_LONG_LONG_OFF)
   HB_U32 l1, l2;
@@ -110,7 +110,7 @@ double hb_get_ieee754(const uint8_t *ptr)
    HB_TRACE(HB_TR_DEBUG, ("hb_get_ieee754(%p)", static_cast<const void*>(ptr)));
 #endif
 
-  int iSig;
+  int32_t iSig;
 
 #if defined(HB_LONG_LONG_OFF)
   HB_U32 l1 = HB_GET_LE_UINT32(ptr);
@@ -148,10 +148,10 @@ void hb_put_ord_ieee754(uint8_t *ptr, double d)
    HB_TRACE(HB_TR_DEBUG, ("hb_put_ord_ieee754(%p, %f)", static_cast<void*>(ptr), d));
 #endif
 
-  int iExp;
+  int32_t iExp;
   HB_U32 l1, l2;
 
-  int iSig = d < 0 ? 1 : 0;
+  int32_t iSig = d < 0 ? 1 : 0;
   if (d == 0.0) {
     l1 = l2 = 0;
   } else {
@@ -179,12 +179,12 @@ double hb_get_ord_ieee754(const uint8_t *ptr)
 
   HB_U32 l1 = HB_GET_BE_UINT32(ptr + 4);
   HB_U32 l2 = HB_GET_BE_UINT32(ptr);
-  int iSig = (l2 & 0x80000000L) ? 0 : 1;
+  int32_t iSig = (l2 & 0x80000000L) ? 0 : 1;
   if (iSig) {
     l2 ^= 0x7FFFFFFFL;
     l1 ^= 0xFFFFFFFFL;
   }
-  int iExp = ((l2 >> (HB_MANTISSA_BITS - 32)) & HB_EXPONENT_MASK);
+  int32_t iExp = ((l2 >> (HB_MANTISSA_BITS - 32)) & HB_EXPONENT_MASK);
   l2 &= (static_cast<HB_U32>(1) << (HB_MANTISSA_BITS - 32)) - 1;
 
   if ((l1 | l2 | iExp) != 0) {

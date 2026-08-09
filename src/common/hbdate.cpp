@@ -82,8 +82,8 @@
 #define HB_STR_DATE_BASE 1721060 // 0000-01-01
 #define HB_SYS_DATE_BASE 2440588 // 1970-01-01
 
-void hb_timeStampGetLocal(int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes, int *piSeconds,
-                          int *piMSec)
+void hb_timeStampGetLocal(int32_t *piYear, int32_t *piMonth, int32_t *piDay, int32_t *piHour, int32_t *piMinutes, int32_t *piSeconds,
+                          int32_t *piMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampGetLocal(%p,%p,%p,%p,%p,%p,%p)", static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay), static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
@@ -176,7 +176,7 @@ void hb_timeStampGet(long *plJulian, long *plMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampGet(%p,%p)", static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinute, iSeconds, iMillisec;
+  int32_t iYear, iMonth, iDay, iHour, iMinute, iSeconds, iMillisec;
 
   hb_timeStampGetLocal(&iYear, &iMonth, &iDay, &iHour, &iMinute, &iSeconds, &iMillisec);
   *plJulian = hb_dateEncode(iYear, iMonth, iDay);
@@ -189,13 +189,13 @@ double hb_dateSeconds(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateSeconds()"));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinute, iSeconds, iMillisec;
+  int32_t iYear, iMonth, iDay, iHour, iMinute, iSeconds, iMillisec;
 
   hb_timeStampGetLocal(&iYear, &iMonth, &iDay, &iHour, &iMinute, &iSeconds, &iMillisec);
   return static_cast<double>(hb_timeEncode(iHour, iMinute, iSeconds, iMillisec)) / 1000;
 }
 
-long hb_dateEncode(int iYear, int iMonth, int iDay)
+long hb_dateEncode(int32_t iYear, int32_t iMonth, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateEncode(%d, %d, %d)", iYear, iMonth, iDay));
@@ -205,11 +205,11 @@ long hb_dateEncode(int iYear, int iMonth, int iDay)
   if (iYear >= 0 && iYear <= HB_DATE_YEAR_LIMIT && iMonth >= 1 && iMonth <= 12 && iDay >= 1) {
     // Month, year, and lower day limits are simple,
     // but upper day limit is dependent upon month and leap year
-    static const int auiDayLimit[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    static const int32_t auiDayLimit[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     if (iDay <= auiDayLimit[iMonth - 1] ||
         (iDay == 29 && iMonth == 2 && (iYear & 3) == 0 && (iYear % 100 != 0 || iYear % 400 == 0))) {
-      int iFactor = (iMonth < 3) ? -1 : 0;
+      int32_t iFactor = (iMonth < 3) ? -1 : 0;
 
       return (static_cast<long>(iFactor + 4800 + iYear) * 1461 / 4) +
              (static_cast<long>(iMonth - 2 - (iFactor * 12)) * 367) / 12 -
@@ -220,7 +220,7 @@ long hb_dateEncode(int iYear, int iMonth, int iDay)
   return 0;
 }
 
-void hb_dateDecode(long lJulian, int *piYear, int *piMonth, int *piDay)
+void hb_dateDecode(long lJulian, int32_t *piYear, int32_t *piMonth, int32_t *piDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDecode(%ld, %p, %p, %p)", lJulian, static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay)));
@@ -246,7 +246,7 @@ void hb_dateDecode(long lJulian, int *piYear, int *piMonth, int *piDay)
   }
 }
 
-void hb_dateStrPut(char *szDate, int iYear, int iMonth, int iDay)
+void hb_dateStrPut(char *szDate, int32_t iYear, int32_t iMonth, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateStrPut(%p, %d, %d, %d)", static_cast<void*>(szDate), iYear, iMonth, iDay));
@@ -268,7 +268,7 @@ void hb_dateStrPut(char *szDate, int iYear, int iMonth, int iDay)
   }
 }
 
-void hb_dateStrGet(const char *szDate, int *piYear, int *piMonth, int *piDay)
+void hb_dateStrGet(const char *szDate, int32_t *piYear, int32_t *piMonth, int32_t *piDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateStrGet(%.8s, %p, %p, %p)", szDate, static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay)));
@@ -305,7 +305,7 @@ char *hb_dateDecStr(char *szDate, long lJulian)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDecStr(%p, %ld)", static_cast<void*>(szDate), lJulian));
 #endif
 
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (lJulian <= 0) {
     memset(szDate, ' ', 8);
@@ -324,14 +324,14 @@ long hb_dateEncStr(const char *szDate)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateEncStr(%.8s)", szDate));
 #endif
 
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   hb_dateStrGet(szDate, &iYear, &iMonth, &iDay);
 
   return hb_dateEncode(iYear, iMonth, iDay);
 }
 
-int hb_dateJulianDOW(long lJulian)
+int32_t hb_dateJulianDOW(long lJulian)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateJulianDOW(%ld)", lJulian));
@@ -344,14 +344,14 @@ int hb_dateJulianDOW(long lJulian)
   }
 }
 
-HB_BOOL hb_dateDecWeek(long lJulian, int *piYear, int *piWeek, int *piDay)
+HB_BOOL hb_dateDecWeek(long lJulian, int32_t *piYear, int32_t *piWeek, int32_t *piDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDecWeek(%ld,%p,%p,%p)", lJulian, static_cast<void*>(piYear), static_cast<void*>(piWeek), static_cast<void*>(piDay)));
 #endif
 
   if (lJulian >= HB_STR_DATE_BASE) {
-    int iMonth, iDay;
+    int32_t iMonth, iDay;
 
     *piDay = static_cast<int>(lJulian % 7) + 1;
     lJulian += 4 - *piDay;
@@ -366,7 +366,7 @@ HB_BOOL hb_dateDecWeek(long lJulian, int *piYear, int *piWeek, int *piDay)
   return false;
 }
 
-long hb_dateEncWeek(int iYear, int iWeek, int iDay)
+long hb_dateEncWeek(int32_t iYear, int32_t iWeek, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateEncWeek(%d,%d,%d)", iYear, iWeek, iDay));
@@ -382,7 +382,7 @@ long hb_dateEncWeek(int iYear, int iWeek, int iDay)
   return lDate;
 }
 
-int hb_dateDOW(int iYear, int iMonth, int iDay)
+int32_t hb_dateDOW(int32_t iYear, int32_t iMonth, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDOW(%d, %d, %d)", iYear, iMonth, iDay));
@@ -398,13 +398,13 @@ int hb_dateDOW(int iYear, int iMonth, int iDay)
   return (iDay + 26 * iMonth / 10 + iYear + iYear / 4 - iYear / 100 + iYear / 400 + 6) % 7 + 1;
 }
 
-void hb_dateToday(int *piYear, int *piMonth, int *piDay)
+void hb_dateToday(int32_t *piYear, int32_t *piMonth, int32_t *piDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateToday(%p,%p,%p)", static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay)));
 #endif
 
-  int iHour, iMinute, iSeconds, iMillisec;
+  int32_t iHour, iMinute, iSeconds, iMillisec;
 
   hb_timeStampGetLocal(piYear, piMonth, piDay, &iHour, &iMinute, &iSeconds, &iMillisec);
 }
@@ -417,7 +417,7 @@ void hb_dateTimeStr(char *pszTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateTimeStr(%p)", static_cast<void*>(pszTime)));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinute, iSeconds, iMillisec;
+  int32_t iYear, iMonth, iDay, iHour, iMinute, iSeconds, iMillisec;
 
   hb_timeStampGetLocal(&iYear, &iMonth, &iDay, &iHour, &iMinute, &iSeconds, &iMillisec);
   hb_snprintf(pszTime, 9, "%02d:%02d:%02d", iHour, iMinute, iSeconds);
@@ -425,7 +425,7 @@ void hb_dateTimeStr(char *pszTime)
 
 // functions to operate on time and timestamp values
 
-long hb_timeEncode(int iHour, int iMinutes, int iSeconds, int iMSec)
+long hb_timeEncode(int32_t iHour, int32_t iMinutes, int32_t iSeconds, int32_t iMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeEncode(%d, %d, %d, %d)", iHour, iMinutes, iSeconds, iMSec));
@@ -443,7 +443,7 @@ long hb_timeEncode(int iHour, int iMinutes, int iSeconds, int iMSec)
   return lMilliSec;
 }
 
-void hb_timeDecode(long lMilliSec, int *piHour, int *piMinutes, int *piSeconds, int *piMSec)
+void hb_timeDecode(long lMilliSec, int32_t *piHour, int32_t *piMinutes, int32_t *piSeconds, int32_t *piMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeDecode(%ld, %p, %p, %p, %p)", lMilliSec, static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
@@ -474,7 +474,7 @@ char *hb_timeStr(char *szTime, long lMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStr(%p, %ld)", static_cast<void*>(szTime), lMilliSec));
 #endif
 
-  int iHour, iMinutes, iSeconds, iMSec;
+  int32_t iHour, iMinutes, iSeconds, iMSec;
 
   hb_timeDecode(lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec);
   hb_snprintf(szTime, 13, "%02d:%02d:%02d.%03d", iHour, iMinutes, iSeconds, iMSec);
@@ -482,14 +482,14 @@ char *hb_timeStr(char *szTime, long lMilliSec)
   return szTime;
 }
 
-HB_BOOL hb_timeStrGetUTC(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec, int *piUTCOffset)
+HB_BOOL hb_timeStrGetUTC(const char *szTime, int32_t *piHour, int32_t *piMinutes, int32_t *piSeconds, int32_t *piMSec, int32_t *piUTCOffset)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStrGetUTC(%s, %p, %p, %p, %p, %p)", szTime, static_cast<void *>(piHour), static_cast<void *>(piMinutes),
                          static_cast<void *>(piSeconds), static_cast<void *>(piMSec), static_cast<void *>(piUTCOffset)));
 #endif
 
-  int iHour, iMinutes, iSeconds, iMSec, iUTCOffset, iBlocks;
+  int32_t iHour, iMinutes, iSeconds, iMSec, iUTCOffset, iBlocks;
 
   iHour = iMinutes = iSeconds = iMSec = iUTCOffset = iBlocks = 0;
   bool fValid = false;
@@ -614,7 +614,7 @@ HB_BOOL hb_timeStrGetUTC(const char *szTime, int *piHour, int *piMinutes, int *p
   return fValid;
 }
 
-HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec)
+HB_BOOL hb_timeStrGet(const char *szTime, int32_t *piHour, int32_t *piMinutes, int32_t *piSeconds, int32_t *piMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStrGet(%s, %p, %p, %p, %p)", szTime, static_cast<void *>(piHour), static_cast<void *>(piMinutes),
@@ -623,7 +623,7 @@ HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
   return hb_timeStrGetUTC(szTime, piHour, piMinutes, piSeconds, piMSec, nullptr);
 }
 
-void hb_timeStrRawGet(const char *szTime, int *piHour, int *piMinutes, int *piSeconds, int *piMSec)
+void hb_timeStrRawGet(const char *szTime, int32_t *piHour, int32_t *piMinutes, int32_t *piSeconds, int32_t *piMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStrRawGet(%.10s, %p, %p, %p, %p)", szTime, static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
@@ -632,7 +632,7 @@ void hb_timeStrRawGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
   *piHour = *piMinutes = *piSeconds = *piMSec = 0;
 
   if (szTime != nullptr) {
-    int iLen = 0;
+    int32_t iLen = 0;
 
     while (iLen < 10 && HB_ISDIGIT(szTime[iLen])) {
       ++iLen;
@@ -678,7 +678,7 @@ char *hb_timeStampStrRawPut(char *szDateTime, long lJulian, long lMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampStrRawPut(%p, %ld, %ld)", static_cast<void*>(szDateTime), lJulian, lMilliSec));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
+  int32_t iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
 
   hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
   hb_dateStrPut(szDateTime, iYear, iMonth, iDay);
@@ -694,7 +694,7 @@ void hb_timeStampStrRawGet(const char *szDateTime, long *plJulian, long *plMilli
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampStrRawGet(%s, %p, %p)", szDateTime, static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec, iLen;
+  int32_t iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec, iLen;
 
   *plJulian = *plMilliSec = 0;
 
@@ -725,7 +725,7 @@ char *hb_timeStampStr(char *szDateTime, long lJulian, long lMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampStr(%p, %ld, %ld)", static_cast<void*>(szDateTime), lJulian, lMilliSec));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
+  int32_t iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
 
   hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
   hb_timeDecode(lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec);
@@ -736,8 +736,8 @@ char *hb_timeStampStr(char *szDateTime, long lJulian, long lMilliSec)
   return szDateTime;
 }
 
-HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int *piYear, int *piMonth, int *piDay, int *piHour,
-                              int *piMinutes, int *piSeconds, int *piMSec, int *piUTCOffset)
+HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int32_t *piYear, int32_t *piMonth, int32_t *piDay, int32_t *piHour,
+                              int32_t *piMinutes, int32_t *piSeconds, int32_t *piMSec, int32_t *piUTCOffset)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG,
@@ -745,7 +745,7 @@ HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int *piYear, int *piMonth,
             static_cast<void *>(piDay), static_cast<void *>(piHour), static_cast<void *>(piMinutes), static_cast<void *>(piSeconds), static_cast<void *>(piMSec), static_cast<void *>(piUTCOffset)));
 #endif
 
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   iYear = iMonth = iDay = 0;
   bool fValid = false;
@@ -844,8 +844,8 @@ HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int *piYear, int *piMonth,
   return fValid;
 }
 
-HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes,
-                           int *piSeconds, int *piMSec)
+HB_BOOL hb_timeStampStrGet(const char *szDateTime, int32_t *piYear, int32_t *piMonth, int32_t *piDay, int32_t *piHour, int32_t *piMinutes,
+                           int32_t *piSeconds, int32_t *piMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG,
@@ -862,7 +862,7 @@ HB_BOOL hb_timeStampStrGetDT(const char *szDateTime, long *plJulian, long *plMil
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampStrGetDT(%s, %p, %p)", szDateTime, static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec, iUTCOffset;
+  int32_t iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec, iUTCOffset;
 
   bool fValid =
       hb_timeStampStrGetUTC(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec, &iUTCOffset);
@@ -928,7 +928,7 @@ void hb_timeStampUnpackDT(double dTimeStamp, long *plJulian, long *plMilliSec)
   }
 }
 
-double hb_timeStampPack(int iYear, int iMonth, int iDay, int iHour, int iMinutes, int iSeconds, int iMSec)
+double hb_timeStampPack(int32_t iYear, int32_t iMonth, int32_t iDay, int32_t iHour, int32_t iMinutes, int32_t iSeconds, int32_t iMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampPack(%d, %d, %d, %d, %d, %d, %d)", iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec));
@@ -949,8 +949,8 @@ double hb_timeStampPack(int iYear, int iMonth, int iDay, int iHour, int iMinutes
   return dTimeStamp;
 }
 
-void hb_timeStampUnpack(double dTimeStamp, int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes,
-                        int *piSeconds, int *piMSec)
+void hb_timeStampUnpack(double dTimeStamp, int32_t *piYear, int32_t *piMonth, int32_t *piDay, int32_t *piHour, int32_t *piMinutes,
+                        int32_t *piSeconds, int32_t *piMSec)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampUnpack(%f, %p, %p, %p, %p, %p, %p, %p)", dTimeStamp, static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay), static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
@@ -963,7 +963,7 @@ void hb_timeStampUnpack(double dTimeStamp, int *piYear, int *piMonth, int *piDay
   hb_timeDecode(lMilliSec, piHour, piMinutes, piSeconds, piMSec);
 }
 
-double hb_timeStampPackD(int iYear, int iMonth, int iDay, int iHour, int iMinutes, double dSeconds)
+double hb_timeStampPackD(int32_t iYear, int32_t iMonth, int32_t iDay, int32_t iHour, int32_t iMinutes, double dSeconds)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampPackD(%d, %d, %d, %d, %d, %f)", iYear, iMonth, iDay, iHour, iMinutes, dSeconds));
@@ -982,7 +982,7 @@ double hb_timeStampPackD(int iYear, int iMonth, int iDay, int iHour, int iMinute
   return dTimeStamp;
 }
 
-void hb_timeStampUnpackD(double dTimeStamp, int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes,
+void hb_timeStampUnpackD(double dTimeStamp, int32_t *piYear, int32_t *piMonth, int32_t *piDay, int32_t *piHour, int32_t *piMinutes,
                          double *pdSeconds)
 {
 #if 0
@@ -990,7 +990,7 @@ void hb_timeStampUnpackD(double dTimeStamp, int *piYear, int *piMonth, int *piDa
 #endif
 
   long lJulian, lMilliSec;
-  int iSeconds, iMSec;
+  int32_t iSeconds, iMSec;
 
   hb_timeStampUnpackDT(dTimeStamp, &lJulian, &lMilliSec);
   hb_dateDecode(lJulian, piYear, piMonth, piDay);
@@ -1046,7 +1046,7 @@ long hb_timeUTCOffset(void) // in seconds
 #endif
 }
 
-long hb_timeStampUTCOffset(int iYear, int iMonth, int iDay, int iHour, int iMinutes, int iSeconds)
+long hb_timeStampUTCOffset(int32_t iYear, int32_t iMonth, int32_t iDay, int32_t iHour, int32_t iMinutes, int32_t iSeconds)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampUTCOffset(%d, %d, %d, %d, %d, %d)", iYear, iMonth, iDay, iHour, iMinutes, iSeconds));
@@ -1088,7 +1088,7 @@ long hb_timeStampUTCOffset(int iYear, int iMonth, int iDay, int iHour, int iMinu
   local = mktime(&timeinfo);
 
   if (local != (time_t)-1) {
-    int isdst = (timeinfo.tm_isdst > 0 ? 3600 : 0);
+    int32_t isdst = (timeinfo.tm_isdst > 0 ? 3600 : 0);
 #if defined(HB_HAS_LOCALTIME_R)
     utc = mktime(gmtime_r(&local, &timeinfo));
 #else
@@ -1108,7 +1108,7 @@ double hb_timeLocalToUTC(double dTimeStamp)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeLocalToUTC(%f)", dTimeStamp));
 #endif
 
-  int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
+  int32_t iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
 
   hb_timeStampUnpack(dTimeStamp, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec);
 
@@ -1124,11 +1124,11 @@ HB_MAXUINT hb_timerGet(void)
 
 #if defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199309L && defined(CLOCK_REALTIME)
   {
-    static int s_iClkId = -1;
+    static int32_t s_iClkId = -1;
     struct timespec ts;
 
     if (s_iClkId < 0) {
-      int i, piClkId[] = {
+      int32_t i, piClkId[] = {
 #if defined(CLOCK_MONOTONIC)
                  CLOCK_MONOTONIC,
 #endif
@@ -1216,9 +1216,9 @@ HB_MAXINT hb_timerTest(HB_MAXINT nTimeOut, HB_MAXUINT *pnTimer)
 //       libs in VxWorks 6.8. So here we emulate its
 //       base functionality. [vszakats]
 
-int gettimeofday(struct timeval *tv, void *tz)
+int32_t gettimeofday(struct timeval *tv, void *tz)
 {
-  int ret;
+  int32_t ret;
   struct timespec tp;
 
   HB_SYMBOL_UNUSED(tz);
