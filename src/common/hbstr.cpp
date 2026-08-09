@@ -555,6 +555,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
   auto fDec = false;
   auto fNeg = false;
   auto fHex = false;
+  auto fBin = false;
   int iPos = 0;
   int c, iWidth, iDec = 0, iDecR = 0;
 
@@ -596,6 +597,16 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
         break;
       }
       *lVal = (*lVal << 4) + c;
+    }
+  // Binary Number
+  } else if (fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && (szNum[iPos + 1] == 'B' || szNum[iPos + 1] == 'b')) {
+    iPos += 2;
+    iWidth = HB_DEFAULT_WIDTH;
+    fBin = true;
+    for (; iPos < iLen; iPos++) {
+      c = szNum[iPos];
+      if (c == '0' || c == '1')
+        *lVal = (*lVal << 1) | (c - '0');
     }
   } else {
     HB_MAXINT lLimV;
@@ -648,7 +659,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
   }
   if (!fDbl && (
 #if defined(PCODE_LONG_LIM)
-                   (fPCode && !fHex && !PCODE_LONG_LIM(*lVal)) ||
+                   (fPCode && !fHex && !fBin && !PCODE_LONG_LIM(*lVal)) ||
 #endif
                    fDec)) {
     *dVal = static_cast<double>(*lVal);
@@ -662,7 +673,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
     *piDec = iDec + iDecR;
   }
   if (piWidth) {
-    if (fHex) {
+    if (fHex || fBin) {
       *piWidth = iWidth;
     } else {
       if (fPCode) {
