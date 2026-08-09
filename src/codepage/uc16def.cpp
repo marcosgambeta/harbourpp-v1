@@ -457,8 +457,7 @@ static const uint16_t s_up_val[2987] =
 static uint16_t s_uc_upper(int n)
 {
    n -= HB_UCUP_FIRST;
-   if( n >= 0 && n <= (HB_UCUP_LAST - HB_UCUP_FIRST) )
-   {
+   if (n >= 0 && n <= (HB_UCUP_LAST - HB_UCUP_FIRST)) {
       return s_up_val[(s_up_idx[n >> HB_UCUP_BITS] << HB_UCUP_BITS) + (n & ((1 << HB_UCUP_BITS) - 1))];
    }
    return 0;
@@ -923,8 +922,7 @@ static const uint16_t s_lo_val[2523] =
 static uint16_t s_uc_lower(int n)
 {
    n -= HB_UCLO_FIRST;
-   if( n >= 0 && n <= (HB_UCLO_LAST - HB_UCLO_FIRST) )
-   {
+   if (n >= 0 && n <= (HB_UCLO_LAST - HB_UCLO_FIRST)) {
       return s_lo_val[(s_lo_idx[n >> HB_UCLO_BITS] << HB_UCLO_BITS) + (n & ((1 << HB_UCLO_BITS) - 1))];
    }
    return 0;
@@ -1153,8 +1151,7 @@ static const uint8_t s_ch_val[2222] =
 static int s_uc_flags(int n)
 {
    n -= HB_UCFL_FIRST;
-   if( n >= 0 && n <= (HB_UCFL_LAST - HB_UCFL_FIRST) )
-   {
+   if (n >= 0 && n <= (HB_UCFL_LAST - HB_UCFL_FIRST)) {
       uint8_t v;
       v = s_ch_val[(s_ch_idx[n >> HB_UCFL_BITS] << (HB_UCFL_BITS - 1)) + ((n & ((1 << HB_UCFL_BITS) - 1)) >> 1)];
       return n & 1 ? v >> 4 : v & 0x0F;

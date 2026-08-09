@@ -66,12 +66,11 @@ static HB_CDP_GET_FUNC(UTF8_get)
 
 static HB_CDP_PUT_FUNC(UTF8_put)
 {
-   int i = hb_cdpUTF8CharSize(wc);
+   int32_t i = hb_cdpUTF8CharSize(wc);
 
    HB_SYMBOL_UNUSED(cdp);
 
-   if( *pnIndex + i <= nLen )
-   {
+   if (*pnIndex + i <= nLen) {
       hb_cdpU16CharToUTF8(&pDst[*pnIndex], wc);
       *pnIndex += i;
       return true;
@@ -115,7 +114,7 @@ static HB_CDP_FLAGS_FUNC(UTF8_flags)
 
 static HB_CDP_CMP_FUNC(UTF8_cmp)
 {
-   int iRet;
+   int32_t iRet;
 
 #ifdef HB_UTF8EX_SORT
 
@@ -123,26 +122,20 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
    HB_WCHAR wc1, wc2;
 
    iRet = 0;
-   for( ;; )
-   {
-      if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) )
-      {
-         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-         {
+   for (;;) {
+      if (!HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2)) {
+         if (fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1)) {
             iRet = 1;
          }
          break;
       }
-      if( !HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-      {
+      if (!HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1)) {
          iRet = -1;
          break;
       }
-      if( wc1 != wc2 )
-      {
+      if (wc1 != wc2) {
          uint16_t us1 = s_uniSort[wc1], us2 = s_uniSort[wc2];
-         if( us1 != us2 )
-         {
+         if (us1 != us2) {
             iRet = us1 < us2 ? -1 : 1;
             break;
          }
@@ -156,23 +149,15 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
    HB_SYMBOL_UNUSED(cdp);
 
    iRet = memcmp(szFirst, szSecond, nLen);
-   if( iRet == 0 )
-   {
-      if( nLenSecond > nLenFirst )
-      {
+   if (iRet == 0) {
+      if (nLenSecond > nLenFirst) {
          iRet = -1;
-      }
-      else if( fExact && nLenSecond < nLenFirst )
-      {
+      } else if (fExact && nLenSecond < nLenFirst) {
          iRet = 1;
       }
-   }
-   else if( iRet > 0 )
-   {
+   } else if (iRet > 0) {
       iRet = 1;
-   }
-   else
-   {
+   } else {
       iRet = -1;
    }
 #endif
@@ -182,33 +167,27 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
 
 static HB_CDP_CMP_FUNC(UTF8_cmpi)
 {
-   int iRet = 0;
+   int32_t iRet = 0;
 
 #ifdef HB_UTF8EX_SORT
 
    HB_SIZE nPos1 = 0, nPos2 = 0;
    HB_WCHAR wc1, wc2;
 
-   for( ;; )
-   {
-      if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) )
-      {
-         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-         {
+   for (;;) {
+      if (!HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2)) {
+         if (fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1)) {
             iRet = 1;
          }
          break;
       }
-      if( !HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-      {
+      if (!HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1)) {
          iRet = -1;
          break;
       }
-      if( wc1 != wc2 )
-      {
+      if (wc1 != wc2) {
          uint16_t us1 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc1)], us2 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc2)];
-         if( us1 != us2 )
-         {
+         if (us1 != us2) {
             iRet = us1 < us2 ? -1 : 1;
             break;
          }
@@ -219,24 +198,18 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
 
    HB_SIZE nLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-   while( nLen-- )
-   {
-      HB_UCHAR u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst++)], u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond++)];
-      if( u1 != u2 )
-      {
+   while (nLen--) {
+      uint8_t u1 = cdp->upper[static_cast<uint8_t>(*szFirst++)], u2 = cdp->upper[static_cast<uint8_t>(*szSecond++)];
+      if (u1 != u2) {
          iRet = (u1 < u2) ? -1 : 1;
          break;
       }
    }
 
-   if( iRet == 0 )
-   {
-      if( nLenSecond > nLenFirst )
-      {
+   if (iRet == 0) {
+      if (nLenSecond > nLenFirst) {
          iRet = -1;
-      }
-      else if( fExact && nLenSecond < nLenFirst )
-      {
+      } else if (fExact && nLenSecond < nLenFirst) {
          iRet = 1;
       }
    }
@@ -248,34 +221,29 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
 
 static void hb_cp_init(PHB_CODEPAGE cdp)
 {
-   HB_UCHAR * flags, * upper, * lower;
+   uint8_t *flags, *upper, *lower;
 
-   cdp->buffer = static_cast<HB_UCHAR*>(hb_xgrab(0x300));
-   cdp->flags = flags = static_cast<HB_UCHAR*>(cdp->buffer);
-   cdp->upper = upper = static_cast<HB_UCHAR*>(cdp->buffer) + 0x100;
-   cdp->lower = lower = static_cast<HB_UCHAR*>(cdp->buffer) + 0x200;
+   cdp->buffer = static_cast<uint8_t*>(hb_xgrab(0x300));
+   cdp->flags = flags = static_cast<uint8_t*>(cdp->buffer);
+   cdp->upper = upper = static_cast<uint8_t*>(cdp->buffer) + 0x100;
+   cdp->lower = lower = static_cast<uint8_t*>(cdp->buffer) + 0x200;
 
-   for( auto i = 0; i < 0x100; ++i )
-   {
+   for (auto i = 0; i < 0x100; ++i) {
       flags[i] = 0;
-      if( HB_ISDIGIT(i) )
-      {
+      if (HB_ISDIGIT(i)) {
          flags[i] |= HB_CDP_DIGIT;
       }
-      if( HB_ISALPHA(i) )
-      {
+      if (HB_ISALPHA(i)) {
          flags[i] |= HB_CDP_ALPHA;
       }
-      if( HB_ISUPPER(i) )
-      {
+      if (HB_ISUPPER(i)) {
          flags[i] |= HB_CDP_UPPER;
       }
-      if( HB_ISLOWER(i) )
-      {
+      if (HB_ISLOWER(i)) {
          flags[i] |= HB_CDP_LOWER;
       }
-      upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
-      lower[i] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
+      upper[i] = static_cast<uint8_t>(HB_TOUPPER(i));
+      lower[i] = static_cast<uint8_t>(HB_TOLOWER(i));
    }
 }
 

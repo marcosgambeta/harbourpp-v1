@@ -1856,11 +1856,10 @@ static const uint16_t s_big5_ucs16[14006] =
    0x7069, 0x706A, 0x9EA4, 0x9F7E, 0x9F49, 0x9F98
 };
 
-static uint16_t s_big5_to_ucs16(int n)
+static uint16_t s_big5_to_ucs16(int32_t n)
 {
    n -= HB_BIG5_FIRST;
-   if( n >= 0 && n <= (HB_BIG5_LAST - HB_BIG5_FIRST) )
-   {
+   if (n >= 0 && n <= (HB_BIG5_LAST - HB_BIG5_FIRST)) {
       return s_big5_ucs16[(s_big5index[n >> HB_BIG5_BITS] << HB_BIG5_BITS) + (n & ((1 << HB_BIG5_BITS) - 1))];
    }
    return 0;
@@ -4858,11 +4857,10 @@ static const uint16_t s_ucs16_big5[22814] =
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xA2CE
 };
 
-static uint16_t s_ucs16_to_big5(int n)
+static uint16_t s_ucs16_to_big5(int32_t n)
 {
    n -= HB_U16_FIRST;
-   if( n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST) )
-   {
+   if (n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST)) {
       return s_ucs16_big5[(s_ucs16index[n >> HB_U16_BITS] << HB_U16_BITS) + (n & ((1 << HB_U16_BITS) - 1))];
    }
    return 0;
