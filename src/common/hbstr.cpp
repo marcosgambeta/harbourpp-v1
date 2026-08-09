@@ -556,6 +556,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
   auto fNeg = false;
   auto fHex = false;
   auto fBin = false;
+  auto fOct = false;
   int32_t iPos = 0;
   int32_t c, iWidth, iDec = 0, iDecR = 0;
 
@@ -608,6 +609,17 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
       if (c == '0' || c == '1')
         *lVal = (*lVal << 1) | (c - '0');
     }
+  // Octal Number
+  } else if (fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && (szNum[iPos + 1] == 'O' || szNum[iPos + 1] == 'o')) {
+    iPos += 2;
+    iWidth = HB_DEFAULT_WIDTH;
+    fOct = true;
+    for (; iPos < iLen; iPos++) {
+      c = szNum[iPos];
+      if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7') {
+        *lVal = (*lVal << 3) | (c - '0');
+      }
+    }
   } else {
     HB_MAXINT lLimV;
 
@@ -659,7 +671,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
   }
   if (!fDbl && (
 #if defined(PCODE_LONG_LIM)
-                   (fPCode && !fHex && !fBin && !PCODE_LONG_LIM(*lVal)) ||
+                   (fPCode && !fHex && !fBin && !fOct && !PCODE_LONG_LIM(*lVal)) ||
 #endif
                    fDec)) {
     *dVal = static_cast<double>(*lVal);
@@ -673,7 +685,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
     *piDec = iDec + iDecR;
   }
   if (piWidth) {
-    if (fHex || fBin) {
+    if (fHex || fBin || fOct) {
       *piWidth = iWidth;
     } else {
       if (fPCode) {

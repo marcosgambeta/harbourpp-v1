@@ -1225,6 +1225,18 @@ static void hb_pp_getLine(PHB_PP_STATE pState)
 
           // (LEX: mark token as binary?)
           hb_pp_tokenAddNext(pState, pBuffer, n, HB_PP_TOKEN_NUMBER);
+        } else if (nLen >= 3 && pBuffer[0] == '0' && (pBuffer[1] == 'o' || pBuffer[1] == 'O') &&
+          (pBuffer[2] == '0' || pBuffer[2] == '1' || pBuffer[2] == '2' || pBuffer[2] == '3' ||
+           pBuffer[2] == '4' || pBuffer[2] == '5' || pBuffer[2] == '6' || pBuffer[2] == '7')) {
+          n = 2;
+          while (++n < nLen && (pBuffer[n] == '0' || pBuffer[n] == '1' || pBuffer[n] == '2' ||
+            pBuffer[n] == '3' || pBuffer[n] == '4' || pBuffer[n] == '5' || pBuffer[n] == '6' ||
+            pBuffer[n] == '7')) {
+            ;
+          }
+
+          // (LEX: mark token as octal?)
+          hb_pp_tokenAddNext(pState, pBuffer, n, HB_PP_TOKEN_NUMBER);
         } else if (nLen >= 3 && pBuffer[0] == '0' && (pBuffer[1] == 'd' || pBuffer[1] == 'D') &&
                    HB_PP_ISDIGIT(pBuffer[2])) {
           n = 2;
