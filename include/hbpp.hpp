@@ -386,8 +386,8 @@ struct _HB_PP_TOKEN
    const char * value;              // token value
    HB_SIZE   len;                   // token value length
    HB_SIZE   spaces;                // leading spaces for stringify
-   HB_USHORT type;                  // token type, see HB_PP_TOKEN_*
-   HB_USHORT index;                 // index to match marker or 0
+   uint16_t type;                  // token type, see HB_PP_TOKEN_*
+   uint16_t index;                 // index to match marker or 0
 };
 using HB_PP_TOKEN = _HB_PP_TOKEN;
 using PHB_PP_TOKEN = HB_PP_TOKEN *; // deprecated in core code
@@ -400,8 +400,8 @@ typedef struct _HB_PP_TOKEN
    const char * value;              // token value
    HB_SIZE   len;                   // token value length
    HB_SIZE   spaces;                // leading spaces for stringify
-   HB_USHORT type;                  // token type, see HB_PP_TOKEN_*
-   HB_USHORT index;                 // index to match marker or 0
+   uint16_t type;                  // token type, see HB_PP_TOKEN_*
+   uint16_t index;                 // index to match marker or 0
 }
 HB_PP_TOKEN, * PHB_PP_TOKEN;
 #endif
@@ -481,7 +481,7 @@ typedef struct _HB_PP_MARKERPTR
    struct _HB_PP_MARKERPTR * pNext;
    HB_PP_TOKEN *  pToken;
    HB_PP_TOKEN *  pMTokens;
-   HB_USHORT      type;
+   uint16_t      type;
 }
 HB_PP_MARKERPTR, * PHB_PP_MARKERPTR;
 
@@ -489,16 +489,16 @@ typedef struct _HB_PP_MARKERLST
 {
    struct _HB_PP_MARKERLST * pNext;
    PHB_PP_MARKERPTR  pMatchMarkers;
-   HB_USHORT         canrepeat;
-   HB_USHORT         index;
+   uint16_t         canrepeat;
+   uint16_t         index;
 }
 HB_PP_MARKERLST, * PHB_PP_MARKERLST;
 
 typedef struct
 {
-   HB_USHORT canrepeat;
+   uint16_t canrepeat;
    // filled when pattern matches for substitution, cleared after
-   HB_USHORT matches;
+   uint16_t matches;
    PHB_PP_RESULT  pResult;
 }
 HB_PP_MARKER, * PHB_PP_MARKER;
@@ -508,8 +508,8 @@ typedef struct _HB_PP_RULE
    struct _HB_PP_RULE * pPrev;      // previous rule
    HB_PP_TOKEN *  pMatch;           // match pattern or NULL
    HB_PP_TOKEN *  pResult;          // result pattern or NULL
-   HB_USHORT      mode;             // comparison mode HB_PP_CMP_*
-   HB_USHORT      markers;          // number of markers in marker table
+   uint16_t      mode;             // comparison mode HB_PP_CMP_*
+   uint16_t      markers;          // number of markers in marker table
    // filled when pattern matches for substitution, cleared after
    PHB_PP_MARKER  pMarkers;         // marker table
    HB_PP_TOKEN *  pNextExpr;        // next expression after match pattern
@@ -520,8 +520,8 @@ typedef struct _HB_PP_DEFRULE
 {
    HB_PP_TOKEN *  pMatch;
    HB_PP_TOKEN *  pResult;
-   HB_USHORT      mode;
-   HB_USHORT      markers;
+   uint16_t      mode;
+   uint16_t      markers;
    HB_ULONG       repeatbits;
 }
 HB_PP_DEFRULE, * PHB_PP_DEFRULE;
@@ -531,7 +531,7 @@ typedef struct
    const char *   name;       // input name
    HB_SIZE        len;        // input name length
    const char *   value;      // output name
-   HB_USHORT      type;       // HB_PP_TOKEN_*
+   uint16_t      type;       // HB_PP_TOKEN_*
 }
 HB_PP_OPERATOR, * PHB_PP_OPERATOR;
 
@@ -614,7 +614,7 @@ typedef struct
    HB_SIZE   nSpaces;               // leading spaces for next token
    HB_SIZE   nSpacesNL;             // leading spaces ';' token (fCanNextLine) if it will not be line concatenator
    HB_SIZE   nSpacesMin;            // minimal number of leading spaces for next token
-   HB_USHORT usLastType;            // last token type
+   uint16_t usLastType;            // last token type
    HB_BOOL   fCanNextLine;          // ';' token found and we do not know yet if it's command separator or line concatenator
    HB_BOOL   fDirective;            // # directives is parsed
    HB_BOOL   fNewStatement;         // set to HB_TRUE at line beginning or after each ';' token

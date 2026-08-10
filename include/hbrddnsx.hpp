@@ -377,8 +377,8 @@ typedef struct _HB_PAGEINFO
    HB_ULONG   Page;
    HB_BOOL    Changed;
    int        iUsed;
-   HB_USHORT  uiKeys;
-   HB_USHORT  uiOffset;
+   uint16_t  uiKeys;
+   uint16_t  uiOffset;
    struct _HB_PAGEINFO * pNext;
    struct _HB_PAGEINFO * pPrev;
 #ifdef HB_NSX_EXTERNAL_PAGEBUFFER
@@ -409,7 +409,7 @@ typedef struct _HB_NSXSCOPE
 {
    PHB_ITEM   scopeItem;
    LPKEYINFO  scopeKey;
-   HB_USHORT  scopeKeyLen;
+   uint16_t  scopeKeyLen;
 } HB_NSXSCOPE;
 typedef HB_NSXSCOPE * PHB_NSXSCOPE;
 
@@ -445,16 +445,16 @@ typedef struct _TAGINFO
    HB_UCHAR    TagFlags;
    HB_UCHAR    KeyType;
    HB_UCHAR    TrailChar;
-   HB_USHORT   KeyLength;
-   HB_USHORT   nField;
-   HB_USHORT   uiNumber;
-   HB_USHORT   MaxKeys;
+   uint16_t   KeyLength;
+   uint16_t   nField;
+   uint16_t   uiNumber;
+   uint16_t   MaxKeys;
 
-   HB_USHORT   CurKeyOffset;
-   HB_USHORT   CurKeyNo;
+   uint16_t   CurKeyOffset;
+   uint16_t   CurKeyNo;
 
-   HB_USHORT   stackSize;
-   HB_USHORT   stackLevel;
+   uint16_t   stackSize;
+   uint16_t   stackLevel;
    LPTREESTACK stack;
 
    HB_ULONG    keyCount;

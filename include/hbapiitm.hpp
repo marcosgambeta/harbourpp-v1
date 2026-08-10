@@ -53,7 +53,7 @@ HB_EXTERN_BEGIN
 
 typedef struct
 {
-   HB_USHORT paramCount;
+   uint16_t paramCount;
    PHB_ITEM pItems[ HB_EVAL_PARAM_MAX_ + 1 ];
 } HB_EVALINFO, * PHB_EVALINFO;
 
@@ -100,8 +100,8 @@ extern HB_EXPORT void *       hb_itemGetPtrGC  ( PHB_ITEM pItem, const HB_GC_FUN
 extern HB_EXPORT PHB_SYMB     hb_itemGetSymbol ( PHB_ITEM pItem );
 extern HB_EXPORT PHB_ITEM     hb_itemNew       ( PHB_ITEM pNull );
 extern HB_EXPORT void         hb_itemInit      ( PHB_ITEM pItem );
-extern HB_EXPORT HB_USHORT    hb_itemPCount    ( void );
-extern HB_EXPORT PHB_ITEM     hb_itemParam     ( HB_USHORT uiParam );
+extern HB_EXPORT uint16_t    hb_itemPCount    ( void );
+extern HB_EXPORT PHB_ITEM     hb_itemParam     ( uint16_t uiParam );
 extern HB_EXPORT PHB_ITEM     hb_itemPutC      ( PHB_ITEM pItem, const char * szText );
 extern HB_EXPORT PHB_ITEM     hb_itemPutCL     ( PHB_ITEM pItem, const char * szText, HB_SIZE nLen );
 extern HB_EXPORT PHB_ITEM     hb_itemPutCConst ( PHB_ITEM pItem, const char * szText );
@@ -148,10 +148,10 @@ extern HB_EXPORT PHB_ITEM     hb_itemPutNLLLen ( PHB_ITEM pItem, HB_LONGLONG lNu
 
 /* Non Clipper compliant internal API */
 
-extern HB_EXPORT PHB_ITEM     hb_itemParamPtr  ( HB_USHORT uiParam, long lMask );
-extern HB_EXPORT HB_BOOL      hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem );
-extern HB_EXPORT HB_BOOL      hb_itemParamStoreForward( HB_USHORT uiParam, PHB_ITEM pItem );
-extern HB_EXPORT HB_BOOL      hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem );
+extern HB_EXPORT PHB_ITEM     hb_itemParamPtr  ( uint16_t uiParam, long lMask );
+extern HB_EXPORT HB_BOOL      hb_itemParamStore( uint16_t uiParam, PHB_ITEM pItem );
+extern HB_EXPORT HB_BOOL      hb_itemParamStoreForward( uint16_t uiParam, PHB_ITEM pItem );
+extern HB_EXPORT HB_BOOL      hb_itemParamStoreRelease( uint16_t uiParam, PHB_ITEM pItem );
 extern HB_EXPORT HB_BOOL      hb_itemEqual     ( PHB_ITEM pItem1, PHB_ITEM pItem2 );
 extern HB_EXPORT HB_BOOL      hb_itemCompare   ( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int * piResult ); /* For compatible types compare pItem1 with pItem2 setting piResult to -1, 0 or 1 if pItem1 is <, == or > then pItem2 and return true otherwise return false. */
 extern HB_EXPORT int          hb_itemStrCmp    ( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact ); /* our string compare */

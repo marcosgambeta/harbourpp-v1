@@ -183,11 +183,11 @@ extern HB_EXPORT HB_ERRCODE hb_gtSuspend( void ); /* prepare the terminal for sh
 extern HB_EXPORT HB_ERRCODE hb_gtResume( void ); /* resume the terminal after the shell output */
 extern HB_EXPORT int        hb_gtReadKey( int iEventMask );
 extern HB_EXPORT HB_ERRCODE hb_gtRectSize( int iTop, int iLeft, int iBottom, int iRight, HB_SIZE * pnBuffSize );
-extern HB_EXPORT HB_ERRCODE hb_gtRepChar( int iRow, int iCol, HB_USHORT usChar, HB_SIZE nCount );
+extern HB_EXPORT HB_ERRCODE hb_gtRepChar( int iRow, int iCol, uint16_t usChar, HB_SIZE nCount );
 extern HB_EXPORT HB_ERRCODE hb_gtSave( int iTop, int iLeft, int iBottom, int iRight, void * pScrBuff );
 extern HB_EXPORT HB_ERRCODE hb_gtRest( int iTop, int iLeft, int iBottom, int iRight, const void * pScrBuff );
-extern HB_EXPORT HB_ERRCODE hb_gtGetChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, HB_USHORT * pusChar );
-extern HB_EXPORT HB_ERRCODE hb_gtPutChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar );
+extern HB_EXPORT HB_ERRCODE hb_gtGetChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, uint16_t * pusChar );
+extern HB_EXPORT HB_ERRCODE hb_gtPutChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar );
 extern HB_EXPORT HB_ERRCODE hb_gtBeginWrite( void );
 extern HB_EXPORT HB_ERRCODE hb_gtEndWrite( void );
 extern HB_EXPORT HB_ERRCODE hb_gtScrDim( int * piHeight, int * piWidth );
@@ -218,10 +218,10 @@ extern HB_EXPORT int        hb_gtSetFlag( int iType, int iNewValue );
 extern HB_EXPORT int        hb_gtGetCurrColor( void );
 extern HB_EXPORT int        hb_gtGetClearColor( void );
 extern HB_EXPORT HB_ERRCODE hb_gtSetClearColor( int iColor );
-extern HB_EXPORT HB_USHORT  hb_gtGetClearChar( void );
-extern HB_EXPORT HB_ERRCODE hb_gtSetClearChar( HB_USHORT usChar );
-extern HB_EXPORT HB_ERRCODE hb_gtGetScrChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, HB_USHORT * pusChar );
-extern HB_EXPORT HB_ERRCODE hb_gtPutScrChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar );
+extern HB_EXPORT uint16_t  hb_gtGetClearChar( void );
+extern HB_EXPORT HB_ERRCODE hb_gtSetClearChar( uint16_t usChar );
+extern HB_EXPORT HB_ERRCODE hb_gtGetScrChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, uint16_t * pusChar );
+extern HB_EXPORT HB_ERRCODE hb_gtPutScrChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar );
 extern HB_EXPORT HB_ERRCODE hb_gtFlush( void );
 extern HB_EXPORT HB_ERRCODE hb_gtGetPosEx( int * piRow, int * piCol );
 extern HB_EXPORT HB_ERRCODE hb_gtScrollEx( int iTop, int iLeft, int iBottom, int iRight, int iColor, int iChar, int iRows, int iCols );
@@ -277,7 +277,7 @@ extern HB_EXPORT HB_BOOL    hb_gtWFlash( void );
 extern HB_EXPORT void       hb_gtWApp( HB_GT_WND ** wnd );
 extern HB_EXPORT void       hb_gtWCurrent( HB_GT_WND * wnd );
 extern HB_EXPORT void       hb_gtWPos( HB_GT_WND * wnd, HB_GT_RECT * rect );
-extern HB_EXPORT HB_BOOL    hb_gtWVis( HB_GT_WND * wnd, HB_USHORT uiStatus );
+extern HB_EXPORT HB_BOOL    hb_gtWVis( HB_GT_WND * wnd, uint16_t uiStatus );
 
 extern HB_EXPORT HB_ERRCODE hb_gtSLR( HB_GT_SLR * pSLR ); /* System-Level Request */
 extern HB_EXPORT HB_ERRCODE hb_gtModalRead( void * );

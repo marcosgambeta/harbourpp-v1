@@ -60,7 +60,7 @@ HB_EXTERN_BEGIN
 typedef struct _DELIMDATA
 {
    char      szTableExt[ HB_MAX_FILE_EXT + 1 ];
-   HB_USHORT uiSetHeader;      /* RDDI_SETHEADER */
+   uint16_t uiSetHeader;      /* RDDI_SETHEADER */
 } DELIMDATA, * LPDELIMDATA;
 
 
@@ -86,11 +86,11 @@ typedef struct _DELIMAREA
    PHB_FILE    pFile;               /* Data file handle */
    char *      szFileName;          /* Name of data file */
    char *      szEol;               /* EOL marker */
-   HB_USHORT   uiEolLen;            /* Size of EOL marker */
+   uint16_t   uiEolLen;            /* Size of EOL marker */
    char        cDelim;              /* Character field delimiter */
    char        cSeparator;          /* Field separator */
-   HB_USHORT   uiRecordLen;         /* Size of record */
-   HB_USHORT * pFieldOffset;        /* Pointer to field offset array */
+   uint16_t   uiRecordLen;         /* Size of record */
+   uint16_t * pFieldOffset;        /* Pointer to field offset array */
    HB_BYTE *   pRecord;             /* Buffer of record data */
    HB_BYTE *   pBuffer;             /* Read/Write */
    HB_SIZE     nBufferSize;         /* IO buffer size */

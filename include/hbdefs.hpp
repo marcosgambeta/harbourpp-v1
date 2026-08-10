@@ -209,9 +209,9 @@ typedef unsigned int        HB_UINT;
 #endif
 
 /* Harbour abstract types */
-#define HB_AREANO           HB_USHORT
-#define HB_FIELDNO          HB_USHORT
-#define HB_PARAMNO          HB_USHORT
+#define HB_AREANO           uint16_t
+#define HB_FIELDNO          uint16_t
+#define HB_PARAMNO          uint16_t
 
 /* Convenience */
 typedef HB_UCHAR            HB_BYTE;
@@ -696,7 +696,7 @@ typedef HB_U32 HB_FATTR;
 #define HB_LOWORD( l )          ( ( HB_U16 ) ( l ) )
 #define HB_HIWORD( l )          ( ( HB_U16 ) ( ( ( l ) >> 16 ) & 0xFFFF ) )
 #define HB_MKSHORT( lo, hi )    ( static_cast< HB_SHORT >( ( ( HB_I16 ) ( hi ) ) << 8 ) | ( lo ) )
-#define HB_MKUSHORT( lo, hi )   ( static_cast< HB_USHORT >( ( ( HB_U16 ) ( hi ) ) << 8 ) | ( lo ) )
+#define HB_MKUSHORT( lo, hi )   ( static_cast< uint16_t >( ( ( HB_U16 ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< HB_LONG > \
                                        ( ( ( ( HB_I32 ) ( b4 ) ) << 24 ) | \
                                          ( ( ( HB_I32 ) ( b3 ) ) << 16 ) | \
@@ -1425,7 +1425,7 @@ typedef HB_U32 HB_FATTR;
 #define HB_GET_LE_INT64( p )        (( HB_I64 ) HB_GET_LE_UINT64( p ))
 
 #define HB_PCODE_MKSHORT( p )       ( static_cast< HB_SHORT >( HB_GET_LE_INT16( p ) ) )
-#define HB_PCODE_MKUSHORT( p )      ( static_cast< HB_USHORT >( HB_GET_LE_UINT16( p ) ) )
+#define HB_PCODE_MKUSHORT( p )      ( static_cast< uint16_t >( HB_GET_LE_UINT16( p ) ) )
 #define HB_PCODE_MKLONG( p )        ( static_cast< HB_LONG >( HB_GET_LE_INT32( p ) ) )
 #define HB_PCODE_MKULONG( p )       ( static_cast< HB_ULONG >( HB_GET_LE_UINT32( p ) ) )
 #define HB_PCODE_MKLONGLONG( p )    (( HB_LONGLONG )  HB_GET_LE_INT64( p ))

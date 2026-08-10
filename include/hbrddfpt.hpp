@@ -214,8 +214,8 @@ typedef struct _MEMOGCTABLE
    HB_ULONG  ulDirPage;             /* FLEX Dir GC page offset */
    HB_ULONG  ulCounter;             /* FLEX cyclic counter */
    HB_ULONG  ulSize;                /* FLEX GC page size in bytes */
-   HB_USHORT usMaxItem;             /* max number of items in pGCitems */
-   HB_USHORT usItems;               /* number of items in pGCitems */
+   uint16_t usMaxItem;             /* max number of items in pGCitems */
+   uint16_t usItems;               /* number of items in pGCitems */
    LPMEMOGCITEM pGCitems;           /* free block list */
    FPTHEADER fptHeader;             /* FPT file header */
 } MEMOGCTABLE;

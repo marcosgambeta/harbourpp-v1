@@ -201,12 +201,12 @@ struct _RDDNODE;
 typedef struct
 {
    const char *   atomName;         /* FIELD (symbol) name */
-   HB_USHORT      uiType;           /* FIELD type */
-   HB_USHORT      uiTypeExtended;   /* FIELD type extended */
-   HB_USHORT      uiLen;            /* Overall FIELD length */
-   HB_USHORT      uiDec;            /* Decimal places of numeric FIELD */
-   HB_USHORT      uiFlags;          /* FIELD flags */
-   HB_USHORT      unused;
+   uint16_t      uiType;           /* FIELD type */
+   uint16_t      uiTypeExtended;   /* FIELD type extended */
+   uint16_t      uiLen;            /* Overall FIELD length */
+   uint16_t      uiDec;            /* Decimal places of numeric FIELD */
+   uint16_t      uiFlags;          /* FIELD flags */
+   uint16_t      unused;
 } DBFIELDINFO;
 
 typedef DBFIELDINFO * LPDBFIELDINFO;
@@ -221,8 +221,8 @@ typedef DBFIELDINFO * LPDBFIELDINFO;
 
 typedef struct
 {
-   HB_USHORT      uiArea;           /* Work Area number of the data store */
-   HB_USHORT      unused;
+   uint16_t      uiArea;           /* Work Area number of the data store */
+   uint16_t      unused;
    const char *   abName;           /* The qualified name of the data store */
    const char *   atomAlias;        /* The logical name of the data store */
    HB_BOOL        fShared;          /* Share mode of the data store */
@@ -360,8 +360,8 @@ typedef DBSCOPEINFO * LPDBSCOPEINFO;
 
 typedef struct
 {
-   HB_USHORT nScope;     /* scope operation: TOPSCOPE/ENDSCOPE */
-   HB_USHORT unused;
+   uint16_t nScope;     /* scope operation: TOPSCOPE/ENDSCOPE */
+   uint16_t unused;
    PHB_ITEM  scopeValue;
 } DBORDSCOPEINFO;
 
@@ -443,8 +443,8 @@ typedef DBEVALINFO * LPDBEVALINFO;
 
 typedef struct
 {
-   HB_USHORT uiSource;       /* Field index number from the source */
-   HB_USHORT uiDest;         /* Destination field index number */
+   uint16_t uiSource;       /* Field index number from the source */
+   uint16_t uiDest;         /* Destination field index number */
 } DBTRANSITEM;
 
 typedef DBTRANSITEM * LPDBTRANSITEM;
@@ -465,8 +465,8 @@ typedef struct
    struct _AREA * lpaSource;     /* Pointer to source work area */
    struct _AREA * lpaDest;       /* Pointer to dest work area */
    DBSCOPEINFO    dbsci;         /* Scope to limit transfer */
-   HB_USHORT      uiFlags;       /* Transfer attributes */
-   HB_USHORT      uiItemCount;   /* Number of items below */
+   uint16_t      uiFlags;       /* Transfer attributes */
+   uint16_t      uiItemCount;   /* Number of items below */
    LPDBTRANSITEM  lpTransItems;  /* Array of items */
 } DBTRANSINFO;
 
@@ -486,8 +486,8 @@ typedef DBTRANSINFO * LPDBTRANSINFO;
 
 typedef struct
 {
-   HB_USHORT uiField;        /* Index into the workarea->fields structure */
-   HB_USHORT uiFlags;        /* Sort flags */
+   uint16_t uiField;        /* Index into the workarea->fields structure */
+   uint16_t uiFlags;        /* Sort flags */
 } DBSORTITEM;
 
 typedef DBSORTITEM * LPDBSORTITEM;
@@ -515,8 +515,8 @@ typedef struct
 {
    DBTRANSINFO    dbtri;         /* Destination workarea transfer information */
    LPDBSORTITEM   lpdbsItem;     /* Fields which compose the key values for the sort */
-   HB_USHORT      uiItemCount;   /* The number of fields above */
-   HB_USHORT      unused;
+   uint16_t      uiItemCount;   /* The number of fields above */
+   uint16_t      unused;
 } DBSORTINFO;
 
 typedef DBSORTINFO * LPDBSORTINFO;
@@ -534,8 +534,8 @@ typedef DBSORTINFO * LPDBSORTINFO;
 typedef struct
 {
    PHB_ITEM  itmRecID;
-   HB_USHORT uiMethod;
-   HB_USHORT fResult;
+   uint16_t uiMethod;
+   uint16_t fResult;
 } DBLOCKINFO;
 
 typedef DBLOCKINFO * LPDBLOCKINFO;
@@ -552,12 +552,12 @@ typedef DBLOCKINFO * LPDBLOCKINFO;
 
 typedef struct _FIELD
 {
-   HB_USHORT uiType;           /* Field type */
-   HB_USHORT uiTypeExtended;   /* Field type - extended */
-   HB_USHORT uiLen;            /* Field length */
-   HB_USHORT uiDec;            /* Decimal length */
-   HB_USHORT uiFlags;          /* FIELD flags */
-   HB_USHORT uiArea;           /* Area this field resides in */
+   uint16_t uiType;           /* Field type */
+   uint16_t uiTypeExtended;   /* Field type - extended */
+   uint16_t uiLen;            /* Field length */
+   uint16_t uiDec;            /* Decimal length */
+   uint16_t uiFlags;          /* FIELD flags */
+   uint16_t uiArea;           /* Area this field resides in */
    void *    sym;              /* Symbol that represents the field */
    struct _FIELD * lpfNext;    /* The next field in the list */
 } FIELD;
@@ -588,11 +588,11 @@ typedef struct _AREA
    /* I'll add this soon, Druzus */
    struct _RDDFUNCS * lprfsSuper;/* Virtual super method table for this workarea */
 #endif
-   HB_USHORT uiArea;             /* The number assigned to this workarea */
-   HB_USHORT rddID;              /* RDD id */
+   uint16_t uiArea;             /* The number assigned to this workarea */
+   uint16_t rddID;              /* RDD id */
    void * atomAlias;             /* Pointer to the alias symbol for this workarea */
-   HB_USHORT uiFieldExtent;      /* Total number of fields allocated */
-   HB_USHORT uiFieldCount;       /* Total number of fields used */
+   uint16_t uiFieldExtent;      /* Total number of fields allocated */
+   uint16_t uiFieldCount;       /* Total number of fields used */
    LPFIELD lpFields;             /* Pointer to an array of fields */
    void * lpFieldExtents;        /* Void ptr for additional field properties */
    PHB_ITEM valResult;           /* All purpose result holder */
@@ -605,10 +605,10 @@ typedef struct _AREA
    DBFILTERINFO dbfi;            /* Filter in effect */
    LPDBORDERCONDINFO lpdbOrdCondInfo;
    LPDBRELINFO lpdbRelations;    /* Parent/Child relationships used */
-   HB_USHORT uiParents;          /* Number of parents for this area */
-   HB_USHORT uiMaxFieldNameLength;
-   HB_USHORT heap;
-   HB_USHORT heapSize;
+   uint16_t uiParents;          /* Number of parents for this area */
+   uint16_t uiMaxFieldNameLength;
+   uint16_t heap;
+   uint16_t heapSize;
    PHB_CODEPAGE cdPage;          /* Area's codepage pointer */
 } AREA;
 
@@ -627,7 +627,7 @@ typedef HB_ERRCODE ( * DBENTRYP_B     )( AREAP area, HB_BOOL param );
 typedef HB_ERRCODE ( * DBENTRYP_L     )( AREAP area, HB_LONG param );
 typedef HB_ERRCODE ( * DBENTRYP_UL    )( AREAP area, HB_ULONG param );
 typedef HB_ERRCODE ( * DBENTRYP_I     )( AREAP area, PHB_ITEM param );
-typedef HB_ERRCODE ( * DBENTRYP_SI    )( AREAP area, HB_USHORT index, PHB_ITEM param );
+typedef HB_ERRCODE ( * DBENTRYP_SI    )( AREAP area, uint16_t index, PHB_ITEM param );
 typedef HB_ERRCODE ( * DBENTRYP_VO    )( AREAP area, LPDBOPENINFO param );
 typedef HB_ERRCODE ( * DBENTRYP_VT    )( AREAP area, LPDBTRANSINFO param );
 typedef HB_ERRCODE ( * DBENTRYP_VF    )( AREAP area, LPDBFIELDINFO param );
@@ -641,23 +641,23 @@ typedef HB_ERRCODE ( * DBENTRYP_VOC   )( AREAP area, LPDBORDERCREATEINFO param )
 typedef HB_ERRCODE ( * DBENTRYP_VOO   )( AREAP area, LPDBORDERCONDINFO param );
 typedef HB_ERRCODE ( * DBENTRYP_VOS   )( AREAP area, LPDBORDSCOPEINFO param );
 typedef HB_ERRCODE ( * DBENTRYP_VOI   )( AREAP area, LPDBORDERINFO param );
-typedef HB_ERRCODE ( * DBENTRYP_SVOI  )( AREAP area, HB_USHORT index, LPDBORDERINFO param );
-typedef HB_ERRCODE ( * DBENTRYP_SP    )( AREAP area, HB_USHORT * param );
+typedef HB_ERRCODE ( * DBENTRYP_SVOI  )( AREAP area, uint16_t index, LPDBORDERINFO param );
+typedef HB_ERRCODE ( * DBENTRYP_SP    )( AREAP area, uint16_t * param );
 typedef HB_ERRCODE ( * DBENTRYP_P     )( AREAP area, const HB_BYTE * param );
 typedef HB_ERRCODE ( * DBENTRYP_CP    )( AREAP area, char * param );
 typedef HB_ERRCODE ( * DBENTRYP_CC    )( AREAP area, const char * param );
 typedef HB_ERRCODE ( * DBENTRYP_PP    )( AREAP area, HB_BYTE ** param );
-typedef HB_ERRCODE ( * DBENTRYP_S     )( AREAP area, HB_USHORT param );
+typedef HB_ERRCODE ( * DBENTRYP_S     )( AREAP area, uint16_t param );
 typedef HB_ERRCODE ( * DBENTRYP_LP    )( AREAP area, HB_LONG * param );
 typedef HB_ERRCODE ( * DBENTRYP_ULP   )( AREAP area, HB_ULONG * param );
-typedef HB_ERRCODE ( * DBENTRYP_SVP   )( AREAP area, HB_USHORT index, void * param );
-typedef HB_ERRCODE ( * DBENTRYP_SSP   )( AREAP area, HB_USHORT index, HB_USHORT * param );
-typedef HB_ERRCODE ( * DBENTRYP_SCP   )( AREAP area, HB_USHORT index, char * param );
-typedef HB_ERRCODE ( * DBENTRYP_SCCS  )( AREAP area, HB_USHORT index, const char * param, HB_USHORT p3 );
-typedef HB_ERRCODE ( * DBENTRYP_VSP   )( AREAP area, HB_USHORT action, HB_ULONG lRecord );
-typedef HB_ERRCODE ( * DBENTRYP_SVL   )( AREAP area, HB_USHORT index, HB_ULONG * param );
-typedef HB_ERRCODE ( * DBENTRYP_SSI   )( AREAP area, HB_USHORT p1, HB_USHORT p2, PHB_ITEM p3 );
-typedef HB_ERRCODE ( * DBENTRYP_ISI   )( AREAP area, PHB_ITEM p1, HB_USHORT p2, PHB_ITEM p3 );
+typedef HB_ERRCODE ( * DBENTRYP_SVP   )( AREAP area, uint16_t index, void * param );
+typedef HB_ERRCODE ( * DBENTRYP_SSP   )( AREAP area, uint16_t index, uint16_t * param );
+typedef HB_ERRCODE ( * DBENTRYP_SCP   )( AREAP area, uint16_t index, char * param );
+typedef HB_ERRCODE ( * DBENTRYP_SCCS  )( AREAP area, uint16_t index, const char * param, uint16_t p3 );
+typedef HB_ERRCODE ( * DBENTRYP_VSP   )( AREAP area, uint16_t action, HB_ULONG lRecord );
+typedef HB_ERRCODE ( * DBENTRYP_SVL   )( AREAP area, uint16_t index, HB_ULONG * param );
+typedef HB_ERRCODE ( * DBENTRYP_SSI   )( AREAP area, uint16_t p1, uint16_t p2, PHB_ITEM p3 );
+typedef HB_ERRCODE ( * DBENTRYP_ISI   )( AREAP area, PHB_ITEM p1, uint16_t p2, PHB_ITEM p3 );
 typedef HB_ERRCODE ( * DBENTRYP_BIB   )( AREAP area, HB_BOOL p1, PHB_ITEM p2, HB_BOOL p3 );
 typedef HB_ERRCODE ( * DBENTRYP_VPL   )( AREAP area, void * p1, HB_LONG p2 );
 typedef HB_ERRCODE ( * DBENTRYP_VPLP  )( AREAP area, void * p1, HB_LONG * p2 );
@@ -668,7 +668,7 @@ typedef HB_ERRCODE ( * DBENTRYP_LSP   )( AREAP area, HB_ULONG p1, HB_BOOL * p2 )
 typedef HB_ERRCODE ( * DBENTRYP_R     )( struct _RDDNODE * pRDD );
 typedef HB_ERRCODE ( * DBENTRYP_RVVL  )( struct _RDDNODE * pRDD, PHB_ITEM p1, PHB_ITEM p2, HB_ULONG p3 );
 typedef HB_ERRCODE ( * DBENTRYP_RVVVL )( struct _RDDNODE * pRDD, PHB_ITEM p1, PHB_ITEM p2, PHB_ITEM p3, HB_ULONG p4 );
-typedef HB_ERRCODE ( * DBENTRYP_RSLV  )( struct _RDDNODE * pRDD, HB_USHORT index, HB_ULONG p1, PHB_ITEM p2 );
+typedef HB_ERRCODE ( * DBENTRYP_RSLV  )( struct _RDDNODE * pRDD, uint16_t index, HB_ULONG p1, PHB_ITEM p2 );
 /*--------------------* Virtual Method Table *----------------------*/
 
 typedef struct _RDDFUNCS
@@ -830,10 +830,10 @@ typedef RDDFUNCS * PRDDFUNCS;
 typedef struct _RDDNODE
 {
    char szName[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ]; /* Name of RDD */
-   HB_USHORT rddID;            /* RDD ID */
-   HB_USHORT uiType;           /* Type of RDD */
-   HB_USHORT uiAreaSize;       /* Size of the WorkArea */
-   HB_USHORT rddSuperID;       /* ancestor RDD ID */
+   uint16_t rddID;            /* RDD ID */
+   uint16_t uiType;           /* Type of RDD */
+   uint16_t uiAreaSize;       /* Size of the WorkArea */
+   uint16_t rddSuperID;       /* ancestor RDD ID */
    RDDFUNCS  pTable;           /* Table of functions */
    RDDFUNCS  pSuperTable;      /* Table of super functions */
    void      *lpvCargo;        /* RDD specific extended data, if used then
@@ -1207,25 +1207,25 @@ extern HB_EXPORT HB_ERRCODE   hb_rddGetAliasNumber( const char * szAlias, int * 
 extern HB_EXPORT void *       hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea );
 extern HB_EXPORT void *       hb_rddGetCurrentWorkAreaPointer( void );
 extern HB_EXPORT void *       hb_rddGetWorkAreaPointer( int iArea );
-extern HB_EXPORT HB_USHORT    hb_rddInsertAreaNode( const char *szDriver );
+extern HB_EXPORT uint16_t    hb_rddInsertAreaNode( const char *szDriver );
 extern HB_EXPORT void         hb_rddReleaseCurrentArea( void );
 
-extern HB_EXPORT int          hb_rddRegister( const char * szDriver, HB_USHORT uiType );
+extern HB_EXPORT int          hb_rddRegister( const char * szDriver, uint16_t uiType );
 extern HB_EXPORT HB_ERRCODE   hb_rddInherit( RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNCS * pSuperTable, const char * szDrvName );
-extern HB_EXPORT HB_ERRCODE   hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNCS * pSuperTable, const char * szDrvName, HB_USHORT * puiSuperRddId );
-extern HB_EXPORT HB_BOOL      hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID );
-extern HB_EXPORT LPRDDNODE    hb_rddGetNode( HB_USHORT uiNode );
-extern HB_EXPORT LPRDDNODE    hb_rddFindNode( const char * szDriver, HB_USHORT * uiIndex );
+extern HB_EXPORT HB_ERRCODE   hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNCS * pSuperTable, const char * szDrvName, uint16_t * puiSuperRddId );
+extern HB_EXPORT HB_BOOL      hb_rddIsDerivedFrom( uint16_t uiRddID, uint16_t uiSuperRddID );
+extern HB_EXPORT LPRDDNODE    hb_rddGetNode( uint16_t uiNode );
+extern HB_EXPORT LPRDDNODE    hb_rddFindNode( const char * szDriver, uint16_t * uiIndex );
 extern HB_EXPORT LPRDDNODE    hb_rddFindFileNode( LPRDDNODE pRddNode, const char * szFileName );
 extern HB_EXPORT void         hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable );
-extern HB_EXPORT HB_USHORT    hb_rddFieldIndex( AREAP pArea, const char * szName );
-extern HB_EXPORT HB_USHORT    hb_rddFieldExpIndex( AREAP pArea, const char * szField );
+extern HB_EXPORT uint16_t    hb_rddFieldIndex( AREAP pArea, const char * szName );
+extern HB_EXPORT uint16_t    hb_rddFieldExpIndex( AREAP pArea, const char * szField );
 extern HB_EXPORT const char * hb_rddFindDrv( const char * szDriver, const char * szFileName );
 extern HB_EXPORT const char * hb_rddDefaultDrv( const char * szDriver );
 extern HB_EXPORT HB_ERRCODE   hb_rddSelectFirstAvailable( void );
 extern HB_EXPORT HB_ERRCODE   hb_rddVerifyAliasName( const char * szAlias );
-extern HB_EXPORT void *       hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID );
-extern HB_EXPORT PHB_ITEM     hb_rddList( HB_USHORT uiType );
+extern HB_EXPORT void *       hb_rddNewAreaNode( LPRDDNODE pRddNode, uint16_t uiRddID );
+extern HB_EXPORT PHB_ITEM     hb_rddList( uint16_t uiType );
 extern HB_EXPORT void         hb_rddCloseAll( void );
 extern HB_EXPORT void         hb_rddFlushAll( void );
 extern HB_EXPORT void         hb_rddUnLockAll( void );
@@ -1234,13 +1234,13 @@ extern HB_EXPORT void         hb_rddSetNetErr( HB_BOOL fNetErr );
 
 extern HB_EXPORT HB_ERRCODE   hb_rddOpenTable(
                                  const char * szFileName, const char * szDriver,
-                                 HB_USHORT uiArea, const char *szAlias,
+                                 uint16_t uiArea, const char *szAlias,
                                  HB_BOOL fShared, HB_BOOL fReadonly,
                                  const char * szCpId, HB_ULONG ulConnection,
                                  PHB_ITEM pStruct, PHB_ITEM pDelim );
 extern HB_EXPORT HB_ERRCODE   hb_rddCreateTable(
                                  const char * szFileName, const char * szDriver,
-                                 HB_USHORT uiArea, const char *szAlias,
+                                 uint16_t uiArea, const char *szAlias,
                                  HB_BOOL fKeepOpen,
                                  const char * szCpId, HB_ULONG ulConnection,
                                  PHB_ITEM pStruct, PHB_ITEM pDelim );
@@ -1267,7 +1267,7 @@ extern HB_EXPORT HB_ERRCODE   hb_rddTransRecords(
                                  PHB_ITEM pRest,
                                  const char *szCpId,
                                  PHB_ITEM pDelim );
-extern HB_EXPORT void         hb_tblStructure( AREAP pArea, PHB_ITEM pStruct, HB_USHORT uiSize );
+extern HB_EXPORT void         hb_tblStructure( AREAP pArea, PHB_ITEM pStruct, uint16_t uiSize );
 extern HB_EXPORT HB_ERRCODE   hb_rddCloseAllParentRelations( AREAP pArea );
 
 extern HB_EXPORT HB_ERRCODE   hb_rddEvalWA( PHB_ITEM pBlock );

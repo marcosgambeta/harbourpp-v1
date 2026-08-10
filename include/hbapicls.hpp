@@ -53,36 +53,36 @@ HB_EXTERN_BEGIN
 
 // TODO: enum ?
 #if defined(__cplusplus)
-constexpr HB_USHORT HB_OO_OP_PLUS = 0;
-constexpr HB_USHORT HB_OO_OP_MINUS = 1;
-constexpr HB_USHORT HB_OO_OP_MULT = 2;
-constexpr HB_USHORT HB_OO_OP_DIVIDE = 3;
-constexpr HB_USHORT HB_OO_OP_MOD = 4;
-constexpr HB_USHORT HB_OO_OP_POWER = 5;
-constexpr HB_USHORT HB_OO_OP_INC = 6;
-constexpr HB_USHORT HB_OO_OP_DEC = 7;
-constexpr HB_USHORT HB_OO_OP_EQUAL = 8;
-constexpr HB_USHORT HB_OO_OP_EXACTEQUAL = 9;
-constexpr HB_USHORT HB_OO_OP_NOTEQUAL = 10;
-constexpr HB_USHORT HB_OO_OP_LESS = 11;
-constexpr HB_USHORT HB_OO_OP_LESSEQUAL = 12;
-constexpr HB_USHORT HB_OO_OP_GREATER = 13;
-constexpr HB_USHORT HB_OO_OP_GREATEREQUAL = 14;
-constexpr HB_USHORT HB_OO_OP_ASSIGN = 15;
-constexpr HB_USHORT HB_OO_OP_INSTRING = 16;
-constexpr HB_USHORT HB_OO_OP_INCLUDE = 17;
-constexpr HB_USHORT HB_OO_OP_NOT = 18;
-constexpr HB_USHORT HB_OO_OP_AND = 19;
-constexpr HB_USHORT HB_OO_OP_OR = 20;
-constexpr HB_USHORT HB_OO_OP_ARRAYINDEX = 21;
-constexpr HB_USHORT HB_OO_OP_ENUMINDEX = 22;
-constexpr HB_USHORT HB_OO_OP_ENUMBASE = 23;
-constexpr HB_USHORT HB_OO_OP_ENUMVALUE = 24;
-constexpr HB_USHORT HB_OO_OP_ENUMSTART = 25;
-constexpr HB_USHORT HB_OO_OP_ENUMSKIP = 26;
-constexpr HB_USHORT HB_OO_OP_ENUMSTOP = 27;
-constexpr HB_USHORT HB_OO_OP_ENUMISFIRST = 28;
-constexpr HB_USHORT HB_OO_OP_ENUMISLAST = 29;
+constexpr uint16_t HB_OO_OP_PLUS = 0;
+constexpr uint16_t HB_OO_OP_MINUS = 1;
+constexpr uint16_t HB_OO_OP_MULT = 2;
+constexpr uint16_t HB_OO_OP_DIVIDE = 3;
+constexpr uint16_t HB_OO_OP_MOD = 4;
+constexpr uint16_t HB_OO_OP_POWER = 5;
+constexpr uint16_t HB_OO_OP_INC = 6;
+constexpr uint16_t HB_OO_OP_DEC = 7;
+constexpr uint16_t HB_OO_OP_EQUAL = 8;
+constexpr uint16_t HB_OO_OP_EXACTEQUAL = 9;
+constexpr uint16_t HB_OO_OP_NOTEQUAL = 10;
+constexpr uint16_t HB_OO_OP_LESS = 11;
+constexpr uint16_t HB_OO_OP_LESSEQUAL = 12;
+constexpr uint16_t HB_OO_OP_GREATER = 13;
+constexpr uint16_t HB_OO_OP_GREATEREQUAL = 14;
+constexpr uint16_t HB_OO_OP_ASSIGN = 15;
+constexpr uint16_t HB_OO_OP_INSTRING = 16;
+constexpr uint16_t HB_OO_OP_INCLUDE = 17;
+constexpr uint16_t HB_OO_OP_NOT = 18;
+constexpr uint16_t HB_OO_OP_AND = 19;
+constexpr uint16_t HB_OO_OP_OR = 20;
+constexpr uint16_t HB_OO_OP_ARRAYINDEX = 21;
+constexpr uint16_t HB_OO_OP_ENUMINDEX = 22;
+constexpr uint16_t HB_OO_OP_ENUMBASE = 23;
+constexpr uint16_t HB_OO_OP_ENUMVALUE = 24;
+constexpr uint16_t HB_OO_OP_ENUMSTART = 25;
+constexpr uint16_t HB_OO_OP_ENUMSKIP = 26;
+constexpr uint16_t HB_OO_OP_ENUMSTOP = 27;
+constexpr uint16_t HB_OO_OP_ENUMISFIRST = 28;
+constexpr uint16_t HB_OO_OP_ENUMISLAST = 29;
 #else
 #define HB_OO_OP_PLUS         0
 #define HB_OO_OP_MINUS        1
@@ -117,7 +117,7 @@ constexpr HB_USHORT HB_OO_OP_ENUMISLAST = 29;
 #endif
 
 #if defined(__cplusplus)
-constexpr HB_USHORT HB_OO_MAX_OPERATOR = 29;
+constexpr uint16_t HB_OO_MAX_OPERATOR = 29;
 #else
 #define HB_OO_MAX_OPERATOR    29
 #endif
@@ -130,7 +130,7 @@ extern void hb_clsDoInit(void);
 extern void hb_clsReleaseAll(void);
 // classes.c - mark all class internals as used
 extern void hb_clsIsClassRef(void);
-extern HB_BOOL hb_clsHasDestructor(HB_USHORT uiClass);
+extern HB_BOOL hb_clsHasDestructor(uint16_t uiClass);
 // returns the real method symbol for given stack symbol
 extern PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol);
 
@@ -138,8 +138,8 @@ extern PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol);
 extern PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pSymMsg, PHB_STACK_STATE pStack);
 // create object variable reference
 extern HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack);
-extern HB_BOOL hb_objHasOperator(PHB_ITEM pObject, HB_USHORT uiOperator);
-extern HB_BOOL hb_objOperatorCall(HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2);
+extern HB_BOOL hb_objHasOperator(PHB_ITEM pObject, uint16_t uiOperator);
+extern HB_BOOL hb_objOperatorCall(uint16_t uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2);
 extern void hb_objDestructorCall(PHB_ITEM pObject);
 extern PHB_ITEM hb_objCloneTo(PHB_ITEM pDest, PHB_ITEM pObject);
 extern void hb_objCloneBody(PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList);
@@ -152,20 +152,20 @@ extern void hb_mthAddTime(HB_ULONG ulClockTicks); // profiler from classes.c
 #endif // _HB_API_INTERNAL_
 
 // class management
-extern HB_EXPORT const char *hb_clsName(HB_USHORT uiClass);
-extern HB_EXPORT const char *hb_clsFuncName(HB_USHORT uiClass);
-extern HB_EXPORT const char *hb_clsMethodName(HB_USHORT uiClass, HB_USHORT uiMethod);
-extern HB_EXPORT PHB_SYMB hb_clsFuncSym(HB_USHORT uiClass);
+extern HB_EXPORT const char *hb_clsName(uint16_t uiClass);
+extern HB_EXPORT const char *hb_clsFuncName(uint16_t uiClass);
+extern HB_EXPORT const char *hb_clsMethodName(uint16_t uiClass, uint16_t uiMethod);
+extern HB_EXPORT PHB_SYMB hb_clsFuncSym(uint16_t uiClass);
 // is a class handle inherited from szParentName Class ?
-extern HB_EXPORT HB_BOOL hb_clsIsParent(HB_USHORT uiClass, const char *szParentName);
-extern HB_EXPORT HB_SIZE hb_clsGetVarIndex(HB_USHORT uiClass, PHB_DYNS pVarSym);
-extern HB_EXPORT HB_USHORT hb_clsFindClass(const char *szClass, const char *szClassFunc);
+extern HB_EXPORT HB_BOOL hb_clsIsParent(uint16_t uiClass, const char *szParentName);
+extern HB_EXPORT HB_SIZE hb_clsGetVarIndex(uint16_t uiClass, PHB_DYNS pVarSym);
+extern HB_EXPORT uint16_t hb_clsFindClass(const char *szClass, const char *szClassFunc);
 
 // object management
 // get object class handle
-extern HB_EXPORT HB_USHORT hb_objGetClass(PHB_ITEM pItem);
+extern HB_EXPORT uint16_t hb_objGetClass(PHB_ITEM pItem);
 // set object class handle using class name and class function name
-extern HB_EXPORT HB_USHORT hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc);
+extern HB_EXPORT uint16_t hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc);
 // retrieves an object class name
 extern HB_EXPORT const char *hb_objGetClsName(PHB_ITEM pObject);
 // retrieves an object class name for a specific message
@@ -194,11 +194,11 @@ extern HB_EXPORT PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg);
 extern HB_EXPORT void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int iParamOffset);
 
 // Harbour equivalent for Clipper internal __mdCreate()
-extern HB_EXPORT HB_USHORT hb_clsCreate(HB_USHORT usSize, const char *szClassName);
+extern HB_EXPORT uint16_t hb_clsCreate(uint16_t usSize, const char *szClassName);
 // Harbour equivalent for Clipper internal __mdAdd()
-extern HB_EXPORT void hb_clsAdd(HB_USHORT usClassH, const char *szMethodName, PHB_FUNC pFuncPtr);
+extern HB_EXPORT void hb_clsAdd(uint16_t usClassH, const char *szMethodName, PHB_FUNC pFuncPtr);
 // Harbour equivalent for Clipper internal __mdAssociate()
-extern HB_EXPORT void hb_clsAssociate(HB_USHORT usClassH);
+extern HB_EXPORT void hb_clsAssociate(uint16_t usClassH);
 
 HB_EXTERN_END
 

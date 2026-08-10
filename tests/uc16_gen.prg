@@ -244,7 +244,7 @@ static function array_to_code( aVal, cName, nn )
    local cResult, l, n
 
    cResult := "static const " + ;
-              iif( nn == 1, "HB_BYTE", "HB_USHORT" ) + " " + ;
+              iif( nn == 1, "HB_BYTE", "uint16_t" ) + " " + ;
               cName + "[ " + hb_ntos( len( aVal ) ) + " ] =" + hb_eol()
    cResult += "{" + hb_eol()
    l := 0
@@ -287,7 +287,7 @@ return aVal
 static function index_func16( cName, cNameInd, cNameConv, cMin, cMax, cBit )
    local cResult
 
-   cResult := "static HB_USHORT " + cName + "( int n )" + hb_eol() + ;
+   cResult := "static uint16_t " + cName + "( int n )" + hb_eol() + ;
               "{" + hb_eol() + ;
               "   n -= " + cMin + ";" + hb_eol() + ;
               "   if( n >= 0 && n <= ( " + cMax + " - " + cMin + " ) )" + hb_eol() + ;

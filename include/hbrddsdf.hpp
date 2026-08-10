@@ -75,9 +75,9 @@ typedef struct _SDFAREA
    PHB_FILE    pFile;               /* Data file handle */
    char *      szFileName;          /* Name of data file */
    char *      szEol;               /* EOL marker */
-   HB_USHORT   uiEolLen;            /* Size of EOL marker */
-   HB_USHORT   uiRecordLen;         /* Size of record */
-   HB_USHORT * pFieldOffset;        /* Pointer to field offset array */
+   uint16_t   uiEolLen;            /* Size of EOL marker */
+   uint16_t   uiRecordLen;         /* Size of record */
+   uint16_t * pFieldOffset;        /* Pointer to field offset array */
    HB_BYTE *   pRecord;             /* Buffer of record data */
    HB_BYTE *   pBuffer;             /* Read/Write */
    HB_SIZE     nBufferSize;         /* IO buffer size */

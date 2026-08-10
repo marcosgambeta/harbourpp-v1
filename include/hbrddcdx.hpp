@@ -246,8 +246,8 @@ struct _CDXTAG;   /* forward declaration */
 typedef struct _CDXKEY
 {
    HB_ULONG  rec;
-   HB_USHORT mode;
-   HB_USHORT len;
+   uint16_t mode;
+   uint16_t len;
    HB_BYTE   val[ 1 ];
 } CDXKEY, * LPCDXKEY;
 
@@ -261,8 +261,8 @@ typedef struct _CDXPAGE
    int       iCurKey;
 
    HB_ULONG  RNMask;
-   HB_USHORT DCMask;
-   HB_USHORT TCMask;
+   uint16_t DCMask;
+   uint16_t TCMask;
    HB_BYTE   RNBits;
    HB_BYTE   DCBits;
    HB_BYTE   TCBits;
@@ -313,9 +313,9 @@ typedef struct _CDXTAG
    char *    ForExpr;         /* a tag for expression as text */
    PHB_ITEM  pKeyItem;        /* item with a macro pcode for a tag key expression */
    PHB_ITEM  pForItem;        /* item with a macro pcode for a tag for expression */
-   HB_USHORT uiType;          /* a type of key expression value */
-   HB_USHORT uiLen;           /* length of the key expression value */
-   HB_USHORT nField;          /* Field number for simple (one field) key expression */
+   uint16_t uiType;          /* a type of key expression value */
+   uint16_t uiLen;           /* length of the key expression value */
+   uint16_t nField;          /* Field number for simple (one field) key expression */
    HB_BYTE   bTrail;          /* trailing character for shorter key value */
    HB_BYTE   OptFlags;        /* index options flag */
    HB_BOOL   AscendKey;       /* ascending/descending order flag */
@@ -344,7 +344,7 @@ typedef struct _CDXTAG
 
    HB_ULONG  TagBlock;        /* a page offset where a tag header is stored */
    HB_ULONG  RootBlock;       /* a page offset with the root of keys tree */
-   HB_USHORT MaxKeys;         /* maximum number of keys in Interior node */
+   uint16_t MaxKeys;         /* maximum number of keys in Interior node */
 
    struct _CDXINDEX * pIndex; /* a parent index info */
    struct _CDXTAG   * pNext;  /* pointer to next tag in index */
@@ -378,10 +378,10 @@ typedef struct _CDXINDEX
    HB_BOOL    fReadonly;      /* Read only file */
    HB_BOOL    fDelete;        /* delete on close flag */
    HB_BOOL    fLargeFile;     /* page numbers instead of page offsets in index file */
-   HB_USHORT  uiHeaderLen;    /* length of tag header */
-   HB_USHORT  uiPageLen;      /* length of index page */
-   HB_USHORT  uiPageBits;     /* length of index page in bits */
-   HB_USHORT  uiMaxKeyLen;    /* maximum index key length */
+   uint16_t  uiHeaderLen;    /* length of tag header */
+   uint16_t  uiPageLen;      /* length of index page */
+   uint16_t  uiPageBits;     /* length of index page in bits */
+   uint16_t  uiMaxKeyLen;    /* maximum index key length */
    HB_ULONG   nextAvail;      /* offset to next free page in the end of index file */
    HB_ULONG   freePage;       /* offset to next free page inside index file */
    LPCDXLIST  freeLst;        /* list of free pages in index file */
@@ -463,7 +463,7 @@ typedef struct _CDXAREA
    const HB_UCHAR * sortTab;     /* Table with sorted characters */
    HB_BOOL        fCdxAppend;    /* Appended record changed */
    HB_BOOL        fSortCDP;      /* Use CDP functions for sorting */
-   HB_USHORT      uiTag;         /* current tag focus */
+   uint16_t      uiTag;         /* current tag focus */
 
 } CDXAREA, * LPCDXAREA;
 

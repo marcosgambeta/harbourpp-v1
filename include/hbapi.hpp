@@ -310,10 +310,10 @@ typedef struct _HB_STACK_STATE
   HB_ISIZ   nBaseItem;        // stack base offset of previous func/proc
   HB_SIZE   nPrivateBase;     // memvars base offset of previous func/proc
   void *    pStatics;         // statics frame of previous func/proc
-  HB_USHORT uiClass;          // class when message is sent
-  HB_USHORT uiMethod;         // number of class method
-  HB_USHORT uiLineNo;         // current line number
-  HB_USHORT fDebugging;       // debugger active
+  uint16_t uiClass;          // class when message is sent
+  uint16_t uiMethod;         // number of class method
+  uint16_t uiLineNo;         // current line number
+  uint16_t fDebugging;       // debugger active
 } HB_STACK_STATE, * PHB_STACK_STATE; // used to save/restore stack state in hb_vmDo)_
 
 // Internal structures that holds data
@@ -330,10 +330,10 @@ struct hb_struHash
 struct hb_struBlock
 {
   struct _HB_CODEBLOCK *value;
-  HB_USHORT paramcnt;
-  HB_USHORT lineno;
-  HB_USHORT hclass;
-  HB_USHORT method;
+  uint16_t paramcnt;
+  uint16_t lineno;
+  uint16_t hclass;
+  uint16_t method;
 };
 
 struct hb_struPointer
@@ -352,20 +352,20 @@ struct hb_struDateTime
 struct hb_struDouble
 {
   double value;
-  HB_USHORT length;
-  HB_USHORT decimal;
+  uint16_t length;
+  uint16_t decimal;
 };
 
 struct hb_struInteger
 {
   int32_t value;
-  HB_USHORT length;
+  uint16_t length;
 };
 
 struct hb_struLong
 {
   HB_MAXINT value;
-  HB_USHORT length;
+  uint16_t length;
 };
 
 struct hb_struLogical
@@ -415,16 +415,16 @@ struct hb_struSymbol
 {
   PHB_SYMB        value;
   PHB_STACK_STATE stackstate;      // function stack state
-  HB_USHORT       paramcnt;        // number of passed parameters in function call
-  HB_USHORT       paramdeclcnt;    // number of declared parameters in function definition
+  uint16_t       paramcnt;        // number of passed parameters in function call
+  uint16_t       paramdeclcnt;    // number of declared parameters in function definition
 };
 
 struct hb_struRecover
 {
   const HB_BYTE *recover;    // address of recover code
   HB_SIZE        base;       // previous recover base
-  HB_USHORT      flags;      // previous recovery state and recover type
-  HB_USHORT      request;    // requested action
+  uint16_t      flags;      // previous recovery state and recover type
+  uint16_t      request;    // requested action
 };
 
 // items hold at the virtual machine stack
@@ -518,20 +518,20 @@ typedef struct _HB_ITEM
   //
   int32_t integerValue();
   void setIntegerValue(int32_t iValue);
-  HB_USHORT integerLength();
-  void setIntegerLength(HB_USHORT length);
+  uint16_t integerLength();
+  void setIntegerLength(uint16_t length);
   //
   HB_MAXINT longValue();
   void setLongValue(HB_MAXINT lValue);
-  HB_USHORT longLength();
-  void setLongLength(HB_USHORT length);
+  uint16_t longLength();
+  void setLongLength(uint16_t length);
   //
   double doubleValue();
   void setDoubleValue(double dValue);
-  HB_USHORT doubleLength();
-  void setDoubleLength(HB_USHORT length);
-  HB_USHORT doubleDecimal();
-  void setDoubleDecimal(HB_USHORT decimal);
+  uint16_t doubleLength();
+  void setDoubleLength(uint16_t length);
+  uint16_t doubleDecimal();
+  void setDoubleDecimal(uint16_t decimal);
   //
   char *stringValue();
   void setStringValue(char *sValue);
@@ -563,21 +563,21 @@ typedef struct _HB_ITEM
   void setSymbolValue(PHB_SYMB pValue);
   PHB_STACK_STATE symbolStackState();
   void setSymbolStackState(PHB_STACK_STATE pValue);
-  HB_USHORT symbolParamCnt();
-  void setSymbolParamCnt(HB_USHORT usValue);
-  HB_USHORT symbolParamDeclCnt();
-  void setSymbolParamDeclCnt(HB_USHORT usValue);
+  uint16_t symbolParamCnt();
+  void setSymbolParamCnt(uint16_t usValue);
+  uint16_t symbolParamDeclCnt();
+  void setSymbolParamDeclCnt(uint16_t usValue);
   //
   _HB_CODEBLOCK *blockValue();
   void setBlockValue(_HB_CODEBLOCK *pValue);
-  HB_USHORT blockParamCnt();
-  void setBlockParamCnt(HB_USHORT usValue);
-  HB_USHORT blockLineNo();
-  void setBlockLineNo(HB_USHORT usValue);
-  HB_USHORT blockHClass();
-  void setBlockHClass(HB_USHORT usValue);
-  HB_USHORT blockMethod();
-  void setBlockMethod(HB_USHORT usValue);
+  uint16_t blockParamCnt();
+  void setBlockParamCnt(uint16_t usValue);
+  uint16_t blockLineNo();
+  void setBlockLineNo(uint16_t usValue);
+  uint16_t blockHClass();
+  void setBlockHClass(uint16_t usValue);
+  uint16_t blockMethod();
+  void setBlockMethod(uint16_t usValue);
   //
   _HB_BASEHASH *hashValue();
   void setHashValue(_HB_BASEHASH *pValue);
@@ -757,12 +757,12 @@ inline void _HB_ITEM::setIntegerValue(int32_t iValue)
   this->item.asInteger.value = iValue;
 }
 
-inline HB_USHORT _HB_ITEM::integerLength()
+inline uint16_t _HB_ITEM::integerLength()
 {
   return this->item.asInteger.length;
 }
 
-inline void _HB_ITEM::setIntegerLength(HB_USHORT length)
+inline void _HB_ITEM::setIntegerLength(uint16_t length)
 {
   this->item.asInteger.length = length;
 }
@@ -779,12 +779,12 @@ inline void _HB_ITEM::setLongValue(HB_MAXINT lValue)
   this->item.asLong.value = lValue;
 }
 
-inline HB_USHORT _HB_ITEM::longLength()
+inline uint16_t _HB_ITEM::longLength()
 {
   return this->item.asLong.length;
 }
 
-inline void _HB_ITEM::setLongLength(HB_USHORT length)
+inline void _HB_ITEM::setLongLength(uint16_t length)
 {
   this->item.asLong.length = length;
 }
@@ -801,22 +801,22 @@ inline void _HB_ITEM::setDoubleValue(double dValue)
   this->item.asDouble.value = dValue;
 }
 
-inline HB_USHORT _HB_ITEM::doubleLength()
+inline uint16_t _HB_ITEM::doubleLength()
 {
   return this->item.asDouble.length;
 }
 
-inline void _HB_ITEM::setDoubleLength(HB_USHORT length)
+inline void _HB_ITEM::setDoubleLength(uint16_t length)
 {
   this->item.asDouble.length = length;
 }
 
-inline HB_USHORT _HB_ITEM::doubleDecimal()
+inline uint16_t _HB_ITEM::doubleDecimal()
 {
   return this->item.asDouble.decimal;
 }
 
-inline void _HB_ITEM::setDoubleDecimal(HB_USHORT decimal)
+inline void _HB_ITEM::setDoubleDecimal(uint16_t decimal)
 {
   this->item.asDouble.decimal = decimal;
 }
@@ -941,22 +941,22 @@ inline void _HB_ITEM::setSymbolStackState(PHB_STACK_STATE pValue)
   this->item.asSymbol.stackstate = pValue;
 }
 
-inline HB_USHORT _HB_ITEM::symbolParamCnt()
+inline uint16_t _HB_ITEM::symbolParamCnt()
 {
   return this->item.asSymbol.paramcnt;
 }
 
-inline void _HB_ITEM::setSymbolParamCnt(HB_USHORT usValue)
+inline void _HB_ITEM::setSymbolParamCnt(uint16_t usValue)
 {
   this->item.asSymbol.paramcnt = usValue;
 }
 
-inline HB_USHORT _HB_ITEM::symbolParamDeclCnt()
+inline uint16_t _HB_ITEM::symbolParamDeclCnt()
 {
   return this->item.asSymbol.paramdeclcnt;
 }
 
-inline void _HB_ITEM::setSymbolParamDeclCnt(HB_USHORT usValue)
+inline void _HB_ITEM::setSymbolParamDeclCnt(uint16_t usValue)
 {
   this->item.asSymbol.paramdeclcnt = usValue;
 }
@@ -973,42 +973,42 @@ inline void _HB_ITEM::setBlockValue(_HB_CODEBLOCK *pValue)
   this->item.asBlock.value = pValue;
 }
 
-inline HB_USHORT _HB_ITEM::blockParamCnt()
+inline uint16_t _HB_ITEM::blockParamCnt()
 {
   return this->item.asBlock.paramcnt;
 }
 
-inline void _HB_ITEM::setBlockParamCnt(HB_USHORT usValue)
+inline void _HB_ITEM::setBlockParamCnt(uint16_t usValue)
 {
   this->item.asBlock.paramcnt = usValue;
 }
 
-inline HB_USHORT _HB_ITEM::blockLineNo()
+inline uint16_t _HB_ITEM::blockLineNo()
 {
   return this->item.asBlock.lineno;
 }
 
-inline void _HB_ITEM::setBlockLineNo(HB_USHORT usValue)
+inline void _HB_ITEM::setBlockLineNo(uint16_t usValue)
 {
   this->item.asBlock.lineno = usValue;
 }
 
-inline HB_USHORT _HB_ITEM::blockHClass()
+inline uint16_t _HB_ITEM::blockHClass()
 {
   return this->item.asBlock.hclass;
 }
 
-inline void _HB_ITEM::setBlockHClass(HB_USHORT usValue)
+inline void _HB_ITEM::setBlockHClass(uint16_t usValue)
 {
   this->item.asBlock.hclass = usValue;
 }
 
-inline HB_USHORT _HB_ITEM::blockMethod()
+inline uint16_t _HB_ITEM::blockMethod()
 {
   return this->item.asBlock.method;
 }
 
-inline void _HB_ITEM::setBlockMethod(HB_USHORT usValue)
+inline void _HB_ITEM::setBlockMethod(uint16_t usValue)
 {
   this->item.asBlock.method = usValue;
 }
@@ -1033,8 +1033,8 @@ typedef struct _HB_BASEARRAY
   PHB_ITEM    pItems;       // pointer to the array items
   HB_SIZE     nLen;         // number of items in the array
   HB_SIZE     nAllocated;   // number of allocated items
-  HB_USHORT   uiClass;      // offset to the classes base if it is an object
-  HB_USHORT   uiPrevCls;    // for fixing after access super
+  uint16_t   uiClass;      // offset to the classes base if it is an object
+  uint16_t   uiPrevCls;    // for fixing after access super
 } HB_BASEARRAY, * PHB_BASEARRAY;
 
 #if defined(__cplusplus)
@@ -1082,7 +1082,7 @@ typedef struct _HB_CODEBLOCK
   PHB_SYMB    pDefSymb;     // symbol where the codeblock was created
   PHB_ITEM    pLocals;      // table with referenced local variables
   void *      pStatics;     // STATICs base frame
-  HB_USHORT   uiLocals;     // number of referenced local variables
+  uint16_t   uiLocals;     // number of referenced local variables
   HB_SHORT    dynBuffer;    // is pcode buffer allocated dynamically, SHORT used instead of HB_BOOL intentionally to force optimal alignment
 } HB_CODEBLOCK, * PHB_CODEBLOCK;
 
@@ -1154,7 +1154,7 @@ extern HB_EXPORT void *hb_xrealloc(void *pMem, HB_SIZE nSize) HB_ALLOC_SIZE_ATTR
 // returns the size of an allocated memory block
 extern HB_EXPORT HB_SIZE hb_xsize(void *pMem);
 // return allocation place (function name and line number)
-extern HB_EXPORT const char *hb_xinfo(void *pMem, HB_USHORT *puiLine);
+extern HB_EXPORT const char *hb_xinfo(void *pMem, uint16_t *puiLine);
 // Query different types of memory information
 extern HB_EXPORT HB_SIZE hb_xquery(int32_t iMode);
 extern HB_EXPORT HB_BOOL hb_xtraced(void);
@@ -1231,9 +1231,9 @@ extern HB_EXPORT void *hb_xmemset(void *pDestArg, int32_t iFill, HB_SIZE nLen);
 // virtual memory
 typedef unsigned long HB_VMHANDLE;
 
-extern HB_EXPORT HB_VMHANDLE hb_xvalloc(HB_SIZE nSize, HB_USHORT nFlags);
+extern HB_EXPORT HB_VMHANDLE hb_xvalloc(HB_SIZE nSize, uint16_t nFlags);
 extern HB_EXPORT void hb_xvfree(HB_VMHANDLE h);
-extern HB_EXPORT HB_VMHANDLE hb_xvrealloc(HB_VMHANDLE h, HB_SIZE nSize, HB_USHORT nFlags);
+extern HB_EXPORT HB_VMHANDLE hb_xvrealloc(HB_VMHANDLE h, HB_SIZE nSize, uint16_t nFlags);
 extern HB_EXPORT void *hb_xvlock(HB_VMHANDLE h);
 extern HB_EXPORT void hb_xvunlock(HB_VMHANDLE h);
 extern HB_EXPORT void *hb_xvwire(HB_VMHANDLE h);
@@ -1700,7 +1700,7 @@ extern HB_EXPORT PHB_ITEM hb_arrayCloneTo(PHB_ITEM pDest, PHB_ITEM pArray);
 // sorts an array item
 extern HB_EXPORT HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, PHB_ITEM pBlock);
 // Creates and returns an Array of n Elements from the Eval Stack - Does NOT pop the items.
-extern HB_EXPORT PHB_ITEM hb_arrayFromStack(HB_USHORT uiLen);
+extern HB_EXPORT PHB_ITEM hb_arrayFromStack(uint16_t uiLen);
 // Creates and returns an Array of Generic Parameters for a given call level
 extern HB_EXPORT PHB_ITEM hb_arrayFromParams(int32_t iLevel);
 // Creates and returns an Array of Generic Parameters for current base symbol.
@@ -2023,7 +2023,7 @@ extern HB_EXPORT void *hb_codeblockId(PHB_ITEM pItem);
 // retrieves numer of references to the codeblock
 extern HB_EXPORT HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem);
 // create a code-block
-extern PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, HB_USHORT uiLocals, const HB_BYTE *pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen);
+extern PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, uint16_t uiLocals, const HB_BYTE *pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen);
 extern PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE *pBuffer, HB_SIZE nLen);
 // get local variable referenced in a codeblock
 extern PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos);
@@ -2095,7 +2095,7 @@ extern char *hb_compDecodeString(int32_t iMethod, const char *szText, HB_SIZE *p
 // misc
 // retrieve a procedure name into a buffer
 extern HB_EXPORT char *hb_procname(int32_t iLevel, char *szName, HB_BOOL bskipBlock);
-extern HB_EXPORT HB_BOOL hb_procinfo(int32_t iLevel, char *szName, HB_USHORT *puiLine, char *szFile);
+extern HB_EXPORT HB_BOOL hb_procinfo(int32_t iLevel, char *szName, uint16_t *puiLine, char *szFile);
 
 // macro compiler
 #if defined(HB_MACRO_SUPPORT)

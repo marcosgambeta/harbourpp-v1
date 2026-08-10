@@ -70,17 +70,17 @@ extern HB_EXPORT void hb_vmAtQuit(HB_INIT_FUNC pFunc, void *cargo);
 // invokes the virtual machine
 extern HB_EXPORT void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols) HB_FLATTEN_ATTR;
 // module symbols initialization with extended information
-extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID, HB_USHORT uiPcodeVer);
+extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
 // module symbols initialization with extended information
-extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID, HB_USHORT uiPcodeVer);
+extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
 
 
 #ifdef _HB_API_INTERNAL_
    typedef struct _HB_SYMBOLS
    {
       PHB_SYMB  pModuleSymbols;     // pointer to module symbol table
-      HB_USHORT uiModuleSymbols;    // number of symbols on that table
-      HB_USHORT uiStaticsOffset;    // offset of statics base symbol
+      uint16_t uiModuleSymbols;    // number of symbols on that table
+      uint16_t uiStaticsOffset;    // offset of statics base symbol
       struct _HB_SYMBOLS * pNext;   // pointer to the next SYMBOLS structure
       HB_SYMBOLSCOPE hScope;        // scope collected from all symbols in module used to speed initialization code
       void *    hDynLib;            // handler to dynamic library
@@ -91,7 +91,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, HB_USHORT
       HB_ULONG  ulID;               // module unique identifier
    } HB_SYMBOLS, * PHB_SYMBOLS;     // structure to keep track of all modules symbol tables
 
-   extern PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID, HB_BOOL fDynLib, HB_BOOL fClone, HB_BOOL fOverLoad);
+   extern PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, HB_BOOL fDynLib, HB_BOOL fClone, HB_BOOL fOverLoad);
    extern HB_BOOL hb_vmLockModuleSymbols(void);
    extern void hb_vmUnlockModuleSymbols(void);
    extern void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols);
@@ -100,7 +100,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, HB_USHORT
    extern void hb_vmExitSymbolGroup(void *hDynLib);
    extern PHB_SYMB hb_vmFindFuncSym(const char *szFuncName, void *hDynLib);
    extern const char *hb_vmFindModuleSymbolName(PHB_SYMB pSym);
-   extern HB_BOOL hb_vmFindModuleSymbols(PHB_SYMB pSym, PHB_SYMB *pSymbols, HB_USHORT *puiSymbols);
+   extern HB_BOOL hb_vmFindModuleSymbols(PHB_SYMB pSym, PHB_SYMB *pSymbols, uint16_t *puiSymbols);
    extern PHB_SYMB hb_vmGetRealFuncSym(PHB_SYMB pSym);
    extern HB_EXPORT void hb_vmSetFunction(PHB_SYMB pOldSym, PHB_SYMB pNewSym);
    extern HB_EXPORT void hb_vmSetDynFunc(PHB_DYNS pDynSym);
@@ -111,7 +111,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, HB_USHORT
 
    extern void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int iCount);
 
-   extern void hb_vmEval(HB_USHORT uiParams);
+   extern void hb_vmEval(uint16_t uiParams);
 #endif
 
 extern void hb_vmSetExceptionHandler(void);
@@ -126,7 +126,7 @@ extern HB_EXPORT void hb_vmRequestBreak(PHB_ITEM pItem);
 extern HB_EXPORT void hb_vmRequestCancel(void);
 extern HB_EXPORT void hb_vmRequestQuit(void);
 extern HB_EXPORT void hb_vmRequestEndProc(void);
-extern HB_EXPORT HB_USHORT hb_vmRequestQuery(void);
+extern HB_EXPORT uint16_t hb_vmRequestQuery(void);
 extern HB_EXPORT HB_BOOL hb_vmRequestReenter(void);
 extern HB_EXPORT void hb_vmRequestRestore(void);
 extern HB_EXPORT HB_BOOL hb_vmRequestReenterExt(void);
@@ -150,13 +150,13 @@ extern HB_EXPORT HB_BOOL hb_vmSetKeyPool(HB_BOOL fEnable);
 // Execution
 
 // invoke the virtual machine
-extern HB_EXPORT void hb_vmDo(HB_USHORT uiParams);
+extern HB_EXPORT void hb_vmDo(uint16_t uiParams);
 // executes a function or procedure
-extern HB_EXPORT void hb_vmProc(HB_USHORT uiParams);
+extern HB_EXPORT void hb_vmProc(uint16_t uiParams);
 // executes a function
-extern HB_EXPORT void hb_vmFunction(HB_USHORT uiParams);
+extern HB_EXPORT void hb_vmFunction(uint16_t uiParams);
 // sends a message to an object
-extern HB_EXPORT void hb_vmSend(HB_USHORT uiParams);
+extern HB_EXPORT void hb_vmSend(uint16_t uiParams);
 // executes passed codeblock with no arguments
 extern HB_EXPORT PHB_ITEM hb_vmEvalBlock(PHB_ITEM pBlockItem);
 // executes passed codeblock with variable number of arguments

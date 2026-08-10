@@ -93,13 +93,13 @@ typedef struct
    HB_BOOL        fNetError;        /* current NetErr() flag */
 
    void **        waList;           /* Allocated WorkAreas */
-   HB_USHORT      uiWaMax;          /* Number of allocated WA */
-   HB_USHORT      uiWaSpace;        /* Number of allocated WA */
+   uint16_t      uiWaMax;          /* Number of allocated WA */
+   uint16_t      uiWaSpace;        /* Number of allocated WA */
 
-   HB_USHORT *    waNums;           /* Allocated WorkAreas */
-   HB_USHORT      uiWaNumMax;       /* Number of allocated WA */
+   uint16_t *    waNums;           /* Allocated WorkAreas */
+   uint16_t      uiWaNumMax;       /* Number of allocated WA */
 
-   HB_USHORT      uiCurrArea;       /* Current WokrArea number */
+   uint16_t      uiCurrArea;       /* Current WokrArea number */
    void *         pCurrArea;        /* Current WorkArea pointer */
 }
 HB_STACKRDD, * PHB_STACKRDD;
@@ -135,7 +135,7 @@ HB_PRIVATE_STACK, * PHB_PRIVATE_STACK;
 typedef struct
 {
    void *     pMemvar;        /* memvar pointer ( publics & privates ) */
-   HB_USHORT  uiArea;         /* Workarea number */
+   uint16_t  uiArea;         /* Workarea number */
 }
 HB_DYN_HANDLES, * PHB_DYN_HANDLES;
 #endif
@@ -151,8 +151,8 @@ typedef struct
    HB_ISIZ    nItems;         /* total items that may be held on the stack */
    HB_ISIZ    nWithObject;    /* stack offset to base current WITH OBJECT item */
    HB_ISIZ    nRecoverBase;   /* current SEQUENCE envelope offset or 0 if no SEQUENCE is active */
-   HB_USHORT  uiActionRequest;/* request for some action - stop processing of opcodes */
-   HB_USHORT  uiQuitState;    /* HVM is quitting */
+   uint16_t  uiActionRequest;/* request for some action - stop processing of opcodes */
+   uint16_t  uiQuitState;    /* HVM is quitting */
    HB_STACK_STATE state;      /* first (default) stack state frame */
    HB_STACKRDD rdd;           /* RDD related data */
    char       szDate[ 9 ];    /* last returned date from hb_pards() YYYYMMDD format */
@@ -289,7 +289,7 @@ extern HB_EXPORT PHB_ITEM    hb_stackItem( HB_ISIZ nItemPos );
 
 /* stack management functions */
 extern HB_EXPORT int         hb_stackCallDepth( void );
-extern HB_EXPORT void        hb_stackBaseProcInfo( char * szProcName, HB_USHORT * puiProcLine ); /* get current .prg function name and line number */
+extern HB_EXPORT void        hb_stackBaseProcInfo( char * szProcName, uint16_t * puiProcLine ); /* get current .prg function name and line number */
 
 extern HB_EXPORT HB_ISIZ     hb_stackBaseProcOffset( int iLevel );
 extern HB_EXPORT HB_ISIZ     hb_stackBaseSymbolOffset( PHB_SYMB pSymbol );
@@ -316,7 +316,7 @@ extern void        hb_stackIncrease( void );   /* increase the stack size */
 extern void        hb_stackDec( void );
 extern void        hb_stackDecrease( HB_SIZE nItems );
 extern void        hb_stackRemove( HB_ISIZ nUntilPos );
-extern PHB_ITEM    hb_stackNewFrame( PHB_STACK_STATE pFrame, HB_USHORT uiParams );
+extern PHB_ITEM    hb_stackNewFrame( PHB_STACK_STATE pFrame, uint16_t uiParams );
 extern void        hb_stackOldFrame( PHB_STACK_STATE pFrame );
 extern void        hb_stackClearMemvarsBase( void );
 
@@ -326,8 +326,8 @@ extern PHB_ITEM ** hb_stackItemBasePtr( void );
 
 extern HB_EXPORT HB_ISIZ     hb_stackGetRecoverBase( void );
 extern           void        hb_stackSetRecoverBase( HB_ISIZ nBase );
-extern           HB_USHORT   hb_stackGetActionRequest( void );
-extern           void        hb_stackSetActionRequest( HB_USHORT uiAction );
+extern           uint16_t   hb_stackGetActionRequest( void );
+extern           void        hb_stackSetActionRequest( uint16_t uiAction );
 
 extern void        hb_stackSetStaticsBase( void * pBase );
 extern void *      hb_stackGetStaticsBase( void );
@@ -355,12 +355,12 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
 #if defined(HB_MT_VM)
    extern void *           hb_stackList( void );
    extern void             hb_stackListSet( void * pStackLst );
-   extern void             hb_stackIdSetActionRequest( void * pStackID, HB_USHORT uiAction );
+   extern void             hb_stackIdSetActionRequest( void * pStackID, uint16_t uiAction );
    extern PHB_DYN_HANDLES  hb_stackGetDynHandle( PHB_DYNS pDynSym );
    extern HB_SYMCNT        hb_stackDynHandlesCount( void );
    extern void             hb_stackClearMemvars( HB_SYMCNT );
    extern HB_BOOL          hb_stackQuitState( void );
-   extern void             hb_stackSetQuitState( HB_USHORT uiState );
+   extern void             hb_stackSetQuitState( uint16_t uiState );
    extern int              hb_stackUnlock( void );
    extern int              hb_stackLock( void );
    extern int              hb_stackLockCount( void );

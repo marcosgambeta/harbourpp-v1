@@ -139,9 +139,9 @@ typedef struct _DBFDATA
    HB_BYTE   bMemoType;        /* DB_MEMO_FPT */
    HB_BYTE   bMemoExtType;     /* DB_MEMOVER_FLEX */
    HB_BYTE   bDecimals;        /* RDDI_DECIMALS */
-   HB_USHORT uiSetHeader;      /* RDDI_SETHEADER */
-   HB_USHORT uiDirtyRead;      /* HB_IDXREAD_CLEANMASK */
-   HB_USHORT uiIndexPageSize;  /* 0 */
+   uint16_t uiSetHeader;      /* RDDI_SETHEADER */
+   uint16_t uiDirtyRead;      /* HB_IDXREAD_CLEANMASK */
+   uint16_t uiIndexPageSize;  /* 0 */
    HB_ULONG  ulMemoBlockSize;  /* 0 */
 
    HB_BOOL   fSortRecNo;
@@ -153,8 +153,8 @@ typedef struct _DBFDATA
 
 typedef struct _HB_DBFFIELDBITS
 {
-   HB_USHORT uiNullBit;
-   HB_USHORT uiLengthBit;
+   uint16_t uiNullBit;
+   uint16_t uiLengthBit;
 } HB_DBFFIELDBITS, * PHB_DBFFIELDBITS;
 
 typedef struct _HB_DBFLOCKDATA
@@ -192,21 +192,21 @@ typedef struct _DBFAREA
    PHB_FILE    pMemoTmpFile;        /* Memo temporary file handle */
    char *      szDataFileName;      /* Name of data file */
    char *      szMemoFileName;      /* Name of memo file */
-   HB_USHORT   uiHeaderLen;         /* Size of header */
-   HB_USHORT   uiRecordLen;         /* Size of record */
+   uint16_t   uiHeaderLen;         /* Size of header */
+   uint16_t   uiRecordLen;         /* Size of record */
    HB_ULONG    ulMemoBlockSize;     /* Size of memo block */
    HB_ULONG    ulNewBlockSize;      /* Size of new memo block */
-   HB_USHORT   uiMemoVersion;       /* MEMO file version */
-   HB_USHORT   uiDirtyRead;         /* Index dirty read bit filed */
-   HB_USHORT   uiNullOffset;        /* Offset to _NullFlags filed */
-   HB_USHORT   uiNullCount;         /* Number of null flags */
+   uint16_t   uiMemoVersion;       /* MEMO file version */
+   uint16_t   uiDirtyRead;         /* Index dirty read bit filed */
+   uint16_t   uiNullOffset;        /* Offset to _NullFlags filed */
+   uint16_t   uiNullCount;         /* Number of null flags */
    HB_BYTE     bTableType;          /* DBF type */
    HB_BYTE     bMemoType;           /* MEMO type used in DBF memo fields */
    HB_BYTE     bLockType;           /* Type of locking schemes */
    HB_BYTE     bCryptType;          /* Type of used encryption */
    HB_UINT     uiSetHeader;         /* DBF header updating modes DBI_SETHEADER */
    DBFHEADER   dbfHeader;           /* DBF header buffer */
-   HB_USHORT * pFieldOffset;        /* Pointer to field offset array */
+   uint16_t * pFieldOffset;        /* Pointer to field offset array */
    PHB_DBFFIELDBITS pFieldBits;     /* Pointer to extended DBF field info array */
    HB_BYTE *   pRecord;             /* Buffer of record data */
    HB_ULONG    ulRecCount;          /* Total records */
@@ -249,13 +249,13 @@ typedef DBFAREA * LPDBFAREA;
 
 #define SUPERTABLE                         ( &dbfSuper )
 
-extern HB_EXPORT HB_ULONG   hb_dbfGetMemoBlock( DBFAREAP pArea, HB_USHORT uiIndex );
-extern HB_EXPORT void       hb_dbfPutMemoBlock( DBFAREAP pArea, HB_USHORT uiIndex,
+extern HB_EXPORT HB_ULONG   hb_dbfGetMemoBlock( DBFAREAP pArea, uint16_t uiIndex );
+extern HB_EXPORT void       hb_dbfPutMemoBlock( DBFAREAP pArea, uint16_t uiIndex,
                                                 HB_ULONG ulBlock );
-extern HB_EXPORT HB_ERRCODE hb_dbfGetMemoData( DBFAREAP pArea, HB_USHORT uiIndex,
+extern HB_EXPORT HB_ERRCODE hb_dbfGetMemoData( DBFAREAP pArea, uint16_t uiIndex,
                                                HB_ULONG * pulBlock, HB_ULONG * pulSize,
                                                HB_ULONG * pulType );
-extern HB_EXPORT HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, HB_USHORT uiIndex,
+extern HB_EXPORT HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, uint16_t uiIndex,
                                                HB_ULONG ulBlock, HB_ULONG ulSize,
                                                HB_ULONG ulType );
 extern HB_EXPORT HB_ERRCODE hb_dbfGetEGcode( HB_ERRCODE errCode );

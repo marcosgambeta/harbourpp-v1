@@ -131,7 +131,7 @@ struct _HB_SYMB;
       struct _HB_SYMB * pSymbol; /* pointer to its relative local symbol */
 #  if !defined(HB_MT_VM)
       void *    pMemvar;          /* memvar pointer ( publics & privates ) */
-      HB_USHORT uiArea;           /* Workarea number */
+      uint16_t uiArea;           /* Workarea number */
 #  endif /* ! HB_MT_VM */
       HB_SYMCNT uiSymNum;         /* dynamic symbol number */
 #  if !defined(HB_NO_PROFILER)
