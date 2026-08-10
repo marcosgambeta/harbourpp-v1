@@ -58,8 +58,8 @@ HB_EXTERN_BEGIN
 // was not specified at compile time (the value is a result of optimization
 // performed by the compiler)
 #if defined(__cplusplus)
-constexpr int HB_DEFAULT_WIDTH = 255;
-constexpr int HB_DEFAULT_DECIMALS = 255;
+constexpr int32_t HB_DEFAULT_WIDTH = 255;
+constexpr int32_t HB_DEFAULT_DECIMALS = 255;
 #else
 #define HB_DEFAULT_WIDTH     255
 #define HB_DEFAULT_DECIMALS  255
@@ -358,7 +358,7 @@ struct hb_struDouble
 
 struct hb_struInteger
 {
-  int value;
+  int32_t value;
   HB_USHORT length;
 };
 
@@ -486,7 +486,7 @@ typedef struct _HB_ITEM
   bool isObject();
   bool isNumber(); // TODO: same as isNumeric()
   //
-  HB_EXPORT int getNI();
+  HB_EXPORT int32_t getNI();
   HB_EXPORT long getNL();
   HB_EXPORT double getND();
   HB_EXPORT HB_BOOL getL();
@@ -502,7 +502,7 @@ typedef struct _HB_ITEM
   //HB_EXPORT void *getPtrGC(const HB_GC_FUNCS *pFuncs); TODO:
   HB_EXPORT PHB_SYMB getSymbol();
   //
-  HB_EXPORT _HB_ITEM *putNI(int iNumber);
+  HB_EXPORT _HB_ITEM *putNI(int32_t iNumber);
   HB_EXPORT _HB_ITEM *putNL(long lNumber);
   HB_EXPORT _HB_ITEM *putL(HB_BOOL bValue);
   HB_EXPORT _HB_ITEM *putC(const char *szText);
@@ -516,8 +516,8 @@ typedef struct _HB_ITEM
   HB_BOOL logicalValue();
   void setLogicalValue(HB_BOOL bValue);
   //
-  int integerValue();
-  void setIntegerValue(int iValue);
+  int32_t integerValue();
+  void setIntegerValue(int32_t iValue);
   HB_USHORT integerLength();
   void setIntegerLength(HB_USHORT length);
   //
@@ -747,12 +747,12 @@ inline void _HB_ITEM::setLogicalValue(HB_BOOL bValue)
 
 // integer
 
-inline int _HB_ITEM::integerValue()
+inline int32_t _HB_ITEM::integerValue()
 {
   return this->item.asInteger.value;
 }
 
-inline void _HB_ITEM::setIntegerValue(int iValue)
+inline void _HB_ITEM::setIntegerValue(int32_t iValue)
 {
   this->item.asInteger.value = iValue;
 }
@@ -1156,7 +1156,7 @@ extern HB_EXPORT HB_SIZE hb_xsize(void *pMem);
 // return allocation place (function name and line number)
 extern HB_EXPORT const char *hb_xinfo(void *pMem, HB_USHORT *puiLine);
 // Query different types of memory information
-extern HB_EXPORT HB_SIZE hb_xquery(int iMode);
+extern HB_EXPORT HB_SIZE hb_xquery(int32_t iMode);
 extern HB_EXPORT HB_BOOL hb_xtraced(void);
 extern HB_EXPORT void hb_xsetfilename(const char *szValue);
 extern HB_EXPORT void hb_xsetinfo(const char *szValue);
@@ -1225,7 +1225,7 @@ extern void *hb_xRefResize(void *pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE *pn
 // copy more than memcpy() can
 extern HB_EXPORT void *hb_xmemcpy(void *pDestArg, const void *pSourceArg, HB_SIZE nLen);
 // set more than memset() can
-extern HB_EXPORT void *hb_xmemset(void *pDestArg, int iFill, HB_SIZE nLen);
+extern HB_EXPORT void *hb_xmemset(void *pDestArg, int32_t iFill, HB_SIZE nLen);
 #endif
 
 // virtual memory
@@ -1316,109 +1316,109 @@ extern HB_EXPORT void hb_gcCollectAll(HB_BOOL fForce);
 
 // Extend API
 // Determine the param count or data type
-extern HB_EXPORT HB_ULONG hb_parinfo(int iParam);
+extern HB_EXPORT HB_ULONG hb_parinfo(int32_t iParam);
 // retrieve length or element type of an array parameter
-extern HB_EXPORT HB_SIZE hb_parinfa(int iParamNum, HB_SIZE nArrayIndex);
+extern HB_EXPORT HB_SIZE hb_parinfa(int32_t iParamNum, HB_SIZE nArrayIndex);
 // retrieve a generic parameter
-extern HB_EXPORT PHB_ITEM hb_param(int iParam, long lMask);
+extern HB_EXPORT PHB_ITEM hb_param(int32_t iParam, long lMask);
 // Returns either the generic parameter or a NIL item if param not provided
-extern HB_EXPORT PHB_ITEM hb_paramError(int iParam);
-extern HB_EXPORT HB_BOOL hb_extIsNil(int iParam);
-extern HB_EXPORT HB_BOOL hb_extIsArray(int iParam);
-extern HB_EXPORT HB_BOOL hb_extIsObject(int iParam);
+extern HB_EXPORT PHB_ITEM hb_paramError(int32_t iParam);
+extern HB_EXPORT HB_BOOL hb_extIsNil(int32_t iParam);
+extern HB_EXPORT HB_BOOL hb_extIsArray(int32_t iParam);
+extern HB_EXPORT HB_BOOL hb_extIsObject(int32_t iParam);
 
 // retrieve a string parameter
-extern HB_EXPORT const char *hb_parc(int iParam);
+extern HB_EXPORT const char *hb_parc(int32_t iParam);
 // retrieve a string parameter
-extern HB_EXPORT const char *hb_parcx(int iParam);
+extern HB_EXPORT const char *hb_parcx(int32_t iParam);
 // retrieve a string parameter length
-extern HB_EXPORT HB_SIZE hb_parclen(int iParam);
+extern HB_EXPORT HB_SIZE hb_parclen(int32_t iParam);
 // retrieve a by-reference string parameter length, including terminator
-extern HB_EXPORT HB_SIZE hb_parcsiz(int iParam);
+extern HB_EXPORT HB_SIZE hb_parcsiz(int32_t iParam);
 // retrieve a date as a string YYYYMMDD
-extern HB_EXPORT const char *hb_pards(int iParam);
+extern HB_EXPORT const char *hb_pards(int32_t iParam);
 // retrieve a date as a string YYYYMMDD
-extern HB_EXPORT char *hb_pardsbuff(char *szDate, int iParam);
+extern HB_EXPORT char *hb_pardsbuff(char *szDate, int32_t iParam);
 // retrieve a date as a long integer
-extern HB_EXPORT long hb_pardl(int iParam);
+extern HB_EXPORT long hb_pardl(int32_t iParam);
 // retrieve a timestamp as a double number
-extern HB_EXPORT double hb_partd(int iParam);
+extern HB_EXPORT double hb_partd(int32_t iParam);
 // retrieve a timestamp as two long numbers
-extern HB_EXPORT HB_BOOL hb_partdt(long *plJulian, long *plMilliSec , int iParam);
+extern HB_EXPORT HB_BOOL hb_partdt(long *plJulian, long *plMilliSec , int32_t iParam);
 // retrieve a logical parameter as an int
-extern HB_EXPORT int hb_parl(int iParam);
+extern HB_EXPORT int32_t hb_parl(int32_t iParam);
 // retrieve a logical parameter as an int, return default value if parameter isn't logical
-extern HB_EXPORT int hb_parldef(int iParam, int iDefValue);
+extern HB_EXPORT int32_t hb_parldef(int32_t iParam, int32_t iDefValue);
 // retrieve a numeric parameter as a double
-extern HB_EXPORT double hb_parnd(int iParam);
+extern HB_EXPORT double hb_parnd(int32_t iParam);
 // retrieve a numeric parameter as a integer
-extern HB_EXPORT int hb_parni(int iParam);
+extern HB_EXPORT int32_t hb_parni(int32_t iParam);
 // retrieve a numeric parameter as a integer, return default value if parameter isn't numeric
-extern HB_EXPORT int hb_parnidef(int iParam, int iDefValue);
+extern HB_EXPORT int32_t hb_parnidef(int32_t iParam, int32_t iDefValue);
 // retrieve a numeric parameter as a long
-extern HB_EXPORT long hb_parnl(int iParam);
+extern HB_EXPORT long hb_parnl(int32_t iParam);
 // retrieve a numeric parameter as a long, return default value if parameter isn't numeric
-extern HB_EXPORT long hb_parnldef(int iParam, long lDefValue);
+extern HB_EXPORT long hb_parnldef(int32_t iParam, long lDefValue);
 // retrieve a numeric parameter as a HB_SIZE
-extern HB_EXPORT HB_ISIZ hb_parns(int iParam);
+extern HB_EXPORT HB_ISIZ hb_parns(int32_t iParam);
 // retrieve a numeric parameter as a HB_SIZE, return default value if parameter isn't numeric
-extern HB_EXPORT HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue);
+extern HB_EXPORT HB_ISIZ hb_parnsdef(int32_t iParam, HB_ISIZ nDefValue);
 // retrieve a numeric parameter as a HB_MAXINT
-extern HB_EXPORT HB_MAXINT hb_parnint(int iParam);
+extern HB_EXPORT HB_MAXINT hb_parnint(int32_t iParam);
 // retrieve a numeric parameter as a HB_MAXINT, return default value if parameter isn't numeric
-extern HB_EXPORT HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue);
+extern HB_EXPORT HB_MAXINT hb_parnintdef(int32_t iParam, HB_MAXINT nDefValue);
 // retrieve a parameter as a pointer
-extern HB_EXPORT void *hb_parptr(int iParam);
+extern HB_EXPORT void *hb_parptr(int32_t iParam);
 // retrieve a parameter (NIL, pointer, number and string) as a pointer
-extern HB_EXPORT void *hb_parptrx(int iParam);
+extern HB_EXPORT void *hb_parptrx(int32_t iParam);
 // retrieve a parameter as a pointer if it's a pointer to GC allocated block
-extern HB_EXPORT void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam);
+extern HB_EXPORT void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int32_t iParam);
 #ifndef HB_LONG_LONG_OFF
 // retrieve a numeric parameter as a long long
-extern HB_EXPORT HB_LONGLONG hb_parnll(int iParam);
+extern HB_EXPORT HB_LONGLONG hb_parnll(int32_t iParam);
 #endif
 
 // retrieve a string parameter
-extern HB_EXPORT const char *hb_parvc(int iParam, ...);
+extern HB_EXPORT const char *hb_parvc(int32_t iParam, ...);
 // retrieve a string parameter
-extern HB_EXPORT const char *hb_parvcx(int iParam, ...);
+extern HB_EXPORT const char *hb_parvcx(int32_t iParam, ...);
 // retrieve a string parameter length
-extern HB_EXPORT HB_SIZE hb_parvclen(int iParam, ...);
+extern HB_EXPORT HB_SIZE hb_parvclen(int32_t iParam, ...);
 // retrieve a by-reference string parameter length, including terminator
-extern HB_EXPORT HB_SIZE hb_parvcsiz(int iParam, ...);
+extern HB_EXPORT HB_SIZE hb_parvcsiz(int32_t iParam, ...);
 // retrieve a date as a string YYYYMMDD
-extern HB_EXPORT const char *hb_parvds(int iParam, ...);
+extern HB_EXPORT const char *hb_parvds(int32_t iParam, ...);
 // retrieve a date as a string YYYYMMDD
-extern HB_EXPORT char *hb_parvdsbuff(char *szDate, int iParam, ...);
+extern HB_EXPORT char *hb_parvdsbuff(char *szDate, int32_t iParam, ...);
 // retrieve a date as a long integer
-extern HB_EXPORT long hb_parvdl(int iParam, ...);
+extern HB_EXPORT long hb_parvdl(int32_t iParam, ...);
 // retrieve a timestamp as a double number
-extern HB_EXPORT double hb_parvtd(int iParam, ...);
+extern HB_EXPORT double hb_parvtd(int32_t iParam, ...);
 // retrieve a timestamp as two long numbers
-extern HB_EXPORT HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec , int iParam, ...);
+extern HB_EXPORT HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec , int32_t iParam, ...);
 // retrieve a logical parameter as an int
-extern HB_EXPORT int hb_parvl(int iParam, ...);
+extern HB_EXPORT int32_t hb_parvl(int32_t iParam, ...);
 // retrieve a numeric parameter as a double
-extern HB_EXPORT double hb_parvnd(int iParam, ...);
+extern HB_EXPORT double hb_parvnd(int32_t iParam, ...);
 // retrieve a numeric parameter as a integer
-extern HB_EXPORT int hb_parvni(int iParam, ...);
+extern HB_EXPORT int32_t hb_parvni(int32_t iParam, ...);
 // retrieve a numeric parameter as a long
-extern HB_EXPORT long hb_parvnl(int iParam, ...);
+extern HB_EXPORT long hb_parvnl(int32_t iParam, ...);
 // retrieve a numeric parameter as a HB_SIZE
-extern HB_EXPORT HB_ISIZ hb_parvns(int iParam, ...);
+extern HB_EXPORT HB_ISIZ hb_parvns(int32_t iParam, ...);
 // retrieve a numeric parameter as a HB_MAXINT
-extern HB_EXPORT HB_MAXINT hb_parvnint(int iParam, ...);
+extern HB_EXPORT HB_MAXINT hb_parvnint(int32_t iParam, ...);
 // retrieve a parameter as a pointer
-extern HB_EXPORT void *hb_parvptr(int iParam, ...);
+extern HB_EXPORT void *hb_parvptr(int32_t iParam, ...);
 // retrieve a parameter as a pointer if it's a pointer to GC allocated block
-extern HB_EXPORT void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...);
+extern HB_EXPORT void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int32_t iParam, ...);
 #ifndef HB_LONG_LONG_OFF
 // retrieve a numeric parameter as a long long
-extern HB_EXPORT HB_LONGLONG hb_parvnll(int iParam, ...);
+extern HB_EXPORT HB_LONGLONG hb_parvnll(int32_t iParam, ...);
 #endif
 
 // returns the number of supplied parameters
-extern HB_EXPORT int hb_pcount(void);
+extern HB_EXPORT int32_t hb_pcount(void);
 // post a NIL return value
 extern HB_EXPORT void hb_ret(void);
 // returns a string
@@ -1438,7 +1438,7 @@ extern HB_EXPORT void hb_retclen_const(const char *szText, HB_SIZE nLen);
 // returns a date, must use YYYYMMDD format
 extern HB_EXPORT void hb_retds(const char *szDate);
 // returns a date
-extern HB_EXPORT void hb_retd(int iYear, int iMonth, int iDay);
+extern HB_EXPORT void hb_retd(int32_t iYear, int32_t iMonth, int32_t iDay);
 // returns a long value as a Julian date
 extern HB_EXPORT void hb_retdl(long lJulian);
 // returns a double value as a timestamp
@@ -1446,11 +1446,11 @@ extern HB_EXPORT void hb_rettd(double dTimeStamp);
 // returns two long values as a timestamp
 extern HB_EXPORT void hb_rettdt(long lJulian, long lMilliSec);
 // returns a logical integer
-extern HB_EXPORT void hb_retl(int iTrueFalse);
+extern HB_EXPORT void hb_retl(int32_t iTrueFalse);
 // returns a double
 extern HB_EXPORT void hb_retnd(double dNumber);
 // returns a integer number
-extern HB_EXPORT void hb_retni(int iNumber);
+extern HB_EXPORT void hb_retni(int32_t iNumber);
 // returns a long number
 extern HB_EXPORT void hb_retnl(long lNumber);
 // returns a size
@@ -1458,15 +1458,15 @@ extern HB_EXPORT void hb_retns(HB_ISIZ nNumber);
 // returns a long number
 extern HB_EXPORT void hb_retnint(HB_MAXINT nNumber);
 // returns a double, with specific width and decimals
-extern HB_EXPORT void hb_retnlen(double dNumber, int iWidth, int iDec);
+extern HB_EXPORT void hb_retnlen(double dNumber, int32_t iWidth, int32_t iDec);
 // returns a double, with specific width and decimals
-extern HB_EXPORT void hb_retndlen(double dNumber, int iWidth, int iDec);
+extern HB_EXPORT void hb_retndlen(double dNumber, int32_t iWidth, int32_t iDec);
 // returns a integer number, with specific width
-extern HB_EXPORT void hb_retnilen(int iNumber, int iWidth);
+extern HB_EXPORT void hb_retnilen(int32_t iNumber, int32_t iWidth);
 // returns a long number, with specific width
-extern HB_EXPORT void hb_retnllen(long lNumber, int iWidth);
+extern HB_EXPORT void hb_retnllen(long lNumber, int32_t iWidth);
 // returns a long long number, with specific width
-extern HB_EXPORT void hb_retnintlen(HB_MAXINT nNumber, int iWidth);
+extern HB_EXPORT void hb_retnintlen(HB_MAXINT nNumber, int32_t iWidth);
 // returns an array with a specific length
 extern HB_EXPORT void hb_reta(HB_SIZE nLen);
 // returns a pointer
@@ -1477,7 +1477,7 @@ extern HB_EXPORT void hb_retptrGC(void *ptr);
 // returns a long long number
 extern HB_EXPORT void hb_retnll(HB_LONGLONG lNumber);
 // returns a long long number, with specific width
-extern HB_EXPORT void hb_retnlllen(HB_LONGLONG lNumber, int iWidth);
+extern HB_EXPORT void hb_retnlllen(HB_LONGLONG lNumber, int32_t iWidth);
 #endif
 
 #define HB_IS_VALID_INDEX(idx, max)  ((idx) > 0 && static_cast<HB_SIZE>(idx) <= (max))
@@ -1519,75 +1519,75 @@ extern HB_EXPORT void hb_retnlllen(HB_LONGLONG lNumber, int iWidth);
 #endif // _HB_API_MACROS_
 
 // stores a NIL on a variable by reference
-extern HB_EXPORT int hb_stor(int iParam);
+extern HB_EXPORT int32_t hb_stor(int32_t iParam);
 // stores a szString on a variable by reference
-extern HB_EXPORT int hb_storc(const char *szText, int iParam);
+extern HB_EXPORT int32_t hb_storc(const char *szText, int32_t iParam);
 // stores a fixed length string on a variable by reference
-extern HB_EXPORT int hb_storclen(const char *szText, HB_SIZE nLength, int iParam);
+extern HB_EXPORT int32_t hb_storclen(const char *szText, HB_SIZE nLength, int32_t iParam);
 // stores a fixed length string buffer on a variable by reference
-extern HB_EXPORT int hb_storclen_buffer(char *szText, HB_SIZE nLength, int iParam);
+extern HB_EXPORT int32_t hb_storclen_buffer(char *szText, HB_SIZE nLength, int32_t iParam);
 // szDate must have YYYYMMDD format
-extern HB_EXPORT int hb_stords(const char *szDate, int iParam);
+extern HB_EXPORT int32_t hb_stords(const char *szDate, int32_t iParam);
 // lJulian must be a date in Julian format
-extern HB_EXPORT int hb_stordl(long lJulian, int iParam);
+extern HB_EXPORT int32_t hb_stordl(long lJulian, int32_t iParam);
 // stores a double value as timestamp on a variable by reference
-extern HB_EXPORT int hb_stortd(double dTimeStamp, int iParam);
+extern HB_EXPORT int32_t hb_stortd(double dTimeStamp, int32_t iParam);
 // stores two long values as timestamp on a variable by reference
-extern HB_EXPORT int hb_stortdt(long lJulian, long lMilliSec, int iParam);
+extern HB_EXPORT int32_t hb_stortdt(long lJulian, long lMilliSec, int32_t iParam);
 // stores a logical integer on a variable by reference
-extern HB_EXPORT int hb_storl(int iLogical, int iParam);
+extern HB_EXPORT int32_t hb_storl(int32_t iLogical, int32_t iParam);
 // stores an integer on a variable by reference
-extern HB_EXPORT int hb_storni(int iValue, int iParam);
+extern HB_EXPORT int32_t hb_storni(int32_t iValue, int32_t iParam);
 // stores a long on a variable by reference
-extern HB_EXPORT int hb_stornl(long lValue, int iParam);
+extern HB_EXPORT int32_t hb_stornl(long lValue, int32_t iParam);
 // stores a HB_SIZE on a variable by reference
-extern HB_EXPORT int hb_storns(HB_ISIZ nValue, int iParam);
+extern HB_EXPORT int32_t hb_storns(HB_ISIZ nValue, int32_t iParam);
 // stores a double on a variable by reference
-extern HB_EXPORT int hb_stornd(double dValue, int iParam);
+extern HB_EXPORT int32_t hb_stornd(double dValue, int32_t iParam);
 // stores a HB_MAXINT on a variable by reference
-extern HB_EXPORT int hb_stornint(HB_MAXINT nValue, int iParam);
+extern HB_EXPORT int32_t hb_stornint(HB_MAXINT nValue, int32_t iParam);
 // stores a pointer on a variable by reference
-extern HB_EXPORT int hb_storptr(void *pointer, int iParam);
+extern HB_EXPORT int32_t hb_storptr(void *pointer, int32_t iParam);
 // stores a pointer to GC block on a variable by reference
-extern HB_EXPORT int hb_storptrGC(void *pointer, int iParam);
+extern HB_EXPORT int32_t hb_storptrGC(void *pointer, int32_t iParam);
 #ifndef HB_LONG_LONG_OFF
 // stores a long long on a variable by reference
-extern HB_EXPORT int hb_stornll(HB_LONGLONG llValue, int iParam);
+extern HB_EXPORT int32_t hb_stornll(HB_LONGLONG llValue, int32_t iParam);
 #endif
 
 // stores a szString on a variable by reference
-extern HB_EXPORT int hb_storvc(const char *szText, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvc(const char *szText, int32_t iParam, ...);
 // stores a fixed length string on a variable by reference
-extern HB_EXPORT int hb_storvclen(const char *szText, HB_SIZE nLength, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvclen(const char *szText, HB_SIZE nLength, int32_t iParam, ...);
 // stores a fixed length string buffer on a variable by reference
-extern HB_EXPORT int hb_storvclen_buffer(char *szText, HB_SIZE nLength, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvclen_buffer(char *szText, HB_SIZE nLength, int32_t iParam, ...);
 // szDate must have YYYYMMDD format
-extern HB_EXPORT int hb_storvds(const char *szDate, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvds(const char *szDate, int32_t iParam, ...);
 // lJulian must be a date in Julian format
-extern HB_EXPORT int hb_storvdl(long lJulian, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvdl(long lJulian, int32_t iParam, ...);
 // stores a double value as timestamp on a variable by reference
-extern HB_EXPORT int hb_storvtd(double dTimeStamp, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvtd(double dTimeStamp, int32_t iParam, ...);
 // stores two long values as timestamp on a variable by reference
-extern HB_EXPORT int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvtdt(long lJulian, long lMilliSec, int32_t iParam, ...);
 // stores a logical integer on a variable by reference
-extern HB_EXPORT int hb_storvl(int iLogical, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvl(int32_t iLogical, int32_t iParam, ...);
 // stores an integer on a variable by reference
-extern HB_EXPORT int hb_storvni(int iValue, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvni(int32_t iValue, int32_t iParam, ...);
 // stores a long on a variable by reference
-extern HB_EXPORT int hb_storvnl(long lValue, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvnl(long lValue, int32_t iParam, ...);
 // stores a HB_SIZE on a variable by reference
-extern HB_EXPORT int hb_storvns(HB_ISIZ nValue, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvns(HB_ISIZ nValue, int32_t iParam, ...);
 // stores a double on a variable by reference
-extern HB_EXPORT int hb_storvnd(double dValue, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvnd(double dValue, int32_t iParam, ...);
 // stores a HB_MAXINT on a variable by reference
-extern HB_EXPORT int hb_storvnint(HB_MAXINT nValue, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvnint(HB_MAXINT nValue, int32_t iParam, ...);
 // stores a pointer on a variable by reference
-extern HB_EXPORT int hb_storvptr(void *pointer, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvptr(void *pointer, int32_t iParam, ...);
 // stores a pointer to GC block on a variable by reference
-extern HB_EXPORT int hb_storvptrGC(void *pointer, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvptrGC(void *pointer, int32_t iParam, ...);
 #ifndef HB_LONG_LONG_OFF
 // stores a long long on a variable by reference
-extern HB_EXPORT int hb_storvnll(HB_LONGLONG llValue, int iParam, ...);
+extern HB_EXPORT int32_t hb_storvnll(HB_LONGLONG llValue, int32_t iParam, ...);
 #endif
 
 // array management
@@ -1639,7 +1639,7 @@ extern HB_EXPORT PHB_SYMB hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the logical value contained on an array element
 extern HB_EXPORT HB_BOOL hb_arrayGetL(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the int value contained on an array element
-extern HB_EXPORT int hb_arrayGetNI(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT int32_t hb_arrayGetNI(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the long numeric value contained on an array element
 extern HB_EXPORT long hb_arrayGetNL(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the HB_SIZE value contained on an array element
@@ -1667,7 +1667,7 @@ extern HB_EXPORT HB_BOOL hb_arraySetDL(PHB_ITEM pArray, HB_SIZE nIndex, long lDa
 extern HB_EXPORT HB_BOOL hb_arraySetTD(PHB_ITEM pArray, HB_SIZE nIndex, double dTimeStamp);
 extern HB_EXPORT HB_BOOL hb_arraySetTDT(PHB_ITEM pArray, HB_SIZE nIndex, long lJulian, long lMilliSec);
 extern HB_EXPORT HB_BOOL hb_arraySetL(PHB_ITEM pArray, HB_SIZE nIndex, HB_BOOL fValue);
-extern HB_EXPORT HB_BOOL hb_arraySetNI(PHB_ITEM pArray, HB_SIZE nIndex, int iNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetNI(PHB_ITEM pArray, HB_SIZE nIndex, int32_t iNumber);
 extern HB_EXPORT HB_BOOL hb_arraySetNL(PHB_ITEM pArray, HB_SIZE nIndex, long lNumber);
 extern HB_EXPORT HB_BOOL hb_arraySetNS(PHB_ITEM pArray, HB_SIZE nIndex, HB_ISIZ nNumber);
 #ifndef HB_LONG_LONG_OFF
@@ -1702,7 +1702,7 @@ extern HB_EXPORT HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE
 // Creates and returns an Array of n Elements from the Eval Stack - Does NOT pop the items.
 extern HB_EXPORT PHB_ITEM hb_arrayFromStack(HB_USHORT uiLen);
 // Creates and returns an Array of Generic Parameters for a given call level
-extern HB_EXPORT PHB_ITEM hb_arrayFromParams(int iLevel);
+extern HB_EXPORT PHB_ITEM hb_arrayFromParams(int32_t iLevel);
 // Creates and returns an Array of Generic Parameters for current base symbol.
 extern HB_EXPORT PHB_ITEM hb_arrayBaseParams(void);
 // Creates and returns an Array of Generic Parameters for current base symbol with self item
@@ -1733,7 +1733,7 @@ extern HB_EXPORT HB_BOOL hb_hashAllocNewPair(PHB_ITEM pHash, PHB_ITEM *pKeyPtr, 
 extern HB_EXPORT void hb_hashSort(PHB_ITEM pHash);
 extern HB_EXPORT PHB_ITEM hb_hashClone(PHB_ITEM pHash);
 extern HB_EXPORT PHB_ITEM hb_hashCloneTo(PHB_ITEM pDest, PHB_ITEM pHash);
-extern HB_EXPORT void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType);
+extern HB_EXPORT void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int32_t iType);
 extern HB_EXPORT HB_BOOL hb_hashScan(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE *pnPos);
 extern HB_EXPORT HB_BOOL hb_hashScanSoft(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE *pnPos);
 extern HB_EXPORT void hb_hashPreallocate(PHB_ITEM pHash, HB_SIZE nNewSize);
@@ -1741,16 +1741,16 @@ extern HB_EXPORT PHB_ITEM hb_hashGetKeys(PHB_ITEM pHash);
 extern HB_EXPORT PHB_ITEM hb_hashGetValues(PHB_ITEM pHash);
 extern HB_EXPORT void hb_hashSetDefault(PHB_ITEM pHash, PHB_ITEM pValue);
 extern HB_EXPORT PHB_ITEM hb_hashGetDefault(PHB_ITEM pHash);
-extern HB_EXPORT void hb_hashSetFlags(PHB_ITEM pHash, int iFlags);
-extern HB_EXPORT void hb_hashClearFlags(PHB_ITEM pHash, int iFlags);
-extern HB_EXPORT int hb_hashGetFlags(PHB_ITEM pHash);
+extern HB_EXPORT void hb_hashSetFlags(PHB_ITEM pHash, int32_t iFlags);
+extern HB_EXPORT void hb_hashClearFlags(PHB_ITEM pHash, int32_t iFlags);
+extern HB_EXPORT int32_t hb_hashGetFlags(PHB_ITEM pHash);
 // retrieves the hash unique ID
 extern HB_EXPORT void *hb_hashId(PHB_ITEM pHash);
 // retrieves numer of references to the hash
 extern HB_EXPORT HB_COUNTER hb_hashRefs(PHB_ITEM pHash);
 
 // WARNING: these hb_hashGet*() functions are dangerous, be sure that base HASH value will not be changed
-extern HB_EXPORT PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int iFlags);
+extern HB_EXPORT PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int32_t iFlags);
 extern HB_EXPORT PHB_ITEM hb_hashGetItemRefPtr(PHB_ITEM pHash, PHB_ITEM pKey);
 extern HB_EXPORT PHB_ITEM hb_hashGetCItemPtr(PHB_ITEM pHash, const char *pszKey);
 extern HB_EXPORT HB_SIZE hb_hashGetCItemPos(PHB_ITEM pHash, const char *pszKey);
@@ -1762,26 +1762,26 @@ extern HB_EXPORT HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos);
 #if defined(__cplusplus)
 
 // hash item flags
-constexpr int HB_HASH_AUTOADD_NEVER = 0x00;
-constexpr int HB_HASH_AUTOADD_ACCESS = 0x01;
-constexpr int HB_HASH_AUTOADD_ASSIGN = 0x02;
-constexpr int HB_HASH_AUTOADD_ALWAYS = (HB_HASH_AUTOADD_ACCESS | HB_HASH_AUTOADD_ASSIGN);
-constexpr int HB_HASH_AUTOADD_REFERENCE = HB_HASH_AUTOADD_ALWAYS;
-constexpr int HB_HASH_AUTOADD_MASK = 0x03;
+constexpr int32_t HB_HASH_AUTOADD_NEVER = 0x00;
+constexpr int32_t HB_HASH_AUTOADD_ACCESS = 0x01;
+constexpr int32_t HB_HASH_AUTOADD_ASSIGN = 0x02;
+constexpr int32_t HB_HASH_AUTOADD_ALWAYS = (HB_HASH_AUTOADD_ACCESS | HB_HASH_AUTOADD_ASSIGN);
+constexpr int32_t HB_HASH_AUTOADD_REFERENCE = HB_HASH_AUTOADD_ALWAYS;
+constexpr int32_t HB_HASH_AUTOADD_MASK = 0x03;
 
-constexpr int HB_HASH_RESORT = 0x08;
+constexpr int32_t HB_HASH_RESORT = 0x08;
 
-constexpr int HB_HASH_IGNORECASE = 0x10;
-constexpr int HB_HASH_BINARY = 0x20;
-constexpr int HB_HASH_KEEPORDER = 0x40;
+constexpr int32_t HB_HASH_IGNORECASE = 0x10;
+constexpr int32_t HB_HASH_BINARY = 0x20;
+constexpr int32_t HB_HASH_KEEPORDER = 0x40;
 
-constexpr int HB_HASH_FLAG_MASK = 0xFFFF;
-constexpr int HB_HASH_FLAG_DEFAULT = (HB_HASH_AUTOADD_ASSIGN | HB_HASH_BINARY | HB_HASH_KEEPORDER);
+constexpr int32_t HB_HASH_FLAG_MASK = 0xFFFF;
+constexpr int32_t HB_HASH_FLAG_DEFAULT = (HB_HASH_AUTOADD_ASSIGN | HB_HASH_BINARY | HB_HASH_KEEPORDER);
 
-constexpr int HB_HASH_UNION = 0; // logical OR  on items in two hash tables
-constexpr int HB_HASH_INTERSECT = 1; // logical AND on items in two hash tables
-constexpr int HB_HASH_DIFFERENCE = 2; // logical XOR on items in two hash tables
-constexpr int HB_HASH_REMOVE = 3; // h1 & (h1 ^ h2)
+constexpr int32_t HB_HASH_UNION = 0; // logical OR  on items in two hash tables
+constexpr int32_t HB_HASH_INTERSECT = 1; // logical AND on items in two hash tables
+constexpr int32_t HB_HASH_DIFFERENCE = 2; // logical XOR on items in two hash tables
+constexpr int32_t HB_HASH_REMOVE = 3; // h1 & (h1 ^ h2)
 
 #else
 
@@ -1814,9 +1814,9 @@ constexpr int HB_HASH_REMOVE = 3; // h1 & (h1 ^ h2)
 extern const char * const hb_szAscii[256]; // array of 1 character length strings
 
 // compare two strings without regards to case
-extern HB_EXPORT int hb_stricmp(const char *s1, const char *s2);
+extern HB_EXPORT int32_t hb_stricmp(const char *s1, const char *s2);
 // compare two string without regards to case, limited by length
-extern HB_EXPORT int hb_strnicmp(const char *s1, const char *s2, HB_SIZE nLen);
+extern HB_EXPORT int32_t hb_strnicmp(const char *s1, const char *s2, HB_SIZE nLen);
 // convert a string in-place to upper-case
 extern HB_EXPORT char *hb_strupr(char *pszText);
 // convert a string in-place to lower-case
@@ -1836,18 +1836,18 @@ extern HB_EXPORT char *hb_xstrcat(char *dest, const char *src, ...);
 // Concatenates multiple strings into a single result
 extern HB_EXPORT char *hb_xstrcpy(char *szDest, const char *szSrc, ...);
 // converts string to number, sets iDec, iWidth and returns HB_TRUE if results is double, used by compiler
-extern HB_EXPORT HB_BOOL hb_compStrToNum(const char *szNum, HB_SIZE nLen, HB_MAXINT *pnVal, double *pdVal, int *piDec, int *piWidth);
+extern HB_EXPORT HB_BOOL hb_compStrToNum(const char *szNum, HB_SIZE nLen, HB_MAXINT *pnVal, double *pdVal, int32_t *piDec, int32_t *piWidth);
 // converts string to number, sets iDec, iWidth and returns HB_TRUE if results is double, used by Val()
-extern HB_EXPORT HB_BOOL hb_valStrnToNum(const char *szNum, HB_SIZE nLen, HB_MAXINT *pnVal, double *pdVal, int *piDec, int *piWidth);
+extern HB_EXPORT HB_BOOL hb_valStrnToNum(const char *szNum, HB_SIZE nLen, HB_MAXINT *pnVal, double *pdVal, int32_t *piDec, int32_t *piWidth);
 // converts string to number, returns HB_TRUE if results is double
 extern HB_EXPORT HB_BOOL hb_strToNum(const char *szNum, HB_MAXINT *pnVal, double *pdVal);
 // converts string to number, returns HB_TRUE if results is double
 extern HB_EXPORT HB_BOOL hb_strnToNum(const char *szNum, HB_SIZE nLen, HB_MAXINT *pnVal, double *pdVal);
 // snprintf() equivalent
-extern HB_EXPORT int hb_snprintf(char *buffer, size_t bufsize, const char *format, ...) HB_PRINTF_FORMAT(3, 4);
+extern HB_EXPORT int32_t hb_snprintf(char *buffer, size_t bufsize, const char *format, ...) HB_PRINTF_FORMAT(3, 4);
 // vsnprintf() equivalent
-extern HB_EXPORT int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap);
-extern HB_EXPORT int hb_printf_params(const char *format);
+extern HB_EXPORT int32_t hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap);
+extern HB_EXPORT int32_t hb_printf_params(const char *format);
 
 // compare two strings using platform dependent rules for file matching
 extern HB_EXPORT HB_BOOL hb_strMatchFile(const char *pszString, const char *szPattern);
@@ -1874,14 +1874,14 @@ extern HB_EXPORT HB_ISIZ hb_strAtTBM(const char *needle, HB_ISIZ m, const char *
 extern HB_EXPORT char *hb_strUpper(char *szText, HB_SIZE nLen);
 // convert an existing string buffer to lower case
 extern HB_EXPORT char *hb_strLower(char *szText, HB_SIZE nLen);
-extern HB_EXPORT HB_BOOL hb_charIsDigit(int iChar);
-extern HB_EXPORT HB_BOOL hb_charIsAlpha(int iChar);
-extern HB_EXPORT HB_BOOL hb_charIsLower(int iChar);
-extern HB_EXPORT HB_BOOL hb_charIsUpper(int iChar);
+extern HB_EXPORT HB_BOOL hb_charIsDigit(int32_t iChar);
+extern HB_EXPORT HB_BOOL hb_charIsAlpha(int32_t iChar);
+extern HB_EXPORT HB_BOOL hb_charIsLower(int32_t iChar);
+extern HB_EXPORT HB_BOOL hb_charIsUpper(int32_t iChar);
 // converts iChar to upper case
-extern HB_EXPORT int hb_charUpper(int iChar);
+extern HB_EXPORT int32_t hb_charUpper(int32_t iChar);
 // converts iChar to lower case
-extern HB_EXPORT int hb_charLower(int iChar);
+extern HB_EXPORT int32_t hb_charLower(int32_t iChar);
 
 extern HB_EXPORT HB_BOOL hb_strIsDigit(const char *szChar);
 extern HB_EXPORT HB_BOOL hb_strIsAlpha(const char *szChar);
@@ -1903,24 +1903,24 @@ extern HB_EXPORT const char *hb_strLTrim(const char *szText, HB_SIZE *nLen);
 extern HB_EXPORT HB_SIZE hb_strRTrimLen(const char *szText, HB_SIZE nLen, HB_BOOL bAnySpace);
 // return the numeric value of a character string representation of a number
 extern HB_EXPORT double hb_strVal(const char *szText, HB_SIZE nLen);
-extern HB_EXPORT HB_MAXINT hb_strValInt(const char *szText, int *iOverflow);
+extern HB_EXPORT HB_MAXINT hb_strValInt(const char *szText, int32_t *iOverflow);
 // remove C ESC sequences and converts them to Clipper chars
 extern HB_EXPORT char *hb_strRemEscSeq(char *szText, HB_SIZE *nLen);
 extern HB_EXPORT char *hb_numToStr(char *szBuf, HB_SIZE nSize, HB_MAXINT nNumber);
-extern HB_EXPORT char *hb_dblToStr(char *szBuf, HB_SIZE nSize, double dNumber, int iMaxDec);
+extern HB_EXPORT char *hb_dblToStr(char *szBuf, HB_SIZE nSize, double dNumber, int32_t iMaxDec);
 // round a number to a specific number of digits
-extern HB_EXPORT double hb_numRound(double dResult, int iDec);
+extern HB_EXPORT double hb_numRound(double dResult, int32_t iDec);
 // take the integer part of the number
 extern HB_EXPORT double hb_numInt(double dNum);
 extern HB_EXPORT void hb_random_seed(HB_I32 seed);
 extern HB_EXPORT double hb_random_num(void);
 extern HB_EXPORT double hb_random_num_secure(void);
 extern HB_EXPORT void hb_random_block(void *data, HB_SIZE len);
-extern HB_EXPORT double hb_numDecConv(double dNum, int iDec);
-extern HB_EXPORT double hb_numExpConv(double dNum, int iDec);
+extern HB_EXPORT double hb_numDecConv(double dNum, int32_t iDec);
+extern HB_EXPORT double hb_numExpConv(double dNum, int32_t iDec);
 extern HB_EXPORT void hb_strtohex(const char *pSource, HB_SIZE size, char *pDest);
 
-extern HB_EXPORT PHB_ITEM  hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PHB_ITEM *pItemArray);
+extern HB_EXPORT PHB_ITEM  hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int32_t iCount, PHB_ITEM *pItemArray);
 
 // architecture dependent number conversions
 extern HB_EXPORT void hb_put_ieee754(HB_BYTE *ptr, double d);
@@ -1963,9 +1963,9 @@ extern HB_EXPORT const char *hb_dynsymName(PHB_DYNS pDynSym);
 extern HB_EXPORT HB_BOOL hb_dynsymIsFunction(PHB_DYNS pDynSym);
 extern HB_EXPORT HB_BOOL hb_dynsymIsMemvar(PHB_DYNS pDynSym);
 // return work area number bound with given dynamic symbol
-extern HB_EXPORT int hb_dynsymAreaHandle(PHB_DYNS pDynSym);
+extern HB_EXPORT int32_t hb_dynsymAreaHandle(PHB_DYNS pDynSym);
 // set work area number for a given dynamic symbol
-extern HB_EXPORT void hb_dynsymSetAreaHandle(PHB_DYNS pDynSym, int iArea);
+extern HB_EXPORT void hb_dynsymSetAreaHandle(PHB_DYNS pDynSym, int32_t iArea);
 extern HB_EXPORT HB_SYMCNT hb_dynsymToNum(PHB_DYNS pDynSym);
 extern HB_EXPORT PHB_DYNS hb_dynsymFromNum(HB_SYMCNT iSymNum);
 #ifdef _HB_API_INTERNAL_
@@ -1983,21 +1983,21 @@ extern HB_EXPORT PHB_SYMB hb_symbolNew(const char *szName);
 
 // Command-line and environment argument management
 // initialize command-line argument API's
-extern HB_EXPORT void hb_cmdargInit(int argc, char *argv[]);
+extern HB_EXPORT void hb_cmdargInit(int32_t argc, char *argv[]);
 // retrieve command-line argument count
-extern HB_EXPORT int hb_cmdargARGC(void);
+extern HB_EXPORT int32_t hb_cmdargARGC(void);
 // retrieve command-line argument buffer pointer
 extern HB_EXPORT char **hb_cmdargARGV(void);
 // retrieve given command-line argument
-extern HB_EXPORT const char *hb_cmdargARGVN(int argc);
+extern HB_EXPORT const char *hb_cmdargARGVN(int32_t argc);
 // determine if a string is an internal setting
-extern HB_EXPORT HB_BOOL hb_cmdargIsInternal(const char *szArg, int *piLen);
+extern HB_EXPORT HB_BOOL hb_cmdargIsInternal(const char *szArg, int32_t *piLen);
 // return application name with path or NULL if not set, caller must free returned value with hb_xfree() if not NULL
 extern HB_EXPORT char *hb_cmdargProgName(void);
 // return application name without path or NULL if not set, caller must free returned value with hb_xfree() if not NULL
 extern HB_EXPORT char *hb_cmdargBaseProgName(void);
 // places application parameters on the HVM stack
-extern int hb_cmdargPushArgs(void);
+extern int32_t hb_cmdargPushArgs(void);
 // update arguments after HVM initialization
 extern void hb_cmdargUpdate(void);
 // Check if a given internal switch (like //INFO) was set
@@ -2005,14 +2005,14 @@ extern HB_BOOL hb_cmdargCheck(const char *pszName);
 // Returns the string value of an internal switch (like //GT:cgi)
 extern char *hb_cmdargString(const char *pszName);
 // Returns the numeric value of an internal switch (like //F:90)
-extern int hb_cmdargNum(const char *pszName);
+extern int32_t hb_cmdargNum(const char *pszName);
 // Check for command-line internal arguments
 extern void hb_cmdargProcess(void);
 #if defined(HB_OS_WIN)
 // Set WinMain() parameters
-extern HB_EXPORT void hb_winmainArgInit(void *hInstance, void *hPrevInstance, int iCmdShow);
+extern HB_EXPORT void hb_winmainArgInit(void *hInstance, void *hPrevInstance, int32_t iCmdShow);
 // Retrieve WinMain() parameters
-extern HB_EXPORT HB_BOOL hb_winmainArgGet(void *phInstance, void *phPrevInstance, int *piCmdShow);
+extern HB_EXPORT HB_BOOL hb_winmainArgGet(void *phInstance, void *phPrevInstance, int32_t *piCmdShow);
 extern HB_EXPORT void hb_winmainArgVBuild(void);
 extern HB_EXPORT void hb_winmainArgVFree(void);
 #endif
@@ -2026,9 +2026,9 @@ extern HB_EXPORT HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem);
 extern PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, HB_USHORT uiLocals, const HB_BYTE *pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen);
 extern PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE *pBuffer, HB_SIZE nLen);
 // get local variable referenced in a codeblock
-extern PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos);
+extern PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos);
 // get local variable passed by reference
-extern PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int iItemPos);
+extern PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos);
 
 // memvars subsystem
 // clear all PUBLIC and PRIVATE variables optionally without GetList PUBLIC variable
@@ -2049,14 +2049,14 @@ extern void hb_memvarSetPrivatesBase(HB_SIZE nBase);
 extern void hb_memvarUpdatePrivatesBase(void);
 extern void hb_memvarNewParameter(PHB_SYMB pSymbol, PHB_ITEM pValue);
 extern char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen);
-extern void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue);
+extern void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int32_t iScope, PHB_ITEM pValue);
 // retrieve scope of a dynamic variable symbol
-extern int hb_memvarScope(const char *szVarName, HB_SIZE nLength);
+extern int32_t hb_memvarScope(const char *szVarName, HB_SIZE nLength);
 // Detach a local variable from the eval stack
 extern PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal);
 extern HB_EXPORT PHB_ITEM hb_memvarGetValueBySym(PHB_DYNS pDynSym);
 // create array with visible memvar references or copies respecting given memvars scope
-extern HB_EXPORT PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy);
+extern HB_EXPORT PHB_ITEM hb_memvarSaveInArray(int32_t iScope, HB_BOOL fCopy);
 extern void hb_memvarRestoreFromArray(PHB_ITEM pArray);
 
 #ifdef _HB_API_INTERNAL_
@@ -2084,18 +2084,18 @@ extern HB_EXPORT void hb_conOutErr(const char *pStr, HB_SIZE nLen);
 // output an string to the screen and/or printer and/or alternate
 extern HB_EXPORT void hb_conOutAlt(const char *pStr, HB_SIZE nLen);
 // retrieve and optionally set cursor shape
-extern HB_EXPORT int hb_conSetCursor(HB_BOOL bSetCursor, int iNewCursor);
+extern HB_EXPORT int32_t hb_conSetCursor(HB_BOOL bSetCursor, int32_t iNewCursor);
 // retrieve and optionally set console color
 extern HB_EXPORT const char *hb_conSetColor(const char *szColor);
 
 // compiler and macro compiler
-extern HB_EXPORT_INT char *hb_compEncodeString(int iMethod, const char *szText, HB_SIZE *pnLen);
-extern char *hb_compDecodeString(int iMethod, const char *szText, HB_SIZE *pnLen);
+extern HB_EXPORT_INT char *hb_compEncodeString(int32_t iMethod, const char *szText, HB_SIZE *pnLen);
+extern char *hb_compDecodeString(int32_t iMethod, const char *szText, HB_SIZE *pnLen);
 
 // misc
 // retrieve a procedure name into a buffer
-extern HB_EXPORT char *hb_procname(int iLevel, char *szName, HB_BOOL bskipBlock);
-extern HB_EXPORT HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile);
+extern HB_EXPORT char *hb_procname(int32_t iLevel, char *szName, HB_BOOL bskipBlock);
+extern HB_EXPORT HB_BOOL hb_procinfo(int32_t iLevel, char *szName, HB_USHORT *puiLine, char *szFile);
 
 // macro compiler
 #if defined(HB_MACRO_SUPPORT)
@@ -2105,9 +2105,9 @@ typedef struct HB_MACRO_ * PHB_MACRO;
 typedef void * PHB_MACRO;
 #endif
 // retrieve results of a macro expansion
-extern HB_EXPORT void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags);
+extern HB_EXPORT void hb_macroGetValue(PHB_ITEM pItem, int32_t iContext, int32_t flags);
 // assign a value to a macro-expression item
-extern void hb_macroSetValue(PHB_ITEM pItem, int flags);
+extern void hb_macroSetValue(PHB_ITEM pItem, int32_t flags);
 // push reference to given expression
 extern void hb_macroPushReference(PHB_ITEM pItem);
 // macro text substitution
@@ -2125,9 +2125,9 @@ extern char *hb_macroTextSymbol(const char *szString, HB_SIZE nLength, HB_BOOL *
 // expands valid '&' operator
 extern char *hb_macroExpandString(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewString);
 // compiles and evaluates an aliased macro expression
-extern void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int flags);
+extern void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags);
 // compiles and evaluates an aliased macro expression
-extern void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int flags);
+extern void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags);
 // determine the type of an expression
 extern HB_EXPORT const char *hb_macroGetType(PHB_ITEM pItem);
 
@@ -2164,13 +2164,13 @@ extern HB_EXPORT HB_BOOL hb_libFree(PHB_ITEM pDynLib);
 extern HB_EXPORT void *hb_libHandle(PHB_ITEM pDynLib);
 extern HB_EXPORT void *hb_libSymAddr(PHB_ITEM pDynLib, const char *pszSymbol);
 
-extern HB_EXPORT void hb_dynCall(int iFuncFlags, void *pFunction, int iParams, int iFirst, int *piArgFlags);
+extern HB_EXPORT void hb_dynCall(int32_t iFuncFlags, void *pFunction, int32_t iParams, int32_t iFirst, int32_t *piArgFlags);
 
 // misc
 // retrieves a constant string with host OS CPU architecture
 extern HB_EXPORT const char *hb_verHostCPU(void);
 // retrieves bit width of host OS
-extern HB_EXPORT int hb_verHostBitWidth(void);
+extern HB_EXPORT int32_t hb_verHostBitWidth(void);
 // retrieves a constant string with CPU architecture
 extern HB_EXPORT const char *hb_verCPU(void);
 // retrieves a constant string with OS platform (as it appears in __PLATFORM__* macro)
@@ -2213,11 +2213,11 @@ extern HB_EXPORT const char *hb_verHB_PLAT(void);
 extern HB_EXPORT const char *hb_verHB_COMP(void);
 
 // return non-zero if OS == Wine
-extern HB_EXPORT int hb_iswine(void);
+extern HB_EXPORT int32_t hb_iswine(void);
 // return non-zero if OS == Windows 9x, ME
-extern HB_EXPORT int hb_iswin9x(void);
+extern HB_EXPORT int32_t hb_iswin9x(void);
 // return non-zero if OS == Windows NT or newer
-extern HB_EXPORT int hb_iswinnt(void);
+extern HB_EXPORT int32_t hb_iswinnt(void);
 // return HB_TRUE if OS == Windows 2000 or newer
 extern HB_EXPORT HB_BOOL hb_iswin2k(void);
 // return HB_TRUE if OS == Windows 2003 Server or newer
@@ -2234,8 +2234,8 @@ extern HB_EXPORT HB_BOOL hb_iswin81(void);
 extern HB_EXPORT HB_BOOL hb_iswin10(void);
 // return HB_TRUE if OS is Windows CE or Windows Mobile
 extern HB_EXPORT HB_BOOL hb_iswince(void);
-extern HB_EXPORT HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper);
-extern HB_EXPORT HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper);
+extern HB_EXPORT HB_BOOL hb_iswinver(int32_t iMajor, int32_t iMinor, int32_t iType, HB_BOOL fOrUpper);
+extern HB_EXPORT HB_BOOL hb_iswinsp(int32_t iServicePackMajor, HB_BOOL fOrUpper);
 
 extern HB_EXPORT HB_BOOL hb_printerIsReady(const char *pszPrinterName);
 
@@ -2261,7 +2261,7 @@ extern HB_EXPORT char *hb_osStrU16Decode2(const HB_WCHAR *pszNameW, char *pszBuf
 #endif
 
 // environment variables access
-extern HB_EXPORT HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int nSize);
+extern HB_EXPORT HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int32_t nSize);
 // WARNING: This returned pointer must be freed if not NULL using hb_xfree(ptr);
 extern HB_EXPORT char *hb_getenv(const char *name);
 // set or delete (szValue==NULL) environment variable
