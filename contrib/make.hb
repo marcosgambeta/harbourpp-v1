@@ -563,6 +563,7 @@ STATIC FUNCTION call_hbmk2( cProjectPath, cOptionsPre, cDynSuffix, cStdErr, cStd
 
    hb_SetEnv( "_HB_CONTRIB_SUBDIR", hb_FNameDir( hb_DirSepToOS( cProjectPath ) ) )
 
+#ifdef __PLATFORM__WINDOWS
    cCommand := s_cBinDir + "hbmk2" + ;
       " -quiet -width=0 -autohbm-" + ;
       " @" + StrTran(s_cHome + "hbpre", "\", "/") + ;
@@ -570,6 +571,15 @@ STATIC FUNCTION call_hbmk2( cProjectPath, cOptionsPre, cDynSuffix, cStdErr, cStd
       " " + StrTran(cProjectPath, "\", "/") + ;
       " @" + StrTran(s_cHome, "\", "/") + "hbpost" + ;
       cOptionsLibDyn + " -jobs=allcores"
+#else
+   cCommand := s_cBinDir + "hbmk2" + ;
+      " -quiet -width=0 -autohbm-" + ;
+      " @" + StrTran(s_cHome + "hbpre", "\", "/") + ;
+      cOptionsPre + ;
+      " " + StrTran(cProjectPath, "\", "/") + ;
+      " @" + StrTran(s_cHome, "\", "/") + "hbpost" + ;
+      cOptionsLibDyn
+#endif
 
    IF PCount() >= 4
       nErrorLevel := hb_processRun( cCommand,, @cStdOut, @cStdErr )
