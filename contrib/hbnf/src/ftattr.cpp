@@ -145,7 +145,7 @@ HB_FUNC(FT_RESTATT)
                uint8_t   bAttr;
                uint16_t usChar;
                hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
-               iColor = static_cast<HB_UCHAR>(*pAttrib++);
+               iColor = static_cast<uint8_t>(*pAttrib++);
                hb_gtPutChar(iTop, iCol, iColor, bAttr, usChar);
                ++iCol;
                --nLen;

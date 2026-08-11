@@ -66,7 +66,7 @@ void ct_charlist(int iMode)
     }
 
     for (sCnt = 0; sCnt < sStrLen; ++sCnt) {
-      asCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])]++;
+      asCharCnt[static_cast<uint8_t>(pcString[sCnt])]++;
     }
 
     for (sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt) {
@@ -84,7 +84,7 @@ void ct_charlist(int iMode)
       memset(acMark, 0, sizeof(acMark));
 
       for (sCnt = 0; sCnt < sStrLen; ++sCnt) {
-        auto uc = static_cast<HB_UCHAR>(pcString[sCnt]);
+        auto uc = static_cast<uint8_t>(pcString[sCnt]);
 
         if (acMark[uc] == 0) {
           acCharCnt[sRetStrLen++] = uc;
@@ -95,12 +95,12 @@ void ct_charlist(int iMode)
       char cScan = iMode == CT_CHARLIST_CHARSLIST ? 1 : 0;
 
       for (sCnt = 0; sCnt < sStrLen; ++sCnt) {
-        acCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])] = 1;
+        acCharCnt[static_cast<uint8_t>(pcString[sCnt])] = 1;
       }
 
       for (sCnt = 0; sCnt < HB_SIZEOFARRAY(acCharCnt); ++sCnt) {
         if (acCharCnt[sCnt] == cScan) {
-          acCharCnt[sRetStrLen++] = static_cast<HB_UCHAR>(sCnt);
+          acCharCnt[sRetStrLen++] = static_cast<uint8_t>(sCnt);
         }
       }
     }

@@ -1855,7 +1855,7 @@ static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int iRow, int iCol, int *piColor
   return true;
 }
 
-static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, HB_UCHAR *puChar,
+static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint8_t *puChar,
                                   HB_BOOL fTerm)
 {
 #if 0
@@ -1865,7 +1865,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, 
   uint16_t usChar;
 
   if (hb_ctw_gt_GetScrChar(pGT, iRow, iCol, piColor, pbAttr, &usChar)) {
-    HB_UCHAR uc = 0;
+    uint8_t uc = 0;
     if (usChar) {
       if (fTerm && pGT->cdpTerm) {
         uc = hb_cdpGetUC(pGT->cdpTerm, usChar, 0);
@@ -1880,7 +1880,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int iRow, int iCol, int *piColor, 
             uc = hb_cdpGetUC(pGT->cdpHost, usChar, 0);
           }
           if (uc == 0) {
-            uc = hb_cdpGetUC(hb_vmCDP(), usChar, usChar < 32 ? static_cast<HB_UCHAR>(usChar) : '?');
+            uc = hb_cdpGetUC(hb_vmCDP(), usChar, usChar < 32 ? static_cast<uint8_t>(usChar) : '?');
           }
         }
       }

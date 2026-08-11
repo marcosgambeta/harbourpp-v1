@@ -239,14 +239,14 @@ HB_FUNC(CLEARSLOW) // TODO: Unicode support
   auto iLeft = hb_parni(3);
   auto iBottom = hb_parnidef(4, iMaxRow);
   auto iRight = hb_parnidef(5, iMaxCol);
-  HB_UCHAR ucChar;
+  uint8_t ucChar;
 
   if (HB_ISNUM(6)) {
-    ucChar = static_cast<HB_UCHAR>(hb_parni(6));
+    ucChar = static_cast<uint8_t>(hb_parni(6));
   } else if (HB_ISCHAR(6)) {
-    ucChar = static_cast<HB_UCHAR>(hb_parc(6)[0]);
+    ucChar = static_cast<uint8_t>(hb_parc(6)[0]);
   } else {
-    ucChar = static_cast<HB_UCHAR>(hb_gtGetClearChar());
+    ucChar = static_cast<uint8_t>(hb_gtGetClearChar());
   }
 
   if (iTop >= 0 && iLeft >= 0 && iTop <= iBottom && iLeft <= iRight) {
@@ -378,8 +378,8 @@ HB_FUNC(STRSCREEN) // TODO: Unicode support
       do {
         int iC = iCol;
         do {
-          uint16_t usChar = static_cast<HB_UCHAR>(*szText++);
-          int iColor = static_cast<HB_UCHAR>(*szText++);
+          uint16_t usChar = static_cast<uint8_t>(*szText++);
+          int iColor = static_cast<uint8_t>(*szText++);
           hb_gtPutChar(iRow, iC, iColor, 0, usChar);
           nLen -= 2;
         } while (nLen && ++iC <= iMaxCol);

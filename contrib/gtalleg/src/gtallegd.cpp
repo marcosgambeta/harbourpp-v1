@@ -1068,7 +1068,7 @@ static void hb_gt_alleg_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // Fun
 
    int      iColor;
    uint8_t  bAttr;
-   HB_UCHAR uc;
+   uint8_t uc;
 
    if( s_fInit ) {
       int iPosX = iCol * s_byFontWidth, iPosY = iRow * s_byFontSize;

@@ -97,7 +97,7 @@ HB_FUNC(SETCLEARB)
     auto iChar = hb_parni(1);
     auto cdp = hb_vmCDP();
     if (!HB_CDP_ISCHARUNI(cdp)) {
-      iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
+      iChar = hb_cdpGetU16(cdp, static_cast<uint8_t>(iChar));
     }
     usNew = static_cast<uint16_t>(iChar);
   } else if (HB_ISCHAR(1)) {
@@ -117,7 +117,7 @@ HB_FUNC(GETCLEARB)
   auto cdp = hb_vmCDP();
 
   if (!HB_CDP_ISCHARUNI(cdp)) {
-    HB_UCHAR uc = hb_cdpGetUC(cdp, static_cast<HB_WCHAR>(iChar), 0);
+    uint8_t uc = hb_cdpGetUC(cdp, static_cast<HB_WCHAR>(iChar), 0);
     if (uc) {
       iChar = uc;
     }

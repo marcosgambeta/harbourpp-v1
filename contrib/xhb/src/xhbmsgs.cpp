@@ -112,11 +112,11 @@ HB_FUNC(XHB_EEQUAL)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue == static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) == dValue);
   } else if (pSelf->isBlock() && pValue->isBlock()) {
@@ -135,11 +135,11 @@ HB_FUNC(XHB_EQUAL)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue == static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) == dValue);
   } else if (pSelf->isHash() && pValue->isHash()) {
@@ -158,11 +158,11 @@ HB_FUNC(XHB_NOTEQUAL)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue != static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) != dValue);
   } else if (pSelf->isHash() && pValue->isHash()) {
@@ -181,11 +181,11 @@ HB_FUNC(XHB_LESS)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue < static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) < dValue);
   } else {
@@ -202,11 +202,11 @@ HB_FUNC(XHB_LESSEQ)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue <= static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) <= dValue);
   } else {
@@ -223,11 +223,11 @@ HB_FUNC(XHB_GREATER)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue > static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) > dValue);
   } else {
@@ -244,11 +244,11 @@ HB_FUNC(XHB_GREATEREQ)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     auto dValue = hb_itemGetND(pSelf);
     hb_retl(dValue >= static_cast<double>(uc));
   } else if (hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) >= dValue);
   } else {
@@ -342,13 +342,13 @@ HB_FUNC(XHB_PLUS)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retnlen(dValue + uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
-    uc += static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
+    uc += static_cast<uint8_t>(hb_itemGetNI(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   } else if (pSelf->isHash() && pValue->isHash()) {
     PHB_ITEM pHash = hb_hashClone(pSelf);
@@ -368,13 +368,13 @@ HB_FUNC(XHB_MINUS)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retnlen(dValue - uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
-    uc -= static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
+    uc -= static_cast<uint8_t>(hb_itemGetNI(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   } else if (pSelf->isHash() && pValue->isHash()) {
     PHB_ITEM pHash = hb_hashClone(pSelf);
@@ -395,7 +395,7 @@ HB_FUNC(XHB_INC)
   if (pSelf->isNumeric()) {
     hb_retnd(hb_itemGetND(pSelf) + 1);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1) {
-    HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]) + 1;
+    uint8_t uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]) + 1;
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1086, nullptr, "++", 1, pSelf);
@@ -412,7 +412,7 @@ HB_FUNC(XHB_DEC)
   if (pSelf->isNumeric()) {
     hb_retnd(hb_itemGetND(pSelf) - 1);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1) {
-    HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]) - 1;
+    uint8_t uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]) - 1;
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1087, nullptr, "--", 1, pSelf);
@@ -428,18 +428,18 @@ HB_FUNC(XHB_MULT)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retndlen(dValue * uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     int iDec;
     double dValue = hb_itemGetNDDec(pValue, &iDec);
     hb_retndlen(static_cast<double>(uc) * dValue, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1) {
-    auto uc1 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
-    auto uc2 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc1 = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc2 = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     hb_retnint(uc1 * uc2);
   } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1083, nullptr, "*", 2, pSelf, pValue);
@@ -455,7 +455,7 @@ HB_FUNC(XHB_DIV)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     if (uc == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue);
       if (pResult) {
@@ -466,9 +466,9 @@ HB_FUNC(XHB_DIV)
     }
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue &&
              (pValue->isNumeric() || hb_itemGetCLen(pValue) == 1)) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     double dDivisor = pValue->isNumeric() ? hb_itemGetND(pValue)
-                                          : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
+                                          : static_cast<double>(static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]));
 
     if (dDivisor == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue);
@@ -492,7 +492,7 @@ HB_FUNC(XHB_MOD)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     if (uc == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue);
       if (pResult) {
@@ -503,9 +503,9 @@ HB_FUNC(XHB_MOD)
     }
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue &&
              (pValue->isNumeric() || hb_itemGetCLen(pValue) == 1)) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     double dDivisor = pValue->isNumeric() ? hb_itemGetND(pValue)
-                                          : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
+                                          : static_cast<double>(static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]));
 
     if (dDivisor == 0) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue);
@@ -529,14 +529,14 @@ HB_FUNC(XHB_POW)
   auto pValue = hb_param(1, Harbour::Item::ANY);
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     hb_retnd(pow(hb_itemGetND(pSelf), static_cast<double>(uc)));
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
-    auto uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
     hb_retnd(pow(static_cast<double>(uc), hb_itemGetND(pValue)));
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1) {
-    auto uc1 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
-    auto uc2 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
+    auto uc1 = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
+    auto uc2 = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
     hb_retnd(pow(static_cast<double>(uc1), static_cast<double>(uc2)));
   } else {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1088, nullptr, "^", 2, pSelf, pValue);

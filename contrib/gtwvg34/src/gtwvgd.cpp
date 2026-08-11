@@ -1822,7 +1822,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT, RECT updateRect)
       }
       text[len++] = (TCHAR)usChar;
 #else
-      HB_UCHAR uc;
+      uint8_t uc;
       if (!HB_GTSELF_GETSCRUC(pWVT->pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_TRUE)) {
         break;
       }

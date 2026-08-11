@@ -50,10 +50,10 @@
 HB_FUNC(CHARPACK)
 {
   auto len = hb_parclen(1);
-  auto in = reinterpret_cast<const HB_UCHAR *>(hb_parcx(1));
+  auto in = reinterpret_cast<const uint8_t *>(hb_parcx(1));
 
   if (hb_parni(2) == 0) {
-    auto out = static_cast<HB_UCHAR *>(hb_xgrab(len * 3 + 2));
+    auto out = static_cast<uint8_t *>(hb_xgrab(len * 3 + 2));
     HB_SIZE n_in = 0, n_out = 0;
 
     out[n_out++] = 158;
@@ -61,13 +61,13 @@ HB_FUNC(CHARPACK)
 
     while (n_in < len) {
       HB_ISIZ n_count = 1, n_max = HB_MIN(255, len - n_in);
-      HB_UCHAR c = in[n_in];
+      uint8_t c = in[n_in];
 
       while (n_count < n_max && in[n_in + n_count] == c) {
         n_count++;
       }
       out[n_out++] = 0;
-      out[n_out++] = static_cast<HB_UCHAR>(n_count);
+      out[n_out++] = static_cast<uint8_t>(n_count);
       out[n_out++] = c;
       n_in += n_count;
     }
@@ -82,11 +82,11 @@ HB_FUNC(CHARPACK)
   hb_retclen(reinterpret_cast<const char *>(in), len);
 }
 
-static HB_UCHAR *buf_append(HB_UCHAR *buf, HB_SIZE *buf_size, HB_SIZE count, HB_UCHAR c, HB_SIZE *buf_len)
+static uint8_t *buf_append(uint8_t *buf, HB_SIZE *buf_size, HB_SIZE count, uint8_t c, HB_SIZE *buf_len)
 {
   if (*buf_len + count > *buf_size) {
     *buf_size = HB_MAX(*buf_len + count, *buf_size + 32768);
-    buf = static_cast<HB_UCHAR *>(hb_xrealloc(buf, *buf_size));
+    buf = static_cast<uint8_t *>(hb_xrealloc(buf, *buf_size));
   }
   memset(buf + *buf_len, c, count);
   *buf_len += count;
@@ -96,7 +96,7 @@ static HB_UCHAR *buf_append(HB_UCHAR *buf, HB_SIZE *buf_size, HB_SIZE count, HB_
 HB_FUNC(CHARUNPACK)
 {
   auto len = hb_parclen(1);
-  auto in = reinterpret_cast<const HB_UCHAR *>(hb_parcx(1));
+  auto in = reinterpret_cast<const uint8_t *>(hb_parcx(1));
 
   if (hb_parni(2) == 0) {
     HB_SIZE out_len = 0;
@@ -106,7 +106,7 @@ HB_FUNC(CHARUNPACK)
       hb_retclen(reinterpret_cast<const char *>(in), len);
       return;
     }
-    auto out = static_cast<HB_UCHAR *>(hb_xgrab(buf_size));
+    auto out = static_cast<uint8_t *>(hb_xgrab(buf_size));
     for (HB_SIZE i = 2; i <= len - 3; i += 3) {
       if (in[i] != 0) {
         hb_xfree(out);

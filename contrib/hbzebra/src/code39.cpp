@@ -49,7 +49,7 @@
 
 /* Usually one character bitmap does not fit into 1 byte, but if we use enough
    good encoding, we can manage to fit :) [Mindaugas] */
-static const HB_UCHAR s_code[] = {
+static const uint8_t s_code[] = {
     0x58, /* 0 */
     0x09, /* 1 */
     0x0C, /* 2 */

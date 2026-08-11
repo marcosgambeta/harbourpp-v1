@@ -112,7 +112,7 @@ static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, PHB_ITEM 
       PHB_ITEM pCount = nullptr;
       HB_SIZE nRead;
 
-      auto buffer = static_cast<HB_UCHAR *>(hb_xgrab(BUFFER_SIZE));
+      auto buffer = static_cast<uint8_t *>(hb_xgrab(BUFFER_SIZE));
       bRetVal = true;
       if (pBlock && pBlock->isEvalItem()) {
         pCount = hb_itemNew(nullptr);

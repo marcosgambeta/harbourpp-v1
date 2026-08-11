@@ -91,7 +91,7 @@ typedef struct
    HB_BOOL    bIsAllocated;      /* if buffers were allocated           */
    char *     buffer;            /* file buffer pointer                 */
    char *     lbuff;             /* line buffer pointer                 */
-   HB_UCHAR * vseg;              /* video segment variable              */
+   uint8_t * vseg;              /* video segment variable              */
    int        iCellSize;         /* size of one buffer cell             */
 } FT_DISPC, * PFT_DISPC;
 
@@ -120,7 +120,7 @@ static void          filebot(PFT_DISPC dispc);
 static void chattr( PFT_DISPC dispc, int x, int y, int len, int attr )
 {
    /* calc the screen memory coord */
-   HB_UCHAR * vmem;
+   uint8_t * vmem;
 
    vmem = dispc->vseg + ( y * ( dispc->width + 1 ) * dispc->iCellSize ) + ( x * dispc->iCellSize ) + 1;
 
@@ -349,7 +349,7 @@ static void disp_update(PFT_DISPC dispc, int offset)
 
       for( i = dispc->wincol, col = 0; col <= dispc->width; col++ )
       {
-         HB_UCHAR * vmem = dispc->vseg + pos + (col * dispc->iCellSize);
+         uint8_t * vmem = dispc->vseg + pos + (col * dispc->iCellSize);
 
          *vmem = dispc->lbuff[i++];
       }
@@ -563,7 +563,7 @@ HB_FUNC(_FT_DFINIT)
    dispc->iCellSize = static_cast<int>(nSize);
 
    hb_gtRectSize(dispc->sline, dispc->scol, dispc->eline, dispc->ecol, &nSize);
-   dispc->vseg = static_cast<HB_UCHAR*>(hb_xalloc(nSize));
+   dispc->vseg = static_cast<uint8_t *>(hb_xalloc(nSize));
    if( dispc->vseg != nullptr )
    {
       hb_gtSave(dispc->sline, dispc->scol, dispc->eline, dispc->ecol, dispc->vseg);

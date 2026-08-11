@@ -166,7 +166,7 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
 
     while (*szVal && nCnt++ < nLen)
     {
-      if (static_cast<HB_UCHAR>(*szVal) >= 32)
+      if (static_cast<uint8_t>(*szVal) >= 32)
       {
         // if( *szVal == *szDelim || *szVal == *szEsc || *szVal == *szQuote )
         // we don't need to escape delim in CSV mode,

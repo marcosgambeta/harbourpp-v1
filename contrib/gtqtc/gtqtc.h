@@ -340,7 +340,7 @@ struct HB_GTQTC
    QString *   fontName;                     // requested font name
 
    QBitmap *   boxImage[HB_BOXCH_TRANS_MAX];   // bitmaps with box drawing characters
-   HB_UCHAR    boxIndex[HB_BOXCH_TRANS_COUNT]; // indexes to bitmap array
+   uint8_t    boxIndex[HB_BOXCH_TRANS_COUNT]; // indexes to bitmap array
    int         boxCount;                       // number of defined box characters
 
    QIcon *     qIcon;                        // application icon

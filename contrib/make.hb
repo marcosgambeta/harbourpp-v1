@@ -569,7 +569,7 @@ STATIC FUNCTION call_hbmk2( cProjectPath, cOptionsPre, cDynSuffix, cStdErr, cStd
       cOptionsPre + ;
       " " + StrTran(cProjectPath, "\", "/") + ;
       " @" + StrTran(s_cHome, "\", "/") + "hbpost" + ;
-      cOptionsLibDyn
+      cOptionsLibDyn + " -jobs=allcores"
 
    IF PCount() >= 4
       nErrorLevel := hb_processRun( cCommand,, @cStdOut, @cStdErr )

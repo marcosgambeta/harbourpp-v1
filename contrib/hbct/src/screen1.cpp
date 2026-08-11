@@ -116,7 +116,7 @@ HB_FUNC(SCREENMIX)
           }
           i = iCol;
         } else if (HB_CDPCHAR_GET(cdp, szText, nLen, &nIndex, &wc)) {
-          hb_gtPutChar(iRow, i++, static_cast<HB_UCHAR>(szAttr[ul]), 0, wc);
+          hb_gtPutChar(iRow, i++, static_cast<uint8_t>(szAttr[ul]), 0, wc);
         } else {
           break;
         }
@@ -217,7 +217,7 @@ static int hb_ctGetClearChar(int iParam)
   if (HB_ISNUM(iParam)) {
     iChar = hb_parni(iParam);
   } else if (HB_ISCHAR(iParam)) {
-    iChar = static_cast<HB_UCHAR>(hb_parc(iParam)[0]);
+    iChar = static_cast<uint8_t>(hb_parc(iParam)[0]);
   } else {
     iChar = static_cast<int>(hb_gtGetClearChar());
   }
@@ -297,7 +297,7 @@ HB_FUNC(UNTEXTWIN)
     if (HB_ISNUM(6)) {
       usInit = static_cast<uint16_t>(hb_parni(6));
     } else if (hb_parclen(6) > 0) {
-      usInit = static_cast<HB_UCHAR>(hb_parc(6)[0]);
+      usInit = static_cast<uint8_t>(hb_parc(6)[0]);
     } else {
       usInit = 176;
     }
@@ -305,7 +305,7 @@ HB_FUNC(UNTEXTWIN)
     if (HB_ISNUM(7)) {
       usEnd = static_cast<uint16_t>(hb_parni(7));
     } else if (hb_parclen(7) > 0) {
-      usEnd = static_cast<HB_UCHAR>(hb_parc(7)[0]);
+      usEnd = static_cast<uint8_t>(hb_parc(7)[0]);
     } else {
       usEnd = 223;
     }
@@ -345,7 +345,7 @@ HB_FUNC(CHARWIN)
     if (HB_ISNUM(6)) {
       usOldChar = static_cast<uint16_t>(hb_parni(6));
     } else if (hb_parclen(6) > 0) {
-      usOldChar = static_cast<HB_UCHAR>(hb_parc(6)[0]);
+      usOldChar = static_cast<uint8_t>(hb_parc(6)[0]);
     } else {
       fAll = true;
     }

@@ -49,7 +49,7 @@
 
 HB_FUNC(CHECKSUM)
 {
-  auto pbyString = reinterpret_cast<const HB_UCHAR *>(hb_parc(1));
+  auto pbyString = reinterpret_cast<const uint8_t *>(hb_parc(1));
   auto nLen = hb_parclen(1);
   HB_U32 u32Result = 0;
 

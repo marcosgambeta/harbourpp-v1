@@ -66,7 +66,7 @@ static void do_ascpos(int iSwitch)
       hb_retni(0);
     } else {
       if (iSwitch == DO_ASCPOS_VALPOS) {
-        if (HB_ISDIGIT(static_cast<HB_UCHAR>(pcString[sPos - 1]))) {
+        if (HB_ISDIGIT(static_cast<uint8_t>(pcString[sPos - 1]))) {
           hb_retni(pcString[sPos - 1] - '0');
         } else {
           hb_retni(0);
