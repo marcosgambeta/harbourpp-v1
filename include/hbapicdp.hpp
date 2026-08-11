@@ -101,7 +101,7 @@ typedef struct _HB_UNITABLE
 {
   const char *uniID;
   const HB_WCHAR *uniCodes;
-  HB_UCHAR *uniTrans;
+  uint8_t *uniTrans;
   HB_WCHAR wcMax;
 } HB_UNITABLE, * PHB_UNITABLE;
 
@@ -120,11 +120,11 @@ typedef struct _HB_CODEPAGE
   const char *id;
   const char *info;
   PHB_UNITABLE uniTable;
-  const HB_UCHAR *flags;
-  const HB_UCHAR *upper;
-  const HB_UCHAR *lower;
-  const HB_UCHAR *sort;
-  const HB_UCHAR *acc;
+  const uint8_t *flags;
+  const uint8_t *upper;
+  const uint8_t *lower;
+  const uint8_t *sort;
+  const uint8_t *acc;
   int nACSort;
   int type;
   PHB_CDP_GET_FUNC wcharGet;
@@ -418,12 +418,12 @@ extern HB_EXPORT void hb_vmSetCDP(HB_CODEPAGE *pCDP);
 
 // character flags
 #if defined(__cplusplus)
-constexpr HB_UCHAR HB_CDP_DIGIT = 0x01;
-constexpr HB_UCHAR HB_CDP_ALPHA = 0x02;
-constexpr HB_UCHAR HB_CDP_LOWER = 0x04;
-constexpr HB_UCHAR HB_CDP_UPPER = 0x08;
-constexpr HB_UCHAR HB_CDP_MULTI1 = 0x10;
-constexpr HB_UCHAR HB_CDP_MULTI2 = 0x20;
+constexpr uint8_t HB_CDP_DIGIT = 0x01;
+constexpr uint8_t HB_CDP_ALPHA = 0x02;
+constexpr uint8_t HB_CDP_LOWER = 0x04;
+constexpr uint8_t HB_CDP_UPPER = 0x08;
+constexpr uint8_t HB_CDP_MULTI1 = 0x10;
+constexpr uint8_t HB_CDP_MULTI2 = 0x20;
 #else
 #define HB_CDP_DIGIT    0x01
 #define HB_CDP_ALPHA    0x02
@@ -551,7 +551,7 @@ extern HB_EXPORT HB_BOOL hb_cdpIsUpper(HB_CODEPAGE *cdp, int iChar);
 
 extern HB_EXPORT int hb_cdpcmp(const char *szFirst, HB_SIZE nLenFirst, const char *szSecond, HB_SIZE nLenSecond, HB_CODEPAGE *cdp, HB_BOOL fExact);
 extern HB_EXPORT int hb_cdpicmp(const char *szFirst, HB_SIZE nLenFirst, const char *szSecond, HB_SIZE nLenSecond, HB_CODEPAGE *cdp, HB_BOOL fExact);
-extern HB_EXPORT const HB_UCHAR *hb_cdpGetSortTab(HB_CODEPAGE *cdp);
+extern HB_EXPORT const uint8_t *hb_cdpGetSortTab(HB_CODEPAGE *cdp);
 
 extern HB_EXPORT char *hb_cdpDup(const char *, HB_CODEPAGE *, HB_CODEPAGE *);
 extern HB_EXPORT char *hb_cdpDupn(const char *, HB_SIZE, HB_CODEPAGE *, HB_CODEPAGE *);
@@ -569,17 +569,17 @@ extern HB_EXPORT HB_SIZE hb_cdpnDup2Lower(HB_CODEPAGE *cdp, const char *pszText,
 extern HB_EXPORT HB_SIZE hb_cdpTransLen(const char *pSrc, HB_SIZE nSrc, HB_SIZE nMax, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut);
 extern HB_EXPORT HB_SIZE hb_cdpTransTo(const char *pSrc, HB_SIZE nSrc, char *pDst, HB_SIZE nDst, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut);
 
-extern HB_EXPORT HB_WCHAR hb_cdpGetU16Disp(HB_CODEPAGE *cdp, HB_UCHAR ch);
+extern HB_EXPORT HB_WCHAR hb_cdpGetU16Disp(HB_CODEPAGE *cdp, uint8_t ch);
 extern HB_EXPORT HB_SIZE hb_cdpStrToUTF8Disp(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, char *pDst, HB_SIZE nDst);
 extern HB_EXPORT int hb_cdpTranslateDispChar(int iChar, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut);
 extern HB_EXPORT int hb_cdpTranslateChar(int iChar, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut);
 
-extern HB_EXPORT HB_UCHAR hb_cdpGetChar(HB_CODEPAGE *cdp, HB_WCHAR wc);
-extern HB_EXPORT HB_WCHAR hb_cdpGetU16(HB_CODEPAGE *cdp, HB_UCHAR ch);
-extern HB_EXPORT HB_UCHAR hb_cdpGetUC(HB_CODEPAGE *cdp, HB_WCHAR wc, HB_UCHAR ucDef);
-extern HB_EXPORT HB_WCHAR hb_cdpGetWC(HB_CODEPAGE *cdp, HB_UCHAR ch, HB_WCHAR wcDef);
+extern HB_EXPORT uint8_t hb_cdpGetChar(HB_CODEPAGE *cdp, HB_WCHAR wc);
+extern HB_EXPORT HB_WCHAR hb_cdpGetU16(HB_CODEPAGE *cdp, uint8_t ch);
+extern HB_EXPORT uint8_t hb_cdpGetUC(HB_CODEPAGE *cdp, HB_WCHAR wc, uint8_t ucDef);
+extern HB_EXPORT HB_WCHAR hb_cdpGetWC(HB_CODEPAGE *cdp, uint8_t ch, HB_WCHAR wcDef);
 
-extern HB_EXPORT HB_BOOL hb_cdpGetFromUTF8(HB_CODEPAGE *cdp, HB_UCHAR ch, int *n, HB_WCHAR *pwc);
+extern HB_EXPORT HB_BOOL hb_cdpGetFromUTF8(HB_CODEPAGE *cdp, uint8_t ch, int *n, HB_WCHAR *pwc);
 
 extern HB_EXPORT HB_SIZE hb_cdpUTF8StringLength(const char *pSrc, HB_SIZE nLen);
 extern HB_EXPORT HB_SIZE hb_cdpUTF8StringAt(const char *szNeedle, HB_SIZE nLenN, const char *szHaystack, HB_SIZE nLenH, HB_SIZE nStart, HB_SIZE nEnd, HB_BOOL fReverse);
@@ -604,7 +604,7 @@ extern HB_EXPORT HB_WCHAR hb_cdpGetU16Ctrl(HB_WCHAR wc);
 extern HB_EXPORT int hb_cdpUTF8CharSize(HB_WCHAR32 wc);
 extern HB_EXPORT int hb_cdpU32CharToUTF8(char *szUTF8, HB_WCHAR32 wc);
 extern HB_EXPORT int hb_cdpU16CharToUTF8(char *szUTF8, HB_WCHAR wc);
-extern HB_EXPORT HB_BOOL hb_cdpUTF8ToU16NextChar(HB_UCHAR ucChar, int *n, HB_WCHAR *pwc);
+extern HB_EXPORT HB_BOOL hb_cdpUTF8ToU16NextChar(uint8_t ucChar, int *n, HB_WCHAR *pwc);
 extern HB_EXPORT HB_BOOL hb_cdpUTF8GetU32(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR32 *pWC);
 extern HB_EXPORT HB_BOOL hb_cdpUTF8GetUCS(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR32 *pWC);
 extern HB_EXPORT HB_BOOL hb_cdpUTF8GetU16(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR16 *pWC);

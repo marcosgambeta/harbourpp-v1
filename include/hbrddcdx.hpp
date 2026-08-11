@@ -460,7 +460,7 @@ typedef struct _CDXAREA
 
    LPCDXSORTINFO  pSort;         /* Index build structure */
    LPCDXINDEX     lpIndexes;     /* Pointer to indexes array */
-   const HB_UCHAR * sortTab;     /* Table with sorted characters */
+   const uint8_t * sortTab;     /* Table with sorted characters */
    HB_BOOL        fCdxAppend;    /* Appended record changed */
    HB_BOOL        fSortCDP;      /* Use CDP functions for sorting */
    uint16_t      uiTag;         /* current tag focus */

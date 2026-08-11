@@ -253,63 +253,63 @@ sx_Thermometer() => if ( NSX_TAG_NOUPDATE | NSX_TAG_TEMPLATE ) -> 4
 
 typedef struct _NSXTAGITEM
 {
-   HB_UCHAR TagName[ NSX_TAGNAME + 1 ];  /* name of tag in ASCIIZ */
-   HB_UCHAR TagOffset[ 4 ];              /* Tag header offset */
+   uint8_t TagName[ NSX_TAGNAME + 1 ];  /* name of tag in ASCIIZ */
+   uint8_t TagOffset[ 4 ];              /* Tag header offset */
 } NSXTAGITEM;
 typedef NSXTAGITEM * LPNSXTAGITEM;
 
 typedef struct _NSXROOTHEADER
 {
-   HB_UCHAR Signature[ 1 ];           /* "i" = 0x69 */
-   HB_UCHAR IndexFlags[ 1 ];          /* 0x00 */
-   HB_UCHAR TagCount[ 2 ];            /* number of tags in index file */
-   HB_UCHAR Version[ 2 ];             /* cyclic counter for concurrent access */
-   HB_UCHAR FreePage[ 4 ];            /* offset of first free page in index file */
-   HB_UCHAR FileSize[ 4 ];            /* the index file length */
+   uint8_t Signature[ 1 ];           /* "i" = 0x69 */
+   uint8_t IndexFlags[ 1 ];          /* 0x00 */
+   uint8_t TagCount[ 2 ];            /* number of tags in index file */
+   uint8_t Version[ 2 ];             /* cyclic counter for concurrent access */
+   uint8_t FreePage[ 4 ];            /* offset of first free page in index file */
+   uint8_t FileSize[ 4 ];            /* the index file length */
    NSXTAGITEM TagList[ NSX_MAXTAGS ];
-   HB_UCHAR Unused[ NSX_PAGELEN - 14 - NSX_MAXTAGS * sizeof( NSXTAGITEM ) ];
+   uint8_t Unused[ NSX_PAGELEN - 14 - NSX_MAXTAGS * sizeof( NSXTAGITEM ) ];
 } NSXROOTHEADER;
 typedef NSXROOTHEADER * LPNSXROOTHEADER;
 
 typedef struct _NSXTAGHEADER
 {
-   HB_UCHAR Signature[ 1 ];           /* "i" = 0x69 */
-   HB_UCHAR TagFlags[ 1 ];            /* update flags: NSX_TAG_* */
-   HB_UCHAR RootPage[ 4 ];            /* offset of tag root page */
-   HB_UCHAR KeyType[ 2 ];             /* index key type: NSX_TYPE_* */
-   HB_UCHAR KeySize[ 2 ];             /* index key size */
-   HB_UCHAR Unique[ 2 ];              /* 0x0001 for UNIQUE indexes */
-   HB_UCHAR Descend[ 2 ];             /* 0x0001 for descend indexes */
-   HB_UCHAR KeyExpr[ NSX_MAXEXPLEN ]; /* index KEY expression ASCIIZ */
-   HB_UCHAR ForExpr[ NSX_MAXEXPLEN ]; /* index FOR expression ASCIIZ */
-   HB_UCHAR Unused[ NSX_PAGELEN - 14 - NSX_MAXEXPLEN - NSX_MAXEXPLEN ];
+   uint8_t Signature[ 1 ];           /* "i" = 0x69 */
+   uint8_t TagFlags[ 1 ];            /* update flags: NSX_TAG_* */
+   uint8_t RootPage[ 4 ];            /* offset of tag root page */
+   uint8_t KeyType[ 2 ];             /* index key type: NSX_TYPE_* */
+   uint8_t KeySize[ 2 ];             /* index key size */
+   uint8_t Unique[ 2 ];              /* 0x0001 for UNIQUE indexes */
+   uint8_t Descend[ 2 ];             /* 0x0001 for descend indexes */
+   uint8_t KeyExpr[ NSX_MAXEXPLEN ]; /* index KEY expression ASCIIZ */
+   uint8_t ForExpr[ NSX_MAXEXPLEN ]; /* index FOR expression ASCIIZ */
+   uint8_t Unused[ NSX_PAGELEN - 14 - NSX_MAXEXPLEN - NSX_MAXEXPLEN ];
 } NSXTAGHEADER;
 typedef NSXTAGHEADER * LPNSXTAGHEADER;
 
 typedef struct
 {
-   HB_UCHAR Signature[ 1 ];           /* "i" = 0x69 */
-   HB_UCHAR TagFlags[ 1 ];            /* update flags: NSX_TAG_* */
-   HB_UCHAR RootPage[ 4 ];            /* offset of tag root page */
+   uint8_t Signature[ 1 ];           /* "i" = 0x69 */
+   uint8_t TagFlags[ 1 ];            /* update flags: NSX_TAG_* */
+   uint8_t RootPage[ 4 ];            /* offset of tag root page */
 } NSXTAGHEADERUPDT;
 
 typedef struct _NSXBRANCHPAGE
 {
-   HB_UCHAR NodeID[ 1 ];              /* NSX_BRANCHPAGE | ( lRoot ? NSX_ROOTPAGE : 0 ) */
-   HB_UCHAR RecNoLen[ 1 ];            /* number of bytes for recno in branch keys - seems to be unused */
-   HB_UCHAR KeyCount[ 2 ];            /* number of key in page */
-   HB_UCHAR LowerPage[ 4 ];           /* offset to the page with lower keys */
-   HB_UCHAR KeyData[ NSX_PAGELEN - 8 ];  /* with branch keys */
+   uint8_t NodeID[ 1 ];              /* NSX_BRANCHPAGE | ( lRoot ? NSX_ROOTPAGE : 0 ) */
+   uint8_t RecNoLen[ 1 ];            /* number of bytes for recno in branch keys - seems to be unused */
+   uint8_t KeyCount[ 2 ];            /* number of key in page */
+   uint8_t LowerPage[ 4 ];           /* offset to the page with lower keys */
+   uint8_t KeyData[ NSX_PAGELEN - 8 ];  /* with branch keys */
 } NSXBRANCHPAGE;
 typedef NSXBRANCHPAGE * LPNSXBRANCHPAGE;
 
 typedef struct _NSXLEAFPAGE
 {
-   HB_UCHAR NodeID[ 1 ];              /* NSX_LEAFPAGE | ( lRoot ? NSX_ROOTPAGE : 0 ) */
-   HB_UCHAR RecNoLen[ 1 ];            /* number of bytes for recno in leaf keys */
-   HB_UCHAR KeyCount[ 2 ];            /* number of key in page */
-   HB_UCHAR UsedArea[ 2 ];            /* area used in page -> offset to free area */
-   HB_UCHAR KeyData[ NSX_PAGELEN - NSX_LEAFKEYOFFSET ];  /* with branch keys */
+   uint8_t NodeID[ 1 ];              /* NSX_LEAFPAGE | ( lRoot ? NSX_ROOTPAGE : 0 ) */
+   uint8_t RecNoLen[ 1 ];            /* number of bytes for recno in leaf keys */
+   uint8_t KeyCount[ 2 ];            /* number of key in page */
+   uint8_t UsedArea[ 2 ];            /* area used in page -> offset to free area */
+   uint8_t KeyData[ NSX_PAGELEN - NSX_LEAFKEYOFFSET ];  /* with branch keys */
 } NSXLEAFPAGE;
 typedef NSXLEAFPAGE * LPNSXLEAFPAGE;
 
@@ -318,20 +318,20 @@ typedef NSXLEAFPAGE * LPNSXLEAFPAGE;
    variable member sizes */
 typedef struct _NSXBRANCHKEY
 {
-   HB_UCHAR Page[ 4 ];        /* page offset with higher keys values */
-   HB_UCHAR RecNo[ n ];       /* where n is RecNoLen */
-   HB_UCHAR KeyData[ l ];     /* key value where l is KeySize */
+   uint8_t Page[ 4 ];        /* page offset with higher keys values */
+   uint8_t RecNo[ n ];       /* where n is RecNoLen */
+   uint8_t KeyData[ l ];     /* key value where l is KeySize */
 } NSXBRANCHKEY;
 typedef NSXBRANCHKEY * LPNSXBRANCHKEY;
 
 typedef struct _NSXLEAFKEY
 {
-   HB_UCHAR RecNo[ n ];       /* where n is RecNoLen */
-   HB_UCHAR Size[ 1 ];        /* key data size with this byte and n RecNo HB_BYTEs
+   uint8_t RecNo[ n ];       /* where n is RecNoLen */
+   uint8_t Size[ 1 ];        /* key data size with this byte and n RecNo HB_BYTEs
                                * if Size == n + 1 then key is fully duplicated
                                */
-   HB_UCHAR DupCount[ 1 ];    /* number of bytes from previous key */
-   HB_UCHAR KeyData[ m ];     /* rest of key value with RLE compression:
+   uint8_t DupCount[ 1 ];    /* number of bytes from previous key */
+   uint8_t KeyData[ m ];     /* rest of key value with RLE compression:
                                *    FF xx yy => Replicate(yy, xx)
                                *    FF 01    => FF
                                * m = Size - n - 2
@@ -360,7 +360,7 @@ typedef struct _KEYINFO
    HB_ULONG page;     /* page number */
    HB_ULONG rec;      /* record number */
    int      mode;     /* comparison mode NSX_CMP_* */
-   HB_UCHAR val[ 1 ]; /* key value */
+   uint8_t val[ 1 ]; /* key value */
 } KEYINFO;
 typedef KEYINFO * LPKEYINFO;
 
@@ -368,7 +368,7 @@ typedef struct _TREE_STACK
 {
    HB_ULONG page;
    HB_SHORT ikey;
-   HB_UCHAR * value;
+   uint8_t * value;
 }  TREE_STACK;
 typedef TREE_STACK * LPTREESTACK;
 
@@ -384,14 +384,14 @@ typedef struct _HB_PAGEINFO
 #ifdef HB_NSX_EXTERNAL_PAGEBUFFER
    union
    {
-      HB_UCHAR *        buffer;
+      uint8_t *        buffer;
       LPNSXROOTHEADER   rootHeader;
       LPNSXTAGHEADER    tagHeader;
    } data;
 #else
    union
    {
-      HB_UCHAR       buffer[ NSX_PAGELEN ];
+      uint8_t       buffer[ NSX_PAGELEN ];
       NSXROOTHEADER  rootHeader;
       NSXTAGHEADER   tagHeader;
    } data;
@@ -401,7 +401,7 @@ typedef HB_PAGEINFO * LPPAGEINFO;
 
 typedef union
 {
-   HB_UCHAR *        buffer;
+   uint8_t *        buffer;
    LPNSXROOTHEADER   header;
 } HB_NSXPAGEHEAD;
 
@@ -442,9 +442,9 @@ typedef struct _TAGINFO
    HB_ULONG    HeadBlock;
    HB_ULONG    RootBlock;
 
-   HB_UCHAR    TagFlags;
-   HB_UCHAR    KeyType;
-   HB_UCHAR    TrailChar;
+   uint8_t    TagFlags;
+   uint8_t    KeyType;
+   uint8_t    TrailChar;
    uint16_t   KeyLength;
    uint16_t   nField;
    uint16_t   uiNumber;
@@ -510,7 +510,7 @@ typedef struct
    HB_ULONG    ulKeys;     /* number of keys in page */
    HB_ULONG    ulKeyBuf;   /* number of keys in memory buffer */
    HB_ULONG    ulCurKey;   /* current key in memory buffer */
-   HB_UCHAR *  pKeyPool;   /* memory buffer */
+   uint8_t *  pKeyPool;   /* memory buffer */
 } NSXSWAPPAGE;
 typedef NSXSWAPPAGE * LPNSXSWAPPAGE;
 
@@ -520,8 +520,8 @@ typedef struct
    PHB_FILE   pTempFile;      /* handle to temporary file */
    char *     szTempFileName; /* temporary file name */
    int        keyLen;         /* key length */
-   HB_UCHAR   trailChar;      /* index key trail character */
-   HB_UCHAR   recSize;        /* record size in leaf keys */
+   uint8_t   trailChar;      /* index key trail character */
+   uint8_t   recSize;        /* record size in leaf keys */
    HB_BOOL    fUnique;        /* HB_TRUE if index is unique */
    HB_BOOL    fReindex;       /* HB_TRUE if reindexing is in process */
    HB_ULONG   ulMaxRec;       /* the highest record number */
@@ -531,17 +531,17 @@ typedef struct
    HB_ULONG   ulCurPage;      /* current page */
    HB_ULONG   ulPgKeys;       /* maximum number of key in page memory buffer */
    HB_ULONG   ulMaxKey;       /* maximum number of keys in single page */
-   HB_UCHAR * pKeyPool;       /* memory buffer for current page then for pages */
-   HB_UCHAR * pStartKey;      /* beginning of key pool after sorting */
+   uint8_t * pKeyPool;       /* memory buffer for current page then for pages */
+   uint8_t * pStartKey;      /* beginning of key pool after sorting */
    LPNSXSWAPPAGE pSwapPage;   /* list of pages */
    LPPAGEINFO NodeList[ NSX_STACKSIZE ]; /* Stack of pages */
    HB_ULONG   ulFirst;
    HB_ULONG * pSortedPages;
-   HB_UCHAR   pLastKey[ NSX_MAXKEYLEN ]; /* last key val */
+   uint8_t   pLastKey[ NSX_MAXKEYLEN ]; /* last key val */
    HB_ULONG   ulLastRec;
    HB_ULONG   ulLastLeaf;     /* last non empty leaf page written to tag */
 
-   HB_UCHAR * pBuffIO;        /* index IO buffer */
+   uint8_t * pBuffIO;        /* index IO buffer */
    HB_ULONG   ulSizeIO;       /* size of IO buffer in index pages */
    HB_ULONG   ulPagesIO;      /* number of index pages in buffer */
    HB_ULONG   ulFirstIO;      /* first page in buffer */

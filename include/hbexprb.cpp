@@ -1283,7 +1283,7 @@ static HB_EXPR_FUNC(hb_compExprUseArrayAt)
             {
                if( HB_IS_VALID_INDEX( nIndex, pExpr->nLength ) )
                {
-                  HB_UCHAR ucValue = ( HB_UCHAR ) pExpr->value.asString.string[ nIndex - 1 ];
+                  uint8_t ucValue = ( uint8_t ) pExpr->value.asString.string[ nIndex - 1 ];
 
                   HB_COMP_EXPR_FREE( pSelf );
                   pSelf = hb_compExprNewLong( ucValue, HB_COMP_PARAM );

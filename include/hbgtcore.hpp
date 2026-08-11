@@ -146,7 +146,7 @@ typedef struct
    void      (* GetScrCursor) ( HB_GT_PTR, int *, int *, int * );
    HB_BOOL   (* GetScrChar) ( HB_GT_PTR, int, int, int *, HB_BYTE *, uint16_t * );
    HB_BOOL   (* PutScrChar) ( HB_GT_PTR, int, int, int, HB_BYTE, uint16_t );
-   HB_BOOL   (* GetScrUC) ( HB_GT_PTR, int, int, int *, HB_BYTE *, HB_UCHAR *, HB_BOOL );
+   HB_BOOL   (* GetScrUC) ( HB_GT_PTR, int, int, int *, HB_BYTE *, uint8_t *, HB_BOOL );
    void      (* DispBegin) ( HB_GT_PTR );
    void      (* DispEnd) ( HB_GT_PTR );
    int       (* DispCount) ( HB_GT_PTR );
@@ -363,7 +363,7 @@ extern HB_EXPORT void hb_gt_gcMark( void );
 #define HB_GTSELF_CPBOX(g)                      ((g)->cdpBox)
 #define HB_GTSELF_CPIN(g)                       ((g)->cdpIn)
 
-#define HB_GTSELF_KEYTRANS(g,k)                 (((k)>=127 && (k)<=255 && (g)->cdpIn) ? hb_cdpGetWC((g)->cdpIn,(HB_UCHAR)(k),0) : 0)
+#define HB_GTSELF_KEYTRANS(g,k)                 (((k)>=127 && (k)<=255 && (g)->cdpIn) ? hb_cdpGetWC((g)->cdpIn,(uint8_t)(k),0) : 0)
 
 
 #define HB_GTSELF_LOCK(g)                       (g)->pFuncTable->Lock(g)
