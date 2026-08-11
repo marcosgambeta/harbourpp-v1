@@ -93,21 +93,21 @@ HB_FUNC(HB_CDPEXISTS)
 HB_FUNC(HB_CDPUNIID)
 {
   auto id = hb_parc(1);
-  PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
+  HB_CODEPAGE *cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
   hb_retc(cdp ? cdp->uniTable->uniID : nullptr);
 }
 
 HB_FUNC(HB_CDPINFO)
 {
   auto id = hb_parc(1);
-  PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
+  HB_CODEPAGE *cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
   hb_retc(cdp ? cdp->info : nullptr);
 }
 
 HB_FUNC(HB_CDPISCHARIDX)
 {
   auto id = hb_parc(1);
-  PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
+  HB_CODEPAGE *cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
   auto fResult = false;
 
   if (cdp) {
@@ -166,8 +166,8 @@ HB_FUNC(HB_TRANSLATE)
   auto szIdOut = hb_parc(3);
 
   if (nLen) {
-    PHB_CODEPAGE cdpIn = szIdIn ? hb_cdpFindExt(szIdIn) : hb_vmCDP();
-    PHB_CODEPAGE cdpOut = szIdOut ? hb_cdpFindExt(szIdOut) : hb_vmCDP();
+    HB_CODEPAGE *cdpIn = szIdIn ? hb_cdpFindExt(szIdIn) : hb_vmCDP();
+    HB_CODEPAGE *cdpOut = szIdOut ? hb_cdpFindExt(szIdOut) : hb_vmCDP();
 
     if (cdpIn && cdpOut && cdpIn != cdpOut &&
         (cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM(cdpIn) || HB_CDP_ISCUSTOM(cdpOut))) {
@@ -217,7 +217,7 @@ HB_FUNC(HB_STRTOUTF8)
 
   if (nLen) {
     auto szCP = hb_parc(2);
-    PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
+    HB_CODEPAGE *cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
     if (cdp) {
       if (hb_cdpIsUTF8(cdp)) {
@@ -249,7 +249,7 @@ HB_FUNC(HB_UTF8TOSTR)
 
     if (nLen) {
       auto szCP = hb_parc(2);
-      PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
+      HB_CODEPAGE *cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
       if (cdp) {
         if (hb_cdpIsUTF8(cdp)) {

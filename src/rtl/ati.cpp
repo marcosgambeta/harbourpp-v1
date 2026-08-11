@@ -52,7 +52,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-static HB_SIZE s_strAtI(PHB_CODEPAGE cdp, const char *szSub, HB_SIZE nSubLen, const char *szText, HB_SIZE nLen)
+static HB_SIZE s_strAtI(HB_CODEPAGE *cdp, const char *szSub, HB_SIZE nSubLen, const char *szText, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("s_strAtI(%p, %s, %" HB_PFS "u, %s, %" HB_PFS "u)", static_cast<void*>(cdp), szSub, nSubLen, szText, nLen));

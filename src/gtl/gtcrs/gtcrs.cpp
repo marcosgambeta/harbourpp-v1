@@ -1633,7 +1633,7 @@ static int gt_setsize(InOutBase *ioBase, int rows, int cols)
   return ret;
 }
 
-static void setKeyTrans(InOutBase *ioBase, PHB_CODEPAGE cdpTerm, PHB_CODEPAGE cdpHost)
+static void setKeyTrans(InOutBase *ioBase, HB_CODEPAGE *cdpTerm, HB_CODEPAGE *cdpHost)
 {
   if (cdpTerm && cdpHost && cdpTerm != cdpHost) {
     if (ioBase->in_transtbl == nullptr) {
@@ -1649,7 +1649,7 @@ static void setKeyTrans(InOutBase *ioBase, PHB_CODEPAGE cdpTerm, PHB_CODEPAGE cd
   }
 }
 
-static void setDispTrans(InOutBase *ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE cdpTerm, int transBox)
+static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *cdpTerm, int transBox)
 {
   int aSet = (cdpHost && cdpTerm);
 

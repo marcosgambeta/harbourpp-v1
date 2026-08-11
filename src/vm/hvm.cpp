@@ -8677,13 +8677,13 @@ HB_BOOL hb_vmInternalsEnabled(void)
   return s_fInternalsEnabled;
 }
 
-PHB_CODEPAGE hb_vmCDP(void)
+HB_CODEPAGE *hb_vmCDP(void)
 {
   HB_STACK_TLS_PRELOAD
-  return static_cast<PHB_CODEPAGE>(hb_stackGetCDP());
+  return static_cast<HB_CODEPAGE *>(hb_stackGetCDP());
 }
 
-void hb_vmSetCDP(PHB_CODEPAGE pCDP)
+void hb_vmSetCDP(HB_CODEPAGE *pCDP)
 {
   HB_STACK_TLS_PRELOAD
   hb_stackSetCDP(static_cast<void *>(pCDP));

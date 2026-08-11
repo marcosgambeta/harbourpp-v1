@@ -436,7 +436,7 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
   int iCol;
 
 #if !defined(UNICODE)
-  PHB_CODEPAGE cdp;
+  HB_CODEPAGE *cdp;
   uint8_t bxAttr;
 #endif
 

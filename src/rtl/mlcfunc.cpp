@@ -70,7 +70,7 @@ struct HB_MLC_INFO
   bool fWordWrap;
   int iEOLs;
   PHB_EOL_INFO pEOLs;
-  PHB_CODEPAGE cdp;
+  HB_CODEPAGE *cdp;
 
   HB_SIZE nOffset;
   HB_SIZE nMaxCol;

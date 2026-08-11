@@ -1024,7 +1024,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_OSCODEPAGE:
     if (pSet->hb_set_oscp) {
-      pResult = hb_itemPutC(pResult, (static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp))->id);
+      pResult = hb_itemPutC(pResult, (static_cast<HB_CODEPAGE *>(pSet->hb_set_oscp))->id);
     } else if (pResult) {
       pResult->clear();
     } else {
@@ -1034,7 +1034,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       if (pArg1->isNil()) {
         pSet->hb_set_oscp = nullptr;
       } else if (pArg1->isString()) {
-        PHB_CODEPAGE cdp = hb_cdpFindExt(pArg1->getCPtr());
+        HB_CODEPAGE *cdp = hb_cdpFindExt(pArg1->getCPtr());
         if (cdp) {
           pSet->hb_set_oscp = static_cast<void *>(cdp);
         }
@@ -1045,7 +1045,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_DBCODEPAGE:
     if (pSet->hb_set_dbcp) {
-      pResult = hb_itemPutC(pResult, (static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp))->id);
+      pResult = hb_itemPutC(pResult, (static_cast<HB_CODEPAGE *>(pSet->hb_set_dbcp))->id);
     } else if (pResult) {
       pResult->clear();
     } else {
@@ -1055,7 +1055,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       if (pArg1->isNil()) {
         pSet->hb_set_dbcp = nullptr;
       } else if (pArg1->isString()) {
-        PHB_CODEPAGE cdp = hb_cdpFindExt(pArg1->getCPtr());
+        HB_CODEPAGE *cdp = hb_cdpFindExt(pArg1->getCPtr());
         if (cdp) {
           pSet->hb_set_dbcp = static_cast<void *>(cdp);
         }
@@ -1893,7 +1893,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
         pSet->hb_set_oscp = nullptr;
         fResult = true;
       } else if (pItem->isString()) {
-        PHB_CODEPAGE cdp = hb_cdpFindExt(pItem->getCPtr());
+        HB_CODEPAGE *cdp = hb_cdpFindExt(pItem->getCPtr());
         if (cdp) {
           pSet->hb_set_oscp = static_cast<void *>(cdp);
           fResult = true;
@@ -1905,7 +1905,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
         pSet->hb_set_dbcp = nullptr;
         fResult = true;
       } else if (pItem->isString()) {
-        PHB_CODEPAGE cdp = hb_cdpFindExt(pItem->getCPtr());
+        HB_CODEPAGE *cdp = hb_cdpFindExt(pItem->getCPtr());
         if (cdp) {
           pSet->hb_set_dbcp = static_cast<void *>(cdp);
           fResult = true;
@@ -2112,9 +2112,9 @@ const char *hb_setGetCPtr(HB_set_enum set_specifier)
   case HB_SET_HBOUTLOGINFO:
     return pSet->HB_SET_HBOUTLOGINFO;
   case HB_SET_OSCODEPAGE:
-    return pSet->hb_set_oscp ? (static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp))->id : nullptr;
+    return pSet->hb_set_oscp ? (static_cast<HB_CODEPAGE *>(pSet->hb_set_oscp))->id : nullptr;
   case HB_SET_DBCODEPAGE:
-    return pSet->hb_set_dbcp ? (static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp))->id : nullptr;
+    return pSet->hb_set_dbcp ? (static_cast<HB_CODEPAGE *>(pSet->hb_set_dbcp))->id : nullptr;
   case HB_SET_LANGUAGE:
     return hb_langID();
   case HB_SET_CODEPAGE:
@@ -2704,7 +2704,7 @@ const char *hb_setGetOSCODEPAGE(void)
   HB_STACK_TLS_PRELOAD
   PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-  return pSet->hb_set_oscp ? (static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp))->id : nullptr;
+  return pSet->hb_set_oscp ? (static_cast<HB_CODEPAGE *>(pSet->hb_set_oscp))->id : nullptr;
 }
 
 void *hb_setGetOSCP(void)
@@ -2718,7 +2718,7 @@ const char *hb_setGetDBCODEPAGE(void)
   HB_STACK_TLS_PRELOAD
   PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-  return pSet->hb_set_dbcp ? (static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp))->id : nullptr;
+  return pSet->hb_set_dbcp ? (static_cast<HB_CODEPAGE *>(pSet->hb_set_dbcp))->id : nullptr;
 }
 
 HB_BOOL hb_osUseCP(void)
@@ -2729,7 +2729,7 @@ HB_BOOL hb_osUseCP(void)
   if (hb_stackId())
 #endif
   {
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       return cdpHost && cdpHost != cdpOS;
@@ -2743,7 +2743,7 @@ const char *hb_osEncodeCP(const char *szName, char **pszFree, HB_SIZE *pnSize)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {
@@ -2772,7 +2772,7 @@ const char *hb_osDecodeCP(const char *szName, char **pszFree, HB_SIZE *pnSize)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {
@@ -2801,7 +2801,7 @@ char *hb_osStrEncode(const char *pszName)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {
@@ -2817,7 +2817,7 @@ char *hb_osStrEncodeN(const char *pszName, HB_SIZE nLen)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {
@@ -2833,7 +2833,7 @@ char *hb_osStrEncode2(const char *pszName, char *pszBuffer, HB_SIZE nSize)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {
@@ -2851,7 +2851,7 @@ char *hb_osStrDecode(const char *pszName)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {
@@ -2867,7 +2867,7 @@ char *hb_osStrDecode2(const char *pszName, char *pszBuffer, HB_SIZE nSize)
 {
   if (hb_vmIsReady()) {
     HB_STACK_TLS_PRELOAD
-    auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
+    auto cdpOS = static_cast<HB_CODEPAGE *>(hb_stackSetStruct()->hb_set_oscp);
     if (cdpOS) {
       auto cdpHost = hb_vmCDP();
       if (cdpHost && cdpHost != cdpOS) {

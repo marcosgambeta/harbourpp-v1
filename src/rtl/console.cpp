@@ -627,7 +627,7 @@ HB_FUNC(HB_DISPOUTATBOX)
       iColor = hb_gtGetCurrColor();
     }
 
-    PHB_CODEPAGE cdp = hb_gtBoxCP();
+    HB_CODEPAGE *cdp = hb_gtBoxCP();
 
     HB_SIZE nIndex = 0;
     HB_WCHAR wc;

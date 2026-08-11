@@ -113,8 +113,8 @@ static auto s_bStdinConsole = false;
 static auto s_bStdoutConsole = false;
 static auto s_bStderrConsole = false;
 static auto s_fDispTrans = false;
-static PHB_CODEPAGE s_cdpTerm;
-static PHB_CODEPAGE s_cdpHost;
+static HB_CODEPAGE *s_cdpTerm;
+static HB_CODEPAGE *s_cdpHost;
 
 static int s_iOutBufSize = 0;
 static int s_iOutBufIndex = 0;

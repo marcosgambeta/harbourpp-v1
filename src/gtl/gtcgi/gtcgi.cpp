@@ -247,8 +247,8 @@ static void hb_gt_cgi_conPos(PHB_GTCGI pGTCGI, int iRow, int iCol)
   pGTCGI->iCol = iCol;
 }
 
-static void hb_gt_cgi_conOut(PHB_GT pGT, const char *szText, HB_SIZE nLength, PHB_CODEPAGE cdpHost,
-                             PHB_CODEPAGE cdpTerm)
+static void hb_gt_cgi_conOut(PHB_GT pGT, const char *szText, HB_SIZE nLength, HB_CODEPAGE *cdpHost,
+                             HB_CODEPAGE *cdpTerm)
 {
   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
 
@@ -297,7 +297,7 @@ static void hb_gt_cgi_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength) 
 
 static void hb_gt_cgi_WriteConW(PHB_GT pGT, const HB_WCHAR *szTextW, HB_SIZE nLength) // FuncTable
 {
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pGT);
   HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
   auto buffer = static_cast<char *>(hb_xgrab(nSize));
   hb_cdpU16ToStr(cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize);
@@ -313,7 +313,7 @@ static void hb_gt_cgi_WriteAt(PHB_GT pGT, int iRow, int iCol, const char *szText
 
 static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *szTextW, HB_SIZE nLength) // FuncTable
 {
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pGT);
   HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
   auto buffer = static_cast<char *>(hb_xgrab(nSize));
   hb_cdpU16ToStr(cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize);
@@ -361,7 +361,7 @@ static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   }
 
   if (iSize > 0) {
-    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
+    HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pGT);
     int iIndex = 0;
 
     while (--iLineFeed >= 0) {

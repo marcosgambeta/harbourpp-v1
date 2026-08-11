@@ -131,8 +131,8 @@ static const HB_UCHAR s_signature[4] = {193, 'H', 'B', 'L'};
 struct _HB_I18N_TRANS
 {
   HB_COUNTER iUsers;
-  PHB_CODEPAGE cdpage;
-  PHB_CODEPAGE base_cdpage;
+  HB_CODEPAGE *cdpage;
+  HB_CODEPAGE *base_cdpage;
   PHB_ITEM table;
   PHB_ITEM context_table;
   PHB_ITEM default_context;
@@ -586,7 +586,7 @@ static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBa
   return fResult;
 }
 
-static void hb_i18n_transitm(PHB_ITEM pText, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
+static void hb_i18n_transitm(PHB_ITEM pText, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut)
 {
   auto nLen = hb_itemGetCLen(pText);
 
@@ -601,9 +601,9 @@ static const char *hb_i18n_setcodepage(PHB_I18N_TRANS pI18N, const char *szCdpID
   const char *szOldCdpID = nullptr;
 
   if (pI18N) {
-    PHB_CODEPAGE cdp = szCdpID ? hb_cdpFind(szCdpID) : nullptr;
+    HB_CODEPAGE *cdp = szCdpID ? hb_cdpFind(szCdpID) : nullptr;
 
-    PHB_CODEPAGE cdpage = fBase ? pI18N->base_cdpage : pI18N->cdpage;
+    HB_CODEPAGE *cdpage = fBase ? pI18N->base_cdpage : pI18N->cdpage;
     if (cdpage) {
       szOldCdpID = cdpage->id;
     }
@@ -696,7 +696,7 @@ static void hb_i18n_addtext(PHB_I18N_TRANS pI18N, PHB_ITEM pMsgID, PHB_ITEM pTra
 PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext)
 {
   PHB_I18N_TRANS pI18N = hb_i18n_table();
-  PHB_CODEPAGE cdpage = nullptr;
+  HB_CODEPAGE *cdpage = nullptr;
   PHB_ITEM pMsgDst = pMsgID;
 
   if (pI18N) {
@@ -741,7 +741,7 @@ PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext)
 PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
 {
   PHB_I18N_TRANS pI18N = hb_i18n_table();
-  PHB_CODEPAGE cdpage = nullptr;
+  HB_CODEPAGE *cdpage = nullptr;
   PHB_ITEM pMsgDst = pMsgID;
   PHB_ITEM pBlock = nullptr;
   int iPluralForm = 0;

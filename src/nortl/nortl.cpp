@@ -387,12 +387,12 @@ int hb_charLower(int iChar)
   return HB_TOLOWER(iChar);
 }
 
-PHB_CODEPAGE hb_vmCDP(void)
+HB_CODEPAGE *hb_vmCDP(void)
 {
   return nullptr;
 }
 
-HB_SIZE hb_cdpTextPos(PHB_CODEPAGE cdp, const char *pText, HB_SIZE nSize, HB_SIZE nIndex)
+HB_SIZE hb_cdpTextPos(HB_CODEPAGE *cdp, const char *pText, HB_SIZE nSize, HB_SIZE nIndex)
 {
   HB_SYMBOL_UNUSED(cdp);
   HB_SYMBOL_UNUSED(pText);
@@ -400,7 +400,7 @@ HB_SIZE hb_cdpTextPos(PHB_CODEPAGE cdp, const char *pText, HB_SIZE nSize, HB_SIZ
   return nIndex >= nSize ? nSize : nIndex;
 }
 
-HB_BOOL hb_cdpCharEq(PHB_CODEPAGE cdp, const char *szText1, HB_SIZE nLen1, HB_SIZE *pnPos1, const char *szText2,
+HB_BOOL hb_cdpCharEq(HB_CODEPAGE *cdp, const char *szText1, HB_SIZE nLen1, HB_SIZE *pnPos1, const char *szText2,
                      HB_SIZE nLen2, HB_SIZE *pnPos2)
 {
   HB_SYMBOL_UNUSED(cdp);
@@ -412,7 +412,7 @@ HB_BOOL hb_cdpCharEq(PHB_CODEPAGE cdp, const char *szText1, HB_SIZE nLen1, HB_SI
   }
 }
 
-HB_BOOL hb_cdpCharCaseEq(PHB_CODEPAGE cdp, const char *szText1, HB_SIZE nLen1, HB_SIZE *pnPos1, const char *szText2,
+HB_BOOL hb_cdpCharCaseEq(HB_CODEPAGE *cdp, const char *szText1, HB_SIZE nLen1, HB_SIZE *pnPos1, const char *szText2,
                          HB_SIZE nLen2, HB_SIZE *pnPos2)
 {
   HB_SYMBOL_UNUSED(cdp);

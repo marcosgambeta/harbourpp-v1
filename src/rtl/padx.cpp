@@ -51,13 +51,13 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-static HB_SIZE hb_cdpItemLen(PHB_CODEPAGE cdp, PHB_ITEM pItem)
+static HB_SIZE hb_cdpItemLen(HB_CODEPAGE *cdp, PHB_ITEM pItem)
 {
   auto nLen = hb_itemGetCLen(pItem);
   return nLen && cdp ? hb_cdpTextLen(cdp, pItem->getCPtr(), nLen) : nLen;
 }
 
-static const char *s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE *pnPad)
+static const char *s_hb_padGet(HB_CODEPAGE *cdp, HB_SIZE *pnPad)
 {
   auto szPad = hb_parc(3);
 
@@ -77,7 +77,7 @@ static const char *s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE *pnPad)
 #define HB_PAD_R 1
 #define HB_PAD_C 2
 
-static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
+static void s_hb_strPad(int iMode, HB_CODEPAGE *cdp)
 {
   HB_ISIZ nLen = hb_parns(2);
 

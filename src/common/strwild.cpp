@@ -114,7 +114,7 @@ static bool hb_strMatchWildRaw(const char *szString, const char *szPattern, bool
 }
 
 static bool hb_strMatchWildCDP(const char *szString, const char *szPattern, bool fExact, bool fCase, bool fFile,
-                               PHB_CODEPAGE cdp)
+                               HB_CODEPAGE *cdp)
 {
   auto fMatch = true;
   auto fAny = false;

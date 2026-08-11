@@ -251,7 +251,7 @@ struct XWND_DEF
 
   // locale set to UTF-8 or X_HAVE_UTF8_STRING
   bool fUTF8key;
-  PHB_CODEPAGE utf8CDP;
+  HB_CODEPAGE *utf8CDP;
 
 #ifdef X_HAVE_UTF8_STRING
   XIM im;
@@ -2887,7 +2887,7 @@ static void hb_gt_xwc_ProcessKey(PXWND_DEF wnd, XKeyEvent *evt)
   }
 
   if (i > 0) {
-    PHB_CODEPAGE cdp = wnd->fUTF8key ? wnd->utf8CDP : HB_GTSELF_INCP(wnd->pGT);
+    HB_CODEPAGE *cdp = wnd->fUTF8key ? wnd->utf8CDP : HB_GTSELF_INCP(wnd->pGT);
     HB_WCHAR wc;
     HB_SIZE nI = 0;
 
@@ -3272,7 +3272,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
                       reinterpret_cast<unsigned char *>(aProp), HB_SIZEOFARRAY(aProp));
     } else if (req->target == s_atomString || req->target == s_atomText) {
       // TODO: for s_atomString convert data to ISO-8859-1
-      PHB_CODEPAGE cdpin = HB_GTSELF_INCP(wnd->pGT);
+      HB_CODEPAGE *cdpin = HB_GTSELF_INCP(wnd->pGT);
 
       if (cdpin && cdpin != wnd->utf8CDP) {
         HB_SIZE nLen = wnd->ClipboardSize;

@@ -329,10 +329,10 @@ struct _HB_GTTRM
   bool fUTF8;
 
 #ifndef HB_GT_UNICODE_BUF
-  PHB_CODEPAGE cdpIn;
-  PHB_CODEPAGE cdpHost;
-  PHB_CODEPAGE cdpTerm;
-  PHB_CODEPAGE cdpBox;
+  HB_CODEPAGE *cdpIn;
+  HB_CODEPAGE *cdpHost;
+  HB_CODEPAGE *cdpTerm;
+  HB_CODEPAGE *cdpBox;
 
   HB_UCHAR keyTransTbl[256];
 #endif
@@ -607,7 +607,7 @@ static void hb_gt_trm_termOut(PHB_GTTRM pTerm, const char *pStr, int iLen)
 static void hb_gt_trm_termOutTrans(PHB_GTTRM pTerm, const char *pStr, int iLen, int iAttr)
 {
   if (pTerm->iOutBufSize) {
-    PHB_CODEPAGE cdp = nullptr;
+    HB_CODEPAGE *cdp = nullptr;
 
     if (pTerm->fUTF8) {
       if ((iAttr & (HB_GTTRM_ATTR_ACSC | HB_GTTRM_ATTR_BOX)) && pTerm->cdpBox) {
@@ -2289,7 +2289,7 @@ static void hb_gt_trm_SetTitle(PHB_GTTRM pTerm, const char *szTitle)
 #ifndef HB_GT_UNICODE_BUF
 static void hb_gt_trm_SetKeyTrans(PHB_GTTRM pTerm)
 {
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pTerm->pGT), cdpHost = HB_GTSELF_HOSTCP(pTerm->pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_INCP(pTerm->pGT), cdpHost = HB_GTSELF_HOSTCP(pTerm->pGT);
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetKeyTrans(%p,%p,%p)", static_cast<void*>(pTerm), static_cast<void*>(cdpTerm), static_cast<void*>(cdpHost)));
@@ -2303,8 +2303,8 @@ static void hb_gt_trm_SetKeyTrans(PHB_GTTRM pTerm)
 
 static void hb_gt_trm_SetDispTrans(PHB_GTTRM pTerm, int box)
 {
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pTerm->pGT);
-  PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pTerm->pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pTerm->pGT);
+  HB_CODEPAGE *cdpHost = HB_GTSELF_HOSTCP(pTerm->pGT);
 
   memset(pTerm->chrattr, 0, sizeof(pTerm->chrattr));
   memset(pTerm->boxattr, 0, sizeof(pTerm->boxattr));
@@ -3807,7 +3807,7 @@ static HB_BOOL hb_gt_trm_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutC(pInfo->pResult, pTerm->cdpBox ? pTerm->cdpBox->id : nullptr);
     szVal = hb_itemGetCPtr(pInfo->pNewVal);
     if (szVal != nullptr && *szVal) {
-      PHB_CODEPAGE cdpBox = hb_cdpFind(szVal);
+      HB_CODEPAGE *cdpBox = hb_cdpFind(szVal);
       if (cdpBox) {
         pTerm->cdpBox = cdpBox;
       }

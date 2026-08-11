@@ -109,7 +109,7 @@ static HB_CDP_LEN_FUNC(BIG5_len)
    return b5 ? 2 : 1;
 }
 
-static void hb_cp_init(PHB_CODEPAGE cdp)
+static void hb_cp_init(HB_CODEPAGE *cdp)
 {
    uint8_t *flags, *upper, *lower;
 

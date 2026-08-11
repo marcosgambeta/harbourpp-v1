@@ -203,7 +203,7 @@ struct HB_REF_LIST
 
 using PHB_REF_LIST = HB_REF_LIST *;
 
-static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
                                   HB_SIZE nOffset, PHB_REF_LIST pRefList);
 
 #if 0
@@ -450,7 +450,7 @@ static void hb_itemSerialTypedGet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int iTy
   }
 }
 
-static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut,
+static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut,
                                  PHB_REF_LIST pRefList, HB_SIZE nOffset)
 {
   HB_SIZE nSize, nLen, u;
@@ -599,7 +599,7 @@ static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn,
   return nSize;
 }
 
-static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut,
+static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut,
                                 HB_UCHAR *pBuffer, HB_SIZE nOffset, PHB_REF_LIST pRefList)
 {
   HB_MAXINT lVal;
@@ -1144,7 +1144,7 @@ static bool hb_deserializeTest(const HB_UCHAR **pBufferPtr, HB_SIZE *pnSize, HB_
   return true;
 }
 
-static HB_SIZE hb_deserializeHash(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeHash(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
                                   HB_SIZE nOffset, HB_SIZE nLen, PHB_REF_LIST pRefList)
 {
   hb_hashNew(pItem);
@@ -1179,7 +1179,7 @@ static HB_SIZE hb_deserializeHash(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
   return nOffset;
 }
 
-static HB_SIZE hb_deserializeArray(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeArray(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
                                    HB_SIZE nOffset, HB_SIZE nLen, PHB_REF_LIST pRefList)
 {
   hb_arrayNew(pItem, nLen);
@@ -1191,7 +1191,7 @@ static HB_SIZE hb_deserializeArray(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
   return nOffset;
 }
 
-static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
                                   HB_SIZE nOffset, PHB_REF_LIST pRefList)
 {
   HB_SIZE nLen, nPad, nSize;
@@ -1612,7 +1612,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
 /*
  * public API functions
  */
-char *hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut, HB_SIZE *pnSize)
+char *hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, HB_SIZE *pnSize)
 {
   HB_REF_LIST refList;
 
@@ -1655,7 +1655,7 @@ char *hb_itemSerialize(PHB_ITEM pItem, int iFlags, HB_SIZE *pnSize)
   return hb_itemSerializeCP(pItem, iFlags, nullptr, nullptr, pnSize);
 }
 
-PHB_ITEM hb_itemDeserializeCP(const char **pBufferPtr, HB_SIZE *pnSize, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
+PHB_ITEM hb_itemDeserializeCP(const char **pBufferPtr, HB_SIZE *pnSize, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut)
 {
   auto pBuffer = reinterpret_cast<const HB_UCHAR *>(*pBufferPtr);
   PHB_ITEM pItem = nullptr;
@@ -1684,8 +1684,8 @@ HB_FUNC(HB_SERIALIZE)
     auto pszCdpIn = hb_parc(3);
     auto pszCdpOut = hb_parc(4);
 
-    PHB_CODEPAGE cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
-    PHB_CODEPAGE cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();
+    HB_CODEPAGE *cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
+    HB_CODEPAGE *cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();
 
     int iFlags;
     if (HB_ISNUM(2)) {
@@ -1710,8 +1710,8 @@ HB_FUNC(HB_DESERIALIZE)
     auto pszCdpIn = hb_parc(2);
     auto pszCdpOut = hb_parc(3);
 
-    PHB_CODEPAGE cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
-    PHB_CODEPAGE cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();
+    HB_CODEPAGE *cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
+    HB_CODEPAGE *cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();
 
     PHB_ITEM pItem = hb_itemDeserializeCP(&pBuffer, &nSize, cdpIn, cdpOut);
     if (pItem != nullptr) {

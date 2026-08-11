@@ -390,9 +390,9 @@ static void hb_sln_setACSCtrans(void)
 static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
 {
 #if !defined(HB_SLN_UNICODE)
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pGT);
 #endif
-  PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
+  HB_CODEPAGE *cdpHost = HB_GTSELF_HOSTCP(pGT);
 
   // build a conversion chars table
   for (auto i = 0; i < 256; i++) {
@@ -436,7 +436,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
 // ***********************************************************************
 static void hb_sln_setKeyTrans(PHB_GT pGT)
 {
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
   const char *p;
 
   for (auto i = 0; i < 256; i++) {

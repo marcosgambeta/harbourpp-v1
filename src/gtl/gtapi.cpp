@@ -1050,13 +1050,13 @@ HB_ERRCODE hb_gtSetKeyCP(const char *pszTermCDP, const char *pszHostCDP)
   return errCode;
 }
 
-PHB_CODEPAGE hb_gtHostCP(void)
+HB_CODEPAGE *hb_gtHostCP(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtHostCP()"));
 #endif
 
-  PHB_CODEPAGE cdp = nullptr;
+  HB_CODEPAGE *cdp = nullptr;
 
   PHB_GT pGT = hb_gt_Base();
   if (pGT != nullptr) {
@@ -1066,13 +1066,13 @@ PHB_CODEPAGE hb_gtHostCP(void)
   return cdp;
 }
 
-PHB_CODEPAGE hb_gtBoxCP(void)
+HB_CODEPAGE *hb_gtBoxCP(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtBoxCP()"));
 #endif
 
-  PHB_CODEPAGE cdp = nullptr;
+  HB_CODEPAGE *cdp = nullptr;
 
   PHB_GT pGT = hb_gt_Base();
   if (pGT != nullptr) {

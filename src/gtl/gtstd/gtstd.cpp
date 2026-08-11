@@ -539,7 +539,7 @@ static void hb_gt_std_DispLine(PHB_GT pGT, int iRow, int iFrom, int iSize)
   uint16_t usChar;
   int iCol, iLastCol, iAll;
   HB_SIZE nLen, nI;
-  PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pGT);
   PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
 
   if (iSize < 0) {

@@ -293,7 +293,7 @@ const char *hb_itemGetStr(PHB_ITEM pItem, void *cdp, void **phString, HB_SIZE *p
     HB_SIZE nSize = 0;
 
     const char *pString = hb_cdpnDup3(pItem->stringValue(), pItem->stringLength(), nullptr, pnLen, &pFree, &nSize,
-                                      hb_vmCDP(), static_cast<PHB_CODEPAGE>(cdp));
+                                      hb_vmCDP(), static_cast<HB_CODEPAGE *>(cdp));
     if (pFree != nullptr) {
       *phString = static_cast<void *>(pFree);
     } else if (pItem->stringAllocated() == 0) {
@@ -392,10 +392,10 @@ HB_SIZE hb_itemCopyStr(PHB_ITEM pItem, void *cdp, char *pStrBuffer, HB_SIZE nSiz
   if (pItem && pItem->isString()) {
     if (pStrBuffer) {
       return hb_cdpTransTo(pItem->stringValue(), pItem->stringLength(), pStrBuffer, nSize, hb_vmCDP(),
-                           static_cast<PHB_CODEPAGE>(cdp));
+                           static_cast<HB_CODEPAGE *>(cdp));
     } else {
       return hb_cdpnDup2Len(pItem->stringValue(), pItem->stringLength(), nSize, hb_vmCDP(),
-                            static_cast<PHB_CODEPAGE>(cdp));
+                            static_cast<HB_CODEPAGE *>(cdp));
     }
   } else if (pStrBuffer && nSize) {
     pStrBuffer[0] = '\0';
@@ -454,7 +454,7 @@ PHB_ITEM hb_itemPutStrLen(PHB_ITEM pItem, void *cdp, const char *pStr, HB_SIZE n
     return hb_itemPutC(pItem, nullptr);
   }
 
-  char *pszText = hb_cdpnDup(pStr, &nLen, static_cast<PHB_CODEPAGE>(cdp), hb_vmCDP());
+  char *pszText = hb_cdpnDup(pStr, &nLen, static_cast<HB_CODEPAGE *>(cdp), hb_vmCDP());
 
   return hb_itemPutCLPtr(pItem, pszText, nLen);
 }
@@ -506,7 +506,7 @@ PHB_ITEM hb_itemPutStr(PHB_ITEM pItem, void *cdp, const char *pStr)
   }
 
   HB_SIZE nLen = strlen(pStr);
-  char *pszText = hb_cdpnDup(pStr, &nLen, static_cast<PHB_CODEPAGE>(cdp), hb_vmCDP());
+  char *pszText = hb_cdpnDup(pStr, &nLen, static_cast<HB_CODEPAGE *>(cdp), hb_vmCDP());
 
   return hb_itemPutCLPtr(pItem, pszText, nLen);
 }

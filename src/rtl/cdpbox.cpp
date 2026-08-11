@@ -62,7 +62,7 @@ HB_FUNC(HB_UTF8TOSTRBOX)
     char *szDest = nullptr;
 
     if (nLen) {
-      PHB_CODEPAGE cdp = hb_gtBoxCP();
+      HB_CODEPAGE *cdp = hb_gtBoxCP();
 
       if (cdp) {
         if (hb_cdpIsUTF8(cdp)) {

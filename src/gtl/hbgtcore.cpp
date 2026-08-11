@@ -848,7 +848,7 @@ static HB_BOOL hb_gt_def_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, uin
 
 static int hb_gt_def_PutText(PHB_GT pGT, int iRow, int iCol, int iColor, const char *szText, HB_SIZE nLen)
 {
-  PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
+  HB_CODEPAGE *cdp = HB_GTSELF_HOSTCP(pGT);
   HB_SIZE nIndex = 0;
   HB_WCHAR wc;
 
@@ -939,7 +939,7 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
   auto bBell = false;
   auto bNewLine = false;
   HB_WCHAR szString[WRITECON_BUFFER_SIZE];
-  PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
+  HB_CODEPAGE *cdp = HB_GTSELF_HOSTCP(pGT);
   HB_SIZE nIndex = 0;
   HB_WCHAR wc;
 
@@ -1219,7 +1219,7 @@ static long hb_gt_def_RectSize(PHB_GT pGT, int iTop, int iLeft, int iBottom, int
 static void hb_gt_def_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, void *pBuffer)
 {
   auto pbyBuffer = static_cast<uint8_t *>(pBuffer);
-  PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
+  HB_CODEPAGE *cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 
   while (iTop <= iBottom) {
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
@@ -1250,7 +1250,7 @@ static void hb_gt_def_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 static void hb_gt_def_Rest(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, const void *pBuffer)
 {
   auto pbyBuffer = static_cast<const uint8_t *>(pBuffer);
-  PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
+  HB_CODEPAGE *cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 
   while (iTop <= iBottom) {
     for (int iCol = iLeft; iCol <= iRight; ++iCol) {
@@ -1586,7 +1586,7 @@ static void hb_gt_def_BoxW(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 static void hb_gt_def_Box(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, const char *szFrame, int iColor)
 {
   if (szFrame != nullptr) {
-    PHB_CODEPAGE cdp = HB_GTSELF_BOXCP(pGT);
+    HB_CODEPAGE *cdp = HB_GTSELF_BOXCP(pGT);
     HB_WCHAR szFrameW[10], wc;
     HB_SIZE nLen = strlen(szFrame), nIndex = 0, nPos = 0;
 
@@ -1770,7 +1770,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutC(pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING) {
       if (pInfo->pNewVal->getCLen() > 0) {
-        PHB_CODEPAGE cdpBox = hb_cdpFind(pInfo->pNewVal->getCPtr());
+        HB_CODEPAGE *cdpBox = hb_cdpFind(pInfo->pNewVal->getCPtr());
         if (cdpBox) {
           pGT->cdpBox = cdpBox;
         }
@@ -1939,7 +1939,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
     const HB_WCHAR *szMessageW = hb_itemGetStrU16(pMessage, HB_CDP_ENDIAN_NATIVE, &hMessage, &nLen);
     auto fScreen = false;
     auto fKeyBoard = false;
-    PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
+    HB_CODEPAGE *cdp = HB_GTSELF_HOSTCP(pGT);
     char szKey[HB_MAX_CHAR_LEN];
     HB_SIZE nChar;
     int iKey, i, iRows, iCols;
