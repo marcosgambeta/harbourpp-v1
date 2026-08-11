@@ -115,13 +115,13 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
       auto szString = pItem->getCPtr();
       auto nLen = pItem->getCLen();
 
-      if (nLen >= 2 && (static_cast<HB_UCHAR>(szString[0]) == 'O' || static_cast<HB_UCHAR>(szString[0]) == 'o') &&
-          (static_cast<HB_UCHAR>(szString[1]) == 'N' || static_cast<HB_UCHAR>(szString[1]) == 'n')) {
+      if (nLen >= 2 && (static_cast<uint8_t>(szString[0]) == 'O' || static_cast<uint8_t>(szString[0]) == 'o') &&
+          (static_cast<uint8_t>(szString[1]) == 'N' || static_cast<uint8_t>(szString[1]) == 'n')) {
         bLogical = true;
       } else if (nLen >= 3 &&
-                 (static_cast<HB_UCHAR>(szString[0]) == 'O' || static_cast<HB_UCHAR>(szString[0]) == 'o') &&
-                 (static_cast<HB_UCHAR>(szString[1]) == 'F' || static_cast<HB_UCHAR>(szString[1]) == 'f') &&
-                 (static_cast<HB_UCHAR>(szString[2]) == 'F' || static_cast<HB_UCHAR>(szString[2]) == 'f')) {
+                 (static_cast<uint8_t>(szString[0]) == 'O' || static_cast<uint8_t>(szString[0]) == 'o') &&
+                 (static_cast<uint8_t>(szString[1]) == 'F' || static_cast<uint8_t>(szString[1]) == 'f') &&
+                 (static_cast<uint8_t>(szString[2]) == 'F' || static_cast<uint8_t>(szString[2]) == 'f')) {
         bLogical = false;
       }
     }
@@ -420,7 +420,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
     char *szDateFormat = pSet->HB_SET_DATEFORMAT;
     auto size = static_cast<int>(strlen(szDateFormat));
     for (auto count = 0; count < size; count++) {
-      int32_t digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[count]));
+      int32_t digit = HB_TOUPPER(static_cast<uint8_t>(szDateFormat[count]));
       if (digit == 'Y') {
         if (y_start == -1) {
           y_start = count;

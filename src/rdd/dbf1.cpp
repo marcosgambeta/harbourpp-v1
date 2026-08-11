@@ -1965,7 +1965,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
                           reinterpret_cast<const HB_WCHAR *>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]), nLen);
     } else {
       if (hb_dbfGetNullFlag(pArea, pArea->pFieldBits[uiIndex].uiLengthBit)) {
-        nLen = static_cast<HB_UCHAR>(pArea->pRecord[pArea->pFieldOffset[uiIndex] + nLen - 1]);
+        nLen = static_cast<uint8_t>(pArea->pRecord[pArea->pFieldOffset[uiIndex] + nLen - 1]);
         // protection against corrupted files
         if (nLen > static_cast<HB_SIZE>(pField->uiLen)) {
           nLen = pField->uiLen;

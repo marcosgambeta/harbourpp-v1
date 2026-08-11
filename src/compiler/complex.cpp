@@ -499,12 +499,12 @@ int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
     pLex->iState = LITERAL;
     if (hb_compStrToNum(pToken->value, pToken->len, &lNumber, &dNumber, &iDec, &iWidth)) {
       yylval_ptr->valDouble.dNumber = dNumber;
-      yylval_ptr->valDouble.bDec = static_cast<HB_UCHAR>(iDec);
-      yylval_ptr->valDouble.bWidth = static_cast<HB_UCHAR>(iWidth);
+      yylval_ptr->valDouble.bDec = static_cast<uint8_t>(iDec);
+      yylval_ptr->valDouble.bWidth = static_cast<uint8_t>(iWidth);
       return NUM_DOUBLE;
     } else {
       yylval_ptr->valLong.lNumber = lNumber;
-      yylval_ptr->valLong.bWidth = static_cast<HB_UCHAR>(iWidth);
+      yylval_ptr->valLong.bWidth = static_cast<uint8_t>(iWidth);
       return NUM_LONG;
     }
   }
@@ -712,7 +712,7 @@ int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       return IDENTIFIER;
     }
     pLex->iState = OPERATOR;
-    return static_cast<HB_UCHAR>(pToken->value[0]);
+    return static_cast<uint8_t>(pToken->value[0]);
 
   case HB_PP_TOKEN_EQ:
     if (HB_SUPPORT_HARBOUR && pToken->pNext && pToken->pNext->spaces == 0 &&
@@ -736,14 +736,14 @@ int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
   case HB_PP_TOKEN_GT:
   case HB_PP_TOKEN_REFERENCE:
     pLex->iState = OPERATOR;
-    return static_cast<HB_UCHAR>(pToken->value[0]);
+    return static_cast<uint8_t>(pToken->value[0]);
 
   case HB_PP_TOKEN_EOL:
     pLex->fEol = true;
     // fallthrough
   case HB_PP_TOKEN_EOC:
     pLex->iState = LOOKUP;
-    return static_cast<HB_UCHAR>(pToken->value[0]);
+    return static_cast<uint8_t>(pToken->value[0]);
 
   case HB_PP_TOKEN_KEYWORD: {
     int32_t iType;
@@ -1177,7 +1177,7 @@ int32_t hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
     return iType;
   }
   default:
-    return static_cast<HB_UCHAR>(pToken->value[0]);
+    return static_cast<uint8_t>(pToken->value[0]);
   }
 }
 

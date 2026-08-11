@@ -127,7 +127,7 @@ static const HB_PLURAL_FORMS s_plural_forms[] = {
 
 #define HB_PLURAL_FOMRS_COUNT HB_SIZEOFARRAY(s_plural_forms)
 
-static const HB_UCHAR s_signature[4] = {193, 'H', 'B', 'L'};
+static const uint8_t s_signature[4] = {193, 'H', 'B', 'L'};
 struct _HB_I18N_TRANS
 {
   HB_COUNTER iUsers;

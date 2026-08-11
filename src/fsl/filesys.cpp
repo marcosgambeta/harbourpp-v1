@@ -1919,7 +1919,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
         nCount = 0;
       }
 
-      bResult = ReadFile(hWFileHandle, static_cast<HB_UCHAR *>(pBuff) + nRead, dwToRead, &dwRead, nullptr);
+      bResult = ReadFile(hWFileHandle, static_cast<uint8_t *>(pBuff) + nRead, dwToRead, &dwRead, nullptr);
       if (!bResult) {
         break;
       }
@@ -1956,7 +1956,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
         nCount = 0;
       }
 
-      HB_FAILURE_RETRY(lRead, read(hFileHandle, static_cast<HB_UCHAR *>(pBuff) + nRead, uiToRead));
+      HB_FAILURE_RETRY(lRead, read(hFileHandle, static_cast<uint8_t *>(pBuff) + nRead, uiToRead));
 
       if (lRead <= 0) {
         break;
@@ -2013,7 +2013,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
       }
 
       bResult =
-          WriteFile(hWFileHandle, static_cast<const HB_UCHAR *>(pBuff) + nWritten, dwToWrite, &dwWritten, nullptr);
+          WriteFile(hWFileHandle, static_cast<const uint8_t *>(pBuff) + nWritten, dwToWrite, &dwWritten, nullptr);
       if (!bResult) {
         break;
       }
@@ -2054,7 +2054,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
         nCount = 0;
       }
 
-      HB_FAILURE_RETRY(lWritten, write(hFileHandle, static_cast<const HB_UCHAR *>(pBuff) + nWritten, uiToWrite));
+      HB_FAILURE_RETRY(lWritten, write(hFileHandle, static_cast<const uint8_t *>(pBuff) + nWritten, uiToWrite));
 
       if (lWritten <= 0) {
         break;
@@ -2130,7 +2130,7 @@ HB_SIZE hb_fsReadAt(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount, HB_FOFF
         nCount = 0;
       }
 
-      bResult = ReadFile(hWFileHandle, static_cast<HB_UCHAR *>(pBuff) + nRead, dwToRead, &dwRead, &Overlapped);
+      bResult = ReadFile(hWFileHandle, static_cast<uint8_t *>(pBuff) + nRead, dwToRead, &dwRead, &Overlapped);
 
       if (!bResult) {
         break;
@@ -2246,7 +2246,7 @@ HB_SIZE hb_fsWriteAt(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCount, 
         nCount = 0;
       }
 
-      bResult = WriteFile(hWFileHandle, static_cast<HB_UCHAR *>(const_cast<void *>(pBuff)) + nWritten, dwToWrite,
+      bResult = WriteFile(hWFileHandle, static_cast<uint8_t *>(const_cast<void *>(pBuff)) + nWritten, dwToWrite,
                           &dwWritten, &Overlapped);
 
       if (!bResult) {
@@ -3240,13 +3240,13 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
       nLen -= 2;
     }
 #endif
-    if (strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[0]))) {
+    if (strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<uint8_t>(pszStart[0]))) {
       pszStart++;
       nLen--;
     }
 
     // Strip the trailing (back)slash if there's one
-    if (nLen && strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[nLen - 1]))) {
+    if (nLen && strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<uint8_t>(pszStart[nLen - 1]))) {
       nLen--;
     }
 
@@ -3317,7 +3317,7 @@ HB_BOOL hb_fsGetCWD(char *pszBuffer, HB_SIZE nSize)
     nLen = strlen(pszBuffer);
 
     // add the trailing (back)slash if there's no one
-    if (nLen + 1 < nSize && strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszBuffer[nLen - 1])) == 0) {
+    if (nLen + 1 < nSize && strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<uint8_t>(pszBuffer[nLen - 1])) == 0) {
       pszBuffer[nLen++] = HB_OS_PATH_DELIM_CHR;
       pszBuffer[nLen] = '\0';
     }
@@ -3797,7 +3797,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
     }
   }
   if (cDirSep != HB_OS_PATH_DELIM_CHR) {
-    if (strchr(pszFileName, static_cast<HB_UCHAR>(cDirSep)) == nullptr) {
+    if (strchr(pszFileName, static_cast<uint8_t>(cDirSep)) == nullptr) {
       cDirSep = HB_OS_PATH_DELIM_CHR;
     }
   }
@@ -3921,7 +3921,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
     }
   }
   if (cDirSep != HB_OS_PATH_DELIM_CHR) {
-    if (strchr(pszFileName, static_cast<HB_UCHAR>(cDirSep)) == nullptr) {
+    if (strchr(pszFileName, static_cast<uint8_t>(cDirSep)) == nullptr) {
       cDirSep = HB_OS_PATH_DELIM_CHR;
     }
   }

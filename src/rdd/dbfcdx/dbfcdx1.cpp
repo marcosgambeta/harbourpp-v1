@@ -317,7 +317,7 @@ static int hb_cdxValCompare(LPCDXTAG pTag, const uint8_t *val1, int len1, const 
   if (pTag->uiType == 'C') {
     if (iLimit > 0) {
       if (pTag->pIndex->pArea->sortTab) {
-        const HB_UCHAR *sortTab = pTag->pIndex->pArea->sortTab;
+        const uint8_t *sortTab = pTag->pIndex->pArea->sortTab;
         int iPos = 0;
         while (iPos < iLimit) {
           iResult = sortTab[val1[iPos]] - sortTab[val2[iPos]];

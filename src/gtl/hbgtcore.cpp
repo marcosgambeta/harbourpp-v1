@@ -794,14 +794,14 @@ static HB_BOOL hb_gt_def_GetChar(PHB_GT pGT, int iRow, int iCol, int *piColor, u
   return false;
 }
 
-static HB_BOOL hb_gt_def_GetUC(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, HB_UCHAR *puChar,
+static HB_BOOL hb_gt_def_GetUC(PHB_GT pGT, int iRow, int iCol, int *piColor, uint8_t *pbAttr, uint8_t *puChar,
                                HB_BOOL fTerm)
 {
   long lIndex;
 
   if (HB_GTSELF_CHECKPOS(pGT, iRow, iCol, &lIndex)) {
     HB_WCHAR wc = pGT->screenBuffer[lIndex].c.usChar;
-    HB_UCHAR uc = 0;
+    uint8_t uc = 0;
 
     *piColor = pGT->screenBuffer[lIndex].c.bColor;
     *pbAttr = pGT->screenBuffer[lIndex].c.bAttr;
@@ -820,7 +820,7 @@ static HB_BOOL hb_gt_def_GetUC(PHB_GT pGT, int iRow, int iCol, int *piColor, uin
             uc = hb_cdpGetUC(pGT->cdpHost, wc, 0);
           }
           if (uc == 0) {
-            uc = hb_cdpGetUC(hb_vmCDP(), wc, wc < 32 ? static_cast<HB_UCHAR>(wc) : '?');
+            uc = hb_cdpGetUC(hb_vmCDP(), wc, wc < 32 ? static_cast<uint8_t>(wc) : '?');
           }
         }
       }

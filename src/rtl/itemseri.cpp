@@ -56,7 +56,7 @@
 #include "hbserial.ch"
 
 /*
-HB_UCHAR [1] - item type
+uint8_t [1] - item type
    0. NIL               0
    1. TRUE              0
    2. FALSE             0
@@ -203,7 +203,7 @@ struct HB_REF_LIST
 
 using PHB_REF_LIST = HB_REF_LIST *;
 
-static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const uint8_t *pBuffer,
                                   HB_SIZE nOffset, PHB_REF_LIST pRefList);
 
 #if 0
@@ -600,7 +600,7 @@ static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn,
 }
 
 static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut,
-                                HB_UCHAR *pBuffer, HB_SIZE nOffset, PHB_REF_LIST pRefList)
+                                uint8_t *pBuffer, HB_SIZE nOffset, PHB_REF_LIST pRefList)
 {
   HB_MAXINT lVal;
   double d;
@@ -645,7 +645,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
       hb_itemGetNLen(pItem, &iWidth, nullptr);
       if (HB_LIM_INT8(lVal)) {
         pBuffer[nOffset++] = HB_SERIAL_INT8NUM;
-        pBuffer[nOffset++] = static_cast<HB_UCHAR>(lVal);
+        pBuffer[nOffset++] = static_cast<uint8_t>(lVal);
       } else if (HB_LIM_INT16(lVal)) {
         pBuffer[nOffset++] = HB_SERIAL_INT16NUM;
         HB_PUT_LE_UINT16(&pBuffer[nOffset], lVal);
@@ -663,12 +663,12 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
         HB_PUT_LE_UINT64(&pBuffer[nOffset], lVal);
         nOffset += 8;
       }
-      pBuffer[nOffset++] = static_cast<HB_UCHAR>(iWidth);
+      pBuffer[nOffset++] = static_cast<uint8_t>(iWidth);
     } else if (lVal == 0) {
       pBuffer[nOffset++] = HB_SERIAL_ZERO;
     } else if (HB_LIM_INT8(lVal)) {
       pBuffer[nOffset++] = HB_SERIAL_INT8;
-      pBuffer[nOffset++] = static_cast<HB_UCHAR>(lVal);
+      pBuffer[nOffset++] = static_cast<uint8_t>(lVal);
     } else if (HB_LIM_INT16(lVal)) {
       pBuffer[nOffset++] = HB_SERIAL_INT16;
       HB_PUT_LE_UINT16(&pBuffer[nOffset], lVal);
@@ -695,8 +695,8 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
       pBuffer[nOffset++] = HB_SERIAL_DBLNUM;
       HB_PUT_LE_DOUBLE(&pBuffer[nOffset], d);
       nOffset += 8;
-      pBuffer[nOffset++] = static_cast<HB_UCHAR>(iWidth);
-      pBuffer[nOffset++] = static_cast<HB_UCHAR>(iDecimal);
+      pBuffer[nOffset++] = static_cast<uint8_t>(iWidth);
+      pBuffer[nOffset++] = static_cast<uint8_t>(iDecimal);
     } else if (d == 0.0) {
       pBuffer[nOffset++] = HB_SERIAL_ZERO;
     } else {
@@ -713,7 +713,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
       nLen = 0xFF;
     }
     pBuffer[nOffset++] = HB_SERIAL_SYMBOL;
-    pBuffer[nOffset++] = static_cast<HB_UCHAR>(nLen);
+    pBuffer[nOffset++] = static_cast<uint8_t>(nLen);
     memcpy(&pBuffer[nOffset], szVal, nLen);
     nOffset += nLen;
     break;
@@ -736,11 +736,11 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
           nLen -= n;
           nSize -= n;
           pBuffer[nOffset++] = HB_SERIAL_STRPAD8;
-          pBuffer[nOffset++] = static_cast<HB_UCHAR>(nLen);
-          pBuffer[nOffset++] = static_cast<HB_UCHAR>(n);
+          pBuffer[nOffset++] = static_cast<uint8_t>(nLen);
+          pBuffer[nOffset++] = static_cast<uint8_t>(n);
         } else {
           pBuffer[nOffset++] = HB_SERIAL_STRING8;
-          pBuffer[nOffset++] = static_cast<HB_UCHAR>(nLen);
+          pBuffer[nOffset++] = static_cast<uint8_t>(nLen);
         }
       } else if (nLen <= UINT16_MAX) {
         if (n > 2) {
@@ -800,7 +800,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
       nLen = hb_arrayLen(pItem);
       if (nLen <= 255) {
         pBuffer[nOffset++] = nRef == HB_SERIAL_DUMMYOFFSET ? HB_SERIAL_ARRAY8 : HB_SERIAL_ARRAYREF8;
-        pBuffer[nOffset++] = static_cast<HB_UCHAR>(nLen);
+        pBuffer[nOffset++] = static_cast<uint8_t>(nLen);
       } else if (nLen <= UINT16_MAX) {
         pBuffer[nOffset++] = nRef == HB_SERIAL_DUMMYOFFSET ? HB_SERIAL_ARRAY16 : HB_SERIAL_ARRAYREF16;
         HB_PUT_LE_UINT16(&pBuffer[nOffset], nLen);
@@ -838,7 +838,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
       nLen = hb_hashLen(pItem);
       if (nLen <= 255) {
         pBuffer[nOffset++] = nRef == HB_SERIAL_DUMMYOFFSET ? HB_SERIAL_HASH8 : HB_SERIAL_HASHREF8;
-        pBuffer[nOffset++] = static_cast<HB_UCHAR>(nLen);
+        pBuffer[nOffset++] = static_cast<uint8_t>(nLen);
       } else if (nLen <= UINT16_MAX) {
         pBuffer[nOffset++] = nRef == HB_SERIAL_DUMMYOFFSET ? HB_SERIAL_HASH16 : HB_SERIAL_HASHREF16;
         HB_PUT_LE_UINT16(&pBuffer[nOffset], nLen);
@@ -864,9 +864,9 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
   return nOffset;
 }
 
-static bool hb_deserializeTest(const HB_UCHAR **pBufferPtr, HB_SIZE *pnSize, HB_SIZE nOffset, PHB_REF_LIST pRefList)
+static bool hb_deserializeTest(const uint8_t **pBufferPtr, HB_SIZE *pnSize, HB_SIZE nOffset, PHB_REF_LIST pRefList)
 {
-  const HB_UCHAR *pBuffer = *pBufferPtr;
+  const uint8_t *pBuffer = *pBufferPtr;
   HB_SIZE nSize = *pnSize, nLen = 0;
 
   if (nSize == 0) {
@@ -1144,7 +1144,7 @@ static bool hb_deserializeTest(const HB_UCHAR **pBufferPtr, HB_SIZE *pnSize, HB_
   return true;
 }
 
-static HB_SIZE hb_deserializeHash(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeHash(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const uint8_t *pBuffer,
                                   HB_SIZE nOffset, HB_SIZE nLen, PHB_REF_LIST pRefList)
 {
   hb_hashNew(pItem);
@@ -1179,7 +1179,7 @@ static HB_SIZE hb_deserializeHash(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
   return nOffset;
 }
 
-static HB_SIZE hb_deserializeArray(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeArray(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const uint8_t *pBuffer,
                                    HB_SIZE nOffset, HB_SIZE nLen, PHB_REF_LIST pRefList)
 {
   hb_arrayNew(pItem, nLen);
@@ -1191,7 +1191,7 @@ static HB_SIZE hb_deserializeArray(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPA
   return nOffset;
 }
 
-static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const HB_UCHAR *pBuffer,
+static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, const uint8_t *pBuffer,
                                   HB_SIZE nOffset, PHB_REF_LIST pRefList)
 {
   HB_SIZE nLen, nPad, nSize;
@@ -1439,9 +1439,9 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
       HB_REF_LIST refListZ;
 
       hb_itemSerialRefListInit(&refListZ);
-      pBuffer = reinterpret_cast<const HB_UCHAR *>(szVal);
+      pBuffer = reinterpret_cast<const uint8_t *>(szVal);
       if (hb_deserializeTest(&pBuffer, &nLen, 0, &refListZ)) {
-        hb_deserializeItem(pItem, cdpIn, cdpOut, reinterpret_cast<const HB_UCHAR *>(szVal), 0, &refListZ);
+        hb_deserializeItem(pItem, cdpIn, cdpOut, reinterpret_cast<const uint8_t *>(szVal), 0, &refListZ);
       } else {
         hb_itemClear(pItem);
       }
@@ -1618,7 +1618,7 @@ char *hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODE
 
   hb_itemSerialRefListInit(&refList);
   HB_SIZE nSize = hb_itemSerialSize(pItem, iFlags, cdpIn, cdpOut, &refList, 0);
-  auto pBuffer = static_cast<HB_UCHAR *>(hb_xgrab(nSize + 1));
+  auto pBuffer = static_cast<uint8_t *>(hb_xgrab(nSize + 1));
   hb_itemSerialUnusedFree(&refList);
   hb_serializeItem(pItem, iFlags, cdpIn, cdpOut, pBuffer, 0, &refList);
   hb_itemSerialRefListFree(&refList);
@@ -1635,7 +1635,7 @@ char *hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODE
           HB_PUT_LE_UINT32(&pBuffer[5], nSize);
           memcpy(&pBuffer[9], pDest, nDest);
           nSize = nDest + 9;
-          pBuffer = static_cast<HB_UCHAR *>(hb_xrealloc(pBuffer, nSize + 1));
+          pBuffer = static_cast<uint8_t *>(hb_xrealloc(pBuffer, nSize + 1));
         }
       }
       hb_xfree(pDest);
@@ -1657,12 +1657,12 @@ char *hb_itemSerialize(PHB_ITEM pItem, int iFlags, HB_SIZE *pnSize)
 
 PHB_ITEM hb_itemDeserializeCP(const char **pBufferPtr, HB_SIZE *pnSize, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut)
 {
-  auto pBuffer = reinterpret_cast<const HB_UCHAR *>(*pBufferPtr);
+  auto pBuffer = reinterpret_cast<const uint8_t *>(*pBufferPtr);
   PHB_ITEM pItem = nullptr;
   HB_REF_LIST refList;
 
   hb_itemSerialRefListInit(&refList);
-  if (!pnSize || hb_deserializeTest(reinterpret_cast<const HB_UCHAR **>(pBufferPtr), pnSize, 0, &refList)) {
+  if (!pnSize || hb_deserializeTest(reinterpret_cast<const uint8_t **>(pBufferPtr), pnSize, 0, &refList)) {
     pItem = hb_itemNew(nullptr);
     hb_deserializeItem(pItem, cdpIn, cdpOut, pBuffer, 0, &refList);
   }

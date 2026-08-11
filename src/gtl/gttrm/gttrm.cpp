@@ -334,7 +334,7 @@ struct _HB_GTTRM
   HB_CODEPAGE *cdpTerm;
   HB_CODEPAGE *cdpBox;
 
-  HB_UCHAR keyTransTbl[256];
+  uint8_t keyTransTbl[256];
 #endif
 
   int charmap[256];
@@ -1321,13 +1321,13 @@ again:
     } else if (nKey >= 32 && nKey <= 255) {
       HB_WCHAR wc = 0;
       n = i = 0;
-      if (hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(nKey), &n, &wc)) {
+      if (hb_cdpUTF8ToU16NextChar(static_cast<uint8_t>(nKey), &n, &wc)) {
         while (n > 0) {
           ch = test_bufch(pTerm, i++, pTerm->esc_delay);
           if (ch < 0 || ch > 255) {
             break;
           }
-          if (!hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(ch), &n, &wc)) {
+          if (!hb_cdpUTF8ToU16NextChar(static_cast<uint8_t>(ch), &n, &wc)) {
             n = -1;
           }
         }
@@ -1341,7 +1341,7 @@ again:
     if (nKey >= 32 && nKey <= 255 && pTerm->fUTF8 && pTerm->cdpIn) {
       uint16_t uc = 0;
       n = i = 0;
-      if (hb_cdpGetFromUTF8(pTerm->cdpIn, static_cast<HB_UCHAR>(nKey), &n, &uc)) {
+      if (hb_cdpGetFromUTF8(pTerm->cdpIn, static_cast<uint8_t>(nKey), &n, &uc)) {
         while (n > 0) {
           ch = test_bufch(pTerm, i++, pTerm->esc_delay);
           if (ch < 0 || ch > 255) {
@@ -3683,7 +3683,7 @@ static void hb_gt_trm_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
       }
       usChar = hb_cdpGetU16Ctrl(usChar);
     } else {
-      HB_UCHAR uc;
+      uint8_t uc;
       if (!HB_GTSELF_GETSCRUC(pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, false)) {
         break;
       }

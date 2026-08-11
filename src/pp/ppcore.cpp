@@ -452,7 +452,7 @@ static HB_PP_TOKEN *hb_pp_tokenNew(const char *value, HB_SIZE nLen, HB_SIZE nSpa
 
   if (HB_PP_TOKEN_ALLOC(type)) {
     if (nLen <= 1) {
-      pToken->value = hb_szAscii[nLen ? static_cast<HB_UCHAR>(value[0]) : 0];
+      pToken->value = hb_szAscii[nLen ? static_cast<uint8_t>(value[0]) : 0];
       type |= HB_PP_TOKEN_STATIC;
     } else {
       char *val = static_cast<char *>(memcpy(hb_xgrab(nLen + 1), value, nLen));
@@ -479,7 +479,7 @@ static void hb_pp_tokenSetValue(HB_PP_TOKEN *pToken, const char *value, HB_SIZE 
     hb_xfree(const_cast<char *>(pToken->value));
   }
   if (nLen <= 1) {
-    pToken->value = hb_szAscii[nLen ? static_cast<HB_UCHAR>(value[0]) : 0];
+    pToken->value = hb_szAscii[nLen ? static_cast<uint8_t>(value[0]) : 0];
     pToken->type |= HB_PP_TOKEN_STATIC;
   } else {
     char *val = static_cast<char *>(memcpy(hb_xgrab(nLen + 1), value, nLen));
@@ -616,7 +616,7 @@ static void hb_pp_readLine(PHB_PP_STATE pState)
   for (;;) {
     if (pState->pFile->pLineBuf) {
       if (pState->pFile->nLineBufLen) {
-        ch = static_cast<HB_UCHAR>(pState->pFile->pLineBuf[0]);
+        ch = static_cast<uint8_t>(pState->pFile->pLineBuf[0]);
         pState->pFile->pLineBuf++;
         pState->pFile->nLineBufLen--;
       } else {
@@ -1738,7 +1738,7 @@ static PHB_PP_FILE hb_pp_FileNew(PHB_PP_STATE pState, const char *szFileName, HB
         }
         if (!file_in &&
             (!pFileName->szPath || (!pFileName->szDrive &&
-                                    !strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pFileName->szPath[0]))))) {
+                                    !strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<uint8_t>(pFileName->szPath[0]))))) {
           char *szFirstFName = nullptr;
           pFile = pState->pFile;
           while (pFile) {
@@ -5344,7 +5344,7 @@ void hb_pp_tokenUpper(HB_PP_TOKEN *pToken)
     }
 
     if (pToken->len <= 1) {
-      HB_UCHAR ucVal = pToken->len ? static_cast<HB_UCHAR>(pToken->value[1]) : 0;
+      uint8_t ucVal = pToken->len ? static_cast<uint8_t>(pToken->value[1]) : 0;
       if (HB_PP_TOKEN_ALLOC(pToken->type)) {
         hb_xfree(const_cast<char *>(pToken->value));
         pToken->type |= HB_PP_TOKEN_STATIC;
@@ -5373,7 +5373,7 @@ void hb_pp_tokenUpper(HB_PP_TOKEN *pToken)
   }
 
   if (pToken->len <= 1) {
-    HB_UCHAR ucVal = static_cast<HB_UCHAR>(HB_PP_UPPER(pToken->value[0]));
+    uint8_t ucVal = static_cast<uint8_t>(HB_PP_UPPER(pToken->value[0]));
     if (HB_PP_TOKEN_ALLOC(pToken->type)) {
       hb_xfree(const_cast<char *>(pToken->value));
       pToken->type |= HB_PP_TOKEN_STATIC;

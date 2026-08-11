@@ -162,7 +162,7 @@ HB_FUNC(HB_SCROLL)
     if (iChar > 0 && iChar <= 255) {
       auto cdp = hb_vmCDP();
       if (!HB_CDP_ISCHARUNI(cdp)) {
-        iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
+        iChar = hb_cdpGetU16(cdp, static_cast<uint8_t>(iChar));
       }
     }
   } else if (HB_ISCHAR(8)) {

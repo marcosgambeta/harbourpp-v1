@@ -352,13 +352,13 @@ union YYSTYPE
    struct
    {
       HB_MAXINT lNumber;   /* to hold a long number returned by lex */
-      HB_UCHAR  bWidth;    /* to hold the width of the value */
+      uint8_t  bWidth;    /* to hold the width of the value */
    } valLong;
    struct
    {
       double   dNumber;    /* to hold a double number returned by lex */
-      HB_UCHAR bWidth;     /* to hold the width of the value */
-      HB_UCHAR bDec;       /* to hold the number of decimal points in the value */
+      uint8_t bWidth;     /* to hold the width of the value */
+      uint8_t bDec;       /* to hold the number of decimal points in the value */
    } valDouble;
    struct
    {
@@ -5674,7 +5674,7 @@ yyreduce:
                    if( ! HB_COMP_PARAM->pLastDeclared->pClass )
                    {
                      hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_CLASS_NOT_FOUND, (yyvsp[-1].asVarType)->szFromClass, HB_COMP_PARAM->pLastDeclared->szName );
-                     HB_COMP_PARAM->pLastDeclared->cType = ( HB_ISUPPER( ( HB_UCHAR ) (yyvsp[-1].asVarType)->cVarType ) ? 'O' : 'o' );
+                     HB_COMP_PARAM->pLastDeclared->cType = ( HB_ISUPPER( ( uint8_t ) (yyvsp[-1].asVarType)->cVarType ) ? 'O' : 'o' );
                    }
                  }
                }
@@ -5744,7 +5744,7 @@ yyreduce:
                    if( ! HB_COMP_PARAM->pLastMethod->pClass )
                    {
                      hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_CLASS_NOT_FOUND, (yyvsp[0].asVarType)->szFromClass, HB_COMP_PARAM->pLastMethod->szName );
-                     HB_COMP_PARAM->pLastMethod->cType = ( HB_ISUPPER( ( HB_UCHAR ) (yyvsp[0].asVarType)->cVarType ) ? 'O' : 'o' );
+                     HB_COMP_PARAM->pLastMethod->cType = ( HB_ISUPPER( ( uint8_t ) (yyvsp[0].asVarType)->cVarType ) ? 'O' : 'o' );
                    }
                  }
                }
@@ -5781,7 +5781,7 @@ yyreduce:
                      if( ! HB_COMP_PARAM->pLastMethod->pClass )
                      {
                         hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_CLASS_NOT_FOUND, (yyvsp[0].asVarType)->szFromClass, HB_COMP_PARAM->pLastMethod->szName );
-                        HB_COMP_PARAM->pLastMethod->cType = ( HB_ISUPPER( ( HB_UCHAR ) cVarType ) ? 'O' :'o' );
+                        HB_COMP_PARAM->pLastMethod->cType = ( HB_ISUPPER( ( uint8_t ) cVarType ) ? 'O' :'o' );
                      }
                   }
                   else

@@ -420,7 +420,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
     for (auto i = 0; i < 256; ++i) {
       if (hb_cdpIsAlpha(cdpHost, i)) {
 #ifdef HB_SLN_UNICODE
-        int iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<HB_UCHAR>(i)));
+        int iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<uint8_t>(i)));
 #else
         int iDst = hb_cdpTranslateDispChar(i, cdpHost, cdpTerm);
 #endif
@@ -992,17 +992,17 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
         SLsmg_gotorc(iRow, iCol);
         usChar = hb_cdpGetU16Ctrl(usChar);
 #ifdef HB_SLN_UTF8
-        SLchar.color = s_colorTab[static_cast<HB_UCHAR>(iColor)];
+        SLchar.color = s_colorTab[static_cast<uint8_t>(iColor)];
         SLchar.nchars = 1;
         SLchar.wchars[0] = usChar;
 #else
-        SLchar = s_colorTab[static_cast<HB_UCHAR>(iColor)] | SLSMG_BUILD_CHAR(usChar, 0);
+        SLchar = s_colorTab[static_cast<uint8_t>(iColor)] | SLSMG_BUILD_CHAR(usChar, 0);
 #endif
         SLsmg_write_raw(&SLchar, 1);
         ++iCol;
       }
     } else {
-      HB_UCHAR uc;
+      uint8_t uc;
       while (iSize-- > 0) {
         if (!HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, false)) {
           break;

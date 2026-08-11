@@ -457,11 +457,11 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
     int i = iRow * _GetScreenWidth() + psrWin->Left;
     for (iCol = psrWin->Left; iCol <= psrWin->Right; ++iCol) {
 #if defined(UNICODE)
-      HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Attributes), 0,
+      HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, static_cast<uint8_t>(s_pCharInfoScreen[i].Attributes), 0,
                            s_pCharInfoScreen[i].Char.UnicodeChar);
 #else
-      uint16_t usChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Char.AsciiChar));
-      HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Attributes), bxAttr, usChar);
+      uint16_t usChar = hb_cdpGetU16(cdp, static_cast<uint8_t>(s_pCharInfoScreen[i].Char.AsciiChar));
+      HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, static_cast<uint8_t>(s_pCharInfoScreen[i].Attributes), bxAttr, usChar);
 #endif
       ++i;
     }
@@ -1269,7 +1269,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 #if defined(UNICODE)
         iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
 #else
-        iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
+        iChar = static_cast<uint8_t>(pInRec->Event.KeyEvent.uChar.AsciiChar);
 #endif
 
         // Under Win9x, upper row keys are affected by caps-lock
@@ -1621,7 +1621,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 #if defined(UNICODE)
         iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
 #else
-        iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
+        iChar = static_cast<uint8_t>(pInRec->Event.KeyEvent.uChar.AsciiChar);
 #endif
       }
 
@@ -2041,7 +2041,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
       }
       s_pCharInfoScreen[i].Char.UnicodeChar = hb_cdpGetU16Ctrl(usChar);
 #else
-      HB_UCHAR uc;
+      uint8_t uc;
       if (!HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, true)) {
         break;
       }

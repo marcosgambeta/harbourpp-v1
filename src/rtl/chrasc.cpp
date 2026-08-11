@@ -91,7 +91,7 @@ HB_FUNC(ASC)
     if (HB_CDP_ISCHARUNI(cdp)) {
       iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
     } else {
-      iChar = static_cast<HB_UCHAR>(szValue[0]);
+      iChar = static_cast<uint8_t>(szValue[0]);
     }
 
     hb_retni(iChar);

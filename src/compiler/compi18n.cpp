@@ -193,16 +193,16 @@ void hb_compI18nAddPlural(HB_COMP_DECL, const char **szTexts, HB_ULONG ulCount, 
 static void hb_compI18nEscapeString(FILE *file, const char *szText)
 {
   while (*szText) {
-    if (static_cast<HB_UCHAR>(*szText) < ' ') {
+    if (static_cast<uint8_t>(*szText) < ' ') {
       if (*szText == '\t') {
         fprintf(file, "\\t");
       } else if (*szText == '\n') {
         fprintf(file, "\\n");
       } else if (*szText == '\r') {
         fprintf(file, "\\r");
-      } else if ((static_cast<HB_UCHAR>(szText[1]) >= '0' && static_cast<HB_UCHAR>(szText[1]) <= '9') ||
-                 (static_cast<HB_UCHAR>(szText[1]) >= 'A' && static_cast<HB_UCHAR>(szText[1]) <= 'F') ||
-                 (static_cast<HB_UCHAR>(szText[1]) >= 'a' && static_cast<HB_UCHAR>(szText[1]) <= 'f')) {
+      } else if ((static_cast<uint8_t>(szText[1]) >= '0' && static_cast<uint8_t>(szText[1]) <= '9') ||
+                 (static_cast<uint8_t>(szText[1]) >= 'A' && static_cast<uint8_t>(szText[1]) <= 'F') ||
+                 (static_cast<uint8_t>(szText[1]) >= 'a' && static_cast<uint8_t>(szText[1]) <= 'f')) {
         fprintf(file, "\\%03o", *szText);
       } else {
         fprintf(file, "\\x%02X", *szText);

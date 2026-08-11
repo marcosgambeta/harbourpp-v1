@@ -137,8 +137,8 @@ HB_FUNC(HB_STRTOHEX)
 
     szPtr = szDest = static_cast<char *>(hb_xgrab(nDest + 1));
     do {
-      auto uc = static_cast<HB_UCHAR>(*szStr++);
-      HB_UCHAR ud;
+      auto uc = static_cast<uint8_t>(*szStr++);
+      uint8_t ud;
       ud = uc >> 4;
       *szPtr++ = ud + (ud < 10 ? '0' : 'A' - 10);
       ud = uc & 0x0F;

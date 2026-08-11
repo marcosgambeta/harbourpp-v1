@@ -81,7 +81,7 @@ static const HB_WCHAR s_uniCtrls[32] = {0x2007, 0x263A, 0x263B, 0x2665, 0x2666, 
                                         0x25BA, 0x25C4, 0x2195, 0x203C, 0x00B6, 0x00A7, 0x25AC, 0x21A8,
                                         0x2191, 0x2193, 0x2192, 0x2190, 0x221F, 0x2194, 0x25B2, 0x25BC};
 
-static HB_UCHAR *s_rev_ctrl = nullptr;
+static uint8_t *s_rev_ctrl = nullptr;
 
 static const HB_WCHAR s_uniCodes[NUMBER_OF_CHARS] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -119,7 +119,7 @@ static HB_CDP_LEN_FUNC(hb_cdpUTF8_len);
 
 static HB_UNITABLE hb_uniTbl_UTF8 = {HB_CPID_437, s_uniCodes, nullptr, 0};
 
-static HB_UCHAR s_en_buffer[0x300];
+static uint8_t s_en_buffer[0x300];
 
 // pseudo codepage for translations only
 static HB_CODEPAGE s_utf8_codepage = {"UTF8",
@@ -236,7 +236,7 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
 {
   HB_CDP_LOCK();
   if (uniTable->uniTrans == nullptr) {
-    HB_UCHAR *uniTrans;
+    uint8_t *uniTrans;
     HB_WCHAR wcMax;
     bool fLatinFallback = true;
     int i;
@@ -257,10 +257,10 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
         wcMax = wc;
       }
     }
-    uniTrans = static_cast<HB_UCHAR *>(hb_xgrabz((wcMax + 1) * sizeof(HB_UCHAR)));
+    uniTrans = static_cast<uint8_t *>(hb_xgrabz((wcMax + 1) * sizeof(uint8_t)));
     for (i = 0; i < 256; ++i) {
       if (uniTable->uniCodes[i]) {
-        uniTrans[uniTable->uniCodes[i]] = static_cast<HB_UCHAR>(i);
+        uniTrans[uniTable->uniCodes[i]] = static_cast<uint8_t>(i);
       }
     }
     if (fLatinFallback) {
@@ -279,9 +279,9 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
 
     if (s_rev_ctrl == nullptr) {
       wcMax = HB_MAX_CTRL_CODE;
-      s_rev_ctrl = static_cast<HB_UCHAR *>(hb_xgrabz((wcMax + 1) * sizeof(HB_UCHAR)));
+      s_rev_ctrl = static_cast<uint8_t *>(hb_xgrabz((wcMax + 1) * sizeof(uint8_t)));
       for (i = 0; i < 32; ++i) {
-        s_rev_ctrl[s_uniCtrls[i]] = static_cast<HB_UCHAR>(i);
+        s_rev_ctrl[s_uniCtrls[i]] = static_cast<uint8_t>(i);
       }
     }
   }
@@ -293,7 +293,7 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
 static HB_BOOL hb_cdpStd_get(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR *wc)
 {
   if (*pnIndex < nLen) {
-    auto uc = static_cast<HB_UCHAR>(pSrc[(*pnIndex)++]);
+    auto uc = static_cast<uint8_t>(pSrc[(*pnIndex)++]);
 
     *wc = cdp->uniTable->uniCodes[uc];
     if (*wc == 0) {
@@ -315,7 +315,7 @@ static HB_BOOL hb_cdpStd_put(HB_CODEPAGE *cdp, char *pDst, HB_SIZE nLen, HB_SIZE
     if (wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[wc]) {
       pDst[(*pnIndex)++] = cdp->uniTable->uniTrans[wc];
     } else {
-      pDst[(*pnIndex)++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<HB_UCHAR>(wc);
+      pDst[(*pnIndex)++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<uint8_t>(wc);
     }
 
     return true;
@@ -360,7 +360,7 @@ static int hb_cdpBin_cmpi(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenFir
   int iRet = 0;
 
   while (nLen--) {
-    HB_UCHAR u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst++)], u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond++)];
+    uint8_t u1 = cdp->upper[static_cast<uint8_t>(*szFirst++)], u2 = cdp->upper[static_cast<uint8_t>(*szSecond++)];
     if (u1 != u2) {
       iRet = (u1 < u2) ? -1 : 1;
       break;
@@ -387,17 +387,17 @@ static int hb_cdpStd_cmp(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenFirs
   nLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
   for (HB_SIZE nPos = 0; nPos < nLen; ++szFirst, ++szSecond, ++nPos) {
     if (*szFirst != *szSecond) {
-      n1 = static_cast<HB_UCHAR>(cdp->sort[static_cast<HB_UCHAR>(*szFirst)]);
-      n2 = static_cast<HB_UCHAR>(cdp->sort[static_cast<HB_UCHAR>(*szSecond)]);
+      n1 = static_cast<uint8_t>(cdp->sort[static_cast<uint8_t>(*szFirst)]);
+      n2 = static_cast<uint8_t>(cdp->sort[static_cast<uint8_t>(*szSecond)]);
       if (n1 != n2) {
         iRet = (n1 < n2) ? -1 : 1;
         break;
       }
       if (iAcc == 0 && (fExact || (nLenFirst == nLenSecond && cdp->acc))) {
         if (cdp->acc) {
-          iAcc = (cdp->acc[static_cast<HB_UCHAR>(*szFirst)] < cdp->acc[static_cast<HB_UCHAR>(*szSecond)]) ? -1 : 1;
+          iAcc = (cdp->acc[static_cast<uint8_t>(*szFirst)] < cdp->acc[static_cast<uint8_t>(*szSecond)]) ? -1 : 1;
         } else {
-          iAcc = (static_cast<HB_UCHAR>(*szFirst) < static_cast<HB_UCHAR>(*szSecond)) ? -1 : 1;
+          iAcc = (static_cast<uint8_t>(*szFirst) < static_cast<uint8_t>(*szSecond)) ? -1 : 1;
         }
       }
     }
@@ -424,12 +424,12 @@ static int hb_cdpStd_cmpi(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenFir
 
   nLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
   for (HB_SIZE nPos = 0; nPos < nLen; ++szFirst, ++szSecond, ++nPos) {
-    int u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst)];
-    int u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond)];
+    int u1 = cdp->upper[static_cast<uint8_t>(*szFirst)];
+    int u2 = cdp->upper[static_cast<uint8_t>(*szSecond)];
 
     if (u1 != u2) {
-      int n1 = static_cast<HB_UCHAR>(cdp->sort[u1]);
-      int n2 = static_cast<HB_UCHAR>(cdp->sort[u2]);
+      int n1 = static_cast<uint8_t>(cdp->sort[u1]);
+      int n2 = static_cast<uint8_t>(cdp->sort[u2]);
       if (n1 != n2) {
         iRet = (n1 < n2) ? -1 : 1;
         break;
@@ -493,13 +493,13 @@ static int hb_cdpUTF8_len(HB_CODEPAGE *cdp, HB_WCHAR wc)
 static HB_BOOL hb_cdpMulti_get(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR *wc)
 {
   if (*pnIndex < nLen) {
-    auto uc = static_cast<HB_UCHAR>(pSrc[(*pnIndex)++]);
+    auto uc = static_cast<uint8_t>(pSrc[(*pnIndex)++]);
 
     *wc = cdp->uniTable->uniCodes[uc];
     if (*wc == 0) {
       *wc = uc;
     } else if ((cdp->flags[uc] & HB_CDP_MULTI1) != 0 && *pnIndex < nLen) {
-      auto uc2 = static_cast<HB_UCHAR>(pSrc[*pnIndex + 1]);
+      auto uc2 = static_cast<uint8_t>(pSrc[*pnIndex + 1]);
       if ((cdp->flags[uc2] & HB_CDP_MULTI2) != 0) {
         for (auto i = 0; i < cdp->nMulti; ++i) {
           if (uc2 == cdp->multi[i].cLast[0] || uc2 == cdp->multi[i].cLast[1]) {
@@ -553,7 +553,7 @@ static HB_BOOL hb_cdpMulti_put(HB_CODEPAGE *cdp, char *pDst, HB_SIZE nLen, HB_SI
           return true;
         }
       }
-      pDst[(*pnIndex)++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<HB_UCHAR>(wc);
+      pDst[(*pnIndex)++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<uint8_t>(wc);
     }
     return true;
   }
@@ -599,12 +599,12 @@ static int hb_cdpMulti_cmp(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenFi
   for (HB_SIZE nPos = 0; nPos < nLen; ++szFirst, ++szSecond, ++nPos) {
     int n1, n2;
 
-    auto u1 = static_cast<HB_UCHAR>(*szFirst);
-    auto u2 = static_cast<HB_UCHAR>(*szSecond);
+    auto u1 = static_cast<uint8_t>(*szFirst);
+    auto u2 = static_cast<uint8_t>(*szSecond);
 
     n1 = cdp->sort[u1];
     if ((cdp->flags[u1] & HB_CDP_MULTI1) != 0 && (nPos < nLenFirst - 1) &&
-        (cdp->flags[static_cast<HB_UCHAR>(szFirst[1])] & HB_CDP_MULTI2) != 0) {
+        (cdp->flags[static_cast<uint8_t>(szFirst[1])] & HB_CDP_MULTI2) != 0) {
       n = hb_cdpMulti_weight(cdp, szFirst);
       if (n != 0) {
         n1 = n;
@@ -616,7 +616,7 @@ static int hb_cdpMulti_cmp(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenFi
     }
     n2 = cdp->sort[u2];
     if ((cdp->flags[u2] & HB_CDP_MULTI1) != 0 && (nPos < nLenSecond - 1) &&
-        (cdp->flags[static_cast<HB_UCHAR>(szSecond[1])] & HB_CDP_MULTI2) != 0) {
+        (cdp->flags[static_cast<uint8_t>(szSecond[1])] & HB_CDP_MULTI2) != 0) {
       n = hb_cdpMulti_weight(cdp, szSecond);
       if (n != 0) {
         n2 = n;
@@ -686,11 +686,11 @@ static int hb_cdpMulti_cmpi(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenF
   for (HB_SIZE nPos = 0; nPos < nLen; ++szFirst, ++szSecond, ++nPos) {
     int n, u1, u2, n1, n2;
 
-    u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst)];
-    u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond)];
+    u1 = cdp->upper[static_cast<uint8_t>(*szFirst)];
+    u2 = cdp->upper[static_cast<uint8_t>(*szSecond)];
 
     if ((cdp->flags[u1] & HB_CDP_MULTI1) != 0 && (nPos < nLenFirst - 1) &&
-        (cdp->flags[static_cast<HB_UCHAR>(szFirst[1])] & HB_CDP_MULTI2) != 0) {
+        (cdp->flags[static_cast<uint8_t>(szFirst[1])] & HB_CDP_MULTI2) != 0) {
       n = hb_cdpMulti_weightI(cdp, szFirst);
       if (n != 0) {
         n1 = n;
@@ -706,7 +706,7 @@ static int hb_cdpMulti_cmpi(HB_CODEPAGE *cdp, const char *szFirst, HB_SIZE nLenF
     }
 
     if ((cdp->flags[u2] & HB_CDP_MULTI1) != 0 && (nPos < nLenSecond - 1) &&
-        (cdp->flags[static_cast<HB_UCHAR>(szSecond[1])] & HB_CDP_MULTI2) != 0) {
+        (cdp->flags[static_cast<uint8_t>(szSecond[1])] & HB_CDP_MULTI2) != 0) {
       n = hb_cdpMulti_weightI(cdp, szSecond);
       if (n != 0) {
         n2 = n;
@@ -824,7 +824,7 @@ char *hb_strLower(char *szText, HB_SIZE nLen)
 
   if (cdp != nullptr) {
     for (HB_SIZE u = 0; u < nLen; u++) {
-      szText[u] = static_cast<char>(cdp->lower[static_cast<HB_UCHAR>(szText[u])]);
+      szText[u] = static_cast<char>(cdp->lower[static_cast<uint8_t>(szText[u])]);
     }
   } else {
     for (HB_SIZE u = 0; u < nLen; u++) {
@@ -845,7 +845,7 @@ char *hb_strUpper(char *szText, HB_SIZE nLen)
 
   if (cdp != nullptr) {
     for (HB_SIZE u = 0; u < nLen; u++) {
-      szText[u] = static_cast<char>(cdp->upper[static_cast<HB_UCHAR>(szText[u])]);
+      szText[u] = static_cast<char>(cdp->upper[static_cast<uint8_t>(szText[u])]);
     }
   } else {
     for (HB_SIZE u = 0; u < nLen; u++) {
@@ -874,10 +874,10 @@ HB_BOOL hb_strIsDigit(const char *szChar)
         return false;
       }
     } else {
-      return (cdp->flags[static_cast<HB_UCHAR>(*szChar)] & HB_CDP_DIGIT) != 0;
+      return (cdp->flags[static_cast<uint8_t>(*szChar)] & HB_CDP_DIGIT) != 0;
     }
   } else {
-    int iChar = static_cast<HB_UCHAR>(*szChar);
+    int iChar = static_cast<uint8_t>(*szChar);
     return HB_ISDIGIT(iChar);
   }
 }
@@ -896,10 +896,10 @@ HB_BOOL hb_strIsAlpha(const char *szChar)
         return false;
       }
     } else {
-      return (cdp->flags[static_cast<HB_UCHAR>(*szChar)] & HB_CDP_ALPHA) != 0;
+      return (cdp->flags[static_cast<uint8_t>(*szChar)] & HB_CDP_ALPHA) != 0;
     }
   } else {
-    int iChar = static_cast<HB_UCHAR>(*szChar);
+    int iChar = static_cast<uint8_t>(*szChar);
     return HB_ISALPHA(iChar);
   }
 }
@@ -918,10 +918,10 @@ HB_BOOL hb_strIsLower(const char *szChar)
         return false;
       }
     } else {
-      return (cdp->flags[static_cast<HB_UCHAR>(*szChar)] & HB_CDP_LOWER) != 0;
+      return (cdp->flags[static_cast<uint8_t>(*szChar)] & HB_CDP_LOWER) != 0;
     }
   } else {
-    int iChar = static_cast<HB_UCHAR>(*szChar);
+    int iChar = static_cast<uint8_t>(*szChar);
     return HB_ISLOWER(iChar);
   }
 }
@@ -940,17 +940,17 @@ HB_BOOL hb_strIsUpper(const char *szChar)
         return false;
       }
     } else {
-      return (cdp->flags[static_cast<HB_UCHAR>(*szChar)] & HB_CDP_UPPER) != 0;
+      return (cdp->flags[static_cast<uint8_t>(*szChar)] & HB_CDP_UPPER) != 0;
     }
   } else {
-    int iChar = static_cast<HB_UCHAR>(*szChar);
+    int iChar = static_cast<uint8_t>(*szChar);
     return HB_ISUPPER(iChar);
   }
 }
 
 // comparison
 
-const HB_UCHAR *hb_cdpGetSortTab(HB_CODEPAGE *cdp)
+const uint8_t *hb_cdpGetSortTab(HB_CODEPAGE *cdp)
 {
   return (cdp->nMulti == 0 && cdp->nACSort == 0 && cdp->wcharCmp == nullptr) ? cdp->sort : nullptr;
 }
@@ -1061,7 +1061,7 @@ int hb_cdpU16CharToUTF8(char *szUTF8, HB_WCHAR wc)
   return n;
 }
 
-HB_BOOL hb_cdpUTF8ToU16NextChar(HB_UCHAR ucChar, int *n, HB_WCHAR *pwc)
+HB_BOOL hb_cdpUTF8ToU16NextChar(uint8_t ucChar, int *n, HB_WCHAR *pwc)
 {
   if (*n > 0) {
     if ((ucChar & 0xc0) != 0x80) {
@@ -1107,7 +1107,7 @@ HB_BOOL hb_cdpUTF8GetU32(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WC
 
   if (nIndex < nLen) {
     HB_WCHAR32 wcMin = 0; // forbid overlong encodings
-    HB_UCHAR uc = static_cast<HB_UCHAR>(pSrc[nIndex++]);
+    uint8_t uc = static_cast<uint8_t>(pSrc[nIndex++]);
 
     if (uc < 0x80) {
       wc = uc;
@@ -1135,7 +1135,7 @@ HB_BOOL hb_cdpUTF8GetU32(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WC
         wcMin = 0x4000000;
       }
       while (n > 0 && nIndex < nLen) {
-        uc = static_cast<HB_UCHAR>(pSrc[nIndex]);
+        uc = static_cast<uint8_t>(pSrc[nIndex]);
         if ((uc & 0xc0) != 0x80) {
           break;
         }
@@ -1148,7 +1148,7 @@ HB_BOOL hb_cdpUTF8GetU32(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WC
     if (n != 0 || wc < wcMin) {
       wc = HB_CDP_ERROR_UNICHAR;
       while (n-- > 0 && nIndex < nLen) {
-        uc = static_cast<HB_UCHAR>(pSrc[nIndex]);
+        uc = static_cast<uint8_t>(pSrc[nIndex]);
         if (uc < 0x80 || (uc >= 0xc2 && uc <= 0xf4)) {
           break;
         }
@@ -1322,7 +1322,7 @@ char *hb_cdpUTF8StringSubstr(const char *pSrc, HB_SIZE nLen, HB_SIZE nFrom, HB_S
   return pDst;
 }
 
-HB_BOOL hb_cdpGetFromUTF8(HB_CODEPAGE *cdp, HB_UCHAR ch, int *n, HB_WCHAR *pwc)
+HB_BOOL hb_cdpGetFromUTF8(HB_CODEPAGE *cdp, uint8_t ch, int *n, HB_WCHAR *pwc)
 {
   if (hb_cdpUTF8ToU16NextChar(ch, n, pwc)) {
     if (*n == 0 && cdp) {
@@ -1332,7 +1332,7 @@ HB_BOOL hb_cdpGetFromUTF8(HB_CODEPAGE *cdp, HB_UCHAR ch, int *n, HB_WCHAR *pwc)
           char c;
 
           if (HB_CDPCHAR_PUT(cdp, &c, 1, &nSize, *pwc)) {
-            *pwc = static_cast<HB_UCHAR>(c);
+            *pwc = static_cast<uint8_t>(c);
           }
         }
       } else {
@@ -1341,7 +1341,7 @@ HB_BOOL hb_cdpGetFromUTF8(HB_CODEPAGE *cdp, HB_UCHAR ch, int *n, HB_WCHAR *pwc)
         }
 
         if (*pwc <= cdp->uniTable->wcMax) {
-          HB_UCHAR uc = cdp->uniTable->uniTrans[*pwc];
+          uint8_t uc = cdp->uniTable->uniTrans[*pwc];
           if (uc) {
             *pwc = uc;
           }
@@ -1373,7 +1373,7 @@ HB_SIZE hb_cdpStrAsUTF8Len(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, HB_
   } else {
     const HB_WCHAR *uniCodes = cdp->uniTable->uniCodes;
     for (nPosS = nPosD = 0; nPosS < nSrc; ++nPosS) {
-      auto uc = static_cast<HB_UCHAR>(pSrc[nPosS]);
+      auto uc = static_cast<uint8_t>(pSrc[nPosS]);
       HB_WCHAR wc = uniCodes[uc];
 
       if (wc == 0) {
@@ -1417,7 +1417,7 @@ HB_SIZE hb_cdpStrToUTF8(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, char *
   } else {
     const HB_WCHAR *uniCodes = cdp->uniTable->uniCodes;
     for (nPosS = nPosD = 0; nPosS < nSrc && nPosD < nDst; ++nPosS) {
-      auto uc = static_cast<HB_UCHAR>(pSrc[nPosS]);
+      auto uc = static_cast<uint8_t>(pSrc[nPosS]);
       HB_WCHAR wc = uniCodes[uc];
 
       if (wc == 0) {
@@ -1470,7 +1470,7 @@ HB_SIZE hb_cdpStrToUTF8Disp(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, ch
   } else {
     const HB_WCHAR *uniCodes = cdp->uniTable->uniCodes;
     for (nPosS = nPosD = 0; nPosS < nSrc && nPosD < nDst; ++nPosS) {
-      auto uc = static_cast<HB_UCHAR>(pSrc[nPosS]);
+      auto uc = static_cast<uint8_t>(pSrc[nPosS]);
       HB_WCHAR wc = uniCodes[uc];
 
       if (wc == 0) {
@@ -1545,7 +1545,7 @@ HB_SIZE hb_cdpUTF8ToStr(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, char *
       }
     }
   } else {
-    HB_UCHAR *uniTrans;
+    uint8_t *uniTrans;
 
     if (cdp->uniTable->uniTrans == nullptr) {
       hb_cdpBuildTransTable(cdp->uniTable);
@@ -1558,7 +1558,7 @@ HB_SIZE hb_cdpUTF8ToStr(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, char *
       if (wc <= wcMax && uniTrans[wc]) {
         pDst[nPosD++] = uniTrans[wc];
       } else {
-        pDst[nPosD++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<HB_UCHAR>(wc);
+        pDst[nPosD++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<uint8_t>(wc);
       }
     }
   }
@@ -1572,7 +1572,7 @@ HB_SIZE hb_cdpUTF8ToStr(HB_CODEPAGE *cdp, const char *pSrc, HB_SIZE nSrc, char *
 
 // U16 (hb wide char) conversions
 
-HB_WCHAR hb_cdpGetU16(HB_CODEPAGE *cdp, HB_UCHAR ch)
+HB_WCHAR hb_cdpGetU16(HB_CODEPAGE *cdp, uint8_t ch)
 {
   if (cdp != nullptr) {
     HB_WCHAR wc;
@@ -1590,7 +1590,7 @@ HB_WCHAR hb_cdpGetU16(HB_CODEPAGE *cdp, HB_UCHAR ch)
   }
 }
 
-HB_WCHAR hb_cdpGetWC(HB_CODEPAGE *cdp, HB_UCHAR ch, HB_WCHAR wcDef)
+HB_WCHAR hb_cdpGetWC(HB_CODEPAGE *cdp, uint8_t ch, HB_WCHAR wcDef)
 {
   if (cdp != nullptr) {
     if (HB_CDP_ISCUSTOM(cdp)) {
@@ -1608,7 +1608,7 @@ HB_WCHAR hb_cdpGetWC(HB_CODEPAGE *cdp, HB_UCHAR ch, HB_WCHAR wcDef)
   return wcDef;
 }
 
-HB_WCHAR hb_cdpGetU16Disp(HB_CODEPAGE *cdp, HB_UCHAR ch)
+HB_WCHAR hb_cdpGetU16Disp(HB_CODEPAGE *cdp, uint8_t ch)
 {
   if (cdp != nullptr) {
     HB_WCHAR wc;
@@ -1629,7 +1629,7 @@ HB_WCHAR hb_cdpGetU16Disp(HB_CODEPAGE *cdp, HB_UCHAR ch)
   }
 }
 
-HB_UCHAR hb_cdpGetChar(HB_CODEPAGE *cdp, HB_WCHAR wc)
+uint8_t hb_cdpGetChar(HB_CODEPAGE *cdp, HB_WCHAR wc)
 {
   if (cdp != nullptr) {
     if (HB_CDP_ISCUSTOM(cdp)) {
@@ -1640,7 +1640,7 @@ HB_UCHAR hb_cdpGetChar(HB_CODEPAGE *cdp, HB_WCHAR wc)
         if (!HB_CDPCHAR_PUT(cdp, &c, 1, &n, wc)) {
           wc = HB_CDP_ERROR_ASCCHAR;
         } else {
-          wc = static_cast<HB_UCHAR>(c);
+          wc = static_cast<uint8_t>(c);
         }
       } else {
         wc = HB_CDP_ERROR_ASCCHAR;
@@ -1651,17 +1651,17 @@ HB_UCHAR hb_cdpGetChar(HB_CODEPAGE *cdp, HB_WCHAR wc)
       }
 
       if (wc <= cdp->uniTable->wcMax) {
-        HB_UCHAR uc = cdp->uniTable->uniTrans[wc];
+        uint8_t uc = cdp->uniTable->uniTrans[wc];
         if (uc) {
           wc = uc;
         }
       }
     }
   }
-  return wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<HB_UCHAR>(wc);
+  return wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<uint8_t>(wc);
 }
 
-HB_UCHAR hb_cdpGetUC(HB_CODEPAGE *cdp, HB_WCHAR wc, HB_UCHAR ucDef)
+uint8_t hb_cdpGetUC(HB_CODEPAGE *cdp, HB_WCHAR wc, uint8_t ucDef)
 {
   if (cdp != nullptr) {
     if (HB_CDP_ISCUSTOM(cdp)) {
@@ -1669,7 +1669,7 @@ HB_UCHAR hb_cdpGetUC(HB_CODEPAGE *cdp, HB_WCHAR wc, HB_UCHAR ucDef)
         HB_SIZE n = 0;
         char c;
         if (HB_CDPCHAR_PUT(cdp, &c, 1, &n, wc)) {
-          ucDef = static_cast<HB_UCHAR>(c);
+          ucDef = static_cast<uint8_t>(c);
         }
       }
     } else {
@@ -1678,20 +1678,20 @@ HB_UCHAR hb_cdpGetUC(HB_CODEPAGE *cdp, HB_WCHAR wc, HB_UCHAR ucDef)
       }
 
       if (wc <= cdp->uniTable->wcMax) {
-        HB_UCHAR uc = cdp->uniTable->uniTrans[wc];
+        uint8_t uc = cdp->uniTable->uniTrans[wc];
         if (uc) {
           ucDef = uc;
         }
       }
       if (ucDef == 0 && wc <= HB_MAX_CTRL_CODE) {
-        HB_UCHAR uc = s_rev_ctrl[wc];
+        uint8_t uc = s_rev_ctrl[wc];
         if (uc) {
           ucDef = uc;
         }
       }
     }
   } else if (wc <= 0xFF) {
-    ucDef = static_cast<HB_UCHAR>(wc);
+    ucDef = static_cast<uint8_t>(wc);
   }
 
   return ucDef;
@@ -1778,7 +1778,7 @@ HB_SIZE hb_cdpStrToU16(HB_CODEPAGE *cdp, int iEndian, const char *pSrc, HB_SIZE 
   } else {
     uniCodes = cdp->uniTable->uniCodes;
     for (nPosS = nPosD = 0; nPosS < nSrc && nPosD < nDst; ++nPosS) {
-      auto uc = static_cast<HB_UCHAR>(pSrc[nPosS]);
+      auto uc = static_cast<uint8_t>(pSrc[nPosS]);
       HB_WCHAR wc = uniCodes[uc];
 
       if (wc == 0) {
@@ -1861,7 +1861,7 @@ HB_SIZE hb_cdpU16AsStrLen(HB_CODEPAGE *cdp, const HB_WCHAR *pSrc, HB_SIZE nSrc, 
 
 HB_SIZE hb_cdpU16ToStr(HB_CODEPAGE *cdp, int iEndian, const HB_WCHAR *pSrc, HB_SIZE nSrc, char *pDst, HB_SIZE nDst)
 {
-  HB_UCHAR *uniTrans;
+  uint8_t *uniTrans;
   HB_WCHAR wcMax, wc;
   HB_SIZE nPosS, nPosD;
 
@@ -1935,7 +1935,7 @@ HB_SIZE hb_cdpU16ToStr(HB_CODEPAGE *cdp, int iEndian, const HB_WCHAR *pSrc, HB_S
       if (wc <= wcMax && uniTrans[wc]) {
         pDst[nPosD++] = uniTrans[wc];
       } else {
-        pDst[nPosD++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<HB_UCHAR>(wc);
+        pDst[nPosD++] = wc >= 0x100 ? HB_CDP_ERROR_ASCCHAR : static_cast<uint8_t>(wc);
       }
     }
   }
@@ -1997,7 +1997,7 @@ HB_SIZE hb_cdpTransTo(const char *pSrc, HB_SIZE nSrc, char *pDst, HB_SIZE nDst, 
         }
       }
     } else {
-      HB_UCHAR *uniTrans;
+      uint8_t *uniTrans;
       HB_WCHAR wcMax;
 
       if (cdpOut->uniTable->uniTrans == nullptr) {
@@ -2010,7 +2010,7 @@ HB_SIZE hb_cdpTransTo(const char *pSrc, HB_SIZE nSrc, char *pDst, HB_SIZE nDst, 
         nSrc = nDst;
       }
       for (nSize = 0; nSize < nSrc; ++nSize) {
-        auto uc = static_cast<HB_UCHAR>(pSrc[nSize]);
+        auto uc = static_cast<uint8_t>(pSrc[nSize]);
         HB_WCHAR wc = cdpIn->uniTable->uniCodes[uc];
         if (wc && wc <= wcMax && uniTrans[wc]) {
           uc = uniTrans[wc];
@@ -2044,7 +2044,7 @@ int hb_cdpTranslateChar(int iChar, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut)
       if (HB_CDPCHAR_GET(cdpIn, &c, 1, &n, &wc)) {
         if (HB_CDPCHAR_PUT(cdpOut, &c, 1, &n, wc)) {
           if (c != HB_CDP_ERROR_ASCCHAR)
-            iChar = static_cast<HB_UCHAR>(c);
+            iChar = static_cast<uint8_t>(c);
         }
       }
     } else {
@@ -2087,7 +2087,7 @@ int hb_cdpTranslateDispChar(int iChar, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut)
       }
       if (HB_CDPCHAR_PUT(cdpOut, &c, 1, &n, wc)) {
         if (c != HB_CDP_ERROR_ASCCHAR) {
-          iChar = static_cast<HB_UCHAR>(c);
+          iChar = static_cast<uint8_t>(c);
         }
       }
     } else {
@@ -2218,7 +2218,7 @@ char *hb_cdpnDupUpper(HB_CODEPAGE *cdp, const char *pszText, HB_SIZE *pnSize)
       }
     } else {
       for (HB_SIZE n = 0; n < nSize; n++) {
-        pszDst[n] = static_cast<char>(cdp->upper[static_cast<HB_UCHAR>(pszText[n])]);
+        pszDst[n] = static_cast<char>(cdp->upper[static_cast<uint8_t>(pszText[n])]);
       }
     }
   } else {
@@ -2257,7 +2257,7 @@ char *hb_cdpnDupLower(HB_CODEPAGE *cdp, const char *pszText, HB_SIZE *pnSize)
       }
     } else {
       for (HB_SIZE n = 0; n < nSize; n++) {
-        pszDst[n] = static_cast<char>(cdp->lower[static_cast<HB_UCHAR>(pszText[n])]);
+        pszDst[n] = static_cast<char>(cdp->lower[static_cast<uint8_t>(pszText[n])]);
       }
     }
   } else {
@@ -2280,7 +2280,7 @@ HB_SIZE hb_cdpnDup2Upper(HB_CODEPAGE *cdp, const char *pszText, HB_SIZE nSize, c
     }
   } else if (!HB_CDP_ISCUSTOM(cdp) || !cdp->wcharUpper) {
     for (HB_SIZE n = 0; n < nMax; n++) {
-      pBuffer[n] = static_cast<char>(cdp->upper[static_cast<HB_UCHAR>(pszText[n])]);
+      pBuffer[n] = static_cast<char>(cdp->upper[static_cast<uint8_t>(pszText[n])]);
     }
   } else {
     HB_SIZE nS = 0;
@@ -2312,7 +2312,7 @@ HB_SIZE hb_cdpnDup2Lower(HB_CODEPAGE *cdp, const char *pszText, HB_SIZE nSize, c
     }
   } else if (!HB_CDP_ISCUSTOM(cdp) || !cdp->wcharLower) {
     for (HB_SIZE n = 0; n < nMax; n++) {
-      pBuffer[n] = static_cast<char>(cdp->lower[static_cast<HB_UCHAR>(pszText[n])]);
+      pBuffer[n] = static_cast<char>(cdp->lower[static_cast<uint8_t>(pszText[n])]);
     }
   } else {
     HB_SIZE nS = 0;
@@ -2429,10 +2429,10 @@ HB_WCHAR hb_cdpTextGetU16(HB_CODEPAGE *cdp, const char *szText, HB_SIZE nLen)
           wc = 0;
         }
       } else {
-        wc = cdp->uniTable->uniCodes[static_cast<HB_UCHAR>(*szText)];
+        wc = cdp->uniTable->uniCodes[static_cast<uint8_t>(*szText)];
       }
     } else {
-      wc = static_cast<HB_UCHAR>(*szText);
+      wc = static_cast<uint8_t>(*szText);
     }
   }
 
@@ -2453,7 +2453,7 @@ HB_SIZE hb_cdpTextPutU16(HB_CODEPAGE *cdp, char *szText, HB_SIZE nSize, HB_WCHAR
         }
 
         if (wc <= cdp->uniTable->wcMax) {
-          HB_UCHAR uc = cdp->uniTable->uniTrans[wc];
+          uint8_t uc = cdp->uniTable->uniTrans[wc];
           if (uc) {
             szText[nLen++] = uc;
           }
@@ -2491,10 +2491,10 @@ HB_BOOL hb_cdpCharCaseEq(HB_CODEPAGE *cdp, const char *szText1, HB_SIZE nLen1, H
 {
   if (*pnPos1 < nLen1 && *pnPos2 < nLen2) {
     if (cdp == nullptr) {
-      HB_UCHAR uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
+      uint8_t uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
       return HB_TOUPPER(uc1) == HB_TOUPPER(uc2);
     } else if (!HB_CDP_ISCUSTOM(cdp) || !cdp->wcharUpper) {
-      HB_UCHAR uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
+      uint8_t uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
       return cdp->upper[uc1] == cdp->upper[uc2];
     } else {
       HB_WCHAR wc1, wc2;
@@ -2508,10 +2508,10 @@ HB_BOOL hb_cdpCharCaseEq(HB_CODEPAGE *cdp, const char *szText1, HB_SIZE nLen1, H
 
 // CP management
 
-static HB_UCHAR hb_cdpUtf8Char(const char **pStrPtr, PHB_UNITABLE uniTable)
+static uint8_t hb_cdpUtf8Char(const char **pStrPtr, PHB_UNITABLE uniTable)
 {
   const char *pszString = *pStrPtr;
-  HB_UCHAR uc = 0;
+  uint8_t uc = 0;
 
   if (*pszString) {
     HB_SIZE nIndex = 0;
@@ -2519,12 +2519,12 @@ static HB_UCHAR hb_cdpUtf8Char(const char **pStrPtr, PHB_UNITABLE uniTable)
 
     if (hb_cdpUTF8GetU16(pszString, hb_strnlen(pszString, 6), &nIndex, &wc)) {
       if (wc < 127) {
-        uc = static_cast<HB_UCHAR>(wc);
+        uc = static_cast<uint8_t>(wc);
       } else {
         int n;
         for (n = 0; n < 256; ++n) {
           if (wc == uniTable->uniCodes[n]) {
-            uc = static_cast<HB_UCHAR>(n);
+            uc = static_cast<uint8_t>(n);
             break;
           }
         }
@@ -2542,7 +2542,7 @@ static HB_UCHAR hb_cdpUtf8Char(const char **pStrPtr, PHB_UNITABLE uniTable)
   return uc;
 }
 
-#define _HB_CDP_GETUC(p) (!fUtf8 ? static_cast<HB_UCHAR>(*(p) ? *(p)++ : 0) : hb_cdpUtf8Char(&(p), uniTable))
+#define _HB_CDP_GETUC(p) (!fUtf8 ? static_cast<uint8_t>(*(p) ? *(p)++ : 0) : hb_cdpUtf8Char(&(p), uniTable))
 
 static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITABLE uniTable, const char *pszUpper,
                                      const char *pszLower, unsigned int nACSort, unsigned int nCaseSort, HB_BOOL fUtf8)
@@ -2550,10 +2550,10 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
   bool lSort, fError;
   int iMulti, iAcc, iAccUp, iAccLo, iSortUp, iSortLo, i;
   const char *pup, *plo;
-  HB_UCHAR ucUp, ucLo, ucUp2, ucLo2;
+  uint8_t ucUp, ucLo, ucUp2, ucLo2;
   HB_SIZE nSize, ul;
-  HB_UCHAR *buffer, *flags, *upper, *lower, *sort, *acc;
-  HB_UCHAR used[256];
+  uint8_t *buffer, *flags, *upper, *lower, *sort, *acc;
+  uint8_t used[256];
   HB_CODEPAGE *cdp;
   PHB_MULTICHAR multi;
 
@@ -2574,7 +2574,7 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
     }
 
     if (ucUp == '.') {
-      HB_UCHAR ucU1, ucU2, ucL1, ucL2;
+      uint8_t ucU1, ucU2, ucL1, ucL2;
 
       ucU1 = _HB_CDP_GETUC(pup);
       ucU2 = _HB_CDP_GETUC(pup);
@@ -2683,7 +2683,7 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
     nSize += iMulti * sizeof(HB_MULTICHAR);
   }
 
-  buffer = static_cast<HB_UCHAR *>(hb_xgrabz(nSize));
+  buffer = static_cast<uint8_t *>(hb_xgrabz(nSize));
   cdp = reinterpret_cast<HB_CODEPAGE *>(&buffer[ul]);
   cdp->buffer = buffer;
 
@@ -2724,8 +2724,8 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
     if (HB_ISLOWER(i)) {
       flags[i] |= HB_CDP_LOWER;
     }
-    upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
-    lower[i] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
+    upper[i] = static_cast<uint8_t>(HB_TOUPPER(i));
+    lower[i] = static_cast<uint8_t>(HB_TOLOWER(i));
   }
 
   iAccUp = iAccLo = 0;
@@ -2743,13 +2743,13 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
       multi->cFirst[1] = _HB_CDP_GETUC(plo);
       multi->cLast[1] = _HB_CDP_GETUC(plo);
       if (multi->cFirst[0] != ' ') {
-        flags[static_cast<HB_UCHAR>(multi->cFirst[0])] |= HB_CDP_MULTI1;
-        flags[static_cast<HB_UCHAR>(multi->cLast[0])] |= HB_CDP_MULTI2;
+        flags[static_cast<uint8_t>(multi->cFirst[0])] |= HB_CDP_MULTI1;
+        flags[static_cast<uint8_t>(multi->cLast[0])] |= HB_CDP_MULTI2;
         multi->sortUp = ++iSortUp - iAccUp;
       }
       if (multi->cFirst[1] != ' ') {
-        flags[static_cast<HB_UCHAR>(multi->cFirst[1])] |= HB_CDP_MULTI1;
-        flags[static_cast<HB_UCHAR>(multi->cLast[1])] |= HB_CDP_MULTI2;
+        flags[static_cast<uint8_t>(multi->cFirst[1])] |= HB_CDP_MULTI1;
+        flags[static_cast<uint8_t>(multi->cLast[1])] |= HB_CDP_MULTI2;
 
         if (nCaseSort == HB_CDP_CSSORT_UPLO) {
           ++iSortLo;
@@ -2801,9 +2801,9 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
             if (iAcc && nACSort != HB_CDP_ACSORT_NONE) {
               ++iAccUp;
             }
-            sort[ucUp] = static_cast<HB_UCHAR>(++iSortUp - iAccUp);
+            sort[ucUp] = static_cast<uint8_t>(++iSortUp - iAccUp);
             if (acc) {
-              acc[ucUp] = static_cast<HB_UCHAR>(iSortUp);
+              acc[ucUp] = static_cast<uint8_t>(iSortUp);
             }
             if (ucUp2 > ucUp) {
               ucUp2 = ucUp;
@@ -2835,9 +2835,9 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
               iAccLo = iAccUp;
               iSortLo = iSortUp;
             }
-            sort[ucLo] = static_cast<HB_UCHAR>(iSortLo - iAccLo);
+            sort[ucLo] = static_cast<uint8_t>(iSortLo - iAccLo);
             if (acc) {
-              acc[ucLo] = static_cast<HB_UCHAR>(iSortLo);
+              acc[ucLo] = static_cast<uint8_t>(iSortLo);
             }
             if (ucLo2 > ucLo) {
               ucLo2 = ucLo;
@@ -2900,9 +2900,9 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
         iAdd = iUp + iLo;
       }
 
-      sort[i] += static_cast<HB_UCHAR>(iAdd);
+      sort[i] += static_cast<uint8_t>(iAdd);
       if (acc) {
-        acc[i] += static_cast<HB_UCHAR>(iAdd);
+        acc[i] += static_cast<uint8_t>(iAdd);
       }
     }
     for (i = 0; i < cdp->nMulti; ++i) {
@@ -2940,12 +2940,12 @@ static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITA
 static HB_CODEPAGE **hb_cdpFindPos(const char *id)
 {
   if (s_cdpList == nullptr) {
-    HB_UCHAR *flags, *upper, *lower;
+    uint8_t *flags, *upper, *lower;
 
     memset(s_en_buffer, '\0', 0x300);
-    s_en_codepage.flags = flags = static_cast<HB_UCHAR *>(s_en_buffer);
-    s_en_codepage.upper = upper = static_cast<HB_UCHAR *>(s_en_buffer) + 0x100;
-    s_en_codepage.lower = lower = static_cast<HB_UCHAR *>(s_en_buffer) + 0x200;
+    s_en_codepage.flags = flags = static_cast<uint8_t *>(s_en_buffer);
+    s_en_codepage.upper = upper = static_cast<uint8_t *>(s_en_buffer) + 0x100;
+    s_en_codepage.lower = lower = static_cast<uint8_t *>(s_en_buffer) + 0x200;
     for (auto i = 0; i < 0x100; ++i) {
       if (HB_ISDIGIT(i)) {
         flags[i] |= HB_CDP_DIGIT;
@@ -2959,8 +2959,8 @@ static HB_CODEPAGE **hb_cdpFindPos(const char *id)
       if (HB_ISLOWER(i)) {
         flags[i] |= HB_CDP_LOWER;
       }
-      upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
-      lower[i] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
+      upper[i] = static_cast<uint8_t>(HB_TOUPPER(i));
+      lower[i] = static_cast<uint8_t>(HB_TOLOWER(i));
     }
     s_utf8_codepage.flags = s_en_codepage.flags;
     s_utf8_codepage.upper = s_en_codepage.upper;

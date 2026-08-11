@@ -1424,7 +1424,7 @@ static HBITMAP hb_gt_wvt_GetBoxChar(PHB_GTWVT pWVT, uint16_t *puc16)
     } else {
       iTrans = 0;
     }
-    pWVT->boxIndex[iPos] = static_cast<HB_UCHAR>(iTrans);
+    pWVT->boxIndex[iPos] = static_cast<uint8_t>(iTrans);
   }
 
   return pWVT->boxImage[iTrans];
@@ -2752,7 +2752,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT)
         pWVT->TextLine[len++] = static_cast<TCHAR>(usChar);
       }
 #else
-      HB_UCHAR uc;
+      uint8_t uc;
       if (!HB_GTSELF_GETSCRUC(pWVT->pGT, iRow, iCol, &iColor, &bAttr, &uc, true)) {
         break;
       }

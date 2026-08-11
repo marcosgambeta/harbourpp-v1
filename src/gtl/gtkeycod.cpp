@@ -626,7 +626,7 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, HB_CODEPAGE *cdp)
       iKey += 'A' - 1;
     } else if (iKey <= 255 && (iKey >= 128 || (iFlags & (HB_KF_CTRL | HB_KF_ALT)) == 0)) {
       if (cdp) {
-        int uc = hb_cdpGetWC(cdp, static_cast<HB_UCHAR>(iKey), 0);
+        int uc = hb_cdpGetWC(cdp, static_cast<uint8_t>(iKey), 0);
         if (uc) {
           return HB_INKEY_NEW_UNICODEF(uc, iFlags);
         }

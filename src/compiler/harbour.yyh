@@ -175,13 +175,13 @@ union YYSTYPE
    struct
    {
       HB_MAXINT lNumber;   /* to hold a long number returned by lex */
-      HB_UCHAR  bWidth;    /* to hold the width of the value */
+      uint8_t  bWidth;    /* to hold the width of the value */
    } valLong;
    struct
    {
       double   dNumber;    /* to hold a double number returned by lex */
-      HB_UCHAR bWidth;     /* to hold the width of the value */
-      HB_UCHAR bDec;       /* to hold the number of decimal points in the value */
+      uint8_t bWidth;     /* to hold the width of the value */
+      uint8_t bDec;       /* to hold the number of decimal points in the value */
    } valDouble;
    struct
    {

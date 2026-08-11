@@ -418,7 +418,7 @@ HB_BOOL hb_cdpCharCaseEq(HB_CODEPAGE *cdp, const char *szText1, HB_SIZE nLen1, H
   HB_SYMBOL_UNUSED(cdp);
 
   if (*pnPos1 < nLen1 && *pnPos2 < nLen2) {
-    HB_UCHAR uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
+    uint8_t uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
     return HB_TOUPPER(uc1) == HB_TOUPPER(uc2);
   } else {
     return false;

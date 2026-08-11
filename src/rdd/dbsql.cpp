@@ -146,7 +146,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
       if (*szVal == *szDelim || *szVal == *szEsc) {
         hb_addToFBuffer(pFileBuf, *szEsc);
       }
-      if (static_cast<HB_UCHAR>(*szVal) >= 32) {
+      if (static_cast<uint8_t>(*szVal) >= 32) {
         hb_addToFBuffer(pFileBuf, *szVal);
       } else {
 #if 0

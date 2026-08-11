@@ -418,11 +418,11 @@ static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, b
 
       while ((c = *tmp++) != 0) {
         if (HB_ISNEXTIDCHAR(c)) {
-          fputc(static_cast<HB_UCHAR>(c), yyc);
+          fputc(static_cast<uint8_t>(c), yyc);
         } else if (!fStrip || c != '$' || *tmp != 0) {
           // 'x' is used to force unique name and eliminate possible
           // collisions with other function names.
-          fprintf(yyc, "x%02x", static_cast<HB_UCHAR>(c));
+          fprintf(yyc, "x%02x", static_cast<uint8_t>(c));
         }
       }
       if (iFuncSuffix) {
@@ -430,7 +430,7 @@ static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, b
       }
       i += 2;
     } else {
-      fputc(static_cast<HB_UCHAR>(cDecor[i]), yyc);
+      fputc(static_cast<uint8_t>(cDecor[i]), yyc);
       i++;
     }
   }
@@ -1374,14 +1374,14 @@ static HB_GENC_FUNC(hb_p_pushdouble)
   fprintf(cargo->yyc, "\tHB_P_PUSHDOUBLE,");
   ++nPCodePos;
   for (auto i = 0; i < static_cast<int32_t>(sizeof(double) + sizeof(uint8_t) + sizeof(uint8_t)); ++i) {
-    fprintf(cargo->yyc, " %u,", static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + i]));
+    fprintf(cargo->yyc, " %u,", static_cast<uint8_t>(pFunc->pCode[nPCodePos + i]));
   }
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %.*f, %u, %u",
-            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(uint8_t)]),
+            static_cast<uint8_t>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(uint8_t)]),
             HB_PCODE_MKDOUBLE(&pFunc->pCode[nPCodePos]),
-            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double)]),
-            static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(uint8_t)]));
+            static_cast<uint8_t>(pFunc->pCode[nPCodePos + sizeof(double)]),
+            static_cast<uint8_t>(pFunc->pCode[nPCodePos + sizeof(double) + sizeof(uint8_t)]));
   }
   fprintf(cargo->yyc, "\n");
 

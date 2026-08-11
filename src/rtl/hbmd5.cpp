@@ -231,7 +231,7 @@ static void hb_md5val(HB_U32 accum[], char *md5val)
 static void hb_md5_count(const void *data, HB_SIZE nLen, char *digest, const void *init_block)
 {
   auto ucdata = static_cast<const unsigned char *>(data);
-  HB_UCHAR buf[128];
+  uint8_t buf[128];
   MD5_BUF md5;
   HB_ISIZ i, n;
 
@@ -265,10 +265,10 @@ static void hb_md5_count(const void *data, HB_SIZE nLen, char *digest, const voi
     memcpy(md5.buf, buf, 64);
     hb_md5go(&md5);
   }
-  buf[i++] = static_cast<HB_UCHAR>((nLen << 3) & 0xF8);
+  buf[i++] = static_cast<uint8_t>((nLen << 3) & 0xF8);
   nLen >>= 5;
   for (n = 7; n; --n) {
-    buf[i++] = static_cast<HB_UCHAR>(nLen & 0xFF);
+    buf[i++] = static_cast<uint8_t>(nLen & 0xFF);
     nLen >>= 8;
   }
   memcpy(md5.buf, buf + i - 64, 64);
@@ -329,7 +329,7 @@ HB_BOOL hb_md5file(const char *pszFileName, char *digest)
     HB_SIZE n;
     int i;
     HB_FOFFSET flen = 0;
-    HB_UCHAR buf[128];
+    uint8_t buf[128];
     auto readbuf = static_cast<uint8_t *>(hb_xgrab(MAX_FBUF));
 
     hb_md5accinit(md5.accum);
@@ -368,10 +368,10 @@ HB_BOOL hb_md5file(const char *pszFileName, char *digest)
       memcpy(md5.buf, buf, 64);
       hb_md5go(&md5);
     }
-    buf[i++] = static_cast<HB_UCHAR>((flen << 3) & 0xF8);
+    buf[i++] = static_cast<uint8_t>((flen << 3) & 0xF8);
     flen >>= 5;
     for (n = 7; n; --n) {
-      buf[i++] = static_cast<HB_UCHAR>(flen & 0xFF);
+      buf[i++] = static_cast<uint8_t>(flen & 0xFF);
       flen >>= 8;
     }
     memcpy(md5.buf, buf + i - 64, 64);

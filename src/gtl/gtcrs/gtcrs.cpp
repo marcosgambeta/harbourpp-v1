@@ -2700,7 +2700,7 @@ static void hb_gt_crs_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   if (s_ioBase) {
     int iColor;
     uint8_t bAttr;
-    HB_UCHAR uc;
+    uint8_t uc;
     chtype ch;
 
     wmove(s_ioBase->hb_stdscr, iRow, iCol);

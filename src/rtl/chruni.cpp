@@ -97,7 +97,7 @@ HB_FUNC(HB_BCODE)
   auto szText = hb_parc(1);
 
   if (szText != nullptr) {
-    hb_retni(static_cast<HB_UCHAR>(szText[0]));
+    hb_retni(static_cast<uint8_t>(szText[0]));
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -164,7 +164,7 @@ HB_FUNC(HB_BPEEK)
 
   if (pText && HB_ISNUM(2)) {
     HB_SIZE nPos = hb_parns(2);
-    hb_retni((nPos > 0 && nPos <= pText->getCLen()) ? static_cast<HB_UCHAR>(pText->getCPtr()[nPos - 1]) : 0);
+    hb_retni((nPos > 0 && nPos <= pText->getCLen()) ? static_cast<uint8_t>(pText->getCPtr()[nPos - 1]) : 0);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

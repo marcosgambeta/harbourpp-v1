@@ -289,7 +289,7 @@ struct XWND_DEF
 
   // character translation table, it changes some characters in screen buffer into graphs primitives
   XWC_CharTrans boxTrans[HB_BOXCH_TRANS_MAX];
-  HB_UCHAR boxIndex[HB_BOXCH_TRANS_COUNT];
+  uint8_t boxIndex[HB_BOXCH_TRANS_COUNT];
   int boxCount;
 
   bool fInvalidChr;

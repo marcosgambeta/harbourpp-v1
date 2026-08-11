@@ -411,7 +411,7 @@ static HB_CRITICAL_NEW(s_hsxMtx);
 #endif
 
 /* the conversion table for ASCII alpha pairs */
-static const HB_UCHAR hb_hsxHashArray[] = {
+static const uint8_t hb_hsxHashArray[] = {
     /*        A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R   S   T   U   W   V   X   Y   Z */
     /* A */ 7,   102, 222, 185, 19,  48,  167, 4,   173, 4,   79,  251, 194,
     250,         7,   187, 7,   251, 209, 249, 41,  101, 39,  29,  71,  40,
@@ -473,8 +473,8 @@ static int hb_hsxHashVal(int c1, int c2, int iKeyBits, bool fNoCase, int iFilter
   if (fNoCase) {
     if (iFilter == 3) {
       auto cdp = hb_vmCDP();
-      c1 = static_cast<HB_UCHAR>(cdp->upper[c1]);
-      c2 = static_cast<HB_UCHAR>(cdp->upper[c2]);
+      c1 = static_cast<uint8_t>(cdp->upper[c1]);
+      c2 = static_cast<uint8_t>(cdp->upper[c2]);
     } else {
       if (c1 >= 'a' && c1 <= 'z') {
         c1 -= 'a' - 'A';
@@ -517,15 +517,15 @@ static void hb_hsxHashStr(const char *pStr, HB_SIZE nLen, uint8_t *pKey, int iKe
 #if 0
 /* This code keeps the strict CFTS behavior which stops string
    manipulating at first Chr(0) character */
-   if( pStr && nLen-- && (c1 = static_cast<HB_UCHAR>(*pStr++)) != 0 ) {
+   if( pStr && nLen-- && (c1 = static_cast<uint8_t>(*pStr++)) != 0 ) {
       int c2;
-      while( nLen-- && (c2 = static_cast<HB_UCHAR>(*pStr++)) != 0 ) {
+      while( nLen-- && (c2 = static_cast<uint8_t>(*pStr++)) != 0 ) {
 #else
   /* This version can work well with embedded 0 characters */
   if (pStr && nLen--) {
-    c1 = static_cast<HB_UCHAR>(*pStr++);
+    c1 = static_cast<uint8_t>(*pStr++);
     while (nLen--) {
-      int c2 = static_cast<HB_UCHAR>(*pStr++);
+      int c2 = static_cast<uint8_t>(*pStr++);
 #endif
       int iBitNum = hb_hsxHashVal(c1, c2, iKeyBits, fNoCase, iFilter, fUseHash);
       if (iBitNum--) {
@@ -539,7 +539,7 @@ static void hb_hsxHashStr(const char *pStr, HB_SIZE nLen, uint8_t *pKey, int iKe
 static int hb_hsxStrCmp(const char *pSub, HB_SIZE nSub, const char *pStr, HB_SIZE nLen, bool fNoCase, int iFilter)
 {
   auto fResult = false;
-  HB_UCHAR c1, c2;
+  uint8_t c1, c2;
 
   if (nSub == 0) {
     return HSX_SUCCESSFALSE;
@@ -549,13 +549,13 @@ static int hb_hsxStrCmp(const char *pSub, HB_SIZE nSub, const char *pStr, HB_SIZ
     HB_SIZE nPos;
     fResult = true;
     for (nPos = 0; fResult && nPos < nSub; nPos++) {
-      c1 = static_cast<HB_UCHAR>(pSub[nPos]);
-      c2 = static_cast<HB_UCHAR>(pStr[nPos]);
+      c1 = static_cast<uint8_t>(pSub[nPos]);
+      c2 = static_cast<uint8_t>(pStr[nPos]);
       if (fNoCase) {
         if (iFilter == 3) {
           auto cdp = hb_vmCDP();
-          c1 = static_cast<HB_UCHAR>(cdp->upper[c1]);
-          c2 = static_cast<HB_UCHAR>(cdp->upper[c2]);
+          c1 = static_cast<uint8_t>(cdp->upper[c1]);
+          c2 = static_cast<uint8_t>(cdp->upper[c2]);
         } else {
           if (c1 >= 'a' && c1 <= 'z') {
             c1 -= 'a' - 'A';

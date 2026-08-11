@@ -2757,7 +2757,7 @@ int32_t hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
     } else {
       do {
         if (*szFirst != *szSecond) {
-          iRet = (static_cast<HB_UCHAR>(*szFirst) < static_cast<HB_UCHAR>(*szSecond)) ? -1 : 1;
+          iRet = (static_cast<uint8_t>(*szFirst) < static_cast<uint8_t>(*szSecond)) ? -1 : 1;
           break;
         }
         szFirst++;
@@ -2826,8 +2826,8 @@ int32_t hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
       iRet = hb_cdpicmp(szFirst, nLenFirst, szSecond, nLenSecond, cdp, bForceExact);
     } else {
       do {
-        int32_t i1 = HB_TOUPPER(static_cast<HB_UCHAR>(*szFirst));
-        int32_t i2 = HB_TOUPPER(static_cast<HB_UCHAR>(*szSecond));
+        int32_t i1 = HB_TOUPPER(static_cast<uint8_t>(*szFirst));
+        int32_t i2 = HB_TOUPPER(static_cast<uint8_t>(*szSecond));
         if (i1 != i2) {
           iRet = (i1 < i2) ? -1 : 1;
           break;
@@ -3215,7 +3215,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     buffer[1] = 'x';
     buffer[--size] = '\0';
     do {
-      auto uc = static_cast<HB_UCHAR>(addr & 0xf);
+      auto uc = static_cast<uint8_t>(addr & 0xf);
       buffer[--size] = static_cast<char>(uc + (uc < 10 ? '0' : 'A' - 10));
       addr >>= 4;
     } while (size > 2);

@@ -76,16 +76,16 @@ HB_FUNC(HB_STRREPLACE)
       if (nText > 1024) {
         ptrOpt = static_cast<HB_SIZE *>(hb_xgrabz(256 * sizeof(HB_SIZE)));
         for (nAt = 0; nAt < nSrc; ++nAt) {
-          HB_UCHAR uc;
+          uint8_t uc;
 
           if (pszSrc) {
-            uc = static_cast<HB_UCHAR>(pszSrc[nAt]);
+            uc = static_cast<uint8_t>(pszSrc[nAt]);
           } else {
             PHB_ITEM pItem = pSrc->isHash() ? hb_hashGetKeyAt(pSrc, nAt + 1) : hb_arrayGetItemPtr(pSrc, nAt + 1);
             if (hb_itemGetCLen(pItem) == 0) {
               continue;
             }
-            uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pItem)[0]);
+            uc = static_cast<uint8_t>(hb_itemGetCPtr(pItem)[0]);
           }
           if (ptrOpt[uc] == 0) {
             ptrOpt[uc] = nAt + 1;
@@ -98,7 +98,7 @@ HB_FUNC(HB_STRREPLACE)
       nSize = nPos = nSkip = 0;
       while (nPos < nText) {
         if (ptrOpt) {
-          nAt = ptrOpt[static_cast<HB_UCHAR>(pszText[nPos])];
+          nAt = ptrOpt[static_cast<uint8_t>(pszText[nPos])];
           if (nAt == 0 || pszSrc) {
             nSkip = 1;
           } else {
@@ -124,7 +124,7 @@ HB_FUNC(HB_STRREPLACE)
             }
           }
         } else if (pszSrc) {
-          ptr = static_cast<const char *>(memchr(pszSrc, static_cast<HB_UCHAR>(pszText[nPos]), nSrc));
+          ptr = static_cast<const char *>(memchr(pszSrc, static_cast<uint8_t>(pszText[nPos]), nSrc));
           nAt = ptr ? ptr - pszSrc + 1 : 0;
           nSkip = 1;
         } else {

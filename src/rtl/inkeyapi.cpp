@@ -426,7 +426,7 @@ HB_SIZE hb_inkeyKeyString(int iKey, char *buffer, HB_SIZE nSize)
     }
     if (iKey >= 32 && iKey <= 255 && iKey != 127) {
       auto cdp = hb_vmCDP();
-      nLen = hb_cdpTextPutU16(cdp, buffer, nSize, hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iKey)));
+      nLen = hb_cdpTextPutU16(cdp, buffer, nSize, hb_cdpGetU16(cdp, static_cast<uint8_t>(iKey)));
     }
   }
   return nLen;
@@ -459,7 +459,7 @@ int hb_inkeyKeyStd(int iKey)
       } else if (HB_INKEY_ISUNICODE(iKey)) {
         auto wc = static_cast<HB_WCHAR>(iVal);
         if (wc) {
-          HB_UCHAR uc = hb_cdpGetUC(hb_vmCDP(), wc, 0);
+          uint8_t uc = hb_cdpGetUC(hb_vmCDP(), wc, 0);
           if (uc != 0) {
             iKey = uc;
           }

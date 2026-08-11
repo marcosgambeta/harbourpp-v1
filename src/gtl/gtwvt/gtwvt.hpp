@@ -322,7 +322,7 @@ struct HB_GTWVT
   HB_SIZE wcTransLen; // size of unicode character translation table
 
   HBITMAP boxImage[HB_BOXCH_TRANS_MAX];
-  HB_UCHAR boxIndex[HB_BOXCH_TRANS_COUNT];
+  uint8_t boxIndex[HB_BOXCH_TRANS_COUNT];
   int boxCount;
   HDC hBmpDC;
   HPEN hPen;

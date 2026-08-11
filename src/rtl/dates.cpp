@@ -76,10 +76,10 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
     const char *szPtr = szDateFormat;
 
     while (format_count < size) {
-      int digit = HB_TOUPPER(static_cast<HB_UCHAR>(*szPtr));
+      int digit = HB_TOUPPER(static_cast<uint8_t>(*szPtr));
       szPtr++;
       digit_count = 1;
-      while (HB_TOUPPER(static_cast<HB_UCHAR>(*szPtr)) == digit && format_count < size) {
+      while (HB_TOUPPER(static_cast<uint8_t>(*szPtr)) == digit && format_count < size) {
         szPtr++;
         if (format_count + digit_count < size) {
           digit_count++;

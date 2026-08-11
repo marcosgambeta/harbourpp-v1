@@ -489,7 +489,7 @@ HB_FUNC(TRANSFORM)
             szResult[i] = (uiPicFlags & PF_EXCHANG) ? ',' : '.';
             iCount++;
           } else if (cPic == ',' && i && iCount < iWidth) {
-            if (HB_ISDIGIT(static_cast<HB_UCHAR>(szResult[i - 1]))) {
+            if (HB_ISDIGIT(static_cast<uint8_t>(szResult[i - 1]))) {
               szResult[i] = (uiPicFlags & PF_EXCHANG) ? '.' : ',';
             } else {
               szResult[i] = szResult[i - 1];

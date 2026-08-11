@@ -301,13 +301,13 @@ union YYSTYPE
    struct
    {
       HB_MAXINT lNumber; /* to hold a long number returned by lex */
-      HB_UCHAR  bWidth;  /* to hold the width of the value */
+      uint8_t  bWidth;  /* to hold the width of the value */
    } valLong;
    struct
    {
       double   dNumber; /* to hold a double number returned by lex */
-      HB_UCHAR bWidth;  /* to hold the width of the value */
-      HB_UCHAR bDec;    /* to hold the number of decimal points in the value */
+      uint8_t bWidth;  /* to hold the width of the value */
+      uint8_t bDec;    /* to hold the number of decimal points in the value */
    } valDouble;
    struct
    {
@@ -3235,14 +3235,14 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
          if( hb_compStrToNum( pToken->value, pToken->len, &lNumber, &dNumber, &iDec, &iWidth ) )
          {
             yylval_ptr->valDouble.dNumber = dNumber;
-            yylval_ptr->valDouble.bDec    = ( HB_UCHAR ) iDec;
-            yylval_ptr->valDouble.bWidth  = ( HB_UCHAR ) iWidth;
+            yylval_ptr->valDouble.bDec    = ( uint8_t ) iDec;
+            yylval_ptr->valDouble.bWidth  = ( uint8_t ) iWidth;
             return NUM_DOUBLE;
          }
          else
          {
             yylval_ptr->valLong.lNumber = lNumber;
-            yylval_ptr->valLong.bWidth  = ( HB_UCHAR ) iWidth;
+            yylval_ptr->valLong.bWidth  = ( uint8_t ) iWidth;
             return NUM_LONG;
          }
       }
