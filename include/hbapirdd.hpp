@@ -609,7 +609,7 @@ typedef struct _AREA
    uint16_t uiMaxFieldNameLength;
    uint16_t heap;
    uint16_t heapSize;
-   PHB_CODEPAGE cdPage;          /* Area's codepage pointer */
+   HB_CODEPAGE *cdPage;          /* Area's codepage pointer */
 } AREA;
 
 typedef AREA * LPAREA;

@@ -305,10 +305,10 @@ typedef struct _HB_GT_BASE
    HB_FHANDLE     hStdErr;
 
    HB_BOOL        fDispTrans;
-   PHB_CODEPAGE   cdpTerm;
-   PHB_CODEPAGE   cdpHost;
-   PHB_CODEPAGE   cdpBox;
-   PHB_CODEPAGE   cdpIn;
+   HB_CODEPAGE *  cdpTerm;
+   HB_CODEPAGE *  cdpHost;
+   HB_CODEPAGE *  cdpBox;
+   HB_CODEPAGE *  cdpIn;
 
    int            iColorIndex;
    int            iColorCount;
@@ -638,7 +638,7 @@ extern HB_EXPORT void    hb_gt_winapi_setKbdState( int kbdShifts );
 extern HB_EXPORT void    hb_gt_winapi_tone( double dFrequency, double dDuration );
 #endif // HB_OS_WIN
 #if defined(HB_OS_WIN)
-extern int hb_gt_dos_keyCodeTranslate( int iKey, int iFlags, PHB_CODEPAGE cdp );
+extern int hb_gt_dos_keyCodeTranslate( int iKey, int iFlags, HB_CODEPAGE *cdp );
 #endif // HB_OS_WIN
 
 HB_EXTERN_END
