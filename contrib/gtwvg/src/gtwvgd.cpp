@@ -1213,7 +1213,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
 
       {
 #if !defined(UNICODE)
-        PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pWVT->pGT), cdpBox = HB_GTSELF_BOXCP(pWVT->pGT);
+        HB_CODEPAGE *cdpHost = HB_GTSELF_HOSTCP(pWVT->pGT), cdpBox = HB_GTSELF_BOXCP(pWVT->pGT);
 #endif
         TCHAR *sBuffer;
         HB_SIZE nSize;

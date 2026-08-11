@@ -92,7 +92,7 @@ typedef struct _MIXTAG
   HB_ULONG ulRecMax;
   HB_ULONG ulRecCount;
 
-  PHB_CODEPAGE pCodepage; // National sort table for character key tags, nullptr otherwise
+  HB_CODEPAGE *pCodepage; // National sort table for character key tags, nullptr otherwise
 
   HB_ULONG ulKeyNo;
 } MIXTAG, *PMIXTAG;
@@ -259,7 +259,7 @@ static void mixKeyFree(PMIXKEY pKey)
   hb_xfree(pKey);
 }
 
-static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, PHB_CODEPAGE pCodepage)
+static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, HB_CODEPAGE *pCodepage)
 {
   int i;
 
@@ -288,7 +288,7 @@ static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, PHB_CODEPAGE 
   return i;
 }
 
-static void mixQSort(PMIXKEY *pKeys, HB_ULONG left, HB_ULONG right, uint16_t uiLen, PHB_CODEPAGE pCodepage)
+static void mixQSort(PMIXKEY *pKeys, HB_ULONG left, HB_ULONG right, uint16_t uiLen, HB_CODEPAGE *pCodepage)
 {
   HB_ULONG l, r;
   PMIXKEY x, h;

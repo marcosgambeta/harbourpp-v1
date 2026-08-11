@@ -207,8 +207,8 @@ typedef struct
    HWND     hWnd;                           // the window handle
    HB_BOOL  fInit;                          // logical variable indicating that window should be open
 
-   PHB_CODEPAGE hostCDP;                    // Host/HVM CodePage for unicode output translations
-   PHB_CODEPAGE inCDP;                      // Host/HVM CodePage for unicode input translations
+   HB_CODEPAGE *hostCDP;                    // Host/HVM CodePage for unicode output translations
+   HB_CODEPAGE *inCDP;                      // Host/HVM CodePage for unicode input translations
 #if ! defined(UNICODE)
    BYTE     keyTransTbl[ 256 ];
    BYTE     chrTransTbl[ 256 ];

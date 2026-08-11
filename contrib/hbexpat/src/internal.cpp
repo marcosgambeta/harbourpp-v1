@@ -52,7 +52,7 @@
 
 HB_FUNC(__HB_XML_CDPU16MAP)
 {
-   PHB_CODEPAGE cdp = hb_cdpFindExt(hb_parc(1));
+   HB_CODEPAGE *cdp = hb_cdpFindExt(hb_parc(1));
 
    if( cdp )
    {

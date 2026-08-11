@@ -73,7 +73,7 @@ HB_FUNC(SAYDOWN)
       auto nTextLen = hb_parclen(1);
 
       HB_WCHAR wc;
-      PHB_CODEPAGE cdp = hb_gtHostCP();
+      HB_CODEPAGE *cdp = hb_gtHostCP();
       HB_SIZE nIndex = 0;
 
       int iColor = hb_gtGetCurrColor();

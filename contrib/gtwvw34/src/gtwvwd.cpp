@@ -667,7 +667,7 @@ static int hb_gt_wvw_PutText(PHB_GT pGT, int iRow, int iCol, int iColor, const c
 #if defined(UNICODE)
   /* Very experimental and half-done */
   {
-    PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
+    HB_CODEPAGE *cdp = HB_GTSELF_HOSTCP(pGT);
 
     if (cdp) {
       HB_SIZE nIndex = 0;
@@ -810,7 +810,7 @@ static void hb_gt_wvw_usBox(PHB_GT pGT, PWVW_WIN wvw_win, int iTop, int iLeft, i
     i = 0;
 
     if (szFrame) {
-      PHB_CODEPAGE cdp = HB_GTSELF_BOXCP(pGT);
+      HB_CODEPAGE *cdp = HB_GTSELF_BOXCP(pGT);
       HB_WCHAR wc;
       HB_SIZE nLen = strlen(szFrame), nIndex = 0;
 
@@ -4895,7 +4895,7 @@ static void hb_gt_wvw_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 {
   auto pbyBuffer = static_cast<uint8_t *>(pBuffer);
 #if defined(UNICODE)
-  PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
+  HB_CODEPAGE *cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 #endif
 
   iTop = iTop < 0 ? 0 : iTop;
@@ -4942,7 +4942,7 @@ static void hb_gt_wvw_Rest(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 {
   auto pbyBuffer = static_cast<const uint8_t *>(pBuffer);
 #if defined(UNICODE)
-  PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
+  HB_CODEPAGE *cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 #endif
 
   PWVW_WIN wvw_win = s_wvw->pWin[s_wvw->iNumWindows - 1];

@@ -1399,7 +1399,7 @@ static void hb_ctw_gt_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
   HB_BOOL bBell = false;
   int iRow, iCol, iMaxRow, iMaxCol;
   HB_WCHAR szString[WRITECON_BUFFER_SIZE];
-  PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
+  HB_CODEPAGE *cdp = HB_GTSELF_HOSTCP(pGT);
   HB_SIZE nIndex = 0;
   HB_WCHAR wc;
 

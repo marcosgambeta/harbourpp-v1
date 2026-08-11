@@ -169,7 +169,7 @@ typedef struct _MIXTAG
    PMIXKEY HotKey;
    HB_BOOL HotFor;
 
-   PHB_CODEPAGE pCodepage;          /* National sort table for character key tags, NULL otherwise */
+   HB_CODEPAGE *pCodepage;          /* National sort table for character key tags, NULL otherwise */
 } MIXTAG, * PMIXTAG;
 
 
@@ -183,7 +183,7 @@ typedef struct _SQLMIXAREA
 
    PMIXTAG      pTagList;
    PMIXTAG      pTag;
-   PHB_CODEPAGE pCodepage;
+   HB_CODEPAGE *pCodepage;
 } SQLMIXAREA, * SQLMIXAREAP;
 
 

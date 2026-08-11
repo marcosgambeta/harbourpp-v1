@@ -83,7 +83,7 @@ static char *hb_strescape(const char *szInput, HB_ISIZ nLen, const char *cDelim)
 }
 
 /* Export field values to text file */
-static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char *cDelim, PHB_CODEPAGE cdp)
+static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char *cDelim, HB_CODEPAGE *cdp)
 {
   switch (hb_itemType(pValue)) {
   /* a "C" field */
@@ -152,7 +152,7 @@ HB_FUNC(DBF2TEXT)
   auto handle = static_cast<HB_FHANDLE>(hb_parnint(5));
   auto cSep = hb_parc(6);
   auto nCount = hb_parni(7);
-  PHB_CODEPAGE cdp = hb_cdpFind(hb_parcx(8));
+  HB_CODEPAGE *cdp = hb_cdpFind(hb_parcx(8));
 
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 

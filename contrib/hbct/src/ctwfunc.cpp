@@ -217,7 +217,7 @@ HB_FUNC(WBOX)
   if (pszBoxFrame) {
     auto nLen = hb_parclen(1);
     HB_SIZE nIndex = 0, nSize = 0;
-    PHB_CODEPAGE cdp = hb_gtBoxCP();
+    HB_CODEPAGE *cdp = hb_gtBoxCP();
 
     while (nSize < HB_SIZEOFARRAY(szBoxBuf) - 1 && HB_CDPCHAR_GET(cdp, pszBoxFrame, nLen, &nIndex, &wc)) {
       szBoxBuf[nSize++] = wc;

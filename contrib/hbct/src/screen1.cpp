@@ -103,7 +103,7 @@ HB_FUNC(SCREENMIX)
       uint8_t bAttr;
       uint16_t usChar;
       HB_WCHAR wc;
-      PHB_CODEPAGE cdp = hb_gtHostCP();
+      HB_CODEPAGE *cdp = hb_gtHostCP();
       HB_SIZE nIndex = 0, ul = 0;
       int i;
 
@@ -148,7 +148,7 @@ HB_FUNC(SAYSCREEN)
     }
 
     if (iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol()) {
-      PHB_CODEPAGE cdp = hb_gtHostCP();
+      HB_CODEPAGE *cdp = hb_gtHostCP();
       HB_SIZE nIndex = 0;
       int i;
 
