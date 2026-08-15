@@ -46,38 +46,38 @@
 // $HB_END_LICENSE$
 
 #include "hbssl.h"
+
 #include <hbapifs.hpp>
 #include <hbapiitm.hpp>
 #include <hbvm.hpp>
 
-enum HB_PEM_TYPES
+typedef enum
 {
   hb_PEM_X509,
   hb_PEM_EVP_PKEY,
   hb_PEM_RSA,
   hb_PEM_ANY
-};
+} HB_PEM_TYPES;
 
-// Callback
+/* Callback */
 
 static int hb_ssl_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
 {
-  auto retsize = 0;
+  int retsize = 0;
 
   if (size > 0 && userdata && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
-    hb_vmPush(static_cast<PHB_ITEM>(userdata));
+    hb_vmPush((PHB_ITEM)userdata);
     hb_vmPushLogical(rwflag);
     hb_vmSend(1);
 
     buf[0] = '\0';
 
-    retsize = static_cast<int>(hb_parclen(-1));
+    retsize = (int)hb_parclen(-1);
 
     if (retsize > 0) {
-      if (retsize > size) {
+      if (retsize > size)
         retsize = size;
-      }
 
       memcpy(buf, hb_parc(-1), retsize);
     }
@@ -102,27 +102,26 @@ static void hb_PEM_read_bio(PEM_READ_BIO *func, HB_PEM_TYPES type)
 {
   BIO *bio;
 
-  if (hb_BIO_is(1)) {
+  if (hb_BIO_is(1))
     bio = hb_BIO_par(1);
-  } else if (HB_ISCHAR(1)) {
+  else if (HB_ISCHAR(1))
     bio = BIO_new_file(hb_parc(1), "r");
-  } else if (HB_ISNUM(1)) {
+  else if (HB_ISNUM(1))
     bio = BIO_new_fd(hb_parni(1), BIO_NOCLOSE);
-  } else {
+  else
     bio = nullptr;
-  }
 
-  if (bio != nullptr) {
-    auto pPassCallback = hb_param(2, Harbour::Item::EVALITEM);
+  if (bio) {
+    PHB_ITEM pPassCallback = hb_param(2, HB_IT_EVALITEM);
     pem_password_cb *cb;
     void *cargo, *result;
 
-    if (pPassCallback != nullptr) {
+    if (pPassCallback) {
       cb = hb_ssl_pem_password_cb;
       cargo = pPassCallback;
     } else {
       cb = nullptr;
-      cargo = const_cast<char *>(hb_parc(2)); // NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it
+      cargo = HB_UNCONST(hb_parc(2)); /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
     }
 
     result = (*func)(bio, nullptr, cb, cargo);
@@ -130,28 +129,25 @@ static void hb_PEM_read_bio(PEM_READ_BIO *func, HB_PEM_TYPES type)
     if (result) {
       switch (type) {
       case hb_PEM_X509:
-        hb_X509_ret(static_cast<X509 *>(result));
+        hb_X509_ret((X509 *)result);
         break;
       case hb_PEM_EVP_PKEY:
-        hb_EVP_PKEY_ret(static_cast<EVP_PKEY *>(result));
+        hb_EVP_PKEY_ret((EVP_PKEY *)result);
         break;
       case hb_PEM_RSA:
-        hb_RSA_ret(static_cast<RSA *>(result));
+        hb_RSA_ret((RSA *)result);
         break;
       case hb_PEM_ANY:
         hb_retptr(nullptr);
         break;
       }
-    } else {
+    } else
       hb_retptr(nullptr);
-    }
 
-    if (!hb_BIO_is(1)) {
+    if (!hb_BIO_is(1))
       BIO_free(bio);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 #define HB_PEM_ERR_NOFUNC() hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS)
@@ -172,15 +168,15 @@ HB_FUNC(PEM_READ_BIO_DSAPARAMS)
 #else
 HB_FUNC(PEM_READ_BIO_DSAPRIVATEKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_DSAPrivateKey), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_DSAPrivateKey, hb_PEM_ANY);
 }
 HB_FUNC(PEM_READ_BIO_DSA_PUBKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_DSA_PUBKEY), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_DSA_PUBKEY, hb_PEM_ANY);
 }
 HB_FUNC(PEM_READ_BIO_DSAPARAMS)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_DSAparams), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_DSAparams, hb_PEM_ANY);
 }
 #endif
 
@@ -192,7 +188,7 @@ HB_FUNC(PEM_READ_BIO_DHPARAMS)
 #else
 HB_FUNC(PEM_READ_BIO_DHPARAMS)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_DHparams), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_DHparams, hb_PEM_ANY);
 }
 #endif
 
@@ -212,46 +208,46 @@ HB_FUNC(PEM_READ_BIO_RSA_PUBKEY)
 #else
 HB_FUNC(PEM_READ_BIO_RSAPRIVATEKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_RSAPrivateKey), hb_PEM_RSA);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_RSAPrivateKey, hb_PEM_RSA);
 }
 HB_FUNC(PEM_READ_BIO_RSAPUBLICKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_RSAPublicKey), hb_PEM_RSA);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_RSAPublicKey, hb_PEM_RSA);
 }
 HB_FUNC(PEM_READ_BIO_RSA_PUBKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_RSA_PUBKEY), hb_PEM_RSA);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_RSA_PUBKEY, hb_PEM_RSA);
 }
 #endif
 
 HB_FUNC(PEM_READ_BIO_X509_REQ)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_X509_REQ), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_X509_REQ, hb_PEM_ANY);
 }
 HB_FUNC(PEM_READ_BIO_X509_CRL)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_X509_CRL), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_X509_CRL, hb_PEM_ANY);
 }
 HB_FUNC(PEM_READ_BIO_PKCS7)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_PKCS7), hb_PEM_ANY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_PKCS7, hb_PEM_ANY);
 }
 
 HB_FUNC(PEM_READ_X509)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_X509), hb_PEM_X509);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_X509, hb_PEM_X509);
 }
 HB_FUNC(PEM_READ_X509_AUX)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_X509_AUX), hb_PEM_X509);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_X509_AUX, hb_PEM_X509);
 }
 HB_FUNC(PEM_READ_PRIVATEKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_PrivateKey), hb_PEM_EVP_PKEY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_PrivateKey, hb_PEM_EVP_PKEY);
 }
 HB_FUNC(PEM_READ_PUBKEY)
 {
-  hb_PEM_read_bio(reinterpret_cast<PEM_READ_BIO *>(PEM_read_bio_PUBKEY), hb_PEM_EVP_PKEY);
+  hb_PEM_read_bio((PEM_READ_BIO *)PEM_read_bio_PUBKEY, hb_PEM_EVP_PKEY);
 }
 
 HB_FUNC_TRANSLATE(PEM_READ_BIO_PRIVATEKEY, PEM_READ_PRIVATEKEY)
@@ -261,22 +257,22 @@ HB_FUNC_TRANSLATE(PEM_READ_BIO_X509_AUX, PEM_READ_X509_AUX)
 
 #if 0
 
-int PEM_write_bio_RSAPrivateKey(BIO * bp, RSA * x, const EVP_CIPHER * enc, unsigned char * kstr, int klen, pem_password_cb * cb, void * u);
-int PEM_write_bio_DSAPrivateKey(BIO * bp, DSA * x, const EVP_CIPHER * enc, unsigned char * kstr, int klen, pem_password_cb * cb, void * u);
-int PEM_write_bio_PrivateKey(BIO * bp, EVP_PKEY * x, const EVP_CIPHER * enc, unsigned char * kstr, int klen, pem_password_cb * cb, void * u);
-int PEM_write_bio_PKCS8PrivateKey(BIO * bp, EVP_PKEY * x, const EVP_CIPHER * enc, char * kstr, int klen, pem_password_cb * cb, void * u);
-int PEM_write_bio_PKCS8PrivateKey_nid(BIO * bp, EVP_PKEY * x, int nid, char * kstr, int klen, pem_password_cb * cb, void * u);
-int PEM_write_bio_PUBKEY(BIO * bp, EVP_PKEY * x);
-int PEM_write_bio_RSAPublicKey(BIO * bp, RSA * x);
-int PEM_write_bio_RSA_PUBKEY(BIO * bp, RSA * x);
-int PEM_write_bio_DSA_PUBKEY(BIO * bp, DSA * x);
-int PEM_write_bio_DSAparams(BIO * bp, DSA * x);
-int PEM_write_bio_DHparams(BIO * bp, DH * x);
-int PEM_write_bio_X509(BIO * bp, X509 * x);
-int PEM_write_bio_X509_AUX(BIO * bp, X509 * x);
-int PEM_write_bio_X509_REQ(BIO * bp, X509_REQ * x);
-int PEM_write_bio_X509_REQ_NEW(BIO * bp, X509_REQ * x);
-int PEM_write_bio_X509_CRL(BIO * bp, X509_CRL * x);
-int PEM_write_bio_PKCS7(BIO * bp, PKCS7 * x);
+int PEM_write_bio_RSAPrivateKey(       BIO * bp, RSA      * x, const EVP_CIPHER * enc, unsigned char * kstr, int klen, pem_password_cb * cb, void * u );
+int PEM_write_bio_DSAPrivateKey(       BIO * bp, DSA      * x, const EVP_CIPHER * enc, unsigned char * kstr, int klen, pem_password_cb * cb, void * u );
+int PEM_write_bio_PrivateKey(          BIO * bp, EVP_PKEY * x, const EVP_CIPHER * enc, unsigned char * kstr, int klen, pem_password_cb * cb, void * u );
+int PEM_write_bio_PKCS8PrivateKey(     BIO * bp, EVP_PKEY * x, const EVP_CIPHER * enc, char * kstr, int klen, pem_password_cb * cb, void * u );
+int PEM_write_bio_PKCS8PrivateKey_nid( BIO * bp, EVP_PKEY * x, int nid, char * kstr, int klen, pem_password_cb * cb, void * u );
+int PEM_write_bio_PUBKEY(              BIO * bp, EVP_PKEY * x );
+int PEM_write_bio_RSAPublicKey(        BIO * bp, RSA * x );
+int PEM_write_bio_RSA_PUBKEY(          BIO * bp, RSA * x );
+int PEM_write_bio_DSA_PUBKEY(          BIO * bp, DSA * x );
+int PEM_write_bio_DSAparams(           BIO * bp, DSA * x );
+int PEM_write_bio_DHparams(            BIO * bp, DH * x );
+int PEM_write_bio_X509(                BIO * bp, X509 * x );
+int PEM_write_bio_X509_AUX(            BIO * bp, X509 * x );
+int PEM_write_bio_X509_REQ(            BIO * bp, X509_REQ * x );
+int PEM_write_bio_X509_REQ_NEW(        BIO * bp, X509_REQ * x );
+int PEM_write_bio_X509_CRL(            BIO * bp, X509_CRL * x );
+int PEM_write_bio_PKCS7(               BIO * bp, PKCS7 * x );
 
 #endif

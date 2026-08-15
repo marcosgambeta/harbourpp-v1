@@ -1,6 +1,6 @@
-//
-// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
-//
+/*
+ * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+ */
 
 #require "hbssl"
 
@@ -73,20 +73,20 @@ PROCEDURE Main()
    ? "=============="
    bioe := BIO_new_fd( 1, HB_BIO_NOCLOSE )
    FOR EACH tmp IN all
-      ? tmp:__enumIndex(), pub := tmp:exec("pubkey.pem", "test")
-      IF !Empty(pub)
+      ? tmp:__enumIndex(), pub := tmp:exec( "pubkey.pem", "test" )
+      IF ! Empty( pub )
          ? "EVP_PKEY_free", EVP_PKEY_free( pub )
       ENDIF
       ? ; ERR_print_errors( bioe )
    NEXT
    BIO_free( bioe )
 
-   ? pub := PEM_READ_BIO_PUBKEY("pubkey.pem", "test")
+   ? pub := PEM_READ_BIO_PUBKEY( "pubkey.pem", "test" )
 
    ? "EVP_SealInit", EVP_SealInit( ctx, "AES-192-OFB", @a, @iv, { pub } )
-   ? ValType(a), Len(a)
-   ? ValType(a[1]), ">" + hb_StrToHex( a[1] ) + "<"
-   ? ValType(iv), ">" + hb_StrToHex( iv ) + "<"
+   ? ValType( a ), Len( a )
+   ? ValType( a[ 1 ] ), ">" + hb_StrToHex( a[ 1 ] ) + "<"
+   ? ValType( iv ), ">" + hb_StrToHex( iv ) + "<"
 
    ? "EVP_PKEY_free", EVP_PKEY_free( pub )
 

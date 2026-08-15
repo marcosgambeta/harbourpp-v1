@@ -46,6 +46,7 @@
 // $HB_END_LICENSE$
 
 #include "hbssl.h"
+
 #include <openssl/err.h>
 
 HB_FUNC(ERR_LOAD_CRYPTO_STRINGS)
@@ -55,13 +56,12 @@ HB_FUNC(ERR_LOAD_CRYPTO_STRINGS)
 
 HB_FUNC(ERR_PRINT_ERRORS)
 {
-  auto bio = hb_BIO_par(1);
+  BIO *bio = hb_BIO_par(1);
 
-  if (bio != nullptr) {
+  if (bio)
     ERR_print_errors(bio);
-  } else {
+  else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(ERR_GET_ERROR)
@@ -89,30 +89,30 @@ HB_FUNC(ERR_ERROR_STRING)
 
   buffer[0] = '\0';
 
-  ERR_error_string_n(static_cast<unsigned long>(hb_parnint(1)), buffer, sizeof(buffer));
+  ERR_error_string_n((unsigned long)hb_parnint(1), buffer, sizeof(buffer));
 
   hb_retc(buffer);
 }
 
 HB_FUNC(ERR_LIB_ERROR_STRING)
 {
-  hb_retc(ERR_lib_error_string(static_cast<unsigned long>(hb_parnint(1))));
+  hb_retc(ERR_lib_error_string((unsigned long)hb_parnint(1)));
 }
 
 HB_FUNC(ERR_FUNC_ERROR_STRING)
 {
-  hb_retc(ERR_lib_error_string(static_cast<unsigned long>(hb_parnint(1))));
+  hb_retc(ERR_lib_error_string((unsigned long)hb_parnint(1)));
 }
 
 HB_FUNC(ERR_REASON_ERROR_STRING)
 {
-  hb_retc(ERR_lib_error_string(static_cast<unsigned long>(hb_parnint(1))));
+  hb_retc(ERR_lib_error_string((unsigned long)hb_parnint(1)));
 }
 
 HB_FUNC(ERR_GET_ERROR_LINE)
 {
   const char *file = nullptr;
-  auto line = 0;
+  int line = 0;
 
 #if OPENSSL_VERSION_NUMBER < 0x30000000L
   hb_retnint(ERR_get_error_line(&file, &line));
@@ -127,7 +127,7 @@ HB_FUNC(ERR_GET_ERROR_LINE)
 HB_FUNC(ERR_PEEK_ERROR_LINE)
 {
   const char *file = nullptr;
-  auto line = 0;
+  int line = 0;
 
   hb_retnint(ERR_peek_error_line(&file, &line));
 
@@ -138,7 +138,7 @@ HB_FUNC(ERR_PEEK_ERROR_LINE)
 HB_FUNC(ERR_PEEK_LAST_ERROR_LINE)
 {
   const char *file = nullptr;
-  auto line = 0;
+  int line = 0;
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
   hb_retnint(ERR_peek_last_error_line(&file, &line));
@@ -153,9 +153,9 @@ HB_FUNC(ERR_PEEK_LAST_ERROR_LINE)
 HB_FUNC(ERR_GET_ERROR_LINE_DATA)
 {
   const char *file = nullptr;
-  auto line = 0;
+  int line = 0;
   const char *data = nullptr;
-  auto flags = 0;
+  int flags = 0;
 
 #if OPENSSL_VERSION_NUMBER < 0x30000000L
   hb_retnint(ERR_get_error_line_data(&file, &line, &data, &flags));
@@ -172,9 +172,9 @@ HB_FUNC(ERR_GET_ERROR_LINE_DATA)
 HB_FUNC(ERR_PEEK_ERROR_LINE_DATA)
 {
   const char *file = nullptr;
-  auto line = 0;
+  int line = 0;
   const char *data = nullptr;
-  auto flags = 0;
+  int flags = 0;
 
 #if OPENSSL_VERSION_NUMBER < 0x30000000L
   hb_retnint(ERR_peek_error_line_data(&file, &line, &data, &flags));
@@ -192,9 +192,9 @@ HB_FUNC(ERR_PEEK_LAST_ERROR_LINE_DATA)
 {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
   const char *file = nullptr;
-  auto line = 0;
+  int line = 0;
   const char *data = nullptr;
-  auto flags = 0;
+  int flags = 0;
 
 #if OPENSSL_VERSION_NUMBER < 0x30000000L
   hb_retnint(ERR_peek_last_error_line_data(&file, &line, &data, &flags));

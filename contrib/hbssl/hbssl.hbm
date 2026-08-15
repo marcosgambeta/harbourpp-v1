@@ -31,6 +31,9 @@
 # Patent expires in 2010/2011
 -cflag=-DOPENSSL_NO_IDEA
 
+# MSYS2 lacks applink.c and __int64
+{MSYSTEM}-cflag=-DHB_OPENSSL_MSYS
+
 # to suppress Apple's deprecation warnings that apply to
 # the complete OpenSSL API, starting with OS X Lion 10.7
 -cflag={allgcc&darwin}-Wno-deprecated
@@ -41,32 +44,32 @@
 -cflag=-Wno-error=deprecated-declarations{sunos&allgcc&HB_BUILD_TEST='strict'}
 
 # For _fileno() in openssl/applink.c
-#-c=gnu90
+-c=gnu90
 
-{allmingw}-cflag=-fpermissive
 {clang64}-cflag=-fpermissive
 
 hbssl.hbx
 
 -i.
 
-src\ssl_hbcon.prg
+src/ssl_hbcon.prg
 
-src\ssl_hb.cpp
-src\ssl_inet.cpp
-src\ssl_sock.cpp
-src\bio.cpp
-src\err.cpp
-src\evp.cpp
-src\evpciph.cpp
-src\evpenc.cpp
-src\evpmd.cpp
-src\evppkey.cpp
-src\pem.cpp
-src\rand.cpp
-src\rsa.cpp
-src\ssl.cpp
-src\sslciph.cpp
-src\sslctx.cpp
-src\sslsess.cpp
-src\x509.cpp
+src/ssl_hb.cpp
+src/ssl_inet.cpp
+src/ssl_sock.cpp
+src/bio.cpp
+src/d2i.cpp
+src/err.cpp
+src/evp.cpp
+src/evpciph.cpp
+src/evpenc.cpp
+src/evpmd.cpp
+src/evppkey.cpp
+src/pem.cpp
+src/rand.cpp
+src/rsa.cpp
+src/ssl.cpp
+src/sslciph.cpp
+src/sslctx.cpp
+src/sslsess.cpp
+src/x509.cpp

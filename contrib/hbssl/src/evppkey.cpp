@@ -46,20 +46,22 @@
 // $HB_END_LICENSE$
 
 #include "hbssl.h"
+
 #include <hbapiitm.hpp>
+
 #include <openssl/evp.h>
 #include <openssl/rsa.h>
 
 static HB_GARBAGE_FUNC(EVP_PKEY_release)
 {
-  auto ph = static_cast<void **>(Cargo);
+  void **ph = (void **)Cargo;
 
-  // Check if pointer is not nullptr to avoid multiple freeing
+  /* Check if pointer is not NULL to avoid multiple freeing */
   if (ph && *ph) {
-    // Destroy the object
-    EVP_PKEY_free(static_cast<EVP_PKEY *>(*ph));
+    /* Destroy the object */
+    EVP_PKEY_free((EVP_PKEY *)*ph);
 
-    // set pointer to nullptr just in case
+    /* set pointer to NULL just in case */
     *ph = nullptr;
   }
 }
@@ -73,43 +75,47 @@ HB_BOOL hb_EVP_PKEY_is(int iParam)
 
 EVP_PKEY *hb_EVP_PKEY_par(int iParam)
 {
-  auto ph = static_cast<void **>(hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam));
-  return ph ? static_cast<EVP_PKEY *>(*ph) : nullptr;
+  void **ph = (void **)hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam);
+
+  return ph ? (EVP_PKEY *)*ph : nullptr;
 }
 
 EVP_PKEY *hb_EVP_PKEY_get(PHB_ITEM pItem)
 {
-  auto ph = static_cast<void **>(hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs));
-  return ph ? static_cast<EVP_PKEY *>(*ph) : nullptr;
+  void **ph = (void **)hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs);
+
+  return ph ? (EVP_PKEY *)*ph : nullptr;
 }
 
 void hb_EVP_PKEY_free(PHB_ITEM pItem)
 {
-  auto ph = static_cast<void **>(hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs));
+  void **ph = (void **)hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs);
 
   if (ph && *ph) {
-    EVP_PKEY_free(static_cast<EVP_PKEY *>(*ph));
+    EVP_PKEY_free((EVP_PKEY *)*ph);
     *ph = nullptr;
   }
 }
 
 void hb_EVP_PKEY_ret(EVP_PKEY *pkey)
 {
-  auto ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_PKEY *), &s_gcEVP_PKEY_funcs));
+  void **ph = (void **)hb_gcAllocate(sizeof(EVP_PKEY *), &s_gcEVP_PKEY_funcs);
+
   *ph = pkey;
+
   hb_retptrGC(ph);
 }
 
 static HB_GARBAGE_FUNC(EVP_PKEY_CTX_release)
 {
-  auto ph = static_cast<void **>(Cargo);
+  void **ph = (void **)Cargo;
 
-  // Check if pointer is not nullptr to avoid multiple freeing
+  /* Check if pointer is not NULL to avoid multiple freeing */
   if (ph && *ph) {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-    EVP_PKEY_CTX_free(static_cast<EVP_PKEY_CTX *>(*ph));
+    EVP_PKEY_CTX_free((EVP_PKEY_CTX *)*ph);
 #endif
-    // set pointer to nullptr just in case
+    /* set pointer to NULL just in case */
     *ph = nullptr;
   }
 }
@@ -117,23 +123,26 @@ static HB_GARBAGE_FUNC(EVP_PKEY_CTX_release)
 static const HB_GC_FUNCS s_gcEVP_PKEY_CTX_funcs = {EVP_PKEY_CTX_release, hb_gcDummyMark};
 
 #if 0
-static bool hb_EVP_PKEY_CTX_is(int iParam)
+static HB_BOOL hb_EVP_PKEY_CTX_is( int iParam )
 {
-  return hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam) != nullptr;
+   return hb_parptrGC( &s_gcEVP_PKEY_CTX_funcs, iParam ) != nullptr;
 }
 #endif
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
 static EVP_PKEY_CTX *hb_EVP_PKEY_CTX_par(int iParam)
 {
-  auto ph = static_cast<void **>(hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam));
-  return ph ? static_cast<EVP_PKEY_CTX *>(*ph) : nullptr;
+  void **ph = (void **)hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam);
+
+  return ph ? (EVP_PKEY_CTX *)*ph : nullptr;
 }
 
 static void hb_EVP_PKEY_CTX_ret(EVP_PKEY_CTX *pkey)
 {
-  auto ph = static_cast<void **>(hb_gcAllocate(sizeof(EVP_PKEY_CTX *), &s_gcEVP_PKEY_CTX_funcs));
+  void **ph = (void **)hb_gcAllocate(sizeof(EVP_PKEY_CTX *), &s_gcEVP_PKEY_CTX_funcs);
+
   *ph = pkey;
+
   hb_retptrGC(ph);
 }
 #endif
@@ -151,83 +160,99 @@ HB_FUNC(EVP_PKEY_TYPE)
 HB_FUNC(EVP_PKEY_BASE_ID)
 {
   if (hb_EVP_PKEY_is(1)) {
-    auto pkey = hb_EVP_PKEY_par(1);
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
 
-    if (pkey != nullptr) {
+    if (pkey)
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
       hb_retni(EVP_PKEY_base_id(pkey));
 #else
-      hb_retni(EVP_PKEY_type(hb_parni(1)));
+      hb_retni(EVP_PKEY_type(pkey->type));
 #endif
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(EVP_PKEY_SIZE)
 {
   if (hb_EVP_PKEY_is(1)) {
-    auto pkey = hb_EVP_PKEY_par(1);
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
 
-    if (pkey != nullptr) {
+    if (pkey)
       hb_retni(EVP_PKEY_size(pkey));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(EVP_PKEY_BITS)
 {
   if (hb_EVP_PKEY_is(1)) {
-    auto pkey = hb_EVP_PKEY_par(1);
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
 
-    if (pkey != nullptr) {
+    if (pkey)
       hb_retni(EVP_PKEY_bits(pkey));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+}
+
+HB_FUNC(EVP_PKEY_GET_ENCODED_PUBLIC_KEY)
+{
+  if (hb_EVP_PKEY_is(1)) {
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
+
+    if (pkey) {
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+      unsigned char *pubkey_val;
+      size_t pubkey_len;
+
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L
+      pubkey_len = EVP_PKEY_get1_encoded_public_key(pkey, &pubkey_val);
+#else
+      pubkey_len = EVP_PKEY_get1_tls_encodedpoint(pkey, &pubkey_val);
+#endif
+      if (pubkey_len != 0) {
+        hb_retclen((char *)pubkey_val, pubkey_len);
+        OPENSSL_free(pubkey_val);
+      } else
+#endif
+        hb_retc_null();
+    }
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC(EVP_PKEY_ASSIGN)
 {
   if (hb_EVP_PKEY_is(1)) {
-    auto pkey = hb_EVP_PKEY_par(1);
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
 
-    if (pkey != nullptr) {
-      // QUESTION: Is hb_openssl_strdup() okay here? [vszakats]
+    if (pkey)
+      /* QUESTION: Is hb_openssl_strdup() okay here? [vszakats] */
       hb_retni(EVP_PKEY_assign(pkey, hb_parni(2), hb_openssl_strdup(hb_parcx(3))));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(EVP_PKEY_ASSIGN_RSA)
 {
 #ifndef OPENSSL_NO_RSA
   if (hb_EVP_PKEY_is(1) && hb_RSA_is(2)) {
-    auto pkey = hb_EVP_PKEY_par(1);
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
     RSA *key = hb_RSA_par(2);
     int res = 0;
 
-    if (pkey != nullptr && key != nullptr) {
+    if (pkey && key) {
       res = EVP_PKEY_assign_RSA(pkey, key);
 
-      if (res != 0) {
+      if (res != 0)
 #if OPENSSL_VERSION_NUMBER >= 0x0090700fL
         RSA_up_ref(key);
 #else
         hb_RSA_par_remove(2);
 #endif
-      }
     }
     hb_retni(res);
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 #else
   hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
@@ -237,15 +262,13 @@ HB_FUNC(EVP_PKEY_ASSIGN_DSA)
 {
 #ifndef OPENSSL_NO_DSA
   if (hb_EVP_PKEY_is(1) && HB_ISPOINTER(2)) {
-    auto pkey = hb_EVP_PKEY_par(1);
-    auto key = static_cast<DSA *>(hb_parptr(2));
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
+    DSA *key = (DSA *)hb_parptr(2);
 
-    if (pkey != nullptr && key != nullptr) {
+    if (pkey && key)
       hb_retni(EVP_PKEY_assign_DSA(pkey, key));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 #else
   hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
@@ -253,17 +276,15 @@ HB_FUNC(EVP_PKEY_ASSIGN_DSA)
 
 HB_FUNC(EVP_PKEY_ASSIGN_DH)
 {
-#ifndef OPENSSL_NO_RSA
+#ifndef OPENSSL_NO_DH
   if (hb_EVP_PKEY_is(1) && HB_ISPOINTER(2)) {
-    auto pkey = hb_EVP_PKEY_par(1);
-    auto key = static_cast<DH *>(hb_parptr(2));
+    EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
+    DH *key = (DH *)hb_parptr(2);
 
-    if (pkey != nullptr && key != nullptr) {
+    if (pkey && key)
       hb_retni(EVP_PKEY_assign_DH(pkey, key));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 #else
   hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
@@ -272,37 +293,200 @@ HB_FUNC(EVP_PKEY_ASSIGN_DH)
 HB_FUNC(EVP_PKEY_CTX_NEW)
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-  auto pkey = hb_EVP_PKEY_par(1);
+  EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
 
-  if (pkey != nullptr) {
-    hb_EVP_PKEY_CTX_ret(EVP_PKEY_CTX_new(pkey, static_cast<ENGINE *>(hb_parptr(2))));
-  }
-#else
+  if (pkey) {
+    hb_EVP_PKEY_CTX_ret(EVP_PKEY_CTX_new(pkey, (ENGINE *)hb_parptr(2)));
+  } else
+#elif !defined(OPENSSL_NO_RSA)
   if (hb_RSA_is(1)) {
-    hb_itemReturn(hb_param(1, Harbour::Item::POINTER));
-  }
+    hb_itemReturn(hb_param(1, HB_IT_POINTER));
+  } else
 #endif
-  else {
     hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+}
+
+HB_FUNC(EVP_PKEY_CTX_SET_RSA_PADDING)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx && HB_ISNUM(2)) {
+    hb_retni(EVP_PKEY_CTX_set_rsa_padding(ctx, hb_parni(2)));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#elif 0
+  if (hb_RSA_is(1)) {
+    hb_retni(1);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_GET_RSA_PADDING)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    int pad_mode = 0, ret;
+
+    ret = EVP_PKEY_CTX_get_rsa_padding(ctx, &pad_mode);
+    if (ret <= 0)
+      pad_mode = ret;
+    hb_retni(pad_mode);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#elif 0
+  if (hb_RSA_is(1)) {
+    hb_retni(1);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_SET_RSA_PSS_SALTLEN)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx && HB_ISNUM(2)) {
+    hb_retni(EVP_PKEY_CTX_set_rsa_pss_saltlen(ctx, hb_parni(2)));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_GET_RSA_PSS_SALTLEN)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    int saltlen = 0, ret;
+
+    ret = EVP_PKEY_CTX_get_rsa_pss_saltlen(ctx, &saltlen);
+    if (ret <= 0)
+      saltlen = ret;
+    hb_retni(saltlen);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_SET_RSA_OAEP_MD)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+  const EVP_MD *md = hb_EVP_MD_par(2);
+
+  if (ctx && md) {
+    hb_retni(EVP_PKEY_CTX_set_rsa_oaep_md(ctx, md));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#elif 0
+  if (hb_RSA_is(1)) {
+    hb_retni(1);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_GET_RSA_OAEP_MD)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    const EVP_MD *md = nullptr;
+    int ret;
+
+    ret = EVP_PKEY_CTX_get_rsa_oaep_md(ctx, &md);
+    if (ret > 0)
+      ret = hb_EVP_MD_ptr_to_id(md);
+    hb_retni(ret);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#elif 0
+  if (hb_RSA_is(1)) {
+    hb_retni(1);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_SET_RSA_MGF1_MD)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+  const EVP_MD *md = hb_EVP_MD_par(2);
+
+  if (ctx && md) {
+    hb_retni(EVP_PKEY_CTX_set_rsa_mgf1_md(ctx, md));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#elif 0
+  if (hb_RSA_is(1)) {
+    hb_retni(1);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_GET_RSA_MGF1_MD)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    const EVP_MD *md = nullptr;
+    int ret;
+
+    ret = EVP_PKEY_CTX_get_rsa_mgf1_md(ctx, &md);
+    if (ret > 0)
+      ret = hb_EVP_MD_ptr_to_id(md);
+    hb_retni(ret);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#elif 0
+  if (hb_RSA_is(1)) {
+    hb_retni(1);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
 }
 
 HB_FUNC(EVP_PKEY_ENCRYPT_INIT)
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-  auto ctx = hb_EVP_PKEY_CTX_par(1);
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
-  if (ctx != nullptr) {
+  if (ctx) {
     hb_retni(EVP_PKEY_encrypt_init(ctx));
-  }
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else
   if (hb_RSA_is(1)) {
     hb_retni(1);
-  }
-#endif
-  else {
+  } else
     hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+#endif
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -314,176 +498,283 @@ HB_FUNC(EVP_PKEY_ENCRYPT_INIT)
 HB_FUNC(EVP_PKEY_ENCRYPT)
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-  auto ctx = hb_EVP_PKEY_CTX_par(1);
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
-  if (ctx != nullptr) {
-    auto in = reinterpret_cast<const unsigned char *>(hb_parcx(3));
-    size_t inlen = static_cast<size_t>(hb_parclen(3)), outlen = 0;
+  if (ctx) {
+    const unsigned char *in = (const unsigned char *)hb_parcx(3);
+    size_t inlen = (size_t)hb_parclen(3), outlen = 0;
     unsigned char *buffer = nullptr;
+    int ret;
 
-    int ret = EVP_PKEY_encrypt(ctx, nullptr, &outlen, in, inlen);
+    ret = EVP_PKEY_encrypt(ctx, nullptr, &outlen, in, inlen);
     if (ret > 0) {
-      buffer = static_cast<unsigned char *>(hb_xgrab(outlen + 1));
+      buffer = (unsigned char *)hb_xgrab(outlen + 1);
 
       ret = EVP_PKEY_encrypt(ctx, buffer, &outlen, in, inlen);
       if (ret > 0) {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), outlen, 2)) {
+        if (!hb_storclen_buffer((char *)buffer, outlen, 2))
           ret = 0;
-        }
       }
     }
     if (ret <= 0) {
-      if (buffer) {
+      if (buffer)
         hb_xfree(buffer);
-      }
       hb_storc(nullptr, 2);
     }
     hb_retni(ret);
-  }
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else
+#ifndef OPENSSL_NO_RSA
   if (hb_RSA_is(1)) {
-    auto rsa = hb_RSA_par(1);
-    auto from = static_cast<const unsigned char *>(hb_parcx(3));
-    auto flen = static_cast<int>(hb_parclen(3));
+    RSA *rsa = hb_RSA_par(1);
+    const unsigned char *from = (const unsigned char *)hb_parcx(3);
+    int flen = (int)hb_parclen(3);
+    unsigned char *buffer;
     int ret;
 
-    auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
+    buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
     if (HB_RSA_KEY_ISPRIVATE(rsa))
-      // private key
-      ret = RSA_private_encrypt(flen, const_cast<unsigned char *>(from), buffer, rsa, RSA_PKCS1_PADDING);
-    else {
-      // public key
-      ret = RSA_public_encrypt(flen, const_cast<unsigned char *>(from), buffer, rsa, RSA_PKCS1_PADDING);
-    }
+      /* private key */
+      ret = RSA_private_encrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
+    else
+      /* public key */
+      ret = RSA_public_encrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
 
     if (ret > 0) {
-      if (!hb_storclen_buffer(static_cast<char *>(buffer), ret, 2)) {
+      if (!hb_storclen_buffer((char *)buffer, ret, 2))
         ret = 0;
-      }
     }
     if (ret <= 0) {
-      if (buffer) {
+      if (buffer)
         hb_xfree(buffer);
-      }
       hb_storc(nullptr, 2);
     }
     hb_retni(ret);
-  }
+  } else
 #endif
-  else {
     hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+#endif
 }
 
 HB_FUNC(EVP_PKEY_DECRYPT_INIT)
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-  auto ctx = hb_EVP_PKEY_CTX_par(1);
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
-  if (ctx != nullptr) {
+  if (ctx) {
     hb_retni(EVP_PKEY_decrypt_init(ctx));
-  }
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else
   if (hb_RSA_is(1)) {
     hb_retni(1);
-  }
-#endif
-  else {
+  } else
     hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+#endif
 }
 
 HB_FUNC(EVP_PKEY_DECRYPT)
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-  auto ctx = hb_EVP_PKEY_CTX_par(1);
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
-  if (ctx != nullptr) {
-    auto in = reinterpret_cast<const unsigned char *>(hb_parcx(3));
-    size_t inlen = static_cast<size_t>(hb_parclen(3)), outlen = 0;
+  if (ctx) {
+    const unsigned char *in = (const unsigned char *)hb_parcx(3);
+    size_t inlen = (size_t)hb_parclen(3), outlen = 0;
     unsigned char *buffer = nullptr;
+    int ret;
 
-    int ret = EVP_PKEY_decrypt(ctx, nullptr, &outlen, in, inlen);
+    ret = EVP_PKEY_decrypt(ctx, nullptr, &outlen, in, inlen);
     if (ret > 0) {
-      buffer = static_cast<unsigned char *>(hb_xgrab(outlen + 1));
+      buffer = (unsigned char *)hb_xgrab(outlen + 1);
 
       ret = EVP_PKEY_decrypt(ctx, buffer, &outlen, in, inlen);
       if (ret > 0) {
-        if (!hb_storclen_buffer(reinterpret_cast<char *>(buffer), outlen, 2)) {
+        if (!hb_storclen_buffer((char *)buffer, outlen, 2))
           ret = 0;
-        }
       }
     }
     if (ret <= 0) {
-      if (buffer) {
+      if (buffer)
         hb_xfree(buffer);
-      }
       hb_storc(nullptr, 2);
     }
     hb_retni(ret);
-  }
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else
+#ifndef OPENSSL_NO_RSA
   if (hb_RSA_is(1)) {
-    auto rsa = hb_RSA_par(1);
-    auto from = static_cast<const unsigned char *>(hb_parcx(3));
-    auto flen = static_cast<int>(hb_parclen(3));
+    RSA *rsa = hb_RSA_par(1);
+    const unsigned char *from = (const unsigned char *)hb_parcx(3);
+    int flen = (int)hb_parclen(3);
+    unsigned char *buffer;
     int ret;
 
-    auto buffer = static_cast<unsigned char *>(hb_xgrab(RSA_size(rsa) + 1));
+    buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
-    if (HB_RSA_KEY_ISPRIVATE(rsa)) {
-      // private key
-      ret = RSA_private_decrypt(flen, const_cast<unsigned char *>(from), buffer, rsa, RSA_PKCS1_PADDING);
-    } else {
-      // public key
-      ret = RSA_public_decrypt(flen, const_cast<unsigned char *>(from), buffer, rsa, RSA_PKCS1_PADDING);
-    }
+    if (HB_RSA_KEY_ISPRIVATE(rsa))
+      /* private key */
+      ret = RSA_private_decrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
+    else
+      /* public key */
+      ret = RSA_public_decrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
 
     if (ret > 0) {
-      buffer = static_cast<unsigned char *>(hb_xrealloc(buffer, ret + 1));
-      if (!hb_storclen_buffer(static_cast<char *>(buffer), ret, 2)) {
+      buffer = (unsigned char *)hb_xrealloc(buffer, ret + 1);
+      if (!hb_storclen_buffer((char *)buffer, ret, 2))
         ret = 0;
-      }
     }
     if (ret <= 0) {
-      if (buffer) {
+      if (buffer)
         hb_xfree(buffer);
-      }
       hb_storc(nullptr, 2);
     }
     hb_retni(ret);
-  }
+  } else
 #endif
-  else {
     hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_SET_SIGNATURE_MD)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+  const EVP_MD *md = hb_EVP_MD_par(2);
+
+  if (ctx && md) {
+    hb_retni(EVP_PKEY_CTX_set_signature_md(ctx, md));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_CTX_GET_SIGNATURE_MD)
+{
+#if !defined(OPENSSL_NO_RSA) && OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    const EVP_MD *md = nullptr;
+    int ret;
+
+    ret = EVP_PKEY_CTX_get_signature_md(ctx, &md);
+    if (ret > 0)
+      ret = hb_EVP_MD_ptr_to_id(md);
+    hb_retni(ret);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_SIGN_INIT)
+{
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    hb_retni(EVP_PKEY_sign_init(ctx));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_SIGN)
+{
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    const unsigned char *tbs = (const unsigned char *)hb_parcx(3);
+    size_t tbslen = (size_t)hb_parclen(3), siglen = 0;
+    unsigned char *sig = nullptr;
+    int ret;
+
+    ret = EVP_PKEY_sign(ctx, nullptr, &siglen, tbs, tbslen);
+    if (ret > 0) {
+      sig = (unsigned char *)hb_xgrab(siglen + 1);
+
+      ret = EVP_PKEY_sign(ctx, sig, &siglen, tbs, tbslen);
+      if (ret > 0) {
+        if (!hb_storclen_buffer((char *)sig, siglen, 2))
+          ret = 0;
+      }
+    }
+    if (ret <= 0) {
+      if (sig)
+        hb_xfree(sig);
+      hb_storc(nullptr, 2);
+    }
+    hb_retni(ret);
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_VERIFY_INIT)
+{
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    hb_retni(EVP_PKEY_verify_init(ctx));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
+}
+
+HB_FUNC(EVP_PKEY_VERIFY)
+{
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+  EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
+
+  if (ctx) {
+    const unsigned char *sig = (const unsigned char *)hb_parcx(2);
+    size_t siglen = (size_t)hb_parclen(2);
+    const unsigned char *tbs = (const unsigned char *)hb_parcx(3);
+    size_t tbslen = (size_t)hb_parclen(3);
+
+    hb_retni(EVP_PKEY_verify(ctx, sig, siglen, tbs, tbslen));
+  } else
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#else
+  hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+#endif
 }
 
 #if 0
 
-int EVP_PKEY_set1_RSA(EVP_PKEY * pkey, RSA * key);
-int EVP_PKEY_set1_DSA(EVP_PKEY * pkey, DSA * key);
-int EVP_PKEY_set1_DH(EVP_PKEY * pkey, DH * key);
-int EVP_PKEY_set1_EC_KEY(EVP_PKEY * pkey, EC_KEY * key);
+int EVP_PKEY_set1_RSA( EVP_PKEY * pkey, RSA * key );
+int EVP_PKEY_set1_DSA( EVP_PKEY * pkey, DSA * key );
+int EVP_PKEY_set1_DH( EVP_PKEY * pkey, DH * key );
+int EVP_PKEY_set1_EC_KEY( EVP_PKEY * pkey, EC_KEY * key );
 
-RSA * EVP_PKEY_get1_RSA(EVP_PKEY * pkey);
-DSA * EVP_PKEY_get1_DSA(EVP_PKEY * pkey);
-DH * EVP_PKEY_get1_DH(EVP_PKEY * pkey);
-EC_KEY * EVP_PKEY_get1_EC_KEY(EVP_PKEY * pkey);
+RSA *    EVP_PKEY_get1_RSA( EVP_PKEY * pkey );
+DSA *    EVP_PKEY_get1_DSA( EVP_PKEY * pkey );
+DH *     EVP_PKEY_get1_DH( EVP_PKEY * pkey );
+EC_KEY * EVP_PKEY_get1_EC_KEY( EVP_PKEY * pkey );
 
-// These changed in 0.9.9 to something different, they weren't probably documented before.
-int EVP_PKEY_decrypt(unsigned char * dec_key, const unsigned char * enc_key, int enc_key_len, EVP_PKEY * private_key);
-int EVP_PKEY_encrypt(unsigned char * enc_key, const unsigned char * key, int key_len, EVP_PKEY * pub_key);
+/* These changed in 0.9.9 to something different, they weren't probably documented before. */
+int EVP_PKEY_decrypt( unsigned char * dec_key, const unsigned char * enc_key, int enc_key_len, EVP_PKEY * private_key );
+int EVP_PKEY_encrypt( unsigned char * enc_key, const unsigned char * key, int key_len, EVP_PKEY * pub_key     );
 
-// 1.0.0
-int EVP_PKEY_sign_init(EVP_PKEY_CTX * ctx);
-int EVP_PKEY_sign(EVP_PKEY_CTX * ctx, unsigned char * sig, size_t * siglen, const unsigned char * tbs, size_t tbslen);
-
-int EVP_PKEY_verify_init(EVP_PKEY_CTX * ctx);
-int EVP_PKEY_verify(EVP_PKEY_CTX * ctx, const unsigned char * sig, size_t siglen, const unsigned char * tbs, size_t tbslen);
-
-int EVP_PKEY_verify_recover_init(EVP_PKEY_CTX * ctx);
-int EVP_PKEY_verify_recover(EVP_PKEY_CTX * ctx, unsigned char * rout, size_t * routlen, const unsigned char * sig, size_t siglen);
+/* 1.0.0 */
+int EVP_PKEY_verify_recover_init( EVP_PKEY_CTX * ctx );
+int EVP_PKEY_verify_recover( EVP_PKEY_CTX * ctx,
+                             unsigned char * rout, size_t * routlen,
+                             const unsigned char * sig, size_t siglen );
 
 #endif

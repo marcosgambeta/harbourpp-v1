@@ -46,13 +46,17 @@
 // $HB_END_LICENSE$
 
 #include "hbssl.h"
+
 #include <openssl/evp.h>
 
 char *hb_openssl_strdup(const char *pszText)
 {
+  char *pszDup;
   size_t len = strlen(pszText) + 1;
-  auto pszDup = static_cast<char *>(OPENSSL_malloc(len));
+
+  pszDup = (char *)OPENSSL_malloc(len);
   memcpy(pszDup, pszText, len);
+
   return pszDup;
 }
 
@@ -77,35 +81,32 @@ HB_FUNC(ERR_LOAD_EVP_STRINGS)
 
 HB_FUNC(EVP_PKEY_FREE)
 {
-  auto pKey = hb_param(1, Harbour::Item::POINTER);
+  PHB_ITEM pKey = hb_param(1, HB_IT_POINTER);
 
-  if (pKey != nullptr) {
+  if (pKey)
     hb_EVP_PKEY_free(pKey);
-  } else {
+  else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(EVP_BYTESTOKEY)
 {
-  auto cipher = hb_EVP_CIPHER_par(1);
-  auto md = hb_EVP_MD_par(2);
+  const EVP_CIPHER *cipher = hb_EVP_CIPHER_par(1);
+  const EVP_MD *md = hb_EVP_MD_par(2);
 
-  if (cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8)) {
+  if (cipher && md && (!HB_ISCHAR(3) || hb_parclen(3) == 8)) {
     unsigned char key[EVP_MAX_KEY_LENGTH];
     unsigned char iv[EVP_MAX_IV_LENGTH];
 
     memset(key, 0, sizeof(key));
     memset(iv, 0, sizeof(iv));
 
-    hb_retni(EVP_BytesToKey(cipher, static_cast<HB_SSL_CONST EVP_MD *>(md),
-                            reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)) /* salt */,
-                            reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(4)) /* data */,
-                            static_cast<int>(hb_parclen(4)), hb_parni(5) /* count */, key, iv));
+    hb_retni(EVP_BytesToKey(cipher, (HB_SSL_CONST EVP_MD *)md, (HB_SSL_CONST unsigned char *)hb_parc(3) /* salt */,
+                            (HB_SSL_CONST unsigned char *)hb_parcx(4) /* data */, (int)hb_parclen(4),
+                            hb_parni(5) /* count */, key, iv));
 
-    hb_storclen(reinterpret_cast<char *>(key), EVP_CIPHER_key_length(cipher), 6);
-    hb_storclen(reinterpret_cast<char *>(iv), EVP_CIPHER_iv_length(cipher), 7);
-  } else {
+    hb_storclen((char *)key, EVP_CIPHER_key_length(cipher), 6);
+    hb_storclen((char *)iv, EVP_CIPHER_iv_length(cipher), 7);
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }

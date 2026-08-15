@@ -1,10 +1,10 @@
-//
-// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
-//
+/*
+ * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+ */
 
 #require "hbssl"
 
-#define CRLF Chr(13) + Chr(10)
+#define CRLF Chr( 13 ) + Chr( 10 )
 
 PROCEDURE Main()
 
@@ -31,9 +31,9 @@ PROCEDURE Main()
    ? "INETFD", hb_inetFD( socket )
    ? "INETSEND", hb_inetSend( socket, "GET / http/1.1" + CRLF + "Host: " + "www.fortify.net" + CRLF + CRLF )
    ? "INETERR", hb_inetErrorCode( socket )
-   buffer := Space(1024)
-   ? "INETRECVALL", hb_inetRecvAll( socket, @buffer, Len(buffer) )
-   ? "BUFFER", ">" + AllTrim(buffer) + "<"
+   buffer := Space( 1024 )
+   ? "INETRECVALL", hb_inetRecvAll( socket, @buffer, Len( buffer ) )
+   ? "BUFFER", ">" + AllTrim( buffer ) + "<"
    ? "INETCLOSE", hb_inetClose( socket )
 
    ? "-------"
@@ -91,7 +91,7 @@ PROCEDURE Main()
 
    ? "SSL_WRITE", tmp := SSL_write( ssl, "GET / http/1.1" + CRLF + "Host: " + "www.fortify.net" + CRLF + CRLF )
    ? "SSL_GET_ERROR", SSL_get_error( ssl, tmp )
-   buffer := Space(1024)
+   buffer := Space( 1024 )
    ? "SSL_READ", tmp := SSL_read( ssl, @buffer )
    ? "SSL_GET_ERROR", SSL_get_error( ssl, tmp )
    ? buffer

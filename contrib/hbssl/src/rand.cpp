@@ -46,16 +46,17 @@
 // $HB_END_LICENSE$
 
 #include "hbssl.h"
+
 #include <openssl/rand.h>
 
 HB_FUNC(RAND_SEED)
 {
-  RAND_seed(hb_parcx(1), static_cast<int>(hb_parclen(1)));
+  RAND_seed(hb_parcx(1), (int)hb_parclen(1));
 }
 
 HB_FUNC(RAND_ADD)
 {
-  RAND_add(hb_parcx(1), static_cast<int>(hb_parclen(1)), hb_parnd(2));
+  RAND_add(hb_parcx(1), (int)hb_parclen(1), hb_parnd(2));
 }
 
 HB_FUNC(RAND_POLL)
@@ -75,7 +76,7 @@ HB_FUNC(RAND_EVENT)
   RAND_poll();
   hb_retni(RAND_status());
 #else
-  hb_retni(RAND_event(hb_parni(1), static_cast<WPARAM>(hb_parnint(2)), static_cast<LPARAM>(hb_parnint(3))));
+  hb_retni(RAND_event(hb_parni(1), (WPARAM)hb_parnint(2), (LPARAM)hb_parnint(3)));
 #endif
 #else
   hb_retni(1);

@@ -45,27 +45,28 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-// for applink.c
+/* for applink.c */
 #if defined(_MSC_VER)
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #elif defined(__BORLANDC__)
-// NOTE: To avoid these with BCC 5.5:
-//       Warning W8065 openssl/applink.c 40: Call to function '_setmode' with no prototype in function app_fsetmod
-//       Error E2451 openssl/applink.c 82: Undefined symbol '_lseek' in function OPENSSL_Applink
+/* NOTE: To avoid these with BCC 5.5:
+         Warning W8065 openssl/applink.c 40: Call to function '_setmode' with no prototype in function app_fsetmod
+         Error E2451 openssl/applink.c 82: Undefined symbol '_lseek' in function OPENSSL_Applink
+ */
 #include "io.h"
 #define _setmode setmode
 #undef _lseek
 #define _lseek lseek
 #endif
 
-// This must come before #include "hbssl.h".
-// OpenSSL 1.1.x and upper don't require Windows headers anymore,
-// but if #included, it still must come before its own headers.
-// The Harbour wrapper code doesn't need the Windows headers, so
-// they will be dropped once 1.0.2 is EOLed in 2019-12-31.
-#include "hbdefs.hpp"
+/* This must come before #include "hbssl.h".
+   OpenSSL 1.1.x and upper don't require Windows headers anymore,
+   but if #included, it still must come before its own headers.
+   The Harbour wrapper code doesn't need the Windows headers, so
+   they will be dropped once 1.0.2 is EOLed in 2019-12-31. */
+#include "hbdefs.h"
 #if defined(HB_OS_WIN)
 #include <windows.h>
 #include <wincrypt.h>
@@ -75,33 +76,34 @@
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
 #include <openssl/x509v3.h>
 #endif
+
 #include <hbapiitm.hpp>
 #include <hbvm.hpp>
 
-#if !defined(HB_OPENSSL_NO_APPLINK) && defined(HB_OS_WIN) && defined(HB_CPU_X86) &&                                    \
+#if !defined(HB_OPENSSL_NO_APPLINK) && defined(HB_OS_WIN) && defined(HB_CPU_X86) && !defined(HB_OPENSSL_STATIC) &&     \
     OPENSSL_VERSION_NUMBER >= 0x00908000L
-// Enable this to add support for various scenarios when
-// OpenSSL is build with OPENSSL_USE_APPLINK (the default).
-// In such case care must be taken to initialize pointers
-// to C RTL function to avoid crashes.
+/* Enable this to add support for various scenarios when
+   OpenSSL is build with OPENSSL_USE_APPLINK (the default).
+   In such case care must be taken to initialize pointers
+   to C RTL function to avoid crashes. */
 #define HB_OPENSSL_HAS_APPLINK
 #endif
 
-// NOTE: See: http://www.openssl.org/support/faq.html#PROG2
-//       Application must call SSL_init(), so that this module gets linked.
-//       [vszakats]
-#if defined(HB_OS_WIN) && !defined(HB_OPENSSL_STATIC) && OPENSSL_VERSION_NUMBER >= 0x00908000L
-// Pull a stub that returns a table with some selected
-// C RTL function pointers. When linking to OpenSSL shared
-// libraries, the function OPENSSL_Applink() exported from
-// the application executable will be dynamically called
-// from the OpenSSL crypto .dll. When linking OpenSSL statically,
-// we will call it manually from SSL_init(). This will not
-// work when using 'hbssl' as a dynamic lib, because
-// OPENSSL_Applink() must be exported from the main executable.
-// Consequently 'hbrun' will fail with operations that require
-// C RTL calls internally. Such calls are currently made when
-// using BIO_new_fd() BIO_new_file() IO API.
+/* NOTE: See: http://www.openssl.org/support/faq.html#PROG2
+         Application must call SSL_init(), so that this module gets linked.
+         [vszakats] */
+#if defined(HB_OPENSSL_HAS_APPLINK)
+/* Pull a stub that returns a table with some selected
+   C RTL function pointers. When linking to OpenSSL shared
+   libraries, the function OPENSSL_Applink() exported from
+   the application executable will be dynamically called
+   from the OpenSSL crypto .dll. When linking OpenSSL statically,
+   we will call it manually from SSL_init(). This will not
+   work when using 'hbssl' as a dynamic lib, because
+   OPENSSL_Applink() must be exported from the main executable.
+   Consequently 'hbrun' will fail with operations that require
+   C RTL calls internally. Such calls are currently made when
+   using BIO_new_fd() BIO_new_file() IO API. */
 #include "openssl/applink.c"
 #endif
 
@@ -131,7 +133,7 @@ HB_FUNC(HB_SSL_STATIC)
 
 HB_FUNC(OPENSSL_VERSION)
 {
-  auto value = hb_parni(1);
+  int value = hb_parni(1);
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
     (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x30500000L)
@@ -190,7 +192,7 @@ HB_FUNC(OPENSSL_VERSION_NUM)
 #endif
 }
 
-// SSLEAY_VERSION is existing macro so we cannot use HB_FUNC_TRANSLATE
+/* SSLEAY_VERSION is existing macro so we cannot use HB_FUNC_TRANSLATE */
 #if 0
    HB_FUNC_TRANSLATE( SSLEAY_VERSION, OPENSSL_VERSION )
 #else
@@ -201,27 +203,24 @@ HB_FUNC(SSLEAY_VERSION)
 #endif
 HB_FUNC_TRANSLATE(SSLEAY, OPENSSL_VERSION_NUM)
 
-struct _HB_SSL
+typedef struct _HB_SSL
 {
   SSL *ssl;
   PHB_ITEM pCallbackArg;
-};
-
-using HB_SSL = _HB_SSL;
-using PHB_SSL = _HB_SSL *;
+} HB_SSL, *PHB_SSL;
 
 static HB_GARBAGE_FUNC(PHB_SSL_release)
 {
-  auto hb_ssl = static_cast<PHB_SSL>(Cargo);
+  PHB_SSL hb_ssl = (PHB_SSL)Cargo;
 
-  if (hb_ssl != nullptr) {
-    // Destroy the object
-    if (hb_ssl->ssl != nullptr) {
+  if (hb_ssl) {
+    /* Destroy the object */
+    if (hb_ssl->ssl) {
       SSL_free(hb_ssl->ssl);
       hb_ssl->ssl = nullptr;
     }
 
-    if (hb_ssl->pCallbackArg != nullptr) {
+    if (hb_ssl->pCallbackArg) {
       hb_itemRelease(hb_ssl->pCallbackArg);
       hb_ssl->pCallbackArg = nullptr;
     }
@@ -230,12 +229,11 @@ static HB_GARBAGE_FUNC(PHB_SSL_release)
 
 static HB_GARBAGE_FUNC(PHB_SSL_mark)
 {
-  auto hb_ssl = static_cast<PHB_SSL>(Cargo);
+  PHB_SSL hb_ssl = (PHB_SSL)Cargo;
 
-  if (hb_ssl != nullptr) {
-    if (hb_ssl->pCallbackArg != nullptr) {
+  if (hb_ssl) {
+    if (hb_ssl->pCallbackArg)
       hb_gcMark(hb_ssl->pCallbackArg);
-    }
   }
 }
 
@@ -243,84 +241,87 @@ static const HB_GC_FUNCS s_gcSSL_funcs = {PHB_SSL_release, PHB_SSL_mark};
 
 HB_BOOL hb_SSL_is(int iParam)
 {
-  auto hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
+  PHB_SSL hb_ssl = (PHB_SSL)hb_parptrGC(&s_gcSSL_funcs, iParam);
+
   return hb_ssl && hb_ssl->ssl;
 }
 
 static PHB_SSL hb_SSL_par_raw(int iParam)
 {
-  auto hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
+  PHB_SSL hb_ssl = (PHB_SSL)hb_parptrGC(&s_gcSSL_funcs, iParam);
+
   return hb_ssl;
 }
 
 SSL *hb_SSL_par(int iParam)
 {
-  auto hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
+  PHB_SSL hb_ssl = (PHB_SSL)hb_parptrGC(&s_gcSSL_funcs, iParam);
+
   return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
 SSL *hb_SSL_itemGet(PHB_ITEM pItem)
 {
-  auto hb_ssl = static_cast<PHB_SSL>(hb_itemGetPtrGC(pItem, &s_gcSSL_funcs));
+  PHB_SSL hb_ssl = (PHB_SSL)hb_itemGetPtrGC(pItem, &s_gcSSL_funcs);
+
   return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
 HB_FUNC(SSL_NEW)
 {
   if (hb_SSL_CTX_is(1)) {
-    auto ctx = hb_SSL_CTX_par(1);
+    SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
-    if (ctx != nullptr) {
-      auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
+    if (ctx) {
+      PHB_SSL hb_ssl = (PHB_SSL)hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs);
+
       memset(hb_ssl, 0, sizeof(HB_SSL));
       hb_ssl->ssl = SSL_new(ctx);
+
       hb_retptrGC(hb_ssl);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_DUP)
 {
   if (hb_SSL_is(1)) {
-    auto ssl_par = hb_SSL_par(1);
+    SSL *ssl_par = hb_SSL_par(1);
 
-    if (ssl_par != nullptr) {
-      auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
+    if (ssl_par) {
+      PHB_SSL hb_ssl = (PHB_SSL)hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs);
+
       memset(hb_ssl, 0, sizeof(HB_SSL));
+
       hb_ssl->ssl = SSL_dup(ssl_par);
+
       hb_retptrGC(hb_ssl);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_ACCEPT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_accept(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_CLEAR)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_clear(ssl);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -329,174 +330,148 @@ HB_FUNC_TRANSLATE(SSL_STATE, SSL_GET_STATE)
 HB_FUNC(SSL_STATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_state(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 #endif
 
 HB_FUNC(SSL_PENDING)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_pending(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_BIO)
 {
-  auto rbio = hb_BIO_par(2);
-  auto wbio = hb_BIO_par(3);
+  BIO *rbio = hb_BIO_par(2);
+  BIO *wbio = hb_BIO_par(3);
 
-  if (hb_SSL_is(1) && rbio != nullptr && wbio != nullptr) {
-    auto ssl = hb_SSL_par(1);
+  if (hb_SSL_is(1) && rbio && wbio) {
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_bio(ssl, rbio, wbio);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_RBIO)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retptr(SSL_get_rbio(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_WBIO)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retptr(SSL_get_wbio(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_CONNECT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_connect(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SHUTDOWN)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_shutdown(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_VERSION)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_version(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_VERSION)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_get_version(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CIPHER)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_get_cipher(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_DO_HANDSHAKE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_do_handshake(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_RENEGOTIATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_renegotiate(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_TOTAL_RENEGOTIATIONS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_total_renegotiations(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_FD)
@@ -504,14 +479,12 @@ HB_FUNC(SSL_SET_FD)
   int iSD;
 
   if (hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_set_fd(ssl, iSD));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_RFD)
@@ -519,14 +492,12 @@ HB_FUNC(SSL_SET_RFD)
   int iSD;
 
   if (hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_set_rfd(ssl, iSD));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_WFD)
@@ -534,187 +505,167 @@ HB_FUNC(SSL_SET_WFD)
   int iSD;
 
   if (hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_set_wfd(ssl, iSD));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_WANT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_want(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_WANT_NOTHING)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_want_nothing(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_WANT_X509_LOOKUP)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_want_x509_lookup(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_WANT_READ)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_want_read(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_READ)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      auto pItem = hb_param(2, Harbour::Item::STRING);
+    if (ssl) {
+      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
       char *pBuffer;
       HB_SIZE nLen;
-      auto nRead = 0;
+      int nRead = 0;
 
-      if (pItem != nullptr && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
+      if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
         if (HB_ISNUM(3)) {
           nRead = hb_parni(3);
-          if (nRead >= 0 && nRead < static_cast<int>(nLen)) {
+          if (nRead >= 0 && nRead < (int)nLen)
             nLen = nRead;
-          }
         }
-        nRead = nLen >= INT_MAX ? INT_MAX : static_cast<int>(nLen);
+        nRead = nLen >= INT_MAX ? INT_MAX : (int)nLen;
 
         nRead = SSL_read(ssl, pBuffer, nRead);
       }
 
       hb_retni(nRead);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_PEEK)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      auto pItem = hb_param(2, Harbour::Item::STRING);
+    if (ssl) {
+      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
       char *pBuffer;
       HB_SIZE nLen;
-      auto nRead = 0;
+      int nRead = 0;
 
-      if (pItem != nullptr && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
+      if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
         if (HB_ISNUM(3)) {
           nRead = hb_parni(3);
-          if (nRead >= 0 && nRead < static_cast<int>(nLen)) {
+          if (nRead >= 0 && nRead < (int)nLen)
             nLen = nRead;
-          }
         }
-        nRead = nLen >= INT_MAX ? INT_MAX : static_cast<int>(nLen);
+        nRead = nLen >= INT_MAX ? INT_MAX : (int)nLen;
 
         nRead = SSL_peek(ssl, pBuffer, nRead);
       }
 
       hb_retni(nRead);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_WANT_WRITE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_want_write(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_WRITE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      auto pBuffer = hb_param(2, Harbour::Item::STRING);
-      auto nLen = hb_itemGetCLen(pBuffer);
+    if (ssl) {
+      PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
+      HB_SIZE nLen = hb_itemGetCLen(pBuffer);
 
       if (HB_ISNUM(3)) {
-        auto nWrite = static_cast<HB_SIZE>(hb_parnl(3));
-        if (nWrite < nLen) {
+        HB_SIZE nWrite = (HB_SIZE)hb_parnl(3);
+        if (nWrite < nLen)
           nLen = nWrite;
-        }
       }
 
-      hb_retni(SSL_write(ssl, hb_itemGetCPtr(pBuffer), static_cast<int>(nLen)));
+      hb_retni(SSL_write(ssl, hb_itemGetCPtr(pBuffer), (int)nLen));
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_SSL_METHOD)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      hb_retni(SSL_set_ssl_method(ssl, static_cast<SSL_METHOD *>(hb_ssl_method_id_to_ptr(hb_parni(2)))));
+      hb_retni(SSL_set_ssl_method(ssl, (SSL_METHOD *)hb_ssl_method_id_to_ptr(hb_parni(2))));
 #else
       hb_retni(SSL_set_ssl_method(ssl, hb_ssl_method_id_to_ptr(hb_parni(2))));
 #endif
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_SSL_METHOD)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
       SSL_METHOD *p = SSL_get_ssl_method(ssl);
 #else
@@ -723,182 +674,163 @@ HB_FUNC(SSL_GET_SSL_METHOD)
       int n;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-      if (p == TLS_method()) {
+      if (p == TLS_method())
         n = HB_SSL_CTX_NEW_METHOD_TLS;
-      } else if (p == TLS_server_method()) {
+      else if (p == TLS_server_method())
         n = HB_SSL_CTX_NEW_METHOD_TLS_SERVER;
-      } else if (p == TLS_client_method()) {
+      else if (p == TLS_client_method())
         n = HB_SSL_CTX_NEW_METHOD_TLS_CLIENT;
-      }
 #else
-      if (p == SSLv23_method()) {
+      if (p == SSLv23_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV23;
-      } else if (p == SSLv23_server_method()) {
+      else if (p == SSLv23_server_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV23_SERVER;
-      } else if (p == SSLv23_client_method()) {
+      else if (p == SSLv23_client_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV23_CLIENT;
-      }
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      else if (p == SSLv2_method()) {
+      else if (p == SSLv2_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV2;
-      } else if (p == SSLv2_server_method()) {
+      else if (p == SSLv2_server_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV2_SERVER;
-      } else if (p == SSLv2_client_method()) {
+      else if (p == SSLv2_client_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV2_CLIENT;
-      }
 #endif
 #ifndef OPENSSL_NO_SSL3_METHOD
-      else if (p == SSLv3_method()) {
+      else if (p == SSLv3_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV3;
-      } else if (p == SSLv3_server_method()) {
+      else if (p == SSLv3_server_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV3_SERVER;
-      } else if (p == SSLv3_client_method()) {
+      else if (p == SSLv3_client_method())
         n = HB_SSL_CTX_NEW_METHOD_SSLV3_CLIENT;
-      }
 #endif
 #ifndef OPENSSL_NO_TLS1_METHOD
-      else if (p == TLSv1_method()) {
+      else if (p == TLSv1_method())
         n = HB_SSL_CTX_NEW_METHOD_TLSV1;
-      } else if (p == TLSv1_server_method()) {
+      else if (p == TLSv1_server_method())
         n = HB_SSL_CTX_NEW_METHOD_TLSV1_SERVER;
-      } else if (p == TLSv1_client_method()) {
+      else if (p == TLSv1_client_method())
         n = HB_SSL_CTX_NEW_METHOD_TLSV1_CLIENT;
-      }
 #endif
 #endif
-      else {
+      else
         n = HB_SSL_CTX_NEW_METHOD_UNKNOWN;
-      }
 
       hb_retni(n);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CURRENT_CIPHER)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retptr(HB_UNCONST(SSL_get_current_cipher(ssl)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CIPHER_BITS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      auto alg_bits = 0;
+    if (ssl) {
+      int alg_bits = 0;
+
       hb_retni(SSL_get_cipher_bits(ssl, &alg_bits));
+
       hb_storni(alg_bits, 2);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CIPHER_LIST)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_get_cipher_list(ssl, hb_parni(2)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_CIPHER_LIST)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr && hb_parclen(2) <= 255) {
+    if (ssl && hb_parclen(2) <= 255)
       hb_retni(SSL_set_cipher_list(ssl, hb_parcx(2)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CIPHER_NAME)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_get_cipher_name(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CIPHER_VERSION)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_get_cipher_version(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_COPY_SESSION_ID)
 {
   if (hb_SSL_is(1) && hb_SSL_is(2)) {
-    auto ssl1 = hb_SSL_par(1);
-    auto ssl2 = hb_SSL_par(2);
+    SSL *ssl1 = hb_SSL_par(1);
+    SSL *ssl2 = hb_SSL_par(2);
 
-    if (ssl1 != nullptr && ssl2 != nullptr) {
+    if (ssl1 && ssl2)
       SSL_copy_session_id(ssl1, ssl2);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_SHARED_CIPHERS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      char buffer[128 + 1]; // See: CVE-2006-3738
+    if (ssl) {
+      char buffer[128 + 1]; /* See: CVE-2006-3738 */
+
       buffer[0] = '\0';
+
       hb_retc(SSL_get_shared_ciphers(ssl, buffer, sizeof(buffer) - 1));
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_TLSEXT_HOST_NAME)
 {
   if (hb_SSL_is(1)) {
 #if defined(SSL_CTRL_SET_TLSEXT_HOSTNAME)
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      hb_retni(SSL_set_tlsext_host_name(ssl, const_cast<char *>(hb_parc(2))));
-    }
+    if (ssl)
+      hb_retni(SSL_set_tlsext_host_name(ssl, HB_UNCONST(hb_parc(2))));
 #endif
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_ALERT_DESC_STRING)
@@ -924,89 +856,73 @@ HB_FUNC(SSL_ALERT_TYPE_STRING_LONG)
 HB_FUNC(SSL_RSTATE_STRING)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_rstate_string(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_RSTATE_STRING_LONG)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_rstate_string(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_STATE_STRING)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_rstate_string(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_STATE_STRING_LONG)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retc(SSL_rstate_string(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 #if 0
 
-HB_FUNC(SSL_GET_PSK_IDENTITY_HINT)
+HB_FUNC( SSL_GET_PSK_IDENTITY_HINT )
 {
-  if (hb_SSL_is(1))
-  {
-    auto ssl = hb_SSL_par(1);
+   if( hb_SSL_is( 1 ) )
+   {
+      SSL * ssl = hb_SSL_par( 1 );
 
-    if (ssl != nullptr)
-    {
-      hb_retc(SSL_get_psk_identity_hint(ssl));
-    }
-  }
-  else
-  {
-    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+      if( ssl )
+         hb_retc( SSL_get_psk_identity_hint( ssl ) );
+   }
+   else
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-HB_FUNC(SSL_GET_PSK_IDENTITY)
+HB_FUNC( SSL_GET_PSK_IDENTITY )
 {
-  if (hb_SSL_is(1))
-  {
-    auto ssl = hb_SSL_par(1);
+   if( hb_SSL_is( 1 ) )
+   {
+      SSL * ssl = hb_SSL_par( 1 );
 
-    if (ssl != nullptr)
-    {
-      hb_retc(SSL_get_psk_identity(ssl));
-    }
-  }
-  else
-  {
-    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
+      if( ssl )
+         hb_retc( SSL_get_psk_identity( ssl ) );
+   }
+   else
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #endif
@@ -1014,584 +930,502 @@ HB_FUNC(SSL_GET_PSK_IDENTITY)
 HB_FUNC(SSL_CHECK_PRIVATE_KEY)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_check_private_key(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_ERROR)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_error(ssl, hb_parni(2)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_FD)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_fd(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_RFD)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_rfd(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_WFD)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_wfd(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_QUIET_SHUTDOWN)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_quiet_shutdown(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_SHUTDOWN)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_shutdown(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_READ_AHEAD)
 {
   if (hb_SSL_is(1)) {
-#if defined(__BORLANDC__) // FIXME: SSL_get_read_ahead is an unresolved external when trying to link with BCC
+#if defined(__BORLANDC__) /* FIXME: SSL_get_read_ahead is an unresolved external when trying to link with BCC */
     hb_retni(0);
 #else
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_read_ahead(ssl));
-    }
 #endif
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_STATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_state(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_VERIFY_MODE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_get_verify_mode(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_IN_ACCEPT_INIT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_in_accept_init(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_IN_BEFORE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_in_before(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_IN_CONNECT_INIT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_in_connect_init(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_IN_INIT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_in_init(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_IS_INIT_FINISHED)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_is_init_finished(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_NUM_RENEGOTIATIONS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_num_renegotiations(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_CLEAR_NUM_RENEGOTIATIONS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_clear_num_renegotiations(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_DEFAULT_TIMEOUT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_get_default_timeout(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_VERIFY_RESULT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_get_verify_result(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SESSION_REUSED)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_session_reused(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_ACCEPT_STATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_accept_state(ssl);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_CONNECT_STATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_connect_state(ssl);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_OPTIONS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnint(SSL_get_options(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_OPTIONS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
 #if OPENSSL_VERSION_NUMBER >= 0x30000000L
-      SSL_set_options(ssl, static_cast<uint64_t>(hb_parnint(2)));
+      SSL_set_options(ssl, (uint64_t)hb_parnint(2));
 #else
-      SSL_set_options(ssl, static_cast<unsigned long>(hb_parnl(2)));
+      SSL_set_options(ssl, (unsigned long)hb_parnl(2));
 #endif
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_VERIFY)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_verify(ssl, hb_parni(2), nullptr);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_QUIET_SHUTDOWN)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_quiet_shutdown(ssl, hb_parni(2));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_READ_AHEAD)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_read_ahead(ssl, hb_parni(2) /* yes */);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_SHUTDOWN)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_shutdown(ssl, hb_parni(2) /* mode */);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_VERIFY_RESULT)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_verify_result(ssl, hb_parnl(2) /* arg */);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_MODE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_mode(ssl, hb_parnl(2));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_MODE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retnl(SSL_get_mode(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_SET_MTU)
 {
   if (hb_SSL_is(1)) {
 #if OPENSSL_VERSION_NUMBER >= 0x00908000L && !defined(HB_OPENSSL_OLD_OSX_)
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       SSL_set_mtu(ssl, hb_parnl(2));
-    }
 #endif
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CERTIFICATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl) {
       X509 *x509 = SSL_get_certificate(ssl);
 
-      if (x509 != nullptr) {
+      if (x509) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
         X509_up_ref(x509);
 #else
         x509 = X509_dup(x509);
-        if (x509 != nullptr) {
+        if (x509)
           X509_check_purpose(x509, -1, 0);
-        }
 #endif
       }
       hb_X509_ret(x509);
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_PEER_CERTIFICATE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_X509_ret(SSL_get_peer_certificate(ssl));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_CERTIFICATE)
 {
   if (hb_SSL_is(1) && hb_X509_is(2)) {
-    auto ssl = hb_SSL_par(1);
-    auto x509 = hb_X509_par(2);
+    SSL *ssl = hb_SSL_par(1);
+    X509 *x509 = hb_X509_par(2);
 
-    if (ssl != nullptr && x509 != nullptr) {
+    if (ssl && x509)
       hb_retni(SSL_use_certificate(ssl, x509));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_ADD_CLIENT_CA)
 {
   if (hb_SSL_is(1) && hb_X509_is(2)) {
-    auto ssl = hb_SSL_par(1);
-    auto x509 = hb_X509_par(2);
+    SSL *ssl = hb_SSL_par(1);
+    X509 *x509 = hb_X509_par(2);
 
-    if (ssl != nullptr && x509 != nullptr) {
+    if (ssl && x509)
       hb_retni(SSL_add_client_CA(ssl, x509));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_CERTIFICATE_FILE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_use_certificate_file(ssl, hb_parc(2), hb_parni(3)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_PRIVATEKEY_FILE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_use_PrivateKey_file(ssl, hb_parc(2), hb_parni(3)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_RSAPRIVATEKEY_FILE)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
       hb_retni(SSL_use_RSAPrivateKey_file(ssl, hb_parc(2), hb_parni(3)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CIPHERS)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl) {
       STACK_OF(SSL_CIPHER) *stack = SSL_get_ciphers(ssl);
       int len = sk_SSL_CIPHER_num(stack);
 
       if (len > 0) {
-        auto pArray = hb_itemArrayNew(len);
+        PHB_ITEM pArray = hb_itemArrayNew(len);
+        int tmp;
 
-        for (auto tmp = 0; tmp < len; tmp++) {
+        for (tmp = 0; tmp < len; tmp++)
           hb_arraySetPtr(pArray, tmp + 1, HB_UNCONST(sk_SSL_CIPHER_value(stack, tmp)));
-        }
 
         hb_itemReturnRelease(pArray);
-      } else {
+      } else
         hb_reta(0);
-      }
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_GET_CLIENT_CA_LIST)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl) {
       STACK_OF(X509_NAME) *stack = SSL_get_client_CA_list(ssl);
       int len = sk_X509_NAME_num(stack);
 
       if (len > 0) {
-        auto pArray = hb_itemArrayNew(len);
+        PHB_ITEM pArray = hb_itemArrayNew(len);
+        int tmp;
 
-        for (auto tmp = 0; tmp < len; tmp++) {
+        for (tmp = 0; tmp < len; tmp++)
           hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
-        }
 
         hb_itemReturnRelease(pArray);
-      } else {
+      } else
         hb_reta(0);
-      }
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_LOAD_CLIENT_CA_FILE)
@@ -1601,88 +1435,74 @@ HB_FUNC(SSL_LOAD_CLIENT_CA_FILE)
     int len = sk_X509_NAME_num(stack);
 
     if (len > 0) {
-      auto pArray = hb_itemArrayNew(len);
+      PHB_ITEM pArray = hb_itemArrayNew(len);
+      int tmp;
 
-      for (auto tmp = 0; tmp < len; tmp++) {
+      for (tmp = 0; tmp < len; tmp++)
         hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
-      }
 
       hb_itemReturnRelease(pArray);
-    } else {
+    } else
       hb_reta(0);
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_RSAPRIVATEKEY_ASN1)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
+    if (ssl)
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
-      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, reinterpret_cast<const unsigned char *>(hb_parc(2)),
-                                          static_cast<int>(hb_parclen(2))));
+      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, (const unsigned char *)hb_parc(2), (int)hb_parclen(2)));
 #else
-      // 'const' not used in 2nd param because ssh.h misses it, too.
-      //  Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
-      //  [vszakats]
-      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, static_cast<unsigned char *>(const_cast<char *>(hb_parc(2))),
-                                          static_cast<int>(hb_parclen(2))));
+      /* 'const' not used in 2nd param because ssh.h misses it, too.
+          Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
+          [vszakats] */
+      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, (unsigned char *)HB_UNCONST(hb_parc(2)), (int)hb_parclen(2)));
 #endif
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_PRIVATEKEY_ASN1)
 {
   if (hb_SSL_is(2)) {
-    auto ssl = hb_SSL_par(2);
+    SSL *ssl = hb_SSL_par(2);
 
-    if (ssl != nullptr) {
-      hb_retni(SSL_use_PrivateKey_ASN1(hb_parni(1), ssl, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)),
-                                       static_cast<int>(hb_parclen(3))));
-    }
-  } else {
+    if (ssl)
+      hb_retni(SSL_use_PrivateKey_ASN1(hb_parni(1), ssl, (HB_SSL_CONST unsigned char *)hb_parc(3), (int)hb_parclen(3)));
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_CERTIFICATE_ASN1)
 {
   if (hb_SSL_is(1)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      hb_retni(SSL_use_certificate_ASN1(ssl, reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(2)),
-                                        static_cast<int>(hb_parclen(2))));
-    }
-  } else {
+    if (ssl)
+      hb_retni(SSL_use_certificate_ASN1(ssl, (HB_SSL_CONST unsigned char *)hb_parc(2), (int)hb_parclen(2)));
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 HB_FUNC(SSL_USE_PRIVATEKEY)
 {
   if (hb_SSL_is(1) && hb_EVP_PKEY_is(2)) {
-    auto ssl = hb_SSL_par(1);
+    SSL *ssl = hb_SSL_par(1);
 
-    if (ssl != nullptr) {
-      // QUESTION: It's unclear whether we should pass a copy here,
-      //           and who should free such passed EVP_PKEY object.
-      //           [vszakats]
+    if (ssl)
+      /* QUESTION: It's unclear whether we should pass a copy here,
+                   and who should free such passed EVP_PKEY object.
+                   [vszakats] */
       hb_retni(SSL_use_PrivateKey(ssl, hb_EVP_PKEY_par(2)));
-    }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
-// Callback
+/* Callback */
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
 static void hb_ssl_msg_callback(int write_p, int version, int content_type, const void *buf, size_t len, SSL *ssl,
@@ -1690,13 +1510,13 @@ static void hb_ssl_msg_callback(int write_p, int version, int content_type, cons
 {
   HB_SYMBOL_UNUSED(ssl);
 
-  if (userdata != nullptr && hb_vmRequestReenter()) {
+  if (userdata && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
-    hb_vmPush(static_cast<PHB_ITEM>(userdata));
+    hb_vmPush((PHB_ITEM)userdata);
     hb_vmPushLogical(write_p);
     hb_vmPushInteger(version);
     hb_vmPushInteger(content_type);
-    hb_vmPushString(static_cast<const char *>(buf), static_cast<HB_SIZE>(len));
+    hb_vmPushString((const char *)buf, (HB_SIZE)len);
     hb_vmSend(4);
 
     hb_vmRequestRestore();
@@ -1707,57 +1527,55 @@ static void hb_ssl_msg_callback(int write_p, int version, int content_type, cons
 HB_FUNC(SSL_SET_MSG_CALLBACK)
 {
   if (hb_SSL_is(1)) {
-    auto hb_ssl = hb_SSL_par_raw(1);
+    PHB_SSL hb_ssl = hb_SSL_par_raw(1);
 
-    if (hb_ssl != nullptr) {
+    if (hb_ssl) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-      auto pCallback = hb_param(2, Harbour::Item::EVALITEM);
+      PHB_ITEM pCallback = hb_param(2, HB_IT_EVALITEM);
 
-      if (hb_ssl->pCallbackArg != nullptr) {
+      if (hb_ssl->pCallbackArg) {
         SSL_set_msg_callback_arg(hb_ssl->ssl, nullptr);
         hb_itemRelease(hb_ssl->pCallbackArg);
         hb_ssl->pCallbackArg = nullptr;
       }
 
-      if (pCallback != nullptr) {
+      if (pCallback) {
         hb_ssl->pCallbackArg = hb_itemNew(pCallback);
         SSL_set_msg_callback_arg(hb_ssl->ssl, hb_ssl->pCallbackArg);
         SSL_set_msg_callback(hb_ssl->ssl, hb_ssl_msg_callback);
         hb_gcUnlock(hb_ssl->pCallbackArg);
-      } else {
+      } else
         SSL_set_msg_callback(hb_ssl->ssl, nullptr);
-      }
 #endif
     }
-  } else {
+  } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-  }
 }
 
 #if 0
 
-void SSL_set_psk_client_callback(SSL * ssl, unsigned int (* callback)(SSL * ssl, const char * hint, char * identity, unsigned int max_identity_len, unsigned char * psk, unsigned int max_psk_len));
-void SSL_set_psk_server_callback(SSL * ssl, unsigned int (* callback)(SSL * ssl, const char * identity, unsigned char * psk, int max_psk_len));
+void         SSL_set_psk_client_callback( SSL * ssl, unsigned int ( * callback )( SSL * ssl, const char * hint, char * identity, unsigned int max_identity_len, unsigned char * psk, unsigned int max_psk_len ) );
+void         SSL_set_psk_server_callback( SSL * ssl, unsigned int ( * callback )( SSL * ssl, const char * identity, unsigned char * psk, int max_psk_len ) );
 
-EVP_PKEY * SSL_get_privatekey(SSL * ssl);
+EVP_PKEY *   SSL_get_privatekey( SSL * ssl );
 
-STACK * SSL_get_peer_cert_chain(const SSL * ssl);
-int SSL_use_RSAPrivateKey(SSL * ssl, RSA * rsa);
-void SSL_set_app_data(SSL * ssl, char * arg);
-int SSL_set_ex_data(SSL * ssl, int idx, char * arg);
-char * SSL_get_app_data(SSL * ssl);
-char * SSL_get_ex_data(ssl, int);
-int SSL_add_dir_cert_subjects_to_stack(STACK * stack, const char * dir);
-int SSL_add_file_cert_subjects_to_stack(STACK * stack, const char * file);
-STACK * SSL_dup_CA_list(STACK * sk);
-SSL_CTX * SSL_get_SSL_CTX(const SSL * ssl);
-int SSL_get_ex_data_X509_STORE_CTX_idx(void);
-int SSL_get_ex_new_index(long argl, char * argp, int (*new_func); (void), int (* dup_func)(void), void (* free_func)(void))
-void(*SSL_get_info_callback(const SSL * ssl);)()
-SSL_SESSION * SSL_get_session(const SSL * ssl);
-int(*SSL_get_verify_callback(const SSL * ssl))(int, X509_STORE_CTX *)
-void SSL_set_client_CA_list(SSL * ssl, STACK * list);
-void SSL_set_info_callback(SSL * ssl, void (*cb); (void))
-void SSL_set_verify(SSL * ssl, int mode, int (*callback); (void))
+STACK *      SSL_get_peer_cert_chain( const SSL * ssl );
+int          SSL_use_RSAPrivateKey( SSL * ssl, RSA * rsa );
+void         SSL_set_app_data( SSL * ssl, char * arg );
+int          SSL_set_ex_data( SSL * ssl, int idx, char * arg );
+char *       SSL_get_app_data( SSL * ssl );
+char *       SSL_get_ex_data( ssl, int );
+int          SSL_add_dir_cert_subjects_to_stack( STACK * stack, const char * dir );
+int          SSL_add_file_cert_subjects_to_stack( STACK * stack, const char * file );
+STACK *      SSL_dup_CA_list( STACK * sk );
+SSL_CTX *    SSL_get_SSL_CTX( const SSL * ssl );
+int          SSL_get_ex_data_X509_STORE_CTX_idx( void );
+int          SSL_get_ex_new_index( long argl, char * argp, int ( *new_func ); ( void ), int ( * dup_func )( void ), void ( * free_func )( void ) )
+void( *SSL_get_info_callback( const SSL * ssl ); )()
+SSL_SESSION * SSL_get_session( const SSL * ssl );
+int( *SSL_get_verify_callback( const SSL * ssl ) )( int, X509_STORE_CTX * )
+void         SSL_set_client_CA_list( SSL * ssl, STACK * list );
+void         SSL_set_info_callback( SSL * ssl, void ( *cb ); ( void ) )
+void         SSL_set_verify( SSL * ssl, int mode, int ( *callback ); ( void ) )
 
 #endif
