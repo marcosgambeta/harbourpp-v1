@@ -1,6 +1,6 @@
-/*
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- */
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 #require "hbssl"
 
@@ -38,30 +38,30 @@ PROCEDURE Main()
    OpenSSL_add_all_ciphers()
 
    ctx := hb_EVP_CIPHER_ctx_create()
-   EVP_CIPHER_CTX_init( ctx )
+   EVP_CIPHER_CTX_init(ctx)
 
-   EVP_EncryptInit( ctx, "AES-192-OFB", cKey )
-   ? EVP_CIPHER_CTX_cipher( ctx )
-   ? EVP_CIPHER_block_size( EVP_CIPHER_CTX_cipher( ctx ) )
+   EVP_EncryptInit(ctx, "AES-192-OFB", cKey)
+   ? EVP_CIPHER_CTX_cipher(ctx)
+   ? EVP_CIPHER_block_size(EVP_CIPHER_CTX_cipher(ctx))
 
    encrypted := ""
    result := ""
-   EVP_EncryptUpdate( ctx, @result, "sample text" )
+   EVP_EncryptUpdate(ctx, @result, "sample text")
    encrypted += result
-   EVP_EncryptFinal( ctx, @result )
+   EVP_EncryptFinal(ctx, @result)
    encrypted += result
-   ? "ENCRYTPTED", ">" + hb_StrToHex( encrypted ) + "<"
+   ? "ENCRYTPTED", ">" + hb_StrToHex(encrypted) + "<"
    ? ">" + encrypted + "<"
 
    ctx := hb_EVP_CIPHER_ctx_create()
 
-   EVP_DecryptInit( ctx, "AES-192-OFB", cKey )
+   EVP_DecryptInit(ctx, "AES-192-OFB", cKey)
 
    decrypted := ""
    result := ""
-   EVP_DecryptUpdate( ctx, @result, encrypted )
+   EVP_DecryptUpdate(ctx, @result, encrypted)
    decrypted += result
-   EVP_DecryptFinal( ctx, @result )
+   EVP_DecryptFinal(ctx, @result)
    decrypted += result
    ? "DECRYTPTED", ">" + decrypted + "<"
 
@@ -71,24 +71,24 @@ PROCEDURE Main()
    ctx := hb_EVP_CIPHER_ctx_create()
 
    ? "=============="
-   bioe := BIO_new_fd( 1, HB_BIO_NOCLOSE )
+   bioe := BIO_new_fd(1, HB_BIO_NOCLOSE)
    FOR EACH tmp IN all
-      ? tmp:__enumIndex(), pub := tmp:exec( "pubkey.pem", "test" )
-      IF ! Empty( pub )
-         ? "EVP_PKEY_free", EVP_PKEY_free( pub )
+      ? tmp:__enumIndex(), pub := tmp:exec("pubkey.pem", "test")
+      IF !Empty(pub)
+         ? "EVP_PKEY_free", EVP_PKEY_free(pub)
       ENDIF
-      ? ; ERR_print_errors( bioe )
+      ? ; ERR_print_errors(bioe)
    NEXT
-   BIO_free( bioe )
+   BIO_free(bioe)
 
-   ? pub := PEM_READ_BIO_PUBKEY( "pubkey.pem", "test" )
+   ? pub := PEM_READ_BIO_PUBKEY("pubkey.pem", "test")
 
-   ? "EVP_SealInit", EVP_SealInit( ctx, "AES-192-OFB", @a, @iv, { pub } )
-   ? ValType( a ), Len( a )
-   ? ValType( a[ 1 ] ), ">" + hb_StrToHex( a[ 1 ] ) + "<"
-   ? ValType( iv ), ">" + hb_StrToHex( iv ) + "<"
+   ? "EVP_SealInit", EVP_SealInit(ctx, "AES-192-OFB", @a, @iv, {pub})
+   ? ValType(a), Len(a)
+   ? ValType(a[1]), ">" + hb_StrToHex(a[1]) + "<"
+   ? ValType(iv), ">" + hb_StrToHex(iv) + "<"
 
-   ? "EVP_PKEY_free", EVP_PKEY_free( pub )
+   ? "EVP_PKEY_free", EVP_PKEY_free(pub)
 
    ctx := NIL
 

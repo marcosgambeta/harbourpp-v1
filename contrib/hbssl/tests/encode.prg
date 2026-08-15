@@ -1,6 +1,6 @@
-/*
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- */
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 #require "hbssl"
 
@@ -17,25 +17,25 @@ PROCEDURE Main()
 
    ctx := hb_EVP_ENCODE_ctx_create()
 
-   EVP_EncodeInit( ctx )
+   EVP_EncodeInit(ctx)
 
    encrypted := ""
    result := ""
-   EVP_EncodeUpdate( ctx, @result, "sample text" )
+   EVP_EncodeUpdate(ctx, @result, "sample text")
    encrypted += result
-   EVP_EncodeFinal( ctx, @result )
+   EVP_EncodeFinal(ctx, @result)
    encrypted += result
    ? "ENCRYTPTED", ">" + encrypted + "<"
 
    ctx := hb_EVP_ENCODE_ctx_create()
 
-   EVP_DecodeInit( ctx )
+   EVP_DecodeInit(ctx)
 
    decrypted := ""
    result := ""
-   EVP_DecodeUpdate( ctx, @result, encrypted )
+   EVP_DecodeUpdate(ctx, @result, encrypted)
    decrypted += result
-   EVP_DecodeFinal( ctx, @result )
+   EVP_DecodeFinal(ctx, @result)
    decrypted += result
    ? "DECRYTPTED", ">" + decrypted + "<"
 

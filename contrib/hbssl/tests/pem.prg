@@ -1,6 +1,6 @@
-/*
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- */
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+//
 
 #require "hbssl"
 
@@ -15,18 +15,18 @@ PROCEDURE Main()
    ERR_load_PEM_strings()
    OpenSSL_add_all_algorithms()
 
-   bioe := BIO_new_fd( 1, HB_BIO_NOCLOSE )
+   bioe := BIO_new_fd(1, HB_BIO_NOCLOSE)
 
-   ? PEM_READ_BIO_RSAPRIVATEKEY( "privkey.pem", {| lWrite | Output(  "Callback (block)", lWrite, hb_eol() ), "test" } )
-   ? ; ERR_print_errors( bioe )
-   ? PEM_READ_BIO_RSAPRIVATEKEY( "privkey.pem", @cb_function() )
-   ? ; ERR_print_errors( bioe )
-   ? PEM_READ_BIO_RSAPRIVATEKEY( "privkey.pem", "test" )
-   ? ; ERR_print_errors( bioe )
-   ? PEM_READ_BIO_RSAPUBLICKEY( "privkey.pem", {| lWrite | Output(  "Callback (block)", lWrite, hb_eol() ), "test" } )
-   ? ; ERR_print_errors( bioe )
-   ? PEM_READ_BIO_RSAPUBLICKEY( "privkey.pem", "test" )
-   ? ; ERR_print_errors( bioe )
+   ? PEM_READ_BIO_RSAPRIVATEKEY("privkey.pem", {|lWrite|Output("Callback (block)", lWrite, hb_eol()), "test"})
+   ? ; ERR_print_errors(bioe)
+   ? PEM_READ_BIO_RSAPRIVATEKEY("privkey.pem", @cb_function())
+   ? ; ERR_print_errors(bioe)
+   ? PEM_READ_BIO_RSAPRIVATEKEY("privkey.pem", "test")
+   ? ; ERR_print_errors(bioe)
+   ? PEM_READ_BIO_RSAPUBLICKEY("privkey.pem", {|lWrite|Output("Callback (block)", lWrite, hb_eol()), "test"})
+   ? ; ERR_print_errors(bioe)
+   ? PEM_READ_BIO_RSAPUBLICKEY("privkey.pem", "test")
+   ? ; ERR_print_errors(bioe)
 
 #pragma __cstream|cString:=%s
 -----BEGIN RSA PRIVATE KEY-----
@@ -49,28 +49,28 @@ B0NDIZKbaPJHHPb9Ne7nQECzv0/kzmAley9UMTZ1M7fq6KYemR0LsA==
 -----END RSA PRIVATE KEY-----
 #pragma __endtext
 
-   ? PEM_READ_BIO_RSAPRIVATEKEY( bio := BIO_new_mem_buf( cString ), {| lWrite | QOut( "Callback", lWrite, hb_eol() ), "test" } )
-   ? ; ERR_print_errors( bioe )
-   BIO_free( bio )
-   ? PEM_READ_BIO_RSAPRIVATEKEY( bio := BIO_new_mem_buf( cString ), "test" )
-   ? ; ERR_print_errors( bioe )
-   BIO_free( bio )
-   ? PEM_READ_BIO_RSAPRIVATEKEY( bio := BIO_new_mem_buf( cString ), "<wrong>" )
-   ? ; ERR_print_errors( bioe )
-   BIO_free( bio )
+   ? PEM_READ_BIO_RSAPRIVATEKEY(bio := BIO_new_mem_buf(cString), {|lWrite|QOut("Callback", lWrite, hb_eol()), "test"})
+   ? ; ERR_print_errors(bioe)
+   BIO_free(bio)
+   ? PEM_READ_BIO_RSAPRIVATEKEY(bio := BIO_new_mem_buf(cString), "test")
+   ? ; ERR_print_errors(bioe)
+   BIO_free(bio)
+   ? PEM_READ_BIO_RSAPRIVATEKEY(bio := BIO_new_mem_buf(cString), "<wrong>")
+   ? ; ERR_print_errors(bioe)
+   BIO_free(bio)
 
-   BIO_free( bioe )
+   BIO_free(bioe)
 
    RETURN
 
-STATIC FUNCTION cb_function( lWrite )
+STATIC FUNCTION cb_function(lWrite)
 
    ? "Callback (func)", lWrite
    ?
 
    RETURN "test"
 
-STATIC FUNCTION Output( ... )
+STATIC FUNCTION Output(...)
 
    ? ...
 
