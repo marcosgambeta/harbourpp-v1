@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* this has to be declared before hbsocket.h is included */
+// this has to be declared before hbsocket.h is included
 #define _HB_SOCKEX_IMPLEMENTATION_
 
 #include "hbssl.h"
@@ -263,7 +263,7 @@ PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXIN
     pStream->blocking = !pStream->blocking;
 
   SSL_set_mode(ssl, HB_SSL_MODE_AUTO_RETRY);
-  iResult = SSL_set_fd(ssl, (int)sd); /* Truncates `sd` on win64. https://docs.openssl.org/3.0/man3/SSL_set_fd/#notes */
+  iResult = SSL_set_fd(ssl, (int)sd); // Truncates `sd` on win64. https://docs.openssl.org/3.0/man3/SSL_set_fd/#notes
 
   timer = hb_timerInit(timeout);
 
@@ -309,7 +309,7 @@ PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXIN
   return pStream;
 }
 
-/* socket filter */
+// socket filter
 
 static SSL *s_SSL_itemGet(PHB_ITEM pItem, PHB_ITEM *pSSL, HB_BOOL *pfFree)
 {
@@ -378,9 +378,8 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
   return pSock;
 }
 
-/* this wrapper does not support multilevel filtering so
-   it destroys previous wrappers if any and create new one.
- */
+// this wrapper does not support multilevel filtering so
+// it destroys previous wrappers if any and create new one.
 static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
   PHB_SOCKEX pSockNew = nullptr;
@@ -541,13 +540,13 @@ static void s_sslSocketNew(HB_BOOL fServer)
   }
 }
 
-/* hb_socketNewSSL_connect( [@]<pSocket>, <pSSL> [, <nTimeout> ] ) */
+// hb_socketNewSSL_connect( [@]<pSocket>, <pSSL> [, <nTimeout> ] )
 HB_FUNC(HB_SOCKETNEWSSL_CONNECT)
 {
   s_sslSocketNew(false);
 }
 
-/* hb_socketNewSSL_accept( [@]<pSocket>, <pSSL> [, <nTimeout> ] ) */
+// hb_socketNewSSL_accept( [@]<pSocket>, <pSSL> [, <nTimeout> ] )
 HB_FUNC(HB_SOCKETNEWSSL_ACCEPT)
 {
   s_sslSocketNew(true);

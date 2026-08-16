@@ -56,12 +56,12 @@ static HB_GARBAGE_FUNC(EVP_PKEY_release)
 {
   void **ph = (void **)Cargo;
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (ph && *ph) {
-    /* Destroy the object */
+    // Destroy the object
     EVP_PKEY_free((EVP_PKEY *)*ph);
 
-    /* set pointer to NULL just in case */
+    // set pointer to NULL just in case
     *ph = nullptr;
   }
 }
@@ -110,12 +110,12 @@ static HB_GARBAGE_FUNC(EVP_PKEY_CTX_release)
 {
   void **ph = (void **)Cargo;
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (ph && *ph) {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
     EVP_PKEY_CTX_free((EVP_PKEY_CTX *)*ph);
 #endif
-    /* set pointer to NULL just in case */
+    // set pointer to NULL just in case
     *ph = nullptr;
   }
 }
@@ -226,7 +226,7 @@ HB_FUNC(EVP_PKEY_ASSIGN)
     EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
 
     if (pkey)
-      /* QUESTION: Is hb_openssl_strdup() okay here? [vszakats] */
+      // QUESTION: Is hb_openssl_strdup() okay here? [vszakats]
       hb_retni(EVP_PKEY_assign(pkey, hb_parni(2), hb_openssl_strdup(hb_parcx(3))));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -536,10 +536,10 @@ HB_FUNC(EVP_PKEY_ENCRYPT)
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
     if (HB_RSA_KEY_ISPRIVATE(rsa))
-      /* private key */
+      // private key
       ret = RSA_private_encrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
     else
-      /* public key */
+      // public key
       ret = RSA_public_encrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
 
     if (ret > 0) {
@@ -616,10 +616,10 @@ HB_FUNC(EVP_PKEY_DECRYPT)
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
     if (HB_RSA_KEY_ISPRIVATE(rsa))
-      /* private key */
+      // private key
       ret = RSA_private_decrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
     else
-      /* public key */
+      // public key
       ret = RSA_public_decrypt(flen, HB_UNCONST(from), buffer, rsa, hb_parnidef(4, RSA_PKCS1_PADDING));
 
     if (ret > 0) {
@@ -767,11 +767,11 @@ DSA *    EVP_PKEY_get1_DSA( EVP_PKEY * pkey );
 DH *     EVP_PKEY_get1_DH( EVP_PKEY * pkey );
 EC_KEY * EVP_PKEY_get1_EC_KEY( EVP_PKEY * pkey );
 
-/* These changed in 0.9.9 to something different, they weren't probably documented before. */
+// These changed in 0.9.9 to something different, they weren't probably documented before.
 int EVP_PKEY_decrypt( unsigned char * dec_key, const unsigned char * enc_key, int enc_key_len, EVP_PKEY * private_key );
 int EVP_PKEY_encrypt( unsigned char * enc_key, const unsigned char * key, int key_len, EVP_PKEY * pub_key     );
 
-/* 1.0.0 */
+// 1.0.0
 int EVP_PKEY_verify_recover_init( EVP_PKEY_CTX * ctx );
 int EVP_PKEY_verify_recover( EVP_PKEY_CTX * ctx,
                              unsigned char * rout, size_t * routlen,

@@ -51,12 +51,12 @@ static HB_GARBAGE_FUNC(SSL_SESSION_release)
 {
   void **ph = (void **)Cargo;
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (ph && *ph) {
-    /* Destroy the object */
+    // Destroy the object
     SSL_SESSION_free((SSL_SESSION *)*ph);
 
-    /* set pointer to NULL just in case */
+    // set pointer to NULL just in case
     *ph = nullptr;
   }
 }

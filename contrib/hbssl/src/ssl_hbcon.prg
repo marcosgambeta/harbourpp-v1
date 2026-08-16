@@ -45,19 +45,19 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* hb_SSL_new() --> <pSSL> */
+// hb_SSL_new() --> <pSSL>
 FUNCTION hb_SSL_new()
 
    STATIC s_onceControl
 
-   /* initialize SSL library */
+   // initialize SSL library
    hb_threadOnce( @s_onceControl, {|| SSL_init(), ;
                   RAND_seed( hb_randStr( 20 ) + hb_TToS( hb_DateTime() ) ) } )
 
-   /* create a new SSL structure for a connection */
+   // create a new SSL structure for a connection
    RETURN SSL_new( SSL_CTX_new() )
 
-/* hb_SSL_connect_socket( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected> */
+// hb_SSL_connect_socket( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected>
 FUNCTION hb_SSL_connect_socket( pSocket, nTimeout, cInfo )
 
    LOCAL nErr
@@ -74,7 +74,7 @@ FUNCTION hb_SSL_connect_socket( pSocket, nTimeout, cInfo )
                           nErr, ERR_error_string( nErr ) )
    RETURN .F.
 
-/* hb_SSL_connect_inet( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected> */
+// hb_SSL_connect_inet( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected>
 FUNCTION hb_SSL_connect_inet( pInetSock, nTimeout, cInfo )
 
    LOCAL nResult, nErr

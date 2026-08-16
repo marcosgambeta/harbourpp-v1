@@ -53,12 +53,12 @@ static HB_GARBAGE_FUNC(s_RSA_release)
 {
   void **ph = (void **)Cargo;
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (ph && *ph) {
-    /* Destroy the object */
+    // Destroy the object
     RSA_free((RSA *)*ph);
 
-    /* set pointer to NULL just in case */
+    // set pointer to NULL just in case
     *ph = nullptr;
   }
 }

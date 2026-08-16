@@ -49,7 +49,7 @@
 
 #include <hbapiitm.hpp>
 
-/* */
+//
 
 typedef struct
 {
@@ -77,19 +77,19 @@ static void PHB_BIO_free(PHB_BIO hb_bio)
   hb_xfree(hb_bio);
 }
 
-/* HB_BIO GC handler */
+// HB_BIO GC handler
 
-/* BIO destructor, it's executed automatically */
+// BIO destructor, it's executed automatically
 static HB_GARBAGE_FUNC(HB_BIO_Destructor)
 {
-  /* Retrieve image pointer holder */
+  // Retrieve image pointer holder
   HB_BIO **ptr = (HB_BIO **)Cargo;
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (*ptr) {
     PHB_BIO_free(*ptr);
 
-    /* set pointer to NULL to avoid multiple freeing */
+    // set pointer to NULL to avoid multiple freeing
     *ptr = nullptr;
   }
 }
@@ -119,7 +119,7 @@ static void hb_BIO_ret(BIO *bio, void *hStrRef)
   hb_retptrGC((void *)ptr);
 }
 
-/* */
+//
 
 static HB_BOOL hb_BIO_METHOD_is(int iParam)
 {
@@ -164,7 +164,7 @@ static BIO_METHOD *hb_BIO_METHOD_par(int iParam)
   case HB_BIO_METHOD_S_FD:
     p = BIO_s_fd();
     break;
-#if 0 /* BIO_s_log() isn't exported via implibs on Windows at version 0.9.8k. [vszakats] */
+#if 0 // BIO_s_log() isn't exported via implibs on Windows at version 0.9.8k. [vszakats]
 #ifndef OPENSSL_SYS_OS2
       case HB_BIO_METHOD_S_LOG:         p = BIO_s_log();        break;
 #endif
@@ -199,7 +199,7 @@ static BIO_METHOD *hb_BIO_METHOD_par(int iParam)
 }
 
 #if 0
-/* NOTE: Unused yet. Commented to avoid warning */
+// NOTE: Unused yet. Commented to avoid warning
 static int hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
 {
    int n;
@@ -215,7 +215,7 @@ static int hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
    else if( p == BIO_s_accept()     ) n = HB_BIO_METHOD_S_ACCEPT;
 #endif
    else if( p == BIO_s_fd()         ) n = HB_BIO_METHOD_S_FD;
-#if 0 /* BIO_s_log() isn't exported via implibs on Windows at version 0.9.8k. [vszakats] */
+#if 0 // BIO_s_log() isn't exported via implibs on Windows at version 0.9.8k. [vszakats]
 #ifndef OPENSSL_SYS_OS2
    else if( p == BIO_s_log()        ) n = HB_BIO_METHOD_S_LOG;
 #endif
@@ -650,9 +650,9 @@ HB_FUNC(BIO_FREE)
 }
 
 HB_FUNC_TRANSLATE(BIO_VFREE, BIO_FREE)
-HB_FUNC_TRANSLATE(BIO_FREE_ALL, BIO_FREE) /* These wrappers don't allow to create chained BIOs, so this is valid. */
+HB_FUNC_TRANSLATE(BIO_FREE_ALL, BIO_FREE) // These wrappers don't allow to create chained BIOs, so this is valid.
 
-/* --- connect --- */
+// --- connect ---
 
 HB_FUNC(BIO_NEW_CONNECT)
 {
@@ -660,7 +660,7 @@ HB_FUNC(BIO_NEW_CONNECT)
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L && !defined(LIBRESSL_VERSION_NUMBER)
     hb_BIO_ret(BIO_new_connect(hb_parc(1)), nullptr);
 #else
-    /* NOTE: Discarding 'const', OpenSSL will strdup() */
+    // NOTE: Discarding 'const', OpenSSL will strdup()
     hb_BIO_ret(BIO_new_connect((char *)HB_UNCONST(hb_parc(1))), nullptr);
 #endif
   else
@@ -673,7 +673,7 @@ HB_FUNC(BIO_NEW_ACCEPT)
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L && !defined(LIBRESSL_VERSION_NUMBER)
     hb_BIO_ret(BIO_new_accept(hb_parc(1)), nullptr);
 #else
-    /* NOTE: Discarding 'const', OpenSSL will strdup() */
+    // NOTE: Discarding 'const', OpenSSL will strdup()
     hb_BIO_ret(BIO_new_accept((char *)HB_UNCONST(hb_parc(1))), nullptr);
 #endif
   else
@@ -722,7 +722,7 @@ HB_FUNC(BIO_SET_CONN_IP)
 
   if (bio && HB_ISCHAR(2) && hb_parclen(2) == 4) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-    HB_SYMBOL_UNUSED(bio); /* TODO: reimplement using BIO_set_conn_address() */
+    HB_SYMBOL_UNUSED(bio); // TODO: reimplement using BIO_set_conn_address()
     hb_retnl(0);
 #else
     if (hb_parclen(2) == 4)
@@ -778,12 +778,12 @@ HB_FUNC(BIO_GET_CONN_IP)
 HB_FUNC(BIO_GET_CONN_INT_PORT)
 {
 #if OPENSSL_VERSION_NUMBER >=                                                                                          \
-    0x10001000L /* fixed here: https://rt.openssl.org/Ticket/Display.html?id=1989&user=guest&pass=guest */
+    0x10001000L // fixed here: https://rt.openssl.org/Ticket/Display.html?id=1989&user=guest&pass=guest
   BIO *bio = hb_BIO_par(1);
 
   if (bio) {
-#if OPENSSL_VERSION_NUMBER == 0x1000206fL /* 1.0.2f */ || OPENSSL_VERSION_NUMBER == 0x1000112fL /* 1.0.1r */
-    /* Fix for header regression */
+#if OPENSSL_VERSION_NUMBER == 0x1000206fL /* 1.0.2f */ || OPENSSL_VERSION_NUMBER == 0x1000112fL // 1.0.1r
+    // Fix for header regression
     hb_retnl(BIO_ctrl(bio, BIO_C_GET_CONNECT, 3, nullptr));
 #elif OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined(LIBRESSL_VERSION_NUMBER)
     const BIO_ADDR *ba = BIO_get_conn_address(bio);
@@ -856,9 +856,9 @@ HB_FUNC(ERR_LOAD_BIO_STRINGS)
 
 #define BIO_set_url(b, url) BIO_ctrl(b, BIO_C_SET_PROXY_PARAM, 0, (char *)(url))
 #define BIO_set_proxies(b, p) BIO_ctrl(b, BIO_C_SET_PROXY_PARAM, 1, (char *)(p))
-/* BIO_set_nbio(b,n) */
+// BIO_set_nbio(b,n)
 #define BIO_set_filter_bio(b, s) BIO_ctrl(b, BIO_C_SET_PROXY_PARAM, 2, (char *)(s))
-/* BIO *BIO_get_filter_bio(BIO *bio); */
+// BIO *BIO_get_filter_bio(BIO *bio);
 #define BIO_set_proxy_cb(b, cb) BIO_callback_ctrl(b, BIO_C_SET_PROXY_PARAM, 3, (void *(*cb)()))
 #define BIO_set_proxy_header(b, sk) BIO_ctrl(b, BIO_C_SET_PROXY_PARAM, 4, (char *)sk)
 #define BIO_set_no_connect_return(b, bool) BIO_int_ctrl(b, BIO_C_SET_PROXY_PARAM, 5, bool)

@@ -65,9 +65,9 @@ static HB_GARBAGE_FUNC(EVP_MD_CTX_release)
 {
   void **ph = (void **)Cargo;
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (ph && *ph) {
-    /* Destroy the object */
+    // Destroy the object
 #if defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x20700000L
     EVP_MD_CTX_destroy((EVP_MD_CTX *)*ph);
 #elif OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -76,7 +76,7 @@ static HB_GARBAGE_FUNC(EVP_MD_CTX_release)
     hb_xfree(*ph);
 #endif
 
-    /* set pointer to NULL just in case */
+    // set pointer to NULL just in case
     *ph = nullptr;
   }
 }
