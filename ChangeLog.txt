@@ -7,6 +7,38 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-07-07 12:05 UTC+0200 Antonio Linares [PENDING]
+  * include/hbver.h
+  * config/global.mk
+  * package/harbour.spec
+  * package/harbour-win.spec.in
+  * package/harbour-wce.spec.in
+  * package/winuni/mpkg_win_uni.bat
+    * trunk version bump. 3.2.0 -> 3.2.1dev
+
+2026-07-07 12:00 UTC+0200 Antonio Linares [PENDING]
+  * include/hbver.h
+  * config/global.mk
+  * package/harbour.spec
+  * package/harbour-win.spec.in
+  * package/harbour-wce.spec.in
+  * package/harbour.rb
+  * package/winuni/mpkg_win_uni.bat
+  * package/winuni/RELNOTES.txt
+  * package/RELEASE-3.2.0.txt
+  * debian/changelog
+  * README.md
+    * Harbour 3.2.0 stable release
+
+---------- 3.2.0 ----------
+
+2026-05-14 14:50 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * contrib/sddsqlt3/core.c
+    ! fix RDDI_EXECUTE operation of SQLITE3 SDD, where SQL statement error
+      instead of raising a .prg runtime error, mostly led to a hard GPF.
+      Additional minor fix is that error message is now converted from
+      UTF8 to HVM codepage.
+
 2026-02-28 15:33 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
   * contrib/hbssl/evppkey.c
     ! disabled EVP_PKEY_get_encoded_public_key() in LibreSSL builds
