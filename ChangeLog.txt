@@ -39,7 +39,7 @@
       Additional minor fix is that error message is now converted from
       UTF8 to HVM codepage.
 
-2026-02-28 15:33 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2026-02-28 15:33 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/evppkey.c
     ! disabled EVP_PKEY_get_encoded_public_key() in LibreSSL builds
 
@@ -47,7 +47,7 @@
   * contrib/gtqtc/gtqtc1.cpp
     * use Qt::MiddleButton: instead of case Qt::MidButton: in Qt5 builds
 
-  * contrib/hbssl/evppkey.c [PENDING]
+  * contrib/hbssl/evppkey.c
     * implemented EVP_PKEY_get_encoded_public_key() in OpenSSL 1.1 builds
       using depreciated in 3.0 EVP_PKEY_get1_tls_encodedpoint()
 
@@ -56,7 +56,7 @@
     * excluded HB_GT_QTC[3-7] functions
 
 2026-02-26 23:12 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
-  * contrib/hbssl/evppkey.c [PENDING]
+  * contrib/hbssl/evppkey.c
     ! added missing OpenSSL version check for new function
       EVP_PKEY_get1_encoded_public_key().
       OpenSSL 3.0.0 is required otherwise empty string is returned.
@@ -65,7 +65,7 @@
     ! use QFontDatabase static members to not create depreciated in Qt6
       QFontDatabase object instance
 
-2026-02-26 20:50 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2026-02-26 20:50 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/evppkey.c
   * contrib/hbssl/hbssl.hbx
     + added new PRG function
@@ -142,26 +142,26 @@
   * src/rtl/gtxwc/gtxwc.c
     + added small hack to retrive some key codes hidden by X*LookupString()
 
-2026-01-09 17:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2026-01-09 17:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/ssl_hb.c
     ! fixed buffer overflow
     ! fixed GPF on wrong parameters
 
-2025-12-23 00:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2025-12-23 00:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/d2i.c
   * contrib/hbssl/hbssl.hbx
     * added new PRG function which converts ASN.1 DER SEQUENCE (RFC 3279) to
       IEEE P1363 Fixed Field Concatenation ( R || S ):
          D2I_ECDSA_SIG_RS( <cSigDER> ) -> <cSigRS>
 
-  * src/rtl/vfile.c
+  * src/rtl/vfile.c [PENDING]
     * comment formatting
 
-2025-12-21 12:06 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2025-12-21 12:06 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/x509.c
     ! fixed compilation with OpenSSL < 1.1
 
-2025-12-21 10:45 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2025-12-21 10:45 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/hbssl.hbx
   * contrib/hbssl/evppkey.c
     + added new PRG functions:
@@ -183,7 +183,7 @@
     + added new PRG function:
          X509_get_serialNumber( <pX509> ) -> <nSerialNum>
 
-  * src/rtl/base64d.c
+  * src/rtl/base64d.c [PENDING]
     * indenting
     ; question: With small modification we can add support for base64url
                 encoding (with additional parameter passed to hb_base64encode())
@@ -295,12 +295,12 @@
   * src/rtl/cdpapi.c
     ! added missing variable initialization
 
-2025-12-10 17:00 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2025-12-10 17:00 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/d2i.c
     * use HB_SSL_CONST instead of explicit const for some ancient (<0.9.8)
       OpenSSL versions
 
-2025-12-10 16:29 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl) [PENDING]
+2025-12-10 16:29 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/evpmd.c
   * contrib/hbssl/hbssl.h
     * moved hb_EVP_MD_ptr_to_id() function from static to public area
@@ -325,13 +325,13 @@
          EVP_PKEY_CTX_get_RSA_MGF1_md()
          EVP_PKEY_CTX_set_RSA_MGF1_md()
 
-  * src/common/hbdate.c
+  * src/common/hbdate.c [PENDING]
     * accept up to 9 fractional digits (nanoseconds) in timestamp strings
       though only first three ones (milliseconds) are significant.
       Recently some tools begin to generate such timestamp values and
       Harbour had problems with decoding them correctly.
 
-  * src/compiler/hbmain.c
+  * src/compiler/hbmain.c [PENDING]
     + allow to pass file name for source code compiled by hb_compileFromBuf()
       It works like in all other versions of hb_compile*() functions - it's
       enough to pass it as argument without option prefix (option prefix
@@ -409,11 +409,11 @@
       trustful. With rolling releases of these MS tools, it's more
       likely that "random" numbers will appear in dir names.
 
-2025-10-21 13:20 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+2025-10-21 13:20 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * contrib/hbssl/hbssl.hbc
     ! actually target VS 2017 for libcrypto, libssl
 
-  * utils/hbmk2/hbmk2.prg
+  * utils/hbmk2/hbmk2.prg [PENDING]
     ! slight rework of MSVC version detection, so it actually operates
       with empty cPath_CompC variable
 
@@ -422,14 +422,14 @@
     * with Zig building GUI applications on Windows, hbmk2 will
       now pass -Wl,/subsystem:windows to the linker
 
-2025-10-20 17:42 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+2025-10-20 17:42 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * contrib/hbssl/hbssl.hbc
     ! actually lib* prefix should stay on win/msvc platform
       OpenSSL builds. Thanks to Mario H. Sabado for testing
       and feedback.
 
-2025-10-20 10:47 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
-  * .github/workflows/windows-ci.yml
+2025-10-20 10:47 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * .github/workflows/windows-ci.yml [PENDING]
     * encourage to test OpenSSL
 
   * contrib/hbssl/hbssl.hbc
@@ -444,7 +444,7 @@
   * .github/workflows/windows-ci.yml
     + add openssl-devel to MSYS2 CI
 
-2025-10-19 22:12 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+2025-10-19 22:12 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * contrib/hbssl/hbssl.h
   * contrib/hbssl/hbssl.hbm
   * contrib/hbssl/ssl.c
@@ -468,7 +468,7 @@
       now reference libssl and libcrypto instead of old
       ssleay32/libeay32 pair when linking.
 
-  * config/win/zig.mk
+  * config/win/zig.mk [PENDING]
     % unnecessary check
 
 2025-10-18 23:15 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
