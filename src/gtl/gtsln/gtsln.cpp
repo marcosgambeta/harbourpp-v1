@@ -786,7 +786,7 @@ static HB_BOOL hb_gt_sln_IsColor(PHB_GT pGT) // FuncTable
 static void hb_gt_sln_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int>(fBlink)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
 #endif
 
   // We cannot switch remote terminal between blinking and highlight mode
@@ -818,9 +818,9 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
     char escstr[64];
 
     dFrequency = HB_MIN(HB_MAX(0.0, dFrequency), 32767.0);
-    hb_snprintf(escstr, 63, "\033[10;%d]", static_cast<int>(dFrequency));
+    hb_snprintf(escstr, 63, "\033[10;%d]", static_cast<int32_t>(dFrequency));
     SLtt_write_string(escstr);
-    hb_snprintf(escstr, 63, "\033[11;%d]", static_cast<int>(dDuration * 1000.0 / 18.2));
+    hb_snprintf(escstr, 63, "\033[11;%d]", static_cast<int32_t>(dDuration * 1000.0 / 18.2));
     SLtt_write_string(escstr);
     SLtt_flush_output();
   } else {

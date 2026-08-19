@@ -363,9 +363,9 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
       }
       ch = hb_gt_dos_keyCodeTranslate(ch, 0, HB_GTSELF_CPIN(pGT));
     }
-  } else if (!_eof(static_cast<int>(pGTSTD->hStdin))) {
+  } else if (!_eof(static_cast<int32_t>(pGTSTD->hStdin))) {
     uint8_t bChar;
-    if (_read(static_cast<int>(pGTSTD->hStdin), &bChar, 1) == 1) {
+    if (_read(static_cast<int32_t>(pGTSTD->hStdin), &bChar, 1) == 1) {
       ch = bChar;
     }
   }

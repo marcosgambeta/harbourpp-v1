@@ -277,7 +277,7 @@ static void hb_gt_pca_AnsiGetCurPos(int *iRow, int *iCol)
           continue;
         }
       }
-      if (n == static_cast<int>(sizeof(rdbuf))) {
+      if (n == static_cast<int32_t>(sizeof(rdbuf))) {
         break;
       }
 
@@ -321,7 +321,7 @@ static void hb_gt_pca_AnsiSetCursorPos(int iRow, int iCol)
   if (s_iRow != iRow || s_iCol != iCol) {
     char buff[16];
     hb_snprintf(buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1);
-    hb_gt_pca_termOut(buff, static_cast<int>(strlen(buff)));
+    hb_gt_pca_termOut(buff, static_cast<int32_t>(strlen(buff)));
     s_iRow = iRow;
     s_iCol = iCol;
   }
@@ -603,9 +603,9 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
       }
       ch = hb_gt_dos_keyCodeTranslate(ch, 0, HB_GTSELF_CPIN(pGT));
     }
-  } else if (!_eof(static_cast<int>(s_hFilenoStdin))) {
+  } else if (!_eof(static_cast<int32_t>(s_hFilenoStdin))) {
     uint8_t bChar;
-    if (_read(static_cast<int>(s_hFilenoStdin), &bChar, 1) == 1) {
+    if (_read(static_cast<int32_t>(s_hFilenoStdin), &bChar, 1) == 1) {
       ch = bChar;
     }
   }
@@ -723,7 +723,7 @@ static HB_BOOL hb_gt_pca_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
                                    HB_BOOL fBox) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int32_t>(fBox)));
 #endif
 
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
@@ -758,7 +758,7 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
         HB_SIZE nLen = iLen;
         const char *buffer =
             hb_cdpnDup3(s_sLineBuf, nLen, s_sTransBuf, &nLen, &s_sTransBuf, &s_nTransBufSize, s_cdpHost, s_cdpTerm);
-        hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, buffer, static_cast<int>(nLen));
+        hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, buffer, static_cast<int32_t>(nLen));
       } else {
         hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, s_sLineBuf, iLen);
       }
@@ -777,7 +777,7 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
       HB_SIZE nLen = iLen;
       const char *buffer =
           hb_cdpnDup3(s_sLineBuf, nLen, s_sTransBuf, &nLen, &s_sTransBuf, &s_nTransBufSize, s_cdpHost, s_cdpTerm);
-      hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, buffer, static_cast<int>(nLen));
+      hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, buffer, static_cast<int32_t>(nLen));
     } else {
       hb_gt_pca_AnsiPutStr(iRow, iCol, iColor2, s_sLineBuf, iLen);
     }

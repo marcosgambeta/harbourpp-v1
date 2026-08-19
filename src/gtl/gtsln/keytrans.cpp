@@ -384,10 +384,10 @@ static int KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
 // a very simple sort algorithm
 static void hb_sln_SortKeyTranslationTable(void)
 {
-  for (auto i = 0; i < (static_cast<int>(KeyTranslationTableSize) - 1); i++) {
+  for (auto i = 0; i < (static_cast<int32_t>(KeyTranslationTableSize) - 1); i++) {
     int min = i;
 
-    for (int j = i + 1; j < static_cast<int>(KeyTranslationTableSize); j++) {
+    for (int j = i + 1; j < static_cast<int32_t>(KeyTranslationTableSize); j++) {
       if (KeyTranslationTable[j][0] < KeyTranslationTable[min][0]) {
         min = j;
       }
@@ -452,7 +452,7 @@ int hb_sln_SetKeyInKeyTranslationTable(int SlangKey, int ClipKey)
    int Found = 0;
 
    if( (SlangKey >= KeyTranslationTable[0][0] ) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]) ) {
-      for( auto i = 0; i < static_cast<int>(KeyTranslationTableSize); i++ ) {
+      for( auto i = 0; i < static_cast<int32_t>(KeyTranslationTableSize); i++ ) {
          if( SlangKey == KeyTranslationTable[i][0] ) {
             KeyTranslationTable[i][1] = ClipKey;
          }

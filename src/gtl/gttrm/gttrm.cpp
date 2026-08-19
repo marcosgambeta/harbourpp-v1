@@ -1407,8 +1407,8 @@ static void hb_gt_trm_LinuxTone(PHB_GTTRM pTerm, double dFrequency, double dDura
     hb_gt_trm_termOut(pTerm, "\033[10m", 5);
     pTerm->iACSC = 0;
   }
-  hb_snprintf(escseq, sizeof(escseq), "\033[10;%d]\033[11;%d]\007", static_cast<int>(dFrequency),
-              static_cast<int>(dDuration * 1000.0 / 18.2));
+  hb_snprintf(escseq, sizeof(escseq), "\033[10;%d]\033[11;%d]\007", static_cast<int32_t>(dFrequency),
+              static_cast<int32_t>(dDuration * 1000.0 / 18.2));
   hb_gt_trm_termOut(pTerm, escseq, strlen(escseq));
   hb_gt_trm_termFlush(pTerm);
 
@@ -1826,8 +1826,8 @@ static void hb_gt_trm_BsdTone(PHB_GTTRM pTerm, double dFrequency, double dDurati
 
   char escseq[64];
 
-  hb_snprintf(escseq, sizeof(escseq), "\033[=%d;%dB\007", static_cast<int>(dFrequency),
-              static_cast<int>(dDuration * 10.0 / 18.2));
+  hb_snprintf(escseq, sizeof(escseq), "\033[=%d;%dB\007", static_cast<int32_t>(dFrequency),
+              static_cast<int32_t>(dDuration * 10.0 / 18.2));
   hb_gt_trm_termOut(pTerm, escseq, strlen(escseq));
   hb_gt_trm_termFlush(pTerm);
 
@@ -3589,7 +3589,7 @@ static HB_BOOL hb_gt_trm_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
 static void hb_gt_trm_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int>(fBlink)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
 #endif
 
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
@@ -3622,7 +3622,7 @@ static HB_BOOL hb_gt_trm_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
                                    HB_BOOL fBox) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int32_t>(fBox)));
 #endif
 
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {

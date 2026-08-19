@@ -241,7 +241,7 @@ int hb_sln_Init_Terminal(int phase)
     // get Dead key definition
     auto p = reinterpret_cast<unsigned const char *>(getenv(s_DeadKeyEnvName));
     if (p && *p) {
-      s_iDeadKey = static_cast<int>(*p);
+      s_iDeadKey = static_cast<int32_t>(*p);
     }
 
     // number of keys dealing with a Dead key
@@ -290,7 +290,7 @@ int hb_sln_Init_Terminal(int phase)
 int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int>(iEventMask)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(iEventMask)));
 #endif
 
   static int InDeadState = false;
@@ -348,7 +348,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
   }
 
   // user AbortKey break
-  if (static_cast<int>(ch) == s_hb_sln_Abort_key) {
+  if (static_cast<int32_t>(ch) == s_hb_sln_Abort_key) {
     return HB_BREAK_FLAG;
   }
 
@@ -365,18 +365,18 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
   // Dead key handling
   if (InDeadState) {
     InDeadState = false;
-    if (static_cast<int>(ch) == s_iDeadKey) { // double press Dead key
+    if (static_cast<int32_t>(ch) == s_iDeadKey) { // double press Dead key
       return ch;
     }
     if (ch < 256) { // is this needed ???
-      for (auto i = 0; i < static_cast<int>(hb_sln_convKDeadKeys[0]); i++) {
-        if (static_cast<int>(hb_sln_convKDeadKeys[2 * i + 1]) == static_cast<int>(ch)) {
-          return static_cast<int>(hb_sln_convKDeadKeys[2 * i + 2]);
+      for (auto i = 0; i < static_cast<int32_t>(hb_sln_convKDeadKeys[0]); i++) {
+        if (static_cast<int32_t>(hb_sln_convKDeadKeys[2 * i + 1]) == static_cast<int32_t>(ch)) {
+          return static_cast<int32_t>(hb_sln_convKDeadKeys[2 * i + 2]);
         }
       }
     }
     return 0;
-  } else if (static_cast<int>(ch) == s_iDeadKey) {
+  } else if (static_cast<int32_t>(ch) == s_iDeadKey) {
     // entering Dead key state
     InDeadState = true;
     return 0;
@@ -449,7 +449,7 @@ static int hb_sln_try_get_Kbd_State(void)
     return 0;
   }
 
-  return static_cast<int>(modifiers);
+  return static_cast<int32_t>(modifiers);
 
 #elif defined(M_UNIX)
 

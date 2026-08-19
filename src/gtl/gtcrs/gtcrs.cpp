@@ -1494,8 +1494,8 @@ static void gt_tone(InOutBase *ioBase, double dFrequency, double dDuration)
 {
   if (ioBase->terminal_type == TERM_LINUX && ioBase->beep != nullptr) {
     char escseq[64];
-    hb_snprintf(escseq, sizeof(escseq), "\033[10;%d]\033[11;%d]%s", static_cast<int>(dFrequency),
-                static_cast<int>(dDuration * 1000.0 / 18.2), ioBase->beep);
+    hb_snprintf(escseq, sizeof(escseq), "\033[10;%d]\033[11;%d]%s", static_cast<int32_t>(dFrequency),
+                static_cast<int32_t>(dDuration * 1000.0 / 18.2), ioBase->beep);
     write_ttyseq(ioBase, escseq);
   } else {
     // curses beep()
@@ -1682,7 +1682,7 @@ static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *c
     ioBase->std_chmap[i] |= ch;
     ioBase->box_chmap[i] |= ch;
 
-    if (i != static_cast<int>(ch & A_CHARTEXT) && (ioBase->std_chmap[i] & A_ALTCHARSET) == 0) {
+    if (i != static_cast<int32_t>(ch & A_CHARTEXT) && (ioBase->std_chmap[i] & A_ALTCHARSET) == 0) {
       if (ioBase->out_transtbl == nullptr) {
         ioBase->out_transtbl = static_cast<unsigned char *>(hb_xgrabz(256));
       }
@@ -1698,7 +1698,7 @@ static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *c
         if (transBox) {
           ioBase->box_chmap[i] = uc | A_NORMAL;
         }
-        if (i != static_cast<int>(uc)) {
+        if (i != static_cast<int32_t>(uc)) {
           if (ioBase->out_transtbl == nullptr) {
             ioBase->out_transtbl = static_cast<unsigned char *>(hb_xgrabz(256));
           }
@@ -2192,7 +2192,7 @@ int HB_GT_FUNC(gt_CloseTerm(int iHandle))
 
 int HB_GT_FUNC(gt_WaitKey(double dTimeOut))
 {
-  return wait_key(s_ioBase, static_cast<int>(dTimeOut >= 0 ? dTimeOut * 1000.0 : -1));
+  return wait_key(s_ioBase, static_cast<int32_t>(dTimeOut >= 0 ? dTimeOut * 1000.0 : -1));
 }
 
 int HB_GT_FUNC(gt_AddKeyMap(int iKey, char *szSequence))
@@ -2324,7 +2324,7 @@ static HB_BOOL hb_gt_crs_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
 static void hb_gt_crs_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetBlink(%p, %d)", static_cast<void*>(pGT), static_cast<int>(fBlink)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetBlink(%p, %d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
 #endif
 
   if (fBlink) {
@@ -2634,7 +2634,7 @@ static HB_BOOL hb_gt_crs_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
                                    HB_BOOL fBox) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int32_t>(fBox)));
 #endif
 
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {

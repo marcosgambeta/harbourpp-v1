@@ -374,7 +374,7 @@ static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
         break;
       }
       iIndex +=
-          static_cast<int>(hb_cdpTextPutU16(cdpTerm, pGTCGI->sLineBuf + iIndex, pGTCGI->iLineBufSize - iIndex, usChar));
+          static_cast<int32_t>(hb_cdpTextPutU16(cdpTerm, pGTCGI->sLineBuf + iIndex, pGTCGI->iLineBufSize - iIndex, usChar));
       ++iLen;
       ++iCol;
     }

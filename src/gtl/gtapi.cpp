@@ -543,7 +543,7 @@ HB_ERRCODE hb_gtScrDim(int *piHeight, int *piWidth)
 HB_ERRCODE hb_gtSetSnowFlag(HB_BOOL fNoSnow)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gtSetSnowFlag(%d)", static_cast<int>(fNoSnow)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gtSetSnowFlag(%d)", static_cast<int32_t>(fNoSnow)));
 #endif
 
   PHB_GT pGT = hb_gt_Base();
@@ -724,7 +724,7 @@ HB_ERRCODE hb_gtGetBlink(HB_BOOL *bpBlink)
 HB_ERRCODE hb_gtSetBlink(HB_BOOL fBlink)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gtSetBlink(%d)", static_cast<int>(fBlink)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gtSetBlink(%d)", static_cast<int32_t>(fBlink)));
 #endif
 
   PHB_GT pGT = hb_gt_Base();
@@ -1240,7 +1240,7 @@ HB_ERRCODE hb_gtGetScrChar(int iRow, int iCol, int *piColor, uint8_t *pbAttr, ui
 HB_ERRCODE hb_gtPutScrChar(int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gtPutScrChar(%d, %d, %d, %d, %hu)", iRow, iCol, iColor, static_cast<int>(bAttr), usChar));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gtPutScrChar(%d, %d, %d, %d, %hu)", iRow, iCol, iColor, static_cast<int32_t>(bAttr), usChar));
 #endif
 
   HB_ERRCODE errCode = Harbour::FAILURE;

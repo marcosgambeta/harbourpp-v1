@@ -874,7 +874,7 @@ static int hb_gt_def_PutTextW(PHB_GT pGT, int iRow, int iCol, int iColor, const 
     } while (--nLen);
   }
 
-  return iCol + static_cast<int>(nLen);
+  return iCol + static_cast<int32_t>(nLen);
 }
 
 static void hb_gt_def_Replicate(PHB_GT pGT, int iRow, int iCol, int iColor, uint8_t bAttr, uint16_t usChar,
@@ -1933,7 +1933,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
     pMessage = hb_hashGetCItemPtr(pMessage, "TXT");
   }
 
-  if (pMessage && pMessage->isString() && pOptions && (iOptions = static_cast<int>(hb_arrayLen(pOptions))) > 0) {
+  if (pMessage && pMessage->isString() && pOptions && (iOptions = static_cast<int32_t>(hb_arrayLen(pOptions))) > 0) {
     HB_SIZE nLen;
     void *hMessage;
     const HB_WCHAR *szMessageW = hb_itemGetStrU16(pMessage, HB_CDP_ENDIAN_NATIVE, &hMessage, &nLen);
@@ -2097,7 +2097,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
             if (nLen > ulWidth) {
               nLen = ulWidth;
             }
-            HB_GTSELF_PUTTEXTW(pGT, i, iLeft + static_cast<int>((ulWidth - nLen + 1) >> 1) + 2, iClrNorm,
+            HB_GTSELF_PUTTEXTW(pGT, i, iLeft + static_cast<int32_t>((ulWidth - nLen + 1) >> 1) + 2, iClrNorm,
                                szMsgDsp + ulLast, nLen);
           }
           ulLast = ulMsg + 1;
@@ -2111,7 +2111,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
         if (nLen > ulWidth) {
           nLen = ulWidth;
         }
-        HB_GTSELF_PUTTEXTW(pGT, i, iLeft + static_cast<int>((ulWidth - nLen + 1) >> 1) + 2, iClrNorm, szMsgDsp + ulLast,
+        HB_GTSELF_PUTTEXTW(pGT, i, iLeft + static_cast<int32_t>((ulWidth - nLen + 1) >> 1) + 2, iClrNorm, szMsgDsp + ulLast,
                            nLen);
       }
       hb_xfree(szMsgDsp);
@@ -2128,9 +2128,9 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
           szOptW = hb_arrayGetStrU16(pOptions, i, HB_CDP_ENDIAN_NATIVE, &hOpt, &nLen);
           HB_GTSELF_PUTTEXTW(pGT, iBottom - 1, iMnuCol, iClr, s_szSpaceW, 1);
           HB_GTSELF_PUTTEXTW(pGT, iBottom - 1, iMnuCol + 1, iClr, szOptW, nLen);
-          HB_GTSELF_PUTTEXTW(pGT, iBottom - 1, iMnuCol + 1 + static_cast<int>(nLen), iClr, s_szSpaceW, 1);
+          HB_GTSELF_PUTTEXTW(pGT, iBottom - 1, iMnuCol + 1 + static_cast<int32_t>(nLen), iClr, s_szSpaceW, 1);
           hb_strfree(hOpt);
-          iMnuCol += static_cast<int>(nLen) + 4;
+          iMnuCol += static_cast<int32_t>(nLen) + 4;
         }
         while (HB_GTSELF_DISPCOUNT(pGT)) {
           HB_GTSELF_DISPEND(pGT);
@@ -2162,11 +2162,11 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
             iMnuCol = iLeft + ((ulWidth - ulCurrWidth) >> 1) + 4;
             for (i = 1; i <= iOptions; ++i) {
               nLen = hb_itemCopyStrU16(hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0);
-              if (iMCol >= iMnuCol && iMCol < iMnuCol + static_cast<int>(nLen)) {
+              if (iMCol >= iMnuCol && iMCol < iMnuCol + static_cast<int32_t>(nLen)) {
                 iRet = i;
                 break;
               }
-              iMnuCol += static_cast<int>(nLen) + 4;
+              iMnuCol += static_cast<int32_t>(nLen) + 4;
             }
           }
         }
@@ -2801,7 +2801,7 @@ static int hb_gt_def_InkeyNext(PHB_GT pGT, int iEventMask)
 static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iEventMask)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_def_InkeyGet(%p,%d,%f,%d)", static_cast<void*>(pGT), static_cast<int>(fWait), dSeconds, iEventMask));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_def_InkeyGet(%p,%d,%f,%d)", static_cast<void*>(pGT), static_cast<int32_t>(fWait), dSeconds, iEventMask));
 #endif
 
   HB_MAXUINT timer;

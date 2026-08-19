@@ -94,7 +94,7 @@ static int hb_gt_gui_optionId(const char *pszOption)
     }
 
     if (nSize >= 2 && nSize <= 9) {
-      for (auto i = 0; i < static_cast<int>(_HB_BUTTON_COUNT); ++i) {
+      for (auto i = 0; i < static_cast<int32_t>(_HB_BUTTON_COUNT); ++i) {
         if (nSize == s_buttons[i].len && hb_strnicmp(s_buttons[i].name, pszOption, nSize) == 0) {
           return s_buttons[i].id;
         }
@@ -142,7 +142,7 @@ static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
 #endif
   }
   if (iButton) {
-    auto iOptions = static_cast<int>(hb_arrayLen(pOptions));
+    auto iOptions = static_cast<int32_t>(hb_arrayLen(pOptions));
 
     for (auto i = 1; i <= iOptions; ++i) {
       id = hb_gt_gui_optionId(hb_arrayGetCPtr(pOptions, i));
@@ -159,7 +159,7 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 {
   void *hText;
   LPCTSTR lpText = HB_ITEMGETSTR(pMessage, &hText, nullptr);
-  int iRet, iOptions = pOptions ? static_cast<int>(hb_arrayLen(pOptions)) : 0;
+  int iRet, iOptions = pOptions ? static_cast<int32_t>(hb_arrayLen(pOptions)) : 0;
 
   if (lpText && iOptions > 0) {
     int iType = 0;
