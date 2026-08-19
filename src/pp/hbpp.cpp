@@ -77,7 +77,7 @@ static void hb_pp_writeToken(FILE *fout, HB_PP_TOKEN *pToken, const char *szName
   while (pToken) {
     int iOptional = hb_pp_writeTokenCount(pToken->pMTokens);
 
-    auto i = static_cast<int>(strlen(szName));
+    auto i = static_cast<int32_t>(strlen(szName));
     if (pToken->pNext) {
       fprintf(fout, "   { %s +%2d", szName, iToken + iOptional + 1);
     } else {
@@ -89,9 +89,9 @@ static void hb_pp_writeToken(FILE *fout, HB_PP_TOKEN *pToken, const char *szName
       fprintf(fout, ", NULL%*s", i, "");
     }
 
-    i = 16 - static_cast<int>(strlen(pToken->value));
+    i = 16 - static_cast<int32_t>(strlen(pToken->value));
     fprintf(fout, ", \"%s\", %*s %2d,%2d, 0x%04x, %u }%s\n", pToken->value, i < 0 ? 0 : i, "",
-            static_cast<int>(pToken->len), static_cast<int>(pToken->spaces),
+            static_cast<int32_t>(pToken->len), static_cast<int32_t>(pToken->spaces),
             pToken->type | HB_PP_TOKEN_STATIC | HB_PP_TOKEN_PREDEFINED, pToken->index,
             fLast && !pToken->pNext && iOptional == 0 ? "" : ",");
 
@@ -479,7 +479,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, in
       } else if (!*szLog) {
         if (szLine[4] == '-' && szLine[7] == '-' && szLine[10] == ' ' && szLine[13] == ':') {
           hb_strncpy(szLog, szLine, sizeof(szLog) - 1);
-          iLen = static_cast<int>(strlen(szLog));
+          iLen = static_cast<int32_t>(strlen(szLog));
           while (iLen-- && HB_ISSPACE(szLog[iLen])) {
             szLog[iLen] = '\0';
           }
@@ -502,14 +502,14 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, in
 
       *szLine = '"';
       hb_strncpy(szLine + 1, szLog, sizeof(szLine) - 3);
-      iLen = static_cast<int>(strlen(szLine));
+      iLen = static_cast<int32_t>(strlen(szLine));
       szLine[iLen] = '"';
       szLine[++iLen] = '\0';
       hb_pp_addDefine(pState, "HB_VER_LENTRY", szLine);
       *pszLastEntry = hb_strdup(szLog);
 
       hb_strncpy(szLine + 1, szId, sizeof(szLine) - 3);
-      iLen = static_cast<int>(strlen(szLine));
+      iLen = static_cast<int32_t>(strlen(szLine));
       szLine[iLen] = '"';
       szLine[++iLen] = '\0';
       hb_pp_addDefine(pState, "HB_VER_CHLID", szLine);

@@ -2353,21 +2353,21 @@ static void hb_pp_pragmaNew(PHB_PP_STATE pState, HB_PP_TOKEN *pToken)
     } else if (hb_pp_tokenValueCmp(pToken, "AUTOMEMVAR", HB_PP_CMP_DBASE)) {
       pValue = hb_pp_pragmaGetLogical(pToken->pNext, &fValue);
       if (pValue) {
-        fError = hb_pp_setCompilerSwitch(pState, "a", static_cast<int>(fValue));
+        fError = hb_pp_setCompilerSwitch(pState, "a", static_cast<int32_t>(fValue));
       } else {
         fError = true;
       }
     } else if (hb_pp_tokenValueCmp(pToken, "DEBUGINFO", HB_PP_CMP_DBASE)) {
       pValue = hb_pp_pragmaGetLogical(pToken->pNext, &fValue);
       if (pValue) {
-        fError = hb_pp_setCompilerSwitch(pState, "b", static_cast<int>(fValue));
+        fError = hb_pp_setCompilerSwitch(pState, "b", static_cast<int32_t>(fValue));
       } else {
         fError = true;
       }
     } else if (hb_pp_tokenValueCmp(pToken, "DYNAMICMEMVAR", HB_PP_CMP_DBASE)) {
       pValue = hb_pp_pragmaGetLogical(pToken->pNext, &fValue);
       if (pValue) {
-        fError = hb_pp_setCompilerSwitch(pState, "v", static_cast<int>(fValue));
+        fError = hb_pp_setCompilerSwitch(pState, "v", static_cast<int32_t>(fValue));
       } else {
         fError = true;
       }
@@ -4862,7 +4862,7 @@ void hb_pp_initDynDefines(PHB_PP_STATE pState, HB_BOOL fArchDefs)
     hb_pp_addDefine(pState, szDefine, nullptr);
 #endif
 
-    hb_snprintf(szResult, sizeof(szResult), "%d", static_cast<int>(sizeof(void *)));
+    hb_snprintf(szResult, sizeof(szResult), "%d", static_cast<int32_t>(sizeof(void *)));
 #if defined(HB_ARCH_16BIT)
     hb_pp_addDefine(pState, "__ARCH16BIT__", szResult);
 #elif defined(HB_ARCH_32BIT)
@@ -4906,7 +4906,7 @@ void hb_pp_initDynDefines(PHB_PP_STATE pState, HB_BOOL fArchDefs)
   szResult[1] = '"';
   hb_timeStampGet(&lDate, &lTime);
   hb_timeStampStr(szResult + 2, lDate, lTime);
-  auto i = static_cast<int>(strlen(szResult));
+  auto i = static_cast<int32_t>(strlen(szResult));
   szResult[i++] = '"';
   szResult[i] = '\0';
   hb_pp_addDefine(pState, "__TIMESTAMP__", szResult);
