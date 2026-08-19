@@ -1838,7 +1838,7 @@ static HB_ERRCODE hb_nsxTagHeaderSave(LPTAGINFO pTag)
   if (pIndex->Update) {
     uint16_t type = hb_nsxKeyTypeRaw(pTag->KeyType);
 
-    memset((HB_BYTE *)&Header + NSX_TAGHEAD_HEADSIZE, 0, sizeof(Header) - NSX_TAGHEAD_HEADSIZE);
+    memset((uint8_t *)&Header + NSX_TAGHEAD_HEADSIZE, 0, sizeof(Header) - NSX_TAGHEAD_HEADSIZE);
 
     HB_PUT_LE_UINT16(Header.KeyType, type);
     HB_PUT_LE_UINT16(Header.KeySize, pTag->KeyLength);
