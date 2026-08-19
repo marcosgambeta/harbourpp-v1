@@ -238,9 +238,9 @@ void hb_dateDecode(long lJulian, int32_t *piYear, int32_t *piMonth, int32_t *piD
     V = 80 * J / 2447;
     U = V / 11;
 
-    *piYear = static_cast<int>(X + U + (W - 49) * 100);
-    *piMonth = static_cast<int>(V + 2 - (U * 12));
-    *piDay = static_cast<int>(J - (2447 * V / 80));
+    *piYear = static_cast<int32_t>(X + U + (W - 49) * 100);
+    *piMonth = static_cast<int32_t>(V + 2 - (U * 12));
+    *piDay = static_cast<int32_t>(J - (2447 * V / 80));
   } else {
     *piYear = *piMonth = *piDay = 0;
   }
@@ -284,10 +284,10 @@ void hb_dateStrGet(const char *szDate, int32_t *piYear, int32_t *piMonth, int32_
 #endif
   {
     // Date string has correct length, so attempt to convert
-    *piYear = ((static_cast<int>(szDate[0] - '0') * 10 + static_cast<int>(szDate[1] - '0')) * 10 +
-               static_cast<int>(szDate[2] - '0')) *
+    *piYear = ((static_cast<int32_t>(szDate[0] - '0') * 10 + static_cast<int32_t>(szDate[1] - '0')) * 10 +
+               static_cast<int32_t>(szDate[2] - '0')) *
                   10 +
-              static_cast<int>(szDate[3] - '0');
+              static_cast<int32_t>(szDate[3] - '0');
     *piMonth = (szDate[4] - '0') * 10 + (szDate[5] - '0');
     *piDay = (szDate[6] - '0') * 10 + (szDate[7] - '0');
   } else {
@@ -338,7 +338,7 @@ int32_t hb_dateJulianDOW(long lJulian)
 #endif
 
   if (lJulian >= HB_STR_DATE_BASE) {
-    return static_cast<int>((lJulian + 1) % 7) + 1;
+    return static_cast<int32_t>((lJulian + 1) % 7) + 1;
   } else {
     return 0;
   }
@@ -353,7 +353,7 @@ HB_BOOL hb_dateDecWeek(long lJulian, int32_t *piYear, int32_t *piWeek, int32_t *
   if (lJulian >= HB_STR_DATE_BASE) {
     int32_t iMonth, iDay;
 
-    *piDay = static_cast<int>(lJulian % 7) + 1;
+    *piDay = static_cast<int32_t>(lJulian % 7) + 1;
     lJulian += 4 - *piDay;
     hb_dateDecode(lJulian, piYear, &iMonth, &iDay);
     *piWeek = (lJulian - hb_dateEncode(*piYear, 1, 1)) / 7 + 1;
@@ -461,7 +461,7 @@ void hb_timeDecode(long lMilliSec, int32_t *piHour, int32_t *piMinutes, int32_t 
     if (lMilliSec >= 24) {
       *piHour = *piMinutes = *piSeconds = *piMSec = 0;
     } else {
-      *piHour = static_cast<int>(lMilliSec);
+      *piHour = static_cast<int32_t>(lMilliSec);
     }
   }
 }
@@ -653,14 +653,14 @@ void hb_timeStrRawGet(const char *szTime, int32_t *piHour, int32_t *piMinutes, i
           switch (iLen) {
           case 4:
           case 3:
-            *piMSec = (static_cast<int>(szTime[0] - '0') * 10 + static_cast<int>(szTime[1] - '0')) * 10 +
-                      static_cast<int>(szTime[2] - '0');
+            *piMSec = (static_cast<int32_t>(szTime[0] - '0') * 10 + static_cast<int32_t>(szTime[1] - '0')) * 10 +
+                      static_cast<int32_t>(szTime[2] - '0');
             break;
           case 2:
-            *piMSec = (static_cast<int>(szTime[0] - '0') * 10 + static_cast<int>(szTime[1] - '0')) * 10;
+            *piMSec = (static_cast<int32_t>(szTime[0] - '0') * 10 + static_cast<int32_t>(szTime[1] - '0')) * 10;
             break;
           case 1:
-            *piMSec = static_cast<int>(szTime[0] - '0') * 100;
+            *piMSec = static_cast<int32_t>(szTime[0] - '0') * 100;
             break;
           }
         }
@@ -756,10 +756,10 @@ HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int32_t *piYear, int32_t *
     }
     if (HB_ISDIGIT(szDateTime[0]) && HB_ISDIGIT(szDateTime[1]) && HB_ISDIGIT(szDateTime[2]) &&
         HB_ISDIGIT(szDateTime[3]) && (szDateTime[4] == '-' || szDateTime[4] == '/' || szDateTime[4] == '.')) {
-      iYear = ((static_cast<int>(szDateTime[0] - '0') * 10 + static_cast<int>(szDateTime[1] - '0')) * 10 +
-               static_cast<int>(szDateTime[2] - '0')) *
+      iYear = ((static_cast<int32_t>(szDateTime[0] - '0') * 10 + static_cast<int32_t>(szDateTime[1] - '0')) * 10 +
+               static_cast<int32_t>(szDateTime[2] - '0')) *
                   10 +
-              static_cast<int>(szDateTime[3] - '0');
+              static_cast<int32_t>(szDateTime[3] - '0');
       // ISO 8601 Calendar dates: YYYY-MM-DD
       if (HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) && szDateTime[7] == szDateTime[4] &&
           HB_ISDIGIT(szDateTime[8]) && HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10])) {
@@ -785,8 +785,8 @@ HB_BOOL hb_timeStampStrGetUTC(const char *szDateTime, int32_t *piYear, int32_t *
       // ISO 8601 Ordinal dates: YYYY-DDD
       else if (szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) &&
                HB_ISDIGIT(szDateTime[7]) && !HB_ISDIGIT(szDateTime[8])) {
-        iDay = (static_cast<int>(szDateTime[5] - '0') * 10 + static_cast<int>(szDateTime[6] - '0')) * 10 +
-               static_cast<int>(szDateTime[7] - '0');
+        iDay = (static_cast<int32_t>(szDateTime[5] - '0') * 10 + static_cast<int32_t>(szDateTime[6] - '0')) * 10 +
+               static_cast<int32_t>(szDateTime[7] - '0');
         if (iDay > 0 && (iDay <= 365 || (iDay == 366 && iYear % 4 == 0 && (iYear % 100 != 0 || iYear % 400 == 0)))) {
           long lDate = hb_dateEncode(iYear, 1, 1);
           if (lDate) {
@@ -1143,7 +1143,7 @@ HB_MAXUINT hb_timerGet(void)
 #endif
                  0};
 
-      for (i = 0; i < static_cast<int>(HB_SIZEOFARRAY(piClkId)); ++i) {
+      for (i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(piClkId)); ++i) {
         s_iClkId = piClkId[i];
         if (s_iClkId == 0 || clock_getres(s_iClkId, &ts) == 0) {
           break;

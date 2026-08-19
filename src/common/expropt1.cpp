@@ -196,7 +196,7 @@ const char *hb_compExprDescription(PHB_EXPR pExpr)
 
 int32_t hb_compExprType(PHB_EXPR pExpr)
 {
-  return static_cast<int>(pExpr->ExprType);
+  return static_cast<int32_t>(pExpr->ExprType);
 }
 
 int32_t hb_compExprIsInteger(PHB_EXPR pExpr)
@@ -254,7 +254,7 @@ int32_t hb_compExprAsNumSign(PHB_EXPR pExpr)
 int32_t hb_compExprAsInteger(PHB_EXPR pExpr)
 {
   if (pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG) {
-    return static_cast<int>(pExpr->value.asNum.val.l);
+    return static_cast<int32_t>(pExpr->value.asNum.val.l);
   } else {
     return 0;
   }

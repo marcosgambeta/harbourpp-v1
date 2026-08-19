@@ -681,9 +681,9 @@ static size_t put_str(char *buffer, size_t bufsize, size_t size, const _x_str st
     str = "(null)";
   }
   if (precision < 0) {
-    precision = static_cast<int>(strlen(str));
+    precision = static_cast<int32_t>(strlen(str));
   } else if (precision > 0) {
-    precision = static_cast<int>(_hb_strnlen(str, precision));
+    precision = static_cast<int32_t>(_hb_strnlen(str, precision));
   }
 
   width -= precision;
@@ -1251,7 +1251,7 @@ int32_t hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list a
             // overflows. It can also cause unintentional memory
             // corruption by programmers typo in pattern so if it's
             // not strictly necessary it's good to disable it.
-            *(va_arg_n(args, _x_intptr, param)) = static_cast<int>(size);
+            *(va_arg_n(args, _x_intptr, param)) = static_cast<int32_t>(size);
             continue;
           case '%': // store % consuming arguments %
             break;
@@ -1291,7 +1291,7 @@ int32_t hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list a
     buffer[bufsize - 1] = 0;
   }
 
-  return static_cast<int>(size - 1);
+  return static_cast<int32_t>(size - 1);
 }
 
 #else // defined(HB_USE_CRTL_SNPRINTF)

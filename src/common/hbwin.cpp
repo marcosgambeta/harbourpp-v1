@@ -69,14 +69,14 @@ int32_t hb_wctomblen(const wchar_t *szText)
 
 void hb_wcntombcpy(char *dstA, const wchar_t *srcW, HB_SIZE nLen)
 {
-  WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, static_cast<int>(nLen), nullptr, nullptr);
-  dstA[static_cast<int>(nLen)] = '\0';
+  WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, static_cast<int32_t>(nLen), nullptr, nullptr);
+  dstA[static_cast<int32_t>(nLen)] = '\0';
 }
 
 void hb_mbntowccpy(wchar_t *dstW, const char *srcA, HB_SIZE nLen)
 {
-  MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, static_cast<int>(nLen));
-  dstW[static_cast<int>(nLen)] = L'\0';
+  MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, static_cast<int32_t>(nLen));
+  dstW[static_cast<int32_t>(nLen)] = L'\0';
 }
 
 wchar_t *hb_mbtowc(const char *srcA)
@@ -98,9 +98,9 @@ char *hb_wctomb(const wchar_t *srcW)
 wchar_t *hb_mbntowc(const char *srcA, HB_SIZE nLen)
 {
   nLen = hb_strnlen(srcA, nLen);
-  int32_t length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), nullptr, 0);
+  int32_t length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int32_t>(nLen), nullptr, 0);
   auto dstW = static_cast<wchar_t *>(hb_xgrab((length + 1) * sizeof(wchar_t)));
-  MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), dstW, length);
+  MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int32_t>(nLen), dstW, length);
   dstW[length] = L'\0';
   return dstW;
 }
@@ -108,9 +108,9 @@ wchar_t *hb_mbntowc(const char *srcA, HB_SIZE nLen)
 char *hb_wcntomb(const wchar_t *srcW, HB_SIZE nLen)
 {
   nLen = hb_wcnlen(srcW, nLen);
-  int32_t length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
+  int32_t length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int32_t>(nLen), nullptr, 0, nullptr, nullptr);
   auto dstA = static_cast<char *>(hb_xgrab(length + 1));
-  WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), dstA, length, nullptr, nullptr);
+  WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int32_t>(nLen), dstA, length, nullptr, nullptr);
   dstA[length] = '\0';
   return dstA;
 }

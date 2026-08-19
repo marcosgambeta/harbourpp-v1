@@ -1648,8 +1648,8 @@ HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
 
   if (pArg->ExprType == HB_ET_NUMERIC) {
     if (HB_SUPPORT_USERCP) {
-      int32_t iVal = pArg->value.asNum.NumType == HB_ET_LONG ? static_cast<int>(pArg->value.asNum.val.l)
-                                                         : static_cast<int>(pArg->value.asNum.val.d);
+      int32_t iVal = pArg->value.asNum.NumType == HB_ET_LONG ? static_cast<int32_t>(pArg->value.asNum.val.l)
+                                                         : static_cast<int32_t>(pArg->value.asNum.val.d);
       fDoOpt = iVal >= 0 && iVal <= 127;
     } else {
       fDoOpt = true;
@@ -1679,7 +1679,7 @@ HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
         pExpr->value.asString.dealloc = false;
         pExpr->nLength = 0;
       } else {
-        pExpr->value.asString.string = const_cast<char *>(hb_szAscii[static_cast<int>(pArg->value.asNum.val.l) & 0xff]);
+        pExpr->value.asString.string = const_cast<char *>(hb_szAscii[static_cast<int32_t>(pArg->value.asNum.val.l) & 0xff]);
         pExpr->value.asString.dealloc = false;
         pExpr->nLength = 1;
       }
@@ -1709,7 +1709,7 @@ HB_BOOL hb_compExprReduceBCHAR(PHB_EXPR pSelf, HB_COMP_DECL)
 
     pExpr->ValType = HB_EV_STRING;
     pExpr->value.asString.string = const_cast<char *>(
-        hb_szAscii[(pArg->value.asNum.NumType == HB_ET_LONG ? static_cast<int>(pArg->value.asNum.val.l)
+        hb_szAscii[(pArg->value.asNum.NumType == HB_ET_LONG ? static_cast<int32_t>(pArg->value.asNum.val.l)
                                                             : HB_CAST_INT(pArg->value.asNum.val.d)) &
                    0xff]);
     pExpr->value.asString.dealloc = false;
