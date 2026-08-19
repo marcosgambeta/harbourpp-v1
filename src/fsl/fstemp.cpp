@@ -146,7 +146,7 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
 
     if (pszDir && pszDir[0] != '\0') {
       hb_strncpy(pszName, pszDir, HB_PATH_MAX - 1);
-      iLen = static_cast<int>(strlen(pszName));
+      iLen = static_cast<int32_t>(strlen(pszName));
       if (pszName[iLen - 1] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1) {
         pszName[iLen] = HB_OS_PATH_DELIM_CHR;
         pszName[iLen + 1] = '\0';
@@ -159,8 +159,8 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
       hb_strncat(pszName, pszPrefix, HB_PATH_MAX - 1);
     }
 
-    iLen = static_cast<int>(strlen(pszName));
-    if (iLen > (HB_PATH_MAX - 1) - 6 - (pszExt ? static_cast<int>(strlen(pszExt)) : 0)) {
+    iLen = static_cast<int32_t>(strlen(pszName));
+    if (iLen > (HB_PATH_MAX - 1) - 6 - (pszExt ? static_cast<int32_t>(strlen(pszExt)) : 0)) {
       fd = FS_ERROR;
       break;
     }
@@ -178,9 +178,9 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
       if (pszExt && *pszExt) {
         hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
 #if defined(HB_USE_LARGEFILE64)
-        fd = static_cast<HB_FHANDLE>(mkstemps64(pszName, static_cast<int>(strlen(pszExt))));
+        fd = static_cast<HB_FHANDLE>(mkstemps64(pszName, static_cast<int32_t>(strlen(pszExt))));
 #else
-        fd = static_cast<HB_FHANDLE>(mkstemps(pszName, static_cast<int>(strlen(pszExt))));
+        fd = static_cast<HB_FHANDLE>(mkstemps(pszName, static_cast<int32_t>(strlen(pszExt))));
 #endif
       } else
 #endif
@@ -199,7 +199,7 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
 
       for (auto i = 0; i < 6; i++) {
         d = d * 36;
-        auto n = static_cast<int>(d);
+        auto n = static_cast<int32_t>(d);
         d = modf(d, &x);
         pszName[iLen++] = static_cast<char>(n + (n > 9 ? 'a' - 10 : '0'));
       }
@@ -388,7 +388,7 @@ HB_ERRCODE hb_fsTempDir(char *pszTempDir)
 #endif
 
   if (nResult == 0 && pszTempDir[0] != '\0') {
-    auto len = static_cast<int>(strlen(pszTempDir));
+    auto len = static_cast<int32_t>(strlen(pszTempDir));
     if (pszTempDir[len - 1] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1) {
       pszTempDir[len] = HB_OS_PATH_DELIM_CHR;
       pszTempDir[len + 1] = '\0';

@@ -568,7 +568,7 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
 
     for (;;) {
       bool fLast = nTimeOut >= 0 && nTimeOut <= 1000;
-      int tout = fLast ? static_cast<int>(nTimeOut) : 1000;
+      int tout = fLast ? static_cast<int32_t>(nTimeOut) : 1000;
 
       iResult = poll(&fds, 1, tout);
       hb_fsSetIOError(iResult >= 0, 0);
@@ -698,7 +698,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
     if (s_fSamePoll) {
       pfds = reinterpret_cast<struct pollfd *>(pPollSet);
     } else {
-      if (iCount <= static_cast<int>(HB_SIZEOFARRAY(fds))) {
+      if (iCount <= static_cast<int32_t>(HB_SIZEOFARRAY(fds))) {
         pfds = fds;
       } else {
         pfds = static_cast<struct pollfd *>(pFree = hb_xgrab(sizeof(struct pollfd) * iCount));
@@ -717,7 +717,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
     timer = hb_timerInit(nTimeOut);
     for (;;) {
       bool fLast = nTimeOut >= 0 && nTimeOut <= 1000;
-      int tout = fLast ? static_cast<int>(nTimeOut) : 1000;
+      int tout = fLast ? static_cast<int32_t>(nTimeOut) : 1000;
 
       iResult = poll(pfds, iCount, tout);
       hb_fsSetIOError(iResult >= 0, 0);
@@ -2688,7 +2688,7 @@ int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength,
     lock_info.l_len = nLength;
     lock_info.l_whence = SEEK_SET;
     lock_info.l_pid = 0;
-    iResult = fcntl(hFileHandle, F_GETLK64, &lock_info) != -1 ? static_cast<int>(lock_info.l_pid) : -1;
+    iResult = fcntl(hFileHandle, F_GETLK64, &lock_info) != -1 ? static_cast<int32_t>(lock_info.l_pid) : -1;
 #else
     struct flock lock_info;
 
@@ -2697,7 +2697,7 @@ int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength,
     lock_info.l_len = nLength;
     lock_info.l_whence = SEEK_SET;
     lock_info.l_pid = 0;
-    iResult = fcntl(hFileHandle, F_GETLK, &lock_info) != -1 ? static_cast<int>(lock_info.l_pid) : -1;
+    iResult = fcntl(hFileHandle, F_GETLK, &lock_info) != -1 ? static_cast<int32_t>(lock_info.l_pid) : -1;
 #endif
   }
 #else
