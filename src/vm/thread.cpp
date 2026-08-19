@@ -1354,7 +1354,7 @@ HB_FUNC(HB_THREADWAIT)
   PHB_THREADSTATE *pThreads = pAlloc;
   if (HB_ISARRAY(1)) {
     auto pArray = hb_param(1, Harbour::Item::ARRAY);
-    auto iLen = static_cast<int>(hb_arrayLen(pArray));
+    auto iLen = static_cast<int32_t>(hb_arrayLen(pArray));
     int32_t i;
 
     for (i = iThreads = 0; i < iLen; ++i) {
@@ -2075,7 +2075,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
           HB_COND_SIGNAL(pMutex->cond_w);
         }
       } else if (pMutex->waiters) {
-        auto iLen = static_cast<int>(hb_arrayLen(pMutex->events));
+        auto iLen = static_cast<int32_t>(hb_arrayLen(pMutex->events));
         int32_t iCount = pMutex->waiters - iLen;
 
         if (iCount > 0) {

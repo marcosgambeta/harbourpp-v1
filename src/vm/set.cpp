@@ -163,7 +163,7 @@ static char *set_string(PHB_ITEM pItem, char *szOldString)
 static void close_handle(PHB_SET_STRUCT pSet, HB_set_enum set_specifier)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("close_handle(%p, %d)", static_cast<void*>(pSet), static_cast<int>(set_specifier)));
+   HB_TRACE(HB_TR_DEBUG, ("close_handle(%p, %d)", static_cast<void*>(pSet), static_cast<int32_t>(set_specifier)));
 #endif
 
   PHB_FILE *handle_ptr;
@@ -220,7 +220,7 @@ static const char *is_devicename(const char *szFileName)
         }
       }
     }
-    auto iLen = static_cast<int>(strlen(szFileName + iSkip));
+    auto iLen = static_cast<int32_t>(strlen(szFileName + iSkip));
     if (iLen >= 3 && iLen <= 4) {
       int32_t iFrom, iTo;
 
@@ -256,7 +256,7 @@ static const char *is_devicename(const char *szFileName)
 static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend, HB_set_enum set_specifier)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("open_handle(%p, %s, %d, %d)", static_cast<void*>(pSet), file_name, static_cast<int>(fAppend), static_cast<int>(set_specifier)));
+   HB_TRACE(HB_TR_DEBUG, ("open_handle(%p, %s, %d, %d)", static_cast<void*>(pSet), file_name, static_cast<int32_t>(fAppend), static_cast<int32_t>(set_specifier)));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -418,7 +418,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
     // Convert to upper case and determine where year is
     y_start = y_stop = -1;
     char *szDateFormat = pSet->HB_SET_DATEFORMAT;
-    auto size = static_cast<int>(strlen(szDateFormat));
+    auto size = static_cast<int32_t>(strlen(szDateFormat));
     for (auto count = 0; count < size; count++) {
       int32_t digit = HB_TOUPPER(static_cast<uint8_t>(szDateFormat[count]));
       if (digit == 'Y') {
@@ -458,7 +458,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       if (new_century_setting) {
         hb_strncat(szNewFormat, "YY", size);
       }
-      auto format_len = static_cast<int>(strlen(szDateFormat));
+      auto format_len = static_cast<int32_t>(strlen(szDateFormat));
       if (y_stop < format_len) {
         hb_strncat(szNewFormat, szDateFormat + y_stop, size);
       }

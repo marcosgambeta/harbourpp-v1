@@ -676,7 +676,7 @@ static void hb_memvarRelease(PHB_ITEM pMemvar)
 static void hb_memvarReleaseWithMask(const char *szMask, bool bInclude)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_memvarReleaseWithMask(%s, %d)", szMask, static_cast<int>(bInclude)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_memvarReleaseWithMask(%s, %d)", szMask, static_cast<int32_t>(bInclude)));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -755,7 +755,7 @@ static HB_DYNS_FUNC(hb_memvarClear)
 void hb_memvarsClear(HB_BOOL fAll)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_memvarsClear(%d)", static_cast<int>(fAll)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_memvarsClear(%d)", static_cast<int32_t>(fAll)));
 #endif
 
   HB_STACK_TLS_PRELOAD

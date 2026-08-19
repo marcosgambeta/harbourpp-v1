@@ -1096,7 +1096,7 @@ void hb_clsDoInit(void)
 
   HB_STACK_TLS_PRELOAD
 
-  for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_puiHandles)); ++i) {
+  for (auto i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(s_puiHandles)); ++i) {
     auto pFuncSym = hb_dynsymFindName(s_pszFuncNames[i]);
     if (pFuncSym && hb_dynsymIsFunction(pFuncSym)) {
       auto pReturn = hb_stackReturnItem();
@@ -3126,7 +3126,7 @@ HB_FUNC(__CLSADDMSG)
     } else if (nType == HB_OO_MSG_PROPERTY || nType == HB_OO_MSG_CLASSPROPERTY) {
       auto pType = hb_param(7, Harbour::Item::ANY);
       char szAssign[HB_SYMBOL_NAME_LEN + 1];
-      auto iLen = static_cast<int>(hb_parclen(2));
+      auto iLen = static_cast<int32_t>(hb_parclen(2));
       if (iLen >= HB_SYMBOL_NAME_LEN) {
         iLen = HB_SYMBOL_NAME_LEN - 1;
       }
@@ -3796,7 +3796,7 @@ HB_FUNC(__CLSASSOCTYPE)
 HB_FUNC(__CLSCNTCLASSES)
 {
   HB_STACK_TLS_PRELOAD
-  hb_retni(static_cast<int>(s_uiClasses));
+  hb_retni(static_cast<int32_t>(s_uiClasses));
 }
 
 // __cls_CntClsData(<hClass>) --> <nCount>

@@ -441,7 +441,7 @@ HB_BOOL hb_cmdargIsInternal(const char *szArg, int32_t *piLen)
 static char *hb_cmdargGet(const char *pszName, bool bRetValue)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargGet(%s, %d)", pszName, static_cast<int>(bRetValue)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargGet(%s, %d)", pszName, static_cast<int32_t>(bRetValue)));
 #endif
 
   int32_t iPrefixLen;
@@ -498,7 +498,7 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
     //       chars at all, Harbour is more strict/standard in this respect,
     //       it requires the switches to be separated.
 
-    auto i = static_cast<int>(strlen(pszName));
+    auto i = static_cast<int32_t>(strlen(pszName));
     while (*pszNext) {
       static const char *s_szSeparator = " ;,\t";
       char *pszEnd;

@@ -86,7 +86,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
   void *hDynLib = nullptr;
 
   if (hb_itemGetCLen(pLibName) > 0) {
-    int32_t argc = pArgs ? static_cast<int>(hb_arrayLen(pArgs)) : 0;
+    int32_t argc = pArgs ? static_cast<int32_t>(hb_arrayLen(pArgs)) : 0;
     const char **argv = nullptr;
 
     if (argc > 0) {

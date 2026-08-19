@@ -218,7 +218,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
         if (IsBadReadPtr(pc, 1)) {
           break;
         }
-        hb_snprintf(buf, sizeof(buf), " %02X", static_cast<int>(pc[i]));
+        hb_snprintf(buf, sizeof(buf), " %02X", static_cast<int32_t>(pc[i]));
         hb_strncat(errmsg, buf, errmsglen);
       }
       hb_strncat(errmsg, "\n    SS:ESP:", errmsglen);
@@ -244,7 +244,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
               reinterpret_cast<uint32_t>(ebp) >= ebp[0]) {
             break;
           }
-          hb_snprintf(buf, sizeof(buf), "    %08X %08X  ", static_cast<int>(eip), reinterpret_cast<int>(ebp));
+          hb_snprintf(buf, sizeof(buf), "    %08X %08X  ", static_cast<int32_t>(eip), reinterpret_cast<int32_t>(ebp));
           hb_strncat(errmsg, buf, errmsglen);
           for (uint32_t j = 0; j < 10 && reinterpret_cast<uint32_t>(ebp + j) < ebp[0]; j++) {
             hb_snprintf(buf, sizeof(buf), " %08X", ebp[j]);

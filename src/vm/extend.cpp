@@ -529,7 +529,7 @@ int32_t hb_parni(int32_t iParam)
     if (pItem->isInteger()) {
       return pItem->integerValue();
     } else if (pItem->isLong()) {
-      return static_cast<int>(pItem->longValue());
+      return static_cast<int32_t>(pItem->longValue());
     } else if (pItem->isDouble()) {
       return HB_CAST_INT(pItem->doubleValue());
     }
@@ -556,7 +556,7 @@ int32_t hb_parnidef(int32_t iParam, int32_t iDefValue)
     if (pItem->isInteger()) {
       return pItem->integerValue();
     } else if (pItem->isLong()) {
-      return static_cast<int>(pItem->longValue());
+      return static_cast<int32_t>(pItem->longValue());
     } else if (pItem->isDouble()) {
       return HB_CAST_INT(pItem->doubleValue());
     }
@@ -1231,7 +1231,7 @@ int32_t hb_parvni(int32_t iParam, ...)
     if (pItem->isInteger()) {
       return pItem->integerValue();
     } else if (pItem->isLong()) {
-      return static_cast<int>(pItem->longValue());
+      return static_cast<int32_t>(pItem->longValue());
     } else if (pItem->isDouble()) {
       return HB_CAST_INT(pItem->doubleValue());
     } else if (pItem->isArray()) {
@@ -1537,7 +1537,7 @@ void hb_retc_const(const char *szText)
 void hb_retclen(const char *szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_retclen(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen));
+   HB_TRACE(HB_TR_DEBUG, ("hb_retclen(%.*s, %" HB_PFS "u)", static_cast<int32_t>(nLen), szText, nLen));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -1548,7 +1548,7 @@ void hb_retclen(const char *szText, HB_SIZE nLen)
 void hb_retclen_buffer(char *szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen));
+   HB_TRACE(HB_TR_DEBUG, ("hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast<int32_t>(nLen), szText, nLen));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -1559,7 +1559,7 @@ void hb_retclen_buffer(char *szText, HB_SIZE nLen)
 void hb_retclen_const(const char *szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen));
+   HB_TRACE(HB_TR_DEBUG, ("hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast<int32_t>(nLen), szText, nLen));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -1841,7 +1841,7 @@ int32_t hb_storc(const char *szText, int32_t iParam)
 int32_t hb_storclen(const char *szText, HB_SIZE nLen, int32_t iParam)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam));
+   HB_TRACE(HB_TR_DEBUG, ("hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int32_t>(nLen), szText, nLen, iParam));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -1864,7 +1864,7 @@ int32_t hb_storclen(const char *szText, HB_SIZE nLen, int32_t iParam)
 int32_t hb_storclen_buffer(char *szText, HB_SIZE nLen, int32_t iParam)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam));
+   HB_TRACE(HB_TR_DEBUG, ("hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast<int32_t>(nLen), szText, nLen, iParam));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -2225,7 +2225,7 @@ int32_t hb_storvc(const char *szText, int32_t iParam, ...)
 int32_t hb_storvclen(const char *szText, HB_SIZE nLen, int32_t iParam, ...)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam));
+   HB_TRACE(HB_TR_DEBUG, ("hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int32_t>(nLen), szText, nLen, iParam));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -2257,7 +2257,7 @@ int32_t hb_storvclen(const char *szText, HB_SIZE nLen, int32_t iParam, ...)
 int32_t hb_storvclen_buffer(char *szText, HB_SIZE nLen, int32_t iParam, ...)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam));
+   HB_TRACE(HB_TR_DEBUG, ("hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int32_t>(nLen), szText, nLen, iParam));
 #endif
 
   HB_STACK_TLS_PRELOAD
@@ -2714,5 +2714,5 @@ int32_t hb_pcount(void)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  return static_cast<int>((hb_stackBaseItem())->symbolParamCnt());
+  return static_cast<int32_t>((hb_stackBaseItem())->symbolParamCnt());
 }
