@@ -4,9 +4,9 @@
 
 #include "hbapi.hpp"
 
-constexpr int HB_BIG5_FIRST = 0xA140; // #define HB_BIG5_FIRST   0xA140
-constexpr int HB_BIG5_LAST = 0xF9D5; // #define HB_BIG5_LAST    0xF9D5
-constexpr int HB_BIG5_BITS = 5; // #define HB_BIG5_BITS    5
+constexpr int32_t HB_BIG5_FIRST = 0xA140; // #define HB_BIG5_FIRST   0xA140
+constexpr int32_t HB_BIG5_LAST = 0xF9D5; // #define HB_BIG5_LAST    0xF9D5
+constexpr int32_t HB_BIG5_BITS = 5; // #define HB_BIG5_BITS    5
 
 static const uint16_t s_big5index[709] =
 {
@@ -1865,9 +1865,9 @@ static uint16_t s_big5_to_ucs16(int32_t n)
    return 0;
 }
 
-constexpr int HB_U16_FIRST = 0x00A0; // #define HB_U16_FIRST    0x00A0
-constexpr int HB_U16_LAST = 0xFFFD; // #define HB_U16_LAST     0xFFFD
-constexpr int HB_U16_BITS = 6; // #define HB_U16_BITS     6
+constexpr int32_t HB_U16_FIRST = 0x00A0; // #define HB_U16_FIRST    0x00A0
+constexpr int32_t HB_U16_LAST = 0xFFFD; // #define HB_U16_LAST     0xFFFD
+constexpr int32_t HB_U16_BITS = 6; // #define HB_U16_BITS     6
 
 static const uint16_t s_ucs16index[1022] =
 {

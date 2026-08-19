@@ -44,7 +44,7 @@
 
 #include "hbapicdp.hpp"
 
-constexpr int NUMBER_OF_CHARS = 256; // #define NUMBER_OF_CHARS    256
+constexpr int32_t NUMBER_OF_CHARS = 256; // #define NUMBER_OF_CHARS    256
 
 static const HB_WCHAR s_uniCodes[NUMBER_OF_CHARS] =
 {

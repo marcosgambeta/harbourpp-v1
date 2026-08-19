@@ -4,9 +4,9 @@
 
 #include "hbapi.hpp"
 
-constexpr int HB_UCUP_FIRST = 0x0030; // #define HB_UCUP_FIRST   0x0030
-constexpr int HB_UCUP_LAST = 0xFF5A; // #define HB_UCUP_LAST    0xFF5A
-constexpr int HB_UCUP_BITS = 7; // #define HB_UCUP_BITS    7
+constexpr int32_t HB_UCUP_FIRST = 0x0030; // #define HB_UCUP_FIRST   0x0030
+constexpr int32_t HB_UCUP_LAST = 0xFF5A; // #define HB_UCUP_LAST    0xFF5A
+constexpr int32_t HB_UCUP_BITS = 7; // #define HB_UCUP_BITS    7
 
 static const uint16_t s_up_idx[511] =
 {
@@ -454,7 +454,7 @@ static const uint16_t s_up_val[2987] =
    0xFF38, 0xFF39, 0xFF3A
 };
 
-static uint16_t s_uc_upper(int n)
+static uint16_t s_uc_upper(int32_t n)
 {
    n -= HB_UCUP_FIRST;
    if (n >= 0 && n <= (HB_UCUP_LAST - HB_UCUP_FIRST)) {
@@ -463,9 +463,9 @@ static uint16_t s_uc_upper(int n)
    return 0;
 }
 
-constexpr int HB_UCLO_FIRST = 0x0020; // #define HB_UCLO_FIRST   0x0020
-constexpr int HB_UCLO_LAST = 0xFF3A; // #define HB_UCLO_LAST    0xFF3A
-constexpr int HB_UCLO_BITS = 6; // #define HB_UCLO_BITS    6
+constexpr int32_t HB_UCLO_FIRST = 0x0020; // #define HB_UCLO_FIRST   0x0020
+constexpr int32_t HB_UCLO_LAST = 0xFF3A; // #define HB_UCLO_LAST    0xFF3A
+constexpr int32_t HB_UCLO_BITS = 6; // #define HB_UCLO_BITS    6
 
 static const uint16_t s_lo_idx[1021] =
 {
@@ -919,7 +919,7 @@ static const uint16_t s_lo_val[2523] =
    0xFF58, 0xFF59, 0xFF5A
 };
 
-static uint16_t s_uc_lower(int n)
+static uint16_t s_uc_lower(int32_t n)
 {
    n -= HB_UCLO_FIRST;
    if (n >= 0 && n <= (HB_UCLO_LAST - HB_UCLO_FIRST)) {
@@ -928,9 +928,9 @@ static uint16_t s_uc_lower(int n)
    return 0;
 }
 
-constexpr int HB_UCFL_FIRST = 0x0000; // #define HB_UCFL_FIRST   0x0000
-constexpr int HB_UCFL_LAST = 0xFF5A; // #define HB_UCFL_LAST    0xFF5A
-constexpr int HB_UCFL_BITS = 8; // #define HB_UCFL_BITS    8
+constexpr int32_t HB_UCFL_FIRST = 0x0000; // #define HB_UCFL_FIRST   0x0000
+constexpr int32_t HB_UCFL_LAST = 0xFF5A; // #define HB_UCFL_LAST    0xFF5A
+constexpr int32_t HB_UCFL_BITS = 8; // #define HB_UCFL_BITS    8
 
 static const uint8_t s_ch_idx[256] =
 {
@@ -1148,7 +1148,7 @@ static const uint8_t s_ch_val[2222] =
    0x66, 0x06
 };
 
-static int s_uc_flags(int n)
+static int32_t s_uc_flags(int32_t n)
 {
    n -= HB_UCFL_FIRST;
    if (n >= 0 && n <= (HB_UCFL_LAST - HB_UCFL_FIRST)) {

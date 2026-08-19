@@ -1,8 +1,8 @@
 #include "hbapi.hpp"
 
-constexpr int HB_GBK_FIRST = 0x8140; // #define HB_GBK_FIRST   0x8140
-constexpr int HB_GBK_LAST = 0xFE4F; // #define HB_GBK_LAST    0xFE4F
-constexpr int HB_GBK_BITS = 6; // #define HB_GBK_BITS    6
+constexpr int32_t HB_GBK_FIRST = 0x8140; // #define HB_GBK_FIRST   0x8140
+constexpr int32_t HB_GBK_LAST = 0xFE4F; // #define HB_GBK_LAST    0xFE4F
+constexpr int32_t HB_GBK_BITS = 6; // #define HB_GBK_BITS    6
 
 static const uint16_t s_gbkindex[501] =
 {
@@ -2933,7 +2933,7 @@ static const uint16_t s_gbk_ucs16[22864] =
    0xFA1F, 0xFA20, 0xFA21, 0xFA23, 0xFA24, 0xFA27, 0xFA28, 0xFA29
 };
 
-static uint16_t s_gbk_to_ucs16(int n)
+static uint16_t s_gbk_to_ucs16(int32_t n)
 {
    n -= HB_GBK_FIRST;
    if (n >= 0 && n <= (HB_GBK_LAST - HB_GBK_FIRST)) {
@@ -2942,9 +2942,9 @@ static uint16_t s_gbk_to_ucs16(int n)
    return 0;
 }
 
-constexpr int HB_U16_FIRST = 0x00A4; // #define HB_U16_FIRST    0x00A4
-constexpr int HB_U16_LAST = 0xFFE5; // #define HB_U16_LAST     0xFFE5
-constexpr int HB_U16_BITS = 6; // #define HB_U16_BITS     6
+constexpr int32_t HB_U16_FIRST = 0x00A4; // #define HB_U16_FIRST    0x00A4
+constexpr int32_t HB_U16_LAST = 0xFFE5; // #define HB_U16_LAST     0xFFE5
+constexpr int32_t HB_U16_BITS = 6; // #define HB_U16_BITS     6
 
 static const uint16_t s_ucs16index[1022] =
 {
@@ -6107,7 +6107,7 @@ static const uint16_t s_ucs16_gbk[24194] =
    0xA957, 0xA3A4
 };
 
-static uint16_t s_ucs16_to_gbk(int n)
+static uint16_t s_ucs16_to_gbk(int32_t n)
 {
    n -= HB_U16_FIRST;
    if (n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST)) {
