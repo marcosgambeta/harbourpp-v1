@@ -54,9 +54,9 @@ HB_EXTERN_BEGIN
 
 /* File locking flags */
 #if defined(__cplusplus)
-constexpr int FL_LOCK = 0x0000;   /* Lock a region */
-constexpr int FL_UNLOCK = 0x0001;   /* Unlock a region */
-constexpr int FL_MASK = 0x00FF;   /* Mask for lock type */
+constexpr int32_t FL_LOCK = 0x0000;   /* Lock a region */
+constexpr int32_t FL_UNLOCK = 0x0001;   /* Unlock a region */
+constexpr int32_t FL_MASK = 0x00FF;   /* Mask for lock type */
 #else
 #define FL_LOCK       0x0000   /* Lock a region */
 #define FL_UNLOCK     0x0001   /* Unlock a region */
@@ -123,7 +123,7 @@ constexpr int FL_MASK = 0x00FF;   /* Mask for lock type */
                                 HB_FA_POSIX_SID(a) )
 
 extern HB_EXPORT HB_BOOL    hb_fsChDir       ( const char * pszDirName ); /* change working directory */
-extern HB_EXPORT HB_ERRCODE hb_fsChDrv       ( int iDrive ); /* change working drive */
+extern HB_EXPORT HB_ERRCODE hb_fsChDrv       ( int32_t iDrive ); /* change working drive */
 extern HB_EXPORT void       hb_fsClose       ( HB_FHANDLE hFileHandle ); /* close a file */
 extern HB_EXPORT void       hb_fsCloseRaw    ( HB_FHANDLE hFileHandle ); /* close a file without setting hb_fsError() */
 extern HB_EXPORT void       hb_fsCommit      ( HB_FHANDLE hFileHandle ); /* commit updates of a file */
@@ -132,10 +132,10 @@ extern HB_EXPORT HB_FHANDLE hb_fsCreateEx    ( const char * pszFileName, HB_FATT
 extern HB_EXPORT HB_FHANDLE hb_fsCreateTemp  ( const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName ); /* create a temporary file from components */
 extern HB_EXPORT HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * pszPrefix, const char * pszExt, HB_FATTR ulAttr ); /* create a temporary file from components */
 extern HB_EXPORT HB_ERRCODE hb_fsTempDir     ( char * pszDir ); /* full buffer with system temp directory (or empty on error) */
-extern HB_EXPORT const char * hb_fsCurDir    ( int iDrive ); /* retrieve a static pointer containing current directory for specified drive */
-extern HB_EXPORT HB_ERRCODE hb_fsCurDirBuff  ( int iDrive, char * pbyBuffer, HB_SIZE nLen ); /* copy current directory for given drive into a buffer */
+extern HB_EXPORT const char * hb_fsCurDir    ( int32_t iDrive ); /* retrieve a static pointer containing current directory for specified drive */
+extern HB_EXPORT HB_ERRCODE hb_fsCurDirBuff  ( int32_t iDrive, char * pbyBuffer, HB_SIZE nLen ); /* copy current directory for given drive into a buffer */
 extern HB_EXPORT void       hb_fsBaseDirBuff ( char * pbyBuffer ); /* retrieve the base dir of the executable */
-extern HB_EXPORT int        hb_fsCurDrv      ( void ); /* retrieve current drive number */
+extern HB_EXPORT int32_t        hb_fsCurDrv      ( void ); /* retrieve current drive number */
 extern HB_EXPORT HB_BOOL    hb_fsDelete      ( const char * pszFileName ); /* delete a file */
 extern HB_EXPORT HB_BOOL    hb_fsEof         ( HB_FHANDLE hFileHandle ); /* determine if an open file is position at end-of-file */
 extern HB_EXPORT HB_ERRCODE hb_fsError       ( void ); /* retrieve file system error */
@@ -147,12 +147,12 @@ extern HB_EXPORT HB_FHANDLE hb_fsExtOpen     ( const char * pszFileName, const c
                                                HB_FATTR nFlags, const char * pPaths, PHB_ITEM pError ); /* open a file using default extension and a list of paths */
 extern HB_EXPORT char *     hb_fsExtName     ( const char * pszFileName, const char * pDefExt,
                                                HB_FATTR nExFlags, const char * pPaths ); /* convert file name for hb_fsExtOpen(), caller must free the returned buffer */
-extern HB_EXPORT HB_ERRCODE hb_fsIsDrv       ( int iDrive ); /* determine if a drive number is a valid drive */
+extern HB_EXPORT HB_ERRCODE hb_fsIsDrv       ( int32_t iDrive ); /* determine if a drive number is a valid drive */
 extern HB_EXPORT HB_BOOL    hb_fsIsDevice    ( HB_FHANDLE hFileHandle ); /* determine if a file is attached to a device (console?) */
 extern HB_EXPORT HB_BOOL    hb_fsLock        ( HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, uint16_t uiMode ); /* request a lock on a portion of a file */
 extern HB_EXPORT HB_BOOL    hb_fsLockLarge   ( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
                                                HB_FOFFSET nLength, uint16_t uiMode ); /* request a lock on a portion of a file using 64-bit API */
-extern HB_EXPORT int        hb_fsLockTest    ( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
+extern HB_EXPORT int32_t        hb_fsLockTest    ( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
                                                HB_FOFFSET nLength, uint16_t uiMode );
 extern HB_EXPORT HB_BOOL    hb_fsMkDir       ( const char * pszDirName ); /* create a directory */
 extern HB_EXPORT HB_FHANDLE hb_fsOpen        ( const char * pszFileName, uint16_t uiFlags ); /* open a file */
@@ -166,7 +166,7 @@ extern HB_EXPORT HB_ULONG   hb_fsSeek        ( HB_FHANDLE hFileHandle, HB_LONG l
 extern HB_EXPORT HB_FOFFSET hb_fsSeekLarge   ( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, uint16_t uiFlags ); /* reposition an open file using 64-bit API */
 extern HB_EXPORT HB_FOFFSET hb_fsTell        ( HB_FHANDLE hFileHandle ); /* retrieve the current position of a file */
 extern HB_EXPORT HB_FOFFSET hb_fsGetSize     ( HB_FHANDLE hFileHandle ); /* retrieve the size of a file, it may change current seek position */
-extern HB_EXPORT int        hb_fsSetDevMode  ( HB_FHANDLE hFileHandle, int iDevMode ); /* change the device mode of a file (text/binary) */
+extern HB_EXPORT int32_t        hb_fsSetDevMode  ( HB_FHANDLE hFileHandle, int32_t iDevMode ); /* change the device mode of a file (text/binary) */
 extern HB_EXPORT HB_BOOL    hb_fsGetFileTime ( const char * pszFileName, long * plJulian, long * plMillisec );
 extern HB_EXPORT HB_BOOL    hb_fsSetFileTime ( const char * pszFileName, long lJulian, long lMillisec );
 extern HB_EXPORT HB_BOOL    hb_fsGetAttr     ( const char * pszFileName, HB_FATTR * pulAttr );
@@ -185,7 +185,7 @@ extern HB_EXPORT HB_BOOL    hb_fsPipeUnblock ( HB_FHANDLE hPipeHandle );
 extern HB_EXPORT HB_SIZE    hb_fsPipeIsData  ( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT nTimeOut );
 extern HB_EXPORT HB_SIZE    hb_fsPipeRead    ( HB_FHANDLE hPipeHandle, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeOut );
 extern HB_EXPORT HB_SIZE    hb_fsPipeWrite   ( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeOut );
-extern HB_EXPORT int        hb_fsIsPipeOrSock( HB_FHANDLE hPipeHandle );
+extern HB_EXPORT int32_t        hb_fsIsPipeOrSock( HB_FHANDLE hPipeHandle );
 extern HB_EXPORT HB_FHANDLE hb_fsGetOsHandle ( HB_FHANDLE hFileHandle );
 extern HB_EXPORT HB_ERRCODE hb_fsGetFError   ( void ); /* get FError() flag */
 extern HB_EXPORT void       hb_fsSetFError   ( HB_ERRCODE uiError ); /* set FError() flag */
@@ -218,9 +218,9 @@ typedef struct
 #define HB_POLLHUP   0x0010 /* Hung up */
 #define HB_POLLNVAL  0x0020 /* Invalid polling request */
 
-extern HB_EXPORT int        hb_fsPoll        ( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut );
-extern HB_EXPORT int        hb_fsCanRead     ( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut );
-extern HB_EXPORT int        hb_fsCanWrite    ( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut );
+extern HB_EXPORT int32_t        hb_fsPoll        ( PHB_POLLFD pPollSet, int32_t iCount, HB_MAXINT nTimeOut );
+extern HB_EXPORT int32_t        hb_fsCanRead     ( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut );
+extern HB_EXPORT int32_t        hb_fsCanWrite    ( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut );
 #endif // HB_OS_UNIX
 
 
@@ -323,12 +323,12 @@ extern HB_EXPORT HB_FHANDLE hb_fsProcessOpen( const char * pszFileName,
                                               HB_FHANDLE * phStdin, HB_FHANDLE * phStdout,
                                               HB_FHANDLE * phStderr,
                                               HB_BOOL fDetach, HB_ULONG * pulPID );
-extern HB_EXPORT int        hb_fsProcessRun( const char * pszFileName,
+extern HB_EXPORT int32_t        hb_fsProcessRun( const char * pszFileName,
                                              const char * pStdInBuf, HB_SIZE nStdInLen,
                                              char ** pStdOutPtr, HB_SIZE * pnStdOut,
                                              char ** pStdErrPtr, HB_SIZE * pnStdErr,
                                              HB_BOOL fDetach );
-extern HB_EXPORT int        hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait );
+extern HB_EXPORT int32_t        hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait );
 extern HB_EXPORT HB_BOOL    hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle );
 
 /* Misc helper functions */
@@ -383,8 +383,8 @@ extern HB_EXPORT HB_WCHAR *   hb_fsNameConvU16( const char * pszFileName );
                                       HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError );
 
       void        ( * Close )       ( PHB_FILE pFile );
-      HB_BOOL     ( * Lock )        ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType );
-      int         ( * LockTest )    ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType );
+      HB_BOOL     ( * Lock )        ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType );
+      int32_t         ( * LockTest )    ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType );
       HB_SIZE     ( * Read )        ( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout );
       HB_SIZE     ( * Write )       ( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout );
       HB_SIZE     ( * ReadAt )      ( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset );
@@ -395,7 +395,7 @@ extern HB_EXPORT HB_WCHAR *   hb_fsNameConvU16( const char * pszFileName );
       HB_BOOL     ( * Eof )         ( PHB_FILE pFile );
       void        ( * Flush )       ( PHB_FILE pFile, HB_BOOL fDirty );
       void        ( * Commit )      ( PHB_FILE pFile );
-      HB_BOOL     ( * Configure )   ( PHB_FILE pFile, int iIndex, PHB_ITEM pValue );
+      HB_BOOL     ( * Configure )   ( PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue );
       HB_FHANDLE  ( * Handle )      ( PHB_FILE pFile );
    }
    HB_FILE_FUNCS;
@@ -433,8 +433,8 @@ extern HB_EXPORT PHB_FILE     hb_fileExtOpen    ( const char * pszFileName, cons
                                                   HB_FATTR nExFlags, const char * pPaths,
                                                   PHB_ITEM pError );
 extern HB_EXPORT void         hb_fileClose      ( PHB_FILE pFile );
-extern HB_EXPORT HB_BOOL      hb_fileLock       ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType );
-extern HB_EXPORT int          hb_fileLockTest   ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType );
+extern HB_EXPORT HB_BOOL      hb_fileLock       ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType );
+extern HB_EXPORT int32_t          hb_fileLockTest   ( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType );
 extern HB_EXPORT HB_SIZE      hb_fileRead       ( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout );
 extern HB_EXPORT HB_SIZE      hb_fileWrite      ( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout );
 extern HB_EXPORT HB_SIZE      hb_fileReadAt     ( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset );
@@ -445,7 +445,7 @@ extern HB_EXPORT HB_FOFFSET   hb_fileSize       ( PHB_FILE pFile );
 extern HB_EXPORT HB_BOOL      hb_fileEof        ( PHB_FILE pFile );
 extern HB_EXPORT void         hb_fileFlush      ( PHB_FILE pFile, HB_BOOL fDirty );
 extern HB_EXPORT void         hb_fileCommit     ( PHB_FILE pFile );
-extern HB_EXPORT HB_BOOL      hb_fileConfigure  ( PHB_FILE pFile, int iIndex, PHB_ITEM pValue );
+extern HB_EXPORT HB_BOOL      hb_fileConfigure  ( PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue );
 extern HB_EXPORT HB_FHANDLE   hb_fileHandle     ( PHB_FILE pFile );
 
 extern HB_EXPORT PHB_FILE     hb_fileCreateTemp ( const char * pszDir, const char * pszPrefix,
@@ -466,8 +466,8 @@ extern HB_EXPORT HB_BYTE *    hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
 extern HB_EXPORT HB_BOOL      hb_fileSave( const char * pszFileName, const void * buffer, HB_SIZE nSize );
 
 /* interface to PRG level hb_vf*() file pointer items */
-extern HB_EXPORT PHB_FILE     hb_fileParam( int iParam );
-extern HB_EXPORT PHB_FILE     hb_fileParamGet(int iParam);
+extern HB_EXPORT PHB_FILE     hb_fileParam( int32_t iParam );
+extern HB_EXPORT PHB_FILE     hb_fileParamGet(int32_t iParam);
 extern HB_EXPORT PHB_FILE     hb_fileItemGet( PHB_ITEM pItem );
 extern HB_EXPORT PHB_ITEM     hb_fileItemPut( PHB_ITEM pItem, PHB_FILE pFile );
 extern HB_EXPORT void         hb_fileItemClear( PHB_ITEM pItem );

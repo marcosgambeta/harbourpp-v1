@@ -257,8 +257,8 @@ typedef struct _CDXPAGE
    HB_ULONG  Left;
    HB_ULONG  Right;
 
-   int       iKeys;
-   int       iCurKey;
+   int32_t       iKeys;
+   int32_t       iCurKey;
 
    HB_ULONG  RNMask;
    uint16_t DCMask;
@@ -296,7 +296,7 @@ typedef struct _CDXPAGE
 typedef struct _CDXSTACK
 {
    LPCDXPAGE Page;
-   int       iKey;
+   int32_t       iKey;
 } CDXSTACK, * LPCDXSTACK;
 
 typedef struct _CDXLIST
@@ -334,7 +334,7 @@ typedef struct _CDXTAG
    HB_BOOL   TagEOF;
 
    HB_BOOL   fRePos;
-   int       curKeyState;     /* see: CDX_CURKEY_* */
+   int32_t       curKeyState;     /* see: CDX_CURKEY_* */
    HB_ULONG  rawKeyCount;
    HB_ULONG  rawKeyPos;
    HB_ULONG  rawKeyRec;
@@ -385,8 +385,8 @@ typedef struct _CDXINDEX
    HB_ULONG   nextAvail;      /* offset to next free page in the end of index file */
    HB_ULONG   freePage;       /* offset to next free page inside index file */
    LPCDXLIST  freeLst;        /* list of free pages in index file */
-   int        lockWrite;      /* number of write lock set */
-   int        lockRead;       /* number of read lock set */
+   int32_t        lockWrite;      /* number of write lock set */
+   int32_t        lockRead;       /* number of read lock set */
    HB_DBFLOCKDATA lockData;   /* index lock data */
 #ifdef HB_CDX_DBGCODE
    HB_BOOL    RdLck;
@@ -412,7 +412,7 @@ typedef struct
    LPCDXTAG   pTag;           /* current Tag */
    PHB_FILE   pTempFile;      /* handle to temporary file */
    char *     szTempFileName; /* temporary file name */
-   int        keyLen;         /* key length */
+   int32_t        keyLen;         /* key length */
    HB_BYTE    bTrl;           /* filler char for shorter keys */
    HB_BOOL    fUnique;        /* HB_TRUE if index is unique */
    HB_BOOL    fReindex;       /* HB_TRUE if reindexing is in process */
@@ -433,7 +433,7 @@ typedef struct
    HB_ULONG   ulLastRec;
    HB_BYTE *  pRecBuff;
 #ifndef HB_CDX_PACKTRAIL
-   int        iLastTrl;       /* last key trailing spaces */
+   int32_t        iLastTrl;       /* last key trailing spaces */
 #endif
 } CDXSORTINFO, * LPCDXSORTINFO;
 

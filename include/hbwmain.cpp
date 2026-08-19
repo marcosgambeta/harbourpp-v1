@@ -49,9 +49,9 @@
 int WINAPI WinMain(HINSTANCE hInstance,     /* handle to current instance */
                    HINSTANCE hPrevInstance, /* handle to previous instance */
                    HB_LPSTR lpCmdLine,      /* pointer to command-line */
-                   int iCmdShow)            /* show state of window */
+                   int32_t iCmdShow)            /* show state of window */
 {
-  int iErrorCode;
+  int32_t iErrorCode;
 
 #if defined(HB_VM_STARTUP)
 
@@ -69,7 +69,7 @@ int WINAPI WinMain(HINSTANCE hInstance,     /* handle to current instance */
 #else
 #define HB_MAX_ARGS 256
 
-  int argc = 0;
+  int32_t argc = 0;
   char *argv[HB_MAX_ARGS];
 
   LPSTR pArgs, pArg, pDst, pSrc;

@@ -97,7 +97,7 @@ HB_EXTERN_BEGIN
 #     define HB_ATOM_GET( p )       ( *(p) )
 #     define HB_ATOM_SET( p, n )    do { *(p) = (n); } while(0)
 
-      static __inline__ void hb_spinlock_acquire( int * l )
+      static __inline__ void hb_spinlock_acquire( int32_t * l )
       {
          for( ;; )
          {

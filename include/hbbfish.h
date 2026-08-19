@@ -74,7 +74,7 @@ typedef struct
 }
 HB_BLOWFISH;
 
-extern HB_EXPORT void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int keylen );
+extern HB_EXPORT void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int32_t keylen );
 extern HB_EXPORT void hb_blowfishEncrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr );
 extern HB_EXPORT void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr );
 

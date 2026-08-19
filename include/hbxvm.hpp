@@ -70,7 +70,7 @@ extern HB_EXPORT HB_BOOL hb_xvmAlwaysEnd(void);
 extern HB_EXPORT HB_BOOL hb_xvmSeqBlock(void);
 
 // prepare FOR EACH loop
-extern HB_EXPORT HB_BOOL hb_xvmEnumStart(int, int);
+extern HB_EXPORT HB_BOOL hb_xvmEnumStart(int, int32_t);
 // increment FOR EACH loop counter
 extern HB_EXPORT HB_BOOL hb_xvmEnumNext(void);
 // decrement FOR EACH loop counter
@@ -91,13 +91,13 @@ extern HB_EXPORT HB_BOOL hb_xvmSwitchGet(PHB_ITEM *);
 extern HB_EXPORT void hb_xvmSetLine(uint16_t uiLine);
 
 // increases the stack pointer for the amount of locals and params supplied
-extern HB_EXPORT void hb_xvmFrame(int iLocals, int iParams);
+extern HB_EXPORT void hb_xvmFrame(int32_t iLocals, int32_t iParams);
 // increases the stack pointer for the amount of locals and variable params
-extern HB_EXPORT void hb_xvmVFrame(int iLocals, int iParams);
+extern HB_EXPORT void hb_xvmVFrame(int32_t iLocals, int32_t iParams);
 extern HB_EXPORT void hb_xvmSFrame(PHB_SYMB pSymbol);
 extern HB_EXPORT void hb_xvmStatics(PHB_SYMB pSymbol, uint16_t uiStatics);
 extern HB_EXPORT void hb_xvmThreadStatics(uint16_t uiStatics, const HB_BYTE * statics);
-extern HB_EXPORT void hb_xvmParameter(PHB_SYMB pSymbol, int iParams);
+extern HB_EXPORT void hb_xvmParameter(PHB_SYMB pSymbol, int32_t iParams);
 // pops the latest stack value into stack.Return
 extern HB_EXPORT void hb_xvmRetValue(void);
 extern HB_EXPORT void hb_xvmRetNil(void);
@@ -145,13 +145,13 @@ extern HB_EXPORT HB_BOOL hb_xvmPopLogical(HB_BOOL *);
 // swaps items on the eval stack and pops the workarea number
 extern HB_EXPORT HB_BOOL hb_xvmSwapAlias(void);
 // add integer to given local variable
-extern HB_EXPORT HB_BOOL hb_xvmLocalAddInt(int iLocal, HB_LONG lAdd);
+extern HB_EXPORT HB_BOOL hb_xvmLocalAddInt(int32_t iLocal, HB_LONG lAdd);
 // increment given local variable
-extern HB_EXPORT HB_BOOL hb_xvmLocalInc(int iLocal);
+extern HB_EXPORT HB_BOOL hb_xvmLocalInc(int32_t iLocal);
 // decrement given local variable
-extern HB_EXPORT HB_BOOL hb_xvmLocalDec(int iLocal);
+extern HB_EXPORT HB_BOOL hb_xvmLocalDec(int32_t iLocal);
 // increment given local variable and push it on HVM stack
-extern HB_EXPORT HB_BOOL hb_xvmLocalIncPush(int iLocal);
+extern HB_EXPORT HB_BOOL hb_xvmLocalIncPush(int32_t iLocal);
 
 extern HB_EXPORT HB_BOOL hb_xvmAnd(void);
 extern HB_EXPORT HB_BOOL hb_xvmOr(void);
@@ -160,7 +160,7 @@ extern HB_EXPORT HB_BOOL hb_xvmNegate(void);
 extern HB_EXPORT void hb_xvmDuplicate(void);
 extern HB_EXPORT void hb_xvmDuplUnRef(void);
 extern HB_EXPORT void hb_xvmPushUnRef(void);
-extern HB_EXPORT void hb_xvmSwap(int iCount);
+extern HB_EXPORT void hb_xvmSwap(int32_t iCount);
 extern HB_EXPORT HB_BOOL hb_xvmForTest(void);
 extern HB_EXPORT void hb_xvmFuncPtr(void);
 // checks if the two latest values on the stack are equal, removes both and leaves result
@@ -230,20 +230,20 @@ extern HB_EXPORT HB_BOOL hb_xvmMacroDo(uint16_t uiArgSets);
 extern HB_EXPORT HB_BOOL hb_xvmMacroFunc(uint16_t uiArgSets);
 extern HB_EXPORT HB_BOOL hb_xvmMacroSend(uint16_t uiArgSets);
 extern HB_EXPORT HB_BOOL hb_xvmMacroArrayGen(uint16_t uiArgSets);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPush(int bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPush(int32_t bFlags);
 extern HB_EXPORT HB_BOOL hb_xvmMacroPushRef(void);
 extern HB_EXPORT HB_BOOL hb_xvmMacroPushIndex(void);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPushArg(PHB_SYMB pSymbol, int bFlags);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPushList(int bFlags);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPushAliased(int bFlags);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPushPare(int bFlags);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPop(int bFlags);
-extern HB_EXPORT HB_BOOL hb_xvmMacroPopAliased(int bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPushArg(PHB_SYMB pSymbol, int32_t bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPushList(int32_t bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPushAliased(int32_t bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPushPare(int32_t bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPop(int32_t bFlags);
+extern HB_EXPORT HB_BOOL hb_xvmMacroPopAliased(int32_t bFlags);
 extern HB_EXPORT HB_BOOL hb_xvmMacroSymbol(void);
 extern HB_EXPORT HB_BOOL hb_xvmMacroText(void);
 
-extern HB_EXPORT void hb_xvmPushStringHidden(int iMethod, const char * szText, HB_SIZE nSize);
-extern HB_EXPORT void hb_xvmPushDouble(double dNumber, int iWidth, int iDec);
+extern HB_EXPORT void hb_xvmPushStringHidden(int32_t iMethod, const char * szText, HB_SIZE nSize);
+extern HB_EXPORT void hb_xvmPushDouble(double dNumber, int32_t iWidth, int32_t iDec);
 #ifdef HB_LONG_LONG_OFF
 extern HB_EXPORT void hb_xvmPushLongLong(double dNumber);
 #else
@@ -266,8 +266,8 @@ extern HB_EXPORT HB_BOOL hb_xvmMultByInt(HB_LONG lValue);
 extern HB_EXPORT HB_BOOL hb_xvmDivideByInt(HB_LONG lValue);
 extern HB_EXPORT HB_BOOL hb_xvmModulusByInt(HB_LONG lValue);
 extern HB_EXPORT HB_BOOL hb_xvmAddInt(HB_LONG lValue);
-extern HB_EXPORT void hb_xvmLocalSetInt(int iLocal, HB_LONG lValue);
-//extern HB_EXPORT void hb_xvmLocalSetStr(int iLocal, const char * pValue, HB_SIZE nLen);
+extern HB_EXPORT void hb_xvmLocalSetInt(int32_t iLocal, HB_LONG lValue);
+//extern HB_EXPORT void hb_xvmLocalSetStr(int32_t iLocal, const char * pValue, HB_SIZE nLen);
 extern HB_EXPORT void hb_xvmPushFuncSymbol(PHB_SYMB pSym);
 
 extern HB_EXPORT HB_BOOL hb_xvmLessThenInt(HB_LONG lValue);
@@ -283,11 +283,11 @@ extern HB_EXPORT HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL * fValue);
 extern HB_EXPORT HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue);
 extern HB_EXPORT HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL * fValue);
 
-extern HB_EXPORT HB_BOOL hb_xvmLocalAdd(int iLocal);
+extern HB_EXPORT HB_BOOL hb_xvmLocalAdd(int32_t iLocal);
 extern HB_EXPORT HB_BOOL hb_xvmStaticAdd(uint16_t uiStatic);
 extern HB_EXPORT HB_BOOL hb_xvmMemvarAdd(PHB_SYMB pSymbol);
 
-extern HB_EXPORT void hb_xvmCopyLocals(int iDest, int iSource);
+extern HB_EXPORT void hb_xvmCopyLocals(int32_t iDest, int32_t iSource);
 
 HB_EXTERN_END
 

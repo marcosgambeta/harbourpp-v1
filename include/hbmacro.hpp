@@ -81,9 +81,9 @@ HB_EXTERN_BEGIN
 
 /* Global functions
  */
-extern void hb_macroError( int iError, HB_COMP_DECL );
-extern int hb_macroYYParse( PHB_MACRO pMacro );
-extern int hb_macroSetMacro( HB_BOOL fSet, int flag );
+extern void hb_macroError( int32_t iError, HB_COMP_DECL );
+extern int32_t hb_macroYYParse( PHB_MACRO pMacro );
+extern int32_t hb_macroSetMacro( HB_BOOL fSet, int32_t flag );
 extern HB_ULONG hb_macroAutoSetMacro( HB_ULONG ulFlag );
 extern HB_BOOL hb_macroLexNew( PHB_MACRO pMacro );
 extern void hb_macroLexDelete( PHB_MACRO pMacro );
@@ -133,17 +133,17 @@ extern void hb_macroGenPushAliasedVar( const char * szVarName,
                                        HB_BOOL bPushAliasValue,
                                        const char * szAlias,
                                        HB_MAXINT nWorkarea, HB_COMP_DECL );
-extern void hb_macroGenPushLogical( int iTrueFalse, HB_COMP_DECL );
+extern void hb_macroGenPushLogical( int32_t iTrueFalse, HB_COMP_DECL );
 extern void hb_macroGenPushDouble( double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COMP_DECL );
-extern void hb_macroGenPushFunCall( const char * szFunName, int iFlags, HB_COMP_DECL );
-extern void hb_macroGenPushFunSym( const char * szFunName, int iFlags, HB_COMP_DECL );
+extern void hb_macroGenPushFunCall( const char * szFunName, int32_t iFlags, HB_COMP_DECL );
+extern void hb_macroGenPushFunSym( const char * szFunName, int32_t iFlags, HB_COMP_DECL );
 extern void hb_macroGenPushFunRef( const char * szFunName, HB_COMP_DECL );
 extern void hb_macroGenPushString( const char * szText, HB_SIZE nStrLen, HB_COMP_DECL );
 
 extern void hb_macroCodeBlockStart( HB_COMP_DECL );
 extern void hb_macroCodeBlockEnd( HB_COMP_DECL );
 
-extern int hb_macroLocalVarGetPos( const char * szVarName, HB_COMP_DECL );
+extern int32_t hb_macroLocalVarGetPos( const char * szVarName, HB_COMP_DECL );
 extern HB_BOOL hb_macroIsValidMacroText( const char * szText, HB_SIZE nLen );
 
 #endif // HB_MACRO_SUPPORT

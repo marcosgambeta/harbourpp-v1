@@ -99,7 +99,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, uint16_t uiSym
       static PHB_SYMB symbols = hb_vmProcessSymbols( symbols_table, static_cast< uint16_t >( HB_INIT_SYMBOLS_COUNT ), (module), (id), (vpcode) ); \
 
    #define HB_CALL_ON_STARTUP_BEGIN( func ) \
-      static int func( void ) \
+      static int32_t func( void ) \
       {
 
    /* this allows any macros to be preprocessed first
@@ -110,7 +110,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, uint16_t uiSym
    #define _HB_CALL_ON_STARTUP_END( func ) \
          return 0; \
       } \
-      static int static_int_##func = func();
+      static int32_t static_int_##func = func();
 
 #elif defined(HB_INITSEG_STARTUP)
 
@@ -239,14 +239,14 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, uint16_t uiSym
    #define HB_INIT_SYMBOLS_EX_END( func, module, id, vpcode ) \
       }; \
       static PHB_SYMB symbols = symbols_table; \
-      static int func( void ) \
+      static int32_t func( void ) \
       { \
          symbols = hb_vmProcessSymbols( symbols_table, static_cast< uint16_t >( HB_INIT_SYMBOLS_COUNT ), (module), (id), (vpcode) ); \
          return 0; \
       }
 
    #define HB_CALL_ON_STARTUP_BEGIN( func ) \
-      static int func( void ) \
+      static int32_t func( void ) \
       {
 
    #define HB_CALL_ON_STARTUP_END( func ) \

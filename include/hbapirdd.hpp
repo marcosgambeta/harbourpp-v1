@@ -1197,20 +1197,20 @@ extern HB_EXPORT HB_ERRCODE   hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFie
 extern HB_EXPORT HB_ERRCODE   hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol );
 extern HB_EXPORT HB_ERRCODE   hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol );
 extern HB_EXPORT HB_ERRCODE   hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol );
-extern HB_EXPORT int          hb_rddGetCurrentWorkAreaNumber( void );
-extern HB_EXPORT HB_ERRCODE   hb_rddSelectWorkAreaNumber( int iArea );
+extern HB_EXPORT int32_t          hb_rddGetCurrentWorkAreaNumber( void );
+extern HB_EXPORT HB_ERRCODE   hb_rddSelectWorkAreaNumber( int32_t iArea );
 extern HB_EXPORT HB_ERRCODE   hb_rddSelectWorkAreaAlias( const char * szAlias );
 extern HB_EXPORT HB_ERRCODE   hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias );
-extern HB_EXPORT HB_ERRCODE   hb_rddGetAliasNumber( const char * szAlias, int * iArea );
+extern HB_EXPORT HB_ERRCODE   hb_rddGetAliasNumber( const char * szAlias, int32_t * iArea );
 
 /* other functions */
-extern HB_EXPORT void *       hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea );
+extern HB_EXPORT void *       hb_rddAllocWorkAreaAlias( const char * szAlias, int32_t iArea );
 extern HB_EXPORT void *       hb_rddGetCurrentWorkAreaPointer( void );
-extern HB_EXPORT void *       hb_rddGetWorkAreaPointer( int iArea );
+extern HB_EXPORT void *       hb_rddGetWorkAreaPointer( int32_t iArea );
 extern HB_EXPORT uint16_t    hb_rddInsertAreaNode( const char *szDriver );
 extern HB_EXPORT void         hb_rddReleaseCurrentArea( void );
 
-extern HB_EXPORT int          hb_rddRegister( const char * szDriver, uint16_t uiType );
+extern HB_EXPORT int32_t          hb_rddRegister( const char * szDriver, uint16_t uiType );
 extern HB_EXPORT HB_ERRCODE   hb_rddInherit( RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNCS * pSuperTable, const char * szDrvName );
 extern HB_EXPORT HB_ERRCODE   hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNCS * pSuperTable, const char * szDrvName, uint16_t * puiSuperRddId );
 extern HB_EXPORT HB_BOOL      hb_rddIsDerivedFrom( uint16_t uiRddID, uint16_t uiSuperRddID );

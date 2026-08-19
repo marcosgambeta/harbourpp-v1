@@ -359,7 +359,7 @@ typedef struct _KEYINFO
 {
    HB_ULONG page;     /* page number */
    HB_ULONG rec;      /* record number */
-   int      mode;     /* comparison mode NSX_CMP_* */
+   int32_t      mode;     /* comparison mode NSX_CMP_* */
    uint8_t val[ 1 ]; /* key value */
 } KEYINFO;
 typedef KEYINFO * LPKEYINFO;
@@ -376,7 +376,7 @@ typedef struct _HB_PAGEINFO
 {
    HB_ULONG   Page;
    HB_BOOL    Changed;
-   int        iUsed;
+   int32_t        iUsed;
    uint16_t  uiKeys;
    uint16_t  uiOffset;
    struct _HB_PAGEINFO * pNext;
@@ -483,12 +483,12 @@ typedef struct _NSXINDEX
    HB_BOOL     Update;
    HB_BOOL     Production;    /* Production index */
    HB_DBFLOCKDATA lockData;   /* index lock data */
-   int         lockWrite;     /* number of write lock set */
-   int         lockRead;      /* number of read lock set */
+   int32_t         lockWrite;     /* number of write lock set */
+   int32_t         lockRead;      /* number of read lock set */
 
    NSXROOTHEADER  HeaderBuff;
    HB_BOOL     fValidHeader;
-   int         iTags;
+   int32_t         iTags;
    LPTAGINFO * lpTags;
 
    HB_ULONG    ulPages;
@@ -519,7 +519,7 @@ typedef struct
    LPTAGINFO  pTag;           /* current Tag */
    PHB_FILE   pTempFile;      /* handle to temporary file */
    char *     szTempFileName; /* temporary file name */
-   int        keyLen;         /* key length */
+   int32_t        keyLen;         /* key length */
    uint8_t   trailChar;      /* index key trail character */
    uint8_t   recSize;        /* record size in leaf keys */
    HB_BOOL    fUnique;        /* HB_TRUE if index is unique */

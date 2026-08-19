@@ -179,7 +179,7 @@ typedef struct _HB_PAGEINFO
 {
    HB_ULONG  Page;
    HB_BOOL   Changed;
-   int       iUsed;
+   int32_t       iUsed;
    uint16_t uiKeys;
    struct _HB_PAGEINFO * pNext;
    struct _HB_PAGEINFO * pPrev;
@@ -265,12 +265,12 @@ typedef struct _NTXINDEX
    HB_BOOL     Compound;
    HB_BOOL     Production;    /* Production index */
    HB_DBFLOCKDATA lockData;   /* index lock data */
-   int         lockWrite;     /* number of write lock set */
-   int         lockRead;      /* number of read lock set */
+   int32_t         lockWrite;     /* number of write lock set */
+   int32_t         lockRead;      /* number of read lock set */
 
    HB_BYTE *   HeaderBuff;    /* TODO: make it member */
    HB_BOOL     fValidHeader;
-   int         iTags;
+   int32_t         iTags;
    LPTAGINFO * lpTags;
 
    HB_ULONG    ulPages;
@@ -301,7 +301,7 @@ typedef struct
    LPTAGINFO  pTag;           /* current Tag */
    PHB_FILE   pTempFile;      /* handle to temporary file */
    char *     szTempFileName; /* temporary file name */
-   int        keyLen;         /* key length */
+   int32_t        keyLen;         /* key length */
    HB_BOOL    fUnique;        /* HB_TRUE if index is unique */
    HB_BOOL    fReindex;       /* HB_TRUE if reindexing is in process */
    HB_ULONG   ulMaxRec;       /* the highest record number */

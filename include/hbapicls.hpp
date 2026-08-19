@@ -182,8 +182,8 @@ extern HB_EXPORT PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObj, const char *sMsg, void
 extern HB_EXPORT void *hb_objDataGetPtr(PHB_ITEM pObj, const char *sMsg);
 extern HB_EXPORT PHB_ITEM hb_objDataPutL(PHB_ITEM pObj, const char *sMsg, HB_BOOL value);
 extern HB_EXPORT HB_BOOL hb_objDataGetL(PHB_ITEM pObj, const char *sMsg);
-extern HB_EXPORT PHB_ITEM hb_objDataPutNI(PHB_ITEM pObj, const char *sMsg, int value);
-extern HB_EXPORT int hb_objDataGetNI(PHB_ITEM pObj, const char *sMsg);
+extern HB_EXPORT PHB_ITEM hb_objDataPutNI(PHB_ITEM pObj, const char *sMsg, int32_t value);
+extern HB_EXPORT int32_t hb_objDataGetNI(PHB_ITEM pObj, const char *sMsg);
 extern HB_EXPORT PHB_ITEM hb_objDataPutNL(PHB_ITEM pObj, const char *sMsg, long value);
 extern HB_EXPORT long hb_objDataGetNL(PHB_ITEM pObj, const char *sMsg);
 //
@@ -191,7 +191,7 @@ extern HB_EXPORT long hb_objDataGetNL(PHB_ITEM pObj, const char *sMsg);
 extern HB_EXPORT PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg);
 
 // send message which allows to set execution context for debugger
-extern HB_EXPORT void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int iParamOffset);
+extern HB_EXPORT void hb_dbg_objSendMessage(int32_t iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int32_t iParamOffset);
 
 // Harbour equivalent for Clipper internal __mdCreate()
 extern HB_EXPORT uint16_t hb_clsCreate(uint16_t usSize, const char *szClassName);

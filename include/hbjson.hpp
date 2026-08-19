@@ -50,8 +50,8 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_EXPORT char *  hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent );
-extern HB_EXPORT char *  hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, HB_CODEPAGE *cdp );
+extern HB_EXPORT char *  hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int32_t iIndent );
+extern HB_EXPORT char *  hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int32_t iIndent, HB_CODEPAGE *cdp );
 extern HB_EXPORT HB_SIZE hb_jsonDecode( const char * szSource, PHB_ITEM pValue );
 extern HB_EXPORT HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, HB_CODEPAGE *cdp );
 

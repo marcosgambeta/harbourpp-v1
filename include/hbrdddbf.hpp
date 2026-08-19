@@ -163,8 +163,8 @@ typedef struct _HB_DBFLOCKDATA
    HB_FOFFSET     size;
    HB_FOFFSET     next;
    HB_FOFFSET     tolock;
-   int            type;
-   int            count;
+   int32_t            type;
+   int32_t            count;
 } HB_DBFLOCKDATA, * PHB_DBFLOCKDATA;
 
 
@@ -261,7 +261,7 @@ extern HB_EXPORT HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, uint16_t uiIndex,
 extern HB_EXPORT HB_ERRCODE hb_dbfGetEGcode( HB_ERRCODE errCode );
 extern HB_EXPORT HB_BOOL    hb_dbfLockIdxGetData( HB_BYTE bScheme, PHB_DBFLOCKDATA pLockData );
 extern HB_EXPORT HB_BOOL    hb_dbfLockIdxFile( DBFAREAP pArea, PHB_FILE pFile,
-                                               int iType, HB_BOOL fLateWrlck,
+                                               int32_t iType, HB_BOOL fLateWrlck,
                                                PHB_DBFLOCKDATA pLockData );
 extern HB_EXPORT HB_BOOL    hb_dbfLockIdxWrite( DBFAREAP pArea, PHB_FILE pFile,
                                                 PHB_DBFLOCKDATA pLockData );

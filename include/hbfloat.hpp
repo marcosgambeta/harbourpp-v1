@@ -157,7 +157,7 @@
 #  define hb_isfinite( d )       _finite( d )
 #  if defined(hb_fpclassify)
 #     define HB_NUMTYPE( v, d )  do { \
-                                    int t = hb_fpclassify( d ); \
+                                    int32_t t = hb_fpclassify( d ); \
                                     v = ( ( t & ( _FPCLASS_UNSUP | _FPCLASS_SNAN | _FPCLASS_QNAN ) ) ? _HB_NUM_NAN : \
                                           ( ( t & _FPCLASS_NINF ) ? _HB_NUM_NINF : \
                                             ( ( t & _FPCLASS_PINF ) ? _HB_NUM_PINF : 0 ) ) ); \
@@ -182,7 +182,7 @@
 #  define hb_isfinite( d )       _finite( d )
 #  if defined(hb_fpclassify)
 #     define HB_NUMTYPE( v, d )  do { \
-                                    int t = hb_fpclassify( d ); \
+                                    int32_t t = hb_fpclassify( d ); \
                                     v = ( ( t & ( _FPCLASS_UNSUP | _FPCLASS_SNAN | _FPCLASS_QNAN ) ) ? _HB_NUM_NAN : \
                                           ( ( t & _FPCLASS_NINF ) ? _HB_NUM_NINF : \
                                             ( ( t & _FPCLASS_PINF ) ? _HB_NUM_PINF : 0 ) ) ); \
@@ -223,7 +223,7 @@
 #  else
 #     define hb_isfinite( d )       HB_TRUE
 #     define HB_NUMTYPE( v, d )  do { \
-                                    int iTODO; \
+                                    int32_t iTODO; \
                                     v = hb_isfinite( d ) ? 0 : _HB_NUM_NAN ; \
                                  } while( 0 )
 #  endif

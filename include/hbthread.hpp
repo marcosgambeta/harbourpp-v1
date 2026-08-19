@@ -256,7 +256,7 @@ HB_EXTERN_BEGIN
       HB_BOOL fInit;
       union
       {
-         int               dummy;
+         int32_t               dummy;
          HB_RAWCRITICAL_T  value;
       } critical;
    } HB_CRITICAL_T;
@@ -270,7 +270,7 @@ HB_EXTERN_BEGIN
          HB_BOOL        fInit;
          union
          {
-            int            dummy;
+            int32_t            dummy;
             HB_RAWCOND_T   value;
          } cond;
       } HB_COND_T;
@@ -279,15 +279,15 @@ HB_EXTERN_BEGIN
       typedef struct
       {
          HB_BOOL           fInit;
-         int               waiters;
+         int32_t               waiters;
          union
          {
-            int               dummy;
+            int32_t               dummy;
             HB_RAWCOND_T      value;
          } cond;
          union
          {
-            int               dummy;
+            int32_t               dummy;
             HB_RAWCRITICAL_T  value;
          } critical;
       } HB_COND_T;

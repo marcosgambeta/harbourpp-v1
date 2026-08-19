@@ -52,7 +52,7 @@ HB_EXTERN_BEGIN
 // Harbour virtual machine init/exit functions
 extern HB_EXPORT void hb_vmInit(HB_BOOL bStartMainProc);
 // Immediately quits the virtual machine, return ERRORLEVEL code
-extern HB_EXPORT int hb_vmQuit(void);
+extern HB_EXPORT int32_t hb_vmQuit(void);
 
 // registration AtInit, AtExit and AtQuit functions.
 // AtInit functions are executed just before .prg INIT procedures.
@@ -96,7 +96,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, uint16_t 
    extern void hb_vmUnlockModuleSymbols(void);
    extern void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols);
    extern void hb_vmBeginSymbolGroup(void *hDynLib, HB_BOOL fClone);
-   extern void hb_vmInitSymbolGroup(void *hNewDynLib, int argc, const char *argv[]);
+   extern void hb_vmInitSymbolGroup(void *hNewDynLib, int32_t argc, const char *argv[]);
    extern void hb_vmExitSymbolGroup(void *hDynLib);
    extern PHB_SYMB hb_vmFindFuncSym(const char *szFuncName, void *hDynLib);
    extern const char *hb_vmFindModuleSymbolName(PHB_SYMB pSym);
@@ -109,7 +109,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, uint16_t 
    // create extended message reference
    extern HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg);
 
-   extern void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int iCount);
+   extern void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int32_t iCount);
 
    extern void hb_vmEval(uint16_t uiParams);
 #endif
@@ -175,13 +175,13 @@ extern HB_EXPORT void hb_vmPush(PHB_ITEM pItem);
 // in this case it places nil at self
 extern HB_EXPORT void hb_vmPushNil(void);
 // pushes a number on to the stack and decides if it is integer, long or double
-extern HB_EXPORT void hb_vmPushNumber(double dNumber, int iDec);
+extern HB_EXPORT void hb_vmPushNumber(double dNumber, int32_t iDec);
 // pushes a integer number onto the stack
-extern HB_EXPORT void hb_vmPushInteger(int iNumber);
+extern HB_EXPORT void hb_vmPushInteger(int32_t iNumber);
 // pushes a long number onto the stack
 extern HB_EXPORT void hb_vmPushLong(long lNumber);
 // pushes a double number onto the stack
-extern HB_EXPORT void hb_vmPushDouble(double dNumber, int iDec);
+extern HB_EXPORT void hb_vmPushDouble(double dNumber, int32_t iDec);
 // pushes a HB_SIZE number onto the stack
 extern HB_EXPORT void hb_vmPushSize(HB_ISIZ nNumber);
 // pushes a number on to the stack and decides if it is integer or HB_MAXINT

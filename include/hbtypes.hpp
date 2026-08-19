@@ -54,11 +54,11 @@ HB_EXTERN_BEGIN
 extern PHB_FUNC hb_dllGetProcAddress( const char * szProcName );
 
 typedef int      ( * HB_PCOUNT )( void );
-typedef HB_ULONG ( * HB_PARINFO )( int iParam );
-typedef HB_SIZE  ( * HB_PARINFA )( int iParam, HB_SIZE nArrayIndex );
-typedef PHB_ITEM ( * HB_PARAM )( int iParam, long lMask );
-typedef PHB_ITEM ( * HB_PARAMERROR )( int iParam );
-typedef HB_BOOL  ( * HB_EXTISPARAM ) ( int iParam );
+typedef HB_ULONG ( * HB_PARINFO )( int32_t iParam );
+typedef HB_SIZE  ( * HB_PARINFA )( int32_t iParam, HB_SIZE nArrayIndex );
+typedef PHB_ITEM ( * HB_PARAM )( int32_t iParam, long lMask );
+typedef PHB_ITEM ( * HB_PARAMERROR )( int32_t iParam );
+typedef HB_BOOL  ( * HB_EXTISPARAM ) ( int32_t iParam );
 #if defined(HB_LEGACY_LEVEL4)
 #  define HB_EXTISARRAY HB_EXTISPARAM
 #endif
@@ -67,35 +67,35 @@ typedef void     ( * HB_RET )( void );
 typedef void     ( * HB_RETC )( const char * szText );
 typedef void     ( * HB_RETCLEN )( const char * szText, HB_SIZE nLen );
 typedef void     ( * HB_RETDS )( const char * szDate );
-typedef void     ( * HB_RETD )( int iYear, int iMonth, int iDay );
+typedef void     ( * HB_RETD )( int32_t iYear, int32_t iMonth, int32_t iDay );
 typedef void     ( * HB_RETDL )( long lJulian );
-typedef void     ( * HB_RETL )( int iTrueFalse );
+typedef void     ( * HB_RETL )( int32_t iTrueFalse );
 typedef void     ( * HB_RETND )( double dNumber );
-typedef void     ( * HB_RETNI )( int iNumber );
+typedef void     ( * HB_RETNI )( int32_t iNumber );
 typedef void     ( * HB_RETNL )( long lNumber );
-typedef void     ( * HB_RETNLEN )( double dNumber, int iWidth, int iDec );
-typedef void     ( * HB_RETNDLEN )( double dNumber, int iWidth, int iDec );
-typedef void     ( * HB_RETNILEN )( int iNumber, int iWidth );
-typedef void     ( * HB_RETNLLEN )( long lNumber, int iWidth );
+typedef void     ( * HB_RETNLEN )( double dNumber, int32_t iWidth, int32_t iDec );
+typedef void     ( * HB_RETNDLEN )( double dNumber, int32_t iWidth, int32_t iDec );
+typedef void     ( * HB_RETNILEN )( int32_t iNumber, int32_t iWidth );
+typedef void     ( * HB_RETNLLEN )( long lNumber, int32_t iWidth );
 typedef void     ( * HB_RETA )( HB_SIZE nLen );
 
-typedef char *   ( * HB_PARVC )  ( int iParam, ... );
-typedef HB_SIZE  ( * HB_PARVCLEN )( int iParam, ... );
-typedef HB_SIZE  ( * HB_PARVCSIZ )( int iParam, ... );
-typedef char *   ( * HB_PARVDS )( int iParam, ... );
-typedef char *   ( * HB_PARVDSBUFF )( char * szDate, int iParam, ... );
-typedef int      ( * HB_PARVL )( int iParam, ... );
-typedef double   ( * HB_PARVND )( int iParam, ... );
-typedef int      ( * HB_PARVNI )( int iParam, ... );
-typedef long     ( * HB_PARVNL )( int iParam, ... );
+typedef char *   ( * HB_PARVC )  ( int32_t iParam, ... );
+typedef HB_SIZE  ( * HB_PARVCLEN )( int32_t iParam, ... );
+typedef HB_SIZE  ( * HB_PARVCSIZ )( int32_t iParam, ... );
+typedef char *   ( * HB_PARVDS )( int32_t iParam, ... );
+typedef char *   ( * HB_PARVDSBUFF )( char * szDate, int32_t iParam, ... );
+typedef int      ( * HB_PARVL )( int32_t iParam, ... );
+typedef double   ( * HB_PARVND )( int32_t iParam, ... );
+typedef int      ( * HB_PARVNI )( int32_t iParam, ... );
+typedef long     ( * HB_PARVNL )( int32_t iParam, ... );
 
-typedef int      ( * HB_STORVC )( const char * szText, int iParam, ... );
-typedef int      ( * HB_STORVCLEN )( const char * szText, HB_SIZE nLength, int iParam, ... );
-typedef int      ( * HB_STORVDS )( const char * szDate, int iParam, ... );
-typedef int      ( * HB_STORVL )( int iLogical, int iParam, ... );
-typedef int      ( * HB_STORVNI )( int iValue, int iParam, ... );
-typedef int      ( * HB_STORVNL )( long lValue, int iParam, ... );
-typedef int      ( * HB_STORVND )( double dValue, int iParam, ... );
+typedef int      ( * HB_STORVC )( const char * szText, int32_t iParam, ... );
+typedef int      ( * HB_STORVCLEN )( const char * szText, HB_SIZE nLength, int32_t iParam, ... );
+typedef int      ( * HB_STORVDS )( const char * szDate, int32_t iParam, ... );
+typedef int      ( * HB_STORVL )( int32_t iLogical, int32_t iParam, ... );
+typedef int      ( * HB_STORVNI )( int32_t iValue, int32_t iParam, ... );
+typedef int      ( * HB_STORVNL )( long lValue, int32_t iParam, ... );
+typedef int      ( * HB_STORVND )( double dValue, int32_t iParam, ... );
 
 typedef HB_BOOL  ( * HB_ARRAYNEW )( PHB_ITEM pItem, HB_SIZE nLen );
 typedef HB_SIZE  ( * HB_ARRAYLEN )( PHB_ITEM pArray );

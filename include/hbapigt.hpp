@@ -59,7 +59,7 @@ HB_EXTERN_BEGIN
 
 /* maximum length of color string */
 #if defined(__cplusplus)
-constexpr int HB_CLRSTR_LEN = 64;
+constexpr int32_t HB_CLRSTR_LEN = 64;
 #else
 #define HB_CLRSTR_LEN           64
 #endif
@@ -67,12 +67,12 @@ constexpr int HB_CLRSTR_LEN = 64;
 /* attributes for color strings, these are the same as the ones in color.ch
    but prefixed with HB_ to avoid collision. */
 #if defined(__cplusplus)
-constexpr int HB_CLR_STANDARD = 0;
-constexpr int HB_CLR_ENHANCED = 1;
-constexpr int HB_CLR_BORDER = 2;
-constexpr int HB_CLR_BACKGROUND = 3;
-constexpr int HB_CLR_UNSELECTED = 4;
-constexpr int HB_CLR_MAX_ = HB_CLR_UNSELECTED;
+constexpr int32_t HB_CLR_STANDARD = 0;
+constexpr int32_t HB_CLR_ENHANCED = 1;
+constexpr int32_t HB_CLR_BORDER = 2;
+constexpr int32_t HB_CLR_BACKGROUND = 3;
+constexpr int32_t HB_CLR_UNSELECTED = 4;
+constexpr int32_t HB_CLR_MAX_ = HB_CLR_UNSELECTED;
 #else
 #define HB_CLR_STANDARD         0
 #define HB_CLR_ENHANCED         1
@@ -159,109 +159,109 @@ extern HB_EXPORT HB_ERRCODE hb_gtInit( HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 extern HB_EXPORT HB_ERRCODE hb_gtExit( void );
 extern HB_EXPORT HB_ERRCODE hb_gtLock( void );
 extern HB_EXPORT HB_ERRCODE hb_gtUnlock( void );
-extern HB_EXPORT HB_ERRCODE hb_gtBox( int iTop, int iLeft, int iBottom, int iRight, const char * szFrame );
-extern HB_EXPORT HB_ERRCODE hb_gtBoxD( int iTop, int iLeft, int iBottom, int iRight );
-extern HB_EXPORT HB_ERRCODE hb_gtBoxS( int iTop, int iLeft, int iBottom, int iRight );
-extern HB_EXPORT HB_ERRCODE hb_gtDrawBox( int iTop, int iLeft, int iBottom, int iRight, const char * szFrame, int iColor );
-extern HB_EXPORT HB_ERRCODE hb_gtColorSelect( int iColorIndex );
-extern HB_EXPORT int        hb_gtColorToN( const char * szColorString );
-extern HB_EXPORT HB_ERRCODE hb_gtColorsToString( int * pColors, int iColorCount, char * pszColorString, int iBufSize );
+extern HB_EXPORT HB_ERRCODE hb_gtBox( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, const char * szFrame );
+extern HB_EXPORT HB_ERRCODE hb_gtBoxD( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight );
+extern HB_EXPORT HB_ERRCODE hb_gtBoxS( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight );
+extern HB_EXPORT HB_ERRCODE hb_gtDrawBox( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, const char * szFrame, int32_t iColor );
+extern HB_EXPORT HB_ERRCODE hb_gtColorSelect( int32_t iColorIndex );
+extern HB_EXPORT int32_t        hb_gtColorToN( const char * szColorString );
+extern HB_EXPORT HB_ERRCODE hb_gtColorsToString( int32_t * pColors, int32_t iColorCount, char * pszColorString, int32_t iBufSize );
 extern HB_EXPORT HB_ERRCODE hb_gtDispBegin( void );
-extern HB_EXPORT int        hb_gtDispCount( void );
+extern HB_EXPORT int32_t        hb_gtDispCount( void );
 extern HB_EXPORT HB_ERRCODE hb_gtDispEnd( void );
-extern HB_EXPORT HB_ERRCODE hb_gtDrawShadow( int iTop, int iLeft, int iBottom, int iRight, int iColor );
+extern HB_EXPORT HB_ERRCODE hb_gtDrawShadow( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor );
 extern HB_EXPORT HB_ERRCODE hb_gtGetBlink( HB_BOOL * pbBlink );
 extern HB_EXPORT HB_ERRCODE hb_gtGetColorStr( char * pszColorString );
-extern HB_EXPORT HB_ERRCODE hb_gtGetCursor( int * piCursorShape );
-extern HB_EXPORT HB_ERRCODE hb_gtGetPos( int * piRow, int * piCol );
+extern HB_EXPORT HB_ERRCODE hb_gtGetCursor( int32_t * piCursorShape );
+extern HB_EXPORT HB_ERRCODE hb_gtGetPos( int32_t * piRow, int32_t * piCol );
 extern HB_EXPORT HB_BOOL    hb_gtIsColor( void );
-extern HB_EXPORT int        hb_gtMaxCol( void );
-extern HB_EXPORT int        hb_gtMaxRow( void );
+extern HB_EXPORT int32_t        hb_gtMaxCol( void );
+extern HB_EXPORT int32_t        hb_gtMaxRow( void );
 extern HB_EXPORT HB_ERRCODE hb_gtPostExt( void );
 extern HB_EXPORT HB_ERRCODE hb_gtPreExt( void );
 extern HB_EXPORT HB_ERRCODE hb_gtSuspend( void ); /* prepare the terminal for shell output */
 extern HB_EXPORT HB_ERRCODE hb_gtResume( void ); /* resume the terminal after the shell output */
-extern HB_EXPORT int        hb_gtReadKey( int iEventMask );
-extern HB_EXPORT HB_ERRCODE hb_gtRectSize( int iTop, int iLeft, int iBottom, int iRight, HB_SIZE * pnBuffSize );
-extern HB_EXPORT HB_ERRCODE hb_gtRepChar( int iRow, int iCol, uint16_t usChar, HB_SIZE nCount );
-extern HB_EXPORT HB_ERRCODE hb_gtSave( int iTop, int iLeft, int iBottom, int iRight, void * pScrBuff );
-extern HB_EXPORT HB_ERRCODE hb_gtRest( int iTop, int iLeft, int iBottom, int iRight, const void * pScrBuff );
-extern HB_EXPORT HB_ERRCODE hb_gtGetChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, uint16_t * pusChar );
-extern HB_EXPORT HB_ERRCODE hb_gtPutChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar );
+extern HB_EXPORT int32_t        hb_gtReadKey( int32_t iEventMask );
+extern HB_EXPORT HB_ERRCODE hb_gtRectSize( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, HB_SIZE * pnBuffSize );
+extern HB_EXPORT HB_ERRCODE hb_gtRepChar( int32_t iRow, int32_t iCol, uint16_t usChar, HB_SIZE nCount );
+extern HB_EXPORT HB_ERRCODE hb_gtSave( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, void * pScrBuff );
+extern HB_EXPORT HB_ERRCODE hb_gtRest( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, const void * pScrBuff );
+extern HB_EXPORT HB_ERRCODE hb_gtGetChar( int32_t iRow, int32_t iCol, int32_t * piColor, HB_BYTE * pbAttr, uint16_t * pusChar );
+extern HB_EXPORT HB_ERRCODE hb_gtPutChar( int32_t iRow, int32_t iCol, int32_t iColor, HB_BYTE bAttr, uint16_t usChar );
 extern HB_EXPORT HB_ERRCODE hb_gtBeginWrite( void );
 extern HB_EXPORT HB_ERRCODE hb_gtEndWrite( void );
-extern HB_EXPORT HB_ERRCODE hb_gtScrDim( int * piHeight, int * piWidth );
-extern HB_EXPORT HB_ERRCODE hb_gtScroll( int iTop, int iLeft, int iBottom, int iRight, int iRows, int iCols );
-extern HB_EXPORT HB_ERRCODE hb_gtScrollUp( int iRows );
-extern HB_EXPORT HB_ERRCODE hb_gtSetAttribute( int iTop, int iLeft, int iBottom, int iRight, int iColor );
+extern HB_EXPORT HB_ERRCODE hb_gtScrDim( int32_t * piHeight, int32_t * piWidth );
+extern HB_EXPORT HB_ERRCODE hb_gtScroll( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iRows, int32_t iCols );
+extern HB_EXPORT HB_ERRCODE hb_gtScrollUp( int32_t iRows );
+extern HB_EXPORT HB_ERRCODE hb_gtSetAttribute( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor );
 extern HB_EXPORT HB_ERRCODE hb_gtSetBlink( HB_BOOL bBlink );
 extern HB_EXPORT HB_ERRCODE hb_gtSetColorStr( const char * pszColorString );
-extern HB_EXPORT HB_ERRCODE hb_gtSetCursor( int iCursorShape );
-extern HB_EXPORT HB_ERRCODE hb_gtSetMode( int iRows, int iCols );
-extern HB_EXPORT HB_ERRCODE hb_gtSetPos( int iRow, int iCol );
+extern HB_EXPORT HB_ERRCODE hb_gtSetCursor( int32_t iCursorShape );
+extern HB_EXPORT HB_ERRCODE hb_gtSetMode( int32_t iRows, int32_t iCols );
+extern HB_EXPORT HB_ERRCODE hb_gtSetPos( int32_t iRow, int32_t iCol );
 extern HB_EXPORT HB_ERRCODE hb_gtSetSnowFlag( HB_BOOL bNoSnow );
 extern HB_EXPORT HB_ERRCODE hb_gtTone( double dFrequency, double dDuration );
 extern HB_EXPORT HB_ERRCODE hb_gtWrite( const char * szStr, HB_SIZE nLen );
-extern HB_EXPORT HB_ERRCODE hb_gtWriteAt( int iRow, int iCol, const char * szStr, HB_SIZE nLen );
+extern HB_EXPORT HB_ERRCODE hb_gtWriteAt( int32_t iRow, int32_t iCol, const char * szStr, HB_SIZE nLen );
 extern HB_EXPORT HB_ERRCODE hb_gtWriteCon( const char * szStr, HB_SIZE nLen );
-extern HB_EXPORT HB_ERRCODE hb_gtPutText( int iRow, int iCol, const char * szStr, HB_SIZE nLength, int iColor );
-extern HB_EXPORT const char * hb_gtVersion( int iType );
+extern HB_EXPORT HB_ERRCODE hb_gtPutText( int32_t iRow, int32_t iCol, const char * szStr, HB_SIZE nLength, int32_t iColor );
+extern HB_EXPORT const char * hb_gtVersion( int32_t iType );
 extern HB_EXPORT HB_ERRCODE hb_gtOutStd( const char * szStr, HB_SIZE nLen );
 extern HB_EXPORT HB_ERRCODE hb_gtOutErr( const char * szStr, HB_SIZE nLen );
 extern HB_EXPORT HB_ERRCODE hb_gtSetDispCP( const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox );
 extern HB_EXPORT HB_ERRCODE hb_gtSetKeyCP( const char * pszTermCDP, const char * pszHostCDP );
 extern HB_EXPORT HB_CODEPAGE *hb_gtHostCP( void );
 extern HB_EXPORT HB_CODEPAGE *hb_gtBoxCP( void );
-extern HB_EXPORT HB_ERRCODE hb_gtInfo( int iType, PHB_GT_INFO pInfo );
-extern HB_EXPORT int        hb_gtAlert( PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay );
-extern HB_EXPORT int        hb_gtSetFlag( int iType, int iNewValue );
-extern HB_EXPORT int        hb_gtGetCurrColor( void );
-extern HB_EXPORT int        hb_gtGetClearColor( void );
-extern HB_EXPORT HB_ERRCODE hb_gtSetClearColor( int iColor );
+extern HB_EXPORT HB_ERRCODE hb_gtInfo( int32_t iType, PHB_GT_INFO pInfo );
+extern HB_EXPORT int32_t        hb_gtAlert( PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay );
+extern HB_EXPORT int32_t        hb_gtSetFlag( int32_t iType, int32_t iNewValue );
+extern HB_EXPORT int32_t        hb_gtGetCurrColor( void );
+extern HB_EXPORT int32_t        hb_gtGetClearColor( void );
+extern HB_EXPORT HB_ERRCODE hb_gtSetClearColor( int32_t iColor );
 extern HB_EXPORT uint16_t  hb_gtGetClearChar( void );
 extern HB_EXPORT HB_ERRCODE hb_gtSetClearChar( uint16_t usChar );
-extern HB_EXPORT HB_ERRCODE hb_gtGetScrChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, uint16_t * pusChar );
-extern HB_EXPORT HB_ERRCODE hb_gtPutScrChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, uint16_t usChar );
+extern HB_EXPORT HB_ERRCODE hb_gtGetScrChar( int32_t iRow, int32_t iCol, int32_t * piColor, HB_BYTE * pbAttr, uint16_t * pusChar );
+extern HB_EXPORT HB_ERRCODE hb_gtPutScrChar( int32_t iRow, int32_t iCol, int32_t iColor, HB_BYTE bAttr, uint16_t usChar );
 extern HB_EXPORT HB_ERRCODE hb_gtFlush( void );
-extern HB_EXPORT HB_ERRCODE hb_gtGetPosEx( int * piRow, int * piCol );
-extern HB_EXPORT HB_ERRCODE hb_gtScrollEx( int iTop, int iLeft, int iBottom, int iRight, int iColor, int iChar, int iRows, int iCols );
-extern HB_EXPORT HB_ERRCODE hb_gtBoxEx( int iTop, int iLeft, int iBottom, int iRight, const char * szFrame, int iColor );
-extern HB_EXPORT int        hb_gtGfxPrimitive( int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor );
-extern HB_EXPORT HB_ERRCODE hb_gtGfxText( int iTop, int iLeft, const char * szText, int iColor, int iSize, int iWidth );
+extern HB_EXPORT HB_ERRCODE hb_gtGetPosEx( int32_t * piRow, int32_t * piCol );
+extern HB_EXPORT HB_ERRCODE hb_gtScrollEx( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor, int32_t iChar, int32_t iRows, int32_t iCols );
+extern HB_EXPORT HB_ERRCODE hb_gtBoxEx( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, const char * szFrame, int32_t iColor );
+extern HB_EXPORT int32_t        hb_gtGfxPrimitive( int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor );
+extern HB_EXPORT HB_ERRCODE hb_gtGfxText( int32_t iTop, int32_t iLeft, const char * szText, int32_t iColor, int32_t iSize, int32_t iWidth );
 
 extern HB_EXPORT HB_BOOL    hb_mouseIsPresent( void );
 extern HB_EXPORT HB_BOOL    hb_mouseGetCursor( void );
 extern HB_EXPORT void       hb_mouseSetCursor( HB_BOOL bVisible );
-extern HB_EXPORT int        hb_mouseCol( void );
-extern HB_EXPORT int        hb_mouseRow( void );
-extern HB_EXPORT void       hb_mouseGetPos( int * piRow, int * piCol );
-extern HB_EXPORT void       hb_mouseSetPos( int iRow, int iCol );
-extern HB_EXPORT void       hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight );
-extern HB_EXPORT void       hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight );
-extern HB_EXPORT int        hb_mouseStorageSize( void );
+extern HB_EXPORT int32_t        hb_mouseCol( void );
+extern HB_EXPORT int32_t        hb_mouseRow( void );
+extern HB_EXPORT void       hb_mouseGetPos( int32_t * piRow, int32_t * piCol );
+extern HB_EXPORT void       hb_mouseSetPos( int32_t iRow, int32_t iCol );
+extern HB_EXPORT void       hb_mouseSetBounds( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight );
+extern HB_EXPORT void       hb_mouseGetBounds( int32_t * piTop, int32_t * piLeft, int32_t * piBottom, int32_t * piRight );
+extern HB_EXPORT int32_t        hb_mouseStorageSize( void );
 extern HB_EXPORT void       hb_mouseSaveState( void * pBuffer );
 extern HB_EXPORT void       hb_mouseRestoreState( const void * pBuffer );
-extern HB_EXPORT int        hb_mouseGetDoubleClickSpeed( void );
-extern HB_EXPORT void       hb_mouseSetDoubleClickSpeed( int iSpeed );
-extern HB_EXPORT int        hb_mouseCountButton( void );
-extern HB_EXPORT HB_BOOL    hb_mouseButtonState( int iButton );
-extern HB_EXPORT HB_BOOL    hb_mouseButtonPressed( int iButton, int * piRow, int * piCol );
-extern HB_EXPORT HB_BOOL    hb_mouseButtonReleased( int iButton, int * piRow, int * piCol );
-extern HB_EXPORT int        hb_mouseReadKey( int iEventMask );
+extern HB_EXPORT int32_t        hb_mouseGetDoubleClickSpeed( void );
+extern HB_EXPORT void       hb_mouseSetDoubleClickSpeed( int32_t iSpeed );
+extern HB_EXPORT int32_t        hb_mouseCountButton( void );
+extern HB_EXPORT HB_BOOL    hb_mouseButtonState( int32_t iButton );
+extern HB_EXPORT HB_BOOL    hb_mouseButtonPressed( int32_t iButton, int32_t * piRow, int32_t * piCol );
+extern HB_EXPORT HB_BOOL    hb_mouseButtonReleased( int32_t iButton, int32_t * piRow, int32_t * piCol );
+extern HB_EXPORT int32_t        hb_mouseReadKey( int32_t iEventMask );
 
 typedef struct
 {
-   int   iTop;
-   int   iLeft;
-   int   iBottom;
-   int   iRight;
+   int32_t   iTop;
+   int32_t   iLeft;
+   int32_t   iBottom;
+   int32_t   iRight;
 } HB_GT_RECT;
 typedef HB_GT_RECT * PHB_GT_RECT;
 
 typedef struct
 {
-   int   iRow;
-   int   iCol;
+   int32_t   iRow;
+   int32_t   iCol;
 } HB_GT_CORD;
 typedef HB_GT_CORD * PHB_GT_CORD;
 
@@ -300,22 +300,22 @@ extern HB_EXPORT HB_ERRCODE hb_gtSetBorder( HB_GT_RGB * color );
 
 
 /* Harbour keyboard support functions */
-extern HB_EXPORT int        hb_inkey( HB_BOOL bWait, double dSeconds, int iEvenMask ); /* Wait for keyboard input */
-extern HB_EXPORT void       hb_inkeyPut( int ch );          /* Inserts an inkey code into the keyboard buffer */
-extern HB_EXPORT void       hb_inkeyIns( int ch );          /* Inserts an inkey code into the keyboard buffer */
-extern HB_EXPORT int        hb_inkeyLast( int iEvenMask );  /* Return the value of the last key that was extracted */
-extern HB_EXPORT int        hb_inkeyNext( int iEvenMask );  /* Return the next key without extracting it */
+extern HB_EXPORT int32_t        hb_inkey( HB_BOOL bWait, double dSeconds, int32_t iEvenMask ); /* Wait for keyboard input */
+extern HB_EXPORT void       hb_inkeyPut( int32_t ch );          /* Inserts an inkey code into the keyboard buffer */
+extern HB_EXPORT void       hb_inkeyIns( int32_t ch );          /* Inserts an inkey code into the keyboard buffer */
+extern HB_EXPORT int32_t        hb_inkeyLast( int32_t iEvenMask );  /* Return the value of the last key that was extracted */
+extern HB_EXPORT int32_t        hb_inkeyNext( int32_t iEvenMask );  /* Return the next key without extracting it */
 extern HB_EXPORT void       hb_inkeyPoll( void );           /* Poll the console keyboard to stuff the Harbour buffer */
 extern HB_EXPORT void       hb_inkeyReset( void );          /* Reset the Harbour keyboard buffer */
 extern HB_EXPORT void       hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol ); /* Set text into inkey buffer */
-extern HB_EXPORT int        hb_inkeySetLast( int iKey );    /* Set new LastKey() value, return previous one */
+extern HB_EXPORT int32_t        hb_inkeySetLast( int32_t iKey );    /* Set new LastKey() value, return previous one */
 extern HB_EXPORT void       hb_inkeyExit( void );           /* reset inkey pool to default state and free any allocated resources */
 
-extern HB_EXPORT HB_SIZE    hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize ); /* convert key value to string */
-extern HB_EXPORT int        hb_inkeyKeyStd( int iKey );     /* convert Harbour extended key code to Cl*pper inkey code */
-extern HB_EXPORT int        hb_inkeyKeyExt( int iKey );     /* extract function/edit key code value HB_KX_* from Harbour extended key code */
-extern HB_EXPORT int        hb_inkeyKeyMod( int iKey );     /* extract keyboard modifiers HB_KF_* from Harbour extended key code */
-extern HB_EXPORT int        hb_inkeyKeyVal( int iKey );     /* extract key/character code from Harbour extended key code */
+extern HB_EXPORT HB_SIZE    hb_inkeyKeyString( int32_t iKey, char * buffer, HB_SIZE nSize ); /* convert key value to string */
+extern HB_EXPORT int32_t        hb_inkeyKeyStd( int32_t iKey );     /* convert Harbour extended key code to Cl*pper inkey code */
+extern HB_EXPORT int32_t        hb_inkeyKeyExt( int32_t iKey );     /* extract function/edit key code value HB_KX_* from Harbour extended key code */
+extern HB_EXPORT int32_t        hb_inkeyKeyMod( int32_t iKey );     /* extract keyboard modifiers HB_KF_* from Harbour extended key code */
+extern HB_EXPORT int32_t        hb_inkeyKeyVal( int32_t iKey );     /* extract key/character code from Harbour extended key code */
 
 /* macros to manipulate Harbour extended key codes */
 #define HB_INKEY_EXT_MASK           0xF8000000

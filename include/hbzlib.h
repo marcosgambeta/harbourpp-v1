@@ -51,8 +51,8 @@
 #if defined(_HB_ZLIB_INTERNAL_)
 
 typedef HB_SIZE ( * HB_ZLIB_CBOUND )( HB_SIZE );
-typedef HB_SIZE ( * HB_ZLIB_UNSIZE )( const char *, HB_SIZE, int * );
-typedef int     ( * HB_ZLIB_COMPRS )( char *, HB_SIZE *, const char *, HB_SIZE, int );
+typedef HB_SIZE ( * HB_ZLIB_UNSIZE )( const char *, HB_SIZE, int32_t * );
+typedef int     ( * HB_ZLIB_COMPRS )( char *, HB_SIZE *, const char *, HB_SIZE, int32_t );
 typedef int     ( * HB_ZLIB_UNCMPS )( char *, HB_SIZE *, const char *, HB_SIZE );
 
 extern void hb_zlibInit( HB_ZLIB_CBOUND, HB_ZLIB_UNSIZE, HB_ZLIB_COMPRS, HB_ZLIB_UNCMPS );
@@ -62,9 +62,9 @@ extern void hb_zlibInit( HB_ZLIB_CBOUND, HB_ZLIB_UNSIZE, HB_ZLIB_COMPRS, HB_ZLIB
 HB_EXTERN_BEGIN
 
 extern HB_EXPORT HB_SIZE hb_zlibCompressBound( HB_SIZE nLen );
-extern HB_EXPORT HB_SIZE hb_zlibUncompressedSize( const char * pSrc, HB_SIZE nLen, int * piResult );
-extern HB_EXPORT int     hb_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int iLevel );
-extern HB_EXPORT int     hb_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen );
+extern HB_EXPORT HB_SIZE hb_zlibUncompressedSize( const char * pSrc, HB_SIZE nLen, int32_t * piResult );
+extern HB_EXPORT int32_t     hb_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int32_t iLevel );
+extern HB_EXPORT int32_t     hb_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen );
 
 HB_EXTERN_END
 

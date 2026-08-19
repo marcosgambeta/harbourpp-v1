@@ -84,14 +84,14 @@ extern HB_EXPORT PHB_LANG  hb_langFind          ( const char * pszID );
 
 extern HB_EXPORT PHB_LANG     hb_langSelect     ( PHB_LANG lang );
 extern HB_EXPORT const char * hb_langSelectID   ( const char * pszID );
-extern HB_EXPORT const char * hb_langGetItem    ( const char * pszID, int iIndex );
+extern HB_EXPORT const char * hb_langGetItem    ( const char * pszID, int32_t iIndex );
 extern HB_EXPORT const char * hb_langID         ( void );
 extern HB_EXPORT char *       hb_langName       ( const char * pszID );
 
 /* Compatibility interfaces */
 
-extern HB_EXPORT const char * hb_langDGetItem         ( int iIndex );
-extern HB_EXPORT const char * hb_langDGetErrorDesc    ( int iIndex );
+extern HB_EXPORT const char * hb_langDGetItem         ( int32_t iIndex );
+extern HB_EXPORT const char * hb_langDGetErrorDesc    ( int32_t iIndex );
 
 HB_EXTERN_END
 

@@ -74,7 +74,7 @@ struct _HB_SYMB;
                   { \
                      (p)->type = HB_IT_INTEGER; \
                      (p)->item.asInteger.length = HB_INT_EXPLENGTH( v ); \
-                     (p)->item.asInteger.value = ( int ) (v); \
+                     (p)->item.asInteger.value = ( int32_t ) (v); \
                   } \
                   else \
                   { \
@@ -88,7 +88,7 @@ struct _HB_SYMB;
 #     define HB_ITEM_PUT_LONGRAW( p, v )  \
                do { \
                   (p)->type = HB_IT_INTEGER; \
-                  (p)->item.asInteger.value = ( int ) (v); \
+                  (p)->item.asInteger.value = ( int32_t ) (v); \
                   (p)->item.asInteger.length = HB_INT_LENGTH( v ); \
                } while( 0 )
 #  else
@@ -217,7 +217,7 @@ typedef HB_DYNS_FUNC( ( * PHB_DYNS_FUNC ) );
 #define HB_CARGO_FUNC( func )    void func( void *cargo )
 typedef HB_CARGO_FUNC( ( * PHB_CARGO_FUNC ) );
 
-typedef void * ( * PHB_ALLOCUPDT_FUNC )( void *, int );
+typedef void * ( * PHB_ALLOCUPDT_FUNC )( void *, int32_t );
 
 typedef void ( * HB_INIT_FUNC )( void * );
 /* List of functions used by hb_vmAtInit()/hb_vmAtExit() */

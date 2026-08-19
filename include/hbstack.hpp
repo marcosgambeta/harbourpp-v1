@@ -62,8 +62,8 @@ HB_EXTERN_BEGIN
 typedef void (*PHB_TSD_FUNC)(void *);
 typedef struct
 {
-   int          iHandle;
-   int          iSize;
+   int32_t          iHandle;
+   int32_t          iSize;
    PHB_TSD_FUNC pInitFunc;
    PHB_TSD_FUNC pCleanFunc;
 }
@@ -83,7 +83,7 @@ typedef struct
    HB_ERRCODE uiErrorLast;
    HB_ERRCODE uiOsErrorLast;
    HB_ERRCODE uiSocketError;
-   int        iSocketOsError;
+   int32_t        iSocketOsError;
 }
 HB_IOERRORS, * PHB_IOERRORS;
 
@@ -160,16 +160,16 @@ typedef struct
    void *     pLang;          /* current language module */
    void *     pI18N;          /* current I18N module */
    void *     hGT;            /* current GT module */
-   int        iTSD;           /* number of allocated TSD holders */
+   int32_t        iTSD;           /* number of allocated TSD holders */
    PHB_TSD_HOLDER pTSD;       /* thread specific data holder */
    void *     pStatics;       /* statics base for the current function call */
    HB_PRIVATE_STACK privates; /* private variables stack */
    HB_SET_STRUCT set;
-   int        iKeyPoll;       /* counter for GT/keyboard polling */
+   int32_t        iKeyPoll;       /* counter for GT/keyboard polling */
    HB_BOOL    fDebugRequest;  /* request debugger activation */
    void *     pDebugInfo;     /* internal debugger structure */
 #if defined(HB_MT_VM)
-   int        iUnlocked;      /* counter for nested hb_vmUnlock() calls */
+   int32_t        iUnlocked;      /* counter for nested hb_vmUnlock() calls */
    PHB_DYN_HANDLES pDynH;     /* dynamic symbol handles */
    HB_SYMCNT  uiDynH;         /* number of dynamic symbol handles */
    void *     pStackLst;      /* this stack entry in stack linked list */
@@ -269,8 +269,8 @@ typedef struct
 #endif // _HB_API_INTERNAL_
 
 extern HB_EXPORT void *      hb_stackId( void );
-extern HB_EXPORT PHB_ITEM    hb_stackItemFromTop( int nFromTop );
-extern HB_EXPORT PHB_ITEM    hb_stackItemFromBase( int nFromBase );
+extern HB_EXPORT PHB_ITEM    hb_stackItemFromTop( int32_t nFromTop );
+extern HB_EXPORT PHB_ITEM    hb_stackItemFromBase( int32_t nFromBase );
 extern HB_EXPORT PHB_ITEM    hb_stackBaseItem( void );
 extern HB_EXPORT PHB_ITEM    hb_stackSelfItem( void );   /* returns Self object at C function level */
 extern HB_EXPORT PHB_ITEM    hb_stackReturnItem( void ); /* returns RETURN Item from stack */
@@ -288,10 +288,10 @@ extern HB_EXPORT HB_ISIZ     hb_stackTotalItems( void );
 extern HB_EXPORT PHB_ITEM    hb_stackItem( HB_ISIZ nItemPos );
 
 /* stack management functions */
-extern HB_EXPORT int         hb_stackCallDepth( void );
+extern HB_EXPORT int32_t         hb_stackCallDepth( void );
 extern HB_EXPORT void        hb_stackBaseProcInfo( char * szProcName, uint16_t * puiProcLine ); /* get current .prg function name and line number */
 
-extern HB_EXPORT HB_ISIZ     hb_stackBaseProcOffset( int iLevel );
+extern HB_EXPORT HB_ISIZ     hb_stackBaseProcOffset( int32_t iLevel );
 extern HB_EXPORT HB_ISIZ     hb_stackBaseSymbolOffset( PHB_SYMB pSymbol );
 extern           void        hb_stackDispCall( void );
 
@@ -320,8 +320,8 @@ extern PHB_ITEM    hb_stackNewFrame( PHB_STACK_STATE pFrame, uint16_t uiParams )
 extern void        hb_stackOldFrame( PHB_STACK_STATE pFrame );
 extern void        hb_stackClearMemvarsBase( void );
 
-extern PHB_ITEM    hb_stackLocalVariable( int iLocal );
-extern PHB_ITEM    hb_stackLocalVariableAt( int * piFromBase );
+extern PHB_ITEM    hb_stackLocalVariable( int32_t iLocal );
+extern PHB_ITEM    hb_stackLocalVariableAt( int32_t * piFromBase );
 extern PHB_ITEM ** hb_stackItemBasePtr( void );
 
 extern HB_EXPORT HB_ISIZ     hb_stackGetRecoverBase( void );
@@ -336,7 +336,7 @@ extern           PHB_ITEM    hb_stackWithObjectItem( void );
 extern HB_EXPORT HB_ISIZ     hb_stackWithObjectOffset( void );
 extern           void        hb_stackWithObjectSetOffset( HB_ISIZ nOffset );
 
-extern int *       hb_stackKeyPolls( void );
+extern int32_t *       hb_stackKeyPolls( void );
 extern HB_BOOL *   hb_stackDebugRequest( void );
 
 extern void        hb_stackDestroyTSD( void );
@@ -350,7 +350,7 @@ extern void *      hb_stackGetI18N( void );
 extern void        hb_stackSetI18N( void * );
 
 extern void        hb_stackIsStackRef( void *, PHB_TSD_FUNC );
-extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
+extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int32_t );
 
 #if defined(HB_MT_VM)
    extern void *           hb_stackList( void );
@@ -361,9 +361,9 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
    extern void             hb_stackClearMemvars( HB_SYMCNT );
    extern HB_BOOL          hb_stackQuitState( void );
    extern void             hb_stackSetQuitState( uint16_t uiState );
-   extern int              hb_stackUnlock( void );
-   extern int              hb_stackLock( void );
-   extern int              hb_stackLockCount( void );
+   extern int32_t              hb_stackUnlock( void );
+   extern int32_t              hb_stackLock( void );
+   extern int32_t              hb_stackLockCount( void );
    extern void *           hb_stackAllocator( void );
 #endif
 
@@ -376,8 +376,8 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
 
 #if defined(_HB_STACK_MACROS_)
 
-#define hb_stackItemFromTop( n )    ( * ( hb_stack.pPos + ( int ) ( n ) ) )
-#define hb_stackItemFromBase( n )   ( * ( hb_stack.pBase + ( int ) ( n ) + 1 ) )
+#define hb_stackItemFromTop( n )    ( * ( hb_stack.pPos + ( int32_t ) ( n ) ) )
+#define hb_stackItemFromBase( n )   ( * ( hb_stack.pBase + ( int32_t ) ( n ) + 1 ) )
 #define hb_stackTopOffset( )        ( hb_stack.pPos - hb_stack.pItems )
 #define hb_stackBaseOffset( )       ( hb_stack.pBase - hb_stack.pItems + 1 )
 /* #define hb_stackTotalItems( )       ( hb_stack.nItems ) */
@@ -484,10 +484,10 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
 #define hb_stackLocalVariableAt( p )( ( ( ( *hb_stack.pBase )->item.asSymbol.paramcnt > \
                                           ( *hb_stack.pBase )->item.asSymbol.paramdeclcnt ) && \
                                         ( * (p) ) > ( * hb_stack.pBase )->item.asSymbol.paramdeclcnt ) ? \
-                                      ( * ( hb_stack.pBase + ( int ) ( * (p) += \
+                                      ( * ( hb_stack.pBase + ( int32_t ) ( * (p) += \
                                           ( * hb_stack.pBase )->item.asSymbol.paramcnt - \
                                           ( * hb_stack.pBase )->item.asSymbol.paramdeclcnt ) + 1 ) ) : \
-                                      ( * ( hb_stack.pBase + ( int ) ( * (p) ) + 1 ) ) )
+                                      ( * ( hb_stack.pBase + ( int32_t ) ( * (p) ) + 1 ) ) )
 
 #define hb_stackGetPrivateStack( )  ( &hb_stack.privates )
 #define hb_stackSetStruct( )        ( &hb_stack.set )
