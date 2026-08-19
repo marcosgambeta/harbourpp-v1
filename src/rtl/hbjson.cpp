@@ -587,7 +587,7 @@ char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int iIndent, HB_CODEPAGE 
   if (!pCtx->szEol || !pCtx->szEol[0]) {
     pCtx->szEol = hb_conNewLine();
   }
-  pCtx->iEolLen = static_cast<int>(strlen(pCtx->szEol));
+  pCtx->iEolLen = static_cast<int32_t>(strlen(pCtx->szEol));
 
   _hb_jsonEncode(pValue, pCtx, 0, false, cdp);
   if (iIndent) {

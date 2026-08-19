@@ -542,7 +542,7 @@ static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
       pSock->inbuffer = len;
       len = 1;
     }
-    return static_cast<int>(len);
+    return static_cast<int32_t>(len);
   }
   return fBuffer ? 0 : hb_socketSelectRead(pSock->sd, timeout);
 }
@@ -640,7 +640,7 @@ HB_FUNC(HB_SOCKETNEWZNET)
       pSock = hb_sockexNew(sd, s_sockFilter.pszName, hb_param(2, Harbour::Item::ANY));
     } else {
       auto keydata = hb_parc(2);
-      auto keylen = static_cast<int>(hb_parclen(2));
+      auto keylen = static_cast<int32_t>(hb_parclen(2));
       auto level = hb_parnidef(3, HB_ZLIB_COMPRESSION_DEFAULT);
       auto strategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
 

@@ -625,7 +625,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
       dwResult = WaitForSingleObject(hProc, fWait ? INFINITE : 0);
       if (dwResult == WAIT_OBJECT_0) {
         fError = !GetExitCodeProcess(hProc, &dwResult);
-        iRetStatus = !fError ? static_cast<int>(dwResult) : -2;
+        iRetStatus = !fError ? static_cast<int32_t>(dwResult) : -2;
       }
       hb_fsSetIOError(!fError, 0);
       if (!fError) {
@@ -941,7 +941,7 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
         dwResult = WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)), dwWait);
         if (dwResult == WAIT_OBJECT_0) {
           if (GetExitCodeProcess(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)), &dwResult)) {
-            iResult = static_cast<int>(dwResult);
+            iResult = static_cast<int32_t>(dwResult);
           } else {
             iResult = -2;
           }

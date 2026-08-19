@@ -260,7 +260,7 @@ void hb_conOutAlt(const char *szStr, HB_SIZE nLen)
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_CON)) != nullptr) {
     // Print to printer if SET PRINTER ON and valid printer file
     hb_fileWrite(pFile, szStr, nLen, -1);
-    hb_prnPos()->col += static_cast<int>(nLen);
+    hb_prnPos()->col += static_cast<int32_t>(nLen);
   }
 }
 
@@ -276,7 +276,7 @@ static void hb_conOutDev(const char *szStr, HB_SIZE nLen)
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_DEV)) != nullptr) {
     // Display to printer if SET DEVICE TO PRINTER and valid printer file
     hb_fileWrite(pFile, szStr, nLen, -1);
-    hb_prnPos()->col += static_cast<int>(nLen);
+    hb_prnPos()->col += static_cast<int32_t>(nLen);
   } else {
     // Otherwise, display to console
     hb_gtWrite(szStr, nLen);
@@ -373,7 +373,7 @@ HB_FUNC(QOUT)
     if (pPrnPos->col) {
       char buf[256];
 
-      if (pPrnPos->col > static_cast<int>(sizeof(buf))) {
+      if (pPrnPos->col > static_cast<int32_t>(sizeof(buf))) {
         auto pBuf = static_cast<char *>(hb_xgrab(pPrnPos->col));
         memset(pBuf, ' ', pPrnPos->col);
         hb_fileWrite(pFile, pBuf, static_cast<uint16_t>(pPrnPos->col), -1);
@@ -403,12 +403,12 @@ HB_FUNC(__EJECT) // Ejects the current page from the printer
 
 HB_FUNC(PROW) // Returns the current printer row position
 {
-  hb_retni(static_cast<int>(hb_prnPos()->row));
+  hb_retni(static_cast<int32_t>(hb_prnPos()->row));
 }
 
 HB_FUNC(PCOL) // Returns the current printer row position
 {
-  hb_retni(static_cast<int>(hb_prnPos()->col));
+  hb_retni(static_cast<int32_t>(hb_prnPos()->col));
 }
 
 static void hb_conDevPos(int iRow, int iCol)
@@ -442,7 +442,7 @@ static void hb_conDevPos(int iRow, int iCol)
         }
 
         while (pPrnPos->row < iPRow) {
-          if (iPtr + s_iCrLfLen > static_cast<int>(sizeof(buf))) {
+          if (iPtr + s_iCrLfLen > static_cast<int32_t>(sizeof(buf))) {
             hb_fileWrite(pFile, buf, static_cast<uint16_t>(iPtr), -1);
             iPtr = 0;
           }
@@ -457,7 +457,7 @@ static void hb_conDevPos(int iRow, int iCol)
       }
 
       while (pPrnPos->col < iPCol) {
-        if (iPtr == static_cast<int>(sizeof(buf))) {
+        if (iPtr == static_cast<int32_t>(sizeof(buf))) {
           hb_fileWrite(pFile, buf, static_cast<uint16_t>(iPtr), -1);
           iPtr = 0;
         }

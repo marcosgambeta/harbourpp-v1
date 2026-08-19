@@ -82,7 +82,7 @@ static void hb_itemHexStr(PHB_ITEM pItem, char *pStr, HB_BOOL fUpper)
 
   pStr[iLen] = '\0';
   do {
-    auto iDigit = static_cast<int>(nValue & 0x0F);
+    auto iDigit = static_cast<int32_t>(nValue & 0x0F);
     pStr[--iLen] = static_cast<char>(iDigit + (iDigit < 10 ? '0' : (fUpper ? 'A' : 'a') - 10));
     nValue >>= 4;
   } while (iLen);
@@ -223,7 +223,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
         while (*pStr2 == ' ') {
           pStr2++;
         }
-        iSize = static_cast<int>(strlen(pStr2));
+        iSize = static_cast<int32_t>(strlen(pStr2));
         if (*pStr2 == '-') {
           fSign = 1;
           iSize--;
@@ -352,7 +352,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
         while (*pStr2 == ' ') {
           pStr2++;
         }
-        iSize = static_cast<int>(strlen(pStr2));
+        iSize = static_cast<int32_t>(strlen(pStr2));
       } else {
         iSize = 1;
         pStr2 = "0";
@@ -438,7 +438,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
       }
 
       if (iWidth > 1) {
-        for (i = static_cast<int>(nSize); i < iWidth; i++) {
+        for (i = static_cast<int32_t>(nSize); i < iWidth; i++) {
           bufadd(&buffer, " ", 1);
         }
       }

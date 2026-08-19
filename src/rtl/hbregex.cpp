@@ -103,7 +103,7 @@ static int hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
 static int hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int iMatches, HB_REGMATCH *aMatches)
 {
 #if defined(HB_HAS_PCRE)
-  int iResult = pcre_exec(pRegEx->re_pcre, nullptr /* pcre_extra */, szString, static_cast<int>(nLen),
+  int iResult = pcre_exec(pRegEx->re_pcre, nullptr /* pcre_extra */, szString, static_cast<int32_t>(nLen),
                           0 /* startoffset */, pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE(iMatches));
   if (iResult == 0) {
     for (auto i = 0; i < iMatches; i++) {

@@ -164,7 +164,7 @@ HB_FUNC(HB_VERSION)
     hb_retc_null();
     break;
   case HB_VERSION_BITWIDTH:
-    hb_retni(static_cast<int>(sizeof(void *)) * 8);
+    hb_retni(static_cast<int32_t>(sizeof(void *)) * 8);
     break;
   case HB_VERSION_MT:
     hb_retl(hb_vmIsMt());

@@ -57,7 +57,7 @@ HB_FUNC(AMPM)
   if (nTimeLen) {
     auto pszTime = hb_parc(1);
     memcpy(pszResult, pszTime, nTimeLen);
-    iHour = static_cast<int>(hb_strVal(pszTime, nTimeLen));
+    iHour = static_cast<int32_t>(hb_strVal(pszTime, nTimeLen));
   }
 
   if (iHour == 0 || iHour == 24) {

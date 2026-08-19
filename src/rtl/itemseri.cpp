@@ -1480,7 +1480,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
   case HB_SERIAL_XHB_N:
     switch (pBuffer[nOffset++]) {
     case 'I':
-      hb_itemPutNI(pItem, static_cast<int>(HB_GET_BE_UINT64(&pBuffer[nOffset])));
+      hb_itemPutNI(pItem, static_cast<int32_t>(HB_GET_BE_UINT64(&pBuffer[nOffset])));
       break;
     case 'L':
       hb_itemPutNL(pItem, static_cast<long>(HB_GET_BE_UINT64(&pBuffer[nOffset])));

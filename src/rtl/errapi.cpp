@@ -558,7 +558,7 @@ uint16_t hb_errLaunch(PHB_ITEM pError)
     pErrData->iLaunchCount++;
 
     // set DosError() to last OS error code
-    pErrData->uiErrorDOS = static_cast<int>(hb_errGetOsCode(pError));
+    pErrData->uiErrorDOS = static_cast<int32_t>(hb_errGetOsCode(pError));
 
     // Add one try to the counter.
     if (uiFlags & EF_CANRETRY) {
@@ -652,7 +652,7 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
     pErrData->iLaunchCount++;
 
     // set DosError() to last OS error code
-    pErrData->uiErrorDOS = static_cast<int>(hb_errGetOsCode(pError));
+    pErrData->uiErrorDOS = static_cast<int32_t>(hb_errGetOsCode(pError));
 
     // Add one try to the counter.
     if (uiFlags & EF_CANRETRY) {

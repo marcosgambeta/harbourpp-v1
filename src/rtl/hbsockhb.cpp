@@ -662,7 +662,7 @@ int hb_sockexSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOO
     if (fSetEX && pArrayEX) {
       hb_arraySize(pArrayEX, 0);
     }
-    iResult = static_cast<int>(nRead + nWrite);
+    iResult = static_cast<int32_t>(nRead + nWrite);
   } else {
     if (pFunc == nullptr) {
       pFunc = s_socketSelectCallback;
@@ -742,14 +742,14 @@ void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int *pKeylen
 
     if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "key")) != nullptr && pItem->isString()) {
       *pKeydata = pItem->getCPtr();
-      *pKeylen = static_cast<int>(pItem->getCLen());
+      *pKeylen = static_cast<int32_t>(pItem->getCLen());
     } else if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "pass")) != nullptr && pItem->isString()) {
       *pKeydata = pItem->getCPtr();
-      *pKeylen = static_cast<int>(pItem->getCLen());
+      *pKeylen = static_cast<int32_t>(pItem->getCLen());
     }
     if (pIV && pIVlen && (pItem = hb_hashGetCItemPtr(pParams, "iv")) != nullptr && pItem->isString()) {
       *pIV = pItem->getCPtr();
-      *pIVlen = static_cast<int>(pItem->getCLen());
+      *pIVlen = static_cast<int32_t>(pItem->getCLen());
     }
     if (pLevel && (pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && pItem->isNumeric()) {
       *pLevel = pItem->getNI();

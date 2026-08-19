@@ -60,7 +60,7 @@ static signed char base64_decode_value(int value_in)
       26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51};
 
   value_in -= 43;
-  if (value_in < 0 || value_in >= static_cast<int>(HB_SIZEOFARRAY(s_decoding))) {
+  if (value_in < 0 || value_in >= static_cast<int32_t>(HB_SIZEOFARRAY(s_decoding))) {
     return -1;
   }
 

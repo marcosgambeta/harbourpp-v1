@@ -55,15 +55,15 @@ static char *hb_SecToTimeStr(char *pszTime, long lTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_SecToTimeStr(%p, %ld)", static_cast<void*>(pszTime), lTime));
 #endif
 
-  auto iValue = static_cast<int>((lTime / 3600) % 24);
+  auto iValue = static_cast<int32_t>((lTime / 3600) % 24);
   pszTime[0] = static_cast<char>(iValue / 10) + '0';
   pszTime[1] = static_cast<char>(iValue % 10) + '0';
   pszTime[2] = ':';
-  iValue = static_cast<int>((lTime / 60) % 60);
+  iValue = static_cast<int32_t>((lTime / 60) % 60);
   pszTime[3] = static_cast<char>(iValue / 10) + '0';
   pszTime[4] = static_cast<char>(iValue % 10) + '0';
   pszTime[5] = ':';
-  iValue = static_cast<int>(lTime % 60);
+  iValue = static_cast<int32_t>(lTime % 60);
   pszTime[6] = static_cast<char>(iValue / 10) + '0';
   pszTime[7] = static_cast<char>(iValue % 10) + '0';
   pszTime[8] = '\0';

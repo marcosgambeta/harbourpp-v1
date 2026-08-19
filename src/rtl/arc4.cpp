@@ -284,7 +284,7 @@ static int arc4_seed_sysctl_bsd(void)
   }
 
   /* make sure that the buffer actually got set. */
-  for (int i = any_set = 0; i < static_cast<int>(sizeof(buf)); ++i) {
+  for (int i = any_set = 0; i < static_cast<int32_t>(sizeof(buf)); ++i) {
     any_set |= buf[i];
   }
 

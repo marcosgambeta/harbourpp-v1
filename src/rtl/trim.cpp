@@ -69,7 +69,7 @@ const char *hb_strLTrim(const char *szText, HB_SIZE *nLen)
 HB_SIZE hb_strRTrimLen(const char *szText, HB_SIZE nLen, HB_BOOL bAnySpace)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_strRTrimLen(%s, %" HB_PFS "u, %d)", szText, nLen, static_cast<int>(bAnySpace)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_strRTrimLen(%s, %" HB_PFS "u, %d)", szText, nLen, static_cast<int32_t>(bAnySpace)));
 #endif
 
   if (bAnySpace) {

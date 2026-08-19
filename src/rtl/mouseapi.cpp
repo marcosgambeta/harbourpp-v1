@@ -90,7 +90,7 @@ HB_BOOL hb_mouseGetCursor(void)
 void hb_mouseSetCursor(HB_BOOL fVisible)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_mouseSetCursor(%d)", static_cast<int>(fVisible)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_mouseSetCursor(%d)", static_cast<int32_t>(fVisible)));
 #endif
 
   PHB_GT pGT = hb_gt_Base();
