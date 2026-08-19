@@ -844,7 +844,7 @@ static void hb_dbgAddModule(const char *szName)
 {
   szName = hb_dbgStripModuleName(szName);
   const char *szFuncName = strrchr(szName, ':');
-  int iLen = szFuncName ? static_cast<int>(szFuncName - szName) : static_cast<int>(strlen(szName));
+  int iLen = szFuncName ? static_cast<int32_t>(szFuncName - szName) : static_cast<int32_t>(strlen(szName));
   char *szModuleName = hb_strndup(szName, iLen);
 
   HB_DBGCOMMON_LOCK();
