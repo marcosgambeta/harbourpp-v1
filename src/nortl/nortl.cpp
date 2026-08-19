@@ -268,7 +268,7 @@ static char *hb_memToStr(char *szBuffer, void *pMem, HB_SIZE nSize)
   if (nSize > HB_MEMSTR_BLOCK_MAX) {
     iSize = HB_MEMSTR_BLOCK_MAX;
   } else {
-    iSize = static_cast<int>(nSize);
+    iSize = static_cast<int32_t>(nSize);
   }
 
   iPrintable = 0;
@@ -369,7 +369,7 @@ void hb_conOutErr(const char *pStr, HB_SIZE nLen)
     nLen = strlen(pStr);
   }
 
-  fprintf(stderr, "%.*s", static_cast<int>(nLen), pStr);
+  fprintf(stderr, "%.*s", static_cast<int32_t>(nLen), pStr);
 }
 
 const char *hb_conNewLine(void)
