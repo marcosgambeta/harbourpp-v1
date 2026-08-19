@@ -1569,7 +1569,7 @@ static void hb_ntxIndexTagAdd(LPNTXINDEX pIndex, LPTAGINFO pTag)
   if (i == iTags) {
     ++iTags;
     HB_PUT_LE_UINT16(lpCTX->ntags, iTags);
-    iLen = static_cast<int>(strlen(pTag->TagName));
+    iLen = static_cast<int32_t>(strlen(pTag->TagName));
     if (iLen > NTX_MAX_TAGNAME) {
       iLen = NTX_MAX_TAGNAME;
     }
@@ -1671,20 +1671,20 @@ static HB_ERRCODE hb_ntxTagHeaderSave(LPTAGINFO pTag)
     Header.unique[0] = pTag->UniqueKey ? 1 : 0;
     Header.descend[0] = pTag->AscendKey ? 0 : 1;
     Header.custom[0] = pTag->Custom ? 1 : 0;
-    iLen = static_cast<int>(strlen(pTag->KeyExpr));
+    iLen = static_cast<int32_t>(strlen(pTag->KeyExpr));
     if (iLen > NTX_MAX_EXP) {
       iLen = NTX_MAX_EXP;
     }
     memcpy(Header.key_expr, pTag->KeyExpr, iLen);
     if (pTag->ForExpr) {
-      iLen = static_cast<int>(strlen(pTag->ForExpr));
+      iLen = static_cast<int32_t>(strlen(pTag->ForExpr));
       if (iLen > NTX_MAX_EXP) {
         iLen = NTX_MAX_EXP;
       }
       memcpy(Header.for_expr, pTag->ForExpr, iLen);
     }
     if (pTag->fTagName) {
-      iLen = static_cast<int>(strlen(pTag->TagName));
+      iLen = static_cast<int32_t>(strlen(pTag->TagName));
       if (iLen > NTX_MAX_TAGNAME) {
         iLen = NTX_MAX_TAGNAME;
       }
@@ -2395,7 +2395,7 @@ static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char *key, 
       iEnd = i - 1;
     }
   }
-  return iLast >= 0 ? iLast : static_cast<int>(pPage->uiKeys);
+  return iLast >= 0 ? iLast : static_cast<int32_t>(pPage->uiKeys);
 }
 
 /*
@@ -3220,7 +3220,7 @@ static void hb_ntxTagGoToRelKeyPos(LPTAGINFO pTag, double dPos)
       if (hb_ntxGetKeyPage(pPage, pPage->uiKeys)) {
         ++iKeys;
       }
-      iKey = static_cast<int>(dPos * iKeys);
+      iKey = static_cast<int32_t>(dPos * iKeys);
       if (iKey >= iKeys) {
         iKey = iKeys - 1;
       }
@@ -5092,7 +5092,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
             iRec = ulRecCount - ulRecNo + 1;
           }
           if (ulNextCount > 0 && ulNextCount < static_cast<HB_ULONG>(iRec)) {
-            iRec = static_cast<int>(ulNextCount);
+            iRec = static_cast<int32_t>(ulNextCount);
           }
           nSize = static_cast<HB_SIZE>(iRec) * pArea->dbfarea.uiRecordLen;
           if (hb_fileReadAt(pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
@@ -5135,7 +5135,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
         switch (hb_itemType(pItem)) {
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
-          hb_ntxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(), static_cast<int>(pItem->getCLen()));
+          hb_ntxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(), static_cast<int32_t>(pItem->getCLen()));
           break;
 
         case Harbour::Item::INTEGER:
@@ -5936,7 +5936,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     iLen = 1;
     break;
   case 'C':
-    iLen = static_cast<int>(pResult->getCLen());
+    iLen = static_cast<int32_t>(pResult->getCLen());
     if (iLen > NTX_MAX_KEY) {
       iLen = NTX_MAX_KEY;
     }

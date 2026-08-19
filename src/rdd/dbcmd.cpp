@@ -670,7 +670,7 @@ HB_FUNC(DBSELECTAREA)
       if (pItem != nullptr) {
         auto pSymAlias = pItem->getSymbol();
         if (pSymAlias->pDynSym != nullptr) {
-          iNewArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+          iNewArea = static_cast<int32_t>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
         }
       }
     }
@@ -1519,7 +1519,7 @@ HB_FUNC(SELECT)
       if (pItem) {
         PHB_SYMB pSymAlias = pItem->getSymbol();
         if (pSymAlias->pDynSym) {
-          iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+          iArea = static_cast<int32_t>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
         }
       }
     }

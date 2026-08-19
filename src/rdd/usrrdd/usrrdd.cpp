@@ -879,7 +879,7 @@ static HB_ERRCODE hb_usrSysName(AREAP pArea, char *szSysName)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrSysName(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(szSysName)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushNil();
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_SYSNAME)) {
     hb_stackPop();
@@ -945,7 +945,7 @@ static HB_ERRCODE hb_usrBof(AREAP pArea, HB_BOOL *pBof)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrBof(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBof)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushLogical(pArea->fBof);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_BOF)) {
     hb_stackPop();
@@ -970,7 +970,7 @@ static HB_ERRCODE hb_usrEof(AREAP pArea, HB_BOOL *pEof)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrEof(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pEof)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushLogical(pArea->fEof);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_EOF)) {
     hb_stackPop();
@@ -995,7 +995,7 @@ static HB_ERRCODE hb_usrFound(AREAP pArea, HB_BOOL *pFound)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrFound(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFound)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushLogical(pArea->fFound);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_FOUND)) {
     hb_stackPop();
@@ -1160,7 +1160,7 @@ static HB_ERRCODE hb_usrDeleted(AREAP pArea, HB_BOOL *pDeleted)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrDeleted(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pDeleted)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushLogical(false);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_DELETED)) {
     hb_stackPop();
@@ -1228,7 +1228,7 @@ static HB_ERRCODE hb_usrFieldName(AREAP pArea, uint16_t uiIndex, char *szName)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrFieldName(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(szName)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushNil();
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_FIELDNAME)) {
     hb_stackPop();
@@ -1301,7 +1301,7 @@ static HB_ERRCODE hb_usrFieldCount(AREAP pArea, uint16_t *puiFields)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrFieldCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(puiFields)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushInteger(0);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_FIELDCOUNT)) {
     hb_stackPop();
@@ -1389,7 +1389,7 @@ static HB_ERRCODE hb_usrGetRec(AREAP pArea, uint8_t **pBuffer)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushNil();
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_GETREC)) {
     hb_stackPop();
@@ -1453,7 +1453,7 @@ static HB_ERRCODE hb_usrGetVarLen(AREAP pArea, uint16_t uiIndex, HB_ULONG *pulLe
    HB_TRACE(HB_TR_DEBUG, ("hb_usrGetVarLen(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pulLength)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushInteger(0);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_GETVARLEN)) {
     hb_stackPop();
@@ -1477,7 +1477,7 @@ static HB_ERRCODE hb_usrRecCount(AREAP pArea, HB_ULONG *pulRecCount)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrRecCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecCount)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushInteger(0);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_RECCOUNT)) {
     hb_stackPop();
@@ -1519,7 +1519,7 @@ static HB_ERRCODE hb_usrRecNo(AREAP pArea, HB_ULONG *pulRecNo)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrRecNo(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecNo)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushInteger(0);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_RECNO)) {
     hb_stackPop();
@@ -1616,7 +1616,7 @@ static HB_ERRCODE hb_usrAlias(AREAP pArea, char *szAlias)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrAlias(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(szAlias)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushNil();
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ALIAS)) {
     hb_stackPop();
@@ -1755,7 +1755,7 @@ static HB_ERRCODE hb_usrPackRec(AREAP pArea, HB_ULONG ulRecNo, HB_BOOL *pWritten
    HB_TRACE(HB_TR_DEBUG, ("hb_usrPackRec(%p,%lu,%p)", static_cast<void*>(pArea), ulRecNo, static_cast<void*>(pWritten)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushLogical(true);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_PACKREC)) {
     hb_stackPop();
@@ -1981,7 +1981,7 @@ static HB_ERRCODE hb_usrRelArea(AREAP pArea, uint16_t uiRelNo, uint16_t *puiRelA
    HB_TRACE(HB_TR_DEBUG, ("hb_usrRelArea(%p,%hu,%p)", static_cast<void*>(pArea), uiRelNo, static_cast<void*>(puiRelArea)));
 #endif
 
-  auto nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+  auto nOffset = static_cast<int32_t>(hb_stackTopOffset() - hb_stackBaseOffset());
   hb_vmPushInteger(0);
   if (!hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_RELAREA)) {
     hb_stackPop();

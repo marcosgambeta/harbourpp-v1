@@ -944,7 +944,7 @@ static HB_ERRCODE hb_waNewArea(AREAP pArea)
 static HB_ERRCODE hb_waOpen(AREAP pArea, LPDBOPENINFO pInfo)
 {
   if (!pArea->atomAlias && pInfo->atomAlias && pInfo->atomAlias[0]) {
-    pArea->atomAlias = hb_rddAllocWorkAreaAlias(pInfo->atomAlias, static_cast<int>(pInfo->uiArea));
+    pArea->atomAlias = hb_rddAllocWorkAreaAlias(pInfo->atomAlias, static_cast<int32_t>(pInfo->uiArea));
     if (!pArea->atomAlias) {
       SELF_CLOSE(pArea);
       return Harbour::FAILURE;

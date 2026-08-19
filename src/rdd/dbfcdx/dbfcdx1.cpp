@@ -1622,7 +1622,7 @@ static void hb_cdxPageLeafEncode(LPCDXPAGE pPage, uint8_t *pKeyBuf, int iKeys)
 #ifdef HB_CDX_DBGCODE
   if (pKeyPos - pRecPos != pPage->iFree) {
     fprintf(stderr, "\r\nPage=0x%lx, calc=%d, iFree=%d, req=%u, keys=%d, keyLen=%d\r\n", pPage->Page,
-            static_cast<int>(pKeyPos - pRecPos), pPage->iFree, pPage->ReqByte, iKeys, iNum);
+            static_cast<int32_t>(pKeyPos - pRecPos), pPage->iFree, pPage->ReqByte, iKeys, iNum);
     fflush(stderr);
     hb_cdxErrInternal("hb_cdxPageLeafEncode: FreeSpace calculated wrong!");
   }
@@ -4499,7 +4499,7 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char *szBagName, bool *fProd
 static void hb_cdxOrdListClear(CDXAREAP pArea, bool fAll, LPCDXINDEX pKeepInd)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cdxOrdListClear(%p, %d)", static_cast<void*>(pArea), static_cast<int>(fAll)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_cdxOrdListClear(%p, %d)", static_cast<void*>(pArea), static_cast<int32_t>(fAll)));
 #endif
 
   if (pArea->lpIndexes) {
@@ -5477,7 +5477,7 @@ static HB_ERRCODE hb_cdxDBOIKeyGoto(CDXAREAP pArea, LPCDXTAG pTag, HB_ULONG ulKe
           pPage = pOwnerPage->Child;
         }
         if (static_cast<HB_ULONG>(pPage->iKeys) >= ulKeyCnt) {
-          pPage->iCurKey = pTag->UsrAscend ? static_cast<int>(ulKeyCnt) - 1 : pPage->iKeys - static_cast<int>(ulKeyCnt);
+          pPage->iCurKey = pTag->UsrAscend ? static_cast<int32_t>(ulKeyCnt) - 1 : pPage->iKeys - static_cast<int32_t>(ulKeyCnt);
           hb_cdxSetCurKey(pPage);
         } else {
           pTag->CurKey->rec = 0;
@@ -5521,7 +5521,7 @@ static bool hb_cdxGoToRelKeyPos(LPCDXPAGE pPage, double dPos)
       return false;
     }
 
-    pPage->iCurKey = static_cast<int>(dPos * pPage->iKeys);
+    pPage->iCurKey = static_cast<int32_t>(dPos * pPage->iKeys);
     if (pPage->iCurKey >= pPage->iKeys) {
       pPage->iCurKey = pPage->iKeys - 1;
     }
@@ -8371,7 +8371,7 @@ static void hb_cdxSortKeyAdd(LPCDXSORTINFO pSort, HB_ULONG ulRec, const uint8_t 
   pDst = &pSort->pKeyPool[pSort->ulKeys * (iLen + 4)];
 
   if (pSort->pTag->IgnoreCase) {
-    iKeyLen = static_cast<int>(hb_cdpnDup2Upper(pSort->pTag->pIndex->pArea->dbfarea.area.cdPage,
+    iKeyLen = static_cast<int32_t>(hb_cdpnDup2Upper(pSort->pTag->pIndex->pArea->dbfarea.area.cdPage,
                                                 reinterpret_cast<const char *>(pKeyVal), iKeyLen,
                                                 reinterpret_cast<char *>(pDst), iLen));
     if (iLen > iKeyLen) {
@@ -8716,7 +8716,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
             iRec = ulRecCount - ulRecNo + 1;
           }
           if (ulNextCount > 0 && ulNextCount < static_cast<HB_ULONG>(iRec)) {
-            iRec = static_cast<int>(ulNextCount);
+            iRec = static_cast<int32_t>(ulNextCount);
           }
           nSize = static_cast<HB_SIZE>(iRec) * pArea->dbfarea.uiRecordLen;
           if (hb_fileReadAt(pArea->dbfarea.pDataFile, pSort->pRecBuff, nSize,
@@ -8773,7 +8773,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
           hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, reinterpret_cast<const uint8_t *>(pItem->getCPtr()),
-                           static_cast<int>(pItem->getCLen()));
+                           static_cast<int32_t>(pItem->getCLen()));
           break;
 
         case Harbour::Item::INTEGER:

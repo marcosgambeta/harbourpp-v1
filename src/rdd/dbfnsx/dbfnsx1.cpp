@@ -402,7 +402,7 @@ static uint16_t hb_nsxLeafPutKey(LPTAGINFO pTag, LPPAGEINFO pPage, uint16_t uiOf
 
   pDst = ptr + 2;
   iMax = NSX_PAGELEN - uiOffset - ucSize + 1;
-  if (iMax > static_cast<int>(ucLen)) {
+  if (iMax > static_cast<int32_t>(ucLen)) {
     iMax = ucLen;
   }
   if (iMax > 0) {
@@ -1845,13 +1845,13 @@ static HB_ERRCODE hb_nsxTagHeaderSave(LPTAGINFO pTag)
     Header.Unique[0] = pTag->UniqueKey ? 1 : 0;
     Header.Descend[0] = pTag->AscendKey ? 0 : 1;
 
-    auto iLen = static_cast<int>(strlen(pTag->KeyExpr));
+    auto iLen = static_cast<int32_t>(strlen(pTag->KeyExpr));
     if (iLen > NSX_MAXEXPLEN) {
       iLen = NSX_MAXEXPLEN;
     }
     memcpy(Header.KeyExpr, pTag->KeyExpr, iLen);
     if (pTag->ForExpr) {
-      iLen = static_cast<int>(strlen(pTag->ForExpr));
+      iLen = static_cast<int32_t>(strlen(pTag->ForExpr));
       if (iLen > NSX_MAXEXPLEN) {
         iLen = NSX_MAXEXPLEN;
       }
@@ -3419,7 +3419,7 @@ static void hb_nsxTagGoToRelKeyPos(LPTAGINFO pTag, double dPos)
       if (!hb_nsxIsLeaf(pPage)) {
         ++iKeys;
       }
-      iKey = static_cast<int>(dPos * iKeys);
+      iKey = static_cast<int32_t>(dPos * iKeys);
       if (iKey >= iKeys) {
         iKey = iKeys - 1;
       }
@@ -5498,7 +5498,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
             iRec = ulRecCount - ulRecNo + 1;
           }
           if (ulNextCount > 0 && ulNextCount < static_cast<HB_ULONG>(iRec)) {
-            iRec = static_cast<int>(ulNextCount);
+            iRec = static_cast<int32_t>(ulNextCount);
           }
           nSize = static_cast<HB_SIZE>(iRec) * pArea->dbfarea.uiRecordLen;
           if (hb_fileReadAt(pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
@@ -5541,7 +5541,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
         switch (hb_itemType(pItem)) {
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
-          hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(), static_cast<int>(pItem->getCLen()));
+          hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(), static_cast<int32_t>(pItem->getCLen()));
           break;
 
         case Harbour::Item::INTEGER:
@@ -6280,7 +6280,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     iLen = 1;
     break;
   case 'C':
-    iLen = static_cast<int>(pResult->getCLen());
+    iLen = static_cast<int32_t>(pResult->getCLen());
     if (iLen > NSX_MAXKEYLEN) {
       iLen = NSX_MAXKEYLEN;
     }

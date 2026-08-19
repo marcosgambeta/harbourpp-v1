@@ -233,7 +233,7 @@ uint16_t hb_rddFieldExpIndex(AREAP pArea, const char *szField)
 
     n = 0;
     if (SELF_ALIAS(pArea, szAlias) == Harbour::SUCCESS) {
-      l = static_cast<int>(strlen(szAlias));
+      l = static_cast<int32_t>(strlen(szAlias));
     } else {
       l = 0;
     }
@@ -305,7 +305,7 @@ HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
   } else {
     auto pSymAlias = hb_dynsymFindName(szAlias);
 
-    *iArea = pSymAlias ? static_cast<int>(hb_dynsymAreaHandle(pSymAlias)) : 0;
+    *iArea = pSymAlias ? static_cast<int32_t>(hb_dynsymAreaHandle(pSymAlias)) : 0;
     if (*iArea == 0) {
       return Harbour::FAILURE;
     }
@@ -323,7 +323,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
 
   const char *szName;
 
-  auto iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+  auto iArea = static_cast<int32_t>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
   if (iArea) {
     hb_rddSelectWorkAreaNumber(iArea);
     return Harbour::SUCCESS;
@@ -354,7 +354,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
     if (hb_errLaunch(pError) != E_RETRY) {
       break;
     }
-    iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+    iArea = static_cast<int32_t>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
     if (iArea) {
       hb_rddSelectWorkAreaNumber(iArea);
       errCode = Harbour::SUCCESS;

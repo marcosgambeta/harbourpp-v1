@@ -436,7 +436,7 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
         if (pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::AUTOINC) {
           if (pField->uiDec) {
             nValue =
-                static_cast<HB_MAXINT>(hb_numDecConv(static_cast<double>(nValue), -static_cast<int>(pField->uiDec)));
+                static_cast<HB_MAXINT>(hb_numDecConv(static_cast<double>(nValue), -static_cast<int32_t>(pField->uiDec)));
           }
           if (uiLen == 1) { // TODO: switch ?
             *pPtr = static_cast<signed char>(nValue);
@@ -835,7 +835,7 @@ static HB_ERRCODE hb_dbfUnlockRecord(DBFAREAP pArea, HB_ULONG ulRecNo)
 static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, uint16_t *pResult, bool bExclusive)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfLockRecord(%p, %lu, %p, %i)", static_cast<void*>(pArea), ulRecNo, static_cast<void*>(pResult), static_cast<int>(bExclusive)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_dbfLockRecord(%p, %lu, %p, %i)", static_cast<void*>(pArea), ulRecNo, static_cast<void*>(pResult), static_cast<int32_t>(bExclusive)));
 #endif
 
   if (pArea->lpdbPendingRel) {
@@ -1714,7 +1714,7 @@ static HB_ERRCODE hb_dbfAddField(DBFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 static HB_ERRCODE hb_dbfAppend(DBFAREAP pArea, HB_BOOL bUnLockAll)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfAppend(%p, %d)", static_cast<void*>(pArea), static_cast<int>(bUnLockAll)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_dbfAppend(%p, %d)", static_cast<void*>(pArea), static_cast<int32_t>(bUnLockAll)));
 #endif
 
   uint16_t fLocked;
@@ -2046,15 +2046,15 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
         fError = true;
         break;
       }
-      hb_itemPutNDLen(pItem, hb_numDecConv(dVal, static_cast<int>(pField->uiDec)), iLen,
-                      static_cast<int>(pField->uiDec));
+      hb_itemPutNDLen(pItem, hb_numDecConv(dVal, static_cast<int32_t>(pField->uiDec)), iLen,
+                      static_cast<int32_t>(pField->uiDec));
     } else {
       switch (pField->uiLen) {
       case 1:
         hb_itemPutNILen(pItem, static_cast<HB_SCHAR>(pArea->pRecord[pArea->pFieldOffset[uiIndex]]), 4);
         break;
       case 2:
-        hb_itemPutNILen(pItem, static_cast<int>(HB_GET_LE_INT16(pArea->pRecord + pArea->pFieldOffset[uiIndex])), 6);
+        hb_itemPutNILen(pItem, static_cast<int32_t>(HB_GET_LE_INT16(pArea->pRecord + pArea->pFieldOffset[uiIndex])), 6);
         break;
       case 3:
         hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT24(pArea->pRecord + pArea->pFieldOffset[uiIndex])),
@@ -2083,7 +2083,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
   case Harbour::DB::Field::DOUBLE:
   case Harbour::DB::Field::CURDOUBLE:
     hb_itemPutNDLen(pItem, HB_GET_LE_DOUBLE(pArea->pRecord + pArea->pFieldOffset[uiIndex]),
-                    20 - (pField->uiDec > 0 ? (pField->uiDec + 1) : 0), static_cast<int>(pField->uiDec));
+                    20 - (pField->uiDec > 0 ? (pField->uiDec + 1) : 0), static_cast<int32_t>(pField->uiDec));
     break;
 
   case Harbour::DB::Field::LONG: {
@@ -2104,11 +2104,11 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
 
     if (pField->uiDec) {
       hb_itemPutNDLen(pItem, fDbl ? dVal : static_cast<double>(lVal),
-                      static_cast<int>(pField->uiLen - pField->uiDec - 1), static_cast<int>(pField->uiDec));
+                      static_cast<int32_t>(pField->uiLen - pField->uiDec - 1), static_cast<int32_t>(pField->uiDec));
     } else if (fDbl) {
-      hb_itemPutNDLen(pItem, dVal, static_cast<int>(pField->uiLen), 0);
+      hb_itemPutNDLen(pItem, dVal, static_cast<int32_t>(pField->uiLen), 0);
     } else {
-      hb_itemPutNIntLen(pItem, lVal, static_cast<int>(pField->uiLen));
+      hb_itemPutNIntLen(pItem, lVal, static_cast<int32_t>(pField->uiLen));
     }
     break;
   }
@@ -2131,7 +2131,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
       }
       dVal = hb_numExpConv(dVal, -iExp);
     }
-    hb_itemPutNDLen(pItem, dVal, static_cast<int>(pField->uiLen - pField->uiDec - 1), static_cast<int>(pField->uiDec));
+    hb_itemPutNDLen(pItem, dVal, static_cast<int32_t>(pField->uiLen - pField->uiDec - 1), static_cast<int32_t>(pField->uiDec));
     break;
 
   case Harbour::DB::Field::ANY:
@@ -2468,11 +2468,11 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
         if (pField->uiDec || pItem->isDouble()) {
           double dVal;
 #if 0 // this version rounds double values to nearest integer
-          dVal = hb_numDecConv(pItem->getND(), -static_cast<int>(pField->uiDec));
+          dVal = hb_numDecConv(pItem->getND(), -static_cast<int32_t>(pField->uiDec));
 #else // this one truncates double value to integer dropping fractional part
           dVal = pItem->getND();
           if (pField->uiDec) {
-            dVal = hb_numDecConv(dVal, -static_cast<int>(pField->uiDec));
+            dVal = hb_numDecConv(dVal, -static_cast<int32_t>(pField->uiDec));
           }
 #endif
           lVal = static_cast<HB_MAXINT>(dVal);

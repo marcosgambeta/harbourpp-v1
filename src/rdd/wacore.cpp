@@ -68,7 +68,7 @@ static void hb_waNodeInsert(PHB_STACKRDD pRddInfo, AREAP pArea)
   uint16_t uiWaPos;
 
   if (pRddInfo->uiCurrArea >= pRddInfo->uiWaNumMax) {
-    int iSize = ((static_cast<int>(pRddInfo->uiCurrArea) + 256) >> 8) << 8;
+    int iSize = ((static_cast<int32_t>(pRddInfo->uiCurrArea) + 256) >> 8) << 8;
 
     if (iSize > HB_RDD_MAX_AREA_NUM) {
       iSize = HB_RDD_MAX_AREA_NUM;
@@ -92,7 +92,7 @@ static void hb_waNodeInsert(PHB_STACKRDD pRddInfo, AREAP pArea)
   } else {
     uiWaPos = pRddInfo->uiWaMax++;
     if (pRddInfo->uiWaMax > pRddInfo->uiWaSpace) {
-      int iSize = ((static_cast<int>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
+      int iSize = ((static_cast<int32_t>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
 
       if (iSize > HB_RDD_MAX_AREA_NUM) {
         iSize = HB_RDD_MAX_AREA_NUM;
@@ -138,7 +138,7 @@ static void hb_waNodeDelete(PHB_STACKRDD pRddInfo)
     }
     pRddInfo->waList[pRddInfo->uiWaMax] = nullptr;
     if (pRddInfo->uiWaSpace - pRddInfo->uiWaMax > 256) {
-      int iSize = ((static_cast<int>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
+      int iSize = ((static_cast<int32_t>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
 
       if (iSize > HB_RDD_MAX_AREA_NUM) {
         iSize = HB_RDD_MAX_AREA_NUM;
@@ -368,7 +368,7 @@ const char *hb_rddDefaultDrv(const char *szDriver)
     const char *szDrvTable[] = {"DBFNTX", "DBFCDX", "DBFFPT", "DBF"};
 
     pRddInfo->szDefaultRDD = "";
-    for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(szDrvTable)); ++i) {
+    for (auto i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(szDrvTable)); ++i) {
       if (hb_rddFindNode(szDrvTable[i], nullptr)) {
         pRddInfo->szDefaultRDD = szDrvTable[i];
         break;
@@ -404,7 +404,7 @@ const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
       const char *szDrvTable[] = {"DBFNTX", "DBFCDX", "DBFFPT", "DBF"};
 
       pRddInfo->szDefaultRDD = "";
-      for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(szDrvTable)); ++i) {
+      for (auto i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(szDrvTable)); ++i) {
         pRddNode = hb_rddFindNode(szDrvTable[i], nullptr);
         if (pRddNode) {
           pRddInfo->szDefaultRDD = szDrvTable[i];
