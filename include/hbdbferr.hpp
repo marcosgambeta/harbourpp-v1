@@ -49,42 +49,42 @@ HB_EXTERN_BEGIN
 
 /* DBF errors */
 #if defined(__cplusplus)
-constexpr unsigned int EDBF_UNSUPPORTED = 1000;
-constexpr unsigned int EDBF_OPEN_DBF = 1001;
-constexpr unsigned int EDBF_OPEN_MEMO = 1002;
-constexpr unsigned int EDBF_OPEN_INDEX = 1003;
-constexpr unsigned int EDBF_CREATE_DBF = 1004;
-constexpr unsigned int EDBF_CREATE_MEMO = 1005;
-constexpr unsigned int EDBF_CREATE_INDEX = 1006;
-constexpr unsigned int EDBF_CREATE = EDBF_CREATE_INDEX;
-constexpr unsigned int EDBF_READ = 1010;
-constexpr unsigned int EDBF_WRITE = 1011;
-constexpr unsigned int EDBF_CORRUPT = 1012;
-constexpr unsigned int EDBF_DATATYPE = 1020;
-constexpr unsigned int EDBF_DATAWIDTH = 1021;
-constexpr unsigned int EDBF_UNLOCKED = 1022;
-constexpr unsigned int EDBF_SHARED = 1023;
-constexpr unsigned int EDBF_APPENDLOCK = 1024;
-constexpr unsigned int EDBF_READONLY = 1025;
-constexpr unsigned int EDBF_LIMITEXCEEDED = 1027;
-constexpr unsigned int EDBF_LOCKTIMEOUT = 1035;
-constexpr unsigned int EDBF_LOCK = 1038;
+constexpr uint32_t EDBF_UNSUPPORTED = 1000;
+constexpr uint32_t EDBF_OPEN_DBF = 1001;
+constexpr uint32_t EDBF_OPEN_MEMO = 1002;
+constexpr uint32_t EDBF_OPEN_INDEX = 1003;
+constexpr uint32_t EDBF_CREATE_DBF = 1004;
+constexpr uint32_t EDBF_CREATE_MEMO = 1005;
+constexpr uint32_t EDBF_CREATE_INDEX = 1006;
+constexpr uint32_t EDBF_CREATE = EDBF_CREATE_INDEX;
+constexpr uint32_t EDBF_READ = 1010;
+constexpr uint32_t EDBF_WRITE = 1011;
+constexpr uint32_t EDBF_CORRUPT = 1012;
+constexpr uint32_t EDBF_DATATYPE = 1020;
+constexpr uint32_t EDBF_DATAWIDTH = 1021;
+constexpr uint32_t EDBF_UNLOCKED = 1022;
+constexpr uint32_t EDBF_SHARED = 1023;
+constexpr uint32_t EDBF_APPENDLOCK = 1024;
+constexpr uint32_t EDBF_READONLY = 1025;
+constexpr uint32_t EDBF_LIMITEXCEEDED = 1027;
+constexpr uint32_t EDBF_LOCKTIMEOUT = 1035;
+constexpr uint32_t EDBF_LOCK = 1038;
 /* ORDER errors */
-constexpr unsigned int EDBF_INVALIDKEY = 1026;
-constexpr unsigned int EDBF_NOTINDEXED = 1201;
-constexpr unsigned int EDBF_INVALIDORDER = 1050;
-constexpr unsigned int EDBF_SCOPETYPE = 1051;
-constexpr unsigned int EDBF_NOTCUSTOM = 1052;
-constexpr unsigned int EDBF_INVALIDFOR = 1053;
-constexpr unsigned int EDBF_KEYLENGTH = 1054;
-constexpr unsigned int EDBF_SIGNATURE = 1055;
+constexpr uint32_t EDBF_INVALIDKEY = 1026;
+constexpr uint32_t EDBF_NOTINDEXED = 1201;
+constexpr uint32_t EDBF_INVALIDORDER = 1050;
+constexpr uint32_t EDBF_SCOPETYPE = 1051;
+constexpr uint32_t EDBF_NOTCUSTOM = 1052;
+constexpr uint32_t EDBF_INVALIDFOR = 1053;
+constexpr uint32_t EDBF_KEYLENGTH = 1054;
+constexpr uint32_t EDBF_SIGNATURE = 1055;
 //
-constexpr unsigned int EDBF_MEMOTYPE = 1056;
-constexpr unsigned int EDBF_MEMOTOOLONG = 1057;
+constexpr uint32_t EDBF_MEMOTYPE = 1056;
+constexpr uint32_t EDBF_MEMOTOOLONG = 1057;
 //
-constexpr unsigned int EDBF_CREATE_TEMP = 1060;
-constexpr unsigned int EDBF_WRITE_TEMP = 1061;
-constexpr unsigned int EDBF_READ_TEMP = 1062;
+constexpr uint32_t EDBF_CREATE_TEMP = 1060;
+constexpr uint32_t EDBF_WRITE_TEMP = 1061;
+constexpr uint32_t EDBF_READ_TEMP = 1062;
 #else
 #define EDBF_UNSUPPORTED                           1000
 #define EDBF_OPEN_DBF                              1001

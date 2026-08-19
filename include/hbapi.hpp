@@ -107,7 +107,7 @@ namespace Harbour
 {
   namespace Item
   {
-    enum Type : unsigned int
+    enum Type : uint32_t
     {
       NIL       = 0x00000,
       POINTER   = 0x00001,
@@ -1116,7 +1116,7 @@ typedef struct
 #endif // _HB_API_INTERNAL_
 
 // RDD method return codes
-typedef unsigned int HB_ERRCODE;
+typedef uint32_t HB_ERRCODE;
 
 // NOTA: mantido para compatibilidade
 #define HB_SUCCESS         0
@@ -1126,7 +1126,7 @@ typedef unsigned int HB_ERRCODE;
 #if defined(__cplusplus)
 namespace Harbour
 {
-  enum Result : unsigned int
+  enum Result : uint32_t
   {
     SUCCESS = 0,
     FAILURE = 1

@@ -435,9 +435,9 @@ constexpr uint8_t HB_CDP_MULTI2 = 0x20;
 
 // accented character sorting
 #if defined(__cplusplus)
-constexpr unsigned int HB_CDP_ACSORT_NONE = 0; // no special sorting for accented characters
-constexpr unsigned int HB_CDP_ACSORT_EQUAL = 1; // accented characters have the same weight as corresponding unaccented ones
-constexpr unsigned int HB_CDP_ACSORT_INTERLEAVED = 2; // accented characters sort after their unaccented counterparts only
+constexpr uint32_t HB_CDP_ACSORT_NONE = 0; // no special sorting for accented characters
+constexpr uint32_t HB_CDP_ACSORT_EQUAL = 1; // accented characters have the same weight as corresponding unaccented ones
+constexpr uint32_t HB_CDP_ACSORT_INTERLEAVED = 2; // accented characters sort after their unaccented counterparts only
                                                       // if the unaccented versions of all characters being compared are the
                                                       // same ( interleaving )
 #else
@@ -450,9 +450,9 @@ constexpr unsigned int HB_CDP_ACSORT_INTERLEAVED = 2; // accented characters sor
 
 // letter case sensitive sorting
 #if defined(__cplusplus)
-constexpr unsigned int HB_CDP_CSSORT_UPLO = 0; // upper letters first then lower ones
-constexpr unsigned int HB_CDP_CSSORT_MIXED = 1; // upper and lower letters are mixed
-constexpr unsigned int HB_CDP_CSSORT_IGNORE = 2; // ignore case
+constexpr uint32_t HB_CDP_CSSORT_UPLO = 0; // upper letters first then lower ones
+constexpr uint32_t HB_CDP_CSSORT_MIXED = 1; // upper and lower letters are mixed
+constexpr uint32_t HB_CDP_CSSORT_IGNORE = 2; // ignore case
 #else
 #define HB_CDP_CSSORT_UPLO          0     // upper letters first then lower ones
 #define HB_CDP_CSSORT_MIXED         1     // upper and lower letters are mixed
@@ -530,8 +530,8 @@ extern HB_EXPORT HB_BOOL hb_cdpRegisterNew(const char *id,
                                            PHB_UNITABLE uniTable,
                                            const char *pszUpper,
                                            const char *pszLower,
-                                           unsigned int nACSort,
-                                           unsigned int nCaseSort,
+                                           uint32_t nACSort,
+                                           uint32_t nCaseSort,
                                            HB_BOOL fUtf8);
 extern HB_EXPORT void hb_cdpBuildTransTable(PHB_UNITABLE uniTable);
 extern HB_EXPORT void hb_cdpReleaseAll(void);

@@ -405,7 +405,7 @@ HB_EXTERN_BEGIN
       struct hb_spinlock_r
       {
          HB_SPINLOCK_T  lock;
-         unsigned int   count;
+         uint32_t   count;
          HB_THREAD_ID   thid;
       };
 

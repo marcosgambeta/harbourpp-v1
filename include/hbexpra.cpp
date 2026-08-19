@@ -556,7 +556,7 @@ static const char *s_szStaticFun[] = {"HB_MUTEXCREATE", "__BREAKBLOCK"};
 
 static HB_BOOL hb_compStaticFunction(const char *szName)
 {
-  unsigned int ui;
+  uint32_t ui;
 
   for (ui = 0; ui < HB_SIZEOFARRAY(s_szStaticFun); ++ui)
   {

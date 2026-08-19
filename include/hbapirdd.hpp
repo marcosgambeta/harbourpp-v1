@@ -114,7 +114,7 @@ NOTE:
 namespace Harbour {
    namespace DB {
       namespace Field {
-         enum Type : unsigned int {
+         enum Type : uint32_t {
             NONE      = 0,
             STRING    = 1,  /* "C" */
             LOGICAL   = 2,  /* "L" */
