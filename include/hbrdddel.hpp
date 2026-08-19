@@ -91,8 +91,8 @@ typedef struct _DELIMAREA
    char        cSeparator;          /* Field separator */
    uint16_t   uiRecordLen;         /* Size of record */
    uint16_t * pFieldOffset;        /* Pointer to field offset array */
-   HB_BYTE *   pRecord;             /* Buffer of record data */
-   HB_BYTE *   pBuffer;             /* Read/Write */
+   uint8_t *   pRecord;             /* Buffer of record data */
+   uint8_t *   pBuffer;             /* Read/Write */
    HB_SIZE     nBufferSize;         /* IO buffer size */
    HB_SIZE     nBufferRead;         /* Number of bytes in read buffer */
    HB_SIZE     nBufferAtRead;       /* The index in the buffer where we should read next peace of data */

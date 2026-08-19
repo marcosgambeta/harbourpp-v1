@@ -102,11 +102,11 @@ extern PHB_EXPR hb_macroExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP
 /* Declarations for functions macro.c */
 #if defined(HB_MACRO_SUPPORT)
 
-extern void hb_macroGenPCode1( HB_BYTE byte, HB_COMP_DECL );
-extern void hb_macroGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL );
-extern void hb_macroGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL );
-extern void hb_macroGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte4, HB_COMP_DECL );
-extern void hb_macroGenPCodeN( const HB_BYTE * pBuffer, HB_SIZE nSize, HB_COMP_DECL );
+extern void hb_macroGenPCode1( uint8_t byte, HB_COMP_DECL );
+extern void hb_macroGenPCode2( uint8_t byte1, uint8_t byte2, HB_COMP_DECL );
+extern void hb_macroGenPCode3( uint8_t byte1, uint8_t byte2, uint8_t byte3, HB_COMP_DECL );
+extern void hb_macroGenPCode4( uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, HB_COMP_DECL );
+extern void hb_macroGenPCodeN( const uint8_t * pBuffer, HB_SIZE nSize, HB_COMP_DECL );
 
 extern HB_SIZE hb_macroGenJump( HB_ISIZ nOffset, HB_COMP_DECL );
 extern HB_SIZE hb_macroGenJumpFalse( HB_ISIZ nOffset, HB_COMP_DECL );
@@ -134,7 +134,7 @@ extern void hb_macroGenPushAliasedVar( const char * szVarName,
                                        const char * szAlias,
                                        HB_MAXINT nWorkarea, HB_COMP_DECL );
 extern void hb_macroGenPushLogical( int32_t iTrueFalse, HB_COMP_DECL );
-extern void hb_macroGenPushDouble( double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COMP_DECL );
+extern void hb_macroGenPushDouble( double dNumber, uint8_t bWidth, uint8_t bDec, HB_COMP_DECL );
 extern void hb_macroGenPushFunCall( const char * szFunName, int32_t iFlags, HB_COMP_DECL );
 extern void hb_macroGenPushFunSym( const char * szFunName, int32_t iFlags, HB_COMP_DECL );
 extern void hb_macroGenPushFunRef( const char * szFunName, HB_COMP_DECL );

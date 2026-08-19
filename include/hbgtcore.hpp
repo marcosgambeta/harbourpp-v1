@@ -144,20 +144,20 @@ typedef struct
    int32_t       (* GetCursorStyle) ( HB_GT_PTR );
    void      (* SetCursorStyle) ( HB_GT_PTR, int32_t );
    void      (* GetScrCursor) ( HB_GT_PTR, int32_t *, int32_t *, int32_t * );
-   HB_BOOL   (* GetScrChar) ( HB_GT_PTR, int32_t, int32_t, int32_t *, HB_BYTE *, uint16_t * );
-   HB_BOOL   (* PutScrChar) ( HB_GT_PTR, int32_t, int32_t, int32_t, HB_BYTE, uint16_t );
-   HB_BOOL   (* GetScrUC) ( HB_GT_PTR, int32_t, int32_t, int32_t *, HB_BYTE *, uint8_t *, HB_BOOL );
+   HB_BOOL   (* GetScrChar) ( HB_GT_PTR, int32_t, int32_t, int32_t *, uint8_t *, uint16_t * );
+   HB_BOOL   (* PutScrChar) ( HB_GT_PTR, int32_t, int32_t, int32_t, uint8_t, uint16_t );
+   HB_BOOL   (* GetScrUC) ( HB_GT_PTR, int32_t, int32_t, int32_t *, uint8_t *, uint8_t *, HB_BOOL );
    void      (* DispBegin) ( HB_GT_PTR );
    void      (* DispEnd) ( HB_GT_PTR );
    int32_t       (* DispCount) ( HB_GT_PTR );
-   HB_BOOL   (* GetChar) ( HB_GT_PTR, int32_t, int32_t, int32_t *, HB_BYTE *, uint16_t * );
-   HB_BOOL   (* PutChar) ( HB_GT_PTR, int32_t, int32_t, int32_t, HB_BYTE, uint16_t );
+   HB_BOOL   (* GetChar) ( HB_GT_PTR, int32_t, int32_t, int32_t *, uint8_t *, uint16_t * );
+   HB_BOOL   (* PutChar) ( HB_GT_PTR, int32_t, int32_t, int32_t, uint8_t, uint16_t );
    long      (* RectSize) ( HB_GT_PTR, int32_t, int32_t, int32_t, int32_t );
    void      (* Save) ( HB_GT_PTR, int32_t, int32_t, int32_t, int32_t, void * );
    void      (* Rest) ( HB_GT_PTR, int32_t, int32_t, int32_t, int32_t, const void * );
    int32_t       (* PutText) ( HB_GT_PTR, int32_t, int32_t, int32_t, const char *, HB_SIZE );
    int32_t       (* PutTextW) ( HB_GT_PTR, int32_t, int32_t, int32_t, const HB_WCHAR *, HB_SIZE );
-   void      (* Replicate) ( HB_GT_PTR, int32_t, int32_t, int32_t, HB_BYTE, uint16_t, HB_SIZE );
+   void      (* Replicate) ( HB_GT_PTR, int32_t, int32_t, int32_t, uint8_t, uint16_t, HB_SIZE );
    void      (* WriteAt) ( HB_GT_PTR, int32_t, int32_t, const char *, HB_SIZE );
    void      (* WriteAtW) ( HB_GT_PTR, int32_t, int32_t, const HB_WCHAR *, HB_SIZE );
    void      (* Write) ( HB_GT_PTR, const char *, HB_SIZE );
@@ -262,8 +262,8 @@ typedef union
    struct
    {
       HB_U16   usChar;
-      HB_BYTE  bColor;
-      HB_BYTE  bAttr;
+      uint8_t  bColor;
+      uint8_t  bAttr;
    } c;
    HB_U32   uiValue;
 } HB_SCREENCELL;

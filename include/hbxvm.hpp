@@ -96,7 +96,7 @@ extern HB_EXPORT void hb_xvmFrame(int32_t iLocals, int32_t iParams);
 extern HB_EXPORT void hb_xvmVFrame(int32_t iLocals, int32_t iParams);
 extern HB_EXPORT void hb_xvmSFrame(PHB_SYMB pSymbol);
 extern HB_EXPORT void hb_xvmStatics(PHB_SYMB pSymbol, uint16_t uiStatics);
-extern HB_EXPORT void hb_xvmThreadStatics(uint16_t uiStatics, const HB_BYTE * statics);
+extern HB_EXPORT void hb_xvmThreadStatics(uint16_t uiStatics, const uint8_t * statics);
 extern HB_EXPORT void hb_xvmParameter(PHB_SYMB pSymbol, int32_t iParams);
 // pops the latest stack value into stack.Return
 extern HB_EXPORT void hb_xvmRetValue(void);
@@ -112,11 +112,11 @@ extern HB_EXPORT void hb_xvmPopStatic(uint16_t uiStatic);
 extern HB_EXPORT HB_BOOL hb_xvmPushVariable(PHB_SYMB pSymbol);
 extern HB_EXPORT HB_BOOL hb_xvmPopVariable(PHB_SYMB pSymbol);
 // creates a codeblock
-extern HB_EXPORT void hb_xvmPushBlock(const HB_BYTE * pCode, PHB_SYMB pSymbols);
+extern HB_EXPORT void hb_xvmPushBlock(const uint8_t * pCode, PHB_SYMB pSymbols);
 // creates a codeblock
-extern HB_EXPORT void hb_xvmPushBlockShort(const HB_BYTE * pCode, PHB_SYMB pSymbols);
+extern HB_EXPORT void hb_xvmPushBlockShort(const uint8_t * pCode, PHB_SYMB pSymbols);
 // creates a codeblock
-extern HB_EXPORT void hb_xvmPushBlockLarge(const HB_BYTE * pCode, PHB_SYMB pSymbols);
+extern HB_EXPORT void hb_xvmPushBlockLarge(const uint8_t * pCode, PHB_SYMB pSymbols);
 extern HB_EXPORT void hb_xvmPushSelf(void);
 extern HB_EXPORT void hb_xvmPushVParams(void);
 extern HB_EXPORT void hb_xvmPushAParams(void);
@@ -223,7 +223,7 @@ extern HB_EXPORT HB_BOOL hb_xvmArrayPop(void);
 extern HB_EXPORT void hb_xvmHashGen(HB_SIZE nElements);
 
 extern HB_EXPORT void hb_xvmLocalName(uint16_t uiLocal, const char * szLocalName);
-extern HB_EXPORT void hb_xvmStaticName(HB_BYTE bIsGlobal, uint16_t uiStatic, const char * szStaticName);
+extern HB_EXPORT void hb_xvmStaticName(uint8_t bIsGlobal, uint16_t uiStatic, const char * szStaticName);
 extern HB_EXPORT void hb_xvmModuleName(const char * szModuleName);
 
 extern HB_EXPORT HB_BOOL hb_xvmMacroDo(uint16_t uiArgSets);

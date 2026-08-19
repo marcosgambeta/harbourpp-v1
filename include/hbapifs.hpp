@@ -461,8 +461,8 @@ extern HB_EXPORT HB_BOOL      hb_fileDetach( PHB_FILE pFile );
 extern HB_EXPORT HB_BOOL      hb_fileIsLocal( PHB_FILE pFile );
 extern HB_EXPORT HB_BOOL      hb_fileIsLocalName( const char * pszFileName );
 extern HB_EXPORT HB_SIZE      hb_fileResult( HB_SIZE nSize );
-extern HB_EXPORT HB_BYTE *    hb_fileLoad( const char * pszFileName, HB_SIZE nMaxSize, HB_SIZE * pnSize );
-extern HB_EXPORT HB_BYTE *    hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize );
+extern HB_EXPORT uint8_t *    hb_fileLoad( const char * pszFileName, HB_SIZE nMaxSize, HB_SIZE * pnSize );
+extern HB_EXPORT uint8_t *    hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize );
 extern HB_EXPORT HB_BOOL      hb_fileSave( const char * pszFileName, const void * buffer, HB_SIZE nSize );
 
 /* interface to PRG level hb_vf*() file pointer items */

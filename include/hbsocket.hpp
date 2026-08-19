@@ -153,7 +153,7 @@ typedef struct _HB_SOCKEX
    long      inbuffer;
    long      posbuffer;
    long      readahead;
-   HB_BYTE * buffer;
+   uint8_t * buffer;
    void *    cargo;
    const HB_SOCKET_FILTER * pFilter;
 }

@@ -68,7 +68,7 @@ extern HB_EXPORT void hb_vmAtQuit(HB_INIT_FUNC pFunc, void *cargo);
 // Harbour virtual machine functions
 
 // invokes the virtual machine
-extern HB_EXPORT void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols) HB_FLATTEN_ATTR;
+extern HB_EXPORT void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols) HB_FLATTEN_ATTR;
 // module symbols initialization with extended information
 extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
 // module symbols initialization with extended information

@@ -53,20 +53,20 @@ HB_EXTERN_BEGIN
 
 typedef struct _DBFHEADER
 {
-   HB_BYTE   bVersion;
-   HB_BYTE   bYear;
-   HB_BYTE   bMonth;
-   HB_BYTE   bDay;
-   HB_BYTE   ulRecCount[ 4 ];
-   HB_BYTE   uiHeaderLen[ 2 ];
-   HB_BYTE   uiRecordLen[ 2 ];
-   HB_BYTE   bReserved1[ 2 ];
-   HB_BYTE   bTransaction;       /* 1-transaction begin */
-   HB_BYTE   bEncrypted;         /* 1-encrypted table */
-   HB_BYTE   bReserved2[ 12 ];
-   HB_BYTE   bHasTags;           /* bit filed: 1-production index, 2-memo file in VFP */
-   HB_BYTE   bCodePage;
-   HB_BYTE   bReserved3[ 2 ];
+   uint8_t   bVersion;
+   uint8_t   bYear;
+   uint8_t   bMonth;
+   uint8_t   bDay;
+   uint8_t   ulRecCount[ 4 ];
+   uint8_t   uiHeaderLen[ 2 ];
+   uint8_t   uiRecordLen[ 2 ];
+   uint8_t   bReserved1[ 2 ];
+   uint8_t   bTransaction;       /* 1-transaction begin */
+   uint8_t   bEncrypted;         /* 1-encrypted table */
+   uint8_t   bReserved2[ 12 ];
+   uint8_t   bHasTags;           /* bit filed: 1-production index, 2-memo file in VFP */
+   uint8_t   bCodePage;
+   uint8_t   bReserved3[ 2 ];
 } DBFHEADER;
 
 typedef DBFHEADER * LPDBFHEADER;
@@ -77,16 +77,16 @@ typedef DBFHEADER * LPDBFHEADER;
 
 typedef struct _DBFFIELD
 {
-   HB_BYTE   bName[ 11 ];
-   HB_BYTE   bType;
-   HB_BYTE   bReserved1[ 4 ];      /* offset from record begin in FP */
-   HB_BYTE   bLen;
-   HB_BYTE   bDec;
-   HB_BYTE   bFieldFlags;          /* 1-system column, 2-nullable, 4-binary */
-   HB_BYTE   bCounter[ 4 ];        /* auto-increment counter */
-   HB_BYTE   bStep;                /* auto-increment step */
-   HB_BYTE   bReserved2[ 7 ];
-   HB_BYTE   bHasTag;
+   uint8_t   bName[ 11 ];
+   uint8_t   bType;
+   uint8_t   bReserved1[ 4 ];      /* offset from record begin in FP */
+   uint8_t   bLen;
+   uint8_t   bDec;
+   uint8_t   bFieldFlags;          /* 1-system column, 2-nullable, 4-binary */
+   uint8_t   bCounter[ 4 ];        /* auto-increment counter */
+   uint8_t   bStep;                /* auto-increment step */
+   uint8_t   bReserved2[ 7 ];
+   uint8_t   bHasTag;
 } DBFFIELD;
 
 typedef DBFFIELD * LPDBFFIELD;
@@ -97,9 +97,9 @@ typedef DBFFIELD * LPDBFFIELD;
 
 typedef struct _SMTFIELD
 {
-   HB_BYTE   type[ 2 ];
-   HB_BYTE   length[ 4 ];
-   HB_BYTE   block[ 4 ];
+   uint8_t   type[ 2 ];
+   uint8_t   length[ 4 ];
+   uint8_t   block[ 4 ];
 } SMTFIELD;
 
 typedef SMTFIELD * LPSMTFIELD;

@@ -574,7 +574,7 @@ typedef struct
    int32_t            iDefinitions;     // number of rules in pDefinitions
    int32_t            iTranslations;    // number of rules in pTranslations
    int32_t            iCommands;        // number of rules in pCommands
-   HB_BYTE        pMap[ HB_PP_HASHID_MAX ]; // translation map
+   uint8_t        pMap[ HB_PP_HASHID_MAX ]; // translation map
 
    HB_PP_TOKEN *  pTokenOut;        // preprocessed tokens
    HB_PP_TOKEN ** pNextTokenPtr;    // pointer to the last NULL pointer in token list
