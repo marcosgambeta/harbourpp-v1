@@ -1944,7 +1944,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
     nRead = 0;
 
     while (nCount) {
-      unsigned int uiToRead;
+      uint32_t uiToRead;
       long lRead;
 
       // Determine how much to read this time
@@ -1952,7 +1952,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
         uiToRead = INT_MAX;
         nCount -= static_cast<HB_SIZE>(uiToRead);
       } else {
-        uiToRead = static_cast<unsigned int>(nCount);
+        uiToRead = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -2042,7 +2042,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
   if (nCount) {
 #if defined(HB_FS_IO_16BIT)
     while (nCount) {
-      unsigned int uiToWrite;
+      uint32_t uiToWrite;
       long lWritten;
 
       // Determine how much to write this time
@@ -2050,7 +2050,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
         uiToWrite = INT_MAX;
         nCount -= static_cast<HB_SIZE>(uiToWrite);
       } else {
-        uiToWrite = static_cast<unsigned int>(nCount);
+        uiToWrite = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 

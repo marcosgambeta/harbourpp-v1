@@ -54,7 +54,7 @@ HB_FUNC(HB_HMAC_SHA224)
   unsigned char mac[SHA224_DIGEST_SIZE];
   hmac_sha224_ctx ctx;
 
-  hb_hmac_sha224_init(&ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)));
+  hb_hmac_sha224_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
 #if HB_SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
@@ -62,13 +62,13 @@ HB_FUNC(HB_HMAC_SHA224)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -96,7 +96,7 @@ HB_FUNC(HB_HMAC_SHA256)
   unsigned char mac[SHA256_DIGEST_SIZE];
   hmac_sha256_ctx ctx;
 
-  hb_hmac_sha256_init(&ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)));
+  hb_hmac_sha256_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
 #if HB_SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
@@ -104,13 +104,13 @@ HB_FUNC(HB_HMAC_SHA256)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -138,7 +138,7 @@ HB_FUNC(HB_HMAC_SHA384)
   unsigned char mac[SHA384_DIGEST_SIZE];
   hmac_sha384_ctx ctx;
 
-  hb_hmac_sha384_init(&ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)));
+  hb_hmac_sha384_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
 #if HB_SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
@@ -146,13 +146,13 @@ HB_FUNC(HB_HMAC_SHA384)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -180,7 +180,7 @@ HB_FUNC(HB_HMAC_SHA512)
   unsigned char mac[SHA512_DIGEST_SIZE];
   hmac_sha512_ctx ctx;
 
-  hb_hmac_sha512_init(&ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)));
+  hb_hmac_sha512_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
 #if HB_SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
@@ -188,13 +188,13 @@ HB_FUNC(HB_HMAC_SHA512)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 

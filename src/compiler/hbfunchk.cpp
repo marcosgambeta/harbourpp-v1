@@ -112,7 +112,7 @@ static const HB_FUNCINFO s_stdFunc[] =
 
 HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *szFuncCall, int32_t iArgs)
 {
-  unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_stdFunc) - 1, uiMiddle;
+  uint32_t uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_stdFunc) - 1, uiMiddle;
   auto iLen = static_cast<int32_t>(strlen(szFuncCall));
   int32_t iCmp;
 

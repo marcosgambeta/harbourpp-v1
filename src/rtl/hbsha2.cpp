@@ -62,13 +62,13 @@ HB_FUNC(HB_SHA224)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -104,13 +104,13 @@ HB_FUNC(HB_SHA256)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -146,13 +146,13 @@ HB_FUNC(HB_SHA384)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 
@@ -188,13 +188,13 @@ HB_FUNC(HB_SHA512)
     HB_SIZE nDone = 0;
 
     while (nCount) {
-      unsigned int uiChunk;
+      uint32_t uiChunk;
 
       if (nCount > static_cast<HB_SIZE>(UINT_MAX)) {
         uiChunk = UINT_MAX;
         nCount -= static_cast<HB_SIZE>(uiChunk);
       } else {
-        uiChunk = static_cast<unsigned int>(nCount);
+        uiChunk = static_cast<uint32_t>(nCount);
         nCount = 0;
       }
 

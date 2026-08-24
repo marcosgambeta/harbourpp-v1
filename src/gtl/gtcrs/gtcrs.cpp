@@ -124,7 +124,7 @@ struct InOutBase
   int row, col;
   int maxrow, maxcol;
   int is_color;
-  unsigned int disp_count;
+  uint32_t disp_count;
 
   char *acsc, *beep, *flash, *civis, *cnorm, *cvvis;
 
@@ -1712,7 +1712,7 @@ static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *c
 static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_t termpid)
 {
   int bg, fg;
-  unsigned int i;
+  uint32_t i;
   char buf[256], *ptr, *crsterm = nullptr;
 
   auto ioBase = static_cast<InOutBase *>(hb_xgrabz(sizeof(InOutBase)));
@@ -1870,7 +1870,7 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
       }
 #endif
     for (i = 0; i < 256; i++) {
-      unsigned int n;
+      uint32_t n;
       bg = (i >> 4) & 0x07; // extract background color bits 4-6
       fg = (i & 0x07);      // extract foreground color bits 0-2
       n = bg * 8 + fg;

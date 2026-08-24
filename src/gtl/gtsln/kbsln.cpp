@@ -89,10 +89,10 @@
 
 // extra keysyms definitions
 #define SL_KEY_NUM_5 SL_KEY_B2 // this is checked explicitly
-#define SL_KEY_MAX (static_cast<unsigned int>(0x2000))
+#define SL_KEY_MAX (static_cast<uint32_t>(0x2000))
 #define SL_KEY_ESC (SL_KEY_MAX + 1)
 #define SL_KEY_MOU (SL_KEY_ESC + 1)
-#define SL_KEY_ALT(ch) (SL_KEY_MAX + (static_cast<unsigned int>(ch)))
+#define SL_KEY_ALT(ch) (SL_KEY_MAX + (static_cast<uint32_t>(ch)))
 
 // we choose Ctrl+\ as an abort key on Unixes where it is a SIGQUIT key by default
 // abort key is Ctrl+\ on Unix ( but Ctrl+@ on Linux console )
@@ -294,7 +294,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
 #endif
 
   static int InDeadState = false;
-  unsigned int ch, tmp, kbdflags;
+  uint32_t ch, tmp, kbdflags;
 
   // user AbortKey break
   if (SLKeyBoard_Quit == 1) {
@@ -413,7 +413,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
     int n = 0;
 
     if (hb_cdpUTF8ToU16NextChar(static_cast<uint8_t>(ch), &n, &wc)) {
-      unsigned int buf[10], i = 0;
+      uint32_t buf[10], i = 0;
 
       while (n > 0) {
         if (SLang_input_pending(hb_sln_escDelay == 0 ? -100 : -HB_MAX(hb_sln_escDelay, 0)) == 0) {

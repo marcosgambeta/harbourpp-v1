@@ -235,7 +235,7 @@ static int arc4_seed_sysctl_linux(void)
   }
 
   /* make sure that the buffer actually got set. */
-  for (unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i) {
+  for (uint32_t i = 0, any_set = 0; i < sizeof(buf); ++i) {
     any_set |= buf[i];
   }
 

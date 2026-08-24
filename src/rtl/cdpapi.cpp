@@ -2545,7 +2545,7 @@ static uint8_t hb_cdpUtf8Char(const char **pStrPtr, PHB_UNITABLE uniTable)
 #define _HB_CDP_GETUC(p) (!fUtf8 ? static_cast<uint8_t>(*(p) ? *(p)++ : 0) : hb_cdpUtf8Char(&(p), uniTable))
 
 static HB_CODEPAGE *hb_buildCodePage(const char *id, const char *info, PHB_UNITABLE uniTable, const char *pszUpper,
-                                     const char *pszLower, unsigned int nACSort, unsigned int nCaseSort, HB_BOOL fUtf8)
+                                     const char *pszLower, uint32_t nACSort, uint32_t nCaseSort, HB_BOOL fUtf8)
 {
   bool lSort, fError;
   int iMulti, iAcc, iAccUp, iAccLo, iSortUp, iSortLo, i;
@@ -3016,7 +3016,7 @@ HB_BOOL hb_cdpRegisterRaw(HB_CODEPAGE *cdp)
 }
 
 HB_BOOL hb_cdpRegisterNew(const char *id, const char *info, PHB_UNITABLE uniTable, const char *pszUpper,
-                          const char *pszLower, unsigned int nACSort, unsigned int nCaseSort, HB_BOOL fUtf8)
+                          const char *pszLower, uint32_t nACSort, uint32_t nCaseSort, HB_BOOL fUtf8)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG,

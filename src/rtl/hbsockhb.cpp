@@ -280,7 +280,7 @@ int hb_sockexRegister(const HB_SOCKET_FILTER *pFilter)
 
 /* helper functions */
 
-static bool s_socketaddrParam(int iParam, void **pAddr, unsigned int *puiLen)
+static bool s_socketaddrParam(int iParam, void **pAddr, uint32_t *puiLen)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY);
 
@@ -824,7 +824,7 @@ HB_FUNC(HB_SOCKETGETSOCKNAME)
 
   if (socket != HB_NO_SOCKET) {
     void *addr;
-    unsigned int len;
+    uint32_t len;
 
     if (hb_socketGetSockName(socket, &addr, &len) == 0) {
       PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
@@ -848,7 +848,7 @@ HB_FUNC(HB_SOCKETGETPEERNAME)
 
   if (socket != HB_NO_SOCKET) {
     void *addr;
-    unsigned int len;
+    uint32_t len;
 
     if (hb_socketGetPeerName(socket, &addr, &len) == 0) {
       PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
@@ -904,7 +904,7 @@ HB_FUNC(HB_SOCKETBIND)
 {
   HB_SOCKET socket = hb_socketParam(1);
   void *addr;
-  unsigned int len;
+  uint32_t len;
 
   if (socket != HB_NO_SOCKET && s_socketaddrParam(2, &addr, &len)) {
     hb_retl(hb_socketBind(socket, addr, len) == 0);
@@ -928,7 +928,7 @@ HB_FUNC(HB_SOCKETACCEPT)
   if (socket != HB_NO_SOCKET) {
     HB_SOCKET socketaccept;
     void *addr = nullptr;
-    unsigned int len;
+    uint32_t len;
 
     socketaccept = hb_socketAccept(socket, &addr, &len, hb_parnintdef(3, -1));
 
@@ -958,7 +958,7 @@ HB_FUNC(HB_SOCKETCONNECT)
 {
   HB_SOCKET socket = hb_socketParam(1);
   void *addr;
-  unsigned int len;
+  uint32_t len;
 
   if (socket != HB_NO_SOCKET && s_socketaddrParam(2, &addr, &len)) {
     HB_BOOL fResult = hb_socketConnect(socket, addr, len, hb_parnintdef(3, -1)) == 0;
@@ -1005,7 +1005,7 @@ HB_FUNC(HB_SOCKETSENDTO)
 {
   HB_SOCKET socket = hb_socketParam(1);
   void *addr;
-  unsigned int len;
+  uint32_t len;
 
   if (socket != HB_NO_SOCKET && s_socketaddrParam(5, &addr, &len)) {
     auto lLen = static_cast<long>(hb_parclen(2));
@@ -1058,7 +1058,7 @@ HB_FUNC(HB_SOCKETRECVFROM)
 
     if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
       void *addr = nullptr;
-      unsigned int len;
+      uint32_t len;
       long lRet;
 
       if (HB_ISNUM(3)) {
@@ -1239,7 +1239,7 @@ HB_FUNC(HB_SOCKETSELECT)
 HB_FUNC(HB_SOCKETRESOLVEINETADDR)
 {
   void *addr;
-  unsigned int len;
+  uint32_t len;
 
   s_socket_init();
   if (hb_socketResolveInetAddr(&addr, &len, hb_parc(1), hb_parni(2))) {
@@ -1273,7 +1273,7 @@ HB_FUNC(HB_SOCKETRESOLVEADDR)
 HB_FUNC(HB_SOCKETGETHOSTNAME)
 {
   void *addr;
-  unsigned int len;
+  uint32_t len;
 
   if (s_socketaddrParam(1, &addr, &len)) {
     char *szHostName = hb_socketGetHostName(addr, len);
