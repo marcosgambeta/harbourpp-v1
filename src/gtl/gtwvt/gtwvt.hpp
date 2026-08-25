@@ -253,8 +253,8 @@
 
 struct _HB_GTWVT_MNU
 {
-  int iKey;
-  int iEvent;
+  int32_t iKey;
+  int32_t iEvent;
   void *hName;
   LPCTSTR lpName;
   struct _HB_GTWVT_MNU *pNext;
@@ -266,13 +266,13 @@ using PHB_GTWVT_MNU = HB_GTWVT_MNU *;
 struct HB_GTWVT
 {
   PHB_GT pGT;  // core GT pointer
-  int iHandle; // window number
+  int32_t iHandle; // window number
 
   HINSTANCE hInstance; // parent window instance
-  int iCmdShow;
+  int32_t iCmdShow;
 
-  int ROWS; // number of displayable rows in window
-  int COLS; // number of displayable columns in window
+  int32_t ROWS; // number of displayable rows in window
+  int32_t COLS; // number of displayable columns in window
 
   TCHAR *TextLine; // buffer for text line
 
@@ -280,25 +280,25 @@ struct HB_GTWVT
 
   bool CaretExist;  // HB_TRUE if a caret has been created
   bool CaretHidden; // HB_TRUE if a caret has been hiden
-  int CaretSize;    // Height of solid caret
-  int CaretWidth;   // Width of solid caret
+  int32_t CaretSize;    // Height of solid caret
+  int32_t CaretWidth;   // Width of solid caret
 
   POINT MousePos; // the last mouse position
 
-  int Keys[128];     // Array to hold the characters & events
-  int keyPointerIn;  // Offset into key array for character to be placed
-  int keyPointerOut; // Offset into key array of next character to read
-  int keyLastPos;    // last inkey code position in buffer
-  int keyFlags;      // keyboard modifiers
+  int32_t Keys[128];     // Array to hold the characters & events
+  int32_t keyPointerIn;  // Offset into key array for character to be placed
+  int32_t keyPointerOut; // Offset into key array of next character to read
+  int32_t keyLastPos;    // last inkey code position in buffer
+  int32_t keyFlags;      // keyboard modifiers
 
   POINT PTEXTSIZE;             // size of the fixed width font
   bool FixedFont;              // HB_TRUE if current font is a fixed font
-  int *FixedSize;              // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
-  int fontHeight;              // requested font height
-  int fontWidth;               // requested font width
-  int fontWeight;              // Bold level
-  int fontQuality;             // requested font quality
-  int fontAttribute;           // font attribute: HB_GTI_FONTA_*
+  int32_t *FixedSize;              // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
+  int32_t fontHeight;              // requested font height
+  int32_t fontWidth;               // requested font width
+  int32_t fontWeight;              // Bold level
+  int32_t fontQuality;             // requested font quality
+  int32_t fontAttribute;           // font attribute: HB_GTI_FONTA_*
   TCHAR fontFace[LF_FACESIZE]; // requested font face name LF_FACESIZE #defined in wingdi.h
   HFONT hFont;                 // current font handle
 #if !defined(UNICODE)
@@ -314,16 +314,16 @@ struct HB_GTWVT
   void *hWindowTitle;
   LPCTSTR lpWindowTitle;
 
-  int CodePage; // Code page to use for display characters
+  int32_t CodePage; // Code page to use for display characters
 #if !defined(UNICODE)
-  int boxCodePage; // Code page to use for display draw line characters
+  int32_t boxCodePage; // Code page to use for display draw line characters
 #else
   HB_WCHAR *wcTrans;  // unicode character translation table
   HB_SIZE wcTransLen; // size of unicode character translation table
 
   HBITMAP boxImage[HB_BOXCH_TRANS_MAX];
   uint8_t boxIndex[HB_BOXCH_TRANS_COUNT];
-  int boxCount;
+  int32_t boxCount;
   HDC hBmpDC;
   HPEN hPen;
   HBRUSH hBrush;
@@ -337,11 +337,11 @@ struct HB_GTWVT
   bool bMaximized; // Flag is set when window has been maximized
   bool bFullScreen;
   bool bAltEnter; // Can use Alt+Enter to enter full screen mode
-  int MarginTop;
-  int MarginLeft;
+  int32_t MarginTop;
+  int32_t MarginLeft;
 
-  int iNewPosX;
-  int iNewPosY;
+  int32_t iNewPosX;
+  int32_t iNewPosY;
 
   bool bBeingMarked; // Flag to control DOS window like copy operation
   bool bBeginMarked;
@@ -355,8 +355,8 @@ struct HB_GTWVT
   RECT sRectNew;
   RECT sRectOld;
 
-  int CloseMode;
-  int ResizeMode; // Sets the resizing mode either to FONT or ROWS
+  int32_t CloseMode;
+  int32_t ResizeMode; // Sets the resizing mode either to FONT or ROWS
 
   bool bResizing;
   bool bAlreadySizing;
