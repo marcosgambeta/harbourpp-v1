@@ -136,7 +136,7 @@ using HB_PCONSOLE_SCREEN_BUFFER_INFOEX = HB_CONSOLE_SCREEN_BUFFER_INFOEX *;
 
 // ***********************************************************************
 
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
@@ -157,14 +157,14 @@ static auto s_fSpecialKeyHandling = false;
 static auto s_fAltKeyHandling = false;
 static auto s_fBreak = false;
 static auto s_fSuspend = false;
-static int s_iCursorStyle;
-static int s_iOldCurStyle;
-static int s_iCurRow;
-static int s_iCurCol;
-static int s_iUpdtTop;
-static int s_iUpdtBottom;
-static int s_iUpdtLeft;
-static int s_iUpdtRight;
+static int32_t s_iCursorStyle;
+static int32_t s_iOldCurStyle;
+static int32_t s_iCurRow;
+static int32_t s_iCurCol;
+static int32_t s_iUpdtTop;
+static int32_t s_iUpdtBottom;
+static int32_t s_iUpdtLeft;
+static int32_t s_iUpdtRight;
 static CHAR_INFO *s_pCharInfoScreen = nullptr;
 static HB_SIZE s_nScreenBuffSize = 0;
 
@@ -186,17 +186,17 @@ static DWORD s_dwNumRead;  // Ok to use DWORD here, because this is specific...
 static DWORD s_dwNumIndex; // ...to the Windows API, which defines DWORD, etc.
 static INPUT_RECORD s_irBuffer[INPUT_BUFFER_LEN];
 static auto s_fAltIsDown = false;
-static int s_iAltVal = 0;
+static int32_t s_iAltVal = 0;
 
-static int s_mouse_buttons;
-static int s_mouse_col;
-static int s_mouse_row;
+static int32_t s_mouse_buttons;
+static int32_t s_mouse_col;
+static int32_t s_mouse_row;
 
 // ***********************************************************************
 
-static int hb_gt_win_keyFlags(DWORD dwState)
+static int32_t hb_gt_win_keyFlags(DWORD dwState)
 {
-  int iFlags = 0;
+  int32_t iFlags = 0;
 
   if (dwState & SHIFT_PRESSED) {
     iFlags |= HB_KF_SHIFT;
@@ -211,9 +211,9 @@ static int hb_gt_win_keyFlags(DWORD dwState)
   return iFlags;
 }
 
-static int hb_gt_win_getKbdState(void)
+static int32_t hb_gt_win_getKbdState(void)
 {
-  int iKbdState = 0;
+  int32_t iKbdState = 0;
 
   if (GetKeyState(VK_SHIFT) & 0x80) {
     iKbdState |= HB_GTI_KBD_SHIFT;
@@ -369,7 +369,7 @@ static void hb_gt_win_xScreenUpdate(void)
 
 // ***********************************************************************
 
-static void hb_gt_win_xUpdtSet(int iTop, int iLeft, int iBottom, int iRight)
+static void hb_gt_win_xUpdtSet(int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xUpdtSet(%d, %d, %d, %d)", iTop, iLeft, iBottom, iRight));
@@ -433,7 +433,7 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xGetScreenContents(%p,%p)", static_cast<void*>(pGT), static_cast<void*>(psrWin)));
 #endif
 
-  int iCol;
+  int32_t iCol;
 
 #if !defined(UNICODE)
   HB_CODEPAGE *cdp;
@@ -453,8 +453,8 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
   }
 #endif
 
-  for (int iRow = psrWin->Top; iRow <= psrWin->Bottom; ++iRow) {
-    int i = iRow * _GetScreenWidth() + psrWin->Left;
+  for (int32_t iRow = psrWin->Top; iRow <= psrWin->Bottom; ++iRow) {
+    int32_t i = iRow * _GetScreenWidth() + psrWin->Left;
     for (iCol = psrWin->Left; iCol <= psrWin->Right; ++iCol) {
 #if defined(UNICODE)
       HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, static_cast<uint8_t>(s_pCharInfoScreen[i].Attributes), 0,
@@ -545,7 +545,7 @@ static bool hb_gt_win_SetPalette_Vista(bool bSet, COLORREF *colors)
   static P_SETCONSOLESCREENBUFFERINFOEX s_pSetConsoleScreenBufferInfoEx = nullptr;
 
   auto bDone = false;
-  int tmp;
+  int32_t tmp;
 
   if (!s_fChecked) {
     HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
@@ -823,7 +823,7 @@ static void hb_gt_win_Exit(PHB_GT pGT)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
+static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -908,7 +908,7 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
 
 // ***********************************************************************
 
-static const char *hb_gt_win_Version(PHB_GT pGT, int iType)
+static const char *hb_gt_win_Version(PHB_GT pGT, int32_t iType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -975,9 +975,9 @@ static HB_BOOL hb_gt_win_Resume(PHB_GT pGT)
 
 // ***********************************************************************
 
-static int Handle_Alt_Key(INPUT_RECORD *pInRec, bool *pAltIsDown, int *pAltVal)
+static int32_t Handle_Alt_Key(INPUT_RECORD *pInRec, bool *pAltIsDown, int32_t *pAltVal)
 {
-  int iVal = 0;
+  int32_t iVal = 0;
 
   switch ((pInRec->Event.KeyEvent.dwControlKeyState & ENHANCED_KEY) == 0 ? pInRec->Event.KeyEvent.wVirtualScanCode
                                                                          : 0) {
@@ -1023,9 +1023,9 @@ static int Handle_Alt_Key(INPUT_RECORD *pInRec, bool *pAltIsDown, int *pAltVal)
   return iVal;
 }
 
-static int SpecialHandling(WORD wScan, int iKey, bool fShifted)
+static int32_t SpecialHandling(WORD wScan, int32_t iKey, bool fShifted)
 {
-  int iStd, iShift;
+  int32_t iStd, iShift;
 
   switch (wScan) {
   case 2:
@@ -1124,7 +1124,7 @@ static int SpecialHandling(WORD wScan, int iKey, bool fShifted)
   return iKey;
 }
 
-static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
+static int32_t hb_gt_win_ReadKey(PHB_GT pGT, int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -1132,7 +1132,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 
   HB_SYMBOL_UNUSED(iEventMask);
 
-  int iKey = 0;
+  int32_t iKey = 0;
 
   // First check for Ctrl+Break, which is handled by gtwin.c
   if (s_fBreak) {
@@ -1247,8 +1247,8 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
       WORD wScan = pInRec->Event.KeyEvent.wVirtualScanCode;
       WORD wVKey = pInRec->Event.KeyEvent.wVirtualKeyCode;
       DWORD dwState = pInRec->Event.KeyEvent.dwControlKeyState;
-      int iFlags = hb_gt_win_keyFlags(dwState);
-      int iChar = 0;
+      int32_t iFlags = hb_gt_win_keyFlags(dwState);
+      int32_t iChar = 0;
 
       if (pInRec->Event.KeyEvent.wRepeatCount-- > 1) {
         fPop = false;
@@ -1636,7 +1636,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
           iKey = HB_INKEY_NEW_UNICODEF(iChar, iFlags);
         }
 #else
-        int u = HB_GTSELF_KEYTRANS(pGT, iChar);
+        int32_t u = HB_GTSELF_KEYTRANS(pGT, iChar);
         if (u) {
           iKey = HB_INKEY_NEW_UNICODEF(u, iFlags);
         }
@@ -1667,7 +1667,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
         iKey = HB_K_RESIZE;
       }
     } else if (pInRec->EventType == MOUSE_EVENT) {
-      int iFlags = hb_gt_win_keyFlags(pInRec->Event.MouseEvent.dwControlKeyState);
+      int32_t iFlags = hb_gt_win_keyFlags(pInRec->Event.MouseEvent.dwControlKeyState);
 
       // mouse wheel events use screen based mouse position
       if (pInRec->Event.MouseEvent.dwEventFlags == MOUSE_HWHEELED) {
@@ -1759,7 +1759,7 @@ static bool hb_gt_win_FullScreen(HB_BOOL bFullScreen)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, pInfo));
@@ -1979,21 +1979,21 @@ static HB_BOOL hb_gt_win_mouse_IsPresent(PHB_GT pGT)
   return s_fMouseEnable;
 }
 
-static void hb_gt_win_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
+static void hb_gt_win_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
 {
   HB_SYMBOL_UNUSED(pGT);
   *piRow = s_mouse_row;
   *piCol = s_mouse_col;
 }
 
-static void hb_gt_win_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
+static void hb_gt_win_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
 {
   HB_SYMBOL_UNUSED(pGT);
   s_mouse_row = iRow;
   s_mouse_col = iCol;
 }
 
-static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int iButton)
+static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -2010,7 +2010,7 @@ static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int iButton)
   return fReturn;
 }
 
-static int hb_gt_win_mouse_CountButton(PHB_GT pGT)
+static int32_t hb_gt_win_mouse_CountButton(PHB_GT pGT)
 {
   DWORD dwCount = 0;
   HB_SYMBOL_UNUSED(pGT);
@@ -2020,7 +2020,7 @@ static int hb_gt_win_mouse_CountButton(PHB_GT pGT)
 
 // ***********************************************************************
 
-static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
+static void hb_gt_win_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
@@ -2028,10 +2028,10 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 
   if (iSize > 0 && s_pCharInfoScreen && iRow < static_cast<int32_t>(_GetScreenHeight()) &&
       iCol < static_cast<int32_t>(_GetScreenWidth())) {
-    int iColor;
+    int32_t iColor;
     uint8_t bAttr;
-    int iFirst = iCol;
-    int i = (iRow * _GetScreenWidth() + iCol);
+    int32_t iFirst = iCol;
+    int32_t i = (iRow * _GetScreenWidth() + iCol);
 
     while (iSize-- > 0) {
 #if defined(UNICODE)
@@ -2065,7 +2065,7 @@ static void hb_gt_win_Refresh(PHB_GT pGT)
 
   HB_GTSUPER_REFRESH(pGT);
   if (s_pCharInfoScreen) {
-    int iRow, iCol, iStyle;
+    int32_t iRow, iCol, iStyle;
 
     HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
 
