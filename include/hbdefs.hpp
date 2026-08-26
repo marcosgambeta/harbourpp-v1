@@ -566,10 +566,10 @@ typedef HB_U32 HB_FATTR;
 /* type for memory pointer diff */
 #if defined(HB_OS_WIN_64)
    typedef HB_LONGLONG HB_PTRDIFF;
-   typedef HB_ULONGLONG HB_PTRUINT;
+   typedef HB_ULONGLONG HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
 #else
    typedef long HB_PTRDIFF;
-   typedef unsigned long HB_PTRUINT;
+   typedef unsigned long HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
 #endif
 
 /* type for file offsets */
@@ -1467,7 +1467,7 @@ typedef HB_U32 HB_FATTR;
 
 #define HB_SIZEOFARRAY( var )       ( sizeof( var ) / sizeof( *var ) )
 
-#define HB_UNCONST( p )       ( ( void * ) ( HB_PTRUINT ) ( const void * ) ( p ) )
+#define HB_UNCONST( p )       ( ( void * ) ( uintptr_t ) ( const void * ) ( p ) )
 #define HB_DECONST( c, p )    ( ( c ) HB_UNCONST( p ) )
 
 
