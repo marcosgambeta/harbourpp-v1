@@ -921,7 +921,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 HB_FUNC(WVT_CREATEDIALOGMODAL)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
-  HB_PTRDIFF iResult = 0;
+  intptr_t iResult = 0;
 
   if (_s) {
     int iIndex;
