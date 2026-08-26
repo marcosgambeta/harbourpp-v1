@@ -875,7 +875,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   PHB_DYNS pExecSym;
   int iIndex;
   int iResource = hb_parni(4);
-  HB_PTRDIFF iResult = 0;
+  intptr_t iResult = 0;
   HWND hParent = HB_ISNUM(5) ? (HWND)(uintptr_t)hb_parnint(5) : _s->hWnd;
 
   // check if we still have room for a new dialog
