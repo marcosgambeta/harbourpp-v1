@@ -565,10 +565,10 @@ typedef HB_U32 HB_FATTR;
 
 /* type for memory pointer diff */
 #if defined(HB_OS_WIN_64)
-   typedef HB_LONGLONG HB_PTRDIFF;
+   typedef HB_LONGLONG HB_PTRDIFF; // NOTE: HB_PTRDIFF deprecated in core code
    typedef HB_ULONGLONG HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
 #else
-   typedef long HB_PTRDIFF;
+   typedef long HB_PTRDIFF; // NOTE: HB_PTRDIFF deprecated in core code
    typedef unsigned long HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
 #endif
 
@@ -582,8 +582,8 @@ typedef HB_U32 HB_FATTR;
 #endif
 
 #if defined(HB_OS_WIN)
-   typedef HB_PTRDIFF HB_FHANDLE;
-   typedef HB_PTRDIFF HB_NHANDLE;
+   typedef intptr_t HB_FHANDLE;
+   typedef intptr_t HB_NHANDLE;
 #  define hb_numToHandle( h )   ( ( HB_FHANDLE ) ( HB_NHANDLE ) ( h ) )
 #else
    typedef int HB_FHANDLE;
