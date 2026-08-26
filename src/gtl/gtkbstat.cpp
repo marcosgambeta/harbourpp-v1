@@ -55,7 +55,7 @@
 
 int32_t hb_gt_winapi_getKbdState(void)
 {
-  BYTE kbState[256];
+  uint8_t kbState[256];
   int32_t iKbdState = 0;
 
   if (GetKeyboardState(kbState)) {
@@ -115,7 +115,7 @@ int32_t hb_gt_winapi_getKbdState(void)
 
 void hb_gt_winapi_setKbdState(int32_t iKbdState)
 {
-  BYTE kbState[256];
+  uint8_t kbState[256];
 
   if (GetKeyboardState(kbState)) {
     kbState[VK_SHIFT] = (iKbdState & HB_GTI_KBD_SHIFT) ? 0x80 : 0;
