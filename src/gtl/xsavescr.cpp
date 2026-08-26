@@ -54,10 +54,10 @@
 
 struct HB_SCRDATA
 {
-  int row;
-  int col;
-  int maxrow;
-  int maxcol;
+  int32_t row;
+  int32_t col;
+  int32_t maxrow;
+  int32_t maxcol;
   void *buffer;
 };
 

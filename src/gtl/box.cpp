@@ -61,7 +61,7 @@ HB_FUNC(DISPBOX)
     auto pszColor = hb_parc(6);
 
     if (pszBox) {
-      int iColor;
+      int32_t iColor;
 
       if (pszColor) {
         iColor = hb_gtColorToN(pszColor);
@@ -102,7 +102,7 @@ HB_FUNC(HB_DISPBOX)
   if (pTop && pLeft && pBottom && pRight) {
     auto pszBox = hb_parc(5);
     auto pszColor = hb_parc(6);
-    int iColor = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
+    int32_t iColor = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
 
     hb_gtDrawBox(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI(), pszBox, iColor);
   }

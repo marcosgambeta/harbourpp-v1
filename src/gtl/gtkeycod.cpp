@@ -56,9 +56,9 @@
 
 #if defined(HB_OS_WIN)
 
-int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, HB_CODEPAGE *cdp)
+int32_t hb_gt_dos_keyCodeTranslate(int32_t iKey, int32_t iFlags, HB_CODEPAGE *cdp)
 {
-  int iKeyPad = iFlags & HB_KF_KEYPAD;
+  int32_t iKeyPad = iFlags & HB_KF_KEYPAD;
 
   iFlags &= (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT);
 
@@ -626,7 +626,7 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, HB_CODEPAGE *cdp)
       iKey += 'A' - 1;
     } else if (iKey <= 255 && (iKey >= 128 || (iFlags & (HB_KF_CTRL | HB_KF_ALT)) == 0)) {
       if (cdp) {
-        int uc = hb_cdpGetWC(cdp, static_cast<uint8_t>(iKey), 0);
+        int32_t uc = hb_cdpGetWC(cdp, static_cast<uint8_t>(iKey), 0);
         if (uc) {
           return HB_INKEY_NEW_UNICODEF(uc, iFlags);
         }

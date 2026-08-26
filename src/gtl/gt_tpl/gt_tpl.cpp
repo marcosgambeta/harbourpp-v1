@@ -51,7 +51,7 @@
 
 #include "hbgtcore.hpp"
 #include "hbinit.hpp"
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
@@ -79,7 +79,7 @@ static void hb_gt_tpl_Exit(PHB_GT pGT) // FuncTable
   // TODO:
 }
 
-static int hb_gt_tpl_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
+static int32_t hb_gt_tpl_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -94,7 +94,7 @@ static int hb_gt_tpl_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
   return 0;
 }
 
-static const char *hb_gt_tpl_Version(PHB_GT pGT, int iType) // FuncTable
+static const char *hb_gt_tpl_Version(PHB_GT pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -108,7 +108,7 @@ static const char *hb_gt_tpl_Version(PHB_GT pGT, int iType) // FuncTable
   return "Terminal: (template)";
 }
 
-static HB_BOOL hb_gt_tpl_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
+static HB_BOOL hb_gt_tpl_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -123,13 +123,13 @@ static HB_BOOL hb_gt_tpl_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
   return false;
 }
 
-static void hb_gt_tpl_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
+static void hb_gt_tpl_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
 #endif
 
-  int iColor;
+  int32_t iColor;
   uint8_t bAttr;
   uint16_t usChar;
 
@@ -147,7 +147,7 @@ static void hb_gt_tpl_Refresh(PHB_GT pGT) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Refresh(%p)", static_cast<void*>(pGT)));
 #endif
 
-  int iRow, iCol, iStyle;
+  int32_t iRow, iCol, iStyle;
 
   HB_GTSUPER_REFRESH(pGT);
   HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);

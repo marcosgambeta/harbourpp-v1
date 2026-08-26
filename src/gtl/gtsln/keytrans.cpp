@@ -53,7 +53,7 @@
 // ***********************************************************************
 
 // a table of keys translation
-static int KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
+static int32_t KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
                                        {SL_KEY_DOWN, K_DOWN},
                                        {SL_KEY_LEFT, K_LEFT},
                                        {SL_KEY_RIGHT, K_RIGHT},
@@ -387,13 +387,13 @@ static void hb_sln_SortKeyTranslationTable(void)
   for (auto i = 0; i < (static_cast<int32_t>(KeyTranslationTableSize) - 1); i++) {
     int min = i;
 
-    for (int j = i + 1; j < static_cast<int32_t>(KeyTranslationTableSize); j++) {
+    for (int32_t j = i + 1; j < static_cast<int32_t>(KeyTranslationTableSize); j++) {
       if (KeyTranslationTable[j][0] < KeyTranslationTable[min][0]) {
         min = j;
       }
     }
 
-    int KeyTmp[2];
+    int32_t KeyTmp[2];
 
     if (min > i) {
       KeyTmp[0] = KeyTranslationTable[i][0];
@@ -417,13 +417,13 @@ static void hb_sln_SortKeyTranslationTable(void)
 // *************************************************************************
 
 // standard binary search
-static int hb_sln_FindKeyTranslation(int SlangKey)
+static int32_t hb_sln_FindKeyTranslation(int32_t SlangKey)
 {
   if ((SlangKey >= KeyTranslationTable[0][0]) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0])) {
-    int Start = 0, Stop = KeyTranslationTableSize - 1;
+    int32_t Start = 0, Stop = KeyTranslationTableSize - 1;
 
     while (Start <= Stop) {
-      int CurPos = (Start + Stop) / 2;
+      int32_t CurPos = (Start + Stop) / 2;
 
 #if 0
          fprintf(stderr, "%d %d %d\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1]);
@@ -447,9 +447,9 @@ static int hb_sln_FindKeyTranslation(int SlangKey)
 
 // *************************************************************************
 #if 0
-int hb_sln_SetKeyInKeyTranslationTable(int SlangKey, int ClipKey)
+int32_t hb_sln_SetKeyInKeyTranslationTable(int32_t SlangKey, int32_t ClipKey)
 {
-   int Found = 0;
+   int32_t Found = 0;
 
    if( (SlangKey >= KeyTranslationTable[0][0] ) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]) ) {
       for( auto i = 0; i < static_cast<int32_t>(KeyTranslationTableSize); i++ ) {

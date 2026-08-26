@@ -53,10 +53,10 @@
 
 #include <windows.h>
 
-int hb_gt_winapi_getKbdState(void)
+int32_t hb_gt_winapi_getKbdState(void)
 {
   BYTE kbState[256];
-  int iKbdState = 0;
+  int32_t iKbdState = 0;
 
   if (GetKeyboardState(kbState)) {
     if (kbState[VK_SHIFT] & 0x80) {
@@ -113,7 +113,7 @@ int hb_gt_winapi_getKbdState(void)
   return iKbdState;
 }
 
-void hb_gt_winapi_setKbdState(int iKbdState)
+void hb_gt_winapi_setKbdState(int32_t iKbdState)
 {
   BYTE kbState[256];
 

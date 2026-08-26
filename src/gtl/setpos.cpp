@@ -66,16 +66,16 @@ HB_FUNC(SETPOS) // Sets the screen position
 
 HB_FUNC(ROW) // Return the current screen row position (zero origin)
 {
-  int iRow;
-  int iCol;
+  int32_t iRow;
+  int32_t iCol;
   hb_gtGetPos(&iRow, &iCol);
   hb_retni(iRow);
 }
 
 HB_FUNC(COL) // Return the current screen column position (zero origin)
 {
-  int iRow;
-  int iCol;
+  int32_t iRow;
+  int32_t iCol;
   hb_gtGetPos(&iRow, &iCol);
   hb_retni(iCol);
 }

@@ -213,7 +213,7 @@ extern bool hb_sln_UnderXterm;
 extern unsigned char hb_sln_inputTab[256];
 
 // delay for waiting on characters after ESC key
-extern int hb_sln_escDelay;
+extern int32_t hb_sln_escDelay;
 
 // ***********************************************************************
 
@@ -223,22 +223,22 @@ extern unsigned char hb_sln_convKDeadKeys[];
 // indicates that screen size has changed
 extern volatile bool hb_sln_bScreen_Size_Changed;
 
-extern int hb_sln_Init_Terminal(int phase);
+extern int32_t hb_sln_Init_Terminal(int32_t phase);
 
-extern int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask);
+extern int32_t hb_gt_sln_ReadKey(PHB_GT pGT, int32_t iEventMask);
 
 extern void hb_gt_sln_mouse_Init(void);
 extern void hb_gt_sln_mouse_Exit(void);
 extern HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT);
 extern void hb_gt_sln_mouse_Show(PHB_GT pGT);
 extern void hb_gt_sln_mouse_Hide(PHB_GT pGT);
-extern void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol);
-extern void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol);
-extern int hb_gt_sln_mouse_CountButton(PHB_GT pGT);
-extern HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton);
+extern void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol);
+extern void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol);
+extern int32_t hb_gt_sln_mouse_CountButton(PHB_GT pGT);
+extern HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int32_t iButton);
 
 extern void hb_gt_sln_mouse_FixTrash(void);
-extern int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew);
+extern int32_t hb_gt_sln_mouse_Inkey(int32_t iEventMask, HB_BOOL fCheckNew);
 extern void hb_gt_sln_mouse_ProcessTerminalEvent(void);
 
 // ***********************************************************************

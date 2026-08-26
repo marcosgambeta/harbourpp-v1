@@ -96,7 +96,7 @@
 
 // we choose Ctrl+\ as an abort key on Unixes where it is a SIGQUIT key by default
 // abort key is Ctrl+\ on Unix ( but Ctrl+@ on Linux console )
-static int s_hb_sln_Abort_key = 28;
+static int32_t s_hb_sln_Abort_key = 28;
 
 // ***********************************************************************
 
@@ -109,13 +109,13 @@ static const char *s_DeadKeyEnvName = "HB_GTSLN_NATIONDEADKEY";
 unsigned char hb_sln_convKDeadKeys[257]; // it should be allocated by hb_xalloc()
 
 // contains an integer value of a DeadKey or -1
-static int s_iDeadKey = -1;
+static int32_t s_iDeadKey = -1;
 
 // escape key delay
 #ifdef HB_SLANG_ONE_ESC
-int hb_sln_escDelay = 250;
+int32_t hb_sln_escDelay = 250;
 #else
-int hb_sln_escDelay = 0;
+int32_t hb_sln_escDelay = 0;
 #endif
 
 bool hb_sln_UnderLinuxConsole = false;
@@ -146,7 +146,7 @@ static void hb_sln_Init_TermType(void)
 static void hb_sln_Init_KeyTranslations(void)
 {
   char ch, keyname[SLANG_MAX_KEYMAP_KEY_SEQ + 1];
-  int keynum, i;
+  int32_t keynum, i;
   char *keyseq;
 
   // for defining ^[<Key> sequences - this simulates Alt+Keys
@@ -220,10 +220,10 @@ static void hb_sln_Init_KeyTranslations(void)
 
 // ***********************************************************************
 
-int hb_sln_Init_Terminal(int phase)
+int32_t hb_sln_Init_Terminal(int32_t phase)
 {
   struct termios newTTY;
-  int ret = 0;
+  int32_t ret = 0;
 
   // first time init phase - we don't want this after
   // return from system command ( see run.c )
@@ -287,13 +287,13 @@ int hb_sln_Init_Terminal(int phase)
 
 // ***********************************************************************
 
-int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
+int32_t hb_gt_sln_ReadKey(PHB_GT pGT, int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(iEventMask)));
 #endif
 
-  static int InDeadState = false;
+  static int32_t InDeadState = false;
   uint32_t ch, tmp, kbdflags;
 
   // user AbortKey break
@@ -318,7 +318,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
   }
 
   bool fInput = SLang_input_pending(0) != 0;
-  int iKey = hb_gt_sln_mouse_Inkey(iEventMask, !fInput);
+  int32_t iKey = hb_gt_sln_mouse_Inkey(iEventMask, !fInput);
   if (!fInput || iKey != 0) {
     return iKey;
   }
@@ -410,7 +410,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
 #if (defined(HB_SLN_UTF8) || defined(HB_SLN_UNICODE))
   else if (ch >= 32 && ch <= 255) {
     HB_WCHAR wc = 0;
-    int n = 0;
+    int32_t n = 0;
 
     if (hb_cdpUTF8ToU16NextChar(static_cast<uint8_t>(ch), &n, &wc)) {
       uint32_t buf[10], i = 0;
@@ -440,7 +440,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
 
 // ***********************************************************************
 
-static int hb_sln_try_get_Kbd_State(void)
+static int32_t hb_sln_try_get_Kbd_State(void)
 {
 #if defined(__linux__)
   unsigned char modifiers = 6;
@@ -453,8 +453,8 @@ static int hb_sln_try_get_Kbd_State(void)
 
 #elif defined(M_UNIX)
 
-  int modifiers = 0;
-  int IOcommand = 0;
+  int32_t modifiers = 0;
+  int32_t IOcommand = 0;
 
   if (ioctl(0, TCGETSC, &IOcommand) >= 0) {
     // if keyboard is not in SCANCODE mode
@@ -490,28 +490,28 @@ static int hb_sln_try_get_Kbd_State(void)
 
 // ***********************************************************************
 
-int hb_sln_Shft_Pressed(void)
+int32_t hb_sln_Shft_Pressed(void)
 {
   return (hb_sln_try_get_Kbd_State() & SHIFT_PRESSED) != 0;
 }
 
 // ***********************************************************************
 
-int hb_sln_Ctrl_Pressed(void)
+int32_t hb_sln_Ctrl_Pressed(void)
 {
   return (hb_sln_try_get_Kbd_State() & CONTROL_PRESSED) != 0;
 }
 
 // ***********************************************************************
 
-int hb_sln_Alt_Pressed(void)
+int32_t hb_sln_Alt_Pressed(void)
 {
   return (hb_sln_try_get_Kbd_State() & ALT_PRESSED) != 0;
 }
 
 // ***********************************************************************
 
-int hb_sln_Kbd_State(void)
+int32_t hb_sln_Kbd_State(void)
 {
   return hb_sln_try_get_Kbd_State();
 }

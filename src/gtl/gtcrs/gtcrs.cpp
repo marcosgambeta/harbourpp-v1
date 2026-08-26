@@ -51,7 +51,7 @@
 
 #include "gtcrs.hpp"
 
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
@@ -65,32 +65,32 @@ static volatile auto s_InetrruptFlag = false;
 #endif
 static volatile auto s_WinSizeChangeFlag = false;
 
-static int s_iStdIn, s_iStdOut, s_iStdErr;
+static int32_t s_iStdIn, s_iStdOut, s_iStdErr;
 
 struct evtFD
 {
-  int fd;
-  int mode;
-  int status;
-  int index;
+  int32_t fd;
+  int32_t mode;
+  int32_t status;
+  int32_t index;
   void *data;
-  int (*eventFunc)(int, int, void *);
+  int32_t (*eventFunc)(int32_t, int32_t, void *);
 };
 
 struct mouseEvent
 {
-  int row, col;
-  int buttonstate;
-  int lbuttons;
-  int flags;
-  int lbup_row, lbup_col;
-  int lbdn_row, lbdn_col;
-  int rbup_row, rbup_col;
-  int rbdn_row, rbdn_col;
-  int mbup_row, mbup_col;
-  int mbdn_row, mbdn_col;
+  int32_t row, col;
+  int32_t buttonstate;
+  int32_t lbuttons;
+  int32_t flags;
+  int32_t lbup_row, lbup_col;
+  int32_t lbdn_row, lbdn_col;
+  int32_t rbup_row, rbup_col;
+  int32_t rbdn_row, rbdn_col;
+  int32_t mbup_row, mbup_col;
+  int32_t mbdn_row, mbdn_col;
   // to analyze DBLCLK on xterm
-  int click_delay;
+  int32_t click_delay;
   struct timeval BL_time;
   struct timeval BR_time;
   struct timeval BM_time;
@@ -98,8 +98,8 @@ struct mouseEvent
 
 struct _keyTab
 {
-  int ch;
-  int key;
+  int32_t ch;
+  int32_t key;
   struct _keyTab *nextCh;
   struct _keyTab *otherCh;
 };
@@ -108,52 +108,52 @@ using keyTab = _keyTab;
 
 struct InOutBase
 {
-  int terminal_type;
+  int32_t terminal_type;
 
   keyTab *pKeyTab;
-  int key_flag;
-  int esc_delay;
-  int key_counter;
-  int nation_mode;
+  int32_t key_flag;
+  int32_t esc_delay;
+  int32_t key_counter;
+  int32_t nation_mode;
   unsigned char *in_transtbl;
   unsigned char *out_transtbl;
   unsigned char *nation_transtbl;
-  int *charmap;
+  int32_t *charmap;
 
-  int cursor, lcursor;
-  int row, col;
-  int maxrow, maxcol;
-  int is_color;
+  int32_t cursor, lcursor;
+  int32_t row, col;
+  int32_t maxrow, maxcol;
+  int32_t is_color;
   uint32_t disp_count;
 
   char *acsc, *beep, *flash, *civis, *cnorm, *cvvis;
 
-  int mouse_type;
-  int mButtons;
-  int nTermMouseChars;
+  int32_t mouse_type;
+  int32_t mButtons;
+  int32_t nTermMouseChars;
   unsigned char cTermMouseBuf[3];
   mouseEvent mLastEvt;
 #if defined(HB_HAS_GPM)
   Gpm_Connect Conn;
 #endif
 
-  int base_infd;
-  int base_outfd;
-  int stdoutfd;
-  int stderrfd;
+  int32_t base_infd;
+  int32_t base_outfd;
+  int32_t stdoutfd;
+  int32_t stderrfd;
   pid_t termpid;
-  int lTIOsaved;
+  int32_t lTIOsaved;
   struct termios saved_TIO, curr_TIO;
 
   unsigned char stdin_buf[STDIN_BUFLEN];
-  int stdin_ptr_l;
-  int stdin_ptr_r;
-  int stdin_inbuf;
+  int32_t stdin_ptr_l;
+  int32_t stdin_ptr_r;
+  int32_t stdin_inbuf;
 
   PHB_POLLFD pPollSet;
   evtFD **event_fds;
-  int efds_size;
-  int efds_no;
+  int32_t efds_size;
+  int32_t efds_no;
 
   // curses data
   SCREEN *basescr;
@@ -169,27 +169,27 @@ struct InOutBase
 static InOutBase *s_ioBase = nullptr;
 
 static InOutBase **s_ioBaseTab = nullptr;
-static int s_iSize_ioBaseTab = 0;
-static int s_iActive_ioBase = -1;
+static int32_t s_iSize_ioBaseTab = 0;
+static int32_t s_iActive_ioBase = -1;
 
 static void set_tmevt(unsigned char *cMBuf, mouseEvent *);
-static int getMouseKey(mouseEvent *);
+static int32_t getMouseKey(mouseEvent *);
 static void destroy_ioBase(InOutBase *ioBase);
-static void set_sig_handler(int iSig);
+static void set_sig_handler(int32_t iSig);
 
 static void curs_wrkaround(void);
 
-static int getClipKey(int nKey)
+static int32_t getClipKey(int32_t nKey)
 {
-  int nRet = 0;
+  int32_t nRet = 0;
 
   if (IS_CLIPKEY(nKey)) {
     nRet = GET_CLIPKEY(nKey);
   } else if (HB_INKEY_ISEXT(nKey)) {
     nRet = nKey;
   } else {
-    int nFlag = 0;
-    int n = GET_KEYMASK(nKey);
+    int32_t nFlag = 0;
+    int32_t n = GET_KEYMASK(nKey);
     nKey = CLR_KEYMASK(nKey);
     if (n & KEY_SHIFTMASK) {
       nFlag |= HB_KF_SHIFT;
@@ -220,9 +220,9 @@ static int getClipKey(int nKey)
 
 #if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
 #if 1
-static void sig_handler(int signo)
+static void sig_handler(int32_t signo)
 {
-  int e = errno;
+  int32_t e = errno;
 
   if (signo < MAX_SIGNO) {
     s_SignalTable[signo] = true;
@@ -231,7 +231,7 @@ static void sig_handler(int signo)
 
   switch (signo) {
   case SIGCHLD: {
-    int status;
+    int32_t status;
     pid_t pid;
     while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
       ;
@@ -258,7 +258,7 @@ static void sig_handler(int signo)
 
 static void set_signals(void)
 {
-  int sigs[] = {SIGINT, SIGQUIT, SIGTSTP, SIGWINCH, SIGCHLD, 0};
+  int32_t sigs[] = {SIGINT, SIGQUIT, SIGTSTP, SIGWINCH, SIGCHLD, 0};
 
   s_SignalFlag = false;
   for (auto i = 1; i < MAX_SIGNO; ++i) {
@@ -274,14 +274,14 @@ static void set_signals(void)
 }
 
 #else
-static void sig_handler(int signo)
+static void sig_handler(int32_t signo)
 {
-  int e = errno;
+  int32_t e = errno;
   char *pszSig;
 
   switch (signo) {
   case SIGCHLD: {
-    int status;
+    int32_t status;
     pid_t pid;
     pszSig = "SIGCHLD";
     while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
@@ -339,7 +339,7 @@ static void set_signals(void)
 }
 #endif
 
-static void set_sig_handler(int iSig)
+static void set_sig_handler(int32_t iSig)
 {
   // SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
@@ -369,10 +369,10 @@ static bool write_ttyseq(InOutBase *ioBase, const char *seq)
   return success;
 }
 
-static int add_efds(InOutBase *ioBase, int fd, int mode, int (*eventFunc)(int, int, void *), void *data)
+static int32_t add_efds(InOutBase *ioBase, int32_t fd, int32_t mode, int32_t (*eventFunc)(int32_t, int32_t, void *), void *data)
 {
   evtFD *pefd = nullptr;
-  int fl;
+  int32_t fl;
 
   if (eventFunc == nullptr && mode != O_RDONLY) {
     return -1;
@@ -417,9 +417,9 @@ static int add_efds(InOutBase *ioBase, int fd, int mode, int (*eventFunc)(int, i
   return fd;
 }
 
-static void del_efds(InOutBase *ioBase, int fd)
+static void del_efds(InOutBase *ioBase, int32_t fd)
 {
-  int n = -1;
+  int32_t n = -1;
 
   for (auto i = 0; i < ioBase->efds_no && n == -1; i++) {
     if (ioBase->event_fds[i]->fd == fd) {
@@ -430,7 +430,7 @@ static void del_efds(InOutBase *ioBase, int fd)
   if (n != -1) {
     hb_xfree(ioBase->event_fds[n]);
     ioBase->efds_no--;
-    for (int i = n; i < ioBase->efds_no; i++) {
+    for (int32_t i = n; i < ioBase->efds_no; i++) {
       ioBase->event_fds[i] = ioBase->event_fds[i + 1];
     }
   }
@@ -454,7 +454,7 @@ static void del_all_efds(InOutBase *ioBase)
 
 static int getMouseKey(mouseEvent *mEvt)
 {
-  int nKey = 0;
+  int32_t nKey = 0;
 
   if (mEvt->lbuttons != mEvt->buttonstate) {
     if (mEvt->buttonstate & M_CURSOR_MOVE) {
@@ -467,7 +467,7 @@ static int getMouseKey(mouseEvent *mEvt)
       nKey = HB_INKEY_NEW_MKEY(K_MWBACKWARD, mEvt->flags);
       mEvt->buttonstate &= ~M_BUTTON_WHEELDOWN;
     } else {
-      int butt = mEvt->lbuttons ^ mEvt->buttonstate;
+      int32_t butt = mEvt->lbuttons ^ mEvt->buttonstate;
 
       if (butt & M_BUTTON_LEFT) {
         if (mEvt->buttonstate & M_BUTTON_LEFT) {
@@ -521,7 +521,7 @@ static int getMouseKey(mouseEvent *mEvt)
 
 static void chk_mevtdblck(mouseEvent *mEvt)
 {
-  int newbuttons = (mEvt->buttonstate & ~mEvt->lbuttons) & M_BUTTON_KEYMASK;
+  int32_t newbuttons = (mEvt->buttonstate & ~mEvt->lbuttons) & M_BUTTON_KEYMASK;
 
   if (newbuttons != 0) {
     struct timeval tv;
@@ -561,8 +561,8 @@ static void set_tmevt(unsigned char *cMBuf, mouseEvent *mEvt)
     mEvt->flags |= HB_KF_CTRL;
   }
 
-  int col = cMBuf[1] - 33;
-  int row = cMBuf[2] - 33;
+  int32_t col = cMBuf[1] - 33;
+  int32_t row = cMBuf[2] - 33;
   if (mEvt->row != row || mEvt->col != col) {
     mEvt->buttonstate |= M_CURSOR_MOVE;
     mEvt->row = row;
@@ -600,12 +600,12 @@ static void set_tmevt(unsigned char *cMBuf, mouseEvent *mEvt)
 }
 
 #if defined(HB_HAS_GPM)
-static int set_gpmevt(int fd, int mode, void *data)
+static int32_t set_gpmevt(int32_t fd, int32_t mode, void *data)
 {
   HB_SYMBOL_UNUSED(fd);
   HB_SYMBOL_UNUSED(mode);
 
-  int nKey = 0;
+  int32_t nKey = 0;
   Gpm_Event gEvt;
 
   auto mEvt = static_cast<mouseEvent *>(data);
@@ -705,7 +705,7 @@ static void mouse_init(InOutBase *ioBase)
     gpm_zerobased = 1;
     gpm_visiblepointer = 0;
     if (Gpm_Open(&ioBase->Conn, 0) >= 0 && gpm_fd >= 0) {
-      int flags;
+      int32_t flags;
 
       if ((flags = fcntl(gpm_fd, F_GETFL, 0)) != -1) {
         fcntl(gpm_fd, F_SETFL, flags | O_NONBLOCK);
@@ -743,9 +743,9 @@ static void mouse_exit(InOutBase *ioBase)
 #endif
 }
 
-static int read_bufch(InOutBase *ioBase, int fd)
+static int32_t read_bufch(InOutBase *ioBase, int32_t fd)
 {
-  int n = 0;
+  int32_t n = 0;
 
   if (STDIN_BUFLEN > ioBase->stdin_inbuf) {
     unsigned char buf[STDIN_BUFLEN];
@@ -764,10 +764,10 @@ static int read_bufch(InOutBase *ioBase, int fd)
   return n;
 }
 
-static int get_inch(InOutBase *ioBase, HB_MAXINT timeout)
+static int32_t get_inch(InOutBase *ioBase, HB_MAXINT timeout)
 {
-  int nRet = 0, nNext = 0, npfd = -1, nchk = ioBase->efds_no, lRead = 0;
-  int mode, i, n, counter;
+  int32_t nRet = 0, nNext = 0, npfd = -1, nchk = ioBase->efds_no, lRead = 0;
+  int32_t mode, i, n, counter;
   evtFD *pefd = nullptr;
 
   HB_MAXUINT timer = hb_timerInit(timeout);
@@ -863,9 +863,9 @@ static int get_inch(InOutBase *ioBase, HB_MAXINT timeout)
   return nRet == 0 ? nNext : nRet;
 }
 
-static int test_bufch(InOutBase *ioBase, int n, int delay)
+static int32_t test_bufch(InOutBase *ioBase, int32_t n, int32_t delay)
 {
-  int nKey = 0;
+  int32_t nKey = 0;
 
   if (ioBase->stdin_inbuf == n) {
     nKey = get_inch(ioBase, delay);
@@ -876,7 +876,7 @@ static int test_bufch(InOutBase *ioBase, int n, int delay)
              : (ioBase->stdin_inbuf > n ? ioBase->stdin_buf[(ioBase->stdin_ptr_l + n) % STDIN_BUFLEN] : -1);
 }
 
-static void free_bufch(InOutBase *ioBase, int n)
+static void free_bufch(InOutBase *ioBase, int32_t n)
 {
   if (n > ioBase->stdin_inbuf) {
     n = ioBase->stdin_inbuf;
@@ -885,9 +885,9 @@ static void free_bufch(InOutBase *ioBase, int n)
   ioBase->stdin_inbuf -= n;
 }
 
-static int wait_key(InOutBase *ioBase, int milisec)
+static int wait_key(InOutBase *ioBase, int32_t milisec)
 {
-  int nKey, esc, n, i, ch, counter;
+  int32_t nKey, esc, n, i, ch, counter;
   keyTab *ptr;
 
   if (s_WinSizeChangeFlag) {
@@ -1028,15 +1028,15 @@ again:
   return nKey;
 }
 
-static int addKeyMap(InOutBase *ioBase, int nKey, const char *cdesc)
+static int32_t addKeyMap(InOutBase *ioBase, int32_t nKey, const char *cdesc)
 {
-  int ret = K_UNDEF, i = 0;
+  int32_t ret = K_UNDEF, i = 0;
 
   if (cdesc == nullptr) {
     return ret;
   }
 
-  int c = static_cast<unsigned char>(cdesc[i++]);
+  int32_t c = static_cast<unsigned char>(cdesc[i++]);
   keyTab **ptr = &ioBase->pKeyTab;
 
   while (c) {
@@ -1062,11 +1062,11 @@ static int addKeyMap(InOutBase *ioBase, int nKey, const char *cdesc)
   return ret;
 }
 
-static int removeKeyMap(InOutBase *ioBase, const char *cdesc)
+static int32_t removeKeyMap(InOutBase *ioBase, const char *cdesc)
 {
-  int ret = K_UNDEF, i = 0;
+  int32_t ret = K_UNDEF, i = 0;
 
-  int c = static_cast<unsigned char>(cdesc[i++]);
+  int32_t c = static_cast<unsigned char>(cdesc[i++]);
   keyTab **ptr = &ioBase->pKeyTab;
 
   while (c && *ptr != nullptr) {
@@ -1105,7 +1105,7 @@ static void removeAllKeyMap(keyTab **ptr)
 static void disp_cursor(InOutBase *ioBase)
 {
   if (ioBase->cursor != ioBase->lcursor) {
-    int lcurs = -1;
+    int32_t lcurs = -1;
     char *cv = nullptr;
 
     switch (ioBase->cursor) {
@@ -1152,7 +1152,7 @@ static void disp_cursor(InOutBase *ioBase)
   }
 }
 
-static void set_cursor(InOutBase *ioBase, int style)
+static void set_cursor(InOutBase *ioBase, int32_t style)
 {
   switch (style) {
   case SC_NONE:
@@ -1198,7 +1198,7 @@ static void gt_ttyrestore(InOutBase *ioBase)
   }
 }
 
-static bool gt_outstr(InOutBase *ioBase, int fd, const char *str, int len)
+static bool gt_outstr(InOutBase *ioBase, int32_t fd, const char *str, int32_t len)
 {
   auto success = false;
 
@@ -1221,12 +1221,12 @@ static bool gt_outstr(InOutBase *ioBase, int fd, const char *str, int len)
   return success;
 }
 
-static void gt_outstd(InOutBase *ioBase, const char *str, int len)
+static void gt_outstd(InOutBase *ioBase, const char *str, int32_t len)
 {
   gt_outstr(ioBase, ioBase->stdoutfd, str, len);
 }
 
-static void gt_outerr(InOutBase *ioBase, const char *str, int len)
+static void gt_outerr(InOutBase *ioBase, const char *str, int32_t len)
 {
   gt_outstr(ioBase, ioBase->stderrfd, str, len);
 }
@@ -1507,7 +1507,7 @@ static void gt_tone(InOutBase *ioBase, double dFrequency, double dDuration)
   }
 }
 
-static void set_sig_keys(InOutBase *ioBase, int key_int, int key_brk, int key_stp)
+static void set_sig_keys(InOutBase *ioBase, int32_t key_int, int32_t key_brk, int32_t key_stp)
 {
   if (isatty(ioBase->base_infd)) {
     // set SIGINT character, default ^C
@@ -1537,9 +1537,9 @@ static void set_sig_keys(InOutBase *ioBase, int key_int, int key_brk, int key_st
   }
 }
 
-static int gt_getsize(InOutBase *ioBase, int *rows, int *cols)
+static int32_t gt_getsize(InOutBase *ioBase, int32_t *rows, int32_t *cols)
 {
-  int ret = -1;
+  int32_t ret = -1;
 
   *rows = *cols = 0;
 
@@ -1571,10 +1571,10 @@ static int gt_getsize(InOutBase *ioBase, int *rows, int *cols)
   return ret;
 }
 
-static int gt_resize(InOutBase *ioBase)
+static int32_t gt_resize(InOutBase *ioBase)
 {
-  int ret = -1;
-  int rows = 0, cols = 0;
+  int32_t ret = -1;
+  int32_t rows = 0, cols = 0;
 
   if (gt_getsize(ioBase, &rows, &cols) >= 0) {
 #if 0
@@ -1598,12 +1598,12 @@ static int gt_resize(InOutBase *ioBase)
   return ret;
 }
 
-static int gt_setsize(InOutBase *ioBase, int rows, int cols)
+static int32_t gt_setsize(InOutBase *ioBase, int32_t rows, int32_t cols)
 {
-  int ret = -1;
+  int32_t ret = -1;
 
   if (ioBase->terminal_type == TERM_XTERM) {
-    int r, c;
+    int32_t r, c;
     char escseq[64];
     hb_snprintf(escseq, sizeof(escseq), "\033[8;%d;%dt", rows, cols);
     write_ttyseq(ioBase, escseq);
@@ -1649,9 +1649,9 @@ static void setKeyTrans(InOutBase *ioBase, HB_CODEPAGE *cdpTerm, HB_CODEPAGE *cd
   }
 }
 
-static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *cdpTerm, int transBox)
+static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *cdpTerm, int32_t transBox)
 {
-  int aSet = (cdpHost && cdpTerm);
+  int32_t aSet = (cdpHost && cdpTerm);
 
   for (auto i = 0; i < 256; i++) {
     chtype ch = ioBase->charmap[i] & 0xffff;
@@ -1709,9 +1709,9 @@ static void setDispTrans(InOutBase *ioBase, HB_CODEPAGE *cdpHost, HB_CODEPAGE *c
   }
 }
 
-static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_t termpid)
+static InOutBase *create_ioBase(char *term, int32_t infd, int32_t outfd, int32_t errfd, pid_t termpid)
 {
-  int bg, fg;
+  int32_t bg, fg;
   uint32_t i;
   char buf[256], *ptr, *crsterm = nullptr;
 
@@ -1824,7 +1824,7 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
   }
   ioBase->acsc = tiGetS("acsc");
 
-  ioBase->charmap = static_cast<int *>(hb_xgrab(256 * sizeof(int)));
+  ioBase->charmap = static_cast<int32_t *>(hb_xgrab(256 * sizeof(int32_t)));
   hb_gt_chrmapinit(ioBase->charmap, term, ioBase->terminal_type == TERM_XTERM);
   setDispTrans(ioBase, nullptr, nullptr, 0);
 
@@ -2019,7 +2019,7 @@ static InOutBase *create_newXterm(void)
 {
 #if defined(HB_OS_LINUX) || defined(HB_OS_BSD)
 #if 0
-   int masterfd, slavefd, fd;
+   int32_t masterfd, slavefd, fd;
    pid_t termpid;
    char ptyname[64], buf[64], * ptr;
 
@@ -2078,9 +2078,9 @@ static InOutBase *create_newXterm(void)
   return nullptr;
 }
 
-static int set_active_ioBase(int iNO_ioBase)
+static int32_t set_active_ioBase(int32_t iNO_ioBase)
 {
-  int iPrev = s_iActive_ioBase;
+  int32_t iPrev = s_iActive_ioBase;
 
   if (iNO_ioBase >= 0 && iNO_ioBase < s_iSize_ioBaseTab) {
     s_iActive_ioBase = iNO_ioBase;
@@ -2091,9 +2091,9 @@ static int set_active_ioBase(int iNO_ioBase)
   return iPrev;
 }
 
-static int add_new_ioBase(InOutBase *ioBase)
+static int32_t add_new_ioBase(InOutBase *ioBase)
 {
-  int i, add = 0;
+  int32_t i, add = 0;
 
   for (i = 0; i < s_iSize_ioBaseTab && !add; ++i) {
     if (!s_ioBaseTab[i]) {
@@ -2110,7 +2110,7 @@ static int add_new_ioBase(InOutBase *ioBase)
           static_cast<InOutBase **>(hb_xrealloc(s_ioBaseTab, (s_iSize_ioBaseTab += 10) * sizeof(InOutBase *)));
     }
     s_ioBaseTab[i] = ioBase;
-    for (int n = i + 1; n < s_iSize_ioBaseTab; n++) {
+    for (int32_t n = i + 1; n < s_iSize_ioBaseTab; n++) {
       s_ioBaseTab[n] = nullptr;
     }
   }
@@ -2122,7 +2122,7 @@ static int add_new_ioBase(InOutBase *ioBase)
   return i;
 }
 
-static int del_ioBase(int iNO_ioBase)
+static int32_t del_ioBase(int32_t iNO_ioBase)
 {
   if (iNO_ioBase >= 0 && iNO_ioBase < s_iSize_ioBaseTab) {
     destroy_ioBase(s_ioBaseTab[iNO_ioBase]);
@@ -2158,19 +2158,19 @@ static void del_all_ioBase(void)
 
 // ***********************************************************************
 
-HB_BOOL HB_GT_FUNC(gt_AddEventHandle(int iFile, int iMode, int (*eventFunc)(int, int, void *), void *data))
+HB_BOOL HB_GT_FUNC(gt_AddEventHandle(int32_t iFile, int32_t iMode, int32_t (*eventFunc)(int32_t, int32_t, void *), void *data))
 {
   return add_efds(s_ioBase, iFile, iMode, eventFunc, data) == iFile;
 }
 
-void HB_GT_FUNC(gt_DelEventHandle(int iFileDes))
+void HB_GT_FUNC(gt_DelEventHandle(int32_t iFileDes))
 {
   del_efds(s_ioBase, iFileDes);
 }
 
 int HB_GT_FUNC(gt_NewXTerm(void))
 {
-  int iHandle = -1;
+  int32_t iHandle = -1;
 
   InOutBase *ioBase = create_newXterm();
   if (ioBase) {
@@ -2180,12 +2180,12 @@ int HB_GT_FUNC(gt_NewXTerm(void))
   return iHandle;
 }
 
-int HB_GT_FUNC(gt_SetTerm(int iHandle))
+int HB_GT_FUNC(gt_SetTerm(int32_t iHandle))
 {
   return set_active_ioBase(iHandle);
 }
 
-int HB_GT_FUNC(gt_CloseTerm(int iHandle))
+int HB_GT_FUNC(gt_CloseTerm(int32_t iHandle))
 {
   return del_ioBase(iHandle);
 }
@@ -2195,7 +2195,7 @@ int HB_GT_FUNC(gt_WaitKey(double dTimeOut))
   return wait_key(s_ioBase, static_cast<int32_t>(dTimeOut >= 0 ? dTimeOut * 1000.0 : -1));
 }
 
-int HB_GT_FUNC(gt_AddKeyMap(int iKey, char *szSequence))
+int HB_GT_FUNC(gt_AddKeyMap(int32_t iKey, char *szSequence))
 {
   return addKeyMap(s_ioBase, SET_CLIPKEY(iKey), szSequence);
 }
@@ -2205,24 +2205,24 @@ int HB_GT_FUNC(gt_RemoveKeyMap(char *szSequence))
   return removeKeyMap(s_ioBase, szSequence);
 }
 
-int HB_GT_FUNC(gt_ESCdelay(int iDelay))
+int HB_GT_FUNC(gt_ESCdelay(int32_t iDelay))
 {
-  int iRet = s_ioBase->esc_delay;
+  int32_t iRet = s_ioBase->esc_delay;
   s_ioBase->esc_delay = iDelay;
   return iRet;
 }
 
-void HB_GT_FUNC(gt_SetInterruptKey(int iInterupt))
+void HB_GT_FUNC(gt_SetInterruptKey(int32_t iInterupt))
 {
   set_sig_keys(s_ioBase, iInterupt, -1, -1);
 }
 
-void HB_GT_FUNC(gt_SetDebugKey(int iDebug))
+void HB_GT_FUNC(gt_SetDebugKey(int32_t iDebug))
 {
   set_sig_keys(s_ioBase, -1, iDebug, -1);
 }
 
-HB_BOOL HB_GT_FUNC(gt_GetSignalFlag(int iSig))
+HB_BOOL HB_GT_FUNC(gt_GetSignalFlag(int32_t iSig))
 {
   auto bRetVal = false;
 
@@ -2234,7 +2234,7 @@ HB_BOOL HB_GT_FUNC(gt_GetSignalFlag(int iSig))
   return bRetVal;
 }
 
-void HB_GT_FUNC(gt_CatchSignal(int iSig))
+void HB_GT_FUNC(gt_CatchSignal(int32_t iSig))
 {
   set_sig_handler(iSig);
 }
@@ -2256,7 +2256,7 @@ static void hb_gt_crs_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
     s_iStdErr = hFilenoStderr;
 #ifdef HB_GT_CRS_TTYHACK
     {
-      int ittyfd;
+      int32_t ittyfd;
 
       if ((ittyfd = open("/dev/tty", O_RDWR)) != -1) {
         hFilenoStdin = hFilenoStdout = ittyfd;
@@ -2305,7 +2305,7 @@ static HB_BOOL hb_gt_crs_IsColor(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_crs_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
+static HB_BOOL hb_gt_crs_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -2354,7 +2354,7 @@ static void hb_gt_crs_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
 // ***********************************************************************
 
-static const char *hb_gt_crs_Version(PHB_GT pGT, int iType) // FuncTable
+static const char *hb_gt_crs_Version(PHB_GT pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -2526,7 +2526,7 @@ static void hb_gt_crs_mouse_Hide(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static void hb_gt_crs_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol) // FuncTable
+static void hb_gt_crs_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_Col(%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(piRow), static_cast<void*>(piCol)));
@@ -2540,7 +2540,7 @@ static void hb_gt_crs_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol) // FuncTa
 
 // ***********************************************************************
 
-static void hb_gt_crs_mouse_SetPos(PHB_GT pGT, int iRow, int iCol) // FuncTable
+static void hb_gt_crs_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_SetPos(%p,%i,%i)", static_cast<void*>(pGT), iRow, iCol));
@@ -2556,7 +2556,7 @@ static void hb_gt_crs_mouse_SetPos(PHB_GT pGT, int iRow, int iCol) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
+static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int32_t iButton) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_ButtonState(%p,%i)", static_cast<void*>(pGT), iButton));
@@ -2567,7 +2567,7 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
   auto ret = false;
 
   if (s_ioBase->mouse_type != 0) {
-    int mask;
+    int32_t mask;
 
     if (iButton == 0) {
       mask = M_BUTTON_LEFT;
@@ -2587,7 +2587,7 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
 
 // ***********************************************************************
 
-static int hb_gt_crs_mouse_CountButton(PHB_GT pGT) // FuncTable
+static int32_t hb_gt_crs_mouse_CountButton(PHB_GT pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_CountButton(%p)", static_cast<void*>(pGT)));
@@ -2597,7 +2597,7 @@ static int hb_gt_crs_mouse_CountButton(PHB_GT pGT) // FuncTable
   return s_ioBase->mButtons;
 }
 
-static void hb_gt_crs_mouse_SetDoubleClickSpeed(PHB_GT pGT, int iSpeed) // FuncTable
+static void hb_gt_crs_mouse_SetDoubleClickSpeed(PHB_GT pGT, int32_t iSpeed) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_SetDoubleClickSpeed(%p,%d)", static_cast<void*>(pGT), iSpeed));
@@ -2609,7 +2609,7 @@ static void hb_gt_crs_mouse_SetDoubleClickSpeed(PHB_GT pGT, int iSpeed) // FuncT
 
 // ***********************************************************************
 
-static int hb_gt_crs_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
+static int32_t hb_gt_crs_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -2617,7 +2617,7 @@ static int hb_gt_crs_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 
   HB_SYMBOL_UNUSED(iEventMask);
 
-  int iKey = wait_key(s_ioBase, 0);
+  int32_t iKey = wait_key(s_ioBase, 0);
 
   if (iKey == K_RESIZE) {
     gt_resize(s_ioBase);
@@ -2661,7 +2661,7 @@ static HB_BOOL hb_gt_crs_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_crs_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_crs_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
@@ -2691,14 +2691,14 @@ static HB_BOOL hb_gt_crs_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
 // ***********************************************************************
 
-static void hb_gt_crs_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
+static void hb_gt_crs_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
 #endif
 
   if (s_ioBase) {
-    int iColor;
+    int32_t iColor;
     uint8_t bAttr;
     uint8_t uc;
     chtype ch;
@@ -2725,7 +2725,7 @@ static void hb_gt_crs_Refresh(PHB_GT pGT) // FuncTable
 
   HB_GTSUPER_REFRESH(pGT);
   if (s_ioBase) {
-    int iRow, iCol, iShape;
+    int32_t iRow, iCol, iShape;
 
     HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iShape);
     s_ioBase->row = iRow;

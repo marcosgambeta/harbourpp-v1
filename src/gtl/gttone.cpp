@@ -70,7 +70,7 @@
 #include <conio.h>
 #endif
 
-static int hb_Inp9x(unsigned short int usPort)
+static int32_t hb_Inp9x(unsigned short int usPort)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_Inp9x(%hu)", usPort));
@@ -107,7 +107,7 @@ static int hb_Inp9x(unsigned short int usPort)
   return usVal;
 }
 
-static int hb_Outp9x(unsigned short int usPort, unsigned short int usVal)
+static int32_t hb_Outp9x(unsigned short int usPort, unsigned short int usVal)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_Outp9x(%hu, %hu)", usPort, usVal));
@@ -147,7 +147,7 @@ static void hb_gt_w9xTone(double dFreq, double dDurat)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_w9xtone(%lf, %lf)", dFreq, dDurat));
 #endif
 
-  int uLSB, uMSB;
+  int32_t uLSB, uMSB;
   unsigned long lAdjFreq;
 
   // sync with internal clock with very small time period

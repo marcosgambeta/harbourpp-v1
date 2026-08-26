@@ -61,7 +61,7 @@
 
 const char *hb_gt_szCharMapFileDefault = "/etc/harbour/hb-charmap.def";
 
-static void chrmap_init(int *piTransTbl)
+static void chrmap_init(int32_t *piTransTbl)
 {
   for (auto i = 0; i < 256; ++i) {
     piTransTbl[i] = HB_CHRMAP(i < 128 ? 1 : 0, i);
@@ -70,14 +70,14 @@ static void chrmap_init(int *piTransTbl)
   piTransTbl[155] = HB_CHRMAP(1, '.');
 }
 
-static void chrmap_dotctrl(int *piTransTbl)
+static void chrmap_dotctrl(int32_t *piTransTbl)
 {
   for (auto i = 0; i < 32; ++i) {
     piTransTbl[i] = piTransTbl[i + 128] = HB_CHRMAP(1, '.');
   }
 }
 
-static void chrmap_ascictrl(int *piTransTbl)
+static void chrmap_ascictrl(int32_t *piTransTbl)
 {
   piTransTbl[4] = HB_CHRMAP(1, '#');
   piTransTbl[16] = HB_CHRMAP(1, '>');
@@ -90,7 +90,7 @@ static void chrmap_ascictrl(int *piTransTbl)
   piTransTbl[27] = HB_CHRMAP(1, '<');
 }
 
-static void chrmap_acscbox(int *piTransTbl)
+static void chrmap_acscbox(int32_t *piTransTbl)
 {
   piTransTbl[4] = HB_CHRMAP(5, '`');  // ACS_DIAMOND
   piTransTbl[16] = HB_CHRMAP(5, '+'); // ACS_RARROW
@@ -162,9 +162,9 @@ static void skip_blank(char **buf)
   }
 }
 
-static int get_val(char **buf)
+static int32_t get_val(char **buf)
 {
-  int n = -1;
+  int32_t n = -1;
 
   if ((*buf)[0] == '\'' && (*buf)[1] != '\0' && (*buf)[2] == '\'') {
     n = (*buf)[1] & 0xff;
@@ -186,10 +186,10 @@ static int get_val(char **buf)
   return n > 0xff ? -1 : n;
 }
 
-static int parse_line(char *buf, int *from, int *to, char *op, int *val, int *mod)
+static int32_t parse_line(char *buf, int32_t *from, int32_t *to, char *op, int32_t *val, int32_t *mod)
 {
   char *s;
-  int ret = 0, ina = 0;
+  int32_t ret = 0, ina = 0;
 
   s = buf;
   while (*s != '\0') {
@@ -262,11 +262,11 @@ static int parse_line(char *buf, int *from, int *to, char *op, int *val, int *mo
   return ret;
 }
 
-static int chrmap_parse(FILE *fp, const char *pszTerm, int *nTransTbl, const char *pszFile)
+static int32_t chrmap_parse(FILE *fp, const char *pszTerm, int32_t *nTransTbl, const char *pszFile)
 {
-  int line = 0, from = 0, to = 0, val = 0, mod = 0, i, n;
+  int32_t line = 0, from = 0, to = 0, val = 0, mod = 0, i, n;
   char *s, op = 0;
-  int isTerm = 0;
+  int32_t isTerm = 0;
   fpos_t pos;
 
   fgetpos(fp, &pos);
@@ -344,9 +344,9 @@ static int chrmap_parse(FILE *fp, const char *pszTerm, int *nTransTbl, const cha
   return isTerm;
 }
 
-static int hb_gt_chrmapread(const char *pszFile, const char *pszTerm, int *nTransTbl)
+static int32_t hb_gt_chrmapread(const char *pszFile, const char *pszTerm, int32_t *nTransTbl)
 {
-  int isTerm = -1;
+  int32_t isTerm = -1;
   auto fp = hb_fopen(pszFile, "r");
 
   if (fp != nullptr) {
@@ -373,10 +373,10 @@ static int hb_gt_chrmapread(const char *pszFile, const char *pszTerm, int *nTran
   return isTerm;
 }
 
-int hb_gt_chrmapinit(int *piTransTbl, const char *pszTerm, HB_BOOL fSetACSC)
+int32_t hb_gt_chrmapinit(int32_t *piTransTbl, const char *pszTerm, HB_BOOL fSetACSC)
 {
   char *pszFree = nullptr;
-  int nRet = -1;
+  int32_t nRet = -1;
 
   chrmap_init(piTransTbl);
 
@@ -433,9 +433,9 @@ int hb_gt_chrmapinit(int *piTransTbl, const char *pszTerm, HB_BOOL fSetACSC)
 }
 
 #if 0
-int main(int argc, char ** argv)
+int32_t main(int32_t argc, char ** argv)
 {
-   int piTransTbl[256];
+   int32_t piTransTbl[256];
 
    if( hb_gt_chrmapinit(piTransTbl, nullptr) == -1 ) {
       printf("cannot init charmap.\n");

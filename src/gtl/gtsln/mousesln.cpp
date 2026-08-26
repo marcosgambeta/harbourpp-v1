@@ -58,11 +58,11 @@
 
 // ***********************************************************************
 
-static int s_iMouseRow = 0;
-static int s_iMouseCol = 0;
+static int32_t s_iMouseRow = 0;
+static int32_t s_iMouseCol = 0;
 
 static auto s_bMousePresent = false;
-static int s_iMouseButtons = -1;
+static int32_t s_iMouseButtons = -1;
 
 static uint16_t s_usMouseState = 0;
 static uint16_t s_usLastMouseState = 0;
@@ -88,7 +88,7 @@ static HB_BOOL GetGpmEvent(Gpm_Event *Evt)
 
 // ***********************************************************************
 
-static HB_BOOL GetXtermEvent(int *Btn, int *Col, int *Row)
+static HB_BOOL GetXtermEvent(int32_t *Btn, int32_t *Col, int32_t *Row)
 {
   // Xterm mouse event consists of three chars
   if (SLang_input_pending(0) > 0) {
@@ -141,7 +141,7 @@ static void hb_sln_CheckDoubleClick(void)
 
 void hb_gt_sln_mouse_ProcessTerminalEvent(void)
 {
-  int Btn, Col, Row;
+  int32_t Btn, Col, Row;
 
   if (GetXtermEvent(&Btn, &Col, &Row)) {
     if (s_iMouseRow != Row || s_iMouseCol != Col) {
@@ -177,7 +177,7 @@ void hb_gt_sln_mouse_ProcessTerminalEvent(void)
 
 // ***********************************************************************
 
-int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
+int32_t hb_gt_sln_mouse_Inkey(int32_t iEventMask, HB_BOOL fCheckNew)
 {
   if (s_usMouseState != s_usLastMouseState) {
     if (s_usMouseState & M_CURSOR_MOVE) {
@@ -306,8 +306,8 @@ void hb_gt_sln_mouse_Init(void)
   else if (hb_sln_UnderLinuxConsole) {
     Gpm_Connect Conn;
 #ifdef HB_GPM_NOICE_DISABLE
-    int iErr = dup(STDERR_FILENO);
-    int iNull = open("/dev/null", O_RDWR);
+    int32_t iErr = dup(STDERR_FILENO);
+    int32_t iNull = open("/dev/null", O_RDWR);
     dup2(iNull, STDERR_FILENO);
     close(iNull);
 #endif
@@ -410,7 +410,7 @@ void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 
 // ***********************************************************************
 
-void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
+void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
 {
   HB_SYMBOL_UNUSED(pGT);
   *piRow = s_iMouseRow;
@@ -419,7 +419,7 @@ void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
 
 // ***********************************************************************
 
-void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
+void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -437,7 +437,7 @@ void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
 
 // ***********************************************************************
 
-HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
+HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -455,7 +455,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
 
 // ***********************************************************************
 
-int hb_gt_sln_mouse_CountButton(PHB_GT pGT)
+int32_t hb_gt_sln_mouse_CountButton(PHB_GT pGT)
 {
   HB_SYMBOL_UNUSED(pGT);
   return s_iMouseButtons;

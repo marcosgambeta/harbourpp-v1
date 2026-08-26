@@ -51,7 +51,7 @@
 
 #include "gtsln.hpp"
 
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
@@ -87,7 +87,7 @@ unsigned char hb_sln_inputTab[256];
 
 static auto s_fActive = false;
 
-static int s_iCursorStyle = SC_NORMAL;
+static int32_t s_iCursorStyle = SC_NORMAL;
 
 // indicate if we are currently running a command from system
 static auto s_bSuspended = false;
@@ -105,7 +105,7 @@ static const char *hb_NationCharsEnvName = "HRBNATIONCHARS";
 volatile bool hb_sln_bScreen_Size_Changed = false;
 
 // window's resize handler
-static void sigwinch_handler(int iSig)
+static void sigwinch_handler(int32_t iSig)
 {
   HB_SYMBOL_UNUSED(iSig);
   hb_sln_bScreen_Size_Changed = true;
@@ -117,21 +117,21 @@ static void sigwinch_handler(int iSig)
 static void hb_sln_colorTrans(void)
 {
   for (auto i = 0; i < 256; i++) {
-    int fg = (i & 0x0F);
+    int32_t fg = (i & 0x0F);
     // bit 7 is a blinking attribute - not used when console is not in
     // UTF-8 mode because we are using it for changing into ACSC
     // In SLANG 2.0 the character attributes are hold in uint16_t not uint8_t
     // so we can use all colors, blinking bit and ACSC switch without
     // any problems also when console is not in UTF-8 mode.
 #ifdef HB_SLN_UTF8 // slang 2.0
-    int bg = (i >> 4) & 0x0F;
+    int32_t bg = (i >> 4) & 0x0F;
 #else
-    int bg = (i >> 4) & (hb_sln_Is_Unicode ? 0x0F : 0x07);
+    int32_t bg = (i >> 4) & (hb_sln_Is_Unicode ? 0x0F : 0x07);
 #endif
     // in Clipper default color i 0x07 when in Slang 0x00,
     // we make a small trick with XOR 7 to make default colors
     // the same.
-    int clr = (bg << 4) | (fg ^ 0x07);
+    int32_t clr = (bg << 4) | (fg ^ 0x07);
     SLtt_set_color(clr, nullptr, const_cast<char *>(s_colorNames[fg]), const_cast<char *>(s_colorNames[bg]));
 #ifdef HB_SLN_UTF8
     s_colorTab[i] = clr;
@@ -420,9 +420,9 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
     for (auto i = 0; i < 256; ++i) {
       if (hb_cdpIsAlpha(cdpHost, i)) {
 #ifdef HB_SLN_UNICODE
-        int iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<uint8_t>(i)));
+        int32_t iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<uint8_t>(i)));
 #else
-        int iDst = hb_cdpTranslateDispChar(i, cdpHost, cdpTerm);
+        int32_t iDst = hb_cdpTranslateDispChar(i, cdpHost, cdpTerm);
 #endif
         HB_SLN_BUILD_RAWCHAR(s_outputTab[i], iDst, 0);
         if (fBox) {
@@ -446,7 +446,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
   // init national chars
   p = getenv(hb_NationCharsEnvName);
   if (p) {
-    int len = strlen(p) >> 1;
+    int32_t len = strlen(p) >> 1;
 
     // no more than 128 National chars are allowed
     if (len > 128) {
@@ -458,7 +458,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
 
     len <<= 1;
     for (auto i = 0; i < len; i += 2) {
-      int ch = static_cast<unsigned char>(p[i + 1]);
+      int32_t ch = static_cast<unsigned char>(p[i + 1]);
       hb_sln_convKDeadKeys[i + 1] = static_cast<unsigned char>(p[i]);
       hb_sln_convKDeadKeys[i + 2] = ch;
       hb_sln_inputTab[static_cast<unsigned char>(p[i])] = ch;
@@ -468,7 +468,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
 
 // ***********************************************************************
 
-static void hb_sln_SetCursorStyle(int iStyle)
+static void hb_sln_SetCursorStyle(int32_t iStyle)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sln_SetCursorStyle(%d)", iStyle));
@@ -517,15 +517,15 @@ static void hb_sln_SetCursorStyle(int iStyle)
 
 // ***********************************************************************
 #ifdef HB_SLN_UTF8
-static int hb_sln_isUTF8(int iStdOut, int iStdIn)
+static int32_t hb_sln_isUTF8(int32_t iStdOut, int32_t iStdIn)
 {
   if (isatty(iStdOut) && isatty(iStdIn)) {
     const char *szBuf = "\r\303\255\033[6n\r  \r";
-    int len = strlen(szBuf);
+    int32_t len = strlen(szBuf);
 
     if (write(iStdOut, szBuf, len) == len) {
       char rdbuf[64];
-      int i, j, n, d, y, x;
+      int32_t i, j, n, d, y, x;
 
       n = j = x = y = 0;
       // wait up to 2 seconds for answer
@@ -755,7 +755,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
+static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -837,7 +837,7 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
 // ***********************************************************************
 
-static const char *hb_gt_sln_Version(PHB_GT pGT, int iType) // FuncTable
+static const char *hb_gt_sln_Version(PHB_GT pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Version(%p)", static_cast<void*>(pGT)));
@@ -913,7 +913,7 @@ static HB_BOOL hb_gt_sln_PostExt(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
@@ -972,7 +972,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char
 
 // ***********************************************************************
 
-static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
+static void hb_gt_sln_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
@@ -980,7 +980,7 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
 
   if (s_fActive) {
     SLsmg_Char_Type SLchar;
-    int iColor;
+    int32_t iColor;
     uint8_t bAttr;
 
     if (hb_sln_Is_Unicode) {
@@ -1026,7 +1026,7 @@ static void hb_gt_sln_Refresh(PHB_GT pGT) // FuncTable
 
   HB_GTSUPER_REFRESH(pGT);
   if (s_fActive) {
-    int iRow, iCol, iStyle;
+    int32_t iRow, iCol, iStyle;
 
     HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
     if (iStyle != SC_NONE && (iRow < 0 || iCol < 0 || iRow >= SLtt_Screen_Rows || iCol >= SLtt_Screen_Cols)) {

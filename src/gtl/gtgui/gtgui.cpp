@@ -61,7 +61,7 @@
 
 // ***********************************************************************
 
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
@@ -72,7 +72,7 @@ struct _HB_BUTTON_ID
 {
   const char *name;
   HB_SIZE len;
-  int id;
+  int32_t id;
 };
 
 static const _HB_BUTTON_ID s_buttons[] = {{"OK", 2, 0x0001},        {"QUIT", 4, 0x0002},    {"CANCEL", 6, 0x0002},
@@ -82,7 +82,7 @@ static const _HB_BUTTON_ID s_buttons[] = {{"OK", 2, 0x0001},        {"QUIT", 4, 
 
 #define _HB_BUTTON_COUNT HB_SIZEOFARRAY(s_buttons)
 
-static int hb_gt_gui_optionId(const char *pszOption)
+static int32_t hb_gt_gui_optionId(const char *pszOption)
 {
   if (pszOption) {
     while (HB_ISSPACE(*pszOption)) {
@@ -104,9 +104,9 @@ static int hb_gt_gui_optionId(const char *pszOption)
   return 0;
 }
 
-static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
+static int32_t hb_gt_gui_optionPos(int32_t id, int32_t iType, PHB_ITEM pOptions)
 {
-  int iButton = 0;
+  int32_t iButton = 0;
 
   switch (id) {
   case IDOK:
@@ -154,15 +154,15 @@ static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
   return 0;
 }
 
-static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh,
+static int32_t hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh,
                            double dDelay) // FuncTable
 {
   void *hText;
   LPCTSTR lpText = HB_ITEMGETSTR(pMessage, &hText, nullptr);
-  int iRet, iOptions = pOptions ? static_cast<int32_t>(hb_arrayLen(pOptions)) : 0;
+  int32_t iRet, iOptions = pOptions ? static_cast<int32_t>(hb_arrayLen(pOptions)) : 0;
 
   if (lpText && iOptions > 0) {
-    int iType = 0;
+    int32_t iType = 0;
     UINT uType;
 
     for (auto i = 1; i <= iOptions; ++i) {
@@ -218,7 +218,7 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 
 // ***********************************************************************
 
-static const char *hb_gt_gui_Version(PHB_GT pGT, int iType) // FuncTable
+static const char *hb_gt_gui_Version(PHB_GT pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -252,7 +252,7 @@ static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));

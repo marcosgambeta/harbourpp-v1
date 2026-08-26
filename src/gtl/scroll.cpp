@@ -53,11 +53,11 @@
 
 HB_FUNC(SCROLL)
 {
-  int iMaxRow = hb_gtMaxRow();
-  int iMaxCol = hb_gtMaxCol();
+  int32_t iMaxRow = hb_gtMaxRow();
+  int32_t iMaxCol = hb_gtMaxCol();
 
-  int iBottom;
-  int iRight;
+  int32_t iBottom;
+  int32_t iRight;
 
   /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
@@ -103,13 +103,13 @@ HB_FUNC(SCROLL)
 
 HB_FUNC(HB_SCROLL)
 {
-  int iMaxRow = hb_gtMaxRow();
-  int iMaxCol = hb_gtMaxCol();
+  int32_t iMaxRow = hb_gtMaxRow();
+  int32_t iMaxCol = hb_gtMaxCol();
 
-  int iBottom;
-  int iRight;
-  int iColor;
-  int iChar;
+  int32_t iBottom;
+  int32_t iRight;
+  int32_t iColor;
+  int32_t iChar;
 
   /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 

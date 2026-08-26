@@ -63,7 +63,7 @@ HB_FUNC(NOSNOW)
 
 HB_FUNC(SETMODE)
 {
-  int iRows, iCols;
+  int32_t iRows, iCols;
 
   hb_gtScrDim(&iRows, &iCols);
   if (HB_ISNUM(1)) {
