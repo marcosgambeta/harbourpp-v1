@@ -112,7 +112,7 @@ void hbwapi_stor_SIZE(const SIZE *p, int iParam)
       s_hb_hashSetCItemNL(pStru, "cy", p->cy);
     } else {
       if (!pStru->isArray()) {
-        if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(2))) {
+        if (!hb_itemParamStoreRelease(static_cast<uint16_t>(iParam), pStru = hb_itemArrayNew(2))) {
           hb_itemRelease(pStru);
         }
         pStru = hb_param(iParam, Harbour::Item::ANY);
@@ -136,7 +136,7 @@ void hbwapi_stor_POINT(const POINT *p, int iParam)
       s_hb_hashSetCItemNL(pStru, "y", p->y);
     } else {
       if (!pStru->isArray()) {
-        if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(2))) {
+        if (!hb_itemParamStoreRelease(static_cast<uint16_t>(iParam), pStru = hb_itemArrayNew(2))) {
           hb_itemRelease(pStru);
         }
         pStru = hb_param(iParam, Harbour::Item::ANY);
@@ -189,7 +189,7 @@ void hbwapi_stor_RECT(const RECT *p, int iParam)
       s_hb_hashSetCItemNL(pStru, "bottom", p->bottom);
     } else {
       if (!pStru->isArray()) {
-        if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(4))) {
+        if (!hb_itemParamStoreRelease(static_cast<uint16_t>(iParam), pStru = hb_itemArrayNew(4))) {
           hb_itemRelease(pStru);
         }
         pStru = hb_param(iParam, Harbour::Item::ANY);
@@ -986,7 +986,7 @@ static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC *p, int iParam)
       s_hb_hashSetCItemNL(pStru, "tmCharSet", p->tmCharSet);
     } else {
       if (!pStru->isArray()) {
-        if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(20))) {
+        if (!hb_itemParamStoreRelease(static_cast<uint16_t>(iParam), pStru = hb_itemArrayNew(20))) {
           hb_itemRelease(pStru);
         }
         pStru = hb_param(iParam, Harbour::Item::ANY);
