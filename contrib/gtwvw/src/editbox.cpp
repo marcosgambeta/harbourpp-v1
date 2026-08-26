@@ -104,10 +104,10 @@ HB_FUNC(WVW_EBCREATE)
   int iTop, iLeft, iBottom, iRight;
   int iOffTop, iOffLeft, iOffBottom, iOffRight;
   UINT uiEBid;
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
   LPTSTR lpszText = const_cast<LPTSTR>(hb_parcx(6));
 
   BOOL bMultiline = HB_ISLOG(8) ? hb_parl(8) : FALSE;
@@ -115,7 +115,7 @@ HB_FUNC(WVW_EBCREATE)
 
   auto dwMoreStyle = static_cast<DWORD>(HB_ISNUM(9) ? hb_parnl(9) : 0);
 
-  auto usMaxChar = static_cast<USHORT>(HB_ISNUM(10) && hb_parni(10) > 0 ? hb_parni(10) : 0);
+  auto usMaxChar = static_cast<uint16_t>(HB_ISNUM(10) && hb_parni(10) > 0 ? hb_parni(10) : 0);
 
   DWORD dwStyle;
   auto pData = hb_getWvwData();
@@ -177,7 +177,7 @@ HB_FUNC(WVW_EBCREATE)
   if (hWndEB) {
     RECT rXB{};
     RECT rOffXB{};
-    /* USHORT i; */
+    /* uint16_t i; */
     BOOL bFromOEM = (pWindowData->CodePage == OEM_CHARSET);
 
     if (bFromOEM) {
@@ -473,7 +473,7 @@ HB_FUNC(WVW_EBGETTEXT)
   UINT uiEBid = hb_parni(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid);
   BOOL bSoftBreak = HB_ISLOG(3) ? hb_parl(3) : FALSE;
-  USHORT usLen;
+  uint16_t usLen;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   BOOL bToOEM = (pWindowData->CodePage == OEM_CHARSET);
 
@@ -486,7 +486,7 @@ HB_FUNC(WVW_EBGETTEXT)
     SendMessage(static_cast<HWND>(pcd->hWndCtrl), EM_FMTLINES, static_cast<WPARAM>(TRUE), 0);
   }
 
-  usLen = static_cast<USHORT>(SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_GETTEXTLENGTH, 0, 0)) + 1;
+  usLen = static_cast<uint16_t>(SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_GETTEXTLENGTH, 0, 0)) + 1;
 
   auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(usLen));
 
@@ -620,11 +620,11 @@ HB_FUNC(WVW_STCREATE)
   BOOL bBorder = hb_parnl(7);
   ULONG ulExStyle = 0 | (bBorder ? WS_EX_CLIENTEDGE : 0);
 
-  auto usWidth = static_cast<USHORT>(hb_parni(4));
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  USHORT usBottom = HB_ISNUM(11) ? static_cast<USHORT>(hb_parni(11)) : usTop;
-  USHORT usRight = HB_ISNUM(12) ? static_cast<USHORT>(hb_parni(12)) : usLeft + usWidth - 1;
+  auto usWidth = static_cast<uint16_t>(hb_parni(4));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  uint16_t usBottom = HB_ISNUM(11) ? static_cast<uint16_t>(hb_parni(11)) : usTop;
+  uint16_t usRight = HB_ISNUM(12) ? static_cast<uint16_t>(hb_parni(12)) : usLeft + usWidth - 1;
   /* char * sText = hb_parc(5); */
 
   int iStyle = (bBorder ? WS_BORDER : 0);

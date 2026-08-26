@@ -194,7 +194,7 @@ HB_FUNC(WVW_TBADDBUTTON)
   BOOL bMap3Dcolors = HB_ISLOG(6) ? hb_parl(6) : FALSE;
   BOOL bDropdown = HB_ISLOG(7) ? hb_parl(7) : FALSE;
   HWND hWndTB;
-  USHORT usOldHeight;
+  uint16_t usOldHeight;
 
   hWndTB = pWindowData->hToolBar;
   if (hWndTB == nullptr) {
@@ -269,7 +269,7 @@ HB_FUNC(WVW_TBDELBUTTON)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   int iButton = HB_ISNUM(2) ? hb_parni(2) : -1;
   HWND hWndTB;
-  USHORT usOldHeight;
+  uint16_t usOldHeight;
 
   hWndTB = pWindowData->hToolBar;
   if (hWndTB == nullptr || iButton < 0) {
@@ -343,7 +343,7 @@ HB_FUNC(WVW_TBENABLEBUTTON)
   BOOL bEnable = HB_ISLOG(3) ? hb_parl(3) : TRUE;
   int iCommand;
   HWND hWndTB;
-  USHORT usOldHeight;
+  uint16_t usOldHeight;
 
   hWndTB = pWindowData->hToolBar;
   if (hWndTB == nullptr || iButton < 0) {
@@ -459,7 +459,7 @@ HB_FUNC(WVW_SETTOOLTIP)
   POINT xy{};
   int iTop, iLeft, iBottom, iRight;
 
-  USHORT usTop = hb_parni(2), usLeft = hb_parni(3), usBottom = hb_parni(4), usRight = hb_parni(5);
+  uint16_t usTop = hb_parni(2), usLeft = hb_parni(3), usBottom = hb_parni(4), usRight = hb_parni(5);
 
   if (!pWindowData->bToolTipActive) {
     return;

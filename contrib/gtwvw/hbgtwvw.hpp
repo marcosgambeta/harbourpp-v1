@@ -392,16 +392,16 @@ struct win_data
    int byLineSpacing;                        /*x linespacing in pixels */
    int iLSpaceColor;                         /*x linespacing color index */
 
-   USHORT usRowOfs;                          /*x offset to Main Window's (0,0)                     */
-   USHORT usColOfs;                          /*x offset to Main Window's (0,0)                     */
+   uint16_t usRowOfs;                          /*x offset to Main Window's (0,0)                     */
+   uint16_t usColOfs;                          /*x offset to Main Window's (0,0)                     */
    int    uiDispCount;                       /*x pending DispEnd() request                         */
    BOOL   bPaintPending;                     /*x pending WVW_PAINT() execution                     */
    RECT   rPaintPending;                     /*x rect of pending bPaintPending  */
    HWND   hStatusBar;                        /* handle to status bar */
-   USHORT usSBHeight;                        /* height of status bar */
+   uint16_t usSBHeight;                        /* height of status bar */
 
    HWND   hToolBar;                          /* TB handle to toolbar        */
-   USHORT usTBHeight;                        /* TB height of toolbar        */
+   uint16_t usTBHeight;                        /* TB height of toolbar        */
    int    iStartStdBitmap,
           iStartViewBitmap,
           iStartHistBitmap;            /* start of bitmap index       */
@@ -433,13 +433,13 @@ struct win_data
    POINT    PTEXTSIZE;                             /* size of the fixed width font */
    BOOL     FixedFont;                             /* TRUE if current font is a fixed font */
    int      FixedSize[WVW_MAX_COLS];             /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
-   USHORT   ROWS;                                  /* number of displayable rows in window */
-   USHORT   COLS;                                  /* number of displayable columns in window */
+   uint16_t   ROWS;                                  /* number of displayable rows in window */
+   uint16_t   COLS;                                  /* number of displayable columns in window */
    COLORREF foreground;                            /* foreground colour */
 
    COLORREF background;                            /* background colour */
 
-   USHORT BUFFERSIZE;                              /* size of the screen text buffer */
+   uint16_t BUFFERSIZE;                              /* size of the screen text buffer */
    BYTE   byBuffer[WVW_MAX_ROWS * WVW_MAX_COLS]; /* buffer with the text to be displayed on the screen */
    BYTE   byColors[WVW_MAX_ROWS * WVW_MAX_COLS];
    BYTE * pBuffer;                                 /*   "     "    "    */
@@ -560,9 +560,9 @@ extern HBITMAP FindBitmapHandle(const char * szFileName, int * piWidth, int * pi
 extern void AddBitmapHandle(const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight);
 extern void hb_gt_wvwFUNCPrologue(BYTE byNumCoord, int * iRow1, int * iCol1, int * iRow2, int * iCol2);
 extern void hb_gt_wvwFUNCEpilogue(void);
-extern void hb_wvw_HBFUNCPrologue(UINT usWinNum, USHORT * pusRow1, USHORT * pusCol1, USHORT * pusRow2, USHORT * pusCol2);
+extern void hb_wvw_HBFUNCPrologue(UINT usWinNum, uint16_t * pusRow1, uint16_t * pusCol1, uint16_t * pusRow2, uint16_t * pusCol2);
 extern RECT    hb_gt_wvwGetXYFromColRowRect(WIN_DATA * pWindowData, RECT colrow);
-extern POINT hb_gt_wvwGetXYFromColRow(WIN_DATA * pWindowData, USHORT col, USHORT row);
+extern POINT hb_gt_wvwGetXYFromColRow(WIN_DATA * pWindowData, uint16_t col, uint16_t row);
 extern DWORD hb_gt_wvwGetColorData(int iIndex);
 extern BOOL GetImageDimension(const char * image, int * pWidth, int * pHeight);
 extern BOOL GetIPictDimension(IPicture * pPic, int * pWidth, int * pHeight);
@@ -584,7 +584,7 @@ extern BOOL StoreControlProc(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, WND
 extern WNDPROC GetControlProc(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl);
 extern LRESULT CALLBACK hb_gt_wvwXBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern LRESULT CALLBACK hb_gt_wvwBtnProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-extern UINT ButtonCreate(UINT usWinNum, USHORT usTop, USHORT usLeft, USHORT usBottom, USHORT usRight, LPCTSTR lpszCaption,
+extern UINT ButtonCreate(UINT usWinNum, uint16_t usTop, uint16_t usLeft, uint16_t usBottom, uint16_t usRight, LPCTSTR lpszCaption,
                          char * szBitmap, UINT uiBitmap, PHB_ITEM phbiCodeBlock,
                          int iOffTop, int iOffLeft, int iOffBottom, int iOffRight,
                          double dStretch, BOOL bMap3Dcolors,
@@ -593,10 +593,10 @@ extern LRESULT CALLBACK hb_gt_wvwCBProc(HWND hWnd, UINT message, WPARAM wParam, 
 extern LONG  GetFontDialogUnits(HWND h, HFONT f);
 extern HFONT   hb_gt_wvwGetFont(const char * pszFace, int iHeight, int iWidth, int iWeight, int iQuality, int iCodePage);
 extern LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-extern USHORT  hb_gt_wvwGetMouseX(WIN_DATA * pWindowData);
-extern USHORT  hb_gt_wvwGetMouseY(WIN_DATA * pWindowData);
-extern USHORT hb_gt_wvwRowOfs(UINT usWinNum);
-extern USHORT hb_gt_wvwColOfs(UINT usWinNum);
+extern uint16_t  hb_gt_wvwGetMouseX(WIN_DATA * pWindowData);
+extern uint16_t  hb_gt_wvwGetMouseY(WIN_DATA * pWindowData);
+extern uint16_t hb_gt_wvwRowOfs(UINT usWinNum);
+extern uint16_t hb_gt_wvwColOfs(UINT usWinNum);
 extern IPicture * hb_gt_wvwLoadPicture(const char * image);
 extern int nCopyAnsiToWideChar(LPWORD lpWCStr, LPSTR lpAnsiIn);
 extern LPWORD lpwAlign(LPWORD lpIn);

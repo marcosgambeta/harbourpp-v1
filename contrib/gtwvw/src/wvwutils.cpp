@@ -180,7 +180,7 @@ HB_FUNC(WIN_SETDLGITEMTEXT)
 
 HB_FUNC(WIN_GETDLGITEMTEXT)
 {
-  USHORT iLen = static_cast<USHORT>(
+  uint16_t iLen = static_cast<uint16_t>(
                     SendMessage(static_cast<HWND>(GetDlgItem(reinterpret_cast<HWND>(HB_PARHANDLE(1)), hb_parni(2))),
                                 static_cast<UINT>(WM_GETTEXTLENGTH), 0, 0)) +
                 1;
@@ -352,10 +352,10 @@ HB_FUNC(WVW_GBCREATE)
   int iOffTop, iOffLeft, iOffBottom, iOffRight;
   /* int   iStyle; */
   UINT uiPBid;
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
   LPCTSTR lpszCaption = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
   char *szBitmap = HB_ISCHAR(7) ? const_cast<char *>(hb_parcx(7)) : nullptr;
   UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
@@ -382,10 +382,10 @@ HB_FUNC(WVW_RBCREATE)
   int iOffTop, iOffLeft, iOffBottom, iOffRight;
   /* int   iStyle; */
   UINT uiPBid;
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
   LPCTSTR lpszCaption = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
   char *szBitmap = HB_ISCHAR(7) ? const_cast<char *>(hb_parcx(7)) : nullptr;
   UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
@@ -561,7 +561,7 @@ HB_FUNC(SETPARENT)
   auto usWinNum = WVW_WHICH_WINDOW;
   UINT usWinNum1 = HB_ISNIL(2)
                        ? (hb_gt_wvw_GetMainCoordMode() ? ((hb_gt_wvw_GetNumWindows()) - 1) : hb_gt_wvw_GetCurWindow())
-                       : (static_cast<USHORT>(hb_parni(2)));
+                       : (static_cast<uint16_t>(hb_parni(2)));
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   auto pWindowData1 = hb_gt_wvw_GetWindowsData(usWinNum1);
   HWND hWndParent = pWindowData->hWnd;
@@ -1090,7 +1090,7 @@ HB_FUNC(TOOLBARADDBUTTONS)
    ULONG  ulID;
 #endif
   DWORD style = GetWindowLong(hWndCtrl, GWL_STYLE);
-  USHORT usOldHeight;
+  uint16_t usOldHeight;
 
   SetWindowLong(hWndCtrl, GWL_STYLE, style | TBSTYLE_TOOLTIPS | TBSTYLE_FLAT);
 
@@ -1650,8 +1650,8 @@ HB_FUNC(WVW_SETMOUSEPOS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto usRow = static_cast<USHORT>(hb_parni(2));
-  auto usCol = static_cast<USHORT>(hb_parni(3));
+  auto usRow = static_cast<uint16_t>(hb_parni(2));
+  auto usCol = static_cast<uint16_t>(hb_parni(3));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usRow, &usCol, nullptr, nullptr);
@@ -1686,10 +1686,10 @@ HB_FUNC(WVW_FILLRECTANGLE)
   auto p = hb_getWvwData();
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   int iTop, iLeft, iBottom, iRight;
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
   COLORREF crRGBcolor = HB_ISNIL(6) ? 0 : hb_parnl(6);
   BOOL bTight = HB_ISNIL(7) ? FALSE : hb_parl(7);
   BOOL bUseBrush = HB_ISNIL(8) ? FALSE : hb_parl(8);
@@ -2203,10 +2203,10 @@ HB_FUNC(WVW_SAVESCREEN)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -2250,10 +2250,10 @@ HB_FUNC(WVW_RESTSCREEN)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   BOOL bResult = FALSE;
   BOOL bDoNotDestroyBMP = HB_ISNIL(7) ? FALSE : hb_parl(7);
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);

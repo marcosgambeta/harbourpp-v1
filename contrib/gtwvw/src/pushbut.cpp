@@ -96,10 +96,10 @@ HB_FUNC(WVW_PBCREATE)
   int iOffTop, iOffLeft, iOffBottom, iOffRight;
   /* int   iStyle; */
   UINT uiPBid;
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
   LPCTSTR lpszCaption = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
   char *szBitmap = HB_ISCHAR(7) ? const_cast<char *>(hb_parcx(7)) : nullptr;
   UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
@@ -414,13 +414,13 @@ HB_FUNC(WVW_CBCREATE)
   int iOffTop, iOffLeft, iOffBottom, iOffRight;
 
   UINT uiCBid;
-  auto usWidth = static_cast<USHORT>(hb_parni(4));
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  USHORT usBottom = usTop;
-  USHORT usRight = usLeft + usWidth - 1;
-  auto usNumElement = static_cast<USHORT>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, Harbour::Item::ARRAY)) : 0);
-  auto usListLines = static_cast<USHORT>(HB_ISNUM(7) ? hb_parni(7) : 3);
+  auto usWidth = static_cast<uint16_t>(hb_parni(4));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  uint16_t usBottom = usTop;
+  uint16_t usRight = usLeft + usWidth - 1;
+  auto usNumElement = static_cast<uint16_t>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, Harbour::Item::ARRAY)) : 0);
+  auto usListLines = static_cast<uint16_t>(HB_ISNUM(7) ? hb_parni(7) : 3);
   BYTE byCharHeight = hb_wvw_LineHeight(pWindowData);
 
   /* in the future combobox type might be selectable by 8th parameter */
@@ -484,7 +484,7 @@ HB_FUNC(WVW_CBCREATE)
         /* ignore failure */
       }
     } else {
-      for (USHORT i = 1; i <= usNumElement; i++) {
+      for (uint16_t i = 1; i <= usNumElement; i++) {
         if (SendMessage(static_cast<HWND>(hWndCB), CB_ADDSTRING, 0,
                         reinterpret_cast<LPARAM>(static_cast<LPCTSTR>(hb_parvcx(5, i)))) < 0) {
           /* ignore failure */

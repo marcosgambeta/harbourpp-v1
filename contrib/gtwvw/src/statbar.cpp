@@ -80,7 +80,7 @@ HB_FUNC(WVW_SBCREATE)
       pWindowData->hSBfont = CreateFontIndirect(&pData->s_lfSB);
     }
     if (GetClientRect(hWndSB, &rSB)) {
-      pWindowData->usSBHeight = static_cast<USHORT>(rSB.bottom);
+      pWindowData->usSBHeight = static_cast<uint16_t>(rSB.bottom);
     }
     pWindowData->hStatusBar = hWndSB;
 
@@ -140,7 +140,7 @@ HB_FUNC(WVW_SBADDPART)
   WORD displayFlags;
   HICON hIcon;
   BOOL lResetParts;
-  USHORT usWidth;
+  uint16_t usWidth;
 
   hWndSB = pWindowData->hStatusBar;
   if (hWndSB == nullptr) {
@@ -150,7 +150,7 @@ HB_FUNC(WVW_SBADDPART)
 
   displayFlags = HB_ISNIL(4) ? 0 : static_cast<WORD>(hb_parnl(4));
   lResetParts = !HB_ISNIL(5) && hb_parl(5);
-  usWidth = HB_ISNIL(3) || hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : static_cast<USHORT>(hb_parni(3));
+  usWidth = HB_ISNIL(3) || hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : static_cast<uint16_t>(hb_parni(3));
 
   if (HB_ISCHAR(2)) {
     auto hDCSB = GetDC(hWndSB);
@@ -160,7 +160,7 @@ HB_FUNC(WVW_SBADDPART)
     auto hOldFont = static_cast<HFONT>(SelectObject(hDCSB, hFont));
 
     if (GetTextExtentPoint32(hDCSB, hb_parcx(2), hb_parclen(2) + 1, &size)) {
-      usWidth = static_cast<USHORT>(size.cx);
+      usWidth = static_cast<uint16_t>(size.cx);
     }
 
     SelectObject(hDCSB, hOldFont);
@@ -417,10 +417,10 @@ HB_FUNC(WVW_XBCREATE)
   int iOffTop, iOffLeft, iOffBottom, iOffRight;
   auto iStyle = static_cast<int>(!HB_ISNUM(2) ? -1 : hb_parni(2));
   UINT uiXBid;
-  auto usTop = static_cast<USHORT>(hb_parni(3));
-  auto usLeft = static_cast<USHORT>(hb_parni(4));
-  USHORT usBottom;
-  USHORT usRight;
+  auto usTop = static_cast<uint16_t>(hb_parni(3));
+  auto usLeft = static_cast<uint16_t>(hb_parni(4));
+  uint16_t usBottom;
+  uint16_t usRight;
 
   if (iStyle < SBS_HORZ || iStyle > SBS_VERT || !HB_ISBLOCK(6)) {
     hb_retnl(0);
@@ -428,7 +428,7 @@ HB_FUNC(WVW_XBCREATE)
   }
 
   if (iStyle == SBS_VERT) {
-    usBottom = usTop + static_cast<USHORT>(hb_parni(5)) - 1;
+    usBottom = usTop + static_cast<uint16_t>(hb_parni(5)) - 1;
     usRight = usLeft;
 
     iOffTop = !HB_ISNIL(7) ? hb_parvni(7, 1) : 0;
@@ -436,7 +436,7 @@ HB_FUNC(WVW_XBCREATE)
     iOffBottom = !HB_ISNIL(7) ? hb_parvni(7, 3) : 0;
     iOffRight = !HB_ISNIL(7) ? hb_parvni(7, 4) : 0;
   } else {
-    usRight = usLeft + static_cast<USHORT>(hb_parni(5)) - 1;
+    usRight = usLeft + static_cast<uint16_t>(hb_parni(5)) - 1;
     usBottom = usTop;
 
     iOffTop = !HB_ISNIL(7) ? hb_parvni(7, 1) : +3 - pWindowData->byLineSpacing;

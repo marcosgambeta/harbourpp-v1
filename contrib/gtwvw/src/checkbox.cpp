@@ -92,7 +92,7 @@ HB_FUNC(WVW_CXCREATE)
   auto usWinNum = WVW_WHICH_WINDOW;
   /* int   iStyle; */
   UINT uiPBid;
-  USHORT usTop = static_cast<BYTE>(hb_parni(2)), usLeft = static_cast<BYTE>(hb_parni(3)),
+  uint16_t usTop = static_cast<BYTE>(hb_parni(2)), usLeft = static_cast<BYTE>(hb_parni(3)),
          usBottom = static_cast<BYTE>(hb_parni(4)), usRight = static_cast<BYTE>(hb_parni(5));
   LPCTSTR lpszCaption = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
   char *szBitmap = HB_ISCHAR(7) ? const_cast<char *>(hb_parcx(7)) : nullptr;
@@ -395,10 +395,10 @@ HB_FUNC(WVW_PGCREATE)
   BOOL bSmooth = (!HB_ISLOG(9) ? FALSE : hb_parl(9));
   BOOL bVertical = (!HB_ISLOG(10) ? FALSE : hb_parl(10));
   UINT uiPGid;
-  auto usTop = static_cast<USHORT>(hb_parni(2));
-  auto usLeft = static_cast<USHORT>(hb_parni(3));
-  auto usBottom = static_cast<USHORT>(hb_parni(4));
-  auto usRight = static_cast<USHORT>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni(4));
+  auto usRight = static_cast<uint16_t>(hb_parni(5));
 
   InitCommonControls();
 
