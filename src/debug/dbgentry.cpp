@@ -63,7 +63,7 @@ static bool hb_clsSetScope(bool fScope)
   return fScope;
 }
 
-#define HB_DBGINFO_DISABLE (reinterpret_cast<HB_DEBUGINFO *>(static_cast<HB_PTRUINT>(0x01)))
+#define HB_DBGINFO_DISABLE (reinterpret_cast<HB_DEBUGINFO *>(static_cast<uintptr_t>(0x01)))
 
 #if defined(HB_OS_UNIX)
 #define FILENAME_EQUAL(s1, s2) (!strcmp((s1), (s2)))

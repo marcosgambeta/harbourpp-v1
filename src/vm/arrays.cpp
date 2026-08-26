@@ -1423,9 +1423,9 @@ static bool hb_nestedCloneFind(PHB_NESTED_CLONED pClonedList, void *pValue, PHB_
   PHB_NESTED_REF pRef = pClonedList->pRefs;
 
   while (nFirst < nLast) {
-    if (reinterpret_cast<HB_PTRUINT>(pRef[nMiddle].value) < reinterpret_cast<HB_PTRUINT>(pValue)) {
+    if (reinterpret_cast<uintptr_t>(pRef[nMiddle].value) < reinterpret_cast<uintptr_t>(pValue)) {
       nFirst = nMiddle + 1;
-    } else if (reinterpret_cast<HB_PTRUINT>(pRef[nMiddle].value) > reinterpret_cast<HB_PTRUINT>(pValue)) {
+    } else if (reinterpret_cast<uintptr_t>(pRef[nMiddle].value) > reinterpret_cast<uintptr_t>(pValue)) {
       nLast = nMiddle;
     } else {
       hb_itemCopy(pDest, pRef[nMiddle].pDest);

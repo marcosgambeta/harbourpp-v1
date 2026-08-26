@@ -196,7 +196,7 @@ static void hb_freeArgs(char **argv)
 static int hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hStderr))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast<void*>(static_cast<uintptr_t>(hStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hStderr))));
 #endif
 
   int iResult = FS_ERROR;
@@ -609,7 +609,7 @@ HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHA
 int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessValue(%p, %d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hProcess)), fWait));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessValue(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hProcess)), fWait));
 #endif
 
   int iRetStatus = -1;
@@ -679,7 +679,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessClose(%p, %d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hProcess)), fGentle));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessClose(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hProcess)), fGentle));
 #endif
 
   auto fResult = false;

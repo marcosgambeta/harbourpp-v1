@@ -466,9 +466,9 @@ static PHB_TASKINFO hb_taskNew(long stack_size)
   auto pTask = static_cast<PHB_TASKINFO>(hb_xgrabz(sizeof(HB_TASKINFO)));
   pTask->stack = static_cast<char *>(hb_xgrab(stack_size));
 
-  HB_PTRUINT new_size = static_cast<HB_PTRUINT>(pTask->stack) + stack_size;
-  new_size &= ~static_cast<HB_PTRUINT>(HB_TASK_STACK_ALIGN - 1);
-  new_size -= static_cast<HB_PTRUINT>(pTask->stack);
+  uintptr_t new_size = static_cast<uintptr_t>(pTask->stack) + stack_size;
+  new_size &= ~static_cast<uintptr_t>(HB_TASK_STACK_ALIGN - 1);
+  new_size -= static_cast<uintptr_t>(pTask->stack);
 
   pTask->stack_size = static_cast<long>(new_size);
   pTask->id = ++s_iTaskID;

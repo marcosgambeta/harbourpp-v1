@@ -3125,7 +3125,7 @@ static bool hb_gt_wvt_FullScreen(PHB_GT pGT)
 static void hb_gt_wvt_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Init(%p,%p,%p,%p)", static_cast<void *>(pGT), reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hFilenoStderr))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Init(%p,%p,%p,%p)", static_cast<void *>(pGT), reinterpret_cast<void *>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void *>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void *>(static_cast<uintptr_t>(hFilenoStderr))));
 #endif
 
   HINSTANCE hInstance;
@@ -3395,15 +3395,15 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // F
     break;
 
   case HB_GTI_INPUTFD:
-    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<HB_PTRUINT>(GetStdHandle(STD_INPUT_HANDLE)));
+    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<uintptr_t>(GetStdHandle(STD_INPUT_HANDLE)));
     break;
 
   case HB_GTI_OUTPUTFD:
-    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<HB_PTRUINT>(GetStdHandle(STD_OUTPUT_HANDLE)));
+    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<uintptr_t>(GetStdHandle(STD_OUTPUT_HANDLE)));
     break;
 
   case HB_GTI_ERRORFD:
-    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<HB_PTRUINT>(GetStdHandle(STD_ERROR_HANDLE)));
+    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<uintptr_t>(GetStdHandle(STD_ERROR_HANDLE)));
     break;
 
   case HB_GTI_FONTSIZE:
@@ -3730,7 +3730,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // F
       pWVT->hIconToFree = hIconToFree;
       pWVT->hIcon = hIcon;
     }
-    pInfo->pResult = hb_itemPutPtr(pInfo->pResult, reinterpret_cast<void *>(reinterpret_cast<HB_PTRUINT>(pWVT->hIcon)));
+    pInfo->pResult = hb_itemPutPtr(pInfo->pResult, reinterpret_cast<void *>(reinterpret_cast<uintptr_t>(pWVT->hIcon)));
     break;
   }
   case HB_GTI_VIEWPORTWIDTH:

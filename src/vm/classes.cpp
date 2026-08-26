@@ -414,7 +414,7 @@ static HB_SYMCNT hb_clsBucketPos(PHB_DYNS pMsg, HB_SYMCNT uiMask)
    // Safely divide it by 16 - it's minimum memory allocated for single
    // HB_DYNS structure
 
-   // return (static_cast<uint16_t>(static_cast<HB_PTRUINT>(pMsg) >> 4) & uiMask) << BUCKETBITS;
+   // return (static_cast<uint16_t>(static_cast<uintptr_t>(pMsg) >> 4) & uiMask) << BUCKETBITS;
 
    // Using continuous symbol numbers we are 100% sure that we will cover
    // the whole 16-bit area and we will never have any problems until number

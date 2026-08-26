@@ -243,9 +243,9 @@ static PHB_REF_ITEM hb_itemSerialValueFind(PHB_REF_LIST pRefList, void *value, H
   HB_SIZE nMiddle = (nFirst + nLast) >> 1;
 
   while (nFirst < nLast) {
-    if (reinterpret_cast<HB_PTRUINT>(pRefList->pRefs[nMiddle].value) < reinterpret_cast<HB_PTRUINT>(value)) {
+    if (reinterpret_cast<uintptr_t>(pRefList->pRefs[nMiddle].value) < reinterpret_cast<uintptr_t>(value)) {
       nFirst = nMiddle + 1;
-    } else if (reinterpret_cast<HB_PTRUINT>(pRefList->pRefs[nMiddle].value) > reinterpret_cast<HB_PTRUINT>(value)) {
+    } else if (reinterpret_cast<uintptr_t>(pRefList->pRefs[nMiddle].value) > reinterpret_cast<uintptr_t>(value)) {
       nLast = nMiddle;
     } else {
       *pnPos = nMiddle;

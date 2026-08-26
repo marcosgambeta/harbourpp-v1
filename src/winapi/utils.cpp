@@ -32,7 +32,7 @@
 
 HB_FUNC(WAPTON)
 {
-  hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
+  hb_retnint(reinterpret_cast<uintptr_t>(hb_parptr(1)));
 }
 
 HB_FUNC(WANTOP)

@@ -3187,7 +3187,7 @@ static void hb_gt_trm_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
 #endif
 
   int32_t iRows = 24, iCols = 80;

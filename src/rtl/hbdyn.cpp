@@ -129,52 +129,52 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
   switch (pArg->iType) {
   case HB_DYN_CTYPE_BOOL:
     pArg->value.t.n64 = hb_itemGetL(pParam);
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_CHAR:
     pArg->value.t.n64 = static_cast<char>(hb_itemGetNI(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED:
     pArg->value.t.n64 = static_cast<unsigned char>(hb_itemGetNI(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_SHORT:
     pArg->value.t.n64 = static_cast<short>(hb_itemGetNI(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
     pArg->value.t.n64 = static_cast<unsigned short>(hb_itemGetNI(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_INT:
     pArg->value.t.n64 = hb_itemGetNI(pParam);
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_INT_UNSIGNED:
     pArg->value.t.n64 = static_cast<uint32_t>(hb_itemGetNInt(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_LONG:
     pArg->value.t.n64 = hb_itemGetNL(pParam);
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_LONG_UNSIGNED:
     pArg->value.t.n64 = static_cast<unsigned long>(hb_itemGetNInt(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_LLONG:
     pArg->value.t.n64 = hb_itemGetNInt(pParam);
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_LLONG_UNSIGNED:
@@ -184,7 +184,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 #else
     pArg->value.t.n64 = static_cast<HB_ULONGLONG>(hb_itemGetNInt(pParam));
 #endif
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_FLOAT:
@@ -192,7 +192,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 
   case HB_DYN_CTYPE_DOUBLE:
     HB_PUT_LE_DOUBLE(reinterpret_cast<uint8_t *>(&pArg->value.t.n64), hb_itemGetND(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
@@ -202,7 +202,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
     pArg->bRawBuffer = true;
     memcpy(static_cast<char *>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
     (static_cast<char *>(pArg->hString))[nLen] = '\0';
-    r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
+    r = reinterpret_cast<uintptr_t>(pArg->hString);
     pArg->value.t.n64 = r;
     break;
   }
@@ -212,19 +212,19 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
     case HB_DYN_ENC_ASCII: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
-      r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
+      r = reinterpret_cast<uintptr_t>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
     case HB_DYN_ENC_UTF8: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
-      r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
+      r = reinterpret_cast<uintptr_t>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
     case HB_DYN_ENC_UTF16: {
       HB_SIZE nLen;
       const HB_WCHAR *s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
-      r = reinterpret_cast<HB_PTRUINT>(hb_wstrunshare(&pArg->hString, s, nLen));
+      r = reinterpret_cast<uintptr_t>(hb_wstrunshare(&pArg->hString, s, nLen));
       break;
     }
     default: {
@@ -233,7 +233,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
       pArg->bRawBuffer = true;
       memcpy(static_cast<char *>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
       (static_cast<char *>(pArg->hString))[nLen] = '\0';
-      r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
+      r = reinterpret_cast<uintptr_t>(pArg->hString);
       break;
     }
     }
@@ -253,8 +253,8 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
   case HB_DYN_CTYPE_FLOAT_PTR:
   case HB_DYN_CTYPE_DOUBLE_PTR:
   case HB_DYN_CTYPE_STRUCTURE_PTR:
-    pArg->value.t.n64 = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pParam));
-    r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
+    pArg->value.t.n64 = reinterpret_cast<uintptr_t>(hb_itemGetPtr(pParam));
+    r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_VOID:
@@ -622,7 +622,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
     pArg->bRawBuffer = true;
     memcpy(static_cast<char *>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
     (static_cast<char *>(pArg->hString))[nLen] = '\0';
-    *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
+    *r1 = reinterpret_cast<uintptr_t>(pArg->hString);
     pArg->value.t.n32 = *r1;
     break;
   }
@@ -653,7 +653,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
       pArg->bRawBuffer = true;
       memcpy(static_cast<char *>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
       (static_cast<char *>(pArg->hString))[nLen] = '\0';
-      *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
+      *r1 = reinterpret_cast<uintptr_t>(pArg->hString);
       break;
     }
     }

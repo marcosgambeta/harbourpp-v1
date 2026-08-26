@@ -535,7 +535,7 @@ static uint16_t convert_seek_flags(uint16_t uiFlags)
 HB_FHANDLE hb_fsGetOsHandle(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsGetOsHandle(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsGetOsHandle(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
 #if defined(HB_OS_WIN)
@@ -657,7 +657,7 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
 int hb_fsCanRead(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsCanRead(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nTimeOut));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsCanRead(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nTimeOut));
 #endif
 
   return hb_fsCanAccess(hFileHandle, nTimeOut, true);
@@ -666,7 +666,7 @@ int hb_fsCanRead(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
 int hb_fsCanWrite(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsCanWrite(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nTimeOut));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsCanWrite(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nTimeOut));
 #endif
 
   return hb_fsCanAccess(hFileHandle, nTimeOut, false);
@@ -1033,7 +1033,7 @@ HB_BOOL hb_fsPipeCreate(HB_FHANDLE hPipe[2])
 int hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsIsPipeOrSock(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hPipeHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsIsPipeOrSock(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hPipeHandle))));
 #endif
 
 #if defined(HB_OS_UNIX)
@@ -1065,7 +1065,7 @@ int hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
 HB_BOOL hb_fsPipeUnblock(HB_FHANDLE hPipeHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeUnblock(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hPipeHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeUnblock(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hPipeHandle))));
 #endif
 
 #if defined(HB_OS_WIN)
@@ -1102,7 +1102,7 @@ HB_BOOL hb_fsPipeUnblock(HB_FHANDLE hPipeHandle)
 HB_SIZE hb_fsPipeIsData(HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT nTimeOut)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeIsData(%p,%" HB_PFS "u,%" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hPipeHandle)), nBufferSize, nTimeOut));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeIsData(%p,%" HB_PFS "u,%" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hPipeHandle)), nBufferSize, nTimeOut));
 #endif
 
   HB_SIZE nToRead = 0;
@@ -1164,7 +1164,7 @@ HB_SIZE hb_fsPipeIsData(HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT n
 HB_SIZE hb_fsPipeRead(HB_FHANDLE hPipeHandle, void *buffer, HB_SIZE nSize, HB_MAXINT nTimeOut)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeRead(%p,%p,%" HB_PFS "u,%" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hPipeHandle)), buffer, nSize, nTimeOut));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeRead(%p,%p,%" HB_PFS "u,%" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hPipeHandle)), buffer, nSize, nTimeOut));
 #endif
 
   HB_SIZE nRead;
@@ -1183,7 +1183,7 @@ HB_SIZE hb_fsPipeRead(HB_FHANDLE hPipeHandle, void *buffer, HB_SIZE nSize, HB_MA
 HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void *buffer, HB_SIZE nSize, HB_MAXINT nTimeOut)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeWrite(%p,%p,%" HB_PFS "u,%" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hPipeHandle)), buffer, nSize, nTimeOut));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeWrite(%p,%p,%" HB_PFS "u,%" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hPipeHandle)), buffer, nSize, nTimeOut));
 #endif
 
   HB_SIZE nWritten;
@@ -1379,7 +1379,7 @@ HB_FHANDLE hb_fsOpenEx(const char *pszFileName, uint16_t uiFlags, HB_FATTR nAttr
 void hb_fsCloseRaw(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsCloseRaw(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsCloseRaw(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
   hb_vmUnlock();
@@ -1406,7 +1406,7 @@ void hb_fsCloseRaw(HB_FHANDLE hFileHandle)
 void hb_fsClose(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsClose(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsClose(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
   hb_vmUnlock();
@@ -1436,7 +1436,7 @@ void hb_fsClose(HB_FHANDLE hFileHandle)
 int hb_fsSetDevMode(HB_FHANDLE hFileHandle, int iDevMode)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetDevMode(%p, %d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), iDevMode));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetDevMode(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), iDevMode));
 #endif
 
   HB_SYMBOL_UNUSED(hFileHandle);
@@ -1815,7 +1815,7 @@ HB_BOOL hb_fsSetAttr(const char *pszFileName, HB_FATTR nAttr)
 uint16_t hb_fsRead(HB_FHANDLE hFileHandle, void *pBuff, uint16_t uiCount)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsRead(%p, %p, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, uiCount));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsRead(%p, %p, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), pBuff, uiCount));
 #endif
 
   uint16_t uiRead;
@@ -1848,7 +1848,7 @@ uint16_t hb_fsRead(HB_FHANDLE hFileHandle, void *pBuff, uint16_t uiCount)
 uint16_t hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, uint16_t uiCount)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsWrite(%p, %p, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, uiCount));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsWrite(%p, %p, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), pBuff, uiCount));
 #endif
 
   uint16_t uiWritten = 0;
@@ -1891,7 +1891,7 @@ uint16_t hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, uint16_t uiCount)
 HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsReadLarge(%p, %p, %" HB_PFS "u)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, nCount));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsReadLarge(%p, %p, %" HB_PFS "u)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), pBuff, nCount));
 #endif
 
   HB_SIZE nRead;
@@ -1985,7 +1985,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
 HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCount)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsWriteLarge(%p, %p, %" HB_PFS "u)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, nCount));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsWriteLarge(%p, %p, %" HB_PFS "u)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), pBuff, nCount));
 #endif
 
   HB_SIZE nWritten = 0;
@@ -2089,7 +2089,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
 HB_SIZE hb_fsReadAt(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount, HB_FOFFSET nOffset)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsReadAt(%p, %p, %" HB_PFS "u, %" PFHL "i)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, nCount, nOffset));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsReadAt(%p, %p, %" HB_PFS "u, %" PFHL "i)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), pBuff, nCount, nOffset));
 #endif
 
   HB_SIZE nRead;
@@ -2205,7 +2205,7 @@ HB_SIZE hb_fsReadAt(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount, HB_FOFF
 HB_SIZE hb_fsWriteAt(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCount, HB_FOFFSET nOffset)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsWriteAt(%p, %p, %" HB_PFS "u, %" PFHL "i)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), pBuff, nCount, nOffset));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsWriteAt(%p, %p, %" HB_PFS "u, %" PFHL "i)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), pBuff, nCount, nOffset));
 #endif
 
   HB_SIZE nWritten;
@@ -2322,7 +2322,7 @@ HB_SIZE hb_fsWriteAt(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCount, 
 HB_BOOL hb_fsTruncAt(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsTruncAt(%p, %" PFHL "i)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nOffset));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsTruncAt(%p, %" PFHL "i)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nOffset));
 #endif
 
   auto fResult = false;
@@ -2369,7 +2369,7 @@ HB_BOOL hb_fsTruncAt(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset)
 void hb_fsCommit(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsCommit(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsCommit(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
   hb_vmUnlock();
@@ -2427,7 +2427,7 @@ void hb_fsCommit(HB_FHANDLE hFileHandle)
 HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, uint16_t uiMode)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsLock(%p, %lu, %lu, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), ulStart, ulLength, uiMode));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsLock(%p, %lu, %lu, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), ulStart, ulLength, uiMode));
 #endif
 
   auto fResult = false;
@@ -2572,7 +2572,7 @@ HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, u
 HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, uint16_t uiMode)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsLockLarge(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nStart, nLength, uiMode));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsLockLarge(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nStart, nLength, uiMode));
 #endif
 
   auto fResult = false;
@@ -2673,7 +2673,7 @@ HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLe
 int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, uint16_t uiMode)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsLockTest(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nStart, nLength, uiMode));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsLockTest(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nStart, nLength, uiMode));
 #endif
 
   int iResult;
@@ -2718,7 +2718,7 @@ int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength,
 HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, uint16_t uiFlags)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsSeek(%p, %ld, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), lOffset, uiFlags));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsSeek(%p, %ld, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), lOffset, uiFlags));
 #endif
 
   HB_ULONG ulPos;
@@ -2780,7 +2780,7 @@ HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, uint16_t uiFlags)
 HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, uint16_t uiFlags)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsSeekLarge(%p, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nOffset, uiFlags));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsSeekLarge(%p, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nOffset, uiFlags));
 #endif
 
   HB_FOFFSET nPos;
@@ -2859,7 +2859,7 @@ HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, uint16_t u
 HB_FOFFSET hb_fsTell(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsTell(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsTell(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
   return hb_fsSeekLarge(hFileHandle, 0, FS_RELATIVE);
@@ -2868,7 +2868,7 @@ HB_FOFFSET hb_fsTell(HB_FHANDLE hFileHandle)
 HB_FOFFSET hb_fsGetSize(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsGetSize(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsGetSize(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
 #if defined(HB_OS_WIN)
@@ -3529,7 +3529,7 @@ HB_ERRCODE hb_fsIsDrv(int iDrive)
 HB_BOOL hb_fsIsDevice(HB_FHANDLE hFileHandle)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDevice(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDevice(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle))));
 #endif
 
   auto fResult = false;

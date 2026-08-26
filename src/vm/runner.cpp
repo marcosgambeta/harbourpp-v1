@@ -343,7 +343,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
         ch = *buffer++ = szHrbBody[nBodyOffset++];
       } while (ch);
       pSymRead[ul].scope.value = static_cast<uint8_t>(szHrbBody[nBodyOffset++]);
-      pSymRead[ul].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(static_cast<HB_PTRUINT>(szHrbBody[nBodyOffset++]));
+      pSymRead[ul].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(static_cast<uintptr_t>(szHrbBody[nBodyOffset++]));
       pSymRead[ul].pDynSym = nullptr;
 
       if (pHrbBody->lSymStart == -1 && (pSymRead[ul].scope.value & HB_FS_FIRST) != 0 &&
