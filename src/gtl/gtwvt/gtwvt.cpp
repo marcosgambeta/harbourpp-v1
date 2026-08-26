@@ -1442,10 +1442,10 @@ static HFONT hb_gt_wvt_GetFont(LPCTSTR lpFace, int32_t iHeight, int32_t iWidth, 
     logfont.lfItalic = 0;
     logfont.lfUnderline = 0;
     logfont.lfStrikeOut = 0;
-    logfont.lfCharSet = static_cast<BYTE>(iCodePage); // OEM_CHARSET
+    logfont.lfCharSet = static_cast<uint8_t>(iCodePage); // OEM_CHARSET
     logfont.lfOutPrecision = 0;
     logfont.lfClipPrecision = 0;
-    logfont.lfQuality = static_cast<BYTE>(iQuality);    // DEFAULT_QUALITY, DRAFT_QUALITY or PROOF_QUALITY
+    logfont.lfQuality = static_cast<uint8_t>(iQuality);    // DEFAULT_QUALITY, DRAFT_QUALITY or PROOF_QUALITY
     logfont.lfPitchAndFamily = FIXED_PITCH | FF_MODERN; // all mapping depends on fixed width fonts!
     logfont.lfHeight = iHeight;
     logfont.lfWidth = iWidth < 0 ? -iWidth : iWidth;
@@ -1573,9 +1573,9 @@ static bool hb_gt_wvt_GetCharFromInputQueue(PHB_GTWVT pWVT, int32_t *iKey)
 #if !defined(UNICODE)
 static int32_t hb_gt_wvt_key_ansi_to_oem(int32_t c)
 {
-  BYTE pszSrc[2];
+  uint8_t pszSrc[2];
   wchar_t pszWide[1];
-  BYTE pszDst[2];
+  uint8_t pszDst[2];
 
   pszSrc[0] = static_cast<char>(c);
   pszSrc[1] = pszDst[0] = pszDst[1] = 0;
