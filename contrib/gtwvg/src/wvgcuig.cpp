@@ -199,7 +199,7 @@ HB_FUNC(WVG_SETGOBJDATA)
           break;
         case GOBJ_OBJDATA_PICTUREEX:
           if (HB_ISNUM(3)) {
-            gObj->pPicture = (IPicture *)(HB_PTRUINT)hb_parni(3);
+            gObj->pPicture = (IPicture *)(uintptr_t)hb_parni(3);
           }
           break;
         case GOBJ_OBJDATA_PICTURE:
@@ -239,32 +239,32 @@ HB_FUNC(WVG_SETGOBJDATA)
           if (gObj->hFont && gObj->bDestroyFont) {
             DeleteObject(gObj->hFont);
           }
-          gObj->hFont = (HFONT)(HB_PTRUINT)hb_parnint(3);
+          gObj->hFont = (HFONT)(uintptr_t)hb_parnint(3);
           gObj->bDestroyFont = false;
           break;
         case GOBJ_OBJDATA_HPEN:
           if (gObj->hPen && gObj->bDestroyPen) {
             DeleteObject(gObj->hPen);
           }
-          gObj->hPen = (HPEN)(HB_PTRUINT)hb_parnint(3);
+          gObj->hPen = (HPEN)(uintptr_t)hb_parnint(3);
           gObj->bDestroyPen = false;
           break;
         case GOBJ_OBJDATA_HBRUSH:
           if (gObj->hBrush && gObj->bDestroyBrush) {
             DeleteObject(gObj->hBrush);
           }
-          gObj->hBrush = (HBRUSH)(HB_PTRUINT)hb_parnint(3);
+          gObj->hBrush = (HBRUSH)(uintptr_t)hb_parnint(3);
           gObj->bDestroyBrush = true;
           break;
         case GOBJ_OBJDATA_COLORTEXT:
           if (HB_ISNUM(3)) {
-            gObj->crRGBText = (COLORREF)(HB_PTRUINT)hb_parnint(3);
+            gObj->crRGBText = (COLORREF)(uintptr_t)hb_parnint(3);
           } else {
             bSuccess = false;
           }
           break;
         case GOBJ_OBJDATA_COLORBK:
-          gObj->crRGBBk = (COLORREF)(HB_PTRUINT)hb_parnint(3);
+          gObj->crRGBBk = (COLORREF)(uintptr_t)hb_parnint(3);
           break;
         case GOBJ_OBJDATA_BLOCK:
           if (gObj->bBlock) {
@@ -1271,7 +1271,7 @@ HB_FUNC(WVG_TEXTBOX)
   gObj->crRGBText = (COLORREF)hb_parnint(9);
   gObj->crRGBBk = (COLORREF)hb_parnint(10);
 
-  gObj->hFont = (HFONT)(HB_PTRUINT)hb_parnint(11);
+  gObj->hFont = (HFONT)(uintptr_t)hb_parnint(11);
   gObj->bDestroyFont = false;
 
   gObj->gObjNext = pWVT->gObjs;
@@ -1346,7 +1346,7 @@ HB_FUNC(WVG_PICTUREEX)
     gObj->aOffset.iBottom = hb_parvni(5, 3);
     gObj->aOffset.iRight = hb_parvni(5, 4);
 
-    gObj->pPicture = (IPicture *)(HB_PTRUINT)hb_parnint(6);
+    gObj->pPicture = (IPicture *)(uintptr_t)hb_parnint(6);
     gObj->iData = (hb_parl(7) ? 1 : 0);
     gObj->bDestroyPicture = false;
 

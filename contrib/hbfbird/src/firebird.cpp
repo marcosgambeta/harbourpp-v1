@@ -483,7 +483,7 @@ HB_FUNC(FBQUERY)
     auto qry_handle = hb_itemArrayNew(6);
 
     hb_arraySetPtr(qry_handle, 1, reinterpret_cast<void *>(stmt));
-    hb_arraySetPtr(qry_handle, 2, reinterpret_cast<void *>(reinterpret_cast<HB_PTRUINT>(sqlda)));
+    hb_arraySetPtr(qry_handle, 2, reinterpret_cast<void *>(reinterpret_cast<uintptr_t>(sqlda)));
 
     if (!HB_ISPOINTER(4))
     {

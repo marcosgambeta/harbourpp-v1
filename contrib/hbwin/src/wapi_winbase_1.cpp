@@ -182,10 +182,10 @@ HB_FUNC(WAPI_GETPROCADDRESS)
   FARPROC pProc;
   DWORD dwLastError;
   pProc = GetProcAddress(static_cast<HMODULE>(hb_parptr(1)),
-                         HB_ISCHAR(2) ? hb_parc(2) : reinterpret_cast<LPCSTR>(static_cast<HB_PTRUINT>(hb_parnint(2))));
+                         HB_ISCHAR(2) ? hb_parc(2) : reinterpret_cast<LPCSTR>(static_cast<uintptr_t>(hb_parnint(2))));
   dwLastError = GetLastError();
   hbwapi_SetLastError(dwLastError);
-  hb_retptr(reinterpret_cast<void *>(reinterpret_cast<HB_PTRUINT>(pProc)));
+  hb_retptr(reinterpret_cast<void *>(reinterpret_cast<uintptr_t>(pProc)));
 }
 
 // HMODULE WINAPI GetModuleHandle(__in_opt LPCTSTR lpModuleName);

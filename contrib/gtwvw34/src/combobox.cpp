@@ -324,7 +324,7 @@ HB_FUNC(WVW_CBCREATE)
     HWND hWnd = CreateWindowEx(
         0, TEXT("COMBOBOX"), nullptr, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL | hb_parni(12) /* nStyle */,
         iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, wvw_win->hWnd,
-        reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
+        reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
 
     if (hWnd) {
       HB_SIZE nMaxWidth = 0;

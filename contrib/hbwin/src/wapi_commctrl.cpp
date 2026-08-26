@@ -407,7 +407,7 @@ HB_FUNC(WAPI_TABCTRL_GETROWCOUNT)
 // (HIMAGELIST)SNDMSG((hwnd), TCM_GETIMAGELIST, 0, 0)
 HB_FUNC(WAPI_TABCTRL_GETIMAGELIST)
 {
-  hbwapi_ret_NINT(reinterpret_cast<HB_PTRUINT>(TabCtrl_GetImageList(hbwapi_par_raw_HWND(1))));
+  hbwapi_ret_NINT(reinterpret_cast<uintptr_t>(TabCtrl_GetImageList(hbwapi_par_raw_HWND(1))));
 }
 
 // #define TabCtrl_SetImageList(hwnd, himl)
@@ -415,7 +415,7 @@ HB_FUNC(WAPI_TABCTRL_GETIMAGELIST)
 HB_FUNC(WAPI_TABCTRL_SETIMAGELIST)
 {
   hbwapi_ret_NINT(
-      reinterpret_cast<HB_PTRUINT>(TabCtrl_SetImageList(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HIMAGELIST(2))));
+      reinterpret_cast<uintptr_t>(TabCtrl_SetImageList(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HIMAGELIST(2))));
 }
 
 // wapi_TabCtrl_SetItem(hWndTab, nInsertPos, cText, iImageListIndex)
@@ -514,7 +514,7 @@ HB_FUNC(WAPI_TABCTRL_SETPADDING)
 // (HWND)SNDMSG((hwnd), TCM_GETTOOLTIPS, 0, 0)
 HB_FUNC(WAPI_TABCTRL_GETTOOLTIPS)
 {
-  hbwapi_ret_NINT(reinterpret_cast<HB_PTRUINT>(TabCtrl_GetToolTips(hbwapi_par_raw_HWND(1))));
+  hbwapi_ret_NINT(reinterpret_cast<uintptr_t>(TabCtrl_GetToolTips(hbwapi_par_raw_HWND(1))));
 }
 
 // TabCtrl_SetToolTips(hwnd, hwndTT)

@@ -834,7 +834,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
 #if _TODO_REGION
     // TODO: Solve reference counting to 'h' handle. Also for returned one.
     if (bRegion) {
-      hb_retnint(static_cast<HB_PTRUINT>(SelectObject(hDC, h)));
+      hb_retnint(static_cast<uintptr_t>(SelectObject(hDC, h)));
     } else
 #endif
     {

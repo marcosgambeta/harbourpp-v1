@@ -353,8 +353,8 @@ HB_FUNC(XDL_MMFILE_COMPACT)
 
 /* callbacks */
 
-#define hb_ptrToHandle(p)   static_cast<HB_FHANDLE>(reinterpret_cast<HB_PTRUINT>(p))
-#define hb_parHandlePtr(n)  reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hb_numToHandle(hb_parnint(n))))
+#define hb_ptrToHandle(p)   static_cast<HB_FHANDLE>(reinterpret_cast<uintptr_t>(p))
+#define hb_parHandlePtr(n)  reinterpret_cast<void*>(static_cast<uintptr_t>(hb_numToHandle(hb_parnint(n))))
 
 static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 {

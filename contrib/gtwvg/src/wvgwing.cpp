@@ -100,16 +100,16 @@
 
 #define WIN_STATUSBAR_MAX_PARTS 256
 
-#define wvg_parwparam(n) ((WPARAM)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parlparam(n) ((LPARAM)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parhandle(n) ((HANDLE)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parhwnd(n) ((HWND)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parwndproc(n) ((WNDPROC)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parhbrush(n) ((HBRUSH)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parhdc(n) ((HDC)(HB_PTRUINT)hb_parnint(n))
-#define wvg_parcolor(n) ((COLORREF)(HB_PTRUINT)hb_parnint(n))
+#define wvg_parwparam(n) ((WPARAM)(uintptr_t)hb_parnint(n))
+#define wvg_parlparam(n) ((LPARAM)(uintptr_t)hb_parnint(n))
+#define wvg_parhandle(n) ((HANDLE)(uintptr_t)hb_parnint(n))
+#define wvg_parhwnd(n) ((HWND)(uintptr_t)hb_parnint(n))
+#define wvg_parwndproc(n) ((WNDPROC)(uintptr_t)hb_parnint(n))
+#define wvg_parhbrush(n) ((HBRUSH)(uintptr_t)hb_parnint(n))
+#define wvg_parhdc(n) ((HDC)(uintptr_t)hb_parnint(n))
+#define wvg_parcolor(n) ((COLORREF)(uintptr_t)hb_parnint(n))
 
-#define wvg_rethandle(n) (hb_retnint((HB_PTRUINT)n))
+#define wvg_rethandle(n) (hb_retnint((uintptr_t)n))
 
 #if defined(__BORLANDC__) && !defined(HB_ARCH_64BIT)
 #undef MAKELONG
@@ -370,7 +370,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMFILE)
   void *hText;
 
   hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
-                           (HWND)(HB_PTRUINT)hb_parnint(5), 0);
+                           (HWND)(uintptr_t)hb_parnint(5), 0);
   hb_strfree(hText);
   hb_retptr((void *)hBitmap);
 }
@@ -380,7 +380,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMRESOURCEID)
   HBITMAP hBitmap;
 
   hBitmap =
-      hPrepareBitmap(nullptr, hb_parni(1), hb_parni(2), hb_parni(3), hb_parl(4), (HWND)(HB_PTRUINT)hb_parnint(5), 2);
+      hPrepareBitmap(nullptr, hb_parni(1), hb_parni(2), hb_parni(3), hb_parl(4), (HWND)(uintptr_t)hb_parnint(5), 2);
 
   hb_retptr((void *)hBitmap);
 }
@@ -391,14 +391,14 @@ HB_FUNC(WVG_PREPAREBITMAPFROMRESOURCENAME)
   void *hText;
 
   hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
-                           (HWND)(HB_PTRUINT)hb_parnint(5), 1);
+                           (HWND)(uintptr_t)hb_parnint(5), 1);
   hb_strfree(hText);
   hb_retptr((void *)hBitmap);
 }
 
 HB_FUNC(WVG_STATUSBARCREATEPANEL)
 {
-  HWND hWndSB = (HWND)(HB_PTRUINT)hb_parnint(1);
+  HWND hWndSB = (HWND)(uintptr_t)hb_parnint(1);
   int iMode = hb_parni(2);
 
   if (hWndSB == nullptr || !IsWindow(hWndSB)) {
@@ -450,7 +450,7 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
 
 HB_FUNC(WVG_STATUSBARSETTEXT)
 {
-  HWND hWndSB = (HWND)(HB_PTRUINT)hb_parnint(1);
+  HWND hWndSB = (HWND)(uintptr_t)hb_parnint(1);
 
   if (hWndSB && IsWindow(hWndSB)) {
     int iPart = hb_parnidef(2, 1);
@@ -471,7 +471,7 @@ HB_FUNC(WVG_STATUSBARSETTEXT)
 HB_FUNC(WVG_STATUSBARREFRESH)
 {
 #if 0
-   HWND hWndSB = (HWND)(HB_PTRUINT)hb_parnint(1);
+   HWND hWndSB = (HWND)(uintptr_t)hb_parnint(1);
 
    if (hWndSB && IsWindow(hWndSB))
    {
@@ -503,8 +503,8 @@ HB_FUNC(WVG_GETNMHDRINFO)
   hb_arrayNew(pEvParams, 3);
 
   hb_arraySetNI(pEvParams, 1, lpnmh->code);
-  hb_arraySetNInt(pEvParams, 2, (HB_PTRUINT)lpnmh->idFrom);
-  hb_arraySetNInt(pEvParams, 3, (HB_PTRUINT)lpnmh->hwndFrom);
+  hb_arraySetNInt(pEvParams, 2, (uintptr_t)lpnmh->idFrom);
+  hb_arraySetNInt(pEvParams, 3, (uintptr_t)lpnmh->hwndFrom);
 
   hb_itemReturnRelease(pEvParams);
 }
@@ -521,9 +521,9 @@ HB_FUNC(WVG_GETNMMOUSEINFO)
   hb_arrayNew(pEvParams, 4);
 
   hb_arraySetNI(pEvParams, 1, nmh.code);
-  hb_arraySetNInt(pEvParams, 2, (HB_PTRUINT)nmh.idFrom);
-  hb_arraySetNInt(pEvParams, 3, (HB_PTRUINT)nmh.hwndFrom);
-  hb_arraySetNInt(pEvParams, 4, (HB_PTRUINT)nmm->dwItemSpec);
+  hb_arraySetNInt(pEvParams, 2, (uintptr_t)nmh.idFrom);
+  hb_arraySetNInt(pEvParams, 3, (uintptr_t)nmh.hwndFrom);
+  hb_arraySetNInt(pEvParams, 4, (uintptr_t)nmm->dwItemSpec);
 
   hb_itemReturnRelease(pEvParams);
 }
@@ -541,8 +541,8 @@ HB_FUNC(WVG_GETNMTREEVIEWINFO)
   hb_arrayNew(pEvParams, 4);
 
   hb_arraySetNI(pEvParams, 1, nmh.code);
-  hb_arraySetNInt(pEvParams, 2, (HB_PTRUINT)nmh.idFrom);
-  hb_arraySetNInt(pEvParams, 3, (HB_PTRUINT)nmh.hwndFrom);
+  hb_arraySetNInt(pEvParams, 2, (uintptr_t)nmh.idFrom);
+  hb_arraySetNInt(pEvParams, 3, (uintptr_t)nmh.hwndFrom);
   hb_arraySetNI(pEvParams, 4, pnmtv->action);
 
   hb_itemReturnRelease(pEvParams);
@@ -562,7 +562,7 @@ HB_FUNC(WVG_TREEVIEW_GETSELECTIONINFO)
     TV_ITEM item;
     HTREEITEM hParent;
 
-    hb_stornint((HB_PTRUINT)hSelected, 6);
+    hb_stornint((uintptr_t)hSelected, 6);
 
     item.mask = TVIF_HANDLE | TVIF_TEXT | TVIF_IMAGE;
     item.hItem = hSelected;
@@ -574,7 +574,7 @@ HB_FUNC(WVG_TREEVIEW_GETSELECTIONINFO)
     }
 
     hParent = TreeView_GetParent(wvg_parhwnd(1), hSelected);
-    hb_stornint((HB_PTRUINT)hParent, 5);
+    hb_stornint((uintptr_t)hParent, 5);
 
     item.mask = TVIF_HANDLE | TVIF_TEXT;
     item.hItem = hParent;
@@ -605,7 +605,7 @@ HB_FUNC(WVG_TREEVIEW_ADDITEM)
   tvis.hParent = HB_ISNUM(2) ? (HTREEITEM)wvg_parhandle(2) : nullptr;
   HB_WIN_V_UNION(tvis, item.pszText) = (LPTSTR)HB_PARSTRDEF(3, &hText, nullptr);
 
-  hb_retnint((HB_PTRUINT)TreeView_InsertItem(wvg_parhwnd(1), &tvis));
+  hb_retnint((uintptr_t)TreeView_InsertItem(wvg_parhwnd(1), &tvis));
 
   hb_strfree(hText);
 }
@@ -715,10 +715,10 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
   if (block) {
     hb_vmPushEvalSym();
     hb_vmPush(block);
-    hb_vmPushNumInt((HB_PTRUINT)hwnd);
+    hb_vmPushNumInt((uintptr_t)hwnd);
     hb_vmPushInteger(msg);
-    hb_vmPushNumInt((HB_PTRUINT)wParam);
-    hb_vmPushNumInt((HB_PTRUINT)lParam);
+    hb_vmPushNumInt((uintptr_t)wParam);
+    hb_vmPushNumInt((uintptr_t)lParam);
     hb_vmDo(4);
     bret = hb_parnl(-1);
 
@@ -792,7 +792,7 @@ HB_FUNC(WVG_CHOOSEFONT)
   cf.Flags = Flags;
   cf.rgbColors = RGB(0, 0, 0);
 
-  cf.lCustData = (HB_PTRUINT)hb_param(2, Harbour::Item::BLOCK);
+  cf.lCustData = (uintptr_t)hb_param(2, Harbour::Item::BLOCK);
   cf.lpfnHook = WvgDialogProcChooseFont;
 
   cf.lpTemplateName = (LPTSTR) nullptr;
@@ -861,7 +861,7 @@ HB_FUNC(WVG_FONTCREATE)
 
   if (hFont) {
     aFont = wvg_logfontTOarray(&lf, false);
-    hb_arraySetNInt(aFont, 15, (HB_PTRUINT)hFont);
+    hb_arraySetNInt(aFont, 15, (uintptr_t)hFont);
   } else {
     aFont = wvg_logfontTOarray(&lf, true);
   }
@@ -1027,10 +1027,10 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
       hb_vmPushEvalSym();
       hb_vmPush(pBlock);
     }
-    hb_vmPushNumInt((HB_PTRUINT)hwnd);
+    hb_vmPushNumInt((uintptr_t)hwnd);
     hb_vmPushInteger(msg);
-    hb_vmPushNumInt((HB_PTRUINT)wParam);
-    hb_vmPushNumInt((HB_PTRUINT)lParam);
+    hb_vmPushNumInt((uintptr_t)wParam);
+    hb_vmPushNumInt((uintptr_t)lParam);
     hb_vmDo(4);
     lRet = (long)hb_parnint(-1);
     return lRet;
@@ -1049,10 +1049,10 @@ HB_FUNC(WVG_SETWINDOWPROCBLOCK)
 #if (defined(_MSC_VER) && (_MSC_VER <= 1200)) && !defined(HB_ARCH_64BIT)
   oldProc = (WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (long)ControlWindowProcedure);
 #else
-  oldProc = (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (HB_PTRUINT)ControlWindowProcedure);
+  oldProc = (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (uintptr_t)ControlWindowProcedure);
 #endif
 
-  hb_retnint((HB_PTRUINT)oldProc);
+  hb_retnint((uintptr_t)oldProc);
 }
 
 HB_FUNC(WVG_RELEASEWINDOWPROCBLOCK)

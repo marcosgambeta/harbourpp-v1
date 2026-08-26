@@ -142,7 +142,7 @@ HB_FUNC(WVW_PGCREATE)
 
     HWND hWnd = CreateWindowEx(
         0, PROGRESS_CLASS, nullptr, WS_CHILD | WS_VISIBLE | iStyle, iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1,
-        wvw_win->hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
+        wvw_win->hWnd, reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
 
     if (hWnd) {
       if (HB_ISNUM(7)) {

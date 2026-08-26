@@ -172,7 +172,7 @@ HINSTANCE hbwapi_Instance(void)
   return hInstance;
 }
 
-HKEY hbwapi_get_HKEY(HB_PTRUINT nKey)
+HKEY hbwapi_get_HKEY(uintptr_t nKey)
 {
   switch (nKey) {
   case 1:

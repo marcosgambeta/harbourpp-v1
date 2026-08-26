@@ -328,7 +328,7 @@ void *__hbwapi_par_handle(int n)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   if (HB_ISNUM(n)) {
-    return s_handle_trace(n) ? static_cast<void *>(static_cast<HB_PTRUINT>(hb_parnint(n))) : nullptr;
+    return s_handle_trace(n) ? static_cast<void *>(static_cast<uintptr_t>(hb_parnint(n))) : nullptr;
   } else
 #endif
     return hb_parptr(n);
@@ -338,7 +338,7 @@ void *__hbwapi_parv_handle(int n, int i)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   if (HB_ISNUM(n)) {
-    return s_handle_trace(n) ? static_cast<void *>(static_cast<HB_PTRUINT>(hb_parvnint(n, i))) : nullptr;
+    return s_handle_trace(n) ? static_cast<void *>(static_cast<uintptr_t>(hb_parvnint(n, i))) : nullptr;
   } else
 #endif
     return hb_parvptr(n, i);
@@ -348,7 +348,7 @@ void *hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   if (pItem && pItem->isNumeric()) {
-    return static_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pItem)));
+    return static_cast<void *>(static_cast<uintptr_t>(hb_itemGetNInt(pItem)));
   } else
 #endif
     return hb_itemGetPtr(pItem);

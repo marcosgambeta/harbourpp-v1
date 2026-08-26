@@ -71,7 +71,7 @@ HB_FUNC(WAPI_SETWINDOWPOS)
   } else if (HB_ISNUM(2)) {
     // Do not delete this, it will be active if
     // numeric pointers are not accepted above
-    hWndInsertAfter = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(2)));
+    hWndInsertAfter = reinterpret_cast<HWND>(static_cast<uintptr_t>(hb_parnint(2)));
 
     if (!(hWndInsertAfter == HWND_TOP || hWndInsertAfter == HWND_BOTTOM || hWndInsertAfter == HWND_TOPMOST ||
           hWndInsertAfter == HWND_NOTOPMOST)) {
@@ -186,7 +186,7 @@ HB_FUNC(WAPI_CREATEWINDOWEX)
                                 hbwapi_par_INT(7),                                       // nWidth
                                 hbwapi_par_INT(8),                                       // nHeight
                                 hbwapi_par_raw_HWND(9), // hWndParent, default to HWND_DESKTOP
-                                HB_ISNUM(10) ? reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(10)))
+                                HB_ISNUM(10) ? reinterpret_cast<HMENU>(static_cast<uintptr_t>(hb_parnint(10)))
                                              : hbwapi_par_raw_HMENU(10), // hMenu
                                 hbwapi_par_raw_HINSTANCE(11),            // hInstance
                                 static_cast<LPVOID>(hb_parptr(12)));     // lpParam
@@ -556,7 +556,7 @@ HB_FUNC(WAPI_INSERTMENU)
 {
   HMENU hMenu = hbwapi_par_raw_HMENU(1);
   UINT uFlags = hbwapi_par_UINT(3), uPosition = hbwapi_par_UINT(2);
-  HB_PTRUINT uIDNewItem;
+  uintptr_t uIDNewItem;
   void *hNewItemStr;
   LPCTSTR lpNewItem = HB_PARSTR(5, &hNewItemStr, nullptr);
 
@@ -576,7 +576,7 @@ HB_FUNC(WAPI_INSERTMENU)
     if (lpNewItem) {
       uFlags |= MF_STRING;
     } else if (HB_ISNUM(5)) {
-      lpNewItem = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(5)));
+      lpNewItem = reinterpret_cast<LPCTSTR>(static_cast<uintptr_t>(hb_parnint(5)));
       if (lpNewItem) {
         uFlags |= MF_OWNERDRAW;
       }
@@ -600,7 +600,7 @@ HB_FUNC(WAPI_APPENDMENU)
 {
   HMENU hMenu = hbwapi_par_raw_HMENU(1);
   UINT uFlags = hbwapi_par_UINT(2);
-  HB_PTRUINT uIDNewItem;
+  uintptr_t uIDNewItem;
   void *hNewItemStr;
   LPCTSTR lpNewItem = HB_PARSTR(4, &hNewItemStr, nullptr);
 
@@ -620,7 +620,7 @@ HB_FUNC(WAPI_APPENDMENU)
     if (lpNewItem) {
       uFlags |= MF_STRING;
     } else if (HB_ISNUM(4)) {
-      lpNewItem = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(4)));
+      lpNewItem = reinterpret_cast<LPCTSTR>(static_cast<uintptr_t>(hb_parnint(4)));
       if (lpNewItem) {
         uFlags |= MF_OWNERDRAW;
       }
@@ -757,7 +757,7 @@ HB_FUNC(WAPI_DESTROYACCELERATORTABLE)
 
 HB_FUNC(WAPI_GETKEYBOARDLAYOUT)
 {
-  hbwapi_ret_NINT(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(GetKeyboardLayout(hbwapi_par_DWORD(1)))));
+  hbwapi_ret_NINT(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(GetKeyboardLayout(hbwapi_par_DWORD(1)))));
 }
 
 HB_FUNC(WAPI_GETKEYBOARDLAYOUTNAME)
@@ -1027,7 +1027,7 @@ HB_FUNC(WAPI_SENDMESSAGETIMEOUT) // NOTE: unsafe function, may write past buffer
     hb_storc(nullptr, 4);
   }
 
-  hb_stornint(static_cast<HB_PTRUINT>(pdwResult), 7);
+  hb_stornint(static_cast<uintptr_t>(pdwResult), 7);
 
   hb_strfree(hText);
 }

@@ -518,15 +518,15 @@ HB_FUNC(WAPI_INSERTMENU)
   BOOL fResult;
   HMENU hMenu = hbwapi_par_raw_HMENU(1), hSubMenu = hbwapi_par_raw_HMENU(4);
   UINT uPosition = hbwapi_par_UINT(2), uFlags = hbwapi_par_UINT(3);
-  HB_PTRUINT uIDNewItem;
+  uintptr_t uIDNewItem;
   void *hNewItemStr;
   LPCTSTR lpNewItem = HB_PARSTR(5, &hNewItemStr, nullptr);
 
   if (hSubMenu) {
     uFlags |= MF_POPUP;
-    uIDNewItem = reinterpret_cast<HB_PTRUINT>(hSubMenu);
+    uIDNewItem = reinterpret_cast<uintptr_t>(hSubMenu);
   } else {
-    uIDNewItem = HB_ISPOINTER(4) ? reinterpret_cast<HB_PTRUINT>(hb_parptr(4)) : static_cast<HB_PTRUINT>(hb_parnint(4));
+    uIDNewItem = HB_ISPOINTER(4) ? reinterpret_cast<uintptr_t>(hb_parptr(4)) : static_cast<uintptr_t>(hb_parnint(4));
   }
   if (lpNewItem) {
     uFlags |= MF_STRING;
@@ -545,15 +545,15 @@ HB_FUNC(WAPI_APPENDMENU)
   BOOL fResult;
   HMENU hMenu = hbwapi_par_raw_HMENU(1), hSubMenu = hbwapi_par_raw_HMENU(3);
   UINT uFlags = hbwapi_par_UINT(2);
-  HB_PTRUINT uIDNewItem;
+  uintptr_t uIDNewItem;
   void *hNewItemStr;
   LPCTSTR lpNewItem = HB_PARSTR(4, &hNewItemStr, nullptr);
 
   if (hSubMenu) {
     uFlags |= MF_POPUP;
-    uIDNewItem = reinterpret_cast<HB_PTRUINT>(hSubMenu);
+    uIDNewItem = reinterpret_cast<uintptr_t>(hSubMenu);
   } else {
-    uIDNewItem = HB_ISPOINTER(3) ? reinterpret_cast<HB_PTRUINT>(hb_parptr(3)) : static_cast<HB_PTRUINT>(hb_parnint(3));
+    uIDNewItem = HB_ISPOINTER(3) ? reinterpret_cast<uintptr_t>(hb_parptr(3)) : static_cast<uintptr_t>(hb_parnint(3));
   }
   if (lpNewItem) {
     uFlags |= MF_STRING;

@@ -530,7 +530,7 @@ static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, bool 
 static void hb_gt_alleg_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr) // FuncTable
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Init(%p,%p,%p,%p)", pGT, static_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), static_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), static_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Init(%p,%p,%p,%p)", pGT, static_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), static_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), static_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
 #endif
 
    int iRet;

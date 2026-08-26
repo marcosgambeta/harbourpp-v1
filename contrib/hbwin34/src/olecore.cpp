@@ -2023,7 +2023,7 @@ HB_FUNC(WIN_OLEERRORTEXT)
     break;
   default: {
     char buf[16];
-    hb_snprintf(buf, 16, "0x%08x", static_cast<UINT>(static_cast<HB_PTRUINT>(lOleError)));
+    hb_snprintf(buf, 16, "0x%08x", static_cast<UINT>(static_cast<uintptr_t>(lOleError)));
     hb_retc(buf);
   }
   }

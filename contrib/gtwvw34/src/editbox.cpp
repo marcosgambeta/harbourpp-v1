@@ -530,7 +530,7 @@ HB_FUNC(WVW_EBCREATE)
 
     HWND hWnd = CreateWindowEx(
         0, TEXT("EDIT"), nullptr, WS_CHILD | WS_VISIBLE | dwStyle, iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1,
-        wvw_win->hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
+        wvw_win->hWnd, reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
 
     if (hWnd) {
       void *hText;

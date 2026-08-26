@@ -118,7 +118,7 @@ HB_FUNC(WIN_CHOOSECOLOR)
   cc.rgbResult = hbwapi_par_COLORREF(3);
   cc.lpCustColors = crCustClr;
   cc.Flags = hbwapi_par_WORD(5);
-  cc.lCustData = static_cast<LPARAM>(reinterpret_cast<HB_PTRUINT>(hb_param(6, Harbour::Item::EVALITEM)));
+  cc.lCustData = static_cast<LPARAM>(reinterpret_cast<uintptr_t>(hb_param(6, Harbour::Item::EVALITEM)));
   cc.lpfnHook = cc.lCustData ? CCHookProc : nullptr;
   cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
 

@@ -2071,7 +2071,7 @@ HB_FUNC(HBXML_DATAREAD)
     mxml_refil_setup(&refil, nullptr, buf, nLen, nLen);
   } else { /* can only be an integer, that is, a file handle */
     mxml_refil_setup(&refil, mxml_refill_from_handle_func, buffer, 0, 512);
-    refil.u.vPtr = reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pParam)));
+    refil.u.vPtr = reinterpret_cast<void *>(static_cast<uintptr_t>(hb_itemGetNInt(pParam)));
   }
 
   /* Now we can get the root node */

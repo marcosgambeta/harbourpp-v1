@@ -1706,7 +1706,7 @@ HB_FUNC(FI_WINDRAW)
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
     HDC hDC =
-        HB_ISNUM(2) ? reinterpret_cast<HDC>(static_cast<HB_PTRUINT>(hb_parnint(2))) : static_cast<HDC>(hb_parptr(2));
+        HB_ISNUM(2) ? reinterpret_cast<HDC>(static_cast<uintptr_t>(hb_parnint(2))) : static_cast<HDC>(hb_parptr(2));
     RECT rcDest;
 
     rcDest.top = hb_parni(3);

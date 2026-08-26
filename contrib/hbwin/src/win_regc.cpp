@@ -47,7 +47,7 @@
 #include "hbwin.hpp"
 #include <hbapiitm.hpp>
 
-static HKEY hb_regkeyconv(HB_PTRUINT nKey)
+static HKEY hb_regkeyconv(uintptr_t nKey)
 {
   switch (nKey) {
   case 1:
@@ -73,7 +73,7 @@ HB_FUNC(WIN_REGCREATEKEYEX)
   HKEY hkResult = nullptr;
   DWORD dwDisposition = 0;
 
-  hb_retl(RegCreateKeyEx(hb_regkeyconv(static_cast<HB_PTRUINT>(hb_parnint(1))), HB_PARSTRDEF(2, &hKey, nullptr), 0,
+  hb_retl(RegCreateKeyEx(hb_regkeyconv(static_cast<uintptr_t>(hb_parnint(1))), HB_PARSTRDEF(2, &hKey, nullptr), 0,
                          nullptr, hb_parnl(5) /* dwOptions */, hb_parnl(6) /* samDesired */,
                          nullptr /* lpSecurityAttributes */, &hkResult, &dwDisposition) == ERROR_SUCCESS);
 
@@ -88,7 +88,7 @@ HB_FUNC(WIN_REGOPENKEYEX)
   void *hKey;
   HKEY hkResult = nullptr;
 
-  hb_retl(RegOpenKeyEx(hb_regkeyconv(static_cast<HB_PTRUINT>(hb_parnint(1))), HB_PARSTRDEF(2, &hKey, nullptr),
+  hb_retl(RegOpenKeyEx(hb_regkeyconv(static_cast<uintptr_t>(hb_parnint(1))), HB_PARSTRDEF(2, &hKey, nullptr),
                        0 /* dwOptions */, hb_parnl(4) /* samDesired */, &hkResult) == ERROR_SUCCESS);
 
   hb_storptr(hkResult, 5);
@@ -187,7 +187,7 @@ HB_FUNC(WIN_REGSETVALUEEX)
 HB_FUNC(WIN_REGDELETEKEY)
 {
   void *hKey;
-  hb_retl(RegDeleteKey(hb_regkeyconv(static_cast<HB_PTRUINT>(hb_parnint(1))),
+  hb_retl(RegDeleteKey(hb_regkeyconv(static_cast<uintptr_t>(hb_parnint(1))),
                        static_cast<LPCTSTR>(HB_PARSTRDEF(2, &hKey, nullptr))) == ERROR_SUCCESS);
   hb_strfree(hKey);
 }

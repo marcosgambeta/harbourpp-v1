@@ -56,9 +56,9 @@
 
 #include <windows.h>
 
-#define hbwapi_par_WPARAM( n )              ( ( WPARAM ) ( HB_ISPOINTER( n ) ? ( HB_PTRUINT ) hb_parptr( n ) : ( HB_PTRUINT ) hb_parnint( n ) ) )
-#define hbwapi_par_LPARAM( n )              ( ( LPARAM ) ( HB_ISPOINTER( n ) ? ( HB_PTRUINT ) hb_parptr( n ) : ( HB_PTRUINT ) hb_parnint( n ) ) )
-#define hbwapi_par_RESULT( n )              ( HB_ISPOINTER( n ) ? ( HB_PTRUINT ) hb_parptr( n ) : ( HB_PTRUINT ) hb_parnint( n ) )
+#define hbwapi_par_WPARAM( n )              ( ( WPARAM ) ( HB_ISPOINTER( n ) ? ( uintptr_t ) hb_parptr( n ) : ( uintptr_t ) hb_parnint( n ) ) )
+#define hbwapi_par_LPARAM( n )              ( ( LPARAM ) ( HB_ISPOINTER( n ) ? ( uintptr_t ) hb_parptr( n ) : ( uintptr_t ) hb_parnint( n ) ) )
+#define hbwapi_par_RESULT( n )              ( HB_ISPOINTER( n ) ? ( uintptr_t ) hb_parptr( n ) : ( uintptr_t ) hb_parnint( n ) )
 
 #define hbwapi_parv_raw_HANDLE( n, i )      ( ( HANDLE           ) __hbwapi_parv_handle( n, i ) )
 
@@ -164,7 +164,7 @@ extern TCHAR *   hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE 
 extern HB_SIZE   hbwapi_tstrlen(const TCHAR * pText);
 extern HMODULE   hbwapi_LoadLibrarySystem( LPCTSTR pFileName );
 
-extern HB_EXPORT HKEY       hbwapi_get_HKEY( HB_PTRUINT nKey );
+extern HB_EXPORT HKEY       hbwapi_get_HKEY( uintptr_t nKey );
 extern HB_EXPORT HMODULE    hbwapi_LoadLibrarySystemVM( const char * szFileName );
 
 extern HB_EXPORT void       hbwapi_SetLastError( DWORD dwLastError );

@@ -725,7 +725,7 @@ HB_FUNC(WAPI_SELECTOBJECT)
   if (hDC && h) {
     // TODO: Solve reference counting to 'h' handle. Also for returned one.
     if (bRegion) {
-      hb_retnint(reinterpret_cast<HB_PTRUINT>(SelectObject(hDC, h)));
+      hb_retnint(reinterpret_cast<uintptr_t>(SelectObject(hDC, h)));
     } else {
       hb_retl(SelectObject(hDC, h) != nullptr); // NOTE: We don't return a raw pointer.
     }

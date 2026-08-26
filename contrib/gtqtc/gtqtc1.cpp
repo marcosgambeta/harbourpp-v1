@@ -1838,8 +1838,8 @@ static void hb_gt_qtc_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 {
   PHB_GTQTC pQTC;
 
-  HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Init(%p,%p,%p,%p)", pGT, (void *)(HB_PTRUINT)hFilenoStdin,
-                         (void *)(HB_PTRUINT)hFilenoStdout, (void *)(HB_PTRUINT)hFilenoStderr));
+  HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Init(%p,%p,%p,%p)", pGT, (void *)(uintptr_t)hFilenoStdin,
+                         (void *)(uintptr_t)hFilenoStdout, (void *)(uintptr_t)hFilenoStderr));
 
   if (!s_qtapp) {
 #if defined(HB_QTC_NO_HIGHDPI_SCALING) && QT_VERSION >= 0x060000

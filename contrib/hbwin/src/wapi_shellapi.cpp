@@ -56,7 +56,7 @@ HB_FUNC(WAPI_SHELLEXECUTE)
   void *hParameters;
   void *hDirectory;
 
-  hb_retnint(reinterpret_cast<HB_PTRUINT>(
+  hb_retnint(reinterpret_cast<uintptr_t>(
       ShellExecute(static_cast<HWND>(hb_parptr(1)),
                    HB_PARSTR(2, &hOperation, nullptr), // edit, explore, open, print, play?, properties?
                    HB_PARSTRDEF(3, &hFile, nullptr), HB_PARSTR(4, &hParameters, nullptr),

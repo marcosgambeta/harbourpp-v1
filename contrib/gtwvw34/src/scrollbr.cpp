@@ -254,7 +254,7 @@ HB_FUNC(WVW_XBCREATE)
                        iRight - iLeft + 1,                                        /* width of the scroll bar */
                        iBottom - iTop + 1,                                        /* height */
                        wvw_win->hWnd,                                             /* handle to main window */
-                       reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), /* id for this scroll bar control */
+                       reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), /* id for this scroll bar control */
                        GetModuleHandle(nullptr),                                  /* instance owning this window */
                        nullptr);                                                  /* pointer not needed */
 

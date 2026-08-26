@@ -1861,7 +1861,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
       if (hb_vmRequestReenter()) {
         hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
         hb_vmPushNil();
-        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hDlg)));
+        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hDlg)));
         hb_vmPushNumInt(message);
         hb_vmPushNumInt(wParam);
         hb_vmPushNumInt(lParam);
@@ -1906,7 +1906,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
         if (hb_vmRequestReenter()) {
           hb_vmPushEvalSym();
           hb_vmPush(s_pWvwData->s_sApp->pFunc[iIndex]);
-          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hDlg)));
+          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hDlg)));
           hb_vmPushNumInt(message);
           hb_vmPushNumInt(wParam);
           hb_vmPushNumInt(lParam);
@@ -1990,7 +1990,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
         hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
 
         hb_vmPushNil();
-        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hDlg)));
+        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hDlg)));
         hb_vmPushNumInt(message);
         hb_vmPushNumInt(wParam);
         hb_vmPushNumInt(lParam);
@@ -2028,7 +2028,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
         if (hb_vmRequestReenter()) {
           hb_vmPushEvalSym();
           hb_vmPush(pFunc);
-          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hDlg)));
+          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hDlg)));
           hb_vmPushNumInt(message);
           hb_vmPushNumInt(wParam);
           hb_vmPushNumInt(lParam);
@@ -2488,7 +2488,7 @@ static void xUserTimerNow(UINT usWinNum, HWND hWnd, UINT message, WPARAM wParam,
       hb_vmPushDynSym(s_pWvwData->s_sApp->pSymWVW_TIMER);
       hb_vmPushNil();
       hb_vmPushInteger(static_cast<int>(usWinNum));
-      hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hWnd)));
+      hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hWnd)));
       hb_vmPushNumInt(message);
       hb_vmPushNumInt(wParam);
       hb_vmPushNumInt(lParam);
@@ -2660,7 +2660,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
         hb_vmPushDynSym(s_pWvwData->s_sApp->pSymWVW_MENUSELECT);
         hb_vmPushNil();
         hb_vmPushInteger(static_cast<int>(usWinNum));
-        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hWnd)));
+        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hWnd)));
         hb_vmPushNumInt(message);
         hb_vmPushNumInt(wParam);
         hb_vmPushNumInt(lParam);
@@ -2934,7 +2934,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
           hb_vmPushDynSym(s_pWvwData->s_sApp->pSymWVW_SETFOCUS);
           hb_vmPushNil();
           hb_vmPushInteger(static_cast<int>(usWinNum));
-          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hWnd)));
+          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hWnd)));
           hb_vmDo(2);
           hb_vmRequestRestore();
         }
@@ -2961,7 +2961,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
         hb_vmPushDynSym(s_pWvwData->s_sApp->pSymWVW_KILLFOCUS);
         hb_vmPushNil();
         hb_vmPushInteger(static_cast<int>(usWinNum));
-        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hWnd)));
+        hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hWnd)));
         hb_vmDo(2);
         hb_vmRequestRestore();
       }
@@ -3402,7 +3402,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
           hb_vmPushDynSym(s_pWvwData->s_sApp->pSymWVW_SIZE);
           hb_vmPushNil();
           hb_vmPushInteger(static_cast<int>(usWinNum));
-          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hWnd)));
+          hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hWnd)));
           hb_vmPushNumInt(message);
           hb_vmPushNumInt(wParam);
           hb_vmPushNumInt(lParam);
@@ -5095,7 +5095,7 @@ static void hb_gt_wvwInputNotAllowed(UINT usWinNum, UINT message, WPARAM wParam,
       hb_vmPushDynSym(s_pWvwData->s_sApp->pSymWVW_INPUTFOCUS);
       hb_vmPushNil();
       hb_vmPushInteger(static_cast<int>(usWinNum));
-      hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(s_pWvwData->s_pWindows[usWinNum]->hWnd)));
+      hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(s_pWvwData->s_pWindows[usWinNum]->hWnd)));
       hb_vmPushNumInt(message);
       hb_vmPushNumInt(wParam);
       hb_vmPushNumInt(lParam);

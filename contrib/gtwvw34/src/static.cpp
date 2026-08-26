@@ -110,7 +110,7 @@ HB_FUNC(WVW_STCREATE)
     HWND hWnd =
         CreateWindowEx(fBorder ? WS_EX_CLIENTEDGE : 0, TEXT("STATIC"), nullptr, WS_CHILD | WS_VISIBLE | iStyle, iLeft,
                        iTop, iRight - iLeft + 1, iBottom - iTop + 1, wvw_win->hWnd,
-                       reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
+                       reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
 
     if (hWnd) {
       if (HB_ISCHAR(5)) {

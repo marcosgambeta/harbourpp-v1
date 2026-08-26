@@ -206,7 +206,7 @@ HB_FUNC(WAPI_SENDDLGITEMMESSAGE) // NOTE: unsafe function, may corrupt memory
 // aligned on a DWORD (4 byte) boundary.
 static LPWORD s_AlignOnDWORD(LPWORD p)
 {
-  auto ul = reinterpret_cast<HB_PTRUINT>(p);
+  auto ul = reinterpret_cast<uintptr_t>(p);
 
   ul += 3;
   ul >>= 2;
@@ -354,7 +354,7 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     *p++ = 0x00; // extras (in array 12)
 
     // 768 is the maximum size of one item
-    if ((reinterpret_cast<HB_PTRUINT>(p) - reinterpret_cast<HB_PTRUINT>(pdlgtemplate)) > _BUFFERSIZE - 768) {
+    if ((reinterpret_cast<uintptr_t>(p) - reinterpret_cast<uintptr_t>(pdlgtemplate)) > _BUFFERSIZE - 768) {
       nItems = i;
       break;
     }
@@ -365,7 +365,7 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
   p = s_AlignOnDWORD(p);
 
   hb_retclen(reinterpret_cast<char *>(pdlgtemplate),
-             reinterpret_cast<HB_PTRUINT>(p) - reinterpret_cast<HB_PTRUINT>(pdlgtemplate));
+             reinterpret_cast<uintptr_t>(p) - reinterpret_cast<uintptr_t>(pdlgtemplate));
 
   hb_xfree(pdlgtemplate);
 }

@@ -1196,15 +1196,15 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
 
   case HB_GTI_INPUTFD:
-    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<HB_PTRUINT>(GetStdHandle(STD_INPUT_HANDLE)));
+    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<uintptr_t>(GetStdHandle(STD_INPUT_HANDLE)));
     break;
 
   case HB_GTI_OUTPUTFD:
-    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<HB_PTRUINT>(GetStdHandle(STD_OUTPUT_HANDLE)));
+    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<uintptr_t>(GetStdHandle(STD_OUTPUT_HANDLE)));
     break;
 
   case HB_GTI_ERRORFD:
-    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<HB_PTRUINT>(GetStdHandle(STD_ERROR_HANDLE)));
+    pInfo->pResult = hb_itemPutNInt(pInfo->pResult, reinterpret_cast<uintptr_t>(GetStdHandle(STD_ERROR_HANDLE)));
     break;
 
   case HB_GTI_FONTSIZE:
@@ -1415,7 +1415,7 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       hIcon = hb_gt_wvw_SetWindowIconFromFile(wvw_win, HB_ITEMGETSTR(pInfo->pNewVal, &hName, nullptr));
       hb_strfree(hName);
     }
-    pInfo->pResult = hb_itemPutPtr(pInfo->pResult, reinterpret_cast<void *>(reinterpret_cast<HB_PTRUINT>(hIcon)));
+    pInfo->pResult = hb_itemPutPtr(pInfo->pResult, reinterpret_cast<void *>(reinterpret_cast<uintptr_t>(hIcon)));
     break;
   }
 
@@ -1428,7 +1428,7 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     } else if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hIcon = hb_gt_wvw_SetWindowIcon(wvw_win, hb_itemGetNI(pInfo->pNewVal), nullptr);
     }
-    pInfo->pResult = hb_itemPutPtr(pInfo->pResult, reinterpret_cast<void *>(reinterpret_cast<HB_PTRUINT>(hIcon)));
+    pInfo->pResult = hb_itemPutPtr(pInfo->pResult, reinterpret_cast<void *>(reinterpret_cast<uintptr_t>(hIcon)));
     break;
   }
 
@@ -6218,7 +6218,7 @@ int hb_gt_wvw_ButtonCreate(PWVW_WIN wvw_win, int iTop, int iLeft, int iBottom, i
                         iRight - iLeft + 1,                                 /* width of the button */
                         iBottom - iTop + 1,                                 /* height */
                         wvw_win->hWnd,                                      /* handle to parent window */
-                        reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), /* id for this button control */
+                        reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), /* id for this button control */
                         GetModuleHandle(nullptr),                                  /* instance owning this window */
                         nullptr);                                                  /* pointer not needed */
 

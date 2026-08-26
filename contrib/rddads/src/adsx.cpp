@@ -943,7 +943,7 @@ static HB_ERRCODE adsxSysName(ADSXAREAP pArea, uint8_t *pBuffer)
     u32RetVal = AdsGetTableType(pArea->adsarea.hTable, &u16TableType);
     if (u32RetVal != AE_SUCCESS) {
 #if 0
-         HB_TRACE( HB_TR_DEBUG, ( "Error in adsxSysName: %lu  pArea->adsarea.hTable %p", static_cast<HB_ULONG>(u32RetVal), static_cast<void*>(static_cast<HB_PTRUINT>(pArea->adsarea.hTable)) ) );
+         HB_TRACE( HB_TR_DEBUG, ( "Error in adsxSysName: %lu  pArea->adsarea.hTable %p", static_cast<HB_ULONG>(u32RetVal), static_cast<void*>(static_cast<uintptr_t>(pArea->adsarea.hTable)) ) );
 #endif
       u16TableType = static_cast<UNSIGNED16>(pArea->adsarea.iFileType);
     }
