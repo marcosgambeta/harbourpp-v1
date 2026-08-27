@@ -101,9 +101,9 @@
 
 struct arc4_stream
 {
-  HB_U8 i;
-  HB_U8 j;
-  HB_U8 s[256];
+  uint8_t i;
+  uint8_t j;
+  uint8_t s[256];
 };
 
 #if !defined(HB_OS_UNIX)
@@ -131,22 +131,22 @@ static HB_CRITICAL_NEW(arc4_lock);
 #define _HB_INLINE_
 #endif
 
-static _HB_INLINE_ HB_U8 arc4_getbyte(void);
+static _HB_INLINE_ uint8_t arc4_getbyte(void);
 
 static _HB_INLINE_ void arc4_init(void)
 {
   for (auto n = 0; n < 256; ++n) {
-    rs.s[n] = static_cast<HB_U8>(n);
+    rs.s[n] = static_cast<uint8_t>(n);
   }
 
   rs.i = rs.j = 0;
 }
 
-static _HB_INLINE_ void arc4_addrandom(const HB_U8 *dat, int32_t datlen)
+static _HB_INLINE_ void arc4_addrandom(const uint8_t *dat, int32_t datlen)
 {
   rs.i--;
   for (auto n = 0; n < 256; ++n) {
-    HB_U8 si;
+    uint8_t si;
     rs.i = (rs.i + 1);
     si = rs.s[rs.i];
     rs.j = rs.j + si + dat[n % datlen];
@@ -157,7 +157,7 @@ static _HB_INLINE_ void arc4_addrandom(const HB_U8 *dat, int32_t datlen)
 }
 
 #if defined(HB_OS_UNIX)
-static HB_ISIZ read_all(int32_t fd, HB_U8 *buf, size_t count)
+static HB_ISIZ read_all(int32_t fd, uint8_t *buf, size_t count)
 {
   HB_SIZE numread = 0;
 
@@ -220,7 +220,7 @@ static int32_t arc4_seed_sysctl_linux(void)
    * running in a chroot).
    */
   int32_t mib[] = {CTL_KERN, KERN_RANDOM, RANDOM_UUID};
-  HB_U8 buf[ADD_ENTROPY];
+  uint8_t buf[ADD_ENTROPY];
   size_t n;
   int32_t any_set;
 
@@ -262,7 +262,7 @@ static int32_t arc4_seed_sysctl_bsd(void)
    * (e.g., we're running in a chroot).
    */
   int32_t mib[] = {CTL_KERN, KERN_ARND};
-  HB_U8 buf[ADD_ENTROPY];
+  uint8_t buf[ADD_ENTROPY];
   size_t len, n;
   int32_t any_set;
 
@@ -358,7 +358,7 @@ static int32_t arc4_seed_proc_sys_kernel_random_uuid(void)
    * Its format is stupid, so we need to decode it from hex.
    */
   char buf[128];
-  HB_U8 entropy[64];
+  uint8_t entropy[64];
   int32_t i, nybbles;
 
   for (auto bytes = 0; bytes < ADD_ENTROPY;) {
@@ -414,7 +414,7 @@ static int32_t arc4_seed_urandom(void)
   static const char *filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
 
   for (auto i = 0; filenames[i]; ++i) {
-    HB_U8 buf[ADD_ENTROPY];
+    uint8_t buf[ADD_ENTROPY];
     HB_SIZE n;
 
     int32_t fd = open(filenames[i], O_RDONLY, 0);
@@ -442,12 +442,12 @@ static int32_t arc4_seed_urandom(void)
 
 static int32_t arc4_seed_rand(void)
 {
-  HB_U8 buf[ADD_ENTROPY];
+  uint8_t buf[ADD_ENTROPY];
 
   srand(static_cast<unsigned>(hb_dateMilliSeconds()));
 
   for (HB_SIZE i = 0; i < sizeof(buf); i++) {
-    buf[i] = static_cast<HB_U8>(rand() % 256); /* not biased */
+    buf[i] = static_cast<uint8_t>(rand() % 256); /* not biased */
   }
 
   arc4_addrandom(buf, sizeof(buf));
@@ -563,9 +563,9 @@ static void arc4_stir_if_needed(void)
 #endif
 }
 
-static _HB_INLINE_ HB_U8 arc4_getbyte(void)
+static _HB_INLINE_ uint8_t arc4_getbyte(void)
 {
-  HB_U8 si, sj;
+  uint8_t si, sj;
 
   rs.i = rs.i + 1;
   si = rs.s[rs.i];
@@ -638,7 +638,7 @@ HB_U32 hb_arc4random(void)
 
 void hb_arc4random_buf(void *_buf, HB_SIZE n)
 {
-  auto buf = static_cast<HB_U8 *>(_buf);
+  auto buf = static_cast<uint8_t *>(_buf);
 
   ARC4_LOCK();
 

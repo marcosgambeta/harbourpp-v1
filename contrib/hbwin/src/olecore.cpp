@@ -562,8 +562,8 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM p
       ptr = &V_I1(&v);
       break;
     case VT_UI1:
-      V_UI1(&v) = pStr ? static_cast<HB_U8>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                       : static_cast<HB_U8>(hb_arrayGetNI(pItem, uiPos));
+      V_UI1(&v) = pStr ? static_cast<uint8_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
+                       : static_cast<uint8_t>(hb_arrayGetNI(pItem, uiPos));
       ptr = &V_UI1(&v);
       break;
     case VT_I2:

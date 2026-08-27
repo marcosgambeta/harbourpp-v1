@@ -218,7 +218,7 @@ typedef HB_UCHAR            HB_BYTE;
 
 /* Guaranteed 8-bit types */
 typedef HB_SCHAR            HB_I8;
-typedef HB_UCHAR            HB_U8;
+typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 
 /* Guaranteed 16-bit types */
 #if USHRT_MAX == 0xFFFF
