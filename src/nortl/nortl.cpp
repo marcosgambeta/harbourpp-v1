@@ -234,7 +234,7 @@ void hb_xfree(void *pMem) /* frees fixed memory */
   }
 }
 
-HB_SIZE hb_xquery(int iMode)
+HB_SIZE hb_xquery(int32_t iMode)
 {
   HB_SIZE nResult = 0;
 
@@ -263,7 +263,7 @@ static char *hb_memToStr(char *szBuffer, void *pMem, HB_SIZE nSize)
 {
   unsigned char *byMem = static_cast<uint8_t *>(pMem);
   char *pDest = szBuffer;
-  int iSize, iPrintable;
+  int32_t iSize, iPrintable;
 
   if (nSize > HB_MEMSTR_BLOCK_MAX) {
     iSize = HB_MEMSTR_BLOCK_MAX;
@@ -290,7 +290,7 @@ static char *hb_memToStr(char *szBuffer, void *pMem, HB_SIZE nSize)
   } else {
     /* format as hex */
     for (auto i = 0; i < iSize; ++i) {
-      int iLo = byMem[i] & 0x0f, iHi = byMem[i] >> 4;
+      int32_t iLo = byMem[i] & 0x0f, iHi = byMem[i] >> 4;
       *pDest++ = '\\';
       *pDest++ = static_cast<char>(iHi <= 9 ? '0' + iHi : 'A' - 10 + iHi);
       *pDest++ = static_cast<char>(iLo <= 9 ? '0' + iLo : 'A' - 10 + iLo);
@@ -377,12 +377,12 @@ const char *hb_conNewLine(void)
   return "\n";
 }
 
-int hb_charUpper(int iChar)
+int32_t hb_charUpper(int32_t iChar)
 {
   return HB_TOUPPER(iChar);
 }
 
-int hb_charLower(int iChar)
+int32_t hb_charLower(int32_t iChar)
 {
   return HB_TOLOWER(iChar);
 }
@@ -485,7 +485,7 @@ char *hb_osStrU16Decode2(const HB_WCHAR *pszNameW, char *pszBuffer, HB_SIZE nSiz
 /* HB_TRACE */
 static HB_TRACEINFO s_traceInfo;
 
-void hb_traceset(int level, const char *file, int line, const char *proc)
+void hb_traceset(int32_t level, const char *file, int32_t line, const char *proc)
 {
   s_traceInfo.level = level;
   s_traceInfo.file = file;
@@ -520,8 +520,8 @@ void hb_fsSetError(HB_ERRCODE uiError)
 
 /* file name conversion */
 
-static int s_iFileCase = HB_SET_CASE_MIXED;
-static int s_iDirCase = HB_SET_CASE_MIXED;
+static int32_t s_iFileCase = HB_SET_CASE_MIXED;
+static int32_t s_iDirCase = HB_SET_CASE_MIXED;
 static auto s_fFnTrim = false;
 static char s_cDirSep = HB_OS_PATH_DELIM_CHR;
 
@@ -697,17 +697,17 @@ HB_WCHAR *hb_fsNameConvU16(const char *szFileName)
 }
 #endif
 
-int hb_setGetFileCase(void)
+int32_t hb_setGetFileCase(void)
 {
   return s_iFileCase;
 }
 
-int hb_setGetDirCase(void)
+int32_t hb_setGetDirCase(void)
 {
   return s_iDirCase;
 }
 
-int hb_setGetDirSeparator(void)
+int32_t hb_setGetDirSeparator(void)
 {
   return s_cDirSep;
 }
@@ -717,17 +717,17 @@ HB_BOOL hb_setGetTrimFileName(void)
   return s_fFnTrim;
 }
 
-void hb_setSetFileCase(int iFileCase)
+void hb_setSetFileCase(int32_t iFileCase)
 {
   s_iFileCase = iFileCase;
 }
 
-void hb_setSetDirCase(int iDirCase)
+void hb_setSetDirCase(int32_t iDirCase)
 {
   s_iDirCase = iDirCase;
 }
 
-void hb_setSetDirSeparator(int iSeparator)
+void hb_setSetDirSeparator(int32_t iSeparator)
 {
   s_cDirSep = static_cast<char>(iSeparator);
 }
