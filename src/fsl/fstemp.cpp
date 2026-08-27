@@ -138,7 +138,7 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
                              HB_FATTR ulAttr)
 {
   // less attemps
-  int iAttemptLeft = 99, iLen;
+  int32_t iAttemptLeft = 99, iLen;
   HB_FHANDLE fd;
 
   do {
@@ -301,7 +301,7 @@ HB_FHANDLE hb_fsCreateTemp(const char *pszDir, const char *pszPrefix, HB_FATTR u
   // If there was no special extension requested, we're using
   // native temp file generation functions on systems where such
   // API exist.
-  int iAttemptLeft = 999;
+  int32_t iAttemptLeft = 999;
 
   while (--iAttemptLeft) {
     if (hb_fsTempName(pszName, pszDir, pszPrefix)) {

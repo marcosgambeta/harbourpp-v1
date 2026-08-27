@@ -264,7 +264,7 @@ HB_FUNC(HB_FREADLEN)
 HB_FUNC(CURDIR)
 {
   char szBuffer[HB_PATH_MAX];
-  int iDrive = 0;
+  int32_t iDrive = 0;
   const char *szDrive;
 
   szDrive = hb_parc(1);
@@ -291,7 +291,7 @@ HB_FUNC(HB_CURDRIVE)
 
   szDrive = hb_parc(1);
   if (szDrive != nullptr) {
-    int iDrive = -1;
+    int32_t iDrive = -1;
 
     if (*szDrive >= 'A' && *szDrive <= 'Z') {
       iDrive = *szDrive - 'A';
@@ -417,7 +417,7 @@ HB_FUNC(HB_FSETDATETIME)
       lDate = hb_pardl(2);
     }
     if (HB_ISCHAR(3)) {
-      int iHour, iMinutes, iSeconds, iMSec;
+      int32_t iHour, iMinutes, iSeconds, iMSec;
       if (hb_timeStrGet(hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec)) {
         lTime = hb_timeEncode(iHour, iMinutes, iSeconds, iMSec);
       }
@@ -464,7 +464,7 @@ HB_FUNC(HB_FGETDATETIME)
 
 HB_FUNC(HB_FSETDEVMODE)
 {
-  int iRet = -1;
+  int32_t iRet = -1;
 
   if (HB_ISNUM(1)) {
     iRet = hb_fsSetDevMode(hb_numToHandle(hb_parnint(1)), hb_parni(2));

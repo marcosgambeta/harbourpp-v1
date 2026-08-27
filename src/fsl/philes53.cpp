@@ -54,7 +54,7 @@
 
 HB_FUNC(FSETDEVMOD)
 {
-  int iRet = FD_BINARY;
+  int32_t iRet = FD_BINARY;
 
   if (HB_ISNUM(1)) {
     iRet = hb_fsSetDevMode(hb_numToHandle(hb_parnint(1)), hb_parni(2));

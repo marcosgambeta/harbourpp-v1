@@ -184,7 +184,7 @@ double hb_fsDiskSpace(const char *pszPath, uint16_t uiType)
   }
 #else
   {
-    int iTODO;
+    int32_t iTODO;
 
     HB_SYMBOL_UNUSED(uiType);
   }

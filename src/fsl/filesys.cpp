@@ -278,12 +278,12 @@ static auto s_fUseWaitLocks = true;
 
 #if defined(HB_OS_WIN) && defined(HB_OS_HAS_DRIVE_LETTER)
 
-static int fs_win_get_drive(void)
+static int32_t fs_win_get_drive(void)
 {
   TCHAR pBuffer[HB_PATH_MAX];
   LPTSTR lpBuffer = pBuffer;
   DWORD dwResult, dwSize;
-  int iDrive = 0;
+  int32_t iDrive = 0;
 
   dwSize = HB_SIZEOFARRAY(pBuffer);
   dwResult = GetCurrentDirectory(dwSize, lpBuffer);
@@ -307,7 +307,7 @@ static int fs_win_get_drive(void)
   return iDrive;
 }
 
-static void fs_win_set_drive(int iDrive)
+static void fs_win_set_drive(int32_t iDrive)
 {
   if (iDrive >= 0 && iDrive <= 25) {
     TCHAR szBuffer[3];
@@ -415,8 +415,8 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, uint16_t uiFlags, D
 
 #else
 
-static void convert_open_flags(bool fCreate, HB_FATTR nAttr, uint16_t uiFlags, int *flags, unsigned *mode, int *share,
-                               int *attr)
+static void convert_open_flags(bool fCreate, HB_FATTR nAttr, uint16_t uiFlags, int32_t *flags, unsigned *mode, int32_t *share,
+                               int32_t *attr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("convert_open_flags(%d, %u, %hu, %p, %p, %p, %p)", fCreate, nAttr, uiFlags, static_cast<void*>(flags), static_cast<void*>(mode), static_cast<void*>(share), static_cast<void*>(attr)));
@@ -550,9 +550,9 @@ HB_FHANDLE hb_fsGetOsHandle(HB_FHANDLE hFileHandle)
 // intentionally covered by HB_OS_UNIX macro to generate compile time
 // error in code which tries to use it on other platforms
 
-static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
+static int32_t hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
 {
-  int iResult;
+  int32_t iResult;
 
   hb_vmUnlock();
 
@@ -568,7 +568,7 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
 
     for (;;) {
       bool fLast = nTimeOut >= 0 && nTimeOut <= 1000;
-      int tout = fLast ? static_cast<int32_t>(nTimeOut) : 1000;
+      int32_t tout = fLast ? static_cast<int32_t>(nTimeOut) : 1000;
 
       iResult = poll(&fds, 1, tout);
       hb_fsSetIOError(iResult >= 0, 0);
@@ -640,7 +640,7 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
   }
 // #else
 //{
-//    int iTODO; // TODO: for given platform
+//    int32_t iTODO; // TODO: for given platform
 //
 //    HB_SYMBOL_UNUSED(hFile);
 //    HB_SYMBOL_UNUSED(nTimeOut);
@@ -654,7 +654,7 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
   return iResult;
 }
 
-int hb_fsCanRead(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
+int32_t hb_fsCanRead(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsCanRead(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nTimeOut));
@@ -663,7 +663,7 @@ int hb_fsCanRead(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
   return hb_fsCanAccess(hFileHandle, nTimeOut, true);
 }
 
-int hb_fsCanWrite(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
+int32_t hb_fsCanWrite(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsCanWrite(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nTimeOut));
@@ -672,13 +672,13 @@ int hb_fsCanWrite(HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut)
   return hb_fsCanAccess(hFileHandle, nTimeOut, false);
 }
 
-int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
+int32_t hb_fsPoll(PHB_POLLFD pPollSet, int32_t iCount, HB_MAXINT nTimeOut)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsPoll(%p, %d, %" PFHL "d)", static_cast<void*>(pPollSet), iCount, nTimeOut));
 #endif
 
-  int iResult;
+  int32_t iResult;
 
   hb_vmUnlock();
 
@@ -693,7 +693,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
 
     HB_MAXUINT timer;
     void *pFree = nullptr;
-    int i;
+    int32_t i;
 
     if (s_fSamePoll) {
       pfds = reinterpret_cast<struct pollfd *>(pPollSet);
@@ -717,7 +717,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
     timer = hb_timerInit(nTimeOut);
     for (;;) {
       bool fLast = nTimeOut >= 0 && nTimeOut <= 1000;
-      int tout = fLast ? static_cast<int32_t>(nTimeOut) : 1000;
+      int32_t tout = fLast ? static_cast<int32_t>(nTimeOut) : 1000;
 
       iResult = poll(pfds, iCount, tout);
       hb_fsSetIOError(iResult >= 0, 0);
@@ -751,11 +751,11 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
     HB_MAXUINT timer = hb_timerInit(nTimeOut);
 #endif
     fd_set rfds, wfds, efds;
-    int i;
+    int32_t i;
 
     for (;;) {
       struct timeval tv;
-      int iMaxFD = 0;
+      int32_t iMaxFD = 0;
       bool fLast = nTimeOut >= 0 && nTimeOut <= 1000;
 
       if (fLast) {
@@ -840,7 +840,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
   }
 // #else
 //{
-//    int iTODO; // TODO: for given platform
+//    int32_t iTODO; // TODO: for given platform
 //
 //    HB_SYMBOL_UNUSED(pPollSet);
 //    HB_SYMBOL_UNUSED(iCount);
@@ -900,7 +900,7 @@ HB_FHANDLE hb_fsPOpen(const char *pszFileName, const char *pszMode)
     if (pipe(hPipeHandle) == 0) {
       if ((pid = fork()) != -1) {
         if (pid != 0) {
-          int iResult, iStatus = 0;
+          int32_t iResult, iStatus = 0;
 
           HB_FAILURE_RETRY(iResult, waitpid(pid, &iStatus, 0));
 
@@ -918,7 +918,7 @@ HB_FHANDLE hb_fsPOpen(const char *pszFileName, const char *pszMode)
           }
         } else {
           HB_FHANDLE hNullHandle;
-          int iMaxFD, iResult;
+          int32_t iMaxFD, iResult;
 
           HB_FAILURE_RETRY(hNullHandle, open("/dev/null", O_RDWR));
           if (fRead) {
@@ -1019,7 +1019,7 @@ HB_BOOL hb_fsPipeCreate(HB_FHANDLE hPipe[2])
   }
 #else
   {
-    int iTODO; // TODO: for given platform
+    int32_t iTODO; // TODO: for given platform
 
     hPipe[0] = hPipe[1] = FS_ERROR;
     hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
@@ -1030,7 +1030,7 @@ HB_BOOL hb_fsPipeCreate(HB_FHANDLE hPipe[2])
   return fResult;
 }
 
-int hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
+int32_t hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsIsPipeOrSock(%p)", reinterpret_cast<void*>(static_cast<uintptr_t>(hPipeHandle))));
@@ -1040,10 +1040,10 @@ int hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
   {
 #if defined(HB_USE_LARGEFILE64)
     struct stat64 statbuf;
-    int ret = fstat64(hPipeHandle, &statbuf);
+    int32_t ret = fstat64(hPipeHandle, &statbuf);
 #else
     struct stat statbuf;
-    int ret = fstat(hPipeHandle, &statbuf);
+    int32_t ret = fstat(hPipeHandle, &statbuf);
 #endif
     hb_fsSetIOError(ret == 0, 0);
     return ret == 0 && (S_ISFIFO(statbuf.st_mode) || S_ISSOCK(statbuf.st_mode)) ? 1 : 0;
@@ -1055,7 +1055,7 @@ int hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
     return type == FILE_TYPE_PIPE ? 1 : 0;
   }
 #else
-  int iTODO; // TODO: for given platform
+  int32_t iTODO; // TODO: for given platform
   HB_SYMBOL_UNUSED(hPipeHandle);
   hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
   return 0;
@@ -1080,7 +1080,7 @@ HB_BOOL hb_fsPipeUnblock(HB_FHANDLE hPipeHandle)
   }
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_MINIX)
   {
-    int ret = fcntl(hPipeHandle, F_GETFL, 0);
+    int32_t ret = fcntl(hPipeHandle, F_GETFL, 0);
 
     if (ret != -1 && (ret & O_NONBLOCK) == 0) {
       ret = fcntl(hPipeHandle, F_SETFL, ret | O_NONBLOCK);
@@ -1091,7 +1091,7 @@ HB_BOOL hb_fsPipeUnblock(HB_FHANDLE hPipeHandle)
   }
 #else
   {
-    int iTODO; // TODO: for given platform
+    int32_t iTODO; // TODO: for given platform
     HB_SYMBOL_UNUSED(hPipeHandle);
     hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
     return false;
@@ -1138,7 +1138,7 @@ HB_SIZE hb_fsPipeIsData(HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT n
   }
 #elif defined(HB_OS_UNIX)
   {
-    int iResult = hb_fsCanRead(hPipeHandle, nTimeOut);
+    int32_t iResult = hb_fsCanRead(hPipeHandle, nTimeOut);
 
     if (iResult > 0) {
       nToRead = nBufferSize;
@@ -1148,7 +1148,7 @@ HB_SIZE hb_fsPipeIsData(HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT n
   }
 #else
   {
-    int iTODO; // TODO: for given platform
+    int32_t iTODO; // TODO: for given platform
     HB_SYMBOL_UNUSED(hPipeHandle);
     HB_SYMBOL_UNUSED(nBufferSize);
     HB_SYMBOL_UNUSED(nTimeOut);
@@ -1240,10 +1240,10 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void *buffer, HB_SIZE nSize
   }
 #elif defined(HB_OS_UNIX)
   {
-    int iResult = hb_fsCanWrite(hPipeHandle, nTimeOut);
+    int32_t iResult = hb_fsCanWrite(hPipeHandle, nTimeOut);
 
     if (iResult > 0) {
-      int iFlags = -1;
+      int32_t iFlags = -1;
 
       iResult = fcntl(hPipeHandle, F_GETFL, 0);
       if (iResult != -1 && (iResult & O_NONBLOCK) == 0) {
@@ -1265,7 +1265,7 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void *buffer, HB_SIZE nSize
   }
 #else
   {
-    int iTODO; // TODO: for given platform
+    int32_t iTODO; // TODO: for given platform
     HB_SYMBOL_UNUSED(nTimeOut);
     nWritten = hb_fsWriteLarge(hPipeHandle, buffer, nSize);
   }
@@ -1338,7 +1338,7 @@ HB_FHANDLE hb_fsOpenEx(const char *pszFileName, uint16_t uiFlags, HB_FATTR nAttr
 #else
   {
     char *pszFree;
-    int flags, share, attr;
+    int32_t flags, share, attr;
     unsigned mode;
 
     pszFileName = hb_fsNameConv(pszFileName, &pszFree);
@@ -1388,7 +1388,7 @@ void hb_fsCloseRaw(HB_FHANDLE hFileHandle)
 #else
   {
 #if defined(EINTR)
-    int ret;
+    int32_t ret;
     // ignoring EINTR in close() it's quite common bug when sockets or
     // pipes are used. Without such protection it's not safe to use
     // signals in user code.
@@ -1414,7 +1414,7 @@ void hb_fsClose(HB_FHANDLE hFileHandle)
   hb_fsSetIOError(CloseHandle(DosToWinHandle(hFileHandle)) != 0, 0);
 #else
   {
-    int ret;
+    int32_t ret;
 #if defined(EINTR)
     // ignoring EINTR in close() it's quite common bug when sockets or
     // pipes are used. Without such protection it's not safe to use
@@ -1433,7 +1433,7 @@ void hb_fsClose(HB_FHANDLE hFileHandle)
 
 #define FD_TEST 0
 
-int hb_fsSetDevMode(HB_FHANDLE hFileHandle, int iDevMode)
+int32_t hb_fsSetDevMode(HB_FHANDLE hFileHandle, int32_t iDevMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSetDevMode(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), iDevMode));
@@ -1521,7 +1521,7 @@ HB_BOOL hb_fsGetFileTime(const char *pszFileName, long *plJulian, long *plMillis
   }
 #else
   {
-    int iTODO; // TODO: for given platform
+    int32_t iTODO; // TODO: for given platform
 
     HB_SYMBOL_UNUSED(pszFileName);
   }
@@ -1585,7 +1585,7 @@ HB_BOOL hb_fsGetAttr(const char *pszFileName, HB_FATTR *pnAttr)
     }
 #else
     {
-      int iTODO; // TODO: for given platform
+      int32_t iTODO; // TODO: for given platform
 
       HB_SYMBOL_UNUSED(pszFileName);
     }
@@ -1608,8 +1608,8 @@ HB_BOOL hb_fsSetFileTime(const char *pszFileName, long lJulian, long lMillisec)
 #endif
 
   auto fResult = false;
-  int iYear, iMonth, iDay;
-  int iHour, iMinute, iSecond, iMSec;
+  int32_t iYear, iMonth, iDay;
+  int32_t iHour, iMinute, iSecond, iMSec;
 
   hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
   hb_timeDecode(lMillisec, &iHour, &iMinute, &iSecond, &iMSec);
@@ -1717,7 +1717,7 @@ HB_BOOL hb_fsSetFileTime(const char *pszFileName, long lJulian, long lMillisec)
   }
 #else
   {
-    int iTODO; // To force warning
+    int32_t iTODO; // To force warning
 
     fResult = false;
     hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
@@ -1777,7 +1777,7 @@ HB_BOOL hb_fsSetAttr(const char *pszFileName, HB_FATTR nAttr)
 
 #if defined(HB_OS_UNIX)
     {
-      int iAttr = HB_FA_POSIX_ATTR(nAttr), iResult;
+      int32_t iAttr = HB_FA_POSIX_ATTR(nAttr), iResult;
       if (iAttr == 0) {
         iAttr = S_IRUSR | S_IRGRP | S_IROTH;
         if (!(nAttr & HB_FA_READONLY)) {
@@ -1795,7 +1795,7 @@ HB_BOOL hb_fsSetAttr(const char *pszFileName, HB_FATTR nAttr)
     }
 #else
     {
-      int iTODO; // To force warning
+      int32_t iTODO; // To force warning
 
       fResult = false;
       hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
@@ -1874,7 +1874,7 @@ uint16_t hb_fsWrite(HB_FHANDLE hFileHandle, const void *pBuff, uint16_t uiCount)
     HB_FAILURE_RETRY(lWritten, write(hFileHandle, pBuff, uiCount));
     uiWritten = lWritten == -1 ? 0 : static_cast<uint16_t>(lWritten);
   } else {
-    int iResult;
+    int32_t iResult;
 #if defined(HB_USE_LARGEFILE64)
     HB_FAILURE_RETRY(iResult, ftruncate64(hFileHandle, lseek64(hFileHandle, 0L, SEEK_CUR)));
 #else
@@ -2072,7 +2072,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
     nWritten = lWritten == -1 ? 0 : lWritten;
 #endif
   } else {
-    int iResult;
+    int32_t iResult;
 #if defined(HB_USE_LARGEFILE64)
     HB_FAILURE_RETRY(iResult, ftruncate64(hFileHandle, lseek64(hFileHandle, 0L, SEEK_CUR)));
 #else
@@ -2351,7 +2351,7 @@ HB_BOOL hb_fsTruncAt(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset)
   }
 #else
   {
-    int iResult;
+    int32_t iResult;
 #if defined(HB_USE_LARGEFILE64)
     HB_FAILURE_RETRY(iResult, ftruncate64(hFileHandle, nOffset));
 #else
@@ -2380,7 +2380,7 @@ void hb_fsCommit(HB_FHANDLE hFileHandle)
 
 #elif defined(HB_OS_UNIX)
   {
-    int iResult;
+    int32_t iResult;
     // We should check here only for _POSIX_SYNCHRONIZED_IO defined
     // and it should be enough to test if fdatasync() declaration
     // exists in <unistd.h>. Unfortunately on some OS-es like Darwin
@@ -2408,7 +2408,7 @@ void hb_fsCommit(HB_FHANDLE hFileHandle)
   // compliant. I vote to disable it. [druzus]
 
   {
-    int dup_handle;
+    int32_t dup_handle;
     auto fResult = false;
 
     dup_handle = dup(hFileHandle);
@@ -2514,7 +2514,7 @@ HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, u
 #elif defined(HB_OS_UNIX)
   {
     struct flock lock_info;
-    int iResult;
+    int32_t iResult;
 
     switch (uiMode & FL_MASK) {
     case FL_LOCK:
@@ -2629,7 +2629,7 @@ HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLe
 #elif defined(HB_USE_LARGEFILE64)
   {
     struct flock64 lock_info;
-    int iResult;
+    int32_t iResult;
 
     hb_vmUnlock();
     switch (uiMode & FL_MASK) {
@@ -2670,13 +2670,13 @@ HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLe
   return fResult;
 }
 
-int hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, uint16_t uiMode)
+int32_t hb_fsLockTest(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLength, uint16_t uiMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsLockTest(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<uintptr_t>(hFileHandle)), nStart, nLength, uiMode));
 #endif
 
-  int iResult;
+  int32_t iResult;
 
 #if defined(HB_OS_UNIX)
   {
@@ -3145,7 +3145,7 @@ HB_BOOL hb_fsRmDir(const char *pszDirName)
 // NOTE: This is not thread safe function, it's there for compatibility.
 // NOTE: 0 = current drive, 1 = A, 2 = B, 3 = C, etc.
 
-const char *hb_fsCurDir(int iDrive)
+const char *hb_fsCurDir(int32_t iDrive)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsCurDir(%d)", iDrive));
@@ -3162,13 +3162,13 @@ const char *hb_fsCurDir(int iDrive)
 // NOTE: Thread safe version of hb_fsCurDir()
 // NOTE: 0 = current drive, 1 = A, 2 = B, 3 = C, etc.
 
-HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
+HB_ERRCODE hb_fsCurDirBuff(int32_t iDrive, char *pszBuffer, HB_SIZE nSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsCurDirBuff(%d)", iDrive));
 #endif
 
-  int iCurDrv = iDrive;
+  int32_t iCurDrv = iDrive;
   HB_ERRCODE nResult;
 
   pszBuffer[0] = '\0';
@@ -3382,7 +3382,7 @@ HB_BOOL hb_fsSetCWD(const char *pszDirName)
 
 #if defined(HB_OS_HAS_DRIVE_LETTER)
     if (fResult && pszDirName[0] != 0 && pszDirName[1] == HB_OS_DRIVE_DELIM_CHR) {
-      int iDrive = pszDirName[0];
+      int32_t iDrive = pszDirName[0];
 
       if (iDrive >= 'A' && iDrive <= 'Z') {
         iDrive -= 'A';
@@ -3411,7 +3411,7 @@ HB_BOOL hb_fsSetCWD(const char *pszDirName)
 
 // NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ...
 
-HB_ERRCODE hb_fsChDrv(int iDrive)
+HB_ERRCODE hb_fsChDrv(int32_t iDrive)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsChDrv(%d)", iDrive));
@@ -3421,7 +3421,7 @@ HB_ERRCODE hb_fsChDrv(int iDrive)
 
 #if defined(HB_OS_HAS_DRIVE_LETTER)
   {
-    int iSave, iNewDrive;
+    int32_t iSave, iNewDrive;
 
     hb_vmUnlock();
 
@@ -3453,13 +3453,13 @@ HB_ERRCODE hb_fsChDrv(int iDrive)
 
 // NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ...
 
-int hb_fsCurDrv(void)
+int32_t hb_fsCurDrv(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsCurDrv()"));
 #endif
 
-  int iDrive;
+  int32_t iDrive;
 
 #if defined(HB_OS_HAS_DRIVE_LETTER)
 
@@ -3480,7 +3480,7 @@ int hb_fsCurDrv(void)
 
 // NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ...
 
-HB_ERRCODE hb_fsIsDrv(int iDrive)
+HB_ERRCODE hb_fsIsDrv(int32_t iDrive)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDrv(%d)", iDrive));
@@ -3498,7 +3498,7 @@ HB_ERRCODE hb_fsIsDrv(int iDrive)
   }
 #elif defined(HB_OS_HAS_DRIVE_LETTER)
   {
-    int iSave, iNewDrive;
+    int32_t iSave, iNewDrive;
 
     hb_vmUnlock();
 
@@ -3672,7 +3672,7 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
 #if defined(HB_USE_SHARELOCKS)
   if (hFile != FS_ERROR && (nExFlags & FXO_SHARELOCK) != 0) {
 #if defined(HB_USE_BSDLOCKS)
-    int iLock, iResult;
+    int32_t iLock, iResult;
     if ( // (uiFlags & (FO_READ | FO_WRITE | FO_READWRITE)) == FO_READ ||
         (uiFlags & (FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE)) == 0) {
       iLock = LOCK_SH | LOCK_NB;
@@ -3789,8 +3789,8 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
   bool fTrim = hb_setGetTrimFileName();
   bool fEncodeCP = hb_osUseCP();
   auto cDirSep = static_cast<char>(hb_setGetDirSeparator());
-  int iFileCase = hb_setGetFileCase();
-  int iDirCase = hb_setGetDirCase();
+  int32_t iFileCase = hb_setGetFileCase();
+  int32_t iDirCase = hb_setGetDirCase();
   if (fTrim) {
     if (strchr(pszFileName, ' ') == nullptr) {
       fTrim = false;
@@ -3913,8 +3913,8 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
   auto cdp = hb_vmCDP();
   bool fTrim = hb_setGetTrimFileName();
   auto cDirSep = static_cast<char>(hb_setGetDirSeparator());
-  int iFileCase = hb_setGetFileCase();
-  int iDirCase = hb_setGetDirCase();
+  int32_t iFileCase = hb_setGetFileCase();
+  int32_t iDirCase = hb_setGetDirCase();
   if (fTrim) {
     if (strchr(pszFileName, ' ') == nullptr) {
       fTrim = false;
@@ -4026,7 +4026,7 @@ void hb_fsBaseDirBuff(char *pszBuffer)
   }
 }
 
-static bool hb_fsDisableWaitLocks(int iSet)
+static bool hb_fsDisableWaitLocks(int32_t iSet)
 {
   bool fRetVal = s_fUseWaitLocks;
 

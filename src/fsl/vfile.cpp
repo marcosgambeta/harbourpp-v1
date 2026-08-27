@@ -65,7 +65,7 @@ static HB_GARBAGE_FUNC(hb_file_Destructor)
 
 static const HB_GC_FUNCS s_gcFileFuncs = {hb_file_Destructor, hb_gcDummyMark};
 
-PHB_FILE hb_fileParam(int iParam)
+PHB_FILE hb_fileParam(int32_t iParam)
 {
   auto fileHolder = static_cast<PHB_FILE *>(hb_parptrGC(&s_gcFileFuncs, iParam));
 
@@ -77,7 +77,7 @@ PHB_FILE hb_fileParam(int iParam)
   return nullptr;
 }
 
-PHB_FILE hb_fileParamGet(int iParam)
+PHB_FILE hb_fileParamGet(int32_t iParam)
 {
   auto fileHolder = static_cast<PHB_FILE *>(hb_parptrGC(&s_gcFileFuncs, iParam));
   return fileHolder ? *fileHolder : nullptr;
@@ -105,7 +105,7 @@ void hb_fileItemClear(PHB_ITEM pItem)
   }
 }
 
-static PHB_FILE *hb_fileParamPtr(int iParam)
+static PHB_FILE *hb_fileParamPtr(int32_t iParam)
 {
   auto fileHolder = static_cast<PHB_FILE *>(hb_parptrGC(&s_gcFileFuncs, iParam));
 
@@ -161,7 +161,7 @@ HB_FUNC(HB_VFERASE)
 {
   auto pszFile = hb_parc(1);
   HB_ERRCODE uiError = 3;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszFile) {
     if (hb_fileDelete(pszFile)) {
@@ -180,7 +180,7 @@ HB_FUNC(HB_VFRENAME)
   auto szFileOld = hb_parc(1);
   auto szFileNew = hb_parc(2);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (szFileOld != nullptr && szFileNew != nullptr) {
     if (hb_fileRename(szFileOld, szFileNew)) {
@@ -199,7 +199,7 @@ HB_FUNC(HB_VFCOPYFILE)
   auto pszSource = hb_parc(1);
   auto pszDestin = hb_parc(2);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszSource && pszDestin) {
     if (hb_fileCopy(pszSource, pszDestin)) {
@@ -218,7 +218,7 @@ HB_FUNC(HB_VFCOPYFILEEX)
   auto pszSource = hb_parc(1);
   auto pszDestin = hb_parc(2);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszSource && pszDestin) {
     if (hb_fileCopyEx(pszSource, pszDestin, hb_parns(3), hb_parldef(4, HB_TRUE),
@@ -238,7 +238,7 @@ HB_FUNC(HB_VFMOVEFILE)
   auto pszSource = hb_parc(1);
   auto pszDestin = hb_parc(2);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszSource && pszDestin) {
     if (hb_fileMove(pszSource, pszDestin)) {
@@ -272,7 +272,7 @@ HB_FUNC(HB_VFDIRMAKE)
 {
   auto pszDirName = hb_parc(1);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszDirName) {
     if (hb_fileDirMake(pszDirName)) {
@@ -290,7 +290,7 @@ HB_FUNC(HB_VFDIRREMOVE)
 {
   auto pszDirName = hb_parc(1);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszDirName) {
     if (hb_fileDirRemove(pszDirName)) {
@@ -379,7 +379,7 @@ HB_FUNC(HB_VFTIMESET)
       lDate = hb_pardl(2);
     }
     if (HB_ISCHAR(3)) {
-      int iHour, iMinutes, iSeconds, iMSec;
+      int32_t iHour, iMinutes, iSeconds, iMSec;
       if (hb_timeStrGet(hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec)) {
         lTime = hb_timeEncode(iHour, iMinutes, iSeconds, iMSec);
       }
@@ -396,7 +396,7 @@ HB_FUNC(HB_VFLINK)
   auto pszExisting = hb_parc(1);
   auto pszNewFile = hb_parc(2);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszExisting && pszNewFile) {
     if (hb_fileLink(pszExisting, pszNewFile)) {
@@ -415,7 +415,7 @@ HB_FUNC(HB_VFLINKSYM)
   auto pszTarget = hb_parc(1);
   auto pszNewFile = hb_parc(2);
   HB_ERRCODE uiError = 2;
-  int iResult = F_ERROR;
+  int32_t iResult = F_ERROR;
 
   if (pszTarget && pszNewFile) {
     if (hb_fileLinkSym(pszTarget, pszNewFile)) {
@@ -453,7 +453,7 @@ HB_FUNC(HB_VFOPEN)
     char szName[HB_PATH_MAX];
     HB_FATTR nModeAttr = 0;
 
-    int iMode =
+    int32_t iMode =
         hb_parnidef(2, FO_READWRITE | FO_DENYNONE | FO_PRIVATE) & (0xFF | FO_CREAT | FO_TRUNC | FO_EXCL | FO_DEFAULTS);
 
     if (iMode & FO_CREAT) {

@@ -134,7 +134,7 @@ HB_FUNC(DISKSPACE)
 
     {
 #if defined(__CEGCC__)
-      int iTODO;
+      int32_t iTODO;
 
       bError = false;
 #else

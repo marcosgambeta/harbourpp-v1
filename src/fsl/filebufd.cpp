@@ -216,7 +216,7 @@ static void s_fileClose(PHB_FILE pFile)
   hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   HB_SYMBOL_UNUSED(pFile);
   HB_SYMBOL_UNUSED(nStart);
@@ -226,7 +226,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
   return false;
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   HB_SYMBOL_UNUSED(pFile);
   HB_SYMBOL_UNUSED(nStart);
@@ -320,7 +320,7 @@ static void s_fileCommit(PHB_FILE pFile)
   hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
 {
   HB_SYMBOL_UNUSED(pFile);
   HB_SYMBOL_UNUSED(iIndex);

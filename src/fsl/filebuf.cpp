@@ -100,8 +100,8 @@ struct _HB_FILE
   const HB_FILE_FUNCS *pFuncs;
   HB_ULONG device;
   HB_ULONG inode;
-  int used;
-  int mode;
+  int32_t used;
+  int32_t mode;
   HB_BOOL shared;
   HB_FHANDLE hFile;
   HB_FHANDLE hFileRO;
@@ -159,7 +159,7 @@ static PHB_FILE hb_fileFind(HB_ULONG device, HB_ULONG inode)
   return nullptr;
 }
 
-static PHB_FILE hb_fileNew(HB_FHANDLE hFile, bool fShared, int iMode, HB_ULONG device, HB_ULONG inode, bool fBind)
+static PHB_FILE hb_fileNew(HB_FHANDLE hFile, bool fShared, int32_t iMode, HB_ULONG device, HB_ULONG inode, bool fBind)
 {
   PHB_FILE pFile = hb_fileFind(device, inode);
 
@@ -663,7 +663,7 @@ static void s_fileClose(PHB_FILE pFile)
   hb_vmLock();
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   auto fResult = false;
   auto fLockFS = false;
@@ -740,9 +740,9 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
   return fResult;
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
-  int iResult;
+  int32_t iResult;
 
   hb_vmUnlock();
 
@@ -825,7 +825,7 @@ static void s_fileCommit(PHB_FILE pFile)
   hb_fsCommit(pFile->hFile);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
 {
   HB_SYMBOL_UNUSED(pFile);
 
@@ -884,12 +884,12 @@ static void s_fileposClose(PHB_FILE pFilePos)
   hb_xfree(pFilePos);
 }
 
-static HB_BOOL s_fileposLock(PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileposLock(PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   return _PHB_FILE->pFuncs->Lock(_PHB_FILE, nStart, nLen, iType);
 }
 
-static int s_fileposLockTest(PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static int32_t s_fileposLockTest(PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   return _PHB_FILE->pFuncs->LockTest(_PHB_FILE, nStart, nLen, iType);
 }
@@ -968,7 +968,7 @@ static void s_fileposCommit(PHB_FILE pFilePos)
   _PHB_FILE->pFuncs->Commit(_PHB_FILE);
 }
 
-static HB_BOOL s_fileposConfigure(PHB_FILE pFilePos, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileposConfigure(PHB_FILE pFilePos, int32_t iIndex, PHB_ITEM pValue)
 {
   return _PHB_FILE->pFuncs->Configure(_PHB_FILE, iIndex, pValue);
 }
@@ -1013,11 +1013,11 @@ static PHB_FILE hb_fileposNew(PHB_FILE pFile)
 #endif // HB_OS_UNIX
 
 static const HB_FILE_FUNCS *s_pFileTypes[HB_FILE_TYPE_MAX];
-static int s_iFileTypes = 0;
+static int32_t s_iFileTypes = 0;
 
-static int s_fileFindDrv(const char *pszFileName)
+static int32_t s_fileFindDrv(const char *pszFileName)
 {
-  int i = -1;
+  int32_t i = -1;
 
   if (pszFileName) {
     i = s_iFileTypes;
@@ -1063,7 +1063,7 @@ HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS *pFuncs)
 
 HB_BOOL hb_fileExists(const char *pszFileName, char *pRetPath)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Exists(s_pFileTypes[i], pszFileName, pRetPath);
@@ -1074,7 +1074,7 @@ HB_BOOL hb_fileExists(const char *pszFileName, char *pRetPath)
 
 HB_BOOL hb_fileDelete(const char *pszFileName)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Delete(s_pFileTypes[i], pszFileName);
@@ -1085,7 +1085,7 @@ HB_BOOL hb_fileDelete(const char *pszFileName)
 
 HB_BOOL hb_fileRename(const char *pszFileName, const char *pszNewName)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Rename(s_pFileTypes[i], pszFileName, pszNewName);
@@ -1096,7 +1096,7 @@ HB_BOOL hb_fileRename(const char *pszFileName, const char *pszNewName)
 
 HB_BOOL hb_fileCopy(const char *pszSrcFile, const char *pszDstFile)
 {
-  int i = s_fileFindDrv(pszSrcFile);
+  int32_t i = s_fileFindDrv(pszSrcFile);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Copy(s_pFileTypes[i], pszSrcFile, pszDstFile);
@@ -1107,7 +1107,7 @@ HB_BOOL hb_fileCopy(const char *pszSrcFile, const char *pszDstFile)
 
 HB_BOOL hb_fileMove(const char *pszSrcFile, const char *pszDstFile)
 {
-  int iS = s_fileFindDrv(pszSrcFile), iD = s_fileFindDrv(pszDstFile);
+  int32_t iS = s_fileFindDrv(pszSrcFile), iD = s_fileFindDrv(pszDstFile);
 
   if (iS == iD) {
     if (iS >= 0 ? s_pFileTypes[iS]->Rename(s_pFileTypes[iS], pszSrcFile, pszDstFile)
@@ -1121,7 +1121,7 @@ HB_BOOL hb_fileMove(const char *pszSrcFile, const char *pszDstFile)
 
 HB_BOOL hb_fileDirExists(const char *pszDirName)
 {
-  int i = s_fileFindDrv(pszDirName);
+  int32_t i = s_fileFindDrv(pszDirName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->DirExists(s_pFileTypes[i], pszDirName);
@@ -1132,7 +1132,7 @@ HB_BOOL hb_fileDirExists(const char *pszDirName)
 
 HB_BOOL hb_fileDirMake(const char *pszDirName)
 {
-  int i = s_fileFindDrv(pszDirName);
+  int32_t i = s_fileFindDrv(pszDirName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->DirMake(s_pFileTypes[i], pszDirName);
@@ -1143,7 +1143,7 @@ HB_BOOL hb_fileDirMake(const char *pszDirName)
 
 HB_BOOL hb_fileDirRemove(const char *pszDirName)
 {
-  int i = s_fileFindDrv(pszDirName);
+  int32_t i = s_fileFindDrv(pszDirName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->DirRemove(s_pFileTypes[i], pszDirName);
@@ -1154,7 +1154,7 @@ HB_BOOL hb_fileDirRemove(const char *pszDirName)
 
 double hb_fileDirSpace(const char *pszDirName, uint16_t uiType)
 {
-  int i = s_fileFindDrv(pszDirName);
+  int32_t i = s_fileFindDrv(pszDirName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->DirSpace(s_pFileTypes[i], pszDirName, uiType);
@@ -1165,7 +1165,7 @@ double hb_fileDirSpace(const char *pszDirName, uint16_t uiType)
 
 PHB_ITEM hb_fileDirectory(const char *pszDirSpec, const char *pszAttr)
 {
-  int i = s_fileFindDrv(pszDirSpec);
+  int32_t i = s_fileFindDrv(pszDirSpec);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Directory(s_pFileTypes[i], pszDirSpec, pszAttr);
@@ -1176,7 +1176,7 @@ PHB_ITEM hb_fileDirectory(const char *pszDirSpec, const char *pszAttr)
 
 HB_BOOL hb_fileTimeGet(const char *pszFileName, long *plJulian, long *plMillisec)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->TimeGet(s_pFileTypes[i], pszFileName, plJulian, plMillisec);
@@ -1187,7 +1187,7 @@ HB_BOOL hb_fileTimeGet(const char *pszFileName, long *plJulian, long *plMillisec
 
 HB_BOOL hb_fileTimeSet(const char *pszFileName, long lJulian, long lMillisec)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->TimeSet(s_pFileTypes[i], pszFileName, lJulian, lMillisec);
@@ -1198,7 +1198,7 @@ HB_BOOL hb_fileTimeSet(const char *pszFileName, long lJulian, long lMillisec)
 
 HB_FOFFSET hb_fileSizeGet(const char *pszFileName, HB_BOOL bUseDirEntry)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     HB_FOFFSET nSize = 0;
@@ -1233,7 +1233,7 @@ HB_FOFFSET hb_fileSizeGet(const char *pszFileName, HB_BOOL bUseDirEntry)
 
 HB_BOOL hb_fileAttrGet(const char *pszFileName, HB_FATTR *pulAttr)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->AttrGet(s_pFileTypes[i], pszFileName, pulAttr);
@@ -1244,7 +1244,7 @@ HB_BOOL hb_fileAttrGet(const char *pszFileName, HB_FATTR *pulAttr)
 
 HB_BOOL hb_fileAttrSet(const char *pszFileName, HB_FATTR ulAttr)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->AttrSet(s_pFileTypes[i], pszFileName, ulAttr);
@@ -1255,7 +1255,7 @@ HB_BOOL hb_fileAttrSet(const char *pszFileName, HB_FATTR ulAttr)
 
 HB_BOOL hb_fileLink(const char *pszExisting, const char *pszNewName)
 {
-  int i = s_fileFindDrv(pszExisting);
+  int32_t i = s_fileFindDrv(pszExisting);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Link(s_pFileTypes[i], pszExisting, pszNewName);
@@ -1266,7 +1266,7 @@ HB_BOOL hb_fileLink(const char *pszExisting, const char *pszNewName)
 
 HB_BOOL hb_fileLinkSym(const char *pszTarget, const char *pszNewName)
 {
-  int i = s_fileFindDrv(pszTarget);
+  int32_t i = s_fileFindDrv(pszTarget);
 
   if (i >= 0) {
     return s_pFileTypes[i]->LinkSym(s_pFileTypes[i], pszTarget, pszNewName);
@@ -1277,7 +1277,7 @@ HB_BOOL hb_fileLinkSym(const char *pszTarget, const char *pszNewName)
 
 char *hb_fileLinkRead(const char *pszFileName)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->LinkRead(s_pFileTypes[i], pszFileName);
@@ -1289,7 +1289,7 @@ char *hb_fileLinkRead(const char *pszFileName)
 PHB_FILE hb_fileExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR nExFlags, const char *pPaths,
                         PHB_ITEM pError)
 {
-  int i = s_fileFindDrv(pszFileName);
+  int32_t i = s_fileFindDrv(pszFileName);
 
   if (i >= 0) {
     return s_pFileTypes[i]->Open(s_pFileTypes[i], pszFileName, pDefExt, nExFlags, pPaths, pError);
@@ -1303,12 +1303,12 @@ void hb_fileClose(PHB_FILE pFile)
   pFile->pFuncs->Close(pFile);
 }
 
-HB_BOOL hb_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+HB_BOOL hb_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   return pFile->pFuncs->Lock(pFile, nStart, nLen, iType);
 }
 
-int hb_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+int32_t hb_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   return pFile->pFuncs->LockTest(pFile, nStart, nLen, iType);
 }
@@ -1363,7 +1363,7 @@ void hb_fileCommit(PHB_FILE pFile)
   pFile->pFuncs->Commit(pFile);
 }
 
-HB_BOOL hb_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+HB_BOOL hb_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
 {
   return pFile->pFuncs->Configure(pFile, iIndex, pValue);
 }

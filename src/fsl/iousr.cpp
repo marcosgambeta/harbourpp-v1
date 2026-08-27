@@ -64,7 +64,7 @@ struct _HB_IOUSR
 {
   HB_FILE_FUNCS funcs;
   char *prefix;
-  int prefix_len;
+  int32_t prefix_len;
   PHB_SYMB prg_funcs[IOUSR_METHODCOUNT];
 };
 
@@ -88,7 +88,7 @@ static HB_CRITICAL_NEW(s_iousrMtx);
   }                                                                                                                    \
   while (false)
 
-static int s_iCount = 0;
+static int32_t s_iCount = 0;
 static PHB_IOUSR s_ioUsrs[HB_FILE_TYPE_MAX];
 
 static void s_errRT_IOUSR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription)
@@ -128,7 +128,7 @@ static PHB_IOUSR s_iousrAddNew(const char *pszPrefix)
 
   HB_IOUSR_LOCK();
 
-  int iCount = s_iCount;
+  int32_t iCount = s_iCount;
   while (--iCount >= 0) {
     if (hb_stricmp(pszPrefix, s_ioUsrs[iCount]->prefix) == 0) {
       break;
@@ -153,7 +153,7 @@ static PHB_IOUSR s_iousrAddNew(const char *pszPrefix)
 
 #define s_getUsrIO(p) (static_cast<PHB_IOUSR>(HB_UNCONST(p)))
 
-static void s_pushMethod(PHB_IOUSR pIO, int iMethod)
+static void s_pushMethod(PHB_IOUSR pIO, int32_t iMethod)
 {
   hb_vmPushSymbol(pIO->prg_funcs[iMethod - 1]);
   hb_vmPushNil();
@@ -404,7 +404,7 @@ static void s_fileClose(PHB_FILE pFile)
   hb_vmDo(1);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   PHB_IOUSR pIO = s_getUsrIO(pFile->pFuncs);
   s_pushMethod(pIO, IOUSR_LOCK);
@@ -416,7 +416,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
   return hb_parl(-1);
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
   PHB_IOUSR pIO = s_getUsrIO(pFile->pFuncs);
   s_pushMethod(pIO, IOUSR_LOCKTEST);
@@ -564,7 +564,7 @@ static void s_fileCommit(PHB_FILE pFile)
   hb_vmDo(1);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
 {
   PHB_IOUSR pIO = s_getUsrIO(pFile->pFuncs);
   s_pushMethod(pIO, IOUSR_CONFIGURE);

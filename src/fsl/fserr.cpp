@@ -58,7 +58,7 @@
 
 // Try to translate C errno into DOS error code
 #if !defined(HB_OS_WIN)
-static HB_ERRCODE hb_errnoToDosError(int ErrCode)
+static HB_ERRCODE hb_errnoToDosError(int32_t ErrCode)
 {
   switch (ErrCode) {
 #if defined(ENMFILE)
@@ -214,7 +214,7 @@ void hb_fsSetIOError(HB_BOOL fResult, uint16_t uiOperation)
     uiOsErrorLast = static_cast<HB_ERRCODE>(dwLastError);
     uiErrorLast = hb_WinToDosError(dwLastError);
 #else
-    int iErrCode = errno;
+    int32_t iErrCode = errno;
     uiOsErrorLast = iErrCode;
     uiErrorLast = hb_errnoToDosError(iErrCode);
 #endif
