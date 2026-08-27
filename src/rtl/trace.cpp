@@ -50,11 +50,11 @@
 #include "hbapiitm.hpp"
 #include "hbtrace.hpp"
 
-static int s_traceLogLevel = HB_TR_DEFAULT;
+static int32_t s_traceLogLevel = HB_TR_DEFAULT;
 
-static void hb_trace_message(char *buffer, HB_SIZE nSize, int iParam, int iCount)
+static void hb_trace_message(char *buffer, HB_SIZE nSize, int32_t iParam, int32_t iCount)
 {
-  int iFirst = iParam;
+  int32_t iFirst = iParam;
 
   buffer[0] = '\0';
 
@@ -111,7 +111,7 @@ HB_FUNC(HB_TRACELEVEL)
 
 HB_FUNC(HB_TRACELOGLEVEL)
 {
-  int iOldLevel = s_traceLogLevel;
+  int32_t iOldLevel = s_traceLogLevel;
 
   if (HB_ISNUM(1)) {
     auto iLevel = hb_parni(1);

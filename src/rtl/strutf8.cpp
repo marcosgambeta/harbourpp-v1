@@ -59,7 +59,7 @@ HB_FUNC(HB_STRISUTF8)
       char c = *szText++;
 
       if (c & 0x80) {
-        int i = 0;
+        int32_t i = 0;
 
         while ((c <<= 1) & 0x80) {
           ++i;

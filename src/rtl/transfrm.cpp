@@ -361,9 +361,9 @@ HB_FUNC(TRANSFORM)
     // --- Handle NUMERIC values ---
 
     else if (pValue->isNumeric()) {
-      int iWidth; // Width of string
-      int iDec;   // Number of decimals
-      int iCount;
+      int32_t iWidth; // Width of string
+      int32_t iDec;   // Number of decimals
+      int32_t iCount;
       HB_SIZE i;
       PHB_ITEM pNumber = nullptr;
 
@@ -844,7 +844,7 @@ HB_FUNC(TRANSFORM)
       char *szStr;
 
       if (pValue->isNumInt() && hb_setGetFixed()) {
-        int iWidth, iDec;
+        int32_t iWidth, iDec;
         hb_itemGetNLen(pValue, &iWidth, &iDec);
         iWidth += 2 + (hb_setGetDecimals() << 1);
         szStr = static_cast<char *>(hb_xgrab(iWidth + 1));

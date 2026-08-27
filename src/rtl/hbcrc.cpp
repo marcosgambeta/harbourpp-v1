@@ -145,7 +145,7 @@ HB_MAXUINT hb_crc(HB_MAXUINT crc, const void *buf, HB_SIZE len, HB_MAXUINT poly)
     }
     crc ^= --mask;
     do {
-      int i = 8;
+      int32_t i = 8;
       crc ^= *ucbuf++;
       do {
         crc = (crc & 1) ? revp ^ (crc >> 1) : crc >> 1;
@@ -161,7 +161,7 @@ HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void *buf, HB_SIZE len, HB_MAXUINT pol
   if (buf && len) {
     auto ucbuf = static_cast<const unsigned char *>(buf);
     HB_MAXUINT mask, revp = poly;
-    int bits = 0;
+    int32_t bits = 0;
 
     while (revp >>= 1) {
       ++bits;
@@ -173,7 +173,7 @@ HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void *buf, HB_SIZE len, HB_MAXUINT pol
       poly <<= -bits;
       crc <<= -bits;
       do {
-        int i = 8;
+        int32_t i = 8;
         crc ^= static_cast<HB_MAXUINT>(*ucbuf++);
         do {
           crc = (crc & mask) ? poly ^ (crc << 1) : crc << 1;
@@ -183,7 +183,7 @@ HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void *buf, HB_SIZE len, HB_MAXUINT pol
       crc >>= -bits;
     } else {
       do {
-        int i = 8;
+        int32_t i = 8;
         crc ^= static_cast<HB_MAXUINT>(*ucbuf++) << bits;
         do {
           crc = (crc & mask) ? poly ^ (crc << 1) : crc << 1;

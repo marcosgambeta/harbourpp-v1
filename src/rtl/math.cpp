@@ -63,7 +63,7 @@
 
 struct HB_MATHERRDATA
 {
-  int mode;
+  int32_t mode;
   PHB_ITEM block;
   HB_MATH_HANDLERPROC handler;
   HB_MATH_HANDLERPROC prevHandler;
@@ -75,14 +75,14 @@ struct HB_MATHERRDATA
 using PHB_MATHERRDATA = HB_MATHERRDATA *;
 
 // Harbour default math error handling routine
-static int hb_matherr(HB_MATH_EXCEPTION *pexc)
+static int32_t hb_matherr(HB_MATH_EXCEPTION *pexc)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_matherr(%p)", static_cast<void*>(pexc)));
 #endif
 
-  int mode = hb_mathGetErrMode();
-  int iRet = 1;
+  int32_t mode = hb_mathGetErrMode();
+  int32_t iRet = 1;
 
   if (pexc == nullptr || pexc->handled != 0) {
     // error already handled by other handlers !
@@ -216,7 +216,7 @@ void hb_mathResetError(HB_MATH_EXCEPTION *phb_exc)
 // route C math lib errors to Harbour error handling
 #if defined(HB_MATH_HANDLER)
 
-int matherr(struct exception *err)
+int32_t matherr(struct exception *err)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("matherr(%p)", static_cast<void*>(err)));
@@ -269,7 +269,7 @@ int matherr(struct exception *err)
   pExc->handled = 0;
 
   HB_MATH_HANDLERPROC mathHandler = hb_mathGetHandler();
-  int retval;
+  int32_t retval;
   if (mathHandler) {
     retval = (*(mathHandler))(pExc);
     err->retval = pExc->retval;
@@ -289,7 +289,7 @@ HB_BOOL hb_mathGetError(HB_MATH_EXCEPTION *phb_exc, const char *szFunc, double a
 
 #if defined(HB_MATH_ERRNO)
 
-  int errCode, v;
+  int32_t errCode, v;
 
   switch (errno) {
   case 0:
@@ -376,14 +376,14 @@ HB_BOOL hb_mathGetError(HB_MATH_EXCEPTION *phb_exc, const char *szFunc, double a
 // handling math errors, Harbour default handling routine
 
 // set error handling mode of hb_matherr()
-int hb_mathSetErrMode(int imode)
+int32_t hb_mathSetErrMode(int32_t imode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_mathSetErrMode (%i)", imode));
 #endif
 
   PHB_MATHERRDATA pMathErr;
-  int oldmode;
+  int32_t oldmode;
 
   pMathErr = hb_mathErrData();
   oldmode = pMathErr->mode;
@@ -397,7 +397,7 @@ int hb_mathSetErrMode(int imode)
 }
 
 // get error handling mode of hb_matherr()
-int hb_mathGetErrMode(void)
+int32_t hb_mathGetErrMode(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_mathGetErrMode()"));
@@ -447,10 +447,10 @@ HB_MATH_HANDLERPROC hb_mathGetHandler(void)
 // example of hb_mathSet/GetHandler: add a new math handler that
 // calls a given codeblock for every math error
 
-static int hb_matherrblock(HB_MATH_EXCEPTION *pexc)
+static int32_t hb_matherrblock(HB_MATH_EXCEPTION *pexc)
 {
   PHB_MATHERRDATA pMathErr = hb_mathErrData();
-  int retval;
+  int32_t retval;
 
   // call codeblock for both case: handled and unhandled exceptions
 

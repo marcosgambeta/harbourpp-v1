@@ -112,7 +112,7 @@ struct arc4_stream
 static pid_t arc4_stir_pid;
 #endif
 
-static int rs_initialized;
+static int32_t rs_initialized;
 static struct arc4_stream rs;
 static HB_I32 arc4_count;
 
@@ -142,7 +142,7 @@ static _HB_INLINE_ void arc4_init(void)
   rs.i = rs.j = 0;
 }
 
-static _HB_INLINE_ void arc4_addrandom(const HB_U8 *dat, int datlen)
+static _HB_INLINE_ void arc4_addrandom(const HB_U8 *dat, int32_t datlen)
 {
   rs.i--;
   for (auto n = 0; n < 256; ++n) {
@@ -157,7 +157,7 @@ static _HB_INLINE_ void arc4_addrandom(const HB_U8 *dat, int datlen)
 }
 
 #if defined(HB_OS_UNIX)
-static HB_ISIZ read_all(int fd, HB_U8 *buf, size_t count)
+static HB_ISIZ read_all(int32_t fd, HB_U8 *buf, size_t count)
 {
   HB_SIZE numread = 0;
 
@@ -180,10 +180,10 @@ static HB_ISIZ read_all(int fd, HB_U8 *buf, size_t count)
 #if defined(HB_OS_WIN)
 
 #define TRY_SEED_MS_CRYPTOAPI
-static int arc4_seed_win(void)
+static int32_t arc4_seed_win(void)
 {
   /* This is adapted from Tor's crypto_seed_rng() */
-  static int s_provider_set = 0;
+  static int32_t s_provider_set = 0;
   static HCRYPTPROV s_provider;
   unsigned char buf[ADD_ENTROPY];
 
@@ -211,7 +211,7 @@ static int arc4_seed_win(void)
 #if defined(HAVE_DECL_CTL_KERN) && defined(HAVE_DECL_KERN_RANDOM) && defined(HAVE_DECL_RANDOM_UUID)
 
 #define TRY_SEED_SYSCTL_LINUX
-static int arc4_seed_sysctl_linux(void)
+static int32_t arc4_seed_sysctl_linux(void)
 {
   /*
    * Based on code by William Ahern, this function tries to use the
@@ -219,10 +219,10 @@ static int arc4_seed_sysctl_linux(void)
    * even if /dev/urandom is inaccessible for some reason (e.g., we're
    * running in a chroot).
    */
-  int mib[] = {CTL_KERN, KERN_RANDOM, RANDOM_UUID};
+  int32_t mib[] = {CTL_KERN, KERN_RANDOM, RANDOM_UUID};
   HB_U8 buf[ADD_ENTROPY];
   size_t n;
-  int any_set;
+  int32_t any_set;
 
   memset(buf, 0, sizeof(buf));
 
@@ -253,7 +253,7 @@ static int arc4_seed_sysctl_linux(void)
 #if defined(HAVE_DECL_CTL_KERN) && defined(HAVE_DECL_KERN_ARND)
 
 #define TRY_SEED_SYSCTL_BSD
-static int arc4_seed_sysctl_bsd(void)
+static int32_t arc4_seed_sysctl_bsd(void)
 {
   /*
    * Based on code from William Ahern and from OpenBSD, this function
@@ -261,10 +261,10 @@ static int arc4_seed_sysctl_bsd(void)
    * This can work even if /dev/urandom is inaccessible for some reason
    * (e.g., we're running in a chroot).
    */
-  int mib[] = {CTL_KERN, KERN_ARND};
+  int32_t mib[] = {CTL_KERN, KERN_ARND};
   HB_U8 buf[ADD_ENTROPY];
   size_t len, n;
-  int any_set;
+  int32_t any_set;
 
   memset(buf, 0, sizeof(buf));
 
@@ -284,7 +284,7 @@ static int arc4_seed_sysctl_bsd(void)
   }
 
   /* make sure that the buffer actually got set. */
-  for (int i = any_set = 0; i < static_cast<int32_t>(sizeof(buf)); ++i) {
+  for (int32_t i = any_set = 0; i < static_cast<int32_t>(sizeof(buf)); ++i) {
     any_set |= buf[i];
   }
 
@@ -350,7 +350,7 @@ static _HB_INLINE_ int hex_char_to_int(char c)
   return -1;
 }
 
-static int arc4_seed_proc_sys_kernel_random_uuid(void)
+static int32_t arc4_seed_proc_sys_kernel_random_uuid(void)
 {
   /*
    * Occasionally, somebody will make /proc/sys accessible in a chroot,
@@ -359,11 +359,11 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
    */
   char buf[128];
   HB_U8 entropy[64];
-  int i, nybbles;
+  int32_t i, nybbles;
 
   for (auto bytes = 0; bytes < ADD_ENTROPY;) {
-    int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
-    int n;
+    int32_t fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
+    int32_t n;
 
     if (fd < 0) {
       return -1;
@@ -379,7 +379,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
     memset(entropy, 0, sizeof(entropy));
     for (i = nybbles = 0; i < n; ++i) {
       if (HB_ISXDIGIT(buf[i])) {
-        int nyb = hex_char_to_int(buf[i]);
+        int32_t nyb = hex_char_to_int(buf[i]);
 
         if (nybbles & 1) {
           entropy[nybbles / 2] |= nyb;
@@ -408,7 +408,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
 #if defined(HB_OS_UNIX)
 
 #define TRY_SEED_URANDOM
-static int arc4_seed_urandom(void)
+static int32_t arc4_seed_urandom(void)
 {
   /* This is adapted from Tor's crypto_seed_rng() */
   static const char *filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
@@ -417,7 +417,7 @@ static int arc4_seed_urandom(void)
     HB_U8 buf[ADD_ENTROPY];
     HB_SIZE n;
 
-    int fd = open(filenames[i], O_RDONLY, 0);
+    int32_t fd = open(filenames[i], O_RDONLY, 0);
 
     if (fd < 0) {
       continue;
@@ -440,7 +440,7 @@ static int arc4_seed_urandom(void)
 }
 #endif /* HB_OS_UNIX */
 
-static int arc4_seed_rand(void)
+static int32_t arc4_seed_rand(void)
 {
   HB_U8 buf[ADD_ENTROPY];
 
@@ -458,7 +458,7 @@ static int arc4_seed_rand(void)
 
 static void arc4_seed(void)
 {
-  int ok = 0;
+  int32_t ok = 0;
 
   /*
    * We try every method that might work, and don't give up even if one
@@ -601,7 +601,7 @@ void arc4random_stir(void)
    ARC4_UNLOCK();
 }
 
-void arc4random_addrandom(const unsigned char * dat, int datlen)
+void arc4random_addrandom(const unsigned char * dat, int32_t datlen)
 {
    ARC4_LOCK();
    if( !rs_initialized ) {

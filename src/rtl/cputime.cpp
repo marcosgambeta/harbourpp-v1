@@ -68,7 +68,7 @@
 //  n == 12 cstime -> sum of the system CPU time of the current + child process
 //  n == 13 cu+cs  -> sum of cutime + cstime
 
-double hb_secondsCPU(int n)
+double hb_secondsCPU(int32_t n)
 {
   double d = 0.0;
 

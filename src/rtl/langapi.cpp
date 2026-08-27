@@ -292,7 +292,7 @@ const char *hb_langSelectID(const char *pszID)
   return pszIDOld;
 }
 
-const char *hb_langGetItem(const char *pszID, int iIndex)
+const char *hb_langGetItem(const char *pszID, int32_t iIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langGetItem(%s,%i)", pszID ? pszID : "(null)", iIndex));
@@ -337,7 +337,7 @@ char *hb_langName(const char *pszID)
 
 /* Compatibility interfaces */
 
-const char *hb_langDGetErrorDesc(int iIndex)
+const char *hb_langDGetErrorDesc(int32_t iIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langDGetErrorDesc(%i)", iIndex));
@@ -346,7 +346,7 @@ const char *hb_langDGetErrorDesc(int iIndex)
   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex);
 }
 
-const char *hb_langDGetItem(int iIndex)
+const char *hb_langDGetItem(int32_t iIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langDGetItem(%i)", iIndex));

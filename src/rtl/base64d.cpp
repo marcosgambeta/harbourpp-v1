@@ -52,7 +52,7 @@
 
 // Warning: this code works only on ASCII based machines
 
-static signed char base64_decode_value(int value_in)
+static signed char base64_decode_value(int32_t value_in)
 {
   static const signed char s_decoding[] = {
       62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -2, -1, -1, -1, 0,  1,  2,  3,  4,

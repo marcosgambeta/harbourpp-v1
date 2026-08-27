@@ -69,7 +69,7 @@ static HB_GARBAGE_FUNC(hb_gz_Destructor)
 
 static const HB_GC_FUNCS s_gcGZFuncs = {hb_gz_Destructor, hb_gcDummyMark};
 
-static gzFile hb_gzParam(int iParam)
+static gzFile hb_gzParam(int32_t iParam)
 {
   auto gzHolder = static_cast<gzFile *>(hb_parptrGC(&s_gcGZFuncs, iParam));
 
@@ -155,7 +155,7 @@ HB_FUNC(HB_GZCLOSE)
     gzFile gz = *gzHolder;
     *gzHolder = nullptr;
     hb_vmUnlock();
-    int iResult = gzclose(gz);
+    int32_t iResult = gzclose(gz);
     hb_vmLock();
     hb_retni(iResult);
   } else {
@@ -201,7 +201,7 @@ HB_FUNC(HB_GZREAD)
         }
       }
       hb_vmUnlock();
-      int iResult = gzread(gz, szBuffer, static_cast<unsigned>(nLen));
+      int32_t iResult = gzread(gz, szBuffer, static_cast<unsigned>(nLen));
       hb_vmLock();
       hb_retni(iResult);
     }
@@ -223,7 +223,7 @@ HB_FUNC(HB_GZWRITE)
     gzFile gz = hb_gzParam(1);
     if (gz) {
       hb_vmUnlock();
-      int iResult =
+      int32_t iResult =
           gzwrite(gz, szData, HB_ISNUM(3) ? static_cast<unsigned>(hb_parns(3)) : static_cast<unsigned>(hb_parclen(2)));
       hb_vmLock();
       hb_retni(iResult);
@@ -279,7 +279,7 @@ HB_FUNC(HB_GZPUTS)
     gzFile gz = hb_gzParam(1);
     if (gz) {
       hb_vmUnlock();
-      int iResult = gzputs(gz, szData);
+      int32_t iResult = gzputs(gz, szData);
       hb_vmLock();
       hb_retni(iResult);
     }
@@ -299,7 +299,7 @@ HB_FUNC(HB_GZPUTC)
     gzFile gz = hb_gzParam(1);
     if (gz) {
       hb_vmUnlock();
-      int iResult = gzputc(gz, hb_parni(2));
+      int32_t iResult = gzputc(gz, hb_parni(2));
       hb_vmLock();
       hb_retni(iResult);
     }
@@ -319,7 +319,7 @@ HB_FUNC(HB_GZGETC)
 
   if (gz) {
     hb_vmUnlock();
-    int iResult = gzgetc(gz);
+    int32_t iResult = gzgetc(gz);
     hb_vmLock();
     hb_retni(iResult);
   }
@@ -337,7 +337,7 @@ HB_FUNC(HB_GZUNGETC)
     gzFile gz = hb_gzParam(2);
     if (gz) {
       hb_vmUnlock();
-      int iResult = gzungetc(hb_parni(1), gz);
+      int32_t iResult = gzungetc(hb_parni(1), gz);
       hb_vmLock();
       hb_retni(iResult);
     }
@@ -358,7 +358,7 @@ HB_FUNC(HB_GZFLUSH)
 
   if (gz) {
     hb_vmUnlock();
-    int iResult = gzflush(gz, hb_parnidef(2, Z_SYNC_FLUSH));
+    int32_t iResult = gzflush(gz, hb_parnidef(2, Z_SYNC_FLUSH));
     hb_vmLock();
     hb_retni(iResult);
   }
@@ -395,7 +395,7 @@ HB_FUNC(HB_GZREWIND)
 
   if (gz) {
     hb_vmUnlock();
-    int iResult = gzrewind(gz);
+    int32_t iResult = gzrewind(gz);
     hb_vmLock();
     hb_retni(iResult);
   }
@@ -429,7 +429,7 @@ HB_FUNC(HB_GZEOF)
 
   if (gz) {
     hb_vmUnlock();
-    int iResult = gzeof(gz);
+    int32_t iResult = gzeof(gz);
     hb_vmLock();
     hb_retl(iResult != 0);
   }
@@ -446,7 +446,7 @@ HB_FUNC(HB_GZDIRECT)
   gzFile gz = hb_gzParam(1);
   if (gz) {
     hb_vmUnlock();
-    int iResult = gzdirect(gz);
+    int32_t iResult = gzdirect(gz);
     hb_vmLock();
     hb_retl(iResult != 0);
   }
@@ -463,7 +463,7 @@ HB_FUNC(HB_GZERROR)
   gzFile gz = hb_gzParam(1);
 
   if (gz) {
-    int iErrNum = 0;
+    int32_t iErrNum = 0;
     hb_retc(gzerror(gz, &iErrNum));
     hb_storni(iErrNum, 2);
   }

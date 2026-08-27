@@ -69,7 +69,7 @@
 
 using PHB_DYNADDR = void (*)(void);
 
-static int hb_hbtoctype(int iHarbourType)
+static int32_t hb_hbtoctype(int32_t iHarbourType)
 {
   switch (iHarbourType) {
   case Harbour::Item::NIL:
@@ -112,9 +112,9 @@ struct HB_DYNVAL
 struct HB_DYNARG
 {
   void *hString;
-  int iType;
-  int iEncoding;
-  int iOptions;
+  int32_t iType;
+  int32_t iEncoding;
+  int32_t iOptions;
   bool bRawBuffer;
   bool bByRef;
   HB_DYNVAL value;
@@ -265,7 +265,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
   return r;
 }
 
-static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
+static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int32_t iRetType, int32_t iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
   switch (iRetType) {
   case HB_DYN_CTYPE_VOID:
@@ -505,9 +505,9 @@ struct HB_DYNVAL
 struct HB_DYNARG
 {
   void *hString;
-  int iType;
-  int iEncoding;
-  int iOptions;
+  int32_t iType;
+  int32_t iEncoding;
+  int32_t iOptions;
   bool bRawBuffer;
   bool bByRef;
   HB_DYNVAL value;
@@ -683,7 +683,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   }
 }
 
-static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
+static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int32_t iRetType, int32_t iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
   switch (iRetType) {
   case HB_DYN_CTYPE_VOID:
@@ -1061,7 +1061,7 @@ HB_DYN_CTYPE_DECL(float, __stdcall, FX86_SFL);
 
 #endif
 
-void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int *piArgFlags)
+void hb_dynCall(int32_t iFuncFlags, void *pFunctionRaw, int32_t iParams, int32_t iFirst, int32_t *piArgFlags)
 {
   auto pFunction = reinterpret_cast<PHB_DYNADDR>(pFunctionRaw);
 
@@ -1071,17 +1071,17 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
 #if defined(HB_ARCH_64BIT)
   {
-    int iRetType = iFuncFlags & _MASK_CTYPE;
-    int iEncoding = iFuncFlags & _MASK_ENCODING;
-    int iOptions = iFuncFlags & _MASK_OPTIONS;
+    int32_t iRetType = iFuncFlags & _MASK_CTYPE;
+    int32_t iEncoding = iFuncFlags & _MASK_ENCODING;
+    int32_t iOptions = iFuncFlags & _MASK_OPTIONS;
 
     iParams -= iFirst - 1;
 
     if (iParams <= _DYNEXEC_MAXPARAM) {
-      int iRetTypeRaw;
+      int32_t iRetTypeRaw;
       HB_DYNVAL ret;
       HB_DYNARG *pArg;
-      int tmp;
+      int32_t tmp;
 
       HB_U64 rawpar[_DYNEXEC_MAXPARAM];
 
@@ -1166,20 +1166,20 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
   }
 #elif defined(HB_ARCH_32BIT)
   {
-    int iCallConv = iFuncFlags & _MASK_CALLCONV;
-    int iRetType = iFuncFlags & _MASK_CTYPE;
-    int iEncoding = iFuncFlags & _MASK_ENCODING;
-    int iOptions = iFuncFlags & _MASK_OPTIONS;
+    int32_t iCallConv = iFuncFlags & _MASK_CALLCONV;
+    int32_t iRetType = iFuncFlags & _MASK_CTYPE;
+    int32_t iEncoding = iFuncFlags & _MASK_ENCODING;
+    int32_t iOptions = iFuncFlags & _MASK_OPTIONS;
 
     iParams -= iFirst - 1;
 
     if (iParams <= _DYNEXEC_MAXPARAM) {
-      int iRetTypeRaw;
+      int32_t iRetTypeRaw;
       HB_DYNVAL ret;
       HB_DYNARG *pArg;
-      int tmp;
+      int32_t tmp;
 
-      int iParamsRaw = 0;
+      int32_t iParamsRaw = 0;
       HB_U32 rawpar[_DYNEXEC_MAXPARAM * 2];
 
 #if !defined(HB_LONG_LONG_OFF)

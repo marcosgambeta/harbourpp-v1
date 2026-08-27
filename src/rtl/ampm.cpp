@@ -51,7 +51,7 @@ HB_FUNC(AMPM)
 {
   auto nTimeLen = hb_parclen(1);
   auto pszResult = static_cast<char *>(hb_xgrab(HB_MAX(nTimeLen, 2) + 3 + 1));
-  int iHour = 0;
+  int32_t iHour = 0;
   auto bAM = false;
 
   if (nTimeLen) {

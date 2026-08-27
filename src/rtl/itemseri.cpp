@@ -188,8 +188,8 @@ struct HB_REF_ITEM
 {
   void *value;
   HB_SIZE nOffset;
-  int iRefs;
-  int iType;
+  int32_t iRefs;
+  int32_t iType;
 };
 
 using PHB_REF_ITEM = HB_REF_ITEM *;
@@ -259,7 +259,7 @@ static PHB_REF_ITEM hb_itemSerialValueFind(PHB_REF_LIST pRefList, void *value, H
   return nullptr;
 }
 
-static PHB_REF_ITEM hb_itemSerialOffsetFind(PHB_REF_LIST pRefList, HB_SIZE nOffset, int iType, HB_SIZE *pnPos)
+static PHB_REF_ITEM hb_itemSerialOffsetFind(PHB_REF_LIST pRefList, HB_SIZE nOffset, int32_t iType, HB_SIZE *pnPos)
 {
   HB_SIZE nFirst = 0;
   HB_SIZE nLast = pRefList->nCount;
@@ -383,7 +383,7 @@ static bool hb_itemSerialOffsetRef(PHB_REF_LIST pRefList, HB_SIZE nOffset)
 }
 
 /* used by hb_deserializeTest() for HB_SERIAL_XHB_R */
-static void hb_itemSerialTypedRef(PHB_REF_LIST pRefList, int iType, HB_SIZE nIndex)
+static void hb_itemSerialTypedRef(PHB_REF_LIST pRefList, int32_t iType, HB_SIZE nIndex)
 {
   HB_SIZE nPos;
 
@@ -422,7 +422,7 @@ static void hb_itemSerialOffsetGet(PHB_REF_LIST pRefList, PHB_ITEM pItem, HB_SIZ
 
 /* used by hb_deserializeItem() for
    HB_SERIAL_XHB_A, HB_SERIAL_XHB_H, HB_SERIAL_XHB_Q, HB_SERIAL_XHB_O */
-static void hb_itemSerialTypedSet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int iType)
+static void hb_itemSerialTypedSet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int32_t iType)
 {
   HB_SIZE nPos = pRefList->nCount;
 
@@ -438,7 +438,7 @@ static void hb_itemSerialTypedSet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int iTy
 }
 
 /* used by hb_deserializeItem() for HB_SERIAL_XHB_R */
-static void hb_itemSerialTypedGet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int iType, HB_SIZE nIndex)
+static void hb_itemSerialTypedGet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int32_t iType, HB_SIZE nIndex)
 {
   PHB_REF_ITEM pRef;
   HB_SIZE nPos;
@@ -450,7 +450,7 @@ static void hb_itemSerialTypedGet(PHB_REF_LIST pRefList, PHB_ITEM pItem, int iTy
   }
 }
 
-static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut,
+static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int32_t iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut,
                                  PHB_REF_LIST pRefList, HB_SIZE nOffset)
 {
   HB_SIZE nSize, nLen, u;
@@ -604,7 +604,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
 {
   HB_MAXINT lVal;
   double d;
-  int iWidth, iDecimal;
+  int32_t iWidth, iDecimal;
   long l, l2;
   const char *szVal;
   HB_SIZE nRef, nLen, n;
@@ -823,7 +823,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, HB_CODEPAGE *cdp
       HB_PUT_LE_UINT32(&pBuffer[nOffset], nRef);
       nOffset += 4;
     } else {
-      int iHashFlags = hb_hashGetFlags(pItem);
+      int32_t iHashFlags = hb_hashGetFlags(pItem);
       auto pDefVal = hb_hashGetDefault(pItem);
 
       if ((iHashFlags & ~HB_HASH_RESORT) != HB_HASH_FLAG_DEFAULT) {
@@ -1409,7 +1409,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
   }
 
   case HB_SERIAL_HASHFLAGS: {
-    int iHashFlags = HB_GET_LE_UINT16(&pBuffer[nOffset]);
+    int32_t iHashFlags = HB_GET_LE_UINT16(&pBuffer[nOffset]);
     nOffset = hb_deserializeItem(pItem, cdpIn, cdpOut, pBuffer, nOffset + 2, pRefList);
     hb_hashClearFlags(pItem, HB_HASH_FLAG_MASK);
     if ((iHashFlags & (HB_HASH_KEEPORDER | HB_HASH_BINARY)) != HB_HASH_BINARY) {
@@ -1612,7 +1612,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
 /*
  * public API functions
  */
-char *hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, HB_SIZE *pnSize)
+char *hb_itemSerializeCP(PHB_ITEM pItem, int32_t iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, HB_SIZE *pnSize)
 {
   HB_REF_LIST refList;
 
@@ -1650,7 +1650,7 @@ char *hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, HB_CODEPAGE *cdpIn, HB_CODE
   return reinterpret_cast<char *>(pBuffer);
 }
 
-char *hb_itemSerialize(PHB_ITEM pItem, int iFlags, HB_SIZE *pnSize)
+char *hb_itemSerialize(PHB_ITEM pItem, int32_t iFlags, HB_SIZE *pnSize)
 {
   return hb_itemSerializeCP(pItem, iFlags, nullptr, nullptr, pnSize);
 }
@@ -1687,7 +1687,7 @@ HB_FUNC(HB_SERIALIZE)
     HB_CODEPAGE *cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
     HB_CODEPAGE *cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();
 
-    int iFlags;
+    int32_t iFlags;
     if (HB_ISNUM(2)) {
       iFlags = hb_parni(2);
     } else {

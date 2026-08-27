@@ -71,7 +71,7 @@ static void hb_inkeySetTextKeys(const char *pszText, HB_SIZE nSize, HB_BOOL fIns
     }
 
     while (n--) {
-      int iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE(keys[n]) : keys[n];
+      int32_t iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE(keys[n]) : keys[n];
       hb_inkeyIns(iKey);
     }
     if (nSize > HB_SIZEOFARRAY(buffer)) {
@@ -79,7 +79,7 @@ static void hb_inkeySetTextKeys(const char *pszText, HB_SIZE nSize, HB_BOOL fIns
     }
   } else {
     while (HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc)) {
-      int iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE(wc) : wc;
+      int32_t iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE(wc) : wc;
       hb_inkeyPut(iKey);
     }
   }
@@ -187,7 +187,7 @@ HB_FUNC_TRANSLATE(HB_SETLASTKEY, HB_KEYSETLAST)
 HB_FUNC(HB_KEYCODE)
 {
   auto szValue = hb_parc(1);
-  int iKey;
+  int32_t iKey;
 
   if (szValue != nullptr) {
     auto cdp = hb_vmCDP();

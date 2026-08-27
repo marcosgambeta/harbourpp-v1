@@ -91,8 +91,8 @@ struct HB_ERRDATA
 {
   PHB_ERROR_INFO errorHandler;
   PHB_ITEM errorBlock;
-  int iLaunchCount;
-  int uiErrorDOS; // The value of DosError()
+  int32_t iLaunchCount;
+  int32_t uiErrorDOS; // The value of DosError()
 };
 
 using PHB_ERRDATA = HB_ERRDATA *;
@@ -105,7 +105,7 @@ static void hb_errorDataRelease(void *Cargo)
 
 static HB_TSD_NEW(s_errData, sizeof(HB_ERRDATA), nullptr, hb_errorDataRelease);
 
-static bool hb_errGetNumCode(int *piValue, const char *szOperation)
+static bool hb_errGetNumCode(int32_t *piValue, const char *szOperation)
 {
   auto pItem = hb_param(1, Harbour::Item::NUMERIC);
 
@@ -295,7 +295,7 @@ HB_FUNC_STATIC(GENCODE)
 
 HB_FUNC_STATIC(_GENCODE)
 {
-  int iValue;
+  int32_t iValue;
 
   if (hb_errGetNumCode(&iValue, "GENCODE")) {
     hb_errPutGenCode(hb_stackSelfItem(), static_cast<HB_ERRCODE>(iValue));
@@ -312,7 +312,7 @@ HB_FUNC_STATIC(OSCODE)
 
 HB_FUNC_STATIC(_OSCODE)
 {
-  int iValue;
+  int32_t iValue;
 
   if (hb_errGetNumCode(&iValue, "OSCODE")) {
     hb_errPutOsCode(hb_stackSelfItem(), static_cast<HB_ERRCODE>(iValue));
@@ -328,7 +328,7 @@ HB_FUNC_STATIC(SUBCODE)
 
 HB_FUNC_STATIC(_SUBCODE)
 {
-  int iValue;
+  int32_t iValue;
 
   if (hb_errGetNumCode(&iValue, "SUBCODE")) {
     hb_errPutSubCode(hb_stackSelfItem(), static_cast<HB_ERRCODE>(iValue));
@@ -344,7 +344,7 @@ HB_FUNC_STATIC(SEVERITY)
 
 HB_FUNC_STATIC(_SEVERITY)
 {
-  int iValue;
+  int32_t iValue;
 
   if (hb_errGetNumCode(&iValue, "SEVERITY")) {
     hb_errPutSeverity(hb_stackSelfItem(), static_cast<uint16_t>(iValue));
@@ -360,7 +360,7 @@ HB_FUNC_STATIC(TRIES)
 
 HB_FUNC_STATIC(_TRIES)
 {
-  int iValue;
+  int32_t iValue;
 
   if (hb_errGetNumCode(&iValue, "TRIES")) {
     hb_errPutTries(hb_stackSelfItem(), static_cast<uint16_t>(iValue));

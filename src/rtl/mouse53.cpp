@@ -78,7 +78,7 @@ HB_FUNC(MSETCURSOR)
 HB_FUNC(MROW)
 {
   if (hb_parl(1)) {
-    int iRow, iCol;
+    int32_t iRow, iCol;
     hb_mouseGetPos(&iRow, &iCol);
     hb_retni(iRow);
   } else {
@@ -89,7 +89,7 @@ HB_FUNC(MROW)
 HB_FUNC(MCOL)
 {
   if (hb_parl(1)) {
-    int iRow, iCol;
+    int32_t iRow, iCol;
     hb_mouseGetPos(&iRow, &iCol);
     hb_retni(iCol);
   } else {
@@ -125,7 +125,7 @@ HB_FUNC(MDBLCLK)
 
 HB_FUNC(MSAVESTATE)
 {
-  int iLen = hb_mouseStorageSize();
+  int32_t iLen = hb_mouseStorageSize();
 
   if (iLen > 0) {
     auto pBuffer = hb_xgrab(iLen + 1);
@@ -154,7 +154,7 @@ HB_FUNC(MSETBOUNDS)
 
 HB_FUNC(HB_MGETBOUNDS)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
   hb_mouseGetBounds(&iTop, &iLeft, &iBottom, &iRight);
   hb_storni(iTop, 1);
   hb_storni(iLeft, 2);

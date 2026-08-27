@@ -78,7 +78,7 @@ HB_FUNC(__ACCEPT)
   char szAcceptResult[ACCEPT_BUFFER_LEN];
   char szKey[HB_MAX_CHAR_LEN];
   HB_SIZE nLen = 0, nChar;
-  int input = 0;
+  int32_t input = 0;
 
   // cPrompt(s) passed ?
   if (hb_pcount() >= 1) {

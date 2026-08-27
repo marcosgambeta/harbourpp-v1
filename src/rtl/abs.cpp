@@ -54,8 +54,8 @@ HB_FUNC(ABS)
   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
   if (pNumber) {
-    int iWidth;
-    int iDec;
+    int32_t iWidth;
+    int32_t iDec;
 
     hb_itemGetNLen(pNumber, &iWidth, &iDec);
 

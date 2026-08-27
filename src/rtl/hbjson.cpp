@@ -55,7 +55,7 @@
 // https://tools.ietf.org/html/rfc4627
 //
 //    C level functions:
-//      char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent );
+//      char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int32_t iIndent );
 //         pValue  - value to encode;
 //         pnLen   - if pnLen is not nullptr, length of returned buffer is
 //                   stored to *pnLen;
@@ -97,8 +97,8 @@ struct HB_JSON_ENCODE_CTX
   HB_SIZE nAlloc;
   void **pId;
   HB_SIZE nAllocId;
-  int iIndent;
-  int iEolLen;
+  int32_t iIndent;
+  int32_t iEolLen;
   const char *szEol;
 };
 
@@ -226,7 +226,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     char buf[24];
     HB_MAXINT nVal = pValue->getNInt();
     bool fNeg = nVal < 0;
-    int i = 0;
+    int32_t i = 0;
 
     if (fNeg) {
       nVal = -nVal;
@@ -240,7 +240,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     _hb_jsonCtxAdd(pCtx, &buf[sizeof(buf) - i], i);
   } else if (pValue->isNumeric()) {
     char buf[64];
-    int iDec;
+    int32_t iDec;
     double dblValue = hb_itemGetNDDec(pValue, &iDec);
     hb_snprintf(buf, sizeof(buf), "%.*f", iDec, dblValue);
     _hb_jsonCtxAdd(pCtx, buf, strlen(buf));
@@ -446,7 +446,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, HB_CODE
     HB_MAXINT nValue = 0;
     double dblValue = 0;
     auto fDbl = false;
-    int iDec = 0;
+    int32_t iDec = 0;
 
     bool fNeg = *szSource == '-';
     if (fNeg) {
@@ -470,7 +470,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, HB_CODE
       }
     }
     if (*szSource == 'e' || *szSource == 'E') {
-      int iExp = 0;
+      int32_t iExp = 0;
 
       szSource++;
       bool fNegExp = *szSource == '-';
@@ -575,7 +575,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, HB_CODE
 
 // C level API functions
 
-char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int iIndent, HB_CODEPAGE *cdp)
+char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int32_t iIndent, HB_CODEPAGE *cdp)
 {
   auto pCtx = static_cast<PHB_JSON_ENCODE_CTX>(hb_xgrab(sizeof(HB_JSON_ENCODE_CTX)));
   pCtx->nAlloc = 16;
@@ -605,7 +605,7 @@ char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int iIndent, HB_CODEPAGE 
   return szRet;
 }
 
-char *hb_jsonEncode(PHB_ITEM pValue, HB_SIZE *pnLen, int iIndent)
+char *hb_jsonEncode(PHB_ITEM pValue, HB_SIZE *pnLen, int32_t iIndent)
 {
   return hb_jsonEncodeCP(pValue, pnLen, iIndent, nullptr);
 }
@@ -631,7 +631,7 @@ HB_SIZE hb_jsonDecode(const char *szSource, PHB_ITEM pValue)
 
 // Harbour level API functions
 
-static HB_CODEPAGE *_hb_jsonCdpPar(int iParam)
+static HB_CODEPAGE *_hb_jsonCdpPar(int32_t iParam)
 {
   if (hb_pcount() >= iParam) {
     auto szCdp = hb_parc(iParam);
@@ -649,7 +649,7 @@ HB_FUNC(HB_JSONENCODE)
 
   if (pItem != nullptr) {
     HB_SIZE nLen;
-    int iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni(2);
+    int32_t iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni(2);
     char *szRet = hb_jsonEncodeCP(pItem, &nLen, iIndent, _hb_jsonCdpPar(3));
     hb_retclen_buffer(szRet, nLen);
   }

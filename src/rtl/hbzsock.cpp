@@ -134,12 +134,12 @@ static long s_zsock_write(PHB_SOCKEX_Z pZ, HB_MAXINT timeout)
   return lSent;
 }
 
-static int s_zsock_inbuffer(PHB_SOCKEX pSock)
+static int32_t s_zsock_inbuffer(PHB_SOCKEX pSock)
 {
   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
 
   if (pSock->inbuffer == 0 && pZ->fDecompressIn) {
-    int err;
+    int32_t err;
 
     if (pSock->buffer == nullptr) {
       if (pSock->readahead <= 0) {
@@ -177,7 +177,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeo
     }
     return lRecv;
   } else if (pZ->fDecompressIn) {
-    int err = Z_OK;
+    int32_t err = Z_OK;
 
     pZ->z_read.next_out = static_cast<Bytef *>(data);
     pZ->z_read.avail_out = static_cast<uInt>(len);
@@ -220,7 +220,7 @@ static long s_sockexWrite(PHB_SOCKEX pSock, const void *data, long len, HB_MAXIN
     pZ->z_write.avail_in = static_cast<uInt>(len);
 
     while (pZ->z_write.avail_in) {
-      int err;
+      int32_t err;
 
       if (pZ->z_write.avail_out == 0) {
         lWritten = s_zsock_write(pZ, timeout);
@@ -252,7 +252,7 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
 
   if (pZ->fCompressOut && (!fSync || pZ->z_write.avail_out != HB_ZSOCK_WRBUFSIZE || pZ->z_write.total_in != 0 ||
                            pZ->z_write.total_out != 0)) {
-    int err;
+    int32_t err;
 
     if (pZ->z_write.avail_out > 0) {
       err = deflate(&pZ->z_write, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH);
@@ -276,12 +276,12 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
   return lResult + hb_sockexFlush(pZ->sock, timeout, fSync);
 }
 
-static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   return s_zsock_inbuffer(pSock) ? 1 : hb_sockexCanRead(HB_ZSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
 
-static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   return hb_sockexCanWrite(HB_ZSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
@@ -300,7 +300,7 @@ static char *s_sockexName(PHB_SOCKEX pSock)
   return pszName;
 }
 
-static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
 {
   switch (HB_ZSOCK_ERROR_BASE - iError) {
   case Z_STREAM_END:
@@ -324,10 +324,10 @@ static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
   return hb_sockexErrorStr(HB_ZSOCK_GET(pSock)->sock, iError);
 }
 
-static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
+static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
-  int iResult = 0;
+  int32_t iResult = 0;
 
   if (pZ) {
     if (pZ->sock) {
@@ -394,7 +394,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
   if (pSock) {
     HB_BOOL fDecompressIn = true, fCompressOut = true;
-    int level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT, windowBitsIn = MAX_WBITS,
+    int32_t level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT, windowBitsIn = MAX_WBITS,
         windowBitsOut = MAX_WBITS;
 
     if (pParams && pParams->isHash()) {

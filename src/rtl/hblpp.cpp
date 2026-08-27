@@ -76,7 +76,7 @@ void hb_lppSetLimit(PHB_LPP pSocket, HB_SIZE nLimit)
   pSocket->nLimit = nLimit;
 }
 
-int hb_lppError(PHB_LPP pSocket)
+int32_t hb_lppError(PHB_LPP pSocket)
 {
   return pSocket->iError;
 }

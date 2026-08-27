@@ -61,8 +61,8 @@ struct _HB_ZNETSTREAM
 {
   z_stream rd;      /* input stream */
   z_stream wr;      /* output stream */
-  int err;          /* error code for last stream operation */
-  int crypt;        /* encryption */
+  int32_t err;          /* error code for last stream operation */
+  int32_t crypt;        /* encryption */
   uInt crypt_in;    /* number of encrypted characters in buffer  */
   uInt crypt_size;  /* size of encrypted block */
   uInt skip_in;     /* encryption block padding bytes */
@@ -85,7 +85,7 @@ using HB_ZNETSTREAM = _HB_ZNETSTREAM;
 #endif
 
 /* return status of last compression/decompression operation */
-int hb_znetError(PHB_ZNETSTREAM pStream)
+int32_t hb_znetError(PHB_ZNETSTREAM pStream)
 {
   return pStream->err;
 }
@@ -114,7 +114,7 @@ void hb_znetClose(PHB_ZNETSTREAM pStream)
 
 /* create new stream structure
  */
-PHB_ZNETSTREAM hb_znetOpen(int level, int strategy)
+PHB_ZNETSTREAM hb_znetOpen(int32_t level, int32_t strategy)
 {
   auto pStream = static_cast<PHB_ZNETSTREAM>(hb_xgrabz(sizeof(HB_ZNETSTREAM)));
 
@@ -149,7 +149,7 @@ PHB_ZNETSTREAM hb_znetOpen(int level, int strategy)
 
 /* set encryption key
  */
-void hb_znetEncryptKey(PHB_ZNETSTREAM pStream, const void *keydata, int keylen)
+void hb_znetEncryptKey(PHB_ZNETSTREAM pStream, const void *keydata, int32_t keylen)
 {
   if (pStream->crypt == 0) {
     pStream->crypt = 1;
@@ -429,7 +429,7 @@ long hb_znetWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void *buffer, long
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
   const void *keydata = nullptr;
-  int keylen = 0, level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT;
+  int32_t keylen = 0, level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT;
 
   hb_socekxParamsGetStd(pParams, &keydata, &keylen, nullptr, nullptr, &level, &strategy);
 
@@ -458,7 +458,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
   return pSockNew;
 }
 
-static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
+static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
   if (pSock->cargo) {
     if (pSock->sd != HB_NO_SOCKET) {
@@ -467,7 +467,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
     hb_znetClose(HB_ZNET_GET(pSock));
   }
 
-  int iResult = hb_sockexRawClear(pSock, fClose);
+  int32_t iResult = hb_sockexRawClear(pSock, fClose);
   hb_xfree(pSock);
 
   return iResult;
@@ -521,7 +521,7 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
   return pSock->cargo ? hb_znetFlush(HB_ZNET_GET(pSock), pSock->sd, timeout, fSync) : 0;
 }
 
-static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   if (pSock->inbuffer) {
     return 1;
@@ -547,7 +547,7 @@ static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
   return fBuffer ? 0 : hb_socketSelectRead(pSock->sd, timeout);
 }
 
-static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   if (pSock->sd == HB_NO_SOCKET) {
     hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
@@ -566,7 +566,7 @@ static char *s_sockexName(PHB_SOCKEX pSock)
   return hb_strdup(pSock->pFilter->pszName);
 }
 
-static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
 {
   HB_SYMBOL_UNUSED(pSock);
 
@@ -596,7 +596,7 @@ static const HB_SOCKET_FILTER s_sockFilter = {"znet",           s_sockexNew,   s
                                               s_sockexRead,     s_sockexWrite, s_sockexFlush,   s_sockexCanRead,
                                               s_sockexCanWrite, s_sockexName,  s_sockexErrorStr};
 
-PHB_SOCKEX hb_sockexNewZNet(HB_SOCKET sd, const void *keydata, int keylen, int level, int strategy)
+PHB_SOCKEX hb_sockexNewZNet(HB_SOCKET sd, const void *keydata, int32_t keylen, int32_t level, int32_t strategy)
 {
   PHB_SOCKEX pSock = nullptr;
 

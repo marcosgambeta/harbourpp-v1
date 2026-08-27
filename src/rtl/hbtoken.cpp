@@ -57,7 +57,7 @@
 #define _HB_TOK_EOL_DELIM 0x10
 #define _HB_TOK_STRIP_QUOTE 0x20
 
-static HB_SIZE hb_tokenCount(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE nDelim, int iFlags)
+static HB_SIZE hb_tokenCount(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE nDelim, int32_t iFlags)
 {
   HB_SIZE nPos = 0, nTokens = 1;
   char cQuote = 0;
@@ -93,7 +93,7 @@ static HB_SIZE hb_tokenCount(const char *szLine, HB_SIZE nLen, const char *szDel
   return nTokens;
 }
 
-static const char *hb_tokenGet(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE *pnDelim, int iFlags,
+static const char *hb_tokenGet(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE *pnDelim, int32_t iFlags,
                                HB_SIZE nToken, HB_SIZE *pnLen)
 {
   HB_SIZE nPos, nStart, nDelim = *pnDelim;
@@ -141,7 +141,7 @@ static const char *hb_tokenGet(const char *szLine, HB_SIZE nLen, const char *szD
   return nullptr;
 }
 
-static PHB_ITEM hb_tokenArray(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE nDelim, int iFlags)
+static PHB_ITEM hb_tokenArray(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE nDelim, int32_t iFlags)
 {
   HB_SIZE nTokens = hb_tokenCount(szLine, nLen, szDelim, nDelim, iFlags);
   auto pArray = hb_itemArrayNew(nTokens);
@@ -184,14 +184,14 @@ static PHB_ITEM hb_tokenArray(const char *szLine, HB_SIZE nLen, const char *szDe
   return pArray;
 }
 
-static bool hb_tokenParam(int iParam, HB_SIZE nSkip, const char **pszLine, HB_SIZE *pnLen, const char **pszDelim,
-                          HB_SIZE *pnDelim, int *piFlags)
+static bool hb_tokenParam(int32_t iParam, HB_SIZE nSkip, const char **pszLine, HB_SIZE *pnLen, const char **pszDelim,
+                          HB_SIZE *pnDelim, int32_t *piFlags)
 {
   auto szLine = hb_parc(1);
   const char *szDelim = nullptr;
   auto nLen = hb_parclen(1);
   HB_SIZE nDelim = 0;
-  int iFlags = 0;
+  int32_t iFlags = 0;
 
   if (nLen) {
     if (nSkip) {
@@ -246,7 +246,7 @@ HB_FUNC(HB_TOKENCOUNT)
 {
   const char *szLine, *szDelim;
   HB_SIZE nLen, nDelim;
-  int iFlags;
+  int32_t iFlags;
 
   if (hb_tokenParam(2, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags)) {
     hb_retns(hb_tokenCount(szLine, nLen, szDelim, nDelim, iFlags));
@@ -259,7 +259,7 @@ HB_FUNC(HB_TOKENGET)
 {
   const char *szLine, *szDelim;
   HB_SIZE nLen, nDelim;
-  int iFlags;
+  int32_t iFlags;
 
   if (hb_tokenParam(3, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags)) {
     szLine = hb_tokenGet(szLine, nLen, szDelim, &nDelim, iFlags, hb_parns(2), &nLen);
@@ -276,7 +276,7 @@ HB_FUNC(HB_TOKENPTR)
 {
   const char *szLine, *szDelim;
   HB_SIZE nLen, nDelim;
-  int iFlags;
+  int32_t iFlags;
 
   if (hb_tokenParam(3, hb_parns(2), &szLine, &nLen, &szDelim, &nDelim, &iFlags)) {
     const char *szToken;
@@ -303,7 +303,7 @@ HB_FUNC(HB_ATOKENS)
 {
   const char *szLine, *szDelim;
   HB_SIZE nLen, nDelim;
-  int iFlags;
+  int32_t iFlags;
 
   if (hb_tokenParam(2, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags)) {
     hb_itemReturnRelease(hb_tokenArray(szLine, nLen, szDelim, nDelim, iFlags));

@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 
-static bool hb_numParam(int iParam, HB_MAXINT *plNum)
+static bool hb_numParam(int32_t iParam, HB_MAXINT *plNum)
 {
   if (HB_ISNUM(iParam)) {
     *plNum = hb_parnint(iParam);

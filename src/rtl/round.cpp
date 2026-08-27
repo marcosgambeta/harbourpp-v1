@@ -59,7 +59,7 @@ HB_FUNC(INT)
     if (pNumber->isNumInt()) {
       hb_itemReturn(pNumber);
     } else {
-      int iWidth;
+      int32_t iWidth;
 
       hb_itemGetNLen(pNumber, &iWidth, nullptr);
       hb_retnlen(hb_numInt(pNumber->getND()), iWidth, 0);

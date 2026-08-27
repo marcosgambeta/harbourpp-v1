@@ -105,9 +105,9 @@ static bool s_fInit = false;
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams);
 
 /* destroy extended socket structure */
-static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
+static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-  int iResult = hb_sockexRawClear(pSock, fClose);
+  int32_t iResult = hb_sockexRawClear(pSock, fClose);
 
   hb_xfree(pSock);
 
@@ -169,7 +169,7 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
    any timeout. Such call is executed just before inside
    hb_sockexSelect() just before call to low-level socket select()
    function. */
-static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   if (pSock->inbuffer > 0) {
     return 1;
@@ -189,7 +189,7 @@ static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
    then this functions should return 0. In most of implementations 0
    can be returned in all cases if fBuffer is true. Such behavior will
    reduce number of data buffered and not flushed. */
-static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   if (pSock->sd == HB_NO_SOCKET) {
     hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
@@ -208,7 +208,7 @@ static char *s_sockexName(PHB_SOCKEX pSock)
 }
 
 /* convert error code into short string description */
-static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
 {
   HB_SYMBOL_UNUSED(pSock);
 
@@ -250,9 +250,9 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 }
 
 static const HB_SOCKET_FILTER *s_socketFilters[HB_SOCKET_FILTER_MAX];
-static int s_iFilterCount = 0;
+static int32_t s_iFilterCount = 0;
 
-int hb_sockexRegister(const HB_SOCKET_FILTER *pFilter)
+int32_t hb_sockexRegister(const HB_SOCKET_FILTER *pFilter)
 {
   if (s_iFilterCount == 0) {
     s_socketFilters[s_iFilterCount++] = &s_sockFilter;
@@ -280,7 +280,7 @@ int hb_sockexRegister(const HB_SOCKET_FILTER *pFilter)
 
 /* helper functions */
 
-static bool s_socketaddrParam(int iParam, void **pAddr, uint32_t *puiLen)
+static bool s_socketaddrParam(int32_t iParam, void **pAddr, uint32_t *puiLen)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY);
 
@@ -344,7 +344,7 @@ static HB_GARBAGE_FUNC(hb_socket_destructor)
 
 static const HB_GC_FUNCS s_gcSocketFuncs = {hb_socket_destructor, hb_gcDummyMark};
 
-HB_SOCKET hb_socketParam(int iParam)
+HB_SOCKET hb_socketParam(int32_t iParam)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_parptrGC(&s_gcSocketFuncs, iParam));
 
@@ -384,7 +384,7 @@ void hb_socketItemClear(PHB_ITEM pItem)
 
 /* extended socket functions hb_sockex* */
 
-PHB_SOCKEX hb_sockexParam(int iParam)
+PHB_SOCKEX hb_sockexParam(int32_t iParam)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_parptrGC(&s_gcSocketFuncs, iParam));
 
@@ -456,7 +456,7 @@ HB_BOOL hb_sockexItemSetFilter(PHB_ITEM pItem, const char *pszFilter, PHB_ITEM p
   return false;
 }
 
-static int s_socket_filter_find(const char *pszFilter)
+static int32_t s_socket_filter_find(const char *pszFilter)
 {
   for (auto i = 0; i < s_iFilterCount; ++i) {
     if (hb_stricmp(s_socketFilters[i]->pszName, pszFilter) == 0) {
@@ -467,14 +467,14 @@ static int s_socket_filter_find(const char *pszFilter)
 }
 
 static const HB_SOCKET_FILTER **s_socket_getfilters(const char *pszFilter, const HB_SOCKET_FILTER **pFilters,
-                                                    int *piCount)
+                                                    int32_t *piCount)
 {
-  int iCount = 0, iMax = *piCount;
+  int32_t iCount = 0, iMax = *piCount;
 
   if (pszFilter == nullptr) {
     pFilters[iCount++] = &s_sockFilter;
   } else {
-    int i = s_socket_filter_find(pszFilter);
+    int32_t i = s_socket_filter_find(pszFilter);
 
     if (i >= 0) {
       pFilters[iCount++] = s_socketFilters[i];
@@ -527,7 +527,7 @@ PHB_SOCKEX hb_sockexNew(HB_SOCKET sd, const char *pszFilter, PHB_ITEM pParams)
 {
   const HB_SOCKET_FILTER *pBuffer[16];
   const HB_SOCKET_FILTER **pFilters;
-  int iCount = HB_SIZEOFARRAY(pBuffer);
+  int32_t iCount = HB_SIZEOFARRAY(pBuffer);
   PHB_SOCKEX pSock = nullptr;
 
   pFilters = s_socket_getfilters(pszFilter, pBuffer, &iCount);
@@ -554,7 +554,7 @@ PHB_SOCKEX hb_sockexNext(PHB_SOCKEX pSock, const char *pszFilter, PHB_ITEM pPara
 {
   const HB_SOCKET_FILTER *pBuffer[16];
   const HB_SOCKET_FILTER **pFilters;
-  int iCount = HB_SIZEOFARRAY(pBuffer);
+  int32_t iCount = HB_SIZEOFARRAY(pBuffer);
 
   pFilters = s_socket_getfilters(pszFilter, pBuffer, &iCount);
   if (pFilters) {
@@ -573,7 +573,7 @@ PHB_SOCKEX hb_sockexNext(PHB_SOCKEX pSock, const char *pszFilter, PHB_ITEM pPara
   return pSock;
 }
 
-int hb_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
+int32_t hb_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
   return pSock->pFilter->Close(pSock, fClose);
 }
@@ -600,12 +600,12 @@ long hb_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
   return pSock->pFilter->Flush(pSock, timeout, fSync);
 }
 
-int hb_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+int32_t hb_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   return pSock->pFilter->CanRead(pSock, fBuffer, timeout);
 }
 
-int hb_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+int32_t hb_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   return pSock->pFilter->CanWrite(pSock, fBuffer, timeout);
 }
@@ -615,15 +615,15 @@ char *hb_sockexName(PHB_SOCKEX pSock)
   return pSock->pFilter->Name(pSock);
 }
 
-const char *hb_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+const char *hb_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
 {
   return pSock->pFilter->ErrorStr(pSock, iError);
 }
 
-int hb_sockexSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX,
+int32_t hb_sockexSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX,
                     HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc)
 {
-  int iResult;
+  int32_t iResult;
   HB_SIZE nRead = 0, nWrite = 0, nLen, nPos;
   PHB_SOCKEX pSock;
 
@@ -673,9 +673,9 @@ int hb_sockexSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOO
   return iResult;
 }
 
-int hb_sockexRawClear(PHB_SOCKEX pSock, HB_BOOL fClose)
+int32_t hb_sockexRawClear(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-  int iResult = 0;
+  int32_t iResult = 0;
 
   if (fClose && pSock->sd != HB_NO_SOCKET) {
     if (pSock->fShutDown) {
@@ -722,20 +722,20 @@ void hb_sockexSetShutDown(PHB_SOCKEX pSock, HB_BOOL fShutDown)
   }
 }
 
-int hb_sockexGetAutoFlush(PHB_SOCKEX pSock)
+int32_t hb_sockexGetAutoFlush(PHB_SOCKEX pSock)
 {
   return pSock ? pSock->iAutoFlush : 0;
 }
 
-void hb_sockexSetAutoFlush(PHB_SOCKEX pSock, int iAutoFlush)
+void hb_sockexSetAutoFlush(PHB_SOCKEX pSock, int32_t iAutoFlush)
 {
   if (pSock) {
     pSock->iAutoFlush = iAutoFlush;
   }
 }
 
-void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int *pKeylen, const void **pIV, int *pIVlen,
-                           int *pLevel, int *pStrategy)
+void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int32_t *pKeylen, const void **pIV, int32_t *pIVlen,
+                           int32_t *pLevel, int32_t *pStrategy)
 {
   if (pParams && pParams->isHash()) {
     PHB_ITEM pItem;
@@ -794,7 +794,7 @@ HB_FUNC(HB_SOCKETGETOSERROR)
 HB_FUNC(HB_SOCKETERRORSTRING)
 {
   PHB_SOCKEX pSock;
-  int iError = 1;
+  int32_t iError = 1;
 
   if (HB_ISPOINTER(1)) {
     pSock = hb_sockexParam(1);
@@ -988,7 +988,7 @@ HB_FUNC(HB_SOCKETSEND)
       }
     }
     if (pSock->fRedirAll) {
-      int iAutoFlush = pSock->iAutoFlush;
+      int32_t iAutoFlush = pSock->iAutoFlush;
       if (iAutoFlush <= 0) {
         pSock->iAutoFlush = 15000;
       }
@@ -1175,7 +1175,7 @@ HB_FUNC(HB_SOCKETGETSNDBUFSIZE)
   HB_SOCKET socket = hb_socketParam(1);
 
   if (socket != HB_NO_SOCKET) {
-    int size;
+    int32_t size;
     hb_retl(hb_socketGetSndBufSize(socket, &size) == 0);
     hb_storni(size, 2);
   }
@@ -1186,7 +1186,7 @@ HB_FUNC(HB_SOCKETGETRCVBUFSIZE)
   HB_SOCKET socket = hb_socketParam(1);
 
   if (socket != HB_NO_SOCKET) {
-    int size;
+    int32_t size;
     hb_retl(hb_socketGetRcvBufSize(socket, &size) == 0);
     hb_storni(size, 2);
   }

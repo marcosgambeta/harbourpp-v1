@@ -53,8 +53,8 @@
 HB_FUNC(HB_DYNCALL)
 {
   auto pParam = hb_param(1, Harbour::Item::POINTER | Harbour::Item::ARRAY);
-  int *piArgFlags = nullptr;
-  int iFuncFlags = HB_DYN_CALLCONV_CDECL;
+  int32_t *piArgFlags = nullptr;
+  int32_t iFuncFlags = HB_DYN_CALLCONV_CDECL;
 
   PHB_ITEM pLibraryHandle = nullptr;
   auto bFreeLibrary = false;
@@ -98,7 +98,7 @@ HB_FUNC(HB_DYNCALL)
         if (nBasePos <= nLen) {
           HB_SIZE nArgCount = hb_pcount() - 1;
 
-          piArgFlags = static_cast<int *>(hb_xgrab(sizeof(int) * nArgCount));
+          piArgFlags = static_cast<int *>(hb_xgrab(sizeof(int32_t) * nArgCount));
 
           for (HB_SIZE nPos = 0; nPos < nArgCount; ++nPos) {
             piArgFlags[nPos] = ((nPos + nBasePos) <= nLen && hb_arrayGetItemPtr(pParam, nPos + nBasePos)->isNumeric())

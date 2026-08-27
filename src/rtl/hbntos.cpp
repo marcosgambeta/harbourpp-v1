@@ -84,7 +84,7 @@ HB_FUNC(HB_NTOC)
 
     if (!pNumber->isDouble()) {
       HB_MAXINT nNumber = pNumber->getNInt();
-      int iPos = sizeof(szBuffer);
+      int32_t iPos = sizeof(szBuffer);
       bool fNeg = nNumber < 0;
 
       if (fNeg) {

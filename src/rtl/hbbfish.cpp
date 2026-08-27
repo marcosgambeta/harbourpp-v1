@@ -250,11 +250,11 @@ void hb_blowfishDecrypt(const HB_BLOWFISH *bf, HB_U32 *xl, HB_U32 *xr)
     bf->a[++i] = xR;                                                                                                   \
   }
 
-void hb_blowfishInit(HB_BLOWFISH *bf, const void *keydata, int keylen)
+void hb_blowfishInit(HB_BLOWFISH *bf, const void *keydata, int32_t keylen)
 {
   auto key = static_cast<const unsigned char *>(keydata);
   HB_U32 xL, xR;
-  int i, j, l;
+  int32_t i, j, l;
 
   memcpy(bf, &s_blowFishInit, sizeof(s_blowFishInit));
 

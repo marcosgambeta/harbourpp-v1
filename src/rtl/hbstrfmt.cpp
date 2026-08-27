@@ -70,7 +70,7 @@ static void bufadd(BUFFERTYPE *pBuf, const char *pAdd, HB_SIZE nLen)
 static void hb_itemHexStr(PHB_ITEM pItem, char *pStr, HB_BOOL fUpper)
 {
   HB_MAXUINT nValue, nTmp;
-  int iLen;
+  int32_t iLen;
 
   nValue = nTmp = hb_itemGetNInt(pItem);
 
@@ -88,12 +88,12 @@ static void hb_itemHexStr(PHB_ITEM pItem, char *pStr, HB_BOOL fUpper)
   } while (iLen);
 }
 
-PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PHB_ITEM *pItemArray)
+PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int32_t iCount, PHB_ITEM *pItemArray)
 {
   BUFFERTYPE buffer;
   PHB_ITEM pItem;
   const char *pFmtEnd, *pFmtSave;
-  int i, iParam, iParamNo, iWidth, iDec;
+  int32_t i, iParam, iParamNo, iWidth, iDec;
   HB_BOOL fLeftAlign, fForceSign, fPadZero, fSpaceSign, fSign;
 
   auto pFmt = hb_itemGetCPtr(pItemFormat);
@@ -208,7 +208,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
     case 'X': {
       char *pStr = nullptr;
       const char *pStr2;
-      int iSize, iExtra;
+      int32_t iSize, iExtra;
 
       fSign = 0;
       if (pItem && pItem->isNumeric()) {
@@ -321,7 +321,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
     case 'f': {
       char *pStr = nullptr;
       const char *pStr2;
-      int iSize, iExtra, iD;
+      int32_t iSize, iExtra, iD;
 
       if (pItem && pItem->isNumeric()) {
         hb_itemGetNLen(pItem, &iSize, &iD);

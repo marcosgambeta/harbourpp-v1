@@ -97,7 +97,7 @@ static char **hb_buildArgs(const char *pszFileName)
 {
   const char *src;
   char *dst, cQuote = 0, *pszFree = nullptr;
-  int argc = 0;
+  int32_t argc = 0;
 
   while (HB_ISSPACE(*pszFileName)) {
     ++pszFileName;
@@ -193,17 +193,17 @@ static void hb_freeArgs(char **argv)
 #endif
 
 #if defined(HB_PROCESS_USEFILES)
-static int hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr)
+static int32_t hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast<void*>(static_cast<uintptr_t>(hStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hStderr))));
 #endif
 
-  int iResult = FS_ERROR;
+  int32_t iResult = FS_ERROR;
 
 #if defined(HB_OS_WIN) || defined(HB_OS_UNIX)
   {
-    int iStdIn, iStdOut, iStdErr;
+    int32_t iStdIn, iStdOut, iStdErr;
 
     char **argv = hb_buildArgs(pszFileName);
 
@@ -229,7 +229,7 @@ static int hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHAND
       if (pid == 0) {
         /* close all non std* handles */
         {
-          int iMaxFD;
+          int32_t iMaxFD;
           iMaxFD = sysconf(_SC_OPEN_MAX);
           if (iMaxFD < 3) {
             iMaxFD = 1024;
@@ -246,7 +246,7 @@ static int hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHAND
         execvp(argv[0], argv);
         _exit(EXIT_FAILURE);
       } else if (pid != -1) {
-        int iStatus;
+        int32_t iStatus;
         HB_FAILURE_RETRY(iResult, waitpid(pid, &iStatus, 0));
 #ifdef ERESTARTSYS
         if (iResult < 0 && errno != ERESTARTSYS)
@@ -293,7 +293,7 @@ static int hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHAND
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int32_t iTODO; /* TODO: for given platform */
 
     HB_SYMBOL_UNUSED(pszFileName);
     HB_SYMBOL_UNUSED(hStdin);
@@ -464,7 +464,7 @@ HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHA
 
       /* close all non std* handles */
       {
-        int iMaxFD;
+        int32_t iMaxFD;
         iMaxFD = sysconf(_SC_OPEN_MAX);
         if (iMaxFD < 3) {
           iMaxFD = 1024;
@@ -492,9 +492,9 @@ HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHA
 
 #elif defined(HB_OS_WIN)
 
-    int hStdIn, hStdOut, hStdErr;
+    int32_t hStdIn, hStdOut, hStdErr;
     char **argv;
-    int pid;
+    int32_t pid;
 
     hStdIn = dup(0);
     hStdOut = dup(1);
@@ -572,7 +572,7 @@ HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHA
     hb_fsSetIOError(!fError, 0);
 
 #else
-    int iTODO; /* TODO: for given platform */
+    int32_t iTODO; /* TODO: for given platform */
 
     HB_SYMBOL_UNUSED(pszFileName);
     HB_SYMBOL_UNUSED(fDetach);
@@ -606,13 +606,13 @@ HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHA
   return hResult;
 }
 
-int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
+int32_t hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessValue(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hProcess)), fWait));
 #endif
 
-  int iRetStatus = -1;
+  int32_t iRetStatus = -1;
 
 #if defined(HB_OS_WIN)
   {
@@ -638,7 +638,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
   }
 #elif defined(HB_OS_UNIX)
   {
-    int iStatus;
+    int32_t iStatus;
     auto pid = static_cast<pid_t>(hProcess);
 
     if (pid > 0) {
@@ -663,7 +663,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int32_t iTODO; /* TODO: for given platform */
 
     HB_SYMBOL_UNUSED(hProcess);
     HB_SYMBOL_UNUSED(fWait);
@@ -711,7 +711,7 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int32_t iTODO; /* TODO: for given platform */
 
     HB_SYMBOL_UNUSED(hProcess);
     HB_SYMBOL_UNUSED(fGentle);
@@ -723,7 +723,7 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
 
 #define HB_STD_BUFFER_SIZE 4096
 
-int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStdInLen, char **pStdOutPtr,
+int32_t hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStdInLen, char **pStdOutPtr,
                     HB_SIZE *pulStdOut, char **pStdErrPtr, HB_SIZE *pulStdErr, HB_BOOL fDetach)
 {
 #if 0
@@ -733,7 +733,7 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
   HB_FHANDLE hStdin, hStdout, hStderr, *phStdin, *phStdout, *phStderr;
   char *pOutBuf, *pErrBuf;
   HB_SIZE nOutSize, nErrSize, nOutBuf, nErrBuf;
-  int iResult;
+  int32_t iResult;
 
   nOutBuf = nErrBuf = nOutSize = nErrSize = 0;
   pOutBuf = pErrBuf = nullptr;
@@ -836,7 +836,7 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
 
       auto fFinished = false;
       auto fBlocked = false;
-      int iPipeCount = 0;
+      int32_t iPipeCount = 0;
 
       if (nStdInLen == 0 && hStdin != FS_ERROR) {
         hb_fsClose(hStdin);
@@ -964,7 +964,7 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
 #elif defined(HB_OS_WIN)
 
       HB_MAXINT nTimeOut = 0;
-      int iPipeCount = 0;
+      int32_t iPipeCount = 0;
 
       if (nStdInLen == 0 && hStdin != FS_ERROR) {
         hb_fsClose(hStdin);
@@ -1272,7 +1272,7 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
 
 #else
 
-      int iTODO;
+      int32_t iTODO;
 
       HB_SYMBOL_UNUSED(nStdInLen);
       HB_SYMBOL_UNUSED(nOutSize);

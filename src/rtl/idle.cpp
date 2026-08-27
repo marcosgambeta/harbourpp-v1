@@ -59,8 +59,8 @@ struct HB_IDLEDATA
 {
   HB_BOOL fCollectGarbage; /* flag to force GC activation in idle state */
   HB_BOOL fIamIdle;        /* flag to prevent recursive calls of hb_idleState() */
-  int iIdleTask;           /* current task to be executed */
-  int iIdleMaxTask;        /* number of tasks in the list */
+  int32_t iIdleTask;           /* current task to be executed */
+  int32_t iIdleMaxTask;        /* number of tasks in the list */
   PHB_ITEM *pIdleTasks;    /* list of background tasks */
 };
 
@@ -197,7 +197,7 @@ HB_FUNC(HB_IDLEDEL)
   auto pID = hb_parptr(1);
 
   if (pID && pIdleData && pIdleData->pIdleTasks) {
-    int iTask = 0;
+    int32_t iTask = 0;
 
     while (iTask < pIdleData->iIdleMaxTask) {
       PHB_ITEM pItem = pIdleData->pIdleTasks[iTask];

@@ -82,7 +82,7 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar
 
   auto hLog = hb_fopen(szFile, "a+");
   if (hLog) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
     hb_dateToday(&iYear, &iMonth, &iDay);
     char szTime[9];
     hb_dateTimeStr(szTime);
@@ -124,7 +124,7 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar
   }
 
   if (fStack && hb_stackTotalItems()) {
-    int iLevel = 0;
+    int32_t iLevel = 0;
     uint16_t uiLine;
     while (hb_procinfo(iLevel++, buffer, &uiLine, file)) {
       char msg[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32];

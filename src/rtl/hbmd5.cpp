@@ -127,7 +127,7 @@ static void hb_md5go(MD5_BUF *md5)
 {
   HB_U32 X[16], A[4];
   uint8_t *ptr;
-  int i;
+  int32_t i;
 
   /* copy accumulators first */
   memcpy(A, md5->accum, sizeof(A));
@@ -292,7 +292,7 @@ void hb_md5(const void *data, HB_SIZE nLen, char *digest)
 void hb_hmac_md5(const void *key, HB_SIZE nKeyLen, const void *message, HB_SIZE nMsgLen, char *digest)
 {
   char init_block[64];
-  int i;
+  int32_t i;
 
   memset(init_block, 0, sizeof(init_block));
   if (nKeyLen <= sizeof(init_block)) {
@@ -327,7 +327,7 @@ HB_BOOL hb_md5file(const char *pszFileName, char *digest)
   if (pFile != nullptr) {
     MD5_BUF md5;
     HB_SIZE n;
-    int i;
+    int32_t i;
     HB_FOFFSET flen = 0;
     uint8_t buf[128];
     auto readbuf = static_cast<uint8_t *>(hb_xgrab(MAX_FBUF));

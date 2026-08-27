@@ -55,14 +55,14 @@ static void hb_regfree(PHB_REGEX pRegEx)
   HB_SYMBOL_UNUSED(pRegEx);
 }
 
-static int hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
+static int32_t hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
 {
   HB_SYMBOL_UNUSED(pRegEx);
   HB_SYMBOL_UNUSED(szRegEx);
   return -1;
 }
 
-static int hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int iMatches, HB_REGMATCH *aMatches)
+static int32_t hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int32_t iMatches, HB_REGMATCH *aMatches)
 {
   HB_SYMBOL_UNUSED(pRegEx);
   HB_SYMBOL_UNUSED(szString);
@@ -96,7 +96,7 @@ HB_BOOL hb_regexIs(PHB_ITEM pItem)
   return hb_itemGetPtrGC(pItem, &s_gcRegexFuncs) != nullptr;
 }
 
-PHB_REGEX hb_regexCompile(const char *szRegEx, HB_SIZE nLen, int iFlags)
+PHB_REGEX hb_regexCompile(const char *szRegEx, HB_SIZE nLen, int32_t iFlags)
 {
   HB_SYMBOL_UNUSED(nLen);
 
@@ -113,7 +113,7 @@ PHB_REGEX hb_regexCompile(const char *szRegEx, HB_SIZE nLen, int iFlags)
   return pRegEx;
 }
 
-PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
+PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int32_t iFlags)
 {
   PHB_REGEX pRegEx = nullptr;
   HB_BOOL fArgError = true;

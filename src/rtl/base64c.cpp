@@ -92,7 +92,7 @@ HB_FUNC(HB_BASE64ENCODE)
     ADD_EOL();                                                                                                         \
   } while (false)
         static const char s_b64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-        int x, y;
+        int32_t x, y;
 
         x = *s++;
         ADD_CHAR(x >> 2);

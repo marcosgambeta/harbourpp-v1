@@ -206,13 +206,13 @@ static const HB_KEY_VALUE s_transKeyStd[] = {
     {K_CTRL_BS, K_ALT_BS, K_CTRL_BS, 0},        // 127
 };
 
-int hb_inkey(HB_BOOL fWait, double dSeconds, int iEventMask)
+int32_t hb_inkey(HB_BOOL fWait, double dSeconds, int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkey(%d, %f, %d)", static_cast<int32_t>(fWait), dSeconds, iEventMask));
 #endif
 
-  int iKey = 0;
+  int32_t iKey = 0;
   PHB_GT pGT;
 
   pGT = hb_gt_Base();
@@ -223,7 +223,7 @@ int hb_inkey(HB_BOOL fWait, double dSeconds, int iEventMask)
   return iKey;
 }
 
-void hb_inkeyPut(int iKey)
+void hb_inkeyPut(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyPut(%d)", iKey));
@@ -238,7 +238,7 @@ void hb_inkeyPut(int iKey)
   }
 }
 
-void hb_inkeyIns(int iKey)
+void hb_inkeyIns(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyIns(%d)", iKey));
@@ -253,13 +253,13 @@ void hb_inkeyIns(int iKey)
   }
 }
 
-int hb_inkeyLast(int iEventMask)
+int32_t hb_inkeyLast(int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyLast(%d)", iEventMask));
 #endif
 
-  int iKey = 0;
+  int32_t iKey = 0;
   PHB_GT pGT;
 
   pGT = hb_gt_Base();
@@ -270,13 +270,13 @@ int hb_inkeyLast(int iEventMask)
   return iKey;
 }
 
-int hb_inkeyNext(int iEventMask)
+int32_t hb_inkeyNext(int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyNext(%d)", iEventMask));
 #endif
 
-  int iKey = 0;
+  int32_t iKey = 0;
   PHB_GT pGT;
 
   pGT = hb_gt_Base();
@@ -302,13 +302,13 @@ void hb_inkeyPoll(void)
   }
 }
 
-int hb_inkeySetLast(int iKey)
+int32_t hb_inkeySetLast(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeySetLast(%d)", iKey));
 #endif
 
-  int iLast = 0;
+  int32_t iLast = 0;
   PHB_GT pGT;
 
   pGT = hb_gt_Base();
@@ -349,7 +349,7 @@ void hb_inkeyReset(void)
   }
 }
 
-static int s_inkeyTransChar(int iKey, int iFlags, const HB_KEY_VALUE *pKeyVal)
+static int32_t s_inkeyTransChar(int32_t iKey, int32_t iFlags, const HB_KEY_VALUE *pKeyVal)
 {
   if ((iFlags & HB_KF_KEYPAD) != 0 && (iFlags & (HB_KF_ALT | HB_KF_CTRL)) != 0) {
     switch (iKey) {
@@ -400,7 +400,7 @@ static int s_inkeyTransChar(int iKey, int iFlags, const HB_KEY_VALUE *pKeyVal)
   }
 }
 
-HB_SIZE hb_inkeyKeyString(int iKey, char *buffer, HB_SIZE nSize)
+HB_SIZE hb_inkeyKeyString(int32_t iKey, char *buffer, HB_SIZE nSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast<void*>(buffer), nSize));
@@ -414,7 +414,7 @@ HB_SIZE hb_inkeyKeyString(int iKey, char *buffer, HB_SIZE nSize)
     if (HB_INKEY_ISCHAR(iKey)) {
       iKey = HB_INKEY_VALUE(iKey);
     } else if (HB_INKEY_ISKEY(iKey)) {
-      int iFlags = HB_INKEY_FLAGS(iKey);
+      int32_t iFlags = HB_INKEY_FLAGS(iKey);
 
       iKey = HB_INKEY_VALUE(iKey);
 
@@ -432,14 +432,14 @@ HB_SIZE hb_inkeyKeyString(int iKey, char *buffer, HB_SIZE nSize)
   return nLen;
 }
 
-int hb_inkeyKeyStd(int iKey)
+int32_t hb_inkeyKeyStd(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyStd(%d)", iKey));
 #endif
 
   if (HB_INKEY_ISEXT(iKey)) {
-    int iFlags = HB_INKEY_FLAGS(iKey);
+    int32_t iFlags = HB_INKEY_FLAGS(iKey);
 
     if (HB_INKEY_ISMOUSEPOS(iKey)) {
       iKey = K_MOUSEMOVE;
@@ -452,7 +452,7 @@ int hb_inkeyKeyStd(int iKey)
         iKey = s_inkeyTransChar(iKey, iFlags, &s_transKeyStd[iKey - 32]);
       }
     } else if (HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE(iKey)) {
-      int iVal = HB_INKEY_VALUE(iKey);
+      int32_t iVal = HB_INKEY_VALUE(iKey);
 
       if (iVal >= 32 && iVal <= 127 && (iFlags & (HB_KF_ALT | HB_KF_CTRL)) != 0) {
         iKey = s_inkeyTransChar(iVal, iFlags, &s_transKeyStd[iVal - 32]);
@@ -476,13 +476,13 @@ int hb_inkeyKeyStd(int iKey)
   return iKey;
 }
 
-int hb_inkeyKeyMod(int iKey)
+int32_t hb_inkeyKeyMod(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyMod(%d)", iKey));
 #endif
 
-  int iFlags = 0;
+  int32_t iFlags = 0;
 
   if (HB_INKEY_ISEXT(iKey) && !HB_INKEY_ISMOUSEPOS(iKey)) {
     iFlags = HB_INKEY_FLAGS(iKey);
@@ -491,13 +491,13 @@ int hb_inkeyKeyMod(int iKey)
   return iFlags;
 }
 
-int hb_inkeyKeyVal(int iKey)
+int32_t hb_inkeyKeyVal(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyVal(%d)", iKey));
 #endif
 
-  int iValue = 0;
+  int32_t iValue = 0;
 
   if (HB_INKEY_ISEXT(iKey) && !HB_INKEY_ISMOUSEPOS(iKey)) {
     iValue = HB_INKEY_VALUE(iKey);
@@ -506,13 +506,13 @@ int hb_inkeyKeyVal(int iKey)
   return iValue;
 }
 
-int hb_inkeyKeyExt(int iKey)
+int32_t hb_inkeyKeyExt(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyVal(%d)", iKey));
 #endif
 
-  int iValue = 0;
+  int32_t iValue = 0;
 
   if (HB_INKEY_ISKEY(iKey)) {
     iValue = HB_INKEY_VALUE(iKey);

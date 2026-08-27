@@ -55,7 +55,7 @@
 //       to update the references in the compiler as well.
 //       [vszakats]
 
-static bool hb_numParam(int iParam, HB_MAXINT *plNum)
+static bool hb_numParam(int32_t iParam, HB_MAXINT *plNum)
 {
   if (HB_ISNUM(iParam)) {
     *plNum = hb_parnint(iParam);
@@ -71,7 +71,7 @@ HB_FUNC(HB_BITAND)
   HB_MAXINT lValue;
 
   if (hb_numParam(1, &lValue)) {
-    int iPCount = hb_pcount() - 1, i = 1;
+    int32_t iPCount = hb_pcount() - 1, i = 1;
     do {
       HB_MAXINT lNext;
       if (!hb_numParam(++i, &lNext)) {
@@ -88,7 +88,7 @@ HB_FUNC(HB_BITOR)
   HB_MAXINT lValue;
 
   if (hb_numParam(1, &lValue)) {
-    int iPCount = hb_pcount() - 1, i = 1;
+    int32_t iPCount = hb_pcount() - 1, i = 1;
     do {
       HB_MAXINT lNext;
       if (!hb_numParam(++i, &lNext)) {
@@ -105,7 +105,7 @@ HB_FUNC(HB_BITXOR)
   HB_MAXINT lValue;
 
   if (hb_numParam(1, &lValue)) {
-    int iPCount = hb_pcount() - 1, i = 1;
+    int32_t iPCount = hb_pcount() - 1, i = 1;
     do {
       HB_MAXINT lNext;
       if (!hb_numParam(++i, &lNext)) {

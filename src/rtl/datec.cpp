@@ -58,7 +58,7 @@ static const char s_nullStr[4] = {0};
 #define s_nullStr ""
 #endif
 
-const char *hb_dateCMonth(int iMonth)
+const char *hb_dateCMonth(int32_t iMonth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateCMonth(%d)", iMonth));
@@ -67,7 +67,7 @@ const char *hb_dateCMonth(int iMonth)
   return (iMonth >= 1 && iMonth <= 12) ? hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1) : s_nullStr;
 }
 
-const char *hb_dateCDOW(int iDay)
+const char *hb_dateCDOW(int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateCDOW(%d)", iDay));
@@ -81,7 +81,7 @@ HB_FUNC(CMONTH)
   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
   if (pDate) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
 
     hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retc_const(hb_dateCMonth(iMonth));
@@ -98,7 +98,7 @@ HB_FUNC(CDOW)
     long lDate = pDate->getDL();
 
     if (lDate) {
-      int iYear, iMonth, iDay;
+      int32_t iYear, iMonth, iDay;
 
       hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
       hb_retc_const(hb_dateCDOW(hb_dateDOW(iYear, iMonth, iDay)));

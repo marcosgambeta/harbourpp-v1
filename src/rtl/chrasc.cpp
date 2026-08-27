@@ -86,7 +86,7 @@ HB_FUNC(ASC)
   auto szValue = hb_parc(1);
 
   if (szValue != nullptr) {
-    int iChar;
+    int32_t iChar;
     auto cdp = hb_vmCDP();
     if (HB_CDP_ISCHARUNI(cdp)) {
       iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));

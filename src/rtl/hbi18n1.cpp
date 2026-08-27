@@ -112,7 +112,7 @@
 struct _HB_PLURAL_FORMS
 {
   const char *szLangID;
-  int iForm;
+  int32_t iForm;
 };
 
 using HB_PLURAL_FORMS = _HB_PLURAL_FORMS;
@@ -138,8 +138,8 @@ struct _HB_I18N_TRANS
   PHB_ITEM default_context;
   PHB_ITEM plural_block;
   PHB_ITEM base_plural_block;
-  int plural_form;
-  int base_plural_form;
+  int32_t plural_form;
+  int32_t base_plural_form;
 };
 
 using HB_I18N_TRANS = _HB_I18N_TRANS;
@@ -150,7 +150,7 @@ static PHB_I18N_TRANS hb_i18n_table(void)
   return static_cast<PHB_I18N_TRANS>(hb_vmI18N());
 }
 
-static int hb_i18n_pluralformfind(const char *szLang)
+static int32_t hb_i18n_pluralformfind(const char *szLang)
 {
   for (auto i = 0; i < static_cast<int32_t>(HB_PLURAL_FOMRS_COUNT); ++i) {
     if (hb_stricmp(szLang, s_plural_forms[i].szLangID) == 0) {
@@ -167,7 +167,7 @@ static int hb_i18n_pluralformfind(const char *szLang)
   return 0;
 }
 
-static const char *hb_i18n_pluralformid(int iForm)
+static const char *hb_i18n_pluralformid(int32_t iForm)
 {
   for (auto i = 0; i < static_cast<int32_t>(HB_PLURAL_FOMRS_COUNT); ++i) {
     if (s_plural_forms[i].iForm == iForm) {
@@ -181,7 +181,7 @@ static const char *hb_i18n_pluralformid(int iForm)
 //       https://www.gnu.org/software/hello/manual/gettext/Plural-forms.html
 //       [vszakats]
 
-static long hb_i18n_pluralindex(int iForm, PHB_ITEM pNum)
+static long hb_i18n_pluralindex(int32_t iForm, PHB_ITEM pNum)
 {
   double n = hb_numRound(hb_itemGetND(pNum), 10), n10, n100;
 
@@ -484,7 +484,7 @@ static HB_GARBAGE_FUNC(hb_i18n_destructor)
 
 static const HB_GC_FUNCS s_gcI18NFuncs = {hb_i18n_destructor, hb_gcDummyMark};
 
-static PHB_I18N_TRANS hb_i18n_param(int *piParam, bool fActive)
+static PHB_I18N_TRANS hb_i18n_param(int32_t *piParam, bool fActive)
 {
   auto pI18NHolder = static_cast<PHB_I18N_TRANS *>(hb_parptrGC(&s_gcI18NFuncs, *piParam));
 
@@ -516,7 +516,7 @@ static bool hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, bool 
   if (pI18N) {
     if (pOldForm) {
       PHB_ITEM pBlock;
-      int iForm;
+      int32_t iForm;
 
       if (fBase) {
         pBlock = pI18N->base_plural_block;
@@ -560,7 +560,7 @@ static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBa
       }
       fResult = true;
     } else if (pForm->isString()) {
-      int iForm = hb_i18n_pluralformfind(pForm->getCPtr());
+      int32_t iForm = hb_i18n_pluralformfind(pForm->getCPtr());
       if (iForm) {
         const char *szKey;
         if (fBase) {
@@ -744,7 +744,7 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
   HB_CODEPAGE *cdpage = nullptr;
   PHB_ITEM pMsgDst = pMsgID;
   PHB_ITEM pBlock = nullptr;
-  int iPluralForm = 0;
+  int32_t iPluralForm = 0;
 
   if (pI18N) {
     PHB_ITEM pTable = pContext && pI18N->context_table ? hb_hashGetItemPtr(pI18N->context_table, pContext, 0)
@@ -856,7 +856,7 @@ HB_FUNC(HB_I18N_CREATE)
 
 HB_FUNC(HB_I18N_CODEPAGE)
 {
-  int iParam = 1;
+  int32_t iParam = 1;
 
   PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
 
@@ -869,7 +869,7 @@ HB_FUNC(HB_I18N_CODEPAGE)
 
 HB_FUNC(HB_I18N_PLURALFORM)
 {
-  int iParam = 1;
+  int32_t iParam = 1;
 
   PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
   if (pI18N) {
@@ -891,7 +891,7 @@ HB_FUNC(HB_I18N_PLURALFORM)
 
 HB_FUNC(HB_I18N_DESCRIPTION)
 {
-  int iParam = 1;
+  int32_t iParam = 1;
 
   PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
   if (pI18N) {
@@ -907,7 +907,7 @@ HB_FUNC(HB_I18N_DESCRIPTION)
 
 HB_FUNC(HB_I18N_ADDTEXT)
 {
-  int iParam = 1;
+  int32_t iParam = 1;
 
   PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, false);
   if (pI18N) {
@@ -946,7 +946,7 @@ HB_FUNC(HB_I18N_SET)
     if (HB_ISNIL(1)) {
       hb_vmSetI18N(nullptr);
     } else {
-      int iParam = 1;
+      int32_t iParam = 1;
       PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, false);
       if (pI18N) {
         hb_vmSetI18N(hb_i18n_alloc(pI18N));
@@ -961,7 +961,7 @@ HB_FUNC(HB_I18N_SET)
 
 HB_FUNC(HB_I18N_SAVETABLE)
 {
-  int iParam = 1;
+  int32_t iParam = 1;
 
   PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
   if (pI18N) {
@@ -1006,7 +1006,7 @@ HB_FUNC(__I18N_HASHTABLE)
       hb_itemRelease(pTable);
     }
   } else {
-    int iParam = 1;
+    int32_t iParam = 1;
 
     pI18N = hb_i18n_param(&iParam, true);
     if (pI18N) {

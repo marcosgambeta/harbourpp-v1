@@ -53,7 +53,7 @@
 #include "hbinit.hpp"
 
 #if defined(HB_HAS_PCRE)
-static int s_iUTF8Enabled;
+static int32_t s_iUTF8Enabled;
 #endif
 
 static void hb_regfree(PHB_REGEX pRegEx)
@@ -67,13 +67,13 @@ static void hb_regfree(PHB_REGEX pRegEx)
 #endif
 }
 
-static int hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
+static int32_t hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
 {
 #if defined(HB_HAS_PCRE)
   const unsigned char *pCharTable = nullptr;
   const char *szError = nullptr;
-  int iErrOffset = 0;
-  int iCFlags = ((pRegEx->iFlags & HBREG_ICASE) ? PCRE_CASELESS : 0) |
+  int32_t iErrOffset = 0;
+  int32_t iCFlags = ((pRegEx->iFlags & HBREG_ICASE) ? PCRE_CASELESS : 0) |
                 ((pRegEx->iFlags & HBREG_NEWLINE) ? PCRE_MULTILINE : 0) |
                 ((pRegEx->iFlags & HBREG_DOTALL) ? PCRE_DOTALL : 0);
 
@@ -88,7 +88,7 @@ static int hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
   pRegEx->re_pcre = pcre_compile(szRegEx, iCFlags, &szError, &iErrOffset, pCharTable);
   return pRegEx->re_pcre ? 0 : -1;
 #elif defined(HB_POSIX_REGEX)
-  int iCFlags = REG_EXTENDED | ((pRegEx->iFlags & HBREG_ICASE) ? REG_ICASE : 0) |
+  int32_t iCFlags = REG_EXTENDED | ((pRegEx->iFlags & HBREG_ICASE) ? REG_ICASE : 0) |
                 ((pRegEx->iFlags & HBREG_NEWLINE) ? REG_NEWLINE : 0) | ((pRegEx->iFlags & HBREG_NOSUB) ? REG_NOSUB : 0);
   pRegEx->iEFlags =
       ((pRegEx->iFlags & HBREG_NOTBOL) ? REG_NOTBOL : 0) | ((pRegEx->iFlags & HBREG_NOTEOL) ? REG_NOTEOL : 0);
@@ -100,10 +100,10 @@ static int hb_regcomp(PHB_REGEX pRegEx, const char *szRegEx)
 #endif
 }
 
-static int hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int iMatches, HB_REGMATCH *aMatches)
+static int32_t hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int32_t iMatches, HB_REGMATCH *aMatches)
 {
 #if defined(HB_HAS_PCRE)
-  int iResult = pcre_exec(pRegEx->re_pcre, nullptr /* pcre_extra */, szString, static_cast<int32_t>(nLen),
+  int32_t iResult = pcre_exec(pRegEx->re_pcre, nullptr /* pcre_extra */, szString, static_cast<int32_t>(nLen),
                           0 /* startoffset */, pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE(iMatches));
   if (iResult == 0) {
     for (auto i = 0; i < iMatches; i++) {
@@ -123,7 +123,7 @@ static int hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int 
   for (auto i = 0; i < iMatches; i++) {
     HB_REGMATCH_EO(aMatches, i) = HB_REGMATCH_UNSET;
   }
-  int iResult = regexec(&pRegEx->reg, szString, iMatches, aMatches, pRegEx->iEFlags);
+  int32_t iResult = regexec(&pRegEx->reg, szString, iMatches, aMatches, pRegEx->iEFlags);
   if (iResult == 0) {
     for (auto i = 0; i < iMatches; i++) {
       if (HB_REGMATCH_EO(aMatches, i) != HB_REGMATCH_UNSET) {
@@ -154,7 +154,7 @@ HB_FUNC(HB_REGEXCOMP)
   if (nLen == 0) {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   } else {
-    int iFlags = HBREG_EXTENDED;
+    int32_t iFlags = HBREG_EXTENDED;
 
     if (!hb_parldef(2, true)) {
       iFlags |= HBREG_ICASE;
@@ -224,11 +224,11 @@ HB_FUNC(HB_ATX)
   }
 }
 
-static bool hb_regex(int iRequest)
+static bool hb_regex(int32_t iRequest)
 {
   HB_REGMATCH aMatches[HB_REGMATCH_SIZE(REGEX_MAX_GROUPS)];
   PHB_ITEM pRetArray, pMatch;
-  int i;
+  int32_t i;
   auto fResult = false;
 
   auto pString = hb_param(2, Harbour::Item::STRING);
@@ -244,8 +244,8 @@ static bool hb_regex(int iRequest)
 
   auto pszString = pString->getCPtr();
   auto nLen = pString->getCLen();
-  int iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
-  int iMatches = hb_regexec(pRegEx, pszString, nLen, iMaxMatch, aMatches);
+  int32_t iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
+  int32_t iMatches = hb_regexec(pRegEx, pszString, nLen, iMaxMatch, aMatches);
   if (iMatches > 0) {
     switch (iRequest) {
     case 0:
@@ -301,7 +301,7 @@ static bool hb_regex(int iRequest)
       pRetArray = hb_itemArrayNew(iMatches);
 
       for (i = 0; i < iMatches; i++) {
-        int iSO = HB_REGMATCH_SO(aMatches, i), iEO = HB_REGMATCH_EO(aMatches, i);
+        int32_t iSO = HB_REGMATCH_SO(aMatches, i), iEO = HB_REGMATCH_EO(aMatches, i);
         pMatch = hb_arrayGetItemPtr(pRetArray, i + 1);
         hb_arrayNew(pMatch, 3);
         if (iEO != -1) {
@@ -327,8 +327,8 @@ static bool hb_regex(int iRequest)
       auto iGetMatch = hb_parni(6);          /* Gets if want only one single match or a sub-match */
       bool fOnlyMatch = hb_parldef(7, true); /* if true returns only matches and sub-matches, not positions */
       HB_SIZE nOffset = 0;
-      int iCount = 0;
-      int iSO, iEO;
+      int32_t iCount = 0;
+      int32_t iSO, iEO;
 
       /* Set new array */
       pRetArray = hb_itemArrayNew(0);

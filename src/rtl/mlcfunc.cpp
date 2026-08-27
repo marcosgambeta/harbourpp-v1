@@ -68,7 +68,7 @@ struct HB_MLC_INFO
   HB_SIZE nLineLength;
   HB_SIZE nTabSize;
   bool fWordWrap;
-  int iEOLs;
+  int32_t iEOLs;
   PHB_EOL_INFO pEOLs;
   HB_CODEPAGE *cdp;
 
@@ -82,9 +82,9 @@ struct HB_MLC_INFO
 
 using PHB_MLC_INFO = HB_MLC_INFO *;
 
-static void hb_mlGetEOLs(PHB_MLC_INFO pMLC, int iParam)
+static void hb_mlGetEOLs(PHB_MLC_INFO pMLC, int32_t iParam)
 {
-  int iEOLs = 0;
+  int32_t iEOLs = 0;
   HB_SIZE nLen;
 
   pMLC->pEOLs = pMLC->EOL_buffer;
@@ -142,7 +142,7 @@ static void hb_mlGetEOLs(PHB_MLC_INFO pMLC, int iParam)
   pMLC->iEOLs = iEOLs;
 }
 
-static bool hb_mlInit(PHB_MLC_INFO pMLC, int iParAdd)
+static bool hb_mlInit(PHB_MLC_INFO pMLC, int32_t iParAdd)
 {
   HB_ISIZ nSize = hb_parnsdef(2, 79);
 
@@ -187,7 +187,7 @@ static void hb_mlExit(PHB_MLC_INFO pMLC)
   }
 }
 
-static int hb_mlEol(PHB_MLC_INFO pMLC)
+static int32_t hb_mlEol(PHB_MLC_INFO pMLC)
 {
   const char *pszString = pMLC->pszString + pMLC->nOffset;
   HB_SIZE nLen = pMLC->nLen - pMLC->nOffset;
@@ -205,7 +205,7 @@ static int hb_mlEol(PHB_MLC_INFO pMLC)
 static HB_SIZE hb_mlGetLine(PHB_MLC_INFO pMLC)
 {
   HB_SIZE nBlankCol = 0, nBlankPos = 0, nLastCol = 0, nLastPos;
-  int i;
+  int32_t i;
 
   pMLC->nCol = 0;
 

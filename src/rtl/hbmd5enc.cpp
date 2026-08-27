@@ -50,12 +50,12 @@
 #include "hbapiitm.hpp"
 #include "hbchksum.h"
 
-static void hb_md5_init_seed(char *vect, const char *pszKey, int iLen)
+static void hb_md5_init_seed(char *vect, const char *pszKey, int32_t iLen)
 {
   hb_md5(pszKey, iLen, vect);
 }
 
-static void hb_md5_next_seed(char *vect, const char *pszKey, int iLen)
+static void hb_md5_next_seed(char *vect, const char *pszKey, int32_t iLen)
 {
   for (auto i = 0; i < 16; ++i) {
     vect[i] ^= pszKey[i % iLen];

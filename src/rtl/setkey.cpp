@@ -57,7 +57,7 @@
 
 struct HB_SETKEY_
 {
-  int iKeyCode;
+  int32_t iKeyCode;
   PHB_ITEM pAction;
   PHB_ITEM pIsActive;
   struct HB_SETKEY_ *next;
@@ -93,7 +93,7 @@ static void hb_setkeyRelease(void *cargo)
 
 static HB_TSD_NEW(s_skData, sizeof(HB_SK_DATA), nullptr, hb_setkeyRelease);
 
-static bool sk_testActive(PHB_ITEM pIsActive, int iKeyCode)
+static bool sk_testActive(PHB_ITEM pIsActive, int32_t iKeyCode)
 {
   if (pIsActive) {
     hb_vmPushEvalSym();
@@ -105,7 +105,7 @@ static bool sk_testActive(PHB_ITEM pIsActive, int iKeyCode)
   return true;
 }
 
-static PHB_SETKEY sk_findkey(int iKeyCode, PHB_SETKEY sk_list, PHB_SETKEY *sk_list_end)
+static PHB_SETKEY sk_findkey(int32_t iKeyCode, PHB_SETKEY sk_list, PHB_SETKEY *sk_list_end)
 {
   PHB_SETKEY sk_list_tmp;
 
@@ -117,7 +117,7 @@ static PHB_SETKEY sk_findkey(int iKeyCode, PHB_SETKEY sk_list, PHB_SETKEY *sk_li
   return sk_list_tmp;
 }
 
-static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB_ITEM pAction, PHB_ITEM pIsActive)
+static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int32_t iKeyCode, PHB_ITEM pAction, PHB_ITEM pIsActive)
 {
   if (iKeyCode) {
     PHB_SETKEY sk_list_tmp, sk_list_end;
@@ -216,7 +216,7 @@ HB_FUNC(HB_SETKEY)
       // sk_list_end is not used in this context
       sk_list_tmp = sk_findkey(iKeyCode, sk_data->sk_list, &sk_list_end);
       if (sk_list_tmp == nullptr) {
-        int iKeyStd = hb_inkeyKeyStd(iKeyCode);
+        int32_t iKeyStd = hb_inkeyKeyStd(iKeyCode);
 
         if (iKeyStd != iKeyCode) {
           sk_list_tmp = sk_findkey(iKeyStd, sk_data->sk_list, &sk_list_end);
@@ -334,7 +334,7 @@ HB_FUNC(HB_SETKEYCHECK)
     // sk_list_end is not used in this context
     sk_list_tmp = sk_findkey(iKeyCode, sk_data->sk_list, &sk_list_end);
     if (sk_list_tmp == nullptr) {
-      int iKeyStd = hb_inkeyKeyStd(iKeyCode);
+      int32_t iKeyStd = hb_inkeyKeyStd(iKeyCode);
 
       if (iKeyStd != iKeyCode) {
         sk_list_tmp = sk_findkey(iKeyStd, sk_data->sk_list, &sk_list_end);

@@ -55,7 +55,7 @@ static HB_SIZE s_zlibCompressBound(HB_SIZE nLen)
   return 0;
 }
 
-static HB_SIZE s_zlibUncompressedSize(const char *pSrc, HB_SIZE nLen, int *piResult)
+static HB_SIZE s_zlibUncompressedSize(const char *pSrc, HB_SIZE nLen, int32_t *piResult)
 {
   HB_SYMBOL_UNUSED(pSrc);
   HB_SYMBOL_UNUSED(nLen);
@@ -63,7 +63,7 @@ static HB_SIZE s_zlibUncompressedSize(const char *pSrc, HB_SIZE nLen, int *piRes
   return 0;
 }
 
-static int s_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen, int iLevel)
+static int32_t s_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen, int32_t iLevel)
 {
   HB_SYMBOL_UNUSED(pDst);
   HB_SYMBOL_UNUSED(pnDst);
@@ -74,7 +74,7 @@ static int s_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE 
   return HB_ZLIB_RES_UNSUPPORTED;
 }
 
-static int s_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen)
+static int32_t s_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen)
 {
   HB_SYMBOL_UNUSED(pDst);
   HB_SYMBOL_UNUSED(pnDst);
@@ -102,17 +102,17 @@ HB_SIZE hb_zlibCompressBound(HB_SIZE nLen)
   return s_compressBound(nLen);
 }
 
-HB_SIZE hb_zlibUncompressedSize(const char *pSrc, HB_SIZE nLen, int *piResult)
+HB_SIZE hb_zlibUncompressedSize(const char *pSrc, HB_SIZE nLen, int32_t *piResult)
 {
   return s_uncompressedSize(pSrc, nLen, piResult);
 }
 
-int hb_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen, int iLevel)
+int32_t hb_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen, int32_t iLevel)
 {
   return s_compress(pDst, pnDst, pSrc, nLen, iLevel);
 }
 
-int hb_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen)
+int32_t hb_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nLen)
 {
   return s_uncompress(pDst, pnDst, pSrc, nLen);
 }

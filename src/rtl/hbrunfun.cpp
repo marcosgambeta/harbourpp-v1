@@ -61,7 +61,7 @@ HB_FUNC(HB_RUN)
   auto pszCommand = hb_parc(1);
 
   if (pszCommand) {
-    int iResult = -1;
+    int32_t iResult = -1;
 
     if (hb_gtSuspend() == Harbour::SUCCESS) {
 #if defined(HB_OS_WIN)

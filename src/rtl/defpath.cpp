@@ -52,7 +52,7 @@ HB_FUNC(__DEFPATH)
 {
   char buffer[HB_PATH_MAX - 1 + 2];
   const char *szDefault = hb_setGetDefault();
-  int size = 0;
+  int32_t size = 0;
 
   if (szDefault != nullptr) {
     // Leave enough space to append a path delimiter

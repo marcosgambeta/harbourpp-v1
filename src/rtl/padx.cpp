@@ -77,7 +77,7 @@ static const char *s_hb_padGet(HB_CODEPAGE *cdp, HB_SIZE *pnPad)
 #define HB_PAD_R 1
 #define HB_PAD_C 2
 
-static void s_hb_strPad(int iMode, HB_CODEPAGE *cdp)
+static void s_hb_strPad(int32_t iMode, HB_CODEPAGE *cdp)
 {
   HB_ISIZ nLen = hb_parns(2);
 

@@ -60,7 +60,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
   // NOTE: szFormattedDate must point to a buffer of at least 11 bytes.
   //       szDateFormat must point to a buffer holding the date format to use.
 
-  int format_count, digit_count;
+  int32_t format_count, digit_count;
 
   // Determine the maximum size of the formatted date string
   auto size = static_cast<int32_t>(strlen(szDateFormat));
@@ -76,7 +76,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
     const char *szPtr = szDateFormat;
 
     while (format_count < size) {
-      int digit = HB_TOUPPER(static_cast<uint8_t>(*szPtr));
+      int32_t digit = HB_TOUPPER(static_cast<uint8_t>(*szPtr));
       szPtr++;
       digit_count = 1;
       while (HB_TOUPPER(static_cast<uint8_t>(*szPtr)) == digit && format_count < size) {
@@ -223,18 +223,18 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
   return szFormattedDate;
 }
 
-static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long *plDate)
+static int32_t hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long *plDate)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateUnformatRaw(%s, %s, %p)", szDate, szDateFormat, static_cast<void*>(plDate)));
 #endif
 
-  int d_value = 0, m_value = 0, y_value = 0;
-  int iSize = 0;
+  int32_t d_value = 0, m_value = 0, y_value = 0;
+  int32_t iSize = 0;
 
   if (szDate != nullptr) {
-    int d_pos = 0, m_pos = 0, y_pos = 0;
-    int count, digit, non_digit, used;
+    int32_t d_pos = 0, m_pos = 0, y_pos = 0;
+    int32_t count, digit, non_digit, used;
 
     if (!szDateFormat) {
       szDateFormat = hb_setGetDateFormat();
@@ -352,10 +352,10 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_timeFormat(%p, %s, %ld)", static_cast<void*>(szBuffer), szTimeFormat, lMilliSec));
 #endif
 
-  int iPM, i12;
-  int i, value, digits, skip;
+  int32_t iPM, i12;
+  int32_t i, value, digits, skip;
 
-  int iHour, iMinutes, iSeconds, iMSec;
+  int32_t iHour, iMinutes, iSeconds, iMSec;
   hb_timeDecode(lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec);
   char *szTimeBuffer = szBuffer;
 
@@ -379,8 +379,8 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
 
   i = 0;
   while (i < size) {
-    int count = -i;
-    int ch = HB_TOUPPER(szTimeFormat[i]);
+    int32_t count = -i;
+    int32_t ch = HB_TOUPPER(szTimeFormat[i]);
     ++i;
     while (ch == HB_TOUPPER(szTimeFormat[i]) && i < size) {
       ++i;
@@ -490,8 +490,8 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
     return 0;
   }
 
-  int iHour, iMinutes, iSeconds, iMSec, iPM;
-  int i, count, *pValue;
+  int32_t iHour, iMinutes, iSeconds, iMSec, iPM;
+  int32_t i, count, *pValue;
 
   if (!szTimeFormat) {
     szTimeFormat = hb_setGetTimeFormat();
@@ -499,7 +499,7 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
 
   auto size = static_cast<int32_t>(hb_strnlen(szTime, hb_strnlen(szTimeFormat, 16)));
   iHour = iMinutes = iSeconds = iMSec = iPM = -1;
-  int prec = 0;
+  int32_t prec = 0;
   for (i = count = 0; i < size && szTime[count]; ++i) {
     switch (szTimeFormat[i]) {
     case 'H':
@@ -599,7 +599,7 @@ void hb_timeStampUnformat(const char *szDateTime, const char *szDateFormat, cons
     if (!szDateFormat) {
       szDateFormat = hb_setGetDateFormat();
     }
-    int size = hb_dateUnformatRaw(szDateTime, szDateFormat, plJulian);
+    int32_t size = hb_dateUnformatRaw(szDateTime, szDateFormat, plJulian);
     *plMilliSec = hb_timeUnformat(szDateTime + size, szTimeFormat);
   } else {
     *plJulian = *plMilliSec = 0;

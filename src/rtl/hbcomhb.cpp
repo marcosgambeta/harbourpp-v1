@@ -101,7 +101,7 @@ HB_FUNC(HB_COMFLOWCHARS)
 
 HB_FUNC(HB_COMFLOWCONTROL)
 {
-  int iValue = 0;
+  int32_t iValue = 0;
   hb_retl(hb_comFlowControl(hb_parni(1), &iValue, hb_parnidef(3, -1)) == 0);
   hb_storni(iValue, 2);
 }
@@ -165,21 +165,21 @@ HB_FUNC(HB_COMLASTNUM)
 
 HB_FUNC(HB_COMLSR)
 {
-  int iValue = 0;
+  int32_t iValue = 0;
   hb_retl(hb_comLSR(hb_parni(1), &iValue) == 0);
   hb_storni(iValue, 2);
 }
 
 HB_FUNC(HB_COMMCR)
 {
-  int iValue = 0;
+  int32_t iValue = 0;
   hb_retl(hb_comMCR(hb_parni(1), &iValue, hb_parni(3), hb_parni(4)) == 0);
   hb_storni(iValue, 2);
 }
 
 HB_FUNC(HB_COMMSR)
 {
-  int iValue = 0;
+  int32_t iValue = 0;
   hb_retl(hb_comMSR(hb_parni(1), &iValue) == 0);
   hb_storni(iValue, 2);
 }

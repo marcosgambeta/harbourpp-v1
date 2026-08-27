@@ -127,7 +127,7 @@ HB_FUNC(YEAR)
   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
   if (pDate) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
     hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retnilen(iYear, 5);
   } else {
@@ -140,7 +140,7 @@ HB_FUNC(MONTH)
   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
   if (pDate) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
     hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retnilen(iMonth, 3);
   } else {
@@ -153,7 +153,7 @@ HB_FUNC(DAY)
   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
   if (pDate) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
     hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retnilen(iDay, 3);
   } else {
@@ -181,7 +181,7 @@ HB_FUNC(TIME)
 
 HB_FUNC(DATE)
 {
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
   hb_dateToday(&iYear, &iMonth, &iDay);
   hb_retd(iYear, iMonth, iDay);
 }
@@ -189,7 +189,7 @@ HB_FUNC(DATE)
 HB_FUNC(HB_DATE)
 {
   if (hb_pcount() == 0) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
     hb_dateToday(&iYear, &iMonth, &iDay);
     hb_retd(iYear, iMonth, iDay);
   } else {
@@ -461,7 +461,7 @@ HB_FUNC(HB_HOUR)
   long lDate, lTime;
 
   if (hb_partdt(&lDate, &lTime, 1)) {
-    int iHour, iMinutes, iSeconds, iMSec;
+    int32_t iHour, iMinutes, iSeconds, iMSec;
     hb_timeDecode(lTime, &iHour, &iMinutes, &iSeconds, &iMSec);
     hb_retnilen(iHour, 3);
   } else {
@@ -474,7 +474,7 @@ HB_FUNC(HB_MINUTE)
   long lDate, lTime;
 
   if (hb_partdt(&lDate, &lTime, 1)) {
-    int iHour, iMinutes, iSeconds, iMSec;
+    int32_t iHour, iMinutes, iSeconds, iMSec;
     hb_timeDecode(lTime, &iHour, &iMinutes, &iSeconds, &iMSec);
     hb_retnilen(iMinutes, 3);
   } else {
@@ -487,7 +487,7 @@ HB_FUNC(HB_SEC)
   long lDate, lTime;
 
   if (hb_partdt(&lDate, &lTime, 1)) {
-    int iHour, iMinutes, iSeconds, iMSec;
+    int32_t iHour, iMinutes, iSeconds, iMSec;
     hb_timeDecode(lTime, &iHour, &iMinutes, &iSeconds, &iMSec);
     hb_retndlen(static_cast<double>(iSeconds * 1000 + iMSec) / 1000, 3, 3);
   } else {
@@ -511,7 +511,7 @@ HB_FUNC(HB_TSTOSTR)
           hb_retclen(szBuffer, 10);
         }
       } else {
-        int i = 23;
+        int32_t i = 23;
         while (szBuffer[i - 1] == '0') {
           --i;
         }
@@ -555,7 +555,7 @@ HB_FUNC(HB_WEEK)
   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
   if (pDate) {
-    int iYear, iWeek, iDay;
+    int32_t iYear, iWeek, iDay;
     hb_dateDecWeek(pDate->getDL(), &iYear, &iWeek, &iDay);
     hb_storni(iYear, 2);
     hb_storni(iDay, 3);
@@ -568,7 +568,7 @@ HB_FUNC(HB_WEEK)
 HB_FUNC(HB_UTCOFFSET)
 {
   if (HB_ISDATETIME(1)) {
-    int iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
+    int32_t iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
     hb_timeStampUnpack(hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec);
     hb_retnl(hb_timeStampUTCOffset(iYear, iMonth, iDay, iHour, iMinute, iSecond));
   } else {

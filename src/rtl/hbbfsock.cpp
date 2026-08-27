@@ -70,8 +70,8 @@ struct HB_SOCKEX_BF
   uint8_t decounter[HB_BF_CIPHERBLOCK];
   uint8_t buffer[HB_BFSOCK_WRBUFSIZE];
   long inbuffer;
-  int encoded;
-  int decoded;
+  int32_t encoded;
+  int32_t decoded;
 };
 
 using PHB_SOCKEX_BF = HB_SOCKEX_BF *;
@@ -195,12 +195,12 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
   return pBF->inbuffer + hb_sockexFlush(pBF->sock, timeout, fSync);
 }
 
-static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   return pSock->inbuffer > 0 ? 1 : hb_sockexCanRead(HB_BFSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
 
-static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   return hb_sockexCanWrite(HB_BFSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
@@ -219,15 +219,15 @@ static char *s_sockexName(PHB_SOCKEX pSock)
   return pszName;
 }
 
-static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
 {
   return hb_sockexErrorStr(HB_BFSOCK_GET(pSock)->sock, iError);
 }
 
-static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
+static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
-  int iResult = 0;
+  int32_t iResult = 0;
 
   if (pBF) {
     if (pBF->sock) {
@@ -281,13 +281,13 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
   if (pSock) {
     const void *keydata = nullptr, *iv = nullptr;
-    int keylen = 0, ivlen = 0;
+    int32_t keylen = 0, ivlen = 0;
 
     hb_socekxParamsGetStd(pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr);
     if (keylen > 0) {
       auto pBF = static_cast<PHB_SOCKEX_BF>(hb_xgrabz(sizeof(HB_SOCKEX_BF)));
       auto pVect = static_cast<const uint8_t *>(ivlen > 0 ? iv : nullptr);
-      int i;
+      int32_t i;
 
       hb_blowfishInit(&pBF->bf, keydata, keylen);
       for (i = 0; i < HB_BF_CIPHERBLOCK; ++i) {

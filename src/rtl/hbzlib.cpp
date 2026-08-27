@@ -94,7 +94,7 @@ static void s_zlib_free(void *cargo, void *address)
   }
 }
 
-static int s_zlibCompress2(char **pDstPtr, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nSrc, HB_BOOL fGZip, int level)
+static int32_t s_zlibCompress2(char **pDstPtr, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nSrc, HB_BOOL fGZip, int32_t level)
 {
   z_stream stream{};
   stream.zalloc = s_zlib_alloc;
@@ -102,7 +102,7 @@ static int s_zlibCompress2(char **pDstPtr, HB_SIZE *pnDst, const char *pSrc, HB_
   stream.opaque = nullptr;
   stream.next_in = reinterpret_cast<Bytef *>(const_cast<char *>(pSrc));
   stream.avail_in = static_cast<uInt>(nSrc);
-  int iResult = deflateInit2(&stream, level, Z_DEFLATED, 15 + (fGZip ? 16 : 0), 8, Z_DEFAULT_STRATEGY);
+  int32_t iResult = deflateInit2(&stream, level, Z_DEFLATED, 15 + (fGZip ? 16 : 0), 8, Z_DEFAULT_STRATEGY);
   if (iResult == Z_OK) {
     if (*pDstPtr == nullptr) {
       if (*pnDst == 0) {
@@ -133,12 +133,12 @@ static int s_zlibCompress2(char **pDstPtr, HB_SIZE *pnDst, const char *pSrc, HB_
   return iResult;
 }
 
-static int s_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nSrc, int level)
+static int32_t s_zlibCompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nSrc, int32_t level)
 {
   return s_zlibCompress2(&pDst, pnDst, pSrc, nSrc, false, level);
 }
 
-static HB_SIZE s_zlibUncompressedSize(const char *szSrc, HB_SIZE nLen, int *piResult)
+static HB_SIZE s_zlibUncompressedSize(const char *szSrc, HB_SIZE nLen, int32_t *piResult)
 {
   Byte buffer[1024];
   HB_SIZE nDest = 0;
@@ -168,7 +168,7 @@ static HB_SIZE s_zlibUncompressedSize(const char *szSrc, HB_SIZE nLen, int *piRe
   return nDest;
 }
 
-static int s_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nSrc)
+static int32_t s_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZE nSrc)
 {
   z_stream stream{};
   stream.zalloc = s_zlib_alloc;
@@ -176,7 +176,7 @@ static int s_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB_SIZ
   stream.opaque = nullptr;
   stream.next_in = reinterpret_cast<Bytef *>(const_cast<char *>(pSrc));
   stream.avail_in = static_cast<uInt>(nSrc);
-  int iResult = inflateInit2(&stream, 15 + 32);
+  int32_t iResult = inflateInit2(&stream, 15 + 32);
 
   if (iResult == Z_OK) {
     stream.next_out = reinterpret_cast<Bytef *>(pDst);
@@ -236,7 +236,7 @@ HB_FUNC(HB_ZUNCOMPRESSLEN)
 
   if (szData != nullptr) {
     auto nLen = hb_parclen(1);
-    int iResult = Z_OK;
+    int32_t iResult = Z_OK;
 
     if (nLen) {
       nLen = s_zlibUncompressedSize(szData, nLen, &iResult);
@@ -270,7 +270,7 @@ HB_FUNC(HB_ZCOMPRESS)
       HB_BOOL fAlloc = false;
       HB_SIZE nDstLen;
       char *pDest;
-      int iResult;
+      int32_t iResult;
 
       if (pBuffer) {
         if (!hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen)) {
@@ -327,7 +327,7 @@ HB_FUNC(HB_ZUNCOMPRESS)
     if (nLen) {
       HB_SIZE nDstLen;
       char *pDest = nullptr;
-      int iResult = Z_OK;
+      int32_t iResult = Z_OK;
 
       if (pBuffer) {
         if (!hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen)) {
@@ -399,7 +399,7 @@ HB_FUNC(HB_GZCOMPRESS)
       HB_BOOL fAlloc = false;
       HB_SIZE nDstLen;
       char *pDest;
-      int iResult;
+      int32_t iResult;
 
       if (pBuffer) {
         if (!hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen)) {

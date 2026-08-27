@@ -59,8 +59,8 @@ static void hb_val(HB_BOOL fExt)
     auto iLen = static_cast<int32_t>(pText->getCLen());
     HB_MAXINT lValue;
     double dValue;
-    int iDec;
-    int iWidth;
+    int32_t iDec;
+    int32_t iWidth;
     bool fDbl = hb_valStrnToNum(szText, iLen, &lValue, &dValue, &iDec, &iWidth);
 
     if (fExt) {

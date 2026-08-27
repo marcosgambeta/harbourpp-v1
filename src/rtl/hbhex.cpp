@@ -59,7 +59,7 @@ HB_FUNC(HB_HEXTONUM)
       szHex++;
     }
     while (*szHex) {
-      int iDigit;
+      int32_t iDigit;
       char c = *szHex++;
       if (c >= '0' && c <= '9') {
         iDigit = c - '0';
@@ -82,7 +82,7 @@ HB_FUNC(HB_HEXTONUM)
 HB_FUNC(HB_NUMTOHEX)
 {
   HB_MAXUINT nNum;
-  int iLen;
+  int32_t iLen;
   auto fDefaultLen = false;
   char ret[33];
 
@@ -180,7 +180,7 @@ HB_FUNC(HB_HEXTOSTR)
 
     nDest >>= 1;
     if (nDest) {
-      int iVal = 0x10;
+      int32_t iVal = 0x10;
 
       auto szDest = static_cast<char *>(hb_xgrab(nDest + 1));
 

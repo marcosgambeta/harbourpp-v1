@@ -91,8 +91,8 @@ static auto s_hFilenoStderr = static_cast<HB_FHANDLE>(HB_STDERR_HANDLE);
 
 struct HB_PRNPOS
 {
-  int row;
-  int col;
+  int32_t row;
+  int32_t col;
 };
 
 using PHB_PRNPOS = HB_PRNPOS *;
@@ -125,7 +125,7 @@ void hb_conInit(void)
 #ifdef HB_CLP_UNDOC
   {
     // Undocumented CA-Cl*pper switch //STDERR:x
-    int iStderr = hb_cmdargNum("STDERR");
+    int32_t iStderr = hb_cmdargNum("STDERR");
 
     if (iStderr == 0 || iStderr == 1) { // //STDERR with no parameter or 0
       s_hFilenoStderr = s_hFilenoStdout;
@@ -411,7 +411,7 @@ HB_FUNC(PCOL) // Returns the current printer row position
   hb_retni(static_cast<int32_t>(hb_prnPos()->col));
 }
 
-static void hb_conDevPos(int iRow, int iCol)
+static void hb_conDevPos(int32_t iRow, int32_t iCol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_conDevPos(%d, %d)", iRow, iCol));
@@ -423,13 +423,13 @@ static void hb_conDevPos(int iRow, int iCol)
   // otherwise position console
 
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_DEV)) != nullptr) {
-    int iPRow = iRow;
-    int iPCol = iCol + hb_setGetMargin();
+    int32_t iPRow = iRow;
+    int32_t iPCol = iCol + hb_setGetMargin();
     PHB_PRNPOS pPrnPos = hb_prnPos();
 
     if (pPrnPos->row != iPRow || pPrnPos->col != iPCol) {
       char buf[256];
-      int iPtr = 0;
+      int32_t iPtr = 0;
 
       if (pPrnPos->row != iPRow) {
         if (++pPrnPos->row > iPRow) {
@@ -590,7 +590,7 @@ HB_FUNC(HB_DISPOUTAT)
     HB_BOOL bFreeReq;
     char *pszString = hb_itemStringCon(hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq);
 
-    int iColor;
+    int32_t iColor;
     if (HB_ISCHAR(4)) {
       iColor = hb_gtColorToN(hb_parc(4));
     } else if (HB_ISNUM(4)) {
@@ -618,7 +618,7 @@ HB_FUNC(HB_DISPOUTATBOX)
     auto iCol = hb_parni(2);
     auto pszString = hb_parc(3);
 
-    int iColor;
+    int32_t iColor;
     if (HB_ISCHAR(4)) {
       iColor = hb_gtColorToN(hb_parc(4));
     } else if (HB_ISNUM(4)) {
