@@ -3235,7 +3235,7 @@ static int32_t init_mparams(void)
        alignment must be at least 8.
        Alignment, min chunk size, and page size must all be powers of 2.
     */
-    if ((sizeof(size_t) != sizeof(char *)) || (MAX_SIZE_T < MIN_CHUNK_SIZE) || (sizeof(int) < 4) ||
+    if ((sizeof(size_t) != sizeof(char *)) || (MAX_SIZE_T < MIN_CHUNK_SIZE) || (sizeof(int32_t) < 4) ||
         (MALLOC_ALIGNMENT < (size_t)8U) || ((MALLOC_ALIGNMENT & (MALLOC_ALIGNMENT - SIZE_T_ONE)) != 0) ||
         ((MCHUNK_SIZE & (MCHUNK_SIZE - SIZE_T_ONE)) != 0) || ((gsize & (gsize - SIZE_T_ONE)) != 0) ||
         ((psize & (psize - SIZE_T_ONE)) != 0))

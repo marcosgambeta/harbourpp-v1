@@ -71,7 +71,7 @@ static void hb_macroFlagsInit(void *pFlags)
   *(static_cast<int32_t *>(pFlags)) = HB_SM_DEFAULT;
 }
 
-static HB_TSD_NEW(s_macroFlags, sizeof(int), hb_macroFlagsInit, nullptr);
+static HB_TSD_NEW(s_macroFlags, sizeof(int32_t), hb_macroFlagsInit, nullptr);
 
 static int32_t hb_macroFlags(void)
 {

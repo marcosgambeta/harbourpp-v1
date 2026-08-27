@@ -91,7 +91,7 @@
 #if defined(JB_SP)
 #define HB_TASK_STACK_INIT(jmp, sp)                                                                                    \
   do {                                                                                                                 \
-    (jmp)[0].__jmpbuf[JB_SP] = (int)(sp);                                                                              \
+    (jmp)[0].__jmpbuf[JB_SP] = (int32_t)(sp);                                                                          \
   } while (false)
 #else
 #define HB_TASK_STACK_INIT(jmp, sp)                                                                                    \

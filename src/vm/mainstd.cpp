@@ -55,7 +55,7 @@ int32_t _CRT_glob = 0;
 
 HB_EXTERN_END
 
-int main(int32_t argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("main(%d, %p)", argc, static_cast<void*>(argv)));
