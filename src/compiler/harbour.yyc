@@ -3216,7 +3216,7 @@ do {                                    \
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
-int yydebug;
+int32_t yydebug;
 #else /* !YYDEBUG */
 # define YYDPRINTF(Args)
 # define YY_SYMBOL_PRINT(Title, Type, Value, Location)
@@ -3510,7 +3510,7 @@ int
 yyparse (HB_COMP *pComp)
 {
 /* The lookahead symbol.  */
-int yychar;
+int32_t yychar;
 
 
 /* The semantic value of the lookahead symbol.  */

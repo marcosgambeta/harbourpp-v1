@@ -2764,7 +2764,7 @@ void hb_compGenPushAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, co
   }
 }
 
-void hb_compGenPushLogical(int iTrueFalse, HB_COMP_DECL) // pushes a logical value on the virtual machine stack
+void hb_compGenPushLogical(int32_t iTrueFalse, HB_COMP_DECL) // pushes a logical value on the virtual machine stack
 {
   hb_compGenPCode1(static_cast<uint8_t>(iTrueFalse ? HB_P_TRUE : HB_P_FALSE), HB_COMP_PARAM);
 }
