@@ -68,7 +68,7 @@ static void hb_waNodeInsert(PHB_STACKRDD pRddInfo, AREAP pArea)
   uint16_t uiWaPos;
 
   if (pRddInfo->uiCurrArea >= pRddInfo->uiWaNumMax) {
-    int iSize = ((static_cast<int32_t>(pRddInfo->uiCurrArea) + 256) >> 8) << 8;
+    int32_t iSize = ((static_cast<int32_t>(pRddInfo->uiCurrArea) + 256) >> 8) << 8;
 
     if (iSize > HB_RDD_MAX_AREA_NUM) {
       iSize = HB_RDD_MAX_AREA_NUM;
@@ -92,7 +92,7 @@ static void hb_waNodeInsert(PHB_STACKRDD pRddInfo, AREAP pArea)
   } else {
     uiWaPos = pRddInfo->uiWaMax++;
     if (pRddInfo->uiWaMax > pRddInfo->uiWaSpace) {
-      int iSize = ((static_cast<int32_t>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
+      int32_t iSize = ((static_cast<int32_t>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
 
       if (iSize > HB_RDD_MAX_AREA_NUM) {
         iSize = HB_RDD_MAX_AREA_NUM;
@@ -138,7 +138,7 @@ static void hb_waNodeDelete(PHB_STACKRDD pRddInfo)
     }
     pRddInfo->waList[pRddInfo->uiWaMax] = nullptr;
     if (pRddInfo->uiWaSpace - pRddInfo->uiWaMax > 256) {
-      int iSize = ((static_cast<int32_t>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
+      int32_t iSize = ((static_cast<int32_t>(pRddInfo->uiWaMax) + 256) >> 8) << 8;
 
       if (iSize > HB_RDD_MAX_AREA_NUM) {
         iSize = HB_RDD_MAX_AREA_NUM;
@@ -418,7 +418,7 @@ const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
 }
 
 // Function for getting given workarea pointer
-void *hb_rddGetWorkAreaPointer(int iArea)
+void *hb_rddGetWorkAreaPointer(int32_t iArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetWorkAreaPointer(%d)", iArea));
@@ -448,7 +448,7 @@ void *hb_rddGetCurrentWorkAreaPointer(void)
 }
 
 // Return the current WorkArea number.
-int hb_rddGetCurrentWorkAreaNumber(void)
+int32_t hb_rddGetCurrentWorkAreaNumber(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetCurrentWorkAreaNumber()"));
@@ -458,7 +458,7 @@ int hb_rddGetCurrentWorkAreaNumber(void)
 }
 
 // Select a WorkArea by the number.
-HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
+HB_ERRCODE hb_rddSelectWorkAreaNumber(int32_t iArea)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaNumber(%d)", iArea));

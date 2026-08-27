@@ -135,7 +135,7 @@ void *hb_rddNewAreaNode(LPRDDNODE pRddNode, uint16_t uiRddID)
 
 HB_ERRCODE hb_rddGetTempAlias(char *szAliasTmp)
 {
-  int iArea;
+  int32_t iArea;
 
   for (auto i = 1; i < 1000; i++) {
     hb_snprintf(szAliasTmp, 11, "__HBTMP%03i", i);
@@ -148,13 +148,13 @@ HB_ERRCODE hb_rddGetTempAlias(char *szAliasTmp)
 }
 
 // allocate and return atomAlias for new workarea or nullptr if alias already exist
-void *hb_rddAllocWorkAreaAlias(const char *szAlias, int iArea)
+void *hb_rddAllocWorkAreaAlias(const char *szAlias, int32_t iArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddAllocWorkAreaAlias(%s, %d)", szAlias, iArea));
 #endif
 
-  int iDummyArea;
+  int32_t iDummyArea;
 
   // Verify if the alias name is valid symbol
   if (hb_rddVerifyAliasName(szAlias) != Harbour::SUCCESS) {
@@ -229,7 +229,7 @@ uint16_t hb_rddFieldExpIndex(AREAP pArea, const char *szField)
 
   if (strchr(szField, '>') != nullptr) {
     char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
-    int j, l, n;
+    int32_t j, l, n;
 
     n = 0;
     if (SELF_ALIAS(pArea, szAlias) == Harbour::SUCCESS) {
@@ -241,7 +241,7 @@ uint16_t hb_rddFieldExpIndex(AREAP pArea, const char *szField)
     // strip the _FIELD-> and FIELD-> prefix, it could be nested
     // so repeat this process until all prefixes will be removed
     do {
-      int i;
+      int32_t i;
       j = n;
       i = 0;
       if (HB_ISFIRSTIDCHAR(szField[n])) {
@@ -276,7 +276,7 @@ uint16_t hb_rddFieldExpIndex(AREAP pArea, const char *szField)
 }
 
 // Find a WorkArea by the alias, return Harbour::FAILURE if not found
-HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
+HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int32_t *iArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetAliasNumber(%s, %p)", szAlias, static_cast<void*>(iArea)));
@@ -373,7 +373,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szAlias)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaAlias(%s)", szAlias));
 #endif
 
-  int iArea;
+  int32_t iArea;
 
   HB_ERRCODE errCode = hb_rddGetAliasNumber(szAlias, &iArea);
 

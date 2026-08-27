@@ -277,7 +277,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 
   for (uint16_t uiCount = 0; uiCount < uiItems; uiCount++) {
     uint16_t uiLen, uiDec;
-    int iData;
+    int32_t iData;
 
     dbFieldInfo.uiTypeExtended = 0;
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
@@ -538,7 +538,7 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, uint16_t uiIndex, uint16_t uiType,
     uint16_t uiFlags = 0;
     char szType[8];
     char cType;
-    int iLen = 0;
+    int32_t iLen = 0;
 
     switch (pField->uiType) {
     case Harbour::DB::Field::STRING:
@@ -848,7 +848,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
     return pNode ? SELF_RDDINFO(pNode, RDDI_TABLEEXT, 0, pItem) : Harbour::FAILURE;
   }
   case DBI_SCOPEDRELATION: {
-    int iRelNo = hb_itemGetNI(pItem);
+    int32_t iRelNo = hb_itemGetNI(pItem);
     auto fScoped = false;
 
     if (iRelNo > 0) {
@@ -1474,7 +1474,7 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
         errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
 
         if (errCode == Harbour::SUCCESS) {
-          int iOrder = hb_itemGetNI(pInfo.itmResult);
+          int32_t iOrder = hb_itemGetNI(pInfo.itmResult);
           if (iOrder != 0) {
             if (pRelInfo->isScoped) {
               pInfo.itmNewVal = pResult;
@@ -1758,7 +1758,7 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
    HB_TRACE(HB_TR_DEBUG, ("hb_waEvalBlock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBlock)));
 #endif
 
-  int iUsedArea;
+  int32_t iUsedArea;
 
   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
   iUsedArea = pArea->uiArea;
@@ -1790,7 +1790,7 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConn
 #endif
 
   auto fResult = false;
-  int iResult;
+  int32_t iResult;
 
   HB_SYMBOL_UNUSED(pRDD);
   HB_SYMBOL_UNUSED(ulConnection);
@@ -2354,7 +2354,7 @@ void hb_rddShutDown(void)
 }
 
 // Register a RDD driver.
-int hb_rddRegister(const char *szDriver, uint16_t uiType)
+int32_t hb_rddRegister(const char *szDriver, uint16_t uiType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddRegister(%s, %hu)", szDriver, uiType));
@@ -2362,7 +2362,7 @@ int hb_rddRegister(const char *szDriver, uint16_t uiType)
 
   char szGetFuncTable[HB_RDD_MAX_DRIVERNAME_LEN + 14];
   uint16_t uiFunctions = 0;
-  int iResult;
+  int32_t iResult;
 
   if (hb_rddFindNode(szDriver, nullptr)) { // Duplicated RDD
     return 1;

@@ -192,7 +192,7 @@ static HB_MAXINT hb_dbfNextValueGet(DBFAREAP pArea, uint16_t uiField, bool fUpda
 
   if (hb_fileReadAt(pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD)) ==
       sizeof(dbField)) {
-    int iType = hb_dbfIsAutoIncField(pArea->area.lpFields + uiField);
+    int32_t iType = hb_dbfIsAutoIncField(pArea->area.lpFields + uiField);
 
     if (iType == HB_AUTOINC_LONG) {
       nValue = HB_GET_LE_UINT64(dbField.bReserved2);
@@ -231,10 +231,10 @@ static HB_MAXINT hb_dbfNextValueSet(DBFAREAP pArea, uint16_t uiField, HB_MAXINT 
   return nPrevValue;
 }
 
-static int hb_dbfNextValueStep(DBFAREAP pArea, uint16_t uiField, int iStep)
+static int32_t hb_dbfNextValueStep(DBFAREAP pArea, uint16_t uiField, int32_t iStep)
 {
   DBFFIELD dbField;
-  int iPrevStep = 0;
+  int32_t iPrevStep = 0;
 
   if (hb_fileReadAt(pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD)) ==
       sizeof(dbField)) {
@@ -337,7 +337,7 @@ static void hb_dbfUpdateStampFields(DBFAREAP pArea)
   }
 }
 
-static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
+static void hb_dbfSetBlankRecord(DBFAREAP pArea, int32_t iType)
 {
   uint8_t *pPtr = pArea->pRecord, bFill = ' ', bNext;
   HB_SIZE nSize = 1; // 1 byte ' ' for DELETE flag
@@ -514,7 +514,7 @@ static void hb_dbfClearNullFlag(uint8_t *pRecord, uint16_t uiNullOffset, uint16_
 }
 
 // Executes user trigger function
-static bool hb_dbfTriggerDo(DBFAREAP pArea, int iEvent, int iField, PHB_ITEM pItem)
+static bool hb_dbfTriggerDo(DBFAREAP pArea, int32_t iEvent, int32_t iField, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfTriggerDo(%p,%d,%d,%p)", static_cast<void*>(pArea), iEvent, iField, pItem));
@@ -1237,7 +1237,7 @@ static bool hb_dbfLockIdxRepeatFail(DBFAREAP pArea, PHB_DBFLOCKDATA pLockData)
 // Set lock using current locking schemes in additional files (MEMO, INDEX)
 // This function is common for different MEMO implementation
 // so I left it in DBF.
-HB_BOOL hb_dbfLockIdxFile(DBFAREAP pArea, PHB_FILE pFile, int iType, HB_BOOL fLateWrlck, PHB_DBFLOCKDATA pLockData)
+HB_BOOL hb_dbfLockIdxFile(DBFAREAP pArea, PHB_FILE pFile, int32_t iType, HB_BOOL fLateWrlck, PHB_DBFLOCKDATA pLockData)
 {
   HB_FOFFSET tolock;
   auto fOK = false;
@@ -1328,7 +1328,7 @@ HB_BOOL hb_dbfLockIdxWrite(DBFAREAP pArea, PHB_FILE pFile, PHB_DBFLOCKDATA pLock
 
 // Get DBF locking parameters
 static HB_ERRCODE hb_dbfLockData(DBFAREAP pArea, HB_FOFFSET *pnPos, HB_FOFFSET *pnFlSize, HB_FOFFSET *pnRlSize,
-                                 int *iDir)
+                                 int32_t *iDir)
 {
   switch (pArea->bLockType) {
   case DB_DBFLOCK_CLIPPER:
@@ -1389,19 +1389,19 @@ static HB_ERRCODE hb_dbfLockData(DBFAREAP pArea, HB_FOFFSET *pnPos, HB_FOFFSET *
   return Harbour::SUCCESS;
 }
 
-static int hb_dbfLockTest(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRecNo)
+static int32_t hb_dbfLockTest(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRecNo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfLockTest(%p, %hu, %lu)", static_cast<void*>(pArea), uiAction, ulRecNo));
 #endif
 
-  int iResult = -1;
+  int32_t iResult = -1;
 
   if (!pArea->fShared || pArea->fFLocked || (uiAction == REC_LOCK && hb_dbfIsLocked(pArea, ulRecNo))) {
     iResult = 0;
   } else {
     HB_FOFFSET nPos, nFlSize, nRlSize;
-    int iDir;
+    int32_t iDir;
 
     if (hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == Harbour::SUCCESS) {
       switch (uiAction) {
@@ -2017,7 +2017,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
   case Harbour::DB::Field::AUTOINC:
   case Harbour::DB::Field::ROWVER:
     if (pField->uiDec) {
-      int iLen;
+      int32_t iLen;
 
       switch (pField->uiLen) {
       case 1:
@@ -2121,7 +2121,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
     }
     if (nLen && (pszVal[nLen] == '+' || pszVal[nLen] == '-') && (pszVal[nLen - 1] == 'e' || pszVal[nLen - 1] == 'E')) {
       uint16_t uiLen = static_cast<uint16_t>(nLen);
-      int iExp = 0;
+      int32_t iExp = 0;
 
       while (++uiLen < pField->uiLen) {
         iExp = iExp * 10 + (pszVal[uiLen] - '0');
@@ -2463,7 +2463,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
                  (pArea->fTransRec &&
                   (pField->uiType == Harbour::DB::Field::AUTOINC || pField->uiType == Harbour::DB::Field::ROWVER))) {
         HB_MAXINT lVal;
-        int iSize;
+        int32_t iSize;
 
         if (pField->uiDec || pItem->isDouble()) {
           double dVal;
@@ -3413,7 +3413,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
 
   case DBI_LOCKOFFSET: {
     HB_FOFFSET nPos, nFlSize, nRlSize;
-    int iDir;
+    int32_t iDir;
 
     hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir);
     hb_itemPutNInt(pItem, nPos);
@@ -3429,7 +3429,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
     break;
 
   case DBI_LOCKSCHEME: {
-    int iScheme = hb_itemGetNI(pItem);
+    int32_t iScheme = hb_itemGetNI(pItem);
     if (pArea->bLockType) {
       hb_itemPutNI(pItem, pArea->bLockType);
     } else {
@@ -3453,7 +3453,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
     HB_UINT uiSetHeader = pArea->uiSetHeader;
 
     if (pItem->isNumeric()) {
-      int iMode = pItem->getNI();
+      int32_t iMode = pItem->getNI();
       if ((iMode & ~DB_SETHEADER_MASK) == 0) {
         pArea->uiSetHeader = iMode;
       }
@@ -3507,7 +3507,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
   case DBI_DB_VERSION:
   case DBI_RDD_VERSION: {
     char szBuf[64];
-    int iSub = hb_itemGetNI(pItem);
+    int32_t iSub = hb_itemGetNI(pItem);
 
     if (iSub == 1) {
       hb_snprintf(szBuf, sizeof(szBuf), "%d.%d (%s)", 0, 1, "DBF");
@@ -3574,7 +3574,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, uint16_t uiIndex, uint16_t uiT
     return Harbour::FAILURE;
   case DBS_STEP:
     if (hb_dbfIsAutoIncField(pArea->area.lpFields + uiIndex - 1) != HB_AUTOINC_NONE) {
-      int iValue;
+      int32_t iValue;
       if (pItem->isNumeric()) {
         fLck = false;
         if (pArea->fShared && !pArea->fFLocked && !pArea->fHeaderLocked) {
@@ -4688,13 +4688,13 @@ static void hb_dbfSortFree(LPDBSORTREC pSortRec)
   }
 }
 
-static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue2)
+static int32_t hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue2)
 {
   for (uint16_t uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; ++uiCount) {
     uint16_t uiFlags = pSortRec->pSortInfo->lpdbsItem[uiCount].uiFlags;
     auto pItem1 = hb_arrayGetItemPtr(pValue1, uiCount + 1);
     auto pItem2 = hb_arrayGetItemPtr(pValue2, uiCount + 1);
-    int i = 0;
+    int32_t i = 0;
 
     if (uiFlags & SF_DOUBLE) {
       auto dValue1 = hb_itemGetND(pItem1);
@@ -4725,9 +4725,9 @@ static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue
   return 0;
 }
 
-static int hb_dbfSortCompare(LPDBSORTREC pSortRec, HB_SORTIDX nIndex1, HB_SORTIDX nIndex2)
+static int32_t hb_dbfSortCompare(LPDBSORTREC pSortRec, HB_SORTIDX nIndex1, HB_SORTIDX nIndex2)
 {
-  int i = hb_dbfSortCmp(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, nIndex1 + 1),
+  int32_t i = hb_dbfSortCmp(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, nIndex1 + 1),
                         hb_arrayGetItemPtr(pSortRec->pSortArray, nIndex2 + 1));
   return i == 0 ? (nIndex1 < nIndex2 ? -1 : 1) : i;
 }
@@ -4808,7 +4808,7 @@ static void hb_dbfSortInsPage(LPDBSORTREC pSortRec, HB_SORTIDX *pIndex, HB_SORTI
 {
   while (nFirst < nLast) {
     HB_SORTIDX nMiddle = (nFirst + nLast) >> 1;
-    int i = hb_dbfSortCompare(pSortRec, pIndex[nAt], pIndex[nMiddle]);
+    int32_t i = hb_dbfSortCompare(pSortRec, pIndex[nAt], pIndex[nMiddle]);
 
     if (i < 0) {
       nLast = nMiddle;
@@ -5383,7 +5383,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRe
 
   if (pArea->fShared) {
     HB_FOFFSET nPos, nFlSize, nRlSize;
-    int iDir;
+    int32_t iDir;
     auto fLck = false;
 
     if (hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == Harbour::FAILURE) {
@@ -5809,7 +5809,7 @@ static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfWriteDBHeader(%p)", static_cast<void*>(pArea)));
 #endif
 
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
   auto fLck = false;
   HB_ERRCODE errCode;
 
@@ -6204,7 +6204,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_TABLETYPE: {
-    int iType = hb_itemGetNI(pItem);
+    int32_t iType = hb_itemGetNI(pItem);
     hb_itemPutNI(pItem, pData->bTableType ? pData->bTableType : DB_DBF_STD);
     switch (iType) {
     case DB_DBF_STD: // standard dBase/Clipper DBF file
@@ -6214,7 +6214,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_LOCKSCHEME: {
-    int iScheme = hb_itemGetNI(pItem);
+    int32_t iScheme = hb_itemGetNI(pItem);
 
     hb_itemPutNI(pItem, pData->bLockType ? pData->bLockType : hb_setGetDBFLockScheme());
     switch (iScheme) {
@@ -6234,7 +6234,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     uint16_t uiSetHeader = pData->uiSetHeader;
 
     if (pItem->isNumeric()) {
-      int iMode = pItem->getNI();
+      int32_t iMode = pItem->getNI();
       if ((iMode & ~DB_SETHEADER_MASK) == 0) {
         pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }
@@ -6251,7 +6251,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_INDEXPAGESIZE: {
-    int iPageSize = hb_itemGetNI(pItem);
+    int32_t iPageSize = hb_itemGetNI(pItem);
 
     hb_itemPutNI(pItem, pData->uiIndexPageSize);
     if (iPageSize >= 0x200 && iPageSize <= 0x2000 && ((iPageSize - 1) & iPageSize) == 0) {
@@ -6260,7 +6260,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_DECIMALS: {
-    int iDecimals = pItem->isNumeric() ? pItem->getNI() : -1;
+    int32_t iDecimals = pItem->isNumeric() ? pItem->getNI() : -1;
 
     hb_itemPutNI(pItem, pData->bDecimals);
     if (iDecimals >= 0 && iDecimals <= 20) {

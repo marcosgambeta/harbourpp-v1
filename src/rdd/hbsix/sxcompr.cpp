@@ -275,7 +275,7 @@ static bool hb_LZSSxWrite(PHB_LZSSX_COMPR pCompr, uint8_t ucVal)
   return pCompr->fResult || pCompr->fContinue;
 }
 
-static int hb_LZSSxRead(PHB_LZSSX_COMPR pCompr)
+static int32_t hb_LZSSxRead(PHB_LZSSX_COMPR pCompr)
 {
   if (pCompr->inBuffPos < pCompr->inBuffRead) {
     return static_cast<uint8_t>(pCompr->inBuffer[pCompr->inBuffPos++]);
@@ -298,7 +298,7 @@ static HB_BOOL hb_LZSSxDecode(PHB_LZSSX_COMPR pCompr)
 {
   HB_BOOL fResult = true;
   uint16_t itemMask;
-  int offset, length, rbufidx, c, h;
+  int32_t offset, length, rbufidx, c, h;
 
   rbufidx = RBUFLENGTH - MAXLENGTH;
   itemMask = 0;
@@ -355,9 +355,9 @@ static HB_BOOL hb_LZSSxDecode(PHB_LZSSX_COMPR pCompr)
   return fResult;
 }
 
-static void hb_LZSSxNodeInsert(PHB_LZSSX_COMPR pCompr, int r)
+static void hb_LZSSxNodeInsert(PHB_LZSSX_COMPR pCompr, int32_t r)
 {
-  int i, p, cmp;
+  int32_t i, p, cmp;
   uint8_t *key;
 
   cmp = 1;
@@ -410,10 +410,10 @@ static void hb_LZSSxNodeInsert(PHB_LZSSX_COMPR pCompr, int r)
   pCompr->parent[p] = DUMMYNODE;
 }
 
-static void hb_LZSSxNodeDelete(PHB_LZSSX_COMPR pCompr, int p)
+static void hb_LZSSxNodeDelete(PHB_LZSSX_COMPR pCompr, int32_t p)
 {
   if (pCompr->parent[p] != DUMMYNODE) {
-    int q;
+    int32_t q;
     if (pCompr->right[p] == DUMMYNODE) {
       q = pCompr->left[p];
     } else if (pCompr->left[p] == DUMMYNODE) {

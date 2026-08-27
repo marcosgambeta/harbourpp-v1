@@ -108,7 +108,7 @@ static bool hb_sxOrdParam(LPDBORDERINFO pInfo)
 HB_FUNC(SX_TAGORDER)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iOrder = 0;
+  int32_t iOrder = 0;
 
   if (pArea != nullptr) {
     DBORDERINFO Info;
@@ -131,7 +131,7 @@ HB_FUNC(SX_TAGORDER)
 HB_FUNC(SX_TAGNO)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iBagOrder = 0;
+  int32_t iBagOrder = 0;
 
   if (pArea != nullptr) {
     DBORDERINFO Info;
@@ -139,7 +139,7 @@ HB_FUNC(SX_TAGNO)
     if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutNI(nullptr, 0);
       if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS) {
-        int iOrder = hb_itemGetNI(Info.itmResult);
+        int32_t iOrder = hb_itemGetNI(Info.itmResult);
         if (iOrder) {
           Info.itmOrder = hb_itemPutNI(nullptr, iOrder);
           Info.atomBagName = nullptr;
@@ -237,13 +237,13 @@ HB_FUNC(SX_CHILL)
 HB_FUNC(SX_THERMOMETER)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iTemperature = -1;
+  int32_t iTemperature = -1;
 
   if (pArea != nullptr) {
     DBORDERINFO Info;
 
     if (hb_sxOrdParam(&Info)) {
-      int i;
+      int32_t i;
       Info.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &Info);
       i = hb_itemGetNI(Info.itmResult);
@@ -386,7 +386,7 @@ HB_FUNC(SX_I_TAGNAME)
 HB_FUNC(SX_INDEXCOUNT)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iCount = 0;
+  int32_t iCount = 0;
 
   if (pArea != nullptr) {
     DBORDERINFO Info{};
@@ -418,7 +418,7 @@ HB_FUNC(SX_INDEXNAME)
 HB_FUNC(SX_INDEXTYPE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iType = DBOI_TYPE_UNDEF;
+  int32_t iType = DBOI_TYPE_UNDEF;
 
   if (pArea != nullptr) {
     DBORDERINFO Info;
@@ -629,7 +629,7 @@ HB_FUNC(SX_WILDSEEK)
   auto fFound = false;
 
   if (pArea != nullptr) {
-    int iOrder = 0;
+    int32_t iOrder = 0;
 
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);

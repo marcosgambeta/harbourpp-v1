@@ -151,7 +151,7 @@ static HB_ERRCODE hb_usrEvalAreaFunc(PHB_ITEM pMethods, uint16_t uiMethod, AREAP
   return Harbour::SUCCESS;
 }
 
-static AREAP hb_usrGetAreaPointer(int iArea)
+static AREAP hb_usrGetAreaPointer(int32_t iArea)
 {
   if (iArea != 0) {
     return static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
@@ -3295,7 +3295,7 @@ static HB_ERRCODE hb_usrErrorRT(AREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE e
   return iRet;
 }
 
-static AREAP hb_usrGetAreaParam(int iParams)
+static AREAP hb_usrGetAreaParam(int32_t iParams)
 {
   AREAP pArea = nullptr;
 
@@ -3324,7 +3324,7 @@ static AREAP hb_usrGetAreaParam(int iParams)
   return nullptr;
 }
 
-static LPRDDNODE hb_usrGetNodeParam(int iParams)
+static LPRDDNODE hb_usrGetNodeParam(int32_t iParams)
 {
   LPRDDNODE pRDD = nullptr;
   uint16_t uiNode = 0;

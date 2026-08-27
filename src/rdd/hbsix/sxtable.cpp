@@ -131,7 +131,7 @@ HB_FUNC(SX_ISSHARED)
 HB_FUNC(SX_IDTYPE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iType = 0;
+  int32_t iType = 0;
 
   if (pArea != nullptr) {
     auto pItem = hb_itemNew(nullptr);
@@ -147,7 +147,7 @@ HB_FUNC(SX_IDTYPE)
 HB_FUNC(SX_TABLETYPE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  int iType = 0;
+  int32_t iType = 0;
 
   if (pArea != nullptr) {
     auto pItem = hb_itemNew(nullptr);
@@ -190,7 +190,7 @@ HB_FUNC(SX_ROLLBACK)
 {
   auto fResult = false;
   auto fRollChild = false;
-  int iArea = 0;
+  int32_t iArea = 0;
   AREAP pArea;
 
   if (HB_ISNUM(1)) {

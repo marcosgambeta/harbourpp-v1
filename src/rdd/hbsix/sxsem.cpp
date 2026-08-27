@@ -94,7 +94,7 @@ static bool hb_sxSemName(char *szFileName)
 static PHB_FILE hb_sxSemOpen(char *szFileName, HB_BOOL *pfNewFile)
 {
   PHB_FILE pFile;
-  int i = 0;
+  int32_t i = 0;
 
   do {
     pFile = hb_fileExtOpen(szFileName, ".sem",
@@ -127,7 +127,7 @@ static PHB_FILE hb_sxSemOpen(char *szFileName, HB_BOOL *pfNewFile)
 HB_FUNC(SX_MAKESEM)
 {
   char szFileName[HB_PATH_MAX];
-  int iUsers = -1;
+  int32_t iUsers = -1;
   HB_BOOL fError = false, fNewFile = false;
 
   if (hb_sxSemName(szFileName)) {
@@ -163,7 +163,7 @@ HB_FUNC(SX_MAKESEM)
 HB_FUNC(SX_KILLSEM)
 {
   char szFileName[HB_PATH_MAX];
-  int iUsers = -1;
+  int32_t iUsers = -1;
 
   if (hb_sxSemName(szFileName)) {
     PHB_FILE pFile = hb_sxSemOpen(szFileName, nullptr);

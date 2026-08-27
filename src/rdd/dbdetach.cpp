@@ -57,7 +57,7 @@ HB_FUNC(HB_DBDETACH)
   auto pAlias = hb_param(1, Harbour::Item::ANY);
   auto pCargo = hb_param(2, Harbour::Item::ANY); // Harbour::Item::BLOCK in Xbase++
   AREAP pArea = nullptr;
-  int iArea;
+  int32_t iArea;
 
   if (!pAlias || pAlias->isNil()) {
     pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());

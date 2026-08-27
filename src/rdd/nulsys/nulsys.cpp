@@ -55,7 +55,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szName)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
+HB_ERRCODE hb_rddSelectWorkAreaNumber(int32_t iArea)
 {
   HB_SYMBOL_UNUSED(iArea);
 
@@ -69,7 +69,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
   return Harbour::FAILURE;
 }
 
-int hb_rddGetCurrentWorkAreaNumber(void)
+int32_t hb_rddGetCurrentWorkAreaNumber(void)
 {
   return 0;
 }
@@ -106,7 +106,7 @@ HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
+HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int32_t *iArea)
 {
   HB_SYMBOL_UNUSED(szAlias);
   HB_SYMBOL_UNUSED(iArea);

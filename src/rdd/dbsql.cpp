@@ -199,12 +199,12 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
   case Harbour::Item::LONG:
   case Harbour::Item::DOUBLE: {
     char szResult[HB_MAX_DOUBLE_LENGTH];
-    int iSize, iWidth, iDec;
+    int32_t iSize, iWidth, iDec;
 
     hb_itemGetNLen(pValue, &iWidth, &iDec);
     iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
     if (hb_itemStrBuf(szResult, pValue, iSize, iDec)) {
-      int iPos = 0;
+      int32_t iPos = 0;
       while (iSize && HB_ISSPACE(szResult[iPos])) {
         iPos++;
         iSize--;

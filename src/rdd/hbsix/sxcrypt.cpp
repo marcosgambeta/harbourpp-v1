@@ -93,7 +93,7 @@ void hb_sxEnCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLe
   HB_U32 ulSeed;
   HB_U16 uiKey;
   HB_SIZE nPos;
-  int i;
+  int32_t i;
 
   ulSeed = hb_sxInitSeed(pKeyVal, &uiKey);
   for (nPos = 0, i = 0; nPos < nLen; nPos++) {
@@ -114,7 +114,7 @@ void hb_sxDeCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLe
   HB_U32 ulSeed;
   HB_U16 uiKey;
   HB_SIZE nPos;
-  int i;
+  int32_t i;
 
   ulSeed = hb_sxInitSeed(pKeyVal, &uiKey);
   for (nPos = 0, i = 0; nPos < nLen; nPos++) {

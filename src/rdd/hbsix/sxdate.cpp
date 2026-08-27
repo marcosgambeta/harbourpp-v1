@@ -58,7 +58,7 @@ char *hb_sxDtoP(char *pDate, long lJulian)
    HB_TRACE(HB_TR_DEBUG, ("hb_sxDtoP(%p, %ld)", static_cast<void*>(pDate), lJulian));
 #endif
 
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
   long lPDate;
 
   hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
@@ -75,7 +75,7 @@ long hb_sxPtoD(const char *pDate)
 #endif
 
   if (pDate) {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
     long lPDate;
 
     lPDate = HB_GET_BE_UINT24(pDate);

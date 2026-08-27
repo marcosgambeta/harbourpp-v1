@@ -253,7 +253,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
   return nSize;
 }
 
-static int hb_delimNextChar(DELIMAREAP pArea)
+static int32_t hb_delimNextChar(DELIMAREAP pArea)
 {
   for (;;) {
     unsigned char ch;
@@ -315,7 +315,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimReadRecord(%p)", static_cast<void*>(pArea)));
 #endif
 
-  int ch = 0;
+  int32_t ch = 0;
 
   pArea->area.fEof = true;
 
@@ -1060,7 +1060,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
   case DBI_DB_VERSION:
   case DBI_RDD_VERSION: {
     char szBuf[64];
-    int iSub = hb_itemGetNI(pItem);
+    int32_t iSub = hb_itemGetNI(pItem);
 
     if (iSub == 1) {
       hb_snprintf(szBuf, sizeof(szBuf), "%d.%d (%s)", 0, 1, "DELIM");
@@ -1550,7 +1550,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulC
     LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
     uint16_t uiSetHeader = pData->uiSetHeader;
     if (pItem->isNumeric()) {
-      int iMode = pItem->getNI();
+      int32_t iMode = pItem->getNI();
       if (iMode == 0 || iMode == 1) {
         pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }

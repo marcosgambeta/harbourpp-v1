@@ -762,7 +762,7 @@ static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
   case DBI_DB_VERSION:
   case DBI_RDD_VERSION: {
     char szBuf[64];
-    int iSub = hb_itemGetNI(pItem);
+    int32_t iSub = hb_itemGetNI(pItem);
 
     if (iSub == 1) {
       hb_snprintf(szBuf, sizeof(szBuf), "%d.%d (%s)", 0, 1, "SDF");
