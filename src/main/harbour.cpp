@@ -118,9 +118,9 @@ const char * hb_verHB_COMP(void)
 }
 #endif
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
-  int iResult;
+  int32_t iResult;
 
   iResult = hb_compMain(argc, static_cast<const char *const *>(argv));
 
