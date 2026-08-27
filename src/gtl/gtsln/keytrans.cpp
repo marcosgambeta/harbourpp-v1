@@ -385,7 +385,7 @@ static int32_t KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
 static void hb_sln_SortKeyTranslationTable(void)
 {
   for (auto i = 0; i < (static_cast<int32_t>(KeyTranslationTableSize) - 1); i++) {
-    int min = i;
+    int32_t min = i;
 
     for (int32_t j = i + 1; j < static_cast<int32_t>(KeyTranslationTableSize); j++) {
       if (KeyTranslationTable[j][0] < KeyTranslationTable[min][0]) {

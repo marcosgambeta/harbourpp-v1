@@ -362,7 +362,7 @@ static bool write_ttyseq(InOutBase *ioBase, const char *seq)
     success = (fwrite(seq, seqlen, 1, ioBase->baseout) == seqlen);
     fflush(ioBase->baseout);
   } else {
-    int seqlen = strlen(seq);
+    int32_t seqlen = strlen(seq);
     success = (write(ioBase->base_outfd, seq, seqlen) == seqlen);
   }
 
@@ -452,7 +452,7 @@ static void del_all_efds(InOutBase *ioBase)
   }
 }
 
-static int getMouseKey(mouseEvent *mEvt)
+static int32_t getMouseKey(mouseEvent *mEvt)
 {
   int32_t nKey = 0;
 
@@ -885,7 +885,7 @@ static void free_bufch(InOutBase *ioBase, int32_t n)
   ioBase->stdin_inbuf -= n;
 }
 
-static int wait_key(InOutBase *ioBase, int32_t milisec)
+static int32_t wait_key(InOutBase *ioBase, int32_t milisec)
 {
   int32_t nKey, esc, n, i, ch, counter;
   keyTab *ptr;
@@ -2168,7 +2168,7 @@ void HB_GT_FUNC(gt_DelEventHandle(int32_t iFileDes))
   del_efds(s_ioBase, iFileDes);
 }
 
-int HB_GT_FUNC(gt_NewXTerm(void))
+int32_t HB_GT_FUNC(gt_NewXTerm(void))
 {
   int32_t iHandle = -1;
 
@@ -2180,32 +2180,32 @@ int HB_GT_FUNC(gt_NewXTerm(void))
   return iHandle;
 }
 
-int HB_GT_FUNC(gt_SetTerm(int32_t iHandle))
+int32_t HB_GT_FUNC(gt_SetTerm(int32_t iHandle))
 {
   return set_active_ioBase(iHandle);
 }
 
-int HB_GT_FUNC(gt_CloseTerm(int32_t iHandle))
+int32_t HB_GT_FUNC(gt_CloseTerm(int32_t iHandle))
 {
   return del_ioBase(iHandle);
 }
 
-int HB_GT_FUNC(gt_WaitKey(double dTimeOut))
+int32_t HB_GT_FUNC(gt_WaitKey(double dTimeOut))
 {
   return wait_key(s_ioBase, static_cast<int32_t>(dTimeOut >= 0 ? dTimeOut * 1000.0 : -1));
 }
 
-int HB_GT_FUNC(gt_AddKeyMap(int32_t iKey, char *szSequence))
+int32_t HB_GT_FUNC(gt_AddKeyMap(int32_t iKey, char *szSequence))
 {
   return addKeyMap(s_ioBase, SET_CLIPKEY(iKey), szSequence);
 }
 
-int HB_GT_FUNC(gt_RemoveKeyMap(char *szSequence))
+int32_t HB_GT_FUNC(gt_RemoveKeyMap(char *szSequence))
 {
   return removeKeyMap(s_ioBase, szSequence);
 }
 
-int HB_GT_FUNC(gt_ESCdelay(int32_t iDelay))
+int32_t HB_GT_FUNC(gt_ESCdelay(int32_t iDelay))
 {
   int32_t iRet = s_ioBase->esc_delay;
   s_ioBase->esc_delay = iDelay;

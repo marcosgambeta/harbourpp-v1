@@ -121,7 +121,7 @@ int32_t hb_sln_escDelay = 0;
 bool hb_sln_UnderLinuxConsole = false;
 bool hb_sln_UnderXterm = false;
 
-static int hb_sln_try_get_Kbd_State(void);
+static int32_t hb_sln_try_get_Kbd_State(void);
 
 // key translations tables - notice problems with compilation after changes
 #include "keytrans.cpp"

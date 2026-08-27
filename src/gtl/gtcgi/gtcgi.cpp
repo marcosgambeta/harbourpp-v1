@@ -333,7 +333,7 @@ static void hb_gt_cgi_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSi
   int32_t iColor;
   uint8_t bAttr;
   uint16_t usChar;
-  int iLineFeed, iHeight, iWidth, iLen;
+  int32_t iLineFeed, iHeight, iWidth, iLen;
 
   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);

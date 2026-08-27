@@ -3021,7 +3021,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
 
   case ButtonPress:
   case ButtonRelease: {
-    int button = evt->xbutton.button - 1;
+    int32_t button = evt->xbutton.button - 1;
 
 #ifdef XWC_DEBUG
     printf("Event: %s, button=%d\n", evt->type == ButtonPress ? "ButtonPress" : "ButtonRelease", button);
@@ -3034,7 +3034,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
       button = wnd->mouseButtonsMap[button] - 1;
     }
     if (button >= 0 && button < wnd->mouseNumButtons) {
-      int key = 0;
+      int32_t key = 0;
 
       if (evt->type == ButtonPress) {
         if (wnd->keyModifiers.bShift && button == 0 && wnd->fSelectCopy && !wnd->fMarkMode) {
@@ -3839,7 +3839,7 @@ static void hb_gt_xwc_InvalidatePts(PXWND_DEF wnd, int32_t left, int32_t top, in
 
 static void hb_gt_xwc_UpdateCursor(PXWND_DEF wnd)
 {
-  int cursorType = wnd->cursorState ? wnd->cursorType : SC_NONE;
+  int32_t cursorType = wnd->cursorState ? wnd->cursorType : SC_NONE;
 
   // must the mouse cursor be positioned?
   if (wnd->mouseGotoRow >= 0 && wnd->mouseGotoCol >= 0) {
