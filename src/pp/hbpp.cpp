@@ -61,9 +61,9 @@ HB_MAXINT hb_verRevision(void)
 /*
  * functions to create .c files with rules defined in given PP context
  */
-static int hb_pp_writeTokenCount(HB_PP_TOKEN *pToken)
+static int32_t hb_pp_writeTokenCount(HB_PP_TOKEN *pToken)
 {
-  int iToken = 0;
+  int32_t iToken = 0;
 
   while (pToken) {
     iToken += hb_pp_writeTokenCount(pToken->pMTokens) + 1;
@@ -72,10 +72,10 @@ static int hb_pp_writeTokenCount(HB_PP_TOKEN *pToken)
   return iToken;
 }
 
-static void hb_pp_writeToken(FILE *fout, HB_PP_TOKEN *pToken, const char *szName, int iToken, bool fLast)
+static void hb_pp_writeToken(FILE *fout, HB_PP_TOKEN *pToken, const char *szName, int32_t iToken, bool fLast)
 {
   while (pToken) {
-    int iOptional = hb_pp_writeTokenCount(pToken->pMTokens);
+    int32_t iOptional = hb_pp_writeTokenCount(pToken->pMTokens);
 
     auto i = static_cast<int32_t>(strlen(szName));
     if (pToken->pNext) {
@@ -106,7 +106,7 @@ static void hb_pp_writeToken(FILE *fout, HB_PP_TOKEN *pToken, const char *szName
 
 static void hb_pp_writeTokenList(FILE *fout, HB_PP_TOKEN *pTokenLst, const char *szName)
 {
-  int iTokens;
+  int32_t iTokens;
 
   iTokens = hb_pp_writeTokenCount(pTokenLst);
   if (iTokens) {
@@ -116,12 +116,12 @@ static void hb_pp_writeTokenList(FILE *fout, HB_PP_TOKEN *pTokenLst, const char 
   }
 }
 
-static int hb_pp_writeRules(FILE *fout, PHB_PP_RULE pFirst, const char *szName)
+static int32_t hb_pp_writeRules(FILE *fout, PHB_PP_RULE pFirst, const char *szName)
 {
   char szMatch[16], szResult[16];
   HB_ULONG ulRepeatBits, ulBit;
   PHB_PP_RULE pRule;
-  int iRule;
+  int32_t iRule;
   uint16_t u;
 
   iRule = 0;
@@ -171,7 +171,7 @@ static int hb_pp_writeRules(FILE *fout, PHB_PP_RULE pFirst, const char *szName)
   return iRule;
 }
 
-static void hb_pp_generateInitFunc(FILE *fout, int iRules, const char *szVar, const char *szRule)
+static void hb_pp_generateInitFunc(FILE *fout, int32_t iRules, const char *szVar, const char *szRule)
 {
   fprintf(fout, "   hb_pp_initRules( &pState->p%s, &pState->i%s, ", szVar, szVar);
   if (iRules) {
@@ -183,7 +183,7 @@ static void hb_pp_generateInitFunc(FILE *fout, int iRules, const char *szVar, co
 
 static void hb_pp_generateRules(FILE *fout, PHB_PP_STATE pState, const char *szPPRuleFuncName)
 {
-  int iDefs = 0, iTrans = 0, iCmds = 0;
+  int32_t iDefs = 0, iTrans = 0, iCmds = 0;
 
   fprintf(fout, "/*\n"
                 " * Built-in preprocessor rules.\n"
@@ -213,7 +213,7 @@ static void hb_pp_generateRules(FILE *fout, PHB_PP_STATE pState, const char *szP
 
 static void hb_pp_undefCompilerRules(PHB_PP_STATE pState)
 {
-  int i;
+  int32_t i;
   PHB_PP_RULE *pRulePtr, pRule;
   const char *szRules[] = {"__HARBOUR__",    "__DATE__",       "__TIME__",      "__FILE__",      "__LINE__",
                            "__HB_MAIN__",    "__ARCH16BIT__",  "__ARCH32BIT__", "__ARCH64BIT__", "__LITTLE_ENDIAN__",
@@ -236,9 +236,9 @@ static void hb_pp_undefCompilerRules(PHB_PP_STATE pState)
   }
 }
 
-static int hb_pp_preprocesfile(PHB_PP_STATE pState, const char *szRuleFile, const char *szPPRuleFuncName)
+static int32_t hb_pp_preprocesfile(PHB_PP_STATE pState, const char *szRuleFile, const char *szPPRuleFuncName)
 {
-  int iResult = 0;
+  int32_t iResult = 0;
   HB_SIZE nLen;
 
   while (hb_pp_nextLine(pState, &nLen) != nullptr && nLen) {
@@ -264,7 +264,7 @@ static int hb_pp_preprocesfile(PHB_PP_STATE pState, const char *szRuleFile, cons
 static char *hb_pp_escapeString(char *szString)
 {
   char *szResult, ch;
-  int iLen;
+  int32_t iLen;
 
   szResult = szString;
   iLen = 0;
@@ -292,9 +292,9 @@ static char *hb_pp_escapeString(char *szString)
   return szResult;
 }
 
-static int hb_pp_generateVerInfo(char *szVerFile, HB_MAXINT nRevID, char *szChangeLogID, char *szLastEntry)
+static int32_t hb_pp_generateVerInfo(char *szVerFile, HB_MAXINT nRevID, char *szChangeLogID, char *szLastEntry)
 {
-  int iResult = 0;
+  int32_t iResult = 0;
 
   auto fout = hb_fopen(szVerFile, "w");
   if (!fout) {
@@ -390,18 +390,18 @@ static char *hb_fsFileFind(const char *pszFileMask)
   return nullptr;
 }
 
-static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, int iQuiet, HB_MAXINT *pnRevID,
+static int32_t hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, int32_t iQuiet, HB_MAXINT *pnRevID,
                                 char **pszChangeLogID, char **pszLastEntry)
 {
   char *pszFree = nullptr;
-  int iResult = 0;
+  int32_t iResult = 0;
 
   char szToCheck[HB_PATH_MAX];
   auto pFileName = hb_fsFNameSplit(pszFileName);
 
   if (!pFileName->szName) {
     static const char *s_szNames[] = {"ChangeLog.txt", "CHANGES.txt", nullptr};
-    int i = 0;
+    int32_t i = 0;
 
     if (!pFileName->szPath) {
       pFileName->szPath = "../../../../..";
@@ -446,7 +446,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, in
     char szId[128];
     char szLog[128];
     char *szFrom, *szTo;
-    int iLen;
+    int32_t iLen;
 
     if (iQuiet == 0) {
       fprintf(stdout, "Reading ChangeLog file: %s\n", pszFileName);
@@ -517,7 +517,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, in
 
       if (strlen(szLog) >= 16) {
         long lJulian = 0, lMilliSec = 0;
-        int iLen = 16;
+        int32_t iLen = 16;
 
         if (szLog[16] == ' ' && szLog[17] == 'U' && szLog[18] == 'T' && szLog[19] == 'C' &&
             (szLog[20] == '+' || szLog[20] == '-') && HB_ISDIGIT(szLog[21]) && HB_ISDIGIT(szLog[22]) &&
@@ -581,14 +581,14 @@ static void hb_pp_usage(char *szName)
          "Note:  if neither -o nor -v is specified then -w is default action\n\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
   char *szFile = nullptr, *szRuleFile = nullptr, *szVerFile = nullptr;
   char *szStdCh = nullptr, *szLogFile = nullptr, *szInclude;
   auto fWrite = false;
   auto fChgLog = false;
   char *szChangeLogID = nullptr, *szLastEntry = nullptr;
-  int iResult = 0, iQuiet = 0, i;
+  int32_t iResult = 0, iQuiet = 0, i;
   HB_MAXINT nRevID = 0;
   char *szPPRuleFuncName = nullptr;
   PHB_PP_STATE pState;

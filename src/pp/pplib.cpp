@@ -54,7 +54,7 @@
 
 HB_EXTERN_BEGIN
 
-static void hb_pp_ErrorMessage(void *cargo, const char *const szMsgTable[], char cPrefix, int iCode,
+static void hb_pp_ErrorMessage(void *cargo, const char *const szMsgTable[], char cPrefix, int32_t iCode,
                                const char *szParam1, const char *szParam2)
 {
 #if 0
@@ -81,7 +81,7 @@ static void hb_pp_Disp(void *cargo, const char *szMessage)
   HB_SYMBOL_UNUSED(szMessage);
 }
 
-static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piValue, HB_BOOL fSet)
+static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int32_t *piValue, HB_BOOL fSet)
 {
   /* ignore all compiler switches */
   HB_SYMBOL_UNUSED(cargo);
@@ -125,7 +125,7 @@ static void hb_pp_StdRules(PHB_ITEM ppItem)
   }
 }
 
-PHB_PP_STATE hb_pp_Param(int iParam)
+PHB_PP_STATE hb_pp_Param(int32_t iParam)
 {
   PHB_PP_STATE *pStatePtr = static_cast<PHB_PP_STATE *>(hb_parptrGC(&s_gcPPFuncs, iParam));
 
