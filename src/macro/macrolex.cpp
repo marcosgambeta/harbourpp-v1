@@ -117,7 +117,7 @@ static void hb_lexIdentCopy(PHB_MACRO_LEX pLex)
   }
 }
 
-static int hb_lexTimestampGet(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
+static int32_t hb_lexTimestampGet(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
   auto fOK = false;
   char *dst = pLex->pDst;
@@ -141,11 +141,11 @@ static int hb_lexTimestampGet(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_L
   return TIMESTAMP;
 }
 
-static int hb_lexDateGet(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
+static int32_t hb_lexDateGet(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
   auto fOK = false;
   char *dst = pLex->pDst;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   pLex->quote = false;
   while (pLex->nSrc < pLex->nLen) {
@@ -167,7 +167,7 @@ static int hb_lexDateGet(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pL
   return NUM_DATE;
 }
 
-static int hb_lexStringCopy(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex, char cDelim)
+static int32_t hb_lexStringCopy(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex, char cDelim)
 {
   pLex->quote = false;
   yylval_ptr->valChar.string = pLex->pDst;
@@ -186,7 +186,7 @@ static int hb_lexStringCopy(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX
   return LITERAL;
 }
 
-static int hb_lexStringExtCopy(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
+static int32_t hb_lexStringExtCopy(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
   HB_SIZE nLen;
   char *string;
@@ -219,11 +219,11 @@ static int hb_lexStringExtCopy(YYSTYPE *yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_
   return LITERAL;
 }
 
-static int hb_lexNumConv(YYSTYPE *yylval_ptr, PHB_MACRO_LEX pLex, HB_SIZE nLen)
+static int32_t hb_lexNumConv(YYSTYPE *yylval_ptr, PHB_MACRO_LEX pLex, HB_SIZE nLen)
 {
   HB_MAXINT lNumber;
   double dNumber;
-  int iDec, iWidth;
+  int32_t iDec, iWidth;
 
   if (hb_compStrToNum(pLex->pString + pLex->nSrc, nLen, &lNumber, &dNumber, &iDec, &iWidth)) {
     yylval_ptr->valDouble.dNumber = dNumber;
@@ -241,7 +241,7 @@ static int hb_lexNumConv(YYSTYPE *yylval_ptr, PHB_MACRO_LEX pLex, HB_SIZE nLen)
 
 extern int hb_macro_yylex(YYSTYPE *yylval_ptr, PHB_MACRO pMacro);
 
-int hb_macro_yylex(YYSTYPE *yylval_ptr, PHB_MACRO pMacro)
+int32_t hb_macro_yylex(YYSTYPE *yylval_ptr, PHB_MACRO pMacro)
 {
   PHB_MACRO_LEX pLex = static_cast<PHB_MACRO_LEX>(pMacro->pLex);
 
@@ -450,7 +450,7 @@ int hb_macro_yylex(YYSTYPE *yylval_ptr, PHB_MACRO pMacro)
       if (pLex->nSrc < pLex->nLen) {
         if (HB_ISFIRSTIDCHAR(pLex->pString[pLex->nSrc])) {
           /* [&<keyword>[.[<nextidchars>]]]+ */
-          int iParts = 0;
+          int32_t iParts = 0;
           pLex->quote = false;
           yylval_ptr->string = pLex->pDst;
           pLex->nSrc--;
@@ -498,7 +498,7 @@ int hb_macro_yylex(YYSTYPE *yylval_ptr, PHB_MACRO pMacro)
             while (++n < pLex->nLen && HB_ISDIGIT(pLex->pString[n])) {
             };
             if (n - pLex->nSrc == 9) {
-              int year, month, day;
+              int32_t year, month, day;
               hb_dateStrGet(pLex->pString + pLex->nSrc + 1, &year, &month, &day);
               yylval_ptr->valLong.lNumber = hb_dateEncode(year, month, day);
               pLex->nSrc = n;

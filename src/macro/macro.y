@@ -139,7 +139,7 @@
 %union                  /* special structure used by lex and yacc to share info */
 {
    const char * string; /* to hold a string returned by lex */
-   int       iNumber;   /* to hold a temporary integer number */
+   int32_t       iNumber;   /* to hold a temporary integer number */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    void *    pVoid;     /* to hold any memory structure we may need */
    PHB_EXPR  asExpr;
@@ -150,7 +150,7 @@
    } valChar;
    struct
    {
-      int      iNumber; /* to hold a number returned by lex */
+      int32_t      iNumber; /* to hold a number returned by lex */
    } valInteger;
    struct
    {
@@ -735,7 +735,7 @@ void yyerror( PHB_MACRO pMacro, const char * s )
 
 typedef struct HB_MEXPR_
 {
-   int      count;
+   int32_t      count;
    HB_EXPR  Expressions[ HB_MEXPR_PREALLOC ];
    struct HB_MEXPR_ *pPrev;
 }
@@ -870,9 +870,9 @@ static const HB_COMP_FUNCS s_macro_funcs =
    hb_macroErrorDuplVar,
 };
 
-int hb_macroYYParse( PHB_MACRO pMacro )
+int32_t hb_macroYYParse( PHB_MACRO pMacro )
 {
-   int iResult;
+   int32_t iResult;
 
    pMacro->funcs = &s_macro_funcs;
 
@@ -913,7 +913,7 @@ void hb_macroLexDelete( PHB_MACRO pMacro )
    }
 }
 
-int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
+int32_t hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 {
    HB_PP_TOKEN *pToken = hb_pp_lexGet( ( PHB_PP_STATE ) pMacro->pLex );
 
@@ -961,7 +961,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
       {
          HB_MAXINT lNumber;
          double dNumber;
-         int iDec, iWidth;
+         int32_t iDec, iWidth;
 
          if( hb_compStrToNum( pToken->value, pToken->len, &lNumber, &dNumber, &iDec, &iWidth ) )
          {
@@ -980,7 +980,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
       case HB_PP_TOKEN_DATE:
          if( pToken->len == 10 )
          {
-            int year, month, day;
+            int32_t year, month, day;
             hb_dateStrGet( pToken->value + 2, &year, &month, &day );
             yylval_ptr->valLong.lNumber = hb_dateEncode( year, month, day );
          }

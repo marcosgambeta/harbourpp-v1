@@ -94,7 +94,7 @@ union YYSTYPE
 #line 140 "macro.y" /* yacc.c:1909  */
 
    const char * string; /* to hold a string returned by lex */
-   int       iNumber;   /* to hold a temporary integer number */
+   int32_t       iNumber;   /* to hold a temporary integer number */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    void *    pVoid;     /* to hold any memory structure we may need */
    PHB_EXPR  asExpr;
@@ -105,7 +105,7 @@ union YYSTYPE
    } valChar;
    struct
    {
-      int      iNumber; /* to hold a number returned by lex */
+      int32_t      iNumber; /* to hold a number returned by lex */
    } valInteger;
    struct
    {
@@ -132,6 +132,6 @@ union YYSTYPE
 
 
 
-int hb_macro_yyparse (PHB_MACRO pMacro);
+int32_t hb_macro_yyparse (PHB_MACRO pMacro);
 
 #endif /* !YY_HB_MACRO_YY_MACROY_H_INCLUDED  */

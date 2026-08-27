@@ -285,7 +285,7 @@ union YYSTYPE
 #line 140 "macro.y" /* yacc.c:355  */
 
    const char * string; /* to hold a string returned by lex */
-   int       iNumber;   /* to hold a temporary integer number */
+   int32_t       iNumber;   /* to hold a temporary integer number */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    void *    pVoid;     /* to hold any memory structure we may need */
    PHB_EXPR  asExpr;
@@ -296,7 +296,7 @@ union YYSTYPE
    } valChar;
    struct
    {
-      int      iNumber; /* to hold a number returned by lex */
+      int32_t      iNumber; /* to hold a number returned by lex */
    } valInteger;
    struct
    {
@@ -323,7 +323,7 @@ union YYSTYPE
 
 
 
-int hb_macro_yyparse (PHB_MACRO pMacro);
+int32_t hb_macro_yyparse (PHB_MACRO pMacro);
 
 #endif /* !YY_HB_MACRO_YY_MACROY_H_INCLUDED  */
 
@@ -1242,7 +1242,7 @@ do {                                                                      \
 `----------------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, PHB_MACRO pMacro)
+yy_symbol_value_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, PHB_MACRO pMacro)
 {
   FILE *yyo = yyoutput;
   YYUSE (yyo);
@@ -1262,7 +1262,7 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
 `--------------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, PHB_MACRO pMacro)
+yy_symbol_print (FILE *yyoutput, int32_t yytype, YYSTYPE const * const yyvaluep, PHB_MACRO pMacro)
 {
   YYFPRINTF (yyoutput, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
@@ -1282,7 +1282,7 @@ yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)
   YYFPRINTF (stderr, "Stack now");
   for (; yybottom <= yytop; yybottom++)
     {
-      int yybot = *yybottom;
+      int32_t yybot = *yybottom;
       YYFPRINTF (stderr, " %d", yybot);
     }
   YYFPRINTF (stderr, "\n");
@@ -1300,11 +1300,11 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule, PHB_MACRO pMacro)
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int32_t yyrule, PHB_MACRO pMacro)
 {
   unsigned long int yylno = yyrline[yyrule];
-  int yynrhs = yyr2[yyrule];
-  int yyi;
+  int32_t yynrhs = yyr2[yyrule];
+  int32_t yyi;
   YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
              yyrule - 1, yylno);
   /* The symbols being reduced.  */
@@ -1327,7 +1327,7 @@ do {                                    \
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
-int yydebug;
+int32_t yydebug;
 #else /* !YYDEBUG */
 # define YYDPRINTF(Args)
 # define YY_SYMBOL_PRINT(Title, Type, Value, Location)
@@ -1449,7 +1449,7 @@ yytnamerr (char *yyres, const char *yystr)
    required number of bytes is too large to store.  */
 static int
 yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
-                yytype_int16 *yyssp, int yytoken)
+                yytype_int16 *yyssp, int32_t yytoken)
 {
   YYSIZE_T yysize0 = yytnamerr (YY_NULLPTR, yytname[yytoken]);
   YYSIZE_T yysize = yysize0;
@@ -1460,7 +1460,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
   char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
   /* Number of reported tokens (one for the "unexpected", one per
      "expected"). */
-  int yycount = 0;
+  int32_t yycount = 0;
 
   /* There are many possibilities here to consider:
      - If this state is a consistent state with a default action, then
@@ -1487,18 +1487,18 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
   */
   if (yytoken != YYEMPTY)
     {
-      int yyn = yypact[*yyssp];
+      int32_t yyn = yypact[*yyssp];
       yyarg[yycount++] = yytname[yytoken];
       if (!yypact_value_is_default (yyn))
         {
           /* Start YYX at -YYN if negative to avoid negative indexes in
              YYCHECK.  In other words, skip the first -YYN actions for
              this state because they are default actions.  */
-          int yyxbegin = yyn < 0 ? -yyn : 0;
+          int32_t yyxbegin = yyn < 0 ? -yyn : 0;
           /* Stay within bounds of both yycheck and yytname.  */
-          int yychecklim = YYLAST - yyn + 1;
-          int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-          int yyx;
+          int32_t yychecklim = YYLAST - yyn + 1;
+          int32_t yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
+          int32_t yyx;
 
           for (yyx = yyxbegin; yyx < yyxend; ++yyx)
             if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR
@@ -1558,7 +1558,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
      produced a string with the wrong number of "%s"s.  */
   {
     char *yyp = *yymsg;
-    int yyi = 0;
+    int32_t yyi = 0;
     while ((*yyp = *yyformat) != '\0')
       if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
         {
@@ -1580,7 +1580,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, PHB_MACRO pMacro)
+yydestruct (const char *yymsg, int32_t yytype, YYSTYPE *yyvaluep, PHB_MACRO pMacro)
 {
   YYUSE (yyvaluep);
   YYUSE (pMacro);
@@ -1604,7 +1604,7 @@ int
 yyparse (PHB_MACRO pMacro)
 {
 /* The lookahead symbol.  */
-int yychar;
+int32_t yychar;
 
 
 /* The semantic value of the lookahead symbol.  */
@@ -1614,11 +1614,11 @@ YY_INITIAL_VALUE (static YYSTYPE yyval_default;)
 YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
     /* Number of syntax errors so far.  */
-    int yynerrs;
+    int32_t yynerrs;
 
-    int yystate;
+    int32_t yystate;
     /* Number of tokens to shift before error messages enabled.  */
-    int yyerrstatus;
+    int32_t yyerrstatus;
 
     /* The stacks and their tools:
        'yyss': related to states.
@@ -1639,10 +1639,10 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
     YYSIZE_T yystacksize;
 
-  int yyn;
-  int yyresult;
+  int32_t yyn;
+  int32_t yyresult;
   /* Lookahead token as an internal (translated) token number.  */
-  int yytoken = 0;
+  int32_t yytoken = 0;
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
@@ -1658,7 +1658,7 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
   /* The number of symbols on the RHS of the reduced rule.
      Keep to zero when no symbol should be popped.  */
-  int yylen = 0;
+  int32_t yylen = 0;
 
   yyssp = yyss = yyssa;
   yyvsp = yyvs = yyvsa;
@@ -2812,7 +2812,7 @@ yyerrlab:
                                         yyssp, yytoken)
       {
         char const *yymsgp = YY_("syntax error");
-        int yysyntax_error_status;
+        int32_t yysyntax_error_status;
         yysyntax_error_status = YYSYNTAX_ERROR;
         if (yysyntax_error_status == 0)
           yymsgp = yymsg;
@@ -3004,7 +3004,7 @@ void yyerror( PHB_MACRO pMacro, const char * s )
 
 typedef struct HB_MEXPR_
 {
-   int      count;
+   int32_t      count;
    HB_EXPR  Expressions[ HB_MEXPR_PREALLOC ];
    struct HB_MEXPR_ *pPrev;
 }
@@ -3139,9 +3139,9 @@ static const HB_COMP_FUNCS s_macro_funcs =
    hb_macroErrorDuplVar,
 };
 
-int hb_macroYYParse( PHB_MACRO pMacro )
+int32_t hb_macroYYParse( PHB_MACRO pMacro )
 {
-   int iResult;
+   int32_t iResult;
 
    pMacro->funcs = &s_macro_funcs;
 
@@ -3182,7 +3182,7 @@ void hb_macroLexDelete( PHB_MACRO pMacro )
    }
 }
 
-int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
+int32_t hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 {
    HB_PP_TOKEN *pToken = hb_pp_lexGet( ( PHB_PP_STATE ) pMacro->pLex );
 
@@ -3230,7 +3230,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
       {
          HB_MAXINT lNumber;
          double dNumber;
-         int iDec, iWidth;
+         int32_t iDec, iWidth;
 
          if( hb_compStrToNum( pToken->value, pToken->len, &lNumber, &dNumber, &iDec, &iWidth ) )
          {
@@ -3249,7 +3249,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
       case HB_PP_TOKEN_DATE:
          if( pToken->len == 10 )
          {
-            int year, month, day;
+            int32_t year, month, day;
             hb_dateStrGet( pToken->value + 2, &year, &month, &day );
             yylval_ptr->valLong.lNumber = hb_dateEncode( year, month, day );
          }
