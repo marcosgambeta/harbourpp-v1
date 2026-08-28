@@ -1324,7 +1324,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
           break;
 
         case HB_P_JUMP:
-          nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
+          nOffset = HB_PCODE_MKINT16(&pCode[nJumpAddr + 1]);
           if (nOffset == 3) {
             hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, false, false);
           } else if (HB_LIM_INT8(nOffset)) {
@@ -1334,7 +1334,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
           break;
 
         case HB_P_JUMPFALSE:
-          nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
+          nOffset = HB_PCODE_MKINT16(&pCode[nJumpAddr + 1]);
           if (nOffset == 3) {
             hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, true, false);
           } else if (HB_LIM_INT8(nOffset)) {
@@ -1344,7 +1344,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
           break;
 
         case HB_P_JUMPTRUE:
-          nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
+          nOffset = HB_PCODE_MKINT16(&pCode[nJumpAddr + 1]);
           if (nOffset == 3) {
             hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, true, false);
           } else if (HB_LIM_INT8(nOffset)) {
@@ -1460,7 +1460,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
           case HB_P_JUMP:
           case HB_P_JUMPFALSE:
           case HB_P_JUMPTRUE:
-            nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
+            nOffset = HB_PCODE_MKINT16(&pCode[nJumpAddr + 1]);
             break;
 
           case HB_P_JUMPFAR:
@@ -1513,7 +1513,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
           case HB_P_JUMP:
           case HB_P_JUMPFALSE:
           case HB_P_JUMPTRUE:
-            nOffset += HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
+            nOffset += HB_PCODE_MKINT16(&pCode[nJumpAddr + 1]);
             HB_PUT_LE_UINT16(&pCode[nJumpAddr + 1], nOffset);
             break;
 
@@ -2990,7 +2990,7 @@ HB_BOOL hb_compHasJump(HB_HFUNC *pFunc, HB_SIZE nPos)
     case HB_P_JUMP:
     case HB_P_JUMPFALSE:
     case HB_P_JUMPTRUE:
-      nJumpAddr += HB_PCODE_MKSHORT(&pFunc->pCode[nJumpAddr + 1]);
+      nJumpAddr += HB_PCODE_MKINT16(&pFunc->pCode[nJumpAddr + 1]);
       break;
 
       // Jump can be replaced by series of NOOPs or POP and NOOPs

@@ -2248,7 +2248,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_JUMP: {
-      pCode += HB_PCODE_MKSHORT(&pCode[1]);
+      pCode += HB_PCODE_MKINT16(&pCode[1]);
       break;
     }
 
@@ -2268,7 +2268,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 
     case HB_P_JUMPFALSE: {
       if (!hb_vmPopLogical()) {
-        pCode += HB_PCODE_MKSHORT(&pCode[1]);
+        pCode += HB_PCODE_MKINT16(&pCode[1]);
       } else {
         pCode += 3;
       }
@@ -2295,7 +2295,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 
     case HB_P_JUMPTRUE: {
       if (hb_vmPopLogical()) {
-        pCode += HB_PCODE_MKSHORT(&pCode[1]);
+        pCode += HB_PCODE_MKINT16(&pCode[1]);
       } else {
         pCode += 3;
       }
@@ -2377,7 +2377,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
     case HB_P_PUSHINT: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
-      pItem->setIntegerValue(HB_PCODE_MKSHORT(&pCode[1]));
+      pItem->setIntegerValue(HB_PCODE_MKINT16(&pCode[1]));
       pItem->setIntegerLength(10);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(HB_P_PUSHINT)"));
@@ -2576,7 +2576,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_PUSHLOCAL: {
-      hb_vmPushLocal(HB_PCODE_MKSHORT(&pCode[1]));
+      hb_vmPushLocal(HB_PCODE_MKINT16(&pCode[1]));
       pCode += 3;
       break;
     }
@@ -2588,7 +2588,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_PUSHLOCALREF: {
-      hb_vmPushLocalByRef(HB_PCODE_MKSHORT(&pCode[1]));
+      hb_vmPushLocalByRef(HB_PCODE_MKINT16(&pCode[1]));
       pCode += 3;
       break;
     }
@@ -2711,7 +2711,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
     }
 
     case HB_P_POPLOCAL: {
-      hb_vmPopLocal(HB_PCODE_MKSHORT(&pCode[1]));
+      hb_vmPopLocal(HB_PCODE_MKINT16(&pCode[1]));
       pCode += 3;
       break;
     }
@@ -3032,7 +3032,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
             HB_TRACE(HB_TR_DEBUG, ("HB_P_LOCALNEARADDINT"));
 #endif
 
-      hb_vmAddInt(hb_stackLocalVariable(iLocal), HB_PCODE_MKSHORT(&pCode[2]));
+      hb_vmAddInt(hb_stackLocalVariable(iLocal), HB_PCODE_MKINT16(&pCode[2]));
       pCode += 4;
       break;
     }
@@ -3043,7 +3043,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
             HB_TRACE(HB_TR_DEBUG, ("HB_P_LOCALADDINT"));
 #endif
 
-      hb_vmAddInt(hb_stackLocalVariable(iLocal), HB_PCODE_MKSHORT(&pCode[3]));
+      hb_vmAddInt(hb_stackLocalVariable(iLocal), HB_PCODE_MKINT16(&pCode[3]));
       pCode += 5;
       break;
     }
@@ -4828,7 +4828,7 @@ static const uint8_t *hb_vmSwitch(const uint8_t *pCode, uint16_t casesCnt)
         break;
       case HB_P_JUMP:
         if (fFound) {
-          pCode += HB_PCODE_MKSHORT(&pCode[1]);
+          pCode += HB_PCODE_MKINT16(&pCode[1]);
         } else {
           pCode += 3;
         }

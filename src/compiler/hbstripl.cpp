@@ -75,7 +75,7 @@ static HB_STRIP_FUNC(hb_p_line)
         nNewPos += 3 + static_cast<signed char>(pFunc->pCode[nPCodePos + 4]);
         break;
       case HB_P_JUMP:
-        nNewPos += 3 + HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 4]);
+        nNewPos += 3 + HB_PCODE_MKINT16(&pFunc->pCode[nPCodePos + 4]);
         break;
       case HB_P_JUMPFAR:
         nNewPos += 3 + HB_PCODE_MKINT24(&pFunc->pCode[nPCodePos + 4]);

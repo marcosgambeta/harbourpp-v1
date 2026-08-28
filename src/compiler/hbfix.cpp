@@ -110,7 +110,7 @@ static HB_FIX_FUNC(hb_p_pushblocklarge)
 static HB_FIX_FUNC(hb_p_localfix)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  int16_t iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKINT16(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 

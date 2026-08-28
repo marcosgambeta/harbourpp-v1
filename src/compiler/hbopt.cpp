@@ -56,7 +56,7 @@ using PHB_OPT_FUNC = HB_OPT_FUNC_ *;
 static HB_OPT_FUNC(hb_p_poplocal)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  int16_t iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKINT16(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -71,11 +71,11 @@ static HB_OPT_FUNC(hb_p_poplocal)
 static HB_OPT_FUNC(hb_p_pushlocal)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  int16_t iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKINT16(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 
-  if (pFunc->pCode[nPCodePos + 3] == HB_P_POPLOCAL && HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 4]) == iVar &&
+  if (pFunc->pCode[nPCodePos + 3] == HB_P_POPLOCAL && HB_PCODE_MKINT16(&pFunc->pCode[nPCodePos + 4]) == iVar &&
       !hb_compHasJump(pFunc, nPCodePos + 3)) {
     hb_compNOOPfill(pFunc, nPCodePos, 6, false, false);
   } else if (pFunc->pCode[nPCodePos + 3] == HB_P_POPLOCALNEAR &&
@@ -96,7 +96,7 @@ static HB_OPT_FUNC(hb_p_pushlocalnear)
   HB_SYMBOL_UNUSED(cargo);
 
   if (pFunc->pCode[nPCodePos + 2] == HB_P_POPLOCAL &&
-      static_cast<HB_SCHAR>(pFunc->pCode[nPCodePos + 1]) == HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 3]) &&
+      static_cast<HB_SCHAR>(pFunc->pCode[nPCodePos + 1]) == HB_PCODE_MKINT16(&pFunc->pCode[nPCodePos + 3]) &&
       !hb_compHasJump(pFunc, nPCodePos + 2)) {
     hb_compNOOPfill(pFunc, nPCodePos, 5, false, false);
   } else if (pFunc->pCode[nPCodePos + 2] == HB_P_POPLOCALNEAR &&
@@ -112,7 +112,7 @@ static HB_OPT_FUNC(hb_p_pushlocalnear)
 static HB_OPT_FUNC(hb_p_localaddint)
 {
   uint8_t *pVar = &pFunc->pCode[nPCodePos + 1];
-  int16_t iVar = HB_PCODE_MKSHORT(pVar);
+  int16_t iVar = HB_PCODE_MKINT16(pVar);
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -910,7 +910,7 @@ static int16_t hb_compLocalGetNumber(uint8_t *pCode)
   case HB_P_LOCALINC:
   case HB_P_LOCALINCPUSH:
   case HB_P_LOCALADDINT:
-    return HB_PCODE_MKSHORT(pCode + 1);
+    return HB_PCODE_MKINT16(pCode + 1);
   }
   assert(0);
   return 0;
@@ -927,7 +927,7 @@ static HB_ISIZ hb_compJumpGetOffset(uint8_t *pCode)
   case HB_P_JUMP:
   case HB_P_JUMPFALSE:
   case HB_P_JUMPTRUE:
-    return HB_PCODE_MKSHORT(pCode + 1);
+    return HB_PCODE_MKINT16(pCode + 1);
 
   case HB_P_JUMPFAR:
   case HB_P_JUMPFALSEFAR:
@@ -968,7 +968,7 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
     case HB_P_LOCALDEC:
     case HB_P_LOCALINC:
     case HB_P_LOCALINCPUSH:
-      isVar = HB_PCODE_MKSHORT(&pFunc->pCode[nPos + 1]);
+      isVar = HB_PCODE_MKINT16(&pFunc->pCode[nPos + 1]);
       break;
     }
 
@@ -1082,7 +1082,7 @@ static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, int16_t isLocal)
       break;
 
     case HB_P_PUSHLOCAL:
-      if (isLocal == HB_PCODE_MKSHORT(&pFunc->pCode[nPos + 1])) {
+      if (isLocal == HB_PCODE_MKINT16(&pFunc->pCode[nPos + 1])) {
         pFunc->pCode[nPos] = HB_P_PUSHSELF;
         hb_compNOOPfill(pFunc, nPos + 1, 2, false, false);
       }
@@ -1098,7 +1098,7 @@ static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, int16_t isLocal)
       break;
 
     case HB_P_POPLOCAL:
-      if (isLocal == HB_PCODE_MKSHORT(&pFunc->pCode[nPos + 1])) {
+      if (isLocal == HB_PCODE_MKINT16(&pFunc->pCode[nPos + 1])) {
         assert(nPos > 0 && pFunc->pCode[nLastPos] == HB_P_PUSHSELF && !hb_compHasJump(pFunc, nPos));
 
         hb_compNOOPfill(pFunc, nLastPos, 1, false, false);
@@ -1346,7 +1346,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
     case HB_P_LOCALINC:
     case HB_P_LOCALINCPUSH: {
       uint8_t *pVar = &pFunc->pCode[nPos + 1];
-      int16_t isVar = HB_PCODE_MKSHORT(pVar);
+      int16_t isVar = HB_PCODE_MKINT16(pVar);
 
       if (isVar > 0 && pLocals[isVar - 1].isNumber != isVar) {
         isVar = pLocals[isVar - 1].isNumber;
@@ -1374,7 +1374,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
         int16_t isVar;
 
         pVar += 2;
-        isVar = HB_PCODE_MKSHORT(pVar);
+        isVar = HB_PCODE_MKINT16(pVar);
 
         if (isVar > 0 && pLocals[isVar - 1].isNumber != isVar) {
           isVar = pLocals[isVar - 1].isNumber;

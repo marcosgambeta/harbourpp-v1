@@ -110,7 +110,7 @@ static int32_t hb_hrbReadHead(const char *szBody, HB_SIZE nBodySize, HB_SIZE *pn
   const char *pVersion = szBody + nSigSize;
   *pnBodyOffset += nSigSize + 2;
 
-  return HB_PCODE_MKSHORT(pVersion);
+  return HB_PCODE_MKINT16(pVersion);
 }
 
 static bool hb_hrbReadValue(const char *szBody, HB_SIZE nBodySize, HB_SIZE *pnBodyOffset, HB_ULONG *pulValue)
