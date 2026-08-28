@@ -52,9 +52,9 @@
 
 struct CT_STR
 {
-  int iRefSwitch;
-  int iAtMupaSwitch;
-  int iAtLikeMode;
+  int32_t iRefSwitch;
+  int32_t iAtMupaSwitch;
+  int32_t iAtLikeMode;
   char cAtLikeChar;
 };
 
@@ -315,7 +315,7 @@ HB_FUNC(CSETREF)
   if (HB_ISLOG(1)) {
     ct_setref(hb_parl(1));
   } else if (hb_pcount() > 0) { // 1 params, but is not logical !
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CSETREF, nullptr, HB_ERR_FUNCNAME, 0,
@@ -355,7 +355,7 @@ HB_FUNC(CSETATMUPA)
   if (HB_ISLOG(1)) {
     ct_setatmupa(hb_parl(1));
   } else if (hb_pcount() > 0) { // 1 params, but is not logical !
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CSETATMUPA, nullptr, HB_ERR_FUNCNAME, 0,
@@ -422,7 +422,7 @@ HB_FUNC(SETATLIKE)
     if (iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD) {
       ct_setatlike(iNewMode);
     } else {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0,
@@ -447,7 +447,7 @@ HB_FUNC(SETATLIKE)
       }
     }
   } else if (hb_pcount() > 1) { // more than 2 params, but second is not string !
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0,

@@ -50,7 +50,7 @@
 
 HB_FUNC(POSCHAR)
 {
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   if (hb_parclen(1) > 0) {
     if (hb_parclen(2) > 0 || HB_ISNUM(2)) {
@@ -88,7 +88,7 @@ HB_FUNC(POSCHAR)
       }
     } else {
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSCHAR, nullptr,
@@ -105,7 +105,7 @@ HB_FUNC(POSCHAR)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSCHAR, nullptr, HB_ERR_FUNCNAME,
@@ -159,7 +159,7 @@ HB_FUNC(POSDEL)
     hb_retclen_buffer(pcRet, sStrLen - sDelLen);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSDEL, nullptr, HB_ERR_FUNCNAME,
@@ -197,7 +197,7 @@ HB_FUNC(POSINS)
 
       // check for false sStartPos
       if (sStartPos > sStrLen + 1) {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSINS, nullptr, HB_ERR_FUNCNAME, 0,
@@ -229,7 +229,7 @@ HB_FUNC(POSINS)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSINS, nullptr, HB_ERR_FUNCNAME,
@@ -246,7 +246,7 @@ HB_FUNC(POSINS)
 
 HB_FUNC(POSREPL)
 {
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
@@ -278,7 +278,7 @@ HB_FUNC(POSREPL)
 
       // check for false sStartPos
       if (sStartPos > sStrLen + 1) {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSREPL, nullptr, HB_ERR_FUNCNAME, 0,
@@ -325,7 +325,7 @@ HB_FUNC(POSREPL)
       }
     } else {
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSREPL, nullptr,
@@ -342,7 +342,7 @@ HB_FUNC(POSREPL)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSREPL, nullptr, HB_ERR_FUNCNAME,

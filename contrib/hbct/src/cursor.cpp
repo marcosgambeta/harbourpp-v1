@@ -49,8 +49,8 @@
 
 HB_FUNC(SAVECURSOR)
 {
-  int iRow, iCol;
-  int iCursor;
+  int32_t iRow, iCol;
+  int32_t iCursor;
 
   hb_gtGetPos(&iRow, &iCol);
   hb_gtGetCursor(&iCursor);

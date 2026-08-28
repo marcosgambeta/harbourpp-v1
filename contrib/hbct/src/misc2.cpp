@@ -78,7 +78,7 @@ HB_FUNC(COMPLEMENT)
     } else if (pItem->isNumInt()) {
       hb_retnint(-hb_itemGetNInt(pItem));
     } else if (pItem->isNumeric()) {
-      int iWidth, iDec;
+      int32_t iWidth, iDec;
       auto dValue = hb_itemGetND(pItem);
       hb_itemGetNLen(pItem, &iWidth, &iDec);
       hb_retndlen(-dValue, iWidth, iDec);

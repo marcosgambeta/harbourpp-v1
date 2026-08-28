@@ -58,7 +58,7 @@ HB_FUNC(CHARPIX)
 
 HB_FUNC(VGAPALETTE)
 {
-  int attr;
+  int32_t attr;
 
   if (hb_pcount() < 4) {
     // Resetting palette registers to default values is not supported yet
@@ -100,9 +100,9 @@ HB_FUNC(SETFONT)
   auto font = hb_parcx(1);
   auto len = static_cast<unsigned>(hb_parclen(1));
   auto area = hb_parni(2);
-  int offset = 0;
-  int count = 256;
-  int height = 16;
+  int32_t offset = 0;
+  int32_t count = 256;
+  int32_t height = 16;
 
   if (!area) {
     area = 1;

@@ -63,8 +63,8 @@ static void do_atnum(int iSwitch)
     auto sStrToMatchLen = hb_parclen(1);
     auto pcString = hb_parc(2);
     auto sStrLen = hb_parclen(2);
-    int iMultiPass = ct_getatmupa();
-    int iAtLike = ct_getatlike();
+    int32_t iMultiPass = ct_getatmupa();
+    int32_t iAtLike = ct_getatlike();
     char cAtLike = ct_getatlikechar();
     HB_SIZE sIgnore = hb_parnsdef(4, 0); // eventually ignore some characters
     HB_SIZE sMatchStrLen = 0;
@@ -75,7 +75,7 @@ static void do_atnum(int iSwitch)
       switch (iSwitch) {
       case DO_ATNUM_AFTERATNUM: {
         // AFTERATNUM
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_AFTERATNUM, nullptr, HB_ERR_FUNCNAME, 0,
@@ -87,7 +87,7 @@ static void do_atnum(int iSwitch)
       }
       case DO_ATNUM_BEFORATNUM: {
         // BEFORATNUM
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_BEFORATNUM, nullptr, HB_ERR_FUNCNAME, 0,
@@ -99,7 +99,7 @@ static void do_atnum(int iSwitch)
       }
       case DO_ATNUM_ATNUM: {
         // ATNUM
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0,
@@ -227,7 +227,7 @@ static void do_atnum(int iSwitch)
     case DO_ATNUM_BEFORATNUM: {
       // AFTERATNUM
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
@@ -245,7 +245,7 @@ static void do_atnum(int iSwitch)
     case DO_ATNUM_ATNUM: {
       // ATNUM
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME,

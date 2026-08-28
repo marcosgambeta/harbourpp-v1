@@ -164,7 +164,7 @@ HB_FUNC(FILETIME)
 
 HB_FUNC(SETFATTR)
 {
-  int iResult;
+  int32_t iResult;
 
   if (hb_fsSetAttr(hb_parcx(1), hb_parnldef(2, HB_FA_ARCHIVE))) {
     iResult = 0;
@@ -197,7 +197,7 @@ HB_FUNC(SETFDATI)
       }
       lJulian = pDate ? hb_itemGetDL(pDate) : -1;
       if (pTime) {
-        int hour = 0, minute = 0, second = 0, msec = 0;
+        int32_t hour = 0, minute = 0, second = 0, msec = 0;
         hb_timeStrGet(hb_itemGetCPtr(pTime), &hour, &minute, &second, &msec);
         lMillisec = hb_timeEncode(hour, minute, second, msec);
       } else {

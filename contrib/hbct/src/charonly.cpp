@@ -68,7 +68,7 @@ static void do_charonly(int iSwitch)
     auto pcOnlySet = hb_parc(1);
     auto sOnlySetLen = hb_parclen(1);
     HB_SIZE sRetStrLen = 0;
-    int iShift;
+    int32_t iShift;
 
     // check for zero-length strings
     switch (iSwitch) {
@@ -121,10 +121,10 @@ static void do_charonly(int iSwitch)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      int iError = 0;
+      int32_t iError = 0;
 
       switch (iSwitch) {
       case DO_CHARONLY_CHARONLY:

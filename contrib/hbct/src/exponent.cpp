@@ -98,7 +98,7 @@ HB_FUNC(EXPONENT)
 {
 #ifdef CT_EXPONENT_MANTISSA_BIT
 
-  int iExponent = 0;
+  int32_t iExponent = 0;
 
   union {
     double value;
@@ -118,7 +118,7 @@ HB_FUNC(EXPONENT)
 
 #else
 
-  int iExponent = 0;
+  int32_t iExponent = 0;
 
   auto dValue = hb_parnd(1);
 

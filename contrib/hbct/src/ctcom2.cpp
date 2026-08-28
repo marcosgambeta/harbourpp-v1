@@ -58,7 +58,7 @@ HB_FUNC(COM_DOSCON)
 
   if (nLen > 0) {
     if (HB_ISNUM(2) || HB_ISNUM(3)) {
-      int iRow, iCol;
+      int32_t iRow, iCol;
 
       hb_gtGetPos(&iRow, &iCol);
       if (HB_ISNUM(2)) {
@@ -151,7 +151,7 @@ HB_FUNC(XMOBLOCK)
 HB_FUNC(XMOCHECK)
 {
   auto nLen = hb_parclen(1);
-  int iResult = -1;
+  int32_t iResult = -1;
 
   if (nLen >= 132) {
     auto szBlock = hb_parc(1);
@@ -184,7 +184,7 @@ HB_FUNC(ZEROINSERT)
   if (pString) {
     HB_SIZE nBits, n;
     unsigned int uiVal;
-    int i;
+    int32_t i;
 
     auto szText = hb_itemGetCPtr(pString);
     auto nLen = hb_itemGetCLen(pString);
@@ -205,7 +205,7 @@ HB_FUNC(ZEROINSERT)
       HB_SIZE nDest = nLen + ((nBits + 7) >> 3);
       auto pszDest = static_cast<char *>(hb_xgrab(nDest + 1));
       unsigned char c = 0;
-      int j;
+      int32_t j;
 
       nBits = n = 0;
       i = 1;
@@ -254,7 +254,7 @@ HB_FUNC(ZEROREMOVE)
 
   if (pString) {
     HB_SIZE nDest, nBits, n;
-    int i, j, l;
+    int32_t i, j, l;
     unsigned char ucVal;
 
     auto szText = hb_itemGetCPtr(pString);

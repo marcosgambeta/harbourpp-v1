@@ -76,7 +76,7 @@ HB_FUNC(FLOOR)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_FLOOR, nullptr, HB_ERR_FUNCNAME,
@@ -111,7 +111,7 @@ HB_FUNC(CEILING)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CEILING, nullptr, HB_ERR_FUNCNAME,
@@ -130,7 +130,7 @@ HB_FUNC(SIGN)
 {
   if (HB_ISNUM(1)) {
     auto dInput = hb_parnd(1);
-    int iResult;
+    int32_t iResult;
 
     if (dInput == 0.00) {
       iResult = 0;
@@ -143,7 +143,7 @@ HB_FUNC(SIGN)
     hb_retni(iResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_SIGN, nullptr, HB_ERR_FUNCNAME, 0,
@@ -188,7 +188,7 @@ HB_FUNC(LOG10)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_LOG10, nullptr, HB_ERR_FUNCNAME,
@@ -220,7 +220,7 @@ HB_FUNC(FACT)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_FACT, nullptr, HB_ERR_FUNCNAME, 0,

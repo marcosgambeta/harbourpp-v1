@@ -52,7 +52,7 @@
 
 HB_FUNC(INVERTATTR)
 {
-  int iAttr;
+  int32_t iAttr;
 
   if (HB_ISCHAR(1)) {
     iAttr = hb_gtColorToN(hb_parc(1));
@@ -69,7 +69,7 @@ HB_FUNC(INVERTATTR)
 HB_FUNC(COLORTON)
 {
   if (HB_ISCHAR(1)) {
-    int iColor = hb_gtColorToN(hb_parc(1));
+    int32_t iColor = hb_gtColorToN(hb_parc(1));
     hb_retni(iColor == -1 ? 0 : iColor);
   } else {
     hb_retni(hb_parni(1));

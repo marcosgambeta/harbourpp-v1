@@ -51,7 +51,7 @@
 HB_FUNC(CTOBIT)
 {
   auto nString = hb_parclen(1);
-  int iResult = 0;
+  int32_t iResult = 0;
 
   if (nString > 0) {
     auto nPattern = hb_parclen(2);
@@ -62,7 +62,7 @@ HB_FUNC(CTOBIT)
 
       for (HB_SIZE n = 0; n < nString; ++n) {
         char c = pszString[n];
-        int i = 0;
+        int32_t i = 0;
 
         do {
           if (pszPattern[i] == c) {

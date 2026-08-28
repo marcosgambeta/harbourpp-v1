@@ -167,7 +167,7 @@ PHB_ITEM ct_error_subst(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE e
 }
 
 // argument error behaviour
-static int s_iArgErrMode = CT_ARGERR_IGNORE;
+static int32_t s_iArgErrMode = CT_ARGERR_IGNORE;
 
 void ct_setargerrormode(int iMode)
 {
@@ -198,7 +198,7 @@ HB_FUNC(CSETARGERR)
         iNewMode == CT_ARGERR_CATASTROPHIC || iNewMode == CT_ARGERR_IGNORE) {
       ct_setargerrormode(hb_parni(1));
     } else {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
@@ -206,7 +206,7 @@ HB_FUNC(CSETARGERR)
       }
     }
   } else if (hb_pcount() > 0) { // more than one param but not integer
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0,
@@ -216,12 +216,12 @@ HB_FUNC(CSETARGERR)
 }
 
 // initialization
-static int s_initialized = 0; // TODO: make this thread safe
+static int32_t s_initialized = 0; // TODO: make this thread safe
 
 HB_FUNC(CTCINIT)
 {
   if (s_initialized == 0) {
-    int iSuccess;
+    int32_t iSuccess;
 
     iSuccess = ct_str_init();
     iSuccess |= ct_math_init();

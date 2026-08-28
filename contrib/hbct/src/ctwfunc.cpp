@@ -50,9 +50,9 @@
 #include <hbapistr.hpp>
 #include "ctwin.h"
 
-static int hb_ctColorParam(int iParam, int iDefault)
+static int32_t hb_ctColorParam(int32_t iParam, int32_t iDefault)
 {
-  int iColor;
+  int32_t iColor;
 
   if (HB_ISNUM(iParam)) {
     iColor = hb_parni(iParam);
@@ -80,7 +80,7 @@ HB_FUNC(GETCLEARA)
 
 HB_FUNC(SETCLEARA)
 {
-  int iColor = hb_ctColorParam(1, -1);
+  int32_t iColor = hb_ctColorParam(1, -1);
 
   if (iColor >= 0) {
     hb_gtSetClearColor(iColor);
@@ -113,7 +113,7 @@ HB_FUNC(SETCLEARB)
 
 HB_FUNC(GETCLEARB)
 {
-  int iChar = hb_gtGetClearChar();
+  int32_t iChar = hb_gtGetClearChar();
   auto cdp = hb_vmCDP();
 
   if (!HB_CDP_ISCHARUNI(cdp)) {
@@ -158,7 +158,7 @@ HB_FUNC(WBOARD)
 
 HB_FUNC(WOPEN)
 {
-  int iColor;
+  int32_t iColor;
 
   // 6th (color) and 7th (lVisible) parameters are Harbour extensions
   iColor = hb_ctColorParam(6, -1); // Harbour extension // HB_EXTENSION
@@ -212,7 +212,7 @@ HB_FUNC(WBOX)
 
   HB_WCHAR szBoxBuf[10], wc;
   auto pszBoxFrame = hb_parc(1);
-  int iColor;
+  int32_t iColor;
 
   if (pszBoxFrame) {
     auto nLen = hb_parclen(1);
@@ -242,8 +242,8 @@ HB_FUNC(WBOX)
 
 HB_FUNC(WFORMAT)
 {
-  int iWindow = hb_ctwCurrentWindow();
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iWindow = hb_ctwCurrentWindow();
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_pcount() == 0) {
     hb_ctwGetFormatCords(iWindow, true, &iTop, &iLeft, &iBottom, &iRight);
@@ -262,7 +262,7 @@ HB_FUNC(WFORMAT)
 
 HB_FUNC(WROW)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iTop);
@@ -270,7 +270,7 @@ HB_FUNC(WROW)
 
 HB_FUNC(WCOL)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iLeft);
@@ -278,7 +278,7 @@ HB_FUNC(WCOL)
 
 HB_FUNC(WLASTROW)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iBottom);
@@ -286,7 +286,7 @@ HB_FUNC(WLASTROW)
 
 HB_FUNC(WLASTCOL)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iRight);
@@ -294,7 +294,7 @@ HB_FUNC(WLASTCOL)
 
 HB_FUNC(WFROW)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iTop);
@@ -302,7 +302,7 @@ HB_FUNC(WFROW)
 
 HB_FUNC(WFCOL)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iLeft);
@@ -310,7 +310,7 @@ HB_FUNC(WFCOL)
 
 HB_FUNC(WFLASTROW)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iBottom);
@@ -318,7 +318,7 @@ HB_FUNC(WFLASTROW)
 
 HB_FUNC(WFLASTCOL)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
   hb_retni(iRight);
@@ -350,7 +350,7 @@ HB_FUNC(CTWLASTKEY)
 HB_FUNC(HBCT_MAXROW) // Return the maximum screen/window row number (zero origin)
 {
   if (hb_parl(1)) {
-    int iRows, iCols;
+    int32_t iRows, iCols;
     hb_gtScrDim(&iRows, &iCols);
     hb_retni(iRows - 1);
   } else {
@@ -361,7 +361,7 @@ HB_FUNC(HBCT_MAXROW) // Return the maximum screen/window row number (zero origin
 HB_FUNC(HBCT_MAXCOL) // Return the maximum screen/window column number (zero origin)
 {
   if (hb_parl(1)) {
-    int iRows, iCols;
+    int32_t iRows, iCols;
     hb_gtScrDim(&iRows, &iCols);
     hb_retni(iCols - 1);
   } else {
@@ -400,8 +400,8 @@ HB_FUNC(WALIAS)
 
 HB_FUNC(WLIST)
 {
-  const int *piStack;
-  int iWindows, iFrom;
+  const int32_t *piStack;
+  int32_t iWindows, iFrom;
 
   iWindows = hb_ctwGetWindowStack(&piStack);
   if (iWindows < 0) {

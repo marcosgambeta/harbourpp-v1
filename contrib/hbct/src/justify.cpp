@@ -55,7 +55,7 @@
 // helper function for the Just*() functions
 static void do_justify(int iSwitch)
 {
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
@@ -127,7 +127,7 @@ static void do_justify(int iSwitch)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,

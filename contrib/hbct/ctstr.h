@@ -51,8 +51,8 @@
 
 HB_EXTERN_BEGIN
 
-extern int ct_str_init( void );
-extern int ct_str_exit( void );
+extern int32_t ct_str_init( void );
+extern int32_t ct_str_exit( void );
 
 extern const char * ct_at_exact_forward(const char * pcString, HB_SIZE sStrLen,
                                         const char * pcMatch, HB_SIZE sMatchLen,
@@ -73,12 +73,12 @@ extern const char * ct_at_charset_backward(const char * pcString, HB_SIZE sStrLe
                                            const char * pcCharSet, HB_SIZE sCharSetLen,
                                            HB_SIZE * psMatchedCharPos);
 
-extern void ct_setref( int iNewSwitch );
-extern int  ct_getref( void );
-extern void ct_setatmupa(int iNewSwitch);
-extern int  ct_getatmupa(void);
-extern void ct_setatlike( int iNewSwitch );
-extern int  ct_getatlike( void );
+extern void ct_setref( int32_t iNewSwitch );
+extern int32_t  ct_getref( void );
+extern void ct_setatmupa(int32_t iNewSwitch);
+extern int32_t  ct_getatmupa(void);
+extern void ct_setatlike( int32_t iNewSwitch );
+extern int32_t  ct_getatlike( void );
 extern void ct_setatlikechar( char cNewChar );
 extern char ct_getatlikechar( void );
 

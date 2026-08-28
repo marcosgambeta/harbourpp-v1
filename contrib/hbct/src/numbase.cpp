@@ -72,7 +72,7 @@ HB_FUNC(CTON)
 #endif
 
     for (;;) {
-      int iDigit = static_cast<uint8_t>(*szNumber++);
+      int32_t iDigit = static_cast<uint8_t>(*szNumber++);
       if (iDigit >= '0' && iDigit <= '9') {
         iDigit -= '0';
       } else if (iDigit >= 'A' && iDigit <= 'Z') {
@@ -130,14 +130,14 @@ HB_FUNC(NTOC)
 
   if (iBase >= 2 && iBase <= 36 && ct_numParam(1, &nValue)) {
     auto uValue = static_cast<HB_MAXUINT>(nValue);
-    int i;
+    int32_t i;
 
     i = iLen == 0 ? static_cast<int>(sizeof(szBuffer)) : iLen;
     do {
       if (--i < 0) {
         break;
       } else {
-        int iDigit = uValue % iBase;
+        int32_t iDigit = uValue % iBase;
         uValue /= iBase;
         iDigit += iDigit < 10 ? '0' : ('A' - 10);
         szBuffer[i] = static_cast<char>(iDigit);

@@ -51,7 +51,7 @@
 
 static void SetGet(int iFlag)
 {
-  int iState = 0;
+  int32_t iState = 0;
   HB_GT_INFO gtInfo{};
 
   hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);

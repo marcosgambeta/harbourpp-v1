@@ -76,7 +76,7 @@ HB_EXTERN_BEGIN
 #define CT_CHARLIST_CHARHIST    2
 #define CT_CHARLIST_CHARSLIST   3
 
-extern void ct_charlist( int iMode );
+extern void ct_charlist( int32_t iMode );
 
 // ct_charop() modes
 #define CT_CHAROP_CHARADD       0
@@ -90,9 +90,9 @@ extern void ct_charlist( int iMode );
 #define CT_CHAROP_CHARRLL       8  // new: left rotation
 #define CT_CHAROP_CHARRLR       9  // new: right rotation
 
-extern void ct_charop( int iMode );
+extern void ct_charop( int32_t iMode );
 
-extern HB_BOOL ct_numParam( int iParam, HB_MAXINT * plNum );
+extern HB_BOOL ct_numParam( int32_t iParam, HB_MAXINT * plNum );
 
 // CT subsystem error throwing functions
 extern uint16_t ct_error( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
@@ -102,8 +102,8 @@ extern PHB_ITEM ct_error_subst( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ER
                                 const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, uint16_t uiFlags, HB_ULONG uiArgCount, ... );
 
 // set argument error behaviour
-extern void ct_setargerrormode( int iMode );
-extern int ct_getargerrormode( void );
+extern void ct_setargerrormode( int32_t iMode );
+extern int32_t ct_getargerrormode( void );
 
 HB_EXTERN_END
 

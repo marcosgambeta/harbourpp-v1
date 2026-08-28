@@ -51,8 +51,8 @@
 HB_FUNC(WORDREPL)
 {
   // suppressing return value ?
-  int iNoRet = ct_getref() && HB_ISBYREF(2);
-  int iMultiPass = ct_getatmupa();
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(2);
+  int32_t iMultiPass = ct_getatmupa();
 
   HB_SIZE sSearchLen, sReplaceLen;
 
@@ -63,7 +63,7 @@ HB_FUNC(WORDREPL)
     auto pcString = hb_parc(2);
     auto sStrLen = hb_parclen(2);
     auto pcReplace = hb_parc(3);
-    int iMode = hb_parldef(4, 0);
+    int32_t iMode = hb_parldef(4, 0);
 
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
     hb_xmemcpy(pcRet, pcString, sStrLen);
@@ -117,7 +117,7 @@ HB_FUNC(WORDREPL)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_WORDREPL, nullptr,

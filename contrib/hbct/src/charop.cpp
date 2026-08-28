@@ -57,7 +57,7 @@
 void ct_charop(int iMode)
 {
   // suppressing return value ?
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   if (HB_ISCHAR(1)) {
     auto sStrLen = hb_parclen(1);
@@ -85,7 +85,7 @@ void ct_charop(int iMode)
 
     // SHL
     case CT_CHAROP_CHARSHL: {
-      int iSHL = hb_parni(2) % 8; // defaults to 0
+      int32_t iSHL = hb_parni(2) % 8; // defaults to 0
 
       if (iSHL == 0) {
         hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -99,7 +99,7 @@ void ct_charop(int iMode)
 
     // SHR
     case CT_CHAROP_CHARSHR: {
-      int iSHR = hb_parni(2) % 8; // defaults to 0
+      int32_t iSHR = hb_parni(2) % 8; // defaults to 0
 
       if (iSHR == 0) {
         hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -113,7 +113,7 @@ void ct_charop(int iMode)
 
     // RLL
     case CT_CHAROP_CHARRLL: {
-      int iRLL = hb_parni(2) % 8; // defaults to 0
+      int32_t iRLL = hb_parni(2) % 8; // defaults to 0
 
       hb_xmemcpy(pucResult, pucString, sStrLen);
 
@@ -134,7 +134,7 @@ void ct_charop(int iMode)
 
     // RLR
     case CT_CHAROP_CHARRLR: {
-      int iRLR = hb_parni(2) % 8; // defaults to 0
+      int32_t iRLR = hb_parni(2) % 8; // defaults to 0
 
       hb_xmemcpy(pucResult, pucString, sStrLen);
 
@@ -164,7 +164,7 @@ void ct_charop(int iMode)
           pucResult[sPos] = static_cast<char>(pucString[sPos] + pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
         }
       } else {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARADD, nullptr, HB_ERR_FUNCNAME, 0,
@@ -186,7 +186,7 @@ void ct_charop(int iMode)
           pucResult[sPos] = static_cast<char>(pucString[sPos] - pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
         }
       } else {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSUB, nullptr, HB_ERR_FUNCNAME, 0,
@@ -208,7 +208,7 @@ void ct_charop(int iMode)
           pucResult[sPos] = static_cast<char>(pucString[sPos] & pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
         }
       } else {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARAND, nullptr, HB_ERR_FUNCNAME, 0,
@@ -230,7 +230,7 @@ void ct_charop(int iMode)
           pucResult[sPos] = static_cast<char>(pucString[sPos] | pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
         }
       } else {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHAROR, nullptr, HB_ERR_FUNCNAME, 0,
@@ -252,7 +252,7 @@ void ct_charop(int iMode)
           pucResult[sPos] = static_cast<char>(pucString[sPos] ^ pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
         }
       } else {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARXOR, nullptr, HB_ERR_FUNCNAME, 0,
@@ -273,10 +273,10 @@ void ct_charop(int iMode)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
-      int iError = 0;
+      int32_t iError = 0;
 
       switch (iMode) {
       case CT_CHAROP_CHARADD:

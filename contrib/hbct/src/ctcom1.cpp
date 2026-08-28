@@ -50,7 +50,7 @@
 #include <hbapicom.hpp>
 #include "ctcom.ch"
 
-static int hb_ctComCharParam(int iParam)
+static int32_t hb_ctComCharParam(int iParam)
 {
   auto pszParam = hb_parc(iParam);
 
@@ -68,7 +68,7 @@ static int hb_ctComCharParam(int iParam)
 static void hb_ctComTestMSR(int iLine)
 {
   HB_BOOL fResult;
-  int iMSR;
+  int32_t iMSR;
 
   if (hb_comMSR(hb_parni(1), &iMSR) != -1) {
     fResult = (iMSR & iLine) != 0;
@@ -130,7 +130,7 @@ HB_FUNC(COM_RING)
 // com_RTS(<nComPort>, [<lNewRTSStatus>]) --> <lOldRTSStatus>
 HB_FUNC(COM_RTS)
 {
-  int iMCR, iClr = 0, iSet = 0;
+  int32_t iMCR, iClr = 0, iSet = 0;
 
   if (HB_ISLOG(2)) {
     if (hb_parl(2)) {
@@ -146,7 +146,7 @@ HB_FUNC(COM_RTS)
 // com_DTR(<nComPort>, [<lNewDTRStatus>]) --> <lOldDTRStatus>
 HB_FUNC(COM_DTR)
 {
-  int iMCR, iClr = 0, iSet = 0;
+  int32_t iMCR, iClr = 0, iSet = 0;
 
   if (HB_ISLOG(2)) {
     if (hb_parl(2)) {
@@ -162,7 +162,7 @@ HB_FUNC(COM_DTR)
 // com_MCR(<nComPort>, [<nMCR>]) --> <nMCR> (MCR_*)
 HB_FUNC(COM_MCR)
 {
-  int iMCR, iClr, iSet;
+  int32_t iMCR, iClr, iSet;
 
   if (HB_ISNUM(2)) {
     iClr = 0xff;
@@ -181,7 +181,7 @@ HB_FUNC(COM_MCR)
 // com_MSR(<nComPort>) --> <nMSR> (MSR_*)
 HB_FUNC(COM_MSR)
 {
-  int iMSR;
+  int32_t iMSR;
 
   if (hb_comMSR(hb_parni(1), &iMSR) == -1) {
     iMSR = MSR_ERROR;
@@ -193,7 +193,7 @@ HB_FUNC(COM_MSR)
 // com_LSR(<nComPort>) --> <nLSR> (LSR_*)
 HB_FUNC(COM_LSR)
 {
-  int iLSR;
+  int32_t iLSR;
 
   if (hb_comLSR(hb_parni(1), &iLSR) == -1) {
     iLSR = LSR_ERROR;
@@ -212,7 +212,7 @@ HB_FUNC(COM_BREAK)
 HB_FUNC(COM_HARD)
 {
   auto iPort = hb_parni(1);
-  int iFlow, iMask;
+  int32_t iFlow, iMask;
   HB_BOOL fResult = false;
 
   if (hb_comFlowControl(iPort, &iFlow, -1) != -1) {
@@ -234,7 +234,7 @@ HB_FUNC(COM_HARD)
 HB_FUNC(COM_SOFT)
 {
   auto iPort = hb_parni(1);
-  int iFlow, iMask;
+  int32_t iFlow, iMask;
   HB_BOOL fResult = false;
 
   if (hb_comFlowControl(iPort, &iFlow, -1) != -1) {
@@ -261,7 +261,7 @@ HB_FUNC(COM_SOFT_R)
 {
   HB_BOOL fResult = false;
   auto iPort = hb_parni(1);
-  int iMode;
+  int32_t iMode;
 
   if (HB_ISLOG(2)) {
     hb_comFlowSet(iPort, HB_COM_FL_SOFT | (hb_parl(2) ? HB_COM_FL_OOFF : HB_COM_FL_OON));
@@ -279,7 +279,7 @@ HB_FUNC(COM_SOFT_R)
 HB_FUNC(COM_SOFT_S)
 {
   HB_BOOL fResult = false;
-  int iMode = hb_comInputState(hb_parni(1));
+  int32_t iMode = hb_comInputState(hb_parni(1));
 
   if (iMode > 0) {
     fResult = (iMode & HB_COM_RX_XOFF) != 0;
@@ -303,7 +303,7 @@ HB_FUNC(COM_REMOTE)
 // com_SMode(<nComPort>) --> <nSendMode>
 HB_FUNC(COM_SMODE)
 {
-  int iMode = hb_comOutputState(hb_parni(1)), iResult = 0;
+  int32_t iMode = hb_comOutputState(hb_parni(1)), iResult = 0;
 
   if (iMode > 0) {
     if (iMode & HB_COM_TX_EMPTY) {
@@ -350,7 +350,7 @@ HB_FUNC(COM_INIT)
 {
   auto iPort = hb_parni(1);
   auto iBaud = hb_parnidef(2, 300);
-  int iParity = hb_parcx(3)[0];
+  int32_t iParity = hb_parcx(3)[0];
   auto iSize = hb_parnidef(4, 8);
   auto iStop = hb_parnidef(5, 1);
 

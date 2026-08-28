@@ -64,7 +64,7 @@ HB_FUNC(CELSIUS)
     hb_retnd(dResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CELSIUS, nullptr, HB_ERR_FUNCNAME,
@@ -89,7 +89,7 @@ HB_FUNC(FAHRENHEIT)
     hb_retnd(dResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_FAHRENHEIT, nullptr,

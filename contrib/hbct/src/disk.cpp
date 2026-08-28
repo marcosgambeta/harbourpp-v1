@@ -72,7 +72,7 @@ HB_FUNC(DIRNAME)
 {
   auto pbyBuffer = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
   auto pszDrive = hb_parc(1);
-  int iDrive = 0;
+  int32_t iDrive = 0;
 
   if (pszDrive) {
     auto uc = static_cast<uint8_t>(*pszDrive);

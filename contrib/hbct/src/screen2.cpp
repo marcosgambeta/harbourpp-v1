@@ -55,7 +55,7 @@ HB_FUNC(SAYDOWN)
   auto nLen = hb_parclen(1);
 
   if (nLen) {
-    int iRow, iCol, iMaxRow, iMaxCol;
+    int32_t iRow, iCol, iMaxRow, iMaxCol;
     long lDelay = hb_parnldef(2, 4);
 
     hb_gtGetPos(&iRow, &iCol);
@@ -76,7 +76,7 @@ HB_FUNC(SAYDOWN)
       HB_CODEPAGE *cdp = hb_gtHostCP();
       HB_SIZE nIndex = 0;
 
-      int iColor = hb_gtGetCurrColor();
+      int32_t iColor = hb_gtGetCurrColor();
 
       if (nLen > static_cast<HB_SIZE>(iMaxRow - iRow + 1)) {
         nLen = static_cast<HB_SIZE>(iMaxRow - iRow + 1);
@@ -110,7 +110,7 @@ HB_FUNC(SAYSPREAD)
   const HB_WCHAR *pwText = hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hText, &nLen);
 
   if (nLen) {
-    int iRow, iCol, iMaxRow, iMaxCol;
+    int32_t iRow, iCol, iMaxRow, iMaxCol;
     long lDelay;
 
     lDelay = hb_parnldef(2, 4);
@@ -127,7 +127,7 @@ HB_FUNC(SAYSPREAD)
 
     if (iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol) {
       HB_SIZE nPos;
-      int iColor = hb_gtGetCurrColor();
+      int32_t iColor = hb_gtGetCurrColor();
 
       nPos = nLen >> 1;
       nLen = nLen & 1;
@@ -164,7 +164,7 @@ HB_FUNC(SAYMOVEIN)
   const HB_WCHAR *pwText = hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hText, &nLen);
 
   if (nLen) {
-    int iRow, iCol, iMaxRow, iMaxCol;
+    int32_t iRow, iCol, iMaxRow, iMaxCol;
     long lDelay;
     HB_BOOL fBack;
 
@@ -183,8 +183,8 @@ HB_FUNC(SAYMOVEIN)
 
     if (iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol) {
       HB_SIZE nChars;
-      int iColor = hb_gtGetCurrColor();
-      int iNewCol;
+      int32_t iColor = hb_gtGetCurrColor();
+      int32_t iNewCol;
 
       iNewCol = iCol + static_cast<int>(nLen);
       if (fBack) {
@@ -232,8 +232,8 @@ HB_FUNC(SAYMOVEIN)
 
 HB_FUNC(CLEARSLOW) // TODO: Unicode support
 {
-  int iMaxRow = hb_gtMaxRow();
-  int iMaxCol = hb_gtMaxCol();
+  int32_t iMaxRow = hb_gtMaxRow();
+  int32_t iMaxCol = hb_gtMaxCol();
   long lDelay = hb_parnl(1);
   auto iTop = hb_parni(2);
   auto iLeft = hb_parni(3);
@@ -251,7 +251,7 @@ HB_FUNC(CLEARSLOW) // TODO: Unicode support
 
   if (iTop >= 0 && iLeft >= 0 && iTop <= iBottom && iLeft <= iRight) {
     char pszFrame[2];
-    int iColor = hb_gtGetCurrColor();
+    int32_t iColor = hb_gtGetCurrColor();
     double dX, dY, dXX, dYY;
 
     pszFrame[0] = static_cast<char>(ucChar);
@@ -307,7 +307,7 @@ HB_FUNC(CLEARSLOW) // TODO: Unicode support
 
 HB_FUNC(SCREENSTR) // TODO: Unicode support
 {
-  int iRow, iCol, iMaxRow, iMaxCol;
+  int32_t iRow, iCol, iMaxRow, iMaxCol;
   char *pBuffer;
   HB_SIZE nCount = HB_SIZE_MAX;
 
@@ -334,9 +334,9 @@ HB_FUNC(SCREENSTR) // TODO: Unicode support
     nSize <<= 1;
     szText = pBuffer = static_cast<char *>(hb_xgrab(nSize + 1));
     do {
-      int iC = iCol;
+      int32_t iC = iCol;
       do {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
         hb_gtGetChar(iRow, iC, &iColor, &bAttr, &usChar);
@@ -361,7 +361,7 @@ HB_FUNC(STRSCREEN) // TODO: Unicode support
 
   if (nLen) {
     auto szText = hb_parc(1);
-    int iRow, iCol, iMaxRow, iMaxCol;
+    int32_t iRow, iCol, iMaxRow, iMaxCol;
 
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(2)) {
@@ -376,10 +376,10 @@ HB_FUNC(STRSCREEN) // TODO: Unicode support
     if (iRow >= 0 && iRow <= iMaxRow && iCol >= 0 && iCol <= iMaxCol) {
       hb_gtBeginWrite();
       do {
-        int iC = iCol;
+        int32_t iC = iCol;
         do {
           uint16_t usChar = static_cast<uint8_t>(*szText++);
-          int iColor = static_cast<uint8_t>(*szText++);
+          int32_t iColor = static_cast<uint8_t>(*szText++);
           hb_gtPutChar(iRow, iC, iColor, 0, usChar);
           nLen -= 2;
         } while (nLen && ++iC <= iMaxCol);
@@ -393,7 +393,7 @@ HB_FUNC(STRSCREEN) // TODO: Unicode support
 
 HB_FUNC(__HBCT_DSPTIME) // Helper function for ShowTime()
 {
-  int iColor;
+  int32_t iColor;
   char szTime[10];
 
   auto iRow = hb_parni(1);
@@ -417,7 +417,7 @@ HB_FUNC(__HBCT_DSPTIME) // Helper function for ShowTime()
   }
 
   if (hb_parl(5)) {
-    int iHour = (szTime[0] - '0') * 10 + (szTime[1] - '0');
+    int32_t iHour = (szTime[0] - '0') * 10 + (szTime[1] - '0');
 
     if (hb_parl(6)) {
       szTime[iLen++] = iHour >= 12 ? 'p' : 'a';

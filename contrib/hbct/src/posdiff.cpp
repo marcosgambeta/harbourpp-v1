@@ -59,7 +59,7 @@ HB_FUNC(POSDIFF)
     HB_SIZE sIgnore = hb_parnsdef(3, 0);
 
     if (sIgnore > sStrLen1 || sIgnore > sStrLen2) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSDIFF, nullptr, HB_ERR_FUNCNAME, 0,
@@ -89,7 +89,7 @@ HB_FUNC(POSDIFF)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSDIFF, nullptr, HB_ERR_FUNCNAME,
@@ -124,7 +124,7 @@ HB_FUNC(POSEQUAL)
     }
 
     if (sCompare == 0 || sIgnore > sStrLen1 || sIgnore > sStrLen2) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0,
@@ -136,7 +136,7 @@ HB_FUNC(POSEQUAL)
     }
 
     if (sStrLen1 < (sCompare + sIgnore) || sStrLen2 < (sCompare + sIgnore)) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0,
@@ -173,7 +173,7 @@ HB_FUNC(POSEQUAL)
     hb_retns(0);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_POSEQUAL, nullptr,

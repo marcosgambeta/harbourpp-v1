@@ -56,7 +56,7 @@ HB_FUNC(RANGEREM)
     const unsigned char *pc;
     unsigned char ucChar1, ucChar2;
     HB_SIZE sRetIndex;
-    int iMode;
+    int32_t iMode;
 
     if (HB_ISCHAR(1)) {
       ucChar1 = *(reinterpret_cast<const unsigned char *>(hb_parc(1)));
@@ -76,7 +76,7 @@ HB_FUNC(RANGEREM)
     sRetIndex = 0;
     for (pc = reinterpret_cast<const unsigned char *>(pcString);
          pc < reinterpret_cast<const unsigned char *>(pcString) + sStrLen; pc++) {
-      int iBool = ((*pc) >= ucChar1);
+      int32_t iBool = ((*pc) >= ucChar1);
 
       if (iMode) {
         iBool |= ((*pc) <= ucChar2);
@@ -94,7 +94,7 @@ HB_FUNC(RANGEREM)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREM, nullptr,
@@ -113,7 +113,7 @@ HB_FUNC(RANGEREM)
 
 HB_FUNC(RANGEREPL)
 {
-  int iNoRef = ct_getref() && HB_ISBYREF(3);
+  int32_t iNoRef = ct_getref() && HB_ISBYREF(3);
 
   if ((hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3) &&
       (hb_parclen(4) > 0 || HB_ISNUM(4))) {
@@ -122,7 +122,7 @@ HB_FUNC(RANGEREPL)
     const unsigned char *pc;
     unsigned char ucChar1, ucChar2, ucReplace;
     HB_SIZE sRetIndex;
-    int iMode;
+    int32_t iMode;
 
     if (HB_ISCHAR(1)) {
       ucChar1 = *(reinterpret_cast<const unsigned char *>(hb_parc(1)));
@@ -148,7 +148,7 @@ HB_FUNC(RANGEREPL)
     sRetIndex = 0;
     for (pc = reinterpret_cast<const unsigned char *>(pcString);
          pc < reinterpret_cast<const unsigned char *>(pcString) + sStrLen; pc++) {
-      int iBool = ((*pc) >= ucChar1);
+      int32_t iBool = ((*pc) >= ucChar1);
 
       if (iMode) {
         iBool |= ((*pc) <= ucChar2);
@@ -179,7 +179,7 @@ HB_FUNC(RANGEREPL)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREPL, nullptr,

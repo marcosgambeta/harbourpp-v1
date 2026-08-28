@@ -55,8 +55,8 @@ HB_FUNC(ATREPL)
     auto nStrToMatchLen = hb_parclen(1);
     auto pcString = hb_parc(2);
     auto nStrLen = hb_parclen(2);
-    int iMultiPass = ct_getatmupa();
-    int iAtLike = ct_getatlike();
+    int32_t iMultiPass = ct_getatmupa();
+    int32_t iAtLike = ct_getatlike();
     char cAtLike = ct_getatlikechar();
     HB_SIZE nIgnore, nMatchStrLen = 0;
     HB_SIZE nCounter;
@@ -64,7 +64,7 @@ HB_FUNC(ATREPL)
 
     const char *pcReplacement;
     HB_SIZE nReplaceLen;
-    int iReplaceMode;
+    int32_t iReplaceMode;
     char *pcRetStr;
     HB_SIZE nRetStrLen;
 
@@ -72,7 +72,7 @@ HB_FUNC(ATREPL)
     nIgnore = hb_parns(6);
 
     if (nIgnore >= nStrLen) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ATREPL, nullptr, HB_ERR_FUNCNAME, 0,
@@ -221,7 +221,7 @@ HB_FUNC(ATREPL)
     hb_retclen_buffer(pcRetStr, nRetStrLen);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ATREPL, nullptr, HB_ERR_FUNCNAME,

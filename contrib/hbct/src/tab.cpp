@@ -58,7 +58,7 @@ HB_FUNC(TABEXPAND)
     char cFill, cTab, cCR;
     const char *pcNewLine;
     HB_SIZE sNewLineLen;
-    int iIgnore141;
+    int32_t iIgnore141;
     HB_SIZE sIndex, sLineIndex;
     HB_SIZE sTabCnt = 0;
 
@@ -171,7 +171,7 @@ HB_FUNC(TABEXPAND)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TABEXPAND, nullptr,
@@ -195,7 +195,7 @@ HB_FUNC(TABPACK)
     HB_SIZE sTabWidth = 0;
     char cFill, cTab, cCR;
     const char *pcNewLine;
-    int iIgnore141;
+    int32_t iIgnore141;
     HB_SIZE sIndex, sTabIndex, sFillCount;
 
     if (HB_ISNUM(2)) {
@@ -335,7 +335,7 @@ HB_FUNC(TABPACK)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME,

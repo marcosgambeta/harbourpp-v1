@@ -51,7 +51,7 @@
 
 #define MATRIXELEMENT(__row, __col) *(piPenalty + ((__row) * (sStrLen2 + 1)) + (__col))
 
-static int min3(int a, int b, int c)
+static int32_t min3(int32_t a, int32_t b, int32_t c)
 {
   if (a < b) {
     return a < c ? a : c;
@@ -67,7 +67,7 @@ HB_FUNC(STRDIFF)
     // get parameters
     const char *pcStr1, *pcStr2;
     HB_SIZE sStrLen1, sStrLen2;
-    int iAtLike = ct_getatlike();
+    int32_t iAtLike = ct_getatlike();
     char cAtLike = ct_getatlikechar();
     HB_SIZE sRowCnt, sColCnt;
 
@@ -91,7 +91,7 @@ HB_FUNC(STRDIFF)
     if ((static_cast<double>(sStrLen1) + 1.0) * (static_cast<double>(sStrLen2) + 1.0) *
             (static_cast<double>(sizeof(int))) >=
         static_cast<double>(UINT_MAX)) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0,
@@ -117,7 +117,7 @@ HB_FUNC(STRDIFF)
     for (sRowCnt = 0; sRowCnt <= sStrLen1 - 1; sRowCnt++) {
       MATRIXELEMENT(sRowCnt + 1, 0) = MATRIXELEMENT(sRowCnt, 0) + iDelete;
       for (sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++) {
-        int iReplaceCost;
+        int32_t iReplaceCost;
 
         if (pcStr1[sRowCnt] == pcStr2[sColCnt] ||
             (iAtLike == CT_SETATLIKE_WILDCARD && (pcStr1[sRowCnt] == cAtLike || pcStr2[sColCnt] == cAtLike))) {
@@ -136,7 +136,7 @@ HB_FUNC(STRDIFF)
     hb_xfree(piPenalty);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME,

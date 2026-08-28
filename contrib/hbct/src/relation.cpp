@@ -101,7 +101,7 @@ HB_FUNC(CHARRELA)
     hb_retns(0);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARRELA, nullptr,
@@ -118,7 +118,7 @@ HB_FUNC(CHARRELA)
 
 HB_FUNC(CHARRELREP)
 {
-  int iNoRet = ct_getref() && HB_ISBYREF(4);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(4);
 
   if (HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) && HB_ISCHAR(5)) {
     auto pcStringToMatch1 = hb_parc(1);
@@ -200,7 +200,7 @@ HB_FUNC(CHARRELREP)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARRELREP, nullptr,

@@ -64,7 +64,7 @@ static void do_pad(int iSwitch)
 
     nRetLen = hb_parns(2);
     if (nRetLen <= 0) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
@@ -109,7 +109,7 @@ static void do_pad(int iSwitch)
     hb_retclen_buffer(pcRet, sRetLen);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,

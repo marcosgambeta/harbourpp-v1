@@ -73,7 +73,7 @@ int ct_math_exit(void)
 // ---------------- //
 // math precision   //
 // ---------------- //
-static int s_iPrecision = 16; // TODO: make this thread safe
+static int32_t s_iPrecision = 16; // TODO: make this thread safe
 
 void ct_setprecision(int iPrecision)
 {
@@ -100,7 +100,7 @@ HB_FUNC(SETPREC)
   if (iPrec >= 1 && iPrec <= 16) {
     ct_setprecision(iPrec);
   } else {
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_SETPREC, nullptr, HB_ERR_FUNCNAME, 0,
@@ -114,7 +114,7 @@ HB_FUNC(GETPREC)
 {
   hb_retni(ct_getprecision());
   if (hb_pcount() > 0) {
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_GETPREC, nullptr, HB_ERR_FUNCNAME, 0,

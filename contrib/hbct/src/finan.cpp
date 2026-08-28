@@ -84,7 +84,7 @@ HB_FUNC(FV)
     hb_retnd(dResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0,
@@ -127,7 +127,7 @@ HB_FUNC(PV)
     hb_retnd(dResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0,
@@ -170,7 +170,7 @@ HB_FUNC(PAYMENT)
     hb_retnd(dResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME,
@@ -226,7 +226,7 @@ HB_FUNC(PERIODS)
     hb_retnd(dResult);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME,
@@ -288,7 +288,7 @@ HB_FUNC(RATE)
     hb_retnd(j * 0.000833333); // return as mensual's rate
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0,

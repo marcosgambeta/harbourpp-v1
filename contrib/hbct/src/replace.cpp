@@ -59,7 +59,7 @@ static const HB_ERRCODE sulErrorSubcodes[] = {CT_ERROR_REPLALL, CT_ERROR_REPLLEF
 static void do_replace(int iSwitch)
 {
   // suppressing return value ?
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   // param check
   if (HB_ISCHAR(1) && (hb_parclen(2) > 0 || HB_ISNUM(2))) {
@@ -120,7 +120,7 @@ static void do_replace(int iSwitch)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, sulErrorSubcodes[iSwitch], nullptr,

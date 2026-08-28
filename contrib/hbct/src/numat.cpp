@@ -55,8 +55,8 @@ HB_FUNC(NUMAT)
     auto sStrToMatchLen = hb_parclen(1);
     auto pcString = hb_parc(2);
     auto sStrLen = hb_parclen(2);
-    int iMultiPass = ct_getatmupa();
-    int iAtLike = ct_getatlike();
+    int32_t iMultiPass = ct_getatmupa();
+    int32_t iAtLike = ct_getatlike();
     char cAtLike = ct_getatlikechar();
     HB_SIZE sIgnore, sMatchStrLen = 0, sSubStrLen;
     HB_SIZE nCounter;
@@ -66,7 +66,7 @@ HB_FUNC(NUMAT)
     sIgnore = hb_parnsdef(3, 0);
 
     if (sIgnore >= sStrLen) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -109,7 +109,7 @@ HB_FUNC(NUMAT)
     hb_retns(nCounter - 1);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME,

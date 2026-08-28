@@ -51,7 +51,7 @@
 HB_FUNC(CHARMIRR)
 {
   // suppressing return value ?
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   // param check
   if (HB_ISCHAR(1)) {
@@ -59,10 +59,10 @@ HB_FUNC(CHARMIRR)
     const char *pc1;
     auto sStrLen = hb_parclen(1);
     char *pc2;
-    int iDontMirrorSpaces = hb_parldef(2, 0);
+    int32_t iDontMirrorSpaces = hb_parldef(2, 0);
 
     if (sStrLen == 0) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIRR, nullptr, HB_ERR_FUNCNAME, 0,
@@ -106,7 +106,7 @@ HB_FUNC(CHARMIRR)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIRR, nullptr,

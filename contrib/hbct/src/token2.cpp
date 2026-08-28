@@ -91,7 +91,7 @@ static TOKEN_ENVIRONMENT sTokEnvNew(void)
 }
 
 // add a tokenizing position to a token environment
-static int sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
+static int32_t sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
 {
   HB_SIZE nIndex;
   TOKEN_ENVIRONMENT env = *pEnv;
@@ -113,7 +113,7 @@ static int sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
 }
 
 // check to see if token pointer is at end of environment
-static int sTokEnvEnd(TOKEN_ENVIRONMENT env)
+static int32_t sTokEnvEnd(TOKEN_ENVIRONMENT env)
 {
   return env[1].sStartPos >= env[0].sStartPos;
 }
@@ -145,7 +145,7 @@ static TOKEN_POSITION *sTokEnvGetPosIndex(TOKEN_ENVIRONMENT env, HB_SIZE nIndex)
 }
 
 // increment tokenizing pointer by one
-static int sTokEnvIncPtr(TOKEN_ENVIRONMENT env)
+static int32_t sTokEnvIncPtr(TOKEN_ENVIRONMENT env)
 {
   if (env[1].sStartPos >= env[0].sStartPos) {
     return 0;
@@ -156,7 +156,7 @@ static int sTokEnvIncPtr(TOKEN_ENVIRONMENT env)
 }
 
 // set tokenizing pointer to 0-based value
-static int sTokEnvSetPtr(TOKEN_ENVIRONMENT env, HB_SIZE sCnt)
+static int32_t sTokEnvSetPtr(TOKEN_ENVIRONMENT env, HB_SIZE sCnt)
 {
   if (sCnt >= env[0].sStartPos) {
     return 0;
@@ -170,7 +170,7 @@ static int sTokEnvSetPtr(TOKEN_ENVIRONMENT env, HB_SIZE sCnt)
 
 // sTokEnvDecPtr currently not used !
 #if 0
-static int sTokEnvDecPtr(TOKEN_ENVIRONMENT env)
+static int32_t sTokEnvDecPtr(TOKEN_ENVIRONMENT env)
 {
    if( env[1].sStartPos <= 0 ) {
       return 0;
@@ -259,7 +259,7 @@ static TOKEN_ENVIRONMENT sTokGet(int iParam, HB_BOOL fReadOnly)
   }
 }
 
-static int sTokSave(TOKEN_ENVIRONMENT sTokenEnvironment, int iParam)
+static int32_t sTokSave(TOKEN_ENVIRONMENT sTokenEnvironment, int32_t iParam)
 {
   if (iParam != 0 && HB_ISBYREF(iParam)) {
     if (!hb_storclen_buffer(reinterpret_cast<char *>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment), iParam)) {
@@ -305,7 +305,7 @@ HB_FUNC(TOKENINIT)
 
     // allocate new token environment
     if ((sTokenEnvironment = sTokEnvNew()) == nullptr) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_MEM, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -347,7 +347,7 @@ HB_FUNC(TOKENINIT)
       }
 
       if (!sTokEnvAddPos(&sTokenEnvironment, &sTokenPosition)) {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_MEM, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -373,7 +373,7 @@ HB_FUNC(TOKENINIT)
 
     if (sTokenEnvironment != nullptr) {
       // rewind to first token
-      int iResult = sTokEnvSetPtr(sTokenEnvironment, 0);
+      int32_t iResult = sTokEnvSetPtr(sTokenEnvironment, 0);
 
       if (!sTokSave(sTokenEnvironment, 4)) {
         iResult = false;
@@ -382,7 +382,7 @@ HB_FUNC(TOKENINIT)
     } else {
       // nothing to rewind -> return .F.
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENINIT, nullptr,
@@ -409,7 +409,7 @@ HB_FUNC(TOKENNEXT)
 
     // token environment by parameter ...
     if (sTokenEnvironment == nullptr) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -430,7 +430,7 @@ HB_FUNC(TOKENNEXT)
     }
 
     if (psTokenPosition == nullptr || sStrLen <= psTokenPosition->sStartPos) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -452,7 +452,7 @@ HB_FUNC(TOKENNEXT)
   } else {
     // no string given, no token returns
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr,
@@ -475,7 +475,7 @@ HB_FUNC(TOKENNUM)
     hb_retns(sTokEnvGetCnt(sTokenEnvironment));
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNUM, nullptr,
@@ -498,7 +498,7 @@ HB_FUNC(TOKENEND)
     hb_retl(sTokEnvEnd(sTokenEnvironment));
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENEND, nullptr,
@@ -528,7 +528,7 @@ HB_FUNC(TOKENEXIT)
 
 HB_FUNC(TOKENAT)
 {
-  int iSeparatorPos = 0;
+  int32_t iSeparatorPos = 0;
   HB_SIZE sCurrentIndex;
   TOKEN_ENVIRONMENT sTokenEnvironment;
   TOKEN_POSITION *psTokenPosition;
@@ -539,7 +539,7 @@ HB_FUNC(TOKENAT)
 
   sTokenEnvironment = sTokGet(3, true);
   if (sTokenEnvironment == nullptr) {
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENAT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -558,7 +558,7 @@ HB_FUNC(TOKENAT)
 
   psTokenPosition = sTokEnvGetPosIndex(sTokenEnvironment, sCurrentIndex);
   if (psTokenPosition == nullptr) {
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENAT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -603,7 +603,7 @@ HB_FUNC(RESTTOKEN)
     sTokSet(sNewTokEnv);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_RESTTOKEN, nullptr,

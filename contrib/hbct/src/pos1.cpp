@@ -65,9 +65,9 @@ static void do_pos1(int iSwitch)
         HB_ISCHAR(3)))) {              // .. and 3rd param
     const unsigned char *puc;
     unsigned char ucChar1 = ' ', ucChar2 = ' ';
-    int iMode;
+    int32_t iMode;
     HB_SIZE sIgnore;
-    int iParamShift = 0;
+    int32_t iParamShift = 0;
 
     if (iSwitch == DO_POS1_POSRANGE) {
       if (hb_parclen(1) == 0) {
@@ -94,7 +94,7 @@ static void do_pos1(int iSwitch)
     sIgnore = hb_parnsdef(iParamShift + 3, 0);
 
     for (puc = pcString + sIgnore; puc < pcString + sStrLen; puc++) {
-      int iDoRet = 0;
+      int32_t iDoRet = 0;
 
       switch (iSwitch) {
       case DO_POS1_POSALPHA:
@@ -122,7 +122,7 @@ static void do_pos1(int iSwitch)
     hb_retns(0);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       HB_ERRCODE iError = 0;

@@ -73,8 +73,8 @@ static const HB_SIZE sc_sSeparatorStrLen = 26;
 struct CT_TOKEN
 {
   // even if these are chars, variable must be int, since we need an extra -1
-  int iPreSeparator;
-  int iPostSeparator;
+  int32_t iPreSeparator;
+  int32_t iPostSeparator;
 };
 
 using PCT_TOKEN = CT_TOKEN *;
@@ -101,8 +101,8 @@ static void do_token1(int iSwitch)
 {
   auto ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
 
-  int iParamCheck = 0;
-  int iNoRef = ct_getref() && HB_ISBYREF(1);
+  int32_t iParamCheck = 0;
+  int32_t iNoRef = ct_getref() && HB_ISBYREF(1);
 
   switch (iSwitch) {
   case DO_TOKEN1_TOKEN:
@@ -343,7 +343,7 @@ static void do_token1(int iSwitch)
     switch (iSwitch) {
     case DO_TOKEN1_TOKEN: {
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
       char cRet;
 
       if (HB_ISBYREF(5)) { // HB_EXTENSION
@@ -372,7 +372,7 @@ static void do_token1(int iSwitch)
     case DO_TOKEN1_TOKENLOWER:
     case DO_TOKEN1_TOKENUPPER: {
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,
@@ -392,7 +392,7 @@ static void do_token1(int iSwitch)
     case DO_TOKEN1_NUMTOKEN:
     case DO_TOKEN1_ATTOKEN: {
       PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG,

@@ -93,7 +93,7 @@ HB_FUNC(NUMAND)
   HB_MAXINT lValue = -1, lNext = 0;
 
   if (iPCount && ct_numParam(1, &lValue)) {
-    int i = 1;
+    int32_t i = 1;
 
     while (--iPCount && ct_numParam(++i, &lNext)) {
       lValue &= lNext;
@@ -112,7 +112,7 @@ HB_FUNC(NUMOR)
   HB_MAXINT lValue = -1, lNext = 0;
 
   if (iPCount && ct_numParam(1, &lValue)) {
-    int i = 1;
+    int32_t i = 1;
 
     while (--iPCount && ct_numParam(++i, &lNext)) {
       lValue |= lNext;
@@ -131,7 +131,7 @@ HB_FUNC(NUMXOR)
   HB_MAXINT lValue = -1, lNext = 0;
 
   if (iPCount && ct_numParam(1, &lValue)) {
-    int i = 1;
+    int32_t i = 1;
 
     while (--iPCount && ct_numParam(++i, &lNext)) {
       lValue ^= lNext;
@@ -228,7 +228,7 @@ HB_FUNC(CLEARBIT)
   HB_MAXINT lValue;
 
   if (ct_numParam(1, &lValue)) {
-    int i = 1;
+    int32_t i = 1;
 
     while (--iPCount) {
       auto iBit = hb_parni(++i);
@@ -252,7 +252,7 @@ HB_FUNC(SETBIT)
   HB_MAXINT lValue;
 
   if (ct_numParam(1, &lValue)) {
-    int i = 1;
+    int32_t i = 1;
 
     while (--iPCount) {
       auto iBit = hb_parni(++i);

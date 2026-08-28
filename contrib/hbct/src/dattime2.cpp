@@ -66,7 +66,7 @@ static HB_BOOL ct_isleap(int iYear)
   return iYear != 0 && (iYear & 3) == 0 && (iYear % 100 != 0 || iYear % 400 == 0);
 }
 
-static int ct_daysinmonth(int iMonth, HB_BOOL bLeap)
+static int32_t ct_daysinmonth(int iMonth, HB_BOOL bLeap)
 {
   if (iMonth == 2) {
     return bLeap ? 29 : 28;
@@ -77,16 +77,16 @@ static int ct_daysinmonth(int iMonth, HB_BOOL bLeap)
   }
 }
 
-static int ct_daystomonth(int iMonth, HB_BOOL bLeap)
+static int32_t ct_daystomonth(int iMonth, HB_BOOL bLeap)
 {
-  static const int sc_iMonths[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+  static const int32_t sc_iMonths[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 
   return (iMonth < 1 || iMonth > 12) ? 0 : sc_iMonths[iMonth - 1] + ((bLeap && iMonth > 2) ? 1 : 0);
 }
 
-static int ct_doy(long lDate)
+static int32_t ct_doy(long lDate)
 {
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
   long lFirst;
 
   hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
@@ -97,7 +97,7 @@ static int ct_doy(long lDate)
 HB_FUNC(CTODOW)
 {
   auto nLen = hb_parclen(1);
-  int iDow = 0;
+  int32_t iDow = 0;
 
   if (nLen) {
     auto cdp = hb_vmCDP();
@@ -117,7 +117,7 @@ HB_FUNC(CTODOW)
 HB_FUNC(CTOMONTH)
 {
   auto nLen = hb_parclen(1);
-  int iMonth = 0;
+  int32_t iMonth = 0;
 
   if (nLen) {
     auto cdp = hb_vmCDP();
@@ -135,7 +135,7 @@ HB_FUNC(CTOMONTH)
 
 HB_FUNC(DMY)
 {
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
   HB_BOOL bMode = false;
 
   if (HB_ISDATETIME(1)) {
@@ -151,7 +151,7 @@ HB_FUNC(DMY)
   if (iMonth >= 1 && iMonth <= 12) {
     const char *szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
     auto iMonLen = static_cast<int>(strlen(szMonth));
-    int iLen = 0, iBufLen = iMonLen + 10;
+    int32_t iLen = 0, iBufLen = iMonLen + 10;
     auto szMDY = static_cast<char *>(hb_xgrab(iBufLen));
 
     if (iDay < 10) {
@@ -191,7 +191,7 @@ HB_FUNC(DMY)
 
 HB_FUNC(MDY)
 {
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISDATETIME(1)) {
     hb_dateDecode(hb_pardl(1), &iYear, &iMonth, &iDay);
@@ -202,7 +202,7 @@ HB_FUNC(MDY)
   if (iMonth >= 1 && iMonth <= 12) {
     const char *szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
     auto iLen = static_cast<int>(strlen(szMonth));
-    int iBufLen = iLen + 9;
+    int32_t iBufLen = iLen + 9;
     auto szMDY = static_cast<char *>(hb_xgrab(iBufLen));
 
     hb_strncpy(szMDY, szMonth, iBufLen - 1);
@@ -234,7 +234,7 @@ HB_FUNC(MDY)
 HB_FUNC(ADDMONTH)
 {
   long lJulian, lMillisec = 0;
-  int iYear, iMonth, iDay, iNum, iDays;
+  int32_t iYear, iMonth, iDay, iNum, iDays;
   HB_BOOL fTimeStamp = false;
 
   if (HB_ISNUM(1)) {
@@ -283,7 +283,7 @@ HB_FUNC(DOY)
   if (HB_ISDATETIME(1)) {
     lDate = hb_pardl(1);
   } else {
-    int iYear, iMonth, iDay;
+    int32_t iYear, iMonth, iDay;
 
     hb_dateToday(&iYear, &iMonth, &iDay);
     lDate = hb_dateEncode(iYear, iMonth, iDay);
@@ -294,7 +294,7 @@ HB_FUNC(DOY)
 
 HB_FUNC(ISLEAP)
 {
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISDATETIME(1)) {
     hb_dateDecode(hb_pardl(1), &iYear, &iMonth, &iDay);
@@ -323,7 +323,7 @@ HB_FUNC(DAYSINMONTH)
 
 HB_FUNC(QUARTER)
 {
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISDATETIME(1)) {
     hb_dateDecode(hb_pardl(1), &iYear, &iMonth, &iDay);
@@ -337,7 +337,7 @@ HB_FUNC(QUARTER)
 HB_FUNC(LASTDAYOM)
 {
   HB_BOOL bLeap = false;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNUM(1)) {
     iMonth = hb_parni(1);
@@ -366,7 +366,7 @@ HB_FUNC(NTOCMONTH)
 
 HB_FUNC(WEEK)
 {
-  int iYear, iMonth, iDay, iWeek;
+  int32_t iYear, iMonth, iDay, iWeek;
   long lDate;
   HB_BOOL bSWN = hb_parl(2);
 
@@ -381,8 +381,8 @@ HB_FUNC(WEEK)
   if (!lDate) {
     iWeek = 0;
   } else if (bSWN) {
-    int iDays = ct_daystomonth(iMonth, ct_isleap(iYear)) + iDay;
-    int iPart = (iDays % 7);
+    int32_t iDays = ct_daystomonth(iMonth, ct_isleap(iYear)) + iDay;
+    int32_t iPart = (iDays % 7);
 
     iWeek = iDays / 7;
     if (iPart > 0) {

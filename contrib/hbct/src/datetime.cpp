@@ -53,7 +53,7 @@
 HB_FUNC(BOM)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);
@@ -73,7 +73,7 @@ HB_FUNC(BOM)
 HB_FUNC(EOM)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);
@@ -98,7 +98,7 @@ HB_FUNC(EOM)
 HB_FUNC(BOQ)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);
@@ -120,7 +120,7 @@ HB_FUNC(BOQ)
 HB_FUNC(EOQ)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);
@@ -145,7 +145,7 @@ HB_FUNC(EOQ)
 HB_FUNC(BOY)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);
@@ -165,7 +165,7 @@ HB_FUNC(BOY)
 HB_FUNC(EOY)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);
@@ -182,13 +182,13 @@ HB_FUNC(EOY)
   }
 }
 
-static int hb_wom(int iYear, int iMonth, int iDay)
+static int32_t hb_wom(int32_t iYear, int32_t iMonth, int32_t iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_wom(%d, %d, %d)", iYear, iMonth, iDay));
 #endif
 
-  int iWom;
+  int32_t iWom;
 
   iWom = iDay + hb_dateDOW(iYear, iMonth, 1) - 1;
   if (iWom > 0) {
@@ -201,7 +201,7 @@ static int hb_wom(int iYear, int iMonth, int iDay)
 HB_FUNC(WOM)
 {
   long lDate;
-  int iYear, iMonth, iDay;
+  int32_t iYear, iMonth, iDay;
 
   if (HB_ISNIL(1)) {
     hb_dateToday(&iYear, &iMonth, &iDay);

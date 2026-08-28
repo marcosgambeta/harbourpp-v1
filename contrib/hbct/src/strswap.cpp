@@ -58,7 +58,7 @@ HB_FUNC(STRSWAP)
     auto pcString1 = hb_parc(1);
     auto pcString2 = hb_parc(2);
     char *pcRet1 = nullptr, *pcRet2 = nullptr;
-    int iChange1, iChange2;
+    int32_t iChange1, iChange2;
     HB_SIZE sIndex, sCmpLen;
 
     if ((iChange1 = HB_ISBYREF(1)) != 0) {
@@ -98,7 +98,7 @@ HB_FUNC(STRSWAP)
     hb_retc_null();
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_STRSWAP, nullptr, HB_ERR_FUNCNAME,

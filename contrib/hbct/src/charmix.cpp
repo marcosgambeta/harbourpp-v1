@@ -58,7 +58,7 @@ HB_FUNC(CHARMIX)
     HB_SIZE sLen2, sPos2, sResultPos;
 
     if (sLen1 == 0) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME, 0,
@@ -73,7 +73,7 @@ HB_FUNC(CHARMIX)
       pcString2 = hb_parc(2);
       sLen2 = hb_parclen(2);
       if (sLen2 == 0) {
-        int iArgErrorMode = ct_getargerrormode();
+        int32_t iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE) {
           ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME, 0,
@@ -100,7 +100,7 @@ HB_FUNC(CHARMIX)
     hb_retclen_buffer(pcResult, sLen1 * 2);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME,

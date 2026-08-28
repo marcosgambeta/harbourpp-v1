@@ -53,8 +53,8 @@
 
 HB_FUNC(SCREENATTR)
 {
-  int iRow, iCol;
-  int iColor;
+  int32_t iRow, iCol;
+  int32_t iColor;
   uint8_t bAttr;
   uint16_t usChar;
 
@@ -81,7 +81,7 @@ HB_FUNC(SCREENMIX)
     auto szText = hb_parc(1);
     const char *szAttr;
     auto nAttr = hb_parclen(2);
-    int iRow, iCol;
+    int32_t iRow, iCol;
 
     if (nAttr == 0) {
       szAttr = " ";
@@ -99,13 +99,13 @@ HB_FUNC(SCREENMIX)
     }
 
     if (iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol()) {
-      int iColor;
+      int32_t iColor;
       uint8_t bAttr;
       uint16_t usChar;
       HB_WCHAR wc;
       HB_CODEPAGE *cdp = hb_gtHostCP();
       HB_SIZE nIndex = 0, ul = 0;
-      int i;
+      int32_t i;
 
       hb_gtBeginWrite();
       i = iCol;
@@ -137,7 +137,7 @@ HB_FUNC(SAYSCREEN)
 
   if (nLen) {
     auto szText = hb_parc(1);
-    int iRow, iCol;
+    int32_t iRow, iCol;
 
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(2)) {
@@ -150,12 +150,12 @@ HB_FUNC(SAYSCREEN)
     if (iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol()) {
       HB_CODEPAGE *cdp = hb_gtHostCP();
       HB_SIZE nIndex = 0;
-      int i;
+      int32_t i;
 
       hb_gtBeginWrite();
       i = iCol;
       for (;;) {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
         HB_WCHAR wc;
@@ -177,10 +177,10 @@ HB_FUNC(SAYSCREEN)
   hb_retc_null();
 }
 
-static HB_BOOL hb_ctGetWinCord(int *piTop, int *piLeft, int *piBottom, int *piRight)
+static HB_BOOL hb_ctGetWinCord(int32_t *piTop, int32_t *piLeft, int32_t *piBottom, int32_t *piRight)
 {
-  int iMaxRow = hb_gtMaxRow();
-  int iMaxCol = hb_gtMaxCol();
+  int32_t iMaxRow = hb_gtMaxRow();
+  int32_t iMaxCol = hb_gtMaxCol();
 
   hb_gtGetPos(piTop, piLeft);
 
@@ -210,9 +210,9 @@ static HB_BOOL hb_ctGetWinCord(int *piTop, int *piLeft, int *piBottom, int *piRi
   return *piTop >= 0 && *piLeft >= 0 && *piTop <= *piBottom && *piLeft <= *piRight;
 }
 
-static int hb_ctGetClearChar(int iParam)
+static int32_t hb_ctGetClearChar(int32_t iParam)
 {
-  int iChar;
+  int32_t iChar;
 
   if (HB_ISNUM(iParam)) {
     iChar = hb_parni(iParam);
@@ -225,9 +225,9 @@ static int hb_ctGetClearChar(int iParam)
   return iChar;
 }
 
-static int hb_ctGetClearColor(int iParam)
+static int32_t hb_ctGetClearColor(int32_t iParam)
 {
-  int iColor;
+  int32_t iColor;
 
   if (HB_ISNUM(iParam)) {
     iColor = hb_parni(iParam);
@@ -245,10 +245,10 @@ static int hb_ctGetClearColor(int iParam)
 
 HB_FUNC(CLEARWIN)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight)) {
-    int iColor, iChar;
+    int32_t iColor, iChar;
 
     iColor = hb_ctGetClearColor(5);
     iChar = hb_ctGetClearChar(6);
@@ -261,14 +261,14 @@ HB_FUNC(CLEARWIN)
 
 HB_FUNC(INVERTWIN)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight)) {
     hb_gtBeginWrite();
     while (iTop <= iBottom) {
-      int iCol = iLeft;
+      int32_t iCol = iLeft;
       while (iCol <= iRight) {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
 
@@ -287,7 +287,7 @@ HB_FUNC(INVERTWIN)
 
 HB_FUNC(UNTEXTWIN)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight)) {
     uint16_t usInit, usEnd;
@@ -312,9 +312,9 @@ HB_FUNC(UNTEXTWIN)
 
     hb_gtBeginWrite();
     while (iTop <= iBottom) {
-      int iCol = iLeft;
+      int32_t iCol = iLeft;
       while (iCol <= iRight) {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
 
@@ -334,7 +334,7 @@ HB_FUNC(UNTEXTWIN)
 
 HB_FUNC(CHARWIN)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight)) {
     uint16_t usOldChar = 0;
@@ -352,9 +352,9 @@ HB_FUNC(CHARWIN)
 
     hb_gtBeginWrite();
     while (iTop <= iBottom) {
-      int iCol = iLeft;
+      int32_t iCol = iLeft;
       while (iCol <= iRight) {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
 
@@ -374,10 +374,10 @@ HB_FUNC(CHARWIN)
 
 HB_FUNC(COLORWIN)
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight)) {
-    int iNewColor, iOldColor = 0;
+    int32_t iNewColor, iOldColor = 0;
     HB_BOOL fAll = false;
 
     iNewColor = hb_ctGetClearColor(5);
@@ -390,9 +390,9 @@ HB_FUNC(COLORWIN)
 
     hb_gtBeginWrite();
     while (iTop <= iBottom) {
-      int iCol = iLeft;
+      int32_t iCol = iLeft;
       while (iCol <= iRight) {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
 
@@ -412,7 +412,7 @@ HB_FUNC(COLORWIN)
 
 HB_FUNC(SCREENTEXT) // HB_EXTENSION
 {
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight)) {
     char *pBuffer;
@@ -420,9 +420,9 @@ HB_FUNC(SCREENTEXT) // HB_EXTENSION
     HB_SIZE nSize = static_cast<HB_SIZE>(iBottom - iTop + 1) * (iRight - iLeft + 1);
     szText = pBuffer = static_cast<char *>(hb_xgrab(nSize + 1));
     while (iTop <= iBottom) {
-      int iCol = iLeft;
+      int32_t iCol = iLeft;
       while (iCol <= iRight) {
-        int iColor;
+        int32_t iColor;
         uint8_t bAttr;
         uint16_t usChar;
         hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
@@ -439,10 +439,10 @@ HB_FUNC(SCREENTEXT) // HB_EXTENSION
 
 HB_FUNC(COLORREPL)
 {
-  int iMaxRow = hb_gtMaxRow();
-  int iMaxCol = hb_gtMaxCol();
-  int iRow = 0;
-  int iNewColor, iOldColor = 0;
+  int32_t iMaxRow = hb_gtMaxRow();
+  int32_t iMaxCol = hb_gtMaxCol();
+  int32_t iRow = 0;
+  int32_t iNewColor, iOldColor = 0;
   HB_BOOL fAll = false;
 
   iNewColor = hb_ctGetClearColor(1);
@@ -455,9 +455,9 @@ HB_FUNC(COLORREPL)
 
   hb_gtBeginWrite();
   while (iRow <= iMaxRow) {
-    int iCol = 0;
+    int32_t iCol = 0;
     while (iCol <= iMaxCol) {
-      int iColor;
+      int32_t iColor;
       uint8_t bAttr;
       uint16_t usChar;
 

@@ -50,7 +50,7 @@
 
 HB_FUNC(WORDTOCHAR)
 {
-  int iMultiPass;
+  int32_t iMultiPass;
   HB_SIZE sSearchLen, sStrLen, sReplaceLen;
 
   iMultiPass = ct_getatmupa();
@@ -62,7 +62,7 @@ HB_FUNC(WORDTOCHAR)
     auto pcString = hb_parc(2);
     auto pcReplace = hb_parc(3);
     HB_SIZE sRetIndex, sIndex;
-    int iNoReplace;
+    int32_t iNoReplace;
 
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
     sRetIndex = 0;
@@ -103,7 +103,7 @@ HB_FUNC(WORDTOCHAR)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_WORDTOCHAR, nullptr,

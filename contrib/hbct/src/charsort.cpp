@@ -92,7 +92,7 @@ _hb_do_sortdescend(const void *p1, const void *p2)
 HB_FUNC(CHARSORT)
 {
   // suppressing return value ?
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   // param check I
   if (HB_ISCHAR(1)) {
@@ -105,7 +105,7 @@ HB_FUNC(CHARSORT)
     HB_SIZE sElementLen = hb_parnsdef(2, 1);
     HB_SIZE sIgnore = hb_parnsdef(4, 0);
     HB_SIZE sSortLen = hb_parnsdef(6, sStrLen - sIgnore);
-    int iDescend = hb_parldef(7, 0);
+    int32_t iDescend = hb_parldef(7, 0);
 
     charsort->sCompareLen = hb_parnsdef(3, sElementLen);
     charsort->sElementPos = hb_parnsdef(5, 0);
@@ -113,7 +113,7 @@ HB_FUNC(CHARSORT)
     // param check II
     if (sElementLen == 0 || charsort->sCompareLen > sElementLen || sIgnore + sElementLen > sStrLen ||
         charsort->sElementPos + charsort->sCompareLen > sElementLen || sSortLen + sIgnore > sStrLen) {
-      int iArgErrorMode = ct_getargerrormode();
+      int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
         ct_error(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0,
@@ -148,7 +148,7 @@ HB_FUNC(CHARSORT)
     }
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr,

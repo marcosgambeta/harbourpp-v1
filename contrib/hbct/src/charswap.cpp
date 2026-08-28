@@ -59,14 +59,14 @@
 static void do_charswap(int iSwitch)
 {
   // suppress return value ?
-  int iNoRet = ct_getref() && HB_ISBYREF(1);
+  int32_t iNoRet = ct_getref() && HB_ISBYREF(1);
 
   // param check
   if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);
     auto sStrLen = hb_parclen(1);
     HB_SIZE sRetIndex = 0;
-    int iShift, iMod;
+    int32_t iShift, iMod;
     const char *pcSub;
 
     if (sStrLen == 0) {
@@ -130,7 +130,7 @@ static void do_charswap(int iSwitch)
     hb_xfree(pcRet);
   } else {
     PHB_ITEM pSubst = nullptr;
-    int iArgErrorMode = ct_getargerrormode();
+    int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       if (iSwitch == DO_CHARSWAP_CHARSWAP) {
