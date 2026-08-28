@@ -1107,7 +1107,7 @@ static HB_GENC_FUNC(hb_p_pushlocalref)
 
 static HB_GENC_FUNC(hb_p_pushlong)
 {
-  HB_LONG lVal = HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]);
+  HB_LONG lVal = HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1]);
 
   HB_GENC_LABEL();
 
@@ -1620,7 +1620,7 @@ static HB_GENC_FUNC(hb_p_switch)
     switch (pFunc->pCode[nPCodePos]) {
     case HB_P_PUSHLONG:
       fprintf(cargo->yyc, "\t\tif ((type & Harbour::Item::NUMINT) != 0 && lVal == %ldL)\n",
-              HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]));
+              HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1]));
       nPCodePos += 5;
       break;
     case HB_P_PUSHSTRSHORT:
@@ -1665,7 +1665,7 @@ static HB_GENC_FUNC(hb_p_switch)
 static HB_GENC_FUNC(hb_p_pushdate)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\thb_xvmPushDate(%ldL);\n", static_cast<long>(HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1])));
+  fprintf(cargo->yyc, "\thb_xvmPushDate(%ldL);\n", static_cast<long>(HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1])));
   return 5;
 }
 
@@ -1674,8 +1674,8 @@ static HB_GENC_FUNC(hb_p_pushtimestamp)
   HB_GENC_LABEL();
 
   fprintf(cargo->yyc, "\thb_xvmPushTimeStamp(%ldL, %ldL);\n",
-          static_cast<long>(HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1])),
-          static_cast<long>(HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 5])));
+          static_cast<long>(HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1])),
+          static_cast<long>(HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 5])));
   return 9;
 }
 

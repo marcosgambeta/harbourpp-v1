@@ -1457,7 +1457,7 @@ static HB_GENC_FUNC(hb_p_pushlong)
   fprintf(cargo->yyc, "\tHB_P_PUSHLONG, %u, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3], pFunc->pCode[nPCodePos + 4]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// %li", HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %li", HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1]));
   }
   fprintf(cargo->yyc, "\n");
   return 5;
@@ -1949,7 +1949,7 @@ static HB_GENC_FUNC(hb_p_pushdate)
     int32_t year, month, day;
     char date[9];
 
-    hb_dateDecode(HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]), &year, &month, &day);
+    hb_dateDecode(HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1]), &year, &month, &day);
     hb_dateStrPut(date, year, month, day);
     date[8] = '\0';
     fprintf(cargo->yyc, "\t// %s", date);
@@ -1968,8 +1968,8 @@ static HB_GENC_FUNC(hb_p_pushtimestamp)
   if (cargo->bVerbose) {
     char timestamp[24];
 
-    hb_timeStampStr(timestamp, HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]),
-                    HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 5]));
+    hb_timeStampStr(timestamp, HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 1]),
+                    HB_PCODE_MKINT32(&pFunc->pCode[nPCodePos + 5]));
     fprintf(cargo->yyc, "\t// %s", timestamp);
   }
   fprintf(cargo->yyc, "\n");

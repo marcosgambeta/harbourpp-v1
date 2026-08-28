@@ -120,7 +120,7 @@ static bool hb_hrbReadValue(const char *szBody, HB_SIZE nBodySize, HB_SIZE *pnBo
 #endif
 
   if (*pnBodyOffset + 4 < nBodySize) {
-    *pulValue = HB_PCODE_MKLONG(szBody + *pnBodyOffset);
+    *pulValue = HB_PCODE_MKINT32(szBody + *pnBodyOffset);
     *pnBodyOffset += 4;
 
     if (*pulValue <= 0x00FFFFFFUL) {

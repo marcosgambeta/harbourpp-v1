@@ -2391,9 +2391,9 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
             HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHLONG)"));
 #endif
 #if HB_VMINT_MAX >= INT32_MAX
-      hb_vmPushIntegerConst(static_cast<int32_t>(HB_PCODE_MKLONG(&pCode[1])));
+      hb_vmPushIntegerConst(static_cast<int32_t>(HB_PCODE_MKINT32(&pCode[1])));
 #else
-      hb_vmPushLongConst(static_cast<long>(HB_PCODE_MKLONG(&pCode[1])));
+      hb_vmPushLongConst(static_cast<long>(HB_PCODE_MKINT32(&pCode[1])));
 #endif
       pCode += 5;
       break;
@@ -2466,7 +2466,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 #endif
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::DATE);
-      pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKLONG(&pCode[1])));
+      pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKINT32(&pCode[1])));
       pItem->setDateTimeTime(0);
       pCode += 5;
       break;
@@ -2478,8 +2478,8 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 #endif
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::TIMESTAMP);
-      pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKLONG(&pCode[1])));
-      pItem->setDateTimeTime(static_cast<long>(HB_PCODE_MKLONG(&pCode[5])));
+      pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKINT32(&pCode[1])));
+      pItem->setDateTimeTime(static_cast<long>(HB_PCODE_MKINT32(&pCode[5])));
       pCode += 9;
       break;
     }
@@ -4795,7 +4795,7 @@ static const uint8_t *hb_vmSwitch(const uint8_t *pCode, uint16_t casesCnt)
       switch (pCode[0]) {
       case HB_P_PUSHLONG:
         if (pSwitch->isNumInt()) {
-          fFound = HB_ITEM_GET_NUMINTRAW(pSwitch) == HB_PCODE_MKLONG(&pCode[1]);
+          fFound = HB_ITEM_GET_NUMINTRAW(pSwitch) == HB_PCODE_MKINT32(&pCode[1]);
         }
         pCode += 5;
         break;
