@@ -178,7 +178,7 @@ void ct_setargerrormode(int iMode)
   s_iArgErrMode = iMode;
 }
 
-int ct_getargerrormode(void)
+int ct_getargerrormode()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getargerrormode()"));

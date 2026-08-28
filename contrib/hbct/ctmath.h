@@ -57,12 +57,12 @@
 HB_EXTERN_BEGIN
 
 // initialization
-extern int32_t ct_math_init( void );
-extern int32_t ct_math_exit( void );
+extern int32_t ct_math_init();
+extern int32_t ct_math_exit();
 
 // set and get precision
 extern void ct_setprecision( int32_t iPrecision );
-extern int32_t ct_getprecision( void );
+extern int32_t ct_getprecision();
 
 HB_EXTERN_END
 

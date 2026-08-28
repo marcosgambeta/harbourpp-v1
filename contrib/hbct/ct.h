@@ -103,7 +103,7 @@ extern PHB_ITEM ct_error_subst( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ER
 
 // set argument error behaviour
 extern void ct_setargerrormode( int32_t iMode );
-extern int32_t ct_getargerrormode( void );
+extern int32_t ct_getargerrormode();
 
 HB_EXTERN_END
 

@@ -64,7 +64,7 @@ void ct_setfcreate(HB_FATTR nFileAttr)
   s_nFileAttr = nFileAttr;
 }
 
-HB_FATTR ct_getfcreate(void)
+HB_FATTR ct_getfcreate()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getfcreate()"));
@@ -91,7 +91,7 @@ void ct_setsafety(HB_BOOL bSafety)
   s_bSafety = bSafety;
 }
 
-HB_BOOL ct_getsafety(void)
+HB_BOOL ct_getsafety()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getsafety()"));

@@ -63,23 +63,23 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_EXPORT HB_BOOL hb_ctwInit( void );
+extern HB_EXPORT HB_BOOL hb_ctwInit();
 extern HB_EXPORT int32_t     hb_ctwSetShadowAttr( int32_t iAttr );
 extern HB_EXPORT int32_t     hb_ctwSetMoveMode( int32_t iMode );
 extern HB_EXPORT int32_t     hb_ctwSetMoveStep( int32_t iVertical, int32_t iHorizontal );
 extern HB_EXPORT int32_t     hb_ctwSetWindowBoard(int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight);
 extern HB_EXPORT int32_t     hb_ctwSetBorderMode( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight );
 extern HB_EXPORT int32_t     hb_ctwCreateWindow( int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, HB_BOOL fClear, int32_t iColor, HB_BOOL fVisible );
-extern HB_EXPORT int32_t     hb_ctwCloseAllWindows( void );
+extern HB_EXPORT int32_t     hb_ctwCloseAllWindows();
 extern HB_EXPORT int32_t     hb_ctwCloseWindow( int32_t iWindow );
-extern HB_EXPORT int32_t     hb_ctwCurrentWindow( void );
+extern HB_EXPORT int32_t     hb_ctwCurrentWindow();
 extern HB_EXPORT int32_t     hb_ctwSelectWindow( int32_t iWindow, HB_BOOL fToTop );
 extern HB_EXPORT int32_t     hb_ctwChangeWindowHandle( int32_t iNewWindow );
 extern HB_EXPORT int32_t     hb_ctwGetWindowStack( const int32_t ** piStack );
 extern HB_EXPORT int32_t     hb_ctwVisible( int32_t iWindow, int32_t iVisible );
 extern HB_EXPORT int32_t     hb_ctwSetWindowShadow( int32_t iWindow, int32_t iAttr );
 extern HB_EXPORT int32_t     hb_ctwSetWindowLevel( int32_t iWindow, int32_t iLevel );
-extern HB_EXPORT int32_t     hb_ctwMaxWindow( void );
+extern HB_EXPORT int32_t     hb_ctwMaxWindow();
 extern HB_EXPORT int32_t     hb_ctwChangeMargins( int32_t iWindow, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight );
 extern HB_EXPORT int32_t     hb_ctwSetWindowClip( int32_t iWindow, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight );
 extern HB_EXPORT int32_t     hb_ctwGetWindowCords( int32_t iWindow, HB_BOOL fCenter, int32_t * piTop, int32_t * piLeft, int32_t * piBottom, int32_t * piRight );

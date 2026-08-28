@@ -75,7 +75,7 @@ static HB_TSD_NEW(s_ct_str, sizeof(CT_STR), s_ct_str_init, nullptr);
 // -------------- //
 // initialization //
 // -------------- //
-int ct_str_init(void)
+int ct_str_init()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ctstr_init()"));
@@ -84,7 +84,7 @@ int ct_str_init(void)
   return 1;
 }
 
-int ct_str_exit(void)
+int ct_str_exit()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ctstr_exit()"));
@@ -297,7 +297,7 @@ void ct_setref(int iNewSwitch)
   ct_str->iRefSwitch = iNewSwitch;
 }
 
-int ct_getref(void)
+int ct_getref()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getref()"));
@@ -337,7 +337,7 @@ void ct_setatmupa(int iNewSwitch)
   ct_str->iAtMupaSwitch = iNewSwitch;
 }
 
-int ct_getatmupa(void)
+int ct_getatmupa()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getatmupa()"));
@@ -377,7 +377,7 @@ void ct_setatlike(int iNewMode)
   ct_str->iAtLikeMode = iNewMode;
 }
 
-int ct_getatlike(void)
+int ct_getatlike()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getatlike()"));
@@ -399,7 +399,7 @@ void ct_setatlikechar(char cNewChar)
   ct_str->cAtLikeChar = cNewChar;
 }
 
-char ct_getatlikechar(void)
+char ct_getatlikechar()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getatlikechar()"));

@@ -1185,7 +1185,7 @@ static void hb_ctw_Init(PHB_GTCTW pCTW)
 
 // ---
 
-static PHB_GTCTW hb_ctw_base(void)
+static PHB_GTCTW hb_ctw_base()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_base()"));
@@ -2352,7 +2352,7 @@ static void hb_ctw_gt_RedrawDiff(PHB_GT pGT)
 
 // Public functions
 
-HB_BOOL hb_ctwInit(void)
+HB_BOOL hb_ctwInit()
 {
   PHB_GTCTW pCTW = hb_ctw_base();
 
@@ -2439,7 +2439,7 @@ int32_t hb_ctwCreateWindow(int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t
   return iResult;
 }
 
-int32_t hb_ctwCloseAllWindows(void)
+int32_t hb_ctwCloseAllWindows()
 {
   int32_t iResult = -1;
   PHB_GTCTW pCTW = hb_ctw_base();
@@ -2465,7 +2465,7 @@ int32_t hb_ctwCloseWindow(int32_t iWindow)
   return iResult;
 }
 
-int32_t hb_ctwCurrentWindow(void)
+int32_t hb_ctwCurrentWindow()
 {
   int32_t iResult = 0;
   PHB_GTCTW pCTW = hb_ctw_base();
@@ -2553,7 +2553,7 @@ int32_t hb_ctwSetWindowShadow(int32_t iWindow, int32_t iAttr)
   return iResult;
 }
 
-int32_t hb_ctwMaxWindow(void)
+int32_t hb_ctwMaxWindow()
 {
   int32_t iResult = 0;
   PHB_GTCTW pCTW = hb_ctw_base();

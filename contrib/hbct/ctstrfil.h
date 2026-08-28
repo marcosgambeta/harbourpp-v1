@@ -50,10 +50,10 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_FATTR ct_getfcreate( void );
+extern HB_FATTR ct_getfcreate();
 extern void ct_setfcreate( HB_FATTR nFileAttr );
 
-extern HB_BOOL ct_getsafety( void );
+extern HB_BOOL ct_getsafety();
 extern void ct_setsafety( HB_BOOL bSafety );
 
 HB_EXTERN_END

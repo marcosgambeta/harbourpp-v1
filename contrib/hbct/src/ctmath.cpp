@@ -52,7 +52,7 @@
 // ---------------- //
 //  initialization  //
 // ---------------- //
-int ct_math_init(void)
+int ct_math_init()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_math_init()"));
@@ -61,7 +61,7 @@ int ct_math_init(void)
   return 1;
 }
 
-int ct_math_exit(void)
+int ct_math_exit()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_math_exit()"));
@@ -84,7 +84,7 @@ void ct_setprecision(int iPrecision)
   s_iPrecision = iPrecision;
 }
 
-int ct_getprecision(void)
+int ct_getprecision()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_getprecision()"));

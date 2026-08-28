@@ -72,7 +72,7 @@ struct TOKEN_POSITION
 using TOKEN_ENVIRONMENT = TOKEN_POSITION *;
 
 // alloc new token environment
-static TOKEN_ENVIRONMENT sTokEnvNew(void)
+static TOKEN_ENVIRONMENT sTokEnvNew()
 {
   auto env = static_cast<TOKEN_ENVIRONMENT>(hb_xalloc(sizeof(TOKEN_POSITION) * (2 + TOKEN_ENVIRONMENT_STEP) + 1));
 
