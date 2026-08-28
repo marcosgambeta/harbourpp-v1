@@ -239,7 +239,7 @@ static HB_CODETRACE_FUNC(hb_p_seqend)
 
 static HB_CODETRACE_FUNC(hb_p_switch)
 {
-  uint16_t usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), us;
+  uint16_t usCases = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]), us;
   HB_SIZE nStart = nPCodePos, nNewPos;
 
   nPCodePos += 3;
@@ -262,7 +262,7 @@ static HB_CODETRACE_FUNC(hb_p_switch)
       nPCodePos += 2 + pFunc->pCode[nPCodePos + 1];
       break;
     case HB_P_PUSHSTR:
-      nPCodePos += 3 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+      nPCodePos += 3 + HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
       break;
     case HB_P_PUSHSTRLARGE:
       nPCodePos += 4 + HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);

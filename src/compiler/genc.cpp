@@ -529,7 +529,7 @@ static HB_GENC_FUNC(hb_p_arraydim)
 {
   fprintf(cargo->yyc, "\tHB_P_ARRAYDIM, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -669,7 +669,7 @@ static HB_GENC_FUNC(hb_p_arraygen)
 {
   fprintf(cargo->yyc, "\tHB_P_ARRAYGEN, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -679,7 +679,7 @@ static HB_GENC_FUNC(hb_p_hashgen)
 {
   fprintf(cargo->yyc, "\tHB_P_HASHGEN, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -846,7 +846,7 @@ static HB_GENC_FUNC(hb_p_line)
   }
   fprintf(cargo->yyc, "HB_P_LINE, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -992,7 +992,7 @@ static HB_GENC_FUNC(hb_p_message)
   fprintf(cargo->yyc, "\tHB_P_MESSAGE, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1083,7 +1083,7 @@ static HB_GENC_FUNC(hb_p_parameter)
           pFunc->pCode[nPCodePos + 3]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 4;
@@ -1118,7 +1118,7 @@ static HB_GENC_FUNC(hb_p_popaliasedfield)
   fprintf(cargo->yyc, "\tHB_P_POPALIASEDFIELD, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1139,7 +1139,7 @@ static HB_GENC_FUNC(hb_p_popaliasedvar)
   fprintf(cargo->yyc, "\tHB_P_POPALIASEDVAR, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1150,7 +1150,7 @@ static HB_GENC_FUNC(hb_p_popfield)
   fprintf(cargo->yyc, "\tHB_P_POPFIELD, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1183,7 +1183,7 @@ static HB_GENC_FUNC(hb_p_popmemvar)
   fprintf(cargo->yyc, "\tHB_P_POPMEMVAR, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1193,7 +1193,7 @@ static HB_GENC_FUNC(hb_p_popstatic)
 {
   fprintf(cargo->yyc, "\tHB_P_POPSTATIC, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    hb_compGenCStaticName(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), cargo);
+    hb_compGenCStaticName(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]), cargo);
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1204,7 +1204,7 @@ static HB_GENC_FUNC(hb_p_popvariable)
   fprintf(cargo->yyc, "\tHB_P_POPVARIABLE, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1231,7 +1231,7 @@ static HB_GENC_FUNC(hb_p_pushaliasedfield)
   fprintf(cargo->yyc, "\tHB_P_PUSHALIASEDFIELD, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1252,7 +1252,7 @@ static HB_GENC_FUNC(hb_p_pushaliasedvar)
   fprintf(cargo->yyc, "\tHB_P_PUSHALIASEDVAR, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1278,18 +1278,18 @@ static HB_GENC_FUNC(hb_p_pushblock)
 
   fprintf(cargo->yyc, "\tHB_P_PUSHBLOCK, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %u", HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]));
   }
   fprintf(cargo->yyc, "\n");
 
-  uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]);
+  uint16_t w = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 3]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 3], pFunc->pCode[nPCodePos + 4]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local parameters (%u)", w);
   }
   fprintf(cargo->yyc, "\n");
 
-  uint16_t wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
+  uint16_t wVar = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 5]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 5], pFunc->pCode[nPCodePos + 6]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local variables (%u)", wVar);
@@ -1306,7 +1306,7 @@ static HB_GENC_FUNC(hb_p_pushblock)
     // because at the time of C++ code generation we don't know
     // in which function was defined this local variable
     if (cargo->bVerbose && (pFunc->cScope & HB_FS_INITEXIT) != HB_FS_INITEXIT) {
-      w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos]);
+      w = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos]);
       hb_compGenCLocalName(pFunc, w, nPCodePos, cargo);
     }
     fprintf(cargo->yyc, "\n");
@@ -1314,7 +1314,7 @@ static HB_GENC_FUNC(hb_p_pushblock)
   }
 
   if (cargo->nEndBlockPos < nStart) {
-    cargo->nEndBlockPos = nStart + HB_PCODE_MKUSHORT(&pFunc->pCode[nStart + 1]) - 1;
+    cargo->nEndBlockPos = nStart + HB_PCODE_MKUINT16(&pFunc->pCode[nStart + 1]) - 1;
   }
 
   return nPCodePos - nStart;
@@ -1331,14 +1331,14 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
   }
   fprintf(cargo->yyc, "\n");
 
-  uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]);
+  uint16_t w = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 4]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 4], pFunc->pCode[nPCodePos + 5]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local parameters (%u)", w);
   }
   fprintf(cargo->yyc, "\n");
 
-  uint16_t wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
+  uint16_t wVar = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 6]);
   fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 6], pFunc->pCode[nPCodePos + 7]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// number of local variables (%u)", wVar);
@@ -1355,7 +1355,7 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
     // because at the time of C++ code generation we don't know
     // in which function was defined this local variable
     if (cargo->bVerbose && (pFunc->cScope & HB_FS_INITEXIT) != HB_FS_INITEXIT) {
-      w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos]);
+      w = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos]);
       hb_compGenCLocalName(pFunc, w, nPCodePos, cargo);
     }
     fprintf(cargo->yyc, "\n");
@@ -1393,7 +1393,7 @@ static HB_GENC_FUNC(hb_p_pushfield)
   fprintf(cargo->yyc, "\tHB_P_PUSHFIELD, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1487,7 +1487,7 @@ static HB_GENC_FUNC(hb_p_pushmemvar)
   fprintf(cargo->yyc, "\tHB_P_PUSHMEMVAR, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1498,7 +1498,7 @@ static HB_GENC_FUNC(hb_p_pushmemvarref)
   fprintf(cargo->yyc, "\tHB_P_PUSHMEMVARREF, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1524,7 +1524,7 @@ static HB_GENC_FUNC(hb_p_pushstatic)
 {
   fprintf(cargo->yyc, "\tHB_P_PUSHSTATIC, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    hb_compGenCStaticName(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), cargo);
+    hb_compGenCStaticName(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]), cargo);
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1534,7 +1534,7 @@ static HB_GENC_FUNC(hb_p_pushstaticref)
 {
   fprintf(cargo->yyc, "\tHB_P_PUSHSTATICREF, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
-    hb_compGenCStaticName(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), cargo);
+    hb_compGenCStaticName(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]), cargo);
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1560,7 +1560,7 @@ static HB_GENC_FUNC(hb_p_pushstrshort)
 
 static HB_GENC_FUNC(hb_p_pushstr)
 {
-  uint16_t wLen = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  uint16_t wLen = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
 
   fprintf(cargo->yyc, "\tHB_P_PUSHSTR, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
 
@@ -1597,7 +1597,7 @@ static HB_GENC_FUNC(hb_p_pushstrlarge)
 
 static HB_GENC_FUNC(hb_p_pushstrhidden)
 {
-  uint16_t wLen = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 2]);
+  uint16_t wLen = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 2]);
 
   fprintf(cargo->yyc, "\tHB_P_PUSHSTRHIDDEN, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3]);
@@ -1619,7 +1619,7 @@ static HB_GENC_FUNC(hb_p_pushsym)
   fprintf(cargo->yyc, "\tHB_P_PUSHSYM, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1640,7 +1640,7 @@ static HB_GENC_FUNC(hb_p_pushfuncsym)
   fprintf(cargo->yyc, "\tHB_P_PUSHFUNCSYM, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1651,7 +1651,7 @@ static HB_GENC_FUNC(hb_p_pushvariable)
   fprintf(cargo->yyc, "\tHB_P_PUSHVARIABLE, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;
@@ -1791,7 +1791,7 @@ static HB_GENC_FUNC(hb_p_statics)
   fprintf(cargo->yyc, "\tHB_P_STATICS, %u, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3], pFunc->pCode[nPCodePos + 4]);
   if (cargo->bVerbose) {
-    fprintf(cargo->yyc, "\t// symbol (_INITSTATICS), %u statics", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]));
+    fprintf(cargo->yyc, "\t// symbol (_INITSTATICS), %u statics", HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 3]));
   }
   fprintf(cargo->yyc, "\n");
   return 5;
@@ -1824,7 +1824,7 @@ static HB_GENC_FUNC(hb_p_staticname)
 
 static HB_GENC_FUNC(hb_p_threadstatics)
 {
-  uint16_t w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  uint16_t w = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
 
   fprintf(cargo->yyc, "\tHB_P_THREADSTATICS, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
@@ -1836,7 +1836,7 @@ static HB_GENC_FUNC(hb_p_threadstatics)
   for (uint16_t u = 0; u < w; ++u) {
     fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos], pFunc->pCode[nPCodePos + 1]);
     if (cargo->bVerbose) {
-      hb_compGenCStaticName(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos]), cargo);
+      hb_compGenCStaticName(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos]), cargo);
     }
     fprintf(cargo->yyc, "\n");
     nPCodePos += 2;
@@ -2187,7 +2187,7 @@ static HB_GENC_FUNC(hb_p_withobjectmessage)
   fprintf(cargo->yyc, "\tHB_P_WITHOBJECTMESSAGE, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
     fprintf(cargo->yyc, "\t// %s",
-            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])));
+            hb_compSymbolName(cargo->HB_COMP_PARAM, HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])));
   }
   fprintf(cargo->yyc, "\n");
   return 3;

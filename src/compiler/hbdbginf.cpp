@@ -63,7 +63,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
         nSkip = 0;
         switch (pFunc->pCode[nPos]) {
         case HB_P_LINE:
-          ulLine = HB_PCODE_MKUSHORT(&pFunc->pCode[nPos + 1]);
+          ulLine = HB_PCODE_MKUINT16(&pFunc->pCode[nPos + 1]);
           break;
 
         case HB_P_MODULENAME:
@@ -75,11 +75,11 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
         // if it's not necessary then simply remove the
         // code below. [druzus]
         case HB_P_PUSHBLOCKLARGE:
-          nSkip = 8 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPos + 6]) * 2;
+          nSkip = 8 + HB_PCODE_MKUINT16(&pFunc->pCode[nPos + 6]) * 2;
           break;
 
         case HB_P_PUSHBLOCK:
-          nSkip = 7 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPos + 5]) * 2;
+          nSkip = 7 + HB_PCODE_MKUINT16(&pFunc->pCode[nPos + 5]) * 2;
           break;
 
         case HB_P_PUSHBLOCKSHORT:

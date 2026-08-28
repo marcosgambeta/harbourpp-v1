@@ -37,7 +37,7 @@ static HB_PSIZE_FUNC(hb_p_pushstrshort)
 static HB_PSIZE_FUNC(hb_p_pushstr)
 {
   HB_SYMBOL_UNUSED(cargo);
-  return 3 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  return 3 + HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
 }
 
 static HB_PSIZE_FUNC(hb_p_pushstrlarge)
@@ -49,13 +49,13 @@ static HB_PSIZE_FUNC(hb_p_pushstrlarge)
 static HB_PSIZE_FUNC(hb_p_pushstrhidden)
 {
   HB_SYMBOL_UNUSED(cargo);
-  return 4 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 2]);
+  return 4 + HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 2]);
 }
 
 static HB_PSIZE_FUNC(hb_p_pushblock)
 {
   HB_SYMBOL_UNUSED(cargo);
-  return HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  return HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
 }
 
 static HB_PSIZE_FUNC(hb_p_pushblockshort)
@@ -112,7 +112,7 @@ static HB_PSIZE_FUNC(hb_p_staticname)
 static HB_PSIZE_FUNC(hb_p_threadstatics)
 {
   HB_SYMBOL_UNUSED(cargo);
-  return 3 + (static_cast<HB_SIZE>(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])) << 1);
+  return 3 + (static_cast<HB_SIZE>(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])) << 1);
 }
 
 // clang-format off

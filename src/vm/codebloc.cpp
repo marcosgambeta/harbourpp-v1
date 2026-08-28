@@ -164,7 +164,7 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
     do {
       // Swap the current value of local variable with the reference to this
       // value.
-      int32_t iLocal = HB_PCODE_MKUSHORT(pLocalPosTable);
+      int32_t iLocal = HB_PCODE_MKUINT16(pLocalPosTable);
       pLocal = hb_stackLocalVariable(iLocal);
       pLocalPosTable += 2;
 

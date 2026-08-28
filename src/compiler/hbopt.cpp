@@ -130,7 +130,7 @@ static HB_OPT_FUNC(hb_p_pushstatic)
   HB_SYMBOL_UNUSED(cargo);
 
   if (pFunc->pCode[nPCodePos + 3] == HB_P_POPSTATIC &&
-      HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]) == HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]) &&
+      HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]) == HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 4]) &&
       !hb_compHasJump(pFunc, nPCodePos + 3)) {
     hb_compNOOPfill(pFunc, nPCodePos, 6, false, false);
   } else if (pFunc->pCode[nPCodePos + 3] == HB_P_POP && !hb_compHasJump(pFunc, nPCodePos + 3)) {
@@ -145,7 +145,7 @@ static HB_OPT_FUNC(hb_p_pushmemvar)
   HB_SYMBOL_UNUSED(cargo);
 
   if (pFunc->pCode[nPCodePos + 3] == HB_P_POPMEMVAR &&
-      HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]) == HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]) &&
+      HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]) == HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 4]) &&
       !hb_compHasJump(pFunc, nPCodePos + 3)) {
     hb_compNOOPfill(pFunc, nPCodePos, 6, false, false);
   } else if (pFunc->pCode[nPCodePos + 3] == HB_P_POP && !hb_compHasJump(pFunc, nPCodePos + 3)) {
@@ -531,7 +531,7 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
 
 static HB_OPT_FUNC(hb_p_switch)
 {
-  uint16_t usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  uint16_t usCases = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
   HB_SIZE nStart = nPCodePos;
 
   HB_SYMBOL_UNUSED(cargo);
@@ -556,7 +556,7 @@ static HB_OPT_FUNC(hb_p_switch)
       nPCodePos += 2 + pFunc->pCode[nPCodePos + 1];
       break;
     case HB_P_PUSHSTR:
-      nPCodePos += 3 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+      nPCodePos += 3 + HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
       break;
     case HB_P_PUSHSTRLARGE:
       nPCodePos += 4 + HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);
@@ -1048,11 +1048,11 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
         pCode++;
       }
 
-      usVarCount = HB_PCODE_MKUSHORT(pCode);
+      usVarCount = HB_PCODE_MKUINT16(pCode);
       while (usVarCount--) {
         uint16_t usVar;
         pCode += 2;
-        usVar = HB_PCODE_MKUSHORT(pCode);
+        usVar = HB_PCODE_MKUINT16(pCode);
         if (usVar > 0) {
           pLocals[usVar - 1].bFlags |= OPT_LOCAL_FLAG_BLOCK;
         }
@@ -1172,7 +1172,7 @@ static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, ui
         return 1;
       }
     } else if (pFunc->pCode[nPos] == HB_P_SWITCH) { // Switch is multi-place jump
-      uint16_t usCount = HB_PCODE_MKUSHORT(pFunc->pCode + nPos + 1);
+      uint16_t usCount = HB_PCODE_MKUINT16(pFunc->pCode + nPos + 1);
 
       nPos += 3;
       for (uint16_t us = 0; us < usCount; us++) {
@@ -1305,7 +1305,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
         }
       }
     } else if (pFunc->pCode[nPos] == HB_P_LINE) {
-      usLine = HB_PCODE_MKUSHORT(pFunc->pCode + nPos + 1);
+      usLine = HB_PCODE_MKUINT16(pFunc->pCode + nPos + 1);
     }
     nLastPos = nPos;
     nPos += hb_compPCodeSize(pFunc, nPos);
@@ -1369,7 +1369,7 @@ static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocal
         pVar++;
       }
 
-      usVarCount = HB_PCODE_MKUSHORT(pVar);
+      usVarCount = HB_PCODE_MKUINT16(pVar);
       while (usVarCount--) {
         int16_t isVar;
 
