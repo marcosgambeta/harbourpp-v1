@@ -1429,7 +1429,8 @@ typedef HB_U32 HB_FATTR;
 #define HB_PCODE_MKUSHORT( p )      ( static_cast< uint16_t >( HB_GET_LE_UINT16( p ) ) ) // NOTE: deprecated
 #define HB_PCODE_MKUINT16( p )      ( static_cast< uint16_t >( HB_GET_LE_UINT16( p ) ) )
 #define HB_PCODE_MKLONG( p )        ( static_cast< HB_LONG >( HB_GET_LE_INT32( p ) ) )
-#define HB_PCODE_MKULONG( p )       ( static_cast< HB_ULONG >( HB_GET_LE_UINT32( p ) ) )
+#define HB_PCODE_MKULONG( p )       ( static_cast< HB_ULONG >( HB_GET_LE_UINT32( p ) ) ) // NOTE: deprecated
+#define HB_PCODE_MKUINT32( p )      ( static_cast< uint32_t >( HB_GET_LE_UINT32( p ) ) )
 #define HB_PCODE_MKLONGLONG( p )    (( HB_LONGLONG )  HB_GET_LE_INT64( p ))
 #define HB_PCODE_MKULONGLONG( p )   (( HB_ULONGLONG ) HB_GET_LE_UINT64( p ))
 #define HB_PCODE_MKDOUBLE( p )      (( double )       HB_GET_LE_DOUBLE( p ))
