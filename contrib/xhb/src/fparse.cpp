@@ -70,7 +70,7 @@
 /* adjustable, but this should be sufficient in normal situation */
 #define MAX_READ 4096
 
-static void hb_ParseLine(PHB_ITEM pReturn, const char *szText, int iDelimiter, int *iWord)
+static void hb_ParseLine(PHB_ITEM pReturn, const char *szText, int32_t iDelimiter, int32_t *iWord)
 {
   if (szText) {
     HB_ISIZ nLen = strlen(szText);
@@ -212,13 +212,13 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char *szText, int iDelimiter, i
   }
 }
 
-static char **hb_tokensplit(const char *string, uint8_t delimiter, int iCharCount, int *iWord)
+static char **hb_tokensplit(const char *string, uint8_t delimiter, int32_t iCharCount, int32_t *iWord)
 {
   char *bufptr;
   char **token_list;
   char last_char = '\0';
   auto word_count = 0;
-  int word_nbr;
+  int32_t word_nbr;
 
   auto buffer = static_cast<char *>(hb_xgrab(iCharCount + 1));
 
@@ -263,14 +263,14 @@ static char **hb_tokensplit(const char *string, uint8_t delimiter, int iCharCoun
   return token_list;
 }
 
-static HB_BOOL file_read(FILE *stream, char *string, int *iCharCount)
+static HB_BOOL file_read(FILE *stream, char *string, int32_t *iCharCount)
 {
   auto cnbr = 0;
 
   memset(string, ' ', MAX_READ);
 
   for (;;) {
-    int ch = fgetc(stream);
+    int32_t ch = fgetc(stream);
 
     if (ch == '\n' || ch == EOF || ch == 26) {
       *iCharCount = cnbr;
@@ -294,7 +294,7 @@ HB_FUNC(FPARSE)
 {
   auto pSrc = hb_param(1, Harbour::Item::STRING);
   auto pDelim = hb_param(2, Harbour::Item::STRING);
-  int iToken;
+  int32_t iToken;
   auto iCharCount = 0;
   uint8_t nByte;
 
@@ -475,7 +475,7 @@ HB_FUNC(FLINECOUNT)
 {
   auto pSrc = hb_param(1, Harbour::Item::STRING);
   HB_SIZE nLineCount = 0;
-  int ch;
+  int32_t ch;
 
   /* file parameter correctly passed */
   if (!pSrc) {
@@ -515,7 +515,7 @@ HB_FUNC(FCHARCOUNT)
 {
   auto pSrc = hb_param(1, Harbour::Item::STRING);
   HB_SIZE nResult = 0;
-  int ch;
+  int32_t ch;
 
   /* file parameter correctly passed */
   if (!pSrc) {

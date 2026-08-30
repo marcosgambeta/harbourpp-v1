@@ -98,7 +98,7 @@ typedef struct
   HB_UINT translated;
 } S_TUPLE;
 
-static int s_translateSignal(HB_UINT sig, HB_UINT subsig);
+static int32_t s_translateSignal(HB_UINT sig, HB_UINT subsig);
 
 /* Unix specific signal handling implementation
  *
@@ -126,7 +126,7 @@ static S_TUPLE s_sigTable[] = {{SIGHUP, 0, HB_SIGNAL_REFRESH},
                                {SIGUSR2, 0, HB_SIGNAL_USER2},
                                {0, 0, 0}};
 
-static void s_signalHandler(int sig, siginfo_t *info, void *v)
+static void s_signalHandler(int32_t sig, siginfo_t *info, void *v)
 {
   HB_SIZE nPos;
 
@@ -150,7 +150,7 @@ static void s_signalHandler(int sig, siginfo_t *info, void *v)
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
     auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
     if (uiMask & uiSig) {
-      int iRet;
+      int32_t iRet;
 
       /* we don't unlock the mutex now, even if it is
          a little dangerous. But we are in a signal hander...
@@ -239,7 +239,7 @@ static void *s_signalListener(void *my_stack)
   HB_STACK *pStack = (HB_STACK *)my_stack;
 
 #if defined(HB_OS_BSD)
-  int sig;
+  int32_t sig;
 #else
   siginfo_t sinfo;
 #endif
@@ -369,7 +369,7 @@ static S_TUPLE s_sigTable[] = {
     {0, 0, 0}};
 
 /* Manager of signals for windows */
-static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
+static LONG s_signalHandler(int32_t type, int32_t sig, PEXCEPTION_RECORD exc)
 {
   HB_SIZE nPos;
 
@@ -391,7 +391,7 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
     auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
     if ((uiMask & uiSig) == uiSig) {
-      int iRet;
+      int32_t iRet;
 
       /* we don't unlock the mutex now, even if it is
          a little dangerous. But we are in a signal hander...
@@ -463,7 +463,7 @@ static LRESULT CALLBACK s_exceptionFilter(PEXCEPTION_POINTERS exInfo)
   return s_signalHandler(0, exInfo->ExceptionRecord->ExceptionCode, exInfo->ExceptionRecord);
 }
 
-static LRESULT CALLBACK s_MsgFilterFunc(int nCode, WPARAM wParam, LPARAM lParam)
+static LRESULT CALLBACK s_MsgFilterFunc(int32_t nCode, WPARAM wParam, LPARAM lParam)
 {
   PMSG msg;
 
@@ -621,7 +621,7 @@ static void s_serviceSetDflSig(void)
 /* This translates a signal into abstract HB_SIGNAL
    from os specific representation */
 
-static int s_translateSignal(HB_UINT sig, HB_UINT subsig)
+static int32_t s_translateSignal(HB_UINT sig, HB_UINT subsig)
 {
   auto i = 0;
 
@@ -678,7 +678,7 @@ static void s_signalHandlersInit()
 HB_FUNC(HB_STARTSERVICE)
 {
 #ifdef HB_THREAD_SUPPORT
-  int iCount = hb_threadCountStacks();
+  int32_t iCount = hb_threadCountStacks();
   if (iCount > 2 || (sp_hooks == nullptr && iCount > 1)) {
     /* TODO: Right error code here */
     hb_errRT_BASE_SubstR(EG_ARG, 3012, "Service must be started before starting threads", nullptr, 0);
@@ -690,7 +690,7 @@ HB_FUNC(HB_STARTSERVICE)
   {
     /* Iconic? */
     if (hb_parl(1)) {
-      int pid = fork();
+      int32_t pid = fork();
 
       if (pid != 0) {
         hb_vmRequestQuit();
@@ -809,7 +809,7 @@ HB_FUNC(HB_PUSHSIGNALHANDLER)
 
 HB_FUNC(HB_POPSIGNALHANDLER)
 {
-  int nLen;
+  int32_t nLen;
 
   if (sp_hooks != nullptr) {
     hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
@@ -1051,7 +1051,7 @@ HB_FUNC(HB_SIGNALDESC)
 
 HB_FUNC(HB_SERVICEGENERATEFAULT)
 {
-  int *pGPF = nullptr;
+  int32_t *pGPF = nullptr;
 
   *pGPF = 0;
   /* if it doesn't cause GPF (on some platforms it's possible) try this */

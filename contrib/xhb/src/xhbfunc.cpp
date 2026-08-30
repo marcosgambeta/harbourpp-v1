@@ -198,11 +198,11 @@ HB_FUNC(CURDIRX)
   HB_ERRCODE uiErrorOld = hb_fsError();
   auto pbyBuffer = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
   auto pDrv = hb_param(1, Harbour::Item::STRING);
-  int iCurDrv = hb_fsCurDrv();
-  int iDrv;
+  int32_t iCurDrv = hb_fsCurDrv();
+  int32_t iDrv;
 
   if (pDrv && hb_parclen(1) > 0) {
-    iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
+    iDrv = static_cast<int32_t>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
     if (iDrv != iCurDrv) {
       hb_fsChDrv(iDrv);
     }
@@ -246,7 +246,7 @@ HB_FUNC(HB_EXEC)
 {
   if (HB_ISSYMBOL(1)) {
     HB_BOOL fSend = false;
-    int iParams = hb_pcount() - 1;
+    int32_t iParams = hb_pcount() - 1;
 
     if (iParams >= 1) {
       fSend = iParams > 1 && !hb_param(2, Harbour::Item::ANY)->isNil();
@@ -292,10 +292,10 @@ HB_FUNC(XHB_MEMOWRIT)
 
 #if defined(HB_OS_UNIX) && !defined(HB_EOL_CRLF)
 static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_LF, 0};
-static const int s_iCrLfLen = 1;
+static const int32_t s_iCrLfLen = 1;
 #else
 static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_CR, HB_CHAR_LF, 0};
-static const int s_iCrLfLen = 2;
+static const int32_t s_iCrLfLen = 2;
 #endif
 
 HB_FUNC(HB_OSNEWLINE)

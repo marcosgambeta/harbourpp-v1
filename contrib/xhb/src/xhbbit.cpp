@@ -57,7 +57,7 @@
 #define XHB_OR 1
 #define XHB_XOR 2
 
-static void s_xhb_bitOper(int iOper)
+static void s_xhb_bitOper(int32_t iOper)
 {
   auto pItem1 = hb_param(1, Harbour::Item::ANY);
   auto pItem2 = hb_param(2, Harbour::Item::ANY);
@@ -156,7 +156,7 @@ static void s_xhb_bitOper(int iOper)
 
     if ((pItem1->isNumeric() || nLen1 == 1) && pItem2->isString()) {
       auto pStr = hb_itemGetCPtr(pItem2);
-      int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);
+      int32_t iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);
 
       switch (iOper) {
       case XHB_AND:

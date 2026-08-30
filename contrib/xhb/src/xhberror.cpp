@@ -273,7 +273,7 @@ HB_FUNC_STATIC(ERRORINIT)
 
       hb_arraySetC(pItem, 1, szProcFile);
       hb_arraySetC(pItem, 2, szProcName);
-      hb_arraySetNI(pItem, 3, static_cast<int>(uiProcLine));
+      hb_arraySetNI(pItem, 3, static_cast<int32_t>(uiProcLine));
       hb_arrayAddForward(pStack, pItem);
     }
     hb_errRelease(pItem);

@@ -79,12 +79,12 @@ static auto s_iXtermPid = 0;
 
 static void debugInit(void)
 {
-  int iFifoResult;
+  int32_t iFifoResult;
   HB_FNAME *pFileName = nullptr;
   char szDebugName[128];
 
   if (!s_iUseDebugName) {
-    auto iRand = static_cast<int>(hb_random_num() * 1000000);
+    auto iRand = static_cast<int32_t>(hb_random_num() * 1000000);
     pFileName = hb_fsFNameSplit(hb_cmdargARGVN(0));
     hb_snprintf(szDebugName, sizeof(szDebugName) - 1, "/tmp/%s%d_dbg", pFileName->szName, iRand);
   } else {
@@ -99,7 +99,7 @@ static void debugInit(void)
 
   if (iFifoResult == 0 || iFifoResult == EEXIST) {
     char szDebugTitle[30];
-    int iPid;
+    int32_t iPid;
 
     hb_snprintf(szDebugTitle, sizeof(szDebugTitle), "%s - Debug", pFileName->szName);
 
@@ -112,7 +112,7 @@ static void debugInit(void)
         s_iXtermPid = execlp("xterm", "xterm", "-T", szDebugTitle, "-e", "cat", szDebugName, nullptr);
 
         if (s_iXtermPid <= 0) {
-          int lastresort = open(szDebugName, O_RDONLY);
+          int32_t lastresort = open(szDebugName, O_RDONLY);
 
           if (lastresort >= 0) {
             close(lastresort);
@@ -155,7 +155,7 @@ HB_BOOL hb_OutDebugName(PHB_ITEM pName)
 void hb_OutDebug(const char *szMsg, HB_SIZE nMsgLen)
 {
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-  int iStatus;
+  int32_t iStatus;
 
   /* Are we under X? */
   if (getenv("DISPLAY") != nullptr) {
@@ -170,7 +170,7 @@ void hb_OutDebug(const char *szMsg, HB_SIZE nMsgLen)
 
     /* Check if display process has terminated in the meanwhile */
     if (!s_iUseDebugName) {
-      int iPid = waitpid(s_iXtermPid, &iStatus, WNOHANG);
+      int32_t iPid = waitpid(s_iXtermPid, &iStatus, WNOHANG);
       if (iPid == s_iXtermPid || iPid == -1) {
         s_iXtermPid = 0;
 #if 0

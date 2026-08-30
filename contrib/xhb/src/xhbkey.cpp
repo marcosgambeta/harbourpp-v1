@@ -49,14 +49,14 @@
 #include <hbset.hpp>
 #include "xhbinkey.ch"
 
-static int hb_inkeyKeyXHB(int iKey)
+static int32_t hb_inkeyKeyXHB(int32_t iKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyXHB(%d)", iKey));
 #endif
 
   if (HB_INKEY_ISEXT(iKey)) {
-    int iFlags = HB_INKEY_FLAGS(iKey), iValue = HB_INKEY_VALUE(iKey);
+    int32_t iFlags = HB_INKEY_FLAGS(iKey), iValue = HB_INKEY_VALUE(iKey);
 
     if (HB_INKEY_ISKEY(iKey)) {
       if ((iFlags & (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT)) == HB_KF_SHIFT && iValue >= 0 && iValue < 32) {
@@ -107,7 +107,7 @@ HB_FUNC(XHB_KEYTRANS)
 HB_FUNC(XHB_INKEY)
 {
   auto iPCount = hb_pcount();
-  int iKey;
+  int32_t iKey;
 
   iKey = hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1),
                   hb_parnidef(2, hb_setGetEventMask()) | HB_INKEY_EXT);

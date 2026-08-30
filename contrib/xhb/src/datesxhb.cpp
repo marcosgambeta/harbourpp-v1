@@ -107,8 +107,8 @@ HB_FUNC(HMS2D)
   auto dSec = hb_parnd(3);
 
   hb_retnd(hb_timeEncode(
-      iHour, iMin, static_cast<int>(dSec),
-      static_cast<int>((static_cast<double>(dSec - static_cast<double>(static_cast<int>(dSec)))) * 1000)));
+      iHour, iMin, static_cast<int32_t>(dSec),
+      static_cast<int32_t>((static_cast<double>(dSec - static_cast<double>(static_cast<int32_t>(dSec)))) * 1000)));
 }
 
 HB_FUNC(TTOD)

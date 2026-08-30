@@ -72,7 +72,7 @@ typedef struct
   HB_ULONG ulTaskID; /* task identifier */
   PHB_ITEM pTask;    /* pointer to the task item */
   double dSeconds;   /* internal - last time this task has gone */
-  int millisec;      /* milliseconds after this task must run */
+  int32_t millisec;      /* milliseconds after this task must run */
   HB_BOOL bActive;   /* task is active ? */
 } HB_BACKGROUNDTASK, *PHB_BACKGROUNDTASK;
 
@@ -81,12 +81,12 @@ extern void hb_backgroundRunForced(void);          /* run all background routine
 extern void hb_backgroundRun(void);                /* run all background routines but only if them are active*/
 extern void hb_backgroundReset(void);              /* reset internal counter */
 extern void hb_backgroundShutDown(void);           /* closes all background tasks */
-extern HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec,
+extern HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int32_t nMillisec,
                                      HB_BOOL bActive); /* Adds a codeblock or an executable array */
 extern PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID);   /* Deletes a prevuiously added task */
 extern PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID);
 extern HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive);
-extern int hb_backgroundTime(HB_ULONG ulID, int nMillisec);
+extern int32_t hb_backgroundTime(HB_ULONG ulID, int32_t nMillisec);
 
 HB_EXTERN_END
 
@@ -122,7 +122,7 @@ static uint16_t s_uiBackgroundMaxTask = 0;
 
 /* ------------------------  C  LEVEL ------------------------------ */
 
-HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
+HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int32_t nMillisec, HB_BOOL bActive)
 {
   /* store a copy of passed codeblock
    */
@@ -324,7 +324,7 @@ HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive)
 }
 
 /* Set task time */
-int hb_backgroundTime(HB_ULONG ulID, int nMillisec)
+int32_t hb_backgroundTime(HB_ULONG ulID, int32_t nMillisec)
 {
   PHB_BACKGROUNDTASK pBkgTask;
   auto nOldState = 0;

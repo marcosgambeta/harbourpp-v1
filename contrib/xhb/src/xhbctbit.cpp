@@ -74,7 +74,7 @@ static HB_ULONG hb_hextonum(const char *cHex)
   return ulNum;
 }
 
-static HB_LONG __getparam(int iParam)
+static HB_LONG __getparam(int32_t iParam)
 {
   auto szHexNum = hb_parc(iParam);
 
@@ -109,7 +109,7 @@ static HB_LONG __numnot(HB_LONG lNum1, HB_LONG lNum2)
 
 static void sizeofbits(uint16_t *pusBytes, HB_LONG *plPattern, HB_LONG *plTestMSB)
 {
-  *pusBytes = (HB_ISNIL(1) || hb_parni(1) == 0) ? sizeof(int) * 8 : static_cast<uint16_t>(hb_parni(1));
+  *pusBytes = (HB_ISNIL(1) || hb_parni(1) == 0) ? sizeof(int32_t) * 8 : static_cast<uint16_t>(hb_parni(1));
 
   if (*pusBytes > sizeof(HB_LONG) * 8) {
     *pusBytes = *pusBytes % (sizeof(HB_LONG) * 8);
@@ -120,7 +120,7 @@ static void sizeofbits(uint16_t *pusBytes, HB_LONG *plPattern, HB_LONG *plTestMS
   *plTestMSB = (*pusBytes == 0) ? 0 : (1 << (*pusBytes - 1));
 }
 
-static HB_LONG __numfun(int iPCount, HB_LONG (*operation)(HB_LONG wNum1, HB_LONG wNum2), HB_BOOL *pbOk)
+static HB_LONG __numfun(int32_t iPCount, HB_LONG (*operation)(HB_LONG wNum1, HB_LONG wNum2), HB_BOOL *pbOk)
 {
   if ((HB_ISNUM(1) || HB_ISNIL(1)) && (HB_ISNUM(2) || HB_ISCHAR(2))) {
     HB_LONG lNum1 = __getparam(2);
@@ -133,7 +133,7 @@ static HB_LONG __numfun(int iPCount, HB_LONG (*operation)(HB_LONG wNum1, HB_LONG
     if (iPCount == 2) {
       lNumOp = (*operation)(lNum1, 0); /* If unary operation: NOT */
     } else {
-      int iFor;
+      int32_t iFor;
 
       for (iFor = 3; iFor <= iPCount; iFor++) {
         if (HB_ISNUM(iFor) || HB_ISCHAR(iFor)) {

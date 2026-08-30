@@ -163,7 +163,7 @@ HB_FUNC(HB_SYSLOGMESSAGE)
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS) && !defined(HB_OS_SYMBIAN)
 
-  int logval;
+  int32_t logval;
 
   switch (hb_parni(2)) {
   case HB_LOG_CRITICAL:

@@ -165,12 +165,12 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
 
     case CTYPE_INT:          /* int */
     case CTYPE_UNSIGNED_INT: /* unsigned int */
-      uiMemberSize = sizeof(int);
+      uiMemberSize = sizeof(int32_t);
       break;
 
     case CTYPE_INT_PTR:          /* int * */
     case CTYPE_UNSIGNED_INT_PTR: /* unsigned int * */
-      uiMemberSize = sizeof(int *);
+      uiMemberSize = sizeof(int32_t *);
       break;
 
     case CTYPE_LONG:          /* long */
@@ -341,7 +341,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
     case CTYPE_INT:          /* int */
     case CTYPE_UNSIGNED_INT: /* unsigned int */
       /* Type check performed in actual translation... */
-      uiMemberSize = sizeof(int);
+      uiMemberSize = sizeof(int32_t);
       break;
 
     case CTYPE_INT_PTR:          /* int * */
@@ -353,7 +353,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
         return nullptr;
       }
 
-      uiMemberSize = sizeof(int *);
+      uiMemberSize = sizeof(int32_t *);
       break;
 
     case CTYPE_LONG:          /* long */
@@ -625,13 +625,13 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
 
     case CTYPE_INT: /* int */
       if ((pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER) {
-        *((int *)(Buffer + uiOffset)) = static_cast<int>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+        *((int32_t *)(Buffer + uiOffset)) = static_cast<int32_t>((pBaseVar->pItems + nIndex)->item.asInteger.value);
       } else if ((pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG) {
-        *((int *)(Buffer + uiOffset)) = static_cast<int>((pBaseVar->pItems + nIndex)->item.asLong.value);
+        *((int32_t *)(Buffer + uiOffset)) = static_cast<int32_t>((pBaseVar->pItems + nIndex)->item.asLong.value);
       } else if ((pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE) {
-        *((int *)(Buffer + uiOffset)) = static_cast<int>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+        *((int32_t *)(Buffer + uiOffset)) = static_cast<int32_t>((pBaseVar->pItems + nIndex)->item.asDouble.value);
       } else if ((pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL) {
-        *((int *)(Buffer + uiOffset)) = 0;
+        *((int32_t *)(Buffer + uiOffset)) = 0;
       } else {
         hb_errRT_BASE(EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2),
                       hb_paramError(3));
@@ -662,21 +662,21 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
     case CTYPE_INT_PTR: /* int * */
       switch ((pBaseVar->pItems + nIndex)->type) {
       case Harbour::Item::POINTER:
-        *((int **)(Buffer + uiOffset)) = (int *)((pBaseVar->pItems + nIndex)->item.asPointer.value);
+        *((int32_t **)(Buffer + uiOffset)) = (int32_t *)((pBaseVar->pItems + nIndex)->item.asPointer.value);
         break;
 
 #if UINT_MAX == ULONG_MAX
       case Harbour::Item::INTEGER:
-        *((int **)(Buffer + uiOffset)) =
-            (int *)static_cast<uintptr_t>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+        *((int32_t **)(Buffer + uiOffset)) =
+            (int32_t *)static_cast<uintptr_t>((pBaseVar->pItems + nIndex)->item.asInteger.value);
         break;
 #endif
       case Harbour::Item::LONG:
-        *((int **)(Buffer + uiOffset)) = (int *)static_cast<uintptr_t>((pBaseVar->pItems + nIndex)->item.asLong.value);
+        *((int32_t **)(Buffer + uiOffset)) = (int32_t *)static_cast<uintptr_t>((pBaseVar->pItems + nIndex)->item.asLong.value);
         break;
 
       default:
-        *((int **)(Buffer + uiOffset)) = nullptr;
+        *((int32_t **)(Buffer + uiOffset)) = nullptr;
         break;
       }
       break;
@@ -1016,12 +1016,12 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
     case CTYPE_INT:          /* int */
     case CTYPE_UNSIGNED_INT: /* unsigned int */
-      uiMemberSize = sizeof(int);
+      uiMemberSize = sizeof(int32_t);
       break;
 
     case CTYPE_INT_PTR:          /* int * */
     case CTYPE_UNSIGNED_INT_PTR: /* unsigned int * */
-      uiMemberSize = sizeof(int *);
+      uiMemberSize = sizeof(int32_t *);
       break;
 
     case CTYPE_LONG:          /* long */
@@ -1101,11 +1101,11 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
     switch ((pBaseDef->pItems + nIndex)->item.asInteger.value) {
     case CTYPE_CHAR: /* char */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, (int)*(reinterpret_cast<char *>(Buffer + uiOffset)));
+      hb_itemPutNI(pBaseVar->pItems + nIndex, (int32_t)*(reinterpret_cast<char *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_UNSIGNED_CHAR: /* unsigned char */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, (int)*(static_cast<uint8_t *>(Buffer + uiOffset)));
+      hb_itemPutNI(pBaseVar->pItems + nIndex, (int32_t)*(static_cast<uint8_t *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_CHAR_PTR: /* char * */
@@ -1161,11 +1161,11 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
       break;
 
     case CTYPE_INT: /* int */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, *(reinterpret_cast<int *>(Buffer + uiOffset)));
+      hb_itemPutNI(pBaseVar->pItems + nIndex, *(reinterpret_cast<int32_t *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_UNSIGNED_INT: /* unsigned int */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, static_cast<int>(*(reinterpret_cast<unsigned int *>(Buffer + uiOffset))));
+      hb_itemPutNI(pBaseVar->pItems + nIndex, static_cast<int32_t>(*(reinterpret_cast<unsigned int *>(Buffer + uiOffset))));
       break;
 
     case CTYPE_INT_PTR:          /* int * */

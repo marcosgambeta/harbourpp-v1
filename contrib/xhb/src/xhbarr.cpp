@@ -101,7 +101,7 @@ HB_FUNC(ASPLICE)
 
     if (hb_pcount() > 3) {
       auto nNew = 0;
-      int nAdd = hb_pcount() - 3;
+      int32_t nAdd = hb_pcount() - 3;
 
       if (static_cast<HB_SIZE>(nAdd) > nRemove) {
         HB_SIZE nMore = nAdd - nRemove;

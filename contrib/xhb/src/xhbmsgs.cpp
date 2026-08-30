@@ -343,7 +343,7 @@ HB_FUNC(XHB_PLUS)
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
-    int iDec;
+    int32_t iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retnlen(dValue + uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
@@ -369,7 +369,7 @@ HB_FUNC(XHB_MINUS)
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
-    int iDec;
+    int32_t iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retnlen(dValue - uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
@@ -429,12 +429,12 @@ HB_FUNC(XHB_MULT)
 
   if (pSelf->isNumeric() && hb_itemGetCLen(pValue) == 1) {
     auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pValue)[0]);
-    int iDec;
+    int32_t iDec;
     double dValue = hb_itemGetNDDec(pSelf, &iDec);
     hb_retndlen(dValue * uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
-    int iDec;
+    int32_t iDec;
     double dValue = hb_itemGetNDDec(pValue, &iDec);
     hb_retndlen(static_cast<double>(uc) * dValue, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1) {
