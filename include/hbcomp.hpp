@@ -60,7 +60,7 @@ extern HB_ISIZ hb_compPCodeSize(HB_HFUNC *, HB_SIZE);
 extern void hb_compPCodeEval(HB_HFUNC *, const PHB_PCODE_FUNC *, void *);
 extern void hb_compPCodeTrace(HB_HFUNC *, const PHB_PCODE_FUNC *, void *);
 
-extern void hb_compGenLabelTable(HB_HFUNC *pFunc, PHB_LABEL_INFO label_info);
+extern void hb_compGenLabelTable(HB_HFUNC *pFunc, HB_LABEL_INFO *label_info);
 extern PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL);
 
 extern void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc);

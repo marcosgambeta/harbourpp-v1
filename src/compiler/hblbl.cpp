@@ -48,7 +48,7 @@
 #include "hbcomp.hpp"
 #include "hbassert.hpp"
 
-#define HB_LABEL_FUNC(func) HB_PCODE_FUNC(func, PHB_LABEL_INFO)
+#define HB_LABEL_FUNC(func) HB_PCODE_FUNC(func, HB_LABEL_INFO *)
 typedef HB_LABEL_FUNC(HB_LABEL_FUNC_);
 using PHB_LABEL_FUNC = HB_LABEL_FUNC_ *;
 
@@ -363,7 +363,7 @@ static const PHB_LABEL_FUNC s_GenLabelFuncTable[] =
 };
 // clang-format on
 
-void hb_compGenLabelTable(HB_HFUNC *pFunc, PHB_LABEL_INFO label_info)
+void hb_compGenLabelTable(HB_HFUNC *pFunc, HB_LABEL_INFO *label_info)
 {
   const PHB_LABEL_FUNC *pFuncTable = s_GenLabelFuncTable;
 

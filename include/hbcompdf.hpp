@@ -811,7 +811,7 @@ typedef struct _HB_LABEL_INFO
    int32_t       iNestedBlock;
    HB_SIZE * pnLabels;
    const PHB_PCODE_FUNC * pFuncTable;
-} HB_LABEL_INFO, * PHB_LABEL_INFO;
+} HB_LABEL_INFO;
 
 #define HB_MODE_COMPILER      1
 #define HB_MODE_MACRO         2

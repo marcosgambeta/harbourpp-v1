@@ -49,7 +49,7 @@
 #include "hbdate.hpp"
 #include "hbassert.hpp"
 
-#define HB_GENC_FUNC(func) HB_PCODE_FUNC(func, PHB_LABEL_INFO)
+#define HB_GENC_FUNC(func) HB_PCODE_FUNC(func, HB_LABEL_INFO *)
 typedef HB_GENC_FUNC(HB_GENC_FUNC_);
 using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
@@ -139,7 +139,7 @@ static void hb_gencc_copyLocals(FILE *yyc, int32_t iLocal1, int32_t iLocal2)
   }
 }
 
-static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo,
+static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, HB_LABEL_INFO *cargo,
                                        const char *szFunc)
 {
   if (HB_GENC_GETLABEL(nPCodePos + 1) == 0) {
@@ -193,7 +193,7 @@ static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_S
   return 1;
 }
 
-static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
+static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, HB_LABEL_INFO *cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -276,7 +276,7 @@ static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE n
   return 0;
 }
 
-static int32_t hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo)
+static int32_t hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, HB_SIZE nPCodePos, HB_LABEL_INFO *cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
