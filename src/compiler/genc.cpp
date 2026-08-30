@@ -33,17 +33,15 @@ static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, b
 static void hb_writeEndInit(HB_COMP_DECL, FILE *yyc, const char *szModulname, const char *szSourceFile);
 
 // helper structure to pass information
-struct HB_stru_genc_info
+struct HB_GENC_INFO
 {
   HB_COMP_DECL;
   FILE *yyc;
   bool bVerbose;
   HB_SIZE nEndBlockPos;
 };
-using HB_GENC_INFO = HB_stru_genc_info;
-using PHB_GENC_INFO = HB_GENC_INFO *;
 
-#define HB_GENC_FUNC(func) HB_PCODE_FUNC(func, PHB_GENC_INFO)
+#define HB_GENC_FUNC(func) HB_PCODE_FUNC(func, HB_GENC_INFO *)
 typedef HB_GENC_FUNC(HB_GENC_FUNC_);
 using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
@@ -450,7 +448,7 @@ static void hb_compGenCByteStr(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
   }
 }
 
-static void hb_compGenCLocalName(HB_HFUNC *pFunc, int32_t iLocal, HB_SIZE nPCodePos, PHB_GENC_INFO cargo)
+static void hb_compGenCLocalName(HB_HFUNC *pFunc, int32_t iLocal, HB_SIZE nPCodePos, HB_GENC_INFO *cargo)
 {
   // Variable with negative order are local variables
   // referenced in a codeblock -handle it with care
@@ -474,7 +472,7 @@ static void hb_compGenCLocalName(HB_HFUNC *pFunc, int32_t iLocal, HB_SIZE nPCode
   }
 }
 
-static void hb_compGenCStaticName(uint16_t uiStatic, PHB_GENC_INFO cargo)
+static void hb_compGenCStaticName(uint16_t uiStatic, HB_GENC_INFO *cargo)
 {
   const char *szName = hb_compStaticVariableName(cargo->HB_COMP_PARAM, uiStatic);
 
