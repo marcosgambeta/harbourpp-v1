@@ -128,7 +128,7 @@ HB_FUNC(WVG_SENDDLGITEMMESSAGE)
     hb_xmemcpy(cText, hb_itemGetCPtr(pText), iLen + 1);
   }
 
-  hb_retnl((long)SendDlgItemMessage((HWND)(uintptr_t)hb_parnint(1), (int)hb_parni(2), (UINT)hb_parni(3),
+  hb_retnl((long)SendDlgItemMessage((HWND)(uintptr_t)hb_parnint(1), (int32_t)hb_parni(2), (UINT)hb_parni(3),
                                     (WPARAM)hb_parnint(4), (cText ? (LPARAM)cText : (LPARAM)hb_parnint(5))));
 
   if (cText) {
@@ -167,7 +167,7 @@ HB_FUNC(WVG_SETBKCOLOR)
 
 HB_FUNC(WVG_SETBKMODE)
 {
-  hb_retni((int)SetBkMode((HDC)(uintptr_t)hb_parnint(1), hb_parni(2)));
+  hb_retni((int32_t)SetBkMode((HDC)(uintptr_t)hb_parnint(1), hb_parni(2)));
 }
 
 HB_FUNC(WVG_GETSTOCKOBJECT)
@@ -210,7 +210,7 @@ HB_FUNC(WVG_SETDLGITEMTEXT)
 
 HB_FUNC(WVG_GETDLGITEMTEXT)
 {
-  int iLen = (int)SendMessage(GetDlgItem((HWND)(uintptr_t)hb_parnint(1), hb_parni(2)), WM_GETTEXTLENGTH, 0, 0) + 1;
+  int32_t iLen = (int32_t)SendMessage(GetDlgItem((HWND)(uintptr_t)hb_parnint(1), hb_parni(2)), WM_GETTEXTLENGTH, 0, 0) + 1;
   LPTSTR cText = (LPTSTR)hb_xgrab(iLen * sizeof(TCHAR));
   UINT iResult;
 
@@ -303,7 +303,7 @@ HB_FUNC(WVG_LOADIMAGE)
   HANDLE hImage = 0;
   void *hBuffer;
   LPCTSTR lpBuffer = HB_PARSTR(1, &hBuffer, nullptr);
-  int iSource = hb_parni(2);
+  int32_t iSource = hb_parni(2);
 
   switch (iSource) {
   case 0: // Image from resource by numeric id
@@ -525,8 +525,8 @@ HB_FUNC(WVG_TRACKPOPUPMENU)
 {
   HMENU hMenu = (HMENU)(uintptr_t)hb_parnint(1);
   UINT uFlags = hb_parnldef(2, TPM_CENTERALIGN | TPM_RETURNCMD);
-  int x = hb_parni(3);
-  int y = hb_parni(4);
+  int32_t x = hb_parni(3);
+  int32_t y = hb_parni(4);
   HWND hWnd = HB_ISNUM(5) ? (HWND)(uintptr_t)hb_parnint(5) : GetActiveWindow();
 
   POINT xy = {0, 0};
@@ -545,9 +545,9 @@ HB_FUNC(WVG_CHOOSECOLOR)
 {
   CHOOSECOLOR cc;
   COLORREF crCustClr[16];
-  int i;
+  int32_t i;
 
-  for (i = 0; i < (int)HB_SIZEOFARRAY(crCustClr); i++) {
+  for (i = 0; i < (int32_t)HB_SIZEOFARRAY(crCustClr); i++) {
     crCustClr[i] = (HB_ISARRAY(2) ? (COLORREF)hb_parvnl(2, i + 1) : GetSysColor(COLOR_BTNFACE));
   }
 
@@ -594,7 +594,7 @@ HB_FUNC(WVG_SETMENU)
   HB_BOOL bSet;
   RECT wi = {0, 0, 0, 0};
   RECT ci = {0, 0, 0, 0};
-  int height, width;
+  int32_t height, width;
 
   bSet = SetMenu(hWnd, (HMENU)(uintptr_t)hb_parnint(2));
 
@@ -1001,7 +1001,7 @@ HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 {
   HWND hTB = hbwapi_par_raw_HWND(1);
-  int msg = hbwapi_par_INT(2);
+  int32_t msg = hbwapi_par_INT(2);
 
   switch (msg) {
   case TB_ADDBITMAP: {
@@ -1013,7 +1013,7 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 #else
     tbab.nID = (UINT)hbwapi_par_raw_HBITMAP(3);
 #endif
-    hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDBITMAP, (WPARAM)1, (LPARAM)&tbab));
+    hbwapi_ret_NI((int32_t)SendMessage(hTB, TB_ADDBITMAP, (WPARAM)1, (LPARAM)&tbab));
     break;
   }
   case TB_ADDBUTTONS: {
@@ -1030,10 +1030,10 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
     break;
   }
   case TB_ADDSTRING: {
-    int iString;
+    int32_t iString;
     void *hCaption;
 
-    iString = (int)SendMessage(hTB, TB_ADDSTRING, (WPARAM) nullptr, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
+    iString = (int32_t)SendMessage(hTB, TB_ADDSTRING, (WPARAM) nullptr, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
     hb_strfree(hCaption);
 
     hbwapi_ret_NI(iString);
@@ -1175,7 +1175,7 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 HB_FUNC(WVG_SENDEDITCONTROLMESSAGE)
 {
   HWND hED = hbwapi_par_raw_HWND(1);
-  int msg = hbwapi_par_INT(2);
+  int32_t msg = hbwapi_par_INT(2);
 
   switch (msg) {
   case EM_GETSEL: {
@@ -1190,7 +1190,7 @@ HB_FUNC(WVG_SENDEDITCONTROLMESSAGE)
 HB_FUNC(WVG_SENDCBMESSAGE)
 {
   HWND hCB = hbwapi_par_raw_HWND(1);
-  int msg = hbwapi_par_INT(2);
+  int32_t msg = hbwapi_par_INT(2);
   void *hText = nullptr;
 
   switch (msg) {

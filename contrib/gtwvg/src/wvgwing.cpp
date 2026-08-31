@@ -171,7 +171,7 @@ static BITMAPINFO *PackedDibLoad(LPCTSTR szFileName)
   return pbmi;
 }
 
-static int PackedDibGetWidth(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetWidth(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcWidth;
@@ -180,7 +180,7 @@ static int PackedDibGetWidth(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetHeight(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetHeight(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcHeight;
@@ -189,7 +189,7 @@ static int PackedDibGetHeight(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetBitCount(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetBitCount(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcBitCount;
@@ -198,7 +198,7 @@ static int PackedDibGetBitCount(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetInfoHeaderSize(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetInfoHeaderSize(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcSize;
@@ -209,7 +209,7 @@ static int PackedDibGetInfoHeaderSize(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetColorsUsed(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetColorsUsed(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return 0;
@@ -218,9 +218,9 @@ static int PackedDibGetColorsUsed(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetNumColors(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetNumColors(BITMAPINFO *pPackedDib)
 {
-  int iNumColors;
+  int32_t iNumColors;
 
   iNumColors = PackedDibGetColorsUsed(pPackedDib);
 
@@ -231,7 +231,7 @@ static int PackedDibGetNumColors(BITMAPINFO *pPackedDib)
   return iNumColors;
 }
 
-static int PackedDibGetColorTableSize(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetColorTableSize(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return PackedDibGetNumColors(pPackedDib) * sizeof(RGBTRIPLE);
@@ -245,8 +245,8 @@ static BYTE *PackedDibGetBitsPtr(BITMAPINFO *pPackedDib)
   return ((BYTE *)pPackedDib) + PackedDibGetInfoHeaderSize(pPackedDib) + PackedDibGetColorTableSize(pPackedDib);
 }
 
-static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, int iExpHeight, HB_BOOL bMap3Dcolors,
-                              HWND hCtrl, int iMode)
+static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int32_t iExpWidth, int32_t iExpHeight, HB_BOOL bMap3Dcolors,
+                              HWND hCtrl, int32_t iMode)
 {
   HBITMAP hBitmap = nullptr;
 
@@ -254,7 +254,7 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
   case 0:
 
     if (szBitmap) {
-      int iWidth, iHeight;
+      int32_t iWidth, iHeight;
       {
         BITMAPINFO *pPackedDib = nullptr;
         HDC hdc;
@@ -399,7 +399,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMRESOURCENAME)
 HB_FUNC(WVG_STATUSBARCREATEPANEL)
 {
   HWND hWndSB = (HWND)(uintptr_t)hb_parnint(1);
-  int iMode = hb_parni(2);
+  int32_t iMode = hb_parni(2);
 
   if (hWndSB == nullptr || !IsWindow(hWndSB)) {
     hb_retl(false);
@@ -408,16 +408,16 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
 
   switch (iMode) {
   case 0: {
-    int ptArray[WIN_STATUSBAR_MAX_PARTS];
-    int iParts;
+    int32_t ptArray[WIN_STATUSBAR_MAX_PARTS];
+    int32_t iParts;
     RECT rc = {0, 0, 0, 0};
-    int n;
-    int width;
+    int32_t n;
+    int32_t width;
 
-    iParts = (int)SendMessage(hWndSB, SB_GETPARTS, (WPARAM)WIN_STATUSBAR_MAX_PARTS, (LPARAM)(LPINT)ptArray);
+    iParts = (int32_t)SendMessage(hWndSB, SB_GETPARTS, (WPARAM)WIN_STATUSBAR_MAX_PARTS, (LPARAM)(LPINT)ptArray);
 
     GetClientRect(hWndSB, &rc);
-    width = (int)(rc.right / (iParts + 1));
+    width = (int32_t)(rc.right / (iParts + 1));
     for (n = 0; n < iParts; n++) {
       ptArray[n] = (width * (n + 1));
     }
@@ -432,7 +432,7 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
   }
   case -1: {
     RECT rc = {0, 0, 0, 0};
-    int ptArray[WIN_STATUSBAR_MAX_PARTS];
+    int32_t ptArray[WIN_STATUSBAR_MAX_PARTS];
 
     if (GetClientRect(hWndSB, &rc)) {
       ptArray[0] = rc.right;
@@ -453,14 +453,14 @@ HB_FUNC(WVG_STATUSBARSETTEXT)
   HWND hWndSB = (HWND)(uintptr_t)hb_parnint(1);
 
   if (hWndSB && IsWindow(hWndSB)) {
-    int iPart = hb_parnidef(2, 1);
+    int32_t iPart = hb_parnidef(2, 1);
     TCHAR szText[1024];
-    int iFlags;
+    int32_t iFlags;
     void *hCaption;
 
     iPart -= 1; // Zero based
 
-    iFlags = (int)HIWORD(SendMessage(hWndSB, SB_GETTEXT, (WPARAM)iPart, (LPARAM)szText));
+    iFlags = (int32_t)HIWORD(SendMessage(hWndSB, SB_GETTEXT, (WPARAM)iPart, (LPARAM)szText));
 
     SendMessage(hWndSB, SB_SETTEXT, (WPARAM)iPart | iFlags, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
 
@@ -475,8 +475,8 @@ HB_FUNC(WVG_STATUSBARREFRESH)
 
    if (hWndSB && IsWindow(hWndSB))
    {
-      int ptArray[WIN_STATUSBAR_MAX_PARTS];
-      int iParts, i;
+      int32_t ptArray[WIN_STATUSBAR_MAX_PARTS];
+      int32_t iParts, i;
 
       iParts = SendMessage(hWndSB, SB_GETPARTS, WIN_STATUSBAR_MAX_PARTS, (LPARAM)(LPINT)ptArray);
 
@@ -614,8 +614,8 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
 {
   HWND hwnd = wvg_parhwnd(1);
   HTREEITEM hroot, hitem, hitem1, hitem2, hitem3;
-  int iExpand = (hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE);
-  int iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
+  int32_t iExpand = (hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE);
+  int32_t iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
 
   hroot = TreeView_GetRoot(hwnd);
   if (hroot) {
@@ -914,16 +914,16 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
   TBBUTTON tbb;
   HB_BOOL bSuccess;
   HWND hWndTB = hbwapi_par_raw_HWND(1);
-  int iCommand = hb_parni(4);
+  int32_t iCommand = hb_parni(4);
 
   switch (hb_parni(5)) {
   case 1: // button from image
   {
-    int iNewString;
+    int32_t iNewString;
 
     // set string
     void *hCaption;
-    iNewString = (int)SendMessage(hWndTB, TB_ADDSTRING, (WPARAM)0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
+    iNewString = (int32_t)SendMessage(hWndTB, TB_ADDSTRING, (WPARAM)0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
     hb_strfree(hCaption);
 
     if (hb_parl(6)) {

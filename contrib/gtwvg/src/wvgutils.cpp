@@ -198,7 +198,7 @@ HB_FUNC(WVT_CHOOSECOLOR)
 
   CHOOSECOLOR cc;
   COLORREF crCustClr[16];
-  int i;
+  int32_t i;
 
   for (i = 0; i < 16; i++) {
     crCustClr[i] = (HB_ISARRAY(2) ? (COLORREF)hb_parvnl(2, i + 1) : GetSysColor(COLOR_BTNFACE));
@@ -257,7 +257,7 @@ HB_FUNC(WVT_SETTOOLTIP)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   POINT xy = {0, 0};
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
 
   if (!_s->bToolTipActive) {
     return;
@@ -326,7 +326,7 @@ HB_FUNC(WVT_SETTOOLTIPWIDTH)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  int iTipWidth = (int)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0);
+  int32_t iTipWidth = (int32_t)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0);
 
   if (HB_ISNUM(1)) {
     SendMessage(_s->hWndTT, TTM_SETMAXTIPWIDTH, 0, (LPARAM)(uintptr_t)hb_parnint(1));
@@ -367,7 +367,7 @@ HB_FUNC(WVT_SETTOOLTIPTITLE)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  int iIcon;
+  int32_t iIcon;
 
   if (HB_ISCHAR(2)) {
     void *hText;
@@ -388,7 +388,7 @@ HB_FUNC(WVT_GETTOOLTIPWIDTH)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  hb_retni((int)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
+  hb_retni((int32_t)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
 }
 
 HB_FUNC(WVT_GETTOOLTIPBKCOLOR)
@@ -451,7 +451,7 @@ HB_FUNC(WVT_SETPOINTER)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  int iCursor = hb_parni(1);
+  int32_t iCursor = hb_parni(1);
   HCURSOR hCursor;
 
   switch (iCursor) {
@@ -585,18 +585,18 @@ HB_FUNC(WVT_SETMENU)
   RECT wi = {0, 0, 0, 0};
   RECT ci = {0, 0, 0, 0};
   RECT rc = {0, 0, 0, 0};
-  int height, width;
+  int32_t height, width;
 
   SetMenu(_s->hWnd, (HMENU)(uintptr_t)hb_parnint(1));
 
   GetWindowRect(_s->hWnd, &wi);
   GetClientRect(_s->hWnd, &ci);
 
-  height = (int)(_s->PTEXTSIZE.y * _s->ROWS);
-  width = (int)(_s->PTEXTSIZE.x * _s->COLS);
+  height = (int32_t)(_s->PTEXTSIZE.y * _s->ROWS);
+  width = (int32_t)(_s->PTEXTSIZE.x * _s->COLS);
 
-  width += (int)(wi.right - wi.left - ci.right);
-  height += (int)(wi.bottom - wi.top - ci.bottom);
+  width += (int32_t)(wi.right - wi.left - ci.right);
+  height += (int32_t)(wi.bottom - wi.top - ci.bottom);
 
   if (_s->CentreWindow && SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0)) {
     wi.left = rc.left + ((rc.right - rc.left - width) / 2);
@@ -655,7 +655,7 @@ HB_FUNC(WVT_SETLASTMENUEVENT)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  int iEvent = _s->LastMenuEvent;
+  int32_t iEvent = _s->LastMenuEvent;
 
   if (HB_ISNUM(1)) {
     _s->LastMenuEvent = hb_parni(1);
@@ -668,7 +668,7 @@ HB_FUNC(WVT_SETMENUKEYEVENT)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  int iOldEvent = _s->MenuKeyEvent;
+  int32_t iOldEvent = _s->MenuKeyEvent;
 
   if (HB_ISNUM(1)) {
     _s->MenuKeyEvent = hb_parni(1);
@@ -780,9 +780,9 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
   PHB_ITEM pFunc = nullptr;
   PHB_DYNS pExecSym;
   HWND hDlg = 0;
-  int iType = 0;
-  int iIndex;
-  int iResource = hb_parni(4);
+  int32_t iType = 0;
+  int32_t iIndex;
+  int32_t iResource = hb_parni(4);
 
   // check if we still have room for a new dialog
   for (iIndex = 0; iIndex < WVT_DLGML_MAX; iIndex++) {
@@ -873,8 +873,8 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
   PHB_ITEM pFunc = nullptr;
   PHB_DYNS pExecSym;
-  int iIndex;
-  int iResource = hb_parni(4);
+  int32_t iIndex;
+  int32_t iResource = hb_parni(4);
   intptr_t iResult = 0;
   HWND hParent = HB_ISNUM(5) ? (HWND)(uintptr_t)hb_parnint(5) : _s->hWnd;
 
@@ -935,7 +935,7 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
 {
   WORD *p, *pdlgtemplate;
   WORD nItems = (WORD)hb_parvni(1, 4);
-  int i, nchar;
+  int32_t i, nchar;
   DWORD lStyle;
 
   // Parameters: 12 arrays
@@ -1046,9 +1046,9 @@ LPWORD lpwAlign(LPWORD lpIn)
   return (LPWORD)ul;
 }
 
-int nCopyAnsiToWideChar(LPWORD lpWCStr, LPCSTR lpAnsiIn)
+int32_t nCopyAnsiToWideChar(LPWORD lpWCStr, LPCSTR lpAnsiIn)
 {
-  int nChar = 0;
+  int32_t nChar = 0;
 
   do {
     *lpWCStr++ = (WORD)*lpAnsiIn;
@@ -1129,7 +1129,7 @@ HB_FUNC(WVT_GETFONTHANDLE)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   HFONT hFont = 0;
-  int iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni(1) - 1;
 
   if (iSlot >= 0 && iSlot < WVT_PICTURES_MAX) {
     hFont = _s->pGUI->hUserFonts[iSlot];
