@@ -241,7 +241,7 @@ typedef struct _ssfFrame
 
 typedef struct _ssfGlyph
 {
-   int      num;
+   int32_t      num;
    ssfFrame frames[ SSF_MAXFRAMES ];
 } ssfGlyph;
 
@@ -253,7 +253,7 @@ typedef struct _ssfFont
 
 extern void ssfCreateThinFont( ssfFont * sfont );
 extern void ssfSetFontSize( ssfFont * sfont, unsigned short fsize );
-extern unsigned short ssfDrawChar( AL_BITMAP * dst, ssfFont * sfont, char c, int x, int y, int color );
-extern int ssfDrawText( AL_BITMAP * dst, ssfFont * sfont, const char * s, int x, int y, int color );
+extern unsigned short ssfDrawChar( AL_BITMAP * dst, ssfFont * sfont, char c, int32_t x, int32_t y, int32_t color );
+extern int32_t ssfDrawText( AL_BITMAP * dst, ssfFont * sfont, const char * s, int32_t x, int32_t y, int32_t color );
 
 #endif  /* _SSF_H_ */

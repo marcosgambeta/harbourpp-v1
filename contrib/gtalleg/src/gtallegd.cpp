@@ -61,7 +61,7 @@
 #include <inkey.ch>
 #include "hbgfxdef.ch"
 
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER   (&SuperTable)
 #define HB_GTID_PTR  (&s_GtId)
@@ -73,20 +73,20 @@ static bool s_fGtError;
 /* font definition */
 static ssfFont        s_ssfDefaultFont;
 static unsigned short s_byFontSize = 16;
-static int s_byFontWidth = 8;
+static int32_t s_byFontWidth = 8;
 
 /* mouse parameters */
-static int        s_iMsButtons;
-static int        s_mouseButtonsState;
+static int32_t        s_iMsButtons;
+static int32_t        s_mouseButtonsState;
 static HB_GT_RECT s_mouseBound;
 static HB_GT_CORD s_mousePos;
 
 /* screen size in characters */
-static int s_iScrWidth  = 80;
-static int s_iScrHeight = 25;
+static int32_t s_iScrWidth  = 80;
+static int32_t s_iScrHeight = 25;
 /* screen size in pixels */
-static int s_iGFXWidth  = 0;
-static int s_iGFXHeight = 0;
+static int32_t s_iGFXWidth  = 0;
+static int32_t s_iGFXHeight = 0;
 
 /* update region in pixels */
 static HB_GT_RECT s_GFXUpd;
@@ -95,12 +95,12 @@ static HB_GT_RECT s_GFXUpd;
 static HB_GT_RECT s_CLIP;
 
 /* cursor position and style */
-static int s_iCurCol;
-static int s_iCurRow;
-static int s_iCursorStyle;
+static int32_t s_iCurCol;
+static int32_t s_iCurRow;
+static int32_t s_iCursorStyle;
 
 /* color indexes */
-static int s_pClr[16];
+static int32_t s_pClr[16];
 
 /* screen buffer bitmap */
 static AL_BITMAP * s_bmp = nullptr;
@@ -117,8 +117,8 @@ static AL_BITMAP * s_bmp = nullptr;
 
 struct gtAllegKey
 {
-   int al_key;
-   int xhb_key;
+   int32_t al_key;
+   int32_t xhb_key;
 };
 
 #define GT_KEY_TABLE_SIZE  49
@@ -215,7 +215,7 @@ static void hb_gt_alleg_Error(const char * szMsg)
    hb_errInternal(9997, "%s: %s", szMsg, allegro_error);
 }
 
-static bool hb_gt_alleg_CursorRect(int iRow, int iCol, int iStyle, int * piTop, int * piLeft, int * piBottom, int * piRight)
+static bool hb_gt_alleg_CursorRect(int32_t iRow, int32_t iCol, int32_t iStyle, int32_t * piTop, int32_t * piLeft, int32_t * piBottom, int32_t * piRight)
 {
    *piLeft   = s_iHBorder + iCol * s_byFontWidth;
    *piRight  = *piLeft + s_byFontWidth - 1;
@@ -249,9 +249,9 @@ static bool hb_gt_alleg_CursorRect(int iRow, int iCol, int iStyle, int * piTop, 
    return true;
 }
 
-static void hb_gt_alleg_DoCursor(int iRow, int iCol, int iStyle)
+static void hb_gt_alleg_DoCursor(int32_t iRow, int32_t iCol, int32_t iStyle)
 {
-   int iTop, iLeft, iBottom, iRight;
+   int32_t iTop, iLeft, iBottom, iRight;
 
    /* Hide the previous cursor */
    if( s_iCursorStyle != SC_NONE && hb_gt_alleg_CursorRect(s_iCurRow, s_iCurCol, s_iCursorStyle, &iTop, &iLeft, &iBottom, &iRight) ) {
@@ -278,7 +278,7 @@ static void hb_gt_alleg_ScreenUpdate(PHB_GT pGT)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_ScreenUpdate(%p)", pGT));
 #endif
 
-   int     iRow, iCol, iStyle;
+   int32_t     iRow, iCol, iStyle;
    bool    fPix, fCursor;
 
    HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
@@ -306,13 +306,13 @@ static void hb_gt_alleg_ScreenUpdate(PHB_GT pGT)
    }
 }
 
-static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, bool lClearInit)
+static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int32_t iRows, int32_t iCols, bool lClearInit)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, static_cast<int>(lClearInit)));
 #endif
 
-   int       iRet  = 1, iWidth, iHeight; /* Don't remove iRet, ixFP and iyFP initializers! */
+   int32_t       iRet  = 1, iWidth, iHeight; /* Don't remove iRet, ixFP and iyFP initializers! */
    short     ixFP  = 0, iyFP = 0;
    bool      lMode = false, lPrev = s_fInit;
 
@@ -511,7 +511,7 @@ static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, bool 
       }
 
       if( !lClearInit ) {
-         int iColor = s_pClr[(HB_GTSELF_GETCLEARCOLOR(pGT) >> 4) & 0x0f];
+         int32_t iColor = s_pClr[(HB_GTSELF_GETCLEARCOLOR(pGT) >> 4) & 0x0f];
          al_clear_to_color(s_bmp, iColor);
          al_clear_to_color(al_screen, iColor);
       }
@@ -533,7 +533,7 @@ static void hb_gt_alleg_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFi
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Init(%p,%p,%p,%p)", pGT, static_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), static_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), static_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
 #endif
 
-   int iRet;
+   int32_t iRet;
 
    ssfCreateThinFont(&s_ssfDefaultFont);
 
@@ -568,7 +568,7 @@ static void hb_gt_alleg_Exit(PHB_GT pGT) // FuncTable
    }
 }
 
-static const char * hb_gt_alleg_Version(PHB_GT pGT, int iType) // FuncTable
+static const char * hb_gt_alleg_Version(PHB_GT pGT, int32_t iType) // FuncTable
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -579,7 +579,7 @@ static const char * hb_gt_alleg_Version(PHB_GT pGT, int iType) // FuncTable
    return "Harbour++ Terminal: Portable Allegro GUI console";
 }
 
-static HB_BOOL hb_gt_alleg_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
+static HB_BOOL hb_gt_alleg_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_SetMode(%p,%d,%d)", pGT, iRows, iCols));
@@ -590,14 +590,14 @@ static HB_BOOL hb_gt_alleg_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTabl
    return hb_gt_alleg_InitializeScreen(pGT, iRows, iCols, true);
 }
 
-static int hb_gt_alleg_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
+static int32_t hb_gt_alleg_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_ReadKey(%p,%d)", pGT, iEventMask));
 #endif
 
-   int nKey = 0;
-   int i, iMseCol, iMseRow;
+   int32_t nKey = 0;
+   int32_t i, iMseCol, iMseRow;
 
    HB_SYMBOL_UNUSED(iEventMask);
 
@@ -670,10 +670,10 @@ static int hb_gt_alleg_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 #endif
       } else if( (((nKey & 255) == 1) || ((nKey & 255) == 4)) && (((nKey >> 8) >= AL_KEY_F1) && ((nKey >> 8) <= AL_KEY_F12)) ) { /* K_SH_F1 .. F12, K_ALT_F1..F12 */
          if( (nKey & 255) == 1 ) {
-            int iFKeys[12] = { K_SH_F1, K_SH_F2, K_SH_F2, K_SH_F4,  K_SH_F5,  K_SH_F6, K_SH_F7, K_SH_F8, K_SH_F9, K_SH_F10, K_SH_F11, K_SH_F12 };
+            int32_t iFKeys[12] = { K_SH_F1, K_SH_F2, K_SH_F2, K_SH_F4,  K_SH_F5,  K_SH_F6, K_SH_F7, K_SH_F8, K_SH_F9, K_SH_F10, K_SH_F11, K_SH_F12 };
             nKey = iFKeys[(nKey >> 8) - AL_KEY_F1];
          } else {
-            int iFKeys[12] = { K_ALT_F1, K_ALT_F2, K_ALT_F2, K_ALT_F4,  K_ALT_F5,  K_ALT_F6, K_ALT_F7, K_ALT_F8, K_ALT_F9, K_ALT_F10, K_ALT_F11, K_ALT_F12 };
+            int32_t iFKeys[12] = { K_ALT_F1, K_ALT_F2, K_ALT_F2, K_ALT_F4,  K_ALT_F5,  K_ALT_F6, K_ALT_F7, K_ALT_F8, K_ALT_F9, K_ALT_F10, K_ALT_F11, K_ALT_F12 };
             nKey = iFKeys[(nKey >> 8) - AL_KEY_F1];
          }
       } else if( nKey & 255 ) {
@@ -698,7 +698,7 @@ static HB_BOOL hb_gt_alleg_mouse_IsPresent(PHB_GT pGT) // FuncTable
    return true;
 }
 
-static void hb_gt_alleg_mouse_GetPos(PHB_GT pGT, int * piRow, int * piCol) // FuncTable
+static void hb_gt_alleg_mouse_GetPos(PHB_GT pGT, int32_t * piRow, int32_t * piCol) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -710,14 +710,14 @@ static void hb_gt_alleg_mouse_GetPos(PHB_GT pGT, int * piRow, int * piCol) // Fu
    *piCol = al_mouse_x / s_byFontWidth;
 }
 
-static void hb_gt_alleg_mouse_SetPos(PHB_GT pGT, int iRow, int iCol) // FuncTable
+static void hb_gt_alleg_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
    GT_SCREENINIT();
 
    al_position_mouse(iCol * s_byFontWidth, iRow * s_byFontSize);
 }
 
-static HB_BOOL hb_gt_alleg_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
+static HB_BOOL hb_gt_alleg_mouse_ButtonState(PHB_GT pGT, int32_t iButton) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -728,14 +728,14 @@ static HB_BOOL hb_gt_alleg_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTab
    return (al_mouse_b & (1 << (iButton - 1))) != 0;
 }
 
-static int hb_gt_alleg_mouse_CountButton(PHB_GT pGT) // FuncTable
+static int32_t hb_gt_alleg_mouse_CountButton(PHB_GT pGT) // FuncTable
 {
    GT_SCREENINIT();
 
    return s_iMsButtons;
 }
 
-static void hb_gt_alleg_mouse_SetBounds(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight) // FuncTable
+static void hb_gt_alleg_mouse_SetBounds(PHB_GT pGT, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -758,7 +758,7 @@ static void hb_gt_alleg_mouse_SetBounds(PHB_GT pGT, int iTop, int iLeft, int iBo
    al_set_mouse_range(s_mouseBound.iLeft, s_mouseBound.iTop, s_mouseBound.iRight, s_mouseBound.iBottom);
 }
 
-static void hb_gt_alleg_mouse_GetBounds(PHB_GT pGT, int * piTop, int * piLeft, int * piBottom, int * piRight) // FuncTable
+static void hb_gt_alleg_mouse_GetBounds(PHB_GT pGT, int32_t * piTop, int32_t * piLeft, int32_t * piBottom, int32_t * piRight) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -768,13 +768,13 @@ static void hb_gt_alleg_mouse_GetBounds(PHB_GT pGT, int * piTop, int * piLeft, i
    *piRight  = s_mouseBound.iRight;
 }
 
-static HB_BOOL hb_gt_alleg_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_alleg_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Info(%p,%d,%p)", pGT, iType, pInfo));
 #endif
 
-   int iWidth, iHeight, iValue;
+   int32_t iWidth, iHeight, iValue;
 
    switch( iType ) {
       case HB_GTI_ISSCREENPOS:
@@ -884,13 +884,13 @@ static HB_BOOL hb_gt_alleg_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // Fun
                      if( t > b ) { tmp = b; b = t; t = tmp; } \
                } while( 0 )
 
-static int hb_gt_alleg_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor) // FuncTable
+static int32_t hb_gt_alleg_gfx_Primitive(PHB_GT pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", pGT, iType, iTop, iLeft, iBottom, iRight, iColor));
 #endif
 
-   int iRet = 1, iTmp;
+   int32_t iRet = 1, iTmp;
 
    GT_SCREENINIT();
    HB_GTSELF_REFRESH(pGT);
@@ -1024,13 +1024,13 @@ static int hb_gt_alleg_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft,
    return iRet;
 }
 
-static void hb_gt_alleg_gfx_Text(PHB_GT pGT, int iTop, int iLeft, const char * cBuf, int iColor, int iSize, int iWidth) // FuncTable
+static void hb_gt_alleg_gfx_Text(PHB_GT pGT, int32_t iTop, int32_t iLeft, const char * cBuf, int32_t iColor, int32_t iSize, int32_t iWidth) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_gfx_Text(%p,%d,%d,%s,%d,%d,%d)", pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth));
 #endif
 
-   int iBottom, iRight;
+   int32_t iBottom, iRight;
 
    HB_SYMBOL_UNUSED(iWidth);
 
@@ -1060,18 +1060,18 @@ static void hb_gt_alleg_gfx_Text(PHB_GT pGT, int iTop, int iLeft, const char * c
 
 /* ******** Graphics API end ******** */
 
-static void hb_gt_alleg_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
+static void hb_gt_alleg_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Redraw(%p,%d,%d,%d)", pGT, iRow, iCol, iSize));
 #endif
 
-   int      iColor;
+   int32_t      iColor;
    uint8_t  bAttr;
    uint8_t uc;
 
    if( s_fInit ) {
-      int iPosX = iCol * s_byFontWidth, iPosY = iRow * s_byFontSize;
+      int32_t iPosX = iCol * s_byFontWidth, iPosY = iRow * s_byFontSize;
 
       if( s_iCursorStyle != SC_NONE && s_iCurRow == iRow && s_iCurCol >= iCol && s_iCurCol <= iCol + iSize - 1 ) {
          s_iCursorStyle = SC_NONE;
@@ -1088,7 +1088,7 @@ static void hb_gt_alleg_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // Fun
          iPosX += s_byFontWidth;
       }
    } else if( !s_fMakeInit ) {
-      int iDefColor = HB_GTSELF_GETCOLOR(pGT);
+      int32_t iDefColor = HB_GTSELF_GETCOLOR(pGT);
 
       while( iSize-- ) {
          if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, true) ) {
@@ -1169,7 +1169,7 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
  * or when link statically and your linker will force to link main()
  * from Allegro library not the Harbour one
  */
-int _mangled_main(int argc, char * argv[])
+int32_t _mangled_main(int32_t argc, char * argv[])
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("_mangled_main(%d, %p)", argc, argv));
@@ -1180,7 +1180,7 @@ int _mangled_main(int argc, char * argv[])
    return hb_vmQuit();
 }
 
-using _hballeg_main_t = int (*)(int argc, char * argv[]);
+using _hballeg_main_t = int32_t (*)(int32_t argc, char * argv[]);
 
 extern _hballeg_main_t _mangled_main_address;
 _hballeg_main_t _mangled_main_address = _mangled_main;

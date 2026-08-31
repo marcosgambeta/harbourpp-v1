@@ -82,12 +82,12 @@ void ssfSetFontSize(ssfFont * sfont, unsigned short fsize)
    sfont->fsize = fsize;
 }
 
-unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int x, int y, int color)
+unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int32_t x, int32_t y, int32_t color)
 {
-   int      i, j, thick;
+   int32_t      i, j, thick;
    ssfGlyph charGlyph;
    ssfFrame charFrame;
-   int      points[8];
+   int32_t      points[8];
 
    auto p = static_cast<uint8_t>(c);
    charGlyph = *sfont->chars[p];
@@ -190,9 +190,9 @@ unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int x, int 
    return sfont->fsize / 2;
 }
 
-int ssfDrawText(AL_BITMAP * dst, ssfFont * sfont, const char * s, int x, int y, int color)
+int32_t ssfDrawText(AL_BITMAP * dst, ssfFont * sfont, const char * s, int32_t x, int32_t y, int32_t color)
 {
-   int i = 0;
+   int32_t i = 0;
 
    while( s[i] ) {
       x += ssfDrawChar(dst, sfont, s[i], x, y, color);
