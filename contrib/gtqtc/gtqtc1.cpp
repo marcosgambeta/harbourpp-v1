@@ -53,7 +53,7 @@
 
 #include "gtqtc.h"
 
-static int s_GtId;
+static int32_t s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
@@ -166,14 +166,14 @@ static PHB_ITEM hb_gt_qtc_itemPutQString(PHB_ITEM pItem, const QString *pqStr)
     painter.drawText(0, pQTC->fontAscent, QString(ch));                                                                \
   } while (0)
 
-static QBitmap *hb_gt_qtc_bitmap_char(int cellx, int celly)
+static QBitmap *hb_gt_qtc_bitmap_char(int32_t cellx, int32_t celly)
 {
   QBitmap *qBitMap = new QBitmap(cellx, celly);
   qBitMap->clear();
   return qBitMap;
 }
 
-static QBitmap *hb_gt_qtc_defineBoxButtonL(int cellx, int celly)
+static QBitmap *hb_gt_qtc_defineBoxButtonL(int32_t cellx, int32_t celly)
 {
   QBitmap *qBitMap = hb_gt_qtc_bitmap_char(cellx, celly);
 
@@ -190,7 +190,7 @@ static QBitmap *hb_gt_qtc_defineBoxButtonL(int cellx, int celly)
   return qBitMap;
 }
 
-static QBitmap *hb_gt_qtc_defineBoxButtonR(int cellx, int celly)
+static QBitmap *hb_gt_qtc_defineBoxButtonR(int32_t cellx, int32_t celly)
 {
   QBitmap *qBitMap = hb_gt_qtc_bitmap_char(cellx, celly);
 
@@ -211,9 +211,9 @@ static QBitmap *hb_gt_qtc_defineBoxButtonR(int cellx, int celly)
 static QBitmap *hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, uint16_t usCh)
 {
   QBitmap *qBitMap = nullptr;
-  int cellx = pQTC->cellX;
-  int celly = pQTC->cellY;
-  int i, y, x, yy, xx;
+  int32_t cellx = pQTC->cellX;
+  int32_t celly = pQTC->cellY;
+  int32_t i, y, x, yy, xx;
   QPoint pts[3];
 
   if (usCh >= HB_BOXCH_RC_MIN && usCh <= HB_BOXCH_RC_MAX) {
@@ -745,7 +745,7 @@ static QBitmap *hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, uint16_t usCh)
     case HB_BOXCH_FILLER1:
     case HB_BOXCH_FILLER2:
     case HB_BOXCH_FILLER3: {
-      int skip, start, mod;
+      int32_t skip, start, mod;
 
       qBitMap = hb_gt_qtc_bitmap_char(cellx, celly);
       hb_bm_paint_begin(qBitMap);
@@ -1245,7 +1245,7 @@ static QBitmap *hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, uint16_t usCh)
 static QBitmap *hb_gt_qtc_getBoxChar(PHB_GTQTC pQTC, uint16_t *puc16)
 {
   uint16_t uc16 = *puc16;
-  int iPos, iTrans;
+  int32_t iPos, iTrans;
 
   if ((pQTC->fontAttribute & HB_GTI_FONTA_DRAWBOX) == 0) {
     return nullptr;
@@ -1330,7 +1330,7 @@ static QBitmap *hb_gt_qtc_getBoxChar(PHB_GTQTC pQTC, uint16_t *puc16)
 
 static void hb_gt_qtc_resetBoxCharBitmaps(PHB_GTQTC pQTC)
 {
-  int i;
+  int32_t i;
 
   for (i = 1; i <= pQTC->boxCount; i++) {
     delete pQTC->boxImage[i];
@@ -1483,7 +1483,7 @@ static PHB_GTQTC hb_gt_qtc_new(PHB_GT pGT)
 
 static void hb_gt_qtc_updateCursor(PHB_GTQTC pQTC)
 {
-  int cursorType = pQTC->cursorVisible ? pQTC->cursorType : SC_NONE;
+  int32_t cursorType = pQTC->cursorVisible ? pQTC->cursorType : SC_NONE;
 
   if (pQTC->lastCursorType != cursorType || pQTC->lastCursorCol != pQTC->cursorCol ||
       pQTC->lastCursorRow != pQTC->cursorRow) {
@@ -1526,13 +1526,13 @@ static void hb_gt_qtc_updateCursor(PHB_GTQTC pQTC)
 /*
  *  functions for handling the input queues for the mouse and keyboard
  */
-static void hb_gt_qtc_addKeyToInputQueue(PHB_GTQTC pQTC, int iKey)
+static void hb_gt_qtc_addKeyToInputQueue(PHB_GTQTC pQTC, int32_t iKey)
 {
-  int iHead = pQTC->keyHead;
+  int32_t iHead = pQTC->keyHead;
 
   if (pQTC->keyHead != pQTC->keyTail) {
     if (HB_INKEY_ISMOUSEPOS(iKey)) {
-      int iLastKey = pQTC->keyBuffer[pQTC->keyLast];
+      int32_t iLastKey = pQTC->keyBuffer[pQTC->keyLast];
 
       /* Clipper strips repeated mouse movemnt - let's do the same */
       if (HB_INKEY_ISMOUSEPOS(iLastKey)) {
@@ -1556,7 +1556,7 @@ static void hb_gt_qtc_addKeyToInputQueue(PHB_GTQTC pQTC, int iKey)
   }
 }
 
-static HB_BOOL hb_gt_qtc_getKeyFromInputQueue(PHB_GTQTC pQTC, int *piKey)
+static HB_BOOL hb_gt_qtc_getKeyFromInputQueue(PHB_GTQTC pQTC, int32_t *piKey)
 {
   if (pQTC && pQTC->keyTail != pQTC->keyHead) {
     *piKey = pQTC->keyBuffer[pQTC->keyTail];
@@ -1569,9 +1569,9 @@ static HB_BOOL hb_gt_qtc_getKeyFromInputQueue(PHB_GTQTC pQTC, int *piKey)
   return HB_FALSE;
 }
 
-static int hb_gt_qtc_getKbdState()
+static int32_t hb_gt_qtc_getKbdState()
 {
-  int iKbdState = 0;
+  int32_t iKbdState = 0;
   Qt::KeyboardModifiers kbState = QApplication::keyboardModifiers();
 
   if (kbState & Qt::ShiftModifier) {
@@ -1587,9 +1587,9 @@ static int hb_gt_qtc_getKbdState()
   return iKbdState;
 }
 
-static int hb_gt_qtc_getKeyFlags(Qt::KeyboardModifiers keyFlags)
+static int32_t hb_gt_qtc_getKeyFlags(Qt::KeyboardModifiers keyFlags)
 {
-  int iFlags = 0;
+  int32_t iFlags = 0;
 
   if (keyFlags & Qt::AltModifier) {
     iFlags |= HB_KF_ALT;
@@ -1617,7 +1617,7 @@ static int hb_gt_qtc_getKeyFlags(Qt::KeyboardModifiers keyFlags)
   return iFlags;
 }
 
-static void hb_gt_qtc_setMouseKey(PHB_GTQTC pQTC, int x, int y, int iKey, Qt::KeyboardModifiers keyFlags)
+static void hb_gt_qtc_setMouseKey(PHB_GTQTC pQTC, int32_t x, int32_t y, int32_t iKey, Qt::KeyboardModifiers keyFlags)
 {
   x -= pQTC->marginLeft;
   y -= pQTC->marginTop;
@@ -1632,12 +1632,12 @@ static void hb_gt_qtc_setMouseKey(PHB_GTQTC pQTC, int x, int y, int iKey, Qt::Ke
   }
 
   if (iKey != 0) {
-    int iFlags = hb_gt_qtc_getKeyFlags(keyFlags);
+    int32_t iFlags = hb_gt_qtc_getKeyFlags(keyFlags);
     hb_gt_qtc_addKeyToInputQueue(pQTC, HB_INKEY_NEW_MKEY(iKey, iFlags));
   }
 }
 
-static HB_BOOL hb_gt_qtc_setWindowSize(PHB_GTQTC pQTC, int iRows, int iCols)
+static HB_BOOL hb_gt_qtc_setWindowSize(PHB_GTQTC pQTC, int32_t iRows, int32_t iCols)
 {
   if (HB_GTSELF_RESIZE(pQTC->pGT, iRows, iCols)) {
     if (pQTC->iCols != iCols) {
@@ -1751,15 +1751,15 @@ static void hb_gt_qtc_createConsoleWindow(PHB_GTQTC pQTC)
   pQTC->qWnd->update();
 }
 
-static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButtons, double dDelay)
+static int32_t hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButtons, double dDelay)
 {
-  int iRet = 0;
+  int32_t iRet = 0;
 
   if (pText) {
     QMessageBox qMsg(pQTC->qWnd);
     QString qStr;
     PHB_ITEM pTitle, pInfoText, pDetailed;
-    int iLen;
+    int32_t iLen;
 
     pTitle = pInfoText = pDetailed = nullptr;
 
@@ -1796,8 +1796,8 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
       hb_gt_qtc_itemGetQString(pDetailed, &qStr);
       qMsg.setDetailedText(qStr);
     }
-    if (pButtons && HB_IS_ARRAY(pButtons) && (iLen = (int)hb_arrayLen(pButtons)) > 0) {
-      int i;
+    if (pButtons && HB_IS_ARRAY(pButtons) && (iLen = (int32_t)hb_arrayLen(pButtons)) > 0) {
+      int32_t i;
 
 #if defined(HB_OS_ANDROID)
       qputenv("QT_USE_ANDROID_NATIVE_DIALOGS", "0");
@@ -1819,7 +1819,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
     qMsg.addAction(act);
 
     if (dDelay * 100 >= 1) {
-      QTimer::singleShot((int)(dDelay * 1000), &qMsg, SLOT(reject()));
+      QTimer::singleShot((int32_t)(dDelay * 1000), &qMsg, SLOT(reject()));
     }
 
     qMsg.exec();
@@ -1855,7 +1855,7 @@ static void hb_gt_qtc_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
        * so we have to declare them as static [druzus]
        */
       static char **s_argv;
-      static int s_argc;
+      static int32_t s_argc;
 
       s_argc = hb_cmdargARGC();
       s_argv = hb_cmdargARGV();
@@ -1902,7 +1902,7 @@ static void hb_gt_qtc_Exit(PHB_GT pGT)
 
 /* --- */
 
-static void hb_gt_qtc_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
+static void hb_gt_qtc_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize)
 {
   PHB_GTQTC pQTC;
 
@@ -1939,7 +1939,7 @@ static void hb_gt_qtc_Refresh(PHB_GT pGT)
 
 /* --- */
 
-static HB_BOOL hb_gt_qtc_SetMode(PHB_GT pGT, int iRows, int iCols)
+static HB_BOOL hb_gt_qtc_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols)
 {
   PHB_GTQTC pQTC;
   HB_BOOL fResult, fCenter;
@@ -1963,7 +1963,7 @@ static HB_BOOL hb_gt_qtc_SetMode(PHB_GT pGT, int iRows, int iCols)
 
 /* --- */
 
-static const char *hb_gt_qtc_Version(PHB_GT pGT, int iType)
+static const char *hb_gt_qtc_Version(PHB_GT pGT, int32_t iType)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Version(%p,%d)", (void *)pGT, iType));
 
@@ -1987,7 +1987,7 @@ static const char *hb_gt_qtc_Version(PHB_GT pGT, int iType)
 
 /* --- */
 
-static int hb_gt_qtc_ReadKey(PHB_GT pGT, int iEventMask)
+static int32_t hb_gt_qtc_ReadKey(PHB_GT pGT, int32_t iEventMask)
 {
   PHB_GTQTC pQTC;
 
@@ -1997,7 +1997,7 @@ static int hb_gt_qtc_ReadKey(PHB_GT pGT, int iEventMask)
 
   pQTC = HB_GTQTC_GET(pGT);
   if (pQTC) {
-    int iKey;
+    int32_t iKey;
 
     HB_QTC_LOCK();
     if (pQTC->qEventLoop) {
@@ -2039,7 +2039,7 @@ static HB_BOOL hb_gt_qtc_mouse_IsPresent(PHB_GT pGT)
   return HB_TRUE;
 }
 
-static void hb_gt_qtc_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
+static void hb_gt_qtc_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
 {
   PHB_GTQTC pQTC;
 
@@ -2050,7 +2050,7 @@ static void hb_gt_qtc_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
   *piCol = pQTC->mouseCol;
 }
 
-static HB_BOOL hb_gt_qtc_mouse_ButtonState(PHB_GT pGT, int iButton)
+static HB_BOOL hb_gt_qtc_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_mouse_ButtonState(%p,%i)", (void *)pGT, iButton));
 
@@ -2071,7 +2071,7 @@ static HB_BOOL hb_gt_qtc_mouse_ButtonState(PHB_GT pGT, int iButton)
   return HB_FALSE;
 }
 
-static int hb_gt_qtc_mouse_CountButton(PHB_GT pGT)
+static int32_t hb_gt_qtc_mouse_CountButton(PHB_GT pGT)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_mouse_CountButton(%p)", (void *)pGT));
 
@@ -2082,10 +2082,10 @@ static int hb_gt_qtc_mouse_CountButton(PHB_GT pGT)
 
 /* --- */
 
-static int hb_gt_qtc_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay)
+static int32_t hb_gt_qtc_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
   PHB_GTQTC pQTC;
-  int iRet;
+  int32_t iRet;
 
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Alert(%p,%p,%p,%d,%d,%f)", (void *)pGT, (void *)pMessage, (void *)pOptions,
                          iClrNorm, iClrHigh, dDelay));
@@ -2101,10 +2101,10 @@ static int hb_gt_qtc_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
   return iRet;
 }
 
-static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
 {
   PHB_GTQTC pQTC;
-  int iVal;
+  int32_t iVal;
 
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Info(%p,%d,%p)", (void *)pGT, iType, (void *)pInfo));
 
@@ -2439,7 +2439,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
   case HB_GTI_SETPOS_XY:
   case HB_GTI_SETPOS_ROWCOL: {
-    int x = pQTC->iNewPosX, y = pQTC->iNewPosY;
+    int32_t x = pQTC->iNewPosX, y = pQTC->iNewPosY;
 
     if (pQTC->qWnd) {
       x = pQTC->qWnd->pos().x();
@@ -2489,7 +2489,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       if (iVal >= 0 && iVal < 16) {
         pInfo->pResult = hb_itemPutNI(pInfo->pResult, QTC_RGB2NUM(pQTC->colors[iVal]));
         if (pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2)) {
-          int iColor = hb_itemGetNI(pInfo->pNewVal2);
+          int32_t iColor = hb_itemGetNI(pInfo->pNewVal2);
           QRgb rgb = QTC_NUM2RGB(iColor);
           if (rgb != pQTC->colors[iVal]) {
             pQTC->colors[iVal] = rgb;
@@ -2507,7 +2507,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       }
       if (pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 16) {
         for (iVal = 0; iVal < 16; iVal++) {
-          int iColor = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
+          int32_t iColor = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
           QRgb rgb = QTC_NUM2RGB(iColor);
           if (rgb != pQTC->colors[iVal]) {
             pQTC->colors[iVal] = rgb;
@@ -2542,10 +2542,10 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                  (hb_arrayGetType(pInfo->pNewVal, 2) & HB_IT_NUMERIC) &&
                  (hb_arrayGetType(pInfo->pNewVal, 3) & HB_IT_NUMERIC)) {
         HB_SIZE nSize = hb_arrayGetCLen(pInfo->pNewVal, 1);
-        int iWidth = hb_arrayGetNI(pInfo->pNewVal, 2);
-        int iHeight = hb_arrayGetNI(pInfo->pNewVal, 3);
-        int iDepth = hb_arrayGetNI(pInfo->pNewVal, 4);
-        int iPitch = 0;
+        int32_t iWidth = hb_arrayGetNI(pInfo->pNewVal, 2);
+        int32_t iHeight = hb_arrayGetNI(pInfo->pNewVal, 3);
+        int32_t iDepth = hb_arrayGetNI(pInfo->pNewVal, 4);
+        int32_t iPitch = 0;
         const uchar *data = nullptr;
         QImage::Format format;
 
@@ -2569,7 +2569,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
         if (format != QImage::Format_Invalid && iWidth > 0 && iHeight > 0) {
           if (nSize > 0) {
-            int iPad = 32;
+            int32_t iPad = 32;
             while (data == nullptr && iPad >= 8) {
               iPitch = (iWidth * iDepth + iPad - 1) / iPad;
               if (nSize == static_cast<HB_SIZE>(iHeight * iPitch)) {
@@ -2670,10 +2670,10 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
 #define hb_gfx_update(x, y, w, h) pQTC->qWnd->qConsole->update(x, y, w, h)
 
-static int hb_gt_qtc_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor)
+static int32_t hb_gt_qtc_gfx_Primitive(PHB_GT pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor)
 {
   PHB_GTQTC pQTC;
-  int iRet = 1;
+  int32_t iRet = 1;
 
   HB_TRACE(HB_TR_DEBUG,
            ("hb_gt_qtc_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", (void *)pGT, iType, iTop, iLeft, iBottom, iRight, iColor));
@@ -2681,7 +2681,7 @@ static int hb_gt_qtc_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft, i
   pQTC = HB_GTQTC_GET(pGT);
 
   if (pQTC->qWnd) {
-    int iTmp;
+    int32_t iTmp;
 
     switch (iType) {
     case HB_GFX_MAKECOLOR: {
@@ -2888,9 +2888,9 @@ void QTConsole::resetWindowSize()
   pQTC->qWnd->setWindowSize();
 }
 
-void QTConsole::setFontSize(int iFH, int iFW)
+void QTConsole::setFontSize(int32_t iFH, int32_t iFW)
 {
-  int iDec = 0, iHeight, iWidth, iAscent;
+  int32_t iDec = 0, iHeight, iWidth, iAscent;
   bool bStretch = (pQTC->fontAttribute & HB_GTI_FONTA_NOSTRETCH) == 0;
   bool bMaxSize = (pQTC->qWnd->windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) != 0;
 
@@ -2916,7 +2916,7 @@ void QTConsole::setFontSize(int iFH, int iFW)
     }
 
     if (iWidth != iFW) {
-      int iDir;
+      int32_t iDir;
 
       iDec = (iFW * 100) / iWidth;
       if (iDec < 1) {
@@ -2981,8 +2981,8 @@ void QTConsole::setFontSize(int iFH, int iFW)
 
 void QTConsole::setImageSize()
 {
-  int iWidth = pQTC->cellX * pQTC->iCols;
-  int iHeight = pQTC->cellY * pQTC->iRows;
+  int32_t iWidth = pQTC->cellX * pQTC->iCols;
+  int32_t iHeight = pQTC->cellY * pQTC->iRows;
 
   if (iWidth != image->width() || iHeight != image->height()) {
     delete image;
@@ -2998,15 +2998,15 @@ void QTConsole::setImageSize()
 
 void QTConsole::resizeEvent(QResizeEvent *evt)
 {
-  int iWidth = width();
-  int iHeight = height();
+  int32_t iWidth = width();
+  int32_t iHeight = height();
 
   if (iWidth != image->width() || iHeight != image->height()) {
     resizeMode = true;
 
     if (pQTC->iResizeMode == HB_GTI_RESIZEMODE_ROWS) {
-      int iRows = iHeight / pQTC->cellY;
-      int iCols = iWidth / pQTC->cellX;
+      int32_t iRows = iHeight / pQTC->cellY;
+      int32_t iCols = iWidth / pQTC->cellX;
 
       if (hb_gt_qtc_setWindowSize(pQTC, iRows, iCols)) {
         setImageSize();
@@ -3048,7 +3048,7 @@ static QRect hb_gt_qtc_unmapRect(PHB_GTQTC pQTC, const QRect &rc)
 void QTConsole::copySelection()
 {
   const QRect rc = hb_gt_qtc_mapRect(pQTC, image, selectRect);
-  int iRow, iCol;
+  int32_t iRow, iCol;
   QString qStrEol(hb_conNewLine());
   QString qStr("");
 
@@ -3059,7 +3059,7 @@ void QTConsole::copySelection()
 
   for (iRow = rc.top(); iRow <= rc.bottom(); ++iRow) {
     for (iCol = rc.left(); iCol <= rc.right(); ++iCol) {
-      int iColor;
+      int32_t iColor;
       uint8_t bAttr;
       uint16_t usChar;
 
@@ -3081,7 +3081,7 @@ void QTConsole::copySelection()
 
 void QTConsole::repaintChars(const QRect &rx)
 {
-  int iRow, iColor, iTextColor = 0;
+  int32_t iRow, iColor, iTextColor = 0;
   uint8_t bAttr;
   uint16_t usChar;
   bool bClrBkg = (pQTC->fontAttribute & HB_GTI_FONTA_CLRBKG) != 0;
@@ -3097,7 +3097,7 @@ void QTConsole::repaintChars(const QRect &rx)
   }
 
   for (iRow = rc.top(); iRow <= rc.bottom(); ++iRow) {
-    int iCol, iStartCol, iLen;
+    int32_t iCol, iStartCol, iLen;
 
     iCol = iStartCol = rc.left();
     iLen = 0;
@@ -3216,7 +3216,7 @@ void QTConsole::paintEvent(QPaintEvent *evt)
        */
       uint8_t bAttr;
       uint16_t usChar;
-      int iColor;
+      int32_t iColor;
 
       if (HB_GTSELF_GETSCRCHAR(pQTC->pGT, pQTC->cursorRow, pQTC->cursorCol, &iColor, &bAttr, &usChar)) {
         painter.fillRect(rCrs, pQTC->colors[iColor & 0x0F]);
@@ -3291,7 +3291,7 @@ void QTConsole::wheelEvent(QWheelEvent *evt)
     QWidget::wheelEvent(evt);
   }
 #else
-  int iKey;
+  int32_t iKey;
 
   switch (evt->orientation()) {
   case Qt::Vertical:
@@ -3313,7 +3313,7 @@ void QTConsole::wheelEvent(QWheelEvent *evt)
 
 void QTConsole::mouseDoubleClickEvent(QMouseEvent *evt)
 {
-  int iKey;
+  int32_t iKey;
 
   switch (evt->button()) {
   case Qt::LeftButton:
@@ -3349,7 +3349,7 @@ void QTConsole::mouseDoubleClickEvent(QMouseEvent *evt)
 
 void QTConsole::mousePressEvent(QMouseEvent *evt)
 {
-  int iKey;
+  int32_t iKey;
 
   switch (evt->button()) {
   case Qt::LeftButton:
@@ -3387,7 +3387,7 @@ void QTConsole::mousePressEvent(QMouseEvent *evt)
 
 void QTConsole::mouseReleaseEvent(QMouseEvent *evt)
 {
-  int iKey;
+  int32_t iKey;
 
   switch (evt->button()) {
   case Qt::LeftButton:
@@ -3455,7 +3455,7 @@ void QTConsole::inputMethodEvent(QInputMethodEvent *evt)
   QString qStr = evt->commitString();
 
   if (qStr.size() > 0) {
-    for (int i = 0; i < qStr.size(); ++i) {
+    for (int32_t i = 0; i < qStr.size(); ++i) {
       HB_WCHAR wc = qStr[i].unicode();
       hb_gt_qtc_addKeyToInputQueue(pQTC, HB_INKEY_NEW_UNICODE(wc));
     }
@@ -3476,7 +3476,7 @@ void QTConsole::keyReleaseEvent(QKeyEvent *evt)
 
 void QTConsole::keyPressEvent(QKeyEvent *evt)
 {
-  int iKey = 0, iFlags = hb_gt_qtc_getKeyFlags(evt->modifiers()), iSize;
+  int32_t iKey = 0, iFlags = hb_gt_qtc_getKeyFlags(evt->modifiers()), iSize;
 
   /* support for national characters */
   if ((iSize = evt->text().size()) > 0) {
@@ -3484,7 +3484,7 @@ void QTConsole::keyPressEvent(QKeyEvent *evt)
     HB_WCHAR wc = qStr[0].unicode();
 
     if (iSize > 1 || (wc >= 32 && wc != 127)) {
-      int i;
+      int32_t i;
 
       if ((iFlags & HB_KF_CTRL) != 0 && (iFlags & HB_KF_ALT) != 0) {
         /* workaround for AltGR and German keyboard */

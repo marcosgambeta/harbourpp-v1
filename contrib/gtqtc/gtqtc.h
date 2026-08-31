@@ -301,47 +301,47 @@ struct HB_GTQTC
    uint16_t   iRows;                        // number of displayable rows in window
    uint16_t   iCols;                        // number of displayable columns in window
 
-   int         iNewPosX;                     // requested windows x position on the screen
-   int         iNewPosY;                     // requested windows y position on the screen
+   int32_t         iNewPosX;                     // requested windows x position on the screen
+   int32_t         iNewPosY;                     // requested windows y position on the screen
 
-   int         marginLeft;                   // left margin in fullscreen and maximized modes
-   int         marginTop;                    // top margin in fullscreen and maximized modes
+   int32_t         marginLeft;                   // left margin in fullscreen and maximized modes
+   int32_t         marginTop;                    // top margin in fullscreen and maximized modes
 
    bool        cursorVisible;                // cursor visibility flag updated by timer
    // TOCHECK: porque HB_BOOL ?
    HB_BOOL     cursorType;                   // current cursor type selected by programmer
-   int         cursorCol;                    // current cursor position (column)
-   int         cursorRow;                    // current cursor position (row)
-   int         cursorSize;                   // cursor size in pixels
-   int         cursorOffset;                 // cursor offset in character cell
+   int32_t         cursorCol;                    // current cursor position (column)
+   int32_t         cursorRow;                    // current cursor position (row)
+   int32_t         cursorSize;                   // cursor size in pixels
+   int32_t         cursorOffset;                 // cursor offset in character cell
 
    // TOCHECK: porque HB_BOOL ?
    HB_BOOL     lastCursorType;               // previous cursor type
-   int         lastCursorCol;                // previous cursor position (column) 
-   int         lastCursorRow;                // previous cursor position (row)
+   int32_t         lastCursorCol;                // previous cursor position (column) 
+   int32_t         lastCursorRow;                // previous cursor position (row)
 
-   int         mousePosX;                    // the last mouse X pixel position in window
-   int         mousePosY;                    // the last mouse Y pixel position in window
-   int         mouseCol;                     // the last mouse row position in window
-   int         mouseRow;                     // the last mouse col position in window
+   int32_t         mousePosX;                    // the last mouse X pixel position in window
+   int32_t         mousePosY;                    // the last mouse Y pixel position in window
+   int32_t         mouseCol;                     // the last mouse row position in window
+   int32_t         mouseRow;                     // the last mouse col position in window
 
-   int         keyBuffer[QTC_KEY_QUEUE_SIZE]; // Array to hold the characters & events
-   int         keyHead;                      // Offset into key array for character to be placed
-   int         keyTail;                      // Offset into key array of next character to read
-   int         keyLast;                      // last inkey code position in buffer
+   int32_t         keyBuffer[QTC_KEY_QUEUE_SIZE]; // Array to hold the characters & events
+   int32_t         keyHead;                      // Offset into key array for character to be placed
+   int32_t         keyTail;                      // Offset into key array of next character to read
+   int32_t         keyLast;                      // last inkey code position in buffer
 
-   int         cellX;                        // character cell width
-   int         cellY;                        // character cell height
-   int         fontHeight;                   // requested font height
-   int         fontWidth;                    // requested font width
-   int         fontWeight;                   // requested font weight
-   int         fontAscent;                   // real font ascent
-   int         fontAttribute;                // font attribute: HB_GTI_FONTA_*
+   int32_t         cellX;                        // character cell width
+   int32_t         cellY;                        // character cell height
+   int32_t         fontHeight;                   // requested font height
+   int32_t         fontWidth;                    // requested font width
+   int32_t         fontWeight;                   // requested font weight
+   int32_t         fontAscent;                   // real font ascent
+   int32_t         fontAttribute;                // font attribute: HB_GTI_FONTA_*
    QString *   fontName;                     // requested font name
 
    QBitmap *   boxImage[HB_BOXCH_TRANS_MAX];   // bitmaps with box drawing characters
    uint8_t    boxIndex[HB_BOXCH_TRANS_COUNT]; // indexes to bitmap array
-   int         boxCount;                       // number of defined box characters
+   int32_t         boxCount;                       // number of defined box characters
 
    QIcon *     qIcon;                        // application icon
    QString *   wndTitle;                     // window title
@@ -357,8 +357,8 @@ struct HB_GTQTC
    bool        fNoFrame;                     // disable window title and frames
    bool        fRepaint;                     // force internal image repainting
 
-   int         iResizeMode;                  // Sets the resizing mode either to FONT or ROWS
-   int         iCloseMode;                   // ==0 accept ALT+F4 and/or [x] button as CTRL+BREAK, >=1 generate HB_K_CLOSE, ==2 disable [x]
+   int32_t         iResizeMode;                  // Sets the resizing mode either to FONT or ROWS
+   int32_t         iCloseMode;                   // ==0 accept ALT+F4 and/or [x] button as CTRL+BREAK, >=1 generate HB_K_CLOSE, ==2 disable [x]
 };
 
 using PHB_GTQTC = HB_GTQTC *;
@@ -382,7 +382,7 @@ public:
    QRect          selectRect;
 
    void resetWindowSize();
-   void setFontSize(int iFH, int iFW);
+   void setFontSize(int32_t iFH, int32_t iFW);
    void setImageSize();
    void copySelection();
    void repaintChars(const QRect & rx);
