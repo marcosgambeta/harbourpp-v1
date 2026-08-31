@@ -1964,7 +1964,7 @@ static int32_t hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
     if (fScreen) {
       void *pBuffer = nullptr;
       int32_t iDspCount, iStyle, iRow, iCol, iTop, iLeft, iBottom, iRight, iPos;
-      HB_UINT ulLines = 0, ulWidth = 0, ulCurrWidth = 0, ulMsg = 0, ulDst = 0, ulLast = 0, ulSpace1 = 0, ulSpace2 = 0,
+      uint32_t ulLines = 0, ulWidth = 0, ulCurrWidth = 0, ulMsg = 0, ulDst = 0, ulLast = 0, ulSpace1 = 0, ulSpace2 = 0,
               ulDefWidth, ulMaxWidth;
       int32_t iFlag;
 
@@ -2051,7 +2051,7 @@ static int32_t hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
       ulCurrWidth = 0;
       for (i = 1; i <= iOptions; ++i) {
         nLen = hb_itemCopyStrU16(hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0);
-        ulCurrWidth += static_cast<HB_UINT>(nLen) + 4;
+        ulCurrWidth += static_cast<uint32_t>(nLen) + 4;
       }
       if (ulCurrWidth > ulMaxWidth) {
         ulCurrWidth = ulMaxWidth;

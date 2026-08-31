@@ -3450,7 +3450,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
     break;
   }
   case DBI_SETHEADER: {
-    HB_UINT uiSetHeader = pArea->uiSetHeader;
+    uint32_t uiSetHeader = pArea->uiSetHeader;
 
     if (pItem->isNumeric()) {
       int32_t iMode = pItem->getNI();
@@ -3754,7 +3754,7 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
     }
     hb_itemClear(pItem);
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, 0, pItem) == Harbour::SUCCESS) {
-      pArea->uiSetHeader = static_cast<HB_UINT>(pItem->getNI());
+      pArea->uiSetHeader = static_cast<uint32_t>(pItem->getNI());
     }
     hb_itemRelease(pItem);
   }

@@ -106,8 +106,8 @@ struct _HB_FILE
   HB_FHANDLE hFile;
   HB_FHANDLE hFileRO;
   PHB_FLOCK pLocks;
-  HB_UINT uiLocks;
-  HB_UINT uiSize;
+  uint32_t uiLocks;
+  uint32_t uiSize;
   struct _HB_FILE *pNext;
   struct _HB_FILE *pPrev;
 };
@@ -132,7 +132,7 @@ static PHB_FILE s_openFiles = nullptr;
 #if 0
 void hb_fileDsp(PHB_FILE pFile, const char * szMsg)
 {
-   HB_UINT uiPos = 0;
+   uint32_t uiPos = 0;
 
    fprintf(stderr, "\r\n[%s][", szMsg);
    while( uiPos < pFile->uiLocks ) {
@@ -189,9 +189,9 @@ static PHB_FILE hb_fileNew(HB_FHANDLE hFile, bool fShared, int32_t iMode, HB_ULO
   return pFile;
 }
 
-static HB_UINT hb_fileFindOffset(PHB_FILE pFile, HB_FOFFSET nOffset)
+static uint32_t hb_fileFindOffset(PHB_FILE pFile, HB_FOFFSET nOffset)
 {
-  HB_UINT uiFirst, uiLast, uiMiddle;
+  uint32_t uiFirst, uiLast, uiMiddle;
 
   uiFirst = 0;
   uiLast = pFile->uiLocks;
@@ -210,7 +210,7 @@ static HB_UINT hb_fileFindOffset(PHB_FILE pFile, HB_FOFFSET nOffset)
   return uiMiddle;
 }
 
-static void hb_fileInsertLock(PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart, HB_FOFFSET nLen)
+static void hb_fileInsertLock(PHB_FILE pFile, uint32_t uiPos, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
   if (pFile->uiLocks == pFile->uiSize) {
     pFile->uiSize += HB_FLOCK_RESIZE;
@@ -223,7 +223,7 @@ static void hb_fileInsertLock(PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart, 
   pFile->uiLocks++;
 }
 
-static void hb_fileDeleteLock(PHB_FILE pFile, HB_UINT uiPos)
+static void hb_fileDeleteLock(PHB_FILE pFile, uint32_t uiPos)
 {
   pFile->uiLocks--;
   memmove(&pFile->pLocks[uiPos], &pFile->pLocks[uiPos + 1], (pFile->uiLocks - uiPos) * sizeof(HB_FLOCK));
@@ -235,7 +235,7 @@ static void hb_fileDeleteLock(PHB_FILE pFile, HB_UINT uiPos)
 
 static bool hb_fileSetLock(PHB_FILE pFile, bool *pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
-  HB_UINT uiPos = hb_fileFindOffset(pFile, nStart);
+  uint32_t uiPos = hb_fileFindOffset(pFile, nStart);
   auto fLJoin = false;
   auto fRJoin = false;
   if (uiPos < pFile->uiLocks) {
@@ -278,7 +278,7 @@ static bool hb_fileUnlock(PHB_FILE pFile, bool *pfLockFS, HB_FOFFSET nStart, HB_
 {
   auto fResult = false;
 
-  HB_UINT uiPos = hb_fileFindOffset(pFile, nStart);
+  uint32_t uiPos = hb_fileFindOffset(pFile, nStart);
   if (uiPos < pFile->uiLocks) {
     PHB_FLOCK pLock = &pFile->pLocks[uiPos];
     if (nStart >= pLock->start && pLock->len >= nLen && nStart - pLock->start <= pLock->len - nLen) {
@@ -306,7 +306,7 @@ static bool hb_fileUnlock(PHB_FILE pFile, bool *pfLockFS, HB_FOFFSET nStart, HB_
 
 static bool hb_fileTestLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
-  HB_UINT uiPos = hb_fileFindOffset(pFile, nStart);
+  uint32_t uiPos = hb_fileFindOffset(pFile, nStart);
   if (uiPos < pFile->uiLocks) {
     PHB_FLOCK pLock = &pFile->pLocks[uiPos];
     HB_FOFFSET nEnd = nStart + nLen;
