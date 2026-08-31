@@ -461,7 +461,7 @@ static void s_AddPictureHandle(PWVW_GLO wvw, const char *szFileName, IPicture *p
   wvw->a.pphPictureList = pphNew;
 }
 
-static IPicture *hb_gt_wvw_rr_LoadPictureFromResource(PWVW_GLO wvw, const char *resname, HB_UINT iresimage,
+static IPicture *hb_gt_wvw_rr_LoadPictureFromResource(PWVW_GLO wvw, const char *resname, uint32_t iresimage,
                                                       int32_t *piWidth, int32_t *piHeight)
 {
   HBITMAP hbmpx;

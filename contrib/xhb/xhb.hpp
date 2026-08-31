@@ -56,8 +56,8 @@ HB_EXTERN_BEGIN
 /* functions in xhberror.c */
 extern HB_EXPORT const char * hb_errGetProcName( PHB_ITEM pError );
 extern HB_EXPORT PHB_ITEM hb_errPutProcName( PHB_ITEM pError, const char * szProcName );
-extern HB_EXPORT HB_UINT hb_errGetProcLine( PHB_ITEM pError );
-extern HB_EXPORT PHB_ITEM hb_errPutProcLine( PHB_ITEM pError, HB_UINT uiProcLine );
+extern HB_EXPORT uint32_t hb_errGetProcLine( PHB_ITEM pError );
+extern HB_EXPORT PHB_ITEM hb_errPutProcLine( PHB_ITEM pError, uint32_t uiProcLine );
 extern HB_EXPORT const char * hb_errGetModuleName( PHB_ITEM pError );
 extern HB_EXPORT PHB_ITEM hb_errPutModuleName( PHB_ITEM pError, const char * szModuleName );
 extern HB_EXPORT PHB_ITEM hb_errGetCallStack( PHB_ITEM pError );

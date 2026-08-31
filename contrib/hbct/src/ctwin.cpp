@@ -2116,7 +2116,7 @@ static int32_t hb_ctw_gt_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
       int32_t iRet = 0;
 
       PHB_GTCTW pCTW = HB_GTCTW_GET(pGT);
-      HB_UINT ulWidth = 0, ulCurrWidth = 0, ulMsg = 0, ul2, ulMaxWidth, ulLast;
+      uint32_t ulWidth = 0, ulCurrWidth = 0, ulMsg = 0, ul2, ulMaxWidth, ulLast;
       char szKey[HB_MAX_CHAR_LEN];
       HB_SIZE nChar;
       int32_t iDspCount, iLines = 0, iTop, iLeft, iBottom, iRight, iPos, iClr, iWnd, iPrevWnd, i;
@@ -2146,7 +2146,7 @@ static int32_t hb_ctw_gt_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
       ulCurrWidth = 0;
       for (i = 1; i <= iOptions; ++i) {
         nOptLen = hb_itemCopyStrU16(hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0);
-        ulCurrWidth += static_cast<HB_UINT>(nOptLen) + (i > 1 ? 3 : 0);
+        ulCurrWidth += static_cast<uint32_t>(nOptLen) + (i > 1 ? 3 : 0);
       }
       if (ulCurrWidth > ulWidth) {
         ulWidth = ulCurrWidth;

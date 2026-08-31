@@ -5616,7 +5616,7 @@ void hb_gt_wvw_AddUserBitmapHandle(const char *szFileName, HBITMAP hBitmap, int3
   s_wvw->a.pbhUserBitmap = pbhNew;
 }
 
-HBITMAP hb_gt_wvw_PrepareBitmap(const char *szBitmap, HB_UINT uiBitmap, int32_t iExpWidth, int32_t iExpHeight,
+HBITMAP hb_gt_wvw_PrepareBitmap(const char *szBitmap, uint32_t uiBitmap, int32_t iExpWidth, int32_t iExpHeight,
                                 bool fMap3Dcolors, HWND hCtrl)
 {
   HBITMAP hBitmap;
@@ -6161,7 +6161,7 @@ static LRESULT CALLBACK hb_gt_wvw_BtnProc(HWND hWnd, UINT message, WPARAM wParam
 /* ASSUME: WVW_ID_BASE_PUSHBUTTON == WVW_ID_BASE_CHECKBOX
            WVW_CONTROL_PUSHBUTTON == WVW_CONTROL_CHECKBOX */
 int32_t hb_gt_wvw_ButtonCreate(PWVW_WIN wvw_win, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, LPCTSTR szCaption,
-                           const char *szBitmap, HB_UINT uiBitmap, PHB_ITEM pBlock, int32_t iOffTop, int32_t iOffLeft,
+                           const char *szBitmap, uint32_t uiBitmap, PHB_ITEM pBlock, int32_t iOffTop, int32_t iOffLeft,
                            int32_t iOffBottom, int32_t iOffRight, double dStretch, bool fMap3Dcolors, int32_t iStyle, HWND *phWnd)
 {
   HWND hWnd;

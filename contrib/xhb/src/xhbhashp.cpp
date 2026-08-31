@@ -56,7 +56,7 @@ HB_FUNC(HSETPARTITION)
 {
   auto pHash = hb_param(1, Harbour::Item::HASH);
   auto pLevel = hb_param(3, Harbour::Item::NUMERIC);
-  HB_UINT uiLevel = pLevel ? hb_itemGetNI(pLevel) : 1;
+  uint32_t uiLevel = pLevel ? hb_itemGetNI(pLevel) : 1;
 
   if (!pHash) {
     hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

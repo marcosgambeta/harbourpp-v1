@@ -58,8 +58,8 @@
 
 static void STAItm(PHB_ITEM pItmPar)
 {
-   HB_UINT      i;
-   auto ulItmPar = static_cast<HB_UINT>(hb_itemGetCLen(pItmPar));
+   uint32_t      i;
+   auto ulItmPar = static_cast<uint32_t>(hb_itemGetCLen(pItmPar));
    auto cItmPar = hb_itemGetCPtr(pItmPar);
    const char * c;
 
@@ -80,11 +80,11 @@ static void STAItm(PHB_ITEM pItmPar)
    hb_itemPutCLPtr(pItmPar, cRes, i);
 }
 
-static HB_UINT SCItm( char * cBuffer, HB_UINT ulMaxBuf, const char * cParFrm, int iCOut, int IsIndW,
+static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, int iCOut, int IsIndW,
                       int iIndWidth, int IsIndP, int iIndPrec,
                       PHB_ITEM pItmPar )
 {
-   HB_UINT s;
+   uint32_t s;
 
    if( IsIndW && IsIndP )
    {
@@ -196,7 +196,7 @@ static HB_UINT SCItm( char * cBuffer, HB_UINT ulMaxBuf, const char * cParFrm, in
 
 HB_FUNC(SQL_SPRINTF)
 {
-   HB_UINT      ulItmFrm;
+   uint32_t      ulItmFrm;
    const char * cItmFrm;
    char *       cRes;
    int          argc    = hb_pcount() - 1;
@@ -206,7 +206,7 @@ HB_FUNC(SQL_SPRINTF)
    {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
    }
-   else if( (ulItmFrm = static_cast<HB_UINT>(hb_itemGetCLen(pItmFrm))) == 0 )
+   else if( (ulItmFrm = static_cast<uint32_t>(hb_itemGetCLen(pItmFrm))) == 0 )
    {
       hb_retc_null();
    }
@@ -220,7 +220,7 @@ HB_FUNC(SQL_SPRINTF)
    {
       static const char s_szToken[] = "stTcdiouxXaAeEfgGpnSC";
 
-      HB_UINT ulResPos = 0, ulMaxBuf = DK_INCBUF, ulMaxRes = DK_INCRES;
+      uint32_t ulResPos = 0, ulMaxBuf = DK_INCBUF, ulMaxRes = DK_INCRES;
 
       char * cIntMod;
       int    p, iErrorPar = 0;
@@ -234,7 +234,7 @@ HB_FUNC(SQL_SPRINTF)
       {
          PHB_ITEM pItmPar, pItmCpy;
          int      arg, iCOut, IsType, IsIndW, IsIndP, iIndWidth, iIndPrec;
-         HB_UINT  s, f, i, ulWidth, ulParPos = 0;
+         uint32_t  s, f, i, ulWidth, ulParPos = 0;
 
          const char * c = cItmFrm + ulParPos;
 
@@ -493,7 +493,7 @@ HB_FUNC(SQL_SPRINTF)
                   else
                      STAItm(pItmPar);
                }
-               f = static_cast<HB_UINT>(hb_itemGetCLen(pItmPar));
+               f = static_cast<uint32_t>(hb_itemGetCLen(pItmPar));
                if( (f = i + HB_MAX(ulWidth, f)) > ulMaxBuf )
                {
                   ulMaxBuf += f + DK_INCBUF;
@@ -595,7 +595,7 @@ HB_FUNC(SQL_SPRINTF)
                   HB_SIZE nLen = strlen(cStr);
                   const char * cTrimStr = hb_strLTrim(cStr, &nLen);
 
-                  f        = static_cast<HB_UINT>(nLen);
+                  f        = static_cast<uint32_t>(nLen);
                   if( (f = i + HB_MAX(ulWidth, f)) > ulMaxBuf )
                   {
                      ulMaxBuf += f + DK_INCBUF;
@@ -638,7 +638,7 @@ HB_FUNC(SQL_SPRINTF)
          hb_strncpy(cRes + ulResPos, cBuffer, s);
          ulResPos += s;
 
-         if( (ulParPos = static_cast<HB_UINT>(c - cItmFrm)) >= ulItmFrm )
+         if( (ulParPos = static_cast<uint32_t>(c - cItmFrm)) >= ulItmFrm )
             break;   /* No more Par Format */
       }
 

@@ -618,8 +618,8 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM p
       ptr = &V_INT(&v);
       break;
     case VT_UINT:
-      V_UINT(&v) = pStr ? static_cast<HB_UINT>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                        : static_cast<HB_UINT>(hb_arrayGetNI(pItem, uiPos));
+      V_UINT(&v) = pStr ? static_cast<uint32_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
+                        : static_cast<uint32_t>(hb_arrayGetNI(pItem, uiPos));
       ptr = &V_UINT(&v);
       break;
     case VT_ERROR:
@@ -1572,7 +1572,7 @@ HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPP
 
 // IDispatch parameters, return value handling
 
-static void GetParams(DISPPARAMS *dispparam, HB_UINT uiOffset, HB_BOOL fUseRef, UINT uiNamedArgs, PHB_ITEM *pNamedArgs,
+static void GetParams(DISPPARAMS *dispparam, uint32_t uiOffset, HB_BOOL fUseRef, UINT uiNamedArgs, PHB_ITEM *pNamedArgs,
                       DISPID *pDispIds)
 {
   VARIANTARG *pArgs = nullptr;
@@ -1664,7 +1664,7 @@ static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, PHB_ITEM 
   return lOleError;
 }
 
-static void PutParams(DISPPARAMS *dispparam, HB_UINT uiOffset, uint16_t uiClass)
+static void PutParams(DISPPARAMS *dispparam, uint32_t uiOffset, uint16_t uiClass)
 {
   VARIANTARG *pRefs = &dispparam->rgvarg[dispparam->cArgs];
   PHB_ITEM pItem = nullptr;

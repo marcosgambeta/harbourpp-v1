@@ -56,7 +56,7 @@
 add one button to existing Toolbar
 uiBitmap is resource id
 */
-static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char *szBitmap, HB_UINT uiBitmap, LPCTSTR pszLabel,
+static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char *szBitmap, uint32_t uiBitmap, LPCTSTR pszLabel,
                                   int32_t iCommand, int32_t iBitmapType, bool fMap3Dcolors, PWVW_WIN wvw_win, bool fDropdown)
 {
   TBBUTTON tbb;
@@ -495,7 +495,7 @@ HB_FUNC(WVW_TBADDBUTTON)
 
   if (wvw_win) {
     auto iCommand = hb_parni(2);
-    auto uiBitmap = static_cast<HB_UINT>(hb_parni(3));
+    auto uiBitmap = static_cast<uint32_t>(hb_parni(3));
     auto szBitmap = hb_parc(3);
     auto iBitmapType = hb_parni(5);
     bool fMap3Dcolors = hb_parl(6);

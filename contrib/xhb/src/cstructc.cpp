@@ -127,14 +127,14 @@ void hb_retclenStatic(const char * szText, HB_SIZE nLen)
 
 #endif
 
-static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
+static uint32_t SizeOfCStructure(PHB_ITEM aDef, uint32_t uiAlign)
 {
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
-  HB_UINT uiSize = 0, uiMemberSize;
+  uint32_t uiSize = 0, uiMemberSize;
   uint8_t cShift;
-  HB_UINT uiPad;
+  uint32_t uiPad;
 
   for (nIndex = 0; nIndex < nLen; nIndex++) {
     if ((pBaseDef->pItems + nIndex)->type != Harbour::Item::INTEGER) {
@@ -214,7 +214,7 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
 
         if (pStructure->isObject()) {
           hb_objSendMsg(pStructure, "SizeOf", 0);
-          uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
+          uiMemberSize = static_cast<uint32_t>(hb_parns(-1));
           hb_itemRelease(pStructure);
         } else {
           hb_itemRelease(pStructure);
@@ -259,7 +259,7 @@ HB_FUNC(HB_SIZEOFCSTRUCTURE)
 
   if (aDef) {
     auto pAlign = hb_param(2, Harbour::Item::INTEGER);
-    HB_UINT uiAlign;
+    uint32_t uiAlign;
 
     if (pAlign) {
       uiAlign = static_cast<uint8_t>(pAlign->item.asInteger.value);
@@ -273,13 +273,13 @@ HB_FUNC(HB_SIZEOFCSTRUCTURE)
   }
 }
 
-static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, HB_UINT *puiSize)
+static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, uint32_t uiAlign, uint32_t *puiSize)
 {
   PHB_BASEARRAY pBaseVar = aVar->item.asArray.value;
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
-  HB_UINT uiOffset = 0, uiMemberSize;
+  uint32_t uiOffset = 0, uiMemberSize;
   uint8_t cShift;
 
   *puiSize = SizeOfCStructure(aDef, uiAlign);
@@ -441,7 +441,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
 
         if (pStructure->isObject()) {
           hb_objSendMsg(pStructure, "SizeOf", 0);
-          uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
+          uiMemberSize = static_cast<uint32_t>(hb_parns(-1));
           hb_itemRelease(pStructure);
         } else {
           hb_itemRelease(pStructure);
@@ -457,7 +457,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
     }
 
     if (uiOffset) {
-      HB_UINT uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
+      uint32_t uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
 
       if ((cShift = static_cast<uint8_t>(uiOffset % uiPad)) > 0) {
         uiOffset += uiPad - cShift;
@@ -951,8 +951,8 @@ HB_FUNC(HB_ARRAYTOSTRUCTURE)
   auto pAlign = hb_param(3, Harbour::Item::INTEGER);
 
   if (aVar && aDef) {
-    HB_UINT uiSize;
-    HB_UINT uiAlign;
+    uint32_t uiSize;
+    uint32_t uiAlign;
     uint8_t *Buffer;
 
     if (pAlign) {
@@ -969,13 +969,13 @@ HB_FUNC(HB_ARRAYTOSTRUCTURE)
   }
 }
 
-static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM aDef, HB_UINT uiAlign,
+static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM aDef, uint32_t uiAlign,
                                  HB_BOOL bAdoptNested, PHB_ITEM pRet)
 {
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
-  HB_UINT uiOffset, uiMemberSize;
+  uint32_t uiOffset, uiMemberSize;
   uint8_t cShift;
 #if 0
    auto pRet = hb_itemNew(nullptr);
@@ -1065,7 +1065,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
         if (pStructure->isObject()) {
           hb_objSendMsg(pStructure, "SizeOf", 0);
-          uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
+          uiMemberSize = static_cast<uint32_t>(hb_parns(-1));
           hb_itemRelease(pStructure);
         } else {
           hb_itemRelease(pStructure);
@@ -1080,7 +1080,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
     }
 
     if (uiOffset) {
-      HB_UINT uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
+      uint32_t uiPad = ((uiMemberSize < uiAlign) ? uiMemberSize : uiAlign);
 
       if ((cShift = static_cast<uint8_t>(uiOffset % uiPad)) > 0) {
         uiOffset += uiPad - cShift;
@@ -1205,7 +1205,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
       break;
 
     default: {
-      HB_UINT uiNestedSize /*, uiNestedAlign */;
+      uint32_t uiNestedSize /*, uiNestedAlign */;
       auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
       PHB_ITEM pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
@@ -1219,7 +1219,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
       hb_objSendMsg(pStructure, "NALIGN", 0);
       hb_objSendMsg(pStructure, "SizeOf", 0);
-      uiNestedSize = static_cast<HB_UINT>(hb_parns(-1));
+      uiNestedSize = static_cast<uint32_t>(hb_parns(-1));
 
 #if 0
             TraceLog(nullptr, "* NestedSize: %i Offset: %i\n", uiNestedSize, uiOffset);
@@ -1295,7 +1295,7 @@ HB_FUNC(HB_STRUCTURETOARRAY)
 
   if (Structure && aDef) {
     auto Buffer = reinterpret_cast<uint8_t *>(Structure->item.asString.value);
-    HB_UINT uiAlign;
+    uint32_t uiAlign;
     HB_BOOL bAdopt;
 
     if (pAlign) {

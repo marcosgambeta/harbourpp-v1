@@ -110,7 +110,7 @@ HB_FUNC(WVW_PBCREATE)
     void *hCaption;
 
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
-                                    static_cast<HB_UINT>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    static_cast<uint32_t>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
                                     iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
                                     hb_parl(11) /* bMap3Dcolors */, BS_PUSHBUTTON | hb_parni(13) /* nStyle */, &hWnd));
 

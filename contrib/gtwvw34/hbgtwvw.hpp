@@ -488,7 +488,7 @@ extern bool       hb_gt_wvw_GetIPictDimension(IPicture * pPicture, int32_t * piW
 extern RECT       hb_gt_wvw_GetColRowFromXYRect(PWVW_WIN pWIndowData, RECT xy);
 extern int32_t        hb_gt_wvw_LineHeight(PWVW_WIN wvw_win);
 extern WPARAM     hb_gt_wvw_ProcessMessages(PWVW_WIN wvw_win);
-extern HBITMAP    hb_gt_wvw_PrepareBitmap(const char * szBitmap, HB_UINT uiBitmap, int32_t iExpWidth, int32_t iExpHeight, bool bMap3Dcolors, HWND hCtrl);
+extern HBITMAP    hb_gt_wvw_PrepareBitmap(const char * szBitmap, uint32_t uiBitmap, int32_t iExpWidth, int32_t iExpHeight, bool bMap3Dcolors, HWND hCtrl);
 /* control (eg. scrollbar) supporters: */
 extern int32_t        hb_gt_wvw_GetControlClass(PWVW_WIN wvw_win, HWND hWnd);
 extern HWND       hb_gt_wvw_FindControlHandle(PWVW_WIN wvw_win, int32_t nClass, int32_t nId, int32_t * pnStyle);
@@ -498,7 +498,7 @@ extern void       hb_gt_wvw_AddControlHandle(PWVW_WIN wvw_win, int32_t nClass, H
 extern bool       hb_gt_wvw_StoreControlProc(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, WNDPROC OldProc);
 extern WNDPROC    hb_gt_wvw_GetControlProc(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd);
 extern int32_t        hb_gt_wvw_ButtonCreate(PWVW_WIN wvw_win, int32_t usTop, int32_t usLeft, int32_t usBottom, int32_t usRight, LPCTSTR szCaption,
-                                         const char * szBitmap, HB_UINT uiBitmap, PHB_ITEM pBlock,
+                                         const char * szBitmap, uint32_t uiBitmap, PHB_ITEM pBlock,
                                          int32_t iOffTop, int32_t iOffLeft, int32_t iOffBottom, int32_t iOffRight,
                                          double dStretch, bool bMap3Dcolors,
                                          int32_t iStyle, HWND * phWnd);

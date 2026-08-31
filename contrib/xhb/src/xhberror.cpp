@@ -108,7 +108,7 @@ PHB_ITEM hb_errPutProcName(PHB_ITEM pError, const char *szProcName)
   return pError;
 }
 
-HB_UINT hb_errGetProcLine(PHB_ITEM pError)
+uint32_t hb_errGetProcLine(PHB_ITEM pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetProcLine(%p)", pError));
 
@@ -119,7 +119,7 @@ HB_UINT hb_errGetProcLine(PHB_ITEM pError)
   return static_cast<uint16_t>(hb_arrayGetNI(pError, s_nErrProcLine));
 }
 
-PHB_ITEM hb_errPutProcLine(PHB_ITEM pError, HB_UINT uiProcLine)
+PHB_ITEM hb_errPutProcLine(PHB_ITEM pError, uint32_t uiProcLine)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutProcLine(%p, %u)", pError, uiProcLine));
 
@@ -206,7 +206,7 @@ HB_FUNC_STATIC(_PROCLINE)
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
   if (pItem && pItem->isNumeric()) {
-    hb_errPutProcLine(hb_stackSelfItem(), static_cast<HB_UINT>(hb_itemGetNI(pItem)));
+    hb_errPutProcLine(hb_stackSelfItem(), static_cast<uint32_t>(hb_itemGetNI(pItem)));
   }
 
   hb_itemReturn(pItem);

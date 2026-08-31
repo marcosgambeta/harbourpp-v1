@@ -93,12 +93,12 @@ static HB_CRITICAL_NEW(s_ServiceMutex);
 
 typedef struct
 {
-  HB_UINT sig;
-  HB_UINT subsig;
-  HB_UINT translated;
+  uint32_t sig;
+  uint32_t subsig;
+  uint32_t translated;
 } S_TUPLE;
 
-static int32_t s_translateSignal(HB_UINT sig, HB_UINT subsig);
+static int32_t s_translateSignal(uint32_t sig, uint32_t subsig);
 
 /* Unix specific signal handling implementation
  *
@@ -144,11 +144,11 @@ static void s_signalHandler(int32_t sig, siginfo_t *info, void *v)
   bSignalEnabled = false;
   nPos = hb_arrayLen(sp_hooks);
   /* subsig not necessary */
-  auto uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
+  auto uiSig = static_cast<uint32_t>(s_translateSignal(static_cast<uint32_t>(sig), 0));
 
   while (nPos > 0) {
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-    auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
+    auto uiMask = static_cast<uint32_t>(hb_arrayGetNI(pFunction, 1));
     if (uiMask & uiSig) {
       int32_t iRet;
 
@@ -385,11 +385,11 @@ static LONG s_signalHandler(int32_t type, int32_t sig, PEXCEPTION_RECORD exc)
   bSignalEnabled = false;
   nPos = hb_arrayLen(sp_hooks);
   /* subsig not necessary */
-  auto uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
+  auto uiSig = static_cast<uint32_t>(s_translateSignal(static_cast<uint32_t>(type), static_cast<uint32_t>(sig)));
 
   while (nPos > 0) {
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-    auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
+    auto uiMask = static_cast<uint32_t>(hb_arrayGetNI(pFunction, 1));
     if ((uiMask & uiSig) == uiSig) {
       int32_t iRet;
 
@@ -621,7 +621,7 @@ static void s_serviceSetDflSig(void)
 /* This translates a signal into abstract HB_SIGNAL
    from os specific representation */
 
-static int32_t s_translateSignal(HB_UINT sig, HB_UINT subsig)
+static int32_t s_translateSignal(uint32_t sig, uint32_t subsig)
 {
   auto i = 0;
 

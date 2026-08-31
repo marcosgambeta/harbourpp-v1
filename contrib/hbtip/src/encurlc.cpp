@@ -88,7 +88,7 @@ HB_FUNC(TIP_URLENCODE)
             }
             else /* encode! */
             {
-               HB_UINT uiVal;
+               uint32_t uiVal;
                pszRet[nPosRet++] = '%';
                uiVal = (static_cast<uint8_t>(cElem)) >> 4;
                pszRet[nPosRet++] = static_cast<char>((uiVal < 10 ? '0' : 'A' - 10) + uiVal);
