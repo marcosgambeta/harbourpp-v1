@@ -102,7 +102,7 @@ HB_FUNC(WVW_NOPENWINDOW)
 
     PWVW_WIN wvw_par;
 
-    int nWin;
+    int32_t nWin;
 
     HWND hWndParent;
 
@@ -353,7 +353,7 @@ HB_FUNC(WVW_MAXMAXROW)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    int iMaxRows;
+    int32_t iMaxRows;
 
     /* rows and cols passed are dummy ones */
     hb_gt_wvw_ValidWindowSize(wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, &iMaxRows, nullptr);
@@ -373,7 +373,7 @@ HB_FUNC(WVW_MAXMAXCOL)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    int iMaxCols;
+    int32_t iMaxCols;
 
     /* rows and cols passed are dummy ones */
     hb_gt_wvw_ValidWindowSize(wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, nullptr, &iMaxCols);
@@ -394,7 +394,7 @@ HB_FUNC(WVW_UNREACHEDBR)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  int iCols, iRows;
+  int32_t iCols, iRows;
 
   if (wvw_win && IsZoomed(wvw_win->hWnd)) {
     POINT xy = hb_gt_wvw_GetXYFromColRow(wvw_win, wvw_win->COLS, wvw_win->ROWS);
@@ -641,7 +641,7 @@ HB_FUNC(WVW_SETLSPACECOLOR)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    int iOldValue = wvw_win->iLSpaceColor;
+    int32_t iOldValue = wvw_win->iLSpaceColor;
 
     hb_retni(iOldValue);
 

@@ -96,10 +96,10 @@ HB_FUNC(WVW_GBCREATE)
     auto iBottom = hb_parni(4);
     auto iRight = hb_parni(5);
 
-    int iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -1;
-    int iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -1;
-    int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 1;
-    int iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 1;
+    int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -1;
+    int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -1;
+    int32_t iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 1;
+    int32_t iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 1;
 
     void *hCaption;
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
@@ -131,10 +131,10 @@ HB_FUNC(WVW_RBCREATE)
     auto iBottom = hb_parni(4);
     auto iRight = hb_parni(5);
 
-    int iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
-    int iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
-    int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
-    int iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
+    int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
+    int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
+    int32_t iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
+    int32_t iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
 
     void *hCaption;
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
@@ -215,7 +215,7 @@ HB_FUNC(WVW_ADDTOOLTIPEX) /* changed by MAG */
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw && wvw_win) {
-    int iStyle = TTS_ALWAYSTIP;
+    int32_t iStyle = TTS_ALWAYSTIP;
     INITCOMMONCONTROLSEX icex{};
 
     /* Load the tooltip class from the DLL. */
@@ -548,7 +548,7 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
       hb_retni(static_cast<int>(
           SendMessage(wvw_win->hToolBar, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<WPARAM>(&tbab))));
     } else { /* system bitmap */
-      int iOffset;
+      int32_t iOffset;
 
       switch (iBitmapType) {
       case 1:
@@ -811,7 +811,7 @@ HB_FUNC(WVW_LOADPICTURE)
 {
   auto wvw = hb_gt_wvw();
 
-  int iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni(1) - 1;
   auto pPicture = hb_gt_wvw_LoadPicture(hb_parcx(2));
 
   auto fResult = false;
@@ -838,7 +838,7 @@ HB_FUNC(WVW_LOADFONT)
   auto wvw = hb_gt_wvw();
   auto wvw_top = hb_gt_wvw_win_top();
 
-  int iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni(1) - 1;
 
   if (wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts))) {
     LOGFONT lf;
@@ -887,7 +887,7 @@ HB_FUNC(WVW_LOADPEN)
 {
   auto wvw = hb_gt_wvw();
 
-  int iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni(1) - 1;
 
   if (wvw && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
     auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
@@ -1040,10 +1040,10 @@ HB_FUNC(WVW_FILLRECTANGLE)
     auto iBottom = hb_parni(4);
     auto iRight = hb_parni(5);
 
-    int iOffTop = hb_parvni(9, 1);
-    int iOffLeft = hb_parvni(9, 2);
-    int iOffBottom = hb_parvni(9, 3);
-    int iOffRight = hb_parvni(9, 4);
+    int32_t iOffTop = hb_parvni(9, 1);
+    int32_t iOffLeft = hb_parvni(9, 2);
+    int32_t iOffBottom = hb_parvni(9, 3);
+    int32_t iOffRight = hb_parvni(9, 4);
 
     POINT xy;
 
@@ -1154,7 +1154,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
   auto wvw_zer = hb_gt_wvw_win(0);
 
   if (wvw && wvw_zer) {
-    int iIndex;
+    int32_t iIndex;
 
     /* check if we still have room for a new dialog */
     for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)); iIndex++) {
@@ -1239,7 +1239,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
   auto wvw_zer = hb_gt_wvw_win(0);
 
   if (wvw && wvw_zer) {
-    int iIndex;
+    int32_t iIndex;
 
     /* check if we still have room for a new dialog */
     for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)); iIndex++) {
@@ -1313,7 +1313,7 @@ HB_FUNC(WVW_SAVESCREEN)
 
     HBITMAP hBmp;
     POINT xy;
-    int iWidth, iHeight;
+    int32_t iWidth, iHeight;
     auto info = hb_itemArrayNew(3);
 
     hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
@@ -1360,7 +1360,7 @@ HB_FUNC(WVW_RESTSCREEN)
     auto iRight = hb_parni(5);
 
     POINT xy;
-    int iWidth, iHeight;
+    int32_t iWidth, iHeight;
 
     auto fResult = false;
 

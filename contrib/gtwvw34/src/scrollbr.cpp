@@ -64,7 +64,7 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc(HWND hWnd, UINT message, WPARAM wParam,
     wvw->iScrolling = 1;
   }
 
-  int nWin;
+  int32_t nWin;
 
   for (nWin = 0; nWin < wvw->iNumWindows; nWin++) {
     if (wvw->pWin[nWin]->hWnd == hWndParent) {
@@ -174,13 +174,13 @@ HB_FUNC(WVW_XBCREATE)
   if (wvw && wvw_win) {
     auto iTop = hb_parni(3);
     auto iLeft = hb_parni(4);
-    int iBottom;
-    int iRight;
+    int32_t iBottom;
+    int32_t iRight;
 
-    int iOffTop;
-    int iOffLeft;
-    int iOffBottom;
-    int iOffRight;
+    int32_t iOffTop;
+    int32_t iOffLeft;
+    int32_t iOffBottom;
+    int32_t iOffRight;
 
     auto iStyle = hb_parnidef(2, -1);
 
@@ -237,7 +237,7 @@ HB_FUNC(WVW_XBCREATE)
       iBottom = iTop + wvw_win->PTEXTSIZE.y - 1 + iOffBottom;
     }
 
-    int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_SCROLLBAR);
+    int32_t nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_SCROLLBAR);
     if (nCtrlId == 0) {
       nCtrlId = WVW_ID_BASE_SCROLLBAR;
     } else {

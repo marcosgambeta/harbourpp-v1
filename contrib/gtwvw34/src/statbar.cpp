@@ -83,7 +83,7 @@ HB_FUNC(WVW_SBCREATE)
 
       hb_gt_wvw_ResetWindow(wvw_win);
 
-      int piArray = rSB.right;
+      int32_t piArray = rSB.right;
       SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(wvw_win->hSBfont), static_cast<LPARAM>(TRUE));
 
       SendMessage(hWnd, SB_SETPARTS, 1, reinterpret_cast<LPARAM>(&piArray));
@@ -135,11 +135,11 @@ HB_FUNC(WVW_SBADDPART)
   HWND hWnd;
 
   if (wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr) {
-    int piArray[WVW_MAX_STATUS_PARTS];
-    int iNumOfParts;
+    int32_t piArray[WVW_MAX_STATUS_PARTS];
+    int32_t iNumOfParts;
     auto displayFlags = static_cast<WORD>(hb_parnl(4));
     bool fResetParts = hb_parl(5);
-    int iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
+    int32_t iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
     if (HB_ISCHAR(2)) {
       auto hDCSB = GetDC(hWnd);
@@ -182,8 +182,8 @@ HB_FUNC(WVW_SBADDPART)
     SendMessage(hWnd, SB_SETPARTS, iNumOfParts, reinterpret_cast<LPARAM>(piArray));
 
     if (HB_ISCHAR(6)) {
-      int cy = rSB.bottom - rSB.top - 4;
-      int cx = cy;
+      int32_t cy = rSB.bottom - rSB.top - 4;
+      int32_t cx = cy;
 
       void *hName;
       LPCTSTR szName = HB_PARSTR(6, &hName, nullptr);
@@ -229,13 +229,13 @@ HB_FUNC(WVW_SBREFRESH)
   HWND hWnd;
 
   if (wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr) {
-    int piArray[WVW_MAX_STATUS_PARTS];
+    int32_t piArray[WVW_MAX_STATUS_PARTS];
     auto iNumOfParts = static_cast<int>(
         SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
     if (iNumOfParts > 0) {
       RECT rSB{};
       GetClientRect(hWnd, &rSB);
-      int iDiff = rSB.right - piArray[iNumOfParts - 1];
+      int32_t iDiff = rSB.right - piArray[iNumOfParts - 1];
 
       for (auto n = 0; n <= iNumOfParts - 1; n++) {
         piArray[n] += iDiff;

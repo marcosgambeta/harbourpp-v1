@@ -83,10 +83,10 @@ HB_FUNC(WVW_STCREATE)
       }
     }
 
-    int iOffTop = hb_parvni(6, 1);
-    int iOffLeft = hb_parvni(6, 2);
-    int iOffBottom = hb_parvni(6, 3);
-    int iOffRight = hb_parvni(6, 4);
+    int32_t iOffTop = hb_parvni(6, 1);
+    int32_t iOffLeft = hb_parvni(6, 2);
+    int32_t iOffBottom = hb_parvni(6, 3);
+    int32_t iOffRight = hb_parvni(6, 4);
 
     hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
@@ -100,7 +100,7 @@ HB_FUNC(WVW_STCREATE)
     iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
     iRight = xy.x - 1 + iOffRight;
 
-    int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_STATIC);
+    int32_t nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_STATIC);
     if (nCtrlId == 0) {
       nCtrlId = WVW_ID_BASE_STATIC;
     } else {

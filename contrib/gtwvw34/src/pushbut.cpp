@@ -102,10 +102,10 @@ HB_FUNC(WVW_PBCREATE)
     auto iBottom = hb_parni(4);
     auto iRight = hb_parni(5);
 
-    int iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
-    int iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
-    int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
-    int iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
+    int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
+    int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
+    int32_t iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
+    int32_t iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
 
     void *hCaption;
 

@@ -57,15 +57,15 @@
 
 /* EDITBOX begins (experimental) */
 
-static const int s_K_Ctrl[] = {K_CTRL_A, K_CTRL_B, K_CTRL_C, K_CTRL_D, K_CTRL_E, K_CTRL_F, K_CTRL_G, K_CTRL_H, K_CTRL_I,
+static const int32_t s_K_Ctrl[] = {K_CTRL_A, K_CTRL_B, K_CTRL_C, K_CTRL_D, K_CTRL_E, K_CTRL_F, K_CTRL_G, K_CTRL_H, K_CTRL_I,
                                K_CTRL_J, K_CTRL_K, K_CTRL_L, K_CTRL_M, K_CTRL_N, K_CTRL_O, K_CTRL_P, K_CTRL_Q, K_CTRL_R,
                                K_CTRL_S, K_CTRL_T, K_CTRL_U, K_CTRL_V, K_CTRL_W, K_CTRL_X, K_CTRL_Y, K_CTRL_Z};
 
 static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
   HWND hWndParent = GetParent(hWnd);
-  int nWin;
-  int nEBType;
+  int32_t nWin;
+  int32_t nEBType;
 
   auto wvw = hb_gt_wvw();
 
@@ -85,7 +85,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
 
   PWVW_WIN wvw_win = wvw->pWin[nWin];
 
-  int nCtrlId = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_EDITBOX, hWnd, &nEBType);
+  int32_t nCtrlId = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_EDITBOX, hWnd, &nEBType);
   if (nCtrlId == 0) {
     hb_errInternal(10010, "EditBox: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
     return DefWindowProc(hWnd, message, wParam, lParam);
@@ -151,7 +151,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
 
   case WM_CHAR: {
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
-    int iScanCode = HB_LOBYTE(HIWORD(lParam));
+    int32_t iScanCode = HB_LOBYTE(HIWORD(lParam));
     auto c = static_cast<int>(wParam);
 
     if (bCtrl && iScanCode == 28) {
@@ -185,7 +185,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
   }
 
   case WM_SYSCHAR: {
-    int c;
+    int32_t c;
     switch (HB_LOBYTE(HIWORD(lParam))) {
     case 2:
       c = K_ALT_1;
@@ -471,10 +471,10 @@ HB_FUNC(WVW_EBCREATE)
     auto iBottom = hb_parni(4);
     auto iRight = hb_parni(5);
 
-    int nEBType = hb_parl(8) ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE;
+    int32_t nEBType = hb_parl(8) ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE;
 
     auto dwStyle = static_cast<DWORD>(hb_parnl(9));
-    int iMaxChar = hb_parni(10) > 0 ? hb_parni(10) : 0;
+    int32_t iMaxChar = hb_parni(10) > 0 ? hb_parni(10) : 0;
 
     if (wvw_win->hEBfont == nullptr) {
       wvw_win->hEBfont = CreateFontIndirect(&wvw->lfEB);
@@ -484,10 +484,10 @@ HB_FUNC(WVW_EBCREATE)
       }
     }
 
-    int iOffTop = hb_parvni(12, 1);
-    int iOffLeft = hb_parvni(12, 2);
-    int iOffBottom = hb_parvni(12, 3);
-    int iOffRight = hb_parvni(12, 4);
+    int32_t iOffTop = hb_parvni(12, 1);
+    int32_t iOffLeft = hb_parvni(12, 2);
+    int32_t iOffBottom = hb_parvni(12, 3);
+    int32_t iOffRight = hb_parvni(12, 4);
 
     RECT rXB;
     rXB.top = iTop;
@@ -513,7 +513,7 @@ HB_FUNC(WVW_EBCREATE)
     iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
     iRight = xy.x - 1 + iOffRight;
 
-    int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_EDITBOX);
+    int32_t nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_EDITBOX);
     if (nCtrlId == 0) {
       nCtrlId = WVW_ID_BASE_EDITBOX;
     } else {

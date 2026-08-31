@@ -54,8 +54,8 @@
 static LRESULT CALLBACK hb_gt_wvw_CBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
   HWND hWndParent = GetParent(hWnd);
-  int nWin;
-  int nKbdType;
+  int32_t nWin;
+  int32_t nKbdType;
 
   auto wvw = hb_gt_wvw();
 
@@ -75,7 +75,7 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc(HWND hWnd, UINT message, WPARAM wParam,
 
   PWVW_WIN wvw_win = wvw->pWin[nWin];
 
-  int nCtrlId = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_COMBOBOX, hWnd, &nKbdType);
+  int32_t nCtrlId = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_COMBOBOX, hWnd, &nKbdType);
   if (nCtrlId == 0) {
     hb_errInternal(10010, "ComboBox: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
     return DefWindowProc(hWnd, message, wParam, lParam);
@@ -205,7 +205,7 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc(HWND hWnd, UINT message, WPARAM wParam,
   return CallWindowProc(OldProc, hWnd, message, wParam, lParam);
 }
 
-static int hb_gt_wvw_GetFontDialogUnits(HWND hWnd, HFONT hFont)
+static int32_t hb_gt_wvw_GetFontDialogUnits(HWND hWnd, HFONT hFont)
 {
   const TCHAR tmp[] = TEXT("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 
@@ -271,10 +271,10 @@ HB_FUNC(WVW_CBCREATE)
     auto iWidth = hb_parni(4);
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
-    int iBottom = iTop;
-    int iRight = iLeft + iWidth - 1;
+    int32_t iBottom = iTop;
+    int32_t iRight = iLeft + iWidth - 1;
 
-    int iNumElement = HB_ISARRAY(5) ? static_cast<int>(hb_arrayLen(hb_param(5, Harbour::Item::ARRAY))) : 0;
+    int32_t iNumElement = HB_ISARRAY(5) ? static_cast<int>(hb_arrayLen(hb_param(5, Harbour::Item::ARRAY))) : 0;
 
     if (wvw_win->hCBfont == nullptr) {
       wvw_win->hCBfont = CreateFontIndirect(&wvw->lfCB);
@@ -285,10 +285,10 @@ HB_FUNC(WVW_CBCREATE)
       }
     }
 
-    int iOffTop = hb_parvni(10, 1);
-    int iOffLeft = hb_parvni(10, 2);
+    int32_t iOffTop = hb_parvni(10, 1);
+    int32_t iOffLeft = hb_parvni(10, 2);
     auto iOffBottom = hb_parnidef(7, 3); /* nListLines */
-    int iOffRight = hb_parvni(10, 4);
+    int32_t iOffRight = hb_parvni(10, 4);
 
     RECT rXB;
     rXB.top = iTop;
@@ -312,7 +312,7 @@ HB_FUNC(WVW_CBCREATE)
     iBottom = xy.y - wvw_win->iLineSpacing - 1 + (iOffBottom * hb_gt_wvw_LineHeight(wvw_win));
     iRight = xy.x - 1 + iOffRight;
 
-    int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_COMBOBOX);
+    int32_t nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_COMBOBOX);
     if (nCtrlId == 0) {
       nCtrlId = WVW_ID_BASE_COMBOBOX;
     } else {
