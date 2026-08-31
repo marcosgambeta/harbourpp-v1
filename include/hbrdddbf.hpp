@@ -204,7 +204,7 @@ typedef struct _DBFAREA
    uint8_t     bMemoType;           /* MEMO type used in DBF memo fields */
    uint8_t     bLockType;           /* Type of locking schemes */
    uint8_t     bCryptType;          /* Type of used encryption */
-   HB_UINT     uiSetHeader;         /* DBF header updating modes DBI_SETHEADER */
+   uint32_t     uiSetHeader;         /* DBF header updating modes DBI_SETHEADER */
    DBFHEADER   dbfHeader;           /* DBF header buffer */
    uint16_t * pFieldOffset;        /* Pointer to field offset array */
    PHB_DBFFIELDBITS pFieldBits;     /* Pointer to extended DBF field info array */
