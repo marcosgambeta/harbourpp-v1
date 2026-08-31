@@ -23,14 +23,14 @@ HB_FUNC( XFORM )
    const char * cWord    = hb_parc( 1 ) + 2;
    HB_ISIZ      iWordLen = hb_parclen( 1 ) - 2;
    HB_ISIZ      x;
-   HB_UINT      iKey;
+   uint32_t      iKey;
 
    while( --iWordLen >= 1 && iRetLen < 128 )
    {
-      iKey = *( ( HB_UINT * ) cWord );
+      iKey = *( ( uint32_t * ) cWord );
       for( x = 0; x < 14; x += 2 )
       {
-         if( *( ( HB_UINT * ) ( s_cSearch + x ) ) == iKey )
+         if( *( ( uint32_t * ) ( s_cSearch + x ) ) == iKey )
          {
             if( x == 0 )
             {
