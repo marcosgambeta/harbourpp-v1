@@ -244,15 +244,15 @@ struct HB_GT_PARAMS
 {
    DWORD     exStyle;
    DWORD     style;
-   int       x;
-   int       y;
-   int       width;
-   int       height;
+   int32_t       x;
+   int32_t       y;
+   int32_t       width;
+   int32_t       height;
    PHB_ITEM  pParentGT;
    HB_BOOL   bVisible;
    HB_BOOL   bRowCols;
    HB_BOOL   bConfigured;
-   int       iWndType;
+   int32_t       iWndType;
 };
 
 using PHB_GT_PARAMS = HB_GT_PARAMS *;

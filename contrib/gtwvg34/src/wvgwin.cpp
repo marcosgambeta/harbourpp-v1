@@ -107,7 +107,7 @@ HB_FUNC(WVG_SETMENU)
 #if 1
   RECT wi = {0, 0, 0, 0};
   RECT ci = {0, 0, 0, 0};
-  int height, width;
+  int32_t height, width;
 
   GetWindowRect(hWnd, &wi);
   GetClientRect(hWnd, &ci);
@@ -189,8 +189,8 @@ HB_FUNC(WVG_TREEVIEW_ISEXPANDED)
 HB_FUNC(WVG_LBGETTEXT)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  int iIndex = hb_parni(2);
-  int iLen = ListBox_GetTextLen(hWnd, iIndex);
+  int32_t iIndex = hb_parni(2);
+  int32_t iLen = ListBox_GetTextLen(hWnd, iIndex);
   LPTSTR szText = (LPTSTR)hb_xgrab((iLen + 1) * sizeof(TCHAR));
 
   (void)ListBox_GetText(hWnd, iIndex, szText);
@@ -268,7 +268,7 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 #else
     tbab.nID = (UINT)hbwapi_par_raw_HBITMAP(3);
 #endif
-    hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDBITMAP, (WPARAM)1, (LPARAM)&tbab));
+    hbwapi_ret_NI((int32_t)SendMessage(hTB, TB_ADDBITMAP, (WPARAM)1, (LPARAM)&tbab));
     break;
   }
   case TB_ADDBUTTONS: {
@@ -286,7 +286,7 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
   }
   case TB_ADDSTRING: {
     void *hCaption;
-    hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDSTRING, 0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr)));
+    hbwapi_ret_NI((int32_t)SendMessage(hTB, TB_ADDSTRING, 0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr)));
     hb_strfree(hCaption);
     break;
   }

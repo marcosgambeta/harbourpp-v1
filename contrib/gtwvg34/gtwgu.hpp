@@ -66,29 +66,29 @@
 struct HB_GTWGU
 {
    PHB_GT   pGT;                            // core GT pointer
-   int      iHandle;                        // window number
+   int32_t      iHandle;                        // window number
 
    HINSTANCE hInstance;
-   int       iCmdShow;
+   int32_t       iCmdShow;
 
-   int      ROWS;                           // number of displayable rows in window
-   int      COLS;                           // number of displayable columns in window
+   int32_t      ROWS;                           // number of displayable rows in window
+   int32_t      COLS;                           // number of displayable columns in window
 
    POINT    MousePos;                       // the last mouse position
    HB_BOOL  MouseMove;                      // Flag to say whether to return mouse movement events
 
-   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    // Array to hold the characters & events
-   int      keyPointerIn;                   // Offset into key array for character to be placed
-   int      keyPointerOut;                  // Offset into key array of next character to read
-   int      keyLast;                        // last inkey code value in buffer
+   int32_t      Keys[ WVT_CHAR_QUEUE_SIZE ];    // Array to hold the characters & events
+   int32_t      keyPointerIn;                   // Offset into key array for character to be placed
+   int32_t      keyPointerOut;                  // Offset into key array of next character to read
+   int32_t      keyLast;                        // last inkey code value in buffer
 
    POINT    PTEXTSIZE;                      // size of the fixed width font
    HB_BOOL  FixedFont;                      // TRUE if current font is a fixed font
-   int      FixedSize[ WVT_MAX_COLS ];      // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
-   int      fontHeight;                     // requested font height
-   int      fontWidth;                      // requested font width
-   int      fontWeight;                     // Bold level
-   int      fontQuality;                    // requested font quality
+   int32_t      FixedSize[ WVT_MAX_COLS ];      // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
+   int32_t      fontHeight;                     // requested font height
+   int32_t      fontWidth;                      // requested font width
+   int32_t      fontWeight;                     // Bold level
+   int32_t      fontQuality;                    // requested font quality
    char     fontFace[ LF_FACESIZE ];        // requested font face name LF_FACESIZE #defined in wingdi.h
    HFONT    hFont;                          // current font handle
 
@@ -108,7 +108,7 @@ struct HB_GTWGU
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
 
-   int      CodePage;                       // Code page to use for display characters
+   int32_t      CodePage;                       // Code page to use for display characters
    HB_BOOL  Win9X;                          // Flag to say if running on Win9X not NT/2000/XP
    HB_BOOL  CentreWindow;                   // True if window is to be Reset into centre of window
 
@@ -119,15 +119,15 @@ struct HB_GTWGU
 
    // To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed>
 
-   int       rowStart;                      // Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect()
-   int       rowStop;                       // Holds nBottom of last WM_PAINT rectangle
-   int       colStart;                      // Holds nLeft   of last WM_PAINT rectangle
-   int       colStop;                       // Holds nRight  of last WM_PAINT rectangle
+   int32_t       rowStart;                      // Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect()
+   int32_t       rowStop;                       // Holds nBottom of last WM_PAINT rectangle
+   int32_t       colStart;                      // Holds nLeft   of last WM_PAINT rectangle
+   int32_t       colStop;                       // Holds nRight  of last WM_PAINT rectangle
 
-   int       iFactor;                       // Transparency factor 0~255
+   int32_t       iFactor;                       // Transparency factor 0~255
 
-   int       LastMenuEvent;                 // Last menu item selected
-   int       MenuKeyEvent;                  // User definable event number for windows menu command
+   int32_t       LastMenuEvent;                 // Last menu item selected
+   int32_t       MenuKeyEvent;                  // User definable event number for windows menu command
    HB_BOOL   InvalidateWindow;              // Flag for controlling whether to use ScrollWindowEx()
    HB_BOOL   EnableShortCuts;               // Determines whether ALT key enables menu or system menu
 
@@ -145,8 +145,8 @@ struct HB_GTWGU
 
    HB_BOOL   bTracking;                     // To track if mouse has entered or left the window area
    HB_BOOL   bResizing;                     // To know when it is in resizing mode
-   int       width;
-   int       height;
+   int32_t       width;
+   int32_t       height;
 
 };
 

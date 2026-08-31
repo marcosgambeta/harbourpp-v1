@@ -126,7 +126,7 @@ static BITMAPINFO *PackedDibLoad(const char *pszFileName)
   return pbmi;
 }
 
-static int PackedDibGetWidth(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetWidth(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcWidth;
@@ -135,7 +135,7 @@ static int PackedDibGetWidth(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetHeight(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetHeight(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcHeight;
@@ -144,7 +144,7 @@ static int PackedDibGetHeight(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetBitCount(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetBitCount(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcBitCount;
@@ -153,7 +153,7 @@ static int PackedDibGetBitCount(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetInfoHeaderSize(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetInfoHeaderSize(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return ((PBITMAPCOREINFO)pPackedDib)->bmciHeader.bcSize;
@@ -164,7 +164,7 @@ static int PackedDibGetInfoHeaderSize(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetColorsUsed(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetColorsUsed(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return 0;
@@ -173,9 +173,9 @@ static int PackedDibGetColorsUsed(BITMAPINFO *pPackedDib)
   }
 }
 
-static int PackedDibGetNumColors(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetNumColors(BITMAPINFO *pPackedDib)
 {
-  int iNumColors = PackedDibGetColorsUsed(pPackedDib);
+  int32_t iNumColors = PackedDibGetColorsUsed(pPackedDib);
 
   if (iNumColors == 0 && PackedDibGetBitCount(pPackedDib) < 16) {
     iNumColors = 1 << PackedDibGetBitCount(pPackedDib);
@@ -184,7 +184,7 @@ static int PackedDibGetNumColors(BITMAPINFO *pPackedDib)
   return iNumColors;
 }
 
-static int PackedDibGetColorTableSize(BITMAPINFO *pPackedDib)
+static int32_t PackedDibGetColorTableSize(BITMAPINFO *pPackedDib)
 {
   if (pPackedDib->bmiHeader.biSize == sizeof(BITMAPCOREHEADER)) {
     return PackedDibGetNumColors(pPackedDib) * sizeof(RGBTRIPLE);
@@ -206,8 +206,8 @@ HB_FUNC(WVG_PREPAREBITMAPFROMFILE)
   BITMAPINFO *pPackedDib = fMap3Dcolors ? nullptr : PackedDibLoad(hb_parcx(1) /* szFileName */);
 
   if (pPackedDib || fMap3Dcolors) {
-    int iWidth, iExpWidth = hb_parni(2);
-    int iHeight, iExpHeight = hb_parni(3);
+    int32_t iWidth, iExpWidth = hb_parni(2);
+    int32_t iHeight, iExpHeight = hb_parni(3);
     HWND hCtrl = hbwapi_par_raw_HWND(5);
 
     HDC hdc = GetDC(hCtrl);
@@ -285,14 +285,14 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
   if (hWndSB && IsWindow(hWndSB)) {
     switch (hb_parni(2) /* nMode */) {
     case 0: {
-      int ptArray[WIN_STATUSBAR_MAX_PARTS];
+      int32_t ptArray[WIN_STATUSBAR_MAX_PARTS];
       RECT rc = {0, 0, 0, 0};
-      int n;
-      int width;
-      int iParts = (int)SendMessage(hWndSB, SB_GETPARTS, (WPARAM)HB_SIZEOFARRAY(ptArray) - 1, (LPARAM)(LPINT)ptArray);
+      int32_t n;
+      int32_t width;
+      int32_t iParts = (int32_t)SendMessage(hWndSB, SB_GETPARTS, (WPARAM)HB_SIZEOFARRAY(ptArray) - 1, (LPARAM)(LPINT)ptArray);
 
       GetClientRect(hWndSB, &rc);
-      width = (int)(rc.right / (iParts + 1));
+      width = (int32_t)(rc.right / (iParts + 1));
       for (n = 0; n < iParts; n++) {
         ptArray[n] = width * (n + 1);
       }
@@ -306,7 +306,7 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
       RECT rc;
 
       if (GetClientRect(hWndSB, &rc)) {
-        int ptArray = rc.right;
+        int32_t ptArray = rc.right;
 
         hb_retl((HB_BOOL)SendMessage(hWndSB, SB_SETPARTS, (WPARAM)1, (LPARAM)&ptArray));
         return;
@@ -323,8 +323,8 @@ HB_FUNC(WVG_STATUSBARSETTEXT)
   HWND hWndSB = hbwapi_par_raw_HWND(1);
 
   if (hWndSB && IsWindow(hWndSB)) {
-    int iPart = LOBYTE(hb_parnidef(2, 1) - 1);
-    int iFlags = (int)HIWORD(SendMessage(hWndSB, SB_GETTEXTLENGTH, (WPARAM)iPart, 0));
+    int32_t iPart = LOBYTE(hb_parnidef(2, 1) - 1);
+    int32_t iFlags = (int32_t)HIWORD(SendMessage(hWndSB, SB_GETTEXTLENGTH, (WPARAM)iPart, 0));
     void *hCaption;
 
     SendMessage(hWndSB, SB_SETTEXT, (WPARAM)iPart | iFlags, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
@@ -340,8 +340,8 @@ HB_FUNC(WVG_STATUSBARREFRESH)
 
    if( hWndSB && IsWindow( hWndSB ) )
    {
-      int ptArray[WIN_STATUSBAR_MAX_PARTS];
-      int iParts, i;
+      int32_t ptArray[WIN_STATUSBAR_MAX_PARTS];
+      int32_t iParts, i;
 
       iParts = SendMessage( hWndSB, SB_GETPARTS, ( WPARAM ) HB_SIZEOFARRAY( ptArray ), ( LPARAM ) ( LPINT ) ptArray );
 
@@ -479,8 +479,8 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
 {
   HWND hwnd = hbwapi_par_raw_HWND(1);
   HTREEITEM hroot, hitem, hitem1, hitem2, hitem3;
-  int iExpand = hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE;
-  int iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
+  int32_t iExpand = hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE;
+  int32_t iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
 
   hroot = TreeView_GetRoot(hwnd);
   if (hroot) {
@@ -748,8 +748,8 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
   case 1: /* button from image */
   {
     void *hCaption;
-    int iNewString =
-        (int)SendMessage(hWndTB, TB_ADDSTRING, 0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr)); /* set string */
+    int32_t iNewString =
+        (int32_t)SendMessage(hWndTB, TB_ADDSTRING, 0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr)); /* set string */
     hb_strfree(hCaption);
 
     if (hb_parl(6)) {

@@ -68,31 +68,31 @@
 
 struct HB_GOBJ_OFFSET
 {
-   int            iTop;
-   int            iLeft;
-   int            iBottom;
-   int            iRight;
+   int32_t            iTop;
+   int32_t            iLeft;
+   int32_t            iBottom;
+   int32_t            iRight;
 };
 
 
 struct _tag_GOBJS
 {
-   int            iObjType;
-   int            iHandle;
-   int            iState;
-   int            iTop;
-   int            iLeft;
-   int            iBottom;
-   int            iRight;
+   int32_t            iObjType;
+   int32_t            iHandle;
+   int32_t            iState;
+   int32_t            iTop;
+   int32_t            iLeft;
+   int32_t            iBottom;
+   int32_t            iRight;
    HB_GOBJ_OFFSET aOffset;
-   int            iHeight;
-   int            iWidth;       // iThick
-   int            iOrient;
-   int            iAlign;
-   int            iAlignVert;
-   int            iFormat;
-   int            iStyle;       // iShape
-   int            iData;        // iSlot, etc
+   int32_t            iHeight;
+   int32_t            iWidth;       // iThick
+   int32_t            iOrient;
+   int32_t            iAlign;
+   int32_t            iAlignVert;
+   int32_t            iFormat;
+   int32_t            iStyle;       // iShape
+   int32_t            iData;        // iSlot, etc
    COLORREF       crRGB;
    COLORREF       crRGBText;
    COLORREF       crRGBBk;
@@ -141,36 +141,36 @@ using PHB_GUIDATA = HB_GUIDATA *;
 struct HB_GTWVG
 {
    PHB_GT   pGT;                            // core GT pointer
-   int      iHandle;                        // window number
+   int32_t      iHandle;                        // window number
 
    HINSTANCE hInstance;                     // parent window instance
-   int       iCmdShow;
+   int32_t       iCmdShow;
 
-   int      ROWS;                           // number of displayable rows in window
-   int      COLS;                           // number of displayable columns in window
+   int32_t      ROWS;                           // number of displayable rows in window
+   int32_t      COLS;                           // number of displayable columns in window
 
    COLORREF COLORS[ 16 ];                   // colors
 
    HB_BOOL  CaretExist;                     // HB_TRUE if a caret has been created
    HB_BOOL  CaretHidden;                    // HB_TRUE if a caret has been hidden
-   int      CaretSize;                      // Height of solid caret
-   int      CaretWidth;                     // Width of solid caret
+   int32_t      CaretSize;                      // Height of solid caret
+   int32_t      CaretWidth;                     // Width of solid caret
 
    POINT    MousePos;                       // the last mouse position
    HB_BOOL  MouseMove;                      // Flag to say whether to return mouse movement events
 
-   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    // Array to hold the characters & events
-   int      keyPointerIn;                   // Offset into key array for character to be placed
-   int      keyPointerOut;                  // Offset into key array of next character to read
-   int      keyLast;                        // last inkey code value in buffer
+   int32_t      Keys[ WVT_CHAR_QUEUE_SIZE ];    // Array to hold the characters & events
+   int32_t      keyPointerIn;                   // Offset into key array for character to be placed
+   int32_t      keyPointerOut;                  // Offset into key array of next character to read
+   int32_t      keyLast;                        // last inkey code value in buffer
 
    POINT    PTEXTSIZE;                      // size of the fixed width font
    HB_BOOL  FixedFont;                      // HB_TRUE if current font is a fixed font
-   int      FixedSize[ WVT_MAX_COLS ];      // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
-   int      fontHeight;                     // requested font height
-   int      fontWidth;                      // requested font width
-   int      fontWeight;                     // Bold level
-   int      fontQuality;                    // requested font quality
+   int32_t      FixedSize[ WVT_MAX_COLS ];      // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
+   int32_t      fontHeight;                     // requested font height
+   int32_t      fontWidth;                      // requested font width
+   int32_t      fontWeight;                     // Bold level
+   int32_t      fontQuality;                    // requested font quality
    TCHAR    fontFace[ LF_FACESIZE ];        // requested font face name LF_FACESIZE #defined in wingdi.h
    HFONT    hFont;                          // current font handle
 #if ! defined(UNICODE)
@@ -186,9 +186,9 @@ struct HB_GTWVG
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
 
-   int      CodePage;                       // Code page to use for display characters
+   int32_t      CodePage;                       // Code page to use for display characters
 #if ! defined(UNICODE)
-   int      boxCodePage;                    // Code page to use for display draw line characters
+   int32_t      boxCodePage;                    // Code page to use for display draw line characters
 #endif
    HB_BOOL  Win9X;                          // Flag to say if running on Win9X not NT/2000/XP
    HB_BOOL  AltF4Close;                     // Can use Alt+F4 to close application
@@ -210,34 +210,34 @@ struct HB_GTWVG
    HB_BOOL  bClosable;
    HB_BOOL  bFullScreen;
    HB_BOOL  bAltEnter;                      // Can use Alt+Enter to enter full screen mode
-   int      MarginTop;
-   int      MarginLeft;
+   int32_t      MarginTop;
+   int32_t      MarginLeft;
 
-   int      ResizeMode;                     // Sets the resizing mode either to FONT or ROWS
+   int32_t      ResizeMode;                     // Sets the resizing mode either to FONT or ROWS
    RECT     sRectNew;
    RECT     sRectOld;
 
    // To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed>
 
-   int       rowStart;                      // Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect()
-   int       rowStop;                       // Holds nBottom of last WM_PAINT rectangle
-   int       colStart;                      // Holds nLeft   of last WM_PAINT rectangle
-   int       colStop;                       // Holds nRight  of last WM_PAINT rectangle
+   int32_t       rowStart;                      // Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect()
+   int32_t       rowStop;                       // Holds nBottom of last WM_PAINT rectangle
+   int32_t       colStart;                      // Holds nLeft   of last WM_PAINT rectangle
+   int32_t       colStop;                       // Holds nRight  of last WM_PAINT rectangle
 
-   int       iFactor;                       // Transparency factor 0~255
+   int32_t       iFactor;                       // Transparency factor 0~255
 
    HDC       hdc;                           // Handle to Windows Device Context
 
-   int       LastMenuEvent;                 // Last menu item selected
-   int       MenuKeyEvent;                  // User definable event number for windows menu command
+   int32_t       LastMenuEvent;                 // Last menu item selected
+   int32_t       MenuKeyEvent;                  // User definable event number for windows menu command
    HB_BOOL   InvalidateWindow;              // Flag for controlling whether to use ScrollWindowEx()
    HB_BOOL   EnableShortCuts;               // Determines whether ALT key enables menu or system menu
 
    HB_BOOL   bGui;
    HDC       hGuiDC;
    HBITMAP   hGuiBmp;
-   int       iGuiWidth;
-   int       iGuiHeight;
+   int32_t       iGuiWidth;
+   int32_t       iGuiHeight;
 
    HB_BOOL   bPaint;
    HB_BOOL   bGetFocus;
@@ -265,12 +265,12 @@ struct HB_GTWVG
    PHB_ITEM  pFunc[ WVT_DLGML_MAX ];        // Function pointer for WndProc
    // TODO: pcbFunc is redundant and should be removed
    PHB_ITEM  pcbFunc[ WVT_DLGML_MAX ];      // codeblock for WndProc
-   int       iType[ WVT_DLGML_MAX ];        // Type of Function Pointers - Function 1, Block 2, Method 3
+   int32_t       iType[ WVT_DLGML_MAX ];        // Type of Function Pointers - Function 1, Block 2, Method 3
    HWND      hDlgModal[ WVT_DLGMD_MAX ];    // Handle to a modeless dialog
    PHB_ITEM  pFuncModal[ WVT_DLGMD_MAX ];   // Function pointer for WndProc
    // TODO: pcbFuncModal is redundant and should be removed
    PHB_ITEM  pcbFuncModal[ WVT_DLGMD_MAX ]; // codeblock for WndProc
-   int       iTypeModal[ WVT_DLGMD_MAX ];   // Type of Function Pointers - Function 1, Block 2, Method 3
+   int32_t       iTypeModal[ WVT_DLGMD_MAX ];   // Type of Function Pointers - Function 1, Block 2, Method 3
 
    PHB_GT_PARAMS  pPP;                      // Presentation Parameters
 
@@ -280,7 +280,7 @@ struct HB_GTWVG
    HB_BOOL   bResizing;                     // To know when it is in resizing mode
    HB_BOOL   bAlreadySizing;
    HB_BOOL   bComposited;
-   int       CloseMode;
+   int32_t       CloseMode;
 
    PHB_GOBJS gObjs;                         // Graphic Objects
 
@@ -300,11 +300,11 @@ using PHB_GTWVG = HB_GTWVG *;
 #define HB_GTWVT   HB_GTWVG
 #define PHB_GTWVT  PHB_GTWVG
 
-extern HB_EXPORT POINT         hb_wvt_gtGetXYFromColRow( int col, int row );
+extern HB_EXPORT POINT         hb_wvt_gtGetXYFromColRow( int32_t col, int32_t row );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPicture( const char * pszFileName );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPictureFromResource( LPCTSTR resource, LPCTSTR section );
-extern HB_EXPORT void          hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, uint8_t * sBuffer, uint8_t * sAttrib);
-extern HB_EXPORT void          hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, uint8_t * sBuffer, uint8_t * sAttrib);
+extern HB_EXPORT void          hb_wvt_GetStringAttrib(int32_t top, int32_t left, int32_t bottom, int32_t right, uint8_t * sBuffer, uint8_t * sAttrib);
+extern HB_EXPORT void          hb_wvt_PutStringAttrib(int32_t top, int32_t left, int32_t bottom, int32_t right, uint8_t * sBuffer, uint8_t * sAttrib);
 
 extern HB_EXPORT PHB_GTWVT     hb_wvt_gtGetWVT( void );
 

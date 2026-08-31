@@ -179,7 +179,7 @@ HB_FUNC(WVT_SETTOOLTIP)
       ti.uId = 100000;
 
       if (SendMessage(_s->hWndTT, TTM_GETTOOLINFO, 0, (LPARAM)&ti)) {
-        int iTop, iLeft, iBottom, iRight;
+        int32_t iTop, iLeft, iBottom, iRight;
         void *hText;
 
         xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -245,7 +245,7 @@ HB_FUNC(WVT_SETTOOLTIPWIDTH)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   if (_s) {
-    hb_retni((int)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
+    hb_retni((int32_t)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
 
     if (HB_ISNUM(1)) {
       SendMessage(_s->hWndTT, TTM_SETMAXTIPWIDTH, 0, (LPARAM)hb_parnint(1));
@@ -297,7 +297,7 @@ HB_FUNC(WVT_SETTOOLTIPTITLE)
     if (HB_ISCHAR(2)) {
       void *hText;
 
-      int iIcon = hb_parni(1);
+      int32_t iIcon = hb_parni(1);
       if (iIcon > 3) {
         iIcon = 0;
       }
@@ -314,7 +314,7 @@ HB_FUNC(WVT_GETTOOLTIPWIDTH)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   if (_s) {
-    hb_retni((int)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
+    hb_retni((int32_t)SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
     return;
   }
   hb_retni(0);
@@ -512,18 +512,18 @@ HB_FUNC(WVT_SETMENU)
     RECT wi = {0, 0, 0, 0};
     RECT ci = {0, 0, 0, 0};
     RECT rc = {0, 0, 0, 0};
-    int height, width;
+    int32_t height, width;
 
     SetMenu(_s->hWnd, hbwapi_par_raw_HMENU(1));
 
     GetWindowRect(_s->hWnd, &wi);
     GetClientRect(_s->hWnd, &ci);
 
-    height = (int)(_s->PTEXTSIZE.y * _s->ROWS);
-    width = (int)(_s->PTEXTSIZE.x * _s->COLS);
+    height = (int32_t)(_s->PTEXTSIZE.y * _s->ROWS);
+    width = (int32_t)(_s->PTEXTSIZE.x * _s->COLS);
 
-    width += (int)(wi.right - wi.left - ci.right);
-    height += (int)(wi.bottom - wi.top - ci.bottom);
+    width += (int32_t)(wi.right - wi.left - ci.right);
+    height += (int32_t)(wi.bottom - wi.top - ci.bottom);
 
     if (_s->CentreWindow && SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0)) {
       wi.left = rc.left + ((rc.right - rc.left - width) / 2);
@@ -651,12 +651,12 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wP
   INT_PTR lReturn = 0;
 
   if (_s) {
-    int iIndex, iType;
+    int32_t iIndex, iType;
     PHB_ITEM pFunc = nullptr;
 
     iType = 0;
 
-    for (iIndex = 0; iIndex < (int)HB_SIZEOFARRAY(_s->hDlgModeless); iIndex++) {
+    for (iIndex = 0; iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModeless); iIndex++) {
       if (_s->hDlgModeless[iIndex] != nullptr && _s->hDlgModeless[iIndex] == hDlg) {
         if (_s->pFunc[iIndex] != nullptr) {
           pFunc = _s->pFunc[iIndex];
@@ -738,11 +738,11 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
   INT_PTR lReturn = 0;
 
   if (_s) {
-    int iIndex, iType;
+    int32_t iIndex, iType;
     PHB_ITEM pFunc = nullptr;
-    int iFirst = (int)lParam;
+    int32_t iFirst = (int32_t)lParam;
 
-    if (iFirst > 0 && iFirst <= (int)HB_SIZEOFARRAY(_s->hDlgModal)) {
+    if (iFirst > 0 && iFirst <= (int32_t)HB_SIZEOFARRAY(_s->hDlgModal)) {
       _s->hDlgModal[iFirst - 1] = hDlg;
       SendMessage(hDlg, WM_INITDIALOG, 0, 0);
       return lReturn;
@@ -750,7 +750,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
 
     iType = 0;
 
-    for (iIndex = 0; iIndex < (int)HB_SIZEOFARRAY(_s->hDlgModal); iIndex++) {
+    for (iIndex = 0; iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModal); iIndex++) {
       if (_s->hDlgModal[iIndex] != nullptr && _s->hDlgModal[iIndex] == hDlg) {
         if (_s->pFuncModal[iIndex] != nullptr) {
           pFunc = _s->pFuncModal[iIndex];
@@ -834,21 +834,21 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
   HWND hDlg = 0;
 
   if (_s) {
-    int iIndex;
+    int32_t iIndex;
 
     /* check if we still have room for a new dialog */
-    for (iIndex = 0; iIndex < (int)HB_SIZEOFARRAY(_s->hDlgModeless); iIndex++) {
+    for (iIndex = 0; iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModeless); iIndex++) {
       if (_s->hDlgModeless[iIndex] == nullptr) {
         break;
       }
     }
 
-    if (iIndex < (int)HB_SIZEOFARRAY(_s->hDlgModeless)) {
+    if (iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModeless)) {
       PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
       PHB_ITEM pFunc = nullptr;
       PHB_DYNS pExecSym;
-      int iType = 0;
-      int iResource = hb_parni(4);
+      int32_t iType = 0;
+      int32_t iResource = hb_parni(4);
 
       if (pFirst->isEvalItem()) {
         /* pFunc is pointing to stored code block (later) */
@@ -924,20 +924,20 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   intptr_t iResult = 0;
 
   if (_s) {
-    int iIndex;
+    int32_t iIndex;
 
     /* check if we still have room for a new dialog */
-    for (iIndex = 0; iIndex < (int)HB_SIZEOFARRAY(_s->hDlgModal); iIndex++) {
+    for (iIndex = 0; iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModal); iIndex++) {
       if (_s->hDlgModal[iIndex] == nullptr) {
         break;
       }
     }
 
-    if (iIndex < (int)HB_SIZEOFARRAY(_s->hDlgModal)) {
+    if (iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModal)) {
       PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
       PHB_ITEM pFunc = nullptr;
       PHB_DYNS pExecSym;
-      int iResource = hb_parni(4);
+      int32_t iResource = hb_parni(4);
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : _s->hWnd;
 
       if (pFirst->isEvalItem()) {
@@ -1009,7 +1009,7 @@ HB_FUNC(WVT_CBADDSTRING)
 {
   void *hText;
 
-  hb_retni((int)SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), CB_ADDSTRING, 0,
+  hb_retni((int32_t)SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), CB_ADDSTRING, 0,
                             (LPARAM)HB_PARSTR(3, &hText, nullptr)));
 
   hb_strfree(hText);
@@ -1017,7 +1017,7 @@ HB_FUNC(WVT_CBADDSTRING)
 
 HB_FUNC(WVT_CBSETCURSEL)
 {
-  hb_retni((int)SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), CB_SETCURSEL, hb_parni(3), 0));
+  hb_retni((int32_t)SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), CB_SETCURSEL, hb_parni(3), 0));
 }
 
 HB_FUNC(WVT_GETFONTHANDLE)
@@ -1026,9 +1026,9 @@ HB_FUNC(WVT_GETFONTHANDLE)
 
   if (_s) {
     HFONT hFont = 0;
-    int iSlot = hb_parni(1) - 1;
+    int32_t iSlot = hb_parni(1) - 1;
 
-    if (iSlot >= 0 && iSlot < (int)HB_SIZEOFARRAY(_s->pGUI->hUserFonts)) {
+    if (iSlot >= 0 && iSlot < (int32_t)HB_SIZEOFARRAY(_s->pGUI->hUserFonts)) {
       hFont = _s->pGUI->hUserFonts[iSlot];
     }
 
