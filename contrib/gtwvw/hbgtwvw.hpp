@@ -266,7 +266,7 @@ struct bitmap_handle
 {
    char    szFilename[_MAX_PATH + 1];
    HBITMAP hBitmap;
-   int     iWidth, iHeight;
+   int32_t     iWidth, iHeight;
    struct bitmap_handle * pNext;
 };
 using BITMAP_HANDLE = bitmap_handle;
@@ -275,7 +275,7 @@ struct picture_handle
 {
    char       szFilename[_MAX_PATH + 1];
    IPicture * iPicture;
-   int        iWidth, iHeight;
+   int32_t        iWidth, iHeight;
    struct picture_handle * pNext;
 };
 using PICTURE_HANDLE = picture_handle;
@@ -351,13 +351,13 @@ struct app_data
    PHB_ITEM pFunc[WVW_DLGML_MAX];          /* Function pointer for WndProc                              */
    /* TODO: pcbFunc is redundant and should be removed */
    PHB_ITEM pcbFunc[WVW_DLGML_MAX];        /* codeblock for WndProc */
-   int      iType[WVW_DLGML_MAX];          /* Type of Function Pointers - Function 1, Block 2, Method 3 */
+   int32_t      iType[WVW_DLGML_MAX];          /* Type of Function Pointers - Function 1, Block 2, Method 3 */
 
    HWND     hDlgModal[WVW_DLGMD_MAX];      /* Handle to a modal dialog                               */
    PHB_ITEM pFuncModal[WVW_DLGMD_MAX];     /* Function pointer for WndProc                              */
    /* TODO: pcbFuncModal is redundant and should be removed */
    PHB_ITEM pcbFuncModal[WVW_DLGMD_MAX];   /* codeblock for WndProc */
-   int      iTypeModal[WVW_DLGMD_MAX];     /* Type of Function Pointers - Function 1, Block 2, Method 3 */
+   int32_t      iTypeModal[WVW_DLGMD_MAX];     /* Type of Function Pointers - Function 1, Block 2, Method 3 */
 
    BITMAP_HANDLE *  pbhBitmapList;
    PICTURE_HANDLE * pphPictureList;
@@ -389,12 +389,12 @@ struct win_data
    UINT  byWinId;                            /*x Window's Id, a number 0..WVWMAXWINDOWS            */
    TCHAR szWinName[WVW_MAXWINNAMELENGTH];  /*x name of Window ~ szAppName for Window 0  */
 
-   int byLineSpacing;                        /*x linespacing in pixels */
-   int iLSpaceColor;                         /*x linespacing color index */
+   int32_t byLineSpacing;                        /*x linespacing in pixels */
+   int32_t iLSpaceColor;                         /*x linespacing color index */
 
    uint16_t usRowOfs;                          /*x offset to Main Window's (0,0)                     */
    uint16_t usColOfs;                          /*x offset to Main Window's (0,0)                     */
-   int    uiDispCount;                       /*x pending DispEnd() request                         */
+   int32_t    uiDispCount;                       /*x pending DispEnd() request                         */
    BOOL   bPaintPending;                     /*x pending WVW_PAINT() execution                     */
    RECT   rPaintPending;                     /*x rect of pending bPaintPending  */
    HWND   hStatusBar;                        /* handle to status bar */
@@ -402,10 +402,10 @@ struct win_data
 
    HWND   hToolBar;                          /* TB handle to toolbar        */
    uint16_t usTBHeight;                        /* TB height of toolbar        */
-   int    iStartStdBitmap,
+   int32_t    iStartStdBitmap,
           iStartViewBitmap,
           iStartHistBitmap;            /* start of bitmap index       */
-   int iTBImgWidth,
+   int32_t iTBImgWidth,
        iTBImgHeight;                   /* image width and height      */
    WNDPROC tbOldProc;
 
@@ -432,7 +432,7 @@ struct win_data
 
    POINT    PTEXTSIZE;                             /* size of the fixed width font */
    BOOL     FixedFont;                             /* TRUE if current font is a fixed font */
-   int      FixedSize[WVW_MAX_COLS];             /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
+   int32_t      FixedSize[WVW_MAX_COLS];             /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
    uint16_t   ROWS;                                  /* number of displayable rows in window */
    uint16_t   COLS;                                  /* number of displayable columns in window */
    COLORREF foreground;                            /* foreground colour */
@@ -446,32 +446,32 @@ struct win_data
    BYTE * pColors;                                 /*   "     "    "    */
    POINT  caretPos;                                /* the current caret position */
 
-   int   CaretSize;                                /*x this may be specific to each windows, eg. different font size */
+   int32_t   CaretSize;                                /*x this may be specific to each windows, eg. different font size */
    POINT mousePos;                                 /* the last mousedown position */
    BOOL  MouseMove;                                /* Flag to say whether to return mouse movement events */
    HWND  hWnd;                                     /* the window handle */
-   int   Keys[WVW_CHAR_QUEUE_SIZE];              /* Array to hold the characters & events */
-   int   keyPointerIn;                             /* Offset into key array for character to be placed */
-   int   keyPointerOut;                            /* Offset into key array of next character to read */
-   int   keyLast;
+   int32_t   Keys[WVW_CHAR_QUEUE_SIZE];              /* Array to hold the characters & events */
+   int32_t   keyPointerIn;                             /* Offset into key array for character to be placed */
+   int32_t   keyPointerOut;                            /* Offset into key array of next character to read */
+   int32_t   keyLast;
 
    RECT  RectInvalid;                  /* Invalid rectangle if DispBegin() active */
    HFONT hFont;
-   int   fontHeight;                   /* requested font height */
-   int   fontWidth;                    /* requested font width */
-   int   fontWeight;                   /* Bold level */
-   int   fontQuality;
+   int32_t   fontHeight;                   /* requested font height */
+   int32_t   fontWidth;                    /* requested font width */
+   int32_t   fontWeight;                   /* Bold level */
+   int32_t   fontQuality;
    char  fontFace[LF_FACESIZE];      /* requested font face name LF_FACESIZE #defined in wingdi.h */
 
-   int  LastMenuEvent;                 /* Last menu item selected */
-   int  MenuKeyEvent;                  /* User definable event number for windows menu command */
+   int32_t  LastMenuEvent;                 /* Last menu item selected */
+   int32_t  MenuKeyEvent;                  /* User definable event number for windows menu command */
    BOOL CentreWindow;                  /* True if window is to be Reset into centre of window */
 
    /* if CentreWindow is FALSE, two following settings are examined */
    BOOL HCentreWindow;                 /* True if window is to be Reset into centre of window, horizontally */
    BOOL VCentreWindow;                 /* True if window is to be Reset into centre of window, vertically */
 
-   int CodePage;                       /* Code page to use for display characters */
+   int32_t CodePage;                       /* Code page to use for display characters */
 
    BOOL InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
    BOOL EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
@@ -497,8 +497,8 @@ struct wvw_data
    BOOL s_bDefCentreWindow;   /* default CentreWindow setting for subwindows */
    BOOL s_bDefHCentreWindow;  /* default HCentreWindow setting for subwindows */
    BOOL s_bDefVCentreWindow;  /* default VCentreWindow setting for subwindows */
-   int s_byDefLineSpacing;    /* default line spacing */
-   int s_iDefLSpaceColor;     /* if >= 0 this will be the color index                                          for spacing between lines */
+   int32_t s_byDefLineSpacing;    /* default line spacing */
+   int32_t s_iDefLSpaceColor;     /* if >= 0 this will be the color index                                          for spacing between lines */
    BOOL s_bAllowNonTop;       /* allow non-topmost window's control to  accept input */
    BOOL s_bRecurseCBlock;     /* allow control's codeblock to recurse */
    LOGFONT s_lfPB;            /* default font for pushbuttons */
@@ -518,9 +518,9 @@ struct wvw_data
                                             due to invalid input on other
                                             window */
 
-   int s_iScrolling;             /* scrollbar is scrolling */
-   int s_iWrongButtonUp;         /* number of consecutive scrollbar's WM_LBUTTONUP encountered by gtProcessMessages */
-   int s_iMaxWrongButtonUp;
+   int32_t s_iScrolling;             /* scrollbar is scrolling */
+   int32_t s_iWrongButtonUp;         /* number of consecutive scrollbar's WM_LBUTTONUP encountered by gtProcessMessages */
+   int32_t s_iMaxWrongButtonUp;
    /* max number of s_iWrongButtonUp. If it goes higher than this number,
                                              the scrollbar is forced to stop */
 
@@ -554,23 +554,23 @@ extern WIN_DATA * hb_gt_wvw_GetWindowsData(UINT iWin);
 extern WVW_DATA * hb_getWvwData(void);
 extern char * hb_gt_wvw_GetAppName(void);
 extern void hb_gt_wvwResetWindow(UINT usWinNum);
-extern BOOL hb_gt_wvwSetMenuKeyEvent(UINT usWinNum, int iMenuKeyEvent);
+extern BOOL hb_gt_wvwSetMenuKeyEvent(UINT usWinNum, int32_t iMenuKeyEvent);
 /* bitmap caching functions: */
-extern HBITMAP FindBitmapHandle(const char * szFileName, int * piWidth, int * piHeight);
-extern void AddBitmapHandle(const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight);
-extern void hb_gt_wvwFUNCPrologue(BYTE byNumCoord, int * iRow1, int * iCol1, int * iRow2, int * iCol2);
+extern HBITMAP FindBitmapHandle(const char * szFileName, int32_t * piWidth, int32_t * piHeight);
+extern void AddBitmapHandle(const char * szFileName, HBITMAP hBitmap, int32_t iWidth, int32_t iHeight);
+extern void hb_gt_wvwFUNCPrologue(BYTE byNumCoord, int32_t * iRow1, int32_t * iCol1, int32_t * iRow2, int32_t * iCol2);
 extern void hb_gt_wvwFUNCEpilogue(void);
 extern void hb_wvw_HBFUNCPrologue(UINT usWinNum, uint16_t * pusRow1, uint16_t * pusCol1, uint16_t * pusRow2, uint16_t * pusCol2);
 extern RECT    hb_gt_wvwGetXYFromColRowRect(WIN_DATA * pWindowData, RECT colrow);
 extern POINT hb_gt_wvwGetXYFromColRow(WIN_DATA * pWindowData, uint16_t col, uint16_t row);
-extern DWORD hb_gt_wvwGetColorData(int iIndex);
-extern BOOL GetImageDimension(const char * image, int * pWidth, int * pHeight);
-extern BOOL GetIPictDimension(IPicture * pPic, int * pWidth, int * pHeight);
+extern DWORD hb_gt_wvwGetColorData(int32_t iIndex);
+extern BOOL GetImageDimension(const char * image, int32_t * pWidth, int32_t * pHeight);
+extern BOOL GetIPictDimension(IPicture * pPic, int32_t * pWidth, int32_t * pHeight);
 extern LRESULT CALLBACK hb_gt_wvwTBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern void hb_gt_wvwTBinitSize(WIN_DATA * pWindowData, HWND hWndTB);
-extern int IndexToCommand(HWND hWndTB, int iIndex);
-extern int CommandToIndex(HWND hWndTB, int iCommand);
-extern BOOL AddTBButton(HWND hWndToolbar, char * szBitmap, UINT uiBitmap, char * pszLabel, int iCommand, int iBitmapType, BOOL bMap3Dcolors, WIN_DATA * pWindowData, BOOL bDropdown);
+extern int32_t IndexToCommand(HWND hWndTB, int32_t iIndex);
+extern int32_t CommandToIndex(HWND hWndTB, int32_t iCommand);
+extern BOOL AddTBButton(HWND hWndToolbar, char * szBitmap, UINT uiBitmap, char * pszLabel, int32_t iCommand, int32_t iBitmapType, BOOL bMap3Dcolors, WIN_DATA * pWindowData, BOOL bDropdown);
 extern RECT hb_gt_wvwGetColRowFromXYRect(WIN_DATA * pWIndowData, RECT xy);
 extern BYTE hb_wvw_LineHeight(WIN_DATA * pWindowData);
 extern DWORD hb_gt_wvwProcessMessages(WIN_DATA * pWindowData);
@@ -586,42 +586,42 @@ extern LRESULT CALLBACK hb_gt_wvwXBProc(HWND hWnd, UINT message, WPARAM wParam, 
 extern LRESULT CALLBACK hb_gt_wvwBtnProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern UINT ButtonCreate(UINT usWinNum, uint16_t usTop, uint16_t usLeft, uint16_t usBottom, uint16_t usRight, LPCTSTR lpszCaption,
                          char * szBitmap, UINT uiBitmap, PHB_ITEM phbiCodeBlock,
-                         int iOffTop, int iOffLeft, int iOffBottom, int iOffRight,
+                         int32_t iOffTop, int32_t iOffLeft, int32_t iOffBottom, int32_t iOffRight,
                          double dStretch, BOOL bMap3Dcolors,
-                         int iStyle);
+                         int32_t iStyle);
 extern LRESULT CALLBACK hb_gt_wvwCBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern LONG  GetFontDialogUnits(HWND h, HFONT f);
-extern HFONT   hb_gt_wvwGetFont(const char * pszFace, int iHeight, int iWidth, int iWeight, int iQuality, int iCodePage);
+extern HFONT   hb_gt_wvwGetFont(const char * pszFace, int32_t iHeight, int32_t iWidth, int32_t iWeight, int32_t iQuality, int32_t iCodePage);
 extern LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern uint16_t  hb_gt_wvwGetMouseX(WIN_DATA * pWindowData);
 extern uint16_t  hb_gt_wvwGetMouseY(WIN_DATA * pWindowData);
 extern uint16_t hb_gt_wvwRowOfs(UINT usWinNum);
 extern uint16_t hb_gt_wvwColOfs(UINT usWinNum);
 extern IPicture * hb_gt_wvwLoadPicture(const char * image);
-extern int nCopyAnsiToWideChar(LPWORD lpWCStr, LPSTR lpAnsiIn);
+extern int32_t nCopyAnsiToWideChar(LPWORD lpWCStr, LPSTR lpAnsiIn);
 extern LPWORD lpwAlign(LPWORD lpIn);
 
 extern HB_EXPORT BOOL          hb_gt_wvwDestroyPicture(IPicture * iPicture);
 extern HB_EXPORT BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 extern HB_EXPORT BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-extern HB_EXPORT int           hb_gt_wvwGetLastMenuEvent(UINT usWinNum);
-extern HB_EXPORT int           hb_gt_wvwSetLastMenuEvent(UINT usWinNum, int iLastMenuEvent);
-extern HB_EXPORT int           hb_gt_wvwGetWindowTitle(UINT usWinNum, char * title, int length);
-extern HB_EXPORT BOOL          hb_gt_wvwSetFont(UINT usWinNum, const char * fontFace, int height, int width, int Bold, int Quality);
+extern HB_EXPORT int32_t           hb_gt_wvwGetLastMenuEvent(UINT usWinNum);
+extern HB_EXPORT int32_t           hb_gt_wvwSetLastMenuEvent(UINT usWinNum, int32_t iLastMenuEvent);
+extern HB_EXPORT int32_t           hb_gt_wvwGetWindowTitle(UINT usWinNum, char * title, int32_t length);
+extern HB_EXPORT BOOL          hb_gt_wvwSetFont(UINT usWinNum, const char * fontFace, int32_t height, int32_t width, int32_t Bold, int32_t Quality);
 extern HB_EXPORT HWND          hb_gt_wvwGetWindowHandle(UINT usWinNum);
-extern HB_EXPORT void          hb_gt_wvwPostMessage(UINT usWinNum, int message);
-extern HB_EXPORT BOOL          hb_gt_wvwSetWindowPos(UINT usWinNum, int left, int top);
+extern HB_EXPORT void          hb_gt_wvwPostMessage(UINT usWinNum, int32_t message);
+extern HB_EXPORT BOOL          hb_gt_wvwSetWindowPos(UINT usWinNum, int32_t left, int32_t top);
 extern HB_EXPORT BOOL          hb_gt_wvwSetAltF4Close(BOOL bCanClose);
 extern HB_EXPORT void          hb_gt_wvwDoProcessMessages(UINT usWinNum);
 extern HB_EXPORT BOOL          hb_gt_wvwSetMouseMove(UINT usWinNum, BOOL bHandleEvent);
 extern HB_EXPORT BOOL          hb_gt_wvwEnableShortCuts(UINT usWinNum, BOOL bEnable);
-extern HB_EXPORT BOOL          hb_gt_wvwDrawImage(UINT usWinNum, int x1, int y1, int wd, int ht, const char * image, BOOL bTransparent);
-extern HB_EXPORT BOOL          hb_gt_wvwRenderPicture(UINT usWinNum, int x1, int y1, int wd, int ht, IPicture * iPicture, BOOL bTransp);
+extern HB_EXPORT BOOL          hb_gt_wvwDrawImage(UINT usWinNum, int32_t x1, int32_t y1, int32_t wd, int32_t ht, const char * image, BOOL bTransparent);
+extern HB_EXPORT BOOL          hb_gt_wvwRenderPicture(UINT usWinNum, int32_t x1, int32_t y1, int32_t wd, int32_t ht, IPicture * iPicture, BOOL bTransp);
 extern HB_EXPORT WIN_DATA *    hb_gt_wvwGetGlobalData(UINT usWinNum);
-extern HB_EXPORT BOOL          hb_gt_wvwSetColorData(int iIndex, COLORREF ulCr);
-extern HB_EXPORT void          hb_gt_wvwDrawBoxRaised(UINT usWinNum, int iTop, int iLeft, int iBottom, int iRight, BOOL bTight);
-extern HB_EXPORT void          hb_gt_wvwDrawBoxRecessed(UINT usWinNum, int iTop, int iLeft, int iBottom, int iRight, BOOL bTight);
-extern HB_EXPORT void          hb_gt_wvwDrawOutline(UINT usWinNum, int iTop, int iLeft, int iBottom, int iRight);
+extern HB_EXPORT BOOL          hb_gt_wvwSetColorData(int32_t iIndex, COLORREF ulCr);
+extern HB_EXPORT void          hb_gt_wvwDrawBoxRaised(UINT usWinNum, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, BOOL bTight);
+extern HB_EXPORT void          hb_gt_wvwDrawBoxRecessed(UINT usWinNum, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, BOOL bTight);
+extern HB_EXPORT void          hb_gt_wvwDrawOutline(UINT usWinNum, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight);
 extern HB_EXPORT IPicture *    rr_LoadPictureFromResource(const char * resname, UINT iresimage, LONG * lwidth, LONG * lheight);
 extern HB_EXPORT IPicture *    rr_LoadPicture(const char * filename, LONG * lwidth, LONG * lheight);
 

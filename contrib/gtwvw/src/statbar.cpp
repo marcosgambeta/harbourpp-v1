@@ -63,7 +63,7 @@ HB_FUNC(WVW_SBCREATE)
   HWND hWndParent;
   HWND hWndSB;
   auto pData = hb_getWvwData();
-  int ptArray[WVW_MAX_STATUS_PARTS];
+  int32_t ptArray[WVW_MAX_STATUS_PARTS];
 
   if (!(pWindowData->hStatusBar == nullptr)) {
     hb_retnl(0);
@@ -134,8 +134,8 @@ HB_FUNC(WVW_SBADDPART)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   HWND hWndSB;
-  int ptArray[WVW_MAX_STATUS_PARTS];
-  int numOfParts;
+  int32_t ptArray[WVW_MAX_STATUS_PARTS];
+  int32_t numOfParts;
   RECT rSB{};
   WORD displayFlags;
   HICON hIcon;
@@ -188,8 +188,8 @@ HB_FUNC(WVW_SBADDPART)
   SendMessage(hWndSB, SB_SETPARTS, numOfParts, reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray)));
 
   if (!HB_ISNIL(6)) {
-    int cy = rSB.bottom - rSB.top - 4;
-    int cx = cy;
+    int32_t cy = rSB.bottom - rSB.top - 4;
+    int32_t cx = cy;
 
     hIcon = static_cast<HICON>(LoadImage(0, hb_parcx(6), IMAGE_ICON, cx, cy,
                                          LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
@@ -223,9 +223,9 @@ HB_FUNC(WVW_SBREFRESH)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   HWND hWndSB;
-  int ptArray[WVW_MAX_STATUS_PARTS];
-  int numOfParts;
-  int iDiff;
+  int32_t ptArray[WVW_MAX_STATUS_PARTS];
+  int32_t numOfParts;
+  int32_t iDiff;
   RECT rSB{};
 
   hWndSB = pWindowData->hStatusBar;
@@ -260,7 +260,7 @@ HB_FUNC(WVW_SBSETTEXT)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int iPart = HB_ISNIL(2) ? 1 : hb_parni(2);
+  int32_t iPart = HB_ISNIL(2) ? 1 : hb_parni(2);
 
   if (!HB_ISNIL(4)) {
     if (HB_ISCHAR(4)) {
@@ -294,7 +294,7 @@ HB_FUNC(WVW_SBGETTEXT)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int iPart = HB_ISNIL(2) ? 1 : hb_parni(2);
+  int32_t iPart = HB_ISNIL(2) ? 1 : hb_parni(2);
   char cString[1024] = "";
 
   SendMessage(pWindowData->hStatusBar, SB_GETTEXT, static_cast<WPARAM>(iPart), reinterpret_cast<LPARAM>(cString));
@@ -413,8 +413,8 @@ HB_FUNC(WVW_XBCREATE)
   HWND hWndParent = pWindowData->hWnd;
   HWND hWndXB;
   POINT xy{};
-  int iTop, iLeft, iBottom, iRight;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
+  int32_t iTop, iLeft, iBottom, iRight;
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   auto iStyle = static_cast<int>(!HB_ISNUM(2) ? -1 : hb_parni(2));
   UINT uiXBid;
   auto usTop = static_cast<uint16_t>(hb_parni(3));
@@ -573,7 +573,7 @@ HB_FUNC(WVW_XBUPDATE)
   auto iMin = static_cast<int>(HB_ISNIL(5) ? 0 : hb_parni(5));  // TODO: use hb_parnidef
   auto iMax = static_cast<int>(HB_ISNIL(6) ? 0 : hb_parni(6));  // TODO: use hb_parnidef
   SCROLLINFO si;
-  int iRetval;
+  int32_t iRetval;
   UINT fMask = SIF_DISABLENOSCROLL;
 
   if (uiXBid == 0 || hWndXB == nullptr || iPage < 0) {

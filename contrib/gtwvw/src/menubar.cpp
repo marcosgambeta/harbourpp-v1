@@ -84,7 +84,7 @@ HB_FUNC(WVW_CREATEPOPUPMENU)
 HB_FUNC(WVW_APPENDMENU)
 {
   char ucBuf[256];
-  int iLen;
+  int32_t iLen;
   LPCTSTR lpszCaption;
 
   if (!(hb_parni(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni(3) >= WVW_ID_BASE_PUSHBUTTON)) {
@@ -149,7 +149,7 @@ HB_FUNC(WVW_SETLASTMENUEVENT)
 HB_FUNC(WVW_SETMENUKEYEVENT)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  int iEvent = 0;
+  int32_t iEvent = 0;
 
   if (HB_ISNUM(2)) {
     iEvent = hb_parnl(2);
@@ -171,7 +171,7 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
   HBITMAP hBitmapUnchecked = nullptr;
   HBITMAP hBitmapChecked = nullptr;
   char szResname[_MAX_PATH + 1];
-  int iWidth, iHeight;
+  int32_t iWidth, iHeight;
 
   if (!HB_ISNIL(4)) {
     if (HB_ISNUM(4)) {

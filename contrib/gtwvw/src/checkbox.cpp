@@ -90,7 +90,7 @@
 HB_FUNC(WVW_CXCREATE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  /* int   iStyle; */
+  /* int32_t   iStyle; */
   UINT uiPBid;
   uint16_t usTop = static_cast<BYTE>(hb_parni(2)), usLeft = static_cast<BYTE>(hb_parni(3)),
          usBottom = static_cast<BYTE>(hb_parni(4)), usRight = static_cast<BYTE>(hb_parni(5));
@@ -105,10 +105,10 @@ HB_FUNC(WVW_CXCREATE)
     return;
   }
 
-  int iOffTop = !HB_ISNIL(9) ? hb_parvni(9, 1) : -2;
-  int iOffLeft = !HB_ISNIL(9) ? hb_parvni(9, 2) : -2;
-  int iOffBottom = !HB_ISNIL(9) ? hb_parvni(9, 3) : +2;
-  int iOffRight = !HB_ISNIL(9) ? hb_parvni(9, 4) : +2;
+  int32_t iOffTop = !HB_ISNIL(9) ? hb_parvni(9, 1) : -2;
+  int32_t iOffLeft = !HB_ISNIL(9) ? hb_parvni(9, 2) : -2;
+  int32_t iOffBottom = !HB_ISNIL(9) ? hb_parvni(9, 3) : +2;
+  int32_t iOffRight = !HB_ISNIL(9) ? hb_parvni(9, 4) : +2;
 
   uiPBid = ButtonCreate(usWinNum, usTop, usLeft, usBottom, usRight, lpszCaption, szBitmap, uiBitmap,
                         hb_param(8, Harbour::Item::BLOCK), iOffTop, iOffLeft, iOffBottom, iOffRight, dStretch,
@@ -388,8 +388,8 @@ HB_FUNC(WVW_PGCREATE)
   HWND hWndParent = pWindowData->hWnd;
   HWND hWndPG;
   POINT xy{};
-  int iTop, iLeft, iBottom, iRight;
-  int iStyle = 0;
+  int32_t iTop, iLeft, iBottom, iRight;
+  int32_t iStyle = 0;
   BOOL bBackColor = !HB_ISNIL(7);
   BOOL bBarColor = !HB_ISNIL(8);
   BOOL bSmooth = (!HB_ISLOG(9) ? FALSE : hb_parl(9));
@@ -402,10 +402,10 @@ HB_FUNC(WVW_PGCREATE)
 
   InitCommonControls();
 
-  int iOffTop = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
-  int iOffLeft = !HB_ISNIL(6) ? hb_parvni(6, 2) : 0;
-  int iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
-  int iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
+  int32_t iOffTop = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
+  int32_t iOffLeft = !HB_ISNIL(6) ? hb_parvni(6, 2) : 0;
+  int32_t iOffBottom = !HB_ISNIL(6) ? hb_parvni(6, 3) : 0;
+  int32_t iOffRight = !HB_ISNIL(6) ? hb_parvni(6, 4) : 0;
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);

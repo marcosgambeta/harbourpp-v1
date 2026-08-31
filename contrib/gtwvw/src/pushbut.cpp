@@ -93,8 +93,8 @@
 HB_FUNC(WVW_PBCREATE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
-  /* int   iStyle; */
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
+  /* int32_t   iStyle; */
   UINT uiPBid;
   auto usTop = static_cast<uint16_t>(hb_parni(2));
   auto usLeft = static_cast<uint16_t>(hb_parni(3));
@@ -410,8 +410,8 @@ HB_FUNC(WVW_CBCREATE)
                                 pWindowData->fontQuality, pWindowData->CodePage);
 
   POINT xy{};
-  int iTop, iLeft, iBottom, iRight;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
+  int32_t iTop, iLeft, iBottom, iRight;
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
 
   UINT uiCBid;
   auto usWidth = static_cast<uint16_t>(hb_parni(4));
@@ -424,7 +424,7 @@ HB_FUNC(WVW_CBCREATE)
   BYTE byCharHeight = hb_wvw_LineHeight(pWindowData);
 
   /* in the future combobox type might be selectable by 8th parameter */
-  int iStyle = CBS_DROPDOWNLIST | WS_VSCROLL;
+  int32_t iStyle = CBS_DROPDOWNLIST | WS_VSCROLL;
   BYTE bKbdType = HB_ISNUM(9) ? static_cast<BYTE>(hb_parni(9)) : static_cast<BYTE>(WVW_CB_KBD_STANDARD);
 
   if (pWindowData->hCBfont == nullptr) {
@@ -763,7 +763,7 @@ HB_FUNC(WVW_CBGETINDEX)
 
   UINT uiCBid = hb_parni(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
-  int retval;
+  int32_t retval;
 
   if (pcd == nullptr) {
     hb_retni(CB_ERR);
@@ -787,7 +787,7 @@ HB_FUNC(WVW_CBFINDSTRING)
 
   UINT uiCBid = hb_parni(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
-  int retval;
+  int32_t retval;
 
   if (pcd == nullptr) {
     hb_retni(CB_ERR);
@@ -810,7 +810,7 @@ HB_FUNC(WVW_CBGETCURTEXT)
 
   UINT uiCBid = hb_parni(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
-  int iCurSel, iTextLen;
+  int32_t iCurSel, iTextLen;
   LPTSTR lptstr = nullptr;
 
   if (pcd == nullptr) {

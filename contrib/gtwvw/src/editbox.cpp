@@ -101,8 +101,8 @@ HB_FUNC(WVW_EBCREATE)
   HWND hWndParent = pWindowData->hWnd;
   HWND hWndEB;
   POINT xy{};
-  int iTop, iLeft, iBottom, iRight;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
+  int32_t iTop, iLeft, iBottom, iRight;
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   UINT uiEBid;
   auto usTop = static_cast<uint16_t>(hb_parni(2));
   auto usLeft = static_cast<uint16_t>(hb_parni(3));
@@ -614,8 +614,8 @@ HB_FUNC(WVW_STCREATE)
 #endif
 
   POINT xy{};
-  int iTop, iLeft, iBottom, iRight;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
+  int32_t iTop, iLeft, iBottom, iRight;
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   UINT uiCBid;
   BOOL bBorder = hb_parnl(7);
   ULONG ulExStyle = 0 | (bBorder ? WS_EX_CLIENTEDGE : 0);
@@ -627,8 +627,8 @@ HB_FUNC(WVW_STCREATE)
   uint16_t usRight = HB_ISNUM(12) ? static_cast<uint16_t>(hb_parni(12)) : usLeft + usWidth - 1;
   /* char * sText = hb_parc(5); */
 
-  int iStyle = (bBorder ? WS_BORDER : 0);
-  int iBox = HB_ISNUM(10) ? hb_parni(10) : 0;
+  int32_t iStyle = (bBorder ? WS_BORDER : 0);
+  int32_t iBox = HB_ISNUM(10) ? hb_parni(10) : 0;
   HFONT hFont = nullptr;
 
   if (iBox > 0) {

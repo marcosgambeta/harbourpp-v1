@@ -349,8 +349,8 @@ HB_FUNC(WIN_DRAWTEXT)
 HB_FUNC(WVW_GBCREATE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
-  /* int   iStyle; */
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
+  /* int32_t   iStyle; */
   UINT uiPBid;
   auto usTop = static_cast<uint16_t>(hb_parni(2));
   auto usLeft = static_cast<uint16_t>(hb_parni(3));
@@ -379,8 +379,8 @@ HB_FUNC(WVW_GBCREATE)
 HB_FUNC(WVW_RBCREATE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  int iOffTop, iOffLeft, iOffBottom, iOffRight;
-  /* int   iStyle; */
+  int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
+  /* int32_t   iStyle; */
   UINT uiPBid;
   auto usTop = static_cast<uint16_t>(hb_parni(2));
   auto usLeft = static_cast<uint16_t>(hb_parni(3));
@@ -429,7 +429,7 @@ HB_FUNC(WVW_PBVISIBLE)
   BOOL bEnable = HB_ISNIL(3) ? TRUE : hb_parl(3);
   byte bStyle;
   auto hWndPB = FindControlHandle(usWinNum, WVW_CONTROL_PUSHBUTTON, uiCtrlId, &bStyle);
-  int iCmdShow;
+  int32_t iCmdShow;
 
   if (uiCtrlId == 0 || hWndPB == nullptr) {
     hb_retl(false);
@@ -451,7 +451,7 @@ HB_FUNC(WVW_CBVISIBLE)
   BOOL bEnable = HB_ISNIL(3) ? TRUE : hb_parl(3);
   byte bStyle;
   auto hWndCB = FindControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, uiCtrlId, &bStyle);
-  int iCmdShow;
+  int32_t iCmdShow;
 
   if (hWndCB) {
     if (bEnable) {
@@ -472,7 +472,7 @@ HB_FUNC(WVW_CXVISIBLE)
   BOOL bEnable = HB_ISNIL(3) ? TRUE : hb_parl(3);
   byte bStyle;
   auto hWndPB = FindControlHandle(usWinNum, WVW_CONTROL_PUSHBUTTON, uiCtrlId, &bStyle);
-  int iCmdShow;
+  int32_t iCmdShow;
 
   if (uiCtrlId == 0 || hWndPB == nullptr) {
     hb_retl(false);
@@ -603,7 +603,7 @@ HB_FUNC(ADDTOOLTIPEX) /* changed by MAG */
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   auto pData = hb_getWvwData();
 
-  int iStyle = TTS_ALWAYSTIP;
+  int32_t iStyle = TTS_ALWAYSTIP;
   INITCOMMONCONTROLSEX icex{};
   TOOLINFO ti{};
 
@@ -759,7 +759,7 @@ HB_FUNC(OPENIMAGE)
 {
   auto cFileName = hb_parc(1);
   BOOL lString = HB_ISNIL(2) ? 0 : hb_parl(2);
-  int iFileSize;
+  int32_t iFileSize;
   FILE *fp;
   /* IPicture * pPic; */
   LPPICTURE pPic = nullptr;
@@ -984,7 +984,7 @@ HB_FUNC(REDRAWWINDOW)
  */
 HB_FUNC(CREATEFONT)
 {
-  int fnWeight = HB_ISNIL(4) ? 0 : hb_parni(4);
+  int32_t fnWeight = HB_ISNIL(4) ? 0 : hb_parni(4);
   DWORD fdwCharSet = HB_ISNIL(5) ? 0 : hb_parnl(5);
   DWORD fdwItalic = HB_ISNIL(6) ? 0 : hb_parnl(6);
   DWORD fdwUnderline = HB_ISNIL(7) ? 0 : hb_parnl(7);
@@ -1139,9 +1139,9 @@ HB_FUNC(SETBITMAPRESOURCEID)
   auto hBitmap = reinterpret_cast<HBITMAP>(HB_PARHANDLE(3));
   auto uiBitmap = static_cast<UINT>(hb_parni(4));
   HWND hWndToolbar = pWindowData->hToolBar;
-  int iNewBitmap;
+  int32_t iNewBitmap;
   auto iBitmapType = hb_parni(2);
-  int iOffset;
+  int32_t iOffset;
 
   switch (iBitmapType) {
   case 0:
@@ -1192,8 +1192,8 @@ HB_FUNC(DRAWBITMAP)
   DWORD dwraster = HB_ISNIL(3) ? SRCCOPY : hb_parnl(3);
   auto hBitmap = reinterpret_cast<HBITMAP>(HB_PARHANDLE(2));
   BITMAP bitmap;
-  int nWidthDest = (hb_pcount() >= 5 && !HB_ISNIL(6)) ? hb_parni(6) : 0;
-  int nHeightDest = (hb_pcount() >= 6 && !HB_ISNIL(7)) ? hb_parni(7) : 0;
+  int32_t nWidthDest = (hb_pcount() >= 5 && !HB_ISNIL(6)) ? hb_parni(6) : 0;
+  int32_t nHeightDest = (hb_pcount() >= 6 && !HB_ISNIL(7)) ? hb_parni(7) : 0;
 
   SelectObject(hDCmem, hBitmap);
   GetObject(hBitmap, sizeof(BITMAP), static_cast<LPVOID>(&bitmap));
@@ -1441,7 +1441,7 @@ HB_FUNC(WVW_LOADPICTURE)
   IPicture *iPicture = hb_gt_wvwLoadPicture(hb_parcx(2));
 
   if (p && iPicture) {
-    int iSlot = hb_parni(1) - 1;
+    int32_t iSlot = hb_parni(1) - 1;
 
     if (p->s_sApp->iPicture[iSlot]) {
       hb_gt_wvwDestroyPicture(p->s_sApp->iPicture[iSlot]);
@@ -1467,7 +1467,7 @@ HB_FUNC(WVW_LOADFONT)
     UINT usWinNum = p->s_usNumWindows - 1;
     auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
     LOGFONT logfont;
-    int iSlot = hb_parni(1) - 1;
+    int32_t iSlot = hb_parni(1) - 1;
 
     logfont.lfEscapement = HB_ISNIL(11) ? 0 : (hb_parni(11) * 10);
     logfont.lfOrientation = 0;
@@ -1502,10 +1502,10 @@ HB_FUNC(WVW_LOADFONT)
 HB_FUNC(WVW_LOADPEN)
 {
   auto p = hb_getWvwData();
-  int iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni(1) - 1;
 
-  int iPenStyle = HB_ISNIL(2) ? 0 : hb_parni(2);
-  int iPenWidth = HB_ISNIL(3) ? 0 : hb_parni(3);
+  int32_t iPenStyle = HB_ISNIL(2) ? 0 : hb_parni(2);
+  int32_t iPenWidth = HB_ISNIL(3) ? 0 : hb_parni(3);
   auto crColor = static_cast<COLORREF>(HB_ISNIL(4) ? RGB(0, 0, 0) : hb_parnl(4));
 
   auto hPen = CreatePen(iPenStyle, iPenWidth, crColor);
@@ -1685,7 +1685,7 @@ HB_FUNC(WVW_FILLRECTANGLE)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto p = hb_getWvwData();
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int iTop, iLeft, iBottom, iRight;
+  int32_t iTop, iLeft, iBottom, iRight;
   auto usTop = static_cast<uint16_t>(hb_parni(2));
   auto usLeft = static_cast<uint16_t>(hb_parni(3));
   auto usBottom = static_cast<uint16_t>(hb_parni(4));
@@ -1700,10 +1700,10 @@ HB_FUNC(WVW_FILLRECTANGLE)
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
   }
 
-  int iOffTop = !HB_ISNIL(9) ? hb_parvni(9, 1) : 0;
-  int iOffLeft = !HB_ISNIL(9) ? hb_parvni(9, 2) : 0;
-  int iOffBottom = !HB_ISNIL(9) ? hb_parvni(9, 3) : 0;
-  int iOffRight = !HB_ISNIL(9) ? hb_parvni(9, 4) : 0;
+  int32_t iOffTop = !HB_ISNIL(9) ? hb_parvni(9, 1) : 0;
+  int32_t iOffLeft = !HB_ISNIL(9) ? hb_parvni(9, 2) : 0;
+  int32_t iOffBottom = !HB_ISNIL(9) ? hb_parvni(9, 3) : 0;
+  int32_t iOffRight = !HB_ISNIL(9) ? hb_parvni(9, 4) : 0;
 
   POINT xy = hb_gt_wvwGetXYFromColRow(pWindowData, usLeft, usTop);
   iTop = bTight ? xy.y + 2 : xy.y;
@@ -1812,7 +1812,7 @@ HB_FUNC(WVW_SETPEN)
   }
 
   auto iPenStyle = hb_parni(1);
-  int iPenWidth = HB_ISNIL(2) ? 0 : hb_parni(2);
+  int32_t iPenWidth = HB_ISNIL(2) ? 0 : hb_parni(2);
   COLORREF crColor = HB_ISNIL(3) ? RGB(0, 0, 0) : static_cast<COLORREF>(hb_parnl(3));
 
   auto hPen = CreatePen(iPenStyle, iPenWidth, crColor);
@@ -1884,7 +1884,7 @@ HB_FUNC(WVW__MAKEDLGTEMPLATE)
 {
   WORD *p, *pdlgtemplate;
   auto nItems = static_cast<WORD>(hb_parvni(1, 4));
-  int nchar;
+  int32_t nchar;
 
   pdlgtemplate = p = static_cast<PWORD>(LocalAlloc(LPTR, 65534));
 
@@ -1988,7 +1988,7 @@ HB_FUNC(WVW_SHOWWINDOW)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int iCmdShow = HB_ISNUM(2) ? hb_parni(2) : SW_SHOWNORMAL;
+  int32_t iCmdShow = HB_ISNUM(2) ? hb_parni(2) : SW_SHOWNORMAL;
 
   ShowWindow(pWindowData->hWnd, iCmdShow);
 }
@@ -2014,8 +2014,8 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
   PHB_DYNS pExecSym;
   auto p = hb_getWvwData();
   HWND hDlg = nullptr;
-  int iIndex;
-  int iType = 0;
+  int32_t iIndex;
+  int32_t iType = 0;
   auto iResource = hb_parni(4);
 
   /* check if we still have room for a new dialog */
@@ -2104,9 +2104,9 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
   PHB_ITEM pFunc = nullptr;
   PHB_DYNS pExecSym;
   auto p = hb_getWvwData();
-  int iIndex;
+  int32_t iIndex;
   auto iResource = hb_parni(4);
-  int iResult = 0;
+  int32_t iResult = 0;
   HWND hParent = HB_ISNIL(5) ? p->s_pWindows[0]->hWnd : reinterpret_cast<HWND>(HB_PARHANDLE(5));
 
   /* check if we still have room for a new dialog */
@@ -2213,15 +2213,15 @@ HB_FUNC(WVW_SAVESCREEN)
   }
 
   POINT xy = hb_gt_wvwGetXYFromColRow(pWindowData, usLeft, usTop);
-  int iTop = xy.y;
-  int iLeft = xy.x;
+  int32_t iTop = xy.y;
+  int32_t iLeft = xy.x;
 
   xy = hb_gt_wvwGetXYFromColRow(pWindowData, usRight + 1, usBottom + 1);
-  int iBottom = xy.y - 1;
-  int iRight = xy.x - 1;
+  int32_t iBottom = xy.y - 1;
+  int32_t iRight = xy.x - 1;
 
-  int iWidth = iRight - iLeft + 1;
-  int iHeight = iBottom - iTop + 1;
+  int32_t iWidth = iRight - iLeft + 1;
+  int32_t iHeight = iBottom - iTop + 1;
 
   auto hBmp = CreateCompatibleBitmap(pWindowData->hdc, iWidth, iHeight);
 
@@ -2260,15 +2260,15 @@ HB_FUNC(WVW_RESTSCREEN)
   }
 
   POINT xy = hb_gt_wvwGetXYFromColRow(pWindowData, usLeft, usTop);
-  int iTop = xy.y;
-  int iLeft = xy.x;
+  int32_t iTop = xy.y;
+  int32_t iLeft = xy.x;
 
   xy = hb_gt_wvwGetXYFromColRow(pWindowData, usRight + 1, usBottom + 1);
-  int iBottom = xy.y - 1;
-  int iRight = xy.x - 1;
+  int32_t iBottom = xy.y - 1;
+  int32_t iRight = xy.x - 1;
 
-  int iWidth = iRight - iLeft + 1;
-  int iHeight = iBottom - iTop + 1;
+  int32_t iWidth = iRight - iLeft + 1;
+  int32_t iHeight = iBottom - iTop + 1;
 
   auto hBmp = static_cast<HBITMAP>(SelectObject(pWindowData->hCompDC, reinterpret_cast<HBITMAP>(hb_parvnl(6, 3))));
   if (hBmp) {
