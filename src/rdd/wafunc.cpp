@@ -315,7 +315,7 @@ HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int32_t *iArea)
 }
 
 // Select a WorkArea by the symbol name.
-HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
+HB_ERRCODE hb_rddSelectWorkAreaSymbol(HB_SYMB *pSymAlias)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaSymbol(%p)", static_cast<void*>(pSymAlias)));
@@ -404,7 +404,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szAlias)
 }
 
 // Obtain the current value of a field.
-HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFieldGet(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
@@ -428,7 +428,7 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 }
 
 // Assign a value to a field.
-HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFieldPut(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
@@ -452,7 +452,7 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 }
 
 // Obtain the current value of a field.
-HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetFieldValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
@@ -481,7 +481,7 @@ HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 }
 
 // Assign a value to a field.
-HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddPutFieldValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));

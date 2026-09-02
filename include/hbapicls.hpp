@@ -132,12 +132,12 @@ extern void hb_clsReleaseAll(void);
 extern void hb_clsIsClassRef(void);
 extern HB_BOOL hb_clsHasDestructor(uint16_t uiClass);
 // returns the real method symbol for given stack symbol
-extern PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol);
+extern HB_SYMB *hb_clsMethodSym(PHB_ITEM pBaseSymbol);
 
 // returns the method pointer of an object class
-extern PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pSymMsg, PHB_STACK_STATE pStack);
+extern HB_SYMB *hb_objGetMethod(PHB_ITEM pObject, HB_SYMB *pSymMsg, PHB_STACK_STATE pStack);
 // create object variable reference
-extern HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack);
+extern HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack);
 extern HB_BOOL hb_objHasOperator(PHB_ITEM pObject, uint16_t uiOperator);
 extern HB_BOOL hb_objOperatorCall(uint16_t uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2);
 extern void hb_objDestructorCall(PHB_ITEM pObject);
@@ -155,7 +155,7 @@ extern void hb_mthAddTime(HB_ULONG ulClockTicks); // profiler from classes.c
 extern HB_EXPORT const char *hb_clsName(uint16_t uiClass);
 extern HB_EXPORT const char *hb_clsFuncName(uint16_t uiClass);
 extern HB_EXPORT const char *hb_clsMethodName(uint16_t uiClass, uint16_t uiMethod);
-extern HB_EXPORT PHB_SYMB hb_clsFuncSym(uint16_t uiClass);
+extern HB_EXPORT HB_SYMB *hb_clsFuncSym(uint16_t uiClass);
 // is a class handle inherited from szParentName Class ?
 extern HB_EXPORT HB_BOOL hb_clsIsParent(uint16_t uiClass, const char *szParentName);
 extern HB_EXPORT HB_SIZE hb_clsGetVarIndex(uint16_t uiClass, PHB_DYNS pVarSym);

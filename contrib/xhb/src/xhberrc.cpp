@@ -59,7 +59,7 @@
 
 #include <windows.h>
 
-static PHB_SYMB s_pFuncSymbol = nullptr;
+static HB_SYMB *s_pFuncSymbol = nullptr;
 static PHB_DYNS s_pHbCStructDyn = nullptr;
 static PHB_DYNS s_pBufferMsg = nullptr;
 
@@ -117,7 +117,7 @@ HB_FUNC(SETUNHANDLEDEXCEPTIONFILTER)
 #if defined(HB_OS_WIN)
   LPTOP_LEVEL_EXCEPTION_FILTER pDefaultHandler = nullptr;
   auto pFuncItm = hb_param(1, Harbour::Item::ANY);
-  PHB_SYMB pFuncSym = s_pFuncSymbol;
+  HB_SYMB *pFuncSym = s_pFuncSymbol;
 
   if (pFuncItm && pFuncItm->isSymbol()) {
     s_pFuncSymbol = hb_itemGetSymbol(pFuncItm);

@@ -1051,7 +1051,7 @@ HB_FUNC(HB_THREADSTART)
   }
 
   const char *szFuncName = nullptr;
-  PHB_SYMB pSymbol = nullptr;
+  HB_SYMB *pSymbol = nullptr;
 
   if (pStart) {
     if (pStart->isString()) {

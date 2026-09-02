@@ -97,7 +97,7 @@ extern HB_EXPORT HB_MAXINT    hb_itemGetNInt   ( PHB_ITEM pItem );
 extern HB_EXPORT void         hb_itemGetNLen   ( PHB_ITEM pItem, int32_t * piWidth, int32_t * piDec );
 extern HB_EXPORT void *       hb_itemGetPtr    ( PHB_ITEM pItem );
 extern HB_EXPORT void *       hb_itemGetPtrGC  ( PHB_ITEM pItem, const HB_GC_FUNCS * pFuncs );
-extern HB_EXPORT PHB_SYMB     hb_itemGetSymbol ( PHB_ITEM pItem );
+extern HB_EXPORT HB_SYMB *    hb_itemGetSymbol ( PHB_ITEM pItem );
 extern HB_EXPORT PHB_ITEM     hb_itemNew       ( PHB_ITEM pNull );
 extern HB_EXPORT void         hb_itemInit      ( PHB_ITEM pItem );
 extern HB_EXPORT uint16_t    hb_itemPCount    ( void );
@@ -130,7 +130,7 @@ extern HB_EXPORT PHB_ITEM     hb_itemPutNLLen  ( PHB_ITEM pItem, long lNumber, i
 extern HB_EXPORT PHB_ITEM     hb_itemPutNumType( PHB_ITEM pItem, double dNumber, int32_t iDec, int32_t iType1, int32_t iType2 );
 extern HB_EXPORT PHB_ITEM     hb_itemPutPtr    ( PHB_ITEM pItem, void * pValue );
 extern HB_EXPORT PHB_ITEM     hb_itemPutPtrGC  ( PHB_ITEM pItem, void * pValue );
-extern HB_EXPORT PHB_ITEM     hb_itemPutSymbol ( PHB_ITEM pItem, PHB_SYMB pSym );
+extern HB_EXPORT PHB_ITEM     hb_itemPutSymbol ( PHB_ITEM pItem, HB_SYMB *pSym );
 extern HB_EXPORT PHB_ITEM     hb_itemPutNil    ( PHB_ITEM pItem );
 extern HB_EXPORT HB_BOOL      hb_itemRelease   ( PHB_ITEM pItem );
 extern HB_EXPORT PHB_ITEM     hb_itemReturn    ( PHB_ITEM pItem );

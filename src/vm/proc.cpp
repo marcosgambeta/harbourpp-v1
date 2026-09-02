@@ -88,7 +88,7 @@ HB_FUNC(PROCLINE)
 HB_FUNC(PROCFILE)
 {
 #ifndef HB_CLP_STRICT
-  PHB_SYMB pSym = nullptr;
+  HB_SYMB *pSym = nullptr;
 
   if (HB_ISSYMBOL(1)) {
     pSym = hb_param(1, Harbour::Item::SYMBOL)->getSymbol();
@@ -188,7 +188,7 @@ HB_BOOL hb_procinfo(int32_t iLevel, char *szName, uint16_t *puiLine, char *szFil
     auto pBase = hb_stackItem(nOffset);
     auto pSelf = hb_stackItem(nOffset + 1);
 
-    PHB_SYMB pSym = pBase->symbolValue();
+    HB_SYMB *pSym = pBase->symbolValue();
 
     if (szName != nullptr) {
       szName[0] = '\0';

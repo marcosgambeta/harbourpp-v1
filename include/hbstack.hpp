@@ -292,7 +292,7 @@ extern HB_EXPORT int32_t         hb_stackCallDepth( void );
 extern HB_EXPORT void        hb_stackBaseProcInfo( char * szProcName, uint16_t * puiProcLine ); /* get current .prg function name and line number */
 
 extern HB_EXPORT HB_ISIZ     hb_stackBaseProcOffset( int32_t iLevel );
-extern HB_EXPORT HB_ISIZ     hb_stackBaseSymbolOffset( PHB_SYMB pSymbol );
+extern HB_EXPORT HB_ISIZ     hb_stackBaseSymbolOffset( HB_SYMB *pSymbol );
 extern           void        hb_stackDispCall( void );
 
 /* thread specific data */

@@ -826,7 +826,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 
   if (pBlock) {
     if (pBlock->isPointer()) {
-      hb_vmPushSymbol(hb_dynsymSymbol(((PHB_SYMB)pBlock)->pDynSym));
+      hb_vmPushSymbol(hb_dynsymSymbol(((HB_SYMB *)pBlock)->pDynSym));
       hb_vmPushNil();
     } else {
       hb_vmPushEvalSym();

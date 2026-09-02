@@ -1237,7 +1237,7 @@ HB_ISIZ hb_stackBaseProcOffset(int32_t iLevel)
   }
 }
 
-HB_ISIZ hb_stackBaseSymbolOffset(PHB_SYMB pSymbol)
+HB_ISIZ hb_stackBaseSymbolOffset(HB_SYMB *pSymbol)
 {
   HB_STACK_TLS_PRELOAD
   HB_ISIZ nOffset = hb_stack.pBase - hb_stack.pItems;

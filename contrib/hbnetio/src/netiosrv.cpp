@@ -110,7 +110,7 @@ struct _HB_CONSRV
    HB_BOOL        stop;
    HB_BOOL        rpc;
    HB_BOOL        login;
-   PHB_SYMB       rpcFunc;
+   HB_SYMB *      rpcFunc;
    PHB_ITEM       rpcFilter;
    PHB_ITEM       mutex;
    PHB_CONSTREAM  streams;

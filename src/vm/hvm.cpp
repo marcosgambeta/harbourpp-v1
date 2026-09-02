@@ -181,7 +181,7 @@ static void hb_vmMacroPushIndex();
 // Database
 
 // select the workarea using a given item or a substituted value
-static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM, PHB_SYMB);
+static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM, HB_SYMB *);
 // swaps items on the eval stack and pops the workarea number
 static void hb_vmSwapAlias();
 
@@ -194,9 +194,9 @@ static void hb_vmFrame(uint16_t usLocals, unsigned char ucParams);
 // increases the stack pointer for the amount of locals and variable number of params supplied
 static void hb_vmVFrame(uint16_t usLocals, unsigned char ucParams);
 // sets the statics frame for a function
-static void hb_vmSFrame(PHB_SYMB pSym);
+static void hb_vmSFrame(HB_SYMB *pSym);
 // increases the global statics array to hold a PRG statics
-static void hb_vmStatics(PHB_SYMB pSym, uint16_t uiStatics);
+static void hb_vmStatics(HB_SYMB *pSym, uint16_t uiStatics);
 // mark thread static variables
 static void hb_vmInitThreadStatics(uint16_t uiCount, const uint8_t *pCode);
 // clear complex static variables
@@ -209,13 +209,13 @@ static void hb_vmStaticsRelease();
 // pushes the current workarea number
 static void hb_vmPushAlias();
 // pushes an aliased field on the eval stack
-static void hb_vmPushAliasedField(PHB_SYMB);
+static void hb_vmPushAliasedField(HB_SYMB *);
 // pushes an aliased variable on the eval stack
-static void hb_vmPushAliasedVar(PHB_SYMB);
+static void hb_vmPushAliasedVar(HB_SYMB *);
 // creates a codeblock
-static void hb_vmPushBlock(const uint8_t *pCode, PHB_SYMB pSymbols, HB_SIZE nLen);
+static void hb_vmPushBlock(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen);
 // creates a codeblock
-static void hb_vmPushBlockShort(const uint8_t *pCode, PHB_SYMB pSymbols, HB_SIZE nLen);
+static void hb_vmPushBlockShort(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen);
 // creates a macro-compiled codeblock
 static void hb_vmPushMacroBlock(const uint8_t *pCode, HB_SIZE nSize, uint16_t usParams);
 // Pushes a double constant (pcode)
@@ -242,7 +242,7 @@ static void hb_vmPushStatic(uint16_t uiStatic);
 // pushes a static by reference onto the stack
 static void hb_vmPushStaticByRef(uint16_t uiStatic);
 // pushes undeclared variable
-static void hb_vmPushVariable(PHB_SYMB pVarSymb);
+static void hb_vmPushVariable(HB_SYMB *pVarSymb);
 // pushes reference to object variable
 static void hb_vmPushObjectVarRef();
 // pushes variable parameters
@@ -265,9 +265,9 @@ static HB_BOOL hb_vmPopLogical();
 // pops the workarea number form the eval stack
 static void hb_vmPopAlias();
 // pops an aliased field from the eval stack
-static void hb_vmPopAliasedField(PHB_SYMB);
+static void hb_vmPopAliasedField(HB_SYMB *);
 // pops an aliased variable from the eval stack
-static void hb_vmPopAliasedVar(PHB_SYMB);
+static void hb_vmPopAliasedVar(HB_SYMB *);
 // pops the stack latest value onto a local
 static void hb_vmPopLocal(int32_t iLocal);
 // pops the stack latest value onto a static
@@ -351,7 +351,7 @@ static PHB_ITEM s_breakBlock = nullptr;
 static auto s_fHVMActive = false;      // is HVM ready for PCODE executing
 static auto s_fDoExitProc = true;      // execute EXIT procedures
 static int32_t s_nErrorLevel = 0;          // application exit status
-static PHB_SYMB s_pSymStart = nullptr; // start symbol of the application. MAIN() is not required
+static HB_SYMB *s_pSymStart = nullptr; // start symbol of the application. MAIN() is not required
 
 static PHB_SYMBOLS s_pSymbols = nullptr; // to hold a linked list of all different modules symbol tables
 static HB_ULONG s_ulFreeSymbols = 0;     // number of free module symbols
@@ -1128,7 +1128,7 @@ PHB_ITEM hb_vmThreadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
 #endif // HB_MT_VM
 }
 
-void hb_vmSetFunction(PHB_SYMB pOldSym, PHB_SYMB pNewSym)
+void hb_vmSetFunction(HB_SYMB *pOldSym, HB_SYMB *pNewSym)
 {
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
   HB_SYMB SymOldBuf, SymNewBuf;
@@ -1144,7 +1144,7 @@ void hb_vmSetFunction(PHB_SYMB pOldSym, PHB_SYMB pNewSym)
     uint16_t uiSymbols = pLastSymbols->uiModuleSymbols;
 
     for (uint16_t ui = 0; ui < uiSymbols; ++ui) {
-      PHB_SYMB pSym = pLastSymbols->pModuleSymbols + ui;
+      HB_SYMB *pSym = pLastSymbols->pModuleSymbols + ui;
 
       if (pSym->value.pFunPtr == pOldSym->value.pFunPtr &&
           (pSym->value.pFunPtr || strcmp(pSym->szName, pOldSym->szName) == 0)) {
@@ -1164,7 +1164,7 @@ void hb_vmSetDynFunc(PHB_DYNS pDynSym)
     uint16_t uiSymbols = pLastSymbols->uiModuleSymbols;
 
     for (uint16_t ui = 0; ui < uiSymbols; ++ui) {
-      PHB_SYMB pSym = pLastSymbols->pModuleSymbols + ui;
+      HB_SYMB *pSym = pLastSymbols->pModuleSymbols + ui;
 
       if (pSym->pDynSym == pDynSym && pDynSym->pSymbol != pSym) {
         pSym->scope.value |= HB_FS_DEFERRED;
@@ -1433,7 +1433,7 @@ int32_t hb_vmQuit(void)
   return s_nErrorLevel;
 }
 
-void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
+void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmExecute(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols)));
@@ -2754,7 +2754,7 @@ void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols)
 #if 0
             // Pops a value from the eval stack and uses it to set
             // a new value of a variable of unknown type.
-            PHB_SYMB pSymbol = pSymbols + HB_PCODE_MKUINT16(&pCode[1]);
+            HB_SYMB *pSymbol = pSymbols + HB_PCODE_MKUINT16(&pCode[1]);
 
             if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) ) {
                // If exist a memory symbol with this name use it
@@ -5478,7 +5478,7 @@ static void hb_vmPushAParams()
 // Database
 // -------------------------------
 
-static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
+static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, HB_SYMB *pField)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmSelectWorkArea(%p,%p)", static_cast<void*>(pAlias), static_cast<void*>(pField)));
@@ -5617,7 +5617,7 @@ void hb_vmProc(uint16_t uiParams)
 #endif
 #endif
 
-  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
+  HB_SYMB *pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
   HB_VM_FUNCUNREF(pSym);
   if (HB_VM_ISFUNC(pSym)) {
     HB_TRACE_PRG(("Calling: %s", pSym->szName));
@@ -5683,11 +5683,11 @@ void hb_vmDo(uint16_t uiParams)
 #endif
 
   HB_STACK_STATE sStackState;
-  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
+  HB_SYMB *pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
   auto pSelf = hb_stackSelfItem(); // NIL, OBJECT or BLOCK
 
   if (!pSelf->isNil()) { // are we sending a message ?
-    PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
+    HB_SYMB *pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
     if (pExecSym) {
       HB_VM_FUNCUNREF(pExecSym);
     }
@@ -5771,10 +5771,10 @@ void hb_vmSend(uint16_t uiParams)
 #endif
 
   HB_STACK_STATE sStackState;
-  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
+  HB_SYMB *pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
   auto pSelf = hb_stackSelfItem(); // NIL, OBJECT or BLOCK
 
-  PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
+  HB_SYMB *pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
   if (pExecSym) {
     HB_VM_FUNCUNREF(pExecSym);
   }
@@ -5812,7 +5812,7 @@ static void hb_vmPushObjectVarRef()
   HB_STACK_TLS_PRELOAD
   HB_STACK_STATE sStackState;
   PHB_ITEM pItem = hb_stackNewFrame(&sStackState, 0); // procedure name
-  PHB_SYMB pSym = pItem->symbolValue();
+  HB_SYMB *pSym = pItem->symbolValue();
   if (!hb_objGetVarRef(hb_stackSelfItem(), pSym, &sStackState) && hb_vmRequestQuery() == 0) {
     hb_errRT_BASE_SubstR(EG_NOVARMETHOD, 1005, nullptr, pSym->szName + (pSym->szName[0] == '_' ? 1 : 0), 1,
                          hb_stackSelfItem());
@@ -6239,7 +6239,7 @@ static void hb_vmVFrame(uint16_t usLocals, unsigned char ucParams)
   }
 }
 
-static void hb_vmSFrame(PHB_SYMB pSym) // sets the statics frame for a function
+static void hb_vmSFrame(HB_SYMB *pSym) // sets the statics frame for a function
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmSFrame(%p)", static_cast<void*>(pSym)));
@@ -6251,7 +6251,7 @@ static void hb_vmSFrame(PHB_SYMB pSym) // sets the statics frame for a function
   hb_stackSetStaticsBase(pSym->value.pStaticsBase);
 }
 
-static void hb_vmStatics(PHB_SYMB pSym,
+static void hb_vmStatics(HB_SYMB *pSym,
                          uint16_t uiStatics) // initializes the global aStatics array or redimensions it
 {
 #if 0
@@ -6685,7 +6685,7 @@ void hb_vmPushStringPcode(const char *szText, HB_SIZE nLength)
       const_cast<char *>((nLength <= 1 ? hb_szAscii[static_cast<unsigned char>(szText[0])] : szText)));
 }
 
-void hb_vmPushSymbol(PHB_SYMB pSym)
+void hb_vmPushSymbol(HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushSymbol(%p)", static_cast<void*>(pSym)));
@@ -6731,7 +6731,7 @@ void hb_vmPushEvalSym(void)
 // +4    -> start of table with referenced local variables
 //
 // NOTE: pCode points to static memory
-static void hb_vmPushBlock(const uint8_t *pCode, PHB_SYMB pSymbols, HB_SIZE nLen)
+static void hb_vmPushBlock(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushBlock(%p,%p,%" HB_PFS "u)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols), nLen));
@@ -6765,7 +6765,7 @@ static void hb_vmPushBlock(const uint8_t *pCode, PHB_SYMB pSymbols, HB_SIZE nLen
 //  0    -> start of table with referenced local variables
 //
 // NOTE: pCode points to static memory
-static void hb_vmPushBlockShort(const uint8_t *pCode, PHB_SYMB pSymbols, HB_SIZE nLen)
+static void hb_vmPushBlockShort(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushBlockShort(%p,%p,%" HB_PFS "u)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols), nLen));
@@ -6830,7 +6830,7 @@ static void hb_vmPushAlias()
 // It pops the last item from the stack to use it to select a workarea
 // and next pushes the value of a given field
 // (for performance reason it replaces alias value with field value)
-static void hb_vmPushAliasedField(PHB_SYMB pSym)
+static void hb_vmPushAliasedField(HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushAliasedField(%p)", static_cast<void*>(pSym)));
@@ -6853,7 +6853,7 @@ static void hb_vmPushAliasedField(PHB_SYMB pSym)
 // (for performance reason it replaces alias value with field value)
 // This is used in the following context:
 // (any_alias)->variable
-static void hb_vmPushAliasedVar(PHB_SYMB pSym)
+static void hb_vmPushAliasedVar(HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushAliasedVar(%p)", static_cast<void*>(pSym)));
@@ -6966,7 +6966,7 @@ static void hb_vmPushStaticByRef(uint16_t uiStatic)
   hb_gcRefInc(pBase->arrayValue());
 }
 
-static void hb_vmPushVariable(PHB_SYMB pVarSymb)
+static void hb_vmPushVariable(HB_SYMB *pVarSymb)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("(hb_vmPushVariable)"));
@@ -7082,7 +7082,7 @@ static void hb_vmPopAlias()
 
 // Pops the alias to use it to select a workarea and next pops a value
 // into a given field
-static void hb_vmPopAliasedField(PHB_SYMB pSym)
+static void hb_vmPopAliasedField(HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPopAliasedField(%p)", static_cast<void*>(pSym)));
@@ -7104,7 +7104,7 @@ static void hb_vmPopAliasedField(PHB_SYMB pSym)
 // into either a field or a memvar based on the alias value
 // This is used in the following context:
 // (any_alias)->variable
-static void hb_vmPopAliasedVar(PHB_SYMB pSym)
+static void hb_vmPopAliasedVar(HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPopAliasedVar(%p)", static_cast<void*>(pSym)));
@@ -7186,7 +7186,7 @@ static void hb_vmPopStatic(uint16_t uiStatic)
 
 // Functions to manage module symbols
 
-PHB_SYMB hb_vmGetRealFuncSym(PHB_SYMB pSym)
+HB_SYMB *hb_vmGetRealFuncSym(HB_SYMB *pSym)
 {
   if (pSym && !(pSym->scope.value & HB_FS_LOCAL)) {
     pSym = pSym->pDynSym && ((pSym->pDynSym->pSymbol->scope.value & HB_FS_LOCAL) ||
@@ -7216,7 +7216,7 @@ void hb_vmUnlockModuleSymbols(void)
 #endif // HB_MT_VM
 }
 
-const char *hb_vmFindModuleSymbolName(PHB_SYMB pSym)
+const char *hb_vmFindModuleSymbolName(HB_SYMB *pSym)
 {
   if (pSym) {
     PHB_SYMBOLS pLastSymbols = s_pSymbols;
@@ -7231,7 +7231,7 @@ const char *hb_vmFindModuleSymbolName(PHB_SYMB pSym)
   return nullptr;
 }
 
-HB_BOOL hb_vmFindModuleSymbols(PHB_SYMB pSym, PHB_SYMB *pSymbols, uint16_t *puiSymbols)
+HB_BOOL hb_vmFindModuleSymbols(HB_SYMB *pSym, HB_SYMB **pSymbols, uint16_t *puiSymbols)
 {
   if (pSym) {
     PHB_SYMBOLS pLastSymbols = s_pSymbols;
@@ -7258,9 +7258,9 @@ HB_BOOL hb_vmFindModuleSymbols(PHB_SYMB pSym, PHB_SYMB *pSymbols, uint16_t *puiS
   return false;
 }
 
-PHB_SYMB hb_vmFindFuncSym(const char *szFuncName, void *hDynLib)
+HB_SYMB *hb_vmFindFuncSym(const char *szFuncName, void *hDynLib)
 {
-  static PHB_SYMB pFuncSym = nullptr;
+  static HB_SYMB *pFuncSym = nullptr;
 
   if (szFuncName != nullptr) {
     PHB_SYMBOLS pSymbols = s_pSymbols;
@@ -7268,7 +7268,7 @@ PHB_SYMB hb_vmFindFuncSym(const char *szFuncName, void *hDynLib)
     while (pSymbols) {
       if (pSymbols->fActive && pSymbols->hDynLib == hDynLib) {
         for (uint16_t ui = 0; ui < pSymbols->uiModuleSymbols; ++ui) {
-          PHB_SYMB pSymbol = &pSymbols->pModuleSymbols[ui];
+          HB_SYMB *pSymbol = &pSymbols->pModuleSymbols[ui];
 
           if ((pSymbol->scope.value & HB_FS_LOCAL) != 0 && hb_stricmp(pSymbol->szName, szFuncName) == 0) {
             if ((pSymbol->scope.value & HB_FS_STATIC) == 0) {
@@ -7295,7 +7295,7 @@ static void hb_vmStaticsClear()
 
   while (pLastSymbols) {
     if (pLastSymbols->uiStaticsOffset) {
-      PHB_SYMB pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
+      HB_SYMB *pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
       PHB_ITEM pStatics = HB_SYM_STATICSBASE(pSym);
       if (pStatics) {
         HB_SIZE nLen = hb_arrayLen(pStatics);
@@ -7318,7 +7318,7 @@ static void hb_vmStaticsRelease()
 
   while (pLastSymbols) {
     if (pLastSymbols->uiStaticsOffset) {
-      PHB_SYMB pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
+      HB_SYMB *pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
       PHB_ITEM pStatics = HB_SYM_STATICSBASE(pSym);
       if (pStatics) {
         hb_itemRelease(pStatics);
@@ -7337,7 +7337,7 @@ static HB_SIZE hb_vmStaticsCount()
     PHB_SYMBOLS pLastSymbols = s_pSymbols;
     while (pLastSymbols) {
       if (pLastSymbols->uiStaticsOffset) {
-        PHB_SYMB pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
+        HB_SYMB *pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
         PHB_ITEM pStatics = HB_SYM_STATICSBASE(pSym);
         if (pStatics) {
           nStatics += hb_arrayLen(pStatics);
@@ -7362,7 +7362,7 @@ static PHB_ITEM hb_vmStaticsArray()
     HB_SIZE nOffset = 0;
     while (pLastSymbols) {
       if (pLastSymbols->uiStaticsOffset) {
-        PHB_SYMB pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
+        HB_SYMB *pSym = pLastSymbols->pModuleSymbols + pLastSymbols->uiStaticsOffset;
         PHB_ITEM pStatics = HB_SYM_STATICSBASE(pSym);
         if (pStatics) {
           HB_SIZE nLen = hb_arrayLen(pStatics);
@@ -7379,7 +7379,7 @@ static PHB_ITEM hb_vmStaticsArray()
   return pArray;
 }
 
-static PHB_SYMBOLS hb_vmFindFreeModule(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID)
+static PHB_SYMBOLS hb_vmFindFreeModule(HB_SYMB *pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmFindFreeModule(%p,%hu,%s,%lu)", static_cast<void*>(pSymbols), uiSymbols, szModuleName, ulID));
@@ -7391,7 +7391,7 @@ static PHB_SYMBOLS hb_vmFindFreeModule(PHB_SYMB pSymbols, uint16_t uiSymbols, co
     while (pLastSymbols) {
       if (!pLastSymbols->fActive && pLastSymbols->ulID == ulID && pLastSymbols->uiModuleSymbols == uiSymbols &&
           pLastSymbols->szModuleName != nullptr && strcmp(pLastSymbols->szModuleName, szModuleName) == 0) {
-        PHB_SYMB pModuleSymbols = pLastSymbols->pModuleSymbols;
+        HB_SYMB *pModuleSymbols = pLastSymbols->pModuleSymbols;
         uint16_t ui;
 
         for (ui = 0; ui < uiSymbols; ++ui) {
@@ -7423,7 +7423,7 @@ void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols)
   if (pSymbols->fActive && hb_vmLockModuleSymbols()) {
     if (pSymbols->fActive) {
       for (uint16_t ui = 0; ui < pSymbols->uiModuleSymbols; ++ui) {
-        PHB_SYMB pSymbol = &pSymbols->pModuleSymbols[ui];
+        HB_SYMB *pSymbol = &pSymbols->pModuleSymbols[ui];
 
         // do not overwrite already initialized statics' frame
         if (ui == 0 || ui != pSymbols->uiStaticsOffset || !HB_SYM_STATICSBASE(pSymbol)) {
@@ -7577,7 +7577,7 @@ void hb_vmExitSymbolGroup(void *hDynLib)
   }
 }
 
-PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID,
+PHB_SYMBOLS hb_vmRegisterSymbols(HB_SYMB *pModuleSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID,
                                  HB_BOOL fDynLib, HB_BOOL fClone, HB_BOOL fOverLoad)
 {
 #if 0
@@ -7605,7 +7605,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, uint16_t uiSymbols, co
         nSize += strlen(pModuleSymbols[ui].szName) + 1;
       }
       auto buffer = static_cast<char *>(memcpy(hb_xgrab(nSize), pModuleSymbols, nSymSize));
-      pModuleSymbols = reinterpret_cast<PHB_SYMB>(buffer);
+      pModuleSymbols = reinterpret_cast<HB_SYMB *>(buffer);
       for (ui = 0; ui < uiSymbols; ui++) {
         buffer += nSymSize;
         nSymSize = strlen(pModuleSymbols[ui].szName) + 1;
@@ -7639,7 +7639,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, uint16_t uiSymbols, co
   }
 
   for (ui = 0; ui < uiSymbols; ui++) { // register each public symbol on the dynamic symbol table
-    PHB_SYMB pSymbol = pNewSymbols->pModuleSymbols + ui;
+    HB_SYMB *pSymbol = pNewSymbols->pModuleSymbols + ui;
 
     bool fStatics = (pSymbol->scope.value & HB_FS_INITEXIT) == HB_FS_INITEXIT ||
                     (fRecycled && ui != 0 && ui == pNewSymbols->uiStaticsOffset && HB_SYM_STATICSBASE(pSymbol));
@@ -7736,7 +7736,7 @@ static void hb_vmVerifySymbols(PHB_ITEM pArray)
     uint16_t uiSymbols = pLastSymbols->uiModuleSymbols;
 
     for (uint16_t ui = 0; ui < uiSymbols; ++ui) {
-      PHB_SYMB pSym = pLastSymbols->pModuleSymbols + ui;
+      HB_SYMB *pSym = pLastSymbols->pModuleSymbols + ui;
 
       if (pSym->pDynSym && hb_dynsymFind(pSym->szName) != pSym->pDynSym) {
         char szText[256];
@@ -7771,7 +7771,7 @@ static void hb_vmVerifyPCodeVersion(const char *szModuleName, uint16_t uiPCodeVe
 
 // module symbols initialization with extended information
 
-PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiModuleSymbols, const char *szModuleName, HB_ULONG ulID,
+HB_SYMB *hb_vmProcessSymbols(HB_SYMB *pSymbols, uint16_t uiModuleSymbols, const char *szModuleName, HB_ULONG ulID,
                              uint16_t uiPCodeVer)
 {
 #if 0
@@ -7783,7 +7783,7 @@ PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiModuleSymbols, const 
       ->pModuleSymbols;
 }
 
-PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, uint16_t uiModuleSymbols, const char *szModuleName,
+HB_SYMB *hb_vmProcessDynLibSymbols(HB_SYMB *pSymbols, uint16_t uiModuleSymbols, const char *szModuleName,
                                    HB_ULONG ulID, uint16_t uiPCodeVer)
 {
 #if 0
@@ -8584,7 +8584,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
   auto fResult = false;
   *pResult = nullptr;
   if (s_fHVMActive) {
-    PHB_SYMB pSymbol = nullptr;
+    HB_SYMB *pSymbol = nullptr;
 
     if (pItem->isString()) {
       auto pDynSym = hb_dynsymFindName(pItem->stringValue());
@@ -9069,7 +9069,7 @@ void hb_xvmVFrame(int32_t iLocals, int32_t iParams)
   hb_vmVFrame(static_cast<uint16_t>(iLocals), static_cast<unsigned char>(iParams));
 }
 
-void hb_xvmSFrame(PHB_SYMB pSymbol)
+void hb_xvmSFrame(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmSFrame(%p)", static_cast<void*>(pSymbol)));
@@ -9157,7 +9157,7 @@ void hb_xvmRetInt(HB_LONG lValue)
   hb_itemPutNL(hb_stackReturnItem(), lValue);
 }
 
-void hb_xvmStatics(PHB_SYMB pSymbol, uint16_t uiStatics)
+void hb_xvmStatics(HB_SYMB *pSymbol, uint16_t uiStatics)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmStatics(%p,%hu)", static_cast<void*>(pSymbol), uiStatics));
@@ -9175,7 +9175,7 @@ void hb_xvmThreadStatics(uint16_t uiStatics, const uint8_t *statics)
   hb_vmInitThreadStatics(uiStatics, statics);
 }
 
-void hb_xvmParameter(PHB_SYMB pSymbol, int32_t iParams)
+void hb_xvmParameter(HB_SYMB *pSymbol, int32_t iParams)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmParameter(%p,%d)", static_cast<void*>(pSymbol), iParams));
@@ -9267,7 +9267,7 @@ void hb_xvmPopStatic(uint16_t uiStatic)
   hb_vmPopStatic(uiStatic);
 }
 
-HB_BOOL hb_xvmPushVariable(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPushVariable(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushVariable(%p)", static_cast<void*>(pSymbol)));
@@ -9278,7 +9278,7 @@ HB_BOOL hb_xvmPushVariable(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPopVariable(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPopVariable(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPopVariable(%p)", static_cast<void*>(pSymbol)));
@@ -9296,7 +9296,7 @@ HB_BOOL hb_xvmPopVariable(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-void hb_xvmPushBlockShort(const uint8_t *pCode, PHB_SYMB pSymbols)
+void hb_xvmPushBlockShort(const uint8_t *pCode, HB_SYMB *pSymbols)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushBlockShort(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols)));
@@ -9305,7 +9305,7 @@ void hb_xvmPushBlockShort(const uint8_t *pCode, PHB_SYMB pSymbols)
   hb_vmPushBlockShort(pCode, pSymbols, false);
 }
 
-void hb_xvmPushBlock(const uint8_t *pCode, PHB_SYMB pSymbols)
+void hb_xvmPushBlock(const uint8_t *pCode, HB_SYMB *pSymbols)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushBlock(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols)));
@@ -9324,7 +9324,7 @@ void hb_xvmPushSelf(void)
   hb_vmPush(hb_stackSelfItem());
 }
 
-void hb_xvmPushFuncSymbol(PHB_SYMB pSym)
+void hb_xvmPushFuncSymbol(HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushFuncSymbol(%p)", static_cast<void*>(pSym)));
@@ -9372,7 +9372,7 @@ HB_BOOL hb_xvmSwapAlias(void)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPushField(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPushField(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushField(%p)", static_cast<void*>(pSymbol)));
@@ -9394,7 +9394,7 @@ HB_BOOL hb_xvmPushAlias(void)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPushAliasedField(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPushAliasedField(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushAliasedField(%p)", static_cast<void*>(pSymbol)));
@@ -9405,7 +9405,7 @@ HB_BOOL hb_xvmPushAliasedField(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPushAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
+HB_BOOL hb_xvmPushAliasedFieldExt(HB_SYMB *pAlias, HB_SYMB *pField)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushAliasedFieldExt(%p,%p)", static_cast<void*>(pAlias), static_cast<void*>(pField)));
@@ -9420,7 +9420,7 @@ HB_BOOL hb_xvmPushAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPushAliasedVar(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPushAliasedVar(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushAliasedVar(%p)", static_cast<void*>(pSymbol)));
@@ -9431,7 +9431,7 @@ HB_BOOL hb_xvmPushAliasedVar(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPopField(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPopField(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPopField(%p)", static_cast<void*>(pSymbol)));
@@ -9443,7 +9443,7 @@ HB_BOOL hb_xvmPopField(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPushMemvar(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPushMemvar(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushMemvar(%p)", static_cast<void*>(pSymbol)));
@@ -9454,7 +9454,7 @@ HB_BOOL hb_xvmPushMemvar(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPushMemvarByRef(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPushMemvarByRef(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPushMemvarByRef(%p)", static_cast<void*>(pSymbol)));
@@ -9465,7 +9465,7 @@ HB_BOOL hb_xvmPushMemvarByRef(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPopMemvar(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPopMemvar(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPopMemvar(%p)", static_cast<void*>(pSymbol)));
@@ -9477,7 +9477,7 @@ HB_BOOL hb_xvmPopMemvar(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPopAliasedField(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPopAliasedField(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPopAliasedField(%p)", static_cast<void*>(pSymbol)));
@@ -9488,7 +9488,7 @@ HB_BOOL hb_xvmPopAliasedField(PHB_SYMB pSymbol)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPopAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
+HB_BOOL hb_xvmPopAliasedFieldExt(HB_SYMB *pAlias, HB_SYMB *pField)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPopAliasedFieldExt(%p,%p)", static_cast<void*>(pAlias), static_cast<void*>(pField)));
@@ -9504,7 +9504,7 @@ HB_BOOL hb_xvmPopAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmPopAliasedVar(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmPopAliasedVar(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmPopAliasedVar(%p)", static_cast<void*>(pSymbol)));
@@ -9630,7 +9630,7 @@ HB_BOOL hb_xvmStaticAdd(uint16_t uiStatic)
   HB_XVM_RETURN
 }
 
-HB_BOOL hb_xvmMemvarAdd(PHB_SYMB pSymbol)
+HB_BOOL hb_xvmMemvarAdd(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_xvmMemvarAdd(%p)", static_cast<void*>(pSymbol)));
@@ -11289,7 +11289,7 @@ void hb_xvmWithObjectEnd(void)
   hb_stackPop(); // remove implicit object
 }
 
-void hb_xvmWithObjectMessage(PHB_SYMB pSymbol)
+void hb_xvmWithObjectMessage(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmWithObjectMessage(%p)", static_cast<void*>(pSymbol)));

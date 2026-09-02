@@ -232,7 +232,7 @@ HB_FUNC(HB_LIBGETFUNSYM)
     void *hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));
 
     if (hDynLib) {
-      PHB_SYMB pSym = hb_vmFindFuncSym(szFuncName, hDynLib);
+      HB_SYMB *pSym = hb_vmFindFuncSym(szFuncName, hDynLib);
 
       if (pSym) {
         hb_itemPutSymbol(hb_stackReturnItem(), pSym);

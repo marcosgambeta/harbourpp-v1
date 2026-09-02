@@ -64,7 +64,7 @@ HB_FUNC(HB_QSELF)
     PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
 
     if (nOffset > 0 && pSelf->isBlock()) {
-      static PHB_SYMB s_pSymEval = nullptr;
+      static HB_SYMB *s_pSymEval = nullptr;
 
       if (s_pSymEval == nullptr) {
         hb_vmPushEvalSym();

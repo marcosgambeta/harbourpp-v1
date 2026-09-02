@@ -56,13 +56,13 @@
 // processes messages sent to a modal or modeless dialog box.
 static INT_PTR CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  PHB_SYMB pSymbol;
+  HB_SYMB *pSymbol;
 
   if (message == WM_INITDIALOG && lParam) {
-    pSymbol = reinterpret_cast<PHB_SYMB>(lParam);
+    pSymbol = reinterpret_cast<HB_SYMB *>(lParam);
     SetWindowLongPtr(hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol));
   } else {
-    pSymbol = reinterpret_cast<PHB_SYMB>(GetWindowLongPtr(hDlg, GWLP_USERDATA));
+    pSymbol = reinterpret_cast<HB_SYMB *>(GetWindowLongPtr(hDlg, GWLP_USERDATA));
   }
 
   if (pSymbol) {

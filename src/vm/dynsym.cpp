@@ -121,7 +121,7 @@ static HB_SYMCNT s_uiDynIdxSize = 0;
 
 // Insert new symbol into dynamic symbol table.
 // In MT mode caller should protected it by HB_DYNSYM_LOCK()
-static PHB_DYNS hb_dynsymInsert(PHB_SYMB pSymbol, HB_SYMCNT uiPos)
+static PHB_DYNS hb_dynsymInsert(HB_SYMB *pSymbol, HB_SYMCNT uiPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymInsert(%p, %u)", static_cast<void*>(pSymbol), uiPos));
@@ -180,7 +180,7 @@ static PHB_DYNS hb_dynsymPos(const char *szName, HB_SYMCNT *puiPos)
 
 // Create new symbol.
 // In MT mode caller should protected it by HB_DYNSYM_LOCK()
-static PHB_SYMB hb_symbolAlloc(const char *szName)
+static HB_SYMB *hb_symbolAlloc(const char *szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_symbolAlloc(%s)", szName));
@@ -232,13 +232,13 @@ PHB_DYNS hb_dynsymFind(const char *szName)
 }
 
 // Create new symbol
-PHB_SYMB hb_symbolNew(const char *szName)
+HB_SYMB *hb_symbolNew(const char *szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_symbolNew(%s)", szName));
 #endif
 
-  PHB_SYMB pSymbol;
+  HB_SYMB *pSymbol;
 
   HB_DYNSYM_LOCK();
 
@@ -250,7 +250,7 @@ PHB_SYMB hb_symbolNew(const char *szName)
 }
 
 // creates a new dynamic symbol
-PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
+PHB_DYNS hb_dynsymNew(HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymNew(%p)", static_cast<void*>(pSymbol)));
@@ -435,7 +435,7 @@ PHB_DYNS hb_dynsymFindName(const char *szName) // finds a symbol
   return hb_dynsymFind(szUprName);
 }
 
-PHB_SYMB hb_dynsymGetSymbol(const char *szName)
+HB_SYMB *hb_dynsymGetSymbol(const char *szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymGetSymbol(%s)", szName));
@@ -444,7 +444,7 @@ PHB_SYMB hb_dynsymGetSymbol(const char *szName)
   return hb_dynsymGet(szName)->pSymbol;
 }
 
-PHB_SYMB hb_dynsymFindSymbol(const char *szName)
+HB_SYMB *hb_dynsymFindSymbol(const char *szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymFindSymbol(%s)", szName));
@@ -454,7 +454,7 @@ PHB_SYMB hb_dynsymFindSymbol(const char *szName)
   return pDynSym ? pDynSym->pSymbol : nullptr;
 }
 
-PHB_SYMB hb_dynsymSymbol(PHB_DYNS pDynSym)
+HB_SYMB *hb_dynsymSymbol(PHB_DYNS pDynSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymSymbol(%p)", static_cast<void*>(pDynSym)));

@@ -102,7 +102,7 @@ HB_FUNC(EMPTY)
     break;
 
   case Harbour::Item::SYMBOL: {
-    PHB_SYMB pSym = pItem->getSymbol();
+    HB_SYMB *pSym = pItem->getSymbol();
     if (pSym && (pSym->scope.value & HB_FS_DEFERRED) && pSym->pDynSym) {
       pSym = hb_dynsymSymbol(pSym->pDynSym);
     }

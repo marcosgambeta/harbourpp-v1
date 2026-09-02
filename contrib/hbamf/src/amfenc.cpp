@@ -1113,7 +1113,7 @@ static void amf3_conversion_out(amfContext *context, PHB_ITEM pItem)
 {
   auto pRetCopy = hb_itemNew(nullptr);
   auto pOuterContext = hb_itemPutPtr(nullptr, context);
-  PHB_SYMB pSym = hb_itemGetSymbol(context->conv_function);
+  HB_SYMB *pSym = hb_itemGetSymbol(context->conv_function);
 
   if (pItem == hb_stackReturnItem())
   {

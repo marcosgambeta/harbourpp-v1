@@ -68,17 +68,17 @@ extern HB_EXPORT void hb_vmAtQuit(HB_INIT_FUNC pFunc, void *cargo);
 // Harbour virtual machine functions
 
 // invokes the virtual machine
-extern HB_EXPORT void hb_vmExecute(const uint8_t *pCode, PHB_SYMB pSymbols) HB_FLATTEN_ATTR;
+extern HB_EXPORT void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols) HB_FLATTEN_ATTR;
 // module symbols initialization with extended information
-extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
+extern HB_EXPORT HB_SYMB *hb_vmProcessSymbols(HB_SYMB *pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
 // module symbols initialization with extended information
-extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
+extern HB_EXPORT HB_SYMB *hb_vmProcessDynLibSymbols(HB_SYMB *pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, uint16_t uiPcodeVer);
 
 
 #ifdef _HB_API_INTERNAL_
    typedef struct _HB_SYMBOLS
    {
-      PHB_SYMB  pModuleSymbols;     // pointer to module symbol table
+      HB_SYMB * pModuleSymbols;     // pointer to module symbol table
       uint16_t uiModuleSymbols;    // number of symbols on that table
       uint16_t uiStaticsOffset;    // offset of statics base symbol
       struct _HB_SYMBOLS * pNext;   // pointer to the next SYMBOLS structure
@@ -91,18 +91,18 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessDynLibSymbols(PHB_SYMB pSymbols, uint16_t 
       HB_ULONG  ulID;               // module unique identifier
    } HB_SYMBOLS, * PHB_SYMBOLS;     // structure to keep track of all modules symbol tables
 
-   extern PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, HB_BOOL fDynLib, HB_BOOL fClone, HB_BOOL fOverLoad);
+   extern PHB_SYMBOLS hb_vmRegisterSymbols(HB_SYMB *pModuleSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID, HB_BOOL fDynLib, HB_BOOL fClone, HB_BOOL fOverLoad);
    extern HB_BOOL hb_vmLockModuleSymbols(void);
    extern void hb_vmUnlockModuleSymbols(void);
    extern void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols);
    extern void hb_vmBeginSymbolGroup(void *hDynLib, HB_BOOL fClone);
    extern void hb_vmInitSymbolGroup(void *hNewDynLib, int32_t argc, const char *argv[]);
    extern void hb_vmExitSymbolGroup(void *hDynLib);
-   extern PHB_SYMB hb_vmFindFuncSym(const char *szFuncName, void *hDynLib);
-   extern const char *hb_vmFindModuleSymbolName(PHB_SYMB pSym);
-   extern HB_BOOL hb_vmFindModuleSymbols(PHB_SYMB pSym, PHB_SYMB *pSymbols, uint16_t *puiSymbols);
-   extern PHB_SYMB hb_vmGetRealFuncSym(PHB_SYMB pSym);
-   extern HB_EXPORT void hb_vmSetFunction(PHB_SYMB pOldSym, PHB_SYMB pNewSym);
+   extern HB_SYMB *hb_vmFindFuncSym(const char *szFuncName, void *hDynLib);
+   extern const char *hb_vmFindModuleSymbolName(HB_SYMB *pSym);
+   extern HB_BOOL hb_vmFindModuleSymbols(HB_SYMB *pSym, HB_SYMB **pSymbols, uint16_t *puiSymbols);
+   extern HB_SYMB *hb_vmGetRealFuncSym(HB_SYMB *pSym);
+   extern HB_EXPORT void hb_vmSetFunction(HB_SYMB *pOldSym, HB_SYMB *pNewSym);
    extern HB_EXPORT void hb_vmSetDynFunc(PHB_DYNS pDynSym);
 
    extern void hb_vmEnumRelease(PHB_ITEM pBase, PHB_ITEM pValue);
@@ -197,7 +197,7 @@ extern HB_EXPORT void hb_vmPushDate(long lDate);
 // pushes two long value as timestamp onto the stack
 extern HB_EXPORT void hb_vmPushTimeStamp(long lJulian, long lMilliSec);
 // pushes a function pointer onto the stack
-extern HB_EXPORT void hb_vmPushSymbol(PHB_SYMB pSym);
+extern HB_EXPORT void hb_vmPushSymbol(HB_SYMB *pSym);
 // pushes a function/method pointer onto the stack
 extern HB_EXPORT void hb_vmPushDynSym(PHB_DYNS pDynSym);
 // pushes a codeblock eval symbol onto the stack

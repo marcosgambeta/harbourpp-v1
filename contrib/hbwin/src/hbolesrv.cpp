@@ -370,7 +370,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
       if (pItem != nullptr) {
         if (pItem->isEvalItem()) {
           if ((wFlags & DISPATCH_METHOD) != 0) {
-            PHB_SYMB pSym = hb_itemGetSymbol(pItem);
+            HB_SYMB *pSym = hb_itemGetSymbol(pItem);
             fResult = hb_oleDispInvoke(pSym, pSym ? pAction : pItem, nullptr, pParams, pVarResult, s_objItemToVariant,
                                        uiClass);
           }

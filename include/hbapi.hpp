@@ -413,7 +413,7 @@ struct hb_struString
 
 struct hb_struSymbol
 {
-  PHB_SYMB        value;
+  HB_SYMB *       value;
   PHB_STACK_STATE stackstate;      // function stack state
   uint16_t       paramcnt;        // number of passed parameters in function call
   uint16_t       paramdeclcnt;    // number of declared parameters in function definition
@@ -500,7 +500,7 @@ typedef struct _HB_ITEM
   HB_EXPORT HB_BOOL getTDT(long *plJulian, long *plMilliSec);
   HB_EXPORT void *getPtr();
   //HB_EXPORT void *getPtrGC(const HB_GC_FUNCS *pFuncs); TODO:
-  HB_EXPORT PHB_SYMB getSymbol();
+  HB_EXPORT HB_SYMB *getSymbol();
   //
   HB_EXPORT _HB_ITEM *putNI(int32_t iNumber);
   HB_EXPORT _HB_ITEM *putNL(long lNumber);
@@ -559,8 +559,8 @@ typedef struct _HB_ITEM
   long dateTimeTime();
   void setDateTimeTime(long lValue);
   //
-  PHB_SYMB symbolValue();
-  void setSymbolValue(PHB_SYMB pValue);
+  HB_SYMB *symbolValue();
+  void setSymbolValue(HB_SYMB *pValue);
   PHB_STACK_STATE symbolStackState();
   void setSymbolStackState(PHB_STACK_STATE pValue);
   uint16_t symbolParamCnt();
@@ -921,12 +921,12 @@ inline void _HB_ITEM::setDateTimeTime(long lValue)
 
 // symbol
 
-inline PHB_SYMB _HB_ITEM::symbolValue()
+inline HB_SYMB *_HB_ITEM::symbolValue()
 {
   return this->item.asSymbol.value;
 }
 
-inline void _HB_ITEM::setSymbolValue(PHB_SYMB pValue)
+inline void _HB_ITEM::setSymbolValue(HB_SYMB *pValue)
 {
   this->item.asSymbol.value = pValue;
 }
@@ -1078,8 +1078,8 @@ typedef struct _HB_BASEHASH
 typedef struct _HB_CODEBLOCK
 {
   const uint8_t *pCode;     // codeblock pcode
-  PHB_SYMB    pSymbols;     // codeblocks symbols
-  PHB_SYMB    pDefSymb;     // symbol where the codeblock was created
+  HB_SYMB *   pSymbols;     // codeblocks symbols
+  HB_SYMB *   pDefSymb;     // symbol where the codeblock was created
   PHB_ITEM    pLocals;      // table with referenced local variables
   void *      pStatics;     // STATICs base frame
   uint16_t   uiLocals;     // number of referenced local variables
@@ -1635,7 +1635,7 @@ extern HB_EXPORT void *hb_arrayGetPtr(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the GC pointer contained on an array element
 extern HB_EXPORT void *hb_arrayGetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS *pFuncs);
 // retrieves symbol contained on an array element
-extern HB_EXPORT PHB_SYMB hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_SYMB *hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the logical value contained on an array element
 extern HB_EXPORT HB_BOOL hb_arrayGetL(PHB_ITEM pArray, HB_SIZE nIndex);
 // retrieves the int value contained on an array element
@@ -1682,7 +1682,7 @@ extern HB_EXPORT HB_BOOL hb_arraySetCLPtr(PHB_ITEM pArray, HB_SIZE nIndex, char 
 extern HB_EXPORT HB_BOOL hb_arraySetCConst(PHB_ITEM pArray, HB_SIZE nIndex, const char *szText);
 extern HB_EXPORT HB_BOOL hb_arraySetPtr(PHB_ITEM pArray, HB_SIZE nIndex, void *pValue);
 extern HB_EXPORT HB_BOOL hb_arraySetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, void *pValue);
-extern HB_EXPORT HB_BOOL hb_arraySetSymbol(PHB_ITEM pArray, HB_SIZE nIndex, PHB_SYMB pSymbol);
+extern HB_EXPORT HB_BOOL hb_arraySetSymbol(PHB_ITEM pArray, HB_SIZE nIndex, HB_SYMB *pSymbol);
 // fill an array with a given item
 extern HB_EXPORT HB_BOOL hb_arrayFill(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE *pnCount);
 // scan an array for a given item, or until code-block item returns HB_TRUE
@@ -1942,7 +1942,7 @@ extern HB_EXPORT PHB_DYNS hb_dynsymGet(const char *szName);
 // finds and creates a dynamic symbol if not found - case sensitive
 extern HB_EXPORT PHB_DYNS hb_dynsymGetCase(const char *szName);
 // creates a new dynamic symbol based on a local one
-extern HB_EXPORT PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol);
+extern HB_EXPORT PHB_DYNS hb_dynsymNew(HB_SYMB *pSymbol);
 // finds a dynamic symbol
 extern HB_EXPORT PHB_DYNS hb_dynsymFind(const char *szName);
 // converts to uppercase and finds a dynamic symbol
@@ -1954,10 +1954,10 @@ extern HB_EXPORT void hb_dynsymEval(PHB_DYNS_FUNC pFunction, void *Cargo);
 // enumerates all dynamic symbols with global symbol table locked - can be used ONLY when user function does not try to access dynamic symbol table
 extern HB_EXPORT void hb_dynsymProtectEval(PHB_DYNS_FUNC pFunction, void *Cargo);
 // finds and creates a dynamic symbol if not found and return pointer to its HB_SYMB structure
-extern HB_EXPORT PHB_SYMB hb_dynsymGetSymbol(const char *szName);
+extern HB_EXPORT HB_SYMB *hb_dynsymGetSymbol(const char *szName);
 // finds a dynamic symbol and return pointer to its HB_SYMB structure
-extern HB_EXPORT PHB_SYMB hb_dynsymFindSymbol(const char *szName);
-extern HB_EXPORT PHB_SYMB hb_dynsymSymbol(PHB_DYNS pDynSym);
+extern HB_EXPORT HB_SYMB *hb_dynsymFindSymbol(const char *szName);
+extern HB_EXPORT HB_SYMB *hb_dynsymSymbol(PHB_DYNS pDynSym);
 // return dynamic symbol name
 extern HB_EXPORT const char *hb_dynsymName(PHB_DYNS pDynSym);
 extern HB_EXPORT HB_BOOL hb_dynsymIsFunction(PHB_DYNS pDynSym);
@@ -1979,7 +1979,7 @@ extern HB_LONG hb_dynsymCount(void);
 
 // Symbol management
 // create a new symbol
-extern HB_EXPORT PHB_SYMB hb_symbolNew(const char *szName);
+extern HB_EXPORT HB_SYMB *hb_symbolNew(const char *szName);
 
 // Command-line and environment argument management
 // initialize command-line argument API's
@@ -2023,7 +2023,7 @@ extern HB_EXPORT void *hb_codeblockId(PHB_ITEM pItem);
 // retrieves numer of references to the codeblock
 extern HB_EXPORT HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem);
 // create a code-block
-extern PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen);
+extern PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable, HB_SYMB *pSymbols, HB_SIZE nLen);
 extern PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen);
 // get local variable referenced in a codeblock
 extern PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos);
@@ -2034,20 +2034,20 @@ extern PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos);
 // clear all PUBLIC and PRIVATE variables optionally without GetList PUBLIC variable
 extern void hb_memvarsClear(HB_BOOL fAll);
 // copy an item into a symbol
-extern HB_EXPORT void hb_memvarSetValue(PHB_SYMB pMemvarSymb, PHB_ITEM pItem);
+extern HB_EXPORT void hb_memvarSetValue(HB_SYMB *pMemvarSymb, PHB_ITEM pItem);
 // copy an symbol value into an item
-extern HB_EXPORT HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb);
+extern HB_EXPORT HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, HB_SYMB *pMemvarSymb);
 // copy an symbol value into an item, with error trapping
-extern void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb);
+extern void hb_memvarGetValue(PHB_ITEM pItem, HB_SYMB *pMemvarSymb);
 // copy a reference to a symbol value into an item, with error trapping
-extern void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb);
+extern void hb_memvarGetRefer(PHB_ITEM pItem, HB_SYMB *pMemvarSymb);
 // retrieve current PRIVATE variables stack base
 extern HB_SIZE hb_memvarGetPrivatesBase(void);
 // release PRIVATE variables created after specified base
 extern void hb_memvarSetPrivatesBase(HB_SIZE nBase);
 // Update PRIVATE base offset so they will not be removed when function return
 extern void hb_memvarUpdatePrivatesBase(void);
-extern void hb_memvarNewParameter(PHB_SYMB pSymbol, PHB_ITEM pValue);
+extern void hb_memvarNewParameter(HB_SYMB *pSymbol, PHB_ITEM pValue);
 extern char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen);
 extern void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int32_t iScope, PHB_ITEM pValue);
 // retrieve scope of a dynamic variable symbol
@@ -2064,7 +2064,7 @@ extern void hb_memvarRestoreFromArray(PHB_ITEM pArray);
 extern void hb_memvarValueIncRef(PHB_ITEM pValue);
 // decrease the reference count of a global value
 extern void hb_memvarValueDecRef(PHB_ITEM pValue);
-extern PHB_ITEM hb_memvarGetItem(PHB_SYMB pMemvarSymb);
+extern PHB_ITEM hb_memvarGetItem(HB_SYMB *pMemvarSymb);
 #if defined(_HB_API_MACROS_)
 #  define hb_memvarValueIncRef(p)       hb_xRefInc(p)
 #endif // _HB_API_MACROS_

@@ -633,7 +633,7 @@ void *hb_arrayGetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS *pFunc
                                                            : nullptr;
 }
 
-PHB_SYMB hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex)
+HB_SYMB *hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayGetSymbol(%p, %" HB_PFS "u)", static_cast<void*>(pArray), nIndex));
@@ -905,7 +905,7 @@ HB_BOOL hb_arraySetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, void *pValue)
   }
 }
 
-HB_BOOL hb_arraySetSymbol(PHB_ITEM pArray, HB_SIZE nIndex, PHB_SYMB pSymbol)
+HB_BOOL hb_arraySetSymbol(PHB_ITEM pArray, HB_SIZE nIndex, HB_SYMB *pSymbol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arraySetSymbol(%p, %" HB_PFS "u, %p)", static_cast<void*>(pArray), nIndex, static_cast<void*>(pSymbol)));

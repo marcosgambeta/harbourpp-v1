@@ -209,7 +209,7 @@ typedef struct _HB_SYMB
       void *         pStaticsBase;  /* base offset to array of statics */
    } value;
    PHB_DYNS       pDynSym;          /* pointer to its dynamic symbol if defined */
-} HB_SYMB, * PHB_SYMB;
+} HB_SYMB, * PHB_SYMB; // NOTE: PHB_SYMB is deprecated in Harbour++ source code
 
 #define HB_DYNS_FUNC( hbfunc )   HB_BOOL hbfunc( PHB_DYNS pDynSymbol, void * Cargo )
 typedef HB_DYNS_FUNC( ( * PHB_DYNS_FUNC ) );
@@ -246,7 +246,7 @@ typedef struct _HB_FUNC_LIST
 
 #define HB_FS_INITEXIT ( HB_FS_INIT | HB_FS_EXIT )
 
-extern HB_EXPORT void hb_vmExecute( const uint8_t * pCode, PHB_SYMB pSymbols ) HB_FLATTEN_ATTR;  /* invokes the virtual machine */
+extern HB_EXPORT void hb_vmExecute( const uint8_t * pCode, HB_SYMB *pSymbols ) HB_FLATTEN_ATTR;  /* invokes the virtual machine */
 
 HB_EXTERN_END
 

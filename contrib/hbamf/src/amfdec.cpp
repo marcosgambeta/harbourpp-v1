@@ -1170,7 +1170,7 @@ static bool amf3_deserialize_obj(amfContext *context, PHB_ITEM pItem, bool proxy
 static void amf3_conversion_in(amfContext *context, PHB_ITEM pItem)
 {
   auto pRetCopy = hb_itemNew(nullptr);
-  PHB_SYMB pSym = hb_itemGetSymbol(context->conv_function);
+  HB_SYMB *pSym = hb_itemGetSymbol(context->conv_function);
 
   if (pItem == hb_stackReturnItem())
   {

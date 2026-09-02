@@ -1070,7 +1070,7 @@ HB_EXPORT void *_HB_ITEM::getPtrGC(const HB_GC_FUNCS *pFuncs) // equivalent to h
 }
 #endif
 
-PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
+HB_SYMB *hb_itemGetSymbol(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetSymbol(%p)", static_cast<void*>(pItem)));
@@ -1079,7 +1079,7 @@ PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
   return pItem && pItem->isSymbol() ? pItem->symbolValue() : nullptr;
 }
 
-HB_EXPORT PHB_SYMB _HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
+HB_EXPORT HB_SYMB *_HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
 {
   return this->isSymbol() ? this->symbolValue() : nullptr;
 }
@@ -1774,7 +1774,7 @@ PHB_ITEM hb_itemPutPtrRawGC(PHB_ITEM pItem, void *pValue)
   return pItem;
 }
 
-PHB_ITEM hb_itemPutSymbol(PHB_ITEM pItem, PHB_SYMB pSym)
+PHB_ITEM hb_itemPutSymbol(PHB_ITEM pItem, HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutSymbol(%p,%p)", static_cast<void*>(pItem), static_cast<void*>(pSym)));

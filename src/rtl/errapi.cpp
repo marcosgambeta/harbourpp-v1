@@ -813,7 +813,7 @@ PHB_ITEM hb_errPutOperation(PHB_ITEM pError, const char *szOperation)
 #endif
 
   if (szOperation == HB_ERR_FUNCNAME) {
-    PHB_SYMB pSym = hb_itemGetSymbol(hb_stackBaseItem());
+    HB_SYMB *pSym = hb_itemGetSymbol(hb_stackBaseItem());
     if (pSym) {
       szOperation = pSym->szName;
     }

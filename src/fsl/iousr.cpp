@@ -65,7 +65,7 @@ struct _HB_IOUSR
   HB_FILE_FUNCS funcs;
   char *prefix;
   int32_t prefix_len;
-  PHB_SYMB prg_funcs[IOUSR_METHODCOUNT];
+  HB_SYMB *prg_funcs[IOUSR_METHODCOUNT];
 };
 
 using HB_IOUSR = _HB_IOUSR;

@@ -62,7 +62,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber(int32_t iArea)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
+HB_ERRCODE hb_rddSelectWorkAreaSymbol(HB_SYMB *pSymAlias)
 {
   HB_SYMBOL_UNUSED(pSymAlias);
 
@@ -74,7 +74,7 @@ int32_t hb_rddGetCurrentWorkAreaNumber(void)
   return 0;
 }
 
-HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
   HB_SYMBOL_UNUSED(pItem);
   HB_SYMBOL_UNUSED(pFieldSymbol);
@@ -82,7 +82,7 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
   HB_SYMBOL_UNUSED(pItem);
   HB_SYMBOL_UNUSED(pFieldSymbol);
@@ -90,7 +90,7 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
   HB_SYMBOL_UNUSED(pItem);
   HB_SYMBOL_UNUSED(pFieldSymbol);
@@ -98,7 +98,7 @@ HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
+HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
 {
   HB_SYMBOL_UNUSED(pItem);
   HB_SYMBOL_UNUSED(pFieldSymbol);

@@ -1037,7 +1037,7 @@ void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch *pdispVal, uint16_t uiClass)
 {
   if (pdispVal) {
     if (hb_vmRequestReenter()) {
-      PHB_SYMB pClassFunc;
+      HB_SYMB *pClassFunc;
       PHB_ITEM pPtrGC;
 
       pClassFunc = hb_clsFuncSym(uiClass);
@@ -1498,7 +1498,7 @@ typedef struct
   VARIANT *variant;
 } HB_OLE_PARAM_REF;
 
-HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPPARAMS *pParams, VARIANT *pVarResult,
+HB_BOOL hb_oleDispInvoke(HB_SYMB *pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPPARAMS *pParams, VARIANT *pVarResult,
                          HB_OLEOBJ_FUNC pObjFunc, uint16_t uiClass)
 {
   if (!pSym && pObject->isSymbol()) {

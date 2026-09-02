@@ -1517,7 +1517,7 @@ HB_FUNC(SELECT)
     } else {
       auto pItem = hb_param(1, Harbour::Item::SYMBOL);
       if (pItem) {
-        PHB_SYMB pSymAlias = pItem->getSymbol();
+        HB_SYMB *pSymAlias = pItem->getSymbol();
         if (pSymAlias->pDynSym) {
           iArea = static_cast<int32_t>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
         }

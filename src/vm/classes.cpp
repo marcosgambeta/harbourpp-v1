@@ -134,8 +134,8 @@ struct METHOD
 {
   PHB_DYNS pMessage;    // Method symbolic name
   PHB_DYNS pAccMsg;     // Corresponding access method symbolic name
-  PHB_SYMB pFuncSym;    // Function symbol
-  PHB_SYMB pRealSym;    // Real function symbol when wrapper is used
+  HB_SYMB *pFuncSym;    // Function symbol
+  HB_SYMB *pRealSym;    // Real function symbol when wrapper is used
   HB_TYPE itemType;     // Type of item in restricted assignment
   uint16_t uiSprClass; // Original class handle (super or current class handle if not inherited). [RAC&JF]
   uint16_t uiScope;    // Scoping value
@@ -160,14 +160,14 @@ struct CLASS
   char *szName;              // Class name
   PHB_DYNS pClassSym;        // Class symbolic name
   PMETHOD pMethods;          // Class methods
-  PHB_SYMB pClassFuncSym;    // Class function symbol
-  PHB_SYMB pFriendModule;    // Class friend symbols
+  HB_SYMB *pClassFuncSym;    // Class function symbol
+  HB_SYMB *pFriendModule;    // Class friend symbols
   PINITDATA pInitData;       // Class/instance Initialization data
   PHB_ITEM pClassDatas;      // Harbour Array for Class Datas
   PHB_ITEM pSharedDatas;     // Harbour Array for Class Shared Datas
   PHB_ITEM pInlines;         // Array for inline codeblocks
   PHB_ITEM pMutex;           // Class sync method mutex
-  PHB_SYMB *pFriendSyms;     // Friend functions' symbols
+  HB_SYMB **pFriendSyms;     // Friend functions' symbols
   PHB_CLSCAST pSuperClasses; // Super classes
   HB_U32 nOpFlags;           // Flags for overloaded operators
   uint16_t uiClass;         // This class handle
@@ -835,7 +835,7 @@ static bool hb_clsUpdateHiddenMessages(PMETHOD pSrcMethod, PMETHOD pDstMethod, P
     if (pNewMethod && pNewMethod != pSrcMethod && !(pNewMethod->uiScope & HB_OO_CLSTP_HIDDEN) &&
         hb_clsCanClearMethod(pDstMethod, false)) {
       uint16_t uiPrevCls = pDstMethod->uiPrevCls, uiPrevMth = pDstMethod->uiPrevMth;
-      PHB_SYMB pFuncSym;
+      HB_SYMB *pFuncSym;
 
       memcpy(pDstMethod, pNewMethod, sizeof(METHOD));
       pDstMethod->uiPrevCls = uiPrevCls;
@@ -912,7 +912,7 @@ static void hb_clsDefineSuperClass(PCLASS pClass, uint16_t uiSuperCls, bool fNew
     pMethod->pFuncSym = &s___msgSuper;
     pMethod->uiOffset = hb_clsParentInstanceOffset(pClass, uiSuperCls);
   } else {
-    PHB_SYMB pFuncSym = pMethod->pFuncSym;
+    HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
     if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
       pFuncSym = pMethod->pRealSym;
@@ -993,7 +993,7 @@ static void hb_clsCopyClass(PCLASS pClsDst, PCLASS pClsSrc)
   } while (--nLimit);
 }
 
-static bool hb_clsIsFriendSymbol(PCLASS pClass, PHB_SYMB pSym)
+static bool hb_clsIsFriendSymbol(PCLASS pClass, HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_clsIsFriendSymbol(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pSym)));
@@ -1012,7 +1012,7 @@ static bool hb_clsIsFriendSymbol(PCLASS pClass, PHB_SYMB pSym)
   return false;
 }
 
-static void hb_clsAddFriendSymbol(PCLASS pClass, PHB_SYMB pSym)
+static void hb_clsAddFriendSymbol(PCLASS pClass, HB_SYMB *pSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_clsAddFriendSymbol(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pSym)));
@@ -1020,12 +1020,12 @@ static void hb_clsAddFriendSymbol(PCLASS pClass, PHB_SYMB pSym)
 
   if (!hb_clsIsFriendSymbol(pClass, pSym)) {
     if (pClass->uiFriendSyms == 0) {
-      pClass->pFriendSyms = static_cast<PHB_SYMB *>(hb_xgrab(sizeof(PHB_SYMB)));
+      pClass->pFriendSyms = static_cast<HB_SYMB **>(hb_xgrab(sizeof(HB_SYMB *)));
       pClass->pFriendSyms[0] = pSym;
       pClass->uiFriendSyms++;
     } else {
       pClass->pFriendSyms =
-          static_cast<PHB_SYMB *>(hb_xrealloc(pClass->pFriendSyms, (pClass->uiFriendSyms + 1) * sizeof(PHB_SYMB)));
+          static_cast<HB_SYMB **>(hb_xrealloc(pClass->pFriendSyms, (pClass->uiFriendSyms + 1) * sizeof(HB_SYMB *)));
       pClass->pFriendSyms[pClass->uiFriendSyms++] = pSym;
     }
   }
@@ -1038,7 +1038,7 @@ void hb_clsInit(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_clsInit()"));
 #endif
 
-  PHB_SYMB pOpSym;
+  HB_SYMB *pOpSym;
   uint16_t uiOperator;
 
   for (uiOperator = 0, pOpSym = s_opSymbols; uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym) {
@@ -1374,7 +1374,7 @@ const char *hb_clsFuncName(uint16_t uiClass)
   }
 }
 
-PHB_SYMB hb_clsFuncSym(uint16_t uiClass)
+HB_SYMB *hb_clsFuncSym(uint16_t uiClass)
 {
   if (uiClass && uiClass <= s_uiClasses) {
     return s_pClasses[uiClass]->pClassFuncSym;
@@ -1399,7 +1399,7 @@ static HB_SIZE hb_clsGetVarIndexEx(uint16_t uiClass, PHB_DYNS pVarSym, uint16_t 
 {
   PMETHOD pMethod = hb_clsFindMsg(s_pClasses[uiSuper], pVarSym);
   if (pMethod) {
-    PHB_SYMB pFuncSym = pMethod->pFuncSym;
+    HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
     if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
       pFuncSym = pMethod->pRealSym;
@@ -1435,7 +1435,7 @@ uint16_t hb_clsFindClass(const char *szClass, const char *szClassFunc)
   return 0;
 }
 
-static uint16_t hb_clsFindClassByFunc(PHB_SYMB pClassFuncSym)
+static uint16_t hb_clsFindClassByFunc(HB_SYMB *pClassFuncSym)
 {
   for (uint16_t uiClass = 1; uiClass <= s_uiClasses; uiClass++) {
     if (s_pClasses[uiClass]->pClassFuncSym == pClassFuncSym) {
@@ -1446,13 +1446,13 @@ static uint16_t hb_clsFindClassByFunc(PHB_SYMB pClassFuncSym)
 }
 
 // Get the real method symbol for given stack symbol
-PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol)
+HB_SYMB *hb_clsMethodSym(PHB_ITEM pBaseSymbol)
 {
   PHB_STACK_STATE pStack = pBaseSymbol->symbolStackState();
 
   if (pStack->uiClass) {
     PMETHOD pMethod = s_pClasses[pStack->uiClass]->pMethods + pStack->uiMethod;
-    PHB_SYMB pFuncSym = pMethod->pFuncSym;
+    HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
     if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
       pFuncSym = pMethod->pRealSym;
@@ -1551,9 +1551,9 @@ static uint16_t hb_clsSenderMethodClass(void)
   return 0;
 }
 
-static PHB_SYMB hb_clsSenderSymbol(void)
+static HB_SYMB *hb_clsSenderSymbol(void)
 {
-  PHB_SYMB pSym = nullptr;
+  HB_SYMB *pSym = nullptr;
   HB_ISIZ nOffset = hb_clsSenderOffset();
 
   if (nOffset > 0) {
@@ -1587,7 +1587,7 @@ static uint16_t hb_clsSenderObjectClass(void)
   return 0;
 }
 
-static PHB_SYMB hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
+static HB_SYMB *hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
 {
   if (pMethod->uiScope & (HB_OO_CLSTP_HIDDEN | HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_OVERLOADED)) {
     uint16_t uiSenderClass = hb_clsSenderMethodClass();
@@ -1623,7 +1623,7 @@ static PHB_SYMB hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
         return &s___msgScopeErr;
       }
     } else if (pMethod->uiScope & (HB_OO_CLSTP_HIDDEN | HB_OO_CLSTP_PROTECTED)) {
-      PHB_SYMB pSym = hb_clsSenderSymbol();
+      HB_SYMB *pSym = hb_clsSenderSymbol();
 
       if (!hb_clsIsFriendSymbol(s_pClasses[pMethod->uiSprClass], pSym)) {
         if ((pMethod->uiScope & HB_OO_CLSTP_HIDDEN) || !hb_clsIsFriendSymbol(s_pClasses[pStack->uiClass], pSym)) {
@@ -1636,7 +1636,7 @@ static PHB_SYMB hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
   return pMethod->pFuncSym;
 }
 
-static PHB_SYMB hb_clsScalarMethod(PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STATE pStack)
+static HB_SYMB *hb_clsScalarMethod(PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STATE pStack)
 {
   PMETHOD pMethod = hb_clsFindMsg(pClass, pMsg);
 
@@ -1673,7 +1673,7 @@ static void hb_clsMakeSuperObject(PHB_ITEM pDest, PHB_ITEM pObject, uint16_t uiS
 // <pFuncSym> = hb_objGetMethod(<pObject>, <pMessage>, <pStackState>)
 //
 // Internal function to the function pointer of a message of an object
-PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack)
+HB_SYMB *hb_objGetMethod(PHB_ITEM pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_objGetMethod(%p, %p, %p)", static_cast<void*>(pObject), static_cast<void*>(pMessage), static_cast<void*>(pStack)));
@@ -1733,7 +1733,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     } else if (s_uiArrayClass) {
       pClass = s_pClasses[s_uiArrayClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1745,7 +1745,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     } else if (s_uiBlockClass) {
       pClass = s_pClasses[s_uiBlockClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1825,7 +1825,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiSymbolClass) {
       pClass = s_pClasses[s_uiSymbolClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1845,7 +1845,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiHashClass) {
       pClass = s_pClasses[s_uiHashClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1886,7 +1886,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiCharacterClass) {
       pClass = s_pClasses[s_uiCharacterClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1896,7 +1896,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiDateClass) {
       pClass = s_pClasses[s_uiDateClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1906,7 +1906,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiTimeStampClass) {
       pClass = s_pClasses[s_uiTimeStampClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1916,7 +1916,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiNumericClass) {
       pClass = s_pClasses[s_uiNumericClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1926,7 +1926,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiLogicalClass) {
       pClass = s_pClasses[s_uiLogicalClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1936,7 +1936,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiPointerClass) {
       pClass = s_pClasses[s_uiPointerClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -1946,7 +1946,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     if (s_uiNilClass) {
       pClass = s_pClasses[s_uiNilClass];
       {
-        PHB_SYMB pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
+        HB_SYMB *pExecSym = hb_clsScalarMethod(pClass, pMsg, pStack);
         if (pExecSym) {
           return pExecSym;
         }
@@ -2001,7 +2001,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
   return nullptr;
 }
 
-HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack)
+HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack)
 {
 #if defined(HB_HASH_MSG_ITEMS)
   if (pObject->isHash()) {
@@ -2016,7 +2016,7 @@ HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pSt
   }
 #endif
 
-  PHB_SYMB pExecSym = hb_objGetMethod(pObject, pMessage, pStack);
+  HB_SYMB *pExecSym = hb_objGetMethod(pObject, pMessage, pStack);
   if (pExecSym) {
     HB_STACK_TLS_PRELOAD
     if (pExecSym == &s___msgSetData) {
@@ -2394,7 +2394,7 @@ PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
     PMETHOD pMethod = hb_clsFindMsg(pClass, pVarMsg);
 
     if (pMethod) {
-      PHB_SYMB pFuncSym = pMethod->pFuncSym;
+      HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
       if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
         pFuncSym = pMethod->pRealSym;
@@ -2443,7 +2443,7 @@ static PHB_DYNS hb_objGetMsgSym(PHB_ITEM pMessage)
   return pDynSym;
 }
 
-static PHB_SYMB hb_objGetFuncSym(PHB_ITEM pItem)
+static HB_SYMB *hb_objGetFuncSym(PHB_ITEM pItem)
 {
   if (pItem != nullptr) {
     if (pItem->isSymbol()) {
@@ -2782,7 +2782,7 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
     }
 
     uint16_t uiOperator;
-    PHB_SYMB pOpSym;
+    HB_SYMB *pOpSym;
     HB_U32 nOpFlags = 0;
 
     for (uiOperator = 0, pOpSym = s_opSymbols; uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym) {
@@ -2792,7 +2792,7 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
       }
     }
 
-    PHB_SYMB pFuncSym = nullptr;
+    HB_SYMB *pFuncSym = nullptr;
     auto fOK = false;
 
     // basic parameter validation
@@ -3163,7 +3163,7 @@ HB_FUNC(__CLSADDMSG)
 //                   with the same name as szClassName is used
 // <fModuleFriendly> when true all functions and classes from the same
 //                   module as pClassFunc are defined as friends
-static uint16_t hb_clsNew(const char *szClassName, uint16_t uiDatas, PHB_ITEM pSuperArray, PHB_SYMB pClassFunc,
+static uint16_t hb_clsNew(const char *szClassName, uint16_t uiDatas, PHB_ITEM pSuperArray, HB_SYMB *pClassFunc,
                            bool fModuleFriendly)
 {
   PMETHOD pMethod;
@@ -3260,7 +3260,7 @@ static uint16_t hb_clsNew(const char *szClassName, uint16_t uiDatas, PHB_ITEM pS
 
               memcpy(pMethod, pSprCls->pMethods + n, sizeof(METHOD));
               if (!hb_clsUpdateHiddenMessages(pMethod, pMethod, pNewCls)) {
-                PHB_SYMB pFuncSym = pMethod->pFuncSym;
+                HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
                 if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
                   pFuncSym = pMethod->pRealSym;
@@ -3391,7 +3391,7 @@ HB_FUNC(__CLSADDFRIEND)
     PCLASS pClass = s_pClasses[uiClass];
 
     if (!pClass->fLocked) {
-      PHB_SYMB pSym = hb_vmGetRealFuncSym(hb_itemGetSymbol(hb_param(2, Harbour::Item::SYMBOL)));
+      HB_SYMB *pSym = hb_vmGetRealFuncSym(hb_itemGetSymbol(hb_param(2, Harbour::Item::SYMBOL)));
       if (pSym) {
         hb_clsAddFriendSymbol(pClass, pSym);
       }
@@ -3511,7 +3511,7 @@ HB_FUNC(__CLSMODMSG)
       PMETHOD pMethod = hb_clsFindMsg(pClass, pMsg);
 
       if (pMethod) {
-        PHB_SYMB pFuncSym = pMethod->pFuncSym;
+        HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
         if (pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData) {
           hb_errRT_BASE(EG_ARG, 3004, "Cannot modify a DATA item", HB_ERR_FUNCNAME, 0);
@@ -3601,7 +3601,7 @@ HB_FUNC(__OBJHASMSGASSIGNED)
 
   if (pMessage) {
     HB_STACK_TLS_PRELOAD
-    PHB_SYMB pExecSym = hb_objGetMethod(hb_param(1, Harbour::Item::ANY), pMessage->pSymbol, nullptr);
+    HB_SYMB *pExecSym = hb_objGetMethod(hb_param(1, Harbour::Item::ANY), pMessage->pSymbol, nullptr);
     hb_retl(pExecSym && pExecSym != &s___msgVirtual);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -3655,7 +3655,7 @@ HB_FUNC(__CLSINSTSUPER)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL);
   uint16_t uiClassH = 0, uiClass;
-  PHB_SYMB pClassFuncSym = nullptr;
+  HB_SYMB *pClassFuncSym = nullptr;
   char szDesc[128];
 
   if (pItem != nullptr) {
@@ -4045,7 +4045,7 @@ HB_FUNC_STATIC(msgClassName)
 
 static int32_t hb_methodType(PMETHOD pMethod)
 {
-  PHB_SYMB pFuncSym = pMethod->pFuncSym;
+  HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
   if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
     pFuncSym = pMethod->pRealSym;
@@ -4194,7 +4194,7 @@ HB_FUNC_STATIC(msgPerform)
 
   if (pItem != nullptr) {
     uint16_t uiPCount = hb_pcount();
-    PHB_SYMB pSym = nullptr;
+    HB_SYMB *pSym = nullptr;
 
     if (pItem->isSymbol()) {
       pSym = pItem->symbolValue();
@@ -4224,7 +4224,7 @@ HB_FUNC_STATIC(msgDelegate)
   PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
-  PHB_SYMB pExecSym = pClass->pMethods[pMethod->uiData].pFuncSym;
+  HB_SYMB *pExecSym = pClass->pMethods[pMethod->uiData].pFuncSym;
 
   if (pExecSym) {
     HB_VM_FUNCUNREF(pExecSym);
@@ -4242,7 +4242,7 @@ HB_FUNC_STATIC(msgSync)
   PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
-  PHB_SYMB pExecSym = pMethod->pRealSym;
+  HB_SYMB *pExecSym = pMethod->pRealSym;
 
   if (pExecSym) {
     HB_VM_FUNCUNREF(pExecSym);
@@ -4272,7 +4272,7 @@ HB_FUNC_STATIC(msgSyncClass)
   PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
-  PHB_SYMB pExecSym = pMethod->pRealSym;
+  HB_SYMB *pExecSym = pMethod->pRealSym;
 
   if (pExecSym) {
     HB_VM_FUNCUNREF(pExecSym);
@@ -4295,7 +4295,7 @@ HB_FUNC_STATIC(msgSyncClass)
 HB_FUNC_STATIC(msgNoMethod)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_SYMB pSym = hb_itemGetSymbol(hb_stackBaseItem());
+  HB_SYMB *pSym = hb_itemGetSymbol(hb_stackBaseItem());
 
 #if 1 // Clipper compatible error message
   if (pSym->szName[0] == '_') {
@@ -4549,7 +4549,7 @@ void hb_mthAddTime(HB_ULONG ulClockTicks)
   }
 
   if (pObject->isBlock()) {
-    PHB_SYMB pSym = hb_stackBaseItem()->symbolValue();
+    HB_SYMB *pSym = hb_stackBaseItem()->symbolValue();
 
     if (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym) {
       pSym->pDynSym->ulCalls++;
@@ -4643,7 +4643,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, uint16_t uiScope, HB_BOOL fChan
   while (nCount && nLimit) {
     if (pMethod->pMessage && (uiScope == 0 || (pMethod->uiScope & uiScope) != 0) &&
         (uiClass == pClass->uiClass || uiClass == pMethod->uiSprClass)) {
-      PHB_SYMB pFuncSym = pMethod->pFuncSym;
+      HB_SYMB *pFuncSym = pMethod->pFuncSym;
 
       if (pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass) {
         pFuncSym = pMethod->pRealSym;
@@ -5059,7 +5059,7 @@ void hb_clsAdd(uint16_t usClassH, const char *szMethodName, PHB_FUNC pFuncPtr)
   // We can use empty name "" for this symbol in hb_symbolNew()
   // It's only envelop for function with additional execution
   // information for HVM not registered symbol. [druzus]
-  PHB_SYMB pExecSym = hb_symbolNew("");
+  HB_SYMB *pExecSym = hb_symbolNew("");
   pExecSym->value.pFunPtr = pFuncPtr;
   auto pFuncItem = hb_itemPutSymbol(nullptr, pExecSym);
 

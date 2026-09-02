@@ -75,7 +75,7 @@ struct HRB_BODY // TODO: HB_BOOL -> bool
   HB_BOOL fInit;      // should be INIT functions executed
   HB_BOOL fExit;      // should be EXIT functions executed
   HB_LONG lSymStart;  // Startup Symbol
-  PHB_SYMB pSymRead;  // Symbols read
+  HB_SYMB *pSymRead;  // Symbols read
   PHB_DYNF pDynFunc;  // Functions read
   PHB_SYMBOLS pModuleSymbols;
 };
@@ -333,7 +333,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
 
     nBodyOffset = nPos;
     ul = pHrbBody->ulSymbols * sizeof(HB_SYMB);
-    auto pSymRead = static_cast<PHB_SYMB>(hb_xgrab(nSize + ul)); // Symbols read
+    auto pSymRead = static_cast<HB_SYMB *>(hb_xgrab(nSize + ul)); // Symbols read
     char *buffer = (reinterpret_cast<char *>(pSymRead)) + ul;
     char ch;
 
@@ -738,7 +738,7 @@ HB_FUNC(HB_HRBGETFUNSYM)
 
   if (pHrbBody && szName) {
     HB_ULONG nPos;
-    PHB_SYMB pSym;
+    HB_SYMB *pSym;
 
     for (nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos) {
       if (pSym->value.pFunPtr != nullptr && (pSym->scope.value & HB_FS_INITEXIT) == 0 &&
@@ -758,7 +758,7 @@ HB_FUNC(HB_HRBGETFUNLIST)
 
   if (pHrbBody) {
     HB_ULONG nPos;
-    PHB_SYMB pSym;
+    HB_SYMB *pSym;
     auto paList = hb_itemArrayNew(0);
     auto pFuncName = hb_itemNew(nullptr);
     auto iType = hb_parni(2);

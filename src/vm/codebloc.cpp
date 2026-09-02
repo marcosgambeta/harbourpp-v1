@@ -119,7 +119,7 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs = {
 //
 // Note: pLocalPosTable cannot be used if uiLocals is ZERO
 PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable,
-                              PHB_SYMB pSymbols, HB_SIZE nLen)
+                              HB_SYMB *pSymbols, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), uiLocals, static_cast<const void*>(pLocalPosTable), static_cast<void*>(pSymbols), nLen));

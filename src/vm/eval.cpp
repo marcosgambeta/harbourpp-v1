@@ -108,7 +108,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 
   if (pEvalInfo) {
     PHB_ITEM pItem = pEvalInfo->pItems[0];
-    PHB_SYMB pSymbol = nullptr;
+    HB_SYMB *pSymbol = nullptr;
 
     if (pItem->isString()) {
       auto pDynSym = hb_dynsymFindName(pItem->stringValue());
@@ -188,7 +188,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
   PHB_ITEM pResult = nullptr;
 
   if (pItem != nullptr) {
-    PHB_SYMB pSymbol = nullptr;
+    HB_SYMB *pSymbol = nullptr;
 
     if (pItem->isString()) {
       auto pDynSym = hb_dynsymFindName(pItem->stringValue());
@@ -375,7 +375,7 @@ HB_FUNC(HB_FORNEXT) // nStart, nEnd | bEnd, bCode, nStep
 
 HB_FUNC(HB_EXECFROMARRAY)
 {
-  PHB_SYMB pExecSym = nullptr;
+  HB_SYMB *pExecSym = nullptr;
   PHB_ITEM pFunc = nullptr;
   PHB_ITEM pSelf = nullptr;
   PHB_ITEM pArray = nullptr;
@@ -475,7 +475,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
   }
 
   if (pParam) {
-    PHB_SYMB pExecSym = nullptr;
+    HB_SYMB *pExecSym = nullptr;
 
     if (pParam->isSymbol()) {
       pExecSym = pParam->getSymbol();

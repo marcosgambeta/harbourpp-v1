@@ -314,7 +314,7 @@ static void hb_memvarResetPrivatesBase(void)
 //
 // pMemvar - symbol associated with a variable
 // pItem   - value to store in memvar
-void hb_memvarSetValue(PHB_SYMB pMemvarSymb, PHB_ITEM pItem)
+void hb_memvarSetValue(HB_SYMB *pMemvarSymb, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarSetValue(%p, %p)", static_cast<void*>(pMemvarSymb), static_cast<void*>(pItem)));
@@ -342,7 +342,7 @@ void hb_memvarSetValue(PHB_SYMB pMemvarSymb, PHB_ITEM pItem)
   }
 }
 
-HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
+HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, HB_SYMB *pMemvarSymb)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGet(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
@@ -374,7 +374,7 @@ HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
   return errCode;
 }
 
-void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
+void hb_memvarGetValue(PHB_ITEM pItem, HB_SYMB *pMemvarSymb)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
@@ -396,7 +396,7 @@ void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
   }
 }
 
-void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
+void hb_memvarGetRefer(PHB_ITEM pItem, HB_SYMB *pMemvarSymb)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetRefer(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
@@ -446,7 +446,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
   }
 }
 
-PHB_ITEM hb_memvarGetItem(PHB_SYMB pMemvarSymb)
+PHB_ITEM hb_memvarGetItem(HB_SYMB *pMemvarSymb)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetItem(%p)", static_cast<void*>(pMemvarSymb)));
@@ -466,7 +466,7 @@ PHB_ITEM hb_memvarGetItem(PHB_SYMB pMemvarSymb)
   return nullptr;
 }
 
-void hb_memvarNewParameter(PHB_SYMB pSymbol, PHB_ITEM pValue)
+void hb_memvarNewParameter(HB_SYMB *pSymbol, PHB_ITEM pValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarNewParameter(%p, %p)", static_cast<void*>(pSymbol), static_cast<void*>(pValue)));

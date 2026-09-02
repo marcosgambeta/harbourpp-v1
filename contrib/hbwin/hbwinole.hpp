@@ -147,7 +147,7 @@ extern HB_EXPORT IDispatch * hb_oleItemGet( PHB_ITEM pItem );
 extern HB_EXPORT PHB_ITEM    hb_oleItemPut( PHB_ITEM pItem, IDispatch * pDisp );
 extern HB_EXPORT PHB_ITEM    hb_oleItemGetCallBack( PHB_ITEM pItem );
 extern HB_EXPORT void        hb_oleItemSetCallBack( PHB_ITEM pItem, PHB_ITEM * pCallBack );
-extern HB_EXPORT HB_BOOL     hb_oleDispInvoke( PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam,
+extern HB_EXPORT HB_BOOL     hb_oleDispInvoke( HB_SYMB *pSym, PHB_ITEM pObject, PHB_ITEM pParam,
                                               DISPPARAMS * pParams, VARIANT * pVarResult,
                                               HB_OLEOBJ_FUNC pObjFunc, uint16_t uiClass );
 extern HB_EXPORT void        hb_oleItemSetDestructor( PHB_ITEM pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void * cargo );
