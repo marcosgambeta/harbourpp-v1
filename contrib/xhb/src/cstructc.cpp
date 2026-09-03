@@ -1345,7 +1345,7 @@ HB_FUNC(HB_STRING2POINTER)
 
 HB_FUNC(__CSTR_COPYTO)
 {
-  static PHB_DYNS s_pVALUE = nullptr;
+  static HB_DYNS *s_pVALUE = nullptr;
   auto pTarget = hb_param(1, Harbour::Item::ANY);
   void *pPointer;
 

@@ -132,8 +132,8 @@ using PINITDATA = INITDATA *;
 
 struct METHOD
 {
-  PHB_DYNS pMessage;    // Method symbolic name
-  PHB_DYNS pAccMsg;     // Corresponding access method symbolic name
+  HB_DYNS *pMessage;    // Method symbolic name
+  HB_DYNS *pAccMsg;     // Corresponding access method symbolic name
   HB_SYMB *pFuncSym;    // Function symbol
   HB_SYMB *pRealSym;    // Real function symbol when wrapper is used
   HB_TYPE itemType;     // Type of item in restricted assignment
@@ -158,7 +158,7 @@ using PMETHOD = METHOD *;
 struct CLASS
 {
   char *szName;              // Class name
-  PHB_DYNS pClassSym;        // Class symbolic name
+  HB_DYNS *pClassSym;        // Class symbolic name
   PMETHOD pMethods;          // Class methods
   HB_SYMB *pClassFuncSym;    // Class function symbol
   HB_SYMB *pFriendModule;    // Class friend symbols
@@ -402,7 +402,7 @@ static PHB_ITEM s_pClassMtx = nullptr;
 // ---
 
 #if 0
-static HB_SYMCNT hb_clsBucketPos(PHB_DYNS pMsg, HB_SYMCNT uiMask)
+static HB_SYMCNT hb_clsBucketPos(HB_DYNS *pMsg, HB_SYMCNT uiMask)
 {
    // we can use PHB_DYNS address as base for hash key.
    // This value is perfectly unique and we do not need anything more
@@ -483,7 +483,7 @@ static bool hb_clsDictRealloc(PCLASS pClass)
     pNewMethods = static_cast<PMETHOD>(hb_xgrabz((nNewHashKey << BUCKETBITS) * sizeof(METHOD)));
 
     for (n = 0; n < nLimit; n++) {
-      auto pMessage = static_cast<PHB_DYNS>(pClass->pMethods[n].pMessage);
+      auto pMessage = static_cast<HB_DYNS *>(pClass->pMethods[n].pMessage);
 
       if (pMessage) {
         PMETHOD pMethod = pNewMethods + hb_clsBucketPos(pMessage, nNewHashKey - 1);
@@ -533,7 +533,7 @@ static void hb_clsDictInit(PCLASS pClass, HB_SYMCNT uiHashKey)
 #endif
 }
 
-static PMETHOD hb_clsFindMsg(PCLASS pClass, PHB_DYNS pMsg)
+static PMETHOD hb_clsFindMsg(PCLASS pClass, HB_DYNS *pMsg)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_clsFindMsg(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pMsg)));
@@ -570,7 +570,7 @@ static PMETHOD hb_clsFindMsg(PCLASS pClass, PHB_DYNS pMsg)
   return nullptr;
 }
 
-static PMETHOD hb_clsAllocMsg(PCLASS pClass, PHB_DYNS pMsg)
+static PMETHOD hb_clsAllocMsg(PCLASS pClass, HB_DYNS *pMsg)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_clsAllocMsg(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pMsg)));
@@ -632,7 +632,7 @@ static bool hb_clsCanClearMethod(PMETHOD pMethod, bool fError)
   return true;
 }
 
-static void hb_clsFreeMsg(PCLASS pClass, PHB_DYNS pMsg)
+static void hb_clsFreeMsg(PCLASS pClass, HB_DYNS *pMsg)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_clsFreeMsg(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pMsg)));
@@ -697,7 +697,7 @@ static bool hb_clsHasParentClass(PCLASS pClass, uint16_t uiParentCls)
   // return pMethod && pMethod->pFuncSym == &s___msgSuper;
 }
 
-static uint16_t hb_clsGetParent(PCLASS pClass, PHB_DYNS pParentSym)
+static uint16_t hb_clsGetParent(PCLASS pClass, HB_DYNS *pParentSym)
 {
   uint16_t uiCount = pClass->uiSuperClasses;
 
@@ -1395,7 +1395,7 @@ const char *hb_clsMethodName(uint16_t uiClass, uint16_t uiMethod)
   return nullptr;
 }
 
-static HB_SIZE hb_clsGetVarIndexEx(uint16_t uiClass, PHB_DYNS pVarSym, uint16_t uiSuper)
+static HB_SIZE hb_clsGetVarIndexEx(uint16_t uiClass, HB_DYNS *pVarSym, uint16_t uiSuper)
 {
   PMETHOD pMethod = hb_clsFindMsg(s_pClasses[uiSuper], pVarSym);
   if (pMethod) {
@@ -1413,7 +1413,7 @@ static HB_SIZE hb_clsGetVarIndexEx(uint16_t uiClass, PHB_DYNS pVarSym, uint16_t 
   return 0;
 }
 
-HB_SIZE hb_clsGetVarIndex(uint16_t uiClass, PHB_DYNS pVarSym)
+HB_SIZE hb_clsGetVarIndex(uint16_t uiClass, HB_DYNS *pVarSym)
 {
   if (uiClass && uiClass <= s_uiClasses) {
     return hb_clsGetVarIndexEx(uiClass, pVarSym, uiClass);
@@ -1636,7 +1636,7 @@ static HB_SYMB *hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
   return pMethod->pFuncSym;
 }
 
-static HB_SYMB *hb_clsScalarMethod(PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STATE pStack)
+static HB_SYMB *hb_clsScalarMethod(PCLASS pClass, HB_DYNS *pMsg, PHB_STACK_STATE pStack)
 {
   PMETHOD pMethod = hb_clsFindMsg(pClass, pMsg);
 
@@ -1682,7 +1682,7 @@ HB_SYMB *hb_objGetMethod(PHB_ITEM pObject, HB_SYMB *pMessage, PHB_STACK_STATE pS
   HB_STACK_TLS_PRELOAD
   PCLASS pClass = nullptr;
 
-  PHB_DYNS pMsg = pMessage->pDynSym;
+  HB_DYNS *pMsg = pMessage->pDynSym;
 
   if (pObject->isArray()) {
     if (pObject->arrayValue()->uiClass) {
@@ -2217,7 +2217,7 @@ HB_BOOL hb_objOperatorCall(uint16_t uiOperator, PHB_ITEM pResult, PHB_ITEM pObje
 }
 
 // return true if object has a given message
-HB_BOOL hb_objHasMessage(PHB_ITEM pObject, PHB_DYNS pMessage)
+HB_BOOL hb_objHasMessage(PHB_ITEM pObject, HB_DYNS *pMessage)
 {
   return hb_objGetMethod(pObject, pMessage->pSymbol, nullptr) != nullptr;
 }
@@ -2241,7 +2241,7 @@ HB_BOOL hb_objHasMsg(PHB_ITEM pObject, const char *szString)
   }
 }
 
-PHB_ITEM hb_objSendMessage(PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, ...)
+PHB_ITEM hb_objSendMessage(PHB_ITEM pObject, HB_DYNS *pMsgSym, HB_ULONG ulArg, ...)
 {
   if (pObject && pMsgSym) {
     hb_vmPushSymbol(pMsgSym->pSymbol);
@@ -2386,7 +2386,7 @@ long hb_objDataGetNL(PHB_ITEM pObject, const char *szMsg)
 
 //
 
-PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
+PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, HB_DYNS *pVarMsg)
 {
   if (pObject && pObject->isObject() && pVarMsg) {
     uint16_t uiClass = pObject->arrayValue()->uiClass;
@@ -2419,9 +2419,9 @@ PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
   return nullptr;
 }
 
-static PHB_DYNS hb_objGetMsgSym(PHB_ITEM pMessage)
+static HB_DYNS *hb_objGetMsgSym(PHB_ITEM pMessage)
 {
-  PHB_DYNS pDynSym = nullptr;
+  HB_DYNS *pDynSym = nullptr;
 
   if (pMessage) {
     const char *szMsg = nullptr;
@@ -2491,7 +2491,7 @@ void hb_dbg_objSendMessage(int32_t iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessa
 {
   HB_STACK_TLS_PRELOAD
 
-  PHB_DYNS pMsgSym = hb_objGetMsgSym(pMessage);
+  HB_DYNS *pMsgSym = hb_objGetMsgSym(pMessage);
   if (pObject && pMsgSym) {
     uint16_t uiParams = 0;
 
@@ -2718,7 +2718,7 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
       uiScope |= HB_OO_CLSTP_EXPORTED;
     }
 
-    PHB_DYNS pMessage;
+    HB_DYNS *pMessage;
 
     // translate names of operator overloading messages
     if (uiType == HB_OO_MSG_DESTRUCTOR) {
@@ -2830,7 +2830,7 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
       break;
 
     case HB_OO_MSG_DELEGATE: {
-      PHB_DYNS pDelegMsg = hb_objGetMsgSym(pFunction);
+      HB_DYNS *pDelegMsg = hb_objGetMsgSym(pFunction);
       if (pDelegMsg) {
         pNewMeth = hb_clsFindMsg(pClass, pDelegMsg);
         if (pNewMeth) {
@@ -3582,7 +3582,7 @@ HB_FUNC(__OBJGETCLSNAME)
 // Is <cSymbol> a valid message for the <oObj>
 HB_FUNC(__OBJHASMSG)
 {
-  PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
+  HB_DYNS *pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
 
   if (pMessage) {
     HB_STACK_TLS_PRELOAD
@@ -3597,7 +3597,7 @@ HB_FUNC(__OBJHASMSG)
 // checks if function exists and is not virtual
 HB_FUNC(__OBJHASMSGASSIGNED)
 {
-  PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
+  HB_DYNS *pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
 
   if (pMessage) {
     HB_STACK_TLS_PRELOAD
@@ -3613,7 +3613,7 @@ HB_FUNC(__OBJHASMSGASSIGNED)
 // Send a message to an object
 HB_FUNC(__OBJSENDMSG)
 {
-  PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
+  HB_DYNS *pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
 
   if (pMessage) {
     HB_STACK_TLS_PRELOAD
@@ -4922,7 +4922,7 @@ HB_FUNC(__CLSGETANCESTORS)
 // -1 if message is not supported.
 HB_FUNC(__CLSMSGTYPE)
 {
-  PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
+  HB_DYNS *pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
 
   if (pMessage) {
     HB_STACK_TLS_PRELOAD

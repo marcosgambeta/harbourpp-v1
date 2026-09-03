@@ -346,12 +346,12 @@ typedef struct
    HB_BOOL   bSetFocus;
    HB_BOOL   bKillFocus;
 
-   PHB_DYNS  pSymWVT_PAINT;                 // Stores pointer to WVT_PAINT function
-   PHB_DYNS  pSymWVT_SETFOCUS;              // Stores pointer to WVT_SETFOCUS function
-   PHB_DYNS  pSymWVT_KILLFOCUS;             // Stores pointer to WVT_KILLFOCUS function
-   PHB_DYNS  pSymWVT_MOUSE;                 // Stores pointer to WVT_MOUSE function
-   PHB_DYNS  pSymWVT_TIMER;                 // Stores pointer to WVT_TIMER function
-   PHB_DYNS  pSymWVT_KEY;
+   HB_DYNS * pSymWVT_PAINT;                 // Stores pointer to WVT_PAINT function
+   HB_DYNS * pSymWVT_SETFOCUS;              // Stores pointer to WVT_SETFOCUS function
+   HB_DYNS * pSymWVT_KILLFOCUS;             // Stores pointer to WVT_KILLFOCUS function
+   HB_DYNS * pSymWVT_MOUSE;                 // Stores pointer to WVT_MOUSE function
+   HB_DYNS * pSymWVT_TIMER;                 // Stores pointer to WVT_TIMER function
+   HB_DYNS * pSymWVT_KEY;
 
    HPEN      currentPen;                    // Handle to current pen settable at runtime
    HBRUSH    currentBrush;                  // Handle to current brush settable by runtime

@@ -524,7 +524,7 @@ static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM
     auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
-    hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+    hb_errPutOperation(pError, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)));
     hb_errPutSubCode(pError, errCode);
     hb_errPutFlags(pError, EF_CANDEFAULT);
     errCode = SELF_ERROR(&pArea->area, pError);

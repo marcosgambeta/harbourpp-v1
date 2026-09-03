@@ -2156,7 +2156,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
     auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
-    hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+    hb_errPutOperation(pError, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)));
     hb_errPutSubCode(pError, EDBF_DATATYPE);
     SELF_ERROR(&pArea->area, pError);
     hb_itemRelease(pError);
@@ -2555,7 +2555,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
     auto pError = hb_errNew();
     hb_errPutGenCode(pError, hb_dbfGetEGcode(errCode));
     hb_errPutDescription(pError, hb_langDGetErrorDesc(hb_dbfGetEGcode(errCode)));
-    hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+    hb_errPutOperation(pError, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)));
     hb_errPutSubCode(pError, errCode);
     hb_errPutFlags(pError, EF_CANDEFAULT);
     hb_errPutArgs(pError, 1, pItem);
@@ -2911,7 +2911,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
   pArea->uiNullCount = 0;
   for (uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++) {
     LPFIELD pField = pArea->area.lpFields + uiCount;
-    hb_strncpy(reinterpret_cast<char *>(pThisField->bName), hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)),
+    hb_strncpy(reinterpret_cast<char *>(pThisField->bName), hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)),
                sizeof(pThisField->bName) - 1);
     pArea->pFieldOffset[uiCount] = pArea->uiRecordLen;
     // field offset
@@ -3480,7 +3480,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
     if (pItem->isLogical()) {
       pArea->fTrigger = pArea->pTriggerSym && pItem->getL();
     } else {
-      PHB_DYNS pTriggerSym = pArea->pTriggerSym;
+      HB_DYNS *pTriggerSym = pArea->pTriggerSym;
       if (pItem->isString()) {
         hb_dbfTriggerSet(pArea, pItem);
       }

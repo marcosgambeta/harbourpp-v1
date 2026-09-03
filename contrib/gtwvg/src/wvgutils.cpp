@@ -778,7 +778,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 
   PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
   PHB_ITEM pFunc = nullptr;
-  PHB_DYNS pExecSym;
+  HB_DYNS *pExecSym;
   HWND hDlg = 0;
   int32_t iType = 0;
   int32_t iIndex;
@@ -872,7 +872,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
 
   PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
   PHB_ITEM pFunc = nullptr;
-  PHB_DYNS pExecSym;
+  HB_DYNS *pExecSym;
   int32_t iIndex;
   int32_t iResource = hb_parni(4);
   intptr_t iResult = 0;

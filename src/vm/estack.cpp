@@ -431,7 +431,7 @@ HB_SYMCNT hb_stackDynHandlesCount(void)
   return hb_stack.uiDynH;
 }
 
-PHB_DYN_HANDLES hb_stackGetDynHandle(PHB_DYNS pDynSym)
+PHB_DYN_HANDLES hb_stackGetDynHandle(HB_DYNS *pDynSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackGetDynHandle()"));

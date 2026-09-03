@@ -103,11 +103,11 @@ extern HB_EXPORT HB_SYMB *hb_vmProcessDynLibSymbols(HB_SYMB *pSymbols, uint16_t 
    extern HB_BOOL hb_vmFindModuleSymbols(HB_SYMB *pSym, HB_SYMB **pSymbols, uint16_t *puiSymbols);
    extern HB_SYMB *hb_vmGetRealFuncSym(HB_SYMB *pSym);
    extern HB_EXPORT void hb_vmSetFunction(HB_SYMB *pOldSym, HB_SYMB *pNewSym);
-   extern HB_EXPORT void hb_vmSetDynFunc(PHB_DYNS pDynSym);
+   extern HB_EXPORT void hb_vmSetDynFunc(HB_DYNS *pDynSym);
 
    extern void hb_vmEnumRelease(PHB_ITEM pBase, PHB_ITEM pValue);
    // create extended message reference
-   extern HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg);
+   extern HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, HB_DYNS *pMessage, HB_DYNS *pAccMsg);
 
    extern void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int32_t iCount);
 
@@ -199,7 +199,7 @@ extern HB_EXPORT void hb_vmPushTimeStamp(long lJulian, long lMilliSec);
 // pushes a function pointer onto the stack
 extern HB_EXPORT void hb_vmPushSymbol(HB_SYMB *pSym);
 // pushes a function/method pointer onto the stack
-extern HB_EXPORT void hb_vmPushDynSym(PHB_DYNS pDynSym);
+extern HB_EXPORT void hb_vmPushDynSym(HB_DYNS *pDynSym);
 // pushes a codeblock eval symbol onto the stack
 extern HB_EXPORT void hb_vmPushEvalSym(void);
 // push an item of HB_IT_POINTER type

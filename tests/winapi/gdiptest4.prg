@@ -221,7 +221,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-  static PHB_DYNS s_pDynSym = nullptr;
+  static HB_DYNS *s_pDynSym = nullptr;
 
   if (s_pDynSym == nullptr)
   {
@@ -250,7 +250,7 @@ HB_FUNC_STATIC(GETWINDOWPROC)
 
 INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-  static PHB_DYNS s_pDynSym = nullptr;
+  static HB_DYNS *s_pDynSym = nullptr;
 
   if (s_pDynSym == nullptr)
   {

@@ -60,8 +60,8 @@
 #include <windows.h>
 
 static HB_SYMB *s_pFuncSymbol = nullptr;
-static PHB_DYNS s_pHbCStructDyn = nullptr;
-static PHB_DYNS s_pBufferMsg = nullptr;
+static HB_DYNS *s_pHbCStructDyn = nullptr;
+static HB_DYNS *s_pBufferMsg = nullptr;
 
 LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS *ExceptionInfo)
 {

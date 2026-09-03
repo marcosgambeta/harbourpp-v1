@@ -310,7 +310,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, L
     switch (iType) {
     case 1: // Function Name
       if (hb_vmRequestReenter()) {
-        hb_vmPushDynSym((PHB_DYNS)pFunc);
+        hb_vmPushDynSym((HB_DYNS *)pFunc);
         hb_vmPushNil();
         hb_vmPushNumInt((HB_MAXINT)(uintptr_t)hDlg);
         hb_vmPushNumInt(message);
@@ -403,7 +403,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, L
     switch (iType) {
     case 1: // Function Name
       if (hb_vmRequestReenter()) {
-        hb_vmPushDynSym((PHB_DYNS)pFunc);
+        hb_vmPushDynSym((HB_DYNS *)pFunc);
         hb_vmPushNil();
         hb_vmPushNumInt((HB_MAXINT)(uintptr_t)hDlg);
         hb_vmPushNumInt(message);

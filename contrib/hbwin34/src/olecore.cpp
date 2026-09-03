@@ -72,9 +72,9 @@
 // base date value in OLE (1899-12-30) as Julian day
 #define HB_OLE_DATE_BASE 0x0024D9AB
 
-static PHB_DYNS s_pDyns_hb_oleauto;
-static PHB_DYNS s_pDyns_hObjAccess;
-static PHB_DYNS s_pDyns_hObjAssign;
+static HB_DYNS *s_pDyns_hb_oleauto;
+static HB_DYNS *s_pDyns_hObjAccess;
+static HB_DYNS *s_pDyns_hObjAssign;
 
 typedef struct
 {

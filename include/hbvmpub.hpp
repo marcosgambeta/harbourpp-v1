@@ -139,7 +139,7 @@ struct _HB_SYMB;
       HB_ULONG  ulTime;           /* profiler support */
       HB_ULONG  ulRecurse;        /* profiler support */
 #  endif /* ! HB_NO_PROFILER */
-   } HB_DYNS, * PHB_DYNS;
+   } HB_DYNS, * PHB_DYNS; // NOTE: PHB_DYNS is deprecated in Harbour++ source code
 
    /* pCode dynamic function - HRB */
    typedef struct _HB_PCODEFUNC
@@ -186,9 +186,10 @@ struct _HB_SYMB;
    typedef struct
    {
       struct _HB_SYMB * pSymbol; /* pointer to its relative local symbol */
-   } _HB_DYNS, * PHB_DYNS;
+   } _HB_DYNS, * PHB_DYNS; // NOTE: PHB_DYNS is deprecated in Harbour++ source code
 #else
-   typedef void *  PHB_DYNS;
+   typedef void *  PHB_DYNS; // NOTE: PHB_DYNS is deprecated in Harbour++ source code
+   typedef void    HB_DYNS;
 #endif
 
 #endif // ! _HB_API_INTERNAL_
@@ -208,10 +209,10 @@ typedef struct _HB_SYMB
       PHB_PCODEFUNC  pCodeFunc;     /* PCODE function address */
       void *         pStaticsBase;  /* base offset to array of statics */
    } value;
-   PHB_DYNS       pDynSym;          /* pointer to its dynamic symbol if defined */
+   HB_DYNS *      pDynSym;          /* pointer to its dynamic symbol if defined */
 } HB_SYMB, * PHB_SYMB; // NOTE: PHB_SYMB is deprecated in Harbour++ source code
 
-#define HB_DYNS_FUNC( hbfunc )   HB_BOOL hbfunc( PHB_DYNS pDynSymbol, void * Cargo )
+#define HB_DYNS_FUNC( hbfunc )   HB_BOOL hbfunc( HB_DYNS *pDynSymbol, void * Cargo )
 typedef HB_DYNS_FUNC( ( * PHB_DYNS_FUNC ) );
 
 #define HB_CARGO_FUNC( func )    void func( void *cargo )

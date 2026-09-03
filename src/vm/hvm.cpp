@@ -303,7 +303,7 @@ static void hb_vmDebuggerShowLine(uint16_t uiLine);
 // notifies the debugger for an endproc
 static void hb_vmDebuggerEndProc();
 
-static PHB_DYNS s_pDynsDbgEntry = nullptr; // Cached __DBGENTRY symbol
+static HB_DYNS *s_pDynsDbgEntry = nullptr; // Cached __DBGENTRY symbol
 static HB_DBGENTRY_FUNC s_pFunDbgEntry;    // C level debugger entry
 #endif
 
@@ -1156,7 +1156,7 @@ void hb_vmSetFunction(HB_SYMB *pOldSym, HB_SYMB *pNewSym)
   }
 }
 
-void hb_vmSetDynFunc(PHB_DYNS pDynSym)
+void hb_vmSetDynFunc(HB_DYNS *pDynSym)
 {
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
 
@@ -2879,28 +2879,28 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
       // macro compiled opcodes - we are using symbol address here
 
     case HB_P_MMESSAGE: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPushSymbol(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPOPALIASEDFIELD: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPopAliasedField(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPOPALIASEDVAR: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPopAliasedVar(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPOPFIELD: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       // Pops a value from the eval stack and uses it to set
       // a new value of the given field
       hb_rddPutFieldValue((hb_stackItemFromTop(-1)), pDynSym->pSymbol);
@@ -2908,32 +2908,32 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPopField)"));
 #endif
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPOPMEMVAR: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_memvarSetValue(pDynSym->pSymbol, hb_stackItemFromTop(-1));
       hb_stackPop();
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPopMemvar)"));
 #endif
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPUSHALIASEDFIELD: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPushAliasedField(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPUSHALIASEDVAR: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPushAliasedVar(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
@@ -2968,47 +2968,47 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
     }
 
     case HB_P_MPUSHFIELD: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       // It pushes the current value of the given field onto the eval stack
       hb_rddGetFieldValue(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPushField)"));
 #endif
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPUSHMEMVAR: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_memvarGetValue(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPushMemvar)"));
 #endif
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPUSHMEMVARREF: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_memvarGetRefer(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPushMemvarRef)"));
 #endif
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPUSHSYM: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPushSymbol(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
     case HB_P_MPUSHVARIABLE: {
-      auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+      auto pDynSym = static_cast<HB_DYNS *>(HB_GET_PTR(pCode + 1));
       hb_vmPushVariable(pDynSym->pSymbol);
-      pCode += sizeof(PHB_DYNS) + 1;
+      pCode += sizeof(HB_DYNS *) + 1;
       break;
     }
 
@@ -6698,7 +6698,7 @@ void hb_vmPushSymbol(HB_SYMB *pSym)
   pItem->setSymbolStackState(nullptr);
 }
 
-void hb_vmPushDynSym(PHB_DYNS pDynSym)
+void hb_vmPushDynSym(HB_DYNS *pDynSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushDynSym(%p)", static_cast<void*>(pDynSym)));
@@ -8031,8 +8031,8 @@ void hb_vmPushItemRef(PHB_ITEM pItem)
 // extended message reference structure
 struct HB_MSGREF
 {
-  PHB_DYNS access;
-  PHB_DYNS assign;
+  HB_DYNS *access;
+  HB_DYNS *assign;
   HB_ITEM object;
   HB_ITEM value;
 };
@@ -8146,7 +8146,7 @@ static void hb_vmMsgRefMark(void *value)
 }
 
 // create extended message reference
-HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
+HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, HB_DYNS *pMessage, HB_DYNS *pAccMsg)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmMsgReference(%p,%p,%p)", static_cast<void*>(pObject), static_cast<void*>(pMessage), static_cast<void*>(pAccMsg)));

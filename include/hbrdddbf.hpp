@@ -238,7 +238,7 @@ typedef struct _DBFAREA
    HB_ULONG *  pLocksPos;           /* List of records locked */
    HB_ULONG    ulNumLocksPos;       /* Number of records locked */
    char *      pCryptKey;           /* Pointer to encryption key */
-   PHB_DYNS    pTriggerSym;         /* DynSym pointer to trigger function */
+   HB_DYNS *   pTriggerSym;         /* DynSym pointer to trigger function */
 } DBFAREA;
 
 typedef DBFAREA * LPDBFAREA;

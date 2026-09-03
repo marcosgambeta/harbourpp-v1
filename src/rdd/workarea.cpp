@@ -531,7 +531,7 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, uint16_t uiIndex, uint16_t uiType,
   pField = pArea->lpFields + uiIndex - 1;
   switch (uiType) {
   case DBS_NAME:
-    hb_itemPutC(pItem, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+    hb_itemPutC(pItem, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)));
     break;
 
   case DBS_TYPE: {
@@ -702,7 +702,7 @@ static HB_ERRCODE hb_waFieldName(AREAP pArea, uint16_t uiIndex, char *szName)
   }
 
   pField = pArea->lpFields + uiIndex - 1;
-  hb_strncpy(szName, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)), pArea->uiMaxFieldNameLength);
+  hb_strncpy(szName, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), pArea->uiMaxFieldNameLength);
   return Harbour::SUCCESS;
 }
 
@@ -731,8 +731,8 @@ static HB_ERRCODE hb_waAlias(AREAP pArea, char *szAlias)
 #endif
 
   hb_strncpy(szAlias,
-             pArea->atomAlias && hb_dynsymAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias))
-                 ? hb_dynsymName(static_cast<PHB_DYNS>(pArea->atomAlias))
+             pArea->atomAlias && hb_dynsymAreaHandle(static_cast<HB_DYNS *>(pArea->atomAlias))
+                 ? hb_dynsymName(static_cast<HB_DYNS *>(pArea->atomAlias))
                  : "",
              HB_RDD_MAX_ALIAS_LEN);
 
@@ -755,7 +755,7 @@ static HB_ERRCODE hb_waClose(AREAP pArea)
   hb_rddCloseAllParentRelations(pArea);
 
   if (pArea->atomAlias) {
-    hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), 0);
+    hb_dynsymSetAreaHandle(static_cast<HB_DYNS *>(pArea->atomAlias), 0);
   }
 
   return Harbour::SUCCESS;

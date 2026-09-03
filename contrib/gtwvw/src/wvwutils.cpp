@@ -2011,7 +2011,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
 {
   auto pFirst = hb_param(3, Harbour::Item::ANY);
   PHB_ITEM pFunc = nullptr;
-  PHB_DYNS pExecSym;
+  HB_DYNS *pExecSym;
   auto p = hb_getWvwData();
   HWND hDlg = nullptr;
   int32_t iIndex;
@@ -2102,7 +2102,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
 {
   auto pFirst = hb_param(3, Harbour::Item::ANY);
   PHB_ITEM pFunc = nullptr;
-  PHB_DYNS pExecSym;
+  HB_DYNS *pExecSym;
   auto p = hb_getWvwData();
   int32_t iIndex;
   auto iResource = hb_parni(4);

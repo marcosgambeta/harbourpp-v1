@@ -555,7 +555,7 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
   hb_waNodeDelete(hb_stackRDD());
   pArea->uiArea = 0;
   if (pArea->atomAlias) {
-    hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), 0);
+    hb_dynsymSetAreaHandle(static_cast<HB_DYNS *>(pArea->atomAlias), 0);
   }
 
   // restore previous WA number
@@ -588,7 +588,7 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
 
 AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, HB_ULONG ulMilliSec)
 {
-  PHB_DYNS pSymAlias = nullptr;
+  HB_DYNS *pSymAlias = nullptr;
   AREAP pArea = nullptr;
 
   if (pCargo) {
@@ -627,7 +627,7 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
         for (nPos = 1; nPos <= nLen; ++nPos) {
           AREAP *pDetachedArea =
               static_cast<AREAP *>(hb_arrayGetPtrGC(hb_arrayGetItemPtr(s_pDetachedAreas, nPos), 1, &s_gcWAFuncs));
-          if (pSymAlias == static_cast<PHB_DYNS>((*pDetachedArea)->atomAlias)) {
+          if (pSymAlias == static_cast<HB_DYNS *>((*pDetachedArea)->atomAlias)) {
             break;
           }
         }
@@ -670,8 +670,8 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
   if (pArea != nullptr) {
     hb_waNodeInsert(hb_stackRDD(), pArea);
     if (pArea->atomAlias) {
-      if (hb_dynsymAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias)) == 0) {
-        hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), pArea->uiArea);
+      if (hb_dynsymAreaHandle(static_cast<HB_DYNS *>(pArea->atomAlias)) == 0) {
+        hb_dynsymSetAreaHandle(static_cast<HB_DYNS *>(pArea->atomAlias), pArea->uiArea);
       }
     }
   }
@@ -695,7 +695,7 @@ PHB_ITEM hb_rddDetachedList(void)
     for (HB_SIZE nPos = 1; nPos <= nLen; ++nPos) {
       AREAP *pDetachedArea =
           static_cast<AREAP *>(hb_arrayGetPtrGC(hb_arrayGetItemPtr(s_pDetachedAreas, nPos), 1, &s_gcWAFuncs));
-      PHB_DYNS pAlias = static_cast<PHB_DYNS>((*pDetachedArea)->atomAlias);
+      HB_DYNS *pAlias = static_cast<HB_DYNS *>((*pDetachedArea)->atomAlias);
       hb_arraySetC(pArray, nPos, hb_dynsymName(pAlias));
     }
   }

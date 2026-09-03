@@ -117,7 +117,7 @@ HB_TSD_HOLDER, * PHB_TSD_HOLDER;
 
 typedef struct
 {
-   PHB_DYNS    pDynSym;
+   HB_DYNS *   pDynSym;
    PHB_ITEM    pPrevMemvar;
 }
 HB_PRIVATE_ITEM, * PHB_PRIVATE_ITEM;
@@ -356,7 +356,7 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int32_t 
    extern void *           hb_stackList( void );
    extern void             hb_stackListSet( void * pStackLst );
    extern void             hb_stackIdSetActionRequest( void * pStackID, uint16_t uiAction );
-   extern PHB_DYN_HANDLES  hb_stackGetDynHandle( PHB_DYNS pDynSym );
+   extern PHB_DYN_HANDLES  hb_stackGetDynHandle( HB_DYNS *pDynSym );
    extern HB_SYMCNT        hb_stackDynHandlesCount( void );
    extern void             hb_stackClearMemvars( HB_SYMCNT );
    extern HB_BOOL          hb_stackQuitState( void );

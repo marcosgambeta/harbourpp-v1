@@ -1859,7 +1859,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
     switch (iType) {
     case 1:
       if (hb_vmRequestReenter()) {
-        hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
+        hb_vmPushDynSym(reinterpret_cast<HB_DYNS *>(pFunc));
         hb_vmPushNil();
         hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hDlg)));
         hb_vmPushNumInt(message);
@@ -1987,7 +1987,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
     switch (iType) {
     case 1:
       if (hb_vmRequestReenter()) {
-        hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
+        hb_vmPushDynSym(reinterpret_cast<HB_DYNS *>(pFunc));
 
         hb_vmPushNil();
         hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<uintptr_t>(hDlg)));

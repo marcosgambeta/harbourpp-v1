@@ -433,17 +433,17 @@ struct WVW_GLO
       int32_t       iBMcache;                 /* number of bitmap cached */
       int32_t       iMaxBMcache;              /* maximum number of bitmap cached */
 
-      PHB_DYNS pSymWVW_PAINT;             /* Pointer to WVW_PAINT() function */
-      PHB_DYNS pSymWVW_SETFOCUS;          /* Pointer to WVW_SETFOCUS() function */
-      PHB_DYNS pSymWVW_KILLFOCUS;         /* Pointer to WVW_KILLFOCUS() function */
-      PHB_DYNS pSymWVW_MOUSE;             /* Pointer to WVW_MOUSE() function */
-      PHB_DYNS pSymWVW_TBMOUSE;           /* Pointer to WVW_TBMOUSE() function */
-      PHB_DYNS pSymWVW_MENUSELECT;        /* Pointer to WVW_MENUSELECT() function*/
-      PHB_DYNS pSymWVW_SIZE;              /* Pointer to WVW_SIZE() function */
-      PHB_DYNS pSymWVW_MOVE;              /* Pointer to WVW_MOVE() function */
-      PHB_DYNS pSymWVW_INPUTFOCUS;        /* Pointer to WVW_INPUTFOCUS() function */
-      PHB_DYNS pSymWVW_TIMER;             /* Pointer to WVW_TIMER() function */
-      PHB_DYNS pSymWVW_ONCTLCOLOR;        /* Pointer to WVW_ONCTLCOLOR() function */
+      HB_DYNS *pSymWVW_PAINT;             /* Pointer to WVW_PAINT() function */
+      HB_DYNS *pSymWVW_SETFOCUS;          /* Pointer to WVW_SETFOCUS() function */
+      HB_DYNS *pSymWVW_KILLFOCUS;         /* Pointer to WVW_KILLFOCUS() function */
+      HB_DYNS *pSymWVW_MOUSE;             /* Pointer to WVW_MOUSE() function */
+      HB_DYNS *pSymWVW_TBMOUSE;           /* Pointer to WVW_TBMOUSE() function */
+      HB_DYNS *pSymWVW_MENUSELECT;        /* Pointer to WVW_MENUSELECT() function*/
+      HB_DYNS *pSymWVW_SIZE;              /* Pointer to WVW_SIZE() function */
+      HB_DYNS *pSymWVW_MOVE;              /* Pointer to WVW_MOVE() function */
+      HB_DYNS *pSymWVW_INPUTFOCUS;        /* Pointer to WVW_INPUTFOCUS() function */
+      HB_DYNS *pSymWVW_TIMER;             /* Pointer to WVW_TIMER() function */
+      HB_DYNS *pSymWVW_ONCTLCOLOR;        /* Pointer to WVW_ONCTLCOLOR() function */
    } a;
 
 };

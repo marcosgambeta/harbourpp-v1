@@ -208,7 +208,7 @@ uint16_t hb_rddFieldIndex(AREAP pArea, const char *szName)
 
         while (pField) {
           ++uiCount;
-          if (pDynSym == static_cast<PHB_DYNS>(pField->sym)) {
+          if (pDynSym == static_cast<HB_DYNS *>(pField->sym)) {
             return uiCount;
           }
           pField = pField->lpfNext;
@@ -414,10 +414,10 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
   if (pArea != nullptr) {
     uint16_t uiField = 1;
     LPFIELD pField = pArea->lpFields;
-    PHB_DYNS pDynSym = pFieldSymbol->pDynSym;
+    HB_DYNS *pDynSym = pFieldSymbol->pDynSym;
 
     while (pField) {
-      if (static_cast<PHB_DYNS>(pField->sym) == pDynSym) {
+      if (static_cast<HB_DYNS *>(pField->sym) == pDynSym) {
         return SELF_GETVALUE(pArea, uiField, pItem);
       }
       ++uiField;
@@ -438,10 +438,10 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, HB_SYMB *pFieldSymbol)
   if (pArea != nullptr) {
     uint16_t uiField = 1;
     LPFIELD pField = pArea->lpFields;
-    PHB_DYNS pDynSym = pFieldSymbol->pDynSym;
+    HB_DYNS *pDynSym = pFieldSymbol->pDynSym;
 
     while (pField) {
-      if (static_cast<PHB_DYNS>(pField->sym) == pDynSym) {
+      if (static_cast<HB_DYNS *>(pField->sym) == pDynSym) {
         return SELF_PUTVALUE(pArea, uiField, pItem);
       }
       ++uiField;

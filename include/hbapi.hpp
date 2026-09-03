@@ -1938,15 +1938,15 @@ extern HB_EXPORT void hb_put_le_uint64(const uint8_t *ptr, double d);
 
 // dynamic symbol table management
 // finds and creates a dynamic symbol if not found
-extern HB_EXPORT PHB_DYNS hb_dynsymGet(const char *szName);
+extern HB_EXPORT HB_DYNS *hb_dynsymGet(const char *szName);
 // finds and creates a dynamic symbol if not found - case sensitive
-extern HB_EXPORT PHB_DYNS hb_dynsymGetCase(const char *szName);
+extern HB_EXPORT HB_DYNS *hb_dynsymGetCase(const char *szName);
 // creates a new dynamic symbol based on a local one
-extern HB_EXPORT PHB_DYNS hb_dynsymNew(HB_SYMB *pSymbol);
+extern HB_EXPORT HB_DYNS *hb_dynsymNew(HB_SYMB *pSymbol);
 // finds a dynamic symbol
-extern HB_EXPORT PHB_DYNS hb_dynsymFind(const char *szName);
+extern HB_EXPORT HB_DYNS *hb_dynsymFind(const char *szName);
 // converts to uppercase and finds a dynamic symbol
-extern HB_EXPORT PHB_DYNS hb_dynsymFindName(const char *szName);
+extern HB_EXPORT HB_DYNS *hb_dynsymFindName(const char *szName);
 // releases the memory of the dynamic symbol table
 extern HB_EXPORT void hb_dynsymRelease(void);
 // enumerates all dynamic symbols
@@ -1957,22 +1957,22 @@ extern HB_EXPORT void hb_dynsymProtectEval(PHB_DYNS_FUNC pFunction, void *Cargo)
 extern HB_EXPORT HB_SYMB *hb_dynsymGetSymbol(const char *szName);
 // finds a dynamic symbol and return pointer to its HB_SYMB structure
 extern HB_EXPORT HB_SYMB *hb_dynsymFindSymbol(const char *szName);
-extern HB_EXPORT HB_SYMB *hb_dynsymSymbol(PHB_DYNS pDynSym);
+extern HB_EXPORT HB_SYMB *hb_dynsymSymbol(HB_DYNS *pDynSym);
 // return dynamic symbol name
-extern HB_EXPORT const char *hb_dynsymName(PHB_DYNS pDynSym);
-extern HB_EXPORT HB_BOOL hb_dynsymIsFunction(PHB_DYNS pDynSym);
-extern HB_EXPORT HB_BOOL hb_dynsymIsMemvar(PHB_DYNS pDynSym);
+extern HB_EXPORT const char *hb_dynsymName(HB_DYNS *pDynSym);
+extern HB_EXPORT HB_BOOL hb_dynsymIsFunction(HB_DYNS *pDynSym);
+extern HB_EXPORT HB_BOOL hb_dynsymIsMemvar(HB_DYNS *pDynSym);
 // return work area number bound with given dynamic symbol
-extern HB_EXPORT int32_t hb_dynsymAreaHandle(PHB_DYNS pDynSym);
+extern HB_EXPORT int32_t hb_dynsymAreaHandle(HB_DYNS *pDynSym);
 // set work area number for a given dynamic symbol
-extern HB_EXPORT void hb_dynsymSetAreaHandle(PHB_DYNS pDynSym, int32_t iArea);
-extern HB_EXPORT HB_SYMCNT hb_dynsymToNum(PHB_DYNS pDynSym);
-extern HB_EXPORT PHB_DYNS hb_dynsymFromNum(HB_SYMCNT iSymNum);
+extern HB_EXPORT void hb_dynsymSetAreaHandle(HB_DYNS *pDynSym, int32_t iArea);
+extern HB_EXPORT HB_SYMCNT hb_dynsymToNum(HB_DYNS *pDynSym);
+extern HB_EXPORT HB_DYNS *hb_dynsymFromNum(HB_SYMCNT iSymNum);
 #ifdef _HB_API_INTERNAL_
 // return memvar handle number bound with given dynamic symbol
-extern PHB_ITEM hb_dynsymGetMemvar(PHB_DYNS pDynSym);
+extern PHB_ITEM hb_dynsymGetMemvar(HB_DYNS *pDynSym);
 // set memvar handle for a given dynamic symbol
-extern void hb_dynsymSetMemvar(PHB_DYNS pDynSym, PHB_ITEM pMemvar);
+extern void hb_dynsymSetMemvar(HB_DYNS *pDynSym, PHB_ITEM pMemvar);
 // number of dynamic symbols
 extern HB_LONG hb_dynsymCount(void);
 #endif
@@ -2054,7 +2054,7 @@ extern void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int32_t iScope, PHB_ITEM p
 extern int32_t hb_memvarScope(const char *szVarName, HB_SIZE nLength);
 // Detach a local variable from the eval stack
 extern PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal);
-extern HB_EXPORT PHB_ITEM hb_memvarGetValueBySym(PHB_DYNS pDynSym);
+extern HB_EXPORT PHB_ITEM hb_memvarGetValueBySym(HB_DYNS *pDynSym);
 // create array with visible memvar references or copies respecting given memvars scope
 extern HB_EXPORT PHB_ITEM hb_memvarSaveInArray(int32_t iScope, HB_BOOL fCopy);
 extern void hb_memvarRestoreFromArray(PHB_ITEM pArray);

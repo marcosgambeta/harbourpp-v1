@@ -405,7 +405,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
       }
     }
 
-    PHB_DYNS pDynSym;
+    HB_DYNS *pDynSym;
 
     // End of PCODE loading, now linking
     for (ul = 0; ul < pHrbBody->ulSymbols; ul++) {

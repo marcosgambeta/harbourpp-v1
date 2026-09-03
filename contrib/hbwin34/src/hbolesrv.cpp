@@ -95,12 +95,12 @@ static HB_BOOL s_objItemToVariant(VARIANT *pVariant, PHB_ITEM pItem);
 
 // helper functions
 
-static DISPID hb_dynsymToDispId(PHB_DYNS pDynSym)
+static DISPID hb_dynsymToDispId(HB_DYNS *pDynSym)
 {
   return static_cast<DISPID>(hb_dynsymToNum(pDynSym));
 }
 
-static PHB_DYNS hb_dispIdToDynsym(DISPID dispid)
+static HB_DYNS *hb_dispIdToDynsym(DISPID dispid)
 {
   if (static_cast<LONG>(dispid) > 0) {
     return hb_dynsymFromNum(static_cast<int>(dispid));
@@ -339,7 +339,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch *lpThis, REFIID riid, L
 static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID riid, LCID lcid, WORD wFlags,
                                         DISPPARAMS *pParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
 {
-  PHB_DYNS pDynSym;
+  HB_DYNS *pDynSym;
   PHB_ITEM pAction;
   uint16_t uiClass = 0;
 

@@ -1681,7 +1681,7 @@ HB_FUNC(NETIO_SERVER)
                      }
                      else
                      {
-                        PHB_DYNS pDynSym = nullptr;
+                        HB_DYNS *pDynSym = nullptr;
                         PHB_ITEM pItem = nullptr;
 
                         if( conn->rpcFilter )
@@ -1902,7 +1902,7 @@ HB_FUNC(NETIO_SERVER)
  */
 HB_FUNC(NETIO_SERVEDCONNECTION)
 {
-   static PHB_DYNS s_pDyns_netio_server = nullptr;
+   static HB_DYNS *s_pDyns_netio_server = nullptr;
 
    if( s_pDyns_netio_server == nullptr )
    {

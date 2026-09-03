@@ -51,7 +51,7 @@
 
 HB_FUNC(__XHELP)
 {
-  static PHB_DYNS s_pDynSym = nullptr;
+  static HB_DYNS *s_pDynSym = nullptr;
 
   if (s_pDynSym == nullptr) {
     s_pDynSym = hb_dynsymGetCase("HELP");

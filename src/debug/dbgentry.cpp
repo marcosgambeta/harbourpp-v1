@@ -177,7 +177,7 @@ struct HB_DEBUGINFO
   bool bInitGlobals;
   bool bInitStatics;
   bool bInitLines;
-  PHB_DYNS pDbgEntry;
+  HB_DYNS *pDbgEntry;
 };
 
 static HB_DBGCOMMONINFO s_common = {0, nullptr, nullptr};

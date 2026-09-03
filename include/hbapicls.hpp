@@ -158,7 +158,7 @@ extern HB_EXPORT const char *hb_clsMethodName(uint16_t uiClass, uint16_t uiMetho
 extern HB_EXPORT HB_SYMB *hb_clsFuncSym(uint16_t uiClass);
 // is a class handle inherited from szParentName Class ?
 extern HB_EXPORT HB_BOOL hb_clsIsParent(uint16_t uiClass, const char *szParentName);
-extern HB_EXPORT HB_SIZE hb_clsGetVarIndex(uint16_t uiClass, PHB_DYNS pVarSym);
+extern HB_EXPORT HB_SIZE hb_clsGetVarIndex(uint16_t uiClass, HB_DYNS *pVarSym);
 extern HB_EXPORT uint16_t hb_clsFindClass(const char *szClass, const char *szClassFunc);
 
 // object management
@@ -173,9 +173,9 @@ extern HB_EXPORT const char *hb_objGetRealClsName(PHB_ITEM pObject, const char *
 
 // returns HB_TRUE/HB_FALSE whether szString is an existing message for object
 extern HB_EXPORT HB_BOOL hb_objHasMsg(PHB_ITEM pObject, const char *szString);
-extern HB_EXPORT HB_BOOL hb_objHasMessage(PHB_ITEM pObject, PHB_DYNS pMessage);
+extern HB_EXPORT HB_BOOL hb_objHasMessage(PHB_ITEM pObject, HB_DYNS *pMessage);
 extern HB_EXPORT PHB_ITEM hb_objSendMsg(PHB_ITEM pObj, const char *sMsg, HB_ULONG ulArg, ...);
-extern HB_EXPORT PHB_ITEM hb_objSendMessage(PHB_ITEM pObj, PHB_DYNS pMessage, HB_ULONG ulArg, ...);
+extern HB_EXPORT PHB_ITEM hb_objSendMessage(PHB_ITEM pObj, HB_DYNS *pMessage, HB_ULONG ulArg, ...);
 
 // DATA Put/Get (experimental/work in progress)
 extern HB_EXPORT PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObj, const char *sMsg, void *value);
@@ -188,7 +188,7 @@ extern HB_EXPORT PHB_ITEM hb_objDataPutNL(PHB_ITEM pObj, const char *sMsg, long 
 extern HB_EXPORT long hb_objDataGetNL(PHB_ITEM pObj, const char *sMsg);
 //
 
-extern HB_EXPORT PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg);
+extern HB_EXPORT PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, HB_DYNS *pVarMsg);
 
 // send message which allows to set execution context for debugger
 extern HB_EXPORT void hb_dbg_objSendMessage(int32_t iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int32_t iParamOffset);

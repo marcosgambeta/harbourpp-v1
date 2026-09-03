@@ -670,7 +670,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wP
       switch (iType) {
       case 1: /* Function Name */
         if (hb_vmRequestReenter()) {
-          hb_vmPushDynSym((PHB_DYNS)pFunc);
+          hb_vmPushDynSym((HB_DYNS *)pFunc);
           hb_vmPushNil();
           hbwapi_vmPush_HANDLE(hDlg);
           hb_vmPushNumInt(message);
@@ -764,7 +764,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
       switch (iType) {
       case 1: /* Function Name */
         if (hb_vmRequestReenter()) {
-          hb_vmPushDynSym((PHB_DYNS)pFunc);
+          hb_vmPushDynSym((HB_DYNS *)pFunc);
           hb_vmPushNil();
           hbwapi_vmPush_HANDLE(hDlg);
           hb_vmPushNumInt(message);
@@ -846,7 +846,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
     if (iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModeless)) {
       PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
       PHB_ITEM pFunc = nullptr;
-      PHB_DYNS pExecSym;
+      HB_DYNS *pExecSym;
       int32_t iType = 0;
       int32_t iResource = hb_parni(4);
 
@@ -936,7 +936,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
     if (iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModal)) {
       PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
       PHB_ITEM pFunc = nullptr;
-      PHB_DYNS pExecSym;
+      HB_DYNS *pExecSym;
       int32_t iResource = hb_parni(4);
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : _s->hWnd;
 

@@ -366,20 +366,20 @@ struct app_data
    UINT uiBMcache;                     /* number of bitmap cached */
    UINT uiMaxBMcache;                  /* maximum number of bitmap cached */
 
-   PHB_DYNS pSymWVW_PAINT;             /* Stores pointer to WVW_PAINT function     */
-   PHB_DYNS pSymWVW_SETFOCUS;          /* Stores pointer to WVW_SETFOCUS function  */
-   PHB_DYNS pSymWVW_KILLFOCUS;         /* Stores pointer to WVW_KILLFOCUS function */
-   PHB_DYNS pSymWVW_MOUSE;             /* Stores pointer to WVW_MOUSE function     */
-   PHB_DYNS pSymWVW_TBMOUSE;           /* Stores pointer to WVW_TBMOUSE function   */
-   PHB_DYNS pSymWVW_MENUSELECT;        /* Stores pointer to WVW_MENUSELECT function*/
+   HB_DYNS *pSymWVW_PAINT;             /* Stores pointer to WVW_PAINT function     */
+   HB_DYNS *pSymWVW_SETFOCUS;          /* Stores pointer to WVW_SETFOCUS function  */
+   HB_DYNS *pSymWVW_KILLFOCUS;         /* Stores pointer to WVW_KILLFOCUS function */
+   HB_DYNS *pSymWVW_MOUSE;             /* Stores pointer to WVW_MOUSE function     */
+   HB_DYNS *pSymWVW_TBMOUSE;           /* Stores pointer to WVW_TBMOUSE function   */
+   HB_DYNS *pSymWVW_MENUSELECT;        /* Stores pointer to WVW_MENUSELECT function*/
 
-   PHB_DYNS pSymWVW_SIZE;              /* Stores pointer to WVW_SIZE function */
-   PHB_DYNS pSymWVW_MOVE;              /* Stores pointer to WVW_MOVE function */
+   HB_DYNS *pSymWVW_SIZE;              /* Stores pointer to WVW_SIZE function */
+   HB_DYNS *pSymWVW_MOVE;              /* Stores pointer to WVW_MOVE function */
 
-   PHB_DYNS pSymWVW_INPUTFOCUS;        /* Stores pointer to WVW_INPUTFOCUS function*/
+   HB_DYNS *pSymWVW_INPUTFOCUS;        /* Stores pointer to WVW_INPUTFOCUS function*/
 
-   PHB_DYNS pSymWVW_TIMER;             /* Stores pointer to WVW_TIMER function     */
-   PHB_DYNS pSymWVW_ONCTLCOLOR;        /* Stores pointer to WVW_TIMER function     */
+   HB_DYNS *pSymWVW_TIMER;             /* Stores pointer to WVW_TIMER function     */
+   HB_DYNS *pSymWVW_ONCTLCOLOR;        /* Stores pointer to WVW_TIMER function     */
 
 };
 using APP_DATA = app_data;

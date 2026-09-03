@@ -128,7 +128,7 @@ static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
   pBuffer = pArea->pBuffer;
 
   for (uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++) {
-    pszFieldName = hb_dynsymName(static_cast<PHB_DYNS>((pArea->area.lpFields + uiCount)->sym));
+    pszFieldName = hb_dynsymName(static_cast<HB_DYNS *>((pArea->area.lpFields + uiCount)->sym));
     nSize += strlen(pszFieldName) + 3;
   }
   if (nSize > 0) {
@@ -139,7 +139,7 @@ static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
 
     nSize = 0;
     for (uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++) {
-      pszFieldName = hb_dynsymName(static_cast<PHB_DYNS>((pArea->area.lpFields + uiCount)->sym));
+      pszFieldName = hb_dynsymName(static_cast<HB_DYNS *>((pArea->area.lpFields + uiCount)->sym));
       nS = strlen(pszFieldName);
       if (uiCount) {
         pBuffer[nSize++] = pArea->cSeparator;
@@ -730,7 +730,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM 
     auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
-    hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+    hb_errPutOperation(pError, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)));
     hb_errPutSubCode(pError, EDBF_DATATYPE);
     SELF_ERROR(&pArea->area, pError);
     hb_itemRelease(pError);
@@ -831,7 +831,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM 
 
     hb_errPutGenCode(pError, errGenCode);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
-    hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+    hb_errPutOperation(pError, hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)));
     hb_errPutSubCode(pError, errCode);
     hb_errPutFlags(pError, EF_CANDEFAULT);
     errCode = SELF_ERROR(&pArea->area, pError);

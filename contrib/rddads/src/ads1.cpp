@@ -3081,7 +3081,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
     case Harbour::DB::Field::IMAGE:
     case Harbour::DB::Field::BLOB:
       uiFldLen = hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s;", static_cast<int>(pArea->area.uiMaxFieldNameLength),
-                             hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)), cType);
+                             hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), cType);
       break;
 
     case Harbour::DB::Field::STRING:
@@ -3090,13 +3090,13 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
     case Harbour::DB::Field::VARLENGTH:
       uiFldLen =
           hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d;", static_cast<int>(pArea->area.uiMaxFieldNameLength),
-                      hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)), cType, pField->uiLen);
+                      hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), cType, pField->uiLen);
       break;
 
     default:
       uiFldLen =
           hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d,%d;", static_cast<int>(pArea->area.uiMaxFieldNameLength),
-                      hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)), cType, pField->uiLen, pField->uiDec);
+                      hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), cType, pField->uiLen, pField->uiDec);
       break;
     }
 

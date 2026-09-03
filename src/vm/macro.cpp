@@ -779,9 +779,9 @@ HB_FUNC(HB_MACROBLOCK)
   }
 }
 
-static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int32_t iWorkArea, bool fMemVar)
+static void hb_macroSetGetBlock(HB_DYNS *pVarSym, PHB_ITEM pItem, int32_t iWorkArea, bool fMemVar)
 {
-  uint8_t byBuf[23 + sizeof(PHB_DYNS) + sizeof(PHB_DYNS)];
+  uint8_t byBuf[23 + sizeof(HB_DYNS *) + sizeof(HB_DYNS *)];
   uint8_t bPushPcode;
   uint8_t bPopPcode;
 
@@ -813,7 +813,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int32_t iWorkA
   }
   byBuf[i++] = bPushPcode;
   HB_PUT_PTR(&byBuf[i], pVarSym);
-  i += sizeof(PHB_DYNS);
+  i += sizeof(HB_DYNS *);
   byBuf[i++] = HB_P_ENDBLOCK;
 
   byBuf[n] = static_cast<uint8_t>(i - n + 1);
@@ -829,7 +829,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int32_t iWorkA
   }
   byBuf[i++] = bPopPcode;
   HB_PUT_PTR(&byBuf[i], pVarSym);
-  i += sizeof(PHB_DYNS);
+  i += sizeof(HB_DYNS *);
   byBuf[i++] = HB_P_ENDBLOCK;
 
   if (pItem->isComplex()) {
@@ -1229,8 +1229,8 @@ void hb_macroGenJumpHere(HB_SIZE nOffset, HB_COMP_DECL)
 // Function generates pcode for passed memvar name
 static void hb_macroMemvarGenPCode(uint8_t bPCode, const char *szVarName, HB_COMP_DECL)
 {
-  uint8_t byBuf[sizeof(PHB_DYNS) + 1];
-  PHB_DYNS pSym;
+  uint8_t byBuf[sizeof(HB_DYNS *) + 1];
+  HB_DYNS *pSym;
 
   if (HB_MACRO_DATA->Flags & HB_MACRO_GEN_TYPE) {
     // we are determining the type of expression (called from Type() function)
@@ -1254,8 +1254,8 @@ static void hb_macroMemvarGenPCode(uint8_t bPCode, const char *szVarName, HB_COM
 // generates the pcode to push a symbol on the virtual machine stack
 void hb_macroGenPushSymbol(const char *szSymbolName, HB_BOOL bFunction, HB_COMP_DECL)
 {
-  uint8_t byBuf[sizeof(PHB_DYNS) + 1];
-  PHB_DYNS pSym;
+  uint8_t byBuf[sizeof(HB_DYNS *) + 1];
+  HB_DYNS *pSym;
 
   if (HB_MACRO_DATA->Flags & HB_MACRO_GEN_TYPE) {
     // we are determining the type of expression (called from Type() function)
@@ -1328,7 +1328,7 @@ void hb_macroGenPushTimeStamp(long lDate, long lTime, HB_COMP_DECL)
 void hb_macroGenMessage(const char *szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 {
   if (szMsgName != nullptr) {
-    uint8_t byBuf[sizeof(PHB_DYNS) + 1];
+    uint8_t byBuf[sizeof(HB_DYNS *) + 1];
 
     // Find the address of passed symbol - create the symbol if doesn't exist
     auto pSym = hb_dynsymGetCase(szMsgName);
