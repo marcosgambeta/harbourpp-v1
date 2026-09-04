@@ -1597,7 +1597,7 @@ static HB_GENC_FUNC(hb_p_switch)
   }
 
   if (fStr || fNum) {
-    fprintf(cargo->yyc, "\t{\n\t\tPHB_ITEM pSwitch;\n\t\tHB_TYPE type;\n");
+    fprintf(cargo->yyc, "\t{\n\t\tHB_ITEM *pSwitch;\n\t\tHB_TYPE type;\n");
     if (fStr) {
       fprintf(cargo->yyc, "\t\tconst char * pszText;\n\t\tHB_SIZE nLen;\n");
     }

@@ -82,7 +82,7 @@ static int32_t s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_
 
   if (!fBefore) {
     HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
-    auto pIncItem = static_cast<PHB_ITEM>(HB_COMP_PARAM->cargo);
+    auto pIncItem = static_cast<HB_ITEM *>(HB_COMP_PARAM->cargo);
 
     if (pIncItem) {
       if (HB_IS_HASH(pIncItem)) {
@@ -104,7 +104,7 @@ static int32_t s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_
   return HB_PP_OPEN_FILE;
 }
 
-static void hb_compGenArgList(int32_t iFirst, int32_t iLast, int32_t *pArgC, const char ***pArgV, PHB_ITEM *pIncItem,
+static void hb_compGenArgList(int32_t iFirst, int32_t iLast, int32_t *pArgC, const char ***pArgV, HB_ITEM **pIncItem,
                               PHB_PP_OPEN_FUNC *pOpenFunc, PHB_PP_MSG_FUNC *pMsgFunc)
 {
   if (pMsgFunc) {
@@ -126,7 +126,7 @@ static void hb_compGenArgList(int32_t iFirst, int32_t iLast, int32_t *pArgC, con
     }
   }
 
-  PHB_ITEM pParam;
+  HB_ITEM *pParam;
   int32_t argc = 1;
 
   for (int32_t i = iFirst; i <= iLast; ++i) {
@@ -174,7 +174,7 @@ HB_FUNC(HB_COMPILE)
 {
   int32_t argc;
   const char **argv;
-  PHB_ITEM pIncItem;
+  HB_ITEM *pIncItem;
   PHB_PP_OPEN_FUNC pOpenFunc;
   PHB_PP_MSG_FUNC pMsgFunc;
   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
@@ -186,7 +186,7 @@ HB_FUNC(HB_COMPILEBUF)
 {
   int32_t argc;
   const char **argv;
-  PHB_ITEM pIncItem;
+  HB_ITEM *pIncItem;
   PHB_PP_OPEN_FUNC pOpenFunc;
   PHB_PP_MSG_FUNC pMsgFunc;
   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
@@ -207,7 +207,7 @@ HB_FUNC(HB_COMPILEFROMBUF)
   if (szSource != nullptr) {
     int32_t argc;
     const char **argv;
-    PHB_ITEM pIncItem;
+    HB_ITEM *pIncItem;
     PHB_PP_OPEN_FUNC pOpenFunc;
     PHB_PP_MSG_FUNC pMsgFunc;
     hb_compGenArgList(2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
