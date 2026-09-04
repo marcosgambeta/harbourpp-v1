@@ -104,7 +104,7 @@ static int32_t hb_gt_gui_optionId(const char *pszOption)
   return 0;
 }
 
-static int32_t hb_gt_gui_optionPos(int32_t id, int32_t iType, PHB_ITEM pOptions)
+static int32_t hb_gt_gui_optionPos(int32_t id, int32_t iType, HB_ITEM *pOptions)
 {
   int32_t iButton = 0;
 
@@ -154,7 +154,7 @@ static int32_t hb_gt_gui_optionPos(int32_t id, int32_t iType, PHB_ITEM pOptions)
   return 0;
 }
 
-static int32_t hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh,
+static int32_t hb_gt_gui_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh,
                            double dDelay) // FuncTable
 {
   void *hText;

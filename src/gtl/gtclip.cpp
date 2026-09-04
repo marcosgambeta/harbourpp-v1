@@ -165,7 +165,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw(uint32_t uFormat, void *pData, HB_SIZE nSiz
   return fResult;
 }
 
-HB_BOOL hb_gt_winapi_setClipboard(uint32_t uFormat, PHB_ITEM pItem)
+HB_BOOL hb_gt_winapi_setClipboard(uint32_t uFormat, HB_ITEM *pItem)
 {
   auto fResult = false;
 
@@ -211,7 +211,7 @@ HB_BOOL hb_gt_winapi_setClipboard(uint32_t uFormat, PHB_ITEM pItem)
   return fResult;
 }
 
-HB_BOOL hb_gt_winapi_getClipboard(uint32_t uFormat, PHB_ITEM pItem)
+HB_BOOL hb_gt_winapi_getClipboard(uint32_t uFormat, HB_ITEM *pItem)
 {
   HB_SIZE nSize = 0;
 

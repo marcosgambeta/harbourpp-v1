@@ -1701,7 +1701,7 @@ static HB_BOOL hb_gt_def_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char
   return false;
 }
 
-static void hb_gt_def_SetBlock(PHB_ITEM *pItemPtr, PHB_GT_INFO pInfo)
+static void hb_gt_def_SetBlock(HB_ITEM **pItemPtr, PHB_GT_INFO pInfo)
 {
   if (*pItemPtr) {
     if (pInfo->pResult) {
@@ -1916,7 +1916,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
   return true;
 }
 
-static int32_t hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
+static int32_t hb_gt_def_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
   int32_t iRet = 0, iOptions;
 
@@ -2806,7 +2806,7 @@ static int32_t hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, in
 
   HB_MAXUINT timer;
   HB_MAXINT timeout;
-  PHB_ITEM pKey;
+  HB_ITEM *pKey;
   auto fPop = false;
 
   pKey = nullptr;
@@ -3801,7 +3801,7 @@ static void *hb_gtParam(int32_t iParam)
   return nullptr;
 }
 
-PHB_GT hb_gt_ItemBase(PHB_ITEM pItemGT)
+PHB_GT hb_gt_ItemBase(HB_ITEM *pItemGT)
 {
   auto gtHolder = static_cast<void **>(hb_itemGetPtrGC(pItemGT, &s_gcGTFuncs));
 

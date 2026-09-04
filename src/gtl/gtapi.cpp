@@ -1100,7 +1100,7 @@ HB_ERRCODE hb_gtInfo(int32_t iType, PHB_GT_INFO pInfo)
   return errCode;
 }
 
-int32_t hb_gtAlert(PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
+int32_t hb_gtAlert(HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtAlert(%p, %p, %d, %d, %f)", static_cast<void*>(pMessage), static_cast<void*>(pOptions), iClrNorm, iClrHigh, dDelay));
