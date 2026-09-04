@@ -1637,7 +1637,7 @@ HB_FUNC(WAGRADIENTFILL)
   if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
     for (std::size_t i = 0; i < nLen; i++) {
-      PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
+      HB_ITEM *pItem = hb_arrayGetItemPtr(pArray2, i + 1);
       if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT")) {
         type = 1;
         vec2gr.push_back(*static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
@@ -1678,7 +1678,7 @@ HB_FUNC(WAGDIGRADIENTFILL)
   if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
     for (std::size_t i = 0; i < nLen; i++) {
-      PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
+      HB_ITEM *pItem = hb_arrayGetItemPtr(pArray2, i + 1);
       if (hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT")) {
         type = 1;
         vec2gr.push_back(*static_cast<GRADIENT_RECT *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));

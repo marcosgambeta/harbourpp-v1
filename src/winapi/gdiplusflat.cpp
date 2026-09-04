@@ -121,13 +121,13 @@
 using namespace Gdiplus;
 using namespace Gdiplus::DllExports;
 
-static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray);
-static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray);
-static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray);
-static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray);
-static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray);
-static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray);
-static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray);
+static std::vector<GpPoint> GpPointArrayToVector(const HB_ITEM *pArray);
+static std::vector<GpPointF> GpPointFArrayToVector(const HB_ITEM *pArray);
+static std::vector<GpRect> GpRectArrayToVector(const HB_ITEM *pArray);
+static std::vector<GpRectF> GpRectFArrayToVector(const HB_ITEM *pArray);
+static std::vector<REAL> REALArrayToVector(const HB_ITEM *pArray);
+static std::vector<ARGB> ARGBArrayToVector(const HB_ITEM *pArray);
+static std::vector<BYTE> BYTEArrayToVector(const HB_ITEM *pArray);
 
 ///////////////////////////////////////////////////////////////////////////////
 // AdjustableArrowCap functions
@@ -4655,85 +4655,85 @@ HB_FUNC(WAGDIPGETTEXTUREIMAGE)
 // auxiliary functions
 ///////////////////////////////////////////////////////////////////////////////
 
-static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray)
+static std::vector<GpPoint> GpPointArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<GpPoint> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(*static_cast<GpPoint *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpPoint *>(hb_objDataGetPtr(hb_arrayGetItemPtr(const_cast<HB_ITEM *>(pArray), i + 1), "PTR")));
     }
   }
   return vec;
 }
 
-static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray)
+static std::vector<GpPointF> GpPointFArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<GpPointF> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(*static_cast<GpPointF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpPointF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(const_cast<HB_ITEM *>(pArray), i + 1), "PTR")));
     }
   }
   return vec;
 }
 
-static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray)
+static std::vector<GpRect> GpRectArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<GpRect> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(*static_cast<GpRect *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpRect *>(hb_objDataGetPtr(hb_arrayGetItemPtr(const_cast<HB_ITEM *>(pArray), i + 1), "PTR")));
     }
   }
   return vec;
 }
 
-static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray)
+static std::vector<GpRectF> GpRectFArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<GpRectF> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(*static_cast<GpRectF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+      vec.push_back(*static_cast<GpRectF *>(hb_objDataGetPtr(hb_arrayGetItemPtr(const_cast<HB_ITEM *>(pArray), i + 1), "PTR")));
     }
   }
   return vec;
 }
 
-static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray)
+static std::vector<REAL> REALArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<REAL> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
+      vec.push_back(static_cast<REAL>(hb_arrayGetND(const_cast<HB_ITEM *>(pArray), i + 1)));
     }
   }
   return vec;
 }
 
-static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray)
+static std::vector<ARGB> ARGBArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<ARGB> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray, i + 1)));
+      vec.push_back(static_cast<ARGB>(hb_arrayGetNL(const_cast<HB_ITEM *>(pArray), i + 1)));
     }
   }
   return vec;
 }
 
-static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray)
+static std::vector<BYTE> BYTEArrayToVector(const HB_ITEM *pArray)
 {
   std::vector<BYTE> vec{};
   if (pArray != nullptr) {
-    const std::size_t nLen = hb_arrayLen(pArray);
+    const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<BYTE>(hb_arrayGetNI(const_cast<HB_ITEM *>(pArray), i + 1)));
     }
   }
   return vec;
