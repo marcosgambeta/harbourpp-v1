@@ -107,7 +107,7 @@ HB_EXTERN_END
 
 static const HB_GC_FUNCS s_gcPPFuncs = {hb_pp_Destructor, hb_gcDummyMark};
 
-static void hb_pp_StdRules(PHB_ITEM ppItem)
+static void hb_pp_StdRules(HB_ITEM *ppItem)
 {
   static auto s_fInit = true;
   static HB_DYNS *s_pDynSym;
