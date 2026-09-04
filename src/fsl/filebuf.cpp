@@ -374,7 +374,7 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, uint
   return hb_fsDiskSpace(pszDirName, uiType);
 }
 
-static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char *pszDirSpec, const char *pszAttr)
+static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char *pszDirSpec, const char *pszAttr)
 {
   HB_SYMBOL_UNUSED(pFuncs);
   return hb_fsDirectory(pszDirSpec, pszAttr, true);
@@ -423,7 +423,7 @@ static char *s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char *pszFileName)
 }
 
 static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, const char *pDefExt, HB_FATTR nExFlags,
-                              const char *pPaths, PHB_ITEM pError)
+                              const char *pPaths, HB_ITEM *pError)
 {
   PHB_FILE pFile = nullptr;
 #if defined(HB_OS_UNIX)
@@ -825,7 +825,7 @@ static void s_fileCommit(PHB_FILE pFile)
   hb_fsCommit(pFile->hFile);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
   HB_SYMBOL_UNUSED(pFile);
 
@@ -968,7 +968,7 @@ static void s_fileposCommit(PHB_FILE pFilePos)
   _PHB_FILE->pFuncs->Commit(_PHB_FILE);
 }
 
-static HB_BOOL s_fileposConfigure(PHB_FILE pFilePos, int32_t iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileposConfigure(PHB_FILE pFilePos, int32_t iIndex, HB_ITEM *pValue)
 {
   return _PHB_FILE->pFuncs->Configure(_PHB_FILE, iIndex, pValue);
 }
@@ -1163,7 +1163,7 @@ double hb_fileDirSpace(const char *pszDirName, uint16_t uiType)
   return hb_fsDiskSpace(pszDirName, uiType);
 }
 
-PHB_ITEM hb_fileDirectory(const char *pszDirSpec, const char *pszAttr)
+HB_ITEM *hb_fileDirectory(const char *pszDirSpec, const char *pszAttr)
 {
   int32_t i = s_fileFindDrv(pszDirSpec);
 
@@ -1204,7 +1204,7 @@ HB_FOFFSET hb_fileSizeGet(const char *pszFileName, HB_BOOL bUseDirEntry)
     HB_FOFFSET nSize = 0;
 
     if (bUseDirEntry) {
-      PHB_ITEM pDir = hb_fileDirectory(pszFileName, "HS");
+      HB_ITEM *pDir = hb_fileDirectory(pszFileName, "HS");
 
       if (pDir) {
         auto pEntry = hb_arrayGetItemPtr(pDir, 1);
@@ -1287,7 +1287,7 @@ char *hb_fileLinkRead(const char *pszFileName)
 }
 
 PHB_FILE hb_fileExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR nExFlags, const char *pPaths,
-                        PHB_ITEM pError)
+                        HB_ITEM *pError)
 {
   int32_t i = s_fileFindDrv(pszFileName);
 
@@ -1363,7 +1363,7 @@ void hb_fileCommit(PHB_FILE pFile)
   pFile->pFuncs->Commit(pFile);
 }
 
-HB_BOOL hb_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
+HB_BOOL hb_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
   return pFile->pFuncs->Configure(pFile, iIndex, pValue);
 }

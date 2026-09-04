@@ -69,7 +69,7 @@ static bool hb_copyfile(const char *pszSource, const char *pszDest)
 
   auto bRetVal = false;
   PHB_FILE pSource;
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
 
   do {
     pSource = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK,

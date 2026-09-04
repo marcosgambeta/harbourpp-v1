@@ -74,7 +74,7 @@ using PHB_IOUSR = _HB_IOUSR *;
 struct _HB_FILE
 {
   const HB_FILE_FUNCS *pFuncs;
-  PHB_ITEM pFileItm;
+  HB_ITEM *pFileItm;
 };
 
 using HB_FILE = _HB_FILE;
@@ -94,7 +94,7 @@ static PHB_IOUSR s_ioUsrs[HB_FILE_TYPE_MAX];
 static void s_errRT_IOUSR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription)
 {
   auto pError = hb_errRT_New(ES_ERROR, "IOUSR", errGenCode, errSubCode, szDescription, HB_ERR_FUNCNAME, 0, EF_NONE);
-  PHB_ITEM pArray = hb_arrayBaseParams();
+  HB_ITEM *pArray = hb_arrayBaseParams();
   if (pArray) {
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
@@ -114,7 +114,7 @@ static void s_iousrFreeAll(void *cargo)
   }
 }
 
-static PHB_FILE s_fileNew(PHB_IOUSR pIO, PHB_ITEM pFileItm)
+static PHB_FILE s_fileNew(PHB_IOUSR pIO, HB_ITEM *pFileItm)
 {
   auto pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
   pFile->pFuncs = &pIO->funcs;
@@ -254,7 +254,7 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, uint
   return hb_parnd(-1);
 }
 
-static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char *pszDirSpec, const char *pszAttr)
+static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char *pszDirSpec, const char *pszAttr)
 {
   PHB_IOUSR pIO = s_getUsrIO(pFuncs);
   s_pushMethod(pIO, IOUSR_DIRECTORY);
@@ -362,7 +362,7 @@ static char *s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char *pszFileName)
 }
 
 static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char *pszName, const char *pszDefExt, HB_FATTR nExFlags,
-                           const char *pPaths, PHB_ITEM pError)
+                           const char *pPaths, HB_ITEM *pError)
 {
   PHB_IOUSR pIO = s_getUsrIO(pFuncs);
   PHB_FILE pFile = nullptr;
@@ -564,7 +564,7 @@ static void s_fileCommit(PHB_FILE pFile)
   hb_vmDo(1);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
   PHB_IOUSR pIO = s_getUsrIO(pFile->pFuncs);
   s_pushMethod(pIO, IOUSR_CONFIGURE);

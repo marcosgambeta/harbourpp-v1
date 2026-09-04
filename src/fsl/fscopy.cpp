@@ -102,7 +102,7 @@ HB_BOOL hb_fsCopy(const char *pszSource, const char *pszDest)
   return fResult;
 }
 
-HB_BOOL hb_fileCopyEx(const char *pszSource, const char *pszDest, HB_SIZE nBufSize, HB_BOOL fTime, PHB_ITEM pCallBack)
+HB_BOOL hb_fileCopyEx(const char *pszSource, const char *pszDest, HB_SIZE nBufSize, HB_BOOL fTime, HB_ITEM *pCallBack)
 {
   auto fResult = false;
   PHB_FILE pSrcFile;

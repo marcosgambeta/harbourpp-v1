@@ -3619,7 +3619,7 @@ char *hb_fsExtName(const char *pszFileName, const char *pDefExt, HB_FATTR nExFla
 }
 
 HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR nExFlags, const char *pPaths,
-                        PHB_ITEM pError)
+                        HB_ITEM *pError)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsExtOpen(%s, %s, %u, %p, %p)", pszFileName, pDefExt, nExFlags, static_cast<const void*>(pPaths), static_cast<void*>(pError)));

@@ -83,20 +83,20 @@ PHB_FILE hb_fileParamGet(int32_t iParam)
   return fileHolder ? *fileHolder : nullptr;
 }
 
-PHB_FILE hb_fileItemGet(PHB_ITEM pItem)
+PHB_FILE hb_fileItemGet(HB_ITEM *pItem)
 {
   auto fileHolder = static_cast<PHB_FILE *>(hb_itemGetPtrGC(pItem, &s_gcFileFuncs));
   return fileHolder ? *fileHolder : nullptr;
 }
 
-PHB_ITEM hb_fileItemPut(PHB_ITEM pItem, PHB_FILE pFile)
+HB_ITEM *hb_fileItemPut(HB_ITEM *pItem, PHB_FILE pFile)
 {
   auto fileHolder = static_cast<PHB_FILE *>(hb_gcAllocate(sizeof(PHB_FILE), &s_gcFileFuncs));
   *fileHolder = pFile;
   return hb_itemPutPtrGC(pItem, fileHolder);
 }
 
-void hb_fileItemClear(PHB_ITEM pItem)
+void hb_fileItemClear(HB_ITEM *pItem)
 {
   auto fileHolder = static_cast<PHB_FILE *>(hb_itemGetPtrGC(pItem, &s_gcFileFuncs));
 

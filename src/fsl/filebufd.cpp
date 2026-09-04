@@ -123,7 +123,7 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char *pszDirName, uint
   return 0.0;
 }
 
-static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char *pszDirSpec, const char *pszAttr)
+static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char *pszDirSpec, const char *pszAttr)
 {
   HB_SYMBOL_UNUSED(pFuncs);
   HB_SYMBOL_UNUSED(pszDirSpec);
@@ -197,7 +197,7 @@ static char *s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char *pszFileName)
 }
 
 static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char *pszName, const char *pszDefExt, HB_FATTR nExFlags,
-                           const char *pPaths, PHB_ITEM pError)
+                           const char *pPaths, HB_ITEM *pError)
 {
   HB_SYMBOL_UNUSED(pFuncs);
   HB_SYMBOL_UNUSED(pszName);
@@ -320,7 +320,7 @@ static void s_fileCommit(PHB_FILE pFile)
   hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
   HB_SYMBOL_UNUSED(pFile);
   HB_SYMBOL_UNUSED(iIndex);
