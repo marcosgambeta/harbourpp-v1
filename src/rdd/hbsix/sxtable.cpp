@@ -173,7 +173,7 @@ HB_FUNC(SX_TABLENAME)
   }
 }
 
-static void hb_sxRollBackChild(AREAP pArea, PHB_ITEM pItem)
+static void hb_sxRollBackChild(AREAP pArea, HB_ITEM *pItem)
 {
   LPDBRELINFO lpdbRelation = pArea->lpdbRelations;
 
@@ -220,7 +220,7 @@ HB_FUNC(SX_RLOCK)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto fResult = false;
-  PHB_ITEM pResult = nullptr;
+  HB_ITEM *pResult = nullptr;
 
   if (pArea != nullptr) {
     auto pRecords = hb_param(1, Harbour::Item::ARRAY);
@@ -270,7 +270,7 @@ HB_FUNC(SX_SETPASS)
 {
   auto iPCount = hb_pcount();
   auto fResult = false;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   if (iPCount == 1) {
     if (HB_ISCHAR(1)) {
@@ -342,7 +342,7 @@ HB_FUNC(SX_DBFENCRYPT)
   auto fResult = false;
 
   if (pArea != nullptr) {
-    PHB_ITEM pItem = hb_itemParam(1);
+    HB_ITEM *pItem = hb_itemParam(1);
 
     if (SELF_INFO(pArea, DBI_ENCRYPT, pItem) == Harbour::SUCCESS) {
       fResult = hb_itemGetL(pItem);
@@ -358,7 +358,7 @@ HB_FUNC(SX_DBFDECRYPT)
   auto fResult = false;
 
   if (pArea != nullptr) {
-    PHB_ITEM pItem = hb_itemParam(1);
+    HB_ITEM *pItem = hb_itemParam(1);
     if (SELF_INFO(pArea, DBI_DECRYPT, pItem) == Harbour::SUCCESS) {
       fResult = hb_itemGetL(pItem);
     }
@@ -389,7 +389,7 @@ HB_FUNC(SX_TURBOAREA)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr) {
-    PHB_ITEM pItem = hb_itemParam(1);
+    HB_ITEM *pItem = hb_itemParam(1);
     if (hb_pcount() > 0 && pItem->isNil()) {
       hb_itemPutNI(pItem, 0);
     }
@@ -416,7 +416,7 @@ HB_FUNC(SX_SETTURBO)
   if (!pRDDNode) {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   } else {
-    PHB_ITEM pItem = hb_itemParam(1);
+    HB_ITEM *pItem = hb_itemParam(1);
     if (hb_pcount() > 0 && pItem->isNil()) {
       hb_itemPutNI(pItem, 0);
     }

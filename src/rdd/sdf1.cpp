@@ -211,7 +211,7 @@ static HB_ERRCODE hb_sdfGoTo(SDFAREAP pArea, HB_ULONG ulRecNo)
 }
 
 // Position the cursor to a specific, physical identity.
-static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
@@ -313,7 +313,7 @@ static HB_ERRCODE hb_sdfRecNo(SDFAREAP pArea, HB_ULONG *pulRecNo)
 }
 
 // Obtain physical row ID at current WorkArea cursor position.
-static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, PHB_ITEM pRecNo)
+static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, HB_ITEM *pRecNo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
@@ -397,7 +397,7 @@ static HB_ERRCODE hb_sdfRecall(SDFAREAP pArea)
 }
 
 // Obtain the current value of a field.
-static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -495,7 +495,7 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pIte
 }
 
 // Assign a value to a field.
-static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -724,7 +724,7 @@ static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
 }
 
 // Retrieve information about the current table/driver.
-static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -991,7 +991,7 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
 #endif
 
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
 
@@ -1071,7 +1071,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
 #endif
 
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
   uint16_t uiFlags;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
@@ -1158,7 +1158,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 }
 
 // Retrieve information about the current driver.
-static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));

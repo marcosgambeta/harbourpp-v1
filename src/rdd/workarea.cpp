@@ -260,7 +260,7 @@ static HB_ERRCODE hb_waAddField(AREAP pArea, LPDBFIELDINFO pFieldInfo)
 }
 
 // Add all fields defined in an array to the WorkArea.
-static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
+static HB_ERRCODE hb_waCreateFields(AREAP pArea, HB_ITEM *pStruct)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waCreateFields(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pStruct)));
@@ -516,7 +516,7 @@ static HB_ERRCODE hb_waFieldCount(AREAP pArea, uint16_t *uiFields)
 }
 
 // Retrieve information about a field.
-static HB_ERRCODE hb_waFieldInfo(AREAP pArea, uint16_t uiIndex, uint16_t uiType, PHB_ITEM pItem)
+static HB_ERRCODE hb_waFieldInfo(AREAP pArea, uint16_t uiIndex, uint16_t uiType, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waFieldInfo(%p, %hu, %hu, %p)", static_cast<void*>(pArea), uiIndex, uiType, static_cast<void*>(pItem)));
@@ -762,7 +762,7 @@ static HB_ERRCODE hb_waClose(AREAP pArea)
 }
 
 // Retrieve information about the current driver.
-static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -1290,7 +1290,7 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
     errCode = SELF_PUTREC(pTransInfo->lpaDest, pRecord);
   } else {
     LPDBTRANSITEM pTransItem;
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
 
     if (pTransInfo->uiFlags & DBTF_RECALL) {
       bDeleted = false;
@@ -1464,7 +1464,7 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
     } else {
       errCode = SELF_EVALBLOCK(pRelInfo->lpaParent, pRelInfo->itmCobExpr);
       if (errCode == Harbour::SUCCESS) {
-        PHB_ITEM pResult;
+        HB_ITEM *pResult;
         DBORDERINFO pInfo{};
 
         // Check the current order
@@ -1516,7 +1516,7 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
 }
 
 // Obtain the character expression of the specified relation.
-static HB_ERRCODE hb_waRelText(AREAP pArea, uint16_t uiRelNo, PHB_ITEM pExpr)
+static HB_ERRCODE hb_waRelText(AREAP pArea, uint16_t uiRelNo, HB_ITEM *pExpr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waRelText(%p, %hu, %p)", static_cast<void*>(pArea), uiRelNo, static_cast<void*>(pExpr)));
@@ -1632,7 +1632,7 @@ static HB_ERRCODE hb_waClearLocate(AREAP pArea)
 }
 
 // Return filter condition of the specified WorkArea.
-static HB_ERRCODE hb_waFilterText(AREAP pArea, PHB_ITEM pFilter)
+static HB_ERRCODE hb_waFilterText(AREAP pArea, HB_ITEM *pFilter)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waFilterText(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFilter)));
@@ -1733,7 +1733,7 @@ static HB_ERRCODE hb_waCompile(AREAP pArea, const char *szExpr)
 }
 
 // Raise a runtime error.
-static HB_ERRCODE hb_waError(AREAP pArea, PHB_ITEM pError)
+static HB_ERRCODE hb_waError(AREAP pArea, HB_ITEM *pError)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waError(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pError)));
@@ -1752,7 +1752,7 @@ static HB_ERRCODE hb_waError(AREAP pArea, PHB_ITEM pError)
 }
 
 // Evaluate a code block.
-static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
+static HB_ERRCODE hb_waEvalBlock(AREAP pArea, HB_ITEM *pBlock)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waEvalBlock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBlock)));
@@ -1783,7 +1783,7 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
 }
 
 // RDD info
-static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnection, PHB_ITEM pItem)
+static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnection, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnection, static_cast<void*>(pItem)));
@@ -2210,7 +2210,7 @@ LPRDDNODE hb_rddGetNode(uint16_t uiNode)
   return uiNode < s_uiRddCount ? s_RddList[uiNode] : nullptr;
 }
 
-PHB_ITEM hb_rddList(uint16_t uiType)
+HB_ITEM *hb_rddList(uint16_t uiType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddList(%hu)", uiType));

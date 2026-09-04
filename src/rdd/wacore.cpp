@@ -478,7 +478,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber(int32_t iArea)
 
 static HB_CRITICAL_NEW(s_waMtx);
 static HB_COND_NEW(s_waCond);
-static PHB_ITEM s_pDetachedAreas = nullptr;
+static HB_ITEM *s_pDetachedAreas = nullptr;
 
 static HB_GARBAGE_FUNC(hb_waHolderDestructor)
 {
@@ -509,7 +509,7 @@ static const HB_GC_FUNCS s_gcWAFuncs = {hb_waHolderDestructor, hb_gcDummyMark};
 
 void hb_rddCloseDetachedAreas(void)
 {
-  PHB_ITEM pDetachedArea;
+  HB_ITEM *pDetachedArea;
 
   // protect by critical section access to s_pDetachedAreas array
   hb_threadEnterCriticalSectionGC(&s_waMtx);
@@ -523,7 +523,7 @@ void hb_rddCloseDetachedAreas(void)
   }
 }
 
-HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
+HB_ERRCODE hb_rddDetachArea(AREAP pArea, HB_ITEM *pCargo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddDetachArea(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pCargo)));
@@ -586,7 +586,7 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
   return Harbour::SUCCESS;
 }
 
-AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, HB_ULONG ulMilliSec)
+AREAP hb_rddRequestArea(const char *szAlias, HB_ITEM *pCargo, HB_BOOL fNewArea, HB_ULONG ulMilliSec)
 {
   HB_DYNS *pSymAlias = nullptr;
   AREAP pArea = nullptr;
@@ -679,7 +679,7 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
   return pArea;
 }
 
-PHB_ITEM hb_rddDetachedList(void)
+HB_ITEM *hb_rddDetachedList(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_rddDetachedList()"));

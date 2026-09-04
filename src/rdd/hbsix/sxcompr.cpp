@@ -697,7 +697,7 @@ HB_FUNC(_SX_STRDECOMPRESS)
             hb_xfree(pBuf);
           }
         } else {
-          PHB_ITEM pItem = hb_errRT_SubstParams("SIXCOMPRESS", EG_MEM, 0, "possible compressed string corruption",
+          HB_ITEM *pItem = hb_errRT_SubstParams("SIXCOMPRESS", EG_MEM, 0, "possible compressed string corruption",
                                                 "_SX_STRDECOMPRESS");
           if (pItem != nullptr) {
             hb_itemReturnRelease(pItem);

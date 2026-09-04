@@ -346,7 +346,7 @@ struct _HSXINFO
   /* xHarbour extension */
   int32_t iArea;         /* work area number if bound with WA or 0 */
   char *szKeyExpr;   /* key expression when bound with WA for automatic update */
-  PHB_ITEM pKeyItem; /* item with compiled key expression */
+  HB_ITEM *pKeyItem; /* item with compiled key expression */
   HB_BOOL fFlush;    /* data was written to file and not committed */
 };
 
@@ -604,7 +604,7 @@ static LPHSXINFO hb_hsxGetPointer(int32_t iHandle)
   return pHSX;
 }
 
-static int32_t hb_hsxCompile(const char *szExpr, PHB_ITEM *pExpr)
+static int32_t hb_hsxCompile(const char *szExpr, HB_ITEM **pExpr)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -616,7 +616,7 @@ static int32_t hb_hsxCompile(const char *szExpr, PHB_ITEM *pExpr)
     *pExpr = pArea->valResult;
     pArea->valResult = nullptr;
   } else {
-    PHB_ITEM pItem = hb_vmCompileMacro(szExpr, nullptr);
+    HB_ITEM *pItem = hb_vmCompileMacro(szExpr, nullptr);
     if (!pItem) {
       return HSX_BADPARMS;
     }
@@ -625,7 +625,7 @@ static int32_t hb_hsxCompile(const char *szExpr, PHB_ITEM *pExpr)
   return HSX_SUCCESS;
 }
 
-static int32_t hb_hsxEval(int32_t iHandle, PHB_ITEM pExpr, uint8_t *pKey, HB_BOOL *fDeleted)
+static int32_t hb_hsxEval(int32_t iHandle, HB_ITEM *pExpr, uint8_t *pKey, HB_BOOL *fDeleted)
 {
   LPHSXINFO pHSX = hb_hsxGetPointer(iHandle);
   int32_t iResult = HSX_SUCCESS;
@@ -1114,7 +1114,7 @@ static int32_t hb_hsxUnDelete(int32_t iHandle, HB_ULONG ulRecord)
   return iRetVal;
 }
 
-static int32_t hb_hsxReplace(int32_t iHandle, HB_ULONG ulRecord, PHB_ITEM pExpr, HB_BOOL fDeleted)
+static int32_t hb_hsxReplace(int32_t iHandle, HB_ULONG ulRecord, HB_ITEM *pExpr, HB_BOOL fDeleted)
 {
   LPHSXINFO pHSX = hb_hsxGetPointer(iHandle);
   int32_t iRetVal;
@@ -1146,7 +1146,7 @@ static int32_t hb_hsxReplace(int32_t iHandle, HB_ULONG ulRecord, PHB_ITEM pExpr,
   return iRetVal;
 }
 
-static int32_t hb_hsxAdd(int32_t iHandle, HB_ULONG *pulRecNo, PHB_ITEM pExpr, HB_BOOL fDeleted)
+static int32_t hb_hsxAdd(int32_t iHandle, HB_ULONG *pulRecNo, HB_ITEM *pExpr, HB_BOOL fDeleted)
 {
   LPHSXINFO pHSX = hb_hsxGetPointer(iHandle);
   int32_t iRetVal;
@@ -1302,7 +1302,7 @@ static LPHSXINFO hb_hsxNew(void)
   return pHSX;
 }
 
-static void hb_hsxExpDestroy(PHB_ITEM pItem)
+static void hb_hsxExpDestroy(HB_ITEM *pItem)
 {
   hb_vmDestroyBlockOrMacro(pItem);
 }
@@ -1421,11 +1421,11 @@ static int32_t hb_hsxDestroy(int32_t iHandle)
 }
 
 static int32_t hb_hsxCreate(const char *szFile, int32_t iBufSize, int32_t iKeySize, HB_BOOL fIgnoreCase, int32_t iFilter,
-                        PHB_ITEM pExpr)
+                        HB_ITEM *pExpr)
 {
   char szFileName[HB_PATH_MAX];
   const char *szExpr = nullptr;
-  PHB_ITEM pKeyExpr = nullptr;
+  HB_ITEM *pKeyExpr = nullptr;
   HB_ULONG ulBufSize;
   uint16_t uiRecordSize;
   LPHSXINFO pHSX;
@@ -1590,7 +1590,7 @@ static int32_t hb_hsxOpen(const char *szFile, int32_t iBufSize, int32_t iMode)
   return pHSX->iHandle;
 }
 
-static int32_t hb_hsxIndex(const char *szFile, PHB_ITEM pExpr, int32_t iKeySize, int32_t iMode, int32_t iBufSize, HB_BOOL fIgnoreCase,
+static int32_t hb_hsxIndex(const char *szFile, HB_ITEM *pExpr, int32_t iKeySize, int32_t iMode, int32_t iBufSize, HB_BOOL fIgnoreCase,
                        int32_t iFilter)
 {
   int32_t iRetVal = HSX_SUCCESS, iHandle;
@@ -1645,14 +1645,14 @@ static int32_t hb_hsxIndex(const char *szFile, PHB_ITEM pExpr, int32_t iKeySize,
   return hb_hsxOpen(szFile, iBufSize, iMode);
 }
 
-static int32_t hb_hsxFilter(int32_t iHandle, const char *pSeek, HB_SIZE nSeek, PHB_ITEM pVerify, int32_t iVerifyType)
+static int32_t hb_hsxFilter(int32_t iHandle, const char *pSeek, HB_SIZE nSeek, HB_ITEM *pVerify, int32_t iVerifyType)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   LPHSXINFO pHSX = hb_hsxGetPointer(iHandle);
   HB_BOOL fDestroyExpr = false, fValid;
   int32_t iResult = HSX_SUCCESS;
   HB_ULONG ulRecNo = 0, ulRec;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   if (!pHSX) {
     return HSX_BADHANDLE;

@@ -458,7 +458,7 @@ static HB_ERRCODE hb_delimGoTo(DELIMAREAP pArea, HB_ULONG ulRecNo)
 }
 
 // Position the cursor to a specific, physical identity.
-static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
@@ -560,7 +560,7 @@ static HB_ERRCODE hb_delimRecNo(DELIMAREAP pArea, HB_ULONG *pulRecNo)
 }
 
 // Obtain physical row ID at current WorkArea cursor position.
-static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
+static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, HB_ITEM *pRecNo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
@@ -644,7 +644,7 @@ static HB_ERRCODE hb_delimRecall(DELIMAREAP pArea)
 }
 
 // Obtain the current value of a field.
-static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -742,7 +742,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM 
 }
 
 // Assign a value to a field.
-static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -961,7 +961,7 @@ static HB_ERRCODE hb_delimFlush(DELIMAREAP pArea)
 }
 
 // Retrieve information about the current table/driver.
-static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -1304,7 +1304,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
 #endif
 
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
 
@@ -1396,7 +1396,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
 #endif
 
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
   uint16_t uiFlags;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
@@ -1521,7 +1521,7 @@ static HB_ERRCODE hb_delimExit(LPRDDNODE pRDD)
 }
 
 // Retrieve information about the current driver.
-static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));

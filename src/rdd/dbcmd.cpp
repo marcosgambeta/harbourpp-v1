@@ -67,7 +67,7 @@ HB_FUNC(AFIELDS)
 #ifdef DBS_FLAG
   auto pFlags = hb_param(5, Harbour::Item::ARRAY);
 #else
-  PHB_ITEM pFlags = nullptr;
+  HB_ITEM *pFlags = nullptr;
 #endif
 
   if (!pArea || (!pName && !pType && !pLen && !pDec && !pFlags)) {
@@ -1755,7 +1755,7 @@ HB_FUNC(__DBARRANGE)
         hb_xfree(szFieldLine);
       }
 
-      PHB_ITEM pTransItm = hb_dbTransInfoPut(nullptr, &dbSortInfo.dbtri);
+      HB_ITEM *pTransItm = hb_dbTransInfoPut(nullptr, &dbSortInfo.dbtri);
       errCode = SELF_INFO(dbSortInfo.dbtri.lpaDest, DBI_TRANSREC, pTransItm);
       if (errCode == Harbour::SUCCESS) {
         errCode = dbSortInfo.dbtri.uiItemCount == 0
@@ -1812,7 +1812,7 @@ HB_FUNC(__DBTRANS)
             dbTransInfo.dbsci.fBackward = dbTransInfo.dbsci.fOptimized = false;
         dbTransInfo.dbsci.fIncludeDeleted = true;
 
-        PHB_ITEM pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
+        HB_ITEM *pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
         errCode = SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
         if (errCode == Harbour::SUCCESS) {
           errCode = dbTransInfo.uiItemCount == 0 ? Harbour::FAILURE : SELF_TRANS(dbTransInfo.lpaSource, &dbTransInfo);
@@ -1922,7 +1922,7 @@ HB_FUNC(HB_RDDINFO)
   auto pIndex = hb_param(1, Harbour::Item::NUMERIC);
 
   if (pRDDNode && pIndex) {
-    PHB_ITEM pInfo = hb_itemParam(2);
+    HB_ITEM *pInfo = hb_itemParam(2);
     SELF_RDDINFO(pRDDNode, static_cast<uint16_t>(pIndex->getNI()), ulConnection, pInfo);
     hb_itemReturnRelease(pInfo);
   } else {

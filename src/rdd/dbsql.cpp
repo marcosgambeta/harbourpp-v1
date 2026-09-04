@@ -128,7 +128,7 @@ static PHB_FILEBUF hb_createFBuffer(PHB_FILE pFile, HB_SIZE nSize)
 }
 
 // Export field value into the buffer in SQL format
-static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char *szDelim, const char *szEsc)
+static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, HB_ITEM *pValue, const char *szDelim, const char *szEsc)
 {
   switch (hb_itemType(pValue)) {
   case Harbour::Item::STRING:
@@ -224,14 +224,14 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
 }
 
 // Export DBF content to a SQL script file
-static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_ITEM pWhile, PHB_ITEM pFor,
+static HB_ULONG hb_db2Sql(AREAP pArea, HB_ITEM *pFields, HB_MAXINT llNext, HB_ITEM *pWhile, HB_ITEM *pFor,
                           const char *szDelim, const char *szSep, const char *szEsc, const char *szTable,
                           PHB_FILE pFile, HB_BOOL fInsert, HB_BOOL fRecno)
 {
   PHB_FILEBUF pFileBuf;
   HB_ULONG ulRecords = 0;
   uint16_t uiFields = 0, ui;
-  PHB_ITEM pTmp;
+  HB_ITEM *pTmp;
   HB_BOOL fWriteSep = false;
   const char *szNewLine = hb_conNewLine();
   char *szInsert = nullptr;
@@ -348,7 +348,7 @@ HB_FUNC(__DBSQL)
     auto pFor = hb_param(5, Harbour::Item::BLOCK);
     auto pWhile = hb_param(6, Harbour::Item::BLOCK);
     auto pNext = hb_param(7, Harbour::Item::NUMERIC);
-    PHB_ITEM pRecord = HB_ISNIL(8) ? nullptr : hb_param(8, Harbour::Item::ANY);
+    HB_ITEM *pRecord = HB_ISNIL(8) ? nullptr : hb_param(8, Harbour::Item::ANY);
     HB_BOOL fRest = pWhile != nullptr || hb_parl(9);
     HB_BOOL fAppend = hb_parl(10);
     HB_BOOL fInsert = hb_parl(11);
@@ -363,7 +363,7 @@ HB_FUNC(__DBSQL)
     if (!szFileName) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
     } else if (fExport) { // COPY TO SQL
-      PHB_ITEM pError = nullptr;
+      HB_ITEM *pError = nullptr;
       HB_BOOL fRetry;
 
       // Try to create Dat file

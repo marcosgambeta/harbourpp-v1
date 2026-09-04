@@ -184,12 +184,12 @@ static void hb_cdxErrInternal(const char *szMsg)
 
 // generate Run-Time error
 static HB_ERRCODE hb_cdxErrorRT(CDXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *filename,
-                                HB_ERRCODE errOsCode, uint16_t uiFlags, PHB_ITEM *pErrorPtr)
+                                HB_ERRCODE errOsCode, uint16_t uiFlags, HB_ITEM **pErrorPtr)
 {
   HB_ERRCODE iRet = Harbour::FAILURE;
 
   if (hb_vmRequestQuery() == 0) {
-    PHB_ITEM pError;
+    HB_ITEM *pError;
     if (pErrorPtr) {
       if (!*pErrorPtr) {
         *pErrorPtr = hb_errNew();
@@ -375,7 +375,7 @@ static int32_t hb_cdxValCompare(LPCDXTAG pTag, const uint8_t *val1, int32_t len1
 }
 
 // get CDX key type for given item
-static uint8_t hb_cdxItemType(PHB_ITEM pItem)
+static uint8_t hb_cdxItemType(HB_ITEM *pItem)
 {
   switch (hb_itemType(pItem)) {
   case Harbour::Item::STRING:
@@ -409,7 +409,7 @@ static uint8_t hb_cdxItemTypeCmp(uint8_t bType)
 
 // store Item in index key
 // TODO: uiType check and generate RT error if necessary
-static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, LPCDXTAG pTag, int32_t iMode)
+static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, HB_ITEM *pItem, HB_ULONG ulRec, LPCDXTAG pTag, int32_t iMode)
 {
   uint8_t buf[CDX_MAXKEY];
   const uint8_t *ptr;
@@ -511,7 +511,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
 }
 
 // get Item from index key
-static PHB_ITEM hb_cdxKeyGetItem(LPCDXKEY pKey, PHB_ITEM pItem, LPCDXTAG pTag)
+static HB_ITEM *hb_cdxKeyGetItem(LPCDXKEY pKey, HB_ITEM *pItem, LPCDXTAG pTag)
 {
   double d;
 
@@ -564,7 +564,7 @@ static PHB_ITEM hb_cdxKeyGetItem(LPCDXKEY pKey, PHB_ITEM pItem, LPCDXTAG pTag)
 static LPCDXKEY hb_cdxKeyEval(LPCDXKEY pKey, LPCDXTAG pTag)
 {
   CDXAREAP pArea = pTag->pIndex->pArea;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
 
   if (pTag->nField) {
@@ -594,7 +594,7 @@ static LPCDXKEY hb_cdxKeyEval(LPCDXKEY pKey, LPCDXTAG pTag)
 }
 
 // evaluate conditional expression and return the result
-static bool hb_cdxEvalCond(CDXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
+static bool hb_cdxEvalCond(CDXAREAP pArea, HB_ITEM *pCondItem, bool fSetWA)
 {
   auto iCurrArea = 0;
   auto fRet = false;
@@ -618,10 +618,10 @@ static bool hb_cdxEvalCond(CDXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 }
 
 // evaluate seek/skip block: {| key, rec | ... }
-static bool hb_cdxEvalSeekCond(LPCDXTAG pTag, PHB_ITEM pCondItem)
+static bool hb_cdxEvalSeekCond(LPCDXTAG pTag, HB_ITEM *pCondItem)
 {
   auto fRet = false;
-  PHB_ITEM pKeyVal, pKeyRec;
+  HB_ITEM *pKeyVal, *pKeyRec;
 
   pKeyVal = hb_cdxKeyGetItem(pTag->CurKey, nullptr, pTag);
   pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKey->rec);
@@ -675,7 +675,7 @@ static void hb_cdxTagClearScope(LPCDXTAG pTag, uint16_t nScope)
 
   CDXAREAP pArea = pTag->pIndex->pArea;
   LPCDXKEY *pScopeKey;
-  PHB_ITEM *pScope;
+  HB_ITEM **pScope;
 
   // resolve any pending scope relations first
   if (pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped) {
@@ -704,10 +704,10 @@ static void hb_cdxTagClearScope(LPCDXTAG pTag, uint16_t nScope)
 }
 
 // set top or bottom scope
-static void hb_cdxTagSetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
+static void hb_cdxTagSetScope(LPCDXTAG pTag, uint16_t nScope, HB_ITEM *pItem)
 {
   CDXAREAP pArea = pTag->pIndex->pArea;
-  PHB_ITEM pScopeVal;
+  HB_ITEM *pScopeVal;
 
   // resolve any pending scope relations first
   if (pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped) {
@@ -717,7 +717,7 @@ static void hb_cdxTagSetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
   pScopeVal = (hb_itemType(pItem) & Harbour::Item::BLOCK) ? hb_vmEvalBlock(pItem) : pItem;
 
   if (hb_cdxItemTypeCmp(static_cast<uint8_t>(pTag->uiType)) == hb_cdxItemTypeCmp(hb_cdxItemType(pScopeVal))) {
-    PHB_ITEM *pScope;
+    HB_ITEM **pScope;
     LPCDXKEY *pScopeKey;
     HB_ULONG ulRec;
 
@@ -747,10 +747,10 @@ static void hb_cdxTagSetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
   }
 }
 
-static void hb_cdxTagGetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
+static void hb_cdxTagGetScope(LPCDXTAG pTag, uint16_t nScope, HB_ITEM *pItem)
 {
   CDXAREAP pArea = pTag->pIndex->pArea;
-  PHB_ITEM *pScope;
+  HB_ITEM **pScope;
 
   // resolve any pending scoped relations first
   if (pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped) {
@@ -768,7 +768,7 @@ static void hb_cdxTagGetScope(LPCDXTAG pTag, uint16_t nScope, PHB_ITEM pItem)
 // refresh top and bottom scope value if set as codeblock
 static void hb_cdxTagRefreshScope(LPCDXTAG pTag)
 {
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   if (pTag->pIndex->pArea->dbfarea.lpdbPendingRel && pTag->pIndex->pArea->dbfarea.lpdbPendingRel->isScoped) {
     SELF_FORCEREL(&pTag->pIndex->pArea->dbfarea.area);
@@ -4142,8 +4142,8 @@ static void hb_cdxReorderTagList(LPCDXTAG *TagListPtr)
 
 // create new order header, store it and then make an order
 static LPCDXTAG hb_cdxIndexCreateTag(bool fStruct, LPCDXINDEX pIndex, const char *szTagName, const char *szKeyExp,
-                                     PHB_ITEM pKeyItem, uint8_t bType, uint16_t uiLen, const char *szForExp,
-                                     PHB_ITEM pForItem, bool fAscnd, bool fUniq, bool fNoCase, bool fCustom,
+                                     HB_ITEM *pKeyItem, uint8_t bType, uint16_t uiLen, const char *szForExp,
+                                     HB_ITEM *pForItem, bool fAscnd, bool fUniq, bool fNoCase, bool fCustom,
                                      bool fReindex)
 {
   LPCDXTAG pTag;
@@ -4254,8 +4254,8 @@ static void hb_cdxIndexDelTag(LPCDXINDEX pIndex, const char *szTagName)
 }
 
 // add tag to order bag
-static LPCDXTAG hb_cdxIndexAddTag(LPCDXINDEX pIndex, const char *szTagName, const char *szKeyExp, PHB_ITEM pKeyItem,
-                                  uint8_t bType, uint16_t uiLen, const char *szForExp, PHB_ITEM pForItem, bool fAscend,
+static LPCDXTAG hb_cdxIndexAddTag(LPCDXINDEX pIndex, const char *szTagName, const char *szKeyExp, HB_ITEM *pKeyItem,
+                                  uint8_t bType, uint16_t uiLen, const char *szForExp, HB_ITEM *pForItem, bool fAscend,
                                   bool fUnique, bool fNoCase, bool fCustom, bool fReindex)
 {
   LPCDXTAG pTag, *pTagPtr;
@@ -4448,7 +4448,7 @@ static bool hb_cdxIndexLoad(LPCDXINDEX pIndex, char *szBaseName)
 // create index file name
 static void hb_cdxCreateFName(CDXAREAP pArea, const char *szBagName, bool *fProd, char *szFileName, char *szBaseName)
 {
-  PHB_ITEM pExt = nullptr;
+  HB_ITEM *pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
   auto pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
@@ -4513,7 +4513,7 @@ static void hb_cdxOrdListClear(CDXAREAP pArea, bool fAll, LPCDXINDEX pKeepInd)
                         pFileNameCdx->szName ? pFileNameCdx->szName : "") != 0;
       if (!fAll) {
         DBORDERINFO pExtInfo{};
-        PHB_ITEM pExt;
+        HB_ITEM *pExt;
 
         pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
         if (SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == Harbour::SUCCESS) {
@@ -4606,7 +4606,7 @@ static uint16_t hb_cdxGetTagNumber(CDXAREAP pArea, LPCDXTAG pFindTag)
 }
 
 // find Tag in tag list
-static LPCDXTAG hb_cdxFindTag(CDXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagItem, uint16_t *puiTag)
+static LPCDXTAG hb_cdxFindTag(CDXAREAP pArea, HB_ITEM *pTagItem, HB_ITEM *pBagItem, uint16_t *puiTag)
 {
   LPCDXTAG pTag = nullptr;
   int32_t iTag = 0, iFind = 0;
@@ -4844,7 +4844,7 @@ static HB_ERRCODE hb_cdxDBOISkipUnique(CDXAREAP pArea, LPCDXTAG pTag, HB_LONG lT
 }
 
 // skip while code block doesn't return true
-static bool hb_cdxDBOISkipEval(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB_ITEM pEval)
+static bool hb_cdxDBOISkipEval(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, HB_ITEM *pEval)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxDBOISkipEval(%p, %p, %i, %p)", static_cast<void*>(pArea), static_cast<void*>(pTag), fForward, static_cast<void*>(pEval)));
@@ -4935,7 +4935,7 @@ static bool hb_cdxDBOISkipEval(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB
 }
 
 // skip while comparison with given pattern with wildcards doesn't return true
-static bool hb_cdxDBOISkipWild(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB_ITEM pWildItm)
+static bool hb_cdxDBOISkipWild(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, HB_ITEM *pWildItm)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxDBOISkipWild(%p, %p, %i, %p)", static_cast<void*>(pArea), static_cast<void*>(pTag), fForward, static_cast<void*>(pWildItm)));
@@ -5095,7 +5095,7 @@ static bool hb_cdxRegexMatch(CDXAREAP pArea, PHB_REGEX pRegEx, LPCDXKEY pKey)
 }
 
 // skip while regular expression on index key val doesn't return true
-static bool hb_cdxDBOISkipRegEx(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB_ITEM pRegExItm)
+static bool hb_cdxDBOISkipRegEx(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, HB_ITEM *pRegExItm)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxDBOISkipRegEx(%p, %p, %i, %p)", static_cast<void*>(pArea), static_cast<void*>(pTag), fForward, static_cast<void*>(pRegExItm)));
@@ -5183,8 +5183,8 @@ static bool hb_cdxDBOISkipRegEx(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PH
 }
 
 // evaluate given C function in given scope
-static HB_ULONG hb_cdxDBOIScopeEval(LPCDXTAG pTag, HB_EVALSCOPE_FUNC pFunc, void *pParam, PHB_ITEM pItemLo,
-                                    PHB_ITEM pItemHi)
+static HB_ULONG hb_cdxDBOIScopeEval(LPCDXTAG pTag, HB_EVALSCOPE_FUNC pFunc, void *pParam, HB_ITEM *pItemLo,
+                                    HB_ITEM *pItemHi)
 {
   HB_ULONG ulCount = 0, ulLen = static_cast<HB_ULONG>(pTag->uiLen);
   LPCDXKEY pCurKey = hb_cdxKeyCopy(nullptr, pTag->CurKey), pTopScopeKey = pTag->topScopeKey,
@@ -5917,7 +5917,7 @@ static HB_ERRCODE hb_cdxGoTop(CDXAREAP pArea)
 }
 
 // ( DBENTRYP_BIB )   hb_cdxSeek
-static HB_ERRCODE hb_cdxSeek(CDXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pKeyItm, HB_BOOL fFindLast)
+static HB_ERRCODE hb_cdxSeek(CDXAREAP pArea, HB_BOOL fSoftSeek, HB_ITEM *pKeyItm, HB_BOOL fFindLast)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxSeek(%p, %d, %p, %d)", static_cast<void*>(pArea), fSoftSeek, static_cast<void*>(pKeyItm), fFindLast));
@@ -6548,7 +6548,7 @@ static HB_ERRCODE hb_cdxOrderListAdd(CDXAREAP pArea, LPDBORDERINFO pOrderInfo)
   LPCDXINDEX pIndex, *pIndexPtr;
   auto fProd = false;
   auto bRetry = false;
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
 
   if (FAST_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
@@ -6793,7 +6793,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   auto fCustom = false;
   auto fTemporary = false;
   auto fExclusive = false;
-  PHB_ITEM pKeyExp, pForExp = nullptr, pResult;
+  HB_ITEM *pKeyExp, *pForExp = nullptr, *pResult;
   char szCpndTagName[CDX_MAXTAGNAMELEN + 1], szTagName[CDX_MAXTAGNAMELEN + 1];
   char szFileName[HB_PATH_MAX];
   const char *szFor = nullptr;
@@ -6987,7 +6987,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     PHB_FILE pFile;
     auto bRetry = false;
     bool fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
-    PHB_ITEM pError = nullptr;
+    HB_ITEM *pError = nullptr;
 
     do {
       if (fTemporary) {
@@ -7363,7 +7363,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
         auto pForExpr = pInfo->itmNewVal->getCPtr();
 
         if (SELF_COMPILE(&pArea->dbfarea.area, pForExpr) == Harbour::SUCCESS) {
-          PHB_ITEM pForItem = pArea->dbfarea.area.valResult;
+          HB_ITEM *pForItem = pArea->dbfarea.area.valResult;
           pArea->dbfarea.area.valResult = nullptr;
           if (SELF_EVALBLOCK(&pArea->dbfarea.area, pForItem) == Harbour::SUCCESS) {
             if (hb_itemType(pArea->dbfarea.area.valResult) & Harbour::Item::LOGICAL) {
@@ -7947,7 +7947,7 @@ static HB_ERRCODE hb_cdxSetFilter(CDXAREAP pArea, LPDBFILTERINFO pFilterInfo)
 
 // Retrieve (set) information about RDD
 // ( DBENTRYP_RSLV )   hb_fptFieldInfo
-static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
@@ -8592,7 +8592,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
 {
   LPCDXAREA pArea = pTag->pIndex->pArea;
   LPCDXSORTINFO pSort;
-  PHB_ITEM pWhileItem = nullptr, pEvalItem = nullptr;
+  HB_ITEM *pWhileItem = nullptr, *pEvalItem = nullptr;
   HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
   HB_LONG lStep = 0;
   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
@@ -8637,7 +8637,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
     auto fUseFilter = false;
     uint8_t *pSaveRecBuff = pArea->dbfarea.pRecord, cTemp[8];
     int32_t iRecBuff = 0, iRecBufSize, iRec;
-    PHB_ITEM pForItem, pItem = nullptr;
+    HB_ITEM *pForItem, *pItem = nullptr;
 
     pForItem = pTag->pForItem;
     if (pTag->nField) {

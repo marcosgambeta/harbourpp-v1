@@ -469,12 +469,12 @@ static uint16_t hb_nsxLeafPutKey(LPTAGINFO pTag, LPPAGEINFO pPage, uint16_t uiOf
  * generate Run-Time error
  */
 static HB_ERRCODE hb_nsxErrorRT(NSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szFileName,
-                                HB_ERRCODE errOsCode, uint16_t uiFlags, PHB_ITEM *pErrorPtr)
+                                HB_ERRCODE errOsCode, uint16_t uiFlags, HB_ITEM **pErrorPtr)
 {
   HB_ERRCODE iRet = Harbour::FAILURE;
 
   if (hb_vmRequestQuery() == 0) {
-    PHB_ITEM pError;
+    HB_ITEM *pError;
     if (pErrorPtr) {
       if (!*pErrorPtr) {
         *pErrorPtr = hb_errNew();
@@ -535,7 +535,7 @@ static LPKEYINFO hb_nsxKeyCopy(LPKEYINFO pKeyDest, LPKEYINFO pKey, int32_t keyle
 /*
  * get NSX key type for given item
  */
-static uint8_t hb_nsxItemType(PHB_ITEM pItem)
+static uint8_t hb_nsxItemType(HB_ITEM *pItem)
 {
   switch (hb_itemType(pItem)) {
   case Harbour::Item::STRING:
@@ -634,7 +634,7 @@ static uint16_t hb_nsxKeyTypeRaw(uint8_t ucType)
  *       probably not here or we will have to add parameter
  *       for scope key evaluation
  */
-static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, LPTAGINFO pTag, bool fTrans,
+static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, HB_ITEM *pItem, HB_ULONG ulRecNo, LPTAGINFO pTag, bool fTrans,
                                   uint16_t *puiLen)
 {
   double d;
@@ -705,7 +705,7 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
 /*
  * get Item from index key
  */
-static PHB_ITEM hb_nsxKeyGetItem(PHB_ITEM pItem, LPKEYINFO pKey, LPTAGINFO pTag, bool fTrans)
+static HB_ITEM *hb_nsxKeyGetItem(HB_ITEM *pItem, LPKEYINFO pKey, LPTAGINFO pTag, bool fTrans)
 {
   double d;
 
@@ -758,7 +758,7 @@ static PHB_ITEM hb_nsxKeyGetItem(PHB_ITEM pItem, LPKEYINFO pKey, LPTAGINFO pTag,
 static LPKEYINFO hb_nsxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
 {
   NSXAREAP pArea = pTag->pIndex->pArea;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
 
   if (pTag->nField) {
@@ -791,7 +791,7 @@ static LPKEYINFO hb_nsxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
 /*
  * evaluate conditional expression and return the logical result
  */
-static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
+static bool hb_nsxEvalCond(NSXAREAP pArea, HB_ITEM *pCondItem, bool fSetWA)
 {
   auto iCurrArea = 0;
   auto fRet = false;
@@ -817,10 +817,10 @@ static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 /*
  * evaluate seek/skip block: {| key, rec | ... }
  */
-static bool hb_nsxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
+static bool hb_nsxEvalSeekCond(LPTAGINFO pTag, HB_ITEM *pCondItem)
 {
   auto fRet = false;
-  PHB_ITEM pKeyVal;
+  HB_ITEM *pKeyVal;
 
   pKeyVal = hb_nsxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
   auto pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->rec);
@@ -967,10 +967,10 @@ static void hb_nsxTagClearScope(LPTAGINFO pTag, uint16_t nScope)
 /*
  * set top or bottom scope
  */
-static void hb_nsxTagSetScope(LPTAGINFO pTag, uint16_t nScope, PHB_ITEM pItem)
+static void hb_nsxTagSetScope(LPTAGINFO pTag, uint16_t nScope, HB_ITEM *pItem)
 {
   NSXAREAP pArea = pTag->pIndex->pArea;
-  PHB_ITEM pScopeVal;
+  HB_ITEM *pScopeVal;
 
   /* resolve any pending scope relations first */
   if (pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped) {
@@ -1006,7 +1006,7 @@ static void hb_nsxTagSetScope(LPTAGINFO pTag, uint16_t nScope, PHB_ITEM pItem)
 /*
  * get top or bottom scope item
  */
-static void hb_nsxTagGetScope(LPTAGINFO pTag, uint16_t nScope, PHB_ITEM pItem)
+static void hb_nsxTagGetScope(LPTAGINFO pTag, uint16_t nScope, HB_ITEM *pItem)
 {
   NSXAREAP pArea = pTag->pIndex->pArea;
   PHB_NSXSCOPE pScope;
@@ -1034,7 +1034,7 @@ static void hb_nsxTagGetScope(LPTAGINFO pTag, uint16_t nScope, PHB_ITEM pItem)
  */
 static void hb_nsxTagRefreshScope(LPTAGINFO pTag)
 {
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   /* resolve any pending scope relations first */
   if (pTag->pIndex->pArea->dbfarea.lpdbPendingRel && pTag->pIndex->pArea->dbfarea.lpdbPendingRel->isScoped) {
@@ -1592,9 +1592,9 @@ static bool hb_nsxIsTemplateFunc(const char *szKeyExpr)
 /*
  * create the new tag structure
  */
-static LPTAGINFO hb_nsxTagNew(LPNSXINDEX pIndex, const char *szTagName, const char *szKeyExpr, PHB_ITEM pKeyExpr,
+static LPTAGINFO hb_nsxTagNew(LPNSXINDEX pIndex, const char *szTagName, const char *szKeyExpr, HB_ITEM *pKeyExpr,
                               uint8_t ucKeyType, uint16_t uiKeyLen, uint8_t bTrail, const char *szForExpr,
-                              PHB_ITEM pForExpr, bool fAscendKey, bool fUnique, bool fCustom)
+                              HB_ITEM *pForExpr, bool fAscendKey, bool fUnique, bool fCustom)
 {
   auto pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
   pTag->TagName = hb_strndup(szTagName, NSX_TAGNAME);
@@ -1713,7 +1713,7 @@ static HB_ERRCODE hb_nsxTagAdd(LPNSXINDEX pIndex, LPTAGINFO pTag)
 static LPTAGINFO hb_nsxTagLoad(LPNSXINDEX pIndex, HB_ULONG ulBlock, const char *szTagName, LPNSXTAGHEADER lpNSX)
 {
   LPTAGINFO pTag;
-  PHB_ITEM pKeyExp, pForExp = nullptr;
+  HB_ITEM *pKeyExp, *pForExp = nullptr;
   uint16_t uiUnique, uiDescend, uiKeySize;
   uint8_t ucType, ucTrail;
 
@@ -3562,7 +3562,7 @@ static HB_ERRCODE hb_nsxTagSpaceFree(LPTAGINFO pTag)
  */
 static void hb_nsxCreateFName(NSXAREAP pArea, const char *szBagName, bool *fProd, char *szFileName, char *szTagName)
 {
-  PHB_ITEM pExt = nullptr;
+  HB_ITEM *pExt = nullptr;
   bool fName = szBagName && *szBagName;
 
   auto pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
@@ -3659,7 +3659,7 @@ static int32_t hb_nsxFindTagByName(LPNSXINDEX pIndex, const char *szTag)
 /*
  * Find the tag by its name or number
  */
-static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagItem)
+static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, HB_ITEM *pTagItem, HB_ITEM *pBagItem)
 {
   LPNSXINDEX pIndex;
   auto fBag = false;
@@ -4194,7 +4194,7 @@ static bool hb_nsxOrdSkipUnique(LPTAGINFO pTag, HB_LONG lToSkip)
 /*
  * skip while code block doesn't return true
  */
-static bool hb_nsxOrdSkipEval(LPTAGINFO pTag, bool fForward, PHB_ITEM pEval)
+static bool hb_nsxOrdSkipEval(LPTAGINFO pTag, bool fForward, HB_ITEM *pEval)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxOrdSkipEval(%p, %d, %p)", static_cast<void*>(pTag), fForward, static_cast<void*>(pEval)));
@@ -4272,7 +4272,7 @@ static bool hb_nsxOrdSkipEval(LPTAGINFO pTag, bool fForward, PHB_ITEM pEval)
 /*
  * skip while code block doesn't return true
  */
-static bool hb_nsxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
+static bool hb_nsxOrdSkipWild(LPTAGINFO pTag, bool fForward, HB_ITEM *pWildItm)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxOrdSkipWild(%p, %d, %p)", static_cast<void*>(pTag), fForward, static_cast<void*>(pWildItm)));
@@ -4404,7 +4404,7 @@ static bool hb_nsxRegexMatch(LPTAGINFO pTag, PHB_REGEX pRegEx, const char *szKey
 /*
  * skip while regular expression on index key val doesn't return true
  */
-static bool hb_nsxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, PHB_ITEM pRegExItm)
+static bool hb_nsxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, HB_ITEM *pRegExItm)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxOrdSkipRegEx(%p, %d, %p)", static_cast<void*>(pTag), fForward, static_cast<void*>(pRegExItm)));
@@ -4488,7 +4488,7 @@ static bool hb_nsxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, PHB_ITEM pRegExItm
  * add key to custom tag (ordKeyAdd())
  * user key value is not implemented
  */
-static bool hb_nsxOrdKeyAdd(LPTAGINFO pTag, PHB_ITEM pItem)
+static bool hb_nsxOrdKeyAdd(LPTAGINFO pTag, HB_ITEM *pItem)
 {
   NSXAREAP pArea = pTag->pIndex->pArea;
   auto fResult = false;
@@ -4529,7 +4529,7 @@ static bool hb_nsxOrdKeyAdd(LPTAGINFO pTag, PHB_ITEM pItem)
  * del key from custom tag (ordKeyDel())
  * user key value is not implemented
  */
-static bool hb_nsxOrdKeyDel(LPTAGINFO pTag, PHB_ITEM pItem)
+static bool hb_nsxOrdKeyDel(LPTAGINFO pTag, HB_ITEM *pItem)
 {
   NSXAREAP pArea = pTag->pIndex->pArea;
   auto fResult = false;
@@ -4616,8 +4616,8 @@ static bool hb_nsxOrdFindRec(LPTAGINFO pTag, HB_ULONG ulRecNo, bool fCont)
 /*
  * evaluate given C function in given scope
  */
-static HB_ULONG hb_nsxOrdScopeEval(LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void *pParam, PHB_ITEM pItemLo,
-                                   PHB_ITEM pItemHi)
+static HB_ULONG hb_nsxOrdScopeEval(LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void *pParam, HB_ITEM *pItemLo,
+                                   HB_ITEM *pItemHi)
 {
   HB_ULONG ulCount = 0, ulLen = static_cast<HB_ULONG>(pTag->KeyLength);
   auto pItemTop = hb_itemNew(nullptr);
@@ -4625,7 +4625,7 @@ static HB_ULONG hb_nsxOrdScopeEval(LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void
   bool fDescend = pTag->fUsrDescend;
 
   if (fDescend) {
-    PHB_ITEM pTemp = pItemLo;
+    HB_ITEM *pTemp = pItemLo;
     pItemLo = pItemHi;
     pItemHi = pTemp;
     pTag->fUsrDescend = false;
@@ -5362,7 +5362,7 @@ static void hb_nsxSortOut(LPNSXSORTINFO pSort)
 static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
 {
   LPNSXAREA pArea = pTag->pIndex->pArea;
-  PHB_ITEM pWhileItem = nullptr, pEvalItem = nullptr;
+  HB_ITEM *pWhileItem = nullptr, *pEvalItem = nullptr;
   HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
   LPNSXSORTINFO pSort;
   HB_LONG lStep = 0;
@@ -5415,8 +5415,8 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
     int32_t iRecBuff = 0, iRecBufSize, iRec;
     double d;
     auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
-    PHB_ITEM pItem = nullptr;
-    PHB_ITEM pForItem;
+    HB_ITEM *pItem = nullptr;
+    HB_ITEM *pForItem;
 
     pForItem = pTag->pForItem;
     if (pTag->nField) {
@@ -5747,7 +5747,7 @@ static HB_ERRCODE hb_nsxTop(NSXAREAP pArea)
   return retval;
 }
 
-static HB_ERRCODE hb_nsxSeek(NSXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, HB_BOOL fFindLast)
+static HB_ERRCODE hb_nsxSeek(NSXAREAP pArea, HB_BOOL fSoftSeek, HB_ITEM *pItem, HB_BOOL fFindLast)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxSeek(%p, %d, %p, %d)", static_cast<void*>(pArea), fSoftSeek, static_cast<void*>(pItem), fFindLast));
@@ -6211,7 +6211,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxOrderCreate(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-  PHB_ITEM pResult, pKeyExp, pForExp = nullptr;
+  HB_ITEM *pResult, *pKeyExp, *pForExp = nullptr;
   int32_t iLen, iTag;
   char szFileName[HB_PATH_MAX], szTagName[NSX_TAGNAME + 1];
   const char *szFor = nullptr;
@@ -6389,7 +6389,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     PHB_FILE pFile;
     auto bRetry = false;
     bool fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
-    PHB_ITEM pError = nullptr;
+    HB_ITEM *pError = nullptr;
     char szSpFile[HB_PATH_MAX];
 
     do {
@@ -6761,7 +6761,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::STRING) {
         auto szForExpr = pInfo->itmNewVal->getCPtr();
         if (pTag->ForExpr ? strncmp(pTag->ForExpr, szForExpr, NSX_MAXEXPLEN) != 0 : *szForExpr) {
-          PHB_ITEM pForItem = nullptr;
+          HB_ITEM *pForItem = nullptr;
           bool fOK = *szForExpr == 0;
           if (!fOK) {
             if (SELF_COMPILE(&pArea->dbfarea.area, szForExpr) == Harbour::SUCCESS) {
@@ -7264,7 +7264,7 @@ static HB_ERRCODE hb_nsxOrderListAdd(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
   pIndex = hb_nsxFindBag(pArea, szFileName);
 
   if (!pIndex) {
-    PHB_ITEM pError = nullptr;
+    HB_ITEM *pError = nullptr;
     LPNSXINDEX *pIndexPtr;
     auto fRetry = false;
     auto fReadonly = false;
@@ -7456,7 +7456,7 @@ static HB_ERRCODE hb_nsxOrderListRebuild(NSXAREAP pArea)
   return errCode;
 }
 
-static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));

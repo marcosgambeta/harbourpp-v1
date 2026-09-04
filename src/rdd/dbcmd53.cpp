@@ -274,7 +274,7 @@ HB_FUNC(DBINFO)
   if (pArea != nullptr) {
     auto pIndex = hb_param(1, Harbour::Item::NUMERIC);
     if (pIndex) {
-      PHB_ITEM pInfo = hb_itemParam(2);
+      HB_ITEM *pInfo = hb_itemParam(2);
 
       SELF_INFO(pArea, static_cast<uint16_t>(pIndex->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
@@ -342,7 +342,7 @@ HB_FUNC(DBRECORDINFO)
     auto pType = hb_param(1, Harbour::Item::NUMERIC);
     auto pRecNo = hb_param(2, Harbour::Item::ANY);
     if (pType) {
-      PHB_ITEM pInfo = hb_itemParam(3);
+      HB_ITEM *pInfo = hb_itemParam(3);
 
       SELF_RECINFO(pArea, pRecNo, static_cast<uint16_t>(pType->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
