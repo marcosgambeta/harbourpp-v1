@@ -141,7 +141,7 @@ static const char *hb_tokenGet(const char *szLine, HB_SIZE nLen, const char *szD
   return nullptr;
 }
 
-static PHB_ITEM hb_tokenArray(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE nDelim, int32_t iFlags)
+static HB_ITEM *hb_tokenArray(const char *szLine, HB_SIZE nLen, const char *szDelim, HB_SIZE nDelim, int32_t iFlags)
 {
   HB_SIZE nTokens = hb_tokenCount(szLine, nLen, szDelim, nDelim, iFlags);
   auto pArray = hb_itemArrayNew(nTokens);

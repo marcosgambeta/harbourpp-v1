@@ -61,7 +61,7 @@ struct HB_IDLEDATA
   HB_BOOL fIamIdle;        /* flag to prevent recursive calls of hb_idleState() */
   int32_t iIdleTask;           /* current task to be executed */
   int32_t iIdleMaxTask;        /* number of tasks in the list */
-  PHB_ITEM *pIdleTasks;    /* list of background tasks */
+  HB_ITEM **pIdleTasks;    /* list of background tasks */
 };
 
 using PHB_IDLEDATA = HB_IDLEDATA *;
@@ -174,10 +174,10 @@ HB_FUNC(HB_IDLEADD)
     ++pIdleData->iIdleMaxTask;
 
     if (!pIdleData->pIdleTasks) {
-      pIdleData->pIdleTasks = static_cast<PHB_ITEM *>(hb_xgrab(sizeof(PHB_ITEM)));
+      pIdleData->pIdleTasks = static_cast<HB_ITEM **>(hb_xgrab(sizeof(HB_ITEM *)));
     } else {
       pIdleData->pIdleTasks =
-          static_cast<PHB_ITEM *>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
+          static_cast<HB_ITEM **>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(HB_ITEM *) * pIdleData->iIdleMaxTask));
     }
 
     /* store a copy of passed codeblock
@@ -200,7 +200,7 @@ HB_FUNC(HB_IDLEDEL)
     int32_t iTask = 0;
 
     while (iTask < pIdleData->iIdleMaxTask) {
-      PHB_ITEM pItem = pIdleData->pIdleTasks[iTask];
+      HB_ITEM *pItem = pIdleData->pIdleTasks[iTask];
 
       if (pID == hb_codeblockId(pItem)) {
         hb_itemClear(hb_itemReturn(pItem)); /* return a codeblock */
@@ -210,10 +210,10 @@ HB_FUNC(HB_IDLEDEL)
         if (pIdleData->iIdleMaxTask) {
           if (iTask != pIdleData->iIdleMaxTask) {
             memmove(&pIdleData->pIdleTasks[iTask], &pIdleData->pIdleTasks[iTask + 1],
-                    sizeof(PHB_ITEM) * (pIdleData->iIdleMaxTask - iTask));
+                    sizeof(HB_ITEM *) * (pIdleData->iIdleMaxTask - iTask));
           }
           pIdleData->pIdleTasks =
-              static_cast<PHB_ITEM *>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
+              static_cast<HB_ITEM **>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(HB_ITEM *) * pIdleData->iIdleMaxTask));
           if (pIdleData->iIdleTask >= pIdleData->iIdleMaxTask) {
             pIdleData->iIdleTask = 0;
           }

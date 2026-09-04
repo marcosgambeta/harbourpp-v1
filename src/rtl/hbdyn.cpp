@@ -122,7 +122,7 @@ struct HB_DYNARG
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
+static HB_U64 hb_u64par(HB_ITEM *pParam, PHB_DYNARG pArg)
 {
   HB_U64 r;
 
@@ -265,7 +265,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
   return r;
 }
 
-static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int32_t iRetType, int32_t iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
+static HB_ITEM *hb_u64ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
   switch (iRetType) {
   case HB_DYN_CTYPE_VOID:
@@ -515,7 +515,7 @@ struct HB_DYNARG
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, bool *b64)
+static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, bool *b64)
 {
   *b64 = false;
   *r2 = 0;
@@ -683,7 +683,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   }
 }
 
-static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int32_t iRetType, int32_t iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
+static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
   switch (iRetType) {
   case HB_DYN_CTYPE_VOID:

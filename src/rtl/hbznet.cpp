@@ -426,7 +426,7 @@ long hb_znetWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void *buffer, long
 
 #define HB_ZNET_GET(p) (static_cast<PHB_ZNETSTREAM>(p->cargo))
 
-static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, HB_ITEM *pParams)
 {
   const void *keydata = nullptr;
   int32_t keylen = 0, level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT;
@@ -444,7 +444,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 /* this wrapper does not support multilevel filtering so
    it destroys previous wrappers if any and create new one.
  */
-static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, HB_ITEM *pParams)
 {
   PHB_SOCKEX pSockNew = nullptr;
 

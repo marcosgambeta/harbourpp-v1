@@ -56,7 +56,7 @@ HB_FUNC(HB_DYNCALL)
   int32_t *piArgFlags = nullptr;
   int32_t iFuncFlags = HB_DYN_CALLCONV_CDECL;
 
-  PHB_ITEM pLibraryHandle = nullptr;
+  HB_ITEM *pLibraryHandle = nullptr;
   auto bFreeLibrary = false;
   void *pFunctionPtr = nullptr;
 

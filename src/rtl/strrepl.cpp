@@ -81,7 +81,7 @@ HB_FUNC(HB_STRREPLACE)
           if (pszSrc) {
             uc = static_cast<uint8_t>(pszSrc[nAt]);
           } else {
-            PHB_ITEM pItem = pSrc->isHash() ? hb_hashGetKeyAt(pSrc, nAt + 1) : hb_arrayGetItemPtr(pSrc, nAt + 1);
+            HB_ITEM *pItem = pSrc->isHash() ? hb_hashGetKeyAt(pSrc, nAt + 1) : hb_arrayGetItemPtr(pSrc, nAt + 1);
             if (hb_itemGetCLen(pItem) == 0) {
               continue;
             }

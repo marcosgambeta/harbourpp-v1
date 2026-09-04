@@ -102,7 +102,7 @@
 static bool s_fInit = false;
 
 /* create new extended socket structure */
-static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams);
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, HB_ITEM *pParams);
 
 /* destroy extended socket structure */
 static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
@@ -219,7 +219,7 @@ static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
    so it destroys previous wrappers if any and restore new raw socket,
    some other wrappers may allow to join filters encapsulating existing
    ones, i.e.: "ZLIB" | "BlowFish" */
-static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, HB_ITEM *pParams)
 {
   PHB_SOCKEX pSockNew = nullptr;
 
@@ -238,7 +238,7 @@ static const HB_SOCKET_FILTER s_sockFilter = {"socket",         s_sockexNew,   s
                                               s_sockexCanWrite, s_sockexName,  s_sockexErrorStr};
 
 /* create new extended socket structure */
-static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, HB_ITEM *pParams)
 {
   auto pSock = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
   pSock->sd = sd;
@@ -292,7 +292,7 @@ static bool s_socketaddrParam(int32_t iParam, void **pAddr, uint32_t *puiLen)
   return false;
 }
 
-static HB_SOCKET s_socketSelectCallback(PHB_ITEM pItem)
+static HB_SOCKET s_socketSelectCallback(HB_ITEM *pItem)
 {
   HB_SOCKET socket = hb_socketItemGet(pItem);
 
@@ -356,14 +356,14 @@ HB_SOCKET hb_socketParam(int32_t iParam)
   return HB_NO_SOCKET;
 }
 
-HB_SOCKET hb_socketItemGet(PHB_ITEM pItem)
+HB_SOCKET hb_socketItemGet(HB_ITEM *pItem)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
   return pSockPtr && *pSockPtr ? (*pSockPtr)->sd : HB_NO_SOCKET;
 }
 
-PHB_ITEM hb_socketItemPut(PHB_ITEM pItem, HB_SOCKET sd)
+HB_ITEM *hb_socketItemPut(HB_ITEM *pItem, HB_SOCKET sd)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_gcAllocate(sizeof(PHB_SOCKEX), &s_gcSocketFuncs));
 
@@ -372,7 +372,7 @@ PHB_ITEM hb_socketItemPut(PHB_ITEM pItem, HB_SOCKET sd)
   return hb_itemPutPtrGC(pItem, pSockPtr);
 }
 
-void hb_socketItemClear(PHB_ITEM pItem)
+void hb_socketItemClear(HB_ITEM *pItem)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
@@ -396,14 +396,14 @@ PHB_SOCKEX hb_sockexParam(int32_t iParam)
   return nullptr;
 }
 
-PHB_SOCKEX hb_sockexItemGet(PHB_ITEM pItem)
+PHB_SOCKEX hb_sockexItemGet(HB_ITEM *pItem)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
   return pSockPtr ? *pSockPtr : nullptr;
 }
 
-PHB_ITEM hb_sockexItemPut(PHB_ITEM pItem, PHB_SOCKEX pSock)
+HB_ITEM *hb_sockexItemPut(HB_ITEM *pItem, PHB_SOCKEX pSock)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_gcAllocate(sizeof(PHB_SOCKEX), &s_gcSocketFuncs));
 
@@ -412,7 +412,7 @@ PHB_ITEM hb_sockexItemPut(PHB_ITEM pItem, PHB_SOCKEX pSock)
   return hb_itemPutPtrGC(pItem, pSockPtr);
 }
 
-void hb_sockexItemClear(PHB_ITEM pItem)
+void hb_sockexItemClear(HB_ITEM *pItem)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
@@ -421,7 +421,7 @@ void hb_sockexItemClear(PHB_ITEM pItem)
   }
 }
 
-HB_BOOL hb_sockexItemReplace(PHB_ITEM pItem, PHB_SOCKEX pSock)
+HB_BOOL hb_sockexItemReplace(HB_ITEM *pItem, PHB_SOCKEX pSock)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
@@ -435,7 +435,7 @@ HB_BOOL hb_sockexItemReplace(PHB_ITEM pItem, PHB_SOCKEX pSock)
   return false;
 }
 
-HB_BOOL hb_sockexItemSetFilter(PHB_ITEM pItem, const char *pszFilter, PHB_ITEM pParams)
+HB_BOOL hb_sockexItemSetFilter(HB_ITEM *pItem, const char *pszFilter, HB_ITEM *pParams)
 {
   auto pSockPtr = static_cast<PHB_SOCKEX *>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
@@ -523,7 +523,7 @@ static const HB_SOCKET_FILTER **s_socket_getfilters(const char *pszFilter, const
   return pFilters;
 }
 
-PHB_SOCKEX hb_sockexNew(HB_SOCKET sd, const char *pszFilter, PHB_ITEM pParams)
+PHB_SOCKEX hb_sockexNew(HB_SOCKET sd, const char *pszFilter, HB_ITEM *pParams)
 {
   const HB_SOCKET_FILTER *pBuffer[16];
   const HB_SOCKET_FILTER **pFilters;
@@ -550,7 +550,7 @@ PHB_SOCKEX hb_sockexNew(HB_SOCKET sd, const char *pszFilter, PHB_ITEM pParams)
   return pSock;
 }
 
-PHB_SOCKEX hb_sockexNext(PHB_SOCKEX pSock, const char *pszFilter, PHB_ITEM pParams)
+PHB_SOCKEX hb_sockexNext(PHB_SOCKEX pSock, const char *pszFilter, HB_ITEM *pParams)
 {
   const HB_SOCKET_FILTER *pBuffer[16];
   const HB_SOCKET_FILTER **pFilters;
@@ -620,7 +620,7 @@ const char *hb_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
   return pSock->pFilter->ErrorStr(pSock, iError);
 }
 
-int32_t hb_sockexSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX,
+int32_t hb_sockexSelect(HB_ITEM *pArrayRD, HB_BOOL fSetRD, HB_ITEM *pArrayWR, HB_BOOL fSetWR, HB_ITEM *pArrayEX,
                     HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc)
 {
   int32_t iResult;
@@ -734,11 +734,11 @@ void hb_sockexSetAutoFlush(PHB_SOCKEX pSock, int32_t iAutoFlush)
   }
 }
 
-void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int32_t *pKeylen, const void **pIV, int32_t *pIVlen,
+void hb_socekxParamsGetStd(HB_ITEM *pParams, const void **pKeydata, int32_t *pKeylen, const void **pIV, int32_t *pIVlen,
                            int32_t *pLevel, int32_t *pStrategy)
 {
   if (pParams && pParams->isHash()) {
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
 
     if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "key")) != nullptr && pItem->isString()) {
       *pKeydata = pItem->getCPtr();
@@ -760,10 +760,10 @@ void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int32_t *pKe
   }
 }
 
-void hb_socekxParamsInit(PHB_SOCKEX pSock, PHB_ITEM pParams)
+void hb_socekxParamsInit(PHB_SOCKEX pSock, HB_ITEM *pParams)
 {
   if (pParams && pParams->isHash()) {
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
 
     if ((pItem = hb_hashGetCItemPtr(pParams, "readahead")) != nullptr && pItem->isNumeric()) {
       if (pSock->buffer == nullptr) {
@@ -827,7 +827,7 @@ HB_FUNC(HB_SOCKETGETSOCKNAME)
     uint32_t len;
 
     if (hb_socketGetSockName(socket, &addr, &len) == 0) {
-      PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
+      HB_ITEM *pItem = hb_socketAddrToItem(addr, len);
 
       if (addr) {
         hb_xfree(addr);
@@ -851,7 +851,7 @@ HB_FUNC(HB_SOCKETGETPEERNAME)
     uint32_t len;
 
     if (hb_socketGetPeerName(socket, &addr, &len) == 0) {
-      PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
+      HB_ITEM *pItem = hb_socketAddrToItem(addr, len);
 
       if (addr) {
         hb_xfree(addr);
@@ -939,7 +939,7 @@ HB_FUNC(HB_SOCKETACCEPT)
     }
 
     if (HB_ISBYREF(2)) {
-      PHB_ITEM pItem;
+      HB_ITEM *pItem;
       if (socketaccept != HB_NO_SOCKET && (pItem = hb_socketAddrToItem(addr, len)) != nullptr) {
         hb_itemParamStoreForward(2, pItem);
         hb_itemRelease(pItem);
@@ -1070,7 +1070,7 @@ HB_FUNC(HB_SOCKETRECVFROM)
       hb_retnl(lRet = hb_socketRecvFrom(socket, pBuffer, static_cast<long>(nLen), hb_parni(4), &addr, &len,
                                         hb_parnintdef(6, -1)));
       if (HB_ISBYREF(5)) {
-        PHB_ITEM pAddr;
+        HB_ITEM *pAddr;
 
         if (lRet != -1 && (pAddr = hb_socketAddrToItem(addr, len)) != nullptr) {
           hb_itemParamStoreForward(5, pAddr);
@@ -1243,7 +1243,7 @@ HB_FUNC(HB_SOCKETRESOLVEINETADDR)
 
   s_socket_init();
   if (hb_socketResolveInetAddr(&addr, &len, hb_parc(1), hb_parni(2))) {
-    PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
+    HB_ITEM *pItem = hb_socketAddrToItem(addr, len);
 
     if (addr) {
       hb_xfree(addr);
@@ -1294,7 +1294,7 @@ HB_FUNC(HB_SOCKETGETHOSTS)
   auto szAddr = hb_parc(1);
 
   if (szAddr != nullptr) {
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
 
     s_socket_init();
     pItem = hb_socketGetHosts(szAddr, hb_parnidef(2, HB_SOCKET_AF_INET));
@@ -1315,7 +1315,7 @@ HB_FUNC( HB_SOCKETGETALIASES )
    auto szAddr = hb_parc(1);
 
    if( szAddr ) {
-      PHB_ITEM pItem;
+      HB_ITEM *pItem;
 
       s_socket_init();
       pItem = hb_socketGetAliases(szAddr, hb_parnidef(2, HB_SOCKET_AF_INET));
@@ -1332,7 +1332,7 @@ HB_FUNC( HB_SOCKETGETALIASES )
 
 HB_FUNC(HB_SOCKETGETIFACES)
 {
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   s_socket_init();
   pItem = hb_socketGetIFaces(hb_parni(1), hb_parl(2));

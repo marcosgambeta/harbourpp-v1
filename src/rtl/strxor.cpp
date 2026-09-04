@@ -54,7 +54,7 @@ HB_FUNC(HB_STRXOR)
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
   if (pItem != nullptr) {
-    PHB_ITEM pItem2;
+    HB_ITEM *pItem2;
     HB_SIZE n;
     char *pRet;
 

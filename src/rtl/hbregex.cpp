@@ -227,7 +227,7 @@ HB_FUNC(HB_ATX)
 static bool hb_regex(int32_t iRequest)
 {
   HB_REGMATCH aMatches[HB_REGMATCH_SIZE(REGEX_MAX_GROUPS)];
-  PHB_ITEM pRetArray, pMatch;
+  HB_ITEM *pRetArray, *pMatch;
   int32_t i;
   auto fResult = false;
 
@@ -322,7 +322,7 @@ static bool hb_regex(int32_t iRequest)
       break;
 
     case 5: { /* _ALL_ results AND positions */
-      PHB_ITEM pAtxArray;
+      HB_ITEM *pAtxArray;
       auto iMax = hb_parni(5);               /* max nuber of matches I want, 0 = unlimited */
       auto iGetMatch = hb_parni(6);          /* Gets if want only one single match or a sub-match */
       bool fOnlyMatch = hb_parldef(7, true); /* if true returns only matches and sub-matches, not positions */

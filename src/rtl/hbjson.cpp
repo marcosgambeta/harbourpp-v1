@@ -135,7 +135,7 @@ static void _hb_jsonCtxAddIndent(PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel)
   }
 }
 
-static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel, bool fEOL, HB_CODEPAGE *cdp)
+static void _hb_jsonEncode(HB_ITEM *pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel, bool fEOL, HB_CODEPAGE *cdp)
 {
   // Protection against recursive structures
   if ((pValue->isArray() || pValue->isHash()) && hb_itemSize(pValue) > 0) {
@@ -358,7 +358,7 @@ static const char *_skipws(const char *szSource)
   return szSource;
 }
 
-static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, HB_CODEPAGE *cdp)
+static const char *_hb_jsonDecode(const char *szSource, HB_ITEM *pValue, HB_CODEPAGE *cdp)
 {
   if (*szSource == '\"') {
     char *szDest, *szHead;
@@ -575,7 +575,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, HB_CODE
 
 // C level API functions
 
-char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int32_t iIndent, HB_CODEPAGE *cdp)
+char *hb_jsonEncodeCP(HB_ITEM *pValue, HB_SIZE *pnLen, int32_t iIndent, HB_CODEPAGE *cdp)
 {
   auto pCtx = static_cast<PHB_JSON_ENCODE_CTX>(hb_xgrab(sizeof(HB_JSON_ENCODE_CTX)));
   pCtx->nAlloc = 16;
@@ -605,14 +605,14 @@ char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int32_t iIndent, HB_CODEP
   return szRet;
 }
 
-char *hb_jsonEncode(PHB_ITEM pValue, HB_SIZE *pnLen, int32_t iIndent)
+char *hb_jsonEncode(HB_ITEM *pValue, HB_SIZE *pnLen, int32_t iIndent)
 {
   return hb_jsonEncodeCP(pValue, pnLen, iIndent, nullptr);
 }
 
-HB_SIZE hb_jsonDecodeCP(const char *szSource, PHB_ITEM pValue, HB_CODEPAGE *cdp)
+HB_SIZE hb_jsonDecodeCP(const char *szSource, HB_ITEM *pValue, HB_CODEPAGE *cdp)
 {
-  PHB_ITEM pItem = pValue ? pValue : hb_itemNew(nullptr);
+  HB_ITEM *pItem = pValue ? pValue : hb_itemNew(nullptr);
 
   const char *sz = szSource ? _hb_jsonDecode(_skipws(szSource), pItem, cdp) : nullptr;
   if (!pValue) {
@@ -624,7 +624,7 @@ HB_SIZE hb_jsonDecodeCP(const char *szSource, PHB_ITEM pValue, HB_CODEPAGE *cdp)
   return 0;
 }
 
-HB_SIZE hb_jsonDecode(const char *szSource, PHB_ITEM pValue)
+HB_SIZE hb_jsonDecode(const char *szSource, HB_ITEM *pValue)
 {
   return hb_jsonDecodeCP(szSource, pValue, nullptr);
 }

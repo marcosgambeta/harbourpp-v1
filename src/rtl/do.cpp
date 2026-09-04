@@ -60,7 +60,7 @@
 HB_FUNC(DO)
 {
   auto uiPCount = static_cast<uint16_t>(hb_pcount());
-  PHB_ITEM pSelf = nullptr;
+  HB_ITEM *pSelf = nullptr;
 
   if (uiPCount > 0) {
     auto pItem = hb_param(1, Harbour::Item::ANY);

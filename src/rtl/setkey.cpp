@@ -58,8 +58,8 @@
 struct HB_SETKEY_
 {
   int32_t iKeyCode;
-  PHB_ITEM pAction;
-  PHB_ITEM pIsActive;
+  HB_ITEM *pAction;
+  HB_ITEM *pIsActive;
   struct HB_SETKEY_ *next;
 };
 
@@ -93,7 +93,7 @@ static void hb_setkeyRelease(void *cargo)
 
 static HB_TSD_NEW(s_skData, sizeof(HB_SK_DATA), nullptr, hb_setkeyRelease);
 
-static bool sk_testActive(PHB_ITEM pIsActive, int32_t iKeyCode)
+static bool sk_testActive(HB_ITEM *pIsActive, int32_t iKeyCode)
 {
   if (pIsActive) {
     hb_vmPushEvalSym();
@@ -117,7 +117,7 @@ static PHB_SETKEY sk_findkey(int32_t iKeyCode, PHB_SETKEY sk_list, PHB_SETKEY *s
   return sk_list_tmp;
 }
 
-static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int32_t iKeyCode, PHB_ITEM pAction, PHB_ITEM pIsActive)
+static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int32_t iKeyCode, HB_ITEM *pAction, HB_ITEM *pIsActive)
 {
   if (iKeyCode) {
     PHB_SETKEY sk_list_tmp, sk_list_end;

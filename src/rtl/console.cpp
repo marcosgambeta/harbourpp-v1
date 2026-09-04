@@ -283,7 +283,7 @@ static void hb_conOutDev(const char *szStr, HB_SIZE nLen)
   }
 }
 
-static char *hb_itemStringCon(PHB_ITEM pItem, HB_SIZE *pnLen, HB_BOOL *pfFreeReq)
+static char *hb_itemStringCon(HB_ITEM *pItem, HB_SIZE *pnLen, HB_BOOL *pfFreeReq)
 {
   // logical values in device output (not console, stdout or stderr) are
   // shown as single letter

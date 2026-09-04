@@ -77,7 +77,7 @@ HB_FUNC(MOD)
       }
       hb_retnd(dResult);
     } else {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS);
+      HB_ITEM *pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS);
 
       // In CA-Cl*pper Mod() function ignores substitution result
       // and return original numeric item keeping its internal

@@ -254,9 +254,9 @@ static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
   return iResult;
 }
 
-static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams);
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, HB_ITEM *pParams);
 
-static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, HB_ITEM *pParams)
 {
   PHB_SOCKEX pSock, pSockNew = nullptr;
 
@@ -275,7 +275,7 @@ static const HB_SOCKET_FILTER s_sockFilter = {"BFSOCK",         s_sockexNew,   s
                                               s_sockexRead,     s_sockexWrite, s_sockexFlush,   s_sockexCanRead,
                                               s_sockexCanWrite, s_sockexName,  s_sockexErrorStr};
 
-static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, HB_ITEM *pParams)
 {
   PHB_SOCKEX pSockNew = nullptr;
 

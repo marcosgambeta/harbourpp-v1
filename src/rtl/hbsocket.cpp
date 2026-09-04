@@ -407,7 +407,7 @@ int32_t hb_socketAddrGetPort(const void *pSockAddr, unsigned len)
   return -1;
 }
 
-HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, PHB_ITEM pAddrItm)
+HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, HB_ITEM *pAddrItm)
 {
   HB_SYMBOL_UNUSED(pAddrItm);
   hb_socketSetError(HB_SOCKET_ERR_AFNOSUPPORT);
@@ -416,7 +416,7 @@ HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, PHB_ITEM pAddr
   return false;
 }
 
-PHB_ITEM hb_socketAddrToItem(const void *pSockAddr, unsigned len)
+HB_ITEM *hb_socketAddrToItem(const void *pSockAddr, unsigned len)
 {
   HB_SYMBOL_UNUSED(pSockAddr);
   HB_SYMBOL_UNUSED(len);
@@ -674,7 +674,7 @@ int32_t hb_socketSelectWriteEx(HB_SOCKET sd, HB_MAXINT timeout)
   return -1;
 }
 
-int32_t hb_socketSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX,
+int32_t hb_socketSelect(HB_ITEM *pArrayRD, HB_BOOL fSetRD, HB_ITEM *pArrayWR, HB_BOOL fSetWR, HB_ITEM *pArrayEX,
                     HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc)
 {
   HB_SYMBOL_UNUSED(pArrayRD);
@@ -707,7 +707,7 @@ char *hb_socketResolveAddr(const char *szAddr, int32_t af)
   return nullptr;
 }
 
-PHB_ITEM hb_socketGetHosts(const char *szAddr, int32_t af)
+HB_ITEM *hb_socketGetHosts(const char *szAddr, int32_t af)
 {
   HB_SYMBOL_UNUSED(szAddr);
   HB_SYMBOL_UNUSED(af);
@@ -715,7 +715,7 @@ PHB_ITEM hb_socketGetHosts(const char *szAddr, int32_t af)
   return nullptr;
 }
 
-PHB_ITEM hb_socketGetAliases(const char *szAddr, int32_t af)
+HB_ITEM *hb_socketGetAliases(const char *szAddr, int32_t af)
 {
   HB_SYMBOL_UNUSED(szAddr);
   HB_SYMBOL_UNUSED(af);
@@ -731,7 +731,7 @@ char *hb_socketGetHostName(const void *pSockAddr, unsigned len)
   return nullptr;
 }
 
-PHB_ITEM hb_socketGetIFaces(int32_t af, HB_BOOL fNoAliases)
+HB_ITEM *hb_socketGetIFaces(int32_t af, HB_BOOL fNoAliases)
 {
   HB_SYMBOL_UNUSED(af);
   HB_SYMBOL_UNUSED(fNoAliases);
@@ -2061,7 +2061,7 @@ int32_t hb_socketAddrGetPort(const void *pSockAddr, unsigned len)
   return iPort;
 }
 
-HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, PHB_ITEM pAddrItm)
+HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, HB_ITEM *pAddrItm)
 {
   HB_BOOL fOK = false;
 
@@ -2090,9 +2090,9 @@ HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, PHB_ITEM pAddr
   return fOK;
 }
 
-PHB_ITEM hb_socketAddrToItem(const void *pSockAddr, unsigned len)
+HB_ITEM *hb_socketAddrToItem(const void *pSockAddr, unsigned len)
 {
-  PHB_ITEM pAddrItm = nullptr;
+  HB_ITEM *pAddrItm = nullptr;
 
   switch (hb_socketGetAddrFamily(pSockAddr, len)) {
 #if defined(AF_INET)
@@ -2796,7 +2796,7 @@ int32_t hb_socketSelectWriteEx(HB_SOCKET sd, HB_MAXINT timeout)
   return ret;
 }
 
-static HB_SOCKET s_socketSelectCallback(PHB_ITEM pItem)
+static HB_SOCKET s_socketSelectCallback(HB_ITEM *pItem)
 {
   HB_SOCKET sd = HB_NO_SOCKET;
 
@@ -2825,14 +2825,14 @@ static int32_t s_socketPollCheck(HB_SOCKET sd, struct pollfd *pfds, nfds_t nfds)
 }
 #endif /* HB_HAS_POLL */
 
-int32_t hb_socketSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX,
+int32_t hb_socketSelect(HB_ITEM *pArrayRD, HB_BOOL fSetRD, HB_ITEM *pArrayWR, HB_BOOL fSetWR, HB_ITEM *pArrayEX,
                     HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc)
 {
 #if defined(HB_HAS_POLL)
   HB_SOCKET sd;
   HB_SIZE nLen, nPos, ul;
   int32_t iResult, iError, tout, iPos, i;
-  PHB_ITEM pItemSets[3];
+  HB_ITEM *pItemSets[3];
   HB_BOOL pSet[3];
   int32_t pEvents[3];
   struct pollfd *pfds = nullptr;
@@ -2929,7 +2929,7 @@ int32_t hb_socketSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB
   HB_SOCKET maxsd, sd;
   int32_t i, ret, iError;
   HB_SIZE nLen, nPos, ul;
-  PHB_ITEM pItemSets[3];
+  HB_ITEM *pItemSets[3];
   HB_BOOL pSet[3];
   fd_set fds[3], *pfds[3];
   struct timeval tv;
@@ -3188,9 +3188,9 @@ char *hb_socketResolveAddr(const char *szAddr, int32_t af)
   return szResult;
 }
 
-PHB_ITEM hb_socketGetHosts(const char *szAddr, int32_t af)
+HB_ITEM *hb_socketGetHosts(const char *szAddr, int32_t af)
 {
-  PHB_ITEM pItem = nullptr;
+  HB_ITEM *pItem = nullptr;
 
 #if defined(HB_HAS_ADDRINFO)
   struct addrinfo hints, *res = nullptr, *ai;
@@ -3310,7 +3310,7 @@ PHB_ITEM hb_socketGetHosts(const char *szAddr, int32_t af)
   return pItem;
 }
 
-PHB_ITEM hb_socketGetAliases(const char *szAddr, int32_t af)
+HB_ITEM *hb_socketGetAliases(const char *szAddr, int32_t af)
 {
   /* TODO: implement it */
   HB_SYMBOL_UNUSED(szAddr);
@@ -3400,7 +3400,7 @@ char *hb_socketGetHostName(const void *pSockAddr, unsigned len)
  * IFACEs
  */
 #if defined(HB_OS_WIN) || defined(SIOCGIFCONF)
-static void hb_socketArraySetInetAddr(PHB_ITEM pItem, HB_SIZE nPos, const void *pSockAddr, unsigned len)
+static void hb_socketArraySetInetAddr(HB_ITEM *pItem, HB_SIZE nPos, const void *pSockAddr, unsigned len)
 {
   char *szAddr = hb_socketAddrGetName(pSockAddr, len);
 
@@ -3412,7 +3412,7 @@ static void hb_socketArraySetInetAddr(PHB_ITEM pItem, HB_SIZE nPos, const void *
 }
 #endif
 #if defined(HB_OS_WIN) && !defined(SIOCGIFCONF)
-static HB_SIZE hb_socketArrayFindInetAddr(const char *szAddr, PHB_ITEM pArray, HB_SIZE nPos)
+static HB_SIZE hb_socketArrayFindInetAddr(const char *szAddr, HB_ITEM *pArray, HB_SIZE nPos)
 {
   HB_SIZE nLen = hb_arrayLen(pArray);
 
@@ -3455,10 +3455,10 @@ static char *hb_getMAC(const char *pszIfName)
 }
 #endif
 
-PHB_ITEM hb_socketGetIFaces(int32_t af, HB_BOOL fNoAliases)
+HB_ITEM *hb_socketGetIFaces(int32_t af, HB_BOOL fNoAliases)
 {
-  PHB_ITEM pArray = nullptr;
-  PHB_ITEM pItem = nullptr;
+  HB_ITEM *pArray = nullptr;
+  HB_ITEM *pItem = nullptr;
   int32_t iError = 0;
 
 /*

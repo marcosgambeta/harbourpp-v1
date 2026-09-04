@@ -64,7 +64,7 @@
 struct HB_MATHERRDATA
 {
   int32_t mode;
-  PHB_ITEM block;
+  HB_ITEM *block;
   HB_MATH_HANDLERPROC handler;
   HB_MATH_HANDLERPROC prevHandler;
 #if defined(HB_MATH_HANDLER)
@@ -98,7 +98,7 @@ static int32_t hb_matherr(HB_MATH_EXCEPTION *pexc)
     //       The error handler can either substitute the erroneous value
     //       (by returning a numeric value) or choose the default error
     //       handling (by returning .F., as usual) [martin vogel]
-    PHB_ITEM pError = hb_errRT_New_Subst(ES_ERROR, "MATH", EG_NUMERR, pexc->type, pexc->error, pexc->funcname, 0,
+    HB_ITEM *pError = hb_errRT_New_Subst(ES_ERROR, "MATH", EG_NUMERR, pexc->type, pexc->error, pexc->funcname, 0,
                                          EF_CANSUBSTITUTE | (mode == HB_MATH_ERRMODE_USER ? 0 : EF_CANDEFAULT));
 
     // Assign the new array to the object data item.
@@ -112,7 +112,7 @@ static int32_t hb_matherr(HB_MATH_EXCEPTION *pexc)
     hb_itemRelease(pArg2);
 
     // launch error codeblock
-    PHB_ITEM pMatherrResult = hb_errLaunchSubst(pError);
+    HB_ITEM *pMatherrResult = hb_errLaunchSubst(pError);
     hb_errRelease(pError);
 
     if (pMatherrResult) {
@@ -474,7 +474,7 @@ static int32_t hb_matherrblock(HB_MATH_EXCEPTION *pexc)
     // b) can return an integer value to set the return value of matherr().
     // NOTE that these values are only used if lHandled was .F. and is set
     // to .T. within the codeblock
-    PHB_ITEM pRet = hb_itemDo(pMathErr->block, 6, pType, pFuncname, pError, pArg1, pArg2, pArray);
+    HB_ITEM *pRet = hb_itemDo(pMathErr->block, 6, pType, pFuncname, pError, pArg1, pArg2, pArray);
 
     hb_itemRelease(pType);
     hb_itemRelease(pFuncname);

@@ -72,7 +72,7 @@ struct HB_SOCKET_STRUCT
   int32_t iCount;
   int32_t iTimeout;
   int32_t iTimeLimit;
-  PHB_ITEM pPeriodicBlock;
+  HB_ITEM *pPeriodicBlock;
   PHB_ZNETSTREAM stream;
   HB_INET_RDFUNC recvFunc;
   HB_INET_WRFUNC sendFunc;
@@ -238,7 +238,7 @@ static void hb_inetAutoInit(void)
   }
 }
 
-HB_SOCKET hb_znetInetFD(PHB_ITEM pItem, HB_BOOL fError)
+HB_SOCKET hb_znetInetFD(HB_ITEM *pItem, HB_BOOL fError)
 {
   auto socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
 
@@ -251,7 +251,7 @@ HB_SOCKET hb_znetInetFD(PHB_ITEM pItem, HB_BOOL fError)
   return HB_NO_SOCKET;
 }
 
-HB_MAXINT hb_znetInetTimeout(PHB_ITEM pItem, HB_BOOL fError)
+HB_MAXINT hb_znetInetTimeout(HB_ITEM *pItem, HB_BOOL fError)
 {
   auto socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
 
@@ -264,7 +264,7 @@ HB_MAXINT hb_znetInetTimeout(PHB_ITEM pItem, HB_BOOL fError)
   return -1;
 }
 
-HB_BOOL hb_znetInetInitialize(PHB_ITEM pItem, PHB_ZNETSTREAM pStream, HB_INET_RDFUNC recvFunc, HB_INET_WRFUNC sendFunc,
+HB_BOOL hb_znetInetInitialize(HB_ITEM *pItem, PHB_ZNETSTREAM pStream, HB_INET_RDFUNC recvFunc, HB_INET_WRFUNC sendFunc,
                               HB_INET_FLFUNC flushFunc, HB_INET_CLFUNC cleanFunc, HB_INET_ERFUNC errorFunc,
                               HB_INET_ESFUNC errstrFunc)
 {
@@ -307,7 +307,7 @@ HB_FUNC(HB_INETCLEANUP)
 
 HB_FUNC(HB_INETCREATE)
 {
-  PHB_ITEM pSocket = nullptr;
+  HB_ITEM *pSocket = nullptr;
   PHB_SOCKET_STRUCT socket;
 
   HB_SOCKET_INIT(socket, pSocket);
@@ -1026,7 +1026,7 @@ HB_FUNC(HB_INETGETHOSTS)
 
   if (szHost != nullptr) {
     HB_INET_INITIALIZE();
-    PHB_ITEM pHosts = hb_socketGetHosts(szHost, HB_SOCKET_PF_INET);
+    HB_ITEM *pHosts = hb_socketGetHosts(szHost, HB_SOCKET_PF_INET);
     if (pHosts) {
       hb_itemReturnRelease(pHosts);
     } else {
@@ -1043,7 +1043,7 @@ HB_FUNC(HB_INETGETALIAS)
 
   if (szHost != nullptr) {
     HB_INET_INITIALIZE();
-    PHB_ITEM pHosts = hb_socketGetAliases(szHost, HB_SOCKET_PF_INET);
+    HB_ITEM *pHosts = hb_socketGetAliases(szHost, HB_SOCKET_PF_INET);
     if (pHosts) {
       hb_itemReturnRelease(pHosts);
     } else {
@@ -1059,7 +1059,7 @@ HB_FUNC(HB_INETGETALIAS)
 HB_FUNC(HB_INETIFINFO)
 {
   HB_INET_INITIALIZE();
-  PHB_ITEM pInfo = hb_socketGetIFaces(hb_parnidef(2, HB_SOCKET_PF_INET), hb_parl(1));
+  HB_ITEM *pInfo = hb_socketGetIFaces(hb_parnidef(2, HB_SOCKET_PF_INET), hb_parl(1));
   if (pInfo) {
     hb_itemReturnRelease(pInfo);
   } else {
@@ -1080,7 +1080,7 @@ static int32_t s_inetBind(PHB_SOCKET_STRUCT socket, const void *pSockAddr, unsig
 HB_FUNC(HB_INETSERVER)
 {
   PHB_SOCKET_STRUCT socket = HB_PARSOCKET(2);
-  PHB_ITEM pSocket = nullptr;
+  HB_ITEM *pSocket = nullptr;
 
   if (!HB_ISNUM(1) || (socket == nullptr && !HB_ISNIL(2))) {
     hb_inetErrRT();
@@ -1134,7 +1134,7 @@ HB_FUNC(HB_INETACCEPT)
         hb_inetGetError(socket);
       } else {
         PHB_SOCKET_STRUCT new_socket;
-        PHB_ITEM pSocket = nullptr;
+        HB_ITEM *pSocket = nullptr;
         HB_SOCKET_INIT(new_socket, pSocket);
         new_socket->remote = sa;
         new_socket->remotelen = len;
@@ -1159,7 +1159,7 @@ static void hb_inetConnectInternal(HB_BOOL fResolve)
   if (szHost == nullptr || iPort == 0 || (socket == nullptr && !HB_ISNIL(3))) {
     hb_inetErrRT();
   } else {
-    PHB_ITEM pSocket = nullptr;
+    HB_ITEM *pSocket = nullptr;
 
     if (!socket) {
       HB_SOCKET_INIT(socket, pSocket);
@@ -1223,7 +1223,7 @@ HB_FUNC(HB_INETCONNECTIP)
 HB_FUNC(HB_INETDGRAMBIND)
 {
   PHB_SOCKET_STRUCT socket;
-  PHB_ITEM pSocket = nullptr;
+  HB_ITEM *pSocket = nullptr;
   auto iPort = hb_parni(1);
   const char *szAddress;
 
@@ -1268,7 +1268,7 @@ HB_FUNC(HB_INETDGRAMBIND)
 HB_FUNC(HB_INETDGRAM)
 {
   PHB_SOCKET_STRUCT socket;
-  PHB_ITEM pSocket = nullptr;
+  HB_ITEM *pSocket = nullptr;
 
   HB_SOCKET_INIT(socket, pSocket);
 

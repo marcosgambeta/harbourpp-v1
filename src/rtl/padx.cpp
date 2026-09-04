@@ -51,7 +51,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-static HB_SIZE hb_cdpItemLen(HB_CODEPAGE *cdp, PHB_ITEM pItem)
+static HB_SIZE hb_cdpItemLen(HB_CODEPAGE *cdp, HB_ITEM *pItem)
 {
   auto nLen = hb_itemGetCLen(pItem);
   return nLen && cdp ? hb_cdpTextLen(cdp, pItem->getCPtr(), nLen) : nLen;

@@ -123,7 +123,7 @@
 struct HB_LPP_GC
 {
   PHB_LPP pSocket;
-  PHB_ITEM pItemSocket;
+  HB_ITEM *pItemSocket;
 };
 
 using PHB_LPP_GC = HB_LPP_GC *;

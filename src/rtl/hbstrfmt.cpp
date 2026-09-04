@@ -67,7 +67,7 @@ static void bufadd(BUFFERTYPE *pBuf, const char *pAdd, HB_SIZE nLen)
   pBuf->pData[pBuf->nLen] = '\0';
 }
 
-static void hb_itemHexStr(PHB_ITEM pItem, char *pStr, HB_BOOL fUpper)
+static void hb_itemHexStr(HB_ITEM *pItem, char *pStr, HB_BOOL fUpper)
 {
   HB_MAXUINT nValue, nTmp;
   int32_t iLen;
@@ -88,10 +88,10 @@ static void hb_itemHexStr(PHB_ITEM pItem, char *pStr, HB_BOOL fUpper)
   } while (iLen);
 }
 
-PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int32_t iCount, PHB_ITEM *pItemArray)
+HB_ITEM *hb_strFormat(HB_ITEM *pItemReturn, HB_ITEM *pItemFormat, int32_t iCount, HB_ITEM **pItemArray)
 {
   BUFFERTYPE buffer;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
   const char *pFmtEnd, *pFmtSave;
   int32_t i, iParam, iParamNo, iWidth, iDec;
   HB_BOOL fLeftAlign, fForceSign, fPadZero, fSpaceSign, fSign;
@@ -469,10 +469,10 @@ HB_FUNC(HB_STRFORMAT)
 
   if (pFormat) {
     auto iParams = hb_pcount();
-    PHB_ITEM *pItemArray = nullptr;
+    HB_ITEM **pItemArray = nullptr;
 
     if (iParams > 1) {
-      pItemArray = static_cast<PHB_ITEM *>(hb_xgrab((iParams - 1) * sizeof(PHB_ITEM)));
+      pItemArray = static_cast<HB_ITEM **>(hb_xgrab((iParams - 1) * sizeof(HB_ITEM *)));
       for (auto i = 1; i < iParams; i++) {
         pItemArray[i - 1] = hb_param(i + 1, Harbour::Item::ANY);
       }

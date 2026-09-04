@@ -91,7 +91,7 @@ static HB_GARBAGE_FUNC(hb_regexRelease)
 
 static const HB_GC_FUNCS s_gcRegexFuncs = {hb_regexRelease, hb_gcDummyMark};
 
-HB_BOOL hb_regexIs(PHB_ITEM pItem)
+HB_BOOL hb_regexIs(HB_ITEM *pItem)
 {
   return hb_itemGetPtrGC(pItem, &s_gcRegexFuncs) != nullptr;
 }
@@ -113,7 +113,7 @@ PHB_REGEX hb_regexCompile(const char *szRegEx, HB_SIZE nLen, int32_t iFlags)
   return pRegEx;
 }
 
-PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int32_t iFlags)
+PHB_REGEX hb_regexGet(HB_ITEM *pRegExItm, int32_t iFlags)
 {
   PHB_REGEX pRegEx = nullptr;
   HB_BOOL fArgError = true;

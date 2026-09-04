@@ -187,7 +187,7 @@ HB_FUNC(HB_GZSETPARAMS)
 HB_FUNC(HB_GZREAD)
 {
 #ifndef HB_NO_GZLIB
-  PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
+  HB_ITEM *pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
   char *szBuffer;
   HB_SIZE nLen;
 

@@ -541,7 +541,7 @@ HB_FUNC(HB_MLEVAL)
     HB_SIZE nPos = hb_parns(6) - 1;
     bool fWordWrap = hb_parldef(5, true);
     auto cdp = hb_vmCDP();
-    PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;
+    HB_ITEM *pLineItem = nullptr, *pSoftItem = nullptr;
     auto fSoftCR = false;
     auto fEOL = false;
 

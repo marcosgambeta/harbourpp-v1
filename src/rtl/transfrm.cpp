@@ -365,7 +365,7 @@ HB_FUNC(TRANSFORM)
       int32_t iDec;   // Number of decimals
       int32_t iCount;
       HB_SIZE i;
-      PHB_ITEM pNumber = nullptr;
+      HB_ITEM *pNumber = nullptr;
 
       auto dValue = pValue->getND();
 
