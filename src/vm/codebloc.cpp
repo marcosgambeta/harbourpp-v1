@@ -96,7 +96,7 @@ static HB_GARBAGE_FUNC(hb_codeblockGarbageMark)
   auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
 
   if (pCBlock->uiLocals) {
-    PHB_ITEM pLocals = pCBlock->pLocals;
+    HB_ITEM *pLocals = pCBlock->pLocals;
     uint16_t uiLocals = pCBlock->uiLocals;
 
     do {
@@ -144,21 +144,21 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
     pCode = pBuffer;
   }
 
-  PHB_ITEM pLocals;
+  HB_ITEM *pLocals;
 
   if (uiLocals) {
     // NOTE: if a codeblock will be created by macro compiler then
     // uiLocal have to be ZERO
     // uiLocal will be also ZERO if it is a nested codeblock
     uint16_t ui = 1;
-    PHB_ITEM pLocal;
+    HB_ITEM *pLocal;
 
     // Create a table that will store the values of local variables
     // accessed in a codeblock
     // The element 0 is unused
     // NOTE: This table can be shared by codeblocks created during
     // evaluation of this codeblock
-    pLocals = static_cast<PHB_ITEM>(hb_xgrab((uiLocals + 1) * sizeof(HB_ITEM)));
+    pLocals = static_cast<HB_ITEM *>(hb_xgrab((uiLocals + 1) * sizeof(HB_ITEM)));
     pLocals[0].type = Harbour::Item::NIL;
 
     do {
@@ -247,7 +247,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 }
 
 // Get local variable referenced in a codeblock
-PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos)
+HB_ITEM *hb_codeblockGetVar(HB_ITEM *pItem, int32_t iItemPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos));
@@ -260,7 +260,7 @@ PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos)
 }
 
 // Get local variable passed by reference
-PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos)
+HB_ITEM *hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetRef(%p, %d)", static_cast<void*>(pCBlock), iItemPos));
@@ -270,7 +270,7 @@ PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos)
 }
 
 // retrieves the codeblock unique ID
-void *hb_codeblockId(PHB_ITEM pItem)
+void *hb_codeblockId(HB_ITEM *pItem)
 {
   if (pItem->isBlock()) {
     return static_cast<void *>(pItem->blockValue());
@@ -280,7 +280,7 @@ void *hb_codeblockId(PHB_ITEM pItem)
 }
 
 // retrieves numer of references to the codeblock
-HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem)
+HB_COUNTER hb_codeblockRefs(HB_ITEM *pItem)
 {
   if (pItem->isBlock()) {
     return hb_gcRefCount(pItem->blockValue());

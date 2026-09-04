@@ -157,7 +157,7 @@ void hb_macroDelete(PHB_MACRO pMacro)
 }
 
 // checks if a correct ITEM was passed from the virtual machine eval stack
-static bool hb_macroCheckParam(PHB_ITEM pItem)
+static bool hb_macroCheckParam(HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroCheckParam(%p)", static_cast<void*>(pItem)));
@@ -166,7 +166,7 @@ static bool hb_macroCheckParam(PHB_ITEM pItem)
   auto bValid = true;
 
   if (!pItem->isString()) {
-    PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1065, nullptr, "&", 1, pItem);
+    HB_ITEM *pResult = hb_errRT_BASE_Subst(EG_ARG, 1065, nullptr, "&", 1, pItem);
 
     bValid = false;
     if (pResult) {
@@ -228,7 +228,7 @@ static void hb_macroSyntaxError(PHB_MACRO pMacro)
     hb_errRelease(pMacro->pError);
     pMacro->pError = nullptr;
   } else {
-    PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_SYNTAX, 1449, nullptr, "&", 1, hb_stackItemFromTop(-1));
+    HB_ITEM *pResult = hb_errRT_BASE_Subst(EG_SYNTAX, 1449, nullptr, "&", 1, hb_stackItemFromTop(-1));
 
     if (pResult) {
       hb_stackPop(); // remove compiled string
@@ -392,7 +392,7 @@ static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
 // iContext contains HB_P_MACROPUSHPARE if a macro is used inside a codeblock
 // Eval({|| &macro })
 
-void hb_macroGetValue(PHB_ITEM pItem, int32_t iContext, int32_t flags)
+void hb_macroGetValue(HB_ITEM *pItem, int32_t iContext, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroGetValue(%p)", static_cast<void*>(pItem)));
@@ -468,7 +468,7 @@ void hb_macroGetValue(PHB_ITEM pItem, int32_t iContext, int32_t flags)
 //   This will be called when macro variable or macro expression is
 // placed on the left side of the assignment
 // POP operation
-void hb_macroSetValue(PHB_ITEM pItem, int32_t flags)
+void hb_macroSetValue(HB_ITEM *pItem, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroSetValue(%p)", static_cast<void*>(pItem)));
@@ -506,7 +506,7 @@ void hb_macroSetValue(PHB_ITEM pItem, int32_t flags)
 //   This will be called when macro variable or macro expression is
 //   passed by reference or used in optimized left side of the <op>=
 //   expression or as argument of ++ or -- operation
-void hb_macroPushReference(PHB_ITEM pItem)
+void hb_macroPushReference(HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPushReference(%p)", static_cast<void*>(pItem)));
@@ -549,7 +549,7 @@ void hb_macroPushReference(PHB_ITEM pItem)
 //    &("M + M->M + M")
 //    instead of
 //    &("M + M") -> &("M + M")
-static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t iFlag, int32_t iSupported)
+static void hb_macroUseAliased(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t iFlag, int32_t iSupported)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -616,7 +616,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t iFlag, in
 // pops a value from the stack
 //    &alias->var := any
 //    alias->&var := any
-void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags)
+void hb_macroPopAliasedValue(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPopAliasedValue(%p, %p)", static_cast<void*>(pAlias), static_cast<void*>(pVar)));
@@ -629,7 +629,7 @@ void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags)
 // pushes a value onto the stack
 //    any := &alias->var
 //    any := alias->&var
-void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags)
+void hb_macroPushAliasedValue(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t flags)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPushAliasedValue(%p, %p)", static_cast<void*>(pAlias), static_cast<void*>(pVar)));
@@ -747,7 +747,7 @@ PHB_MACRO hb_macroCompile(const char *szString)
   return pMacro;
 }
 
-static void hb_macroBlock(const char *szString, PHB_ITEM pItem)
+static void hb_macroBlock(const char *szString, HB_ITEM *pItem)
 {
   PHB_MACRO pMacro = hb_macroCompile(szString);
 
@@ -779,7 +779,7 @@ HB_FUNC(HB_MACROBLOCK)
   }
 }
 
-static void hb_macroSetGetBlock(HB_DYNS *pVarSym, PHB_ITEM pItem, int32_t iWorkArea, bool fMemVar)
+static void hb_macroSetGetBlock(HB_DYNS *pVarSym, HB_ITEM *pItem, int32_t iWorkArea, bool fMemVar)
 {
   uint8_t byBuf[23 + sizeof(HB_DYNS *) + sizeof(HB_DYNS *)];
   uint8_t bPushPcode;
@@ -932,7 +932,7 @@ HB_FUNC(FIELDWBLOCK)
 //
 // 'pItem' points to a ITEM that contains a string value which after
 //    text substitution will return a function name
-void hb_macroPushSymbol(PHB_ITEM pItem)
+void hb_macroPushSymbol(HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPushSymbol(%p)", static_cast<void*>(pItem)));
@@ -971,7 +971,7 @@ void hb_macroPushSymbol(PHB_ITEM pItem)
 //
 // 'pItem' points to a ITEM that contains a string value which after
 //    text substitution will be returned
-void hb_macroTextValue(PHB_ITEM pItem)
+void hb_macroTextValue(HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroTextValue(%p)", static_cast<void*>(pItem)));
@@ -992,7 +992,7 @@ void hb_macroTextValue(PHB_ITEM pItem)
   }
 }
 
-const char *hb_macroGetType(PHB_ITEM pItem)
+const char *hb_macroGetType(HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroGetType(%p)", static_cast<void*>(pItem)));
@@ -1099,7 +1099,7 @@ HB_FUNC(HB_SETMACRO)
 
   if (iPrmCnt > 0) {
     auto flags = hb_parni(1);
-    PHB_ITEM pValue;
+    HB_ITEM *pValue;
 
     switch (flags) {
     case HB_SM_HARBOUR:

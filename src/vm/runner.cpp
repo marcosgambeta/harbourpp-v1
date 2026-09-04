@@ -189,7 +189,7 @@ static void hb_hrbInitStatic(PHRB_BODY pHrbBody)
   }
 }
 
-static void hb_hrbInit(PHRB_BODY pHrbBody, int32_t iPCount, PHB_ITEM *pParams)
+static void hb_hrbInit(PHRB_BODY pHrbBody, int32_t iPCount, HB_ITEM **pParams)
 {
   if (pHrbBody->fInit) {
     if (hb_vmRequestReenter()) {
@@ -500,7 +500,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, uint16_t u
 static PHRB_BODY hb_hrbLoadFromFile(const char *szHrb, uint16_t usMode)
 {
   PHRB_BODY pHrbBody = nullptr;
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
   PHB_FILE pFile;
 
   // Open as binary
@@ -536,9 +536,9 @@ static PHRB_BODY hb_hrbLoadFromFile(const char *szHrb, uint16_t usMode)
   return pHrbBody;
 }
 
-static void hb_hrbDo(PHRB_BODY pHrbBody, int32_t iPCount, PHB_ITEM *pParams)
+static void hb_hrbDo(PHRB_BODY pHrbBody, int32_t iPCount, HB_ITEM **pParams)
 {
-  PHB_ITEM pRetVal = nullptr;
+  HB_ITEM *pRetVal = nullptr;
 
   hb_hrbInit(pHrbBody, iPCount, pParams);
 
@@ -621,10 +621,10 @@ HB_FUNC(HB_HRBRUN)
 
     if (pHrbBody) {
       int32_t iPCount = hb_pcount() - nParam;
-      PHB_ITEM *pParams = nullptr;
+      HB_ITEM **pParams = nullptr;
 
       if (iPCount > 0) {
-        pParams = static_cast<PHB_ITEM *>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
+        pParams = static_cast<HB_ITEM **>(hb_xgrab(sizeof(HB_ITEM *) * iPCount));
         for (auto i = 0; i < iPCount; i++) {
           pParams[i] = hb_stackItemFromBase(i + 1 + nParam);
         }
@@ -669,10 +669,10 @@ HB_FUNC(HB_HRBLOAD)
 
     if (pHrbBody) {
       int32_t iPCount = hb_pcount() - nParam;
-      PHB_ITEM *pParams = nullptr;
+      HB_ITEM **pParams = nullptr;
 
       if (iPCount > 0) {
-        pParams = static_cast<PHB_ITEM *>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
+        pParams = static_cast<HB_ITEM **>(hb_xgrab(sizeof(HB_ITEM *) * iPCount));
         for (auto i = 0; i < iPCount; i++) {
           pParams[i] = hb_stackItemFromBase(i + 1 + nParam);
         }
@@ -696,10 +696,10 @@ HB_FUNC(HB_HRBDO)
 
   if (pHrbBody) {
     int32_t iPCount = hb_pcount() - 1;
-    PHB_ITEM *pParams = nullptr;
+    HB_ITEM **pParams = nullptr;
 
     if (iPCount > 0) {
-      pParams = static_cast<PHB_ITEM *>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
+      pParams = static_cast<HB_ITEM **>(hb_xgrab(sizeof(HB_ITEM *) * iPCount));
       for (auto i = 0; i < iPCount; i++) {
         pParams[i] = hb_stackItemFromBase(i + 2);
       }

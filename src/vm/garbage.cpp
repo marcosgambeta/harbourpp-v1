@@ -329,22 +329,22 @@ HB_GARBAGE_FUNC(hb_gcDummyMark)
 
 HB_GARBAGE_FUNC(hb_gcGripMark)
 {
-  hb_gcItemRef(static_cast<PHB_ITEM>(Cargo));
+  hb_gcItemRef(static_cast<HB_ITEM *>(Cargo));
 }
 
 static HB_GARBAGE_FUNC(hb_gcGripRelease)
 {
-  if (static_cast<PHB_ITEM>(Cargo)->isComplex()) {
-    static_cast<PHB_ITEM>(Cargo)->clear();
+  if (static_cast<HB_ITEM *>(Cargo)->isComplex()) {
+    static_cast<HB_ITEM *>(Cargo)->clear();
   }
 }
 
 static const HB_GC_FUNCS s_gcGripFuncs = {hb_gcGripRelease, hb_gcGripMark};
 
-PHB_ITEM hb_gcGripGet(PHB_ITEM pOrigin)
+HB_ITEM *hb_gcGripGet(HB_ITEM *pOrigin)
 {
   PHB_GARBAGE pAlloc = HB_GARBAGE_NEW(sizeof(HB_ITEM));
-  auto pItem = static_cast<PHB_ITEM>(HB_BLOCK_PTR(pAlloc));
+  auto pItem = static_cast<HB_ITEM *>(HB_BLOCK_PTR(pAlloc));
 
   pAlloc->pFuncs = &s_gcGripFuncs;
   pAlloc->locked = 1;
@@ -363,7 +363,7 @@ PHB_ITEM hb_gcGripGet(PHB_ITEM pOrigin)
   return pItem;
 }
 
-void hb_gcGripDrop(PHB_ITEM pItem)
+void hb_gcGripDrop(HB_ITEM *pItem)
 {
   hb_gcRefFree(pItem);
 }
@@ -447,7 +447,7 @@ void hb_gcMark(void *pBlock)
 }
 
 // Mark a passed item as used so it will be not released by the GC
-void hb_gcItemRef(PHB_ITEM pItem)
+void hb_gcItemRef(HB_ITEM *pItem)
 {
   while (pItem->isByRef()) {
     if (pItem->isEnum()) {

@@ -121,7 +121,7 @@
 #else
 static volatile auto s_fThreadInit = false;
 
-static PHB_ITEM s_pOnceMutex = nullptr;
+static HB_ITEM *s_pOnceMutex = nullptr;
 
 static int32_t s_waiting_for_threads = 0;
 
@@ -958,7 +958,7 @@ PHB_THREADSTATE hb_threadStateNew(void)
   return pThread;
 }
 
-PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
+PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, HB_ITEM *pParams)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -1010,7 +1010,7 @@ static PHB_THREADSTATE hb_thParam(int32_t iParam, int32_t iPos)
   return nullptr;
 }
 
-PHB_ITEM hb_threadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
+HB_ITEM *hb_threadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
 {
 #if !defined(HB_MT_VM)
   HB_SYMBOL_UNUSED(ulAttr);
@@ -1019,7 +1019,7 @@ PHB_ITEM hb_threadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
   return nullptr;
 #else
   PHB_THREADSTATE pThread;
-  PHB_ITEM pReturn;
+  HB_ITEM *pReturn;
 
   pThread = hb_threadStateClone(ulAttr, nullptr);
   pThread->pFunc = pFunc;
@@ -1082,7 +1082,7 @@ HB_FUNC(HB_THREADSTART)
 #else
     HB_STACK_TLS_PRELOAD
 
-    PHB_ITEM pParams = hb_arrayBaseParams();
+    HB_ITEM *pParams = hb_arrayBaseParams();
     HB_SIZE nPCount = hb_arrayLen(pParams);
 
     // remove thread attributes
@@ -1107,7 +1107,7 @@ HB_FUNC(HB_THREADSTART)
     PHB_THREADSTATE pThread = hb_threadStateClone(ulAttr, pParams);
     pThread->pFunc = hb_threadStartVM;
     pThread->cargo = pThread;
-    PHB_ITEM pReturn = pThread->pThItm;
+    HB_ITEM *pReturn = pThread->pThItm;
 
     // make copy of thread pointer item before we pass it to new thread
     // to avoid race condition
@@ -1513,7 +1513,7 @@ struct _HB_MUTEX
   int32_t lockers;
   int32_t waiters;
   int32_t syncsignals;
-  PHB_ITEM events;
+  HB_ITEM *events;
   HB_THREAD_ID owner;
   HB_RAWCRITICAL_T mutex;
   HB_RAWCOND_T cond_l;
@@ -1634,12 +1634,12 @@ static HB_GARBAGE_FUNC(hb_mutexMark)
 
 static const HB_GC_FUNCS s_gcMutexFuncs = {hb_mutexDestructor, hb_mutexMark};
 
-static PHB_MUTEX hb_mutexPtr(PHB_ITEM pItem)
+static PHB_MUTEX hb_mutexPtr(HB_ITEM *pItem)
 {
   return static_cast<PHB_MUTEX>(hb_itemGetPtrGC(pItem, &s_gcMutexFuncs));
 }
 
-static PHB_ITEM hb_mutexParam(int32_t iParam)
+static HB_ITEM *hb_mutexParam(int32_t iParam)
 {
   auto pItem = hb_param(iParam, Harbour::Item::POINTER);
 
@@ -1651,7 +1651,7 @@ static PHB_ITEM hb_mutexParam(int32_t iParam)
   return nullptr;
 }
 
-PHB_ITEM hb_threadMutexCreate(void)
+HB_ITEM *hb_threadMutexCreate(void)
 {
   auto pItem = hb_itemNew(nullptr);
   auto pMutex = static_cast<PHB_MUTEX>(hb_gcAllocRaw(sizeof(HB_MUTEX), &s_gcMutexFuncs));
@@ -1680,7 +1680,7 @@ PHB_ITEM hb_threadMutexCreate(void)
 }
 
 #if defined(HB_MT_VM)
-void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
+void hb_threadMutexSyncSignal(HB_ITEM *pItemMtx)
 {
   auto pMutex = hb_mutexPtr(pItemMtx);
 
@@ -1703,7 +1703,7 @@ void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
   }
 }
 
-HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM pItemSync)
+HB_BOOL hb_threadMutexSyncWait(HB_ITEM *pItemMtx, HB_ULONG ulMilliSec, HB_ITEM *pItemSync)
 {
   auto pMutex = hb_mutexPtr(pItemMtx);
   PHB_MUTEX pSyncMutex = nullptr;
@@ -1825,7 +1825,7 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
 }
 #endif // HB_MT_VM
 
-HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
+HB_BOOL hb_threadMutexUnlock(HB_ITEM *pItem)
 {
   auto pMutex = hb_mutexPtr(pItem);
   auto fResult = false;
@@ -1857,7 +1857,7 @@ HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
   return fResult;
 }
 
-HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
+HB_BOOL hb_threadMutexLock(HB_ITEM *pItem)
 {
   auto pMutex = hb_mutexPtr(pItem);
   auto fResult = false;
@@ -1916,7 +1916,7 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
   return fResult;
 }
 
-HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
+HB_BOOL hb_threadMutexTimedLock(HB_ITEM *pItem, HB_ULONG ulMilliSec)
 {
   auto pMutex = hb_mutexPtr(pItem);
   auto fResult = false;
@@ -2012,7 +2012,7 @@ static void hb_thredMutexEventInit(PHB_MUTEX pMutex)
 }
 #endif
 
-void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
+void hb_threadMutexNotify(HB_ITEM *pItem, HB_ITEM *pNotifier, HB_BOOL fWaiting)
 {
   auto pMutex = hb_mutexPtr(pItem);
 
@@ -2102,10 +2102,10 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
   }
 }
 
-PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
+HB_ITEM *hb_threadMutexSubscribe(HB_ITEM *pItem, HB_BOOL fClear)
 {
   auto pMutex = hb_mutexPtr(pItem);
-  PHB_ITEM pResult = nullptr;
+  HB_ITEM *pResult = nullptr;
 
   if (pMutex) {
 #if !defined(HB_MT_VM)
@@ -2206,10 +2206,10 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
   return pResult;
 }
 
-PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear)
+HB_ITEM *hb_threadMutexTimedSubscribe(HB_ITEM *pItem, HB_ULONG ulMilliSec, HB_BOOL fClear)
 {
   auto pMutex = hb_mutexPtr(pItem);
-  PHB_ITEM pResult = nullptr;
+  HB_ITEM *pResult = nullptr;
 
   if (pMutex) {
 #if !defined(HB_MT_VM)
@@ -2391,7 +2391,7 @@ HB_FUNC(HB_MUTEXSUBSCRIBE)
 
   if (pItem != nullptr) {
     HB_STACK_TLS_PRELOAD
-    PHB_ITEM pResult;
+    HB_ITEM *pResult;
 
     if (HB_ISNUM(2)) {
       HB_ULONG ulMilliSec = 0;
@@ -2420,7 +2420,7 @@ HB_FUNC(HB_MUTEXSUBSCRIBENOW)
 
   if (pItem != nullptr) {
     HB_STACK_TLS_PRELOAD
-    PHB_ITEM pResult;
+    HB_ITEM *pResult;
 
     if (HB_ISNUM(2)) {
       HB_ULONG ulMilliSec = 0;

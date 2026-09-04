@@ -490,16 +490,16 @@ HB_BOOL hb_dynsymIsMemvar(HB_DYNS *pDynSym)
   return hb_dynsymHandles(pDynSym)->pMemvar != nullptr;
 }
 
-PHB_ITEM hb_dynsymGetMemvar(HB_DYNS *pDynSym)
+HB_ITEM *hb_dynsymGetMemvar(HB_DYNS *pDynSym)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymGetMemvar(%p)", static_cast<void*>(pDynSym)));
 #endif
 
-  return static_cast<PHB_ITEM>(hb_dynsymHandles(pDynSym)->pMemvar);
+  return static_cast<HB_ITEM *>(hb_dynsymHandles(pDynSym)->pMemvar);
 }
 
-void hb_dynsymSetMemvar(HB_DYNS *pDynSym, PHB_ITEM pMemvar)
+void hb_dynsymSetMemvar(HB_DYNS *pDynSym, HB_ITEM *pMemvar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymSetMemvar(%p, %p)", static_cast<void*>(pDynSym), static_cast<void*>(pMemvar)));
@@ -541,7 +541,7 @@ static HB_DYNS *hb_dynsymGetByIndex(HB_LONG lIndex)
   return pDynSym;
 }
 
-static HB_DYNS *hb_dynsymByItem(PHB_ITEM pItem)
+static HB_DYNS *hb_dynsymByItem(HB_ITEM *pItem)
 {
   HB_DYNS *pDynSym = nullptr;
 

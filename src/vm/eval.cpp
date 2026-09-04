@@ -54,7 +54,7 @@
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 
-HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
+HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
@@ -84,7 +84,7 @@ HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
 //       all, don't release the eval parameter Items explicitly to make both
 //       Harbour and CA-Cl*pper happy. [vszakats]
 
-HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
+HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_evalPutParam(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
@@ -98,16 +98,16 @@ HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
   }
 }
 
-PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
+HB_ITEM *hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo)));
 #endif
 
-  PHB_ITEM pResult = nullptr;
+  HB_ITEM *pResult = nullptr;
 
   if (pEvalInfo) {
-    PHB_ITEM pItem = pEvalInfo->pItems[0];
+    HB_ITEM *pItem = pEvalInfo->pItems[0];
     HB_SYMB *pSymbol = nullptr;
 
     if (pItem->isString()) {
@@ -179,13 +179,13 @@ HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
 // NOTE: When calling hb_itemDo() with no arguments for the Harbour item being
 //       evaluated, you must use '(PHB_ITEM *) 0' as the third parameter.
 
-PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
+HB_ITEM *hb_itemDo(HB_ITEM *pItem, HB_ULONG ulPCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemDo(%p, %lu, ...)", static_cast<void*>(pItem), ulPCount));
 #endif
 
-  PHB_ITEM pResult = nullptr;
+  HB_ITEM *pResult = nullptr;
 
   if (pItem != nullptr) {
     HB_SYMB *pSymbol = nullptr;
@@ -217,7 +217,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
           va_list va;
           va_start(va, ulPCount);
           for (HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++) {
-            hb_vmPush(va_arg(va, PHB_ITEM));
+            hb_vmPush(va_arg(va, HB_ITEM *));
           }
           va_end(va);
         }
@@ -242,13 +242,13 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
 // NOTE: When calling hb_itemDoC() with no arguments for the Harbour function
 //       being called, you must use '(PHB_ITEM *) 0' as the third parameter.
 
-PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
+HB_ITEM *hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount));
 #endif
 
-  PHB_ITEM pResult = nullptr;
+  HB_ITEM *pResult = nullptr;
 
   if (szFunc != nullptr) {
     auto pDynSym = hb_dynsymFindName(szFunc);
@@ -261,7 +261,7 @@ PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
           va_list va;
           va_start(va, ulPCount);
           for (HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++) {
-            hb_vmPush(va_arg(va, PHB_ITEM));
+            hb_vmPush(va_arg(va, HB_ITEM *));
           }
           va_end(va);
         }
@@ -279,7 +279,7 @@ PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
 // that you may access its value using a hb_par...(-1).
 
 // undocumented Clipper _cEval0()
-void hb_evalBlock0(PHB_ITEM pCodeBlock)
+void hb_evalBlock0(HB_ITEM *pCodeBlock)
 {
   hb_vmPushEvalSym();
   hb_vmPush(pCodeBlock);
@@ -287,7 +287,7 @@ void hb_evalBlock0(PHB_ITEM pCodeBlock)
 }
 
 // undocumented Clipper _cEval1()
-void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
+void hb_evalBlock1(HB_ITEM *pCodeBlock, HB_ITEM *pParam)
 {
   hb_vmPushEvalSym();
   hb_vmPush(pCodeBlock);
@@ -296,17 +296,17 @@ void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
 }
 
 // same functionality but with a nullptr terminated list of parameters
-void hb_evalBlock(PHB_ITEM pCodeBlock, ...)
+void hb_evalBlock(HB_ITEM *pCodeBlock, ...)
 {
   va_list args;
   uint16_t uiParams = 0;
-  PHB_ITEM pParam;
+  HB_ITEM *pParam;
 
   hb_vmPushEvalSym();
   hb_vmPush(pCodeBlock);
 
   va_start(args, pCodeBlock);
-  while ((pParam = va_arg(args, PHB_ITEM)) != nullptr) {
+  while ((pParam = va_arg(args, HB_ITEM *)) != nullptr) {
     hb_vmPush(pParam);
     uiParams++;
   }
@@ -376,10 +376,10 @@ HB_FUNC(HB_FORNEXT) // nStart, nEnd | bEnd, bCode, nStep
 HB_FUNC(HB_EXECFROMARRAY)
 {
   HB_SYMB *pExecSym = nullptr;
-  PHB_ITEM pFunc = nullptr;
-  PHB_ITEM pSelf = nullptr;
-  PHB_ITEM pArray = nullptr;
-  PHB_ITEM pItem;
+  HB_ITEM *pFunc = nullptr;
+  HB_ITEM *pSelf = nullptr;
+  HB_ITEM *pArray = nullptr;
+  HB_ITEM *pItem;
   HB_ULONG ulParamOffset = 0;
   auto iPCount = hb_pcount();
 
@@ -456,10 +456,10 @@ HB_FUNC(HB_EXECFROMARRAY)
   }
 }
 
-HB_BOOL hb_execFromArray(PHB_ITEM pParam)
+HB_BOOL hb_execFromArray(HB_ITEM *pParam)
 {
-  PHB_ITEM pArray = nullptr;
-  PHB_ITEM pSelf = nullptr;
+  HB_ITEM *pArray = nullptr;
+  HB_ITEM *pSelf = nullptr;
   HB_ULONG ulParamOffset = 0;
 
   if (pParam && pParam->isArray() && !pParam->isObject()) {

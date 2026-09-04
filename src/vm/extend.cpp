@@ -57,7 +57,7 @@
 // NOTE: iParam = -1 can be used to access the return value.
 // NOTE: iParam = 0 can be used to access the SELF object.
 
-PHB_ITEM hb_param(int32_t iParam, long lMask)
+HB_ITEM *hb_param(int32_t iParam, long lMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_param(%d, %ld)", iParam, lMask));
@@ -83,7 +83,7 @@ PHB_ITEM hb_param(int32_t iParam, long lMask)
   return nullptr;
 }
 
-PHB_ITEM hb_paramError(int32_t iParam)
+HB_ITEM *hb_paramError(int32_t iParam)
 {
   static HB_ITEM s_NIL;
 
@@ -149,7 +149,7 @@ HB_BOOL hb_extIsNil(int32_t iParam)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   if (iParam == -1) {
     pItem = hb_stackReturnItem();
@@ -172,7 +172,7 @@ HB_BOOL hb_extIsNil(int32_t iParam)
 HB_BOOL hb_extIsArray(int32_t iParam)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   if (iParam == -1) {
     pItem = hb_stackReturnItem();
@@ -195,7 +195,7 @@ HB_BOOL hb_extIsArray(int32_t iParam)
 HB_BOOL hb_extIsObject(int32_t iParam)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   if (iParam == -1) {
     pItem = hb_stackReturnItem();

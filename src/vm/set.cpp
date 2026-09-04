@@ -80,7 +80,7 @@ struct HB_SET_LISTENER_LST
 
 using PHB_SET_LISTENER_LST = HB_SET_LISTENER_LST *;
 
-static char set_char(PHB_ITEM pItem, char oldChar)
+static char set_char(HB_ITEM *pItem, char oldChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("set_char(%p, %c)", static_cast<void*>(pItem), oldChar));
@@ -100,7 +100,7 @@ static char set_char(PHB_ITEM pItem, char oldChar)
 
 // Change the setting if the parameter is a logical value, or is
 // either "ON" or "OFF" (regardless of case)
-static bool set_logical(PHB_ITEM pItem, bool bDefault)
+static bool set_logical(HB_ITEM *pItem, bool bDefault)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("set_logical(%p)", static_cast<void*>(pItem)));
@@ -130,7 +130,7 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
   return bLogical;
 }
 
-static int32_t set_number(PHB_ITEM pItem, int32_t iOldValue)
+static int32_t set_number(HB_ITEM *pItem, int32_t iOldValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("set_number(%p, %d)", static_cast<void*>(pItem), iOldValue));
@@ -139,7 +139,7 @@ static int32_t set_number(PHB_ITEM pItem, int32_t iOldValue)
   return pItem->isNumeric() ? pItem->getNI() : iOldValue;
 }
 
-static char *set_string(PHB_ITEM pItem, char *szOldString)
+static char *set_string(HB_ITEM *pItem, char *szOldString)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("set_string(%p, %s)", static_cast<void*>(pItem), szOldString));
@@ -260,7 +260,7 @@ static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend
 #endif
 
   HB_STACK_TLS_PRELOAD
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
   PHB_FILE handle;
   PHB_FILE *handle_ptr;
   HB_ERRCODE uiError;
@@ -508,7 +508,7 @@ static char *hb_set_PRINTFILE_default(void)
 #endif
 }
 
-PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pArg1, PHB_ITEM pArg2)
+HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pArg1, HB_ITEM *pArg2)
 {
   HB_STACK_TLS_PRELOAD
   PHB_SET_STRUCT pSet = hb_stackSetStruct();
@@ -1385,7 +1385,7 @@ int32_t hb_setListenerRemove(int32_t listener)
   return listener;
 }
 
-HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
+HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
 {
   HB_STACK_TLS_PRELOAD
   auto fResult = false;
@@ -1928,7 +1928,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
   return fResult;
 }
 
-HB_BOOL hb_setSetItem2(HB_set_enum set_specifier, PHB_ITEM pItem1, PHB_ITEM pItem2)
+HB_BOOL hb_setSetItem2(HB_set_enum set_specifier, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
   auto fResult = false;
 

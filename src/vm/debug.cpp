@@ -100,7 +100,7 @@
 
 // AddToArray(<pItem>, <pReturn>, <uiPos>)
 // Add <pItem> to array <pReturn> at pos <uiPos>
-static void AddToArray(PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos)
+static void AddToArray(HB_ITEM *pItem, HB_ITEM *pReturn, HB_SIZE nPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("AddToArray(%p, %p, %" HB_PFS "u)", static_cast<void*>(pItem), static_cast<void*>(pReturn), nPos));
@@ -257,14 +257,14 @@ HB_FUNC(__DBGVMPARLLIST)
   }
 }
 
-PHB_ITEM hb_dbg_vmVarLGet(int32_t iLevel, int32_t iLocal)
+HB_ITEM *hb_dbg_vmVarLGet(int32_t iLevel, int32_t iLocal)
 {
   HB_ISIZ nBaseOffset = hb_stackBaseOffset();
   while (iLevel-- > 0 && nBaseOffset > 1) {
     nBaseOffset = hb_stackItem(nBaseOffset - 1)->symbolStackState()->nBaseItem + 1;
   }
 
-  PHB_ITEM pLocal = nullptr;
+  HB_ITEM *pLocal = nullptr;
 
   if (iLevel < 0) {
     if (iLocal > SHRT_MAX) {
@@ -297,7 +297,7 @@ HB_FUNC(__DBGVMVARLGET)
   if (hb_vmInternalsEnabled()) {
     int32_t iLevel = hb_parni(1) + 1;
     auto iLocal = hb_parni(2);
-    PHB_ITEM pLocal = hb_dbg_vmVarLGet(iLevel, iLocal);
+    HB_ITEM *pLocal = hb_dbg_vmVarLGet(iLevel, iLocal);
 
     if (pLocal) {
       hb_itemReturn(pLocal);
@@ -319,7 +319,7 @@ HB_FUNC(__DBGVMVARLSET)
     }
 
     if (iLevel < 0) {
-      PHB_ITEM pLocal;
+      HB_ITEM *pLocal;
 
       if (iLocal > SHRT_MAX) {
         iLocal -= USHRT_MAX;

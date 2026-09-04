@@ -81,7 +81,7 @@ static HB_GARBAGE_FUNC(hb_libRelease)
 
 static const HB_GC_FUNCS s_gcDynlibFuncs = {hb_libRelease, hb_gcDummyMark};
 
-PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
+HB_ITEM *hb_libLoad(HB_ITEM *pLibName, HB_ITEM *pArgs)
 {
   void *hDynLib = nullptr;
 
@@ -140,7 +140,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
   return nullptr;
 }
 
-HB_BOOL hb_libFree(PHB_ITEM pDynLib)
+HB_BOOL hb_libFree(HB_ITEM *pDynLib)
 {
   auto fResult = false;
   auto pDynLibPtr = static_cast<void **>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
@@ -165,13 +165,13 @@ HB_BOOL hb_libFree(PHB_ITEM pDynLib)
   return fResult;
 }
 
-void *hb_libHandle(PHB_ITEM pDynLib)
+void *hb_libHandle(HB_ITEM *pDynLib)
 {
   auto pDynLibPtr = static_cast<void **>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
   return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
 
-void *hb_libSymAddr(PHB_ITEM pDynLib, const char *pszSymbol)
+void *hb_libSymAddr(HB_ITEM *pDynLib, const char *pszSymbol)
 {
   void *hDynLib = hb_libHandle(pDynLib);
 
@@ -192,7 +192,7 @@ void *hb_libSymAddr(PHB_ITEM pDynLib, const char *pszSymbol)
 HB_FUNC(HB_LIBLOAD)
 {
   auto iPCount = hb_pcount();
-  PHB_ITEM pArgs = nullptr;
+  HB_ITEM *pArgs = nullptr;
 
   if (iPCount > 1) {
     pArgs = hb_itemArrayNew(iPCount - 1);

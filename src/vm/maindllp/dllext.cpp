@@ -97,7 +97,7 @@ HB_SIZE hb_parinfa(int32_t iParam, HB_SIZE nArrayIndex)
   return s_parinfa ? s_parinfa(iParam, nArrayIndex) : 0;
 }
 
-PHB_ITEM hb_param(int32_t iParam, long lMask)
+HB_ITEM *hb_param(int32_t iParam, long lMask)
 {
   static HB_PARAM s_param = nullptr;
 
@@ -111,7 +111,7 @@ PHB_ITEM hb_param(int32_t iParam, long lMask)
   return s_param ? s_param(iParam, lMask) : nullptr;
 }
 
-PHB_ITEM hb_paramError(int32_t iParam)
+HB_ITEM *hb_paramError(int32_t iParam)
 {
   static HB_PARAMERROR s_paramError = nullptr;
 
@@ -839,7 +839,7 @@ int32_t hb_storvnd(double dNumber, int32_t iParam, ...)
   return 0;
 }
 
-HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen)
+HB_BOOL hb_arrayNew(HB_ITEM *pItem, HB_SIZE nLen)
 {
   static HB_ARRAYNEW s_arrayNew = nullptr;
 
@@ -852,7 +852,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen)
   return s_arrayNew ? s_arrayNew(pItem, nLen) : false;
 }
 
-HB_SIZE hb_arrayLen(PHB_ITEM pArray)
+HB_SIZE hb_arrayLen(HB_ITEM *pArray)
 {
   static HB_ARRAYLEN s_arrayLen = nullptr;
 
@@ -865,7 +865,7 @@ HB_SIZE hb_arrayLen(PHB_ITEM pArray)
   return s_arrayLen ? s_arrayLen(pArray) : 0;
 }
 
-HB_BOOL hb_arrayIsObject(PHB_ITEM pArray)
+HB_BOOL hb_arrayIsObject(HB_ITEM *pArray)
 {
   static HB_ARRAYISOBJECT s_arrayIsObject = nullptr;
 
@@ -878,7 +878,7 @@ HB_BOOL hb_arrayIsObject(PHB_ITEM pArray)
   return s_arrayIsObject ? s_arrayIsObject(pArray) : false;
 }
 
-HB_BOOL hb_arrayAdd(PHB_ITEM pArray, PHB_ITEM pItem)
+HB_BOOL hb_arrayAdd(HB_ITEM *pArray, HB_ITEM *pItem)
 {
   static HB_ARRAYADD s_arrayAdd = nullptr;
 
@@ -891,7 +891,7 @@ HB_BOOL hb_arrayAdd(PHB_ITEM pArray, PHB_ITEM pItem)
   return s_arrayAdd ? s_arrayAdd(pArray, pItem) : false;
 }
 
-HB_BOOL hb_arrayIns(PHB_ITEM pArray, HB_SIZE nIndex)
+HB_BOOL hb_arrayIns(HB_ITEM *pArray, HB_SIZE nIndex)
 {
   static HB_ARRAYINS s_arrayIns = nullptr;
 
@@ -904,7 +904,7 @@ HB_BOOL hb_arrayIns(PHB_ITEM pArray, HB_SIZE nIndex)
   return s_arrayIns ? s_arrayIns(pArray, nIndex) : false;
 }
 
-HB_BOOL hb_arrayDel(PHB_ITEM pArray, HB_SIZE nIndex)
+HB_BOOL hb_arrayDel(HB_ITEM *pArray, HB_SIZE nIndex)
 {
   static HB_ARRAYDEL s_arrayDel = nullptr;
 
@@ -917,7 +917,7 @@ HB_BOOL hb_arrayDel(PHB_ITEM pArray, HB_SIZE nIndex)
   return s_arrayDel ? s_arrayDel(pArray, nIndex) : false;
 }
 
-HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
+HB_BOOL hb_arraySize(HB_ITEM *pArray, HB_SIZE nLen)
 {
   static HB_ARRAYSIZE s_arraySize = nullptr;
 
@@ -930,7 +930,7 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
   return s_arraySize ? s_arraySize(pArray, nLen) : false;
 }
 
-HB_BOOL hb_arrayLast(PHB_ITEM pArray, PHB_ITEM pResult)
+HB_BOOL hb_arrayLast(HB_ITEM *pArray, HB_ITEM *pResult)
 {
   static HB_ARRAYLAST s_arrayLast = nullptr;
 
@@ -943,7 +943,7 @@ HB_BOOL hb_arrayLast(PHB_ITEM pArray, PHB_ITEM pResult)
   return s_arrayLast ? s_arrayLast(pArray, pResult) : false;
 }
 
-HB_BOOL hb_arraySet(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
+HB_BOOL hb_arraySet(HB_ITEM *pArray, HB_SIZE nIndex, HB_ITEM *pItem)
 {
   static HB_ARRAYSET s_arraySet = nullptr;
 
@@ -956,7 +956,7 @@ HB_BOOL hb_arraySet(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
   return s_arraySet ? s_arraySet(pArray, nIndex, pItem) : false;
 }
 
-HB_BOOL hb_arrayGet(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
+HB_BOOL hb_arrayGet(HB_ITEM *pArray, HB_SIZE nIndex, HB_ITEM *pItem)
 {
   static HB_ARRAYGET s_arrayGet = nullptr;
 
@@ -1027,7 +1027,7 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize)
   return s_xrealloc ? s_xrealloc(pMem, nSize) : nullptr;
 }
 
-void hb_macroTextValue(PHB_ITEM pItem)
+void hb_macroTextValue(HB_ITEM *pItem)
 {
   static HB_MACROTEXTVALUE s_macroTextValue = nullptr;
 

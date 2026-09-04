@@ -60,7 +60,7 @@ HB_FUNC(HB_HASH)
   if (iPCount & 1) {
     hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);
   } else {
-    PHB_ITEM pHash = hb_hashNew(nullptr);
+    HB_ITEM *pHash = hb_hashNew(nullptr);
     for (auto iParam = 1; iParam <= iPCount; iParam += 2) {
       auto pKey = hb_param(iParam, Harbour::Item::HASHKEY);
       auto pValue = hb_param(iParam + 1, Harbour::Item::ANY);
@@ -336,7 +336,7 @@ HB_FUNC(HB_HFILL)
   auto pValue = hb_param(2, Harbour::Item::ANY);
 
   if (pHash && pValue) {
-    PHB_ITEM pDest;
+    HB_ITEM *pDest;
     HB_SIZE nPos = 0;
 
     while ((pDest = hb_hashGetValueAt(pHash, ++nPos)) != nullptr) {
