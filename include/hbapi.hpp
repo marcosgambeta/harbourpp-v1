@@ -428,7 +428,8 @@ struct hb_struRecover
 };
 
 // items hold at the virtual machine stack
-typedef struct _HB_ITEM
+#if defined(__cplusplus)
+struct _HB_ITEM
 {
   HB_TYPE type;
   union
@@ -451,9 +452,7 @@ typedef struct _HB_ITEM
     struct hb_struRecover   asRecover;
   } item;
 
-// for internal use (core)
-#if defined(__cplusplus)
-  //
+  // for internal use (core)
   HB_TYPE rawType();
   void setType(HB_TYPE type);
   //
@@ -583,8 +582,34 @@ typedef struct _HB_ITEM
   void setHashValue(_HB_BASEHASH *pValue);
   //
   HB_EXPORT void clear();
-#endif
+};
+using HB_ITEM = _HB_ITEM;
+using PHB_ITEM = HB_ITEM *;
+#else
+typedef struct _HB_ITEM
+{
+  HB_TYPE type;
+  union
+  {
+    struct hb_struArray     asArray;
+    struct hb_struBlock     asBlock;
+    struct hb_struDateTime  asDateTime;
+    struct hb_struDouble    asDouble;
+    struct hb_struInteger   asInteger;
+    struct hb_struLogical   asLogical;
+    struct hb_struLong      asLong;
+    struct hb_struPointer   asPointer;
+    struct hb_struHash      asHash;
+    struct hb_struMemvar    asMemvar;
+    struct hb_struRefer     asRefer;
+    struct hb_struEnum      asEnum;
+    struct hb_struExtRef    asExtRef;
+    struct hb_struString    asString;
+    struct hb_struSymbol    asSymbol;
+    struct hb_struRecover   asRecover;
+  } item;
 } HB_ITEM, * PHB_ITEM;
+#endif
 
 #if defined(__cplusplus)
 
