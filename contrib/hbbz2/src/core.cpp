@@ -253,7 +253,7 @@ HB_FUNC(HB_BZ2_COMPRESS)
       auto nLen = hb_parclen(1);
 
       if( nLen ) {
-         PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
+         HB_ITEM *pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
          HB_SIZE  nDstLen;
          char *   pDest;
          int      iResult;
@@ -296,7 +296,7 @@ HB_FUNC(HB_BZ2_COMPRESS)
       --> <cUnCompressedData> or NIL on Error */
 HB_FUNC(HB_BZ2_UNCOMPRESS)
 {
-   PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
+   HB_ITEM     *pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
    auto szData = hb_parc(1);
 
    if( szData ) {
