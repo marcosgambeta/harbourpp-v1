@@ -28,16 +28,16 @@ struct amfContext
   const char *cBuf;
   HB_ISIZ position;
   HB_ISIZ length;
-  PHB_ITEM obj_ref;
-  PHB_ITEM str_ref;
-  PHB_ITEM class_ref;
-  PHB_ITEM conv_function;
+  HB_ITEM *obj_ref;
+  HB_ITEM *str_ref;
+  HB_ITEM *class_ref;
+  HB_ITEM *conv_function;
 };
 
-static bool amf3_getItem(amfContext *context, PHB_ITEM pItem);
+static bool amf3_getItem(amfContext *context, HB_ITEM *pItem);
 extern HB_BOOL hbamf_is_cls_externalizable(uint16_t uiClass);
 
-static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
+static HB_ITEM *hbamf_cls_externalizable_instance(HB_ITEM *pClassFuncStr)
 {
   auto pSymbol = hb_dynsymGet(hb_itemGetCPtr(pClassFuncStr));
 
@@ -198,7 +198,7 @@ static bool amf3_decode_int(amfContext *context, int *iVal)
 
 #if 0
 
-static bool amf3_decode_reference(PHB_ITEM pHash, int val, PHB_ITEM pRefItem)
+static bool amf3_decode_reference(HB_ITEM *pHash, int val, HB_ITEM *pRefItem)
 {
    /* Check for index reference */
    if( (val & REFERENCE_BIT) == 0 ) {
@@ -216,13 +216,13 @@ static bool amf3_decode_reference(PHB_ITEM pHash, int val, PHB_ITEM pRefItem)
 
 #endif
 
-static PHB_ITEM amf3_decode_reference(PHB_ITEM pHash, int val)
+static HB_ITEM *amf3_decode_reference(HB_ITEM *pHash, int val)
 {
   /* Check for index reference */
   if ((val & REFERENCE_BIT) == 0)
   {
     auto pKey = hb_itemNew(nullptr);
-    PHB_ITEM pRefItem;
+    HB_ITEM *pRefItem;
     hb_itemPutNI(pKey, val >> 1);
 
     pRefItem = hb_hashGetItemPtr(pHash, pKey, 0);
@@ -238,7 +238,7 @@ static PHB_ITEM amf3_decode_reference(PHB_ITEM pHash, int val)
   return nullptr;
 }
 
-static void amf3_add_reference(PHB_ITEM pHash, PHB_ITEM pItem)
+static void amf3_add_reference(HB_ITEM *pHash, HB_ITEM *pItem)
 {
   HB_SIZE iRef = hb_hashLen(pHash);
   auto pKey = hb_itemNew(nullptr);
@@ -253,7 +253,7 @@ static void amf3_add_reference(PHB_ITEM pHash, PHB_ITEM pItem)
   hb_itemRelease(pKey);
 }
 
-static bool amfX_decode_string(amfContext *context, PHB_ITEM pItem, unsigned int string_size)
+static bool amfX_decode_string(amfContext *context, HB_ITEM *pItem, unsigned int string_size)
 {
   const char *str = readBytes(context, string_size);
 
@@ -266,12 +266,12 @@ static bool amfX_decode_string(amfContext *context, PHB_ITEM pItem, unsigned int
   return true;
 }
 
-static bool amf3_deserialize_string(amfContext *context, PHB_ITEM pItem)
+static bool amf3_deserialize_string(amfContext *context, HB_ITEM *pItem)
 {
   int header;
   int *header_p = &header;
-  PHB_ITEM pRefItem;
-  PHB_ITEM pHash = context->str_ref;
+  HB_ITEM *pRefItem;
+  HB_ITEM *pHash = context->str_ref;
 
   if (!amf3_decode_int(context, header_p))
   {
@@ -313,7 +313,7 @@ static bool amf3_deserialize_string(amfContext *context, PHB_ITEM pItem)
 }
 
 /* Add the dynamic attributes of an encoded obj to a dict. */
-static bool amf3_decode_dynamic_dict(amfContext *context, PHB_ITEM pItem)
+static bool amf3_decode_dynamic_dict(amfContext *context, HB_ITEM *pItem)
 {
   for (;;)
   {
@@ -352,7 +352,7 @@ static bool amf3_decode_dynamic_dict(amfContext *context, PHB_ITEM pItem)
 }
 
 /* Populate an array with values from the buffer. */
-static bool decode_dynamic_array_AMF3(amfContext *context, PHB_ITEM pItem, int array_len, bool dict)
+static bool decode_dynamic_array_AMF3(amfContext *context, HB_ITEM *pItem, int array_len, bool dict)
 {
   int i;
   bool lRet;
@@ -414,12 +414,12 @@ static bool decode_dynamic_array_AMF3(amfContext *context, PHB_ITEM pItem, int a
   return true;
 }
 
-static bool amf3_deserialize_array(amfContext *context, PHB_ITEM pItem, bool collection)
+static bool amf3_deserialize_array(amfContext *context, HB_ITEM *pItem, bool collection)
 {
   int header;
   int *header_p = &header;
-  PHB_ITEM pRefItem;
-  PHB_ITEM pHash = context->obj_ref;
+  HB_ITEM *pRefItem;
+  HB_ITEM *pHash = context->obj_ref;
   bool mixed; /* if the result will be a Hash with both numbers and strings as keys */
   const char *byte_ref;
 
@@ -512,7 +512,7 @@ static bool amf3_deserialize_array(amfContext *context, PHB_ITEM pItem, bool col
 }
 
 /* Decode a date. */
-static bool amf3_decode_epoch(amfContext *context, PHB_ITEM pItem)
+static bool amf3_decode_epoch(amfContext *context, HB_ITEM *pItem)
 {
   double epoch_millisecs;
 
@@ -527,12 +527,12 @@ static bool amf3_decode_epoch(amfContext *context, PHB_ITEM pItem)
 }
 
 /* Deserialize date. */
-static bool amf3_deserialize_date(amfContext *context, PHB_ITEM pItem)
+static bool amf3_deserialize_date(amfContext *context, HB_ITEM *pItem)
 {
   int header;
   int *header_p = &header;
-  PHB_ITEM pRefItem;
-  PHB_ITEM pHash = context->obj_ref;
+  HB_ITEM *pRefItem;
+  HB_ITEM *pHash = context->obj_ref;
 
   if (!amf3_decode_int(context, header_p))
   {
@@ -566,7 +566,7 @@ static bool amf3_deserialize_date(amfContext *context, PHB_ITEM pItem)
 }
 
 /* Decode a byte array. */
-static bool amf3_decode_byte_array(amfContext *context, PHB_ITEM pItem, int byte_len)
+static bool amf3_decode_byte_array(amfContext *context, HB_ITEM *pItem, int byte_len)
 {
   const char *str = readBytes(context, byte_len);
 
@@ -580,12 +580,12 @@ static bool amf3_decode_byte_array(amfContext *context, PHB_ITEM pItem, int byte
 }
 
 /* Deserialize a byte array. */
-static bool amf3_deserialize_byte_array(amfContext *context, PHB_ITEM pItem)
+static bool amf3_deserialize_byte_array(amfContext *context, HB_ITEM *pItem)
 {
   int header;
   int *header_p = &header;
-  PHB_ITEM pRefItem;
-  PHB_ITEM pHash = context->obj_ref;
+  HB_ITEM *pRefItem;
+  HB_ITEM *pHash = context->obj_ref;
 
   if (!amf3_decode_int(context, header_p))
   {
@@ -619,10 +619,10 @@ static bool amf3_deserialize_byte_array(amfContext *context, PHB_ITEM pItem)
 }
 
 /* Get an object's class def - nearly a copy/paste from decoder */
-static PHB_ITEM class_def_from_classname(/* amfContext * context, */ PHB_ITEM pClassName)
+static HB_ITEM *class_def_from_classname(/* amfContext * context, */ HB_ITEM *pClassName)
 {
   uint16_t uiClass;
-  PHB_ITEM pClass;
+  HB_ITEM *pClass;
   char *pszBuffer = hb_itemGetC(pClassName);
   auto nLen = hb_itemGetCLen(pClassName);
 
@@ -690,13 +690,13 @@ static PHB_ITEM class_def_from_classname(/* amfContext * context, */ PHB_ITEM pC
  *
  * Header argument is the obj header.
  */
-static bool amf3_decode_class_def(amfContext *context, PHB_ITEM pClass, int header)
+static bool amf3_decode_class_def(amfContext *context, HB_ITEM *pClass, int header)
 {
   auto pStrAlias = hb_itemNew(nullptr);
-  PHB_ITEM pMappedClassDef = nullptr;
-  PHB_ITEM pKey;
-  PHB_ITEM pValue;
-  PHB_ITEM pAttrs;
+  HB_ITEM *pMappedClassDef = nullptr;
+  HB_ITEM *pKey;
+  HB_ITEM *pValue;
+  HB_ITEM *pAttrs;
   int i;
 
   if (!amf3_deserialize_string(context, pStrAlias))
@@ -820,10 +820,10 @@ static bool amf3_decode_class_def(amfContext *context, PHB_ITEM pClass, int head
  *
  * header argument is the parsed obj header.
  */
-static bool amf3_deserialize_class_def(amfContext *context, PHB_ITEM pClass, int header)
+static bool amf3_deserialize_class_def(amfContext *context, HB_ITEM *pClass, int header)
 {
-  PHB_ITEM pHash = context->class_ref;
-  PHB_ITEM pRefItem;
+  HB_ITEM *pHash = context->class_ref;
+  HB_ITEM *pRefItem;
 
   /* Check for reference */
   pRefItem = amf3_decode_reference(pHash, header);
@@ -852,10 +852,10 @@ static bool amf3_deserialize_class_def(amfContext *context, PHB_ITEM pClass, int
 }
 
 /* Returns a dict with values from an object. */
-static bool amf3_decode_obj_attrs(amfContext *context, PHB_ITEM pHash, PHB_ITEM pClass)
+static bool amf3_decode_obj_attrs(amfContext *context, HB_ITEM *pHash, HB_ITEM *pClass)
 {
-  PHB_ITEM pArray;
-  PHB_ITEM pValue;
+  HB_ITEM *pArray;
+  HB_ITEM *pValue;
   HB_SIZE static_attr_len;
   HB_SIZE i;
 
@@ -918,7 +918,7 @@ static bool amf3_decode_obj_attrs(amfContext *context, PHB_ITEM pHash, PHB_ITEM 
 }
 
 /* Decode an anonymous obj. */
-static bool amf3_decode_anon_obj(amfContext *context, PHB_ITEM pItem, PHB_ITEM pClass)
+static bool amf3_decode_anon_obj(amfContext *context, HB_ITEM *pItem, HB_ITEM *pClass)
 {
   auto pAnonHash = hb_itemNew(nullptr);
   bool result = false;
@@ -939,13 +939,13 @@ static bool amf3_decode_anon_obj(amfContext *context, PHB_ITEM pItem, PHB_ITEM p
   return result;
 }
 
-static bool amf3_decode_externalizable(amfContext *context, PHB_ITEM pItem)
+static bool amf3_decode_externalizable(amfContext *context, HB_ITEM *pItem)
 {
   const char *position;
   auto pRetCopy = hb_itemNew(nullptr);
-  PHB_ITEM pPos;
+  HB_ITEM *pPos;
   bool result = true;
-  PHB_ITEM pObject;
+  HB_ITEM *pObject;
 
   if (pItem == hb_stackReturnItem())
   {
@@ -986,15 +986,15 @@ static bool amf3_decode_externalizable(amfContext *context, PHB_ITEM pItem)
  *
  * proxy is flag indicating that the obj being deserialized is within an ObjectProxy
  */
-static bool amf3_deserialize_obj(amfContext *context, PHB_ITEM pItem, bool proxy)
+static bool amf3_deserialize_obj(amfContext *context, HB_ITEM *pItem, bool proxy)
 {
   int header;
   int *header_p = &header;
-  PHB_ITEM pRefItem;
-  PHB_ITEM pHash = context->obj_ref;
-  PHB_ITEM pClass;
-  PHB_ITEM pMappedClassDef;
-  PHB_ITEM pValue;
+  HB_ITEM *pRefItem;
+  HB_ITEM *pHash = context->obj_ref;
+  HB_ITEM *pClass;
+  HB_ITEM *pMappedClassDef;
+  HB_ITEM *pValue;
   int obj_type; /* 0 = anonymous, 1 == externalizable, 2 == typed */
   bool result;
 
@@ -1167,7 +1167,7 @@ static bool amf3_deserialize_obj(amfContext *context, PHB_ITEM pItem, bool proxy
   return result;
 }
 
-static void amf3_conversion_in(amfContext *context, PHB_ITEM pItem)
+static void amf3_conversion_in(amfContext *context, HB_ITEM *pItem)
 {
   auto pRetCopy = hb_itemNew(nullptr);
   HB_SYMB *pSym = hb_itemGetSymbol(context->conv_function);
@@ -1197,7 +1197,7 @@ static void amf3_conversion_in(amfContext *context, PHB_ITEM pItem)
    pointer of a final decoding function... in case reference checking
    returns nothing */
 
-static bool amf3_getItem(amfContext *context, PHB_ITEM pItem)
+static bool amf3_getItem(amfContext *context, HB_ITEM *pItem)
 {
   char byte;
   const char *byte_ref;
@@ -1303,7 +1303,7 @@ static bool amf3_getItem(amfContext *context, PHB_ITEM pItem)
 
 HB_FUNC(AMF3_DECODE)
 {
-  PHB_ITEM pItem = hb_stackReturnItem();
+  HB_ITEM *pItem = hb_stackReturnItem();
 
 #if defined(_DEBUG)
   auto pDebugBlock = hb_param(2, Harbour::Item::BLOCK);
