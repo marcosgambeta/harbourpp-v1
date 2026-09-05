@@ -516,7 +516,7 @@ HB_FUNC(WVW_CBCREATE)
     rOffXB.right = iOffRight;
 
     AddControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, uiCBid,
-                     static_cast<PHB_ITEM>(hb_param(6, Harbour::Item::BLOCK)), rXB, rOffXB,
+                     static_cast<HB_ITEM *>(hb_param(6, Harbour::Item::BLOCK)), rXB, rOffXB,
                      static_cast<byte>(bKbdType));
 
     auto OldProc =

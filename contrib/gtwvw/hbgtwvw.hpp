@@ -295,7 +295,7 @@ struct control_data
    BYTE     byCtrlClass;
    HWND     hWndCtrl;
    UINT     uiCtrlid;
-   PHB_ITEM phiCodeBlock;
+   HB_ITEM *phiCodeBlock;
    BOOL     bBusy;
    UINT     uiBusy;
    RECT     rCtrl, rOffCtrl;
@@ -348,15 +348,15 @@ struct app_data
 
    HWND hDlgModeless[WVW_DLGML_MAX];       /* Handle to a modeless dialog                               */
 
-   PHB_ITEM pFunc[WVW_DLGML_MAX];          /* Function pointer for WndProc                              */
+   HB_ITEM *pFunc[WVW_DLGML_MAX];          /* Function pointer for WndProc                              */
    /* TODO: pcbFunc is redundant and should be removed */
-   PHB_ITEM pcbFunc[WVW_DLGML_MAX];        /* codeblock for WndProc */
+   HB_ITEM *pcbFunc[WVW_DLGML_MAX];        /* codeblock for WndProc */
    int32_t      iType[WVW_DLGML_MAX];          /* Type of Function Pointers - Function 1, Block 2, Method 3 */
 
    HWND     hDlgModal[WVW_DLGMD_MAX];      /* Handle to a modal dialog                               */
-   PHB_ITEM pFuncModal[WVW_DLGMD_MAX];     /* Function pointer for WndProc                              */
+   HB_ITEM *pFuncModal[WVW_DLGMD_MAX];     /* Function pointer for WndProc                              */
    /* TODO: pcbFuncModal is redundant and should be removed */
-   PHB_ITEM pcbFuncModal[WVW_DLGMD_MAX];   /* codeblock for WndProc */
+   HB_ITEM *pcbFuncModal[WVW_DLGMD_MAX];   /* codeblock for WndProc */
    int32_t      iTypeModal[WVW_DLGMD_MAX];     /* Type of Function Pointers - Function 1, Block 2, Method 3 */
 
    BITMAP_HANDLE *  pbhBitmapList;
@@ -578,14 +578,14 @@ extern DWORD hb_gt_wvwProcessMessages(WIN_DATA * pWindowData);
 extern HWND FindControlHandle(UINT usWinNum, BYTE byCtrlClass, UINT uiCtrlid, byte * pbStyle);
 extern UINT FindControlId(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, byte * pbStyle);
 extern UINT LastControlId(UINT usWinNum, BYTE byCtrlClass);
-extern void AddControlHandle(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid, PHB_ITEM phiCodeBlock, RECT rCtrl, RECT rOffCtrl, byte bStyle);
+extern void AddControlHandle(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid, HB_ITEM *phiCodeBlock, RECT rCtrl, RECT rOffCtrl, byte bStyle);
 extern CONTROL_DATA * GetControlData(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid);
 extern BOOL StoreControlProc(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, WNDPROC OldProc);
 extern WNDPROC GetControlProc(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl);
 extern LRESULT CALLBACK hb_gt_wvwXBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern LRESULT CALLBACK hb_gt_wvwBtnProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 extern UINT ButtonCreate(UINT usWinNum, uint16_t usTop, uint16_t usLeft, uint16_t usBottom, uint16_t usRight, LPCTSTR lpszCaption,
-                         char * szBitmap, UINT uiBitmap, PHB_ITEM phbiCodeBlock,
+                         char * szBitmap, UINT uiBitmap, HB_ITEM *phbiCodeBlock,
                          int32_t iOffTop, int32_t iOffLeft, int32_t iOffBottom, int32_t iOffRight,
                          double dStretch, BOOL bMap3Dcolors,
                          int32_t iStyle);

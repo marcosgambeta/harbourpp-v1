@@ -1010,8 +1010,8 @@ HB_FUNC(CREATEFONT)
 HB_FUNC(SELECTFONT)
 {
   LOGFONT lf;
-  PHB_ITEM pObj = HB_ISNIL(1) ? nullptr : hb_param(1, Harbour::Item::OBJECT);
-  /* PHB_ITEM temp1; */
+  HB_ITEM *pObj = HB_ISNIL(1) ? nullptr : hb_param(1, Harbour::Item::OBJECT);
+  /* HB_ITEM *temp1; */
 
   CHOOSEFONT cf;
   cf.lStructSize = sizeof(CHOOSEFONT);
@@ -1083,7 +1083,7 @@ HB_FUNC(TOOLBARADDBUTTONS)
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
   auto iButtons = hb_parni(4);
   auto tb = static_cast<struct _TBBUTTON *>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
-  PHB_ITEM pTemp;
+  HB_ITEM *pTemp;
   /* BOOL bSystem; */
 
 #if 0
@@ -2010,7 +2010,7 @@ HB_FUNC(WVW_UPDATEWINDOW)
 HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
 {
   auto pFirst = hb_param(3, Harbour::Item::ANY);
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
   HB_DYNS *pExecSym;
   auto p = hb_getWvwData();
   HWND hDlg = nullptr;
@@ -2041,7 +2041,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
   else if (pFirst->isString()) {
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
     if (pExecSym) {
-      pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
+      pFunc = reinterpret_cast<HB_ITEM *>(pExecSym);
     }
     iType = 1;
   }
@@ -2101,7 +2101,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
 HB_FUNC(WVW_CREATEDIALOGMODAL)
 {
   auto pFirst = hb_param(3, Harbour::Item::ANY);
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
   HB_DYNS *pExecSym;
   auto p = hb_getWvwData();
   int32_t iIndex;
@@ -2135,7 +2135,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
   else if (pFirst->isString()) {
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
     if (pExecSym) {
-      pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
+      pFunc = reinterpret_cast<HB_ITEM *>(pExecSym);
     }
     p->s_sApp->pFuncModal[iIndex] = pFunc;
     p->s_sApp->iTypeModal[iIndex] = 1;

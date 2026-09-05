@@ -207,7 +207,7 @@ HB_FUNC(WVW_EBCREATE)
     rOffXB.right = iOffRight;
 
     AddControlHandle(usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid,
-                     static_cast<PHB_ITEM>(hb_param(7, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(bEBType));
+                     static_cast<HB_ITEM *>(hb_param(7, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(bEBType));
 
     auto OldProc =
         reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndEB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwEBProc)));

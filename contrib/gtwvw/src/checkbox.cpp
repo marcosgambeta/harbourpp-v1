@@ -464,7 +464,7 @@ HB_FUNC(WVW_PGCREATE)
     rOffXB.bottom = iOffBottom;
     rOffXB.right = iOffRight;
 
-    AddControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, hWndPG, uiPGid, static_cast<PHB_ITEM>(nullptr), rXB, rOffXB,
+    AddControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, hWndPG, uiPGid, static_cast<HB_ITEM *>(nullptr), rXB, rOffXB,
                      static_cast<byte>(iStyle));
 
     hb_retnl(static_cast<LONG>(uiPGid));

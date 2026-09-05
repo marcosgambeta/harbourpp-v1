@@ -156,7 +156,7 @@ static BOOL hb_gt_wvwSetCodePage(UINT usWinNum, int32_t iCodePage);
 static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static BOOL hb_gt_wvwAllocSpBuffer(WIN_DATA *pWindowData, uint16_t col, uint16_t row);
 static void hb_gt_wvwSetWindowTitle(UINT usWinNum, LPCTSTR title);
-static PHB_ITEM hb_gt_wvw_GetWindowTitle(UINT usWinNum, PHB_ITEM pItem);
+static HB_ITEM *hb_gt_wvw_GetWindowTitle(UINT usWinNum, HB_ITEM *pItem);
 static HICON hb_gt_wvwSetWindowIcon(UINT usWinNum, int32_t icon, const char *lpIconName);
 static HICON hb_gt_wvwSetWindowIconFromFile(UINT usWinNum, LPCTSTR icon);
 static BOOL hb_gt_wvwSetCentreWindow(UINT usWinNum, BOOL bCentre, BOOL bPaint);
@@ -1841,7 +1841,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
 {
   int32_t iIndex;
   long int bReturn = FALSE;
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
 
   auto iType = 0;
 
@@ -1880,7 +1880,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
          if( s_pWvwData->s_sApp->pFunc[iIndex]->type == Harbour::Item::BLOCK ) {
          HB_ITEM hihDlg, himessage, hiwParam, hilParam;
-         PHB_ITEM pReturn;
+         HB_ITEM *pReturn;
 
          hihDlg.type = Harbour::Item::NIL;
          hb_itemPutNL(&hihDlg, (ULONG) hDlg);
@@ -1894,7 +1894,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
          hilParam.type = Harbour::Item::NIL;
          hb_itemPutNL(&hilParam, (ULONG) lParam);
 
-         pReturn = hb_itemDo(static_cast<PHB_ITEM>(s_pWvwData->s_sApp->pFunc[iIndex]), 4, &hihDlg, &himessage,
+         pReturn = hb_itemDo(static_cast<HB_ITEM *>(s_pWvwData->s_sApp->pFunc[iIndex]), 4, &hihDlg, &himessage,
          &hiwParam, &hilParam);
 
          bReturn = hb_itemGetNL(pReturn);
@@ -1961,7 +1961,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
 {
   int32_t iIndex;
   long int bReturn = FALSE;
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
 
   auto iFirst = static_cast<int>(lParam);
 
@@ -2006,7 +2006,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
       /*
          if( s_pWvwData->s_sApp->pFuncModal[iIndex]->type == Harbour::Item::BLOCK ) {
          HB_ITEM hihDlg, himessage, hiwParam, hilParam;
-         PHB_ITEM pReturn;
+         HB_ITEM *pReturn;
 
          hihDlg.type = Harbour::Item::NIL;
          hb_itemPutNL(&hihDlg, (ULONG) hDlg);
@@ -2020,7 +2020,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
          hilParam.type = Harbour::Item::NIL;
          hb_itemPutNL(&hilParam, (ULONG) lParam);
 
-         pReturn = hb_itemDo(static_cast<PHB_ITEM>(s_pWvwData->s_sApp->pFuncModal[iIndex]), 4, &hihDlg, &himessage,
+         pReturn = hb_itemDo(static_cast<HB_ITEM *>(s_pWvwData->s_sApp->pFuncModal[iIndex]), 4, &hihDlg, &himessage,
          &hiwParam, &hilParam); bReturn = hb_itemGetNL(pReturn); hb_itemRelease(pReturn);
          }
        */
@@ -5955,7 +5955,7 @@ static void hb_gt_wvwSetWindowTitle(UINT usWinNum, LPCSTR title)
   SetWindowText(s_pWvwData->s_pWindows[usWinNum]->hWnd, title);
 }
 
-static PHB_ITEM hb_gt_wvw_GetWindowTitle(UINT usWinNum, PHB_ITEM pItem)
+static HB_ITEM *hb_gt_wvw_GetWindowTitle(UINT usWinNum, HB_ITEM *pItem)
 {
   TCHAR buffer[WVW_MAX_TITLE_SIZE];
   int32_t iResult;
@@ -8763,7 +8763,7 @@ UINT LastControlId(UINT usWinNum, BYTE byCtrlClass)
   }
 }
 
-void AddControlHandle(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid, PHB_ITEM phiCodeBlock, RECT rCtrl,
+void AddControlHandle(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid, HB_ITEM *phiCodeBlock, RECT rCtrl,
                       RECT rOffCtrl, byte bStyle)
 {
   WIN_DATA *pWindowData = s_pWvwData->s_pWindows[usWinNum];
@@ -8877,8 +8877,8 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
   if ((pcd->byCtrlClass == WVW_CONTROL_SCROLLBAR || pcd->byCtrlClass == WVW_CONTROL_PUSHBUTTON ||
        pcd->byCtrlClass == WVW_CONTROL_COMBOBOX || pcd->byCtrlClass == WVW_CONTROL_EDITBOX) &&
       pcd->phiCodeBlock) {
-    PHB_ITEM phiXBmsg, phiXBpos;
-    PHB_ITEM pReturn;
+    HB_ITEM *phiXBmsg, *phiXBpos;
+    HB_ITEM *pReturn;
 
     if (pcd->bBusy) {
       if (!s_pWvwData->s_bRecurseCBlock) {
@@ -8912,7 +8912,7 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
     } else if (pcd->byCtrlClass == WVW_CONTROL_COMBOBOX) {
       int32_t iCurSel;
 
-      PHB_ITEM phiEvent, phiIndex;
+      HB_ITEM *phiEvent, *phiIndex;
 
       switch (iEventType) {
       case CBN_SELCHANGE:
@@ -8952,7 +8952,7 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
         hb_itemRelease(phiIndex);
       }
     } else if (pcd->byCtrlClass == WVW_CONTROL_EDITBOX) {
-      PHB_ITEM phiEvent;
+      HB_ITEM *phiEvent;
 
       switch (iEventType) {
       case EN_SETFOCUS:
@@ -9214,7 +9214,7 @@ LRESULT CALLBACK hb_gt_wvwBtnProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
  *        WVW_CONTROL_PUSHBUTTON == WVW_CONTROL_CHECKBOX
  */
 UINT ButtonCreate(UINT usWinNum, uint16_t usTop, uint16_t usLeft, uint16_t usBottom, uint16_t usRight, LPCTSTR lpszCaption,
-                  char *szBitmap, UINT uiBitmap, PHB_ITEM phbiCodeBlock, int32_t iOffTop, int32_t iOffLeft, int32_t iOffBottom,
+                  char *szBitmap, UINT uiBitmap, HB_ITEM *phbiCodeBlock, int32_t iOffTop, int32_t iOffLeft, int32_t iOffBottom,
                   int32_t iOffRight, double dStretch, BOOL bMap3Dcolors, int32_t iStyle)
 {
   WIN_DATA *pWindowData = s_pWvwData->s_pWindows[usWinNum];
@@ -9301,7 +9301,7 @@ UINT ButtonCreate(UINT usWinNum, uint16_t usTop, uint16_t usLeft, uint16_t usBot
     rOffXB.bottom = iOffBottom;
     rOffXB.right = iOffRight;
 
-    AddControlHandle(usWinNum, WVW_CONTROL_PUSHBUTTON, hWndButton, uiPBid, static_cast<PHB_ITEM>(phbiCodeBlock), rXB,
+    AddControlHandle(usWinNum, WVW_CONTROL_PUSHBUTTON, hWndButton, uiPBid, static_cast<HB_ITEM *>(phbiCodeBlock), rXB,
                      rOffXB, static_cast<byte>(iStyle));
 
 #if 0
@@ -9756,12 +9756,12 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 
   if (iKey != 0) {
     auto hiKey = hb_itemNew(nullptr);
-    PHB_ITEM pReturn;
+    HB_ITEM *pReturn;
     BOOL bCodeExec = FALSE;
 
     hb_itemPutNI(hiKey, iKey);
 
-    PHB_ITEM pCodeblock = hb_itemDoC("SETKEY", 1, hiKey);
+    HB_ITEM *pCodeblock = hb_itemDoC("SETKEY", 1, hiKey);
     if (pCodeblock->isBlock()) {
       SetFocus(hWndParent);
       pReturn = hb_itemDo(pCodeblock, 0);
