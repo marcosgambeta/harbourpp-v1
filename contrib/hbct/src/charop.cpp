@@ -272,7 +272,7 @@ void ct_charop(int iMode)
       hb_retclen_buffer(reinterpret_cast<char *>(pucResult), sStrLen);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

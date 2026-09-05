@@ -90,7 +90,7 @@ HB_FUNC(SIN)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -125,7 +125,7 @@ HB_FUNC(COS)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -160,7 +160,7 @@ HB_FUNC(TAN)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -192,7 +192,7 @@ HB_FUNC(COT)
     dResult = dResult ? 1 / dResult : HUGE_VAL;
     hb_retnd(dResult);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -227,7 +227,7 @@ HB_FUNC(ASIN)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -262,7 +262,7 @@ HB_FUNC(ACOS)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -304,7 +304,7 @@ HB_FUNC(ATAN)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -351,7 +351,7 @@ HB_FUNC(ATN2)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -392,7 +392,7 @@ HB_FUNC(SINH)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -429,7 +429,7 @@ HB_FUNC(COSH)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -470,7 +470,7 @@ HB_FUNC(TANH)
       hb_retnd(dResult);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -494,7 +494,7 @@ HB_FUNC(RTOD)
 
     hb_retnd(dResult);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -518,7 +518,7 @@ HB_FUNC(DTOR)
 
     hb_retnd(dResult);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

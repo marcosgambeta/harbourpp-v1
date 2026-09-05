@@ -59,7 +59,7 @@ HB_FUNC(ASCIISUM)
     }
     hb_retnint(ulResult);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
       pSubst = ct_error_subst(static_cast<uint16_t>(iArgErrorMode), EG_ARG, CT_ERROR_ASCIISUM, nullptr,

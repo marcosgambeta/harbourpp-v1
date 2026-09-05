@@ -226,7 +226,7 @@ static void do_atnum(int iSwitch)
     case DO_ATNUM_AFTERATNUM:
     case DO_ATNUM_BEFORATNUM: {
       // AFTERATNUM
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -244,7 +244,7 @@ static void do_atnum(int iSwitch)
     }
     case DO_ATNUM_ATNUM: {
       // ATNUM
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {

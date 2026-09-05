@@ -93,7 +93,7 @@ static void do_count(int iSwitch)
 
     hb_retns(sRetVal);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

@@ -62,7 +62,7 @@ uint16_t ct_error(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubC
 
   uint16_t uiAction;
 
-  PHB_ITEM pArray;
+  HB_ITEM *pArray;
   va_list va;
 
   auto pError =
@@ -84,7 +84,7 @@ uint16_t ct_error(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubC
 
     va_start(va, ulArgCount);
     for (HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++) {
-      hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
+      hb_itemArrayPut(pArray, ulArgPos, va_arg(va, HB_ITEM *));
     }
     va_end(va);
   }
@@ -111,17 +111,17 @@ uint16_t ct_error(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubC
 
 // throwing a CT-subsystem error with value substitution
 // - function adapted from errorapi.c
-PHB_ITEM ct_error_subst(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
+HB_ITEM *ct_error_subst(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                         const char *szOperation, HB_ERRCODE errOsCode, uint16_t uiFlags, HB_ULONG ulArgCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
 #endif
 
-  PHB_ITEM pRetVal;
-  PHB_ITEM pError;
+  HB_ITEM *pRetVal;
+  HB_ITEM *pError;
 
-  PHB_ITEM pArray;
+  HB_ITEM *pArray;
   va_list va;
 
   pError = hb_errRT_New_Subst(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode,
@@ -143,7 +143,7 @@ PHB_ITEM ct_error_subst(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE e
 
     va_start(va, ulArgCount);
     for (HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++) {
-      hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
+      hb_itemArrayPut(pArray, ulArgPos, va_arg(va, HB_ITEM *));
     }
     va_end(va);
   }

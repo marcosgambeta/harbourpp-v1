@@ -98,7 +98,7 @@ extern HB_BOOL ct_numParam( int32_t iParam, HB_MAXINT * plNum );
 extern uint16_t ct_error( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
                            const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, uint16_t uiFlags, HB_ULONG uiArgCount, ... );
 
-extern PHB_ITEM ct_error_subst( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
+extern HB_ITEM *ct_error_subst( uint16_t uiSeverity, HB_ERRCODE ulGenCode, HB_ERRCODE ulSubCode,
                                 const char * szDescription, const char * szOperation, HB_ERRCODE uiOsCode, uint16_t uiFlags, HB_ULONG uiArgCount, ... );
 
 // set argument error behaviour

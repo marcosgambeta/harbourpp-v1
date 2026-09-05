@@ -342,7 +342,7 @@ static void do_token1(int iSwitch)
   } else {
     switch (iSwitch) {
     case DO_TOKEN1_TOKEN: {
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
       char cRet;
 
@@ -371,7 +371,7 @@ static void do_token1(int iSwitch)
     }
     case DO_TOKEN1_TOKENLOWER:
     case DO_TOKEN1_TOKENUPPER: {
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -391,7 +391,7 @@ static void do_token1(int iSwitch)
     }
     case DO_TOKEN1_NUMTOKEN:
     case DO_TOKEN1_ATTOKEN: {
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {

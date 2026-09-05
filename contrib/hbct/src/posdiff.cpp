@@ -88,7 +88,7 @@ HB_FUNC(POSDIFF)
       hb_retns(0);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -172,7 +172,7 @@ HB_FUNC(POSEQUAL)
     }
     hb_retns(0);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

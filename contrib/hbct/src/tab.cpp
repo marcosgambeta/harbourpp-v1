@@ -170,7 +170,7 @@ HB_FUNC(TABEXPAND)
     hb_retclen(pcRet, sRetLen);
     hb_xfree(pcRet);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -334,7 +334,7 @@ HB_FUNC(TABPACK)
     hb_retclen(pcRet, sRetLen);
     hb_xfree(pcRet);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

@@ -135,7 +135,7 @@ HB_FUNC(STRDIFF)
     hb_retni(MATRIXELEMENT(sStrLen1, sStrLen2));
     hb_xfree(piPenalty);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

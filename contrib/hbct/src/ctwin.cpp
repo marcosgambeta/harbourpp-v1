@@ -2085,7 +2085,7 @@ static HB_BOOL hb_ctw_gt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
   return true;
 }
 
-static int32_t hb_ctw_gt_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
+static int32_t hb_ctw_gt_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_Alert(%p,%p,%p,%d,%d,%f)", static_cast<void*>(pGT), static_cast<void*>(pMessage), static_cast<void*>(pOptions), iClrNorm, iClrHigh, dDelay));

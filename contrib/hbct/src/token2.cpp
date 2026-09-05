@@ -381,7 +381,7 @@ HB_FUNC(TOKENINIT)
       hb_retl(iResult);
     } else {
       // nothing to rewind -> return .F.
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -451,7 +451,7 @@ HB_FUNC(TOKENNEXT)
     sTokSave(sTokenEnvironment, 3);
   } else {
     // no string given, no token returns
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -474,7 +474,7 @@ HB_FUNC(TOKENNUM)
   if (sTokenEnvironment != nullptr) {
     hb_retns(sTokEnvGetCnt(sTokenEnvironment));
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -497,7 +497,7 @@ HB_FUNC(TOKENEND)
   if (sTokenEnvironment != nullptr) {
     hb_retl(sTokEnvEnd(sTokenEnvironment));
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -602,7 +602,7 @@ HB_FUNC(RESTTOKEN)
 
     sTokSet(sNewTokEnv);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

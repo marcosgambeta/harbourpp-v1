@@ -116,7 +116,7 @@ HB_FUNC(WORDREPL)
       hb_retclen_buffer(pcRet, sStrLen);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {

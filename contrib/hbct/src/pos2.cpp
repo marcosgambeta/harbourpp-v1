@@ -87,7 +87,7 @@ HB_FUNC(POSCHAR)
         hb_retclen_buffer(pcRet, sStrLen);
       }
     } else {
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -104,7 +104,7 @@ HB_FUNC(POSCHAR)
       }
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -158,7 +158,7 @@ HB_FUNC(POSDEL)
 
     hb_retclen_buffer(pcRet, sStrLen - sDelLen);
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -228,7 +228,7 @@ HB_FUNC(POSINS)
       hb_retclen(pcString, sStrLen);
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -324,7 +324,7 @@ HB_FUNC(POSREPL)
         hb_retclen_buffer(pcRet, sRetLen);
       }
     } else {
-      PHB_ITEM pSubst = nullptr;
+      HB_ITEM *pSubst = nullptr;
       int32_t iArgErrorMode = ct_getargerrormode();
 
       if (iArgErrorMode != CT_ARGERR_IGNORE) {
@@ -341,7 +341,7 @@ HB_FUNC(POSREPL)
       }
     }
   } else {
-    PHB_ITEM pSubst = nullptr;
+    HB_ITEM *pSubst = nullptr;
     int32_t iArgErrorMode = ct_getargerrormode();
 
     if (iArgErrorMode != CT_ARGERR_IGNORE) {
