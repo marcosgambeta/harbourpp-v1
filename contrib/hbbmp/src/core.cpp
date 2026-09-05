@@ -784,7 +784,7 @@ HB_FUNC( HB_BMP_FROMBITMAP )
    int align = hb_parni( 2 ), width = hb_parni( 3 ), height = hb_parni( 4 ),
        depth = hb_parni( 5 ), dpi = hb_parni( 6 ),
        iError = 0;
-   PHB_ITEM pColors = hb_param( 7, HB_IT_ARRAY );
+   HB_ITEM *pColors = hb_param( 7, HB_IT_ARRAY );
    HB_BOOL fromtop = height < 0;
    PHB_BMPINFO pBMP = NULL;
 
