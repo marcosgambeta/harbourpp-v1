@@ -118,7 +118,7 @@ HB_FUNC(WVG_SENDMESSAGE)
 
 HB_FUNC(WVG_SENDDLGITEMMESSAGE)
 {
-  PHB_ITEM pText = hb_param(5, Harbour::Item::STRING);
+  HB_ITEM *pText = hb_param(5, Harbour::Item::STRING);
   char *cText = nullptr;
   HB_ISIZ iLen = 0;
 
@@ -339,7 +339,7 @@ HB_FUNC(WVG_LOADIMAGE)
 HB_FUNC(WVG_GETCLIENTRECT)
 {
   RECT rc = {0, 0, 0, 0};
-  PHB_ITEM info = hb_itemArrayNew(4);
+  HB_ITEM *info = hb_itemArrayNew(4);
 
   GetClientRect((HWND)(uintptr_t)hb_parnint(1), &rc);
 
@@ -404,7 +404,7 @@ HB_FUNC(WVG_DRAWTEXT)
 HB_FUNC(WVG_GETWINDOWRECT)
 {
   RECT rc;
-  PHB_ITEM info = hb_itemArrayNew(4);
+  HB_ITEM *info = hb_itemArrayNew(4);
 
   GetWindowRect((HWND)(uintptr_t)hb_parnint(1), &rc);
 
@@ -475,7 +475,7 @@ HB_FUNC(WVG_DESTROYWINDOW)
 HB_FUNC(WVG_CLIENTTOSCREEN)
 {
   POINT Point;
-  PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+  HB_ITEM *pArray = hb_param(2, Harbour::Item::ARRAY);
 
   if (wvt_Array2Point(pArray, &Point)) {
     if (ClientToScreen((HWND)(uintptr_t)hb_parnint(1), &Point)) {
@@ -492,7 +492,7 @@ HB_FUNC(WVG_CLIENTTOSCREEN)
 HB_FUNC(WVG_SCREENTOCLIENT)
 {
   POINT Point;
-  PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+  HB_ITEM *pArray = hb_param(2, Harbour::Item::ARRAY);
 
   if (wvt_Array2Point(pArray, &Point)) {
     if (ScreenToClient((HWND)(uintptr_t)hb_parnint(1), &Point) > 0) {
@@ -1145,7 +1145,7 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
   case TB_GETINSERTMARK:
     break;
   case TB_GETCOLORSCHEME: {
-    PHB_ITEM info = hb_itemArrayNew(2);
+    HB_ITEM *info = hb_itemArrayNew(2);
     COLORSCHEME colorScheme;
 
     colorScheme.dwSize = sizeof(COLORSCHEME);

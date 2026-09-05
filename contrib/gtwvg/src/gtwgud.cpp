@@ -288,7 +288,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int32_t iCmdShow
   return pWVT;
 }
 
-static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, PHB_ITEM pParams)
+static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, HB_ITEM *pParams)
 {
   int32_t nResult = 0; // Unhandled
 
@@ -296,7 +296,7 @@ static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, PHB_ITEM pPar
     if (hb_vmRequestReenter()) {
       auto pEvent = hb_itemPutNI(nullptr, nEvent);
 
-      nResult = hb_itemGetNI(hb_vmEvalBlockV(static_cast<PHB_ITEM>(pWVT->pGT->pNotifierBlock), 2, pEvent, pParams));
+      nResult = hb_itemGetNI(hb_vmEvalBlockV(static_cast<HB_ITEM *>(pWVT->pGT->pNotifierBlock), 2, pEvent, pParams));
 
       hb_itemRelease(pEvent);
 
@@ -1276,7 +1276,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
   case HB_GTI_SETFONT:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
-      PHB_ITEM pSome;
+      HB_ITEM *pSome;
 
       pSome = hb_arrayGetItemPtr(pInfo->pNewVal, 1);
       if (hb_itemType(pSome) & Harbour::Item::STRING) {
@@ -1818,7 +1818,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
   case HB_GTI_PRESPARAMS:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
       if (hb_arrayLen(pInfo->pNewVal) == HB_GTI_PP_SIZE) {
-        PHB_ITEM pSome;
+        HB_ITEM *pSome;
 
         pSome = hb_arrayGetItemPtr(pInfo->pNewVal, HB_GTI_PP_EXSTYLE);
         if (hb_itemType(pSome) & Harbour::Item::NUMERIC) {

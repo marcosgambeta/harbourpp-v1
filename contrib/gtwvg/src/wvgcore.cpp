@@ -292,7 +292,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, L
 
   int32_t iIndex, iType;
   long int lReturn = 0;
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
 
   iType = 0;
 
@@ -360,7 +360,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, L
 
   case WM_NCDESTROY:
     if (_s->pFunc[iIndex] != nullptr && _s->iType[iIndex] == 2) {
-      hb_itemRelease(static_cast<PHB_ITEM>(_s->pFunc[iIndex]));
+      hb_itemRelease(static_cast<HB_ITEM *>(_s->pFunc[iIndex]));
     }
     _s->hDlgModeless[iIndex] = nullptr;
     _s->pFunc[iIndex] = nullptr;
@@ -378,7 +378,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, L
 
   int32_t iIndex, iType;
   long int lReturn = 0;
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
   int32_t iFirst = (int32_t)lParam;
 
   if (iFirst > 0 && iFirst <= WVT_DLGMD_MAX) {
@@ -453,7 +453,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, L
 
   case WM_NCDESTROY:
     if (_s->pFuncModal[iIndex] != nullptr && _s->iTypeModal[iIndex] == 2) {
-      hb_itemRelease(static_cast<PHB_ITEM>(_s->pFuncModal[iIndex]));
+      hb_itemRelease(static_cast<HB_ITEM *>(_s->pFuncModal[iIndex]));
     }
     _s->hDlgModal[iIndex] = nullptr;
     _s->pFuncModal[iIndex] = nullptr;
@@ -2703,7 +2703,7 @@ HB_FUNC(WVT_SAVESCREEN)
   HBITMAP hBmp, oldBmp;
   POINT xy = {0, 0};
   int32_t iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-  PHB_ITEM info = hb_itemArrayNew(3);
+  HB_ITEM *info = hb_itemArrayNew(3);
 
   xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
   iTop = xy.y;

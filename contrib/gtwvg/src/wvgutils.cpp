@@ -77,15 +77,15 @@ BOOL WINAPI ChooseColor(LPCHOOSECOLORW);
 #if 0
 HB_EXTERN_BEGIN
 
-extern HB_BOOL  wvt_Array2Rect(PHB_ITEM aRect, RECT * rc);
-extern PHB_ITEM wvt_Rect2Array(RECT * rc);
-extern HB_BOOL  wvt_Array2Point(PHB_ITEM aPoint, POINT * pt);
-extern PHB_ITEM wvt_Point2Array(POINT * pt);
-extern HB_BOOL  wvt_Array2Size(PHB_ITEM aSize, SIZE * siz);
-extern PHB_ITEM wvt_Size2Array(SIZE * siz);
-extern void     wvt_Rect2ArrayEx(RECT * rc, PHB_ITEM aRect);
-extern void     wvt_Point2ArrayEx(POINT * pt, PHB_ITEM aPoint);
-extern void     wvt_Size2ArrayEx(SIZE * siz, PHB_ITEM aSize);
+extern HB_BOOL  wvt_Array2Rect(HB_ITEM *aRect, RECT * rc);
+extern HB_ITEM *wvt_Rect2Array(RECT * rc);
+extern HB_BOOL  wvt_Array2Point(HB_ITEM *aPoint, POINT * pt);
+extern HB_ITEM *wvt_Point2Array(POINT * pt);
+extern HB_BOOL  wvt_Array2Size(HB_ITEM *aSize, SIZE * siz);
+extern HB_ITEM *wvt_Size2Array(SIZE * siz);
+extern void     wvt_Rect2ArrayEx(RECT * rc, HB_ITEM *aRect);
+extern void     wvt_Point2ArrayEx(POINT * pt, HB_ITEM *aPoint);
+extern void     wvt_Size2ArrayEx(SIZE * siz, HB_ITEM *aSize);
 
 HB_EXTERN_END
 #endif
@@ -437,7 +437,7 @@ HB_FUNC(WVT_GETPAINTRECT)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  PHB_ITEM info = hb_itemArrayNew(4);
+  HB_ITEM *info = hb_itemArrayNew(4);
 
   hb_arraySetNI(info, 1, _s->rowStart);
   hb_arraySetNI(info, 2, _s->colStart);
@@ -546,7 +546,7 @@ HB_FUNC(WVT_SETMOUSEMOVE)
 
 HB_FUNC(WVT_GETXYFROMROWCOL)
 {
-  PHB_ITEM info = hb_itemArrayNew(2);
+  HB_ITEM *info = hb_itemArrayNew(2);
   POINT xy = {0, 0};
 
   xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -561,7 +561,7 @@ HB_FUNC(WVT_GETFONTINFO)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  PHB_ITEM info = hb_itemArrayNew(7);
+  HB_ITEM *info = hb_itemArrayNew(7);
 
   HB_ARRAYSETSTR(info, 1, _s->fontFace);
   hb_arraySetNL(info, 2, _s->fontHeight);
@@ -723,7 +723,7 @@ HB_FUNC(WVT_CLIENTTOSCREEN)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  PHB_ITEM info = hb_itemArrayNew(2);
+  HB_ITEM *info = hb_itemArrayNew(2);
   POINT xy = {0, 0};
 
   xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -739,7 +739,7 @@ HB_FUNC(WVT_CLIENTTOSCREEN)
 HB_FUNC(WVT_GETCURSORPOS)
 {
   POINT xy = {0, 0};
-  PHB_ITEM info = hb_itemArrayNew(2);
+  HB_ITEM *info = hb_itemArrayNew(2);
 
   GetCursorPos(&xy);
 
@@ -776,8 +776,8 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFirst = hb_param(3, Harbour::Item::ANY);
+  HB_ITEM *pFunc = nullptr;
   HB_DYNS *pExecSym;
   HWND hDlg = 0;
   int32_t iType = 0;
@@ -804,7 +804,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
   } else if (hb_itemType(pFirst) == Harbour::Item::STRING) {
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
     if (pExecSym) {
-      pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
+      pFunc = reinterpret_cast<HB_ITEM *>(pExecSym);
     }
     iType = 1;
   }
@@ -870,8 +870,8 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-  PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFirst = hb_param(3, Harbour::Item::ANY);
+  HB_ITEM *pFunc = nullptr;
   HB_DYNS *pExecSym;
   int32_t iIndex;
   int32_t iResource = hb_parni(4);
@@ -902,7 +902,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   } else if (hb_itemType(pFirst) == Harbour::Item::STRING) {
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
     if (pExecSym) {
-      pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
+      pFunc = reinterpret_cast<HB_ITEM *>(pExecSym);
     }
     _s->pFuncModal[iIndex] = pFunc;
     _s->iTypeModal[iIndex] = 1;
@@ -1142,7 +1142,7 @@ HB_FUNC(WVT_GETFONTHANDLE)
 //                     Utility Functions - Not API
 //
 
-HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT *rc)
+HB_BOOL wvt_Array2Rect(HB_ITEM *aRect, RECT *rc)
 {
   if (aRect->isArray() && hb_arrayLen(aRect) == 4) {
     rc->left = hb_arrayGetNL(aRect, 1);
@@ -1154,9 +1154,9 @@ HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT *rc)
   return false;
 }
 
-PHB_ITEM wvt_Rect2Array(RECT *rc)
+HB_ITEM *wvt_Rect2Array(RECT *rc)
 {
-  PHB_ITEM aRect = hb_itemArrayNew(4);
+  HB_ITEM *aRect = hb_itemArrayNew(4);
 
   hb_arraySetNL(aRect, 1, rc->left);
   hb_arraySetNL(aRect, 2, rc->top);
@@ -1166,7 +1166,7 @@ PHB_ITEM wvt_Rect2Array(RECT *rc)
   return aRect;
 }
 
-HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT *pt)
+HB_BOOL wvt_Array2Point(HB_ITEM *aPoint, POINT *pt)
 {
   if (aPoint->isArray() && hb_arrayLen(aPoint) == 2) {
     pt->x = hb_arrayGetNL(aPoint, 1);
@@ -1176,9 +1176,9 @@ HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT *pt)
   return false;
 }
 
-PHB_ITEM wvt_Point2Array(POINT *pt)
+HB_ITEM *wvt_Point2Array(POINT *pt)
 {
-  PHB_ITEM aPoint = hb_itemArrayNew(2);
+  HB_ITEM *aPoint = hb_itemArrayNew(2);
 
   hb_arraySetNL(aPoint, 1, pt->x);
   hb_arraySetNL(aPoint, 2, pt->y);
@@ -1186,7 +1186,7 @@ PHB_ITEM wvt_Point2Array(POINT *pt)
   return aPoint;
 }
 
-HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE *siz)
+HB_BOOL wvt_Array2Size(HB_ITEM *aSize, SIZE *siz)
 {
   if (aSize->isArray() && hb_arrayLen(aSize) == 2) {
     siz->cx = hb_arrayGetNL(aSize, 1);
@@ -1196,9 +1196,9 @@ HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE *siz)
   return false;
 }
 
-PHB_ITEM wvt_Size2Array(SIZE *siz)
+HB_ITEM *wvt_Size2Array(SIZE *siz)
 {
-  PHB_ITEM aSize = hb_itemArrayNew(2);
+  HB_ITEM *aSize = hb_itemArrayNew(2);
 
   hb_arraySetNL(aSize, 1, siz->cx);
   hb_arraySetNL(aSize, 2, siz->cy);
@@ -1206,7 +1206,7 @@ PHB_ITEM wvt_Size2Array(SIZE *siz)
   return aSize;
 }
 
-void wvt_Rect2ArrayEx(RECT *rc, PHB_ITEM aRect)
+void wvt_Rect2ArrayEx(RECT *rc, HB_ITEM *aRect)
 {
   hb_arraySetNL(aRect, 1, rc->left);
   hb_arraySetNL(aRect, 2, rc->top);
@@ -1214,13 +1214,13 @@ void wvt_Rect2ArrayEx(RECT *rc, PHB_ITEM aRect)
   hb_arraySetNL(aRect, 4, rc->bottom);
 }
 
-void wvt_Point2ArrayEx(POINT *pt, PHB_ITEM aPoint)
+void wvt_Point2ArrayEx(POINT *pt, HB_ITEM *aPoint)
 {
   hb_arraySetNL(aPoint, 1, pt->x);
   hb_arraySetNL(aPoint, 2, pt->y);
 }
 
-void wvt_Size2ArrayEx(SIZE *siz, PHB_ITEM aSize)
+void wvt_Size2ArrayEx(SIZE *siz, HB_ITEM *aSize)
 {
   hb_arraySetNL(aSize, 1, siz->cx);
   hb_arraySetNL(aSize, 2, siz->cy);

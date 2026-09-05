@@ -1498,9 +1498,9 @@ HB_FUNC(WVG_OBJECT)
 
 // wvg_Object(GOBJ_OBJTYPE_GRIDVERT, {||{nTop, nBottom, aCols, nCols, aPxlOff}})
 //                                              aPxlOff[1] and aPxlOff[3] used
-static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
+static void hb_wvg_GridVert(PHB_GTWVT pWVT, HB_ITEM *pArray, RECT *uRect)
 {
-  PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);
+  HB_ITEM *pCols = hb_arrayGetItemPtr(pArray, 3);
   HB_ISIZ iTabs = hb_arrayLen(pCols);
 
   if (iTabs > 0) {
@@ -1533,7 +1533,7 @@ static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
   }
 }
 
-static void hb_wvg_GridHorz(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT *uRect)
+static void hb_wvg_GridHorz(PHB_GTWVT pWVT, HB_ITEM *pArray, RECT *uRect)
 {
   int32_t iAtRow = hb_arrayGetNI(pArray, 1);
   int32_t iRows = hb_arrayGetNI(pArray, 4);
@@ -1579,7 +1579,7 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect)
 
       if (gObj->iObjType == GOBJ_OBJTYPE_OBJECT) {
         if (hb_vmRequestReenter()) {
-          PHB_ITEM pArray;
+          HB_ITEM *pArray;
 
           hb_vmPushEvalSym();
           hb_vmPush(gObj->bBlock);

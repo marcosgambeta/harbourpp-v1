@@ -199,7 +199,7 @@ typedef struct _tag_GOBJS
    TRIVERTEX      vert[ 2 ];
    void *         hText;
    LPCTSTR        lpText;
-   PHB_ITEM       bBlock;
+   HB_ITEM *      bBlock;
    struct _tag_GOBJS * gObjNext;
 
 } HB_GOBJS, * PHB_GOBJS;
@@ -212,7 +212,7 @@ typedef struct
    int32_t       y;
    int32_t       width;
    int32_t       height;
-   PHB_ITEM  pParentGT;
+   HB_ITEM * pParentGT;
    HB_BOOL   bVisible;
    HB_BOOL   bRowCols;
    HB_BOOL   bConfigured;
@@ -364,14 +364,14 @@ typedef struct
    HB_BOOL   bToolTipActive;                // Flag to set whether tooltip is active or not
 
    HWND      hDlgModeless[ WVT_DLGML_MAX ]; // Handle to a modeless dialog
-   PHB_ITEM  pFunc[ WVT_DLGML_MAX ];        // Function pointer for WndProc
+   HB_ITEM * pFunc[ WVT_DLGML_MAX ];        // Function pointer for WndProc
    // TODO: pcbFunc is redundant and should be removed
-   PHB_ITEM  pcbFunc[ WVT_DLGML_MAX ];      // codeblock for WndProc
+   HB_ITEM * pcbFunc[ WVT_DLGML_MAX ];      // codeblock for WndProc
    int32_t       iType[ WVT_DLGML_MAX ];        // Type of Function Pointers - Function 1, Block 2, Method 3
    HWND      hDlgModal[ WVT_DLGMD_MAX ];    // Handle to a modeless dialog
-   PHB_ITEM  pFuncModal[ WVT_DLGMD_MAX ];   // Function pointer for WndProc
+   HB_ITEM * pFuncModal[ WVT_DLGMD_MAX ];   // Function pointer for WndProc
    // TODO: pcbFuncModal is redundant and should be removed
-   PHB_ITEM  pcbFuncModal[ WVT_DLGMD_MAX ]; // codeblock for WndProc
+   HB_ITEM * pcbFuncModal[ WVT_DLGMD_MAX ]; // codeblock for WndProc
    int32_t       iTypeModal[ WVT_DLGMD_MAX ];   // Type of Function Pointers - Function 1, Block 2, Method 3
 
    PHB_GT_PARAMS  pPP;                      // Presentation Parameters
@@ -388,7 +388,7 @@ typedef struct
 
    HWND      hWndParent;                    // Parent Window Handle, if any
 
-   PHB_ITEM  pNotifierGUI;                  // Notifier to Wvg*Parts if embedded into a GT Window
+   HB_ITEM * pNotifierGUI;                  // Notifier to Wvg*Parts if embedded into a GT Window
 
    HB_THREAD_NO threadNO;                   // Will hold the current THREAD No
 
@@ -509,15 +509,15 @@ extern HB_EXPORT void          hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRe
 
 //-
 
-extern HB_BOOL  wvt_Array2Rect(PHB_ITEM aRect, RECT *rc);
-extern PHB_ITEM wvt_Rect2Array(RECT *rc);
-extern HB_BOOL  wvt_Array2Point(PHB_ITEM aPoint, POINT *pt);
-extern PHB_ITEM wvt_Point2Array(POINT *pt);
-extern HB_BOOL  wvt_Array2Size(PHB_ITEM aSize, SIZE *siz);
-extern PHB_ITEM wvt_Size2Array(SIZE *siz);
-extern void     wvt_Rect2ArrayEx(RECT *rc, PHB_ITEM aRect);
-extern void     wvt_Point2ArrayEx(POINT *pt, PHB_ITEM aPoint);
-extern void     wvt_Size2ArrayEx(SIZE *siz, PHB_ITEM aSize);
+extern HB_BOOL  wvt_Array2Rect(HB_ITEM *aRect, RECT *rc);
+extern HB_ITEM *wvt_Rect2Array(RECT *rc);
+extern HB_BOOL  wvt_Array2Point(HB_ITEM *aPoint, POINT *pt);
+extern HB_ITEM *wvt_Point2Array(POINT *pt);
+extern HB_BOOL  wvt_Array2Size(HB_ITEM *aSize, SIZE *siz);
+extern HB_ITEM *wvt_Size2Array(SIZE *siz);
+extern void     wvt_Rect2ArrayEx(RECT *rc, HB_ITEM *aRect);
+extern void     wvt_Point2ArrayEx(POINT *pt, HB_ITEM *aPoint);
+extern void     wvt_Size2ArrayEx(SIZE *siz, HB_ITEM *aSize);
 
 HB_EXTERN_END
 

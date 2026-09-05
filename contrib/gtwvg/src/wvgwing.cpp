@@ -653,7 +653,7 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
 
 //                            WvgFontDialog()
 
-PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
+HB_ITEM *wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 {
   auto aFont = hb_itemNew(nullptr);
 
@@ -701,16 +701,16 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
 {
   HB_BOOL bret = false;
   HB_BOOL binit = false;
-  PHB_ITEM block;
+  HB_ITEM *block;
 
   if (msg == WM_INITDIALOG) {
     CHOOSEFONT *cf = (CHOOSEFONT *)lParam;
-    auto pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData)));
+    auto pBlock = static_cast<HB_ITEM *>(hb_itemNew(reinterpret_cast<HB_ITEM *>(cf->lCustData)));
     SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
     binit = true;
   }
 
-  block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
+  block = static_cast<HB_ITEM *>(GetProp(hwnd, TEXT("DIALOGPROC")));
 
   if (block) {
     hb_vmPushEvalSym();
@@ -803,7 +803,7 @@ HB_FUNC(WVG_CHOOSEFONT)
   cf.nSizeMax = 0;
 
   if (ChooseFont(&cf)) {
-    PHB_ITEM aFont = wvg_logfontTOarray(&lf, false);
+    HB_ITEM *aFont = wvg_logfontTOarray(&lf, false);
     auto aInfo = hb_itemNew(nullptr);
 
     hb_arrayNew(aInfo, 4);
@@ -820,7 +820,7 @@ HB_FUNC(WVG_CHOOSEFONT)
 
 HB_FUNC(WVG_CHOOSEFONT_GETLOGFONT)
 {
-  PHB_ITEM aFont;
+  HB_ITEM *aFont;
 
   LOGFONT lf{};
 
@@ -834,7 +834,7 @@ HB_FUNC(WVG_CHOOSEFONT_GETLOGFONT)
 HB_FUNC(WVG_FONTCREATE)
 {
   HFONT hFont;
-  PHB_ITEM aFont;
+  HB_ITEM *aFont;
 
   LOGFONT lf{};
 
@@ -1016,7 +1016,7 @@ HB_FUNC(WVG_BEGINMOUSETRACKING)
 
 LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  PHB_ITEM pBlock = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
+  HB_ITEM *pBlock = static_cast<HB_ITEM *>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
   long lRet;
 
   if (pBlock) {
@@ -1058,7 +1058,7 @@ HB_FUNC(WVG_SETWINDOWPROCBLOCK)
 HB_FUNC(WVG_RELEASEWINDOWPROCBLOCK)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  PHB_ITEM pBlock = static_cast<PHB_ITEM>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
+  HB_ITEM *pBlock = static_cast<HB_ITEM *>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
 
   if (pBlock) {
     hb_itemRelease(pBlock);

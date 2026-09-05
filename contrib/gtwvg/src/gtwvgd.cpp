@@ -274,11 +274,11 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
   pWVT->pSymWVT_KEY = nullptr;
   for (iIndex = 0; iIndex < (int32_t)HB_SIZEOFARRAY(pWVT->pFunc); iIndex++) {
     if (pWVT->pFunc[iIndex] != nullptr && pWVT->iType[iIndex] == 2) {
-      hb_itemRelease(static_cast<PHB_ITEM>(pWVT->pFunc[iIndex]));
+      hb_itemRelease(static_cast<HB_ITEM *>(pWVT->pFunc[iIndex]));
       pWVT->pFunc[iIndex] = nullptr;
     }
     if (pWVT->pcbFunc[iIndex] != nullptr) {
-      hb_itemRelease(static_cast<PHB_ITEM>(pWVT->pcbFunc[iIndex]));
+      hb_itemRelease(static_cast<HB_ITEM *>(pWVT->pcbFunc[iIndex]));
       pWVT->pcbFunc[iIndex] = nullptr;
     }
   }
@@ -462,7 +462,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int32_t iCmdShow
   return pWVT;
 }
 
-static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, PHB_ITEM pParams)
+static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, HB_ITEM *pParams)
 {
   int32_t nResult = 0; // Unhandled
 
@@ -3706,7 +3706,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
     if (!pWVT->hWnd) {
       if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
         if (hb_arrayLen(pInfo->pNewVal) == HB_GTI_PP_SIZE) {
-          PHB_ITEM pSome;
+          HB_ITEM *pSome;
 
           pSome = hb_arrayGetItemPtr(pInfo->pNewVal, HB_GTI_PP_EXSTYLE);
           if (hb_itemType(pSome) & Harbour::Item::NUMERIC) {
