@@ -221,7 +221,7 @@ struct _WVW_CTL
    int32_t      nClass;
    HWND     hWnd;
    int32_t      nId;
-   PHB_ITEM pBlock;
+   HB_ITEM *pBlock;
    bool     fBusy;
    int32_t      nBusy;
    RECT     rect;
@@ -419,11 +419,11 @@ struct WVW_GLO
       HPEN       hUserPens[20];               /* User defined pens */
 
       HWND     hDlgModeless[WVW_DLGML_MAX];   /* Handle to a modeless dialog */
-      PHB_ITEM pFunc[WVW_DLGML_MAX];          /* Function pointer for WndProc */
+      HB_ITEM *pFunc[WVW_DLGML_MAX];          /* Function pointer for WndProc */
       int32_t      iType[WVW_DLGML_MAX];          /* Type of Function Pointers - Function 1, Block 2, Method 3 */
 
       HWND     hDlgModal[WVW_DLGMD_MAX];      /* Handle to a modal dialog */
-      PHB_ITEM pFuncModal[WVW_DLGMD_MAX];     /* Function pointer for WndProc */
+      HB_ITEM *pFuncModal[WVW_DLGMD_MAX];     /* Function pointer for WndProc */
       int32_t      iTypeModal[WVW_DLGMD_MAX];     /* Type of Function Pointers - Function 1, Block 2, Method 3 */
 
       WVW_BMP *  pbhBitmapList;
@@ -494,11 +494,11 @@ extern int32_t        hb_gt_wvw_GetControlClass(PWVW_WIN wvw_win, HWND hWnd);
 extern HWND       hb_gt_wvw_FindControlHandle(PWVW_WIN wvw_win, int32_t nClass, int32_t nId, int32_t * pnStyle);
 extern int32_t        hb_gt_wvw_FindControlId(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, int32_t * pnStyle);
 extern int32_t        hb_gt_wvw_LastControlId(PWVW_WIN wvw_win, int32_t nClass);
-extern void       hb_gt_wvw_AddControlHandle(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, int32_t nId, PHB_ITEM pBlock, RECT rect, RECT offs, int32_t nStyle);
+extern void       hb_gt_wvw_AddControlHandle(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, int32_t nId, HB_ITEM *pBlock, RECT rect, RECT offs, int32_t nStyle);
 extern bool       hb_gt_wvw_StoreControlProc(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, WNDPROC OldProc);
 extern WNDPROC    hb_gt_wvw_GetControlProc(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd);
 extern int32_t        hb_gt_wvw_ButtonCreate(PWVW_WIN wvw_win, int32_t usTop, int32_t usLeft, int32_t usBottom, int32_t usRight, LPCTSTR szCaption,
-                                         const char * szBitmap, uint32_t uiBitmap, PHB_ITEM pBlock,
+                                         const char * szBitmap, uint32_t uiBitmap, HB_ITEM *pBlock,
                                          int32_t iOffTop, int32_t iOffLeft, int32_t iOffBottom, int32_t iOffRight,
                                          double dStretch, bool bMap3Dcolors,
                                          int32_t iStyle, HWND * phWnd);

@@ -124,7 +124,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 static bool hb_gt_wvwAllocSpBuffer(PWVW_WIN wvw_win, int32_t iCol, int32_t iRow);
 
 static void hb_gt_wvw_SetWindowTitle(PWVW_WIN wvw_win, LPCTSTR szTitle);
-static PHB_ITEM hb_gt_wvw_GetWindowTitleItem(PWVW_WIN wvw_win, PHB_ITEM pItem);
+static HB_ITEM *hb_gt_wvw_GetWindowTitleItem(PWVW_WIN wvw_win, HB_ITEM *pItem);
 
 static void hb_gt_wvw_SetCaretOn(PWVW_WIN wvw_win, bool fOn);
 static bool hb_gt_wvw_SetCaretPos(PWVW_WIN wvw_win);
@@ -1688,7 +1688,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
 {
   int32_t iIndex;
   BOOL bReturn = FALSE;
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
 
   auto iType = 0;
 
@@ -1722,12 +1722,12 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
       /* eval the codeblock */
 #if 0
             if( pFunc->isEvalItem() ) {
-               PHB_ITEM hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
+               HB_ITEM *hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
                auto himessage = hb_itemPutNInt(nullptr, message);
                auto hiwParam  = hb_itemPutNInt(nullptr, wParam);
                auto hilParam  = hb_itemPutNInt(nullptr, lParam);
 
-               PHB_ITEM pReturn = hb_itemDo(pFunc, 4, hihDlg, himessage, hiwParam, hilParam);
+               HB_ITEM *pReturn = hb_itemDo(pFunc, 4, hihDlg, himessage, hiwParam, hilParam);
 
                bReturn = (hb_itemGetNL(pReturn) != 0);
 
@@ -1795,7 +1795,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
 {
   int32_t iIndex;
   BOOL bReturn = FALSE;
-  PHB_ITEM pFunc = nullptr;
+  HB_ITEM *pFunc = nullptr;
 
   auto iFirst = static_cast<int>(lParam);
 
@@ -1837,12 +1837,12 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
       /* eval the codeblock */
 #if 0
             if( pFunc->isEvalItem() ) {
-               PHB_ITEM hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
+               HB_ITEM *hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
                auto himessage = hb_itemPutNInt(nullptr, message);
                auto hiwParam  = hb_itemPutNInt(nullptr, wParam);
                auto hilParam  = hb_itemPutNInt(nullptr, lParam);
 
-               PHB_ITEM pReturn = hb_itemDo(pFunc, 4, hihDlg, himessage, hiwParam, hilParam);
+               HB_ITEM *pReturn = hb_itemDo(pFunc, 4, hihDlg, himessage, hiwParam, hilParam);
 
                bReturn = (hb_itemGetNL(pReturn) != 0);
 
@@ -5144,7 +5144,7 @@ static void hb_gt_wvw_SetWindowTitle(PWVW_WIN wvw_win, LPCTSTR szTitle)
   SetWindowText(wvw_win->hWnd, szTitle);
 }
 
-static PHB_ITEM hb_gt_wvw_GetWindowTitleItem(PWVW_WIN wvw_win, PHB_ITEM pItem)
+static HB_ITEM *hb_gt_wvw_GetWindowTitleItem(PWVW_WIN wvw_win, HB_ITEM *pItem)
 {
   TCHAR buffer[WVW_MAX_TITLE_SIZE];
   int32_t iResult;
@@ -5817,7 +5817,7 @@ int32_t hb_gt_wvw_LastControlId(PWVW_WIN wvw_win, int32_t nClass)
   }
 }
 
-void hb_gt_wvw_AddControlHandle(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, int32_t nId, PHB_ITEM pBlock, RECT rect, RECT offs,
+void hb_gt_wvw_AddControlHandle(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, int32_t nId, HB_ITEM *pBlock, RECT rect, RECT offs,
                                 int32_t nStyle)
 {
   if (wvw_win) {
@@ -5930,7 +5930,7 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, UINT 
   if ((wvw_ctl->nClass == WVW_CONTROL_SCROLLBAR || wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON ||
        wvw_ctl->nClass == WVW_CONTROL_COMBOBOX || wvw_ctl->nClass == WVW_CONTROL_EDITBOX) &&
       wvw_ctl->pBlock) {
-    PHB_ITEM pReturn;
+    HB_ITEM *pReturn;
 
     if (wvw_ctl->fBusy) {
       if (!s_wvw->fRecurseCBlock) {
@@ -6161,7 +6161,7 @@ static LRESULT CALLBACK hb_gt_wvw_BtnProc(HWND hWnd, UINT message, WPARAM wParam
 /* ASSUME: WVW_ID_BASE_PUSHBUTTON == WVW_ID_BASE_CHECKBOX
            WVW_CONTROL_PUSHBUTTON == WVW_CONTROL_CHECKBOX */
 int32_t hb_gt_wvw_ButtonCreate(PWVW_WIN wvw_win, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, LPCTSTR szCaption,
-                           const char *szBitmap, uint32_t uiBitmap, PHB_ITEM pBlock, int32_t iOffTop, int32_t iOffLeft,
+                           const char *szBitmap, uint32_t uiBitmap, HB_ITEM *pBlock, int32_t iOffTop, int32_t iOffLeft,
                            int32_t iOffBottom, int32_t iOffRight, double dStretch, bool fMap3Dcolors, int32_t iStyle, HWND *phWnd)
 {
   HWND hWnd;

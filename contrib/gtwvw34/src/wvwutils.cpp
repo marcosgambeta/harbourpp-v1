@@ -1165,7 +1165,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
 
     if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless))) {
       auto pFirst = hb_param(3, Harbour::Item::ANY);
-      PHB_ITEM pFunc = nullptr;
+      HB_ITEM *pFunc = nullptr;
       HWND hDlg = nullptr;
       auto iType = 0;
       auto iResource = hb_parni(4);
@@ -1177,7 +1177,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
       } else if (pFirst->isString()) {
         auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         if (pExecSym) {
-          pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
+          pFunc = reinterpret_cast<HB_ITEM *>(pExecSym);
         }
         iType = 1;
       }
@@ -1259,7 +1259,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
         wvw->a.iTypeModal[iIndex] = 2;
       } else if (pFirst->isString()) {
         auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
-        wvw->a.pFuncModal[iIndex] = pExecSym ? reinterpret_cast<PHB_ITEM>(pExecSym) : nullptr;
+        wvw->a.pFuncModal[iIndex] = pExecSym ? reinterpret_cast<HB_ITEM *>(pExecSym) : nullptr;
         wvw->a.iTypeModal[iIndex] = 1;
       }
 
