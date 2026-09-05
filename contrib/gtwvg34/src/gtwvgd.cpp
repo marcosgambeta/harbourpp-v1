@@ -270,11 +270,11 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
   pWVT->pSymWVT_KEY = nullptr;
   for (iIndex = 0; iIndex < (int32_t)HB_SIZEOFARRAY(pWVT->pFunc); iIndex++) {
     if (pWVT->pFunc[iIndex] != nullptr && pWVT->iType[iIndex] == 2) {
-      hb_itemRelease((PHB_ITEM)pWVT->pFunc[iIndex]);
+      hb_itemRelease((HB_ITEM *)pWVT->pFunc[iIndex]); // TODO: C++ cast
       pWVT->pFunc[iIndex] = nullptr;
     }
     if (pWVT->pcbFunc[iIndex] != nullptr) {
-      hb_itemRelease((PHB_ITEM)pWVT->pcbFunc[iIndex]);
+      hb_itemRelease((HB_ITEM *)pWVT->pcbFunc[iIndex]); // TODO: C++ cast
       pWVT->pcbFunc[iIndex] = nullptr;
     }
   }
@@ -417,7 +417,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int32_t iCmdShow
   pWVT->CloseMode = 0;
 
   {
-    PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+    HB_ITEM *pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
     pWVT->lpWindowTitle = HB_ITEMGETSTR(pItem, &pWVT->hWindowTitle, nullptr);
     hb_itemRelease(pItem);
   }
@@ -456,16 +456,16 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int32_t iCmdShow
   return pWVT;
 }
 
-static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, PHB_ITEM pParams)
+static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, HB_ITEM *pParams)
 {
   LRESULT nResult = 0; /* Unhandled */
 
   if (pWVT->pGT->pNotifierBlock || pWVT->pNotifierGUI) {
     if (hb_vmRequestReenter()) {
-      PHB_ITEM pEvent = hb_itemPutNI(nullptr, nEvent);
+      HB_ITEM *pEvent = hb_itemPutNI(nullptr, nEvent);
 
       if (pWVT->pGT->pNotifierBlock) {
-        PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
+        HB_ITEM *pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
 
         if (pResult->isPointer()) {
           nResult = (uintptr_t)hb_itemGetPtr(pResult);
@@ -475,7 +475,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, PHB_ITEM pPar
       }
 
       if (pWVT->pNotifierGUI) {
-        PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pNotifierGUI, 2, pEvent, pParams);
+        HB_ITEM *pResult = hb_vmEvalBlockV(pWVT->pNotifierGUI, 2, pEvent, pParams);
 
         if (pResult->isPointer()) {
           nResult = (uintptr_t)hb_itemGetPtr(pResult);
@@ -496,7 +496,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, PHB_ITEM pPar
 
 static void hb_gt_wvt_FireMenuEvent(PHB_GTWVT pWVT, int32_t iMode, int32_t menuIndex)
 {
-  PHB_ITEM pEvParams = hb_itemArrayNew(2);
+  HB_ITEM *pEvParams = hb_itemArrayNew(2);
 
   hb_arraySetNI(pEvParams, 1, iMode);
   hb_arraySetNI(pEvParams, 2, menuIndex);
@@ -656,7 +656,7 @@ static void hb_gt_wvt_AddCharToInputQueue(PHB_GTWVT pWVT, int32_t iKey)
   }
   /* Fire event to be trapped by the application */
   {
-    PHB_ITEM pEvParams = hb_itemPutNI(nullptr, iKey);
+    HB_ITEM *pEvParams = hb_itemPutNI(nullptr, iKey);
     hb_gt_wvt_FireEvent(pWVT, HB_GTE_KEYBOARD, pEvParams);
   }
 }
@@ -927,7 +927,7 @@ static HB_BOOL hb_gt_wvt_FitSizeRows(PHB_GTWVT pWVT)
     pWVT->bResizing = HB_FALSE;
 
     if (bSizeChanged) {
-      PHB_ITEM pEvParams = hb_itemArrayNew(4);
+      HB_ITEM *pEvParams = hb_itemArrayNew(4);
 
       hb_arraySetNI(pEvParams, 1, iw);
       hb_arraySetNI(pEvParams, 2, ih);
@@ -1263,14 +1263,14 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
 
 #if defined(UNICODE)
         if (j > 0) {
-          PHB_ITEM pItem = hb_itemPutStrLenU16(nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, j);
+          HB_ITEM *pItem = hb_itemPutStrLenU16(nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, j);
           hb_gt_winapi_setClipboard(CF_UNICODETEXT, pItem);
           hb_itemRelease(pItem);
         }
         hb_xfree(sBuffer);
 #else
         if (j > 0) {
-          PHB_ITEM pItem = hb_itemPutCLPtr(nullptr, sBuffer, j);
+          HB_ITEM *pItem = hb_itemPutCLPtr(nullptr, sBuffer, j);
           hb_gt_winapi_setClipboard(pWVT->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pItem);
           hb_itemRelease(pItem);
         } else {
@@ -1368,7 +1368,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
   }
 
   if (keyCode != 0) {
-    PHB_ITEM pEvParams = hb_itemArrayNew(6);
+    HB_ITEM *pEvParams = hb_itemArrayNew(6);
 
     hb_gt_wvt_AddCharToInputQueue(pWVT, keyCode);
 
@@ -1748,7 +1748,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT, RECT updateRect)
     hb_wvt_gtRestGuiState(pWVT, &updateRect);
     ValidateRect(pWVT->hWnd, &updateRect);
     {
-      PHB_ITEM pEvParams = hb_itemArrayNew(4);
+      HB_ITEM *pEvParams = hb_itemArrayNew(4);
 
       hb_arraySetNI(pEvParams, 1, updateRect.left);
       hb_arraySetNI(pEvParams, 2, updateRect.top);
@@ -1764,7 +1764,7 @@ static void hb_gt_wvt_PaintText(PHB_GTWVT pWVT, RECT updateRect)
     hb_wvt_gtRestGuiState(pWVT, &updateRect);
     ValidateRect(pWVT->hWnd, &updateRect);
     {
-      PHB_ITEM pEvParams = hb_itemArrayNew(4);
+      HB_ITEM *pEvParams = hb_itemArrayNew(4);
 
       hb_arraySetNI(pEvParams, 1, updateRect.left);
       hb_arraySetNI(pEvParams, 2, updateRect.top);
@@ -1918,14 +1918,14 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
           }
         }
         { /* To evoke if that portion is covered by GUI control */
-          PHB_ITEM pEvParams = hbwapi_itemPut_HANDLE(nullptr, hWnd);
+          HB_ITEM *pEvParams = hbwapi_itemPut_HANDLE(nullptr, hWnd);
           hb_gt_wvt_FireEvent(pWVT, HB_GTE_PAINT, pEvParams);
         }
         return 0;
       }
       break;
     case WM_HSCROLL: {
-      PHB_ITEM pEvParams = hb_itemArrayNew(3);
+      HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
       hb_arraySetNL(pEvParams, 1, (long)LOWORD(wParam));
       hb_arraySetNL(pEvParams, 2, (long)HIWORD(wParam));
@@ -1935,7 +1935,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       return 0;
     }
     case WM_VSCROLL: {
-      PHB_ITEM pEvParams = hb_itemArrayNew(3);
+      HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
       hb_arraySetNL(pEvParams, 1, (long)LOWORD(wParam));
       hb_arraySetNL(pEvParams, 2, (long)HIWORD(wParam));
@@ -1967,7 +1967,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
         pWVT->bGetFocus = HB_TRUE;
       }
       { /* For mixing GUI/CUI items */
-        PHB_ITEM pEvParams = hb_itemArrayNew(3);
+        HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
         hbwapi_arraySet_HANDLE(pEvParams, 1, hWnd);
         hbwapi_arraySet_HANDLE(pEvParams, 2, (HWND)wParam);
@@ -1991,7 +1991,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
         }
       }
       { /* To mix GUI/CUI items */
-        PHB_ITEM pEvParams = hb_itemArrayNew(3);
+        HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
         hbwapi_arraySet_HANDLE(pEvParams, 1, hWnd);
         hbwapi_arraySet_HANDLE(pEvParams, 2, (HWND)wParam);
@@ -2032,7 +2032,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
     case WM_CLOSE: /* Clicked 'X' on system menu */
       if (pWVT->CloseMode == 0) {
-        PHB_ITEM pEvParams = hb_itemNew(nullptr);
+        HB_ITEM *pEvParams = hb_itemNew(nullptr);
         if (hb_gt_wvt_FireEvent(pWVT, HB_GTE_CLOSE, pEvParams) == 0) {
 #if 1
           hb_gt_wvt_AddCharToInputQueue(pWVT, HB_K_CLOSE);
@@ -2056,7 +2056,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
     /* Pritpal Bedi - 2008-06-06 */
     case WM_ACTIVATE: {
-      PHB_ITEM pEvParams = hb_itemNew(nullptr);
+      HB_ITEM *pEvParams = hb_itemNew(nullptr);
       hb_gt_wvt_FireEvent(pWVT, (LOWORD(wParam) == WA_INACTIVE ? HB_GTE_KILLFOCUS : HB_GTE_SETFOCUS), pEvParams);
       return 0;
     }
@@ -2128,7 +2128,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
         }
         hb_gt_wvt_FireMenuEvent(pWVT, 0, (int32_t)LOWORD(wParam));
       } else {
-        PHB_ITEM pEvParams = hb_itemArrayNew(3);
+        HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
         hb_arraySetNI(pEvParams, 1, HIWORD(wParam));        /* Notification Code */
         hb_arraySetNI(pEvParams, 2, LOWORD(wParam));        /* Control identifier */
@@ -2144,7 +2144,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       hb_gt_wvt_FireMenuEvent(pWVT, 2, (int32_t)wParam);
       return 0;
     case WM_MOUSEHOVER: {
-      PHB_ITEM pEvParams = hb_itemArrayNew(6);
+      HB_ITEM *pEvParams = hb_itemArrayNew(6);
 
       hb_arraySetNI(pEvParams, 1, message);
       hb_arraySetNI(pEvParams, 2, 0);
@@ -2155,7 +2155,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       return 0;
     }
     case WM_MOUSELEAVE: {
-      PHB_ITEM pEvParams = hb_itemArrayNew(2);
+      HB_ITEM *pEvParams = hb_itemArrayNew(2);
 
       hb_arraySetNI(pEvParams, 1, message);
       hb_arraySetNI(pEvParams, 2, 0);
@@ -2166,7 +2166,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       return DefWindowProc(hWnd, message, wParam, lParam);
     }
     case WM_NOTIFY: {
-      PHB_ITEM pEvParams = hb_itemArrayNew(2);
+      HB_ITEM *pEvParams = hb_itemArrayNew(2);
 
       hb_arraySetNI(pEvParams, 1, (int32_t)wParam);
       hbwapi_arraySet_HANDLE(pEvParams, 2, (NMHDR *)lParam);
@@ -2182,7 +2182,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
     case WM_CTLCOLORSCROLLBAR:
     case WM_CTLCOLORSTATIC: {
       LRESULT nResult;
-      PHB_ITEM pEvParams = hb_itemArrayNew(2);
+      HB_ITEM *pEvParams = hb_itemArrayNew(2);
 
       hbwapi_arraySet_HANDLE(pEvParams, 1, (HDC)wParam);
       hbwapi_arraySet_HANDLE(pEvParams, 2, (HWND)lParam);
@@ -2197,7 +2197,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
     }
     case WM_CHARTOITEM:
     case WM_VKEYTOITEM: {
-      PHB_ITEM pEvParams = hb_itemArrayNew(3);
+      HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
       hb_arraySetNL(pEvParams, 1, (long)LOWORD(wParam));
       hb_arraySetNL(pEvParams, 2, (long)HIWORD(wParam));
@@ -2629,7 +2629,7 @@ static void hb_gt_wvt_Exit(PHB_GT pGT)
 
   pWVT = HB_GTWVT_GET(pGT);
   if (pWVT && pWVT->hWnd) {
-    PHB_ITEM pEvParams = hb_itemArrayNew(2);
+    HB_ITEM *pEvParams = hb_itemArrayNew(2);
     hbwapi_arraySet_HANDLE(pEvParams, 1, pWVT->hWnd);
     hb_arraySetNInt(pEvParams, 2, pWVT->threadNO);
     hb_gt_wvt_FireEvent(pWVT, HB_GTE_CLOSED, pEvParams);
@@ -3700,7 +3700,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
     if (!pWVT->hWnd) {
       if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
         if (hb_arrayLen(pInfo->pNewVal) == HB_GTI_PP_SIZE) {
-          PHB_ITEM pSome;
+          HB_ITEM *pSome;
 
           pSome = hb_arrayGetItemPtr(pInfo->pNewVal, HB_GTI_PP_EXSTYLE);
           if (hb_itemType(pSome) & Harbour::Item::NUMERIC) {
@@ -4028,7 +4028,7 @@ static void hb_gt_wvt_Refresh(PHB_GT pGT)
     if (!pWVT->hWnd && pWVT->fInit) {
       hb_gt_wvt_CreateConsoleWindow(pWVT);
       if (pWVT->hWnd) {
-        PHB_ITEM pEvParams = hb_itemArrayNew(2);
+        HB_ITEM *pEvParams = hb_itemArrayNew(2);
         hbwapi_arraySet_HANDLE(pEvParams, 1, pWVT->hWnd);
         hb_arraySetNInt(pEvParams, 2, pWVT->threadNO);
         hb_gt_wvt_FireEvent(pWVT, HB_GTE_CREATED, pEvParams);

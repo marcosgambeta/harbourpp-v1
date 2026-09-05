@@ -396,7 +396,7 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
   case TB_GETINSERTMARK:
     break;
   case TB_GETCOLORSCHEME: {
-    PHB_ITEM info = hb_itemArrayNew(2);
+    HB_ITEM *info = hb_itemArrayNew(2);
     COLORSCHEME colorScheme{};
 
     colorScheme.dwSize = sizeof(colorScheme);
@@ -464,9 +464,9 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     cbi.cbSize = sizeof(cbi);
 
     if (GetComboBoxInfo(hCB, &cbi)) {
-      PHB_ITEM pCbi = hb_itemArrayNew(6);
-      PHB_ITEM pRc1 = hb_itemArrayNew(4);
-      PHB_ITEM pRc2 = hb_itemArrayNew(4);
+      HB_ITEM *pCbi = hb_itemArrayNew(6);
+      HB_ITEM *pRc1 = hb_itemArrayNew(4);
+      HB_ITEM *pRc2 = hb_itemArrayNew(4);
 
       hb_arraySetNI(pRc1, 1, cbi.rcItem.left);
       hb_arraySetNI(pRc1, 2, cbi.rcItem.top);
@@ -506,7 +506,7 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     break;
   case CB_GETDROPPEDCONTROLRECT: {
     RECT rc;
-    PHB_ITEM pRect = hb_itemArrayNew(4);
+    HB_ITEM *pRect = hb_itemArrayNew(4);
 
     SendMessage(hCB, CB_GETDROPPEDCONTROLRECT, 0, (LPARAM)&rc);
 
@@ -526,7 +526,7 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     break;
   case CB_GETEDITSEL: {
     DWORD range = (DWORD)SendMessage(hCB, CB_GETEDITSEL, 0, 0);
-    PHB_ITEM pRng = hb_itemArrayNew(2);
+    HB_ITEM *pRng = hb_itemArrayNew(2);
 
     hb_arraySetNI(pRng, 1, LOWORD(range));
     hb_arraySetNI(pRng, 1, HIWORD(range));

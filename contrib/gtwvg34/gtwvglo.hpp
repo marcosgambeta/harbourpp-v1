@@ -248,7 +248,7 @@ struct HB_GT_PARAMS
    int32_t       y;
    int32_t       width;
    int32_t       height;
-   PHB_ITEM  pParentGT;
+   HB_ITEM * pParentGT;
    HB_BOOL   bVisible;
    HB_BOOL   bRowCols;
    HB_BOOL   bConfigured;

@@ -107,7 +107,7 @@ struct _tag_GOBJS
    TRIVERTEX      vert[ 2 ];
    void *         hText;
    LPCTSTR        lpText;
-   PHB_ITEM       bBlock;
+   HB_ITEM *      bBlock;
    struct _tag_GOBJS * gObjNext;
 
 };
@@ -262,14 +262,14 @@ struct HB_GTWVG
    HB_BOOL   bToolTipActive;                // Flag to set whether tooltip is active or not
 
    HWND      hDlgModeless[ WVT_DLGML_MAX ]; // Handle to a modeless dialog
-   PHB_ITEM  pFunc[ WVT_DLGML_MAX ];        // Function pointer for WndProc
+   HB_ITEM * pFunc[ WVT_DLGML_MAX ];        // Function pointer for WndProc
    // TODO: pcbFunc is redundant and should be removed
-   PHB_ITEM  pcbFunc[ WVT_DLGML_MAX ];      // codeblock for WndProc
+   HB_ITEM * pcbFunc[ WVT_DLGML_MAX ];      // codeblock for WndProc
    int32_t       iType[ WVT_DLGML_MAX ];        // Type of Function Pointers - Function 1, Block 2, Method 3
    HWND      hDlgModal[ WVT_DLGMD_MAX ];    // Handle to a modeless dialog
-   PHB_ITEM  pFuncModal[ WVT_DLGMD_MAX ];   // Function pointer for WndProc
+   HB_ITEM * pFuncModal[ WVT_DLGMD_MAX ];   // Function pointer for WndProc
    // TODO: pcbFuncModal is redundant and should be removed
-   PHB_ITEM  pcbFuncModal[ WVT_DLGMD_MAX ]; // codeblock for WndProc
+   HB_ITEM * pcbFuncModal[ WVT_DLGMD_MAX ]; // codeblock for WndProc
    int32_t       iTypeModal[ WVT_DLGMD_MAX ];   // Type of Function Pointers - Function 1, Block 2, Method 3
 
    PHB_GT_PARAMS  pPP;                      // Presentation Parameters
@@ -286,7 +286,7 @@ struct HB_GTWVG
 
    HWND      hWndParent;                    // Parent Window Handle, if any
 
-   PHB_ITEM  pNotifierGUI;                  // Notifier to Wvg*Parts if embedded into a GT Window
+   HB_ITEM * pNotifierGUI;                  // Notifier to Wvg*Parts if embedded into a GT Window
 
    HB_THREAD_NO threadNO;                   // Will hold the current THREAD No
 

@@ -80,7 +80,7 @@ HB_FUNC(WVT_CHOOSEFONT)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   if (_s) {
-    PHB_ITEM ary = hb_itemArrayNew(9);
+    HB_ITEM *ary = hb_itemArrayNew(9);
 
     LONG PointSize = 0;
     COLORREF Colors = 0;
@@ -378,7 +378,7 @@ HB_FUNC(WVT_GETPAINTRECT)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   if (_s) {
-    PHB_ITEM info = hb_itemArrayNew(4);
+    HB_ITEM *info = hb_itemArrayNew(4);
 
     hb_arraySetNI(info, 1, _s->rowStart);
     hb_arraySetNI(info, 2, _s->colStart);
@@ -474,7 +474,7 @@ HB_FUNC(WVT_SETMOUSEMOVE)
 
 HB_FUNC(WVT_GETXYFROMROWCOL)
 {
-  PHB_ITEM info = hb_itemArrayNew(2);
+  HB_ITEM *info = hb_itemArrayNew(2);
   POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
   hb_arraySetNL(info, 1, xy.x);
@@ -488,7 +488,7 @@ HB_FUNC(WVT_GETFONTINFO)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   if (_s) {
-    PHB_ITEM info = hb_itemArrayNew(7);
+    HB_ITEM *info = hb_itemArrayNew(7);
 
     HB_ARRAYSETSTR(info, 1, _s->fontFace);
     hb_arraySetNL(info, 2, _s->fontHeight);
@@ -631,7 +631,7 @@ HB_FUNC(WVT_CLIENTTOSCREEN)
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
   if (_s) {
-    PHB_ITEM info = hb_itemArrayNew(2);
+    HB_ITEM *info = hb_itemArrayNew(2);
     POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
     ClientToScreen(_s->hWnd, &xy);
@@ -652,7 +652,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wP
 
   if (_s) {
     int32_t iIndex, iType;
-    PHB_ITEM pFunc = nullptr;
+    HB_ITEM *pFunc = nullptr;
 
     iType = 0;
 
@@ -719,7 +719,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wP
 
       case WM_NCDESTROY:
         if (_s->pFunc[iIndex] != nullptr && _s->iType[iIndex] == 2)
-          hb_itemRelease((PHB_ITEM)_s->pFunc[iIndex]);
+          hb_itemRelease((HB_ITEM *)_s->pFunc[iIndex]); // TODO: C++ cast
         _s->hDlgModeless[iIndex] = nullptr;
         _s->pFunc[iIndex] = nullptr;
         _s->iType[iIndex] = 0;
@@ -739,7 +739,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
 
   if (_s) {
     int32_t iIndex, iType;
-    PHB_ITEM pFunc = nullptr;
+    HB_ITEM *pFunc = nullptr;
     int32_t iFirst = (int32_t)lParam;
 
     if (iFirst > 0 && iFirst <= (int32_t)HB_SIZEOFARRAY(_s->hDlgModal)) {
@@ -813,7 +813,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
 
       case WM_NCDESTROY:
         if (_s->pFuncModal[iIndex] != nullptr && _s->iTypeModal[iIndex] == 2)
-          hb_itemRelease((PHB_ITEM)_s->pFuncModal[iIndex]);
+          hb_itemRelease((HB_ITEM *)_s->pFuncModal[iIndex]); // TODO: C++ cast
         _s->hDlgModal[iIndex] = nullptr;
         _s->pFuncModal[iIndex] = nullptr;
         _s->iTypeModal[iIndex] = 0;
@@ -844,8 +844,8 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
     }
 
     if (iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModeless)) {
-      PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
-      PHB_ITEM pFunc = nullptr;
+      HB_ITEM *pFirst = hb_param(3, Harbour::Item::ANY);
+      HB_ITEM *pFunc = nullptr;
       HB_DYNS *pExecSym;
       int32_t iType = 0;
       int32_t iResource = hb_parni(4);
@@ -857,7 +857,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
       } else if (pFirst->isString()) {
         pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         if (pExecSym) {
-          pFunc = (PHB_ITEM)pExecSym;
+          pFunc = (HB_ITEM *)pExecSym; // TODO: C++ cast
         }
         iType = 1;
       }
@@ -934,8 +934,8 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
     }
 
     if (iIndex < (int32_t)HB_SIZEOFARRAY(_s->hDlgModal)) {
-      PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
-      PHB_ITEM pFunc = nullptr;
+      HB_ITEM *pFirst = hb_param(3, Harbour::Item::ANY);
+      HB_ITEM *pFunc = nullptr;
       HB_DYNS *pExecSym;
       int32_t iResource = hb_parni(4);
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : _s->hWnd;
@@ -950,7 +950,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
       } else if (pFirst->isString()) {
         pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         if (pExecSym) {
-          pFunc = (PHB_ITEM)pExecSym;
+          pFunc = (HB_ITEM *)pExecSym; // TODO: C++ cast
         }
         _s->pFuncModal[iIndex] = pFunc;
         _s->iTypeModal[iIndex] = 1;

@@ -363,7 +363,7 @@ HB_FUNC(WVG_GETNMHDRINFO)
 {
   LPNMHDR lpnmh = (LPNMHDR)hbwapi_par_raw_HANDLE(1);
 
-  PHB_ITEM pEvParams = hb_itemArrayNew(3);
+  HB_ITEM *pEvParams = hb_itemArrayNew(3);
 
   hb_arraySetNI(pEvParams, 1, lpnmh->code);
   hb_arraySetNInt(pEvParams, 2, (uintptr_t)lpnmh->idFrom);
@@ -378,7 +378,7 @@ HB_FUNC(WVG_GETNMMOUSEINFO)
   LPNMMOUSE nmm = (LPNMMOUSE)hbwapi_par_raw_HANDLE(1);
   NMHDR nmh = nmm->hdr;
 
-  PHB_ITEM pEvParams = hb_itemArrayNew(4);
+  HB_ITEM *pEvParams = hb_itemArrayNew(4);
 
   hb_arraySetNI(pEvParams, 1, nmh.code);
   hb_arraySetNInt(pEvParams, 2, (uintptr_t)nmh.idFrom);
@@ -394,7 +394,7 @@ HB_FUNC(WVG_GETNMTREEVIEWINFO)
   LPNMTREEVIEW pnmtv = (LPNMTREEVIEW)hbwapi_par_raw_HANDLE(1);
   NMHDR nmh = pnmtv->hdr;
 
-  PHB_ITEM pEvParams = hb_itemArrayNew(4);
+  HB_ITEM *pEvParams = hb_itemArrayNew(4);
 
   hb_arraySetNI(pEvParams, 1, nmh.code);
   hb_arraySetNInt(pEvParams, 2, (uintptr_t)nmh.idFrom);
@@ -518,9 +518,9 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
 
 /* WvgFontDialog() */
 
-static PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf)
+static HB_ITEM *wvg_logfontTOarray(LPLOGFONT lf)
 {
-  PHB_ITEM aFont = hb_itemArrayNew(15);
+  HB_ITEM *aFont = hb_itemArrayNew(15);
 
   HB_ARRAYSETSTR(aFont, 1, lf->lfFaceName);
   hb_arraySetNL(aFont, 2, lf->lfHeight);
@@ -546,16 +546,16 @@ static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wPa
 {
   UINT_PTR bret = 0;
   HB_BOOL binit = HB_FALSE;
-  PHB_ITEM block;
+  HB_ITEM *block;
 
   if (msg == WM_INITDIALOG) {
     CHOOSEFONT *cf = (CHOOSEFONT *)lParam;
-    PHB_ITEM pBlock = hb_itemNew((PHB_ITEM)cf->lCustData);
+    HB_ITEM *pBlock = hb_itemNew((HB_ITEM *)cf->lCustData); // TODO: C++ cast
     SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
     binit = HB_TRUE;
   }
 
-  block = (PHB_ITEM)GetProp(hwnd, TEXT("DIALOGPROC"));
+  block = (HB_ITEM *)GetProp(hwnd, TEXT("DIALOGPROC")); // TODO: C++ cast
 
   if (block) {
     hb_vmPushEvalSym();
@@ -643,8 +643,8 @@ HB_FUNC(WVG_CHOOSEFONT)
   cf.nSizeMax = 0;
 
   if (ChooseFont(&cf)) {
-    PHB_ITEM aFont = wvg_logfontTOarray(&lf);
-    PHB_ITEM aInfo = hb_itemArrayNew(4);
+    HB_ITEM *aFont = wvg_logfontTOarray(&lf);
+    HB_ITEM *aInfo = hb_itemArrayNew(4);
 
     hb_arraySetNI(aInfo, 1, cf.iPointSize);
     hb_arraySetNInt(aInfo, 2, cf.rgbColors);
@@ -672,7 +672,7 @@ HB_FUNC(WVG_FONTCREATE)
   LOGFONT lf{};
   HFONT hFont;
 
-  PHB_ITEM aFont = hb_param(1, Harbour::Item::ARRAY);
+  HB_ITEM *aFont = hb_param(1, Harbour::Item::ARRAY);
 
   if (aFont) {
     HB_ITEMCOPYSTR(hb_arrayGetItemPtr(aFont, 1), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
@@ -822,7 +822,7 @@ HB_FUNC(WVG_BEGINMOUSETRACKING)
 
 LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  PHB_ITEM pBlock = (PHB_ITEM)GetProp(hwnd, TEXT("BLOCKCALLBACK"));
+  HB_ITEM *pBlock = (HB_ITEM *)GetProp(hwnd, TEXT("BLOCKCALLBACK")); // TODO: C++ cast
 
   if (pBlock) {
     if (pBlock->isPointer()) {
@@ -847,7 +847,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 HB_FUNC(WVG_SETWINDOWPROCBLOCK)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  PHB_ITEM pBlock = hb_itemNew(hb_param(2, Harbour::Item::EVALITEM));
+  HB_ITEM *pBlock = hb_itemNew(hb_param(2, Harbour::Item::EVALITEM));
 
   SetProp(hWnd, TEXT("BLOCKCALLBACK"), pBlock);
 
@@ -861,7 +861,7 @@ HB_FUNC(WVG_SETWINDOWPROCBLOCK)
 HB_FUNC(WVG_RELEASEWINDOWPROCBLOCK)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  PHB_ITEM pBlock = (PHB_ITEM)RemoveProp(hWnd, TEXT("BLOCKCALLBACK"));
+  HB_ITEM *pBlock = (HB_ITEM *)RemoveProp(hWnd, TEXT("BLOCKCALLBACK")); // TODO: C++ cast
 
   if (pBlock) {
     hb_itemRelease(pBlock);
