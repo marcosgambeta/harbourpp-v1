@@ -269,7 +269,7 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uin
    return hb_fileDirSpace(s_bz2io_name(pszDirName, nullptr), uiType);
 }
 
-static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr) // FileFunc
+static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -325,7 +325,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName) //
    return hb_fileLinkRead(s_bz2io_name(pszFileName, nullptr));
 }
 
-static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError) // FileFunc
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, HB_ITEM *pError) // FileFunc
 {
    int iBlockSize = HB_BZ2_BLOCKSIZE;
    char * pszNameBuf = nullptr;
@@ -586,7 +586,7 @@ static void s_fileCommit(PHB_FILE pFile) // FileFunc
    }
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue) // FileFunc
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue) // FileFunc
 {
    switch( iIndex ) {
       case HB_VF_TIMEOUT:
