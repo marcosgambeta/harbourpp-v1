@@ -224,7 +224,7 @@ static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
    return false;
 }
 
-static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, HB_ITEM *pError)
 {
    PHB_FILE pFile = nullptr;
    HB_ERRCODE errcode = 0;
@@ -328,7 +328,7 @@ static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_
    return lSent;
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue)
 {
    switch( iIndex ) {
       case HB_VF_TIMEOUT:
