@@ -104,7 +104,7 @@ static void hb_gt_qtc_appFree(void *cargo)
   s_qtapp = nullptr;
 }
 
-static void hb_gt_qtc_itemGetQString(PHB_ITEM pItem, QString *pqStr)
+static void hb_gt_qtc_itemGetQString(HB_ITEM *pItem, QString *pqStr)
 {
   const HB_WCHAR *wStr;
   HB_SIZE nSize;
@@ -122,7 +122,7 @@ static void hb_gt_qtc_itemGetQString(PHB_ITEM pItem, QString *pqStr)
   }
 }
 
-static PHB_ITEM hb_gt_qtc_itemPutQString(PHB_ITEM pItem, const QString *pqStr)
+static HB_ITEM *hb_gt_qtc_itemPutQString(HB_ITEM *pItem, const QString *pqStr)
 {
 #if defined(HB_OS_WIN)
   return hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR *>(pqStr->utf16()),
@@ -1473,7 +1473,7 @@ static PHB_GTQTC hb_gt_qtc_new(PHB_GT pGT)
   pQTC->fRepaint = HB_TRUE;
 
   {
-    PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+    HB_ITEM *pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
     pQTC->wndTitle = new QString();
     hb_gt_qtc_itemGetQString(pItem, pQTC->wndTitle);
     hb_itemRelease(pItem);
@@ -1751,14 +1751,14 @@ static void hb_gt_qtc_createConsoleWindow(PHB_GTQTC pQTC)
   pQTC->qWnd->update();
 }
 
-static int32_t hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButtons, double dDelay)
+static int32_t hb_gt_qtc_messageBox(PHB_GTQTC pQTC, HB_ITEM *pText, HB_ITEM *pButtons, double dDelay)
 {
   int32_t iRet = 0;
 
   if (pText) {
     QMessageBox qMsg(pQTC->qWnd);
     QString qStr;
-    PHB_ITEM pTitle, pInfoText, pDetailed;
+    HB_ITEM *pTitle, *pInfoText, *pDetailed;
     int32_t iLen;
 
     pTitle = pInfoText = pDetailed = nullptr;
@@ -1768,7 +1768,7 @@ static int32_t hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pBu
         pButtons = hb_hashGetCItemPtr(pText, "BTN");
       }
       if (dDelay <= 0) {
-        PHB_ITEM pVal = hb_hashGetCItemPtr(pText, "TIM");
+        HB_ITEM *pVal = hb_hashGetCItemPtr(pText, "TIM");
         if (pVal && HB_IS_NUMERIC(pVal))
           dDelay = hb_itemGetND(pVal);
       }
@@ -1804,7 +1804,7 @@ static int32_t hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pBu
 #endif
 
       for (i = 1; i <= iLen; ++i) {
-        PHB_ITEM pItem = hb_arrayGetItemPtr(pButtons, i);
+        HB_ITEM *pItem = hb_arrayGetItemPtr(pButtons, i);
 
         if (HB_IS_STRING(pItem)) {
           hb_gt_qtc_itemGetQString(pItem, &qStr);
@@ -2082,7 +2082,7 @@ static int32_t hb_gt_qtc_mouse_CountButton(PHB_GT pGT)
 
 /* --- */
 
-static int32_t hb_gt_qtc_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
+static int32_t hb_gt_qtc_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
   PHB_GTQTC pQTC;
   int32_t iRet;
