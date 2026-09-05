@@ -92,7 +92,7 @@ HB_FUNC(CAIRO_SET_MATRIX)
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
     if ((pItem = hb_param(2, Harbour::Item::ARRAY)) != nullptr && hb_arrayLen(pItem) == 6)
     {
       cairo_matrix_t m;
@@ -127,7 +127,7 @@ HB_FUNC(CAIRO_TRANSFORM)
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
     if ((pItem = hb_param(2, Harbour::Item::ARRAY)) != nullptr && hb_arrayLen(pItem) == 6)
     {
       cairo_matrix_t m;

@@ -61,14 +61,14 @@ static HB_GARBAGE_FUNC(hb_cairo_pattern_destructor)
 
 static const HB_GC_FUNCS s_gcPatternFuncs = {hb_cairo_pattern_destructor, hb_gcDummyMark};
 
-cairo_pattern_t *hb_cairoPatternItemGet(PHB_ITEM pItem)
+cairo_pattern_t *hb_cairoPatternItemGet(HB_ITEM *pItem)
 {
   auto ppPattern = static_cast<cairo_pattern_t **>(hb_itemGetPtrGC(pItem, &s_gcPatternFuncs));
 
   return ppPattern ? *ppPattern : nullptr;
 }
 
-PHB_ITEM hb_cairoPatternItemPut(PHB_ITEM pItem, cairo_pattern_t *pPattern)
+HB_ITEM *hb_cairoPatternItemPut(HB_ITEM *pItem, cairo_pattern_t *pPattern)
 {
   auto ppPattern = static_cast<cairo_pattern_t **>(hb_gcAllocate(sizeof(cairo_pattern_t *), &s_gcPatternFuncs));
 

@@ -61,14 +61,14 @@ static HB_GARBAGE_FUNC(hb_cairo_destructor)
 
 static const HB_GC_FUNCS s_gcCairoFuncs = {hb_cairo_destructor, hb_gcDummyMark};
 
-cairo_t *hb_cairoItemGet(PHB_ITEM pItem)
+cairo_t *hb_cairoItemGet(HB_ITEM *pItem)
 {
   auto ppCairo = static_cast<cairo_t **>(hb_itemGetPtrGC(pItem, &s_gcCairoFuncs));
 
   return ppCairo ? *ppCairo : nullptr;
 }
 
-PHB_ITEM hb_cairoItemPut(PHB_ITEM pItem, cairo_t *pCairo)
+HB_ITEM *hb_cairoItemPut(HB_ITEM *pItem, cairo_t *pCairo)
 {
   auto ppCairo = static_cast<cairo_t **>(hb_gcAllocate(sizeof(cairo_t *), &s_gcCairoFuncs));
 
@@ -123,14 +123,14 @@ static HB_GARBAGE_FUNC(hb_cairo_surface_destructor)
 
 static const HB_GC_FUNCS s_gcSurfaceFuncs = {hb_cairo_surface_destructor, hb_gcDummyMark};
 
-cairo_surface_t *hb_cairoSurfaceItemGet(PHB_ITEM pItem)
+cairo_surface_t *hb_cairoSurfaceItemGet(HB_ITEM *pItem)
 {
   auto ppSurface = static_cast<cairo_surface_t **>(hb_itemGetPtrGC(pItem, &s_gcSurfaceFuncs));
 
   return ppSurface ? *ppSurface : nullptr;
 }
 
-PHB_ITEM hb_cairoSurfaceItemPut(PHB_ITEM pItem, cairo_surface_t *pSurface)
+HB_ITEM *hb_cairoSurfaceItemPut(HB_ITEM *pItem, cairo_surface_t *pSurface)
 {
   auto ppSurface = static_cast<cairo_surface_t **>(hb_gcAllocate(sizeof(cairo_surface_t *), &s_gcSurfaceFuncs));
 
@@ -193,14 +193,14 @@ static HB_GARBAGE_FUNC(hb_cairo_path_destructor)
 
 static const HB_GC_FUNCS s_gcPathFuncs = {hb_cairo_path_destructor, hb_gcDummyMark};
 
-cairo_path_t *hb_cairoPathItemGet(PHB_ITEM pItem)
+cairo_path_t *hb_cairoPathItemGet(HB_ITEM *pItem)
 {
   auto ppPath = static_cast<cairo_path_t **>(hb_itemGetPtrGC(pItem, &s_gcPathFuncs));
 
   return ppPath ? *ppPath : nullptr;
 }
 
-PHB_ITEM hb_cairoPathItemPut(PHB_ITEM pItem, cairo_path_t *pPath)
+HB_ITEM *hb_cairoPathItemPut(HB_ITEM *pItem, cairo_path_t *pPath)
 {
   auto ppPath = static_cast<cairo_path_t **>(hb_gcAllocate(sizeof(cairo_path_t *), &s_gcPathFuncs));
 
