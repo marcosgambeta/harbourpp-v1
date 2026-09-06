@@ -149,8 +149,8 @@ typedef struct _MIXTAG
    char *               szName;
    char *               szKeyExpr;
    char *               szForExpr;
-   PHB_ITEM             pKeyItem;
-   PHB_ITEM             pForItem;
+   HB_ITEM *            pKeyItem;
+   HB_ITEM *            pForItem;
 
    uint8_t      bType;
    unsigned int uiKeyLen;                    /* Length of key */
@@ -189,13 +189,13 @@ typedef struct _SQLMIXAREA
 
 /* SQLDD */
 
-typedef HB_ERRCODE ( *SDDFUNC_CONNECT )( SQLDDCONNECTION * pConnection, PHB_ITEM pItem );
+typedef HB_ERRCODE ( *SDDFUNC_CONNECT )( SQLDDCONNECTION * pConnection, HB_ITEM *pItem );
 typedef HB_ERRCODE ( *SDDFUNC_DISCONNECT )( SQLDDCONNECTION * pConnection );
-typedef HB_ERRCODE ( *SDDFUNC_EXECUTE )( SQLDDCONNECTION * pConnection, PHB_ITEM pItem );
+typedef HB_ERRCODE ( *SDDFUNC_EXECUTE )( SQLDDCONNECTION * pConnection, HB_ITEM *pItem );
 typedef HB_ERRCODE ( *SDDFUNC_OPEN )( SQLBASEAREAP pArea );
 typedef HB_ERRCODE ( *SDDFUNC_CLOSE )( SQLBASEAREAP pArea );
 typedef HB_ERRCODE ( *SDDFUNC_GOTO )( SQLBASEAREAP pArea, HB_ULONG ulRecNo );
-typedef HB_ERRCODE ( *SDDFUNC_GETVALUE )( SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem );
+typedef HB_ERRCODE ( *SDDFUNC_GETVALUE )( SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem );
 typedef HB_ERRCODE ( *SDDFUNC_GETVARLEN )( SQLBASEAREAP pArea, uint16_t uiIndex, HB_ULONG * pLength );
 
 
@@ -234,7 +234,7 @@ typedef struct _SDDNODE
 HB_EXTERN_BEGIN
 
 extern HB_EXPORT int hb_sddRegister( PSDDNODE pSdd );
-extern HB_EXPORT void hb_rddsqlSetError( HB_ERRCODE errCode, const char * szError, const char * szQuery, PHB_ITEM pItem, unsigned long ulAffectedRows );
+extern HB_EXPORT void hb_rddsqlSetError( HB_ERRCODE errCode, const char * szError, const char * szQuery, HB_ITEM *pItem, unsigned long ulAffectedRows );
 
 HB_EXTERN_END
 

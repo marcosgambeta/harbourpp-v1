@@ -134,7 +134,7 @@ static PMIXKEY hb_mixKeyNew(PMIXTAG pTag)
   return static_cast<PMIXKEY>(hb_xgrab(pTag->uiTotalLen));
 }
 
-static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, PMIXTAG pTag)
+static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, HB_ITEM *pItem, HB_ULONG ulRecNo, PMIXTAG pTag)
 {
   if (!pKey) {
     pKey = hb_mixKeyNew(pTag);
@@ -211,7 +211,7 @@ static PMIXKEY hb_mixKeyEval(PMIXKEY pKey, PMIXTAG pTag)
   return pKey;
 }
 
-static HB_BOOL hb_mixEvalCond(SQLMIXAREAP pArea, PHB_ITEM pCondItem)
+static HB_BOOL hb_mixEvalCond(SQLMIXAREAP pArea, HB_ITEM *pCondItem)
 {
   int iCurrArea = 0;
 
@@ -695,14 +695,14 @@ static HB_BOOL hb_mixTagDelKey(PMIXTAG pTag, PMIXKEY pKey)
   return true;
 }
 
-static PMIXTAG hb_mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem,
-                               PHB_ITEM pWhileItem, uint8_t bType, unsigned int uiKeyLen, SQLMIXAREAP pArea)
+static PMIXTAG hb_mixTagCreate(const char *szTagName, HB_ITEM *pKeyExpr, HB_ITEM *pKeyItem, HB_ITEM *pForItem,
+                               HB_ITEM *pWhileItem, uint8_t bType, unsigned int uiKeyLen, SQLMIXAREAP pArea)
 {
   PMIXKEY pKey = nullptr;
   LPDBORDERCONDINFO pOrdCondInfo = pArea->sqlarea.area.lpdbOrdCondInfo;
   HB_ULONG ulNextCount = 0;
   HB_LONG lStep = 0;
-  PHB_ITEM pItem, pEvalItem = nullptr;
+  HB_ITEM *pItem, *pEvalItem = nullptr;
 
   auto pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
 
@@ -1001,7 +1001,7 @@ static void hb_mixTagSkip(PMIXTAG pTag, HB_LONG lSkip)
 
 // hb_mix*()
 
-static PMIXTAG hb_mixFindTag(SQLMIXAREAP pArea, PHB_ITEM pOrder)
+static PMIXTAG hb_mixFindTag(SQLMIXAREAP pArea, HB_ITEM *pOrder)
 {
   PMIXTAG pTag;
 
@@ -1184,7 +1184,7 @@ static HB_ERRCODE sqlmixGoTop(SQLMIXAREAP pArea)
   return retval;
 }
 
-static HB_ERRCODE sqlmixSeek(SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, HB_BOOL fFindLast)
+static HB_ERRCODE sqlmixSeek(SQLMIXAREAP pArea, HB_BOOL fSoftSeek, HB_ITEM *pItem, HB_BOOL fFindLast)
 {
   if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
@@ -1455,7 +1455,7 @@ static HB_ERRCODE sqlmixOrderListFocus(SQLMIXAREAP pArea, LPDBORDERINFO pOrderIn
 
 static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
 {
-  PHB_ITEM pKeyItem;
+  HB_ITEM *pKeyItem;
 
   // Obtain key codeblock
   if (pOrderInfo->itmCobExpr) {
@@ -1477,7 +1477,7 @@ static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrde
     return Harbour::FAILURE;
   }
 
-  PHB_ITEM pResult = pArea->sqlarea.area.valResult;
+  HB_ITEM *pResult = pArea->sqlarea.area.valResult;
   pArea->sqlarea.area.valResult = nullptr;
 
   uint16_t uiLen;
@@ -1523,8 +1523,8 @@ static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrde
     return Harbour::FAILURE;
   }
 
-  PHB_ITEM pForItem = nullptr;
-  PHB_ITEM pWhileItem = nullptr;
+  HB_ITEM *pForItem = nullptr;
+  HB_ITEM *pWhileItem = nullptr;
 
   if (pArea->sqlarea.area.lpdbOrdCondInfo) {
     // Obtain FOR codeblock
@@ -1660,7 +1660,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, uint16_t uiIndex, LPDBORDER
         auto pForExpr = hb_itemGetCPtr(pOrderInfo->itmNewVal);
 
         if (SELF_COMPILE(&pArea->sqlarea.area, pForExpr) == Harbour::SUCCESS) {
-          PHB_ITEM pForItem = pArea->sqlarea.area.valResult;
+          HB_ITEM *pForItem = pArea->sqlarea.area.valResult;
 
           pArea->sqlarea.area.valResult = nullptr;
           if (SELF_EVALBLOCK(&pArea->sqlarea.area, pForItem) == Harbour::SUCCESS) {
