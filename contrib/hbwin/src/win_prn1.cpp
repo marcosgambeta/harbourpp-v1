@@ -370,38 +370,38 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
                         HB_ISBYREF(8) || HB_ISBYREF(9) || HB_ISBYREF(10);
 
           if ((iProp = hb_parni(3)) != 0) { // [2007-02-22] don't change if 0
-            pDevMode->dmPaperSize = static_cast<short>(iProp);
+            pDevMode->dmPaperSize = static_cast<int16_t>(iProp);
             dmFields |= DM_PAPERSIZE;
           }
 
           if (HB_ISLOG(4)) {
-            pDevMode->dmOrientation = static_cast<short>(hb_parl(4) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT);
+            pDevMode->dmOrientation = static_cast<int16_t>(hb_parl(4) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT);
             dmFields |= DM_ORIENTATION;
           }
 
           if ((iProp = hb_parni(5)) > 0) {
-            pDevMode->dmCopies = static_cast<short>(iProp);
+            pDevMode->dmCopies = static_cast<int16_t>(iProp);
             dmFields |= DM_COPIES;
           }
 
           if ((iProp = hb_parni(6)) != 0) { // [2007-02-22] don't change if 0
-            pDevMode->dmDefaultSource = static_cast<short>(iProp);
+            pDevMode->dmDefaultSource = static_cast<int16_t>(iProp);
             dmFields |= DM_DEFAULTSOURCE;
           }
 
           if ((iProp = hb_parni(7)) != 0) { // [2007-02-22] don't change if 0
-            pDevMode->dmDuplex = static_cast<short>(iProp);
+            pDevMode->dmDuplex = static_cast<int16_t>(iProp);
             dmFields |= DM_DUPLEX;
           }
 
           if ((iProp = hb_parni(8)) != 0) { // [2007-02-22] don't change if 0
-            pDevMode->dmPrintQuality = static_cast<short>(iProp);
+            pDevMode->dmPrintQuality = static_cast<int16_t>(iProp);
             dmFields |= DM_PRINTQUALITY;
           }
 
           if (pDevMode->dmPaperSize == DMPAPER_USER && (iProp = hb_parni(9)) > 0 && (iProp2 = hb_parni(10)) > 0) {
-            pDevMode->dmPaperLength = static_cast<short>(iProp);
-            pDevMode->dmPaperWidth = static_cast<short>(iProp2);
+            pDevMode->dmPaperLength = static_cast<int16_t>(iProp);
+            pDevMode->dmPaperWidth = static_cast<int16_t>(iProp2);
             dmFields |= DM_PAPERLENGTH | DM_PAPERWIDTH;
           }
 

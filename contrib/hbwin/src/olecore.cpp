@@ -1122,11 +1122,11 @@ void hb_oleVariantToItemEx(HB_ITEM *pItem, VARIANT *pVariant, uint16_t uiClass)
     break;
 
   case VT_I2:
-    hb_itemPutNI(pItem, static_cast<short>(V_I2(pVariant)));
+    hb_itemPutNI(pItem, static_cast<int16_t>(V_I2(pVariant)));
     break;
 
   case VT_I2 | VT_BYREF:
-    hb_itemPutNI(pItem, static_cast<short>(*V_I2REF(pVariant)));
+    hb_itemPutNI(pItem, static_cast<int16_t>(*V_I2REF(pVariant)));
     break;
 
   case VT_I4:
@@ -1401,7 +1401,7 @@ void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjF
     break;
 
   case VT_I2 | VT_BYREF:
-    *V_I2REF(pVariant) = static_cast<short>(hb_itemGetNI(pItem));
+    *V_I2REF(pVariant) = static_cast<int16_t>(hb_itemGetNI(pItem));
     break;
 
   case VT_I4 | VT_BYREF:
@@ -2472,7 +2472,7 @@ HB_FUNC(__OLEVARIANTNEW)
   case VT_I2:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_I2;
-      V_I2(&variant) = static_cast<short>(hb_itemGetNI(pInit));
+      V_I2(&variant) = static_cast<int16_t>(hb_itemGetNI(pInit));
     }
     break;
 

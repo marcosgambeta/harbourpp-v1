@@ -292,15 +292,15 @@ HB_FUNC(__WAPI_DEVMODE_SET)
   auto pStru = hb_param(2, Harbour::Item::ANY);
 
   if (pDevMode && pStru && pStru->isHash()) {
-    pDevMode->dmOrientation = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmOrientation")));
-    pDevMode->dmPaperSize = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
-    pDevMode->dmPaperLength = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperLength")));
-    pDevMode->dmPaperWidth = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperWidth")));
-    pDevMode->dmScale = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmScale")));
-    pDevMode->dmCopies = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmCopies")));
-    pDevMode->dmDefaultSource = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDefaultSource")));
-    pDevMode->dmPrintQuality = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPrintQuality")));
-    pDevMode->dmDuplex = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDuplex")));
+    pDevMode->dmOrientation = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmOrientation")));
+    pDevMode->dmPaperSize = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
+    pDevMode->dmPaperLength = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperLength")));
+    pDevMode->dmPaperWidth = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperWidth")));
+    pDevMode->dmScale = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmScale")));
+    pDevMode->dmCopies = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmCopies")));
+    pDevMode->dmDefaultSource = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDefaultSource")));
+    pDevMode->dmPrintQuality = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPrintQuality")));
+    pDevMode->dmDuplex = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDuplex")));
 
     pDevMode->dmFields = 0;
     if (hb_hashGetCItemPtr(pStru, "dmOrientation")) {
