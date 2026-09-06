@@ -56,22 +56,22 @@
 
 #include "hbzebra.ch"
 
-typedef struct
+struct HB_BITBUFFER
 {
-   unsigned char * pBuffer;
-   HB_SIZE         nLen;
-   HB_SIZE         nAlloc;
-   void *          pCargo;
-} HB_BITBUFFER, * PHB_BITBUFFER;
+   unsigned char *pBuffer;
+   HB_SIZE nLen;
+   HB_SIZE nAlloc;
+   void *pCargo;
+};
 
-typedef struct
+struct HB_ZEBRA
 {
-   int32_t             iType;
-   int32_t             iError;
-   int32_t             iCol;
-   char *          szCode;
-   HB_BITBUFFER *  pBits;
-} HB_ZEBRA, * PHB_ZEBRA;
+   int32_t iType;
+   int32_t iError;
+   int32_t iCol;
+   char *szCode;
+   HB_BITBUFFER *pBits;
+};
 
 HB_EXTERN_BEGIN
 
