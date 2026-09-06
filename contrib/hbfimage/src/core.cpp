@@ -71,7 +71,7 @@
 
 typedef struct
 {
-  PHB_ITEM pErrorCallback;
+  HB_ITEM *pErrorCallback;
 } HB_FI_ERROR;
 
 static void hb_fi_error_init(void *cargo)
@@ -241,7 +241,7 @@ static void FreeImageErrorHandler(FREE_IMAGE_FORMAT fif, const char *message)
 
   if (pError)
   {
-    PHB_ITEM pErrorCallback = pError->pErrorCallback;
+    HB_ITEM *pErrorCallback = pError->pErrorCallback;
 
     if (pErrorCallback && hb_vmRequestReenter())
     {
