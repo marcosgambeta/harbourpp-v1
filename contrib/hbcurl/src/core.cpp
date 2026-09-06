@@ -122,9 +122,9 @@ typedef struct _HB_CURL
   char *er_ptr;
   size_t er_len;
 
-  PHB_ITEM pProgressCallback;
-  PHB_ITEM pDebugCallback;
-  PHB_ITEM pWriteFunctionCallback;
+  HB_ITEM *pProgressCallback;
+  HB_ITEM *pDebugCallback;
+  HB_ITEM *pWriteFunctionCallback;
 
 #ifdef HB_CURL_HASH_STRINGS
   PHB_HASH_TABLE pHash;
@@ -559,7 +559,7 @@ static int hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, 
     if (hb_vmRequestReenter())
     {
       hb_vmPushEvalSym();
-      hb_vmPush(static_cast<PHB_ITEM>(Cargo));
+      hb_vmPush(static_cast<HB_ITEM *>(Cargo));
 #if LIBCURL_VERSION_NUM >= 0x072000
       hb_vmPushNumInt(static_cast<HB_MAXINT>(ulnow > 0 ? ulnow : dlnow));
       hb_vmPushNumInt(static_cast<HB_MAXINT>(ultotal > 0 ? ultotal : dltotal));
@@ -1074,7 +1074,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         // Callback
 
       case HB_CURLOPT_WRITEFUNCTION: {
-        PHB_ITEM pWriteFunctionCallback = hb_param(3, Harbour::Item::EVALITEM);
+        HB_ITEM *pWriteFunctionCallback = hb_param(3, Harbour::Item::EVALITEM);
 
         if (hb_curl->pWriteFunctionCallback)
         {
@@ -1397,7 +1397,7 @@ HB_FUNC(CURL_EASY_SETOPT)
 
             for (nPos = 1; nPos <= nLen; ++nPos)
             {
-              PHB_ITEM pSubArray = hb_arrayGetItemPtr(pArray, nPos);
+              HB_ITEM *pSubArray = hb_arrayGetItemPtr(pArray, nPos);
               curl_mimepart *part = curl_mime_addpart(hb_curl->mime);
 
               curl_mime_name(part, hb_arrayGetCPtr(pSubArray, 1));
@@ -1408,7 +1408,7 @@ HB_FUNC(CURL_EASY_SETOPT)
 #else
           for (nPos = 1; nPos <= nLen; ++nPos)
           {
-            PHB_ITEM pSubArray = hb_arrayGetItemPtr(pArray, nPos);
+            HB_ITEM *pSubArray = hb_arrayGetItemPtr(pArray, nPos);
 
             curl_formadd(&hb_curl->pHTTPPOST_First, &hb_curl->pHTTPPOST_Last, CURLFORM_COPYNAME,
                          hb_arrayGetCPtr(pSubArray, 1), CURLFORM_NAMELENGTH, hb_arrayGetCLen(pSubArray, 1),
@@ -2255,7 +2255,7 @@ HB_FUNC(CURL_EASY_ER_BUFF_GET)
   }
 }
 
-static void hb_curl_slist_array(PHB_ITEM pArray, struct curl_slist *slist)
+static void hb_curl_slist_array(HB_ITEM *pArray, struct curl_slist *slist)
 {
   struct curl_slist *walk_slist;
   int nCount;
@@ -2596,7 +2596,7 @@ HB_FUNC(CURL_EASY_GETINFO)
     case HB_CURL_INFO_TYPE_CERTINFO:
       if (ret_certinfo && ret_certinfo->num_of_certs > 0)
       {
-        PHB_ITEM pArray = hb_itemArrayNew(ret_certinfo->num_of_certs);
+        HB_ITEM *pArray = hb_itemArrayNew(ret_certinfo->num_of_certs);
         int num;
 
         for (num = 1; num <= ret_certinfo->num_of_certs; num++, ret_certinfo->certinfo++)
@@ -2613,7 +2613,7 @@ HB_FUNC(CURL_EASY_GETINFO)
     case HB_CURL_INFO_TYPE_SLIST:
       if (ret_slist)
       {
-        PHB_ITEM pArray = hb_itemNew(nullptr);
+        HB_ITEM *pArray = hb_itemNew(nullptr);
         hb_curl_slist_array(pArray, ret_slist);
         hb_itemReturnRelease(pArray);
         curl_slist_free_all(ret_slist);
@@ -2694,7 +2694,7 @@ HB_FUNC(CURL_VERSION_INFO)
 
   if (data)
   {
-    PHB_ITEM pArray = hb_itemArrayNew(13);
+    HB_ITEM *pArray = hb_itemArrayNew(13);
 
     hb_arraySetC(pArray, 1, data->version);          // LIBCURL_VERSION
     hb_arraySetNI(pArray, 2, data->version_num);     // LIBCURL_VERSION_NUM
@@ -2729,7 +2729,7 @@ HB_FUNC(CURL_VERSION_INFO)
     hb_arraySetC(pArray, 13, nullptr);
 #endif
     {
-      PHB_ITEM pProtocols;
+      HB_ITEM *pProtocols;
       int nCount = 0;
       const char *const *prot = data->protocols;
 
@@ -2830,7 +2830,7 @@ HB_FUNC(CURL_WS_RECV)
 #else
     struct curl_ws_frame *meta = nullptr;
 #endif
-    PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+    HB_ITEM *pBuffer = hb_param(2, Harbour::Item::STRING);
     char *buffer;
     HB_SIZE buflen;
 
@@ -3038,8 +3038,8 @@ HB_FUNC(CURL_MULTI_INFO_READ)
 
       if (msg && curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &response_code) == CURLE_OK)
       {
-        PHB_ITEM pHandles = hb_param(2, Harbour::Item::ARRAY);
-        PHB_ITEM pReturn = hb_itemArrayNew(HB_CURLMSG_RESP_LAST);
+        HB_ITEM *pHandles = hb_param(2, Harbour::Item::ARRAY);
+        HB_ITEM *pReturn = hb_itemArrayNew(HB_CURLMSG_RESP_LAST);
 
         hb_arraySetNI(pReturn, HB_CURLMSG_RESP_LEN, msgs_in_queue);
         hb_arraySetNL(pReturn, HB_CURLMSG_RESP_RESPONSE_CODE, response_code);
