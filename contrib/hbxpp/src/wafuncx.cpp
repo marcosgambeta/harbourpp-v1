@@ -54,7 +54,7 @@
 
 static HB_ERRCODE s_waList(AREAP pArea, void * Cargo)
 {
-   auto pArray = static_cast<PHB_ITEM>(Cargo);
+   auto pArray = static_cast<HB_ITEM *>(Cargo);
    HB_SIZE  nLen   = hb_arrayLen(pArray) + 1;
 
    hb_arraySize(pArray, nLen);
@@ -65,7 +65,7 @@ static HB_ERRCODE s_waList(AREAP pArea, void * Cargo)
 
 HB_FUNC(WORKSPACELIST)
 {
-   PHB_ITEM pArray;
+   HB_ITEM *pArray;
 
    if( hb_parni(1) == DB_ZEROSPACE )
       pArray = hb_rddDetachedList();

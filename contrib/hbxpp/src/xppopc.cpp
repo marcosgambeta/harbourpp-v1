@@ -134,7 +134,7 @@ HB_FUNC(XPP_INDEX)
       }
       else
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1068, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex); /* TODO: Emulate exact XPP error msg */
+         HB_ITEM *pResult = hb_errRT_BASE_Subst(EG_ARG, 1068, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex); /* TODO: Emulate exact XPP error msg */
          if( pResult )
             hb_itemReturnRelease(pResult);
       }
@@ -152,7 +152,7 @@ HB_FUNC(XPP_INCLUDE)
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf);
+      HB_ITEM *pResult = hb_errRT_BASE_Subst(EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf);
       if( pResult )
          hb_itemReturnRelease(pResult);
    }

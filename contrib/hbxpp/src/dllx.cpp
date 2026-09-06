@@ -65,7 +65,7 @@
 
 typedef struct
 {
-   PHB_ITEM pLibraryHandle;
+   HB_ITEM *pLibraryHandle;
    int      iFuncFlags;
    void *   pFunctionPtr; /* Function Address */
 } HB_DLLEXEC, * PHB_DLLEXEC;
@@ -109,7 +109,7 @@ HB_FUNC_TRANSLATE( DLLUNLOAD, HB_LIBFREE )
 HB_FUNC(DLLCALL)
 {
    auto pLibrary = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pLibraryHandle = nullptr;
+   HB_ITEM *pLibraryHandle = nullptr;
    HB_BOOL  bFreeLibrary   = false;
 
    if( pLibrary )
@@ -154,7 +154,7 @@ HB_FUNC(DLLCALL)
 HB_FUNC(DLLPREPARECALL)
 {
    auto pLibrary = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pLibraryHandle = nullptr;
+   HB_ITEM *pLibraryHandle = nullptr;
    HB_BOOL  bFreeLibrary   = false;
    const char * pszErrorText;
 
