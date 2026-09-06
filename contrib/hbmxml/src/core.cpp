@@ -68,21 +68,21 @@ struct HBMXML_NODE /* placeholder for mxml_node_t */
 
 struct HB_CBS_VAR
 {
-   PHB_ITEM type_cb;
-   PHB_ITEM save_cb;
-   PHB_ITEM sax_cb;
+   HB_ITEM *type_cb;
+   HB_ITEM *save_cb;
+   HB_ITEM *sax_cb;
    void * hText;
 };
 
 struct HB_CUSTOM_CBS_VAR
 {
-   PHB_ITEM load_cb;
-   PHB_ITEM save_cb;
+   HB_ITEM *load_cb;
+   HB_ITEM *save_cb;
 };
 
 struct HB_ERROR_CB_VAR
 {
-   PHB_ITEM error_cb;
+   HB_ITEM *error_cb;
 };
 
 static void hb_cbs_var_init(void * cargo)
@@ -153,7 +153,7 @@ static void hbmxml_release(mxml_node_t * node)
       if( (user_data = mxmlGetUserData(node)) != nullptr )
       {
          mxmlSetUserData(node, nullptr);
-         hb_itemRelease(static_cast<PHB_ITEM>(user_data));
+         hb_itemRelease(static_cast<HB_ITEM *>(user_data));
       }
    }
 
@@ -647,7 +647,7 @@ HB_FUNC(MXMLGETUSERDATA)
 
    if( node )
    {
-      auto pItem = static_cast<PHB_ITEM>(mxmlGetUserData(node));
+      auto pItem = static_cast<HB_ITEM *>(mxmlGetUserData(node));
 
       if( pItem != nullptr )
       {
@@ -780,7 +780,7 @@ static mxml_type_t type_cb(mxml_node_t * node)
 
    if( pCbs != nullptr )
    {
-      PHB_ITEM pCallback = pCbs->type_cb;
+      HB_ITEM *pCallback = pCbs->type_cb;
 
       if( pCallback && hb_vmRequestReenter() )
       {
@@ -1182,7 +1182,7 @@ static void sax_cb(mxml_node_t * node, mxml_sax_event_t event, void * data)
 
    if( node != nullptr && pCbs != nullptr )
    {
-      PHB_ITEM pCallback = pCbs->sax_cb;
+      HB_ITEM *pCallback = pCbs->sax_cb;
 
       if( pCallback && hb_vmRequestReenter() )
       {
@@ -1195,7 +1195,7 @@ static void sax_cb(mxml_node_t * node, mxml_sax_event_t event, void * data)
 
          if( data != nullptr )
          {
-            hb_vmPush(static_cast<PHB_ITEM>(data));
+            hb_vmPush(static_cast<HB_ITEM *>(data));
             uPCount++;
          }
          hb_vmSend(uPCount);
@@ -1217,7 +1217,7 @@ HB_FUNC(MXMLSAXLOADFILE)
    mxml_node_t * node;
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    mxml_sax_cb_t cb_sax = MXML_NO_CALLBACK;
-   PHB_ITEM pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
+   HB_ITEM *pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
@@ -1285,7 +1285,7 @@ HB_FUNC(MXMLSAXLOADSTRING)
    mxml_node_t * node;
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    mxml_sax_cb_t cb_sax = MXML_NO_CALLBACK;
-   PHB_ITEM pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
+   HB_ITEM *pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
    const char * s;
 
@@ -1350,7 +1350,7 @@ static const char * save_cb(mxml_node_t * node, int where)
 
    if( node != nullptr && pCbs != nullptr )
    {
-      PHB_ITEM pCallback = pCbs->save_cb;
+      HB_ITEM *pCallback = pCbs->save_cb;
 
       if( pCbs->hText )
       {
@@ -1562,7 +1562,7 @@ static void error_cb(const char * pszErrorMsg)
 
    if( pError_cb != nullptr )
    {
-      PHB_ITEM pCallback = pError_cb->error_cb;
+      HB_ITEM *pCallback = pError_cb->error_cb;
 
       if( pCallback && hb_vmRequestReenter() )
       {
@@ -1682,7 +1682,7 @@ HB_FUNC(MXMLSETUSERDATA)
 
    if( node )
    {
-      PHB_ITEM pItem = hb_itemClone(hb_param(2, Harbour::Item::ANY));
+      HB_ITEM *pItem = hb_itemClone(hb_param(2, Harbour::Item::ANY));
 
       if( pItem != nullptr )
       {
@@ -1748,7 +1748,7 @@ HB_FUNC(MXMLGETCUSTOM)
 
    if( node )
    {
-      auto pItem = static_cast<PHB_ITEM>(const_cast<void*>(mxmlGetCustom(node)));
+      auto pItem = static_cast<HB_ITEM *>(const_cast<void*>(mxmlGetCustom(node)));
 
       if( pItem != nullptr )
       {
@@ -1765,7 +1765,7 @@ HB_FUNC(MXMLGETCUSTOM)
 
 static void custom_destroy_cb(void * Cargo)
 {
-   auto pItem = static_cast<PHB_ITEM>(Cargo);
+   auto pItem = static_cast<HB_ITEM *>(Cargo);
 
    if( pItem != nullptr )
    {
@@ -1780,7 +1780,7 @@ HB_FUNC(MXMLNEWCUSTOM)
 {
    if( hb_pcount() > 1 )
    {
-      PHB_ITEM pItem = hb_itemClone(hb_param(2, Harbour::Item::ANY));
+      HB_ITEM *pItem = hb_itemClone(hb_param(2, Harbour::Item::ANY));
       mxml_node_t * parent = MXML_NO_PARENT;
       mxml_node_t * node = nullptr;
 
@@ -1819,7 +1819,7 @@ HB_FUNC(MXMLSETCUSTOM)
 
    if( node && hb_pcount() > 1 )
    {
-      PHB_ITEM pItem = hb_itemClone(hb_param(2, Harbour::Item::ANY));
+      HB_ITEM *pItem = hb_itemClone(hb_param(2, Harbour::Item::ANY));
 
       if( pItem != nullptr )
       {
@@ -1847,7 +1847,7 @@ static int custom_load_cb(mxml_node_t * node, const char * data)
 
    if( node != nullptr && pCCbs != nullptr && data != nullptr )
    {
-      PHB_ITEM pCallback = pCCbs->load_cb;
+      HB_ITEM *pCallback = pCCbs->load_cb;
 
       if( pCallback && hb_vmRequestReenter() )
       {
@@ -1875,7 +1875,7 @@ static char * custom_save_cb(mxml_node_t * node)
 
    if( node != nullptr && pCCbs != nullptr )
    {
-      PHB_ITEM pCallback = pCCbs->save_cb;
+      HB_ITEM *pCallback = pCCbs->save_cb;
 
       if( pCallback && hb_vmRequestReenter() )
       {
@@ -1999,9 +1999,9 @@ HB_FUNC(HB_MXMLGETATTRS)
 
    if( node && mxmlGetType(node) == MXML_ELEMENT )
    {
-      PHB_ITEM pAttrs = hb_hashNew(hb_itemNew(nullptr));
-      PHB_ITEM pKey = nullptr;
-      PHB_ITEM pValue = nullptr;
+      HB_ITEM *pAttrs = hb_hashNew(hb_itemNew(nullptr));
+      HB_ITEM *pKey = nullptr;
+      HB_ITEM *pValue = nullptr;
       int i, count;
       const char *name, *value;
 
