@@ -264,7 +264,7 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, ui
    return hb_fileDirSpace(s_gzio_name(pszDirName, nullptr), uiType);
 }
 
-static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
+static HB_ITEM *s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -322,7 +322,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
                             const char * pszDefExt, HB_FATTR nExFlags,
-                            const char * pPaths, PHB_ITEM pError )
+                            const char * pPaths, HB_ITEM *pError )
 {
    int iLevel = Z_DEFAULT_COMPRESSION;
    char * pszNameBuf = nullptr;
@@ -585,7 +585,7 @@ static void s_fileCommit( PHB_FILE pFile )
       hb_fsSetError(0);
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
+static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, HB_ITEM *pValue )
 {
    switch( iIndex )
    {
