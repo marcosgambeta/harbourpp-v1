@@ -140,7 +140,7 @@ static bool addStrnToContext(pgCopyContext *context, const char *str, HB_SIZE si
 }
 
 // Export field value into the buffer in PG accepted CSV format
-static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char *szQuote, const char *szEsc)
+static bool exportBufSqlVar(pgCopyContext *context, HB_ITEM *pValue, const char *szQuote, const char *szEsc)
 {
   switch (hb_itemType(pValue))
   {
