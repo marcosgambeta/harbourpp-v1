@@ -73,9 +73,9 @@ struct SDDDATA
   sqlite3_stmt *pStmt;
 };
 
-static HB_ERRCODE sqlite3Connect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE sqlite3Connect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE sqlite3Disconnect(SQLDDCONNECTION *pConnection);
-static HB_ERRCODE sqlite3Execute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE sqlite3Execute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea);
 static HB_ERRCODE sqlite3Close(SQLBASEAREAP pArea);
 static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
@@ -163,7 +163,7 @@ static char *sqlite3GetError(sqlite3 *pDb, HB_ERRCODE *pErrCode)
   int iNativeErr;
 
   if (pDb) {
-    PHB_ITEM pRet = S_HB_ITEMPUTSTR(nullptr, sqlite3_errmsg(pDb));
+    HB_ITEM *pRet = S_HB_ITEMPUTSTR(nullptr, sqlite3_errmsg(pDb));
     szRet = hb_strdup(hb_itemGetCPtr(pRet));
     hb_itemRelease(pRet);
     iNativeErr = sqlite3_errcode(pDb);
@@ -291,7 +291,7 @@ static void sqlite3DeclStru(sqlite3_stmt *st, uint16_t uiIndex, uint16_t *puiLen
 #endif
 
 /* --- SDD METHODS --- */
-static HB_ERRCODE sqlite3Connect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE sqlite3Connect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   sqlite3 *db;
   void *hConn;
@@ -320,7 +320,7 @@ static HB_ERRCODE sqlite3Disconnect(SQLDDCONNECTION *pConnection)
   return errCode;
 }
 
-static HB_ERRCODE sqlite3Execute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE sqlite3Execute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   sqlite3 *pDb = (static_cast<SDDCONN *>(pConnection->pSDDConn))->pDb;
   HB_ERRCODE errCode;
@@ -398,7 +398,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
   auto uiFields = static_cast<uint16_t>(sqlite3_column_count(st));
   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
-  PHB_ITEM pName = nullptr;
+  HB_ITEM *pName = nullptr;
   errCode = 0;
   bool bError = false;
   auto pItemEof = hb_itemArrayNew(uiFields);
@@ -541,7 +541,7 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
     auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
     for (uint16_t ui = 0; ui < pArea->area.uiFieldCount; ++ui) {
-      PHB_ITEM pItem = nullptr;
+      HB_ITEM *pItem = nullptr;
       LPFIELD pField = pArea->area.lpFields + ui;
       uint16_t uiType = pField->uiType;
 
