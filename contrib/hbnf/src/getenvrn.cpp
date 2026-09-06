@@ -106,7 +106,7 @@ HB_FUNC(FT_GETE)
       LPTCH    lpEnviron = GetEnvironmentStrings(), lpEnv;
       LPTSTR   lpResult  = nullptr, lpDst;
       HB_SIZE  nSize     = 0, nCount = 0;
-      PHB_ITEM pArray    = nullptr;
+      HB_ITEM *pArray    = nullptr;
       int      rettype   = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
 
       if( lpEnviron )

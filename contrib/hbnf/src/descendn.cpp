@@ -21,10 +21,10 @@
 
 HB_FUNC(FT_DESCEND)
 {
-   PHB_ITEM iP     = hb_itemParam(1);
+   HB_ITEM *iP     = hb_itemParam(1);
    HB_TYPE  uiType = hb_itemType(iP);
 
-   PHB_ITEM iR = nullptr;
+   HB_ITEM *iR = nullptr;
 
    if( (uiType & Harbour::Item::NUMERIC) && (uiType & Harbour::Item::DOUBLE) )
    {
