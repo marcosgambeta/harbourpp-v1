@@ -245,12 +245,12 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
   pItems = p;
 
   *p++ = static_cast<WORD>(nItems);           // NumberOfItems
-  *p++ = static_cast<short>(hb_parvni(1, 5)); // x
-  *p++ = static_cast<short>(hb_parvni(1, 6)); // y
-  *p++ = static_cast<short>(hb_parvni(1, 7)); // cx
-  *p++ = static_cast<short>(hb_parvni(1, 8)); // cy
-  *p++ = static_cast<short>(0);               // Menu (ignored for now.)
-  *p++ = static_cast<short>(0x00);            // Class also ignored
+  *p++ = static_cast<int16_t>(hb_parvni(1, 5)); // x
+  *p++ = static_cast<int16_t>(hb_parvni(1, 6)); // y
+  *p++ = static_cast<int16_t>(hb_parvni(1, 7)); // cx
+  *p++ = static_cast<int16_t>(hb_parvni(1, 8)); // cy
+  *p++ = static_cast<int16_t>(0);               // Menu (ignored for now.)
+  *p++ = static_cast<int16_t>(0x00);            // Class also ignored
 
   if (hb_parinfa(1, 11) == Harbour::Item::STRING) {
     void *hText;
@@ -276,9 +276,9 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     void *hText;
     LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 15, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
-    *p++ = static_cast<short>(hb_parvni(1, 12));
-    *p++ = static_cast<short>(hb_parvni(1, 13));
-    *p++ = static_cast<short>(hb_parvni(1, 14));
+    *p++ = static_cast<int16_t>(hb_parvni(1, 12));
+    *p++ = static_cast<int16_t>(hb_parvni(1, 13));
+    *p++ = static_cast<int16_t>(hb_parvni(1, 14));
 
     nchar = hb_wstrnlen(szText, nchar);
 
@@ -305,10 +305,10 @@ HB_FUNC(__WAPI_DLGTEMPLATE_RAW_NEW)
     *p++ = LOWORD(hb_parvnl(4, i)); // style
     *p++ = HIWORD(hb_parvnl(4, i));
 
-    *p++ = static_cast<short>(hb_parvni(5, i)); // x
-    *p++ = static_cast<short>(hb_parvni(6, i)); // y
-    *p++ = static_cast<short>(hb_parvni(7, i)); // cx
-    *p++ = static_cast<short>(hb_parvni(8, i)); // cy
+    *p++ = static_cast<int16_t>(hb_parvni(5, i)); // x
+    *p++ = static_cast<int16_t>(hb_parvni(6, i)); // y
+    *p++ = static_cast<int16_t>(hb_parvni(7, i)); // cx
+    *p++ = static_cast<int16_t>(hb_parvni(8, i)); // cy
 
     *p++ = LOWORD(hb_parvnl(9, i)); // id
     *p++ = HIWORD(hb_parvnl(9, i)); // id
