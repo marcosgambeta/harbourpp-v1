@@ -70,20 +70,20 @@ typedef struct
    int             iError;
    int             iCol;
    char *          szCode;
-   PHB_BITBUFFER   pBits;
+   HB_BITBUFFER *  pBits;
 } HB_ZEBRA, * PHB_ZEBRA;
 
 HB_EXTERN_BEGIN
 
-extern HB_EXPORT PHB_BITBUFFER    hb_bitbuffer_create( void );
-extern HB_EXPORT void             hb_bitbuffer_destroy( PHB_BITBUFFER pBitBuffer );
-extern HB_EXPORT HB_SIZE          hb_bitbuffer_len(PHB_BITBUFFER pBitBuffer);
-extern HB_EXPORT unsigned char *  hb_bitbuffer_buffer( PHB_BITBUFFER pBitBuffer );
-extern HB_EXPORT bool             hb_bitbuffer_get( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos );
-extern HB_EXPORT void             hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, bool fValue );
-extern HB_EXPORT void             hb_bitbuffer_not( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos );
-extern HB_EXPORT void             hb_bitbuffer_cat_int( PHB_BITBUFFER pBitBuffer, int iValue, int iLen );
-extern HB_EXPORT void             hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen );
+extern HB_EXPORT HB_BITBUFFER    *hb_bitbuffer_create( void );
+extern HB_EXPORT void             hb_bitbuffer_destroy( HB_BITBUFFER *pBitBuffer );
+extern HB_EXPORT HB_SIZE          hb_bitbuffer_len(HB_BITBUFFER *pBitBuffer);
+extern HB_EXPORT unsigned char *  hb_bitbuffer_buffer( HB_BITBUFFER *pBitBuffer );
+extern HB_EXPORT bool             hb_bitbuffer_get( HB_BITBUFFER *pBitBuffer, HB_SIZE nPos );
+extern HB_EXPORT void             hb_bitbuffer_set( HB_BITBUFFER *pBitBuffer, HB_SIZE nPos, bool fValue );
+extern HB_EXPORT void             hb_bitbuffer_not( HB_BITBUFFER *pBitBuffer, HB_SIZE nPos );
+extern HB_EXPORT void             hb_bitbuffer_cat_int( HB_BITBUFFER *pBitBuffer, int iValue, int iLen );
+extern HB_EXPORT void             hb_bitbuffer_cat_int_rev( HB_BITBUFFER *pBitBuffer, int iValue, int iLen );
 
 extern HB_EXPORT HB_ZEBRA     *hb_zebra_create( void );
 extern HB_EXPORT void          hb_zebra_destroy( HB_ZEBRA *pZebra );

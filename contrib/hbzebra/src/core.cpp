@@ -50,15 +50,15 @@
 
 /* --- Bit buffer --- */
 
-PHB_BITBUFFER hb_bitbuffer_create(void)
+HB_BITBUFFER *hb_bitbuffer_create(void)
 {
-  auto pBitBuffer = static_cast<PHB_BITBUFFER>(hb_xgrab(sizeof(HB_BITBUFFER)));
+  auto pBitBuffer = static_cast<HB_BITBUFFER *>(hb_xgrab(sizeof(HB_BITBUFFER)));
 
   hb_xmemset(pBitBuffer, 0, sizeof(HB_BITBUFFER));
   return pBitBuffer;
 }
 
-void hb_bitbuffer_destroy(PHB_BITBUFFER pBitBuffer)
+void hb_bitbuffer_destroy(HB_BITBUFFER *pBitBuffer)
 {
   if (pBitBuffer->pBuffer) {
     hb_xfree(pBitBuffer->pBuffer);
@@ -66,22 +66,22 @@ void hb_bitbuffer_destroy(PHB_BITBUFFER pBitBuffer)
   hb_xfree(pBitBuffer);
 }
 
-HB_SIZE hb_bitbuffer_len(PHB_BITBUFFER pBitBuffer)
+HB_SIZE hb_bitbuffer_len(HB_BITBUFFER *pBitBuffer)
 {
   return pBitBuffer->nLen;
 }
 
-unsigned char *hb_bitbuffer_buffer(PHB_BITBUFFER pBitBuffer)
+unsigned char *hb_bitbuffer_buffer(HB_BITBUFFER *pBitBuffer)
 {
   return pBitBuffer->pBuffer;
 }
 
-bool hb_bitbuffer_get(PHB_BITBUFFER pBitBuffer, HB_SIZE nPos)
+bool hb_bitbuffer_get(HB_BITBUFFER *pBitBuffer, HB_SIZE nPos)
 {
   return nPos > pBitBuffer->nLen ? false : ((pBitBuffer->pBuffer[nPos >> 3] >> (nPos & 7)) & 1);
 }
 
-void hb_bitbuffer_set(PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, bool fValue)
+void hb_bitbuffer_set(HB_BITBUFFER *pBitBuffer, HB_SIZE nPos, bool fValue)
 {
   if (pBitBuffer->nAlloc * 8 <= nPos) {
     HB_SIZE nNewAlloc = ((pBitBuffer->nAlloc >> 1) + nPos + 8) / 8;
@@ -101,7 +101,7 @@ void hb_bitbuffer_set(PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, bool fValue)
   }
 }
 
-void hb_bitbuffer_not(PHB_BITBUFFER pBitBuffer, HB_SIZE nPos)
+void hb_bitbuffer_not(HB_BITBUFFER *pBitBuffer, HB_SIZE nPos)
 {
   if (pBitBuffer->nAlloc * 8 <= nPos) {
     HB_SIZE nNewAlloc = ((pBitBuffer->nAlloc >> 1) + nPos + 8) / 8;
@@ -113,7 +113,7 @@ void hb_bitbuffer_not(PHB_BITBUFFER pBitBuffer, HB_SIZE nPos)
   *(pBitBuffer->pBuffer + (nPos >> 3)) ^= 1 << (nPos & 0x7);
 }
 
-void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t iLen)
+void hb_bitbuffer_cat_int(HB_BITBUFFER *pBitBuffer, int32_t iValue, int32_t iLen)
 {
   int32_t i;
 
@@ -134,7 +134,7 @@ void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t iLen
   }
 }
 
-void hb_bitbuffer_cat_int_rev(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t iLen)
+void hb_bitbuffer_cat_int_rev(HB_BITBUFFER *pBitBuffer, int32_t iValue, int32_t iLen)
 {
   if ((pBitBuffer->nLen + iLen) >= pBitBuffer->nAlloc * 8) {
     HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ((pBitBuffer->nAlloc >> 1) + iLen + 7) / 8;

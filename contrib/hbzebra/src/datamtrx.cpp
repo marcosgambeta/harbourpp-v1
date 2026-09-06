@@ -291,7 +291,7 @@ static void _datamatrix_place_d(int32_t *pArr, int32_t iPRow, int32_t iPCol, int
   _datamatrix_place_bit(pArr, iPRow, iPCol, 1, iPCol - 1, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_do_placement(PHB_BITBUFFER pBits, unsigned char *pCW, const DATAMATRIX_SIZE *pSize)
+static void _datamatrix_do_placement(HB_BITBUFFER *pBits, unsigned char *pCW, const DATAMATRIX_SIZE *pSize)
 {
   int32_t i, iR, iC, iPRow, iPCol;
 
