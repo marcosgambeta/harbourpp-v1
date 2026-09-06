@@ -135,7 +135,7 @@ typedef struct
   ADSHANDLE hConnect;
   int iIndexPageSize;
 #if !defined(ADS_LINUX)
-  PHB_ITEM pCallBack;
+  HB_ITEM *pCallBack;
 #endif // ! ADS_LINUX
 } HB_ADSDATA, *PHB_ADSDATA;
 
@@ -216,12 +216,12 @@ void hb_ads_setIndexPageSize(int iIndexPageSize)
 }
 
 #if !defined(ADS_LINUX)
-static PHB_ITEM hb_ads_getCallBack(void)
+static HB_ITEM *hb_ads_getCallBack(void)
 {
   return HB_ADS_THREAD_DATA->pCallBack;
 }
 
-static void hb_ads_setCallBack(PHB_ITEM pCallBack)
+static void hb_ads_setCallBack(HB_ITEM *pCallBack)
 {
   PHB_ADSDATA pAdsData = HB_ADS_THREAD_DATA;
 
@@ -1443,7 +1443,7 @@ UNSIGNED32 WINAPI hb_adsShowCallback(UNSIGNED16 usPercentDone, UNSIGNED32 ulCall
 UNSIGNED32 WINAPI hb_adsShowCallback(UNSIGNED16 usPercentDone)
 #endif
 {
-  PHB_ITEM pCallBack = hb_ads_getCallBack();
+  HB_ITEM *pCallBack = hb_ads_getCallBack();
 
   if (pCallBack) {
     auto pPercentDone = hb_itemPutNI(nullptr, usPercentDone);

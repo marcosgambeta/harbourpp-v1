@@ -152,12 +152,12 @@ static void adsSetSend(void)
 }
 
 static HB_ERRCODE commonError(ADSAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode,
-                              const char *szFileName, uint16_t uiFlags, PHB_ITEM *pErrorPtr)
+                              const char *szFileName, uint16_t uiFlags, HB_ITEM **pErrorPtr)
 {
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   if (hb_vmRequestQuery() == 0) {
-    PHB_ITEM pError;
+    HB_ITEM *pError;
 
     if (pErrorPtr) {
       if (!*pErrorPtr) {
@@ -459,7 +459,7 @@ static HB_ERRCODE hb_adsCheckLock(ADSAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static void adsGetKeyItem(ADSAREAP pArea, PHB_ITEM pItem, int iKeyType, char *pKeyBuf, int iKeyLen)
+static void adsGetKeyItem(ADSAREAP pArea, HB_ITEM *pItem, int iKeyType, char *pKeyBuf, int iKeyLen)
 {
   double dValue;
 
@@ -541,7 +541,7 @@ static void adsGetKeyItem(ADSAREAP pArea, PHB_ITEM pItem, int iKeyType, char *pK
   }
 }
 
-static void adsScopeGet(ADSAREAP pArea, ADSHANDLE hOrder, uint16_t nScope, PHB_ITEM pItem)
+static void adsScopeGet(ADSAREAP pArea, ADSHANDLE hOrder, uint16_t nScope, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsScopeGet(%p, %lu, %hu, %p)", static_cast<void*>(pArea), hOrder, nScope, static_cast<void*>(pItem)));
@@ -567,7 +567,7 @@ static void adsScopeGet(ADSAREAP pArea, ADSHANDLE hOrder, uint16_t nScope, PHB_I
   }
 }
 
-static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, uint16_t nScope, PHB_ITEM pItem)
+static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, uint16_t nScope, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsScopeSet(%p, %lu, %hu, %p)", static_cast<void*>(pArea), hOrder, nScope, static_cast<void*>(pItem)));
@@ -944,7 +944,7 @@ static HB_ERRCODE adsGoTo(ADSAREAP pArea, HB_ULONG ulRecNo)
   return u32RetVal == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsGoToId(ADSAREAP pArea, PHB_ITEM pItem)
+static HB_ERRCODE adsGoToId(ADSAREAP pArea, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
@@ -988,7 +988,7 @@ static HB_ERRCODE adsGoTop(ADSAREAP pArea)
   return SELF_SKIPFILTER(&pArea->area, 1);
 }
 
-static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_BOOL bFindLast)
+static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, HB_ITEM *pKey, HB_BOOL bFindLast)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsSeek(%p, %d, %p, %d)", static_cast<void*>(pArea), bSoftSeek, static_cast<void*>(pKey), bFindLast));
@@ -1446,7 +1446,7 @@ static HB_ERRCODE adsAppend(ADSAREAP pArea, HB_BOOL fUnLockAll)
   return Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
+static HB_ERRCODE adsCreateFields(ADSAREAP pArea, HB_ITEM *pStruct)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsCreateFields(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pStruct)));
@@ -1954,7 +1954,7 @@ static HB_ERRCODE adsFieldCount(ADSAREAP pArea, uint16_t *uiFields)
 
 #define adsFieldDisplay nullptr
 
-static HB_ERRCODE adsFieldInfo(ADSAREAP pArea, uint16_t uiIndex, uint16_t uiType, PHB_ITEM pItem)
+static HB_ERRCODE adsFieldInfo(ADSAREAP pArea, uint16_t uiIndex, uint16_t uiType, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsFieldInfo(%p, %hu, %hu, %p)", static_cast<void*>(pArea), uiIndex, uiType, static_cast<void*>(pItem)));
@@ -2066,7 +2066,7 @@ static HB_ERRCODE adsGetRec(ADSAREAP pArea, uint8_t **pBuffer)
   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsGetValue(ADSAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE adsGetValue(ADSAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -2485,7 +2485,7 @@ static HB_ERRCODE adsPutRec(ADSAREAP pArea, const uint8_t *pBuffer)
   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsPutValue(ADSAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE adsPutValue(ADSAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsPutValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -2779,7 +2779,7 @@ static HB_ERRCODE adsRecCount(ADSAREAP pArea, HB_ULONG *pRecCount)
   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsRecInfo(ADSAREAP pArea, PHB_ITEM pRecID, uint16_t uiInfoType, PHB_ITEM pInfo)
+static HB_ERRCODE adsRecInfo(ADSAREAP pArea, HB_ITEM *pRecID, uint16_t uiInfoType, HB_ITEM *pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsRecInfo(%p, %p, %hu, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecID), uiInfoType, static_cast<void*>(pInfo)));
@@ -2866,7 +2866,7 @@ static HB_ERRCODE adsRecNo(ADSAREAP pArea, HB_ULONG *ulRecNo)
   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsRecId(ADSAREAP pArea, PHB_ITEM pRecNo)
+static HB_ERRCODE adsRecId(ADSAREAP pArea, HB_ITEM *pRecNo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsRecId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
@@ -3154,7 +3154,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
   return SELF_GOTOP(&pArea->area);
 }
 
-static HB_ERRCODE adsInfo(ADSAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE adsInfo(ADSAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
@@ -3406,7 +3406,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
       return Harbour::FAILURE;
     }
   } else { // if( hb_strnicmp(szFile, "TABLE:", 6) == 0 )
-    PHB_ITEM pError = nullptr;
+    HB_ITEM *pError = nullptr;
     bool fRetry;
 
     if (szFile && (hb_strnicmp(szFile, "TABLE:", 6) == 0)) {
@@ -4034,7 +4034,7 @@ static HB_ERRCODE adsOrderCreate(ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
   ADSHANDLE hTableOrIndex;
   UNSIGNED32 u32RetVal;
   UNSIGNED32 u32Options = ADS_DEFAULT;
-  PHB_ITEM pExprItem = pOrderInfo->abExpr;
+  HB_ITEM *pExprItem = pOrderInfo->abExpr;
   UNSIGNED16 u16 = 0;
   UNSIGNED8 pucWhile[(ADS_MAX_KEY_LENGTH << 1) + 3];
   UNSIGNED16 u16Len = ADS_MAX_KEY_LENGTH;
@@ -4875,7 +4875,7 @@ static HB_ERRCODE adsLock(ADSAREAP pArea, LPDBLOCKINFO pLockInfo)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE adsUnLock(ADSAREAP pArea, PHB_ITEM pRecNo)
+static HB_ERRCODE adsUnLock(ADSAREAP pArea, HB_ITEM *pRecNo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsUnLock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
@@ -4971,7 +4971,7 @@ static HB_ERRCODE adsPutValueFile(ADSAREAP pArea, uint16_t uiIndex, const char *
 #define adsWriteDBHeader nullptr
 
 // TODO: Use AdsDeleteFile()
-static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIndex, HB_ULONG ulConnect)
+static HB_ERRCODE adsDrop(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItemIndex, HB_ULONG ulConnect)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsDrop(%p, %p, %p, %lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), ulConnect));
@@ -4979,7 +4979,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
 
   char szFileName[HB_PATH_MAX];
   const char *szExt;
-  PHB_ITEM pFileExt = nullptr;
+  HB_ITEM *pFileExt = nullptr;
   bool fTable = false, fResult = false;
 
   auto szFile = hb_itemGetCPtr(pItemIndex);
@@ -5047,14 +5047,14 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
 
 // TODO: Use AdsCheckExistence()
 //       UNSIGNED32 ENTRYPOINT AdsCheckExistence(ADSHANDLE hConnect, UNSIGNED8 *pucFileName, UNSIGNED16 *pusOnDisk);
-static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIndex, HB_ULONG ulConnect)
+static HB_ERRCODE adsExists(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItemIndex, HB_ULONG ulConnect)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsExists(%p, %p, %p, %lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), ulConnect));
 #endif
 
   char szFileName[HB_PATH_MAX];
-  PHB_ITEM pFileExt = nullptr;
+  HB_ITEM *pFileExt = nullptr;
   bool fTable = false;
 
   auto szFile = hb_itemGetCPtr(pItemIndex);
@@ -5084,7 +5084,7 @@ static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
   return hb_spFile(szFileName, nullptr) ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIndex, PHB_ITEM pNewName,
+static HB_ERRCODE adsRename(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItemIndex, HB_ITEM *pNewName,
                             HB_ULONG ulConnect)
 {
   HB_SYMBOL_UNUSED(pRDD);
@@ -5151,7 +5151,7 @@ static HB_ERRCODE adsExit(LPRDDNODE pRDD)
   }
 }
 
-static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
+static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));

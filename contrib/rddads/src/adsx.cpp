@@ -83,8 +83,8 @@ typedef struct _MIXTAG
   char *szName;
   char *szKeyExpr;
   char *szForExpr;
-  PHB_ITEM pKeyItem;
-  PHB_ITEM pForItem;
+  HB_ITEM *pKeyItem;
+  HB_ITEM *pForItem;
   uint8_t bType;
   uint16_t uiLen;
 
@@ -163,7 +163,7 @@ static HB_ERRCODE hb_adsUpdateAreaFlags(ADSXAREAP pArea)
 
 // Memory Index
 
-static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, uint8_t bType, uint16_t uiLen)
+static PMIXKEY mixKeyNew(HB_ITEM *pItem, HB_ULONG ulRecNo, uint8_t bType, uint16_t uiLen)
 {
   double dbl;
   uint8_t buf[8];
@@ -230,7 +230,7 @@ static PMIXKEY mixKeyEval(PMIXTAG pTag, ADSXAREAP pArea)
   return pKey;
 }
 
-static bool mixEvalCond(PHB_ITEM pCondItem, ADSXAREAP pArea)
+static bool mixEvalCond(HB_ITEM *pCondItem, ADSXAREAP pArea)
 {
   int iCurrArea = 0;
   bool fRet;
@@ -375,15 +375,15 @@ static int mixCompareKey(PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, uint16_t
   return mixQSortCompare(pTag->pKeys[ulKeyPos], pKey, uiLen, pTag->pCodepage);
 }
 
-static PMIXTAG mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem,
-                            PHB_ITEM pWhileItem, uint8_t bType, uint16_t uiLen, ADSXAREAP pArea)
+static PMIXTAG mixTagCreate(const char *szTagName, HB_ITEM *pKeyExpr, HB_ITEM *pKeyItem, HB_ITEM *pForItem,
+                            HB_ITEM *pWhileItem, uint8_t bType, uint16_t uiLen, ADSXAREAP pArea)
 {
   PMIXKEY pKey;
   LPDBORDERCONDINFO pOrdCondInfo = pArea->adsarea.area.lpdbOrdCondInfo;
   ADSHANDLE hOrder;
   HB_ULONG ulRec, ulStartRec, ulNextCount = 0;
   HB_LONG lStep = 0;
-  PHB_ITEM pItem, pEvalItem = nullptr;
+  HB_ITEM *pItem, *pEvalItem = nullptr;
 
   auto pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
 
@@ -528,7 +528,7 @@ static void mixTagDestroy(PMIXTAG pTag)
   hb_xfree(pTag);
 }
 
-static PMIXTAG mixFindTag(ADSXAREAP pArea, PHB_ITEM pOrder)
+static PMIXTAG mixFindTag(ADSXAREAP pArea, HB_ITEM *pOrder)
 {
   PMIXTAG pTag;
 
@@ -712,7 +712,7 @@ static HB_ERRCODE adsxGoTop(ADSXAREAP pArea)
   return Harbour::FAILURE;
 }
 
-static HB_ERRCODE adsxSeek(ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_BOOL bFindLast)
+static HB_ERRCODE adsxSeek(ADSXAREAP pArea, HB_BOOL bSoftSeek, HB_ITEM *pKey, HB_BOOL bFindLast)
 {
   PMIXKEY pMixKey;
   uint16_t uiLen;
@@ -848,7 +848,7 @@ static HB_ERRCODE adsxSkip(ADSXAREAP pArea, HB_LONG lToSkip)
   return errCode;
 }
 
-static HB_ERRCODE adsxPutValue(ADSXAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE adsxPutValue(ADSXAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
   PMIXUPDATE pUpdate;
   HB_ERRCODE errCode;
@@ -1000,7 +1000,7 @@ static HB_ERRCODE adsxOrderListFocus(ADSXAREAP pArea, LPDBORDERINFO pOrderInfo)
 static HB_ERRCODE adsxOrderCreate(ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
 {
   PMIXTAG pTagNew, pTag;
-  PHB_ITEM pKeyItem, pForItem = nullptr, pWhileItem = nullptr, pResult;
+  HB_ITEM *pKeyItem, *pForItem = nullptr, *pWhileItem = nullptr, *pResult;
   HB_ULONG ulRecNo;
   uint16_t uiLen;
   uint8_t bType;
