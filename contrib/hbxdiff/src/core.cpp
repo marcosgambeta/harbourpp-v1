@@ -69,8 +69,8 @@
 #define XDLT_STD_BLKSIZE                    (1024 * 8)
 #define XDLT_MAX_LINE_SIZE                  80
 
-static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType);
-static void *   hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError);
+static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int iType);
+static void *   hb_mmf_itemGet(HB_ITEM *pItem, int iType, HB_BOOL fError);
 static void     hb_mmf_ret(void * pMemAddr, int iType);
 static void *   hb_mmf_param(int iParam, int iType, HB_BOOL fError);
 
@@ -111,7 +111,7 @@ static const HB_GC_FUNCS s_gc_xdiffFuncs =
    hb_gcDummyMark
 };
 
-static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
+static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int iType)
 {
    if( pItem != nullptr )
    {
@@ -128,7 +128,7 @@ static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
    return hb_itemPutPtrGC(pItem, pStructHolder);
 }
 
-static void * hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError)
+static void * hb_mmf_itemGet(HB_ITEM *pItem, int iType, HB_BOOL fError)
 {
    auto pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs));
    int iError = 0;
@@ -224,7 +224,7 @@ HB_FUNC(XDL_READ_MMFILE)
 
    if( phb_mmf && phb_mmf->mmf )
    {
-      PHB_ITEM pData = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
+      HB_ITEM *pData = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
       char *   data;
       HB_SIZE  size;
 
@@ -372,7 +372,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
 static int xdlt_outb(void * priv, mmbuffer_t * mb, int nbuf)
 {
-   auto pCallback = static_cast<PHB_ITEM>(priv);
+   auto pCallback = static_cast<HB_ITEM *>(priv);
 
    if( pCallback && hb_vmRequestReenter() )
    {
