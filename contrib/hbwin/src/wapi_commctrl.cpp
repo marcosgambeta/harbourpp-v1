@@ -196,8 +196,8 @@ HB_FUNC(WAPI_IMAGELIST_GETICON)
 // BOOL ImageList_GetIconSize(HIMAGELIST himl, int *cx, int *cy);
 HB_FUNC(WAPI_IMAGELIST_GETICONSIZE)
 {
-  int cx;
-  int cy;
+  int32_t cx;
+  int32_t cy;
 
   if (ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy)) {
     hb_storni(cx, 2);
@@ -545,7 +545,7 @@ HB_FUNC(WAPI_TABCTRL_SETMINTABWIDTH)
 #if 0
    hbwapi_ret_NI(TabCtrl_SetMinTabWidth(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)));
 #endif
-  hbwapi_ret_NI(static_cast<int>(SendMessage(hbwapi_par_raw_HWND(1), TCM_SETMINTABWIDTH, static_cast<WPARAM>(0),
+  hbwapi_ret_NI(static_cast<int32_t>(SendMessage(hbwapi_par_raw_HWND(1), TCM_SETMINTABWIDTH, static_cast<WPARAM>(0),
                                              static_cast<LPARAM>(hbwapi_par_INT(2)))));
 }
 
@@ -630,7 +630,7 @@ HB_FUNC(WAPI_TABCTRL_CREATE)
 // not an API
 HB_FUNC(WAPI_TABCTRL_ADDITEM)
 {
-  int iCount = TabCtrl_GetItemCount(hbwapi_par_raw_HWND(1));
+  int32_t iCount = TabCtrl_GetItemCount(hbwapi_par_raw_HWND(1));
   TC_ITEM item;
 
   void *hText;

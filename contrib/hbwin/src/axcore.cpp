@@ -345,7 +345,7 @@ static char * GUID2String(GUID * pID)
 {
    static char strguid[128];
    wchar_t     olestr[128];
-   int         iLen;
+   int32_t     iLen;
 
    StringFromGUID2(pID, olestr, HB_SIZEOFARRAY(olestr));
    iLen = WideCharToMultiByte(CP_ACP, 0, olestr, -1, strguid, sizeof(strguid), nullptr, nullptr);
@@ -363,7 +363,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
   TYPEATTR *pTypeAttr;
   HREFTYPE hRefType;
   HRESULT hr;
-  int iFlags, i;
+  int32_t iFlags, i;
 
   if (!szEvent) {
     IProvideClassInfo2 *iPCI2;
@@ -445,14 +445,14 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
     HB_VTBL(iTI)->Release(HB_THIS(iTI));
 
     if (hr == S_OK) {
-      int iCount = HB_VTBL(iTL)->GetTypeInfoCount(HB_THIS(iTL));
+      int32_t iCount = HB_VTBL(iTL)->GetTypeInfoCount(HB_THIS(iTL));
       for (i = 0; i < iCount; i++) {
         hr = HB_VTBL(iTL)->GetTypeInfo(HB_THIS_(iTL) i, &iTI);
         if (hr == S_OK) {
           hr = HB_VTBL(iTI)->GetTypeAttr(HB_THIS_(iTI) & pTypeAttr);
           if (hr == S_OK) {
             if (pTypeAttr->typekind == TKIND_COCLASS) {
-              int j;
+              int32_t j;
 
               for (j = 0; j < pTypeAttr->cImplTypes; j++) {
                 if (szEvent) {
@@ -463,7 +463,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
                     hr = HB_VTBL(iTISink)->GetDocumentation(HB_THIS_(iTISink) - 1, &bstr, nullptr, nullptr, nullptr);
                     if (hr == S_OK) {
                       char str[256];
-                      int iLen;
+                      int32_t iLen;
 
                       iLen = WideCharToMultiByte(CP_ACP, 0, bstr, -1, str, sizeof(str), nullptr, nullptr);
                       if (iLen > 0) {
@@ -496,7 +496,7 @@ static HRESULT _get_default_sink(IDispatch *iDisp, const char *szEvent, IID *pii
 // Debug code. You can also comment out iFlags condition, to list more interfaces [Mindaugas]
                                     BSTR bstr;
                                     char str[256];
-                                    int  iLen;
+                                    int32_t  iLen;
 
                                     HB_VTBL(iTISink)->GetDocumentation(HB_THIS_(iTISink) -1, &bstr, nullptr, nullptr, nullptr);
                                     iLen = WideCharToMultiByte(CP_ACP, 0, bstr, -1, str, sizeof(str), nullptr, nullptr);

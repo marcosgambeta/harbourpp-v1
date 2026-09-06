@@ -76,7 +76,7 @@ void hbwapi_ret_HDC(HDC p)
   }
 }
 
-HDC hbwapi_par_HDC(int iParam)
+HDC hbwapi_par_HDC(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HDC_funcs, iParam));
 
@@ -112,7 +112,7 @@ void hbwapi_ret_HPEN(HPEN p)
   }
 }
 
-HPEN hbwapi_par_HPEN(int iParam)
+HPEN hbwapi_par_HPEN(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HPEN_funcs, iParam));
 
@@ -148,7 +148,7 @@ void hbwapi_ret_HBRUSH(HBRUSH p)
   }
 }
 
-HBRUSH hbwapi_par_HBRUSH(int iParam)
+HBRUSH hbwapi_par_HBRUSH(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HBRUSH_funcs, iParam));
 
@@ -184,7 +184,7 @@ void hbwapi_ret_HFONT(HFONT p)
   }
 }
 
-HFONT hbwapi_par_HFONT(int iParam)
+HFONT hbwapi_par_HFONT(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HFONT_funcs, iParam));
 
@@ -220,7 +220,7 @@ void hbwapi_ret_PDEVMODE(PDEVMODE p)
   }
 }
 
-PDEVMODE hbwapi_par_PDEVMODE(int iParam)
+PDEVMODE hbwapi_par_PDEVMODE(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam));
 

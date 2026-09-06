@@ -130,17 +130,17 @@ static HB_BOOL s_hashWithNumKeys(HB_ITEM *pHash)
   return true;
 }
 
-static int s_WideToAnsiBuffer(const wchar_t *wszString, char *szBuffer, int iLen)
+static int32_t s_WideToAnsiBuffer(const wchar_t *wszString, char *szBuffer, int32_t iLen)
 {
-  int iResult = WideCharToMultiByte(CP_ACP, 0, wszString, -1, szBuffer, iLen, nullptr, nullptr);
+  int32_t iResult = WideCharToMultiByte(CP_ACP, 0, wszString, -1, szBuffer, iLen, nullptr, nullptr);
   szBuffer[iLen - 1] = '\0';
   return iResult;
 }
 
-static HB_BOOL s_getKeyValue(LPCTSTR lpKey, LPTSTR lpBuffer, int iLen)
+static HB_BOOL s_getKeyValue(LPCTSTR lpKey, LPTSTR lpBuffer, int32_t iLen)
 {
   LPTSTR lpPtr;
-  int iSize, iPos, iCount;
+  int32_t iSize, iPos, iCount;
 
   if (lpKey == reinterpret_cast<LPCTSTR>(-1)) {
     return GetModuleFileName(s_hInstDll, lpBuffer, iLen);
@@ -167,7 +167,7 @@ static HB_BOOL s_getKeyValue(LPCTSTR lpKey, LPTSTR lpBuffer, int iLen)
         break;
       } else {
         LPCTSTR lpVal = c == TEXT('$') ? s_lpClsName : s_lpClsId;
-        iCount = static_cast<int>(HB_STRNLEN(lpVal, iSize));
+        iCount = static_cast<int32_t>(HB_STRNLEN(lpVal, iSize));
         memcpy(lpPtr, lpVal, iCount * sizeof(TCHAR));
         lpKey++;
         lpPtr += iCount;
@@ -270,7 +270,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch *lpThis, REFIID riid, L
     char szName[HB_SYMBOL_NAME_LEN + 1];
     DISPID dispid = 0;
 
-    if (s_WideToAnsiBuffer(rgszNames[0], szName, static_cast<int>(sizeof(szName))) != 0) {
+    if (s_WideToAnsiBuffer(rgszNames[0], szName, static_cast<int32_t>(sizeof(szName))) != 0) {
       HB_ITEM *pAction;
 
       pAction = (reinterpret_cast<IHbOleServer *>(lpThis))->pAction;
@@ -607,7 +607,7 @@ STDAPI DllUnregisterServer(void)
 {
   TCHAR lpKeyName[MAX_REGSTR_SIZE];
 
-  for (int i = static_cast<int>(HB_SIZEOFARRAY(s_regTable)) - 1; i >= 0; --i) {
+  for (int32_t i = static_cast<int32_t>(HB_SIZEOFARRAY(s_regTable)) - 1; i >= 0; --i) {
     if (s_getKeyValue(s_regTable[i][0], lpKeyName, MAX_REGSTR_SIZE)) {
       RegDeleteKey(HKEY_CLASSES_ROOT, lpKeyName);
     }
@@ -632,7 +632,7 @@ STDAPI DllRegisterServer(void)
   HRESULT hr = S_OK;
   HKEY hKey;
 
-  for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_regTable)); ++i) {
+  for (auto i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(s_regTable)); ++i) {
     long err;
 
     s_getKeyValue(s_regTable[i][0], lpKeyName, MAX_REGSTR_SIZE);

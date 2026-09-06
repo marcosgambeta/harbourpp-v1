@@ -88,7 +88,7 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_EXPORT int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size );
+extern HB_EXPORT int32_t hbwin_bitmapType( const void * pImgBuf, HB_SIZE size );
 
 HB_EXTERN_END
 

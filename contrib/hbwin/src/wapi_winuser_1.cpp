@@ -75,7 +75,7 @@ HB_FUNC(WAPI_ISZOOMED)
 #if 0
 HB_FUNC(WAPI_GETSYSTEMMETRICS) // TODO: deprecated (using waGetSystemMetrics from WinApi library)
 {
-   int iResult = GetSystemMetrics(hbwapi_par_INT(1));
+   int32_t iResult = GetSystemMetrics(hbwapi_par_INT(1));
 
    hbwapi_SetLastError(GetLastError());
    hbwapi_ret_NI(iResult);
@@ -128,8 +128,8 @@ HB_FUNC(WAPI_CREATEWINDOWEX)
   HWND hResult = CreateWindowEx(hbwapi_par_DWORD(1), // dwExStyle
                                 HB_PARSTRDEF(2, &hClassName, nullptr), HB_PARSTRDEF(3, &hWindowName, nullptr),
                                 HB_ISNUM(4) ? hbwapi_par_DWORD(4) : WS_OVERLAPPEDWINDOW,           // dwStyle
-                                HB_ISNUM(5) ? hbwapi_par_INT(5) : static_cast<int>(CW_USEDEFAULT), // x
-                                HB_ISNUM(6) ? hbwapi_par_INT(6) : static_cast<int>(CW_USEDEFAULT), // y
+                                HB_ISNUM(5) ? hbwapi_par_INT(5) : static_cast<int32_t>(CW_USEDEFAULT), // x
+                                HB_ISNUM(6) ? hbwapi_par_INT(6) : static_cast<int32_t>(CW_USEDEFAULT), // y
                                 hbwapi_par_INT(7),                                                 // nWidth
                                 hbwapi_par_INT(8),                                                 // nHeight
                                 hbwapi_par_raw_HWND(9),       // hWndParent, default to HWND_DESKTOP
@@ -178,7 +178,7 @@ HB_FUNC(WAPI_DRAWTEXT)
     HB_SIZE nTextLen;
     LPCTSTR lpText = HB_PARSTR(2, &hText, &nTextLen);
 
-    hbwapi_ret_NI(DrawText(hDC, lpText, static_cast<int>(nTextLen), &rect, hbwapi_par_UINT(4)));
+    hbwapi_ret_NI(DrawText(hDC, lpText, static_cast<int32_t>(nTextLen), &rect, hbwapi_par_UINT(4)));
 
     hb_strfree(hText);
 
@@ -245,7 +245,7 @@ HB_FUNC(WAPI_GETSCROLLINFO)
 // int GetScrollPos(HWND hWnd, int nBar);
 HB_FUNC(WAPI_GETSCROLLPOS)
 {
-  int iResult;
+  int32_t iResult;
   DWORD dwLastError;
 
   iResult = GetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
@@ -262,7 +262,7 @@ HB_FUNC(WAPI_GETSCROLLRANGE)
   DWORD dwLastError;
 
   {
-    int minPos, maxPos;
+    int32_t minPos, maxPos;
 
     bSuccess = GetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), &minPos, &maxPos);
 
@@ -304,7 +304,7 @@ HB_FUNC(WAPI_SETSCROLLINFO)
 // int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw);
 HB_FUNC(WAPI_SETSCROLLPOS)
 {
-  int iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
+  int32_t iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
 }
@@ -462,7 +462,7 @@ HB_FUNC(WAPI_TRACKPOPUPMENU)
 
 HB_FUNC(WAPI_ENABLEMENUITEM)
 {
-  int iResult;
+  int32_t iResult;
 
   iResult = EnableMenuItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
   hbwapi_SetLastError(GetLastError());
@@ -615,7 +615,7 @@ HB_FUNC(WAPI_GETMENUSTATE)
 
 HB_FUNC(WAPI_GETMENUITEMCOUNT)
 {
-  int iResult;
+  int32_t iResult;
 
   iResult = GetMenuItemCount(hbwapi_par_raw_HMENU(1));
   hbwapi_SetLastError(GetLastError());
@@ -664,7 +664,7 @@ HB_FUNC(WAPI_CREATEACCELERATORTABLE)
 {
   HACCEL hAccel = nullptr;
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  int iEntries = pArray ? static_cast<int>(hb_arrayLen(pArray)) : 0;
+  int32_t iEntries = pArray ? static_cast<int32_t>(hb_arrayLen(pArray)) : 0;
 
   if (iEntries > 0) {
     auto lpAccel = static_cast<LPACCEL>(hb_xgrab(sizeof(ACCEL) * iEntries));

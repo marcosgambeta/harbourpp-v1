@@ -89,7 +89,7 @@ struct HB_OLEDATA
   HRESULT lOleError;
   HB_BOOL fNullDate;
   HB_BOOL fNil2Null;
-  int iInit;
+  int32_t iInit;
 };
 
 using PHB_OLEDATA = HB_OLEDATA *;
@@ -252,8 +252,8 @@ static void hb_oleExcepDescription(EXCEPINFO *pExcep, char **pszDescription, cha
   }
 
   if (pExcep->bstrSource) {
-    auto iStrLen = static_cast<int>(SysStringLen(pExcep->bstrSource));
-    int iLen = WideCharToMultiByte(CP_ACP, 0, pExcep->bstrSource, iStrLen, nullptr, 0, nullptr, nullptr);
+    auto iStrLen = static_cast<int32_t>(SysStringLen(pExcep->bstrSource));
+    int32_t iLen = WideCharToMultiByte(CP_ACP, 0, pExcep->bstrSource, iStrLen, nullptr, 0, nullptr, nullptr);
     *pszSource = static_cast<char *>(hb_xgrab((iLen + 1) * sizeof(char)));
     WideCharToMultiByte(CP_ACP, 0, pExcep->bstrSource, iStrLen, *pszSource, iLen + 1, nullptr, nullptr);
     (*pszSource)[iLen] = '\0';
@@ -265,8 +265,8 @@ static void hb_oleExcepDescription(EXCEPINFO *pExcep, char **pszDescription, cha
   }
 
   if (pExcep->bstrDescription) {
-    auto iStrLen = static_cast<int>(SysStringLen(pExcep->bstrDescription));
-    int iLen = WideCharToMultiByte(CP_ACP, 0, pExcep->bstrDescription, iStrLen, nullptr, 0, nullptr, nullptr);
+    auto iStrLen = static_cast<int32_t>(SysStringLen(pExcep->bstrDescription));
+    int32_t iLen = WideCharToMultiByte(CP_ACP, 0, pExcep->bstrDescription, iStrLen, nullptr, 0, nullptr, nullptr);
     *pszDescription = static_cast<char *>(hb_xgrab((iLen + 14 + 1) * sizeof(char)));
     WideCharToMultiByte(CP_ACP, 0, pExcep->bstrDescription, iStrLen, *pszDescription, iLen + 1, nullptr, nullptr);
     (*pszDescription)[iLen] = '\0';
@@ -283,7 +283,7 @@ static void hb_oleExcepDescription(EXCEPINFO *pExcep, char **pszDescription, cha
   }
 }
 
-IDispatch *hb_oleParam(int iParam)
+IDispatch *hb_oleParam(int32_t iParam)
 {
   auto pOle = static_cast<HB_OLE *>(hb_parptrGC(&s_gcOleFuncs, iParam));
 
@@ -348,7 +348,7 @@ void hb_oleItemSetDestructor(HB_ITEM *pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void 
   }
 }
 
-static IEnumVARIANT *hb_oleenumParam(int iParam)
+static IEnumVARIANT *hb_oleenumParam(int32_t iParam)
 {
   auto ppEnum = static_cast<IEnumVARIANT **>(hb_parptrGC(&s_gcOleenumFuncs, iParam));
 
@@ -360,7 +360,7 @@ static IEnumVARIANT *hb_oleenumParam(int iParam)
   return nullptr;
 }
 
-static VARIANT *hb_oleVariantParam(int iParam)
+static VARIANT *hb_oleVariantParam(int32_t iParam)
 {
   auto pVariant = static_cast<VARIANT *>(hb_parptrGC(&s_gcVariantFuncs, iParam));
 
@@ -395,13 +395,13 @@ HB_ITEM *hb_oleItemPutVariant(HB_ITEM *pItem, VARIANT *pVariant, HB_BOOL fMove)
 
 static wchar_t *AnsiToWide(const char *szString)
 {
-  int iLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szString, -1, nullptr, 0);
+  int32_t iLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szString, -1, nullptr, 0);
   auto szWide = static_cast<wchar_t *>(hb_xgrab(iLen * sizeof(wchar_t)));
   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szString, -1, szWide, iLen);
   return szWide;
 }
 
-static void AnsiToWideBuffer(const char *szString, wchar_t *szWide, int iLen)
+static void AnsiToWideBuffer(const char *szString, wchar_t *szWide, int32_t iLen)
 {
   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szString, -1, szWide, iLen);
   szWide[iLen - 1] = L'\0';
@@ -504,7 +504,7 @@ static void hb_oleVariantRef(VARIANT *pVariant, VARIANT *pVarRef)
   }
 }
 
-static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *pItem, int iDims, int iDim, long *plSize,
+static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *pItem, int32_t iDims, int32_t iDim, long *plSize,
                                    long *plIndex)
 {
   const char *pStr;
@@ -685,7 +685,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *p
   return true;
 }
 
-static SAFEARRAY *hb_oleSafeArrayFromItem(HB_ITEM *pItem, VARTYPE vt, int iDims, long *plSize)
+static SAFEARRAY *hb_oleSafeArrayFromItem(HB_ITEM *pItem, VARTYPE vt, int32_t iDims, long *plSize)
 {
   SAFEARRAYBOUND boundbuf[16], *sabound;
   SAFEARRAY *pSafeArray;
@@ -704,7 +704,7 @@ static SAFEARRAY *hb_oleSafeArrayFromItem(HB_ITEM *pItem, VARTYPE vt, int iDims,
     iDims = 1;
   }
 
-  sabound = iDims > static_cast<int>(HB_SIZEOFARRAY(boundbuf))
+  sabound = iDims > static_cast<int32_t>(HB_SIZEOFARRAY(boundbuf))
                 ? static_cast<SAFEARRAYBOUND *>(hb_xgrab(sizeof(SAFEARRAYBOUND) * iDims))
                 : boundbuf;
   // use the same buffer for dimensions and indexes
@@ -991,7 +991,7 @@ void hb_oleItemToVariantEx(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pOb
   hb_oleItemToVariantRef(pVariant, pItem, nullptr, pObjFunc);
 }
 
-static void hb_oleSafeArrayToItem(HB_ITEM *pItem, SAFEARRAY *pSafeArray, int iDims, int iDim, long *plIndex, VARTYPE vt,
+static void hb_oleSafeArrayToItem(HB_ITEM *pItem, SAFEARRAY *pSafeArray, int32_t iDims, int32_t iDim, long *plIndex, VARTYPE vt,
                                   uint16_t uiClass)
 {
   long lFrom, lTo;
@@ -1304,7 +1304,7 @@ void hb_oleVariantToItemEx(HB_ITEM *pItem, VARIANT *pVariant, uint16_t uiClass)
     if (V_VT(pVariant) & VT_ARRAY) {
       SAFEARRAY *pSafeArray = (V_VT(pVariant) & VT_BYREF) ? *V_ARRAYREF(pVariant) : V_ARRAY(pVariant);
       if (pSafeArray) {
-        auto iDims = static_cast<int>(SafeArrayGetDim(pSafeArray));
+        auto iDims = static_cast<int32_t>(SafeArrayGetDim(pSafeArray));
 
         if (iDims >= 1) {
           if (iDims > 1 || !hb_oleSafeArrayToString(pItem, pSafeArray)) {
@@ -1508,11 +1508,11 @@ HB_BOOL hb_oleDispInvoke(HB_SYMB *pSym, HB_ITEM *pObject, HB_ITEM *pParam, DISPP
 
   if ((pSym || pObject) && hb_vmRequestReenter()) {
     HB_OLE_PARAM_REF refArray[32];
-    int i, ii, iParams, iCount, iRefs;
+    int32_t i, ii, iParams, iCount, iRefs;
 
     iParams = iCount = pParams->cArgs;
 
-    for (i = iRefs = 0; i < iCount && iRefs < static_cast<int>(HB_SIZEOFARRAY(refArray)); i++) {
+    for (i = iRefs = 0; i < iCount && iRefs < static_cast<int32_t>(HB_SIZEOFARRAY(refArray)); i++) {
       if (V_VT(&pParams->rgvarg[i]) & VT_BYREF) {
         refArray[iRefs++].item = hb_stackAllocItem();
       }
@@ -1606,7 +1606,7 @@ static void GetParams(DISPPARAMS *dispparam, uint32_t uiOffset, HB_BOOL fUseRef,
 
     for (uiArg = 0; uiArg < uiArgCount; uiArg++) {
       VARIANT *pVariant = &pArgs[uiArg + uiNamedArgs];
-      auto iParam = static_cast<int>(uiOffset + uiArgCount - uiArg);
+      auto iParam = static_cast<int32_t>(uiOffset + uiArgCount - uiArg);
 
       VariantInit(pVariant);
       if (fUseRef && HB_ISBYREF(iParam)) {
@@ -1633,7 +1633,7 @@ static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, HB_ITEM *
   OLECHAR *pNames[HB_OLE_MAX_NAMEDARGS + 1];
   void *phStrings[HB_OLE_MAX_NAMEDARGS];
   HB_SIZE nLen = hb_hashLen(pHash), nPos;
-  int iArgs = 0, iArg;
+  int32_t iArgs = 0, iArg;
   HRESULT lOleError;
 
   pNames[0] = szMethodName;
@@ -2079,7 +2079,7 @@ HB_FUNC(WIN_OLEAUTO___ONERROR)
   auto iPCount = hb_pcount();
 
   szMethod = hb_itemGetSymbol(hb_stackBaseItem())->szName;
-  AnsiToWideBuffer(szMethod, szMethodWide, static_cast<int>(HB_SIZEOFARRAY(szMethodWide)));
+  AnsiToWideBuffer(szMethod, szMethodWide, static_cast<int32_t>(HB_SIZEOFARRAY(szMethodWide)));
 
   // Try property put
 
@@ -2631,14 +2631,14 @@ HB_FUNC(__OLEVARIANTNEW)
       iType &= ~VT_ARRAY;
       if (iType == (iType & VT_TYPEMASK)) {
         long plBuf[16], *plSize;
-        int iPCount = hb_pcount() - 2, iDims;
+        int32_t iPCount = hb_pcount() - 2, iDims;
 
         if (iPCount < 0) {
           iPCount = 0;
         }
         iDims = iPCount;
 
-        plSize = iDims < static_cast<int>(HB_SIZEOFARRAY(plBuf)) ? plBuf
+        plSize = iDims < static_cast<int32_t>(HB_SIZEOFARRAY(plBuf)) ? plBuf
                                                                  : static_cast<long *>(hb_xgrab(sizeof(long) * iDims));
 
         while (iPCount > 0 && HB_ISNIL(iPCount + 2)) {

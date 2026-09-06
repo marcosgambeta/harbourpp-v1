@@ -64,9 +64,9 @@
 
 // Functions for loading and printing bitmaps
 
-int hbwin_bitmapType(const void *pImgBuf, HB_SIZE size)
+int32_t hbwin_bitmapType(const void *pImgBuf, HB_SIZE size)
 {
-  int iType = HB_WIN_BITMAP_UNKNOWN;
+  int32_t iType = HB_WIN_BITMAP_UNKNOWN;
 
   if (pImgBuf) {
     if (size > 2 && memcmp(pImgBuf, "BM", 2) == 0) {
@@ -119,17 +119,17 @@ HB_FUNC(WIN_LOADBITMAPFILE)
 #define CHECKPNGFORMAT 4120
 #endif
 
-static int hbwin_bitmapIsSupported(HDC hDC, int iType, const void *pImgBuf, HB_SIZE nSize)
+static int32_t hbwin_bitmapIsSupported(HDC hDC, int32_t iType, const void *pImgBuf, HB_SIZE nSize)
 {
   if (hDC && iType != HB_WIN_BITMAP_UNKNOWN && pImgBuf && nSize >= sizeof(BITMAPCOREHEADER)) {
     if (iType == HB_WIN_BITMAP_BMP) {
       return 0;
     } else {
-      int iRes = iType = (iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT);
+      int32_t iRes = iType = (iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT);
 
       iRes = ExtEscape(hDC, QUERYESCSUPPORT, sizeof(iRes), reinterpret_cast<LPCSTR>(&iRes), 0, 0);
       if (iRes > 0) {
-        if (ExtEscape(hDC, iType, static_cast<int>(nSize), static_cast<LPCSTR>(pImgBuf), sizeof(iRes),
+        if (ExtEscape(hDC, iType, static_cast<int32_t>(nSize), static_cast<LPCSTR>(pImgBuf), sizeof(iRes),
                       reinterpret_cast<LPSTR>(&iRes)) > 0) {
           if (iRes == 1) {
             return 0;
@@ -166,7 +166,7 @@ HB_FUNC(WIN_DRAWBITMAP)
   //        [vszakats]
   auto nSize = hb_parclen(2);
   auto pbmfh = reinterpret_cast<BITMAPFILEHEADER *>(const_cast<char *>(hb_parc(2)));
-  int iType = hbwin_bitmapType(pbmfh, nSize);
+  int32_t iType = hbwin_bitmapType(pbmfh, nSize);
 
   if (hbwin_bitmapIsSupported(hDC, iType, pbmfh, nSize) == 0) {
     auto iWidth = hb_parni(7);
@@ -200,7 +200,7 @@ HB_FUNC(WIN_DRAWBITMAP)
     if (pbmi && pBits) {
       SetStretchBltMode(hDC, COLORONCOLOR);
       hb_retl(StretchDIBits(hDC, hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), 0, 0, iWidth, iHeight, pBits, pbmi,
-                            DIB_RGB_COLORS, SRCCOPY) != static_cast<int>(GDI_ERROR));
+                            DIB_RGB_COLORS, SRCCOPY) != static_cast<int32_t>(GDI_ERROR));
     } else {
       hb_retl(false);
     }

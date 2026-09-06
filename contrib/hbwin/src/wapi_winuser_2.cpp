@@ -52,7 +52,7 @@ HB_FUNC(WAPI_MESSAGEBOX)
   void *hStr1;
   void *hStr2;
 
-  int iResult = MessageBox(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr),
+  int32_t iResult = MessageBox(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr),
                            hbwapi_par_INT(4));
 
   hbwapi_SetLastError(GetLastError());
@@ -61,11 +61,11 @@ HB_FUNC(WAPI_MESSAGEBOX)
   hb_strfree(hStr2);
 }
 
-static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
+static int32_t s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                IN WORD wLanguageId, IN DWORD dwMilliseconds)
 {
   // undocumented Windows API
-  using _HB_MSGBOXTOUT = int(__stdcall *)(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
+  using _HB_MSGBOXTOUT = int32_t(__stdcall *)(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                           IN WORD wLanguageId, IN DWORD dwMilliseconds);
   static auto s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);
 
@@ -85,7 +85,7 @@ HB_FUNC(WAPI_MESSAGEBOXTIMEOUT)
   void *hStr1;
   void *hStr2;
 
-  int iResult =
+  int32_t iResult =
       s_MessageBoxTimeout(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr),
                           hbwapi_par_UINT(4), hbwapi_par_WORD(5), hbwapi_par_DWORD(6));
 

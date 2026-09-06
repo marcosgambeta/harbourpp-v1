@@ -109,10 +109,10 @@ HB_FUNC(WIN_ANSITOWIDE)
 {
   auto nLen = hb_parclen(1);
   LPCSTR lpSrcMB = hb_parcx(1);
-  DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0);
+  DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int32_t>(nLen), nullptr, 0);
   auto lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
 
-  MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), lpDstWide, dwLength + 1);
+  MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int32_t>(nLen), lpDstWide, dwLength + 1);
 
   hb_retclen_buffer(reinterpret_cast<char *>(lpDstWide), static_cast<HB_SIZE>(dwLength * sizeof(wchar_t)));
 }
@@ -121,10 +121,10 @@ HB_FUNC(WIN_WIDETOANSI)
 {
   auto nLen = hb_parclen(1);
   auto lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
-  DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
+  DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int32_t>(nLen), nullptr, 0, nullptr, nullptr);
   auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
 
-  WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);
+  WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int32_t>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);
 
   hb_retclen_buffer(lpDstMB, static_cast<HB_SIZE>(dwLength));
 }
@@ -168,7 +168,7 @@ HB_FUNC(WIN_HPREVINSTANCE)
 
 HB_FUNC(WIN_NCMDSHOW)
 {
-  int nCmdShow;
+  int32_t nCmdShow;
 
   hb_winmainArgGet(nullptr, nullptr, &nCmdShow);
 
@@ -177,12 +177,12 @@ HB_FUNC(WIN_NCMDSHOW)
 
 HB_FUNC(WIN_LOWORD)
 {
-  hb_retni(static_cast<int>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
+  hb_retni(static_cast<int32_t>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
 HB_FUNC(WIN_HIWORD)
 {
-  hb_retni(static_cast<int>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
+  hb_retni(static_cast<int32_t>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
 HB_FUNC(WIN_SYSREFRESH)

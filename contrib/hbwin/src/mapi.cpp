@@ -101,7 +101,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
       HB_SIZE nRecpCount = pRecpList ? hb_arrayLen(pRecpList) : 0;
       HB_SIZE nFileCount = pFileList ? hb_arrayLen(pFileList) : 0;
 
-      int iString = 0;
+      int32_t iString = 0;
 
       auto hString = static_cast<void **>(hb_xgrab((4 + 2 + (2 * nRecpCount) + (2 * nFileCount)) * sizeof(void *)));
 

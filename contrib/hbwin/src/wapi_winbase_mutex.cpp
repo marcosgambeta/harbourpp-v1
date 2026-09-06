@@ -71,7 +71,7 @@ static void hbwapi_mutex_ret(HANDLE hMutex)
   }
 }
 
-static HANDLE hbwapi_mutex_par(int iParam)
+static HANDLE hbwapi_mutex_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_hbwapi_mutex_funcs, iParam));
 

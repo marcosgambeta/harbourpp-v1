@@ -70,7 +70,7 @@ static void s_hb_hashSetCItemNL(HB_ITEM *pHash, const char *pszKey, long v)
   hb_itemRelease(pKey);
 }
 
-POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
+POINT *hbwapi_par_POINT(POINT *p, int32_t iParam, HB_BOOL bMandatory)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -93,7 +93,7 @@ POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
   return nullptr;
 }
 
-void hbwapi_stor_POINT(POINT *p, int iParam)
+void hbwapi_stor_POINT(POINT *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -106,7 +106,7 @@ void hbwapi_stor_POINT(POINT *p, int iParam)
   }
 }
 
-RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
+RECT *hbwapi_par_RECT(RECT *p, int32_t iParam, HB_BOOL bMandatory)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -133,7 +133,7 @@ RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
   return nullptr;
 }
 
-void hbwapi_stor_RECT(RECT *p, int iParam)
+void hbwapi_stor_RECT(RECT *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -150,7 +150,7 @@ void hbwapi_stor_RECT(RECT *p, int iParam)
   }
 }
 
-LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
+LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int32_t iParam, HB_BOOL bMandatory)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -221,7 +221,7 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
   return nullptr;
 }
 
-DOCINFO *hbwapi_par_DOCINFO(DOCINFO *p, int iParam, HB_BOOL bMandatory, void ***ph)
+DOCINFO *hbwapi_par_DOCINFO(DOCINFO *p, int32_t iParam, HB_BOOL bMandatory, void ***ph)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
   auto h = static_cast<void **>(hb_xgrabz(3 * sizeof(void *)));
@@ -513,7 +513,7 @@ HB_FUNC(WAPI_SETTEXTALIGN)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retni(static_cast<int>(SetTextAlign(hDC, static_cast<UINT>(hb_parni(2)))));
+    hb_retni(static_cast<int32_t>(SetTextAlign(hDC, static_cast<UINT>(hb_parni(2)))));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -525,7 +525,7 @@ HB_FUNC(WAPI_GETTEXTALIGN)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retni(static_cast<int>(GetTextAlign(hDC)));
+    hb_retni(static_cast<int32_t>(GetTextAlign(hDC)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -541,7 +541,7 @@ HB_FUNC(WAPI_TEXTOUT)
     HB_SIZE nDataLen;
     LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
 
-    hb_retl(TextOut(hDC, hb_parni(2), hb_parni(3), lpData, static_cast<int>(nDataLen)));
+    hb_retl(TextOut(hDC, hb_parni(2), hb_parni(3), lpData, static_cast<int32_t>(nDataLen)));
 
     hb_strfree(hData);
   } else {

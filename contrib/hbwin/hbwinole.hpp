@@ -142,7 +142,7 @@ extern HB_EXPORT void        hb_oleItemToVariantEx( VARIANT * pVariant, HB_ITEM 
 extern HB_EXPORT void        hb_oleVariantUpdate( VARIANT * pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjFunc );
 extern HB_EXPORT VARIANT *   hb_oleItemGetVariant( HB_ITEM *pItem );
 extern HB_EXPORT HB_ITEM    *hb_oleItemPutVariant( HB_ITEM *pItem, VARIANT * pVariant, HB_BOOL fMove );
-extern HB_EXPORT IDispatch * hb_oleParam( int iParam );
+extern HB_EXPORT IDispatch * hb_oleParam( int32_t iParam );
 extern HB_EXPORT IDispatch * hb_oleItemGet( HB_ITEM *pItem );
 extern HB_EXPORT HB_ITEM    *hb_oleItemPut( HB_ITEM *pItem, IDispatch * pDisp );
 extern HB_EXPORT HB_ITEM    *hb_oleItemGetCallBack( HB_ITEM *pItem );

@@ -134,8 +134,8 @@ struct _SHNAMEMAPPING
 {
   LPTSTR pszOldPath;
   LPTSTR pszNewPath;
-  int cchOldPath;
-  int cchNewPath;
+  int32_t cchOldPath;
+  int32_t cchNewPath;
 };
 
 using SHNAMEMAPPING = _SHNAMEMAPPING;
@@ -150,7 +150,7 @@ struct HANDLETOMAPPINGS
   LPSHNAMEMAPPING lpSHNameMapping;
 };
 
-static LPTSTR s_StringList(int iParam)
+static LPTSTR s_StringList(int32_t iParam)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
   HB_ITEM *pArrItem;
@@ -215,7 +215,7 @@ HB_FUNC(WIN_SHFILEOPERATION)
   fop.hNameMappings = nullptr;
   fop.lpszProgressTitle = HB_PARSTR(8, &hProgressTitle, nullptr);
 
-  int iRetVal = SHFileOperation(&fop);
+  int32_t iRetVal = SHFileOperation(&fop);
   hbwapi_SetLastError(GetLastError());
 
   hb_storl(fop.fAnyOperationsAborted, 6);

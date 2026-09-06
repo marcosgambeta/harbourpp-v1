@@ -74,8 +74,8 @@ static INT_PTR CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wPar
     hb_vmPushNumInt(lParam);
 
     if (message == WM_COMMAND) {
-      hb_vmPushInteger(static_cast<int>(HIWORD(wParam)));
-      hb_vmPushInteger(static_cast<int>(LOWORD(wParam)));
+      hb_vmPushInteger(static_cast<int32_t>(HIWORD(wParam)));
+      hb_vmPushInteger(static_cast<int32_t>(LOWORD(wParam)));
       hb_vmDo(6);
     } else {
       hb_vmDo(4);
@@ -111,7 +111,7 @@ HB_FUNC(WAPI_ENDDIALOG)
 HB_FUNC(WAPI_SETDLGITEMTEXT)
 {
   void *hStr;
-  int iResult = SetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), HB_PARSTR(3, &hStr, nullptr));
+  int32_t iResult = SetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), HB_PARSTR(3, &hStr, nullptr));
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
@@ -122,7 +122,7 @@ HB_FUNC(WAPI_SETDLGITEMTEXT)
 HB_FUNC(WAPI_GETDLGITEMTEXT)
 {
   HWND nItem = GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
-  auto nSize = static_cast<int>(SendMessage(nItem, WM_GETTEXTLENGTH, 0, 0));
+  auto nSize = static_cast<int32_t>(SendMessage(nItem, WM_GETTEXTLENGTH, 0, 0));
   auto lpResult = static_cast<TCHAR *>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
 
   UINT nResult = GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, nSize + 1);
@@ -143,7 +143,7 @@ HB_FUNC(WAPI_GETDLGITEM)
 HB_FUNC(WAPI_COMBOBOX_ADDSTRING)
 {
   void *hStr;
-  int iResult = ComboBox_AddString(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr));
+  int32_t iResult = ComboBox_AddString(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr));
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
