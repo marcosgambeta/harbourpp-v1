@@ -110,7 +110,7 @@
 struct _HB_EXPAT
 {
    XML_Parser parser;
-   PHB_ITEM   pVar[_VAR_LEN_];
+   HB_ITEM *  pVar[_VAR_LEN_];
 };
 
 using HB_EXPAT = _HB_EXPAT;
@@ -230,7 +230,7 @@ static void XMLCALL hb_expat_StartElementHandler( void * userdata, const XML_Cha
       {
          auto pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          auto pElement = hb_itemPutStrUTF8(nullptr, name);
-         PHB_ITEM pAttr;
+         HB_ITEM *pAttr;
 
          if( atts )
          {
@@ -434,8 +434,8 @@ static void XMLCALL hb_expat_XmlDeclHandler( void * userdata, const XML_Char * v
       if( hb_vmRequestReenter() )
       {
          auto pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
-         PHB_ITEM pPar1     = version ? hb_itemPutStrUTF8(nullptr, version) : hb_itemNew(nullptr);
-         PHB_ITEM pPar2     = encoding ? hb_itemPutStrUTF8(nullptr, encoding) : hb_itemNew(nullptr);
+         HB_ITEM *pPar1     = version ? hb_itemPutStrUTF8(nullptr, version) : hb_itemNew(nullptr);
+         HB_ITEM *pPar2     = encoding ? hb_itemPutStrUTF8(nullptr, encoding) : hb_itemNew(nullptr);
          auto pPar3 = hb_itemPutNI(nullptr, standalone);
 
          hb_evalBlock(hb_expat->pVar[_VAR_bXmlDeclHandler], pUserData, pPar1, pPar2, pPar3, nullptr);
@@ -460,8 +460,8 @@ static void XMLCALL hb_expat_StartDoctypeDeclHandler( void * userdata, const XML
       {
          auto pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          auto pPar1 = hb_itemPutStrUTF8(nullptr, doctypeName);
-         PHB_ITEM pPar2     = sysid ? hb_itemPutStrUTF8(nullptr, sysid) : hb_itemNew(nullptr);
-         PHB_ITEM pPar3     = pubid ? hb_itemPutStrUTF8(nullptr, pubid) : hb_itemNew(nullptr);
+         HB_ITEM *pPar2     = sysid ? hb_itemPutStrUTF8(nullptr, sysid) : hb_itemNew(nullptr);
+         HB_ITEM *pPar3     = pubid ? hb_itemPutStrUTF8(nullptr, pubid) : hb_itemNew(nullptr);
          auto pPar4 = hb_itemPutL(nullptr, has_internal_subset);
 
          hb_evalBlock(hb_expat->pVar[_VAR_bStartDoctypeDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, nullptr);
@@ -494,7 +494,7 @@ static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata, const XML_Char
          auto pPar1 = hb_itemPutStrUTF8(nullptr, elname);
          auto pPar2 = hb_itemPutStrUTF8(nullptr, attname);
          auto pPar3 = hb_itemPutStrUTF8(nullptr, att_type);
-         PHB_ITEM pPar4     = dflt ? hb_itemPutStrUTF8(nullptr, dflt) : hb_itemNew(nullptr);
+         HB_ITEM *pPar4     = dflt ? hb_itemPutStrUTF8(nullptr, dflt) : hb_itemNew(nullptr);
          auto pPar5 = hb_itemPutL(nullptr, isrequired);
 
          hb_evalBlock(hb_expat->pVar[_VAR_bAttlistDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, nullptr);
@@ -522,11 +522,11 @@ static void XMLCALL hb_expat_EntityDeclHandler( void * userdata, const XML_Char 
          auto pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          auto pPar1 = hb_itemPutStrUTF8(nullptr, entityName);
          auto pPar2 = hb_itemPutL(nullptr, is_parameter_entity);
-         PHB_ITEM pPar3     = value ? hb_itemPutStrLenUTF8(nullptr, value, value_length) : hb_itemNew(nullptr);
-         PHB_ITEM pPar4     = base ? hb_itemPutStrUTF8(nullptr, base) : hb_itemNew(nullptr);
-         PHB_ITEM pPar5     = systemId ? hb_itemPutStrUTF8(nullptr, systemId) : hb_itemNew(nullptr);
-         PHB_ITEM pPar6     = publicId ? hb_itemPutStrUTF8(nullptr, publicId) : hb_itemNew(nullptr);
-         PHB_ITEM pPar7     = notationName ? hb_itemPutStrUTF8(nullptr, notationName) : hb_itemNew(nullptr);
+         HB_ITEM *pPar3     = value ? hb_itemPutStrLenUTF8(nullptr, value, value_length) : hb_itemNew(nullptr);
+         HB_ITEM *pPar4     = base ? hb_itemPutStrUTF8(nullptr, base) : hb_itemNew(nullptr);
+         HB_ITEM *pPar5     = systemId ? hb_itemPutStrUTF8(nullptr, systemId) : hb_itemNew(nullptr);
+         HB_ITEM *pPar6     = publicId ? hb_itemPutStrUTF8(nullptr, publicId) : hb_itemNew(nullptr);
+         HB_ITEM *pPar7     = notationName ? hb_itemPutStrUTF8(nullptr, notationName) : hb_itemNew(nullptr);
 
          hb_evalBlock(hb_expat->pVar[_VAR_bEntityDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, pPar6, pPar7, nullptr);
 
@@ -585,9 +585,9 @@ static void XMLCALL hb_expat_NotationDeclHandler( void * userdata, const XML_Cha
       {
          auto pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          auto pPar1 = hb_itemPutStrUTF8(nullptr, notationName);
-         PHB_ITEM pPar2     = base ? hb_itemPutStrUTF8(nullptr, base) : hb_itemNew(nullptr);
-         PHB_ITEM pPar3     = systemId ? hb_itemPutStrUTF8(nullptr, systemId) : hb_itemNew(nullptr);
-         PHB_ITEM pPar4     = publicId ? hb_itemPutStrUTF8(nullptr, publicId) : hb_itemNew(nullptr);
+         HB_ITEM *pPar2     = base ? hb_itemPutStrUTF8(nullptr, base) : hb_itemNew(nullptr);
+         HB_ITEM *pPar3     = systemId ? hb_itemPutStrUTF8(nullptr, systemId) : hb_itemNew(nullptr);
+         HB_ITEM *pPar4     = publicId ? hb_itemPutStrUTF8(nullptr, publicId) : hb_itemNew(nullptr);
 
          hb_evalBlock(hb_expat->pVar[_VAR_bNotationDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, nullptr);
 
@@ -691,7 +691,7 @@ static PHB_EXPAT PHB_EXPAT_par( int iParam )
    return ph ? static_cast<PHB_EXPAT>(*ph) : nullptr;
 }
 
-static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, PHB_ITEM pBlock )
+static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, HB_ITEM *pBlock )
 {
    if( hb_expat->pVar[iHandler] )
    {
