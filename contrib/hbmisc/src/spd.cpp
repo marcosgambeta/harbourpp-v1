@@ -56,7 +56,7 @@
 #include <hbdate.hpp>
 #include <hbset.hpp>
 
-static void STAItm(PHB_ITEM pItmPar)
+static void STAItm(HB_ITEM *pItmPar)
 {
    uint32_t      i;
    auto ulItmPar = static_cast<uint32_t>(hb_itemGetCLen(pItmPar));
@@ -82,7 +82,7 @@ static void STAItm(PHB_ITEM pItmPar)
 
 static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, int iCOut, int IsIndW,
                       int iIndWidth, int IsIndP, int iIndPrec,
-                      PHB_ITEM pItmPar )
+                      HB_ITEM *pItmPar )
 {
    uint32_t s;
 
@@ -232,7 +232,7 @@ HB_FUNC(SQL_SPRINTF)
 
       for( p = 0; p < argc;  /* Not p++ by support index & indirect arguments */ )
       {
-         PHB_ITEM pItmPar, pItmCpy;
+         HB_ITEM *pItmPar, *pItmCpy;
          int      arg, iCOut, IsType, IsIndW, IsIndP, iIndWidth, iIndPrec;
          uint32_t  s, f, i, ulWidth, ulParPos = 0;
 

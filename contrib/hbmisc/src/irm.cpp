@@ -182,7 +182,7 @@ static void hb_irmMapMarkCallback( HB_ULONG ulRecNo, unsigned char * pKey, unsig
  *    ">=", tag, bag, value                   ordKeyVal() >= value
  *    "<=<=", tag, bag, value1, value2        value1 <= ordKeyVal() <= value2
  */
-PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
+PHB_IRMMAP hb_irmExecute(HB_ITEM *pItem)
 {
    const char * szOper;
 
