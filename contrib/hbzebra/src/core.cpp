@@ -124,7 +124,7 @@ void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t iLen
     pBitBuffer->nAlloc = nNewAlloc;
   }
 
-  if (static_cast<unsigned int>(iLen) > sizeof(int32_t) * 8) {
+  if (static_cast<uint32_t>(iLen) > sizeof(int32_t) * 8) {
     iLen = sizeof(int32_t) * 8;
   }
 
@@ -143,7 +143,7 @@ void hb_bitbuffer_cat_int_rev(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t 
     pBitBuffer->nAlloc = nNewAlloc;
   }
 
-  if (static_cast<unsigned int>(iLen) > sizeof(int32_t) * 8) {
+  if (static_cast<uint32_t>(iLen) > sizeof(int32_t) * 8) {
     iLen = sizeof(int32_t) * 8;
   }
 

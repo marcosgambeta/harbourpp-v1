@@ -116,8 +116,8 @@ static void _codabar_add(PHB_BITBUFFER pBits, char code, int32_t iFlags, bool fL
 
 HB_ZEBRA *hb_zebra_create_codabar(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  unsigned int i;
-  auto iLen = static_cast<unsigned int>(nLen);
+  uint32_t i;
+  auto iLen = static_cast<uint32_t>(nLen);
 
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_CODABAR;

@@ -83,13 +83,13 @@ typedef struct
 
 typedef struct
 {
-  unsigned int uiECC;
+  uint32_t uiECC;
   QRBLOCKPARAM block[2];
 } QRLEVEL, *PQRLEVEL;
 
 typedef struct
 {
-  unsigned int uiTotal; /* total number of codewords */
+  uint32_t uiTotal; /* total number of codewords */
   QRLEVEL level[4];
 } QRVERSION, *PQRVERSION;
 
@@ -317,22 +317,22 @@ static unsigned char *s_align[40] = {
 static int32_t _qr_check_version_table(void)
 {
   int32_t iL;
-  unsigned int uiSumD, uiSumE;
+  uint32_t uiSumD, uiSumE;
 
   for (auto iV = 1; iV <= 40; iV++) {
     const QRVERSION *pQRVersion = &s_version[iV - 1];
 
     for (iL = 0; iL < 4; iL++) {
       uiSumE =
-          static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * (pQRVersion->level[iL].block[0].uiECC) +
-          static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * (pQRVersion->level[iL].block[1].uiECC);
+          static_cast<uint32_t>(pQRVersion->level[iL].block[0].uiCount) * (pQRVersion->level[iL].block[0].uiECC) +
+          static_cast<uint32_t>(pQRVersion->level[iL].block[1].uiCount) * (pQRVersion->level[iL].block[1].uiECC);
       if (uiSumE != pQRVersion->level[iL].uiECC) {
         return iV + 10000 + (iL + 1) * 1000;
       }
 
       uiSumD =
-          static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * (pQRVersion->level[iL].block[0].uiData) +
-          static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * (pQRVersion->level[iL].block[1].uiData);
+          static_cast<uint32_t>(pQRVersion->level[iL].block[0].uiCount) * (pQRVersion->level[iL].block[0].uiData) +
+          static_cast<uint32_t>(pQRVersion->level[iL].block[1].uiCount) * (pQRVersion->level[iL].block[1].uiData);
       if (uiSumD + uiSumE != pQRVersion->uiTotal) {
         return iV + 20000 + (iL + 1) * 1000;
       }
@@ -469,7 +469,7 @@ static PHB_BITBUFFER _qr_interlace(PHB_BITBUFFER pData, unsigned char *pECC, int
   const QRLEVEL *pLevel = &(pVersion->level[iLevel]);
   PHB_BITBUFFER pRet;
   uint8_t *pDataBuf, *pRetBuf;
-  unsigned int uiDst, uiSrc, uiPos, uiBlock;
+  uint32_t uiDst, uiSrc, uiPos, uiBlock;
 
   pRet = hb_bitbuffer_create();
   hb_bitbuffer_set(pRet, pVersion->uiTotal * 8, false); /* Allocate */
@@ -478,34 +478,34 @@ static PHB_BITBUFFER _qr_interlace(PHB_BITBUFFER pData, unsigned char *pECC, int
   pDataBuf = hb_bitbuffer_buffer(pData);
 
   uiDst = 0;
-  for (uiPos = 0; uiPos < static_cast<unsigned int>(pLevel->block[0].uiData) ||
-                  uiPos < static_cast<unsigned int>(pLevel->block[1].uiData);
+  for (uiPos = 0; uiPos < static_cast<uint32_t>(pLevel->block[0].uiData) ||
+                  uiPos < static_cast<uint32_t>(pLevel->block[1].uiData);
        uiPos++) {
     uiSrc = 0;
-    for (uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[0].uiCount); uiBlock++) {
-      if (uiPos < static_cast<unsigned int>(pLevel->block[0].uiData)) {
+    for (uiBlock = 0; uiBlock < static_cast<uint32_t>(pLevel->block[0].uiCount); uiBlock++) {
+      if (uiPos < static_cast<uint32_t>(pLevel->block[0].uiData)) {
         pRetBuf[uiDst++] = pDataBuf[uiPos + uiSrc];
       }
       uiSrc += pLevel->block[0].uiData;
     }
     if (pLevel->block[1].uiCount) {
-      for (uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[1].uiCount); uiBlock++) {
+      for (uiBlock = 0; uiBlock < static_cast<uint32_t>(pLevel->block[1].uiCount); uiBlock++) {
         pRetBuf[uiDst++] = pDataBuf[uiPos + uiSrc];
         uiSrc += pLevel->block[1].uiData;
       }
     }
   }
 
-  for (uiPos = 0; uiPos < static_cast<unsigned int>(pLevel->block[0].uiECC); uiPos++) {
+  for (uiPos = 0; uiPos < static_cast<uint32_t>(pLevel->block[0].uiECC); uiPos++) {
     uiSrc = 0;
-    for (uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[0].uiCount); uiBlock++) {
-      if (uiPos < static_cast<unsigned int>(pLevel->block[0].uiECC)) {
+    for (uiBlock = 0; uiBlock < static_cast<uint32_t>(pLevel->block[0].uiCount); uiBlock++) {
+      if (uiPos < static_cast<uint32_t>(pLevel->block[0].uiECC)) {
         pRetBuf[uiDst++] = s_rev[pECC[uiPos + uiSrc]];
       }
       uiSrc += pLevel->block[0].uiECC;
     }
     if (pLevel->block[1].uiCount) {
-      for (uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[1].uiCount); uiBlock++) {
+      for (uiBlock = 0; uiBlock < static_cast<uint32_t>(pLevel->block[1].uiCount); uiBlock++) {
         pRetBuf[uiDst++] = s_rev[pECC[uiPos + uiSrc]];
         uiSrc += pLevel->block[1].uiECC;
       }
