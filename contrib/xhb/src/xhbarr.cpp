@@ -60,7 +60,7 @@ HB_FUNC(ASPLICE)
   if (pArray) {
     HB_SIZE nStart, nRemove, nIndex;
     HB_SIZE nLen = hb_arrayLen(pArray);
-    PHB_ITEM pReturn = hb_stackReturnItem();
+    HB_ITEM *pReturn = hb_stackReturnItem();
 
     if (nLen == 0) {
       hb_arrayNew(pReturn, 0);

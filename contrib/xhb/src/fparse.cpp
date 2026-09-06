@@ -70,7 +70,7 @@
 /* adjustable, but this should be sufficient in normal situation */
 #define MAX_READ 4096
 
-static void hb_ParseLine(PHB_ITEM pReturn, const char *szText, int32_t iDelimiter, int32_t *iWord)
+static void hb_ParseLine(HB_ITEM *pReturn, const char *szText, int32_t iDelimiter, int32_t *iWord)
 {
   if (szText) {
     HB_ISIZ nLen = strlen(szText);

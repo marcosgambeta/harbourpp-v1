@@ -75,7 +75,7 @@ static HB_SYMB s_symXhbErrorNew = {"XHB_ERRORNEW", {HB_FS_PUBLIC | HB_FS_LOCAL},
 static HB_SYMB s_symErrorNew = {"ERRORNEW", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(XHB_ERRORNEW)}, nullptr};
 #endif
 
-static void s_xhbErrorResize(PHB_ITEM pError)
+static void s_xhbErrorResize(HB_ITEM *pError)
 {
   hb_arraySize(pError, s_nErrObjSize);
   hb_arraySetCConst(pError, s_nErrProcName, nullptr);
@@ -84,7 +84,7 @@ static void s_xhbErrorResize(PHB_ITEM pError)
   hb_arrayNew(hb_arrayGetItemPtr(pError, s_nErrCallStack), 0);
 }
 
-const char *hb_errGetProcName(PHB_ITEM pError)
+const char *hb_errGetProcName(HB_ITEM *pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetProcName(%p)", pError));
 
@@ -95,7 +95,7 @@ const char *hb_errGetProcName(PHB_ITEM pError)
   return hb_arrayGetCPtr(pError, s_nErrProcName);
 }
 
-PHB_ITEM hb_errPutProcName(PHB_ITEM pError, const char *szProcName)
+HB_ITEM *hb_errPutProcName(HB_ITEM *pError, const char *szProcName)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutProcName(%p, %s)", pError, szProcName));
 
@@ -108,7 +108,7 @@ PHB_ITEM hb_errPutProcName(PHB_ITEM pError, const char *szProcName)
   return pError;
 }
 
-uint32_t hb_errGetProcLine(PHB_ITEM pError)
+uint32_t hb_errGetProcLine(HB_ITEM *pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetProcLine(%p)", pError));
 
@@ -119,7 +119,7 @@ uint32_t hb_errGetProcLine(PHB_ITEM pError)
   return static_cast<uint16_t>(hb_arrayGetNI(pError, s_nErrProcLine));
 }
 
-PHB_ITEM hb_errPutProcLine(PHB_ITEM pError, uint32_t uiProcLine)
+HB_ITEM *hb_errPutProcLine(HB_ITEM *pError, uint32_t uiProcLine)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutProcLine(%p, %u)", pError, uiProcLine));
 
@@ -132,7 +132,7 @@ PHB_ITEM hb_errPutProcLine(PHB_ITEM pError, uint32_t uiProcLine)
   return pError;
 }
 
-const char *hb_errGetModuleName(PHB_ITEM pError)
+const char *hb_errGetModuleName(HB_ITEM *pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetModuleName(%p)", pError));
 
@@ -143,7 +143,7 @@ const char *hb_errGetModuleName(PHB_ITEM pError)
   return hb_arrayGetCPtr(pError, s_nErrProcModule);
 }
 
-PHB_ITEM hb_errPutModuleName(PHB_ITEM pError, const char *szModuleName)
+HB_ITEM *hb_errPutModuleName(HB_ITEM *pError, const char *szModuleName)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutModuleName(%p, %s)", pError, szModuleName));
 
@@ -156,7 +156,7 @@ PHB_ITEM hb_errPutModuleName(PHB_ITEM pError, const char *szModuleName)
   return pError;
 }
 
-PHB_ITEM hb_errGetCallStack(PHB_ITEM pError)
+HB_ITEM *hb_errGetCallStack(HB_ITEM *pError)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errGetCallStack(%p)", pError));
 
@@ -167,7 +167,7 @@ PHB_ITEM hb_errGetCallStack(PHB_ITEM pError)
   return hb_arrayGetItemPtr(pError, s_nErrCallStack);
 }
 
-PHB_ITEM hb_errPutCallStack(PHB_ITEM pError, PHB_ITEM pCallStack)
+HB_ITEM *hb_errPutCallStack(HB_ITEM *pError, HB_ITEM *pCallStack)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_errPutCallStack(%p, %p)", pError, pCallStack));
 
@@ -250,7 +250,7 @@ HB_FUNC_STATIC(ERRORINIT)
 
   if (s_nErrObjSize != 0) {
     auto pStack = hb_itemArrayNew(0);
-    PHB_ITEM pItem = nullptr;
+    HB_ITEM *pItem = nullptr;
     char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
     char szProcFile[HB_PATH_MAX];
     uint16_t uiProcLine;

@@ -51,7 +51,7 @@
 
 HB_FUNC(__MVSYMBOLINFO)
 {
-  PHB_ITEM pArray;
+  HB_ITEM *pArray;
 
   pArray = hb_memvarSaveInArray(HB_MV_PUBLIC | HB_MV_PRIVATE, true);
   if (pArray) {

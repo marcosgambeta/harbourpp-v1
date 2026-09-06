@@ -51,7 +51,7 @@
 #include <hbapierr.hpp>
 #include <hbstack.hpp>
 
-static PHB_ITEM hb_vmWithObjectItem(HB_ISIZ nLevel)
+static HB_ITEM *hb_vmWithObjectItem(HB_ISIZ nLevel)
 {
   HB_ISIZ nOffset = hb_stackWithObjectOffset();
 
@@ -95,7 +95,7 @@ HB_FUNC(HB_WITHOBJECTCOUNTER)
 
 HB_FUNC(HB_RESETWITH)
 {
-  PHB_ITEM pItem = hb_vmWithObjectItem(0);
+  HB_ITEM *pItem = hb_vmWithObjectItem(0);
 
   if (hb_pcount() >= 1 && pItem) {
     hb_itemMove(pItem, hb_stackItemFromBase(1));

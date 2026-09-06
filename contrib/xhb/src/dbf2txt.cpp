@@ -83,7 +83,7 @@ static char *hb_strescape(const char *szInput, HB_ISIZ nLen, const char *cDelim)
 }
 
 /* Export field values to text file */
-static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char *cDelim, HB_CODEPAGE *cdp)
+static HB_BOOL hb_ExportVar(HB_FHANDLE handle, HB_ITEM *pValue, const char *cDelim, HB_CODEPAGE *cdp)
 {
   switch (hb_itemType(pValue)) {
   /* a "C" field */

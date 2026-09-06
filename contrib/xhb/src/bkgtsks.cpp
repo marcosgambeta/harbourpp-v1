@@ -70,7 +70,7 @@ HB_EXTERN_BEGIN
 typedef struct
 {
   HB_ULONG ulTaskID; /* task identifier */
-  PHB_ITEM pTask;    /* pointer to the task item */
+  HB_ITEM *pTask;    /* pointer to the task item */
   double dSeconds;   /* internal - last time this task has gone */
   int32_t millisec;      /* milliseconds after this task must run */
   HB_BOOL bActive;   /* task is active ? */
@@ -81,9 +81,9 @@ extern void hb_backgroundRunForced(void);          /* run all background routine
 extern void hb_backgroundRun(void);                /* run all background routines but only if them are active*/
 extern void hb_backgroundReset(void);              /* reset internal counter */
 extern void hb_backgroundShutDown(void);           /* closes all background tasks */
-extern HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int32_t nMillisec,
+extern HB_ULONG hb_backgroundAddFunc(HB_ITEM *pBlock, int32_t nMillisec,
                                      HB_BOOL bActive); /* Adds a codeblock or an executable array */
-extern PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID);   /* Deletes a prevuiously added task */
+extern HB_ITEM *hb_backgroundDelFunc(HB_ULONG ulID);   /* Deletes a prevuiously added task */
 extern PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID);
 extern HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive);
 extern int32_t hb_backgroundTime(HB_ULONG ulID, int32_t nMillisec);
@@ -122,7 +122,7 @@ static uint16_t s_uiBackgroundMaxTask = 0;
 
 /* ------------------------  C  LEVEL ------------------------------ */
 
-HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int32_t nMillisec, HB_BOOL bActive)
+HB_ULONG hb_backgroundAddFunc(HB_ITEM *pBlock, int32_t nMillisec, HB_BOOL bActive)
 {
   /* store a copy of passed codeblock
    */
@@ -252,10 +252,10 @@ void hb_backgroundShutDown(void)
 }
 
 /* caller have to free return ITEM by hb_itemRelease() if it's not nullptr */
-PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID)
+HB_ITEM *hb_backgroundDelFunc(HB_ULONG ulID)
 {
   PHB_BACKGROUNDTASK pBkgTask;
-  PHB_ITEM pItem = nullptr;
+  HB_ITEM *pItem = nullptr;
   HB_BOOL bOldSet = s_bEnabled;
 
   s_bEnabled = false;
@@ -387,7 +387,7 @@ HB_FUNC(HB_BACKGROUNDADD)
 /* Delete a task with given handle and return a codeblock with this task */
 HB_FUNC(HB_BACKGROUNDDEL)
 {
-  PHB_ITEM pItem = nullptr;
+  HB_ITEM *pItem = nullptr;
 
   if (s_pBackgroundTasks && HB_ISNUM(1)) {
     /* TODO: access to pointers from harbour code */

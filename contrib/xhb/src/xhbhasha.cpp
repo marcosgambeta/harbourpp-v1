@@ -74,7 +74,7 @@ static void s_errRT_hashAA(void)
                 HB_ERR_ARGS_BASEPARAMS);
 }
 
-static HB_BOOL s_isHashAA(PHB_ITEM pHash)
+static HB_BOOL s_isHashAA(HB_ITEM *pHash)
 {
   return (hb_hashGetFlags(pHash) & HB_HASH_KEEPORDER) != 0;
 }
@@ -90,7 +90,7 @@ HB_FUNC(HAAGETKEYAT)
   } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
   } else {
-    PHB_ITEM pItem = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
+    HB_ITEM *pItem = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
     if (pItem != nullptr) {
       hb_itemReturn(pItem);
     } else {
@@ -110,7 +110,7 @@ HB_FUNC(HAAGETVALUEAT)
   } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
   } else {
-    PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
+    HB_ITEM *pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
     if (pItem != nullptr) {
       hb_itemReturn(pItem);
     } else {
@@ -131,7 +131,7 @@ HB_FUNC(HAASETVALUEAT)
   } else if (!s_isHashAA(pHash)) {
     s_errRT_hashAA();
   } else {
-    PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
+    HB_ITEM *pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
     if (pItem != nullptr) {
       hb_itemCopy(pItem, pValue);
     } else {

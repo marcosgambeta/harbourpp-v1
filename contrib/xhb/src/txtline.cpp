@@ -204,7 +204,7 @@ HB_FUNC(HB_TABEXPAND)
  * @nEnd, @lFound, @lEOF) */
 HB_FUNC(HB_READLINE)
 {
-  PHB_ITEM pTerm1;
+  HB_ITEM *pTerm1;
   auto szText = hb_parcx(1);
   const char **pTerm;
   HB_SIZE *pnTermSizes;

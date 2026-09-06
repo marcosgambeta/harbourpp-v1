@@ -207,8 +207,8 @@ typedef struct
 
 typedef struct
 {
-   PHB_ITEM pName;
-   PHB_ITEM pValue;
+   HB_ITEM *pName;
+   HB_ITEM *pValue;
 } HBXML_ATTRIBUTE, * PHBXML_ATTRIBUTE;
 
 

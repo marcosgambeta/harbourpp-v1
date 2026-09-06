@@ -58,7 +58,7 @@ HB_FUNC(THROW)
   auto pError = hb_param(1, Harbour::Item::ANY);
 
   if (pError && pError->isObject()) {
-    PHB_ITEM pResult = hb_errLaunchSubst(pError);
+    HB_ITEM *pResult = hb_errLaunchSubst(pError);
     if (pResult) {
       hb_itemReturnRelease(pResult);
     }

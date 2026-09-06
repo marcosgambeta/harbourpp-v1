@@ -315,7 +315,7 @@ HB_FUNC(HB_OSPATHSEPARATOR)
 HB_FUNC(HB_ISBYREF)
 {
    if( hb_pcount() ) {
-      PHB_ITEM pItem = hb_stackItemFromBase(1);
+      HB_ITEM *pItem = hb_stackItemFromBase(1);
       if( pItem->isByRef() ) {
          hb_retl(hb_itemUnRefOnce(pItem)->isByRef());
       }

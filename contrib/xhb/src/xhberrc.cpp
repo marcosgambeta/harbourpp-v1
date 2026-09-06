@@ -68,7 +68,7 @@ LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS *ExceptionInfo)
   LONG lResult = EXCEPTION_CONTINUE_SEARCH;
 
   if (s_pFuncSymbol && hb_vmRequestReenter()) {
-    PHB_ITEM pException = nullptr;
+    HB_ITEM *pException = nullptr;
     uint16_t uiParams = 0;
 
     if (s_pHbCStructDyn) {

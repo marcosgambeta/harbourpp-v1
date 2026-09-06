@@ -62,7 +62,7 @@
 
 #define BUFFER_SIZE 8192
 
-static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, PHB_ITEM pBlock)
+static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, HB_ITEM *pBlock)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_copyfile(%s, %s, %p)", pszSource, pszDest, static_cast<void*>(pBlock)));
@@ -70,7 +70,7 @@ static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, PHB_ITEM 
 
   HB_BOOL bRetVal = false;
   PHB_FILE pSource;
-  PHB_ITEM pError = nullptr;
+  HB_ITEM *pError = nullptr;
 
   do {
     pSource = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK,
@@ -109,7 +109,7 @@ static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, PHB_ITEM 
     }
 
     if (pDest != nullptr) {
-      PHB_ITEM pCount = nullptr;
+      HB_ITEM *pCount = nullptr;
       HB_SIZE nRead;
 
       auto buffer = static_cast<uint8_t *>(hb_xgrab(BUFFER_SIZE));

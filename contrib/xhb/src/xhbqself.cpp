@@ -61,7 +61,7 @@ HB_FUNC(HB_QSELF)
   HB_ISIZ nOffset = hb_stackBaseProcOffset(1);
 
   if (nOffset > 0) {
-    PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
+    HB_ITEM *pSelf = hb_stackItem(nOffset + 1);
 
     if (nOffset > 0 && pSelf->isBlock()) {
       static HB_SYMB *s_pSymEval = nullptr;

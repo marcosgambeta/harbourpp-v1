@@ -126,7 +126,7 @@ static void debugInit(void)
 
 #endif
 
-HB_BOOL hb_OutDebugName(PHB_ITEM pName)
+HB_BOOL hb_OutDebugName(HB_ITEM *pName)
 {
   HB_BOOL bRet;
 

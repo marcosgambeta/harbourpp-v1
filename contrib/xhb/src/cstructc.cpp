@@ -60,7 +60,7 @@
 #include <hbset.hpp>
 #include "hbctypes.ch"
 
-static PHB_ITEM hb_itemPutCRaw(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
+static HB_ITEM *hb_itemPutCRaw(HB_ITEM *pItem, const char *szText, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutCRaw(%p, %s, %" HB_PFS "u)", static_cast<void*>(pItem), szText, nLen));
@@ -89,7 +89,7 @@ static PHB_ITEM hb_itemPutCRaw(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
 }
 
 #undef hb_itemPutCRawStatic
-static PHB_ITEM hb_itemPutCRawStatic(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
+static HB_ITEM *hb_itemPutCRawStatic(HB_ITEM *pItem, const char *szText, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutCRawStatic(%p, %s, %" HB_PFS "u)", static_cast<void*>(pItem), szText, nLen));
@@ -127,7 +127,7 @@ void hb_retclenStatic(const char * szText, HB_SIZE nLen)
 
 #endif
 
-static uint32_t SizeOfCStructure(PHB_ITEM aDef, uint32_t uiAlign)
+static uint32_t SizeOfCStructure(HB_ITEM *aDef, uint32_t uiAlign)
 {
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
@@ -208,7 +208,7 @@ static uint32_t SizeOfCStructure(PHB_ITEM aDef, uint32_t uiAlign)
         uiMemberSize = sizeof(void *);
       } else if ((pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE) {
         auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
-        PHB_ITEM pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
+        HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
         hb_itemRelease(pID);
 
@@ -273,7 +273,7 @@ HB_FUNC(HB_SIZEOFCSTRUCTURE)
   }
 }
 
-static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, uint32_t uiAlign, uint32_t *puiSize)
+static uint8_t *ArrayToStructure(HB_ITEM *aVar, HB_ITEM *aDef, uint32_t uiAlign, uint32_t *puiSize)
 {
   PHB_BASEARRAY pBaseVar = aVar->item.asArray.value;
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
@@ -435,7 +435,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, uint32_t uiAlign,
         uiMemberSize = sizeof(void *);
       } else if ((pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE) {
         auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
-        PHB_ITEM pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
+        HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
         hb_itemRelease(pID);
 
@@ -884,7 +884,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, uint32_t uiAlign,
 
     default:
       if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE) {
-        PHB_ITEM pStructure = pBaseVar->pItems + nIndex;
+        HB_ITEM *pStructure = pBaseVar->pItems + nIndex;
 
         if (pStructure->isLong()) {
           if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR) {
@@ -914,7 +914,7 @@ static uint8_t *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, uint32_t uiAlign,
           }
         } else if (strncmp(hb_objGetClsName(pStructure), "C Structure", 11) == 0) {
           PHB_BASEARRAY pBaseStructure = pStructure->item.asArray.value;
-          PHB_ITEM pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
+          HB_ITEM *pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
 
           hb_objSendMsg(pStructure, "VALUE", 0);
 
@@ -969,8 +969,8 @@ HB_FUNC(HB_ARRAYTOSTRUCTURE)
   }
 }
 
-static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM aDef, uint32_t uiAlign,
-                                 HB_BOOL bAdoptNested, PHB_ITEM pRet)
+static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *aDef, uint32_t uiAlign,
+                                 HB_BOOL bAdoptNested, HB_ITEM *pRet)
 {
   PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
@@ -1059,7 +1059,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
         uiMemberSize = sizeof(void *);
       } else if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE) {
         auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
-        PHB_ITEM pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
+        HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
         hb_itemRelease(pID);
 
@@ -1207,7 +1207,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
     default: {
       uint32_t uiNestedSize /*, uiNestedAlign */;
       auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
-      PHB_ITEM pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
+      HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
       hb_itemRelease(pID);
 
@@ -1232,7 +1232,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
         if (*(char **)((long **)(Buffer + uiOffset))) {
           PHB_BASEARRAY pBaseStructure = pStructure->item.asArray.value;
-          PHB_ITEM pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
+          HB_ITEM *pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
 
           if (!bAdoptNested) {
             hb_itemPutCRawStatic(pInternalBuffer, *(char **)((long **)(Buffer + uiOffset)), uiNestedSize);
@@ -1249,7 +1249,7 @@ static PHB_ITEM StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
         }
       } else {
         PHB_BASEARRAY pBaseStructure = pStructure->item.asArray.value;
-        PHB_ITEM pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
+        HB_ITEM *pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
         HB_ITEM Adopt;
 
         Adopt.type = Harbour::Item::LOGICAL;
