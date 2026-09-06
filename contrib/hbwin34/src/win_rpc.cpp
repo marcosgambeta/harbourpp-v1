@@ -58,12 +58,12 @@ HB_FUNC(WIN_UUIDCREATESTRING)
 
   lRPCStatus = UuidCreate(&uuid);
 
-  UuidToString(&uuid, reinterpret_cast<short unsigned int **>(&tszUuid));
+  UuidToString(&uuid, reinterpret_cast<uint16_t **>(&tszUuid));
 
   if (tszUuid != nullptr) {
     HB_RETSTR(tszUuid);
 
-    RpcStringFree(reinterpret_cast<short unsigned **>(&tszUuid));
+    RpcStringFree(reinterpret_cast<uint16_t **>(&tszUuid));
   } else {
     hb_retc_null();
   }
