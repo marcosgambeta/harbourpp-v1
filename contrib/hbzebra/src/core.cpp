@@ -167,14 +167,14 @@ static HB_GARBAGE_FUNC(hb_zebra_destructor)
 
 static const HB_GC_FUNCS s_gcZebraFuncs = {hb_zebra_destructor, hb_gcDummyMark};
 
-PHB_ZEBRA hb_zebraItemGet(PHB_ITEM pItem)
+PHB_ZEBRA hb_zebraItemGet(HB_ITEM *pItem)
 {
   auto ppZebra = static_cast<PHB_ZEBRA *>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
   return ppZebra ? *ppZebra : nullptr;
 }
 
-PHB_ITEM hb_zebraItemPut(PHB_ITEM pItem, PHB_ZEBRA pZebra)
+HB_ITEM *hb_zebraItemPut(HB_ITEM *pItem, PHB_ZEBRA pZebra)
 {
   auto ppZebra = static_cast<PHB_ZEBRA *>(hb_gcAllocate(sizeof(PHB_ZEBRA), &s_gcZebraFuncs));
 
@@ -182,7 +182,7 @@ PHB_ITEM hb_zebraItemPut(PHB_ITEM pItem, PHB_ZEBRA pZebra)
   return hb_itemPutPtrGC(pItem, ppZebra);
 }
 
-void hb_zebraItemClear(PHB_ITEM pItem)
+void hb_zebraItemClear(HB_ITEM *pItem)
 {
   auto ppZebra = static_cast<PHB_ZEBRA *>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 

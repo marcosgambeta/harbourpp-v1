@@ -110,9 +110,9 @@ int hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, do
 
 static void hb_zebra_draw_codeblock_callback(void *pDrawBlock, double dX, double dY, double dWidth, double dHeight)
 {
-  if (pDrawBlock && static_cast<PHB_ITEM>(pDrawBlock)->isBlock() && hb_vmRequestReenter()) {
+  if (pDrawBlock && static_cast<HB_ITEM *>(pDrawBlock)->isBlock() && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
-    hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
+    hb_vmPush(static_cast<HB_ITEM *>(pDrawBlock));
     hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);
     hb_vmPushDouble(dY, HB_DEFAULT_DECIMALS);
     hb_vmPushDouble(dWidth, HB_DEFAULT_DECIMALS);
@@ -122,7 +122,7 @@ static void hb_zebra_draw_codeblock_callback(void *pDrawBlock, double dX, double
   }
 }
 
-int hb_zebra_draw_codeblock(PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, double dY, double dWidth, double dHeight,
+int hb_zebra_draw_codeblock(PHB_ZEBRA pZebra, HB_ITEM *pDrawBlock, double dX, double dY, double dWidth, double dHeight,
                             int iFlags)
 {
   return hb_zebra_draw(pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags);

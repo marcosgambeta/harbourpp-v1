@@ -88,9 +88,9 @@ extern HB_EXPORT void             hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBu
 extern HB_EXPORT PHB_ZEBRA     hb_zebra_create( void );
 extern HB_EXPORT void          hb_zebra_destroy( PHB_ZEBRA pZebra );
 
-extern HB_EXPORT PHB_ZEBRA     hb_zebraItemGet( PHB_ITEM pItem );
-extern HB_EXPORT PHB_ITEM      hb_zebraItemPut( PHB_ITEM pItem, PHB_ZEBRA pZebra );
-extern HB_EXPORT void          hb_zebraItemClear( PHB_ITEM pItem );
+extern HB_EXPORT PHB_ZEBRA     hb_zebraItemGet( HB_ITEM *pItem );
+extern HB_EXPORT HB_ITEM      *hb_zebraItemPut( HB_ITEM *pItem, PHB_ZEBRA pZebra );
+extern HB_EXPORT void          hb_zebraItemClear( HB_ITEM *pItem );
 extern HB_EXPORT PHB_ZEBRA     hb_zebra_param( int iParam );
 extern HB_EXPORT void          hb_zebra_ret( PHB_ZEBRA pZebra );
 
