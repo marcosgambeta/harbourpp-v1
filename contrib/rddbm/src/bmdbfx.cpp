@@ -82,7 +82,7 @@ HB_FUNC(BM_DBSEEKWILD)
       HB_BOOL fAll = hb_parl(5);
       HB_BOOL fFound = false;
 
-      PHB_ITEM pArray = nullptr;
+      HB_ITEM *pArray = nullptr;
 
       if (fAll) {
         pArray = hb_itemArrayNew(0);
@@ -279,7 +279,7 @@ static AREAP hb_bmGetCurrentWorkArea(void)
   return pArea;
 }
 
-static PHB_ITEM hb_bmGetArrayParam(int iParam)
+static HB_ITEM *hb_bmGetArrayParam(int iParam)
 {
   auto pArray = hb_param(iParam, Harbour::Item::ARRAY);
 
