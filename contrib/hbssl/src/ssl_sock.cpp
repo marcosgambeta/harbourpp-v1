@@ -58,7 +58,7 @@
 typedef struct _HB_SSLSTREAM
 {
   SSL *ssl;
-  PHB_ITEM pSSL;
+  HB_ITEM *pSSL;
   HB_BOOL blocking;
 } HB_SSLSTREAM;
 
@@ -248,7 +248,7 @@ void hb_ssl_socketClose(PHB_SSLSTREAM pStream)
   hb_xfree(pStream);
 }
 
-PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL, int *piResult)
+PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXINT timeout, HB_ITEM *pSSL, int *piResult)
 {
   PHB_SSLSTREAM pStream;
   HB_MAXUINT timer;
@@ -311,12 +311,12 @@ PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXIN
 
 // socket filter
 
-static SSL *s_SSL_itemGet(PHB_ITEM pItem, PHB_ITEM *pSSL, HB_BOOL *pfFree)
+static SSL *s_SSL_itemGet(HB_ITEM *pItem, HB_ITEM **pSSL, HB_BOOL *pfFree)
 {
   SSL *ssl = nullptr;
 
   if (pItem) {
-    PHB_ITEM pRelease = nullptr;
+    HB_ITEM *pRelease = nullptr;
 
     if (HB_IS_EVALITEM(pItem))
       pItem = pRelease = hb_itemDo(pItem, 0);
@@ -343,16 +343,16 @@ static SSL *s_SSL_itemGet(PHB_ITEM pItem, PHB_ITEM *pSSL, HB_BOOL *pfFree)
 #define HB_SSLSOCK_GET(p) ((PHB_SSLSTREAM)p->cargo)
 #define HB_SSLSOCK_READAHEAD 0x40
 
-static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, HB_ITEM *pParams)
 {
   PHB_SOCKEX pSock;
   HB_BOOL fServer = false, fFree = false;
   HB_MAXINT timeout = -1;
-  PHB_ITEM pSSL = nullptr;
+  HB_ITEM *pSSL = nullptr;
   SSL *ssl = nullptr;
 
   if (pParams && HB_IS_HASH(pParams)) {
-    PHB_ITEM pItem;
+    HB_ITEM *pItem;
 
     if (ssl == nullptr)
       ssl = s_SSL_itemGet(hb_hashGetCItemPtr(pParams, "ssl"), &pSSL, &fFree);
@@ -380,7 +380,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 
 // this wrapper does not support multilevel filtering so
 // it destroys previous wrappers if any and create new one.
-static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, HB_ITEM *pParams)
 {
   PHB_SOCKEX pSockNew = nullptr;
 
@@ -493,7 +493,7 @@ static const HB_SOCKET_FILTER s_sockFilter = {
     "SSL",         s_sockexNew,     s_sockexNext,     s_sockexClose, s_sockexRead,    s_sockexWrite,
     s_sockexFlush, s_sockexCanRead, s_sockexCanWrite, s_sockexName,  s_sockexErrorStr};
 
-PHB_SOCKEX hb_sockexNewSSL(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL)
+PHB_SOCKEX hb_sockexNewSSL(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXINT timeout, HB_ITEM *pSSL)
 {
   PHB_SOCKEX pSock = nullptr;
 
@@ -528,7 +528,7 @@ static void s_sslSocketNew(HB_BOOL fServer)
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 
     if (pSock) {
-      PHB_ITEM pSockItm = hb_param(1, HB_IT_POINTER);
+      HB_ITEM *pSockItm = hb_param(1, HB_IT_POINTER);
 
       if (HB_ISBYREF(1) && hb_sockexItemReplace(pSockItm, pSock))
         hb_itemReturn(pSockItm);

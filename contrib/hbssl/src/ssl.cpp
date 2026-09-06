@@ -205,7 +205,7 @@ HB_FUNC_TRANSLATE(SSLEAY, OPENSSL_VERSION_NUM)
 typedef struct _HB_SSL
 {
   SSL *ssl;
-  PHB_ITEM pCallbackArg;
+  HB_ITEM *pCallbackArg;
 } HB_SSL, *PHB_SSL;
 
 static HB_GARBAGE_FUNC(PHB_SSL_release)
@@ -259,7 +259,7 @@ SSL *hb_SSL_par(int iParam)
   return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
-SSL *hb_SSL_itemGet(PHB_ITEM pItem)
+SSL *hb_SSL_itemGet(HB_ITEM *pItem)
 {
   PHB_SSL hb_ssl = (PHB_SSL)hb_itemGetPtrGC(pItem, &s_gcSSL_funcs);
 
@@ -562,7 +562,7 @@ HB_FUNC(SSL_READ)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl) {
-      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
+      HB_ITEM *pItem = hb_param(2, HB_IT_STRING);
       char *pBuffer;
       HB_SIZE nLen;
       int nRead = 0;
@@ -590,7 +590,7 @@ HB_FUNC(SSL_PEEK)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl) {
-      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
+      HB_ITEM *pItem = hb_param(2, HB_IT_STRING);
       char *pBuffer;
       HB_SIZE nLen;
       int nRead = 0;
@@ -629,7 +629,7 @@ HB_FUNC(SSL_WRITE)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl) {
-      PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
+      HB_ITEM *pBuffer = hb_param(2, HB_IT_STRING);
       HB_SIZE nLen = hb_itemGetCLen(pBuffer);
 
       if (HB_ISNUM(3)) {
@@ -1389,7 +1389,7 @@ HB_FUNC(SSL_GET_CIPHERS)
       int len = sk_SSL_CIPHER_num(stack);
 
       if (len > 0) {
-        PHB_ITEM pArray = hb_itemArrayNew(len);
+        HB_ITEM *pArray = hb_itemArrayNew(len);
         int tmp;
 
         for (tmp = 0; tmp < len; tmp++)
@@ -1413,7 +1413,7 @@ HB_FUNC(SSL_GET_CLIENT_CA_LIST)
       int len = sk_X509_NAME_num(stack);
 
       if (len > 0) {
-        PHB_ITEM pArray = hb_itemArrayNew(len);
+        HB_ITEM *pArray = hb_itemArrayNew(len);
         int tmp;
 
         for (tmp = 0; tmp < len; tmp++)
@@ -1434,7 +1434,7 @@ HB_FUNC(SSL_LOAD_CLIENT_CA_FILE)
     int len = sk_X509_NAME_num(stack);
 
     if (len > 0) {
-      PHB_ITEM pArray = hb_itemArrayNew(len);
+      HB_ITEM *pArray = hb_itemArrayNew(len);
       int tmp;
 
       for (tmp = 0; tmp < len; tmp++)
@@ -1511,7 +1511,7 @@ static void hb_ssl_msg_callback(int write_p, int version, int content_type, cons
 
   if (userdata && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
-    hb_vmPush((PHB_ITEM)userdata);
+    hb_vmPush((HB_ITEM *)userdata); // TODO: C++ cast
     hb_vmPushLogical(write_p);
     hb_vmPushInteger(version);
     hb_vmPushInteger(content_type);
@@ -1530,7 +1530,7 @@ HB_FUNC(SSL_SET_MSG_CALLBACK)
 
     if (hb_ssl) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-      PHB_ITEM pCallback = hb_param(2, HB_IT_EVALITEM);
+      HB_ITEM *pCallback = hb_param(2, HB_IT_EVALITEM);
 
       if (hb_ssl->pCallbackArg) {
         SSL_set_msg_callback_arg(hb_ssl->ssl, nullptr);

@@ -548,7 +548,7 @@ HB_FUNC(BIO_NEW_FILE)
 
 HB_FUNC(BIO_NEW_MEM_BUF)
 {
-  PHB_ITEM pBuffer = hb_param(1, HB_IT_STRING);
+  HB_ITEM *pBuffer = hb_param(1, HB_IT_STRING);
 
   if (pBuffer) {
     void *hStrRef;

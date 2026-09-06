@@ -67,7 +67,7 @@ static int hb_ssl_pem_password_cb(char *buf, int size, int rwflag, void *userdat
 
   if (size > 0 && userdata && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
-    hb_vmPush((PHB_ITEM)userdata);
+    hb_vmPush((HB_ITEM *)userdata); // TODO: C++ cast
     hb_vmPushLogical(rwflag);
     hb_vmSend(1);
 
@@ -112,7 +112,7 @@ static void hb_PEM_read_bio(PEM_READ_BIO *func, HB_PEM_TYPES type)
     bio = nullptr;
 
   if (bio) {
-    PHB_ITEM pPassCallback = hb_param(2, HB_IT_EVALITEM);
+    HB_ITEM *pPassCallback = hb_param(2, HB_IT_EVALITEM);
     pem_password_cb *cb;
     void *cargo, *result;
 

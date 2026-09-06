@@ -1207,7 +1207,7 @@ HB_FUNC(EVP_SEALINIT)
 
     if (ctx) {
       int npubk = 0;
-      PHB_ITEM pArray = nullptr;
+      HB_ITEM *pArray = nullptr;
       EVP_PKEY *pkey1 = nullptr;
 
       if (HB_ISARRAY(5)) {
@@ -1232,7 +1232,7 @@ HB_FUNC(EVP_SEALINIT)
         unsigned char *iv = ivl > 0 ? (unsigned char *)hb_xgrab(ivl + 1) : nullptr;
 
         EVP_PKEY **pubk = (EVP_PKEY **)hb_xgrab(sizeof(EVP_PKEY *) * npubk + 1);
-        PHB_ITEM pPKEY;
+        HB_ITEM *pPKEY;
         int tmp;
 
         for (tmp = 0; tmp < npubk; ++tmp) {

@@ -89,7 +89,7 @@ SSL_CTX *hb_SSL_CTX_par(int iParam)
   return ph ? (SSL_CTX *)*ph : nullptr;
 }
 
-SSL_CTX *hb_SSL_CTX_itemGet(PHB_ITEM pItem)
+SSL_CTX *hb_SSL_CTX_itemGet(HB_ITEM *pItem)
 {
   void **ph = (void **)hb_itemGetPtrGC(pItem, &s_gcSSL_CTX_funcs);
 
@@ -586,7 +586,7 @@ HB_FUNC(SSL_CTX_GET_CLIENT_CA_LIST)
       int len = sk_X509_NAME_num(stack);
 
       if (len > 0) {
-        PHB_ITEM pArray = hb_itemArrayNew(sk_X509_NAME_num(stack));
+        HB_ITEM *pArray = hb_itemArrayNew(sk_X509_NAME_num(stack));
         int tmp;
 
         for (tmp = 0; tmp < len; tmp++)

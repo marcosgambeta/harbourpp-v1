@@ -81,7 +81,7 @@ HB_FUNC(ERR_LOAD_EVP_STRINGS)
 
 HB_FUNC(EVP_PKEY_FREE)
 {
-  PHB_ITEM pKey = hb_param(1, HB_IT_POINTER);
+  HB_ITEM *pKey = hb_param(1, HB_IT_POINTER);
 
   if (pKey)
     hb_EVP_PKEY_free(pKey);

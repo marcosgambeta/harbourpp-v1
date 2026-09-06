@@ -199,9 +199,9 @@ struct _HB_SSLSTREAM;
 typedef struct _HB_SSLSTREAM *PHB_SSLSTREAM;
 
 extern PHB_SOCKEX         hb_sockexNewSSL(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer,
-                                           HB_MAXINT timeout, PHB_ITEM pSSL);
+                                           HB_MAXINT timeout, HB_ITEM *pSSL);
 extern PHB_SSLSTREAM      hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer,
-                                            HB_MAXINT timeout, PHB_ITEM pSSL, int *piResult);
+                                            HB_MAXINT timeout, HB_ITEM *pSSL, int *piResult);
 extern void               hb_ssl_socketClose(PHB_SSLSTREAM pStream);
 extern const char *       hb_ssl_socketErrorStr(int iError);
 extern long               hb_ssl_socketRead(PHB_SSLSTREAM pStream, HB_SOCKET sd,
@@ -217,11 +217,11 @@ extern BIO *              hb_BIO_par(int iParam);
 
 extern HB_BOOL            hb_SSL_CTX_is(int iParam);
 extern SSL_CTX *          hb_SSL_CTX_par(int iParam);
-extern SSL_CTX *          hb_SSL_CTX_itemGet(PHB_ITEM pItem);
+extern SSL_CTX *          hb_SSL_CTX_itemGet(HB_ITEM *pItem);
 
 extern HB_BOOL            hb_SSL_is(int iParam);
 extern SSL *              hb_SSL_par(int iParam);
-extern SSL *              hb_SSL_itemGet(PHB_ITEM pItem);
+extern SSL *              hb_SSL_itemGet(HB_ITEM *pItem);
 
 extern HB_BOOL            hb_SSL_SESSION_is(int iParam);
 extern SSL_SESSION *      hb_SSL_SESSION_par(int iParam);
@@ -244,8 +244,8 @@ extern const EVP_CIPHER * hb_EVP_CIPHER_par(int iParam);
 
 extern HB_BOOL            hb_EVP_PKEY_is(int iParam);
 extern EVP_PKEY *         hb_EVP_PKEY_par(int iParam);
-extern EVP_PKEY *         hb_EVP_PKEY_get(PHB_ITEM pItem);
-extern void               hb_EVP_PKEY_free(PHB_ITEM pItem);
+extern EVP_PKEY *         hb_EVP_PKEY_get(HB_ITEM *pItem);
+extern void               hb_EVP_PKEY_free(HB_ITEM *pItem);
 extern void               hb_EVP_PKEY_ret(EVP_PKEY *pkey);
 
 extern char *             hb_openssl_strdup(const char *pszText);

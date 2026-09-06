@@ -80,14 +80,14 @@ EVP_PKEY *hb_EVP_PKEY_par(int iParam)
   return ph ? (EVP_PKEY *)*ph : nullptr;
 }
 
-EVP_PKEY *hb_EVP_PKEY_get(PHB_ITEM pItem)
+EVP_PKEY *hb_EVP_PKEY_get(HB_ITEM *pItem)
 {
   void **ph = (void **)hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs);
 
   return ph ? (EVP_PKEY *)*ph : nullptr;
 }
 
-void hb_EVP_PKEY_free(PHB_ITEM pItem)
+void hb_EVP_PKEY_free(HB_ITEM *pItem)
 {
   void **ph = (void **)hb_itemGetPtrGC(pItem, &s_gcEVP_PKEY_funcs);
 
