@@ -77,13 +77,13 @@ struct SDDDATA
   unsigned long *pNatLength;
 };
 
-static HB_ERRCODE mysqlConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE mysqlConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE mysqlDisconnect(SQLDDCONNECTION *pConnection);
-static HB_ERRCODE mysqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE mysqlExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE mysqlClose(SQLBASEAREAP pArea);
 static HB_ERRCODE mysqlGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
-static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem);
+static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem);
 
 static SDDNODE s_mysqldd = {nullptr,
                             "MYSQL",
@@ -151,7 +151,7 @@ static uint16_t hb_errRT_MySQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, c
 
 /* --- SDD METHODS --- */
 
-static HB_ERRCODE mysqlConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE mysqlConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   auto pItemUnixSocket = hb_arrayGetItemPtr(pItem, 7);
 
@@ -177,7 +177,7 @@ static HB_ERRCODE mysqlDisconnect(SQLDDCONNECTION *pConnection)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE mysqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE mysqlExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   MYSQL *pMySql = (static_cast<SDDCONN *>(pConnection->pSDDConn))->pMySql;
 
@@ -189,7 +189,7 @@ static HB_ERRCODE mysqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
   MYSQL_RES *pResult = mysql_store_result(pMySql);
 
   HB_ULONG ulAffectedRows;
-  PHB_ITEM pNewID = nullptr;
+  HB_ITEM *pNewID = nullptr;
 
   if (pResult) {
     ulAffectedRows = static_cast<HB_ULONG>(mysql_num_rows(pResult));
@@ -238,7 +238,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
   auto pItemEof = hb_itemArrayNew(uiFields);
 
   MYSQL_FIELD *pMyField;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
   HB_ERRCODE errCode = 0;
 
   bool bError = false;
@@ -445,7 +445,7 @@ static HB_ERRCODE mysqlGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
   auto pSDDData = static_cast<SDDDATA *>(pArea->pSDDData);
 
