@@ -91,8 +91,6 @@ CPP_SOURCES := \
    hbznet.cpp \
    hbzsock.cpp \
    idle.cpp \
-   inkey.cpp \
-   inkeyapi.cpp \
    is.cpp \
    isprint.cpp \
    itemseri.cpp \
@@ -212,6 +210,8 @@ CPP_SOURCES := \
 #   gttone.cpp \ (moved to gtl)
 #   gx.cpp \ (moved to gtl)
 #   hbgtcore.cpp \ (moved to gtl)
+#   inkey.cpp \ (moved to gtl)
+#   inkeyapi.cpp \ (moved to gtl)
 #   maxrow.cpp \ (moved to gtl)
 #   saverest.cpp \ (moved to gtl)
 #   scroll.cpp \ (moved to gtl)

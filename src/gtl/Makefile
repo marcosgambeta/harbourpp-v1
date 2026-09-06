@@ -23,6 +23,8 @@ CPP_SOURCES := \
    gttone.cpp \
    gx.cpp \
    hbgtcore.cpp \
+   inkey.cpp \
+   inkeyapi.cpp \
    maxrow.cpp \
    saverest.cpp \
    scroll.cpp \
