@@ -59,7 +59,7 @@ static char _itf_checksum(const char *szCode)
   return '0' + (100000 - sum) % 10;
 }
 
-PHB_ZEBRA hb_zebra_create_itf(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_itf(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i, iN, iW;
   auto iLen = static_cast<int32_t>(nLen);

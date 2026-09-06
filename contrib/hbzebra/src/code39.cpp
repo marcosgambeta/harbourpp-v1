@@ -149,7 +149,7 @@ static void _code39_add(PHB_BITBUFFER pBits, char code, int32_t iFlags, bool fLa
   }
 }
 
-PHB_ZEBRA hb_zebra_create_code39(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_code39(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i;
   auto iLen = static_cast<int32_t>(nLen);

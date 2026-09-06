@@ -55,7 +55,7 @@
 
 typedef void (*HB_ZEBRA_CALLBACK)(void *cargo, double dX, double dY, double dWidth, double dHeight);
 
-int32_t hb_zebra_draw(PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, double dX, double dY, double dWidth,
+int32_t hb_zebra_draw(HB_ZEBRA *pZebra, HB_ZEBRA_CALLBACK pCallback, void *cargo, double dX, double dY, double dWidth,
                   double dHeight, int32_t iFlags)
 {
   double dLast;
@@ -122,7 +122,7 @@ static void hb_zebra_draw_codeblock_callback(void *pDrawBlock, double dX, double
   }
 }
 
-int32_t hb_zebra_draw_codeblock(PHB_ZEBRA pZebra, HB_ITEM *pDrawBlock, double dX, double dY, double dWidth, double dHeight,
+int32_t hb_zebra_draw_codeblock(HB_ZEBRA *pZebra, HB_ITEM *pDrawBlock, double dX, double dY, double dWidth, double dHeight,
                             int32_t iFlags)
 {
   return hb_zebra_draw(pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags);
@@ -143,7 +143,7 @@ HB_FUNC(HB_ZEBRA_DRAW)
   }
 }
 
-int32_t hb_zebra_getsize(PHB_ZEBRA pZebra, int32_t *piWidth, int32_t *piHeight)
+int32_t hb_zebra_getsize(HB_ZEBRA *pZebra, int32_t *piWidth, int32_t *piHeight)
 {
   HB_SIZE n, nLen;
   int32_t iRow, iCol, iMaxCol = pZebra->iCol, iWidth, iHeight;
@@ -191,7 +191,7 @@ HB_FUNC(HB_ZEBRA_GETSIZE)
 }
 
 /* NOTE: caller must free the returned bitmap pointer if not NULL */
-unsigned char *hb_zebra_getbitmap(PHB_ZEBRA pZebra, int32_t iAlign, HB_BOOL fBottomUp, HB_SIZE *pnSize, int32_t *piWidth,
+unsigned char *hb_zebra_getbitmap(HB_ZEBRA *pZebra, int32_t iAlign, HB_BOOL fBottomUp, HB_SIZE *pnSize, int32_t *piWidth,
                                   int32_t *piHeight, int32_t iScaleX, int32_t iScaleY, int32_t iBorder)
 {
   unsigned char *pBitMap = NULL;
@@ -255,7 +255,7 @@ unsigned char *hb_zebra_getbitmap(PHB_ZEBRA pZebra, int32_t iAlign, HB_BOOL fBot
  * -> <cBitMap> | NIL */
 HB_FUNC(HB_ZEBRA_GETBITMAP)
 {
-  PHB_ZEBRA pZebra = hb_zebra_param(1);
+  HB_ZEBRA *pZebra = hb_zebra_param(1);
 
   if (pZebra) {
     HB_SIZE nSize;

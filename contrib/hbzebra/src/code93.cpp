@@ -115,7 +115,7 @@ static int32_t _code93_charno(char ch)
   return -1;
 }
 
-PHB_ZEBRA hb_zebra_create_code93(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_code93(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t k, i, j;
   auto iLen = static_cast<int32_t>(nLen);

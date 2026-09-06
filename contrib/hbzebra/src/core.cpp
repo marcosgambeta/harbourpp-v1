@@ -157,7 +157,7 @@ void hb_bitbuffer_cat_int_rev(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t 
 
 static HB_GARBAGE_FUNC(hb_zebra_destructor)
 {
-  auto ppZebra = static_cast<PHB_ZEBRA *>(Cargo);
+  auto ppZebra = static_cast<HB_ZEBRA **>(Cargo);
 
   if (*ppZebra) {
     hb_zebra_destroy(*ppZebra);
@@ -167,16 +167,16 @@ static HB_GARBAGE_FUNC(hb_zebra_destructor)
 
 static const HB_GC_FUNCS s_gcZebraFuncs = {hb_zebra_destructor, hb_gcDummyMark};
 
-PHB_ZEBRA hb_zebraItemGet(HB_ITEM *pItem)
+HB_ZEBRA *hb_zebraItemGet(HB_ITEM *pItem)
 {
-  auto ppZebra = static_cast<PHB_ZEBRA *>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
+  auto ppZebra = static_cast<HB_ZEBRA **>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
   return ppZebra ? *ppZebra : nullptr;
 }
 
-HB_ITEM *hb_zebraItemPut(HB_ITEM *pItem, PHB_ZEBRA pZebra)
+HB_ITEM *hb_zebraItemPut(HB_ITEM *pItem, HB_ZEBRA *pZebra)
 {
-  auto ppZebra = static_cast<PHB_ZEBRA *>(hb_gcAllocate(sizeof(PHB_ZEBRA), &s_gcZebraFuncs));
+  auto ppZebra = static_cast<HB_ZEBRA **>(hb_gcAllocate(sizeof(HB_ZEBRA *), &s_gcZebraFuncs));
 
   *ppZebra = pZebra;
   return hb_itemPutPtrGC(pItem, ppZebra);
@@ -184,16 +184,16 @@ HB_ITEM *hb_zebraItemPut(HB_ITEM *pItem, PHB_ZEBRA pZebra)
 
 void hb_zebraItemClear(HB_ITEM *pItem)
 {
-  auto ppZebra = static_cast<PHB_ZEBRA *>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
+  auto ppZebra = static_cast<HB_ZEBRA **>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
   if (ppZebra) {
     *ppZebra = nullptr;
   }
 }
 
-PHB_ZEBRA hb_zebra_param(int32_t iParam)
+HB_ZEBRA *hb_zebra_param(int32_t iParam)
 {
-  auto ppZebra = static_cast<PHB_ZEBRA *>(hb_parptrGC(&s_gcZebraFuncs, iParam));
+  auto ppZebra = static_cast<HB_ZEBRA **>(hb_parptrGC(&s_gcZebraFuncs, iParam));
 
   if (ppZebra && *ppZebra) {
     return *ppZebra;
@@ -203,22 +203,22 @@ PHB_ZEBRA hb_zebra_param(int32_t iParam)
   return nullptr;
 }
 
-void hb_zebra_ret(PHB_ZEBRA pZebra)
+void hb_zebra_ret(HB_ZEBRA *pZebra)
 {
   hb_zebraItemPut(hb_stackReturnItem(), pZebra);
 }
 
 /* --- Zebra --- */
 
-PHB_ZEBRA hb_zebra_create(void)
+HB_ZEBRA *hb_zebra_create(void)
 {
-  auto pZebra = static_cast<PHB_ZEBRA>(hb_xgrab(sizeof(HB_ZEBRA)));
+  auto pZebra = static_cast<HB_ZEBRA *>(hb_xgrab(sizeof(HB_ZEBRA)));
 
   hb_xmemset(pZebra, 0, sizeof(HB_ZEBRA));
   return pZebra;
 }
 
-void hb_zebra_destroy(PHB_ZEBRA pZebra)
+void hb_zebra_destroy(HB_ZEBRA *pZebra)
 {
   if (pZebra->szCode) {
     hb_xfree(pZebra->szCode);

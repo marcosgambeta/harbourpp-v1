@@ -189,7 +189,7 @@ static int32_t _code128_charno(char ch, int32_t iCodeSet)
   return -1;
 }
 
-PHB_ZEBRA hb_zebra_create_code128(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_code128(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i, j, k, csum, iCodeSet, iCodeLen;
   auto iLen = static_cast<int32_t>(nLen);

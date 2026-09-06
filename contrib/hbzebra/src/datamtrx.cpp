@@ -364,7 +364,7 @@ static void _datamatrix_do_placement(PHB_BITBUFFER pBits, unsigned char *pCW, co
   hb_xfree(pArr);
 }
 
-PHB_ZEBRA hb_zebra_create_datamatrix(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_datamatrix(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   const DATAMATRIX_SIZE *pSize;
   int32_t i, j, iDataCount, iErrorSize;

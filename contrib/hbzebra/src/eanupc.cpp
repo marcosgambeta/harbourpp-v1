@@ -116,7 +116,7 @@ static char _upce_checksum(const char *szCode)
   return _upca_checksum(szExp);
 }
 
-PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i;
   auto iLen = static_cast<int32_t>(nLen);
@@ -177,7 +177,7 @@ PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int32_t iFlags
   return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i;
   auto iLen = static_cast<int32_t>(nLen);
@@ -233,7 +233,7 @@ PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int32_t iFlags)
   return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i;
   auto iLen = static_cast<int32_t>(nLen);
@@ -289,7 +289,7 @@ PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int32_t iFlags)
   return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_upce(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_upce(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   int32_t i;
   auto iLen = static_cast<int32_t>(nLen);

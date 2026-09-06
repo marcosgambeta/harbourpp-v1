@@ -1145,7 +1145,7 @@ static void _qr_draw_version_format(PHB_BITBUFFER pBits, int32_t iVersion, int32
 #endif
 }
 
-PHB_ZEBRA hb_zebra_create_qrcode(const char *szCode, HB_SIZE nLen, int32_t iFlags)
+HB_ZEBRA *hb_zebra_create_qrcode(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   PHB_BITBUFFER pData, pFinal;
   unsigned char *pECC;
