@@ -85,7 +85,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                             const char * pszDefExt, HB_FATTR nExFlags,
-                            const char * pPaths, PHB_ITEM pError )
+                            const char * pPaths, HB_ITEM *pError )
 {
    const char * pszCommand = pszName;
    HB_MAXINT timeout = -1;
@@ -186,7 +186,7 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
    return pFile->fEof;
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
+static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, HB_ITEM *pValue )
 {
    switch( iIndex )
    {
