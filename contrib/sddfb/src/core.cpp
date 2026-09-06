@@ -69,9 +69,9 @@ struct SDDDATA
   XSQLDA ISC_FAR *pSqlda;
 };
 
-static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE fbDisconnect(SQLDDCONNECTION *pConnection);
-static HB_ERRCODE fbExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE fbExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE fbOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE fbClose(SQLBASEAREAP pArea);
 static HB_ERRCODE fbGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
@@ -140,7 +140,7 @@ static uint16_t hb_errRT_FirebirdDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode
 }
 
 /* --- SDD METHODS --- */
-static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   ISC_STATUS_ARRAY status;
   auto hDb = static_cast<isc_db_handle>(0);
@@ -189,7 +189,7 @@ static HB_ERRCODE fbDisconnect(SQLDDCONNECTION *pConnection)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE fbExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE fbExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   HB_SYMBOL_UNUSED(pConnection);
   HB_SYMBOL_UNUSED(pItem);
@@ -279,7 +279,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
   uint16_t uiCount;
   XSQLVAR *pVar;
   bool bError = false;
-  PHB_ITEM pItem;
+  HB_ITEM *pItem;
 
   for (uiCount = 0, pVar = pSqlda->sqlvar; uiCount < uiFields; uiCount++, pVar++) {
     /* FIXME: if pVar->sqlname is ended with 0 byte then this hb_strndup()
@@ -449,7 +449,7 @@ static HB_ERRCODE fbGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
     lErr = isc_dsql_fetch(status, phStmt, SQL_DIALECT_V5, pSDDData->pSqlda);
 
     if (lErr == 0) {
-      PHB_ITEM pItem = nullptr;
+      HB_ITEM *pItem = nullptr;
 
       auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
       for (ui = 0; ui < pArea->area.uiFieldCount; ui++) {
