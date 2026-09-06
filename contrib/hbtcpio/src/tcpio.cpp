@@ -84,7 +84,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                             const char * pszDefExt, HB_FATTR nExFlags,
-                            const char * pPaths, PHB_ITEM pError )
+                            const char * pPaths, HB_ITEM *pError )
 {
    const char * pszHost = pszName + FILE_PREFIX_LEN, * ptr;
    PHB_FILE pFile = nullptr;
@@ -274,7 +274,7 @@ static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
    hb_sockexFlush(pFile->sock, pFile->timeout, false);
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
+static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, HB_ITEM *pValue )
 {
    switch( iIndex )
    {
