@@ -169,7 +169,7 @@ static const unsigned short s_code[] = {
 
 #define SHIFT_AB 98
 
-static int _code128_charno(char ch, int iCodeSet)
+static int32_t _code128_charno(char ch, int32_t iCodeSet)
 {
   if (iCodeSet == CODESET_A) {
     if (ch >= ' ' && ch <= '_') {
@@ -189,10 +189,10 @@ static int _code128_charno(char ch, int iCodeSet)
   return -1;
 }
 
-PHB_ZEBRA hb_zebra_create_code128(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_code128(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i, j, k, csum, iCodeSet, iCodeLen;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i, j, k, csum, iCodeSet, iCodeLen;
+  auto iLen = static_cast<int32_t>(nLen);
 
   HB_SYMBOL_UNUSED(iFlags);
 
@@ -221,7 +221,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char *szCode, HB_SIZE nLen, int iFlags)
   pZebra->szCode[j] = '\0';
 
   /* generate code set switch characters */
-  auto pCode = static_cast<int *>(hb_xgrab(sizeof(int) * iLen * 2));
+  auto pCode = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * iLen * 2));
   iCodeSet = CODESET_B; /* to pacify MSVC warning only. It will be assigned later */
   iCodeLen = 0;
   /* determine the first optimal codeset */
@@ -245,7 +245,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char *szCode, HB_SIZE nLen, int iFlags)
   /* Warning: digit optimizer works in optimal way with this encoder code. Be careful
      if you'll change encoder code, digit optimizer can require adjustment also [Mindaugas] */
   for (i = 0; i < iLen; i++) {
-    int iCode = _code128_charno(szCode[i], iCodeSet);
+    int32_t iCode = _code128_charno(szCode[i], iCodeSet);
 
     if (iCode != -1) {
       pCode[iCodeLen++] = iCode;

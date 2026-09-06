@@ -113,9 +113,9 @@ void hb_bitbuffer_not(PHB_BITBUFFER pBitBuffer, HB_SIZE nPos)
   *(pBitBuffer->pBuffer + (nPos >> 3)) ^= 1 << (nPos & 0x7);
 }
 
-void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int iValue, int iLen)
+void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t iLen)
 {
-  int i;
+  int32_t i;
 
   if ((pBitBuffer->nLen + iLen) >= pBitBuffer->nAlloc * 8) {
     HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ((pBitBuffer->nAlloc >> 1) + iLen + 7) / 8;
@@ -124,8 +124,8 @@ void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int iValue, int iLen)
     pBitBuffer->nAlloc = nNewAlloc;
   }
 
-  if (static_cast<unsigned int>(iLen) > sizeof(int) * 8) {
-    iLen = sizeof(int) * 8;
+  if (static_cast<unsigned int>(iLen) > sizeof(int32_t) * 8) {
+    iLen = sizeof(int32_t) * 8;
   }
 
   /* TODO: optimize */
@@ -134,7 +134,7 @@ void hb_bitbuffer_cat_int(PHB_BITBUFFER pBitBuffer, int iValue, int iLen)
   }
 }
 
-void hb_bitbuffer_cat_int_rev(PHB_BITBUFFER pBitBuffer, int iValue, int iLen)
+void hb_bitbuffer_cat_int_rev(PHB_BITBUFFER pBitBuffer, int32_t iValue, int32_t iLen)
 {
   if ((pBitBuffer->nLen + iLen) >= pBitBuffer->nAlloc * 8) {
     HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ((pBitBuffer->nAlloc >> 1) + iLen + 7) / 8;
@@ -143,12 +143,12 @@ void hb_bitbuffer_cat_int_rev(PHB_BITBUFFER pBitBuffer, int iValue, int iLen)
     pBitBuffer->nAlloc = nNewAlloc;
   }
 
-  if (static_cast<unsigned int>(iLen) > sizeof(int) * 8) {
-    iLen = sizeof(int) * 8;
+  if (static_cast<unsigned int>(iLen) > sizeof(int32_t) * 8) {
+    iLen = sizeof(int32_t) * 8;
   }
 
   /* TODO: optimize */
-  for (int i = iLen - 1; i >= 0; i--) {
+  for (int32_t i = iLen - 1; i >= 0; i--) {
     hb_bitbuffer_set(pBitBuffer, pBitBuffer->nLen, iValue & (1 << i));
   }
 }
@@ -191,7 +191,7 @@ void hb_zebraItemClear(HB_ITEM *pItem)
   }
 }
 
-PHB_ZEBRA hb_zebra_param(int iParam)
+PHB_ZEBRA hb_zebra_param(int32_t iParam)
 {
   auto ppZebra = static_cast<PHB_ZEBRA *>(hb_parptrGC(&s_gcZebraFuncs, iParam));
 

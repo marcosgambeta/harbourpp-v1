@@ -62,7 +62,7 @@ static const char s_code[] = {
     0x0C  /* Start/Stop 11 */
 };
 
-static int _code11_charno(char ch)
+static int32_t _code11_charno(char ch)
 {
   if ('0' <= ch && ch <= '9') {
     return ch - '0';
@@ -72,9 +72,9 @@ static int _code11_charno(char ch)
   return -1;
 }
 
-static void _code11_add(PHB_BITBUFFER pBits, char code, int iFlags, bool fLast)
+static void _code11_add(PHB_BITBUFFER pBits, char code, int32_t iFlags, bool fLast)
 {
-  int i;
+  int32_t i;
 
   if (iFlags & HB_ZEBRA_FLAG_WIDE2_5) {
     for (i = 0; i < 5; i++) {
@@ -103,7 +103,7 @@ static void _code11_add(PHB_BITBUFFER pBits, char code, int iFlags, bool fLast)
   }
 }
 
-PHB_ZEBRA hb_zebra_create_code11(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_code11(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   unsigned int csum, ksum, i;
   auto iLen = static_cast<unsigned int>(nLen);
@@ -129,7 +129,7 @@ PHB_ZEBRA hb_zebra_create_code11(const char *szCode, HB_SIZE nLen, int iFlags)
 
   csum = ksum = 0;
   for (i = 0; i < iLen; i++) {
-    int no = _code11_charno(szCode[i]);
+    int32_t no = _code11_charno(szCode[i]);
     _code11_add(pZebra->pBits, s_code[no], iFlags, false);
     ksum += (((iLen + 1 - i) % 9) ? (iLen + 1 - i) % 9 : 9) * no;
     csum += (((iLen - i) % 10) ? (iLen - i) % 10 : 10) * no;

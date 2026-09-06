@@ -530,12 +530,12 @@ static const unsigned short s_rs8[] = {
     63, 310, 863, 251, 366, 304, 282, 738, 675, 410, 389, 244,  31, 121, 303, 263 };
 // clang-format on
 
-static int _pdf417_ec_size(int iLevel)
+static int32_t _pdf417_ec_size(int32_t iLevel)
 {
   return 2 << iLevel;
 }
 
-static int _pdf417_default_ec_level(int iDataSize)
+static int32_t _pdf417_default_ec_level(int32_t iDataSize)
 {
   /* https://www.idautomation.com/barcode-faq/2d/pdf417/ */
   if (iDataSize <= 40) {
@@ -550,12 +550,12 @@ static int _pdf417_default_ec_level(int iDataSize)
   return 5; /* <= 863 */
 }
 
-static int _pdf417_width(int iColCount, int iFlags)
+static int32_t _pdf417_width(int32_t iColCount, int32_t iFlags)
 {
   return 17 + (iColCount + 2) * 17 + 18 - ((iFlags & HB_ZEBRA_FLAG_PDF417_TRUNCATED) ? 34 : 0);
 }
 
-static int _pdf417_left_codeword(int iRow, int iRowCount, int iColCount, int iLevel)
+static int32_t _pdf417_left_codeword(int32_t iRow, int32_t iRowCount, int32_t iColCount, int32_t iLevel)
 {
   if (iRow % 3 == 0) {
     return (iRow / 3) * 30 + (iRowCount - 1) / 3;
@@ -565,7 +565,7 @@ static int _pdf417_left_codeword(int iRow, int iRowCount, int iColCount, int iLe
   return (iRow / 3) * 30 + iColCount - 1;
 }
 
-static int _pdf417_right_codeword(int iRow, int iRowCount, int iColCount, int iLevel)
+static int32_t _pdf417_right_codeword(int32_t iRow, int32_t iRowCount, int32_t iColCount, int32_t iLevel)
 {
   if (iRow % 3 == 0) {
     return (iRow / 3) * 30 + iColCount - 1;
@@ -575,17 +575,17 @@ static int _pdf417_right_codeword(int iRow, int iRowCount, int iColCount, int iL
   return (iRow / 3) * 30 + iLevel * 3 + (iRowCount - 1) % 3;
 }
 
-static int _pdf417_isdigit(char ch)
+static int32_t _pdf417_isdigit(char ch)
 {
   return '0' <= ch && ch <= '9';
 }
 
-static int _pdf417_isalpha(char ch)
+static int32_t _pdf417_isalpha(char ch)
 {
   return (' ' <= ch && static_cast<unsigned char>(ch) <= 127) || ch == '\t' || ch == '\n' || ch == '\r';
 }
 
-static int _pdf417_upperno(char ch)
+static int32_t _pdf417_upperno(char ch)
 {
   if ('A' <= ch && ch <= 'Z') {
     return ch - 'A';
@@ -596,7 +596,7 @@ static int _pdf417_upperno(char ch)
   return -1;
 }
 
-static int _pdf417_lowerno(char ch)
+static int32_t _pdf417_lowerno(char ch)
 {
   if ('a' <= ch && ch <= 'z') {
     return ch - 'a';
@@ -607,7 +607,7 @@ static int _pdf417_lowerno(char ch)
   return -1;
 }
 
-static int _pdf417_mixedno(char ch)
+static int32_t _pdf417_mixedno(char ch)
 {
   if ('0' <= ch && ch <= '9') {
     return ch - '0';
@@ -650,7 +650,7 @@ static int _pdf417_mixedno(char ch)
   return -1;
 }
 
-static int _pdf417_punctno(char ch)
+static int32_t _pdf417_punctno(char ch)
 {
   switch (ch) {
   case ';':
@@ -715,14 +715,14 @@ static int _pdf417_punctno(char ch)
   return -1;
 }
 
-static int _pdf417_encode_byte(const char *szCode, int iLen, int *pCW, int iPos)
+static int32_t _pdf417_encode_byte(const char *szCode, int32_t iLen, int32_t *pCW, int32_t iPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("encode byte len=%d", iLen));
 #endif
 
   HB_LONGLONG ill;
-  int i;
+  int32_t i;
 
   if (iLen == 0) {
     return iPos;
@@ -764,7 +764,7 @@ static int _pdf417_encode_byte(const char *szCode, int iLen, int *pCW, int iPos)
       pCW[iPos + 2] = ill % 900;
       ill /= 900;
       pCW[iPos + 1] = ill % 900;
-      pCW[iPos] = static_cast<int>(ill / 900);
+      pCW[iPos] = static_cast<int32_t>(ill / 900);
       iPos += 5;
     } else {
       if (iPos + iLen - i > MAX_CODEWORD_COUNT) {
@@ -779,7 +779,7 @@ static int _pdf417_encode_byte(const char *szCode, int iLen, int *pCW, int iPos)
   return iPos;
 }
 
-static int _pdf417_encode_text_add(int *pCW, int iPos, int *i1, int *i2, int no)
+static int32_t _pdf417_encode_text_add(int32_t *pCW, int32_t iPos, int32_t *i1, int32_t *i2, int32_t no)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("text halfcodeword %d", no));
@@ -798,13 +798,13 @@ static int _pdf417_encode_text_add(int *pCW, int iPos, int *i1, int *i2, int no)
   return iPos;
 }
 
-static int _pdf417_encode_text(const char *szCode, int iLen, int *pCW, int iPos)
+static int32_t _pdf417_encode_text(const char *szCode, int32_t iLen, int32_t *pCW, int32_t iPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("encode text len=%d", iLen));
 #endif
 
-  int j, i1, i2, no, iSubMode;
+  int32_t j, i1, i2, no, iSubMode;
 
   iSubMode = SUBMODE_UPPER;
   i1 = i2 = -1;
@@ -1007,7 +1007,7 @@ static int _pdf417_encode_text(const char *szCode, int iLen, int *pCW, int iPos)
   return iPos;
 }
 
-static int _pdf417_encode_numeric(const char *szCode, int iLen, int *pCW, int iPos)
+static int32_t _pdf417_encode_numeric(const char *szCode, int32_t iLen, int32_t *pCW, int32_t iPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("encode numeric len=%d", iLen));
@@ -1017,7 +1017,7 @@ static int _pdf417_encode_numeric(const char *szCode, int iLen, int *pCW, int iP
      digits in an effective way. I use more simple way and encode digits in groups
      not longer that 18 digits. 64-bit integer arithmetics do this job */
 
-  int i, j;
+  int32_t i, j;
 
   if (iLen == 0) {
     return iPos;
@@ -1026,7 +1026,7 @@ static int _pdf417_encode_numeric(const char *szCode, int iLen, int *pCW, int iP
   i = 0;
   while (i < iLen) {
     HB_LONGLONG ill;
-    int k = iLen - i;
+    int32_t k = iLen - i;
     if (k > 18) {
       k = 18;
     }
@@ -1051,9 +1051,9 @@ static int _pdf417_encode_numeric(const char *szCode, int iLen, int *pCW, int iP
   return iPos;
 }
 
-static int _pdf417_encode(const char *szCode, int iLen, int *pCW)
+static int32_t _pdf417_encode(const char *szCode, int32_t iLen, int32_t *pCW)
 {
-  int i, j, iMode, iPos, iStart;
+  int32_t i, j, iMode, iPos, iStart;
 
   /*
      Byte:     6 bytes -> 5 CW                1.2
@@ -1177,11 +1177,11 @@ static int _pdf417_encode(const char *szCode, int iLen, int *pCW)
   return iPos;
 }
 
-static void _pdf417_reed_solomon(int *pCW, int iLen, int iLevel)
+static void _pdf417_reed_solomon(int32_t *pCW, int32_t iLen, int32_t iLevel)
 {
-  int *pEC;
+  int32_t *pEC;
   const unsigned short *coef;
-  int i, j, iECLen;
+  int32_t i, j, iECLen;
 
   iECLen = _pdf417_ec_size(iLevel);
 
@@ -1222,7 +1222,7 @@ static void _pdf417_reed_solomon(int *pCW, int iLen, int iLevel)
   }
 
   for (i = 0; i < iLen; i++) {
-    int iM = (pCW[i] + pEC[iECLen - 1]) % 929;
+    int32_t iM = (pCW[i] + pEC[iECLen - 1]) % 929;
     for (j = iECLen - 1; j >= 0; j--) {
       if (j) {
         pEC[j] = (pEC[j - 1] + 929 - (iM * coef[j]) % 929) % 929;
@@ -1243,15 +1243,15 @@ static void _pdf417_reed_solomon(int *pCW, int iLen, int iLevel)
   }
 }
 
-PHB_ZEBRA hb_zebra_create_pdf417(const char *szCode, HB_SIZE nLen, int iFlags, int iColCount)
+PHB_ZEBRA hb_zebra_create_pdf417(const char *szCode, HB_SIZE nLen, int32_t iFlags, int32_t iColCount)
 {
-  int i, j, iLevel, iRowCount, iDataCount, iCount;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i, j, iLevel, iRowCount, iDataCount, iCount;
+  auto iLen = static_cast<int32_t>(nLen);
 
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_PDF417;
 
-  auto pCW = static_cast<int *>(hb_xgrab(sizeof(int) * MAX_CODEWORD_COUNT));
+  auto pCW = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * MAX_CODEWORD_COUNT));
   iDataCount = _pdf417_encode(szCode, iLen, pCW);
   if (iDataCount == -1) {
     hb_xfree(pCW);

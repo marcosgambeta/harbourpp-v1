@@ -49,11 +49,11 @@
 
 static char _msi_checksum(const char *szCode)
 {
-  int j = 1, sum = 0;
+  int32_t j = 1, sum = 0;
 
   /* Luhn algorithm */
-  for (int i = static_cast<int>(strlen(szCode)) - 1; i >= 0; i--) {
-    int k = (szCode[i] - '0') * (j ? 2 : 1);
+  for (int32_t i = static_cast<int32_t>(strlen(szCode)) - 1; i >= 0; i--) {
+    int32_t k = (szCode[i] - '0') * (j ? 2 : 1);
     if (k > 9) {
       k -= 9;
     }
@@ -64,10 +64,10 @@ static char _msi_checksum(const char *szCode)
   return static_cast<char>('0' + (sum ? 10 - sum : 0));
 }
 
-PHB_ZEBRA hb_zebra_create_msi(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_msi(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i, j, iN, iW;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i, j, iN, iW;
+  auto iLen = static_cast<int32_t>(nLen);
 
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_MSI;

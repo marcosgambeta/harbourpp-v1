@@ -76,13 +76,13 @@
 
 typedef struct
 {
-  int iRow;
-  int iCol;
-  int iRegionRow;
-  int iRegionCol;
-  int iDataSize;
-  int iBlockSize;
-  int iBlockErrorSize;
+  int32_t iRow;
+  int32_t iCol;
+  int32_t iRegionRow;
+  int32_t iRegionCol;
+  int32_t iDataSize;
+  int32_t iBlockSize;
+  int32_t iBlockErrorSize;
 } DATAMATRIX_SIZE, *PDATAMATRIX_SIZE;
 
 static const DATAMATRIX_SIZE s_size[SIZE_COUNT] = {
@@ -97,14 +97,14 @@ static const DATAMATRIX_SIZE s_size[SIZE_COUNT] = {
     {88, 88, 22, 22, 576, 144, 56},    {96, 96, 24, 24, 696, 174, 68},    {104, 104, 26, 26, 816, 136, 56},
     {120, 120, 20, 20, 1050, 175, 68}, {132, 132, 22, 22, 1304, 163, 62}, {144, 144, 24, 24, 1558, 156, 62}};
 
-static int _datamatrix_isdigit(char ch)
+static int32_t _datamatrix_isdigit(char ch)
 {
   return '0' <= ch && ch <= '9';
 }
 
-static int _datamatrix_encode(const char *szCode, int iLen, unsigned char *pCW)
+static int32_t _datamatrix_encode(const char *szCode, int32_t iLen, unsigned char *pCW)
 {
-  int iPos = 0;
+  int32_t iPos = 0;
 
   for (auto i = 0; i < iLen; i++) {
     if (_datamatrix_isdigit(szCode[i]) && i < iLen - 1 && _datamatrix_isdigit(szCode[i + 1])) {
@@ -120,10 +120,10 @@ static int _datamatrix_encode(const char *szCode, int iLen, unsigned char *pCW)
   return iPos;
 }
 
-static void _reed_solomon_encode(unsigned char *pData, int iDataLen, unsigned char *pEC, int iECLen, int *pPoly,
-                                 int *pExp, int *pLog, int iMod)
+static void _reed_solomon_encode(unsigned char *pData, int32_t iDataLen, unsigned char *pEC, int32_t iECLen, int32_t *pPoly,
+                                 int32_t *pExp, int32_t *pLog, int32_t iMod)
 {
-  int i, j;
+  int32_t i, j;
 
   for (i = 0; i < iECLen; i++) {
     pEC[i] = 0;
@@ -149,7 +149,7 @@ static void _reed_solomon_encode(unsigned char *pData, int iDataLen, unsigned ch
 
 static void _datamatrix_reed_solomon(unsigned char *pData, const DATAMATRIX_SIZE *pSize)
 {
-  int i, j, iBits, iMod, iPoly, iECLen, iIndex, iBlocks;
+  int32_t i, j, iBits, iMod, iPoly, iECLen, iIndex, iBlocks;
 
   /* Init Galois field. Parameters: iPoly */
   iPoly = 0x12D;
@@ -160,8 +160,8 @@ static void _datamatrix_reed_solomon(unsigned char *pData, const DATAMATRIX_SIZE
   }
 
   iMod = (1 << iBits) - 1;
-  auto pExp = static_cast<int *>(hb_xgrab(sizeof(int) * iMod));       /* exponent function */
-  auto pLog = static_cast<int *>(hb_xgrab(sizeof(int) * (iMod + 1))); /* logarithm function */
+  auto pExp = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * iMod));       /* exponent function */
+  auto pLog = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * (iMod + 1))); /* logarithm function */
   j = 1;
   for (i = 0; i < iMod; i++) {
     pExp[i] = j;
@@ -176,7 +176,7 @@ static void _datamatrix_reed_solomon(unsigned char *pData, const DATAMATRIX_SIZE
   iECLen = pSize->iBlockErrorSize;
   iIndex = 1;
 
-  auto pPoly = static_cast<int *>(hb_xgrab(sizeof(int) * (iECLen + 1)));
+  auto pPoly = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * (iECLen + 1)));
   pPoly[0] = 1;
   for (i = 1; i <= iECLen; i++) {
     pPoly[i] = 1;
@@ -196,7 +196,7 @@ static void _datamatrix_reed_solomon(unsigned char *pData, const DATAMATRIX_SIZE
   iBlocks = (pSize->iDataSize + 2) / pSize->iBlockSize;
   for (i = 0; i < iBlocks; i++) {
     unsigned char data[256], ecc[80];
-    int k = 0;
+    int32_t k = 0;
 
     /* Copy to temporary buffer */
     for (j = i; j < pSize->iDataSize; j += iBlocks) {
@@ -218,7 +218,7 @@ static void _datamatrix_reed_solomon(unsigned char *pData, const DATAMATRIX_SIZE
   hb_xfree(pPoly);
 }
 
-static void _datamatrix_place_bit(int *pArr, int iPRow, int iPCol, int iR, int iC, int iValue)
+static void _datamatrix_place_bit(int32_t *pArr, int32_t iPRow, int32_t iPCol, int32_t iR, int32_t iC, int32_t iValue)
 {
   if (iR < 0) {
     iR += iPRow;
@@ -231,7 +231,7 @@ static void _datamatrix_place_bit(int *pArr, int iPRow, int iPCol, int iR, int i
   pArr[iR * iPCol + iC] = iValue;
 }
 
-static void _datamatrix_place(int *pArr, int iPRow, int iPCol, int iR, int iC, int iIndex)
+static void _datamatrix_place(int32_t *pArr, int32_t iPRow, int32_t iPCol, int32_t iR, int32_t iC, int32_t iIndex)
 {
   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 2, iC - 2, (iIndex << 3) + 7);
   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 2, iC - 1, (iIndex << 3) + 6);
@@ -243,7 +243,7 @@ static void _datamatrix_place(int *pArr, int iPRow, int iPCol, int iR, int iC, i
   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 0, iC - 0, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_a(int *pArr, int iPRow, int iPCol, int iIndex)
+static void _datamatrix_place_a(int32_t *pArr, int32_t iPRow, int32_t iPCol, int32_t iIndex)
 {
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1, 0, (iIndex << 3) + 7);
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1, 1, (iIndex << 3) + 6);
@@ -255,7 +255,7 @@ static void _datamatrix_place_a(int *pArr, int iPRow, int iPCol, int iIndex)
   _datamatrix_place_bit(pArr, iPRow, iPCol, 3, iPCol - 1, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_b(int *pArr, int iPRow, int iPCol, int iIndex)
+static void _datamatrix_place_b(int32_t *pArr, int32_t iPRow, int32_t iPCol, int32_t iIndex)
 {
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 3, 0, (iIndex << 3) + 7);
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 2, 0, (iIndex << 3) + 6);
@@ -267,7 +267,7 @@ static void _datamatrix_place_b(int *pArr, int iPRow, int iPCol, int iIndex)
   _datamatrix_place_bit(pArr, iPRow, iPCol, 1, iPCol - 1, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_c(int *pArr, int iPRow, int iPCol, int iIndex)
+static void _datamatrix_place_c(int32_t *pArr, int32_t iPRow, int32_t iPCol, int32_t iIndex)
 {
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 3, 0, (iIndex << 3) + 7);
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 2, 0, (iIndex << 3) + 6);
@@ -279,7 +279,7 @@ static void _datamatrix_place_c(int *pArr, int iPRow, int iPCol, int iIndex)
   _datamatrix_place_bit(pArr, iPRow, iPCol, 3, iPCol - 1, (iIndex << 3) + 0);
 }
 
-static void _datamatrix_place_d(int *pArr, int iPRow, int iPCol, int iIndex)
+static void _datamatrix_place_d(int32_t *pArr, int32_t iPRow, int32_t iPCol, int32_t iIndex)
 {
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1, 0, (iIndex << 3) + 7);
   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1, iPCol - 1, (iIndex << 3) + 6);
@@ -293,14 +293,14 @@ static void _datamatrix_place_d(int *pArr, int iPRow, int iPCol, int iIndex)
 
 static void _datamatrix_do_placement(PHB_BITBUFFER pBits, unsigned char *pCW, const DATAMATRIX_SIZE *pSize)
 {
-  int i, iR, iC, iPRow, iPCol;
+  int32_t i, iR, iC, iPRow, iPCol;
 
   /* Calculate placement size without L-patterns and clock tracks */
   iPRow = pSize->iRow - 2 * (pSize->iRow / pSize->iRegionRow);
   iPCol = pSize->iCol - 2 * (pSize->iCol / pSize->iRegionCol);
 
-  auto pArr = static_cast<int *>(hb_xgrab(sizeof(int) * iPCol * iPRow));
-  hb_xmemset(pArr, 0, sizeof(int) * iPCol * iPRow);
+  auto pArr = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * iPCol * iPRow));
+  hb_xmemset(pArr, 0, sizeof(int32_t) * iPCol * iPRow);
 
   /* Generate placement index array */
 
@@ -364,11 +364,11 @@ static void _datamatrix_do_placement(PHB_BITBUFFER pBits, unsigned char *pCW, co
   hb_xfree(pArr);
 }
 
-PHB_ZEBRA hb_zebra_create_datamatrix(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_datamatrix(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   const DATAMATRIX_SIZE *pSize;
-  int i, j, iDataCount, iErrorSize;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i, j, iDataCount, iErrorSize;
+  auto iLen = static_cast<int32_t>(nLen);
 
   auto pZebra = hb_zebra_create();
   pZebra->iType = HB_ZEBRA_TYPE_DATAMATRIX;

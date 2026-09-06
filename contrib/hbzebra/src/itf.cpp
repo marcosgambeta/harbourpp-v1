@@ -51,7 +51,7 @@ static const char s_code[] = {0x0C, 0x11, 0x12, 0x03, 0x14, 0x05, 0x06, 0x18, 0x
 
 static char _itf_checksum(const char *szCode)
 {
-  int sum = 0;
+  int32_t sum = 0;
 
   for (auto i = 0; szCode[i]; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
@@ -59,10 +59,10 @@ static char _itf_checksum(const char *szCode)
   return '0' + (100000 - sum) % 10;
 }
 
-PHB_ZEBRA hb_zebra_create_itf(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_itf(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i, iN, iW;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i, iN, iW;
+  auto iLen = static_cast<int32_t>(nLen);
   char csum;
 
   auto pZebra = hb_zebra_create();

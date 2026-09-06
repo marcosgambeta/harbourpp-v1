@@ -54,7 +54,7 @@ static const char s_gcode[] = {0x72, 0x66, 0x6C, 0x42, 0x5C, 0x4E, 0x50, 0x44, 0
 
 static char _ean13_checksum(const char *szCode)
 {
-  int sum = 0;
+  int32_t sum = 0;
 
   for (auto i = 0; i < 12; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 3 : 1);
@@ -64,7 +64,7 @@ static char _ean13_checksum(const char *szCode)
 
 static char _ean8_checksum(const char *szCode)
 {
-  int sum = 0;
+  int32_t sum = 0;
 
   for (auto i = 0; i < 7; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
@@ -74,7 +74,7 @@ static char _ean8_checksum(const char *szCode)
 
 static char _upca_checksum(const char *szCode)
 {
-  int sum = 0;
+  int32_t sum = 0;
 
   for (auto i = 0; i < 11; i++) {
     sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
@@ -116,10 +116,10 @@ static char _upce_checksum(const char *szCode)
   return _upca_checksum(szExp);
 }
 
-PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i;
+  auto iLen = static_cast<int32_t>(nLen);
 
   HB_SYMBOL_UNUSED(iFlags);
 
@@ -177,10 +177,10 @@ PHB_ZEBRA hb_zebra_create_ean13(const char *szCode, HB_SIZE nLen, int iFlags)
   return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i;
+  auto iLen = static_cast<int32_t>(nLen);
 
   HB_SYMBOL_UNUSED(iFlags);
 
@@ -233,10 +233,10 @@ PHB_ZEBRA hb_zebra_create_ean8(const char *szCode, HB_SIZE nLen, int iFlags)
   return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i;
+  auto iLen = static_cast<int32_t>(nLen);
 
   HB_SYMBOL_UNUSED(iFlags);
 
@@ -289,10 +289,10 @@ PHB_ZEBRA hb_zebra_create_upca(const char *szCode, HB_SIZE nLen, int iFlags)
   return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_upce(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_upce(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
-  int i;
-  auto iLen = static_cast<int>(nLen);
+  int32_t i;
+  auto iLen = static_cast<int32_t>(nLen);
   char sumcode;
 
   HB_SYMBOL_UNUSED(iFlags);

@@ -68,7 +68,7 @@ static const char s_code[] = {0x60,  /* 0 */
                               0x68,  /* C */
                               0x38}; /* D */
 
-static int _codabar_charno(char ch)
+static int32_t _codabar_charno(char ch)
 {
   if ('0' <= ch && ch <= '9') {
     return ch - '0';
@@ -77,15 +77,15 @@ static int _codabar_charno(char ch)
 
     const char *ptr = strchr(s_symbols, ch);
     if (ptr && *ptr) {
-      return static_cast<int>(ptr - s_symbols + 10);
+      return static_cast<int32_t>(ptr - s_symbols + 10);
     }
   }
   return -1;
 }
 
-static void _codabar_add(PHB_BITBUFFER pBits, char code, int iFlags, bool fLast)
+static void _codabar_add(PHB_BITBUFFER pBits, char code, int32_t iFlags, bool fLast)
 {
-  int i;
+  int32_t i;
 
   if (iFlags & HB_ZEBRA_FLAG_WIDE2_5) {
     for (i = 0; i < 7; i++) {
@@ -114,7 +114,7 @@ static void _codabar_add(PHB_BITBUFFER pBits, char code, int iFlags, bool fLast)
   }
 }
 
-PHB_ZEBRA hb_zebra_create_codabar(const char *szCode, HB_SIZE nLen, int iFlags)
+PHB_ZEBRA hb_zebra_create_codabar(const char *szCode, HB_SIZE nLen, int32_t iFlags)
 {
   unsigned int i;
   auto iLen = static_cast<unsigned int>(nLen);
@@ -123,7 +123,7 @@ PHB_ZEBRA hb_zebra_create_codabar(const char *szCode, HB_SIZE nLen, int iFlags)
   pZebra->iType = HB_ZEBRA_TYPE_CODABAR;
 
   for (i = 0; i < iLen; i++) {
-    int j = _codabar_charno(szCode[i]);
+    int32_t j = _codabar_charno(szCode[i]);
 
     if (j < 0 || (j >= 16 && i != 0 && i != iLen - 1)) {
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
@@ -138,12 +138,12 @@ PHB_ZEBRA hb_zebra_create_codabar(const char *szCode, HB_SIZE nLen, int iFlags)
 
   pZebra->pBits = hb_bitbuffer_create();
 
-  if (iLen == 0 || _codabar_charno(static_cast<int>(szCode[0])) < 16) {
+  if (iLen == 0 || _codabar_charno(static_cast<int32_t>(szCode[0])) < 16) {
     _codabar_add(pZebra->pBits, s_code[_codabar_charno('A')], iFlags, false); /* Default start A */
   }
 
   for (i = 0; i < iLen; i++) {
-    int no = _codabar_charno(szCode[i]);
+    int32_t no = _codabar_charno(szCode[i]);
     _codabar_add(pZebra->pBits, s_code[no], iFlags, i > 0 && no >= 16);
   }
 
