@@ -200,8 +200,8 @@ extern HB_EXPORT void       hbwapi_ret_PDEVMODE( PDEVMODE p );
 
 extern HB_EXPORT HB_BOOL    hbwapi_is_HANDLE( int iParam );
 
-extern HB_EXPORT void *     hbwapi_itemGet_HANDLE( PHB_ITEM pItem );
-extern HB_EXPORT void *     hbwapi_arrayGet_HANDLE( PHB_ITEM pArray, HB_SIZE nIndex );
+extern HB_EXPORT void *     hbwapi_itemGet_HANDLE( HB_ITEM *pItem );
+extern HB_EXPORT void *     hbwapi_arrayGet_HANDLE( HB_ITEM *pArray, HB_SIZE nIndex );
 
 extern HB_EXPORT void *     __hbwapi_par_handle( int n );
 extern HB_EXPORT void *     __hbwapi_parv_handle( int n, int i );

@@ -86,12 +86,12 @@ static TCHAR s_lpClsName[MAX_CLSNAME_SIZE] = TEXT("");
 
 static bool s_fServerReady = false;
 static bool s_fHashClone = false;
-static PHB_ITEM s_pAction = nullptr;
-static PHB_ITEM s_pMsgHash = nullptr;
+static HB_ITEM *s_pAction = nullptr;
+static HB_ITEM *s_pMsgHash = nullptr;
 
 static HINSTANCE s_hInstDll;
 
-static HB_BOOL s_objItemToVariant(VARIANT *pVariant, PHB_ITEM pItem);
+static HB_BOOL s_objItemToVariant(VARIANT *pVariant, HB_ITEM *pItem);
 
 // helper functions
 
@@ -116,7 +116,7 @@ static void hb_errRT_OLESRV(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERR
       hb_errRT_New(ES_ERROR, "OLESERVER", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
   if (hb_pcount() != 0) {
     // HB_ERR_ARGS_BASEPARAMS
-    PHB_ITEM pArray = hb_arrayBaseParams();
+    HB_ITEM *pArray = hb_arrayBaseParams();
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
   }
@@ -124,12 +124,12 @@ static void hb_errRT_OLESRV(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERR
   hb_errRelease(pError);
 }
 
-static HB_BOOL s_hashWithNumKeys(PHB_ITEM pHash)
+static HB_BOOL s_hashWithNumKeys(HB_ITEM *pHash)
 {
   HB_SIZE nLen = hb_hashLen(pHash);
 
   for (HB_SIZE n = 1; n <= nLen; ++n) {
-    PHB_ITEM pKey = hb_hashGetKeyAt(pHash, n);
+    HB_ITEM *pKey = hb_hashGetKeyAt(pHash, n);
     if (!pKey || !pKey->isNumeric()) {
       return false;
     }
@@ -212,7 +212,7 @@ typedef struct
 {
   const IDispatchVtbl *lpVtbl;
   DWORD count;
-  PHB_ITEM pAction;
+  HB_ITEM *pAction;
   HB_BOOL fGuids;
 } IHbOleServer;
 
@@ -280,7 +280,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch *lpThis, REFIID riid, L
     DISPID dispid = 0;
 
     if (s_WideToAnsiBuffer(rgszNames[0], szName, static_cast<int>(sizeof(szName))) != 0) {
-      PHB_ITEM pAction;
+      HB_ITEM *pAction;
 
       pAction = (reinterpret_cast<IHbOleServer *>(lpThis))->pAction;
       if (!pAction) {
@@ -340,7 +340,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
                                         DISPPARAMS *pParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
 {
   HB_DYNS *pDynSym;
-  PHB_ITEM pAction;
+  HB_ITEM *pAction;
   uint16_t uiClass = 0;
 
   HB_SYMBOL_UNUSED(lcid);
@@ -366,7 +366,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
                                    pVarResult, s_objItemToVariant, uiClass);
       }
     } else if (pAction->isHash()) {
-      PHB_ITEM pItem;
+      HB_ITEM *pItem;
 
       if ((reinterpret_cast<IHbOleServer *>(lpThis))->fGuids) {
         auto pKey = hb_itemPutNL(hb_stackAllocItem(), static_cast<long>(dispid));
@@ -498,7 +498,7 @@ static ULONG STDMETHODCALLTYPE classRelease(IClassFactory *lpThis)
   return InterlockedDecrement(&s_lObjectCount);
 }
 
-static HRESULT s_createHbOleObject(REFIID riid, void **ppvObj, PHB_ITEM pAction, HB_BOOL fGuids)
+static HRESULT s_createHbOleObject(REFIID riid, void **ppvObj, HB_ITEM *pAction, HB_BOOL fGuids)
 {
   HRESULT hr;
   auto thisobj = static_cast<IHbOleServer *>(hb_xalloc(sizeof(IHbOleServer)));
@@ -522,7 +522,7 @@ static HRESULT s_createHbOleObject(REFIID riid, void **ppvObj, PHB_ITEM pAction,
   return hr;
 }
 
-static HB_BOOL s_objItemToVariant(VARIANT *pVariant, PHB_ITEM pItem)
+static HB_BOOL s_objItemToVariant(VARIANT *pVariant, HB_ITEM *pItem)
 {
   void *pvObj;
 
@@ -548,7 +548,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance(IClassFactory *lpThis, IUnk
   if (punkOuter) {
     hr = CLASS_E_NOAGGREGATION;
   } else {
-    PHB_ITEM pAction = nullptr;
+    HB_ITEM *pAction = nullptr;
     bool fGuids = false;
 
     if (s_pAction) {

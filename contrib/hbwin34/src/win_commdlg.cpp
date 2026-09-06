@@ -65,16 +65,16 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
 {
   UINT_PTR res;
   bool fInit = false;
-  PHB_ITEM pBlock;
+  HB_ITEM *pBlock;
 
   if (msg == WM_INITDIALOG) {
     auto cc = reinterpret_cast<CHOOSECOLOR *>(lParam);
-    SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<PHB_ITEM>(cc->lCustData)));
+    SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<HB_ITEM *>(cc->lCustData)));
     fInit = true;
   }
 
-  if ((pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter()) {
-    PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
+  if ((pBlock = static_cast<HB_ITEM *>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter()) {
+    HB_ITEM *pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
     auto pMsg = hb_itemPutNInt(nullptr, msg);
     auto pLPa = hb_itemPutNInt(nullptr, wParam);
     auto pWPa = hb_itemPutNInt(nullptr, lParam);

@@ -79,7 +79,7 @@ static HB_DYNS *s_pDyns_hObjAssign;
 typedef struct
 {
   IDispatch *pDisp;
-  PHB_ITEM *pCallBack;
+  HB_ITEM **pCallBack;
   HB_OLE_DESTRUCTOR_FUNC pDestructorFunc;
   void *cargo;
 } HB_OLE;
@@ -176,7 +176,7 @@ static HB_GARBAGE_FUNC(hb_ole_destructor)
   if (pDisp) {
     pOle->pDisp = nullptr;
     if (pOle->pCallBack && *pOle->pCallBack) {
-      PHB_ITEM pCallBack = *pOle->pCallBack;
+      HB_ITEM *pCallBack = *pOle->pCallBack;
       *pOle->pCallBack = nullptr;
       pOle->pCallBack = nullptr;
       hb_itemRelease(pCallBack);
@@ -230,7 +230,7 @@ static void hb_errRT_OLE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCOD
 
   if (hb_pcount() != 0) {
     // HB_ERR_ARGS_BASEPARAMS
-    PHB_ITEM pArray = hb_arrayBaseParams();
+    HB_ITEM *pArray = hb_arrayBaseParams();
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
   }
@@ -295,14 +295,14 @@ IDispatch *hb_oleParam(int iParam)
   return nullptr;
 }
 
-IDispatch *hb_oleItemGet(PHB_ITEM pItem)
+IDispatch *hb_oleItemGet(HB_ITEM *pItem)
 {
   auto pOle = static_cast<HB_OLE *>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
   return pOle ? pOle->pDisp : nullptr;
 }
 
-PHB_ITEM hb_oleItemPut(PHB_ITEM pItem, IDispatch *pDisp)
+HB_ITEM *hb_oleItemPut(HB_ITEM *pItem, IDispatch *pDisp)
 {
   auto pOle = static_cast<HB_OLE *>(hb_gcAllocate(sizeof(HB_OLE), &s_gcOleFuncs));
 
@@ -313,20 +313,20 @@ PHB_ITEM hb_oleItemPut(PHB_ITEM pItem, IDispatch *pDisp)
   return hb_itemPutPtrGC(pItem, pOle);
 }
 
-PHB_ITEM hb_oleItemGetCallBack(PHB_ITEM pItem)
+HB_ITEM *hb_oleItemGetCallBack(HB_ITEM *pItem)
 {
   auto pOle = static_cast<HB_OLE *>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
   return pOle && pOle->pCallBack ? *pOle->pCallBack : nullptr;
 }
 
-void hb_oleItemSetCallBack(PHB_ITEM pItem, PHB_ITEM *pCallBack)
+void hb_oleItemSetCallBack(HB_ITEM *pItem, HB_ITEM **pCallBack)
 {
   auto pOle = static_cast<HB_OLE *>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
   if (pOle) {
     if (pOle->pCallBack && *pOle->pCallBack) {
-      PHB_ITEM pCallBackPrev = *pOle->pCallBack;
+      HB_ITEM *pCallBackPrev = *pOle->pCallBack;
       *pOle->pCallBack = nullptr;
       pOle->pCallBack = nullptr;
       hb_itemRelease(pCallBackPrev);
@@ -338,7 +338,7 @@ void hb_oleItemSetCallBack(PHB_ITEM pItem, PHB_ITEM *pCallBack)
   }
 }
 
-void hb_oleItemSetDestructor(PHB_ITEM pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void *cargo)
+void hb_oleItemSetDestructor(HB_ITEM *pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void *cargo)
 {
   auto pOle = static_cast<HB_OLE *>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
@@ -371,12 +371,12 @@ static VARIANT *hb_oleVariantParam(int iParam)
   return pVariant;
 }
 
-VARIANT *hb_oleItemGetVariant(PHB_ITEM pItem)
+VARIANT *hb_oleItemGetVariant(HB_ITEM *pItem)
 {
   return static_cast<VARIANT *>(hb_itemGetPtrGC(pItem, &s_gcVariantFuncs));
 }
 
-PHB_ITEM hb_oleItemPutVariant(PHB_ITEM pItem, VARIANT *pVariant, HB_BOOL fMove)
+HB_ITEM *hb_oleItemPutVariant(HB_ITEM *pItem, VARIANT *pVariant, HB_BOOL fMove)
 {
   auto pDestVariant = static_cast<VARIANT *>(hb_gcAllocate(sizeof(VARIANT), &s_gcVariantFuncs));
 
@@ -407,7 +407,7 @@ static void AnsiToWideBuffer(const char *szString, wchar_t *szWide, int iLen)
   szWide[iLen - 1] = L'\0';
 }
 
-static BSTR hb_oleItemToString(PHB_ITEM pItem)
+static BSTR hb_oleItemToString(HB_ITEM *pItem)
 {
   auto uiStrLen = static_cast<UINT>(hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_NATIVE, nullptr, UINT_MAX));
   BSTR strVal = SysAllocStringLen(nullptr, uiStrLen);
@@ -417,7 +417,7 @@ static BSTR hb_oleItemToString(PHB_ITEM pItem)
   return strVal;
 }
 
-static void hb_oleStringToItem(BSTR strVal, PHB_ITEM pItem)
+static void hb_oleStringToItem(BSTR strVal, HB_ITEM *pItem)
 {
   hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_NATIVE, strVal, SysStringLen(strVal));
 }
@@ -504,7 +504,7 @@ static void hb_oleVariantRef(VARIANT *pVariant, VARIANT *pVarRef)
   }
 }
 
-static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM pItem, int iDims, int iDim, long *plSize,
+static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *pItem, int iDims, int iDim, long *plSize,
                                    long *plIndex)
 {
   const char *pStr;
@@ -685,7 +685,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM p
   return true;
 }
 
-static SAFEARRAY *hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims, long *plSize)
+static SAFEARRAY *hb_oleSafeArrayFromItem(HB_ITEM *pItem, VARTYPE vt, int iDims, long *plSize)
 {
   SAFEARRAYBOUND boundbuf[16], *sabound;
   SAFEARRAY *pSafeArray;
@@ -734,7 +734,7 @@ static SAFEARRAY *hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims,
   return pSafeArray;
 }
 
-static HB_BOOL hb_oleSafeArrayToString(PHB_ITEM pItem, SAFEARRAY *pSafeArray)
+static HB_BOOL hb_oleSafeArrayToString(HB_ITEM *pItem, SAFEARRAY *pSafeArray)
 {
   long lFrom, lTo;
   VARTYPE vt = VT_UI1;
@@ -756,7 +756,7 @@ static HB_BOOL hb_oleSafeArrayToString(PHB_ITEM pItem, SAFEARRAY *pSafeArray)
   return false;
 }
 
-IDispatch *hb_oleItemGetDispatch(PHB_ITEM pItem)
+IDispatch *hb_oleItemGetDispatch(HB_ITEM *pItem)
 {
   if (pItem->isObject()) {
     if (hb_objHasMessage(pItem, s_pDyns_hObjAccess)) {
@@ -785,7 +785,7 @@ static void hb_oleDispatchToVariant(VARIANT *pVariant, IDispatch *pDisp, VARIANT
 
 // Item <-> Variant conversion
 
-static void hb_oleItemToVariantRef(VARIANT *pVariant, PHB_ITEM pItem, VARIANT *pVarRef, HB_OLEOBJ_FUNC pObjFunc)
+static void hb_oleItemToVariantRef(VARIANT *pVariant, HB_ITEM *pItem, VARIANT *pVarRef, HB_OLEOBJ_FUNC pObjFunc)
 {
   VariantClear(pVariant); // VT_T(pVariant) = VT_EMPTY;
 
@@ -984,17 +984,17 @@ static void hb_oleItemToVariantRef(VARIANT *pVariant, PHB_ITEM pItem, VARIANT *p
 #endif
 }
 
-void hb_oleItemToVariant(VARIANT *pVariant, PHB_ITEM pItem)
+void hb_oleItemToVariant(VARIANT *pVariant, HB_ITEM *pItem)
 {
   hb_oleItemToVariantRef(pVariant, pItem, nullptr, nullptr);
 }
 
-void hb_oleItemToVariantEx(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjFunc)
+void hb_oleItemToVariantEx(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjFunc)
 {
   hb_oleItemToVariantRef(pVariant, pItem, nullptr, pObjFunc);
 }
 
-static void hb_oleSafeArrayToItem(PHB_ITEM pItem, SAFEARRAY *pSafeArray, int iDims, int iDim, long *plIndex, VARTYPE vt,
+static void hb_oleSafeArrayToItem(HB_ITEM *pItem, SAFEARRAY *pSafeArray, int iDims, int iDim, long *plIndex, VARTYPE vt,
                                   uint16_t uiClass)
 {
   long lFrom, lTo;
@@ -1036,12 +1036,12 @@ static void hb_oleSafeArrayToItem(PHB_ITEM pItem, SAFEARRAY *pSafeArray, int iDi
   }
 }
 
-void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch *pdispVal, uint16_t uiClass)
+void hb_oleDispatchToItem(HB_ITEM *pItem, IDispatch *pdispVal, uint16_t uiClass)
 {
   if (pdispVal) {
     if (hb_vmRequestReenter()) {
       HB_SYMB *pClassFunc;
-      PHB_ITEM pPtrGC;
+      HB_ITEM *pPtrGC;
 
       pClassFunc = hb_clsFuncSym(uiClass);
       if (!pClassFunc) {
@@ -1073,7 +1073,7 @@ void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch *pdispVal, uint16_t uiClass)
   }
 }
 
-void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, uint16_t uiClass)
+void hb_oleVariantToItemEx(HB_ITEM *pItem, VARIANT *pVariant, uint16_t uiClass)
 {
   if (V_VT(pVariant) == (VT_VARIANT | VT_BYREF)) {
     pVariant = V_VARIANTREF(pVariant);
@@ -1327,12 +1327,12 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, uint16_t uiClass)
   }
 }
 
-void hb_oleVariantToItem(PHB_ITEM pItem, VARIANT *pVariant)
+void hb_oleVariantToItem(HB_ITEM *pItem, VARIANT *pVariant)
 {
   hb_oleVariantToItemEx(pItem, pVariant, 0);
 }
 
-void hb_oleVariantUpdate(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjFunc)
+void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjFunc)
 {
   switch (V_VT(pVariant)) {
   case VT_DISPATCH | VT_BYREF: {
@@ -1496,11 +1496,11 @@ void hb_oleVariantUpdate(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjF
 
 typedef struct
 {
-  PHB_ITEM item;
+  HB_ITEM *item;
   VARIANT *variant;
 } HB_OLE_PARAM_REF;
 
-HB_BOOL hb_oleDispInvoke(HB_SYMB *pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPPARAMS *pParams, VARIANT *pVarResult,
+HB_BOOL hb_oleDispInvoke(HB_SYMB *pSym, HB_ITEM *pObject, HB_ITEM *pParam, DISPPARAMS *pParams, VARIANT *pVarResult,
                          HB_OLEOBJ_FUNC pObjFunc, uint16_t uiClass)
 {
   if (!pSym && pObject->isSymbol()) {
@@ -1572,7 +1572,7 @@ HB_BOOL hb_oleDispInvoke(HB_SYMB *pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPP
 
 // IDispatch parameters, return value handling
 
-static void GetParams(DISPPARAMS *dispparam, uint32_t uiOffset, HB_BOOL fUseRef, UINT uiNamedArgs, PHB_ITEM *pNamedArgs,
+static void GetParams(DISPPARAMS *dispparam, uint32_t uiOffset, HB_BOOL fUseRef, UINT uiNamedArgs, HB_ITEM **pNamedArgs,
                       DISPID *pDispIds)
 {
   VARIANTARG *pArgs = nullptr;
@@ -1629,8 +1629,8 @@ static void GetParams(DISPPARAMS *dispparam, uint32_t uiOffset, HB_BOOL fUseRef,
 
 #define HB_OLE_MAX_NAMEDARGS 32
 
-static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, PHB_ITEM pHash, UINT *puiNamedArgs,
-                              PHB_ITEM *pArgs, DISPID *pDispIds)
+static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, HB_ITEM *pHash, UINT *puiNamedArgs,
+                              HB_ITEM **pArgs, DISPID *pDispIds)
 {
   OLECHAR *pNames[HB_OLE_MAX_NAMEDARGS + 1];
   void *phStrings[HB_OLE_MAX_NAMEDARGS];
@@ -1641,7 +1641,7 @@ static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, PHB_ITEM 
   pNames[0] = szMethodName;
 
   for (HB_SIZE nPos = 1; nPos <= nLen; ++nPos) {
-    PHB_ITEM pKey = hb_hashGetKeyAt(pHash, nPos);
+    HB_ITEM *pKey = hb_hashGetKeyAt(pHash, nPos);
     if (pKey->isString()) {
       pNames[iArgs + 1] =
           const_cast<HB_WCHAR *>(hb_itemGetStrU16(pKey, HB_CDP_ENDIAN_NATIVE, &phStrings[iArgs], nullptr));
@@ -1667,7 +1667,7 @@ static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, PHB_ITEM 
 static void PutParams(DISPPARAMS *dispparam, uint32_t uiOffset, uint16_t uiClass)
 {
   VARIANTARG *pRefs = &dispparam->rgvarg[dispparam->cArgs];
-  PHB_ITEM pItem = nullptr;
+  HB_ITEM *pItem = nullptr;
 
   if (dispparam->cNamedArgs > 0) {
     ++uiOffset;
@@ -2132,7 +2132,7 @@ HB_FUNC(WIN_OLEAUTO___ONERROR)
 
   if (iPCount >= 1 && HB_ISHASH(1)) {
     // named parameters are passed in hash array
-    PHB_ITEM pArgs[HB_OLE_MAX_NAMEDARGS];
+    HB_ITEM *pArgs[HB_OLE_MAX_NAMEDARGS];
     DISPID pDispIds[HB_OLE_MAX_NAMEDARGS + 1];
     UINT uiNamedArgs;
 

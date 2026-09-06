@@ -344,7 +344,7 @@ void *__hbwapi_parv_handle(int n, int i)
     return hb_parvptr(n, i);
 }
 
-void *hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
+void *hbwapi_itemGet_HANDLE(HB_ITEM *pItem)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   if (pItem && pItem->isNumeric()) {
@@ -355,7 +355,7 @@ void *hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
 }
 
 // pArray must not be nullptr
-void *hbwapi_arrayGet_HANDLE(PHB_ITEM pArray, HB_SIZE nIndex)
+void *hbwapi_arrayGet_HANDLE(HB_ITEM *pArray, HB_SIZE nIndex)
 {
   return hbwapi_itemGet_HANDLE(hb_arrayGetItemPtr(pArray, nIndex));
 }

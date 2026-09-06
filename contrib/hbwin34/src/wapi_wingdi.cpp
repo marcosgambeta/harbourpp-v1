@@ -57,7 +57,7 @@
 #include <hbapierr.hpp>
 #include <winspool.h>
 
-static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char *pszKey, long v)
+static void s_hb_hashSetCItemNL(HB_ITEM *pHash, const char *pszKey, long v)
 {
   auto pKey = hb_itemPutC(nullptr, pszKey);
   auto pValue = hb_itemPutNL(nullptr, v);
@@ -68,7 +68,7 @@ static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char *pszKey, long v)
   hb_itemRelease(pKey);
 }
 
-static void s_hb_hashSetCItemC(PHB_ITEM pHash, const char *pszKey, const TCHAR *v, HB_SIZE l)
+static void s_hb_hashSetCItemC(HB_ITEM *pHash, const char *pszKey, const TCHAR *v, HB_SIZE l)
 {
   auto pKey = hb_itemPutC(nullptr, pszKey);
   auto pValue = HB_ITEMPUTSTRLEN(nullptr, v, l);
