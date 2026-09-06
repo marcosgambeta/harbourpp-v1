@@ -111,8 +111,8 @@ struct _HB_CONSRV
    HB_BOOL        rpc;
    HB_BOOL        login;
    HB_SYMB *      rpcFunc;
-   PHB_ITEM       rpcFilter;
-   PHB_ITEM       mutex;
+   HB_ITEM *      rpcFilter;
+   HB_ITEM *      mutex;
    PHB_CONSTREAM  streams;
    HB_MAXUINT     wr_count;
    HB_MAXUINT     rd_count;
@@ -950,7 +950,7 @@ HB_FUNC(NETIO_SERVER)
                         HB_SIZE itmSize = 0;
                         char * itmData = nullptr;
                         const char * pszAttr = size2 ? reinterpret_cast<const char*>(msg) : nullptr;
-                        PHB_ITEM pResult = hb_fileDirectory(pszDirSpec, pszAttr);
+                        HB_ITEM *pResult = hb_fileDirectory(pszDirSpec, pszAttr);
 
                         errFsCode = hb_fsError();
 
@@ -1299,7 +1299,7 @@ HB_FUNC(NETIO_SERVER)
                      }
                      else
                      {
-                        PHB_ITEM pValue = nullptr;
+                        HB_ITEM *pValue = nullptr;
 
                         if( size > 0 )
                         {
@@ -1682,7 +1682,7 @@ HB_FUNC(NETIO_SERVER)
                      else
                      {
                         HB_DYNS *pDynSym = nullptr;
-                        PHB_ITEM pItem = nullptr;
+                        HB_ITEM *pItem = nullptr;
 
                         if( conn->rpcFilter )
                         {
@@ -1801,7 +1801,7 @@ HB_FUNC(NETIO_SERVER)
                                  if( uiMsg == NETIO_FUNC || uiMsg == NETIO_FUNCCTRL )
                                  {
                                     HB_SIZE itmSize;
-                                    PHB_ITEM pResult = hb_stackReturnItem();
+                                    HB_ITEM *pResult = hb_stackReturnItem();
                                     char * itmData = hb_itemSerialize(pResult, HB_SERIALIZE_NUMSIZE, &itmSize);
                                     if( itmSize <= sizeof(buffer) - NETIO_MSGLEN )
                                     {
@@ -1915,7 +1915,7 @@ HB_FUNC(NETIO_SERVEDCONNECTION)
 
       if( nOffset > 0 )
       {
-         PHB_ITEM pItem = hb_stackItem(nOffset + 2);
+         HB_ITEM *pItem = hb_stackItem(nOffset + 2);
 
          if( hb_itemGetPtrGC(pItem, &s_gcConSrvFuncs) != nullptr )
          {
@@ -2074,7 +2074,7 @@ HB_FUNC(NETIO_SRVSTATUS)
          {
             void * addr;
             unsigned int len;
-            PHB_ITEM pItem = nullptr;
+            HB_ITEM *pItem = nullptr;
 
             if( hb_socketGetPeerName(hb_sockexGetHandle(conn->sock), &addr, &len) == 0 )
             {

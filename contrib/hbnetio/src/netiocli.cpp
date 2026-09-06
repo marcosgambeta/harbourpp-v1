@@ -99,7 +99,7 @@ struct _HB_SRVDATA
 {
    int      id;
    int      type;
-   PHB_ITEM array;
+   HB_ITEM *array;
    char *   data;
    HB_SIZE  size;
    HB_SIZE  bufsize;
@@ -114,7 +114,7 @@ struct _HB_CONCLI
 {
    HB_COUNTER          used;
    HB_COUNTER          usrcount;
-   PHB_ITEM            mutex;
+   HB_ITEM *           mutex;
    HB_ERRCODE          errcode;
    int                 timeout;
    int                 port;
@@ -351,7 +351,7 @@ static HB_BOOL s_fileRecvSrvData(PHB_CONCLI conn, long len, int iStreamID, int i
             {
                HB_SIZE nSize = len;
                const char * data = buffer;
-               PHB_ITEM pItem = hb_itemDeserialize(&data, &nSize);
+               HB_ITEM *pItem = hb_itemDeserialize(&data, &nSize);
 
                if( pItem != nullptr )
                {
@@ -1495,7 +1495,7 @@ static HB_BOOL s_netio_procexec(int iMsg, int iType)
 
                if( nResult > 0 )
                {
-                  PHB_ITEM pItem = nullptr;
+                  HB_ITEM *pItem = nullptr;
                   HB_SIZE nRecv;
 
                   if( nResult > size && buffer )
@@ -1863,9 +1863,9 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uin
    return dResult;
 }
 
-static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr)
+static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr)
 {
-   PHB_ITEM pDirArray = nullptr;
+   HB_ITEM *pDirArray = nullptr;
 
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -2324,7 +2324,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
    return pszResult;
 }
 
-static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths, HB_ITEM *pError)
 {
    PHB_FILE pFile = nullptr;
    const char * pszFile = pszFileName;
@@ -2705,7 +2705,7 @@ static void s_fileCommit(PHB_FILE pFile)
    }
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue)
 {
    bool fResult = false;
 
@@ -2742,7 +2742,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
             nRecv = s_fileRecvAll(pFile->conn, buffer, static_cast<long>(nResult));
             if( nRecv == nResult && pValue )
             {
-               PHB_ITEM pResult = hb_itemDeserialize(&data, &nResult);
+               HB_ITEM *pResult = hb_itemDeserialize(&data, &nResult);
 
                if( pResult )
                {
