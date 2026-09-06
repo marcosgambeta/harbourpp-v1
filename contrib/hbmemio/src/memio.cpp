@@ -370,7 +370,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsRename(const char * szName, const char * szNewNa
    return true;
 }
 
-HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory(const char * pszDirSpec, const char * pszAttr)
+HB_MEMFS_EXPORT HB_ITEM *hb_memfsDirectory(const char * pszDirSpec, const char * pszAttr)
 {
    PHB_MEMFS_DIRENTRY pDirEn = nullptr;
    char *   pszFree = nullptr;
@@ -946,7 +946,7 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uin
    return 0.0;
 }
 
-static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr)
+static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    return hb_memfsDirectory(pszDirSpec + FILE_PREFIX_LEN, pszAttr);
@@ -1009,7 +1009,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
    return nullptr;
 }
 
-static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * szName, const char * szDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * szName, const char * szDefExt, HB_FATTR nExFlags, const char * pPaths, HB_ITEM *pError)
 {
    HB_FHANDLE hFile;
    char       szNameNew[HB_PATH_MAX];
@@ -1135,7 +1135,7 @@ static void s_fileCommit(PHB_FILE pFile)
    hb_memfsCommit(pFile->hFile);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue)
 {
    HB_SYMBOL_UNUSED(pFile);
 
