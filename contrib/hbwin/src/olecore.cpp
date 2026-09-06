@@ -1447,7 +1447,7 @@ void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjF
     break;
 
   case VT_UINT | VT_BYREF:
-    *V_UINTREF(pVariant) = static_cast<unsigned int>(hb_itemGetNI(pItem));
+    *V_UINTREF(pVariant) = static_cast<uint32_t>(hb_itemGetNI(pItem));
     break;
 
   case VT_ERROR | VT_BYREF:
