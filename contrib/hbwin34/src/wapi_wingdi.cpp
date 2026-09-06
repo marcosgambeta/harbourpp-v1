@@ -79,7 +79,7 @@ static void s_hb_hashSetCItemC(HB_ITEM *pHash, const char *pszKey, const TCHAR *
   hb_itemRelease(pKey);
 }
 
-POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
+POINT *hbwapi_par_POINT(POINT *p, int32_t iParam, HB_BOOL bMandatory)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -102,7 +102,7 @@ POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
   return nullptr;
 }
 
-void hbwapi_stor_SIZE(const SIZE *p, int iParam)
+void hbwapi_stor_SIZE(const SIZE *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -126,7 +126,7 @@ void hbwapi_stor_SIZE(const SIZE *p, int iParam)
   }
 }
 
-void hbwapi_stor_POINT(const POINT *p, int iParam)
+void hbwapi_stor_POINT(const POINT *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -150,7 +150,7 @@ void hbwapi_stor_POINT(const POINT *p, int iParam)
   }
 }
 
-RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
+RECT *hbwapi_par_RECT(RECT *p, int32_t iParam, HB_BOOL bMandatory)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -177,7 +177,7 @@ RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
   return nullptr;
 }
 
-void hbwapi_stor_RECT(const RECT *p, int iParam)
+void hbwapi_stor_RECT(const RECT *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -205,7 +205,7 @@ void hbwapi_stor_RECT(const RECT *p, int iParam)
   }
 }
 
-LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
+LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int32_t iParam, HB_BOOL bMandatory)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -276,7 +276,7 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
   return nullptr;
 }
 
-LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int iParam)
+LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
@@ -329,7 +329,7 @@ LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int iParam)
   return p;
 }
 
-DOCINFO *hbwapi_par_DOCINFO(DOCINFO *p, int iParam, HB_BOOL bMandatory, void ***ph)
+DOCINFO *hbwapi_par_DOCINFO(DOCINFO *p, int32_t iParam, HB_BOOL bMandatory, void ***ph)
 {
   auto pStru = hb_param(iParam, Harbour::Item::HASH);
   auto h = static_cast<void **>(hb_xgrabz(3 * sizeof(void *)));
@@ -609,7 +609,7 @@ HB_FUNC(WAPI_SETTEXTALIGN)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hb_retni(static_cast<int>(SetTextAlign(hDC, hbwapi_par_UINT(2))));
+    hb_retni(static_cast<int32_t>(SetTextAlign(hDC, hbwapi_par_UINT(2))));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -620,7 +620,7 @@ HB_FUNC(WAPI_GETTEXTALIGN)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hb_retni(static_cast<int>(GetTextAlign(hDC)));
+    hb_retni(static_cast<int32_t>(GetTextAlign(hDC)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -632,7 +632,7 @@ HB_FUNC(WAPI_GETTEXTEXTENTPOINT32)
   void *hData;
   HB_SIZE nDataLen;
   LPCTSTR lpData = HB_PARSTR(2, &hData, &nDataLen);
-  hbwapi_ret_L(GetTextExtentPoint32(hbwapi_par_HDC(1), lpData, static_cast<int>(nDataLen), &size));
+  hbwapi_ret_L(GetTextExtentPoint32(hbwapi_par_HDC(1), lpData, static_cast<int32_t>(nDataLen), &size));
   hbwapi_stor_SIZE(&size, 3);
   hb_strfree(hData);
 }
@@ -646,7 +646,7 @@ HB_FUNC(WAPI_TEXTOUT)
     void *hData;
     HB_SIZE nDataLen;
     LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
-    hbwapi_ret_L(TextOut(hDC, hb_parni(2) /* iRow */, hb_parni(3) /* iCol */, lpData, static_cast<int>(nDataLen)));
+    hbwapi_ret_L(TextOut(hDC, hb_parni(2) /* iRow */, hb_parni(3) /* iCol */, lpData, static_cast<int32_t>(nDataLen)));
     hb_strfree(hData);
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -958,7 +958,7 @@ HB_FUNC(WAPI_GETSTOCKOBJECT)
   hbwapi_ret_raw_HGDIOBJ(GetStockObject(hbwapi_par_INT(1)));
 }
 
-static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC *p, int iParam)
+static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC *p, int32_t iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 

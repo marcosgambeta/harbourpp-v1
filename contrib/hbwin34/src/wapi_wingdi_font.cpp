@@ -73,7 +73,7 @@ HB_FUNC(WAPI_REMOVEFONTRESOURCE)
 HB_FUNC(WAPI_ADDFONTRESOURCEEX)
 {
   void *hFileName;
-  int iResult = AddFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
+  int32_t iResult = AddFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
   hb_strfree(hFileName);
   hb_retni(iResult);
 }

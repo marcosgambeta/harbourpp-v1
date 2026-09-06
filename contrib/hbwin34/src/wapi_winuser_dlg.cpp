@@ -79,8 +79,8 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
       // TODO: rethink this. Called proc can do this on its own,
       //       no need to pass calculated params. Or, think of
       //       some generic solution.
-      hb_vmPushInteger(static_cast<int>(HIWORD(wParam)));
-      hb_vmPushInteger(static_cast<int>(LOWORD(wParam)));
+      hb_vmPushInteger(static_cast<int32_t>(HIWORD(wParam)));
+      hb_vmPushInteger(static_cast<int32_t>(LOWORD(wParam)));
       hb_vmDo(6);
     } else {
       hb_vmPushNumInt(wParam);
@@ -123,7 +123,7 @@ HB_FUNC(WAPI_CHECKDLGBUTTON)
 
 HB_FUNC(WAPI_ISDLGBUTTONCHECKED)
 {
-  int iResult = IsDlgButtonChecked(hbwapi_par_raw_HWND(1), hb_parni(2));
+  int32_t iResult = IsDlgButtonChecked(hbwapi_par_raw_HWND(1), hb_parni(2));
   hbwapi_SetLastError(GetLastError());
   hb_retni(iResult);
 }
@@ -145,7 +145,7 @@ HB_FUNC(WAPI_GETDLGITEMTEXT)
       static_cast<HB_SIZE>(SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)), WM_GETTEXTLENGTH, 0, 0));
   auto lpResult = static_cast<TCHAR *>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
   auto nResult = static_cast<HB_SIZE>(
-      GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, static_cast<int>(nSize + 1)));
+      GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, static_cast<int32_t>(nSize + 1)));
   hbwapi_SetLastError(GetLastError());
   HB_RETSTRLEN(lpResult, nResult);
   hb_xfree(lpResult);
@@ -163,7 +163,7 @@ HB_FUNC(WAPI_GETDLGITEM)
 HB_FUNC(WAPI_COMBOBOX_ADDSTRING)
 {
   void *hStr;
-  int iResult = ComboBox_AddString(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr));
+  int32_t iResult = ComboBox_AddString(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
   hb_strfree(hStr);

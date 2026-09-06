@@ -105,7 +105,7 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
   if (s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0)) {
     if (s_pHarbourEntryFunc != nullptr) {
       if (hb_vmRequestReenterExt()) {
-        int iArgCount = 0;
+        int32_t iArgCount = 0;
 
         if (!s_pHarbourControlFunc) {
           // We report the running status to SCM.

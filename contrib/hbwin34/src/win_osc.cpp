@@ -153,18 +153,18 @@ HB_FUNC(WIN_OSVERSIONINFO)
 {
   auto pArray = hb_itemArrayNew(5);
 
-  int iMajor = 4;
-  int iMinor = 0;
+  int32_t iMajor = 4;
+  int32_t iMinor = 0;
 
   typedef struct
   {
-    int iMajor;
-    int iMinor;
+    int32_t iMajor;
+    int32_t iMinor;
   } HB_ISWINVER;
 
   static const HB_ISWINVER s_vers[] = {{10, 0}, {6, 3}, {6, 2}, {6, 1}, {6, 0}, {5, 2}, {5, 1}, {5, 0}};
 
-  for (auto pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos) {
+  for (auto pos = 0; pos < static_cast<int32_t>(HB_SIZEOFARRAY(s_vers)); ++pos) {
     if (hb_iswinver(s_vers[pos].iMajor, s_vers[pos].iMinor, 0, (pos == 0))) {
       iMajor = s_vers[pos].iMajor;
       iMinor = s_vers[pos].iMinor;

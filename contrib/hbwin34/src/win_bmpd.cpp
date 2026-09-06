@@ -63,8 +63,8 @@
 #define _JPEG_CS_RGB 2
 #define _JPEG_CS_CMYK 3
 
-static int hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
-                             int *piBPC)
+static int32_t hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int32_t *piHeight, int32_t *piWidth, int32_t *piColorSpace,
+                             int32_t *piBPC)
 {
   HB_SIZE nPos = 0;
 
@@ -75,16 +75,16 @@ static int hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *pi
   uint8_t bpc = 0;
 
   if (piHeight) {
-    *piHeight = static_cast<int>(height);
+    *piHeight = static_cast<int32_t>(height);
   }
   if (piWidth) {
-    *piWidth = static_cast<int>(width);
+    *piWidth = static_cast<int32_t>(width);
   }
   if (piColorSpace) {
-    *piColorSpace = static_cast<int>(colorspace);
+    *piColorSpace = static_cast<int32_t>(colorspace);
   }
   if (piBPC) {
-    *piBPC = static_cast<int>(bpc);
+    *piBPC = static_cast<int32_t>(bpc);
   }
 
   if (nPos >= nBufferSize) {
@@ -159,13 +159,13 @@ static int hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *pi
   }
 
   if (piHeight) {
-    *piHeight = static_cast<int>(height);
+    *piHeight = static_cast<int32_t>(height);
   }
   if (piWidth) {
-    *piWidth = static_cast<int>(width);
+    *piWidth = static_cast<int32_t>(width);
   }
   if (piBPC) {
-    *piBPC = static_cast<int>(bpc);
+    *piBPC = static_cast<int32_t>(bpc);
   }
   if (piColorSpace) {
     switch (colorspace) {
@@ -216,15 +216,15 @@ static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 le
   hb_png_read_data->bOk = (length == pos);
 }
 
-static int hb_png_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
-                            int *piBPC)
+static int32_t hb_png_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int32_t *piHeight, int32_t *piWidth, int32_t *piColorSpace,
+                            int32_t *piBPC)
 {
   png_structp png_ptr;
   png_infop info_ptr;
   png_byte header[8];
 
   HB_PNG_READ hb_png_read_data;
-  int iResult;
+  int32_t iResult;
 
   if (piHeight) {
     *piHeight = 0;
@@ -273,16 +273,16 @@ static int hb_png_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int *piH
   if (hb_png_read_data.bOk) {
     png_uint_32 width;
     png_uint_32 height;
-    int bit_depth;
-    int color_type;
+    int32_t bit_depth;
+    int32_t color_type;
 
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr);
 
     if (piHeight) {
-      *piHeight = static_cast<int>(height);
+      *piHeight = static_cast<int32_t>(height);
     }
     if (piWidth) {
-      *piWidth = static_cast<int>(width);
+      *piWidth = static_cast<int32_t>(width);
     }
     if (piBPC) {
       *piBPC = bit_depth;
@@ -308,10 +308,10 @@ HB_FUNC(WIN_BITMAPDIMENSIONS)
   const void *buffer = hb_parc(1);
   auto nSize = hb_parclen(1);
 
-  int iType = hbwin_bitmapType(buffer, nSize);
+  int32_t iType = hbwin_bitmapType(buffer, nSize);
 
-  int iHeight = 0;
-  int iWidth = 0;
+  int32_t iHeight = 0;
+  int32_t iWidth = 0;
   bool bRetVal = false;
 
   if (iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER)) {

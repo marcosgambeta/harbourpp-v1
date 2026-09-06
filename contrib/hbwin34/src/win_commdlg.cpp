@@ -107,7 +107,7 @@ HB_FUNC(WIN_CHOOSECOLOR)
 
   void *hTpl;
 
-  for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); ++i) {
+  for (auto i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(crCustClr)); ++i) {
     crCustClr[i] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
   }
 

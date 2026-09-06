@@ -147,8 +147,8 @@ HB_FUNC(WIN_TEXTOUT)
       }
 
       if (iWidth < 0 && nLen < 1024) {
-        auto n = static_cast<int>(nLen);
-        int aFixed[1024];
+        auto n = static_cast<int32_t>(nLen);
+        int32_t aFixed[1024];
 
         iWidth = -iWidth;
 
@@ -161,7 +161,7 @@ HB_FUNC(WIN_TEXTOUT)
         }
       } else if (ExtTextOut(hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), nullptr)) {
         SIZE sSize;
-        GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen),
+        GetTextExtentPoint32(hDC, lpData, static_cast<int32_t>(nLen),
                              &sSize);          // Get the length of the text in device size
         lResult = static_cast<long>(sSize.cx); // return the width so we can update the current pen position (::PosY)
       }
@@ -192,7 +192,7 @@ HB_FUNC(WIN_GETTEXTSIZE)
     if (nLen > 0) {
       SIZE sSize;
 
-      GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize); // Get the length of the text in device size
+      GetTextExtentPoint32(hDC, lpData, static_cast<int32_t>(nLen), &sSize); // Get the length of the text in device size
 
       if (hb_parldef(4, true)) {
         lResult = static_cast<long>(sSize.cx); // return the width
@@ -247,8 +247,8 @@ HB_FUNC(WIN_CREATEFONT)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    int iHeight;
-    int iWidth;
+    int32_t iHeight;
+    int32_t iWidth;
     auto iWeight = hb_parni(6);
 
     void *hfFaceName;
@@ -353,7 +353,7 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
             IDOK) {
           DWORD dmFields = 0, fMode;
           bool fUserDialog;
-          int iProp, iProp2;
+          int32_t iProp, iProp2;
 
           fUserDialog = HB_ISBYREF(3) || HB_ISBYREF(4) || HB_ISBYREF(5) || HB_ISBYREF(6) || HB_ISBYREF(7) ||
                         HB_ISBYREF(8) || HB_ISBYREF(9) || HB_ISBYREF(10) || HB_ISBYREF(11);
@@ -474,7 +474,7 @@ HB_FUNC(WIN_GETDOCUMENTPROPERTIES)
   hb_retl(bResult);
 }
 
-static int CALLBACK FontEnumCallBack(LOGFONT *lplf, TEXTMETRIC *lpntm, DWORD dwFontType, LPVOID pArray)
+static int32_t CALLBACK FontEnumCallBack(LOGFONT *lplf, TEXTMETRIC *lpntm, DWORD dwFontType, LPVOID pArray)
 {
   auto pSubItems = hb_itemArrayNew(4);
 
@@ -652,7 +652,7 @@ HB_FUNC(WIN_ELLIPSE)
 HB_FUNC(WIN_SETBKMODE)
 {
   HDC hDC = hbwapi_par_HDC(1);
-  int iMode = 0;
+  int32_t iMode = 0;
 
   if (hDC != nullptr) {
     iMode = HB_ISNUM(2) ? SetBkMode(hDC, hb_parni(2)) : GetBkMode(hDC);

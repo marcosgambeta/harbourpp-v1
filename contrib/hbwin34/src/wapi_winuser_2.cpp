@@ -51,7 +51,7 @@ HB_FUNC(WAPI_MESSAGEBOX)
 {
   void *hStr1;
   void *hStr2;
-  int iResult = MessageBox(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr),
+  int32_t iResult = MessageBox(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr),
                            hbwapi_par_INT(4));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);

@@ -187,8 +187,8 @@ HB_FUNC(WAPI_IMAGELIST_GETICON)
 // BOOL ImageList_GetIconSize(HIMAGELIST himl, int *cx, int *cy);
 HB_FUNC(WAPI_IMAGELIST_GETICONSIZE)
 {
-  int cx;
-  int cy;
+  int32_t cx;
+  int32_t cy;
 
   if (ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy)) {
     hb_retl(true);
@@ -541,7 +541,7 @@ HB_FUNC(WAPI_TABCTRL_SETMINTABWIDTH)
 #if 0
    hbwapi_ret_NI(TabCtrl_SetMinTabWidth(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)));
 #endif
-  hbwapi_ret_NI(static_cast<int>(
+  hbwapi_ret_NI(static_cast<int32_t>(
       SendMessage(hbwapi_par_raw_HWND(1), TCM_SETMINTABWIDTH, 0, static_cast<LPARAM>(hbwapi_par_INT(2)))));
 }
 
@@ -625,7 +625,7 @@ HB_FUNC(WAPI_TABCTRL_CREATE)
 // not an API
 HB_FUNC(WAPI_TABCTRL_ADDITEM)
 {
-  int iCount = TabCtrl_GetItemCount(hbwapi_par_raw_HWND(1));
+  int32_t iCount = TabCtrl_GetItemCount(hbwapi_par_raw_HWND(1));
 
   void *hText;
 
@@ -1159,7 +1159,7 @@ HB_FUNC(WAPI_TREEVIEW_SORTCHILDREN)
 }
 
 #if 0
-// BOOL TreeView_SortChildrenCB(HWND hwndTV, LPTVSORTCB psort, BOOL fRecurse); 
+// BOOL TreeView_SortChildrenCB(HWND hwndTV, LPTVSORTCB psort, BOOL fRecurse);
 HB_FUNC(WAPI_TREEVIEW_SORTCHILDRENCB)
 {
    hbwapi_ret_L(TreeView_SortChildrenCB(hbwapi_par_raw_HWND(1), hbwapi_par_raw_TVSORTCB(2), hbwapi_par_BOOL(3)));

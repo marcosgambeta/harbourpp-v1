@@ -82,12 +82,12 @@ void hbwapi_ret_HDC(HDC p)
   }
 }
 
-HB_BOOL hbwapi_is_HDC(int iParam)
+HB_BOOL hbwapi_is_HDC(int32_t iParam)
 {
   return hb_parptrGC(&s_gc_HDC_funcs, iParam) != nullptr;
 }
 
-HDC hbwapi_par_HDC(int iParam)
+HDC hbwapi_par_HDC(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HDC_funcs, iParam));
 
@@ -123,12 +123,12 @@ void hbwapi_ret_HPEN(HPEN p)
   }
 }
 
-HB_BOOL hbwapi_is_HPEN(int iParam)
+HB_BOOL hbwapi_is_HPEN(int32_t iParam)
 {
   return hb_parptrGC(&s_gc_HPEN_funcs, iParam) != nullptr;
 }
 
-HPEN hbwapi_par_HPEN(int iParam)
+HPEN hbwapi_par_HPEN(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HPEN_funcs, iParam));
 
@@ -164,12 +164,12 @@ void hbwapi_ret_HBRUSH(HBRUSH p)
   }
 }
 
-HB_BOOL hbwapi_is_HBRUSH(int iParam)
+HB_BOOL hbwapi_is_HBRUSH(int32_t iParam)
 {
   return hb_parptrGC(&s_gc_HBRUSH_funcs, iParam) != nullptr;
 }
 
-HBRUSH hbwapi_par_HBRUSH(int iParam)
+HBRUSH hbwapi_par_HBRUSH(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HBRUSH_funcs, iParam));
 
@@ -205,12 +205,12 @@ void hbwapi_ret_HFONT(HFONT p)
   }
 }
 
-HB_BOOL hbwapi_is_HFONT(int iParam)
+HB_BOOL hbwapi_is_HFONT(int32_t iParam)
 {
   return hb_parptrGC(&s_gc_HFONT_funcs, iParam) != nullptr;
 }
 
-HFONT hbwapi_par_HFONT(int iParam)
+HFONT hbwapi_par_HFONT(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_HFONT_funcs, iParam));
 
@@ -246,12 +246,12 @@ void hbwapi_ret_PDEVMODE(PDEVMODE p)
   }
 }
 
-HB_BOOL hbwapi_is_PDEVMODE(int iParam)
+HB_BOOL hbwapi_is_PDEVMODE(int32_t iParam)
 {
   return hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam) != nullptr;
 }
 
-PDEVMODE hbwapi_par_PDEVMODE(int iParam)
+PDEVMODE hbwapi_par_PDEVMODE(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam));
 
@@ -278,7 +278,7 @@ HB_FUNC(__WAPI_TYPE)
 }
 
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
-static int s_iDbgUnsafeMode = 2; // 0 = disallow, 1 = trace, 2 = trace + RTE, other = allow
+static int32_t s_iDbgUnsafeMode = 2; // 0 = disallow, 1 = trace, 2 = trace + RTE, other = allow
 
 HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
 {
@@ -291,7 +291,7 @@ HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
 
 // The goal is to minimize numeric pointers circulating
 // on .prg level, so make them visible.
-static HB_BOOL s_handle_trace(int n)
+static HB_BOOL s_handle_trace(int32_t n)
 {
   if (hb_vmInternalsEnabled()) {
     switch (s_iDbgUnsafeMode) {
@@ -324,7 +324,7 @@ HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
 }
 #endif
 
-void *__hbwapi_par_handle(int n)
+void *__hbwapi_par_handle(int32_t n)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   if (HB_ISNUM(n)) {
@@ -334,7 +334,7 @@ void *__hbwapi_par_handle(int n)
     return hb_parptr(n);
 }
 
-void *__hbwapi_parv_handle(int n, int i)
+void *__hbwapi_parv_handle(int32_t n, int32_t i)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   if (HB_ISNUM(n)) {
@@ -360,7 +360,7 @@ void *hbwapi_arrayGet_HANDLE(HB_ITEM *pArray, HB_SIZE nIndex)
   return hbwapi_itemGet_HANDLE(hb_arrayGetItemPtr(pArray, nIndex));
 }
 
-HB_BOOL hbwapi_is_HANDLE(int iParam)
+HB_BOOL hbwapi_is_HANDLE(int32_t iParam)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
   return hb_param(iParam, Harbour::Item::POINTER | Harbour::Item::NUMERIC) != nullptr;

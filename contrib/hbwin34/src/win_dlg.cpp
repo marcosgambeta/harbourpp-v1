@@ -87,7 +87,7 @@ HB_FUNC(WIN_PRINTDLGDC)
   }
 }
 
-static LPTSTR s_dialogPairs(int iParam, DWORD *pdwIndex)
+static LPTSTR s_dialogPairs(int32_t iParam, DWORD *pdwIndex)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
   LPTSTR lpStr = nullptr;

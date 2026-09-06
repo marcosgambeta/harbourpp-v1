@@ -136,8 +136,8 @@ typedef struct _SHNAMEMAPPING
 {
   LPTSTR pszOldPath;
   LPTSTR pszNewPath;
-  int cchOldPath;
-  int cchNewPath;
+  int32_t cchOldPath;
+  int32_t cchNewPath;
 } SHNAMEMAPPING, *LPSHNAMEMAPPING;
 
 #endif // End MinGW-w64 detection
@@ -149,7 +149,7 @@ typedef struct
   LPSHNAMEMAPPING lpSHNameMapping;
 } HANDLETOMAPPINGS;
 
-static LPTSTR s_StringList(int iParam)
+static LPTSTR s_StringList(int32_t iParam)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
   LPTSTR lpStr = nullptr;
@@ -218,7 +218,7 @@ HB_FUNC(WIN_SHFILEOPERATION)
   fop.hNameMappings = nullptr;
   fop.lpszProgressTitle = HB_PARSTR(8, &hProgressTitle, nullptr);
 
-  int iRetVal = SHFileOperation(&fop);
+  int32_t iRetVal = SHFileOperation(&fop);
   hbwapi_SetLastError(GetLastError());
 
   hb_storl(fop.fAnyOperationsAborted, 6);

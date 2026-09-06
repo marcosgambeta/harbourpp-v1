@@ -99,7 +99,7 @@ HB_FUNC(WAPI_ISZOOMED)
 #if 0
 HB_FUNC(WAPI_GETSYSTEMMETRICS) // TODO: deprecated (using waGetSystemMetrics from WinApi library)
 {
-   int iResult = GetSystemMetrics(hbwapi_par_INT(1));
+   int32_t iResult = GetSystemMetrics(hbwapi_par_INT(1));
    hbwapi_SetLastError(GetLastError());
    hbwapi_ret_NI(iResult);
 }
@@ -128,11 +128,11 @@ HB_FUNC(WAPI_MESSAGEBEEP)
   hbwapi_ret_L(bResult);
 }
 
-static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
+static int32_t s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                IN WORD wLanguageId, IN DWORD dwMilliseconds)
 {
   // undocumented Windows API
-  typedef int(__stdcall * _HB_MSGBOXTOUT)(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
+  typedef int32_t(__stdcall * _HB_MSGBOXTOUT)(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCaption, IN UINT uType,
                                           IN WORD wLanguageId, IN DWORD dwMilliseconds);
   static auto s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);
 
@@ -152,7 +152,7 @@ HB_FUNC(WAPI_MESSAGEBOXTIMEOUT)
 {
   void *hStr1;
   void *hStr2;
-  int iResult =
+  int32_t iResult =
       s_MessageBoxTimeout(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr),
                           hbwapi_par_UINT(4), hbwapi_par_WORD(5), hbwapi_par_DWORD(6));
   hbwapi_SetLastError(GetLastError());
@@ -224,7 +224,7 @@ HB_FUNC(WAPI_DRAWTEXT)
     void *hText;
     HB_SIZE nTextLen;
     LPCTSTR lpText = HB_PARSTR(2, &hText, &nTextLen);
-    hbwapi_ret_NI(DrawText(hDC, lpText, static_cast<int>(nTextLen), &rc, hbwapi_par_UINT(4)));
+    hbwapi_ret_NI(DrawText(hDC, lpText, static_cast<int32_t>(nTextLen), &rc, hbwapi_par_UINT(4)));
     hb_strfree(hText);
     hbwapi_stor_RECT(&rc, 3);
   } else {
@@ -309,7 +309,7 @@ HB_FUNC(WAPI_GETSCROLLINFO)
 // int GetScrollPos(HWND hWnd, int nBar);
 HB_FUNC(WAPI_GETSCROLLPOS)
 {
-  int iResult = GetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
+  int32_t iResult = GetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
   DWORD dwLastError = GetLastError();
   hbwapi_SetLastError(dwLastError);
   hbwapi_ret_NI(iResult);
@@ -318,7 +318,7 @@ HB_FUNC(WAPI_GETSCROLLPOS)
 // BOOL GetScrollRange(HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos);
 HB_FUNC(WAPI_GETSCROLLRANGE)
 {
-  int minPos, maxPos;
+  int32_t minPos, maxPos;
   BOOL bSuccess = GetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), &minPos, &maxPos);
   DWORD dwLastError = GetLastError();
   hb_storni(minPos, 3);
@@ -357,7 +357,7 @@ HB_FUNC(WAPI_SETSCROLLINFO)
 // int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw);
 HB_FUNC(WAPI_SETSCROLLPOS)
 {
-  int iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
+  int32_t iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
 }
@@ -506,7 +506,7 @@ HB_FUNC(WAPI_TRACKPOPUPMENU)
 
 HB_FUNC(WAPI_ENABLEMENUITEM)
 {
-  int iResult = EnableMenuItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
+  int32_t iResult = EnableMenuItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
 }
@@ -686,7 +686,7 @@ HB_FUNC(WAPI_GETMENUSTATE)
 
 HB_FUNC(WAPI_GETMENUITEMCOUNT)
 {
-  int iResult = GetMenuItemCount(hbwapi_par_raw_HMENU(1));
+  int32_t iResult = GetMenuItemCount(hbwapi_par_raw_HMENU(1));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_NI(iResult);
 }
@@ -727,7 +727,7 @@ HB_FUNC(WAPI_CREATEACCELERATORTABLE)
 {
   HACCEL hAccel = nullptr;
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  int iEntries = pArray ? static_cast<int>(hb_arrayLen(pArray)) : 0;
+  int32_t iEntries = pArray ? static_cast<int32_t>(hb_arrayLen(pArray)) : 0;
 
   if (iEntries > 0) {
     auto lpAccel = static_cast<LPACCEL>(hb_xgrab(sizeof(ACCEL) * iEntries));
@@ -860,7 +860,7 @@ HB_FUNC(WAPI_SETWINDOWTEXT)
 HB_FUNC(WAPI_GETWINDOWTEXT)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  int nLen = GetWindowTextLength(hWnd);
+  int32_t nLen = GetWindowTextLength(hWnd);
   auto szText = static_cast<TCHAR *>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
   nLen = GetWindowText(hWnd, szText, nLen + 1);
   hbwapi_SetLastError(GetLastError());
@@ -1083,12 +1083,12 @@ HB_FUNC(WAPI_SCREENTOCLIENT)
 
 HB_FUNC(WAPI_LOWORD)
 {
-  hb_retni(static_cast<int>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
+  hb_retni(static_cast<int32_t>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
 HB_FUNC(WAPI_HIWORD)
 {
-  hb_retni(static_cast<int>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
+  hb_retni(static_cast<int32_t>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
 HB_FUNC(WAPI_MAKELPARAM)

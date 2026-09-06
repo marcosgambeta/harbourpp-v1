@@ -170,27 +170,27 @@ extern HB_EXPORT HMODULE    hbwapi_LoadLibrarySystemVM( const char * szFileName 
 extern HB_EXPORT void       hbwapi_SetLastError( DWORD dwLastError );
 extern HB_EXPORT DWORD      hbwapi_GetLastError( void );
 
-extern HB_EXPORT POINT *    hbwapi_par_POINT( POINT * p, int iParam, HB_BOOL bMandatory );
-extern HB_EXPORT RECT *     hbwapi_par_RECT( RECT * p, int iParam, HB_BOOL bMandatory );
-extern HB_EXPORT LOGFONT *  hbwapi_par_LOGFONT( LOGFONT * p, int iParam, HB_BOOL bMandatory );
-extern HB_EXPORT LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam );
-extern HB_EXPORT DOCINFO *  hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** h );
+extern HB_EXPORT POINT *    hbwapi_par_POINT( POINT * p, int32_t iParam, HB_BOOL bMandatory );
+extern HB_EXPORT RECT *     hbwapi_par_RECT( RECT * p, int32_t iParam, HB_BOOL bMandatory );
+extern HB_EXPORT LOGFONT *  hbwapi_par_LOGFONT( LOGFONT * p, int32_t iParam, HB_BOOL bMandatory );
+extern HB_EXPORT LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int32_t iParam );
+extern HB_EXPORT DOCINFO *  hbwapi_par_DOCINFO( DOCINFO * p, int32_t iParam, HB_BOOL bMandatory, void *** h );
 
-extern HB_EXPORT void       hbwapi_stor_SIZE( const SIZE * p, int iParam );
-extern HB_EXPORT void       hbwapi_stor_POINT( const POINT * p, int iParam );
-extern HB_EXPORT void       hbwapi_stor_RECT( const RECT * p, int iParam );
+extern HB_EXPORT void       hbwapi_stor_SIZE( const SIZE * p, int32_t iParam );
+extern HB_EXPORT void       hbwapi_stor_POINT( const POINT * p, int32_t iParam );
+extern HB_EXPORT void       hbwapi_stor_RECT( const RECT * p, int32_t iParam );
 
-extern HB_EXPORT HB_BOOL    hbwapi_is_HDC(int iParam);
-extern HB_EXPORT HB_BOOL    hbwapi_is_HPEN( int iParam );
-extern HB_EXPORT HB_BOOL    hbwapi_is_HBRUSH( int iParam );
-extern HB_EXPORT HB_BOOL    hbwapi_is_HFONT( int iParam );
-extern HB_EXPORT HB_BOOL    hbwapi_is_PDEVMODE( int iParam );
+extern HB_EXPORT HB_BOOL    hbwapi_is_HDC(int32_t iParam);
+extern HB_EXPORT HB_BOOL    hbwapi_is_HPEN( int32_t iParam );
+extern HB_EXPORT HB_BOOL    hbwapi_is_HBRUSH( int32_t iParam );
+extern HB_EXPORT HB_BOOL    hbwapi_is_HFONT( int32_t iParam );
+extern HB_EXPORT HB_BOOL    hbwapi_is_PDEVMODE( int32_t iParam );
 
-extern HB_EXPORT HDC        hbwapi_par_HDC(int iParam);
-extern HB_EXPORT HPEN       hbwapi_par_HPEN( int iParam );
-extern HB_EXPORT HBRUSH     hbwapi_par_HBRUSH( int iParam );
-extern HB_EXPORT HFONT      hbwapi_par_HFONT( int iParam );
-extern HB_EXPORT PDEVMODE   hbwapi_par_PDEVMODE( int iParam );
+extern HB_EXPORT HDC        hbwapi_par_HDC(int32_t iParam);
+extern HB_EXPORT HPEN       hbwapi_par_HPEN( int32_t iParam );
+extern HB_EXPORT HBRUSH     hbwapi_par_HBRUSH( int32_t iParam );
+extern HB_EXPORT HFONT      hbwapi_par_HFONT( int32_t iParam );
+extern HB_EXPORT PDEVMODE   hbwapi_par_PDEVMODE( int32_t iParam );
 
 extern HB_EXPORT void       hbwapi_ret_HDC(HDC p);
 extern HB_EXPORT void       hbwapi_ret_HPEN( HPEN p );
@@ -198,15 +198,15 @@ extern HB_EXPORT void       hbwapi_ret_HBRUSH( HBRUSH p );
 extern HB_EXPORT void       hbwapi_ret_HFONT( HFONT p );
 extern HB_EXPORT void       hbwapi_ret_PDEVMODE( PDEVMODE p );
 
-extern HB_EXPORT HB_BOOL    hbwapi_is_HANDLE( int iParam );
+extern HB_EXPORT HB_BOOL    hbwapi_is_HANDLE( int32_t iParam );
 
 extern HB_EXPORT void *     hbwapi_itemGet_HANDLE( HB_ITEM *pItem );
 extern HB_EXPORT void *     hbwapi_arrayGet_HANDLE( HB_ITEM *pArray, HB_SIZE nIndex );
 
-extern HB_EXPORT void *     __hbwapi_par_handle( int n );
-extern HB_EXPORT void *     __hbwapi_parv_handle( int n, int i );
+extern HB_EXPORT void *     __hbwapi_par_handle( int32_t n );
+extern HB_EXPORT void *     __hbwapi_parv_handle( int32_t n, int32_t i );
 
-extern HB_EXPORT int        hbwin_bitmapType( const void * pImgBuf, HB_SIZE size );
+extern HB_EXPORT int32_t        hbwin_bitmapType( const void * pImgBuf, HB_SIZE size );
 
 HB_EXTERN_END
 
