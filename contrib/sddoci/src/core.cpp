@@ -106,9 +106,9 @@ struct SDDDATA
   OCI_Statement *pStmt;
 };
 
-static HB_ERRCODE ocilibConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE ocilibConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE ocilibDisconnect(SQLDDCONNECTION *pConnection);
-static HB_ERRCODE ocilibExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE ocilibExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE ocilibClose(SQLBASEAREAP pArea);
 static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
@@ -195,7 +195,7 @@ static char *ocilibGetError(HB_ERRCODE *pErrCode)
   int iNativeErr;
 
   if (err) {
-    PHB_ITEM pRet = M_HB_ITEMPUTSTR(nullptr, OCI_ErrorGetString(err));
+    HB_ITEM *pRet = M_HB_ITEMPUTSTR(nullptr, OCI_ErrorGetString(err));
     szRet = hb_strdup(hb_itemGetCPtr(pRet));
     hb_itemRelease(pRet);
     iNativeErr = OCI_ErrorGetOCICode(err);
@@ -213,7 +213,7 @@ static char *ocilibGetError(HB_ERRCODE *pErrCode)
 
 /* --- SDD METHODS --- */
 
-static HB_ERRCODE ocilibConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE ocilibConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   void *hConn;
   void *hUser;
@@ -245,7 +245,7 @@ static HB_ERRCODE ocilibDisconnect(SQLDDCONNECTION *pConnection)
   return errCode;
 }
 
-static HB_ERRCODE ocilibExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE ocilibExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   OCI_Statement *st = OCI_StatementCreate((static_cast<SDDCONN *>(pConnection->pSDDConn))->pConn);
 
@@ -340,7 +340,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
     }
 
     DBFIELDINFO dbFieldInfo{};
-    PHB_ITEM pName = D_HB_ITEMPUTSTR(nullptr, OCI_ColumnGetName(col));
+    HB_ITEM *pName = D_HB_ITEMPUTSTR(nullptr, OCI_ColumnGetName(col));
     dbFieldInfo.atomName = hb_itemGetCPtr(pName);
 
     unsigned int uiDataType = OCI_ColumnGetType(col);
@@ -513,7 +513,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
     auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
-    PHB_ITEM pItem = nullptr;
+    HB_ITEM *pItem = nullptr;
 
     for (uint16_t ui = 1; ui <= pArea->area.uiFieldCount; ++ui) {
       LPFIELD pField = pArea->area.lpFields + ui - 1;
