@@ -127,34 +127,34 @@
 
 HB_EXTERN_BEGIN
 
-typedef HB_BOOL ( *HB_OLEOBJ_FUNC )( VARIANT *, PHB_ITEM );
+typedef HB_BOOL ( *HB_OLEOBJ_FUNC )( VARIANT *, HB_ITEM *);
 typedef void ( *HB_OLE_DESTRUCTOR_FUNC )( void * );
 
 extern HB_EXPORT HB_BOOL     hb_oleInit( void );
 extern HB_EXPORT HRESULT     hb_oleGetError( void );
 extern HB_EXPORT void        hb_oleSetError( HRESULT lOleError );
-extern HB_EXPORT void        hb_oleDispatchToItem( PHB_ITEM pItem, IDispatch * pdispVal, uint16_t uiClass );
-extern HB_EXPORT IDispatch * hb_oleItemGetDispatch( PHB_ITEM pItem );
-extern HB_EXPORT void        hb_oleVariantToItem( PHB_ITEM pItem, VARIANT * pVariant );
-extern HB_EXPORT void        hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, uint16_t uiClass );
-extern HB_EXPORT void        hb_oleItemToVariant( VARIANT * pVariant, PHB_ITEM pItem );
-extern HB_EXPORT void        hb_oleItemToVariantEx( VARIANT * pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjFunc );
-extern HB_EXPORT void        hb_oleVariantUpdate( VARIANT * pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjFunc );
-extern HB_EXPORT VARIANT *   hb_oleItemGetVariant( PHB_ITEM pItem );
-extern HB_EXPORT PHB_ITEM    hb_oleItemPutVariant( PHB_ITEM pItem, VARIANT * pVariant, HB_BOOL fMove );
+extern HB_EXPORT void        hb_oleDispatchToItem( HB_ITEM *pItem, IDispatch * pdispVal, uint16_t uiClass );
+extern HB_EXPORT IDispatch * hb_oleItemGetDispatch( HB_ITEM *pItem );
+extern HB_EXPORT void        hb_oleVariantToItem( HB_ITEM *pItem, VARIANT * pVariant );
+extern HB_EXPORT void        hb_oleVariantToItemEx( HB_ITEM *pItem, VARIANT * pVariant, uint16_t uiClass );
+extern HB_EXPORT void        hb_oleItemToVariant( VARIANT * pVariant, HB_ITEM *pItem );
+extern HB_EXPORT void        hb_oleItemToVariantEx( VARIANT * pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjFunc );
+extern HB_EXPORT void        hb_oleVariantUpdate( VARIANT * pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjFunc );
+extern HB_EXPORT VARIANT *   hb_oleItemGetVariant( HB_ITEM *pItem );
+extern HB_EXPORT HB_ITEM    *hb_oleItemPutVariant( HB_ITEM *pItem, VARIANT * pVariant, HB_BOOL fMove );
 extern HB_EXPORT IDispatch * hb_oleParam( int iParam );
-extern HB_EXPORT IDispatch * hb_oleItemGet( PHB_ITEM pItem );
-extern HB_EXPORT PHB_ITEM    hb_oleItemPut( PHB_ITEM pItem, IDispatch * pDisp );
-extern HB_EXPORT PHB_ITEM    hb_oleItemGetCallBack( PHB_ITEM pItem );
-extern HB_EXPORT void        hb_oleItemSetCallBack( PHB_ITEM pItem, PHB_ITEM * pCallBack );
-extern HB_EXPORT HB_BOOL     hb_oleDispInvoke( HB_SYMB *pSym, PHB_ITEM pObject, PHB_ITEM pParam,
+extern HB_EXPORT IDispatch * hb_oleItemGet( HB_ITEM *pItem );
+extern HB_EXPORT HB_ITEM    *hb_oleItemPut( HB_ITEM *pItem, IDispatch * pDisp );
+extern HB_EXPORT HB_ITEM    *hb_oleItemGetCallBack( HB_ITEM *pItem );
+extern HB_EXPORT void        hb_oleItemSetCallBack( HB_ITEM *pItem, HB_ITEM ** pCallBack );
+extern HB_EXPORT HB_BOOL     hb_oleDispInvoke( HB_SYMB *pSym, HB_ITEM *pObject, HB_ITEM *pParam,
                                               DISPPARAMS * pParams, VARIANT * pVarResult,
                                               HB_OLEOBJ_FUNC pObjFunc, uint16_t uiClass );
-extern HB_EXPORT void        hb_oleItemSetDestructor( PHB_ITEM pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void * cargo );
+extern HB_EXPORT void        hb_oleItemSetDestructor( HB_ITEM *pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void * cargo );
 
 // ActiveX control
 extern HB_EXPORT HB_BOOL     hb_oleAxInit( void );
-extern HB_EXPORT PHB_ITEM    hb_oleAxControlNew( PHB_ITEM pItem, HWND hWnd );
+extern HB_EXPORT HB_ITEM    *hb_oleAxControlNew( HB_ITEM *pItem, HWND hWnd );
 
 HB_EXTERN_END
 

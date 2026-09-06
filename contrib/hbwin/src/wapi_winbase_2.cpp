@@ -147,7 +147,7 @@ HB_FUNC(WAPI_QUERYDOSDEVICE)
   hbwapi_SetLastError(GetLastError());
   if (dwResult) {
     auto pArray = hb_itemArrayNew(0);
-    PHB_ITEM pItem = nullptr;
+    HB_ITEM *pItem = nullptr;
     DWORD dwPos, dwStart;
 
     dwPos = dwStart = 0;

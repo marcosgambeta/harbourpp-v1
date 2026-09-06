@@ -70,7 +70,7 @@ static void hb_errRT_OLE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCOD
 
   if (hb_pcount() != 0) {
     // HB_ERR_ARGS_BASEPARAMS
-    PHB_ITEM pArray = hb_arrayBaseParams();
+    HB_ITEM *pArray = hb_arrayBaseParams();
     hb_errPutArgsArray(pError, pArray);
     hb_itemRelease(pArray);
   }
@@ -120,7 +120,7 @@ HB_FUNC(WIN_AXINIT)
   hb_retl(hb_oleAxInit());
 }
 
-PHB_ITEM hb_oleAxControlNew(PHB_ITEM pItem, HWND hWnd)
+HB_ITEM *hb_oleAxControlNew(HB_ITEM *pItem, HWND hWnd)
 {
   IUnknown *pUnk = nullptr;
   IDispatch *pDisp = nullptr;
@@ -229,7 +229,7 @@ struct ISink
   IConnectionPoint *pConnectionPoint;
   DWORD dwCookie;
   IID rriid;
-  PHB_ITEM pItemHandler;
+  HB_ITEM *pItemHandler;
   uint16_t uiClass;
 };
 
@@ -302,7 +302,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch *lpThis, REFIID riid, L
 static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID riid, LCID lcid, WORD wFlags,
                                         DISPPARAMS *pParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
 {
-  PHB_ITEM pAction;
+  HB_ITEM *pAction;
   HRESULT hr;
 
   HB_SYMBOL_UNUSED(lcid);
@@ -585,7 +585,7 @@ HB_FUNC(__AXREGISTERHANDLER) // (pDisp, bHandler [, cIID]) --> pSink
           lOleError = HB_VTBL(pCPC)->FindConnectionPoint(HB_THIS_(pCPC) HB_ID_REF(rriid), &pCP);
 
           if (lOleError == S_OK) {
-            PHB_ITEM pOleItem;
+            HB_ITEM *pOleItem;
             DWORD dwCookie = 0;
 
             auto pSink = static_cast<ISink *>(hb_xgrab(sizeof(ISink))); // TODO: GlobalAlloc/Free GMEM_FIXED ???

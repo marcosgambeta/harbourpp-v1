@@ -153,7 +153,7 @@ struct HANDLETOMAPPINGS
 static LPTSTR s_StringList(int iParam)
 {
   auto pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
-  PHB_ITEM pArrItem;
+  HB_ITEM *pArrItem;
   LPTSTR lpStr = nullptr;
 
   if (pItem != nullptr) {

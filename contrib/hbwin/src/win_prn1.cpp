@@ -484,7 +484,7 @@ static int CALLBACK FontEnumCallBack(LOGFONT *lplf, TEXTMETRIC *lpntm, DWORD dwF
   hb_arraySetL(pSubItems, 2, (lplf->lfPitchAndFamily & FIXED_PITCH) != 0);
   hb_arraySetL(pSubItems, 3, (dwFontType & TRUETYPE_FONTTYPE) != 0);
   hb_arraySetNL(pSubItems, 4, lpntm->tmCharSet);
-  hb_arrayAddForward(reinterpret_cast<PHB_ITEM>(pArray), pSubItems);
+  hb_arrayAddForward(reinterpret_cast<HB_ITEM *>(pArray), pSubItems);
 
   hb_itemRelease(pSubItems);
 

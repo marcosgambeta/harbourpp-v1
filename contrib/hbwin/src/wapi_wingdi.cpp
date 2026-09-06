@@ -59,7 +59,7 @@
 // For Arc()
 #include <winspool.h>
 
-static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char *pszKey, long v)
+static void s_hb_hashSetCItemNL(HB_ITEM *pHash, const char *pszKey, long v)
 {
   auto pKey = hb_itemPutC(nullptr, pszKey);
   auto pValue = hb_itemPutNL(nullptr, v);

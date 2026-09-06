@@ -105,7 +105,7 @@ HB_FUNC(WIN_PRINTEREXISTS)
   hb_retl(bResult);
 }
 
-static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
+static void hb_GetDefaultPrinter(HB_ITEM *pPrinterName)
 {
   bool bResult = false;
 
@@ -181,7 +181,7 @@ HB_FUNC(WIN_PRINTERSTATUS)
 {
   long nStatus = HB_WIN_PRINTER_STATUS_ERROR;
 
-  PHB_ITEM pPrinterName = hb_itemParam(1);
+  HB_ITEM *pPrinterName = hb_itemParam(1);
 
   if (hb_itemGetCLen(pPrinterName) == 0) {
     hb_GetDefaultPrinter(pPrinterName);
