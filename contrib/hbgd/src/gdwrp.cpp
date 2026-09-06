@@ -135,7 +135,7 @@ static void hb_retGdImage(gdImagePtr im)
 
 #if 0
 /* Function returns PHB_ITEM with gdImage pointer */
-static PHB_ITEM hb_gdImageItemNew( gdImagePtr im )
+static HB_ITEM *hb_gdImageItemNew( gdImagePtr im )
 {
    auto ptr = static_cast<gdImagePtr*>(hb_gcAllocate( sizeof(gdImagePtr), &s_gcGDimageFuncs));
 
@@ -195,7 +195,7 @@ static void hb_retGdFont(gdFontPtr font)
 
 #if 0
 /* Function returns PHB_ITEM with gdFont pointer */
-static PHB_ITEM hb_gdFontItemNew( gdFontPtr font )
+static HB_ITEM *hb_gdFontItemNew( gdFontPtr font )
 {
    auto ptr = static_cast<gdFontPtr*>(hb_gcAllocate(sizeof(gdFontPtr), &s_gcGDfontFuncs));
 
