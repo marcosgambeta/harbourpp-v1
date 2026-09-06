@@ -66,9 +66,9 @@ typedef struct
 
 typedef struct
 {
-   int             iType;
-   int             iError;
-   int             iCol;
+   int32_t             iType;
+   int32_t             iError;
+   int32_t             iCol;
    char *          szCode;
    HB_BITBUFFER *  pBits;
 } HB_ZEBRA, * PHB_ZEBRA;
@@ -82,8 +82,8 @@ extern HB_EXPORT unsigned char *  hb_bitbuffer_buffer( HB_BITBUFFER *pBitBuffer 
 extern HB_EXPORT bool             hb_bitbuffer_get( HB_BITBUFFER *pBitBuffer, HB_SIZE nPos );
 extern HB_EXPORT void             hb_bitbuffer_set( HB_BITBUFFER *pBitBuffer, HB_SIZE nPos, bool fValue );
 extern HB_EXPORT void             hb_bitbuffer_not( HB_BITBUFFER *pBitBuffer, HB_SIZE nPos );
-extern HB_EXPORT void             hb_bitbuffer_cat_int( HB_BITBUFFER *pBitBuffer, int iValue, int iLen );
-extern HB_EXPORT void             hb_bitbuffer_cat_int_rev( HB_BITBUFFER *pBitBuffer, int iValue, int iLen );
+extern HB_EXPORT void             hb_bitbuffer_cat_int( HB_BITBUFFER *pBitBuffer, int32_t iValue, int32_t iLen );
+extern HB_EXPORT void             hb_bitbuffer_cat_int_rev( HB_BITBUFFER *pBitBuffer, int32_t iValue, int32_t iLen );
 
 extern HB_EXPORT HB_ZEBRA     *hb_zebra_create( void );
 extern HB_EXPORT void          hb_zebra_destroy( HB_ZEBRA *pZebra );
@@ -91,7 +91,7 @@ extern HB_EXPORT void          hb_zebra_destroy( HB_ZEBRA *pZebra );
 extern HB_EXPORT HB_ZEBRA     *hb_zebraItemGet( HB_ITEM *pItem );
 extern HB_EXPORT HB_ITEM      *hb_zebraItemPut( HB_ITEM *pItem, HB_ZEBRA *pZebra );
 extern HB_EXPORT void          hb_zebraItemClear( HB_ITEM *pItem );
-extern HB_EXPORT HB_ZEBRA     *hb_zebra_param( int iParam );
+extern HB_EXPORT HB_ZEBRA     *hb_zebra_param( int32_t iParam );
 extern HB_EXPORT void          hb_zebra_ret( HB_ZEBRA *pZebra );
 
 HB_EXTERN_END
