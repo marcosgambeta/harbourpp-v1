@@ -26,6 +26,9 @@ CPP_SOURCES := \
    inkey.cpp \
    inkeyapi.cpp \
    maxrow.cpp \
+   mouse53.cpp \
+   mouseapi.cpp \
+   mousehb.cpp \
    saverest.cpp \
    scroll.cpp \
    scrrow.cpp \

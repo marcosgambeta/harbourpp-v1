@@ -105,9 +105,6 @@ CPP_SOURCES := \
    minmax.cpp \
    mlcfunc.cpp \
    mod.cpp \
-   mouse53.cpp \
-   mouseapi.cpp \
-   mousehb.cpp \
    mtran.cpp \
    natmsg.cpp \
    natmsgu.cpp \
@@ -213,6 +210,9 @@ CPP_SOURCES := \
 #   inkey.cpp \ (moved to gtl)
 #   inkeyapi.cpp \ (moved to gtl)
 #   maxrow.cpp \ (moved to gtl)
+#   mouse53.cpp \ (moved to gtl)
+#   mouseapi.cpp \ (moved to gtl)
+#   mousehb.cpp \ (moved to gtl)
 #   saverest.cpp \ (moved to gtl)
 #   scroll.cpp \ (moved to gtl)
 #   scrrow.cpp \ (moved to gtl)
