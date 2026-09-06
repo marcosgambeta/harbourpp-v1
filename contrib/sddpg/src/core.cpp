@@ -88,12 +88,12 @@ struct SDDDATA
   PGresult *pResult;
 };
 
-static HB_ERRCODE pgsqlConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE pgsqlConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE pgsqlDisconnect(SQLDDCONNECTION *pConnection);
-static HB_ERRCODE pgsqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE pgsqlExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE pgsqlClose(SQLBASEAREAP pArea);
-static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem);
+static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem);
 
 static SDDNODE s_pgsqldd = {nullptr,
                             "POSTGRESQL",
@@ -160,7 +160,7 @@ static uint16_t hb_errRT_PostgreSQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCo
 
 /* --- SDD METHODS --- */
 
-static HB_ERRCODE pgsqlConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE pgsqlConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   auto pszHost = hb_arrayGetCPtr(pItem, 2);
   PGconn *pConn;
@@ -193,7 +193,7 @@ static HB_ERRCODE pgsqlDisconnect(SQLDDCONNECTION *pConnection)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE pgsqlExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE pgsqlExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   PGconn *pConn = (static_cast<SDDCONN *>(pConnection->pSDDConn))->pConn;
 
@@ -462,7 +462,7 @@ static HB_ERRCODE pgsqlClose(SQLBASEAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, PHB_ITEM pItem)
+static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
   auto pSDDData = static_cast<SDDDATA *>(pArea->pSDDData);
 
