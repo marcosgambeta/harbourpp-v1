@@ -115,9 +115,9 @@ struct SDDDATA
   SQLHSTMT hStmt;
 };
 
-static HB_ERRCODE odbcConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE odbcConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE odbcDisconnect(SQLDDCONNECTION *pConnection);
-static HB_ERRCODE odbcExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
+static HB_ERRCODE odbcExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem);
 static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea);
 static HB_ERRCODE odbcClose(SQLBASEAREAP pArea);
 static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo);
@@ -195,7 +195,7 @@ static char *odbcGetError(SQLHENV hEnv, SQLHDBC hConn, SQLHSTMT hStmt, HB_ERRCOD
 
   if (SQL_SUCCEEDED(SQLError(hEnv, hConn, hStmt, szError, &iNativeErr, szError + 6, SQL_MAX_MESSAGE_LENGTH, &iLen))) {
     szError[5] = ' ';
-    PHB_ITEM pRet = O_HB_ITEMPUTSTR(nullptr, reinterpret_cast<O_HB_CHAR *>(szError));
+    HB_ITEM *pRet = O_HB_ITEMPUTSTR(nullptr, reinterpret_cast<O_HB_CHAR *>(szError));
     szRet = hb_strdup(hb_itemGetCPtr(pRet));
     hb_itemRelease(pRet);
   } else {
@@ -210,7 +210,7 @@ static char *odbcGetError(SQLHENV hEnv, SQLHDBC hConn, SQLHSTMT hStmt, HB_ERRCOD
 
 /* --- SDD METHODS --- */
 
-static HB_ERRCODE odbcConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE odbcConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   SQLHENV hEnv = nullptr;
   SQLHDBC hConnect = nullptr;
@@ -295,7 +295,7 @@ static HB_ERRCODE odbcDisconnect(SQLDDCONNECTION *pConnection)
   return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE odbcExecute(SQLDDCONNECTION *pConnection, PHB_ITEM pItem)
+static HB_ERRCODE odbcExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   auto pSDDConn = static_cast<SDDCONN *>(pConnection->pSDDConn);
   SQLHSTMT hStmt;
@@ -654,7 +654,7 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
   SQLRETURN res;
   SQLLEN iLen;
-  PHB_ITEM pArray, pItem;
+  HB_ITEM *pArray, *pItem;
   LPFIELD pField;
   uint16_t ui;
 
