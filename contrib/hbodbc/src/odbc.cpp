@@ -191,7 +191,7 @@ static SQLHENV hb_SQLHENV_par(int iParam)
 struct HB_SQLHDBC
 {
    SQLHDBC  hDbc;
-   PHB_ITEM pHEnvItm;
+   HB_ITEM *pHEnvItm;
    int      conn_counter;
 };
 
@@ -238,7 +238,7 @@ static const HB_GC_FUNCS s_gcSQLHDBCFuncs =
    hb_SQLHDBC_Mark
 };
 
-static void hb_SQLHDBC_stor(PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam)
+static void hb_SQLHDBC_stor(HB_ITEM *pHEnvItm, SQLHDBC hDbc, int iParam)
 {
    auto pHDbc = static_cast<PHB_SQLHDBC>(hb_gcAllocate(sizeof(HB_SQLHDBC), &s_gcSQLHDBCFuncs));
 
@@ -256,12 +256,12 @@ static void hb_SQLHDBC_stor(PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam)
    hb_storptrGC(static_cast<void*>(pHDbc), iParam);
 }
 
-static PHB_SQLHDBC hb_SQLHDBC_get(PHB_ITEM pItem)
+static PHB_SQLHDBC hb_SQLHDBC_get(HB_ITEM *pItem)
 {
    return static_cast<PHB_SQLHDBC>(hb_itemGetPtrGC(pItem, &s_gcSQLHDBCFuncs));
 }
 
-static HB_BOOL hb_SQLHDBC_check(PHB_ITEM pItem, int conn_counter)
+static HB_BOOL hb_SQLHDBC_check(HB_ITEM *pItem, int conn_counter)
 {
    if( pItem != nullptr ) {
       PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(pItem);
@@ -284,7 +284,7 @@ static SQLHDBC hb_SQLHDBC_par(int iParam)
 struct HB_SQLHSTMT
 {
    SQLHSTMT hStmt;
-   PHB_ITEM pHDbcItm;
+   HB_ITEM *pHDbcItm;
    int      conn_counter;
 };
 
@@ -333,7 +333,7 @@ static const HB_GC_FUNCS s_gcSQLHSTMTFuncs =
    hb_SQLHSTMT_Mark
 };
 
-static void hb_SQLHSTMT_stor(PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam)
+static void hb_SQLHSTMT_stor(HB_ITEM *pHDbcItm, SQLHSTMT hStmt, int iParam)
 {
    auto pHStmt = static_cast<PHB_SQLHSTMT>(hb_gcAllocate(sizeof(HB_SQLHSTMT), &s_gcSQLHSTMTFuncs));
 
