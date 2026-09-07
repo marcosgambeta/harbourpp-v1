@@ -225,17 +225,17 @@ extern volatile bool hb_sln_bScreen_Size_Changed;
 
 extern int32_t hb_sln_Init_Terminal(int32_t phase);
 
-extern int32_t hb_gt_sln_ReadKey(PHB_GT pGT, int32_t iEventMask);
+extern int32_t hb_gt_sln_ReadKey(HB_GT *pGT, int32_t iEventMask);
 
 extern void hb_gt_sln_mouse_Init(void);
 extern void hb_gt_sln_mouse_Exit(void);
-extern HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT);
-extern void hb_gt_sln_mouse_Show(PHB_GT pGT);
-extern void hb_gt_sln_mouse_Hide(PHB_GT pGT);
-extern void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol);
-extern void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol);
-extern int32_t hb_gt_sln_mouse_CountButton(PHB_GT pGT);
-extern HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int32_t iButton);
+extern HB_BOOL hb_gt_sln_mouse_IsPresent(HB_GT *pGT);
+extern void hb_gt_sln_mouse_Show(HB_GT *pGT);
+extern void hb_gt_sln_mouse_Hide(HB_GT *pGT);
+extern void hb_gt_sln_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol);
+extern void hb_gt_sln_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol);
+extern int32_t hb_gt_sln_mouse_CountButton(HB_GT *pGT);
+extern HB_BOOL hb_gt_sln_mouse_ButtonState(HB_GT *pGT, int32_t iButton);
 
 extern void hb_gt_sln_mouse_FixTrash(void);
 extern int32_t hb_gt_sln_mouse_Inkey(int32_t iEventMask, HB_BOOL fCheckNew);

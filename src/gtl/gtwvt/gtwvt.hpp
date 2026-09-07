@@ -265,7 +265,7 @@ using PHB_GTWVT_MNU = HB_GTWVT_MNU *;
 
 struct HB_GTWVT
 {
-  PHB_GT pGT;  // core GT pointer
+  HB_GT *pGT;  // core GT pointer
   int32_t iHandle; // window number
 
   HINSTANCE hInstance; // parent window instance

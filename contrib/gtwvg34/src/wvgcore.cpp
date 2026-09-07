@@ -2703,7 +2703,7 @@ HB_FUNC(WVT_RESTSCREEN)
 HB_FUNC(WVG_GTINFOEX)
 {
   if (HB_ISPOINTER(1) && HB_ISNUM(2)) {
-    PHB_GT pGT = hb_gt_ItemBase(hb_param(1, Harbour::Item::ANY));
+    HB_GT *pGT = hb_gt_ItemBase(hb_param(1, Harbour::Item::ANY));
 
     if (pGT) {
       HB_GT_INFO gtInfo;

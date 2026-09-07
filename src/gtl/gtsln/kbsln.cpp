@@ -287,7 +287,7 @@ int32_t hb_sln_Init_Terminal(int32_t phase)
 
 // ***********************************************************************
 
-int32_t hb_gt_sln_ReadKey(PHB_GT pGT, int32_t iEventMask)
+int32_t hb_gt_sln_ReadKey(HB_GT *pGT, int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(iEventMask)));

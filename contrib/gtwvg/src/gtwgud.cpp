@@ -205,7 +205,7 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
   hb_xfree(pWVT);
 }
 
-static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int32_t iCmdShow)
+static PHB_GTWVT hb_gt_wvt_New(HB_GT *pGT, HINSTANCE hInstance, int32_t iCmdShow)
 {
   PHB_GTWVT pWVT;
 
@@ -1075,7 +1075,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
   hWndParent = nullptr;
 
   if (pWVT->pPP->bConfigured) {
-    PHB_GT pGTp = hb_gt_ItemBase(pWVT->pPP->pParentGT);
+    HB_GT *pGTp = hb_gt_ItemBase(pWVT->pPP->pParentGT);
     if (pGTp) {
       PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
       hWndParent = pWVTp->hWnd;
@@ -1145,7 +1145,7 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow(PHB_GTWVT pWVT)
 
 // GT Specific Functions
 
-static void hb_gt_wvt_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
+static void hb_gt_wvt_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Init(%p,%p,%p,%p)", (void *)pGT, (void *)(uintptr_t)hFilenoStdin,
@@ -1181,7 +1181,7 @@ static void hb_gt_wvt_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 // ---
 
-static void hb_gt_wvt_Exit(PHB_GT pGT)
+static void hb_gt_wvt_Exit(HB_GT *pGT)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Exit(%p)", (void *)pGT));
@@ -1199,7 +1199,7 @@ static void hb_gt_wvt_Exit(PHB_GT pGT)
 
 // ---
 
-static int32_t hb_gt_wvt_ReadKey(PHB_GT pGT, int32_t iEventMask)
+static int32_t hb_gt_wvt_ReadKey(HB_GT *pGT, int32_t iEventMask)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_ReadKey(%p,%d)", (void *)pGT, iEventMask));
@@ -1224,7 +1224,7 @@ static int32_t hb_gt_wvt_ReadKey(PHB_GT pGT, int32_t iEventMask)
 }
 
 // dDuration is in 'Ticks' (18.2 per second)
-static void hb_gt_wvt_Tone(PHB_GT pGT, double dFrequency, double dDuration)
+static void hb_gt_wvt_Tone(HB_GT *pGT, double dFrequency, double dDuration)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Tone(%p,%lf,%lf)", (void *)pGT, dFrequency, dDuration));
@@ -1235,7 +1235,7 @@ static void hb_gt_wvt_Tone(PHB_GT pGT, double dFrequency, double dDuration)
   hb_gt_winapi_tone(dFrequency, dDuration);
 }
 
-static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Info(%p,%d,%p)", (void *)pGT, iType, (void *)pInfo));
@@ -1873,7 +1873,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
 
     break;
   case HB_GTI_ENABLE: {
-    PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
+    HB_GT *pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp) {
       PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
       EnableWindow(pWVTp->hWnd, TRUE);
@@ -1882,7 +1882,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
     break;
   }
   case HB_GTI_DISABLE: {
-    PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
+    HB_GT *pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp) {
       PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
       EnableWindow(pWVTp->hWnd, FALSE);
@@ -1891,7 +1891,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
     break;
   }
   case HB_GTI_SETFOCUS: {
-    PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
+    HB_GT *pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp) {
       PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
       SetFocus(pWVTp->hWnd);

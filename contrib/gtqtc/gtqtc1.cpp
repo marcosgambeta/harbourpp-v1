@@ -1420,7 +1420,7 @@ static void hb_gt_qtc_free(PHB_GTQTC pQTC)
   hb_xfree(pQTC);
 }
 
-static PHB_GTQTC hb_gt_qtc_new(PHB_GT pGT)
+static PHB_GTQTC hb_gt_qtc_new(HB_GT *pGT)
 {
   PHB_GTQTC pQTC;
 
@@ -1834,7 +1834,7 @@ static int32_t hb_gt_qtc_messageBox(PHB_GTQTC pQTC, HB_ITEM *pText, HB_ITEM *pBu
 
 static void hb_gt_qtc_InitMT();
 
-static void hb_gt_qtc_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
+static void hb_gt_qtc_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
   PHB_GTQTC pQTC;
 
@@ -1886,7 +1886,7 @@ static void hb_gt_qtc_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 /* --- */
 
-static void hb_gt_qtc_Exit(PHB_GT pGT)
+static void hb_gt_qtc_Exit(HB_GT *pGT)
 {
   PHB_GTQTC pQTC;
 
@@ -1902,7 +1902,7 @@ static void hb_gt_qtc_Exit(PHB_GT pGT)
 
 /* --- */
 
-static void hb_gt_qtc_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize)
+static void hb_gt_qtc_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize)
 {
   PHB_GTQTC pQTC;
 
@@ -1920,7 +1920,7 @@ static void hb_gt_qtc_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 /* --- */
 
-static void hb_gt_qtc_Refresh(PHB_GT pGT)
+static void hb_gt_qtc_Refresh(HB_GT *pGT)
 {
   PHB_GTQTC pQTC;
 
@@ -1939,7 +1939,7 @@ static void hb_gt_qtc_Refresh(PHB_GT pGT)
 
 /* --- */
 
-static HB_BOOL hb_gt_qtc_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols)
+static HB_BOOL hb_gt_qtc_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols)
 {
   PHB_GTQTC pQTC;
   HB_BOOL fResult, fCenter;
@@ -1963,7 +1963,7 @@ static HB_BOOL hb_gt_qtc_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols)
 
 /* --- */
 
-static const char *hb_gt_qtc_Version(PHB_GT pGT, int32_t iType)
+static const char *hb_gt_qtc_Version(HB_GT *pGT, int32_t iType)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Version(%p,%d)", (void *)pGT, iType));
 
@@ -1987,7 +1987,7 @@ static const char *hb_gt_qtc_Version(PHB_GT pGT, int32_t iType)
 
 /* --- */
 
-static int32_t hb_gt_qtc_ReadKey(PHB_GT pGT, int32_t iEventMask)
+static int32_t hb_gt_qtc_ReadKey(HB_GT *pGT, int32_t iEventMask)
 {
   PHB_GTQTC pQTC;
 
@@ -2016,7 +2016,7 @@ static int32_t hb_gt_qtc_ReadKey(PHB_GT pGT, int32_t iEventMask)
 
 /* --- */
 
-static void hb_gt_qtc_Tone(PHB_GT pGT, double dFrequency, double dDuration)
+static void hb_gt_qtc_Tone(HB_GT *pGT, double dFrequency, double dDuration)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_Tone(%p,%lf,%lf)", (void *)pGT, dFrequency, dDuration));
 
@@ -2030,7 +2030,7 @@ static void hb_gt_qtc_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 
 /* --- */
 
-static HB_BOOL hb_gt_qtc_mouse_IsPresent(PHB_GT pGT)
+static HB_BOOL hb_gt_qtc_mouse_IsPresent(HB_GT *pGT)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_mouse_IsPresent(%p)", (void *)pGT));
 
@@ -2039,7 +2039,7 @@ static HB_BOOL hb_gt_qtc_mouse_IsPresent(PHB_GT pGT)
   return HB_TRUE;
 }
 
-static void hb_gt_qtc_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
+static void hb_gt_qtc_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol)
 {
   PHB_GTQTC pQTC;
 
@@ -2050,7 +2050,7 @@ static void hb_gt_qtc_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
   *piCol = pQTC->mouseCol;
 }
 
-static HB_BOOL hb_gt_qtc_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
+static HB_BOOL hb_gt_qtc_mouse_ButtonState(HB_GT *pGT, int32_t iButton)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_mouse_ButtonState(%p,%i)", (void *)pGT, iButton));
 
@@ -2071,7 +2071,7 @@ static HB_BOOL hb_gt_qtc_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
   return HB_FALSE;
 }
 
-static int32_t hb_gt_qtc_mouse_CountButton(PHB_GT pGT)
+static int32_t hb_gt_qtc_mouse_CountButton(HB_GT *pGT)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_qtc_mouse_CountButton(%p)", (void *)pGT));
 
@@ -2082,7 +2082,7 @@ static int32_t hb_gt_qtc_mouse_CountButton(PHB_GT pGT)
 
 /* --- */
 
-static int32_t hb_gt_qtc_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
+static int32_t hb_gt_qtc_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
   PHB_GTQTC pQTC;
   int32_t iRet;
@@ -2101,7 +2101,7 @@ static int32_t hb_gt_qtc_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
   return iRet;
 }
 
-static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
 {
   PHB_GTQTC pQTC;
   int32_t iVal;
@@ -2670,7 +2670,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
 
 #define hb_gfx_update(x, y, w, h) pQTC->qWnd->qConsole->update(x, y, w, h)
 
-static int32_t hb_gt_qtc_gfx_Primitive(PHB_GT pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor)
+static int32_t hb_gt_qtc_gfx_Primitive(HB_GT *pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor)
 {
   PHB_GTQTC pQTC;
   int32_t iRet = 1;

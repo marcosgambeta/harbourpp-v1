@@ -435,7 +435,7 @@ static void hb_gt_pca_AnsiPutStr(int32_t iRow, int32_t iCol, int32_t iColor, con
   s_iCol += iLen;
 }
 
-static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
+static void hb_gt_pca_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
 #if 0
@@ -536,7 +536,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   hb_gt_pca_AnsiGetCurPos(&s_iRow, &s_iCol);
 }
 
-static void hb_gt_pca_Exit(PHB_GT pGT) // FuncTable
+static void hb_gt_pca_Exit(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Exit(%p)", static_cast<void*>(pGT)));
@@ -571,7 +571,7 @@ static void hb_gt_pca_Exit(PHB_GT pGT) // FuncTable
   s_bStdinConsole = s_bStdoutConsole = s_bStderrConsole = false;
 }
 
-static int32_t hb_gt_pca_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
+static int32_t hb_gt_pca_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -633,7 +633,7 @@ static int32_t hb_gt_pca_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
   return ch;
 }
 
-static void hb_gt_pca_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
+static void hb_gt_pca_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Tone(%p, %lf, %lf)", static_cast<void*>(pGT), dFrequency, dDuration));
@@ -659,7 +659,7 @@ static void hb_gt_pca_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
   hb_gtSleep(pGT, dDuration / 18.2);
 }
 
-static void hb_gt_pca_Bell(PHB_GT pGT) // FuncTable
+static void hb_gt_pca_Bell(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Bell(%p)", static_cast<void*>(pGT)));
@@ -670,7 +670,7 @@ static void hb_gt_pca_Bell(PHB_GT pGT) // FuncTable
   hb_gt_pca_termFlush();
 }
 
-static const char *hb_gt_pca_Version(PHB_GT pGT, int32_t iType) // FuncTable
+static const char *hb_gt_pca_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -685,7 +685,7 @@ static const char *hb_gt_pca_Version(PHB_GT pGT, int32_t iType) // FuncTable
   return "Harbour++ Terminal: PC ANSI";
 }
 
-static HB_BOOL hb_gt_pca_Suspend(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_pca_Suspend(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Suspend(%p)", static_cast<void*>(pGT)));
@@ -702,7 +702,7 @@ static HB_BOOL hb_gt_pca_Suspend(PHB_GT pGT) // FuncTable
   return true;
 }
 
-static HB_BOOL hb_gt_pca_Resume(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_pca_Resume(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Resume(%p)", static_cast<void*>(pGT)));
@@ -719,7 +719,7 @@ static HB_BOOL hb_gt_pca_Resume(PHB_GT pGT) // FuncTable
   return true;
 }
 
-static HB_BOOL hb_gt_pca_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP,
+static HB_BOOL hb_gt_pca_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
 {
 #if 0
@@ -735,7 +735,7 @@ static HB_BOOL hb_gt_pca_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
   return true;
 }
 
-static void hb_gt_pca_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
+static void hb_gt_pca_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
@@ -784,7 +784,7 @@ static void hb_gt_pca_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSi
   }
 }
 
-static void hb_gt_pca_Refresh(PHB_GT pGT) // FuncTable
+static void hb_gt_pca_Refresh(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Refresh(%p)", static_cast<void*>(pGT)));
@@ -816,7 +816,7 @@ static void hb_gt_pca_Refresh(PHB_GT pGT) // FuncTable
   hb_gt_pca_termFlush();
 }
 
-static HB_BOOL hb_gt_pca_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_pca_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));

@@ -289,7 +289,7 @@ class QTCWindow;
 
 struct HB_GTQTC
 {
-   PHB_GT      pGT;                          // core GT pointer
+   HB_GT *     pGT;                          // core GT pointer
 
    QTCWindow * qWnd;                         // console window
    QEventLoop* qEventLoop;                   // event loop used by this window

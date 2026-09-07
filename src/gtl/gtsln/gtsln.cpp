@@ -387,7 +387,7 @@ static void hb_sln_setACSCtrans(void)
 
 // ***********************************************************************
 
-static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
+static void hb_sln_setCharTrans(HB_GT *pGT, bool fBox)
 {
 #if !defined(HB_SLN_UNICODE)
   HB_CODEPAGE *cdpTerm = HB_GTSELF_TERMCP(pGT);
@@ -434,7 +434,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
 }
 
 // ***********************************************************************
-static void hb_sln_setKeyTrans(PHB_GT pGT)
+static void hb_sln_setKeyTrans(HB_GT *pGT)
 {
   HB_CODEPAGE *cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
   const char *p;
@@ -585,7 +585,7 @@ static int32_t hb_sln_isUTF8(int32_t iStdOut, int32_t iStdIn)
 // ***********************************************************************
 
 // I think this function should not be void. It should be HB_BOOL
-static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
+static void hb_gt_sln_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
 #if 0
@@ -726,7 +726,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 // ***********************************************************************
 
-static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
+static void hb_gt_sln_Exit(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Exit(%p)", static_cast<void*>(pGT)));
@@ -755,7 +755,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // FuncTable
+static HB_BOOL hb_gt_sln_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -771,7 +771,7 @@ static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // Fu
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_IsColor(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_sln_IsColor(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_IsColor(%p)", static_cast<void*>(pGT)));
@@ -783,7 +783,7 @@ static HB_BOOL hb_gt_sln_IsColor(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static void hb_gt_sln_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
+static void hb_gt_sln_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
@@ -806,7 +806,7 @@ static void hb_gt_sln_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
 
 // ***********************************************************************
 
-static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
+static void hb_gt_sln_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
@@ -837,7 +837,7 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
 // ***********************************************************************
 
-static const char *hb_gt_sln_Version(PHB_GT pGT, int32_t iType) // FuncTable
+static const char *hb_gt_sln_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Version(%p)", static_cast<void*>(pGT)));
@@ -859,7 +859,7 @@ static const char *hb_gt_sln_Version(PHB_GT pGT, int32_t iType) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_sln_Suspend(HB_GT *pGT) // FuncTable
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -875,7 +875,7 @@ static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_sln_Resume(HB_GT *pGT) // FuncTable
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -892,7 +892,7 @@ static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_PreExt(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_sln_PreExt(HB_GT *pGT) // FuncTable
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -905,7 +905,7 @@ static HB_BOOL hb_gt_sln_PreExt(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_PostExt(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_sln_PostExt(HB_GT *pGT) // FuncTable
 {
   HB_SYMBOL_UNUSED(pGT);
   return true;
@@ -913,7 +913,7 @@ static HB_BOOL hb_gt_sln_PostExt(PHB_GT pGT) // FuncTable
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_sln_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
@@ -945,7 +945,7 @@ static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // F
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP,
+static HB_BOOL hb_gt_sln_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
 {
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
@@ -959,7 +959,7 @@ static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
+static HB_BOOL hb_gt_sln_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
 {
   if (HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP)) {
     if (!hb_sln_Is_Unicode) {
@@ -972,7 +972,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char
 
 // ***********************************************************************
 
-static void hb_gt_sln_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
+static void hb_gt_sln_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
@@ -1018,7 +1018,7 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 // ***********************************************************************
 
-static void hb_gt_sln_Refresh(PHB_GT pGT) // FuncTable
+static void hb_gt_sln_Refresh(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Refresh(%p)", static_cast<void*>(pGT)));

@@ -427,7 +427,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler(DWORD dwCtrlType)
 
 // ***********************************************************************
 
-static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
+static void hb_gt_win_xGetScreenContents(HB_GT *pGT, SMALL_RECT *psrWin)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xGetScreenContents(%p,%p)", static_cast<void*>(pGT), static_cast<void*>(psrWin)));
@@ -471,7 +471,7 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
 
 // ***********************************************************************
 
-static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
+static void hb_gt_win_xInitScreenParam(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xInitScreenParam(%p)", static_cast<void*>(pGT)));
@@ -668,7 +668,7 @@ static bool hb_gt_win_SetCloseButton(bool bSet, bool bClosable)
 
 // ***********************************************************************
 
-static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
+static void hb_gt_win_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
@@ -785,7 +785,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 // ***********************************************************************
 
-static void hb_gt_win_Exit(PHB_GT pGT)
+static void hb_gt_win_Exit(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Exit(%p)", static_cast<void*>(pGT)));
@@ -823,7 +823,7 @@ static void hb_gt_win_Exit(PHB_GT pGT)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols)
+static HB_BOOL hb_gt_win_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -908,7 +908,7 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols)
 
 // ***********************************************************************
 
-static const char *hb_gt_win_Version(PHB_GT pGT, int32_t iType)
+static const char *hb_gt_win_Version(HB_GT *pGT, int32_t iType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -925,7 +925,7 @@ static const char *hb_gt_win_Version(PHB_GT pGT, int32_t iType)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_PostExt(PHB_GT pGT)
+static HB_BOOL hb_gt_win_PostExt(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_PostExt(%p)", static_cast<void*>(pGT)));
@@ -940,7 +940,7 @@ static HB_BOOL hb_gt_win_PostExt(PHB_GT pGT)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_Suspend(PHB_GT pGT)
+static HB_BOOL hb_gt_win_Suspend(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Suspend(%p)", static_cast<void*>(pGT)));
@@ -956,7 +956,7 @@ static HB_BOOL hb_gt_win_Suspend(PHB_GT pGT)
   return true;
 }
 
-static HB_BOOL hb_gt_win_Resume(PHB_GT pGT)
+static HB_BOOL hb_gt_win_Resume(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Resume(%p)", static_cast<void*>(pGT)));
@@ -1124,7 +1124,7 @@ static int32_t SpecialHandling(WORD wScan, int32_t iKey, bool fShifted)
   return iKey;
 }
 
-static int32_t hb_gt_win_ReadKey(PHB_GT pGT, int32_t iEventMask)
+static int32_t hb_gt_win_ReadKey(HB_GT *pGT, int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -1717,7 +1717,7 @@ static int32_t hb_gt_win_ReadKey(PHB_GT pGT, int32_t iEventMask)
 
 // ***********************************************************************
 // dDuration is in 'Ticks' (18.2 per second)
-static void hb_gt_win_Tone(PHB_GT pGT, double dFrequency, double dDuration)
+static void hb_gt_win_Tone(HB_GT *pGT, double dFrequency, double dDuration)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
@@ -1759,7 +1759,7 @@ static bool hb_gt_win_FullScreen(HB_BOOL bFullScreen)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, pInfo));
@@ -1973,27 +1973,27 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_mouse_IsPresent(PHB_GT pGT)
+static HB_BOOL hb_gt_win_mouse_IsPresent(HB_GT *pGT)
 {
   HB_SYMBOL_UNUSED(pGT);
   return s_fMouseEnable;
 }
 
-static void hb_gt_win_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
+static void hb_gt_win_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol)
 {
   HB_SYMBOL_UNUSED(pGT);
   *piRow = s_mouse_row;
   *piCol = s_mouse_col;
 }
 
-static void hb_gt_win_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
+static void hb_gt_win_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol)
 {
   HB_SYMBOL_UNUSED(pGT);
   s_mouse_row = iRow;
   s_mouse_col = iCol;
 }
 
-static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
+static HB_BOOL hb_gt_win_mouse_ButtonState(HB_GT *pGT, int32_t iButton)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -2010,7 +2010,7 @@ static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
   return fReturn;
 }
 
-static int32_t hb_gt_win_mouse_CountButton(PHB_GT pGT)
+static int32_t hb_gt_win_mouse_CountButton(HB_GT *pGT)
 {
   DWORD dwCount = 0;
   HB_SYMBOL_UNUSED(pGT);
@@ -2020,7 +2020,7 @@ static int32_t hb_gt_win_mouse_CountButton(PHB_GT pGT)
 
 // ***********************************************************************
 
-static void hb_gt_win_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize)
+static void hb_gt_win_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
@@ -2057,7 +2057,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 // ***********************************************************************
 
-static void hb_gt_win_Refresh(PHB_GT pGT)
+static void hb_gt_win_Refresh(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Refresh(%p)", static_cast<void*>(pGT)));

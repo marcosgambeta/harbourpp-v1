@@ -378,7 +378,7 @@ void hb_gt_sln_mouse_Exit(void)
 
 // ***********************************************************************
 
-HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT)
+HB_BOOL hb_gt_sln_mouse_IsPresent(HB_GT *pGT)
 {
   HB_SYMBOL_UNUSED(pGT);
   return s_bMousePresent;
@@ -386,7 +386,7 @@ HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT)
 
 // ***********************************************************************
 
-void hb_gt_sln_mouse_Show(PHB_GT pGT)
+void hb_gt_sln_mouse_Show(HB_GT *pGT)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -400,7 +400,7 @@ void hb_gt_sln_mouse_Show(PHB_GT pGT)
 
 // ***********************************************************************
 
-void hb_gt_sln_mouse_Hide(PHB_GT pGT)
+void hb_gt_sln_mouse_Hide(HB_GT *pGT)
 {
   HB_SYMBOL_UNUSED(pGT);
 #if defined(HB_HAS_GPM)
@@ -410,7 +410,7 @@ void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 
 // ***********************************************************************
 
-void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
+void hb_gt_sln_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol)
 {
   HB_SYMBOL_UNUSED(pGT);
   *piRow = s_iMouseRow;
@@ -419,7 +419,7 @@ void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
 
 // ***********************************************************************
 
-void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
+void hb_gt_sln_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -437,7 +437,7 @@ void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
 
 // ***********************************************************************
 
-HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
+HB_BOOL hb_gt_sln_mouse_ButtonState(HB_GT *pGT, int32_t iButton)
 {
   HB_SYMBOL_UNUSED(pGT);
 
@@ -455,7 +455,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int32_t iButton)
 
 // ***********************************************************************
 
-int32_t hb_gt_sln_mouse_CountButton(PHB_GT pGT)
+int32_t hb_gt_sln_mouse_CountButton(HB_GT *pGT)
 {
   HB_SYMBOL_UNUSED(pGT);
   return s_iMouseButtons;

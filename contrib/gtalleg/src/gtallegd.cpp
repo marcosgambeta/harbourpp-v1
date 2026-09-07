@@ -272,7 +272,7 @@ static void hb_gt_alleg_DoCursor(int32_t iRow, int32_t iCol, int32_t iStyle)
    s_iCursorStyle = iStyle;
 }
 
-static void hb_gt_alleg_ScreenUpdate(PHB_GT pGT)
+static void hb_gt_alleg_ScreenUpdate(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_ScreenUpdate(%p)", pGT));
@@ -306,7 +306,7 @@ static void hb_gt_alleg_ScreenUpdate(PHB_GT pGT)
    }
 }
 
-static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int32_t iRows, int32_t iCols, bool lClearInit)
+static bool hb_gt_alleg_InitializeScreen(HB_GT *pGT, int32_t iRows, int32_t iCols, bool lClearInit)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, static_cast<int>(lClearInit)));
@@ -527,7 +527,7 @@ static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int32_t iRows, int32_t iCol
    return lMode;
 }
 
-static void hb_gt_alleg_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr) // FuncTable
+static void hb_gt_alleg_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Init(%p,%p,%p,%p)", pGT, static_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), static_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), static_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
@@ -554,7 +554,7 @@ static void hb_gt_alleg_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFi
    HB_GTSELF_RESIZE(pGT, s_iScrHeight, s_iScrWidth);
 }
 
-static void hb_gt_alleg_Exit(PHB_GT pGT) // FuncTable
+static void hb_gt_alleg_Exit(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Exit(%p)", pGT));
@@ -568,7 +568,7 @@ static void hb_gt_alleg_Exit(PHB_GT pGT) // FuncTable
    }
 }
 
-static const char * hb_gt_alleg_Version(PHB_GT pGT, int32_t iType) // FuncTable
+static const char * hb_gt_alleg_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -579,7 +579,7 @@ static const char * hb_gt_alleg_Version(PHB_GT pGT, int32_t iType) // FuncTable
    return "Harbour++ Terminal: Portable Allegro GUI console";
 }
 
-static HB_BOOL hb_gt_alleg_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // FuncTable
+static HB_BOOL hb_gt_alleg_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_SetMode(%p,%d,%d)", pGT, iRows, iCols));
@@ -590,7 +590,7 @@ static HB_BOOL hb_gt_alleg_SetMode(PHB_GT pGT, int32_t iRows, int32_t iCols) // 
    return hb_gt_alleg_InitializeScreen(pGT, iRows, iCols, true);
 }
 
-static int32_t hb_gt_alleg_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
+static int32_t hb_gt_alleg_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_ReadKey(%p,%d)", pGT, iEventMask));
@@ -691,14 +691,14 @@ static int32_t hb_gt_alleg_ReadKey(PHB_GT pGT, int32_t iEventMask) // FuncTable
    return nKey;
 }
 
-static HB_BOOL hb_gt_alleg_mouse_IsPresent(PHB_GT pGT) // FuncTable
+static HB_BOOL hb_gt_alleg_mouse_IsPresent(HB_GT *pGT) // FuncTable
 {
    HB_SYMBOL_UNUSED(pGT);
 
    return true;
 }
 
-static void hb_gt_alleg_mouse_GetPos(PHB_GT pGT, int32_t * piRow, int32_t * piCol) // FuncTable
+static void hb_gt_alleg_mouse_GetPos(HB_GT *pGT, int32_t * piRow, int32_t * piCol) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -710,14 +710,14 @@ static void hb_gt_alleg_mouse_GetPos(PHB_GT pGT, int32_t * piRow, int32_t * piCo
    *piCol = al_mouse_x / s_byFontWidth;
 }
 
-static void hb_gt_alleg_mouse_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol) // FuncTable
+static void hb_gt_alleg_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
    GT_SCREENINIT();
 
    al_position_mouse(iCol * s_byFontWidth, iRow * s_byFontSize);
 }
 
-static HB_BOOL hb_gt_alleg_mouse_ButtonState(PHB_GT pGT, int32_t iButton) // FuncTable
+static HB_BOOL hb_gt_alleg_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -728,14 +728,14 @@ static HB_BOOL hb_gt_alleg_mouse_ButtonState(PHB_GT pGT, int32_t iButton) // Fun
    return (al_mouse_b & (1 << (iButton - 1))) != 0;
 }
 
-static int32_t hb_gt_alleg_mouse_CountButton(PHB_GT pGT) // FuncTable
+static int32_t hb_gt_alleg_mouse_CountButton(HB_GT *pGT) // FuncTable
 {
    GT_SCREENINIT();
 
    return s_iMsButtons;
 }
 
-static void hb_gt_alleg_mouse_SetBounds(PHB_GT pGT, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight) // FuncTable
+static void hb_gt_alleg_mouse_SetBounds(HB_GT *pGT, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -758,7 +758,7 @@ static void hb_gt_alleg_mouse_SetBounds(PHB_GT pGT, int32_t iTop, int32_t iLeft,
    al_set_mouse_range(s_mouseBound.iLeft, s_mouseBound.iTop, s_mouseBound.iRight, s_mouseBound.iBottom);
 }
 
-static void hb_gt_alleg_mouse_GetBounds(PHB_GT pGT, int32_t * piTop, int32_t * piLeft, int32_t * piBottom, int32_t * piRight) // FuncTable
+static void hb_gt_alleg_mouse_GetBounds(HB_GT *pGT, int32_t * piTop, int32_t * piLeft, int32_t * piBottom, int32_t * piRight) // FuncTable
 {
    GT_SCREENINIT();
 
@@ -768,7 +768,7 @@ static void hb_gt_alleg_mouse_GetBounds(PHB_GT pGT, int32_t * piTop, int32_t * p
    *piRight  = s_mouseBound.iRight;
 }
 
-static HB_BOOL hb_gt_alleg_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Info(%p,%d,%p)", pGT, iType, pInfo));
@@ -884,7 +884,7 @@ static HB_BOOL hb_gt_alleg_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) //
                      if( t > b ) { tmp = b; b = t; t = tmp; } \
                } while( 0 )
 
-static int32_t hb_gt_alleg_gfx_Primitive(PHB_GT pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor) // FuncTable
+static int32_t hb_gt_alleg_gfx_Primitive(HB_GT *pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", pGT, iType, iTop, iLeft, iBottom, iRight, iColor));
@@ -1024,7 +1024,7 @@ static int32_t hb_gt_alleg_gfx_Primitive(PHB_GT pGT, int32_t iType, int32_t iTop
    return iRet;
 }
 
-static void hb_gt_alleg_gfx_Text(PHB_GT pGT, int32_t iTop, int32_t iLeft, const char * cBuf, int32_t iColor, int32_t iSize, int32_t iWidth) // FuncTable
+static void hb_gt_alleg_gfx_Text(HB_GT *pGT, int32_t iTop, int32_t iLeft, const char * cBuf, int32_t iColor, int32_t iSize, int32_t iWidth) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_gfx_Text(%p,%d,%d,%s,%d,%d,%d)", pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth));
@@ -1060,7 +1060,7 @@ static void hb_gt_alleg_gfx_Text(PHB_GT pGT, int32_t iTop, int32_t iLeft, const 
 
 /* ******** Graphics API end ******** */
 
-static void hb_gt_alleg_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
+static void hb_gt_alleg_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Redraw(%p,%d,%d,%d)", pGT, iRow, iCol, iSize));
@@ -1103,7 +1103,7 @@ static void hb_gt_alleg_Redraw(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t i
    }
 }
 
-static void hb_gt_alleg_Refresh(PHB_GT pGT) // FuncTable
+static void hb_gt_alleg_Refresh(HB_GT *pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Refresh(%p)", pGT));

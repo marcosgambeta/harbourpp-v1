@@ -132,7 +132,7 @@ using PHB_CT_WND = HB_CT_WND *;
 
 struct HB_GTCTW
 {
-  PHB_GT pGT;
+  HB_GT *pGT;
   HB_GT_FUNCS SuperTable;
 
   HB_TSD TSD;
@@ -1191,7 +1191,7 @@ static PHB_GTCTW hb_ctw_base()
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_base()"));
 #endif
 
-  PHB_GT pGT;
+  HB_GT *pGT;
 
   pGT = hb_gt_Base();
   if (pGT) {
@@ -1218,7 +1218,7 @@ static PHB_GTCTW hb_ctw_base()
   return nullptr;
 }
 
-static void hb_ctw_gt_Exit(PHB_GT pGT)
+static void hb_ctw_gt_Exit(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_Exit(%p)", static_cast<void*>(pGT)));
@@ -1246,7 +1246,7 @@ static void hb_ctw_gt_Exit(PHB_GT pGT)
   }
 }
 
-static int32_t hb_ctw_MouseRow(PHB_GT pGT)
+static int32_t hb_ctw_MouseRow(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_MouseRow(%p)", static_cast<void*>(pGT)));
@@ -1266,7 +1266,7 @@ static int32_t hb_ctw_MouseRow(PHB_GT pGT)
   return iRow;
 }
 
-static int32_t hb_ctw_MouseCol(PHB_GT pGT)
+static int32_t hb_ctw_MouseCol(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_MouseCol(%p)", static_cast<void*>(pGT)));
@@ -1286,7 +1286,7 @@ static int32_t hb_ctw_MouseCol(PHB_GT pGT)
   return iCol;
 }
 
-static void hb_ctw_gt_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
+static void hb_ctw_gt_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetPos(%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(piRow), static_cast<void*>(piCol)));
@@ -1308,7 +1308,7 @@ static void hb_ctw_gt_GetPos(PHB_GT pGT, int32_t *piRow, int32_t *piCol)
 // CTWIN uses differ rules when set cursor position out of screen visible
 // area then standard Clipper's GT drivers so we have to replicate it in
 // SetPos() method, [druzus]
-static void hb_ctw_gt_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
+static void hb_ctw_gt_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetPos(%p,%d,%d)", static_cast<void*>(pGT), iRow, iCol));
@@ -1346,7 +1346,7 @@ static void hb_ctw_gt_SetPos(PHB_GT pGT, int32_t iRow, int32_t iCol)
   }
 }
 
-static int32_t hb_ctw_gt_MaxCol(PHB_GT pGT)
+static int32_t hb_ctw_gt_MaxCol(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_MaxCol(%p)", static_cast<void*>(pGT)));
@@ -1365,7 +1365,7 @@ static int32_t hb_ctw_gt_MaxCol(PHB_GT pGT)
   }
 }
 
-static int32_t hb_ctw_gt_MaxRow(PHB_GT pGT)
+static int32_t hb_ctw_gt_MaxRow(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_MaxRow(%p)", static_cast<void*>(pGT)));
@@ -1388,7 +1388,7 @@ static int32_t hb_ctw_gt_MaxRow(PHB_GT pGT)
 // GT drivers so we have to overload WRITECON() method, [druzus]
 #define WRITECON_BUFFER_SIZE 512
 
-static void hb_ctw_gt_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
+static void hb_ctw_gt_WriteCon(HB_GT *pGT, const char *szText, HB_SIZE nLength)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_WriteCon(%p,%p,%" HB_PFS "u)", static_cast<void*>(pGT), static_cast<const void*>(szText), nLength));
@@ -1504,7 +1504,7 @@ static void hb_ctw_gt_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
   }
 }
 
-static void hb_ctw_gt_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLength)
+static void hb_ctw_gt_WriteConW(HB_GT *pGT, const HB_WCHAR *szText, HB_SIZE nLength)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_WriteConW(%p,%p,%" HB_PFS "u)", static_cast<void*>(pGT), static_cast<const void*>(szText), nLength));
@@ -1620,7 +1620,7 @@ static void hb_ctw_gt_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
   }
 }
 
-static int32_t hb_ctw_gt_GetCursorStyle(PHB_GT pGT)
+static int32_t hb_ctw_gt_GetCursorStyle(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetCursorStyle(%p)", static_cast<void*>(pGT)));
@@ -1638,7 +1638,7 @@ static int32_t hb_ctw_gt_GetCursorStyle(PHB_GT pGT)
   }
 }
 
-static void hb_ctw_gt_SetCursorStyle(PHB_GT pGT, int32_t iStyle)
+static void hb_ctw_gt_SetCursorStyle(HB_GT *pGT, int32_t iStyle)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_SetCursorStyle(%p,%d)", static_cast<void*>(pGT), iStyle));
@@ -1667,7 +1667,7 @@ static void hb_ctw_gt_SetCursorStyle(PHB_GT pGT, int32_t iStyle)
   }
 }
 
-static void hb_ctw_gt_GetColorStr(PHB_GT pGT, char *pszColorString)
+static void hb_ctw_gt_GetColorStr(HB_GT *pGT, char *pszColorString)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetColorStr(%p,%p)", static_cast<void*>(pGT), static_cast<void*>(pszColorString)));
@@ -1686,7 +1686,7 @@ static void hb_ctw_gt_GetColorStr(PHB_GT pGT, char *pszColorString)
   }
 }
 
-static void hb_ctw_gt_SetColorStr(PHB_GT pGT, const char *szColorString)
+static void hb_ctw_gt_SetColorStr(HB_GT *pGT, const char *szColorString)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_SetColorStr(%p,%s)", static_cast<void*>(pGT), szColorString));
@@ -1706,7 +1706,7 @@ static void hb_ctw_gt_SetColorStr(PHB_GT pGT, const char *szColorString)
   }
 }
 
-static void hb_ctw_gt_ColorSelect(PHB_GT pGT, int32_t iColorIndex)
+static void hb_ctw_gt_ColorSelect(HB_GT *pGT, int32_t iColorIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_ColorSelect(%p,%d)", static_cast<void*>(pGT), iColorIndex));
@@ -1727,7 +1727,7 @@ static void hb_ctw_gt_ColorSelect(PHB_GT pGT, int32_t iColorIndex)
   }
 }
 
-static int32_t hb_ctw_gt_GetColor(PHB_GT pGT)
+static int32_t hb_ctw_gt_GetColor(HB_GT *pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetColor(%p)", static_cast<void*>(pGT)));
@@ -1746,7 +1746,7 @@ static int32_t hb_ctw_gt_GetColor(PHB_GT pGT)
   }
 }
 
-static void hb_ctw_gt_GetColorData(PHB_GT pGT, int32_t **pColorsPtr, int32_t *piColorCount, int32_t *piColorIndex)
+static void hb_ctw_gt_GetColorData(HB_GT *pGT, int32_t **pColorsPtr, int32_t *piColorCount, int32_t *piColorIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetColor(%p,%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(pColorsPtr), static_cast<void*>(piColorCount), static_cast<void*>(piColorIndex)));
@@ -1769,7 +1769,7 @@ static void hb_ctw_gt_GetColorData(PHB_GT pGT, int32_t **pColorsPtr, int32_t *pi
   }
 }
 
-static void hb_ctw_gt_GetScrCursor(PHB_GT pGT, int32_t *piRow, int32_t *piCol, int32_t *piStyle)
+static void hb_ctw_gt_GetScrCursor(HB_GT *pGT, int32_t *piRow, int32_t *piCol, int32_t *piStyle)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetScrCursor(%p,%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(piRow), static_cast<void*>(piCol), static_cast<void*>(piStyle)));
@@ -1800,7 +1800,7 @@ static void hb_ctw_gt_GetScrCursor(PHB_GT pGT, int32_t *piRow, int32_t *piCol, i
   }
 }
 
-static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t *piColor, uint8_t *pbAttr, uint16_t *pusChar)
+static HB_BOOL hb_ctw_gt_GetScrChar(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetScrChar(%p,%d,%d,%p,%p,%p)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1855,7 +1855,7 @@ static HB_BOOL hb_ctw_gt_GetScrChar(PHB_GT pGT, int32_t iRow, int32_t iCol, int3
   return true;
 }
 
-static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t *piColor, uint8_t *pbAttr, uint8_t *puChar,
+static HB_BOOL hb_ctw_gt_GetScrUC(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t *piColor, uint8_t *pbAttr, uint8_t *puChar,
                                   HB_BOOL fTerm)
 {
 #if 0
@@ -1891,7 +1891,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t *piColor, uint8_t *pbAttr, uint16_t *pusChar)
+static HB_BOOL hb_ctw_gt_GetChar(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t *piColor, uint8_t *pbAttr, uint16_t *pusChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_GetChar(%p,%d,%d,%p,%p,%p)", static_cast<void*>(pGT), iRow, iCol, static_cast<void*>(piColor), static_cast<void*>(pbAttr), static_cast<void*>(pusChar)));
@@ -1922,7 +1922,7 @@ static HB_BOOL hb_ctw_gt_GetChar(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t iColor, uint8_t bAttr, uint16_t usChar)
+static HB_BOOL hb_ctw_gt_PutChar(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iColor, uint8_t bAttr, uint16_t usChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iColor, static_cast<int>(bAttr), static_cast<int>(usChar)));
@@ -2005,7 +2005,7 @@ static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int32_t iRow, int32_t iCol, int32_t
   return HB_GTSUPER_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar);
 }
 
-static HB_BOOL hb_ctw_gt_Resize(PHB_GT pGT, int32_t iRows, int32_t iCols)
+static HB_BOOL hb_ctw_gt_Resize(HB_GT *pGT, int32_t iRows, int32_t iCols)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_Resize(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
@@ -2032,7 +2032,7 @@ static HB_BOOL hb_ctw_gt_Resize(PHB_GT pGT, int32_t iRows, int32_t iCols)
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_ctw_gt_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
@@ -2085,7 +2085,7 @@ static HB_BOOL hb_ctw_gt_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo)
   return true;
 }
 
-static int32_t hb_ctw_gt_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
+static int32_t hb_ctw_gt_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_Alert(%p,%p,%p,%d,%d,%f)", static_cast<void*>(pGT), static_cast<void*>(pMessage), static_cast<void*>(pOptions), iClrNorm, iClrHigh, dDelay));
@@ -2285,7 +2285,7 @@ static int32_t hb_ctw_gt_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
   return HB_GTSUPER_ALERT(pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay);
 }
 
-static int32_t hb_ctw_gt_ReadKey(PHB_GT pGT, int32_t iEventMask)
+static int32_t hb_ctw_gt_ReadKey(HB_GT *pGT, int32_t iEventMask)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -2303,7 +2303,7 @@ static int32_t hb_ctw_gt_ReadKey(PHB_GT pGT, int32_t iEventMask)
 }
 
 // helper function
-static HB_U32 hb_ctw_gt_cellValue(PHB_GT pGT, int32_t iRow, int32_t iCol)
+static HB_U32 hb_ctw_gt_cellValue(HB_GT *pGT, int32_t iRow, int32_t iCol)
 {
   HB_SCREENCELL cell;
   int32_t iColor;
@@ -2315,7 +2315,7 @@ static HB_U32 hb_ctw_gt_cellValue(PHB_GT pGT, int32_t iRow, int32_t iCol)
   return cell.uiValue;
 }
 
-static void hb_ctw_gt_RedrawDiff(PHB_GT pGT)
+static void hb_ctw_gt_RedrawDiff(HB_GT *pGT)
 {
   if (HB_GTCTW_GET(pGT)->iOpenWindows == 0) {
     HB_GTSUPER_REDRAWDIFF(pGT);

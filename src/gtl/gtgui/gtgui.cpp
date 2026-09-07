@@ -154,7 +154,7 @@ static int32_t hb_gt_gui_optionPos(int32_t id, int32_t iType, HB_ITEM *pOptions)
   return 0;
 }
 
-static int32_t hb_gt_gui_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh,
+static int32_t hb_gt_gui_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh,
                            double dDelay) // FuncTable
 {
   void *hText;
@@ -218,7 +218,7 @@ static int32_t hb_gt_gui_Alert(PHB_GT pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
 
 // ***********************************************************************
 
-static const char *hb_gt_gui_Version(PHB_GT pGT, int32_t iType) // FuncTable
+static const char *hb_gt_gui_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -235,7 +235,7 @@ static const char *hb_gt_gui_Version(PHB_GT pGT, int32_t iType) // FuncTable
 
 // ***********************************************************************
 // dDuration is in 'Ticks' (18.2 per second)
-static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
+static void hb_gt_gui_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
@@ -252,7 +252,7 @@ static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_gui_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
