@@ -2817,7 +2817,7 @@ static int32_t hb_gt_wvt_mouse_CountButton(HB_GT *pGT)
 
 // ---
 
-static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Info(%p,%d,%p)", (void *)pGT, iType, (void *)pInfo));

@@ -1701,7 +1701,7 @@ static HB_BOOL hb_gt_def_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char
   return false;
 }
 
-static void hb_gt_def_SetBlock(HB_ITEM **pItemPtr, PHB_GT_INFO pInfo)
+static void hb_gt_def_SetBlock(HB_ITEM **pItemPtr, HB_GT_INFO *pInfo)
 {
   if (*pItemPtr) {
     if (pInfo->pResult) {
@@ -1722,7 +1722,7 @@ static void hb_gt_def_SetBlock(HB_ITEM **pItemPtr, PHB_GT_INFO pInfo)
   }
 }
 
-static HB_BOOL hb_gt_def_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_def_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
   switch (iType) {
   case HB_GTI_ALTENTER:

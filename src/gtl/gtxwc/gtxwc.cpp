@@ -4990,7 +4990,7 @@ static int32_t hb_gt_xwc_getKbdState(PXWND_DEF wnd)
   return iKbdState;
 }
 
-static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));

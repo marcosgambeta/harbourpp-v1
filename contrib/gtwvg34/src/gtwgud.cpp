@@ -1226,7 +1226,7 @@ static void hb_gt_wvt_Tone(HB_GT *pGT, double dFrequency, double dDuration)
   hb_gt_winapi_tone(dFrequency, dDuration);
 }
 
-static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Info(%p,%d,%p)", (void *)pGT, iType, (void *)pInfo));

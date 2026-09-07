@@ -816,7 +816,7 @@ static void hb_gt_pca_Refresh(HB_GT *pGT) // FuncTable
   hb_gt_pca_termFlush();
 }
 
-static HB_BOOL hb_gt_pca_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_pca_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));

@@ -768,7 +768,7 @@ static void hb_gt_alleg_mouse_GetBounds(HB_GT *pGT, int32_t * piTop, int32_t * p
    *piRight  = s_mouseBound.iRight;
 }
 
-static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo) // FuncTable
+static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_alleg_Info(%p,%d,%p)", pGT, iType, pInfo));

@@ -1759,7 +1759,7 @@ static bool hb_gt_win_FullScreen(HB_BOOL bFullScreen)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, pInfo));

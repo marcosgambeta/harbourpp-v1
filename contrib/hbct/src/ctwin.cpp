@@ -2032,7 +2032,7 @@ static HB_BOOL hb_ctw_gt_Resize(HB_GT *pGT, int32_t iRows, int32_t iCols)
   return false;
 }
 
-static HB_BOOL hb_ctw_gt_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_ctw_gt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));

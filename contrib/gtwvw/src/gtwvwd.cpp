@@ -1307,7 +1307,7 @@ static int32_t hb_gt_wvw_mouse_CountButton(HB_GT *pGT)
  * NOTES: in MainCoord Mode current window is always the Main Window
  */
 /* int32_t gt_info(int32_t iMsgType, BOOL bUpdate, int32_t iParam, void *vpParam ) */
-static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvw_Info(%p,%d,%p)", pGT, iType, pInfo));

@@ -186,7 +186,7 @@ typedef struct
    void      (* OutErr) ( HB_GT_PTR, const char *, HB_SIZE );
    void      (* Tone) ( HB_GT_PTR, double, double );
    void      (* Bell) ( HB_GT_PTR );
-   HB_BOOL   (* Info) ( HB_GT_PTR, int32_t, PHB_GT_INFO );
+   HB_BOOL   (* Info) ( HB_GT_PTR, int32_t, HB_GT_INFO *);
    int32_t       (* Alert) ( HB_GT_PTR, PHB_ITEM, PHB_ITEM, int32_t, int32_t, double );
    int32_t       (* SetFlag) ( HB_GT_PTR, int32_t, int32_t );
 

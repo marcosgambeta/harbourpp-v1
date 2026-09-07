@@ -134,7 +134,7 @@ typedef struct
    PHB_ITEM pNewVal;
    PHB_ITEM pResult;
    PHB_ITEM pNewVal2;
-} HB_GT_INFO, * PHB_GT_INFO;
+} HB_GT_INFO, * PHB_GT_INFO; // NOTE: PHB_GT_INFO is deprecated in Harbour++ source code
 
 /* Public interface. These should never change, only be added to. */
 
@@ -212,7 +212,7 @@ extern HB_EXPORT HB_ERRCODE hb_gtSetDispCP( const char * pszTermCDP, const char 
 extern HB_EXPORT HB_ERRCODE hb_gtSetKeyCP( const char * pszTermCDP, const char * pszHostCDP );
 extern HB_EXPORT HB_CODEPAGE *hb_gtHostCP( void );
 extern HB_EXPORT HB_CODEPAGE *hb_gtBoxCP( void );
-extern HB_EXPORT HB_ERRCODE hb_gtInfo( int32_t iType, PHB_GT_INFO pInfo );
+extern HB_EXPORT HB_ERRCODE hb_gtInfo( int32_t iType, HB_GT_INFO *pInfo );
 extern HB_EXPORT int32_t        hb_gtAlert( PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay );
 extern HB_EXPORT int32_t        hb_gtSetFlag( int32_t iType, int32_t iNewValue );
 extern HB_EXPORT int32_t        hb_gtGetCurrColor( void );

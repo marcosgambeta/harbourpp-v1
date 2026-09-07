@@ -2101,7 +2101,7 @@ static int32_t hb_gt_qtc_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
   return iRet;
 }
 
-static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 {
   PHB_GTQTC pQTC;
   int32_t iVal;

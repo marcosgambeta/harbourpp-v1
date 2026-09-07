@@ -1082,7 +1082,7 @@ HB_CODEPAGE *hb_gtBoxCP(void)
   return cdp;
 }
 
-HB_ERRCODE hb_gtInfo(int32_t iType, PHB_GT_INFO pInfo)
+HB_ERRCODE hb_gtInfo(int32_t iType, HB_GT_INFO *pInfo)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtInfo(%d, %p)", iType, static_cast<void*>(pInfo)));
