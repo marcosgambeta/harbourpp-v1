@@ -2507,7 +2507,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
             pArea->pRecord[pArea->pFieldOffset[uiIndex]] = static_cast<signed char>(lVal);
             break;
           case 2:
-            HB_PUT_LE_UINT16(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U16>(lVal));
+            HB_PUT_LE_UINT16(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<uint16_t>(lVal));
             break;
           case 3:
             HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<uint32_t>(lVal));
@@ -4535,7 +4535,7 @@ static HB_ERRCODE hb_dbfTransCond(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
 #define HB_SORTREC_MINRECBUF 0x10
 
 #if HB_SORTREC_ARRAYSIZE <= 0x10000
-using HB_SORTIDX = HB_U16;
+using HB_SORTIDX = uint16_t;
 #else
 using HB_SORTIDX = uint32_t;
 #endif

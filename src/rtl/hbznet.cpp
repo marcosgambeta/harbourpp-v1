@@ -293,9 +293,9 @@ static long hb_znetStreamWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT t
   if (pStream->crypt) {
     rest = static_cast<long>(pStream->wr.next_out - pStream->crypt_out);
     if (rest > 2) {
-      auto uiLen = static_cast<HB_U16>(rest - 2);
+      auto uiLen = static_cast<uint16_t>(rest - 2);
       HB_PUT_BE_UINT16(pStream->crypt_out, uiLen);
-      uiLen = static_cast<HB_U16>(((rest + 0x07) ^ 0x07) & 0x07);
+      uiLen = static_cast<uint16_t>(((rest + 0x07) ^ 0x07) & 0x07);
       if (static_cast<uInt>(uiLen) <= pStream->wr.avail_out) {
         while (uiLen--) {
           *pStream->wr.next_out++ = static_cast<Byte>(0); /* TODO: use better hashing data */

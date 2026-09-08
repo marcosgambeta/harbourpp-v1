@@ -52,7 +52,7 @@
 HB_FUNC(BIN2W)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
-  HB_U16 uiResult = 0;
+  uint16_t uiResult = 0;
 
   if (pItem != nullptr) {
     auto nLen = pItem->getCLen();

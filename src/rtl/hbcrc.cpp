@@ -84,7 +84,7 @@ static const uint32_t crc32_tab[256] = {
 
 // X^16+X^15+X^2+X^0
 // 0x18005 => 0xA001
-static const HB_U16 crc16_tab[] = {
+static const uint16_t crc16_tab[] = {
     0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301, 0x03C0, 0x0280, 0xC241, 0xC601, 0x06C0, 0x0780, 0xC741, 0x0500, 0xC5C1,
     0xC481, 0x0440, 0xCC01, 0x0CC0, 0x0D80, 0xCD41, 0x0F00, 0xCFC1, 0xCE81, 0x0E40, 0x0A00, 0xCAC1, 0xCB81, 0x0B40,
     0xC901, 0x09C0, 0x0880, 0xC841, 0xD801, 0x18C0, 0x1980, 0xD941, 0x1B00, 0xDBC1, 0xDA81, 0x1A40, 0x1E00, 0xDEC1,
@@ -117,7 +117,7 @@ uint32_t hb_crc32(uint32_t crc, const void *buf, HB_SIZE len)
   return crc ^ 0xffffffffL;
 }
 
-HB_U16 hb_crc16(HB_U16 crc, const void *buf, HB_SIZE len)
+uint16_t hb_crc16(uint16_t crc, const void *buf, HB_SIZE len)
 {
   crc ^= 0xffff;
   if (buf && len) {
@@ -211,7 +211,7 @@ HB_FUNC(HB_CRC16)
   auto szString = hb_parc(1);
 
   if (szString != nullptr) {
-    hb_retnint(hb_crc16(static_cast<HB_U16>(hb_parnl(2)), szString, hb_parclen(1)));
+    hb_retnint(hb_crc16(static_cast<uint16_t>(hb_parnl(2)), szString, hb_parclen(1)));
   } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

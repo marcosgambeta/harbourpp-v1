@@ -59,7 +59,7 @@
 #define rnd_mul1 0x0de6d
 #define rnd_mul2 0x0278d
 
-static uint32_t hb_sxInitSeed(const char *pKeyVal, HB_U16 *puiKey)
+static uint32_t hb_sxInitSeed(const char *pKeyVal, uint16_t *puiKey)
 {
   uint32_t ulSeed = 0;
 
@@ -67,21 +67,21 @@ static uint32_t hb_sxInitSeed(const char *pKeyVal, HB_U16 *puiKey)
     ulSeed = (((ulSeed >> 16) + (ulSeed << 16)) * 17) + HB_GET_LE_UINT16(&pKeyVal[i]);
   }
   ulSeed |= 1;
-  *puiKey = static_cast<HB_U16>(ulSeed);
+  *puiKey = static_cast<uint16_t>(ulSeed);
   return (ulSeed << 16) + (ulSeed >> 16);
 }
 
-static uint32_t hb_sxNextSeed(uint32_t ulSeed, const char *pKeyVal, HB_U16 *puiKey)
+static uint32_t hb_sxNextSeed(uint32_t ulSeed, const char *pKeyVal, uint16_t *puiKey)
 {
   uint32_t ulTemp1, ulTemp2;
-  HB_U16 uiSeedLo, uiSeedHi;
+  uint16_t uiSeedLo, uiSeedHi;
 
-  uiSeedLo = static_cast<HB_U16>(ulSeed);
+  uiSeedLo = static_cast<uint16_t>(ulSeed);
   ulTemp1 = static_cast<uint32_t>(rnd_mul1) * static_cast<uint32_t>(uiSeedLo);
   ulTemp2 = static_cast<uint32_t>(rnd_mul2) * static_cast<uint32_t>(uiSeedLo) + (ulTemp1 >> 16);
-  uiSeedLo = static_cast<HB_U16>(ulTemp1);
+  uiSeedLo = static_cast<uint16_t>(ulTemp1);
   ulTemp1 = static_cast<uint32_t>(rnd_mul1) * (ulSeed >> 16);
-  uiSeedHi = static_cast<HB_U16>(ulTemp1 + ulTemp2);
+  uiSeedHi = static_cast<uint16_t>(ulTemp1 + ulTemp2);
   ulSeed = (static_cast<uint32_t>(uiSeedHi) << 16) + static_cast<uint32_t>(uiSeedLo);
   uiSeedHi |= 1;
   *puiKey = uiSeedHi + HB_GET_LE_UINT16(pKeyVal);
@@ -91,7 +91,7 @@ static uint32_t hb_sxNextSeed(uint32_t ulSeed, const char *pKeyVal, HB_U16 *puiK
 void hb_sxEnCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLen)
 {
   uint32_t ulSeed;
-  HB_U16 uiKey;
+  uint16_t uiKey;
   HB_SIZE nPos;
   int32_t i;
 
@@ -112,7 +112,7 @@ void hb_sxEnCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLe
 void hb_sxDeCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLen)
 {
   uint32_t ulSeed;
-  HB_U16 uiKey;
+  uint16_t uiKey;
   HB_SIZE nPos;
   int32_t i;
 

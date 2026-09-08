@@ -137,7 +137,7 @@ HB_FUNC(XMOBLOCK)
     memset(pszBlock + nLen + 3, 0, nSize - nLen);
   }
   if (fCRC) {
-    auto crc = static_cast<HB_U16>(hb_crcct(0, pszBlock + 3, nSize, 0x11021));
+    auto crc = static_cast<uint16_t>(hb_crcct(0, pszBlock + 3, nSize, 0x11021));
     HB_PUT_BE_UINT16(&pszBlock[3 + nSize], crc);
     nSize += 5;
   } else {

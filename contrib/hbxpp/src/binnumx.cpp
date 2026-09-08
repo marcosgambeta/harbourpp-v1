@@ -82,7 +82,7 @@ HB_FUNC(U2BIN)
 HB_FUNC(W2BIN)
 {
    char szResult[2];
-   auto uiValue = static_cast<HB_U16>(hb_parni(1));
+   auto uiValue = static_cast<uint16_t>(hb_parni(1));
 
    HB_PUT_LE_UINT16(szResult, uiValue);
    hb_retclen(szResult, 2);

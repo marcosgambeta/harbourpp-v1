@@ -346,7 +346,7 @@ void hb_socketCleanup(void)
   ;
 }
 
-HB_U16 hb_socketNToHS(HB_U16 netshort)
+uint16_t hb_socketNToHS(uint16_t netshort)
 {
 #if defined(HB_LITTLE_ENDIAN)
   return HB_SWAP_UINT16(netshort);
@@ -1831,7 +1831,7 @@ static int32_t hb_socketSelectWRE(HB_SOCKET sd, HB_MAXINT timeout)
 #endif /* !HB_HAS_POLL */
 }
 
-HB_U16 hb_socketNToHS(HB_U16 netshort)
+uint16_t hb_socketNToHS(uint16_t netshort)
 {
   return ntohs(netshort);
 }
@@ -1871,7 +1871,7 @@ HB_BOOL hb_socketInetAddr(void **pSockAddr, unsigned *puiLen, const char *szAddr
 
   memset(&sa, 0, sizeof(sa));
   sa.sin_family = AF_INET;
-  sa.sin_port = htons(static_cast<HB_U16>(iPort));
+  sa.sin_port = htons(static_cast<uint16_t>(iPort));
   if (!szAddr || !*szAddr) {
     sa.sin_addr.s_addr = htonl(INADDR_ANY);
     *pSockAddr = memcpy(hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa));
@@ -1911,7 +1911,7 @@ HB_BOOL hb_socketInet6Addr(void **pSockAddr, unsigned *puiLen, const char *szAdd
 
   memset(&sa, 0, sizeof(sa));
   sa.sin6_family = AF_INET6;
-  sa.sin6_port = htons(static_cast<HB_U16>(iPort));
+  sa.sin6_port = htons(static_cast<uint16_t>(iPort));
   if (!szAddr || !*szAddr) {
 #if defined(HB_HAS_INET6_ADDR_CONST)
     memcpy(&sa.sin6_addr, &in6addr_any, sizeof(struct in6_addr));
@@ -3029,7 +3029,7 @@ HB_BOOL hb_socketResolveInetAddr(void **pSockAddr, unsigned *puiLen, const char 
 
   memset(&sa, 0, sizeof(sa));
   sa.sin_family = AF_INET;
-  sa.sin_port = htons(static_cast<HB_U16>(iPort));
+  sa.sin_port = htons(static_cast<uint16_t>(iPort));
   if (!szAddr || !*szAddr) {
     sa.sin_addr.s_addr = htonl(INADDR_ANY);
     *pSockAddr = memcpy(hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa));

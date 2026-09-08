@@ -261,7 +261,7 @@ typedef union
 {
    struct
    {
-      HB_U16   usChar;
+      uint16_t   usChar;
       uint8_t  bColor;
       uint8_t  bAttr;
    } c;

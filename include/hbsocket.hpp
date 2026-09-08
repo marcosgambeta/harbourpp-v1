@@ -67,7 +67,7 @@ extern HB_EXPORT int32_t          hb_socketGetError( void );
 extern HB_EXPORT int32_t          hb_socketGetOsError( void );
 extern HB_EXPORT const char * hb_socketErrorStr( int32_t iError );
 extern HB_EXPORT void         hb_socketSetError( int32_t iError );
-extern HB_EXPORT HB_U16       hb_socketNToHS( HB_U16 netshort );
+extern HB_EXPORT uint16_t       hb_socketNToHS( uint16_t netshort );
 extern HB_EXPORT int32_t          hb_socketGetAddrFamily( const void * pSockAddr, unsigned len );
 extern HB_EXPORT HB_BOOL      hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr );
 extern HB_EXPORT HB_BOOL      hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int32_t iPort );

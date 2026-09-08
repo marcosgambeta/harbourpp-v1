@@ -68,9 +68,9 @@ static int32_t hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int
 {
   HB_SIZE nPos = 0;
 
-  HB_U16 tag;
-  HB_U16 height = 0;
-  HB_U16 width = 0;
+  uint16_t tag;
+  uint16_t height = 0;
+  uint16_t width = 0;
   uint8_t colorspace = 0;
   uint8_t bpc = 0;
 
@@ -91,7 +91,7 @@ static int32_t hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int
     return _JPEG_RET_OVERRUN;
   }
 
-  tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+  tag = HB_SWAP_UINT16(static_cast<uint16_t>(HB_GET_LE_UINT16(buffer + nPos)));
   nPos += 2;
 
   // SOI marker
@@ -100,20 +100,20 @@ static int32_t hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int
   }
 
   for (;;) {
-    HB_U16 size;
+    uint16_t size;
 
     if (nPos >= nBufferSize) {
       return _JPEG_RET_OVERRUN;
     }
 
-    tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+    tag = HB_SWAP_UINT16(static_cast<uint16_t>(HB_GET_LE_UINT16(buffer + nPos)));
     nPos += 2;
 
     if (nPos >= nBufferSize) {
       return _JPEG_RET_OVERRUN;
     }
 
-    size = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+    size = HB_SWAP_UINT16(static_cast<uint16_t>(HB_GET_LE_UINT16(buffer + nPos)));
     nPos += 2;
 
     // SOF markers
@@ -129,14 +129,14 @@ static int32_t hb_jpeg_get_param(const uint8_t *buffer, HB_SIZE nBufferSize, int
         return _JPEG_RET_OVERRUN;
       }
 
-      height = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+      height = HB_SWAP_UINT16(static_cast<uint16_t>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
       if (nPos >= nBufferSize) {
         return _JPEG_RET_OVERRUN;
       }
 
-      width = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+      width = HB_SWAP_UINT16(static_cast<uint16_t>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
       if (nPos >= nBufferSize) {

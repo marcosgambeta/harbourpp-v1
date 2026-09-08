@@ -2107,7 +2107,7 @@ static void hb_cdxPageStore(LPCDXPAGE pPage)
     hb_cdxErrInternal("hb_cdxPageStore: number of keys exceed!");
   }
 #endif
-  HB_PUT_LE_UINT16(pPage->node.intNode.attr, static_cast<HB_U16>(pPage->PageType));
+  HB_PUT_LE_UINT16(pPage->node.intNode.attr, static_cast<uint16_t>(pPage->PageType));
   HB_PUT_LE_UINT16(pPage->node.intNode.nKeys, pPage->iKeys);
   HB_PUT_LE_UINT32(pPage->node.intNode.leftPtr, pPage->Left);
   HB_PUT_LE_UINT32(pPage->node.intNode.rightPtr, pPage->Right);

@@ -3466,7 +3466,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
       memcpy(fptHeader.signature2, "FlexFile3\003", 11);
       ulSize = sizeof(FPTHEADER);
       if (pArea->area.rddID == s_uiRddIdBLOB) {
-        HB_PUT_LE_UINT16(fptHeader.flexSize, static_cast<HB_U16>(pArea->ulMemoBlockSize));
+        HB_PUT_LE_UINT16(fptHeader.flexSize, static_cast<uint16_t>(pArea->ulMemoBlockSize));
       }
     }
   }

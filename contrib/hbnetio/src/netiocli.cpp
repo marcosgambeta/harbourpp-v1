@@ -1085,7 +1085,7 @@ static PHB_CONCLI s_fileConnect(const char ** pFileName, const char * pszServer,
                   if( conn )
                   {
                      uint8_t msgbuf[NETIO_MSGLEN];
-                     auto len = static_cast<HB_U16>(strlen(NETIO_LOGINSTRID));
+                     auto len = static_cast<uint16_t>(strlen(NETIO_LOGINSTRID));
 
                      HB_PUT_LE_UINT32(&msgbuf[0], NETIO_LOGIN);
                      HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -1766,7 +1766,7 @@ static HB_BOOL s_fileDirExists(PHB_FILE_FUNCS pFuncs, const char * pszDirName)
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszDirName));
+         auto len = static_cast<uint16_t>(strlen(pszDirName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_DIREXISTS);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -1792,7 +1792,7 @@ static HB_BOOL s_fileDirMake(PHB_FILE_FUNCS pFuncs, const char * pszDirName)
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszDirName));
+         auto len = static_cast<uint16_t>(strlen(pszDirName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_DIRMAKE);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -1818,7 +1818,7 @@ static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char * pszDirName)
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszDirName));
+         auto len = static_cast<uint16_t>(strlen(pszDirName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_DIRREMOVE);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -1844,7 +1844,7 @@ static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, uin
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszDirName));
+         auto len = static_cast<uint16_t>(strlen(pszDirName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_DIRSPACE);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -1875,8 +1875,8 @@ static HB_ITEM *s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, 
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len1 = static_cast<HB_U16>(pszDirSpec ? strlen(pszDirSpec) : 0);
-         auto len2 = static_cast<HB_U16>(pszAttr ? strlen(pszAttr) : 0);
+         auto len1 = static_cast<uint16_t>(pszDirSpec ? strlen(pszDirSpec) : 0);
+         auto len2 = static_cast<uint16_t>(pszAttr ? strlen(pszAttr) : 0);
          uint8_t * pBuffer = nullptr;
 
          if( len1 + len2 > 0 )
@@ -1963,7 +1963,7 @@ static HB_BOOL s_fileExists(PHB_FILE_FUNCS pFuncs, const char * pszFileName, cha
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_EXISTS);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -1989,7 +1989,7 @@ static HB_BOOL s_fileDelete(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_DELETE);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -2021,8 +2021,8 @@ static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszFileName, con
       else if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len1 = static_cast<HB_U16>(strlen(pszFileName));
-         auto len2 = static_cast<HB_U16>(strlen(pszNewName));
+         auto len1 = static_cast<uint16_t>(strlen(pszFileName));
+         auto len2 = static_cast<uint16_t>(strlen(pszNewName));
          auto pBuffer = static_cast<uint8_t*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszFileName, len1);
@@ -2061,8 +2061,8 @@ static HB_BOOL s_fileCopy(PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const 
       else if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len1 = static_cast<HB_U16>(strlen(pszSource));
-         auto len2 = static_cast<HB_U16>(strlen(pszDstFile));
+         auto len1 = static_cast<uint16_t>(strlen(pszSource));
+         auto len2 = static_cast<uint16_t>(strlen(pszDstFile));
          auto pBuffer = static_cast<uint8_t*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszSource, len1);
@@ -2093,7 +2093,7 @@ static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_ATTRGET);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -2123,7 +2123,7 @@ static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_ATTRSET);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -2150,7 +2150,7 @@ static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, lo
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_FTIMEGET);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -2181,7 +2181,7 @@ static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, lo
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_FTIMESET);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -2215,8 +2215,8 @@ static HB_BOOL s_fileLink(PHB_FILE_FUNCS pFuncs, const char * pszExisting, const
       else if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len1 = static_cast<HB_U16>(strlen(pszExisting));
-         auto len2 = static_cast<HB_U16>(strlen(pszNewName));
+         auto len1 = static_cast<uint16_t>(strlen(pszExisting));
+         auto len2 = static_cast<uint16_t>(strlen(pszNewName));
          auto pBuffer = static_cast<uint8_t*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszExisting, len1);
@@ -2253,8 +2253,8 @@ static HB_BOOL s_fileLinkSym(PHB_FILE_FUNCS pFuncs, const char * pszTarget, cons
       else if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len1 = static_cast<HB_U16>(strlen(pszTarget));
-         auto len2 = static_cast<HB_U16>(strlen(pszNewName));
+         auto len1 = static_cast<uint16_t>(strlen(pszTarget));
+         auto len2 = static_cast<uint16_t>(strlen(pszNewName));
          auto pBuffer = static_cast<uint8_t*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszTarget, len1);
@@ -2285,7 +2285,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFileName));
+         auto len = static_cast<uint16_t>(strlen(pszFileName));
 
          HB_PUT_LE_UINT32(&msgbuf[0], NETIO_LINKREAD);
          HB_PUT_LE_UINT16(&msgbuf[4], len);
@@ -2338,7 +2338,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, cons
       if( s_fileConLock(conn) )
       {
          uint8_t msgbuf[NETIO_MSGLEN];
-         auto len = static_cast<HB_U16>(strlen(pszFile));
+         auto len = static_cast<uint16_t>(strlen(pszFile));
 
          if( nExFlags & 0xFFFF0000 )
          {
@@ -2355,7 +2355,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, cons
          {
             HB_PUT_LE_UINT32(&msgbuf[0], NETIO_OPEN);
             HB_PUT_LE_UINT16(&msgbuf[4], len);
-            HB_PUT_LE_UINT16(&msgbuf[6], static_cast<HB_U16>(nExFlags));
+            HB_PUT_LE_UINT16(&msgbuf[6], static_cast<uint16_t>(nExFlags));
             memset(msgbuf + 8, '\0', sizeof(msgbuf) - 8);
             if( pDefExt )
             {
