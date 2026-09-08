@@ -187,7 +187,7 @@ typedef struct
    void      (* Tone) ( HB_GT_PTR, double, double );
    void      (* Bell) ( HB_GT_PTR );
    HB_BOOL   (* Info) ( HB_GT_PTR, int32_t, HB_GT_INFO *);
-   int32_t       (* Alert) ( HB_GT_PTR, PHB_ITEM, PHB_ITEM, int32_t, int32_t, double );
+   int32_t       (* Alert) ( HB_GT_PTR, HB_ITEM *, HB_ITEM *, int32_t, int32_t, double );
    int32_t       (* SetFlag) ( HB_GT_PTR, int32_t, int32_t );
 
    /* internationalization */
@@ -274,7 +274,7 @@ typedef struct _HB_GT_BASE
 {
    HB_GT_FUNCS   *pFuncTable;
 
-   PHB_ITEM       pMutex;
+   HB_ITEM *      pMutex;
    int32_t            iUsed;
 
    int32_t            iRow;             /* cursor row position */
@@ -334,10 +334,10 @@ typedef struct _HB_GT_BASE
    HB_SIZE        StrBufferSize;
    HB_SIZE        StrBufferPos;
 
-   PHB_ITEM       pNotifierBlock;
-   PHB_ITEM       pInkeyFilterBlock;
-   PHB_ITEM       pInkeyReadBlock;
-   PHB_ITEM       pCargo;
+   HB_ITEM *      pNotifierBlock;
+   HB_ITEM *      pInkeyFilterBlock;
+   HB_ITEM *      pInkeyReadBlock;
+   HB_ITEM *      pCargo;
 
    void *         pGTData[ HB_GT_MAX_ ];    /* local GT data */
 
@@ -352,7 +352,7 @@ extern HB_EXPORT void hb_gt_BaseFree( HB_GT *pGT );
 extern HB_EXPORT void hb_gt_BaseUnlock( HB_GT *pGT );
 extern HB_EXPORT void hb_gt_BaseLock( HB_GT *pGT );
 extern HB_EXPORT void hb_gtSleep( HB_GT *pGT, double dSeconds );
-extern HB_EXPORT HB_GT *hb_gt_ItemBase( PHB_ITEM pItemGT );
+extern HB_EXPORT HB_GT *hb_gt_ItemBase( HB_ITEM *pItemGT );
 extern HB_EXPORT void hb_gt_gcMark( void );
 
 #define HB_GTLOCAL(g)   (g)->pGTData[*HB_GTID_PTR]
@@ -634,9 +634,9 @@ extern int32_t  hb_gt_chrmapinit( int32_t * piTransTbl, const char * pszTerm, HB
 extern HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen );
 extern HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen );
 #if defined(HB_OS_WIN)
-extern HB_EXPORT HB_BOOL hb_gt_winapi_setClipboard( uint32_t uFormat, PHB_ITEM pItem );
+extern HB_EXPORT HB_BOOL hb_gt_winapi_setClipboard( uint32_t uFormat, HB_ITEM *pItem );
 extern HB_EXPORT HB_BOOL hb_gt_winapi_setClipboardRaw( uint32_t uFormat, void * pData, HB_SIZE nSize );
-extern HB_EXPORT HB_BOOL hb_gt_winapi_getClipboard( uint32_t uFormat, PHB_ITEM pItem );
+extern HB_EXPORT HB_BOOL hb_gt_winapi_getClipboard( uint32_t uFormat, HB_ITEM *pItem );
 extern HB_EXPORT int32_t     hb_gt_winapi_getKbdState( void );
 extern HB_EXPORT void    hb_gt_winapi_setKbdState( int32_t kbdShifts );
 extern HB_EXPORT void    hb_gt_winapi_tone( double dFrequency, double dDuration );

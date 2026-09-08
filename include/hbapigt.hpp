@@ -131,9 +131,9 @@ constexpr uint8_t HB_GT_ATTR_REFRESH = 0x80;
 
 typedef struct
 {
-   PHB_ITEM pNewVal;
-   PHB_ITEM pResult;
-   PHB_ITEM pNewVal2;
+   HB_ITEM *pNewVal;
+   HB_ITEM *pResult;
+   HB_ITEM *pNewVal2;
 } HB_GT_INFO, * PHB_GT_INFO; // NOTE: PHB_GT_INFO is deprecated in Harbour++ source code
 
 /* Public interface. These should never change, only be added to. */
@@ -213,7 +213,7 @@ extern HB_EXPORT HB_ERRCODE hb_gtSetKeyCP( const char * pszTermCDP, const char *
 extern HB_EXPORT HB_CODEPAGE *hb_gtHostCP( void );
 extern HB_EXPORT HB_CODEPAGE *hb_gtBoxCP( void );
 extern HB_EXPORT HB_ERRCODE hb_gtInfo( int32_t iType, HB_GT_INFO *pInfo );
-extern HB_EXPORT int32_t        hb_gtAlert( PHB_ITEM pMessage, PHB_ITEM pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay );
+extern HB_EXPORT int32_t        hb_gtAlert( HB_ITEM *pMessage, HB_ITEM *pOptions, int32_t iClrNorm, int32_t iClrHigh, double dDelay );
 extern HB_EXPORT int32_t        hb_gtSetFlag( int32_t iType, int32_t iNewValue );
 extern HB_EXPORT int32_t        hb_gtGetCurrColor( void );
 extern HB_EXPORT int32_t        hb_gtGetClearColor( void );

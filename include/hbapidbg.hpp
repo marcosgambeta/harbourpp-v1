@@ -52,25 +52,25 @@ HB_EXTERN_BEGIN
 // Debugger API
 
 // HVM debugger function
-typedef void (*HB_DBGENTRY_FUNC)(int32_t nMode, int32_t nLine, const char *szName, int32_t nIndex, PHB_ITEM pFrame);
+typedef void (*HB_DBGENTRY_FUNC)(int32_t nMode, int32_t nLine, const char *szName, int32_t nIndex, HB_ITEM *pFrame);
 extern HB_EXPORT HB_DBGENTRY_FUNC hb_dbg_SetEntry(HB_DBGENTRY_FUNC pFunDbgEntry);
 extern HB_EXPORT HB_BOOL hb_dbg_InvokeDebug(HB_BOOL bInvoke);
 extern HB_EXPORT HB_ULONG hb_dbg_ProcLevel(void);
-extern HB_EXPORT PHB_ITEM hb_dbg_vmVarSGet(PHB_ITEM pStaticsBase, int32_t nOffset);
-extern HB_EXPORT PHB_ITEM hb_dbg_vmVarLGet(int32_t iLevel, int32_t iLocal);
+extern HB_EXPORT HB_ITEM *hb_dbg_vmVarSGet(HB_ITEM *pStaticsBase, int32_t nOffset);
+extern HB_EXPORT HB_ITEM *hb_dbg_vmVarLGet(int32_t iLevel, int32_t iLocal);
 extern HB_EXPORT HB_ULONG hb_dbg_vmVarGCount(void);
-extern HB_EXPORT PHB_ITEM hb_dbg_vmVarGGet(int32_t nGlobal, int32_t nOffset);
+extern HB_EXPORT HB_ITEM *hb_dbg_vmVarGGet(int32_t nGlobal, int32_t nOffset);
 
 // internal debugger function
-extern HB_EXPORT void hb_dbgEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nIndex, PHB_ITEM pFrame);
+extern HB_EXPORT void hb_dbgEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nIndex, HB_ITEM *pFrame);
 extern HB_EXPORT const char *hb_dbgGetModuleName(void *handle, const char *szName);
 extern HB_EXPORT void hb_dbgAddBreak(void *handle, const char *szModule, int32_t nLine, const char *szFunction);
 extern HB_EXPORT void hb_dbgAddWatch(void *handle, const char *szExpr, HB_BOOL bTrace);
 extern HB_EXPORT void hb_dbgDelBreak(void *handle, int32_t nBreak);
 extern HB_EXPORT void hb_dbgDelWatch(void *handle, int32_t nWatch);
-extern HB_EXPORT PHB_ITEM hb_dbgGetExpressionValue(void *handle, const char *expression);
-extern HB_EXPORT PHB_ITEM hb_dbgGetSourceFiles(void *handle);
-extern HB_EXPORT PHB_ITEM hb_dbgGetWatchValue(void *handle, int32_t nWatch);
+extern HB_EXPORT HB_ITEM *hb_dbgGetExpressionValue(void *handle, const char *expression);
+extern HB_EXPORT HB_ITEM *hb_dbgGetSourceFiles(void *handle);
+extern HB_EXPORT HB_ITEM *hb_dbgGetWatchValue(void *handle, int32_t nWatch);
 extern HB_EXPORT HB_BOOL hb_dbgIsValidStopLine(void *handle, const char *szModule, int32_t nLine);
 extern HB_EXPORT void hb_dbgSetCBTrace(void *handle, HB_BOOL bCBTrace);
 extern HB_EXPORT void hb_dbgSetGo(void *handle);

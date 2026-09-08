@@ -1055,7 +1055,7 @@ inline void _HB_ITEM::setHashValue(_HB_BASEHASH *pValue)
 // internal structure for arrays
 typedef struct _HB_BASEARRAY
 {
-  PHB_ITEM    pItems;       // pointer to the array items
+  HB_ITEM *   pItems;       // pointer to the array items
   HB_SIZE     nLen;         // number of items in the array
   HB_SIZE     nAllocated;   // number of allocated items
   uint16_t   uiClass;      // offset to the classes base if it is an object
@@ -1105,16 +1105,16 @@ typedef struct _HB_CODEBLOCK
   const uint8_t *pCode;     // codeblock pcode
   HB_SYMB *   pSymbols;     // codeblocks symbols
   HB_SYMB *   pDefSymb;     // symbol where the codeblock was created
-  PHB_ITEM    pLocals;      // table with referenced local variables
+  HB_ITEM *   pLocals;      // table with referenced local variables
   void *      pStatics;     // STATICs base frame
   uint16_t   uiLocals;     // number of referenced local variables
   HB_SHORT    dynBuffer;    // is pcode buffer allocated dynamically, SHORT used instead of HB_BOOL intentionally to force optimal alignment
 } HB_CODEBLOCK, * PHB_CODEBLOCK;
 
 typedef void     (*HB_EXTREF_FUNC0)(void *);
-typedef PHB_ITEM (*HB_EXTREF_FUNC1)(PHB_ITEM);
-typedef PHB_ITEM (*HB_EXTREF_FUNC2)(PHB_ITEM, PHB_ITEM);
-typedef void     (*HB_EXTREF_FUNC3)(PHB_ITEM);
+typedef HB_ITEM *(*HB_EXTREF_FUNC1)(HB_ITEM *);
+typedef HB_ITEM *(*HB_EXTREF_FUNC2)(HB_ITEM *, HB_ITEM *);
+typedef void     (*HB_EXTREF_FUNC3)(HB_ITEM *);
 
 typedef struct _HB_EXTREF
 {
@@ -1128,7 +1128,7 @@ typedef struct _HB_EXTREF
 typedef struct
 {
   void *value;
-  PHB_ITEM pDest;
+  HB_ITEM *pDest;
 } HB_NESTED_REF, * PHB_NESTED_REF;
 
 typedef struct
@@ -1304,8 +1304,8 @@ extern HB_EXPORT void hb_gcDummyClear(void *Cargo);
 // dummy GC mark function
 extern HB_EXPORT void hb_gcDummyMark(void *Cargo);
 
-extern PHB_ITEM hb_gcGripGet(PHB_ITEM pItem);
-extern void hb_gcGripDrop(PHB_ITEM pItem);
+extern HB_ITEM *hb_gcGripGet(HB_ITEM *pItem);
+extern void hb_gcGripDrop(HB_ITEM *pItem);
 
 #ifdef _HB_API_INTERNAL_
 // return cleanup function pointer
@@ -1316,7 +1316,7 @@ extern void *hb_gcAllocRaw(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs);
 // mark complex variables inside given item as used
 extern void hb_gcGripMark(void *Cargo);
 // mark complex variables inside given item as used
-extern void hb_gcItemRef(PHB_ITEM pItem);
+extern void hb_gcItemRef(HB_ITEM *pItem);
 // hvm.c - mark all local variables as used
 extern void hb_vmIsStackRef(void);
 // hvm.c - mark all static variables as used
@@ -1345,9 +1345,9 @@ extern HB_EXPORT HB_ULONG hb_parinfo(int32_t iParam);
 // retrieve length or element type of an array parameter
 extern HB_EXPORT HB_SIZE hb_parinfa(int32_t iParamNum, HB_SIZE nArrayIndex);
 // retrieve a generic parameter
-extern HB_EXPORT PHB_ITEM hb_param(int32_t iParam, long lMask);
+extern HB_EXPORT HB_ITEM *hb_param(int32_t iParam, long lMask);
 // Returns either the generic parameter or a NIL item if param not provided
-extern HB_EXPORT PHB_ITEM hb_paramError(int32_t iParam);
+extern HB_EXPORT HB_ITEM *hb_paramError(int32_t iParam);
 extern HB_EXPORT HB_BOOL hb_extIsNil(int32_t iParam);
 extern HB_EXPORT HB_BOOL hb_extIsArray(int32_t iParam);
 extern HB_EXPORT HB_BOOL hb_extIsObject(int32_t iParam);
@@ -1617,172 +1617,172 @@ extern HB_EXPORT int32_t hb_storvnll(HB_LONGLONG llValue, int32_t iParam, ...);
 
 // array management
 // creates a new array
-extern HB_EXPORT HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen);
+extern HB_EXPORT HB_BOOL hb_arrayNew(HB_ITEM *pItem, HB_SIZE nLen);
 // retrieves the array length
-extern HB_EXPORT HB_SIZE hb_arrayLen(PHB_ITEM pArray);
+extern HB_EXPORT HB_SIZE hb_arrayLen(HB_ITEM *pArray);
 // retrieves if the array is an object
-extern HB_EXPORT HB_BOOL hb_arrayIsObject(PHB_ITEM pArray);
+extern HB_EXPORT HB_BOOL hb_arrayIsObject(HB_ITEM *pArray);
 // retrieves the array unique ID
-extern HB_EXPORT void *hb_arrayId(PHB_ITEM pArray);
+extern HB_EXPORT void *hb_arrayId(HB_ITEM *pArray);
 // retrieves numer of references to the array
-extern HB_EXPORT HB_COUNTER hb_arrayRefs(PHB_ITEM pArray);
+extern HB_EXPORT HB_COUNTER hb_arrayRefs(HB_ITEM *pArray);
 //
-extern HB_EXPORT PHB_ITEM hb_arrayFromId(PHB_ITEM pItem, void *pArrayId);
+extern HB_EXPORT HB_ITEM *hb_arrayFromId(HB_ITEM *pItem, void *pArrayId);
 // add a new item to the end of an array item
-extern HB_EXPORT HB_BOOL hb_arrayAdd(PHB_ITEM pArray, PHB_ITEM pItemValue);
+extern HB_EXPORT HB_BOOL hb_arrayAdd(HB_ITEM *pArray, HB_ITEM *pItemValue);
 // add a new item to the end of an array item with no incrementing of reference counters
-extern HB_EXPORT HB_BOOL hb_arrayAddForward(PHB_ITEM pArray, PHB_ITEM pValue);
+extern HB_EXPORT HB_BOOL hb_arrayAddForward(HB_ITEM *pArray, HB_ITEM *pValue);
 // insert a nil item into an array, without changing the length
-extern HB_EXPORT HB_BOOL hb_arrayIns(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_BOOL hb_arrayIns(HB_ITEM *pArray, HB_SIZE nIndex);
 // delete an array item, without changing length
-extern HB_EXPORT HB_BOOL hb_arrayDel(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_BOOL hb_arrayDel(HB_ITEM *pArray, HB_SIZE nIndex);
 // sets the array total length
-extern HB_EXPORT HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen);
+extern HB_EXPORT HB_BOOL hb_arraySize(HB_ITEM *pArray, HB_SIZE nLen);
 // retrieve last item in an array
-extern HB_EXPORT HB_BOOL hb_arrayLast(PHB_ITEM pArray, PHB_ITEM pResult);
+extern HB_EXPORT HB_BOOL hb_arrayLast(HB_ITEM *pArray, HB_ITEM *pResult);
 // retrieves an item
-extern HB_EXPORT HB_BOOL hb_arrayGet(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem);
+extern HB_EXPORT HB_BOOL hb_arrayGet(HB_ITEM *pArray, HB_SIZE nIndex, HB_ITEM *pItem);
 // create a reference to an array element
-extern HB_EXPORT HB_BOOL hb_arrayGetItemRef(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem);
+extern HB_EXPORT HB_BOOL hb_arrayGetItemRef(HB_ITEM *pArray, HB_SIZE nIndex, HB_ITEM *pItem);
 // returns pointer to specified element of the array
 // WARNING: hb_arrayGetItemPtr() is dangerous, be sure that base ARRAY value will not be changed (f.e. resized)
-extern HB_EXPORT PHB_ITEM hb_arrayGetItemPtr(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_ITEM *hb_arrayGetItemPtr(HB_ITEM *pArray, HB_SIZE nIndex);
 // copy a string from an array item
-extern HB_EXPORT HB_SIZE hb_arrayCopyC(PHB_ITEM pArray, HB_SIZE nIndex, char *szBuffer, HB_SIZE nLen);
+extern HB_EXPORT HB_SIZE hb_arrayCopyC(HB_ITEM *pArray, HB_SIZE nIndex, char *szBuffer, HB_SIZE nLen);
 // retrieves the string contained on an array element
-extern HB_EXPORT char *hb_arrayGetC(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT char *hb_arrayGetC(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the string pointer on an array element
-extern HB_EXPORT const char *hb_arrayGetCPtr(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT const char *hb_arrayGetCPtr(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the string length contained on an array element
-extern HB_EXPORT HB_SIZE hb_arrayGetCLen(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_SIZE hb_arrayGetCLen(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the pointer contained on an array element
-extern HB_EXPORT void *hb_arrayGetPtr(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT void *hb_arrayGetPtr(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the GC pointer contained on an array element
-extern HB_EXPORT void *hb_arrayGetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS *pFuncs);
+extern HB_EXPORT void *hb_arrayGetPtrGC(HB_ITEM *pArray, HB_SIZE nIndex, const HB_GC_FUNCS *pFuncs);
 // retrieves symbol contained on an array element
-extern HB_EXPORT HB_SYMB *hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_SYMB *hb_arrayGetSymbol(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the logical value contained on an array element
-extern HB_EXPORT HB_BOOL hb_arrayGetL(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_BOOL hb_arrayGetL(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the int value contained on an array element
-extern HB_EXPORT int32_t hb_arrayGetNI(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT int32_t hb_arrayGetNI(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the long numeric value contained on an array element
-extern HB_EXPORT long hb_arrayGetNL(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT long hb_arrayGetNL(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the HB_SIZE value contained on an array element
-extern HB_EXPORT HB_ISIZ hb_arrayGetNS(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_ISIZ hb_arrayGetNS(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the HB_MAXINT value contained on an array element
-extern HB_EXPORT HB_MAXINT hb_arrayGetNInt(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_MAXINT hb_arrayGetNInt(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the double value contained on an array element
-extern HB_EXPORT double hb_arrayGetND(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT double hb_arrayGetND(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the date value contained in an array element
-extern HB_EXPORT char *hb_arrayGetDS(PHB_ITEM pArray, HB_SIZE nIndex, char *szDate);
+extern HB_EXPORT char *hb_arrayGetDS(HB_ITEM *pArray, HB_SIZE nIndex, char *szDate);
 // retrieves the date value contained in an array element, as a long integer
-extern HB_EXPORT long hb_arrayGetDL(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT long hb_arrayGetDL(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the timestamp value contained in an array element, as a double value
-extern HB_EXPORT double hb_arrayGetTD(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT double hb_arrayGetTD(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the timestamp value contained in an array element, as two long values
-extern HB_EXPORT HB_BOOL hb_arrayGetTDT(PHB_ITEM pArray, HB_SIZE nIndex, long *plJulian, long *plMilliSec);
+extern HB_EXPORT HB_BOOL hb_arrayGetTDT(HB_ITEM *pArray, HB_SIZE nIndex, long *plJulian, long *plMilliSec);
 // retrieves the type of an array item
-extern HB_EXPORT HB_TYPE hb_arrayGetType(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_TYPE hb_arrayGetType(HB_ITEM *pArray, HB_SIZE nIndex);
 // sets an array element
-extern HB_EXPORT HB_BOOL hb_arraySet(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem);
+extern HB_EXPORT HB_BOOL hb_arraySet(HB_ITEM *pArray, HB_SIZE nIndex, HB_ITEM *pItem);
 // sets an array element by forwarding it's value
-extern HB_EXPORT HB_BOOL hb_arraySetForward(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem);
-extern HB_EXPORT HB_BOOL hb_arraySetDS(PHB_ITEM pArray, HB_SIZE nIndex, const char *szDate);
-extern HB_EXPORT HB_BOOL hb_arraySetDL(PHB_ITEM pArray, HB_SIZE nIndex, long lDate);
-extern HB_EXPORT HB_BOOL hb_arraySetTD(PHB_ITEM pArray, HB_SIZE nIndex, double dTimeStamp);
-extern HB_EXPORT HB_BOOL hb_arraySetTDT(PHB_ITEM pArray, HB_SIZE nIndex, long lJulian, long lMilliSec);
-extern HB_EXPORT HB_BOOL hb_arraySetL(PHB_ITEM pArray, HB_SIZE nIndex, HB_BOOL fValue);
-extern HB_EXPORT HB_BOOL hb_arraySetNI(PHB_ITEM pArray, HB_SIZE nIndex, int32_t iNumber);
-extern HB_EXPORT HB_BOOL hb_arraySetNL(PHB_ITEM pArray, HB_SIZE nIndex, long lNumber);
-extern HB_EXPORT HB_BOOL hb_arraySetNS(PHB_ITEM pArray, HB_SIZE nIndex, HB_ISIZ nNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetForward(HB_ITEM *pArray, HB_SIZE nIndex, HB_ITEM *pItem);
+extern HB_EXPORT HB_BOOL hb_arraySetDS(HB_ITEM *pArray, HB_SIZE nIndex, const char *szDate);
+extern HB_EXPORT HB_BOOL hb_arraySetDL(HB_ITEM *pArray, HB_SIZE nIndex, long lDate);
+extern HB_EXPORT HB_BOOL hb_arraySetTD(HB_ITEM *pArray, HB_SIZE nIndex, double dTimeStamp);
+extern HB_EXPORT HB_BOOL hb_arraySetTDT(HB_ITEM *pArray, HB_SIZE nIndex, long lJulian, long lMilliSec);
+extern HB_EXPORT HB_BOOL hb_arraySetL(HB_ITEM *pArray, HB_SIZE nIndex, HB_BOOL fValue);
+extern HB_EXPORT HB_BOOL hb_arraySetNI(HB_ITEM *pArray, HB_SIZE nIndex, int32_t iNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetNL(HB_ITEM *pArray, HB_SIZE nIndex, long lNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetNS(HB_ITEM *pArray, HB_SIZE nIndex, HB_ISIZ nNumber);
 #ifndef HB_LONG_LONG_OFF
-extern HB_EXPORT HB_BOOL hb_arraySetNLL(PHB_ITEM pArray, HB_SIZE nIndex, HB_LONGLONG llNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetNLL(HB_ITEM *pArray, HB_SIZE nIndex, HB_LONGLONG llNumber);
 #endif
-extern HB_EXPORT HB_BOOL hb_arraySetNInt(PHB_ITEM pArray, HB_SIZE nIndex, HB_MAXINT nNumber);
-extern HB_EXPORT HB_BOOL hb_arraySetND(PHB_ITEM pArray, HB_SIZE nIndex, double dNumber);
-extern HB_EXPORT HB_BOOL hb_arraySetC(PHB_ITEM pArray, HB_SIZE nIndex, const char *szText);
-extern HB_EXPORT HB_BOOL hb_arraySetCL(PHB_ITEM pArray, HB_SIZE nIndex, const char *szText, HB_SIZE nLen);
-extern HB_EXPORT HB_BOOL hb_arraySetCPtr(PHB_ITEM pArray, HB_SIZE nIndex, char *szText);
-extern HB_EXPORT HB_BOOL hb_arraySetCLPtr(PHB_ITEM pArray, HB_SIZE nIndex, char *szText, HB_SIZE nLen);
-extern HB_EXPORT HB_BOOL hb_arraySetCConst(PHB_ITEM pArray, HB_SIZE nIndex, const char *szText);
-extern HB_EXPORT HB_BOOL hb_arraySetPtr(PHB_ITEM pArray, HB_SIZE nIndex, void *pValue);
-extern HB_EXPORT HB_BOOL hb_arraySetPtrGC(PHB_ITEM pArray, HB_SIZE nIndex, void *pValue);
-extern HB_EXPORT HB_BOOL hb_arraySetSymbol(PHB_ITEM pArray, HB_SIZE nIndex, HB_SYMB *pSymbol);
+extern HB_EXPORT HB_BOOL hb_arraySetNInt(HB_ITEM *pArray, HB_SIZE nIndex, HB_MAXINT nNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetND(HB_ITEM *pArray, HB_SIZE nIndex, double dNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetC(HB_ITEM *pArray, HB_SIZE nIndex, const char *szText);
+extern HB_EXPORT HB_BOOL hb_arraySetCL(HB_ITEM *pArray, HB_SIZE nIndex, const char *szText, HB_SIZE nLen);
+extern HB_EXPORT HB_BOOL hb_arraySetCPtr(HB_ITEM *pArray, HB_SIZE nIndex, char *szText);
+extern HB_EXPORT HB_BOOL hb_arraySetCLPtr(HB_ITEM *pArray, HB_SIZE nIndex, char *szText, HB_SIZE nLen);
+extern HB_EXPORT HB_BOOL hb_arraySetCConst(HB_ITEM *pArray, HB_SIZE nIndex, const char *szText);
+extern HB_EXPORT HB_BOOL hb_arraySetPtr(HB_ITEM *pArray, HB_SIZE nIndex, void *pValue);
+extern HB_EXPORT HB_BOOL hb_arraySetPtrGC(HB_ITEM *pArray, HB_SIZE nIndex, void *pValue);
+extern HB_EXPORT HB_BOOL hb_arraySetSymbol(HB_ITEM *pArray, HB_SIZE nIndex, HB_SYMB *pSymbol);
 // fill an array with a given item
-extern HB_EXPORT HB_BOOL hb_arrayFill(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE *pnCount);
+extern HB_EXPORT HB_BOOL hb_arrayFill(HB_ITEM *pArray, HB_ITEM *pValue, HB_SIZE *pnStart, HB_SIZE *pnCount);
 // scan an array for a given item, or until code-block item returns HB_TRUE
-extern HB_EXPORT HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_BOOL fExact);
+extern HB_EXPORT HB_SIZE hb_arrayScan(HB_ITEM *pArray, HB_ITEM *pValue, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_BOOL fExact);
 // scan an array for a given item, or until code-block item returns HB_TRUE in reverted order
-extern HB_EXPORT HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_BOOL fExact);
+extern HB_EXPORT HB_SIZE hb_arrayRevScan(HB_ITEM *pArray, HB_ITEM *pValue, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_BOOL fExact);
 // execute a code-block for every element of an array item
-extern HB_EXPORT HB_BOOL hb_arrayEval(PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE *pnStart, HB_SIZE *pnCount);
+extern HB_EXPORT HB_BOOL hb_arrayEval(HB_ITEM *pArray, HB_ITEM *bBlock, HB_SIZE *pnStart, HB_SIZE *pnCount);
 // copy items from one array to another
-extern HB_EXPORT HB_BOOL hb_arrayCopy(PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_SIZE *pnTarget);
+extern HB_EXPORT HB_BOOL hb_arrayCopy(HB_ITEM *pSrcArray, HB_ITEM *pDstArray, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_SIZE *pnTarget);
 // returns a duplicate of an existing array, including all nested items
-extern HB_EXPORT PHB_ITEM hb_arrayClone(PHB_ITEM pArray);
+extern HB_EXPORT HB_ITEM *hb_arrayClone(HB_ITEM *pArray);
 // returns a duplicate of an existing array, including all nested items
-extern HB_EXPORT PHB_ITEM hb_arrayCloneTo(PHB_ITEM pDest, PHB_ITEM pArray);
+extern HB_EXPORT HB_ITEM *hb_arrayCloneTo(HB_ITEM *pDest, HB_ITEM *pArray);
 // sorts an array item
-extern HB_EXPORT HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, PHB_ITEM pBlock);
+extern HB_EXPORT HB_BOOL hb_arraySort(HB_ITEM *pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_ITEM *pBlock);
 // Creates and returns an Array of n Elements from the Eval Stack - Does NOT pop the items.
-extern HB_EXPORT PHB_ITEM hb_arrayFromStack(uint16_t uiLen);
+extern HB_EXPORT HB_ITEM *hb_arrayFromStack(uint16_t uiLen);
 // Creates and returns an Array of Generic Parameters for a given call level
-extern HB_EXPORT PHB_ITEM hb_arrayFromParams(int32_t iLevel);
+extern HB_EXPORT HB_ITEM *hb_arrayFromParams(int32_t iLevel);
 // Creates and returns an Array of Generic Parameters for current base symbol.
-extern HB_EXPORT PHB_ITEM hb_arrayBaseParams(void);
+extern HB_EXPORT HB_ITEM *hb_arrayBaseParams(void);
 // Creates and returns an Array of Generic Parameters for current base symbol with self item
-extern HB_EXPORT PHB_ITEM hb_arraySelfParams(void);
+extern HB_EXPORT HB_ITEM *hb_arraySelfParams(void);
 #ifndef HB_LONG_LONG_OFF
 // retrieves the long long numeric value contained on an array element
-extern HB_EXPORT HB_LONGLONG hb_arrayGetNLL(PHB_ITEM pArray, HB_SIZE nIndex);
+extern HB_EXPORT HB_LONGLONG hb_arrayGetNLL(HB_ITEM *pArray, HB_SIZE nIndex);
 #endif
 #ifdef _HB_API_INTERNAL_
 // internal array API not exported
 extern void hb_arrayPushBase(PHB_BASEARRAY pBaseArray);
-extern void hb_arraySwap(PHB_ITEM pArray1, PHB_ITEM pArray2);
-extern void hb_nestedCloneInit(PHB_NESTED_CLONED pClonedList, void *pValue, PHB_ITEM pDest);
+extern void hb_arraySwap(HB_ITEM *pArray1, HB_ITEM *pArray2);
+extern void hb_nestedCloneInit(PHB_NESTED_CLONED pClonedList, void *pValue, HB_ITEM *pDest);
 extern void hb_nestedCloneFree(PHB_NESTED_CLONED pClonedList);
-extern void hb_nestedCloneDo(PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED pClonedList);
-extern void hb_hashCloneBody(PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pClonedList);
+extern void hb_nestedCloneDo(HB_ITEM *pDstItem, HB_ITEM *pSrcItem, PHB_NESTED_CLONED pClonedList);
+extern void hb_hashCloneBody(HB_ITEM *pDest, HB_ITEM *pHash, PHB_NESTED_CLONED pClonedList);
 #endif
 
 // hash management
-extern HB_EXPORT PHB_ITEM hb_hashNew(PHB_ITEM pItem);
-extern HB_EXPORT HB_SIZE hb_hashLen(PHB_ITEM pHash);
-extern HB_EXPORT HB_BOOL hb_hashDel(PHB_ITEM pHash, PHB_ITEM pKey);
-extern HB_EXPORT HB_BOOL hb_hashAdd(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue);
-extern HB_EXPORT HB_BOOL hb_hashAddNew(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue);
-extern HB_EXPORT HB_BOOL hb_hashRemove(PHB_ITEM pHash, PHB_ITEM pItem);
-extern HB_EXPORT HB_BOOL hb_hashClear(PHB_ITEM pHash);
-extern HB_EXPORT HB_BOOL hb_hashAllocNewPair(PHB_ITEM pHash, PHB_ITEM *pKeyPtr, PHB_ITEM *pValPtr);
-extern HB_EXPORT void hb_hashSort(PHB_ITEM pHash);
-extern HB_EXPORT PHB_ITEM hb_hashClone(PHB_ITEM pHash);
-extern HB_EXPORT PHB_ITEM hb_hashCloneTo(PHB_ITEM pDest, PHB_ITEM pHash);
-extern HB_EXPORT void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int32_t iType);
-extern HB_EXPORT HB_BOOL hb_hashScan(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE *pnPos);
-extern HB_EXPORT HB_BOOL hb_hashScanSoft(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE *pnPos);
-extern HB_EXPORT void hb_hashPreallocate(PHB_ITEM pHash, HB_SIZE nNewSize);
-extern HB_EXPORT PHB_ITEM hb_hashGetKeys(PHB_ITEM pHash);
-extern HB_EXPORT PHB_ITEM hb_hashGetValues(PHB_ITEM pHash);
-extern HB_EXPORT void hb_hashSetDefault(PHB_ITEM pHash, PHB_ITEM pValue);
-extern HB_EXPORT PHB_ITEM hb_hashGetDefault(PHB_ITEM pHash);
-extern HB_EXPORT void hb_hashSetFlags(PHB_ITEM pHash, int32_t iFlags);
-extern HB_EXPORT void hb_hashClearFlags(PHB_ITEM pHash, int32_t iFlags);
-extern HB_EXPORT int32_t hb_hashGetFlags(PHB_ITEM pHash);
+extern HB_EXPORT HB_ITEM *hb_hashNew(HB_ITEM *pItem);
+extern HB_EXPORT HB_SIZE hb_hashLen(HB_ITEM *pHash);
+extern HB_EXPORT HB_BOOL hb_hashDel(HB_ITEM *pHash, HB_ITEM *pKey);
+extern HB_EXPORT HB_BOOL hb_hashAdd(HB_ITEM *pHash, HB_ITEM *pKey, HB_ITEM *pValue);
+extern HB_EXPORT HB_BOOL hb_hashAddNew(HB_ITEM *pHash, HB_ITEM *pKey, HB_ITEM *pValue);
+extern HB_EXPORT HB_BOOL hb_hashRemove(HB_ITEM *pHash, HB_ITEM *pItem);
+extern HB_EXPORT HB_BOOL hb_hashClear(HB_ITEM *pHash);
+extern HB_EXPORT HB_BOOL hb_hashAllocNewPair(HB_ITEM *pHash, HB_ITEM **pKeyPtr, HB_ITEM **pValPtr);
+extern HB_EXPORT void hb_hashSort(HB_ITEM *pHash);
+extern HB_EXPORT HB_ITEM *hb_hashClone(HB_ITEM *pHash);
+extern HB_EXPORT HB_ITEM *hb_hashCloneTo(HB_ITEM *pDest, HB_ITEM *pHash);
+extern HB_EXPORT void hb_hashJoin(HB_ITEM *pDest, HB_ITEM *pSource, int32_t iType);
+extern HB_EXPORT HB_BOOL hb_hashScan(HB_ITEM *pHash, HB_ITEM *pKey, HB_SIZE *pnPos);
+extern HB_EXPORT HB_BOOL hb_hashScanSoft(HB_ITEM *pHash, HB_ITEM *pKey, HB_SIZE *pnPos);
+extern HB_EXPORT void hb_hashPreallocate(HB_ITEM *pHash, HB_SIZE nNewSize);
+extern HB_EXPORT HB_ITEM *hb_hashGetKeys(HB_ITEM *pHash);
+extern HB_EXPORT HB_ITEM *hb_hashGetValues(HB_ITEM *pHash);
+extern HB_EXPORT void hb_hashSetDefault(HB_ITEM *pHash, HB_ITEM *pValue);
+extern HB_EXPORT HB_ITEM *hb_hashGetDefault(HB_ITEM *pHash);
+extern HB_EXPORT void hb_hashSetFlags(HB_ITEM *pHash, int32_t iFlags);
+extern HB_EXPORT void hb_hashClearFlags(HB_ITEM *pHash, int32_t iFlags);
+extern HB_EXPORT int32_t hb_hashGetFlags(HB_ITEM *pHash);
 // retrieves the hash unique ID
-extern HB_EXPORT void *hb_hashId(PHB_ITEM pHash);
+extern HB_EXPORT void *hb_hashId(HB_ITEM *pHash);
 // retrieves numer of references to the hash
-extern HB_EXPORT HB_COUNTER hb_hashRefs(PHB_ITEM pHash);
+extern HB_EXPORT HB_COUNTER hb_hashRefs(HB_ITEM *pHash);
 
 // WARNING: these hb_hashGet*() functions are dangerous, be sure that base HASH value will not be changed
-extern HB_EXPORT PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int32_t iFlags);
-extern HB_EXPORT PHB_ITEM hb_hashGetItemRefPtr(PHB_ITEM pHash, PHB_ITEM pKey);
-extern HB_EXPORT PHB_ITEM hb_hashGetCItemPtr(PHB_ITEM pHash, const char *pszKey);
-extern HB_EXPORT HB_SIZE hb_hashGetCItemPos(PHB_ITEM pHash, const char *pszKey);
-extern HB_EXPORT PHB_ITEM hb_hashGetKeyAt(PHB_ITEM pHash, HB_SIZE nPos);
-extern HB_EXPORT PHB_ITEM hb_hashGetValueAt(PHB_ITEM pHash, HB_SIZE nPos);
+extern HB_EXPORT HB_ITEM *hb_hashGetItemPtr(HB_ITEM *pHash, HB_ITEM *pKey, int32_t iFlags);
+extern HB_EXPORT HB_ITEM *hb_hashGetItemRefPtr(HB_ITEM *pHash, HB_ITEM *pKey);
+extern HB_EXPORT HB_ITEM *hb_hashGetCItemPtr(HB_ITEM *pHash, const char *pszKey);
+extern HB_EXPORT HB_SIZE hb_hashGetCItemPos(HB_ITEM *pHash, const char *pszKey);
+extern HB_EXPORT HB_ITEM *hb_hashGetKeyAt(HB_ITEM *pHash, HB_SIZE nPos);
+extern HB_EXPORT HB_ITEM *hb_hashGetValueAt(HB_ITEM *pHash, HB_SIZE nPos);
 
-extern HB_EXPORT HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos);
+extern HB_EXPORT HB_BOOL hb_hashDelAt(HB_ITEM *pHash, HB_SIZE nPos);
 
 #if defined(__cplusplus)
 
@@ -1945,7 +1945,7 @@ extern HB_EXPORT double hb_numDecConv(double dNum, int32_t iDec);
 extern HB_EXPORT double hb_numExpConv(double dNum, int32_t iDec);
 extern HB_EXPORT void hb_strtohex(const char *pSource, HB_SIZE size, char *pDest);
 
-extern HB_EXPORT PHB_ITEM  hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int32_t iCount, PHB_ITEM *pItemArray);
+extern HB_EXPORT HB_ITEM  *hb_strFormat(HB_ITEM *pItemReturn, HB_ITEM *pItemFormat, int32_t iCount, HB_ITEM **pItemArray);
 
 // architecture dependent number conversions
 extern HB_EXPORT void hb_put_ieee754(uint8_t *ptr, double d);
@@ -1995,9 +1995,9 @@ extern HB_EXPORT HB_SYMCNT hb_dynsymToNum(HB_DYNS *pDynSym);
 extern HB_EXPORT HB_DYNS *hb_dynsymFromNum(HB_SYMCNT iSymNum);
 #ifdef _HB_API_INTERNAL_
 // return memvar handle number bound with given dynamic symbol
-extern PHB_ITEM hb_dynsymGetMemvar(HB_DYNS *pDynSym);
+extern HB_ITEM *hb_dynsymGetMemvar(HB_DYNS *pDynSym);
 // set memvar handle for a given dynamic symbol
-extern void hb_dynsymSetMemvar(HB_DYNS *pDynSym, PHB_ITEM pMemvar);
+extern void hb_dynsymSetMemvar(HB_DYNS *pDynSym, HB_ITEM *pMemvar);
 // number of dynamic symbols
 extern HB_LONG hb_dynsymCount(void);
 #endif
@@ -2044,52 +2044,52 @@ extern HB_EXPORT void hb_winmainArgVFree(void);
 
 // Codeblock management
 // retrieves the codeblock unique ID
-extern HB_EXPORT void *hb_codeblockId(PHB_ITEM pItem);
+extern HB_EXPORT void *hb_codeblockId(HB_ITEM *pItem);
 // retrieves numer of references to the codeblock
-extern HB_EXPORT HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem);
+extern HB_EXPORT HB_COUNTER hb_codeblockRefs(HB_ITEM *pItem);
 // create a code-block
 extern PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable, HB_SYMB *pSymbols, HB_SIZE nLen);
 extern PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen);
 // get local variable referenced in a codeblock
-extern PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int32_t iItemPos);
+extern HB_ITEM *hb_codeblockGetVar(HB_ITEM *pItem, int32_t iItemPos);
 // get local variable passed by reference
-extern PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos);
+extern HB_ITEM *hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos);
 
 // memvars subsystem
 // clear all PUBLIC and PRIVATE variables optionally without GetList PUBLIC variable
 extern void hb_memvarsClear(HB_BOOL fAll);
 // copy an item into a symbol
-extern HB_EXPORT void hb_memvarSetValue(HB_SYMB *pMemvarSymb, PHB_ITEM pItem);
+extern HB_EXPORT void hb_memvarSetValue(HB_SYMB *pMemvarSymb, HB_ITEM *pItem);
 // copy an symbol value into an item
-extern HB_EXPORT HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, HB_SYMB *pMemvarSymb);
+extern HB_EXPORT HB_ERRCODE hb_memvarGet(HB_ITEM *pItem, HB_SYMB *pMemvarSymb);
 // copy an symbol value into an item, with error trapping
-extern void hb_memvarGetValue(PHB_ITEM pItem, HB_SYMB *pMemvarSymb);
+extern void hb_memvarGetValue(HB_ITEM *pItem, HB_SYMB *pMemvarSymb);
 // copy a reference to a symbol value into an item, with error trapping
-extern void hb_memvarGetRefer(PHB_ITEM pItem, HB_SYMB *pMemvarSymb);
+extern void hb_memvarGetRefer(HB_ITEM *pItem, HB_SYMB *pMemvarSymb);
 // retrieve current PRIVATE variables stack base
 extern HB_SIZE hb_memvarGetPrivatesBase(void);
 // release PRIVATE variables created after specified base
 extern void hb_memvarSetPrivatesBase(HB_SIZE nBase);
 // Update PRIVATE base offset so they will not be removed when function return
 extern void hb_memvarUpdatePrivatesBase(void);
-extern void hb_memvarNewParameter(HB_SYMB *pSymbol, PHB_ITEM pValue);
+extern void hb_memvarNewParameter(HB_SYMB *pSymbol, HB_ITEM *pValue);
 extern char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen);
-extern void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int32_t iScope, PHB_ITEM pValue);
+extern void hb_memvarCreateFromItem(HB_ITEM *pMemvar, int32_t iScope, HB_ITEM *pValue);
 // retrieve scope of a dynamic variable symbol
 extern int32_t hb_memvarScope(const char *szVarName, HB_SIZE nLength);
 // Detach a local variable from the eval stack
-extern PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal);
-extern HB_EXPORT PHB_ITEM hb_memvarGetValueBySym(HB_DYNS *pDynSym);
+extern HB_ITEM *hb_memvarDetachLocal(HB_ITEM *pLocal);
+extern HB_EXPORT HB_ITEM *hb_memvarGetValueBySym(HB_DYNS *pDynSym);
 // create array with visible memvar references or copies respecting given memvars scope
-extern HB_EXPORT PHB_ITEM hb_memvarSaveInArray(int32_t iScope, HB_BOOL fCopy);
-extern void hb_memvarRestoreFromArray(PHB_ITEM pArray);
+extern HB_EXPORT HB_ITEM *hb_memvarSaveInArray(int32_t iScope, HB_BOOL fCopy);
+extern void hb_memvarRestoreFromArray(HB_ITEM *pArray);
 
 #ifdef _HB_API_INTERNAL_
 // increase the reference count of a global value
-extern void hb_memvarValueIncRef(PHB_ITEM pValue);
+extern void hb_memvarValueIncRef(HB_ITEM *pValue);
 // decrease the reference count of a global value
-extern void hb_memvarValueDecRef(PHB_ITEM pValue);
-extern PHB_ITEM hb_memvarGetItem(HB_SYMB *pMemvarSymb);
+extern void hb_memvarValueDecRef(HB_ITEM *pValue);
+extern HB_ITEM *hb_memvarGetItem(HB_SYMB *pMemvarSymb);
 #if defined(_HB_API_MACROS_)
 #  define hb_memvarValueIncRef(p)       hb_xRefInc(p)
 #endif // _HB_API_MACROS_
@@ -2130,15 +2130,15 @@ typedef struct HB_MACRO_ * PHB_MACRO;
 typedef void * PHB_MACRO;
 #endif
 // retrieve results of a macro expansion
-extern HB_EXPORT void hb_macroGetValue(PHB_ITEM pItem, int32_t iContext, int32_t flags);
+extern HB_EXPORT void hb_macroGetValue(HB_ITEM *pItem, int32_t iContext, int32_t flags);
 // assign a value to a macro-expression item
-extern void hb_macroSetValue(PHB_ITEM pItem, int32_t flags);
+extern void hb_macroSetValue(HB_ITEM *pItem, int32_t flags);
 // push reference to given expression
-extern void hb_macroPushReference(PHB_ITEM pItem);
+extern void hb_macroPushReference(HB_ITEM *pItem);
 // macro text substitution
-extern HB_EXPORT void hb_macroTextValue(PHB_ITEM pItem);
+extern HB_EXPORT void hb_macroTextValue(HB_ITEM *pItem);
 // handle a macro function calls, e.g. var := &macro()
-extern void hb_macroPushSymbol(PHB_ITEM pItem);
+extern void hb_macroPushSymbol(HB_ITEM *pItem);
 // executes pcode compiled by macro compiler
 extern void hb_macroRun(PHB_MACRO pMacro);
 // compile a string and return a pcode buffer
@@ -2150,11 +2150,11 @@ extern char *hb_macroTextSymbol(const char *szString, HB_SIZE nLength, HB_BOOL *
 // expands valid '&' operator
 extern char *hb_macroExpandString(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewString);
 // compiles and evaluates an aliased macro expression
-extern void hb_macroPopAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags);
+extern void hb_macroPopAliasedValue(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t flags);
 // compiles and evaluates an aliased macro expression
-extern void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int32_t flags);
+extern void hb_macroPushAliasedValue(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t flags);
 // determine the type of an expression
-extern HB_EXPORT const char *hb_macroGetType(PHB_ITEM pItem);
+extern HB_EXPORT const char *hb_macroGetType(HB_ITEM *pItem);
 
 // idle states
 extern HB_EXPORT void hb_releaseCPU(void);
@@ -2166,8 +2166,8 @@ extern HB_EXPORT void hb_idleReset(void);
 extern HB_EXPORT void hb_idleSleep(double dSeconds);
 
 // I18N public API
-extern PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext);
-extern PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext);
+extern HB_ITEM *hb_i18n_ngettext(HB_ITEM *pNum, HB_ITEM *pMsgID, HB_ITEM *pContext);
+extern HB_ITEM *hb_i18n_gettext(HB_ITEM *pMsgID, HB_ITEM *pContext);
 // I18N internal HVM API
 #if defined(_HB_API_INTERNAL_) || defined(_HB_I18N_INTERNAL_)
 extern void *hb_vmI18N(void);
@@ -2184,10 +2184,10 @@ extern HB_EXPORT HB_BOOL hb_vmInternalsEnabled(void);
 
 extern HB_EXPORT PHB_FUNC hb_vmProcAddress(const char *szFuncName);
 
-extern HB_EXPORT PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs);
-extern HB_EXPORT HB_BOOL hb_libFree(PHB_ITEM pDynLib);
-extern HB_EXPORT void *hb_libHandle(PHB_ITEM pDynLib);
-extern HB_EXPORT void *hb_libSymAddr(PHB_ITEM pDynLib, const char *pszSymbol);
+extern HB_EXPORT HB_ITEM *hb_libLoad(HB_ITEM *pLibName, HB_ITEM *pArgs);
+extern HB_EXPORT HB_BOOL hb_libFree(HB_ITEM *pDynLib);
+extern HB_EXPORT void *hb_libHandle(HB_ITEM *pDynLib);
+extern HB_EXPORT void *hb_libSymAddr(HB_ITEM *pDynLib, const char *pszSymbol);
 
 extern HB_EXPORT void hb_dynCall(int32_t iFuncFlags, void *pFunction, int32_t iParams, int32_t iFirst, int32_t *piArgFlags);
 

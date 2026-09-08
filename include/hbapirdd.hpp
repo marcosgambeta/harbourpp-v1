@@ -247,13 +247,13 @@ typedef struct _DBORDERCONDINFO
    HB_BOOL        fActive;
    char *         abFor;
    char *         abWhile;
-   PHB_ITEM       itmCobFor;
-   PHB_ITEM       itmCobWhile;
-   PHB_ITEM       itmCobEval;
+   HB_ITEM *      itmCobFor;
+   HB_ITEM *      itmCobWhile;
+   HB_ITEM *      itmCobEval;
    HB_LONG        lStep;
-   PHB_ITEM       itmStartRecID;
+   HB_ITEM *      itmStartRecID;
    HB_LONG        lNextCount;
-   PHB_ITEM       itmRecID;
+   HB_ITEM *      itmRecID;
    HB_BOOL        fRest;
    HB_BOOL        fDescending;
    HB_BOOL        fScoped;
@@ -277,7 +277,7 @@ typedef struct
 {
    const char *   abConstrName;     /* Name of relational integrity constraint */
    const char *   abTargetName;     /* Name of target relation table */
-   PHB_ITEM       itmRelationKey;   /* Array of columns in source table to match target primary key */
+   HB_ITEM *      itmRelationKey;   /* Array of columns in source table to match target primary key */
    HB_BOOL        fEnabled;         /* Is constraint enabled ? */
 } DBCONSTRAINTINFO;
 
@@ -295,10 +295,10 @@ typedef struct
    LPDBORDERCONDINFO  lpdbOrdCondInfo;    /* Conditional information */
    const char *       abBagName;          /* Name of the Order bag */
    const char*        atomBagName;        /* Name of the Order */
-   PHB_ITEM           itmOrder;
+   HB_ITEM *          itmOrder;
    HB_BOOL            fUnique;            /* Flag to determine if all keys are unique */
-   PHB_ITEM           itmCobExpr;         /* Code block containing the KEY expression */
-   PHB_ITEM           abExpr;             /* String containing the KEY expression */
+   HB_ITEM *          itmCobExpr;         /* Code block containing the KEY expression */
+   HB_ITEM *          abExpr;             /* String containing the KEY expression */
    LPDBCONSTRAINTINFO lpdbConstraintInfo; /* Relational constraint info */
 } DBORDERCREATEINFO;
 
@@ -314,11 +314,11 @@ typedef DBORDERCREATEINFO * LPDBORDERCREATEINFO;
 
 typedef struct
 {
-   PHB_ITEM atomBagName;  /* Name of the Order Bag */
-   PHB_ITEM itmOrder;     /* Name or Number of the Order */
-   PHB_ITEM itmCobExpr;   /* Code block containing the KEY expression */
-   PHB_ITEM itmResult;    /* Operation result */
-   PHB_ITEM itmNewVal;    /* New Setting */
+   HB_ITEM *atomBagName;  /* Name of the Order Bag */
+   HB_ITEM *itmOrder;     /* Name or Number of the Order */
+   HB_ITEM *itmCobExpr;   /* Code block containing the KEY expression */
+   HB_ITEM *itmResult;    /* Operation result */
+   HB_ITEM *itmNewVal;    /* New Setting */
    HB_BOOL  fAllTags;     /* Open all tags */
 } DBORDERINFO;
 
@@ -334,13 +334,13 @@ typedef DBORDERINFO * LPDBORDERINFO;
 
 typedef struct
 {
-   PHB_ITEM itmCobFor;   /* Code Block representation of a FOR clause */
-   PHB_ITEM lpstrFor;    /* String representation of a FOR clause */
-   PHB_ITEM itmCobWhile; /* Code Block representation of a WHILE clause */
-   PHB_ITEM lpstrWhile;  /* String representation of a WHILE clause */
-   PHB_ITEM lNext;       /* NEXT record */
-   PHB_ITEM itmRecID;    /* single record ID */
-   PHB_ITEM fRest;       /* TRUE if start from the current record */
+   HB_ITEM *itmCobFor;   /* Code Block representation of a FOR clause */
+   HB_ITEM *lpstrFor;    /* String representation of a FOR clause */
+   HB_ITEM *itmCobWhile; /* Code Block representation of a WHILE clause */
+   HB_ITEM *lpstrWhile;  /* String representation of a WHILE clause */
+   HB_ITEM *lNext;       /* NEXT record */
+   HB_ITEM *itmRecID;    /* single record ID */
+   HB_ITEM *fRest;       /* TRUE if start from the current record */
    HB_BOOL  fIgnoreFilter;       /* process should ignore any filter condition */
    HB_BOOL  fIncludeDeleted;     /* process should include deleted records */
    HB_BOOL  fLast;               /* last record of the current scope required */
@@ -362,7 +362,7 @@ typedef struct
 {
    uint16_t nScope;     /* scope operation: TOPSCOPE/ENDSCOPE */
    uint16_t unused;
-   PHB_ITEM  scopeValue;
+   HB_ITEM * scopeValue;
 } DBORDSCOPEINFO;
 
 typedef DBORDSCOPEINFO * LPDBORDSCOPEINFO;
@@ -376,8 +376,8 @@ typedef DBORDSCOPEINFO * LPDBORDSCOPEINFO;
 
 typedef struct
 {
-   PHB_ITEM itmCobExpr;       /* Block representation of the FILTER expression */
-   PHB_ITEM abFilterText;     /* String representation of FILTER expression */
+   HB_ITEM *itmCobExpr;       /* Block representation of the FILTER expression */
+   HB_ITEM *abFilterText;     /* String representation of FILTER expression */
    HB_BOOL  fFilter;          /* flag to indicate that filter is active */
    HB_BOOL  fOptimized;       /* Is (should be) filter optimized */
    void *   lpvCargo;         /* RDD specific extended filter info */
@@ -395,8 +395,8 @@ typedef DBFILTERINFO * LPDBFILTERINFO;
 
 typedef struct _DBRELINFO
 {
-   PHB_ITEM            itmCobExpr;   /* Block representation of the relational SEEK key */
-   PHB_ITEM            abKey;        /* String representation of the relational SEEK key */
+   HB_ITEM *           itmCobExpr;   /* Block representation of the relational SEEK key */
+   HB_ITEM *           abKey;        /* String representation of the relational SEEK key */
    HB_BOOL             isScoped;     /* Is this relation scoped */
    HB_BOOL             isOptimized;  /* Is relation optimized */
    struct _AREA      * lpaParent;    /* The parent of this relation */
@@ -419,8 +419,8 @@ typedef DBRELINFO * LPDBRELINFO;
 
 typedef struct
 {
-   PHB_ITEM    itmBlock;   /* The block to be evaluated */
-   PHB_ITEM    abBlock;    /* String representation of evaluated block */
+   HB_ITEM *   itmBlock;   /* The block to be evaluated */
+   HB_ITEM *   abBlock;    /* String representation of evaluated block */
    DBSCOPEINFO dbsci;      /* Scope info that limits the evaluation */
 } DBEVALINFO;
 
@@ -533,7 +533,7 @@ typedef DBSORTINFO * LPDBSORTINFO;
 
 typedef struct
 {
-   PHB_ITEM  itmRecID;
+   HB_ITEM * itmRecID;
    uint16_t uiMethod;
    uint16_t fResult;
 } DBLOCKINFO;
@@ -595,7 +595,7 @@ typedef struct _AREA
    uint16_t uiFieldCount;       /* Total number of fields used */
    LPFIELD lpFields;             /* Pointer to an array of fields */
    void * lpFieldExtents;        /* Void ptr for additional field properties */
-   PHB_ITEM valResult;           /* All purpose result holder */
+   HB_ITEM *valResult;           /* All purpose result holder */
    HB_BOOL fTop;                 /* HB_TRUE if "top" */
    HB_BOOL fBottom;              /* HB_TRUE if "bottom" */
    HB_BOOL fBof;                 /* HB_TRUE if "bof" */
@@ -626,8 +626,8 @@ typedef HB_ERRCODE ( * DBENTRYP_BP    )( AREAP area, HB_BOOL * param );
 typedef HB_ERRCODE ( * DBENTRYP_B     )( AREAP area, HB_BOOL param );
 typedef HB_ERRCODE ( * DBENTRYP_L     )( AREAP area, HB_LONG param );
 typedef HB_ERRCODE ( * DBENTRYP_UL    )( AREAP area, HB_ULONG param );
-typedef HB_ERRCODE ( * DBENTRYP_I     )( AREAP area, PHB_ITEM param );
-typedef HB_ERRCODE ( * DBENTRYP_SI    )( AREAP area, uint16_t index, PHB_ITEM param );
+typedef HB_ERRCODE ( * DBENTRYP_I     )( AREAP area, HB_ITEM *param );
+typedef HB_ERRCODE ( * DBENTRYP_SI    )( AREAP area, uint16_t index, HB_ITEM *param );
 typedef HB_ERRCODE ( * DBENTRYP_VO    )( AREAP area, LPDBOPENINFO param );
 typedef HB_ERRCODE ( * DBENTRYP_VT    )( AREAP area, LPDBTRANSINFO param );
 typedef HB_ERRCODE ( * DBENTRYP_VF    )( AREAP area, LPDBFIELDINFO param );
@@ -656,9 +656,9 @@ typedef HB_ERRCODE ( * DBENTRYP_SCP   )( AREAP area, uint16_t index, char * para
 typedef HB_ERRCODE ( * DBENTRYP_SCCS  )( AREAP area, uint16_t index, const char * param, uint16_t p3 );
 typedef HB_ERRCODE ( * DBENTRYP_VSP   )( AREAP area, uint16_t action, HB_ULONG lRecord );
 typedef HB_ERRCODE ( * DBENTRYP_SVL   )( AREAP area, uint16_t index, HB_ULONG * param );
-typedef HB_ERRCODE ( * DBENTRYP_SSI   )( AREAP area, uint16_t p1, uint16_t p2, PHB_ITEM p3 );
-typedef HB_ERRCODE ( * DBENTRYP_ISI   )( AREAP area, PHB_ITEM p1, uint16_t p2, PHB_ITEM p3 );
-typedef HB_ERRCODE ( * DBENTRYP_BIB   )( AREAP area, HB_BOOL p1, PHB_ITEM p2, HB_BOOL p3 );
+typedef HB_ERRCODE ( * DBENTRYP_SSI   )( AREAP area, uint16_t p1, uint16_t p2, HB_ITEM *p3 );
+typedef HB_ERRCODE ( * DBENTRYP_ISI   )( AREAP area, HB_ITEM *p1, uint16_t p2, HB_ITEM *p3 );
+typedef HB_ERRCODE ( * DBENTRYP_BIB   )( AREAP area, HB_BOOL p1, HB_ITEM *p2, HB_BOOL p3 );
 typedef HB_ERRCODE ( * DBENTRYP_VPL   )( AREAP area, void * p1, HB_LONG p2 );
 typedef HB_ERRCODE ( * DBENTRYP_VPLP  )( AREAP area, void * p1, HB_LONG * p2 );
 typedef HB_ERRCODE ( * DBENTRYP_LSP   )( AREAP area, HB_ULONG p1, HB_BOOL * p2 );
@@ -666,9 +666,9 @@ typedef HB_ERRCODE ( * DBENTRYP_LSP   )( AREAP area, HB_ULONG p1, HB_BOOL * p2 )
 /* this methods DO USE take a Workarea but an RDDNODE */
 
 typedef HB_ERRCODE ( * DBENTRYP_R     )( struct _RDDNODE * pRDD );
-typedef HB_ERRCODE ( * DBENTRYP_RVVL  )( struct _RDDNODE * pRDD, PHB_ITEM p1, PHB_ITEM p2, HB_ULONG p3 );
-typedef HB_ERRCODE ( * DBENTRYP_RVVVL )( struct _RDDNODE * pRDD, PHB_ITEM p1, PHB_ITEM p2, PHB_ITEM p3, HB_ULONG p4 );
-typedef HB_ERRCODE ( * DBENTRYP_RSLV  )( struct _RDDNODE * pRDD, uint16_t index, HB_ULONG p1, PHB_ITEM p2 );
+typedef HB_ERRCODE ( * DBENTRYP_RVVL  )( struct _RDDNODE * pRDD, HB_ITEM *p1, HB_ITEM *p2, HB_ULONG p3 );
+typedef HB_ERRCODE ( * DBENTRYP_RVVVL )( struct _RDDNODE * pRDD, HB_ITEM *p1, HB_ITEM *p2, HB_ITEM *p3, HB_ULONG p4 );
+typedef HB_ERRCODE ( * DBENTRYP_RSLV  )( struct _RDDNODE * pRDD, uint16_t index, HB_ULONG p1, HB_ITEM *p2 );
 /*--------------------* Virtual Method Table *----------------------*/
 
 typedef struct _RDDFUNCS
@@ -1193,10 +1193,10 @@ extern void hb_rddCloseDetachedAreas( void );
 
 /* RDD virtual machine integration functions */
 extern HB_EXPORT void         hb_rddShutDown( void );
-extern HB_EXPORT HB_ERRCODE   hb_rddGetFieldValue( PHB_ITEM pItem, HB_SYMB *pFieldSymbol );
-extern HB_EXPORT HB_ERRCODE   hb_rddPutFieldValue( PHB_ITEM pItem, HB_SYMB *pFieldSymbol );
-extern HB_EXPORT HB_ERRCODE   hb_rddFieldGet( PHB_ITEM pItem, HB_SYMB *pFieldSymbol );
-extern HB_EXPORT HB_ERRCODE   hb_rddFieldPut( PHB_ITEM pItem, HB_SYMB *pFieldSymbol );
+extern HB_EXPORT HB_ERRCODE   hb_rddGetFieldValue( HB_ITEM *pItem, HB_SYMB *pFieldSymbol );
+extern HB_EXPORT HB_ERRCODE   hb_rddPutFieldValue( HB_ITEM *pItem, HB_SYMB *pFieldSymbol );
+extern HB_EXPORT HB_ERRCODE   hb_rddFieldGet( HB_ITEM *pItem, HB_SYMB *pFieldSymbol );
+extern HB_EXPORT HB_ERRCODE   hb_rddFieldPut( HB_ITEM *pItem, HB_SYMB *pFieldSymbol );
 extern HB_EXPORT int32_t          hb_rddGetCurrentWorkAreaNumber( void );
 extern HB_EXPORT HB_ERRCODE   hb_rddSelectWorkAreaNumber( int32_t iArea );
 extern HB_EXPORT HB_ERRCODE   hb_rddSelectWorkAreaAlias( const char * szAlias );
@@ -1225,7 +1225,7 @@ extern HB_EXPORT const char * hb_rddDefaultDrv( const char * szDriver );
 extern HB_EXPORT HB_ERRCODE   hb_rddSelectFirstAvailable( void );
 extern HB_EXPORT HB_ERRCODE   hb_rddVerifyAliasName( const char * szAlias );
 extern HB_EXPORT void *       hb_rddNewAreaNode( LPRDDNODE pRddNode, uint16_t uiRddID );
-extern HB_EXPORT PHB_ITEM     hb_rddList( uint16_t uiType );
+extern HB_EXPORT HB_ITEM *    hb_rddList( uint16_t uiType );
 extern HB_EXPORT void         hb_rddCloseAll( void );
 extern HB_EXPORT void         hb_rddFlushAll( void );
 extern HB_EXPORT void         hb_rddUnLockAll( void );
@@ -1237,45 +1237,45 @@ extern HB_EXPORT HB_ERRCODE   hb_rddOpenTable(
                                  uint16_t uiArea, const char *szAlias,
                                  HB_BOOL fShared, HB_BOOL fReadonly,
                                  const char * szCpId, HB_ULONG ulConnection,
-                                 PHB_ITEM pStruct, PHB_ITEM pDelim );
+                                 HB_ITEM *pStruct, HB_ITEM *pDelim );
 extern HB_EXPORT HB_ERRCODE   hb_rddCreateTable(
                                  const char * szFileName, const char * szDriver,
                                  uint16_t uiArea, const char *szAlias,
                                  HB_BOOL fKeepOpen,
                                  const char * szCpId, HB_ULONG ulConnection,
-                                 PHB_ITEM pStruct, PHB_ITEM pDelim );
+                                 HB_ITEM *pStruct, HB_ITEM *pDelim );
 extern HB_EXPORT HB_ERRCODE   hb_rddCreateTableTemp(
                                  const char * szDriver,
                                  const char * szAlias,
                                  const char * szCpId, HB_ULONG ulConnection,
-                                 PHB_ITEM pStruct );
+                                 HB_ITEM *pStruct );
 extern HB_EXPORT HB_ERRCODE   hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo );
-extern HB_EXPORT PHB_ITEM     hb_dbTransInfoPut( PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo );
-extern HB_EXPORT LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem );
+extern HB_EXPORT HB_ITEM *    hb_dbTransInfoPut( HB_ITEM *pItem, LPDBTRANSINFO lpdbTransInfo );
+extern HB_EXPORT LPDBTRANSINFO hb_dbTransInfoGet( HB_ITEM *pItem );
 extern HB_EXPORT HB_ERRCODE   hb_dbTransStruct(
                                  AREAP lpaSource, AREAP lpaDest,
                                  LPDBTRANSINFO lpdbTransInfo,
-                                 PHB_ITEM *pStruct, PHB_ITEM pFields );
+                                 HB_ITEM **pStruct, HB_ITEM *pFields );
 extern HB_EXPORT HB_ERRCODE   hb_rddTransRecords(
                                  AREAP pArea,
                                  const char *szFileName, const char *szDriver,
                                  HB_ULONG ulConnection,
-                                 PHB_ITEM pFields, HB_BOOL fExport,
-                                 PHB_ITEM pCobFor, PHB_ITEM pStrFor,
-                                 PHB_ITEM pCobWhile, PHB_ITEM pStrWhile,
-                                 PHB_ITEM pNext, PHB_ITEM pRecID,
-                                 PHB_ITEM pRest,
+                                 HB_ITEM *pFields, HB_BOOL fExport,
+                                 HB_ITEM *pCobFor, HB_ITEM *pStrFor,
+                                 HB_ITEM *pCobWhile, HB_ITEM *pStrWhile,
+                                 HB_ITEM *pNext, HB_ITEM *pRecID,
+                                 HB_ITEM *pRest,
                                  const char *szCpId,
-                                 PHB_ITEM pDelim );
-extern HB_EXPORT void         hb_tblStructure( AREAP pArea, PHB_ITEM pStruct, uint16_t uiSize );
+                                 HB_ITEM *pDelim );
+extern HB_EXPORT void         hb_tblStructure( AREAP pArea, HB_ITEM *pStruct, uint16_t uiSize );
 extern HB_EXPORT HB_ERRCODE   hb_rddCloseAllParentRelations( AREAP pArea );
 
-extern HB_EXPORT HB_ERRCODE   hb_rddEvalWA( PHB_ITEM pBlock );
+extern HB_EXPORT HB_ERRCODE   hb_rddEvalWA( HB_ITEM *pBlock );
 
-extern HB_EXPORT HB_ERRCODE   hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo );
-extern HB_EXPORT AREAP        hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
+extern HB_EXPORT HB_ERRCODE   hb_rddDetachArea( AREAP pArea, HB_ITEM *pCargo );
+extern HB_EXPORT AREAP        hb_rddRequestArea( const char * szAlias, HB_ITEM *pCargo,
                                                  HB_BOOL fNewArea, HB_ULONG ulMilliSec );
-extern HB_EXPORT PHB_ITEM     hb_rddDetachedList( void );
+extern HB_EXPORT HB_ITEM     *hb_rddDetachedList( void );
 
 typedef HB_ERRCODE ( * WACALLBACK )( AREAP, void * );
 extern HB_EXPORT HB_ERRCODE   hb_rddIterateWorkAreas( WACALLBACK pCallBack, void * cargo );

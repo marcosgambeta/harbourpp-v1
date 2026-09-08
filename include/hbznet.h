@@ -80,9 +80,9 @@ extern HB_EXPORT long    hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void
 extern HB_EXPORT long    hb_znetFlush( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync );
 extern HB_EXPORT long    hb_znetWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, long len, HB_MAXINT timeout, long * plast );
 
-extern HB_EXPORT HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError );
-extern HB_EXPORT HB_MAXINT hb_znetInetTimeout( PHB_ITEM pItem, HB_BOOL fError );
-extern HB_EXPORT HB_BOOL   hb_znetInetInitialize( PHB_ITEM, PHB_ZNETSTREAM,
+extern HB_EXPORT HB_SOCKET hb_znetInetFD( HB_ITEM *pItem, HB_BOOL fError );
+extern HB_EXPORT HB_MAXINT hb_znetInetTimeout( HB_ITEM *pItem, HB_BOOL fError );
+extern HB_EXPORT HB_BOOL   hb_znetInetInitialize( HB_ITEM *, PHB_ZNETSTREAM,
                                                   HB_INET_RDFUNC,
                                                   HB_INET_WRFUNC,
                                                   HB_INET_FLFUNC,

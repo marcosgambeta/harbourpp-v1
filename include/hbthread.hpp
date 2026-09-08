@@ -334,13 +334,13 @@ extern HB_EXPORT HB_BOOL  hb_threadDetach( HB_THREAD_HANDLE th_h );
 extern HB_EXPORT HB_THREAD_NO hb_threadNO( void );
 
 /* used by .prg code */
-extern HB_EXPORT PHB_ITEM hb_threadMutexCreate( void );
-extern HB_EXPORT HB_BOOL  hb_threadMutexLock( PHB_ITEM pItem );
-extern HB_EXPORT HB_BOOL  hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec );
-extern HB_EXPORT HB_BOOL  hb_threadMutexUnlock( PHB_ITEM pItem );
-extern HB_EXPORT void     hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting );
-extern HB_EXPORT PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear );
-extern HB_EXPORT PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear );
+extern HB_EXPORT HB_ITEM *hb_threadMutexCreate( void );
+extern HB_EXPORT HB_BOOL  hb_threadMutexLock( HB_ITEM *pItem );
+extern HB_EXPORT HB_BOOL  hb_threadMutexTimedLock( HB_ITEM *pItem, HB_ULONG ulMilliSec );
+extern HB_EXPORT HB_BOOL  hb_threadMutexUnlock( HB_ITEM *pItem );
+extern HB_EXPORT void     hb_threadMutexNotify( HB_ITEM *pItem, HB_ITEM *pNotifier, HB_BOOL fWaiting );
+extern HB_EXPORT HB_ITEM *hb_threadMutexSubscribe( HB_ITEM *pItem, HB_BOOL fClear );
+extern HB_EXPORT HB_ITEM *hb_threadMutexTimedSubscribe( HB_ITEM *pItem, HB_ULONG ulMilliSec, HB_BOOL fClear );
 
 #if defined(_HB_API_INTERNAL_)
 
@@ -357,10 +357,10 @@ typedef struct _HB_THREADSTATE
    PHB_CARGO_FUNC pFunc;
    HB_BOOL        fActive;
    HB_BOOL        fFinished;
-   PHB_ITEM       pParams;
-   PHB_ITEM       pMemvars;
-   PHB_ITEM       pResult;
-   PHB_ITEM       pThItm;
+   HB_ITEM *      pParams;
+   HB_ITEM *      pMemvars;
+   HB_ITEM *      pResult;
+   HB_ITEM *      pThItm;
    HB_THREAD_NO      th_no;
    HB_THREAD_ID      th_id;
    HB_THREAD_HANDLE  th_h;
@@ -377,13 +377,13 @@ extern void hb_threadInit( void );
 extern void hb_threadExit( void );
 
 extern PHB_THREADSTATE hb_threadStateNew( void );
-extern PHB_THREADSTATE hb_threadStateClone( HB_ULONG ulAttr, PHB_ITEM pParams );
-extern PHB_ITEM        hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo );
+extern PHB_THREADSTATE hb_threadStateClone( HB_ULONG ulAttr, HB_ITEM *pParams );
+extern HB_ITEM *       hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo );
 
 extern void    hb_threadMutexUnlockAll( void );
 extern void    hb_threadMutexUnsubscribeAll( void );
-extern void    hb_threadMutexSyncSignal( PHB_ITEM pItemMtx );
-extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM pItemSync );
+extern void    hb_threadMutexSyncSignal( HB_ITEM *pItemMtx );
+extern HB_BOOL hb_threadMutexSyncWait( HB_ITEM *pItemMtx, HB_ULONG ulMilliSec, HB_ITEM *pItemSync );
 
 #if defined(HB_NO_TLS) || defined(HB_TASK_THREAD)
 #  undef HB_USE_TLS

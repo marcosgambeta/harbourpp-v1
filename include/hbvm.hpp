@@ -105,9 +105,9 @@ extern HB_EXPORT HB_SYMB *hb_vmProcessDynLibSymbols(HB_SYMB *pSymbols, uint16_t 
    extern HB_EXPORT void hb_vmSetFunction(HB_SYMB *pOldSym, HB_SYMB *pNewSym);
    extern HB_EXPORT void hb_vmSetDynFunc(HB_DYNS *pDynSym);
 
-   extern void hb_vmEnumRelease(PHB_ITEM pBase, PHB_ITEM pValue);
+   extern void hb_vmEnumRelease(HB_ITEM *pBase, HB_ITEM *pValue);
    // create extended message reference
-   extern HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, HB_DYNS *pMessage, HB_DYNS *pAccMsg);
+   extern HB_BOOL hb_vmMsgReference(HB_ITEM *pObject, HB_DYNS *pMessage, HB_DYNS *pAccMsg);
 
    extern void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int32_t iCount);
 
@@ -122,7 +122,7 @@ extern HB_EXPORT void hb_vmSymbolInit_RT(void);
 
 // Harbour virtual machine escaping API
 extern HB_EXPORT void hb_vmRequestDebug(void);
-extern HB_EXPORT void hb_vmRequestBreak(PHB_ITEM pItem);
+extern HB_EXPORT void hb_vmRequestBreak(HB_ITEM *pItem);
 extern HB_EXPORT void hb_vmRequestCancel(void);
 extern HB_EXPORT void hb_vmRequestQuit(void);
 extern HB_EXPORT void hb_vmRequestEndProc(void);
@@ -130,7 +130,7 @@ extern HB_EXPORT uint16_t hb_vmRequestQuery(void);
 extern HB_EXPORT HB_BOOL hb_vmRequestReenter(void);
 extern HB_EXPORT void hb_vmRequestRestore(void);
 extern HB_EXPORT HB_BOOL hb_vmRequestReenterExt(void);
-extern HB_EXPORT HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...);
+extern HB_EXPORT HB_BOOL hb_vmTryEval(HB_ITEM **pResult, HB_ITEM *pItem, HB_ULONG ulPCount, ...);
 
 extern HB_EXPORT HB_BOOL hb_vmIsActive(void);
 extern HB_EXPORT HB_BOOL hb_vmIsReady(void);
@@ -158,20 +158,20 @@ extern HB_EXPORT void hb_vmFunction(uint16_t uiParams);
 // sends a message to an object
 extern HB_EXPORT void hb_vmSend(uint16_t uiParams);
 // executes passed codeblock with no arguments
-extern HB_EXPORT PHB_ITEM hb_vmEvalBlock(PHB_ITEM pBlockItem);
+extern HB_EXPORT HB_ITEM *hb_vmEvalBlock(HB_ITEM *pBlockItem);
 // executes passed codeblock with variable number of arguments
-extern HB_EXPORT PHB_ITEM hb_vmEvalBlockV(PHB_ITEM pBlockItem, HB_ULONG ulArgCount, ...);
+extern HB_EXPORT HB_ITEM *hb_vmEvalBlockV(HB_ITEM *pBlockItem, HB_ULONG ulArgCount, ...);
 // executes codeblock or macro pointed by given item
-extern HB_EXPORT PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem);
+extern HB_EXPORT HB_ITEM *hb_vmEvalBlockOrMacro(HB_ITEM *pItem);
 // destroy codeblock or macro in given item
-extern HB_EXPORT void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem);
+extern HB_EXPORT void hb_vmDestroyBlockOrMacro(HB_ITEM *pItem);
 // compile given expression and return macro pointer item or NULL
-extern HB_EXPORT PHB_ITEM hb_vmCompileMacro(const char *szExpr, PHB_ITEM pDest);
+extern HB_EXPORT HB_ITEM *hb_vmCompileMacro(const char *szExpr, HB_ITEM *pDest);
 
 // Push
 
 // pushes a generic item onto the stack
-extern HB_EXPORT void hb_vmPush(PHB_ITEM pItem);
+extern HB_EXPORT void hb_vmPush(HB_ITEM *pItem);
 // in this case it places nil at self
 extern HB_EXPORT void hb_vmPushNil(void);
 // pushes a number on to the stack and decides if it is integer, long or double
@@ -207,7 +207,7 @@ extern HB_EXPORT void hb_vmPushPointer(void *pPointer);
 // push an item of GC HB_IT_POINTER type
 extern HB_EXPORT void hb_vmPushPointerGC(void *pPointer);
 // push item reference
-extern HB_EXPORT void hb_vmPushItemRef(PHB_ITEM pItem);
+extern HB_EXPORT void hb_vmPushItemRef(HB_ITEM *pItem);
 
 // return HB_TRUE if HVM is compiled with thread support
 extern HB_EXPORT HB_BOOL hb_vmIsMt(void);
@@ -240,7 +240,7 @@ extern HB_EXPORT void hb_vmTerminateThreads(void);
 // check if given or current thread is main HVM thread
 extern HB_EXPORT HB_BOOL hb_vmThreadIsMain(void *);
 // create new thread with HVM stack
-extern HB_EXPORT PHB_ITEM hb_vmThreadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pThreadFunc, void *cargo);
+extern HB_EXPORT HB_ITEM *hb_vmThreadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pThreadFunc, void *cargo);
 extern HB_EXPORT void *hb_vmThreadState(void);
 
 HB_EXTERN_END

@@ -311,8 +311,8 @@ typedef struct _CDXTAG
    char *    szName;          /* Name of tag */
    char *    KeyExpr;         /* a tag key expression as text */
    char *    ForExpr;         /* a tag for expression as text */
-   PHB_ITEM  pKeyItem;        /* item with a macro pcode for a tag key expression */
-   PHB_ITEM  pForItem;        /* item with a macro pcode for a tag for expression */
+   HB_ITEM  *pKeyItem;        /* item with a macro pcode for a tag key expression */
+   HB_ITEM  *pForItem;        /* item with a macro pcode for a tag for expression */
    uint16_t uiType;          /* a type of key expression value */
    uint16_t uiLen;           /* length of the key expression value */
    uint16_t nField;          /* Field number for simple (one field) key expression */
@@ -357,9 +357,9 @@ typedef struct _CDXTAG
    LPCDXKEY   HotKey;         /* value of hot key expression */
    HB_BOOL    HotFor;         /* index FOR condition for HotKey */
 
-   PHB_ITEM   topScope;       /* Top scope HB_ITEM */
+   HB_ITEM *  topScope;       /* Top scope HB_ITEM */
    LPCDXKEY   topScopeKey;    /* Top scope index key */
-   PHB_ITEM   bottomScope;    /* Bottom scope HB_ITEM */
+   HB_ITEM *  bottomScope;    /* Bottom scope HB_ITEM */
    LPCDXKEY   bottomScopeKey; /* Bottom index key */
 
    LPCDXPAGE  pagePool;       /* page buffer in memory */

@@ -858,7 +858,7 @@ typedef struct HB_MACRO_      // a macro compiled pcode container
    HB_SIZE  length;           // length of the string
    int32_t      Flags;            // some flags we may need
    int32_t      status;           // status of compilation
-   PHB_ITEM pError;           // error object returned from the parser
+   HB_ITEM *pError;           // error object returned from the parser
    PHB_PCODE_INFO pCodeInfo;  // pointer to pcode buffer and info
    void *   pLex;             // lexer buffer pointer
    void *   pExprLst;         // list with allocated expressions

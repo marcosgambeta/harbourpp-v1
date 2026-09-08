@@ -67,34 +67,34 @@ extern HB_EXPORT const HB_WCHAR * hb_wstrnull( const HB_WCHAR * str );
 
 extern HB_EXPORT void hb_strfree( void * hString );
 
-extern HB_EXPORT const char * hb_itemGetStr( PHB_ITEM pItem, void * cdp, void ** phString, HB_SIZE * pnLen );
-extern HB_EXPORT const char * hb_itemGetStrUTF8( PHB_ITEM pItem, void ** phString, HB_SIZE * pnLen );
-extern HB_EXPORT const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int32_t iEndian, void ** phString, HB_SIZE * pnLen );
+extern HB_EXPORT const char * hb_itemGetStr( HB_ITEM *pItem, void * cdp, void ** phString, HB_SIZE * pnLen );
+extern HB_EXPORT const char * hb_itemGetStrUTF8( HB_ITEM *pItem, void ** phString, HB_SIZE * pnLen );
+extern HB_EXPORT const HB_WCHAR * hb_itemGetStrU16( HB_ITEM *pItem, int32_t iEndian, void ** phString, HB_SIZE * pnLen );
 
-extern HB_EXPORT HB_SIZE hb_itemCopyStr( PHB_ITEM pItem, void * cdp, char * pStrBuffer, HB_SIZE nSize );
-extern HB_EXPORT HB_SIZE hb_itemCopyStrUTF8( PHB_ITEM pItem, char * pStrBuffer, HB_SIZE nSize );
-extern HB_EXPORT HB_SIZE hb_itemCopyStrU16( PHB_ITEM pItem, int32_t iEndian, HB_WCHAR * pStrBuffer, HB_SIZE nSize );
+extern HB_EXPORT HB_SIZE hb_itemCopyStr( HB_ITEM *pItem, void * cdp, char * pStrBuffer, HB_SIZE nSize );
+extern HB_EXPORT HB_SIZE hb_itemCopyStrUTF8( HB_ITEM *pItem, char * pStrBuffer, HB_SIZE nSize );
+extern HB_EXPORT HB_SIZE hb_itemCopyStrU16( HB_ITEM *pItem, int32_t iEndian, HB_WCHAR * pStrBuffer, HB_SIZE nSize );
 
-extern HB_EXPORT PHB_ITEM hb_itemPutStrLen( PHB_ITEM pItem, void * cdp, const char * pStr, HB_SIZE nLen );
-extern HB_EXPORT PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen );
-extern HB_EXPORT PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int32_t iEndian, const HB_WCHAR * pStr, HB_SIZE nLen );
+extern HB_EXPORT HB_ITEM *hb_itemPutStrLen( HB_ITEM *pItem, void * cdp, const char * pStr, HB_SIZE nLen );
+extern HB_EXPORT HB_ITEM *hb_itemPutStrLenUTF8( HB_ITEM *pItem, const char * pStr, HB_SIZE nLen );
+extern HB_EXPORT HB_ITEM *hb_itemPutStrLenU16( HB_ITEM *pItem, int32_t iEndian, const HB_WCHAR * pStr, HB_SIZE nLen );
 
-extern HB_EXPORT PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr );
-extern HB_EXPORT PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr );
-extern HB_EXPORT PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int32_t iEndian, const HB_WCHAR * pStr );
+extern HB_EXPORT HB_ITEM *hb_itemPutStr( HB_ITEM *pItem, void * cdp, const char * pStr );
+extern HB_EXPORT HB_ITEM *hb_itemPutStrUTF8( HB_ITEM *pItem, const char * pStr );
+extern HB_EXPORT HB_ITEM *hb_itemPutStrU16( HB_ITEM *pItem, int32_t iEndian, const HB_WCHAR * pStr );
 
 
-extern HB_EXPORT const char * hb_arrayGetStr( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp, void ** phString, HB_SIZE * pnLen );
-extern HB_EXPORT const char * hb_arrayGetStrUTF8( PHB_ITEM pArray, HB_SIZE nIndex, void ** phString, HB_SIZE * pnLen );
-extern HB_EXPORT const HB_WCHAR * hb_arrayGetStrU16( PHB_ITEM pArray, HB_SIZE nIndex, int32_t iEndian, void ** phString, HB_SIZE * pnLen );
+extern HB_EXPORT const char * hb_arrayGetStr( HB_ITEM *pArray, HB_SIZE nIndex, void * cdp, void ** phString, HB_SIZE * pnLen );
+extern HB_EXPORT const char * hb_arrayGetStrUTF8( HB_ITEM *pArray, HB_SIZE nIndex, void ** phString, HB_SIZE * pnLen );
+extern HB_EXPORT const HB_WCHAR * hb_arrayGetStrU16( HB_ITEM *pArray, HB_SIZE nIndex, int32_t iEndian, void ** phString, HB_SIZE * pnLen );
 
-extern HB_EXPORT HB_BOOL hb_arraySetStrLen( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp, const char * pStr, HB_SIZE nLen );
-extern HB_EXPORT HB_BOOL hb_arraySetStrLenUTF8( PHB_ITEM pArray, HB_SIZE nIndex, const char * pStr, HB_SIZE nLen );
-extern HB_EXPORT HB_BOOL hb_arraySetStrLenU16( PHB_ITEM pArray, HB_SIZE nIndex, int32_t iEndian, const HB_WCHAR * pStr, HB_SIZE nLen );
+extern HB_EXPORT HB_BOOL hb_arraySetStrLen( HB_ITEM *pArray, HB_SIZE nIndex, void * cdp, const char * pStr, HB_SIZE nLen );
+extern HB_EXPORT HB_BOOL hb_arraySetStrLenUTF8( HB_ITEM *pArray, HB_SIZE nIndex, const char * pStr, HB_SIZE nLen );
+extern HB_EXPORT HB_BOOL hb_arraySetStrLenU16( HB_ITEM *pArray, HB_SIZE nIndex, int32_t iEndian, const HB_WCHAR * pStr, HB_SIZE nLen );
 
-extern HB_EXPORT HB_BOOL hb_arraySetStr( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp, const char * pStr );
-extern HB_EXPORT HB_BOOL hb_arraySetStrUTF8( PHB_ITEM pArray, HB_SIZE nIndex, const char * pStr );
-extern HB_EXPORT HB_BOOL hb_arraySetStrU16( PHB_ITEM pArray, HB_SIZE nIndex, int32_t iEndian, const HB_WCHAR * pStr );
+extern HB_EXPORT HB_BOOL hb_arraySetStr( HB_ITEM *pArray, HB_SIZE nIndex, void * cdp, const char * pStr );
+extern HB_EXPORT HB_BOOL hb_arraySetStrUTF8( HB_ITEM *pArray, HB_SIZE nIndex, const char * pStr );
+extern HB_EXPORT HB_BOOL hb_arraySetStrU16( HB_ITEM *pArray, HB_SIZE nIndex, int32_t iEndian, const HB_WCHAR * pStr );
 
 
 extern HB_EXPORT const char * hb_parstr( int32_t iParam, void * cdp, void ** phString, HB_SIZE * pnLen );

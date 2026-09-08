@@ -610,8 +610,8 @@ extern HB_EXPORT HB_BOOL hb_cdpUTF8GetUCS(const char *pSrc, HB_SIZE nLen, HB_SIZ
 extern HB_EXPORT HB_BOOL hb_cdpUTF8GetU16(const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR16 *pWC);
 extern HB_EXPORT HB_BOOL hb_cdpUTF8Validate(const char *pSrc, HB_SIZE nLen);
 
-extern HB_EXPORT PHB_ITEM hb_itemDeserializeCP(const char **pBufferPtr, HB_SIZE *pnSize, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut);
-extern HB_EXPORT char *hb_itemSerializeCP(PHB_ITEM pItem, int32_t iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, HB_SIZE *pnSize);
+extern HB_EXPORT HB_ITEM *hb_itemDeserializeCP(const char **pBufferPtr, HB_SIZE *pnSize, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut);
+extern HB_EXPORT char *hb_itemSerializeCP(HB_ITEM *pItem, int32_t iFlags, HB_CODEPAGE *cdpIn, HB_CODEPAGE *cdpOut, HB_SIZE *pnSize);
 
 extern HB_EXPORT HB_WCHAR hb_cdpUpperWC(HB_CODEPAGE *cdp, HB_WCHAR wc);
 

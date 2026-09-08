@@ -407,7 +407,7 @@ typedef union
 
 typedef struct _HB_NSXSCOPE
 {
-   PHB_ITEM   scopeItem;
+   HB_ITEM *  scopeItem;
    LPKEYINFO  scopeKey;
    uint16_t  scopeKeyLen;
 } HB_NSXSCOPE;
@@ -418,8 +418,8 @@ typedef struct _TAGINFO
    char *      TagName;
    char *      KeyExpr;
    char *      ForExpr;
-   PHB_ITEM    pKeyItem;
-   PHB_ITEM    pForItem;
+   HB_ITEM *   pKeyItem;
+   HB_ITEM *   pForItem;
    HB_NSXSCOPE top;
    HB_NSXSCOPE bottom;
 

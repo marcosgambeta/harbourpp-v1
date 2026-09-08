@@ -132,17 +132,17 @@ extern void hb_clsReleaseAll(void);
 extern void hb_clsIsClassRef(void);
 extern HB_BOOL hb_clsHasDestructor(uint16_t uiClass);
 // returns the real method symbol for given stack symbol
-extern HB_SYMB *hb_clsMethodSym(PHB_ITEM pBaseSymbol);
+extern HB_SYMB *hb_clsMethodSym(HB_ITEM *pBaseSymbol);
 
 // returns the method pointer of an object class
-extern HB_SYMB *hb_objGetMethod(PHB_ITEM pObject, HB_SYMB *pSymMsg, PHB_STACK_STATE pStack);
+extern HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pSymMsg, PHB_STACK_STATE pStack);
 // create object variable reference
-extern HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack);
-extern HB_BOOL hb_objHasOperator(PHB_ITEM pObject, uint16_t uiOperator);
-extern HB_BOOL hb_objOperatorCall(uint16_t uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2);
-extern void hb_objDestructorCall(PHB_ITEM pObject);
-extern PHB_ITEM hb_objCloneTo(PHB_ITEM pDest, PHB_ITEM pObject);
-extern void hb_objCloneBody(PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList);
+extern HB_BOOL hb_objGetVarRef(HB_ITEM *pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack);
+extern HB_BOOL hb_objHasOperator(HB_ITEM *pObject, uint16_t uiOperator);
+extern HB_BOOL hb_objOperatorCall(uint16_t uiOperator, HB_ITEM *pResult, HB_ITEM *pObject, HB_ITEM *pMsgArg1, HB_ITEM *pMsgArg2);
+extern void hb_objDestructorCall(HB_ITEM *pObject);
+extern HB_ITEM *hb_objCloneTo(HB_ITEM *pDest, HB_ITEM *pObject);
+extern void hb_objCloneBody(HB_ITEM *pDest, HB_ITEM *pObject, PHB_NESTED_CLONED pClonedList);
 
 #ifndef HB_NO_PROFILER
 // profiler for object management
@@ -163,35 +163,35 @@ extern HB_EXPORT uint16_t hb_clsFindClass(const char *szClass, const char *szCla
 
 // object management
 // get object class handle
-extern HB_EXPORT uint16_t hb_objGetClass(PHB_ITEM pItem);
+extern HB_EXPORT uint16_t hb_objGetClass(HB_ITEM *pItem);
 // set object class handle using class name and class function name
-extern HB_EXPORT uint16_t hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc);
+extern HB_EXPORT uint16_t hb_objSetClass(HB_ITEM *pItem, const char *szClass, const char *szFunc);
 // retrieves an object class name
-extern HB_EXPORT const char *hb_objGetClsName(PHB_ITEM pObject);
+extern HB_EXPORT const char *hb_objGetClsName(HB_ITEM *pObject);
 // retrieves an object class name for a specific message
-extern HB_EXPORT const char *hb_objGetRealClsName(PHB_ITEM pObject, const char *szString);
+extern HB_EXPORT const char *hb_objGetRealClsName(HB_ITEM *pObject, const char *szString);
 
 // returns HB_TRUE/HB_FALSE whether szString is an existing message for object
-extern HB_EXPORT HB_BOOL hb_objHasMsg(PHB_ITEM pObject, const char *szString);
-extern HB_EXPORT HB_BOOL hb_objHasMessage(PHB_ITEM pObject, HB_DYNS *pMessage);
-extern HB_EXPORT PHB_ITEM hb_objSendMsg(PHB_ITEM pObj, const char *sMsg, HB_ULONG ulArg, ...);
-extern HB_EXPORT PHB_ITEM hb_objSendMessage(PHB_ITEM pObj, HB_DYNS *pMessage, HB_ULONG ulArg, ...);
+extern HB_EXPORT HB_BOOL hb_objHasMsg(HB_ITEM *pObject, const char *szString);
+extern HB_EXPORT HB_BOOL hb_objHasMessage(HB_ITEM *pObject, HB_DYNS *pMessage);
+extern HB_EXPORT HB_ITEM *hb_objSendMsg(HB_ITEM *pObj, const char *sMsg, HB_ULONG ulArg, ...);
+extern HB_EXPORT HB_ITEM *hb_objSendMessage(HB_ITEM *pObj, HB_DYNS *pMessage, HB_ULONG ulArg, ...);
 
 // DATA Put/Get (experimental/work in progress)
-extern HB_EXPORT PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObj, const char *sMsg, void *value);
-extern HB_EXPORT void *hb_objDataGetPtr(PHB_ITEM pObj, const char *sMsg);
-extern HB_EXPORT PHB_ITEM hb_objDataPutL(PHB_ITEM pObj, const char *sMsg, HB_BOOL value);
-extern HB_EXPORT HB_BOOL hb_objDataGetL(PHB_ITEM pObj, const char *sMsg);
-extern HB_EXPORT PHB_ITEM hb_objDataPutNI(PHB_ITEM pObj, const char *sMsg, int32_t value);
-extern HB_EXPORT int32_t hb_objDataGetNI(PHB_ITEM pObj, const char *sMsg);
-extern HB_EXPORT PHB_ITEM hb_objDataPutNL(PHB_ITEM pObj, const char *sMsg, long value);
-extern HB_EXPORT long hb_objDataGetNL(PHB_ITEM pObj, const char *sMsg);
+extern HB_EXPORT HB_ITEM *hb_objDataPutPtr(HB_ITEM *pObj, const char *sMsg, void *value);
+extern HB_EXPORT void *hb_objDataGetPtr(HB_ITEM *pObj, const char *sMsg);
+extern HB_EXPORT HB_ITEM *hb_objDataPutL(HB_ITEM *pObj, const char *sMsg, HB_BOOL value);
+extern HB_EXPORT HB_BOOL hb_objDataGetL(HB_ITEM *pObj, const char *sMsg);
+extern HB_EXPORT HB_ITEM *hb_objDataPutNI(HB_ITEM *pObj, const char *sMsg, int32_t value);
+extern HB_EXPORT int32_t hb_objDataGetNI(HB_ITEM *pObj, const char *sMsg);
+extern HB_EXPORT HB_ITEM *hb_objDataPutNL(HB_ITEM *pObj, const char *sMsg, long value);
+extern HB_EXPORT long hb_objDataGetNL(HB_ITEM *pObj, const char *sMsg);
 //
 
-extern HB_EXPORT PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, HB_DYNS *pVarMsg);
+extern HB_EXPORT HB_ITEM *hb_objGetVarPtr(HB_ITEM *pObject, HB_DYNS *pVarMsg);
 
 // send message which allows to set execution context for debugger
-extern HB_EXPORT void hb_dbg_objSendMessage(int32_t iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int32_t iParamOffset);
+extern HB_EXPORT void hb_dbg_objSendMessage(int32_t iProcLevel, HB_ITEM *pObject, HB_ITEM *pMessage, int32_t iParamOffset);
 
 // Harbour equivalent for Clipper internal __mdCreate()
 extern HB_EXPORT uint16_t hb_clsCreate(uint16_t usSize, const char *szClassName);

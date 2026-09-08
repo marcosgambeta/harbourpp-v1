@@ -85,7 +85,7 @@ extern HB_EXPORT void hb_xvmWithObjectEnd(void);
 // send WITH OBJECT message to current WITH OBJECT control variable
 extern HB_EXPORT void hb_xvmWithObjectMessage(HB_SYMB *);
 
-extern HB_EXPORT HB_BOOL hb_xvmSwitchGet(PHB_ITEM *);
+extern HB_EXPORT HB_BOOL hb_xvmSwitchGet(HB_ITEM **);
 
 // set .prg line number information
 extern HB_EXPORT void hb_xvmSetLine(uint16_t uiLine);
