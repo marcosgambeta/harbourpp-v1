@@ -53,7 +53,7 @@
 HB_FUNC(BIN2U)
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
-   HB_U32   uiResult = 0;
+   uint32_t   uiResult = 0;
 
    if( pItem != nullptr )
    {
@@ -73,7 +73,7 @@ HB_FUNC(BIN2U)
 HB_FUNC(U2BIN)
 {
    char szResult[4];
-   auto uiValue = static_cast<HB_U32>(hb_parnint(1));
+   auto uiValue = static_cast<uint32_t>(hb_parnint(1));
 
    HB_PUT_LE_UINT32(szResult, uiValue);
    hb_retclen(szResult, 4);

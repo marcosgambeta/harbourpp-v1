@@ -169,7 +169,7 @@ struct CLASS
   HB_ITEM *pMutex;           // Class sync method mutex
   HB_SYMB **pFriendSyms;     // Friend functions' symbols
   PHB_CLSCAST pSuperClasses; // Super classes
-  HB_U32 nOpFlags;           // Flags for overloaded operators
+  uint32_t nOpFlags;           // Flags for overloaded operators
   uint16_t uiClass;         // This class handle
   uint16_t fHasDestructor;  // has the class destructor message?
   uint16_t fHasOnError;     // has the class OnError message?
@@ -2783,7 +2783,7 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
 
     uint16_t uiOperator;
     HB_SYMB *pOpSym;
-    HB_U32 nOpFlags = 0;
+    uint32_t nOpFlags = 0;
 
     for (uiOperator = 0, pOpSym = s_opSymbols; uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym) {
       if (pOpSym->pDynSym == pMessage) {

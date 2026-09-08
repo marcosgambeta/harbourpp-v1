@@ -63,10 +63,10 @@
 #define LOOP_DO8(buf, i) {LOOP_DO4(buf, i) LOOP_DO4(buf, i + 4)}
 #define LOOP_DO16(buf, i) {LOOP_DO8(buf, i) LOOP_DO8(buf, i + 8)}
 
-HB_U32 hb_adler32(HB_U32 adler, const void *buf, HB_SIZE len)
+uint32_t hb_adler32(uint32_t adler, const void *buf, HB_SIZE len)
 {
-  HB_U32 s1 = adler & 0xffff;
-  HB_U32 s2 = (adler >> 16) & 0xffff;
+  uint32_t s1 = adler & 0xffff;
+  uint32_t s2 = (adler >> 16) & 0xffff;
 
   if (buf && len) {
     auto ucbuf = static_cast<const unsigned char *>(buf);
@@ -99,7 +99,7 @@ HB_FUNC(HB_ADLER32)
   auto szString = hb_parc(1);
 
   if (szString != nullptr) {
-    hb_retnint(hb_adler32(static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1)));
+    hb_retnint(hb_adler32(static_cast<uint32_t>(hb_parnl(2)), szString, hb_parclen(1)));
   } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

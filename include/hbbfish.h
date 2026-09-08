@@ -66,17 +66,17 @@ HB_EXTERN_BEGIN
 
 typedef struct
 {
-   HB_U32   P[ SUBKEYS_COUNT ];
-   HB_U32   S1[ SBOX_ENTRIES ];
-   HB_U32   S2[ SBOX_ENTRIES ];
-   HB_U32   S3[ SBOX_ENTRIES ];
-   HB_U32   S4[ SBOX_ENTRIES ];
+   uint32_t   P[ SUBKEYS_COUNT ];
+   uint32_t   S1[ SBOX_ENTRIES ];
+   uint32_t   S2[ SBOX_ENTRIES ];
+   uint32_t   S3[ SBOX_ENTRIES ];
+   uint32_t   S4[ SBOX_ENTRIES ];
 }
 HB_BLOWFISH;
 
 extern HB_EXPORT void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int32_t keylen );
-extern HB_EXPORT void hb_blowfishEncrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr );
-extern HB_EXPORT void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr );
+extern HB_EXPORT void hb_blowfishEncrypt( const HB_BLOWFISH * bf, uint32_t * xl, uint32_t * xr );
+extern HB_EXPORT void hb_blowfishDecrypt( const HB_BLOWFISH * bf, uint32_t * xl, uint32_t * xr );
 
 HB_EXTERN_END
 

@@ -97,14 +97,14 @@ HB_FUNC(CTON)
     if (static_cast<HB_I32>(nValue) >= 0 || hb_parl(3)) {
       hb_retnl(static_cast<HB_I32>(nValue));
     } else {
-      hb_retnd(static_cast<HB_U32>(nValue));
+      hb_retnd(static_cast<uint32_t>(nValue));
     }
 #else
     if (fStrict) {
       if (hb_parl(3)) {
         hb_retnint(static_cast<HB_I32>(nValue));
       } else {
-        hb_retnint(static_cast<HB_U32>(nValue));
+        hb_retnint(static_cast<uint32_t>(nValue));
       }
     } else if (static_cast<HB_MAXINT>(nValue) < 0) {
       hb_retnd(static_cast<double>(nValue));

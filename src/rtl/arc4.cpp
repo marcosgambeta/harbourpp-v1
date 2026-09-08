@@ -577,9 +577,9 @@ static _HB_INLINE_ uint8_t arc4_getbyte(void)
   return rs.s[(si + sj) & 0xff];
 }
 
-static _HB_INLINE_ HB_U32 arc4_getword(void)
+static _HB_INLINE_ uint32_t arc4_getword(void)
 {
-  HB_U32 val;
+  uint32_t val;
 
   val = arc4_getbyte() << 24;
   val |= arc4_getbyte() << 16;
@@ -621,9 +621,9 @@ void arc4random_addrandom(const unsigned char * dat, int32_t datlen)
 }
 #endif
 
-HB_U32 hb_arc4random(void)
+uint32_t hb_arc4random(void)
 {
-  HB_U32 val;
+  uint32_t val;
 
   ARC4_LOCK();
 
@@ -665,9 +665,9 @@ void hb_arc4random_buf(void *_buf, HB_SIZE n)
  * [2**32 % upper_bound, 2**32) which maps back to [0, upper_bound)
  * after reduction modulo upper_bound.
  */
-HB_U32 hb_arc4random_uniform(HB_U32 upper_bound)
+uint32_t hb_arc4random_uniform(uint32_t upper_bound)
 {
-  HB_U32 r, min;
+  uint32_t r, min;
 
   if (upper_bound < 2) {
     return 0;

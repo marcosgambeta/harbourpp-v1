@@ -78,7 +78,7 @@ using PHB_SOCKEX_BF = HB_SOCKEX_BF *;
 
 static void s_bf_hash(const HB_BLOWFISH *bf, uint8_t *vect, uint8_t *counter)
 {
-  HB_U32 xl, xr, cl, cr;
+  uint32_t xl, xr, cl, cr;
 
   cl = xl = HB_GET_BE_UINT32(&counter[0]);
   cr = xr = HB_GET_BE_UINT32(&counter[4]);

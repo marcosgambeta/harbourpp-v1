@@ -114,13 +114,13 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
                 "    CS:RIP:%04X:%016" PFLL "X  SS:RSP:%04X:%016" PFLL "X\n"
                 "    DS:%04X  ES:%04X  FS:%04X  GS:%04X\n"
                 "    Flags:%08X\n",
-                static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionCode), szCode,
+                static_cast<uint32_t>(pExceptionInfo->ExceptionRecord->ExceptionCode), szCode,
                 reinterpret_cast<uintptr_t>(pExceptionInfo->ExceptionRecord->ExceptionAddress), pCtx->Rax, pCtx->Rbx,
                 pCtx->Rcx, pCtx->Rdx, pCtx->Rsi, pCtx->Rdi, pCtx->Rbp, pCtx->R8, pCtx->R9, pCtx->R10, pCtx->R11,
-                pCtx->R12, pCtx->R13, pCtx->R14, pCtx->R15, static_cast<HB_U32>(pCtx->SegCs), pCtx->Rip,
-                static_cast<HB_U32>(pCtx->SegSs), pCtx->Rsp, static_cast<HB_U32>(pCtx->SegDs),
-                static_cast<HB_U32>(pCtx->SegEs), static_cast<HB_U32>(pCtx->SegFs), static_cast<HB_U32>(pCtx->SegGs),
-                static_cast<HB_U32>(pCtx->EFlags));
+                pCtx->R12, pCtx->R13, pCtx->R14, pCtx->R15, static_cast<uint32_t>(pCtx->SegCs), pCtx->Rip,
+                static_cast<uint32_t>(pCtx->SegSs), pCtx->Rsp, static_cast<uint32_t>(pCtx->SegDs),
+                static_cast<uint32_t>(pCtx->SegEs), static_cast<uint32_t>(pCtx->SegFs), static_cast<uint32_t>(pCtx->SegGs),
+                static_cast<uint32_t>(pCtx->EFlags));
 
     if (pExceptionInfo->ExceptionRecord->NumberParameters &&
         pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>(EXCEPTION_MAXIMUM_PARAMETERS)) {
@@ -154,7 +154,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
                 "    IT20:%016" PFLL "X  IT21:%016" PFLL "X  IT22:%016" PFLL "X\n"
                 "    IGp :%016" PFLL "X  IV0 :%016" PFLL "X  ISp :%016" PFLL "X  ITeb:%016" PFLL "X\n"
                 "    INat:%016" PFLL "X\n",
-                static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionCode),
+                static_cast<uint32_t>(pExceptionInfo->ExceptionRecord->ExceptionCode),
                 pExceptionInfo->ExceptionRecord->ExceptionAddress, pCtx->IntS0, pCtx->IntS1, pCtx->IntS2, pCtx->IntS3,
                 pCtx->IntT0, pCtx->IntT1, pCtx->IntT2, pCtx->IntT3, pCtx->IntT4, pCtx->IntT5, pCtx->IntT6, pCtx->IntT7,
                 pCtx->IntT8, pCtx->IntT9, pCtx->IntT10, pCtx->IntT11, pCtx->IntT12, pCtx->IntT13, pCtx->IntT14,
@@ -190,21 +190,21 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
                 "    CS:EIP:%04X:%08X  SS:ESP:%04X:%08X\n"
                 "    DS:%04X  ES:%04X  FS:%04X  GS:%04X\n"
                 "    Flags:%08X\n",
-                static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionCode), szCode,
-                reinterpret_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionAddress),
-                static_cast<HB_U32>(pCtx->Eax), static_cast<HB_U32>(pCtx->Ebx), static_cast<HB_U32>(pCtx->Ecx),
-                static_cast<HB_U32>(pCtx->Edx), static_cast<HB_U32>(pCtx->Esi), static_cast<HB_U32>(pCtx->Edi),
-                static_cast<HB_U32>(pCtx->Ebp), static_cast<HB_U32>(pCtx->SegCs), static_cast<HB_U32>(pCtx->Eip),
-                static_cast<HB_U32>(pCtx->SegSs), static_cast<HB_U32>(pCtx->Esp), static_cast<HB_U32>(pCtx->SegDs),
-                static_cast<HB_U32>(pCtx->SegEs), static_cast<HB_U32>(pCtx->SegFs), static_cast<HB_U32>(pCtx->SegGs),
-                static_cast<HB_U32>(pCtx->EFlags));
+                static_cast<uint32_t>(pExceptionInfo->ExceptionRecord->ExceptionCode), szCode,
+                reinterpret_cast<uint32_t>(pExceptionInfo->ExceptionRecord->ExceptionAddress),
+                static_cast<uint32_t>(pCtx->Eax), static_cast<uint32_t>(pCtx->Ebx), static_cast<uint32_t>(pCtx->Ecx),
+                static_cast<uint32_t>(pCtx->Edx), static_cast<uint32_t>(pCtx->Esi), static_cast<uint32_t>(pCtx->Edi),
+                static_cast<uint32_t>(pCtx->Ebp), static_cast<uint32_t>(pCtx->SegCs), static_cast<uint32_t>(pCtx->Eip),
+                static_cast<uint32_t>(pCtx->SegSs), static_cast<uint32_t>(pCtx->Esp), static_cast<uint32_t>(pCtx->SegDs),
+                static_cast<uint32_t>(pCtx->SegEs), static_cast<uint32_t>(pCtx->SegFs), static_cast<uint32_t>(pCtx->SegGs),
+                static_cast<uint32_t>(pCtx->EFlags));
 
     if (pExceptionInfo->ExceptionRecord->NumberParameters &&
         pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>(EXCEPTION_MAXIMUM_PARAMETERS)) {
       hb_strncat(errmsg, "    Exception Parameters:", errmsglen);
       for (DWORD arg = 0; arg < pExceptionInfo->ExceptionRecord->NumberParameters; ++arg) {
         hb_snprintf(buf, sizeof(buf), " %08X",
-                    static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionInformation[arg]));
+                    static_cast<uint32_t>(pExceptionInfo->ExceptionRecord->ExceptionInformation[arg]));
         hb_strncat(errmsg, buf, errmsglen);
       }
       hb_strncat(errmsg, "\n", errmsglen);

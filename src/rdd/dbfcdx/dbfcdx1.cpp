@@ -467,7 +467,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, HB_ITEM *pItem, HB_ULONG ulRec, 
   }
   case 'N':
     if (pTag->uiLen == 4) {
-      HB_U32 uiVal = static_cast<HB_U32>(pItem->getNI()) + 0x80000000;
+      uint32_t uiVal = static_cast<uint32_t>(pItem->getNI()) + 0x80000000;
       HB_PUT_BE_UINT32(buf, uiVal);
       nLen = 4;
     } else {
@@ -3195,7 +3195,7 @@ static void hb_cdxTagLoad(LPCDXTAG pTag)
   if (pTag->TagBlock == 0) {
     auto fLargeFile = false;
     uint16_t uiPageLen = CDX_PAGELEN, uiHeaderLen = CDX_HEADERLEN;
-    HB_U32 u32Sig = HB_GET_BE_UINT32(tagHeader.signature);
+    uint32_t u32Sig = HB_GET_BE_UINT32(tagHeader.signature);
 
     if (u32Sig == CDX_HARBOUR_SIGNATURE || u32Sig == HB_SWAP_UINT32(CDX_HARBOUR_SIGNATURE)) {
       fLargeFile = tagHeader.indexSig == 0x21;
@@ -8780,7 +8780,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
         case Harbour::Item::LONG:
         case Harbour::Item::DOUBLE:
           if (pTag->uiLen == 4) {
-            HB_U32 uiVal = static_cast<HB_U32>(pItem->getNI()) + 0x80000000;
+            uint32_t uiVal = static_cast<uint32_t>(pItem->getNI()) + 0x80000000;
             HB_PUT_BE_UINT32(&cTemp[0], uiVal);
             hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 4);
           } else {

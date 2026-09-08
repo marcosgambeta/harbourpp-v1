@@ -808,7 +808,7 @@ HB_FUNC(NETIO_SERVER)
          long lJulian, lMillisec;
          int iFileNo, iStreamID, iIndex, iResult;
          HB_FATTR ulAttr;
-         HB_U32 uiMsg;
+         uint32_t uiMsg;
          HB_FATTR nFlags;
          uint16_t uiFlags;
          char * szExt;

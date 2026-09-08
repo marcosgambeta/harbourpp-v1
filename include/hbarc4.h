@@ -56,9 +56,9 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_EXPORT HB_U32 hb_arc4random( void );
+extern HB_EXPORT uint32_t hb_arc4random( void );
 extern HB_EXPORT void hb_arc4random_buf( void * _buf, HB_SIZE n );
-extern HB_EXPORT HB_U32 hb_arc4random_uniform( HB_U32 upper_bound );
+extern HB_EXPORT uint32_t hb_arc4random_uniform( uint32_t upper_bound );
 
 HB_EXTERN_END
 

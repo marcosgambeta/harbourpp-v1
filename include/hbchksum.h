@@ -46,9 +46,9 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_EXPORT HB_U32 hb_adler32( HB_U32 adler, const void * buf, HB_SIZE len );
+extern HB_EXPORT uint32_t hb_adler32( uint32_t adler, const void * buf, HB_SIZE len );
 extern HB_EXPORT HB_U16 hb_crc16( HB_U16 crc, const void * buf, HB_SIZE len );
-extern HB_EXPORT HB_U32 hb_crc32( HB_U32 crc, const void * buf, HB_SIZE len );
+extern HB_EXPORT uint32_t hb_crc32( uint32_t crc, const void * buf, HB_SIZE len );
 extern HB_EXPORT HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly );
 extern HB_EXPORT HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly );
 extern HB_EXPORT void hb_md5( const void * data, HB_SIZE datalen, char * digest );

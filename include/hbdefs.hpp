@@ -247,7 +247,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 /* Guaranteed 32-bit types */
 #if UINT_MAX == 0xFFFFFFFF
    typedef signed int          HB_I32;
-   typedef unsigned int        HB_U32;
+   typedef unsigned int        HB_U32; // NOTE: HB_U32 is deprecated in Harbour++ source code
    #define HB_I32_MIN          INT_MIN
    #define HB_I32_MAX          INT_MAX
    #define HB_U32_MAX          UINT_MAX
@@ -262,7 +262,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 #  endif
 #elif ULONG_MAX == 0xFFFFFFFF
    typedef signed long         HB_I32;
-   typedef unsigned long       HB_U32;
+   typedef unsigned long       HB_U32; // NOTE: HB_U32 is deprecated in Harbour++ source code
    #define HB_I32_MIN          LONG_MIN
    #define HB_I32_MAX          LONG_MAX
    #define HB_U32_MAX          ULONG_MAX
@@ -384,7 +384,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
        typedef HB_I16        INT16;
    #endif
    #if !defined(UINT32)
-       typedef HB_U32        UINT32;
+       typedef uint32_t        UINT32;
    #endif
    #if !defined(INT32)
        typedef HB_I32        INT32;
@@ -440,7 +440,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 typedef HB_MAXINT    HB_VMMAXINT;
 typedef HB_MAXUINT   HB_VMMAXUINT;
 
-typedef HB_U32       HB_SYMCNT;
+typedef uint32_t       HB_SYMCNT;
 
 #define HB_DBL_LIM_INT(d)     ( HB_VMINT_MIN <= (d) && (d) <= HB_VMINT_MAX )
 #define HB_DBL_LIM_LONG(d)    ( static_cast< HB_MAXDBL >( HB_VMLONG_MIN ) <= static_cast< HB_MAXDBL >(d) && static_cast< HB_MAXDBL >(d) <= static_cast< HB_MAXDBL >( HB_VMLONG_MAX ) )
@@ -545,10 +545,10 @@ typedef HB_U32       HB_SYMCNT;
 #if 0
 typedef USHORT HB_TYPE;
 #endif
-typedef HB_U32 HB_TYPE;
+typedef uint32_t HB_TYPE;
 
 /* type of file attributes */
-typedef HB_U32 HB_FATTR;
+typedef uint32_t HB_FATTR;
 
 /* type of reference counter */
 #if defined(HB_OS_WIN_64)
@@ -703,17 +703,17 @@ typedef HB_U32 HB_FATTR;
                                          ( ( ( HB_I32 ) ( b2 ) ) <<  8 ) | \
                                          ( ( ( HB_I32 ) ( b1 ) ) ) ) )
 #define HB_MKULONG( b1, b2, b3, b4 ) ( static_cast< HB_ULONG > \
-                                       ( ( ( ( HB_U32 ) ( b4 ) ) << 24 ) | \
-                                         ( ( ( HB_U32 ) ( b3 ) ) << 16 ) | \
-                                         ( ( ( HB_U32 ) ( b2 ) ) <<  8 ) | \
-                                         ( ( ( HB_U32 ) ( b1 ) ) ) ) )
+                                       ( ( ( ( uint32_t ) ( b4 ) ) << 24 ) | \
+                                         ( ( ( uint32_t ) ( b3 ) ) << 16 ) | \
+                                         ( ( ( uint32_t ) ( b2 ) ) <<  8 ) | \
+                                         ( ( ( uint32_t ) ( b1 ) ) ) ) )
 
 #define HB_SWAP_UINT16( w )     ( ( HB_U16 ) ( ( ( ( HB_U16 ) ( w ) & 0xFF00 ) >> 8 ) | \
                                                ( ( ( HB_U16 ) ( w ) & 0x00FF ) << 8 ) ) )
-#define HB_SWAP_UINT32( w )     ( ( HB_U32 ) ( ( ( ( HB_U32 ) ( w ) & 0x000000FF ) << 24 ) | \
-                                               ( ( ( HB_U32 ) ( w ) & 0x0000FF00 ) <<  8 ) | \
-                                               ( ( ( HB_U32 ) ( w ) & 0x00FF0000 ) >>  8 ) | \
-                                               ( ( ( HB_U32 ) ( w ) & 0xFF000000 ) >> 24 ) ) )
+#define HB_SWAP_UINT32( w )     ( ( uint32_t ) ( ( ( ( uint32_t ) ( w ) & 0x000000FF ) << 24 ) | \
+                                               ( ( ( uint32_t ) ( w ) & 0x0000FF00 ) <<  8 ) | \
+                                               ( ( ( uint32_t ) ( w ) & 0x00FF0000 ) >>  8 ) | \
+                                               ( ( ( uint32_t ) ( w ) & 0xFF000000 ) >> 24 ) ) )
 
 
 #ifndef PFLL
@@ -797,7 +797,7 @@ typedef HB_U32 HB_FATTR;
 #        define   HB_PUT_PTR( p, v )   HB_PUT_BE_UINT64( p, ( HB_U64 ) ( v ) )
 #        define   HB_GET_PTR( p )      ( ( void * ) HB_GET_BE_UINT64( p ) )
 #     else
-#        define   HB_PUT_PTR( p, v )   HB_PUT_BE_UINT32( p, ( HB_U32 ) ( v ) )
+#        define   HB_PUT_PTR( p, v )   HB_PUT_BE_UINT32( p, ( uint32_t ) ( v ) )
 #        define   HB_GET_PTR( p )      ( ( void * ) HB_GET_BE_UINT32( p ) )
 #     endif
 #  else
@@ -805,16 +805,16 @@ typedef HB_U32 HB_FATTR;
 #        define   HB_PUT_PTR( p, v )   HB_PUT_LE_UINT64( p, ( HB_U64 ) ( v ) )
 #        define   HB_GET_PTR( p )      ( ( void * ) HB_GET_LE_UINT64( p ) )
 #     else
-#        define   HB_PUT_PTR( p, v )   HB_PUT_LE_UINT32( p, ( HB_U32 ) ( v ) )
+#        define   HB_PUT_PTR( p, v )   HB_PUT_LE_UINT32( p, ( uint32_t ) ( v ) )
 #        define   HB_GET_PTR( p )      ( ( void * ) HB_GET_LE_UINT32( p ) )
 #     endif
 #  endif
 #endif
 #if defined(HB_BIG_ENDIAN)
-#  define   HB_PUT_UINT32( p, v )   HB_PUT_BE_UINT32( p, ( HB_U32 ) ( v ) )
+#  define   HB_PUT_UINT32( p, v )   HB_PUT_BE_UINT32( p, ( uint32_t ) ( v ) )
 #  define   HB_GET_UINT32( p )      HB_GET_BE_UINT32( p )
 #else
-#  define   HB_PUT_UINT32( p, v )   HB_PUT_LE_UINT32( p, ( HB_U32 ) ( v ) )
+#  define   HB_PUT_UINT32( p, v )   HB_PUT_LE_UINT32( p, ( uint32_t ) ( v ) )
 #  define   HB_GET_UINT32( p )      HB_GET_LE_UINT32( p )
 #endif
 
@@ -831,7 +831,7 @@ typedef HB_U32 HB_FATTR;
 
 #  if defined(_MSC_VER)
 #     define _HB_CAST16 ( HB_U16 )
-#     define _HB_CAST32 ( HB_U32 )
+#     define _HB_CAST32 ( uint32_t )
 #     define _HB_CAST64 ( HB_U64 )
 #  else
 #     define _HB_CAST16
@@ -857,7 +857,7 @@ typedef HB_U32 HB_FATTR;
 
    typedef union
    {
-      HB_U32   val;
+      uint32_t   val;
       uint8_t  buf[ 4 ];
    } HB_U32CAST, * PHB_U32CAST;
 
@@ -923,21 +923,21 @@ typedef HB_U32 HB_FATTR;
       buf[ 1 ] = u.buf[ 0 ];
    }
 
-   static HB_FORCEINLINE HB_U32 _hb_get_std_uint32( const uint8_t * buf )
+   static HB_FORCEINLINE uint32_t _hb_get_std_uint32( const uint8_t * buf )
    {
       HB_U32CAST u;
       memcpy( u.buf, buf, sizeof( u.buf ) );
       return u.val;
    }
 
-   static HB_FORCEINLINE void _hb_put_std_uint32( uint8_t * buf, HB_U32 val )
+   static HB_FORCEINLINE void _hb_put_std_uint32( uint8_t * buf, uint32_t val )
    {
       HB_U32CAST u;
       u.val = val;
       memcpy( buf, u.buf, sizeof( u.buf ) );
    }
 
-   static HB_FORCEINLINE HB_U32 _hb_get_rev_uint32( const uint8_t * buf )
+   static HB_FORCEINLINE uint32_t _hb_get_rev_uint32( const uint8_t * buf )
    {
       HB_U32CAST u;
 #  if defined(HB_BUILTIN_BSWAP32)
@@ -952,7 +952,7 @@ typedef HB_U32 HB_FATTR;
 #  endif
    }
 
-   static HB_FORCEINLINE void _hb_put_rev_uint32( uint8_t * buf, HB_U32 val )
+   static HB_FORCEINLINE void _hb_put_rev_uint32( uint8_t * buf, uint32_t val )
    {
       HB_U32CAST u;
 #  if defined(HB_BUILTIN_BSWAP32)
@@ -1157,8 +1157,8 @@ typedef HB_U32 HB_FATTR;
 
    #define HB_GET_LE_UINT16( p )    ( *( const HB_U16 * )( p ) )
    #define HB_PUT_LE_UINT16( p, w ) ( *( HB_U16 * )( p ) = ( HB_U16 ) ( w ) )
-   #define HB_GET_LE_UINT32( p )    ( *( const HB_U32 * )( p ) )
-   #define HB_PUT_LE_UINT32( p, l ) ( *( HB_U32 * )( p ) = ( HB_U32 ) ( l ) )
+   #define HB_GET_LE_UINT32( p )    ( *( const uint32_t * )( p ) )
+   #define HB_PUT_LE_UINT32( p, l ) ( *( uint32_t * )( p ) = ( uint32_t ) ( l ) )
    #define HB_GET_LE_UINT64( p )    ( *( const HB_U64 * )( p ) )
    #define HB_PUT_LE_UINT64( p, q ) ( *( HB_U64 * )( p ) = ( HB_U64 ) ( q ) )
 
@@ -1167,11 +1167,11 @@ typedef HB_U32 HB_FATTR;
    #define HB_GET_LE_UINT16( p )    ( ( HB_U16 ) \
                                       ( ( ( HB_U16 ) (( const uint8_t * )( p ))[ 0 ] ) | \
                                         ( ( HB_U16 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) ) )
-   #define HB_GET_LE_UINT32( p )    ( ( HB_U32 ) \
-                                      ( ( ( HB_U32 ) (( const uint8_t * )( p ))[ 0 ] ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 2 ] << 16 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 3 ] << 24 ) ) )
+   #define HB_GET_LE_UINT32( p )    ( ( uint32_t ) \
+                                      ( ( ( uint32_t ) (( const uint8_t * )( p ))[ 0 ] ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 2 ] << 16 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 3 ] << 24 ) ) )
    #define HB_GET_LE_UINT64( p )    ( ( HB_U64 ) \
                                       ( ( ( HB_U64 ) (( const uint8_t * )( p ))[ 0 ] ) | \
                                         ( ( HB_U64 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
@@ -1208,8 +1208,8 @@ typedef HB_U32 HB_FATTR;
 
    #define HB_GET_BE_UINT16( p )    ( *( const HB_U16 * )( p ) )
    #define HB_PUT_BE_UINT16( p, w ) ( *( HB_U16 * )( p ) = ( HB_U16 ) ( w ) )
-   #define HB_GET_BE_UINT32( p )    ( *( const HB_U32 * )( p ) )
-   #define HB_PUT_BE_UINT32( p, l ) ( *( HB_U32 * )( p ) = ( HB_U32 ) ( l ) )
+   #define HB_GET_BE_UINT32( p )    ( *( const uint32_t * )( p ) )
+   #define HB_PUT_BE_UINT32( p, l ) ( *( uint32_t * )( p ) = ( uint32_t ) ( l ) )
    #define HB_GET_BE_UINT64( p )    ( *( const HB_U64 * )( p ) )
    #define HB_PUT_BE_UINT64( p, q ) ( *( HB_U64 * )( p ) = ( HB_U64 ) ( q ) )
 
@@ -1218,11 +1218,11 @@ typedef HB_U32 HB_FATTR;
    #define HB_GET_BE_UINT16( p )    ( ( HB_U16 ) \
                                       ( ( ( HB_U16 ) (( const uint8_t * )( p ))[ 0 ] << 8 ) | \
                                         ( ( HB_U16 ) (( const uint8_t * )( p ))[ 1 ] ) ) )
-   #define HB_GET_BE_UINT32( p )    ( ( HB_U32 ) \
-                                      ( ( ( HB_U32 ) (( const uint8_t * )( p ))[ 0 ] << 24 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 1 ] << 16 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 2 ] <<  8 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 3 ] ) ) )
+   #define HB_GET_BE_UINT32( p )    ( ( uint32_t ) \
+                                      ( ( ( uint32_t ) (( const uint8_t * )( p ))[ 0 ] << 24 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 1 ] << 16 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 2 ] <<  8 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 3 ] ) ) )
    #define HB_GET_BE_UINT64( p )    ( ( HB_U64 ) \
                                       ( ( ( HB_U64 ) (( const uint8_t * )( p ))[ 0 ] << 56 ) | \
                                         ( ( HB_U64 ) (( const uint8_t * )( p ))[ 1 ] << 48 ) | \
@@ -1395,10 +1395,10 @@ typedef HB_U32 HB_FATTR;
                                         ( ( HB_I32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
                                         ( ( HB_I32 ) (( const uint8_t * )( p ))[ 2 ] << 16 ) | \
                                         ( ( HB_I32 ) (((( const uint8_t * )( p ))[ 2 ] & 0x80 ) ? 0xFF : 0x00 ) << 24 ) ) )
-#define HB_GET_LE_UINT24( p )       ( ( HB_U32 ) \
-                                      ( ( ( HB_U32 ) (( const uint8_t * )( p ))[ 0 ] ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 2 ] << 16 ) ) )
+#define HB_GET_LE_UINT24( p )       ( ( uint32_t ) \
+                                      ( ( ( uint32_t ) (( const uint8_t * )( p ))[ 0 ] ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 2 ] << 16 ) ) )
 #define HB_PUT_LE_UINT24( p, u )    do { \
                                        (( uint8_t * )( p ))[ 0 ] = ( uint8_t )( u ); \
                                        (( uint8_t * )( p ))[ 1 ] = ( uint8_t )( ( u ) >>  8 ); \
@@ -1409,10 +1409,10 @@ typedef HB_U32 HB_FATTR;
                                         ( ( HB_I32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
                                         ( ( HB_I32 ) (( const uint8_t * )( p ))[ 0 ] << 16 ) | \
                                         ( ( HB_I32 ) (((( const uint8_t * )( p ))[ 0 ] & 0x80 ) ? 0xFF : 0x00 ) << 24 ) ) )
-#define HB_GET_BE_UINT24( p )       ( ( HB_U32 ) \
-                                      ( ( ( HB_U32 ) (( const uint8_t * )( p ))[ 2 ] ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
-                                        ( ( HB_U32 ) (( const uint8_t * )( p ))[ 0 ] << 16 ) ) )
+#define HB_GET_BE_UINT24( p )       ( ( uint32_t ) \
+                                      ( ( ( uint32_t ) (( const uint8_t * )( p ))[ 2 ] ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
+                                        ( ( uint32_t ) (( const uint8_t * )( p ))[ 0 ] << 16 ) ) )
 #define HB_PUT_BE_UINT24( p, u )    do { \
                                        (( uint8_t * )( p ))[ 2 ] = ( uint8_t )( u ); \
                                        (( uint8_t * )( p ))[ 1 ] = ( uint8_t )( ( u ) >>  8 ); \

@@ -59,9 +59,9 @@
 #define rnd_mul1 0x0de6d
 #define rnd_mul2 0x0278d
 
-static HB_U32 hb_sxInitSeed(const char *pKeyVal, HB_U16 *puiKey)
+static uint32_t hb_sxInitSeed(const char *pKeyVal, HB_U16 *puiKey)
 {
-  HB_U32 ulSeed = 0;
+  uint32_t ulSeed = 0;
 
   for (auto i = 0; i < 7; i++) {
     ulSeed = (((ulSeed >> 16) + (ulSeed << 16)) * 17) + HB_GET_LE_UINT16(&pKeyVal[i]);
@@ -71,18 +71,18 @@ static HB_U32 hb_sxInitSeed(const char *pKeyVal, HB_U16 *puiKey)
   return (ulSeed << 16) + (ulSeed >> 16);
 }
 
-static HB_U32 hb_sxNextSeed(HB_U32 ulSeed, const char *pKeyVal, HB_U16 *puiKey)
+static uint32_t hb_sxNextSeed(uint32_t ulSeed, const char *pKeyVal, HB_U16 *puiKey)
 {
-  HB_U32 ulTemp1, ulTemp2;
+  uint32_t ulTemp1, ulTemp2;
   HB_U16 uiSeedLo, uiSeedHi;
 
   uiSeedLo = static_cast<HB_U16>(ulSeed);
-  ulTemp1 = static_cast<HB_U32>(rnd_mul1) * static_cast<HB_U32>(uiSeedLo);
-  ulTemp2 = static_cast<HB_U32>(rnd_mul2) * static_cast<HB_U32>(uiSeedLo) + (ulTemp1 >> 16);
+  ulTemp1 = static_cast<uint32_t>(rnd_mul1) * static_cast<uint32_t>(uiSeedLo);
+  ulTemp2 = static_cast<uint32_t>(rnd_mul2) * static_cast<uint32_t>(uiSeedLo) + (ulTemp1 >> 16);
   uiSeedLo = static_cast<HB_U16>(ulTemp1);
-  ulTemp1 = static_cast<HB_U32>(rnd_mul1) * (ulSeed >> 16);
+  ulTemp1 = static_cast<uint32_t>(rnd_mul1) * (ulSeed >> 16);
   uiSeedHi = static_cast<HB_U16>(ulTemp1 + ulTemp2);
-  ulSeed = (static_cast<HB_U32>(uiSeedHi) << 16) + static_cast<HB_U32>(uiSeedLo);
+  ulSeed = (static_cast<uint32_t>(uiSeedHi) << 16) + static_cast<uint32_t>(uiSeedLo);
   uiSeedHi |= 1;
   *puiKey = uiSeedHi + HB_GET_LE_UINT16(pKeyVal);
   return ulSeed;
@@ -90,7 +90,7 @@ static HB_U32 hb_sxNextSeed(HB_U32 ulSeed, const char *pKeyVal, HB_U16 *puiKey)
 
 void hb_sxEnCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLen)
 {
-  HB_U32 ulSeed;
+  uint32_t ulSeed;
   HB_U16 uiKey;
   HB_SIZE nPos;
   int32_t i;
@@ -111,7 +111,7 @@ void hb_sxEnCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLe
 
 void hb_sxDeCrypt(const char *pSrc, char *pDst, const char *pKeyVal, HB_SIZE nLen)
 {
-  HB_U32 ulSeed;
+  uint32_t ulSeed;
   HB_U16 uiKey;
   HB_SIZE nPos;
   int32_t i;

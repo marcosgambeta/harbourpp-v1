@@ -265,7 +265,7 @@ typedef union
       uint8_t  bColor;
       uint8_t  bAttr;
    } c;
-   HB_U32   uiValue;
+   uint32_t   uiValue;
 } HB_SCREENCELL;
 typedef HB_SCREENCELL * PHB_SCREENCELL;
 

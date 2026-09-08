@@ -610,10 +610,10 @@ HB_FUNC(HB_UNZIPFILECLOSE)
  *
  */
 
-static HB_BOOL hb_zipGetFileInfoFromHandle(PHB_FILE pFile, HB_U32 * pulCRC, HB_BOOL * pfText)
+static HB_BOOL hb_zipGetFileInfoFromHandle(PHB_FILE pFile, uint32_t * pulCRC, HB_BOOL * pfText)
 {
    HB_BOOL fText = pfText != nullptr, fResult = false;
-   HB_U32  ulCRC = 0;
+   uint32_t  ulCRC = 0;
 
    if( pFile != nullptr ) {
       auto pString = static_cast<unsigned char*>(hb_xgrab(HB_Z_IOBUF_SIZE));
@@ -655,7 +655,7 @@ static HB_BOOL hb_zipGetFileInfoFromHandle(PHB_FILE pFile, HB_U32 * pulCRC, HB_B
    return fResult;
 }
 
-static HB_BOOL hb_zipGetFileInfo(const char * pszFileName, HB_U32 * pulCRC, HB_BOOL * pfText)
+static HB_BOOL hb_zipGetFileInfo(const char * pszFileName, uint32_t * pulCRC, HB_BOOL * pfText)
 {
    PHB_FILE pFile;
    HB_BOOL  fResult;
@@ -675,7 +675,7 @@ HB_FUNC(HB_ZIPFILECRC32)
    auto szFileName = hb_parc(1);
 
    if( szFileName ) {
-      HB_U32 ulCRC = 0;
+      uint32_t ulCRC = 0;
       if( !hb_zipGetFileInfo(szFileName, &ulCRC, nullptr) ) {
          ulCRC = 0;
       }
@@ -695,7 +695,7 @@ static int hb_zipStoreFile(zipFile hZip, int iParamFileName, int iParamZipName, 
    int          iResult;
    HB_BOOL      fError;
    HB_BOOL      fText;
-   HB_U32       ulCRC;
+   uint32_t       ulCRC;
    uLong        flags = 0;
    void *       hZipName = nullptr;
    void *       hComment = nullptr;
@@ -944,7 +944,7 @@ static int hb_zipStoreFileHandle(zipFile hZip, PHB_FILE pFile, int iParamZipName
    zip_fileinfo zfi;
    int          iResult;
    HB_BOOL      fText;
-   HB_U32       ulCRC;
+   uint32_t       ulCRC;
 
    uLong flags = 0;
 

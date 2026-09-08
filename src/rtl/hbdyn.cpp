@@ -102,7 +102,7 @@ static int32_t hb_hbtoctype(int32_t iHarbourType)
 struct HB_DYNVAL
 {
   union {
-    HB_U32 n32;
+    uint32_t n32;
     HB_U64 n64;
     double nDB;
     float nFL;
@@ -493,7 +493,7 @@ HB_DYN_CTYPE_DECL(float, FX64_FL);
 struct HB_DYNVAL
 {
   union {
-    HB_U32 n32;
+    uint32_t n32;
 #if !defined(HB_LONG_LONG_OFF)
     HB_U64 n64;
 #endif
@@ -515,7 +515,7 @@ struct HB_DYNARG
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, bool *b64)
+static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, uint32_t *r1, uint32_t *r2, bool *b64)
 {
   *b64 = false;
   *r2 = 0;
@@ -523,57 +523,57 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   switch (pArg->iType) {
   case HB_DYN_CTYPE_BOOL:
     pArg->value.t.n32 = hb_itemGetL(pParam);
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_CHAR:
     pArg->value.t.n32 = static_cast<char>(hb_itemGetNI(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED:
     pArg->value.t.n32 = static_cast<unsigned char>(hb_itemGetNI(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_SHORT:
     pArg->value.t.n32 = static_cast<short>(hb_itemGetNI(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
     pArg->value.t.n32 = static_cast<unsigned short>(hb_itemGetNI(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_INT:
     pArg->value.t.n32 = hb_itemGetNI(pParam);
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_INT_UNSIGNED:
     pArg->value.t.n32 = static_cast<uint32_t>(hb_itemGetNInt(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_LONG:
     pArg->value.t.n32 = hb_itemGetNL(pParam);
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_LONG_UNSIGNED:
     pArg->value.t.n32 = static_cast<unsigned long>(hb_itemGetNInt(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_LLONG:
 #if !defined(HB_LONG_LONG_OFF)
     pArg->value.t.n64 = hb_itemGetNInt(pParam);
     if (pArg->bByRef) {
-      *r1 = reinterpret_cast<HB_U32>(&pArg->value.t.n64);
+      *r1 = reinterpret_cast<uint32_t>(&pArg->value.t.n64);
     } else {
-      *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
-      *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
+      *r1 = static_cast<uint32_t>(pArg->value.t.n64 & 0xFFFFFFFF);
+      *r2 = static_cast<uint32_t>(pArg->value.t.n64 >> 32);
       *b64 = true;
     }
 #endif
@@ -588,10 +588,10 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
     pArg->value.t.n64 = static_cast<HB_ULONGLONG>(hb_itemGetNInt(pParam));
 #endif
     if (pArg->bByRef) {
-      *r1 = reinterpret_cast<HB_U32>(&pArg->value.t.n64);
+      *r1 = reinterpret_cast<uint32_t>(&pArg->value.t.n64);
     } else {
-      *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
-      *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
+      *r1 = static_cast<uint32_t>(pArg->value.t.n64 & 0xFFFFFFFF);
+      *r2 = static_cast<uint32_t>(pArg->value.t.n64 >> 32);
       *b64 = true;
     }
 #endif
@@ -599,17 +599,17 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
 
   case HB_DYN_CTYPE_FLOAT:
     pArg->value.t.nFL = static_cast<float>(hb_itemGetND(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.nFL) : pArg->value.t.n32;
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.nFL) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_DOUBLE:
     pArg->value.t.nDB = hb_itemGetND(pParam);
     if (pArg->bByRef) {
-      *r1 = reinterpret_cast<HB_U32>(&pArg->value.t.nDB);
+      *r1 = reinterpret_cast<uint32_t>(&pArg->value.t.nDB);
     } else {
 #if !defined(HB_LONG_LONG_OFF)
-      *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
-      *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
+      *r1 = static_cast<uint32_t>(pArg->value.t.n64 & 0xFFFFFFFF);
+      *r2 = static_cast<uint32_t>(pArg->value.t.n64 >> 32);
       *b64 = true;
 #endif
     }
@@ -632,19 +632,19 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
     case HB_DYN_ENC_ASCII: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
-      *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
+      *r1 = reinterpret_cast<uint32_t>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
     case HB_DYN_ENC_UTF8: {
       HB_SIZE nLen;
       const char *s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
-      *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
+      *r1 = reinterpret_cast<uint32_t>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
     case HB_DYN_ENC_UTF16: {
       HB_SIZE nLen;
       const HB_WCHAR *s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
-      *r1 = reinterpret_cast<HB_U32>(hb_wstrunshare(&pArg->hString, s, nLen));
+      *r1 = reinterpret_cast<uint32_t>(hb_wstrunshare(&pArg->hString, s, nLen));
       break;
     }
     default: {
@@ -673,8 +673,8 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
   case HB_DYN_CTYPE_FLOAT_PTR:
   case HB_DYN_CTYPE_DOUBLE_PTR:
   case HB_DYN_CTYPE_STRUCTURE_PTR:
-    pArg->value.t.n32 = reinterpret_cast<HB_U32>(hb_itemGetPtr(pParam));
-    *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
+    pArg->value.t.n32 = reinterpret_cast<uint32_t>(hb_itemGetPtr(pParam));
+    *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_VOID:
@@ -820,66 +820,66 @@ static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
 
 #define HB_DYN_CTYPE_DECL(ret, abi, _type_)                                                                            \
   typedef ret(abi *_type_##P00)(void);                                                                                 \
-  typedef ret(abi *_type_##P01)(HB_U32);                                                                               \
-  typedef ret(abi *_type_##P02)(HB_U32, HB_U32);                                                                       \
-  typedef ret(abi *_type_##P03)(HB_U32, HB_U32, HB_U32);                                                               \
-  typedef ret(abi *_type_##P04)(HB_U32, HB_U32, HB_U32, HB_U32);                                                       \
-  typedef ret(abi *_type_##P05)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                                               \
-  typedef ret(abi *_type_##P06)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                                       \
-  typedef ret(abi *_type_##P07)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                               \
-  typedef ret(abi *_type_##P08)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                       \
-  typedef ret(abi *_type_##P09)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);               \
-  typedef ret(abi *_type_##P10)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);       \
-  typedef ret(abi *_type_##P11)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32);                                                                               \
-  typedef ret(abi *_type_##P12)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32);                                                                       \
-  typedef ret(abi *_type_##P13)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32);                                                               \
-  typedef ret(abi *_type_##P14)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32);                                                       \
-  typedef ret(abi *_type_##P15)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                                               \
-  typedef ret(abi *_type_##P16)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                                       \
-  typedef ret(abi *_type_##P17)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                               \
-  typedef ret(abi *_type_##P18)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                       \
-  typedef ret(abi *_type_##P19)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);               \
-  typedef ret(abi *_type_##P20)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);       \
-  typedef ret(abi *_type_##P21)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32);                                                                               \
-  typedef ret(abi *_type_##P22)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32);                                                                       \
-  typedef ret(abi *_type_##P23)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32);                                                               \
-  typedef ret(abi *_type_##P24)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32);                                                       \
-  typedef ret(abi *_type_##P25)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                                               \
-  typedef ret(abi *_type_##P26)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                                       \
-  typedef ret(abi *_type_##P27)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                               \
-  typedef ret(abi *_type_##P28)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);                       \
-  typedef ret(abi *_type_##P29)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32);               \
-  typedef ret(abi *_type_##P30)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32,        \
-                                HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32)
+  typedef ret(abi *_type_##P01)(uint32_t);                                                                               \
+  typedef ret(abi *_type_##P02)(uint32_t, uint32_t);                                                                       \
+  typedef ret(abi *_type_##P03)(uint32_t, uint32_t, uint32_t);                                                               \
+  typedef ret(abi *_type_##P04)(uint32_t, uint32_t, uint32_t, uint32_t);                                                       \
+  typedef ret(abi *_type_##P05)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                                               \
+  typedef ret(abi *_type_##P06)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                                       \
+  typedef ret(abi *_type_##P07)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                               \
+  typedef ret(abi *_type_##P08)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                       \
+  typedef ret(abi *_type_##P09)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);               \
+  typedef ret(abi *_type_##P10)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);       \
+  typedef ret(abi *_type_##P11)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t);                                                                               \
+  typedef ret(abi *_type_##P12)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t);                                                                       \
+  typedef ret(abi *_type_##P13)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t);                                                               \
+  typedef ret(abi *_type_##P14)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t);                                                       \
+  typedef ret(abi *_type_##P15)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                                               \
+  typedef ret(abi *_type_##P16)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                                       \
+  typedef ret(abi *_type_##P17)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                               \
+  typedef ret(abi *_type_##P18)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                       \
+  typedef ret(abi *_type_##P19)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);               \
+  typedef ret(abi *_type_##P20)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);       \
+  typedef ret(abi *_type_##P21)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t);                                                                               \
+  typedef ret(abi *_type_##P22)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t);                                                                       \
+  typedef ret(abi *_type_##P23)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t);                                                               \
+  typedef ret(abi *_type_##P24)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t);                                                       \
+  typedef ret(abi *_type_##P25)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                                               \
+  typedef ret(abi *_type_##P26)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                                       \
+  typedef ret(abi *_type_##P27)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                               \
+  typedef ret(abi *_type_##P28)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);                       \
+  typedef ret(abi *_type_##P29)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);               \
+  typedef ret(abi *_type_##P30)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,        \
+                                uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t)
 
 #define HB_DYN_FUN_CALL(pcount, _ret_, _type_)                                                                         \
   do {                                                                                                                 \
@@ -1043,7 +1043,7 @@ static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
 #define HB_CDECL
 #endif
 
-HB_DYN_CTYPE_DECL(HB_U32, HB_CDECL, FX86_C32);
+HB_DYN_CTYPE_DECL(uint32_t, HB_CDECL, FX86_C32);
 #if !defined(HB_LONG_LONG_OFF)
 HB_DYN_CTYPE_DECL(HB_U64, HB_CDECL, FX86_C64);
 #endif
@@ -1052,7 +1052,7 @@ HB_DYN_CTYPE_DECL(float, HB_CDECL, FX86_CFL);
 
 #if defined(HB_OS_WIN)
 
-HB_DYN_CTYPE_DECL(HB_U32, __stdcall, FX86_S32);
+HB_DYN_CTYPE_DECL(uint32_t, __stdcall, FX86_S32);
 HB_DYN_CTYPE_DECL(HB_U64, __stdcall, FX86_S64);
 HB_DYN_CTYPE_DECL(double, __stdcall, FX86_SDB);
 HB_DYN_CTYPE_DECL(float, __stdcall, FX86_SFL);
@@ -1180,7 +1180,7 @@ void hb_dynCall(int32_t iFuncFlags, void *pFunctionRaw, int32_t iParams, int32_t
       int32_t tmp;
 
       int32_t iParamsRaw = 0;
-      HB_U32 rawpar[_DYNEXEC_MAXPARAM * 2];
+      uint32_t rawpar[_DYNEXEC_MAXPARAM * 2];
 
 #if !defined(HB_LONG_LONG_OFF)
       ret.t.n64 = 0;
@@ -1207,8 +1207,8 @@ void hb_dynCall(int32_t iFuncFlags, void *pFunctionRaw, int32_t iParams, int32_t
       for (tmp = 0; tmp < iParams; ++tmp) {
         auto pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
-        HB_U32 r1;
-        HB_U32 r2;
+        uint32_t r1;
+        uint32_t r2;
         auto b64 = false;
 
         if (piArgFlags) {

@@ -74,7 +74,7 @@ struct _HB_MEMINFO
   struct _HB_MEMINFO *pPrevBlock;
   struct _HB_MEMINFO *pNextBlock;
   HB_SIZE nSize;
-  HB_U32 Signature;
+  uint32_t Signature;
 };
 
 using HB_MEMINFO = _HB_MEMINFO;
@@ -104,7 +104,7 @@ void *hb_xgrab(HB_SIZE nSize) /* allocates fixed memory, exits on failure */
   }
 
 #ifdef HB_FM_STATISTICS
-  pMem = malloc(nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
+  pMem = malloc(nSize + HB_MEMINFO_SIZE + sizeof(uint32_t));
   if (pMem) {
     if (s_pMemBlocks) {
       s_pMemBlocks->pPrevBlock = static_cast<PHB_MEMINFO>(pMem);
@@ -166,7 +166,7 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
 
   HB_PUT_LE_UINT32((static_cast<uint8_t *>(pMem)) + nMemSize, 0);
 
-  pResult = realloc(pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
+  pResult = realloc(pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(uint32_t));
   if (pResult) {
     if (s_pMemBlocks == pMemBlock) {
       s_pMemBlocks = static_cast<PHB_MEMINFO>(pResult);

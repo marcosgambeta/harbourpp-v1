@@ -81,7 +81,7 @@
 /* MD5 buffer */
 struct MD5_BUF
 {
-  HB_U32 accum[4];
+  uint32_t accum[4];
   uint8_t buf[64];
 };
 
@@ -113,7 +113,7 @@ struct MD5_BUF
 #define OPAD 0x5C
 
 /* Static data */
-static const HB_U32 T[64] = {
+static const uint32_t T[64] = {
     0xD76AA478, 0xE8C7B756, 0x242070DB, 0xC1BDCEEE, 0xF57C0FAF, 0x4787C62A, 0xA8304613, 0xFD469501,
     0x698098D8, 0x8B44F7AF, 0xFFFF5BB1, 0x895CD7BE, 0x6B901122, 0xFD987193, 0xA679438E, 0x49B40821,
     0xF61E2562, 0xC040B340, 0x265E5A51, 0xE9B6C7AA, 0xD62F105D, 0x02441453, 0xD8A1E681, 0xE7D3FBC8,
@@ -125,7 +125,7 @@ static const HB_U32 T[64] = {
 
 static void hb_md5go(MD5_BUF *md5)
 {
-  HB_U32 X[16], A[4];
+  uint32_t X[16], A[4];
   uint8_t *ptr;
   int32_t i;
 
@@ -210,7 +210,7 @@ static void hb_md5go(MD5_BUF *md5)
   md5->accum[3] += A[3];
 }
 
-static void hb_md5accinit(HB_U32 accum[])
+static void hb_md5accinit(uint32_t accum[])
 {
   /* fill initial accumulator state */
   accum[0] = 0x67452301;
@@ -219,7 +219,7 @@ static void hb_md5accinit(HB_U32 accum[])
   accum[3] = 0x10325476;
 }
 
-static void hb_md5val(HB_U32 accum[], char *md5val)
+static void hb_md5val(uint32_t accum[], char *md5val)
 {
   for (auto i = 0; i < 4; i++) {
     for (auto n = 0; n < 4; n++) {

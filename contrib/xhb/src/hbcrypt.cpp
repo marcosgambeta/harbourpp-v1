@@ -282,8 +282,8 @@ void nxs_xordecode(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char
 void nxs_xorcyclic(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char *key, HB_SIZE keylen)
 {
   HB_SIZE pos = 0, crcpos = 0;
-  HB_U32 crc1, crc2, crc3;
-  HB_U32 crc1l, crc2l, crc3l;
+  uint32_t crc1, crc2, crc3;
+  uint32_t crc1l, crc2l, crc3l;
 
   /* Build the cyclic key seed */
   crc1 = keylen >= 2 ? hb_adler32(0, reinterpret_cast<const char *>(key) + 0, keylen - 2) : 1;
@@ -318,10 +318,10 @@ void nxs_xorcyclic(unsigned char *cipher, HB_SIZE cipherlen, const unsigned char
   }
 }
 
-HB_U32 nxs_cyclic_sequence(HB_U32 input)
+uint32_t nxs_cyclic_sequence(uint32_t input)
 {
-  HB_U32 first = input & 0xffff;
-  HB_U32 second = input >> 16;
+  uint32_t first = input & 0xffff;
+  uint32_t second = input >> 16;
 
   return ((second * BASE * BASE) & 0xffff) | ((first * BASE * BASE) & 0xffff0000);
 }

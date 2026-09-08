@@ -178,8 +178,8 @@ void hb_znetEncryptKey(PHB_ZNETSTREAM pStream, const void *keydata, int32_t keyl
 
 static void hb_znetDecrypt(PHB_ZNETSTREAM pStream, Bytef *data)
 {
-  HB_U32 xl = HB_GET_BE_UINT32(data);
-  HB_U32 xr = HB_GET_BE_UINT32(data + 4);
+  uint32_t xl = HB_GET_BE_UINT32(data);
+  uint32_t xr = HB_GET_BE_UINT32(data + 4);
   hb_blowfishDecrypt(pStream->bf, &xl, &xr);
   HB_PUT_BE_UINT32(data, xl);
   HB_PUT_BE_UINT32(data + 4, xr);
@@ -187,8 +187,8 @@ static void hb_znetDecrypt(PHB_ZNETSTREAM pStream, Bytef *data)
 
 static void hb_znetEncrypt(PHB_ZNETSTREAM pStream, Bytef *data)
 {
-  HB_U32 xl = HB_GET_BE_UINT32(data);
-  HB_U32 xr = HB_GET_BE_UINT32(data + 4);
+  uint32_t xl = HB_GET_BE_UINT32(data);
+  uint32_t xr = HB_GET_BE_UINT32(data + 4);
   hb_blowfishEncrypt(pStream->bf, &xl, &xr);
   HB_PUT_BE_UINT32(data, xl);
   HB_PUT_BE_UINT32(data + 4, xr);

@@ -1418,7 +1418,7 @@ HB_FUNC(NETIO_SETPATH)
    }
 }
 
-static const char * s_netio_params(int iParam, int iMsg, const char * pszName, HB_U32 * pSize, char ** pFree)
+static const char * s_netio_params(int iParam, int iMsg, const char * pszName, uint32_t * pSize, char ** pFree)
 {
    int iPCount = iMsg == NETIO_PROCIS ? 0 : hb_pcount();
    char * data = nullptr;
@@ -1443,7 +1443,7 @@ static const char * s_netio_params(int iParam, int iMsg, const char * pszName, H
    }
 
    *pFree = data;
-   *pSize = static_cast<HB_U32>(size);
+   *pSize = static_cast<uint32_t>(size);
 
    return data ? data : pszName;
 }
@@ -1471,7 +1471,7 @@ static HB_BOOL s_netio_procexec(int iMsg, int iType)
          {
             uint8_t msgbuf[NETIO_MSGLEN];
             char * buffer;
-            HB_U32 size;
+            uint32_t size;
             int iStreamID = 0;
 
             const char * data = s_netio_params(iParam, iMsg, pszProcName, &size, &buffer);

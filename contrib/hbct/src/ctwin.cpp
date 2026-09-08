@@ -2303,7 +2303,7 @@ static int32_t hb_ctw_gt_ReadKey(HB_GT *pGT, int32_t iEventMask)
 }
 
 // helper function
-static HB_U32 hb_ctw_gt_cellValue(HB_GT *pGT, int32_t iRow, int32_t iCol)
+static uint32_t hb_ctw_gt_cellValue(HB_GT *pGT, int32_t iRow, int32_t iCol)
 {
   HB_SCREENCELL cell;
   int32_t iColor;
@@ -2322,7 +2322,7 @@ static void hb_ctw_gt_RedrawDiff(HB_GT *pGT)
   } else if (pGT->fRefresh) {
     int32_t l, r, s;
     long lIndex;
-    HB_U32 uiValue;
+    uint32_t uiValue;
 
     for (auto i = 0; i < pGT->iHeight; ++i) {
       if (pGT->pLines[i]) {

@@ -189,9 +189,9 @@ static const HB_BLOWFISH s_blowFishInit = {
 #define F(x) (((S1(a(x)) + S2(b(x))) ^ S3(c(x))) + S4(d(x)))
 #define R(X, n) (F(X) ^ P(n))
 
-void hb_blowfishEncrypt(const HB_BLOWFISH *bf, HB_U32 *xl, HB_U32 *xr)
+void hb_blowfishEncrypt(const HB_BLOWFISH *bf, uint32_t *xl, uint32_t *xr)
 {
-  HB_U32 xL = *xl, xR = *xr;
+  uint32_t xL = *xl, xR = *xr;
 
   xL ^= P(0);
   xR ^= R(xL, 1);
@@ -216,9 +216,9 @@ void hb_blowfishEncrypt(const HB_BLOWFISH *bf, HB_U32 *xl, HB_U32 *xr)
   *xl = xR;
 }
 
-void hb_blowfishDecrypt(const HB_BLOWFISH *bf, HB_U32 *xl, HB_U32 *xr)
+void hb_blowfishDecrypt(const HB_BLOWFISH *bf, uint32_t *xl, uint32_t *xr)
 {
-  HB_U32 xL = *xl, xR = *xr;
+  uint32_t xL = *xl, xR = *xr;
 
   xL ^= P(17);
   xR ^= R(xL, 16);
@@ -253,7 +253,7 @@ void hb_blowfishDecrypt(const HB_BLOWFISH *bf, HB_U32 *xl, HB_U32 *xr)
 void hb_blowfishInit(HB_BLOWFISH *bf, const void *keydata, int32_t keylen)
 {
   auto key = static_cast<const unsigned char *>(keydata);
-  HB_U32 xL, xR;
+  uint32_t xL, xR;
   int32_t i, j, l;
 
   memcpy(bf, &s_blowFishInit, sizeof(s_blowFishInit));

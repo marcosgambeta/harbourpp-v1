@@ -51,11 +51,11 @@ HB_FUNC(CHECKSUM)
 {
   auto pbyString = reinterpret_cast<const uint8_t *>(hb_parc(1));
   auto nLen = hb_parclen(1);
-  HB_U32 u32Result = 0;
+  uint32_t u32Result = 0;
 
   for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
     u32Result += pbyString[nPos] | (pbyString[nPos + 1] << 8);
   }
 
-  hb_retnint(static_cast<HB_U32>((u32Result & 0x00FFFFFF) | ((nLen & 0xFF) << 24)));
+  hb_retnint(static_cast<uint32_t>((u32Result & 0x00FFFFFF) | ((nLen & 0xFF) << 24)));
 }

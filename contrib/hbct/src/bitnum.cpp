@@ -314,9 +314,9 @@ HB_FUNC(INTPOS)
 
     if (f32Bit) {
 #ifndef HB_LONG_LONG_OFF
-      hb_retnint(static_cast<HB_U32>(lValue));
+      hb_retnint(static_cast<uint32_t>(lValue));
 #else
-      hb_retnlen(static_cast<HB_U32>(lValue), 0, 0);
+      hb_retnlen(static_cast<uint32_t>(lValue), 0, 0);
 #endif
     } else {
       hb_retnint(static_cast<HB_U16>(lValue));

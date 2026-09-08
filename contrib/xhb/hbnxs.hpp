@@ -106,7 +106,7 @@ void nxs_xorcyclic(
    unsigned char * cipher, HB_SIZE cipherlen,
    const unsigned char * key, HB_SIZE keylen );
 
-HB_U32 nxs_cyclic_sequence( HB_U32 input );
+uint32_t nxs_cyclic_sequence( uint32_t input );
 
 void nxs_make_scramble(
    HB_ISIZ * scramble,

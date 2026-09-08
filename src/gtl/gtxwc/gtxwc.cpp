@@ -285,7 +285,7 @@ struct XWND_DEF
   Time mouseButtonsTime[XWC_MAX_BUTTONS];
 
   // current screen contents (attr<<24)|(color<<16)|char
-  HB_U32 *pCurrScr;
+  uint32_t *pCurrScr;
 
   // character translation table, it changes some characters in screen buffer into graphs primitives
   XWC_CharTrans boxTrans[HB_BOXCH_TRANS_MAX];
@@ -3570,9 +3570,9 @@ static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int32_t col, int32_t row, uint8_
 
 // ***********************************************************************
 
-static HB_U32 hb_gt_xwc_HashCurrChar(uint8_t attr, uint8_t color, uint16_t chr)
+static uint32_t hb_gt_xwc_HashCurrChar(uint8_t attr, uint8_t color, uint16_t chr)
 {
-  return (static_cast<HB_U32>(attr) << 24) | (static_cast<HB_U32>(color) << 16) | static_cast<HB_U32>(chr);
+  return (static_cast<uint32_t>(attr) << 24) | (static_cast<uint32_t>(color) << 16) | static_cast<uint32_t>(chr);
 }
 
 // ***********************************************************************
@@ -3582,7 +3582,7 @@ static void hb_gt_xwc_RepaintChar(PXWND_DEF wnd, int32_t colStart, int32_t rowSt
   uint16_t irow, startCol = 0, basex, basey, nsize;
   uint8_t oldColor = 0, color, attr;
   uint16_t usCh16, usChBuf[XWC_MAX_COLS];
-  HB_U32 u32Curr = 0xFFFFFFFF;
+  uint32_t u32Curr = 0xFFFFFFFF;
   int32_t i, iColor;
   XWC_CharTrans *chTrans;
 
@@ -3955,7 +3955,7 @@ static bool hb_gt_xwc_SetScrBuff(PXWND_DEF wnd, uint16_t cols, uint16_t rows)
       if (wnd->pCurrScr != nullptr) {
         hb_xfree(wnd->pCurrScr);
       }
-      wnd->pCurrScr = static_cast<HB_U32 *>(hb_xgrab(cols * rows * sizeof(HB_U32)));
+      wnd->pCurrScr = static_cast<uint32_t *>(hb_xgrab(cols * rows * sizeof(uint32_t)));
       hb_gt_xwc_InvalidateFull(wnd);
 
       return true;

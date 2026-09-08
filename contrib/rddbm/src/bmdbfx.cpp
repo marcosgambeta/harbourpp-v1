@@ -181,15 +181,15 @@ HB_FUNC(BM_TURBO)
 
 struct BM_FILTER
 {
-  HB_U32 maxrec;
-  HB_U32 map[1];
+  uint32_t maxrec;
+  uint32_t map[1];
 };
 
 using PBM_FILTER = BM_FILTER *;
 
 #define BM_GETFILTER(p) ((PBM_FILTER)(p)->dbfi.lpvCargo)
 #define BM_ITEMSIZE(n) (((n) + 31) >> 5)
-#define BM_BYTESIZE(n) ((((n) + 31) >> 5) * sizeof(HB_U32))
+#define BM_BYTESIZE(n) ((((n) + 31) >> 5) * sizeof(uint32_t))
 
 #define BM_SETREC(p, r)                                                                                                \
   do {                                                                                                                 \
@@ -298,7 +298,7 @@ static PBM_FILTER hb_bmCreate(AREAP pArea, HB_BOOL fFull)
   if (SELF_RECCOUNT(pArea, &ulRecCount) == Harbour::SUCCESS) {
     HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecCount);
     pBM = static_cast<PBM_FILTER>(memset(hb_xgrab(nSize), fFull ? 0xFF : 0x00, nSize));
-    pBM->maxrec = static_cast<HB_U32>(ulRecCount);
+    pBM->maxrec = static_cast<uint32_t>(ulRecCount);
   }
 
   return pBM;
@@ -321,7 +321,7 @@ HB_FUNC(BM_DBGETFILTERARRAY)
 
         for (HB_ULONG ul = 0; ul < ulItems; ul++) {
           if (pBM->map[ul]) {
-            HB_U32 nBits = pBM->map[ul];
+            uint32_t nBits = pBM->map[ul];
             HB_ULONG ulRec = ul << 5;
 
             do {
@@ -442,7 +442,7 @@ static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
         pArea->dbfi.lpvCargo = pBM = static_cast<PBM_FILTER>(hb_xrealloc(pBM, nSize));
         memset(reinterpret_cast<uint8_t *>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
       }
-      pBM->maxrec = static_cast<HB_U32>(ulRecNo);
+      pBM->maxrec = static_cast<uint32_t>(ulRecNo);
     }
     if (fResult) {
       BM_SETREC(pBM, ulRecNo);

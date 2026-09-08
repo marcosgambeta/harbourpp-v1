@@ -51,7 +51,7 @@
 
 // X^32+X^26+X^23+X^22+X^16+X^12+X^11+X^10+X^8+X^7+X^5+X^4+X^2+X^1+X^0
 // 0x104C11DB7 => 0xEDB88320
-static const HB_U32 crc32_tab[256] = {
+static const uint32_t crc32_tab[256] = {
     0x00000000L, 0x77073096L, 0xEE0E612CL, 0x990951BAL, 0x076DC419L, 0x706AF48FL, 0xE963A535L, 0x9E6495A3L, 0x0EDB8832L,
     0x79DCB8A4L, 0xE0D5E91EL, 0x97D2D988L, 0x09B64C2BL, 0x7EB17CBDL, 0xE7B82D07L, 0x90BF1D91L, 0x1DB71064L, 0x6AB020F2L,
     0xF3B97148L, 0x84BE41DEL, 0x1ADAD47DL, 0x6DDDE4EBL, 0xF4D4B551L, 0x83D385C7L, 0x136C9856L, 0x646BA8C0L, 0xFD62F97AL,
@@ -105,7 +105,7 @@ static const HB_U16 crc16_tab[] = {
     0x4C80, 0x8C41, 0x4400, 0x84C1, 0x8581, 0x4540, 0x8701, 0x47C0, 0x4680, 0x8641, 0x8201, 0x42C0, 0x4380, 0x8341,
     0x4100, 0x81C1, 0x8081, 0x4040};
 
-HB_U32 hb_crc32(HB_U32 crc, const void *buf, HB_SIZE len)
+uint32_t hb_crc32(uint32_t crc, const void *buf, HB_SIZE len)
 {
   crc ^= 0xffffffffL;
   if (buf && len) {
@@ -200,7 +200,7 @@ HB_FUNC(HB_CRC32)
   auto szString = hb_parc(1);
 
   if (szString != nullptr) {
-    hb_retnint(hb_crc32(static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1)));
+    hb_retnint(hb_crc32(static_cast<uint32_t>(hb_parnl(2)), szString, hb_parclen(1)));
   } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

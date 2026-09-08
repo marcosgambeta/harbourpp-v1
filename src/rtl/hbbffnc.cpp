@@ -98,7 +98,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
         pszData[nSize - 1] = static_cast<char>(nSize - nLen);
       }
       for (nLen = 0; nLen < nSize; nLen += 8) {
-        HB_U32 xl, xr;
+        uint32_t xl, xr;
         xl = HB_GET_BE_UINT32(&pszData[nLen]);
         xr = HB_GET_BE_UINT32(&pszData[nLen + 4]);
         hb_blowfishEncrypt(bf, &xl, &xr);
@@ -132,7 +132,7 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
       auto pszData = static_cast<char *>(hb_xgrab(nSize + (fRaw ? 1 : 0)));
       auto pszSource = pData->getCPtr();
       for (nLen = 0; nLen < nSize; nLen += 8) {
-        HB_U32 xl, xr;
+        uint32_t xl, xr;
         xl = HB_GET_BE_UINT32(&pszSource[nLen]);
         xr = HB_GET_BE_UINT32(&pszSource[nLen + 4]);
         hb_blowfishDecrypt(bf, &xl, &xr);
@@ -172,7 +172,7 @@ static void hb_bf_initvect(uint8_t *vect)
 
 static void hb_bf_encode(const HB_BLOWFISH *bf, uint8_t *vect)
 {
-  HB_U32 xl, xr;
+  uint32_t xl, xr;
 
   xl = HB_GET_BE_UINT32(&vect[0]);
   xr = HB_GET_BE_UINT32(&vect[4]);

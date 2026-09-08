@@ -2510,10 +2510,10 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
             HB_PUT_LE_UINT16(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U16>(lVal));
             break;
           case 3:
-            HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
+            HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<uint32_t>(lVal));
             break;
           case 4:
-            HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
+            HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<uint32_t>(lVal));
             break;
           case 8:
 #ifndef HB_LONG_LONG_OFF
@@ -2532,7 +2532,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
       } else if (pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 4) {
         HB_MAXINT lVal = pItem->getNInt();
         if (pItem->isDouble() ? HB_DBL_LIM_INT32(pItem->getND()) : HB_LIM_INT32(lVal)) {
-          HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
+          HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<uint32_t>(lVal));
         } else {
           errCode = EDBF_DATAWIDTH;
         }
@@ -4537,9 +4537,9 @@ static HB_ERRCODE hb_dbfTransCond(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
 #if HB_SORTREC_ARRAYSIZE <= 0x10000
 using HB_SORTIDX = HB_U16;
 #else
-using HB_SORTIDX = HB_U32;
+using HB_SORTIDX = uint32_t;
 #endif
-using HB_DBRECNO = HB_U32;
+using HB_DBRECNO = uint32_t;
 
 struct HB_DBSORTPAGE
 {

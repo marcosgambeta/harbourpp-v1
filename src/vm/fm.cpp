@@ -261,7 +261,7 @@ static auto s_fInitedFM = false;
 
 struct _HB_MEMINFO
 {
-  HB_U32 u32Signature;
+  uint32_t u32Signature;
   uint16_t uiProcLine;
   uint16_t uiReserved;
   HB_SIZE nSize;
@@ -283,7 +283,7 @@ using PHB_MEMINFO = HB_MEMINFO *;
 #endif
 
 #define HB_MEMINFO_SIZE (s_fStatistic ? sizeof(HB_MEMINFO) + HB_COUNTER_OFFSET : HB_COUNTER_OFFSET)
-#define HB_MEMSIG_SIZE sizeof(HB_U32)
+#define HB_MEMSIG_SIZE sizeof(uint32_t)
 
 #define HB_FM_GETSIG(p, n) HB_GET_UINT32(static_cast<uint8_t *>(p) + (n))
 #define HB_FM_SETSIG(p, n) HB_PUT_UINT32(static_cast<uint8_t *>(p) + (n), HB_MEMINFO_SIGNATURE)

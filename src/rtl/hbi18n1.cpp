@@ -415,7 +415,7 @@ static HB_ITEM *hb_i18n_serialize(PHB_I18N_TRANS pI18N)
     HB_SIZE nSize;
     char *pBuffer = hb_itemSerialize(pI18N->table, 0, &nSize);
 
-    HB_U32 ulCRC = hb_crc32(0, pBuffer, nSize);
+    uint32_t ulCRC = hb_crc32(0, pBuffer, nSize);
     auto pI18Nbuffer = static_cast<char *>(memset(hb_xgrab(nSize + HB_I18N_HEADER_SIZE + 1), 0, HB_I18N_HEADER_SIZE));
     memcpy(pI18Nbuffer + HB_I18N_HEADER_SIZE, pBuffer, nSize);
     hb_xfree(pBuffer);

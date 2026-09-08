@@ -709,8 +709,8 @@ static int32_t hb_hsxHdrFlush(int32_t iHandle)
     }
 
     HB_PUT_LE_UINT32(buffer.header.recCount, pHSX->ulRecCount);
-    HB_PUT_LE_UINT32(buffer.header.recSize, static_cast<HB_U32>(pHSX->uiRecordSize));
-    HB_PUT_LE_UINT32(buffer.header.recSizeBits, static_cast<HB_U32>(uiBits));
+    HB_PUT_LE_UINT32(buffer.header.recSize, static_cast<uint32_t>(pHSX->uiRecordSize));
+    HB_PUT_LE_UINT32(buffer.header.recSizeBits, static_cast<uint32_t>(uiBits));
     HB_PUT_LE_UINT16(buffer.header.ignoreCase, pHSX->fIgnoreCase ? 1 : 0);
     HB_PUT_LE_UINT16(buffer.header.filterType, pHSX->iFilterType);
     HB_PUT_LE_UINT32(buffer.header.hashLetters, pHSX->fUseHash ? 1 : 0);
