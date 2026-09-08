@@ -3930,7 +3930,7 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
   return true;
 }
 
-static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
+static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));

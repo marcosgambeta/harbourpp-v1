@@ -2768,7 +2768,7 @@ static int32_t hb_gt_qtc_gfx_Primitive(HB_GT *pGT, int32_t iType, int32_t iTop, 
 
 /* --- */
 
-static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
+static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", (void *)pFuncTable));
 

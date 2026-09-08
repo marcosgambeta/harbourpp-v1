@@ -2085,7 +2085,7 @@ static void hb_gt_win_Refresh(HB_GT *pGT)
 
 // ***********************************************************************
 
-static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
+static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));

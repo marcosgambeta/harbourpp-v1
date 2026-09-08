@@ -3572,7 +3572,7 @@ HB_BOOL hb_gtRegister(const HB_GT_INIT *gtInit)
   return false;
 }
 
-HB_GT *hb_gtLoad(const char *szGtName, HB_GT *pGT, PHB_GT_FUNCS pSuperTable)
+HB_GT *hb_gtLoad(const char *szGtName, HB_GT *pGT, HB_GT_FUNCS *pSuperTable)
 {
   if (szGtName != nullptr) {
     int32_t iPos = hb_gt_FindEntry(szGtName);
@@ -3583,7 +3583,7 @@ HB_GT *hb_gtLoad(const char *szGtName, HB_GT *pGT, PHB_GT_FUNCS pSuperTable)
       }
 
       pGT = static_cast<PHB_GT_BASE>(hb_xgrabz(sizeof(HB_GT_BASE)));
-      pGT->pFuncTable = static_cast<PHB_GT_FUNCS>(hb_xgrab(sizeof(HB_GT_FUNCS)));
+      pGT->pFuncTable = static_cast<HB_GT_FUNCS *>(hb_xgrab(sizeof(HB_GT_FUNCS)));
       memcpy(pGT->pFuncTable, &s_gtCoreFunc, sizeof(HB_GT_FUNCS));
       pGT->iUsed++;
       return pGT;
@@ -3592,7 +3592,7 @@ HB_GT *hb_gtLoad(const char *szGtName, HB_GT *pGT, PHB_GT_FUNCS pSuperTable)
 
       if (fNew) {
         pGT = static_cast<PHB_GT_BASE>(hb_xgrabz(sizeof(HB_GT_BASE)));
-        pGT->pFuncTable = static_cast<PHB_GT_FUNCS>(hb_xgrab(sizeof(HB_GT_FUNCS)));
+        pGT->pFuncTable = static_cast<HB_GT_FUNCS *>(hb_xgrab(sizeof(HB_GT_FUNCS)));
         memcpy(pGT->pFuncTable, &s_gtCoreFunc, sizeof(HB_GT_FUNCS));
         pGT->iUsed++;
       }

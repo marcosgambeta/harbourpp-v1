@@ -239,7 +239,7 @@ typedef struct
 
    void      (* WhoCares) ( HB_GT_PTR, void * );
 
-} HB_GT_FUNCS, * PHB_GT_FUNCS;
+} HB_GT_FUNCS, * PHB_GT_FUNCS; // NOTE: PHB_GT_FUNCS is deprecated in Harbour++ source code
 
 typedef int ( * GTENTRYP_V )( void );
 
@@ -251,8 +251,8 @@ typedef int ( * GTENTRYP_V )( void );
 typedef struct _HB_GT_INIT
 {
    const char     * id;
-   HB_BOOL        (* init) ( PHB_GT_FUNCS );
-   PHB_GT_FUNCS   pSuperTable;
+   HB_BOOL        (* init) ( HB_GT_FUNCS *);
+   HB_GT_FUNCS   *pSuperTable;
    int32_t *          pGtId;
 } HB_GT_INIT, * PHB_GT_INIT;
 
@@ -272,7 +272,7 @@ typedef HB_SCREENCELL * PHB_SCREENCELL;
 
 typedef struct _HB_GT_BASE
 {
-   PHB_GT_FUNCS   pFuncTable;
+   HB_GT_FUNCS   *pFuncTable;
 
    PHB_ITEM       pMutex;
    int32_t            iUsed;
@@ -627,7 +627,7 @@ extern HB_EXPORT void hb_gt_gcMark( void );
 #define HB_GTSUPER_WHOCARES(g,p)                 (HB_GTSUPERTABLE(g))->WhoCares(g,p)
 
 extern HB_EXPORT HB_BOOL hb_gtRegister( const HB_GT_INIT * gtInit );
-extern HB_EXPORT HB_GT  *hb_gtLoad( const char * szGtName, HB_GT *pGT, PHB_GT_FUNCS pSuperTable );
+extern HB_EXPORT HB_GT  *hb_gtLoad( const char * szGtName, HB_GT *pGT, HB_GT_FUNCS *pSuperTable );
 
 /* low-level GT functions common to different GTs supported by RTL */
 extern int32_t  hb_gt_chrmapinit( int32_t * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC );

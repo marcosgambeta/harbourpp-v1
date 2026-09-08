@@ -6575,8 +6575,8 @@ void hb_gt_wvwDrawOutline(UINT usWinNum, int32_t iTop, int32_t iLeft, int32_t iB
 /* BOOL hb_gt_wvw_KeyEvent(message, wParam, lParam); */
 
 /*NOTE: are these workable in MULTI_GT ? */
-/* static void gtFnInit( PHB_GT_FUNCS gt_funcs ) */
-static BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
+/* static void gtFnInit( HB_GT_FUNCS *gt_funcs ) */
+static BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtFnInit( %p )", pFuncTable));

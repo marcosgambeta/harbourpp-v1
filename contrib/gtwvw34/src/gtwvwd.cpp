@@ -5271,7 +5271,7 @@ COLORREF hb_gt_wvw_GetColorData(int32_t iIndex)
 }
 
 /* NOTE: are these workable in MULTI_GT ? */
-static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
+static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gtFnInit(%p)", static_cast<void*>(pFuncTable)));
