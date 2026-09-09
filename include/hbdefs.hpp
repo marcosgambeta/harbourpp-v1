@@ -246,7 +246,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 
 /* Guaranteed 32-bit types */
 #if UINT_MAX == 0xFFFFFFFF
-   typedef signed int          HB_I32;
+   typedef signed int          HB_I32; // NOTE: HB_I32 is deprecated in Harbour++ source code
    typedef unsigned int        HB_U32; // NOTE: HB_U32 is deprecated in Harbour++ source code
    #define HB_I32_MIN          INT_MIN
    #define HB_I32_MAX          INT_MAX
@@ -261,7 +261,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 #     define INT32_MIN     INT_MIN
 #  endif
 #elif ULONG_MAX == 0xFFFFFFFF
-   typedef signed long         HB_I32;
+   typedef signed long         HB_I32; // NOTE: HB_I32 is deprecated in Harbour++ source code
    typedef unsigned long       HB_U32; // NOTE: HB_U32 is deprecated in Harbour++ source code
    #define HB_I32_MIN          LONG_MIN
    #define HB_I32_MAX          LONG_MAX
@@ -387,7 +387,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
        typedef uint32_t        UINT32;
    #endif
    #if !defined(INT32)
-       typedef HB_I32        INT32;
+       typedef int32_t        INT32;
    #endif
    #if !defined(HB_LONG_LONG_OFF)
       #if !defined(UINT64)
@@ -609,11 +609,11 @@ typedef uint32_t HB_FATTR;
 #if defined(HB_OS_WIN) // || defined(HB_OS_DOS) || defined(HB_OS_OS2)
    typedef wchar_t         HB_WCHAR;
    typedef wchar_t         HB_WCHAR16;
-   typedef HB_I32          HB_WCHAR32;
+   typedef int32_t          HB_WCHAR32;
 // #elif defined(__WATCOMC__)
 //    typedef unsigned short  HB_WCHAR;
 //    typedef unsigned short  HB_WCHAR16;
-//    typedef HB_I32          HB_WCHAR32;
+//    typedef int32_t          HB_WCHAR32;
 #else
    typedef unsigned short  HB_WCHAR;
    typedef unsigned short  HB_WCHAR16;
@@ -698,10 +698,10 @@ typedef uint32_t HB_FATTR;
 #define HB_MKSHORT( lo, hi )    ( static_cast< HB_SHORT >( ( ( HB_I16 ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKUSHORT( lo, hi )   ( static_cast< uint16_t >( ( ( uint16_t ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< HB_LONG > \
-                                       ( ( ( ( HB_I32 ) ( b4 ) ) << 24 ) | \
-                                         ( ( ( HB_I32 ) ( b3 ) ) << 16 ) | \
-                                         ( ( ( HB_I32 ) ( b2 ) ) <<  8 ) | \
-                                         ( ( ( HB_I32 ) ( b1 ) ) ) ) )
+                                       ( ( ( ( int32_t ) ( b4 ) ) << 24 ) | \
+                                         ( ( ( int32_t ) ( b3 ) ) << 16 ) | \
+                                         ( ( ( int32_t ) ( b2 ) ) <<  8 ) | \
+                                         ( ( ( int32_t ) ( b1 ) ) ) ) )
 #define HB_MKULONG( b1, b2, b3, b4 ) ( static_cast< HB_ULONG > \
                                        ( ( ( ( uint32_t ) ( b4 ) ) << 24 ) | \
                                          ( ( ( uint32_t ) ( b3 ) ) << 16 ) | \
@@ -1390,11 +1390,11 @@ typedef uint32_t HB_FATTR;
  * 24 bit integers are not directly supported by any processor we used so far
  * so we always have to build them from HB_BYTEs and cannot use C casting
  */
-#define HB_GET_LE_INT24( p )        ( ( HB_I32 ) \
-                                      ( ( ( HB_I32 ) (( const uint8_t * )( p ))[ 0 ] ) | \
-                                        ( ( HB_I32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
-                                        ( ( HB_I32 ) (( const uint8_t * )( p ))[ 2 ] << 16 ) | \
-                                        ( ( HB_I32 ) (((( const uint8_t * )( p ))[ 2 ] & 0x80 ) ? 0xFF : 0x00 ) << 24 ) ) )
+#define HB_GET_LE_INT24( p )        ( ( int32_t ) \
+                                      ( ( ( int32_t ) (( const uint8_t * )( p ))[ 0 ] ) | \
+                                        ( ( int32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
+                                        ( ( int32_t ) (( const uint8_t * )( p ))[ 2 ] << 16 ) | \
+                                        ( ( int32_t ) (((( const uint8_t * )( p ))[ 2 ] & 0x80 ) ? 0xFF : 0x00 ) << 24 ) ) )
 #define HB_GET_LE_UINT24( p )       ( ( uint32_t ) \
                                       ( ( ( uint32_t ) (( const uint8_t * )( p ))[ 0 ] ) | \
                                         ( ( uint32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
@@ -1404,11 +1404,11 @@ typedef uint32_t HB_FATTR;
                                        (( uint8_t * )( p ))[ 1 ] = ( uint8_t )( ( u ) >>  8 ); \
                                        (( uint8_t * )( p ))[ 2 ] = ( uint8_t )( ( u ) >> 16 ); \
                                     } while( 0 )
-#define HB_GET_BE_INT24( p )        ( ( HB_I32 ) \
-                                      ( ( ( HB_I32 ) (( const uint8_t * )( p ))[ 2 ] ) | \
-                                        ( ( HB_I32 ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
-                                        ( ( HB_I32 ) (( const uint8_t * )( p ))[ 0 ] << 16 ) | \
-                                        ( ( HB_I32 ) (((( const uint8_t * )( p ))[ 0 ] & 0x80 ) ? 0xFF : 0x00 ) << 24 ) ) )
+#define HB_GET_BE_INT24( p )        ( ( int32_t ) \
+                                      ( ( ( int32_t ) (( const uint8_t * )( p ))[ 2 ] ) | \
+                                        ( ( int32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
+                                        ( ( int32_t ) (( const uint8_t * )( p ))[ 0 ] << 16 ) | \
+                                        ( ( int32_t ) (((( const uint8_t * )( p ))[ 0 ] & 0x80 ) ? 0xFF : 0x00 ) << 24 ) ) )
 #define HB_GET_BE_UINT24( p )       ( ( uint32_t ) \
                                       ( ( ( uint32_t ) (( const uint8_t * )( p ))[ 2 ] ) | \
                                         ( ( uint32_t ) (( const uint8_t * )( p ))[ 1 ] <<  8 ) | \
@@ -1421,7 +1421,7 @@ typedef uint32_t HB_FATTR;
 
 
 #define HB_GET_LE_INT16( p )        (( HB_I16 ) HB_GET_LE_UINT16( p ))
-#define HB_GET_LE_INT32( p )        (( HB_I32 ) HB_GET_LE_UINT32( p ))
+#define HB_GET_LE_INT32( p )        (( int32_t ) HB_GET_LE_UINT32( p ))
 #define HB_GET_LE_INT64( p )        (( HB_I64 ) HB_GET_LE_UINT64( p ))
 
 #define HB_PCODE_MKSHORT( p )       ( static_cast< HB_SHORT >( HB_GET_LE_INT16( p ) ) ) // NOTE: deprecated

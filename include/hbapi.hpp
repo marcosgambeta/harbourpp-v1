@@ -1937,7 +1937,7 @@ extern HB_EXPORT char *hb_dblToStr(char *szBuf, HB_SIZE nSize, double dNumber, i
 extern HB_EXPORT double hb_numRound(double dResult, int32_t iDec);
 // take the integer part of the number
 extern HB_EXPORT double hb_numInt(double dNum);
-extern HB_EXPORT void hb_random_seed(HB_I32 seed);
+extern HB_EXPORT void hb_random_seed(int32_t seed);
 extern HB_EXPORT double hb_random_num(void);
 extern HB_EXPORT double hb_random_num_secure(void);
 extern HB_EXPORT void hb_random_block(void *data, HB_SIZE len);

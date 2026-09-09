@@ -82,7 +82,7 @@ HB_FUNC(BIN2I)
 HB_FUNC(BIN2L)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
-  HB_I32 iResult = 0;
+  int32_t iResult = 0;
 
   if (pItem != nullptr) {
     auto nLen = pItem->getCLen();
@@ -109,7 +109,7 @@ HB_FUNC(I2BIN)
 HB_FUNC(L2BIN)
 {
   char szResult[4];
-  auto iValue = static_cast<HB_I32>(hb_parnl(1));
+  auto iValue = static_cast<int32_t>(hb_parnl(1));
   HB_PUT_LE_UINT32(szResult, iValue);
   hb_retclen(szResult, 4);
 }

@@ -526,7 +526,7 @@ static HB_ITEM *hb_cdxKeyGetItem(LPCDXKEY pKey, HB_ITEM *pItem, LPCDXTAG pTag)
     }
     case 'N':
       if (pKey->len == 4) {
-        HB_I32 iVal = static_cast<HB_I32>(HB_GET_BE_UINT32(pKey->val)) - 0x80000000;
+        int32_t iVal = static_cast<int32_t>(HB_GET_BE_UINT32(pKey->val)) - 0x80000000;
         pItem = hb_itemPutNI(pItem, iVal);
       } else {
         HB_ORD2DBL(pKey->val, &d);

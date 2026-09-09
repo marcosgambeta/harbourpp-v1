@@ -296,7 +296,7 @@ HB_FUNC(INTNEG)
     HB_BOOL f32Bit = hb_parl(2);
 
     if (f32Bit) {
-      hb_retnint(static_cast<HB_I32>(lValue));
+      hb_retnint(static_cast<int32_t>(lValue));
     } else {
       hb_retnint(static_cast<HB_I16>(lValue));
     }

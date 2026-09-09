@@ -56,25 +56,25 @@
 #define MODULUS 2147483647 // DON'T CHANGE THIS VALUE
 #define MULTIPLIER 48271   // DON'T CHANGE THIS VALUE
 
-static HB_TSD_NEW(s_seed, sizeof(HB_I32), nullptr, nullptr);
-#define SEED_PTR (static_cast<HB_I32 *>(hb_stackGetTSD(&s_seed)))
+static HB_TSD_NEW(s_seed, sizeof(int32_t), nullptr, nullptr);
+#define SEED_PTR (static_cast<int32_t *>(hb_stackGetTSD(&s_seed)))
 
 // Returns a double value between 0 and 1
 double hb_random_num(void)
 {
-  HB_I32 *seed = SEED_PTR;
+  int32_t *seed = SEED_PTR;
 
-  HB_I32 t = *seed;
+  int32_t t = *seed;
   if (t == 0) {
-    t = static_cast<HB_I32>((hb_dateMilliSeconds() ^ reinterpret_cast<uintptr_t>(hb_stackId())) % MODULUS);
+    t = static_cast<int32_t>((hb_dateMilliSeconds() ^ reinterpret_cast<uintptr_t>(hb_stackId())) % MODULUS);
   }
 
 #if !defined(HB_LONG_LONG_OFF)
-  t = static_cast<HB_I32>(static_cast<HB_LONGLONG>(t) * MULTIPLIER % MODULUS);
+  t = static_cast<int32_t>(static_cast<HB_LONGLONG>(t) * MULTIPLIER % MODULUS);
 #else
   {
-    const HB_I32 Q = MODULUS / MULTIPLIER;
-    const HB_I32 R = MODULUS % MULTIPLIER;
+    const int32_t Q = MODULUS / MULTIPLIER;
+    const int32_t R = MODULUS % MULTIPLIER;
 
     t = MULTIPLIER * (t % Q) - R * (t / Q);
     if (t < 0) {
@@ -88,7 +88,7 @@ double hb_random_num(void)
   return static_cast<double>(t - 1) / (MODULUS - 1);
 }
 
-void hb_random_seed(HB_I32 seed)
+void hb_random_seed(int32_t seed)
 {
   seed %= MODULUS;
   *SEED_PTR = (seed < 0) ? seed + MODULUS : seed;

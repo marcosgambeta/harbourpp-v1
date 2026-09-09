@@ -84,7 +84,7 @@ HB_FUNC(HB_BYTESWAPL)
   HB_MAXINT lValue;
 
   if (hb_numParam(1, &lValue)) {
-    auto iVal = static_cast<HB_I32>(HB_SWAP_UINT32(lValue));
+    auto iVal = static_cast<int32_t>(HB_SWAP_UINT32(lValue));
     hb_retnint(iVal);
   }
 }

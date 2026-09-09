@@ -94,15 +94,15 @@ HB_FUNC(CTON)
 
 #ifdef HB_CT3_STRICT32
     // test shows that this is exact CT3 behavior
-    if (static_cast<HB_I32>(nValue) >= 0 || hb_parl(3)) {
-      hb_retnl(static_cast<HB_I32>(nValue));
+    if (static_cast<int32_t>(nValue) >= 0 || hb_parl(3)) {
+      hb_retnl(static_cast<int32_t>(nValue));
     } else {
       hb_retnd(static_cast<uint32_t>(nValue));
     }
 #else
     if (fStrict) {
       if (hb_parl(3)) {
-        hb_retnint(static_cast<HB_I32>(nValue));
+        hb_retnint(static_cast<int32_t>(nValue));
       } else {
         hb_retnint(static_cast<uint32_t>(nValue));
       }

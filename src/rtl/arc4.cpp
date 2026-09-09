@@ -114,7 +114,7 @@ static pid_t arc4_stir_pid;
 
 static int32_t rs_initialized;
 static struct arc4_stream rs;
-static HB_I32 arc4_count;
+static int32_t arc4_count;
 
 #if defined(HB_USE_CPP_MUTEX)
 std::mutex arc4_lock;

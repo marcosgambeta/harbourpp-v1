@@ -971,7 +971,7 @@ int32_t hb_cdpicmp(const char *szFirst, HB_SIZE nLenFirst, const char *szSecond,
 
 int32_t hb_cdpUTF8CharSize(HB_WCHAR32 wc)
 {
-  if ((HB_I32)wc < 0) {
+  if ((int32_t)wc < 0) {
     wc = HB_CDP_ERROR_UNICHAR;
   }
 
@@ -994,7 +994,7 @@ int32_t hb_cdpU32CharToUTF8(char *szUTF8, HB_WCHAR32 wc)
 {
   int32_t n;
 
-  if ((HB_I32)wc < 0) {
+  if ((int32_t)wc < 0) {
     wc = HB_CDP_ERROR_UNICHAR;
   }
 
