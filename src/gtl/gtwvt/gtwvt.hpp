@@ -261,7 +261,7 @@ struct _HB_GTWVT_MNU
 };
 
 using HB_GTWVT_MNU = _HB_GTWVT_MNU;
-using PHB_GTWVT_MNU = HB_GTWVT_MNU *;
+using PHB_GTWVT_MNU = HB_GTWVT_MNU *; // NOTE: PHB_GTWVT_MNU is deprecated
 
 struct HB_GTWVT
 {
@@ -350,7 +350,7 @@ struct HB_GTWVT
   void *hSelectCopy;
   LPCTSTR lpSelectCopy;
 
-  PHB_GTWVT_MNU pMenu;
+  HB_GTWVT_MNU *pMenu;
 
   RECT sRectNew;
   RECT sRectOld;
@@ -366,7 +366,7 @@ struct HB_GTWVT
   RECT ciLast; // need in WM_ENTERSIZEMOVE processing and hb_gt_wvt_PaintText() function [HVB]
 };
 
-using PHB_GTWVT = HB_GTWVT *;
+using PHB_GTWVT = HB_GTWVT *; // NOTE: PHB_GTWVT is deprecated
 
 #ifndef WM_MOUSEWHEEL
 #define WM_MOUSEWHEEL 0x020A
