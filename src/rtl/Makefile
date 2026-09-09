@@ -130,7 +130,6 @@ CPP_SOURCES := \
    sha1hmac.cpp \
    sha2.cpp \
    sha2hmac.cpp \
-   shadow.cpp \
    shadowu.cpp \
    soundex.cpp \
    space.cpp \
@@ -218,6 +217,7 @@ CPP_SOURCES := \
 #   scrrow.cpp \ (moved to gtl)
 #   setpos.cpp \ (moved to gtl)
 #   setposbs.cpp \ (moved to gtl)
+#   shadow.cpp \ (moved to gtl)
 #   xsavescr.cpp \ (moved to gtl)
 
 PRG_SOURCES := \

@@ -34,6 +34,7 @@ CPP_SOURCES := \
    scrrow.cpp \
    setpos.cpp \
    setposbs.cpp \
+   shadow.cpp \
    xsavescr.cpp \
 
 PRG_SOURCES := \
