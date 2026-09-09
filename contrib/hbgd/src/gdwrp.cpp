@@ -222,7 +222,7 @@ static void *LoadImageFromFile(const char *szFile, int *sz)
   if ((fhandle = hb_fsOpen(szFile, FO_READ)) != FS_ERROR)
   {
     /* get lenght */
-    *sz = static_cast<int>(hb_fsSeek(fhandle, 0, FS_END));
+    *sz = static_cast<int32_t>(hb_fsSeek(fhandle, 0, FS_END));
     /* rewind */
     hb_fsSeek(fhandle, 0, FS_SET);
 
@@ -637,7 +637,7 @@ HB_FUNC(
     gdImagePtr im = hb_parGdImage(1);
 
     auto pPoints = hb_param(2, Harbour::Item::ARRAY);
-    auto pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
+    auto pointsTotal = static_cast<int32_t>(hb_arrayLen(pPoints));
     auto color = hb_parni(3);
 
     /* Max Points of polygon */
@@ -678,7 +678,7 @@ HB_FUNC(GDIMAGEOPENPOLYGON) /* original: void gdImageOpenPolygon(gdImagePtr im, 
     gdImagePtr im = hb_parGdImage(1);
 
     auto pPoints = hb_param(2, Harbour::Item::ARRAY);
-    auto pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
+    auto pointsTotal = static_cast<int32_t>(hb_arrayLen(pPoints));
     auto color = hb_parni(3);
 
     /* Max Points of polygon */
@@ -739,7 +739,7 @@ HB_FUNC(GDIMAGEFILLEDPOLYGON) /* original: void gdImageFilledPolygon(gdImagePtr 
     gdImagePtr im = hb_parGdImage(1);
 
     auto pPoints = hb_param(2, Harbour::Item::ARRAY);
-    auto pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
+    auto pointsTotal = static_cast<int32_t>(hb_arrayLen(pPoints));
     auto color = hb_parni(3);
 
     /* Max Points of polygon */
@@ -993,7 +993,7 @@ HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *s
     gdImagePtr im = hb_parGdImage(1);
 
     auto pStyles = hb_param(2, Harbour::Item::ARRAY);
-    auto styleLength = static_cast<int>(hb_arrayLen(pStyles));
+    auto styleLength = static_cast<int32_t>(hb_arrayLen(pStyles));
 
     /* Max numbery of Styles */
     auto styles = static_cast<int *>(hb_xgrab(sizeof(int) * styleLength));

@@ -152,7 +152,7 @@ HB_FUNC(WVW_SBADDPART)
 
       SelectObject(hDCSB, reinterpret_cast<HFONT>(SendMessage(hWnd, WM_GETFONT, 0, 0)));
 
-      if (GetTextExtentPoint32(hDCSB, szText, static_cast<int>(nLen + 1), &size)) {
+      if (GetTextExtentPoint32(hDCSB, szText, static_cast<int32_t>(nLen + 1), &size)) {
         iWidth = size.cx;
       }
 
@@ -162,7 +162,7 @@ HB_FUNC(WVW_SBADDPART)
     }
 
     if (!fResetParts) {
-      iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray) - 1,
+      iNumOfParts = static_cast<int32_t>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray) - 1,
                                                  reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
     } else {
       iNumOfParts = 0;
@@ -230,7 +230,7 @@ HB_FUNC(WVW_SBREFRESH)
 
   if (wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr) {
     int32_t piArray[WVW_MAX_STATUS_PARTS];
-    auto iNumOfParts = static_cast<int>(
+    auto iNumOfParts = static_cast<int32_t>(
         SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
     if (iNumOfParts > 0) {
       RECT rSB{};
@@ -315,7 +315,7 @@ HB_FUNC(WVW_SBGETPARTS)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    hb_retni(static_cast<int>(SendMessage(wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0)));
+    hb_retni(static_cast<int32_t>(SendMessage(wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0)));
   }
 }
 

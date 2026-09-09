@@ -24,7 +24,7 @@ HB_FUNC(GT_ASCPOS)
     }
     else
     {
-      hb_retni(static_cast<int>(s[p])); // return ASCII code of appropriate
+      hb_retni(static_cast<int32_t>(s[p])); // return ASCII code of appropriate
                                         // character in string
     }
   }

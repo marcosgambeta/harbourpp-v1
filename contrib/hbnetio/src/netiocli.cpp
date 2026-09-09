@@ -616,7 +616,7 @@ static void s_fileConFree(PHB_CONCLI conn)
 
 static PHB_CONCLI s_fileConNew(HB_SOCKET sd, const char * pszServer, int iPort, int iTimeOut, const char * pszPasswd, int iPassLen, int iLevel, int iStrategy)
 {
-   auto iLen = static_cast<int>(strlen(pszServer));
+   auto iLen = static_cast<int32_t>(strlen(pszServer));
    auto conn = static_cast<PHB_CONCLI>(hb_xgrab(sizeof(HB_CONCLI) + iLen));
    hb_atomic_set(&conn->used, 1);
    hb_atomic_set(&conn->usrcount, 0);
@@ -784,7 +784,7 @@ static PHB_CONCLI s_fileNameConFind(const char ** pFileName, HB_BOOL fLock)
       {
          if( conn->path )
          {
-            auto iLen = static_cast<int>(strlen(conn->path));
+            auto iLen = static_cast<int32_t>(strlen(conn->path));
 #ifdef HB_OS_UNIX
             if( strncmp(*pFileName, conn->path, iLen) == 0 )
 #else
@@ -878,7 +878,7 @@ static const char * s_fileDecode(const char * pszFileName, char * buffer, const 
 
       if( psz )
       {
-         auto iLen = static_cast<int>(psz - pszFileName);
+         auto iLen = static_cast<int32_t>(psz - pszFileName);
 
          if( pth || iLen == 0 || iLen > 1 )
          {
@@ -897,7 +897,7 @@ static const char * s_fileDecode(const char * pszFileName, char * buffer, const 
                char port_buf[10], c;
 
                iLen = 0;
-               while( HB_ISDIGIT(pszFileName[iLen]) && iLen < static_cast<int>(sizeof(port_buf)) - 1 )
+               while( HB_ISDIGIT(pszFileName[iLen]) && iLen < static_cast<int32_t>(sizeof(port_buf)) - 1 )
                {
                   port_buf[iLen] = pszFileName[iLen];
                   ++iLen;
@@ -916,7 +916,7 @@ static const char * s_fileDecode(const char * pszFileName, char * buffer, const 
                      if( !iOverflow && llPort > 0 && llPort < 0x10000 )
                      {
                         pszFileName += iLen;
-                        *piPort = static_cast<int>(llPort);
+                        *piPort = static_cast<int32_t>(llPort);
                      }
                   }
                   if( c == ':' )
@@ -1006,7 +1006,7 @@ static PHB_CONCLI s_fileConnCheck(PHB_CONCLI conn, const char ** pFileName, HB_B
       HB_NETIO_LOCK();
       if( conn->path )
       {
-         auto iLen = static_cast<int>(strlen(conn->path));
+         auto iLen = static_cast<int32_t>(strlen(conn->path));
 #ifdef HB_OS_UNIX
          if( strncmp(*pFileName, conn->path, iLen) == 0 )
 #else
@@ -1181,7 +1181,7 @@ HB_FUNC(NETIO_DECODE)
    auto iPort = hb_parni(3);
    auto iTimeOut = hb_parni(4);
    auto pszPasswd = hb_parc(5);
-   auto iPassLen = static_cast<int>(hb_parclen(5));
+   auto iPassLen = static_cast<int32_t>(hb_parclen(5));
    auto iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
    auto iStrategy = hb_parnidef(7, HB_ZLIB_STRATEGY_DEFAULT);
 
@@ -1231,7 +1231,7 @@ HB_FUNC(NETIO_CONNECT)
    auto pszPasswd = hb_parc(4);
    auto iPort = hb_parni(2);
    auto iTimeOut = hb_parni(3);
-   auto iPassLen = static_cast<int>(hb_parclen(4));
+   auto iPassLen = static_cast<int32_t>(hb_parclen(4));
    auto iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
    auto iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
 
@@ -1307,7 +1307,7 @@ HB_FUNC(NETIO_GETCONNECTION)
    auto pszPasswd = hb_parc(4);
    auto iPort = hb_parni(2);
    auto iTimeOut = hb_parni(3);
-   auto iPassLen = static_cast<int>(hb_parclen(4));
+   auto iPassLen = static_cast<int32_t>(hb_parclen(4));
    auto iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
    auto iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
 

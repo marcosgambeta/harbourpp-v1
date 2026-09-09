@@ -528,8 +528,8 @@ HB_FUNC(WVW_PGSETRANGE)
   auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
   byte bStyle;
   auto hWndPG = FindControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, uiPGid, &bStyle);
-  auto iMin = static_cast<int>((HB_ISNIL(3) ? 0 : hb_parni(3)));
-  auto iMax = static_cast<int>((HB_ISNIL(4) ? 0 : hb_parni(4)));
+  auto iMin = static_cast<int32_t>((HB_ISNIL(3) ? 0 : hb_parni(3)));
+  auto iMax = static_cast<int32_t>((HB_ISNIL(4) ? 0 : hb_parni(4)));
 
   if (uiPGid == 0 || hWndPG == nullptr || (iMin > iMax)) {
     hb_retl(false);
@@ -554,7 +554,7 @@ HB_FUNC(WVW_PGSETPOS)
   auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
   byte bStyle;
   auto hWndPG = FindControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, uiPGid, &bStyle);
-  auto iPos = static_cast<int>((HB_ISNIL(3) ? 0 : hb_parni(3)));
+  auto iPos = static_cast<int32_t>((HB_ISNIL(3) ? 0 : hb_parni(3)));
   PBRANGE pbrange;
 
   if (uiPGid == 0 || hWndPG == nullptr) {
@@ -591,7 +591,7 @@ HB_FUNC(WVW_PGGETPOS)
     return;
   }
 
-  hb_retni(static_cast<int>(SendMessage(hWndPG, PBM_GETPOS, 0, 0)));
+  hb_retni(static_cast<int32_t>(SendMessage(hWndPG, PBM_GETPOS, 0, 0)));
 }
 
 /* PROGRESSBAR ends                                                   */

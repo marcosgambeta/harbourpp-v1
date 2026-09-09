@@ -234,7 +234,7 @@ static bool amf3_write_int(amfContext *context, HB_ITEM *pItem)
     {
       return false;
     }
-    return amf3_encode_int(context, static_cast<int>(n));
+    return amf3_encode_int(context, static_cast<int32_t>(n));
   }
   else
   {
@@ -289,7 +289,7 @@ static bool amf3_encode_string(amfContext *context, HB_ITEM *pItem)
     len = hb_strRTrimLen(utf8str, len, false);
   }
 
-  if (!amf3_encode_int(context, (static_cast<int>(len) << 1) | REFERENCE_BIT))
+  if (!amf3_encode_int(context, (static_cast<int32_t>(len) << 1) | REFERENCE_BIT))
   {
     return false;
   }
@@ -319,18 +319,18 @@ static int amf3_add_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
 
     if (pHash == context->str_ref)
     {
-      result = static_cast<int>(hb_hashLen(pHash) + context->strstr_count);
+      result = static_cast<int32_t>(hb_hashLen(pHash) + context->strstr_count);
       /* ->strstr_count > 0 only when some inner context inside
        * user-defined conversion function uses only strstr mode
        * like amf3_FromWA() function f.e. */
     }
     else if (pHash == context->obj_ref)
     {
-      result = static_cast<int>(hb_hashLen(pHash) + context->objnref_count);
+      result = static_cast<int32_t>(hb_hashLen(pHash) + context->objnref_count);
     }
     else
     {
-      result = static_cast<int>(hb_hashLen(pHash));
+      result = static_cast<int32_t>(hb_hashLen(pHash));
     }
 
     pVal = hb_itemPutNS(nullptr, result);
@@ -353,7 +353,7 @@ static int amf3_add_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
     { /* do this only for mid-sized strings */
       if (!context->use_refs)
       {
-        result = static_cast<int>(context->strstr_count);
+        result = static_cast<int32_t>(context->strstr_count);
       }
 
       pVal = hb_itemPutNS(nullptr, result); /* put the AMF reference id as value */
@@ -390,13 +390,13 @@ static int amf3_get_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
       hb_itemRelease(pKey);
       if (pVal)
       {
-        return static_cast<int>(hb_itemGetNS(pVal));
+        return static_cast<int32_t>(hb_itemGetNS(pVal));
       }
     }
     else if (hb_hashScan(pHash, pKey, &nPos))
     {
       hb_itemRelease(pKey);
-      return static_cast<int>(nPos - 1);
+      return static_cast<int32_t>(nPos - 1);
     }
     else
     {
@@ -412,7 +412,7 @@ static int amf3_get_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
       HB_ITEM *pStrIdx = hb_hashGetItemPtr(context->strstr_ref, pItem, 0);
       if (pStrIdx)
       {
-        return static_cast<int>(hb_itemGetNS(pStrIdx));
+        return static_cast<int32_t>(hb_itemGetNS(pStrIdx));
       }
     }
   }
@@ -515,7 +515,7 @@ static bool amf3_encode_hash(amfContext *context, HB_ITEM *pItem)
     }
   }
 
-  if (!amf3_encode_int(context, static_cast<int>((nIntKeys << 1) | REFERENCE_BIT)))
+  if (!amf3_encode_int(context, static_cast<int32_t>((nIntKeys << 1) | REFERENCE_BIT)))
   {
     return false;
   }
@@ -661,7 +661,7 @@ static HB_ISIZ amf3_serialize_byte_array(amfContext *context, HB_ITEM *pItem)
     return result;
   }
 
-  if (!amf3_encode_int(context, (static_cast<int>(hb_itemGetCLen(pItem)) << 1) | REFERENCE_BIT))
+  if (!amf3_encode_int(context, (static_cast<int32_t>(hb_itemGetCLen(pItem)) << 1) | REFERENCE_BIT))
   {
     return false;
   }
@@ -700,7 +700,7 @@ static bool amf3_encode_array(amfContext *context, HB_ITEM *pItem)
   HB_SIZE item_len = hb_arrayLen(pItem);
   int i;
 
-  if (!amf3_encode_int(context, (static_cast<int>(item_len) << 1) | REFERENCE_BIT))
+  if (!amf3_encode_int(context, (static_cast<int32_t>(item_len) << 1) | REFERENCE_BIT))
   {
     return false;
   }
@@ -710,7 +710,7 @@ static bool amf3_encode_array(amfContext *context, HB_ITEM *pItem)
     return false;
   }
 
-  for (i = 1; i <= static_cast<int>(item_len); i++)
+  for (i = 1; i <= static_cast<int32_t>(item_len); i++)
   {
     int result;
 
@@ -825,7 +825,7 @@ static int amf3_encode_class_def(amfContext *context, HB_ITEM *pClass)
     return 0;
   }
 
-  header |= (static_cast<int>(static_attr_len)) << 4;
+  header |= (static_cast<int32_t>(static_attr_len)) << 4;
   if (!amf3_encode_int(context, header))
   {
     return 0;
@@ -1446,7 +1446,7 @@ HB_FUNC(AMF3_FROMWA)
     /* TODO: should be if( writeByte() ), before we make a variant that operates on streams directly */
 
     writeByte(context, ARRAY_TYPE);
-    amf3_encode_int(context, (static_cast<int>(nCount) << 1) | REFERENCE_BIT);
+    amf3_encode_int(context, (static_cast<int32_t>(nCount) << 1) | REFERENCE_BIT);
     writeByte(context, NULL_TYPE);
 
     SELF_FIELDCOUNT(pArea, &uiFields);
@@ -1533,7 +1533,7 @@ HB_FUNC(AMF3_FROMWA)
           writeByte(context, ARRAY_TYPE);
           if (bNoFieldPassed)
           {
-            amf3_encode_int(context, (static_cast<int>(uiFields) << 1) | REFERENCE_BIT);
+            amf3_encode_int(context, (static_cast<int32_t>(uiFields) << 1) | REFERENCE_BIT);
             writeByte(context, NULL_TYPE);
             for (uiIter = 1; uiIter <= uiFields; uiIter++)
             {
@@ -1543,7 +1543,7 @@ HB_FUNC(AMF3_FROMWA)
           }
           else
           {
-            amf3_encode_int(context, (static_cast<int>(uiFieldCopy) << 1) | REFERENCE_BIT);
+            amf3_encode_int(context, (static_cast<int32_t>(uiFieldCopy) << 1) | REFERENCE_BIT);
             writeByte(context, NULL_TYPE);
             for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
             {
@@ -1561,7 +1561,7 @@ HB_FUNC(AMF3_FROMWA)
 
           writeByte(context, OBJECT_TYPE);
 #if 0
-               amf3_encode_int(context, (static_cast<int>(1)) << 1 | REFERENCE_BIT);
+               amf3_encode_int(context, (static_cast<int32_t>(1)) << 1 | REFERENCE_BIT);
 #endif
           writeByte(context, DYNAMIC);
           writeByte(context, EMPTY_STRING_TYPE);

@@ -65,15 +65,15 @@ HB_FUNC(WVW_TBCREATE)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   HWND hWndParent = pWindowData->hWnd;
   HWND hWndTB;
-  auto iMaxTextRows = static_cast<int>(HB_ISNIL(2) ? 0 : (hb_parl(2) ? 1 : 0));
+  auto iMaxTextRows = static_cast<int32_t>(HB_ISNIL(2) ? 0 : (hb_parl(2) ? 1 : 0));
   /*   DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni(3)); */
   auto dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS |
                                                       TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE
                                                 : hb_parnl(3));
 
-  auto iSystemBitmap = static_cast<int>(HB_ISNIL(4) ? 1 : hb_parni(4));
-  auto iImageWidth = static_cast<int>(iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1);
-  auto iImageHeight = static_cast<int>(iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1);
+  auto iSystemBitmap = static_cast<int32_t>(HB_ISNIL(4) ? 1 : hb_parni(4));
+  auto iImageWidth = static_cast<int32_t>(iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1);
+  auto iImageHeight = static_cast<int32_t>(iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1);
   TBADDBITMAP tbab{};
 
   InitCommonControls();
@@ -190,7 +190,7 @@ HB_FUNC(WVW_TBADDBUTTON)
   UINT uiBitmap = HB_ISNUM(3) ? static_cast<UINT>(hb_parni(3)) : 0;
 
   char *szLabel = HB_ISNIL(4) ? nullptr : const_cast<char *>(hb_parcx(4));
-  int32_t iBitmapType = HB_ISNIL(5) ? 0 : static_cast<int>(hb_parni(5));
+  int32_t iBitmapType = HB_ISNIL(5) ? 0 : static_cast<int32_t>(hb_parni(5));
   BOOL bMap3Dcolors = HB_ISLOG(6) ? hb_parl(6) : FALSE;
   BOOL bDropdown = HB_ISLOG(7) ? hb_parl(7) : FALSE;
   HWND hWndTB;
@@ -402,7 +402,7 @@ HB_FUNC(WVW_TBINDEX2CMD)
   auto iIndex = hb_parni(2);
   int32_t iCmd = IndexToCommand(hWndTB, iIndex);
 
-  hb_retni(static_cast<int>(iCmd > 0 ? iCmd : -1));
+  hb_retni(static_cast<int32_t>(iCmd > 0 ? iCmd : -1));
 }
 
 /*wvw_tbCmd2Index([nWinNum], nCmd)
@@ -530,7 +530,7 @@ HB_FUNC(WVW_SETTOOLTIPWIDTH)
   int32_t iTipWidth = SendMessage(pWindowData->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0);
 
   if (HB_ISNUM(2)) {
-    SendMessage(pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(static_cast<int>(hb_parni(2))));
+    SendMessage(pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(static_cast<int32_t>(hb_parni(2))));
   }
 
   hb_retni(iTipWidth);

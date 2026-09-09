@@ -254,9 +254,9 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
   bool bError = false;
   for (uint16_t uiCount = 0; uiCount < uiFields; uiCount++) {
     DBFIELDINFO dbFieldInfo{};
-    dbFieldInfo.atomName = PQfname(pResult, static_cast<int>(uiCount));
+    dbFieldInfo.atomName = PQfname(pResult, static_cast<int32_t>(uiCount));
 
-    switch (PQftype(pResult, static_cast<int>(uiCount))) {
+    switch (PQftype(pResult, static_cast<int32_t>(uiCount))) {
     case BPCHAROID:
     case VARCHAROID:
       dbFieldInfo.uiType = Harbour::DB::Field::STRING;
@@ -363,7 +363,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
       break;
     }
 #if 0
-      HB_TRACE(HB_TR_ALWAYS, ("field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int>(uiCount)), PQfsize(pResult, uiCount), PQfformat(pResult, uiCount), PQfmod(pResult, uiCount), bError));
+      HB_TRACE(HB_TR_ALWAYS, ("field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int32_t>(uiCount)), PQfsize(pResult, uiCount), PQfformat(pResult, uiCount), PQfmod(pResult, uiCount), bError));
 #endif
 
     if (!bError) {
@@ -480,7 +480,7 @@ static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *p
   auto nLen = static_cast<HB_SIZE>(PQgetlength(pSDDData->pResult, pArea->ulRecNo - 1, uiIndex));
 
 #if 0
-   HB_TRACE(HB_TR_ALWAYS, ("fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int>(uiCount)), pArea->ulRecNo, uiIndex, pValue, nLen));
+   HB_TRACE(HB_TR_ALWAYS, ("fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int32_t>(uiCount)), pArea->ulRecNo, uiIndex, pValue, nLen));
 #endif
 
   switch (pField->uiType) {
@@ -497,13 +497,13 @@ static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *p
   case Harbour::DB::Field::LONG:
   case Harbour::DB::Field::DOUBLE:
     if (pField->uiDec) {
-      hb_itemPutNDLen(pItem, atof(pValue), static_cast<int>(pField->uiLen) - (static_cast<int>(pField->uiDec) + 1),
-                      static_cast<int>(pField->uiDec));
+      hb_itemPutNDLen(pItem, atof(pValue), static_cast<int32_t>(pField->uiLen) - (static_cast<int32_t>(pField->uiDec) + 1),
+                      static_cast<int32_t>(pField->uiDec));
     } else {
       if (pField->uiLen > 9) {
-        hb_itemPutNDLen(pItem, atof(pValue), static_cast<int>(pField->uiLen), static_cast<int>(pField->uiDec));
+        hb_itemPutNDLen(pItem, atof(pValue), static_cast<int32_t>(pField->uiLen), static_cast<int32_t>(pField->uiDec));
       } else {
-        hb_itemPutNLLen(pItem, atol(pValue), static_cast<int>(pField->uiLen));
+        hb_itemPutNLLen(pItem, atol(pValue), static_cast<int32_t>(pField->uiLen));
       }
     }
     break;

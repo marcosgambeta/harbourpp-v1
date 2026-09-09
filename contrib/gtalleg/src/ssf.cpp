@@ -96,20 +96,20 @@ unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int32_t x, 
    for( i = 0; i < charGlyph.num; i++ ) {
       charFrame = charGlyph.frames[i];
       if( charFrame.ftype == SSF_SPLINE2 ) {
-         points[_F_LEFT2]   = x + static_cast<int>(fScale * charFrame.left);
-         points[_F_TOP2]    = y + static_cast<int>(fScale * charFrame.top);
-         points[_F_RIGHT2]  = x + static_cast<int>(fScale * charFrame.right);
-         points[_F_BOTTOM2] = y + static_cast<int>(fScale * charFrame.bottom);
+         points[_F_LEFT2]   = x + static_cast<int32_t>(fScale * charFrame.left);
+         points[_F_TOP2]    = y + static_cast<int32_t>(fScale * charFrame.top);
+         points[_F_RIGHT2]  = x + static_cast<int32_t>(fScale * charFrame.right);
+         points[_F_BOTTOM2] = y + static_cast<int32_t>(fScale * charFrame.bottom);
       } else {
-         points[_F_LEFT]   = x + static_cast<int>(fScale * charFrame.left);
-         points[_F_TOP]    = y + static_cast<int>(fScale * charFrame.top);
-         points[_F_RIGHT]  = x + static_cast<int>(fScale * charFrame.right);
-         points[_F_BOTTOM] = y + static_cast<int>(fScale * charFrame.bottom);
+         points[_F_LEFT]   = x + static_cast<int32_t>(fScale * charFrame.left);
+         points[_F_TOP]    = y + static_cast<int32_t>(fScale * charFrame.top);
+         points[_F_RIGHT]  = x + static_cast<int32_t>(fScale * charFrame.right);
+         points[_F_BOTTOM] = y + static_cast<int32_t>(fScale * charFrame.bottom);
       }
 
       switch( charFrame.ftype ) {
          case SSF_SPLINE2:
-            thick = static_cast<int>(fScale * charFrame.thick);
+            thick = static_cast<int32_t>(fScale * charFrame.thick);
 
             if( thick == 0 ) {
                thick++;
@@ -147,7 +147,7 @@ unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int32_t x, 
             break;
 
          case SSF_LINE:
-            thick = static_cast<int>(fScale * charFrame.thick);
+            thick = static_cast<int32_t>(fScale * charFrame.thick);
 
             if( thick == 0 ) {
                thick++;
@@ -181,8 +181,8 @@ unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int32_t x, 
             break;
 
          case SSF_TRIANGLE:
-            thick = x + static_cast<int>(fScale * charFrame.thick);
-            al_draw_triangle(dst, points[_F_LEFT], points[_F_TOP], points[_F_RIGHT], points[_F_BOTTOM], thick, y + static_cast<int>(fScale * charFrame.thickdir), color);
+            thick = x + static_cast<int32_t>(fScale * charFrame.thick);
+            al_draw_triangle(dst, points[_F_LEFT], points[_F_TOP], points[_F_RIGHT], points[_F_BOTTOM], thick, y + static_cast<int32_t>(fScale * charFrame.thickdir), color);
             break;
       }
    }

@@ -103,7 +103,7 @@ HB_FUNC(WIN_SENDDLGITEMMESSAGE)
   }
 
   hb_retnl(static_cast<LONG>(
-      SendDlgItemMessage(reinterpret_cast<HWND>(HB_PARHANDLE(1)), static_cast<int>(hb_parni(2)),
+      SendDlgItemMessage(reinterpret_cast<HWND>(HB_PARHANDLE(1)), static_cast<int32_t>(hb_parni(2)),
                          static_cast<UINT>(hb_parni(3)), (HB_ISNIL(4) ? 0 : static_cast<WPARAM>(hb_parnl(4))),
                          (cText ? reinterpret_cast<LPARAM>(cText) : static_cast<LPARAM>(hb_parnl(5))))));
 
@@ -144,7 +144,7 @@ HB_FUNC(WIN_SETBKCOLOR)
 
 HB_FUNC(WVW_SETBKMODE)
 {
-  hb_retni(static_cast<int>(SetBkMode(reinterpret_cast<HDC>(HB_PARHANDLE(1)), hb_parni(2))));
+  hb_retni(static_cast<int32_t>(SetBkMode(reinterpret_cast<HDC>(HB_PARHANDLE(1)), hb_parni(2))));
 }
 
 HB_FUNC(WIN_GETSTOCKOBJECT)
@@ -1106,9 +1106,9 @@ HB_FUNC(TOOLBARADDBUTTONS)
 #if 0
       if( bSystem ) {
          if( ulID > 0 && ulID < 31 ) {
-            tb[ulCount].iBitmap = ulID > 0 ? static_cast<int>(ulID) : -1;
+            tb[ulCount].iBitmap = ulID > 0 ? static_cast<int32_t>(ulID) : -1;
          } else {
-            tb[ulCount].iBitmap = ulID > 0 ? static_cast<int>(ulCount) : -1;
+            tb[ulCount].iBitmap = ulID > 0 ? static_cast<int32_t>(ulCount) : -1;
          }
       }
 #endif
@@ -1116,7 +1116,7 @@ HB_FUNC(TOOLBARADDBUTTONS)
     tb[ulCount].fsState = static_cast<BYTE>(hb_arrayGetNI(pTemp, 3));
     tb[ulCount].fsStyle = static_cast<BYTE>(hb_arrayGetNI(pTemp, 4));
     tb[ulCount].dwData = hb_arrayGetNI(pTemp, 5);
-    tb[ulCount].iString = hb_arrayGetCLen(pTemp, 6) > 0 ? reinterpret_cast<int>(hb_arrayGetCPtr(pTemp, 6)) : 0;
+    tb[ulCount].iString = hb_arrayGetCLen(pTemp, 6) > 0 ? reinterpret_cast<int32_t>(hb_arrayGetCPtr(pTemp, 6)) : 0;
   }
 
   SendMessage(hWndCtrl, TB_ADDBUTTONS, static_cast<WPARAM>(iButtons),
@@ -1166,7 +1166,7 @@ HB_FUNC(SETBITMAPRESOURCEID)
     tbab.nID = reinterpret_cast<UINT>(hBitmap);
     iNewBitmap = SendMessage(hWndToolbar, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<WPARAM>(&tbab));
   } else { /* system bitmap */
-    iNewBitmap = static_cast<int>(uiBitmap) + iOffset;
+    iNewBitmap = static_cast<int32_t>(uiBitmap) + iOffset;
   }
   hb_retni(iNewBitmap);
 }
@@ -2338,10 +2338,10 @@ HB_FUNC_TRANSLATE(WVW_GETKEYSTATE, WAGETKEYSTATE)
 
 HB_FUNC(WVW_LOWORD)
 {
-  hb_retni(static_cast<int>(hb_parnl(1) & 0xFFFF));
+  hb_retni(static_cast<int32_t>(hb_parnl(1) & 0xFFFF));
 }
 
 HB_FUNC(WVW_HIWORD)
 {
-  hb_retni(static_cast<int>((hb_parnl(1) >> 16) & 0xFFFF));
+  hb_retni(static_cast<int32_t>((hb_parnl(1) >> 16) & 0xFFFF));
 }

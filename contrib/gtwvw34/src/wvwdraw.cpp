@@ -276,8 +276,8 @@ static bool hb_gt_wvw_DrawImage(HWND hWnd, int32_t x1, int32_t y1, int32_t wd, i
       /* 2006-07-24 canNOT do it this way: */
       HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) & lWidth);
       HB_VTBL(pPicture)->get_Height(HB_THIS_(pPicture) & lHeight);
-      iWidth  = static_cast<int>(lWidth);
-      iHeight = static_cast<int>(lHeight);
+      iWidth  = static_cast<int32_t>(lWidth);
+      iHeight = static_cast<int32_t>(lHeight);
 #endif
 
     if (HB_VTBL(pPicture)->get_Handle(HB_THIS_(pPicture) reinterpret_cast<OLE_HANDLE *>(&hBitmapTemp)) == S_OK &&
@@ -381,10 +381,10 @@ static bool hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int32_t x1, int32_t y1, in
       HRGN hrgn1;
 
       if (dc == 0) {
-        dc = static_cast<int>(static_cast<float>(dr) * nWidth / nHeight);
+        dc = static_cast<int32_t>(static_cast<float>(dr) * nWidth / nHeight);
       }
       if (dr == 0) {
-        dr = static_cast<int>(static_cast<float>(dc) * nHeight / nWidth);
+        dr = static_cast<int32_t>(static_cast<float>(dc) * nHeight / nWidth);
       }
       if (tor == 0) {
         tor = dr;
@@ -515,8 +515,8 @@ static IPicture *hb_gt_wvw_rr_LoadPictureFromResource(PWVW_GLO wvw, const char *
         nHeight = 0;
       }
 
-      *piWidth = static_cast<int>(nWidth);
-      *piHeight = static_cast<int>(nHeight);
+      *piWidth = static_cast<int32_t>(nWidth);
+      *piHeight = static_cast<int32_t>(nHeight);
     } else {
       PICTDESC picd;
 
@@ -572,8 +572,8 @@ static IPicture *hb_gt_wvw_rr_LoadPicture(const char *filename, int32_t *piWidth
             nHeight = 0;
           }
 
-          *piWidth = static_cast<int>(nWidth);
-          *piHeight = static_cast<int>(nHeight);
+          *piWidth = static_cast<int32_t>(nWidth);
+          *piHeight = static_cast<int32_t>(nHeight);
         }
 
         if (pStream) {
@@ -1093,7 +1093,7 @@ HB_FUNC(WVW_DRAWIMAGE)
       if (HB_ISNUM(6)) {
         int32_t iSlot = hb_parni(6) - 1;
 
-        if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
+        if (iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
           fSuccess = hb_gt_wvw_GetIPictDimension(wvw->a.pPicture[iSlot], &iImgWidth, &iImgHeight);
         }
       } else {
@@ -1121,10 +1121,10 @@ HB_FUNC(WVW_DRAWIMAGE)
 
     if ((fActBottom || fActRight) && !(fActBottom && fActRight)) {
       if (fActRight) {
-        iRightNew = iLeft + static_cast<int>(static_cast<float>(iImgWidth) / iImgHeight * (iBottomNew - iTop + 1)) -
+        iRightNew = iLeft + static_cast<int32_t>(static_cast<float>(iImgWidth) / iImgHeight * (iBottomNew - iTop + 1)) -
                     1; /* right corner (width) must be proportional to height */
       } else {
-        iBottomNew = iTop + static_cast<int>(static_cast<float>(iImgHeight) / iImgWidth * (iRightNew - iLeft + 1)) -
+        iBottomNew = iTop + static_cast<int32_t>(static_cast<float>(iImgHeight) / iImgWidth * (iRightNew - iLeft + 1)) -
                      1; /* bottom corner (height) must be proportional to width */
       }
     }
@@ -1132,7 +1132,7 @@ HB_FUNC(WVW_DRAWIMAGE)
     if (HB_ISNUM(6)) {
       int32_t iSlot = hb_parni(6) - 1;
 
-      if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
+      if (iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
         fResult = hb_gt_wvw_RenderPicture(wvw_win, iLeft, iTop, (iRightNew - iLeft) + 1, (iBottomNew - iTop) + 1,
                                           wvw->a.pPicture[iSlot], fTransparent);
       } else {
@@ -1244,10 +1244,10 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE) /* Not in WVT */
 
       if ((fActBottom || fActRight) && !(fActBottom && fActRight)) {
         if (fActRight) {
-          iRightNew = iLeft + static_cast<int>(static_cast<float>(iImgWidth) / iImgHeight * (iBottomNew - iTop + 1)) -
+          iRightNew = iLeft + static_cast<int32_t>(static_cast<float>(iImgWidth) / iImgHeight * (iBottomNew - iTop + 1)) -
                       1; /* right corner (width) must be proportional to height */
         } else {
-          iBottomNew = iTop + static_cast<int>(static_cast<float>(iImgHeight) / iImgWidth * (iRightNew - iLeft + 1)) -
+          iBottomNew = iTop + static_cast<int32_t>(static_cast<float>(iImgHeight) / iImgWidth * (iRightNew - iLeft + 1)) -
                        1; /* bottom corner (height) must be proportional to width */
         }
       }
@@ -1343,7 +1343,7 @@ HB_FUNC(WVW_DRAWLABELEX)
 
   int32_t iSlot = hb_parni(8) - 1;
 
-  if (wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts)) &&
+  if (wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserFonts)) &&
       wvw->a.hUserFonts[iSlot]) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
@@ -1429,7 +1429,7 @@ HB_FUNC(WVW_DRAWLABELOBJ)
     auto iAlignHorz = hb_parni(7);
     auto iAlignVert = hb_parni(8);
 
-    GetTextExtentPoint32(hDC, szText, static_cast<int>(nLen), &sz);
+    GetTextExtentPoint32(hDC, szText, static_cast<int32_t>(nLen), &sz);
 
     x = iLeft;
     y = iTop;
@@ -1567,7 +1567,7 @@ HB_FUNC(WVW_DRAWOUTLINEEX)
     iBottom = xy.y;
     iRight = xy.x;
 
-    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens)) && wvw->a.hUserPens[iSlot]) {
+    if (iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserPens)) && wvw->a.hUserPens[iSlot]) {
       SelectObject(hDC, wvw->a.hUserPens[iSlot]);
     } else {
       SelectObject(hDC, wvw->a.penBlack);
@@ -1729,7 +1729,7 @@ HB_FUNC(WVW_DRAWLINEEX)
 
   int32_t iSlot = hb_parni(9) - 1;
 
-  if (wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
+  if (wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
     auto iBottom = hb_parni(4);
@@ -2246,7 +2246,7 @@ HB_FUNC(WVW_DRAWBUTTON)
 
       SelectObject(hDC, GetStockObject(DEFAULT_GUI_FONT));
 
-      GetTextExtentPoint32(hDC, szText, static_cast<int>(nLen), &sz);
+      GetTextExtentPoint32(hDC, szText, static_cast<int32_t>(nLen), &sz);
 
       iTextHeight = sz.cy;
 
@@ -2281,7 +2281,7 @@ HB_FUNC(WVW_DRAWBUTTON)
       if (HB_ISNUM(7)) {
         int32_t iSlot = hb_parni(7) - 1;
 
-        if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
+        if (iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
           hb_gt_wvw_RenderPicture(wvw_win, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, wvw->a.pPicture[iSlot],
                                   false);
         }
@@ -2392,7 +2392,7 @@ HB_FUNC(WVW_DRAWPICTURE)
 
   int32_t iSlot = hb_parni(6) - 1;
 
-  if (wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture)) &&
+  if (wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.pPicture)) &&
       wvw->a.pPicture[iSlot]) {
     auto iTop = hb_parni(2);
     auto iLeft = hb_parni(3);
@@ -2871,7 +2871,7 @@ HB_FUNC(WVW_DRAWTEXTBOX)
     rc.bottom = iBottom;
     rc.right = iRight;
 
-    DrawText(hDC, szText, static_cast<int>(nLen), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
+    DrawText(hDC, szText, static_cast<int32_t>(nLen), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
 
     hb_strfree(hText);
 

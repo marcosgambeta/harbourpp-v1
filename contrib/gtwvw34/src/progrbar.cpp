@@ -266,7 +266,7 @@ HB_FUNC(WVW_PGGETPOS)
   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
   if (hWnd) {
-    hb_retni(static_cast<int>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));
+    hb_retni(static_cast<int32_t>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));
   } else {
     hb_retni(0);
   }

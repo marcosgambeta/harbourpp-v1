@@ -97,7 +97,7 @@ HB_FUNC(STRFORMAT)
 
             if( pszMask[nMaskPos] == '%' )
                nRetValLen++;
-            else if( pszMask[nMaskPos] >= '1' && pszMask[nMaskPos] <= static_cast<int>(nParNum + '0') )
+            else if( pszMask[nMaskPos] >= '1' && pszMask[nMaskPos] <= static_cast<int32_t>(nParNum + '0') )
             {
                nPos = pszMask[nMaskPos] - '1';
 
@@ -124,7 +124,7 @@ HB_FUNC(STRFORMAT)
 
             if( pszMask[nMaskPos] == '%' )
                *pszRetVal++ = pszMask[nMaskPos];
-            else if( pszMask[nMaskPos] >= '1' && pszMask[nMaskPos] <= static_cast<int>(nParNum + '0') )
+            else if( pszMask[nMaskPos] >= '1' && pszMask[nMaskPos] <= static_cast<int32_t>(nParNum + '0') )
             {
                nPos = pszMask[nMaskPos] - '1';
 

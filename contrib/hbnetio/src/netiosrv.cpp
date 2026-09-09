@@ -368,7 +368,7 @@ static PHB_CONSRV s_consrvNew(PHB_SOCKEX sock, const char * szRootPath, HB_BOOL 
    if( szRootPath )
    {
       hb_strncpy(conn->rootPath, szRootPath, sizeof(conn->rootPath) - 1);
-      conn->rootPathLen = static_cast<int>(strlen(conn->rootPath));
+      conn->rootPathLen = static_cast<int32_t>(strlen(conn->rootPath));
    }
 
    return conn;
@@ -492,12 +492,12 @@ static void s_listenRet(HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc)
       {
          hb_fsBaseDirBuff(lsd->rootPath);
       }
-      auto iLen = static_cast<int>(strlen(lsd->rootPath));
+      auto iLen = static_cast<int32_t>(strlen(lsd->rootPath));
       if( iLen > 0 )
       {
          if( !s_isDirSep(lsd->rootPath[iLen - 1]) )
          {
-            if( iLen == static_cast<int>(sizeof(lsd->rootPath)) - 1 )
+            if( iLen == static_cast<int32_t>(sizeof(lsd->rootPath)) - 1 )
             {
                --iLen;
             }
@@ -660,7 +660,7 @@ HB_FUNC(NETIO_ACCEPT)
    {
       HB_MAXINT timeout = hb_parnintdef(2, -1);
       HB_SOCKET connsd;
-      auto keylen = static_cast<int>(hb_parclen(3));
+      auto keylen = static_cast<int32_t>(hb_parclen(3));
 
       if( keylen > NETIO_PASSWD_MAX )
       {
@@ -714,7 +714,7 @@ HB_FUNC(NETIO_COMPRESS)
 
    if( conn && conn->sock && !conn->stop )
    {
-      auto keylen = static_cast<int>(hb_parclen(2));
+      auto keylen = static_cast<int32_t>(hb_parclen(2));
       PHB_SOCKEX sock;
 
       if( keylen > NETIO_PASSWD_MAX )

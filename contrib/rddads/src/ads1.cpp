@@ -1401,7 +1401,7 @@ static HB_ERRCODE adsSkipFilter(ADSAREAP pArea, HB_LONG lUpDown)
 static HB_ERRCODE adsAppend(ADSAREAP pArea, HB_BOOL fUnLockAll)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("adsAppend(%p, %d)", static_cast<void*>(pArea), static_cast<int>(fUnLockAll)));
+   HB_TRACE(HB_TR_DEBUG, ("adsAppend(%p, %d)", static_cast<void*>(pArea), static_cast<int32_t>(fUnLockAll)));
 #endif
 
   UNSIGNED32 u32RetVal;
@@ -1480,7 +1480,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, HB_ITEM *pStruct)
     auto uiDec = static_cast<uint16_t>(iData);
     dbFieldInfo.uiDec = 0;
     szFieldType = szType = hb_arrayGetCPtr(pFieldDesc, DBS_TYPE);
-    auto iNameLen = static_cast<int>(strlen(szFieldType));
+    auto iNameLen = static_cast<int32_t>(strlen(szFieldType));
     iData = HB_TOUPPER(szFieldType[0]);
 #ifdef DBS_FLAG
     dbFieldInfo.uiFlags = hb_arrayGetNI(pFieldDesc, DBS_FLAG);
@@ -2217,7 +2217,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
         pArea->area.fEof = true;
       }
       if (pField->uiTypeExtended == ADS_SHORTINT) {
-        hb_itemPutNILen(pItem, static_cast<int>(lVal), 6);
+        hb_itemPutNILen(pItem, static_cast<int32_t>(lVal), 6);
       } else {
         hb_itemPutNLLen(pItem, static_cast<long>(lVal), 11);
       }
@@ -2276,12 +2276,12 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     if (pField->uiTypeExtended == ADS_CURDOUBLE || pField->uiTypeExtended == ADS_DOUBLE)
 #endif
     {
-      hb_itemPutNDLen(pItem, dVal, 20 - (pField->uiDec > 0 ? (pField->uiDec + 1) : 0), static_cast<int>(pField->uiDec));
+      hb_itemPutNDLen(pItem, dVal, 20 - (pField->uiDec > 0 ? (pField->uiDec + 1) : 0), static_cast<int32_t>(pField->uiDec));
     } else if (pField->uiDec) {
-      hb_itemPutNDLen(pItem, dVal, static_cast<int>(pField->uiLen) - (pField->uiDec + 1),
-                      static_cast<int>(pField->uiDec));
+      hb_itemPutNDLen(pItem, dVal, static_cast<int32_t>(pField->uiLen) - (pField->uiDec + 1),
+                      static_cast<int32_t>(pField->uiDec));
     } else {
-      hb_itemPutNLen(pItem, dVal, static_cast<int>(pField->uiLen), 0);
+      hb_itemPutNLen(pItem, dVal, static_cast<int32_t>(pField->uiLen), 0);
     }
     break;
   }
@@ -3080,7 +3080,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
     case Harbour::DB::Field::AUTOINC:
     case Harbour::DB::Field::IMAGE:
     case Harbour::DB::Field::BLOB:
-      uiFldLen = hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s;", static_cast<int>(pArea->area.uiMaxFieldNameLength),
+      uiFldLen = hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s;", static_cast<int32_t>(pArea->area.uiMaxFieldNameLength),
                              hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), cType);
       break;
 
@@ -3089,13 +3089,13 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
     case Harbour::DB::Field::MEMO:
     case Harbour::DB::Field::VARLENGTH:
       uiFldLen =
-          hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d;", static_cast<int>(pArea->area.uiMaxFieldNameLength),
+          hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d;", static_cast<int32_t>(pArea->area.uiMaxFieldNameLength),
                       hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), cType, pField->uiLen);
       break;
 
     default:
       uiFldLen =
-          hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d,%d;", static_cast<int>(pArea->area.uiMaxFieldNameLength),
+          hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d,%d;", static_cast<int32_t>(pArea->area.uiMaxFieldNameLength),
                       hb_dynsymName(static_cast<HB_DYNS *>(pField->sym)), cType, pField->uiLen, pField->uiDec);
       break;
     }

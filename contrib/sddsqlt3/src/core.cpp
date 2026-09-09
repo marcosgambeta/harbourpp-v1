@@ -362,9 +362,9 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
   sqlite3_stmt *st = nullptr;
 
 #if SQLITE_VERSION_NUMBER >= 3020000
-  int result = sqlite3_prepare_v3(pDb, pszQuery, static_cast<int>(nQueryLen), 0, &st, nullptr);
+  int result = sqlite3_prepare_v3(pDb, pszQuery, static_cast<int32_t>(nQueryLen), 0, &st, nullptr);
 #else
-  int result = sqlite3_prepare_v2(pDb, pszQuery, static_cast<int>(nQueryLen), &st, nullptr);
+  int result = sqlite3_prepare_v2(pDb, pszQuery, static_cast<int32_t>(nQueryLen), &st, nullptr);
 #endif
 
   char *szError;

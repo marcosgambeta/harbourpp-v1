@@ -160,19 +160,19 @@ HB_FUNC(FBCONNECT)
   /* FIXME: Possible buffer overflow. Use hb_snprintf(). */
   dpb[i++] = isc_dpb_version1;
   dpb[i++] = isc_dpb_user_name;
-  auto len = static_cast<int>(strlen(user));
-  if (len > static_cast<int>(sizeof(dpb) - i - 4))
+  auto len = static_cast<int32_t>(strlen(user));
+  if (len > static_cast<int32_t>(sizeof(dpb) - i - 4))
   {
-    len = static_cast<int>(sizeof(dpb) - i - 4);
+    len = static_cast<int32_t>(sizeof(dpb) - i - 4);
   }
   dpb[i++] = static_cast<char>(len);
   hb_strncpy(&(dpb[i]), user, len);
   i += static_cast<short>(len);
   dpb[i++] = isc_dpb_password;
-  len = static_cast<int>(strlen(passwd));
-  if (len > static_cast<int>(sizeof(dpb) - i - 2))
+  len = static_cast<int32_t>(strlen(passwd));
+  if (len > static_cast<int32_t>(sizeof(dpb) - i - 2))
   {
-    len = static_cast<int>(sizeof(dpb) - i - 2);
+    len = static_cast<int32_t>(sizeof(dpb) - i - 2);
   }
   dpb[i++] = static_cast<char>(len);
   hb_strncpy(&(dpb[i]), passwd, len);
@@ -491,7 +491,7 @@ HB_FUNC(FBQUERY)
     }
 
     hb_arraySetNL(qry_handle, 4, static_cast<long>(num_cols));
-    hb_arraySetNI(qry_handle, 5, static_cast<int>(dialect));
+    hb_arraySetNI(qry_handle, 5, static_cast<int32_t>(dialect));
     hb_arraySetForward(qry_handle, 6, aNew);
 
     hb_itemReturnRelease(qry_handle);
@@ -603,7 +603,7 @@ HB_FUNC(FBGETDATA)
         isc_decode_timestamp(reinterpret_cast<ISC_TIMESTAMP *>(var->sqldata), &times);
         hb_snprintf(date_s, sizeof(date_s), "%04d-%02d-%02d %02d:%02d:%02d.%04d", times.tm_year + 1900,
                     times.tm_mon + 1, times.tm_mday, times.tm_hour, times.tm_min, times.tm_sec,
-                    static_cast<int>((reinterpret_cast<ISC_TIMESTAMP *>(var->sqldata))->timestamp_time % 10000));
+                    static_cast<int32_t>((reinterpret_cast<ISC_TIMESTAMP *>(var->sqldata))->timestamp_time % 10000));
         hb_snprintf(data, sizeof(data), "%*s ", 24, date_s);
 
         hb_retc(data);
@@ -620,7 +620,7 @@ HB_FUNC(FBGETDATA)
       case SQL_TYPE_TIME:
         isc_decode_sql_time(reinterpret_cast<ISC_TIME *>(var->sqldata), &times);
         hb_snprintf(date_s, sizeof(date_s), "%02d:%02d:%02d.%04d", times.tm_hour, times.tm_min, times.tm_sec,
-                    static_cast<int>((*(reinterpret_cast<ISC_TIME *>(var->sqldata))) % 10000));
+                    static_cast<int32_t>((*(reinterpret_cast<ISC_TIME *>(var->sqldata))) % 10000));
         hb_snprintf(data, sizeof(data), "%*s ", 13, date_s);
 
         hb_retc(data);

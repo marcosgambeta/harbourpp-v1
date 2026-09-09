@@ -230,7 +230,7 @@ HB_FUNC(PQCONNECTDBPARAMS)
   auto pParam = hb_param(1, Harbour::Item::HASH);
   int len;
 
-  if (pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0)
+  if (pParam && (len = static_cast<int32_t>(hb_hashLen(pParam))) > 0)
   {
 #if PG_VERSION_NUM >= 90000
     auto paramKeyValues = static_cast<const char **>(hb_xgrab(sizeof(char *) * len));
@@ -285,7 +285,7 @@ HB_FUNC(PQCONNECTSTARTPARAMS)
   auto pParam = hb_param(1, Harbour::Item::HASH);
   int len;
 
-  if (pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0)
+  if (pParam && (len = static_cast<int32_t>(hb_hashLen(pParam))) > 0)
   {
 #if PG_VERSION_NUM >= 90000
     auto paramKeyValues = static_cast<const char **>(hb_xgrab(sizeof(char *) * len));
@@ -390,7 +390,7 @@ HB_FUNC(PQPINGPARAMS)
   auto pParam = hb_param(1, Harbour::Item::HASH);
   int len;
 
-  if (pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0)
+  if (pParam && (len = static_cast<int32_t>(hb_hashLen(pParam))) > 0)
   {
 #if PG_VERSION_NUM >= 90100
     auto paramKeyValues = static_cast<const char **>(hb_xgrab(sizeof(char *) * len));
@@ -824,7 +824,7 @@ HB_FUNC(PQEXECPARAMS)
 
   if (conn && aParam)
   {
-    auto n = static_cast<int>(hb_arrayLen(aParam));
+    auto n = static_cast<int32_t>(hb_arrayLen(aParam));
 
     if (!n)
     {
@@ -984,7 +984,7 @@ HB_FUNC(PQMETADATA) // not a direct wrapper
         case BITOID:
           if (typemod >= 0)
           {
-            length = static_cast<int>(typemod);
+            length = static_cast<int32_t>(typemod);
           }
           hb_strncpy(buf, "bit", sizeof(buf) - 1);
           break;
@@ -997,7 +997,7 @@ HB_FUNC(PQMETADATA) // not a direct wrapper
         case BPCHAROID:
           if (typemod >= 0)
           {
-            length = static_cast<int>(typemod - VARHDRSZ);
+            length = static_cast<int32_t>(typemod - VARHDRSZ);
           }
           hb_strncpy(buf, "character", sizeof(buf) - 1);
           break;
@@ -1046,7 +1046,7 @@ HB_FUNC(PQMETADATA) // not a direct wrapper
         case VARBITOID:
           if (typemod >= 0)
           {
-            length = static_cast<int>(typemod);
+            length = static_cast<int32_t>(typemod);
           }
           hb_strncpy(buf, "bit varying", sizeof(buf) - 1);
           break;
@@ -1054,7 +1054,7 @@ HB_FUNC(PQMETADATA) // not a direct wrapper
         case VARCHAROID:
           if (typemod >= 0)
           {
-            length = static_cast<int>(typemod - VARHDRSZ);
+            length = static_cast<int32_t>(typemod - VARHDRSZ);
           }
           hb_strncpy(buf, "character varying", sizeof(buf) - 1);
           break;
@@ -1752,7 +1752,7 @@ HB_FUNC(PQEXECPREPARED)
       paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
     }
 
-    hb_PGresult_ret(PQexecPrepared(conn, hb_parcx(2), static_cast<int>(n),
+    hb_PGresult_ret(PQexecPrepared(conn, hb_parcx(2), static_cast<int32_t>(n),
                                    static_cast<const char *const *>(paramvalues), nullptr, nullptr, 1));
 
     hb_xfree(static_cast<void *>(paramvalues));
@@ -1771,7 +1771,7 @@ HB_FUNC(PQPUTCOPYDATA)
 
   if (conn != nullptr)
   {
-    hb_retni(PQputCopyData(conn, hb_parcx(2), static_cast<int>(hb_parclen(2))));
+    hb_retni(PQputCopyData(conn, hb_parcx(2), static_cast<int32_t>(hb_parclen(2))));
   }
   else
   {

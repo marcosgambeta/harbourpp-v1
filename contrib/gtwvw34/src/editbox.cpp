@@ -152,7 +152,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
   case WM_CHAR: {
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     int32_t iScanCode = HB_LOBYTE(HIWORD(lParam));
-    auto c = static_cast<int>(wParam);
+    auto c = static_cast<int32_t>(wParam);
 
     if (bCtrl && iScanCode == 28) {
       iKey = K_CTRL_RETURN;
@@ -302,7 +302,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
       c = K_ALT_M;
       break;
     default:
-      c = static_cast<int>(wParam);
+      c = static_cast<int32_t>(wParam);
     }
     iKey = c;
     break;
@@ -334,7 +334,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     bool bShift = GetKeyState(VK_SHIFT) & 0x8000;
 
-    if (!hb_gt_wvw_BufferedKey(static_cast<int>(wParam))) {
+    if (!hb_gt_wvw_BufferedKey(static_cast<int32_t>(wParam))) {
       break;
     }
 

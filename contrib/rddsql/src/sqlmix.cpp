@@ -242,7 +242,7 @@ static void hb_mixKeyFree(PMIXKEY pKey)
 static int hb_mixKeyCompare(PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, uint32_t uiLen)
 {
   if (!pKey1->notnul || !pKey2->notnul) {
-    return static_cast<int>(pKey1->notnul) - static_cast<int>(pKey2->notnul);
+    return static_cast<int32_t>(pKey1->notnul) - static_cast<int32_t>(pKey2->notnul);
   }
 
   int i = 0;

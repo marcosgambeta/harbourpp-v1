@@ -320,7 +320,7 @@ static void hb_gt_wvw_Exit(HB_GT *pGT)
 
   HB_GTSUPER_EXIT(pGT);
 
-  for (i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); i++) {
+  for (i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); i++) {
     if (s_wvw->a.hDlgModeless[i]) {
       SendMessage(s_wvw->a.hDlgModeless[i], WM_CLOSE, 0, 0);
     }
@@ -437,19 +437,19 @@ static void hb_gt_wvw_Exit(HB_GT *pGT)
 
   UnregisterClass(s_wvw->szAppName, s_wvw->hInstance);
 
-  for (i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.pPicture)); i++) {
+  for (i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.pPicture)); i++) {
     if (s_wvw->a.pPicture[i]) {
       hb_gt_wvw_DestroyPicture(s_wvw->a.pPicture[i]);
     }
   }
 
-  for (i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hUserFonts)); i++) {
+  for (i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hUserFonts)); i++) {
     if (s_wvw->a.hUserFonts[i]) {
       DeleteObject(s_wvw->a.hUserFonts[i]);
     }
   }
 
-  for (i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hUserPens)); i++) {
+  for (i = 0; i < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hUserPens)); i++) {
     if (s_wvw->a.hUserPens[i]) {
       DeleteObject(s_wvw->a.hUserPens[i]);
     }
@@ -691,7 +691,7 @@ static int32_t hb_gt_wvw_PutText(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t
     }
   }
 #else
-  iCol = nLen == 0 ? 0 : iColSav + static_cast<int>(nLen) - 1;
+  iCol = nLen == 0 ? 0 : iColSav + static_cast<int32_t>(nLen) - 1;
   hb_gt_wvw_vPutText(wvw_win, iRow, iColSav, iRow, iCol, szText, iColor);
 #endif
 
@@ -765,7 +765,7 @@ static void hb_gt_wvw_WriteAt(HB_GT *pGT, int32_t iRow, int32_t iCol, const char
   HB_GTSELF_PUTTEXT(pGT, iRow, iCol, HB_GTSELF_GETCOLOR(pGT), pText, nLen);
 
   /* Finally, save the new cursor position, even if off-screen */
-  HB_GTSELF_SETPOS(pGT, iRow, iCol + static_cast<int>(nLen));
+  HB_GTSELF_SETPOS(pGT, iRow, iCol + static_cast<int32_t>(nLen));
 }
 
 static const char *hb_gt_wvw_Version(HB_GT *pGT, int32_t iType)
@@ -1692,7 +1692,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
 
   auto iType = 0;
 
-  for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++) {
+  for (iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++) {
     if (s_wvw->a.hDlgModeless[iIndex] != nullptr && s_wvw->a.hDlgModeless[iIndex] == hDlg) {
       if (s_wvw->a.pFunc[iIndex] != nullptr) {
         pFunc = s_wvw->a.pFunc[iIndex];
@@ -1797,9 +1797,9 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
   BOOL bReturn = FALSE;
   HB_ITEM *pFunc = nullptr;
 
-  auto iFirst = static_cast<int>(lParam);
+  auto iFirst = static_cast<int32_t>(lParam);
 
-  if (iFirst > 0 && iFirst <= static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModal))) {
+  if (iFirst > 0 && iFirst <= static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModal))) {
     s_wvw->a.hDlgModal[iFirst - 1] = hDlg;
     SendMessage(hDlg, WM_INITDIALOG, 0, 0);
     return bReturn;
@@ -1807,7 +1807,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
 
   auto iType = 0;
 
-  for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModal)); iIndex++) {
+  for (iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModal)); iIndex++) {
     if (s_wvw->a.hDlgModal[iIndex] != nullptr && s_wvw->a.hDlgModal[iIndex] == hDlg) {
       if (s_wvw->a.pFuncModal[iIndex] != nullptr) {
         pFunc = s_wvw->a.pFuncModal[iIndex];
@@ -2012,9 +2012,9 @@ bool hb_gt_wvw_ValidWindowSize(PWVW_WIN wvw_win, int32_t iRows, int32_t iCols, H
 
     ReleaseDC(wvw_win->hWnd, hdc);
 
-    width = (iWidth < 0 ? -iWidth : static_cast<int>(tm.tmAveCharWidth)) *
+    width = (iWidth < 0 ? -iWidth : static_cast<int32_t>(tm.tmAveCharWidth)) *
             iCols;                                  /* Total pixel width this setting would take */
-    height = static_cast<int>(tm.tmHeight) * iRows; /* Total pixel height this setting would take */
+    height = static_cast<int32_t>(tm.tmHeight) * iRows; /* Total pixel height this setting would take */
 
     GetWindowRect(wvw_win->hWnd, &wi);
     GetClientRect(wvw_win->hWnd, &ci);
@@ -2330,12 +2330,12 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
   case WM_COMMAND: { /* handle menu items */
     bool fTopMost = (s_wvw->iNumWindows == nWin + 1);
-    auto iEvent = static_cast<int>(HIWORD(wParam));
-    auto iId = static_cast<int>(LOWORD(wParam));
+    auto iEvent = static_cast<int32_t>(HIWORD(wParam));
+    auto iId = static_cast<int32_t>(LOWORD(wParam));
 
     if (iId < WVW_ID_BASE_PUSHBUTTON) {
       if (fTopMost || s_wvw->fAllowNonTop) {
-        hb_gt_wvwHandleMenuSelection(static_cast<int>(LOWORD(wParam)));
+        hb_gt_wvwHandleMenuSelection(static_cast<int32_t>(LOWORD(wParam)));
       } else {
         hb_gt_wvwInputNotAllowed(nWin, message, wParam, lParam);
       }
@@ -2347,7 +2347,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
         if (nCtrlId != 0) {
           s_RunControlBlock(wvw_win, WVW_CONTROL_PUSHBUTTON, hCtrlWnd, message, wParam, lParam, 0);
         } else {
-          hb_gt_wvwHandleMenuSelection(static_cast<int>(LOWORD(wParam)));
+          hb_gt_wvwHandleMenuSelection(static_cast<int32_t>(LOWORD(wParam)));
         }
 
         return 0;
@@ -2356,10 +2356,10 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       }
     } else if (iId <= WVW_ID_MAX_COMBOBOX) {
 #if 0
-            auto lowordwParam = static_cast<int>(LOWORD(wParam));
-            auto hiwordwParam = static_cast<int>(HIWORD(wParam));
-            auto lowordlParam = static_cast<int>(LOWORD(lParam));
-            auto hiwordlParam = static_cast<int>(HIWORD(lParam));
+            auto lowordwParam = static_cast<int32_t>(LOWORD(wParam));
+            auto hiwordwParam = static_cast<int32_t>(HIWORD(wParam));
+            auto lowordlParam = static_cast<int32_t>(LOWORD(lParam));
+            auto hiwordlParam = static_cast<int32_t>(HIWORD(lParam));
             auto hWnd = static_cast<HWND>(lParam);
 
             TraceLog(nullptr, "debugging: WM_COMMAND is processed?\n");
@@ -2381,7 +2381,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
           if (nCtrlId != 0) {
             s_RunControlBlock(wvw_win, WVW_CONTROL_COMBOBOX, hCtrlWnd, message, wParam, lParam, iEvent);
           } else {
-            hb_gt_wvwHandleMenuSelection(static_cast<int>(LOWORD(wParam)));
+            hb_gt_wvwHandleMenuSelection(static_cast<int32_t>(LOWORD(wParam)));
           }
 
           return 0;
@@ -2396,10 +2396,10 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       return 1;
     } else if (iId <= WVW_ID_MAX_EDITBOX) { /* combobox */
 #if 0
-            auto lowordwParam = static_cast<int>(LOWORD(wParam));
-            auto hiwordwParam = static_cast<int>(HIWORD(wParam));
-            auto lowordlParam = static_cast<int>(LOWORD(lParam));
-            auto hiwordlParam = static_cast<int>(HIWORD(lParam));
+            auto lowordwParam = static_cast<int32_t>(LOWORD(wParam));
+            auto hiwordwParam = static_cast<int32_t>(HIWORD(wParam));
+            auto lowordlParam = static_cast<int32_t>(LOWORD(lParam));
+            auto hiwordlParam = static_cast<int32_t>(HIWORD(lParam));
             auto hWnd = static_cast<HWND>(lParam);
 
             TraceLog(nullptr, "debugging: WM_COMMAND is processed?\n");
@@ -2421,7 +2421,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
           if (nCtrlId != 0) {
             s_RunControlBlock(wvw_win, WVW_CONTROL_EDITBOX, hCtrlWnd, message, wParam, lParam, iEvent);
           } else {
-            hb_gt_wvwHandleMenuSelection(static_cast<int>(LOWORD(wParam)));
+            hb_gt_wvwHandleMenuSelection(static_cast<int32_t>(LOWORD(wParam)));
           }
 
           return 0;
@@ -2745,7 +2745,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       bool bAlt = GetKeyState(VK_MENU) & 0x8000;
 
       if (!hb_gt_wvw_AcceptingInput()) {
-        if (hb_gt_wvw_BufferedKey(static_cast<int>(wParam))) {
+        if (hb_gt_wvw_BufferedKey(static_cast<int32_t>(wParam))) {
           hb_gt_wvwInputNotAllowed(nWin, message, wParam, lParam);
         }
         return 0;
@@ -2876,7 +2876,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
   case WM_CHAR: {
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     int32_t iScanCode = HB_LOBYTE(HIWORD(lParam));
-    auto c = static_cast<int>(wParam);
+    auto c = static_cast<int32_t>(wParam);
 
     HWND hMouseCapturer = GetCapture();
 
@@ -3051,7 +3051,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
         c = K_ALT_M;
         break;
       default:
-        c = static_cast<int>(wParam);
+        c = static_cast<int32_t>(wParam);
       }
       hb_gt_wvw_AddCharToInputQueue(c);
     }
@@ -3219,7 +3219,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       case SC_CLOSE:
       case SC_NEXTWINDOW:
       case SC_RESTORE:
-        hb_gt_wvwHandleMenuSelection(static_cast<int>(LOWORD(wParam)));
+        hb_gt_wvwHandleMenuSelection(static_cast<int32_t>(LOWORD(wParam)));
       }
     }
     break;
@@ -3412,7 +3412,7 @@ WPARAM hb_gt_wvw_ProcessMessages(PWVW_WIN wvw_win)
     }
 
     fProcessed = false;
-    for (auto iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++) {
+    for (auto iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++) {
       if (s_wvw->a.hDlgModeless[iIndex] != 0) {
         if (IsDialogMessage(s_wvw->a.hDlgModeless[iIndex], &msg)) {
           fProcessed = true;
@@ -3626,7 +3626,7 @@ static bool hb_gt_wvwTextOut(PWVW_WIN wvw_win, HDC hdc, int32_t iCol, int32_t iR
 
   /* safer solution by Oscar Hernandez Suarez: */
 
-  SetRect(&mClip, xy.x, xy.y, xy.x + static_cast<int>(nLen) * wvw_win->PTEXTSIZE.x, xy.y + wvw_win->PTEXTSIZE.y);
+  SetRect(&mClip, xy.x, xy.y, xy.x + static_cast<int32_t>(nLen) * wvw_win->PTEXTSIZE.x, xy.y + wvw_win->PTEXTSIZE.y);
 
   if (wvw_win->FixedFont) {
     return static_cast<bool>(ExtTextOut(hdc, xy.x, xy.y, ETO_CLIPPED | ETO_OPAQUE, &mClip, wvw_win->TextLine,
@@ -3911,13 +3911,13 @@ static void hb_gtInitStatics(int32_t nWin, LPCTSTR szWinName, int32_t iRow1, int
     s_wvw->a.pSymWVW_TIMER = hb_dynsymFind("WVW_TIMER");
     s_wvw->a.pSymWVW_ONCTLCOLOR = hb_dynsymFind("WVW_ONCTLCOLOR");
 
-    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++) {
+    for (iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++) {
       s_wvw->a.hDlgModeless[iIndex] = nullptr;
       s_wvw->a.pFunc[iIndex] = nullptr;
       s_wvw->a.iType[iIndex] = 0;
     }
 
-    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModal)); iIndex++) {
+    for (iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->a.hDlgModal)); iIndex++) {
       s_wvw->a.hDlgModal[iIndex] = nullptr;
       s_wvw->a.pFuncModal[iIndex] = nullptr;
       s_wvw->a.iTypeModal[iIndex] = 0;
@@ -4140,7 +4140,7 @@ static void hb_gt_wvwMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WPARA
 
     if (wvw_win->hPopup) {
       GetCursorPos(&xy);
-      auto nPopupRet = static_cast<int>(
+      auto nPopupRet = static_cast<int32_t>(
           TrackPopupMenu(wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr));
       if (nPopupRet) {
         hb_gt_wvw_AddCharToInputQueue(nPopupRet);
@@ -4206,7 +4206,7 @@ static void hb_gt_wvwMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WPARA
 
 static bool hb_gt_wvwWindowPrologue(void)
 {
-  if (s_wvw->iNumWindows < static_cast<int>(HB_SIZEOFARRAY(s_wvw->pWin))) {
+  if (s_wvw->iNumWindows < static_cast<int32_t>(HB_SIZEOFARRAY(s_wvw->pWin))) {
     s_wvw->iNumWindows++;
     s_wvw->pWin[s_wvw->iNumWindows - 1] = static_cast<PWVW_WIN>(hb_xgrabz(sizeof(WVW_WIN)));
 
@@ -5086,7 +5086,7 @@ static void hb_gt_wvwFillLineSpace(PWVW_WIN wvw_win, HDC hdc, int32_t startCol, 
   rc.top = iRow;
   rc.left = startCol;
   rc.bottom = iRow;
-  rc.right = startCol + static_cast<int>(len) - 1;
+  rc.right = startCol + static_cast<int32_t>(len) - 1;
   rc = hb_gt_wvw_GetXYFromColRowRect(wvw_win, rc);
 
   lb.lbStyle = BS_SOLID;
@@ -5455,7 +5455,7 @@ static int32_t PackedDibGetHeight(BITMAPINFO *pPackedDib)
     return (reinterpret_cast<PBITMAPCOREINFO>(pPackedDib))->bmciHeader.bcHeight;
   } else {
 #if defined(__BORLANDC__) && defined(__clang__)
-    return abs(static_cast<int>(pPackedDib->bmiHeader.biHeight));
+    return abs(static_cast<int32_t>(pPackedDib->bmiHeader.biHeight));
 #else
     return abs(pPackedDib->bmiHeader.biHeight);
 #endif
@@ -5945,8 +5945,8 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, UINT 
     auto pCtlId = hb_itemPutNI(nullptr, wvw_ctl->nId);
 
     if (wvw_ctl->nClass == WVW_CONTROL_SCROLLBAR) {
-      auto pMsg = hb_itemPutNI(nullptr, static_cast<int>(LOWORD(wParam)));
-      auto pPos = hb_itemPutNI(nullptr, static_cast<int>(HIWORD(wParam)));
+      auto pMsg = hb_itemPutNI(nullptr, static_cast<int32_t>(LOWORD(wParam)));
+      auto pPos = hb_itemPutNI(nullptr, static_cast<int32_t>(HIWORD(wParam)));
 
       pReturn = hb_itemDo(wvw_ctl->pBlock, 4, pWinId, pCtlId, pMsg, pPos);
       hb_itemRelease(pReturn);
@@ -5960,7 +5960,7 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int32_t nClass, HWND hWnd, UINT 
       case CBN_SELCHANGE:
       case CBN_SETFOCUS:
       case CBN_KILLFOCUS: {
-        auto iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
+        auto iCurSel = static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
         if (iCurSel == CB_ERR) {
           break;
         }
@@ -6104,7 +6104,7 @@ static LRESULT CALLBACK hb_gt_wvw_BtnProc(HWND hWnd, UINT message, WPARAM wParam
 
   wvw_win = wvw->pWin[nWin];
 
-  auto nCtrlId = static_cast<int>(GetWindowLong(hWnd, GWL_ID));
+  auto nCtrlId = static_cast<int32_t>(GetWindowLong(hWnd, GWL_ID));
   if (nCtrlId == 0) {
     hb_errInternal(10010, "Control ID not found", nullptr, nullptr);
 
@@ -6129,12 +6129,12 @@ static LRESULT CALLBACK hb_gt_wvw_BtnProc(HWND hWnd, UINT message, WPARAM wParam
       break;
     }
 
-    if (!hb_gt_wvw_BufferedKey(static_cast<int>(wParam))) {
+    if (!hb_gt_wvw_BufferedKey(static_cast<int32_t>(wParam))) {
       break;
     }
 
 #if 0
-         if( static_cast<int>(wParam) == VK_RETURN ) {
+         if( static_cast<int32_t>(wParam) == VK_RETURN ) {
             SendMessage(hWnd, BM_CLICK, 0, 0);
          } else
 #endif
@@ -6229,8 +6229,8 @@ int32_t hb_gt_wvw_ButtonCreate(PWVW_WIN wvw_win, int32_t iTop, int32_t iLeft, in
       int32_t iExpWidth = iRight - iLeft + 1;
       int32_t iExpHeight = iBottom - iTop + 1;
 
-      auto hBitmap = hb_gt_wvw_PrepareBitmap(szBitmap, uiBitmap, static_cast<int>(dStretch) * iExpWidth,
-                                             static_cast<int>(dStretch) * iExpHeight, fMap3Dcolors, hWnd);
+      auto hBitmap = hb_gt_wvw_PrepareBitmap(szBitmap, uiBitmap, static_cast<int32_t>(dStretch) * iExpWidth,
+                                             static_cast<int32_t>(dStretch) * iExpHeight, fMap3Dcolors, hWnd);
 
       if (hBitmap) {
         SendMessage(hWnd, BM_SETIMAGE, static_cast<WPARAM>(IMAGE_BITMAP), reinterpret_cast<LPARAM>(hBitmap));

@@ -138,8 +138,8 @@ HB_FUNC(SAYSPREAD)
 
       hb_gtBeginWrite();
       do {
-        for (HB_SIZE nPos2 = 0; nPos2 < nLen && iCol + static_cast<int>(nPos2) <= iMaxCol; ++nPos2) {
-          hb_gtPutChar(iRow, iCol + static_cast<int>(nPos2), iColor, 0, pwText[nPos + nPos2]);
+        for (HB_SIZE nPos2 = 0; nPos2 < nLen && iCol + static_cast<int32_t>(nPos2) <= iMaxCol; ++nPos2) {
+          hb_gtPutChar(iRow, iCol + static_cast<int32_t>(nPos2), iColor, 0, pwText[nPos + nPos2]);
         }
         nLen += 2;
         if (lDelay) {
@@ -186,11 +186,11 @@ HB_FUNC(SAYMOVEIN)
       int32_t iColor = hb_gtGetCurrColor();
       int32_t iNewCol;
 
-      iNewCol = iCol + static_cast<int>(nLen);
+      iNewCol = iCol + static_cast<int32_t>(nLen);
       if (fBack) {
-        iCol += static_cast<int>(nLen) - 1;
+        iCol += static_cast<int32_t>(nLen) - 1;
       } else {
-        pwText += static_cast<int>(nLen) - 1;
+        pwText += static_cast<int32_t>(nLen) - 1;
       }
       nChars = 1;
 
@@ -201,17 +201,17 @@ HB_FUNC(SAYMOVEIN)
         if (fBack) {
           if (iCol <= iMaxCol) {
             for (nPos = 0; nPos < nChars; ++nPos) {
-              hb_gtPutChar(iRow, iCol + static_cast<int>(nPos), iColor, 0, pwText[nPos]);
+              hb_gtPutChar(iRow, iCol + static_cast<int32_t>(nPos), iColor, 0, pwText[nPos]);
             }
           }
           --iCol;
         } else {
           for (nPos = 0; nPos < nChars; ++nPos) {
-            hb_gtPutChar(iRow, iCol + static_cast<int>(nPos), iColor, 0, pwText[nPos]);
+            hb_gtPutChar(iRow, iCol + static_cast<int32_t>(nPos), iColor, 0, pwText[nPos]);
           }
           --pwText;
         }
-        if (static_cast<int>(nChars) + iCol <= iMaxCol) {
+        if (static_cast<int32_t>(nChars) + iCol <= iMaxCol) {
           ++nChars;
         }
 

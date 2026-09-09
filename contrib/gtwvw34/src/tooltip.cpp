@@ -173,7 +173,7 @@ HB_FUNC(WVW_SETTOOLTIPWIDTH)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    hb_retni(static_cast<int>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
+    hb_retni(static_cast<int32_t>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
 
     if (HB_ISNUM(2)) {
       SendMessage(wvw_win->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(hb_parni(2)));
@@ -247,7 +247,7 @@ HB_FUNC(WVW_GETTOOLTIPWIDTH)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    hb_retni(static_cast<int>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
+    hb_retni(static_cast<int32_t>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
     return;
   }
 #endif

@@ -640,7 +640,7 @@ HB_FUNC(FI_GETFILETYPE)
   if (HB_ISCHAR(1))
   {
     auto filename = hb_parc(1);
-    auto size = static_cast<int>(hb_parclen(1));
+    auto size = static_cast<int32_t>(hb_parclen(1));
 
     hb_retni(FreeImage_GetFileType(filename, size));
   }
@@ -659,7 +659,7 @@ HB_FUNC(FI_GETFILETYPEFROMMEMORY)
   if (HB_ISCHAR(1))
   {
     FIMEMORY *stream =
-        FreeImage_OpenMemory(reinterpret_cast<BYTE *>(const_cast<char *>(hb_parc(1))), static_cast<int>(hb_parclen(1)));
+        FreeImage_OpenMemory(reinterpret_cast<BYTE *>(const_cast<char *>(hb_parc(1))), static_cast<int32_t>(hb_parclen(1)));
     auto size = hb_parni(1);
 
     hb_retni(FreeImage_GetFileTypeFromMemory(stream, size));

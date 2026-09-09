@@ -91,7 +91,7 @@ static int32_t ct_doy(long lDate)
 
   hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
   lFirst = hb_dateEncode(iYear, 1, 1);
-  return static_cast<int>(lDate - lFirst + 1);
+  return static_cast<int32_t>(lDate - lFirst + 1);
 }
 
 HB_FUNC(CTODOW)
@@ -150,7 +150,7 @@ HB_FUNC(DMY)
 
   if (iMonth >= 1 && iMonth <= 12) {
     const char *szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
-    auto iMonLen = static_cast<int>(strlen(szMonth));
+    auto iMonLen = static_cast<int32_t>(strlen(szMonth));
     int32_t iLen = 0, iBufLen = iMonLen + 10;
     auto szMDY = static_cast<char *>(hb_xgrab(iBufLen));
 
@@ -201,7 +201,7 @@ HB_FUNC(MDY)
 
   if (iMonth >= 1 && iMonth <= 12) {
     const char *szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
-    auto iLen = static_cast<int>(strlen(szMonth));
+    auto iLen = static_cast<int32_t>(strlen(szMonth));
     int32_t iBufLen = iLen + 9;
     auto szMDY = static_cast<char *>(hb_xgrab(iBufLen));
 

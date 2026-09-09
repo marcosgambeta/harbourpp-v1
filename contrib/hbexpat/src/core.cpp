@@ -890,7 +890,7 @@ HB_FUNC(XML_PARSE)
 
    if( hb_expat )
    {
-      hb_retni(XML_Parse(hb_expat->parser, hb_parcx(2), static_cast<int>(hb_parclen(2)), static_cast<int>(hb_parl(3))));
+      hb_retni(XML_Parse(hb_expat->parser, hb_parcx(2), static_cast<int32_t>(hb_parclen(2)), static_cast<int32_t>(hb_parl(3))));
    }
    else
    {
@@ -904,7 +904,7 @@ HB_FUNC(XML_GETERRORCODE)
 
    if( hb_expat )
    {
-      hb_retni(static_cast<int>(XML_GetErrorCode(hb_expat->parser)));
+      hb_retni(static_cast<int32_t>(XML_GetErrorCode(hb_expat->parser)));
    }
    else
    {
@@ -981,7 +981,7 @@ HB_FUNC(XML_SETBASE)
    {
       void * hBase;
 
-      hb_retni(static_cast<int>(XML_SetBase(hb_expat->parser, hb_parstr_utf8(1, &hBase, nullptr))));
+      hb_retni(static_cast<int32_t>(XML_SetBase(hb_expat->parser, hb_parstr_utf8(1, &hBase, nullptr))));
 
       hb_strfree(hBase);
    }
@@ -1041,7 +1041,7 @@ HB_FUNC(XML_SETENCODING)
    {
       void * hEncoding;
 
-      hb_retni(static_cast<int>(XML_SetEncoding(hb_expat->parser, hb_parstr_utf8(1, &hEncoding, nullptr))));
+      hb_retni(static_cast<int32_t>(XML_SetEncoding(hb_expat->parser, hb_parstr_utf8(1, &hEncoding, nullptr))));
 
       hb_strfree(hEncoding);
    }
@@ -1071,7 +1071,7 @@ HB_FUNC(XML_USEFOREIGNDTD)
 
    if( hb_expat )
    {
-      hb_retni(static_cast<int>(XML_UseForeignDTD(hb_expat->parser, static_cast<XML_Bool>(hb_parl(2)))));
+      hb_retni(static_cast<int32_t>(XML_UseForeignDTD(hb_expat->parser, static_cast<XML_Bool>(hb_parl(2)))));
    }
    else
    {
@@ -1118,7 +1118,7 @@ HB_FUNC(XML_STOPPARSER)
    if( hb_expat )
    {
 #if HB_EXPAT_VERS(1, 95, 8)
-      hb_retni(static_cast<int>(XML_StopParser(hb_expat->parser, static_cast<XML_Bool>(hb_parl(2)))));
+      hb_retni(static_cast<int32_t>(XML_StopParser(hb_expat->parser, static_cast<XML_Bool>(hb_parl(2)))));
 #else
       hb_retni(HB_XML_ERROR_NOT_IMPLEMENTED_);
 #endif
@@ -1136,7 +1136,7 @@ HB_FUNC(XML_RESUMEPARSER)
    if( hb_expat )
    {
 #if HB_EXPAT_VERS(1, 95, 8)
-      hb_retni(static_cast<int>(XML_ResumeParser(hb_expat->parser)));
+      hb_retni(static_cast<int32_t>(XML_ResumeParser(hb_expat->parser)));
 #else
       hb_retni(HB_XML_ERROR_NOT_IMPLEMENTED_);
 #endif
@@ -1158,7 +1158,7 @@ HB_FUNC(XML_GETPARSINGSTATUS)
 
       XML_GetParsingStatus(hb_expat->parser, &status);
 
-      hb_storni(static_cast<int>(status.parsing), 2);
+      hb_storni(static_cast<int32_t>(status.parsing), 2);
       hb_storl(static_cast<HB_BOOL>(status.finalBuffer), 3);
 #else
       hb_storni(-1, 2);

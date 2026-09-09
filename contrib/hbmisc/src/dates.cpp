@@ -95,7 +95,7 @@ static int hb_doy( int iYear, int iMonth, int iDay )
 static int hb_woy( long lDate, HB_BOOL fISO )
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_woy(%ld, %d)", lDate, static_cast<int>(fISO)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_woy(%ld, %d)", lDate, static_cast<int32_t>(fISO)));
 #endif
 
    int iYear, iMonth, iDay;

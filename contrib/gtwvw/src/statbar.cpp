@@ -308,7 +308,7 @@ HB_FUNC(WVW_SBGETPARTS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto numOfParts = static_cast<int>(SendMessage(pWindowData->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0));
+  auto numOfParts = static_cast<int32_t>(SendMessage(pWindowData->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0));
 
   hb_retni(numOfParts);
 }
@@ -415,7 +415,7 @@ HB_FUNC(WVW_XBCREATE)
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
-  auto iStyle = static_cast<int>(!HB_ISNUM(2) ? -1 : hb_parni(2));
+  auto iStyle = static_cast<int32_t>(!HB_ISNUM(2) ? -1 : hb_parni(2));
   UINT uiXBid;
   auto usTop = static_cast<uint16_t>(hb_parni(3));
   auto usLeft = static_cast<uint16_t>(hb_parni(4));
@@ -568,10 +568,10 @@ HB_FUNC(WVW_XBUPDATE)
   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
   byte bStyle;
   auto hWndXB = FindControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle);
-  auto iPos = static_cast<int>(HB_ISNIL(3) ? 0 : hb_parni(3));  // TODO: use hb_parnidef
-  auto iPage = static_cast<int>(HB_ISNIL(4) ? 0 : hb_parni(4)); // TODO: use hb_parnidef
-  auto iMin = static_cast<int>(HB_ISNIL(5) ? 0 : hb_parni(5));  // TODO: use hb_parnidef
-  auto iMax = static_cast<int>(HB_ISNIL(6) ? 0 : hb_parni(6));  // TODO: use hb_parnidef
+  auto iPos = static_cast<int32_t>(HB_ISNIL(3) ? 0 : hb_parni(3));  // TODO: use hb_parnidef
+  auto iPage = static_cast<int32_t>(HB_ISNIL(4) ? 0 : hb_parni(4)); // TODO: use hb_parnidef
+  auto iMin = static_cast<int32_t>(HB_ISNIL(5) ? 0 : hb_parni(5));  // TODO: use hb_parnidef
+  auto iMax = static_cast<int32_t>(HB_ISNIL(6) ? 0 : hb_parni(6));  // TODO: use hb_parnidef
   SCROLLINFO si;
   int32_t iRetval;
   UINT fMask = SIF_DISABLENOSCROLL;

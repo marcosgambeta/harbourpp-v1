@@ -408,7 +408,7 @@ static void winup( PFT_DISPC dispc )
       }
 
       dispc->buffoffset = getblock(dispc, j);
-      dispc->wintop     = static_cast<int>(i - dispc->buffoffset);
+      dispc->wintop     = static_cast<int32_t>(i - dispc->buffoffset);
 
       buff_align(dispc);
       win_align(dispc);
@@ -465,7 +465,7 @@ static void windown( PFT_DISPC dispc )
       }
       else
       {
-         dispc->wintop = static_cast<int>(i - dispc->buffoffset);
+         dispc->wintop = static_cast<int32_t>(i - dispc->buffoffset);
       }
 
       buff_align(dispc);
@@ -513,7 +513,7 @@ static void filetop( PFT_DISPC dispc )
    }
 
    dispc->bRefresh = true;
-   dispc->wintop   = static_cast<int>(dispc->buffoffset);
+   dispc->wintop   = static_cast<int32_t>(dispc->buffoffset);
    dispc->winrow   = dispc->sline;
    dispc->wincol   = 0;
 
@@ -532,7 +532,7 @@ static void filebot( PFT_DISPC dispc )
    }
 
    dispc->bRefresh = true;
-   dispc->wintop   = static_cast<int>(dispc->buffbot) - 3;
+   dispc->wintop   = static_cast<int32_t>(dispc->buffbot) - 3;
    dispc->winrow   = dispc->eline;
    dispc->wincol   = 0;
 
@@ -560,7 +560,7 @@ HB_FUNC(_FT_DFINIT)
 
    hb_gtRectSize(0, 0, 0, 0, &nSize);
 
-   dispc->iCellSize = static_cast<int>(nSize);
+   dispc->iCellSize = static_cast<int32_t>(nSize);
 
    hb_gtRectSize(dispc->sline, dispc->scol, dispc->eline, dispc->ecol, &nSize);
    dispc->vseg = static_cast<uint8_t *>(hb_xalloc(nSize));
@@ -652,7 +652,7 @@ HB_FUNC(_FT_DFINIT)
 
       if( dispc->fsize < dispc->buffbot )
       {
-         dispc->buffbot = static_cast<int>(dispc->fsize);           /* then set buffer bottom */
+         dispc->buffbot = static_cast<int32_t>(dispc->fsize);           /* then set buffer bottom */
       }
 
       /* set the current lines buffer offset pointer */

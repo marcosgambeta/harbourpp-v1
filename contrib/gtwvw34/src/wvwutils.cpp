@@ -265,7 +265,7 @@ HB_FUNC(WVW_CREATEIMAGELIST)
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
   if (pArray) {
-    auto ulLen = static_cast<int>(hb_arrayLen(pArray));
+    auto ulLen = static_cast<int32_t>(hb_arrayLen(pArray));
 
     HIMAGELIST himl =
         ImageList_Create(hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parnidef(5, ILC_COLOR)), ulLen, hb_parni(4));
@@ -545,7 +545,7 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
       tbab.hInst = nullptr;
       tbab.nID = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HBITMAP(3));
 
-      hb_retni(static_cast<int>(
+      hb_retni(static_cast<int32_t>(
           SendMessage(wvw_win->hToolBar, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<WPARAM>(&tbab))));
     } else { /* system bitmap */
       int32_t iOffset;
@@ -816,7 +816,7 @@ HB_FUNC(WVW_LOADPICTURE)
 
   auto fResult = false;
 
-  if (wvw && pPicture && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
+  if (wvw && pPicture && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.pPicture))) {
     if (wvw->a.pPicture[iSlot]) {
       hb_gt_wvw_DestroyPicture(wvw->a.pPicture[iSlot]);
     }
@@ -840,7 +840,7 @@ HB_FUNC(WVW_LOADFONT)
 
   int32_t iSlot = hb_parni(1) - 1;
 
-  if (wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts))) {
+  if (wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserFonts))) {
     LOGFONT lf;
 
     lf.lfEscapement = hb_parnl(11) * 10;
@@ -889,7 +889,7 @@ HB_FUNC(WVW_LOADPEN)
 
   int32_t iSlot = hb_parni(1) - 1;
 
-  if (wvw && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
+  if (wvw && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
     auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
 
     if (hPen) {
@@ -1157,13 +1157,13 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
     int32_t iIndex;
 
     /* check if we still have room for a new dialog */
-    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)); iIndex++) {
+    for (iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)); iIndex++) {
       if (wvw->a.hDlgModeless[iIndex] == nullptr) {
         break;
       }
     }
 
-    if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless))) {
+    if (iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hDlgModeless))) {
       auto pFirst = hb_param(3, Harbour::Item::ANY);
       HB_ITEM *pFunc = nullptr;
       HWND hDlg = nullptr;
@@ -1242,13 +1242,13 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
     int32_t iIndex;
 
     /* check if we still have room for a new dialog */
-    for (iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)); iIndex++) {
+    for (iIndex = 0; iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hDlgModal)); iIndex++) {
       if (wvw->a.hDlgModal[iIndex] == nullptr) {
         break;
       }
     }
 
-    if (iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal))) {
+    if (iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hDlgModal))) {
       auto pFirst = hb_param(3, Harbour::Item::ANY);
       auto iResource = hb_parni(4);
       INT_PTR iResult = 0;

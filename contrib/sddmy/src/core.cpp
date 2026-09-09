@@ -495,10 +495,10 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, uint16_t uiIndex, HB_ITEM *p
     hb_strncpy(szBuffer, pValue, sizeof(szBuffer) - 1);
 
     if (pField->uiDec) {
-      hb_itemPutNDLen(pItem, atof(szBuffer), static_cast<int>(pField->uiLen) - (static_cast<int>(pField->uiDec) + 1),
-                      static_cast<int>(pField->uiDec));
+      hb_itemPutNDLen(pItem, atof(szBuffer), static_cast<int32_t>(pField->uiLen) - (static_cast<int32_t>(pField->uiDec) + 1),
+                      static_cast<int32_t>(pField->uiDec));
     } else {
-      hb_itemPutNLLen(pItem, atol(szBuffer), static_cast<int>(pField->uiLen));
+      hb_itemPutNLLen(pItem, atol(szBuffer), static_cast<int32_t>(pField->uiLen));
     }
     break;
 

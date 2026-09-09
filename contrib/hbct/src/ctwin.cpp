@@ -251,7 +251,7 @@ static void hb_ctw_TouchLines(PHB_GTCTW pCTW, int32_t iFrom, int32_t iTo)
 static void hb_ctw_WindowMap(PHB_GTCTW pCTW, int32_t iWindow, HB_BOOL fExpose)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_WindowMap(%p,%d,%d)", static_cast<void*>(pCTW), iWindow, static_cast<int>(fExpose)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_WindowMap(%p,%d,%d)", static_cast<void*>(pCTW), iWindow, static_cast<int32_t>(fExpose)));
 #endif
 
   PHB_CT_WND pWnd;
@@ -281,7 +281,7 @@ static void hb_ctw_WindowMap(PHB_GTCTW pCTW, int32_t iWindow, HB_BOOL fExpose)
 static void hb_ctw_RemapAllWindows(PHB_GTCTW pCTW, int32_t iFrom, HB_BOOL fExpose)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_RemapAllWindows(%p,%d,%d)", static_cast<void*>(pCTW), iFrom, static_cast<int>(fExpose)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_RemapAllWindows(%p,%d,%d)", static_cast<void*>(pCTW), iFrom, static_cast<int32_t>(fExpose)));
 #endif
 
   if (pCTW->iMaxWindow) {
@@ -648,7 +648,7 @@ static int32_t hb_ctw_CreateWindow(PHB_GTCTW pCTW, int32_t iTop, int32_t iLeft, 
                                HB_BOOL fVisible)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_CreateWindow(%p,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pCTW), iTop, iLeft, iBottom, iRight, static_cast<int>(fClear), iColor, static_cast<int>(fVisible)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_CreateWindow(%p,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pCTW), iTop, iLeft, iBottom, iRight, static_cast<int32_t>(fClear), iColor, static_cast<int32_t>(fVisible)));
 #endif
 
   uint8_t bAttr;
@@ -867,7 +867,7 @@ static int32_t hb_ctw_CloseAllWindows(PHB_GTCTW pCTW)
 static int32_t hb_ctw_CenterWindow(PHB_GTCTW pCTW, int32_t iWindow, HB_BOOL fCenter)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_CenterWindow(%p,%d,%d)", static_cast<void*>(pCTW), iWindow, static_cast<int>(fCenter)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_CenterWindow(%p,%d,%d)", static_cast<void*>(pCTW), iWindow, static_cast<int32_t>(fCenter)));
 #endif
 
   if (iWindow > 0 && iWindow <= pCTW->iOpenWindows) {
@@ -1021,7 +1021,7 @@ static int32_t hb_ctw_GetWindowCords(PHB_GTCTW pCTW, int32_t iWindow, HB_BOOL fC
                                  int32_t *piRight)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_GetWindowCords(%p,%d,%d,%p,%p,%p,%p)", static_cast<void*>(pCTW), iWindow, static_cast<int>(fCenter), static_cast<void*>(piTop), static_cast<void*>(piLeft), static_cast<void*>(piBottom), static_cast<void*>(piRight)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_GetWindowCords(%p,%d,%d,%p,%p,%p,%p)", static_cast<void*>(pCTW), iWindow, static_cast<int32_t>(fCenter), static_cast<void*>(piTop), static_cast<void*>(piLeft), static_cast<void*>(piBottom), static_cast<void*>(piRight)));
 #endif
 
   if (iWindow > 0 && iWindow <= pCTW->iOpenWindows) {
@@ -1062,7 +1062,7 @@ static int32_t hb_ctw_GetFormatCords(PHB_GTCTW pCTW, int32_t iWindow, HB_BOOL fR
                                  int32_t *piRight)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_GetFormatCords(%p,%d,%d,%p,%p,%p,%p)", static_cast<void*>(pCTW), iWindow, static_cast<int>(fRelative), static_cast<void*>(piTop), static_cast<void*>(piLeft), static_cast<void*>(piBottom), static_cast<void*>(piRight)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_GetFormatCords(%p,%d,%d,%p,%p,%p,%p)", static_cast<void*>(pCTW), iWindow, static_cast<int32_t>(fRelative), static_cast<void*>(piTop), static_cast<void*>(piLeft), static_cast<void*>(piBottom), static_cast<void*>(piRight)));
 #endif
 
   if (iWindow > 0 && iWindow <= pCTW->iOpenWindows) {
@@ -1925,7 +1925,7 @@ static HB_BOOL hb_ctw_gt_GetChar(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t
 static HB_BOOL hb_ctw_gt_PutChar(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iColor, uint8_t bAttr, uint16_t usChar)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iColor, static_cast<int>(bAttr), static_cast<int>(usChar)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iColor, static_cast<int32_t>(bAttr), static_cast<int32_t>(usChar)));
 #endif
 
   PHB_GTCTW pCTW;
@@ -2093,7 +2093,7 @@ static int32_t hb_ctw_gt_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
 
   int32_t iOptions;
 
-  if (pMessage && pMessage->isString() && pOptions && (iOptions = static_cast<int>(hb_arrayLen(pOptions))) > 0) {
+  if (pMessage && pMessage->isString() && pOptions && (iOptions = static_cast<int32_t>(hb_arrayLen(pOptions))) > 0) {
     int32_t iRows, iCols;
     HB_BOOL fScreen;
 
@@ -2214,7 +2214,7 @@ static int32_t hb_ctw_gt_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
           szOptW = hb_arrayGetStrU16(pOptions, i, HB_CDP_ENDIAN_NATIVE, &hOpt, &nLen);
           HB_GTSELF_PUTTEXTW(pGT, iLines + 1, iMnuCol, iClr, szOptW, nLen);
           hb_strfree(hOpt);
-          iMnuCol += static_cast<int>(nLen) + 3;
+          iMnuCol += static_cast<int32_t>(nLen) + 3;
         }
         while (HB_GTSELF_DISPCOUNT(pGT)) {
           HB_GTSELF_DISPEND(pGT);
@@ -2246,11 +2246,11 @@ static int32_t hb_ctw_gt_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
             iMnuCol = ((ulWidth - ulCurrWidth) >> 1) + 1;
             for (i = 1; i <= iOptions; ++i) {
               nLen = hb_itemCopyStrU16(hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0);
-              if (iMCol >= iMnuCol && iMCol < iMnuCol + static_cast<int>(nLen)) {
+              if (iMCol >= iMnuCol && iMCol < iMnuCol + static_cast<int32_t>(nLen)) {
                 iRet = i;
                 break;
               }
-              iMnuCol += static_cast<int>(nLen) + 3;
+              iMnuCol += static_cast<int32_t>(nLen) + 3;
             }
           }
         }

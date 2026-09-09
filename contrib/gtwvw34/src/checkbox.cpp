@@ -261,7 +261,7 @@ HB_FUNC(WVW_CXGETCHECK)
   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
   if (wvw_ctl && wvw_ctl->hWnd) {
-    hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
+    hb_retni(static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
   } else {
     hb_retni(0);
   }

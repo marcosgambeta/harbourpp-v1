@@ -108,9 +108,9 @@ HB_FUNC(EXPONENT)
   xConvert.value = hb_parnd(1);
 
   if (xConvert.value != 0) {
-    iExponent = static_cast<int>(xConvert.string[7] & 0x07F);
+    iExponent = static_cast<int32_t>(xConvert.string[7] & 0x07F);
     iExponent = iExponent << 4;
-    iExponent += static_cast<int>((xConvert.string[6] & 0xF0) >> 4);
+    iExponent += static_cast<int32_t>((xConvert.string[6] & 0xF0) >> 4);
     iExponent -= 1023;
   }
 

@@ -94,7 +94,7 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc(HWND hWnd, UINT message, WPARAM wParam,
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     bool bShift = GetKeyState(VK_SHIFT) & 0x8000;
 
-    if (!hb_gt_wvw_BufferedKey(static_cast<int>(wParam))) {
+    if (!hb_gt_wvw_BufferedKey(static_cast<int32_t>(wParam))) {
       break;
     }
 
@@ -274,7 +274,7 @@ HB_FUNC(WVW_CBCREATE)
     int32_t iBottom = iTop;
     int32_t iRight = iLeft + iWidth - 1;
 
-    int32_t iNumElement = HB_ISARRAY(5) ? static_cast<int>(hb_arrayLen(hb_param(5, Harbour::Item::ARRAY))) : 0;
+    int32_t iNumElement = HB_ISARRAY(5) ? static_cast<int32_t>(hb_arrayLen(hb_param(5, Harbour::Item::ARRAY))) : 0;
 
     if (wvw_win->hCBfont == nullptr) {
       wvw_win->hCBfont = CreateFontIndirect(&wvw->lfCB);
@@ -593,7 +593,7 @@ NOTE: the better name to this function should be WVW_CBgetCurSel()
 HB_FUNC(WVW_CBGETINDEX)
 {
   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
-  hb_retni(wvw_ctl ? static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0)) : CB_ERR);
+  hb_retni(wvw_ctl ? static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0)) : CB_ERR);
 }
 
 /*
@@ -609,7 +609,7 @@ HB_FUNC(WVW_CBFINDSTRING)
 
   if (wvw_ctl) {
     void *hStr;
-    hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_FINDSTRING, static_cast<WPARAM>(-1),
+    hb_retni(static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, CB_FINDSTRING, static_cast<WPARAM>(-1),
                                           reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hStr, nullptr)))));
     hb_strfree(hStr);
   } else {
@@ -627,7 +627,7 @@ HB_FUNC(WVW_CBGETCURTEXT)
   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
 
   if (wvw_ctl) {
-    auto iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
+    auto iCurSel = static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
     auto nTextLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, CB_GETLBTEXTLEN, static_cast<WPARAM>(iCurSel), 0));
     if (nTextLen == static_cast<HB_SIZE>(CB_ERR)) {
       hb_retc_null();

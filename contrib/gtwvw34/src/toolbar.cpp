@@ -104,14 +104,14 @@ static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char *szBitmap, uint32
 
     tbab.hInst = nullptr;
     tbab.nID = reinterpret_cast<UINT_PTR>(hBitmap);
-    iNewBitmap = static_cast<int>(SendMessage(hWndToolbar, TB_ADDBITMAP, 1, reinterpret_cast<WPARAM>(&tbab)));
+    iNewBitmap = static_cast<int32_t>(SendMessage(hWndToolbar, TB_ADDBITMAP, 1, reinterpret_cast<WPARAM>(&tbab)));
   } else { /* system bitmap */
-    iNewBitmap = static_cast<int>(uiBitmap) + iOffset;
+    iNewBitmap = static_cast<int32_t>(uiBitmap) + iOffset;
   }
 
   HB_STRNCPY(szBuffer, pszLabel, HB_SIZEOFARRAY(szBuffer) - 1);
 
-  auto iNewString = static_cast<int>(SendMessage(hWndToolbar, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szBuffer)));
+  auto iNewString = static_cast<int32_t>(SendMessage(hWndToolbar, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szBuffer)));
 
   tbb.iBitmap = iNewBitmap;
   tbb.idCommand = iCommand;
@@ -141,7 +141,7 @@ static int32_t hb_gt_wvw_IndexToCommand(HWND hWndTB, int32_t iIndex)
 
 static int32_t hb_gt_wvw_CommandToIndex(HWND hWndTB, int32_t iCommand)
 {
-  return static_cast<int>(SendMessage(hWndTB, TB_COMMANDTOINDEX, static_cast<WPARAM>(iCommand), 0));
+  return static_cast<int32_t>(SendMessage(hWndTB, TB_COMMANDTOINDEX, static_cast<WPARAM>(iCommand), 0));
 }
 
 static void hb_gt_wvw_TBinitSize(PWVW_WIN wvw_win, HWND hWndTB)
@@ -219,7 +219,7 @@ static void hb_gt_wvw_TBMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WP
   case WM_RBUTTONUP:
     if (wvw_win->hPopup) {
       GetCursorPos(&xy);
-      auto nPopupRet = static_cast<int>(
+      auto nPopupRet = static_cast<int32_t>(
           TrackPopupMenu(wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr));
       if (nPopupRet) {
         hb_gt_wvw_AddCharToInputQueue(nPopupRet);
@@ -427,13 +427,13 @@ HB_FUNC(WVW_TBCREATE)
         tbab.hInst = HINST_COMMCTRL;
         tbab.nID = iSystemBitmap == 1 ? IDB_STD_SMALL_COLOR : IDB_STD_LARGE_COLOR;
         wvw_win->iStartStdBitmap =
-            static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
+            static_cast<int32_t>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
         tbab.nID = iSystemBitmap == 1 ? IDB_VIEW_SMALL_COLOR : IDB_VIEW_LARGE_COLOR;
         wvw_win->iStartViewBitmap =
-            static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
+            static_cast<int32_t>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
         tbab.nID = iSystemBitmap == 1 ? IDB_HIST_SMALL_COLOR : IDB_HIST_LARGE_COLOR;
         wvw_win->iStartHistBitmap =
-            static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
+            static_cast<int32_t>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
       } else {
         wvw_win->iStartStdBitmap = 0;
         wvw_win->iStartViewBitmap = 0;
@@ -569,7 +569,7 @@ HB_FUNC(WVW_TBBUTTONCOUNT)
 
   if (wvw_win) {
     HWND hWnd = wvw_win->hToolBar;
-    hb_retni(hWnd ? static_cast<int>(SendMessage(hWnd, TB_BUTTONCOUNT, 0, 0)) : 0);
+    hb_retni(hWnd ? static_cast<int32_t>(SendMessage(hWnd, TB_BUTTONCOUNT, 0, 0)) : 0);
   }
 }
 
@@ -730,7 +730,7 @@ HB_FUNC(WVW_TOOLBARADDBUTTONS)
 
   if (wvw_win && HB_ISARRAY(3)) {
     auto pArray = hb_param(3, Harbour::Item::ARRAY);
-    auto iButtons = static_cast<int>(hb_arrayLen(pArray));
+    auto iButtons = static_cast<int32_t>(hb_arrayLen(pArray));
 
     if (iButtons > 0) {
       HWND hWndCtrl = hbwapi_par_raw_HWND(2);

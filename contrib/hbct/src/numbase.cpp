@@ -124,7 +124,7 @@ HB_FUNC(NTOC)
   auto iBase = hb_parnidef(2, 10);
   auto iLen = hb_parni(3);
 
-  if (iLen < 0 || iLen > static_cast<int>(sizeof(szBuffer))) {
+  if (iLen < 0 || iLen > static_cast<int32_t>(sizeof(szBuffer))) {
     iLen = sizeof(szBuffer);
   }
 
@@ -132,7 +132,7 @@ HB_FUNC(NTOC)
     auto uValue = static_cast<HB_MAXUINT>(nValue);
     int32_t i;
 
-    i = iLen == 0 ? static_cast<int>(sizeof(szBuffer)) : iLen;
+    i = iLen == 0 ? static_cast<int32_t>(sizeof(szBuffer)) : iLen;
     do {
       if (--i < 0) {
         break;

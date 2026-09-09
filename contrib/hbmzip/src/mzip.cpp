@@ -189,7 +189,7 @@ static PHB_FILE hb_fileHandleParam(int iParam, bool * pfFree)
 
 static HB_FATTR hb_translateExtAttr(const char * szFileName, HB_FATTR ulExtAttr)
 {
-   auto iLen = static_cast<int>(strlen(szFileName));
+   auto iLen = static_cast<int32_t>(strlen(szFileName));
    if( (iLen > 4 && (hb_stricmp(szFileName + iLen - 4, ".exe") == 0 ||
                      hb_stricmp(szFileName + iLen - 4, ".com") == 0 ||
                      hb_stricmp(szFileName + iLen - 4, ".bat") == 0 ||

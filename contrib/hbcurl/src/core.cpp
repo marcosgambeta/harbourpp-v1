@@ -379,7 +379,7 @@ static void *hb_curl_calloc(size_t nelem, size_t elsize)
 
 static void hb_curl_retcode(CURLcode code)
 {
-  hb_retni(static_cast<int>(code));
+  hb_retni(static_cast<int32_t>(code));
 }
 
 HB_FUNC(CURL_GLOBAL_INIT)
@@ -2642,7 +2642,7 @@ HB_FUNC(CURL_EASY_ESCAPE)
 
     if (hb_curl != nullptr)
     {
-      char *buffer = curl_easy_escape(hb_curl->curl, hb_parcx(2), static_cast<int>(hb_parclen(2)));
+      char *buffer = curl_easy_escape(hb_curl->curl, hb_parcx(2), static_cast<int32_t>(hb_parclen(2)));
       hb_retc(buffer);
       curl_free(buffer);
     }
@@ -2666,7 +2666,7 @@ HB_FUNC(CURL_EASY_UNESCAPE)
     if (hb_curl != nullptr)
     {
       int nLen = 0;
-      char *buffer = curl_easy_unescape(hb_curl->curl, hb_parcx(2), static_cast<int>(hb_parclen(2)), &nLen);
+      char *buffer = curl_easy_unescape(hb_curl->curl, hb_parcx(2), static_cast<int32_t>(hb_parclen(2)), &nLen);
       hb_retclen(buffer, nLen);
       curl_free(buffer);
     }
@@ -3083,7 +3083,7 @@ HB_FUNC(CURL_ESCAPE)
 {
   if (HB_ISCHAR(1))
   {
-    char *buffer = curl_escape(hb_parc(1), static_cast<int>(hb_parclen(1)));
+    char *buffer = curl_escape(hb_parc(1), static_cast<int32_t>(hb_parclen(1)));
     hb_retc(buffer);
     curl_free(buffer);
   }
@@ -3098,7 +3098,7 @@ HB_FUNC(CURL_UNESCAPE)
 {
   if (HB_ISCHAR(1))
   {
-    char *buffer = curl_unescape(hb_parc(1), static_cast<int>(hb_parclen(1)));
+    char *buffer = curl_unescape(hb_parc(1), static_cast<int32_t>(hb_parclen(1)));
     hb_retc(buffer);
     curl_free(buffer);
   }

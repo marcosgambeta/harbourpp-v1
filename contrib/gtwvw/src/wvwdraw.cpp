@@ -1254,13 +1254,13 @@ HB_FUNC(WVW_DRAWIMAGE)
       /* right corner (width) must be proportional to height */
 
       iDispHeight = iBottom - iTop + 1;
-      iDispWidth = static_cast<int>(static_cast<float>(iImgWidth) / iImgHeight * iDispHeight);
+      iDispWidth = static_cast<int32_t>(static_cast<float>(iImgWidth) / iImgHeight * iDispHeight);
       iRight = iLeft + iDispWidth - 1;
     } else {
       /* bottom corner (height) must be proportional to width */
 
       iDispWidth = iRight - iLeft + 1;
-      iDispHeight = static_cast<int>(static_cast<float>(iImgHeight) / iImgWidth * iDispWidth);
+      iDispHeight = static_cast<int32_t>(static_cast<float>(iImgHeight) / iImgWidth * iDispWidth);
       iBottom = iTop + iDispHeight - 1;
     }
   }
@@ -1394,13 +1394,13 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
       /* right corner (width) must be proportional to height */
 
       iDispHeight = iBottom - iTop + 1;
-      iDispWidth = static_cast<int>(static_cast<float>(iImgWidth) / iImgHeight * iDispHeight);
+      iDispWidth = static_cast<int32_t>(static_cast<float>(iImgWidth) / iImgHeight * iDispHeight);
       iRight = iLeft + iDispWidth - 1;
     } else {
       /* bottom corner (height) must be proportional to width */
 
       iDispWidth = iRight - iLeft + 1;
-      iDispHeight = static_cast<int>(static_cast<float>(iImgHeight) / iImgWidth * iDispWidth);
+      iDispHeight = static_cast<int32_t>(static_cast<float>(iImgHeight) / iImgWidth * iDispWidth);
       iBottom = iTop + iDispHeight - 1;
     }
   }

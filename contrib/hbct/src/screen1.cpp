@@ -219,7 +219,7 @@ static int32_t hb_ctGetClearChar(int32_t iParam)
   } else if (HB_ISCHAR(iParam)) {
     iChar = static_cast<uint8_t>(hb_parc(iParam)[0]);
   } else {
-    iChar = static_cast<int>(hb_gtGetClearChar());
+    iChar = static_cast<int32_t>(hb_gtGetClearChar());
   }
 
   return iChar;
