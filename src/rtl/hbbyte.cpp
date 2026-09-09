@@ -64,7 +64,7 @@ HB_FUNC(HB_BYTESWAPI)
   HB_MAXINT lValue;
 
   if (hb_numParam(1, &lValue)) {
-    auto iVal = static_cast<HB_I16>(HB_SWAP_UINT16(lValue));
+    auto iVal = static_cast<int16_t>(HB_SWAP_UINT16(lValue));
     hb_retnint(iVal);
   }
 }

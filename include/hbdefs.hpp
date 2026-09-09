@@ -222,7 +222,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 
 /* Guaranteed 16-bit types */
 #if USHRT_MAX == 0xFFFF
-   typedef signed short int    HB_I16;
+   typedef signed short int    HB_I16; // NOTE: HB_I16 is deprecated in Harbour++ source code
    typedef unsigned short int  HB_U16; // NOTE: HB_U16 is deprecated in Harbour++ source code
    #define HB_I16_MIN          SHRT_MIN
    #define HB_I16_MAX          SHRT_MAX
@@ -237,7 +237,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 #     define INT16_MIN     SHRT_MIN
 #  endif
 #else
-   typedef short int           HB_I16;
+   typedef short int           HB_I16; // NOTE: HB_I16 is deprecated in Harbour++ source code
    typedef unsigned short int  HB_U16; // NOTE: HB_U16 is deprecated in Harbour++ source code
    #define HB_I16_MIN          SHRT_MIN
    #define HB_I16_MAX          SHRT_MAX
@@ -381,7 +381,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
        typedef uint16_t        UINT16;
    #endif
    #if !defined(INT16)
-       typedef HB_I16        INT16;
+       typedef int16_t        INT16;
    #endif
    #if !defined(UINT32)
        typedef uint32_t        UINT32;
@@ -695,7 +695,7 @@ typedef uint32_t HB_FATTR;
 #define HB_UHBYTE( w )          ( ( uint8_t ) ( ( ( w ) >> 24 ) & 0xFF ) )
 #define HB_LOWORD( l )          ( ( uint16_t ) ( l ) )
 #define HB_HIWORD( l )          ( ( uint16_t ) ( ( ( l ) >> 16 ) & 0xFFFF ) )
-#define HB_MKSHORT( lo, hi )    ( static_cast< HB_SHORT >( ( ( HB_I16 ) ( hi ) ) << 8 ) | ( lo ) )
+#define HB_MKSHORT( lo, hi )    ( static_cast< HB_SHORT >( ( ( int16_t ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKUSHORT( lo, hi )   ( static_cast< uint16_t >( ( ( uint16_t ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< HB_LONG > \
                                        ( ( ( ( int32_t ) ( b4 ) ) << 24 ) | \
@@ -1420,7 +1420,7 @@ typedef uint32_t HB_FATTR;
                                     } while( 0 )
 
 
-#define HB_GET_LE_INT16( p )        (( HB_I16 ) HB_GET_LE_UINT16( p ))
+#define HB_GET_LE_INT16( p )        (( int16_t ) HB_GET_LE_UINT16( p ))
 #define HB_GET_LE_INT32( p )        (( int32_t ) HB_GET_LE_UINT32( p ))
 #define HB_GET_LE_INT64( p )        (( HB_I64 ) HB_GET_LE_UINT64( p ))
 
