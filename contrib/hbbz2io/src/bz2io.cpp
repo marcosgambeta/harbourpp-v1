@@ -85,9 +85,9 @@ using HB_FILE = _HB_FILE;
 
 #define _PHB_FILE     pFile->pFile
 
-static PHB_FILE s_filebz2New(PHB_FILE pFile, int iMode, int iBlockSize);
+static PHB_FILE s_filebz2New(PHB_FILE pFile, int32_t iMode, int32_t iBlockSize);
 
-static void * s_filebz2Alloc(void * cargo, int nmemb, int size)
+static void * s_filebz2Alloc(void * cargo, int32_t nmemb, int32_t size)
 {
    HB_SYMBOL_UNUSED(cargo);
 
@@ -161,7 +161,7 @@ static void s_bz2_flush(PHB_FILE pFile, bool fClose)
    }
 }
 
-static const char * s_bz2io_name(const char * pszFileName, int * piBlockSize)
+static const char * s_bz2io_name(const char * pszFileName, int32_t * piBlockSize)
 {
    if( HB_TOUPPER(pszFileName[0]) == 'B' && HB_TOUPPER(pszFileName[1]) == 'Z' ) {
       if( pszFileName[2] == ':' ) {
@@ -375,12 +375,12 @@ static void s_fileClose(PHB_FILE pFile) // FileFunc
    hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType) // FileFunc
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType) // FileFunc
 {
    return _PHB_FILE->pFuncs->Lock(_PHB_FILE, nStart, nLen, iType);
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType) // FileFunc
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType) // FileFunc
 {
    return _PHB_FILE->pFuncs->LockTest(_PHB_FILE, nStart, nLen, iType);
 }
@@ -586,7 +586,7 @@ static void s_fileCommit(PHB_FILE pFile) // FileFunc
    }
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue) // FileFunc
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue) // FileFunc
 {
    switch( iIndex ) {
       case HB_VF_TIMEOUT:
@@ -675,7 +675,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
    s_fileHandle
 };
 
-static PHB_FILE s_filebz2New(PHB_FILE pFile, int iMode, int iBlockSize)
+static PHB_FILE s_filebz2New(PHB_FILE pFile, int32_t iMode, int32_t iBlockSize)
 {
    if( pFile ) {
       auto pFileBZ2 = static_cast<PHB_FILE>(hb_xgrabz(sizeof(HB_FILE)));

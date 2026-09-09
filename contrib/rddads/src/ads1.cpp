@@ -63,7 +63,7 @@
 
 #include <rddsys.ch>
 
-static int s_iSetListenerHandle = 0;
+static int32_t s_iSetListenerHandle = 0;
 
 static uint16_t s_uiRddCount = 0;
 static uint16_t s_uiRddIdADS = static_cast<uint16_t>(-1);
@@ -281,7 +281,7 @@ static bool adsIndexKeyCmp(ADSHANDLE hIndex, UNSIGNED8 *pszKey, UNSIGNED16 u16Ke
   return false;
 }
 
-static int adsGetRddType(uint16_t uiRddID)
+static int32_t adsGetRddType(uint16_t uiRddID)
 {
   if (uiRddID == s_uiRddIdADSCDX) {
     return ADS_CDX;
@@ -316,19 +316,19 @@ static int adsGetRddType(uint16_t uiRddID)
   }
 }
 
-static int adsGetFileType(uint16_t uiRddID)
+static int32_t adsGetFileType(uint16_t uiRddID)
 {
   int iType = adsGetRddType(uiRddID);
 
   return iType > 0 ? iType : hb_ads_iFileType;
 }
 
-static const char *adsTableExt(int iFileType)
+static const char *adsTableExt(int32_t iFileType)
 {
   return iFileType == ADS_ADT ? ".adt" : ".dbf";
 }
 
-static const char *adsMemoExt(int iFileType)
+static const char *adsMemoExt(int32_t iFileType)
 {
   switch (iFileType) {
   case ADS_ADT:
@@ -340,7 +340,7 @@ static const char *adsMemoExt(int iFileType)
   return ".fpt";
 }
 
-static const char *adsIndexExt(int iFileType)
+static const char *adsIndexExt(int32_t iFileType)
 {
   switch (iFileType) {
   case ADS_ADT:
@@ -352,7 +352,7 @@ static const char *adsIndexExt(int iFileType)
   return ".cdx";
 }
 
-static int adsIndexPageSize(int iFileType)
+static int32_t adsIndexPageSize(int32_t iFileType)
 {
   switch (iFileType) {
 #if ADS_LIB_VERSION >= 900
@@ -459,7 +459,7 @@ static HB_ERRCODE hb_adsCheckLock(ADSAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-static void adsGetKeyItem(ADSAREAP pArea, HB_ITEM *pItem, int iKeyType, char *pKeyBuf, int iKeyLen)
+static void adsGetKeyItem(ADSAREAP pArea, HB_ITEM *pItem, int32_t iKeyType, char *pKeyBuf, int32_t iKeyLen)
 {
   double dValue;
 

@@ -274,7 +274,7 @@ static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
    hb_sockexFlush(pFile->sock, pFile->timeout, false);
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, HB_ITEM *pValue )
+static HB_BOOL s_fileConfigure( PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue )
 {
    switch( iIndex )
    {

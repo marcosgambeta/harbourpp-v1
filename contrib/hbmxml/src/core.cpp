@@ -177,14 +177,14 @@ static const HB_GC_FUNCS s_gc_mxml_nodeFuncs =
    hb_gcDummyMark
 };
 
-static mxml_node_t * mxml_node_param(int iParam)
+static mxml_node_t * mxml_node_param(int32_t iParam)
 {
    auto pHbnode = static_cast<HBMXML_NODE*>(hb_parptrGC(&s_gc_mxml_nodeFuncs, iParam));
 
    return (pHbnode && pHbnode->node) ? pHbnode->node : nullptr;
 }
 
-static HBMXML_NODE * mxml_node_new(mxml_node_t * node, int iNew)
+static HBMXML_NODE * mxml_node_new(mxml_node_t * node, int32_t iNew)
 {
    auto pHbnode = static_cast<HBMXML_NODE*>(hb_gcAllocate(sizeof(HBMXML_NODE), &s_gc_mxml_nodeFuncs));
 
@@ -197,12 +197,12 @@ static HBMXML_NODE * mxml_node_new(mxml_node_t * node, int iNew)
    return pHbnode;
 }
 
-static void mxml_node_push(mxml_node_t * node, int iNew)
+static void mxml_node_push(mxml_node_t * node, int32_t iNew)
 {
    hb_itemPutPtrGC(hb_stackAllocItem(), mxml_node_new(node, iNew));
 }
 
-static void mxml_node_ret(mxml_node_t * node, int iNew)
+static void mxml_node_ret(mxml_node_t * node, int32_t iNew)
 {
    if( node )
    {
@@ -229,7 +229,7 @@ static const HB_GC_FUNCS s_gc_mxml_indexFuncs =
    hb_gcDummyMark
 };
 
-static mxml_index_t * mxml_index_param(int iParam)
+static mxml_index_t * mxml_index_param(int32_t iParam)
 {
    auto ppMxml_index = static_cast<mxml_index_t **>(hb_parptrGC(&s_gc_mxml_indexFuncs, iParam));
 
@@ -273,7 +273,7 @@ HB_FUNC(HB_MXMLVERSION)
  * wrapper which does it [druzus]
  */
 
-static void mxmlAddRef(mxml_node_t * parent, int where, mxml_node_t * child, mxml_node_t * node)
+static void mxmlAddRef(mxml_node_t * parent, int32_t where, mxml_node_t * child, mxml_node_t * node)
 {
    mxml_node_t * old_parent = mxmlGetParent(node);
 
@@ -1344,7 +1344,7 @@ HB_FUNC(MXMLSAXLOADSTRING)
 
 /* const char *(* mxml_save_cb_t)(mxml_node_t *, int) */
 
-static const char * save_cb(mxml_node_t * node, int where)
+static const char * save_cb(mxml_node_t * node, int32_t where)
 {
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
 
@@ -1841,7 +1841,7 @@ HB_FUNC(MXMLSETCUSTOM)
 
 /* int (* mxml_custom_load_cb_t)(mxml_node_t *, const char *) */
 
-static int custom_load_cb(mxml_node_t * node, const char * data)
+static int32_t custom_load_cb(mxml_node_t * node, const char * data)
 {
    auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
 

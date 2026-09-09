@@ -210,7 +210,7 @@ using PBM_FILTER = BM_FILTER *;
 #define BM_RDD_MAX 8
 
 static uint16_t s_uiRdds[BM_RDD_MAX];
-static int s_iRddCount = 0;
+static int32_t s_iRddCount = 0;
 
 static void hb_bmSetRdd(uint16_t uiRddId)
 {
@@ -279,7 +279,7 @@ static AREAP hb_bmGetCurrentWorkArea(void)
   return pArea;
 }
 
-static HB_ITEM *hb_bmGetArrayParam(int iParam)
+static HB_ITEM *hb_bmGetArrayParam(int32_t iParam)
 {
   auto pArray = hb_param(iParam, Harbour::Item::ARRAY);
 

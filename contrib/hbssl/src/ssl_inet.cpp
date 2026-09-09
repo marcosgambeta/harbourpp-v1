@@ -79,14 +79,14 @@ static long hb_inetFlushSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT time
   return 0;
 }
 
-static int hb_inetErrorSSL(PHB_ZNETSTREAM pStream)
+static int32_t hb_inetErrorSSL(PHB_ZNETSTREAM pStream)
 {
   HB_SYMBOL_UNUSED(pStream);
 
   return hb_socketGetError();
 }
 
-static const char *hb_inetErrStrSSL(PHB_ZNETSTREAM pStream, int iError)
+static const char *hb_inetErrStrSSL(PHB_ZNETSTREAM pStream, int32_t iError)
 {
   HB_SYMBOL_UNUSED(pStream);
 

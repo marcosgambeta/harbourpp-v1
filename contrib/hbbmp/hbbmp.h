@@ -111,28 +111,28 @@ typedef struct _HB_BMPINFO
    uint8_t* data;
 } HB_BMPINFO, * PHB_BMPINFO;
 
-extern HB_EXPORT PHB_BMPINFO  hb_bmp_new( int width, int height, int depth, int dpi, int * piError );
-extern HB_EXPORT PHB_BMPINFO  hb_bmp_frombitmap( const uint8_t * bitmap, int align, int width, int height, int depth, int dpi, const int * palette, int colors, int * piError );
+extern HB_EXPORT PHB_BMPINFO  hb_bmp_new( int32_t width, int32_t height, int32_t depth, int32_t dpi, int32_t * piError );
+extern HB_EXPORT PHB_BMPINFO  hb_bmp_frombitmap( const uint8_t * bitmap, int32_t align, int32_t width, int32_t height, int32_t depth, int32_t dpi, const int32_t * palette, int32_t colors, int32_t * piError );
 extern HB_EXPORT PHB_BMPINFO  hb_bmp_copy( PHB_BMPINFO pBMP );
-extern HB_EXPORT PHB_BMPINFO  hb_bmp_decode( const uint8_t * data, HB_SIZE size, int * piError );
+extern HB_EXPORT PHB_BMPINFO  hb_bmp_decode( const uint8_t * data, HB_SIZE size, int32_t * piError );
 extern HB_EXPORT uint8_t *    hb_bmp_encode( PHB_BMPINFO pBMP, HB_SIZE * pnSsize );
 extern HB_EXPORT void         hb_bmp_free( PHB_BMPINFO pBMP );
 extern HB_EXPORT uint8_t *    hb_bmp_bitmapptr( PHB_BMPINFO pBMP, HB_SIZE * pnSize );
-extern HB_EXPORT void         hb_bmp_seterror( PHB_BMPINFO pBMP, int error );
-extern HB_EXPORT int          hb_bmp_error( PHB_BMPINFO pBMP );
-extern HB_EXPORT int          hb_bmp_width( PHB_BMPINFO pBMP );
-extern HB_EXPORT int          hb_bmp_height( PHB_BMPINFO pBMP );
-extern HB_EXPORT int          hb_bmp_depth( PHB_BMPINFO pBMP );
+extern HB_EXPORT void         hb_bmp_seterror( PHB_BMPINFO pBMP, int32_t error );
+extern HB_EXPORT int32_t      hb_bmp_error( PHB_BMPINFO pBMP );
+extern HB_EXPORT int32_t      hb_bmp_width( PHB_BMPINFO pBMP );
+extern HB_EXPORT int32_t      hb_bmp_height( PHB_BMPINFO pBMP );
+extern HB_EXPORT int32_t      hb_bmp_depth( PHB_BMPINFO pBMP );
 extern HB_EXPORT void         hb_bmp_colorreset( PHB_BMPINFO pBMP );
-extern HB_EXPORT HB_MAXINT    hb_bmp_color( PHB_BMPINFO pBMP, int r, int g, int b, int a );
-extern HB_EXPORT HB_BOOL      hb_bmp_color2rgb( PHB_BMPINFO pBMP, HB_MAXINT clr, int * r, int * g, int * b, int * a );
-extern HB_EXPORT HB_BOOL      hb_bmp_putpixel( PHB_BMPINFO pBMP, int x, int y, HB_MAXINT clr );
-extern HB_EXPORT HB_MAXINT    hb_bmp_getpixel( PHB_BMPINFO pBMP, int x, int y );
-extern HB_EXPORT void         hb_bmp_line( PHB_BMPINFO pBMP, int x1, int y1, int x2, int y2, HB_MAXINT clr );
-extern HB_EXPORT void         hb_bmp_rect( PHB_BMPINFO pBMP, int x, int y, int width, int height, HB_MAXINT clr, HB_BOOL fFill );
+extern HB_EXPORT HB_MAXINT    hb_bmp_color( PHB_BMPINFO pBMP, int32_t r, int32_t g, int32_t b, int32_t a );
+extern HB_EXPORT HB_BOOL      hb_bmp_color2rgb( PHB_BMPINFO pBMP, HB_MAXINT clr, int32_t * r, int32_t * g, int32_t * b, int32_t * a );
+extern HB_EXPORT HB_BOOL      hb_bmp_putpixel( PHB_BMPINFO pBMP, int32_t x, int32_t y, HB_MAXINT clr );
+extern HB_EXPORT HB_MAXINT    hb_bmp_getpixel( PHB_BMPINFO pBMP, int32_t x, int32_t y );
+extern HB_EXPORT void         hb_bmp_line( PHB_BMPINFO pBMP, int32_t x1, int32_t y1, int32_t x2, int32_t y2, HB_MAXINT clr );
+extern HB_EXPORT void         hb_bmp_rect( PHB_BMPINFO pBMP, int32_t x, int32_t y, int32_t width, int32_t height, HB_MAXINT clr, HB_BOOL fFill );
 
-extern HB_EXPORT PHB_BMPINFO  hb_bmpParam( int iParam, HB_BOOL fError );
-extern HB_EXPORT void         hb_bmpParamFree( int iParam );
+extern HB_EXPORT PHB_BMPINFO  hb_bmpParam( int32_t iParam, HB_BOOL fError );
+extern HB_EXPORT void         hb_bmpParamFree( int32_t iParam );
 extern HB_EXPORT void         hb_bmpReturn( PHB_BMPINFO pBMP );
 
 HB_EXTERN_END

@@ -169,7 +169,7 @@ HB_ITEM *ct_error_subst(uint16_t uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE e
 // argument error behaviour
 static int32_t s_iArgErrMode = CT_ARGERR_IGNORE;
 
-void ct_setargerrormode(int iMode)
+void ct_setargerrormode(int32_t iMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setargerrormode(%i)", iMode));

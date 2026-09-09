@@ -79,14 +79,14 @@ static HB_GARBAGE_FUNC(X509_release)
 
 static const HB_GC_FUNCS s_gcX509_funcs = {X509_release, hb_gcDummyMark};
 
-HB_BOOL hb_X509_is(int iParam)
+HB_BOOL hb_X509_is(int32_t iParam)
 {
   PHB_X509 ph = (PHB_X509)hb_parptrGC(&s_gcX509_funcs, iParam);
 
   return ph && ph->pX509;
 }
 
-X509 *hb_X509_par(int iParam)
+X509 *hb_X509_par(int32_t iParam)
 {
   PHB_X509 ph = (PHB_X509)hb_parptrGC(&s_gcX509_funcs, iParam);
 

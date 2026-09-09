@@ -97,7 +97,7 @@ static HB_TSD_NEW(s_ct_token, sizeof(CT_TOKEN), s_ct_token_init, nullptr);
 #define DO_TOKEN1_TOKENUPPER 4
 
 // helper function for the token function group I
-static void do_token1(int iSwitch)
+static void do_token1(int32_t iSwitch)
 {
   auto ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
 

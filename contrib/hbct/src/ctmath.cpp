@@ -75,7 +75,7 @@ int ct_math_exit()
 // ---------------- //
 static int32_t s_iPrecision = 16; // TODO: make this thread safe
 
-void ct_setprecision(int iPrecision)
+void ct_setprecision(int32_t iPrecision)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setprecision (%i)", iPrecision));

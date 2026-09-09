@@ -72,9 +72,9 @@ struct _HB_FILE
 
 using HB_FILE = _HB_FILE;
 
-static PHB_FILE s_fileNew(int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite);
+static PHB_FILE s_fileNew(int32_t port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite);
 
-static int s_fileGetValue(const char * pszName, int * piLen)
+static int32_t s_fileGetValue(const char * pszName, int32_t * piLen)
 {
    int iLen = 0, iValue = 0;
 
@@ -86,7 +86,7 @@ static int s_fileGetValue(const char * pszName, int * piLen)
    return iValue;
 }
 
-static int s_filePortParams(const char * pszName, HB_MAXINT * pTimeout, int * piBaud, int * piParity, int * piSize, int * piStop, int * piFlow)
+static int32_t s_filePortParams(const char * pszName, HB_MAXINT * pTimeout, int32_t * piBaud, int32_t * piParity, int32_t * piSize, int32_t * piStop, int32_t * piFlow)
 {
    int iPort = 0, iLen, iValue;
 
@@ -328,7 +328,7 @@ static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_
    return lSent;
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
    switch( iIndex ) {
       case HB_VF_TIMEOUT:
@@ -426,7 +426,7 @@ static HB_FILE_FUNCS s_fileFuncs =
    s_fileHandle
 };
 
-static PHB_FILE s_fileNew(int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite)
+static PHB_FILE s_fileNew(int32_t port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite)
 {
    auto pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
 

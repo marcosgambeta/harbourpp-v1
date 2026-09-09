@@ -201,49 +201,49 @@ typedef struct _HB_SSLSTREAM *PHB_SSLSTREAM;
 extern PHB_SOCKEX         hb_sockexNewSSL(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer,
                                            HB_MAXINT timeout, HB_ITEM *pSSL);
 extern PHB_SSLSTREAM      hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer,
-                                            HB_MAXINT timeout, HB_ITEM *pSSL, int *piResult);
+                                            HB_MAXINT timeout, HB_ITEM *pSSL, int32_t *piResult);
 extern void               hb_ssl_socketClose(PHB_SSLSTREAM pStream);
-extern const char *       hb_ssl_socketErrorStr(int iError);
+extern const char *       hb_ssl_socketErrorStr(int32_t iError);
 extern long               hb_ssl_socketRead(PHB_SSLSTREAM pStream, HB_SOCKET sd,
                                              void *buffer, long len, HB_MAXINT timeout);
 extern long               hb_ssl_socketWrite(PHB_SSLSTREAM pStream, HB_SOCKET sd,
                                               const void *buffer, long len,
                                               HB_MAXINT timeout, long *plast);
 
-extern const SSL_METHOD *hb_ssl_method_id_to_ptr(int n);
+extern const SSL_METHOD *hb_ssl_method_id_to_ptr(int32_t n);
 
-extern HB_BOOL            hb_BIO_is(int iParam);
-extern BIO *              hb_BIO_par(int iParam);
+extern HB_BOOL            hb_BIO_is(int32_t iParam);
+extern BIO *              hb_BIO_par(int32_t iParam);
 
-extern HB_BOOL            hb_SSL_CTX_is(int iParam);
-extern SSL_CTX *          hb_SSL_CTX_par(int iParam);
+extern HB_BOOL            hb_SSL_CTX_is(int32_t iParam);
+extern SSL_CTX *          hb_SSL_CTX_par(int32_t iParam);
 extern SSL_CTX *          hb_SSL_CTX_itemGet(HB_ITEM *pItem);
 
-extern HB_BOOL            hb_SSL_is(int iParam);
-extern SSL *              hb_SSL_par(int iParam);
+extern HB_BOOL            hb_SSL_is(int32_t iParam);
+extern SSL *              hb_SSL_par(int32_t iParam);
 extern SSL *              hb_SSL_itemGet(HB_ITEM *pItem);
 
-extern HB_BOOL            hb_SSL_SESSION_is(int iParam);
-extern SSL_SESSION *      hb_SSL_SESSION_par(int iParam);
+extern HB_BOOL            hb_SSL_SESSION_is(int32_t iParam);
+extern SSL_SESSION *      hb_SSL_SESSION_par(int32_t iParam);
 
-extern HB_BOOL            hb_X509_is(int iParam);
-extern X509 *             hb_X509_par(int iParam);
+extern HB_BOOL            hb_X509_is(int32_t iParam);
+extern X509 *             hb_X509_par(int32_t iParam);
 extern void               hb_X509_ret(X509 *x509);
 
-extern HB_BOOL            hb_RSA_is(int iParam);
-extern RSA *              hb_RSA_par(int iParam);
-extern void               hb_RSA_par_remove(int iParam);
+extern HB_BOOL            hb_RSA_is(int32_t iParam);
+extern RSA *              hb_RSA_par(int32_t iParam);
+extern void               hb_RSA_par_remove(int32_t iParam);
 extern void               hb_RSA_ret(RSA *rsa);
 
-extern HB_BOOL            hb_EVP_MD_is(int iParam);
-extern const EVP_MD *     hb_EVP_MD_par(int iParam);
+extern HB_BOOL            hb_EVP_MD_is(int32_t iParam);
+extern const EVP_MD *     hb_EVP_MD_par(int32_t iParam);
 extern int                hb_EVP_MD_ptr_to_id(const EVP_MD *p);
 
-extern HB_BOOL            hb_EVP_CIPHER_is(int iParam);
-extern const EVP_CIPHER * hb_EVP_CIPHER_par(int iParam);
+extern HB_BOOL            hb_EVP_CIPHER_is(int32_t iParam);
+extern const EVP_CIPHER * hb_EVP_CIPHER_par(int32_t iParam);
 
-extern HB_BOOL            hb_EVP_PKEY_is(int iParam);
-extern EVP_PKEY *         hb_EVP_PKEY_par(int iParam);
+extern HB_BOOL            hb_EVP_PKEY_is(int32_t iParam);
+extern EVP_PKEY *         hb_EVP_PKEY_par(int32_t iParam);
 extern EVP_PKEY *         hb_EVP_PKEY_get(HB_ITEM *pItem);
 extern void               hb_EVP_PKEY_free(HB_ITEM *pItem);
 extern void               hb_EVP_PKEY_ret(EVP_PKEY *pkey);

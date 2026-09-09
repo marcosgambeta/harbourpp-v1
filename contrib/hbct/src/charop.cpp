@@ -54,7 +54,7 @@
 #include "ct.h"
 
 // helper function
-void ct_charop(int iMode)
+void ct_charop(int32_t iMode)
 {
   // suppressing return value ?
   int32_t iNoRet = ct_getref() && HB_ISBYREF(1);

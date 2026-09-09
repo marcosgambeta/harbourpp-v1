@@ -200,7 +200,7 @@ static HB_ERRCODE s_srvFsError(void)
    return errCode;
 }
 
-static int s_srvFileNew(PHB_CONSRV conn, PHB_FILE pFile)
+static int32_t s_srvFileNew(PHB_CONSRV conn, PHB_FILE pFile)
 {
    if( conn->filesCount < NETIO_FILES_MAX )
    {
@@ -218,7 +218,7 @@ static int s_srvFileNew(PHB_CONSRV conn, PHB_FILE pFile)
    return -1;
 }
 
-static PHB_FILE s_srvFileFree(PHB_CONSRV conn, int iFile)
+static PHB_FILE s_srvFileFree(PHB_CONSRV conn, int32_t iFile)
 {
    if( iFile < NETIO_FILES_MAX && conn->filesCount > 0 )
    {
@@ -238,7 +238,7 @@ static PHB_FILE s_srvFileFree(PHB_CONSRV conn, int iFile)
    return nullptr;
 }
 
-static PHB_FILE s_srvFileGet(PHB_CONSRV conn, int iFile)
+static PHB_FILE s_srvFileGet(PHB_CONSRV conn, int32_t iFile)
 {
    if( iFile < NETIO_FILES_MAX && conn->filesCount > 0 )
    {
@@ -331,7 +331,7 @@ static const HB_GC_FUNCS s_gcConSrvFuncs =
    s_consrv_mark
 };
 
-static PHB_CONSRV s_consrvParam(int iParam)
+static PHB_CONSRV s_consrvParam(int32_t iParam)
 {
    auto conn_ptr = static_cast<PHB_CONSRV*>(hb_parptrGC(&s_gcConSrvFuncs, iParam));
 
@@ -460,7 +460,7 @@ static const HB_GC_FUNCS s_gcListensdFuncs =
    hb_gcDummyMark
 };
 
-static PHB_LISTENSD s_listenParam(int iParam, HB_BOOL fError)
+static PHB_LISTENSD s_listenParam(int32_t iParam, HB_BOOL fError)
 {
    auto lsd_ptr = static_cast<PHB_LISTENSD*>(hb_parptrGC(&s_gcListensdFuncs, iParam));
 

@@ -72,12 +72,12 @@ static HB_GARBAGE_FUNC(EVP_ENCODE_CTX_release)
 
 static const HB_GC_FUNCS s_gcEVP_ENCODE_CTX_funcs = {EVP_ENCODE_CTX_release, hb_gcDummyMark};
 
-static HB_BOOL hb_EVP_ENCODE_CTX_is(int iParam)
+static HB_BOOL hb_EVP_ENCODE_CTX_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam) != nullptr;
 }
 
-static EVP_ENCODE_CTX *hb_EVP_ENCODE_CTX_par(int iParam)
+static EVP_ENCODE_CTX *hb_EVP_ENCODE_CTX_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam);
 

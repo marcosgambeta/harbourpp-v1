@@ -76,20 +76,20 @@
 extern char *sqlite3_temp_directory;
 #endif // SQLITE3_DYNLIB
 
-static HB_ITEM *hb_sqlite3_itemPut(HB_ITEM *pItem, void *pMemAddr, int iType);
-static void *hb_sqlite3_itemGet(HB_ITEM *pItem, int iType, bool fError);
-static void hb_sqlite3_ret(void *pMemAddr, int iType);
-static void *hb_sqlite3_param(int iParam, int iType, bool fError);
+static HB_ITEM *hb_sqlite3_itemPut(HB_ITEM *pItem, void *pMemAddr, int32_t iType);
+static void *hb_sqlite3_itemGet(HB_ITEM *pItem, int32_t iType, bool fError);
+static void hb_sqlite3_ret(void *pMemAddr, int32_t iType);
+static void *hb_sqlite3_param(int32_t iParam, int32_t iType, bool fError);
 
-static int callback(void *, int, char **, char **);
-static int authorizer(void *, int, const char *, const char *, const char *, const char *);
-static int busy_handler(void *, int);
-static int progress_handler(void *);
-static int hook_commit(void *);
+static int32_t callback(void *, int, char **, char **);
+static int32_t authorizer(void *, int, const char *, const char *, const char *, const char *);
+static int32_t busy_handler(void *, int);
+static int32_t progress_handler(void *);
+static int32_t hook_commit(void *);
 static void hook_rollback(void *);
 static void func(sqlite3_context *, int, sqlite3_value **);
 #if SQLITE_VERSION_NUMBER >= 3014000
-static int trace_handler(unsigned, void *, void *, void *);
+static int32_t trace_handler(unsigned, void *, void *, void *);
 #endif
 
 struct HB_SQLITE3
@@ -255,7 +255,7 @@ static HB_GARBAGE_FUNC(hb_sqlite3_mark)
 
 static const HB_GC_FUNCS s_gcSqlite3Funcs = {hb_sqlite3_destructor, hb_sqlite3_mark};
 
-static HB_ITEM *hb_sqlite3_itemPut(HB_ITEM *pItem, void *pMemAddr, int iType)
+static HB_ITEM *hb_sqlite3_itemPut(HB_ITEM *pItem, void *pMemAddr, int32_t iType)
 {
   if (pItem != nullptr)
   {
@@ -276,7 +276,7 @@ static HB_ITEM *hb_sqlite3_itemPut(HB_ITEM *pItem, void *pMemAddr, int iType)
   return hb_itemPutPtrGC(pItem, pStructHolder);
 }
 
-static void *hb_sqlite3_itemGet(HB_ITEM *pItem, int iType, bool fError)
+static void *hb_sqlite3_itemGet(HB_ITEM *pItem, int32_t iType, bool fError)
 {
   auto pStructHolder = static_cast<PHB_SQLITE3_HOLDER>(hb_itemGetPtrGC(pItem, &s_gcSqlite3Funcs));
   int iError = 0;
@@ -308,12 +308,12 @@ static void *hb_sqlite3_itemGet(HB_ITEM *pItem, int iType, bool fError)
   return nullptr;
 }
 
-static void hb_sqlite3_ret(void *pMemAddr, int iType)
+static void hb_sqlite3_ret(void *pMemAddr, int32_t iType)
 {
   hb_sqlite3_itemPut(hb_stackReturnItem(), pMemAddr, iType);
 }
 
-static void *hb_sqlite3_param(int iParam, int iType, bool fError)
+static void *hb_sqlite3_param(int32_t iParam, int32_t iType, bool fError)
 {
   return hb_sqlite3_itemGet(hb_param(iParam, Harbour::Item::POINTER), iType, fError);
 }
@@ -326,7 +326,7 @@ static void *hb_sqlite3_param(int iParam, int iType, bool fError)
       Commit And Rollback Notification Callback
  */
 
-static int callback(void *Cargo, int argc, char **argv, char **azColName)
+static int32_t callback(void *Cargo, int32_t argc, char **argv, char **azColName)
 {
   auto pCallback = static_cast<HB_ITEM *>(Cargo);
 
@@ -361,7 +361,7 @@ static int callback(void *Cargo, int argc, char **argv, char **azColName)
   return 0;
 }
 
-static int authorizer(void *Cargo, int iAction, const char *sName1, const char *sName2, const char *sName3,
+static int32_t authorizer(void *Cargo, int32_t iAction, const char *sName1, const char *sName2, const char *sName3,
                       const char *sName4)
 {
   auto pCallback = static_cast<HB_ITEM *>(Cargo);
@@ -397,7 +397,7 @@ static int authorizer(void *Cargo, int iAction, const char *sName1, const char *
   return 0;
 }
 
-static int busy_handler(void *Cargo, int iNumberOfTimes)
+static int32_t busy_handler(void *Cargo, int32_t iNumberOfTimes)
 {
   auto pCallback = static_cast<HB_ITEM *>(Cargo);
 
@@ -415,7 +415,7 @@ static int busy_handler(void *Cargo, int iNumberOfTimes)
   return 0;
 }
 
-static int progress_handler(void *Cargo)
+static int32_t progress_handler(void *Cargo)
 {
   auto pCallback = static_cast<HB_ITEM *>(Cargo);
 
@@ -432,7 +432,7 @@ static int progress_handler(void *Cargo)
   return 0;
 }
 
-static int hook_commit(void *Cargo)
+static int32_t hook_commit(void *Cargo)
 {
   auto pCallback = static_cast<HB_ITEM *>(Cargo);
 
@@ -462,7 +462,7 @@ static void hook_rollback(void *Cargo)
   }
 }
 
-static void func(sqlite3_context *ctx, int argc, sqlite3_value **argv)
+static void func(sqlite3_context *ctx, int32_t argc, sqlite3_value **argv)
 {
   auto pCallback = static_cast<HB_ITEM *>(sqlite3_user_data(ctx));
 
@@ -2005,7 +2005,7 @@ HB_FUNC(SQLITE3_ENABLE_SHARED_CACHE)
  */
 
 #if SQLITE_VERSION_NUMBER >= 3014000
-static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
+static int32_t trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
 {
   HB_ITEM *pCallback = static_cast<HB_ITEM *>(cbTraceHandler);
   int iRes = 0;

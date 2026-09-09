@@ -51,7 +51,7 @@
 #include "ct.h"
 
 // helper function for the list function
-void ct_charlist(int iMode)
+void ct_charlist(int32_t iMode)
 {
   auto pcString = hb_parc(1);
   auto sStrLen = hb_parclen(1);

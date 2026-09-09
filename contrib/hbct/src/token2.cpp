@@ -236,7 +236,7 @@ static void sTokSet(TOKEN_ENVIRONMENT env)
   }
 }
 
-static TOKEN_ENVIRONMENT sTokGet(int iParam, HB_BOOL fReadOnly)
+static TOKEN_ENVIRONMENT sTokGet(int32_t iParam, HB_BOOL fReadOnly)
 {
   if (iParam < 0 || (iParam > 0 && HB_ISCHAR(iParam))) {
     if (iParam < 0 || fReadOnly || HB_ISBYREF(iParam)) {

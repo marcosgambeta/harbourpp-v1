@@ -54,7 +54,7 @@
 
 #include "hbbz2.ch"
 
-static void * hb_bz2Alloc(void * cargo, int nmemb, int size)
+static void * hb_bz2Alloc(void * cargo, int32_t nmemb, int32_t size)
 {
    HB_SYMBOL_UNUSED(cargo);
 
@@ -77,7 +77,7 @@ static HB_SIZE hb_bz2CompressBound(HB_SIZE nLen)
    return nSize < nLen ? HB_SIZE_MAX - 1 : nSize;
 }
 
-static int hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst, int iBlockSize)
+static int32_t hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst, int32_t iBlockSize)
 {
    bz_stream stream;
    int       iResult;
@@ -117,7 +117,7 @@ static int hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZ
    return iResult;
 }
 
-static HB_SIZE hb_bz2UncompressedSize(const char * szSrc, HB_SIZE nLen, int * piResult)
+static HB_SIZE hb_bz2UncompressedSize(const char * szSrc, HB_SIZE nLen, int32_t * piResult)
 {
    char      buffer[1024];
    bz_stream stream;
@@ -160,7 +160,7 @@ static HB_SIZE hb_bz2UncompressedSize(const char * szSrc, HB_SIZE nLen, int * pi
    return nDest;
 }
 
-static int hb_bz2Uncompress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst)
+static int32_t hb_bz2Uncompress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst)
 {
    bz_stream stream;
    int       iResult;

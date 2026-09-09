@@ -76,7 +76,7 @@ HB_ITEM *hb_cairoPatternItemPut(HB_ITEM *pItem, cairo_pattern_t *pPattern)
   return hb_itemPutPtrGC(pItem, ppPattern);
 }
 
-cairo_pattern_t *hb_cairo_pattern_param(int iParam)
+cairo_pattern_t *hb_cairo_pattern_param(int32_t iParam)
 {
   auto ppPattern = static_cast<cairo_pattern_t **>(hb_parptrGC(&s_gcPatternFuncs, iParam));
 

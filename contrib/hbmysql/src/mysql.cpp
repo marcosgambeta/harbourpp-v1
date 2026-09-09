@@ -106,7 +106,7 @@ static void hb_MYSQL_ret(MYSQL *p)
   }
 }
 
-static MYSQL *hb_MYSQL_par(int iParam)
+static MYSQL *hb_MYSQL_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcMYSQLFuncs, iParam));
 
@@ -146,7 +146,7 @@ static void hb_MYSQL_RES_ret(MYSQL_RES *p)
   }
 }
 
-static MYSQL_RES *hb_MYSQL_RES_par(int iParam)
+static MYSQL_RES *hb_MYSQL_RES_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcMYSQL_RESFuncs, iParam));
 

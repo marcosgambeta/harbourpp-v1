@@ -548,10 +548,10 @@ static size_t hb_curl_write_buff_callback(void *buffer, size_t size, size_t nmem
 }
 
 #if LIBCURL_VERSION_NUM >= 0x072000
-static int hb_curl_xferinfo_callback(void *Cargo, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal,
+static int32_t hb_curl_xferinfo_callback(void *Cargo, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal,
                                      curl_off_t ulnow)
 #else
-static int hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, double ultotal, double ulnow)
+static int32_t hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, double ultotal, double ulnow)
 #endif
 {
   if (Cargo)
@@ -581,7 +581,7 @@ static int hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, 
   return 0;
 }
 
-static int hb_curl_debug_callback(CURL *handle, curl_infotype type, char *data, size_t size, void *Cargo)
+static int32_t hb_curl_debug_callback(CURL *handle, curl_infotype type, char *data, size_t size, void *Cargo)
 {
   HB_SYMBOL_UNUSED(handle);
 
@@ -875,12 +875,12 @@ static void PHB_CURL_ret(PHB_CURL from)
   hb_retptrGC(ph);
 }
 
-static void *PHB_CURL_is(int iParam)
+static void *PHB_CURL_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcCURLFuncs, iParam);
 }
 
-static PHB_CURL PHB_CURL_par(int iParam)
+static PHB_CURL PHB_CURL_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcCURLFuncs, iParam));
 
@@ -2908,12 +2908,12 @@ static void PHB_CURLM_ret()
   hb_retptrGC(ph);
 }
 
-static void *PHB_CURLM_is(int iParam)
+static void *PHB_CURLM_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcCURLMFuncs, iParam);
 }
 
-static PHB_CURLM PHB_CURLM_par(int iParam)
+static PHB_CURLM PHB_CURLM_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcCURLMFuncs, iParam);
 

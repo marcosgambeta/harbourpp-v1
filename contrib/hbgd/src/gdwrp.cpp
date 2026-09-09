@@ -111,14 +111,14 @@ static const HB_GC_FUNCS s_gcGDimageFuncs = {hb_gdImage_Destructor, hb_gcDummyMa
 
 /* Function returns gdImage pointer or nullptr when wrong variable is
    passed or gdImage was freed before */
-static gdImagePtr hb_parGdImage(int iParam)
+static gdImagePtr hb_parGdImage(int32_t iParam)
 {
   auto ptr = static_cast<gdImagePtr *>(hb_parptrGC(&s_gcGDimageFuncs, iParam));
 
   return ptr ? *ptr : nullptr;
 }
 
-static void *hb_isGdImage(int iParam)
+static void *hb_isGdImage(int32_t iParam)
 {
   return hb_parptrGC(&s_gcGDimageFuncs, iParam);
 }
@@ -171,14 +171,14 @@ static const HB_GC_FUNCS s_gcGDfontFuncs = {hb_gdFont_Destructor, hb_gcDummyMark
 
 /* Function returns gdFont pointer or nullptr when wrong variable is
    passed or gdFont was freed before */
-static gdFontPtr hb_parGdFont(int iParam)
+static gdFontPtr hb_parGdFont(int32_t iParam)
 {
   auto ptr = static_cast<gdFontPtr *>(hb_parptrGC(&s_gcGDfontFuncs, iParam));
 
   return ptr ? *ptr : nullptr;
 }
 
-static void *hb_isGdFont(int iParam)
+static void *hb_isGdFont(int32_t iParam)
 {
   return hb_parptrGC(&s_gcGDfontFuncs, iParam);
 }
@@ -205,7 +205,7 @@ static HB_ITEM *hb_gdFontItemNew( gdFontPtr font )
 }
 #endif
 
-static void *LoadImageFromHandle(HB_FHANDLE fhandle, int sz)
+static void *LoadImageFromHandle(HB_FHANDLE fhandle, int32_t sz)
 {
   auto iptr = hb_xgrab(sz);
 
@@ -214,7 +214,7 @@ static void *LoadImageFromHandle(HB_FHANDLE fhandle, int sz)
   return iptr;
 }
 
-static void *LoadImageFromFile(const char *szFile, int *sz)
+static void *LoadImageFromFile(const char *szFile, int32_t *sz)
 {
   void *iptr;
   HB_FHANDLE fhandle;
@@ -242,12 +242,12 @@ static void *LoadImageFromFile(const char *szFile, int *sz)
   return iptr;
 }
 
-static void SaveImageToHandle(HB_FHANDLE fhandle, const void *iptr, int sz)
+static void SaveImageToHandle(HB_FHANDLE fhandle, const void *iptr, int32_t sz)
 {
   hb_fsWriteLarge(fhandle, iptr, static_cast<HB_SIZE>(sz));
 }
 
-static void SaveImageToFile(const char *szFile, const void *iptr, int sz)
+static void SaveImageToFile(const char *szFile, const void *iptr, int32_t sz)
 {
   HB_FHANDLE fhandle;
 
@@ -260,7 +260,7 @@ static void SaveImageToFile(const char *szFile, const void *iptr, int sz)
   }
 }
 
-static void GDImageCreateFrom(int nType)
+static void GDImageCreateFrom(int32_t nType)
 {
   gdImagePtr im = nullptr;
   int sz;
@@ -323,7 +323,7 @@ static void GDImageCreateFrom(int nType)
   }
 }
 
-static void GDImageSaveTo(int nType)
+static void GDImageSaveTo(int32_t nType)
 {
   if (hb_isGdImage(1))
   {
@@ -996,7 +996,7 @@ HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *s
     auto styleLength = static_cast<int32_t>(hb_arrayLen(pStyles));
 
     /* Max numbery of Styles */
-    auto styles = static_cast<int *>(hb_xgrab(sizeof(int) * styleLength));
+    auto styles = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * styleLength));
 
     for (auto i = 0; i < styleLength; i++)
     {
@@ -1004,7 +1004,7 @@ HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *s
     }
 
     /* Set style */
-    gdImageSetStyle(im, static_cast<int *>(styles), styleLength);
+    gdImageSetStyle(im, static_cast<int32_t *>(styles), styleLength);
 
     hb_xfree(styles);
   }

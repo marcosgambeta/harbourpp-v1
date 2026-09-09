@@ -68,12 +68,12 @@ static HB_GARBAGE_FUNC(EVP_PKEY_release)
 
 static const HB_GC_FUNCS s_gcEVP_PKEY_funcs = {EVP_PKEY_release, hb_gcDummyMark};
 
-HB_BOOL hb_EVP_PKEY_is(int iParam)
+HB_BOOL hb_EVP_PKEY_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam) != nullptr;
 }
 
-EVP_PKEY *hb_EVP_PKEY_par(int iParam)
+EVP_PKEY *hb_EVP_PKEY_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam);
 
@@ -130,7 +130,7 @@ static HB_BOOL hb_EVP_PKEY_CTX_is( int iParam )
 #endif
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-static EVP_PKEY_CTX *hb_EVP_PKEY_CTX_par(int iParam)
+static EVP_PKEY_CTX *hb_EVP_PKEY_CTX_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam);
 

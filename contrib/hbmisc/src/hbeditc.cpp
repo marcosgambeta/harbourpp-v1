@@ -148,7 +148,7 @@ static HB_ISIZ Next(PHB_EDITOR pEd, HB_ISIZ adres)
 }
 
 /* Initializes HB_EDITOR structure */
-static void New( PHB_EDITOR pEd, int tab, HB_ISIZ ll, HB_ISIZ bufferSize )
+static void New( PHB_EDITOR pEd, int32_t tab, HB_ISIZ ll, HB_ISIZ bufferSize )
 {
 
    pEd->line_length    = ll;

@@ -77,12 +77,12 @@ static HB_GARBAGE_FUNC(SSL_CTX_release)
 
 static const HB_GC_FUNCS s_gcSSL_CTX_funcs = {SSL_CTX_release, hb_gcDummyMark};
 
-HB_BOOL hb_SSL_CTX_is(int iParam)
+HB_BOOL hb_SSL_CTX_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcSSL_CTX_funcs, iParam) != nullptr;
 }
 
-SSL_CTX *hb_SSL_CTX_par(int iParam)
+SSL_CTX *hb_SSL_CTX_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcSSL_CTX_funcs, iParam);
 
@@ -96,7 +96,7 @@ SSL_CTX *hb_SSL_CTX_itemGet(HB_ITEM *pItem)
   return ph ? (SSL_CTX *)*ph : nullptr;
 }
 
-const SSL_METHOD *hb_ssl_method_id_to_ptr(int n)
+const SSL_METHOD *hb_ssl_method_id_to_ptr(int32_t n)
 {
   const SSL_METHOD *p;
 

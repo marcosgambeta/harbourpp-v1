@@ -53,7 +53,7 @@
 #define DO_COUNT_COUNTRIGHT 1
 
 // helper function for the Count*() functions
-static void do_count(int iSwitch)
+static void do_count(int32_t iSwitch)
 {
   // param check
   if (HB_ISCHAR(1)) {

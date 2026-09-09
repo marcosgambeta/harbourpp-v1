@@ -51,7 +51,7 @@
 #include <hbapi.hpp>
 #include "ct.h"
 
-HB_BOOL ct_numParam(int iParam, HB_MAXINT *plNum)
+HB_BOOL ct_numParam(int32_t iParam, HB_MAXINT *plNum)
 {
   auto szHex = hb_parc(iParam);
 

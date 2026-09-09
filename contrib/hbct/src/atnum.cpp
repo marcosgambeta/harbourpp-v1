@@ -56,7 +56,7 @@
 #define DO_ATNUM_ATNUM 2
 
 // helper function
-static void do_atnum(int iSwitch)
+static void do_atnum(int32_t iSwitch)
 {
   if (HB_ISCHAR(1) && HB_ISCHAR(2)) {
     auto pcStringToMatch = hb_parc(1);

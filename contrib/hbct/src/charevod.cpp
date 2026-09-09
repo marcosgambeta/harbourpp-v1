@@ -57,7 +57,7 @@
 #define DO_CHAREVOD_CHARODD 1
 
 // helper function
-static void do_charevod(int iSwitch)
+static void do_charevod(int32_t iSwitch)
 {
   if (HB_ISCHAR(1)) {
     auto pcString = hb_parc(1);

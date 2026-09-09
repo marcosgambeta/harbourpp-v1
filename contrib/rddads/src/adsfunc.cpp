@@ -210,7 +210,7 @@ int hb_ads_getIndexPageSize(void)
   return HB_ADS_CONN_DATA->iIndexPageSize;
 }
 
-void hb_ads_setIndexPageSize(int iIndexPageSize)
+void hb_ads_setIndexPageSize(int32_t iIndexPageSize)
 {
   HB_ADS_CONN_DATA->iIndexPageSize = iIndexPageSize;
 }

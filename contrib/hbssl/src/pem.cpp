@@ -61,7 +61,7 @@ typedef enum
 
 // Callback
 
-static int hb_ssl_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
+static int32_t hb_ssl_pem_password_cb(char *buf, int32_t size, int32_t rwflag, void *userdata)
 {
   int retsize = 0;
 

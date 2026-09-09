@@ -89,7 +89,7 @@ HB_FUNC(STRDIFF)
 
     // check for memory consumption
     if ((static_cast<double>(sStrLen1) + 1.0) * (static_cast<double>(sStrLen2) + 1.0) *
-            (static_cast<double>(sizeof(int))) >=
+            (static_cast<double>(sizeof(int32_t))) >=
         static_cast<double>(UINT_MAX)) {
       int32_t iArgErrorMode = ct_getargerrormode();
 
@@ -107,7 +107,7 @@ HB_FUNC(STRDIFF)
     auto iDelete = hb_parnidef(4, 6);
     auto iInsert = hb_parnidef(5, 1);
 
-    auto piPenalty = static_cast<int *>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
+    auto piPenalty = static_cast<int32_t *>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int32_t)));
 
     MATRIXELEMENT(0, 0) = 0;
     for (sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++) {

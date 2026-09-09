@@ -56,7 +56,7 @@ void hb_bmp_free( PHB_BMPINFO pBMP )
    hb_xfree( pBMP );
 }
 
-PHB_BMPINFO hb_bmp_new( int width, int height, int depth, int dpi, int * piError )
+PHB_BMPINFO hb_bmp_new( int32_t width, int32_t height, int32_t depth, int32_t dpi, int32_t * piError )
 {
    PHB_BMPINFO pBMP = NULL;
    HB_BOOL fromtop = height < 0;
@@ -118,11 +118,11 @@ PHB_BMPINFO hb_bmp_new( int width, int height, int depth, int dpi, int * piError
    return pBMP;
 }
 
-PHB_BMPINFO hb_bmp_frombitmap( const uint8_t * bitmap, int align,
-                               int width, int height, int depth, int dpi,
-                               const int * palette, int colors, int * piError )
+PHB_BMPINFO hb_bmp_frombitmap( const uint8_t * bitmap, int32_t align,
+                               int32_t width, int32_t height, int32_t depth, int32_t dpi,
+                               const int32_t * palette, int32_t colors, int32_t * piError )
 {
-   static const int mono_palette[ 2 ] = { 0x00FFFFFF, 0x00000000 };
+   static const int32_t mono_palette[ 2 ] = { 0x00FFFFFF, 0x00000000 };
    PHB_BMPINFO pBMP = NULL;
 
    if( bitmap && ( align >= 8 || align >= depth ) && ( align & ( align - 1 ) ) == 0 )
@@ -204,7 +204,7 @@ uint8_t * hb_bmp_bitmapptr( PHB_BMPINFO pBMP, HB_SIZE * pnSize )
    return pBMP->data;
 }
 
-void hb_bmp_seterror( PHB_BMPINFO pBMP, int error )
+void hb_bmp_seterror( PHB_BMPINFO pBMP, int32_t error )
 {
    pBMP->error = error;
 }
@@ -235,7 +235,7 @@ void hb_bmp_colorreset( PHB_BMPINFO pBMP )
    pBMP->clrused = 0;
 }
 
-HB_MAXINT hb_bmp_color( PHB_BMPINFO pBMP, int r, int g, int b, int a )
+HB_MAXINT hb_bmp_color( PHB_BMPINFO pBMP, int32_t r, int32_t g, int32_t b, int32_t a )
 {
    HB_MAXINT iColor = -1;
 
@@ -286,7 +286,7 @@ HB_MAXINT hb_bmp_color( PHB_BMPINFO pBMP, int r, int g, int b, int a )
    return iColor;
 }
 
-HB_BOOL hb_bmp_color2rgb( PHB_BMPINFO pBMP, HB_MAXINT clr, int * r, int * g, int * b, int * a )
+HB_BOOL hb_bmp_color2rgb( PHB_BMPINFO pBMP, HB_MAXINT clr, int32_t * r, int32_t * g, int32_t * b, int32_t * a )
 {
    pBMP->error = HB_BMP_ERROR_COLORINDEX;
    * b = * g = * r = * a = -1;
@@ -328,7 +328,7 @@ HB_BOOL hb_bmp_color2rgb( PHB_BMPINFO pBMP, HB_MAXINT clr, int * r, int * g, int
    return pBMP->error == 0;
 }
 
-HB_BOOL hb_bmp_putpixel( PHB_BMPINFO pBMP, int x, int y, HB_MAXINT clr )
+HB_BOOL hb_bmp_putpixel( PHB_BMPINFO pBMP, int32_t x, int32_t y, HB_MAXINT clr )
 {
    if( x < 0 || x >= pBMP->width || y < 0 || y >= pBMP->height )
       pBMP->error = HB_BMP_ERROR_RANGE;
@@ -374,7 +374,7 @@ HB_BOOL hb_bmp_putpixel( PHB_BMPINFO pBMP, int x, int y, HB_MAXINT clr )
    return pBMP->error == 0;
 }
 
-HB_MAXINT hb_bmp_getpixel( PHB_BMPINFO pBMP, int x, int y )
+HB_MAXINT hb_bmp_getpixel( PHB_BMPINFO pBMP, int32_t x, int32_t y )
 {
    HB_MAXINT clr = -1;
 
@@ -418,7 +418,7 @@ HB_MAXINT hb_bmp_getpixel( PHB_BMPINFO pBMP, int x, int y )
    return clr;
 }
 
-void hb_bmp_line( PHB_BMPINFO pBMP, int x1, int y1, int x2, int y2, HB_MAXINT clr )
+void hb_bmp_line( PHB_BMPINFO pBMP, int32_t x1, int32_t y1, int32_t x2, int32_t y2, HB_MAXINT clr )
 {
    if( clr < 0 || ( clr > ( pBMP->depth <= 8  ? pBMP->clrused :
                           ( pBMP->depth == 16 ? 0xFFFF :
@@ -468,7 +468,7 @@ void hb_bmp_line( PHB_BMPINFO pBMP, int x1, int y1, int x2, int y2, HB_MAXINT cl
    }
 }
 
-void hb_bmp_rect( PHB_BMPINFO pBMP, int x, int y, int width, int height, HB_MAXINT clr, HB_BOOL fFill )
+void hb_bmp_rect( PHB_BMPINFO pBMP, int32_t x, int32_t y, int32_t width, int32_t height, HB_MAXINT clr, HB_BOOL fFill )
 {
    if( width < 0 )
    {
@@ -531,7 +531,7 @@ void hb_bmp_rect( PHB_BMPINFO pBMP, int x, int y, int width, int height, HB_MAXI
    }
 }
 
-PHB_BMPINFO hb_bmp_decode( const uint8_t * data, HB_SIZE size, int * piError )
+PHB_BMPINFO hb_bmp_decode( const uint8_t * data, HB_SIZE size, int32_t * piError )
 {
    PHB_BMPINFO pBMP = NULL;
    int iError = 0;

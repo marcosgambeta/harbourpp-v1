@@ -238,21 +238,21 @@ static HB_GARBAGE_FUNC(PHB_SSL_mark)
 
 static const HB_GC_FUNCS s_gcSSL_funcs = {PHB_SSL_release, PHB_SSL_mark};
 
-HB_BOOL hb_SSL_is(int iParam)
+HB_BOOL hb_SSL_is(int32_t iParam)
 {
   PHB_SSL hb_ssl = (PHB_SSL)hb_parptrGC(&s_gcSSL_funcs, iParam);
 
   return hb_ssl && hb_ssl->ssl;
 }
 
-static PHB_SSL hb_SSL_par_raw(int iParam)
+static PHB_SSL hb_SSL_par_raw(int32_t iParam)
 {
   PHB_SSL hb_ssl = (PHB_SSL)hb_parptrGC(&s_gcSSL_funcs, iParam);
 
   return hb_ssl;
 }
 
-SSL *hb_SSL_par(int iParam)
+SSL *hb_SSL_par(int32_t iParam)
 {
   PHB_SSL hb_ssl = (PHB_SSL)hb_parptrGC(&s_gcSSL_funcs, iParam);
 
@@ -1504,7 +1504,7 @@ HB_FUNC(SSL_USE_PRIVATEKEY)
 // Callback
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-static void hb_ssl_msg_callback(int write_p, int version, int content_type, const void *buf, size_t len, SSL *ssl,
+static void hb_ssl_msg_callback(int32_t write_p, int32_t version, int32_t content_type, const void *buf, size_t len, SSL *ssl,
                                 void *userdata)
 {
   HB_SYMBOL_UNUSED(ssl);

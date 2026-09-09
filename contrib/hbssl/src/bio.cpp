@@ -96,14 +96,14 @@ static HB_GARBAGE_FUNC(HB_BIO_Destructor)
 
 static const HB_GC_FUNCS s_gcBIOFuncs = {HB_BIO_Destructor, hb_gcDummyMark};
 
-BIO *hb_BIO_par(int iParam)
+BIO *hb_BIO_par(int32_t iParam)
 {
   HB_BIO **ptr = (HB_BIO **)hb_parptrGC(&s_gcBIOFuncs, iParam);
 
   return ptr ? (*ptr)->bio : nullptr;
 }
 
-HB_BOOL hb_BIO_is(int iParam)
+HB_BOOL hb_BIO_is(int32_t iParam)
 {
   HB_BIO **ptr = (HB_BIO **)hb_parptrGC(&s_gcBIOFuncs, iParam);
 
@@ -121,15 +121,15 @@ static void hb_BIO_ret(BIO *bio, void *hStrRef)
 
 //
 
-static HB_BOOL hb_BIO_METHOD_is(int iParam)
+static HB_BOOL hb_BIO_METHOD_is(int32_t iParam)
 {
   return HB_ISCHAR(iParam);
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-static const BIO_METHOD *hb_BIO_METHOD_par(int iParam)
+static const BIO_METHOD *hb_BIO_METHOD_par(int32_t iParam)
 #else
-static BIO_METHOD *hb_BIO_METHOD_par(int iParam)
+static BIO_METHOD *hb_BIO_METHOD_par(int32_t iParam)
 #endif
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -200,7 +200,7 @@ static BIO_METHOD *hb_BIO_METHOD_par(int iParam)
 
 #if 0
 // NOTE: Unused yet. Commented to avoid warning
-static int hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
+static int32_t hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
 {
    int n;
 

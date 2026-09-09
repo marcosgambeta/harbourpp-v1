@@ -99,11 +99,11 @@ static HB_TSD_NEW(s_dispc, sizeof(FT_DISPC), nullptr, nullptr);
 
 /* prototypes */
 
-static void          chattr(PFT_DISPC dispc, int x, int y, int len, int attr);
+static void          chattr(PFT_DISPC dispc, int32_t x, int32_t y, int32_t len, int32_t attr);
 static HB_FOFFSET    getblock(PFT_DISPC dispc, HB_FOFFSET offset);
 static void          buff_align(PFT_DISPC dispc);
 static void          win_align(PFT_DISPC dispc);
-static void          disp_update(PFT_DISPC dispc, int offset);
+static void          disp_update(PFT_DISPC dispc, int32_t offset);
 static void          windown(PFT_DISPC dispc);
 static void          winup(PFT_DISPC dispc);
 static void          linedown(PFT_DISPC dispc);
@@ -117,7 +117,7 @@ static void          filebot(PFT_DISPC dispc);
  *
  */
 
-static void chattr( PFT_DISPC dispc, int x, int y, int len, int attr )
+static void chattr( PFT_DISPC dispc, int32_t x, int32_t y, int32_t len, int32_t attr )
 {
    /* calc the screen memory coord */
    uint8_t * vmem;
@@ -302,7 +302,7 @@ static void win_align( PFT_DISPC dispc )
  *
  */
 
-static void disp_update(PFT_DISPC dispc, int offset)
+static void disp_update(PFT_DISPC dispc, int32_t offset)
 {
    int line, col, pos, i;
 

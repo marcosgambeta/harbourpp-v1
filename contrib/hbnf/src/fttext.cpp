@@ -463,7 +463,7 @@ static long _ft_skip( long iRecs )
 /* inserts xxx bytes into the current file, beginning at the current record */
 /* the contents of the inserted bytes are indeterminate, i.e. you'll have to
      write to them before they mean anything */
-static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
+static int32_t _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 {
    auto ReadBuff = static_cast<char*>(hb_xgrab(BUFFSIZE));
    auto WriteBuff = static_cast<char*>(hb_xgrab(BUFFSIZE));
@@ -551,7 +551,7 @@ static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 }
 
 /* deletes xxx bytes from the current file, beginning at the current record */
-static int _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
+static int32_t _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 {
    auto WriteBuff = static_cast<char*>(hb_xgrab(BUFFSIZE));
    HB_FOFFSET fpRead, fpWrite;

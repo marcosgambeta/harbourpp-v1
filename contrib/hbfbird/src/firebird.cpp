@@ -102,7 +102,7 @@ static void hb_FB_db_handle_ret(isc_db_handle p)
   }
 }
 
-static isc_db_handle hb_FB_db_handle_par(int iParam)
+static isc_db_handle hb_FB_db_handle_par(int32_t iParam)
 {
   auto ph = static_cast<isc_db_handle *>(hb_parptrGC(&s_gcFB_db_handleFuncs, iParam));
 

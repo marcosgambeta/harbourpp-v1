@@ -83,24 +83,24 @@ static HB_GARBAGE_FUNC(EVP_MD_CTX_release)
 
 static const HB_GC_FUNCS s_gcEVP_MD_CTX_funcs = {EVP_MD_CTX_release, hb_gcDummyMark};
 
-static HB_BOOL hb_EVP_MD_CTX_is(int iParam)
+static HB_BOOL hb_EVP_MD_CTX_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam) != nullptr;
 }
 
-static EVP_MD_CTX *hb_EVP_MD_CTX_par(int iParam)
+static EVP_MD_CTX *hb_EVP_MD_CTX_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam);
 
   return ph ? (EVP_MD_CTX *)*ph : nullptr;
 }
 
-HB_BOOL hb_EVP_MD_is(int iParam)
+HB_BOOL hb_EVP_MD_is(int32_t iParam)
 {
   return HB_ISCHAR(iParam) || HB_ISNUM(iParam);
 }
 
-const EVP_MD *hb_EVP_MD_par(int iParam)
+const EVP_MD *hb_EVP_MD_par(int32_t iParam)
 {
   const EVP_MD *p;
 

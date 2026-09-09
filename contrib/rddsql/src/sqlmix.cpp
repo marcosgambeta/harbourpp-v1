@@ -239,7 +239,7 @@ static void hb_mixKeyFree(PMIXKEY pKey)
   hb_xfree(pKey);
 }
 
-static int hb_mixKeyCompare(PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, uint32_t uiLen)
+static int32_t hb_mixKeyCompare(PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, uint32_t uiLen)
 {
   if (!pKey1->notnul || !pKey2->notnul) {
     return static_cast<int32_t>(pKey1->notnul) - static_cast<int32_t>(pKey2->notnul);
@@ -293,7 +293,7 @@ static int hb_mixKeyCompare(PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, uint32_t
 
 // This function is used for debugging purposes. Uncomment it, if you need it.
 #if 0
-static void hb_mixTagPrintNode(PMIXTAG pTag, PMIXNODE pNode, int iLevel)
+static void hb_mixTagPrintNode(PMIXTAG pTag, PMIXNODE pNode, int32_t iLevel)
 {
    if( !pNode ) {
       return;
@@ -350,7 +350,7 @@ static uint32_t hb_mixTagNodeParentIndex(PMIXNODE pNode)
   return static_cast<uint32_t>(-1);
 }
 
-static int hb_mixTagFindKey(PMIXTAG pTag, PMIXKEY pKey, uint32_t uiLen, PMIXNODE *ppNode, uint32_t *puiPos,
+static int32_t hb_mixTagFindKey(PMIXTAG pTag, PMIXKEY pKey, uint32_t uiLen, PMIXNODE *ppNode, uint32_t *puiPos,
                             HB_BOOL fValidKey)
 {
   PMIXNODE pNode = pTag->Root;

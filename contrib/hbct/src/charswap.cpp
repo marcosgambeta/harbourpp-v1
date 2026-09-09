@@ -56,7 +56,7 @@
 #define DO_CHARSWAP_WORDSWAP_CHARSWAP 2
 
 // helper function for the CharSwap() and WordSwap() functions
-static void do_charswap(int iSwitch)
+static void do_charswap(int32_t iSwitch)
 {
   // suppress return value ?
   int32_t iNoRet = ct_getref() && HB_ISBYREF(1);

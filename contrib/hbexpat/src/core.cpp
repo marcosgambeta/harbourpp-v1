@@ -158,7 +158,7 @@ static void * XMLCALL hb_expat_xrealloc(void * p, size_t size)
 
 /* Common */
 
-static void hb_expat_hnd_void(int nHnd, void * userdata)
+static void hb_expat_hnd_void(int32_t nHnd, void * userdata)
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -176,7 +176,7 @@ static void hb_expat_hnd_void(int nHnd, void * userdata)
    }
 }
 
-static void hb_expat_hnd_C(int nHnd, void * userdata, const XML_Char * par1)
+static void hb_expat_hnd_C(int32_t nHnd, void * userdata, const XML_Char * par1)
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -197,7 +197,7 @@ static void hb_expat_hnd_C(int nHnd, void * userdata, const XML_Char * par1)
    }
 }
 
-static void hb_expat_hnd_CLen(int nHnd, void * userdata, const XML_Char * par1, int par1len)
+static void hb_expat_hnd_CLen(int32_t nHnd, void * userdata, const XML_Char * par1, int32_t par1len)
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -278,7 +278,7 @@ static void XMLCALL hb_expat_EndElementHandler( void * userdata, const XML_Char 
    hb_expat_hnd_C(_VAR_bEndElementHandler, userdata, name);
 }
 
-static void XMLCALL hb_expat_CharacterDataHandler( void * userdata, const XML_Char * s, int len )
+static void XMLCALL hb_expat_CharacterDataHandler( void * userdata, const XML_Char * s, int32_t len )
 {
    hb_expat_hnd_CLen(_VAR_bCharacterDataHandler, userdata, s, len);
 }
@@ -321,17 +321,17 @@ static void XMLCALL hb_expat_EndCdataSectionHandler( void * userdata )
    hb_expat_hnd_void(_VAR_bEndCdataSectionHandler, userdata);
 }
 
-static void XMLCALL hb_expat_DefaultHandler( void * userdata, const XML_Char * s, int len )
+static void XMLCALL hb_expat_DefaultHandler( void * userdata, const XML_Char * s, int32_t len )
 {
    hb_expat_hnd_CLen(_VAR_bDefaultHandler, userdata, s, len);
 }
 
-static void XMLCALL hb_expat_DefaultHandlerExpand(void * userdata, const XML_Char * s, int len)
+static void XMLCALL hb_expat_DefaultHandlerExpand(void * userdata, const XML_Char * s, int32_t len)
 {
    hb_expat_hnd_CLen(_VAR_bDefaultHandlerExpand, userdata, s, len);
 }
 
-static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata, const XML_Char * entityName, int is_parameter_entity )
+static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata, const XML_Char * entityName, int32_t is_parameter_entity )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -354,7 +354,7 @@ static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata, const XML_Ch
    }
 }
 
-static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_Char * name, XML_Encoding * info )
+static int32_t XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_Char * name, XML_Encoding * info )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
    int       iResult  = XML_STATUS_ERROR;
@@ -425,7 +425,7 @@ static void XMLCALL hb_expat_EndNamespaceDeclHandler( void * userdata, const XML
    hb_expat_hnd_C(_VAR_bEndNamespaceDeclHandler, userdata, prefix);
 }
 
-static void XMLCALL hb_expat_XmlDeclHandler( void * userdata, const XML_Char * version, const XML_Char * encoding, int standalone )
+static void XMLCALL hb_expat_XmlDeclHandler( void * userdata, const XML_Char * version, const XML_Char * encoding, int32_t standalone )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -450,7 +450,7 @@ static void XMLCALL hb_expat_XmlDeclHandler( void * userdata, const XML_Char * v
    }
 }
 
-static void XMLCALL hb_expat_StartDoctypeDeclHandler( void * userdata, const XML_Char * doctypeName, const XML_Char * sysid, const XML_Char * pubid, int has_internal_subset )
+static void XMLCALL hb_expat_StartDoctypeDeclHandler( void * userdata, const XML_Char * doctypeName, const XML_Char * sysid, const XML_Char * pubid, int32_t has_internal_subset )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -482,7 +482,7 @@ static void XMLCALL hb_expat_EndDoctypeDeclHandler( void * userdata )
    hb_expat_hnd_void(_VAR_bEndDoctypeDeclHandler, userdata);
 }
 
-static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata, const XML_Char * elname, const XML_Char * attname, const XML_Char * att_type, const XML_Char * dflt, int isrequired )
+static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata, const XML_Char * elname, const XML_Char * attname, const XML_Char * att_type, const XML_Char * dflt, int32_t isrequired )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -511,7 +511,7 @@ static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata, const XML_Char
    }
 }
 
-static void XMLCALL hb_expat_EntityDeclHandler( void * userdata, const XML_Char * entityName, int is_parameter_entity, const XML_Char * value, int value_length, const XML_Char * base, const XML_Char * systemId, const XML_Char * publicId, const XML_Char * notationName )
+static void XMLCALL hb_expat_EntityDeclHandler( void * userdata, const XML_Char * entityName, int32_t is_parameter_entity, const XML_Char * value, int32_t value_length, const XML_Char * base, const XML_Char * systemId, const XML_Char * publicId, const XML_Char * notationName )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -602,7 +602,7 @@ static void XMLCALL hb_expat_NotationDeclHandler( void * userdata, const XML_Cha
    }
 }
 
-static int XMLCALL hb_expat_NotStandaloneHandler( void * userdata )
+static int32_t XMLCALL hb_expat_NotStandaloneHandler( void * userdata )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
@@ -691,7 +691,7 @@ static PHB_EXPAT PHB_EXPAT_par( int iParam )
    return ph ? static_cast<PHB_EXPAT>(*ph) : nullptr;
 }
 
-static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, HB_ITEM *pBlock )
+static void hb_expat_setvar( PHB_EXPAT hb_expat, int32_t iHandler, HB_ITEM *pBlock )
 {
    if( hb_expat->pVar[iHandler] )
    {

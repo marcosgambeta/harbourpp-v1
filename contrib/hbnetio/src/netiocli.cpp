@@ -231,10 +231,10 @@ static long s_fileRecvTest(PHB_CONCLI conn, void * buffer, long len)
    return lRead;
 }
 
-static int s_fileGenSrvDataID(PHB_CONCLI conn)
+static int32_t s_fileGenSrvDataID(PHB_CONCLI conn)
 {
    PHB_SRVDATA pSrvData = conn->srvdata;
-   static int s_iStreamID = 0;
+   static int32_t s_iStreamID = 0;
 
    if( ++s_iStreamID <= 0 )
    {
@@ -260,7 +260,7 @@ static int s_fileGenSrvDataID(PHB_CONCLI conn)
    return s_iStreamID;
 }
 
-static PHB_SRVDATA s_fileFindSrvData(PHB_CONCLI conn, int iStreamID, int iType)
+static PHB_SRVDATA s_fileFindSrvData(PHB_CONCLI conn, int32_t iStreamID, int32_t iType)
 {
    PHB_SRVDATA pSrvData = conn->srvdata;
 
@@ -276,7 +276,7 @@ static PHB_SRVDATA s_fileFindSrvData(PHB_CONCLI conn, int iStreamID, int iType)
    return nullptr;
 }
 
-static int s_fileNewSrvData(PHB_CONCLI conn, int iType)
+static int32_t s_fileNewSrvData(PHB_CONCLI conn, int32_t iType)
 {
    auto pSrvData = static_cast<PHB_SRVDATA>(hb_xgrabz(sizeof(HB_SRVDATA)));
    pSrvData->id = s_fileGenSrvDataID(conn);
@@ -303,7 +303,7 @@ static int s_fileNewSrvData(PHB_CONCLI conn, int iType)
    return pSrvData->id;
 }
 
-static HB_BOOL s_fileCloseSrvData(PHB_CONCLI conn, int iStreamID)
+static HB_BOOL s_fileCloseSrvData(PHB_CONCLI conn, int32_t iStreamID)
 {
    PHB_SRVDATA * pSrvDataPtr = &conn->srvdata;
 
@@ -334,7 +334,7 @@ static HB_BOOL s_fileCloseSrvData(PHB_CONCLI conn, int iStreamID)
    return false;
 }
 
-static HB_BOOL s_fileRecvSrvData(PHB_CONCLI conn, long len, int iStreamID, int iType)
+static HB_BOOL s_fileRecvSrvData(PHB_CONCLI conn, long len, int32_t iStreamID, int32_t iType)
 {
    auto buffer = static_cast<char*>(hb_xgrab(len));
    bool fResult = false;
@@ -614,7 +614,7 @@ static void s_fileConFree(PHB_CONCLI conn)
    hb_xfree(conn);
 }
 
-static PHB_CONCLI s_fileConNew(HB_SOCKET sd, const char * pszServer, int iPort, int iTimeOut, const char * pszPasswd, int iPassLen, int iLevel, int iStrategy)
+static PHB_CONCLI s_fileConNew(HB_SOCKET sd, const char * pszServer, int32_t iPort, int32_t iTimeOut, const char * pszPasswd, int32_t iPassLen, int32_t iLevel, int32_t iStrategy)
 {
    auto iLen = static_cast<int32_t>(strlen(pszServer));
    auto conn = static_cast<PHB_CONCLI>(hb_xgrab(sizeof(HB_CONCLI) + iLen));
@@ -703,7 +703,7 @@ static void s_fileConClose(PHB_CONCLI conn)
    }
 }
 
-static PHB_CONCLI s_fileConFind(const char * pszServer, int iPort)
+static PHB_CONCLI s_fileConFind(const char * pszServer, int32_t iPort)
 {
    PHB_CONCLI conn;
 
@@ -723,7 +723,7 @@ static PHB_CONCLI s_fileConFind(const char * pszServer, int iPort)
    return conn;
 }
 
-static HB_BOOL s_fileUsrDisconnect(const char * pszServer, int iPort)
+static HB_BOOL s_fileUsrDisconnect(const char * pszServer, int32_t iPort)
 {
    PHB_CONCLI conn, connClose = nullptr;
 
@@ -808,7 +808,7 @@ static PHB_CONCLI s_fileNameConFind(const char ** pFileName, HB_BOOL fLock)
 }
 
 
-static void s_fileGetConnParam(const char ** pszServer, int * piPort, int * piTimeOut, const char ** pszPasswd, int * piPassLen)
+static void s_fileGetConnParam(const char ** pszServer, int32_t * piPort, int32_t * piTimeOut, const char ** pszPasswd, int32_t * piPassLen)
 {
    auto pConData = static_cast<PHB_CONDATA>(hb_stackTestTSD(&s_conData));
 
@@ -836,8 +836,8 @@ static void s_fileGetConnParam(const char ** pszServer, int * piPort, int * piTi
    }
 }
 
-static const char * s_fileDecode(const char * pszFileName, char * buffer, const char ** pServer, int * piPort, int * piTimeOut,
-                                 const char ** pPasswd, int * piPassLen, int * piLevel, int * piStrategy)
+static const char * s_fileDecode(const char * pszFileName, char * buffer, const char ** pServer, int32_t * piPort, int32_t * piTimeOut,
+                                 const char ** pPasswd, int32_t * piPassLen, int32_t * piLevel, int32_t * piStrategy)
 {
    HB_SYMBOL_UNUSED(piTimeOut);
    HB_SYMBOL_UNUSED(piLevel);
@@ -1026,8 +1026,8 @@ static PHB_CONCLI s_fileConnCheck(PHB_CONCLI conn, const char ** pFileName, HB_B
    return nullptr;
 }
 
-static PHB_CONCLI s_fileConnect(const char ** pFileName, const char * pszServer, int iPort, int iTimeOut, HB_BOOL fNoError,
-                                const char * pszPasswd, int iPassLen, int iLevel, int iStrategy)
+static PHB_CONCLI s_fileConnect(const char ** pFileName, const char * pszServer, int32_t iPort, int32_t iTimeOut, HB_BOOL fNoError,
+                                const char * pszPasswd, int32_t iPassLen, int32_t iLevel, int32_t iStrategy)
 {
    PHB_CONCLI conn = nullptr;
 
@@ -1281,7 +1281,7 @@ static const HB_GC_FUNCS s_gcConCliFuncs =
    hb_gcDummyMark
 };
 
-static PHB_CONCLI s_connParam(int iParam)
+static PHB_CONCLI s_connParam(int32_t iParam)
 {
    auto conn_ptr = static_cast<PHB_CONCLI*>(hb_parptrGC(&s_gcConCliFuncs, iParam));
 
@@ -1418,7 +1418,7 @@ HB_FUNC(NETIO_SETPATH)
    }
 }
 
-static const char * s_netio_params(int iParam, int iMsg, const char * pszName, uint32_t * pSize, char ** pFree)
+static const char * s_netio_params(int32_t iParam, int32_t iMsg, const char * pszName, uint32_t * pSize, char ** pFree)
 {
    int iPCount = iMsg == NETIO_PROCIS ? 0 : hb_pcount();
    char * data = nullptr;
@@ -1448,7 +1448,7 @@ static const char * s_netio_params(int iParam, int iMsg, const char * pszName, u
    return data ? data : pszName;
 }
 
-static HB_BOOL s_netio_procexec(int iMsg, int iType)
+static HB_BOOL s_netio_procexec(int32_t iMsg, int32_t iType)
 {
    bool fResult = false;
    int iParam = 1;
@@ -2408,7 +2408,7 @@ static void s_fileClose(PHB_FILE pFile)
    hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int32_t iType)
 {
    bool fResult = false;
 
@@ -2433,7 +2433,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, 
    return fResult;
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int iType)
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int32_t iType)
 {
    int iResult = -1;
 
@@ -2705,7 +2705,7 @@ static void s_fileCommit(PHB_FILE pFile)
    }
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
    bool fResult = false;
 

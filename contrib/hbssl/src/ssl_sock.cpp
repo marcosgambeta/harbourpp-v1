@@ -62,7 +62,7 @@ typedef struct _HB_SSLSTREAM
   HB_BOOL blocking;
 } HB_SSLSTREAM;
 
-const char *hb_ssl_socketErrorStr(int iError)
+const char *hb_ssl_socketErrorStr(int32_t iError)
 {
   if (iError >= HB_SSL_SOCK_ERROR_BASE) {
     switch (iError - HB_SSL_SOCK_ERROR_BASE) {
@@ -248,7 +248,7 @@ void hb_ssl_socketClose(PHB_SSLSTREAM pStream)
   hb_xfree(pStream);
 }
 
-PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXINT timeout, HB_ITEM *pSSL, int *piResult)
+PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL *ssl, HB_BOOL fServer, HB_MAXINT timeout, HB_ITEM *pSSL, int32_t *piResult)
 {
   PHB_SSLSTREAM pStream;
   HB_MAXUINT timer;
@@ -393,7 +393,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, HB_ITEM *pParams)
   return pSockNew;
 }
 
-static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
+static int32_t s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
   int iResult;
 
@@ -443,7 +443,7 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
   return 0;
 }
 
-static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   if (pSock->inbuffer)
     return 1;
@@ -468,7 +468,7 @@ static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
   return fBuffer ? 0 : hb_socketSelectRead(pSock->sd, timeout);
 }
 
-static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
+static int32_t s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
   if (pSock->sd == HB_NO_SOCKET) {
     hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
@@ -482,7 +482,7 @@ static char *s_sockexName(PHB_SOCKEX pSock)
   return hb_strdup(pSock->pFilter->pszName);
 }
 
-static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int32_t iError)
 {
   HB_SYMBOL_UNUSED(pSock);
 

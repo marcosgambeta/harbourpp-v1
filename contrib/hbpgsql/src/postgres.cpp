@@ -82,7 +82,7 @@ void hb_PGconn_ret(PGconn *p)
   }
 }
 
-PGconn *hb_PGconn_par(int iParam)
+PGconn *hb_PGconn_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcPGconnFuncs, iParam));
   return ph ? static_cast<PGconn *>(*ph) : nullptr;
@@ -119,7 +119,7 @@ void hb_PGresult_ret(PGresult *p)
   }
 }
 
-PGresult *hb_PGresult_par(int iParam)
+PGresult *hb_PGresult_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcPGresultFuncs, iParam));
   return ph ? static_cast<PGresult *>(*ph) : nullptr;
@@ -158,7 +158,7 @@ static void hb_PGcancel_ret(PGcancel *p)
   }
 }
 
-static PGcancel *hb_PGcancel_par(int iParam)
+static PGcancel *hb_PGcancel_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcPGcancelFuncs, iParam));
   return ph ? static_cast<PGcancel *>(*ph) : nullptr;
@@ -199,7 +199,7 @@ static void hb_FILE_ret(FILE *p)
   }
 }
 
-static FILE *hb_FILE_par(int iParam)
+static FILE *hb_FILE_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcFILEFuncs, iParam));
   return ph ? static_cast<FILE *>(*ph) : nullptr;

@@ -101,7 +101,7 @@
    #define _VER_PLATFORM   0x00
 #endif
 
-static int _version_made_by(bool fUnicode)
+static int32_t _version_made_by(bool fUnicode)
 {
    return (fUnicode ? 0x3F /* 6.3.x */ : 0x14 /* 2.0.x */) | (_VER_PLATFORM << 8);
 }
@@ -124,7 +124,7 @@ static const HB_GC_FUNCS s_gcZipFileFuncs =
    hb_gcDummyMark
 };
 
-static zipFile hb_zipfileParam(int iParam)
+static zipFile hb_zipfileParam(int32_t iParam)
 {
    auto phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, iParam));
 
@@ -152,7 +152,7 @@ static const HB_GC_FUNCS s_gcUnZipFileFuncs =
    hb_gcDummyMark
 };
 
-static unzFile hb_unzipfileParam(int iParam)
+static unzFile hb_unzipfileParam(int32_t iParam)
 {
    auto phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, iParam));
 
@@ -164,7 +164,7 @@ static unzFile hb_unzipfileParam(int iParam)
    return nullptr;
 }
 
-static PHB_FILE hb_fileHandleParam(int iParam, bool * pfFree)
+static PHB_FILE hb_fileHandleParam(int32_t iParam, bool * pfFree)
 {
    PHB_FILE pFile = nullptr;
 
@@ -685,7 +685,7 @@ HB_FUNC(HB_ZIPFILECRC32)
    }
 }
 
-static int hb_zipStoreFile(zipFile hZip, int iParamFileName, int iParamZipName, const char * szPassword, int iParamComment, bool fUnicode)
+static int32_t hb_zipStoreFile(zipFile hZip, int32_t iParamFileName, int32_t iParamZipName, const char * szPassword, int32_t iParamComment, bool fUnicode)
 {
    auto szFileName = hb_parc(iParamFileName);
    PHB_FILE     pFile;
@@ -938,7 +938,7 @@ HB_FUNC(HB_ZIPSTOREFILE)
    }
 }
 
-static int hb_zipStoreFileHandle(zipFile hZip, PHB_FILE pFile, int iParamZipName, const char * szPassword, int iParamComment, bool fUnicode)
+static int32_t hb_zipStoreFileHandle(zipFile hZip, PHB_FILE pFile, int32_t iParamZipName, const char * szPassword, int32_t iParamComment, bool fUnicode)
 {
    HB_SIZE      nLen;
    zip_fileinfo zfi;
@@ -1042,7 +1042,7 @@ HB_FUNC(HB_ZIPSTOREFILEHANDLE)
    }
 }
 
-static int hb_unzipExtractCurrentFile(unzFile hUnzip, const char * szFileName, const char * szPassword)
+static int32_t hb_unzipExtractCurrentFile(unzFile hUnzip, const char * szFileName, const char * szPassword)
 {
    char          szNameRaw[HB_PATH_MAX * 3];
    char *        szName;
@@ -1226,7 +1226,7 @@ HB_FUNC(HB_UNZIPEXTRACTCURRENTFILE)
    }
 }
 
-static int hb_unzipExtractCurrentFileToHandle(unzFile hUnzip, PHB_FILE pFile, const char * szPassword)
+static int32_t hb_unzipExtractCurrentFileToHandle(unzFile hUnzip, PHB_FILE pFile, const char * szPassword)
 {
    unz_file_info ufi;
 
@@ -1298,7 +1298,7 @@ HB_FUNC(HB_UNZIPEXTRACTCURRENTFILETOHANDLE)
    }
 }
 
-static int hb_zipDeleteFile(const char * szZipFile, const char * szFileMask)
+static int32_t hb_zipDeleteFile(const char * szZipFile, const char * szFileMask)
 {
    char            szTempFile[HB_PATH_MAX];
    char            szCurrFile[HB_PATH_MAX * 3];

@@ -55,7 +55,7 @@
 #define DO_CHARONE_WORDONE 1
 
 // helper function for the *one functions
-static void do_charone(int iSwitch)
+static void do_charone(int32_t iSwitch)
 {
   // param check
   if (HB_ISCHAR(1)) {

@@ -53,7 +53,7 @@
 #define DO_PAD_PADRIGHT 1
 
 // helper function for the pad functions
-static void do_pad(int iSwitch)
+static void do_pad(int32_t iSwitch)
 {
   if (HB_ISCHAR(1) && HB_ISNUM(2)) {
     auto pcString = hb_parc(1);

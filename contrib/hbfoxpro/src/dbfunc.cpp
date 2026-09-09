@@ -52,7 +52,7 @@
 #include <hbapierr.hpp>
 #include <hbset.hpp>
 
-static AREAP s_foxAreaPointer(int iParam)
+static AREAP s_foxAreaPointer(int32_t iParam)
 {
    if( HB_ISNIL(iParam) )
    {

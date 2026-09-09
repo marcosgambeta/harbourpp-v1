@@ -76,7 +76,7 @@ HB_ITEM *hb_cairoItemPut(HB_ITEM *pItem, cairo_t *pCairo)
   return hb_itemPutPtrGC(pItem, ppCairo);
 }
 
-cairo_t *hb_cairo_param(int iParam)
+cairo_t *hb_cairo_param(int32_t iParam)
 {
   auto ppCairo = static_cast<cairo_t **>(hb_parptrGC(&s_gcCairoFuncs, iParam));
 
@@ -138,7 +138,7 @@ HB_ITEM *hb_cairoSurfaceItemPut(HB_ITEM *pItem, cairo_surface_t *pSurface)
   return hb_itemPutPtrGC(pItem, ppSurface);
 }
 
-void hb_cairoSurfaceStor(cairo_surface_t *pSurface, int iParam)
+void hb_cairoSurfaceStor(cairo_surface_t *pSurface, int32_t iParam)
 {
   auto ppSurface = static_cast<cairo_surface_t **>(hb_gcAllocate(sizeof(cairo_surface_t *), &s_gcSurfaceFuncs));
 
@@ -146,7 +146,7 @@ void hb_cairoSurfaceStor(cairo_surface_t *pSurface, int iParam)
   hb_storptrGC(ppSurface, iParam);
 }
 
-cairo_surface_t *hb_cairo_surface_param(int iParam)
+cairo_surface_t *hb_cairo_surface_param(int32_t iParam)
 {
   auto ppSurface = static_cast<cairo_surface_t **>(hb_parptrGC(&s_gcSurfaceFuncs, iParam));
 
@@ -208,7 +208,7 @@ HB_ITEM *hb_cairoPathItemPut(HB_ITEM *pItem, cairo_path_t *pPath)
   return hb_itemPutPtrGC(pItem, ppPath);
 }
 
-cairo_path_t *hb_cairo_path_param(int iParam)
+cairo_path_t *hb_cairo_path_param(int32_t iParam)
 {
   auto ppPath = static_cast<cairo_path_t **>(hb_parptrGC(&s_gcPathFuncs, iParam));
 

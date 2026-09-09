@@ -65,19 +65,19 @@ static HB_GARBAGE_FUNC(s_RSA_release)
 
 static const HB_GC_FUNCS s_gcRSA_funcs = {s_RSA_release, hb_gcDummyMark};
 
-HB_BOOL hb_RSA_is(int iParam)
+HB_BOOL hb_RSA_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcRSA_funcs, iParam) != nullptr;
 }
 
-RSA *hb_RSA_par(int iParam)
+RSA *hb_RSA_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcRSA_funcs, iParam);
 
   return ph ? (RSA *)*ph : nullptr;
 }
 
-void hb_RSA_par_remove(int iParam)
+void hb_RSA_par_remove(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcRSA_funcs, iParam);
 

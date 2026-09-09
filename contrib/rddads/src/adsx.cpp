@@ -259,7 +259,7 @@ static void mixKeyFree(PMIXKEY pKey)
   hb_xfree(pKey);
 }
 
-static int mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, HB_CODEPAGE *pCodepage)
+static int32_t mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, HB_CODEPAGE *pCodepage)
 {
   int i;
 
@@ -370,7 +370,7 @@ static PMIXKEY mixFindKey(PMIXTAG pTag, PMIXKEY pKey, HB_ULONG *ulKeyPos)
   return mixFindKeyLen(pTag, pKey, pTag->uiLen, ulKeyPos);
 }
 
-static int mixCompareKey(PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, uint16_t uiLen)
+static int32_t mixCompareKey(PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, uint16_t uiLen)
 {
   return mixQSortCompare(pTag->pKeys[ulKeyPos], pKey, uiLen, pTag->pCodepage);
 }
@@ -589,7 +589,7 @@ static PMIXUPDATE mixUpdateCreate(ADSXAREAP pArea)
   return pUpdate;
 }
 
-static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate)
+static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int32_t fUpdate)
 {
   PMIXTAG pTag = pArea->pTagList;
   int iTag;

@@ -78,24 +78,24 @@ static HB_GARBAGE_FUNC(EVP_CIPHER_CTX_release)
 
 static const HB_GC_FUNCS s_gcEVP_CIPHER_CTX_funcs = {EVP_CIPHER_CTX_release, hb_gcDummyMark};
 
-static HB_BOOL hb_EVP_CIPHER_CTX_is(int iParam)
+static HB_BOOL hb_EVP_CIPHER_CTX_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcEVP_CIPHER_CTX_funcs, iParam) != nullptr;
 }
 
-static EVP_CIPHER_CTX *hb_EVP_CIPHER_CTX_par(int iParam)
+static EVP_CIPHER_CTX *hb_EVP_CIPHER_CTX_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcEVP_CIPHER_CTX_funcs, iParam);
 
   return ph ? (EVP_CIPHER_CTX *)*ph : nullptr;
 }
 
-HB_BOOL hb_EVP_CIPHER_is(int iParam)
+HB_BOOL hb_EVP_CIPHER_is(int32_t iParam)
 {
   return HB_ISCHAR(iParam) || HB_ISNUM(iParam);
 }
 
-const EVP_CIPHER *hb_EVP_CIPHER_par(int iParam)
+const EVP_CIPHER *hb_EVP_CIPHER_par(int32_t iParam)
 {
   const EVP_CIPHER *p;
 
@@ -460,7 +460,7 @@ const EVP_CIPHER *hb_EVP_CIPHER_par(int iParam)
   return p;
 }
 
-static int hb_EVP_CIPHER_ptr_to_id(const EVP_CIPHER *p)
+static int32_t hb_EVP_CIPHER_ptr_to_id(const EVP_CIPHER *p)
 {
   int n;
 
@@ -1227,7 +1227,7 @@ HB_FUNC(EVP_SEALINIT)
 
       if (npubk > 0) {
         unsigned char **ek = (unsigned char **)hb_xgrab(sizeof(unsigned char *) * npubk);
-        int *ekl = (int *)hb_xgrab(sizeof(int) * npubk);
+        int *ekl = (int32_t *)hb_xgrab(sizeof(int32_t) * npubk);
         int ivl = EVP_CIPHER_iv_length(cipher);
         unsigned char *iv = ivl > 0 ? (unsigned char *)hb_xgrab(ivl + 1) : nullptr;
 

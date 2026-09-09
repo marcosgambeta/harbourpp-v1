@@ -837,7 +837,7 @@ HB_MEMFS_EXPORT void hb_memfsCommit(HB_FHANDLE hFile)
    HB_SYMBOL_UNUSED(hFile);
 }
 
-HB_MEMFS_EXPORT HB_BOOL hb_memfsLock(HB_FHANDLE hFile, HB_FOFFSET ulStart, HB_FOFFSET nLength, int iMode)
+HB_MEMFS_EXPORT HB_BOOL hb_memfsLock(HB_FHANDLE hFile, HB_FOFFSET ulStart, HB_FOFFSET nLength, int32_t iMode)
 {
    HB_SYMBOL_UNUSED(hFile);
    HB_SYMBOL_UNUSED(ulStart);
@@ -846,7 +846,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsLock(HB_FHANDLE hFile, HB_FOFFSET ulStart, HB_FO
    return true;
 }
 
-HB_MEMFS_EXPORT int hb_memfsLockTest(HB_FHANDLE hFile, HB_FOFFSET ulStart, HB_FOFFSET nLength, int iMode)
+HB_MEMFS_EXPORT int hb_memfsLockTest(HB_FHANDLE hFile, HB_FOFFSET ulStart, HB_FOFFSET nLength, int32_t iMode)
 {
    HB_SYMBOL_UNUSED(hFile);
    HB_SYMBOL_UNUSED(ulStart);
@@ -1073,12 +1073,12 @@ static void s_fileClose(PHB_FILE pFile)
    hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET nLen, int32_t iType)
 {
    return hb_memfsLock(pFile->hFile, ulStart, nLen, iType);
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET nLen, int iType)
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET nLen, int32_t iType)
 {
    return hb_memfsLockTest(pFile->hFile, ulStart, nLen, iType);
 }
@@ -1135,7 +1135,7 @@ static void s_fileCommit(PHB_FILE pFile)
    hb_memfsCommit(pFile->hFile);
 }
 
-static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, HB_ITEM *pValue)
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 {
    HB_SYMBOL_UNUSED(pFile);
 

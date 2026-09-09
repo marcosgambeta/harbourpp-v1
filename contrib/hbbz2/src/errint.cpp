@@ -53,12 +53,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern HB_EXPORT void bz_internal_error(int errcode);
+extern HB_EXPORT void bz_internal_error(int32_t errcode);
 #ifdef __cplusplus
 }
 #endif
 
-void bz_internal_error(int errcode)
+void bz_internal_error(int32_t errcode)
 {
    hb_errInternal(static_cast<HB_ERRCODE>(errcode), "libbzip2", nullptr, nullptr);
 }

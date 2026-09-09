@@ -56,7 +56,7 @@
 static const HB_ERRCODE sulErrorSubcodes[] = {CT_ERROR_REPLALL, CT_ERROR_REPLLEFT, CT_ERROR_REPLRIGHT};
 
 // helper function for the Repl*() functions
-static void do_replace(int iSwitch)
+static void do_replace(int32_t iSwitch)
 {
   // suppressing return value ?
   int32_t iNoRet = ct_getref() && HB_ISBYREF(1);

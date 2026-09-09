@@ -56,7 +56,7 @@
 static const HB_ERRCODE sulErrorSubcodes[] = {CT_ERROR_REMALL, CT_ERROR_REMLEFT, CT_ERROR_REMRIGHT};
 
 // helper function for the Rem*() functions
-static void do_remove(int iSwitch)
+static void do_remove(int32_t iSwitch)
 {
   // param check
   if (HB_ISCHAR(1)) {

@@ -24,7 +24,7 @@ int execute( char * exec_str );
 int query( char * sel_str );
 int fetch( void );
 int qclose( void );
-char * getdata(int pos);
+char * getdata(int32_t pos);
 
 
 isc_db_handle db = NULL;
@@ -208,7 +208,7 @@ int qclose( void )
    return 1;
 }
 
-char * getdata(int pos)
+char * getdata(int32_t pos)
 {
    short dtype;
    char  data[ MAX_BUFFER ], * p;

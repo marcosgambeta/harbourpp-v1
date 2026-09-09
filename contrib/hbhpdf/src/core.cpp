@@ -61,7 +61,7 @@ static HB_GARBAGE_FUNC(hb_HPDF_Doc_release)
 
 static const HB_GC_FUNCS s_gcHPDF_DocFuncs = {hb_HPDF_Doc_release, hb_gcDummyMark};
 
-HPDF_Doc hb_HPDF_Doc_par(int iParam)
+HPDF_Doc hb_HPDF_Doc_par(int32_t iParam)
 {
   auto ph = static_cast<void **>(hb_parptrGC(&s_gcHPDF_DocFuncs, iParam));
 

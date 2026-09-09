@@ -145,7 +145,7 @@ static bool amfX_decode_double(amfContext *context, double *val)
   return true;
 }
 
-static bool amf3_decode_int(amfContext *context, int *iVal)
+static bool amf3_decode_int(amfContext *context, int32_t *iVal)
 {
   const char *byte_ref;
   char byte;
@@ -198,7 +198,7 @@ static bool amf3_decode_int(amfContext *context, int *iVal)
 
 #if 0
 
-static bool amf3_decode_reference(HB_ITEM *pHash, int val, HB_ITEM *pRefItem)
+static bool amf3_decode_reference(HB_ITEM *pHash, int32_t val, HB_ITEM *pRefItem)
 {
    /* Check for index reference */
    if( (val & REFERENCE_BIT) == 0 ) {
@@ -216,7 +216,7 @@ static bool amf3_decode_reference(HB_ITEM *pHash, int val, HB_ITEM *pRefItem)
 
 #endif
 
-static HB_ITEM *amf3_decode_reference(HB_ITEM *pHash, int val)
+static HB_ITEM *amf3_decode_reference(HB_ITEM *pHash, int32_t val)
 {
   /* Check for index reference */
   if ((val & REFERENCE_BIT) == 0)
@@ -352,7 +352,7 @@ static bool amf3_decode_dynamic_dict(amfContext *context, HB_ITEM *pItem)
 }
 
 /* Populate an array with values from the buffer. */
-static bool decode_dynamic_array_AMF3(amfContext *context, HB_ITEM *pItem, int array_len, bool dict)
+static bool decode_dynamic_array_AMF3(amfContext *context, HB_ITEM *pItem, int32_t array_len, bool dict)
 {
   int i;
   bool lRet;
@@ -566,7 +566,7 @@ static bool amf3_deserialize_date(amfContext *context, HB_ITEM *pItem)
 }
 
 /* Decode a byte array. */
-static bool amf3_decode_byte_array(amfContext *context, HB_ITEM *pItem, int byte_len)
+static bool amf3_decode_byte_array(amfContext *context, HB_ITEM *pItem, int32_t byte_len)
 {
   const char *str = readBytes(context, byte_len);
 
@@ -690,7 +690,7 @@ static HB_ITEM *class_def_from_classname(/* amfContext * context, */ HB_ITEM *pC
  *
  * Header argument is the obj header.
  */
-static bool amf3_decode_class_def(amfContext *context, HB_ITEM *pClass, int header)
+static bool amf3_decode_class_def(amfContext *context, HB_ITEM *pClass, int32_t header)
 {
   auto pStrAlias = hb_itemNew(nullptr);
   HB_ITEM *pMappedClassDef = nullptr;
@@ -820,7 +820,7 @@ static bool amf3_decode_class_def(amfContext *context, HB_ITEM *pClass, int head
  *
  * header argument is the parsed obj header.
  */
-static bool amf3_deserialize_class_def(amfContext *context, HB_ITEM *pClass, int header)
+static bool amf3_deserialize_class_def(amfContext *context, HB_ITEM *pClass, int32_t header)
 {
   HB_ITEM *pHash = context->class_ref;
   HB_ITEM *pRefItem;

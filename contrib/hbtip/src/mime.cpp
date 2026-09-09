@@ -576,7 +576,7 @@ static const char * s_findExtMimeType( const char * szFileExt )
    return nullptr;
 }
 
-static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, int iElem )
+static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, int32_t iElem )
 {
    const MIME_ENTRY * elem = s_mimeTable + iElem;
    HB_SIZE nPos     = elem->pos;

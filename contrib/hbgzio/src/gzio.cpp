@@ -89,7 +89,7 @@ HB_FILE;
 
 #define _PHB_FILE     pFile->pFile
 
-static PHB_FILE s_filegzipNew(PHB_FILE pFile, int iMode, int iLevel);
+static PHB_FILE s_filegzipNew(PHB_FILE pFile, int32_t iMode, int32_t iLevel);
 
 static voidpf s_gzip_zalloc(voidpf opaque, uInt items, uInt size)
 {
@@ -155,7 +155,7 @@ static void s_gzip_flush( PHB_FILE pFile, HB_BOOL fClose )
       hb_fsSetError(HB_GZIP_ERROR_BASE - err);
 }
 
-static const char * s_gzio_name( const char * pszFileName, int * piLevel )
+static const char * s_gzio_name( const char * pszFileName, int32_t * piLevel )
 {
    if( HB_TOUPPER(pszFileName[0]) == 'G' && HB_TOUPPER(pszFileName[1]) == 'Z' )
    {
@@ -368,12 +368,12 @@ static void s_fileClose( PHB_FILE pFile )
    hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
    return _PHB_FILE->pFuncs->Lock(_PHB_FILE, nStart, nLen, iType);
 }
 
-static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int32_t iType)
 {
    return _PHB_FILE->pFuncs->LockTest(_PHB_FILE, nStart, nLen, iType);
 }
@@ -585,7 +585,7 @@ static void s_fileCommit( PHB_FILE pFile )
       hb_fsSetError(0);
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, HB_ITEM *pValue )
+static HB_BOOL s_fileConfigure( PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue )
 {
    switch( iIndex )
    {
@@ -674,7 +674,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
    s_fileHandle
 };
 
-static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel )
+static PHB_FILE s_filegzipNew( PHB_FILE pFile, int32_t iMode, int32_t iLevel )
 {
    if( pFile )
    {

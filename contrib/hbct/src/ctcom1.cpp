@@ -50,7 +50,7 @@
 #include <hbapicom.hpp>
 #include "ctcom.ch"
 
-static int32_t hb_ctComCharParam(int iParam)
+static int32_t hb_ctComCharParam(int32_t iParam)
 {
   auto pszParam = hb_parc(iParam);
 
@@ -65,7 +65,7 @@ static int32_t hb_ctComCharParam(int iParam)
   return -1;
 }
 
-static void hb_ctComTestMSR(int iLine)
+static void hb_ctComTestMSR(int32_t iLine)
 {
   HB_BOOL fResult;
   int32_t iMSR;

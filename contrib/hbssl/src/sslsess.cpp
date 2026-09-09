@@ -63,12 +63,12 @@ static HB_GARBAGE_FUNC(SSL_SESSION_release)
 
 static const HB_GC_FUNCS s_gcSSL_SESSION_funcs = {SSL_SESSION_release, hb_gcDummyMark};
 
-HB_BOOL hb_SSL_SESSION_is(int iParam)
+HB_BOOL hb_SSL_SESSION_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcSSL_SESSION_funcs, iParam) != nullptr;
 }
 
-SSL_SESSION *hb_SSL_SESSION_par(int iParam)
+SSL_SESSION *hb_SSL_SESSION_par(int32_t iParam)
 {
   void **ph = (void **)hb_parptrGC(&s_gcSSL_SESSION_funcs, iParam);
 

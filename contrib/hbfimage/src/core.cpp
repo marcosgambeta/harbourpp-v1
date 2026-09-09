@@ -141,14 +141,14 @@ static HB_GARBAGE_FUNC(hb_FIBITMAP_Destructor)
 
 static const HB_GC_FUNCS s_gcFIBITMAPFuncs = {hb_FIBITMAP_Destructor, hb_gcDummyMark};
 
-static FIBITMAP *hb_FIBITMAP_par(int iParam)
+static FIBITMAP *hb_FIBITMAP_par(int32_t iParam)
 {
   auto ptr = static_cast<HB_FIBITMAP **>(hb_parptrGC(&s_gcFIBITMAPFuncs, iParam));
 
   return ptr ? (*ptr)->dib : nullptr;
 }
 
-static void *hb_FIBITMAP_is(int iParam)
+static void *hb_FIBITMAP_is(int32_t iParam)
 {
   auto ptr = static_cast<HB_FIBITMAP **>(hb_parptrGC(&s_gcFIBITMAPFuncs, iParam));
 
@@ -182,14 +182,14 @@ static HB_GARBAGE_FUNC(hb_FIMULTIBITMAP_Destructor)
 
 static const HB_GC_FUNCS s_gcFIMULTIBITMAPFuncs = {hb_FIMULTIBITMAP_Destructor, hb_gcDummyMark};
 
-static FIMULTIBITMAP *hb_FIMULTIBITMAP_par(int iParam)
+static FIMULTIBITMAP *hb_FIMULTIBITMAP_par(int32_t iParam)
 {
   auto ptr = static_cast<FIMULTIBITMAP **>(hb_parptrGC(&s_gcFIMULTIBITMAPFuncs, iParam));
 
   return ptr ? *ptr : nullptr;
 }
 
-static void *hb_FIMULTIBITMAP_is(int iParam)
+static void *hb_FIMULTIBITMAP_is(int32_t iParam)
 {
   return hb_parptrGC(&s_gcFIMULTIBITMAPFuncs, iParam);
 }

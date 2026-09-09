@@ -186,7 +186,7 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
    return pFile->fEof;
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, HB_ITEM *pValue )
+static HB_BOOL s_fileConfigure( PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue )
 {
    switch( iIndex )
    {

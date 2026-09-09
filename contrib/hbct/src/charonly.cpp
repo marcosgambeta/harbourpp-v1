@@ -59,7 +59,7 @@
 #define DO_CHARONLY_WORDREM 3
 
 // helper function for the *one functions
-static void do_charonly(int iSwitch)
+static void do_charonly(int32_t iSwitch)
 {
   // param check
   if (HB_ISCHAR(1) && HB_ISCHAR(2)) {

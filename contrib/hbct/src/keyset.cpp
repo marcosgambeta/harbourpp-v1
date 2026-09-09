@@ -49,7 +49,7 @@
 #include "ct.h"
 #include <hbapigt.hpp>
 
-static void SetGet(int iFlag)
+static void SetGet(int32_t iFlag)
 {
   int32_t iState = 0;
   HB_GT_INFO gtInfo{};

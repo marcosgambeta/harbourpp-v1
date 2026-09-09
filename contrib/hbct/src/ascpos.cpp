@@ -55,7 +55,7 @@
 #define DO_ASCPOS_VALPOS 1
 
 // helper function
-static void do_ascpos(int iSwitch)
+static void do_ascpos(int32_t iSwitch)
 {
   if (HB_ISCHAR(1)) {
     auto sStrSize = hb_parclen(1);

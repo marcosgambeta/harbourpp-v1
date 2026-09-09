@@ -286,7 +286,7 @@ const char *ct_at_charset_backward(const char *pcString, HB_SIZE sStrLen, const 
 
 // CSetRef() stuff
 
-void ct_setref(int iNewSwitch)
+void ct_setref(int32_t iNewSwitch)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setref(%i)", iNewSwitch));
@@ -326,7 +326,7 @@ HB_FUNC(CSETREF)
 
 // CSetAtMupa() stuff
 
-void ct_setatmupa(int iNewSwitch)
+void ct_setatmupa(int32_t iNewSwitch)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setatmupa(%i)", iNewSwitch));
@@ -366,7 +366,7 @@ HB_FUNC(CSETATMUPA)
 
 // SetAtLike() stuff
 
-void ct_setatlike(int iNewMode)
+void ct_setatlike(int32_t iNewMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setatlike(%i)", iNewMode));

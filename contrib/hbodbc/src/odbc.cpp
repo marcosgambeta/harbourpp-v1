@@ -170,7 +170,7 @@ static const HB_GC_FUNCS s_gcSQLHENVFuncs =
    hb_gcDummyMark
 };
 
-static void hb_SQLHENV_stor(SQLHENV hEnv, int iParam)
+static void hb_SQLHENV_stor(SQLHENV hEnv, int32_t iParam)
 {
    auto pHEnv = static_cast<PHB_SQLHENV>(hb_gcAllocate(sizeof(HB_SQLHENV), &s_gcSQLHENVFuncs));
 
@@ -179,7 +179,7 @@ static void hb_SQLHENV_stor(SQLHENV hEnv, int iParam)
    hb_storptrGC(static_cast<void*>(pHEnv), iParam);
 }
 
-static SQLHENV hb_SQLHENV_par(int iParam)
+static SQLHENV hb_SQLHENV_par(int32_t iParam)
 {
    auto pHEnv = static_cast<PHB_SQLHENV>(hb_parptrGC(&s_gcSQLHENVFuncs, iParam));
 
@@ -238,7 +238,7 @@ static const HB_GC_FUNCS s_gcSQLHDBCFuncs =
    hb_SQLHDBC_Mark
 };
 
-static void hb_SQLHDBC_stor(HB_ITEM *pHEnvItm, SQLHDBC hDbc, int iParam)
+static void hb_SQLHDBC_stor(HB_ITEM *pHEnvItm, SQLHDBC hDbc, int32_t iParam)
 {
    auto pHDbc = static_cast<PHB_SQLHDBC>(hb_gcAllocate(sizeof(HB_SQLHDBC), &s_gcSQLHDBCFuncs));
 
@@ -261,7 +261,7 @@ static PHB_SQLHDBC hb_SQLHDBC_get(HB_ITEM *pItem)
    return static_cast<PHB_SQLHDBC>(hb_itemGetPtrGC(pItem, &s_gcSQLHDBCFuncs));
 }
 
-static HB_BOOL hb_SQLHDBC_check(HB_ITEM *pItem, int conn_counter)
+static HB_BOOL hb_SQLHDBC_check(HB_ITEM *pItem, int32_t conn_counter)
 {
    if( pItem != nullptr ) {
       PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(pItem);
@@ -272,7 +272,7 @@ static HB_BOOL hb_SQLHDBC_check(HB_ITEM *pItem, int conn_counter)
    }
 }
 
-static SQLHDBC hb_SQLHDBC_par(int iParam)
+static SQLHDBC hb_SQLHDBC_par(int32_t iParam)
 {
    PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(hb_param(iParam, Harbour::Item::POINTER));
 
@@ -333,7 +333,7 @@ static const HB_GC_FUNCS s_gcSQLHSTMTFuncs =
    hb_SQLHSTMT_Mark
 };
 
-static void hb_SQLHSTMT_stor(HB_ITEM *pHDbcItm, SQLHSTMT hStmt, int iParam)
+static void hb_SQLHSTMT_stor(HB_ITEM *pHDbcItm, SQLHSTMT hStmt, int32_t iParam)
 {
    auto pHStmt = static_cast<PHB_SQLHSTMT>(hb_gcAllocate(sizeof(HB_SQLHSTMT), &s_gcSQLHSTMTFuncs));
 
@@ -357,7 +357,7 @@ static void hb_SQLHSTMT_stor(HB_ITEM *pHDbcItm, SQLHSTMT hStmt, int iParam)
    hb_storptrGC(static_cast<void*>(pHStmt), iParam);
 }
 
-static SQLHSTMT hb_SQLHSTMT_par(int iParam)
+static SQLHSTMT hb_SQLHSTMT_par(int32_t iParam)
 {
    auto pHStmt = static_cast<PHB_SQLHSTMT>(hb_parptrGC(&s_gcSQLHSTMTFuncs, iParam));
 

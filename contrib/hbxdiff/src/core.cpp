@@ -69,10 +69,10 @@
 #define XDLT_STD_BLKSIZE                    (1024 * 8)
 #define XDLT_MAX_LINE_SIZE                  80
 
-static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int iType);
-static void *   hb_mmf_itemGet(HB_ITEM *pItem, int iType, HB_BOOL fError);
-static void     hb_mmf_ret(void * pMemAddr, int iType);
-static void *   hb_mmf_param(int iParam, int iType, HB_BOOL fError);
+static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int32_t iType);
+static void *   hb_mmf_itemGet(HB_ITEM *pItem, int32_t iType, HB_BOOL fError);
+static void     hb_mmf_ret(void * pMemAddr, int32_t iType);
+static void *   hb_mmf_param(int32_t iParam, int32_t iType, HB_BOOL fError);
 
 static void xdiff_init(void);
 
@@ -111,7 +111,7 @@ static const HB_GC_FUNCS s_gc_xdiffFuncs =
    hb_gcDummyMark
 };
 
-static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int iType)
+static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int32_t iType)
 {
    if( pItem != nullptr )
    {
@@ -128,7 +128,7 @@ static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int iType)
    return hb_itemPutPtrGC(pItem, pStructHolder);
 }
 
-static void * hb_mmf_itemGet(HB_ITEM *pItem, int iType, HB_BOOL fError)
+static void * hb_mmf_itemGet(HB_ITEM *pItem, int32_t iType, HB_BOOL fError)
 {
    auto pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs));
    int iError = 0;
@@ -150,12 +150,12 @@ static void * hb_mmf_itemGet(HB_ITEM *pItem, int iType, HB_BOOL fError)
    return nullptr;
 }
 
-static void hb_mmf_ret( void * pMemAddr, int iType )
+static void hb_mmf_ret( void * pMemAddr, int32_t iType )
 {
    hb_mmf_itemPut(hb_stackReturnItem(), pMemAddr, iType);
 }
 
-static void * hb_mmf_param( int iParam, int iType, HB_BOOL fError )
+static void * hb_mmf_param( int32_t iParam, int32_t iType, HB_BOOL fError )
 {
    return hb_mmf_itemGet(hb_param(iParam, Harbour::Item::POINTER), iType, fError);
 }
@@ -356,7 +356,7 @@ HB_FUNC(XDL_MMFILE_COMPACT)
 #define hb_ptrToHandle(p)   static_cast<HB_FHANDLE>(reinterpret_cast<uintptr_t>(p))
 #define hb_parHandlePtr(n)  reinterpret_cast<void*>(static_cast<uintptr_t>(hb_numToHandle(hb_parnint(n))))
 
-static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
+static int32_t xdlt_outf( void * priv, mmbuffer_t * mb, int32_t nbuf )
 {
    int i;
 
@@ -370,7 +370,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
    return 0;
 }
 
-static int xdlt_outb(void * priv, mmbuffer_t * mb, int nbuf)
+static int32_t xdlt_outb(void * priv, mmbuffer_t * mb, int32_t nbuf)
 {
    auto pCallback = static_cast<HB_ITEM *>(priv);
 

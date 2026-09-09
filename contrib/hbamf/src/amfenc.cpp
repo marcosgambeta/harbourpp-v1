@@ -92,7 +92,7 @@ static HB_ISIZ bufferGrow(amfContext *context, HB_ISIZ len)
   return current_len;
 }
 
-static int writeByte(amfContext *context, char byte)
+static int32_t writeByte(amfContext *context, char byte)
 {
   if (bufferGrow(context, 1) == -1)
   {
@@ -161,7 +161,7 @@ static bool amfX_write_double(amfContext *context, HB_ITEM *pItem)
   return amfX_encode_double(context, d);
 }
 
-static bool amf3_encode_int(amfContext *context, int value)
+static bool amf3_encode_int(amfContext *context, int32_t value)
 {
   char tmp[4];
   HB_SIZE tmp_size;
@@ -301,7 +301,7 @@ static bool amf3_encode_string(amfContext *context, HB_ITEM *pItem)
   return result;
 }
 
-static int amf3_add_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
+static int32_t amf3_add_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
 {
   HB_ITEM *pVal;
   int result = 0;
@@ -369,7 +369,7 @@ static int amf3_add_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
   return result;
 }
 
-static int amf3_get_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
+static int32_t amf3_get_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
 {
   if (context->use_refs)
   {
@@ -420,7 +420,7 @@ static int amf3_get_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
   return -1;
 }
 
-static int amf3_encode_reference(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem, int bit)
+static int32_t amf3_encode_reference(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem, int32_t bit)
 {
   int idx;
 
@@ -669,7 +669,7 @@ static HB_ISIZ amf3_serialize_byte_array(amfContext *context, HB_ITEM *pItem)
   return amf3_encode_byte_array(context, pItem);
 }
 
-static int amf3_encode_date(amfContext *context, HB_ITEM *pItem)
+static int32_t amf3_encode_date(amfContext *context, HB_ITEM *pItem)
 {
   double timestamp;
 
@@ -683,7 +683,7 @@ static int amf3_encode_date(amfContext *context, HB_ITEM *pItem)
   return amfX_encode_double(context, timestamp);
 }
 
-static int amf3_serialize_date(amfContext *context, HB_ITEM *pItem)
+static int32_t amf3_serialize_date(amfContext *context, HB_ITEM *pItem)
 {
   int result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
 
@@ -752,7 +752,7 @@ static bool amf3_serialize_array(amfContext *context, HB_ITEM *pItem)
   return amf3_encode_array(context, pItem);
 }
 
-static int amf3_encode_class_def(amfContext *context, HB_ITEM *pClass)
+static int32_t amf3_encode_class_def(amfContext *context, HB_ITEM *pClass)
 {
   int header;
   int result;
@@ -858,7 +858,7 @@ static int amf3_encode_class_def(amfContext *context, HB_ITEM *pClass)
   return 1;
 }
 
-static int amf3_serialize_class_def(amfContext *context, HB_ITEM *pClass)
+static int32_t amf3_serialize_class_def(amfContext *context, HB_ITEM *pClass)
 {
   int result = amf3_encode_reference(context, context->class_ref, pClass, 0);
 

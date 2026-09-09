@@ -80,8 +80,8 @@ static void STAItm(HB_ITEM *pItmPar)
    hb_itemPutCLPtr(pItmPar, cRes, i);
 }
 
-static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, int iCOut, int IsIndW,
-                      int iIndWidth, int IsIndP, int iIndPrec,
+static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, int32_t iCOut, int32_t IsIndW,
+                      int32_t iIndWidth, int32_t IsIndP, int32_t iIndPrec,
                       HB_ITEM *pItmPar )
 {
    uint32_t s;

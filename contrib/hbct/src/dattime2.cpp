@@ -61,12 +61,12 @@
 #include <hbdate.hpp>
 #include <hbset.hpp>
 
-static HB_BOOL ct_isleap(int iYear)
+static HB_BOOL ct_isleap(int32_t iYear)
 {
   return iYear != 0 && (iYear & 3) == 0 && (iYear % 100 != 0 || iYear % 400 == 0);
 }
 
-static int32_t ct_daysinmonth(int iMonth, HB_BOOL bLeap)
+static int32_t ct_daysinmonth(int32_t iMonth, HB_BOOL bLeap)
 {
   if (iMonth == 2) {
     return bLeap ? 29 : 28;
@@ -77,7 +77,7 @@ static int32_t ct_daysinmonth(int iMonth, HB_BOOL bLeap)
   }
 }
 
-static int32_t ct_daystomonth(int iMonth, HB_BOOL bLeap)
+static int32_t ct_daystomonth(int32_t iMonth, HB_BOOL bLeap)
 {
   static const int32_t sc_iMonths[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 

@@ -56,9 +56,9 @@
 #define SINGLEBUF 32768
 #define MAXLEN (16 * 1024 * 1024)
 
-static int s_nCount = 0;
+static int32_t s_nCount = 0;
 
-static void countCheck(int n, int nFlowCtrl)
+static void countCheck(int32_t n, int32_t nFlowCtrl)
 {
   // implements flow control for interacting with ill-strange non-configurable
   //  environments that lose data when writing too much into such STDIN pipe.
