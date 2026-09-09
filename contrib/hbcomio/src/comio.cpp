@@ -64,7 +64,7 @@
 struct _HB_FILE
 {
    const HB_FILE_FUNCS * pFuncs;
-   int                   port;
+   int32_t                   port;
    HB_MAXINT             timeout;
    HB_BOOL               fRead;
    HB_BOOL               fWrite;
@@ -76,7 +76,7 @@ static PHB_FILE s_fileNew(int32_t port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOO
 
 static int32_t s_fileGetValue(const char * pszName, int32_t * piLen)
 {
-   int iLen = 0, iValue = 0;
+   int32_t iLen = 0, iValue = 0;
 
    while( HB_ISDIGIT(pszName[iLen]) ) {
       iValue = iValue * 10 + (pszName[iLen++] - '0');
@@ -88,7 +88,7 @@ static int32_t s_fileGetValue(const char * pszName, int32_t * piLen)
 
 static int32_t s_filePortParams(const char * pszName, HB_MAXINT * pTimeout, int32_t * piBaud, int32_t * piParity, int32_t * piSize, int32_t * piStop, int32_t * piFlow)
 {
-   int iPort = 0, iLen, iValue;
+   int32_t iPort = 0, iLen, iValue;
 
    *pTimeout = -1;
    *piBaud = *piParity = *piSize = *piStop = *piFlow = 0;
@@ -228,7 +228,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const ch
 {
    PHB_FILE pFile = nullptr;
    HB_ERRCODE errcode = 0;
-   int iPort, iBaud, iParity, iSize, iStop, iFlow;
+   int32_t iPort, iBaud, iParity, iSize, iStop, iFlow;
    HB_BOOL fRead, fWrite;
    HB_MAXINT timeout;
 
@@ -348,7 +348,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
 
       case HB_VF_SHUTDOWN:
       {
-         int iMode = pFile->fRead ? (pFile->fWrite ? FO_READWRITE : FO_READ) : (pFile->fWrite ? FO_WRITE : -1);
+         int32_t iMode = pFile->fRead ? (pFile->fWrite ? FO_READWRITE : FO_READ) : (pFile->fWrite ? FO_WRITE : -1);
 
          if( pValue->isNumeric() ) {
             switch( hb_itemGetNI(pValue) ) {

@@ -80,7 +80,7 @@ static HB_SIZE hb_bz2CompressBound(HB_SIZE nLen)
 static int32_t hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst, int32_t iBlockSize)
 {
    bz_stream stream;
-   int       iResult;
+   int32_t       iResult;
 
    memset(&stream, 0, sizeof(stream));
 
@@ -163,7 +163,7 @@ static HB_SIZE hb_bz2UncompressedSize(const char * szSrc, HB_SIZE nLen, int32_t 
 static int32_t hb_bz2Uncompress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst)
 {
    bz_stream stream;
-   int       iResult;
+   int32_t       iResult;
 
    memset(&stream, 0, sizeof(stream));
 
@@ -225,7 +225,7 @@ HB_FUNC(HB_BZ2_UNCOMPRESSLEN)
 
    if( szData ) {
       auto nLen = hb_parclen(1);
-      int     iResult = BZ_OK;
+      int32_t     iResult = BZ_OK;
 
       if( nLen ) {
          nLen = hb_bz2UncompressedSize(szData, nLen, &iResult);
@@ -256,7 +256,7 @@ HB_FUNC(HB_BZ2_COMPRESS)
          HB_ITEM *pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
          HB_SIZE  nDstLen;
          char *   pDest;
-         int      iResult;
+         int32_t      iResult;
 
          if( pBuffer ) {
             if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {
@@ -305,7 +305,7 @@ HB_FUNC(HB_BZ2_UNCOMPRESS)
       if( nLen ) {
          HB_SIZE nDstLen;
          char *  pDest   = nullptr;
-         int     iResult = BZ_OK;
+         int32_t     iResult = BZ_OK;
 
          if( pBuffer ) {
             if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {

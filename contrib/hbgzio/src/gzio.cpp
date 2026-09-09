@@ -79,8 +79,8 @@ typedef struct _HB_FILE
    HB_FOFFSET     seek_pos;
    HB_MAXINT      nTimeout;
    HB_BOOL        fInited;
-   int            iMode;
-   int            iLevel;
+   int32_t            iMode;
+   int32_t            iLevel;
 
    z_stream       gz;
    uint8_t        buffer[HB_GZIP_BUFSIZE];
@@ -133,7 +133,7 @@ static HB_SIZE s_gzip_write( PHB_FILE pFile, HB_MAXINT nTimeout )
 
 static void s_gzip_flush( PHB_FILE pFile, HB_BOOL fClose )
 {
-   int err;
+   int32_t err;
 
    if( pFile->gz.avail_out > 0 )
       err = deflate(&pFile->gz, fClose ? Z_FINISH : Z_PARTIAL_FLUSH);
@@ -223,7 +223,7 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const 
 
 static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
 {
-   int iSrcLvl = Z_DEFAULT_COMPRESSION,
+   int32_t iSrcLvl = Z_DEFAULT_COMPRESSION,
        iDstLvl = Z_DEFAULT_COMPRESSION;
    const char * pszSrc = s_gzio_name(pszSrcFile, &iSrcLvl),
               * pszDst = s_gzio_name(pszDstFile, &iDstLvl);
@@ -324,7 +324,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
                             const char * pszDefExt, HB_FATTR nExFlags,
                             const char * pPaths, HB_ITEM *pError )
 {
-   int iLevel = Z_DEFAULT_COMPRESSION;
+   int32_t iLevel = Z_DEFAULT_COMPRESSION;
    char * pszNameBuf = nullptr;
    const char * pszName = s_gzio_name(pszFileName, &iLevel);
    auto iPref = static_cast<int32_t>(pszName - pszFileName);
@@ -384,7 +384,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXIN
 
    if( pFile->iMode != FO_WRITE )
    {
-      int err = Z_OK;
+      int32_t err = Z_OK;
 
       if( !pFile->fInited )
       {
@@ -444,7 +444,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
 
    if( pFile->iMode != FO_READ )
    {
-      int err;
+      int32_t err;
 
       if( !pFile->fInited )
       {

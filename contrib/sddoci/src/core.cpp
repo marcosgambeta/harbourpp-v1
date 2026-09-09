@@ -192,7 +192,7 @@ static char *ocilibGetError(HB_ERRCODE *pErrCode)
   OCI_Error *err = OCI_GetLastError();
 
   char *szRet;
-  int iNativeErr;
+  int32_t iNativeErr;
 
   if (err) {
     HB_ITEM *pRet = M_HB_ITEMPUTSTR(nullptr, OCI_ErrorGetString(err));
@@ -345,7 +345,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
 
     uint32_t uiDataType = OCI_ColumnGetType(col);
     uint32_t uiSize = OCI_ColumnGetSize(col);
-    int iDec = OCI_ColumnGetPrecision(col);
+    int32_t iDec = OCI_ColumnGetPrecision(col);
     bool bNullable = OCI_ColumnGetNullable(col);
 
     if (bNullable) {
@@ -581,7 +581,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
       case Harbour::DB::Field::DATE: {
         OCI_Date *date = OCI_GetDate(rs, ui);
-        int iYear, iMonth, iDay;
+        int32_t iYear, iMonth, iDay;
         if (date && OCI_DateGetDate(date, &iYear, &iMonth, &iDay)) {
           pItem = hb_itemPutD(pItem, iYear, iMonth, iDay);
         }
@@ -590,7 +590,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
       case Harbour::DB::Field::TIME: {
         OCI_Date *date = OCI_GetDate(rs, ui);
-        int iYear, iMonth, iDay, iHour, iMin, iSec;
+        int32_t iYear, iMonth, iDay, iHour, iMin, iSec;
 
         if (date && OCI_DateGetDateTime(date, &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec)) {
           pItem = hb_itemPutTDT(pItem, hb_dateEncode(iYear, iMonth, iDay), hb_timeEncode(iHour, iMin, iSec, 0));
@@ -600,7 +600,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
       case Harbour::DB::Field::TIMESTAMP: {
         OCI_Timestamp *ts = OCI_GetTimestamp(rs, ui);
-        int iYear, iMonth, iDay, iHour, iMin, iSec, iFSec;
+        int32_t iYear, iMonth, iDay, iHour, iMin, iSec, iFSec;
         if (ts && OCI_TimestampGetDateTime(ts, &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec, &iFSec)) {
           pItem = hb_itemPutTDT(pItem, hb_dateEncode(iYear, iMonth, iDay),
                                 hb_timeEncode(iHour, iMin, iSec, iFSec / 1000000));

@@ -113,7 +113,7 @@ using PHB_SQLITE3 = HB_SQLITE3 *;
 
 struct HB_SQLITE3_HOLDER
 {
-  int type;
+  int32_t type;
   HB_SQLITE3 *hbsqlite3;
 };
 
@@ -279,7 +279,7 @@ static HB_ITEM *hb_sqlite3_itemPut(HB_ITEM *pItem, void *pMemAddr, int32_t iType
 static void *hb_sqlite3_itemGet(HB_ITEM *pItem, int32_t iType, bool fError)
 {
   auto pStructHolder = static_cast<PHB_SQLITE3_HOLDER>(hb_itemGetPtrGC(pItem, &s_gcSqlite3Funcs));
-  int iError = 0;
+  int32_t iError = 0;
 
   HB_SYMBOL_UNUSED(iError);
 
@@ -858,7 +858,7 @@ HB_FUNC(SQLITE3_EXEC)
   {
     void *hSQLText;
     char *pszErrMsg = nullptr;
-    int rc;
+    int32_t rc;
 
     if (HB_ISEVALITEM(3))
     {
@@ -909,7 +909,7 @@ HB_FUNC(SQLITE3_PREPARE)
     const char *pszSQLText = hb_parstr_utf8(2, &hSQLText, &nSQLText);
     psqlite3_stmt pStmt;
     const char *pszTail;
-    int result;
+    int32_t result;
 
 #if SQLITE_VERSION_NUMBER >= 3020000
     result = sqlite3_prepare_v3(pHbSqlite3->db, pszSQLText, static_cast<int32_t>(nSQLText),
@@ -1479,7 +1479,7 @@ HB_FUNC(SQLITE3_COLUMN_BLOB)
 
   if (pStmt != nullptr)
   {
-    int iIndex = hb_parni(2) - 1;
+    int32_t iIndex = hb_parni(2) - 1;
     hb_retclen(static_cast<const char *>(sqlite3_column_blob(pStmt, iIndex)), sqlite3_column_bytes(pStmt, iIndex));
   }
   else
@@ -1536,7 +1536,7 @@ HB_FUNC(SQLITE3_COLUMN_TEXT)
 
   if (pStmt != nullptr)
   {
-    int iIndex = hb_parni(2) - 1;
+    int32_t iIndex = hb_parni(2) - 1;
     hb_retstrlen_utf8(reinterpret_cast<const char *>(sqlite3_column_text(pStmt, iIndex)),
                       sqlite3_column_bytes(pStmt, iIndex));
   }
@@ -1636,14 +1636,14 @@ HB_FUNC(SQLITE3_GET_TABLE)
   {
     void *hSQLText;
     auto pResultList = hb_itemArrayNew(0);
-    int iRow, iCol;
+    int32_t iRow, iCol;
     char *pszErrMsg = nullptr;
     char **pResult;
 
     if (sqlite3_get_table(pHbSqlite3->db, hb_parstr_utf8(2, &hSQLText, nullptr), &pResult, &iRow, &iCol, &pszErrMsg) ==
         SQLITE_OK)
     {
-      int k = 0;
+      int32_t k = 0;
 
       for (auto i = 0; i < iRow + 1; i++)
       {
@@ -1701,9 +1701,9 @@ HB_FUNC(SQLITE3_TABLE_COLUMN_METADATA)
   {
     char const *pzDataType = nullptr;
     char const *pzCollSeq = nullptr;
-    int iNotNull = 0;
-    int iPrimaryKey = 0;
-    int iAutoinc = 0;
+    int32_t iNotNull = 0;
+    int32_t iPrimaryKey = 0;
+    int32_t iAutoinc = 0;
 
     void *hDbName;
     void *hTableName;
@@ -2008,7 +2008,7 @@ HB_FUNC(SQLITE3_ENABLE_SHARED_CACHE)
 static int32_t trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
 {
   HB_ITEM *pCallback = static_cast<HB_ITEM *>(cbTraceHandler);
-  int iRes = 0;
+  int32_t iRes = 0;
 
   if (pCallback && hb_vmRequestReenter())
   {
@@ -2066,7 +2066,7 @@ HB_FUNC(SQLITE3_TRACE_V2)
   if (pHbSqlite3 && pHbSqlite3->db)
   {
     unsigned uMask = static_cast<uint32_t>(hb_parnint(2));
-    int iRes;
+    int32_t iRes;
 
     if (pHbSqlite3->cbTraceHandler)
     {
@@ -2577,7 +2577,7 @@ HB_FUNC(SQLITE3_STATUS)
 #if SQLITE_VERSION_NUMBER >= 3006000
   if (hb_pcount() > 3 && (HB_ISNUM(2) && HB_ISBYREF(2)) && (HB_ISNUM(3) && HB_ISBYREF(3)))
   {
-    int iCurrent, iHighwater;
+    int32_t iCurrent, iHighwater;
     hb_retni(sqlite3_status(hb_parni(1), &iCurrent, &iHighwater, static_cast<int32_t>(hb_parl(4))));
     hb_storni(iCurrent, 2);
     hb_storni(iHighwater, 3);
@@ -2620,7 +2620,7 @@ HB_FUNC(SQLITE3_DB_STATUS)
   if (pHbSqlite3 && pHbSqlite3->db && (hb_pcount() > 4) && (HB_ISNUM(3) && HB_ISBYREF(3)) &&
       (HB_ISNUM(4) && HB_ISBYREF(4)))
   {
-    int iCurrent, iHighwater;
+    int32_t iCurrent, iHighwater;
     hb_retni(sqlite3_db_status(pHbSqlite3->db, hb_parni(2), &iCurrent, &iHighwater, static_cast<int32_t>(hb_parl(5))));
     hb_storni(iCurrent, 3);
     hb_storni(iHighwater, 4);

@@ -56,7 +56,7 @@
 
 typedef struct
 {
-   int        area;
+   int32_t        area;
    long       recno[TEXT_WORKAREAS];
    HB_FOFFSET offset[TEXT_WORKAREAS];
    HB_FHANDLE handles[TEXT_WORKAREAS];
@@ -118,7 +118,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int32_
    HB_FOFFSET read_pos;
    HB_ISIZ    read_len;
    HB_ISIZ    x;
-   int        y;
+   int32_t        y;
 
    if( recs > 0 )
    {

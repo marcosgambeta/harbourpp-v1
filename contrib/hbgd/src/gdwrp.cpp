@@ -263,7 +263,7 @@ static void SaveImageToFile(const char *szFile, const void *iptr, int32_t sz)
 static void GDImageCreateFrom(int32_t nType)
 {
   gdImagePtr im = nullptr;
-  int sz;
+  int32_t sz;
   void *iptr;
 
   if (HB_ISCHAR(1))
@@ -329,9 +329,9 @@ static void GDImageSaveTo(int32_t nType)
   {
     gdImagePtr im = hb_parGdImage(1);
 
-    int sz = 0;
+    int32_t sz = 0;
     void *iptr = nullptr;
-    int level = 0, fg = 0;
+    int32_t level = 0, fg = 0;
 
     /* Get file name or an output handler or NIL it I want a return string */
     if (!(HB_ISNIL(2) || HB_ISCHAR(2) || HB_ISNUM(2)))
@@ -1039,7 +1039,7 @@ HB_FUNC(GDIMAGEALPHABLENDING) /* void gdImageAlphaBlending(gdImagePtr im, int bl
   {
     gdImagePtr im = hb_parGdImage(1);
 
-    int blending = hb_parl(2) ? 1 : 0;
+    int32_t blending = hb_parl(2) ? 1 : 0;
 
     gdImageAlphaBlending(im, blending);
   }
@@ -1055,7 +1055,7 @@ HB_FUNC(GDIMAGESAVEALPHA) /* void gdImageSaveAlpha(gdImagePtr im, int saveFlag) 
   {
     gdImagePtr im = hb_parGdImage(1);
 
-    int saveFlag = hb_parl(2) ? 1 : 0;
+    int32_t saveFlag = hb_parl(2) ? 1 : 0;
 
     gdImageSaveAlpha(im, saveFlag);
   }
@@ -1088,7 +1088,7 @@ HB_FUNC(GDIMAGEGETCLIP) /* original: void gdImageGetClip(gdImagePtr im, int *x1P
 {                       /* implementation: array gdImageGetClip(gdImagePtr im) */
   if (hb_isGdImage(1))
   {
-    int x1, y1, x2, y2;
+    int32_t x1, y1, x2, y2;
 
     /* Get clipping rectangle */
     gdImageGetClip(hb_parGdImage(1), &x1, &y1, &x2, &y2);
@@ -1292,7 +1292,7 @@ HB_FUNC(
   {
     gdImagePtr im = hb_parGdImage(1);
 
-    int ditherFlag = hb_parl(2) ? 1 : 0;
+    int32_t ditherFlag = hb_parl(2) ? 1 : 0;
     auto colorsWanted = hb_parni(3);
 
     /* Converts a truecolor image to a palette-based image */
@@ -1311,7 +1311,7 @@ HB_FUNC(GDIMAGECREATEPALETTEFROMTRUECOLOR) /* gdImagePtr gdImageCreatePaletteFro
   {
     gdImagePtr im = hb_parGdImage(1);
 
-    int ditherFlag = hb_parl(2) ? 1 : 0;
+    int32_t ditherFlag = hb_parl(2) ? 1 : 0;
     auto colorsWanted = hb_parni(3);
 
     /* Converts a truecolor image to a palette-based image and return the image */
@@ -1463,14 +1463,14 @@ HB_FUNC(GDIMAGESTRINGFTEX)
     auto string = hb_parc(9);
 
     gdFTStringExtra extra;
-    int flags = 0; /* Extended flags */
+    int32_t flags = 0; /* Extended flags */
 
     /* defaults */
     double linespacing = 1.05;
-    int charmap = gdFTEX_Unicode;
-    int resolution = 96;
+    int32_t charmap = gdFTEX_Unicode;
+    int32_t resolution = 96;
 
-    int aRect[8];
+    int32_t aRect[8];
     char *err;
 
     /* Retrieve rectangle array */
@@ -2044,7 +2044,7 @@ HB_FUNC(GDIMAGEINTERLACE) /* void gdImageInterlace(gdImagePtr im, int interlace)
   {
     gdImagePtr im = hb_parGdImage(1);
 
-    int interlace = hb_parl(2) ? 1 : 0;
+    int32_t interlace = hb_parl(2) ? 1 : 0;
 
     gdImageInterlace(im, interlace);
   }
@@ -2086,7 +2086,7 @@ HB_FUNC(GDIMAGEGIFANIMBEGIN)
     auto GlobalCM = hb_parni(3); /* global color map */
     auto Loops = hb_parni(4);
 
-    int size;
+    int32_t size;
     void *iptr = gdImageGifAnimBeginPtr(im, &size, GlobalCM, Loops);
 
     /* Check if parameter is a file name or a handle */
@@ -2125,7 +2125,7 @@ HB_FUNC(GDIMAGEGIFANIMADD)
     auto Delay = hb_parni(6);
     auto Disposal = hb_parni(7);
 
-    int size;
+    int32_t size;
     void *iptr = gdImageGifAnimAddPtr(im, &size, LocalCM, LeftOfs, TopOfs, Delay, Disposal, previm);
 
     /* Check if parameter is a file name or a handle */
@@ -2152,7 +2152,7 @@ HB_FUNC(GDIMAGEGIFANIMEND)
 #if HB_GD_VERS(2, 0, 33)
   if (HB_ISCHAR(1) || HB_ISNUM(1) || HB_ISNIL(1))
   {
-    int size;
+    int32_t size;
     void *iptr = gdImageGifAnimEndPtr(&size);
 
     /* Check if 1st parameter is a file name or a handle */

@@ -59,8 +59,8 @@ HB_FUNC( FT_REVATTR )
 {
    auto iTop    = hb_parni(1);   /* Defaults to zero on bad type */
    auto iLeft   = hb_parni(2);   /* Defaults to zero on bad type */
-   int iMaxRow  = hb_gtMaxRow();
-   int iMaxCol  = hb_gtMaxCol();
+   int32_t iMaxRow  = hb_gtMaxRow();
+   int32_t iMaxCol  = hb_gtMaxCol();
    auto iBottom = hb_parnidef(3, iMaxRow);
    auto iRight  = hb_parnidef(4, iMaxCol);
 
@@ -87,10 +87,10 @@ HB_FUNC( FT_REVATTR )
 
       while( iTop <= iBottom )
       {
-         int iCol = iLeft;
+         int32_t iCol = iLeft;
          while( iCol <= iRight )
          {
-            int       iColor;
+            int32_t       iColor;
             uint8_t   bAttr;
             uint16_t usChar;
             hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
@@ -110,7 +110,7 @@ HB_FUNC( FT_REVCHR )
    auto iRow = hb_parni(1);
    auto iCol = hb_parni(2);
 
-   int       iColor;
+   int32_t       iColor;
    uint8_t   bAttr;
    uint16_t usChar;
 

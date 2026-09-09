@@ -174,7 +174,7 @@ static HB_ULONG memfsInodeFind(const char * szName, HB_ULONG * pulPos)
    while( ulLeft < ulRight )
    {
       HB_ULONG ulMiddle;
-      int i;
+      int32_t i;
 
       ulMiddle = (ulLeft + ulRight) >> 1;
       i = strcmp(szName, s_fs.pInodes[ulMiddle]->szName);

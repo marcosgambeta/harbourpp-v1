@@ -66,7 +66,7 @@
 typedef struct
 {
    HB_ITEM *pLibraryHandle;
-   int      iFuncFlags;
+   int32_t      iFuncFlags;
    void *   pFunctionPtr; /* Function Address */
 } HB_DLLEXEC, * PHB_DLLEXEC;
 
@@ -127,7 +127,7 @@ HB_FUNC(DLLCALL)
    if( pLibraryHandle )
    {
       auto iXPPFlags = hb_parni(2);
-      int    iFuncFlags   = 0;
+      int32_t    iFuncFlags   = 0;
       void * pFunctionPtr = hb_libSymAddr(pLibraryHandle, hb_parcx(3));
 
       if( (iXPPFlags & DLL_CDECL) != 0 )
@@ -177,7 +177,7 @@ HB_FUNC(DLLPREPARECALL)
       if( pFunctionPtr )
       {
          auto iXPPFlags = hb_parni(2);
-         int iFuncFlags = 0;
+         int32_t iFuncFlags = 0;
 
          if( (iXPPFlags & DLL_CDECL) != 0 )
             iFuncFlags |= HB_DYN_CALLCONV_CDECL;

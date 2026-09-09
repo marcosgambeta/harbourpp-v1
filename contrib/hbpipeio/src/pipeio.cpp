@@ -103,7 +103,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    if( HB_ISDIGIT(*pszCommand) )
    {
       const char * ptr = pszCommand;
-      int iValue = 0;
+      int32_t iValue = 0;
 
       while( HB_ISDIGIT(* ptr) )
       {
@@ -201,7 +201,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue 
       }
       case HB_VF_SHUTDOWN:
       {
-         int iMode = pFile->hPipeRD != FS_ERROR ? (pFile->hPipeWR != FS_ERROR ? FO_READWRITE : FO_READ) : (pFile->hPipeWR != FS_ERROR ? FO_WRITE : -1);
+         int32_t iMode = pFile->hPipeRD != FS_ERROR ? (pFile->hPipeWR != FS_ERROR ? FO_READWRITE : FO_READ) : (pFile->hPipeWR != FS_ERROR ? FO_WRITE : -1);
 
          if( pValue->isNumeric() )
          {

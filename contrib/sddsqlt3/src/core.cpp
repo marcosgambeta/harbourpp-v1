@@ -160,7 +160,7 @@ static uint16_t hb_errRT_SQLT3DD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, c
 static char *sqlite3GetError(sqlite3 *pDb, HB_ERRCODE *pErrCode)
 {
   char *szRet;
-  int iNativeErr;
+  int32_t iNativeErr;
 
   if (pDb) {
     HB_ITEM *pRet = S_HB_ITEMPUTSTR(nullptr, sqlite3_errmsg(pDb));
@@ -250,7 +250,7 @@ static void sqlite3DeclStru(sqlite3_stmt *st, uint16_t uiIndex, uint16_t *puiLen
   if (szDeclType != nullptr) {
     HB_SIZE nLen = strlen(szDeclType);
     HB_SIZE nAt;
-    int iOverflow;
+    int32_t iOverflow;
     HB_MAXINT iRetLen = 0;
 
     /* SQLite doesn't normally have field size limits,
@@ -324,7 +324,7 @@ static HB_ERRCODE sqlite3Execute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
 {
   sqlite3 *pDb = (static_cast<SDDCONN *>(pConnection->pSDDConn))->pDb;
   HB_ERRCODE errCode;
-  int iRow, iCol;
+  int32_t iRow, iCol;
   void *hStatement;
   char **pResult = nullptr;
   char *pszErrMsg = nullptr;
@@ -362,9 +362,9 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
   sqlite3_stmt *st = nullptr;
 
 #if SQLITE_VERSION_NUMBER >= 3020000
-  int result = sqlite3_prepare_v3(pDb, pszQuery, static_cast<int32_t>(nQueryLen), 0, &st, nullptr);
+  int32_t result = sqlite3_prepare_v3(pDb, pszQuery, static_cast<int32_t>(nQueryLen), 0, &st, nullptr);
 #else
-  int result = sqlite3_prepare_v2(pDb, pszQuery, static_cast<int32_t>(nQueryLen), &st, nullptr);
+  int32_t result = sqlite3_prepare_v2(pDb, pszQuery, static_cast<int32_t>(nQueryLen), &st, nullptr);
 #endif
 
   char *szError;
@@ -383,7 +383,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
     hb_itemRelease(pItem);
   }
 
-  int iStatus;
+  int32_t iStatus;
 
   if ((iStatus = sqlite3_step(st)) == SQLITE_DONE) {
     pArea->fFetched = true;

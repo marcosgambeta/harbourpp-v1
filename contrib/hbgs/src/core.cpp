@@ -70,9 +70,9 @@ HB_FUNC(HB_GS)
    if( pParam )
    {
       void *  minst;
-      int     pos;
-      int     code, code1;
-      int     gsargc = static_cast<int32_t>(hb_arrayLen(pParam)) + 1;
+      int32_t     pos;
+      int32_t     code, code1;
+      int32_t     gsargc = static_cast<int32_t>(hb_arrayLen(pParam)) + 1;
       auto gsargv = static_cast<char**>(hb_xgrab(gsargc * sizeof(const char*)));
 
       gsargv[0] = const_cast<char*>("hbgs"); /* actual value doesn't matter */
@@ -104,7 +104,7 @@ HB_FUNC(HB_GS)
 HB_FUNC(HB_GSAPI_REVISION)
 {
    gsapi_revision_t r;
-   int result = gsapi_revision(&r, sizeof(r));
+   int32_t result = gsapi_revision(&r, sizeof(r));
 
    if( result == 0 )
    {

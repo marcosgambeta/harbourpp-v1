@@ -83,7 +83,7 @@ typedef struct
 
 typedef struct
 {
-   int      type;
+   int32_t      type;
    HB_MMF * hb_mmf;
 } HB_MMF_HOLDER, * PHB_MMF_HOLDER;
 
@@ -131,7 +131,7 @@ static HB_ITEM *hb_mmf_itemPut(HB_ITEM *pItem, void * pMemAddr, int32_t iType)
 static void * hb_mmf_itemGet(HB_ITEM *pItem, int32_t iType, HB_BOOL fError)
 {
    auto pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs));
-   int iError = 0;
+   int32_t iError = 0;
 
    HB_SYMBOL_UNUSED(iError);
 
@@ -358,7 +358,7 @@ HB_FUNC(XDL_MMFILE_COMPACT)
 
 static int32_t xdlt_outf( void * priv, mmbuffer_t * mb, int32_t nbuf )
 {
-   int i;
+   int32_t i;
 
    for( i = 0; i < nbuf; i++ )
    {

@@ -107,7 +107,7 @@ static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, 
    }
    else if( IsIndW || IsIndP )
    {
-      int iInd = (IsIndW ? iIndWidth : iIndPrec);
+      int32_t iInd = (IsIndW ? iIndWidth : iIndPrec);
 
       switch( iCOut )
       {
@@ -199,7 +199,7 @@ HB_FUNC(SQL_SPRINTF)
    uint32_t      ulItmFrm;
    const char * cItmFrm;
    char *       cRes;
-   int          argc    = hb_pcount() - 1;
+   int32_t          argc    = hb_pcount() - 1;
    auto pItmFrm = hb_param(1, Harbour::Item::STRING);
 
    if( !pItmFrm || ( cItmFrm = hb_itemGetCPtr(pItmFrm) ) == nullptr )
@@ -223,7 +223,7 @@ HB_FUNC(SQL_SPRINTF)
       uint32_t ulResPos = 0, ulMaxBuf = DK_INCBUF, ulMaxRes = DK_INCRES;
 
       char * cIntMod;
-      int    p, iErrorPar = 0;
+      int32_t    p, iErrorPar = 0;
 
       cIntMod = nullptr;
       cRes    = static_cast<char*>(hb_xgrab(ulMaxRes));
@@ -233,7 +233,7 @@ HB_FUNC(SQL_SPRINTF)
       for( p = 0; p < argc;  /* Not p++ by support index & indirect arguments */ )
       {
          HB_ITEM *pItmPar, *pItmCpy;
-         int      arg, iCOut, IsType, IsIndW, IsIndP, iIndWidth, iIndPrec;
+         int32_t      arg, iCOut, IsType, IsIndW, IsIndP, iIndWidth, iIndPrec;
          uint32_t  s, f, i, ulWidth, ulParPos = 0;
 
          const char * c = cItmFrm + ulParPos;

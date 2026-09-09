@@ -50,7 +50,7 @@
 
 HB_FUNC(FT_ISSHARE)
 {
-   int iShare;
+   int32_t iShare;
 
    iShare = 0;
 

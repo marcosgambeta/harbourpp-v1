@@ -110,9 +110,9 @@ HB_FUNC(RSA_PUBLIC_ENCRYPT)
 
   if (rsa) {
     const unsigned char *from = (const unsigned char *)hb_parcx(2);
-    int flen = (int)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
+    int32_t flen = (int32_t)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
     unsigned char *buffer;
-    int ret;
+    int32_t ret;
 
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
@@ -137,9 +137,9 @@ HB_FUNC(RSA_PRIVATE_DECRYPT)
 
   if (rsa) {
     const unsigned char *from = (const unsigned char *)hb_parcx(2);
-    int flen = (int)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
+    int32_t flen = (int32_t)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
     unsigned char *buffer;
-    int ret;
+    int32_t ret;
 
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
@@ -165,9 +165,9 @@ HB_FUNC(RSA_PRIVATE_ENCRYPT)
 
   if (rsa) {
     const unsigned char *from = (const unsigned char *)hb_parcx(2);
-    int flen = (int)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
+    int32_t flen = (int32_t)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
     unsigned char *buffer;
-    int ret;
+    int32_t ret;
 
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
@@ -192,9 +192,9 @@ HB_FUNC(RSA_PUBLIC_DECRYPT)
 
   if (rsa) {
     const unsigned char *from = (const unsigned char *)hb_parcx(2);
-    int flen = (int)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
+    int32_t flen = (int32_t)hb_parclen(2), padding = hb_parnidef(4, RSA_PKCS1_PADDING);
     unsigned char *buffer;
-    int ret;
+    int32_t ret;
 
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 

@@ -120,15 +120,15 @@ HB_FUNC(EVP_ENCODEUPDATE)
     EVP_ENCODE_CTX *ctx = hb_EVP_ENCODE_CTX_par(1);
 
     if (ctx) {
-      int size = 512;
+      int32_t size = 512;
       unsigned char *buffer = (unsigned char *)hb_xgrab(size + 1);
-      int result;
+      int32_t result;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
     (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x20900000L)
-      result = EVP_EncodeUpdate(ctx, buffer, &size, (HB_SSL_CONST unsigned char *)hb_parcx(3), (int)hb_parclen(3));
+      result = EVP_EncodeUpdate(ctx, buffer, &size, (HB_SSL_CONST unsigned char *)hb_parcx(3), (int32_t)hb_parclen(3));
 #else
-      EVP_EncodeUpdate(ctx, buffer, &size, (HB_SSL_CONST unsigned char *)hb_parcx(3), (int)hb_parclen(3));
+      EVP_EncodeUpdate(ctx, buffer, &size, (HB_SSL_CONST unsigned char *)hb_parcx(3), (int32_t)hb_parclen(3));
       result = 1; // Success
 #endif
       hb_retni(result);
@@ -151,7 +151,7 @@ HB_FUNC(EVP_ENCODEFINAL)
     EVP_ENCODE_CTX *ctx = hb_EVP_ENCODE_CTX_par(1);
 
     if (ctx) {
-      int size = 512;
+      int32_t size = 512;
       unsigned char *buffer = (unsigned char *)hb_xgrab(size + 1);
 
       EVP_EncodeFinal(ctx, buffer, &size);
@@ -185,10 +185,10 @@ HB_FUNC(EVP_DECODEUPDATE)
     EVP_ENCODE_CTX *ctx = hb_EVP_ENCODE_CTX_par(1);
 
     if (ctx) {
-      int size = 512;
+      int32_t size = 512;
       unsigned char *buffer = (unsigned char *)hb_xgrab(size + 1);
 
-      EVP_DecodeUpdate(ctx, buffer, &size, (HB_SSL_CONST unsigned char *)hb_parcx(3), (int)hb_parclen(3));
+      EVP_DecodeUpdate(ctx, buffer, &size, (HB_SSL_CONST unsigned char *)hb_parcx(3), (int32_t)hb_parclen(3));
 
       if (size > 0) {
         if (!hb_storclen_buffer((char *)buffer, size, 2))
@@ -208,7 +208,7 @@ HB_FUNC(EVP_DECODEFINAL)
     EVP_ENCODE_CTX *ctx = hb_EVP_ENCODE_CTX_par(1);
 
     if (ctx) {
-      int size = 512;
+      int32_t size = 512;
       unsigned char *buffer = (unsigned char *)hb_xgrab(size + 1);
 
       EVP_DecodeFinal(ctx, buffer, &size);

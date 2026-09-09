@@ -67,8 +67,8 @@ typedef struct tag_mime
    HB_SIZE            pos;       /* Position in stream from which the match begins */
    const char *       pattern;   /* String to match */
    const char *       mime_type; /* MIME type if complete */
-   int                next;      /* following entry to determine a MIME type, relative to current position (or 0) */
-   int                alternate; /* alternative entry to determine a MIME type, relative to current position (or 0) */
+   int32_t                next;      /* following entry to determine a MIME type, relative to current position (or 0) */
+   int32_t                alternate; /* alternative entry to determine a MIME type, relative to current position (or 0) */
    short unsigned int flags;     /* flags for confrontation */
 } MIME_ENTRY;
 
@@ -555,7 +555,7 @@ static const char * s_findExtMimeType( const char * szFileExt )
    do
    {
       uint32_t uiMiddle;
-      int i;
+      int32_t i;
 
       uiMiddle = ( uiFirst + uiLast ) >> 1;
       i = strcmp(szExt, s_extMimeTable[uiMiddle].pattern);

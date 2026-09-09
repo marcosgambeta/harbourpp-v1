@@ -553,7 +553,7 @@ HB_FUNC(FI_INSERTPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2) && hb_FIBITMAP_is(3))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    int page = hb_parni(2) - 1; /* 0-based index */
+    int32_t page = hb_parni(2) - 1; /* 0-based index */
     FIBITMAP *data = hb_FIBITMAP_par(3);
 
     FreeImage_InsertPage(bitmap, page, data);
@@ -570,7 +570,7 @@ HB_FUNC(FI_DELETEPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    int page = hb_parni(2) - 1; /* 0-based index */
+    int32_t page = hb_parni(2) - 1; /* 0-based index */
 
     FreeImage_DeletePage(bitmap, page);
   }
@@ -586,7 +586,7 @@ HB_FUNC(FI_LOCKPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    int page = hb_parni(2) - 1; /* 0-based index */
+    int32_t page = hb_parni(2) - 1; /* 0-based index */
 
     hb_FIBITMAP_ret(FreeImage_LockPage(bitmap, page), false);
   }

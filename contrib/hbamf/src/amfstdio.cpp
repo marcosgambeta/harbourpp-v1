@@ -87,11 +87,11 @@ HB_FUNC(AMFSTDIO_READ)
   char *pszBuf;
   char *pszTmp = pszLenPrefix;
   uint16_t nBytes;
-  int nTotal = 0;
-  int nLen;
-  int nToRead;
+  int32_t nTotal = 0;
+  int32_t nLen;
+  int32_t nToRead;
   HB_FHANDLE hStdIn = hb_fsGetOsHandle(HB_STDIN_HANDLE);
-  int nFlowCtrl = hb_parnidef(1, SINGLEBUF);
+  int32_t nFlowCtrl = hb_parnidef(1, SINGLEBUF);
   // 0 - disable flow control, 32768 - by default
 
   while (nTotal < 4)

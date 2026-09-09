@@ -238,7 +238,7 @@ HB_FUNC(EVP_PKEY_ASSIGN_RSA)
   if (hb_EVP_PKEY_is(1) && hb_RSA_is(2)) {
     EVP_PKEY *pkey = hb_EVP_PKEY_par(1);
     RSA *key = hb_RSA_par(2);
-    int res = 0;
+    int32_t res = 0;
 
     if (pkey && key) {
       res = EVP_PKEY_assign_RSA(pkey, key);
@@ -331,7 +331,7 @@ HB_FUNC(EVP_PKEY_CTX_GET_RSA_PADDING)
   EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
   if (ctx) {
-    int pad_mode = 0, ret;
+    int32_t pad_mode = 0, ret;
 
     ret = EVP_PKEY_CTX_get_rsa_padding(ctx, &pad_mode);
     if (ret <= 0)
@@ -369,7 +369,7 @@ HB_FUNC(EVP_PKEY_CTX_GET_RSA_PSS_SALTLEN)
   EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
   if (ctx) {
-    int saltlen = 0, ret;
+    int32_t saltlen = 0, ret;
 
     ret = EVP_PKEY_CTX_get_rsa_pss_saltlen(ctx, &saltlen);
     if (ret <= 0)
@@ -409,7 +409,7 @@ HB_FUNC(EVP_PKEY_CTX_GET_RSA_OAEP_MD)
 
   if (ctx) {
     const EVP_MD *md = nullptr;
-    int ret;
+    int32_t ret;
 
     ret = EVP_PKEY_CTX_get_rsa_oaep_md(ctx, &md);
     if (ret > 0)
@@ -454,7 +454,7 @@ HB_FUNC(EVP_PKEY_CTX_GET_RSA_MGF1_MD)
 
   if (ctx) {
     const EVP_MD *md = nullptr;
-    int ret;
+    int32_t ret;
 
     ret = EVP_PKEY_CTX_get_rsa_mgf1_md(ctx, &md);
     if (ret > 0)
@@ -504,7 +504,7 @@ HB_FUNC(EVP_PKEY_ENCRYPT)
     const unsigned char *in = (const unsigned char *)hb_parcx(3);
     size_t inlen = (size_t)hb_parclen(3), outlen = 0;
     unsigned char *buffer = nullptr;
-    int ret;
+    int32_t ret;
 
     ret = EVP_PKEY_encrypt(ctx, nullptr, &outlen, in, inlen);
     if (ret > 0) {
@@ -529,9 +529,9 @@ HB_FUNC(EVP_PKEY_ENCRYPT)
   if (hb_RSA_is(1)) {
     RSA *rsa = hb_RSA_par(1);
     const unsigned char *from = (const unsigned char *)hb_parcx(3);
-    int flen = (int)hb_parclen(3);
+    int32_t flen = (int32_t)hb_parclen(3);
     unsigned char *buffer;
-    int ret;
+    int32_t ret;
 
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
@@ -584,7 +584,7 @@ HB_FUNC(EVP_PKEY_DECRYPT)
     const unsigned char *in = (const unsigned char *)hb_parcx(3);
     size_t inlen = (size_t)hb_parclen(3), outlen = 0;
     unsigned char *buffer = nullptr;
-    int ret;
+    int32_t ret;
 
     ret = EVP_PKEY_decrypt(ctx, nullptr, &outlen, in, inlen);
     if (ret > 0) {
@@ -609,9 +609,9 @@ HB_FUNC(EVP_PKEY_DECRYPT)
   if (hb_RSA_is(1)) {
     RSA *rsa = hb_RSA_par(1);
     const unsigned char *from = (const unsigned char *)hb_parcx(3);
-    int flen = (int)hb_parclen(3);
+    int32_t flen = (int32_t)hb_parclen(3);
     unsigned char *buffer;
-    int ret;
+    int32_t ret;
 
     buffer = (unsigned char *)hb_xgrab(RSA_size(rsa) + 1);
 
@@ -661,7 +661,7 @@ HB_FUNC(EVP_PKEY_CTX_GET_SIGNATURE_MD)
 
   if (ctx) {
     const EVP_MD *md = nullptr;
-    int ret;
+    int32_t ret;
 
     ret = EVP_PKEY_CTX_get_signature_md(ctx, &md);
     if (ret > 0)
@@ -697,7 +697,7 @@ HB_FUNC(EVP_PKEY_SIGN)
     const unsigned char *tbs = (const unsigned char *)hb_parcx(3);
     size_t tbslen = (size_t)hb_parclen(3), siglen = 0;
     unsigned char *sig = nullptr;
-    int ret;
+    int32_t ret;
 
     ret = EVP_PKEY_sign(ctx, nullptr, &siglen, tbs, tbslen);
     if (ret > 0) {

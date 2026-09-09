@@ -79,7 +79,7 @@ HB_FUNC(FT_SETMODE)
 
 HB_FUNC( FT_GETMODE )
 {
-   int iMode;
+   int32_t iMode;
 
    iMode = 0;
 

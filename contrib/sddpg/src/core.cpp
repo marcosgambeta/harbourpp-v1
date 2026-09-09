@@ -209,7 +209,7 @@ static HB_ERRCODE pgsqlExecute(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
     return Harbour::FAILURE;
   }
 
-  int iTuples = PQntuples(pResult);
+  int32_t iTuples = PQntuples(pResult);
   unsigned long ulAffectedRows;
   if (iTuples > 0) {
     ulAffectedRows = static_cast<unsigned long>(iTuples);

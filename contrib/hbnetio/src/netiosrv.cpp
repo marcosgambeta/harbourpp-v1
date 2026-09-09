@@ -92,8 +92,8 @@
 
 struct _HB_CONSTREAM
 {
-   int id;
-   int type;
+   int32_t id;
+   int32_t type;
    struct _HB_CONSTREAM * next;
 };
 
@@ -104,9 +104,9 @@ struct _HB_CONSRV
 {
    PHB_SOCKEX     sock;
    PHB_FILE       fileTable[NETIO_FILES_MAX];
-   int            filesCount;
-   int            firstFree;
-   int            timeout;
+   int32_t            filesCount;
+   int32_t            firstFree;
+   int32_t            timeout;
    HB_BOOL        stop;
    HB_BOOL        rpc;
    HB_BOOL        login;
@@ -116,7 +116,7 @@ struct _HB_CONSRV
    PHB_CONSTREAM  streams;
    HB_MAXUINT     wr_count;
    HB_MAXUINT     rd_count;
-   int            rootPathLen;
+   int32_t            rootPathLen;
    char           rootPath[HB_PATH_MAX];
 };
 
@@ -144,7 +144,7 @@ static HB_BOOL s_isDirSep(char c)
 
 static const char * s_consrvFilePath(char * pszFileName, PHB_CONSRV conn, HB_BOOL fLink)
 {
-   int iPos = 0, iLevel = 0;
+   int32_t iPos = 0, iLevel = 0;
    char ch = HB_OS_PATH_DELIM_CHR;
 
    if( conn->rootPathLen )
@@ -261,7 +261,7 @@ static void s_consrv_disconnect(PHB_CONSRV conn)
 
 static void s_consrv_close(PHB_CONSRV conn)
 {
-   int i = 0;
+   int32_t i = 0;
 
    if( conn->rpcFilter )
    {
@@ -806,7 +806,7 @@ HB_FUNC(NETIO_SERVER)
          HB_ERRCODE errCode = 0, errFsCode;
          long len = 0, size, size2;
          long lJulian, lMillisec;
-         int iFileNo, iStreamID, iIndex, iResult;
+         int32_t iFileNo, iStreamID, iIndex, iResult;
          HB_FATTR ulAttr;
          uint32_t uiMsg;
          HB_FATTR nFlags;
@@ -1731,7 +1731,7 @@ HB_FUNC(NETIO_SERVER)
                               }
                               if( uiMsg == NETIO_FUNCCTRL )
                               {
-                                 int iStreamType;
+                                 int32_t iStreamType;
 
                                  iStreamID = HB_GET_LE_INT32(&msgbuf[8]);
                                  iStreamType = HB_GET_LE_INT32(&msgbuf[12]);
@@ -2019,8 +2019,8 @@ HB_FUNC(NETIO_SRVSTATUS)
 {
    PHB_CONSRV conn = s_consrvParam(1);
    auto iStreamID = hb_parni(2);
-   int iSrvInfo = 0;
-   int iStatus = NETIO_SRVSTAT_RUNNING;
+   int32_t iSrvInfo = 0;
+   int32_t iStatus = NETIO_SRVSTAT_RUNNING;
 
    if( iStreamID < 0 )
    {

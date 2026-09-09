@@ -318,7 +318,7 @@ static int32_t adsGetRddType(uint16_t uiRddID)
 
 static int32_t adsGetFileType(uint16_t uiRddID)
 {
-  int iType = adsGetRddType(uiRddID);
+  int32_t iType = adsGetRddType(uiRddID);
 
   return iType > 0 ? iType : hb_ads_iFileType;
 }
@@ -497,7 +497,7 @@ static void adsGetKeyItem(ADSAREAP pArea, HB_ITEM *pItem, int32_t iKeyType, char
 
   case ADS_NUMERIC:
     if (pArea->iFileType == ADS_NTX) {
-      int iLen = iKeyLen, iDec;
+      int32_t iLen = iKeyLen, iDec;
       HB_MAXINT lValue;
 
       if (*pKeyBuf == '0' - 4) { // negative number
@@ -1463,7 +1463,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, HB_ITEM *pStruct)
   for (uiCount = 0; uiCount < uiItems; uiCount++) {
     uint16_t uiLen;
     const char *szFieldType;
-    int iData;
+    int32_t iData;
 
     dbFieldInfo.uiTypeExtended = 0;
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);

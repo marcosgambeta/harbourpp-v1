@@ -23,7 +23,7 @@ HB_FUNC(GT_STRCOUNT)
 
     for (count = 0, p2 = 0; p2 <= (l2 - l1); p2++)
     {
-      int match = 1;
+      int32_t match = 1;
 
       for (p1 = 0; p1 < l1; p1++)
       {

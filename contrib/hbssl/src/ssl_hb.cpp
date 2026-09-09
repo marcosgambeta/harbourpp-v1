@@ -56,12 +56,12 @@ HB_FUNC(HB_SSL_READ_ALL)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl) {
-      int iMax = hb_parnidef(3, INT_MAX);
-      int iTimeout = hb_parnidef(4, -1);
-      int iBufferSize = hb_parnidef(5, 80);
+      int32_t iMax = hb_parnidef(3, INT_MAX);
+      int32_t iTimeout = hb_parnidef(4, -1);
+      int32_t iBufferSize = hb_parnidef(5, 80);
 
-      int iPos = 0;
-      int iAllocated = 0;
+      int32_t iPos = 0;
+      int32_t iAllocated = 0;
       char *retval = nullptr;
 
       if (iBufferSize <= 15)
@@ -71,8 +71,8 @@ HB_FUNC(HB_SSL_READ_ALL)
 
       for (;;) {
         char buffer[1];
-        int iLen;
-        int sd = SSL_get_rfd(ssl);
+        int32_t iLen;
+        int32_t sd = SSL_get_rfd(ssl);
 
         if (SSL_pending(ssl) || (sd >= 0 && hb_socketSelectRead((HB_SOCKET)sd, iTimeout))) {
           iLen = SSL_read(ssl, buffer, 1);
@@ -120,12 +120,12 @@ HB_FUNC(HB_SSL_READ_LINE)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl) {
-      int iMax = hb_parnidef(3, INT_MAX);
-      int iTimeout = hb_parnidef(4, -1);
-      int iBufferSize = hb_parnidef(5, 80);
+      int32_t iMax = hb_parnidef(3, INT_MAX);
+      int32_t iTimeout = hb_parnidef(4, -1);
+      int32_t iBufferSize = hb_parnidef(5, 80);
 
-      int iPos = 0;
-      int iAllocated = 0;
+      int32_t iPos = 0;
+      int32_t iAllocated = 0;
       char *retval = nullptr;
 
       if (iBufferSize <= 15)
@@ -135,8 +135,8 @@ HB_FUNC(HB_SSL_READ_LINE)
 
       for (;;) {
         char buffer[1];
-        int iLen;
-        int sd = SSL_get_rfd(ssl);
+        int32_t iLen;
+        int32_t sd = SSL_get_rfd(ssl);
 
         if (SSL_pending(ssl) || (sd >= 0 && hb_socketSelectRead((HB_SOCKET)sd, iTimeout))) {
           iLen = SSL_read(ssl, buffer, 1);

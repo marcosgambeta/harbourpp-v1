@@ -145,7 +145,7 @@ static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
   ISC_STATUS_ARRAY status;
   auto hDb = static_cast<isc_db_handle>(0);
   char parambuf[520];
-  int i;
+  int32_t i;
 
   i = 0;
   parambuf[i++] = isc_dpb_version1;
@@ -292,7 +292,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
     DBFIELDINFO dbFieldInfo{};
     dbFieldInfo.atomName = szOurName;
 
-    int iType = pVar->sqltype & ~1;
+    int32_t iType = pVar->sqltype & ~1;
     switch (iType) {
     case SQL_TEXT: {
       dbFieldInfo.uiType = Harbour::DB::Field::STRING;

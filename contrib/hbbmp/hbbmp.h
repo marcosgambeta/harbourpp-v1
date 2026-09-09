@@ -99,14 +99,14 @@ typedef struct _HB_BMPPALETTEITM
 
 typedef struct _HB_BMPINFO
 {
-   int      error;
-   int      width;
-   int      height;
-   int      rowlen;
+   int32_t      error;
+   int32_t      width;
+   int32_t      height;
+   int32_t      rowlen;
    HB_BOOL  fromtop;
-   int      dpi;
-   int      depth;
-   int      clrused;
+   int32_t      dpi;
+   int32_t      depth;
+   int32_t      clrused;
    HB_BMPPALETTEITM palette[ 256 ];
    uint8_t* data;
 } HB_BMPINFO, * PHB_BMPINFO;

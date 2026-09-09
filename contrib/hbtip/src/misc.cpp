@@ -61,7 +61,7 @@ HB_FUNC(TIP_TIMESTAMP)
    static const char * s_months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
    char szRet[64];
-   int  iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
+   int32_t  iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
    long lOffset;
 
    /* FIXME: wrong result is returned when empty dates it's passed */

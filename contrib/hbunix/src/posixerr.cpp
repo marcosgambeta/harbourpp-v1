@@ -52,7 +52,7 @@
 
 typedef struct
 {
-   int iErrNo;
+   int32_t iErrNo;
 } HB_POSIXERRDATA, * PHB_POSIXERRDATA;
 
 static HB_TSD_NEW(s_posix_errno, sizeof(HB_POSIXERRDATA), nullptr, nullptr);

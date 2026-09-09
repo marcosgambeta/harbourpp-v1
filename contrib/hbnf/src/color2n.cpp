@@ -22,7 +22,7 @@
 
 HB_FUNC(FT_COLOR2N)
 {
-   int iRet = 0;
+   int32_t iRet = 0;
 
    if( HB_ISCHAR(1) )
    {

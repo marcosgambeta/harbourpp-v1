@@ -136,7 +136,7 @@ HB_FUNC(CAIRO_PATTERN_GET_COLOR_STOP_COUNT)
 
   if (pPattern != nullptr)
   {
-    int iCount;
+    int32_t iCount;
     hb_retni(cairo_pattern_get_color_stop_count(pPattern, &iCount));
     hb_storni(iCount, 2);
   }

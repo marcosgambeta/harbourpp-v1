@@ -75,7 +75,7 @@ char *hb_adsOemToAnsi(const char *pszSrc, HB_SIZE nLen)
 {
   if (hb_ads_bOEM) {
 #if defined(HB_OS_WIN)
-    int nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast<int32_t>(nLen), nullptr, 0);
+    int32_t nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast<int32_t>(nLen), nullptr, 0);
     auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast<int32_t>(nLen), pszWide, nWideLen);
@@ -100,7 +100,7 @@ char *hb_adsAnsiToOem(const char *pszSrc, HB_SIZE nLen)
 {
   if (hb_ads_bOEM) {
 #if defined(HB_OS_WIN)
-    int nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast<int32_t>(nLen), nullptr, 0);
+    int32_t nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast<int32_t>(nLen), nullptr, 0);
     auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast<int32_t>(nLen), pszWide, nWideLen);
@@ -133,7 +133,7 @@ void hb_adsOemAnsiFree(char *pszSrc)
 typedef struct
 {
   ADSHANDLE hConnect;
-  int iIndexPageSize;
+  int32_t iIndexPageSize;
 #if !defined(ADS_LINUX)
   HB_ITEM *pCallBack;
 #endif // ! ADS_LINUX
@@ -1670,7 +1670,7 @@ HB_FUNC(ADSVERSION)
   UNSIGNED8 ucDesc[128];
   UNSIGNED16 usDescLen = sizeof(ucDesc) - 1;
   char szVersion[256];
-  int iPos;
+  int32_t iPos;
 
   AdsGetVersion(&ulMajor, &ulMinor, &ucLetter, ucDesc, &usDescLen);
 

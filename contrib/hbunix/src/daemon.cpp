@@ -33,7 +33,7 @@
 
 HB_FUNC(UNIX_DAEMON)
 {
-   int fd;
+   int32_t fd;
 
    switch( fork() )
    {

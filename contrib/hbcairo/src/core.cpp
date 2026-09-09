@@ -249,7 +249,7 @@ HB_FUNC(CAIRO_PATH_DESTROY)
 struct HB_CAIRO_PATH_ITERATOR
 {
   cairo_path_t **ppPath;
-  int iPos;
+  int32_t iPos;
 };
 
 using PHB_CAIRO_PATH_ITERATOR = HB_CAIRO_PATH_ITERATOR *;

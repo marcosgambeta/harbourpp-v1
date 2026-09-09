@@ -132,7 +132,7 @@ HB_FUNC(HB_SSL_STATIC)
 
 HB_FUNC(OPENSSL_VERSION)
 {
-  int value = hb_parni(1);
+  int32_t value = hb_parni(1);
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
     (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x30500000L)
@@ -475,7 +475,7 @@ HB_FUNC(SSL_TOTAL_RENEGOTIATIONS)
 
 HB_FUNC(SSL_SET_FD)
 {
-  int iSD;
+  int32_t iSD;
 
   if (hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1) {
     SSL *ssl = hb_SSL_par(1);
@@ -488,7 +488,7 @@ HB_FUNC(SSL_SET_FD)
 
 HB_FUNC(SSL_SET_RFD)
 {
-  int iSD;
+  int32_t iSD;
 
   if (hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1) {
     SSL *ssl = hb_SSL_par(1);
@@ -501,7 +501,7 @@ HB_FUNC(SSL_SET_RFD)
 
 HB_FUNC(SSL_SET_WFD)
 {
-  int iSD;
+  int32_t iSD;
 
   if (hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1) {
     SSL *ssl = hb_SSL_par(1);
@@ -565,15 +565,15 @@ HB_FUNC(SSL_READ)
       HB_ITEM *pItem = hb_param(2, HB_IT_STRING);
       char *pBuffer;
       HB_SIZE nLen;
-      int nRead = 0;
+      int32_t nRead = 0;
 
       if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
         if (HB_ISNUM(3)) {
           nRead = hb_parni(3);
-          if (nRead >= 0 && nRead < (int)nLen)
+          if (nRead >= 0 && nRead < (int32_t)nLen)
             nLen = nRead;
         }
-        nRead = nLen >= INT_MAX ? INT_MAX : (int)nLen;
+        nRead = nLen >= INT_MAX ? INT_MAX : (int32_t)nLen;
 
         nRead = SSL_read(ssl, pBuffer, nRead);
       }
@@ -593,15 +593,15 @@ HB_FUNC(SSL_PEEK)
       HB_ITEM *pItem = hb_param(2, HB_IT_STRING);
       char *pBuffer;
       HB_SIZE nLen;
-      int nRead = 0;
+      int32_t nRead = 0;
 
       if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
         if (HB_ISNUM(3)) {
           nRead = hb_parni(3);
-          if (nRead >= 0 && nRead < (int)nLen)
+          if (nRead >= 0 && nRead < (int32_t)nLen)
             nLen = nRead;
         }
-        nRead = nLen >= INT_MAX ? INT_MAX : (int)nLen;
+        nRead = nLen >= INT_MAX ? INT_MAX : (int32_t)nLen;
 
         nRead = SSL_peek(ssl, pBuffer, nRead);
       }
@@ -638,7 +638,7 @@ HB_FUNC(SSL_WRITE)
           nLen = nWrite;
       }
 
-      hb_retni(SSL_write(ssl, hb_itemGetCPtr(pBuffer), (int)nLen));
+      hb_retni(SSL_write(ssl, hb_itemGetCPtr(pBuffer), (int32_t)nLen));
     }
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -670,7 +670,7 @@ HB_FUNC(SSL_GET_SSL_METHOD)
 #else
       const SSL_METHOD *p = SSL_get_ssl_method(ssl);
 #endif
-      int n;
+      int32_t n;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
       if (p == TLS_method())
@@ -737,7 +737,7 @@ HB_FUNC(SSL_GET_CIPHER_BITS)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl) {
-      int alg_bits = 0;
+      int32_t alg_bits = 0;
 
       hb_retni(SSL_get_cipher_bits(ssl, &alg_bits));
 
@@ -1386,11 +1386,11 @@ HB_FUNC(SSL_GET_CIPHERS)
 
     if (ssl) {
       STACK_OF(SSL_CIPHER) *stack = SSL_get_ciphers(ssl);
-      int len = sk_SSL_CIPHER_num(stack);
+      int32_t len = sk_SSL_CIPHER_num(stack);
 
       if (len > 0) {
         HB_ITEM *pArray = hb_itemArrayNew(len);
-        int tmp;
+        int32_t tmp;
 
         for (tmp = 0; tmp < len; tmp++)
           hb_arraySetPtr(pArray, tmp + 1, HB_UNCONST(sk_SSL_CIPHER_value(stack, tmp)));
@@ -1410,11 +1410,11 @@ HB_FUNC(SSL_GET_CLIENT_CA_LIST)
 
     if (ssl) {
       STACK_OF(X509_NAME) *stack = SSL_get_client_CA_list(ssl);
-      int len = sk_X509_NAME_num(stack);
+      int32_t len = sk_X509_NAME_num(stack);
 
       if (len > 0) {
         HB_ITEM *pArray = hb_itemArrayNew(len);
-        int tmp;
+        int32_t tmp;
 
         for (tmp = 0; tmp < len; tmp++)
           hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
@@ -1431,11 +1431,11 @@ HB_FUNC(SSL_LOAD_CLIENT_CA_FILE)
 {
   if (HB_ISCHAR(1)) {
     STACK_OF(X509_NAME) *stack = SSL_load_client_CA_file(hb_parc(1));
-    int len = sk_X509_NAME_num(stack);
+    int32_t len = sk_X509_NAME_num(stack);
 
     if (len > 0) {
       HB_ITEM *pArray = hb_itemArrayNew(len);
-      int tmp;
+      int32_t tmp;
 
       for (tmp = 0; tmp < len; tmp++)
         hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
@@ -1454,12 +1454,12 @@ HB_FUNC(SSL_USE_RSAPRIVATEKEY_ASN1)
 
     if (ssl)
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
-      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, (const unsigned char *)hb_parc(2), (int)hb_parclen(2)));
+      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, (const unsigned char *)hb_parc(2), (int32_t)hb_parclen(2)));
 #else
       // 'const' not used in 2nd param because ssh.h misses it, too.
       //  Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
       //  [vszakats]
-      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, (unsigned char *)HB_UNCONST(hb_parc(2)), (int)hb_parclen(2)));
+      hb_retni(SSL_use_RSAPrivateKey_ASN1(ssl, (unsigned char *)HB_UNCONST(hb_parc(2)), (int32_t)hb_parclen(2)));
 #endif
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -1471,7 +1471,7 @@ HB_FUNC(SSL_USE_PRIVATEKEY_ASN1)
     SSL *ssl = hb_SSL_par(2);
 
     if (ssl)
-      hb_retni(SSL_use_PrivateKey_ASN1(hb_parni(1), ssl, (HB_SSL_CONST unsigned char *)hb_parc(3), (int)hb_parclen(3)));
+      hb_retni(SSL_use_PrivateKey_ASN1(hb_parni(1), ssl, (HB_SSL_CONST unsigned char *)hb_parc(3), (int32_t)hb_parclen(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1482,7 +1482,7 @@ HB_FUNC(SSL_USE_CERTIFICATE_ASN1)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      hb_retni(SSL_use_certificate_ASN1(ssl, (HB_SSL_CONST unsigned char *)hb_parc(2), (int)hb_parclen(2)));
+      hb_retni(SSL_use_certificate_ASN1(ssl, (HB_SSL_CONST unsigned char *)hb_parc(2), (int32_t)hb_parclen(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

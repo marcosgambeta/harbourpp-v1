@@ -63,13 +63,13 @@ HB_FUNC(CUPSGETDEFAULT)
 HB_FUNC(CUPSGETDESTS)
 {
    cups_dest_t * dest_list;
-   int      num_dests = cupsGetDests(&dest_list);
+   int32_t      num_dests = cupsGetDests(&dest_list);
    auto pArray = hb_itemArrayNew(static_cast<HB_SIZE>(num_dests));
 
    if( num_dests > 0 )
    {
       cups_dest_t * desk_list_bak = dest_list;
-      int i;
+      int32_t i;
 
       for( i = 1; i <= num_dests; ++i, ++dest_list )
          hb_arraySetC(pArray, i, dest_list->name);
@@ -84,7 +84,7 @@ HB_FUNC(CUPSPRINTFILE)
 {
    auto pOptions = hb_param(4, Harbour::Item::HASH | Harbour::Item::ARRAY);
 
-   int num_options         = 0;
+   int32_t num_options         = 0;
    cups_option_t * options = nullptr;
 
    if( pOptions )

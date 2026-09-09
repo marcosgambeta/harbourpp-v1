@@ -17,7 +17,7 @@ HB_FUNC(GT_STREXPAND)
     const char *insert = " ";
     HB_ISIZ len = hb_parclen(1);
     HB_ISIZ i, p;
-    int j;
+    int32_t j;
 
     if (HB_ISCHAR(3))
     {

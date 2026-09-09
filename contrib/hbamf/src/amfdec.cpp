@@ -149,8 +149,8 @@ static bool amf3_decode_int(amfContext *context, int32_t *iVal)
 {
   const char *byte_ref;
   char byte;
-  int result = 0;
-  int byte_cnt = 0;
+  int32_t result = 0;
+  int32_t byte_cnt = 0;
 
   byte_ref = readByte(context);
   if (!byte_ref)
@@ -268,8 +268,8 @@ static bool amfX_decode_string(amfContext *context, HB_ITEM *pItem, uint32_t str
 
 static bool amf3_deserialize_string(amfContext *context, HB_ITEM *pItem)
 {
-  int header;
-  int *header_p = &header;
+  int32_t header;
+  int32_t *header_p = &header;
   HB_ITEM *pRefItem;
   HB_ITEM *pHash = context->str_ref;
 
@@ -354,7 +354,7 @@ static bool amf3_decode_dynamic_dict(amfContext *context, HB_ITEM *pItem)
 /* Populate an array with values from the buffer. */
 static bool decode_dynamic_array_AMF3(amfContext *context, HB_ITEM *pItem, int32_t array_len, bool dict)
 {
-  int i;
+  int32_t i;
   bool lRet;
 
   if (dict)
@@ -416,8 +416,8 @@ static bool decode_dynamic_array_AMF3(amfContext *context, HB_ITEM *pItem, int32
 
 static bool amf3_deserialize_array(amfContext *context, HB_ITEM *pItem, bool collection)
 {
-  int header;
-  int *header_p = &header;
+  int32_t header;
+  int32_t *header_p = &header;
   HB_ITEM *pRefItem;
   HB_ITEM *pHash = context->obj_ref;
   bool mixed; /* if the result will be a Hash with both numbers and strings as keys */
@@ -529,8 +529,8 @@ static bool amf3_decode_epoch(amfContext *context, HB_ITEM *pItem)
 /* Deserialize date. */
 static bool amf3_deserialize_date(amfContext *context, HB_ITEM *pItem)
 {
-  int header;
-  int *header_p = &header;
+  int32_t header;
+  int32_t *header_p = &header;
   HB_ITEM *pRefItem;
   HB_ITEM *pHash = context->obj_ref;
 
@@ -582,8 +582,8 @@ static bool amf3_decode_byte_array(amfContext *context, HB_ITEM *pItem, int32_t 
 /* Deserialize a byte array. */
 static bool amf3_deserialize_byte_array(amfContext *context, HB_ITEM *pItem)
 {
-  int header;
-  int *header_p = &header;
+  int32_t header;
+  int32_t *header_p = &header;
   HB_ITEM *pRefItem;
   HB_ITEM *pHash = context->obj_ref;
 
@@ -697,7 +697,7 @@ static bool amf3_decode_class_def(amfContext *context, HB_ITEM *pClass, int32_t 
   HB_ITEM *pKey;
   HB_ITEM *pValue;
   HB_ITEM *pAttrs;
-  int i;
+  int32_t i;
 
   if (!amf3_deserialize_string(context, pStrAlias))
   {
@@ -988,14 +988,14 @@ static bool amf3_decode_externalizable(amfContext *context, HB_ITEM *pItem)
  */
 static bool amf3_deserialize_obj(amfContext *context, HB_ITEM *pItem, bool proxy)
 {
-  int header;
-  int *header_p = &header;
+  int32_t header;
+  int32_t *header_p = &header;
   HB_ITEM *pRefItem;
   HB_ITEM *pHash = context->obj_ref;
   HB_ITEM *pClass;
   HB_ITEM *pMappedClassDef;
   HB_ITEM *pValue;
-  int obj_type; /* 0 = anonymous, 1 == externalizable, 2 == typed */
+  int32_t obj_type; /* 0 = anonymous, 1 == externalizable, 2 == typed */
   bool result;
 
   if (!amf3_decode_int(context, header_p))
@@ -1229,7 +1229,7 @@ static bool amf3_getItem(amfContext *context, HB_ITEM *pItem)
     break;
 
   case INT_TYPE: {
-    int iVal;
+    int32_t iVal;
     if (amf3_decode_int(context, &iVal))
     {
       hb_itemPutNI(pItem, iVal);

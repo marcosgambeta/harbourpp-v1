@@ -61,7 +61,7 @@ HB_FUNC(CURDRIVE)
    auto szDrive = hb_parc(1);
    if( szDrive )
    {
-      int iDrive = -1;
+      int32_t iDrive = -1;
 
       if( *szDrive >= 'A' && *szDrive <= 'Z' )
          iDrive = *szDrive - 'A';

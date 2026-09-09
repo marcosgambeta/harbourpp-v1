@@ -583,11 +583,11 @@ HB_FUNC(SSL_CTX_GET_CLIENT_CA_LIST)
 #if OPENSSL_VERSION_NUMBER < 0x10000000L ||                                                                            \
     OPENSSL_VERSION_NUMBER >= 0x1000000FL // NOTE: Compilation error when tried with 1.0.0beta5
       STACK_OF(X509_NAME) *stack = SSL_CTX_get_client_CA_list(ctx);
-      int len = sk_X509_NAME_num(stack);
+      int32_t len = sk_X509_NAME_num(stack);
 
       if (len > 0) {
         HB_ITEM *pArray = hb_itemArrayNew(sk_X509_NAME_num(stack));
-        int tmp;
+        int32_t tmp;
 
         for (tmp = 0; tmp < len; tmp++)
           hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
@@ -684,7 +684,7 @@ HB_FUNC(SSL_CTX_USE_RSAPRIVATEKEY_ASN1)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      hb_retni(SSL_CTX_use_RSAPrivateKey_ASN1(ctx, (HB_SSL_CONST unsigned char *)hb_parc(2), (int)hb_parclen(2)));
+      hb_retni(SSL_CTX_use_RSAPrivateKey_ASN1(ctx, (HB_SSL_CONST unsigned char *)hb_parc(2), (int32_t)hb_parclen(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else
@@ -699,7 +699,7 @@ HB_FUNC(SSL_CTX_USE_PRIVATEKEY_ASN1)
 
     if (ctx)
       hb_retni(
-          SSL_CTX_use_PrivateKey_ASN1(hb_parni(1), ctx, (HB_SSL_CONST unsigned char *)hb_parc(3), (int)hb_parclen(3)));
+          SSL_CTX_use_PrivateKey_ASN1(hb_parni(1), ctx, (HB_SSL_CONST unsigned char *)hb_parc(3), (int32_t)hb_parclen(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -710,7 +710,7 @@ HB_FUNC(SSL_CTX_USE_CERTIFICATE_ASN1)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      hb_retni(SSL_CTX_use_certificate_ASN1(ctx, (int)hb_parclen(2), (HB_SSL_CONST unsigned char *)hb_parc(2)));
+      hb_retni(SSL_CTX_use_certificate_ASN1(ctx, (int32_t)hb_parclen(2), (HB_SSL_CONST unsigned char *)hb_parc(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

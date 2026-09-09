@@ -102,7 +102,7 @@ HB_FUNC(EVP_BYTESTOKEY)
     memset(iv, 0, sizeof(iv));
 
     hb_retni(EVP_BytesToKey(cipher, (HB_SSL_CONST EVP_MD *)md, (HB_SSL_CONST unsigned char *)hb_parc(3) /* salt */,
-                            (HB_SSL_CONST unsigned char *)hb_parcx(4) /* data */, (int)hb_parclen(4),
+                            (HB_SSL_CONST unsigned char *)hb_parcx(4) /* data */, (int32_t)hb_parclen(4),
                             hb_parni(5) /* count */, key, iv));
 
     hb_storclen((char *)key, EVP_CIPHER_key_length(cipher), 6);

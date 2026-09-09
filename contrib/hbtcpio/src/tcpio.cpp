@@ -90,7 +90,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    PHB_FILE pFile = nullptr;
    HB_ERRCODE errcode = 0;
    HB_SIZE nLen = 0;
-   int iPort = 0;
+   int32_t iPort = 0;
    HB_MAXINT timeout = -1;
 
    HB_SYMBOL_UNUSED(pFuncs);

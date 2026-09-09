@@ -66,7 +66,7 @@ HB_FUNC(BUBBLEBABBLEENCODE)
    HB_ISIZ nPos = 0;
    HB_ISIZ i;
 
-   int iSeed = 1;
+   int32_t iSeed = 1;
 
    pszResult[nPos++] = 'x';
 

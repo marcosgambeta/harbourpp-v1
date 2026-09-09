@@ -56,8 +56,8 @@
 struct pgCopyContext
 {
   char *buffer;
-  int position;
-  int length;
+  int32_t position;
+  int32_t length;
   bool str_trim;
   PGconn *connection;
 };
@@ -256,7 +256,7 @@ static bool exportBufSqlVar(pgCopyContext *context, HB_ITEM *pValue, const char 
   case Harbour::Item::DOUBLE:
   {
     char szResult[HB_MAX_DOUBLE_LENGTH];
-    int iSize, iWidth, iDec;
+    int32_t iSize, iWidth, iDec;
 
     hb_itemGetNLen(pValue, &iWidth, &iDec);
     iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
@@ -352,7 +352,7 @@ HB_FUNC(HB_PQCOPYFROMWA)
         auto szFieldName = hb_arrayGetCPtr(pFields, uiIter);
         if (szFieldName)
         {
-          int iPos = hb_rddFieldIndex(pArea, szFieldName);
+          int32_t iPos = hb_rddFieldIndex(pArea, szFieldName);
 
           szTmp = hb_xstrcpy(nullptr, szFields, szFieldName, nullptr);
           hb_xfree(szFields);

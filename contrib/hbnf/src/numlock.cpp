@@ -29,7 +29,7 @@
 
 HB_FUNC(FT_NUMLOCK)
 {
-   int        iState = 0;
+   int32_t        iState = 0;
    HB_GT_INFO gtInfo{};
 
    hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
@@ -42,7 +42,7 @@ HB_FUNC(FT_NUMLOCK)
 
    if( HB_ISLOG(1) )
    {
-      int iNewState = hb_parl(1) ? (iState | HB_GTI_KBD_NUMLOCK) : (iState & ~HB_GTI_KBD_NUMLOCK);
+      int32_t iNewState = hb_parl(1) ? (iState | HB_GTI_KBD_NUMLOCK) : (iState & ~HB_GTI_KBD_NUMLOCK);
       gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, iNewState);
       hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
    }

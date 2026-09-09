@@ -63,7 +63,7 @@ typedef enum
 
 static int32_t hb_ssl_pem_password_cb(char *buf, int32_t size, int32_t rwflag, void *userdata)
 {
-  int retsize = 0;
+  int32_t retsize = 0;
 
   if (size > 0 && userdata && hb_vmRequestReenter()) {
     hb_vmPushEvalSym();
@@ -73,7 +73,7 @@ static int32_t hb_ssl_pem_password_cb(char *buf, int32_t size, int32_t rwflag, v
 
     buf[0] = '\0';
 
-    retsize = (int)hb_parclen(-1);
+    retsize = (int32_t)hb_parclen(-1);
 
     if (retsize > 0) {
       if (retsize > size)

@@ -55,7 +55,7 @@ HB_FUNC(BETWEEN)
    if( hb_pcount() == 3 )
    {
       auto pItem = hb_param(1, Harbour::Item::ANY);
-      int iResult1, iResult2;
+      int32_t iResult1, iResult2;
 
       if( hb_itemCompare(pItem, hb_param(2, Harbour::Item::ANY), false, &iResult1) &&
           hb_itemCompare(pItem, hb_param(3, Harbour::Item::ANY), false, &iResult2) )
@@ -72,7 +72,7 @@ HB_FUNC(INLIST)
    if( iPCount > 1 )
    {
       auto pValue = hb_param(1, Harbour::Item::ANY);
-      int iParam;
+      int32_t iParam;
 
       for( iParam = 2; iParam <= iPCount; ++iParam )
       {

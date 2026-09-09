@@ -63,7 +63,7 @@ HB_FUNC(CONVTOOEMCP)
       auto nLen = static_cast<int32_t>(hb_itemGetCLen(pString));
       auto pszSrc = hb_itemGetCPtr(pString);
 
-      int    nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
+      int32_t    nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
       auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
       MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
@@ -93,7 +93,7 @@ HB_FUNC(CONVTOANSICP)
       auto nLen = static_cast<int32_t>(hb_itemGetCLen(pString));
       auto pszSrc = hb_itemGetCPtr(pString);
 
-      int    nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
+      int32_t    nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
       auto pszWide  = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
       MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);

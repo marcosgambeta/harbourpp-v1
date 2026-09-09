@@ -72,7 +72,7 @@ HB_FUNC(STRFORMAT)
       auto pszMask = hb_parcx(1);
       auto nMaskLen = hb_parclen(1);
       HB_SIZE      nMaskPos;
-      int          nPos;
+      int32_t          nPos;
 
       HB_SIZE nRetValLen;
       char *  pszRetVal;

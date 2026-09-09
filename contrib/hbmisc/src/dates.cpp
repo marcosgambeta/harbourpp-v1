@@ -83,8 +83,8 @@ static int32_t hb_doy( int32_t iYear, int32_t iMonth, int32_t iDay )
    HB_TRACE(HB_TR_DEBUG, ("hb_doy(%d, %d, %d)", iYear, iMonth, iDay));
 #endif
 
-   int i;
-   int iDoy = 0;
+   int32_t i;
+   int32_t iDoy = 0;
 
    for( i = 1; i < iMonth; ++i )
       iDoy += hb_daysinmonth(iYear, i);
@@ -98,7 +98,7 @@ static int32_t hb_woy( long lDate, HB_BOOL fISO )
    HB_TRACE(HB_TR_DEBUG, ("hb_woy(%ld, %d)", lDate, static_cast<int32_t>(fISO)));
 #endif
 
-   int iYear, iMonth, iDay;
+   int32_t iYear, iMonth, iDay;
 
    hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
 
@@ -111,7 +111,7 @@ static int32_t hb_woy( long lDate, HB_BOOL fISO )
 HB_FUNC(AMONTHS)
 {
    auto pReturn = hb_itemArrayNew(12);  /* Create array */
-   int      i;
+   int32_t      i;
 
    for( i = 0; i < 12; ++i )
       hb_arraySetC(pReturn, i + 1, hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + i));
@@ -122,7 +122,7 @@ HB_FUNC(AMONTHS)
 HB_FUNC(ADAYS)
 {
    auto pReturn = hb_itemArrayNew(7);  /* Create array */
-   int      i;
+   int32_t      i;
 
    for( i = 0; i < 7; ++i )
       hb_arraySetC(pReturn, i + 1, hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + i));
@@ -136,7 +136,7 @@ HB_FUNC(ISLEAPYEAR)
 
    if( pDate )
    {
-      int iYear, iMonth, iDay;
+      int32_t iYear, iMonth, iDay;
 
       hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
       hb_retl(hb_isleapyear(iYear));
@@ -151,7 +151,7 @@ HB_FUNC(HBMISC_DAYSINMONTH)
 
    if( pDate )
    {
-      int iYear, iMonth, iDay;
+      int32_t iYear, iMonth, iDay;
 
       hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
       hb_retni(hb_daysinmonth(iYear, iMonth));

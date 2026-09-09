@@ -130,7 +130,7 @@ HB_FUNC(CAIRO_GET_DASH)
 
   if (pCairo != nullptr)
   {
-    int iCount = cairo_get_dash_count(pCairo);
+    int32_t iCount = cairo_get_dash_count(pCairo);
     auto pDashes = static_cast<double *>(hb_xgrab(iCount * sizeof(double)));
     double dOffset;
     cairo_get_dash(pCairo, pDashes, &dOffset);

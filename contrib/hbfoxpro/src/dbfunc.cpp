@@ -61,7 +61,7 @@ static AREAP s_foxAreaPointer(int32_t iParam)
    else
    {
       auto szAlias = hb_parc(iParam);
-      int iArea;
+      int32_t iArea;
 
       if( szAlias )
       {

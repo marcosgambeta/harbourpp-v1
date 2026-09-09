@@ -51,7 +51,7 @@
 
 HB_FUNC(_FT_NWKSTAT)
 {
-   int iConnect;
+   int32_t iConnect;
 
    iConnect = 0;
 
@@ -60,8 +60,8 @@ HB_FUNC(_FT_NWKSTAT)
 
 HB_FUNC( _FT_TEMPFIL )
 {
-   int nax;
-   int iflags;
+   int32_t nax;
+   int32_t iflags;
 
    nax    = 0;
    iflags = 0;

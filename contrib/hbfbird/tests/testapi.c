@@ -36,7 +36,7 @@ isc_tr_handle    trans = NULL;
 int main()
 {
    char dpb[ 48 ];
-   int  i = 0, len;
+   int32_t  i = 0, len;
    long status[ 20 ];
 
    dpb[ i++ ] = isc_dpb_version1;
@@ -96,7 +96,7 @@ int query( char * sel_str )
    ISC_STATUS status[ 20 ];
    XSQLVAR *  var;
 
-   int n, i, dtype;
+   int32_t n, i, dtype;
 
    if( isc_start_transaction( status, &trans, 1, &db, 0, NULL ) )
       ERREXIT( status, 1 );

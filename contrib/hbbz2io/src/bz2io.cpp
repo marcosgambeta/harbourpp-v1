@@ -74,8 +74,8 @@ struct _HB_FILE
    HB_MAXINT      nTimeout;
    HB_BOOL        fEof;    // TODO: HB_BOOL -> bool
    HB_BOOL        fInited; // TODO: HB_BOOL -> bool
-   int            iMode;
-   int            iBlockSize;
+   int32_t            iMode;
+   int32_t            iBlockSize;
 
    bz_stream      bz2;
    uint8_t        buffer[HB_BZ2_BUFSIZE];
@@ -134,7 +134,7 @@ static HB_SIZE s_bz2_write(PHB_FILE pFile, HB_MAXINT nTimeout)
 
 static void s_bz2_flush(PHB_FILE pFile, bool fClose)
 {
-   int err;
+   int32_t err;
 
    if( pFile->bz2.avail_out > 0 ) {
       err = BZ2_bzCompress(&pFile->bz2, fClose ? BZ_FINISH : BZ_FLUSH);
@@ -228,7 +228,7 @@ static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszName, const c
 
 static HB_BOOL s_fileCopy(PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile) // FileFunc
 {
-   int iSrcBlkSize = HB_BZ2_BLOCKSIZE,
+   int32_t iSrcBlkSize = HB_BZ2_BLOCKSIZE,
        iDstBlkSize = HB_BZ2_BLOCKSIZE;
    const char * pszSrc = s_bz2io_name(pszSrcFile, &iSrcBlkSize ), * pszDst = s_bz2io_name(pszDstFile, &iDstBlkSize);
 
@@ -327,7 +327,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName) //
 
 static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, HB_ITEM *pError) // FileFunc
 {
-   int iBlockSize = HB_BZ2_BLOCKSIZE;
+   int32_t iBlockSize = HB_BZ2_BLOCKSIZE;
    char * pszNameBuf = nullptr;
    const char * pszName = s_bz2io_name(pszFileName, &iBlockSize);
    auto iPref = static_cast<int32_t>(pszName - pszFileName);
@@ -394,7 +394,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXIN
          hb_fsSetError(0);
          return 0;
       } else if( !pFile->fInited ) {
-         int err = BZ2_bzDecompressInit(&pFile->bz2, 0, 0);
+         int32_t err = BZ2_bzDecompressInit(&pFile->bz2, 0, 0);
          if( err != BZ_OK ) {
             hb_fsSetError(HB_BZ2_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
@@ -413,7 +413,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXIN
       pFile->bz2.total_out_hi32 = pFile->bz2.total_out_lo32 = 0;
 
       while( pFile->bz2.avail_out ) {
-         int err = BZ2_bzDecompress(&pFile->bz2);
+         int32_t err = BZ2_bzDecompress(&pFile->bz2);
 
          if( err != BZ_OK ) {
             if( err == BZ_STREAM_END ) {
@@ -455,7 +455,7 @@ static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, H
    HB_SIZE nResult = 0;
 
    if( pFile->iMode != FO_READ ) {
-      int err;
+      int32_t err;
 
       if( !pFile->fInited ) {
          pFile->bz2.next_out  = reinterpret_cast<char*>(pFile->buffer);

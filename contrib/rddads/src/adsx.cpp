@@ -232,7 +232,7 @@ static PMIXKEY mixKeyEval(PMIXTAG pTag, ADSXAREAP pArea)
 
 static bool mixEvalCond(HB_ITEM *pCondItem, ADSXAREAP pArea)
 {
-  int iCurrArea = 0;
+  int32_t iCurrArea = 0;
   bool fRet;
 
   if (pArea != nullptr) {
@@ -261,7 +261,7 @@ static void mixKeyFree(PMIXKEY pKey)
 
 static int32_t mixQSortCompare(PMIXKEY p1, PMIXKEY p2, uint16_t uiLen, HB_CODEPAGE *pCodepage)
 {
-  int i;
+  int32_t i;
 
   if (pCodepage) {
     i = hb_cdpcmp(reinterpret_cast<const char *>(p1->val), static_cast<HB_ULONG>(uiLen),
@@ -327,7 +327,7 @@ static void mixQSort(PMIXKEY *pKeys, HB_ULONG left, HB_ULONG right, uint16_t uiL
 static PMIXKEY mixFindKeyLen(PMIXTAG pTag, PMIXKEY pKey, uint16_t uiLen, HB_ULONG *ulKeyPos)
 {
   HB_ULONG l, r;
-  int i = 1;
+  int32_t i = 1;
 
   if (!pTag->ulRecCount) {
     if (ulKeyPos) {
@@ -559,7 +559,7 @@ static PMIXTAG mixFindTag(ADSXAREAP pArea, HB_ITEM *pOrder)
 static PMIXUPDATE mixUpdateCreate(ADSXAREAP pArea)
 {
   PMIXTAG pTag;
-  int iTag;
+  int32_t iTag;
 
   pTag = pArea->pTagList;
   if (!pArea->adsarea.fPositioned || !pTag) {
@@ -592,7 +592,7 @@ static PMIXUPDATE mixUpdateCreate(ADSXAREAP pArea)
 static void mixUpdateDestroy(ADSXAREAP pArea, PMIXUPDATE pUpdate, int32_t fUpdate)
 {
   PMIXTAG pTag = pArea->pTagList;
-  int iTag;
+  int32_t iTag;
 
   if (!pUpdate) {
     return;

@@ -56,9 +56,9 @@ HB_FUNC(_FT_MSETSENSITIVE)  /* nHoriz, nVert, nDouble */
 
 HB_FUNC(FT_MGETSENS)
 {
-   int iHoriz;
-   int iVert;
-   int iDouble;
+   int32_t iHoriz;
+   int32_t iVert;
+   int32_t iDouble;
 
    iHoriz  = 0;
    iVert   = 0;
@@ -75,10 +75,10 @@ HB_FUNC(FT_MCONOFF)
 
 HB_FUNC(FT_MBUTPRS)
 {
-   int inX;
-   int inY;
-   int inButton;
-   int iStatus;
+   int32_t inX;
+   int32_t inY;
+   int32_t inButton;
+   int32_t iStatus;
 
    inX      = 0;
    inY      = 0;
@@ -94,10 +94,10 @@ HB_FUNC(FT_MBUTPRS)
 
 HB_FUNC(FT_MBUTREL)
 {
-   int inX;
-   int inY;
-   int inButton;
-   int iStatus;
+   int32_t inX;
+   int32_t inY;
+   int32_t inButton;
+   int32_t iStatus;
 
    inX      = 0;
    inY      = 0;

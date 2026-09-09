@@ -192,7 +192,7 @@ struct HB_SQLHDBC
 {
    SQLHDBC  hDbc;
    HB_ITEM *pHEnvItm;
-   int      conn_counter;
+   int32_t      conn_counter;
 };
 
 using PHB_SQLHDBC = HB_SQLHDBC *;
@@ -285,7 +285,7 @@ struct HB_SQLHSTMT
 {
    SQLHSTMT hStmt;
    HB_ITEM *pHDbcItm;
-   int      conn_counter;
+   int32_t      conn_counter;
 };
 
 using PHB_SQLHSTMT = HB_SQLHSTMT *;

@@ -75,7 +75,7 @@ HB_FUNC(INDEXNAMES)
    if( pArea != nullptr )
    {
       DBORDERINFO pOrderInfo;
-      int         i;
+      int32_t         i;
 
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);

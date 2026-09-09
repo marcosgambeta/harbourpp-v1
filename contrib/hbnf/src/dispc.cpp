@@ -71,28 +71,28 @@ typedef struct
    HB_FOFFSET buffoffset;        /* offset into buffer of current line  */
    HB_FOFFSET fsize;             /* file size in bytes                  */
    HB_ISIZ    bufftop, buffbot;  /* first and last character in buffer  */
-   int        wintop, winbot;    /* first and last character in window  */
-   int        winrow, wincol;    /* row and column of window highlight  */
-   int        sline, eline;      /* start and end line of window        */
-   int        scol, ecol;        /* start and end col of window         */
-   int        height, width;     /* height and width of window          */
+   int32_t        wintop, winbot;    /* first and last character in window  */
+   int32_t        winrow, wincol;    /* row and column of window highlight  */
+   int32_t        sline, eline;      /* start and end line of window        */
+   int32_t        scol, ecol;        /* start and end col of window         */
+   int32_t        height, width;     /* height and width of window          */
    HB_FHANDLE infile;            /* input file handle                   */
-   int        maxlin;            /* line size                           */
+   int32_t        maxlin;            /* line size                           */
    HB_ISIZ    buffsize;          /* buffer size                         */
-   int        hlight;            /* highlight attribute                 */
-   int        norm;              /* normal attribute                    */
+   int32_t        hlight;            /* highlight attribute                 */
+   int32_t        norm;              /* normal attribute                    */
    HB_ISIZ    kcount;            /* number of keys in terminate key list*/
-   int        colinc;            /* col increment amount                */
+   int32_t        colinc;            /* col increment amount                */
    HB_BOOL    bBrowse;           /* browse flag                         */
    HB_BOOL    bRefresh;          /* true means refresh screen           */
-   int        keylist[24];       /* terminate key list                  */
-   int        keytype;           /* K_STRING or K_LIST                  */
+   int32_t        keylist[24];       /* terminate key list                  */
+   int32_t        keytype;           /* K_STRING or K_LIST                  */
 
    HB_BOOL    bIsAllocated;      /* if buffers were allocated           */
    char *     buffer;            /* file buffer pointer                 */
    char *     lbuff;             /* line buffer pointer                 */
    uint8_t * vseg;              /* video segment variable              */
-   int        iCellSize;         /* size of one buffer cell             */
+   int32_t        iCellSize;         /* size of one buffer cell             */
 } FT_DISPC, * PFT_DISPC;
 
 static HB_TSD_NEW(s_dispc, sizeof(FT_DISPC), nullptr, nullptr);
@@ -252,7 +252,7 @@ static void buff_align( PFT_DISPC dispc )
 
 static void win_align( PFT_DISPC dispc )
 {
-   int i;
+   int32_t i;
 
    dispc->winbot = dispc->wintop;   /* find out if there is enough text for */
    i = 0;                           /* full window.                         */
@@ -304,7 +304,7 @@ static void win_align( PFT_DISPC dispc )
 
 static void disp_update(PFT_DISPC dispc, int32_t offset)
 {
-   int line, col, pos, i;
+   int32_t line, col, pos, i;
 
    dispc->bRefresh = false;
    line = 0;
@@ -369,7 +369,7 @@ static void disp_update(PFT_DISPC dispc, int32_t offset)
 
 static void winup( PFT_DISPC dispc )
 {
-   int        k;
+   int32_t        k;
    HB_FOFFSET i, j;
 
    dispc->bRefresh = true;
@@ -424,7 +424,7 @@ static void winup( PFT_DISPC dispc )
 
 static void windown( PFT_DISPC dispc )
 {
-   int        k;
+   int32_t        k;
    HB_FOFFSET i, j;
 
    dispc->bRefresh = true;
@@ -543,7 +543,7 @@ HB_FUNC(_FT_DFINIT)
 {
    auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
-   int     rval;
+   int32_t     rval;
    HB_ISIZ j;
    HB_ISIZ i;
    HB_SIZE nSize;
@@ -702,11 +702,11 @@ HB_FUNC(FT_DISPFILE)
 {
    auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
-   int     i;
+   int32_t     i;
    char    rval[2];
    HB_BOOL bDone;
 
-   int ch;
+   int32_t ch;
 
    /* make sure buffers were allocated and file was opened */
    if( dispc->bIsAllocated && dispc->infile > 0 )

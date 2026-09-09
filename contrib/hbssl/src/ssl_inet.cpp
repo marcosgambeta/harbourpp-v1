@@ -100,7 +100,7 @@ static void hb_inetStartSSL(HB_BOOL fServer)
 
   if (sd != HB_NO_SOCKET) {
     if (hb_SSL_is(2)) {
-      int iResult = -2;
+      int32_t iResult = -2;
       SSL *ssl = hb_SSL_par(2);
 
       if (ssl) {

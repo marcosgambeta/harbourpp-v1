@@ -50,7 +50,7 @@
 
 HB_FUNC(FT_GETVPG)
 {
-   int iPage;
+   int32_t iPage;
 
    iPage = 0;
 

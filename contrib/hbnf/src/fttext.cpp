@@ -143,7 +143,7 @@
 
 typedef struct
 {
-   int area;
+   int32_t area;
    /* arrays used by the text workareas */
    long       recno[TEXT_WORKAREAS];
    HB_FOFFSET offset[TEXT_WORKAREAS];
@@ -678,7 +678,7 @@ HB_FUNC(FT_FSELECT)
 {
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
-   int oldarea = ft_text->area + 1;
+   int32_t oldarea = ft_text->area + 1;
 
    if( HB_ISNUM(1) )
    {

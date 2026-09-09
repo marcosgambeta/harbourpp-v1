@@ -356,7 +356,7 @@ HB_FUNC(FBQUERY)
     XSQLVAR *var;
 
     auto dialect = static_cast<unsigned short>(hb_parnidef(3, SQL_DIALECT_V5));
-    int num_cols;
+    int32_t num_cols;
 
     if (HB_ISPOINTER(4))
     {
@@ -416,11 +416,11 @@ HB_FUNC(FBQUERY)
     auto aNew = hb_itemArrayNew(num_cols);
     auto aTemp = hb_itemNew(nullptr);
 
-    int i;
+    int32_t i;
 
     for (i = 0, var = sqlda->sqlvar; i < sqlda->sqld; i++, var++)
     {
-      int dtype = (var->sqltype & ~1);
+      int32_t dtype = (var->sqltype & ~1);
 
       switch (dtype)
       {
@@ -570,7 +570,7 @@ HB_FUNC(FBGETDATA)
     auto sqlda = static_cast<XSQLDA *>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
     ISC_STATUS_ARRAY status;
 
-    int pos = hb_parni(2) - 1;
+    int32_t pos = hb_parni(2) - 1;
 
     if (!sqlda || pos < 0 || pos >= sqlda->sqln)
     {

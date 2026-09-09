@@ -184,7 +184,7 @@ const EVP_MD *hb_EVP_MD_par(int32_t iParam)
 
 int hb_EVP_MD_ptr_to_id(const EVP_MD *p)
 {
-  int n;
+  int32_t n;
 
   if (p == EVP_md_null())
     n = HB_EVP_MD_MD_NULL;

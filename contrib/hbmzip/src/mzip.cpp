@@ -272,7 +272,7 @@ HB_FUNC(HB_ZIPFILECREATE)
          auto iMethod = hb_parnidef(7, Z_DEFLATED);
          auto iLevel = hb_parnidef(8, Z_DEFAULT_COMPRESSION);
          long  lJulian, lMillisec;
-         int   iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
+         int32_t   iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
          uLong flags = 0;
 
          bool         fUnicode = hb_parl(12);
@@ -411,7 +411,7 @@ HB_FUNC(HB_UNZIPGLOBALINFO)
 
    if( hUnzip ) {
       unz_global_info ugi;
-      int iResult;
+      int32_t iResult;
 
       iResult = unzGetGlobalInfo(hUnzip, &ugi);
 
@@ -494,7 +494,7 @@ HB_FUNC(HB_UNZIPFILEINFO)
    if( hUnzip ) {
       char szFileName[HB_PATH_MAX * 3];
       unz_file_info ufi;
-      int  iResult;
+      int32_t  iResult;
 
       iResult = unzGetCurrentFileInfo(hUnzip, &ufi, szFileName, sizeof(szFileName) - 1, nullptr, 0, nullptr, 0);
       hb_retni(iResult);
@@ -692,7 +692,7 @@ static int32_t hb_zipStoreFile(zipFile hZip, int32_t iParamFileName, int32_t iPa
    HB_SIZE      nLen;
    HB_FATTR     ulExtAttr;
    zip_fileinfo zfi;
-   int          iResult;
+   int32_t          iResult;
    HB_BOOL      fError;
    HB_BOOL      fText;
    uint32_t       ulCRC;
@@ -798,8 +798,8 @@ static int32_t hb_zipStoreFile(zipFile hZip, int32_t iParamFileName, int32_t iPa
       }
 
       if( hb_fileTimeGet(szFileName, &lJulian, &lMillisec) ) {
-         int iYear, iMonth, iDay;
-         int iHour, iMinute, iSecond, iMSec;
+         int32_t iYear, iMonth, iDay;
+         int32_t iHour, iMinute, iSecond, iMSec;
 
          hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
          hb_timeDecode(lMillisec, &iHour, &iMinute, &iSecond, &iMSec);
@@ -942,7 +942,7 @@ static int32_t hb_zipStoreFileHandle(zipFile hZip, PHB_FILE pFile, int32_t iPara
 {
    HB_SIZE      nLen;
    zip_fileinfo zfi;
-   int          iResult;
+   int32_t          iResult;
    HB_BOOL      fText;
    uint32_t       ulCRC;
 
@@ -1048,7 +1048,7 @@ static int32_t hb_unzipExtractCurrentFile(unzFile hUnzip, const char * szFileNam
    char *        szName;
    HB_SIZE       nPos, nLen;
    unz_file_info ufi;
-   int           iResult;
+   int32_t           iResult;
    PHB_FILE      pFile;
 
    iResult = unzGetCurrentFileInfo(hUnzip, &ufi, szNameRaw, sizeof(szNameRaw) - 1, nullptr, 0, nullptr, 0);
@@ -1234,7 +1234,7 @@ static int32_t hb_unzipExtractCurrentFileToHandle(unzFile hUnzip, PHB_FILE pFile
       return -200;
    }
 
-   int iResult = unzGetCurrentFileInfo(hUnzip, &ufi, nullptr, 0, nullptr, 0, nullptr, 0);
+   int32_t iResult = unzGetCurrentFileInfo(hUnzip, &ufi, nullptr, 0, nullptr, 0, nullptr, 0);
    if( iResult != UNZ_OK ) {
       return iResult;
    }
@@ -1309,12 +1309,12 @@ static int32_t hb_zipDeleteFile(const char * szZipFile, const char * szFileMask)
    char *          pszFileComment   = nullptr;
    void *          pExtraField      = nullptr;
    void *          pLocalExtraField = nullptr;
-   int    iFilesLeft = 0;
-   int    iFilesDel  = 0;
-   int    iExtraFieldLen;
-   int    method;
-   int    level;
-   int    iResult;
+   int32_t    iFilesLeft = 0;
+   int32_t    iFilesDel  = 0;
+   int32_t    iExtraFieldLen;
+   int32_t    method;
+   int32_t    level;
+   int32_t    iResult;
    char * pszFree;
 
    /* open source file */
@@ -1420,7 +1420,7 @@ static int32_t hb_zipDeleteFile(const char * szZipFile, const char * szFileMask)
             uLong  ulLeft = ufi.compressed_size;
 
             while( ulLeft > 0 ) {
-               int iRead = HB_MIN(ulLeft, HB_Z_IOBUF_SIZE);
+               int32_t iRead = HB_MIN(ulLeft, HB_Z_IOBUF_SIZE);
                iResult = unzReadCurrentFile(hUnzip, static_cast<voidp>(buffer), iRead);
                if( iResult < 0 ) {
                   break;

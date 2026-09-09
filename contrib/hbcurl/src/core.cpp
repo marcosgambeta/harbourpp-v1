@@ -2258,7 +2258,7 @@ HB_FUNC(CURL_EASY_ER_BUFF_GET)
 static void hb_curl_slist_array(HB_ITEM *pArray, struct curl_slist *slist)
 {
   struct curl_slist *walk_slist;
-  int nCount;
+  int32_t nCount;
 
   // Count
   for (walk_slist = slist, nCount = 0; walk_slist->next; nCount++)
@@ -2296,7 +2296,7 @@ HB_FUNC(CURL_EASY_GETINFO)
     auto hb_curl = PHB_CURL_par(1);
     auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 
-    int type = HB_CURL_INFO_TYPE_INVALID;
+    int32_t type = HB_CURL_INFO_TYPE_INVALID;
 
     char *ret_string = nullptr;
     char *ret_ptr = nullptr;
@@ -2597,7 +2597,7 @@ HB_FUNC(CURL_EASY_GETINFO)
       if (ret_certinfo && ret_certinfo->num_of_certs > 0)
       {
         HB_ITEM *pArray = hb_itemArrayNew(ret_certinfo->num_of_certs);
-        int num;
+        int32_t num;
 
         for (num = 1; num <= ret_certinfo->num_of_certs; num++, ret_certinfo->certinfo++)
         {
@@ -2665,7 +2665,7 @@ HB_FUNC(CURL_EASY_UNESCAPE)
 
     if (hb_curl != nullptr)
     {
-      int nLen = 0;
+      int32_t nLen = 0;
       char *buffer = curl_easy_unescape(hb_curl->curl, hb_parcx(2), static_cast<int32_t>(hb_parclen(2)), &nLen);
       hb_retclen(buffer, nLen);
       curl_free(buffer);
@@ -2730,7 +2730,7 @@ HB_FUNC(CURL_VERSION_INFO)
 #endif
     {
       HB_ITEM *pProtocols;
-      int nCount = 0;
+      int32_t nCount = 0;
       const char *const *prot = data->protocols;
 
       while (*(prot++))
@@ -2991,7 +2991,7 @@ HB_FUNC(CURL_MULTI_PERFORM)
 
     if (hb_curlm)
     {
-      int running_handles = 0;
+      int32_t running_handles = 0;
       res = curl_multi_perform(hb_curlm->curlm, &running_handles);
       hb_stornl(running_handles, 2);
     }
@@ -3032,7 +3032,7 @@ HB_FUNC(CURL_MULTI_INFO_READ)
 
     if (hb_curlm)
     {
-      int msgs_in_queue = 0;
+      int32_t msgs_in_queue = 0;
       long response_code = 0;
       struct CURLMsg *msg = curl_multi_info_read(hb_curlm->curlm, &msgs_in_queue);
 

@@ -304,7 +304,7 @@ static bool amf3_encode_string(amfContext *context, HB_ITEM *pItem)
 static int32_t amf3_add_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem)
 {
   HB_ITEM *pVal;
-  int result = 0;
+  int32_t result = 0;
 
   if (context->use_refs)
   {
@@ -422,7 +422,7 @@ static int32_t amf3_get_index(amfContext *context, HB_ITEM *pHash, HB_ITEM *pIte
 
 static int32_t amf3_encode_reference(amfContext *context, HB_ITEM *pHash, HB_ITEM *pItem, int32_t bit)
 {
-  int idx;
+  int32_t idx;
 
   if (pItem == nullptr)
   {
@@ -452,7 +452,7 @@ static int32_t amf3_encode_reference(amfContext *context, HB_ITEM *pHash, HB_ITE
 
 static bool amf3_serialize_string(amfContext *context, HB_ITEM *pItem)
 {
-  int result;
+  int32_t result;
   auto len = hb_itemGetCLen(pItem);
 
   if (len == 0)
@@ -648,7 +648,7 @@ static HB_ISIZ amf3_encode_byte_array(amfContext *context, HB_ITEM *pItem)
 
 static HB_ISIZ amf3_serialize_byte_array(amfContext *context, HB_ITEM *pItem)
 {
-  int result;
+  int32_t result;
 
   if (hb_itemGetCLen(pItem) == 0)
   {
@@ -685,7 +685,7 @@ static int32_t amf3_encode_date(amfContext *context, HB_ITEM *pItem)
 
 static int32_t amf3_serialize_date(amfContext *context, HB_ITEM *pItem)
 {
-  int result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
+  int32_t result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
 
   if (result > -1)
   {
@@ -698,7 +698,7 @@ static int32_t amf3_serialize_date(amfContext *context, HB_ITEM *pItem)
 static bool amf3_encode_array(amfContext *context, HB_ITEM *pItem)
 {
   HB_SIZE item_len = hb_arrayLen(pItem);
-  int i;
+  int32_t i;
 
   if (!amf3_encode_int(context, (static_cast<int32_t>(item_len) << 1) | REFERENCE_BIT))
   {
@@ -712,7 +712,7 @@ static bool amf3_encode_array(amfContext *context, HB_ITEM *pItem)
 
   for (i = 1; i <= static_cast<int32_t>(item_len); i++)
   {
-    int result;
+    int32_t result;
 
     auto pArrayItem = hb_arrayGetItemPtr(pItem, i);
     if (!pArrayItem)
@@ -736,7 +736,7 @@ static bool amf3_serialize_array(amfContext *context, HB_ITEM *pItem)
   {
     if (hb_arrayRefs(pItem) > 1)
     {
-      int result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
+      int32_t result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
 
       if (result > -1)
       {
@@ -754,8 +754,8 @@ static bool amf3_serialize_array(amfContext *context, HB_ITEM *pItem)
 
 static int32_t amf3_encode_class_def(amfContext *context, HB_ITEM *pClass)
 {
-  int header;
-  int result;
+  int32_t header;
+  int32_t result;
   HB_ISIZ static_attr_len;
   HB_ISIZ i;
   HB_ITEM *class_alias;
@@ -860,7 +860,7 @@ static int32_t amf3_encode_class_def(amfContext *context, HB_ITEM *pClass)
 
 static int32_t amf3_serialize_class_def(amfContext *context, HB_ITEM *pClass)
 {
-  int result = amf3_encode_reference(context, context->class_ref, pClass, 0);
+  int32_t result = amf3_encode_reference(context, context->class_ref, pClass, 0);
 
   if (result > -1)
   {
@@ -1034,7 +1034,7 @@ static bool amf3_encode_object(amfContext *context, HB_ITEM *pItem)
       return 0;
    }
 
-   int i;
+   int32_t i;
    for( i = 0; i < static_attr_len; i++ ) {
       PyObject * static_attr = PySequence_GetItem(static_attrs, i);
       if( !static_attr ) {
@@ -1043,7 +1043,7 @@ static bool amf3_encode_object(amfContext *context, HB_ITEM *pItem)
          return 0;
       }
 
-      int result = encode_AMF3(context, static_attr);
+      int32_t result = encode_AMF3(context, static_attr);
       Py_DECREF(static_attr);
       if( !result ) {
          Py_DECREF(static_attrs);
@@ -1061,7 +1061,7 @@ static bool amf3_encode_object(amfContext *context, HB_ITEM *pItem)
          return 0;
       }
 
-      int result = encode_dynamic_dict_AMF3(context, dynamic_attrs);
+      int32_t result = encode_dynamic_dict_AMF3(context, dynamic_attrs);
       Py_DECREF(dynamic_attrs);
       if( !result ) {
          Py_DECREF(class_def);
@@ -1077,7 +1077,7 @@ static bool amf3_encode_object(amfContext *context, HB_ITEM *pItem)
 
 static bool amf3_serialize_object(amfContext *context, HB_ITEM *pItem)
 {
-  int result;
+  int32_t result;
 
   if (strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_RAW") == 0)
   {
@@ -1343,7 +1343,7 @@ HB_FUNC(AMF3_FROMWA)
   amfContext *outer_context = static_cast<amfContext *>(hb_parptr(7));
 
   DBORDERINFO pInfo;
-  int iOrd;
+  int32_t iOrd;
   uint16_t uiFields;
   HB_ULONG uiRecCount = 0;
   HB_ULONG uiRecNo = 0;
@@ -1460,7 +1460,7 @@ HB_FUNC(AMF3_FROMWA)
         auto szFieldName = hb_arrayGetCPtr(pFields, uiIter);
         if (szFieldName)
         {
-          int iPos = hb_rddFieldIndex(pArea, szFieldName);
+          int32_t iPos = hb_rddFieldIndex(pArea, szFieldName);
 
           if (iPos)
           {

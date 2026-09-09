@@ -31,27 +31,27 @@
 
 typedef struct
 {
-   int     top;               /* topmost row of editor's window */
-   int     left;              /* leftmost column of the editor's window */
-   int     bottom;            /* bottom row position */
-   int     right;             /* rightmost column */
+   int32_t     top;               /* topmost row of editor's window */
+   int32_t     left;              /* leftmost column of the editor's window */
+   int32_t     bottom;            /* bottom row position */
+   int32_t     right;             /* rightmost column */
    HB_ISIZ line_length;       /* maximal line length */
    HB_ISIZ line_number;       /* the number of lines stored in text buffer */
    HB_ISIZ current_line;      /* the offset in memory buffer where the current line starts (where the cursor is positioned) */
    HB_ISIZ first_line;        /* offset of the first line (usually 0) */
    HB_ISIZ last_line;         /* the offset in memory buffer of the last line */
-   int     cursor_row;        /* current cursor row in the window */
+   int32_t     cursor_row;        /* current cursor row in the window */
    HB_ISIZ cursor_col;        /* current cursor column in the window */
    HB_ISIZ first_display;     /* the offset of first visible (displayed) line */
    HB_ISIZ last_display;      /* the offset of last visible line */
    HB_ISIZ first_col;         /* first visible column */
    HB_BOOL fStable;           /* is the editor stabilized? */
-   int     current_stabil;    /* currently displayed row (during stabilization) */
-   int     stabil;            /* number of rows to stabilize */
+   int32_t     current_stabil;    /* currently displayed row (during stabilization) */
+   int32_t     stabil;            /* number of rows to stabilize */
    char    escape;            /* ASCII code of color escape character (the next character after this will be used as color index */
    HB_ISIZ next_stabil;       /* the offset in memory buffer of next line to display */
-   int     dir;               /* the direction of line stabilization */
-   int     tab_size;          /* the number of spaces the replaces TAB character */
+   int32_t     dir;               /* the direction of line stabilization */
+   int32_t     tab_size;          /* the number of spaces the replaces TAB character */
    HB_ISIZ active;            /* the line number where the cursor is positioned */
    HB_BOOL fIsConfigured;
    HB_ISIZ next_line;         /* the offset of next line to return by ED_GetNextLine() */
@@ -207,7 +207,7 @@ static void FormatText( PHB_EDITOR pEd )
 {
    HB_ISIZ dl;
    char *  wsk;
-   int     i;
+   int32_t     i;
    HB_ISIZ nEsc;
 
    dl = pEd->current_line;
@@ -249,7 +249,7 @@ static void FormatText( PHB_EDITOR pEd )
 static void NewText( PHB_EDITOR pEd )
 {
    HB_ISIZ dl;
-   int     i;
+   int32_t     i;
 
    /* text in buffer have to end with CR/LF */
    dl = pEd->text_length;
@@ -503,11 +503,11 @@ HB_FUNC(ED_CONFIG)
 
    if( pEd )
    {
-      int     szer, wys;
-      int     nwys;
+      int32_t     szer, wys;
+      int32_t     nwys;
       HB_ISIZ j;
 
-      int i;
+      int32_t i;
 
       auto top    = hb_parni(2);
       auto left   = hb_parni(3);
@@ -577,8 +577,8 @@ HB_FUNC(ED_CONFIG)
 
       if( pEd->fIsConfigured )
       {
-         int nszer;
-         int diff;
+         int32_t nszer;
+         int32_t diff;
 
          nszer = pEd->right - pEd->left + 1;
          nwys  = pEd->bottom - pEd->top + 1;
@@ -841,8 +841,8 @@ HB_FUNC(ED_STABILIZE)
 
    if( pEd )
    {
-      int     nRow = 0;
-      int     nLeft, nTop;
+      int32_t     nRow = 0;
+      int32_t     nLeft, nTop;
       HB_ISIZ nEscLen, nLen, i, j, e;
       char *  EscPtr;
       char *  cPtr;
@@ -1098,7 +1098,7 @@ static void Up( PHB_EDITOR pEd )
       pEd->current_line = jj;
       if( ((--pEd->cursor_row) + pEd->top) < pEd->top )
       {
-         int j, i;
+         int32_t j, i;
          HB_ISIZ tmp;
 
          /* the new line was not displayed yet */
@@ -1154,7 +1154,7 @@ HB_FUNC(ED_PGDOWN)
 
    if( pEd )
    {
-      int     i;
+      int32_t     i;
       HB_ISIZ j;
 
       j = Next(pEd, pEd->last_display);
@@ -1226,7 +1226,7 @@ HB_FUNC(ED_PGUP)
 
    if( pEd )
    {
-      int     i, bt;
+      int32_t     i, bt;
       HB_ISIZ j;
 
       bt = pEd->bottom - pEd->top;
@@ -1291,7 +1291,7 @@ HB_FUNC(ED_TOP)
 
    if( pEd )
    {
-      int     i;
+      int32_t     i;
       HB_ISIZ nEsc;
 
       Clear(pEd, pEd->current_line, &nEsc);
@@ -1326,7 +1326,7 @@ HB_FUNC(ED_BOTTOM)
 
    if( pEd )
    {
-      int     i, j;
+      int32_t     i, j;
       HB_ISIZ nEsc;
 
       j = 0;
@@ -1367,7 +1367,7 @@ HB_FUNC(ED_BOTTOM)
 /* Go to the specified line number */
 static void GoTo( PHB_EDITOR pEd, HB_ISIZ line )
 {
-   int     i;
+   int32_t     i;
    HB_ISIZ j;
    HB_ISIZ nEsc;
 
@@ -1560,7 +1560,7 @@ HB_FUNC(ED_END)
 static void FormatParagraph( PHB_EDITOR pEd )
 {
    HB_ISIZ rdl;
-   int     cr, cor;
+   int32_t     cr, cor;
    HB_ISIZ cc;
 
    cc  = pEd->cursor_col;
@@ -2352,7 +2352,7 @@ HB_FUNC(ED_DELWORD)
          {
             HB_ISIZ pos1, pos2;
             HB_ISIZ cc, fc;
-            int     cr;
+            int32_t     cr;
             HB_ISIZ fd, ld;
             HB_ISIZ l;
 

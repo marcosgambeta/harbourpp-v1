@@ -48,9 +48,9 @@ HB_FUNC(FT_GETE)
 #if (defined(HB_OS_UNIX) && !defined(HB_OS_IOS))
    {
       char * buffer = nullptr;
-      int    x;
-      int    buffsize = 0;
-      int    rettype  = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
+      int32_t    x;
+      int32_t    buffsize = 0;
+      int32_t    rettype  = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
 
       /* scan strings first and add up total size */
       if( rettype == CHARTYPE )
@@ -107,7 +107,7 @@ HB_FUNC(FT_GETE)
       LPTSTR   lpResult  = nullptr, lpDst;
       HB_SIZE  nSize     = 0, nCount = 0;
       HB_ITEM *pArray    = nullptr;
-      int      rettype   = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
+      int32_t      rettype   = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
 
       if( lpEnviron )
       {

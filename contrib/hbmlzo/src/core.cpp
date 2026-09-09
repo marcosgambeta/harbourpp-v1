@@ -125,7 +125,7 @@ HB_FUNC(HB_LZO1X_1_COMPRESS)
       {
          lzo_uint  dst_len;
          auto wrkmem = static_cast<lzo_voidp>(hb_xalloc(LZO1X_1_MEM_COMPRESS));
-         int       r;
+         int32_t       r;
 
          if( wrkmem == nullptr )
          {
@@ -184,7 +184,7 @@ HB_FUNC(HB_LZO1X_DECOMPRESS)
          hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
-         int r = lzo1x_decompress(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
+         int32_t r = lzo1x_decompress(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
 
          hb_storni(r, 3);
 
@@ -219,7 +219,7 @@ HB_FUNC(HB_LZO1X_DECOMPRESS_SAFE)
          hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
-         int r = lzo1x_decompress_safe(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
+         int32_t r = lzo1x_decompress_safe(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
 
          hb_storni(r, 3);
 

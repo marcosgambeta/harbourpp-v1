@@ -97,8 +97,8 @@
 
 struct _HB_SRVDATA
 {
-   int      id;
-   int      type;
+   int32_t      id;
+   int32_t      type;
    HB_ITEM *array;
    char *   data;
    HB_SIZE  size;
@@ -116,15 +116,15 @@ struct _HB_CONCLI
    HB_COUNTER          usrcount;
    HB_ITEM *           mutex;
    HB_ERRCODE          errcode;
-   int                 timeout;
-   int                 port;
+   int32_t                 timeout;
+   int32_t                 port;
    PHB_SOCKEX          sock;
    PHB_SRVDATA         srvdata;
    struct _HB_CONCLI * next;
    char *              path;
-   int                 level;
-   int                 strategy;
-   int                 passlen;
+   int32_t                 level;
+   int32_t                 strategy;
+   int32_t                 passlen;
    char                passwd[NETIO_PASSWD_MAX];
    char                server[1];
 };
@@ -143,11 +143,11 @@ using HB_FILE = _HB_FILE;
 
 struct HB_CONDATA
 {
-   int  timeout;
-   int  port;
-   int  level;
-   int  strategy;
-   int  passlen;
+   int32_t  timeout;
+   int32_t  port;
+   int32_t  level;
+   int32_t  strategy;
+   int32_t  passlen;
    char server[NETIO_SERVERNAME_MAX];
    char passwd[NETIO_PASSWD_MAX];
 };
@@ -457,11 +457,11 @@ static HB_BOOL s_fileSendMsg(PHB_CONCLI conn, uint8_t * msgbuf, const void * dat
       }
       else if( fWait )
       {
-         int iMsg = HB_GET_LE_INT32(msgbuf);
+         int32_t iMsg = HB_GET_LE_INT32(msgbuf);
 
          for( ;; )
          {
-            int iResult;
+            int32_t iResult;
 
             if( s_fileRecvAll(conn, msgbuf, NETIO_MSGLEN) != NETIO_MSGLEN )
             {
@@ -477,7 +477,7 @@ static HB_BOOL s_fileSendMsg(PHB_CONCLI conn, uint8_t * msgbuf, const void * dat
 
             if( iResult == NETIO_SRVITEM || iResult == NETIO_SRVDATA )
             {
-               int iStreamID = HB_GET_LE_UINT32(&msgbuf[4]);
+               int32_t iStreamID = HB_GET_LE_UINT32(&msgbuf[4]);
 
                len = HB_GET_LE_INT32(&msgbuf[8]);
                if( len > 0 )
@@ -532,7 +532,7 @@ static HB_BOOL s_fileProcessData(PHB_CONCLI conn)
 {
    uint8_t msgbuf[NETIO_MSGLEN];
    bool fResult = true;
-   int iMsg, iStreamID;
+   int32_t iMsg, iStreamID;
 
    for( ;; )
    {
@@ -907,7 +907,7 @@ static const char * s_fileDecode(const char * pszFileName, char * buffer, const 
                {
                   if( iLen > 0 )
                   {
-                     int iOverflow;
+                     int32_t iOverflow;
                      HB_MAXINT llPort;
 
                      port_buf[iLen] = '\0';
@@ -962,7 +962,7 @@ static PHB_CONCLI s_fileConnCheck(PHB_CONCLI conn, const char ** pFileName, HB_B
    {
       char server[NETIO_SERVERNAME_MAX];
       const char * pszServer = nullptr;
-      int iPort = 0;
+      int32_t iPort = 0;
 
       if( !fDefault )
       {
@@ -1420,7 +1420,7 @@ HB_FUNC(NETIO_SETPATH)
 
 static const char * s_netio_params(int32_t iParam, int32_t iMsg, const char * pszName, uint32_t * pSize, char ** pFree)
 {
-   int iPCount = iMsg == NETIO_PROCIS ? 0 : hb_pcount();
+   int32_t iPCount = iMsg == NETIO_PROCIS ? 0 : hb_pcount();
    char * data = nullptr;
    HB_SIZE itmSize;
 
@@ -1451,7 +1451,7 @@ static const char * s_netio_params(int32_t iParam, int32_t iMsg, const char * ps
 static HB_BOOL s_netio_procexec(int32_t iMsg, int32_t iType)
 {
    bool fResult = false;
-   int iParam = 1;
+   int32_t iParam = 1;
 
    PHB_CONCLI conn = s_connParam(1);
    if( conn )
@@ -1472,7 +1472,7 @@ static HB_BOOL s_netio_procexec(int32_t iMsg, int32_t iType)
             uint8_t msgbuf[NETIO_MSGLEN];
             char * buffer;
             uint32_t size;
-            int iStreamID = 0;
+            int32_t iStreamID = 0;
 
             const char * data = s_netio_params(iParam, iMsg, pszProcName, &size, &buffer);
             HB_PUT_LE_UINT32(&msgbuf[0], iMsg);
@@ -2435,7 +2435,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, 
 
 static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int32_t iType)
 {
-   int iResult = -1;
+   int32_t iResult = -1;
 
    if( s_fileConLock(pFile->conn) )
    {

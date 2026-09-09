@@ -228,7 +228,7 @@ HB_FUNC(PQLIBVERSION)
 HB_FUNC(PQCONNECTDBPARAMS)
 {
   auto pParam = hb_param(1, Harbour::Item::HASH);
-  int len;
+  int32_t len;
 
   if (pParam && (len = static_cast<int32_t>(hb_hashLen(pParam))) > 0)
   {
@@ -283,7 +283,7 @@ HB_FUNC(PQSETDBLOGIN)
 HB_FUNC(PQCONNECTSTARTPARAMS)
 {
   auto pParam = hb_param(1, Harbour::Item::HASH);
-  int len;
+  int32_t len;
 
   if (pParam && (len = static_cast<int32_t>(hb_hashLen(pParam))) > 0)
   {
@@ -388,7 +388,7 @@ HB_FUNC(PQRESETPOLL)
 HB_FUNC(PQPINGPARAMS)
 {
   auto pParam = hb_param(1, Harbour::Item::HASH);
-  int len;
+  int32_t len;
 
   if (pParam && (len = static_cast<int32_t>(hb_hashLen(pParam))) > 0)
   {
@@ -903,8 +903,8 @@ HB_FUNC(PQGETVALUE)
   {
     if (PQresultStatus(res) == PGRES_TUPLES_OK)
     {
-      int nRow = hb_parni(2) - 1;
-      int nCol = hb_parni(3) - 1;
+      int32_t nRow = hb_parni(2) - 1;
+      int32_t nCol = hb_parni(3) - 1;
 
       if (!PQgetisnull(res, nRow, nCol))
       {
@@ -937,8 +937,8 @@ HB_FUNC(PQGETLENGTH)
 
     if (PQresultStatus(res) == PGRES_TUPLES_OK)
     {
-      int nRow = hb_parni(2) - 1;
-      int nCol = hb_parni(3) - 1;
+      int32_t nRow = hb_parni(2) - 1;
+      int32_t nCol = hb_parni(3) - 1;
 
       result = PQgetlength(res, nRow, nCol);
     }
@@ -969,13 +969,13 @@ HB_FUNC(PQMETADATA) // not a direct wrapper
   {
     if (PQresultStatus(res) == PGRES_TUPLES_OK)
     {
-      int nFields = PQnfields(res), i;
+      int32_t nFields = PQnfields(res), i;
       auto pResult = hb_itemArrayNew(nFields);
 
       for (i = 0; i < nFields; i++)
       {
         char buf[256];
-        int typemod = PQfmod(res, i);
+        int32_t typemod = PQfmod(res, i);
         auto length = 0;
         auto decimal = 0;
 
@@ -1108,8 +1108,8 @@ HB_FUNC(PQRESULT2ARRAY) // not a direct wrapper
   {
     if (PQresultStatus(res) == PGRES_TUPLES_OK)
     {
-      int nRows = PQntuples(res);
-      int nCols = PQnfields(res);
+      int32_t nRows = PQntuples(res);
+      int32_t nCols = PQnfields(res);
 
       auto pResult = hb_itemArrayNew(nRows);
 
@@ -1834,25 +1834,25 @@ extern int lo_tell(PGconn * conn, int fd);
 
 int PQsendQueryParams(PGconn * conn,
                       const char * command,
-                      int nParams,
+                      int32_t nParams,
                       const Oid * paramTypes,
                       const char * const * paramValues,
                       const int * paramLengths,
                       const int * paramFormats,
-                      int resultFormat);
+                      int32_t resultFormat);
 
 int PQsendPrepare(PGconn * conn,
                   const char * stmtName,
                   const char * query,
-                  int nParams,
+                  int32_t nParams,
                   const Oid * paramTypes);
 
 int PQsendQueryPrepared(PGconn * conn,
                         const char * stmtName,
-                        int nParams,
+                        int32_t nParams,
                         const char * const * paramValues,
                         const int * paramLengths,
                         const int * paramFormats,
-                        int resultFormat);
+                        int32_t resultFormat);
 
 #endif

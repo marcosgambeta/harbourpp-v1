@@ -357,7 +357,7 @@ static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata, const XML_Ch
 static int32_t XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_Char * name, XML_Encoding * info )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
-   int       iResult  = XML_STATUS_ERROR;
+   int32_t       iResult  = XML_STATUS_ERROR;
 
    if( hb_expat && hb_expat->pVar[_VAR_bUnknownEncodingHandler] )
    {
@@ -606,7 +606,7 @@ static int32_t XMLCALL hb_expat_NotStandaloneHandler( void * userdata )
 {
    auto hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   int iResult = XML_STATUS_ERROR;
+   int32_t iResult = XML_STATUS_ERROR;
 
    if( hb_expat && hb_expat->pVar[_VAR_bNotStandaloneHandler] )
    {

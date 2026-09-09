@@ -138,7 +138,7 @@ typedef struct _ADSAREA_
    HB_BOOL fReadonly;             // Read only file
    HB_BOOL fFLocked;              // true if file is locked
 
-   int iFileType;                 // adt/cdx/ntx/vfp
+   int32_t iFileType;                 // adt/cdx/ntx/vfp
 
    ADSHANDLE hTable;
    ADSHANDLE hOrdCurrent;

@@ -1389,7 +1389,7 @@ HB_FUNC(MXMLSAVEALLOCSTRING)
       mxml_save_cb_t cb = MXML_NO_CALLBACK;
       auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
       char buffer[8192];
-      int  bytes;
+      int32_t  bytes;
 
       if( HB_ISBLOCK(2) || HB_ISSYMBOL(2) )
       {
@@ -1485,7 +1485,7 @@ HB_FUNC(MXMLSAVESTRING)
       {
          char * buffer;
          HB_SIZE buffer_size;
-         int bytes;
+         int32_t bytes;
 
          if( hb_itemGetWriteCL(pBuffer, &buffer, &buffer_size) )
          {
@@ -1823,7 +1823,7 @@ HB_FUNC(MXMLSETCUSTOM)
 
       if( pItem != nullptr )
       {
-         int iResult = mxmlSetCustom(node, pItem, custom_destroy_cb);
+         int32_t iResult = mxmlSetCustom(node, pItem, custom_destroy_cb);
 
          if( iResult < 0 )
          {
@@ -1971,7 +1971,7 @@ HB_FUNC(HB_MXMLGETATTRSARRAY)
    {
       auto pAttrs = hb_itemArrayNew(0);
       auto pAttr = hb_itemNew(nullptr);
-      int i, count;
+      int32_t i, count;
       const char *name, *value;
 
       for( i = 0, count = mxmlElementGetAttrCount(node); i < count; i++ )
@@ -2002,7 +2002,7 @@ HB_FUNC(HB_MXMLGETATTRS)
       HB_ITEM *pAttrs = hb_hashNew(hb_itemNew(nullptr));
       HB_ITEM *pKey = nullptr;
       HB_ITEM *pValue = nullptr;
-      int i, count;
+      int32_t i, count;
       const char *name, *value;
 
       for( i = 0, count = mxmlElementGetAttrCount(node); i < count; i++ )

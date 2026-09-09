@@ -213,7 +213,7 @@ static PMIXKEY hb_mixKeyEval(PMIXKEY pKey, PMIXTAG pTag)
 
 static HB_BOOL hb_mixEvalCond(SQLMIXAREAP pArea, HB_ITEM *pCondItem)
 {
-  int iCurrArea = 0;
+  int32_t iCurrArea = 0;
 
   if (pArea != nullptr) {
     iCurrArea = hb_rddGetCurrentWorkAreaNumber();
@@ -245,7 +245,7 @@ static int32_t hb_mixKeyCompare(PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, uint
     return static_cast<int32_t>(pKey1->notnul) - static_cast<int32_t>(pKey2->notnul);
   }
 
-  int i = 0;
+  int32_t i = 0;
   uint32_t uiSize = pTag->uiKeyLen > uiLen ? uiLen : pTag->uiKeyLen;
 
   if (pTag->pCodepage) {
@@ -355,7 +355,7 @@ static int32_t hb_mixTagFindKey(PMIXTAG pTag, PMIXKEY pKey, uint32_t uiLen, PMIX
 {
   PMIXNODE pNode = pTag->Root;
 
-  int i;
+  int32_t i;
   uint32_t ui;
 
   for (;;) {
@@ -546,7 +546,7 @@ static HB_BOOL hb_mixTagAddKey(PMIXTAG pTag, PMIXKEY pKey)
   PMIXNODE pNode;
   uint32_t ui;
 
-  int i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
+  int32_t i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
 
   // Key can not be duplicated
   if (!i) {
@@ -685,7 +685,7 @@ static HB_BOOL hb_mixTagDelKey(PMIXTAG pTag, PMIXKEY pKey)
   PMIXNODE pNode;
   uint32_t ui;
 
-  int i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
+  int32_t i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
 
   if (i) {
     return false;
@@ -1006,7 +1006,7 @@ static PMIXTAG hb_mixFindTag(SQLMIXAREAP pArea, HB_ITEM *pOrder)
   PMIXTAG pTag;
 
   if (pOrder->isNumber()) {
-    int iCurr = 0;
+    int32_t iCurr = 0;
 
     auto iOrder = hb_itemGetNI(pOrder);
 

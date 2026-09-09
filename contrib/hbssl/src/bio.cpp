@@ -202,7 +202,7 @@ static BIO_METHOD *hb_BIO_METHOD_par(int32_t iParam)
 // NOTE: Unused yet. Commented to avoid warning
 static int32_t hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
 {
-   int n;
+   int32_t n;
 
    if(      p == BIO_s_null()       ) n = HB_BIO_METHOD_S_NULL;
 #ifndef OPENSSL_NO_FP_API
@@ -555,7 +555,7 @@ HB_FUNC(BIO_NEW_MEM_BUF)
     HB_SIZE nLen;
     const char *pszBuffer = hb_itemGetCRef(pBuffer, &hStrRef, &nLen);
 
-    hb_BIO_ret(BIO_new_mem_buf(HB_UNCONST(pszBuffer), (int)nLen), hStrRef);
+    hb_BIO_ret(BIO_new_mem_buf(HB_UNCONST(pszBuffer), (int32_t)nLen), hStrRef);
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -565,7 +565,7 @@ HB_FUNC(BIO_READ)
   BIO *bio = hb_BIO_par(1);
 
   if (bio) {
-    int size = HB_ISNUM(3) ? hb_parni(3) : (int)hb_parclen(2);
+    int32_t size = HB_ISNUM(3) ? hb_parni(3) : (int32_t)hb_parclen(2);
 
     if (size > 0) {
       char *buffer = (char *)hb_xgrab(size + 1);
@@ -587,7 +587,7 @@ HB_FUNC(BIO_GETS)
   BIO *bio = hb_BIO_par(1);
 
   if (bio) {
-    int size = HB_ISNUM(3) ? hb_parni(3) : (int)hb_parclen(2);
+    int32_t size = HB_ISNUM(3) ? hb_parni(3) : (int32_t)hb_parclen(2);
 
     if (size > 0) {
       char *buffer = (char *)hb_xgrab(size + 1);
@@ -609,10 +609,10 @@ HB_FUNC(BIO_WRITE)
   BIO *bio = hb_BIO_par(1);
 
   if (bio) {
-    int size = (int)hb_parclen(2);
+    int32_t size = (int32_t)hb_parclen(2);
 
     if (HB_ISNUM(3)) {
-      int towrite = hb_parni(3);
+      int32_t towrite = hb_parni(3);
       if (towrite >= 0 && towrite < size)
         size = towrite;
     }
@@ -637,7 +637,7 @@ HB_FUNC(BIO_FREE)
   HB_BIO **ptr = (HB_BIO **)hb_parptrGC(&s_gcBIOFuncs, 1);
 
   if (ptr) {
-    int result = 0;
+    int32_t result = 0;
 
     if (*ptr) {
       PHB_BIO_free(*ptr);
@@ -705,7 +705,7 @@ HB_FUNC(BIO_SET_CONN_INT_PORT)
   BIO *bio = hb_BIO_par(1);
 
   if (bio && HB_ISNUM(2)) {
-    int port = hb_parni(2);
+    int32_t port = hb_parni(2);
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     char szPort[12];
     hb_retnl(BIO_set_conn_port(bio, hb_numToStr(szPort, sizeof(szPort), port)));
@@ -807,7 +807,7 @@ HB_FUNC(BIO_GET_CONN_ADDRESS)
     const BIO_ADDR *ba = BIO_get_conn_address(bio);
 
     if (ba) {
-      int family = BIO_ADDR_family(ba);
+      int32_t family = BIO_ADDR_family(ba);
       char *pszAddr = BIO_ADDR_hostname_string(ba, 1);
 
       hb_reta(family == HB_SOCKET_AF_LOCAL ? 2 : 3);
