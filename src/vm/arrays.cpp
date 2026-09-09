@@ -58,7 +58,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 
-static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
+static void hb_arrayReleaseItems(HB_BASEARRAY *pBaseArray)
 {
   if (pBaseArray->nLen) {
     do {
@@ -76,7 +76,7 @@ static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
   }
 }
 
-void hb_arrayPushBase(PHB_BASEARRAY pBaseArray)
+void hb_arrayPushBase(HB_BASEARRAY *pBaseArray)
 {
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
@@ -88,7 +88,7 @@ void hb_arrayPushBase(PHB_BASEARRAY pBaseArray)
 // This releases array when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_arrayGarbageRelease)
 {
-  auto pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
+  auto pBaseArray = static_cast<HB_BASEARRAY *>(Cargo);
 
   if (pBaseArray->uiClass) {
     // do not execute destructor for supercasted objects [druzus]
@@ -112,7 +112,7 @@ static HB_GARBAGE_FUNC(hb_arrayGarbageRelease)
 
 static HB_GARBAGE_FUNC(hb_arrayGarbageMark)
 {
-  auto pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
+  auto pBaseArray = static_cast<HB_BASEARRAY *>(Cargo);
 
   if (pBaseArray->nLen) {
     HB_SIZE nLen = pBaseArray->nLen;
@@ -152,7 +152,7 @@ HB_BOOL hb_arrayNew(HB_ITEM *pItem, HB_SIZE nLen) // creates a new array
     pItems = nullptr;
   }
 
-  auto pBaseArray = static_cast<PHB_BASEARRAY>(hb_gcAllocRaw(sizeof(HB_BASEARRAY), &s_gcArrayFuncs));
+  auto pBaseArray = static_cast<HB_BASEARRAY *>(hb_gcAllocRaw(sizeof(HB_BASEARRAY), &s_gcArrayFuncs));
   pBaseArray->pItems = pItems;
   pBaseArray->nLen = nLen;
   pBaseArray->uiClass = 0;
@@ -186,7 +186,7 @@ HB_BOOL hb_arraySize(HB_ITEM *pArray, HB_SIZE nLen)
 #endif
 
   if (pArray->isArray()) {
-    PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+    HB_BASEARRAY *pBaseArray = pArray->arrayValue();
 
     if (nLen != pBaseArray->nLen) {
       HB_SIZE nPos;
@@ -280,7 +280,7 @@ HB_ITEM *hb_arrayFromId(HB_ITEM *pItem, void *pArrayId)
 {
   HB_STACK_TLS_PRELOAD
 
-  hb_arrayPushBase(static_cast<PHB_BASEARRAY>(pArrayId));
+  hb_arrayPushBase(static_cast<HB_BASEARRAY *>(pArrayId));
   if (pItem == nullptr) {
     pItem = hb_itemNew(nullptr);
   }
@@ -297,11 +297,11 @@ HB_BOOL hb_arrayAdd(HB_ITEM *pArray, HB_ITEM *pValue)
 #endif
 
   if (pArray->isArray()) {
-    auto pBaseArray = static_cast<PHB_BASEARRAY>(pArray->arrayValue());
+    auto pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
 
     if (pBaseArray->nLen < HB_SIZE_MAX) {
       hb_arraySize(pArray, pBaseArray->nLen + 1);
-      pBaseArray = static_cast<PHB_BASEARRAY>(pArray->arrayValue());
+      pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
       hb_itemCopy(pBaseArray->pItems + (pBaseArray->nLen - 1), pValue);
 
       return true;
@@ -318,11 +318,11 @@ HB_BOOL hb_arrayAddForward(HB_ITEM *pArray, HB_ITEM *pValue)
 #endif
 
   if (pArray->isArray()) {
-    auto pBaseArray = static_cast<PHB_BASEARRAY>(pArray->arrayValue());
+    auto pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
 
     if (pBaseArray->nLen < HB_SIZE_MAX) {
       hb_arraySize(pArray, pBaseArray->nLen + 1);
-      pBaseArray = static_cast<PHB_BASEARRAY>(pArray->arrayValue());
+      pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
       hb_itemMove(pBaseArray->pItems + (pBaseArray->nLen - 1), pValue);
 
       return true;
@@ -342,7 +342,7 @@ HB_BOOL hb_arrayDel(HB_ITEM *pArray, HB_SIZE nIndex)
     HB_SIZE nLen = pArray->arrayLen();
 
     if (nIndex > 0 && nIndex <= nLen) {
-      PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+      HB_BASEARRAY *pBaseArray = pArray->arrayValue();
 
       if (nIndex == nLen) {
         hb_itemSetNil(pBaseArray->pItems + nIndex - 1);
@@ -369,7 +369,7 @@ HB_BOOL hb_arrayIns(HB_ITEM *pArray, HB_SIZE nIndex)
     HB_SIZE nLen = pArray->arrayLen();
 
     if (nIndex > 0 && nIndex <= nLen) {
-      PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+      HB_BASEARRAY *pBaseArray = pArray->arrayValue();
 
       if (nIndex == nLen) {
         hb_itemSetNil(pBaseArray->pItems + nIndex - 1);
@@ -947,7 +947,7 @@ HB_BOOL hb_arrayFill(HB_ITEM *pArray, HB_ITEM *pValue, HB_SIZE *pnStart, HB_SIZE
 #endif
 
   if (pArray->isArray()) {
-    PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+    HB_BASEARRAY *pBaseArray = pArray->arrayValue();
     HB_SIZE nLen = pBaseArray->nLen;
     HB_SIZE nStart;
 
@@ -983,7 +983,7 @@ HB_SIZE hb_arrayScan(HB_ITEM *pArray, HB_ITEM *pValue, HB_SIZE *pnStart, HB_SIZE
 #endif
 
   if (pArray->isArray()) {
-    PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+    HB_BASEARRAY *pBaseArray = pArray->arrayValue();
     HB_SIZE nLen = pBaseArray->nLen;
     HB_SIZE nStart;
 
@@ -1122,7 +1122,7 @@ HB_SIZE hb_arrayRevScan(HB_ITEM *pArray, HB_ITEM *pValue, HB_SIZE *pnStart, HB_S
 #endif
 
   if (pArray->isArray()) {
-    PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+    HB_BASEARRAY *pBaseArray = pArray->arrayValue();
     HB_SIZE nLen = pBaseArray->nLen;
     HB_SIZE nStart;
 
@@ -1265,7 +1265,7 @@ HB_BOOL hb_arrayEval(HB_ITEM *pArray, HB_ITEM *bBlock, HB_SIZE *pnStart, HB_SIZE
 #endif
 
   if (pArray->isArray() && bBlock->isBlock()) {
-    PHB_BASEARRAY pBaseArray = pArray->arrayValue();
+    HB_BASEARRAY *pBaseArray = pArray->arrayValue();
     HB_SIZE nLen = pBaseArray->nLen;
     HB_SIZE nStart;
 
@@ -1310,8 +1310,8 @@ HB_BOOL hb_arrayCopy(HB_ITEM *pSrcArray, HB_ITEM *pDstArray, HB_SIZE *pnStart, H
 #endif
 
   if (pSrcArray->isArray() && pDstArray->isArray()) {
-    PHB_BASEARRAY pSrcBaseArray = pSrcArray->arrayValue();
-    PHB_BASEARRAY pDstBaseArray = pDstArray->arrayValue();
+    HB_BASEARRAY *pSrcBaseArray = pSrcArray->arrayValue();
+    HB_BASEARRAY *pDstBaseArray = pDstArray->arrayValue();
     HB_SIZE nSrcLen = pSrcBaseArray->nLen;
     HB_SIZE nDstLen = pDstBaseArray->nLen;
     HB_SIZE nStart;

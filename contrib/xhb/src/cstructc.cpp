@@ -129,7 +129,7 @@ void hb_retclenStatic(const char * szText, HB_SIZE nLen)
 
 static uint32_t SizeOfCStructure(HB_ITEM *aDef, uint32_t uiAlign)
 {
-  PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
+  HB_BASEARRAY *pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
   uint32_t uiSize = 0, uiMemberSize;
@@ -275,8 +275,8 @@ HB_FUNC(HB_SIZEOFCSTRUCTURE)
 
 static uint8_t *ArrayToStructure(HB_ITEM *aVar, HB_ITEM *aDef, uint32_t uiAlign, uint32_t *puiSize)
 {
-  PHB_BASEARRAY pBaseVar = aVar->item.asArray.value;
-  PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
+  HB_BASEARRAY *pBaseVar = aVar->item.asArray.value;
+  HB_BASEARRAY *pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
   uint32_t uiOffset = 0, uiMemberSize;
@@ -913,7 +913,7 @@ static uint8_t *ArrayToStructure(HB_ITEM *aVar, HB_ITEM *aDef, uint32_t uiAlign,
             memset(static_cast<void *>(Buffer + uiOffset), 0, uiMemberSize);
           }
         } else if (strncmp(hb_objGetClsName(pStructure), "C Structure", 11) == 0) {
-          PHB_BASEARRAY pBaseStructure = pStructure->item.asArray.value;
+          HB_BASEARRAY *pBaseStructure = pStructure->item.asArray.value;
           HB_ITEM *pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
 
           hb_objSendMsg(pStructure, "VALUE", 0);
@@ -972,7 +972,7 @@ HB_FUNC(HB_ARRAYTOSTRUCTURE)
 static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *aDef, uint32_t uiAlign,
                                  HB_BOOL bAdoptNested, HB_ITEM *pRet)
 {
-  PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
+  HB_BASEARRAY *pBaseDef = aDef->item.asArray.value;
   HB_SIZE nLen = pBaseDef->nLen;
   HB_SIZE nIndex;
   uint32_t uiOffset, uiMemberSize;
@@ -980,7 +980,7 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
 #if 0
    auto pRet = hb_itemNew(nullptr);
 #endif
-  PHB_BASEARRAY pBaseVar;
+  HB_BASEARRAY *pBaseVar;
 
 #if 0
    TraceLog(nullptr, "StructureToArray(%p, %p, %u, %i) ->%u\n", static_cast<const void*>(Buffer), static_cast<void*>(aDef), uiAlign, bAdoptNested, nLen);
@@ -1231,7 +1231,7 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
 #endif
 
         if (*(char **)((long **)(Buffer + uiOffset))) {
-          PHB_BASEARRAY pBaseStructure = pStructure->item.asArray.value;
+          HB_BASEARRAY *pBaseStructure = pStructure->item.asArray.value;
           HB_ITEM *pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
 
           if (!bAdoptNested) {
@@ -1248,7 +1248,7 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
           hb_itemClear(pStructure);
         }
       } else {
-        PHB_BASEARRAY pBaseStructure = pStructure->item.asArray.value;
+        HB_BASEARRAY *pBaseStructure = pStructure->item.asArray.value;
         HB_ITEM *pInternalBuffer = pBaseStructure->pItems + pBaseStructure->nLen - 1;
         HB_ITEM Adopt;
 

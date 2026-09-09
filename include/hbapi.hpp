@@ -1060,7 +1060,7 @@ typedef struct _HB_BASEARRAY
   HB_SIZE     nAllocated;   // number of allocated items
   uint16_t   uiClass;      // offset to the classes base if it is an object
   uint16_t   uiPrevCls;    // for fixing after access super
-} HB_BASEARRAY, * PHB_BASEARRAY;
+} HB_BASEARRAY, * PHB_BASEARRAY; // NOTE: PHB_BASEARRAY is deprecated in Harbour++ source code
 
 #if defined(__cplusplus)
 
@@ -1223,7 +1223,7 @@ extern void *hb_xRefResize(void *pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE *pn
 
 #if defined(HB_LEGACY_LEVEL4)
 #  define HB_ITEM_PTR         PHB_ITEM
-#  define HB_BASEARRAY_PTR    PHB_BASEARRAY
+#  define HB_BASEARRAY_PTR    HB_BASEARRAY*
 #  define HB_CODEBLOCK_PTR    PHB_CODEBLOCK
 #  define HB_MACRO_PTR        PHB_MACRO
 #  define HB_ERROR_INFO_PTR   PHB_ERROR_INFO
@@ -1738,7 +1738,7 @@ extern HB_EXPORT HB_LONGLONG hb_arrayGetNLL(HB_ITEM *pArray, HB_SIZE nIndex);
 #endif
 #ifdef _HB_API_INTERNAL_
 // internal array API not exported
-extern void hb_arrayPushBase(PHB_BASEARRAY pBaseArray);
+extern void hb_arrayPushBase(HB_BASEARRAY *pBaseArray);
 extern void hb_arraySwap(HB_ITEM *pArray1, HB_ITEM *pArray2);
 extern void hb_nestedCloneInit(PHB_NESTED_CLONED pClonedList, void *pValue, HB_ITEM *pDest);
 extern void hb_nestedCloneFree(PHB_NESTED_CLONED pClonedList);
