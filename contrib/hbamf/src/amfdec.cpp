@@ -253,7 +253,7 @@ static void amf3_add_reference(HB_ITEM *pHash, HB_ITEM *pItem)
   hb_itemRelease(pKey);
 }
 
-static bool amfX_decode_string(amfContext *context, HB_ITEM *pItem, unsigned int string_size)
+static bool amfX_decode_string(amfContext *context, HB_ITEM *pItem, uint32_t string_size)
 {
   const char *str = readBytes(context, string_size);
 

@@ -61,7 +61,7 @@ HB_FUNC(__HB_XML_CDPU16MAP)
       /* FIXME: uses hb_cdpGetU16() which cannot be used
                 with CPs using multibyte encoding. */
 
-      for( unsigned int tmp = 0; tmp <= UCHAR_MAX; ++tmp )
+      for( uint32_t tmp = 0; tmp <= UCHAR_MAX; ++tmp )
       {
          hb_arraySetNI(pMap, tmp + 1, hb_cdpGetU16(cdp, static_cast<uint8_t>(tmp)));
       }

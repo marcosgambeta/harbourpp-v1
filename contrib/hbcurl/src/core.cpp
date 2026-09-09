@@ -2801,7 +2801,7 @@ HB_FUNC(CURL_WS_SEND)
 
     if (hb_curl)
       res = curl_ws_send(hb_curl->curl, (const void *)hb_parc(2), (size_t)hb_parclen(2), &sent,
-                         (curl_off_t)hb_parnint(4), (unsigned int)hb_parnl(5));
+                         (curl_off_t)hb_parnint(4), (uint32_t)hb_parnl(5));
 #endif
 
     hb_storns((HB_SIZE)sent, 3);

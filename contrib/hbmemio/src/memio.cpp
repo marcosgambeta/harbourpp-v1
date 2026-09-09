@@ -89,8 +89,8 @@ typedef struct _HB_MEMFS_INODE
    HB_FOFFSET   llAlloc;
    char *       pData;
    char *       szName;
-   unsigned int uiCount;
-   unsigned int uiCountRead, uiCountWrite;
+   uint32_t uiCount;
+   uint32_t uiCountRead, uiCountWrite;
    uint16_t    uiDeny;
 } HB_MEMFS_INODE, * PHB_MEMFS_INODE;
 

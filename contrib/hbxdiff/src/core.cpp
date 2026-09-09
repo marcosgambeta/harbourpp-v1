@@ -588,7 +588,7 @@ HB_FUNC(XDL_BDIFF_TGSIZE)
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-static void * wf_malloc(void * priv, unsigned int size)
+static void * wf_malloc(void * priv, uint32_t size)
 {
    HB_SYMBOL_UNUSED(priv);
 
@@ -602,7 +602,7 @@ static void wf_free( void * priv, void * ptr )
    hb_xfree(ptr);
 }
 
-static void * wf_realloc(void * priv, void * ptr, unsigned int size)
+static void * wf_realloc(void * priv, void * ptr, uint32_t size)
 {
    HB_SYMBOL_UNUSED(priv);
 

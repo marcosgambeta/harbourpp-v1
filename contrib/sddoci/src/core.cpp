@@ -343,8 +343,8 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
     HB_ITEM *pName = D_HB_ITEMPUTSTR(nullptr, OCI_ColumnGetName(col));
     dbFieldInfo.atomName = hb_itemGetCPtr(pName);
 
-    unsigned int uiDataType = OCI_ColumnGetType(col);
-    unsigned int uiSize = OCI_ColumnGetSize(col);
+    uint32_t uiDataType = OCI_ColumnGetType(col);
+    uint32_t uiSize = OCI_ColumnGetSize(col);
     int iDec = OCI_ColumnGetPrecision(col);
     bool bNullable = OCI_ColumnGetNullable(col);
 
@@ -552,7 +552,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
       case Harbour::DB::Field::MEMO: {
         OCI_Long *val = OCI_GetLong(rs, ui);
         if (val) {
-          unsigned int uiSize = OCI_LongGetSize(val);
+          uint32_t uiSize = OCI_LongGetSize(val);
           if (OCI_LongGetType(val) == OCI_CLONG) {
             pItem = D_HB_ITEMPUTSTRLEN(pItem, static_cast<D_HB_CHAR *>(OCI_LongGetBuffer(val)), uiSize);
           } else {

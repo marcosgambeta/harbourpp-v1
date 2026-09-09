@@ -102,7 +102,7 @@ typedef struct _SQLBASEAREA
 typedef struct _SQLDDCONNECTION
 {
    struct _SDDNODE * pSDD;
-   unsigned int      uiAreaCount;
+   uint32_t      uiAreaCount;
 
    void * pSDDConn;                          /* SDD specific data */
 } SQLDDCONNECTION;
@@ -127,8 +127,8 @@ typedef struct _MIXKEY
 
 typedef struct _MIXNODE
 {
-   unsigned int      Leaf;
-   unsigned int      KeyCount;
+   uint32_t      Leaf;
+   uint32_t      KeyCount;
    struct _MIXNODE * Parent;
    struct _MIXNODE * Child[ MIX_NODE_ORDER + 1 ];
 } MIXNODE, * PMIXNODE;
@@ -136,8 +136,8 @@ typedef struct _MIXNODE
 
 typedef struct _MIXNODELEAF
 {
-   unsigned int      Leaf;
-   unsigned int      KeyCount;
+   uint32_t      Leaf;
+   uint32_t      KeyCount;
    struct _MIXNODE * Parent;
 } MIXNODELEAF, * PMIXNODELEAF;
 
@@ -153,8 +153,8 @@ typedef struct _MIXTAG
    HB_ITEM *            pForItem;
 
    uint8_t      bType;
-   unsigned int uiKeyLen;                    /* Length of key */
-   unsigned int uiTotalLen;                  /* Total length of key structure */
+   uint32_t uiKeyLen;                    /* Length of key */
+   uint32_t uiTotalLen;                  /* Total length of key structure */
 
    HB_BOOL fEof;
    HB_BOOL fBof;
@@ -164,7 +164,7 @@ typedef struct _MIXTAG
 
    PMIXKEY      CurKey;
    PMIXNODE     CurNode;
-   unsigned int CurPos;
+   uint32_t CurPos;
 
    PMIXKEY HotKey;
    HB_BOOL HotFor;

@@ -441,7 +441,7 @@ HB_FUNC(EVP_DIGESTFINAL)
 
     if (ctx) {
       unsigned char *buffer = (unsigned char *)hb_xgrab(EVP_MAX_MD_SIZE + 1);
-      unsigned int size = 0;
+      uint32_t size = 0;
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_DigestFinal(ctx, buffer, &size));
@@ -470,7 +470,7 @@ HB_FUNC(EVP_DIGESTFINAL_EX)
     if (ctx) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       unsigned char *buffer = (unsigned char *)hb_xgrab(EVP_MAX_MD_SIZE + 1);
-      unsigned int size = 0;
+      uint32_t size = 0;
 
       hb_retni(EVP_DigestFinal_ex(ctx, buffer, &size));
 
@@ -542,7 +542,7 @@ HB_FUNC(EVP_SIGNFINAL)
 
     if (ctx) {
       unsigned char *buffer = (unsigned char *)hb_xgrab(EVP_PKEY_size(hb_EVP_PKEY_par(3)) + 1);
-      unsigned int size = 0;
+      uint32_t size = 0;
 
       hb_retni(EVP_SignFinal(ctx, buffer, &size, hb_EVP_PKEY_par(3)));
 
@@ -618,7 +618,7 @@ HB_FUNC(EVP_VERIFYFINAL)
     EVP_MD_CTX *ctx = hb_EVP_MD_CTX_par(1);
 
     if (ctx)
-      hb_retni(EVP_VerifyFinal(ctx, (HB_SSL_CONST unsigned char *)hb_parcx(2), (unsigned int)hb_parclen(2),
+      hb_retni(EVP_VerifyFinal(ctx, (HB_SSL_CONST unsigned char *)hb_parcx(2), (uint32_t)hb_parclen(2),
                                hb_EVP_PKEY_par(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

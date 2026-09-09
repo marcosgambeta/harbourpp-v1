@@ -160,8 +160,8 @@ HB_FUNC(MYSQL_REAL_CONNECT)
 
 #if MYSQL_VERSION_ID > 32200
   MYSQL *mysql;
-  auto port = static_cast<unsigned int>(hb_parnidef(4, MYSQL_PORT));
-  auto flags = static_cast<unsigned int>(hb_parnidef(5, 0));
+  auto port = static_cast<uint32_t>(hb_parnidef(4, MYSQL_PORT));
+  auto flags = static_cast<uint32_t>(hb_parnidef(5, 0));
 
   if ((mysql = mysql_init(static_cast<MYSQL *>(nullptr))) != nullptr)
   {
@@ -337,14 +337,14 @@ HB_FUNC(MYSQL_FETCH_ROW)
 
   if (mresult)
   {
-    unsigned int num_fields = mysql_num_fields(mresult);
+    uint32_t num_fields = mysql_num_fields(mresult);
     auto aRow = hb_itemArrayNew(num_fields);
     auto mrow = mysql_fetch_row(mresult);
 
     if (mrow)
     {
       unsigned long *lengths = mysql_fetch_lengths(mresult);
-      for (unsigned int i = 0; i < num_fields; ++i)
+      for (uint32_t i = 0; i < num_fields; ++i)
       {
         hb_arraySetCL(aRow, i + 1, mrow[i], lengths[i]);
       }
@@ -363,7 +363,7 @@ HB_FUNC(MYSQL_DATA_SEEK)
 
   if (mresult)
   {
-    mysql_data_seek(mresult, static_cast<unsigned int>(hb_parni(2)));
+    mysql_data_seek(mresult, static_cast<uint32_t>(hb_parni(2)));
   }
   else
   {

@@ -183,7 +183,7 @@ HB_FUNC(ZEROINSERT)
 
   if (pString) {
     HB_SIZE nBits, n;
-    unsigned int uiVal;
+    uint32_t uiVal;
     int32_t i;
 
     auto szText = hb_itemGetCPtr(pString);

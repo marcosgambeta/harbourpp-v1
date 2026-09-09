@@ -630,7 +630,7 @@ static int XMLCALL hb_expat_NotStandaloneHandler( void * userdata )
 
 static void PHB_EXPAT_free( PHB_EXPAT hb_expat, HB_BOOL bFree )
 {
-   for( unsigned int tmp = 0; tmp < HB_SIZEOFARRAY(hb_expat->pVar); ++tmp )
+   for( uint32_t tmp = 0; tmp < HB_SIZEOFARRAY(hb_expat->pVar); ++tmp )
    {
       if( hb_expat->pVar[tmp] )
       {
@@ -668,7 +668,7 @@ static HB_GARBAGE_FUNC(PHB_EXPAT_mark)
    {
       PHB_EXPAT hb_expat = *hb_expat_ptr;
 
-      for( unsigned int tmp = 0; tmp < HB_SIZEOFARRAY(hb_expat->pVar); ++tmp )
+      for( uint32_t tmp = 0; tmp < HB_SIZEOFARRAY(hb_expat->pVar); ++tmp )
       {
          if( hb_expat->pVar[tmp] )
          {

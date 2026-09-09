@@ -2073,7 +2073,7 @@ HB_FUNC(NETIO_SRVSTATUS)
          case NETIO_SRVINFO_PEERADDRESS:
          {
             void * addr;
-            unsigned int len;
+            uint32_t len;
             HB_ITEM *pItem = nullptr;
 
             if( hb_socketGetPeerName(hb_sockexGetHandle(conn->sock), &addr, &len) == 0 )

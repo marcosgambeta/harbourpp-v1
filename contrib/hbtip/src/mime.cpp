@@ -629,7 +629,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
 
 static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
 {
-   unsigned int uiCount;
+   uint32_t uiCount;
 
    for( uiCount = 0; uiCount < HB_SIZEOFARRAY(s_mimeTable); uiCount++ )
    {

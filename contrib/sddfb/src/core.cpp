@@ -151,7 +151,7 @@ static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
   parambuf[i++] = isc_dpb_version1;
 
   parambuf[i++] = isc_dpb_user_name;
-  auto ul = static_cast<unsigned int>(hb_arrayGetCLen(pItem, 3));
+  auto ul = static_cast<uint32_t>(hb_arrayGetCLen(pItem, 3));
   if (ul > 255) {
     ul = 255;
   }
@@ -160,7 +160,7 @@ static HB_ERRCODE fbConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
   i += ul;
 
   parambuf[i++] = isc_dpb_password;
-  ul = static_cast<unsigned int>(hb_arrayGetCLen(pItem, 4));
+  ul = static_cast<uint32_t>(hb_arrayGetCLen(pItem, 4));
   if (ul > 255) {
     ul = 255;
   }

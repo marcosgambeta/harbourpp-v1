@@ -913,7 +913,7 @@ HB_FUNC(SQLITE3_PREPARE)
 
 #if SQLITE_VERSION_NUMBER >= 3020000
     result = sqlite3_prepare_v3(pHbSqlite3->db, pszSQLText, static_cast<int>(nSQLText),
-                                static_cast<unsigned int>(hb_parnl(3)), &pStmt, &pszTail);
+                                static_cast<uint32_t>(hb_parnl(3)), &pStmt, &pszTail);
 #else
     result = sqlite3_prepare_v2(pHbSqlite3->db, pszSQLText, static_cast<int>(nSQLText), &pStmt, &pszTail);
 #endif
@@ -2065,7 +2065,7 @@ HB_FUNC(SQLITE3_TRACE_V2)
 
   if (pHbSqlite3 && pHbSqlite3->db)
   {
-    unsigned uMask = static_cast<unsigned int>(hb_parnint(2));
+    unsigned uMask = static_cast<uint32_t>(hb_parnint(2));
     int iRes;
 
     if (pHbSqlite3->cbTraceHandler)

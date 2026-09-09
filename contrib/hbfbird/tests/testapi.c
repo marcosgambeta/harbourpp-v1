@@ -409,8 +409,8 @@ char * getdata(int pos)
          case SQL_ARRAY:
             /* Print the blob id on blobs or arrays */
             bid = *( ISC_QUAD ISC_FAR * ) var->sqldata;
-            sprintf( blob_s, "%08x:%08x", ( unsigned int ) bid.gds_quad_high,
-                     ( unsigned int ) bid.gds_quad_low );
+            sprintf( blob_s, "%08x:%08x", ( uint32_t ) bid.gds_quad_high,
+                     ( uint32_t ) bid.gds_quad_low );
             sprintf( p, "%17s ", blob_s );
             break;
 
