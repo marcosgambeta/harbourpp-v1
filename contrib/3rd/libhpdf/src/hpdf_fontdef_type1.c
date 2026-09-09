@@ -287,7 +287,7 @@ LoadAfm (HPDF_FontDef  fontdef,
 
         GetKeyword (s, buf2, HPDF_LIMIT_MAX_NAME_LEN + 1);
 
-        cdata->unicode = HPDF_GryphNameToUnicode (buf2);
+        cdata->unicode = HPDF_GlyphNameToUnicode (buf2);
 
     }
 
@@ -333,7 +333,7 @@ LoadFontData (HPDF_FontDef  fontdef,
 
                /* length1 indicate the size of ascii-data of font-file. */
                if (s1)
-                  attr->length1 = attr->font_data->size + (s1 - buf) + 6;
+                  attr->length1 = (HPDF_UINT) (attr->font_data->size + (s1 - buf) + 6);
             }
 
             if (attr->length1 > 0 && attr->length2 == 0) {
@@ -341,8 +341,8 @@ LoadFontData (HPDF_FontDef  fontdef,
                         len + 11);
 
                 if (s2)
-                    attr->length2 = attr->font_data->size - 520 -
-                        attr->length1 + (s2 - buf);
+                    attr->length2 = (HPDF_UINT) (attr->font_data->size - 520 -
+                        attr->length1 + (s2 - buf));
                 /*  length1 indicate the size of binary-data.
                  *  in most fonts, it is all right at 520 bytes . but it need
                  *  to modify because it does not fully satisfy the
@@ -474,9 +474,9 @@ HPDF_Type1FontDef_SetWidths  (HPDF_FontDef          fontdef,
 
 HPDF_INT16
 HPDF_Type1FontDef_GetWidthByName  (HPDF_FontDef      fontdef,
-                                   const char*  gryph_name)
+                                   const char*  glyph_name)
 {
-    HPDF_UNICODE unicode = HPDF_GryphNameToUnicode (gryph_name);
+    HPDF_UNICODE unicode = HPDF_GlyphNameToUnicode (glyph_name);
 
     HPDF_PTRACE ((" HPDF_Type1FontDef_GetWidthByName\n"));
 
@@ -519,4 +519,3 @@ FreeFunc (HPDF_FontDef  fontdef)
     HPDF_FreeMem (fontdef->mmgr, attr->widths);
     HPDF_FreeMem (fontdef->mmgr, attr);
 }
-

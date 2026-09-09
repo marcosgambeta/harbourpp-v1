@@ -21,7 +21,7 @@
 #include "hpdf.h"
 
 static const HPDF_Point INIT_POS = {0, 0};
-static const HPDF_DashMode INIT_MODE = {{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f};
+static const HPDF_DashMode INIT_MODE = {{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 0, 0.0f};
 
 
 static HPDF_STATUS
@@ -194,12 +194,10 @@ HPDF_Page_SetDash  (HPDF_Page        page,
         return ret;
 
     if (num_param == 0 && phase > 0)
-        return HPDF_RaiseError (page->error, HPDF_PAGE_OUT_OF_RANGE,
-                phase);
+        return HPDF_RaiseError (page->error, HPDF_PAGE_OUT_OF_RANGE, 0);
 
     if (!dash_ptn && num_param > 0)
-        return HPDF_RaiseError (page->error, HPDF_INVALID_PARAMETER,
-                phase);
+        return HPDF_RaiseError (page->error, HPDF_INVALID_PARAMETER, 0);
 
     HPDF_MemSet (buf, 0, HPDF_TMP_BUF_SIZ);
     *pbuf++ = '[';
@@ -302,7 +300,7 @@ HPDF_Page_SetExtGState  (HPDF_Page        page,
     if (HPDF_Stream_WriteStr (attr->stream, " gs\012") != HPDF_OK)
         return HPDF_CheckError (page->error);
 
-    /* change objct class to read only. */
+    /* change object class to read only. */
     ext_gstate->header.obj_class = (HPDF_OSUBCLASS_EXT_GSTATE_R | HPDF_OCLASS_DICT);
 
     return ret;
@@ -441,13 +439,17 @@ HPDF_Page_Concat  (HPDF_Page         page,
         return HPDF_CheckError (page->error);
 
     tm = attr->gstate->trans_matrix;
-
+    /*
+    | ta tb 0 |   | a b |   | ta*a+tb*c   ta*b+tb*d   |
+    | tc td 0 | x | c d | = | tc*a+td*c   tc*b+td*d   |
+    | tx ty 1 |   | x y |   | tx*a+ty*c+x tx*b+ty*d+y |
+    */
     attr->gstate->trans_matrix.a = tm.a * a + tm.b * c;
     attr->gstate->trans_matrix.b = tm.a * b + tm.b * d;
     attr->gstate->trans_matrix.c = tm.c * a + tm.d * c;
     attr->gstate->trans_matrix.d = tm.c * b + tm.d * d;
-    attr->gstate->trans_matrix.x = tm.x + x * tm.a + y * tm.c;
-    attr->gstate->trans_matrix.y = tm.y + x * tm.b + y * tm.d;
+    attr->gstate->trans_matrix.x = tm.x * a + tm.y * c + x;
+    attr->gstate->trans_matrix.y = tm.x * b + tm.y * d + y;
 
     return ret;
 }
@@ -1182,7 +1184,7 @@ HPDF_Page_SetFontAndSize  (HPDF_Page  page,
         return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT, 0);
 
     if (size <= 0 || size > HPDF_MAX_FONTSIZE)
-        return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT_SIZE, size);
+        return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT_SIZE, 0);
 
     if (page->mmgr != font->mmgr)
         return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT, 0);

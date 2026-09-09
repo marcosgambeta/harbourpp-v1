@@ -110,7 +110,7 @@ HPDF_FileStream_FreeFunc  (HPDF_Stream  stream);
  *
  *  stream : Pointer to a HPDF_Stream object.
  *  ptr : Pointer to a buffer to copy read data.
- *  size : Pointer to a variable which indecates buffer size.
+ *  size : Pointer to a variable which indicates buffer size.
  *
  *  HPDF_Stream_read returns HPDF_OK when success. On failure, it returns
  *  error-code returned by reading function of this stream.
@@ -808,7 +808,7 @@ HPDF_FileReader_ReadFunc  (HPDF_Stream  stream,
     HPDF_PTRACE((" HPDF_FileReader_ReadFunc\n"));
 
     HPDF_MemSet(ptr, 0, *siz);
-    rsiz = HPDF_FREAD(ptr, 1, *siz, fp);
+    rsiz = (HPDF_UINT) HPDF_FREAD(ptr, 1, *siz, fp);
 
     if (rsiz != *siz) {
         if (HPDF_FEOF(fp)) {
@@ -975,7 +975,7 @@ HPDF_FileWriter_WriteFunc  (HPDF_Stream      stream,
     HPDF_PTRACE((" HPDF_FileWriter_WriteFunc\n"));
 
     fp = (HPDF_FILEP)stream->attr;
-    ret = HPDF_FWRITE (ptr, 1, siz, fp);
+    ret = (HPDF_UINT) HPDF_FWRITE (ptr, 1, siz, fp);
 
     if (ret != siz) {
         return HPDF_SetError (stream->error, HPDF_FILE_IO_ERROR, HPDF_FERROR(fp));
@@ -1112,10 +1112,7 @@ HPDF_MemStream_SeekFunc  (HPDF_Stream      stream,
     attr->r_ptr_idx = pos / attr->buf_siz;
     attr->r_pos = pos % attr->buf_siz;
     attr->r_ptr = (HPDF_BYTE*)HPDF_List_ItemAt (attr->buf, attr->r_ptr_idx);
-    if (attr->r_ptr == NULL) {
-        HPDF_SetError (stream->error, HPDF_INVALID_OBJECT, 0);
-        return HPDF_INVALID_OBJECT;
-    } else
+    if (attr->r_ptr != NULL)
         attr->r_ptr += attr->r_pos;
 
     return HPDF_OK;
@@ -1467,4 +1464,3 @@ HPDF_Stream_Validate  (HPDF_Stream  stream)
     else
         return HPDF_TRUE;
 }
-

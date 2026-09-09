@@ -132,6 +132,7 @@ static HPDF_UNICODE
 UTF8_Encoder_ToUnicode_Func  (HPDF_Encoder   encoder,
                               HPDF_UINT16    code)
 {
+    (void) code; /* Required by signature, but not used here */
     // Supposed to convert CODE to unicode.
     // This function is always called after ByteType_Func.
     // ByteType_Func recognizes the utf-8 bytes belonging to one character.
@@ -199,7 +200,7 @@ UTF8_Encoder_EncodeText_Func  (HPDF_Encoder        encoder,
         }
     }
 
-    *length = c - result;
+    *length = (HPDF_UINT) (c - result);
 
     return result;
 }
