@@ -54,6 +54,7 @@
 #include <hbapiitm.hpp>
 
 #include "hpdf.h"
+#include "hpdf_pdfa.h"
 
 #define HB_HPDF_VERS( ma, mi, mu ) \
    ( HPDF_MAJOR_VERSION > ma || \
