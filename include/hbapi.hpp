@@ -315,6 +315,7 @@ typedef struct _HB_STACK_STATE
   uint16_t uiLineNo;         // current line number
   uint16_t fDebugging;       // debugger active
 } HB_STACK_STATE, * PHB_STACK_STATE; // used to save/restore stack state in hb_vmDo)_
+// NOTE: PHB_STACK_STATE is deprecated in Harbour++ source code
 
 // Internal structures that holds data
 struct hb_struArray
@@ -414,7 +415,7 @@ struct hb_struString
 struct hb_struSymbol
 {
   HB_SYMB *       value;
-  PHB_STACK_STATE stackstate;      // function stack state
+  HB_STACK_STATE *stackstate;      // function stack state
   uint16_t       paramcnt;        // number of passed parameters in function call
   uint16_t       paramdeclcnt;    // number of declared parameters in function definition
 };
@@ -560,8 +561,8 @@ struct _HB_ITEM
   //
   HB_SYMB *symbolValue();
   void setSymbolValue(HB_SYMB *pValue);
-  PHB_STACK_STATE symbolStackState();
-  void setSymbolStackState(PHB_STACK_STATE pValue);
+  HB_STACK_STATE *symbolStackState();
+  void setSymbolStackState(HB_STACK_STATE *pValue);
   uint16_t symbolParamCnt();
   void setSymbolParamCnt(uint16_t usValue);
   uint16_t symbolParamDeclCnt();
@@ -956,12 +957,12 @@ inline void _HB_ITEM::setSymbolValue(HB_SYMB *pValue)
   this->item.asSymbol.value = pValue;
 }
 
-inline PHB_STACK_STATE _HB_ITEM::symbolStackState()
+inline HB_STACK_STATE *_HB_ITEM::symbolStackState()
 {
   return this->item.asSymbol.stackstate;
 }
 
-inline void _HB_ITEM::setSymbolStackState(PHB_STACK_STATE pValue)
+inline void _HB_ITEM::setSymbolStackState(HB_STACK_STATE *pValue)
 {
   this->item.asSymbol.stackstate = pValue;
 }

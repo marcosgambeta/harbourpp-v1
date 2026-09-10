@@ -829,7 +829,7 @@ static void hb_stackDispLocal(void)
 
 #endif
 
-HB_ITEM *hb_stackNewFrame(PHB_STACK_STATE pFrame, uint16_t uiParams)
+HB_ITEM *hb_stackNewFrame(HB_STACK_STATE *pFrame, uint16_t uiParams)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -860,7 +860,7 @@ HB_ITEM *hb_stackNewFrame(PHB_STACK_STATE pFrame, uint16_t uiParams)
   return pItem;
 }
 
-void hb_stackOldFrame(PHB_STACK_STATE pFrame)
+void hb_stackOldFrame(HB_STACK_STATE *pFrame)
 {
   HB_STACK_TLS_PRELOAD
   if (hb_stack.pPos <= hb_stack.pBase) {

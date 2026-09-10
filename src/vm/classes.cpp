@@ -1448,7 +1448,7 @@ static uint16_t hb_clsFindClassByFunc(HB_SYMB *pClassFuncSym)
 // Get the real method symbol for given stack symbol
 HB_SYMB *hb_clsMethodSym(HB_ITEM *pBaseSymbol)
 {
-  PHB_STACK_STATE pStack = pBaseSymbol->symbolStackState();
+  HB_STACK_STATE *pStack = pBaseSymbol->symbolStackState();
 
   if (pStack->uiClass) {
     PMETHOD pMethod = s_pClasses[pStack->uiClass]->pMethods + pStack->uiMethod;
@@ -1542,7 +1542,7 @@ static uint16_t hb_clsSenderMethodClass(void)
 
   if (nOffset > 0) {
     HB_STACK_TLS_PRELOAD
-    PHB_STACK_STATE pStack = hb_stackItem(nOffset)->symbolStackState();
+    HB_STACK_STATE *pStack = hb_stackItem(nOffset)->symbolStackState();
 
     if (pStack->uiClass) {
       return (s_pClasses[pStack->uiClass]->pMethods + pStack->uiMethod)->uiSprClass;
@@ -1587,7 +1587,7 @@ static uint16_t hb_clsSenderObjectClass(void)
   return 0;
 }
 
-static HB_SYMB *hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
+static HB_SYMB *hb_clsValidScope(PMETHOD pMethod, HB_STACK_STATE *pStack)
 {
   if (pMethod->uiScope & (HB_OO_CLSTP_HIDDEN | HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_OVERLOADED)) {
     uint16_t uiSenderClass = hb_clsSenderMethodClass();
@@ -1636,7 +1636,7 @@ static HB_SYMB *hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
   return pMethod->pFuncSym;
 }
 
-static HB_SYMB *hb_clsScalarMethod(PCLASS pClass, HB_DYNS *pMsg, PHB_STACK_STATE pStack)
+static HB_SYMB *hb_clsScalarMethod(PCLASS pClass, HB_DYNS *pMsg, HB_STACK_STATE *pStack)
 {
   PMETHOD pMethod = hb_clsFindMsg(pClass, pMsg);
 
@@ -1673,7 +1673,7 @@ static void hb_clsMakeSuperObject(HB_ITEM *pDest, HB_ITEM *pObject, uint16_t uiS
 // <pFuncSym> = hb_objGetMethod(<pObject>, <pMessage>, <pStackState>)
 //
 // Internal function to the function pointer of a message of an object
-HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack)
+HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pMessage, HB_STACK_STATE *pStack)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_objGetMethod(%p, %p, %p)", static_cast<void*>(pObject), static_cast<void*>(pMessage), static_cast<void*>(pStack)));
@@ -2001,7 +2001,7 @@ HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pMessage, PHB_STACK_STATE pS
   return nullptr;
 }
 
-HB_BOOL hb_objGetVarRef(HB_ITEM *pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack)
+HB_BOOL hb_objGetVarRef(HB_ITEM *pObject, HB_SYMB *pMessage, HB_STACK_STATE *pStack)
 {
 #if defined(HB_HASH_MSG_ITEMS)
   if (pObject->isHash()) {
@@ -3971,7 +3971,7 @@ HB_FUNC(__CLSSYNCWAIT)
 
   if (nOffset > 0) {
     auto pBase = hb_stackItem(nOffset);
-    PHB_STACK_STATE pStack = pBase->symbolStackState();
+    HB_STACK_STATE *pStack = pBase->symbolStackState();
     uint16_t uiClass = pStack->uiClass;
 
     if (uiClass && uiClass <= s_uiClasses) {
@@ -4166,7 +4166,7 @@ HB_FUNC_STATIC( msgClassParent )
 HB_FUNC_STATIC(msgEvalInline)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
+  HB_STACK_STATE *pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
   uint16_t uiPCount = hb_pcount();
@@ -4221,7 +4221,7 @@ HB_FUNC_STATIC(msgPerform)
 HB_FUNC_STATIC(msgDelegate)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
+  HB_STACK_STATE *pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
   HB_SYMB *pExecSym = pClass->pMethods[pMethod->uiData].pFuncSym;
@@ -4239,7 +4239,7 @@ HB_FUNC_STATIC(msgDelegate)
 HB_FUNC_STATIC(msgSync)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
+  HB_STACK_STATE *pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
   HB_SYMB *pExecSym = pMethod->pRealSym;
@@ -4269,7 +4269,7 @@ HB_FUNC_STATIC(msgSync)
 HB_FUNC_STATIC(msgSyncClass)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
+  HB_STACK_STATE *pStack = hb_stackBaseItem()->symbolStackState();
   PCLASS pClass = s_pClasses[pStack->uiClass];
   PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
   HB_SYMB *pExecSym = pMethod->pRealSym;
@@ -4353,7 +4353,7 @@ HB_FUNC_STATIC(msgTypeErr)
 HB_FUNC_STATIC(msgSuper)
 {
   HB_STACK_TLS_PRELOAD
-  PHB_STACK_STATE pStack = hb_stackBaseItem()->symbolStackState();
+  HB_STACK_STATE *pStack = hb_stackBaseItem()->symbolStackState();
   hb_clsMakeSuperObject(hb_stackReturnItem(), hb_stackSelfItem(),
                         s_pClasses[pStack->uiClass]->pMethods[pStack->uiMethod].uiData);
 }
@@ -5119,7 +5119,7 @@ const char * hb_clsRealMethodName(void)
    const char * szName = nullptr;
 
    if( nOffset > 0 ) {
-      PHB_STACK_STATE pStack = hb_stackItem(nOffset)->symbolStackState();
+      HB_STACK_STATE *pStack = hb_stackItem(nOffset)->symbolStackState();
 
       if( pStack->uiClass && pStack->uiClass <= s_uiClasses ) {
          PCLASS pClass = s_pClasses[pStack->uiClass];

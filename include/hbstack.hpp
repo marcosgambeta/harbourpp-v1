@@ -316,8 +316,8 @@ extern void        hb_stackIncrease( void );   /* increase the stack size */
 extern void        hb_stackDec( void );
 extern void        hb_stackDecrease( HB_SIZE nItems );
 extern void        hb_stackRemove( HB_ISIZ nUntilPos );
-extern HB_ITEM    *hb_stackNewFrame( PHB_STACK_STATE pFrame, uint16_t uiParams );
-extern void        hb_stackOldFrame( PHB_STACK_STATE pFrame );
+extern HB_ITEM    *hb_stackNewFrame( HB_STACK_STATE *pFrame, uint16_t uiParams );
+extern void        hb_stackOldFrame( HB_STACK_STATE *pFrame );
 extern void        hb_stackClearMemvarsBase( void );
 
 extern HB_ITEM    *hb_stackLocalVariable( int32_t iLocal );

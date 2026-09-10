@@ -135,9 +135,9 @@ extern HB_BOOL hb_clsHasDestructor(uint16_t uiClass);
 extern HB_SYMB *hb_clsMethodSym(HB_ITEM *pBaseSymbol);
 
 // returns the method pointer of an object class
-extern HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pSymMsg, PHB_STACK_STATE pStack);
+extern HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pSymMsg, HB_STACK_STATE *pStack);
 // create object variable reference
-extern HB_BOOL hb_objGetVarRef(HB_ITEM *pObject, HB_SYMB *pMessage, PHB_STACK_STATE pStack);
+extern HB_BOOL hb_objGetVarRef(HB_ITEM *pObject, HB_SYMB *pMessage, HB_STACK_STATE *pStack);
 extern HB_BOOL hb_objHasOperator(HB_ITEM *pObject, uint16_t uiOperator);
 extern HB_BOOL hb_objOperatorCall(uint16_t uiOperator, HB_ITEM *pResult, HB_ITEM *pObject, HB_ITEM *pMsgArg1, HB_ITEM *pMsgArg2);
 extern void hb_objDestructorCall(HB_ITEM *pObject);
