@@ -185,9 +185,7 @@ struct BM_FILTER
   uint32_t map[1];
 };
 
-using PBM_FILTER = BM_FILTER *;
-
-#define BM_GETFILTER(p) ((PBM_FILTER)(p)->dbfi.lpvCargo)
+#define BM_GETFILTER(p) ((BM_FILTER *)(p)->dbfi.lpvCargo)
 #define BM_ITEMSIZE(n) (((n) + 31) >> 5)
 #define BM_BYTESIZE(n) ((((n) + 31) >> 5) * sizeof(uint32_t))
 
@@ -290,14 +288,14 @@ static HB_ITEM *hb_bmGetArrayParam(int32_t iParam)
   return pArray;
 }
 
-static PBM_FILTER hb_bmCreate(AREAP pArea, HB_BOOL fFull)
+static BM_FILTER *hb_bmCreate(AREAP pArea, HB_BOOL fFull)
 {
-  PBM_FILTER pBM = nullptr;
+  BM_FILTER *pBM = nullptr;
   HB_ULONG ulRecCount;
 
   if (SELF_RECCOUNT(pArea, &ulRecCount) == Harbour::SUCCESS) {
     HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecCount);
-    pBM = static_cast<PBM_FILTER>(memset(hb_xgrab(nSize), fFull ? 0xFF : 0x00, nSize));
+    pBM = static_cast<BM_FILTER *>(memset(hb_xgrab(nSize), fFull ? 0xFF : 0x00, nSize));
     pBM->maxrec = static_cast<uint32_t>(ulRecCount);
   }
 
@@ -309,7 +307,7 @@ HB_FUNC(BM_DBGETFILTERARRAY)
   auto pArea = hb_bmGetCurrentWorkArea();
 
   if (pArea != nullptr) {
-    PBM_FILTER pBM = BM_GETFILTER(pArea);
+    BM_FILTER *pBM = BM_GETFILTER(pArea);
     auto pArray = hb_itemArrayNew(0);
 
     if (pBM && pArea->dbfi.fOptimized) {
@@ -353,7 +351,7 @@ HB_FUNC(BM_DBSETFILTERARRAY)
 
     if (pArray) {
       if (SELF_CLEARFILTER(pArea) == Harbour::SUCCESS) {
-        PBM_FILTER pBM = hb_bmCreate(pArea, false);
+        BM_FILTER *pBM = hb_bmCreate(pArea, false);
 
         if (pBM) {
           pArea->dbfi.lpvCargo = pBM;
@@ -378,7 +376,7 @@ HB_FUNC(BM_DBSETFILTERARRAYADD)
     auto pArray = hb_bmGetArrayParam(1);
 
     if (pArray) {
-      PBM_FILTER pBM = BM_GETFILTER(pArea);
+      BM_FILTER *pBM = BM_GETFILTER(pArea);
 
       if (pBM) {
         for (HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos--) {
@@ -399,7 +397,7 @@ HB_FUNC(BM_DBSETFILTERARRAYDEL)
     auto pArray = hb_bmGetArrayParam(1);
 
     if (pArray) {
-      PBM_FILTER pBM = BM_GETFILTER(pArea);
+      BM_FILTER *pBM = BM_GETFILTER(pArea);
 
       if (pBM) {
         for (HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos--) {
@@ -414,7 +412,7 @@ HB_FUNC(BM_DBSETFILTERARRAYDEL)
 
 static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
 {
-  PBM_FILTER pBM = BM_GETFILTER(pArea);
+  BM_FILTER *pBM = BM_GETFILTER(pArea);
   HB_BOOL fResult = true;
   HB_ULONG ulRecNo = 0;
 
@@ -439,7 +437,7 @@ static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
       HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE(ulRecNo);
       HB_SIZE nOldSize = sizeof(BM_FILTER) + BM_BYTESIZE(pBM->maxrec);
       if (nSize > nOldSize) {
-        pArea->dbfi.lpvCargo = pBM = static_cast<PBM_FILTER>(hb_xrealloc(pBM, nSize));
+        pArea->dbfi.lpvCargo = pBM = static_cast<BM_FILTER *>(hb_xrealloc(pBM, nSize));
         memset(reinterpret_cast<uint8_t *>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
       }
       pBM->maxrec = static_cast<uint32_t>(ulRecNo);
@@ -497,7 +495,7 @@ static HB_ERRCODE hb_bmPutRec(AREAP pArea, const uint8_t *pBuffer)
 static HB_ERRCODE hb_bmCountScope(AREAP pArea, void *pPtr, HB_LONG *plRec)
 {
   if (pPtr == nullptr) {
-    PBM_FILTER pBM = BM_GETFILTER(pArea);
+    BM_FILTER *pBM = BM_GETFILTER(pArea);
 
     if (pBM && pArea->dbfi.fFilter && !BM_GETREC(pBM, static_cast<HB_ULONG>(*plRec))) {
       *plRec = 0;
@@ -526,7 +524,7 @@ static HB_ERRCODE hb_bmSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
 
   if (errCode == Harbour::SUCCESS) {
     if (hb_setGetOptimize()) {
-      PBM_FILTER pBM = hb_bmCreate(pArea, true);
+      BM_FILTER *pBM = hb_bmCreate(pArea, true);
 
       if (pBM) {
         pArea->dbfi.lpvCargo = pBM;
