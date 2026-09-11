@@ -49,7 +49,7 @@
 
 static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 {
-  auto pExpItm = static_cast<PHB_EXPRLST>(hb_xgrab(sizeof(HB_EXPRLST)));
+  auto pExpItm = static_cast<HB_EXPRLST *>(hb_xgrab(sizeof(HB_EXPRLST)));
 
   pExpItm->pNext = HB_COMP_PARAM->pExprLst;
   HB_COMP_PARAM->pExprLst = pExpItm;
@@ -67,7 +67,7 @@ static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 static void hb_compExprDealloc(HB_COMP_DECL, PHB_EXPR pExpr)
 {
   if (HB_COMP_PARAM->pExprLst) {
-    PHB_EXPRLST pExpItm = reinterpret_cast<PHB_EXPRLST>(pExpr);
+    HB_EXPRLST *pExpItm = reinterpret_cast<HB_EXPRLST *>(pExpr);
 
     pExpItm->pNext->pPrev = pExpItm->pPrev;
     pExpItm->pPrev->pNext = pExpItm->pNext;
@@ -118,7 +118,7 @@ static void hb_compExprFree(HB_COMP_DECL, PHB_EXPR pExpr)
 static void hb_compExprLstDealloc(HB_COMP_DECL)
 {
   if (HB_COMP_PARAM->pExprLst) {
-    PHB_EXPRLST pExpItm, pExp;
+    HB_EXPRLST *pExpItm, *pExp;
     pExpItm = pExp = HB_COMP_PARAM->pExprLst;
     HB_COMP_PARAM->pExprLst = nullptr;
     do {
@@ -126,7 +126,7 @@ static void hb_compExprLstDealloc(HB_COMP_DECL)
       pExp = pExp->pNext;
     } while (pExp != pExpItm);
     do {
-      PHB_EXPRLST pFree = pExp;
+      HB_EXPRLST *pFree = pExp;
       pExp = pExp->pNext;
       hb_xfree(pFree);
     } while (pExp != pExpItm);

@@ -965,7 +965,7 @@ typedef struct _HB_EXPRLST
    HB_EXPR Expression;
    struct _HB_EXPRLST * pPrev;
    struct _HB_EXPRLST * pNext;
-} HB_EXPRLST, * PHB_EXPRLST;
+} HB_EXPRLST, * PHB_EXPRLST; // NOTE: PHB_EXPRLST is deprecated in Harbour++ source code
 
 typedef struct _HB_INCLST
 {
@@ -983,7 +983,7 @@ struct _HB_COMP
 
    // compiler only members
    HB_COMP_LEX *     pLex;
-   PHB_EXPRLST       pExprLst;
+   HB_EXPRLST *      pExprLst;
 
    PHB_HASH_TABLE    pIdentifiers;
    HB_HFUNCTION_LIST functions;
@@ -1090,7 +1090,7 @@ typedef struct _HB_COMP
 
    // compiler only members
    HB_COMP_LEX *     pLex;
-   PHB_EXPRLST       pExprLst;
+   HB_EXPRLST *      pExprLst;
 
    PHB_HASH_TABLE    pIdentifiers;
    HB_HFUNCTION_LIST functions;
