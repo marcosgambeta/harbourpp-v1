@@ -89,11 +89,11 @@ extern HB_BOOL hb_macroLexNew( PHB_MACRO pMacro );
 extern void hb_macroLexDelete( PHB_MACRO pMacro );
 extern char * hb_macroIdentNew( HB_COMP_DECL, char * );
 
-extern PHB_EXPR hb_macroExprGenPush( PHB_EXPR, HB_COMP_DECL );
-extern PHB_EXPR hb_macroExprGenPop( PHB_EXPR, HB_COMP_DECL );
+extern HB_EXPR *hb_macroExprGenPush( HB_EXPR *, HB_COMP_DECL );
+extern HB_EXPR *hb_macroExprGenPop( HB_EXPR *, HB_COMP_DECL );
 
-extern PHB_EXPR hb_macroExprNewArrayAt( PHB_EXPR pArray, PHB_EXPR pIndex, HB_COMP_DECL );
-extern PHB_EXPR hb_macroExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL );
+extern HB_EXPR *hb_macroExprNewArrayAt( HB_EXPR *pArray, HB_EXPR *pIndex, HB_COMP_DECL );
+extern HB_EXPR *hb_macroExprNewFunCall( HB_EXPR *pName, HB_EXPR *pParms, HB_COMP_DECL );
 
 /* Size of pcode buffer incrementation
  */

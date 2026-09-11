@@ -97,7 +97,7 @@ union YYSTYPE
    int32_t       iNumber;   /* to hold a temporary integer number */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    void *    pVoid;     /* to hold any memory structure we may need */
-   PHB_EXPR  asExpr;
+   HB_EXPR * asExpr;
    struct
    {
       const char * string;

@@ -489,7 +489,7 @@ typedef struct HB_EXPR_
    HB_EXPRTYPE ExprType;      // internal expression type
    uint16_t ValType;       // language level value type
    struct HB_EXPR_ * pNext;   // next expression in the list of expressions
-} HB_EXPR, * PHB_EXPR;
+} HB_EXPR, * PHB_EXPR; // NOTE: PHB_EXPR is deprecated in Harbour++ source code
 
 #if defined(__cplusplus)
 struct HB_ENUMERATOR_
@@ -534,7 +534,7 @@ typedef struct HB_LOOPEXIT_
 typedef struct HB_SWITCHCASE_
 {
    HB_SIZE nOffset;
-   PHB_EXPR pExpr;
+   HB_EXPR *pExpr;
    struct HB_SWITCHCASE_ * pNext;
 } HB_SWITCHCASE, * PHB_SWITCHCASE;
 
@@ -543,7 +543,7 @@ typedef struct HB_SWITCHCMD_
    HB_SIZE nOffset;
    PHB_SWITCHCASE pCases;
    PHB_SWITCHCASE pLast;
-   PHB_EXPR pExpr;
+   HB_EXPR *pExpr;
    HB_SIZE nDefault;
    struct HB_SWITCHCMD_ * pPrev;
 } HB_SWITCHCMD, * PHB_SWITCHCMD;
@@ -551,7 +551,7 @@ typedef struct HB_SWITCHCMD_
 // support structure for PUBLIC and PRIVATE statements
 typedef struct HB_RTVAR_
 {
-   PHB_EXPR pVar;
+   HB_EXPR *pVar;
    HB_BOOL bPopValue;
    struct HB_RTVAR_ * pNext;
    struct HB_RTVAR_ * pPrev;
@@ -1213,12 +1213,12 @@ extern void hb_comp_free( HB_COMP * );
 
 typedef struct _HB_COMP_FUNCS
 {
-   PHB_EXPR ( * ExprNew )        ( HB_COMP_DECL, HB_EXPRTYPE iType );
-   void     ( * ExprClear )      ( HB_COMP_DECL, PHB_EXPR pExpr );
-   void     ( * ExprFree )       ( HB_COMP_DECL, PHB_EXPR pExpr );
+   HB_EXPR *( * ExprNew )        ( HB_COMP_DECL, HB_EXPRTYPE iType );
+   void     ( * ExprClear )      ( HB_COMP_DECL, HB_EXPR *pExpr );
+   void     ( * ExprFree )       ( HB_COMP_DECL, HB_EXPR *pExpr );
 
-   PHB_EXPR ( * ErrorType )      ( HB_COMP_DECL, PHB_EXPR );
-   PHB_EXPR ( * ErrorSyntax )    ( HB_COMP_DECL, PHB_EXPR );
+   HB_EXPR *( * ErrorType )      ( HB_COMP_DECL, HB_EXPR *);
+   HB_EXPR *( * ErrorSyntax )    ( HB_COMP_DECL, HB_EXPR *);
    void     ( * ErrorDuplVar )   ( HB_COMP_DECL, const char * );
 } HB_COMP_FUNCS, * PHB_COMP_FUNCS;
 

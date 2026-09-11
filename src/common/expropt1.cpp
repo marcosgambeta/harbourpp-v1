@@ -185,7 +185,7 @@ static const uint8_t s_PrecedTable[HB_EXPR_COUNT] = {
 
 // *************************************************************************
 
-const char *hb_compExprDescription(PHB_EXPR pExpr)
+const char *hb_compExprDescription(HB_EXPR *pExpr)
 {
   if (pExpr) {
     return s_OperTable[pExpr->ExprType];
@@ -194,28 +194,28 @@ const char *hb_compExprDescription(PHB_EXPR pExpr)
   }
 }
 
-int32_t hb_compExprType(PHB_EXPR pExpr)
+int32_t hb_compExprType(HB_EXPR *pExpr)
 {
   return static_cast<int32_t>(pExpr->ExprType);
 }
 
-int32_t hb_compExprIsInteger(PHB_EXPR pExpr)
+int32_t hb_compExprIsInteger(HB_EXPR *pExpr)
 {
   return pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG &&
          HB_LIM_INT16(pExpr->value.asNum.val.l);
 }
 
-int32_t hb_compExprIsLong(PHB_EXPR pExpr)
+int32_t hb_compExprIsLong(HB_EXPR *pExpr)
 {
   return pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG;
 }
 
-int32_t hb_compExprIsString(PHB_EXPR pExpr)
+int32_t hb_compExprIsString(HB_EXPR *pExpr)
 {
   return pExpr->ExprType == HB_ET_STRING;
 }
 
-const char *hb_compExprAsString(PHB_EXPR pExpr)
+const char *hb_compExprAsString(HB_EXPR *pExpr)
 {
   if (pExpr->ExprType == HB_ET_STRING) {
     return pExpr->value.asString.string;
@@ -223,7 +223,7 @@ const char *hb_compExprAsString(PHB_EXPR pExpr)
   return nullptr;
 }
 
-HB_SIZE hb_compExprAsStringLen(PHB_EXPR pExpr)
+HB_SIZE hb_compExprAsStringLen(HB_EXPR *pExpr)
 {
   if (pExpr->ExprType == HB_ET_STRING) {
     return pExpr->nLength;
@@ -231,7 +231,7 @@ HB_SIZE hb_compExprAsStringLen(PHB_EXPR pExpr)
   return 0;
 }
 
-int32_t hb_compExprAsNumSign(PHB_EXPR pExpr)
+int32_t hb_compExprAsNumSign(HB_EXPR *pExpr)
 {
   if (pExpr->ExprType == HB_ET_NUMERIC) {
     if (pExpr->value.asNum.NumType == HB_ET_DOUBLE) {
@@ -251,7 +251,7 @@ int32_t hb_compExprAsNumSign(PHB_EXPR pExpr)
   return 0;
 }
 
-int32_t hb_compExprAsInteger(PHB_EXPR pExpr)
+int32_t hb_compExprAsInteger(HB_EXPR *pExpr)
 {
   if (pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG) {
     return static_cast<int32_t>(pExpr->value.asNum.val.l);
@@ -260,7 +260,7 @@ int32_t hb_compExprAsInteger(PHB_EXPR pExpr)
   }
 }
 
-HB_MAXINT hb_compExprAsLongNum(PHB_EXPR pExpr)
+HB_MAXINT hb_compExprAsLongNum(HB_EXPR *pExpr)
 {
   if (pExpr->ExprType == HB_ET_NUMERIC) {
     if (pExpr->value.asNum.NumType == HB_ET_LONG) {
@@ -273,7 +273,7 @@ HB_MAXINT hb_compExprAsLongNum(PHB_EXPR pExpr)
   }
 }
 
-const char *hb_compExprAsSymbol(PHB_EXPR pExpr)
+const char *hb_compExprAsSymbol(HB_EXPR *pExpr)
 {
   switch (pExpr->ExprType) {
   case HB_ET_VARIABLE:
@@ -291,18 +291,18 @@ const char *hb_compExprAsSymbol(PHB_EXPR pExpr)
 
 // *************************************************************************
 
-PHB_EXPR hb_compExprNewEmpty(HB_COMP_DECL)
+HB_EXPR *hb_compExprNewEmpty(HB_COMP_DECL)
 {
   return HB_COMP_EXPR_NEW(HB_ET_NONE);
 }
 
-PHB_EXPR hb_compExprNewDouble(double dValue, uint8_t ucWidth, uint8_t ucDec, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewDouble(double dValue, uint8_t ucWidth, uint8_t ucDec, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewDouble(%f, %i, %p)", dValue, ucDec, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_NUMERIC);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_NUMERIC);
   pExpr->value.asNum.val.d = dValue;
   pExpr->value.asNum.bWidth = ucWidth;
   pExpr->value.asNum.bDec = ucDec;
@@ -311,13 +311,13 @@ PHB_EXPR hb_compExprNewDouble(double dValue, uint8_t ucWidth, uint8_t ucDec, HB_
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewLong(HB_MAXINT nValue, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewLong(HB_MAXINT nValue, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewLong(%" PFHL "d, %p)", nValue, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_NUMERIC);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_NUMERIC);
   pExpr->value.asNum.val.l = nValue;
   pExpr->value.asNum.bWidth = HB_DEFAULT_WIDTH;
   pExpr->value.asNum.bDec = 0;
@@ -326,39 +326,39 @@ PHB_EXPR hb_compExprNewLong(HB_MAXINT nValue, HB_COMP_DECL)
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewDate(long lDate, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewDate(long lDate, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewDate(%ld, %p)", lDate, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_DATE);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_DATE);
   pExpr->value.asDate.lDate = lDate;
   pExpr->value.asDate.lTime = 0;
   pExpr->ValType = HB_EV_DATE;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewTimeStamp(long lDate, long lTime, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewTimeStamp(long lDate, long lTime, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewTimeStamp(%ld, %ld, %p)", lDate, lTime, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_TIMESTAMP);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_TIMESTAMP);
   pExpr->value.asDate.lDate = lDate;
   pExpr->value.asDate.lTime = lTime;
   pExpr->ValType = HB_EV_TIMESTAMP;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewString(const char *szValue, HB_SIZE nLen, HB_BOOL fDealloc, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewString(const char *szValue, HB_SIZE nLen, HB_BOOL fDealloc, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewString(%s)", szValue));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_STRING);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_STRING);
   pExpr->value.asString.string = const_cast<char *>(szValue);
   pExpr->value.asString.dealloc = fDealloc;
   pExpr->nLength = nLen;
@@ -368,13 +368,13 @@ PHB_EXPR hb_compExprNewString(const char *szValue, HB_SIZE nLen, HB_BOOL fDeallo
 
 // Creates a new literal array { item1, item2, ... itemN }
 //    'pArrList' is a list of array elements
-PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewArray(HB_EXPR *pArrList, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewArray()"));
 #endif
 
-  PHB_EXPR pExpr;
+  HB_EXPR *pExpr;
 
   pArrList->ExprType = HB_ET_ARRAY; // change type from ET_LIST
   pArrList->ValType = HB_EV_ARRAY;
@@ -406,13 +406,13 @@ PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
 
 // Creates a new literal hash { key1=>val1, key2=>val2, ... keyN=>valN }
 //    'pHashList' is a list of hash items
-PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewHash(HB_EXPR *pHashList, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewHash()"));
 #endif
 
-  PHB_EXPR pExpr;
+  HB_EXPR *pExpr;
 
   if (pHashList) {
     pHashList->ExprType = HB_ET_HASH; // change type from ET_LIST
@@ -439,13 +439,13 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
   return pHashList;
 }
 
-PHB_EXPR hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int32_t iFlags, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int32_t iFlags, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewCodeBlock(%s,%" HB_PFS "u,%d,%p)", string ? string : "(null)", nLen, iFlags, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_CODEBLOCK);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_CODEBLOCK);
   pExpr->value.asCodeblock.pExprList = nullptr;
   pExpr->value.asCodeblock.pLocals = nullptr; // this will hold local variables declarations
   pExpr->ValType = HB_EV_CODEBLOCK;
@@ -455,10 +455,10 @@ PHB_EXPR hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int32_t iFlags, HB_
   return pExpr;
 }
 
-PHB_EXPR hb_compExprAddCodeblockExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
+HB_EXPR *hb_compExprAddCodeblockExpr(HB_EXPR *pList, HB_EXPR *pNewItem)
 {
   if (pList->value.asCodeblock.pExprList) {
-    PHB_EXPR pExpr;
+    HB_EXPR *pExpr;
 
     // add new item to the end of the list
     pExpr = pList->value.asCodeblock.pExprList;
@@ -473,80 +473,80 @@ PHB_EXPR hb_compExprAddCodeblockExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
   return pList;
 }
 
-PHB_EXPR hb_compExprNewLogical(int32_t iValue, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewLogical(int32_t iValue, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewLogical(%i,%p)", iValue, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_LOGICAL);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_LOGICAL);
   pExpr->value.asLogical = iValue;
   pExpr->ValType = HB_EV_LOGICAL;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewNil(HB_COMP_DECL)
+HB_EXPR *hb_compExprNewNil(HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewNil(%p)", static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_NIL);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_NIL);
   pExpr->ValType = HB_EV_NIL;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewSelf(HB_COMP_DECL)
+HB_EXPR *hb_compExprNewSelf(HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewSelf(%p)", static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_SELF);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_SELF);
   pExpr->ValType = HB_EV_OBJECT;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewVarRef(const char *szVarName, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewVarRef(const char *szVarName, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewVarRef(%s,%p)", szVarName, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_VARREF);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_VARREF);
   pExpr->value.asSymbol.name = szVarName;
   pExpr->ValType = HB_EV_VARREF;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewFunRef(const char *szFunName, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewFunRef(const char *szFunName, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewFunRef(%s,%p)", szFunName, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_FUNREF);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_FUNREF);
   pExpr->value.asSymbol.name = hb_compGetFuncID(szFunName, &pExpr->value.asSymbol.funcid, &pExpr->value.asSymbol.flags);
   pExpr->ValType = HB_EV_FUNREF;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewRef(PHB_EXPR pRefer, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewRef(HB_EXPR *pRefer, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewRef(%p,%p)", static_cast<void*>(pRefer), static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_REFERENCE);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_REFERENCE);
   pExpr->value.asReference = pRefer;
   pExpr->ValType = HB_EV_VARREF;
   return pExpr;
 }
 
 // Creates new macro expression
-PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const char *szName, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMacro(HB_EXPR *pMacroExpr, unsigned char cMacroOp, const char *szName, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_MACRO);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_MACRO);
 
   if (szName != nullptr) {
 #if 0
@@ -584,13 +584,13 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
 
 // Creates new aliased variable
 //    aliasexpr -> identifier
-PHB_EXPR hb_compExprNewAliasVar(PHB_EXPR pAlias, PHB_EXPR pVariable, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewAliasVar(HB_EXPR *pAlias, HB_EXPR *pVariable, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewAliasVar()"));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ALIASVAR);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_ALIASVAR);
   pExpr->value.asAlias.pAlias = pAlias;
   pExpr->value.asAlias.pVar = pVariable;
   pExpr->value.asAlias.pExpList = nullptr;
@@ -608,13 +608,13 @@ PHB_EXPR hb_compExprNewAliasVar(PHB_EXPR pAlias, PHB_EXPR pVariable, HB_COMP_DEC
 
 // Creates new aliased expression
 //    alias_expr -> ( expression )
-PHB_EXPR hb_compExprNewAliasExpr(PHB_EXPR pAlias, PHB_EXPR pExpList, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewAliasExpr(HB_EXPR *pAlias, HB_EXPR *pExpList, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewAliasExpr()"));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ALIASEXPR);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_ALIASEXPR);
   pExpr->value.asAlias.pAlias = pAlias;
   pExpr->value.asAlias.pExpList = pExpList;
   pExpr->value.asAlias.pVar = nullptr;
@@ -631,13 +631,13 @@ PHB_EXPR hb_compExprNewAliasExpr(PHB_EXPR pAlias, PHB_EXPR pExpList, HB_COMP_DEC
 
 // Creates new send expression
 //    : <msgid> -> ( expression )
-PHB_EXPR hb_compExprNewSend(const char *szMessage, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewSend(const char *szMessage, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewSend(%s,%p)", szMessage, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_SEND);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_SEND);
   pExpr->value.asMessage.pObject = nullptr;
   pExpr->value.asMessage.pParms = nullptr;
   pExpr->value.asMessage.szMessage = szMessage;
@@ -648,13 +648,13 @@ PHB_EXPR hb_compExprNewSend(const char *szMessage, HB_COMP_DECL)
 
 // Creates new macro send expression
 //    : &<msg> -> ( expression )
-PHB_EXPR hb_compExprNewMacroSend(PHB_EXPR pMessage, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMacroSend(HB_EXPR *pMessage, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMacroSend(%p,%p)", static_cast<void*>(pMessage), static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_SEND);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_SEND);
   pExpr->value.asMessage.pObject = nullptr;
   pExpr->value.asMessage.pParms = nullptr;
   pExpr->value.asMessage.szMessage = nullptr;
@@ -675,7 +675,7 @@ PHB_EXPR hb_compExprNewMacroSend(PHB_EXPR pMessage, HB_COMP_DECL)
 //
 //    pExpr   = is an expression returned by hb_compExprNewSend()
 //    pObject = is an object
-PHB_EXPR hb_compExprNewMethodObject(PHB_EXPR pExpr, PHB_EXPR pObject)
+HB_EXPR *hb_compExprNewMethodObject(HB_EXPR *pExpr, HB_EXPR *pObject)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMethodObject(%p,%p)", static_cast<void*>(pExpr), static_cast<void*>(pObject)));
@@ -692,7 +692,7 @@ PHB_EXPR hb_compExprNewMethodObject(PHB_EXPR pExpr, PHB_EXPR pObject)
 //    pObject  = is an expression returned by hb_compExprNewSend()
 //    pArgList = list of passed arguments - it will be HB_ET_NONE if no arguments
 //                are passed
-PHB_EXPR hb_compExprNewMethodCall(PHB_EXPR pObject, PHB_EXPR pArgList)
+HB_EXPR *hb_compExprNewMethodCall(HB_EXPR *pObject, HB_EXPR *pArgList)
 {
   pObject->value.asMessage.pParms = pArgList;
 
@@ -701,7 +701,7 @@ PHB_EXPR hb_compExprNewMethodCall(PHB_EXPR pObject, PHB_EXPR pArgList)
 
 // Create a new iif() expression
 // pExpr is a list of three expressions
-PHB_EXPR hb_compExprNewIIF(PHB_EXPR pExpr)
+HB_EXPR *hb_compExprNewIIF(HB_EXPR *pExpr)
 {
   pExpr->ExprType = HB_ET_IIF;
 
@@ -710,49 +710,49 @@ PHB_EXPR hb_compExprNewIIF(PHB_EXPR pExpr)
 
 // Creates a list - all elements will be used
 // This list can be used to create an array or function's call arguments
-PHB_EXPR hb_compExprNewList(PHB_EXPR pFirstItem, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewList(HB_EXPR *pFirstItem, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewList()"));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_LIST);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_LIST);
   pExpr->value.asList.pExprList = pFirstItem;
   pExpr->value.asList.reference = false;
   return pExpr;
 }
 
 // Creates a list of function call arguments
-PHB_EXPR hb_compExprNewArgList(PHB_EXPR pFirstItem, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewArgList(HB_EXPR *pFirstItem, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewArgList()"));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ARGLIST);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_ARGLIST);
   pExpr->value.asList.pExprList = pFirstItem;
   pExpr->value.asList.reference = false;
   return pExpr;
 }
 
 // Creates a reference to variable arguments
-PHB_EXPR hb_compExprNewArgRef(HB_COMP_DECL)
+HB_EXPR *hb_compExprNewArgRef(HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewArgRef()"));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ARGLIST);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_ARGLIST);
   pExpr->value.asList.pExprList = nullptr;
   pExpr->value.asList.reference = true;
   return pExpr;
 }
 
 // Adds new element to the list
-PHB_EXPR hb_compExprAddListExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
+HB_EXPR *hb_compExprAddListExpr(HB_EXPR *pList, HB_EXPR *pNewItem)
 {
   if (pList->value.asList.pExprList) {
-    PHB_EXPR pExpr;
+    HB_EXPR *pExpr;
 
     // add new item to the end of the list
     pExpr = pList->value.asList.pExprList;
@@ -767,13 +767,13 @@ PHB_EXPR hb_compExprAddListExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
   return pList;
 }
 
-PHB_EXPR hb_compExprNewVar(const char *szName, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewVar(const char *szName, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewVar(%s,%p)", szName, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_VARIABLE);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_VARIABLE);
   pExpr->value.asSymbol.name = szName;
   return pExpr;
 }
@@ -782,13 +782,13 @@ PHB_EXPR hb_compExprNewVar(const char *szName, HB_COMP_DECL)
 //
 // szName is a string with variable name if 'PUBLIC varname' context
 // pMacroVar is a macro expression if 'PUBLIC &varname' context
-PHB_EXPR hb_compExprNewRTVar(const char *szName, PHB_EXPR pMacroVar, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewRTVar(const char *szName, HB_EXPR *pMacroVar, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewRTVar(%s, %p, %p)", szName, static_cast<void*>(pMacroVar), static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_RTVAR);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_RTVAR);
   pExpr->value.asRTVar.szName = szName;
   pExpr->value.asRTVar.pMacro = pMacroVar;
   if (pMacroVar) {
@@ -798,186 +798,186 @@ PHB_EXPR hb_compExprNewRTVar(const char *szName, PHB_EXPR pMacroVar, HB_COMP_DEC
 }
 
 // Create a new symbol used in function calls
-PHB_EXPR hb_compExprNewFunName(const char *szName, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewFunName(const char *szName, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewFunName(%s,%p)", szName, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_FUNNAME);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_FUNNAME);
   pExpr->value.asSymbol.name = hb_compGetFuncID(szName, &pExpr->value.asSymbol.funcid, &pExpr->value.asSymbol.flags);
   return pExpr;
 }
 
 // Create a new symbol used in an alias expressions
-PHB_EXPR hb_compExprNewAlias(const char *szName, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewAlias(const char *szName, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewAlias(%s,%p)", szName, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ALIAS);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_ET_ALIAS);
   pExpr->value.asSymbol.name = szName;
   return pExpr;
 }
 
 // *************************************************************************
 
-PHB_EXPR hb_compExprNewEqual(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewEqual(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_EQUAL);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_EQUAL);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPlus(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPlus(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_PLUS);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_PLUS);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewMinus(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMinus(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_MINUS);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_MINUS);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewMult(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMult(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_MULT);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_MULT);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewDiv(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewDiv(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_DIV);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_DIV);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewMod(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMod(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_MOD);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_MOD);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPower(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPower(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_POWER);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_POWER);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPostInc(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPostInc(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_POSTINC);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_POSTINC);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPostDec(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPostDec(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_POSTDEC);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_POSTDEC);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPreInc(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPreInc(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_PREINC);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_PREINC);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPreDec(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPreDec(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_PREDEC);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_PREDEC);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewPlusEq(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewPlusEq(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_PLUSEQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_PLUSEQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewMinusEq(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMinusEq(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_MINUSEQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_MINUSEQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewMultEq(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewMultEq(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_MULTEQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_MULTEQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewDivEq(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewDivEq(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_DIVEQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_DIVEQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewModEq(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewModEq(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_MODEQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_MODEQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewExpEq(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewExpEq(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_EXPEQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_EXPEQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewAnd(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewAnd(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_AND);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_AND);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewOr(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewOr(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_OR);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_OR);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewNot(PHB_EXPR pNotExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewNot(HB_EXPR *pNotExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr;
+  HB_EXPR *pExpr;
 
   if (pNotExpr->ExprType == HB_ET_LOGICAL) {
     pNotExpr->value.asLogical = !pNotExpr->value.asLogical;
@@ -991,66 +991,66 @@ PHB_EXPR hb_compExprNewNot(PHB_EXPR pNotExpr, HB_COMP_DECL)
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewEQ(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewEQ(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_EQ);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_EQ);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewLT(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewLT(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_LT);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_LT);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewGT(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewGT(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_GT);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_GT);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewLE(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewLE(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_LE);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_LE);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewGE(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewGE(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_GE);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_GE);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewNE(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewNE(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_NE);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_NE);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
-PHB_EXPR hb_compExprNewIN(PHB_EXPR pLeftExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewIN(HB_EXPR *pLeftExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_IN);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_IN);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = nullptr;
   return pExpr;
 }
 
 // NOTE: all invalid cases are handled by yacc rules
-PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprNewNegate(HB_EXPR *pNegExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pExpr;
+  HB_EXPR *pExpr;
 
   if (pNegExpr->ExprType == HB_ET_NUMERIC) {
     if (pNegExpr->value.asNum.NumType == HB_ET_DOUBLE) {
@@ -1080,19 +1080,19 @@ PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
 }
 
 // Handles (expression := expression) syntax
-PHB_EXPR hb_compExprAssign(PHB_EXPR pLeftExpr, PHB_EXPR pRightExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprAssign(HB_EXPR *pLeftExpr, HB_EXPR *pRightExpr, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprAssign()"));
 #endif
 
-  PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_EO_ASSIGN);
+  HB_EXPR *pExpr = HB_COMP_EXPR_NEW(HB_EO_ASSIGN);
   pExpr->value.asOperator.pLeft = pLeftExpr;
   pExpr->value.asOperator.pRight = pRightExpr;
   return pExpr;
 }
 
-void hb_compExprDelOperator(PHB_EXPR pExpr, HB_COMP_DECL)
+void hb_compExprDelOperator(HB_EXPR *pExpr, HB_COMP_DECL)
 {
   if (pExpr->value.asOperator.pLeft) {
     HB_COMP_EXPR_FREE(pExpr->value.asOperator.pLeft);
@@ -1103,7 +1103,7 @@ void hb_compExprDelOperator(PHB_EXPR pExpr, HB_COMP_DECL)
 }
 
 // Sets the argument of an operation found previously
-PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
+HB_EXPR *hb_compExprSetOperand(HB_EXPR *pExpr, HB_EXPR *pItem, HB_COMP_DECL)
 {
   uint8_t ucRight = s_PrecedTable[pItem->ExprType];
 
@@ -1162,7 +1162,7 @@ PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
 
 // Handles prefix&macro-> and &macro.sufix-> in macro compiler
 // Clipper uses macro var directly as alias name in such case
-PHB_EXPR hb_compExprMacroAsAlias(PHB_EXPR pExpr)
+HB_EXPR *hb_compExprMacroAsAlias(HB_EXPR *pExpr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprMacroAsAlias()"));
@@ -1176,7 +1176,7 @@ PHB_EXPR hb_compExprMacroAsAlias(PHB_EXPR pExpr)
 }
 
 // Return a number of elements on the linked list
-HB_ULONG hb_compExprListLen(PHB_EXPR pExpr)
+HB_ULONG hb_compExprListLen(HB_EXPR *pExpr)
 {
   HB_ULONG nLen = 0;
 
@@ -1189,7 +1189,7 @@ HB_ULONG hb_compExprListLen(PHB_EXPR pExpr)
   return nLen;
 }
 
-HB_BOOL hb_compExprListTypeCheck(PHB_EXPR pExpr, HB_EXPRTYPE ExprType)
+HB_BOOL hb_compExprListTypeCheck(HB_EXPR *pExpr, HB_EXPRTYPE ExprType)
 {
   pExpr = pExpr->value.asList.pExprList;
   if (pExpr) {
@@ -1206,12 +1206,12 @@ HB_BOOL hb_compExprListTypeCheck(PHB_EXPR pExpr, HB_EXPRTYPE ExprType)
 }
 
 // Return a number of parameters passed to function or method
-HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
+HB_ULONG hb_compExprParamListLen(HB_EXPR *pExpr)
 {
   HB_ULONG nLen = 0;
 
   if (pExpr) {
-    PHB_EXPR pParam = pExpr->value.asList.pExprList;
+    HB_EXPR *pParam = pExpr->value.asList.pExprList;
     while (pParam) {
       pParam = pParam->pNext;
       ++nLen;
@@ -1228,19 +1228,19 @@ HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
 }
 
 // Check if expression is hb_ArrayToParams(aParams) function call
-HB_BOOL hb_compExprIsArrayToParams(PHB_EXPR pExpr)
+HB_BOOL hb_compExprIsArrayToParams(HB_EXPR *pExpr)
 {
   return pExpr->ExprType == HB_ET_FUNCALL && pExpr->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME &&
          pExpr->value.asFunCall.pFunName->value.asSymbol.funcid == HB_F_ARRAYTOPARAMS;
 }
 
-HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
+HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   HB_SIZE nLen = 0;
 
   if (pExpr) {
     HB_SIZE nItems = 0;
-    PHB_EXPR pElem = pExpr->value.asList.pExprList;
+    HB_EXPR *pElem = pExpr->value.asList.pExprList;
 
     while (pElem) {
       if ((pElem->ExprType == HB_ET_MACRO && HB_SUPPORT_XBASE &&
@@ -1302,7 +1302,7 @@ static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, uint8_t bType)
 }
 
 // Add a new local variable declaration
-PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char *szVarName, uint8_t bType, HB_COMP_DECL)
+HB_EXPR *hb_compExprCBVarAdd(HB_EXPR *pCB, const char *szVarName, uint8_t bType, HB_COMP_DECL)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprCBVarAdd(%s)", szVarName));
@@ -1347,9 +1347,9 @@ void hb_compExprCBVarDel(PHB_CBVAR pVars)
 // {| ~1 | iif( ~1 == NIL, <pExpr>, <pExpr> := ~1 ) }
 //
 // NOTE: "~1" is not a valid variable name so there will be no collisions
-PHB_EXPR hb_compExprSetGetBlock(PHB_EXPR pExpr, HB_COMP_DECL)
+HB_EXPR *hb_compExprSetGetBlock(HB_EXPR *pExpr, HB_COMP_DECL)
 {
-  PHB_EXPR pSet;
+  HB_EXPR *pSet;
 
   // create setget expression: IIF( var==NIL, <pExpr>, <pExpr>:=var )
   pSet = HB_COMP_EXPR_NEW(HB_ET_SETGET);

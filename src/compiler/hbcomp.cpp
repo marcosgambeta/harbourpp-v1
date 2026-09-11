@@ -47,7 +47,7 @@
 
 #include "hbcomp.hpp"
 
-static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
+static HB_EXPR *hb_compExprAlloc(HB_COMP_DECL)
 {
   auto pExpItm = static_cast<HB_EXPRLST *>(hb_xgrab(sizeof(HB_EXPRLST)));
 
@@ -64,7 +64,7 @@ static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
   return &pExpItm->Expression;
 }
 
-static void hb_compExprDealloc(HB_COMP_DECL, PHB_EXPR pExpr)
+static void hb_compExprDealloc(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   if (HB_COMP_PARAM->pExprLst) {
     HB_EXPRLST *pExpItm = reinterpret_cast<HB_EXPRLST *>(pExpr);
@@ -84,13 +84,13 @@ static void hb_compExprDealloc(HB_COMP_DECL, PHB_EXPR pExpr)
   }
 }
 
-static PHB_EXPR hb_compExprNew(HB_COMP_DECL, HB_EXPRTYPE iType)
+static HB_EXPR *hb_compExprNew(HB_COMP_DECL, HB_EXPRTYPE iType)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprNew(%p,%i)", static_cast<void*>(HB_COMP_PARAM), iType));
 #endif
 
-  PHB_EXPR pExpr = hb_compExprAlloc(HB_COMP_PARAM);
+  HB_EXPR *pExpr = hb_compExprAlloc(HB_COMP_PARAM);
   pExpr->ExprType = iType;
   pExpr->pNext = nullptr;
   pExpr->ValType = HB_EV_UNKNOWN;
@@ -99,13 +99,13 @@ static PHB_EXPR hb_compExprNew(HB_COMP_DECL, HB_EXPRTYPE iType)
 }
 
 // Delete self - all components will be deleted somewhere else
-static void hb_compExprClear(HB_COMP_DECL, PHB_EXPR pExpr)
+static void hb_compExprClear(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   hb_compExprDealloc(HB_COMP_PARAM, pExpr);
 }
 
 // Delete all components and delete self
-static void hb_compExprFree(HB_COMP_DECL, PHB_EXPR pExpr)
+static void hb_compExprFree(HB_COMP_DECL, HB_EXPR *pExpr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprFree()"));
@@ -133,14 +133,14 @@ static void hb_compExprLstDealloc(HB_COMP_DECL)
   }
 }
 
-static PHB_EXPR hb_compErrorType(HB_COMP_DECL, PHB_EXPR pExpr)
+static HB_EXPR *hb_compErrorType(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TYPE, szDesc, nullptr);
   return pExpr;
 }
 
-static PHB_EXPR hb_compErrorSyntax(HB_COMP_DECL, PHB_EXPR pExpr)
+static HB_EXPR *hb_compErrorSyntax(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, szDesc, nullptr);

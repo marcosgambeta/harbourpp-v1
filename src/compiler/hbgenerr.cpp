@@ -195,42 +195,42 @@ void hb_compGenWarning(HB_COMP_DECL, const char *const szWarnings[], char cPrefi
   }
 }
 
-PHB_EXPR hb_compErrorLValue(HB_COMP_DECL, PHB_EXPR pExpr)
+HB_EXPR *hb_compErrorLValue(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_LVALUE, szDesc, nullptr);
   return pExpr;
 }
 
-PHB_EXPR hb_compErrorIndex(HB_COMP_DECL, PHB_EXPR pExpr)
+HB_EXPR *hb_compErrorIndex(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_INDEX, szDesc, nullptr);
   return pExpr;
 }
 
-PHB_EXPR hb_compErrorBound(HB_COMP_DECL, PHB_EXPR pExpr)
+HB_EXPR *hb_compErrorBound(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_BOUND, szDesc, nullptr);
   return pExpr;
 }
 
-PHB_EXPR hb_compErrorAlias(HB_COMP_DECL, PHB_EXPR pExpr)
+HB_EXPR *hb_compErrorAlias(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_ALIAS, szDesc, nullptr);
   return pExpr;
 }
 
-PHB_EXPR hb_compErrorStatic(HB_COMP_DECL, const char *szVarName, PHB_EXPR pExpr)
+HB_EXPR *hb_compErrorStatic(HB_COMP_DECL, const char *szVarName, HB_EXPR *pExpr)
 {
   const char *szDesc = hb_compExprDescription(pExpr);
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_ILLEGAL_INIT, szVarName, szDesc);
   return pExpr;
 }
 
-PHB_EXPR hb_compWarnMeaningless(HB_COMP_DECL, PHB_EXPR pExpr)
+HB_EXPR *hb_compWarnMeaningless(HB_COMP_DECL, HB_EXPR *pExpr)
 {
   if (!HB_COMP_PARAM->fMeaningful) {
     const char *szDesc = hb_compExprDescription(pExpr);
@@ -258,7 +258,7 @@ void hb_compErrorMacro(HB_COMP_DECL, const char *szText)
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BAD_MACRO, szText, nullptr);
 }
 
-PHB_EXPR hb_compErrorRefer(HB_COMP_DECL, PHB_EXPR pExpr, const char *szDesc)
+HB_EXPR *hb_compErrorRefer(HB_COMP_DECL, HB_EXPR *pExpr, const char *szDesc)
 {
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_REFER, szDesc, nullptr);
   return pExpr;

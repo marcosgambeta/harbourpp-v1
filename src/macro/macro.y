@@ -142,7 +142,7 @@
    int32_t       iNumber;   /* to hold a temporary integer number */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    void *    pVoid;     /* to hold any memory structure we may need */
-   PHB_EXPR  asExpr;
+   HB_EXPR * asExpr;
    struct
    {
       const char * string;
@@ -751,7 +751,7 @@ HB_MIDENT, * PHB_MIDENT;
 /* Allocates memory for Expression holder structure and stores it
  * on the linked list
 */
-static PHB_EXPR hb_macroExprAlloc( HB_COMP_DECL )
+static HB_EXPR *hb_macroExprAlloc( HB_COMP_DECL )
 {
    PHB_MEXPR pMExpr = ( PHB_MEXPR ) HB_MACRO_DATA->pExprLst;
 
@@ -776,9 +776,9 @@ char * hb_macroIdentNew( HB_COMP_DECL, char * szIdent )
    return szIdent;
 }
 
-static PHB_EXPR hb_macroExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
+static HB_EXPR *hb_macroExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
 {
-   PHB_EXPR pExpr;
+   HB_EXPR *pExpr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroExprNew(%p,%i)", ( void * ) HB_COMP_PARAM, iType ) );
 
@@ -792,7 +792,7 @@ static PHB_EXPR hb_macroExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
 
 /* Delete self - all components will be deleted somewhere else
  */
-static void hb_macroExprClear( HB_COMP_DECL, PHB_EXPR pExpr )
+static void hb_macroExprClear( HB_COMP_DECL, HB_EXPR *pExpr )
 {
    HB_SYMBOL_UNUSED( HB_COMP_PARAM );
 
@@ -801,7 +801,7 @@ static void hb_macroExprClear( HB_COMP_DECL, PHB_EXPR pExpr )
 
 /* Delete all components and delete self
  */
-static void hb_macroExprFree( HB_COMP_DECL, PHB_EXPR pExpr )
+static void hb_macroExprFree( HB_COMP_DECL, HB_EXPR *pExpr )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroExprFree()" ) );
 
@@ -840,13 +840,13 @@ static void hb_macroLstFree( PHB_MACRO pMacro )
    }
 }
 
-static PHB_EXPR hb_macroErrorType( HB_COMP_DECL, PHB_EXPR pExpr )
+static HB_EXPR *hb_macroErrorType( HB_COMP_DECL, HB_EXPR *pExpr )
 {
    hb_macroError( EG_ARG, HB_COMP_PARAM );
    return pExpr;
 }
 
-static PHB_EXPR hb_macroErrorSyntax( HB_COMP_DECL, PHB_EXPR pExpr )
+static HB_EXPR *hb_macroErrorSyntax( HB_COMP_DECL, HB_EXPR *pExpr )
 {
    hb_macroError( EG_SYNTAX, HB_COMP_PARAM );
    return pExpr;

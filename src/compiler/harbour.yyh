@@ -170,7 +170,7 @@ union YYSTYPE
    HB_SIZE sNumber;     /* to hold a temporary HB_SIZE values */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    HB_BOOL bTrue;
-   PHB_EXPR asExpr;
+   HB_EXPR *asExpr;
    void * pVoid;        /* to hold any memory structure we may need */
    struct
    {

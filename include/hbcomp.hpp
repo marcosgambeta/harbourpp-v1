@@ -245,21 +245,21 @@ extern int32_t hb_compMainExt(int32_t argc, const char * const argv[], uint8_t *
 extern void hb_compOutStd(HB_COMP_DECL, const char * szMessage);
 extern void hb_compOutErr(HB_COMP_DECL, const char * szMessage);
 
-extern PHB_EXPR hb_compExprGenStatement(PHB_EXPR, HB_COMP_DECL);
-extern PHB_EXPR hb_compExprGenPush(PHB_EXPR, HB_COMP_DECL);
-extern PHB_EXPR hb_compExprGenPop(PHB_EXPR, HB_COMP_DECL);
-extern PHB_EXPR hb_compExprReduce(PHB_EXPR, HB_COMP_DECL);
+extern HB_EXPR *hb_compExprGenStatement(HB_EXPR *, HB_COMP_DECL);
+extern HB_EXPR *hb_compExprGenPush(HB_EXPR *, HB_COMP_DECL);
+extern HB_EXPR *hb_compExprGenPop(HB_EXPR *, HB_COMP_DECL);
+extern HB_EXPR *hb_compExprReduce(HB_EXPR *, HB_COMP_DECL);
 
-extern PHB_EXPR hb_compErrorIndex(HB_COMP_DECL, PHB_EXPR);
-extern PHB_EXPR hb_compErrorLValue(HB_COMP_DECL, PHB_EXPR);
-extern PHB_EXPR hb_compErrorBound(HB_COMP_DECL, PHB_EXPR);
-extern PHB_EXPR hb_compErrorAlias(HB_COMP_DECL, PHB_EXPR);
-extern PHB_EXPR hb_compErrorRefer(HB_COMP_DECL, PHB_EXPR, const char *);
-extern PHB_EXPR hb_compWarnMeaningless(HB_COMP_DECL, PHB_EXPR);
+extern HB_EXPR *hb_compErrorIndex(HB_COMP_DECL, HB_EXPR *);
+extern HB_EXPR *hb_compErrorLValue(HB_COMP_DECL, HB_EXPR *);
+extern HB_EXPR *hb_compErrorBound(HB_COMP_DECL, HB_EXPR *);
+extern HB_EXPR *hb_compErrorAlias(HB_COMP_DECL, HB_EXPR *);
+extern HB_EXPR *hb_compErrorRefer(HB_COMP_DECL, HB_EXPR *, const char *);
+extern HB_EXPR *hb_compWarnMeaningless(HB_COMP_DECL, HB_EXPR *);
 extern void hb_compErrorMacro(HB_COMP_DECL, const char * szText);
 extern void hb_compErrorVParams(HB_COMP_DECL, const char * szFuncOrBlock);
 
-extern PHB_EXPR hb_compErrorStatic(HB_COMP_DECL, const char *, PHB_EXPR);
+extern HB_EXPR *hb_compErrorStatic(HB_COMP_DECL, const char *, HB_EXPR *);
 extern void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName);
 extern void hb_compErrorCodeblockWith(HB_COMP_DECL, const char * szMessage);
 
@@ -274,8 +274,8 @@ extern void hb_compCodeBlockRewind(HB_COMP_DECL); // restart of fake codeblock
 
 #endif // HB_MACRO_SUPPORT
 
-extern HB_SIZE hb_compExprListEval(HB_COMP_DECL, PHB_EXPR pExpr, PHB_COMP_CARGO_FUNC pEval);
-extern HB_SIZE hb_compExprListEval2(HB_COMP_DECL, PHB_EXPR pExpr1, PHB_EXPR pExpr2, PHB_COMP_CARGO2_FUNC pEval);
+extern HB_SIZE hb_compExprListEval(HB_COMP_DECL, HB_EXPR *pExpr, PHB_COMP_CARGO_FUNC pEval);
+extern HB_SIZE hb_compExprListEval2(HB_COMP_DECL, HB_EXPR *pExpr1, HB_EXPR *pExpr2, PHB_COMP_CARGO2_FUNC pEval);
 
 extern void hb_compChkCommandLine(HB_COMP_DECL, int32_t argc, const char * const argv[]);
 extern void hb_compChkEnvironment(HB_COMP_DECL);
