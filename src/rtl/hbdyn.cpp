@@ -103,7 +103,7 @@ struct HB_DYNVAL
 {
   union {
     uint32_t n32;
-    HB_U64 n64;
+    uint64_t n64;
     double nDB;
     float nFL;
   } t;
@@ -122,9 +122,9 @@ struct HB_DYNARG
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static HB_U64 hb_u64par(HB_ITEM *pParam, PHB_DYNARG pArg)
+static uint64_t hb_u64par(HB_ITEM *pParam, PHB_DYNARG pArg)
 {
-  HB_U64 r;
+  uint64_t r;
 
   switch (pArg->iType) {
   case HB_DYN_CTYPE_BOOL:
@@ -397,26 +397,26 @@ static HB_ITEM *hb_u64ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
 
 #define HB_DYN_CTYPE_DECL(_ret_, _type_)                                                                               \
   typedef _ret_ (*_type_##P00)(void);                                                                                  \
-  typedef _ret_ (*_type_##P01)(HB_U64);                                                                                \
-  typedef _ret_ (*_type_##P02)(HB_U64, HB_U64);                                                                        \
-  typedef _ret_ (*_type_##P03)(HB_U64, HB_U64, HB_U64);                                                                \
-  typedef _ret_ (*_type_##P04)(HB_U64, HB_U64, HB_U64, HB_U64);                                                        \
-  typedef _ret_ (*_type_##P05)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64);                                                \
-  typedef _ret_ (*_type_##P06)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64);                                        \
-  typedef _ret_ (*_type_##P07)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64);                                \
-  typedef _ret_ (*_type_##P08)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64);                        \
-  typedef _ret_ (*_type_##P09)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64);                \
-  typedef _ret_ (*_type_##P10)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64);        \
-  typedef _ret_ (*_type_##P11)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64,         \
-                               HB_U64);                                                                                \
-  typedef _ret_ (*_type_##P12)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, \
-                               HB_U64);                                                                                \
-  typedef _ret_ (*_type_##P13)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, \
-                               HB_U64, HB_U64);                                                                        \
-  typedef _ret_ (*_type_##P14)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, \
-                               HB_U64, HB_U64, HB_U64);                                                                \
-  typedef _ret_ (*_type_##P15)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, \
-                               HB_U64, HB_U64, HB_U64, HB_U64)
+  typedef _ret_ (*_type_##P01)(uint64_t);                                                                                \
+  typedef _ret_ (*_type_##P02)(uint64_t, uint64_t);                                                                        \
+  typedef _ret_ (*_type_##P03)(uint64_t, uint64_t, uint64_t);                                                                \
+  typedef _ret_ (*_type_##P04)(uint64_t, uint64_t, uint64_t, uint64_t);                                                        \
+  typedef _ret_ (*_type_##P05)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t);                                                \
+  typedef _ret_ (*_type_##P06)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t);                                        \
+  typedef _ret_ (*_type_##P07)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t);                                \
+  typedef _ret_ (*_type_##P08)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t);                        \
+  typedef _ret_ (*_type_##P09)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t);                \
+  typedef _ret_ (*_type_##P10)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t);        \
+  typedef _ret_ (*_type_##P11)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t,         \
+                               uint64_t);                                                                                \
+  typedef _ret_ (*_type_##P12)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, \
+                               uint64_t);                                                                                \
+  typedef _ret_ (*_type_##P13)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, \
+                               uint64_t, uint64_t);                                                                        \
+  typedef _ret_ (*_type_##P14)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, \
+                               uint64_t, uint64_t, uint64_t);                                                                \
+  typedef _ret_ (*_type_##P15)(uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, uint64_t, \
+                               uint64_t, uint64_t, uint64_t, uint64_t)
 
 #define HB_DYN_FUN_CALL(pcount, _ret_, _type_)                                                                         \
   do {                                                                                                                 \
@@ -484,7 +484,7 @@ static HB_ITEM *hb_u64ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
     }                                                                                                                  \
   } while (false)
 
-HB_DYN_CTYPE_DECL(HB_U64, FX64_64);
+HB_DYN_CTYPE_DECL(uint64_t, FX64_64);
 HB_DYN_CTYPE_DECL(double, FX64_DB);
 HB_DYN_CTYPE_DECL(float, FX64_FL);
 
@@ -495,7 +495,7 @@ struct HB_DYNVAL
   union {
     uint32_t n32;
 #if !defined(HB_LONG_LONG_OFF)
-    HB_U64 n64;
+    uint64_t n64;
 #endif
     double nDB;
     float nFL;
@@ -1045,7 +1045,7 @@ static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
 
 HB_DYN_CTYPE_DECL(uint32_t, HB_CDECL, FX86_C32);
 #if !defined(HB_LONG_LONG_OFF)
-HB_DYN_CTYPE_DECL(HB_U64, HB_CDECL, FX86_C64);
+HB_DYN_CTYPE_DECL(uint64_t, HB_CDECL, FX86_C64);
 #endif
 HB_DYN_CTYPE_DECL(double, HB_CDECL, FX86_CDB);
 HB_DYN_CTYPE_DECL(float, HB_CDECL, FX86_CFL);
@@ -1053,7 +1053,7 @@ HB_DYN_CTYPE_DECL(float, HB_CDECL, FX86_CFL);
 #if defined(HB_OS_WIN)
 
 HB_DYN_CTYPE_DECL(uint32_t, __stdcall, FX86_S32);
-HB_DYN_CTYPE_DECL(HB_U64, __stdcall, FX86_S64);
+HB_DYN_CTYPE_DECL(uint64_t, __stdcall, FX86_S64);
 HB_DYN_CTYPE_DECL(double, __stdcall, FX86_SDB);
 HB_DYN_CTYPE_DECL(float, __stdcall, FX86_SFL);
 
@@ -1083,7 +1083,7 @@ void hb_dynCall(int32_t iFuncFlags, void *pFunctionRaw, int32_t iParams, int32_t
       HB_DYNARG *pArg;
       int32_t tmp;
 
-      HB_U64 rawpar[_DYNEXEC_MAXPARAM];
+      uint64_t rawpar[_DYNEXEC_MAXPARAM];
 
       ret.t.n64 = 0;
 

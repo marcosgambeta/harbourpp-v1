@@ -603,11 +603,11 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *p
 #if defined(HB_OLE_NO_LL)
       // workaround for wrong OLE variant structure definition
       ptr = &V_UI4(&v);
-      *(static_cast<uint64_t *>(ptr)) = pStr ? static_cast<HB_U64>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                                                 : static_cast<HB_U64>(hb_arrayGetNInt(pItem, uiPos));
+      *(static_cast<uint64_t *>(ptr)) = pStr ? static_cast<uint64_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
+                                                 : static_cast<uint64_t>(hb_arrayGetNInt(pItem, uiPos));
 #else
-      V_UI8(&v) = pStr ? static_cast<HB_U64>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                       : static_cast<HB_U64>(hb_arrayGetNInt(pItem, uiPos));
+      V_UI8(&v) = pStr ? static_cast<uint64_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
+                       : static_cast<uint64_t>(hb_arrayGetNInt(pItem, uiPos));
       ptr = &V_UI8(&v);
 #endif
       break;

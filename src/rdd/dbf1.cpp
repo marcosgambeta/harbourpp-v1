@@ -2517,7 +2517,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
             break;
           case 8:
 #ifndef HB_LONG_LONG_OFF
-            HB_PUT_LE_UINT64(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U64>(lVal));
+            HB_PUT_LE_UINT64(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<uint64_t>(lVal));
 #else
             HB_PUT_LE_UINT64(pArea->pRecord + pArea->pFieldOffset[uiIndex], dVal);
 #endif

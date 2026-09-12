@@ -66,7 +66,7 @@ HB_FUNC(TINYMT64_INIT)
    {
       auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
-      auto seed = static_cast<HB_U64>(hb_parnintdef(4, 1));
+      auto seed = static_cast<uint64_t>(hb_parnintdef(4, 1));
 
       tinymtData->tinymt.mat1 = hb_parnl(1);
       tinymtData->tinymt.mat2 = hb_parnl(2);
@@ -89,9 +89,9 @@ HB_FUNC(TINYMT64_INIT_BY_ARRAY)
    {
       auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
-      HB_U64 seed_array[5];
+      uint64_t seed_array[5];
 
-      seed_array[0] = static_cast<HB_U64>(hb_parnintdef(2, 1));
+      seed_array[0] = static_cast<uint64_t>(hb_parnintdef(2, 1));
 
       tinymtData->tinymt.mat1 = hb_arrayGetNL(pArray, 1);
       tinymtData->tinymt.mat2 = hb_arrayGetNL(pArray, 2);

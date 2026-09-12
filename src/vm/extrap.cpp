@@ -127,7 +127,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
       hb_strncat(errmsg, "    Exception Parameters:", errmsglen);
       for (DWORD arg = 0; arg < pExceptionInfo->ExceptionRecord->NumberParameters; ++arg) {
         hb_snprintf(buf, sizeof(buf), " %016" PFLL "X",
-                    static_cast<HB_U64>(pExceptionInfo->ExceptionRecord->ExceptionInformation[arg]));
+                    static_cast<uint64_t>(pExceptionInfo->ExceptionRecord->ExceptionInformation[arg]));
         hb_strncat(errmsg, buf, errmsglen);
       }
       hb_strncat(errmsg, "\n", errmsglen);

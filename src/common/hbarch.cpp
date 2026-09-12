@@ -59,7 +59,7 @@
 // be sorted as 8-bytes character values (f.e. with memcmp())
 
 #define HB_MANTISSA_BITS 52
-#define HB_MANTISSA_MASK ((static_cast<HB_U64>(1) << HB_MANTISSA_BITS) - 1)
+#define HB_MANTISSA_MASK ((static_cast<uint64_t>(1) << HB_MANTISSA_BITS) - 1)
 #define HB_EXPONENT_BITS 11
 #define HB_EXPONENT_MASK ((1 << HB_EXPONENT_BITS) - 1)
 #define HB_EXPONENT_ADD 0x3ff
@@ -89,17 +89,17 @@ void hb_put_ieee754(uint8_t *ptr, double d)
   HB_PUT_LE_UINT32(ptr, l1);
   HB_PUT_LE_UINT32(ptr + 4, l2);
 #else
-  HB_U64 ll;
+  uint64_t ll;
 
   iSig = d < 0 ? 1 : 0;
   if (d == 0.0) {
     ll = 0;
   } else {
     double df = frexp(iSig ? -d : d, &iExp);
-    ll = static_cast<HB_U64>(ldexp(df, HB_MANTISSA_BITS + 1)) & HB_MANTISSA_MASK;
-    ll |= static_cast<HB_U64>((iExp + HB_EXPONENT_ADD - 1) & HB_EXPONENT_MASK) << HB_MANTISSA_BITS;
+    ll = static_cast<uint64_t>(ldexp(df, HB_MANTISSA_BITS + 1)) & HB_MANTISSA_MASK;
+    ll |= static_cast<uint64_t>((iExp + HB_EXPONENT_ADD - 1) & HB_EXPONENT_MASK) << HB_MANTISSA_BITS;
   }
-  ll |= static_cast<HB_U64>(iSig) << (HB_MANTISSA_BITS + HB_EXPONENT_BITS);
+  ll |= static_cast<uint64_t>(iSig) << (HB_MANTISSA_BITS + HB_EXPONENT_BITS);
   HB_PUT_LE_UINT64(ptr, ll);
 #endif
 }
@@ -126,12 +126,12 @@ double hb_get_ieee754(const uint8_t *ptr)
   double d = ldexp(static_cast<double>(l2), 32) + static_cast<double>(l1);
   return ldexp(iSig ? -d : d, iExp - HB_MANTISSA_BITS - HB_EXPONENT_ADD);
 #else
-  HB_U64 ll = HB_GET_LE_UINT64(ptr);
+  uint64_t ll = HB_GET_LE_UINT64(ptr);
   iSig = static_cast<int32_t>(ll >> (HB_MANTISSA_BITS + HB_EXPONENT_BITS)) & 1;
   auto iExp = static_cast<int32_t>((ll >> HB_MANTISSA_BITS) & HB_EXPONENT_MASK);
   ll &= HB_MANTISSA_MASK;
   if ((ll | iExp) != 0) {
-    ll |= static_cast<HB_U64>(1) << HB_MANTISSA_BITS;
+    ll |= static_cast<uint64_t>(1) << HB_MANTISSA_BITS;
   }
   // the casting form HB_U64 to HB_I64 is necessary for some
   // compilers which does not support HB_U64 -> double conversion

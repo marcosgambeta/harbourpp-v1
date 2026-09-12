@@ -153,9 +153,9 @@ HB_FUNC(WIN_REGSETVALUEEX)
   }
 #if defined(REG_QWORD)
   else if (dwType == REG_QWORD) {
-    auto nSpace = static_cast<HB_U64>(hb_parnint(5));
+    auto nSpace = static_cast<uint64_t>(hb_parnint(5));
     hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, reinterpret_cast<const BYTE *>(&nSpace),
-                          sizeof(HB_U64)) == ERROR_SUCCESS);
+                          sizeof(uint64_t)) == ERROR_SUCCESS);
   }
 #endif
   else if (dwType == REG_SZ || dwType == REG_EXPAND_SZ || dwType == REG_MULTI_SZ) {
