@@ -137,7 +137,7 @@ double hb_get_ieee754(const uint8_t *ptr)
   // compilers which does not support HB_U64 -> double conversion
   // It will not change results because there is only up to 53bits
   // set in mantissa
-  return ldexp(iSig ? -static_cast<double>(static_cast<HB_I64>(ll)) : static_cast<double>(static_cast<HB_I64>(ll)),
+  return ldexp(iSig ? -static_cast<double>(static_cast<int64_t>(ll)) : static_cast<double>(static_cast<int64_t>(ll)),
                iExp - HB_MANTISSA_BITS - HB_EXPONENT_ADD);
 #endif
 }

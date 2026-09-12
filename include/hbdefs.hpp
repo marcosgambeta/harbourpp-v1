@@ -292,7 +292,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 
 /* Guaranteed 64-bit types */
 #if defined(HB_ARCH_64BIT) && !defined(HB_OS_WIN_64)
-   typedef signed long         HB_I64;
+   typedef signed long         HB_I64; // NOTE: HB_I64 is deprecated in Harbour++ source code
    typedef unsigned long       HB_U64;
    #define HB_I64_MIN          LONG_MIN
    #define HB_I64_MAX          LONG_MAX
@@ -308,7 +308,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 #     define INT64_MIN     LONG_MIN
 #  endif
 #elif !defined(HB_LONG_LONG_OFF)
-   typedef int64_t         HB_I64;
+   typedef int64_t         HB_I64; // NOTE: HB_I64 is deprecated in Harbour++ source code
    typedef uint64_t        HB_U64;
    #define HB_I64_MIN          LONGLONG_MIN
    #define HB_I64_MAX          LONGLONG_MAX
@@ -394,7 +394,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
           typedef HB_U64        UINT64;
       #endif
       #if !defined(INT64)
-          typedef HB_I64        INT64;
+          typedef int64_t        INT64;
       #endif
    #endif
 
@@ -1422,7 +1422,7 @@ typedef uint32_t HB_FATTR;
 
 #define HB_GET_LE_INT16( p )        (( int16_t ) HB_GET_LE_UINT16( p ))
 #define HB_GET_LE_INT32( p )        (( int32_t ) HB_GET_LE_UINT32( p ))
-#define HB_GET_LE_INT64( p )        (( HB_I64 ) HB_GET_LE_UINT64( p ))
+#define HB_GET_LE_INT64( p )        (( int64_t ) HB_GET_LE_UINT64( p ))
 
 #define HB_PCODE_MKSHORT( p )       ( static_cast< HB_SHORT >( HB_GET_LE_INT16( p ) ) ) // NOTE: deprecated
 #define HB_PCODE_MKINT16( p )       ( static_cast< int16_t >( HB_GET_LE_INT16( p ) ) )

@@ -711,7 +711,7 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
       case Harbour::DB::Field::INTEGER:
 #if ODBCVER >= 0x0300
         if (pField->uiTypeExtended == static_cast<uint16_t>(SQL_BIGINT)) {
-          HB_I64 val = 0;
+          int64_t val = 0;
           /* NOTE: SQL_C_SBIGINT not available before ODBC 3.0 */
           if (SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_SBIGINT, &val, sizeof(val), &iLen))) {
             pItem = hb_itemPutNIntLen(pItem, val, pField->uiLen);

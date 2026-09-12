@@ -650,7 +650,7 @@ HB_FUNC(SQLGETDATA)  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode */
          case SQL_BIGINT:
 #if ODBCVER >= 0x0300
          {
-            HB_I64 val = 0;
+            int64_t val = 0;
             /* NOTE: SQL_C_SBIGINT not available before ODBC 3.0 */
             if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_SBIGINT, &val, sizeof(val), &nLen)) ) {
                hb_stornint(val, 5);
