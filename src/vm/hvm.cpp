@@ -228,7 +228,7 @@ static void hb_vmPushLocalByRef(int32_t iLocal);
 static void hb_vmPushHBLong(HB_MAXINT nNumber);
 #if !defined(HB_LONG_LONG_OFF)
 // Pushes a long long constant (pcode)
-static void hb_vmPushLongLongConst(HB_LONGLONG lNumber);
+static void hb_vmPushLongLongConst(int64_t lNumber);
 #endif
 #if HB_VMINT_MAX >= INT32_MAX
 // Pushes a int32_t constant (pcode)
@@ -6540,7 +6540,7 @@ static void hb_vmPushHBLong(HB_MAXINT nNumber)
 }
 
 #if !defined(HB_LONG_LONG_OFF)
-static void hb_vmPushLongLongConst(HB_LONGLONG llNumber)
+static void hb_vmPushLongLongConst(int64_t llNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLongLongConst(%" PFLL "d)", llNumber));
@@ -11033,7 +11033,7 @@ void hb_xvmPushLongLong(double dNumber)
   hb_vmPushDoubleConst(dNumber, HB_DEFAULT_WIDTH, 0);
 }
 #else
-void hb_xvmPushLongLong(HB_LONGLONG llNumber)
+void hb_xvmPushLongLong(int64_t llNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLongLong(%" PFLL "i)", llNumber));

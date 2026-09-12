@@ -312,7 +312,7 @@ static HB_ITEM *hb_u64ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
     hb_itemPutNInt(pItem, static_cast<HB_MAXINT>(value.t.n64));
 #else
-    hb_itemPutNInt(pItem, static_cast<HB_LONGLONG>(value.t.n64));
+    hb_itemPutNInt(pItem, static_cast<int64_t>(value.t.n64));
 #endif
     break;
 
@@ -731,7 +731,7 @@ static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
     hb_itemPutNInt(pItem, static_cast<HB_MAXINT>(value.t.n64));
 #else
-    hb_itemPutNInt(pItem, static_cast<HB_LONGLONG>(value.t.n64));
+    hb_itemPutNInt(pItem, static_cast<int64_t>(value.t.n64));
 #endif
 #endif
     break;

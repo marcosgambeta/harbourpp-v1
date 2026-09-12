@@ -1009,7 +1009,7 @@ HB_EXPORT HB_MAXINT _HB_ITEM::getNInt() // equivalent to hb_itemGetNInt
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_LONGLONG hb_itemGetNLL(HB_ITEM *pItem)
+int64_t hb_itemGetNLL(HB_ITEM *pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetNL(%p)", static_cast<void*>(pItem)));
@@ -1017,9 +1017,9 @@ HB_LONGLONG hb_itemGetNLL(HB_ITEM *pItem)
 
   if (pItem != nullptr) {
     if (pItem->isLong()) {
-      return static_cast<HB_LONGLONG>(pItem->longValue());
+      return static_cast<int64_t>(pItem->longValue());
     } else if (pItem->isInteger()) {
-      return static_cast<HB_LONGLONG>(pItem->integerValue());
+      return static_cast<int64_t>(pItem->integerValue());
     } else if (pItem->isDouble()) {
       return HB_CAST_LONGLONG(pItem->doubleValue());
     }
@@ -1408,7 +1408,7 @@ HB_ITEM *hb_itemPutNS(HB_ITEM *pItem, HB_ISIZ nNumber)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_ITEM *hb_itemPutNLL(HB_ITEM *pItem, HB_LONGLONG llNumber)
+HB_ITEM *hb_itemPutNLL(HB_ITEM *pItem, int64_t llNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNL(%p, %" PFLL "d)", static_cast<void*>(pItem), llNumber));
@@ -1476,7 +1476,7 @@ HB_ITEM *hb_itemPutNIntLen(HB_ITEM *pItem, HB_MAXINT nNumber, int32_t iWidth)
 #ifdef HB_LONG_LONG_OFF
     return hb_itemPutNLLen(pItem, static_cast<long>(nNumber), iWidth);
 #else
-    return hb_itemPutNLLLen(pItem, static_cast<HB_LONGLONG>(nNumber), iWidth);
+    return hb_itemPutNLLLen(pItem, static_cast<int64_t>(nNumber), iWidth);
 #endif
   }
 }
@@ -1649,7 +1649,7 @@ HB_ITEM *hb_itemPutNLLen(HB_ITEM *pItem, long lNumber, int32_t iWidth)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_ITEM *hb_itemPutNLLLen(HB_ITEM *pItem, HB_LONGLONG llNumber, int32_t iWidth)
+HB_ITEM *hb_itemPutNLLLen(HB_ITEM *pItem, int64_t llNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNLLLen(%p, %" PFLL "d, %d)", static_cast<void*>(pItem), llNumber, iWidth));
@@ -1699,7 +1699,7 @@ HB_ITEM *hb_itemPutNumType(HB_ITEM *pItem, double dNumber, int32_t iDec, int32_t
 #ifdef HB_LONG_LONG_OFF
     return hb_itemPutNL(pItem, static_cast<long>(static_cast<unsigned long>(dNumber)));
 #else
-    return hb_itemPutNLL(pItem, static_cast<HB_LONGLONG>(dNumber));
+    return hb_itemPutNLL(pItem, static_cast<int64_t>(dNumber));
 #endif
   } else {
     return hb_itemPutND(pItem, dNumber);

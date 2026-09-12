@@ -674,7 +674,7 @@ HB_ISIZ hb_parnsdef(int32_t iParam, HB_ISIZ nDefValue)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_LONGLONG hb_parnll(int32_t iParam)
+int64_t hb_parnll(int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parnll(%d)", iParam));
@@ -690,9 +690,9 @@ HB_LONGLONG hb_parnll(int32_t iParam)
     }
 
     if (pItem->isLong()) {
-      return static_cast<HB_LONGLONG>(pItem->longValue());
+      return static_cast<int64_t>(pItem->longValue());
     } else if (pItem->isInteger()) {
-      return static_cast<HB_LONGLONG>(pItem->integerValue());
+      return static_cast<int64_t>(pItem->integerValue());
     } else if (pItem->isDouble()) {
       return HB_CAST_LONGLONG(pItem->doubleValue());
     }
@@ -1325,7 +1325,7 @@ HB_ISIZ hb_parvns(int32_t iParam, ...)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_LONGLONG hb_parvnll(int32_t iParam, ...)
+int64_t hb_parvnll(int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvnll(%d, ...)", iParam));
@@ -1341,9 +1341,9 @@ HB_LONGLONG hb_parvnll(int32_t iParam, ...)
     }
 
     if (pItem->isLong()) {
-      return static_cast<HB_LONGLONG>(pItem->longValue());
+      return static_cast<int64_t>(pItem->longValue());
     } else if (pItem->isInteger()) {
-      return static_cast<HB_LONGLONG>(pItem->integerValue());
+      return static_cast<int64_t>(pItem->integerValue());
     } else if (pItem->isDouble()) {
       return HB_CAST_LONGLONG(pItem->doubleValue());
     } else if (pItem->isArray()) {
@@ -1680,7 +1680,7 @@ void hb_retns(HB_ISIZ nNumber)
 
 #ifndef HB_LONG_LONG_OFF
 #undef hb_retnll
-void hb_retnll(HB_LONGLONG llNumber)
+void hb_retnll(int64_t llNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnll(%" PFLL "d)", llNumber));
@@ -1748,7 +1748,7 @@ void hb_retnllen(long lNumber, int32_t iWidth)
 
 #ifndef HB_LONG_LONG_OFF
 #undef hb_retnlllen
-void hb_retnlllen(HB_LONGLONG llNumber, int32_t iWidth)
+void hb_retnlllen(int64_t llNumber, int32_t iWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_retnlllen(%" PFLL "d, %d)", llNumber, iWidth));
@@ -2071,7 +2071,7 @@ int32_t hb_storns(HB_ISIZ nValue, int32_t iParam)
 }
 
 #ifndef HB_LONG_LONG_OFF
-int32_t hb_stornll(HB_LONGLONG llValue, int32_t iParam)
+int32_t hb_stornll(int64_t llValue, int32_t iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stornll(%" PFLL "d, %d)", llValue, iParam));
@@ -2545,7 +2545,7 @@ int32_t hb_storvns(HB_ISIZ nValue, int32_t iParam, ...)
 }
 
 #ifndef HB_LONG_LONG_OFF
-int32_t hb_storvnll(HB_LONGLONG llValue, int32_t iParam, ...)
+int32_t hb_storvnll(int64_t llValue, int32_t iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_storvnll(%" PFLL "d, %d, ...)", llValue, iParam));

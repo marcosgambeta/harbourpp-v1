@@ -1130,7 +1130,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
   fprintf(cargo->yyc, "\thb_xvmPushLongLong(%.1f);\n", HB_PCODE_MKLONGLONG(&pFunc->pCode[nPCodePos + 1]));
   return 9;
 #elif LONG_MAX < LONGLONG_MAX
-  HB_LONGLONG llVal;
+  int64_t llVal;
   char szBuf[24];
 
   HB_GENC_LABEL();
@@ -1139,7 +1139,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
   fprintf(cargo->yyc, "\thb_xvmPushLongLong(HB_LL(%s));\n", hb_numToStr(szBuf, sizeof(szBuf), llVal));
   return 9;
 #else
-  HB_LONGLONG llVal;
+  int64_t llVal;
   char szBuf[24];
   int32_t iSkip;
 

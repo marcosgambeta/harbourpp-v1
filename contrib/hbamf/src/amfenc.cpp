@@ -223,7 +223,7 @@ static bool amf3_encode_int(amfContext *context, int32_t value)
 static bool amf3_write_int(amfContext *context, HB_ITEM *pItem)
 {
 #ifndef HB_LONG_LONG_OFF
-  HB_LONGLONG n = hb_itemGetNLL(pItem);
+  int64_t n = hb_itemGetNLL(pItem);
 #else
   long n = hb_itemGetNL(pItem);
 #endif

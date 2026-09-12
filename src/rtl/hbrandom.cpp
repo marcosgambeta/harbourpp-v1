@@ -70,7 +70,7 @@ double hb_random_num(void)
   }
 
 #if !defined(HB_LONG_LONG_OFF)
-  t = static_cast<int32_t>(static_cast<HB_LONGLONG>(t) * MULTIPLIER % MODULUS);
+  t = static_cast<int32_t>(static_cast<int64_t>(t) * MULTIPLIER % MODULUS);
 #else
   {
     const int32_t Q = MODULUS / MULTIPLIER;

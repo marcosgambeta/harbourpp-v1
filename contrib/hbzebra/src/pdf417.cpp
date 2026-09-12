@@ -721,7 +721,7 @@ static int32_t _pdf417_encode_byte(const char *szCode, int32_t iLen, int32_t *pC
    HB_TRACE(HB_TR_DEBUG, ("encode byte len=%d", iLen));
 #endif
 
-  HB_LONGLONG ill;
+  int64_t ill;
   int32_t i;
 
   if (iLen == 0) {
@@ -1025,7 +1025,7 @@ static int32_t _pdf417_encode_numeric(const char *szCode, int32_t iLen, int32_t 
 
   i = 0;
   while (i < iLen) {
-    HB_LONGLONG ill;
+    int64_t ill;
     int32_t k = iLen - i;
     if (k > 18) {
       k = 18;

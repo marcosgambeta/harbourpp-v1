@@ -1401,7 +1401,7 @@ extern HB_EXPORT void *hb_parptrx(int32_t iParam);
 extern HB_EXPORT void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int32_t iParam);
 #ifndef HB_LONG_LONG_OFF
 // retrieve a numeric parameter as a long long
-extern HB_EXPORT HB_LONGLONG hb_parnll(int32_t iParam);
+extern HB_EXPORT int64_t hb_parnll(int32_t iParam);
 #endif
 
 // retrieve a string parameter
@@ -1440,7 +1440,7 @@ extern HB_EXPORT void *hb_parvptr(int32_t iParam, ...);
 extern HB_EXPORT void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int32_t iParam, ...);
 #ifndef HB_LONG_LONG_OFF
 // retrieve a numeric parameter as a long long
-extern HB_EXPORT HB_LONGLONG hb_parvnll(int32_t iParam, ...);
+extern HB_EXPORT int64_t hb_parvnll(int32_t iParam, ...);
 #endif
 
 // returns the number of supplied parameters
@@ -1501,9 +1501,9 @@ extern HB_EXPORT void hb_retptr(void *ptr);
 extern HB_EXPORT void hb_retptrGC(void *ptr);
 #ifndef HB_LONG_LONG_OFF
 // returns a long long number
-extern HB_EXPORT void hb_retnll(HB_LONGLONG lNumber);
+extern HB_EXPORT void hb_retnll(int64_t lNumber);
 // returns a long long number, with specific width
-extern HB_EXPORT void hb_retnlllen(HB_LONGLONG lNumber, int32_t iWidth);
+extern HB_EXPORT void hb_retnlllen(int64_t lNumber, int32_t iWidth);
 #endif
 
 #define HB_IS_VALID_INDEX(idx, max)  ((idx) > 0 && static_cast<HB_SIZE>(idx) <= (max))
@@ -1578,7 +1578,7 @@ extern HB_EXPORT int32_t hb_storptr(void *pointer, int32_t iParam);
 extern HB_EXPORT int32_t hb_storptrGC(void *pointer, int32_t iParam);
 #ifndef HB_LONG_LONG_OFF
 // stores a long long on a variable by reference
-extern HB_EXPORT int32_t hb_stornll(HB_LONGLONG llValue, int32_t iParam);
+extern HB_EXPORT int32_t hb_stornll(int64_t llValue, int32_t iParam);
 #endif
 
 // stores a szString on a variable by reference
@@ -1613,7 +1613,7 @@ extern HB_EXPORT int32_t hb_storvptr(void *pointer, int32_t iParam, ...);
 extern HB_EXPORT int32_t hb_storvptrGC(void *pointer, int32_t iParam, ...);
 #ifndef HB_LONG_LONG_OFF
 // stores a long long on a variable by reference
-extern HB_EXPORT int32_t hb_storvnll(HB_LONGLONG llValue, int32_t iParam, ...);
+extern HB_EXPORT int32_t hb_storvnll(int64_t llValue, int32_t iParam, ...);
 #endif
 
 // array management
@@ -1697,7 +1697,7 @@ extern HB_EXPORT HB_BOOL hb_arraySetNI(HB_ITEM *pArray, HB_SIZE nIndex, int32_t 
 extern HB_EXPORT HB_BOOL hb_arraySetNL(HB_ITEM *pArray, HB_SIZE nIndex, long lNumber);
 extern HB_EXPORT HB_BOOL hb_arraySetNS(HB_ITEM *pArray, HB_SIZE nIndex, HB_ISIZ nNumber);
 #ifndef HB_LONG_LONG_OFF
-extern HB_EXPORT HB_BOOL hb_arraySetNLL(HB_ITEM *pArray, HB_SIZE nIndex, HB_LONGLONG llNumber);
+extern HB_EXPORT HB_BOOL hb_arraySetNLL(HB_ITEM *pArray, HB_SIZE nIndex, int64_t llNumber);
 #endif
 extern HB_EXPORT HB_BOOL hb_arraySetNInt(HB_ITEM *pArray, HB_SIZE nIndex, HB_MAXINT nNumber);
 extern HB_EXPORT HB_BOOL hb_arraySetND(HB_ITEM *pArray, HB_SIZE nIndex, double dNumber);
@@ -1735,7 +1735,7 @@ extern HB_EXPORT HB_ITEM *hb_arrayBaseParams(void);
 extern HB_EXPORT HB_ITEM *hb_arraySelfParams(void);
 #ifndef HB_LONG_LONG_OFF
 // retrieves the long long numeric value contained on an array element
-extern HB_EXPORT HB_LONGLONG hb_arrayGetNLL(HB_ITEM *pArray, HB_SIZE nIndex);
+extern HB_EXPORT int64_t hb_arrayGetNLL(HB_ITEM *pArray, HB_SIZE nIndex);
 #endif
 #ifdef _HB_API_INTERNAL_
 // internal array API not exported

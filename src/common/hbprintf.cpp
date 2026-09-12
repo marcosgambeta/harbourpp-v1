@@ -163,7 +163,7 @@
 #define _x_double int
 #endif
 #ifndef __NO_LONGLONG__
-#define _x_longlong HB_LONGLONG
+#define _x_longlong int64_t
 #define _x_ulonglong HB_ULONGLONG
 #else
 #define _x_longlong long

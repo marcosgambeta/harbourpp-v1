@@ -227,7 +227,7 @@ void hb_dateDecode(long lJulian, int32_t *piYear, int32_t *piMonth, int32_t *piD
 #endif
 
   if (lJulian >= HB_STR_DATE_BASE) {
-    HB_LONGLONG U, V, W, X, J;
+    int64_t U, V, W, X, J;
 
     J = lJulian;
     J += 68569;
@@ -917,7 +917,7 @@ void hb_timeStampUnpackDT(double dTimeStamp, long *plJulian, long *plMilliSec)
       *plMilliSec = static_cast<long>(dTime * HB_MILLISECS_PER_DAY);
     }
 #else
-    HB_LONGLONG llMilliSec = static_cast<HB_LONGLONG>(dTimeStamp * HB_MILLISECS_PER_DAY + 0.5);
+    int64_t llMilliSec = static_cast<int64_t>(dTimeStamp * HB_MILLISECS_PER_DAY + 0.5);
     if (plJulian) {
       *plJulian = static_cast<long>(llMilliSec / HB_MILLISECS_PER_DAY);
     }

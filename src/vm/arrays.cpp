@@ -549,7 +549,7 @@ HB_ISIZ hb_arrayGetNS(HB_ITEM *pArray, HB_SIZE nIndex)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_LONGLONG hb_arrayGetNLL(HB_ITEM *pArray, HB_SIZE nIndex)
+int64_t hb_arrayGetNLL(HB_ITEM *pArray, HB_SIZE nIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayGetNLL(%p, %" HB_PFS "u)", static_cast<void*>(pArray), nIndex));
@@ -764,7 +764,7 @@ HB_BOOL hb_arraySetNS(HB_ITEM *pArray, HB_SIZE nIndex, HB_ISIZ nNumber)
 }
 
 #ifndef HB_LONG_LONG_OFF
-HB_BOOL hb_arraySetNLL(HB_ITEM *pArray, HB_SIZE nIndex, HB_LONGLONG llNumber)
+HB_BOOL hb_arraySetNLL(HB_ITEM *pArray, HB_SIZE nIndex, int64_t llNumber)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arraySetNLL(%p, %" HB_PFS "u, %" PFLL "d)", static_cast<void*>(pArray), nIndex, llNumber));
