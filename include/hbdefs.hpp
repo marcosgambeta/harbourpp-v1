@@ -133,10 +133,10 @@
 
    #if defined(HB_OS_WIN) && !defined(__GNUC__)
       typedef __int64            HB_LONGLONG; // NOTE: HB_LONGLONG is deprecated in Harbour++ source code
-      typedef unsigned __int64   HB_ULONGLONG;
+      typedef unsigned __int64   HB_ULONGLONG; // NOTE: HB_ULONGLONG is deprecated in Harbour++ source code
    #else
       typedef signed long long   HB_LONGLONG; // NOTE: HB_LONGLONG is deprecated in Harbour++ source code
-      typedef unsigned long long HB_ULONGLONG;
+      typedef unsigned long long HB_ULONGLONG; // NOTE: HB_ULONGLONG is deprecated in Harbour++ source code
    #endif
 
    #if !defined(ULONGLONG_MAX)
@@ -194,10 +194,10 @@ typedef unsigned int        HB_UINT;
 #  if defined(HB_SIZE_SIGNED)
       typedef int64_t         HB_SIZE;
 #  else
-      typedef HB_ULONGLONG        HB_SIZE;        /* TODO: Currently 'unsigned', to be changed 'signed' */
+      typedef uint64_t        HB_SIZE;        /* TODO: Currently 'unsigned', to be changed 'signed' */
 #  endif
    typedef int64_t         HB_ISIZ;           /* TODO: Change to HB_SIZE, after HB_SIZE has been converted to signed type. TEMPORARY type. */
-   typedef HB_ULONGLONG        HB_USIZ;           /* TEMPORARY type. Do not use it. */
+   typedef uint64_t        HB_USIZ;           /* TEMPORARY type. Do not use it. */
 #else
 #  if defined(HB_SIZE_SIGNED)
       typedef HB_LONG             HB_SIZE;
@@ -309,7 +309,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 #  endif
 #elif !defined(HB_LONG_LONG_OFF)
    typedef int64_t         HB_I64;
-   typedef HB_ULONGLONG        HB_U64;
+   typedef uint64_t        HB_U64;
    #define HB_I64_MIN          LONGLONG_MIN
    #define HB_I64_MAX          LONGLONG_MAX
    #define HB_U64_MAX          ULONGLONG_MAX
@@ -372,7 +372,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
             typedef int64_t LONGLONG;
          #endif
          #if !defined(ULONGLONG)
-            typedef HB_ULONGLONG ULONGLONG;
+            typedef uint64_t ULONGLONG;
          #endif
       #endif
    #endif
@@ -424,7 +424,7 @@ typedef HB_UCHAR            HB_U8; // NOTE: deprecated in core code
 #  define HB_VMLONG_MIN          LONGLONG_MIN
 #  define HB_VMULONG_MAX         ULONGLONG_MAX
    typedef int64_t           HB_MAXINT;
-   typedef HB_ULONGLONG          HB_MAXUINT;
+   typedef uint64_t          HB_MAXUINT;
 #else
 #  define HB_VMINT_MAX           INT_MAX
 #  define HB_VMINT_MIN           INT_MIN
@@ -552,7 +552,7 @@ typedef uint32_t HB_FATTR;
 
 /* type of reference counter */
 #if defined(HB_OS_WIN_64)
-   typedef HB_ULONGLONG    HB_COUNTER;
+   typedef uint64_t    HB_COUNTER;
 #  define HB_COUNTER_SIZE  8
 #else
    typedef unsigned long   HB_COUNTER;
@@ -566,7 +566,7 @@ typedef uint32_t HB_FATTR;
 /* type for memory pointer diff */
 #if defined(HB_OS_WIN_64)
    typedef int64_t HB_PTRDIFF; // NOTE: HB_PTRDIFF deprecated in core code
-   typedef HB_ULONGLONG HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
+   typedef uint64_t HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
 #else
    typedef long HB_PTRDIFF; // NOTE: HB_PTRDIFF deprecated in core code
    typedef unsigned long HB_PTRUINT; // NOTE: HB_PTRUINT deprecated in core code
@@ -1433,7 +1433,7 @@ typedef uint32_t HB_FATTR;
 #define HB_PCODE_MKULONG( p )       ( static_cast< HB_ULONG >( HB_GET_LE_UINT32( p ) ) ) // NOTE: deprecated
 #define HB_PCODE_MKUINT32( p )      ( static_cast< uint32_t >( HB_GET_LE_UINT32( p ) ) )
 #define HB_PCODE_MKLONGLONG( p )    (( int64_t )  HB_GET_LE_INT64( p ))
-#define HB_PCODE_MKULONGLONG( p )   (( HB_ULONGLONG ) HB_GET_LE_UINT64( p ))
+#define HB_PCODE_MKULONGLONG( p )   (( uint64_t ) HB_GET_LE_UINT64( p ))
 #define HB_PCODE_MKDOUBLE( p )      (( double )       HB_GET_LE_DOUBLE( p ))
 #define HB_PCODE_MKINT24( p )       ( static_cast< HB_LONG >( HB_GET_LE_INT24( p ) ) )
 #define HB_PCODE_MKUINT24( p )      ( static_cast< HB_ULONG >( HB_GET_LE_UINT24( p ) ) )

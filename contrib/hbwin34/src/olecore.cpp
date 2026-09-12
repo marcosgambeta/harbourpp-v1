@@ -603,7 +603,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *p
 #if defined(HB_OLE_NO_LL)
       // workaround for wrong OLE variant structure definition
       ptr = &V_UI4(&v);
-      *(static_cast<HB_ULONGLONG *>(ptr)) = pStr ? static_cast<HB_U64>(static_cast<unsigned char>(pStr[uiPos - 1]))
+      *(static_cast<uint64_t *>(ptr)) = pStr ? static_cast<HB_U64>(static_cast<unsigned char>(pStr[uiPos - 1]))
                                                  : static_cast<HB_U64>(hb_arrayGetNInt(pItem, uiPos));
 #else
       V_UI8(&v) = pStr ? static_cast<HB_U64>(static_cast<unsigned char>(pStr[uiPos - 1]))
@@ -1438,9 +1438,9 @@ void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjF
     *V_UI4REF(pVariant) = static_cast<unsigned long>(hb_itemGetNInt(pItem));
 #elif defined(HB_OLE_NO_LLREF)
     // workaround for wrong OLE variant structure definition
-    *reinterpret_cast<HB_ULONGLONG *>(V_R8REF(pVariant)) = static_cast<HB_ULONGLONG>(hb_itemGetNInt(pItem));
+    *reinterpret_cast<uint64_t *>(V_R8REF(pVariant)) = static_cast<uint64_t>(hb_itemGetNInt(pItem));
 #else
-    *V_UI8REF(pVariant) = static_cast<HB_ULONGLONG>(hb_itemGetNInt(pItem));
+    *V_UI8REF(pVariant) = static_cast<uint64_t>(hb_itemGetNInt(pItem));
 #endif
     break;
 
@@ -2515,7 +2515,7 @@ HB_FUNC(__OLEVARIANTNEW)
       V_VT(&variant) = VT_UI8;
 #if defined(HB_OLE_NO_LL)
       // workaround for wrong OLE variant structure definition
-      *(static_cast<HB_ULONGLONG *>(&V_I4(&variant))) = hb_itemGetNInt(pInit);
+      *(static_cast<uint64_t *>(&V_I4(&variant))) = hb_itemGetNInt(pInit);
 #else
       V_UI8(&variant) = hb_itemGetNInt(pInit);
 #endif

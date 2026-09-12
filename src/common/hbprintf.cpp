@@ -164,7 +164,7 @@
 #endif
 #ifndef __NO_LONGLONG__
 #define _x_longlong int64_t
-#define _x_ulonglong HB_ULONGLONG
+#define _x_ulonglong uint64_t
 #else
 #define _x_longlong long
 #define _x_ulonglong unsigned long

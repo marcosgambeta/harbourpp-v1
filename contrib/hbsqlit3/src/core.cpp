@@ -63,7 +63,7 @@
 /* FIXME: verify the exact SQLITE3 version */
 #if SQLITE_VERSION_NUMBER <= 3004001
 #define sqlite3_int64 int64_t
-#define sqlite3_uint64 HB_ULONGLONG
+#define sqlite3_uint64 uint64_t
 #endif
 
 #define HB_SQLITE3_DB 6000001
