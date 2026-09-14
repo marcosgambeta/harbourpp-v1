@@ -1127,7 +1127,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
 {
 #ifdef HB_LONG_LONG_OFF
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\thb_xvmPushLongLong(%.1f);\n", HB_PCODE_MKLONGLONG(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\thb_xvmPushLongLong(%.1f);\n", HB_PCODE_MKINT64(&pFunc->pCode[nPCodePos + 1]));
   return 9;
 #elif LONG_MAX < LONGLONG_MAX
   int64_t llVal;
@@ -1135,7 +1135,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
 
   HB_GENC_LABEL();
 
-  llVal = HB_PCODE_MKLONGLONG(&pFunc->pCode[nPCodePos + 1]);
+  llVal = HB_PCODE_MKINT64(&pFunc->pCode[nPCodePos + 1]);
   fprintf(cargo->yyc, "\thb_xvmPushLongLong(HB_LL(%s));\n", hb_numToStr(szBuf, sizeof(szBuf), llVal));
   return 9;
 #else
@@ -1146,7 +1146,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
   HB_GENC_LABEL();
 
   fprintf(cargo->yyc, "#if LONG_MAX >= LONGLONG_MAX\n");
-  llVal = HB_PCODE_MKLONGLONG(&pFunc->pCode[nPCodePos + 1]);
+  llVal = HB_PCODE_MKINT64(&pFunc->pCode[nPCodePos + 1]);
   iSkip = hb_gencc_checkNumAhead(llVal, pFunc, nPCodePos + 9, cargo);
 
   if (iSkip == 0) {

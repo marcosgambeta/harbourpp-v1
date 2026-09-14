@@ -2404,9 +2404,9 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
             HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHLONGLONG)"));
 #endif
 #if !defined(HB_LONG_LONG_OFF)
-      hb_vmPushLongLongConst(HB_PCODE_MKLONGLONG(&pCode[1]));
+      hb_vmPushLongLongConst(HB_PCODE_MKINT64(&pCode[1]));
 #else
-      hb_vmPushDoubleConst(HB_PCODE_MKLONGLONG(&pCode[1]), HB_DEFAULT_WIDTH, HB_DEFAULT_DECIMALS);
+      hb_vmPushDoubleConst(HB_PCODE_MKINT64(&pCode[1]), HB_DEFAULT_WIDTH, HB_DEFAULT_DECIMALS);
 #endif
       pCode += 9;
       break;

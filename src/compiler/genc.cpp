@@ -1469,11 +1469,11 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
           pFunc->pCode[nPCodePos + 8]);
   if (cargo->bVerbose) {
 #ifdef HB_LONG_LONG_OFF
-    fprintf(cargo->yyc, "\t// %lf", HB_PCODE_MKLONGLONG(&pFunc->pCode[nPCodePos + 1]));
+    fprintf(cargo->yyc, "\t// %lf", HB_PCODE_MKINT64(&pFunc->pCode[nPCodePos + 1]));
 #else
     char szBuf[24];
     fprintf(cargo->yyc, "\t// %s",
-            hb_numToStr(szBuf, sizeof(szBuf), HB_PCODE_MKLONGLONG(&pFunc->pCode[nPCodePos + 1])));
+            hb_numToStr(szBuf, sizeof(szBuf), HB_PCODE_MKINT64(&pFunc->pCode[nPCodePos + 1])));
 #endif
   }
   fprintf(cargo->yyc, "\n");
