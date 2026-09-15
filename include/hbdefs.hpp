@@ -695,7 +695,8 @@ typedef uint32_t HB_FATTR;
 #define HB_UHBYTE( w )          ( ( uint8_t ) ( ( ( w ) >> 24 ) & 0xFF ) )
 #define HB_LOWORD( l )          ( ( uint16_t ) ( l ) )
 #define HB_HIWORD( l )          ( ( uint16_t ) ( ( ( l ) >> 16 ) & 0xFFFF ) )
-#define HB_MKSHORT( lo, hi )    ( static_cast< HB_SHORT >( ( ( int16_t ) ( hi ) ) << 8 ) | ( lo ) )
+#define HB_MKSHORT( lo, hi )    ( static_cast< int16_t >( ( ( int16_t ) ( hi ) ) << 8 ) | ( lo ) ) // deprecated
+#define HB_MKINT16( lo, hi )    ( static_cast< int16_t >( ( ( int16_t ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKUSHORT( lo, hi )   ( static_cast< uint16_t >( ( ( uint16_t ) ( hi ) ) << 8 ) | ( lo ) ) // deprecated
 #define HB_MKUINT16( lo, hi )   ( static_cast< uint16_t >( ( ( uint16_t ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< HB_LONG > \
