@@ -1157,7 +1157,7 @@ int32_t hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list a
             if (length == _L_CHAR_) {
               argval.value.as_x_intmax_t = static_cast<unsigned char>(va_arg_n(args, _x_int, param));
             } else if (length == _L_SHORT_) {
-              argval.value.as_x_intmax_t = static_cast<unsigned short>(va_arg_n(args, _x_int, param));
+              argval.value.as_x_intmax_t = static_cast<uint16_t>(va_arg_n(args, _x_int, param));
             } else if (length == _L_LONG_) {
               argval.value.as_x_intmax_t = va_arg_n(args, _x_long, param);
             } else if (length == _L_LONGLONG_) {
@@ -1182,7 +1182,7 @@ int32_t hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list a
             if (length == _L_CHAR_) {
               argval.value.as_x_uintmax_t = static_cast<unsigned char>(va_arg_n(args, _x_int, param));
             } else if (length == _L_SHORT_) {
-              argval.value.as_x_uintmax_t = static_cast<unsigned short>(va_arg_n(args, _x_int, param));
+              argval.value.as_x_uintmax_t = static_cast<uint16_t>(va_arg_n(args, _x_int, param));
             } else if (length == _L_LONG_) {
               argval.value.as_x_uintmax_t = va_arg_n(args, _x_ulong, param);
             } else if (length == _L_LONGLONG_) {

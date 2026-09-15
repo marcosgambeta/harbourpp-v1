@@ -70,13 +70,13 @@
 #include <conio.h>
 #endif
 
-static int32_t hb_Inp9x(unsigned short int usPort)
+static int32_t hb_Inp9x(uint16_t usPort)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_Inp9x(%hu)", usPort));
 #endif
 
-  unsigned short int usVal;
+  uint16_t usVal;
 
 #if (defined(__BORLANDC__) && !defined(__clang__))
 
@@ -100,14 +100,14 @@ static int32_t hb_Inp9x(unsigned short int usPort)
 
 #else
 
-  usVal = static_cast<unsigned short int>(_inp(usPort));
+  usVal = static_cast<uint16_t>(_inp(usPort));
 
 #endif
 
   return usVal;
 }
 
-static int32_t hb_Outp9x(unsigned short int usPort, unsigned short int usVal)
+static int32_t hb_Outp9x(uint16_t usPort, uint16_t usVal)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_Outp9x(%hu, %hu)", usPort, usVal));
@@ -176,15 +176,15 @@ static void hb_gt_w9xTone(double dFreq, double dDurat)
 
     // set the frequency ( LSB, MSB )
 
-    hb_Outp9x(66, static_cast<unsigned short int>(uLSB));
-    hb_Outp9x(66, static_cast<unsigned short int>(uMSB));
+    hb_Outp9x(66, static_cast<uint16_t>(uLSB));
+    hb_Outp9x(66, static_cast<uint16_t>(uMSB));
 
     // Get current Port setting
     // enable Speaker Data & Timer gate bits
     // (00000011B is bitmask to enable sound)
     // Turn on Speaker - sound Tone for duration..
 
-    hb_Outp9x(97, static_cast<unsigned short int>(hb_Inp9x(97)) | 3);
+    hb_Outp9x(97, static_cast<uint16_t>(hb_Inp9x(97)) | 3);
 
     hb_idleSleep(dDurat);
 
