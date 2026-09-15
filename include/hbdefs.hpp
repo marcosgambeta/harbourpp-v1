@@ -1434,7 +1434,8 @@ typedef uint32_t HB_FATTR;
 #define HB_PCODE_MKUINT32( p )      ( static_cast< uint32_t >( HB_GET_LE_UINT32( p ) ) )
 #define HB_PCODE_MKLONGLONG( p )    (( int64_t )  HB_GET_LE_INT64( p )) // NOTE: deprecated
 #define HB_PCODE_MKINT64( p )       (( int64_t )  HB_GET_LE_INT64( p ))
-#define HB_PCODE_MKULONGLONG( p )   (( uint64_t ) HB_GET_LE_UINT64( p ))
+#define HB_PCODE_MKULONGLONG( p )   (( uint64_t ) HB_GET_LE_UINT64( p )) // NOTE: deprecated
+#define HB_PCODE_MKUINT64( p )      (( uint64_t ) HB_GET_LE_UINT64( p ))
 #define HB_PCODE_MKDOUBLE( p )      (( double )       HB_GET_LE_DOUBLE( p ))
 #define HB_PCODE_MKINT24( p )       ( static_cast< HB_LONG >( HB_GET_LE_INT24( p ) ) )
 #define HB_PCODE_MKUINT24( p )      ( static_cast< HB_ULONG >( HB_GET_LE_UINT24( p ) ) )
@@ -1450,7 +1451,8 @@ typedef uint32_t HB_FATTR;
    #undef HB_PUT_LE_UINT64
    #undef HB_PCODE_MKLONGLONG // NOTE: deprecated
    #undef HB_PCODE_MKINT64
-   #undef HB_PCODE_MKULONGLONG
+   #undef HB_PCODE_MKULONGLONG // NOTE: deprecated
+   #undef HB_PCODE_MKUINT64
    #undef HB_DBL_LIM_INT64
    #define UINT64_MAXDBL               ( ( ( double ) UINT32_MAX + 1.0 ) * \
                                          ( ( double ) UINT32_MAX + 1.0 ) - 1.0 )
@@ -1461,6 +1463,7 @@ typedef uint32_t HB_FATTR;
    #define HB_PCODE_MKLONGLONG( p )    ( ( double ) HB_GET_LE_INT64( p ) ) // NOTE: deprecated
    #define HB_PCODE_MKINT64( p )       ( ( double ) HB_GET_LE_INT64( p ) )
    #define HB_PCODE_MKULONGLONG( p )   ( ( double ) HB_GET_LE_UINT64( p ) )
+   #define HB_PCODE_MKUINT64( p )      ( ( double ) HB_GET_LE_UINT64( p ) )
    #define HB_DBL_LIM_INT64( d )       ( static_cast< HB_MAXDBL >( -UINT64_MAXDBL ) / 2 - 1 <= \
                                          static_cast< HB_MAXDBL >( d ) && static_cast< HB_MAXDBL >( d ) <= \
                                          static_cast< HB_MAXDBL >( UINT64_MAXDBL ) / 2 )
