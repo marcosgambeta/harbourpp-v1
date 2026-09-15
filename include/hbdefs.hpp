@@ -699,12 +699,22 @@ typedef uint32_t HB_FATTR;
 #define HB_MKINT16( lo, hi )    ( static_cast< int16_t >( ( ( int16_t ) ( hi ) ) << 8 ) | ( lo ) )
 #define HB_MKUSHORT( lo, hi )   ( static_cast< uint16_t >( ( ( uint16_t ) ( hi ) ) << 8 ) | ( lo ) ) // deprecated
 #define HB_MKUINT16( lo, hi )   ( static_cast< uint16_t >( ( ( uint16_t ) ( hi ) ) << 8 ) | ( lo ) )
-#define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< HB_LONG > \
+#define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< int32_t > \
+                                       ( ( ( ( int32_t ) ( b4 ) ) << 24 ) | \
+                                         ( ( ( int32_t ) ( b3 ) ) << 16 ) | \
+                                         ( ( ( int32_t ) ( b2 ) ) <<  8 ) | \
+                                         ( ( ( int32_t ) ( b1 ) ) ) ) ) // deprecated
+#define HB_MKINT32( b1, b2, b3, b4 )  ( static_cast< int32_t > \
                                        ( ( ( ( int32_t ) ( b4 ) ) << 24 ) | \
                                          ( ( ( int32_t ) ( b3 ) ) << 16 ) | \
                                          ( ( ( int32_t ) ( b2 ) ) <<  8 ) | \
                                          ( ( ( int32_t ) ( b1 ) ) ) ) )
-#define HB_MKULONG( b1, b2, b3, b4 ) ( static_cast< HB_ULONG > \
+#define HB_MKULONG( b1, b2, b3, b4 ) ( static_cast< uint32_t > \
+                                       ( ( ( ( uint32_t ) ( b4 ) ) << 24 ) | \
+                                         ( ( ( uint32_t ) ( b3 ) ) << 16 ) | \
+                                         ( ( ( uint32_t ) ( b2 ) ) <<  8 ) | \
+                                         ( ( ( uint32_t ) ( b1 ) ) ) ) ) // deprecated
+#define HB_MKUINT32( b1, b2, b3, b4 ) ( static_cast< uint32_t > \
                                        ( ( ( ( uint32_t ) ( b4 ) ) << 24 ) | \
                                          ( ( ( uint32_t ) ( b3 ) ) << 16 ) | \
                                          ( ( ( uint32_t ) ( b2 ) ) <<  8 ) | \
