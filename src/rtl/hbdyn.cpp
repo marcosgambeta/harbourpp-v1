@@ -143,7 +143,7 @@ static uint64_t hb_u64par(HB_ITEM *pParam, PHB_DYNARG pArg)
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    pArg->value.t.n64 = static_cast<short>(hb_itemGetNI(pParam));
+    pArg->value.t.n64 = static_cast<int16_t>(hb_itemGetNI(pParam));
     r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
@@ -285,7 +285,7 @@ static HB_ITEM *hb_u64ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    hb_itemPutNI(pItem, static_cast<short>(value.t.n64));
+    hb_itemPutNI(pItem, static_cast<int16_t>(value.t.n64));
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
@@ -537,7 +537,7 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, uint32_t *r1, uint32_t *
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    pArg->value.t.n32 = static_cast<short>(hb_itemGetNI(pParam));
+    pArg->value.t.n32 = static_cast<int16_t>(hb_itemGetNI(pParam));
     *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
@@ -703,7 +703,7 @@ static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    hb_itemPutNI(pItem, static_cast<short>(value.t.n32));
+    hb_itemPutNI(pItem, static_cast<int16_t>(value.t.n32));
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:

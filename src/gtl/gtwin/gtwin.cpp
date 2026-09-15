@@ -275,8 +275,8 @@ static void hb_gt_win_xSetCursorPos(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xSetCursorPos()"));
 #endif
 
-  s_csbi.dwCursorPosition.Y = static_cast<short>(s_iCurRow);
-  s_csbi.dwCursorPosition.X = static_cast<short>(s_iCurCol);
+  s_csbi.dwCursorPosition.Y = static_cast<int16_t>(s_iCurRow);
+  s_csbi.dwCursorPosition.X = static_cast<int16_t>(s_iCurCol);
   SetConsoleCursorPosition(s_HOutput, s_csbi.dwCursorPosition);
 }
 
@@ -337,13 +337,13 @@ static void hb_gt_win_xScreenUpdate(void)
       coSize.Y = _GetScreenHeight();
       coSize.X = _GetScreenWidth();
       COORD coDest;
-      coDest.Y = static_cast<short>(s_iUpdtTop);
-      coDest.X = static_cast<short>(s_iUpdtLeft);
+      coDest.Y = static_cast<int16_t>(s_iUpdtTop);
+      coDest.X = static_cast<int16_t>(s_iUpdtLeft);
       SMALL_RECT srWin;
-      srWin.Top = static_cast<short>(s_iUpdtTop);
-      srWin.Left = static_cast<short>(s_iUpdtLeft);
-      srWin.Bottom = static_cast<short>(s_iUpdtBottom);
-      srWin.Right = static_cast<short>(s_iUpdtRight);
+      srWin.Top = static_cast<int16_t>(s_iUpdtTop);
+      srWin.Left = static_cast<int16_t>(s_iUpdtLeft);
+      srWin.Bottom = static_cast<int16_t>(s_iUpdtBottom);
+      srWin.Right = static_cast<int16_t>(s_iUpdtRight);
 
       s_iUpdtTop = _GetScreenHeight();
       s_iUpdtLeft = _GetScreenWidth();
@@ -837,20 +837,20 @@ static HB_BOOL hb_gt_win_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols)
     if (iRows > coBuf.Y) {
       iRows = coBuf.Y;
     } else {
-      coBuf.Y = static_cast<short>(iRows);
+      coBuf.Y = static_cast<int16_t>(iRows);
     }
 
     if (iCols > coBuf.X) {
       iCols = coBuf.X;
     } else {
-      coBuf.X = static_cast<short>(iCols);
+      coBuf.X = static_cast<int16_t>(iCols);
     }
 
     // new console window size and scroll position
     SMALL_RECT srWin;
     srWin.Top = srWin.Left = 0;
-    srWin.Bottom = static_cast<short>(iRows - 1);
-    srWin.Right = static_cast<short>(iCols - 1);
+    srWin.Bottom = static_cast<int16_t>(iRows - 1);
+    srWin.Right = static_cast<int16_t>(iCols - 1);
 
     if (static_cast<int32_t>(_GetScreenWidth()) >= iCols && static_cast<int32_t>(_GetScreenHeight()) >= iRows) {
       // the new dimensions do not exceed the current buffer dimensions so
@@ -880,9 +880,9 @@ static HB_BOOL hb_gt_win_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols)
       // decrease the one of console window dimensions which is larger
       // then the corresponding new one.
       if (static_cast<int32_t>(_GetScreenWidth()) < iCols) {
-        srWin.Right = static_cast<short>(_GetScreenWidth() - 1);
+        srWin.Right = static_cast<int16_t>(_GetScreenWidth() - 1);
       } else {
-        srWin.Bottom = static_cast<short>(_GetScreenHeight() - 1);
+        srWin.Bottom = static_cast<int16_t>(_GetScreenHeight() - 1);
       }
       if (SetConsoleWindowInfo(s_HOutput, TRUE, &srWin)) {
         // now we can safely set the new buffer dimensions because
@@ -890,8 +890,8 @@ static HB_BOOL hb_gt_win_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols)
         // just reduced console window and then we set final console
         // window size.
         if (SetConsoleScreenBufferSize(s_HOutput, coBuf)) {
-          srWin.Bottom = static_cast<short>(iRows - 1);
-          srWin.Right = static_cast<short>(iCols - 1);
+          srWin.Bottom = static_cast<int16_t>(iRows - 1);
+          srWin.Right = static_cast<int16_t>(iCols - 1);
           SetConsoleWindowInfo(s_HOutput, TRUE, &srWin);
         }
         fRet = true;

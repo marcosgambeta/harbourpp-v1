@@ -2367,7 +2367,7 @@ static HB_ERRCODE hb_fptGetMemo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem
         hb_itemPutNI(pItem, static_cast<unsigned char>(pBuffer[0]));
         break;
       case FPTIT_FLEX_SHORT:
-        hb_itemPutNI(pItem, static_cast<short>(HB_GET_LE_UINT16(pBuffer)));
+        hb_itemPutNI(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(pBuffer)));
         break;
       case FPTIT_FLEX_USHORT:
         hb_itemPutNInt(pItem, HB_GET_LE_UINT16(pBuffer));

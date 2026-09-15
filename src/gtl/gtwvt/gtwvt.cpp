@@ -2223,7 +2223,7 @@ static void hb_gt_wvt_MouseEvent(HB_GTWVT *pWVT, UINT message, WPARAM wParam, LP
     break;
 
   case WM_MOUSEWHEEL:
-    keyCode = static_cast<short>(HIWORD(wParam)) > 0 ? K_MWFORWARD : K_MWBACKWARD;
+    keyCode = static_cast<int16_t>(HIWORD(wParam)) > 0 ? K_MWFORWARD : K_MWBACKWARD;
     break;
   }
 

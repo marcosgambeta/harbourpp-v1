@@ -66,10 +66,10 @@
 
 struct HB_KEY_VALUE
 {
-  short key;
-  short alt_key;
-  short ctrl_key;
-  short shift_key;
+  int16_t key;
+  int16_t alt_key;
+  int16_t ctrl_key;
+  int16_t shift_key;
 };
 
 static const int s_keyPadCtrl[] = {K_CTRL_INS, K_CTRL_END,   K_CTRL_DOWN, K_CTRL_PGDN, K_CTRL_LEFT,

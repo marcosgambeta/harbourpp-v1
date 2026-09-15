@@ -560,7 +560,7 @@ static int32_t hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
   {
     HB_MAXUINT timer = hb_timerInit(nTimeOut);
     struct pollfd fds;
-    short int events = fRead ? POLLIN : POLLOUT;
+    int16_t events = fRead ? POLLIN : POLLOUT;
 
     fds.fd = hFile;
     fds.events = events;
