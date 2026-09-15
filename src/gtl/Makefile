@@ -11,6 +11,7 @@ endif
 HB_PRGFLAGS += -ala
 
 CPP_SOURCES := \
+   accept.cpp \
    box.cpp \
    gt.cpp \
    gtapi.cpp \

@@ -12,7 +12,6 @@ HB_PRGFLAGS += -ala
 
 CPP_SOURCES := \
    abs.cpp \
-   accept.cpp \
    ampm.cpp \
    arc4.cpp \
    at.cpp \
@@ -194,6 +193,7 @@ CPP_SOURCES := \
 #   spfiles.cpp \ (moved to fsl)
 #   vfile.cpp \ (moved to fsl)
 
+#   accept.cpp \ (moved to gtl)
 #   box.cpp \ (moved to gtl)
 #   gt.cpp \ (moved to gtl)
 #   gtapi.cpp \ (moved to gtl)
