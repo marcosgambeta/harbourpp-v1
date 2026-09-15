@@ -797,7 +797,7 @@ int32_t hb_socketInit(void)
   if (++s_iSessions == 1) {
 #if defined(HB_OS_WIN)
     WSADATA wsadata;
-    ret = WSAStartup(HB_MKUSHORT(1, 1), &wsadata);
+    ret = WSAStartup(HB_MKUINT16(1, 1), &wsadata);
 #endif
   }
   HB_SOCKET_UNLOCK();
