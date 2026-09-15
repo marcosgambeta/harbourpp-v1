@@ -1424,21 +1424,23 @@ typedef uint32_t HB_FATTR;
 #define HB_GET_LE_INT32( p )        (( int32_t ) HB_GET_LE_UINT32( p ))
 #define HB_GET_LE_INT64( p )        (( int64_t ) HB_GET_LE_UINT64( p ))
 
-#define HB_PCODE_MKSHORT( p )       ( static_cast< HB_SHORT >( HB_GET_LE_INT16( p ) ) ) // NOTE: deprecated
+// deprecated
+#define HB_PCODE_MKSHORT( p )       ( static_cast< int16_t >( HB_GET_LE_INT16( p ) ) )
+#define HB_PCODE_MKUSHORT( p )      ( static_cast< uint16_t >( HB_GET_LE_UINT16( p ) ) )
+#define HB_PCODE_MKLONG( p )        ( static_cast< int32_t >( HB_GET_LE_INT32( p ) ) )
+#define HB_PCODE_MKULONG( p )       ( static_cast< uint32_t >( HB_GET_LE_UINT32( p ) ) )
+#define HB_PCODE_MKLONGLONG( p )    (( int64_t )  HB_GET_LE_INT64( p ))
+#define HB_PCODE_MKULONGLONG( p )   (( uint64_t ) HB_GET_LE_UINT64( p ))
+
 #define HB_PCODE_MKINT16( p )       ( static_cast< int16_t >( HB_GET_LE_INT16( p ) ) )
-#define HB_PCODE_MKUSHORT( p )      ( static_cast< uint16_t >( HB_GET_LE_UINT16( p ) ) ) // NOTE: deprecated
 #define HB_PCODE_MKUINT16( p )      ( static_cast< uint16_t >( HB_GET_LE_UINT16( p ) ) )
-#define HB_PCODE_MKLONG( p )        ( static_cast< HB_LONG >( HB_GET_LE_INT32( p ) ) ) // NOTE: deprecated
 #define HB_PCODE_MKINT32( p )        ( static_cast< int32_t >( HB_GET_LE_INT32( p ) ) )
-#define HB_PCODE_MKULONG( p )       ( static_cast< HB_ULONG >( HB_GET_LE_UINT32( p ) ) ) // NOTE: deprecated
 #define HB_PCODE_MKUINT32( p )      ( static_cast< uint32_t >( HB_GET_LE_UINT32( p ) ) )
-#define HB_PCODE_MKLONGLONG( p )    (( int64_t )  HB_GET_LE_INT64( p )) // NOTE: deprecated
 #define HB_PCODE_MKINT64( p )       (( int64_t )  HB_GET_LE_INT64( p ))
-#define HB_PCODE_MKULONGLONG( p )   (( uint64_t ) HB_GET_LE_UINT64( p )) // NOTE: deprecated
 #define HB_PCODE_MKUINT64( p )      (( uint64_t ) HB_GET_LE_UINT64( p ))
 #define HB_PCODE_MKDOUBLE( p )      (( double )       HB_GET_LE_DOUBLE( p ))
-#define HB_PCODE_MKINT24( p )       ( static_cast< HB_LONG >( HB_GET_LE_INT24( p ) ) )
-#define HB_PCODE_MKUINT24( p )      ( static_cast< HB_ULONG >( HB_GET_LE_UINT24( p ) ) )
+#define HB_PCODE_MKINT24( p )       ( static_cast< HB_LONG >( HB_GET_LE_INT24( p ) ) ) // TODO: HB_LONG -> int32_t
+#define HB_PCODE_MKUINT24( p )      ( static_cast< HB_ULONG >( HB_GET_LE_UINT24( p ) ) ) // TODO: HB_ULONG -> uint32_t
 
 /*
  * Below are hacked version of INT64 macros which operates on double
