@@ -48,7 +48,7 @@
 #define _GT_API
 
 #include "clipdefs.h"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 #define CLR_STRLEN      HB_CLRSTR_LEN
 

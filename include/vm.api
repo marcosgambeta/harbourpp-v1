@@ -51,7 +51,7 @@
 #define _VM_API
 
 #include "clipdefs.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 /* Standard */
 #define _xvalloc( size, flags )      hb_xvalloc( size, flags )

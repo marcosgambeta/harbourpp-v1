@@ -47,7 +47,7 @@
 #ifndef _ITEM_API
 #define _ITEM_API
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #define EVALINFO        HB_EVALINFO
 #define PEVALINFO       PHB_EVALINFO

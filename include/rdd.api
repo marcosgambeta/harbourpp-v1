@@ -48,7 +48,7 @@
 #define _RDD_API
 
 #include "clipdefs.h"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "item.api"
 
 #define SUCCESS     HB_SUCCESS
