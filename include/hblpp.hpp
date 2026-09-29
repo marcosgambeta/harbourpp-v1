@@ -45,8 +45,8 @@
 #ifndef HB_LPP_H_
 #define HB_LPP_H_
 
-#include "hbapi.h"
-#include "hbsocket.h"
+#include "hbapi.hpp"
+#include "hbsocket.hpp"
 #include "hblpp.ch"
 
 HB_EXTERN_BEGIN

@@ -42,7 +42,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 #ifndef HB_MACRO_SUPPORT
 HB_SIZE hb_compExprListEval(HB_COMP_DECL, HB_EXPR *pExpr, PHB_COMP_CARGO_FUNC pEval)

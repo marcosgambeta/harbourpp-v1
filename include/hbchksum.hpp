@@ -1,5 +1,5 @@
-// Compatibility header file for CA-Cl*pper Extend System
-// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+// Header files for functions to calculate different checksums
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -42,19 +42,18 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* DON'T USE THIS FILE FOR NEW HARBOUR C CODE */
-
-/* This file is provided to support some level of */
-/* Harbour compatibility for old Clipper C extension code */
-
-#ifndef HB_EXTEND_H_
-#define HB_EXTEND_H_
-
 #include "hbapi.hpp"
 
-/* Please leave these at the bottom of this file */
+HB_EXTERN_BEGIN
 
-#include "extend.api"
-#include "fm.api"
+extern HB_EXPORT uint32_t hb_adler32( uint32_t adler, const void * buf, HB_SIZE len );
+extern HB_EXPORT uint16_t hb_crc16( uint16_t crc, const void * buf, HB_SIZE len );
+extern HB_EXPORT uint32_t hb_crc32( uint32_t crc, const void * buf, HB_SIZE len );
+extern HB_EXPORT HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly );
+extern HB_EXPORT HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly );
+extern HB_EXPORT void hb_md5( const void * data, HB_SIZE datalen, char * digest );
+extern HB_EXPORT HB_BOOL hb_md5file( const char * pszFileName, char * digest );
+extern HB_EXPORT void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
+                                   const void * message, HB_SIZE nMsgLen, char * digest );
 
-#endif // HB_EXTEND_H_
+HB_EXTERN_END

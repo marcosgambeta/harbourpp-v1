@@ -42,7 +42,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 #if !defined(HB_HASH_USES_ARRAY_INDEXES)
 #define HB_HASH_USES_ARRAY_INDEXES

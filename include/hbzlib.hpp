@@ -1,5 +1,5 @@
-// Compatibility header file for CA-Cl*pper Extend System
-// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+// Dynamic reference to ZLIB functions
+// Copyright 2013 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -42,19 +42,30 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* DON'T USE THIS FILE FOR NEW HARBOUR C CODE */
-
-/* This file is provided to support some level of */
-/* Harbour compatibility for old Clipper C extension code */
-
-#ifndef HB_EXTEND_H_
-#define HB_EXTEND_H_
+#ifndef HB_ZLIB_H_
+#define HB_ZLIB_H_
 
 #include "hbapi.hpp"
+#include "hbzlib.ch"
 
-/* Please leave these at the bottom of this file */
+#if defined(_HB_ZLIB_INTERNAL_)
 
-#include "extend.api"
-#include "fm.api"
+typedef HB_SIZE ( * HB_ZLIB_CBOUND )( HB_SIZE );
+typedef HB_SIZE ( * HB_ZLIB_UNSIZE )( const char *, HB_SIZE, int32_t * );
+typedef int     ( * HB_ZLIB_COMPRS )( char *, HB_SIZE *, const char *, HB_SIZE, int32_t );
+typedef int     ( * HB_ZLIB_UNCMPS )( char *, HB_SIZE *, const char *, HB_SIZE );
 
-#endif // HB_EXTEND_H_
+extern void hb_zlibInit( HB_ZLIB_CBOUND, HB_ZLIB_UNSIZE, HB_ZLIB_COMPRS, HB_ZLIB_UNCMPS );
+
+#endif // _HB_ZLIB_INTERNAL_
+
+HB_EXTERN_BEGIN
+
+extern HB_EXPORT HB_SIZE hb_zlibCompressBound( HB_SIZE nLen );
+extern HB_EXPORT HB_SIZE hb_zlibUncompressedSize( const char * pSrc, HB_SIZE nLen, int32_t * piResult );
+extern HB_EXPORT int32_t     hb_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int32_t iLevel );
+extern HB_EXPORT int32_t     hb_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen );
+
+HB_EXTERN_END
+
+#endif // HB_ZLIB_H_

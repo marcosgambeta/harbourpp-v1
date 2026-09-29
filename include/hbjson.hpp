@@ -45,8 +45,8 @@
 #ifndef HB_JSON_H_
 #define HB_JSON_H_
 
-#include "hbapi.h"
-#include "hbapicdp.h"
+#include "hbapi.hpp"
+#include "hbapicdp.hpp"
 
 HB_EXTERN_BEGIN
 

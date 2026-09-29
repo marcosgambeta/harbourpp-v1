@@ -1,5 +1,15 @@
-// Compatibility header file for CA-Cl*pper Extend System
-// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+//
+// This code implements BlowFish algorithm designed by Bruce Schneier.
+// The description of BlowFish algorithm can be found at:
+//    https://www.schneier.com/paper-blowfish-fse.html
+// This code uses for initial s-boxes and p-array values PI hex digits
+// taken from tables public at:
+//    https://www.schneier.com/blowfish.html
+// which can be downloaded from:
+//    https://www.schneier.com/code/constants.txt
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -42,19 +52,32 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* DON'T USE THIS FILE FOR NEW HARBOUR C CODE */
+#ifndef HB_BLOWFISH_H_
+#define HB_BLOWFISH_H_
 
-/* This file is provided to support some level of */
-/* Harbour compatibility for old Clipper C extension code */
+#include "hbdefs.hpp"
 
-#ifndef HB_EXTEND_H_
-#define HB_EXTEND_H_
+HB_EXTERN_BEGIN
 
-#include "hbapi.hpp"
+#define HB_BF_CIPHERBLOCK     8
 
-/* Please leave these at the bottom of this file */
+#define SUBKEYS_COUNT         18
+#define SBOX_ENTRIES          256
 
-#include "extend.api"
-#include "fm.api"
+typedef struct
+{
+   uint32_t   P[ SUBKEYS_COUNT ];
+   uint32_t   S1[ SBOX_ENTRIES ];
+   uint32_t   S2[ SBOX_ENTRIES ];
+   uint32_t   S3[ SBOX_ENTRIES ];
+   uint32_t   S4[ SBOX_ENTRIES ];
+}
+HB_BLOWFISH;
 
-#endif // HB_EXTEND_H_
+extern HB_EXPORT void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int32_t keylen );
+extern HB_EXPORT void hb_blowfishEncrypt( const HB_BLOWFISH * bf, uint32_t * xl, uint32_t * xr );
+extern HB_EXPORT void hb_blowfishDecrypt( const HB_BLOWFISH * bf, uint32_t * xl, uint32_t * xr );
+
+HB_EXTERN_END
+
+#endif // HB_BLOWFISH_H_

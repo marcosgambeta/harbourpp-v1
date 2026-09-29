@@ -42,11 +42,13 @@ C_HEADERS := \
    hbatomic.h \
    hbatomic.hpp \
    hbbfish.h \
+   hbbfish.hpp \
    hbfloat.h \
    hbfloat.hpp \
    hbcdpreg.h \
    hbcdpreg.hpp \
    hbchksum.h \
+   hbchksum.hpp \
    hbcomp.h \
    hbcomp.hpp \
    hbcompdf.h \
@@ -136,7 +138,9 @@ C_HEADERS := \
    hbwinuni.h \
    hbwinuni.hpp \
    hbzlib.h \
+   hbzlib.hpp \
    hbznet.h \
+   hbznet.hpp \
    hb_io.h \
    hb_io.hpp \
    winapi.hpp \

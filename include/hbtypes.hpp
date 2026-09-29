@@ -47,7 +47,7 @@
 
 #undef _HB_API_MACROS_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_EXTERN_BEGIN
 

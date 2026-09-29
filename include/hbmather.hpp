@@ -46,7 +46,7 @@
 #ifndef HB_MATHER_H_
 #define HB_MATHER_H_
 
-#include "hbmath.h"
+#include "hbmath.hpp"
 
 HB_EXTERN_BEGIN
 

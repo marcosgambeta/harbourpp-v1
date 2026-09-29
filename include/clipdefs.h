@@ -50,7 +50,7 @@
 #ifndef _CLIPDEFS_H
 #define _CLIPDEFS_H
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 /* New types */
 
