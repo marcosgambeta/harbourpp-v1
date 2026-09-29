@@ -126,7 +126,7 @@ STATIC FUNCTION ConvToC( cStr )
 STATIC FUNCTION _begin()
 #pragma __cstream | RETURN %s
 
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 
 static HB_LANG s_lang =
 {
@@ -139,5 +139,5 @@ STATIC FUNCTION _end()
 };
 
 #define HB_LANG_ID      {LNG}
-#include "hbmsgreg.h"
+#include "hbmsgreg.hpp"
 #pragma __endtext
