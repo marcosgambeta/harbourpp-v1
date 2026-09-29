@@ -42,8 +42,8 @@
  *
  */
 
-#include "hbapi.h"
-#include "hbvm.h"
+#include "hbapi.hpp"
+#include "hbvm.hpp"
 #include "hbdroid.h"
 
 /* MT support? */

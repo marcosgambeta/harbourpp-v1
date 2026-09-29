@@ -42,8 +42,8 @@
  *
  */
 
-#include "hbapi.h"
-#include "hbapistr.h"
+#include "hbapi.hpp"
+#include "hbapistr.hpp"
 
 #include "hbdroid.h"
 

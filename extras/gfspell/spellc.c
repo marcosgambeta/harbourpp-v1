@@ -1,6 +1,6 @@
-#include "hbapi.h"
-#include "hbapifs.h"
-#include "hbapiitm.h"
+#include "hbapi.hpp"
+#include "hbapifs.hpp"
+#include "hbapiitm.hpp"
 
 #define HB_ABS( a )  ( ( ( a ) > 0 ) ? ( a ) : -( a ) )
 
