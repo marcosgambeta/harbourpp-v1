@@ -22,7 +22,7 @@ func alert()
 return "[ALERT]"
 
 #pragma begindump
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_FUNC( P7 )
 {

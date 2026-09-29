@@ -1,4 +1,4 @@
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 void hb_cmdargTEST( void )
 {

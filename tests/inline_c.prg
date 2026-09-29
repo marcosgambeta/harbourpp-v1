@@ -8,7 +8,7 @@ PROCEDURE Main()
 
 #pragma begindump
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_FUNC( C_FUNC )
 {

@@ -10,7 +10,7 @@
       hbmk2 -hbdyn dyn.c -otest_x64
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_EXPORT double         TESTD ( double         value ) { printf( "DYN: %lf\n"      , value ); return value; }
 HB_EXPORT float          TESTF ( float          value ) { printf( "DYN: %f\n"       , value ); return value; }

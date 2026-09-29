@@ -1,4 +1,4 @@
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 int main( void )
 {

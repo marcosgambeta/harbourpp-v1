@@ -1,4 +1,4 @@
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 int main( void )
 {
