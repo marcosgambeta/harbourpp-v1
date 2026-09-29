@@ -50,7 +50,7 @@
 #include "hbapicls.hpp"
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
-#include "hbzlib.h"
+#include "hbzlib.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbserial.ch"

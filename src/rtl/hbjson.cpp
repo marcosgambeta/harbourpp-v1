@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
 #include "hbset.hpp"
-#include "hbjson.h"
+#include "hbjson.hpp"
 
 // The application/json Media Type for JavaScript Object Notation (JSON)
 // https://tools.ietf.org/html/rfc4627

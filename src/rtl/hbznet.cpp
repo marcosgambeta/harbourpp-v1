@@ -50,8 +50,8 @@
 /* this has to be declared before hbznet.h is included */
 #define _HB_ZNET_INTERNAL_
 
-#include "hbznet.h"
-#include "hbbfish.h"
+#include "hbznet.hpp"
+#include "hbbfish.hpp"
 #include "hbzlib.ch"
 #include "hbinit.hpp"
 

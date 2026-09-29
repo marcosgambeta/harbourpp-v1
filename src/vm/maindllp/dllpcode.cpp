@@ -49,7 +49,7 @@
 
 #include "hbapi.hpp"
 #include "hbvm.hpp"
-#include "hbtypes.h"
+#include "hbtypes.hpp"
 
 #if defined(HB_OS_WIN)
 #include <windows.h>

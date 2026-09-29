@@ -31,7 +31,7 @@
  */
 
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 /* Compile using: bison -d -v harbour.y */
 

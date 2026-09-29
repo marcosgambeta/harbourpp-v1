@@ -9074,7 +9074,7 @@ HB_CALL_ON_STARTUP_END(_hb_sixcdx_rdd_init_)
 #define HB_DATASEG_BODY                                                                                                \
   HB_DATASEG_FUNC(_hb_sixcdx1_InitSymbols_)                                                                            \
   HB_DATASEG_FUNC(_hb_sixcdx_rdd_init_)
-#include "hbiniseg.h"
+#include "hbiniseg.hpp"
 #endif
 
 #else

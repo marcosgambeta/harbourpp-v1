@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbinit.hpp"
-#include "hbzlib.h"
+#include "hbzlib.hpp"
 
 #include <zlib.h>
 

@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbsocket.hpp"
-#include "hbznet.h"
+#include "hbznet.hpp"
 #include "hbzlib.ch"
 
 // this function is intentionally not in hbinet.c to not create binding

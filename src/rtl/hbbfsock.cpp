@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbsocket.hpp"
-#include "hbbfish.h"
+#include "hbbfish.hpp"
 #include "hbinit.hpp"
 
 #define HB_BFSOCK_READAHEAD 0x40

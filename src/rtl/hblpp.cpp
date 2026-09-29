@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbdate.hpp"
-#include "hblpp.h"
+#include "hblpp.hpp"
 
 PHB_LPP hb_lppCreate(HB_SOCKET sd)
 {

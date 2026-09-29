@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-#include "hbtypes.h"
+#include "hbtypes.hpp"
 
 #if defined(HB_OS_WIN)
 

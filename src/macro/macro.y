@@ -59,10 +59,10 @@
  */
 #define  HB_MACRO_SUPPORT
 
-#include "hbmacro.h"
-#include "hbcomp.h"
-#include "hbdate.h"
-#include "hbpp.h"
+#include "hbmacro.hpp"
+#include "hbcomp.hpp"
+#include "hbdate.hpp"
+#include "hbpp.hpp"
 
 /* Compile using: bison -d -p hb_comp macro.y */
 

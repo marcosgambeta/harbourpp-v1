@@ -7,8 +7,8 @@
 #ifndef _TIFFCONF_
 #define _TIFFCONF_
 
-#include "hbdefs.h"
-#include "hb_io.h"
+#include "hbdefs.hpp"
+#include "hb_io.hpp"
 
 /* Signed 16-bit type */
 #define TIFF_INT16_T HB_I16

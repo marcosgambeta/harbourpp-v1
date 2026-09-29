@@ -76,7 +76,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbchksum.h"
+#include "hbchksum.hpp"
 
 /* MD5 buffer */
 struct MD5_BUF

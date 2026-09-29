@@ -55,7 +55,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbthread.hpp"
-#include "hbchksum.h"
+#include "hbchksum.hpp"
 
 // i18n hash table items:
 //
