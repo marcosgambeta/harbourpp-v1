@@ -7,6 +7,114 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-09-18 11:37 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * doc/en/langall.txt
+    + list missing codepage DE858 in hb_cdpSelect() doc entry
+      noticed by DF7BE - Wilfried Brunken in #416 - thanks!
+
+2026-09-15 18:27 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * contrib/hbhttpd/core.prg
+    ! fix runtime error on unsupported HTTP protocol
+      due to missing Connection header. Reported by
+      Marco Boeri with fix, though the fix was reshaped
+      a bit.
+
+  * config/bsd/global.mk
+    ! don't hardcode "gmake" if Harbour is cross-compiled
+      to this platform from another one
+
+2026-09-01 15:52 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * contrib/hbfbird/firebird.c
+  * contrib/hbfbird/tfirebrd.prg
+    ! fix desync between C and .prg source codes when parsing the date.
+      I'm keeping ISO 8601 date format in case someone uses "raw"
+      FBGetData() function to dump or pass-trough data to another SQL server.
+      Reported by Kamil Przybylski in #413 with slightly different fix.
+
+2026-08-27 20:22 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * contrib/3rd/sqlite3/sqlite3.c
+  * contrib/3rd/sqlite3/sqlite3.diff
+    ! disable threads in old MSVC (exact method copied from older SQLite)
+
+  * contrib/xhb/hbcompat.ch
+    + translate second parameter extensions, trimming any kind of space
+      (TAB, EOL) on the right side to xHarbour extended versions
+      AllTrim( x, .T. ) -> xhb_AllTrim()
+      RTrim( x, .T. )   -> xhb_RTrim()
+
+2026-08-27 18:15 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * contrib/3rd/sqlite3/sqlite3.c
+  * contrib/3rd/sqlite3/sqlite3.diff
+    * SQLite now includes <stdint.h>, applied more checks the same
+      way hbdefs.h does
+
+    ! this and some more defs to fix older MSVC, please retest other
+      ANSI C compilers if possible
+
+2026-08-27 12:23 UTC+0200 Przemyslaw Czerpak (druzus/at/sen.waw.pl) [PENDING]
+  * src/common/hbfsapi.c
+    ! set FIO error code (FError()) in hb_fsNameExists(), hb_fsFileExists()
+      and hb_fsDirExists()
+
+2026-08-26 23:35 UTC+0100 Phil Krylov (phil a t krylov.eu) [PENDING]
+  * contrib/3rd/sqlite3/sqlite3.c
+  * contrib/3rd/sqlite3/sqlite3.diff
+  * contrib/3rd/sqlite3/sqlite3.h
+  * contrib/3rd/sqlite3/sqlite3.hbp
+  * contrib/3rd/sqlite3/sqlite3x.h
+  * contrib/hbsqlit3/hbsqlit3.ch
+    * Updated SQLite to latest version 3.53.4.
+
+2026-08-26 22:48 UTC+0200 Aleksander Czajczynski (hb fki.pl) [PENDING]
+  * contrib/rddsql/sqlbase.c
+    ! compatibility fix for DBInfo( DBI_ISREADONLY ) to return logical
+      .F. instead of NIL as suggested by Itamar Lins. HWGUI browser
+      queries it.
+
+  * contrib/sddsqlt3/core.c
+    ! fix non-default code, guarded with HB_SQLT3_MAP_DECLARED_EMULATED
+      logical bug in parsing decimals from SQL table structure
+      and prevent a theoretical NULL deref
+
+  + contrib/sddsqlt3/tests/struct.prg
+    + demonstrating the effects of enabling HB_SQLT3_MAP_DECLARED_EMULATED
+
+    ; TODO for someone interested, to also implement LOGICAL/BOOLEAN column.
+      Inserting "false, true" to SQLite, will come up later as "0, 1".
+
+2026-08-26 19:55 UTC+0100 Phil Krylov (phil a t krylov.eu) [PENDING]
+  * .github/workflows/vm2-ci.yml
+    ! Fixed OmniOS release number to match VM.
+
+  * .github/workflows/windows-ci.yml
+    ! MSYS2 no longer ships 32-bit allegro, cairo, and ghostscript.
+
+  * contrib/hbhpdf/3rd/libhpdf/hpdfstre.c
+    ! Fix accidental usage of variable-length arrays extension.
+
+  * contrib/hbzebra/datamtrx.c
+    ! Extend -Warray-bounds warning pacification to GCC 16.
+
+  * contrib/sddsqlt3/core.c
+    ! Fix an unused assignment warning.
+
+  * src/rtl/gtcrs/gtcrs.h
+    ! Fix building on Oracle Solaris with GCC 15 and native curses.h.
+
+  * src/vm/dlmalloc.c
+    ! Silence an unused variable warning when assertions are off.
+
+  * src/vm/macro.c
+    ! Extend GCC 15+ -Wstringop-overflow warning pacification to Solaris.
+
+2026-08-26 13:17 UTC+0100 Phil Krylov (phil a t krylov.eu) [PENDING]
+  * doc/en/hashfunc.txt
+    ! Fixed return value documentation for hb_HPairAt()
+
+2026-08-16 17:31 UTC+0200 Damian Szlage (damian szlage.pl) [PENDING]
+  * contrib/hbtip/mail.prg
+    ! MIME-Version header capitalization
+
 2026-07-07 12:05 UTC+0200 Antonio Linares [PENDING]
   * include/hbver.h
   * config/global.mk
