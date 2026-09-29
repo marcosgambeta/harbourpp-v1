@@ -51,7 +51,7 @@
 
 #include <hbapiitm.hpp>
 #include <hbdate.hpp>
-#include "hbznet.h"
+#include "hbznet.hpp"
 
 static long hb_inetReadSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void *buffer, long len, HB_MAXINT timeout)
 {

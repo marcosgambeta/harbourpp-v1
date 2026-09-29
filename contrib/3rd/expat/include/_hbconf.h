@@ -1,7 +1,7 @@
 #ifndef _HBCONF_H
 #define _HBCONF_H
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbarc4.h"
 
 #if defined( HB_FORCE_ARC4RANDOM )
@@ -13,7 +13,7 @@
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 #  undef WIN32_LEAN_AND_MEAN
-#  include "hbwinuni.h"
+#  include "hbwinuni.hpp"
 #endif
 #if defined( HB_OS_WIN_CE ) && ! defined( _WINCE )
 #  define _WINCE

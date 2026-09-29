@@ -2793,7 +2793,7 @@ static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
   return HB_TRUE;
 }
 
-#include "hbgtreg.h"
+#include "hbgtreg.hpp"
 
 /* small hack to easy detect QT version used to compile this GT driver */
 #if QT_VERSION >= 0x070000

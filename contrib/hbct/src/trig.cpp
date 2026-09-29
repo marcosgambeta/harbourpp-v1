@@ -64,7 +64,7 @@
 
 #include "ct.h"
 #include "ctmath.h"
-#include "hbmather.h"
+#include "hbmather.hpp"
 
 HB_FUNC(PI)
 {

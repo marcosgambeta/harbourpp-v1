@@ -45,7 +45,7 @@
 #include <stdlib.h>
 #include "zlib.h"
 
-#include "hbsetup.h"
+#include "hbsetup.hpp"
 
 #if defined( HB_OS_VXWORKS ) && defined( _STD_USING_INT_TYPES )
    /* NOTE: Hack to avoid collision between stdint.h and types/vxTypes.h. [vszakats] */

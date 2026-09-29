@@ -49,7 +49,7 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 #include <hbapigt.hpp>
-#include "hbchksum.h"
+#include "hbchksum.hpp"
 
 // com_DosCon(<cString>, [<nLine>], [<nColumn>]) --> <cNull>
 HB_FUNC(COM_DOSCON)

@@ -45,9 +45,9 @@
  */
 
 #include "hbbmp.h"
-#include "hbapi.h"
-#include "hbapifs.h"
-#include "hbapierr.h"
+#include "hbapi.hpp"
+#include "hbapifs.hpp"
+#include "hbapierr.hpp"
 
 void hb_bmp_free( PHB_BMPINFO pBMP )
 {

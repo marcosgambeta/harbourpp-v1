@@ -32,8 +32,8 @@
 #define PACKAGE_VERSION       "0.23"
 #endif /* #if !defined(PACKAGE_VERSION) */
 
-#include "hbdefs.h"
-#include "hb_io.h"        /* include unistd.h */
+#include "hbdefs.hpp"
+#include "hb_io.hpp"        /* include unistd.h */
 
 /* Define to 1 if you have the `memchr'&Co function. */
 #define HAVE_MEMCHR           1

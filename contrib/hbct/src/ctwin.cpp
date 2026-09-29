@@ -2740,6 +2740,6 @@ static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 // ---
 
 #define HB_GTSUPER NULL
-#include "hbgtreg.h"
+#include "hbgtreg.hpp"
 
 // ---

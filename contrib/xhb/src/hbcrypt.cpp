@@ -62,7 +62,7 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
-#include "hbchksum.h"
+#include "hbchksum.hpp"
 #include "hbnxs.hpp"
 
 #define BASE 65521L /* largest prime smaller than 65536 */

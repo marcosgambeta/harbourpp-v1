@@ -47,7 +47,7 @@
 #ifndef _HBBMP_H_
 #define _HBBMP_H_
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 #include "hbbmp.ch"
 
 HB_EXTERN_BEGIN

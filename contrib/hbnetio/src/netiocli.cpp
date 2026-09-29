@@ -81,7 +81,7 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 #include "hbsocket.hpp"
-#include "hbznet.h"
+#include "hbznet.hpp"
 #include "hbzlib.ch"
 #include <hbinit.hpp>
 #include <hbvm.hpp>

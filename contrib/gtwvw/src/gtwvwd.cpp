@@ -6636,7 +6636,7 @@ static BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
   return TRUE;
 }
 
-#include "hbgtreg.h"
+#include "hbgtreg.hpp"
 
 /* GetSet Functions for static Variable */
 

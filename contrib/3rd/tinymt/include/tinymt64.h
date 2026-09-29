@@ -16,7 +16,7 @@
  * LICENSE.txt
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #if defined( __BORLANDC__ )
 #  pragma warn -inl
