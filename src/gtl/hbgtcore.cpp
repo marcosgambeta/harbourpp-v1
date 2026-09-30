@@ -139,29 +139,23 @@ static void hb_gt_def_BaseInit(PHB_GT_BASE pGT)
 
 static void *hb_gt_def_New(HB_GT *pGT)
 {
-  HB_SIZE nSize, nIndex;
-  uint16_t usChar;
-  int32_t iColor;
-  uint8_t bAttr;
-  int32_t i;
-
   hb_gt_def_BaseInit(pGT);
 
   HB_GTSELF_GETSIZE(pGT, &pGT->iHeight, &pGT->iWidth);
-  nSize = static_cast<HB_SIZE>(pGT->iHeight) * pGT->iWidth;
+  HB_SIZE nSize = static_cast<HB_SIZE>(pGT->iHeight) * pGT->iWidth;
 
   pGT->screenBuffer = static_cast<PHB_SCREENCELL>(hb_xgrab(sizeof(HB_SCREENCELL) * nSize));
   pGT->prevBuffer = static_cast<PHB_SCREENCELL>(hb_xgrabz(sizeof(HB_SCREENCELL) * nSize));
   pGT->pLines = static_cast<HB_BOOL *>(hb_xgrab(sizeof(HB_BOOL) * pGT->iHeight));
 
-  for (i = 0; i < pGT->iHeight; ++i) {
+  for (int32_t i = 0; i < pGT->iHeight; ++i) {
     pGT->pLines[i] = true;
   }
 
-  usChar = HB_GTSELF_GETCLEARCHAR(pGT);
-  iColor = HB_GTSELF_GETCLEARCOLOR(pGT);
-  bAttr = 0;
-  for (nIndex = 0; nIndex < nSize; ++nIndex) {
+  uint16_t usChar = HB_GTSELF_GETCLEARCHAR(pGT);
+  int32_t iColor = HB_GTSELF_GETCLEARCOLOR(pGT);
+  uint8_t bAttr = 0;
+  for (HB_SIZE nIndex = 0; nIndex < nSize; ++nIndex) {
     pGT->screenBuffer[nIndex].c.usChar = usChar;
     pGT->screenBuffer[nIndex].c.bColor = static_cast<uint8_t>(iColor);
     pGT->screenBuffer[nIndex].c.bAttr = bAttr;
