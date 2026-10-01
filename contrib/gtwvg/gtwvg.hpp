@@ -240,7 +240,7 @@ typedef struct
 
 } HB_GUIDATA, * PHB_GUIDATA;
 
-typedef struct
+struct HB_GTWVT
 {
    HB_GT *  pGT;                            // core GT pointer
    int32_t      iHandle;                        // window number
@@ -392,7 +392,7 @@ typedef struct
 
    HB_THREAD_NO threadNO;                   // Will hold the current THREAD No
 
-} HB_GTWVT, * PHB_GTWVT;
+};
 
 //-
 
@@ -503,9 +503,9 @@ extern HB_EXPORT INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message,
 extern HB_EXPORT void          hb_wvt_wvtCore(void);
 extern HB_EXPORT void          hb_wvt_wvtUtils(void);
 
-extern HB_EXPORT PHB_GTWVT     hb_wvt_gtGetWVT(void);
+extern HB_EXPORT HB_GTWVT     *hb_wvt_gtGetWVT(void);
 
-extern HB_EXPORT void          hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT *uRect);
+extern HB_EXPORT void          hb_gt_wvt_PaintGObjects(HB_GTWVT *pWVT, RECT *uRect);
 
 //-
 

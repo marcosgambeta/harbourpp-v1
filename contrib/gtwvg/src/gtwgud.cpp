@@ -77,7 +77,7 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
 #define HB_GTID_PTR (&s_GtId)
 
-#define HB_GTWVT_GET(p) ((PHB_GTWVT)HB_GTLOCAL(p))
+#define HB_GTWVT_GET(p) ((HB_GTWVT *)HB_GTLOCAL(p))
 
 #if defined(HB_USE_CPP_MUTEX)
 std::mutex wvgMtx;
@@ -89,7 +89,7 @@ static HB_CRITICAL_NEW(s_wvtMtx);
 #define HB_WVT_UNLOCK() hb_threadLeaveCriticalSection(&s_wvtMtx)
 #endif
 
-static PHB_GTWVT s_wvtWindows[WVT_MAX_WINDOWS];
+static HB_GTWVT *s_wvtWindows[WVT_MAX_WINDOWS];
 static int32_t s_wvtCount = 0;
 
 static const TCHAR s_szClassName[] = TEXT("Harbour_WVGGUI_Class");
@@ -121,10 +121,10 @@ static void hb_gt_wvt_RegisterClass(HINSTANCE hInstance)
   }
 }
 
-static PHB_GTWVT hb_gt_wvt_Find(HWND hWnd)
+static HB_GTWVT *hb_gt_wvt_Find(HWND hWnd)
 {
   int32_t iCount = s_wvtCount, iPos = 0;
-  PHB_GTWVT pWVT = nullptr;
+  HB_GTWVT *pWVT = nullptr;
 
   HB_WVT_LOCK();
 
@@ -144,7 +144,7 @@ static PHB_GTWVT hb_gt_wvt_Find(HWND hWnd)
   return pWVT;
 }
 
-static HB_BOOL hb_gt_wvt_Alloc(PHB_GTWVT pWVT)
+static HB_BOOL hb_gt_wvt_Alloc(HB_GTWVT *pWVT)
 {
   HB_BOOL fOK = false;
 
@@ -171,7 +171,7 @@ static HB_BOOL hb_gt_wvt_Alloc(PHB_GTWVT pWVT)
   return fOK;
 }
 
-static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
+static void hb_gt_wvt_Free(HB_GTWVT *pWVT)
 {
   HB_WVT_LOCK();
 
@@ -205,11 +205,11 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
   hb_xfree(pWVT);
 }
 
-static PHB_GTWVT hb_gt_wvt_New(HB_GT *pGT, HINSTANCE hInstance, int32_t iCmdShow)
+static HB_GTWVT *hb_gt_wvt_New(HB_GT *pGT, HINSTANCE hInstance, int32_t iCmdShow)
 {
-  PHB_GTWVT pWVT;
+  HB_GTWVT *pWVT;
 
-  pWVT = (PHB_GTWVT)hb_xgrab(sizeof(HB_GTWVT));
+  pWVT = (HB_GTWVT *)hb_xgrab(sizeof(HB_GTWVT));
   memset(pWVT, 0, sizeof(HB_GTWVT));
   pWVT->pGT = pGT;
 
@@ -288,7 +288,7 @@ static PHB_GTWVT hb_gt_wvt_New(HB_GT *pGT, HINSTANCE hInstance, int32_t iCmdShow
   return pWVT;
 }
 
-static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, HB_ITEM *pParams)
+static int32_t hb_gt_wvt_FireEvent(HB_GTWVT *pWVT, int32_t nEvent, HB_ITEM *pParams)
 {
   int32_t nResult = 0; // Unhandled
 
@@ -308,7 +308,7 @@ static int32_t hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int32_t nEvent, HB_ITEM *pPar
   return nResult;
 }
 
-static void hb_gt_wvt_FireMenuEvent(PHB_GTWVT pWVT, int32_t iMode, int32_t menuIndex)
+static void hb_gt_wvt_FireMenuEvent(HB_GTWVT *pWVT, int32_t iMode, int32_t menuIndex)
 {
   auto pEvParams = hb_itemNew(nullptr);
 
@@ -320,7 +320,7 @@ static void hb_gt_wvt_FireMenuEvent(PHB_GTWVT pWVT, int32_t iMode, int32_t menuI
 }
 
 // Functions for handling the input queues for the mouse and keyboard
-static void hb_gt_wvt_AddCharToInputQueue(PHB_GTWVT pWVT, int32_t iKey)
+static void hb_gt_wvt_AddCharToInputQueue(HB_GTWVT *pWVT, int32_t iKey)
 {
   int32_t iPos = pWVT->keyPointerIn;
 
@@ -351,7 +351,7 @@ static void hb_gt_wvt_AddCharToInputQueue(PHB_GTWVT pWVT, int32_t iKey)
 #endif
 }
 
-static HB_BOOL hb_gt_wvt_GetCharFromInputQueue(PHB_GTWVT pWVT, int32_t *iKey)
+static HB_BOOL hb_gt_wvt_GetCharFromInputQueue(HB_GTWVT *pWVT, int32_t *iKey)
 {
   if (pWVT->keyPointerOut != pWVT->keyPointerIn) {
     *iKey = pWVT->Keys[pWVT->keyPointerOut];
@@ -365,7 +365,7 @@ static HB_BOOL hb_gt_wvt_GetCharFromInputQueue(PHB_GTWVT pWVT, int32_t *iKey)
   return false;
 }
 
-static void hb_gt_wvt_TranslateKey(PHB_GTWVT pWVT, int32_t key, int32_t shiftkey, int32_t altkey, int32_t controlkey)
+static void hb_gt_wvt_TranslateKey(HB_GTWVT *pWVT, int32_t key, int32_t shiftkey, int32_t altkey, int32_t controlkey)
 {
   int32_t nVirtKey = GetKeyState(VK_MENU);
 
@@ -402,7 +402,7 @@ static int32_t hb_gt_wvt_key_ansi_to_oem(int32_t c)
   return *pszOem;
 }
 
-static int32_t hb_gt_wvt_SizeChanged(PHB_GTWVT pWVT)
+static int32_t hb_gt_wvt_SizeChanged(HB_GTWVT *pWVT)
 {
   auto pEvParams = hb_itemNew(nullptr);
   RECT rc;
@@ -425,7 +425,7 @@ static int32_t hb_gt_wvt_SizeChanged(PHB_GTWVT pWVT)
   return 0;
 }
 
-static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LPARAM lParam)
+static void hb_gt_wvt_MouseEvent(HB_GTWVT *pWVT, UINT message, WPARAM wParam, LPARAM lParam)
 {
   POINT xy;
   SHORT keyCode = 0;
@@ -525,7 +525,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
   }
 }
 
-static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LPARAM lParam)
+static HB_BOOL hb_gt_wvt_KeyEvent(HB_GTWVT *pWVT, UINT message, WPARAM wParam, LPARAM lParam)
 {
   switch (message) {
   case WM_KEYDOWN:
@@ -838,7 +838,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
 
 static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  PHB_GTWVT pWVT = hb_gt_wvt_Find(hWnd);
+  HB_GTWVT *pWVT = hb_gt_wvt_Find(hWnd);
 
   if (pWVT)
     switch (message) {
@@ -1055,7 +1055,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
   return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-static WPARAM hb_gt_wvt_ProcessMessages(PHB_GTWVT pWVT)
+static WPARAM hb_gt_wvt_ProcessMessages(HB_GTWVT *pWVT)
 {
   MSG msg;
 
@@ -1068,7 +1068,7 @@ static WPARAM hb_gt_wvt_ProcessMessages(PHB_GTWVT pWVT)
   return msg.wParam;
 }
 
-static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
+static HWND hb_gt_wvt_CreateWindow(HB_GTWVT *pWVT)
 {
   HWND hWnd, hWndParent;
 
@@ -1077,7 +1077,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
   if (pWVT->pPP->bConfigured) {
     HB_GT *pGTp = hb_gt_ItemBase(pWVT->pPP->pParentGT);
     if (pGTp) {
-      PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+      HB_GTWVT *pWVTp = HB_GTWVT_GET(pGTp);
       hWndParent = pWVTp->hWnd;
       hb_gt_BaseFree(pGTp);
 
@@ -1119,7 +1119,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
   return hWnd;
 }
 
-static HB_BOOL hb_gt_wvt_CreateConsoleWindow(PHB_GTWVT pWVT)
+static HB_BOOL hb_gt_wvt_CreateConsoleWindow(HB_GTWVT *pWVT)
 {
   if (!pWVT->hWnd) {
     RECT rc = {0, 0, 0, 0};
@@ -1154,7 +1154,7 @@ static void hb_gt_wvt_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   HANDLE hInstance;
   int32_t iCmdShow;
-  PHB_GTWVT pWVT;
+  HB_GTWVT *pWVT;
 
   if (!hb_winmainArgGet(&hInstance, nullptr, &iCmdShow)) {
     hInstance = GetModuleHandle(nullptr);
@@ -1187,7 +1187,7 @@ static void hb_gt_wvt_Exit(HB_GT *pGT)
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Exit(%p)", (void *)pGT));
 #endif
 
-  PHB_GTWVT pWVT;
+  HB_GTWVT *pWVT;
 
   pWVT = HB_GTWVT_GET(pGT);
   HB_GTSUPER_EXIT(pGT);
@@ -1205,7 +1205,7 @@ static int32_t hb_gt_wvt_ReadKey(HB_GT *pGT, int32_t iEventMask)
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_ReadKey(%p,%d)", (void *)pGT, iEventMask));
 #endif
 
-  PHB_GTWVT pWVT;
+  HB_GTWVT *pWVT;
   int32_t c = 0;
   HB_BOOL fKey;
 
@@ -1241,7 +1241,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Info(%p,%d,%p)", (void *)pGT, iType, (void *)pInfo));
 #endif
 
-  PHB_GTWVT pWVT;
+  HB_GTWVT *pWVT;
   int32_t iVal;
 
   pWVT = HB_GTWVT_GET(pGT);
@@ -1875,7 +1875,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_ENABLE: {
     HB_GT *pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp) {
-      PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+      HB_GTWVT *pWVTp = HB_GTWVT_GET(pGTp);
       EnableWindow(pWVTp->hWnd, TRUE);
       hb_gt_BaseFree(pGTp);
     }
@@ -1884,7 +1884,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_DISABLE: {
     HB_GT *pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp) {
-      PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+      HB_GTWVT *pWVTp = HB_GTWVT_GET(pGTp);
       EnableWindow(pWVTp->hWnd, FALSE);
       hb_gt_BaseFree(pGTp);
     }
@@ -1893,7 +1893,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_SETFOCUS: {
     HB_GT *pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp) {
-      PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+      HB_GTWVT *pWVTp = HB_GTWVT_GET(pGTp);
       SetFocus(pWVTp->hWnd);
       hb_gt_BaseFree(pGTp);
     }

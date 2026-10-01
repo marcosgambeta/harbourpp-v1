@@ -175,7 +175,7 @@ typedef struct
    int32_t       iWndType;
 } HB_GT_PARAMS, * PHB_GT_PARAMS;
 
-typedef struct
+struct HB_GTWVT
 {
    HB_GT *  pGT;                            // core GT pointer
    int32_t      iHandle;                        // window number
@@ -260,7 +260,7 @@ typedef struct
    int32_t       width;
    int32_t       height;
 
-} HB_GTWVT, * PHB_GTWVT;
+};
 
 //-
 
