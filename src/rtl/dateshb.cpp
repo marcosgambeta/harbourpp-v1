@@ -193,7 +193,7 @@ HB_FUNC(HB_DATE)
     hb_dateToday(&iYear, &iMonth, &iDay);
     hb_retd(iYear, iMonth, iDay);
   } else {
-    hb_retd(hb_parni(1), hb_parni(2), hb_parni(3));
+    hb_retd(hb_parni32(1), hb_parni32(2), hb_parni32(3));
   }
 }
 
@@ -204,8 +204,8 @@ HB_FUNC(HB_DATETIME)
     hb_timeStampGet(&lDate, &lTime);
     hb_rettdt(lDate, lTime);
   } else {
-    hb_rettdt(hb_dateEncode(hb_parni(1), hb_parni(2), hb_parni(3)),
-              hb_timeEncode(hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
+    hb_rettdt(hb_dateEncode(hb_parni32(1), hb_parni32(2), hb_parni32(3)),
+              hb_timeEncode(hb_parni32(4), hb_parni32(5), hb_parni32(6), hb_parni32(7)));
   }
 }
 

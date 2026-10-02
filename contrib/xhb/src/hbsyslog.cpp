@@ -124,7 +124,7 @@ HB_FUNC(HB_SYSLOGMESSAGE)
     WORD logval;
     void *hMsg;
     LPCTSTR lpMsg = HB_PARSTRDEF(1, &hMsg, nullptr);
-    switch (hb_parni(2)) {
+    switch (hb_parni32(2)) {
     case HB_LOG_CRITICAL:
       logval = EVENTLOG_ERROR_TYPE;
       break;
@@ -165,7 +165,7 @@ HB_FUNC(HB_SYSLOGMESSAGE)
 
   int32_t logval;
 
-  switch (hb_parni(2)) {
+  switch (hb_parni32(2)) {
   case HB_LOG_CRITICAL:
     logval = LOG_CRIT;
     break;

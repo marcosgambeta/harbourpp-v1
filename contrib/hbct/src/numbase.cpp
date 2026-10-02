@@ -122,7 +122,7 @@ HB_FUNC(NTOC)
   char szBuffer[256], *pszResult = nullptr;
   HB_MAXINT nValue = 0;
   auto iBase = hb_parnidef(2, 10);
-  auto iLen = hb_parni(3);
+  auto iLen = hb_parni32(3);
 
   if (iLen < 0 || iLen > static_cast<int32_t>(sizeof(szBuffer))) {
     iLen = sizeof(szBuffer);

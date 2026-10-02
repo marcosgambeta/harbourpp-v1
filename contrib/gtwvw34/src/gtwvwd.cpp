@@ -5334,7 +5334,7 @@ PWVW_GLO hb_gt_wvw()
 int32_t hb_gt_wvw_nWin_N(int32_t iPar)
 {
   if (s_wvw) {
-    int32_t nWin = HB_ISNUM(iPar) ? hb_parni(iPar) : (s_wvw->fMainCoordMode ? s_wvw->iNumWindows - 1 : s_wvw->iCurWindow);
+    int32_t nWin = HB_ISNUM(iPar) ? hb_parni32(iPar) : (s_wvw->fMainCoordMode ? s_wvw->iNumWindows - 1 : s_wvw->iCurWindow);
 
     return nWin >= 0 && nWin < s_wvw->iNumWindows ? nWin : 0;
   } else {
@@ -5350,7 +5350,7 @@ PWVW_WIN hb_gt_wvw_win(int32_t nWin)
 PWVW_WIN hb_gt_wvw_win_par()
 {
   if (s_wvw) {
-    int32_t nWin = HB_ISNUM(1) ? hb_parni(1) : (s_wvw->fMainCoordMode ? s_wvw->iNumWindows - 1 : s_wvw->iCurWindow);
+    int32_t nWin = HB_ISNUM(1) ? hb_parni32(1) : (s_wvw->fMainCoordMode ? s_wvw->iNumWindows - 1 : s_wvw->iCurWindow);
 
     return nWin >= 0 && nWin < s_wvw->iNumWindows ? s_wvw->pWin[nWin] : nullptr;
   } else {
@@ -6273,7 +6273,7 @@ HB_FUNC(WVW_ADDROWS)
   auto wvw_zer = hb_gt_wvw_win(0);
 
   if (wvw && wvw_win) {
-    auto iRows = hb_parni(2);
+    auto iRows = hb_parni32(2);
     int32_t height, width;
 
     RECT wi{}, ci{};
@@ -6387,7 +6387,7 @@ HB_FUNC(WVW_SETLINESPACING)
 
     hb_retni(iOldLineSpacing);
 
-    if (HB_ISNUM(2) && hb_parni(2) >= 0 && hb_parni(2) <= 40 &&
+    if (HB_ISNUM(2) && hb_parni32(2) >= 0 && hb_parni32(2) <= 40 &&
         /* nobody is crazy enough to use > 40 */ fmod(hb_parnd(2), 2) == 0) {
       RECT rcWorkArea{};
 
@@ -6395,7 +6395,7 @@ HB_FUNC(WVW_SETLINESPACING)
         int32_t height;
         int32_t maxHeight = rcWorkArea.bottom - rcWorkArea.top;
 
-        wvw_win->iLineSpacing = hb_parni(2);
+        wvw_win->iLineSpacing = hb_parni32(2);
         height = hb_gt_wvwCalcPixelHeight(wvw_win);
 
         /* TODO/WARNING: this height doesn't take Menu Bar into account */
@@ -6431,15 +6431,15 @@ HB_FUNC(WVW_SIZE_READY)
 
 HB_FUNC(WVW_KEYBOARD)
 {
-  hb_gt_wvw_AddCharToInputQueue(hb_parni(1));
+  hb_gt_wvw_AddCharToInputQueue(hb_parni32(1));
 }
 
 void hb_gt_wvw_GetCoord(PWVW_WIN wvw_win, int32_t iBase, int32_t iOffs, int32_t *piTop, int32_t *piLeft, int32_t *piBottom, int32_t *piRight)
 {
-  auto iTop = hb_parni(iBase);
-  auto iLeft = hb_parni(iBase + 1);
-  auto iBottom = hb_parni(iBase + 2);
-  auto iRight = hb_parni(iBase + 3);
+  auto iTop = hb_parni32(iBase);
+  auto iLeft = hb_parni32(iBase + 1);
+  auto iBottom = hb_parni32(iBase + 2);
+  auto iRight = hb_parni32(iBase + 3);
 
   int32_t iOffTop;
   int32_t iOffLeft;

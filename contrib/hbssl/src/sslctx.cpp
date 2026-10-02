@@ -184,9 +184,9 @@ HB_FUNC(SSL_CTX_SET_SSL_VERSION)
 
     if (ctx)
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      hb_retni(SSL_CTX_set_ssl_version(ctx, (SSL_METHOD *)hb_ssl_method_id_to_ptr(hb_parni(2))));
+      hb_retni(SSL_CTX_set_ssl_version(ctx, (SSL_METHOD *)hb_ssl_method_id_to_ptr(hb_parni32(2))));
 #else
-      hb_retni(SSL_CTX_set_ssl_version(ctx, hb_ssl_method_id_to_ptr(hb_parni(2))));
+      hb_retni(SSL_CTX_set_ssl_version(ctx, hb_ssl_method_id_to_ptr(hb_parni32(2))));
 #endif
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -277,7 +277,7 @@ HB_FUNC(SSL_CTX_SET_SESSION_CACHE_MODE)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      SSL_CTX_set_session_cache_mode(ctx, hb_parni(2));
+      SSL_CTX_set_session_cache_mode(ctx, hb_parni32(2));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -475,7 +475,7 @@ HB_FUNC(SSL_CTX_SESS_SET_CACHE_SIZE)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      SSL_CTX_sess_set_cache_size(ctx, hb_parni(2));
+      SSL_CTX_sess_set_cache_size(ctx, hb_parni32(2));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -486,7 +486,7 @@ HB_FUNC(SSL_CTX_SET_DEFAULT_READ_AHEAD)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      SSL_CTX_set_default_read_ahead(ctx, hb_parni(2));
+      SSL_CTX_set_default_read_ahead(ctx, hb_parni32(2));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -523,7 +523,7 @@ HB_FUNC(SSL_CTX_SET_QUIET_SHUTDOWN)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      SSL_CTX_set_quiet_shutdown(ctx, hb_parni(2));
+      SSL_CTX_set_quiet_shutdown(ctx, hb_parni32(2));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -619,7 +619,7 @@ HB_FUNC(SSL_CTX_USE_CERTIFICATE_FILE)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      hb_retni(SSL_CTX_use_certificate_file(ctx, hb_parc(2), hb_parni(3)));
+      hb_retni(SSL_CTX_use_certificate_file(ctx, hb_parc(2), hb_parni32(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -641,7 +641,7 @@ HB_FUNC(SSL_CTX_USE_PRIVATEKEY_FILE)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      hb_retni(SSL_CTX_use_PrivateKey_file(ctx, hb_parc(2), hb_parni(3)));
+      hb_retni(SSL_CTX_use_PrivateKey_file(ctx, hb_parc(2), hb_parni32(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -669,7 +669,7 @@ HB_FUNC(SSL_CTX_USE_RSAPRIVATEKEY_FILE)
     SSL_CTX *ctx = hb_SSL_CTX_par(1);
 
     if (ctx)
-      hb_retni(SSL_CTX_use_RSAPrivateKey_file(ctx, hb_parc(2), hb_parni(3)));
+      hb_retni(SSL_CTX_use_RSAPrivateKey_file(ctx, hb_parc(2), hb_parni32(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else
@@ -699,7 +699,7 @@ HB_FUNC(SSL_CTX_USE_PRIVATEKEY_ASN1)
 
     if (ctx)
       hb_retni(
-          SSL_CTX_use_PrivateKey_ASN1(hb_parni(1), ctx, (HB_SSL_CONST unsigned char *)hb_parc(3), (int32_t)hb_parclen(3)));
+          SSL_CTX_use_PrivateKey_ASN1(hb_parni32(1), ctx, (HB_SSL_CONST unsigned char *)hb_parc(3), (int32_t)hb_parclen(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

@@ -95,7 +95,7 @@ HB_FUNC(HB_GTINFO)
     gtInfo.pNewVal2 = hb_param(3, Harbour::Item::ANY);
     gtInfo.pResult = nullptr;
 
-    hb_gtInfo(hb_parni(1), &gtInfo);
+    hb_gtInfo(hb_parni32(1), &gtInfo);
     if (gtInfo.pResult) {
       hb_itemReturnRelease(gtInfo.pResult);
     }
@@ -106,26 +106,26 @@ HB_FUNC(HB_GTINFO)
 
 HB_FUNC(HB_GTVERSION)
 {
-  hb_retc_const(hb_gtVersion(hb_parni(1)));
+  hb_retc_const(hb_gtVersion(hb_parni32(1)));
 }
 
 HB_FUNC(HB_GTALERT)
 {
   hb_retni(hb_gtAlert(hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY),
-                      HB_ISCHAR(3) ? hb_gtColorToN(hb_parc(3)) : hb_parni(3) /* iClrNorm */,
-                      HB_ISCHAR(4) ? hb_gtColorToN(hb_parc(4)) : hb_parni(4) /* iClrHigh */, hb_parnd(5)));
+                      HB_ISCHAR(3) ? hb_gtColorToN(hb_parc(3)) : hb_parni32(3) /* iClrNorm */,
+                      HB_ISCHAR(4) ? hb_gtColorToN(hb_parc(4)) : hb_parni32(4) /* iClrHigh */, hb_parnd(5)));
 }
 
 HB_FUNC(HB_GFXPRIMITIVE)
 {
-  hb_retni(hb_gtGfxPrimitive(hb_parni(1) /* nType   */, hb_parni(2) /* nTop    */, hb_parni(3) /* nLeft   */,
-                             hb_parni(4) /* nBottom */, hb_parni(5) /* nRight  */, hb_parni(6) /* nColor  */));
+  hb_retni(hb_gtGfxPrimitive(hb_parni32(1) /* nType   */, hb_parni32(2) /* nTop    */, hb_parni32(3) /* nLeft   */,
+                             hb_parni32(4) /* nBottom */, hb_parni32(5) /* nRight  */, hb_parni32(6) /* nColor  */));
 }
 
 HB_FUNC(HB_GFXTEXT)
 {
-  hb_gtGfxText(hb_parni(1) /* nTop   */, hb_parni(2) /* nLeft  */, hb_parc(3) /* cText  */, hb_parni(4) /* nColor */,
-               hb_parni(5) /* nSize  */, hb_parni(6) /* nWidth */);
+  hb_gtGfxText(hb_parni32(1) /* nTop   */, hb_parni32(2) /* nLeft  */, hb_parc(3) /* cText  */, hb_parni32(4) /* nColor */,
+               hb_parni32(5) /* nSize  */, hb_parni32(6) /* nWidth */);
 }
 
 HB_FUNC(HB_GTLOCK)

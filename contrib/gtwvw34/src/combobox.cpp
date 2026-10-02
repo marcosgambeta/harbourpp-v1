@@ -268,9 +268,9 @@ HB_FUNC(WVW_CBCREATE)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw && wvw_win) {
-    auto iWidth = hb_parni(4);
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
+    auto iWidth = hb_parni32(4);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
     int32_t iBottom = iTop;
     int32_t iRight = iLeft + iWidth - 1;
 
@@ -322,7 +322,7 @@ HB_FUNC(WVW_CBCREATE)
     InitCommonControls();
 
     HWND hWnd = CreateWindowEx(
-        0, TEXT("COMBOBOX"), nullptr, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL | hb_parni(12) /* nStyle */,
+        0, TEXT("COMBOBOX"), nullptr, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL | hb_parni32(12) /* nStyle */,
         iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, wvw_win->hWnd,
         reinterpret_cast<HMENU>(static_cast<uintptr_t>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
 
@@ -390,7 +390,7 @@ HB_FUNC(WVW_CBDESTROY)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto nCtrlId = hb_parni(2);
+    auto nCtrlId = hb_parni32(2);
     auto wvw_ctl = wvw_win->ctlList;
     PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -427,7 +427,7 @@ set the focus to combobox nComboId in window nWinNum
 */
 HB_FUNC(WVW_CBSETFOCUS)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, hb_parni32(2), nullptr);
   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
@@ -437,7 +437,7 @@ returns .T. if the focus is on combobox nComboId in window nWinNum
 */
 HB_FUNC(WVW_CBISFOCUSED)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, hb_parni32(2), nullptr);
   hb_retl(hWnd && GetFocus() == hWnd);
 }
 
@@ -452,7 +452,7 @@ HB_FUNC(WVW_CBENABLE)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hb_parni32(2), nullptr);
 
   if (hWnd) {
     bool fEnable = hb_parldef(3, true);
@@ -474,7 +474,7 @@ return .T. if successful
 */
 HB_FUNC(WVW_CBSETCODEBLOCK)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni32(2));
   auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
 
   if (pBlock && wvw_ctl && !wvw_ctl->fBusy) {
@@ -572,8 +572,8 @@ NOTE: the better name to this function should be wvw_cbSetCurSel()
 */
 HB_FUNC(WVW_CBSETINDEX)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
-  auto iIndex = hb_parni(3);
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni32(2));
+  auto iIndex = hb_parni32(3);
   hb_retl((wvw_ctl && iIndex >= 0) ? SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0) == iIndex
                                    : false);
 }
@@ -592,7 +592,7 @@ NOTE: the better name to this function should be WVW_CBgetCurSel()
 */
 HB_FUNC(WVW_CBGETINDEX)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni32(2));
   hb_retni(wvw_ctl ? static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0)) : CB_ERR);
 }
 
@@ -605,7 +605,7 @@ NOTE:case insensitive
 */
 HB_FUNC(WVW_CBFINDSTRING)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni32(2));
 
   if (wvw_ctl) {
     void *hStr;
@@ -624,7 +624,7 @@ returns "" if none selected
 */
 HB_FUNC(WVW_CBGETCURTEXT)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni32(2));
 
   if (wvw_ctl) {
     auto iCurSel = static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
@@ -656,12 +656,12 @@ Also returns .F. if nCBid not valid
 */
 HB_FUNC(WVW_CBISDROPPED)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni32(2));
   hb_retl(wvw_ctl ? static_cast<bool>(SendMessage(wvw_ctl->hWnd, CB_GETDROPPEDSTATE, 0, 0)) : false);
 }
 
 HB_FUNC(WVW_CBVISIBLE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, hb_parni32(2), nullptr);
   hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

@@ -96,13 +96,13 @@ HB_FUNC(WVW_PBCREATE)
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   /* int32_t   iStyle; */
   UINT uiPBid;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   LPCTSTR lpszCaption = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
   char *szBitmap = HB_ISCHAR(7) ? const_cast<char *>(hb_parcx(7)) : nullptr;
-  UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
+  UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni32(7)) : 0;
   double dStretch = !HB_ISNIL(10) ? hb_parnd(10) : 1;
   BOOL bMap3Dcolors = HB_ISLOG(11) ? static_cast<BOOL>(hb_parl(11)) : FALSE;
 
@@ -129,7 +129,7 @@ HB_FUNC(WVW_PBDESTROY)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
   CONTROL_DATA *pcdPrev = nullptr;
 
@@ -166,7 +166,7 @@ HB_FUNC(WVW_PBDESTROY)
 HB_FUNC(WVW_PBSETFOCUS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   byte bStyle;
   auto hWndPB = FindControlHandle(usWinNum, WVW_CONTROL_PUSHBUTTON, uiCtrlId, &bStyle);
 
@@ -183,7 +183,7 @@ HB_FUNC(WVW_PBSETFOCUS)
 HB_FUNC(WVW_PBISFOCUSED)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   byte bStyle;
   auto hWndPB = FindControlHandle(usWinNum, WVW_CONTROL_PUSHBUTTON, uiCtrlId, &bStyle);
 
@@ -199,7 +199,7 @@ HB_FUNC(WVW_PBISFOCUSED)
 HB_FUNC(WVW_PBENABLE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   BOOL bEnable = HB_ISNIL(3) ? TRUE : hb_parl(3);
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   byte bStyle;
@@ -225,7 +225,7 @@ HB_FUNC(WVW_PBSETCODEBLOCK)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pData = hb_getWvwData();
-  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
   auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
   BOOL bOldSetting = pData->s_bRecurseCBlock;
@@ -282,8 +282,8 @@ HB_FUNC(WVW_PBSETSTYLE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
-  auto ulStyle = static_cast<ULONG>(HB_ISNIL(3) ? 0 : hb_parni(3));
+  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
+  auto ulStyle = static_cast<ULONG>(HB_ISNIL(3) ? 0 : hb_parni32(3));
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
 
   if (pcd->hWndCtrl) {
@@ -307,16 +307,16 @@ HB_FUNC(WVW_PBSETFONT)
   BOOL retval = TRUE;
 
   pData->s_lfPB.lfHeight = HB_ISNIL(3) ? pWindowData->fontHeight - 2 : hb_parnl(3);
-  pData->s_lfPB.lfWidth = HB_ISNIL(4) ? pData->s_lfPB.lfWidth : hb_parni(4);
+  pData->s_lfPB.lfWidth = HB_ISNIL(4) ? pData->s_lfPB.lfWidth : hb_parni32(4);
   pData->s_lfPB.lfEscapement = 0;
   pData->s_lfPB.lfOrientation = 0;
-  pData->s_lfPB.lfWeight = HB_ISNIL(5) ? pData->s_lfPB.lfWeight : hb_parni(5);
+  pData->s_lfPB.lfWeight = HB_ISNIL(5) ? pData->s_lfPB.lfWeight : hb_parni32(5);
   pData->s_lfPB.lfItalic = HB_ISNIL(7) ? pData->s_lfPB.lfItalic : static_cast<BYTE>(hb_parl(7));
   pData->s_lfPB.lfUnderline = HB_ISNIL(8) ? pData->s_lfPB.lfUnderline : static_cast<BYTE>(hb_parl(8));
   pData->s_lfPB.lfStrikeOut = HB_ISNIL(9) ? pData->s_lfPB.lfStrikeOut : static_cast<BYTE>(hb_parl(9));
   pData->s_lfPB.lfCharSet = DEFAULT_CHARSET;
 
-  pData->s_lfPB.lfQuality = HB_ISNIL(6) ? pData->s_lfPB.lfQuality : static_cast<BYTE>(hb_parni(6));
+  pData->s_lfPB.lfQuality = HB_ISNIL(6) ? pData->s_lfPB.lfQuality : static_cast<BYTE>(hb_parni32(6));
   pData->s_lfPB.lfPitchAndFamily = FF_DONTCARE;
   if (HB_ISCHAR(2)) {
     strcpy(pData->s_lfPB.lfFaceName, hb_parcx(2));
@@ -414,18 +414,18 @@ HB_FUNC(WVW_CBCREATE)
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
 
   UINT uiCBid;
-  auto usWidth = static_cast<uint16_t>(hb_parni(4));
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usWidth = static_cast<uint16_t>(hb_parni32(4));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
   uint16_t usBottom = usTop;
   uint16_t usRight = usLeft + usWidth - 1;
   auto usNumElement = static_cast<uint16_t>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, Harbour::Item::ARRAY)) : 0);
-  auto usListLines = static_cast<uint16_t>(HB_ISNUM(7) ? hb_parni(7) : 3);
+  auto usListLines = static_cast<uint16_t>(HB_ISNUM(7) ? hb_parni32(7) : 3);
   BYTE byCharHeight = hb_wvw_LineHeight(pWindowData);
 
   /* in the future combobox type might be selectable by 8th parameter */
   int32_t iStyle = CBS_DROPDOWNLIST | WS_VSCROLL;
-  BYTE bKbdType = HB_ISNUM(9) ? static_cast<BYTE>(hb_parni(9)) : static_cast<BYTE>(WVW_CB_KBD_STANDARD);
+  BYTE bKbdType = HB_ISNUM(9) ? static_cast<BYTE>(hb_parni32(9)) : static_cast<BYTE>(WVW_CB_KBD_STANDARD);
 
   if (pWindowData->hCBfont == nullptr) {
     pWindowData->hCBfont = CreateFontIndirect(&pData->s_lfCB);
@@ -540,7 +540,7 @@ HB_FUNC(WVW_CBDESTROY)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto uiCBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiCBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
   auto pcdPrev = static_cast<CONTROL_DATA *>(nullptr);
 
@@ -577,7 +577,7 @@ HB_FUNC(WVW_CBDESTROY)
 HB_FUNC(WVW_CBSETFOCUS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   byte bStyle;
   auto hWndCB = FindControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, uiCtrlId, &bStyle);
 
@@ -594,7 +594,7 @@ HB_FUNC(WVW_CBSETFOCUS)
 HB_FUNC(WVW_CBISFOCUSED)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   byte bStyle;
   auto hWndCB = FindControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, uiCtrlId, &bStyle);
 
@@ -610,7 +610,7 @@ HB_FUNC(WVW_CBISFOCUSED)
 HB_FUNC(WVW_CBENABLE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   BOOL bEnable = HB_ISNIL(3) ? TRUE : hb_parl(3);
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   byte bStyle;
@@ -636,7 +636,7 @@ HB_FUNC(WVW_CBSETCODEBLOCK)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  auto uiCBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiCBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
   auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
   auto pData = hb_getWvwData();
@@ -678,16 +678,16 @@ HB_FUNC(WVW_CBSETFONT)
   BOOL retval = TRUE;
 
   pData->s_lfCB.lfHeight = HB_ISNIL(3) ? pWindowData->fontHeight - 2 : hb_parnl(3);
-  pData->s_lfCB.lfWidth = HB_ISNIL(4) ? pData->s_lfCB.lfWidth : hb_parni(4);
+  pData->s_lfCB.lfWidth = HB_ISNIL(4) ? pData->s_lfCB.lfWidth : hb_parni32(4);
   pData->s_lfCB.lfEscapement = 0;
   pData->s_lfCB.lfOrientation = 0;
-  pData->s_lfCB.lfWeight = HB_ISNIL(5) ? pData->s_lfCB.lfWeight : hb_parni(5);
+  pData->s_lfCB.lfWeight = HB_ISNIL(5) ? pData->s_lfCB.lfWeight : hb_parni32(5);
   pData->s_lfCB.lfItalic = HB_ISNIL(7) ? pData->s_lfCB.lfItalic : static_cast<BYTE>(hb_parl(7));
   pData->s_lfCB.lfUnderline = HB_ISNIL(8) ? pData->s_lfCB.lfUnderline : static_cast<BYTE>(hb_parl(8));
   pData->s_lfCB.lfStrikeOut = HB_ISNIL(9) ? pData->s_lfCB.lfStrikeOut : static_cast<BYTE>(hb_parl(9));
   pData->s_lfCB.lfCharSet = DEFAULT_CHARSET;
 
-  pData->s_lfCB.lfQuality = HB_ISNIL(6) ? pData->s_lfCB.lfQuality : static_cast<BYTE>(hb_parni(6));
+  pData->s_lfCB.lfQuality = HB_ISNIL(6) ? pData->s_lfCB.lfQuality : static_cast<BYTE>(hb_parni32(6));
   pData->s_lfCB.lfPitchAndFamily = FF_DONTCARE;
   if (HB_ISCHAR(2)) {
     strcpy(pData->s_lfCB.lfFaceName, hb_parcx(2));
@@ -732,8 +732,8 @@ HB_FUNC(WVW_CBSETINDEX)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  UINT uiCBid = hb_parni(2);
-  auto iIndex = hb_parni(3);
+  UINT uiCBid = hb_parni32(2);
+  auto iIndex = hb_parni32(3);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
   BOOL retval;
 
@@ -761,7 +761,7 @@ HB_FUNC(WVW_CBGETINDEX)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  UINT uiCBid = hb_parni(2);
+  UINT uiCBid = hb_parni32(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
   int32_t retval;
 
@@ -785,7 +785,7 @@ HB_FUNC(WVW_CBFINDSTRING)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  UINT uiCBid = hb_parni(2);
+  UINT uiCBid = hb_parni32(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
   int32_t retval;
 
@@ -808,7 +808,7 @@ HB_FUNC(WVW_CBGETCURTEXT)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  UINT uiCBid = hb_parni(2);
+  UINT uiCBid = hb_parni32(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
   int32_t iCurSel, iTextLen;
   LPTSTR lptstr = nullptr;
@@ -844,7 +844,7 @@ HB_FUNC(WVW_CBISDROPPED)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  UINT uiCBid = hb_parni(2);
+  UINT uiCBid = hb_parni32(2);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
 
   if (pcd == nullptr) {

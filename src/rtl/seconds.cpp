@@ -56,7 +56,7 @@ HB_FUNC(SECONDS)
 
 HB_FUNC(HB_SECONDSCPU)
 {
-  hb_retnd(hb_secondsCPU(hb_parni(1)));
+  hb_retnd(hb_secondsCPU(hb_parni32(1)));
 }
 
 HB_FUNC(HB_MILLISECONDS)

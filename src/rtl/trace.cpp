@@ -114,7 +114,7 @@ HB_FUNC(HB_TRACELOGLEVEL)
   int32_t iOldLevel = s_traceLogLevel;
 
   if (HB_ISNUM(1)) {
-    auto iLevel = hb_parni(1);
+    auto iLevel = hb_parni32(1);
     if (iLevel >= HB_TR_ALWAYS && iLevel < HB_TR_LAST) {
       s_traceLogLevel = iLevel;
     }
@@ -137,7 +137,7 @@ HB_FUNC(HB_TRACELOG)
 HB_FUNC(HB_TRACELOGAT)
 {
   if (HB_ISNUM(1)) {
-    auto iLevel = hb_parni(1);
+    auto iLevel = hb_parni32(1);
 
     if (iLevel <= hb_tr_level()) {
       char message[1024];

@@ -1897,7 +1897,7 @@ HB_FUNC(__OLEENUMNEXT)
 
     VariantInit(&variant);
     if (HB_VTBL(pEnum)->Next(HB_THIS_(pEnum) 1, &variant, nullptr) == S_OK) {
-      hb_oleVariantToItemEx(hb_stackReturnItem(), &variant, static_cast<uint16_t>(hb_parni(3)));
+      hb_oleVariantToItemEx(hb_stackReturnItem(), &variant, static_cast<uint16_t>(hb_parni32(3)));
       VariantClear(&variant);
       fResult = true;
     }
@@ -2432,7 +2432,7 @@ HB_FUNC(__OLEVARIANTGETTYPE)
 // __oleVariantNew(<nVariantType>, [<xInitValue>], [<nDims,...>]) --> <pVariant>
 HB_FUNC(__OLEVARIANTNEW)
 {
-  auto iType = hb_parni(1);
+  auto iType = hb_parni32(1);
   auto pInit = hb_param(2, Harbour::Item::ANY);
   IDispatch *pDisp;
   VARIANT variant;

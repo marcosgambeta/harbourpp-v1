@@ -425,7 +425,7 @@ static int32_t s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen
   hb_vmPushNumInt(static_cast<HB_MAXINT>(nLen));
   hb_vmPushInteger(iType);
   hb_vmDo(4);
-  return hb_parni(-1);
+  return hb_parni32(-1);
 }
 
 static HB_SIZE s_fileRead(PHB_FILE pFile, void *data, HB_SIZE nSize, HB_MAXINT timeout)
@@ -661,9 +661,9 @@ HB_FUNC(IOUSR_SETERROR)
   HB_ERRCODE errCodePrev = hb_fsError();
 
   if (HB_ISNUM(1)) {
-    auto errCodeNew = static_cast<HB_ERRCODE>(hb_parni(1));
+    auto errCodeNew = static_cast<HB_ERRCODE>(hb_parni32(1));
     if (errCodeNew != 0) {
-      errCodeNew += static_cast<HB_ERRCODE>(hb_parni(2));
+      errCodeNew += static_cast<HB_ERRCODE>(hb_parni32(2));
     }
     hb_fsSetError(errCodeNew);
   }

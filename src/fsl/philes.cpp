@@ -371,7 +371,7 @@ HB_FUNC(HB_FLOCK)
   if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     fResult = hb_fsLockLarge(hb_numToHandle(hb_parnint(1)), static_cast<HB_FOFFSET>(hb_parnint(2)),
                              static_cast<HB_FOFFSET>(hb_parnint(3)),
-                             FL_LOCK | (static_cast<uint16_t>(hb_parni(4)) & ~FL_MASK));
+                             FL_LOCK | (static_cast<uint16_t>(hb_parni32(4)) & ~FL_MASK));
     uiError = hb_fsError();
   }
   hb_fsSetFError(uiError);
@@ -467,7 +467,7 @@ HB_FUNC(HB_FSETDEVMODE)
   int32_t iRet = -1;
 
   if (HB_ISNUM(1)) {
-    iRet = hb_fsSetDevMode(hb_numToHandle(hb_parnint(1)), hb_parni(2));
+    iRet = hb_fsSetDevMode(hb_numToHandle(hb_parnint(1)), hb_parni32(2));
     hb_fsSetFError(hb_fsError());
   } else {
     hb_fsSetFError(6); /* ERROR_INVALID_HANDLE */

@@ -55,7 +55,7 @@
 HB_FUNC(HPDF_LINKANNOT_SETHIGHLIGHTMODE)
 {
   hb_retnl(static_cast<long>(HPDF_LinkAnnot_SetHighlightMode(static_cast<HPDF_Annotation>(hb_parptr(1)),
-                                                             static_cast<HPDF_AnnotHighlightMode>(hb_parni(2)))));
+                                                             static_cast<HPDF_AnnotHighlightMode>(hb_parni32(2)))));
 }
 
 /* HPDF_LinkAnnot_SetBorderStyle( hAnnot, nWidth, nDashOn, nDashOff ) --> hStatus */
@@ -63,7 +63,7 @@ HB_FUNC(HPDF_LINKANNOT_SETBORDERSTYLE)
 {
   hb_retnl(static_cast<long>(
       HPDF_LinkAnnot_SetBorderStyle(static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_REAL>(hb_parnd(2)),
-                                    static_cast<HPDF_UINT16>(hb_parni(3)), static_cast<HPDF_UINT16>(hb_parni(4)))));
+                                    static_cast<HPDF_UINT16>(hb_parni32(3)), static_cast<HPDF_UINT16>(hb_parni32(4)))));
 }
 
 /* HPDF_TextAnnot_SetIcon( hAnnot, nIconID ) --> hStatus
@@ -79,7 +79,7 @@ HB_FUNC(HPDF_LINKANNOT_SETBORDERSTYLE)
 HB_FUNC(HPDF_TEXTANNOT_SETICON)
 {
   hb_retnl(static_cast<long>(
-      HPDF_TextAnnot_SetIcon(static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_AnnotIcon>(hb_parni(2)))));
+      HPDF_TextAnnot_SetIcon(static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_AnnotIcon>(hb_parni32(2)))));
 }
 
 /* HPDF_TextAnnot_SetOpened(hAnnot, lOpened) --> hStatus */
@@ -146,7 +146,7 @@ HB_FUNC(HPDF_PAGE_CREATETEXTMARKUPANNOT)
 
   hb_retptr(HPDF_Page_CreateTextMarkupAnnot(static_cast<HPDF_Page>(hb_parptr(1)), rc, hb_parc(3),
                                             static_cast<HPDF_Encoder>(hb_parptr(4)),
-                                            static_cast<HPDF_AnnotType>(hb_parni(5))));
+                                            static_cast<HPDF_AnnotType>(hb_parni32(5))));
 #else
   hb_retptr(nullptr);
 #endif
@@ -283,7 +283,7 @@ HB_FUNC(HPDF_PAGE_CREATESTAMPANNOT)
   rc.bottom = static_cast<HPDF_REAL>(hb_parvnd(2, 4));
 
   hb_retptr(HPDF_Page_CreateStampAnnot(static_cast<HPDF_Page>(hb_parptr(1)), rc,
-                                       static_cast<HPDF_StampAnnotName>(hb_parni(3)), hb_parc(4),
+                                       static_cast<HPDF_StampAnnotName>(hb_parni32(3)), hb_parc(4),
                                        static_cast<HPDF_Encoder>(hb_parptr(5))));
 #else
   hb_retptr(nullptr);
@@ -464,7 +464,7 @@ HB_FUNC(HPDF_MARKUPANNOT_SETINTENT)
 {
 #if HB_HPDF_VERS(2, 2, 0)
   hb_retnl(static_cast<long>(HPDF_MarkupAnnot_SetIntent(static_cast<HPDF_Annotation>(hb_parptr(1)),
-                                                        static_cast<HPDF_AnnotIntent>(hb_parni(2)))));
+                                                        static_cast<HPDF_AnnotIntent>(hb_parni32(2)))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
@@ -509,7 +509,7 @@ HB_FUNC(HPDF_MARKUPANNOT_SETCLOUDEFFECT)
 {
 #if HB_HPDF_VERS(2, 2, 0)
   hb_retnl(static_cast<long>(
-      HPDF_MarkupAnnot_SetCloudEffect(static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_INT>(hb_parni(2)))));
+      HPDF_MarkupAnnot_SetCloudEffect(static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_INT>(hb_parni32(2)))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
@@ -647,8 +647,8 @@ HB_FUNC(HPDF_FREETEXTANNOT_SETLINEENDINGSTYLE)
 {
 #if HB_HPDF_VERS(2, 2, 0)
   hb_retnl(static_cast<long>(HPDF_FreeTextAnnot_SetLineEndingStyle(
-      static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_LineAnnotEndingStyle>(hb_parni(2)),
-      static_cast<HPDF_LineAnnotEndingStyle>(hb_parni(3)))));
+      static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_LineAnnotEndingStyle>(hb_parni32(2)),
+      static_cast<HPDF_LineAnnotEndingStyle>(hb_parni32(3)))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
@@ -734,8 +734,8 @@ HB_FUNC(HPDF_LINEANNOT_SETPOSITION)
   p2.y = static_cast<HPDF_REAL>(hb_parvnd(4, 2));
 
   hb_retnl(static_cast<long>(HPDF_LineAnnot_SetPosition(static_cast<HPDF_Annotation>(hb_parptr(1)), p1,
-                                                        static_cast<HPDF_LineAnnotEndingStyle>(hb_parni(3)), p2,
-                                                        static_cast<HPDF_LineAnnotEndingStyle>(hb_parni(5)))));
+                                                        static_cast<HPDF_LineAnnotEndingStyle>(hb_parni32(3)), p2,
+                                                        static_cast<HPDF_LineAnnotEndingStyle>(hb_parni32(5)))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
@@ -749,7 +749,7 @@ HB_FUNC(HPDF_LINEANNOT_SETLEADER)
 {
 #if HB_HPDF_VERS(2, 2, 0)
   hb_retnl(static_cast<long>(
-      HPDF_LineAnnot_SetLeader(static_cast<HPDF_Annotation>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4))));
+      HPDF_LineAnnot_SetLeader(static_cast<HPDF_Annotation>(hb_parptr(1)), hb_parni32(2), hb_parni32(3), hb_parni32(4))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
@@ -763,8 +763,8 @@ HB_FUNC(HPDF_LINEANNOT_SETCAPTION)
 {
 #if HB_HPDF_VERS(2, 2, 0)
   hb_retnl(static_cast<long>(HPDF_LineAnnot_SetCaption(static_cast<HPDF_Annotation>(hb_parptr(1)), hb_parl(2),
-                                                       static_cast<HPDF_LineAnnotCapPosition>(hb_parni(3)), hb_parni(4),
-                                                       hb_parni(5))));
+                                                       static_cast<HPDF_LineAnnotCapPosition>(hb_parni32(3)), hb_parni32(4),
+                                                       hb_parni32(5))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
@@ -782,9 +782,9 @@ HB_FUNC(HPDF_ANNOTATION_SETBORDERSTYLE)
 {
 #if HB_HPDF_VERS(2, 2, 0)
   hb_retnl(static_cast<long>(HPDF_Annotation_SetBorderStyle(
-      static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_BSSubtype>(hb_parni(2)),
-      static_cast<HPDF_REAL>(hb_parnd(3)), static_cast<HPDF_UINT16>(hb_parni(4)), static_cast<HPDF_UINT16>(hb_parni(5)),
-      static_cast<HPDF_UINT16>(hb_parni(6)))));
+      static_cast<HPDF_Annotation>(hb_parptr(1)), static_cast<HPDF_BSSubtype>(hb_parni32(2)),
+      static_cast<HPDF_REAL>(hb_parnd(3)), static_cast<HPDF_UINT16>(hb_parni32(4)), static_cast<HPDF_UINT16>(hb_parni32(5)),
+      static_cast<HPDF_UINT16>(hb_parni32(6)))));
 #else
   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif

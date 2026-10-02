@@ -1689,7 +1689,7 @@ HB_FUNC(HB_SERIALIZE)
 
     int32_t iFlags;
     if (HB_ISNUM(2)) {
-      iFlags = hb_parni(2);
+      iFlags = hb_parni32(2);
     } else {
       iFlags = hb_parl(2) ? HB_SERIALIZE_NUMSIZE : 0;
     }

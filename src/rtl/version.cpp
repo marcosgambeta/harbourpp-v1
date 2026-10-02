@@ -63,7 +63,7 @@ HB_FUNC(VERSION)
 
 HB_FUNC(HB_VERSION)
 {
-  switch (hb_parni(1)) {
+  switch (hb_parni32(1)) {
   case HB_VERSION_URL_BASE:
     hb_retc_const("https://github.com/harbour/core/");
     break;

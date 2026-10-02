@@ -169,8 +169,8 @@ HB_FUNC(WIN_DRAWBITMAP)
     const BITMAPINFO *pbmi = nullptr;
     const BYTE *pBits = nullptr;
 
-    auto iWidth = hb_parni(7);
-    auto iHeight = hb_parni(8);
+    auto iWidth = hb_parni32(7);
+    auto iHeight = hb_parni32(8);
 
     if (iType == HB_WIN_BITMAP_BMP) {
       pbmi = reinterpret_cast<const BITMAPINFO *>(pbmfh + 1);
@@ -200,7 +200,7 @@ HB_FUNC(WIN_DRAWBITMAP)
 
     if (pbmi && pBits) {
       SetStretchBltMode(hDC, COLORONCOLOR);
-      hb_retl(StretchDIBits(hDC, hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), 0, 0, iWidth, iHeight, pBits, pbmi,
+      hb_retl(StretchDIBits(hDC, hb_parni32(3), hb_parni32(4), hb_parni32(5), hb_parni32(6), 0, 0, iWidth, iHeight, pBits, pbmi,
                             DIB_RGB_COLORS, SRCCOPY) != static_cast<int32_t>(GDI_ERROR));
     } else {
       hb_retl(false);

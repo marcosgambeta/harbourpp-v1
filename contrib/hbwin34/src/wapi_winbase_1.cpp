@@ -190,7 +190,7 @@ HB_FUNC(WAPI_GETMODULEHANDLE)
 
 HB_FUNC(WAPI_MULDIV)
 {
-  hb_retni(MulDiv(hb_parni(1), hb_parni(2), hb_parni(3)));
+  hb_retni(MulDiv(hb_parni32(1), hb_parni32(2), hb_parni32(3)));
 }
 
 typedef DWORD(WINAPI *_HB_GETPATHNAME)(LPCTSTR, LPTSTR, DWORD);

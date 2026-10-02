@@ -92,7 +92,7 @@ HB_FUNC(TIMEOFDAY)
   if (hb_pcount() == 0) {
     hb_dateTimeStr(szResult);
   } else {
-    auto iSeconds = hb_parni(1);
+    auto iSeconds = hb_parni32(1);
     iSeconds %= 3600 * 24;
     hb_snprintf(szResult, sizeof(szResult), "%02d:%02d:%02d", iSeconds / 3600, (iSeconds % 3600) / 60, iSeconds % 60);
   }
@@ -102,8 +102,8 @@ HB_FUNC(TIMEOFDAY)
 
 HB_FUNC(HMS2D)
 {
-  auto iHour = hb_parni(1);
-  auto iMin = hb_parni(2);
+  auto iHour = hb_parni32(1);
+  auto iMin = hb_parni32(2);
   auto dSec = hb_parnd(3);
 
   hb_retnd(hb_timeEncode(

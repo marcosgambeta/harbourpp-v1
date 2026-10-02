@@ -54,11 +54,11 @@ static void hb_getScreenRange(int32_t *piMin, int32_t *piMax, HB_BOOL fNoCheck, 
 
   if (fVertical) {
     iMax = hb_gtMaxRow();
-    iFrom = hb_parni(1);
+    iFrom = hb_parni32(1);
     iTo = hb_parnidef(3, iMax);
   } else {
     iMax = hb_gtMaxCol();
-    iFrom = hb_parni(2);
+    iFrom = hb_parni32(2);
     iTo = hb_parnidef(4, iMax);
   }
 

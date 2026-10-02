@@ -603,7 +603,7 @@ HB_FUNC(HB_HRBRUN)
   uint16_t nParam = 1;
 
   if (HB_ISNUM(1)) {
-    usMode = static_cast<uint16_t>(hb_parni(1));
+    usMode = static_cast<uint16_t>(hb_parni32(1));
     nParam++;
   }
 
@@ -651,7 +651,7 @@ HB_FUNC(HB_HRBLOAD)
   uint16_t nParam = 1;
 
   if (HB_ISNUM(1)) {
-    usMode = static_cast<uint16_t>(hb_parni(1));
+    usMode = static_cast<uint16_t>(hb_parni32(1));
     nParam++;
   }
 
@@ -761,7 +761,7 @@ HB_FUNC(HB_HRBGETFUNLIST)
     HB_SYMB *pSym;
     auto paList = hb_itemArrayNew(0);
     auto pFuncName = hb_itemNew(nullptr);
-    auto iType = hb_parni(2);
+    auto iType = hb_parni32(2);
 
     for (nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos) {
       if (pSym->value.pFunPtr != nullptr && (pSym->scope.value & HB_FS_INITEXIT) == 0) {

@@ -642,7 +642,7 @@ HB_FUNC(HB_ARGC)
 
 HB_FUNC(HB_ARGV)
 {
-  char *pszArg = hb_cmdargDup(hb_parni(1));
+  char *pszArg = hb_cmdargDup(hb_parni32(1));
 
   if (pszArg) {
     hb_retc_buffer(pszArg);

@@ -90,7 +90,7 @@ HB_FUNC(DISKSPACE)
   (static_cast<double>((v).u.LowPart) + static_cast<double>((v).u.HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 #endif
 
-    auto iDrive = hb_parni(1);
+    auto iDrive = hb_parni32(1);
 
     if (iDrive >= 0) {
       ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;

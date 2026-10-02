@@ -55,7 +55,7 @@ static int32_t hb_ctColorParam(int32_t iParam, int32_t iDefault)
   int32_t iColor;
 
   if (HB_ISNUM(iParam)) {
-    iColor = hb_parni(iParam);
+    iColor = hb_parni32(iParam);
   } else if (hb_parclen(iParam) > 0) {
     iColor = hb_gtColorToN(hb_parc(iParam));
     if (iColor == -1) {
@@ -94,7 +94,7 @@ HB_FUNC(SETCLEARB)
   uint16_t usNew;
 
   if (HB_ISNUM(1)) {
-    auto iChar = hb_parni(1);
+    auto iChar = hb_parni32(1);
     auto cdp = hb_vmCDP();
     if (!HB_CDP_ISCHARUNI(cdp)) {
       iChar = hb_cdpGetU16(cdp, static_cast<uint8_t>(iChar));
@@ -139,7 +139,7 @@ HB_FUNC(WSETMOVE)
 HB_FUNC(WSTEP)
 {
   if (HB_ISNUM(1) && HB_ISNUM(2)) {
-    hb_retni(hb_ctwSetMoveStep(hb_parni(1), hb_parni(2)));
+    hb_retni(hb_ctwSetMoveStep(hb_parni32(1), hb_parni32(2)));
   } else {
     hb_retni(-1);
   }
@@ -152,8 +152,8 @@ HB_FUNC(WMODE)
 
 HB_FUNC(WBOARD)
 {
-  hb_retni(hb_ctwSetWindowBoard(hb_parni(1), hb_parni(2), HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(),
-                                HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol()));
+  hb_retni(hb_ctwSetWindowBoard(hb_parni32(1), hb_parni32(2), HB_ISNUM(3) ? hb_parni32(3) : hb_gtMaxRow(),
+                                HB_ISNUM(4) ? hb_parni32(4) : hb_gtMaxCol()));
 }
 
 HB_FUNC(WOPEN)
@@ -162,14 +162,14 @@ HB_FUNC(WOPEN)
 
   // 6th (color) and 7th (lVisible) parameters are Harbour extensions
   iColor = hb_ctColorParam(6, -1); // Harbour extension // HB_EXTENSION
-  hb_retni(hb_ctwCreateWindow(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parl(5), iColor,
+  hb_retni(hb_ctwCreateWindow(hb_parni32(1), hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parl(5), iColor,
                               hb_parldef(7, true))); // HB_EXTENSION
 }
 
 HB_FUNC(WCLOSE)
 {
   // 1st parameter (window handle) is Harbour extension
-  hb_retni(hb_ctwCloseWindow(HB_ISNUM(1) ? hb_parni(1) : /* HB_EXTENSION */ hb_ctwCurrentWindow()));
+  hb_retni(hb_ctwCloseWindow(HB_ISNUM(1) ? hb_parni32(1) : /* HB_EXTENSION */ hb_ctwCurrentWindow()));
 }
 
 HB_FUNC(WACLOSE)
@@ -179,7 +179,7 @@ HB_FUNC(WACLOSE)
 
 HB_FUNC(WSELECT) // 2nd parameter (fBringToTop) is Harbour extension
 {
-  hb_retni(HB_ISNUM(1) ? hb_ctwSelectWindow(hb_parni(1), hb_parldef(2, true))
+  hb_retni(HB_ISNUM(1) ? hb_ctwSelectWindow(hb_parni32(1), hb_parldef(2, true))
                        : /* HB_EXTENSION */ hb_ctwCurrentWindow());
 }
 
@@ -224,7 +224,7 @@ HB_FUNC(WBOX)
     }
     szBoxBuf[nSize] = 0;
   } else {
-    auto iFrame = hb_parni(1);
+    auto iFrame = hb_parni32(1);
 
     if (iFrame < 0 || iFrame > 15) {
       iFrame = 0;
@@ -252,10 +252,10 @@ HB_FUNC(WFORMAT)
     iBottom = -iBottom;
     iRight = -iRight;
   } else {
-    iTop = hb_parni(1);
-    iLeft = hb_parni(2);
-    iBottom = hb_parni(3);
-    iRight = hb_parni(4);
+    iTop = hb_parni32(1);
+    iLeft = hb_parni32(2);
+    iBottom = hb_parni32(3);
+    iRight = hb_parni32(4);
   }
   hb_retni(hb_ctwChangeMargins(iWindow, iTop, iLeft, iBottom, iRight));
 }
@@ -331,13 +331,13 @@ HB_FUNC(WCENTER)
 
 HB_FUNC(WMOVE)
 {
-  hb_retni(hb_ctwMoveWindow(hb_ctwCurrentWindow(), hb_parni(1), hb_parni(2)));
+  hb_retni(hb_ctwMoveWindow(hb_ctwCurrentWindow(), hb_parni32(1), hb_parni32(2)));
 }
 
 HB_FUNC(CTWLASTKEY)
 {
   if (HB_ISNUM(1)) {
-    auto iNewKey = hb_parni(1);
+    auto iNewKey = hb_parni32(1);
     hb_retni(hb_ctwLastKey(&iNewKey));
   } else {
     hb_retni(hb_ctwLastKey(nullptr));
@@ -432,12 +432,12 @@ HB_FUNC_TRANSLATE(_WSTACK, WLIST)
 
 HB_FUNC(WHIDE) // HB_EXTENSION
 {
-  hb_ctwVisible(HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN);
+  hb_ctwVisible(HB_ISNUM(1) ? hb_parni32(1) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN);
 }
 
 HB_FUNC(WSHOW) // HB_EXTENSION
 {
-  hb_ctwVisible(HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE);
+  hb_ctwVisible(HB_ISNUM(1) ? hb_parni32(1) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE);
 }
 
 HB_FUNC(WSHADOW) // HB_EXTENSION

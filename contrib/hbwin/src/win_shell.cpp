@@ -111,7 +111,7 @@ HB_FUNC(WIN_SHELLNOTIFYICON)
     if (HB_ITEMCOPYSTR(hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY(tnid.szInfo)) > 0) {
       tnid.uFlags |= NIF_INFO;
     }
-    HB_WIN_V_UNION(tnid, uTimeout) = static_cast<UINT>(hb_parni(8));
+    HB_WIN_V_UNION(tnid, uTimeout) = static_cast<UINT>(hb_parni32(8));
     if (HB_ITEMCOPYSTR(hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY(tnid.szInfoTitle)) > 0) {
       tnid.uFlags |= NIF_INFO;
     }
@@ -207,7 +207,7 @@ HB_FUNC(WIN_SHFILEOPERATION)
   void *hProgressTitle;
 
   fop.hwnd = hbwapi_par_raw_HWND(1);
-  fop.wFunc = static_cast<UINT>(hb_parni(2));
+  fop.wFunc = static_cast<UINT>(hb_parni32(2));
   fop.pFrom = static_cast<LPCTSTR>(s_StringList(3));
   fop.pTo = static_cast<LPCTSTR>(s_StringList(4));
   fop.fFlags = static_cast<FILEOP_FLAGS>(hb_parnl(5));

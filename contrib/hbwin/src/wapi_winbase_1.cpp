@@ -155,7 +155,7 @@ HB_FUNC(WAPI_SETLASTERROR)
 
 HB_FUNC(WAPI_SETERRORMODE)
 {
-  hb_retni(SetErrorMode(static_cast<UINT>(hb_parni(1))));
+  hb_retni(SetErrorMode(static_cast<UINT>(hb_parni32(1))));
 }
 
 HB_FUNC(WAPI_LOADLIBRARY)
@@ -202,7 +202,7 @@ HB_FUNC(WAPI_GETMODULEHANDLE)
 
 HB_FUNC(WAPI_MULDIV)
 {
-  hb_retni(MulDiv(hb_parni(1), hb_parni(2), hb_parni(3)));
+  hb_retni(MulDiv(hb_parni32(1), hb_parni32(2), hb_parni32(3)));
 }
 
 using _HB_GETPATHNAME = DWORD(WINAPI *)(LPCTSTR, LPTSTR, DWORD);

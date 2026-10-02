@@ -293,11 +293,11 @@ HB_FUNC(XHB_ERRORNEW)
   }
 
   if (HB_ISNUM(2)) {
-    hb_errPutGenCode(pError, static_cast<HB_ERRCODE>(hb_parni(2)));
+    hb_errPutGenCode(pError, static_cast<HB_ERRCODE>(hb_parni32(2)));
   }
 
   if (HB_ISNUM(3)) {
-    hb_errPutSubCode(pError, static_cast<HB_ERRCODE>(hb_parni(3)));
+    hb_errPutSubCode(pError, static_cast<HB_ERRCODE>(hb_parni32(3)));
   }
 
   if (HB_ISCHAR(4)) {
@@ -321,7 +321,7 @@ HB_FUNC(XHB_ERRORNEW)
   }
 
   if (HB_ISNUM(9)) {
-    hb_errPutProcLine(pError, hb_parni(9));
+    hb_errPutProcLine(pError, hb_parni32(9));
   }
 
   hb_itemReturnRelease(pError);

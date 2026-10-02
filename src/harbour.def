@@ -3037,6 +3037,7 @@ hb_parl
 hb_parldef
 hb_parnd
 hb_parni
+hb_parni32
 hb_parnidef
 hb_parnint
 hb_parnintdef

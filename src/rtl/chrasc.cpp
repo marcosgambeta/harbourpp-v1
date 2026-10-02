@@ -69,10 +69,10 @@ HB_FUNC(CHR)
     auto cdp = hb_vmCDP();
     if (HB_CDP_ISCHARUNI(cdp)) {
       char szChar[HB_MAX_CHAR_LEN];
-      HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
+      HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni32(1)));
       hb_retclen(szChar, nLen);
     } else {
-      hb_retclen(hb_szAscii[hb_parni(1) & 0xFF], 1);
+      hb_retclen(hb_szAscii[hb_parni32(1) & 0xFF], 1);
     }
 #endif
   } else {

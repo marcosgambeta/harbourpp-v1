@@ -180,7 +180,7 @@ static void sk_add(PHB_SETKEY *sk_list_ptr, HB_BOOL bReturn, int32_t iKeyCode, H
 
 HB_FUNC(SETKEY)
 {
-  auto iKeyCode = hb_parni(1);
+  auto iKeyCode = hb_parni32(1);
 
   if (iKeyCode != 0) {
     auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
@@ -204,7 +204,7 @@ HB_FUNC(SETKEY)
 
 HB_FUNC(HB_SETKEY)
 {
-  auto iKeyCode = hb_parni(1);
+  auto iKeyCode = hb_parni32(1);
 
   if (iKeyCode != 0) {
     auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
@@ -325,7 +325,7 @@ HB_FUNC(HB_SETKEYSAVE)
 HB_FUNC(HB_SETKEYCHECK)
 {
   HB_BOOL bIsKeySet = false;
-  auto iKeyCode = hb_parni(1);
+  auto iKeyCode = hb_parni32(1);
 
   if (iKeyCode != 0) {
     auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));

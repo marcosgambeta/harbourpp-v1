@@ -91,10 +91,10 @@ HB_FUNC(WVW_GBCREATE)
   HWND hWnd = nullptr;
 
   if (wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -1;
     int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -1;
@@ -103,10 +103,10 @@ HB_FUNC(WVW_GBCREATE)
 
     void *hCaption;
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
-                                    static_cast<uint32_t>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    static_cast<uint32_t>(hb_parni32(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
                                     iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
                                     hb_parl(11) /* bMap3Dcolors */,
-                                    BS_TEXT | BS_GROUPBOX | WS_OVERLAPPED | hb_parni(13) /* nStyle */, &hWnd));
+                                    BS_TEXT | BS_GROUPBOX | WS_OVERLAPPED | hb_parni32(13) /* nStyle */, &hWnd));
     hb_strfree(hCaption);
   } else {
     hb_retni(0);
@@ -126,10 +126,10 @@ HB_FUNC(WVW_RBCREATE)
   HWND hWnd = nullptr;
 
   if (wvw_win && HB_ISEVALITEM(8)) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
     int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
@@ -138,9 +138,9 @@ HB_FUNC(WVW_RBCREATE)
 
     void *hCaption;
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
-                                    static_cast<uint32_t>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    static_cast<uint32_t>(hb_parni32(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
                                     iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
-                                    hb_parl(11) /* bMap3Dcolors */, BS_AUTORADIOBUTTON | hb_parni(13) /* nStyle */,
+                                    hb_parl(11) /* bMap3Dcolors */, BS_AUTORADIOBUTTON | hb_parni32(13) /* nStyle */,
                                     &hWnd));
     hb_strfree(hCaption);
   } else {
@@ -154,7 +154,7 @@ HB_FUNC(WVW_SETCONTROLTEXT)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni32(2), nullptr);
 
   if (hWnd) {
     void *hText;
@@ -268,7 +268,7 @@ HB_FUNC(WVW_CREATEIMAGELIST)
     auto ulLen = static_cast<int32_t>(hb_arrayLen(pArray));
 
     HIMAGELIST himl =
-        ImageList_Create(hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parnidef(5, ILC_COLOR)), ulLen, hb_parni(4));
+        ImageList_Create(hb_parni32(2), hb_parni32(3), static_cast<UINT>(hb_parnidef(5, ILC_COLOR)), ulLen, hb_parni32(4));
 
     for (auto ul = 1; ul <= ulLen; ++ul) {
       auto hbmp = static_cast<HBITMAP>(hbwapi_arrayGet_HANDLE(pArray, ul));
@@ -537,7 +537,7 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto iBitmapType = hb_parni(2);
+    auto iBitmapType = hb_parni32(2);
 
     if (iBitmapType == 0) {
       TBADDBITMAP tbab;
@@ -564,7 +564,7 @@ HB_FUNC(WVW_SETBITMAPRESOURCEID)
         iOffset = 0;
       }
 
-      hb_retnint(static_cast<uint32_t>(hb_parni(4)) + iOffset);
+      hb_retnint(static_cast<uint32_t>(hb_parni32(4)) + iOffset);
     }
   } else {
     hb_retni(0);
@@ -578,15 +578,15 @@ HB_FUNC(WVW_DRAWBITMAP)
   auto dwraster = static_cast<DWORD>(hb_parnldef(3, SRCCOPY));
   HBITMAP hBitmap = hbwapi_par_raw_HBITMAP(2);
   BITMAP bm;
-  auto nWidthDest = hb_parni(6);
-  auto nHeightDest = hb_parni(7);
+  auto nWidthDest = hb_parni32(6);
+  auto nHeightDest = hb_parni32(7);
 
   SelectObject(hDCmem, hBitmap);
   GetObject(hBitmap, sizeof(bm), static_cast<LPVOID>(&bm));
   if (nWidthDest && (nWidthDest != bm.bmWidth || nHeightDest != bm.bmHeight)) {
-    StretchBlt(hDC, hb_parni(4), hb_parni(5), nWidthDest, nHeightDest, hDCmem, 0, 0, bm.bmWidth, bm.bmHeight, dwraster);
+    StretchBlt(hDC, hb_parni32(4), hb_parni32(5), nWidthDest, nHeightDest, hDCmem, 0, 0, bm.bmWidth, bm.bmHeight, dwraster);
   } else {
-    BitBlt(hDC, hb_parni(4), hb_parni(5), bm.bmWidth, bm.bmHeight, hDCmem, 0, 0, dwraster);
+    BitBlt(hDC, hb_parni32(4), hb_parni32(5), bm.bmWidth, bm.bmHeight, hDCmem, 0, 0, dwraster);
   }
 
   DeleteDC(hDCmem);
@@ -647,7 +647,7 @@ HB_FUNC(WVW_SETMAXBMCACHE)
     hb_retni(wvw->a.iMaxBMcache);
 
     if (HB_ISNUM(1)) {
-      wvw->a.iMaxBMcache = HB_MAX(hb_parni(1), 0);
+      wvw->a.iMaxBMcache = HB_MAX(hb_parni32(1), 0);
     }
   } else {
     hb_retni(0);
@@ -747,7 +747,7 @@ HB_FUNC(WVW_SETPOINTER)
   if (wvw_win) {
     HCURSOR hCursor;
 
-    switch (hb_parni(2)) {
+    switch (hb_parni32(2)) {
     case 1:
       hCursor = LoadCursor(nullptr, IDC_ARROW);
       break;
@@ -811,7 +811,7 @@ HB_FUNC(WVW_LOADPICTURE)
 {
   auto wvw = hb_gt_wvw();
 
-  int32_t iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni32(1) - 1;
   auto pPicture = hb_gt_wvw_LoadPicture(hb_parcx(2));
 
   auto fResult = false;
@@ -838,7 +838,7 @@ HB_FUNC(WVW_LOADFONT)
   auto wvw = hb_gt_wvw();
   auto wvw_top = hb_gt_wvw_win_top();
 
-  int32_t iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni32(1) - 1;
 
   if (wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserFonts))) {
     LOGFONT lf;
@@ -887,10 +887,10 @@ HB_FUNC(WVW_LOADPEN)
 {
   auto wvw = hb_gt_wvw();
 
-  int32_t iSlot = hb_parni(1) - 1;
+  int32_t iSlot = hb_parni32(1) - 1;
 
   if (wvw && iSlot >= 0 && iSlot < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hUserPens))) {
-    auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
+    auto hPen = CreatePen(hb_parni32(2), hb_parni32(3), hbwapi_par_COLORREF(4));
 
     if (hPen) {
       if (wvw->a.hUserPens[iSlot]) {
@@ -928,7 +928,7 @@ HB_FUNC(WVW_CHOOSEFONT)
     CHOOSEFONT cf{};
 
     if (HB_ISNUM(2)) {
-      iPointSize = -MulDiv(hb_parni(2), GetDeviceCaps(wvw_top->hdc, LOGPIXELSY), 72);
+      iPointSize = -MulDiv(hb_parni32(2), GetDeviceCaps(wvw_top->hdc, LOGPIXELSY), 72);
     }
 
     lf.lfHeight = iPointSize;
@@ -998,8 +998,8 @@ HB_FUNC(WVW_SETMOUSEPOS)
   if (wvw_win) {
     POINT xy;
 
-    auto iRow = hb_parni(2);
-    auto iCol = hb_parni(3);
+    auto iRow = hb_parni32(2);
+    auto iCol = hb_parni32(3);
 
     hb_gt_wvw_HBFUNCPrologue(wvw_win, &iRow, &iCol, nullptr, nullptr);
 
@@ -1035,10 +1035,10 @@ HB_FUNC(WVW_FILLRECTANGLE)
   auto wvw_zer = hb_gt_wvw_win(0);
 
   if (wvw && wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     int32_t iOffTop = hb_parvni(9, 1);
     int32_t iOffLeft = hb_parvni(9, 2);
@@ -1091,14 +1091,14 @@ HB_FUNC(WVW_FILLRECTANGLE)
 HB_FUNC(WVW_LBADDSTRING)
 {
   void *hText;
-  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), LB_ADDSTRING, 0,
+  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni32(2)), LB_ADDSTRING, 0,
               reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
   hb_strfree(hText);
 }
 
 HB_FUNC(WVW_LBSETCURSEL)
 {
-  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), LB_SETCURSEL, hb_parni(3), 0);
+  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni32(2)), LB_SETCURSEL, hb_parni32(3), 0);
 }
 
 /*
@@ -1107,7 +1107,7 @@ WARNING!!! this function is not member of WVW_CB* group of functions
 HB_FUNC(WVW_CBADDSTRING)
 {
   void *hText;
-  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), CB_ADDSTRING, 0,
+  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni32(2)), CB_ADDSTRING, 0,
               reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
   hb_strfree(hText);
 }
@@ -1117,7 +1117,7 @@ WARNING!!! this function is not member of WVW_CB* group of functions
 */
 HB_FUNC(WVW_CBSETCURSEL)
 {
-  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni(2)), CB_SETCURSEL, hb_parni(3), 0);
+  SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hb_parni32(2)), CB_SETCURSEL, hb_parni32(3), 0);
 }
 
 HB_FUNC(WVW_DLGSETICON)
@@ -1125,7 +1125,7 @@ HB_FUNC(WVW_DLGSETICON)
   HICON hIcon = nullptr;
 
   if (HB_ISNUM(2)) {
-    hIcon = LoadIcon(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(2)));
+    hIcon = LoadIcon(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni32(2)));
   } else {
     void *hName;
     hIcon = static_cast<HICON>(LoadImage(nullptr, HB_PARSTRDEF(2, &hName, nullptr), IMAGE_ICON, 0, 0, LR_LOADFROMFILE));
@@ -1168,7 +1168,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
       HB_ITEM *pFunc = nullptr;
       HWND hDlg = nullptr;
       auto iType = 0;
-      auto iResource = hb_parni(4);
+      auto iResource = hb_parni32(4);
 
       if (pFirst->isEvalItem()) {
         /* pFunc is pointing to stored code block (later) */
@@ -1195,7 +1195,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
           break;
         }
         case 1:
-          hDlg = CreateDialog(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(1)),
+          hDlg = CreateDialog(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni32(1)),
                               hb_parl(2) ? wvw_zer->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
           break;
 
@@ -1250,7 +1250,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
 
     if (iIndex < static_cast<int32_t>(HB_SIZEOFARRAY(wvw->a.hDlgModal))) {
       auto pFirst = hb_param(3, Harbour::Item::ANY);
-      auto iResource = hb_parni(4);
+      auto iResource = hb_parni32(4);
       INT_PTR iResult = 0;
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : wvw_zer->hWnd;
 
@@ -1273,7 +1273,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
         break;
       }
       case 1:
-        iResult = DialogBoxParam(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(1)), hParent,
+        iResult = DialogBoxParam(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni32(1)), hParent,
                                  reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcModal),
                                  static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
         break;
@@ -1306,10 +1306,10 @@ HB_FUNC(WVW_SAVESCREEN)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     HBITMAP hBmp;
     POINT xy;
@@ -1354,10 +1354,10 @@ HB_FUNC(WVW_RESTSCREEN)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     POINT xy;
     int32_t iWidth, iHeight;
@@ -1473,7 +1473,7 @@ HB_FUNC(WVW_SETICON)
     void *hName;
 
     if (HB_ISNUM(2) && HB_ISCHAR(3)) {
-      hbwapi_ret_raw_HANDLE(hb_gt_wvw_SetWindowIcon(wvw_win, hb_parni(2), HB_PARSTRDEF(3, &hName, nullptr)));
+      hbwapi_ret_raw_HANDLE(hb_gt_wvw_SetWindowIcon(wvw_win, hb_parni32(2), HB_PARSTRDEF(3, &hName, nullptr)));
     } else {
       hbwapi_ret_raw_HANDLE(hb_gt_wvw_SetWindowIconFromFile(wvw_win, HB_PARSTRDEF(2, &hName, nullptr)));
     }
@@ -1497,7 +1497,7 @@ HB_FUNC(WVW_GETCTRLHANDLE)
 
   auto iStyle = 0;
 
-  hbwapi_ret_raw_HWND(hb_gt_wvw_FindControlHandle(wvw_win, hb_parni(2), hb_parni(3), &iStyle));
+  hbwapi_ret_raw_HWND(hb_gt_wvw_FindControlHandle(wvw_win, hb_parni32(2), hb_parni32(3), &iStyle));
 
   hb_storni(iStyle, 4);
 }
@@ -1507,7 +1507,7 @@ HB_FUNC(WVW_SETCODEPAGE)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    hb_retni(hb_gt_wvw_SetCodePage(wvw_win, hb_parni(2)));
+    hb_retni(hb_gt_wvw_SetCodePage(wvw_win, hb_parni32(2)));
   } else {
     hb_retni(0);
   }
@@ -1558,7 +1558,7 @@ HB_FUNC(WVW_GETXYFROMROWCOL)
   POINT xy{};
 
   if (wvw_win) {
-    xy = hb_gt_wvw_GetXYFromColRow(wvw_win, hb_parni(3), hb_parni(2));
+    xy = hb_gt_wvw_GetXYFromColRow(wvw_win, hb_parni32(3), hb_parni32(2));
   }
 
   hb_arraySetNL(aRet, 1, xy.x);
@@ -1579,7 +1579,7 @@ HB_FUNC(WVW_GETROWCOLFROMXY)
   POINT xy{};
 
   if (wvw_win) {
-    xy = hb_gt_wvw_GetColRowFromXY(wvw_win, hb_parni(2), hb_parni(3));
+    xy = hb_gt_wvw_GetColRowFromXY(wvw_win, hb_parni32(2), hb_parni32(3));
   }
 
   hb_arraySetNL(aRet, 1, xy.y);

@@ -95,10 +95,10 @@ HB_FUNC(WVW_CXCREATE)
   HWND hWnd = nullptr;
 
   if (wvw_win && HB_ISEVALITEM(8)) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
     int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
@@ -108,9 +108,9 @@ HB_FUNC(WVW_CXCREATE)
     void *hCaption;
 
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
-                                    static_cast<uint32_t>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    static_cast<uint32_t>(hb_parni32(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
                                     iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
-                                    hb_parl(11) /* bMap3Dcolors */, BS_AUTOCHECKBOX | hb_parni(13) /* nStyle */,
+                                    hb_parl(11) /* bMap3Dcolors */, BS_AUTOCHECKBOX | hb_parni32(13) /* nStyle */,
                                     &hWnd));
 
     hb_strfree(hCaption);
@@ -130,7 +130,7 @@ HB_FUNC(WVW_CXDESTROY)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto nCtrlId = hb_parni(2);
+    auto nCtrlId = hb_parni32(2);
     auto wvw_ctl = wvw_win->ctlList;
     PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -166,7 +166,7 @@ set the focus to checkbox nButtonId in window nWinNum
 */
 HB_FUNC(WVW_CXSETFOCUS)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, hb_parni32(2), nullptr);
   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
@@ -180,7 +180,7 @@ return previous state of the checkbox (.T.: enabled .F.: disabled)
 HB_FUNC(WVW_CXENABLE)
 {
   auto wvw_win = hb_gt_wvw_win_par();
-  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni32(2), nullptr);
 
   if (hWnd) {
     bool fEnable = hb_parldef(3, true);
@@ -205,7 +205,7 @@ HB_FUNC(WVW_CXSETCODEBLOCK)
   auto wvw = hb_gt_wvw();
 
   if (wvw) {
-    auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+    auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni32(2));
     auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
     bool fOldSetting = wvw->fRecurseCBlock;
 
@@ -240,7 +240,7 @@ this function always returns .T.
 */
 HB_FUNC(WVW_CXSETCHECK)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni32(2));
 
   if (wvw_ctl && wvw_ctl->hWnd) {
     SendMessage(wvw_ctl->hWnd, BM_SETCHECK, static_cast<WPARAM>(hb_parnidef(3, BST_CHECKED)), 0);
@@ -258,7 +258,7 @@ returns check-state of checkbox nCXid
 */
 HB_FUNC(WVW_CXGETCHECK)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni32(2));
 
   if (wvw_ctl && wvw_ctl->hWnd) {
     hb_retni(static_cast<int32_t>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
@@ -323,7 +323,7 @@ HB_FUNC(WVW_CXSETFONT)
 HB_FUNC(WVW_CXSTATUSFONT)
 {
   auto wvw_win = hb_gt_wvw_win_par();
-  auto wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni32(2));
 
   if (wvw_ctl && wvw_ctl->hWnd) {
     SendMessage(wvw_ctl->hWnd, WM_SETFONT,
@@ -336,6 +336,6 @@ HB_FUNC(WVW_CXSTATUSFONT)
 
 HB_FUNC(WVW_CXVISIBLE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni32(2), nullptr);
   hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

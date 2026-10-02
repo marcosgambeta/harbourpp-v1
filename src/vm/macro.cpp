@@ -906,7 +906,7 @@ HB_FUNC(FIELDBLOCK)
 HB_FUNC(FIELDWBLOCK)
 {
   auto szName = hb_parc(1);
-  auto iWorkArea = hb_parni(2);
+  auto iWorkArea = hb_parni32(2);
 
   if (szName && iWorkArea != 0) {
     char szFieldName[HB_SYMBOL_NAME_LEN + 1];
@@ -1098,7 +1098,7 @@ HB_FUNC(HB_SETMACRO)
   auto iPrmCnt = hb_pcount();
 
   if (iPrmCnt > 0) {
-    auto flags = hb_parni(1);
+    auto flags = hb_parni32(1);
     HB_ITEM *pValue;
 
     switch (flags) {

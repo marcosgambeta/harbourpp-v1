@@ -202,7 +202,7 @@ HB_FUNC(HB_DISKSPACE)
   char szPathBuf[4];
 
   if (!pszPath) {
-    auto iDrive = hb_parni(1);
+    auto iDrive = hb_parni32(1);
 
     if (iDrive >= 1 && iDrive < 32) {
       szPathBuf[0] = static_cast<char>(iDrive) + 'A' - 1;

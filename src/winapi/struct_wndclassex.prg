@@ -364,7 +364,7 @@ HB_FUNC_STATIC(WAS_WNDCLASSEX_SETLPSZMENUNAME)
       hb_strfree(str);
     }
     str = nullptr;
-    obj->lpszMenuName = HB_ISCHAR(1) ? HB_PARSTR(1, &str, nullptr) : MAKEINTRESOURCE(hb_parni(1));
+    obj->lpszMenuName = HB_ISCHAR(1) ? HB_PARSTR(1, &str, nullptr) : MAKEINTRESOURCE(hb_parni32(1));
     hb_objDataPutPtr(hb_stackSelfItem(), "_STRMENUNAME", str);
   }
 }

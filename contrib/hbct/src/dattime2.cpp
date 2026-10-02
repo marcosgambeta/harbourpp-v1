@@ -238,7 +238,7 @@ HB_FUNC(ADDMONTH)
   HB_BOOL fTimeStamp = false;
 
   if (HB_ISNUM(1)) {
-    iNum = hb_parni(1);
+    iNum = hb_parni32(1);
     hb_dateToday(&iYear, &iMonth, &iDay);
   } else {
     if (HB_ISTIMESTAMP(1)) {
@@ -250,7 +250,7 @@ HB_FUNC(ADDMONTH)
     } else {
       hb_dateToday(&iYear, &iMonth, &iDay);
     }
-    iNum = hb_parni(2);
+    iNum = hb_parni32(2);
   }
 
   iMonth += iNum;
@@ -307,7 +307,7 @@ HB_FUNC(ISLEAP)
 
 HB_FUNC(DAYSTOMONTH)
 {
-  auto iMonth = hb_parni(1);
+  auto iMonth = hb_parni32(1);
   HB_BOOL bLeap = hb_parl(2);
 
   hb_retni(ct_daystomonth(iMonth, bLeap));
@@ -315,7 +315,7 @@ HB_FUNC(DAYSTOMONTH)
 
 HB_FUNC(DAYSINMONTH)
 {
-  auto iMonth = hb_parni(1);
+  auto iMonth = hb_parni32(1);
   HB_BOOL bLeap = hb_parl(2);
 
   hb_retni(ct_daysinmonth(iMonth, bLeap));
@@ -340,7 +340,7 @@ HB_FUNC(LASTDAYOM)
   int32_t iYear, iMonth, iDay;
 
   if (HB_ISNUM(1)) {
-    iMonth = hb_parni(1);
+    iMonth = hb_parni32(1);
   } else {
     if (HB_ISDATETIME(1)) {
       hb_dateDecode(hb_pardl(1), &iYear, &iMonth, &iDay);
@@ -356,12 +356,12 @@ HB_FUNC(LASTDAYOM)
 
 HB_FUNC(NTOCDOW)
 {
-  hb_retc(hb_dateCDOW(hb_parni(1)));
+  hb_retc(hb_dateCDOW(hb_parni32(1)));
 }
 
 HB_FUNC(NTOCMONTH)
 {
-  hb_retc(hb_dateCMonth(hb_parni(1)));
+  hb_retc(hb_dateCMonth(hb_parni32(1)));
 }
 
 HB_FUNC(WEEK)

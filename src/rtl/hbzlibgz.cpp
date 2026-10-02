@@ -129,7 +129,7 @@ HB_FUNC(HB_GZDOPEN)
     gzFile gz;
 
     hb_vmUnlock();
-    gz = gzdopen(hb_parni(1), cMode);
+    gz = gzdopen(hb_parni32(1), cMode);
     hb_vmLock();
 
     if (gz) {
@@ -173,7 +173,7 @@ HB_FUNC(HB_GZSETPARAMS)
   if (HB_ISNUM(2) && HB_ISNUM(3)) {
     gzFile gz = hb_gzParam(1);
     if (gz) {
-      hb_retni(gzsetparams(gz, hb_parni(2), hb_parni(3)));
+      hb_retni(gzsetparams(gz, hb_parni32(2), hb_parni32(3)));
     }
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -240,7 +240,7 @@ HB_FUNC(HB_GZWRITE)
 HB_FUNC(HB_GZGETS)
 {
 #ifndef HB_NO_GZLIB
-  auto iLen = hb_parni(2);
+  auto iLen = hb_parni32(2);
 
   if (iLen > 0) {
     gzFile gz = hb_gzParam(1);
@@ -299,7 +299,7 @@ HB_FUNC(HB_GZPUTC)
     gzFile gz = hb_gzParam(1);
     if (gz) {
       hb_vmUnlock();
-      int32_t iResult = gzputc(gz, hb_parni(2));
+      int32_t iResult = gzputc(gz, hb_parni32(2));
       hb_vmLock();
       hb_retni(iResult);
     }
@@ -337,7 +337,7 @@ HB_FUNC(HB_GZUNGETC)
     gzFile gz = hb_gzParam(2);
     if (gz) {
       hb_vmUnlock();
-      int32_t iResult = gzungetc(hb_parni(1), gz);
+      int32_t iResult = gzungetc(hb_parni32(1), gz);
       hb_vmLock();
       hb_retni(iResult);
     }

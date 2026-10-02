@@ -107,7 +107,7 @@ const EVP_MD *hb_EVP_MD_par(int32_t iParam)
   if (HB_ISCHAR(iParam))
     return EVP_get_digestbyname(hb_parc(iParam));
 
-  switch (hb_parni(iParam)) {
+  switch (hb_parni32(iParam)) {
   case HB_EVP_MD_MD_NULL:
     p = EVP_md_null();
     break;
@@ -255,7 +255,7 @@ HB_FUNC(EVP_GET_DIGESTBYNAME)
 HB_FUNC(EVP_GET_DIGESTBYNID)
 {
   if (HB_ISNUM(1))
-    hb_retni(hb_EVP_MD_ptr_to_id(EVP_get_digestbynid(hb_parni(1))));
+    hb_retni(hb_EVP_MD_ptr_to_id(EVP_get_digestbynid(hb_parni32(1))));
   else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

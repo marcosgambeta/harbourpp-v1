@@ -62,10 +62,10 @@ HB_FUNC(COM_DOSCON)
 
       hb_gtGetPos(&iRow, &iCol);
       if (HB_ISNUM(2)) {
-        iRow = hb_parni(1);
+        iRow = hb_parni32(1);
       }
       if (HB_ISNUM(3)) {
-        iCol = hb_parni(2);
+        iCol = hb_parni32(2);
       }
       hb_gtSetPos(iRow, iCol);
     }
@@ -118,9 +118,9 @@ HB_FUNC(XMOBLOCK)
 
   auto szData = hb_parc(1);
   auto nLen = hb_parclen(1);
-  auto iBlock = hb_parni(2);
+  auto iBlock = hb_parni32(2);
   fCRC = hb_parl(3);
-  nSize = hb_parni(4) == 2 ? 1024 : 128;
+  nSize = hb_parni32(4) == 2 ? 1024 : 128;
 
   iBlock &= 0xFF;
   if (nLen > nSize) {

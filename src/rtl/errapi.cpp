@@ -462,7 +462,7 @@ HB_FUNC(DOSERROR)
   hb_retni(pErrData->uiErrorDOS);
 
   if (HB_ISNUM(1)) {
-    pErrData->uiErrorDOS = hb_parni(1);
+    pErrData->uiErrorDOS = hb_parni32(1);
   }
 }
 
@@ -1035,13 +1035,13 @@ HB_ITEM *hb_errRT_FileError(HB_ITEM *pError, const char *szSubSystem, HB_ERRCODE
 
 HB_FUNC(__ERRRT_BASE)
 {
-  hb_errRT_BASE(static_cast<HB_ERRCODE>(hb_parni(1)), static_cast<HB_ERRCODE>(hb_parni(2)), hb_parc(3), hb_parc(4),
+  hb_errRT_BASE(static_cast<HB_ERRCODE>(hb_parni32(1)), static_cast<HB_ERRCODE>(hb_parni32(2)), hb_parc(3), hb_parc(4),
                 (hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0), hb_param(6, Harbour::Item::ANY));
 }
 
 HB_FUNC(__ERRRT_SBASE)
 {
-  hb_errRT_BASE_SubstR(static_cast<HB_ERRCODE>(hb_parni(1)), static_cast<HB_ERRCODE>(hb_parni(2)), hb_parc(3),
+  hb_errRT_BASE_SubstR(static_cast<HB_ERRCODE>(hb_parni32(1)), static_cast<HB_ERRCODE>(hb_parni32(2)), hb_parc(3),
                        hb_parc(4), (hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0), hb_param(6, Harbour::Item::ANY));
 }
 

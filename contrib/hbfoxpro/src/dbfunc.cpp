@@ -69,7 +69,7 @@ static AREAP s_foxAreaPointer(int32_t iParam)
       }
       else
       {
-         iArea = hb_parni(iParam);
+         iArea = hb_parni32(iParam);
       }
 
       return static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
@@ -122,7 +122,7 @@ HB_FUNC(RELATION)
    if( pArea != nullptr )
    {
       auto pRelExpr = hb_itemPutC(nullptr, nullptr);
-      auto uiRelNo = static_cast<uint16_t>(hb_parni(1));
+      auto uiRelNo = static_cast<uint16_t>(hb_parni32(1));
       SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
       hb_itemReturnRelease(pRelExpr);
    }
@@ -151,7 +151,7 @@ HB_FUNC(FSIZE)
       }
       else
       {
-         uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
+         uiIndex = static_cast<HB_FIELDNO>(hb_parni32(1));
       }
 
       if( uiIndex > 0 )

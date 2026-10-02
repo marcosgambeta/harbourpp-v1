@@ -52,13 +52,13 @@
 
 HB_FUNC(FT_SETATTR)
 {
-   hb_gtSetAttribute(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5));
+   hb_gtSetAttribute(hb_parni32(1), hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5));
 }
 
 HB_FUNC( FT_REVATTR )
 {
-   auto iTop    = hb_parni(1);   /* Defaults to zero on bad type */
-   auto iLeft   = hb_parni(2);   /* Defaults to zero on bad type */
+   auto iTop    = hb_parni32(1);   /* Defaults to zero on bad type */
+   auto iLeft   = hb_parni32(2);   /* Defaults to zero on bad type */
    int32_t iMaxRow  = hb_gtMaxRow();
    int32_t iMaxCol  = hb_gtMaxCol();
    auto iBottom = hb_parnidef(3, iMaxRow);
@@ -107,8 +107,8 @@ HB_FUNC( FT_REVATTR )
 
 HB_FUNC( FT_REVCHR )
 {
-   auto iRow = hb_parni(1);
-   auto iCol = hb_parni(2);
+   auto iRow = hb_parni32(1);
+   auto iCol = hb_parni32(2);
 
    int32_t       iColor;
    uint8_t   bAttr;

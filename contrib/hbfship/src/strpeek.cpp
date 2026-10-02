@@ -82,7 +82,7 @@ HB_FUNC(STRPOKE)
       if( nPos > 0 && hb_itemGetWriteCL( pText, &pszText, &nLen ) &&
           nPos <= nLen )
       {
-         pszText[nPos - 1] = static_cast<char>(hb_parni(3) & 0xff);
+         pszText[nPos - 1] = static_cast<char>(hb_parni32(3) & 0xff);
       }
       hb_itemReturn(pText);
    }

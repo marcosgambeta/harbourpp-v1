@@ -950,7 +950,7 @@ HB_FUNC(CURL_EASY_PAUSE)
 #if LIBCURL_VERSION_NUM >= 0x071200
     auto hb_curl = PHB_CURL_par(1);
 
-    hb_curl_retcode(hb_curl ? curl_easy_pause(hb_curl->curl, hb_parni(2)) : static_cast<CURLcode>(HB_CURLE_ERROR));
+    hb_curl_retcode(hb_curl ? curl_easy_pause(hb_curl->curl, hb_parni32(2)) : static_cast<CURLcode>(HB_CURLE_ERROR));
 #else
     hb_curl_retcode(static_cast<CURLcode>(HB_CURLE_ERROR));
 #endif
@@ -1047,7 +1047,7 @@ HB_FUNC(CURL_EASY_SETOPT)
 
     if (hb_curl != nullptr)
     {
-      switch (hb_parni(2))
+      switch (hb_parni32(2))
       {
         // Behavior
 
@@ -2307,7 +2307,7 @@ HB_FUNC(CURL_EASY_GETINFO)
     curl_socket_t ret_socket = 0;
     curl_off_t ret_offset = 0;
 
-    switch (hb_parni(2))
+    switch (hb_parni32(2))
     {
     case HB_CURLINFO_EFFECTIVE_URL:
       res = HB_CURL_EASY_GETINFO(hb_curl, CURLINFO_EFFECTIVE_URL, &ret_string);
@@ -3013,7 +3013,7 @@ HB_FUNC(CURL_MULTI_POLL)
 
     if (hb_curlm)
     {
-      res = curl_multi_poll(hb_curlm->curlm, nullptr, 0, hb_parni(2), nullptr);
+      res = curl_multi_poll(hb_curlm->curlm, nullptr, 0, hb_parni32(2), nullptr);
     }
 
     hb_retnl((long)res);

@@ -77,7 +77,7 @@ HB_FUNC(ADSMGKILLUSER)
 {
   hb_retnl(static_cast<UNSIGNED16>(AdsMgKillUser(s_hMgmtHandle,
                                                  reinterpret_cast<UNSIGNED8 *>(const_cast<char *>(hb_parc(1))),
-                                                 static_cast<UNSIGNED16>(hb_parni(2)))));
+                                                 static_cast<UNSIGNED16>(hb_parni32(2)))));
 }
 
 // Determine OS ADS is running on; see ADS_MGMT_* constants
@@ -122,7 +122,7 @@ HB_FUNC(ADSMGGETACTIVITYINFO)
   UNSIGNED16 usStructSize = sizeof(ADS_MGMT_ACTIVITY_INFO);
 
   if (AdsMgGetActivityInfo(s_hMgmtHandle, &stActivityInfo, &usStructSize) == AE_SUCCESS) {
-    switch (hb_parni(1) /* iOption */) {
+    switch (hb_parni32(1) /* iOption */) {
     case 1:
       hb_retnl(stActivityInfo.ulOperations); // Number operations since started
       break;
@@ -462,7 +462,7 @@ HB_FUNC(ADSMGGETOPENTABLES) // nMaxNumberOfFilesToReturn, cUserName, nConnection
           s_hMgmtHandle,
           reinterpret_cast<UNSIGNED8 *>(hb_parclen(2) > 0 ? const_cast<char *>(hb_parc(2)) : nullptr) /* pucUserName */,
           static_cast<UNSIGNED16>(
-              hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to
+              hb_parni32(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to
                                                   current, only take a passed value */
           astOpenTableInfo, &usArrayLen, &usStructSize) == AE_SUCCESS) {
     auto pArray = hb_itemArrayNew(usArrayLen);
@@ -498,7 +498,7 @@ HB_FUNC(ADSMGGETOPENTABLES2) // nMaxNumberOfFilesToReturn, cUserName, nConnectio
           s_hMgmtHandle,
           reinterpret_cast<UNSIGNED8 *>(hb_parclen(2) > 0 ? const_cast<char *>(hb_parc(2)) : nullptr) /* pucUserName */,
           static_cast<UNSIGNED16>(
-              hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to
+              hb_parni32(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to
                                                   current, only take a passed value */
           astOpenTableInfo, &usArrayLen, &usStructSize) == AE_SUCCESS) {
     auto pArray = hb_itemArrayNew(usArrayLen);
@@ -540,7 +540,7 @@ HB_FUNC(ADSMGGETOPENINDEXES) // nMaxNumberOfFilesToReturn, cTableName, cUserName
                                             : nullptr) /* pucTableName */, // fully qualified path to that table
           reinterpret_cast<UNSIGNED8 *>(hb_parclen(3) > 0 ? const_cast<char *>(hb_parc(3)) : nullptr) /* pucUserName */,
           static_cast<UNSIGNED16>(
-              hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to
+              hb_parni32(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to
                                                   current, only take a passed value */
           astOpenIndexInfo, &usArrayLen, &usStructSize) == AE_SUCCESS) {
     auto pArray = hb_itemArrayNew(usArrayLen);
@@ -579,7 +579,7 @@ HB_FUNC(ADSMGGETLOCKS)
                                             : nullptr) /* pucTableName */, // fully qualified path to that table
           reinterpret_cast<UNSIGNED8 *>(hb_parclen(3) > 0 ? const_cast<char *>(hb_parc(3)) : nullptr) /* pucUserName */,
           static_cast<UNSIGNED16>(
-              hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to
+              hb_parni32(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to
                                                   current, only take a passed value */
           astRecordInfo, &usArrayLen, &usStructSize) == AE_SUCCESS) {
     auto pArray = hb_itemArrayNew(usArrayLen);

@@ -684,7 +684,7 @@ static void hb_bmGetFuncTable(const char *szSuper)
   auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
   auto pSuperTable = static_cast<RDDFUNCS *>(hb_parptr(3));
-  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto uiRddId = static_cast<uint16_t>(hb_parni32(4));
   auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
 #if 0

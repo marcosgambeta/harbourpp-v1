@@ -65,16 +65,16 @@ HB_FUNC(HPDF_LOADPNGIMAGEFROMFILE2)
  */
 HB_FUNC(HPDF_LOADRAWIMAGEFROMFILE)
 {
-  hb_retptr(static_cast<void *>(HPDF_LoadRawImageFromFile(hb_HPDF_Doc_par(1), hb_parc(2), hb_parni(3), hb_parni(4),
-                                                          static_cast<HPDF_ColorSpace>(hb_parni(5)))));
+  hb_retptr(static_cast<void *>(HPDF_LoadRawImageFromFile(hb_HPDF_Doc_par(1), hb_parc(2), hb_parni32(3), hb_parni32(4),
+                                                          static_cast<HPDF_ColorSpace>(hb_parni32(5)))));
 }
 
 /* HPDF_LoadRawImageFromMem( hDoc, cBuffer, nWidth, nHeight, nColorSpace, nBitsPerComponents ) --> hImage */
 HB_FUNC(HPDF_LOADRAWIMAGEFROMMEM)
 {
   hb_retptr(static_cast<void *>(
-      HPDF_LoadRawImageFromMem(hb_HPDF_Doc_par(1), reinterpret_cast<const HPDF_BYTE *>(hb_parc(2)), hb_parni(3),
-                               hb_parni(4), static_cast<HPDF_ColorSpace>(hb_parni(5)), hb_parni(6))));
+      HPDF_LoadRawImageFromMem(hb_HPDF_Doc_par(1), reinterpret_cast<const HPDF_BYTE *>(hb_parc(2)), hb_parni32(3),
+                               hb_parni32(4), static_cast<HPDF_ColorSpace>(hb_parni32(5)), hb_parni32(6))));
 }
 
 /* HPDF_LoadJpegImageFromFile( hDoc, cHPEGFileName ) --> hImage */
@@ -161,8 +161,8 @@ HB_FUNC(HPDF_IMAGE_GETCOLORSPACE)
 /* HPDF_Image_SetColorMask( hImage, nRGB_R_Min, nRGB_R_Max, nRGB_G_Min, nRGB_G_Max, nRGB_B_Min, nRGB_B_Max ) */
 HB_FUNC(HPDF_IMAGE_SETCOLORMASK)
 {
-  hb_retnl(static_cast<long>(HPDF_Image_SetColorMask(static_cast<HPDF_Image>(hb_parptr(1)), hb_parni(2), hb_parni(3),
-                                                     hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7))));
+  hb_retnl(static_cast<long>(HPDF_Image_SetColorMask(static_cast<HPDF_Image>(hb_parptr(1)), hb_parni32(2), hb_parni32(3),
+                                                     hb_parni32(4), hb_parni32(5), hb_parni32(6), hb_parni32(7))));
 }
 
 /* HPDF_Image_SetMaskImage( hImage, hImageMask ) --> hStatus */

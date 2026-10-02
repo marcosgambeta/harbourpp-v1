@@ -81,7 +81,7 @@ HB_FUNC(WVW_SETLASTMENUEVENT)
 
   if (wvw_win) {
     hb_retni(wvw_win->LastMenuEvent);
-    wvw_win->LastMenuEvent = hb_parni(2);
+    wvw_win->LastMenuEvent = hb_parni32(2);
   } else {
     hb_retni(0);
   }
@@ -92,7 +92,7 @@ HB_FUNC(WVW_SETMENUKEYEVENT)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    hb_retni(hb_gt_wvw_SetMenuKeyEvent(wvw_win, hb_parni(2)));
+    hb_retni(hb_gt_wvw_SetMenuKeyEvent(wvw_win, hb_parni32(2)));
   } else {
     hb_retni(0);
   }
@@ -113,13 +113,13 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
     auto iHeight = 0;
 
     if (HB_ISNUM(4)) {
-      hb_snprintf(szResName, sizeof(szResName), "?%u", hb_parni(4));
+      hb_snprintf(szResName, sizeof(szResName), "?%u", hb_parni32(4));
 
       hBitmapUnchecked = hb_gt_wvw_FindBitmapHandle(szResName, &iWidth, &iHeight);
 
       if (!hBitmapUnchecked) {
         hBitmapUnchecked = static_cast<HBITMAP>(
-            LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(4)), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
+            LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni32(4)), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         hb_gt_wvw_AddBitmapHandle(szResName, hBitmapUnchecked, iWidth, iHeight);
       }
     } else if (HB_ISCHAR(4)) {
@@ -135,13 +135,13 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
     }
 
     if (HB_ISNUM(5)) {
-      hb_snprintf(szResName, sizeof(szResName), "?%u", hb_parni(5));
+      hb_snprintf(szResName, sizeof(szResName), "?%u", hb_parni32(5));
 
       hBitmapChecked = hb_gt_wvw_FindBitmapHandle(szResName, &iWidth, &iHeight);
 
       if (!hBitmapChecked) {
         hBitmapChecked = static_cast<HBITMAP>(
-            LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(5)), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
+            LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni32(5)), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         hb_gt_wvw_AddBitmapHandle(szResName, hBitmapChecked, iWidth, iHeight);
       }
     } else if (HB_ISCHAR(5)) {
@@ -157,10 +157,10 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
     }
 
     if (HB_ISNUM(2)) {
-      SetMenuItemBitmaps(hbwapi_par_raw_HMENU(1), hb_parni(2), MF_BYCOMMAND, static_cast<HBITMAP>(hBitmapUnchecked),
+      SetMenuItemBitmaps(hbwapi_par_raw_HMENU(1), hb_parni32(2), MF_BYCOMMAND, static_cast<HBITMAP>(hBitmapUnchecked),
                          static_cast<HBITMAP>(hBitmapChecked));
     } else {
-      SetMenuItemBitmaps(hbwapi_par_raw_HMENU(1), hb_parni(3), MF_BYPOSITION, static_cast<HBITMAP>(hBitmapUnchecked),
+      SetMenuItemBitmaps(hbwapi_par_raw_HMENU(1), hb_parni32(3), MF_BYPOSITION, static_cast<HBITMAP>(hBitmapUnchecked),
                          static_cast<HBITMAP>(hBitmapChecked));
     }
   }

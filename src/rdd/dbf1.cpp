@@ -6463,7 +6463,7 @@ HB_FUNC_STATIC(DBF_GETFUNCTABLE)
 {
   auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto uiRddId = static_cast<uint16_t>(hb_parni32(4));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("DBF_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));

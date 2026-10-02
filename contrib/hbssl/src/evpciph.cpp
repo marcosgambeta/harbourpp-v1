@@ -102,7 +102,7 @@ const EVP_CIPHER *hb_EVP_CIPHER_par(int32_t iParam)
   if (HB_ISCHAR(iParam))
     return EVP_get_cipherbyname(hb_parc(iParam));
 
-  switch (hb_parni(iParam)) {
+  switch (hb_parni32(iParam)) {
   case HB_EVP_CIPHER_ENC_NULL:
     p = EVP_enc_null();
     break;
@@ -717,7 +717,7 @@ HB_FUNC(EVP_GET_CIPHERBYNAME)
 HB_FUNC(EVP_GET_CIPHERBYNID)
 {
   if (HB_ISNUM(1))
-    hb_retni(hb_EVP_CIPHER_ptr_to_id(EVP_get_cipherbynid(hb_parni(1))));
+    hb_retni(hb_EVP_CIPHER_ptr_to_id(EVP_get_cipherbynid(hb_parni32(1))));
   else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -821,7 +821,7 @@ HB_FUNC(EVP_CIPHER_CTX_SET_PADDING)
 
     if (ctx) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-      hb_retni(EVP_CIPHER_CTX_set_padding(ctx, hb_parni(2)));
+      hb_retni(EVP_CIPHER_CTX_set_padding(ctx, hb_parni32(2)));
 #else
       hb_retni(0);
 #endif
@@ -847,7 +847,7 @@ HB_FUNC(EVP_CIPHER_CTX_SET_KEY_LENGTH)
     EVP_CIPHER_CTX *ctx = hb_EVP_CIPHER_CTX_par(1);
 
     if (ctx)
-      hb_retni(EVP_CIPHER_CTX_set_key_length(ctx, hb_parni(2)));
+      hb_retni(EVP_CIPHER_CTX_set_key_length(ctx, hb_parni32(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -861,7 +861,7 @@ HB_FUNC(EVP_CIPHER_CTX_CTRL)
       // NOTE: 4th param doesn't have a 'const' qualifier. This is a setter
       //       function, so even if we do a copy, what sort of allocation
       //       routine to use? [vszakats]
-      hb_retni(EVP_CIPHER_CTX_ctrl(ctx, hb_parni(2), hb_parni(3), (void *)HB_UNCONST(hb_parc(4))));
+      hb_retni(EVP_CIPHER_CTX_ctrl(ctx, hb_parni32(2), hb_parni32(3), (void *)HB_UNCONST(hb_parc(4))));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1100,7 +1100,7 @@ HB_FUNC(EVP_CIPHERINIT)
 
     if (ctx)
       hb_retni(EVP_CipherInit(ctx, cipher, (HB_SSL_CONST unsigned char *)hb_parc(3),
-                              (HB_SSL_CONST unsigned char *)hb_parc(4), hb_parni(5)));
+                              (HB_SSL_CONST unsigned char *)hb_parc(4), hb_parni32(5)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1115,7 +1115,7 @@ HB_FUNC(EVP_CIPHERINIT_EX)
     if (ctx) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
       hb_retni(EVP_CipherInit_ex(ctx, cipher, (ENGINE *)hb_parptr(3), (const unsigned char *)hb_parc(4),
-                                 (const unsigned char *)hb_parc(5), hb_parni(6)));
+                                 (const unsigned char *)hb_parc(5), hb_parni32(6)));
 #else
       hb_retni(0);
 #endif

@@ -79,8 +79,8 @@ HB_FUNC(WAPI_SETWINDOWPOS)
     }
   }
 
-  BOOL bResult = SetWindowPos(hbwapi_par_raw_HWND(1), hWndInsertAfter, hb_parni(3), hb_parni(4), hb_parni(5),
-                              hb_parni(6), hbwapi_par_UINT(7));
+  BOOL bResult = SetWindowPos(hbwapi_par_raw_HWND(1), hWndInsertAfter, hb_parni32(3), hb_parni32(4), hb_parni32(5),
+                              hb_parni32(6), hbwapi_par_UINT(7));
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);
@@ -773,7 +773,7 @@ HB_FUNC(WAPI_GETKEYBOARDLAYOUTNAME)
 #if 0
 HB_FUNC(WAPI_GETSYSCOLOR) // TODO: deprecated (using waGetSysColor from WinApi library)
 {
-   hbwapi_ret_DWORD(GetSysColor(hb_parni(1)));
+   hbwapi_ret_DWORD(GetSysColor(hb_parni32(1)));
 }
 #endif
 
@@ -804,7 +804,7 @@ HB_FUNC(WAPI_GETWINDOWRECT)
 // [p4] identifier of radio button to select
 HB_FUNC(WAPI_CHECKRADIOBUTTON)
 {
-  BOOL bResult = CheckRadioButton(hbwapi_par_raw_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4));
+  BOOL bResult = CheckRadioButton(hbwapi_par_raw_HWND(1), hb_parni32(2), hb_parni32(3), hb_parni32(4));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);
 }
@@ -870,7 +870,7 @@ HB_FUNC(WAPI_GETWINDOWTEXT)
 
 HB_FUNC(WAPI_SETWINDOWLONGPTR)
 {
-  auto iIndex = hb_parni(2);
+  auto iIndex = hb_parni32(2);
   LONG_PTR nRetVal;
 
   switch (iIndex) {
@@ -905,7 +905,7 @@ HB_FUNC(WAPI_SETWINDOWLONGPTR)
 
 HB_FUNC(WAPI_GETWINDOWLONGPTR)
 {
-  auto iIndex = hb_parni(2);
+  auto iIndex = hb_parni32(2);
   LONG_PTR nRetVal = GetWindowLongPtr(hbwapi_par_raw_HWND(1), iIndex);
   hbwapi_SetLastError(GetLastError());
 
@@ -1050,7 +1050,7 @@ HB_FUNC(WAPI_GETCURSORPOS)
 
 HB_FUNC(WAPI_SETCURSORPOS)
 {
-  BOOL bResult = SetCursorPos(hb_parni(1), hb_parni(2));
+  BOOL bResult = SetCursorPos(hb_parni32(1), hb_parni32(2));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);
 }
@@ -1064,7 +1064,7 @@ HB_FUNC(WAPI_UPDATEWINDOW)
 // WAPI_SHOWWINDOW(HWND, np2) --> .T.|.F.
 HB_FUNC(WAPI_SHOWWINDOW)
 {
-  hbwapi_ret_L(ShowWindow(hbwapi_par_raw_HWND(1), hb_parni(2)));
+  hbwapi_ret_L(ShowWindow(hbwapi_par_raw_HWND(1), hb_parni32(2)));
 }
 
 HB_FUNC(WAPI_CLIENTTOSCREEN)
@@ -1103,7 +1103,7 @@ HB_FUNC(WAPI_MAKEWPARAM)
 
 HB_FUNC(WAPI_RGB)
 {
-  hbwapi_ret_COLORREF(RGB(hb_parni(1), hb_parni(2), hb_parni(3)));
+  hbwapi_ret_COLORREF(RGB(hb_parni32(1), hb_parni32(2), hb_parni32(3)));
 }
 
 HB_FUNC(WAPI_LOADBITMAP)
@@ -1126,7 +1126,7 @@ HB_FUNC(WAPI_LOADICON)
 
 HB_FUNC(WAPI_DRAWICON)
 {
-  BOOL bResult = DrawIcon(hbwapi_par_raw_HDC(1), hb_parni(2), hb_parni(3), hbwapi_par_raw_HICON(4));
+  BOOL bResult = DrawIcon(hbwapi_par_raw_HDC(1), hb_parni32(2), hb_parni32(3), hbwapi_par_raw_HICON(4));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);
 }

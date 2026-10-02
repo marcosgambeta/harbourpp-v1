@@ -60,18 +60,18 @@
 HB_FUNC(HB_METHODNAME)
 {
   char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
-  hb_retc(hb_procname(hb_parni(1) + 1, szName, true));
+  hb_retc(hb_procname(hb_parni32(1) + 1, szName, true));
 }
 
 HB_FUNC(PROCNAME)
 {
   char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
-  hb_retc(hb_procname(hb_parni(1) + 1, szName, false));
+  hb_retc(hb_procname(hb_parni32(1) + 1, szName, false));
 }
 
 HB_FUNC(PROCLINE)
 {
-  HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni(1) + 1);
+  HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni32(1) + 1);
 
   if (nOffset > 0) {
     hb_retni(hb_stackItem(nOffset)->symbolStackState()->uiLineNo);
@@ -99,7 +99,7 @@ HB_FUNC(PROCFILE)
       pSym = pDynSym->pSymbol;
     }
   } else {
-    HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni(1) + 1);
+    HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni32(1) + 1);
 
     if (nOffset > 0) {
       auto pBase = hb_stackItem(nOffset);

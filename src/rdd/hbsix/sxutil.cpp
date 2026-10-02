@@ -103,7 +103,7 @@ HB_FUNC(SX_WILDMATCH)
 
 HB_FUNC(SX_VERSION)
 {
-  switch (hb_parni(1)) {
+  switch (hb_parni32(1)) {
   case 1:
     hb_retds(HB_SX_DAY);
     break;

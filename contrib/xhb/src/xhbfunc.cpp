@@ -119,7 +119,7 @@ HB_FUNC(XHB__KEYBOARD)
   }
 
   if (HB_ISNUM(1)) {
-    hb_inkeyPut(hb_parni(1));
+    hb_inkeyPut(hb_parni32(1));
   } else if (HB_ISCHAR(1)) {
     hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
   } else if (HB_ISARRAY(1)) {
@@ -269,7 +269,7 @@ HB_FUNC_EXTERN(NETNAME);
 
 HB_FUNC(XHB_NETNAME)
 {
-  if (hb_parni(1) == 1) {
+  if (hb_parni32(1) == 1) {
     HB_FUNC_EXEC(HB_USERNAME);
   } else {
     HB_FUNC_EXEC(NETNAME);

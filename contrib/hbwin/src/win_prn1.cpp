@@ -150,12 +150,12 @@ HB_FUNC(WIN_TEXTOUT)
     if (nLen > 0) {
       SIZE sSize;
 
-      auto iRow = hb_parni(2);
-      auto iCol = hb_parni(3);
-      auto iWidth = hb_parni(6); // defaults to 0
+      auto iRow = hb_parni32(2);
+      auto iCol = hb_parni32(3);
+      auto iWidth = hb_parni32(6); // defaults to 0
 
       if (HB_ISNUM(7)) {
-        SetTextAlign(static_cast<HDC>(hDC), TA_NOUPDATECP | hb_parni(7));
+        SetTextAlign(static_cast<HDC>(hDC), TA_NOUPDATECP | hb_parni32(7));
       }
 
       if (iWidth < 0 && nLen < 1024) {
@@ -241,14 +241,14 @@ HB_FUNC(WIN_GETDEVICECAPS)
 {
   HDC hDC = hbwapi_par_HDC(1);
 
-  hb_retni(hDC && HB_ISNUM(2) ? static_cast<long>(GetDeviceCaps(hDC, hb_parni(2))) : 0);
+  hb_retni(hDC && HB_ISNUM(2) ? static_cast<long>(GetDeviceCaps(hDC, hb_parni32(2))) : 0);
 }
 
 HB_FUNC(WIN_SETMAPMODE)
 {
   HDC hDC = hbwapi_par_HDC(1);
 
-  hb_retni(hDC && HB_ISNUM(2) ? SetMapMode(hDC, hb_parni(2)) : 0);
+  hb_retni(hDC && HB_ISNUM(2) ? SetMapMode(hDC, hb_parni32(2)) : 0);
 }
 
 HB_FUNC(WIN_CREATEFONT)
@@ -260,7 +260,7 @@ HB_FUNC(WIN_CREATEFONT)
     HFONT hFont;
     int32_t iHeight;
     int32_t iWidth;
-    auto iWeight = hb_parni(6);
+    auto iWeight = hb_parni32(6);
 
     void *hfFaceName;
     LPCTSTR pfFaceName;
@@ -269,13 +269,13 @@ HB_FUNC(WIN_CREATEFONT)
     iWeight = iWeight > 0 ? iWeight : FW_NORMAL;
 
     if (hb_parl(10)) { // Ugly hack to enable full control for caller
-      iHeight = hb_parni(3);
-      iWidth = hb_parni(5);
+      iHeight = hb_parni32(3);
+      iWidth = hb_parni32(5);
     } else {
-      auto iMul = hb_parni(4);
-      auto iDiv = hb_parni(5);
+      auto iMul = hb_parni32(4);
+      auto iDiv = hb_parni32(5);
 
-      iHeight = -MulDiv(hb_parni(3), GetDeviceCaps(hDC, LOGPIXELSY), 72);
+      iHeight = -MulDiv(hb_parni32(3), GetDeviceCaps(hDC, LOGPIXELSY), 72);
 
       if (iDiv) {
         iWidth = MulDiv(abs(iMul), GetDeviceCaps(hDC, LOGPIXELSX), abs(iDiv));
@@ -369,7 +369,7 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
           fUserDialog = HB_ISBYREF(3) || HB_ISBYREF(4) || HB_ISBYREF(5) || HB_ISBYREF(6) || HB_ISBYREF(7) ||
                         HB_ISBYREF(8) || HB_ISBYREF(9) || HB_ISBYREF(10);
 
-          if ((iProp = hb_parni(3)) != 0) { // [2007-02-22] don't change if 0
+          if ((iProp = hb_parni32(3)) != 0) { // [2007-02-22] don't change if 0
             pDevMode->dmPaperSize = static_cast<int16_t>(iProp);
             dmFields |= DM_PAPERSIZE;
           }
@@ -379,27 +379,27 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
             dmFields |= DM_ORIENTATION;
           }
 
-          if ((iProp = hb_parni(5)) > 0) {
+          if ((iProp = hb_parni32(5)) > 0) {
             pDevMode->dmCopies = static_cast<int16_t>(iProp);
             dmFields |= DM_COPIES;
           }
 
-          if ((iProp = hb_parni(6)) != 0) { // [2007-02-22] don't change if 0
+          if ((iProp = hb_parni32(6)) != 0) { // [2007-02-22] don't change if 0
             pDevMode->dmDefaultSource = static_cast<int16_t>(iProp);
             dmFields |= DM_DEFAULTSOURCE;
           }
 
-          if ((iProp = hb_parni(7)) != 0) { // [2007-02-22] don't change if 0
+          if ((iProp = hb_parni32(7)) != 0) { // [2007-02-22] don't change if 0
             pDevMode->dmDuplex = static_cast<int16_t>(iProp);
             dmFields |= DM_DUPLEX;
           }
 
-          if ((iProp = hb_parni(8)) != 0) { // [2007-02-22] don't change if 0
+          if ((iProp = hb_parni32(8)) != 0) { // [2007-02-22] don't change if 0
             pDevMode->dmPrintQuality = static_cast<int16_t>(iProp);
             dmFields |= DM_PRINTQUALITY;
           }
 
-          if (pDevMode->dmPaperSize == DMPAPER_USER && (iProp = hb_parni(9)) > 0 && (iProp2 = hb_parni(10)) > 0) {
+          if (pDevMode->dmPaperSize == DMPAPER_USER && (iProp = hb_parni32(9)) > 0 && (iProp2 = hb_parni32(10)) > 0) {
             pDevMode->dmPaperLength = static_cast<int16_t>(iProp);
             pDevMode->dmPaperWidth = static_cast<int16_t>(iProp2);
             dmFields |= DM_PAPERLENGTH | DM_PAPERWIDTH;
@@ -555,7 +555,7 @@ HB_FUNC(WIN_SETCOLOR)
     }
 
     if (HB_ISNUM(4)) {
-      SetTextAlign(hDC, hb_parni(4));
+      SetTextAlign(hDC, hb_parni32(4));
     }
   } else {
     hb_retnl(static_cast<long>(CLR_INVALID));
@@ -572,7 +572,7 @@ HB_FUNC(WIN_SETPEN)
     if (HB_ISPOINTER(2)) {
       hPen = hbwapi_par_HPEN(2);
     } else {
-      hPen = CreatePen(hb_parni(2) /* pen style */, hb_parni(3) /* pen width */,
+      hPen = CreatePen(hb_parni32(2) /* pen style */, hb_parni32(3) /* pen width */,
                        static_cast<COLORREF>(hb_parnl(4)) /* pen color */);
 
       hbwapi_ret_HPEN(hPen);
@@ -613,20 +613,20 @@ HB_FUNC(WIN_LINETO)
 {
   HDC hDC = hbwapi_par_HDC(1);
 
-  hb_retl(hDC ? MoveToEx(hDC, hb_parni(2) /* x1 */, hb_parni(3) /* y1 */, nullptr) &&
-                    LineTo(hDC, hb_parni(4) /* x2 */, hb_parni(5) /* y2 */)
+  hb_retl(hDC ? MoveToEx(hDC, hb_parni32(2) /* x1 */, hb_parni32(3) /* y1 */, nullptr) &&
+                    LineTo(hDC, hb_parni32(4) /* x2 */, hb_parni32(5) /* y2 */)
               : false);
 }
 
 HB_FUNC(WIN_RECTANGLE)
 {
   HDC hDC = hbwapi_par_HDC(1);
-  auto x1 = hb_parni(2);
-  auto y1 = hb_parni(3);
-  auto x2 = hb_parni(4);
-  auto y2 = hb_parni(5);
-  auto iWidth = hb_parni(6);
-  auto iHeight = hb_parni(7);
+  auto x1 = hb_parni32(2);
+  auto y1 = hb_parni32(3);
+  auto x2 = hb_parni32(4);
+  auto y2 = hb_parni32(5);
+  auto iWidth = hb_parni32(6);
+  auto iHeight = hb_parni32(7);
 
   if (iWidth && iHeight) {
     hb_retl(hDC ? RoundRect(hDC, x1, y1, x2, y2, iWidth, iHeight) : false);
@@ -639,8 +639,8 @@ HB_FUNC(WIN_ARC)
 {
   HDC hDC = hbwapi_par_HDC(1);
 
-  hb_retl(hDC ? Arc(hDC /* hDC */, hb_parni(2) /* x1 */, hb_parni(3) /* y1 */, hb_parni(4) /* x2 */,
-                    hb_parni(5) /* y2 */, 0, 0, 0, 0)
+  hb_retl(hDC ? Arc(hDC /* hDC */, hb_parni32(2) /* x1 */, hb_parni32(3) /* y1 */, hb_parni32(4) /* x2 */,
+                    hb_parni32(5) /* y2 */, 0, 0, 0, 0)
               : false);
 }
 
@@ -648,8 +648,8 @@ HB_FUNC(WIN_ELLIPSE)
 {
   HDC hDC = hbwapi_par_HDC(1);
 
-  hb_retl(hDC ? Ellipse(hDC /* hDC */, hb_parni(2) /* x1 */, hb_parni(3) /* y1 */, hb_parni(4) /* x2 */,
-                        hb_parni(5) /* y2 */)
+  hb_retl(hDC ? Ellipse(hDC /* hDC */, hb_parni32(2) /* x1 */, hb_parni32(3) /* y1 */, hb_parni32(4) /* x2 */,
+                        hb_parni32(5) /* y2 */)
               : false);
 }
 
@@ -660,7 +660,7 @@ HB_FUNC(WIN_SETBKMODE)
 
   if (hDC) {
     if (HB_ISNUM(2)) {
-      iMode = SetBkMode(hDC, hb_parni(2));
+      iMode = SetBkMode(hDC, hb_parni32(2));
     } else {
       iMode = GetBkMode(hDC);
     }

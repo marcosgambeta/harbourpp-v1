@@ -89,13 +89,13 @@
 #define hbwapi_par_COLORREF_def( n, d )     ( ( COLORREF ) hb_parnldef( n, d ) )
 
 #define hbwapi_par_BOOL( n )                ( ( BOOL  ) ( hb_parl( n ) ? TRUE : FALSE ) )
-#define hbwapi_par_BYTE( n )                ( ( BYTE  ) hb_parni( n ) )
-#define hbwapi_par_INT( n )                 ( ( INT   ) hb_parni( n ) )
-#define hbwapi_par_UINT( n )                ( ( UINT  ) hb_parni( n ) )
+#define hbwapi_par_BYTE( n )                ( ( BYTE  ) hb_parni32( n ) )
+#define hbwapi_par_INT( n )                 ( ( INT   ) hb_parni32( n ) )
+#define hbwapi_par_UINT( n )                ( ( UINT  ) hb_parni32( n ) )
 #define hbwapi_par_LONG( n )                ( ( LONG  ) hb_parnl( n ) )
 #define hbwapi_par_WORD( n )                ( ( WORD  ) hb_parnl( n ) )
 #define hbwapi_par_DWORD( n )               ( ( DWORD ) hb_parnl( n ) )
-#define hbwapi_par_SHORT( n )               ( ( SHORT ) hb_parni( n ) )
+#define hbwapi_par_SHORT( n )               ( ( SHORT ) hb_parni32( n ) )
 
 #define hbwapi_ret_NINT( i )                hb_retnint( i )
 #define hbwapi_ret_NI( i )                  hb_retni( i )

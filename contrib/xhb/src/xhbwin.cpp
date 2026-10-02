@@ -68,7 +68,7 @@ HB_FUNC(MESSAGEBOX)
   HWND hWnd =
       HB_ISNUM(1) ? reinterpret_cast<HWND>(static_cast<uintptr_t>(hb_parnint(1))) : static_cast<HWND>(hb_parptr(1));
 
-  hb_retni(MessageBox(hWnd, HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr), hb_parni(4)));
+  hb_retni(MessageBox(hWnd, HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr), hb_parni32(4)));
 
   hb_strfree(hStr1);
   hb_strfree(hStr2);

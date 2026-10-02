@@ -24,8 +24,8 @@
 
 HB_FUNC(FT_SAVEATT)
 {
-   auto iTop    = hb_parni(1);        /* Defaults to zero on bad type */
-   auto iLeft   = hb_parni(2);        /* Defaults to zero on bad type */
+   auto iTop    = hb_parni32(1);        /* Defaults to zero on bad type */
+   auto iLeft   = hb_parni32(2);        /* Defaults to zero on bad type */
    int32_t iMaxRow = hb_gtMaxRow();
    int32_t iMaxCol = hb_gtMaxCol();
    auto iBottom = hb_parnidef(3, iMaxRow);
@@ -106,8 +106,8 @@ HB_FUNC(FT_RESTATT)
 
    if( nLen )
    {
-      auto iTop    = hb_parni(1);            /* Defaults to zero on bad type */
-      auto iLeft   = hb_parni(2);            /* Defaults to zero on bad type */
+      auto iTop    = hb_parni32(1);            /* Defaults to zero on bad type */
+      auto iLeft   = hb_parni32(2);            /* Defaults to zero on bad type */
       int32_t iMaxRow  = hb_gtMaxRow();
       int32_t iMaxCol  = hb_gtMaxCol();
       auto iBottom = hb_parnidef(3, iMaxRow);

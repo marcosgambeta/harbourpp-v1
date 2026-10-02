@@ -109,7 +109,7 @@ static HB_LONG __numnot(HB_LONG lNum1, HB_LONG lNum2)
 
 static void sizeofbits(uint16_t *pusBytes, HB_LONG *plPattern, HB_LONG *plTestMSB)
 {
-  *pusBytes = (HB_ISNIL(1) || hb_parni(1) == 0) ? sizeof(int32_t) * 8 : static_cast<uint16_t>(hb_parni(1));
+  *pusBytes = (HB_ISNIL(1) || hb_parni32(1) == 0) ? sizeof(int32_t) * 8 : static_cast<uint16_t>(hb_parni32(1));
 
   if (*pusBytes > sizeof(HB_LONG) * 8) {
     *pusBytes = *pusBytes % (sizeof(HB_LONG) * 8);

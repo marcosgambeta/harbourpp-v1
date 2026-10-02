@@ -807,9 +807,9 @@ HB_FUNC(HB_SOCKETERRORSTRING)
 
   if (pSock || iError == 0) {
     if (HB_ISNUM(1)) {
-      iError = hb_parni(1);
+      iError = hb_parni32(1);
     } else if (HB_ISNUM(2)) {
-      iError = hb_parni(2);
+      iError = hb_parni32(2);
     } else {
       iError = hb_socketGetError();
     }
@@ -871,7 +871,7 @@ HB_FUNC(HB_SOCKETOPEN)
   HB_SOCKET socket;
   auto iDomain = hb_parnidef(1, HB_SOCKET_AF_INET);
   auto iType = hb_parnidef(2, HB_SOCKET_PT_STREAM);
-  auto iProtocol = hb_parni(3);
+  auto iProtocol = hb_parni32(3);
 
   s_socket_init();
   if ((socket = hb_socketOpen(iDomain, iType, iProtocol)) != HB_NO_SOCKET) {
@@ -995,7 +995,7 @@ HB_FUNC(HB_SOCKETSEND)
       lLen = hb_sockexWrite(pSock, hb_parc(2), lLen, timeout);
       pSock->iAutoFlush = iAutoFlush;
     } else {
-      lLen = hb_socketSend(pSock->sd, data, lLen, hb_parni(4), timeout);
+      lLen = hb_socketSend(pSock->sd, data, lLen, hb_parni32(4), timeout);
     }
     hb_retnl(lLen);
   }
@@ -1017,7 +1017,7 @@ HB_FUNC(HB_SOCKETSENDTO)
         lLen = lParam;
       }
     }
-    hb_retnl(hb_socketSendTo(socket, hb_parc(2), lLen, hb_parni(4), addr, len, hb_parnintdef(6, -1)));
+    hb_retnl(hb_socketSendTo(socket, hb_parc(2), lLen, hb_parni32(4), addr, len, hb_parnintdef(6, -1)));
     hb_xfree(addr);
   }
 }
@@ -1040,7 +1040,7 @@ HB_FUNC(HB_SOCKETRECV)
       }
       hb_retnl(pSock->fRedirAll
                    ? hb_sockexRead(pSock, pBuffer, static_cast<long>(nLen), hb_parnintdef(5, -1))
-                   : hb_socketRecv(pSock->sd, pBuffer, static_cast<long>(nLen), hb_parni(4), hb_parnintdef(5, -1)));
+                   : hb_socketRecv(pSock->sd, pBuffer, static_cast<long>(nLen), hb_parni32(4), hb_parnintdef(5, -1)));
     } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
@@ -1067,7 +1067,7 @@ HB_FUNC(HB_SOCKETRECVFROM)
           nLen = lRead;
         }
       }
-      hb_retnl(lRet = hb_socketRecvFrom(socket, pBuffer, static_cast<long>(nLen), hb_parni(4), &addr, &len,
+      hb_retnl(lRet = hb_socketRecvFrom(socket, pBuffer, static_cast<long>(nLen), hb_parni32(4), &addr, &len,
                                         hb_parnintdef(6, -1)));
       if (HB_ISBYREF(5)) {
         HB_ITEM *pAddr;
@@ -1157,7 +1157,7 @@ HB_FUNC(HB_SOCKETSETSNDBUFSIZE)
   HB_SOCKET socket = hb_socketParam(1);
 
   if (socket != HB_NO_SOCKET) {
-    hb_retl(hb_socketSetSndBufSize(socket, hb_parni(2)) == 0);
+    hb_retl(hb_socketSetSndBufSize(socket, hb_parni32(2)) == 0);
   }
 }
 
@@ -1166,7 +1166,7 @@ HB_FUNC(HB_SOCKETSETRCVBUFSIZE)
   HB_SOCKET socket = hb_socketParam(1);
 
   if (socket != HB_NO_SOCKET) {
-    hb_retl(hb_socketSetRcvBufSize(socket, hb_parni(2)) == 0);
+    hb_retl(hb_socketSetRcvBufSize(socket, hb_parni32(2)) == 0);
   }
 }
 
@@ -1242,7 +1242,7 @@ HB_FUNC(HB_SOCKETRESOLVEINETADDR)
   uint32_t len;
 
   s_socket_init();
-  if (hb_socketResolveInetAddr(&addr, &len, hb_parc(1), hb_parni(2))) {
+  if (hb_socketResolveInetAddr(&addr, &len, hb_parc(1), hb_parni32(2))) {
     HB_ITEM *pItem = hb_socketAddrToItem(addr, len);
 
     if (addr) {
@@ -1335,7 +1335,7 @@ HB_FUNC(HB_SOCKETGETIFACES)
   HB_ITEM *pItem;
 
   s_socket_init();
-  pItem = hb_socketGetIFaces(hb_parni(1), hb_parl(2));
+  pItem = hb_socketGetIFaces(hb_parni32(1), hb_parl(2));
   if (pItem != nullptr) {
     hb_itemReturnRelease(pItem);
   } else {
@@ -1426,7 +1426,7 @@ HB_FUNC(HB_SOCKETAUTOFLUSH)
   if (pSock) {
     hb_retni(hb_sockexGetAutoFlush(pSock));
     if (HB_ISNUM(2)) {
-      hb_sockexSetAutoFlush(pSock, hb_parni(2));
+      hb_sockexSetAutoFlush(pSock, hb_parni32(2));
     }
   }
 }

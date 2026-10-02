@@ -229,7 +229,7 @@ static bool hb_tokenParam(int32_t iParam, HB_SIZE nSkip, const char **pszLine, H
         iFlags &= ~_HB_TOK_RESPECT_SQUOTE;
       }
     } else {
-      iFlags |= hb_parni(iParam + 1);
+      iFlags |= hb_parni32(iParam + 1);
     }
   }
 

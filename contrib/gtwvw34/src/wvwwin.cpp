@@ -156,8 +156,8 @@ HB_FUNC(WVW_NOPENWINDOW)
       hb_itemRelease(pItem);
     }
 
-    auto iRow1 = hb_parni(2);
-    auto iCol1 = hb_parni(3);
+    auto iRow1 = hb_parni32(2);
+    auto iCol1 = hb_parni32(3);
     auto iRow2 = hb_parnidef(4, wvw_par->ROWS - 1);
     auto iCol2 = hb_parnidef(5, wvw_par->COLS - 1);
 
@@ -307,7 +307,7 @@ HB_FUNC(WVW_NSETCURWINDOW)
     hb_retni(wvw->iCurWindow);
 
     if (HB_ISNUM(1)) {
-      auto nWin = hb_parni(1);
+      auto nWin = hb_parni32(1);
 
       if (nWin >= 0 && nWin < wvw->iNumWindows) {
         hb_gt_wvw_SetCurWindow(nWin);
@@ -455,8 +455,8 @@ HB_FUNC(WVW_SETPAINTREFRESH)
   if (wvw) {
     hb_retni(wvw->iPaintRefresh);
 
-    if (HB_ISNUM(1) && (hb_parni(1) >= 50 || hb_parni(1) == 0)) {
-      wvw->iPaintRefresh = hb_parni(1);
+    if (HB_ISNUM(1) && (hb_parni32(1) >= 50 || hb_parni32(1) == 0)) {
+      wvw->iPaintRefresh = hb_parni32(1);
 
       if (wvw->a.pSymWVW_PAINT) {
         for (auto i = 0; i < wvw->iNumWindows; i++) {
@@ -590,9 +590,9 @@ HB_FUNC(WVW_SETDEFLINESPACING)
   if (wvw) {
     hb_retni(wvw->iDefLineSpacing);
 
-    if (HB_ISNUM(1) && hb_parni(1) >= 0 && hb_parni(1) <= 40 &&
+    if (HB_ISNUM(1) && hb_parni32(1) >= 0 && hb_parni32(1) <= 40 &&
         /* nobody is crazy enough to use > 40 */ fmod(hb_parnd(1), 2) == 0) {
-      wvw->iDefLineSpacing = hb_parni(1);
+      wvw->iDefLineSpacing = hb_parni32(1);
     }
   } else {
     hb_retni(0);
@@ -617,8 +617,8 @@ HB_FUNC(WVW_SETDEFLSPACECOLOR)
   if (wvw) {
     hb_retni(wvw->iDefLSpaceColor);
 
-    if (HB_ISNUM(1) && hb_parni(1) >= -1 && hb_parni(1) <= 15) {
-      wvw->iDefLSpaceColor = hb_parni(1);
+    if (HB_ISNUM(1) && hb_parni32(1) >= -1 && hb_parni32(1) <= 15) {
+      wvw->iDefLSpaceColor = hb_parni32(1);
     }
   } else {
     hb_retni(0);
@@ -645,8 +645,8 @@ HB_FUNC(WVW_SETLSPACECOLOR)
 
     hb_retni(iOldValue);
 
-    if (HB_ISNUM(2) && hb_parni(2) >= -1 && hb_parni(2) <= 15) {
-      wvw_win->iLSpaceColor = hb_parni(2);
+    if (HB_ISNUM(2) && hb_parni32(2) >= -1 && hb_parni32(2) <= 15) {
+      wvw_win->iLSpaceColor = hb_parni32(2);
 
       if (wvw_win->iLSpaceColor != iOldValue) {
         hb_gt_wvw_SetInvalidRect(wvw_win, 0, 0, wvw_win->COLS - 1, wvw_win->ROWS - 1);
@@ -793,10 +793,10 @@ HB_FUNC(WVW_INVALIDATERECT)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     RECT rc;
     POINT xy;
@@ -822,8 +822,8 @@ HB_FUNC(WVW_CLIENTTOSCREEN)
   POINT xy{};
 
   if (wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
 
     hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, nullptr, nullptr);
 

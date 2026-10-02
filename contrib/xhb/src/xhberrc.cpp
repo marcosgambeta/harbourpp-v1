@@ -159,7 +159,7 @@ HB_FUNC(SETUNHANDLEDEXCEPTIONFILTER)
 HB_FUNC(SETERRORMODE)
 {
 #if defined(HB_OS_WIN)
-  hb_retni(SetErrorMode(hb_parni(1)));
+  hb_retni(SetErrorMode(hb_parni32(1)));
 #else
   hb_retni(0);
 #endif

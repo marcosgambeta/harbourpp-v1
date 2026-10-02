@@ -70,7 +70,7 @@ HB_FUNC(VGAPALETTE)
   if (color_string) {
     attr = hb_gtColorToN(color_string);
   } else if (HB_ISNUM(1)) {
-    attr = hb_parni(1);
+    attr = hb_parni32(1);
   } else {
     attr = -1;
   }
@@ -81,9 +81,9 @@ HB_FUNC(VGAPALETTE)
     return;
   }
 
-  auto red = static_cast<char>(hb_parni(2));
-  auto green = static_cast<char>(hb_parni(3));
-  auto blue = static_cast<char>(hb_parni(4));
+  auto red = static_cast<char>(hb_parni32(2));
+  auto green = static_cast<char>(hb_parni32(3));
+  auto blue = static_cast<char>(hb_parni32(4));
 
   HB_SYMBOL_UNUSED(blue);
   HB_SYMBOL_UNUSED(green);
@@ -99,7 +99,7 @@ HB_FUNC(SETFONT)
 {
   auto font = hb_parcx(1);
   auto len = static_cast<unsigned>(hb_parclen(1));
-  auto area = hb_parni(2);
+  auto area = hb_parni32(2);
   int32_t offset = 0;
   int32_t count = 256;
   int32_t height = 16;
@@ -108,10 +108,10 @@ HB_FUNC(SETFONT)
     area = 1;
   }
   if (HB_ISNUM(3)) {
-    offset = hb_parni(3);
+    offset = hb_parni32(3);
   }
   if (HB_ISNUM(4)) {
-    count = hb_parni(4);
+    count = hb_parni32(4);
   }
   if (HB_ISLOG(3) && hb_parl(3) && count != 0) {
     height = len / count;

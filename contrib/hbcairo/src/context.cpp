@@ -268,7 +268,7 @@ HB_FUNC(CAIRO_SET_FILL_RULE)
 
   if (pCairo != nullptr)
   {
-    cairo_set_fill_rule(pCairo, static_cast<cairo_fill_rule_t>(hb_parni(2)));
+    cairo_set_fill_rule(pCairo, static_cast<cairo_fill_rule_t>(hb_parni32(2)));
   }
 }
 
@@ -278,7 +278,7 @@ HB_FUNC(CAIRO_SET_LINE_CAP)
 
   if (pCairo != nullptr)
   {
-    cairo_set_line_cap(pCairo, static_cast<cairo_line_cap_t>(hb_parni(2)));
+    cairo_set_line_cap(pCairo, static_cast<cairo_line_cap_t>(hb_parni32(2)));
   }
 }
 
@@ -288,7 +288,7 @@ HB_FUNC(CAIRO_SET_LINE_JOIN)
 
   if (pCairo != nullptr)
   {
-    cairo_set_line_join(pCairo, static_cast<cairo_line_join_t>(hb_parni(2)));
+    cairo_set_line_join(pCairo, static_cast<cairo_line_join_t>(hb_parni32(2)));
   }
 }
 
@@ -318,7 +318,7 @@ HB_FUNC(CAIRO_SET_OPERATOR)
 
   if (pCairo != nullptr)
   {
-    cairo_set_operator(pCairo, static_cast<cairo_operator_t>(hb_parni(2)));
+    cairo_set_operator(pCairo, static_cast<cairo_operator_t>(hb_parni32(2)));
   }
 }
 

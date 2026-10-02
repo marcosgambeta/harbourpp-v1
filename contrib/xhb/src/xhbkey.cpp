@@ -101,7 +101,7 @@ static int32_t hb_inkeyKeyXHB(int32_t iKey)
 
 HB_FUNC(XHB_KEYTRANS)
 {
-  hb_retni(hb_inkeyKeyXHB(hb_parni(1)));
+  hb_retni(hb_inkeyKeyXHB(hb_parni32(1)));
 }
 
 HB_FUNC(XHB_INKEY)

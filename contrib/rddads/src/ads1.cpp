@@ -5448,7 +5448,7 @@ static void adsRegisterRDD(uint16_t *pusRddId)
 {
   auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  auto uiRddId = static_cast<uint16_t>(hb_parni(4));
+  auto uiRddId = static_cast<uint16_t>(hb_parni32(4));
   auto puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
   if (pTable) {
@@ -5641,7 +5641,7 @@ HB_FUNC(ADSCUSTOMIZEAOF)
   pArea = hb_adsGetWorkAreaPointer();
   if (pArea != nullptr) {
     if (HB_ISNUM(2)) { // add, delete or toggle
-      u16Option = static_cast<UNSIGNED16>(hb_parni(2));
+      u16Option = static_cast<UNSIGNED16>(hb_parni32(2));
     }
 
     if (HB_ISNIL(1)) { // default to current record

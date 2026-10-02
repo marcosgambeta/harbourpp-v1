@@ -369,7 +369,7 @@ static int32_t XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const X
 
          hb_evalBlock(hb_expat->pVar[_VAR_bUnknownEncodingHandler], pEncData, pPar1, pPar2, nullptr);
 
-         iResult = hb_parni(-1);
+         iResult = hb_parni32(-1);
 
          if( iResult == XML_STATUS_OK )
          {
@@ -617,7 +617,7 @@ static int32_t XMLCALL hb_expat_NotStandaloneHandler( void * userdata )
          hb_vmPush(hb_expat->pVar[_VAR_xUserData]);
          hb_vmSend(1);
 
-         iResult = hb_parni(-1);
+         iResult = hb_parni32(-1);
 
          hb_vmRequestRestore();
       }
@@ -914,7 +914,7 @@ HB_FUNC(XML_GETERRORCODE)
 
 HB_FUNC(XML_ERRORSTRING)
 {
-   hb_retc(XML_ErrorString(static_cast<enum XML_Error>(hb_parni(1))));
+   hb_retc(XML_ErrorString(static_cast<enum XML_Error>(hb_parni32(1))));
 }
 
 HB_FUNC(XML_GETCURRENTBYTEINDEX)
@@ -1057,7 +1057,7 @@ HB_FUNC(XML_SETPARAMENTITYPARSING)
 
    if( hb_expat )
    {
-      hb_retni(XML_SetParamEntityParsing(hb_expat->parser, static_cast<enum XML_ParamEntityParsing>(hb_parni(2))));
+      hb_retni(XML_SetParamEntityParsing(hb_expat->parser, static_cast<enum XML_ParamEntityParsing>(hb_parni32(2))));
    }
    else
    {
@@ -1085,7 +1085,7 @@ HB_FUNC(XML_SETRETURNNSTRIPLET)
 
    if( hb_expat )
    {
-      XML_SetReturnNSTriplet(hb_expat->parser, hb_parni(2));
+      XML_SetReturnNSTriplet(hb_expat->parser, hb_parni32(2));
 
       hb_ret();
    }

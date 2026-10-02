@@ -554,7 +554,7 @@ HB_FUNC(WAPI_SETBKMODE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hb_retni(SetBkMode(hDC, hb_parni(2)));
+    hb_retni(SetBkMode(hDC, hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -576,7 +576,7 @@ HB_FUNC(WAPI_GETDEVICECAPS)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hb_retni(GetDeviceCaps(hDC, hb_parni(2)));
+    hb_retni(GetDeviceCaps(hDC, hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -587,7 +587,7 @@ HB_FUNC(WAPI_SETMAPMODE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hb_retni(SetMapMode(hDC, hb_parni(2)));
+    hb_retni(SetMapMode(hDC, hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -646,7 +646,7 @@ HB_FUNC(WAPI_TEXTOUT)
     void *hData;
     HB_SIZE nDataLen;
     LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
-    hbwapi_ret_L(TextOut(hDC, hb_parni(2) /* iRow */, hb_parni(3) /* iCol */, lpData, static_cast<int32_t>(nDataLen)));
+    hbwapi_ret_L(TextOut(hDC, hb_parni32(2) /* iRow */, hb_parni32(3) /* iCol */, lpData, static_cast<int32_t>(nDataLen)));
     hb_strfree(hData);
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -683,7 +683,7 @@ HB_FUNC(WAPI_EXTTEXTOUT)
       lpFontWidths = nullptr;
     }
 
-    hbwapi_ret_L(ExtTextOut(hDC, hb_parni(2) /* iRow */, hb_parni(3) /* iCol */, hbwapi_par_UINT(4) /* fuOptions */,
+    hbwapi_ret_L(ExtTextOut(hDC, hb_parni32(2) /* iRow */, hb_parni32(3) /* iCol */, hbwapi_par_UINT(4) /* fuOptions */,
                             hbwapi_par_RECT(&rc, 5, false), lpData, static_cast<UINT>(nDataLen), lpFontWidths));
 
     if (lpFontWidths) {
@@ -756,7 +756,7 @@ HB_FUNC(WAPI_GETBKCOLOR)
 // WAPI_CREATEPEN(fnPenStyle, nWidth, crColor) --> HPEN
 HB_FUNC(WAPI_CREATEPEN)
 {
-  hbwapi_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3)));
+  hbwapi_ret_HPEN(CreatePen(hb_parni32(1), hb_parni32(2), hbwapi_par_COLORREF(3)));
 }
 
 // WAPI_CREATESOLIDBRUSH(crColor) --> HBRUSH
@@ -768,7 +768,7 @@ HB_FUNC(WAPI_CREATESOLIDBRUSH)
 // WAPI_CREATEHATCHBRUSH(fnStyle, crColor) --> HBRUSH
 HB_FUNC(WAPI_CREATEHATCHBRUSH)
 {
-  hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni(1), hbwapi_par_COLORREF(2)));
+  hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni32(1), hbwapi_par_COLORREF(2)));
 }
 
 // WAPI_CREATEBRUSHINDIRECT(p) --> HBRUSH
@@ -784,8 +784,8 @@ HB_FUNC(WAPI_CREATEFONT)
   void *hFontFace;
 
   hbwapi_ret_HFONT(
-      CreateFont(hb_parni(1) /* nHeight */, hb_parni(2) /* nWidth */, hb_parni(3) /* nEscapement */,
-                 hb_parni(4) /* nOrientation */, hb_parni(5) /* fnWeight */,
+      CreateFont(hb_parni32(1) /* nHeight */, hb_parni32(2) /* nWidth */, hb_parni32(3) /* nEscapement */,
+                 hb_parni32(4) /* nOrientation */, hb_parni32(5) /* fnWeight */,
                  static_cast<DWORD>(hb_parl(6)) /* fdwItalic */, static_cast<DWORD>(hb_parl(7)) /* fdwUnderline */,
                  static_cast<DWORD>(hb_parl(8)) /* fdwStrikeOut */, static_cast<DWORD>(hb_parnl(9)) /* fdwCharSet */,
                  static_cast<DWORD>(hb_parnldef(10, OUT_DEFAULT_PRECIS)) /* fdwOutputPrecision */,
@@ -853,10 +853,10 @@ HB_FUNC(WAPI_MOVETOEX)
     POINT xy;
 
     if (hbwapi_par_POINT(&xy, 4, false)) {
-      hbwapi_ret_L(MoveToEx(hDC, hb_parni(2) /* X */, hb_parni(3) /* Y */, &xy));
+      hbwapi_ret_L(MoveToEx(hDC, hb_parni32(2) /* X */, hb_parni32(3) /* Y */, &xy));
       hbwapi_stor_POINT(&xy, 4);
     } else {
-      hbwapi_ret_L(MoveToEx(hDC, hb_parni(2) /* X */, hb_parni(3) /* Y */, nullptr));
+      hbwapi_ret_L(MoveToEx(hDC, hb_parni32(2) /* X */, hb_parni32(3) /* Y */, nullptr));
     }
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -868,7 +868,7 @@ HB_FUNC(WAPI_LINETO)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hbwapi_ret_L(LineTo(hDC, hb_parni(2) /* XEnd */, hb_parni(3) /* YEnd */));
+    hbwapi_ret_L(LineTo(hDC, hb_parni32(2) /* XEnd */, hb_parni32(3) /* YEnd */));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -893,7 +893,7 @@ HB_FUNC(WAPI_ROUNDRECT)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hbwapi_ret_L(RoundRect(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
+    hbwapi_ret_L(RoundRect(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5), hb_parni32(6), hb_parni32(7)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -905,7 +905,7 @@ HB_FUNC(WAPI_RECTANGLE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hbwapi_ret_L(Rectangle(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+    hbwapi_ret_L(Rectangle(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -917,8 +917,8 @@ HB_FUNC(WAPI_ARC)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hbwapi_ret_L(Arc(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8),
-                     hb_parni(9)));
+    hbwapi_ret_L(Arc(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5), hb_parni32(6), hb_parni32(7), hb_parni32(8),
+                     hb_parni32(9)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -930,7 +930,7 @@ HB_FUNC(WAPI_ELLIPSE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC != nullptr) {
-    hbwapi_ret_L(Ellipse(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+    hbwapi_ret_L(Ellipse(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -950,7 +950,7 @@ HB_FUNC(WAPI_SETDCPENCOLOR)
 
 HB_FUNC(WAPI_SETARCDIRECTION)
 {
-  hb_retni(SetArcDirection(hbwapi_par_raw_HDC(1), hb_parni(2)));
+  hb_retni(SetArcDirection(hbwapi_par_raw_HDC(1), hb_parni32(2)));
 }
 
 HB_FUNC(WAPI_GETSTOCKOBJECT)

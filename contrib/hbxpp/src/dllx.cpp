@@ -126,7 +126,7 @@ HB_FUNC(DLLCALL)
 
    if( pLibraryHandle )
    {
-      auto iXPPFlags = hb_parni(2);
+      auto iXPPFlags = hb_parni32(2);
       int32_t    iFuncFlags   = 0;
       void * pFunctionPtr = hb_libSymAddr(pLibraryHandle, hb_parcx(3));
 
@@ -176,7 +176,7 @@ HB_FUNC(DLLPREPARECALL)
 
       if( pFunctionPtr )
       {
-         auto iXPPFlags = hb_parni(2);
+         auto iXPPFlags = hb_parni32(2);
          int32_t iFuncFlags = 0;
 
          if( (iXPPFlags & DLL_CDECL) != 0 )

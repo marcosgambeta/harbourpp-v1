@@ -579,7 +579,7 @@ HB_FUNC(PQRESULTERRORFIELD)
   if (res != nullptr)
   {
 #if PG_VERSION_NUM >= 70400
-    hb_retc(PQresultErrorField(res, hb_parni(2)));
+    hb_retc(PQresultErrorField(res, hb_parni32(2)));
 #else
     hb_retc_null();
 #endif
@@ -903,8 +903,8 @@ HB_FUNC(PQGETVALUE)
   {
     if (PQresultStatus(res) == PGRES_TUPLES_OK)
     {
-      int32_t nRow = hb_parni(2) - 1;
-      int32_t nCol = hb_parni(3) - 1;
+      int32_t nRow = hb_parni32(2) - 1;
+      int32_t nCol = hb_parni32(3) - 1;
 
       if (!PQgetisnull(res, nRow, nCol))
       {
@@ -937,8 +937,8 @@ HB_FUNC(PQGETLENGTH)
 
     if (PQresultStatus(res) == PGRES_TUPLES_OK)
     {
-      int32_t nRow = hb_parni(2) - 1;
-      int32_t nCol = hb_parni(3) - 1;
+      int32_t nRow = hb_parni32(2) - 1;
+      int32_t nCol = hb_parni32(3) - 1;
 
       result = PQgetlength(res, nRow, nCol);
     }
@@ -1291,7 +1291,7 @@ HB_FUNC(PQFTABLE)
 
   if (res != nullptr)
   {
-    hb_retnl(static_cast<Oid>(PQftable(res, hb_parni(2) - 1)));
+    hb_retnl(static_cast<Oid>(PQftable(res, hb_parni32(2) - 1)));
   }
   else
   {
@@ -1306,7 +1306,7 @@ HB_FUNC(PQFTYPE)
 
   if (res != nullptr)
   {
-    hb_retnl(static_cast<Oid>(PQftype(res, hb_parni(2) - 1)));
+    hb_retnl(static_cast<Oid>(PQftype(res, hb_parni32(2) - 1)));
   }
   else
   {
@@ -1321,7 +1321,7 @@ HB_FUNC(PQFNAME)
 
   if (res != nullptr)
   {
-    hb_retc(PQfname(res, hb_parni(2) - 1));
+    hb_retc(PQfname(res, hb_parni32(2) - 1));
   }
   else
   {
@@ -1336,7 +1336,7 @@ HB_FUNC(PQFMOD)
 
   if (res != nullptr)
   {
-    hb_retni(PQfmod(res, hb_parni(2) - 1));
+    hb_retni(PQfmod(res, hb_parni32(2) - 1));
   }
   else
   {
@@ -1351,7 +1351,7 @@ HB_FUNC(PQFSIZE)
 
   if (res != nullptr)
   {
-    hb_retni(PQfsize(res, hb_parni(2) - 1));
+    hb_retni(PQfsize(res, hb_parni32(2) - 1));
   }
   else
   {
@@ -1366,7 +1366,7 @@ HB_FUNC(PQGETISNULL)
 
   if (res != nullptr)
   {
-    hb_retl(PQgetisnull(res, hb_parni(2) - 1, hb_parni(3) - 1) ? true : false);
+    hb_retl(PQgetisnull(res, hb_parni32(2) - 1, hb_parni32(3) - 1) ? true : false);
   }
   else
   {
@@ -1599,7 +1599,7 @@ HB_FUNC(PQSETERRORVERBOSITY)
 
   if (conn != nullptr)
   {
-    hb_retni(static_cast<PGVerbosity>(PQsetErrorVerbosity(conn, static_cast<PGVerbosity>(hb_parni(2)))));
+    hb_retni(static_cast<PGVerbosity>(PQsetErrorVerbosity(conn, static_cast<PGVerbosity>(hb_parni32(2)))));
   }
   else
   {
@@ -1727,7 +1727,7 @@ HB_FUNC(PQPREPARE)
 
   if (conn != nullptr)
   {
-    hb_PGresult_ret(PQprepare(conn, hb_parcx(2), hb_parcx(3), hb_parni(4), nullptr));
+    hb_PGresult_ret(PQprepare(conn, hb_parcx(2), hb_parcx(3), hb_parni32(4), nullptr));
   }
   else
   {
@@ -1804,7 +1804,7 @@ HB_FUNC(PQPUTCOPYEND)
 // PG_ENCODING_TO_CHAR() -->
 HB_FUNC(PG_ENCODING_TO_CHAR)
 {
-  hb_retc(pg_encoding_to_char(hb_parni(1)));
+  hb_retc(pg_encoding_to_char(hb_parni32(1)));
 }
 
 // 31.19 Behavior in Threaded Programs

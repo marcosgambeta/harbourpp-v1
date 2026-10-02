@@ -154,7 +154,7 @@ HB_FUNC(EVP_PKEY_NEW)
 
 HB_FUNC(EVP_PKEY_TYPE)
 {
-  hb_retni(EVP_PKEY_type(hb_parni(1)));
+  hb_retni(EVP_PKEY_type(hb_parni32(1)));
 }
 
 HB_FUNC(EVP_PKEY_BASE_ID)
@@ -227,7 +227,7 @@ HB_FUNC(EVP_PKEY_ASSIGN)
 
     if (pkey)
       // QUESTION: Is hb_openssl_strdup() okay here? [vszakats]
-      hb_retni(EVP_PKEY_assign(pkey, hb_parni(2), hb_openssl_strdup(hb_parcx(3))));
+      hb_retni(EVP_PKEY_assign(pkey, hb_parni32(2), hb_openssl_strdup(hb_parcx(3))));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -312,7 +312,7 @@ HB_FUNC(EVP_PKEY_CTX_SET_RSA_PADDING)
   EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
   if (ctx && HB_ISNUM(2)) {
-    hb_retni(EVP_PKEY_CTX_set_rsa_padding(ctx, hb_parni(2)));
+    hb_retni(EVP_PKEY_CTX_set_rsa_padding(ctx, hb_parni32(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #elif 0
@@ -355,7 +355,7 @@ HB_FUNC(EVP_PKEY_CTX_SET_RSA_PSS_SALTLEN)
   EVP_PKEY_CTX *ctx = hb_EVP_PKEY_CTX_par(1);
 
   if (ctx && HB_ISNUM(2)) {
-    hb_retni(EVP_PKEY_CTX_set_rsa_pss_saltlen(ctx, hb_parni(2)));
+    hb_retni(EVP_PKEY_CTX_set_rsa_pss_saltlen(ctx, hb_parni32(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #else

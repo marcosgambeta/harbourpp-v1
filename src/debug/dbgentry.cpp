@@ -2051,7 +2051,7 @@ HB_FUNC(__DBGSETTOCURSOR)
 
   if (ptr != nullptr)
   {
-    hb_dbgSetToCursor(ptr, hb_parc(2), hb_parni(3));
+    hb_dbgSetToCursor(ptr, hb_parc(2), hb_parni32(3));
   }
 }
 
@@ -2069,7 +2069,7 @@ HB_FUNC(__DBGGETEXPRVALUE)
     }
     else
     {
-      pItem = hb_dbgGetWatchValue(ptr, hb_parni(2) - 1);
+      pItem = hb_dbgGetWatchValue(ptr, hb_parni32(2) - 1);
     }
 
     if (pItem != nullptr)
@@ -2100,7 +2100,7 @@ HB_FUNC(__DBGISVALIDSTOPLINE)
 
   if (ptr != nullptr)
   {
-    hb_retl(hb_dbgIsValidStopLine(ptr, hb_parc(2), hb_parni(3)));
+    hb_retl(hb_dbgIsValidStopLine(ptr, hb_parc(2), hb_parni32(3)));
   }
 }
 
@@ -2110,7 +2110,7 @@ HB_FUNC(__DBGADDBREAK)
 
   if (ptr != nullptr)
   {
-    hb_dbgAddBreak(ptr, hb_parc(2), hb_parni(3), hb_parc(4));
+    hb_dbgAddBreak(ptr, hb_parc(2), hb_parni32(3), hb_parc(4));
   }
 }
 
@@ -2120,7 +2120,7 @@ HB_FUNC(__DBGDELBREAK)
 
   if (ptr != nullptr)
   {
-    hb_dbgDelBreak(ptr, hb_parni(2));
+    hb_dbgDelBreak(ptr, hb_parni32(2));
   }
 }
 
@@ -2131,7 +2131,7 @@ HB_FUNC(__DBGISBREAK)
 
   if (ptr && szModule)
   {
-    hb_retni(hb_dbgIsBreakPoint(static_cast<HB_DEBUGINFO *>(ptr), hb_dbgStripModuleName(szModule), hb_parni(3)));
+    hb_retni(hb_dbgIsBreakPoint(static_cast<HB_DEBUGINFO *>(ptr), hb_dbgStripModuleName(szModule), hb_parni32(3)));
   }
 }
 
@@ -2161,7 +2161,7 @@ HB_FUNC(__DBGDELWATCH)
 
   if (ptr != nullptr)
   {
-    hb_dbgDelWatch(ptr, hb_parni(2));
+    hb_dbgDelWatch(ptr, hb_parni32(2));
   }
 }
 
@@ -2171,7 +2171,7 @@ HB_FUNC(__DBGSETWATCH)
 
   if (ptr != nullptr)
   {
-    hb_dbgSetWatch(ptr, hb_parni(2), hb_parc(3), hb_parl(4));
+    hb_dbgSetWatch(ptr, hb_parni32(2), hb_parc(3), hb_parl(4));
   }
 }
 

@@ -186,7 +186,7 @@ HB_FUNC(HB_UTF8CHR)
   if (HB_ISNUM(1)) {
     char utf8Char[HB_MAX_CHAR_LEN];
 
-    int32_t iLen = hb_cdpU32CharToUTF8(utf8Char, static_cast<HB_WCHAR32>(hb_parni(1)));
+    int32_t iLen = hb_cdpU32CharToUTF8(utf8Char, static_cast<HB_WCHAR32>(hb_parni32(1)));
     hb_retclen(utf8Char, iLen);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -438,7 +438,7 @@ HB_FUNC(HB_UTF8POKE)
       int32_t n;
 
       --nPos;
-      uc = static_cast<HB_WCHAR32>(hb_parni(3));
+      uc = static_cast<HB_WCHAR32>(hb_parni32(3));
       n = hb_cdpUTF8CharSize(uc);
 
       hb_cdpUTF8GetU32(&szString[nPos], nLen - nPos, &nDstLen, &uc2);

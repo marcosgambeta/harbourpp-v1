@@ -1098,11 +1098,11 @@ HB_FUNC(__MVDBGINFO)
   auto iCount = hb_pcount();
 
   if (iCount == 1 || iCount == 2) { // request for a number of variables
-    hb_retns(hb_memvarCount(hb_parni(1), hb_parni(2)));
+    hb_retns(hb_memvarCount(hb_parni32(1), hb_parni32(2)));
   } else if (iCount > 2) { // request for a value of variable
     const char *szName;
 
-    HB_ITEM *pValue = hb_memvarDebugVariable(hb_parni(1), hb_parni(2), &szName);
+    HB_ITEM *pValue = hb_memvarDebugVariable(hb_parni32(1), hb_parni32(2), &szName);
 
     if (pValue != nullptr) { // the requested variable was found
       hb_storc(szName, 3);

@@ -61,13 +61,13 @@ HB_FUNC(RANGEREM)
     if (HB_ISCHAR(1)) {
       ucChar1 = *(reinterpret_cast<const unsigned char *>(hb_parc(1)));
     } else {
-      ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
+      ucChar1 = static_cast<unsigned char>(hb_parni32(1) % 256);
     }
 
     if (HB_ISCHAR(2)) {
       ucChar2 = *(reinterpret_cast<const unsigned char *>(hb_parc(2)));
     } else {
-      ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
+      ucChar2 = static_cast<unsigned char>(hb_parni32(2) % 256);
     }
 
     iMode = (ucChar2 < ucChar1);
@@ -127,19 +127,19 @@ HB_FUNC(RANGEREPL)
     if (HB_ISCHAR(1)) {
       ucChar1 = *(reinterpret_cast<const unsigned char *>(hb_parc(1)));
     } else {
-      ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
+      ucChar1 = static_cast<unsigned char>(hb_parni32(1) % 256);
     }
 
     if (HB_ISCHAR(2)) {
       ucChar2 = *(reinterpret_cast<const unsigned char *>(hb_parc(2)));
     } else {
-      ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
+      ucChar2 = static_cast<unsigned char>(hb_parni32(2) % 256);
     }
 
     if (HB_ISCHAR(4)) {
       ucReplace = *(reinterpret_cast<const unsigned char *>(hb_parc(4)));
     } else {
-      ucReplace = static_cast<unsigned char>(hb_parni(4) % 256);
+      ucReplace = static_cast<unsigned char>(hb_parni32(4) % 256);
     }
 
     iMode = (ucChar2 < ucChar1);

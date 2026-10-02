@@ -58,12 +58,12 @@ HB_FUNC(WVW_STCREATE)
 
   if (wvw && wvw_win) {
     bool fBorder = hb_parl(7);
-    auto iWidth = hb_parni(4);
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
+    auto iWidth = hb_parni32(4);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
     auto iBottom = hb_parnidef(11, iTop);
     auto iRight = hb_parnidef(12, iLeft + iWidth - 1);
-    auto iBox = hb_parni(10);
+    auto iBox = hb_parni32(10);
     HFONT hFont = nullptr;
 
     DWORD iStyle = fBorder ? WS_BORDER : 0;

@@ -85,8 +85,8 @@ HB_FUNC(WIN_REPORTEVENT)
       lpStrings[0] = static_cast<LPCTSTR>(HB_ITEMGETSTR(hb_param(6, Harbour::Item::STRING), &hStrings[0], nullptr));
     }
 
-    if (ReportEvent(hEventLog, static_cast<WORD>(hb_parni(3)) /* wType */,
-                    static_cast<WORD>(hb_parni(4)) /* wCategory */, static_cast<DWORD>(hb_parnint(5)) /* dwEventID */,
+    if (ReportEvent(hEventLog, static_cast<WORD>(hb_parni32(3)) /* wType */,
+                    static_cast<WORD>(hb_parni32(4)) /* wCategory */, static_cast<DWORD>(hb_parnint(5)) /* dwEventID */,
                     nullptr /* lpUserSid */, wNumStrings, static_cast<DWORD>(hb_parclen(7)), lpStrings,
                     static_cast<LPVOID>(const_cast<char *>(hb_parc(7))))) {
       bRetVal = true;

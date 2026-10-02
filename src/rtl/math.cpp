@@ -412,7 +412,7 @@ HB_FUNC(HB_MATHERMODE) // ([<nNewMode>]) --> <nOldMode>
 
   // set new mode
   if (HB_ISNUM(1)) {
-    hb_mathSetErrMode(hb_parni(1));
+    hb_mathSetErrMode(hb_parni32(1));
   }
 }
 

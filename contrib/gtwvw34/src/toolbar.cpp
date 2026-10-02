@@ -384,8 +384,8 @@ HB_FUNC(WVW_TBCREATE)
         hb_parnidef(3, TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE);
 
     auto iSystemBitmap = hb_parnidef(4, 1);
-    int32_t iImageWidth = iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1;
-    int32_t iImageHeight = iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1;
+    int32_t iImageWidth = iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni32(5) : -1;
+    int32_t iImageHeight = iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni32(6) : -1;
 
     InitCommonControls();
 
@@ -494,10 +494,10 @@ HB_FUNC(WVW_TBADDBUTTON)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto iCommand = hb_parni(2);
-    auto uiBitmap = static_cast<uint32_t>(hb_parni(3));
+    auto iCommand = hb_parni32(2);
+    auto uiBitmap = static_cast<uint32_t>(hb_parni32(3));
     auto szBitmap = hb_parc(3);
-    auto iBitmapType = hb_parni(5);
+    auto iBitmapType = hb_parni32(5);
     bool fMap3Dcolors = hb_parl(6);
     bool fDropdown = hb_parl(7);
 
@@ -699,7 +699,7 @@ HB_FUNC(WVW_TBINDEX2CMD)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    int32_t iCmd = hb_gt_wvw_IndexToCommand(wvw_win->hToolBar, hb_parni(2));
+    int32_t iCmd = hb_gt_wvw_IndexToCommand(wvw_win->hToolBar, hb_parni32(2));
 
     if (iCmd > 0) {
       hb_retni(iCmd);
@@ -720,7 +720,7 @@ HB_FUNC(WVW_TBCMD2INDEX)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    hb_retni(hb_gt_wvw_CommandToIndex(wvw_win->hToolBar, hb_parni(2)));
+    hb_retni(hb_gt_wvw_CommandToIndex(wvw_win->hToolBar, hb_parni32(2)));
   }
 }
 

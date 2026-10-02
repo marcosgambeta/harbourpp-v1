@@ -27,14 +27,14 @@
 #define wa_get_ptr(n)          HB_ISOBJECT(n) ? hb_objDataGetPtr(hb_param(n, Harbour::Item::OBJECT), "PTR") : nullptr
 // #define wa_par_STRUCT(s, n)    static_cast<s>(hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "PTR", 0))
 
-#define wa_par_ATOM(n)         static_cast<ATOM>(hb_parni(n))
+#define wa_par_ATOM(n)         static_cast<ATOM>(hb_parni32(n))
 #define wa_par_BOOL(n)         hb_parl(n)
 #define wa_par_BOOLEAN(n)      hb_parl(n)
-#define wa_par_BYTE(n)         static_cast<BYTE>(hb_parni(n))
-#define wa_par_char(n)         static_cast<char>(hb_parni(n))
-#define wa_par_CHAR(n)         static_cast<CHAR>(hb_parni(n))
+#define wa_par_BYTE(n)         static_cast<BYTE>(hb_parni32(n))
+#define wa_par_char(n)         static_cast<char>(hb_parni32(n))
+#define wa_par_CHAR(n)         static_cast<CHAR>(hb_parni32(n))
 #define wa_par_COLORREF(n)     static_cast<COLORREF>(hb_parnl(n))
-#define wa_par_COLOR16(n)      static_cast<COLOR16>(hb_parni(n))
+#define wa_par_COLOR16(n)      static_cast<COLOR16>(hb_parni32(n))
 #define wa_par_DWORD(n)        static_cast<DWORD>(hb_parnl(n))
 #define wa_par_DWORD_PTR(n)    static_cast<DWORD_PTR>(hb_parnl(n))
 #define wa_par_FLOAT(n)        static_cast<FLOAT>(hb_parnd(n))
@@ -50,7 +50,7 @@
 #define wa_par_HDRVR(n)        static_cast<HDRVR>(hb_parptr(n))
 #define wa_par_HDWP(n)         static_cast<HDWP>(hb_parptr(n))
 #define wa_par_HENHMETAFILE(n) static_cast<HENHMETAFILE>(hb_parptr(n))
-#define wa_par_HFILE(n)        static_cast<HFILE>(hb_parni(n))
+#define wa_par_HFILE(n)        static_cast<HFILE>(hb_parni32(n))
 #define wa_par_HFONT(n)        static_cast<HFONT>(hb_parptr(n))
 #define wa_par_HGDIOBJ(n)      static_cast<HGDIOBJ>(hb_parptr(n))
 #define wa_par_HGLOBAL(n)      static_cast<HGLOBAL>(hb_parptr(n))
@@ -80,9 +80,9 @@
 #define wa_par_HWAVEOUT(n)     static_cast<HWAVEOUT>(hb_parptr(n))
 #define wa_par_HWINSTA(n)      static_cast<HWINSTA>(hb_parptr(n))
 #define wa_par_HWND(n)         static_cast<HWND>(hb_parptr(n))
-#define wa_par_int(n)          hb_parni(n)
-#define wa_par_INT(n)          hb_parni(n)
-#define wa_par_INT_PTR(n)      static_cast<INT_PTR>(hb_parni(n))
+#define wa_par_int(n)          hb_parni32(n)
+#define wa_par_INT(n)          hb_parni32(n)
+#define wa_par_INT_PTR(n)      static_cast<INT_PTR>(hb_parni32(n))
 #define wa_par_LONG(n)         static_cast<LONG>(hb_parnl(n))
 #define wa_par_LONG_PTR(n)     static_cast<LONG_PTR>(hb_parnl(n))
 #define wa_par_LPARAM(n)       static_cast<LPARAM>(hb_parnint(n))
@@ -91,24 +91,24 @@
 #define wa_par_PCWSTR(n)       reinterpret_cast<PCWSTR>(hb_parc(n))
 #define wa_par_LPVOID(n)       static_cast<LPVOID>(hb_parptr(n))
 #define wa_par_LRESULT(n)      static_cast<LRESULT>(hb_parnl(n))
-#define wa_par_MCIDEVICEID(n)  static_cast<MCIDEVICEID>(hb_parni(n))
+#define wa_par_MCIDEVICEID(n)  static_cast<MCIDEVICEID>(hb_parni32(n))
 #define wa_par_MCIERROR(n)     static_cast<MCIERROR>(hb_parnl(n))
-#define wa_par_MMRESULT(n)     static_cast<MMRESULT>(hb_parni(n))
+#define wa_par_MMRESULT(n)     static_cast<MMRESULT>(hb_parni32(n))
 #define wa_par_REAL(n)         static_cast<REAL>(hb_parnd(n))
 #define wa_par_SIZE_T(n)       static_cast<SIZE_T>(hb_parnl(n))
-#define wa_par_UCHAR(n)        static_cast<UCHAR>(hb_parni(n))
-#define wa_par_UINT(n)         static_cast<UINT>(hb_parni(n))
-#define wa_par_UINT_PTR(n)     HB_ISNUM(n) ? static_cast<UINT_PTR>(hb_parni(n)) : reinterpret_cast<UINT_PTR>(hb_parptr(n))
-#define wa_par_UINT32(n)       static_cast<UINT32>(hb_parni(n))
+#define wa_par_UCHAR(n)        static_cast<UCHAR>(hb_parni32(n))
+#define wa_par_UINT(n)         static_cast<UINT>(hb_parni32(n))
+#define wa_par_UINT_PTR(n)     HB_ISNUM(n) ? static_cast<UINT_PTR>(hb_parni32(n)) : reinterpret_cast<UINT_PTR>(hb_parptr(n))
+#define wa_par_UINT32(n)       static_cast<UINT32>(hb_parni32(n))
 #define wa_par_ULONG(n)        static_cast<ULONG>(hb_parnl(n))
 #define wa_par_ULONG_PTR(n)    static_cast<ULONG_PTR>(hb_parnl(n))
-#define wa_par_WCHAR(n)        static_cast<WCHAR>(hb_parni(n))
-#define wa_par_WORD(n)         static_cast<WORD>(hb_parni(n))
-#define wa_par_WPARAM(n)       static_cast<WPARAM>(hb_parni(n))
-#define wa_par_SHORT(n)        static_cast<SHORT>(hb_parni(n))
+#define wa_par_WCHAR(n)        static_cast<WCHAR>(hb_parni32(n))
+#define wa_par_WORD(n)         static_cast<WORD>(hb_parni32(n))
+#define wa_par_WPARAM(n)       static_cast<WPARAM>(hb_parni32(n))
+#define wa_par_SHORT(n)        static_cast<SHORT>(hb_parni32(n))
 #define wa_par_DWORDLONG(n)    static_cast<DWORDLONG>(hb_parnll(n))
 #define wa_par_ULONGLONG(n)    static_cast<ULONGLONG>(hb_parnll(n))
-#define wa_par_LANGID(n)       static_cast<LANGID>(hb_parni(n))
+#define wa_par_LANGID(n)       static_cast<LANGID>(hb_parni32(n))
 #define wa_par_WNDPROC(n)      reinterpret_cast<WNDPROC>(hb_parptr(n))
 #define wa_par_DLGPROC(n)      reinterpret_cast<DLGPROC>(hb_parptr(n))
 #define wa_par_TIMERPROC(n)    reinterpret_cast<TIMERPROC>(hb_parptr(n))
@@ -216,7 +216,7 @@
 #define wa_ret_WNDPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
 #define wa_ret_DLGPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
 #define wa_ret_FARPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
-#define wa_ret_LANGID(x)       hb_parni(x)
+#define wa_ret_LANGID(x)       hb_parni32(x)
 #define wa_ret_LCID(x)         hb_parnl(x)
 #define wa_ret_GEOID(x)        hb_parnl(x)
 #define wa_ret_GEOTYPE(x)      hb_parnl(x)
@@ -358,43 +358,43 @@
 // OpenGL
 
 // typedef unsigned int GLenum;
-#define wa_par_GLenum(n) static_cast<GLenum>(hb_parni(n))
+#define wa_par_GLenum(n) static_cast<GLenum>(hb_parni32(n))
 #define wa_ret_GLenum(x) hb_retni(x)
 
 // typedef unsigned char GLboolean;
-#define wa_par_GLboolean(n) static_cast<GLboolean>(hb_parni(n))
+#define wa_par_GLboolean(n) static_cast<GLboolean>(hb_parni32(n))
 #define wa_ret_GLboolean(x) hb_retni(x)
 
 // typedef unsigned int GLbitfield;
-#define wa_par_GLbitfield(n) static_cast<GLbitfield>(hb_parni(n))
+#define wa_par_GLbitfield(n) static_cast<GLbitfield>(hb_parni32(n))
 #define wa_ret_GLbitfield(x) hb_retni(x)
 
 // typedef signed char GLbyte;
-#define wa_par_GLbyte(n) static_cast<GLbyte>(hb_parni(n))
+#define wa_par_GLbyte(n) static_cast<GLbyte>(hb_parni32(n))
 #define wa_ret_GLbyte(x) hb_retni(x)
 
 // typedef short GLshort;
-#define wa_par_GLshort(n) static_cast<GLshort>(hb_parni(n))
+#define wa_par_GLshort(n) static_cast<GLshort>(hb_parni32(n))
 #define wa_ret_GLshort(x) hb_retni(x)
 
 // typedef int GLint;
-#define wa_par_GLint(n) static_cast<GLint>(hb_parni(n))
+#define wa_par_GLint(n) static_cast<GLint>(hb_parni32(n))
 #define wa_ret_GLint(x) hb_retni(x)
 
 // typedef int GLsizei;
-#define wa_par_GLsizei(n) static_cast<GLsizei>(hb_parni(n))
+#define wa_par_GLsizei(n) static_cast<GLsizei>(hb_parni32(n))
 #define wa_ret_GLsizei(x) hb_retni(x)
 
 // typedef unsigned char GLubyte;
-#define wa_par_GLubyte(n) static_cast<GLubyte>(hb_parni(n))
+#define wa_par_GLubyte(n) static_cast<GLubyte>(hb_parni32(n))
 #define wa_ret_GLubyte(x) hb_retni(x)
 
 // typedef unsigned short GLushort;
-#define wa_par_GLushort(n) static_cast<GLushort>(hb_parni(n))
+#define wa_par_GLushort(n) static_cast<GLushort>(hb_parni32(n))
 #define wa_ret_GLushort(x) hb_retni(x)
 
 // typedef unsigned int GLuint;
-#define wa_par_GLuint(n) static_cast<GLuint>(hb_parni(n))
+#define wa_par_GLuint(n) static_cast<GLuint>(hb_parni32(n))
 #define wa_ret_GLuint(x) hb_retni(x)
 
 // typedef float GLfloat;

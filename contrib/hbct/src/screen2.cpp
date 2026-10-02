@@ -60,10 +60,10 @@ HB_FUNC(SAYDOWN)
 
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(3)) {
-      iRow = hb_parni(3);
+      iRow = hb_parni32(3);
     }
     if (HB_ISNUM(4)) {
-      iCol = hb_parni(4);
+      iCol = hb_parni32(4);
     }
     iMaxRow = hb_gtMaxRow();
     iMaxCol = hb_gtMaxCol();
@@ -119,11 +119,11 @@ HB_FUNC(SAYSPREAD)
     iMaxCol = hb_gtMaxCol();
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(3)) {
-      iRow = hb_parni(3);
+      iRow = hb_parni32(3);
     } else {
       hb_gtGetPos(&iRow, &iCol);
     }
-    iCol = HB_ISNUM(4) ? hb_parni(4) : (iMaxCol >> 1);
+    iCol = HB_ISNUM(4) ? hb_parni32(4) : (iMaxCol >> 1);
 
     if (iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol) {
       HB_SIZE nPos;
@@ -175,10 +175,10 @@ HB_FUNC(SAYMOVEIN)
     iMaxCol = hb_gtMaxCol();
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(3)) {
-      iRow = hb_parni(3);
+      iRow = hb_parni32(3);
     }
     if (HB_ISNUM(4)) {
-      iCol = hb_parni(4);
+      iCol = hb_parni32(4);
     }
 
     if (iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol) {
@@ -235,14 +235,14 @@ HB_FUNC(CLEARSLOW) // TODO: Unicode support
   int32_t iMaxRow = hb_gtMaxRow();
   int32_t iMaxCol = hb_gtMaxCol();
   long lDelay = hb_parnl(1);
-  auto iTop = hb_parni(2);
-  auto iLeft = hb_parni(3);
+  auto iTop = hb_parni32(2);
+  auto iLeft = hb_parni32(3);
   auto iBottom = hb_parnidef(4, iMaxRow);
   auto iRight = hb_parnidef(5, iMaxCol);
   uint8_t ucChar;
 
   if (HB_ISNUM(6)) {
-    ucChar = static_cast<uint8_t>(hb_parni(6));
+    ucChar = static_cast<uint8_t>(hb_parni32(6));
   } else if (HB_ISCHAR(6)) {
     ucChar = static_cast<uint8_t>(hb_parc(6)[0]);
   } else {
@@ -313,10 +313,10 @@ HB_FUNC(SCREENSTR) // TODO: Unicode support
 
   hb_gtGetPos(&iRow, &iCol);
   if (HB_ISNUM(1)) {
-    iRow = hb_parni(1);
+    iRow = hb_parni32(1);
   }
   if (HB_ISNUM(2)) {
-    iCol = hb_parni(2);
+    iCol = hb_parni32(2);
   }
   if (HB_ISNUM(3)) {
     nCount = hb_parns(3);
@@ -365,10 +365,10 @@ HB_FUNC(STRSCREEN) // TODO: Unicode support
 
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(2)) {
-      iRow = hb_parni(2);
+      iRow = hb_parni32(2);
     }
     if (HB_ISNUM(3)) {
-      iCol = hb_parni(3);
+      iCol = hb_parni32(3);
     }
     iMaxRow = hb_gtMaxRow();
     iMaxCol = hb_gtMaxCol();
@@ -396,10 +396,10 @@ HB_FUNC(__HBCT_DSPTIME) // Helper function for ShowTime()
   int32_t iColor;
   char szTime[10];
 
-  auto iRow = hb_parni(1);
-  auto iCol = hb_parni(2);
+  auto iRow = hb_parni32(1);
+  auto iCol = hb_parni32(2);
   if (HB_ISNUM(4)) {
-    iColor = hb_parni(4);
+    iColor = hb_parni32(4);
   } else if (HB_ISCHAR(4)) {
     iColor = hb_gtColorToN(hb_parc(4));
     if (iColor == -1) {

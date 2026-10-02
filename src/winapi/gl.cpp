@@ -39,43 +39,43 @@
 
 #if 0
 // typedef unsigned int GLenum;
-#define wa_par_GLenum(n) static_cast<GLenum>(hb_parni(n))
+#define wa_par_GLenum(n) static_cast<GLenum>(hb_parni32(n))
 #define wa_ret_GLenum(x) hb_retni(x)
 
 // typedef unsigned char GLboolean;
-#define wa_par_GLboolean(n) static_cast<GLboolean>(hb_parni(n))
+#define wa_par_GLboolean(n) static_cast<GLboolean>(hb_parni32(n))
 #define wa_ret_GLboolean(x) hb_retni(x)
 
 // typedef unsigned int GLbitfield;
-#define wa_par_GLbitfield(n) static_cast<GLbitfield>(hb_parni(n))
+#define wa_par_GLbitfield(n) static_cast<GLbitfield>(hb_parni32(n))
 #define wa_ret_GLbitfield(x) hb_retni(x)
 
 // typedef signed char GLbyte;
-#define wa_par_GLbyte(n) static_cast<GLbyte>(hb_parni(n))
+#define wa_par_GLbyte(n) static_cast<GLbyte>(hb_parni32(n))
 #define wa_ret_GLbyte(x) hb_retni(x)
 
 // typedef short GLshort;
-#define wa_par_GLshort(n) static_cast<GLshort>(hb_parni(n))
+#define wa_par_GLshort(n) static_cast<GLshort>(hb_parni32(n))
 #define wa_ret_GLshort(x) hb_retni(x)
 
 // typedef int GLint;
-#define wa_par_GLint(n) static_cast<GLint>(hb_parni(n))
+#define wa_par_GLint(n) static_cast<GLint>(hb_parni32(n))
 #define wa_ret_GLint(x) hb_retni(x)
 
 // typedef int GLsizei;
-#define wa_par_GLsizei(n) static_cast<GLsizei>(hb_parni(n))
+#define wa_par_GLsizei(n) static_cast<GLsizei>(hb_parni32(n))
 #define wa_ret_GLsizei(x) hb_retni(x)
 
 // typedef unsigned char GLubyte;
-#define wa_par_GLubyte(n) static_cast<GLubyte>(hb_parni(n))
+#define wa_par_GLubyte(n) static_cast<GLubyte>(hb_parni32(n))
 #define wa_ret_GLubyte(x) hb_retni(x)
 
 // typedef unsigned short GLushort;
-#define wa_par_GLushort(n) static_cast<GLushort>(hb_parni(n))
+#define wa_par_GLushort(n) static_cast<GLushort>(hb_parni32(n))
 #define wa_ret_GLushort(x) hb_retni(x)
 
 // typedef unsigned int GLuint;
-#define wa_par_GLuint(n) static_cast<GLuint>(hb_parni(n))
+#define wa_par_GLuint(n) static_cast<GLuint>(hb_parni32(n))
 #define wa_ret_GLuint(x) hb_retni(x)
 
 // typedef float GLfloat;

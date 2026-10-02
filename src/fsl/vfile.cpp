@@ -525,7 +525,7 @@ HB_FUNC(HB_VFLOCK)
 
     if (HB_ISNUM(2) && HB_ISNUM(3)) {
       fResult = hb_fileLock(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_FOFFSET>(hb_parnint(3)),
-                            FL_LOCK | (hb_parni(4) & ~FL_MASK));
+                            FL_LOCK | (hb_parni32(4) & ~FL_MASK));
       uiError = hb_fsError();
     }
     hb_fsSetFError(uiError);
@@ -563,7 +563,7 @@ HB_FUNC(HB_VFLOCKTEST)
 
     if (HB_ISNUM(2) && HB_ISNUM(3)) {
       iResult = hb_fileLockTest(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_FOFFSET>(hb_parnint(3)),
-                                FL_LOCK | (hb_parni(4) & ~FL_MASK));
+                                FL_LOCK | (hb_parni32(4) & ~FL_MASK));
       uiError = hb_fsError();
     }
     hb_fsSetFError(uiError);
@@ -818,7 +818,7 @@ HB_FUNC(HB_VFCONFIG)
   if (pFile) {
     if (HB_ISNUM(2)) {
       auto pValue = hb_itemNew(hb_param(3, Harbour::Item::ANY));
-      hb_fileConfigure(pFile, hb_parni(2), pValue);
+      hb_fileConfigure(pFile, hb_parni32(2), pValue);
       hb_fsSetFError(hb_fsError());
       hb_itemReturnRelease(pValue);
     } else {

@@ -55,8 +55,8 @@
 
 HB_FUNC(WAPI_SETWINDOWPOS)
 {
-  BOOL bResult = SetWindowPos(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HWND(2), hb_parni(3), hb_parni(4), hb_parni(5),
-                              hb_parni(6), static_cast<UINT>(hb_parnl(7)));
+  BOOL bResult = SetWindowPos(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HWND(2), hb_parni32(3), hb_parni32(4), hb_parni32(5),
+                              hb_parni32(6), static_cast<UINT>(hb_parnl(7)));
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);
@@ -162,7 +162,7 @@ HB_FUNC(WAPI_ISWINDOW)
 
 HB_FUNC(WAPI_SHOWWINDOW)
 {
-  BOOL bResult = ShowWindow(hbwapi_par_raw_HWND(1), hb_parni(2));
+  BOOL bResult = ShowWindow(hbwapi_par_raw_HWND(1), hb_parni32(2));
 
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);

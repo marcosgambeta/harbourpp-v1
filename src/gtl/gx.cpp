@@ -67,10 +67,10 @@ HB_FUNC(SETMODE)
 
   hb_gtScrDim(&iRows, &iCols);
   if (HB_ISNUM(1)) {
-    iRows = hb_parni(1);
+    iRows = hb_parni32(1);
   }
   if (HB_ISNUM(2)) {
-    iCols = hb_parni(2);
+    iCols = hb_parni32(2);
   }
 
   hb_retl(hb_gtSetMode(iRows, iCols) == Harbour::SUCCESS);

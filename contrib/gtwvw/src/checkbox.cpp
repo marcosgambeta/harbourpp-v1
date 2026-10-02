@@ -92,11 +92,11 @@ HB_FUNC(WVW_CXCREATE)
   auto usWinNum = WVW_WHICH_WINDOW;
   /* int32_t   iStyle; */
   UINT uiPBid;
-  uint16_t usTop = static_cast<BYTE>(hb_parni(2)), usLeft = static_cast<BYTE>(hb_parni(3)),
-         usBottom = static_cast<BYTE>(hb_parni(4)), usRight = static_cast<BYTE>(hb_parni(5));
+  uint16_t usTop = static_cast<BYTE>(hb_parni32(2)), usLeft = static_cast<BYTE>(hb_parni32(3)),
+         usBottom = static_cast<BYTE>(hb_parni32(4)), usRight = static_cast<BYTE>(hb_parni32(5));
   LPCTSTR lpszCaption = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
   char *szBitmap = HB_ISCHAR(7) ? const_cast<char *>(hb_parcx(7)) : nullptr;
-  UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
+  UINT uiBitmap = HB_ISNUM(7) ? static_cast<UINT>(hb_parni32(7)) : 0;
   double dStretch = !HB_ISNIL(10) ? hb_parnd(10) : 1;
   BOOL bMap3Dcolors = HB_ISLOG(11) ? static_cast<BOOL>(hb_parl(11)) : FALSE;
 
@@ -123,7 +123,7 @@ HB_FUNC(WVW_CXDESTROY)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
   CONTROL_DATA *pcdPrev = nullptr;
 
@@ -160,7 +160,7 @@ HB_FUNC(WVW_CXDESTROY)
 HB_FUNC(WVW_CXSETFOCUS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   byte bStyle;
   auto hWndCX = FindControlHandle(usWinNum, WVW_CONTROL_CHECKBOX, uiCtrlId, &bStyle);
 
@@ -180,7 +180,7 @@ HB_FUNC(WVW_CXSETFOCUS)
 HB_FUNC(WVW_CXENABLE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni(2);
+  UINT uiCtrlId = HB_ISNIL(2) ? 0 : hb_parni32(2);
   BOOL bEnable = HB_ISNIL(3) ? TRUE : hb_parl(3);
   byte bStyle;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
@@ -206,7 +206,7 @@ HB_FUNC(WVW_CXSETCODEBLOCK)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pData = hb_getWvwData();
-  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_CHECKBOX, nullptr, uiCXid);
   auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
   BOOL bOldSetting = pData->s_bRecurseCBlock;
@@ -241,8 +241,8 @@ HB_FUNC(WVW_CXSETCODEBLOCK)
 HB_FUNC(WVW_CXSETCHECK)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
-  auto ulCheck = static_cast<ULONG>(HB_ISNIL(3) ? BST_CHECKED : hb_parni(3));
+  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
+  auto ulCheck = static_cast<ULONG>(HB_ISNIL(3) ? BST_CHECKED : hb_parni32(3));
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_CHECKBOX, nullptr, uiCXid);
 
   if (pcd->hWndCtrl) {
@@ -261,7 +261,7 @@ HB_FUNC(WVW_CXSETCHECK)
 HB_FUNC(WVW_CXGETCHECK)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiCXid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   ULONG ulCheck = 0;
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_CHECKBOX, nullptr, uiCXid);
 
@@ -285,16 +285,16 @@ HB_FUNC(WVW_CXSETFONT)
   BOOL retval = TRUE;
 
   pData->s_lfCX.lfHeight = HB_ISNIL(3) ? pWindowData->fontHeight - 2 : hb_parnl(3);
-  pData->s_lfCX.lfWidth = HB_ISNIL(4) ? pData->s_lfCX.lfWidth : hb_parni(4);
+  pData->s_lfCX.lfWidth = HB_ISNIL(4) ? pData->s_lfCX.lfWidth : hb_parni32(4);
   pData->s_lfCX.lfEscapement = 0;
   pData->s_lfCX.lfOrientation = 0;
-  pData->s_lfCX.lfWeight = HB_ISNIL(5) ? pData->s_lfCX.lfWeight : hb_parni(5);
+  pData->s_lfCX.lfWeight = HB_ISNIL(5) ? pData->s_lfCX.lfWeight : hb_parni32(5);
   pData->s_lfCX.lfItalic = HB_ISNIL(7) ? pData->s_lfCX.lfItalic : static_cast<BYTE>(hb_parl(7));
   pData->s_lfCX.lfUnderline = HB_ISNIL(8) ? pData->s_lfCX.lfUnderline : static_cast<BYTE>(hb_parl(8));
   pData->s_lfCX.lfStrikeOut = HB_ISNIL(9) ? pData->s_lfCX.lfStrikeOut : static_cast<BYTE>(hb_parl(9));
   pData->s_lfCX.lfCharSet = DEFAULT_CHARSET;
 
-  pData->s_lfCX.lfQuality = HB_ISNIL(6) ? pData->s_lfCX.lfQuality : static_cast<BYTE>(hb_parni(6));
+  pData->s_lfCX.lfQuality = HB_ISNIL(6) ? pData->s_lfCX.lfQuality : static_cast<BYTE>(hb_parni32(6));
   pData->s_lfCX.lfPitchAndFamily = FF_DONTCARE;
   if (HB_ISCHAR(2)) {
     strcpy(pData->s_lfCX.lfFaceName, hb_parcx(2));
@@ -330,7 +330,7 @@ HB_FUNC(WVW_CXSTATUSFONT)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   BOOL bFocus = HB_ISNIL(3) ? TRUE : hb_parl(3);
   auto pcd = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
 
@@ -395,10 +395,10 @@ HB_FUNC(WVW_PGCREATE)
   BOOL bSmooth = (!HB_ISLOG(9) ? FALSE : hb_parl(9));
   BOOL bVertical = (!HB_ISLOG(10) ? FALSE : hb_parl(10));
   UINT uiPGid;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   InitCommonControls();
 
@@ -481,7 +481,7 @@ HB_FUNC(WVW_PGDESTROY)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   CONTROL_DATA *pcd = pWindowData->pcdCtrlList;
   CONTROL_DATA *pcdPrev = nullptr;
 
@@ -525,11 +525,11 @@ HB_FUNC(WVW_PGSETRANGE)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   byte bStyle;
   auto hWndPG = FindControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, uiPGid, &bStyle);
-  auto iMin = static_cast<int32_t>((HB_ISNIL(3) ? 0 : hb_parni(3)));
-  auto iMax = static_cast<int32_t>((HB_ISNIL(4) ? 0 : hb_parni(4)));
+  auto iMin = static_cast<int32_t>((HB_ISNIL(3) ? 0 : hb_parni32(3)));
+  auto iMax = static_cast<int32_t>((HB_ISNIL(4) ? 0 : hb_parni32(4)));
 
   if (uiPGid == 0 || hWndPG == nullptr || (iMin > iMax)) {
     hb_retl(false);
@@ -551,10 +551,10 @@ HB_FUNC(WVW_PGSETPOS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   byte bStyle;
   auto hWndPG = FindControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, uiPGid, &bStyle);
-  auto iPos = static_cast<int32_t>((HB_ISNIL(3) ? 0 : hb_parni(3)));
+  auto iPos = static_cast<int32_t>((HB_ISNIL(3) ? 0 : hb_parni32(3)));
   PBRANGE pbrange;
 
   if (uiPGid == 0 || hWndPG == nullptr) {
@@ -582,7 +582,7 @@ HB_FUNC(WVW_PGGETPOS)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+  auto uiPGid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni32(2));
   byte bStyle;
   auto hWndPG = FindControlHandle(usWinNum, WVW_CONTROL_PROGRESSBAR, uiPGid, &bStyle);
 

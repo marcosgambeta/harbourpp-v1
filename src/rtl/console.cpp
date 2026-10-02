@@ -479,7 +479,7 @@ static void hb_conDevPos(int32_t iRow, int32_t iCol)
 HB_FUNC(DEVPOS) // Sets the screen and/or printer position
 {
   if (HB_ISNUM(1) && HB_ISNUM(2)) {
-    hb_conDevPos(hb_parni(1), hb_parni(2));
+    hb_conDevPos(hb_parni32(1), hb_parni32(2));
   }
 
 #if defined(HB_CLP_UNDOC)
@@ -493,8 +493,8 @@ HB_FUNC(SETPRC) // Sets the current printer row and column positions
 {
   if (hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2)) {
     PHB_PRNPOS pPrnPos = hb_prnPos();
-    pPrnPos->row = hb_parni(1);
-    pPrnPos->col = hb_parni(2);
+    pPrnPos->row = hb_parni32(1);
+    pPrnPos->col = hb_parni32(2);
   }
 }
 
@@ -565,7 +565,7 @@ HB_FUNC(DISPOUTAT) // writes a single value to the screen at specific position, 
     HB_SIZE nLen;
     HB_BOOL bFreeReq;
     char *pszString = hb_itemStringCon(hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq);
-    hb_gtWriteAt(hb_parni(1), hb_parni(2), pszString, nLen);
+    hb_gtWriteAt(hb_parni32(1), hb_parni32(2), pszString, nLen);
     if (bFreeReq) {
       hb_xfree(pszString);
     }
@@ -574,7 +574,7 @@ HB_FUNC(DISPOUTAT) // writes a single value to the screen at specific position, 
     HB_SIZE nLen;
     HB_BOOL bFreeReq;
     char *pszString = hb_itemStringCon(hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq);
-    hb_gtWriteAt(hb_parni(1), hb_parni(2), pszString, nLen);
+    hb_gtWriteAt(hb_parni32(1), hb_parni32(2), pszString, nLen);
     if (bFreeReq) {
       hb_xfree(pszString);
     }
@@ -594,12 +594,12 @@ HB_FUNC(HB_DISPOUTAT)
     if (HB_ISCHAR(4)) {
       iColor = hb_gtColorToN(hb_parc(4));
     } else if (HB_ISNUM(4)) {
-      iColor = hb_parni(4);
+      iColor = hb_parni32(4);
     } else {
       iColor = -1;
     }
 
-    hb_gtPutText(hb_parni(1), hb_parni(2), pszString, nLen, iColor);
+    hb_gtPutText(hb_parni32(1), hb_parni32(2), pszString, nLen, iColor);
 
     if (bFreeReq) {
       hb_xfree(pszString);
@@ -614,15 +614,15 @@ HB_FUNC(HB_DISPOUTATBOX)
   auto nLen = hb_parclen(3);
 
   if (nLen > 0) {
-    auto iRow = hb_parni(1);
-    auto iCol = hb_parni(2);
+    auto iRow = hb_parni32(1);
+    auto iCol = hb_parni32(2);
     auto pszString = hb_parc(3);
 
     int32_t iColor;
     if (HB_ISCHAR(4)) {
       iColor = hb_gtColorToN(hb_parc(4));
     } else if (HB_ISNUM(4)) {
-      iColor = hb_parni(4);
+      iColor = hb_parni32(4);
     } else {
       iColor = hb_gtGetCurrColor();
     }

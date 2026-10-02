@@ -80,62 +80,62 @@
 
 HB_FUNC(HB_COMCLOSE)
 {
-  hb_retl(hb_comClose(hb_parni(1)) == 0);
+  hb_retl(hb_comClose(hb_parni32(1)) == 0);
 }
 
 HB_FUNC(HB_COMDISCARDCHAR)
 {
-  hb_retl(hb_comDiscardChar(hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni(2)) == 0);
+  hb_retl(hb_comDiscardChar(hb_parni32(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni32(2)) == 0);
 }
 
 HB_FUNC(HB_COMERRORCHAR)
 {
-  hb_retl(hb_comErrorChar(hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni(2)) == 0);
+  hb_retl(hb_comErrorChar(hb_parni32(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni32(2)) == 0);
 }
 
 HB_FUNC(HB_COMFLOWCHARS)
 {
-  hb_retl(hb_comFlowChars(hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni(2),
-                          HB_ISCHAR(3) ? hb_parc(3)[0] : hb_parni(3)) == 0);
+  hb_retl(hb_comFlowChars(hb_parni32(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni32(2),
+                          HB_ISCHAR(3) ? hb_parc(3)[0] : hb_parni32(3)) == 0);
 }
 
 HB_FUNC(HB_COMFLOWCONTROL)
 {
   int32_t iValue = 0;
-  hb_retl(hb_comFlowControl(hb_parni(1), &iValue, hb_parnidef(3, -1)) == 0);
+  hb_retl(hb_comFlowControl(hb_parni32(1), &iValue, hb_parnidef(3, -1)) == 0);
   hb_storni(iValue, 2);
 }
 
 HB_FUNC(HB_COMFLOWSET)
 {
-  hb_retl(hb_comFlowSet(hb_parni(1), hb_parni(2)) == 0);
+  hb_retl(hb_comFlowSet(hb_parni32(1), hb_parni32(2)) == 0);
 }
 
 HB_FUNC(HB_COMFLUSH)
 {
-  hb_retl(hb_comFlush(hb_parni(1), hb_parnidef(2, HB_COM_IOFLUSH)) == 0);
+  hb_retl(hb_comFlush(hb_parni32(1), hb_parnidef(2, HB_COM_IOFLUSH)) == 0);
 }
 
 HB_FUNC(HB_COMGETDEVICE)
 {
   char buffer[HB_COM_DEV_NAME_MAX];
-  const char *name = hb_comGetDevice(hb_parni(1), buffer, sizeof(buffer));
+  const char *name = hb_comGetDevice(hb_parni32(1), buffer, sizeof(buffer));
   hb_retc(name);
 }
 
 HB_FUNC(HB_COMGETDEVICEHANDLE)
 {
-  hb_retnint((HB_NHANDLE)hb_comGetDeviceHandle(hb_parni(1)));
+  hb_retnint((HB_NHANDLE)hb_comGetDeviceHandle(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMGETERROR)
 {
-  hb_retni(hb_comGetError(hb_parni(1)));
+  hb_retni(hb_comGetError(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMGETOSERROR)
 {
-  hb_retni(hb_comGetOsError(hb_parni(1)));
+  hb_retni(hb_comGetOsError(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMFINDPORT)
@@ -145,17 +145,17 @@ HB_FUNC(HB_COMFINDPORT)
 
 HB_FUNC(HB_COMINIT)
 {
-  hb_retl(hb_comInit(hb_parni(1), hb_parni(2), HB_ISCHAR(3) ? hb_parc(3)[0] : 0, hb_parni(4), hb_parni(5)) == 0);
+  hb_retl(hb_comInit(hb_parni32(1), hb_parni32(2), HB_ISCHAR(3) ? hb_parc(3)[0] : 0, hb_parni32(4), hb_parni32(5)) == 0);
 }
 
 HB_FUNC(HB_COMINPUTCOUNT)
 {
-  hb_retni(hb_comInputCount(hb_parni(1)));
+  hb_retni(hb_comInputCount(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMINPUTSTATE)
 {
-  hb_retni(hb_comInputState(hb_parni(1)));
+  hb_retni(hb_comInputState(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMLASTNUM)
@@ -166,53 +166,53 @@ HB_FUNC(HB_COMLASTNUM)
 HB_FUNC(HB_COMLSR)
 {
   int32_t iValue = 0;
-  hb_retl(hb_comLSR(hb_parni(1), &iValue) == 0);
+  hb_retl(hb_comLSR(hb_parni32(1), &iValue) == 0);
   hb_storni(iValue, 2);
 }
 
 HB_FUNC(HB_COMMCR)
 {
   int32_t iValue = 0;
-  hb_retl(hb_comMCR(hb_parni(1), &iValue, hb_parni(3), hb_parni(4)) == 0);
+  hb_retl(hb_comMCR(hb_parni32(1), &iValue, hb_parni32(3), hb_parni32(4)) == 0);
   hb_storni(iValue, 2);
 }
 
 HB_FUNC(HB_COMMSR)
 {
   int32_t iValue = 0;
-  hb_retl(hb_comMSR(hb_parni(1), &iValue) == 0);
+  hb_retl(hb_comMSR(hb_parni32(1), &iValue) == 0);
   hb_storni(iValue, 2);
 }
 
 HB_FUNC(HB_COMOPEN)
 {
-  hb_retl(hb_comOpen(hb_parni(1)) == 0);
+  hb_retl(hb_comOpen(hb_parni32(1)) == 0);
 }
 
 HB_FUNC(HB_COMOUTPUTCOUNT)
 {
-  hb_retni(hb_comOutputCount(hb_parni(1)));
+  hb_retni(hb_comOutputCount(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMOUTPUTSTATE)
 {
-  hb_retni(hb_comOutputState(hb_parni(1)));
+  hb_retni(hb_comOutputState(hb_parni32(1)));
 }
 
 HB_FUNC(HB_COMSENDBREAK)
 {
   // 50ms break is enough for baud-rate 300 and higher
-  hb_retl(hb_comSendBreak(hb_parni(1), hb_parnidef(2, 50)) == 0);
+  hb_retl(hb_comSendBreak(hb_parni32(1), hb_parnidef(2, 50)) == 0);
 }
 
 HB_FUNC(HB_COMSETDEVICE)
 {
-  hb_retl(hb_comSetDevice(hb_parni(1), hb_parc(2)) == 0);
+  hb_retl(hb_comSetDevice(hb_parni32(1), hb_parc(2)) == 0);
 }
 
 HB_FUNC(HB_COMSETERROR)
 {
-  hb_comSetError(hb_parni(1), hb_parni(2));
+  hb_comSetError(hb_parni32(1), hb_parni32(2));
 }
 
 HB_FUNC(HB_COMRECV)
@@ -228,7 +228,7 @@ HB_FUNC(HB_COMRECV)
         nLen = lRead;
       }
     }
-    hb_retnl(hb_comRecv(hb_parni(1), pBuffer, static_cast<long>(nLen), hb_parnint(4)));
+    hb_retnl(hb_comRecv(hb_parni32(1), pBuffer, static_cast<long>(nLen), hb_parnint(4)));
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -245,5 +245,5 @@ HB_FUNC(HB_COMSEND)
       lLen = lParam;
     }
   }
-  hb_retnl(hb_comSend(hb_parni(1), hb_parc(2), lLen, hb_parnint(4)));
+  hb_retnl(hb_comSend(hb_parni32(1), hb_parc(2), lLen, hb_parnint(4)));
 }

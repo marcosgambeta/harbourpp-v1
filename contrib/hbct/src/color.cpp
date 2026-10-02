@@ -60,7 +60,7 @@ HB_FUNC(INVERTATTR)
       iAttr = 0;
     }
   } else {
-    iAttr = hb_parni(1);
+    iAttr = hb_parni32(1);
   }
 
   hb_retni((iAttr & 0x88) | ((iAttr & 0x07) << 4) | ((iAttr >> 4) & 0x07));
@@ -72,7 +72,7 @@ HB_FUNC(COLORTON)
     int32_t iColor = hb_gtColorToN(hb_parc(1));
     hb_retni(iColor == -1 ? 0 : iColor);
   } else {
-    hb_retni(hb_parni(1));
+    hb_retni(hb_parni32(1));
   }
 }
 

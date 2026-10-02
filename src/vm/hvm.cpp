@@ -11421,7 +11421,7 @@ HB_FUNC(__DBGVMVARSLEN)
 HB_FUNC(__DBGVMVARSGET)
 {
   if (hb_vmInternalsEnabled()) {
-    hb_itemReturn(hb_dbg_vmVarSGet(hb_param(1, Harbour::Item::ARRAY), hb_parni(2)));
+    hb_itemReturn(hb_dbg_vmVarSGet(hb_param(1, Harbour::Item::ARRAY), hb_parni32(2)));
   }
 }
 
@@ -11434,7 +11434,7 @@ HB_FUNC(__DBGVMVARSSET)
     auto pItem = hb_param(3, Harbour::Item::ANY);
 
     if (pStaticsBase && pItem) {
-      hb_arraySet(pStaticsBase, hb_parni(2), pItem);
+      hb_arraySet(pStaticsBase, hb_parni32(2), pItem);
     }
   }
 }
@@ -11490,7 +11490,7 @@ HB_FUNC(__DBGVMVARGLIST)
 HB_FUNC(__DBGVMVARGGET)
 {
   if (hb_vmInternalsEnabled()) {
-    hb_itemReturn(hb_dbg_vmVarGGet(hb_parni(1), hb_parni(2)));
+    hb_itemReturn(hb_dbg_vmVarGGet(hb_parni32(1), hb_parni32(2)));
   }
 }
 
@@ -11500,7 +11500,7 @@ HB_FUNC(__DBGVMVARGSET)
    if( hb_vmInternalsEnabled() ) {
       auto pItem = hb_param(3, Harbour::Item::ANY);
       if( pItem != nullptr ) {
-         hb_arraySet(&s_aGlobals, hb_parni(1) + hb_parni(2), pItem);
+         hb_arraySet(&s_aGlobals, hb_parni32(1) + hb_parni32(2), pItem);
       }
    }
 #endif
@@ -11793,7 +11793,7 @@ HB_FUNC(ERRORLEVEL)
 
   if (hb_pcount() >= 1) {
     // Only replace the error level if a parameter was passed
-    s_nErrorLevel = hb_parni(1);
+    s_nErrorLevel = hb_parni32(1);
   }
 }
 

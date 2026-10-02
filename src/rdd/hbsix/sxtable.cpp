@@ -194,7 +194,7 @@ HB_FUNC(SX_ROLLBACK)
   AREAP pArea;
 
   if (HB_ISNUM(1)) {
-    iArea = hb_parni(1);
+    iArea = hb_parni32(1);
     fRollChild = iArea == 0;
   }
 
@@ -310,7 +310,7 @@ HB_FUNC(SX_SETPASS)
       auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
       if (pArea != nullptr) {
         /* Undocumented SIX3 extension */
-        switch (hb_parni(1)) {
+        switch (hb_parni32(1)) {
         case 1: /* return current password key in raw form */
           pItem = hb_itemNew(nullptr);
           if (SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS) {
@@ -433,7 +433,7 @@ HB_FUNC(SX_SETTURBO)
 HB_FUNC(_SXOPENINIT)
 {
   AREAP pArea = nullptr;
-  auto iArea = hb_parni(1);
+  auto iArea = hb_parni32(1);
 
   if (iArea) {
     pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));

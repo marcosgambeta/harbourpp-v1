@@ -3109,12 +3109,12 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
 
 HB_FUNC(__CLSADDMSG)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto szMessage = hb_parc(2);
 
   if (szMessage != nullptr && uiClass && uiClass <= s_uiClasses) {
-    auto nType = static_cast<uint16_t>(hb_parni(4));
-    auto uiScope = static_cast<uint16_t>(hb_parni(6));
+    auto nType = static_cast<uint16_t>(hb_parni32(4));
+    auto uiScope = static_cast<uint16_t>(hb_parni32(6));
     auto pFunction = hb_param(3, Harbour::Item::ANY);
     auto pInit = hb_param(5, Harbour::Item::ANY);
 
@@ -3385,7 +3385,7 @@ HB_FUNC(__CLSNEW)
 // Add friend function
 HB_FUNC(__CLSADDFRIEND)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
 
   if (uiClass && uiClass <= s_uiClasses) {
     PCLASS pClass = s_pClasses[uiClass];
@@ -3407,7 +3407,7 @@ HB_FUNC(__CLSADDFRIEND)
 // <cMessage> message
 HB_FUNC(__CLSDELMSG)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto pString = hb_param(2, Harbour::Item::STRING);
 
   if (uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked) {
@@ -3476,7 +3476,7 @@ static HB_ITEM *hb_clsInst(uint16_t uiClass)
 // Create a new object from class definition <hClass>
 HB_FUNC(__CLSINST)
 {
-  HB_ITEM *pSelf = hb_clsInst(static_cast<uint16_t>(hb_parni(1)));
+  HB_ITEM *pSelf = hb_clsInst(static_cast<uint16_t>(hb_parni32(1)));
 
   if (pSelf) {
     hb_itemReturnRelease(pSelf);
@@ -3488,7 +3488,7 @@ HB_FUNC(__CLSINST)
 // Block farther class modifications
 HB_FUNC(__CLSLOCK)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
 
   if (uiClass && uiClass <= s_uiClasses) {
     s_pClasses[uiClass]->fLocked = HB_TRUE;
@@ -3500,7 +3500,7 @@ HB_FUNC(__CLSLOCK)
 // Modify message (only for INLINE and METHOD)
 HB_FUNC(__CLSMODMSG)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto pString = hb_param(2, Harbour::Item::STRING);
 
   if (uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked) {
@@ -3571,7 +3571,7 @@ HB_FUNC(__OBJGETCLSNAME)
   if (pObject) {
     uiClass = pObject->arrayValue()->uiClass;
   } else {
-    uiClass = static_cast<uint16_t>(hb_parni(1));
+    uiClass = static_cast<uint16_t>(hb_parni32(1));
   }
 
   hb_retc(hb_clsName(uiClass));
@@ -3735,7 +3735,7 @@ HB_FUNC(__CLSINSTSUPER)
 HB_FUNC(__CLSASSOCTYPE)
 {
   HB_STACK_TLS_PRELOAD
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto pType = hb_param(2, Harbour::Item::ANY);
   auto fResult = false;
 
@@ -3805,7 +3805,7 @@ HB_FUNC(__CLSCNTCLASSES)
 HB_FUNC(__CLS_CNTCLSDATA)
 {
   HB_STACK_TLS_PRELOAD
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   hb_retni(uiClass && uiClass <= s_uiClasses ? static_cast<uint16_t>(hb_arrayLen(s_pClasses[uiClass]->pClassDatas))
                                              : 0);
 }
@@ -3816,7 +3816,7 @@ HB_FUNC(__CLS_CNTCLSDATA)
 HB_FUNC(__CLS_CNTSHRDATA)
 {
   HB_STACK_TLS_PRELOAD
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   hb_retni(uiClass && uiClass <= s_uiClasses ? static_cast<uint16_t>(hb_arrayLen(s_pClasses[uiClass]->pSharedDatas))
                                              : 0);
 }
@@ -3827,7 +3827,7 @@ HB_FUNC(__CLS_CNTSHRDATA)
 HB_FUNC(__CLS_CNTDATA)
 {
   HB_STACK_TLS_PRELOAD
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   hb_retni(uiClass && uiClass <= s_uiClasses ? s_pClasses[uiClass]->uiDatas : 0);
 }
 
@@ -3837,7 +3837,7 @@ HB_FUNC(__CLS_CNTDATA)
 HB_FUNC(__CLS_DECDATA)
 {
   HB_STACK_TLS_PRELOAD
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
 
   if (uiClass && uiClass <= s_uiClasses && s_pClasses[uiClass]->uiDatas > s_pClasses[uiClass]->uiDataFirst) {
     if (!s_pClasses[uiClass]->fLocked) {
@@ -3855,7 +3855,7 @@ HB_FUNC(__CLS_DECDATA)
 HB_FUNC(__CLS_INCDATA)
 {
   HB_STACK_TLS_PRELOAD
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
 
   if (uiClass && uiClass <= s_uiClasses) {
     if (!s_pClasses[uiClass]->fLocked) {
@@ -3885,14 +3885,14 @@ HB_FUNC_TRANSLATE(__CLASSADD, __CLSADDMSG)
 HB_FUNC(__CLASSNAME)
 {
   HB_STACK_TLS_PRELOAD
-  hb_retc(hb_clsName(static_cast<uint16_t>(hb_parni(1))));
+  hb_retc(hb_clsName(static_cast<uint16_t>(hb_parni32(1))));
 }
 
 // NOTE: Undocumented Clipper function
 
 HB_FUNC(__CLASSSEL)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto pReturn = hb_itemNew(nullptr);
 
   if (uiClass && uiClass <= s_uiClasses) {
@@ -3930,7 +3930,7 @@ HB_FUNC(__CLSPARENT)
 {
   HB_STACK_TLS_PRELOAD
   auto szParentName = hb_parc(2);
-  hb_retl(szParentName && hb_clsIsParent(static_cast<uint16_t>(hb_parni(1)), szParentName));
+  hb_retl(szParentName && hb_clsIsParent(static_cast<uint16_t>(hb_parni32(1)), szParentName));
 }
 
 // __Sender() --> <obj> | NIL
@@ -4091,7 +4091,7 @@ HB_FUNC_STATIC(msgClassSel)
     HB_SIZE nLimit = hb_clsMthNum(pClass), nPos = 0;
 
     auto nParam = static_cast<uint16_t>(hb_parnidef(1, HB_MSGLISTALL));
-    auto nScope = static_cast<uint16_t>(hb_parni(2));
+    auto nScope = static_cast<uint16_t>(hb_parni32(2));
     bool lFull = hb_parl(3);
     auto pReturn = hb_itemArrayNew(pClass->uiMethods);
 
@@ -4566,7 +4566,7 @@ HB_FUNC(__GETMSGPRF) // profiler: returns a method called and consumed times
 {
   HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto cMsg = hb_parc(2);
 
   hb_reta(2);
@@ -4764,7 +4764,7 @@ static void hb_objSetIVars(HB_ITEM *pObject, HB_ITEM *pArray)
 HB_FUNC(__OBJGETIVARS)
 {
   auto pObject = hb_param(1, Harbour::Item::OBJECT);
-  auto uiScope = static_cast<uint16_t>(hb_parni(2));
+  auto uiScope = static_cast<uint16_t>(hb_parni32(2));
   bool fChanged = hb_parldef(3, true);
   hb_itemReturnRelease(hb_objGetIVars(pObject, uiScope, fChanged));
 }
@@ -4836,7 +4836,7 @@ HB_FUNC(__OBJRESTOREIVARS)
 // assign message (with "_" prefix)
 HB_FUNC(__CLSGETPROPERTIES)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto pReturn = hb_itemNew(nullptr);
 
   if (uiClass && uiClass <= s_uiClasses) {
@@ -4894,7 +4894,7 @@ HB_FUNC(__CLSGETPROPERTIES)
 // __clsGetAncestors(<nClass> ) --> { <nSuper1>, <nSuper2>, ...}
 HB_FUNC(__CLSGETANCESTORS)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   uint16_t uiCount;
 
   if (uiClass && uiClass <= s_uiClasses) {
@@ -4926,7 +4926,7 @@ HB_FUNC(__CLSMSGTYPE)
 
   if (pMessage) {
     HB_STACK_TLS_PRELOAD
-    auto uiClass = static_cast<uint16_t>(hb_parni(1));
+    auto uiClass = static_cast<uint16_t>(hb_parni32(1));
     PMETHOD pMethod = nullptr;
 
     if (uiClass && uiClass <= s_uiClasses) {
@@ -5032,7 +5032,7 @@ HB_FUNC(__OBJSETCLASSHANDLE)
   uint16_t uiPrevClassHandle = 0;
 
   if (pObject) {
-    auto uiClass = static_cast<uint16_t>(hb_parni(2));
+    auto uiClass = static_cast<uint16_t>(hb_parni32(2));
 
     uiPrevClassHandle = pObject->arrayValue()->uiClass;
     if (uiClass <= s_uiClasses) {
@@ -5083,7 +5083,7 @@ void hb_clsAssociate(uint16_t usClassH)
 
 HB_FUNC(__CLSVERIFY)
 {
-  auto uiClass = static_cast<uint16_t>(hb_parni(1));
+  auto uiClass = static_cast<uint16_t>(hb_parni32(1));
   auto pReturn = hb_itemNew(nullptr);
 
   if (uiClass && uiClass <= s_uiClasses) {

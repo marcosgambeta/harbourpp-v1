@@ -361,7 +361,7 @@ HB_FUNC(WAPI_TABCTRL_INSERTITEM)
 
 HB_FUNC(WAPI_TABCTRL_SETCURSEL)
 {
-  hbwapi_ret_NI(TabCtrl_SetCurSel(hbwapi_par_raw_HWND(1), hb_parni(2)));
+  hbwapi_ret_NI(TabCtrl_SetCurSel(hbwapi_par_raw_HWND(1), hb_parni32(2)));
 }
 
 HB_FUNC(WAPI_TABCTRL_GETCURSEL)
@@ -458,7 +458,7 @@ HB_FUNC(WAPI_TABCTRL_HITTEST)
 {
   TCHITTESTINFO tcht;
 
-  hb_parni(TabCtrl_HitTest(hbwapi_par_raw_HWND(1), &tcht));
+  hb_parni32(TabCtrl_HitTest(hbwapi_par_raw_HWND(1), &tcht));
 }
 
 // TabCtrl_SetItemExtra(hwndTC, cb)
@@ -619,8 +619,8 @@ HB_FUNC(WAPI_TABCTRL_CREATE)
 {
   HWND hwnd = hbwapi_par_raw_HWND(1);
   HWND hbutton =
-      CreateWindowEx(0, WC_TABCONTROL, nullptr, static_cast<LONG>(hb_parnl(6)) /* style */, hb_parni(2), hb_parni(3),
-                     hb_parni(4), hb_parni(5), hwnd, nullptr, GetModuleHandle(nullptr), nullptr);
+      CreateWindowEx(0, WC_TABCONTROL, nullptr, static_cast<LONG>(hb_parnl(6)) /* style */, hb_parni32(2), hb_parni32(3),
+                     hb_parni32(4), hb_parni32(5), hwnd, nullptr, GetModuleHandle(nullptr), nullptr);
 
   SendMessage(hbutton, static_cast<UINT>(WM_SETFONT),
               reinterpret_cast<WPARAM>(reinterpret_cast<HFONT>(SendMessage(hwnd, WM_GETFONT, 0, 0))), 1);

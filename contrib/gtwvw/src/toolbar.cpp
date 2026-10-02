@@ -66,14 +66,14 @@ HB_FUNC(WVW_TBCREATE)
   HWND hWndParent = pWindowData->hWnd;
   HWND hWndTB;
   auto iMaxTextRows = static_cast<int32_t>(HB_ISNIL(2) ? 0 : (hb_parl(2) ? 1 : 0));
-  /*   DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni(3)); */
+  /*   DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni32(3)); */
   auto dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS |
                                                       TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE
                                                 : hb_parnl(3));
 
-  auto iSystemBitmap = static_cast<int32_t>(HB_ISNIL(4) ? 1 : hb_parni(4));
-  auto iImageWidth = static_cast<int32_t>(iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1);
-  auto iImageHeight = static_cast<int32_t>(iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1);
+  auto iSystemBitmap = static_cast<int32_t>(HB_ISNIL(4) ? 1 : hb_parni32(4));
+  auto iImageWidth = static_cast<int32_t>(iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni32(5) : -1);
+  auto iImageHeight = static_cast<int32_t>(iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni32(6) : -1);
   TBADDBITMAP tbab{};
 
   InitCommonControls();
@@ -184,13 +184,13 @@ HB_FUNC(WVW_TBADDBUTTON)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int32_t iCommand = HB_ISNIL(2) ? 0 : hb_parni(2);
+  int32_t iCommand = HB_ISNIL(2) ? 0 : hb_parni32(2);
 
   char *szBitmap = HB_ISCHAR(3) ? const_cast<char *>(hb_parcx(3)) : nullptr;
-  UINT uiBitmap = HB_ISNUM(3) ? static_cast<UINT>(hb_parni(3)) : 0;
+  UINT uiBitmap = HB_ISNUM(3) ? static_cast<UINT>(hb_parni32(3)) : 0;
 
   char *szLabel = HB_ISNIL(4) ? nullptr : const_cast<char *>(hb_parcx(4));
-  int32_t iBitmapType = HB_ISNIL(5) ? 0 : static_cast<int32_t>(hb_parni(5));
+  int32_t iBitmapType = HB_ISNIL(5) ? 0 : static_cast<int32_t>(hb_parni32(5));
   BOOL bMap3Dcolors = HB_ISLOG(6) ? hb_parl(6) : FALSE;
   BOOL bDropdown = HB_ISLOG(7) ? hb_parl(7) : FALSE;
   HWND hWndTB;
@@ -267,7 +267,7 @@ HB_FUNC(WVW_TBDELBUTTON)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int32_t iButton = HB_ISNUM(2) ? hb_parni(2) : -1;
+  int32_t iButton = HB_ISNUM(2) ? hb_parni32(2) : -1;
   HWND hWndTB;
   uint16_t usOldHeight;
 
@@ -300,7 +300,7 @@ HB_FUNC(WVW_TBGETBUTTONRECT)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int32_t iButton = HB_ISNUM(2) ? hb_parni(2) : -1;
+  int32_t iButton = HB_ISNUM(2) ? hb_parni32(2) : -1;
   HWND hWndTB;
   RECT rc;
   RECT rcRect{};
@@ -339,7 +339,7 @@ HB_FUNC(WVW_TBENABLEBUTTON)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  int32_t iButton = HB_ISNUM(2) ? hb_parni(2) : -1;
+  int32_t iButton = HB_ISNUM(2) ? hb_parni32(2) : -1;
   BOOL bEnable = HB_ISLOG(3) ? hb_parl(3) : TRUE;
   int32_t iCommand;
   HWND hWndTB;
@@ -399,7 +399,7 @@ HB_FUNC(WVW_TBINDEX2CMD)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   HWND hWndTB = pWindowData->hToolBar;
-  auto iIndex = hb_parni(2);
+  auto iIndex = hb_parni32(2);
   int32_t iCmd = IndexToCommand(hWndTB, iIndex);
 
   hb_retni(static_cast<int32_t>(iCmd > 0 ? iCmd : -1));
@@ -414,7 +414,7 @@ HB_FUNC(WVW_TBCMD2INDEX)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   HWND hWndTB = pWindowData->hToolBar;
-  auto iCmd = hb_parni(2);
+  auto iCmd = hb_parni32(2);
 
   hb_retni(CommandToIndex(hWndTB, iCmd));
 }
@@ -459,7 +459,7 @@ HB_FUNC(WVW_SETTOOLTIP)
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
 
-  uint16_t usTop = hb_parni(2), usLeft = hb_parni(3), usBottom = hb_parni(4), usRight = hb_parni(5);
+  uint16_t usTop = hb_parni32(2), usLeft = hb_parni32(3), usBottom = hb_parni32(4), usRight = hb_parni32(5);
 
   if (!pWindowData->bToolTipActive) {
     return;
@@ -514,10 +514,10 @@ HB_FUNC(WVW_SETTOOLTIPMARGIN)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   RECT rc{};
 
-  rc.left = hb_parni(3);
-  rc.top = hb_parni(2);
-  rc.right = hb_parni(5);
-  rc.bottom = hb_parni(4);
+  rc.left = hb_parni32(3);
+  rc.top = hb_parni32(2);
+  rc.right = hb_parni32(5);
+  rc.bottom = hb_parni32(4);
 
   SendMessage(pWindowData->hWndTT, TTM_SETMARGIN, 0, static_cast<LPARAM>(&rc));
 }
@@ -530,7 +530,7 @@ HB_FUNC(WVW_SETTOOLTIPWIDTH)
   int32_t iTipWidth = SendMessage(pWindowData->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0);
 
   if (HB_ISNUM(2)) {
-    SendMessage(pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(static_cast<int32_t>(hb_parni(2))));
+    SendMessage(pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(static_cast<int32_t>(hb_parni32(2))));
   }
 
   hb_retni(iTipWidth);
@@ -569,7 +569,7 @@ HB_FUNC(WVW_SETTOOLTIPTITLE)
   int32_t iIcon;
 
   if (!HB_ISNIL(3)) {
-    iIcon = HB_ISNIL(2) ? 0 : hb_parni(2);
+    iIcon = HB_ISNIL(2) ? 0 : hb_parni32(2);
     if (iIcon > 3) {
       iIcon = 0;
     }

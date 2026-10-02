@@ -123,9 +123,9 @@ HB_FUNC(FBCREATEDB)
     auto db_name = hb_parcx(1);
     auto user = hb_parcx(2);
     auto pass = hb_parcx(3);
-    auto page = hb_parni(4);
+    auto page = hb_parni32(4);
     auto charset = hb_parcx(5);
-    auto dialect = static_cast<unsigned short>(hb_parni(6));
+    auto dialect = static_cast<unsigned short>(hb_parni32(6));
     auto collate = hb_parcx(7);
 
     hb_snprintf(create_db, sizeof(create_db),
@@ -215,7 +215,7 @@ HB_FUNC(FBERROR)
 {
   char msg[1024];
 
-  isc_sql_interprete(static_cast<short>(hb_parni(1)) /* sqlcode */, msg, sizeof(msg));
+  isc_sql_interprete(static_cast<short>(hb_parni32(1)) /* sqlcode */, msg, sizeof(msg));
 
   hb_retc(msg);
 }
@@ -300,7 +300,7 @@ HB_FUNC(FBEXECUTE)
     auto exec_str = hb_parcx(2);
     ISC_STATUS status[20];
     ISC_STATUS status_rollback[20];
-    auto dialect = static_cast<unsigned short>(hb_parni(3));
+    auto dialect = static_cast<unsigned short>(hb_parni32(3));
 
     if (HB_ISPOINTER(4))
     {
@@ -570,7 +570,7 @@ HB_FUNC(FBGETDATA)
     auto sqlda = static_cast<XSQLDA *>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
     ISC_STATUS_ARRAY status;
 
-    int32_t pos = hb_parni(2) - 1;
+    int32_t pos = hb_parni32(2) - 1;
 
     if (!sqlda || pos < 0 || pos >= sqlda->sqln)
     {

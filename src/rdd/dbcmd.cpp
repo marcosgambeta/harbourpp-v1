@@ -154,7 +154,7 @@ HB_FUNC(AFIELDS)
 
 HB_FUNC(ALIAS)
 {
-  auto pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
+  auto pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni32(1))));
 
   if (pArea != nullptr) {
     char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
@@ -663,7 +663,7 @@ HB_FUNC(DBSELECTAREA)
   if (szAlias != nullptr) {
     hb_rddSelectWorkAreaAlias(szAlias);
   } else {
-    auto iNewArea = hb_parni(1);
+    auto iNewArea = hb_parni32(1);
 
     if (iNewArea == 0) {
       auto pItem = hb_param(1, Harbour::Item::SYMBOL);
@@ -887,7 +887,7 @@ HB_FUNC(FIELDGET)
 {
   auto pItem = hb_itemNew(nullptr);
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  uint16_t uiField = static_cast<HB_FIELDNO>(hb_parni(1)); // TODO: cast != type
+  uint16_t uiField = static_cast<HB_FIELDNO>(hb_parni32(1)); // TODO: cast != type
 
   if (pArea && uiField) {
     SELF_GETVALUE(pArea, uiField, pItem);
@@ -899,7 +899,7 @@ HB_FUNC(FIELDGET)
 HB_FUNC(FIELDNAME)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  uint16_t uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni(1)); // TODO: cast != type
+  uint16_t uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni32(1)); // TODO: cast != type
 
   if (pArea && uiIndex) {
     if (SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex <= uiFields) {
@@ -933,7 +933,7 @@ HB_FUNC(FIELDPUT)
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr) {
-    uint16_t uiIndex = static_cast<HB_FIELDNO>(hb_parni(1)); // TODO: cast != type
+    uint16_t uiIndex = static_cast<HB_FIELDNO>(hb_parni32(1)); // TODO: cast != type
 
     if (uiIndex > 0) {
       auto pItem = hb_param(2, Harbour::Item::ANY);
@@ -1417,7 +1417,7 @@ HB_FUNC(ORDSETFOCUS)
 
 HB_FUNC(RDDLIST)
 {
-  hb_itemReturnRelease(hb_rddList(static_cast<uint16_t>(hb_parni(1))));
+  hb_itemReturnRelease(hb_rddList(static_cast<uint16_t>(hb_parni32(1))));
 }
 
 HB_FUNC(RDDNAME)
@@ -1450,7 +1450,7 @@ HB_FUNC(RDDREGISTER)
     // 0: Ok, RDD registered
     // 1: RDD already registerd
     // > 1: error
-    if (hb_rddRegister(szDriver, static_cast<uint16_t>(hb_parni(2))) > 1) {
+    if (hb_rddRegister(szDriver, static_cast<uint16_t>(hb_parni32(2))) > 1) {
       hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
     }
   }
@@ -1560,7 +1560,7 @@ HB_FUNC(ORDSCOPE)
 
   if (pArea != nullptr) {
     uint16_t uiAction;
-    auto iScope = hb_parni(1);
+    auto iScope = hb_parni32(1);
     DBORDERINFO pInfo{};
     pInfo.itmResult = hb_itemNew(nullptr);
     if (iScope == 2) {
@@ -1593,7 +1593,7 @@ HB_FUNC(DBRELATION) // (<nRelation>) --> cLinkExp
 
   if (pArea != nullptr) {
     auto pRelExpr = hb_itemPutC(nullptr, nullptr);
-    auto uiRelNo = static_cast<uint16_t>(hb_parni(1));
+    auto uiRelNo = static_cast<uint16_t>(hb_parni32(1));
     SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
     hb_itemReturnRelease(pRelExpr);
   } else {
@@ -1603,7 +1603,7 @@ HB_FUNC(DBRELATION) // (<nRelation>) --> cLinkExp
 
 HB_FUNC(DBRSELECT) // (<nRelation>) --> nWorkArea
 {
-  auto uiRelation = static_cast<uint16_t>(hb_parni(1));
+  auto uiRelation = static_cast<uint16_t>(hb_parni32(1));
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   uint16_t uiWorkArea = 0;
@@ -1646,7 +1646,7 @@ HB_FUNC(DBSETRELATION)
       }
       hb_rddSelectWorkAreaNumber(iArea);
     } else {
-      pChildArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(hb_parni(1)));
+      pChildArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(hb_parni32(1)));
     }
 
     if (pArea == pChildArea)
@@ -1681,7 +1681,7 @@ HB_FUNC(__DBARRANGE)
   HB_ERRCODE errCode = Harbour::FAILURE;
 
   auto pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-  auto pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
+  auto pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni32(1))));
 
   // TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea
   if (pSrcArea && pDstArea && pSrcArea != pDstArea) {
@@ -1788,7 +1788,7 @@ HB_FUNC(__DBTRANS)
   if (HB_ISNUM(1)) {
     auto uiSrcArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
     auto pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-    auto uiDstArea = static_cast<HB_AREANO>(hb_parni(1));
+    auto uiDstArea = static_cast<HB_AREANO>(hb_parni32(1));
     hb_rddSelectWorkAreaNumber(uiDstArea);
     auto pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -2019,7 +2019,7 @@ HB_FUNC(HB_FIELDLEN)
     if (szField != nullptr) {
       uiIndex = hb_rddFieldIndex(pArea, szField);
     } else {
-      uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
+      uiIndex = static_cast<HB_FIELDNO>(hb_parni32(1));
     }
 
     if (uiIndex > 0) {
@@ -2047,7 +2047,7 @@ HB_FUNC(HB_FIELDDEC)
     if (szField != nullptr) {
       uiIndex = hb_rddFieldIndex(pArea, szField);
     } else {
-      uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
+      uiIndex = static_cast<HB_FIELDNO>(hb_parni32(1));
     }
 
     if (uiIndex > 0) {
@@ -2075,7 +2075,7 @@ HB_FUNC(HB_FIELDTYPE)
     if (szField != nullptr) {
       uiIndex = hb_rddFieldIndex(pArea, szField);
     } else {
-      uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
+      uiIndex = static_cast<HB_FIELDNO>(hb_parni32(1));
     }
 
     if (uiIndex > 0) {
@@ -2103,7 +2103,7 @@ HB_FUNC(HB_FIELDGET)
     if (szField != nullptr) {
       uiField = hb_rddFieldIndex(pArea, szField);
     } else {
-      uiField = static_cast<HB_FIELDNO>(hb_parni(1));
+      uiField = static_cast<HB_FIELDNO>(hb_parni32(1));
     }
 
     if (uiField > 0) {
@@ -2125,7 +2125,7 @@ HB_FUNC(HB_FIELDPUT)
     if (szField != nullptr) {
       uiField = hb_rddFieldIndex(pArea, szField);
     } else {
-      uiField = static_cast<HB_FIELDNO>(hb_parni(1));
+      uiField = static_cast<HB_FIELDNO>(hb_parni32(1));
     }
 
     if (uiField > 0) {

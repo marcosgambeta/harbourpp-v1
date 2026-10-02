@@ -159,7 +159,7 @@ static void hbxml_set_doc_status(MXML_REFIL *ref, HB_ITEM *doc, HB_ITEM *pNode, 
 static void hbxml_doc_new_line(HB_ITEM *pDoc)
 {
   hb_objSendMsg(pDoc, "NLINE", 0);
-  auto pNumber = hb_itemPutNI(nullptr, hb_parni(-1) + 1);
+  auto pNumber = hb_itemPutNI(nullptr, hb_parni32(-1) + 1);
   hb_objSendMsg(pDoc, "_NLINE", 1, pNumber);
   hb_itemRelease(pNumber);
 }
@@ -167,7 +167,7 @@ static void hbxml_doc_new_line(HB_ITEM *pDoc)
 static void hbxml_doc_new_node(HB_ITEM *pDoc, int32_t amount)
 {
   hb_objSendMsg(pDoc, "NNODECOUNT", 0);
-  auto pNumber = hb_itemPutNI(nullptr, hb_parni(-1) + amount);
+  auto pNumber = hb_itemPutNI(nullptr, hb_parni32(-1) + amount);
   hb_objSendMsg(pDoc, "_NNODECOUNT", 1, pNumber);
   hb_itemRelease(pNumber);
 
@@ -1419,7 +1419,7 @@ static MXML_STATUS mxml_node_read(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *doc,
 
     while (!child_node->isNil()) {
       hb_objSendMsg(child_node, "NTYPE", 0);
-      if (hb_parni(-1) == MXML_TYPE_DATA) {
+      if (hb_parni32(-1) == MXML_TYPE_DATA) {
         /* first data node ? */
         if (data_node == nullptr) {
           data_node = hb_itemNew(child_node);
@@ -1490,12 +1490,12 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, HB_ITEM *pNode, int32_t sty
 
   if (style & MXML_STYLE_INDENT) {
     hb_objSendMsg(pNode, "DEPTH", 0);
-    depth = hb_parni(-1) - 1;
+    depth = hb_parni32(-1) - 1;
     mxml_node_file_indent(out, depth, style);
   }
 
   hb_objSendMsg(pNode, "NTYPE", 0);
-  switch (hb_parni(-1)) {
+  switch (hb_parni32(-1)) {
   case MXML_TYPE_TAG:
 
     mxml_output_char(out, '<');
@@ -2057,7 +2057,7 @@ HB_FUNC(HBXML_DATAREAD)
 {
   auto pParam = hb_param(2, Harbour::Item::ANY);
   auto pDoc = hb_param(1, Harbour::Item::OBJECT);
-  auto iStyle = hb_parni(3);
+  auto iStyle = hb_parni32(3);
   MXML_REFIL refil;
   char buffer[512], *buf;
   HB_SIZE nLen;

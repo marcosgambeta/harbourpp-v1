@@ -161,7 +161,7 @@ HB_FUNC(HB_RANDINT)
 
 HB_FUNC(HB_RANDOMSEED)
 {
-  hb_random_seed(hb_parni(1));
+  hb_random_seed(hb_parni32(1));
 }
 
 HB_FUNC(HB_RANDOMINTMAX)

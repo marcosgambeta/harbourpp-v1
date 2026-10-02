@@ -88,10 +88,10 @@ HB_FUNC(WVW_PGCREATE)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw && wvw_win) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     int32_t iOffTop = hb_parvni(6, 1);
     int32_t iOffLeft = hb_parvni(6, 2);
@@ -175,7 +175,7 @@ HB_FUNC(WVW_PGDESTROY)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto nCtrlId = hb_parni(2);
+    auto nCtrlId = hb_parni32(2);
     auto wvw_ctl = wvw_win->ctlList;
     PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -216,9 +216,9 @@ returns .T. if operation considered successful
 */
 HB_FUNC(WVW_PGSETRANGE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
-  auto iMin = hb_parni(3);
-  auto iMax = hb_parni(4);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni32(2), nullptr);
+  auto iMin = hb_parni32(3);
+  auto iMax = hb_parni32(4);
 
   if (hWnd && iMin <= iMax) {
     SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(iMin, iMax));
@@ -238,10 +238,10 @@ returns .T. if operation considered successful
 */
 HB_FUNC(WVW_PGSETPOS)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni32(2), nullptr);
 
   if (hWnd) {
-    auto iPos = hb_parni(3);
+    auto iPos = hb_parni32(3);
     PBRANGE pbrange;
 
     SendMessage(hWnd, PBM_GETRANGE, static_cast<WPARAM>(TRUE), reinterpret_cast<LPARAM>(&pbrange));
@@ -263,7 +263,7 @@ returns 0 if operation failed
 */
 HB_FUNC(WVW_PGGETPOS)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni32(2), nullptr);
 
   if (hWnd) {
     hb_retni(static_cast<int32_t>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));

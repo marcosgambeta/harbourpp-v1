@@ -604,7 +604,7 @@ HB_FUNC(NETIO_SERVERTIMEOUT)
       hb_retni(conn->timeout);
       if( HB_ISNUM(2) )
       {
-         conn->timeout = hb_parni(2);
+         conn->timeout = hb_parni32(2);
       }
    }
 }
@@ -1930,7 +1930,7 @@ HB_FUNC(NETIO_SERVEDCONNECTION)
 HB_FUNC(NETIO_SRVSENDITEM)
 {
    PHB_CONSRV conn = s_consrvParam(1);
-   auto iStreamID = hb_parni(2);
+   auto iStreamID = hb_parni32(2);
    auto pItem = hb_param(3, Harbour::Item::ANY);
    bool fResult = false;
 
@@ -1976,7 +1976,7 @@ HB_FUNC(NETIO_SRVSENDITEM)
 HB_FUNC(NETIO_SRVSENDDATA)
 {
    PHB_CONSRV conn = s_consrvParam(1);
-   auto iStreamID = hb_parni(2);
+   auto iStreamID = hb_parni32(2);
    auto lLen = static_cast<long>(hb_parclen(3));
    bool fResult = false;
 
@@ -2018,7 +2018,7 @@ HB_FUNC(NETIO_SRVSENDDATA)
 HB_FUNC(NETIO_SRVSTATUS)
 {
    PHB_CONSRV conn = s_consrvParam(1);
-   auto iStreamID = hb_parni(2);
+   auto iStreamID = hb_parni32(2);
    int32_t iSrvInfo = 0;
    int32_t iStatus = NETIO_SRVSTAT_RUNNING;
 

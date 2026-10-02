@@ -453,7 +453,7 @@ HB_FUNC(WAPI_SETBKMODE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retni(SetBkMode(hDC, hb_parni(2)));
+    hb_retni(SetBkMode(hDC, hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -477,7 +477,7 @@ HB_FUNC(WAPI_GETDEVICECAPS)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retni(GetDeviceCaps(hDC, hb_parni(2)));
+    hb_retni(GetDeviceCaps(hDC, hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -489,7 +489,7 @@ HB_FUNC(WAPI_SETMAPMODE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retni(SetMapMode(hDC, hb_parni(2)));
+    hb_retni(SetMapMode(hDC, hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -513,7 +513,7 @@ HB_FUNC(WAPI_SETTEXTALIGN)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retni(static_cast<int32_t>(SetTextAlign(hDC, static_cast<UINT>(hb_parni(2)))));
+    hb_retni(static_cast<int32_t>(SetTextAlign(hDC, static_cast<UINT>(hb_parni32(2)))));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -541,7 +541,7 @@ HB_FUNC(WAPI_TEXTOUT)
     HB_SIZE nDataLen;
     LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
 
-    hb_retl(TextOut(hDC, hb_parni(2), hb_parni(3), lpData, static_cast<int32_t>(nDataLen)));
+    hb_retl(TextOut(hDC, hb_parni32(2), hb_parni32(3), lpData, static_cast<int32_t>(nDataLen)));
 
     hb_strfree(hData);
   } else {
@@ -582,7 +582,7 @@ HB_FUNC(WAPI_EXTTEXTOUT)
       lpFontWidths = nullptr;
     }
 
-    hb_retl(ExtTextOut(hDC, hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parni(4)), hbwapi_par_RECT(&rect, 5, false),
+    hb_retl(ExtTextOut(hDC, hb_parni32(2), hb_parni32(3), static_cast<UINT>(hb_parni32(4)), hbwapi_par_RECT(&rect, 5, false),
                        lpData, static_cast<UINT>(nDataLen), lpFontWidths));
 
     if (lpFontWidths) {
@@ -662,7 +662,7 @@ HB_FUNC(WAPI_GETBKCOLOR)
 // WAPI_CREATEPEN(nPenStyle, nWidth, nColor) -> HPEN
 HB_FUNC(WAPI_CREATEPEN)
 {
-  hbwapi_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), static_cast<COLORREF>(hb_parnl(3))));
+  hbwapi_ret_HPEN(CreatePen(hb_parni32(1), hb_parni32(2), static_cast<COLORREF>(hb_parnl(3))));
 }
 
 // WAPI_CREATESOLIDBRUSH(nColor) -> HBRUSH
@@ -676,7 +676,7 @@ HB_FUNC(WAPI_CREATESOLIDBRUSH)
 // WAPI_CREATEHATCHBRUSH(nStyle, nColor) -> HBRUSH
 HB_FUNC(WAPI_CREATEHATCHBRUSH)
 {
-  hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni(1), static_cast<COLORREF>(hb_parnl(2))));
+  hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni32(1), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 // WAPI_CREATEFONT(nHeight, nWidth, nEscapement, nOrientation, nWeight, lItalic, lUnderline, lStrikeOut, nCharSet,
@@ -686,7 +686,7 @@ HB_FUNC(WAPI_CREATEFONT)
   void *hFontFace;
 
   hbwapi_ret_HFONT(CreateFont(
-      hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<DWORD>(hb_parl(6)),
+      hb_parni32(1), hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5), static_cast<DWORD>(hb_parl(6)),
       static_cast<DWORD>(hb_parl(7)), static_cast<DWORD>(hb_parl(8)), static_cast<DWORD>(hb_parnl(9)),
       static_cast<DWORD>(hb_parnldef(10, OUT_DEFAULT_PRECIS)), static_cast<DWORD>(hb_parnldef(11, CLIP_DEFAULT_PRECIS)),
       static_cast<DWORD>(hb_parnldef(12, DEFAULT_QUALITY)),
@@ -743,11 +743,11 @@ HB_FUNC(WAPI_MOVETOEX)
     POINT p;
 
     if (hbwapi_par_POINT(&p, 4, false)) {
-      hb_retl(MoveToEx(hDC, hb_parni(2), hb_parni(3), &p));
+      hb_retl(MoveToEx(hDC, hb_parni32(2), hb_parni32(3), &p));
 
       hbwapi_stor_POINT(&p, 4);
     } else {
-      hb_retl(MoveToEx(hDC, hb_parni(2), hb_parni(3), nullptr));
+      hb_retl(MoveToEx(hDC, hb_parni32(2), hb_parni32(3), nullptr));
     }
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -760,7 +760,7 @@ HB_FUNC(WAPI_LINETO)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retl(LineTo(hDC, hb_parni(2), hb_parni(3)));
+    hb_retl(LineTo(hDC, hb_parni32(2), hb_parni32(3)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -786,7 +786,7 @@ HB_FUNC(WAPI_ROUNDRECT)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retl(RoundRect(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
+    hb_retl(RoundRect(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5), hb_parni32(6), hb_parni32(7)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -798,7 +798,7 @@ HB_FUNC(WAPI_RECTANGLE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retl(Rectangle(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+    hb_retl(Rectangle(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -810,8 +810,8 @@ HB_FUNC(WAPI_ARC)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retl(Arc(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8),
-                hb_parni(9)));
+    hb_retl(Arc(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5), hb_parni32(6), hb_parni32(7), hb_parni32(8),
+                hb_parni32(9)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -823,7 +823,7 @@ HB_FUNC(WAPI_ELLIPSE)
   HDC hDC = hbwapi_par_HDC(1);
 
   if (hDC) {
-    hb_retl(Ellipse(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+    hb_retl(Ellipse(hDC, hb_parni32(2), hb_parni32(3), hb_parni32(4), hb_parni32(5)));
   } else {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

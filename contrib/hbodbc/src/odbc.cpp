@@ -550,7 +550,7 @@ HB_FUNC(SQLFETCHSCROLL)
 
    if( hStmt != nullptr ) {
 #if ODBCVER >= 0x0300
-      hb_retni(SQLFetchScroll(hStmt, static_cast<SQLSMALLINT>(hb_parni(2)), static_cast<SQLLEN>(hb_parnint(3))));
+      hb_retni(SQLFetchScroll(hStmt, static_cast<SQLSMALLINT>(hb_parni32(2)), static_cast<SQLLEN>(hb_parnint(3))));
 #else
       hb_retni(SQL_ERROR);
 #endif
@@ -564,7 +564,7 @@ HB_FUNC(SQLGETDATA)  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode */
    auto hStmt = hb_SQLHSTMT_par(1);
 
    if( hStmt != nullptr ) {
-      auto uiField = static_cast<SQLUSMALLINT>(hb_parni(2));
+      auto uiField = static_cast<SQLUSMALLINT>(hb_parni32(2));
       auto iType = static_cast<SQLSMALLINT>(hb_parnidef(3, SQL_BINARY));
       SQLLEN       nLen    = 0;
       SQLRETURN    res     = SQL_ERROR;
@@ -770,12 +770,12 @@ HB_FUNC(SQLDESCRIBECOL)  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType, 
    auto hStmt = hb_SQLHSTMT_par(1);
 
    if( hStmt != nullptr ) {
-      auto iLen = static_cast<SQLSMALLINT>(hb_parni(4));
-      SQLSMALLINT iBufLen   = static_cast<SQLUSMALLINT>(hb_parni(5));
-      SQLSMALLINT iDataType = static_cast<SQLUSMALLINT>(hb_parni(6));
+      auto iLen = static_cast<SQLSMALLINT>(hb_parni32(4));
+      SQLSMALLINT iBufLen   = static_cast<SQLUSMALLINT>(hb_parni32(5));
+      SQLSMALLINT iDataType = static_cast<SQLUSMALLINT>(hb_parni32(6));
       auto nColSize = static_cast<SQLULEN>(hb_parnint(7));
-      SQLSMALLINT iDecimals = static_cast<SQLUSMALLINT>(hb_parni(8));
-      SQLSMALLINT iNullable = static_cast<SQLUSMALLINT>(hb_parni(9));
+      SQLSMALLINT iDecimals = static_cast<SQLUSMALLINT>(hb_parni32(8));
+      SQLSMALLINT iNullable = static_cast<SQLUSMALLINT>(hb_parni32(9));
       SQLTCHAR *  buffer;
 
       if( iLen <= 0 ) {
@@ -786,7 +786,7 @@ HB_FUNC(SQLDESCRIBECOL)  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType, 
       buffer[0] = '\0';
 
       hb_retni(SQLDescribeCol(hStmt,
-                              static_cast<SQLUSMALLINT>(hb_parni(2)),
+                              static_cast<SQLUSMALLINT>(hb_parni32(2)),
                               static_cast<SQLTCHAR*>(buffer),
                               static_cast<SQLSMALLINT>(iLen),
                               static_cast<SQLSMALLINT*>(&iBufLen),
@@ -813,8 +813,8 @@ HB_FUNC(SQLCOLATTRIBUTE)  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @nA
    auto hStmt = hb_SQLHSTMT_par(1);
 
    if( hStmt != nullptr ) {
-      auto iLen = static_cast<SQLSMALLINT>(hb_parni(5));
-      SQLSMALLINT iBufLen = static_cast<SQLUSMALLINT>(hb_parni(6));
+      auto iLen = static_cast<SQLSMALLINT>(hb_parni32(5));
+      SQLSMALLINT iBufLen = static_cast<SQLUSMALLINT>(hb_parni32(6));
 
 #if ODBCVER >= 0x0300
       auto nNumPtr = static_cast<SQLLEN>(hb_parnint(7));
@@ -830,16 +830,16 @@ HB_FUNC(SQLCOLATTRIBUTE)  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @nA
 
 #if ODBCVER >= 0x0300
       hb_retni(SQLColAttribute(hStmt,
-                               static_cast<SQLUSMALLINT>(hb_parni(2)),
-                               static_cast<SQLUSMALLINT>(hb_parni(3)),
+                               static_cast<SQLUSMALLINT>(hb_parni32(2)),
+                               static_cast<SQLUSMALLINT>(hb_parni32(3)),
                                static_cast<SQLPOINTER>(buffer),
                                iLen,
                                static_cast<SQLSMALLINT*>(&iBufLen),
                                static_cast<SQLLEN*>(&nNumPtr)));
 #else
       hb_retni(SQLColAttributes(hStmt,
-                                static_cast<SQLUSMALLINT>(hb_parni(2)),
-                                static_cast<SQLUSMALLINT>(hb_parni(3)),
+                                static_cast<SQLUSMALLINT>(hb_parni32(2)),
+                                static_cast<SQLUSMALLINT>(hb_parni32(3)),
                                 static_cast<SQLPOINTER>(buffer),
                                 iLen,
                                 static_cast<SQLSMALLINT*>(&iBufLen),
@@ -892,7 +892,7 @@ HB_FUNC(SQLERROR)  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
 HB_FUNC(SQLGETDIAGREC)  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError, @cErrorMsg */
 {
 #if ODBCVER >= 0x0300
-   auto iHandleType = static_cast<SQLSMALLINT>(hb_parni(1));
+   auto iHandleType = static_cast<SQLSMALLINT>(hb_parni32(1));
    SQLHANDLE   hHandle;
 
    switch( iHandleType ) {
@@ -921,7 +921,7 @@ HB_FUNC(SQLGETDIAGREC)  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError
 
       hb_retni(SQLGetDiagRec(iHandleType,
                              hHandle,
-                             static_cast<SQLSMALLINT>(hb_parni(3)),
+                             static_cast<SQLSMALLINT>(hb_parni32(3)),
                              static_cast<SQLTCHAR*>(szSQLState),
                              static_cast<SQLINTEGER*>(&lError),
                              static_cast<SQLTCHAR*>(szErrorMsg),
@@ -968,7 +968,7 @@ HB_FUNC(SQLGETINFO)  /* hDbc, nType, @cResult */
       buffer[0] = '\0';
 
       hb_retni(SQLGetInfo(hDbc,
-                          static_cast<SQLUSMALLINT>(hb_parni(2)),
+                          static_cast<SQLUSMALLINT>(hb_parni32(2)),
                           static_cast<SQLPOINTER>(buffer),
                           static_cast<SQLSMALLINT>(sizeof(buffer)),
                           static_cast<SQLSMALLINT*>(&iLen)));
@@ -993,7 +993,7 @@ HB_FUNC(SQLSETCONNECTATTR)  /* hDbc, nOption, uOption */
                                                 static_cast<SQLINTEGER>(SQL_IS_INTEGER)));
 #else
       hb_retni(SQLSetConnectOption(hDbc,
-                                   static_cast<SQLUSMALLINT>(hb_parni(2)),
+                                   static_cast<SQLUSMALLINT>(hb_parni32(2)),
                                    HB_ISCHAR(3) ? static_cast<SQLULEN>(static_cast<uintptr_t>(hb_parc(3))) :
                                                   static_cast<SQLULEN>(hb_parnl(3))));
 #endif
@@ -1016,7 +1016,7 @@ HB_FUNC(SQLSETSTMTATTR)  /* hStmt, nOption, uOption --> nRetCode */
                                              static_cast<SQLINTEGER>(SQL_IS_INTEGER)));
 #else
       hb_retni(SQLSetStmtOption(hStmt,
-                                static_cast<SQLUSMALLINT>(hb_parni(2)),
+                                static_cast<SQLUSMALLINT>(hb_parni32(2)),
                                 HB_ISCHAR(3) ? static_cast<SQLULEN>(static_cast<uintptr_t>(hb_parc(3))) :
                                                static_cast<SQLULEN>(hb_parnl(3))));
 #endif
@@ -1043,7 +1043,7 @@ HB_FUNC(SQLGETCONNECTATTR)  /* hDbc, nOption, @cOption */
 #else
       char buffer[512];
       buffer[0] = '\0';
-      hb_retni(SQLGetConnectOption(hDbc, static_cast<SQLSMALLINT>(hb_parni(2)), static_cast<SQLPOINTER>(buffer)));
+      hb_retni(SQLGetConnectOption(hDbc, static_cast<SQLSMALLINT>(hb_parni32(2)), static_cast<SQLPOINTER>(buffer)));
       hb_storc(buffer, 3);
 #endif
    } else {
@@ -1069,7 +1069,7 @@ HB_FUNC(SQLGETSTMTATTR)  /* hStmt, nOption, @cOption */
 #else
       char buffer[512];
       buffer[0] = '\0';
-      hb_retni(SQLGetStmtOption(hStmt, static_cast<SQLSMALLINT>(hb_parni(2)), static_cast<SQLPOINTER>(buffer)));
+      hb_retni(SQLGetStmtOption(hStmt, static_cast<SQLSMALLINT>(hb_parni32(2)), static_cast<SQLPOINTER>(buffer)));
       hb_storc(buffer, 3);
 #endif
    } else {
@@ -1164,8 +1164,8 @@ HB_FUNC(HB_ODBCSTOD)
 HB_FUNC(HB_ODBCNUMSETLEN)  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
 {
    auto pValue = hb_param(1, Harbour::Item::NUMERIC);
-   auto iLen = hb_parni(2);
-   auto iDec = hb_parni(3);
+   auto iLen = hb_parni32(2);
+   auto iDec = hb_parni32(3);
 
    if( pValue != nullptr && pValue->isNumInt() && iDec == 0 ) {
       hb_retnintlen(hb_itemGetNInt(pValue), iLen);

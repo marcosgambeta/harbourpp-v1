@@ -52,7 +52,7 @@ HB_FUNC(CHARPACK)
   auto len = hb_parclen(1);
   auto in = reinterpret_cast<const uint8_t *>(hb_parcx(1));
 
-  if (hb_parni(2) == 0) {
+  if (hb_parni32(2) == 0) {
     auto out = static_cast<uint8_t *>(hb_xgrab(len * 3 + 2));
     HB_SIZE n_in = 0, n_out = 0;
 
@@ -98,7 +98,7 @@ HB_FUNC(CHARUNPACK)
   auto len = hb_parclen(1);
   auto in = reinterpret_cast<const uint8_t *>(hb_parcx(1));
 
-  if (hb_parni(2) == 0) {
+  if (hb_parni32(2) == 0) {
     HB_SIZE out_len = 0;
     HB_SIZE buf_size = 32768;
 

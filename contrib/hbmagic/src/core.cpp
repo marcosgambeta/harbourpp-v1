@@ -127,7 +127,7 @@ HB_FUNC(MAGIC_SETFLAGS)
    magic_t m = magic_par(1);
 
    if( m )
-      hb_retni(magic_setflags(m, hb_parni(2)));
+      hb_retni(magic_setflags(m, hb_parni32(2)));
    else
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

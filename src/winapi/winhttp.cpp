@@ -36,7 +36,7 @@
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-#define wa_par_INTERNET_PORT(n) static_cast<INTERNET_PORT>(hb_parni(n))
+#define wa_par_INTERNET_PORT(n) static_cast<INTERNET_PORT>(hb_parni32(n))
 
 // WINBOOL WINAPI WinHttpAddRequestHeaders(HINTERNET,LPCWSTR,DWORD,DWORD)
 HB_FUNC(WAWINHTTPADDREQUESTHEADERS)

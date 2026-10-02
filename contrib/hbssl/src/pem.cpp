@@ -107,7 +107,7 @@ static void hb_PEM_read_bio(PEM_READ_BIO *func, HB_PEM_TYPES type)
   else if (HB_ISCHAR(1))
     bio = BIO_new_file(hb_parc(1), "r");
   else if (HB_ISNUM(1))
-    bio = BIO_new_fd(hb_parni(1), BIO_NOCLOSE);
+    bio = BIO_new_fd(hb_parni32(1), BIO_NOCLOSE);
   else
     bio = nullptr;
 

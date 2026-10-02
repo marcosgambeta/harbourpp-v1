@@ -151,7 +151,7 @@ HB_FUNC(DBF2TEXT)
   auto cDelim = hb_parc(4);
   auto handle = static_cast<HB_FHANDLE>(hb_parnint(5));
   auto cSep = hb_parc(6);
-  auto nCount = hb_parni(7);
+  auto nCount = hb_parni32(7);
   HB_CODEPAGE *cdp = hb_cdpFind(hb_parcx(8));
 
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());

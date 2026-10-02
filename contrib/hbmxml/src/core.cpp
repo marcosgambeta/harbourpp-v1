@@ -363,7 +363,7 @@ HB_FUNC(MXMLELEMENTSETATTR)
 
 HB_FUNC(MXMLENTITYGETNAME)
 {
-   hb_retstr_utf8(mxmlEntityGetName(hb_parni(1)));
+   hb_retstr_utf8(mxmlEntityGetName(hb_parni32(1)));
 }
 
 /* int mxmlEntityGetValue(const char * name) */
@@ -395,7 +395,7 @@ HB_FUNC(MXMLFINDELEMENT)
                                             hb_parstr_utf8(3, &hName, nullptr),
                                             hb_parstr_utf8(4, &hAttr, nullptr),
                                             hb_parstr_utf8(5, &hValue, nullptr),
-                                            hb_parni(6));
+                                            hb_parni32(6));
 
       hb_strfree(hName);
       hb_strfree(hAttr);
@@ -612,7 +612,7 @@ HB_FUNC(MXMLGETTEXT)
 
    if( node )
    {
-      auto whitespace = hb_parni(2);
+      auto whitespace = hb_parni32(2);
 
       hb_retstr_utf8(mxmlGetText(node, &whitespace));
       hb_storni(whitespace, 2);
@@ -807,7 +807,7 @@ HB_FUNC(MXMLLOADFILE)
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node_top = MXML_NO_PARENT;
    }
@@ -829,7 +829,7 @@ HB_FUNC(MXMLLOADFILE)
    }
    else if( HB_ISNUM(3) )
    {
-      switch( hb_parni(3) )
+      switch( hb_parni32(3) )
       {
          case 0:  cb = MXML_NO_CALLBACK;       break;
          case 1:  cb = MXML_INTEGER_CALLBACK;  break;
@@ -865,7 +865,7 @@ HB_FUNC(MXMLLOADSTRING)
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node_top = MXML_NO_PARENT;
    }
@@ -887,7 +887,7 @@ HB_FUNC(MXMLLOADSTRING)
    }
    else if( HB_ISNUM(3) )
    {
-      switch( hb_parni(3) )
+      switch( hb_parni32(3) )
       {
          case 0:  cb = MXML_NO_CALLBACK;       break;
          case 1:  cb = MXML_INTEGER_CALLBACK;  break;
@@ -914,7 +914,7 @@ HB_FUNC(MXMLNEWCDATA)
    void * hString;
    mxml_node_t * node;
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node = mxmlNewCDATA(MXML_NO_PARENT, hb_parstr_utf8(2, &hString, nullptr));
       mxml_node_ret(node, 1);
@@ -944,7 +944,7 @@ HB_FUNC(MXMLNEWELEMENT)
    void * hName;
    mxml_node_t * node;
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node = mxmlNewElement(MXML_NO_PARENT, hb_parstr_utf8(2, &hName, nullptr));
       mxml_node_ret(node, 1);
@@ -971,9 +971,9 @@ HB_FUNC(MXMLNEWELEMENT)
 
 HB_FUNC(MXMLNEWINTEGER)
 {
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
-      mxml_node_ret(mxmlNewInteger(MXML_NO_PARENT, hb_parni(2)), 1);
+      mxml_node_ret(mxmlNewInteger(MXML_NO_PARENT, hb_parni32(2)), 1);
    }
    else
    {
@@ -981,7 +981,7 @@ HB_FUNC(MXMLNEWINTEGER)
 
       if( node_parent )
       {
-         mxml_node_ret(mxmlNewInteger(node_parent, hb_parni(2)), 0);
+         mxml_node_ret(mxmlNewInteger(node_parent, hb_parni32(2)), 0);
       }
       else
       {
@@ -997,7 +997,7 @@ HB_FUNC(MXMLNEWOPAQUE)
    void * hOpaque;
    mxml_node_t * node;
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node = mxmlNewOpaque(MXML_NO_PARENT, hb_parstr_utf8(2, &hOpaque, nullptr));
       mxml_node_ret(node, 1);
@@ -1024,7 +1024,7 @@ HB_FUNC(MXMLNEWOPAQUE)
 
 HB_FUNC(MXMLNEWREAL)
 {
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       mxml_node_ret(mxmlNewReal(MXML_NO_PARENT, hb_parnd(2)), 1);
    }
@@ -1050,7 +1050,7 @@ HB_FUNC(MXMLNEWTEXT)
    void * hString;
    mxml_node_t * node;
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node = mxmlNewText(MXML_NO_PARENT, hb_parnidef(2, 0), hb_parstr_utf8(3, &hString, nullptr));
       mxml_node_ret(node, 1);
@@ -1220,7 +1220,7 @@ HB_FUNC(MXMLSAXLOADFILE)
    HB_ITEM *pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node_top = MXML_NO_PARENT;
    }
@@ -1242,7 +1242,7 @@ HB_FUNC(MXMLSAXLOADFILE)
    }
    else if( HB_ISNUM(3) )
    {
-      switch( hb_parni(3) )
+      switch( hb_parni32(3) )
       {
          case 0:  cb = MXML_NO_CALLBACK;       break;
          case 1:  cb = MXML_INTEGER_CALLBACK;  break;
@@ -1289,7 +1289,7 @@ HB_FUNC(MXMLSAXLOADSTRING)
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
    const char * s;
 
-   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+   if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
    {
       node_top = MXML_NO_PARENT;
    }
@@ -1311,7 +1311,7 @@ HB_FUNC(MXMLSAXLOADSTRING)
    }
    else if( HB_ISNUM(3) )
    {
-      switch( hb_parni(3) )
+      switch( hb_parni32(3) )
       {
          case 0:  cb = MXML_NO_CALLBACK;       break;
          case 1:  cb = MXML_INTEGER_CALLBACK;  break;
@@ -1699,7 +1699,7 @@ HB_FUNC(MXMLSETUSERDATA)
 
 HB_FUNC(MXMLSETWRAPMARGIN)
 {
-   mxmlSetWrapMargin(hb_parni(1));
+   mxmlSetWrapMargin(hb_parni32(1));
 }
 
 /* mxml_node_t * mxmlWalkNext(mxml_node_t * node, mxml_node_t * top, int descend) */
@@ -1784,7 +1784,7 @@ HB_FUNC(MXMLNEWCUSTOM)
       mxml_node_t * parent = MXML_NO_PARENT;
       mxml_node_t * node = nullptr;
 
-      if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
+      if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni32(1) == MXML_NO_PARENT) )
       {
          node = mxmlNewCustom(MXML_NO_PARENT, pItem, custom_destroy_cb);
       }

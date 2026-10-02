@@ -182,7 +182,7 @@ HB_FUNC(ED_NEW)
    auto pEd = static_cast<PHB_EDITOR>(hb_xgrab(sizeof(HB_EDITOR)));
 
    HB_ISIZ ll;
-   auto tab = hb_parni(2);
+   auto tab = hb_parni32(2);
    HB_ISIZ bufferSize;
 
    ll = hb_parns(1);
@@ -193,7 +193,7 @@ HB_FUNC(ED_NEW)
    if( bufferSize <= 0 )
       bufferSize = 32767;
 
-   pEd->escape = static_cast<char>(hb_parni(4));
+   pEd->escape = static_cast<char>(hb_parni32(4));
    pEd->begin  = static_cast<char*>(hb_xgrab(bufferSize + 100));
    memset(pEd->begin, '\0', bufferSize);
 
@@ -509,12 +509,12 @@ HB_FUNC(ED_CONFIG)
 
       int32_t i;
 
-      auto top    = hb_parni(2);
-      auto left   = hb_parni(3);
-      auto bottom = hb_parni(4);
-      auto right  = hb_parni(5);
-      auto nRow   = hb_parni(6);
-      auto nCol   = hb_parni(7);
+      auto top    = hb_parni32(2);
+      auto left   = hb_parni32(3);
+      auto bottom = hb_parni32(4);
+      auto right  = hb_parni32(5);
+      auto nRow   = hb_parni32(6);
+      auto nCol   = hb_parni32(7);
 
       szer = pEd->right - pEd->left + 1;
       wys  = pEd->bottom - pEd->top + 1;
@@ -671,7 +671,7 @@ HB_FUNC(ED_GETTEXT)
       HB_ISIZ dl;
       char *  help;
 
-      auto mietka = static_cast<char>(hb_parni(2));
+      auto mietka = static_cast<char>(hb_parni32(2));
 
       dl = strlen(pEd->begin) + 3;
 
@@ -2241,7 +2241,7 @@ HB_FUNC(ED_PUTCHAR)
    if( pEd )
       PutChar(pEd,
               hb_parl(3),              /* current INSERT state */
-              static_cast<char>(hb_parni(2)));  /* character to paste */
+              static_cast<char>(hb_parni32(2)));  /* character to paste */
    else
       hb_errRT_BASE(EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

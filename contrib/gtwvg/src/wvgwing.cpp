@@ -369,7 +369,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMFILE)
   HBITMAP hBitmap;
   void *hText;
 
-  hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
+  hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni32(2), hb_parni32(3), hb_parl(4),
                            (HWND)(uintptr_t)hb_parnint(5), 0);
   hb_strfree(hText);
   hb_retptr((void *)hBitmap);
@@ -380,7 +380,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMRESOURCEID)
   HBITMAP hBitmap;
 
   hBitmap =
-      hPrepareBitmap(nullptr, hb_parni(1), hb_parni(2), hb_parni(3), hb_parl(4), (HWND)(uintptr_t)hb_parnint(5), 2);
+      hPrepareBitmap(nullptr, hb_parni32(1), hb_parni32(2), hb_parni32(3), hb_parl(4), (HWND)(uintptr_t)hb_parnint(5), 2);
 
   hb_retptr((void *)hBitmap);
 }
@@ -390,7 +390,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMRESOURCENAME)
   HBITMAP hBitmap;
   void *hText;
 
-  hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
+  hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni32(2), hb_parni32(3), hb_parl(4),
                            (HWND)(uintptr_t)hb_parnint(5), 1);
   hb_strfree(hText);
   hb_retptr((void *)hBitmap);
@@ -399,7 +399,7 @@ HB_FUNC(WVG_PREPAREBITMAPFROMRESOURCENAME)
 HB_FUNC(WVG_STATUSBARCREATEPANEL)
 {
   HWND hWndSB = (HWND)(uintptr_t)hb_parnint(1);
-  int32_t iMode = hb_parni(2);
+  int32_t iMode = hb_parni32(2);
 
   if (hWndSB == nullptr || !IsWindow(hWndSB)) {
     hb_retl(false);
@@ -615,7 +615,7 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
   HWND hwnd = wvg_parhwnd(1);
   HTREEITEM hroot, hitem, hitem1, hitem2, hitem3;
   int32_t iExpand = (hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE);
-  int32_t iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
+  int32_t iLevels = hb_parni32(3) <= 0 ? 5 : hb_parni32(3);
 
   hroot = TreeView_GetRoot(hwnd);
   if (hroot) {
@@ -914,9 +914,9 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
   TBBUTTON tbb;
   HB_BOOL bSuccess;
   HWND hWndTB = hbwapi_par_raw_HWND(1);
-  int32_t iCommand = hb_parni(4);
+  int32_t iCommand = hb_parni32(4);
 
-  switch (hb_parni(5)) {
+  switch (hb_parni32(5)) {
   case 1: // button from image
   {
     int32_t iNewString;
@@ -931,7 +931,7 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
     }
 
     // add button
-    tbb.iBitmap = hb_parni(2);
+    tbb.iBitmap = hb_parni32(2);
     tbb.idCommand = iCommand;
     tbb.fsState = TBSTATE_ENABLED;
     tbb.fsStyle = TBSTYLE_BUTTON | TBSTYLE_AUTOSIZE;

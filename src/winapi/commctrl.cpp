@@ -441,7 +441,7 @@ HB_FUNC(WATASKDIALOG)
   void *str5{};
   void *str7{};
   int nButton{};
-  wa_ret_HRESULT(TaskDialog(wa_par_HWND(1), wa_par_HINSTANCE(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), static_cast<TASKDIALOG_COMMON_BUTTON_FLAGS>(hb_parni(6)), HB_PARSTR(7, &str7, nullptr), &nButton));
+  wa_ret_HRESULT(TaskDialog(wa_par_HWND(1), wa_par_HINSTANCE(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), static_cast<TASKDIALOG_COMMON_BUTTON_FLAGS>(hb_parni32(6)), HB_PARSTR(7, &str7, nullptr), &nButton));
   hb_strfree(str3);
   hb_strfree(str4);
   hb_strfree(str5);

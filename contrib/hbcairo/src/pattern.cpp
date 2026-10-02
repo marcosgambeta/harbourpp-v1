@@ -162,7 +162,7 @@ HB_FUNC(CAIRO_PATTERN_GET_COLOR_STOP_RGBA)
     double dGreen;
     double dBlue;
     double dAlpha;
-    hb_retni(cairo_pattern_get_color_stop_rgba(pPattern, hb_parni(2), &dOffset, &dRed, &dGreen, &dBlue, &dAlpha));
+    hb_retni(cairo_pattern_get_color_stop_rgba(pPattern, hb_parni32(2), &dOffset, &dRed, &dGreen, &dBlue, &dAlpha));
     hb_stornd(dOffset, 3);
     hb_stornd(dRed, 4);
     hb_stornd(dGreen, 5);

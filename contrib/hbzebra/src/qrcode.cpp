@@ -404,12 +404,12 @@ static int32_t _qr_format_crc(int32_t iLevel, int32_t iMask)
 #ifdef DEBUG_CODE
 HB_FUNC(_QR_VERSION_CRC)
 {
-  hb_retni(_qr_version_crc(hb_parni(1)));
+  hb_retni(_qr_version_crc(hb_parni32(1)));
 }
 
 HB_FUNC(_QR_FORMAT_CRC)
 {
-  hb_retni(_qr_format_crc(hb_parni(1), hb_parni(2)));
+  hb_retni(_qr_format_crc(hb_parni32(1), hb_parni32(2)));
 }
 #endif
 
@@ -1220,7 +1220,7 @@ HB_FUNC(HB_ZEBRA_CREATE_QRCODE)
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
   if (pItem != nullptr) {
-    hb_zebra_ret(hb_zebra_create_qrcode(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
+    hb_zebra_ret(hb_zebra_create_qrcode(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

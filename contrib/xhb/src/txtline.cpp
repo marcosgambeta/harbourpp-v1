@@ -209,7 +209,7 @@ HB_FUNC(HB_READLINE)
   const char **pTerm;
   HB_SIZE *pnTermSizes;
   HB_SIZE nTerms;
-  HB_SIZE nLineSize = hb_parni(3);
+  HB_SIZE nLineSize = hb_parni32(3);
   HB_BOOL bWrap = hb_parl(5);
   HB_BOOL bFound, bEOF;
   HB_SIZE nStartOffset;

@@ -75,10 +75,10 @@ HB_FUNC(WVW_DRAWLABELOBJ)
   UINT uiOptions;
   SIZE sz{};
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   iOffTop = !HB_ISNIL(12) ? hb_parvni(12, 1) : 0;
   iOffLeft = !HB_ISNIL(12) ? hb_parvni(12, 2) : 0;
@@ -100,8 +100,8 @@ HB_FUNC(WVW_DRAWLABELOBJ)
   iBottom = xy.y - 1 + 1 + iOffBottom;
   iRight = xy.x - 1 + 1 + iOffRight;
 
-  iAlignHorz = HB_ISNIL(7) ? 0 : hb_parni(7);
-  iAlignVert = HB_ISNIL(8) ? 0 : hb_parni(8);
+  iAlignHorz = HB_ISNIL(7) ? 0 : hb_parni32(7);
+  iAlignVert = HB_ISNIL(8) ? 0 : hb_parni32(8);
 
   oldTextColor =
       SetTextColor(pWindowData->hdc, HB_ISNIL(9) ? pWindowData->foreground : static_cast<COLORREF>(hb_parnl(9)));
@@ -169,12 +169,12 @@ HB_FUNC(WVW_DRAWTOOLBUTTONSTATE)
   auto s_sApp = hb_gt_wvwGetAppData();
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
-  auto iState = hb_parni(7);
+  auto iState = hb_parni32(7);
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -261,10 +261,10 @@ HB_FUNC(WVW_DRAWSCROLLBUTTON)
   int32_t iHeight, iOff;
   BOOL bDepressed = HB_ISNIL(8) ? FALSE : hb_parl(8);
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -293,7 +293,7 @@ HB_FUNC(WVW_DRAWSCROLLBUTTON)
   }
   SelectObject(pWindowData->hdc, s_sApp->solidBrush);
 
-  switch (hb_parni(7)) {
+  switch (hb_parni32(7)) {
   case 1:
     xy.y = iTop + iOff - 1;
     xy.x = iLeft + ((iRight - iLeft + 1) / 2);
@@ -357,12 +357,12 @@ HB_FUNC(WVW_DRAWSCROLLTHUMBVERT)
   int32_t iTop, iLeft, iBottom, iRight;
   int32_t iTabTop, iTabLft, iTabBtm, iTabRgt;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
-  auto usTabTop = static_cast<uint16_t>(hb_parni(7));
+  auto usTabTop = static_cast<uint16_t>(hb_parni32(7));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -413,11 +413,11 @@ HB_FUNC(WVW_DRAWSCROLLTHUMBHORZ)
   int32_t iThumbLeft, iThumbRight;
   int32_t iTop, iLeft, iBottom, iRight;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
-  auto usThumbLeft = static_cast<uint16_t>(hb_parni(7));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
+  auto usThumbLeft = static_cast<uint16_t>(hb_parni32(7));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -462,10 +462,10 @@ HB_FUNC(WVW_DRAWSHADEDRECT)
    auto s_sApp = hb_gt_wvwGetAppData();
    BOOL       bGF         = FALSE;
 
-   auto usTop = static_cast<uint16_t>(hb_parni(2));
-   auto usLeft = static_cast<uint16_t>(hb_parni(3));
-   auto usBottom = static_cast<uint16_t>(hb_parni(4));
-   auto usRight = static_cast<uint16_t>(hb_parni(5));
+   auto usTop = static_cast<uint16_t>(hb_parni32(2));
+   auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+   auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+   auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
    if( hb_gt_wvw_GetMainCoordMode() ) {
       hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -475,7 +475,7 @@ HB_FUNC(WVW_DRAWSHADEDRECT)
       TRIVERTEX     vert[2];
       GRADIENT_RECT gRect{};
 
-      int32_t   iMode = HB_ISNIL(7) ? GRADIENT_FILL_RECT_H : hb_parni(7);
+      int32_t   iMode = HB_ISNIL(7) ? GRADIENT_FILL_RECT_H : hb_parni32(7);
       POINT xy{};
       int32_t   iTop, iLeft, iBottom, iRight;
 
@@ -519,10 +519,10 @@ HB_FUNC(WVW_DRAWSHADEDRECT)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   BOOL bGF = FALSE;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -531,7 +531,7 @@ HB_FUNC(WVW_DRAWSHADEDRECT)
   TRIVERTEX vert[2];
   GRADIENT_RECT gRect{};
 
-  int32_t iMode = HB_ISNIL(7) ? GRADIENT_FILL_RECT_H : hb_parni(7);
+  int32_t iMode = HB_ISNIL(7) ? GRADIENT_FILL_RECT_H : hb_parni32(7);
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
 
@@ -580,7 +580,7 @@ HB_FUNC(WVW_DRAWTEXTBOX)
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
 
-  int32_t iAlignHorz = HB_ISNIL(8) ? 0 : hb_parni(8);
+  int32_t iAlignHorz = HB_ISNIL(8) ? 0 : hb_parni32(8);
 
   int32_t iAlignH = 0;
 
@@ -588,10 +588,10 @@ HB_FUNC(WVW_DRAWTEXTBOX)
   int32_t oldTextAlign, oldBkMode;
   RECT rc{};
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -630,7 +630,7 @@ HB_FUNC(WVW_DRAWTEXTBOX)
       SetTextColor(pWindowData->hdc, HB_ISNIL(10) ? pWindowData->foreground : static_cast<COLORREF>(hb_parnl(10)));
   oldBkColor =
       SetBkColor(pWindowData->hdc, HB_ISNIL(11) ? pWindowData->background : static_cast<COLORREF>(hb_parnl(11)));
-  oldBkMode = SetBkMode(pWindowData->hdc, HB_ISNIL(12) ? OPAQUE : hb_parni(12));
+  oldBkMode = SetBkMode(pWindowData->hdc, HB_ISNIL(12) ? OPAQUE : hb_parni32(12));
   auto oldFont = static_cast<HFONT>(SelectObject(pWindowData->hdc, reinterpret_cast<HFONT>(HB_PARHANDLE(13))));
 
   DrawText(pWindowData->hdc, hb_parcx(7), strlen(hb_parcx(7)), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
@@ -653,10 +653,10 @@ HB_FUNC(WVW_DRAWPROGRESSBAR)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   auto pWinMainData = hb_gt_wvw_GetWindowsData(0);
   auto s_sApp = hb_gt_wvwGetAppData();
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   int32_t iTop;
   int32_t iLeft;
   int32_t iBottom;
@@ -685,10 +685,10 @@ HB_FUNC(WVW_DRAWPROGRESSBAR)
   iBottom = xy.y - 1 + hb_parvni(6, 3);
   iRight = xy.x - 1 + hb_parvni(6, 4);
 
-  auto iPercent = hb_parni(7);
+  auto iPercent = hb_parni32(7);
   bImage = HB_ISNIL(10) ? FALSE : TRUE;
   bVertical = HB_ISNIL(11) ? FALSE : hb_parl(11);
-  iDirection = HB_ISNIL(12) ? 0 : hb_parni(12);
+  iDirection = HB_ISNIL(12) ? 0 : hb_parni32(12);
 
   if (bVertical) {
     if (iDirection == 0) {
@@ -761,9 +761,9 @@ HB_FUNC(WVW_DRAWBOXGET)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  auto usRow = static_cast<uint16_t>(hb_parni(2));
-  auto usCol = static_cast<uint16_t>(hb_parni(3));
-  auto usLen = static_cast<uint16_t>(hb_parni(4));
+  auto usRow = static_cast<uint16_t>(hb_parni32(2));
+  auto usCol = static_cast<uint16_t>(hb_parni32(3));
+  auto usLen = static_cast<uint16_t>(hb_parni32(4));
 
   iOffTop = !HB_ISNIL(5) ? hb_parvni(5, 1) : 0;
   iOffLeft = !HB_ISNIL(5) ? hb_parvni(5, 2) : 0;
@@ -844,9 +844,9 @@ HB_FUNC(WVW_DRAWBOXGET_XP)
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  auto usRow = static_cast<uint16_t>(hb_parni(2));
-  auto usCol = static_cast<uint16_t>(hb_parni(3));
-  auto usLen = static_cast<uint16_t>(hb_parni(4));
+  auto usRow = static_cast<uint16_t>(hb_parni32(2));
+  auto usCol = static_cast<uint16_t>(hb_parni32(3));
+  auto usLen = static_cast<uint16_t>(hb_parni32(4));
 
   iOffTop = !HB_ISNIL(5) ? hb_parvni(5, 1) : 0;
   iOffLeft = !HB_ISNIL(5) ? hb_parvni(5, 2) : 0;
@@ -905,10 +905,10 @@ HB_FUNC(WVW_DRAWBOXRAISED)
   auto usWinNum = WVW_WHICH_WINDOW;
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   BOOL bUseArray = HB_ISARRAY(6);
 
   BOOL bTight = (bUseArray || HB_ISNIL(6) ? FALSE : hb_parl(6));
@@ -973,10 +973,10 @@ HB_FUNC(WVW_DRAWBOXRECESSED)
   auto usWinNum = WVW_WHICH_WINDOW;
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   BOOL bUseArray = HB_ISARRAY(6);
 
   BOOL bTight = (bUseArray || HB_ISNIL(6) ? FALSE : hb_parl(6));
@@ -1036,10 +1036,10 @@ HB_FUNC(WVW_DRAWBOXGROUP)
   int32_t iTop, iLeft, iBottom, iRight;
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   auto s_sApp = hb_gt_wvwGetAppData();
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
@@ -1105,10 +1105,10 @@ HB_FUNC(WVW_DRAWBOXGROUPRAISED)
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
   auto s_sApp = hb_gt_wvwGetAppData();
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
@@ -1189,10 +1189,10 @@ HB_FUNC(WVW_DRAWIMAGE)
   BOOL bActBottom = HB_ISNIL(4), bActRight = HB_ISNIL(5);
   int32_t iImgWidth = 0, iImgHeight = 0;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   BOOL bTight = HB_ISARRAY(7) || HB_ISNIL(7) ? FALSE : hb_parl(7);
   BOOL bUseArray = HB_ISARRAY(7);
@@ -1226,7 +1226,7 @@ HB_FUNC(WVW_DRAWIMAGE)
 
   if (bActRight || bActBottom) {
     if ((!HB_ISNUM(6) && !GetImageDimension(hb_parcx(6), &iImgWidth, &iImgHeight)) ||
-        (HB_ISNUM(6) && !GetIPictDimension(s_sApp->iPicture[hb_parni(6) - 1], &iImgWidth, &iImgHeight))) {
+        (HB_ISNUM(6) && !GetIPictDimension(s_sApp->iPicture[hb_parni32(6) - 1], &iImgWidth, &iImgHeight))) {
 
       bActRight = FALSE;
       bActBottom = FALSE;
@@ -1267,7 +1267,7 @@ HB_FUNC(WVW_DRAWIMAGE)
 
   if (HB_ISNUM(6)) {
     bResult = hb_gt_wvwRenderPicture(usWinNum, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1,
-                                     s_sApp->iPicture[hb_parni(6) - 1], bTransparent);
+                                     s_sApp->iPicture[hb_parni32(6) - 1], bTransparent);
   } else {
     bResult = hb_gt_wvwDrawImage(usWinNum, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, hb_parcx(6),
                                  bTransparent);
@@ -1307,10 +1307,10 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
   int32_t iImgWidth, iImgHeight;
   LONG lImgWidth, lImgHeight;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   BOOL bTight = HB_ISARRAY(7) || HB_ISNIL(7) ? FALSE : hb_parl(7);
   BOOL bUseArray = HB_ISARRAY(7);
@@ -1353,7 +1353,7 @@ HB_FUNC(WVW_DRAWIMAGE_RESOURCE)
       pPic = rr_LoadPicture(hb_parcx(6), &lImgWidth, &lImgHeight);
     }
   } else {
-    pPic = rr_LoadPictureFromResource(nullptr, hb_parni(6), &lImgWidth, &lImgHeight);
+    pPic = rr_LoadPictureFromResource(nullptr, hb_parni32(6), &lImgWidth, &lImgHeight);
   }
 
 #if 0
@@ -1422,8 +1422,8 @@ HB_FUNC(WVW_DRAWLABEL)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
   POINT xy{};
-  auto usRow = static_cast<uint16_t>(hb_parni(2));
-  auto usCol = static_cast<uint16_t>(hb_parni(3));
+  auto usRow = static_cast<uint16_t>(hb_parni32(2));
+  auto usCol = static_cast<uint16_t>(hb_parni32(3));
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
@@ -1432,20 +1432,20 @@ HB_FUNC(WVW_DRAWLABEL)
   }
 
   LOGFONT logfont{};
-  logfont.lfEscapement = HB_ISNIL(6) ? 0 : (hb_parni(6) * 10);
+  logfont.lfEscapement = HB_ISNIL(6) ? 0 : (hb_parni32(6) * 10);
   logfont.lfOrientation = 0;
-  logfont.lfWeight = HB_ISNIL(12) ? 0 : hb_parni(12);
+  logfont.lfWeight = HB_ISNIL(12) ? 0 : hb_parni32(12);
   logfont.lfItalic = HB_ISNIL(15) ? 0 : static_cast<BYTE>(hb_parl(15));
   logfont.lfUnderline = HB_ISNIL(16) ? 0 : static_cast<BYTE>(hb_parl(16));
   logfont.lfStrikeOut = HB_ISNIL(17) ? 0 : static_cast<BYTE>(hb_parl(17));
-  logfont.lfCharSet = HB_ISNIL(14) ? static_cast<BYTE>(pWindowData->CodePage) : static_cast<BYTE>(hb_parni(14));
+  logfont.lfCharSet = HB_ISNIL(14) ? static_cast<BYTE>(pWindowData->CodePage) : static_cast<BYTE>(hb_parni32(14));
   logfont.lfOutPrecision = 0;
   logfont.lfClipPrecision = 0;
-  logfont.lfQuality = HB_ISNIL(13) ? DEFAULT_QUALITY : static_cast<BYTE>(hb_parni(13));
+  logfont.lfQuality = HB_ISNIL(13) ? DEFAULT_QUALITY : static_cast<BYTE>(hb_parni32(13));
   logfont.lfPitchAndFamily = FF_DONTCARE;
-  logfont.lfHeight = HB_ISNIL(10) ? pWindowData->fontHeight : hb_parni(10);
+  logfont.lfHeight = HB_ISNIL(10) ? pWindowData->fontHeight : hb_parni32(10);
   logfont.lfWidth =
-      HB_ISNIL(11) ? (pWindowData->fontWidth < 0 ? -pWindowData->fontWidth : pWindowData->fontWidth) : hb_parni(11);
+      HB_ISNIL(11) ? (pWindowData->fontWidth < 0 ? -pWindowData->fontWidth : pWindowData->fontWidth) : hb_parni32(11);
 
   strcpy(logfont.lfFaceName, (HB_ISNIL(9) ? pWindowData->fontFace : hb_parcx(9)));
 
@@ -1457,7 +1457,7 @@ HB_FUNC(WVW_DRAWLABEL)
         SetBkColor(pWindowData->hdc, HB_ISNIL(8) ? pWindowData->background : static_cast<COLORREF>(hb_parnl(8)));
     COLORREF oldTextColor =
         SetTextColor(pWindowData->hdc, HB_ISNIL(7) ? pWindowData->foreground : static_cast<COLORREF>(hb_parnl(7)));
-    int32_t oldTextAlign = SetTextAlign(pWindowData->hdc, (HB_ISNIL(5) ? TA_LEFT : hb_parni(5)));
+    int32_t oldTextAlign = SetTextAlign(pWindowData->hdc, (HB_ISNIL(5) ? TA_LEFT : hb_parni32(5)));
     auto oldFont = static_cast<HFONT>(SelectObject(pWindowData->hdc, hFont));
 
     ExtTextOut(pWindowData->hdc, xy.x, xy.y, 0, nullptr, hb_parcx(4), strlen(hb_parcx(4)), nullptr);
@@ -1487,10 +1487,10 @@ HB_FUNC(WVW_DRAWOUTLINE)
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   auto s_sApp = hb_gt_wvwGetAppData();
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
@@ -1511,7 +1511,7 @@ HB_FUNC(WVW_DRAWOUTLINE)
   iRight = xy.x;
 
   if (HB_ISNUM(6)) {
-    hPen = CreatePen(hb_parni(6), 0, (HB_ISNIL(8) ? 0 : static_cast<COLORREF>(hb_parnl(8))));
+    hPen = CreatePen(hb_parni32(6), 0, (HB_ISNIL(8) ? 0 : static_cast<COLORREF>(hb_parnl(8))));
     if (hPen) {
       hOldPen = static_cast<HPEN>(SelectObject(pWindowData->hdc, hPen));
     }
@@ -1547,10 +1547,10 @@ HB_FUNC(WVW_DRAWLINE)
   int32_t iOrient, iFormat, iAlign, iStyle, iThick;
   int32_t x, y;
   COLORREF cr;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   APP_DATA *s_sApp = hb_gt_wvwGetAppData();
 
@@ -1576,11 +1576,11 @@ HB_FUNC(WVW_DRAWLINE)
   iBottom = xy.y - 1 + iOffBottom;
   iRight = xy.x - 1 + iOffRight;
 
-  iOrient = HB_ISNIL(6) ? 0 : hb_parni(6);
-  iFormat = HB_ISNIL(7) ? 0 : hb_parni(7);
-  iAlign = HB_ISNIL(8) ? 0 : hb_parni(8);
-  iStyle = HB_ISNIL(9) ? 0 : hb_parni(9);
-  iThick = HB_ISNIL(10) ? 0 : hb_parni(10);
+  iOrient = HB_ISNIL(6) ? 0 : hb_parni32(6);
+  iFormat = HB_ISNIL(7) ? 0 : hb_parni32(7);
+  iAlign = HB_ISNIL(8) ? 0 : hb_parni32(8);
+  iStyle = HB_ISNIL(9) ? 0 : hb_parni32(9);
+  iThick = HB_ISNIL(10) ? 0 : hb_parni32(10);
   cr = HB_ISNIL(11) ? 0 : static_cast<COLORREF>(hb_parnl(11));
 
   x = iLeft;
@@ -1692,10 +1692,10 @@ HB_FUNC(WVW_DRAWELLIPSE)
   auto s_sApp = hb_gt_wvwGetAppData();
   int32_t iTop, iLeft, iBottom, iRight;
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   iOffTop = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
   iOffLeft = !HB_ISNIL(6) ? hb_parvni(6, 2) : 0;
@@ -1736,10 +1736,10 @@ HB_FUNC(WVW_DRAWRECTANGLE)
   auto s_sApp = hb_gt_wvwGetAppData();
   int32_t iTop, iLeft, iBottom, iRight;
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   /* Ref.: 28454 - Marson de Paula - 2007-11-27 */
   BOOL bUsaCurrentPen = HB_ISNIL(7) ? TRUE : hb_parl(7);
 
@@ -1792,10 +1792,10 @@ HB_FUNC(WVW_DRAWROUNDRECT)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   auto s_sApp = hb_gt_wvwGetAppData();
   int32_t iTop, iLeft, iBottom, iRight, iWd, iHt;
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
 
   iOffTop = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
@@ -1818,8 +1818,8 @@ HB_FUNC(WVW_DRAWROUNDRECT)
   iBottom = xy.y - 1 + iOffBottom;
   iRight = xy.x - 1 + iOffRight;
 
-  iWd = HB_ISNIL(8) ? 0 : hb_parni(8);
-  iHt = HB_ISNIL(7) ? 0 : hb_parni(7);
+  iWd = HB_ISNIL(8) ? 0 : hb_parni32(8);
+  iHt = HB_ISNIL(7) ? 0 : hb_parni32(7);
 
   SelectObject(pWindowData->hdc, s_sApp->currentBrush);
   SelectObject(pWindowData->hdc, s_sApp->currentPen);
@@ -1838,10 +1838,10 @@ HB_FUNC(WVW_DRAWFOCUSRECT)
   RECT rc{};
   POINT xy{};
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
 
   iOffTop = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
@@ -1880,10 +1880,10 @@ HB_FUNC(WVW_DRAWCOLORRECT)
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   auto pWindowMainData = hb_gt_wvw_GetWindowsData(0);
   auto s_sApp = hb_gt_wvwGetAppData();
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   RECT rc{};
   POINT xy{};
@@ -1926,16 +1926,16 @@ HB_FUNC(WVW_DRAWCOLORRECT)
 HB_FUNC(WVW_DRAWGRIDHORZ)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
-  auto usAtRow = static_cast<uint16_t>(hb_parni(2));
-  auto iRows = hb_parni(5);
+  auto usAtRow = static_cast<uint16_t>(hb_parni32(2));
+  auto iRows = hb_parni32(5);
   int32_t y;
   int32_t iLeft, iRight;
   auto s_sApp = hb_gt_wvwGetAppData();
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usRight = static_cast<uint16_t>(hb_parni(4));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usRight = static_cast<uint16_t>(hb_parni32(4));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usAtRow, &usLeft, nullptr, &usRight);
@@ -1980,7 +1980,7 @@ HB_FUNC(WVW_DRAWGRIDVERT)
   int32_t iTop, iBottom, x;
   int32_t iOffTop, iOffLeft, iOffBottom, iOffRight;
   int32_t iCharHeight, iCharWidth;
-  auto iTabs = hb_parni(5);
+  auto iTabs = hb_parni32(5);
   uint16_t usCol;
   auto s_sApp = hb_gt_wvwGetAppData();
 
@@ -1997,8 +1997,8 @@ HB_FUNC(WVW_DRAWGRIDVERT)
 
   HB_SYMBOL_UNUSED(iOffRight);
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usBottom = static_cast<uint16_t>(hb_parni(3));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(3));
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, nullptr, &usBottom, nullptr);
   }
@@ -2053,17 +2053,17 @@ HB_FUNC(WVW_DRAWBUTTON)
 
   BOOL bText = HB_ISCHAR(6);
   BOOL bImage = !(HB_ISNIL(7));
-  int32_t iFormat = HB_ISNIL(8) ? 0 : hb_parni(8);
+  int32_t iFormat = HB_ISNIL(8) ? 0 : hb_parni32(8);
 
   COLORREF textColor = HB_ISNIL(9) ? _COLORS[0] : static_cast<COLORREF>(hb_parnl(9));
   COLORREF bkColor = HB_ISNIL(10) ? _COLORS[7] : static_cast<COLORREF>(hb_parnl(10));
 
   auto pWindowMainData = hb_gt_wvw_GetWindowsData(0);
   auto s_sApp = hb_gt_wvwGetAppData();
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
@@ -2155,7 +2155,7 @@ HB_FUNC(WVW_DRAWBUTTON)
     iImageHeight = (iBottom - iTop + 1 - 8 - iTextHeight);
 
     if (HB_ISNUM(7)) {
-      iPicture = s_sApp->iPicture[hb_parni(7) - 1];
+      iPicture = s_sApp->iPicture[hb_parni32(7) - 1];
 
       hb_gt_wvwRenderPicture(usWinNum, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, iPicture, FALSE);
     } else {
@@ -2175,7 +2175,7 @@ HB_FUNC(WVW_DRAWSTATUSBAR)
   auto usWinNum = WVW_WHICH_WINDOW;
   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
   auto s_sApp = hb_gt_wvwGetAppData();
-  auto iPanels = hb_parni(2);
+  auto iPanels = hb_parni32(2);
   int32_t iNext;
   int32_t iTop, iLeft, iBottom, iRight;
   POINT xy{};
@@ -2271,12 +2271,12 @@ HB_FUNC(WVW_DRAWPICTURE)
   auto s_sApp = hb_gt_wvwGetAppData();
   int32_t iTop, iLeft, iBottom, iRight;
 
-  int32_t iSlot = hb_parni(6) - 1;
+  int32_t iSlot = hb_parni32(6) - 1;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   BOOL bTight = HB_ISARRAY(7) || HB_ISNIL(7) ? FALSE : hb_parl(7);
   BOOL bUseArray = HB_ISARRAY(7);
@@ -2329,10 +2329,10 @@ HB_FUNC(WVW_DRAWLABELEX)
   HFONT oldFont;
   int32_t oldTextAlign;
   COLORREF oldBkColor, oldTextColor;
-  int32_t iSlot = hb_parni(8) - 1;
+  int32_t iSlot = hb_parni32(8) - 1;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, nullptr, nullptr);
@@ -2345,7 +2345,7 @@ HB_FUNC(WVW_DRAWLABELEX)
         SetBkColor(pWindowData->hdc, HB_ISNIL(7) ? pWindowData->background : static_cast<COLORREF>(hb_parnl(7)));
     oldTextColor =
         SetTextColor(pWindowData->hdc, HB_ISNIL(6) ? pWindowData->foreground : static_cast<COLORREF>(hb_parnl(6)));
-    oldTextAlign = SetTextAlign(pWindowData->hdc, (HB_ISNIL(5) ? TA_LEFT : hb_parni(5)));
+    oldTextAlign = SetTextAlign(pWindowData->hdc, (HB_ISNIL(5) ? TA_LEFT : hb_parni32(5)));
     oldFont = static_cast<HFONT>(SelectObject(pWindowData->hdc, s_sApp->hUserFonts[iSlot]));
 
     ExtTextOut(pWindowData->hdc, xy.x, xy.y, 0, nullptr, hb_parcx(4), strlen(hb_parcx(4)), nullptr);
@@ -2376,12 +2376,12 @@ HB_FUNC(WVW_DRAWLINEEX)
   int32_t iOrient, iFormat, iAlign;
   int32_t x, y;
   HPEN hPen;
-  int32_t iSlot = hb_parni(9) - 1;
+  int32_t iSlot = hb_parni32(9) - 1;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -2395,9 +2395,9 @@ HB_FUNC(WVW_DRAWLINEEX)
   iBottom = xy.y - 1;
   iRight = xy.x - 1;
 
-  iOrient = HB_ISNIL(6) ? 0 : hb_parni(6);
-  iFormat = HB_ISNIL(7) ? 0 : hb_parni(7);
-  iAlign = HB_ISNIL(8) ? 0 : hb_parni(8);
+  iOrient = HB_ISNIL(6) ? 0 : hb_parni32(6);
+  iFormat = HB_ISNIL(7) ? 0 : hb_parni32(7);
+  iAlign = HB_ISNIL(8) ? 0 : hb_parni32(8);
 
   x = iLeft;
   y = iTop;
@@ -2503,12 +2503,12 @@ HB_FUNC(WVW_DRAWOUTLINEEX)
   auto s_sApp = hb_gt_wvwGetAppData();
   POINT xy{};
   int32_t iTop, iLeft, iBottom, iRight;
-  int32_t iSlot = hb_parni(6) - 1;
+  int32_t iSlot = hb_parni32(6) - 1;
 
-  auto usTop = static_cast<uint16_t>(hb_parni(2));
-  auto usLeft = static_cast<uint16_t>(hb_parni(3));
-  auto usBottom = static_cast<uint16_t>(hb_parni(4));
-  auto usRight = static_cast<uint16_t>(hb_parni(5));
+  auto usTop = static_cast<uint16_t>(hb_parni32(2));
+  auto usLeft = static_cast<uint16_t>(hb_parni32(3));
+  auto usBottom = static_cast<uint16_t>(hb_parni32(4));
+  auto usRight = static_cast<uint16_t>(hb_parni32(5));
 
   if (hb_gt_wvw_GetMainCoordMode()) {
     hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);

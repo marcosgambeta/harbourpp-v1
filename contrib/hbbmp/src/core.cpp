@@ -769,7 +769,7 @@ void hb_bmpReturn( PHB_BMPINFO pBMP )
 HB_FUNC( HB_BMP_NEW )
 {
    int32_t iError = 0;
-   PHB_BMPINFO pBMP = hb_bmp_new( hb_parni( 1 ), hb_parni( 2 ),
+   PHB_BMPINFO pBMP = hb_bmp_new( hb_parni32( 1 ), hb_parni32( 2 ),
                                   hb_parnidef( 3, 1 ),
                                   hb_parnidef( 4, HB_BMP_DPI_DEFAULT ),
                                   &iError );
@@ -781,8 +781,8 @@ HB_FUNC( HB_BMP_NEW )
 HB_FUNC( HB_BMP_FROMBITMAP )
 {
    const uint8_t * bitmap = ( const uint8_t * ) hb_parc( 1 );
-   int32_t align = hb_parni( 2 ), width = hb_parni( 3 ), height = hb_parni( 4 ),
-       depth = hb_parni( 5 ), dpi = hb_parni( 6 ),
+   int32_t align = hb_parni32( 2 ), width = hb_parni32( 3 ), height = hb_parni32( 4 ),
+       depth = hb_parni32( 5 ), dpi = hb_parni32( 6 ),
        iError = 0;
    HB_ITEM *pColors = hb_param( 7, HB_IT_ARRAY );
    HB_BOOL fromtop = height < 0;
@@ -908,7 +908,7 @@ HB_FUNC( HB_BMP_COLOR )
    PHB_BMPINFO pBMP = hb_bmpParam( 1, HB_TRUE );
 
    if( pBMP )
-      hb_retnint( hb_bmp_color( pBMP, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ) ) );
+      hb_retnint( hb_bmp_color( pBMP, hb_parni32( 2 ), hb_parni32( 3 ), hb_parni32( 4 ), hb_parni32( 5 ) ) );
 }
 
 HB_FUNC( HB_BMP_COLOR2RGB )
@@ -931,7 +931,7 @@ HB_FUNC( HB_BMP_PUTPIXEL )
    PHB_BMPINFO pBMP = hb_bmpParam( 1, HB_TRUE );
 
    if( pBMP )
-      hb_retl( hb_bmp_putpixel( pBMP, hb_parni( 2 ), hb_parni( 3 ), hb_parnint( 4 ) ) );
+      hb_retl( hb_bmp_putpixel( pBMP, hb_parni32( 2 ), hb_parni32( 3 ), hb_parnint( 4 ) ) );
 }
 
 HB_FUNC( HB_BMP_GETPIXEL )
@@ -939,7 +939,7 @@ HB_FUNC( HB_BMP_GETPIXEL )
    PHB_BMPINFO pBMP = hb_bmpParam( 1, HB_TRUE );
 
    if( pBMP )
-      hb_retnint( hb_bmp_getpixel( pBMP, hb_parni( 2 ), hb_parni( 3 ) ) );
+      hb_retnint( hb_bmp_getpixel( pBMP, hb_parni32( 2 ), hb_parni32( 3 ) ) );
 }
 
 HB_FUNC( HB_BMP_LINE )
@@ -947,7 +947,7 @@ HB_FUNC( HB_BMP_LINE )
    PHB_BMPINFO pBMP = hb_bmpParam( 1, HB_TRUE );
 
    if( pBMP )
-      hb_bmp_line( pBMP, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hb_parnint( 6 ) );
+      hb_bmp_line( pBMP, hb_parni32( 2 ), hb_parni32( 3 ), hb_parni32( 4 ), hb_parni32( 5 ), hb_parnint( 6 ) );
 }
 
 HB_FUNC( HB_BMP_RECT )
@@ -955,7 +955,7 @@ HB_FUNC( HB_BMP_RECT )
    PHB_BMPINFO pBMP = hb_bmpParam( 1, HB_TRUE );
 
    if( pBMP )
-      hb_bmp_rect( pBMP, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hb_parnint( 6 ), hb_parldef( 7, HB_TRUE ) );
+      hb_bmp_rect( pBMP, hb_parni32( 2 ), hb_parni32( 3 ), hb_parni32( 4 ), hb_parni32( 5 ), hb_parnint( 6 ), hb_parldef( 7, HB_TRUE ) );
 }
 
 HB_FUNC( HB_BMP_LOAD )

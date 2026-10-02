@@ -66,7 +66,7 @@ HB_FUNC(DISPBOX)
       if (pszColor) {
         iColor = hb_gtColorToN(pszColor);
       } else if (HB_ISNUM(6)) {
-        iColor = hb_parni(6);
+        iColor = hb_parni32(6);
       } else {
         iColor = -1;
       }
@@ -79,7 +79,7 @@ HB_FUNC(DISPBOX)
         hb_gtSetColorStr(pszColor);
       }
 
-      if (hb_parni(5) == 2) {
+      if (hb_parni32(5) == 2) {
         hb_gtBoxD(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
       } else {
         hb_gtBoxS(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());

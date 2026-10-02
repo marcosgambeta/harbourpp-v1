@@ -101,7 +101,7 @@ HB_FUNC(BIN2L)
 HB_FUNC(I2BIN)
 {
   char szResult[2];
-  auto iValue = static_cast<int16_t>(hb_parni(1));
+  auto iValue = static_cast<int16_t>(hb_parni32(1));
   HB_PUT_LE_UINT16(szResult, iValue);
   hb_retclen(szResult, 2);
 }

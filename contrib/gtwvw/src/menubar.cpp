@@ -87,7 +87,7 @@ HB_FUNC(WVW_APPENDMENU)
   int32_t iLen;
   LPCTSTR lpszCaption;
 
-  if (!(hb_parni(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni(3) >= WVW_ID_BASE_PUSHBUTTON)) {
+  if (!(hb_parni32(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni32(3) >= WVW_ID_BASE_PUSHBUTTON)) {
     MessageBox(nullptr, TEXT("Menu Command Id too high. Potential conflict with pushbutton"), hb_gt_wvw_GetAppName(),
                MB_ICONERROR);
     hb_retl(false);
@@ -108,17 +108,17 @@ HB_FUNC(WVW_APPENDMENU)
       lpszCaption = hb_parcx(4);
     }
   } else {
-    lpszCaption = reinterpret_cast<LPCTSTR>(hb_parni(4));
+    lpszCaption = reinterpret_cast<LPCTSTR>(hb_parni32(4));
   }
 
-  hb_retl(AppendMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni(2)),
-                     static_cast<UINT_PTR>(hb_parni(3)), static_cast<LPCTSTR>(lpszCaption)));
+  hb_retl(AppendMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni32(2)),
+                     static_cast<UINT_PTR>(hb_parni32(3)), static_cast<LPCTSTR>(lpszCaption)));
 }
 
 HB_FUNC(WVW_DELETEMENU)
 {
-  hb_retl(DeleteMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni(2)),
-                     static_cast<UINT>(hb_parni(3))));
+  hb_retl(DeleteMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni32(2)),
+                     static_cast<UINT>(hb_parni32(3))));
 }
 
 HB_FUNC(WVW_DESTROYMENU)
@@ -128,8 +128,8 @@ HB_FUNC(WVW_DESTROYMENU)
 
 HB_FUNC(WVW_ENABLEMENUITEM)
 {
-  hb_retni(EnableMenuItem(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni(2)),
-                          static_cast<UINT>(hb_parni(3))));
+  hb_retni(EnableMenuItem(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni32(2)),
+                          static_cast<UINT>(hb_parni32(3))));
 }
 
 HB_FUNC(WVW_GETLASTMENUEVENT)
@@ -143,7 +143,7 @@ HB_FUNC(WVW_SETLASTMENUEVENT)
 {
   auto usWinNum = WVW_WHICH_WINDOW;
 
-  hb_retni(hb_gt_wvwSetLastMenuEvent(usWinNum, hb_parni(2)));
+  hb_retni(hb_gt_wvwSetLastMenuEvent(usWinNum, hb_parni32(2)));
 }
 
 HB_FUNC(WVW_SETMENUKEYEVENT)
@@ -175,13 +175,13 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
 
   if (!HB_ISNIL(4)) {
     if (HB_ISNUM(4)) {
-      sprintf(szResname, "?%u", hb_parni(4));
+      sprintf(szResname, "?%u", hb_parni32(4));
 
       hBitmapUnchecked = FindBitmapHandle(szResname, &iWidth, &iHeight);
 
       if (!hBitmapUnchecked) {
         hBitmapUnchecked = static_cast<HBITMAP>(
-            LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(4)))),
+            LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni32(4)))),
                       IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         AddBitmapHandle(szResname, hBitmapUnchecked, iWidth, iHeight);
       }
@@ -198,13 +198,13 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
 
   if (!HB_ISNIL(5)) {
     if (HB_ISNUM(5)) {
-      sprintf(szResname, "?%u", hb_parni(5));
+      sprintf(szResname, "?%u", hb_parni32(5));
 
       hBitmapChecked = FindBitmapHandle(szResname, &iWidth, &iHeight);
 
       if (!hBitmapChecked) {
         hBitmapChecked = static_cast<HBITMAP>(
-            LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(5)))),
+            LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni32(5)))),
                       IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
         AddBitmapHandle(szResname, hBitmapChecked, iWidth, iHeight);
       }
@@ -220,10 +220,10 @@ HB_FUNC(WVW_MENUITEM_SETBITMAPS)
   }
 
   if (!HB_ISNIL(2)) {
-    SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni(2), MF_BYCOMMAND,
+    SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni32(2), MF_BYCOMMAND,
                        static_cast<HBITMAP>(hBitmapUnchecked), static_cast<HBITMAP>(hBitmapChecked));
   } else {
-    SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni(3), MF_BYPOSITION,
+    SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni32(3), MF_BYPOSITION,
                        static_cast<HBITMAP>(hBitmapUnchecked), static_cast<HBITMAP>(hBitmapChecked));
   }
 }

@@ -172,8 +172,8 @@ HB_FUNC(WVW_XBCREATE)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw && wvw_win) {
-    auto iTop = hb_parni(3);
-    auto iLeft = hb_parni(4);
+    auto iTop = hb_parni32(3);
+    auto iLeft = hb_parni32(4);
     int32_t iBottom;
     int32_t iRight;
 
@@ -190,7 +190,7 @@ HB_FUNC(WVW_XBCREATE)
     }
 
     if (iStyle == SBS_VERT) {
-      iBottom = iTop + hb_parni(5) - 1;
+      iBottom = iTop + hb_parni32(5) - 1;
       iRight = iLeft;
 
       iOffTop = hb_parvni(7, 1);
@@ -198,7 +198,7 @@ HB_FUNC(WVW_XBCREATE)
       iOffBottom = hb_parvni(7, 3);
       iOffRight = hb_parvni(7, 4);
     } else {
-      iRight = iLeft + hb_parni(5) - 1;
+      iRight = iLeft + hb_parni32(5) - 1;
       iBottom = iTop;
 
       iOffTop = HB_ISARRAY(7) ? hb_parvni(7, 1) : 3 - wvw_win->iLineSpacing;
@@ -283,7 +283,7 @@ HB_FUNC(WVW_XBDESTROY)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto nCtrlId = hb_parni(2);
+    auto nCtrlId = hb_parni32(2);
     auto wvw_ctl = wvw_win->ctlList;
     PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -324,7 +324,7 @@ returns -1 if update failed.
 */
 HB_FUNC(WVW_XBUPDATE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni32(2), nullptr);
 
   if (hWnd) {
     UINT fMask = SIF_DISABLENOSCROLL;
@@ -342,10 +342,10 @@ HB_FUNC(WVW_XBUPDATE)
     SCROLLINFO si{};
     si.cbSize = sizeof(si);
     si.fMask = fMask;
-    si.nMin = hb_parni(5);
-    si.nMax = hb_parni(6);
+    si.nMin = hb_parni32(5);
+    si.nMax = hb_parni32(6);
     si.nPage = hbwapi_par_UINT(4);
-    si.nPos = hb_parni(3);
+    si.nPos = hb_parni32(3);
 
     hb_retni(SetScrollInfo(hWnd, SB_CTL, &si, TRUE));
   } else {
@@ -360,7 +360,7 @@ return an empty array {} if invalid parameter passed.
 */
 HB_FUNC(WVW_XBINFO)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni32(2), nullptr);
 
   if (hWnd) {
     SCROLLINFO si{};
@@ -393,7 +393,7 @@ returns .T. if successful
 */
 HB_FUNC(WVW_XBENABLE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni32(2), nullptr);
   UINT uiFlags = hbwapi_par_UINT(3);
   hb_retl(hWnd && uiFlags <= ESB_DISABLE_BOTH && EnableScrollBar(hWnd, SB_CTL, uiFlags));
 }
@@ -408,6 +408,6 @@ returns .T. if successful
 */
 HB_FUNC(WVW_XBVISIBLE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni32(2), nullptr);
   hb_retl(hWnd && ShowScrollBar(hWnd, SB_CTL, static_cast<BOOL>(hb_parldef(3, true))));
 }

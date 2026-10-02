@@ -67,7 +67,7 @@ HB_FUNC(WORKSPACELIST)
 {
    HB_ITEM *pArray;
 
-   if( hb_parni(1) == DB_ZEROSPACE )
+   if( hb_parni32(1) == DB_ZEROSPACE )
       pArray = hb_rddDetachedList();
    else
    {

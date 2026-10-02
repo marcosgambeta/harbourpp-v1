@@ -91,8 +91,8 @@ HB_FUNC(CAIRO_SELECT_FONT_FACE)
   if (pCairo != nullptr)
   {
     void *hFamily;
-    cairo_select_font_face(pCairo, hb_parstr_utf8(2, &hFamily, nullptr), static_cast<cairo_font_slant_t>(hb_parni(3)),
-                           static_cast<cairo_font_weight_t>(hb_parni(4)));
+    cairo_select_font_face(pCairo, hb_parstr_utf8(2, &hFamily, nullptr), static_cast<cairo_font_slant_t>(hb_parni32(3)),
+                           static_cast<cairo_font_weight_t>(hb_parni32(4)));
     hb_strfree(hFamily);
   }
 }

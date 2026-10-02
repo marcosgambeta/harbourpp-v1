@@ -139,7 +139,7 @@ HB_FUNC(WVW_SBADDPART)
     int32_t iNumOfParts;
     auto displayFlags = static_cast<WORD>(hb_parnl(4));
     bool fResetParts = hb_parl(5);
-    int32_t iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
+    int32_t iWidth = hb_parni32(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni32(3);
 
     if (HB_ISCHAR(2)) {
       auto hDCSB = GetDC(hWnd);

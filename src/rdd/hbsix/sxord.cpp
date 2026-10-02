@@ -97,7 +97,7 @@ static bool hb_sxOrdParam(LPDBORDERINFO pInfo)
     pInfo->itmOrder = hb_param(1, Harbour::Item::NUMERIC);
     if (!HB_ISNIL(2)) { /* hb_pcount() > 2 */
       pInfo->atomBagName = hb_param(2, Harbour::Item::NUMERIC);
-      if (hb_parni(2) <= 0) {
+      if (hb_parni32(2) <= 0) {
         return false;
       }
     }
@@ -294,7 +294,7 @@ HB_FUNC(SX_SETSCOPE)
     DBORDERINFO Info;
 
     if (hb_sxOrdParam(&Info)) {
-      auto iScope = hb_parni(1);
+      auto iScope = hb_parni32(1);
       Info.itmResult = hb_itemNew(nullptr);
       if (!HB_ISNIL(2)) {
         Info.itmNewVal = hb_param(2, Harbour::Item::ANY);

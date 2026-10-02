@@ -59,7 +59,7 @@ HB_FUNC(EXPAND)
       char *szDest, *szPtr, cRepl;
       HB_SIZE nSize, nPos;
 
-      auto iRepl = hb_parni(2);
+      auto iRepl = hb_parni32(2);
       auto i = hb_pcount();
       if (i == 2 && HB_ISCHAR(2)) {
         iRepl = 1;
@@ -72,7 +72,7 @@ HB_FUNC(EXPAND)
           iRepl = 1;
         }
         if (HB_ISNUM(3)) {
-          cRepl = static_cast<char>(hb_parni(3));
+          cRepl = static_cast<char>(hb_parni32(3));
         } else if (HB_ISCHAR(3)) {
           cRepl = hb_parc(3)[0];
         } else {

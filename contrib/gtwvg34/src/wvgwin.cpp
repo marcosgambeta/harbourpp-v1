@@ -90,9 +90,9 @@ HB_FUNC(WVG_CREATEBRUSH)
 {
   LOGBRUSH lb;
 
-  lb.lbStyle = hb_parni(1);
+  lb.lbStyle = hb_parni32(1);
   lb.lbColor = hbwapi_par_COLORREF(2);
-  lb.lbHatch = hb_parni(3);
+  lb.lbHatch = hb_parni32(3);
   hbwapi_ret_raw_HANDLE(CreateBrushIndirect(&lb));
 }
 
@@ -130,7 +130,7 @@ HB_FUNC(WVG_ISMENUITEMCHECKED)
   lpmii.cbSize = sizeof(lpmii);
   lpmii.fMask = MIIM_STATE;
 
-  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni(2), TRUE, &lpmii)) {
+  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni32(2), TRUE, &lpmii)) {
     hb_retl((lpmii.fState & MFS_CHECKED) != 0);
   } else {
     hb_retl(HB_FALSE);
@@ -144,7 +144,7 @@ HB_FUNC(WVG_ISMENUITEMENABLED) /* = grayed */
   lpmii.cbSize = sizeof(lpmii);
   lpmii.fMask = MIIM_STATE;
 
-  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni(2), TRUE, &lpmii)) {
+  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni32(2), TRUE, &lpmii)) {
     hb_retl((lpmii.fState & MFS_DISABLED /* equivalent to MFS_GRAYED */) == 0);
   } else {
     hb_retl(HB_TRUE);
@@ -164,7 +164,7 @@ HB_FUNC(WVG_SETMENUITEM)
     lpmii.fMask = MIIM_SUBMENU;
   }
 
-  hb_retl(SetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni(2), TRUE, &lpmii));
+  hb_retl(SetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni32(2), TRUE, &lpmii));
 
   hb_strfree(hText);
 }
@@ -189,7 +189,7 @@ HB_FUNC(WVG_TREEVIEW_ISEXPANDED)
 HB_FUNC(WVG_LBGETTEXT)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  int32_t iIndex = hb_parni(2);
+  int32_t iIndex = hb_parni32(2);
   int32_t iLen = ListBox_GetTextLen(hWnd, iIndex);
   LPTSTR szText = (LPTSTR)hb_xgrab((iLen + 1) * sizeof(TCHAR));
 
@@ -205,7 +205,7 @@ HB_FUNC(WVG_LBGETCURSEL)
 
 HB_FUNC(WVG_LBSETCURSEL)
 {
-  hb_retni(ListBox_SetCurSel(hbwapi_par_raw_HWND(1), hb_parni(2)));
+  hb_retni(ListBox_SetCurSel(hbwapi_par_raw_HWND(1), hb_parni32(2)));
 }
 
 /* Buttons */
@@ -218,7 +218,7 @@ HB_FUNC(WVG_BUTTON_GETCHECK)
 /* wvg_GetCurrentObject( hDC, nObjType ) */
 HB_FUNC(WVG_GETCURRENTOBJECT)
 {
-  hbwapi_ret_raw_HANDLE(GetCurrentObject(hbwapi_par_raw_HDC(1), hb_parni(2)));
+  hbwapi_ret_raw_HANDLE(GetCurrentObject(hbwapi_par_raw_HDC(1), hb_parni32(2)));
 }
 
 /* wvg_GetCurrentBrush( hDC ) */
@@ -248,7 +248,7 @@ HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 
       SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
 
-      (void)pfnLayered(hWnd, cr, (BYTE)hb_parni(3), /* LWA_COLORKEY | */ LWA_ALPHA);
+      (void)pfnLayered(hWnd, cr, (BYTE)hb_parni32(3), /* LWA_COLORKEY | */ LWA_ALPHA);
     }
     FreeLibrary(h);
   }
@@ -445,18 +445,18 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     hb_retnint(SendMessage(hCB, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)HB_PARSTR(3, &hText, nullptr)));
     break;
   case CB_DELETESTRING:
-    hb_retnint(SendMessage(hCB, CB_DELETESTRING, hb_parni(3), 0));
+    hb_retnint(SendMessage(hCB, CB_DELETESTRING, hb_parni32(3), 0));
     break;
 #if defined(CB_DIR)
   case CB_DIR:
-    hb_retnint(SendMessage(hCB, CB_DIR, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
+    hb_retnint(SendMessage(hCB, CB_DIR, (WPARAM)hb_parni32(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
 #endif
   case CB_FINDSTRING:
-    hb_retnint(SendMessage(hCB, CB_FINDSTRING, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
+    hb_retnint(SendMessage(hCB, CB_FINDSTRING, (WPARAM)hb_parni32(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
   case CB_FINDSTRINGEXACT:
-    hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
+    hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, (WPARAM)hb_parni32(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
 #if defined(CB_GETCOMBOBOXINFO)
   case CB_GETCOMBOBOXINFO: {
@@ -572,7 +572,7 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     hb_retnint(SendMessage(hCB, CB_INSERTSTRING, (WPARAM)hb_parnint(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
   case CB_LIMITTEXT:
-    SendMessage(hCB, CB_LIMITTEXT, hb_parni(3), 0);
+    SendMessage(hCB, CB_LIMITTEXT, hb_parni32(3), 0);
     break;
   case CB_RESETCONTENT:
     SendMessage(hCB, CB_RESETCONTENT, 0, 0);

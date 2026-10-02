@@ -97,10 +97,10 @@ HB_FUNC(WVW_PBCREATE)
   HWND hWnd = nullptr;
 
   if (wvw_win && HB_ISEVALITEM(8)) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     int32_t iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
     int32_t iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
@@ -110,9 +110,9 @@ HB_FUNC(WVW_PBCREATE)
     void *hCaption;
 
     hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
-                                    static_cast<uint32_t>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    static_cast<uint32_t>(hb_parni32(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
                                     iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
-                                    hb_parl(11) /* bMap3Dcolors */, BS_PUSHBUTTON | hb_parni(13) /* nStyle */, &hWnd));
+                                    hb_parl(11) /* bMap3Dcolors */, BS_PUSHBUTTON | hb_parni32(13) /* nStyle */, &hWnd));
 
     hb_strfree(hCaption);
   } else {
@@ -131,7 +131,7 @@ HB_FUNC(WVW_PBDESTROY)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win) {
-    auto nCtrlId = hb_parni(2);
+    auto nCtrlId = hb_parni32(2);
     auto wvw_ctl = wvw_win->ctlList;
     PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -167,7 +167,7 @@ set the focus to button nButtonId in window nWinNum
 */
 HB_FUNC(WVW_PBSETFOCUS)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni32(2), nullptr);
   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
@@ -177,7 +177,7 @@ returns .T. if the focus is on button nPBid in window nWinNum
 */
 HB_FUNC(WVW_PBISFOCUSED)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni32(2), nullptr);
   hb_retl(hWnd && GetFocus() == hWnd);
 }
 
@@ -192,7 +192,7 @@ HB_FUNC(WVW_PBENABLE)
 {
   auto wvw_win = hb_gt_wvw_win_par();
 
-  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni32(2), nullptr);
 
   if (hWnd) {
     bool fEnable = hb_parldef(3, true);
@@ -215,7 +215,7 @@ return .T. if successful
 HB_FUNC(WVW_PBSETCODEBLOCK)
 {
   auto wvw = hb_gt_wvw();
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni32(2));
   auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
 
   if (pBlock && wvw_ctl && !wvw_ctl->fBusy) {
@@ -255,10 +255,10 @@ this function always return .T.
 */
 HB_FUNC(WVW_PBSETSTYLE)
 {
-  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni32(2));
 
   if (wvw_ctl && wvw_ctl->hWnd) {
-    SendMessage(wvw_ctl->hWnd, BM_SETSTYLE, static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(TRUE));
+    SendMessage(wvw_ctl->hWnd, BM_SETSTYLE, static_cast<WPARAM>(hb_parni32(3)), static_cast<LPARAM>(TRUE));
   }
 
   hb_retl(true);
@@ -325,6 +325,6 @@ HB_FUNC(WVW_PBSETFONT)
 
 HB_FUNC(WVW_PBVISIBLE)
 {
-  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni32(2), nullptr);
   hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

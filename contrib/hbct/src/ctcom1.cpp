@@ -59,7 +59,7 @@ static int32_t hb_ctComCharParam(int32_t iParam)
       return static_cast<unsigned char>(pszParam[0]);
     }
   } else if (HB_ISNUM(iParam)) {
-    return static_cast<unsigned char>(hb_parni(iParam));
+    return static_cast<unsigned char>(hb_parni32(iParam));
   }
 
   return -1;
@@ -70,7 +70,7 @@ static void hb_ctComTestMSR(int32_t iLine)
   HB_BOOL fResult;
   int32_t iMSR;
 
-  if (hb_comMSR(hb_parni(1), &iMSR) != -1) {
+  if (hb_comMSR(hb_parni32(1), &iMSR) != -1) {
     fResult = (iMSR & iLine) != 0;
   } else {
     fResult = false;
@@ -82,25 +82,25 @@ static void hb_ctComTestMSR(int32_t iLine)
 // com_Count(<nComPort>) --> <nCharactersInInputBuffer>
 HB_FUNC(COM_COUNT)
 {
-  hb_retni(hb_comInputCount(hb_parni(1)));
+  hb_retni(hb_comInputCount(hb_parni32(1)));
 }
 
 // com_SCount(<nComPort>) --> <nCharactersInOutputBuffer>
 HB_FUNC(COM_SCOUNT)
 {
-  hb_retni(hb_comOutputCount(hb_parni(1)));
+  hb_retni(hb_comOutputCount(hb_parni32(1)));
 }
 
 // com_Flush(<nComPort>) --> <lInputBufferCleared>
 HB_FUNC(COM_FLUSH)
 {
-  hb_retl(hb_comFlush(hb_parni(1), HB_COM_IFLUSH) != -1);
+  hb_retl(hb_comFlush(hb_parni32(1), HB_COM_IFLUSH) != -1);
 }
 
 // com_SFlush(<nComPort>) --> <lOutputBufferCleared>
 HB_FUNC(COM_SFLUSH)
 {
-  hb_retl(hb_comFlush(hb_parni(1), HB_COM_OFLUSH) != -1);
+  hb_retl(hb_comFlush(hb_parni32(1), HB_COM_OFLUSH) != -1);
 }
 
 // com_CTS(<nComPort>) --> <lCTSActive>
@@ -139,7 +139,7 @@ HB_FUNC(COM_RTS)
       iClr = HB_COM_MCR_RTS;
     }
   }
-  hb_comMCR(hb_parni(1), &iMCR, iClr, iSet);
+  hb_comMCR(hb_parni32(1), &iMCR, iClr, iSet);
   hb_retl((iMCR & HB_COM_MCR_RTS) != 0);
 }
 
@@ -155,7 +155,7 @@ HB_FUNC(COM_DTR)
       iClr = HB_COM_MCR_DTR;
     }
   }
-  hb_comMCR(hb_parni(1), &iMCR, iClr, iSet);
+  hb_comMCR(hb_parni32(1), &iMCR, iClr, iSet);
   hb_retl((iMCR & HB_COM_MCR_DTR) != 0);
 }
 
@@ -166,12 +166,12 @@ HB_FUNC(COM_MCR)
 
   if (HB_ISNUM(2)) {
     iClr = 0xff;
-    iSet = hb_parni(2) & 0xff;
+    iSet = hb_parni32(2) & 0xff;
   } else {
     iClr = iSet = 0;
   }
 
-  if (hb_comMCR(hb_parni(1), &iMCR, iClr, iSet) == -1) {
+  if (hb_comMCR(hb_parni32(1), &iMCR, iClr, iSet) == -1) {
     iMCR = MCR_ERROR;
   }
 
@@ -183,7 +183,7 @@ HB_FUNC(COM_MSR)
 {
   int32_t iMSR;
 
-  if (hb_comMSR(hb_parni(1), &iMSR) == -1) {
+  if (hb_comMSR(hb_parni32(1), &iMSR) == -1) {
     iMSR = MSR_ERROR;
   }
 
@@ -195,7 +195,7 @@ HB_FUNC(COM_LSR)
 {
   int32_t iLSR;
 
-  if (hb_comLSR(hb_parni(1), &iLSR) == -1) {
+  if (hb_comLSR(hb_parni32(1), &iLSR) == -1) {
     iLSR = LSR_ERROR;
   }
 
@@ -205,13 +205,13 @@ HB_FUNC(COM_LSR)
 // com_Break(<nComPort>, <nDurationInMilliSecs >= 100) --> <lSuccess>
 HB_FUNC(COM_BREAK)
 {
-  hb_retl(hb_comSendBreak(hb_parni(1), hb_parnidef(2, 100)) != 0);
+  hb_retl(hb_comSendBreak(hb_parni32(1), hb_parnidef(2, 100)) != 0);
 }
 
 // com_Hard(<nComPort>, [<lNewHandshake>], [<lDTR/DSR>]) --> <lOldHandshake>
 HB_FUNC(COM_HARD)
 {
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
   int32_t iFlow, iMask;
   HB_BOOL fResult = false;
 
@@ -233,7 +233,7 @@ HB_FUNC(COM_HARD)
 // com_Soft(<nComPort>, [<lNewHandshake>], [<cXONchar>], [<cXOFFchar>]) --> <lOldHandshake>
 HB_FUNC(COM_SOFT)
 {
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
   int32_t iFlow, iMask;
   HB_BOOL fResult = false;
 
@@ -260,7 +260,7 @@ HB_FUNC(COM_SOFT)
 HB_FUNC(COM_SOFT_R)
 {
   HB_BOOL fResult = false;
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
   int32_t iMode;
 
   if (HB_ISLOG(2)) {
@@ -279,7 +279,7 @@ HB_FUNC(COM_SOFT_R)
 HB_FUNC(COM_SOFT_S)
 {
   HB_BOOL fResult = false;
-  int32_t iMode = hb_comInputState(hb_parni(1));
+  int32_t iMode = hb_comInputState(hb_parni32(1));
 
   if (iMode > 0) {
     fResult = (iMode & HB_COM_RX_XOFF) != 0;
@@ -291,19 +291,19 @@ HB_FUNC(COM_SOFT_S)
 // com_ErrChr(<nComPort>, [<nErrorCharacter|cErrorCharacter>]) --> <lChanged>
 HB_FUNC(COM_ERRCHR)
 {
-  hb_retl(hb_comErrorChar(hb_parni(1), hb_ctComCharParam(2)) != -1);
+  hb_retl(hb_comErrorChar(hb_parni32(1), hb_ctComCharParam(2)) != -1);
 }
 
 // com_Remote(<nComPort>, [<nCharacter|cCharacter>]) --> <lActive>
 HB_FUNC(COM_REMOTE)
 {
-  hb_retl(hb_comDiscardChar(hb_parni(1), hb_ctComCharParam(2)) > 0);
+  hb_retl(hb_comDiscardChar(hb_parni32(1), hb_ctComCharParam(2)) > 0);
 }
 
 // com_SMode(<nComPort>) --> <nSendMode>
 HB_FUNC(COM_SMODE)
 {
-  int32_t iMode = hb_comOutputState(hb_parni(1)), iResult = 0;
+  int32_t iMode = hb_comOutputState(hb_parni32(1)), iResult = 0;
 
   if (iMode > 0) {
     if (iMode & HB_COM_TX_EMPTY) {
@@ -348,7 +348,7 @@ HB_FUNC(COM_SKEY)
 // <lInitialized>
 HB_FUNC(COM_INIT)
 {
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
   auto iBaud = hb_parnidef(2, 300);
   int32_t iParity = hb_parcx(3)[0];
   auto iSize = hb_parnidef(4, 8);
@@ -360,7 +360,7 @@ HB_FUNC(COM_INIT)
 // com_Open(<nComPort>, [<nBufferIn>=100] [, <nBufferOut>=0], [<lTrapMode>]) --> <lStatus>
 HB_FUNC(COM_OPEN)
 {
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
 
   // TODO: add support for <nBufferIn>
   // TODO: add support for <nBufferOut>
@@ -372,7 +372,7 @@ HB_FUNC(COM_OPEN)
 // com_Close(<nComPort>) --> <lClosed>
 HB_FUNC(COM_CLOSE)
 {
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
 
   hb_comFlush(iPort, HB_COM_IOFLUSH);
   hb_retl(hb_comClose(iPort) != -1);
@@ -384,7 +384,7 @@ HB_FUNC(COM_READ)
   char buffer[1024];
   char *data;
   long lLen, lRecv;
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
 
   // TODO: add support for <lNoDelete>
 
@@ -431,13 +431,13 @@ HB_FUNC(COM_SEND)
   if (data) {
     lLen = static_cast<long>(hb_parclen(2));
   } else if (HB_ISNUM(2)) {
-    buffer = static_cast<unsigned char>(hb_parni(2));
+    buffer = static_cast<unsigned char>(hb_parni32(2));
     data = &buffer;
     lLen = 1;
   }
 
   if (lLen) {
-    long lResult = hb_comSend(hb_parni(1), data, lLen, 0);
+    long lResult = hb_comSend(hb_parni32(1), data, lLen, 0);
     if (lResult > 0) {
       lLen -= lResult;
     }
@@ -479,7 +479,7 @@ HB_FUNC(COM_SETIRQ)
 // com_DevName(<nComPort> [, <cNewName> ]) --> <cPrevName>
 HB_FUNC(COM_DEVNAME)
 {
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
   auto szDevName = hb_parc(2);
   char buffer[HB_COM_DEV_NAME_MAX];
 

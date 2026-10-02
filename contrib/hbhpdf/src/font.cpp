@@ -83,7 +83,7 @@ HB_FUNC(HPDF_LOADTTFONTFROMFILE2)
   char *pszFree;
   auto pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
 
-  hb_retc(HPDF_LoadTTFontFromFile2(hb_HPDF_Doc_par(1), pszFileName, hb_parni(3), hb_parl(4) ? HPDF_TRUE : HPDF_FALSE));
+  hb_retc(HPDF_LoadTTFontFromFile2(hb_HPDF_Doc_par(1), pszFileName, hb_parni32(3), hb_parl(4) ? HPDF_TRUE : HPDF_FALSE));
 
   if (pszFree) {
     hb_xfree(pszFree);

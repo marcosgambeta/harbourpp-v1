@@ -195,7 +195,7 @@ HB_FUNC(__AXDOVERB) // (hWndAx, iVerb) --> hResult
         RECT rc;
 
         GetClientRect(hWnd, &rc);
-        HB_VTBL(lpOleObject)->DoVerb(HB_THIS_(lpOleObject) hb_parni(2), &Msg, lpOleClientSite, 0, hWnd, &rc);
+        HB_VTBL(lpOleObject)->DoVerb(HB_THIS_(lpOleObject) hb_parni32(2), &Msg, lpOleClientSite, 0, hWnd, &rc);
       }
       HB_VTBL(lpOleObject)->Release(HB_THIS(lpOleObject));
     }

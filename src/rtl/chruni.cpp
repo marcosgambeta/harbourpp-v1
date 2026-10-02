@@ -58,7 +58,7 @@ HB_FUNC(HB_UCHAR)
 {
   if (HB_ISNUM(1)) {
     char szChar[HB_MAX_CHAR_LEN];
-    HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
+    HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni32(1)));
     hb_retclen(szChar, nLen);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -70,7 +70,7 @@ HB_FUNC(HB_UCHAR)
 HB_FUNC(HB_BCHAR)
 {
   if (HB_ISNUM(1)) {
-    auto c = static_cast<char>(hb_parni(1));
+    auto c = static_cast<char>(hb_parni32(1));
     hb_retclen(&c, 1);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -186,7 +186,7 @@ HB_FUNC(HB_UPOKE)
       nPos = hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
       if (nPos < nLen) {
         char szChar[HB_MAX_CHAR_LEN], *pszText;
-        HB_SIZE nChar = hb_cdpTextPutU16(cdp, szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(3)));
+        HB_SIZE nChar = hb_cdpTextPutU16(cdp, szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni32(3)));
         HB_SIZE nOldChar = hb_cdpTextPos(cdp, szText + nPos, nLen - nPos, 1);
         if (nChar == nOldChar) {
           if (hb_itemGetWriteCL(pText, &pszText, &nLen) && nPos + nChar <= nLen) {
@@ -222,7 +222,7 @@ HB_FUNC(HB_BPOKE)
     char *pszText;
 
     if (nPos > 0 && hb_itemGetWriteCL(pText, &pszText, &nLen) && nPos <= nLen) {
-      pszText[nPos - 1] = static_cast<char>(hb_parni(3) & 0xff);
+      pszText[nPos - 1] = static_cast<char>(hb_parni32(3) & 0xff);
     }
     hb_itemReturn(pText);
   } else {

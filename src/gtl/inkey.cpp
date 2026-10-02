@@ -110,7 +110,7 @@ HB_FUNC(HB_KEYCLEAR)
 HB_FUNC(HB_KEYPUT)
 {
   if (HB_ISNUM(1)) {
-    hb_inkeyPut(hb_parni(1));
+    hb_inkeyPut(hb_parni32(1));
   } else if (HB_ISCHAR(1)) {
     hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), false);
   } else if (HB_ISARRAY(1)) {
@@ -132,7 +132,7 @@ HB_FUNC(HB_KEYPUT)
 HB_FUNC(HB_KEYINS)
 {
   if (HB_ISNUM(1)) {
-    hb_inkeyIns(hb_parni(1));
+    hb_inkeyIns(hb_parni32(1));
   } else if (HB_ISCHAR(1)) {
     hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), true);
   } else if (HB_ISARRAY(1)) {
@@ -153,7 +153,7 @@ HB_FUNC(HB_KEYINS)
 
 HB_FUNC(HB_KEYNEXT)
 {
-  hb_retni(hb_inkeyNext(HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask()));
+  hb_retni(hb_inkeyNext(HB_ISNUM(1) ? hb_parni32(1) : hb_setGetEventMask()));
 }
 
 HB_FUNC(NEXTKEY)
@@ -163,7 +163,7 @@ HB_FUNC(NEXTKEY)
 
 HB_FUNC(HB_KEYLAST)
 {
-  hb_retni(hb_inkeyLast(HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask()));
+  hb_retni(hb_inkeyLast(HB_ISNUM(1) ? hb_parni32(1) : hb_setGetEventMask()));
 }
 
 HB_FUNC(LASTKEY)
@@ -174,7 +174,7 @@ HB_FUNC(LASTKEY)
 HB_FUNC(HB_KEYSETLAST)
 {
   if (HB_ISNUM(1)) {
-    hb_retni(hb_inkeySetLast(hb_parni(1)));
+    hb_retni(hb_inkeySetLast(hb_parni32(1)));
   }
 }
 
@@ -209,26 +209,26 @@ HB_FUNC(HB_KEYCODE)
 HB_FUNC(HB_KEYCHAR)
 {
   char szKeyChr[HB_MAX_CHAR_LEN];
-  HB_SIZE nLen = hb_inkeyKeyString(hb_parni(1), szKeyChr, sizeof(szKeyChr));
+  HB_SIZE nLen = hb_inkeyKeyString(hb_parni32(1), szKeyChr, sizeof(szKeyChr));
   hb_retclen(szKeyChr, nLen);
 }
 
 HB_FUNC(HB_KEYSTD)
 {
-  hb_retni(hb_inkeyKeyStd(hb_parni(1)));
+  hb_retni(hb_inkeyKeyStd(hb_parni32(1)));
 }
 
 HB_FUNC(HB_KEYEXT)
 {
-  hb_retni(hb_inkeyKeyExt(hb_parni(1)));
+  hb_retni(hb_inkeyKeyExt(hb_parni32(1)));
 }
 
 HB_FUNC(HB_KEYMOD)
 {
-  hb_retni(hb_inkeyKeyMod(hb_parni(1)));
+  hb_retni(hb_inkeyKeyMod(hb_parni32(1)));
 }
 
 HB_FUNC(HB_KEYVAL)
 {
-  hb_retni(hb_inkeyKeyVal(hb_parni(1)));
+  hb_retni(hb_inkeyKeyVal(hb_parni32(1)));
 }

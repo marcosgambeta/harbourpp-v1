@@ -4638,7 +4638,7 @@ static void hb_dbffptRegisterRDD(uint16_t *pusRddId)
 
   puiCount = static_cast<uint16_t *>(hb_parptr(1));
   pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-  uiRddId = static_cast<uint16_t>(hb_parni(4));
+  uiRddId = static_cast<uint16_t>(hb_parni32(4));
   puiSuperRddId = static_cast<uint16_t *>(hb_parptr(5));
 
 #if 0

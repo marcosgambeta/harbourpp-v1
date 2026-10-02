@@ -206,8 +206,8 @@ HB_FUNC(WVG_PREPAREBITMAPFROMFILE)
   BITMAPINFO *pPackedDib = fMap3Dcolors ? nullptr : PackedDibLoad(hb_parcx(1) /* szFileName */);
 
   if (pPackedDib || fMap3Dcolors) {
-    int32_t iWidth, iExpWidth = hb_parni(2);
-    int32_t iHeight, iExpHeight = hb_parni(3);
+    int32_t iWidth, iExpWidth = hb_parni32(2);
+    int32_t iHeight, iExpHeight = hb_parni32(3);
     HWND hCtrl = hbwapi_par_raw_HWND(5);
 
     HDC hdc = GetDC(hCtrl);
@@ -283,7 +283,7 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
   HWND hWndSB = hbwapi_par_raw_HWND(1);
 
   if (hWndSB && IsWindow(hWndSB)) {
-    switch (hb_parni(2) /* nMode */) {
+    switch (hb_parni32(2) /* nMode */) {
     case 0: {
       int32_t ptArray[WIN_STATUSBAR_MAX_PARTS];
       RECT rc = {0, 0, 0, 0};
@@ -480,7 +480,7 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
   HWND hwnd = hbwapi_par_raw_HWND(1);
   HTREEITEM hroot, hitem, hitem1, hitem2, hitem3;
   int32_t iExpand = hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE;
-  int32_t iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
+  int32_t iLevels = hb_parni32(3) <= 0 ? 5 : hb_parni32(3);
 
   hroot = TreeView_GetRoot(hwnd);
   if (hroot) {
@@ -744,7 +744,7 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
   TBBUTTON tbb;
   HWND hWndTB = hbwapi_par_raw_HWND(1);
 
-  switch (hb_parni(5)) {
+  switch (hb_parni32(5)) {
   case 1: /* button from image */
   {
     void *hCaption;
@@ -757,8 +757,8 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
     }
 
     /* add button */
-    tbb.iBitmap = hb_parni(2);
-    tbb.idCommand = hb_parni(4);
+    tbb.iBitmap = hb_parni32(2);
+    tbb.idCommand = hb_parni32(4);
     tbb.fsState = TBSTATE_ENABLED;
     tbb.fsStyle = TBSTYLE_BUTTON | TBSTYLE_AUTOSIZE;
     tbb.dwData = 0;

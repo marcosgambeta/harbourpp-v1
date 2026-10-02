@@ -1733,8 +1733,8 @@ static int32_t hb_hsxFilter(int32_t iHandle, const char *pSeek, HB_SIZE nSeek, H
    Creates a new, empty HiPer-SEEK index file */
 HB_FUNC(HS_CREATE)
 {
-  hb_retni(hb_hsxCreate(hb_parc(1), hb_parni(2), hb_parni(3),
-                        hb_param(4, Harbour::Item::LOGICAL) == nullptr || hb_parl(4), hb_parni(5),
+  hb_retni(hb_hsxCreate(hb_parc(1), hb_parni32(2), hb_parni32(3),
+                        hb_param(4, Harbour::Item::LOGICAL) == nullptr || hb_parl(4), hb_parni32(5),
                         hb_param(6, Harbour::Item::ANY)));
 }
 
@@ -1742,7 +1742,7 @@ HB_FUNC(HS_CREATE)
    Opens an existing HiPer-SEEK index file */
 HB_FUNC(HS_OPEN)
 {
-  hb_retni(hb_hsxOpen(hb_parc(1), hb_parni(2), hb_param(3, Harbour::Item::NUMERIC) ? hb_parni(3) : HSXDEFOPENMODE));
+  hb_retni(hb_hsxOpen(hb_parc(1), hb_parni32(2), hb_param(3, Harbour::Item::NUMERIC) ? hb_parni32(3) : HSXDEFOPENMODE));
 }
 
 /* hs_Close(<hIndex>) --> nVal = 1 (OK), nVal < 0 (ERROR CODE)
@@ -1750,7 +1750,7 @@ HB_FUNC(HS_OPEN)
 HB_FUNC(HS_CLOSE)
 {
   if (hb_param(1, Harbour::Item::NUMERIC)) {
-    hb_retni(hb_hsxDestroy(hb_parni(1)));
+    hb_retni(hb_hsxDestroy(hb_parni32(1)));
   } else {
     hb_retni(HSX_BADPARMS);
   }
@@ -1761,9 +1761,9 @@ HB_FUNC(HS_CLOSE)
    Creates and populates a new HiPer-SEEK index */
 HB_FUNC(HS_INDEX)
 {
-  hb_retni(hb_hsxIndex(hb_parc(1), hb_param(2, Harbour::Item::ANY), hb_parni(3),
-                       hb_param(4, Harbour::Item::NUMERIC) ? hb_parni(4) : HSXDEFOPENMODE, hb_parni(5),
-                       hb_param(6, Harbour::Item::LOGICAL) == nullptr || hb_parl(6), hb_parni(7)));
+  hb_retni(hb_hsxIndex(hb_parc(1), hb_param(2, Harbour::Item::ANY), hb_parni32(3),
+                       hb_param(4, Harbour::Item::NUMERIC) ? hb_parni32(4) : HSXDEFOPENMODE, hb_parni32(5),
+                       hb_param(6, Harbour::Item::LOGICAL) == nullptr || hb_parl(6), hb_parni32(7)));
 }
 
 /* hs_Add(<hIndex>, [<xExpr>], [lDel]) --> nVal >= 1 (RECNO), nVal < 0 (ERROR CODE)
@@ -1774,7 +1774,7 @@ HB_FUNC(HS_ADD)
     HB_ULONG ulRecNo;
     int32_t iRetVal;
 
-    iRetVal = hb_hsxAdd(hb_parni(1), &ulRecNo, hb_param(2, Harbour::Item::BLOCK | Harbour::Item::STRING), hb_parl(3));
+    iRetVal = hb_hsxAdd(hb_parni32(1), &ulRecNo, hb_param(2, Harbour::Item::BLOCK | Harbour::Item::STRING), hb_parl(3));
 
     if (iRetVal == HSX_SUCCESS) {
       hb_retnint(ulRecNo);
@@ -1792,7 +1792,7 @@ HB_FUNC(HS_REPLACE)
 {
   if (hb_param(1, Harbour::Item::NUMERIC) && hb_param(3, Harbour::Item::NUMERIC)) {
     hb_retni(
-        hb_hsxReplace(hb_parni(1), hb_parnl(3), hb_param(2, Harbour::Item::BLOCK | Harbour::Item::STRING), hb_parl(4)));
+        hb_hsxReplace(hb_parni32(1), hb_parnl(3), hb_param(2, Harbour::Item::BLOCK | Harbour::Item::STRING), hb_parl(4)));
   } else {
     hb_retni(HSX_BADPARMS);
   }
@@ -1803,7 +1803,7 @@ HB_FUNC(HS_REPLACE)
 HB_FUNC(HS_IFDEL)
 {
   if (hb_param(1, Harbour::Item::NUMERIC) && hb_param(2, Harbour::Item::NUMERIC)) {
-    hb_retni(hb_hsxIfDel(hb_parni(1), hb_parnl(2)));
+    hb_retni(hb_hsxIfDel(hb_parni32(1), hb_parnl(2)));
   } else {
     hb_retni(HSX_BADPARMS);
   }
@@ -1814,7 +1814,7 @@ HB_FUNC(HS_IFDEL)
 HB_FUNC(HS_DELETE)
 {
   if (hb_param(1, Harbour::Item::NUMERIC) && hb_param(2, Harbour::Item::NUMERIC)) {
-    hb_retni(hb_hsxDelete(hb_parni(1), hb_parnl(2)));
+    hb_retni(hb_hsxDelete(hb_parni32(1), hb_parnl(2)));
   } else {
     hb_retni(HSX_BADPARMS);
   }
@@ -1825,7 +1825,7 @@ HB_FUNC(HS_DELETE)
 HB_FUNC(HS_UNDELETE)
 {
   if (hb_param(1, Harbour::Item::NUMERIC) && hb_param(2, Harbour::Item::NUMERIC)) {
-    hb_retni(hb_hsxUnDelete(hb_parni(1), hb_parnl(2)));
+    hb_retni(hb_hsxUnDelete(hb_parni32(1), hb_parnl(2)));
   } else {
     hb_retni(HSX_BADPARMS);
   }
@@ -1836,7 +1836,7 @@ HB_FUNC(HS_UNDELETE)
 HB_FUNC(HS_KEYCOUNT)
 {
   if (hb_param(1, Harbour::Item::NUMERIC)) {
-    LPHSXINFO pHSX = hb_hsxGetPointer(hb_parni(1));
+    LPHSXINFO pHSX = hb_hsxGetPointer(hb_parni32(1));
 
     if (pHSX) {
       if (pHSX->fShared) {
@@ -1860,7 +1860,7 @@ HB_FUNC(HS_SET)
   int32_t iRetVal = HSX_BADPARMS;
 
   if (pStr && hb_param(1, Harbour::Item::NUMERIC)) {
-    iRetVal = hb_hsxSeekSet(hb_parni(1), pStr, hb_parclen(2));
+    iRetVal = hb_hsxSeekSet(hb_parni32(1), pStr, hb_parclen(2));
   }
   hb_retni(iRetVal);
 }
@@ -1879,7 +1879,7 @@ HB_FUNC(HS_FILTER)
 
   if (hb_parclen(1) > 0) {
     if (nLen > 0) {
-      iHandle = hb_hsxOpen(hb_parc(1), hb_parni(4), hb_param(5, Harbour::Item::NUMERIC) ? hb_parni(5) : HSXDEFOPENMODE);
+      iHandle = hb_hsxOpen(hb_parc(1), hb_parni32(4), hb_param(5, Harbour::Item::NUMERIC) ? hb_parni32(5) : HSXDEFOPENMODE);
       if (iHandle >= 0) {
         fNew = true;
       } else {
@@ -1887,7 +1887,7 @@ HB_FUNC(HS_FILTER)
       }
     }
   } else if (hb_param(1, Harbour::Item::NUMERIC)) {
-    LPHSXINFO pHSX = hb_hsxGetPointer(hb_parni(1));
+    LPHSXINFO pHSX = hb_hsxGetPointer(hb_parni32(1));
 
     if (!pHSX) {
       iResult = HSX_BADHANDLE;
@@ -1970,7 +1970,7 @@ HB_FUNC(HS_NEXT)
   int32_t iRetVal = HSX_BADPARMS;
 
   if (hb_param(1, Harbour::Item::NUMERIC)) {
-    iRetVal = hb_hsxNext(hb_parni(1), &ulRecNo);
+    iRetVal = hb_hsxNext(hb_parni32(1), &ulRecNo);
   }
 
   if (iRetVal == HSX_SUCCESS) {
@@ -1987,7 +1987,7 @@ HB_FUNC(HS_NEXT)
 HB_FUNC(HS_VERIFY)
 {
   if (hb_param(1, Harbour::Item::NUMERIC)) {
-    auto iHandle = hb_parni(1);
+    auto iHandle = hb_parni32(1);
     auto pExpr = hb_param(2, Harbour::Item::BLOCK);
     const char *szText = nullptr;
     HB_SIZE nLen = 0;
@@ -2011,7 +2011,7 @@ HB_FUNC(HS_VERIFY)
       nLen = pExpr->getCLen();
     }
 
-    hb_retni(hb_hsxVerify(hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4)));
+    hb_retni(hb_hsxVerify(hb_parni32(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni32(4)));
   } else {
     auto pExpr = hb_param(1, Harbour::Item::BLOCK);
     auto szSub = hb_parc(2);

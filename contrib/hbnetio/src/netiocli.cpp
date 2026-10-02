@@ -1178,8 +1178,8 @@ HB_FUNC(NETIO_DECODE)
    auto pszFullName = hb_parc(1);
    const char * pszFile;
    auto pszServer = hb_parc(2);
-   auto iPort = hb_parni(3);
-   auto iTimeOut = hb_parni(4);
+   auto iPort = hb_parni32(3);
+   auto iTimeOut = hb_parni32(4);
    auto pszPasswd = hb_parc(5);
    auto iPassLen = static_cast<int32_t>(hb_parclen(5));
    auto iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
@@ -1229,8 +1229,8 @@ HB_FUNC(NETIO_CONNECT)
 {
    auto pszServer = hb_parc(1);
    auto pszPasswd = hb_parc(4);
-   auto iPort = hb_parni(2);
-   auto iTimeOut = hb_parni(3);
+   auto iPort = hb_parni32(2);
+   auto iTimeOut = hb_parni32(3);
    auto iPassLen = static_cast<int32_t>(hb_parclen(4));
    auto iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
    auto iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
@@ -1305,8 +1305,8 @@ HB_FUNC(NETIO_GETCONNECTION)
 {
    auto pszServer = hb_parc(1);
    auto pszPasswd = hb_parc(4);
-   auto iPort = hb_parni(2);
-   auto iTimeOut = hb_parni(3);
+   auto iPort = hb_parni32(2);
+   auto iTimeOut = hb_parni32(3);
    auto iPassLen = static_cast<int32_t>(hb_parclen(4));
    auto iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
    auto iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
@@ -1333,7 +1333,7 @@ HB_FUNC(NETIO_DISCONNECT)
 {
    auto pszServer = hb_parc(1);
    char * pszIpAddres;
-   auto iPort = hb_parni(2);
+   auto iPort = hb_parni32(2);
    bool fDisconnected = false;
 
    s_fileGetConnParam(&pszServer, &iPort, nullptr, nullptr, nullptr);
@@ -1359,7 +1359,7 @@ HB_FUNC(NETIO_TIMEOUT)
          hb_retni(conn->timeout);
          if( HB_ISNUM(2) )
          {
-            conn->timeout = hb_parni(2);
+            conn->timeout = hb_parni32(2);
          }
          s_fileConUnlock(conn);
       }
@@ -1647,7 +1647,7 @@ static PHB_CONCLI s_netio_getConn(void)
    if( !conn )
    {
       auto pszServer = hb_parc(2);
-      auto iPort = hb_parni(3);
+      auto iPort = hb_parni32(3);
 
       s_fileGetConnParam(&pszServer, &iPort, nullptr, nullptr, nullptr);
       char * pszIpAddres = hb_socketResolveAddr(pszServer, HB_SOCKET_AF_INET);
@@ -1668,7 +1668,7 @@ static PHB_CONCLI s_netio_getConn(void)
  */
 HB_FUNC(NETIO_CLOSESTREAM)
 {
-   auto iStreamID = hb_parni(1);
+   auto iStreamID = hb_parni32(1);
    bool fResult = false;
 
    if( iStreamID )
@@ -1704,7 +1704,7 @@ HB_FUNC(NETIO_CLOSESTREAM)
  */
 HB_FUNC(NETIO_GETDATA)
 {
-   auto iStreamID = hb_parni(1);
+   auto iStreamID = hb_parni32(1);
 
    if( iStreamID )
    {

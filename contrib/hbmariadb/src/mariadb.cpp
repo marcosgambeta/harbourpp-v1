@@ -363,7 +363,7 @@ HB_FUNC(MYSQL_DATA_SEEK)
 
   if (mresult)
   {
-    mysql_data_seek(mresult, static_cast<uint32_t>(hb_parni(2)));
+    mysql_data_seek(mresult, static_cast<uint32_t>(hb_parni32(2)));
   }
   else
   {
@@ -430,7 +430,7 @@ HB_FUNC(MYSQL_FIELD_SEEK)
 
   if (mresult)
   {
-    mysql_field_seek(mresult, static_cast<MYSQL_FIELD_OFFSET>(hb_parni(2)));
+    mysql_field_seek(mresult, static_cast<MYSQL_FIELD_OFFSET>(hb_parni32(2)));
   }
   else
   {

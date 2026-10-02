@@ -285,7 +285,7 @@ HB_FUNC(__WAPI_DBGUNSAFEHANDLES)
   hb_retni(s_iDbgUnsafeMode);
 
   if (HB_ISNUM(1)) {
-    s_iDbgUnsafeMode = hb_parni(1);
+    s_iDbgUnsafeMode = hb_parni32(1);
   }
 }
 

@@ -152,7 +152,7 @@ HB_FUNC(HB_ZEBRA_CREATE_CODE11)
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
   if (pItem != nullptr) {
-    hb_zebra_ret(hb_zebra_create_code11(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
+    hb_zebra_ret(hb_zebra_create_code11(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni32(2)));
   } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

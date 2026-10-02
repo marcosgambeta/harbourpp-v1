@@ -538,6 +538,33 @@ int32_t hb_parni(int32_t iParam)
   return 0;
 }
 
+int32_t hb_parni32(int32_t iParam)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_parni32(%d)", iParam));
+#endif
+
+  HB_STACK_TLS_PRELOAD
+
+  if (iParam >= -1 && iParam <= hb_pcount()) {
+    auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
+
+    if (pItem->isByRef()) {
+      pItem = hb_itemUnRef(pItem);
+    }
+
+    if (pItem->isInteger()) {
+      return pItem->integerValue();
+    } else if (pItem->isLong()) {
+      return static_cast<int32_t>(pItem->longValue());
+    } else if (pItem->isDouble()) {
+      return HB_CAST_INT(pItem->doubleValue());
+    }
+  }
+
+  return 0;
+}
+
 int32_t hb_parnidef(int32_t iParam, int32_t iDefValue)
 {
 #if 0

@@ -1379,6 +1379,7 @@ extern HB_EXPORT int32_t hb_parldef(int32_t iParam, int32_t iDefValue);
 extern HB_EXPORT double hb_parnd(int32_t iParam);
 // retrieve a numeric parameter as a integer
 extern HB_EXPORT int32_t hb_parni(int32_t iParam);
+extern HB_EXPORT int32_t hb_parni32(int32_t iParam);
 // retrieve a numeric parameter as a integer, return default value if parameter isn't numeric
 extern HB_EXPORT int32_t hb_parnidef(int32_t iParam, int32_t iDefValue);
 // retrieve a numeric parameter as a long

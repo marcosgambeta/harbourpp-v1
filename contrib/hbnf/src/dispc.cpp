@@ -550,10 +550,10 @@ HB_FUNC(_FT_DFINIT)
 
    rval = 0;
 
-   dispc->sline = hb_parni(2);                            /* top row of window   */
-   dispc->scol  = hb_parni(3);                            /* left col            */
-   dispc->eline = hb_parni(4);                            /* bottom row          */
-   dispc->ecol  = hb_parni(5);                            /* right col           */
+   dispc->sline = hb_parni32(2);                            /* top row of window   */
+   dispc->scol  = hb_parni32(3);                            /* left col            */
+   dispc->eline = hb_parni32(4);                            /* bottom row          */
+   dispc->ecol  = hb_parni32(5);                            /* right col           */
 
    dispc->width  = dispc->ecol - dispc->scol;               /* calc width of window  */
    dispc->height = dispc->eline - dispc->sline + 1;         /* calc height of window */
@@ -569,7 +569,7 @@ HB_FUNC(_FT_DFINIT)
       hb_gtSave(dispc->sline, dispc->scol, dispc->eline, dispc->ecol, dispc->vseg);
    }
 
-   dispc->maxlin   = hb_parni(12);
+   dispc->maxlin   = hb_parni32(12);
    dispc->buffsize = hb_parns(13);                                    /* yes - load value */
 
    dispc->buffer = static_cast<char*>(hb_xalloc(dispc->buffsize));             /* allocate memory */
@@ -596,9 +596,9 @@ HB_FUNC(_FT_DFINIT)
    else                                                     /* get parameters            */
    {
       dispc->infile = hb_numToHandle(hb_parnint(1));    /* file handle               */
-      j = hb_parni(6);                                    /* starting line value       */
-      dispc->norm   = hb_parni(7);                        /* normal color attribute    */
-      dispc->hlight = hb_parni(8);                        /* highlight color attribute */
+      j = hb_parni32(6);                                    /* starting line value       */
+      dispc->norm   = hb_parni32(7);                        /* normal color attribute    */
+      dispc->hlight = hb_parni32(8);                        /* highlight color attribute */
 
       if( HB_ISARRAY(9) )
       {
@@ -630,7 +630,7 @@ HB_FUNC(_FT_DFINIT)
 
       dispc->bBrowse = hb_parl(10);              /* get browse flag   */
 
-      dispc->colinc = hb_parni(11);              /* column skip value */
+      dispc->colinc = hb_parni32(11);              /* column skip value */
 
       dispc->bufftop    = 0;                       /* init buffer top pointer      */
       dispc->buffbot    = dispc->buffsize;         /* init buffer bottom pointer   */

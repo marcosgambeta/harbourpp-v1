@@ -288,12 +288,12 @@ HB_FUNC(FI_ALLOCATE)
 {
   if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3))
   {
-    auto width = hb_parni(1);
-    auto height = hb_parni(2);
-    auto bpp = hb_parni(3);
-    auto red_mask = static_cast<unsigned>(hb_parni(4));
-    auto green_mask = static_cast<unsigned>(hb_parni(5));
-    auto blue_mask = static_cast<unsigned>(hb_parni(6));
+    auto width = hb_parni32(1);
+    auto height = hb_parni32(2);
+    auto bpp = hb_parni32(3);
+    auto red_mask = static_cast<unsigned>(hb_parni32(4));
+    auto green_mask = static_cast<unsigned>(hb_parni32(5));
+    auto blue_mask = static_cast<unsigned>(hb_parni32(6));
 
     hb_FIBITMAP_ret(FreeImage_Allocate(width, height, bpp, red_mask, green_mask, blue_mask), true);
   }
@@ -310,13 +310,13 @@ HB_FUNC(FI_ALLOCATET)
 {
   if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3))
   {
-    auto type = static_cast<FREE_IMAGE_TYPE>(hb_parni(1));
-    auto width = hb_parni(2);
-    auto height = hb_parni(3);
-    auto bpp = hb_parni(3);
-    auto red_mask = static_cast<unsigned>(hb_parni(4));
-    auto green_mask = static_cast<unsigned>(hb_parni(5));
-    auto blue_mask = static_cast<unsigned>(hb_parni(6));
+    auto type = static_cast<FREE_IMAGE_TYPE>(hb_parni32(1));
+    auto width = hb_parni32(2);
+    auto height = hb_parni32(3);
+    auto bpp = hb_parni32(3);
+    auto red_mask = static_cast<unsigned>(hb_parni32(4));
+    auto green_mask = static_cast<unsigned>(hb_parni32(5));
+    auto blue_mask = static_cast<unsigned>(hb_parni32(6));
 
     hb_FIBITMAP_ret(FreeImage_AllocateT(type, width, height, bpp, red_mask, green_mask, blue_mask), true);
   }
@@ -362,9 +362,9 @@ HB_FUNC(FI_LOADFROMMEMORY)
 {
   if (HB_ISNUM(1) && HB_ISCHAR(2) && HB_ISNUM(3))
   {
-    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
+    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni32(1));
     auto szImage = hb_parc(2);
-    auto flags = hb_parni(3);
+    auto flags = hb_parni32(3);
 
     FIMEMORY *stream =
         FreeImage_OpenMemory(reinterpret_cast<BYTE *>(const_cast<char *>(szImage)), static_cast<DWORD>(hb_parclen(2)));
@@ -388,9 +388,9 @@ HB_FUNC(FI_LOAD)
 {
   if (HB_ISNUM(1) && HB_ISCHAR(2) && HB_ISNUM(3))
   {
-    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
+    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni32(1));
     auto filename = hb_parc(2);
-    auto flags = hb_parni(3);
+    auto flags = hb_parni32(3);
 
     FIBITMAP *dib = FreeImage_Load(fif, filename, flags);
 
@@ -416,10 +416,10 @@ HB_FUNC(FI_SAVE)
 {
   if (HB_ISNUM(1) && hb_FIBITMAP_is(2) && HB_ISCHAR(3) && HB_ISNUM(4))
   {
-    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
+    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni32(1));
     FIBITMAP *dib = hb_FIBITMAP_par(2);
     auto filename = hb_parc(3);
-    auto flags = hb_parni(4);
+    auto flags = hb_parni32(4);
 
     hb_fi_retl(FreeImage_Save(fif, dib, filename, flags));
   }
@@ -479,13 +479,13 @@ HB_FUNC(FI_OPENMULTIBITMAP)
 {
   if (HB_ISNUM(1) && HB_ISCHAR(2) && HB_ISLOG(3) && HB_ISLOG(4))
   {
-    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
+    auto fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni32(1));
     auto filename = hb_parc(2);
 
     BOOL create_new = hb_fi_parl(3);
     BOOL read_only = hb_fi_parl(4);
     BOOL keep_cache_in_memory = hb_fi_parl(5);
-    auto flags = hb_parni(6);
+    auto flags = hb_parni32(6);
 
     FIMULTIBITMAP *dib = FreeImage_OpenMultiBitmap(fif, filename, create_new, read_only, keep_cache_in_memory, flags);
 
@@ -506,7 +506,7 @@ HB_FUNC(FI_CLOSEMULTIBITMAP)
   if (hb_FIMULTIBITMAP_is(1))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    auto flags = hb_parni(2);
+    auto flags = hb_parni32(2);
 
     hb_fi_retl(FreeImage_CloseMultiBitmap(bitmap, flags));
   }
@@ -553,7 +553,7 @@ HB_FUNC(FI_INSERTPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2) && hb_FIBITMAP_is(3))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    int32_t page = hb_parni(2) - 1; /* 0-based index */
+    int32_t page = hb_parni32(2) - 1; /* 0-based index */
     FIBITMAP *data = hb_FIBITMAP_par(3);
 
     FreeImage_InsertPage(bitmap, page, data);
@@ -570,7 +570,7 @@ HB_FUNC(FI_DELETEPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    int32_t page = hb_parni(2) - 1; /* 0-based index */
+    int32_t page = hb_parni32(2) - 1; /* 0-based index */
 
     FreeImage_DeletePage(bitmap, page);
   }
@@ -586,7 +586,7 @@ HB_FUNC(FI_LOCKPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    int32_t page = hb_parni(2) - 1; /* 0-based index */
+    int32_t page = hb_parni32(2) - 1; /* 0-based index */
 
     hb_FIBITMAP_ret(FreeImage_LockPage(bitmap, page), false);
   }
@@ -619,8 +619,8 @@ HB_FUNC(FI_MOVEPAGE)
   if (hb_FIMULTIBITMAP_is(1) && HB_ISNUM(2) && HB_ISNUM(3))
   {
     FIMULTIBITMAP *bitmap = hb_FIMULTIBITMAP_par(1);
-    auto target = hb_parni(2);
-    auto source = hb_parni(3);
+    auto target = hb_parni32(2);
+    auto source = hb_parni32(3);
 
     hb_fi_retl(FreeImage_MovePage(bitmap, target, source));
   }
@@ -660,7 +660,7 @@ HB_FUNC(FI_GETFILETYPEFROMMEMORY)
   {
     FIMEMORY *stream =
         FreeImage_OpenMemory(reinterpret_cast<BYTE *>(const_cast<char *>(hb_parc(1))), static_cast<int32_t>(hb_parclen(1)));
-    auto size = hb_parni(1);
+    auto size = hb_parni32(1);
 
     hb_retni(FreeImage_GetFileTypeFromMemory(stream, size));
 
@@ -718,7 +718,7 @@ HB_FUNC(FI_GETSCANLINE)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto scanline = hb_parni(2);
+    auto scanline = hb_parni32(2);
 
     hb_retptr(FreeImage_GetScanLine(dib, scanline));
   }
@@ -864,7 +864,7 @@ HB_FUNC(FI_SETDOTSPERMETERX)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto res = static_cast<unsigned>(hb_parni(2));
+    auto res = static_cast<unsigned>(hb_parni32(2));
 
     FreeImage_SetDotsPerMeterX(dib, res);
   }
@@ -880,7 +880,7 @@ HB_FUNC(FI_SETDOTSPERMETERY)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto res = static_cast<unsigned>(hb_parni(2));
+    auto res = static_cast<unsigned>(hb_parni32(2));
 
     FreeImage_SetDotsPerMeterY(dib, res);
   }
@@ -1013,7 +1013,7 @@ HB_FUNC(FI_SETTRANSPARENCYTABLE)
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
     auto table = static_cast<BYTE *>(hb_parptr(2));
-    auto count = hb_parni(3);
+    auto count = hb_parni32(3);
 
     FreeImage_SetTransparencyTable(dib, table, count);
   }
@@ -1263,7 +1263,7 @@ HB_FUNC(FI_COLORQUANTIZE)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto quantize = static_cast<FREE_IMAGE_QUANTIZE>(hb_parni(2));
+    auto quantize = static_cast<FREE_IMAGE_QUANTIZE>(hb_parni32(2));
 
     hb_FIBITMAP_ret(FreeImage_ColorQuantize(dib, quantize), true);
   }
@@ -1284,7 +1284,7 @@ HB_FUNC(FI_DITHER)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto algorithm = static_cast<FREE_IMAGE_DITHER>(hb_parni(2));
+    auto algorithm = static_cast<FREE_IMAGE_DITHER>(hb_parni32(2));
 
     hb_FIBITMAP_ret(FreeImage_Dither(dib, algorithm), true);
   }
@@ -1334,7 +1334,7 @@ HB_FUNC(FI_CONVERTTOTYPE)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto dst_type = static_cast<FREE_IMAGE_TYPE>(hb_parni(2));
+    auto dst_type = static_cast<FREE_IMAGE_TYPE>(hb_parni32(2));
     BOOL scale_linear = HB_ISLOG(3) ? hb_fi_parl(3) : TRUE;
 
     hb_FIBITMAP_ret(FreeImage_ConvertToType(dib, dst_type, scale_linear), true);
@@ -1488,9 +1488,9 @@ HB_FUNC(FI_RESCALE)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto dst_width = hb_parni(2);
-    auto dst_height = hb_parni(3);
-    auto filter = static_cast<FREE_IMAGE_FILTER>(hb_parni(4));
+    auto dst_width = hb_parni32(2);
+    auto dst_height = hb_parni32(3);
+    auto filter = static_cast<FREE_IMAGE_FILTER>(hb_parni32(4));
 
     hb_FIBITMAP_ret(FreeImage_Rescale(dib, dst_width, dst_height, filter), true);
   }
@@ -1575,7 +1575,7 @@ HB_FUNC(FI_GETCHANNEL)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto channel = static_cast<FREE_IMAGE_COLOR_CHANNEL>(hb_parni(2));
+    auto channel = static_cast<FREE_IMAGE_COLOR_CHANNEL>(hb_parni32(2));
 
     hb_FIBITMAP_ret(FreeImage_GetChannel(dib, channel), true);
   }
@@ -1598,10 +1598,10 @@ HB_FUNC(FI_COPY)
   if (hb_FIBITMAP_is(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5))
   {
     FIBITMAP *dib = hb_FIBITMAP_par(1);
-    auto left = hb_parni(2);
-    auto top = hb_parni(3);
-    auto right = hb_parni(4);
-    auto bottom = hb_parni(5);
+    auto left = hb_parni32(2);
+    auto top = hb_parni32(3);
+    auto right = hb_parni32(4);
+    auto bottom = hb_parni32(5);
 
     hb_FIBITMAP_ret(FreeImage_Copy(dib, left, top, right, bottom), true);
   }
@@ -1618,9 +1618,9 @@ HB_FUNC(FI_PASTE)
   {
     FIBITMAP *dst = hb_FIBITMAP_par(1);
     FIBITMAP *src = hb_FIBITMAP_par(2);
-    auto left = hb_parni(3);
-    auto top = hb_parni(4);
-    auto alpha = hb_parni(5);
+    auto left = hb_parni32(3);
+    auto top = hb_parni32(4);
+    auto alpha = hb_parni32(5);
 
     hb_fi_retl(FreeImage_Paste(dst, src, left, top, alpha));
   }
@@ -1709,10 +1709,10 @@ HB_FUNC(FI_WINDRAW)
         HB_ISNUM(2) ? reinterpret_cast<HDC>(static_cast<uintptr_t>(hb_parnint(2))) : static_cast<HDC>(hb_parptr(2));
     RECT rcDest;
 
-    rcDest.top = hb_parni(3);
-    rcDest.left = hb_parni(4);
-    rcDest.bottom = hb_parni(5);
-    rcDest.right = hb_parni(6);
+    rcDest.top = hb_parni32(3);
+    rcDest.left = hb_parni32(4);
+    rcDest.bottom = hb_parni32(5);
+    rcDest.right = hb_parni32(6);
 
     /* run function */
     SetStretchBltMode(hDC, COLORONCOLOR);

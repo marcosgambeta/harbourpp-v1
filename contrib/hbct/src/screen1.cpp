@@ -60,10 +60,10 @@ HB_FUNC(SCREENATTR)
 
   hb_gtGetPos(&iRow, &iCol);
   if (HB_ISNUM(1)) {
-    iRow = hb_parni(1);
+    iRow = hb_parni32(1);
   }
   if (HB_ISNUM(2)) {
-    iCol = hb_parni(2);
+    iCol = hb_parni32(2);
   }
 
   if (hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar) != Harbour::SUCCESS) {
@@ -92,10 +92,10 @@ HB_FUNC(SCREENMIX)
 
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(3)) {
-      iRow = hb_parni(3);
+      iRow = hb_parni32(3);
     }
     if (HB_ISNUM(4)) {
-      iCol = hb_parni(4);
+      iCol = hb_parni32(4);
     }
 
     if (iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol()) {
@@ -141,10 +141,10 @@ HB_FUNC(SAYSCREEN)
 
     hb_gtGetPos(&iRow, &iCol);
     if (HB_ISNUM(2)) {
-      iRow = hb_parni(2);
+      iRow = hb_parni32(2);
     }
     if (HB_ISNUM(3)) {
-      iCol = hb_parni(3);
+      iCol = hb_parni32(3);
     }
 
     if (iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol()) {
@@ -185,13 +185,13 @@ static HB_BOOL hb_ctGetWinCord(int32_t *piTop, int32_t *piLeft, int32_t *piBotto
   hb_gtGetPos(piTop, piLeft);
 
   if (HB_ISNUM(1)) {
-    *piTop = hb_parni(1);
+    *piTop = hb_parni32(1);
   }
   if (HB_ISNUM(2)) {
-    *piLeft = hb_parni(2);
+    *piLeft = hb_parni32(2);
   }
   if (HB_ISNUM(3)) {
-    *piBottom = hb_parni(3);
+    *piBottom = hb_parni32(3);
     if (*piBottom > iMaxRow) {
       *piBottom = iMaxRow;
     }
@@ -199,7 +199,7 @@ static HB_BOOL hb_ctGetWinCord(int32_t *piTop, int32_t *piLeft, int32_t *piBotto
     *piBottom = iMaxRow;
   }
   if (HB_ISNUM(4)) {
-    *piRight = hb_parni(4);
+    *piRight = hb_parni32(4);
     if (*piRight > iMaxCol) {
       *piRight = iMaxCol;
     }
@@ -215,7 +215,7 @@ static int32_t hb_ctGetClearChar(int32_t iParam)
   int32_t iChar;
 
   if (HB_ISNUM(iParam)) {
-    iChar = hb_parni(iParam);
+    iChar = hb_parni32(iParam);
   } else if (HB_ISCHAR(iParam)) {
     iChar = static_cast<uint8_t>(hb_parc(iParam)[0]);
   } else {
@@ -230,7 +230,7 @@ static int32_t hb_ctGetClearColor(int32_t iParam)
   int32_t iColor;
 
   if (HB_ISNUM(iParam)) {
-    iColor = hb_parni(iParam);
+    iColor = hb_parni32(iParam);
   } else if (HB_ISCHAR(iParam)) {
     iColor = hb_gtColorToN(hb_parc(iParam));
     if (iColor == -1) {
@@ -295,7 +295,7 @@ HB_FUNC(UNTEXTWIN)
     auto usRepl = static_cast<uint16_t>(hb_ctGetClearChar(5));
 
     if (HB_ISNUM(6)) {
-      usInit = static_cast<uint16_t>(hb_parni(6));
+      usInit = static_cast<uint16_t>(hb_parni32(6));
     } else if (hb_parclen(6) > 0) {
       usInit = static_cast<uint8_t>(hb_parc(6)[0]);
     } else {
@@ -303,7 +303,7 @@ HB_FUNC(UNTEXTWIN)
     }
 
     if (HB_ISNUM(7)) {
-      usEnd = static_cast<uint16_t>(hb_parni(7));
+      usEnd = static_cast<uint16_t>(hb_parni32(7));
     } else if (hb_parclen(7) > 0) {
       usEnd = static_cast<uint8_t>(hb_parc(7)[0]);
     } else {
@@ -343,7 +343,7 @@ HB_FUNC(CHARWIN)
     auto usNewChar = static_cast<uint16_t>(hb_ctGetClearChar(5));
 
     if (HB_ISNUM(6)) {
-      usOldChar = static_cast<uint16_t>(hb_parni(6));
+      usOldChar = static_cast<uint16_t>(hb_parni32(6));
     } else if (hb_parclen(6) > 0) {
       usOldChar = static_cast<uint8_t>(hb_parc(6)[0]);
     } else {

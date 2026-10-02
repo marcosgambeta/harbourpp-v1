@@ -201,7 +201,7 @@ static int32_t s_zlibUncompress(char *pDst, HB_SIZE *pnDst, const char *pSrc, HB
  */
 HB_FUNC(HB_ZLIBVERSION)
 {
-  if (hb_parni(1) == 1) {
+  if (hb_parni32(1) == 1) {
     hb_retc_const(ZLIB_VERSION);
   } else
 #if defined(HB_OS_QNX)
@@ -450,7 +450,7 @@ HB_FUNC(HB_ZERROR)
   /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
   hb_retc_null();
 #else
-  hb_retc(zError(hb_parni(1)));
+  hb_retc(zError(hb_parni32(1)));
 #endif
 }
 

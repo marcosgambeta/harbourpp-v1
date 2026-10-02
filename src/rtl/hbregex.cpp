@@ -271,7 +271,7 @@ static bool hb_regex(int32_t iRequest)
       break;
 
     case 3: /* SPLIT */
-      iMaxMatch = hb_parni(5);
+      iMaxMatch = hb_parni32(5);
       pRetArray = hb_itemArrayNew(0);
       pMatch = hb_itemNew(nullptr);
       iMatches = 0;
@@ -323,8 +323,8 @@ static bool hb_regex(int32_t iRequest)
 
     case 5: { /* _ALL_ results AND positions */
       HB_ITEM *pAtxArray;
-      auto iMax = hb_parni(5);               /* max nuber of matches I want, 0 = unlimited */
-      auto iGetMatch = hb_parni(6);          /* Gets if want only one single match or a sub-match */
+      auto iMax = hb_parni32(5);               /* max nuber of matches I want, 0 = unlimited */
+      auto iGetMatch = hb_parni32(6);          /* Gets if want only one single match or a sub-match */
       bool fOnlyMatch = hb_parldef(7, true); /* if true returns only matches and sub-matches, not positions */
       HB_SIZE nOffset = 0;
       int32_t iCount = 0;

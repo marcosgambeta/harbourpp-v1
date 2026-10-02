@@ -115,7 +115,7 @@ HB_FUNC(WAPI_ENDDIALOG)
 
 HB_FUNC(WAPI_CHECKDLGBUTTON)
 {
-  BOOL bResult = CheckDlgButton(hbwapi_par_raw_HWND(1), hb_parni(2),
+  BOOL bResult = CheckDlgButton(hbwapi_par_raw_HWND(1), hb_parni32(2),
                                 HB_ISNUM(3) ? hbwapi_par_UINT(3) : static_cast<UINT>(hb_parl(3)));
   hbwapi_SetLastError(GetLastError());
   hbwapi_ret_L(bResult);
@@ -123,7 +123,7 @@ HB_FUNC(WAPI_CHECKDLGBUTTON)
 
 HB_FUNC(WAPI_ISDLGBUTTONCHECKED)
 {
-  int32_t iResult = IsDlgButtonChecked(hbwapi_par_raw_HWND(1), hb_parni(2));
+  int32_t iResult = IsDlgButtonChecked(hbwapi_par_raw_HWND(1), hb_parni32(2));
   hbwapi_SetLastError(GetLastError());
   hb_retni(iResult);
 }
@@ -186,7 +186,7 @@ HB_FUNC(WAPI_SENDDLGITEMMESSAGE) // NOTE: unsafe function, may corrupt memory
     szText = HB_STRUNSHARE(&hText, szText, nLen);
   }
 
-  result = SendDlgItemMessage(hbwapi_par_raw_HWND(1), hb_parni(2), hbwapi_par_UINT(3), hbwapi_par_WPARAM(4),
+  result = SendDlgItemMessage(hbwapi_par_raw_HWND(1), hb_parni32(2), hbwapi_par_UINT(3), hbwapi_par_WPARAM(4),
                               szText ? reinterpret_cast<LPARAM>(szText) : hbwapi_par_LPARAM(5));
   hbwapi_SetLastError(GetLastError());
   hb_retnint(result);

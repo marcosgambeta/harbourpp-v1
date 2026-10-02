@@ -313,7 +313,7 @@ HB_FUNC(HB_INETCREATE)
   HB_SOCKET_INIT(socket, pSocket);
 
   if (HB_ISNUM(1)) {
-    socket->iTimeout = hb_parni(1);
+    socket->iTimeout = hb_parni32(1);
   }
 
   hb_itemReturnRelease(pSocket);
@@ -486,7 +486,7 @@ HB_FUNC(HB_INETTIMEOUT)
     hb_retni(socket->iTimeout);
 
     if (HB_ISNUM(2)) {
-      socket->iTimeout = hb_parni(2);
+      socket->iTimeout = hb_parni32(2);
     }
   } else {
     hb_inetErrRT();
@@ -512,7 +512,7 @@ HB_FUNC(HB_INETTIMELIMIT)
     hb_retni(socket->iTimeLimit);
 
     if (HB_ISNUM(2)) {
-      socket->iTimeLimit = hb_parni(2);
+      socket->iTimeLimit = hb_parni32(2);
     }
   } else {
     hb_inetErrRT();
@@ -608,7 +608,7 @@ HB_FUNC(HB_INETSETSNDBUFSIZE)
   if (socket) {
     int32_t iSize = -1;
     if (hb_inetIsOpen(socket)) {
-      iSize = hb_parni(2);
+      iSize = hb_parni32(2);
       hb_socketSetSndBufSize(socket->sd, iSize);
     }
     hb_retni(iSize);
@@ -624,7 +624,7 @@ HB_FUNC(HB_INETSETRCVBUFSIZE)
   if (socket) {
     int32_t iSize = -1;
     if (hb_inetIsOpen(socket)) {
-      iSize = hb_parni(2);
+      iSize = hb_parni32(2);
       hb_socketSetRcvBufSize(socket->sd, iSize);
     }
     hb_retni(iSize);
@@ -700,7 +700,7 @@ static void s_inetRecvInternal(int32_t iMode)
     }
 
     if (HB_ISNUM(3)) {
-      iMaxLen = hb_parni(3);
+      iMaxLen = hb_parni32(3);
       if (iMaxLen < 0) {
         iMaxLen = 0;
       } else if (iLen < iMaxLen) {
@@ -965,7 +965,7 @@ static void s_inetSendInternal(HB_BOOL lAll)
     buffer = pBuffer->getCPtr();
     iSend = static_cast<int32_t>(pBuffer->getCLen());
     if (HB_ISNUM(3)) {
-      iLen = hb_parni(3);
+      iLen = hb_parni32(3);
       if (iLen < iSend) {
         iSend = iLen;
       }
@@ -1096,7 +1096,7 @@ HB_FUNC(HB_INETSERVER)
   if (socket->sd == HB_NO_SOCKET) {
     hb_inetGetError(socket);
   } else {
-    auto iPort = hb_parni(1);
+    auto iPort = hb_parni32(1);
     auto szAddress = hb_parc(3);
     auto iListen = hb_parnidef(4, 10);
 
@@ -1154,7 +1154,7 @@ static void hb_inetConnectInternal(HB_BOOL fResolve)
   auto szHost = hb_parc(1);
   char *szAddr = nullptr;
   PHB_SOCKET_STRUCT socket = HB_PARSOCKET(3);
-  auto iPort = hb_parni(2);
+  auto iPort = hb_parni32(2);
 
   if (szHost == nullptr || iPort == 0 || (socket == nullptr && !HB_ISNIL(3))) {
     hb_inetErrRT();
@@ -1224,7 +1224,7 @@ HB_FUNC(HB_INETDGRAMBIND)
 {
   PHB_SOCKET_STRUCT socket;
   HB_ITEM *pSocket = nullptr;
-  auto iPort = hb_parni(1);
+  auto iPort = hb_parni32(1);
   const char *szAddress;
 
   // Parameter error checking
@@ -1292,7 +1292,7 @@ HB_FUNC(HB_INETDGRAMSEND)
 {
   PHB_SOCKET_STRUCT socket = HB_PARSOCKET(1);
   auto szAddress = hb_parc(2);
-  auto iPort = hb_parni(3);
+  auto iPort = hb_parni32(3);
   auto pBuffer = hb_param(4, Harbour::Item::STRING);
   int32_t iLen;
   const char *szBuffer;
@@ -1314,7 +1314,7 @@ HB_FUNC(HB_INETDGRAMSEND)
       szBuffer = pBuffer->getCPtr();
       iLen = static_cast<int32_t>(pBuffer->getCLen());
       if (HB_ISNUM(5)) {
-        auto iMaxLen = hb_parni(5);
+        auto iMaxLen = hb_parni32(5);
         if (iMaxLen < iLen) {
           iLen = HB_MAX(iMaxLen, 0);
         }
@@ -1352,7 +1352,7 @@ HB_FUNC(HB_INETDGRAMRECV)
       iLen = static_cast<int32_t>(nLen);
     }
     if (HB_ISNUM(3)) {
-      iMax = hb_parni(3);
+      iMax = hb_parni32(3);
       if (iMax < iLen) {
         iLen = HB_MAX(iMax, 0);
       }

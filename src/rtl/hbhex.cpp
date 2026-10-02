@@ -87,7 +87,7 @@ HB_FUNC(HB_NUMTOHEX)
   char ret[33];
 
   if (HB_ISNUM(2)) {
-    iLen = hb_parni(2);
+    iLen = hb_parni32(2);
     iLen = (iLen < 1) ? 1 : ((iLen > 32) ? 32 : iLen);
     fDefaultLen = false;
   } else {

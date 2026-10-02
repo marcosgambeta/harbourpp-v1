@@ -90,10 +90,10 @@ HB_FUNC(WVW_SETTOOLTIP)
   auto wvw_win = hb_gt_wvw_win_par();
 
   if (wvw_win && wvw_win->fToolTipActive) {
-    auto iTop = hb_parni(2);
-    auto iLeft = hb_parni(3);
-    auto iBottom = hb_parni(4);
-    auto iRight = hb_parni(5);
+    auto iTop = hb_parni32(2);
+    auto iLeft = hb_parni32(3);
+    auto iBottom = hb_parni32(4);
+    auto iRight = hb_parni32(5);
 
     hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
@@ -157,10 +157,10 @@ HB_FUNC(WVW_SETTOOLTIPMARGIN)
 
   if (wvw_win) {
     RECT rc;
-    rc.left = hb_parni(3);
-    rc.top = hb_parni(2);
-    rc.right = hb_parni(5);
-    rc.bottom = hb_parni(4);
+    rc.left = hb_parni32(3);
+    rc.top = hb_parni32(2);
+    rc.right = hb_parni32(5);
+    rc.bottom = hb_parni32(4);
 
     SendMessage(wvw_win->hWndTT, TTM_SETMARGIN, 0, reinterpret_cast<LPARAM>(&rc));
   }
@@ -176,7 +176,7 @@ HB_FUNC(WVW_SETTOOLTIPWIDTH)
     hb_retni(static_cast<int32_t>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
 
     if (HB_ISNUM(2)) {
-      SendMessage(wvw_win->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(hb_parni(2)));
+      SendMessage(wvw_win->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(hb_parni32(2)));
     }
 
     return;
@@ -229,7 +229,7 @@ HB_FUNC(WVW_SETTOOLTIPTITLE)
   if (wvw_win && HB_ISCHAR(3)) {
     void *hText;
 
-    auto iIcon = hb_parni(2);
+    auto iIcon = hb_parni32(2);
     if (iIcon > 3) {
       iIcon = 0;
     }

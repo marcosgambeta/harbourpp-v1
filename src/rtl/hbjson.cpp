@@ -649,7 +649,7 @@ HB_FUNC(HB_JSONENCODE)
 
   if (pItem != nullptr) {
     HB_SIZE nLen;
-    int32_t iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni(2);
+    int32_t iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni32(2);
     char *szRet = hb_jsonEncodeCP(pItem, &nLen, iIndent, _hb_jsonCdpPar(3));
     hb_retclen_buffer(szRet, nLen);
   }

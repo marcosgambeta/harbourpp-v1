@@ -132,7 +132,7 @@ HB_FUNC(HB_SSL_STATIC)
 
 HB_FUNC(OPENSSL_VERSION)
 {
-  int32_t value = hb_parni(1);
+  int32_t value = hb_parni32(1);
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L &&                                                                           \
     (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER >= 0x30500000L)
@@ -569,7 +569,7 @@ HB_FUNC(SSL_READ)
 
       if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
         if (HB_ISNUM(3)) {
-          nRead = hb_parni(3);
+          nRead = hb_parni32(3);
           if (nRead >= 0 && nRead < (int32_t)nLen)
             nLen = nRead;
         }
@@ -597,7 +597,7 @@ HB_FUNC(SSL_PEEK)
 
       if (pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen)) {
         if (HB_ISNUM(3)) {
-          nRead = hb_parni(3);
+          nRead = hb_parni32(3);
           if (nRead >= 0 && nRead < (int32_t)nLen)
             nLen = nRead;
         }
@@ -651,9 +651,9 @@ HB_FUNC(SSL_SET_SSL_METHOD)
 
     if (ssl)
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      hb_retni(SSL_set_ssl_method(ssl, (SSL_METHOD *)hb_ssl_method_id_to_ptr(hb_parni(2))));
+      hb_retni(SSL_set_ssl_method(ssl, (SSL_METHOD *)hb_ssl_method_id_to_ptr(hb_parni32(2))));
 #else
-      hb_retni(SSL_set_ssl_method(ssl, hb_ssl_method_id_to_ptr(hb_parni(2))));
+      hb_retni(SSL_set_ssl_method(ssl, hb_ssl_method_id_to_ptr(hb_parni32(2))));
 #endif
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -753,7 +753,7 @@ HB_FUNC(SSL_GET_CIPHER_LIST)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      hb_retc(SSL_get_cipher_list(ssl, hb_parni(2)));
+      hb_retc(SSL_get_cipher_list(ssl, hb_parni32(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -834,22 +834,22 @@ HB_FUNC(SSL_SET_TLSEXT_HOST_NAME)
 
 HB_FUNC(SSL_ALERT_DESC_STRING)
 {
-  hb_retc(SSL_alert_desc_string(hb_parni(1)));
+  hb_retc(SSL_alert_desc_string(hb_parni32(1)));
 }
 
 HB_FUNC(SSL_ALERT_DESC_STRING_LONG)
 {
-  hb_retc(SSL_alert_desc_string_long(hb_parni(1)));
+  hb_retc(SSL_alert_desc_string_long(hb_parni32(1)));
 }
 
 HB_FUNC(SSL_ALERT_TYPE_STRING)
 {
-  hb_retc(SSL_alert_type_string(hb_parni(1)));
+  hb_retc(SSL_alert_type_string(hb_parni32(1)));
 }
 
 HB_FUNC(SSL_ALERT_TYPE_STRING_LONG)
 {
-  hb_retc(SSL_alert_type_string_long(hb_parni(1)));
+  hb_retc(SSL_alert_type_string_long(hb_parni32(1)));
 }
 
 HB_FUNC(SSL_RSTATE_STRING)
@@ -943,7 +943,7 @@ HB_FUNC(SSL_GET_ERROR)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      hb_retni(SSL_get_error(ssl, hb_parni(2)));
+      hb_retni(SSL_get_error(ssl, hb_parni32(2)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1204,7 +1204,7 @@ HB_FUNC(SSL_SET_VERIFY)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      SSL_set_verify(ssl, hb_parni(2), nullptr);
+      SSL_set_verify(ssl, hb_parni32(2), nullptr);
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1215,7 +1215,7 @@ HB_FUNC(SSL_SET_QUIET_SHUTDOWN)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      SSL_set_quiet_shutdown(ssl, hb_parni(2));
+      SSL_set_quiet_shutdown(ssl, hb_parni32(2));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1226,7 +1226,7 @@ HB_FUNC(SSL_SET_READ_AHEAD)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      SSL_set_read_ahead(ssl, hb_parni(2) /* yes */);
+      SSL_set_read_ahead(ssl, hb_parni32(2) /* yes */);
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1237,7 +1237,7 @@ HB_FUNC(SSL_SET_SHUTDOWN)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      SSL_set_shutdown(ssl, hb_parni(2) /* mode */);
+      SSL_set_shutdown(ssl, hb_parni32(2) /* mode */);
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1352,7 +1352,7 @@ HB_FUNC(SSL_USE_CERTIFICATE_FILE)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      hb_retni(SSL_use_certificate_file(ssl, hb_parc(2), hb_parni(3)));
+      hb_retni(SSL_use_certificate_file(ssl, hb_parc(2), hb_parni32(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1363,7 +1363,7 @@ HB_FUNC(SSL_USE_PRIVATEKEY_FILE)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      hb_retni(SSL_use_PrivateKey_file(ssl, hb_parc(2), hb_parni(3)));
+      hb_retni(SSL_use_PrivateKey_file(ssl, hb_parc(2), hb_parni32(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1374,7 +1374,7 @@ HB_FUNC(SSL_USE_RSAPRIVATEKEY_FILE)
     SSL *ssl = hb_SSL_par(1);
 
     if (ssl)
-      hb_retni(SSL_use_RSAPrivateKey_file(ssl, hb_parc(2), hb_parni(3)));
+      hb_retni(SSL_use_RSAPrivateKey_file(ssl, hb_parc(2), hb_parni32(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -1471,7 +1471,7 @@ HB_FUNC(SSL_USE_PRIVATEKEY_ASN1)
     SSL *ssl = hb_SSL_par(2);
 
     if (ssl)
-      hb_retni(SSL_use_PrivateKey_ASN1(hb_parni(1), ssl, (HB_SSL_CONST unsigned char *)hb_parc(3), (int32_t)hb_parclen(3)));
+      hb_retni(SSL_use_PrivateKey_ASN1(hb_parni32(1), ssl, (HB_SSL_CONST unsigned char *)hb_parc(3), (int32_t)hb_parclen(3)));
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

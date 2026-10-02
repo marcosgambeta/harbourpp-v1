@@ -1114,7 +1114,7 @@ HB_FUNC(WACREATEDIALOGPARAM)
 {
   void *str{};
   wa_ret_HWND(CreateDialogParam(wa_par_HINSTANCE(1),
-                                HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni(2)),
+                                HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni32(2)),
                                 wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
   hb_strfree(str);
 }
@@ -1165,7 +1165,7 @@ HB_FUNC(WADIALOGBOXPARAM)
 {
   void *str{};
   wa_ret_INT_PTR(DialogBoxParam(wa_par_HINSTANCE(1),
-                                HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni(2)),
+                                HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni32(2)),
                                 wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
   hb_strfree(str);
 }
@@ -3848,7 +3848,7 @@ HB_FUNC(WALOADCURSOR)
 {
   void *str2{};
   wa_ret_HCURSOR(
-      LoadCursor(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str2, nullptr) : MAKEINTRESOURCE(hb_parni(2))));
+      LoadCursor(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str2, nullptr) : MAKEINTRESOURCE(hb_parni32(2))));
   hb_strfree(str2);
 }
 

@@ -136,7 +136,7 @@ HB_FUNC(HB_ZEBRA_DRAW)
     auto pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
     if (pDrawBlock) {
       hb_retni(
-          hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));
+          hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni32(7)));
     } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     }
@@ -260,8 +260,8 @@ HB_FUNC(HB_ZEBRA_GETBITMAP)
   if (pZebra) {
     HB_SIZE nSize;
     int32_t iWidth, iHeight;
-    unsigned char *pBitMap = hb_zebra_getbitmap(pZebra, hb_parni(2), hb_parl(3), &nSize, &iWidth, &iHeight, hb_parni(6),
-                                                hb_parni(7), hb_parni(8));
+    unsigned char *pBitMap = hb_zebra_getbitmap(pZebra, hb_parni32(2), hb_parl(3), &nSize, &iWidth, &iHeight, hb_parni32(6),
+                                                hb_parni32(7), hb_parni32(8));
 
     hb_storni(iWidth, 4);
     hb_storni(iHeight, 5);

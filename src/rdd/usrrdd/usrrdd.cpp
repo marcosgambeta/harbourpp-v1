@@ -118,7 +118,7 @@ static bool hb_usrPushMethod(HB_ITEM *pMethods, uint16_t uiMethod)
 
 static HB_ERRCODE hb_usrReturn(void)
 {
-  HB_ERRCODE errCode = hb_parni(-1);
+  HB_ERRCODE errCode = hb_parni32(-1);
 
   /*
    * clear the return value - it's not strictly necessary and Clipper
@@ -3072,7 +3072,7 @@ HB_FUNC(USRRDD_GETFUNCTABLE)
   auto pSelfTable = static_cast<RDDFUNCS *>(hb_parptr(2));
   auto pSuperTable = static_cast<RDDFUNCS *>(hb_parptr(3));
 #if 0
-   uiRddID = hb_parni(4);
+   uiRddID = hb_parni32(4);
 #endif
   auto szSuperRDD = hb_parc(5);
   auto pMethods = hb_param(6, Harbour::Item::ARRAY);
@@ -3110,7 +3110,7 @@ HB_FUNC(USRRDD_GETFUNCTABLE)
 
 HB_FUNC(USRRDD_RDDDATA)
 {
-  uint16_t uiRddID = static_cast<uint16_t>(hb_parni(1));
+  uint16_t uiRddID = static_cast<uint16_t>(hb_parni32(1));
 
   if (uiRddID < s_uiUsrNodes && s_pUsrRddNodes[uiRddID]) {
     HB_ITEM *pItem = s_pUsrRddNodes[uiRddID]->pItem;
@@ -3135,7 +3135,7 @@ HB_FUNC(USRRDD_ID)
     AREAP pArea;
 
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3151,7 +3151,7 @@ HB_FUNC(USRRDD_AREADATA)
   AREAP pArea;
 
   if (HB_ISNUM(1)) {
-    pArea = hb_usrGetAreaPointer(hb_parni(1));
+    pArea = hb_usrGetAreaPointer(hb_parni32(1));
   } else {
     pArea = static_cast<AREAP>(hb_parptr(1));
   }
@@ -3171,7 +3171,7 @@ HB_FUNC(USRRDD_AREARESULT)
   AREAP pArea;
 
   if (HB_ISNUM(1)) {
-    pArea = hb_usrGetAreaPointer(hb_parni(1));
+    pArea = hb_usrGetAreaPointer(hb_parni32(1));
   } else {
     pArea = static_cast<AREAP>(hb_parptr(1));
   }
@@ -3194,7 +3194,7 @@ HB_FUNC(USRRDD_SETBOF)
     AREAP pArea;
 
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3211,7 +3211,7 @@ HB_FUNC(USRRDD_SETEOF)
     AREAP pArea;
 
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3228,7 +3228,7 @@ HB_FUNC(USRRDD_SETFOUND)
     AREAP pArea;
 
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3245,7 +3245,7 @@ HB_FUNC(USRRDD_SETTOP)
     AREAP pArea;
 
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3262,7 +3262,7 @@ HB_FUNC(USRRDD_SETBOTTOM)
     AREAP pArea;
 
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3301,7 +3301,7 @@ static AREAP hb_usrGetAreaParam(int32_t iParams)
 
   if (iParams <= hb_pcount()) {
     if (HB_ISNUM(1)) {
-      pArea = hb_usrGetAreaPointer(hb_parni(1));
+      pArea = hb_usrGetAreaPointer(hb_parni32(1));
     } else {
       pArea = static_cast<AREAP>(hb_parptr(1));
     }
@@ -3330,7 +3330,7 @@ static LPRDDNODE hb_usrGetNodeParam(int32_t iParams)
   uint16_t uiNode = 0;
 
   if (iParams <= hb_pcount()) {
-    uiNode = static_cast<uint16_t>(hb_parni(1));
+    uiNode = static_cast<uint16_t>(hb_parni32(1));
     pRDD = hb_rddGetNode(uiNode);
     if (pRDD && uiNode < s_uiUsrNodes && s_pUsrRddNodes[uiNode]) {
       return pRDD;
@@ -3511,7 +3511,7 @@ HB_FUNC_UR_SUPER(FIELDNAME)
   if (pArea != nullptr) {
     auto szName = static_cast<char *>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
 
-    hb_retni(SUPER_FIELDNAME(pArea, static_cast<uint16_t>(hb_parni(2)), szName));
+    hb_retni(SUPER_FIELDNAME(pArea, static_cast<uint16_t>(hb_parni32(2)), szName));
     hb_storc(szName, 3);
     hb_xfree(szName);
   }
@@ -3616,7 +3616,7 @@ HB_FUNC_UR_SUPER(GETVALUE)
   AREAP pArea = hb_usrGetAreaParam(3);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_GETVALUE(pArea, static_cast<uint16_t>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
+    hb_retni(SUPER_GETVALUE(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_param(3, Harbour::Item::ANY)));
   }
 }
 
@@ -3625,7 +3625,7 @@ HB_FUNC_UR_SUPER(PUTVALUE)
   AREAP pArea = hb_usrGetAreaParam(3);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_PUTVALUE(pArea, static_cast<uint16_t>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
+    hb_retni(SUPER_PUTVALUE(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_param(3, Harbour::Item::ANY)));
   }
 }
 
@@ -3636,7 +3636,7 @@ HB_FUNC_UR_SUPER(GETVARLEN)
   if (pArea != nullptr) {
     HB_ULONG ulLength;
 
-    hb_retni(SUPER_GETVARLEN(pArea, static_cast<uint16_t>(hb_parni(2)), &ulLength));
+    hb_retni(SUPER_GETVARLEN(pArea, static_cast<uint16_t>(hb_parni32(2)), &ulLength));
     hb_stornl(ulLength, 3);
   }
 }
@@ -3658,7 +3658,7 @@ HB_FUNC_UR_SUPER(RECINFO)
   AREAP pArea = hb_usrGetAreaParam(4);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_RECINFO(pArea, hb_param(2, Harbour::Item::ANY), static_cast<uint16_t>(hb_parni(3)),
+    hb_retni(SUPER_RECINFO(pArea, hb_param(2, Harbour::Item::ANY), static_cast<uint16_t>(hb_parni32(3)),
                            hb_param(4, Harbour::Item::ANY)));
   }
 }
@@ -3689,7 +3689,7 @@ HB_FUNC_UR_SUPER(FIELDINFO)
   AREAP pArea = hb_usrGetAreaParam(4);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_FIELDINFO(pArea, static_cast<uint16_t>(hb_parni(2)), static_cast<uint16_t>(hb_parni(3)),
+    hb_retni(SUPER_FIELDINFO(pArea, static_cast<uint16_t>(hb_parni32(2)), static_cast<uint16_t>(hb_parni32(3)),
                              hb_param(4, Harbour::Item::ANY)));
   }
 }
@@ -3708,7 +3708,7 @@ HB_FUNC_UR_SUPER(SETFIELDEXTENT)
   AREAP pArea = hb_usrGetAreaParam(2);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_SETFIELDEXTENT(pArea, static_cast<uint16_t>(hb_parni(2))));
+    hb_retni(SUPER_SETFIELDEXTENT(pArea, static_cast<uint16_t>(hb_parni32(2))));
   }
 }
 
@@ -3770,7 +3770,7 @@ HB_FUNC_UR_SUPER(INFO)
   AREAP pArea = hb_usrGetAreaParam(3);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_INFO(pArea, static_cast<uint16_t>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
+    hb_retni(SUPER_INFO(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_param(3, Harbour::Item::ANY)));
   }
 }
 
@@ -3953,7 +3953,7 @@ HB_FUNC_UR_SUPER(RELAREA)
   if (pArea != nullptr) {
     uint16_t uiRelArea;
 
-    hb_retni(SUPER_RELAREA(pArea, static_cast<uint16_t>(hb_parni(2)), &uiRelArea));
+    hb_retni(SUPER_RELAREA(pArea, static_cast<uint16_t>(hb_parni32(2)), &uiRelArea));
     hb_storni(uiRelArea, 3);
   }
 }
@@ -3979,7 +3979,7 @@ HB_FUNC_UR_SUPER(RELTEXT)
   AREAP pArea = hb_usrGetAreaParam(3);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_RELTEXT(pArea, static_cast<uint16_t>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
+    hb_retni(SUPER_RELTEXT(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_param(3, Harbour::Item::ANY)));
   }
 }
 
@@ -4139,7 +4139,7 @@ HB_FUNC_UR_SUPER(ORDINFO)
     auto pItem = hb_param(3, Harbour::Item::ARRAY);
 
     if (hb_usrItemToOrderInfo(pItem, &dbOrderInfo)) {
-      hb_retni(SUPER_ORDINFO(pArea, static_cast<uint16_t>(hb_parni(2)), &dbOrderInfo));
+      hb_retni(SUPER_ORDINFO(pArea, static_cast<uint16_t>(hb_parni32(2)), &dbOrderInfo));
       hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
     } else {
       hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
@@ -4278,7 +4278,7 @@ HB_FUNC_UR_SUPER(RAWLOCK)
   AREAP pArea = hb_usrGetAreaParam(3);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_RAWLOCK(pArea, static_cast<uint16_t>(hb_parni(2)), hb_parnl(3)));
+    hb_retni(SUPER_RAWLOCK(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_parnl(3)));
   }
 }
 
@@ -4355,8 +4355,8 @@ HB_FUNC_UR_SUPER(GETVALUEFILE)
   AREAP pArea = hb_usrGetAreaParam(4);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_GETVALUEFILE(pArea, static_cast<uint16_t>(hb_parni(2)), hb_parc(3),
-                                static_cast<uint16_t>(hb_parni(4))));
+    hb_retni(SUPER_GETVALUEFILE(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_parc(3),
+                                static_cast<uint16_t>(hb_parni32(4))));
   }
 }
 
@@ -4365,8 +4365,8 @@ HB_FUNC_UR_SUPER(PUTVALUEFILE)
   AREAP pArea = hb_usrGetAreaParam(4);
 
   if (pArea != nullptr) {
-    hb_retni(SUPER_PUTVALUEFILE(pArea, static_cast<uint16_t>(hb_parni(2)), hb_parc(3),
-                                static_cast<uint16_t>(hb_parni(4))));
+    hb_retni(SUPER_PUTVALUEFILE(pArea, static_cast<uint16_t>(hb_parni32(2)), hb_parc(3),
+                                static_cast<uint16_t>(hb_parni32(4))));
   }
 }
 
@@ -4421,6 +4421,6 @@ HB_FUNC_UR_SUPER(RDDINFO)
   LPRDDNODE pRDD = hb_usrGetNodeParam(4);
 
   if (pRDD != nullptr) {
-    hb_retni(SUPER_RDDINFO(pRDD, static_cast<uint16_t>(hb_parni(2)), hb_parnl(3), hb_param(4, Harbour::Item::ANY)));
+    hb_retni(SUPER_RDDINFO(pRDD, static_cast<uint16_t>(hb_parni32(2)), hb_parnl(3), hb_param(4, Harbour::Item::ANY)));
   }
 }

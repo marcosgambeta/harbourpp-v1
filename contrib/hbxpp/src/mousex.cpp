@@ -75,9 +75,9 @@ HB_FUNC(SETMOUSE)
          hb_mouseGetPos(&iRow, &iCol);
 
       if( fRow )
-         iRow = hb_parni(2);
+         iRow = hb_parni32(2);
       if( fCol )
-         iCol = hb_parni(3);
+         iCol = hb_parni32(3);
 
       hb_mouseSetPos(iRow, iCol);
    }
