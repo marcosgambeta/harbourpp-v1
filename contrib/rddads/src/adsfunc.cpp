@@ -650,13 +650,13 @@ HB_FUNC(ADSKEYNO)
       UNSIGNED32 pulKey = 0;
       ADSHANDLE hIndex = 0;
       UNSIGNED16 usFilterOption =
-          pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI(pFilterOption)) : ADS_IGNOREFILTERS;
+          pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI32(pFilterOption)) : ADS_IGNOREFILTERS;
 
       // get an Index Handle
       if (pxOrder == nullptr || pxOrder->isNil()) { // didn't pass it in; use current
         hIndex = pArea->hOrdCurrent;
       } else if (pxOrder->isNumber()) {
-        auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
+        auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI32(pxOrder));
 
         if (ordNum > 0) { // otherwise leave hIndex at 0
           AdsGetIndexHandleByOrder(pArea->hTable, ordNum, &hIndex);
@@ -699,13 +699,13 @@ HB_FUNC(ADSKEYCOUNT)
       UNSIGNED32 pulKey = 0;
       ADSHANDLE hIndex = 0;
       UNSIGNED16 usFilterOption =
-          pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI(pFilterOption)) : ADS_IGNOREFILTERS;
+          pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI32(pFilterOption)) : ADS_IGNOREFILTERS;
 
       // get an Index Handle
       if (pxOrder == nullptr || pxOrder->isNil()) { // didn't pass it in; use current
         hIndex = pArea->hOrdCurrent;
       } else if (pxOrder->isNumber()) {
-        auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
+        auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI32(pxOrder));
 
         if (ordNum > 0) { // otherwise leave hIndex at 0
           AdsGetIndexHandleByOrder(pArea->hTable, ordNum, &hIndex);
@@ -2071,7 +2071,7 @@ HB_FUNC(ADSDDSETDATABASEPROPERTY)
 #endif
   {
     if (pParam->isNumeric()) {
-      ulBuffer = static_cast<UNSIGNED16>(hb_itemGetNI(pParam));
+      ulBuffer = static_cast<UNSIGNED16>(hb_itemGetNI32(pParam));
       ulRetVal = AdsDDSetDatabaseProperty(hConnect, ulProperty, static_cast<VOID *>(&ulBuffer), sizeof(ulBuffer));
     } else {
       ulRetVal = AdsDDSetDatabaseProperty(hConnect, ulProperty, nullptr, 0);

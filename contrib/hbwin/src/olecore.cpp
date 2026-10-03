@@ -1397,11 +1397,11 @@ void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjF
     break;
 
   case VT_I1 | VT_BYREF:
-    *V_I1REF(pVariant) = static_cast<signed char>(hb_itemGetNI(pItem));
+    *V_I1REF(pVariant) = static_cast<signed char>(hb_itemGetNI32(pItem));
     break;
 
   case VT_I2 | VT_BYREF:
-    *V_I2REF(pVariant) = static_cast<int16_t>(hb_itemGetNI(pItem));
+    *V_I2REF(pVariant) = static_cast<int16_t>(hb_itemGetNI32(pItem));
     break;
 
   case VT_I4 | VT_BYREF:
@@ -1420,11 +1420,11 @@ void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjF
     break;
 
   case VT_UI1 | VT_BYREF:
-    *V_UI1REF(pVariant) = static_cast<unsigned char>(hb_itemGetNI(pItem));
+    *V_UI1REF(pVariant) = static_cast<unsigned char>(hb_itemGetNI32(pItem));
     break;
 
   case VT_UI2 | VT_BYREF:
-    *V_UI2REF(pVariant) = static_cast<uint16_t>(hb_itemGetNI(pItem));
+    *V_UI2REF(pVariant) = static_cast<uint16_t>(hb_itemGetNI32(pItem));
     break;
 
   case VT_UI4 | VT_BYREF:
@@ -1443,11 +1443,11 @@ void hb_oleVariantUpdate(VARIANT *pVariant, HB_ITEM *pItem, HB_OLEOBJ_FUNC pObjF
     break;
 
   case VT_INT | VT_BYREF:
-    *V_INTREF(pVariant) = hb_itemGetNI(pItem);
+    *V_INTREF(pVariant) = hb_itemGetNI32(pItem);
     break;
 
   case VT_UINT | VT_BYREF:
-    *V_UINTREF(pVariant) = static_cast<uint32_t>(hb_itemGetNI(pItem));
+    *V_UINTREF(pVariant) = static_cast<uint32_t>(hb_itemGetNI32(pItem));
     break;
 
   case VT_ERROR | VT_BYREF:
@@ -2465,14 +2465,14 @@ HB_FUNC(__OLEVARIANTNEW)
   case VT_I1:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_I1;
-      V_I1(&variant) = static_cast<signed char>(hb_itemGetNI(pInit));
+      V_I1(&variant) = static_cast<signed char>(hb_itemGetNI32(pInit));
     }
     break;
 
   case VT_I2:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_I2;
-      V_I2(&variant) = static_cast<int16_t>(hb_itemGetNI(pInit));
+      V_I2(&variant) = static_cast<int16_t>(hb_itemGetNI32(pInit));
     }
     break;
 
@@ -2498,14 +2498,14 @@ HB_FUNC(__OLEVARIANTNEW)
   case VT_UI1:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_UI1;
-      V_UI1(&variant) = static_cast<unsigned char>(hb_itemGetNI(pInit));
+      V_UI1(&variant) = static_cast<unsigned char>(hb_itemGetNI32(pInit));
     }
     break;
 
   case VT_UI2:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_UI2;
-      V_UI2(&variant) = static_cast<uint16_t>(hb_itemGetNI(pInit));
+      V_UI2(&variant) = static_cast<uint16_t>(hb_itemGetNI32(pInit));
     }
     break;
 
@@ -2531,14 +2531,14 @@ HB_FUNC(__OLEVARIANTNEW)
   case VT_INT:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_INT;
-      V_INT(&variant) = hb_itemGetNI(pInit);
+      V_INT(&variant) = hb_itemGetNI32(pInit);
     }
     break;
 
   case VT_UINT:
     if (pInit == nullptr || pInit->isNumeric()) {
       V_VT(&variant) = VT_UINT;
-      V_UINT(&variant) = static_cast<UINT>(hb_itemGetNI(pInit));
+      V_UINT(&variant) = static_cast<UINT>(hb_itemGetNI32(pInit));
     }
     break;
 

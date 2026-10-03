@@ -3408,7 +3408,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_FONTSIZE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->PTEXTSIZE.y);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) {
       HFONT hFont =
           hb_gt_wvt_GetFont(pWVT->fontFace, iVal, pWVT->fontWidth, pWVT->fontWeight, pWVT->fontQuality, pWVT->CodePage);
@@ -3439,7 +3439,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_FONTWIDTH:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->fontWidth);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) {
       pWVT->fontWidth = iVal; // store font status for next operation on fontsize
     }
@@ -3542,7 +3542,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_SCREENHEIGHT:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->PTEXTSIZE.y * pWVT->ROWS);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0 && !pWVT->bMaximized && !pWVT->bFullScreen && pWVT->hWnd) { // Don't allow if Maximized or FullScreen
       // Now conforms to pWVT->ResizeMode setting, resize by FONT or ROWS as applicable [HVB]
       RECT ci;
@@ -3558,7 +3558,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_SCREENWIDTH:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->PTEXTSIZE.x * pWVT->COLS);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0 && !pWVT->bMaximized && !pWVT->bFullScreen && pWVT->hWnd) { // Don't allow if Maximized or FullScreen
       // Now conforms to pWVT->ResizeMode setting, resize by FONT or ROWS as applicable [HVB]
       RECT ci;

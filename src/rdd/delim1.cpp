@@ -1060,7 +1060,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
   case DBI_DB_VERSION:
   case DBI_RDD_VERSION: {
     char szBuf[64];
-    int32_t iSub = hb_itemGetNI(pItem);
+    int32_t iSub = hb_itemGetNI32(pItem);
 
     if (iSub == 1) {
       hb_snprintf(szBuf, sizeof(szBuf), "%d.%d (%s)", 0, 1, "DELIM");
@@ -1375,7 +1375,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, pCreateInfo->ulConnection, pItem) ==
             Harbour::SUCCESS &&
-        hb_itemGetNI(pItem) > 0) {
+        hb_itemGetNI32(pItem) > 0) {
       errCode = hb_delimWriteHeader(pArea);
     }
 

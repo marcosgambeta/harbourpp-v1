@@ -1517,7 +1517,7 @@ static HB_BOOL s_netio_procexec(int32_t iMsg, int32_t iType)
                   {
                      if( iMsg == NETIO_FUNCCTRL )
                      {
-                        if( iStreamID == hb_itemGetNI(pItem) )
+                        if( iStreamID == hb_itemGetNI32(pItem) )
                         {
                            iStreamID = 0;
                         }

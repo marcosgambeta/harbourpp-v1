@@ -912,6 +912,25 @@ int32_t hb_itemGetNI(HB_ITEM *pItem)
   return 0;
 }
 
+int32_t hb_itemGetNI32(HB_ITEM *pItem)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_itemGetNI32(%p)", static_cast<void*>(pItem)));
+#endif
+
+  if (pItem != nullptr) {
+    if (pItem->isInteger()) {
+      return pItem->integerValue();
+    } else if (pItem->isLong()) {
+      return static_cast<int32_t>(pItem->longValue());
+    } else if (pItem->isDouble()) {
+      return HB_CAST_INT(pItem->doubleValue());
+    }
+  }
+
+  return 0;
+}
+
 HB_EXPORT int32_t _HB_ITEM::getNI() // equivalent to hb_itemGetNI
 {
   if (this->isInteger()) {

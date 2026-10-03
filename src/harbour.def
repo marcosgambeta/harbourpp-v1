@@ -2830,6 +2830,7 @@ hb_itemGetLX
 hb_itemGetND
 hb_itemGetNDDec
 hb_itemGetNI
+hb_itemGetNI32
 hb_itemGetNInt
 hb_itemGetNL
 hb_itemGetNLL

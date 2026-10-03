@@ -182,7 +182,7 @@ static void s_signalHandler(int32_t sig, siginfo_t *info, void *v)
       }
 
       pRet = hb_itemDo(pExecArray, 0);
-      iRet = hb_itemGetNI(pRet);
+      iRet = hb_itemGetNI32(pRet);
       hb_itemRelease(pRet);
       hb_itemRelease(pExecArray);
 
@@ -429,7 +429,7 @@ static LONG s_signalHandler(int32_t type, int32_t sig, PEXCEPTION_RECORD exc)
       hb_arraySetNI(pRet, HB_SERVICE_UID, 0);
 
       pRet = hb_itemDo(pExecArray, 0);
-      iRet = hb_itemGetNI(pRet);
+      iRet = hb_itemGetNI32(pRet);
       hb_itemRelease(pRet);
       hb_itemRelease(pExecArray);
 

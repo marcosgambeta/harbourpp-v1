@@ -205,7 +205,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue 
 
          if( pValue->isNumeric() )
          {
-            switch( hb_itemGetNI(pValue) )
+            switch( hb_itemGetNI32(pValue) )
             {
                case FO_READ:
                   if( pFile->hPipeRD != FS_ERROR )

@@ -34,7 +34,7 @@ HB_FUNC(FT_CTRL)
    HB_GT_INFO gtInfo{};
 
    hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
-   hb_retl((hb_itemGetNI(gtInfo.pResult) & HB_GTI_KBD_CTRL) != 0);
+   hb_retl((hb_itemGetNI32(gtInfo.pResult) & HB_GTI_KBD_CTRL) != 0);
    if( gtInfo.pResult )
    {
       hb_itemRelease(gtInfo.pResult);

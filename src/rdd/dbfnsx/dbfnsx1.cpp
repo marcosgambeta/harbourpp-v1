@@ -3672,7 +3672,7 @@ static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, HB_ITEM *pTagItem, HB_ITEM *pBagI
   if (fBag) {
     pIndex = hb_nsxFindBag(pArea, hb_itemGetCPtr(pBagItem));
   } else {
-    int32_t iBag = hb_itemGetNI(pBagItem);
+    int32_t iBag = hb_itemGetNI32(pBagItem);
 
     pIndex = pArea->lpIndexes;
     if (iBag > 0) {
@@ -3707,7 +3707,7 @@ static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, HB_ITEM *pTagItem, HB_ITEM *pBagI
         return pIndex->lpTags[iTag - 1];
       }
     } else {
-      int32_t i = hb_itemGetNI(pTagItem) - 1;
+      int32_t i = hb_itemGetNI32(pTagItem) - 1;
 
       if (i >= 0) {
         if (fBag) {

@@ -3363,7 +3363,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
         hb_itemRelease(pItem);
         return Harbour::FAILURE;
       }
-      pArea->bMemoType = static_cast<uint8_t>(hb_itemGetNI(pItem));
+      pArea->bMemoType = static_cast<uint8_t>(hb_itemGetNI32(pItem));
 #if 0
          if( !pArea->bMemoType ) {
             pArea->bMemoType = DB_MEMO_FPT;
@@ -3385,7 +3385,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
           hb_itemRelease(pItem);
           return Harbour::FAILURE;
         }
-        pArea->uiMemoVersion = static_cast<uint16_t>(hb_itemGetNI(pItem));
+        pArea->uiMemoVersion = static_cast<uint16_t>(hb_itemGetNI32(pItem));
       } else {
         pArea->uiMemoVersion = DB_MEMOVER_STD;
       }
@@ -4406,7 +4406,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_MEMOBLOCKSIZE: {
-    int32_t iSize = hb_itemGetNI(pItem), iOldSize;
+    int32_t iSize = hb_itemGetNI32(pItem), iOldSize;
 
     if (pData->ulMemoBlockSize) {
       hb_itemPutNL(pItem, pData->ulMemoBlockSize);
@@ -4431,7 +4431,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_MEMOTYPE: {
-    int32_t iType = hb_itemGetNI(pItem);
+    int32_t iType = hb_itemGetNI32(pItem);
 
     hb_itemPutNI32(pItem, pData->bMemoType ? pData->bMemoType : DB_MEMO_FPT);
 
@@ -4447,7 +4447,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   }
 
   case RDDI_MEMOVERSION: {
-    int32_t iType = hb_itemGetNI(pItem);
+    int32_t iType = hb_itemGetNI32(pItem);
 
     hb_itemPutNI32(pItem, pData->bMemoExtType ? pData->bMemoExtType : DB_MEMOVER_FLEX);
     switch (iType) {

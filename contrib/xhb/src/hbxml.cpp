@@ -2089,7 +2089,7 @@ HB_FUNC(HB_XMLERRORDESC)
   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
   if (pNum) {
-    hb_retc(mxml_error_desc(static_cast<MXML_ERROR_CODE>(hb_itemGetNI(pNum))));
+    hb_retc(mxml_error_desc(static_cast<MXML_ERROR_CODE>(hb_itemGetNI32(pNum))));
   } else {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
@@ -2114,7 +2114,7 @@ HB_FUNC(HBXML_NODE_TO_STRING)
   if (pStyle == nullptr) {
     iStyle = 0;
   } else {
-    iStyle = hb_itemGetNI(pStyle);
+    iStyle = hb_itemGetNI32(pStyle);
   }
 
   sgs = mxml_sgs_new();
@@ -2147,7 +2147,7 @@ HB_FUNC(HBXML_NODE_WRITE)
   if (pStyle == nullptr) {
     iStyle = 0;
   } else {
-    iStyle = hb_itemGetNI(pStyle);
+    iStyle = hb_itemGetNI32(pStyle);
   }
 
   mxml_output_setup(&out, mxml_output_func_to_handle, 0);

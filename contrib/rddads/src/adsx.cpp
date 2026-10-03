@@ -535,7 +535,7 @@ static PMIXTAG mixFindTag(ADSXAREAP pArea, HB_ITEM *pOrder)
   if (pOrder->isNumber()) {
     UNSIGNED16 usOrder = 0, usFind;
 
-    usFind = static_cast<UNSIGNED16>(hb_itemGetNI(pOrder));
+    usFind = static_cast<UNSIGNED16>(hb_itemGetNI32(pOrder));
 
     AdsGetNumIndexes(pArea->adsarea.hTable, &usOrder);
     usOrder++;
@@ -1331,7 +1331,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO
           pTag = pTag->pNext;
         }
       } else if (pOrderInfo->itmOrder->isNumeric()) {
-        UNSIGNED16 usOrder = 0, usSearch = static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder));
+        UNSIGNED16 usOrder = 0, usSearch = static_cast<UNSIGNED16>(hb_itemGetNI32(pOrderInfo->itmOrder));
 
         AdsGetNumIndexes(pArea->adsarea.hTable, &usOrder);
 

@@ -848,7 +848,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     return pNode ? SELF_RDDINFO(pNode, RDDI_TABLEEXT, 0, pItem) : Harbour::FAILURE;
   }
   case DBI_SCOPEDRELATION: {
-    int32_t iRelNo = hb_itemGetNI(pItem);
+    int32_t iRelNo = hb_itemGetNI32(pItem);
     auto fScoped = false;
 
     if (iRelNo > 0) {
@@ -1474,7 +1474,7 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
         errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
 
         if (errCode == Harbour::SUCCESS) {
-          int32_t iOrder = hb_itemGetNI(pInfo.itmResult);
+          int32_t iOrder = hb_itemGetNI32(pInfo.itmResult);
           if (iOrder != 0) {
             if (pRelInfo->isScoped) {
               pInfo.itmNewVal = pResult;

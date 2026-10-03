@@ -521,7 +521,7 @@ static void func(sqlite3_context *ctx, int32_t argc, sqlite3_value **argv)
     case Harbour::Item::INTEGER:
     case Harbour::Item::LONG:
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
-      sqlite3_result_int(ctx, hb_itemGetNI(pResult));
+      sqlite3_result_int(ctx, hb_itemGetNI32(pResult));
 #else
       sqlite3_result_int64(ctx, hb_itemGetNInt(pResult));
 #endif

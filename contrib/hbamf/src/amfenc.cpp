@@ -1365,7 +1365,7 @@ HB_FUNC(AMF3_FROMWA)
     memset(&pInfo, 0, sizeof(pInfo));
     pInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
-    iOrd = hb_itemGetNI(pInfo.itmResult);
+    iOrd = hb_itemGetNI32(pInfo.itmResult);
     if (iOrd > 0)
     {
       SELF_ORDINFO(pArea, DBOI_KEYCOUNT, &pInfo);
@@ -1505,7 +1505,7 @@ HB_FUNC(AMF3_FROMWA)
           auto szName = static_cast<char *>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
           pField = hb_itemNew(nullptr);
           szName[0] = '\0';
-          SELF_FIELDNAME(pArea, static_cast<uint16_t>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), szName);
+          SELF_FIELDNAME(pArea, static_cast<uint16_t>(hb_itemGetNI32(hb_arrayGetItemPtr(pFields, uiIter))), szName);
           hb_itemPutCPtr(pField, szName);
           hb_arraySet(pFieldNames, uiIter, pField);
           hb_itemRelease(pField);
@@ -1549,7 +1549,7 @@ HB_FUNC(AMF3_FROMWA)
             {
               SELF_GETVALUE(pArea,
                             static_cast<uint16_t>(
-                                hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI(pFields, uiIter) */,
+                                hb_itemGetNI32(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI(pFields, uiIter) */,
                             pItem);
               amf3_encode(context, pItem);
             }
@@ -1578,7 +1578,7 @@ HB_FUNC(AMF3_FROMWA)
           {
             for (uiIter = 1; uiIter <= uiFieldCopy; uiIter++)
             {
-              SELF_GETVALUE(pArea, static_cast<uint16_t>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), pValue);
+              SELF_GETVALUE(pArea, static_cast<uint16_t>(hb_itemGetNI32(hb_arrayGetItemPtr(pFields, uiIter))), pValue);
               amf3_serialize_string(context, hb_arrayGetItemPtr(pFieldNames, uiIter));
               amf3_encode(context, pValue);
             }

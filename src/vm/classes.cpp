@@ -3372,7 +3372,7 @@ HB_FUNC(__CLSNEW)
       (pModFriend == nullptr || pModFriend->isLogical())) {
     HB_STACK_TLS_PRELOAD
     uint16_t uiClass;
-    uiClass = hb_clsNew(szClassName, static_cast<uint16_t>(hb_itemGetNI(pDatas)), pSuperArray,
+    uiClass = hb_clsNew(szClassName, static_cast<uint16_t>(hb_itemGetNI32(pDatas)), pSuperArray,
                         hb_itemGetSymbol(pClassFunc), hb_itemGetL(pModFriend));
     hb_retni(uiClass);
   } else {

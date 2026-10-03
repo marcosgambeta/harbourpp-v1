@@ -1818,7 +1818,7 @@ HB_FUNC(NETIO_SERVER)
                                     memcpy(msg + NETIO_MSGLEN, itmData, itmSize);
                                     hb_xfree(itmData);
                                     len = static_cast<long>(itmSize);
-                                    if( iStreamID && hb_itemGetNI(pResult) == iStreamID )
+                                    if( iStreamID && hb_itemGetNI32(pResult) == iStreamID )
                                     {
                                        hb_threadMutexUnlock(conn->mutex);
                                        iStreamID = 0;

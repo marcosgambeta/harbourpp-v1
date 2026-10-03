@@ -1324,7 +1324,7 @@ HB_FUNC(HB_POINTER2STRING)
   if (pPointer->isPointer() && pLen) {
     hb_retclen(static_cast<char *>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
   } else if (pPointer->isInteger() && pLen) {
-    hb_retclen(reinterpret_cast<char *>(static_cast<uintptr_t>(hb_itemGetNI(pPointer))), hb_itemGetNS(pLen));
+    hb_retclen(reinterpret_cast<char *>(static_cast<uintptr_t>(hb_itemGetNI32(pPointer))), hb_itemGetNS(pLen));
   } else if (pPointer->isLong() && pLen) {
     hb_retclen(reinterpret_cast<char *>(static_cast<uintptr_t>(hb_itemGetNL(pPointer))), hb_itemGetNS(pLen));
   } else {

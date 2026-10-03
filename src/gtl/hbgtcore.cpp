@@ -1900,7 +1900,7 @@ static HB_BOOL hb_gt_def_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_VERSION:
-    pInfo->pResult = hb_itemPutC(pInfo->pResult, HB_GTSELF_VERSION(pGT, hb_itemGetNI(pInfo->pNewVal)));
+    pInfo->pResult = hb_itemPutC(pInfo->pResult, HB_GTSELF_VERSION(pGT, hb_itemGetNI32(pInfo->pNewVal)));
     break;
 
   default:

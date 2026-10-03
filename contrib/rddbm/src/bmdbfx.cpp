@@ -95,7 +95,7 @@ HB_FUNC(BM_DBSEEKWILD)
       HB_ERRCODE errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &OrderInfo);
       int32_t iOrder = 0;
       if (errCode == Harbour::SUCCESS) {
-        iOrder = hb_itemGetNI(OrderInfo.itmResult);
+        iOrder = hb_itemGetNI32(OrderInfo.itmResult);
       }
 
       if (iOrder != 0) {

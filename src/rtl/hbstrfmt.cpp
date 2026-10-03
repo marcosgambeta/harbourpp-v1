@@ -188,7 +188,7 @@ HB_ITEM *hb_strFormat(HB_ITEM *pItemReturn, HB_ITEM *pItemFormat, int32_t iCount
     case 'c': {
       char buf[1];
 
-      buf[0] = static_cast<char>(hb_itemGetNI(pItem));
+      buf[0] = static_cast<char>(hb_itemGetNI32(pItem));
       if (fLeftAlign) {
         bufadd(&buffer, buf, 1);
       }

@@ -116,7 +116,7 @@ HB_FUNC(SX_TAGORDER)
     if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutNI32(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &Info);
-      iOrder = hb_itemGetNI(Info.itmResult);
+      iOrder = hb_itemGetNI32(Info.itmResult);
       hb_itemRelease(Info.itmResult);
     }
   }
@@ -139,7 +139,7 @@ HB_FUNC(SX_TAGNO)
     if (hb_sxOrdParam(&Info)) {
       Info.itmResult = hb_itemPutNI32(nullptr, 0);
       if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS) {
-        int32_t iOrder = hb_itemGetNI(Info.itmResult);
+        int32_t iOrder = hb_itemGetNI32(Info.itmResult);
         if (iOrder) {
           Info.itmOrder = hb_itemPutNI32(nullptr, iOrder);
           Info.atomBagName = nullptr;
@@ -150,7 +150,7 @@ HB_FUNC(SX_TAGNO)
             Info.itmOrder = nullptr;
             hb_itemClear(Info.itmResult);
             if (SELF_ORDINFO(pArea, DBOI_BAGORDER, &Info) == Harbour::SUCCESS) {
-              iBagOrder = iOrder - hb_itemGetNI(Info.itmResult) + 1;
+              iBagOrder = iOrder - hb_itemGetNI32(Info.itmResult) + 1;
             }
             Info.itmOrder = Info.atomBagName;
           }
@@ -246,7 +246,7 @@ HB_FUNC(SX_THERMOMETER)
       int32_t i;
       Info.itmResult = hb_itemPutNI32(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &Info);
-      i = hb_itemGetNI(Info.itmResult);
+      i = hb_itemGetNI32(Info.itmResult);
       if (i) {
         static const uint16_t s_iStates[] = {DBOI_CUSTOM, DBOI_CHGONLY, DBOI_PARTIAL};
         iTemperature = 4;

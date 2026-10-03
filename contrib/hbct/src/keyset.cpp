@@ -56,7 +56,7 @@ static void SetGet(int32_t iFlag)
 
   hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
   if (gtInfo.pResult) {
-    iState = hb_itemGetNI(gtInfo.pResult);
+    iState = hb_itemGetNI32(gtInfo.pResult);
     gtInfo.pNewVal = gtInfo.pResult;
     gtInfo.pResult = nullptr;
   }

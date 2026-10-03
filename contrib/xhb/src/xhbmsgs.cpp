@@ -286,7 +286,7 @@ HB_FUNC(XHB_INDEX)
       } else if (pSelf->isString()) {
         HB_SIZE nLen = hb_itemGetCLen(pSelf);
         if (XHB_IS_VALID_INDEX(nIndex, nLen)) {
-          char cValue = pValue->isString() ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
+          char cValue = pValue->isString() ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI32(pValue));
           if (nLen == 1) {
             hb_itemPutCL(pSelf, &cValue, 1);
           } else {
@@ -348,7 +348,7 @@ HB_FUNC(XHB_PLUS)
     hb_retnlen(dValue + uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
-    uc += static_cast<uint8_t>(hb_itemGetNI(pValue));
+    uc += static_cast<uint8_t>(hb_itemGetNI32(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   } else if (pSelf->isHash() && pValue->isHash()) {
     HB_ITEM *pHash = hb_hashClone(pSelf);
@@ -374,7 +374,7 @@ HB_FUNC(XHB_MINUS)
     hb_retnlen(dValue - uc, 0, iDec);
   } else if (pSelf->isString() && hb_itemGetCLen(pSelf) == 1 && pValue && pValue->isNumeric()) {
     auto uc = static_cast<uint8_t>(hb_itemGetCPtr(pSelf)[0]);
-    uc -= static_cast<uint8_t>(hb_itemGetNI(pValue));
+    uc -= static_cast<uint8_t>(hb_itemGetNI32(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   } else if (pSelf->isHash() && pValue->isHash()) {
     HB_ITEM *pHash = hb_hashClone(pSelf);

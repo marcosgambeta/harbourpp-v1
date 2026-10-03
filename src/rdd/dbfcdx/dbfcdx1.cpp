@@ -4616,14 +4616,14 @@ static LPCDXTAG hb_cdxFindTag(CDXAREAP pArea, HB_ITEM *pTagItem, HB_ITEM *pBagIt
 
   hb_strncpyUpperTrim(szTag, hb_itemGetCPtr(pTagItem), sizeof(szTag) - 1);
   if (!szTag[0]) {
-    iFind = hb_itemGetNI(pTagItem);
+    iFind = hb_itemGetNI32(pTagItem);
   }
 
   fBag = szTag[0] && hb_itemGetCLen(pBagItem) > 0;
   if (fBag) {
     pIndex = hb_cdxFindBag(pArea, hb_itemGetCPtr(pBagItem));
   } else {
-    int32_t iBag = hb_itemGetNI(pBagItem);
+    int32_t iBag = hb_itemGetNI32(pBagItem);
 
     if (iBag > 0) {
       fBag = true;

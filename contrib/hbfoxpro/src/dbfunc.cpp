@@ -101,7 +101,7 @@ HB_FUNC(NDX)
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::NUMERIC);
-      if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
+      if( hb_itemGetNI32(pOrderInfo.itmOrder) == 0 )
       {
          pOrderInfo.itmOrder = nullptr;
       }

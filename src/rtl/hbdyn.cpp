@@ -133,27 +133,27 @@ static uint64_t hb_u64par(HB_ITEM *pParam, PHB_DYNARG pArg)
     break;
 
   case HB_DYN_CTYPE_CHAR:
-    pArg->value.t.n64 = static_cast<char>(hb_itemGetNI(pParam));
+    pArg->value.t.n64 = static_cast<char>(hb_itemGetNI32(pParam));
     r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED:
-    pArg->value.t.n64 = static_cast<unsigned char>(hb_itemGetNI(pParam));
+    pArg->value.t.n64 = static_cast<unsigned char>(hb_itemGetNI32(pParam));
     r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    pArg->value.t.n64 = static_cast<int16_t>(hb_itemGetNI(pParam));
+    pArg->value.t.n64 = static_cast<int16_t>(hb_itemGetNI32(pParam));
     r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
-    pArg->value.t.n64 = static_cast<uint16_t>(hb_itemGetNI(pParam));
+    pArg->value.t.n64 = static_cast<uint16_t>(hb_itemGetNI32(pParam));
     r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
   case HB_DYN_CTYPE_INT:
-    pArg->value.t.n64 = hb_itemGetNI(pParam);
+    pArg->value.t.n64 = hb_itemGetNI32(pParam);
     r = pArg->bByRef ? reinterpret_cast<uintptr_t>(&pArg->value.t.n64) : pArg->value.t.n64;
     break;
 
@@ -527,27 +527,27 @@ static void hb_u32par(HB_ITEM *pParam, PHB_DYNARG pArg, uint32_t *r1, uint32_t *
     break;
 
   case HB_DYN_CTYPE_CHAR:
-    pArg->value.t.n32 = static_cast<char>(hb_itemGetNI(pParam));
+    pArg->value.t.n32 = static_cast<char>(hb_itemGetNI32(pParam));
     *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED:
-    pArg->value.t.n32 = static_cast<unsigned char>(hb_itemGetNI(pParam));
+    pArg->value.t.n32 = static_cast<unsigned char>(hb_itemGetNI32(pParam));
     *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    pArg->value.t.n32 = static_cast<int16_t>(hb_itemGetNI(pParam));
+    pArg->value.t.n32 = static_cast<int16_t>(hb_itemGetNI32(pParam));
     *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
-    pArg->value.t.n32 = static_cast<uint16_t>(hb_itemGetNI(pParam));
+    pArg->value.t.n32 = static_cast<uint16_t>(hb_itemGetNI32(pParam));
     *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 
   case HB_DYN_CTYPE_INT:
-    pArg->value.t.n32 = hb_itemGetNI(pParam);
+    pArg->value.t.n32 = hb_itemGetNI32(pParam);
     *r1 = pArg->bByRef ? reinterpret_cast<uint32_t>(&pArg->value.t.n32) : pArg->value.t.n32;
     break;
 

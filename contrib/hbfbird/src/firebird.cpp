@@ -512,7 +512,7 @@ HB_FUNC(FBFETCH)
     auto stmt = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
     auto sqlda = static_cast<XSQLDA *>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
     ISC_STATUS_ARRAY status;
-    auto dialect = static_cast<unsigned short>(hb_itemGetNI(hb_itemArrayGet(aParam, 5)));
+    auto dialect = static_cast<unsigned short>(hb_itemGetNI32(hb_itemArrayGet(aParam, 5)));
 
     /* FIXME */
     hb_retnl(isc_dsql_fetch(status, &stmt, dialect, sqlda) == 100 ? -1 : isc_sqlcode(status));

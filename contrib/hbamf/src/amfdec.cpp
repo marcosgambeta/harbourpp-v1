@@ -964,7 +964,7 @@ static bool amf3_decode_externalizable(amfContext *context, HB_ITEM *pItem)
   pPos = hb_objSendMsg(pObject, "READEXTERNAL", 1, pStr);
   if (pPos->isInteger())
   {
-    if (!readBytes(context, hb_itemGetNI(pPos)))
+    if (!readBytes(context, hb_itemGetNI32(pPos)))
     {
       result = false;
     }

@@ -5107,7 +5107,7 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_FONTWIDTH:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, wnd->fontWidth);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) { // TODO
       wnd->fontWidth = iVal;
     }
@@ -5115,7 +5115,7 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_FONTSIZE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, wnd->fontHeight);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) { // TODO
       wnd->fontHeight = iVal;
       if (wnd->fInit) {

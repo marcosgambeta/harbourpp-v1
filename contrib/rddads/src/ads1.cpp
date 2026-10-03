@@ -3987,7 +3987,7 @@ static HB_ERRCODE adsOrderListFocus(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
       }
       u32RetVal = AdsGetIndexHandle(pArea->hTable, pucTagName, &hIndex);
     } else if (pOrderInfo->itmOrder->isNumeric()) {
-      u16Order = static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder));
+      u16Order = static_cast<UNSIGNED16>(hb_itemGetNI32(pOrderInfo->itmOrder));
       if (!u16Order) {
         pArea->hOrdCurrent = 0;
         return Harbour::SUCCESS;
@@ -4228,7 +4228,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, uint16_t uiIndex, LPDBORDERINFO p
       u32RetVal = AdsGetIndexHandle(pArea->hTable, pucTagName, &hIndex);
     } else if (pOrderInfo->itmOrder->isNumeric()) {
       u32RetVal =
-          AdsGetIndexHandleByOrder(pArea->hTable, static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder)), &hIndex);
+          AdsGetIndexHandleByOrder(pArea->hTable, static_cast<UNSIGNED16>(hb_itemGetNI32(pOrderInfo->itmOrder)), &hIndex);
     }
 
     if (u32RetVal != AE_SUCCESS) {
@@ -5246,7 +5246,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnec
     break;
 
   case RDDI_INDEXPAGESIZE: {
-    auto iPageSize = hb_itemGetNI(pItem);
+    auto iPageSize = hb_itemGetNI32(pItem);
 
     hb_itemPutNI32(pItem, adsIndexPageSize(adsGetFileType(pRDD->rddID)));
 

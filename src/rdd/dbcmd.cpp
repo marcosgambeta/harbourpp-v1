@@ -994,7 +994,7 @@ HB_FUNC(INDEXORD)
     DBORDERINFO pInfo{};
     pInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
-    hb_retni(hb_itemGetNI(pInfo.itmResult));
+    hb_retni(hb_itemGetNI32(pInfo.itmResult));
     hb_itemRelease(pInfo.itmResult);
   } else {
     hb_retni(0);

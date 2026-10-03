@@ -2839,7 +2839,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
       pArea->lpdbOpenInfo = nullptr;
       return Harbour::FAILURE;
     }
-    pArea->bLockType = static_cast<uint8_t>(hb_itemGetNI(pItem));
+    pArea->bLockType = static_cast<uint8_t>(hb_itemGetNI32(pItem));
     if (pArea->bLockType == 0) {
       pArea->bLockType = DB_DBFLOCK_CLIPPER;
     }
@@ -2855,7 +2855,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
       pArea->lpdbOpenInfo = nullptr;
       return Harbour::FAILURE;
     }
-    pArea->bMemoType = static_cast<uint8_t>(hb_itemGetNI(pItem));
+    pArea->bMemoType = static_cast<uint8_t>(hb_itemGetNI32(pItem));
   }
 
   pArea->bCryptType = DB_CRYPT_NONE;
@@ -3429,7 +3429,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     break;
 
   case DBI_LOCKSCHEME: {
-    int32_t iScheme = hb_itemGetNI(pItem);
+    int32_t iScheme = hb_itemGetNI32(pItem);
     if (pArea->bLockType) {
       hb_itemPutNI32(pItem, pArea->bLockType);
     } else {
@@ -3507,7 +3507,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
   case DBI_DB_VERSION:
   case DBI_RDD_VERSION: {
     char szBuf[64];
-    int32_t iSub = hb_itemGetNI(pItem);
+    int32_t iSub = hb_itemGetNI32(pItem);
 
     if (iSub == 1) {
       hb_snprintf(szBuf, sizeof(szBuf), "%d.%d (%s)", 0, 1, "DBF");
@@ -3818,7 +3818,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       pArea->lpdbOpenInfo = nullptr;
       return Harbour::FAILURE;
     }
-    pArea->bLockType = static_cast<uint8_t>(hb_itemGetNI(pItem));
+    pArea->bLockType = static_cast<uint8_t>(hb_itemGetNI32(pItem));
     if (!pArea->bLockType) {
       pArea->bLockType = DB_DBFLOCK_CLIPPER;
     }
@@ -3879,7 +3879,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
   hb_itemClear(pItem);
   uiDecimals = static_cast<uint16_t>(
       SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS
-          ? hb_itemGetNI(pItem)
+          ? hb_itemGetNI32(pItem)
           : 0);
   hb_itemRelease(pItem);
   uiFlagsMask = 0;
@@ -6204,7 +6204,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_TABLETYPE: {
-    int32_t iType = hb_itemGetNI(pItem);
+    int32_t iType = hb_itemGetNI32(pItem);
     hb_itemPutNI32(pItem, pData->bTableType ? pData->bTableType : DB_DBF_STD);
     switch (iType) {
     case DB_DBF_STD: // standard dBase/Clipper DBF file
@@ -6214,7 +6214,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_LOCKSCHEME: {
-    int32_t iScheme = hb_itemGetNI(pItem);
+    int32_t iScheme = hb_itemGetNI32(pItem);
 
     hb_itemPutNI32(pItem, pData->bLockType ? pData->bLockType : hb_setGetDBFLockScheme());
     switch (iScheme) {
@@ -6251,7 +6251,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_INDEXPAGESIZE: {
-    int32_t iPageSize = hb_itemGetNI(pItem);
+    int32_t iPageSize = hb_itemGetNI32(pItem);
 
     hb_itemPutNI32(pItem, pData->uiIndexPageSize);
     if (iPageSize >= 0x200 && iPageSize <= 0x2000 && ((iPageSize - 1) & iPageSize) == 0) {

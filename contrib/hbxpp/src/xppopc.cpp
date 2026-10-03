@@ -86,7 +86,7 @@ HB_FUNC(XPP_INDEX)
             auto nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
             {
-               char cValue = pValue->isString() ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
+               char cValue = pValue->isString() ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI32(pValue));
                if( nLen == 1 )
                   hb_itemPutCL(pSelf, &cValue, 1);
                else

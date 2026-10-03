@@ -71,7 +71,7 @@ HB_BOOL hbamf_is_cls_externalizable(uint16_t uiClass)
     hb_vmPushString("EXTERNALIZABLE", 14);
     hb_vmDo(2);
 
-    if (hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA)
+    if (hb_itemGetNI32(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA)
     {
       result = true;
     }

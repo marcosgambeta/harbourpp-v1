@@ -351,7 +351,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
          int32_t iMode = pFile->fRead ? (pFile->fWrite ? FO_READWRITE : FO_READ) : (pFile->fWrite ? FO_WRITE : -1);
 
          if( pValue->isNumeric() ) {
-            switch( hb_itemGetNI(pValue) ) {
+            switch( hb_itemGetNI32(pValue) ) {
                case FO_READ:
                   pFile->fRead = false;
                   break;

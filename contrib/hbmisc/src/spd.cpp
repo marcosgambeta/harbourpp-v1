@@ -102,7 +102,7 @@ static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, 
          /* case 'c': case 'C': case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': */
          default:
             s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, iIndWidth, iIndPrec,
-                            pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
+                            pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI32(pItmPar));
       }
    }
    else if( IsIndW || IsIndP )
@@ -122,7 +122,7 @@ static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, 
             break;
          /* case 'c': case 'C': case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': */
          default:
-            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, iInd, pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
+            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, iInd, pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI32(pItmPar));
       }
    }
    else
@@ -140,7 +140,7 @@ static uint32_t SCItm( char * cBuffer, uint32_t ulMaxBuf, const char * cParFrm, 
             break;
          /* case 'c': case 'C': case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': */
          default:
-            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
+            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI32(pItmPar));
       }
    }
    return s;
@@ -363,7 +363,7 @@ HB_FUNC(SQL_SPRINTF)
             pItmPar = hb_param(iIndWidth ? iIndWidth + 1 : p++ + 2, Harbour::Item::INTEGER);
             if( pItmPar )
             {
-               if( (iIndWidth = hb_itemGetNI(pItmPar)) < 0 )
+               if( (iIndWidth = hb_itemGetNI32(pItmPar)) < 0 )
                   ulWidth = -iIndWidth;
                else
                   ulWidth = iIndWidth;
@@ -380,7 +380,7 @@ HB_FUNC(SQL_SPRINTF)
             pItmPar = hb_param(iIndPrec ? iIndPrec + 1 : p++ + 2, Harbour::Item::INTEGER);
             if( pItmPar )
             {
-               iIndPrec = hb_itemGetNI(pItmPar);
+               iIndPrec = hb_itemGetNI32(pItmPar);
             }
             else
             {

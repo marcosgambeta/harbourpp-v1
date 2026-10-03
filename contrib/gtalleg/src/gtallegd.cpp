@@ -789,7 +789,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
 
       case HB_GTI_SCREENWIDTH:
          pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fInit ? AL_SCREEN_W : s_byFontWidth * s_iScrWidth);
-         iWidth = hb_itemGetNI(pInfo->pNewVal);
+         iWidth = hb_itemGetNI32(pInfo->pNewVal);
          if( iWidth > 0 ) {
             s_iGFXWidth = iWidth;
             /* hb_gt_alleg_InitializeScreen(pGT, s_iScrHeight, s_iScrWidth, s_fInit); */
@@ -798,7 +798,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
 
       case HB_GTI_SCREENHEIGHT:
          pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fInit ? AL_SCREEN_H : s_byFontSize * s_iScrHeight);
-         iHeight = hb_itemGetNI(pInfo->pNewVal);
+         iHeight = hb_itemGetNI32(pInfo->pNewVal);
          if( iHeight > 0 ) {
             s_iGFXHeight = iHeight;
             hb_gt_alleg_InitializeScreen(pGT, s_iScrHeight, s_iScrWidth, s_fInit);
@@ -807,7 +807,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
 
       case HB_GTI_SCREENDEPTH:
          pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fInit ? al_bitmap_color_depth(al_screen) : al_desktop_color_depth());
-         iValue = hb_itemGetNI(pInfo->pNewVal);
+         iValue = hb_itemGetNI32(pInfo->pNewVal);
          if( iValue == 8 || iValue == 15 || iValue == 16 || iValue == 24 || iValue == 32 ) {
             al_set_color_depth(iValue);
             hb_gt_alleg_InitializeScreen(pGT, s_iScrHeight, s_iScrWidth, s_fInit);
@@ -816,7 +816,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
 
       case HB_GTI_FONTSIZE:
          pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_byFontSize);
-         iValue         = hb_itemGetNI(pInfo->pNewVal);
+         iValue         = hb_itemGetNI32(pInfo->pNewVal);
          if( iValue > 0 && iValue < 256 ) {
             s_byFontSize  = static_cast<unsigned short>(iValue);
             s_byFontWidth = s_byFontSize / 2;
@@ -849,7 +849,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
 
          pInfo->pResult = hb_itemPutNI32(pInfo->pResult, al_key_shifts);
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) {
-            al_set_keyboard_leds(hb_itemGetNI(pInfo->pNewVal));
+            al_set_keyboard_leds(hb_itemGetNI32(pInfo->pNewVal));
          }
 
          break;

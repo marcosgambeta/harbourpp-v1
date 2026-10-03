@@ -1791,7 +1791,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
   case HB_GTI_CODEPAGE: {
     UINT uiCodePage = GetConsoleCP();
-    UINT uiCodePageNew = hb_itemGetNI(pInfo->pNewVal);
+    UINT uiCodePageNew = hb_itemGetNI32(pInfo->pNewVal);
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, uiCodePage);
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) && uiCodePageNew != uiCodePage) {
       SetConsoleCP(uiCodePageNew);

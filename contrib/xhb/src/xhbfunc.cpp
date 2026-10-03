@@ -73,7 +73,7 @@ HB_FUNC(HB_POINTER2STRING)
    if( pPointer->isPointer() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
    } else if( pPointer->isInteger() && pLen ) {
-      hb_retclen_const(static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS(pLen));
+      hb_retclen_const(static_cast<char*>(hb_itemGetNI32(pPointer)), hb_itemGetNS(pLen));
    } else if( pPointer->isLong() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS(pLen));
    } else {
@@ -131,7 +131,7 @@ HB_FUNC(XHB__KEYBOARD)
       auto pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
       if (pItem->isNumber()) {
-        hb_inkeyPut(hb_itemGetNI(pItem));
+        hb_inkeyPut(hb_itemGetNI32(pItem));
       } else if (pItem->isString()) {
         hb_inkeySetText(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false);
       }

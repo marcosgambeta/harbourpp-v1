@@ -221,14 +221,14 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int32_t iParam, HB_BOOL bMandatory)
     p->lfEscapement = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfEscapement")));
     p->lfOrientation = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfOrientation")));
     p->lfWeight = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWeight")));
-    p->lfItalic = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfItalic")));
-    p->lfUnderline = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfUnderline")));
-    p->lfStrikeOut = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfStrikeOut")));
-    p->lfCharSet = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfCharSet")));
-    p->lfOutPrecision = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfOutPrecision")));
-    p->lfClipPrecision = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfClipPrecision")));
-    p->lfQuality = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfQuality")));
-    p->lfPitchAndFamily = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfPitchAndFamily")));
+    p->lfItalic = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfItalic")));
+    p->lfUnderline = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfUnderline")));
+    p->lfStrikeOut = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfStrikeOut")));
+    p->lfCharSet = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfCharSet")));
+    p->lfOutPrecision = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfOutPrecision")));
+    p->lfClipPrecision = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfClipPrecision")));
+    p->lfQuality = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfQuality")));
+    p->lfPitchAndFamily = static_cast<BYTE>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lfPitchAndFamily")));
 
     pfFaceName = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lfFaceName"), &hfFaceName, &nLen);
 
@@ -283,7 +283,7 @@ LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int32_t iParam)
   memset(p, 0, sizeof(*p));
 
   if (pStru && pStru->isHash()) {
-    p->lbStyle = static_cast<UINT>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lbStyle")));
+    p->lbStyle = static_cast<UINT>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "lbStyle")));
     p->lbColor = static_cast<COLORREF>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lbColor")));
     switch (p->lbStyle) {
     case BS_SOLID:
@@ -400,15 +400,15 @@ HB_FUNC(__WAPI_DEVMODE_SET)
   auto pStru = hb_param(2, Harbour::Item::HASH);
 
   if (pDevMode && pStru) {
-    pDevMode->dmOrientation = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmOrientation")));
-    pDevMode->dmPaperSize = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
-    pDevMode->dmPaperLength = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperLength")));
-    pDevMode->dmPaperWidth = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperWidth")));
-    pDevMode->dmScale = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmScale")));
-    pDevMode->dmCopies = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmCopies")));
-    pDevMode->dmDefaultSource = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDefaultSource")));
-    pDevMode->dmPrintQuality = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPrintQuality")));
-    pDevMode->dmDuplex = static_cast<int16_t>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDuplex")));
+    pDevMode->dmOrientation = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmOrientation")));
+    pDevMode->dmPaperSize = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
+    pDevMode->dmPaperLength = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmPaperLength")));
+    pDevMode->dmPaperWidth = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmPaperWidth")));
+    pDevMode->dmScale = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmScale")));
+    pDevMode->dmCopies = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmCopies")));
+    pDevMode->dmDefaultSource = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmDefaultSource")));
+    pDevMode->dmPrintQuality = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmPrintQuality")));
+    pDevMode->dmDuplex = static_cast<int16_t>(hb_itemGetNI32(hb_hashGetCItemPtr(pStru, "dmDuplex")));
 
     pDevMode->dmFields = 0;
     if (hb_hashGetCItemPtr(pStru, "dmOrientation")) {

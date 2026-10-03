@@ -2124,7 +2124,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
   case HB_GTI_FONTSIZE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellY);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) {
       pQTC->fontHeight = iVal;
       if (pQTC->qWnd) {
@@ -2136,7 +2136,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
   case HB_GTI_FONTWIDTH:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellX);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) {
       /* store font status for next operation on fontsize */
       pQTC->fontWidth = iVal;
@@ -2147,7 +2147,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->fontWeight);
     if (hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC) {
       /* store font status for next operation on fontsize */
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = hb_itemGetNI32(pInfo->pNewVal);
       switch (iVal) {
       case HB_GTI_FONTW_THIN:
       case HB_GTI_FONTW_NORMAL:
@@ -2170,14 +2170,14 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->fontAttribute);
     if (hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC) {
       pQTC->fontAttribute =
-          hb_itemGetNI(pInfo->pNewVal) & (HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG | HB_GTI_FONTA_CTRLCHARS |
+          hb_itemGetNI32(pInfo->pNewVal) & (HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG | HB_GTI_FONTA_CTRLCHARS |
                                           HB_GTI_FONTA_DRAWBOX | HB_GTI_FONTA_NOSTRETCH);
     }
     break;
 
   case HB_GTI_SCREENHEIGHT:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellY * pQTC->iRows);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) {
       HB_GTSELF_SETMODE(pGT, static_cast<uint16_t>(iVal / pQTC->cellY), pQTC->iCols);
     }
@@ -2185,7 +2185,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
   case HB_GTI_SCREENWIDTH:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellX * pQTC->iCols);
-    iVal = hb_itemGetNI(pInfo->pNewVal);
+    iVal = hb_itemGetNI32(pInfo->pNewVal);
     if (iVal > 0) {
       HB_GTSELF_SETMODE(pGT, pQTC->iRows, static_cast<uint16_t>(iVal / pQTC->cellX));
     }
@@ -2262,7 +2262,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_CURSORBLINKRATE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, QApplication::cursorFlashTime());
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = hb_itemGetNI32(pInfo->pNewVal);
       if (iVal < 0) {
         iVal = 0;
       }
@@ -2370,7 +2370,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_CLOSEMODE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->iCloseMode);
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = hb_itemGetNI32(pInfo->pNewVal);
       if (iVal >= 0 && iVal <= 2) {
         pQTC->iCloseMode = iVal;
         if (pQTC->qWnd) {
@@ -2395,7 +2395,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_RESIZEMODE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->iResizeMode);
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = hb_itemGetNI32(pInfo->pNewVal);
       switch (iVal) {
       case HB_GTI_RESIZEMODE_FONT:
       case HB_GTI_RESIZEMODE_ROWS:
@@ -2459,8 +2459,8 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     hb_arraySetNI(pInfo->pResult, 2, y);
 
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) && pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2)) {
-      x = hb_itemGetNI(pInfo->pNewVal);
-      y = hb_itemGetNI(pInfo->pNewVal2);
+      x = hb_itemGetNI32(pInfo->pNewVal);
+      y = hb_itemGetNI32(pInfo->pNewVal2);
     } else if (pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 2) {
       x = hb_arrayGetNI(pInfo->pNewVal, 1);
       y = hb_arrayGetNI(pInfo->pNewVal, 2);
@@ -2485,11 +2485,11 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     HB_BOOL fExpose = HB_FALSE;
 
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = hb_itemGetNI32(pInfo->pNewVal);
       if (iVal >= 0 && iVal < 16) {
         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, QTC_RGB2NUM(pQTC->colors[iVal]));
         if (pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2)) {
-          int32_t iColor = hb_itemGetNI(pInfo->pNewVal2);
+          int32_t iColor = hb_itemGetNI32(pInfo->pNewVal2);
           QRgb rgb = QTC_NUM2RGB(iColor);
           if (rgb != pQTC->colors[iVal]) {
             pQTC->colors[iVal] = rgb;
