@@ -30,6 +30,8 @@ CPP_SOURCES := \
    mouse53.cpp \
    mouseapi.cpp \
    mousehb.cpp \
+   oldbox.cpp \
+   oldclear.cpp \
    saverest.cpp \
    scroll.cpp \
    scrrow.cpp \

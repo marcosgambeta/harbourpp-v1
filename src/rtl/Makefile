@@ -110,8 +110,6 @@ CPP_SOURCES := \
    net.cpp \
    netusr.cpp \
    oemansi.cpp \
-   oldbox.cpp \
-   oldclear.cpp \
    pad.cpp \
    padx.cpp \
    rat.cpp \
@@ -212,6 +210,8 @@ CPP_SOURCES := \
 #   mouse53.cpp \ (moved to gtl)
 #   mouseapi.cpp \ (moved to gtl)
 #   mousehb.cpp \ (moved to gtl)
+#   oldbox.cpp \ (moved to gtl)
+#   oldclear.cpp \ (moved to gtl)
 #   saverest.cpp \ (moved to gtl)
 #   scroll.cpp \ (moved to gtl)
 #   scrrow.cpp \ (moved to gtl)
