@@ -1346,7 +1346,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_FONTSIZE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWindowData->PTEXTSIZE.y);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWindowData->PTEXTSIZE.y);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       auto hFont = hb_gt_wvwGetFont(pWindowData->fontFace, iVal, pWindowData->fontWidth, pWindowData->fontWeight,
@@ -1373,7 +1373,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_FONTWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWindowData->fontWidth);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWindowData->fontWidth);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       /* store font status for next operation on fontsize */
@@ -1413,7 +1413,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       iVal = 0;
       break;
     }
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iVal);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       /* store font status for next operation on fontsize */
       switch (hb_itemGetNI(pInfo->pNewVal)) {
@@ -1447,7 +1447,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       iVal = 0;
       break;
     }
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iVal);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       switch (hb_itemGetNI(pInfo->pNewVal)) {
       case HB_GTI_FONTQ_HIGH:
@@ -1473,7 +1473,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
     /*NOTE 2004-07-19 screenheight includes linespacing, if any */
 
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_wvw_LineHeight(pWindowData) * pWindowData->ROWS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_wvw_LineHeight(pWindowData) * pWindowData->ROWS);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       hb_gt_wvw_bSetMode(pWindowData, static_cast<uint16_t>(iVal / hb_wvw_LineHeight(pWindowData)), pWindowData->COLS);
@@ -1481,7 +1481,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_SCREENWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWindowData->PTEXTSIZE.x * pWindowData->COLS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWindowData->PTEXTSIZE.x * pWindowData->COLS);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       hb_gt_wvw_bSetMode(pWindowData, pWindowData->ROWS, static_cast<uint16_t>(iVal / pWindowData->PTEXTSIZE.x));
@@ -1494,7 +1494,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
     hDesk = GetDesktopWindow();
     GetWindowRect(hDesk, &rDesk);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.right - rDesk.left);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, rDesk.right - rDesk.left);
     break;
   }
 
@@ -1507,7 +1507,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     RECT rDesk{};
     HWND hDesk = GetDesktopWindow();
     GetWindowRect(hDesk, &rDesk);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.bottom - rDesk.top);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, rDesk.bottom - rDesk.top);
     break;
   }
 
@@ -1518,7 +1518,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     hDesk = GetDesktopWindow();
     GetClientRect(hDesk, &rDesk);
 
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.right - rDesk.left) / pWindowData->PTEXTSIZE.x);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, (rDesk.right - rDesk.left) / pWindowData->PTEXTSIZE.x);
     break;
   }
 
@@ -1536,7 +1536,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     hDesk = GetDesktopWindow();
     GetClientRect(hDesk, &rDesk);
 
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.bottom - rDesk.top) / hb_wvw_LineHeight(pWindowData));
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, (rDesk.bottom - rDesk.top) / hb_wvw_LineHeight(pWindowData));
     break;
   }
   case HB_GTI_WINTITLE:
@@ -1548,7 +1548,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     }
     break;
   case HB_GTI_CODEPAGE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWindowData->CodePage);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWindowData->CodePage);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0 && iVal != pWindowData->CodePage) {
       hb_gt_wvwSetCodePage(s_pWvwData->s_usCurWindow, iVal);
@@ -1582,15 +1582,15 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
   /* TODO: these two doesn't seem right. see gtwin about what they're supposed to do */
   case HB_GTI_VIEWMAXWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWindowData->COLS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWindowData->COLS);
     break;
 
   case HB_GTI_VIEWMAXHEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWindowData->ROWS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWindowData->ROWS);
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_winapi_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hb_gt_winapi_setKbdState(hb_itemGetNI(pInfo->pNewVal));
     }
@@ -1616,7 +1616,7 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_CURSORBLINKRATE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, GetCaretBlinkTime());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, GetCaretBlinkTime());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       SetCaretBlinkTime(hb_itemGetNI(pInfo->pNewVal));
     }
@@ -1629,8 +1629,8 @@ static BOOL hb_gt_wvw_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       pInfo->pResult = hb_itemNew(nullptr);
     }
     hb_arrayNew(pInfo->pResult, 2);
-    hb_itemPutNI(hb_arrayGetItemPtr(pInfo->pResult, 2), pWindowData->PTEXTSIZE.y * pWindowData->ROWS);
-    hb_itemPutNI(hb_arrayGetItemPtr(pInfo->pResult, 1), pWindowData->PTEXTSIZE.x * pWindowData->COLS);
+    hb_itemPutNI32(hb_arrayGetItemPtr(pInfo->pResult, 2), pWindowData->PTEXTSIZE.y * pWindowData->ROWS);
+    hb_itemPutNI32(hb_arrayGetItemPtr(pInfo->pResult, 1), pWindowData->PTEXTSIZE.x * pWindowData->COLS);
     iY = hb_itemGetNI(hb_arrayGetItemPtr(pInfo->pNewVal, 2));
     iX = hb_itemGetNI(hb_arrayGetItemPtr(pInfo->pNewVal, 1));
 
@@ -8890,17 +8890,17 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
     pcd->uiBusy++;
 
     auto phiWinNum = hb_itemNew(nullptr);
-    hb_itemPutNI(phiWinNum, static_cast<int32_t>(usWinNum));
+    hb_itemPutNI32(phiWinNum, static_cast<int32_t>(usWinNum));
 
     auto phiXBid = hb_itemNew(nullptr);
-    hb_itemPutNI(phiXBid, static_cast<int32_t>(pcd->uiCtrlid));
+    hb_itemPutNI32(phiXBid, static_cast<int32_t>(pcd->uiCtrlid));
 
     if (pcd->byCtrlClass == WVW_CONTROL_SCROLLBAR) {
       phiXBmsg = hb_itemNew(nullptr);
-      hb_itemPutNI(phiXBmsg, static_cast<int32_t>(LOWORD(wParam)));
+      hb_itemPutNI32(phiXBmsg, static_cast<int32_t>(LOWORD(wParam)));
 
       phiXBpos = hb_itemNew(nullptr);
-      hb_itemPutNI(phiXBpos, static_cast<int32_t>(HIWORD(wParam)));
+      hb_itemPutNI32(phiXBpos, static_cast<int32_t>(HIWORD(wParam)));
 
       pReturn = hb_itemDo(pcd->phiCodeBlock, 4, phiWinNum, phiXBid, phiXBmsg, phiXBpos);
       hb_itemRelease(pReturn);
@@ -8941,10 +8941,10 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
 
         /* now execute the codeblock */
         phiEvent = hb_itemNew(nullptr);
-        hb_itemPutNI(phiEvent, iEventType);
+        hb_itemPutNI32(phiEvent, iEventType);
 
         phiIndex = hb_itemNew(nullptr);
-        hb_itemPutNI(phiIndex, static_cast<int32_t>(iCurSel));
+        hb_itemPutNI32(phiIndex, static_cast<int32_t>(iCurSel));
 
         pReturn = hb_itemDo(pcd->phiCodeBlock, 4, phiWinNum, phiXBid, phiEvent, phiIndex);
         hb_itemRelease(pReturn);
@@ -8962,7 +8962,7 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
         /* now execute the codeblock */
         phiEvent = hb_itemNew(nullptr);
 
-        hb_itemPutNI(phiEvent, static_cast<int32_t>(iEventType));
+        hb_itemPutNI32(phiEvent, static_cast<int32_t>(iEventType));
 
         pReturn = hb_itemDo(pcd->phiCodeBlock, 3, phiWinNum, phiXBid, phiEvent);
         hb_itemRelease(pReturn);
@@ -9759,7 +9759,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
     HB_ITEM *pReturn;
     BOOL bCodeExec = FALSE;
 
-    hb_itemPutNI(hiKey, iKey);
+    hb_itemPutNI32(hiKey, iKey);
 
     HB_ITEM *pCodeblock = hb_itemDoC("SETKEY", 1, hiKey);
     if (pCodeblock->isBlock()) {

@@ -46,7 +46,7 @@ HB_FUNC(FT_CAPLOCK)
    if( HB_ISLOG(1) )
    {
       int32_t iNewState = hb_parl(1) ? (iState | HB_GTI_KBD_CAPSLOCK) : (iState & ~HB_GTI_KBD_CAPSLOCK);
-      gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, iNewState);
+      gtInfo.pNewVal = hb_itemPutNI32(gtInfo.pNewVal, iNewState);
       hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
    }
 

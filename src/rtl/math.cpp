@@ -455,7 +455,7 @@ static int32_t hb_matherrblock(HB_MATH_EXCEPTION *pexc)
   // call codeblock for both case: handled and unhandled exceptions
 
   if (pMathErr->block) {
-    auto pType = hb_itemPutNI(nullptr, pexc->type);
+    auto pType = hb_itemPutNI32(nullptr, pexc->type);
     auto pFuncname = hb_itemPutC(nullptr, pexc->funcname);
     auto pError = hb_itemPutC(nullptr, pexc->error);
     auto pArg1 = hb_itemPutND(nullptr, pexc->arg1);

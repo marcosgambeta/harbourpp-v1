@@ -192,10 +192,10 @@ static HB_ITEM *hb_usrFieldInfoToItem(LPDBFIELDINFO pFieldInfo)
   if (pFieldInfo->atomName) {
     hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_FI_NAME), pFieldInfo->atomName);
   }
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_TYPE), pFieldInfo->uiType);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_TYPEEXT), pFieldInfo->uiTypeExtended);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_LEN), pFieldInfo->uiLen);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_DEC), pFieldInfo->uiDec);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_FI_TYPE), pFieldInfo->uiType);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_FI_TYPEEXT), pFieldInfo->uiTypeExtended);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_FI_LEN), pFieldInfo->uiLen);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_FI_DEC), pFieldInfo->uiDec);
 
   return pItem;
 }
@@ -216,7 +216,7 @@ static bool hb_usrItemToFieldInfo(HB_ITEM *pItem, LPDBFIELDINFO pFieldInfo)
 static HB_ITEM *hb_usrOpenInfoToItem(LPDBOPENINFO pOpenInfo)
 {
   auto pItem = hb_itemArrayNew(UR_OI_SIZE);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_OI_AREA), pOpenInfo->uiArea);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_OI_AREA), pOpenInfo->uiArea);
   if (pOpenInfo->abName) {
     hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_OI_NAME), pOpenInfo->abName);
   }
@@ -292,8 +292,8 @@ static HB_ITEM *hb_usrRelInfoToItem(LPDBRELINFO pRelInfo)
   }
   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_RI_SCOPED), pRelInfo->isScoped);
   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_RI_OPTIMIZED), pRelInfo->isOptimized);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_RI_PARENT), pRelInfo->lpaParent ? pRelInfo->lpaParent->uiArea : 0);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_RI_CHILD), pRelInfo->lpaChild ? pRelInfo->lpaChild->uiArea : 0);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_RI_PARENT), pRelInfo->lpaParent ? pRelInfo->lpaParent->uiArea : 0);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_RI_CHILD), pRelInfo->lpaChild ? pRelInfo->lpaChild->uiArea : 0);
   hb_itemPutPtr(hb_arrayGetItemPtr(pItem, UR_RI_NEXT), pRelInfo->lpdbriNext);
 
   return pItem;
@@ -320,7 +320,7 @@ static HB_ITEM *hb_usrLockInfoToItem(LPDBLOCKINFO pLockInfo)
   if (pLockInfo->itmRecID) {
     hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_LI_RECORD), pLockInfo->itmRecID);
   }
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_LI_METHOD), pLockInfo->uiMethod);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_LI_METHOD), pLockInfo->uiMethod);
   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_LI_RESULT), pLockInfo->fResult);
 
   return pItem;
@@ -426,11 +426,11 @@ static HB_ITEM *hb_usrTransInfoToItem(LPDBTRANSINFO pTransInfo)
 
   pScope = hb_usrScopeInfoToItem(&pTransInfo->dbsci);
   auto pItem = hb_itemArrayNew(UR_TI_SIZE);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_SRCAREA), pTransInfo->lpaSource->uiArea);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_DSTAREA), pTransInfo->lpaDest->uiArea);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_TI_SRCAREA), pTransInfo->lpaSource->uiArea);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_TI_DSTAREA), pTransInfo->lpaDest->uiArea);
   hb_itemMove(hb_arrayGetItemPtr(pItem, UR_TI_SCOPE), pScope);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_FLAGS), pTransInfo->uiFlags);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_ITEMCOUNT), pTransInfo->uiItemCount);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_TI_FLAGS), pTransInfo->uiFlags);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_TI_ITEMCOUNT), pTransInfo->uiItemCount);
   if (pTransInfo->uiItemCount) {
     HB_ITEM *pItems = hb_arrayGetItemPtr(pItem, UR_TI_ITEMS);
     LPDBTRANSITEM pTransItem = pTransInfo->lpTransItems;
@@ -439,8 +439,8 @@ static HB_ITEM *hb_usrTransInfoToItem(LPDBTRANSINFO pTransInfo)
     for (uint16_t uiCount = 1; uiCount <= pTransInfo->uiItemCount; ++uiCount, ++pTransItem) {
       HB_ITEM *pItm = hb_arrayGetItemPtr(pItems, uiCount);
       hb_arrayNew(pItm, UR_TITEM_SIZE);
-      hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_TITEM_SOURCE), pTransItem->uiSource);
-      hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_TITEM_DESTIN), pTransItem->uiDest);
+      hb_itemPutNI32(hb_arrayGetItemPtr(pItm, UR_TITEM_SOURCE), pTransItem->uiSource);
+      hb_itemPutNI32(hb_arrayGetItemPtr(pItm, UR_TITEM_DESTIN), pTransItem->uiDest);
     }
   }
   hb_itemRelease(pScope);
@@ -493,7 +493,7 @@ static HB_ITEM *hb_usrSortInfoToItem(LPDBSORTINFO pSortInfo)
   pTrans = hb_usrTransInfoToItem(&pSortInfo->dbtri);
   auto pItem = hb_itemArrayNew(UR_SRI_SIZE);
   hb_itemMove(hb_arrayGetItemPtr(pItem, UR_SRI_TRANSINFO), pTrans);
-  hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_SRI_ITEMCOUNT), pSortInfo->uiItemCount);
+  hb_itemPutNI32(hb_arrayGetItemPtr(pItem, UR_SRI_ITEMCOUNT), pSortInfo->uiItemCount);
   if (pSortInfo->uiItemCount) {
     auto pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
     LPDBSORTITEM pSortItem = pSortInfo->lpdbsItem;
@@ -502,8 +502,8 @@ static HB_ITEM *hb_usrSortInfoToItem(LPDBSORTINFO pSortInfo)
     for (uint16_t uiCount = 1; uiCount <= pSortInfo->uiItemCount; ++uiCount, ++pSortItem) {
       auto pItm = hb_arrayGetItemPtr(pItems, uiCount);
       hb_arrayNew(pItm, UR_SITEM_SIZE);
-      hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_SITEM_FIELD), pSortItem->uiField);
-      hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_SITEM_FLAGS), pSortItem->uiFlags);
+      hb_itemPutNI32(hb_arrayGetItemPtr(pItm, UR_SITEM_FIELD), pSortItem->uiField);
+      hb_itemPutNI32(hb_arrayGetItemPtr(pItm, UR_SITEM_FLAGS), pSortItem->uiFlags);
     }
   }
   hb_itemRelease(pTrans);

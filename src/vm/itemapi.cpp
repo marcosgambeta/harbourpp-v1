@@ -1329,6 +1329,27 @@ HB_ITEM *hb_itemPutNI(HB_ITEM *pItem, int32_t iNumber)
   return pItem;
 }
 
+HB_ITEM *hb_itemPutNI32(HB_ITEM *pItem, int32_t iNumber)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_itemPutNI32(%p, %d)", static_cast<void*>(pItem), iNumber));
+#endif
+
+  if (pItem != nullptr) {
+    if (pItem->isComplex()) {
+      pItem->clear();
+    }
+  } else {
+    pItem = hb_itemNew(nullptr);
+  }
+
+  pItem->setType(Harbour::Item::INTEGER);
+  pItem->setIntegerValue(iNumber);
+  pItem->setIntegerLength(HB_INT_LENGTH(iNumber));
+
+  return pItem;
+}
+
 HB_EXPORT HB_ITEM *_HB_ITEM::putNI(int32_t iNumber) // equivalent to hb_itemPutNI
 {
   if (this->isComplex()) {
@@ -1694,7 +1715,7 @@ HB_ITEM *hb_itemPutNumType(HB_ITEM *pItem, double dNumber, int32_t iDec, int32_t
   if (iDec || iType1 & Harbour::Item::DOUBLE || iType2 & Harbour::Item::DOUBLE) {
     return hb_itemPutNDDec(pItem, dNumber, iDec);
   } else if (HB_DBL_LIM_INT(dNumber)) {
-    return hb_itemPutNI(pItem, static_cast<int32_t>(dNumber));
+    return hb_itemPutNI32(pItem, static_cast<int32_t>(dNumber));
   } else if (HB_DBL_LIM_LONG(dNumber)) {
 #ifdef HB_LONG_LONG_OFF
     return hb_itemPutNL(pItem, static_cast<long>(static_cast<unsigned long>(dNumber)));

@@ -143,10 +143,10 @@ static const char *mxml_error_desc(MXML_ERROR_CODE code);
 /* This is just a shortcut */
 static void hbxml_set_doc_status(MXML_REFIL *ref, HB_ITEM *doc, HB_ITEM *pNode, int32_t status, int32_t error)
 {
-  auto pNumber = hb_itemPutNI(nullptr, 1);
+  auto pNumber = hb_itemPutNI32(nullptr, 1);
 
   hb_objSendMsg(doc, "_NSTATUS", 1, pNumber);
-  hb_itemPutNI(pNumber, error);
+  hb_itemPutNI32(pNumber, error);
   hb_objSendMsg(doc, "_NERROR", 1, pNumber);
   hb_objSendMsg(doc, "_OERRORNODE", 1, pNode);
   hb_itemRelease(pNumber);
@@ -159,7 +159,7 @@ static void hbxml_set_doc_status(MXML_REFIL *ref, HB_ITEM *doc, HB_ITEM *pNode, 
 static void hbxml_doc_new_line(HB_ITEM *pDoc)
 {
   hb_objSendMsg(pDoc, "NLINE", 0);
-  auto pNumber = hb_itemPutNI(nullptr, hb_parni32(-1) + 1);
+  auto pNumber = hb_itemPutNI32(nullptr, hb_parni32(-1) + 1);
   hb_objSendMsg(pDoc, "_NLINE", 1, pNumber);
   hb_itemRelease(pNumber);
 }
@@ -167,7 +167,7 @@ static void hbxml_doc_new_line(HB_ITEM *pDoc)
 static void hbxml_doc_new_node(HB_ITEM *pDoc, int32_t amount)
 {
   hb_objSendMsg(pDoc, "NNODECOUNT", 0);
-  auto pNumber = hb_itemPutNI(nullptr, hb_parni32(-1) + amount);
+  auto pNumber = hb_itemPutNI32(nullptr, hb_parni32(-1) + amount);
   hb_objSendMsg(pDoc, "_NNODECOUNT", 1, pNumber);
   hb_itemRelease(pNumber);
 
@@ -768,7 +768,7 @@ static void mxml_node_read_data(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *doc, i
 
   buf[iPos] = 0;
 
-  pItem = hb_itemPutNI(nullptr, MXML_TYPE_DATA);
+  pItem = hb_itemPutNI32(nullptr, MXML_TYPE_DATA);
   hb_objSendMsg(pNode, "_NTYPE", 1, pItem);
 
   if (iAllocated > iPos + 1) {
@@ -915,7 +915,7 @@ static void mxml_node_read_directive(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *d
     }
 
     if (ref->status == MXML_STATUS_OK) {
-      auto pItem = hb_itemPutNI(nullptr, MXML_TYPE_DIRECTIVE);
+      auto pItem = hb_itemPutNI32(nullptr, MXML_TYPE_DIRECTIVE);
       buf[iPos] = 0;
       hb_objSendMsg(pNode, "_NTYPE", 1, pItem);
       if (iAllocated > iPos + 1) {
@@ -987,7 +987,7 @@ static void mxml_node_read_pi(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *doc)
   }
 
   if (ref->status == MXML_STATUS_OK) {
-    auto pItem = hb_itemPutNI(nullptr, MXML_TYPE_PI);
+    auto pItem = hb_itemPutNI32(nullptr, MXML_TYPE_PI);
     buf[iPos] = 0;
     hb_objSendMsg(pNode, "_NTYPE", 1, pItem);
     if (iAllocated > iPos + 1) {
@@ -1005,7 +1005,7 @@ static void mxml_node_read_pi(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *doc)
 
 static void mxml_node_read_tag(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *doc, int32_t style)
 {
-  auto pItem = hb_itemPutNI(nullptr, MXML_TYPE_TAG);
+  auto pItem = hb_itemPutNI32(nullptr, MXML_TYPE_TAG);
   hb_objSendMsg(pNode, "_NTYPE", 1, pItem);
   hb_itemRelease(pItem);
 
@@ -1037,7 +1037,7 @@ static void mxml_node_read_comment(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *doc
   int32_t iAllocated;
   auto iStatus = 0;
 
-  auto pItem = hb_itemPutNI(nullptr, MXML_TYPE_COMMENT);
+  auto pItem = hb_itemPutNI32(nullptr, MXML_TYPE_COMMENT);
   hb_objSendMsg(pNode, "_NTYPE", 1, pItem);
 
   /* we'll put all the comment into the data member, up to -> */
@@ -1111,7 +1111,7 @@ static void mxml_node_read_cdata(MXML_REFIL *ref, HB_ITEM *pNode, HB_ITEM *pDoc)
   int32_t chr;
   auto iStatus = 0;
 
-  auto pItem = hb_itemPutNI(nullptr, MXML_TYPE_CDATA);
+  auto pItem = hb_itemPutNI32(nullptr, MXML_TYPE_CDATA);
   hb_objSendMsg(pNode, "_NTYPE", 1, pItem);
 
   /* we'll put all the cdata into the data member, up to ]]>

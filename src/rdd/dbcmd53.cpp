@@ -114,7 +114,7 @@ HB_FUNC(ORDKEYRELPOS)
   if (pArea != nullptr) {
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
-    pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+    pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_RELKEYPOS, &pOrderInfo);
     hb_itemReturnRelease(pOrderInfo.itmResult);
   } else {

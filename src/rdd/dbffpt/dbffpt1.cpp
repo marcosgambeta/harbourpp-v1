@@ -1805,7 +1805,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, uint8_t **pbMemoBuf, uint8_
     break;
   case FPTIT_FLEXAR_CHAR:
     if (bBufEnd - (*pbMemoBuf) >= 1) {
-      hb_itemPutNI(pItem, static_cast<signed char>(*(*pbMemoBuf)++));
+      hb_itemPutNI32(pItem, static_cast<signed char>(*(*pbMemoBuf)++));
     } else {
       errCode = EDBF_CORRUPT;
     }
@@ -1834,7 +1834,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, uint8_t **pbMemoBuf, uint8_
     break;
   case FPTIT_FLEXAR_UCHAR:
     if (bBufEnd - (*pbMemoBuf) >= 1) {
-      hb_itemPutNI(pItem, static_cast<unsigned char>(*(*pbMemoBuf)++));
+      hb_itemPutNI32(pItem, static_cast<unsigned char>(*(*pbMemoBuf)++));
     } else {
       errCode = EDBF_CORRUPT;
     }
@@ -1863,7 +1863,7 @@ static HB_ERRCODE hb_fptReadFlexItem(FPTAREAP pArea, uint8_t **pbMemoBuf, uint8_
     break;
   case FPTIT_FLEXAR_SHORT:
     if (bBufEnd - (*pbMemoBuf) >= 2) {
-      hb_itemPutNI(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(*pbMemoBuf)));
+      hb_itemPutNI32(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(*pbMemoBuf)));
       *pbMemoBuf += 2;
     } else {
       errCode = EDBF_CORRUPT;
@@ -2361,13 +2361,13 @@ static HB_ERRCODE hb_fptGetMemo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem
         hb_itemPutDL(pItem, static_cast<long>(HB_GET_LE_UINT32(pBuffer)));
         break;
       case FPTIT_FLEX_CHAR:
-        hb_itemPutNI(pItem, static_cast<signed char>(pBuffer[0]));
+        hb_itemPutNI32(pItem, static_cast<signed char>(pBuffer[0]));
         break;
       case FPTIT_FLEX_UCHAR:
-        hb_itemPutNI(pItem, static_cast<unsigned char>(pBuffer[0]));
+        hb_itemPutNI32(pItem, static_cast<unsigned char>(pBuffer[0]));
         break;
       case FPTIT_FLEX_SHORT:
-        hb_itemPutNI(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(pBuffer)));
+        hb_itemPutNI32(pItem, static_cast<int16_t>(HB_GET_LE_UINT16(pBuffer)));
         break;
       case FPTIT_FLEX_USHORT:
         hb_itemPutNInt(pItem, HB_GET_LE_UINT16(pBuffer));
@@ -4112,7 +4112,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     } else if (pArea->bMemoType && pArea->ulMemoBlockSize) {
       hb_itemPutNL(pItem, pArea->ulMemoBlockSize);
     } else if (pArea->bMemoType == DB_MEMO_DBT) {
-      hb_itemPutNI(pItem, DBT_DEFBLOCKSIZE);
+      hb_itemPutNI32(pItem, DBT_DEFBLOCKSIZE);
     } else {
       hb_itemClear(pItem);
       return SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_MEMOBLOCKSIZE, 0, pItem);
@@ -4121,9 +4121,9 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 
   case DBI_MEMOTYPE:
     if (pArea->fHasMemo && pArea->pMemoFile) {
-      hb_itemPutNI(pItem, pArea->bMemoType);
+      hb_itemPutNI32(pItem, pArea->bMemoType);
     } else if (pArea->bMemoType) {
-      hb_itemPutNI(pItem, pArea->bMemoType);
+      hb_itemPutNI32(pItem, pArea->bMemoType);
     } else {
       hb_itemClear(pItem);
       return SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_MEMOTYPE, 0, pItem);
@@ -4132,9 +4132,9 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 
   case DBI_MEMOVERSION:
     if (pArea->fHasMemo && pArea->pMemoFile) {
-      hb_itemPutNI(pItem, pArea->uiMemoVersion);
+      hb_itemPutNI32(pItem, pArea->uiMemoVersion);
     } else if (pArea->bMemoType != DB_MEMO_NONE && pArea->uiMemoVersion != 0) {
-      hb_itemPutNI(pItem, pArea->uiMemoVersion);
+      hb_itemPutNI32(pItem, pArea->uiMemoVersion);
     } else {
       hb_itemClear(pItem);
       return SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_MEMOVERSION, 0, pItem);
@@ -4190,7 +4190,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     if (pItem->isArray()) {
       hb_itemPutNInt(pItem, hb_fptPutVarFile(pArea, hb_arrayGetNL(pItem, 1), hb_arrayGetCPtr(pItem, 2)));
     } else {
-      hb_itemPutNI(pItem, 0);
+      hb_itemPutNI32(pItem, 0);
     }
     break;
 
@@ -4411,17 +4411,17 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     if (pData->ulMemoBlockSize) {
       hb_itemPutNL(pItem, pData->ulMemoBlockSize);
     } else if ((iOldSize = hb_setGetMBlockSize()) > 0 && ((iOldSize <= 0x10000) || (iOldSize & 0xFFFF) == 0)) {
-      hb_itemPutNI(pItem, iOldSize);
+      hb_itemPutNI32(pItem, iOldSize);
     } else {
       switch (hb_memoDefaultType(pRDD, ulConnect)) {
       case DB_MEMO_DBT:
-        hb_itemPutNI(pItem, DBT_DEFBLOCKSIZE);
+        hb_itemPutNI32(pItem, DBT_DEFBLOCKSIZE);
         break;
       case DB_MEMO_SMT:
-        hb_itemPutNI(pItem, SMT_DEFBLOCKSIZE);
+        hb_itemPutNI32(pItem, SMT_DEFBLOCKSIZE);
         break;
       default:
-        hb_itemPutNI(pItem, FPT_DEFBLOCKSIZE);
+        hb_itemPutNI32(pItem, FPT_DEFBLOCKSIZE);
         break;
       }
     }
@@ -4433,7 +4433,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   case RDDI_MEMOTYPE: {
     int32_t iType = hb_itemGetNI(pItem);
 
-    hb_itemPutNI(pItem, pData->bMemoType ? pData->bMemoType : DB_MEMO_FPT);
+    hb_itemPutNI32(pItem, pData->bMemoType ? pData->bMemoType : DB_MEMO_FPT);
 
     if (pRDD->rddID != s_uiRddIdBLOB) {
       switch (iType) {
@@ -4449,7 +4449,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   case RDDI_MEMOVERSION: {
     int32_t iType = hb_itemGetNI(pItem);
 
-    hb_itemPutNI(pItem, pData->bMemoExtType ? pData->bMemoExtType : DB_MEMOVER_FLEX);
+    hb_itemPutNI32(pItem, pData->bMemoExtType ? pData->bMemoExtType : DB_MEMOVER_FLEX);
     switch (iType) {
     case DB_MEMOVER_STD:
     case DB_MEMOVER_SIX:
@@ -4461,7 +4461,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   }
 
   case RDDI_MEMOGCTYPE:
-    hb_itemPutNI(pItem, 0);
+    hb_itemPutNI32(pItem, 0);
     break;
 
   case RDDI_MEMOREADLOCK:

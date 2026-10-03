@@ -673,7 +673,7 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
       if (pField->uiDec) {
         pItem = hb_itemPutND(nullptr, 0.0);
       } else {
-        pItem = hb_itemPutNI(nullptr, 0);
+        pItem = hb_itemPutNI32(nullptr, 0);
       }
       break;
 
@@ -979,7 +979,7 @@ static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCo
       ul = 0;
     }
 
-    hb_itemPutNI(pItem, ul);
+    hb_itemPutNI32(pItem, ul);
     break;
   }
 
@@ -1013,7 +1013,7 @@ static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCo
     return Harbour::SUCCESS;
 
   case RDDI_ERRORNO:
-    hb_itemPutNI(pItem, s_errCode);
+    hb_itemPutNI32(pItem, s_errCode);
     return Harbour::SUCCESS;
 
   case RDDI_QUERY:

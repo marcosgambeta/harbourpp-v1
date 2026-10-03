@@ -203,7 +203,7 @@ static bool amf3_decode_reference(HB_ITEM *pHash, int32_t val, HB_ITEM *pRefItem
    /* Check for index reference */
    if( (val & REFERENCE_BIT) == 0 ) {
       auto pKey = hb_itemNew(nullptr);
-      hb_itemPutNI(pKey, val >> 1);
+      hb_itemPutNI32(pKey, val >> 1);
 
       pRefItem = hb_hashGetItemPtr(pHash, pKey, 0);
 
@@ -223,7 +223,7 @@ static HB_ITEM *amf3_decode_reference(HB_ITEM *pHash, int32_t val)
   {
     auto pKey = hb_itemNew(nullptr);
     HB_ITEM *pRefItem;
-    hb_itemPutNI(pKey, val >> 1);
+    hb_itemPutNI32(pKey, val >> 1);
 
     pRefItem = hb_hashGetItemPtr(pHash, pKey, 0);
     if (!pRefItem)
@@ -368,7 +368,7 @@ static bool decode_dynamic_array_AMF3(amfContext *context, HB_ITEM *pItem, int32
       if (amf3_getItem(context, pValue))
       {
         auto pKey = hb_itemNew(nullptr);
-        hb_itemPutNI(pKey, i);
+        hb_itemPutNI32(pKey, i);
 
         if (hb_hashAdd(pItem, pKey, pValue))
         {
@@ -1081,7 +1081,7 @@ static bool amf3_deserialize_obj(amfContext *context, HB_ITEM *pItem, bool proxy
     /* performance FIXME, cache class id (in context maybe)
        to not scan all classes by name every time */
     hb_objSetClass(pItem, "AMF_OBJ", "AMF_OBJ");
-    pValue = hb_itemPutNI(nullptr, OBJAMF_VER);
+    pValue = hb_itemPutNI32(nullptr, OBJAMF_VER);
     hb_arraySet(pItem, OBJAMF_VAR_VER, pValue);
     hb_itemRelease(pValue);
     pValue = hb_itemPutC(nullptr, "ANONYMOUS");
@@ -1232,7 +1232,7 @@ static bool amf3_getItem(amfContext *context, HB_ITEM *pItem)
     int32_t iVal;
     if (amf3_decode_int(context, &iVal))
     {
-      hb_itemPutNI(pItem, iVal);
+      hb_itemPutNI32(pItem, iVal);
     }
     else
     {

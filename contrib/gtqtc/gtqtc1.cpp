@@ -2123,7 +2123,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_FONTSIZE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->cellY);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellY);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       pQTC->fontHeight = iVal;
@@ -2135,7 +2135,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_FONTWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->cellX);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellX);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       /* store font status for next operation on fontsize */
@@ -2144,7 +2144,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_FONTWEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->fontWeight);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->fontWeight);
     if (hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC) {
       /* store font status for next operation on fontsize */
       iVal = hb_itemGetNI(pInfo->pNewVal);
@@ -2167,7 +2167,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_FONTATTRIBUTE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->fontAttribute);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->fontAttribute);
     if (hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC) {
       pQTC->fontAttribute =
           hb_itemGetNI(pInfo->pNewVal) & (HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG | HB_GTI_FONTA_CTRLCHARS |
@@ -2176,7 +2176,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_SCREENHEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->cellY * pQTC->iRows);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellY * pQTC->iRows);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       HB_GTSELF_SETMODE(pGT, static_cast<uint16_t>(iVal / pQTC->cellY), pQTC->iCols);
@@ -2184,7 +2184,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_SCREENWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->cellX * pQTC->iCols);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->cellX * pQTC->iCols);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       HB_GTSELF_SETMODE(pGT, pQTC->iRows, static_cast<uint16_t>(iVal / pQTC->cellX));
@@ -2192,19 +2192,19 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_DESKTOPWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).width());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).width());
     break;
 
   case HB_GTI_DESKTOPHEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).height());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).height());
     break;
 
   case HB_GTI_DESKTOPCOLS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).width() / pQTC->cellX);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).width() / pQTC->cellX);
     break;
 
   case HB_GTI_DESKTOPROWS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).height() / pQTC->cellY);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_qtc_screenSize(pQTC).height() / pQTC->cellY);
     break;
 
   case HB_GTI_WINTITLE:
@@ -2256,11 +2256,11 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_qtc_getKbdState());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_qtc_getKbdState());
     break;
 
   case HB_GTI_CURSORBLINKRATE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, QApplication::cursorFlashTime());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, QApplication::cursorFlashTime());
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
       iVal = hb_itemGetNI(pInfo->pNewVal);
       if (iVal < 0) {
@@ -2368,7 +2368,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_CLOSEMODE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->iCloseMode);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->iCloseMode);
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
       iVal = hb_itemGetNI(pInfo->pNewVal);
       if (iVal >= 0 && iVal <= 2) {
@@ -2393,7 +2393,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_RESIZEMODE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->iResizeMode);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pQTC->iResizeMode);
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
       iVal = hb_itemGetNI(pInfo->pNewVal);
       switch (iVal) {
@@ -2487,7 +2487,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     if (pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal)) {
       iVal = hb_itemGetNI(pInfo->pNewVal);
       if (iVal >= 0 && iVal < 16) {
-        pInfo->pResult = hb_itemPutNI(pInfo->pResult, QTC_RGB2NUM(pQTC->colors[iVal]));
+        pInfo->pResult = hb_itemPutNI32(pInfo->pResult, QTC_RGB2NUM(pQTC->colors[iVal]));
         if (pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2)) {
           int32_t iColor = hb_itemGetNI(pInfo->pNewVal2);
           QRgb rgb = QTC_NUM2RGB(iColor);
@@ -2633,7 +2633,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
         pQTC->fMsgAlert = hb_itemGetL(pInfo->pNewVal);
       }
     } else {
-      pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_qtc_messageBox(pQTC, pInfo->pNewVal, pInfo->pNewVal2, -1));
+      pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_qtc_messageBox(pQTC, pInfo->pNewVal, pInfo->pNewVal2, -1));
     }
     break;
 

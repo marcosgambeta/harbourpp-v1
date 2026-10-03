@@ -537,7 +537,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_AUTORDER:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_AUTORDER);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_AUTORDER);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_AUTORDER) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -547,7 +547,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_AUTOSHARE:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_AUTOSHARE);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_AUTOSHARE);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_AUTOSHARE) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -585,9 +585,9 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     break;
   case HB_SET_CURSOR:
     if (pArg1 != nullptr && pArg1->isNumeric()) {
-      pResult = hb_itemPutNI(pResult, hb_conSetCursor(true, pArg1->getNI()));
+      pResult = hb_itemPutNI32(pResult, hb_conSetCursor(true, pArg1->getNI()));
     } else {
-      pResult = hb_itemPutNI(pResult, hb_conSetCursor(false, 0));
+      pResult = hb_itemPutNI32(pResult, hb_conSetCursor(false, 0));
     }
     break;
   case HB_SET_DATEFORMAT:
@@ -621,7 +621,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_DECIMALS:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_DECIMALS);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_DECIMALS);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_DECIMALS) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -669,7 +669,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_EPOCH:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_EPOCH);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_EPOCH);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_EPOCH) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -685,7 +685,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_EVENTMASK:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_EVENTMASK);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_EVENTMASK);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_EVENTMASK) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -744,7 +744,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_MARGIN:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_MARGIN);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_MARGIN);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_MARGIN) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -754,7 +754,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_MBLOCKSIZE:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_MBLOCKSIZE);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_MBLOCKSIZE);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_MBLOCKSIZE) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -770,7 +770,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_MESSAGE:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_MESSAGE);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_MESSAGE);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_MESSAGE) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -853,7 +853,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_TYPEAHEAD:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_TYPEAHEAD);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_TYPEAHEAD);
     if (pArg1 != nullptr) {
       // Set the value and limit the range
       pSet->HB_SET_TYPEAHEAD = set_number(pArg1, pSet->HB_SET_TYPEAHEAD);
@@ -875,7 +875,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_VIDEOMODE:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_VIDEOMODE);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_VIDEOMODE);
     if (pArg1 != nullptr) {
       pSet->HB_SET_VIDEOMODE = set_number(pArg1, pSet->HB_SET_VIDEOMODE);
     }
@@ -913,7 +913,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_FILECASE:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_FILECASE);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_FILECASE);
     if (pArg1 != nullptr) {
       if (pArg1->isString()) {
         if (!hb_stricmp(pArg1->getCPtr(), "LOWER")) {
@@ -938,7 +938,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     }
     break;
   case HB_SET_DIRCASE:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_DIRCASE);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_DIRCASE);
     if (pArg1 != nullptr) {
       if (pArg1->isString()) {
         if (!hb_stricmp(pArg1->getCPtr(), "LOWER")) {
@@ -973,7 +973,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     break;
   }
   case HB_SET_DBFLOCKSCHEME:
-    pResult = hb_itemPutNI(pResult, pSet->HB_SET_DBFLOCKSCHEME);
+    pResult = hb_itemPutNI32(pResult, pSet->HB_SET_DBFLOCKSCHEME);
     if (pArg1 != nullptr) {
       if (set_number(pArg1, pSet->HB_SET_DBFLOCKSCHEME) < 0) {
         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

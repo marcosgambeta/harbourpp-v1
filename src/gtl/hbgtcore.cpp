@@ -1731,7 +1731,7 @@ static HB_BOOL hb_gt_def_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, 0);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, 0);
     break;
 
   case HB_GTI_INPUTFD:
@@ -1754,7 +1754,7 @@ static HB_BOOL hb_gt_def_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_REDRAWMAX:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pGT->iRedrawMax);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pGT->iRedrawMax);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       pGT->iRedrawMax = pInfo->pNewVal->getNI();
     }
@@ -2828,7 +2828,7 @@ static int32_t hb_gt_def_InkeyGet(HB_GT *pGT, HB_BOOL fWait, double dSeconds, in
       if (!pGT->pInkeyFilterBlock) {
         break;
       }
-      pKey = hb_itemPutNI(pKey, pGT->inkeyLast);
+      pKey = hb_itemPutNI32(pKey, pGT->inkeyLast);
       HB_GTSELF_UNLOCK(pGT);
       pGT->inkeyLast = hb_vmEvalBlockV(pGT->pInkeyFilterBlock, 1, pKey)->getNI();
       HB_GTSELF_LOCK(pGT);

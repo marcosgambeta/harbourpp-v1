@@ -1114,19 +1114,19 @@ void hb_oleVariantToItemEx(HB_ITEM *pItem, VARIANT *pVariant, uint16_t uiClass)
     break;
 
   case VT_I1:
-    hb_itemPutNI(pItem, static_cast<signed char>(V_I1(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<signed char>(V_I1(pVariant)));
     break;
 
   case VT_I1 | VT_BYREF:
-    hb_itemPutNI(pItem, static_cast<signed char>(*V_I1REF(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<signed char>(*V_I1REF(pVariant)));
     break;
 
   case VT_I2:
-    hb_itemPutNI(pItem, static_cast<int16_t>(V_I2(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<int16_t>(V_I2(pVariant)));
     break;
 
   case VT_I2 | VT_BYREF:
-    hb_itemPutNI(pItem, static_cast<int16_t>(*V_I2REF(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<int16_t>(*V_I2REF(pVariant)));
     break;
 
   case VT_I4:
@@ -1160,19 +1160,19 @@ void hb_oleVariantToItemEx(HB_ITEM *pItem, VARIANT *pVariant, uint16_t uiClass)
     break;
 
   case VT_UI1:
-    hb_itemPutNI(pItem, static_cast<unsigned char>(V_UI1(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<unsigned char>(V_UI1(pVariant)));
     break;
 
   case VT_UI1 | VT_BYREF:
-    hb_itemPutNI(pItem, static_cast<unsigned char>(*V_UI1REF(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<unsigned char>(*V_UI1REF(pVariant)));
     break;
 
   case VT_UI2:
-    hb_itemPutNI(pItem, static_cast<uint16_t>(V_UI2(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<uint16_t>(V_UI2(pVariant)));
     break;
 
   case VT_UI2 | VT_BYREF:
-    hb_itemPutNI(pItem, static_cast<uint16_t>(*V_UI2REF(pVariant)));
+    hb_itemPutNI32(pItem, static_cast<uint16_t>(*V_UI2REF(pVariant)));
     break;
 
   case VT_UI4:
@@ -1208,11 +1208,11 @@ void hb_oleVariantToItemEx(HB_ITEM *pItem, VARIANT *pVariant, uint16_t uiClass)
     break;
 
   case VT_INT:
-    hb_itemPutNI(pItem, V_INT(pVariant));
+    hb_itemPutNI32(pItem, V_INT(pVariant));
     break;
 
   case VT_INT | VT_BYREF:
-    hb_itemPutNI(pItem, *V_INTREF(pVariant));
+    hb_itemPutNI32(pItem, *V_INTREF(pVariant));
     break;
 
   case VT_UINT:

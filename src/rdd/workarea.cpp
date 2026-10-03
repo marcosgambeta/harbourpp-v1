@@ -787,7 +787,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
   case DBI_GETHEADERSIZE:
   case DBI_GETRECSIZE:
   case DBI_LOCKCOUNT:
-    hb_itemPutNI(pItem, 0);
+    hb_itemPutNI32(pItem, 0);
     break;
 
   case DBI_LASTUPDATE:
@@ -805,7 +805,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
       uiCount++;
       lpdbRelations = lpdbRelations->lpdbriNext;
     }
-    hb_itemPutNI(pItem, uiCount);
+    hb_itemPutNI32(pItem, uiCount);
     break;
   }
 
@@ -830,7 +830,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     break;
 
   case DBI_FCOUNT:
-    hb_itemPutNI(pItem, pArea->uiFieldCount);
+    hb_itemPutNI32(pItem, pArea->uiFieldCount);
     break;
 
   case DBI_ALIAS: {
@@ -1470,7 +1470,7 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
         // Check the current order
         pResult = pRelInfo->lpaParent->valResult;
         pRelInfo->lpaParent->valResult = nullptr;
-        pInfo.itmResult = hb_itemPutNI(nullptr, 0);
+        pInfo.itmResult = hb_itemPutNI32(nullptr, 0);
         errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
 
         if (errCode == Harbour::SUCCESS) {
@@ -1816,7 +1816,7 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConn
   case RDDI_TABLETYPE:
   case RDDI_MEMOTYPE:
   case RDDI_MEMOVERSION:
-    hb_itemPutNI(pItem, 0);
+    hb_itemPutNI32(pItem, 0);
     break;
 
   case RDDI_STRICTREAD:
@@ -1852,7 +1852,7 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConn
     if (hb_itemType(pItem) & Harbour::Item::NUMERIC) {
       hb_setSetItem(HB_SET_AUTORDER, pItem);
     }
-    hb_itemPutNI(pItem, iResult);
+    hb_itemPutNI32(pItem, iResult);
     break;
   case RDDI_AUTOSHARE:
     fResult = hb_setGetAutoShare();
@@ -1866,14 +1866,14 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConn
     if (hb_itemType(pItem) & Harbour::Item::NUMERIC) {
       hb_setSetItem(HB_SET_DBFLOCKSCHEME, pItem);
     }
-    hb_itemPutNI(pItem, iResult);
+    hb_itemPutNI32(pItem, iResult);
     break;
   case RDDI_MEMOBLOCKSIZE:
     iResult = hb_setGetMBlockSize();
     if (hb_itemType(pItem) & Harbour::Item::NUMERIC) {
       hb_setSetItem(HB_SET_MBLOCKSIZE, pItem);
     }
-    hb_itemPutNI(pItem, iResult);
+    hb_itemPutNI32(pItem, iResult);
     break;
   case RDDI_MEMOEXT: {
     const char *szExt = hb_setGetMFileExt();

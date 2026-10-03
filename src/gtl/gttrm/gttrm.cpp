@@ -3816,14 +3816,14 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 #endif
 
   case HB_GTI_ESCDELAY:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->esc_delay);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pTerm->esc_delay);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       pTerm->esc_delay = pInfo->pNewVal->getNI();
     }
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_trm_getKbdState(pTerm));
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_trm_getKbdState(pTerm));
     break;
 
   case HB_GTI_DELKEYMAP:
@@ -3891,14 +3891,14 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       iVal = 3;
       break;
     }
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iVal);
     break;
 
   case HB_GTI_PALETTE:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       iVal = pInfo->pNewVal->getNI();
       if (iVal >= 0 && iVal < 16) {
-        pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->colors[iVal]);
+        pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pTerm->colors[iVal]);
         if (hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC) {
           pTerm->colors[iVal] = pInfo->pNewVal2->getNI();
           hb_gt_trm_SetPalette(pTerm, iVal, iVal);

@@ -599,7 +599,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue 
          return true;
       }
       case HB_VF_SHUTDOWN:
-         hb_itemPutNI(pValue, pFile->iMode);
+         hb_itemPutNI32(pValue, pFile->iMode);
          return true;
 
       case HB_VF_RDHANDLE:

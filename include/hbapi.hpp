@@ -1529,7 +1529,7 @@ extern HB_EXPORT void hb_retnlllen(int64_t lNumber, int32_t iWidth);
 #define hb_rettdt(lJulian, lMilliSec)        hb_itemPutTDT(hb_stackReturnItem(), lJulian, lMilliSec)
 #define hb_retl(iLogical)                    hb_itemPutL(hb_stackReturnItem(), (iLogical) ? HB_TRUE : HB_FALSE)
 #define hb_retnd(dNumber)                    hb_itemPutND(hb_stackReturnItem(), dNumber)
-#define hb_retni(iNumber)                    hb_itemPutNI(hb_stackReturnItem(), iNumber)
+#define hb_retni(iNumber)                    hb_itemPutNI32(hb_stackReturnItem(), iNumber)
 #define hb_retnl(lNumber)                    hb_itemPutNL(hb_stackReturnItem(), lNumber)
 #define hb_retns(nNumber)                    hb_itemPutNS(hb_stackReturnItem(), nNumber)
 #define hb_retnll(lNumber)                   hb_itemPutNLL(hb_stackReturnItem(), lNumber)

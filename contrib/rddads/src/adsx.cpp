@@ -1377,7 +1377,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO
     break;
 
   case DBOI_KEYSIZE:
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, pTag->uiLen);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, pTag->uiLen);
     break;
 
   case DBOI_KEYVAL: {
@@ -1484,7 +1484,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO
       pTag = pTag->pNext;
       usOrder++;
     }
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, static_cast<int32_t>(usOrder));
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, static_cast<int32_t>(usOrder));
     break;
   }
 
@@ -1499,7 +1499,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO
       pTag2 = pTag2->pNext;
       usOrder++;
     }
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, static_cast<int32_t>(usOrder));
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, static_cast<int32_t>(usOrder));
     break;
   }
 
@@ -1508,7 +1508,7 @@ static HB_ERRCODE adsxOrderInfo(ADSXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO
     break;
 
   case DBOI_OPTLEVEL:
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, DBOI_OPTIMIZED_NONE);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, DBOI_OPTIMIZED_NONE);
     break;
 
   case DBOI_KEYADD:

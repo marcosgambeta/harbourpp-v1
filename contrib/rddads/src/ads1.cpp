@@ -3664,9 +3664,9 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   if (hb_setGetNI(HB_SET_AUTORDER)) {
     DBORDERINFO pOrderInfo;
-    pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+    pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     pOrderInfo.itmNewVal = nullptr;
-    pOrderInfo.itmOrder = hb_itemPutNI(nullptr, hb_setGetNI(HB_SET_AUTORDER));
+    pOrderInfo.itmOrder = hb_itemPutNI32(nullptr, hb_setGetNI(HB_SET_AUTORDER));
     pOrderInfo.atomBagName = nullptr;
     SELF_ORDLSTFOCUS(&pArea->area, &pOrderInfo);
     hb_itemRelease(pOrderInfo.itmOrder);
@@ -4323,7 +4323,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, uint16_t uiIndex, LPDBORDERINFO p
     } else {
       u16 = 0;
     }
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, u16);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, u16);
     break;
 
   case DBOI_KEYVAL:
@@ -4410,7 +4410,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, uint16_t uiIndex, LPDBORDERINFO p
     } else {
       usOrder = 0;
     }
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, usOrder);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, usOrder);
     break;
   }
 
@@ -4462,7 +4462,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, uint16_t uiIndex, LPDBORDERINFO p
       AdsGetNumIndexes(pArea->hTable, &u16);
     }
 
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, u16);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, u16);
     break;
 
   case DBOI_KEYCOUNT:
@@ -4630,7 +4630,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, uint16_t uiIndex, LPDBORDERINFO p
     default:
       u16 = DBOI_OPTIMIZED_NONE;
     }
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, u16);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, u16);
     break;
 
   case DBOI_KEYADD:
@@ -5248,7 +5248,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnec
   case RDDI_INDEXPAGESIZE: {
     auto iPageSize = hb_itemGetNI(pItem);
 
-    hb_itemPutNI(pItem, adsIndexPageSize(adsGetFileType(pRDD->rddID)));
+    hb_itemPutNI32(pItem, adsIndexPageSize(adsGetFileType(pRDD->rddID)));
 
     if (adsGetFileType(pRDD->rddID) == ADS_ADT && iPageSize >= 0x200 && iPageSize <= 0x2000 &&
         ((iPageSize - 1) & iPageSize) == 0) {

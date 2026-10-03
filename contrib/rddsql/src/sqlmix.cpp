@@ -1630,7 +1630,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, uint16_t uiIndex, LPDBORDER
       pTag = pTag->pNext;
       uiTag++;
     }
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, uiTag);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, uiTag);
     return Harbour::SUCCESS;
   }
 
@@ -1716,7 +1716,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, uint16_t uiIndex, LPDBORDER
     break;
 
   case DBOI_NUMBER:
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, uiTag); // otherwise
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, uiTag); // otherwise
     break;
 
   case DBOI_ISCOND:
@@ -1748,11 +1748,11 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, uint16_t uiIndex, LPDBORDER
     break;
 
   case DBOI_KEYSIZE:
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, pTag ? pTag->uiKeyLen : 0);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, pTag ? pTag->uiKeyLen : 0);
     break;
 
   case DBOI_KEYDEC:
-    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, 0);
+    pOrderInfo->itmResult = hb_itemPutNI32(pOrderInfo->itmResult, 0);
     break;
 
     // TODO

@@ -3317,7 +3317,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     break;
 
   case DBI_MEMOTYPE:
-    hb_itemPutNI(pItem, DB_MEMO_NONE);
+    hb_itemPutNI32(pItem, DB_MEMO_NONE);
     break;
 
   case DBI_TABLETYPE:
@@ -3325,7 +3325,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
       hb_itemClear(pItem);
       return SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TABLETYPE, 0, pItem);
     }
-    hb_itemPutNI(pItem, pArea->bTableType);
+    hb_itemPutNI32(pItem, pArea->bTableType);
     break;
 
   case DBI_FILEHANDLE:
@@ -3422,16 +3422,16 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 
   case DBI_LOCKTEST:
     if (pItem->isNumeric()) {
-      hb_itemPutNI(pItem, hb_dbfLockTest(pArea, REC_LOCK, pItem->getNL()));
+      hb_itemPutNI32(pItem, hb_dbfLockTest(pArea, REC_LOCK, pItem->getNL()));
     } else {
-      hb_itemPutNI(pItem, hb_dbfLockTest(pArea, FILE_LOCK, 0));
+      hb_itemPutNI32(pItem, hb_dbfLockTest(pArea, FILE_LOCK, 0));
     }
     break;
 
   case DBI_LOCKSCHEME: {
     int32_t iScheme = hb_itemGetNI(pItem);
     if (pArea->bLockType) {
-      hb_itemPutNI(pItem, pArea->bLockType);
+      hb_itemPutNI32(pItem, pArea->bLockType);
     } else {
       hb_itemClear(pItem);
       errCode = SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_LOCKSCHEME, 0, pItem);
@@ -3458,7 +3458,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
         pArea->uiSetHeader = iMode;
       }
     }
-    hb_itemPutNI(pItem, uiSetHeader);
+    hb_itemPutNI32(pItem, uiSetHeader);
     break;
   }
   case DBI_ROLLBACK:
@@ -3590,7 +3590,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, uint16_t uiIndex, uint16_t uiT
       } else {
         iValue = hb_dbfNextValueStep(pArea, uiIndex - 1, 0);
       }
-      hb_itemPutNI(pItem, iValue);
+      hb_itemPutNI32(pItem, iValue);
       return Harbour::SUCCESS;
     }
     hb_itemClear(pItem);
@@ -6205,7 +6205,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   }
   case RDDI_TABLETYPE: {
     int32_t iType = hb_itemGetNI(pItem);
-    hb_itemPutNI(pItem, pData->bTableType ? pData->bTableType : DB_DBF_STD);
+    hb_itemPutNI32(pItem, pData->bTableType ? pData->bTableType : DB_DBF_STD);
     switch (iType) {
     case DB_DBF_STD: // standard dBase/Clipper DBF file
     case DB_DBF_VFP: // VFP DBF file
@@ -6216,7 +6216,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   case RDDI_LOCKSCHEME: {
     int32_t iScheme = hb_itemGetNI(pItem);
 
-    hb_itemPutNI(pItem, pData->bLockType ? pData->bLockType : hb_setGetDBFLockScheme());
+    hb_itemPutNI32(pItem, pData->bLockType ? pData->bLockType : hb_setGetDBFLockScheme());
     switch (iScheme) {
     case DB_DBFLOCK_CLIPPER:
     case DB_DBFLOCK_CLIPPER2:
@@ -6239,7 +6239,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
         pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }
     }
-    hb_itemPutNI(pItem, uiSetHeader);
+    hb_itemPutNI32(pItem, uiSetHeader);
     break;
   }
   case RDDI_DIRTYREAD: {
@@ -6253,7 +6253,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   case RDDI_INDEXPAGESIZE: {
     int32_t iPageSize = hb_itemGetNI(pItem);
 
-    hb_itemPutNI(pItem, pData->uiIndexPageSize);
+    hb_itemPutNI32(pItem, pData->uiIndexPageSize);
     if (iPageSize >= 0x200 && iPageSize <= 0x2000 && ((iPageSize - 1) & iPageSize) == 0) {
       pData->uiIndexPageSize = static_cast<uint16_t>(iPageSize);
     }
@@ -6262,7 +6262,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
   case RDDI_DECIMALS: {
     int32_t iDecimals = pItem->isNumeric() ? pItem->getNI() : -1;
 
-    hb_itemPutNI(pItem, pData->bDecimals);
+    hb_itemPutNI32(pItem, pData->bDecimals);
     if (iDecimals >= 0 && iDecimals <= 20) {
       pData->bDecimals = static_cast<uint8_t>(iDecimals);
     }

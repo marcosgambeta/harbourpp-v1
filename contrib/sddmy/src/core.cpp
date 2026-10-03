@@ -335,7 +335,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
         break;
 
       case Harbour::DB::Field::INTEGER:
-        pItem = hb_itemPutNI(nullptr, 0);
+        pItem = hb_itemPutNI32(nullptr, 0);
         break;
 
       case Harbour::DB::Field::LONG:

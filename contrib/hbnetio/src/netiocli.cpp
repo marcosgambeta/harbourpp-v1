@@ -1523,7 +1523,7 @@ static HB_BOOL s_netio_procexec(int32_t iMsg, int32_t iType)
                         }
                         else
                         {
-                           hb_itemPutNI(pItem, -1);
+                           hb_itemPutNI32(pItem, -1);
                         }
                      }
                      hb_itemReturnRelease(pItem);

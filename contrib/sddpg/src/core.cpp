@@ -382,7 +382,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
         break;
 
       case Harbour::DB::Field::INTEGER:
-        hb_itemPutNI(pItem, 0);
+        hb_itemPutNI32(pItem, 0);
         break;
 
       case Harbour::DB::Field::LONG:

@@ -1446,7 +1446,7 @@ UNSIGNED32 WINAPI hb_adsShowCallback(UNSIGNED16 usPercentDone)
   HB_ITEM *pCallBack = hb_ads_getCallBack();
 
   if (pCallBack) {
-    auto pPercentDone = hb_itemPutNI(nullptr, usPercentDone);
+    auto pPercentDone = hb_itemPutNI32(nullptr, usPercentDone);
 #if ADS_LIB_VERSION >= 610
     auto pCallbackID = hb_itemPutNL(nullptr, ulCallbackID);
     bool fResult = hb_itemGetL(hb_vmEvalBlockV(pCallBack, 2, pPercentDone, pCallbackID));

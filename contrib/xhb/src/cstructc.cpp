@@ -207,7 +207,7 @@ static uint32_t SizeOfCStructure(HB_ITEM *aDef, uint32_t uiAlign)
       if ((pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE_PTR) {
         uiMemberSize = sizeof(void *);
       } else if ((pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE) {
-        auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
+        auto pID = hb_itemPutNI32(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
         HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
         hb_itemRelease(pID);
@@ -434,7 +434,7 @@ static uint8_t *ArrayToStructure(HB_ITEM *aVar, HB_ITEM *aDef, uint32_t uiAlign,
       if ((pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE_PTR) {
         uiMemberSize = sizeof(void *);
       } else if ((pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE) {
-        auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
+        auto pID = hb_itemPutNI32(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
         HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
         hb_itemRelease(pID);
@@ -1058,7 +1058,7 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
       if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR) {
         uiMemberSize = sizeof(void *);
       } else if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE) {
-        auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
+        auto pID = hb_itemPutNI32(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
         HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
         hb_itemRelease(pID);
@@ -1101,11 +1101,11 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
 
     switch ((pBaseDef->pItems + nIndex)->item.asInteger.value) {
     case CTYPE_CHAR: /* char */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, (int32_t)*(reinterpret_cast<char *>(Buffer + uiOffset)));
+      hb_itemPutNI32(pBaseVar->pItems + nIndex, (int32_t)*(reinterpret_cast<char *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_UNSIGNED_CHAR: /* unsigned char */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, (int32_t)*(static_cast<uint8_t *>(Buffer + uiOffset)));
+      hb_itemPutNI32(pBaseVar->pItems + nIndex, (int32_t)*(static_cast<uint8_t *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_CHAR_PTR: /* char * */
@@ -1147,11 +1147,11 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
       break;
 
     case CTYPE_SHORT: /* short */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, *((short *)(Buffer + uiOffset)));
+      hb_itemPutNI32(pBaseVar->pItems + nIndex, *((short *)(Buffer + uiOffset)));
       break;
 
     case CTYPE_UNSIGNED_SHORT: /* unsigned short */
-      hb_itemPutNI(pBaseVar->pItems + nIndex,
+      hb_itemPutNI32(pBaseVar->pItems + nIndex,
                    static_cast<short>(*(reinterpret_cast<unsigned short *>(Buffer + uiOffset))));
       break;
 
@@ -1161,11 +1161,11 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
       break;
 
     case CTYPE_INT: /* int */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, *(reinterpret_cast<int32_t *>(Buffer + uiOffset)));
+      hb_itemPutNI32(pBaseVar->pItems + nIndex, *(reinterpret_cast<int32_t *>(Buffer + uiOffset)));
       break;
 
     case CTYPE_UNSIGNED_INT: /* unsigned int */
-      hb_itemPutNI(pBaseVar->pItems + nIndex, static_cast<int32_t>(*(reinterpret_cast<unsigned int *>(Buffer + uiOffset))));
+      hb_itemPutNI32(pBaseVar->pItems + nIndex, static_cast<int32_t>(*(reinterpret_cast<unsigned int *>(Buffer + uiOffset))));
       break;
 
     case CTYPE_INT_PTR:          /* int * */
@@ -1206,7 +1206,7 @@ static HB_ITEM *StructureToArray(uint8_t *Buffer, HB_SIZE nBufferLen, HB_ITEM *a
 
     default: {
       uint32_t uiNestedSize /*, uiNestedAlign */;
-      auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
+      auto pID = hb_itemPutNI32(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
       HB_ITEM *pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);
 
       hb_itemRelease(pID);

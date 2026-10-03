@@ -5780,13 +5780,13 @@ static HB_ERRCODE hb_ntxOpen(NTXAREAP pArea, LPDBOPENINFO pOpenInfo)
     if (hb_fileExists(szFileName, nullptr) || DBFAREA_DATA(&pArea->dbfarea)->fStrictStruct) {
       DBORDERINFO pOrderInfo;
 
-      pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+      pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
       pOrderInfo.atomBagName = hb_itemPutC(nullptr, szFileName);
       pOrderInfo.itmNewVal = nullptr;
       pOrderInfo.itmOrder = nullptr;
       errCode = SELF_ORDLSTADD(&pArea->dbfarea.area, &pOrderInfo);
       if (errCode == Harbour::SUCCESS) {
-        pOrderInfo.itmOrder = hb_itemPutNI(nullptr, hb_setGetAutOrder());
+        pOrderInfo.itmOrder = hb_itemPutNI32(nullptr, hb_setGetAutOrder());
         errCode = SELF_ORDLSTFOCUS(&pArea->dbfarea.area, &pOrderInfo);
         hb_itemRelease(pOrderInfo.itmOrder);
         if (errCode == Harbour::SUCCESS) {
@@ -6386,7 +6386,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       i = hb_ntxTagCount(pArea);
     }
 
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, i);
     return Harbour::SUCCESS;
   }
   case DBOI_BAGCOUNT: {
@@ -6396,7 +6396,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       ++i;
       pIndex = pIndex->pNext;
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, i);
     return Harbour::SUCCESS;
   }
   case DBOI_BAGNUMBER: {
@@ -6418,7 +6418,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
         pIndex = pIndex->pNext;
       } while (pIndex);
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? i : 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pIndex ? i : 0);
     return Harbour::SUCCESS;
   }
   case DBOI_BAGORDER: {
@@ -6441,7 +6441,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
         pIndex = pIndex->pNext;
       } while (pIndex);
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? i : 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pIndex ? i : 0);
     return Harbour::SUCCESS;
   }
   case DBOI_RESETPOS:
@@ -6513,7 +6513,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag->TagName);
       break;
     case DBOI_NUMBER:
-      pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, hb_ntxFindTagNum(pArea, pTag));
+      pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, hb_ntxFindTagNum(pArea, pTag));
       break;
     case DBOI_FILEHANDLE:
       pInfo->itmResult =
@@ -6689,10 +6689,10 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, szType);
     } break;
     case DBOI_KEYSIZE:
-      pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pTag->KeyLength);
+      pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pTag->KeyLength);
       break;
     case DBOI_KEYDEC:
-      pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pTag->KeyDec);
+      pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pTag->KeyDec);
       break;
     case DBOI_KEYVAL:
       if (hb_ntxTagLockRead(pTag)) {
@@ -6739,7 +6739,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
                 hb_arrayGetPtr(pInfo->itmNewVal, DBRMI_PARAM), hb_arrayGetItemPtr(pInfo->itmNewVal, DBRMI_LOVAL),
                 hb_arrayGetItemPtr(pInfo->itmNewVal, DBRMI_HIVAL)));
       } else {
-        pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, 0);
+        pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, 0);
       }
       break;
     case DBOI_UPDATECOUNTER:
@@ -6791,14 +6791,14 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       break;
     case DBOI_INDEXTYPE:
 #if defined(HB_NTX_NOMULTITAG)
-      pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, DBOI_TYPE_NONCOMPACT);
+      pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, DBOI_TYPE_NONCOMPACT);
 #else
       pInfo->itmResult =
-          hb_itemPutNI(pInfo->itmResult, pTag->pIndex->Compound ? DBOI_TYPE_COMPOUND : DBOI_TYPE_NONCOMPACT);
+          hb_itemPutNI32(pInfo->itmResult, pTag->pIndex->Compound ? DBOI_TYPE_COMPOUND : DBOI_TYPE_NONCOMPACT);
 #endif
       break;
     case DBOI_INDEXPAGESIZE:
-      pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, NTXBLOCKSIZE);
+      pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, NTXBLOCKSIZE);
       break;
     }
   } else if (pInfo->itmResult) {
@@ -6912,13 +6912,13 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
     case DBOI_SCOPEEVAL:
     case DBOI_UPDATECOUNTER:
     case DBOI_INDEXPAGESIZE:
-      hb_itemPutNI(pInfo->itmResult, 0);
+      hb_itemPutNI32(pInfo->itmResult, 0);
       break;
     case DBOI_FILEHANDLE:
       hb_itemPutNInt(pInfo->itmResult, static_cast<HB_NHANDLE>(FS_ERROR));
       break;
     case DBOI_INDEXTYPE:
-      hb_itemPutNI(pInfo->itmResult, DBOI_TYPE_UNDEF);
+      hb_itemPutNI32(pInfo->itmResult, DBOI_TYPE_UNDEF);
       break;
     case DBOI_BAGNAME:
     case DBOI_CONDITION:

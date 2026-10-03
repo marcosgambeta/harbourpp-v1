@@ -992,7 +992,7 @@ HB_FUNC(INDEXORD)
 
   if (pArea != nullptr) {
     DBORDERINFO pInfo{};
-    pInfo.itmResult = hb_itemPutNI(nullptr, 0);
+    pInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
     hb_retni(hb_itemGetNI(pInfo.itmResult));
     hb_itemRelease(pInfo.itmResult);
@@ -1391,7 +1391,7 @@ HB_FUNC(ORDNUMBER)
       hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
     }
-    pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+    pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_NUMBER, &pOrderInfo);
     hb_itemReturnRelease(pOrderInfo.itmResult);
   } else {

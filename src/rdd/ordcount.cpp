@@ -63,7 +63,7 @@ HB_FUNC(ORDCOUNT)
   if (pArea != nullptr) {
     DBORDERINFO pOrderInfo{};
     pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
-    pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+    pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
     hb_itemReturnRelease(pOrderInfo.itmResult);
   } else {

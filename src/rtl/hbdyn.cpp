@@ -277,23 +277,23 @@ static HB_ITEM *hb_u64ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
     break;
 
   case HB_DYN_CTYPE_CHAR:
-    hb_itemPutNI(pItem, static_cast<char>(value.t.n64));
+    hb_itemPutNI32(pItem, static_cast<char>(value.t.n64));
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED:
-    hb_itemPutNI(pItem, static_cast<unsigned char>(value.t.n64));
+    hb_itemPutNI32(pItem, static_cast<unsigned char>(value.t.n64));
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    hb_itemPutNI(pItem, static_cast<int16_t>(value.t.n64));
+    hb_itemPutNI32(pItem, static_cast<int16_t>(value.t.n64));
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
-    hb_itemPutNI(pItem, static_cast<uint16_t>(value.t.n64));
+    hb_itemPutNI32(pItem, static_cast<uint16_t>(value.t.n64));
     break;
 
   case HB_DYN_CTYPE_INT:
-    hb_itemPutNI(pItem, static_cast<int32_t>(value.t.n64));
+    hb_itemPutNI32(pItem, static_cast<int32_t>(value.t.n64));
     break;
 
   case HB_DYN_CTYPE_INT_UNSIGNED:
@@ -695,23 +695,23 @@ static HB_ITEM *hb_u32ret(HB_ITEM *pItem, int32_t iRetType, int32_t iEncoding, H
     break;
 
   case HB_DYN_CTYPE_CHAR:
-    hb_itemPutNI(pItem, static_cast<char>(value.t.n32));
+    hb_itemPutNI32(pItem, static_cast<char>(value.t.n32));
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED:
-    hb_itemPutNI(pItem, static_cast<unsigned char>(value.t.n32));
+    hb_itemPutNI32(pItem, static_cast<unsigned char>(value.t.n32));
     break;
 
   case HB_DYN_CTYPE_SHORT:
-    hb_itemPutNI(pItem, static_cast<int16_t>(value.t.n32));
+    hb_itemPutNI32(pItem, static_cast<int16_t>(value.t.n32));
     break;
 
   case HB_DYN_CTYPE_SHORT_UNSIGNED:
-    hb_itemPutNI(pItem, static_cast<uint16_t>(value.t.n32));
+    hb_itemPutNI32(pItem, static_cast<uint16_t>(value.t.n32));
     break;
 
   case HB_DYN_CTYPE_INT:
-    hb_itemPutNI(pItem, static_cast<int32_t>(value.t.n32));
+    hb_itemPutNI32(pItem, static_cast<int32_t>(value.t.n32));
     break;
 
   case HB_DYN_CTYPE_INT_UNSIGNED:

@@ -1792,7 +1792,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_CODEPAGE: {
     UINT uiCodePage = GetConsoleCP();
     UINT uiCodePageNew = hb_itemGetNI(pInfo->pNewVal);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, uiCodePage);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, uiCodePage);
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) && uiCodePageNew != uiCodePage) {
       SetConsoleCP(uiCodePageNew);
       SetConsoleOutputCP(uiCodePageNew);
@@ -1825,7 +1825,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_CLOSEMODE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fClosable ? 0 : 2);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fClosable ? 0 : 2);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       auto iVal = pInfo->pNewVal->getNI();
       if (iVal >= 0 && iVal <= 2 && (s_fClosable ? (iVal != 0) : (iVal == 0))) {
@@ -1840,7 +1840,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     break;
 
   case HB_GTI_RESIZEMODE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, HB_GTI_RESIZEMODE_ROWS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, HB_GTI_RESIZEMODE_ROWS);
     break;
 
   case HB_GTI_ALTENTER:
@@ -1892,28 +1892,28 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_DESKTOPHEIGHT:
   case HB_GTI_VIEWMAXHEIGHT: {
     COORD coBuf = GetLargestConsoleWindowSize(s_HOutput);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, coBuf.Y - 1);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, coBuf.Y - 1);
     break;
   }
   case HB_GTI_DESKTOPCOLS:
   case HB_GTI_DESKTOPWIDTH:
   case HB_GTI_VIEWMAXWIDTH: {
     COORD coBuf = GetLargestConsoleWindowSize(s_HOutput);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, coBuf.X - 1);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, coBuf.X - 1);
     break;
   }
   case HB_GTI_SCREENHEIGHT:
   case HB_GTI_VIEWPORTHEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_csbi.srWindow.Bottom - s_csbi.srWindow.Top);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_csbi.srWindow.Bottom - s_csbi.srWindow.Top);
     break;
 
   case HB_GTI_SCREENWIDTH:
   case HB_GTI_VIEWPORTWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_csbi.srWindow.Right - s_csbi.srWindow.Left);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_csbi.srWindow.Right - s_csbi.srWindow.Left);
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_win_getKbdState());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_win_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
     }

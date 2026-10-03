@@ -1555,7 +1555,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulC
         pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }
     }
-    hb_itemPutNI(pItem, uiSetHeader);
+    hb_itemPutNI32(pItem, uiSetHeader);
     break;
   }
   default:

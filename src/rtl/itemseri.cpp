@@ -1211,15 +1211,15 @@ static HB_SIZE hb_deserializeItem(HB_ITEM *pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
     break;
 
   case HB_SERIAL_ZERO:
-    hb_itemPutNI(pItem, 0);
+    hb_itemPutNI32(pItem, 0);
     break;
 
   case HB_SERIAL_INT8:
-    hb_itemPutNI(pItem, static_cast<signed char>(pBuffer[nOffset++]));
+    hb_itemPutNI32(pItem, static_cast<signed char>(pBuffer[nOffset++]));
     break;
 
   case HB_SERIAL_INT16:
-    hb_itemPutNI(pItem, HB_GET_LE_INT16(&pBuffer[nOffset]));
+    hb_itemPutNI32(pItem, HB_GET_LE_INT16(&pBuffer[nOffset]));
     nOffset += 2;
     break;
 
@@ -1480,7 +1480,7 @@ static HB_SIZE hb_deserializeItem(HB_ITEM *pItem, HB_CODEPAGE *cdpIn, HB_CODEPAG
   case HB_SERIAL_XHB_N:
     switch (pBuffer[nOffset++]) {
     case 'I':
-      hb_itemPutNI(pItem, static_cast<int32_t>(HB_GET_BE_UINT64(&pBuffer[nOffset])));
+      hb_itemPutNI32(pItem, static_cast<int32_t>(HB_GET_BE_UINT64(&pBuffer[nOffset])));
       break;
     case 'L':
       hb_itemPutNL(pItem, static_cast<long>(HB_GET_BE_UINT64(&pBuffer[nOffset])));

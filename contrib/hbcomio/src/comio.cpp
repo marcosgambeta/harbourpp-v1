@@ -363,7 +363,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int32_t iIndex, HB_ITEM *pValue)
                   break;
             }
          }
-         hb_itemPutNI(pValue, iMode);
+         hb_itemPutNI32(pValue, iMode);
          return true;
       }
       case HB_VF_RDHANDLE:

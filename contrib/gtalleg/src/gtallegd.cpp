@@ -784,11 +784,11 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
          break;
 
       case HB_GTI_INPUTFD:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, -1);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, -1);
          break;
 
       case HB_GTI_SCREENWIDTH:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fInit ? AL_SCREEN_W : s_byFontWidth * s_iScrWidth);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fInit ? AL_SCREEN_W : s_byFontWidth * s_iScrWidth);
          iWidth = hb_itemGetNI(pInfo->pNewVal);
          if( iWidth > 0 ) {
             s_iGFXWidth = iWidth;
@@ -797,7 +797,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
          break;
 
       case HB_GTI_SCREENHEIGHT:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fInit ? AL_SCREEN_H : s_byFontSize * s_iScrHeight);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fInit ? AL_SCREEN_H : s_byFontSize * s_iScrHeight);
          iHeight = hb_itemGetNI(pInfo->pNewVal);
          if( iHeight > 0 ) {
             s_iGFXHeight = iHeight;
@@ -806,7 +806,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
          break;
 
       case HB_GTI_SCREENDEPTH:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fInit ? al_bitmap_color_depth(al_screen) : al_desktop_color_depth());
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fInit ? al_bitmap_color_depth(al_screen) : al_desktop_color_depth());
          iValue = hb_itemGetNI(pInfo->pNewVal);
          if( iValue == 8 || iValue == 15 || iValue == 16 || iValue == 24 || iValue == 32 ) {
             al_set_color_depth(iValue);
@@ -815,7 +815,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
          break;
 
       case HB_GTI_FONTSIZE:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_byFontSize);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_byFontSize);
          iValue         = hb_itemGetNI(pInfo->pNewVal);
          if( iValue > 0 && iValue < 256 ) {
             s_byFontSize  = static_cast<unsigned short>(iValue);
@@ -825,21 +825,21 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
          break;
 
       case HB_GTI_FONTWIDTH:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_byFontWidth);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_byFontWidth);
          break;
 
       case HB_GTI_DESKTOPWIDTH:
          al_get_desktop_resolution(&iWidth, &iHeight);
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, iWidth);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iWidth);
          break;
 
       case HB_GTI_DESKTOPHEIGHT:
          al_get_desktop_resolution(&iWidth, &iHeight);
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, iHeight);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iHeight);
          break;
 
       case HB_GTI_DESKTOPDEPTH:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, al_desktop_color_depth());
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, al_desktop_color_depth());
          break;
 
       case HB_GTI_KBDSHIFTS:
@@ -847,7 +847,7 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
             al_poll_keyboard();
          }
 
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, al_key_shifts);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, al_key_shifts);
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) {
             al_set_keyboard_leds(hb_itemGetNI(pInfo->pNewVal));
          }
@@ -862,11 +862,11 @@ static HB_BOOL hb_gt_alleg_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) //
          break;
 
       case HB_GTI_VIEWMAXWIDTH:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_iScrWidth);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_iScrWidth);
          break;
 
       case HB_GTI_VIEWMAXHEIGHT:
-         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_iScrHeight);
+         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_iScrHeight);
          break;
 
       default:

@@ -2872,6 +2872,7 @@ hb_itemPutND
 hb_itemPutNDDec
 hb_itemPutNDLen
 hb_itemPutNI
+hb_itemPutNI32
 hb_itemPutNILen
 hb_itemPutNInt
 hb_itemPutNIntLen

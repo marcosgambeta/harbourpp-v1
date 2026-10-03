@@ -391,7 +391,7 @@ HB_FUNC(SX_TURBOAREA)
   if (pArea != nullptr) {
     HB_ITEM *pItem = hb_itemParam(1);
     if (hb_pcount() > 0 && pItem->isNil()) {
-      hb_itemPutNI(pItem, 0);
+      hb_itemPutNI32(pItem, 0);
     }
     if (SELF_INFO(pArea, DBI_DIRTYREAD, pItem) != Harbour::SUCCESS) {
       hb_itemPutL(pItem, false);
@@ -418,7 +418,7 @@ HB_FUNC(SX_SETTURBO)
   } else {
     HB_ITEM *pItem = hb_itemParam(1);
     if (hb_pcount() > 0 && pItem->isNil()) {
-      hb_itemPutNI(pItem, 0);
+      hb_itemPutNI32(pItem, 0);
     }
     if (SELF_RDDINFO(pRDDNode, RDDI_DIRTYREAD, 0, pItem) != Harbour::SUCCESS) {
       hb_itemPutL(pItem, false);

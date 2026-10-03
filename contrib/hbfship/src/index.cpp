@@ -60,7 +60,7 @@ HB_FUNC(INDEXCOUNT)
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+      pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
    }
@@ -78,14 +78,14 @@ HB_FUNC(INDEXNAMES)
       int32_t         i;
 
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+      pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
       auto iSize = hb_itemGetNI(pOrderInfo.itmResult);
 
       auto pArray = hb_itemArrayNew(iSize);
       for( i = 1; i <= iSize; ++i )
       {
-         pOrderInfo.itmOrder  = hb_itemPutNI(pOrderInfo.itmOrder, i);
+         pOrderInfo.itmOrder  = hb_itemPutNI32(pOrderInfo.itmOrder, i);
          pOrderInfo.itmResult = hb_itemPutC(pOrderInfo.itmResult, 0);
          if( SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo) != Harbour::SUCCESS )
             break;

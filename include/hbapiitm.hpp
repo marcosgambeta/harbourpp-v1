@@ -118,6 +118,7 @@ extern HB_EXPORT HB_ITEM     *hb_itemPutTDT    ( HB_ITEM *pItem, long lJulian, l
 extern HB_EXPORT HB_ITEM     *hb_itemPutL      ( HB_ITEM *pItem, HB_BOOL bValue );
 extern HB_EXPORT HB_ITEM     *hb_itemPutND     ( HB_ITEM *pItem, double dNumber );
 extern HB_EXPORT HB_ITEM     *hb_itemPutNI     ( HB_ITEM *pItem, int32_t iNumber );
+extern HB_EXPORT HB_ITEM     *hb_itemPutNI32   ( HB_ITEM *pItem, int32_t iNumber );
 extern HB_EXPORT HB_ITEM     *hb_itemPutNL     ( HB_ITEM *pItem, long lNumber );
 extern HB_EXPORT HB_ITEM     *hb_itemPutNS     ( HB_ITEM *pItem, HB_ISIZ nNumber );
 extern HB_EXPORT HB_ITEM     *hb_itemPutNInt   ( HB_ITEM *pItem, HB_MAXINT nNumber );

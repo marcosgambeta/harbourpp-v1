@@ -3407,7 +3407,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_FONTSIZE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->PTEXTSIZE.y);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->PTEXTSIZE.y);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       HFONT hFont =
@@ -3438,7 +3438,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_FONTWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->fontWidth);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->fontWidth);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0) {
       pWVT->fontWidth = iVal; // store font status for next operation on fontsize
@@ -3478,7 +3478,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       iVal = 0;
       break;
     }
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iVal);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       // store font status for next operation on fontsize
       switch (pInfo->pNewVal->getNI()) {
@@ -3512,7 +3512,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       iVal = 0;
       break;
     }
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, iVal);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       switch (pInfo->pNewVal->getNI()) {
       case HB_GTI_FONTQ_HIGH:
@@ -3529,7 +3529,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_FONTATTRIBUTE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->fontAttribute);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->fontAttribute);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       pWVT->fontAttribute = pInfo->pNewVal->getNI() & (HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG |
                                                        HB_GTI_FONTA_CTRLCHARS | HB_GTI_FONTA_DRAWBOX);
@@ -3541,7 +3541,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_SCREENHEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->PTEXTSIZE.y * pWVT->ROWS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->PTEXTSIZE.y * pWVT->ROWS);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0 && !pWVT->bMaximized && !pWVT->bFullScreen && pWVT->hWnd) { // Don't allow if Maximized or FullScreen
       // Now conforms to pWVT->ResizeMode setting, resize by FONT or ROWS as applicable [HVB]
@@ -3557,7 +3557,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_SCREENWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->PTEXTSIZE.x * pWVT->COLS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->PTEXTSIZE.x * pWVT->COLS);
     iVal = hb_itemGetNI(pInfo->pNewVal);
     if (iVal > 0 && !pWVT->bMaximized && !pWVT->bFullScreen && pWVT->hWnd) { // Don't allow if Maximized or FullScreen
       // Now conforms to pWVT->ResizeMode setting, resize by FONT or ROWS as applicable [HVB]
@@ -3576,28 +3576,28 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     HWND hDesk = GetDesktopWindow();
     RECT rDesk;
     GetWindowRect(hDesk, &rDesk);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.right - rDesk.left);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, rDesk.right - rDesk.left);
     break;
   }
   case HB_GTI_DESKTOPHEIGHT: {
     HWND hDesk = GetDesktopWindow();
     RECT rDesk;
     GetWindowRect(hDesk, &rDesk);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.bottom - rDesk.top);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, rDesk.bottom - rDesk.top);
     break;
   }
   case HB_GTI_DESKTOPCOLS: {
     HWND hDesk = GetDesktopWindow();
     RECT rDesk;
     GetClientRect(hDesk, &rDesk);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.right - rDesk.left) / pWVT->PTEXTSIZE.x);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, (rDesk.right - rDesk.left) / pWVT->PTEXTSIZE.x);
     break;
   }
   case HB_GTI_DESKTOPROWS: {
     HWND hDesk = GetDesktopWindow();
     RECT rDesk;
     GetClientRect(hDesk, &rDesk);
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.bottom - rDesk.top) / pWVT->PTEXTSIZE.y);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, (rDesk.bottom - rDesk.top) / pWVT->PTEXTSIZE.y);
     break;
   }
   case HB_GTI_WINTITLE:
@@ -3612,7 +3612,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_CODEPAGE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->CodePage);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->CodePage);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       iVal = pInfo->pNewVal->getNI();
       if (iVal != pWVT->CodePage) {
@@ -3652,7 +3652,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
 #if !defined(UNICODE)
   case HB_GTI_BOXCP:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->boxCodePage);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->boxCodePage);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       iVal = pInfo->pNewVal->getNI();
       if (iVal != pWVT->boxCodePage) {
@@ -3735,16 +3735,16 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
   }
   case HB_GTI_VIEWPORTWIDTH:
   case HB_GTI_VIEWMAXWIDTH:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->COLS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->COLS);
     break;
 
   case HB_GTI_VIEWPORTHEIGHT:
   case HB_GTI_VIEWMAXHEIGHT:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->ROWS);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->ROWS);
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_winapi_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
     }
@@ -3770,7 +3770,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_CURSORBLINKRATE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, GetCaretBlinkTime());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, GetCaretBlinkTime());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       iVal = pInfo->pNewVal->getNI();
       SetCaretBlinkTime(HB_MAX(iVal, 0));
@@ -3922,7 +3922,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_CLOSEMODE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->CloseMode);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->CloseMode);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       iVal = pInfo->pNewVal->getNI();
       if (iVal >= 0 && iVal <= 2 && pWVT->CloseMode != iVal) {
@@ -3973,7 +3973,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_RESIZEMODE:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->ResizeMode);
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pWVT->ResizeMode);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       iVal = pInfo->pNewVal->getNI();
       switch (iVal) {

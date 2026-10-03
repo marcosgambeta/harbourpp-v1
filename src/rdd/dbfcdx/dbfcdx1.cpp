@@ -527,7 +527,7 @@ static HB_ITEM *hb_cdxKeyGetItem(LPCDXKEY pKey, HB_ITEM *pItem, LPCDXTAG pTag)
     case 'N':
       if (pKey->len == 4) {
         int32_t iVal = static_cast<int32_t>(HB_GET_BE_UINT32(pKey->val)) - 0x80000000;
-        pItem = hb_itemPutNI(pItem, iVal);
+        pItem = hb_itemPutNI32(pItem, iVal);
       } else {
         HB_ORD2DBL(pKey->val, &d);
         pItem = hb_itemPutND(pItem, d);
@@ -6440,13 +6440,13 @@ static HB_ERRCODE hb_cdxOpen(CDXAREAP pArea, LPDBOPENINFO pOpenInfo)
     {
       DBORDERINFO pOrderInfo;
 
-      pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+      pOrderInfo.itmResult = hb_itemPutNI32(nullptr, 0);
       pOrderInfo.atomBagName = hb_itemPutC(nullptr, szFileName);
       pOrderInfo.itmNewVal = nullptr;
       pOrderInfo.itmOrder = nullptr;
       errCode = SELF_ORDLSTADD(&pArea->dbfarea.area, &pOrderInfo);
       if (errCode == Harbour::SUCCESS) {
-        pOrderInfo.itmOrder = hb_itemPutNI(nullptr, hb_setGetAutOrder());
+        pOrderInfo.itmOrder = hb_itemPutNI32(nullptr, hb_setGetAutOrder());
         errCode = SELF_ORDLSTFOCUS(&pArea->dbfarea.area, &pOrderInfo);
         hb_itemRelease(pOrderInfo.itmOrder);
         if (errCode == Harbour::SUCCESS) {
@@ -7266,7 +7266,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       }
       pIndex = pszBag ? nullptr : pIndex->pNext;
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, uiTag);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, uiTag);
     return Harbour::SUCCESS;
   }
 
@@ -7276,7 +7276,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       ++uiTag;
       pIndex = pIndex->pNext;
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, uiTag);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, uiTag);
     return Harbour::SUCCESS;
   }
 
@@ -7299,7 +7299,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
         pIndex = pIndex->pNext;
       } while (pIndex);
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? uiTag : 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pIndex ? uiTag : 0);
     return Harbour::SUCCESS;
   }
 
@@ -7327,7 +7327,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
         pIndex = pIndex->pNext;
       } while (pIndex);
     }
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? uiTag : 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pIndex ? uiTag : 0);
     return Harbour::SUCCESS;
   }
 
@@ -7483,7 +7483,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
     break;
 
   case DBOI_NUMBER:
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, uiTag);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, uiTag);
     break;
 
   case DBOI_BAGNAME:
@@ -7537,13 +7537,13 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
     break;
 
   case DBOI_KEYSIZE:
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pTag ? pTag->uiLen : 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pTag ? pTag->uiLen : 0);
     break;
 
   case DBOI_KEYDEC:
     // there is no fixed number of decimal places for numeric keys
     // in CDX format
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, 0);
     break;
 
   case DBOI_KEYVAL:
@@ -7850,7 +7850,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
       }
       pInfo->itmResult = hb_itemPutNInt(pInfo->itmResult, pTag->pIndex->ulVersion);
     } else {
-      pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, 0);
+      pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, 0);
     }
     break;
 
@@ -7872,11 +7872,11 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
     break;
 
   case DBOI_INDEXTYPE:
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pTag ? DBOI_TYPE_COMPOUND : DBOI_TYPE_UNDEF);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pTag ? DBOI_TYPE_COMPOUND : DBOI_TYPE_UNDEF);
     break;
 
   case DBOI_INDEXPAGESIZE:
-    pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pTag ? pTag->pIndex->uiPageLen : 0);
+    pInfo->itmResult = hb_itemPutNI32(pInfo->itmResult, pTag ? pTag->pIndex->uiPageLen : 0);
     break;
 
   default:

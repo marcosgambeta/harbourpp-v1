@@ -62,7 +62,7 @@ static void SetGet(int32_t iFlag)
   }
 
   if (HB_ISLOG(1)) {
-    gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, hb_parl(1) ? (iState | iFlag) : (iState & ~iFlag));
+    gtInfo.pNewVal = hb_itemPutNI32(gtInfo.pNewVal, hb_parl(1) ? (iState | iFlag) : (iState & ~iFlag));
     hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
   }
 

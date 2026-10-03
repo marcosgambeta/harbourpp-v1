@@ -776,7 +776,7 @@ static void s_inetRecvPattern(const char *const *patterns, int32_t *patternsizes
     return;
   } else if (!hb_inetIsOpen(socket)) {
     if (pResult) {
-      hb_itemPutNI(pResult, -1);
+      hb_itemPutNI32(pResult, -1);
     }
     hb_retc_null();
     return;
@@ -826,7 +826,7 @@ static void s_inetRecvPattern(const char *const *patterns, int32_t *patternsizes
   if (iPaternFound) {
     socket->iCount = iPos;
     if (pResult) {
-      hb_itemPutNI(pResult, iPos);
+      hb_itemPutNI32(pResult, iPos);
     }
     hb_retclen_buffer(buffer, iPos - patternsizes[iPaternFound - 1]);
   } else {
@@ -839,7 +839,7 @@ static void s_inetRecvPattern(const char *const *patterns, int32_t *patternsizes
       iLen = -1;
     }
     if (pResult) {
-      hb_itemPutNI(pResult, iLen);
+      hb_itemPutNI32(pResult, iLen);
     }
     hb_xfree(buffer);
     hb_retc_null();

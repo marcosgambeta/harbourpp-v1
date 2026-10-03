@@ -1095,10 +1095,10 @@ HB_FUNC(GDIMAGEGETCLIP) /* original: void gdImageGetClip(gdImagePtr im, int *x1P
 
     /* Return clipping rectangle value in an array */
     auto pClipArray = hb_itemArrayNew(4);
-    hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 1), x1);
-    hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 2), y1);
-    hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 3), x2);
-    hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 4), y2);
+    hb_itemPutNI32(hb_arrayGetItemPtr(pClipArray, 1), x1);
+    hb_itemPutNI32(hb_arrayGetItemPtr(pClipArray, 2), y1);
+    hb_itemPutNI32(hb_arrayGetItemPtr(pClipArray, 3), x2);
+    hb_itemPutNI32(hb_arrayGetItemPtr(pClipArray, 4), y2);
 
     /* return array */
     hb_itemReturnRelease(pClipArray);
@@ -1518,7 +1518,7 @@ HB_FUNC(GDIMAGESTRINGFTEX)
       auto pArray = hb_itemArrayNew(8);
       for (auto i = 0; i < 8; i++)
       {
-        hb_itemPutNI(hb_arrayGetItemPtr(pArray, i + 1), aRect[i]);
+        hb_itemPutNI32(hb_arrayGetItemPtr(pArray, i + 1), aRect[i]);
       }
       hb_itemCopy(pRect, pArray);
       hb_itemRelease(pArray);

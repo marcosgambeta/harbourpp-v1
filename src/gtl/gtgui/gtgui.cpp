@@ -280,7 +280,7 @@ static HB_BOOL hb_gt_gui_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     break;
 
   case HB_GTI_KBDSHIFTS:
-    pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
+    pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_winapi_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
       hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
     }
