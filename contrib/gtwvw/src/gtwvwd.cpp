@@ -7016,10 +7016,10 @@ HB_FUNC(WVW_UNREACHEDBR)
 
   hb_gt_wvwUnreachedXY(s_pWvwData->s_pWindows[usWinNum], &cols, &rows);
   if (HB_ISBYREF(2)) {
-    hb_storni(rows, 2);
+    hb_storni32(rows, 2);
   }
   if (HB_ISBYREF(3)) {
-    hb_storni(cols, 3);
+    hb_storni32(cols, 3);
   }
 }
 

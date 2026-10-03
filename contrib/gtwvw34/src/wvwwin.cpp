@@ -408,8 +408,8 @@ HB_FUNC(WVW_UNREACHEDBR)
     iCols = iRows = 0;
   }
 
-  hb_storni(iRows, 2);
-  hb_storni(iCols, 3);
+  hb_storni32(iRows, 2);
+  hb_storni32(iCols, 3);
 }
 
 /*

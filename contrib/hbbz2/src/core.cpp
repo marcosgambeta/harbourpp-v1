@@ -237,7 +237,7 @@ HB_FUNC(HB_BZ2_UNCOMPRESSLEN)
          hb_retni(-1);
       }
 
-      hb_storni(iResult, 2);
+      hb_storni32(iResult, 2);
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
@@ -282,10 +282,10 @@ HB_FUNC(HB_BZ2_COMPRESS)
             iResult = BZ_MEM_ERROR;
          }
 
-         hb_storni(iResult, 3);
+         hb_storni32(iResult, 3);
       } else {
          hb_retc_null();
-         hb_storni(BZ_OK, 3);
+         hb_storni32(BZ_OK, 3);
       }
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -334,10 +334,10 @@ HB_FUNC(HB_BZ2_UNCOMPRESS)
                hb_retclen(pDest, nDstLen);
             }
          }
-         hb_storni(iResult, 3);
+         hb_storni32(iResult, 3);
       } else {
          hb_retc_null();
-         hb_storni(BZ_OK, 3);
+         hb_storni32(BZ_OK, 3);
       }
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

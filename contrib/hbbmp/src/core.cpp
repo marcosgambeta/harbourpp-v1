@@ -773,7 +773,7 @@ HB_FUNC( HB_BMP_NEW )
                                   hb_parnidef( 3, 1 ),
                                   hb_parnidef( 4, HB_BMP_DPI_DEFAULT ),
                                   &iError );
-   hb_storni( iError, 5 );
+   hb_storni32( iError, 5 );
    hb_bmpReturn( pBMP );
 }
 
@@ -817,7 +817,7 @@ HB_FUNC( HB_BMP_FROMBITMAP )
          }
       }
    }
-   hb_storni( iError, 8 );
+   hb_storni32( iError, 8 );
    hb_bmpReturn( pBMP );
 }
 
@@ -838,7 +838,7 @@ HB_FUNC( HB_BMP_DECODE )
    {
       int32_t iError = 0;
       PHB_BMPINFO pBMP = hb_bmp_decode( ( const uint8_t * ) data, hb_parclen( 1 ), &iError );
-      hb_storni( iError, 2 );
+      hb_storni32( iError, 2 );
       hb_bmpReturn( pBMP );
    }
    else
@@ -919,10 +919,10 @@ HB_FUNC( HB_BMP_COLOR2RGB )
    {
       int32_t r, g, b, a;
       hb_retl( hb_bmp_color2rgb( pBMP, hb_parnint( 2 ), &r, &g, &b, &a ) );
-      hb_storni( r, 3 );
-      hb_storni( g, 4 );
-      hb_storni( b, 5 );
-      hb_storni( a, 6 );
+      hb_storni32( r, 3 );
+      hb_storni32( g, 4 );
+      hb_storni32( b, 5 );
+      hb_storni32( a, 6 );
    }
 }
 
@@ -975,7 +975,7 @@ HB_FUNC( HB_BMP_LOAD )
       }
       else
          iError = HB_BMP_ERROR_FILEREAD;
-      hb_storni( iError, 2 );
+      hb_storni32( iError, 2 );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

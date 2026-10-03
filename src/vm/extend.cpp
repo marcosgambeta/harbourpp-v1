@@ -2051,6 +2051,29 @@ int32_t hb_storni(int32_t iValue, int32_t iParam)
   return 0;
 }
 
+int32_t hb_storni32(int32_t iValue, int32_t iParam)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_storni32(%d, %d)", iValue, iParam));
+#endif
+
+  HB_STACK_TLS_PRELOAD
+
+  if (iParam == -1) {
+    hb_stackReturnItem()->putNI(iValue);
+    return 1;
+  } else if (iParam >= 0 && iParam <= hb_pcount()) {
+    auto pItem = hb_stackItemFromBase(iParam);
+
+    if (pItem->isByRef()) {
+      hb_itemUnRef(pItem)->putNI(iValue);
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
 int32_t hb_stornl(long lValue, int32_t iParam)
 {
 #if 0

@@ -11744,8 +11744,8 @@ HB_FUNC(__VMCOUNTTHREADS)
   iStacks = iThreads = 0;
 #endif
 
-  hb_storni(iStacks, 1);
-  hb_storni(iThreads, 2);
+  hb_storni32(iStacks, 1);
+  hb_storni32(iThreads, 2);
 
   hb_retni(iThreads);
 }

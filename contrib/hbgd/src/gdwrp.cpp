@@ -445,9 +445,9 @@ static void GDImageSaveTo(int32_t nType)
 
 HB_FUNC(HB_GD_VERSION)
 {
-  hb_storni(GD_MAJOR_VERSION, 1);
-  hb_storni(GD_MINOR_VERSION, 2);
-  hb_storni(GD_RELEASE_VERSION, 3);
+  hb_storni32(GD_MAJOR_VERSION, 1);
+  hb_storni32(GD_MINOR_VERSION, 2);
+  hb_storni32(GD_RELEASE_VERSION, 3);
 }
 
 HB_FUNC(GDVERSION)

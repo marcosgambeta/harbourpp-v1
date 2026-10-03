@@ -200,8 +200,8 @@ HB_FUNC(WAPI_IMAGELIST_GETICONSIZE)
   int32_t cy;
 
   if (ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy)) {
-    hb_storni(cx, 2);
-    hb_storni(cy, 3);
+    hb_storni32(cx, 2);
+    hb_storni32(cy, 3);
     hb_retl(true);
   } else {
     hb_retl(false);

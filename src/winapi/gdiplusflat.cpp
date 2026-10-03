@@ -388,7 +388,7 @@ HB_FUNC(WAGDIPBITMAPAPPLYEFFECT)
   INT i{};
   wa_ret_GpStatus(GdipBitmapApplyEffect(wa_par_GpBitmap(1), static_cast<CGpEffect *>(hb_parptr(2)), static_cast<RECT *>(wa_get_ptr(3)), wa_par_BOOL(4), &p, &i));
   hb_storptr(p, 5);
-  hb_storni(i, 6);
+  hb_storni32(i, 6);
 }
 #endif
 
@@ -402,7 +402,7 @@ HB_FUNC(WAGDIPBITMAPCREATEAPPLYEFFECT)
   INT i{};
   wa_ret_GpStatus(GdipBitmapCreateApplyEffect(&b1, wa_par_INT(2), static_cast<CGpEffect *>(hb_parptr(3)), static_cast<RECT *>(wa_get_ptr(4)), static_cast<RECT *>(wa_get_ptr(5)), &b2, wa_par_BOOL(7), &p, &i));
   hb_storptr(p, 8);
-  hb_storni(i, 9);
+  hb_storni32(i, 9);
 }
 #endif
 
@@ -447,7 +447,7 @@ HB_FUNC(WAGDIPGETBRUSHTYPE)
 {
   GpBrushType bt{};
   wa_ret_GpStatus(GdipGetBrushType(wa_par_GpBrush(1), &bt));
-  hb_storni(bt, 2);
+  hb_storni32(bt, 2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -505,7 +505,7 @@ HB_FUNC(WAGDIPGETCUSTOMLINECAPTYPE)
 {
   CustomLineCapType clct{};
   wa_ret_GpStatus(GdipGetCustomLineCapType(wa_par_GpCustomLineCap(1), &clct));
-  hb_storni(clct, 2);
+  hb_storni32(clct, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetCustomLineCapStrokeCaps(GpCustomLineCap*,GpLineCap,GpLineCap)
@@ -520,8 +520,8 @@ HB_FUNC(WAGDIPGETCUSTOMLINECAPSTROKECAPS)
   GpLineCap v1{};
   GpLineCap v2{};
   wa_ret_GpStatus(GdipGetCustomLineCapStrokeCaps(wa_par_GpCustomLineCap(1), &v1, &v2));
-  hb_storni(v1, 2);
-  hb_storni(v2, 3);
+  hb_storni32(v1, 2);
+  hb_storni32(v2, 3);
 }
 
 // GpStatus WINGDIPAPI GdipSetCustomLineCapStrokeJoin(GpCustomLineCap*,GpLineJoin)
@@ -535,7 +535,7 @@ HB_FUNC(WAGDIPGETCUSTOMLINECAPSTROKEJOIN)
 {
   GpLineJoin v{};
   wa_ret_GpStatus(GdipGetCustomLineCapStrokeJoin(wa_par_GpCustomLineCap(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetCustomLineCapBaseCap(GpCustomLineCap*,GpLineCap)
@@ -549,7 +549,7 @@ HB_FUNC(WAGDIPGETCUSTOMLINECAPBASECAP)
 {
   GpLineCap v{};
   wa_ret_GpStatus(GdipGetCustomLineCapBaseCap(wa_par_GpCustomLineCap(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetCustomLineCapBaseInset(GpCustomLineCap*,REAL)
@@ -692,7 +692,7 @@ HB_FUNC(WAGDIPGETFONTSTYLE)
 {
   INT i{};
   wa_ret_GpStatus(GdipGetFontStyle(wa_par_GpFont(1), &i));
-  hb_storni(i, 2);
+  hb_storni32(i, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetFontSize(GpFont*,REAL*)
@@ -708,7 +708,7 @@ HB_FUNC(WAGDIPGETFONTUNIT)
 {
   GpUnit u{};
   wa_ret_GpStatus(GdipGetFontUnit(wa_par_GpFont(1), &u));
-  hb_storni(u, 2);
+  hb_storni32(u, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetFontHeight(GDIPCONST GpFont*,GDIPCONST GpGraphics*,REAL*)
@@ -767,7 +767,7 @@ HB_FUNC(WAGDIPGETFONTCOLLECTIONFAMILYCOUNT)
 {
   INT i{};
   wa_ret_GpStatus(GdipGetFontCollectionFamilyCount(wa_par_GpFontCollection(1), &i));
-  hb_storni(i, 2);
+  hb_storni32(i, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetFontCollectionFamilyList(GpFontCollection*,INT,GpFontFamily**,INT*)
@@ -973,7 +973,7 @@ HB_FUNC(WAGDIPGETCOMPOSITINGMODE)
 {
   CompositingMode cm{};
   wa_ret_GpStatus(GdipGetCompositingMode(wa_par_GpGraphics(1), &cm));
-  hb_storni(cm, 2);
+  hb_storni32(cm, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetRenderingOrigin(GpGraphics*,INT,INT)
@@ -988,8 +988,8 @@ HB_FUNC(WAGDIPGETRENDERINGORIGIN)
   INT v1{};
   INT v2{};
   wa_ret_GpStatus(GdipGetRenderingOrigin(wa_par_GpGraphics(1), &v1, &v2));
-  hb_storni(v1, 2);
-  hb_storni(v2, 3);
+  hb_storni32(v1, 2);
+  hb_storni32(v2, 3);
 }
 
 // GpStatus WINGDIPAPI GdipSetCompositingQuality(GpGraphics*,CompositingQuality)
@@ -1003,7 +1003,7 @@ HB_FUNC(WAGDIPGETCOMPOSITINGQUALITY)
 {
   CompositingQuality cq{};
   wa_ret_GpStatus(GdipGetCompositingQuality(wa_par_GpGraphics(1), &cq));
-  hb_storni(cq, 2);
+  hb_storni32(cq, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetSmoothingMode(GpGraphics*,SmoothingMode)
@@ -1017,7 +1017,7 @@ HB_FUNC(WAGDIPGETSMOOTHINGMODE)
 {
   SmoothingMode v{};
   wa_ret_GpStatus(GdipGetSmoothingMode(wa_par_GpGraphics(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPixelOffsetMode(GpGraphics*,PixelOffsetMode)
@@ -1031,7 +1031,7 @@ HB_FUNC(WAGDIPGETPIXELOFFSETMODE)
 {
   PixelOffsetMode v{};
   wa_ret_GpStatus(GdipGetPixelOffsetMode(wa_par_GpGraphics(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetTextRenderingHint(GpGraphics*,TextRenderingHint)
@@ -1045,7 +1045,7 @@ HB_FUNC(WAGDIPGETTEXTRENDERINGHINT)
 {
   TextRenderingHint v{};
   wa_ret_GpStatus(GdipGetTextRenderingHint(wa_par_GpGraphics(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetTextContrast(GpGraphics*,UINT)
@@ -1059,7 +1059,7 @@ HB_FUNC(WAGDIPGETTEXTCONTRAST)
 {
   UINT v{};
   wa_ret_GpStatus(GdipGetTextContrast(wa_par_GpGraphics(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetInterpolationMode(GpGraphics*,InterpolationMode)
@@ -1073,7 +1073,7 @@ HB_FUNC(WAGDIPGETINTERPOLATIONMODE)
 {
   InterpolationMode v{};
   wa_ret_GpStatus(GdipGetInterpolationMode(wa_par_GpGraphics(1), &v));
-  hb_storni(v, 2);
+  hb_storni32(v, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGraphicsSetAbort(GpGraphics*,GdiplusAbort*)
@@ -1139,7 +1139,7 @@ HB_FUNC(WAGDIPGETPAGEUNIT)
 {
   GpUnit u{};
   wa_ret_GpStatus(GdipGetPageUnit(wa_par_GpGraphics(1), &u));
-  hb_storni(u, 2);
+  hb_storni32(u, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetPageScale(GpGraphics*,REAL*)
@@ -1867,7 +1867,7 @@ HB_FUNC(WAGDIPBEGINCONTAINER)
   GraphicsContainer gc{};
   wa_ret_GpStatus(
       GdipBeginContainer(wa_par_GpGraphics(1), wa_par_GpRectF(2), wa_par_GpRectF(3), wa_par_GpUnit(4), &gc));
-  hb_storni(gc, 5);
+  hb_storni32(gc, 5);
 }
 
 // GpStatus WINGDIPAPI GdipBeginContainerI(GpGraphics*,GDIPCONST GpRect*,GDIPCONST GpRect*,GpUnit,GraphicsContainer*)
@@ -1875,7 +1875,7 @@ HB_FUNC(WAGDIPBEGINCONTAINERI)
 {
   GraphicsContainer gc{};
   wa_ret_GpStatus(GdipBeginContainerI(wa_par_GpGraphics(1), wa_par_GpRect(2), wa_par_GpRect(3), wa_par_GpUnit(4), &gc));
-  hb_storni(gc, 5);
+  hb_storni32(gc, 5);
 }
 
 // GpStatus WINGDIPAPI GdipBeginContainer2(GpGraphics*,GraphicsContainer*)
@@ -1883,7 +1883,7 @@ HB_FUNC(WAGDIPBEGINCONTAINER2)
 {
   GraphicsContainer gc{};
   wa_ret_GpStatus(GdipBeginContainer2(wa_par_GpGraphics(1), &gc));
-  hb_storni(gc, 2);
+  hb_storni32(gc, 2);
 }
 
 // GpStatus WINGDIPAPI GdipEndContainer(GpGraphics*,GraphicsContainer)
@@ -1965,7 +1965,7 @@ HB_FUNC(WAGDIPGETPATHFILLMODE)
 {
   GpFillMode fm{};
   wa_ret_GpStatus(GdipGetPathFillMode(wa_par_GpPath(1), &fm));
-  hb_storni(fm, 2);
+  hb_storni32(fm, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPathFillMode(GpPath*,GpFillMode)
@@ -2352,7 +2352,7 @@ HB_FUNC(WAGDIPGETHATCHSTYLE)
 {
   GpHatchStyle hs{};
   wa_ret_GpStatus(GdipGetHatchStyle(wa_par_GpHatch(1), &hs));
-  hb_storni(hs, 2);
+  hb_storni32(hs, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetHatchForegroundColor(GpHatch*,ARGB*)
@@ -2454,7 +2454,7 @@ HB_FUNC(WAGDIPGETIMAGEBOUNDS)
 {
   GpUnit u{};
   wa_ret_GpStatus(GdipGetImageBounds(wa_par_GpImage(1), wa_par_GpRectF(2), &u));
-  hb_storni(u, 3);
+  hb_storni32(u, 3);
 }
 
 // GpStatus WINGDIPAPI GdipGetImageDimension(GpImage*,REAL*,REAL*)
@@ -2472,7 +2472,7 @@ HB_FUNC(WAGDIPGETIMAGETYPE)
 {
   ImageType it{};
   wa_ret_GpStatus(GdipGetImageType(wa_par_GpImage(1), &it));
-  hb_storni(it, 2);
+  hb_storni32(it, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetImageWidth(GpImage*,UINT*)
@@ -2522,7 +2522,7 @@ HB_FUNC(WAGDIPGETIMAGEPIXELFORMAT)
 {
   PixelFormat pf{};
   wa_ret_GpStatus(GdipGetImagePixelFormat(wa_par_GpImage(1), &pf));
-  hb_storni(pf, 2);
+  hb_storni32(pf, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetImageThumbnail(GpImage*,UINT,UINT,GpImage**,GetThumbnailImageAbort,VOID*)
@@ -2966,7 +2966,7 @@ HB_FUNC(WAGDIPGETLINEWRAPMODE)
 {
   GpWrapMode wm{};
   wa_ret_GpStatus(GdipGetLineWrapMode(wa_par_GpLineGradient(1), &wm));
-  hb_storni(wm, 2);
+  hb_storni32(wm, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetLineTransform(GpLineGradient*,GpMatrix*)
@@ -3571,7 +3571,7 @@ HB_FUNC(WAGDIPGETPATHGRADIENTWRAPMODE)
 {
   GpWrapMode wm{};
   wa_ret_GpStatus(GdipGetPathGradientWrapMode(wa_par_GpPathGradient(1), &wm));
-  hb_storni(wm, 2);
+  hb_storni32(wm, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPathGradientWrapMode(GpPathGradient*,GpWrapMode)
@@ -3818,7 +3818,7 @@ HB_FUNC(WAGDIPGETPENUNIT)
 {
   GpUnit u{};
   wa_ret_GpStatus(GdipGetPenUnit(wa_par_GpPen(1), &u));
-  hb_storni(u, 2);
+  hb_storni32(u, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPenLineCap197819(GpPen*,GpLineCap,GpLineCap,GpDashCap)
@@ -3851,7 +3851,7 @@ HB_FUNC(WAGDIPGETPENSTARTCAP)
 {
   GpLineCap lc{};
   wa_ret_GpStatus(GdipGetPenStartCap(wa_par_GpPen(1), &lc));
-  hb_storni(lc, 2);
+  hb_storni32(lc, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetPenEndCap(GpPen*,GpLineCap*)
@@ -3859,7 +3859,7 @@ HB_FUNC(WAGDIPGETPENENDCAP)
 {
   GpLineCap lc{};
   wa_ret_GpStatus(GdipGetPenEndCap(wa_par_GpPen(1), &lc));
-  hb_storni(lc, 2);
+  hb_storni32(lc, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetPenDashCap197819(GpPen*,GpDashCap*)
@@ -3867,7 +3867,7 @@ HB_FUNC(WAGDIPGETPENDASHCAP197819)
 {
   GpDashCap dc{};
   wa_ret_GpStatus(GdipGetPenDashCap197819(wa_par_GpPen(1), &dc));
-  hb_storni(dc, 2);
+  hb_storni32(dc, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPenLineJoin(GpPen*,GpLineJoin)
@@ -3881,7 +3881,7 @@ HB_FUNC(WAGDIPGETPENLINEJOIN)
 {
   GpLineJoin lj{};
   wa_ret_GpStatus(GdipGetPenLineJoin(wa_par_GpPen(1), &lj));
-  hb_storni(lj, 2);
+  hb_storni32(lj, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPenCustomStartCap(GpPen*,GpCustomLineCap*)
@@ -3937,7 +3937,7 @@ HB_FUNC(WAGDIPGETPENMODE)
 {
   GpPenAlignment pa{};
   wa_ret_GpStatus(GdipGetPenMode(wa_par_GpPen(1), &pa));
-  hb_storni(pa, 2);
+  hb_storni32(pa, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPenTransform(GpPen*,GpMatrix*)
@@ -4015,7 +4015,7 @@ HB_FUNC(WAGDIPGETPENFILLTYPE)
 {
   GpPenType pt{};
   wa_ret_GpStatus(GdipGetPenFillType(wa_par_GpPen(1), &pt));
-  hb_storni(pt, 2);
+  hb_storni32(pt, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetPenDashStyle(GpPen*,GpDashStyle*)
@@ -4023,7 +4023,7 @@ HB_FUNC(WAGDIPGETPENDASHSTYLE)
 {
   GpDashStyle ds{};
   wa_ret_GpStatus(GdipGetPenDashStyle(wa_par_GpPen(1), &ds));
-  hb_storni(ds, 2);
+  hb_storni32(ds, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetPenDashStyle(GpPen*,GpDashStyle)
@@ -4389,7 +4389,7 @@ HB_FUNC(WAGDIPGETSTRINGFORMATALIGN)
 {
   StringAlignment sa{};
   wa_ret_GpStatus(GdipGetStringFormatAlign(wa_par_GpStringFormat(1), &sa));
-  hb_storni(sa, 2);
+  hb_storni32(sa, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetStringFormatLineAlign(GpStringFormat*,StringAlignment)
@@ -4403,7 +4403,7 @@ HB_FUNC(WAGDIPGETSTRINGFORMATLINEALIGN)
 {
   StringAlignment sa{};
   wa_ret_GpStatus(GdipGetStringFormatLineAlign(wa_par_GpStringFormat(1), &sa));
-  hb_storni(sa, 2);
+  hb_storni32(sa, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetStringFormatTrimming(GpStringFormat*,StringTrimming)
@@ -4417,7 +4417,7 @@ HB_FUNC(WAGDIPGETSTRINGFORMATTRIMMING)
 {
   StringTrimming st{};
   wa_ret_GpStatus(GdipGetStringFormatTrimming(wa_par_GpStringFormat(1), &st));
-  hb_storni(st, 2);
+  hb_storni32(st, 2);
 }
 
 // GpStatus WINGDIPAPI GdipSetStringFormatHotkeyPrefix(GpStringFormat*,INT)
@@ -4464,7 +4464,7 @@ HB_FUNC(WAGDIPGETSTRINGFORMATDIGITSUBSTITUTION)
 {
   StringDigitSubstitute sds{};
   wa_ret_GpStatus(GdipGetStringFormatDigitSubstitution(wa_par_GpStringFormat(1), LANGID*, &sds));
-  hb_storni(sds, 3);
+  hb_storni32(sds, 3);
 }
 #endif
 
@@ -4634,7 +4634,7 @@ HB_FUNC(WAGDIPGETTEXTUREWRAPMODE)
 {
   GpWrapMode wm{};
   wa_ret_GpStatus(GdipGetTextureWrapMode(wa_par_GpTexture(1), &wm));
-  hb_storni(wm, 2);
+  hb_storni32(wm, 2);
 }
 
 // GpStatus WINGDIPAPI GdipGetTextureImage(GpTexture*,GpImage**)

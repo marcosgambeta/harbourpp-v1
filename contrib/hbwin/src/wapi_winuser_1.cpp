@@ -268,8 +268,8 @@ HB_FUNC(WAPI_GETSCROLLRANGE)
 
     dwLastError = GetLastError();
 
-    hb_storni(minPos, 3);
-    hb_storni(maxPos, 4);
+    hb_storni32(minPos, 3);
+    hb_storni32(maxPos, 4);
   }
 
   hbwapi_SetLastError(dwLastError);

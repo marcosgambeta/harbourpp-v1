@@ -121,7 +121,7 @@ HB_FUNC(ERR_GET_ERROR_LINE)
 #endif
 
   hb_storc(file, 1);
-  hb_storni(line, 2);
+  hb_storni32(line, 2);
 }
 
 HB_FUNC(ERR_PEEK_ERROR_LINE)
@@ -132,7 +132,7 @@ HB_FUNC(ERR_PEEK_ERROR_LINE)
   hb_retnint(ERR_peek_error_line(&file, &line));
 
   hb_storc(file, 1);
-  hb_storni(line, 2);
+  hb_storni32(line, 2);
 }
 
 HB_FUNC(ERR_PEEK_LAST_ERROR_LINE)
@@ -147,7 +147,7 @@ HB_FUNC(ERR_PEEK_LAST_ERROR_LINE)
 #endif
 
   hb_storc(file, 1);
-  hb_storni(line, 2);
+  hb_storni32(line, 2);
 }
 
 HB_FUNC(ERR_GET_ERROR_LINE_DATA)
@@ -164,9 +164,9 @@ HB_FUNC(ERR_GET_ERROR_LINE_DATA)
 #endif
 
   hb_storc(file, 1);
-  hb_storni(line, 2);
+  hb_storni32(line, 2);
   hb_storc(data, 3);
-  hb_storni(flags, 4);
+  hb_storni32(flags, 4);
 }
 
 HB_FUNC(ERR_PEEK_ERROR_LINE_DATA)
@@ -183,9 +183,9 @@ HB_FUNC(ERR_PEEK_ERROR_LINE_DATA)
 #endif
 
   hb_storc(file, 1);
-  hb_storni(line, 2);
+  hb_storni32(line, 2);
   hb_storc(data, 3);
-  hb_storni(flags, 4);
+  hb_storni32(flags, 4);
 }
 
 HB_FUNC(ERR_PEEK_LAST_ERROR_LINE_DATA)
@@ -203,16 +203,16 @@ HB_FUNC(ERR_PEEK_LAST_ERROR_LINE_DATA)
 #endif
 
   hb_storc(file, 1);
-  hb_storni(line, 2);
+  hb_storni32(line, 2);
   hb_storc(data, 3);
-  hb_storni(flags, 4);
+  hb_storni32(flags, 4);
 #else
   hb_retnint(-1);
 
   hb_storc(nullptr, 1);
-  hb_storni(0, 2);
+  hb_storni32(0, 2);
   hb_storc(nullptr, 3);
-  hb_storni(0, 4);
+  hb_storni32(0, 4);
 #endif
 }
 

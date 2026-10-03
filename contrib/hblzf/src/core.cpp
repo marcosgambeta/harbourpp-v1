@@ -132,23 +132,23 @@ HB_FUNC(HB_LZF_COMPRESS)
                else
                   hb_retclen_buffer(out_data, uiResult);
 
-               hb_storni(HB_LZF_OK, 3);
+               hb_storni32(HB_LZF_OK, 3);
             }
             else
             {
                if( !pBuffer )
                   hb_xfree(out_data);
 
-               hb_storni(HB_LZF_BUF_ERROR, 3);
+               hb_storni32(HB_LZF_BUF_ERROR, 3);
             }
          }
          else
-            hb_storni(HB_LZF_MEM_ERROR, 3);
+            hb_storni32(HB_LZF_MEM_ERROR, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni(HB_LZF_OK, 3);
+         hb_storni32(HB_LZF_OK, 3);
       }
    }
    else
@@ -205,10 +205,10 @@ HB_FUNC(HB_LZF_DECOMPRESS)
             {
 #if !AVOID_ERRNO
                if( errno == EINVAL )
-                  hb_storni(HB_LZF_DATA_CORRUPTED, 3);
+                  hb_storni32(HB_LZF_DATA_CORRUPTED, 3);
                else
 #endif
-               hb_storni(HB_LZF_OK, 3);
+               hb_storni32(HB_LZF_OK, 3);
 
                if( !pBuffer )
                   hb_xfree(buffer);
@@ -220,16 +220,16 @@ HB_FUNC(HB_LZF_DECOMPRESS)
                else
                   hb_retclen_buffer(buffer, uiResult);
 
-               hb_storni(HB_LZF_OK, 3);
+               hb_storni32(HB_LZF_OK, 3);
             }
          }
          else
-            hb_storni(buffer_size ? HB_LZF_BUF_ERROR : HB_LZF_MEM_ERROR, 3);
+            hb_storni32(buffer_size ? HB_LZF_BUF_ERROR : HB_LZF_MEM_ERROR, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni(HB_LZF_OK, 3);
+         hb_storni32(HB_LZF_OK, 3);
       }
    }
    else

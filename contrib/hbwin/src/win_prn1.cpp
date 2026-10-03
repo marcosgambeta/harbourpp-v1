@@ -413,14 +413,14 @@ HB_FUNC(WIN_SETDOCUMENTPROPERTIES)
           }
 
           if (DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, fMode) == IDOK) {
-            hb_storni(pDevMode->dmPaperSize, 3);
+            hb_storni32(pDevMode->dmPaperSize, 3);
             hb_storl(pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 4);
-            hb_storni(pDevMode->dmCopies, 5);
-            hb_storni(pDevMode->dmDefaultSource, 6);
-            hb_storni(pDevMode->dmDuplex, 7);
-            hb_storni(pDevMode->dmPrintQuality, 8);
-            hb_storni(pDevMode->dmPaperLength, 9);
-            hb_storni(pDevMode->dmPaperWidth, 10);
+            hb_storni32(pDevMode->dmCopies, 5);
+            hb_storni32(pDevMode->dmDefaultSource, 6);
+            hb_storni32(pDevMode->dmDuplex, 7);
+            hb_storni32(pDevMode->dmPrintQuality, 8);
+            hb_storni32(pDevMode->dmPaperLength, 9);
+            hb_storni32(pDevMode->dmPaperWidth, 10);
 
             bResult = (ResetDC(hDC, pDevMode) != nullptr);
           }
@@ -454,14 +454,14 @@ HB_FUNC(WIN_GETDOCUMENTPROPERTIES)
 
       if (DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) ==
           IDOK) {
-        hb_storni(pDevMode->dmPaperSize, 2);
+        hb_storni32(pDevMode->dmPaperSize, 2);
         hb_storl(pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 3);
-        hb_storni(pDevMode->dmCopies, 4);
-        hb_storni(pDevMode->dmDefaultSource, 5);
-        hb_storni(pDevMode->dmDuplex, 6);
-        hb_storni(pDevMode->dmPrintQuality, 7);
-        hb_storni(pDevMode->dmPaperLength, 8);
-        hb_storni(pDevMode->dmPaperWidth, 9);
+        hb_storni32(pDevMode->dmCopies, 4);
+        hb_storni32(pDevMode->dmDefaultSource, 5);
+        hb_storni32(pDevMode->dmDuplex, 6);
+        hb_storni32(pDevMode->dmPrintQuality, 7);
+        hb_storni32(pDevMode->dmPaperLength, 8);
+        hb_storni32(pDevMode->dmPaperWidth, 9);
         bResult = true;
       }
 

@@ -1206,11 +1206,11 @@ HB_FUNC(NETIO_DECODE)
    }
 
    hb_storc(pszServer, 2);
-   hb_storni(iPort, 3);
-   hb_storni(iTimeOut, 4);
+   hb_storni32(iPort, 3);
+   hb_storni32(iTimeOut, 4);
    hb_storclen(pszPasswd, iPassLen, 5);
-   hb_storni(iLevel, 6);
-   hb_storni(iStrategy, 7);
+   hb_storni32(iLevel, 6);
+   hb_storni32(iStrategy, 7);
    if( pszFile != pszFullName )
    {
       /* the order is important and 1st parameter

@@ -465,7 +465,7 @@ HB_FUNC(HB_GZERROR)
   if (gz) {
     int32_t iErrNum = 0;
     hb_retc(gzerror(gz, &iErrNum));
-    hb_storni(iErrNum, 2);
+    hb_storni32(iErrNum, 2);
   }
 #endif
 }

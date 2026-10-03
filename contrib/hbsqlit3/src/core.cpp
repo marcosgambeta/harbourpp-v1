@@ -2579,13 +2579,13 @@ HB_FUNC(SQLITE3_STATUS)
   {
     int32_t iCurrent, iHighwater;
     hb_retni(sqlite3_status(hb_parni32(1), &iCurrent, &iHighwater, static_cast<int32_t>(hb_parl(4))));
-    hb_storni(iCurrent, 2);
-    hb_storni(iHighwater, 3);
+    hb_storni32(iCurrent, 2);
+    hb_storni32(iHighwater, 3);
     return;
   }
 #endif
-  hb_storni(0, 3);
-  hb_storni(0, 4);
+  hb_storni32(0, 3);
+  hb_storni32(0, 4);
   hb_retni(-1);
 }
 
@@ -2622,13 +2622,13 @@ HB_FUNC(SQLITE3_DB_STATUS)
   {
     int32_t iCurrent, iHighwater;
     hb_retni(sqlite3_db_status(pHbSqlite3->db, hb_parni32(2), &iCurrent, &iHighwater, static_cast<int32_t>(hb_parl(5))));
-    hb_storni(iCurrent, 3);
-    hb_storni(iHighwater, 4);
+    hb_storni32(iCurrent, 3);
+    hb_storni32(iHighwater, 4);
     return;
   }
 #endif
-  hb_storni(0, 3);
-  hb_storni(0, 4);
+  hb_storni32(0, 3);
+  hb_storni32(0, 4);
   hb_retni(-1);
 }
 

@@ -120,7 +120,7 @@ HB_FUNC(HB_LZO1X_1_COMPRESS)
       if( src_len > 0 )
          dst = ( lzo_bytep ) hb_xalloc(HB_MAX(hb_lzo_compressbound(src_len), static_cast<HB_SIZE>(hb_parns(2))));
       if( dst == nullptr )
-         hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
+         hb_storni32(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
          lzo_uint  dst_len;
@@ -138,14 +138,14 @@ HB_FUNC(HB_LZO1X_1_COMPRESS)
             hb_xfree(wrkmem);
          }
 
-         hb_storni(r, 3);
+         hb_storni32(r, 3);
 
          if( r == LZO_E_OK )
          {
             hb_storns(dst_len, 2);
 
             if( dst_len >= src_len )
-               hb_storni(LZO_E_NOT_COMPRESSIBLE, 3);  /* incompressible data */
+               hb_storni32(LZO_E_NOT_COMPRESSIBLE, 3);  /* incompressible data */
             else
             {
                hb_retclen_buffer(reinterpret_cast<char*>(dst), dst_len);
@@ -181,12 +181,12 @@ HB_FUNC(HB_LZO1X_DECOMPRESS)
          dst = static_cast<lzo_bytep>(hb_xalloc(hb_parns(2)));
 
       if( dst == nullptr )
-         hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
+         hb_storni32(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
          int32_t r = lzo1x_decompress(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
 
-         hb_storni(r, 3);
+         hb_storni32(r, 3);
 
          if( r == LZO_E_OK )
          {
@@ -216,12 +216,12 @@ HB_FUNC(HB_LZO1X_DECOMPRESS_SAFE)
          dst = static_cast<lzo_bytep>(hb_xalloc(dst_len));
 
       if( dst == nullptr )
-         hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
+         hb_storni32(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
          int32_t r = lzo1x_decompress_safe(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
 
-         hb_storni(r, 3);
+         hb_storni32(r, 3);
 
          if( r == LZO_E_OK )
          {

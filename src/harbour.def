@@ -3413,6 +3413,7 @@ hb_stords
 hb_storl
 hb_stornd
 hb_storni
+hb_storni32
 hb_stornint
 hb_stornl
 hb_stornll

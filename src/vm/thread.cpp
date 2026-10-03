@@ -2478,7 +2478,7 @@ HB_FUNC(HB_MUTEXQUEUEINFO)
 
     if (pMutex) {
       HB_STACK_TLS_PRELOAD
-      hb_storni(pMutex->waiters, 2);
+      hb_storni32(pMutex->waiters, 2);
       hb_storns(pMutex->events ? hb_arrayLen(pMutex->events) : 0, 3);
       hb_retl(true);
     }

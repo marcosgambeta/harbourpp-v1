@@ -1177,7 +1177,7 @@ HB_FUNC(HB_SOCKETGETSNDBUFSIZE)
   if (socket != HB_NO_SOCKET) {
     int32_t size;
     hb_retl(hb_socketGetSndBufSize(socket, &size) == 0);
-    hb_storni(size, 2);
+    hb_storni32(size, 2);
   }
 }
 
@@ -1188,7 +1188,7 @@ HB_FUNC(HB_SOCKETGETRCVBUFSIZE)
   if (socket != HB_NO_SOCKET) {
     int32_t size;
     hb_retl(hb_socketGetRcvBufSize(socket, &size) == 0);
-    hb_storni(size, 2);
+    hb_storni32(size, 2);
   }
 }
 

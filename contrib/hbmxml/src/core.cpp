@@ -615,7 +615,7 @@ HB_FUNC(MXMLGETTEXT)
       auto whitespace = hb_parni32(2);
 
       hb_retstr_utf8(mxmlGetText(node, &whitespace));
-      hb_storni(whitespace, 2);
+      hb_storni32(whitespace, 2);
    }
    else
    {

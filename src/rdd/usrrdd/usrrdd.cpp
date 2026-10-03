@@ -3552,7 +3552,7 @@ HB_FUNC_UR_SUPER(FIELDCOUNT)
     uint16_t uiCount;
 
     hb_retni(SUPER_FIELDCOUNT(pArea, &uiCount));
-    hb_storni(uiCount, 2);
+    hb_storni32(uiCount, 2);
   }
 }
 
@@ -3954,7 +3954,7 @@ HB_FUNC_UR_SUPER(RELAREA)
     uint16_t uiRelArea;
 
     hb_retni(SUPER_RELAREA(pArea, static_cast<uint16_t>(hb_parni32(2)), &uiRelArea));
-    hb_storni(uiRelArea, 3);
+    hb_storni32(uiRelArea, 3);
   }
 }
 

@@ -418,7 +418,7 @@ HB_FUNC(HB_UNZIPGLOBALINFO)
       hb_retni(iResult);
 
       if( iResult == UNZ_OK ) {
-         hb_storni(ugi.number_entry, 2);
+         hb_storni32(ugi.number_entry, 2);
          if( HB_ISBYREF(3) ) {
             if( ugi.size_comment > 0 ) {
                auto pszComment = static_cast<char*>(hb_xgrab(ugi.size_comment + 1));
@@ -437,7 +437,7 @@ HB_FUNC(HB_UNZIPGLOBALINFO)
             }
          }
       } else {
-         hb_storni(0, 2);
+         hb_storni32(0, 2);
          hb_storc(nullptr, 3);
       }
    }

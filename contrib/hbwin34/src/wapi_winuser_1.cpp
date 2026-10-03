@@ -321,8 +321,8 @@ HB_FUNC(WAPI_GETSCROLLRANGE)
   int32_t minPos, maxPos;
   BOOL bSuccess = GetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), &minPos, &maxPos);
   DWORD dwLastError = GetLastError();
-  hb_storni(minPos, 3);
-  hb_storni(maxPos, 4);
+  hb_storni32(minPos, 3);
+  hb_storni32(maxPos, 4);
   hbwapi_SetLastError(dwLastError);
   hbwapi_ret_L(bSuccess);
 }

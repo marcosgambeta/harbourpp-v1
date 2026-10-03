@@ -339,8 +339,8 @@ HB_FUNC(WIN_BITMAPDIMENSIONS)
   }
 #endif
 
-  hb_storni(iWidth, 2);
-  hb_storni(iHeight, 3);
+  hb_storni32(iWidth, 2);
+  hb_storni32(iHeight, 3);
 
   hb_retl(bRetVal);
 }

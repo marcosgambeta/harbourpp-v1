@@ -741,7 +741,7 @@ HB_FUNC(SSL_GET_CIPHER_BITS)
 
       hb_retni(SSL_get_cipher_bits(ssl, &alg_bits));
 
-      hb_storni(alg_bits, 2);
+      hb_storni32(alg_bits, 2);
     }
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

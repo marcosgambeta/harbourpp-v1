@@ -66,7 +66,7 @@ HB_FUNC(SSL_CIPHER_GET_BITS)
 
     hb_retni(hb_parptr(1) ? SSL_CIPHER_get_bits((SSL_CIPHER *)hb_parptr(1), &alg_bits) : 0);
 
-    hb_storni(alg_bits, 2);
+    hb_storni32(alg_bits, 2);
   } else
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

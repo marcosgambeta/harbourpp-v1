@@ -1158,10 +1158,10 @@ HB_FUNC(XML_GETPARSINGSTATUS)
 
       XML_GetParsingStatus(hb_expat->parser, &status);
 
-      hb_storni(static_cast<int32_t>(status.parsing), 2);
+      hb_storni32(static_cast<int32_t>(status.parsing), 2);
       hb_storl(static_cast<HB_BOOL>(status.finalBuffer), 3);
 #else
-      hb_storni(-1, 2);
+      hb_storni32(-1, 2);
       hb_storl(false, 3);
 #endif
    }
@@ -1198,16 +1198,16 @@ HB_FUNC(XML_EXPATVERSIONINFO)
 {
    XML_Expat_Version var = XML_ExpatVersionInfo();
 
-   hb_storni(var.major, 1);
-   hb_storni(var.minor, 2);
-   hb_storni(var.micro, 3);
+   hb_storni32(var.major, 1);
+   hb_storni32(var.minor, 2);
+   hb_storni32(var.micro, 3);
 }
 
 HB_FUNC(HB_XML_EXPATVERSIONINFO)
 {
-   hb_storni(XML_MAJOR_VERSION, 1);
-   hb_storni(XML_MINOR_VERSION, 2);
-   hb_storni(XML_MICRO_VERSION, 3);
+   hb_storni32(XML_MAJOR_VERSION, 1);
+   hb_storni32(XML_MINOR_VERSION, 2);
+   hb_storni32(XML_MICRO_VERSION, 3);
 }
 
 HB_EXPAT_SETHANDLER( STARTELEMENTHANDLER         , StartElementHandler          )

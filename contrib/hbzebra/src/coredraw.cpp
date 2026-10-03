@@ -185,8 +185,8 @@ HB_FUNC(HB_ZEBRA_GETSIZE)
     int32_t iWidth, iHeight;
 
     hb_retni(hb_zebra_getsize(pZebra, &iWidth, &iHeight));
-    hb_storni(iWidth, 2);
-    hb_storni(iHeight, 3);
+    hb_storni32(iWidth, 2);
+    hb_storni32(iHeight, 3);
   }
 }
 
@@ -263,8 +263,8 @@ HB_FUNC(HB_ZEBRA_GETBITMAP)
     unsigned char *pBitMap = hb_zebra_getbitmap(pZebra, hb_parni32(2), hb_parl(3), &nSize, &iWidth, &iHeight, hb_parni32(6),
                                                 hb_parni32(7), hb_parni32(8));
 
-    hb_storni(iWidth, 4);
-    hb_storni(iHeight, 5);
+    hb_storni32(iWidth, 4);
+    hb_storni32(iHeight, 5);
     if (pBitMap)
       hb_retclen_buffer((char *)pBitMap, nSize);
     else

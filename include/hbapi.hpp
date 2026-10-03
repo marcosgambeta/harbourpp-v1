@@ -1565,6 +1565,7 @@ extern HB_EXPORT int32_t hb_stortdt(long lJulian, long lMilliSec, int32_t iParam
 extern HB_EXPORT int32_t hb_storl(int32_t iLogical, int32_t iParam);
 // stores an integer on a variable by reference
 extern HB_EXPORT int32_t hb_storni(int32_t iValue, int32_t iParam);
+extern HB_EXPORT int32_t hb_storni32(int32_t iValue, int32_t iParam);
 // stores a long on a variable by reference
 extern HB_EXPORT int32_t hb_stornl(long lValue, int32_t iParam);
 // stores a HB_SIZE on a variable by reference

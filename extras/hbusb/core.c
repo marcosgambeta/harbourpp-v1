@@ -225,7 +225,7 @@ HB_FUNC( LIBUSB_GET_CONFIGURATION )
    configuration = 0;
    success       = libusb_get_configuration( ( libusb_device_handle * ) hb_parptr( 1 ), &configuration );
 
-   hb_storni( success == 0 ? configuration : 0, 2 );
+   hb_storni32( success == 0 ? configuration : 0, 2 );
 
    hb_retni( success );
 }
@@ -330,9 +330,9 @@ HB_FUNC( LIBUSB_GET_DEVICE_DESCRIPTOR )
    success    = libusb_get_device_descriptor( devicelist[ hb_parni( 2 ) ], &desc );
 
    hb_storptr( &desc, 3 );
-   hb_storni( desc.idVendor, 4 );
-   hb_storni( desc.idProduct, 5 );
-   hb_storni( ( int ) desc.bNumConfigurations, 6 );
+   hb_storni32( desc.idVendor, 4 );
+   hb_storni32( desc.idProduct, 5 );
+   hb_storni32( ( int ) desc.bNumConfigurations, 6 );
 
    hb_retni( success );
 }
@@ -349,7 +349,7 @@ HB_FUNC( LIBUSB_BULK_TRANSFER )
    success = libusb_bulk_transfer( ( libusb_device_handle * ) hb_parptr( 1 ), ( unsigned char ) hb_parni( 2 ), data, sizeof( data ), &transferred, hb_parni( 3 ) );
 
    hb_storclen( ( char * ) data, ( HB_ISIZ ) transferred, 4 );
-   hb_storni( transferred, 5 );
+   hb_storni32( transferred, 5 );
 
    hb_retni( success );
 }
@@ -364,7 +364,7 @@ HB_FUNC( LIBUSB_INTERRUPT_TRANSFER )
    success = libusb_interrupt_transfer( ( libusb_device_handle * ) hb_parptr( 1 ), ( unsigned char ) hb_parni( 2 ), data, sizeof( data ), &transferred, hb_parni( 3 ) );
 
    hb_storclen( ( char * ) data, ( HB_ISIZ ) transferred, 4 );
-   hb_storni( transferred, 5 );
+   hb_storni32( transferred, 5 );
 
    hb_retni( success );
 }

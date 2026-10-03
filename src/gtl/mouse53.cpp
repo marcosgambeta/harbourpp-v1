@@ -156,10 +156,10 @@ HB_FUNC(HB_MGETBOUNDS)
 {
   int32_t iTop, iLeft, iBottom, iRight;
   hb_mouseGetBounds(&iTop, &iLeft, &iBottom, &iRight);
-  hb_storni(iTop, 1);
-  hb_storni(iLeft, 2);
-  hb_storni(iBottom, 3);
-  hb_storni(iRight, 4);
+  hb_storni32(iTop, 1);
+  hb_storni32(iLeft, 2);
+  hb_storni32(iBottom, 3);
+  hb_storni32(iRight, 4);
 }
 
 HB_FUNC(HB_MMIDDLEDOWN)

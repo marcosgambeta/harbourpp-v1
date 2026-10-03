@@ -557,8 +557,8 @@ HB_FUNC(HB_WEEK)
   if (pDate) {
     int32_t iYear, iWeek, iDay;
     hb_dateDecWeek(pDate->getDL(), &iYear, &iWeek, &iDay);
-    hb_storni(iYear, 2);
-    hb_storni(iDay, 3);
+    hb_storni32(iYear, 2);
+    hb_storni32(iDay, 3);
     hb_retni(iWeek);
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

@@ -1499,7 +1499,7 @@ HB_FUNC(WVW_GETCTRLHANDLE)
 
   hbwapi_ret_raw_HWND(hb_gt_wvw_FindControlHandle(wvw_win, hb_parni32(2), hb_parni32(3), &iStyle));
 
-  hb_storni(iStyle, 4);
+  hb_storni32(iStyle, 4);
 }
 
 HB_FUNC(WVW_SETCODEPAGE)

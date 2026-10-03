@@ -2062,7 +2062,7 @@ HB_FUNC(NETIO_SRVSTATUS)
       switch( iSrvInfo )
       {
          case NETIO_SRVINFO_FILESCOUNT:
-            hb_storni(conn->filesCount, 3);
+            hb_storni32(conn->filesCount, 3);
             break;
          case NETIO_SRVINFO_BYTESSENT:
             hb_stornint(conn->wr_count, 3);
