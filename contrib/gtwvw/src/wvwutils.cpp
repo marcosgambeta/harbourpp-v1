@@ -1589,9 +1589,9 @@ HB_FUNC(WVW_CHOOSEFONT)
 
     hb_storvc(lf.lfFaceName, -1, 1);
     hb_storvnl(static_cast<LONG>(PointSize), -1, 2);
-    hb_storvni(lf.lfWidth, -1, 3);
-    hb_storvni(lf.lfWeight, -1, 4);
-    hb_storvni(lf.lfQuality, -1, 5);
+    hb_storvni32(lf.lfWidth, -1, 3);
+    hb_storvni32(lf.lfWeight, -1, 4);
+    hb_storvni32(lf.lfQuality, -1, 5);
     hb_storvl(lf.lfItalic, -1, 6);
     hb_storvl(lf.lfUnderline, -1, 7);
     hb_storvl(lf.lfStrikeOut, -1, 8);
@@ -1600,9 +1600,9 @@ HB_FUNC(WVW_CHOOSEFONT)
 
     hb_storvc("", -1, 1);
     hb_storvnl(0, -1, 2);
-    hb_storvni(0, -1, 3);
-    hb_storvni(0, -1, 4);
-    hb_storvni(0, -1, 5);
+    hb_storvni32(0, -1, 3);
+    hb_storvni32(0, -1, 4);
+    hb_storvni32(0, -1, 5);
     hb_storvl(0, -1, 6);
     hb_storvl(0, -1, 7);
     hb_storvl(0, -1, 8);

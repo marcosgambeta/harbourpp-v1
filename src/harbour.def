@@ -3436,6 +3436,7 @@ hb_storvds
 hb_storvl
 hb_storvnd
 hb_storvni
+hb_storvni32
 hb_storvnint
 hb_storvnl
 hb_storvnll

@@ -811,10 +811,10 @@ HB_FUNC(BIO_GET_CONN_ADDRESS)
       char *pszAddr = BIO_ADDR_hostname_string(ba, 1);
 
       hb_reta(family == HB_SOCKET_AF_LOCAL ? 2 : 3);
-      hb_storvni(family, -1, 1);
+      hb_storvni32(family, -1, 1);
       hb_storvc(pszAddr, -1, 2);
       if (family != HB_SOCKET_AF_LOCAL)
-        hb_storvni(hb_socketNToHS(BIO_ADDR_rawport(ba)), -1, 3);
+        hb_storvni32(hb_socketNToHS(BIO_ADDR_rawport(ba)), -1, 3);
       if (pszAddr)
         OPENSSL_free(pszAddr);
     }

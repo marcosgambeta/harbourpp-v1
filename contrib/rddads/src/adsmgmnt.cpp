@@ -290,22 +290,22 @@ HB_FUNC(ADSMGGETCONFIGINFO)
       hb_storvnl(stConfigValues.usNumWorkerThreads, -1, 15);      // number worker threads
 #if ADS_LIB_VERSION >= 810
       hb_storvnl(stConfigValues.ulSortBuffSize, -1, 16); // index sort buffer size
-      hb_storvni(0, -1, 17);                             // reserved
-      hb_storvni(0, -1, 18);                             // reserved
+      hb_storvni32(0, -1, 17);                             // reserved
+      hb_storvni32(0, -1, 18);                             // reserved
 #elif ADS_LIB_VERSION < 810
       hb_storvnl(stConfigValues.usSortBuffSize, -1, 16); // index sort buffer size
-      hb_storvni(stConfigValues.ucReserved1, -1, 17);    // reserved
-      hb_storvni(stConfigValues.ucReserved2, -1, 18);    // reserved
+      hb_storvni32(stConfigValues.ucReserved1, -1, 17);    // reserved
+      hb_storvni32(stConfigValues.ucReserved2, -1, 18);    // reserved
 #else // not currently used
       hb_storvnl(0, -1, 16); // index sort buffer size
-      hb_storvni(0, -1, 17); // reserved
-      hb_storvni(0, -1, 18); // reserved
+      hb_storvni32(0, -1, 17); // reserved
+      hb_storvni32(0, -1, 18); // reserved
 #endif
       hb_storvc(reinterpret_cast<char *>(stConfigValues.aucErrorLog), -1, 19);    // error log path
       hb_storvc(reinterpret_cast<char *>(stConfigValues.aucSemaphore), -1, 20);   // semaphore file path
       hb_storvc(reinterpret_cast<char *>(stConfigValues.aucTransaction), -1, 21); // TPS log file path
-      hb_storvni(stConfigValues.ucReserved3, -1, 22);                             // reserved
-      hb_storvni(stConfigValues.ucReserved4, -1, 23);                             // reserved
+      hb_storvni32(stConfigValues.ucReserved3, -1, 22);                             // reserved
+      hb_storvni32(stConfigValues.ucReserved4, -1, 23);                             // reserved
       hb_storvnl(stConfigValues.usSendIPPort, -1, 24);                            // NT Service IP send port #
       hb_storvnl(stConfigValues.usReceiveIPPort, -1, 25);                         // NT Service IP rcv port #
       // hb_storvnl(stConfigValues.usReserved5             , -1, 26);     reserved

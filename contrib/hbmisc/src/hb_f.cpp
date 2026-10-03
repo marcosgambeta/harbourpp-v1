@@ -367,9 +367,9 @@ HB_FUNC(HB_FINFO)  /* used for debugging */
    auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_reta(6);
-   hb_storvni(ft_text->area + 1, -1, 1);
-   hb_storvni(ft_text->last_rec[ft_text->area], -1, 2);
-   hb_storvni(ft_text->recno[ft_text->area], -1, 3);
+   hb_storvni32(ft_text->area + 1, -1, 1);
+   hb_storvni32(ft_text->last_rec[ft_text->area], -1, 2);
+   hb_storvni32(ft_text->recno[ft_text->area], -1, 3);
    hb_storvnint(ft_text->offset[ft_text->area], -1, 4);
    hb_storvnint(ft_text->lastbyte[ft_text->area], -1, 5);
    hb_storvl(ft_text->isEof[ft_text->area], -1, 6);

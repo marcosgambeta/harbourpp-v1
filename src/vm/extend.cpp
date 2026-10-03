@@ -2530,6 +2530,38 @@ int32_t hb_storvni(int32_t iValue, int32_t iParam, ...)
   return 0;
 }
 
+int32_t hb_storvni32(int32_t iValue, int32_t iParam, ...)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_storvni32(%d, %d, ...)", iValue, iParam));
+#endif
+
+  HB_STACK_TLS_PRELOAD
+
+  if (iParam >= -1 && iParam <= hb_pcount()) {
+    auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
+    bool bByRef = pItem->isByRef();
+
+    if (bByRef) {
+      pItem = hb_itemUnRef(pItem);
+    }
+
+    if (pItem->isArray()) {
+      int32_t iRetVal;
+      va_list va;
+      va_start(va, iParam);
+      iRetVal = hb_arraySetNI(pItem, va_arg(va, HB_SIZE), iValue) ? 1 : 0;
+      va_end(va);
+      return iRetVal;
+    } else if (bByRef || iParam == -1) {
+      pItem->putNI(iValue);
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
 int32_t hb_storvnl(long lValue, int32_t iParam, ...)
 {
 #if 0
