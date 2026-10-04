@@ -1382,6 +1382,19 @@ HB_EXPORT HB_ITEM *_HB_ITEM::putNI(int32_t iNumber) // equivalent to hb_itemPutN
   return this;
 }
 
+HB_EXPORT HB_ITEM *_HB_ITEM::putNI32(int32_t iNumber) // equivalent to hb_itemPutNI32
+{
+  if (this->isComplex()) {
+    this->clear();
+  }
+
+  this->setType(Harbour::Item::INTEGER);
+  this->setIntegerValue(iNumber);
+  this->setIntegerLength(HB_INT_LENGTH(iNumber));
+
+  return this;
+}
+
 HB_ITEM *hb_itemPutNL(HB_ITEM *pItem, long lNumber)
 {
 #if 0
@@ -3205,7 +3218,7 @@ char *hb_itemString(HB_ITEM *pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     HB_STACK_TLS_PRELOAD
     if (hb_stackSetStruct()->HB_SET_FIXED) {
       // If fixed mode is enabled, use the default number of decimal places.
-      hb_stackAllocItem()->putNI(hb_stackSetStruct()->HB_SET_DECIMALS);
+      hb_stackAllocItem()->putNI32(hb_stackSetStruct()->HB_SET_DECIMALS);
       buffer = hb_itemStr(pItem, nullptr, hb_stackItemFromTop(-1));
       hb_stackPop();
     } else {

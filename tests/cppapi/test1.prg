@@ -41,7 +41,7 @@ RETURN
 HB_FUNC(TEST1)
 {
   _HB_ITEM value{};
-  value.putNI(1);
+  value.putNI32(1);
   hb_retni(value.getNI());
   value.clear();
 }
@@ -50,7 +50,7 @@ HB_FUNC(TEST1)
 HB_FUNC(TEST2)
 {
   auto value = hb_itemNew(nullptr);
-  value->putNI(1);
+  value->putNI32(1);
   hb_retni(value->getNI());
   hb_itemRelease(value);
 }

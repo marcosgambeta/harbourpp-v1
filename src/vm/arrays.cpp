@@ -728,7 +728,7 @@ HB_BOOL hb_arraySetNI(HB_ITEM *pArray, HB_SIZE nIndex, int32_t iNumber)
 #endif
 
   if (pArray->isArray() && pArray->isValidIndex(nIndex)) {
-    (pArray->arrayItem(nIndex))->putNI(iNumber);
+    (pArray->arrayItem(nIndex))->putNI32(iNumber);
     return true;
   } else {
     return false;

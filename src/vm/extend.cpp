@@ -1680,7 +1680,7 @@ void hb_retni(int32_t iNumber)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_stackReturnItem()->putNI(iNumber);
+  hb_stackReturnItem()->putNI32(iNumber);
 }
 
 #undef hb_retnl
@@ -2037,13 +2037,13 @@ int32_t hb_storni(int32_t iValue, int32_t iParam)
   HB_STACK_TLS_PRELOAD
 
   if (iParam == -1) {
-    hb_stackReturnItem()->putNI(iValue);
+    hb_stackReturnItem()->putNI32(iValue);
     return 1;
   } else if (iParam >= 0 && iParam <= hb_pcount()) {
     auto pItem = hb_stackItemFromBase(iParam);
 
     if (pItem->isByRef()) {
-      hb_itemUnRef(pItem)->putNI(iValue);
+      hb_itemUnRef(pItem)->putNI32(iValue);
       return 1;
     }
   }
@@ -2060,13 +2060,13 @@ int32_t hb_storni32(int32_t iValue, int32_t iParam)
   HB_STACK_TLS_PRELOAD
 
   if (iParam == -1) {
-    hb_stackReturnItem()->putNI(iValue);
+    hb_stackReturnItem()->putNI32(iValue);
     return 1;
   } else if (iParam >= 0 && iParam <= hb_pcount()) {
     auto pItem = hb_stackItemFromBase(iParam);
 
     if (pItem->isByRef()) {
-      hb_itemUnRef(pItem)->putNI(iValue);
+      hb_itemUnRef(pItem)->putNI32(iValue);
       return 1;
     }
   }
@@ -2522,7 +2522,7 @@ int32_t hb_storvni(int32_t iValue, int32_t iParam, ...)
       va_end(va);
       return iRetVal;
     } else if (bByRef || iParam == -1) {
-      pItem->putNI(iValue);
+      pItem->putNI32(iValue);
       return 1;
     }
   }
@@ -2554,7 +2554,7 @@ int32_t hb_storvni32(int32_t iValue, int32_t iParam, ...)
       va_end(va);
       return iRetVal;
     } else if (bByRef || iParam == -1) {
-      pItem->putNI(iValue);
+      pItem->putNI32(iValue);
       return 1;
     }
   }

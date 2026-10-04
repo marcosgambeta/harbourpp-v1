@@ -503,6 +503,7 @@ struct _HB_ITEM
   HB_EXPORT HB_SYMB *getSymbol();
   //
   HB_EXPORT _HB_ITEM *putNI(int32_t iNumber);
+  HB_EXPORT _HB_ITEM *putNI32(int32_t iNumber);
   HB_EXPORT _HB_ITEM *putNL(long lNumber);
   HB_EXPORT _HB_ITEM *putL(HB_BOOL bValue);
   HB_EXPORT _HB_ITEM *putC(const char *szText);
