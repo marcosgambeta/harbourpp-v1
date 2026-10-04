@@ -467,7 +467,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, HB_ITEM *pItem, HB_ULONG ulRec, 
   }
   case 'N':
     if (pTag->uiLen == 4) {
-      uint32_t uiVal = static_cast<uint32_t>(pItem->getNI()) + 0x80000000;
+      uint32_t uiVal = static_cast<uint32_t>(pItem->getNI32()) + 0x80000000;
       HB_PUT_BE_UINT32(buf, uiVal);
       nLen = 4;
     } else {
@@ -6412,7 +6412,7 @@ static HB_ERRCODE hb_cdxOpen(CDXAREAP pArea, LPDBOPENINFO pOpenInfo)
       hb_itemRelease(pItem);
       return Harbour::FAILURE;
     }
-    pArea->dbfarea.bLockType = static_cast<uint8_t>(pItem->getNI());
+    pArea->dbfarea.bLockType = static_cast<uint8_t>(pItem->getNI32());
     hb_itemRelease(pItem);
     if (pArea->dbfarea.bLockType == 0) {
       pArea->dbfarea.bLockType = DB_DBFLOCK_VFP;
@@ -8780,7 +8780,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
         case Harbour::Item::LONG:
         case Harbour::Item::DOUBLE:
           if (pTag->uiLen == 4) {
-            uint32_t uiVal = static_cast<uint32_t>(pItem->getNI()) + 0x80000000;
+            uint32_t uiVal = static_cast<uint32_t>(pItem->getNI32()) + 0x80000000;
             HB_PUT_BE_UINT32(&cTemp[0], uiVal);
             hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 4);
           } else {

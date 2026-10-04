@@ -506,7 +506,7 @@ static int32_t hb_matherrblock(HB_MATH_EXCEPTION *pexc)
           hb_itemRelease(pRetval);
         }
         if (pRet && pRet->isNumeric()) {
-          retval = pRet->getNI(); // block may also return 0 to force C math lib warnings
+          retval = pRet->getNI32(); // block may also return 0 to force C math lib warnings
           hb_itemRelease(pRet);
         } else {
           retval = 1; // default return value to suppress C math lib warnings

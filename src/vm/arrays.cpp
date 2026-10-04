@@ -527,7 +527,7 @@ int32_t hb_arrayGetNI(HB_ITEM *pArray, HB_SIZE nIndex)
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayGetNI(%p, %" HB_PFS "u)", static_cast<void*>(pArray), nIndex));
 #endif
 
-  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getNI() : 0;
+  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getNI32() : 0;
 }
 
 long hb_arrayGetNL(HB_ITEM *pArray, HB_SIZE nIndex)

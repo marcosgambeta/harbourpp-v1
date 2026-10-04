@@ -60,7 +60,7 @@ HB_FUNC(__BOX)
   auto pszBox = hb_parc(5);
 
   if (pTop && pLeft && pBottom && pRight && pszBox) {
-    hb_gtBox(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI(), pszBox);
+    hb_gtBox(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32(), pszBox);
   }
 }
 
@@ -72,7 +72,7 @@ HB_FUNC(__BOXD)
   auto pRight = hb_param(4, Harbour::Item::NUMERIC);
 
   if (pTop && pLeft && pBottom && pRight) {
-    hb_gtBoxD(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
+    hb_gtBoxD(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32());
   }
 }
 
@@ -84,7 +84,7 @@ HB_FUNC(__BOXS)
   auto pRight = hb_param(4, Harbour::Item::NUMERIC);
 
   if (pTop && pLeft && pBottom && pRight) {
-    hb_gtBoxS(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
+    hb_gtBoxS(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32());
   }
 }
 

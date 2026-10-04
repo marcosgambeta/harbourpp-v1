@@ -1084,7 +1084,7 @@ HB_FUNC(ORDBAGNAME)
       if (pOrderInfo.itmOrder->isNil()) {
         pOrderInfo.itmOrder = nullptr;
       } else if (pOrderInfo.itmOrder->isNumeric()) {
-        if (pOrderInfo.itmOrder->getNI() == 0) {
+        if (pOrderInfo.itmOrder->getNI32() == 0) {
           pOrderInfo.itmOrder = nullptr;
         }
       } else {
@@ -1244,7 +1244,7 @@ HB_FUNC(ORDFOR)
       if (pOrderInfo.itmOrder->isNil()) {
         pOrderInfo.itmOrder = nullptr;
       } else if (pOrderInfo.itmOrder->isNumeric()) {
-        if (pOrderInfo.itmOrder->getNI() == 0) {
+        if (pOrderInfo.itmOrder->getNI32() == 0) {
           pOrderInfo.itmOrder = nullptr;
         }
       } else {
@@ -1275,7 +1275,7 @@ HB_FUNC(ORDKEY)
       if (pOrderInfo.itmOrder->isNil()) {
         pOrderInfo.itmOrder = nullptr;
       } else if (pOrderInfo.itmOrder->isNumeric()) {
-        if (pOrderInfo.itmOrder->getNI() == 0) {
+        if (pOrderInfo.itmOrder->getNI32() == 0) {
           pOrderInfo.itmOrder = nullptr;
         }
       } else {
@@ -1361,7 +1361,7 @@ HB_FUNC(ORDNAME)
       if (pOrderInfo.itmOrder->isNil()) {
         pOrderInfo.itmOrder = nullptr;
       } else if (pOrderInfo.itmOrder->isNumeric()) {
-        if (pOrderInfo.itmOrder->getNI() == 0) {
+        if (pOrderInfo.itmOrder->getNI32() == 0) {
           pOrderInfo.itmOrder = nullptr;
         }
       } else {
@@ -1923,7 +1923,7 @@ HB_FUNC(HB_RDDINFO)
 
   if (pRDDNode && pIndex) {
     HB_ITEM *pInfo = hb_itemParam(2);
-    SELF_RDDINFO(pRDDNode, static_cast<uint16_t>(pIndex->getNI()), ulConnection, pInfo);
+    SELF_RDDINFO(pRDDNode, static_cast<uint16_t>(pIndex->getNI32()), ulConnection, pInfo);
     hb_itemReturnRelease(pInfo);
   } else {
     hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);

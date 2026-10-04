@@ -3818,7 +3818,7 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
   case HB_GTI_ESCDELAY:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pTerm->esc_delay);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
-      pTerm->esc_delay = pInfo->pNewVal->getNI();
+      pTerm->esc_delay = pInfo->pNewVal->getNI32();
     }
     break;
 
@@ -3896,11 +3896,11 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_PALETTE:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
-      iVal = pInfo->pNewVal->getNI();
+      iVal = pInfo->pNewVal->getNI32();
       if (iVal >= 0 && iVal < 16) {
         pInfo->pResult = hb_itemPutNI32(pInfo->pResult, pTerm->colors[iVal]);
         if (hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC) {
-          pTerm->colors[iVal] = pInfo->pNewVal2->getNI();
+          pTerm->colors[iVal] = pInfo->pNewVal2->getNI32();
           hb_gt_trm_SetPalette(pTerm, iVal, iVal);
           hb_gt_trm_termFlush(pTerm);
         }

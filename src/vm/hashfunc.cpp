@@ -424,7 +424,7 @@ HB_FUNC(HB_HMERGE)
           }
         }
       } else {
-        hb_hashJoin(pDest, pSource, pAction ? pAction->getNI() : HB_HASH_UNION);
+        hb_hashJoin(pDest, pSource, pAction ? pAction->getNI32() : HB_HASH_UNION);
       }
     }
     hb_itemReturn(pDest);
@@ -723,7 +723,7 @@ HB_FUNC(HB_HAUTOADD)
           hb_hashClearFlags(pHash, iOldFlags);
         }
       } else {
-        int32_t iNewFlags = pValue->getNI();
+        int32_t iNewFlags = pValue->getNI32();
         if ((iNewFlags | iOldFlags) != iNewFlags) {
           hb_hashClearFlags(pHash, iOldFlags);
         }

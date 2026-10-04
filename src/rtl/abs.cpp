@@ -60,7 +60,7 @@ HB_FUNC(ABS)
     hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
     if (pNumber->isInteger()) {
-      auto iNumber = pNumber->getNI();
+      auto iNumber = pNumber->getNI32();
 
       if (iNumber >= 0) {
         hb_retnilen(iNumber, iWidth);

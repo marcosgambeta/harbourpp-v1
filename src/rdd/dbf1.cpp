@@ -3453,7 +3453,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
     uint32_t uiSetHeader = pArea->uiSetHeader;
 
     if (pItem->isNumeric()) {
-      int32_t iMode = pItem->getNI();
+      int32_t iMode = pItem->getNI32();
       if ((iMode & ~DB_SETHEADER_MASK) == 0) {
         pArea->uiSetHeader = iMode;
       }
@@ -3583,7 +3583,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, uint16_t uiIndex, uint16_t uiT
           }
           fLck = true;
         }
-        iValue = hb_dbfNextValueStep(pArea, uiIndex - 1, pItem->getNI());
+        iValue = hb_dbfNextValueStep(pArea, uiIndex - 1, pItem->getNI32());
         if (fLck) {
           SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0);
         }
@@ -3750,11 +3750,11 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
   {
     auto pItem = hb_itemNew(nullptr);
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TABLETYPE, 0, pItem) == Harbour::SUCCESS) {
-      pArea->bTableType = static_cast<uint8_t>(pItem->getNI());
+      pArea->bTableType = static_cast<uint8_t>(pItem->getNI32());
     }
     hb_itemClear(pItem);
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, 0, pItem) == Harbour::SUCCESS) {
-      pArea->uiSetHeader = static_cast<uint32_t>(pItem->getNI());
+      pArea->uiSetHeader = static_cast<uint32_t>(pItem->getNI32());
     }
     hb_itemRelease(pItem);
   }
@@ -6234,7 +6234,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     uint16_t uiSetHeader = pData->uiSetHeader;
 
     if (pItem->isNumeric()) {
-      int32_t iMode = pItem->getNI();
+      int32_t iMode = pItem->getNI32();
       if ((iMode & ~DB_SETHEADER_MASK) == 0) {
         pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }
@@ -6260,7 +6260,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulCon
     break;
   }
   case RDDI_DECIMALS: {
-    int32_t iDecimals = pItem->isNumeric() ? pItem->getNI() : -1;
+    int32_t iDecimals = pItem->isNumeric() ? pItem->getNI32() : -1;
 
     hb_itemPutNI32(pItem, pData->bDecimals);
     if (iDecimals >= 0 && iDecimals <= 20) {

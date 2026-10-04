@@ -136,7 +136,7 @@ static int32_t set_number(HB_ITEM *pItem, int32_t iOldValue)
    HB_TRACE(HB_TR_DEBUG, ("set_number(%p, %d)", static_cast<void*>(pItem), iOldValue));
 #endif
 
-  return pItem->isNumeric() ? pItem->getNI() : iOldValue;
+  return pItem->isNumeric() ? pItem->getNI32() : iOldValue;
 }
 
 static char *set_string(HB_ITEM *pItem, char *szOldString)
@@ -585,7 +585,7 @@ HB_ITEM *hb_setGetItem(HB_set_enum set_specifier, HB_ITEM *pResult, HB_ITEM *pAr
     break;
   case HB_SET_CURSOR:
     if (pArg1 != nullptr && pArg1->isNumeric()) {
-      pResult = hb_itemPutNI32(pResult, hb_conSetCursor(true, pArg1->getNI()));
+      pResult = hb_itemPutNI32(pResult, hb_conSetCursor(true, pArg1->getNI32()));
     } else {
       pResult = hb_itemPutNI32(pResult, hb_conSetCursor(false, 0));
     }
@@ -1607,7 +1607,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
 
     case HB_SET_DECIMALS:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_DECIMALS = iValue;
           fResult = true;
@@ -1616,7 +1616,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_EPOCH:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_EPOCH = iValue;
           fResult = true;
@@ -1625,7 +1625,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_MBLOCKSIZE:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_MBLOCKSIZE = iValue;
           fResult = true;
@@ -1634,7 +1634,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_DBFLOCKSCHEME:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_DBFLOCKSCHEME = iValue;
           fResult = true;
@@ -1643,7 +1643,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_AUTORDER:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_AUTORDER = iValue;
           fResult = true;
@@ -1652,7 +1652,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_AUTOSHARE:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_AUTOSHARE = iValue;
           fResult = true;
@@ -1661,13 +1661,13 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_CURSOR:
       if (pItem->isNumeric()) {
-        hb_conSetCursor(true, pItem->getNI());
+        hb_conSetCursor(true, pItem->getNI32());
         fResult = true;
       }
       break;
     case HB_SET_EVENTMASK:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_EVENTMASK = iValue;
           fResult = true;
@@ -1676,7 +1676,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_MARGIN:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_MARGIN = iValue;
           fResult = true;
@@ -1685,7 +1685,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_MESSAGE:
       if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
         if (iValue >= 0) {
           pSet->HB_SET_MESSAGE = iValue;
           fResult = true;
@@ -1695,7 +1695,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
     case HB_SET_TYPEAHEAD:
       if (pItem->isNumeric()) {
         // Set the value and limit the range
-        pSet->HB_SET_TYPEAHEAD = pItem->getNI();
+        pSet->HB_SET_TYPEAHEAD = pItem->getNI32();
         if (pSet->HB_SET_TYPEAHEAD == 0) {
           /* Do nothing */;
         } else if (pSet->HB_SET_TYPEAHEAD < 16) {
@@ -1710,7 +1710,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
       break;
     case HB_SET_VIDEOMODE:
       if (pItem->isNumeric()) {
-        pSet->HB_SET_VIDEOMODE = pItem->getNI();
+        pSet->HB_SET_VIDEOMODE = pItem->getNI32();
         fResult = true;
       }
       break;
@@ -1745,7 +1745,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, HB_ITEM *pItem)
           iValue = HB_SET_CASE_MIXED;
         }
       } else if (pItem->isNumeric()) {
-        iValue = pItem->getNI();
+        iValue = pItem->getNI32();
       }
 
       if (iValue == HB_SET_CASE_LOWER || iValue == HB_SET_CASE_UPPER || iValue == HB_SET_CASE_MIXED) {

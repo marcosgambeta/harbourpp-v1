@@ -752,10 +752,10 @@ void hb_socekxParamsGetStd(HB_ITEM *pParams, const void **pKeydata, int32_t *pKe
       *pIVlen = static_cast<int32_t>(pItem->getCLen());
     }
     if (pLevel && (pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && pItem->isNumeric()) {
-      *pLevel = pItem->getNI();
+      *pLevel = pItem->getNI32();
     }
     if (pStrategy && (pItem = hb_hashGetCItemPtr(pParams, "zs")) != nullptr && pItem->isNumeric()) {
-      *pStrategy = pItem->getNI();
+      *pStrategy = pItem->getNI32();
     }
   }
 }
@@ -771,7 +771,7 @@ void hb_socekxParamsInit(PHB_SOCKEX pSock, HB_ITEM *pParams)
       }
     }
     if ((pItem = hb_hashGetCItemPtr(pParams, "flush")) != nullptr && pItem->isNumeric()) {
-      pSock->iAutoFlush = pItem->getNI();
+      pSock->iAutoFlush = pItem->getNI32();
     }
     if ((pItem = hb_hashGetCItemPtr(pParams, "redir")) != nullptr && pItem->isLogical()) {
       pSock->fRedirAll = pItem->getL();

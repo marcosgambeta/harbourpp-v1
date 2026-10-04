@@ -73,7 +73,7 @@ static bool hb_sxSemName(char *szFileName)
       DBORDERINFO pOrderInfo{};
 
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::NUMERIC);
-      if (pOrderInfo.itmOrder && pOrderInfo.itmOrder->getNI() == 0) {
+      if (pOrderInfo.itmOrder && pOrderInfo.itmOrder->getNI32() == 0) {
         pOrderInfo.itmOrder = nullptr;
       }
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);

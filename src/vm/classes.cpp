@@ -2355,7 +2355,7 @@ int32_t hb_objDataGetNI(HB_ITEM *pObject, const char *szMsg)
   hb_vmSend(0);
   {
     HB_STACK_TLS_PRELOAD
-    return hb_stackReturnItem()->getNI();
+    return hb_stackReturnItem()->getNI32();
   }
 }
 
@@ -2809,14 +2809,14 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
       break;
 
     case HB_OO_MSG_SUPER:
-      uiIndex = static_cast<uint16_t>(pFunction->getNI());
-      uiSprClass = static_cast<uint16_t>(pInit->getNI());
+      uiIndex = static_cast<uint16_t>(pFunction->getNI32());
+      uiSprClass = static_cast<uint16_t>(pInit->getNI32());
       fOK = uiSprClass && uiSprClass <= s_uiClasses && uiIndex <= pClass->uiDatas;
       break;
 
     case HB_OO_MSG_ASSIGN:
     case HB_OO_MSG_ACCESS:
-      uiIndex = static_cast<uint16_t>(pFunction->getNI());
+      uiIndex = static_cast<uint16_t>(pFunction->getNI32());
       // This validation can break buggy .prg code which wrongly
       // sets data offsets but IMHO it will help to clean the code.
       // [druzus]
@@ -2825,7 +2825,7 @@ static bool hb_clsAddMsg(uint16_t uiClass, const char *szMessage, uint16_t uiTyp
 
     case HB_OO_MSG_CLSASSIGN:
     case HB_OO_MSG_CLSACCESS:
-      uiIndex = static_cast<uint16_t>(pFunction->getNI());
+      uiIndex = static_cast<uint16_t>(pFunction->getNI32());
       fOK = uiIndex != 0;
       break;
 
@@ -4780,7 +4780,7 @@ HB_FUNC(__OBJSETIVARS)
     HB_ITEM *pNewObj = nullptr;
 
     if (pObject->isNumeric()) {
-      pObject = pNewObj = hb_clsInst(static_cast<uint16_t>(pObject->getNI()));
+      pObject = pNewObj = hb_clsInst(static_cast<uint16_t>(pObject->getNI32()));
     } else if (pObject->isString()) {
       pObject = pNewObj = hb_clsInst(hb_clsFindClass(pObject->getCPtr(), nullptr));
     } else if (pObject->isSymbol()) {
@@ -4811,7 +4811,7 @@ HB_FUNC(__OBJRESTOREIVARS)
     HB_ITEM *pObject = nullptr;
 
     if (pClass->isNumeric()) {
-      pObject = hb_clsInst(static_cast<uint16_t>(pClass->getNI()));
+      pObject = hb_clsInst(static_cast<uint16_t>(pClass->getNI32()));
     } else if (pClass->isString()) {
       pObject = hb_clsInst(hb_clsFindClass(pClass->getCPtr(), hb_parc(3)));
     } else if (pClass->isSymbol()) {

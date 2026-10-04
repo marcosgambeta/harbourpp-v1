@@ -1550,7 +1550,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulC
     LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
     uint16_t uiSetHeader = pData->uiSetHeader;
     if (pItem->isNumeric()) {
-      int32_t iMode = pItem->getNI();
+      int32_t iMode = pItem->getNI32();
       if (iMode == 0 || iMode == 1) {
         pData->uiSetHeader = static_cast<uint16_t>(iMode);
       }

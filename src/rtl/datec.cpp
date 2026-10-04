@@ -115,7 +115,7 @@ HB_FUNC(HB_CDAY)
   auto pDay = hb_param(1, Harbour::Item::NUMERIC);
 
   if (pDay) {
-    hb_retc_const(hb_dateCDOW(pDay->getNI()));
+    hb_retc_const(hb_dateCDOW(pDay->getNI32()));
   } else {
     hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }

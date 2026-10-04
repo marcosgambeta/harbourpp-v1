@@ -392,7 +392,7 @@ HB_FUNC(SX_INDEXCOUNT)
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
     SELF_ORDINFO(pArea, DBOI_BAGCOUNT, &Info);
-    iCount = Info.itmResult->getNI();
+    iCount = Info.itmResult->getNI32();
     hb_itemRelease(Info.itmResult);
   }
 
@@ -429,7 +429,7 @@ HB_FUNC(SX_INDEXTYPE)
       }
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_INDEXTYPE, &Info) == Harbour::SUCCESS) {
-        iType = Info.itmResult->getNI();
+        iType = Info.itmResult->getNI32();
       }
       hb_itemRelease(Info.itmResult);
     }
@@ -636,7 +636,7 @@ HB_FUNC(SX_WILDSEEK)
 
     if (szPattern != nullptr && szPattern[0]) {
       if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS) {
-        iOrder = Info.itmResult->getNI();
+        iOrder = Info.itmResult->getNI32();
       }
     }
     if (iOrder > 0) {

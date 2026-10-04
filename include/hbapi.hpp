@@ -487,6 +487,7 @@ struct _HB_ITEM
   bool isNumber(); // TODO: same as isNumeric()
   //
   HB_EXPORT int32_t getNI();
+  HB_EXPORT int32_t getNI32();
   HB_EXPORT long getNL();
   HB_EXPORT double getND();
   HB_EXPORT HB_BOOL getL();

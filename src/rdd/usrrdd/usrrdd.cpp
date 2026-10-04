@@ -1312,7 +1312,7 @@ static HB_ERRCODE hb_usrFieldCount(AREAP pArea, uint16_t *puiFields)
   hb_xvmPushLocalByRef(static_cast<int16_t>(nOffset));
   hb_vmDo(2);
 
-  *puiFields = static_cast<uint16_t>(hb_stackItemFromBase(nOffset)->getNI());
+  *puiFields = static_cast<uint16_t>(hb_stackItemFromBase(nOffset)->getNI32());
   hb_stackPop();
 
   return hb_usrReturn();
@@ -1993,7 +1993,7 @@ static HB_ERRCODE hb_usrRelArea(AREAP pArea, uint16_t uiRelNo, uint16_t *puiRelA
   hb_xvmPushLocalByRef(static_cast<int16_t>(nOffset));
   hb_vmDo(3);
 
-  *puiRelArea = static_cast<uint16_t>(hb_stackItemFromBase(nOffset)->getNI());
+  *puiRelArea = static_cast<uint16_t>(hb_stackItemFromBase(nOffset)->getNI32());
   hb_stackPop();
 
   return hb_usrReturn();

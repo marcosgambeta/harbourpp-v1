@@ -83,7 +83,7 @@ HB_FUNC(HB_STRXOR)
 
       return;
     } else if ((pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr) {
-      auto bChar = static_cast<char>(pItem2->getNI());
+      auto bChar = static_cast<char>(pItem2->getNI32());
 
       if (bChar) {
         pRet = static_cast<char *>(hb_xgrab(nLen1 + 1));

@@ -276,7 +276,7 @@ HB_FUNC(DBINFO)
     if (pIndex) {
       HB_ITEM *pInfo = hb_itemParam(2);
 
-      SELF_INFO(pArea, static_cast<uint16_t>(pIndex->getNI()), pInfo);
+      SELF_INFO(pArea, static_cast<uint16_t>(pIndex->getNI32()), pInfo);
       hb_itemReturnRelease(pInfo);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBINFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -303,7 +303,7 @@ HB_FUNC(DBORDERINFO)
       pOrderInfo.itmResult = hb_itemNew(nullptr);
       pOrderInfo.itmCobExpr = nullptr;
       pOrderInfo.fAllTags = false;
-      SELF_ORDINFO(pArea, static_cast<uint16_t>(pType->getNI()), &pOrderInfo);
+      SELF_ORDINFO(pArea, static_cast<uint16_t>(pType->getNI32()), &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -324,7 +324,7 @@ HB_FUNC(DBFIELDINFO)
     if (pType && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex > 0 && uiIndex <= uiFields) {
       auto pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
 
-      SELF_FIELDINFO(pArea, uiIndex, static_cast<uint16_t>(pType->getNI()), pInfo);
+      SELF_FIELDINFO(pArea, uiIndex, static_cast<uint16_t>(pType->getNI32()), pInfo);
       hb_itemReturnRelease(pInfo);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -344,7 +344,7 @@ HB_FUNC(DBRECORDINFO)
     if (pType) {
       HB_ITEM *pInfo = hb_itemParam(3);
 
-      SELF_RECINFO(pArea, pRecNo, static_cast<uint16_t>(pType->getNI()), pInfo);
+      SELF_RECINFO(pArea, pRecNo, static_cast<uint16_t>(pType->getNI32()), pInfo);
       hb_itemReturnRelease(pInfo);
     } else
       hb_errRT_DBCMD(EG_ARG, EDBCMD_INFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -371,7 +371,7 @@ HB_FUNC(DBFILEGET)
     auto pMode = hb_param(3, Harbour::Item::NUMERIC);
     if (uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS &&
         uiIndex <= uiFields) {
-      hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<uint16_t>(pMode->getNI())) ==
+      hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<uint16_t>(pMode->getNI32())) ==
               Harbour::SUCCESS);
     } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBFILEGETBADPARAMETER, nullptr, HB_ERR_FUNCNAME);

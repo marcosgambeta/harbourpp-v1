@@ -1827,7 +1827,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_CLOSEMODE:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, s_fClosable ? 0 : 2);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
-      auto iVal = pInfo->pNewVal->getNI();
+      auto iVal = pInfo->pNewVal->getNI32();
       if (iVal >= 0 && iVal <= 2 && (s_fClosable ? (iVal != 0) : (iVal == 0))) {
         s_fClosable = iVal == 0;
         hb_gt_win_SetCloseButton(true, s_fClosable);
@@ -1849,7 +1849,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
   case HB_GTI_PALETTE:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
-      auto iIndex = pInfo->pNewVal->getNI();
+      auto iIndex = pInfo->pNewVal->getNI32();
 
       if (iIndex >= 0 && iIndex < 16) {
         COLORREF colors[16];
@@ -1915,7 +1915,7 @@ static HB_BOOL hb_gt_win_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
   case HB_GTI_KBDSHIFTS:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_gt_win_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
-      hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
+      hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI32());
     }
     break;
 

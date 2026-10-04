@@ -68,7 +68,7 @@ HB_FUNC(HB_DBDETACH)
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
     }
   } else if (pAlias->isNumber()) {
-    iArea = pAlias->getNI();
+    iArea = pAlias->getNI32();
     if (iArea > 0) {
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
     }

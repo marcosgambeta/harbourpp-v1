@@ -944,6 +944,19 @@ HB_EXPORT int32_t _HB_ITEM::getNI() // equivalent to hb_itemGetNI
   }
 }
 
+HB_EXPORT int32_t _HB_ITEM::getNI32() // equivalent to hb_itemGetNI32
+{
+  if (this->isInteger()) {
+    return this->integerValue();
+  } else if (this->isLong()) {
+    return static_cast<int32_t>(this->longValue());
+  } else if (this->isDouble()) {
+    return HB_CAST_INT(this->doubleValue());
+  } else {
+    return 0;
+  }
+}
+
 long hb_itemGetNL(HB_ITEM *pItem)
 {
 #if 0
@@ -3131,7 +3144,7 @@ char *hb_itemStr(HB_ITEM *pNumber, HB_ITEM *pWidth, HB_ITEM *pDec)
     if (pWidth && pWidth->isNumeric()) {
       // If the width parameter is specified, override the default value
       // and set the number of decimals to zero
-      iWidth = pWidth->getNI();
+      iWidth = pWidth->getNI32();
 
       if (iWidth < 1) {
         iWidth = 10; // If 0 or negative, use default
@@ -3144,7 +3157,7 @@ char *hb_itemStr(HB_ITEM *pNumber, HB_ITEM *pWidth, HB_ITEM *pDec)
       // This function does not include the decimal places in the width,
       // so the width must be adjusted downwards, if the decimal places
       // parameter is greater than 0
-      iDec = pDec->getNI();
+      iDec = pDec->getNI32();
 
       if (iDec <= 0) {
         iDec = 0;

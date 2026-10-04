@@ -110,7 +110,7 @@ static bool hb_errGetNumCode(int32_t *piValue, const char *szOperation)
   auto pItem = hb_param(1, Harbour::Item::NUMERIC);
 
   if (pItem != nullptr) {
-    *piValue = pItem->getNI();
+    *piValue = pItem->getNI32();
   } else {
     pItem = hb_errRT_BASE_Subst(EG_ARG, 0, nullptr, szOperation, HB_ERR_ARGS_BASEPARAMS);
     if (!pItem) {
@@ -122,7 +122,7 @@ static bool hb_errGetNumCode(int32_t *piValue, const char *szOperation)
       hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
     }
 
-    *piValue = pItem->getNI();
+    *piValue = pItem->getNI32();
     hb_itemRelease(pItem);
   }
 

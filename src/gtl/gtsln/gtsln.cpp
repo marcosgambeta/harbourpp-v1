@@ -932,7 +932,7 @@ static HB_BOOL hb_gt_sln_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
   case HB_GTI_ESCDELAY:
     pInfo->pResult = hb_itemPutNI32(pInfo->pResult, hb_sln_escDelay);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) {
-      hb_sln_escDelay = pInfo->pNewVal->getNI();
+      hb_sln_escDelay = pInfo->pNewVal->getNI32();
     }
     break;
 

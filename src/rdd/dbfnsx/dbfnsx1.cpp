@@ -6133,7 +6133,7 @@ static HB_ERRCODE hb_nsxOpen(NSXAREAP pArea, LPDBOPENINFO pOpenInfo)
       hb_itemRelease(pItem);
       return errCode;
     }
-    pArea->dbfarea.bLockType = static_cast<uint8_t>(pItem->getNI());
+    pArea->dbfarea.bLockType = static_cast<uint8_t>(pItem->getNI32());
     hb_itemRelease(pItem);
     if (pArea->dbfarea.bLockType == 0) {
       pArea->dbfarea.bLockType = DB_DBFLOCK_CLIPPER;
@@ -7404,7 +7404,7 @@ static HB_ERRCODE hb_nsxOrderListFocus(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
      * RDDs and I chosen DBFCDX one as default. [druzus]
      */
 #ifdef HB_CLP_STRICT
-    if (pTag || (pOrderInfo->itmOrder->isNumeric() && pOrderInfo->itmOrder->getNI() == 0) ||
+    if (pTag || (pOrderInfo->itmOrder->isNumeric() && pOrderInfo->itmOrder->getNI32() == 0) ||
         (pOrderInfo->itmOrder->isString() && pOrderInfo->itmOrder->getCLen() == 0))
 #endif
       pArea->lpCurTag = pTag;

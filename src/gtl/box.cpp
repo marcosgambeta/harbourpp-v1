@@ -70,7 +70,7 @@ HB_FUNC(DISPBOX)
       } else {
         iColor = -1;
       }
-      hb_gtBoxEx(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI(), pszBox, iColor);
+      hb_gtBoxEx(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32(), pszBox, iColor);
     } else {
       char szOldColor[HB_CLRSTR_LEN];
 
@@ -80,9 +80,9 @@ HB_FUNC(DISPBOX)
       }
 
       if (hb_parni32(5) == 2) {
-        hb_gtBoxD(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
+        hb_gtBoxD(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32());
       } else {
-        hb_gtBoxS(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
+        hb_gtBoxS(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32());
       }
 
       if (pszColor) {
@@ -104,6 +104,6 @@ HB_FUNC(HB_DISPBOX)
     auto pszColor = hb_parc(6);
     int32_t iColor = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
 
-    hb_gtDrawBox(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI(), pszBox, iColor);
+    hb_gtDrawBox(pTop->getNI32(), pLeft->getNI32(), pBottom->getNI32(), pRight->getNI32(), pszBox, iColor);
   }
 }
