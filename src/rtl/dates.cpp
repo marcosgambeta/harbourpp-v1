@@ -53,10 +53,6 @@
 
 char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDateFormat)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dateFormat(%s, %p, %s)", szDate, static_cast<void*>(szFormattedDate), szDateFormat));
-#endif
-
   // NOTE: szFormattedDate must point to a buffer of at least 11 bytes.
   //       szDateFormat must point to a buffer holding the date format to use.
 
@@ -225,10 +221,6 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
 
 static int32_t hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long *plDate)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dateUnformatRaw(%s, %s, %p)", szDate, szDateFormat, static_cast<void*>(plDate)));
-#endif
-
   int32_t d_value = 0, m_value = 0, y_value = 0;
   int32_t iSize = 0;
 
@@ -328,10 +320,6 @@ static int32_t hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, 
 
 long hb_dateUnformat(const char *szDate, const char *szDateFormat)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dateFormat(%s, %s)", szDate, szDateFormat));
-#endif
-
   long lDate;
   hb_dateUnformatRaw(szDate, szDateFormat, &lDate);
   return lDate;
@@ -348,10 +336,6 @@ long hb_dateUnformat(const char *szDate, const char *szDateFormat)
 // always safe buffer size is 17 (+1 for 0)
 char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_timeFormat(%p, %s, %ld)", static_cast<void*>(szBuffer), szTimeFormat, lMilliSec));
-#endif
-
   int32_t iPM, i12;
   int32_t i, value, digits, skip;
 
@@ -465,10 +449,6 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
 char *hb_timeStampFormat(char *szBuffer, const char *szDateFormat, const char *szTimeFormat, long lJulian,
                          long lMilliSec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_timeStampFormat(%p, %s, %s, %ld, %ld)", static_cast<void*>(szBuffer), szDateFormat, szTimeFormat, lJulian, lMilliSec));
-#endif
-
   char szDate[9], *szTimeBuffer;
   hb_dateDecStr(szDate, lJulian);
   hb_dateFormat(szDate, szBuffer, szDateFormat);
@@ -482,10 +462,6 @@ char *hb_timeStampFormat(char *szBuffer, const char *szDateFormat, const char *s
 
 long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_timeUnformat(%s, %s)", szTime, szTimeFormat));
-#endif
-
   if (!szTime) {
     return 0;
   }
@@ -591,10 +567,6 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
 void hb_timeStampUnformat(const char *szDateTime, const char *szDateFormat, const char *szTimeFormat, long *plJulian,
                           long *plMilliSec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
-#endif
-
   if (szDateTime != nullptr) {
     if (!szDateFormat) {
       szDateFormat = hb_setGetDateFormat();

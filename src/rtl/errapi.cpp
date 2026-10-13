@@ -468,10 +468,6 @@ HB_FUNC(DOSERROR)
 
 void hb_errInit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errInit()"));
-#endif
-
   // error function
   hb_dynsymNew(&s_symErrorNew);
   // init message
@@ -486,10 +482,6 @@ void hb_errInit(void)
 
 void hb_errExit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errExit()"));
-#endif
-
   hb_itemRelease(s_pError);
   s_pError = nullptr;
 }
@@ -510,10 +502,6 @@ HB_ITEM *hb_errNew(void)
 {
   HB_ITEM *pError;
 
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errNew()"));
-#endif
-
   if (!s_pError || !s_pError->isObject()) {
     hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
   }
@@ -533,10 +521,6 @@ HB_ITEM *hb_errNew(void)
 
 uint16_t hb_errLaunch(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errLaunch(%p)", pError));
-#endif
-
   uint16_t uiAction = E_DEFAULT; // Needed to avoid GCC -O2 warning
 
   if (pError) {
@@ -628,10 +612,6 @@ uint16_t hb_errLaunch(HB_ITEM *pError)
 
 HB_ITEM *hb_errLaunchSubst(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errLaunchSubst(%p)", pError));
-#endif
-
   HB_ITEM *pResult;
 
   if (pError) {
@@ -694,124 +674,72 @@ HB_ITEM *hb_errLaunchSubst(HB_ITEM *pError)
 
 void hb_errRelease(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errRelease(%p)", pError));
-#endif
-
   // NOTE: nullptr pointer is checked by hb_itemRelease() [vszakats]
   hb_itemRelease(pError);
 }
 
 HB_ITEM *hb_errGetCargo(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetCargo(%p)", pError));
-#endif
-
   return hb_arrayGetItemPtr(pError, HB_TERROR_CARGO);
 }
 
 HB_ITEM *hb_errPutCargo(HB_ITEM *pError, HB_ITEM *pCargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutCargo(%p, %p)", pError, pCargo));
-#endif
-
   hb_arraySet(pError, HB_TERROR_CARGO, pCargo);
   return pError;
 }
 
 HB_ITEM *hb_errGetArgs(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetArgs(%p)", pError));
-#endif
-
   return hb_arrayGetItemPtr(pError, HB_TERROR_ARGS);
 }
 
 HB_ITEM *hb_errPutArgsArray(HB_ITEM *pError, HB_ITEM *pArgs)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutArgsArray(%p, %p)", pError, pArgs));
-#endif
-
   hb_arraySet(pError, HB_TERROR_ARGS, pArgs);
   return pError;
 }
 
 const char *hb_errGetDescription(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetDescription(%p)", pError));
-#endif
-
   return hb_arrayGetCPtr(pError, HB_TERROR_DESCRIPTION);
 }
 
 HB_ITEM *hb_errPutDescription(HB_ITEM *pError, const char *szDescription)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutDescription(%p, %s)", pError, szDescription));
-#endif
-
   hb_arraySetC(pError, HB_TERROR_DESCRIPTION, szDescription);
   return pError;
 }
 
 const char *hb_errGetFileName(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetFileName(%p)", pError));
-#endif
-
   return hb_arrayGetCPtr(pError, HB_TERROR_FILENAME);
 }
 
 HB_ITEM *hb_errPutFileName(HB_ITEM *pError, const char *szFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutFileName(%p, %s)", pError, szFileName));
-#endif
-
   hb_arraySetC(pError, HB_TERROR_FILENAME, szFileName);
   return pError;
 }
 
 HB_ERRCODE hb_errGetGenCode(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetGenCode(%p)", pError));
-#endif
-
   return static_cast<HB_ERRCODE>(hb_arrayGetNI(pError, HB_TERROR_GENCODE));
 }
 
 HB_ITEM *hb_errPutGenCode(HB_ITEM *pError, HB_ERRCODE errGenCode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutGenCode(%p, %d)", pError, errGenCode));
-#endif
-
   hb_arraySetNI(pError, HB_TERROR_GENCODE, errGenCode);
   return pError;
 }
 
 const char *hb_errGetOperation(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetOperation(%p)", pError));
-#endif
-
   return hb_arrayGetCPtr(pError, HB_TERROR_OPERATION);
 }
 
 HB_ITEM *hb_errPutOperation(HB_ITEM *pError, const char *szOperation)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutOperation(%p, %s)", pError, szOperation == HB_ERR_FUNCNAME ? "HB_ERR_FUNCNAME" : szOperation));
-#endif
-
   if (szOperation == HB_ERR_FUNCNAME) {
     HB_SYMB *pSym = hb_itemGetSymbol(hb_stackBaseItem());
     if (pSym) {
@@ -825,114 +753,66 @@ HB_ITEM *hb_errPutOperation(HB_ITEM *pError, const char *szOperation)
 
 HB_ERRCODE hb_errGetOsCode(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetOsCode(%p)", pError));
-#endif
-
   return static_cast<HB_ERRCODE>(hb_arrayGetNI(pError, HB_TERROR_OSCODE));
 }
 
 HB_ITEM *hb_errPutOsCode(HB_ITEM *pError, HB_ERRCODE errOsCode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutOsCode(%p, %d)", pError, errOsCode));
-#endif
-
   hb_arraySetNI(pError, HB_TERROR_OSCODE, errOsCode);
   return pError;
 }
 
 uint16_t hb_errGetSeverity(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetSeverity(%p)", pError));
-#endif
-
   return static_cast<uint16_t>(hb_arrayGetNI(pError, HB_TERROR_SEVERITY));
 }
 
 HB_ITEM *hb_errPutSeverity(HB_ITEM *pError, uint16_t uiSeverity)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutSeverity(%p, %hu)", pError, uiSeverity));
-#endif
-
   hb_arraySetNI(pError, HB_TERROR_SEVERITY, uiSeverity);
   return pError;
 }
 
 HB_ERRCODE hb_errGetSubCode(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetSubCode(%p)", pError));
-#endif
-
   return static_cast<HB_ERRCODE>(hb_arrayGetNI(pError, HB_TERROR_SUBCODE));
 }
 
 HB_ITEM *hb_errPutSubCode(HB_ITEM *pError, HB_ERRCODE errSubCode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutSubCode(%p, %d)", pError, errSubCode));
-#endif
-
   hb_arraySetNI(pError, HB_TERROR_SUBCODE, errSubCode);
   return pError;
 }
 
 const char *hb_errGetSubSystem(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetSubSytem(%p)", pError));
-#endif
-
   return hb_arrayGetCPtr(pError, HB_TERROR_SUBSYSTEM);
 }
 
 HB_ITEM *hb_errPutSubSystem(HB_ITEM *pError, const char *szSubSystem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutSubSytem(%p, %s)", pError, szSubSystem));
-#endif
-
   hb_arraySetC(pError, HB_TERROR_SUBSYSTEM, szSubSystem);
   return pError;
 }
 
 uint16_t hb_errGetTries(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetTries(%p)", pError));
-#endif
-
   return static_cast<uint16_t>(hb_arrayGetNI(pError, HB_TERROR_TRIES));
 }
 
 HB_ITEM *hb_errPutTries(HB_ITEM *pError, uint16_t uiTries)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutTries(%p, %hu)", pError, uiTries));
-#endif
-
   hb_arraySetNI(pError, HB_TERROR_TRIES, uiTries);
   return pError;
 }
 
 uint16_t hb_errGetFlags(HB_ITEM *pError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errGetFlags(%p)", pError));
-#endif
-
   return static_cast<uint16_t>(hb_arrayGetNI(pError, HB_TERROR_FLAGS));
 }
 
 HB_ITEM *hb_errPutFlags(HB_ITEM *pError, uint16_t uiFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutFlags(%p, %hu)", pError, uiFlags));
-#endif
-
   uiFlags &= EF_CANRETRY | EF_CANSUBSTITUTE | EF_CANDEFAULT;
   hb_arraySetNI(pError, HB_TERROR_FLAGS, uiFlags);
   return pError;
@@ -940,10 +820,6 @@ HB_ITEM *hb_errPutFlags(HB_ITEM *pError, uint16_t uiFlags)
 
 HB_ITEM *hb_errPutArgs(HB_ITEM *pError, HB_ULONG ulArgCount, ...)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errPutArgs(%p, %lu, ...)", pError, ulArgCount));
-#endif
-
   auto pArray = hb_itemArrayNew(ulArgCount);
 
   // Build the array from the passed arguments.
@@ -999,10 +875,6 @@ HB_ITEM *hb_errRT_New_Subst(uint16_t uiSeverity, const char *szSubSystem, HB_ERR
 HB_ITEM *hb_errRT_SubstParams(const char *szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
                               const char *szDescription, const char *szOperation)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_errRT_SubstParams()"));
-#endif
-
   HB_ITEM *pError = hb_errRT_New_Subst(ES_ERROR, szSubSystem ? szSubSystem : HB_ERR_SS_BASE, errGenCode, errSubCode,
                                        szDescription, szOperation, 0, EF_NONE);
   HB_ITEM *pArray = hb_arrayBaseParams();

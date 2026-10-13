@@ -82,10 +82,6 @@ static HB_TSD_NEW(s_idleData, sizeof(HB_IDLEDATA), nullptr, hb_idleDataRelease);
 
 void hb_releaseCPU(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_releaseCPU()"));
-#endif
-
   hb_threadReleaseCPU();
 }
 

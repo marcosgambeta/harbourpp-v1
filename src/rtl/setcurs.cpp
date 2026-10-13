@@ -50,10 +50,6 @@
 
 int32_t hb_conSetCursor(HB_BOOL bSetCursor, int32_t iNewCursor)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_conSetCursor(%d, %d)", static_cast<int32_t>(bSetCursor), iNewCursor));
-#endif
-
   int32_t iCursor;
   hb_gtGetCursor(&iCursor);
   if (bSetCursor) {

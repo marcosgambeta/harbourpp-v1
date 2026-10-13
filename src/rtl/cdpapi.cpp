@@ -816,10 +816,6 @@ int32_t hb_charUpper(int32_t iChar)
 
 char *hb_strLower(char *szText, HB_SIZE nLen)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_strLower(%s, %" HB_PFS "u)", szText, nLen));
-#endif
-
   auto cdp = hb_vmCDP();
 
   if (cdp != nullptr) {
@@ -837,10 +833,6 @@ char *hb_strLower(char *szText, HB_SIZE nLen)
 
 char *hb_strUpper(char *szText, HB_SIZE nLen)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_strUpper(%s, %" HB_PFS "u)", szText, nLen));
-#endif
-
   auto cdp = hb_vmCDP();
 
   if (cdp != nullptr) {
@@ -2987,10 +2979,6 @@ static HB_CODEPAGE **hb_cdpFindPos(const char *id)
 
 HB_BOOL hb_cdpRegisterRaw(HB_CODEPAGE *cdp)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpRegisterRaw(%p)", static_cast<void*>(cdp)));
-#endif
-
   HB_CODEPAGE **cdp_ptr = hb_cdpFindPos(cdp->id);
   if (*cdp_ptr == nullptr) {
     if (!HB_CDP_ISCUSTOM(cdp)) {
@@ -3018,11 +3006,6 @@ HB_BOOL hb_cdpRegisterRaw(HB_CODEPAGE *cdp)
 HB_BOOL hb_cdpRegisterNew(const char *id, const char *info, PHB_UNITABLE uniTable, const char *pszUpper,
                           const char *pszLower, uint32_t nACSort, uint32_t nCaseSort, HB_BOOL fUtf8)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG,
-           ("hb_cdpRegisterNew(%s,%s,%s,%s,%u,%u,%d)", id, info, pszUpper, pszLower, nACSort, nCaseSort, fUtf8));
-#endif
-
   HB_CODEPAGE **cdp_ptr = hb_cdpFindPos(id);
   if (*cdp_ptr == nullptr) {
     *cdp_ptr = hb_buildCodePage(id, info, uniTable, pszUpper, pszLower, nACSort, nCaseSort, fUtf8);
@@ -3033,10 +3016,6 @@ HB_BOOL hb_cdpRegisterNew(const char *id, const char *info, PHB_UNITABLE uniTabl
 
 void hb_cdpReleaseAll(void)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpReleaseAll()"));
-#endif
-
   while (s_cdpList) {
     void *buffer = s_cdpList->buffer;
     if (s_cdpList->uniTable->uniTrans) {
@@ -3056,19 +3035,11 @@ void hb_cdpReleaseAll(void)
 
 HB_CODEPAGE *hb_cdpFind(const char *id)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpFind(%s)", id));
-#endif
-
   return id ? *hb_cdpFindPos(id) : nullptr;
 }
 
 HB_CODEPAGE *hb_cdpFindExt(const char *id)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpFindExt(%s)", id));
-#endif
-
   if (id) {
     HB_CODEPAGE *cdp = *hb_cdpFindPos(id);
 
@@ -3083,10 +3054,6 @@ HB_CODEPAGE *hb_cdpFindExt(const char *id)
 
 HB_BOOL hb_cdpIsUTF8(HB_CODEPAGE *cdp)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpIsUTF8(%p)", static_cast<void*>(cdp)));
-#endif
-
   if (cdp == nullptr) {
     cdp = hb_vmCDP();
   }
@@ -3096,10 +3063,6 @@ HB_BOOL hb_cdpIsUTF8(HB_CODEPAGE *cdp)
 
 HB_CODEPAGE *hb_cdpSelect(HB_CODEPAGE *cdp)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpSelect(%p)", static_cast<void*>(cdp)));
-#endif
-
   auto cdpOld = hb_vmCDP();
   if (cdp != nullptr) {
     hb_vmSetCDP(cdp);
@@ -3110,20 +3073,12 @@ HB_CODEPAGE *hb_cdpSelect(HB_CODEPAGE *cdp)
 
 const char *hb_cdpID(void)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpID()"));
-#endif
-
   auto cdp = hb_vmCDP();
   return cdp ? cdp->id : nullptr;
 }
 
 const char *hb_cdpSelectID(const char *id)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_cdpSelectID(%s)", id));
-#endif
-
   auto cdp = hb_cdpSelect(hb_cdpFindExt(id));
   return cdp ? cdp->id : nullptr;
 }

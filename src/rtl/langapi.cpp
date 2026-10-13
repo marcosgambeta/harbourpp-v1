@@ -223,10 +223,6 @@ static bool hb_langTranslate(const char *szNewId, PHB_LANG lang, HB_CODEPAGE *cd
 
 void hb_langReleaseAll(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langReleaseAll()"));
-#endif
-
   for (auto iPos = 0; iPos < HB_LANG_MAX_; iPos++) {
     hb_langRelease(&s_langList[iPos]);
   }
@@ -234,10 +230,6 @@ void hb_langReleaseAll(void)
 
 HB_BOOL hb_langRegister(PHB_LANG lang)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langRegister(%p)", static_cast<const void*>(lang)));
-#endif
-
   if (lang) {
     PHB_LANG_BASE pBase = hb_langFindBase(lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID]);
 
@@ -252,20 +244,12 @@ HB_BOOL hb_langRegister(PHB_LANG lang)
 
 PHB_LANG hb_langFind(const char *pszID)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langFind(%s)", pszID));
-#endif
-
   PHB_LANG_BASE pBase = hb_langFindBase(pszID);
   return pBase ? pBase->lang : nullptr;
 }
 
 PHB_LANG hb_langSelect(PHB_LANG lang)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langSelect(%p)", static_cast<const void*>(lang)));
-#endif
-
   PHB_LANG langOld = hb_vmLang();
   if (lang) {
     hb_vmSetLang(lang);
@@ -276,10 +260,6 @@ PHB_LANG hb_langSelect(PHB_LANG lang)
 
 const char *hb_langSelectID(const char *pszID)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langSelectID(%s)", pszID));
-#endif
-
   const char *pszIDOld = hb_langID();
 
   PHB_LANG lang = hb_langFind(pszID);
@@ -294,10 +274,6 @@ const char *hb_langSelectID(const char *pszID)
 
 const char *hb_langGetItem(const char *pszID, int32_t iIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langGetItem(%s,%i)", pszID ? pszID : "(null)", iIndex));
-#endif
-
   PHB_LANG lang = pszID ? hb_langFind(pszID) : hb_vmLang();
   if (lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_) {
     return lang->pItemList[iIndex];
@@ -308,10 +284,6 @@ const char *hb_langGetItem(const char *pszID, int32_t iIndex)
 
 const char *hb_langID(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langID()"));
-#endif
-
   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID);
 }
 
@@ -339,19 +311,11 @@ char *hb_langName(const char *pszID)
 
 const char *hb_langDGetErrorDesc(int32_t iIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langDGetErrorDesc(%i)", iIndex));
-#endif
-
   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex);
 }
 
 const char *hb_langDGetItem(int32_t iIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langDGetItem(%i)", iIndex));
-#endif
-
   PHB_LANG lang = hb_vmLang();
   if (lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_) {
     return lang->pItemList[iIndex];

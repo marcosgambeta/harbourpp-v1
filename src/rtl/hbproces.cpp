@@ -195,10 +195,6 @@ static void hb_freeArgs(char **argv)
 #if defined(HB_PROCESS_USEFILES)
 static int32_t hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast<void*>(static_cast<uintptr_t>(hStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hStderr))));
-#endif
-
   int32_t iResult = FS_ERROR;
 
 #if defined(HB_OS_WIN) || defined(HB_OS_UNIX)
@@ -311,10 +307,6 @@ static int32_t hb_fsProcessExec(const char *pszFileName, HB_FHANDLE hStdin, HB_F
 HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHANDLE *phStdout, HB_FHANDLE *phStderr,
                             HB_BOOL fDetach, HB_ULONG *pulPID)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessOpen(%s, %p, %p, %p, %d, %p)", pszFileName, static_cast<void*>(phStdin), static_cast<void*>(phStdout), static_cast<void*>(phStderr), fDetach, static_cast<void*>(pulPID)));
-#endif
-
   HB_FHANDLE hPipeIn[2] = {FS_ERROR, FS_ERROR}, hPipeOut[2] = {FS_ERROR, FS_ERROR}, hPipeErr[2] = {FS_ERROR, FS_ERROR};
   HB_FHANDLE hResult = FS_ERROR;
   auto fError = false;
@@ -608,10 +600,6 @@ HB_FHANDLE hb_fsProcessOpen(const char *pszFileName, HB_FHANDLE *phStdin, HB_FHA
 
 int32_t hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessValue(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hProcess)), fWait));
-#endif
-
   int32_t iRetStatus = -1;
 
 #if defined(HB_OS_WIN)
@@ -678,10 +666,6 @@ int32_t hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
  */
 HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessClose(%p, %d)", reinterpret_cast<void*>(static_cast<uintptr_t>(hProcess)), fGentle));
-#endif
-
   auto fResult = false;
 
 #if defined(HB_OS_WIN)
@@ -726,10 +710,6 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
 int32_t hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStdInLen, char **pStdOutPtr,
                     HB_SIZE *pulStdOut, char **pStdErrPtr, HB_SIZE *pulStdErr, HB_BOOL fDetach)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessRun(%s, %p, %" HB_PFS "u, %p, %p, %p, %p, %d)", pszFileName, static_cast<const void*>(pStdInBuf), nStdInLen, static_cast<void*>(pStdOutPtr), static_cast<void*>(pulStdOut), static_cast<void*>(pStdErrPtr), static_cast<void*>(pulStdErr), fDetach));
-#endif
-
   HB_FHANDLE hStdin, hStdout, hStderr, *phStdin, *phStdout, *phStderr;
   char *pOutBuf, *pErrBuf;
   HB_SIZE nOutSize, nErrSize, nOutBuf, nErrBuf;

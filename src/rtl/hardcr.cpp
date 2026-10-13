@@ -51,10 +51,6 @@
 
 static char *hb_strHardCR(char *pszString, HB_SIZE nStringLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_strHardCR(%s, %" HB_PFS "u)", pszString, nStringLen));
-#endif
-
   HB_SIZE nStringPos;
 
   auto cdp = hb_vmCDP();
