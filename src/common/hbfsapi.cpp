@@ -133,9 +133,6 @@ void hb_fsFreeSearchPath(HB_PATHNAMES *pSearchList)
 HB_FNAME *hb_fsFNameSplit(const char *pszFileName)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameSplit(%s)", pszFileName));
-#endif
-#if 0
    HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit: Filename: |%s|", pszFileName));
 #endif
 
@@ -220,10 +217,6 @@ HB_FNAME *hb_fsFNameSplit(const char *pszFileName)
 // This function joins path, name and extension into a string with a filename
 char *hb_fsFNameMerge(char *pszFileName, HB_FNAME *pFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameMerge(%p, %p)", static_cast<void*>(pszFileName), static_cast<void*>(pFileName)));
-#endif
-
   if (pszFileName && pFileName) {
     const char *pszName;
     char cDirSep;
@@ -286,10 +279,6 @@ char *hb_fsFNameMerge(char *pszFileName, HB_FNAME *pFileName)
 
 HB_BOOL hb_fsNameExists(const char *pszFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsNameExists(%p)", static_cast<const void*>(pszFileName)));
-#endif
-
   auto fExist = false;
 
   if (pszFileName != nullptr) {
@@ -332,10 +321,6 @@ HB_BOOL hb_fsNameExists(const char *pszFileName)
 
 HB_BOOL hb_fsFileExists(const char *pszFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsFileExists(%p)", static_cast<const void*>(pszFileName)));
-#endif
-
   auto fExist = false;
 
   if (pszFileName != nullptr) {
@@ -380,10 +365,6 @@ HB_BOOL hb_fsFileExists(const char *pszFileName)
 
 HB_BOOL hb_fsDirExists(const char *pszDirName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsDirExists(%p)", static_cast<const void*>(pszDirName)));
-#endif
-
   auto fExist = false;
 
   if (pszDirName != nullptr) {
@@ -428,10 +409,6 @@ HB_BOOL hb_fsDirExists(const char *pszDirName)
 
 HB_BOOL hb_fsMaxFilesError(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsMaxFilesError()"));
-#endif
-
 #if defined(HB_OS_WIN)
   return GetLastError() == ERROR_TOO_MANY_OPEN_FILES;
 #else

@@ -121,10 +121,6 @@ using PHB_FFIND_INFO = void *;
 
 HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsAttrFromRaw(%u)", raw_attr));
-#endif
-
   HB_FATTR nAttr;
 
 #if defined(HB_OS_WIN)
@@ -224,10 +220,6 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
 
 HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsAttrToRaw(%u)", nAttr));
-#endif
-
   HB_FATTR raw_attr;
 
 #if defined(HB_OS_WIN)
@@ -322,10 +314,6 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
 
 HB_FATTR hb_fsAttrEncode(const char *szAttr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsAttrEncode(%p)", static_cast<const void*>(szAttr)));
-#endif
-
   const char *pos = szAttr;
   char ch;
   HB_FATTR nAttr = 0;
@@ -368,10 +356,6 @@ HB_FATTR hb_fsAttrEncode(const char *szAttr)
 
 char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsAttrDecode(%u, %p)", nAttr, static_cast<void*>(szAttr)));
-#endif
-
   char *ptr = szAttr;
 
   // Using the same order as CA-Cl*pper did: RHSVDA.

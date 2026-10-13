@@ -111,10 +111,6 @@
 
 const char *hb_verCPU(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verCPU()"));
-#endif
-
 #if defined(HB_CPU_X86)
   return "x86";
 #elif defined(HB_CPU_X86_64)
@@ -177,10 +173,6 @@ static bool s_win_iswow64(void)
 
 const char *hb_verHostCPU(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verHostCPU()"));
-#endif
-
   if (s_win_iswow64()) {
     return "x86-64";
   }
@@ -342,10 +334,6 @@ static void s_hb_winVerInit(void)
 
 char *hb_verPlatform(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verPlatform()"));
-#endif
-
   auto pszPlatform = static_cast<char *>(hb_xgrab(PLATFORM_BUF_SIZE + 1));
 
 #if defined(HB_OS_WIN)
@@ -696,10 +684,6 @@ HB_BOOL hb_iswince(void)
 
 char *hb_verCompiler(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verCompiler()"));
-#endif
-
   const char *pszName;
   char szSub[64];
   int32_t iVerMajor;
@@ -1011,10 +995,6 @@ char *hb_verCompiler(void)
 
 char *hb_verHarbour(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verHarbour()"));
-#endif
-
   auto pszVersion = static_cast<char *>(hb_xgrab(80));
   hb_snprintf(pszVersion, 80, "Harbour++ %d.%d.%d%s (r%lu)", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS,
               static_cast<HB_ULONG>(hb_verRevision()));
@@ -1023,10 +1003,6 @@ char *hb_verHarbour(void)
 
 char *hb_verPCode(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verPCode()"));
-#endif
-
   auto pszPCode = static_cast<char *>(hb_xgrab(24));
   hb_snprintf(pszPCode, 24, "PCode version: %d.%d", HB_PCODE_VER >> 8, HB_PCODE_VER & 0xFF);
   return pszPCode;
@@ -1034,10 +1010,6 @@ char *hb_verPCode(void)
 
 char *hb_verBuildDate(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_verBuildDate()"));
-#endif
-
   auto pszDate = static_cast<char *>(hb_xgrab(64));
 // TODO:
 // error: expansion of date or time macro is not reproducible [-Werror,-Wdate-time]

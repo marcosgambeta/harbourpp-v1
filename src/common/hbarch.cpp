@@ -66,10 +66,6 @@
 
 void hb_put_ieee754(uint8_t *ptr, double d)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_put_ieee754(%p, %f)", static_cast<void*>(ptr), d));
-#endif
-
   int32_t iExp, iSig;
 
 #if defined(HB_LONG_LONG_OFF)
@@ -106,10 +102,6 @@ void hb_put_ieee754(uint8_t *ptr, double d)
 
 double hb_get_ieee754(const uint8_t *ptr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_get_ieee754(%p)", static_cast<const void*>(ptr)));
-#endif
-
   int32_t iSig;
 
 #if defined(HB_LONG_LONG_OFF)
@@ -144,10 +136,6 @@ double hb_get_ieee754(const uint8_t *ptr)
 
 void hb_put_ord_ieee754(uint8_t *ptr, double d)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_put_ord_ieee754(%p, %f)", static_cast<void*>(ptr), d));
-#endif
-
   int32_t iExp;
   uint32_t l1, l2;
 
@@ -173,10 +161,6 @@ void hb_put_ord_ieee754(uint8_t *ptr, double d)
 
 double hb_get_ord_ieee754(const uint8_t *ptr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_get_ord_ieee754(%p)", static_cast<const void*>(ptr)));
-#endif
-
   uint32_t l1 = HB_GET_BE_UINT32(ptr + 4);
   uint32_t l2 = HB_GET_BE_UINT32(ptr);
   int32_t iSig = (l2 & 0x80000000L) ? 0 : 1;
@@ -200,10 +184,6 @@ double hb_get_ord_ieee754(const uint8_t *ptr)
 // macro => d = { ... }
 double hb_get_rev_double(const uint8_t *ptr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_get_rev_double(%p)", static_cast<const void*>(ptr)));
-#endif
-
   {
 #if defined(__GNUC__)
     return _hb_get_rev_double(ptr);
@@ -229,10 +209,6 @@ double hb_get_rev_double(const uint8_t *ptr)
 
 double hb_get_std_double(const uint8_t *ptr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_get_std_double(%p)", static_cast<const void*>(ptr)));
-#endif
-
   {
 #if defined(__GNUC__)
     return _hb_get_std_double(ptr);
@@ -264,10 +240,6 @@ double hb_get_std_double(const uint8_t *ptr)
 // databases or serialization streams in RPC
 double hb_get_le_uint64(const uint8_t *ptr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_get_le_uint64(%p)", static_cast<const void*>(ptr)));
-#endif
-
   uint32_t l1 = HB_GET_LE_UINT32(ptr);
   uint32_t l2 = HB_GET_LE_UINT32(ptr + 4);
   return ldexp(static_cast<double>(l2), 32) + static_cast<double>(l1);
@@ -275,10 +247,6 @@ double hb_get_le_uint64(const uint8_t *ptr)
 
 double hb_get_le_int64(const uint8_t *ptr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_get_le_int64(%p)", static_cast<const void*>(ptr)));
-#endif
-
   uint32_t l1 = HB_GET_LE_UINT32(ptr);
   uint32_t l2 = HB_GET_LE_INT32(ptr + 4);
   return ldexp(static_cast<double>(l2), 32) + static_cast<double>(l1);
@@ -286,10 +254,6 @@ double hb_get_le_int64(const uint8_t *ptr)
 
 void hb_put_le_uint64(const uint8_t *ptr, double d)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_put_le_uint64(%p)", static_cast<const void*>(ptr)));
-#endif
-
   uint32_t l1 = static_cast<uint32_t>(d);
   uint32_t l2 = static_cast<uint32_t>(d / 4294967296.0);
   HB_PUT_LE_UINT32(ptr, l1);
