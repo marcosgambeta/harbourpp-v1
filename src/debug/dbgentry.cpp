@@ -573,10 +573,6 @@ void hb_dbgEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nInde
   switch (nMode)
   {
   case HB_DBG_MODULENAME:
-#if 0
-         HB_TRACE(HB_TR_DEBUG, ("MODULENAME %s", szName));
-#endif
-
     if (szName[strlen(szName) - 1] == ':')
     {
       return;
@@ -621,26 +617,16 @@ void hb_dbgEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nInde
     return;
 
   case HB_DBG_LOCALNAME:
-#if 0
-         HB_TRACE(HB_TR_DEBUG, ("LOCALNAME %s index %d", szName, nIndex));
-#endif
-
     hb_dbgAddLocal(info, szName, nIndex, hb_dbg_ProcLevel());
     return;
 
   case HB_DBG_STATICNAME:
-#if 0
-         HB_TRACE(HB_TR_DEBUG, ("STATICNAME %s index %d frame %p", szName, nIndex, static_cast<void*>(pFrame)));
-#endif
-
     hb_dbgAddStatic(info, szName, nIndex, pFrame);
     return;
 
   case HB_DBG_SHOWLINE:
   {
     HB_CALLSTACKINFO *pTop = &info->aCallStack[info->nCallStackLen - 1];
-
-    HB_TRACE(HB_TR_DEBUG, ("SHOWLINE %d", nLine));
 
     // Check if we've hit a tracepoint
     for (i = 0; i < info->nTracePoints; i++)
@@ -742,10 +728,6 @@ void hb_dbgEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nInde
     {
       return;
     }
-
-#if 0
-         HB_TRACE(HB_TR_DEBUG, ("ENDPROC %d", nLine));
-#endif
 
     if (info->bInitLines)
     {
@@ -1227,10 +1209,6 @@ static bool hb_dbgEqual(HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static HB_ITEM *hb_dbgEval(HB_DEBUGINFO *info, HB_WATCHPOINT *watch, bool *valid)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("expr %s", watch->szExpr));
-#endif
-
   HB_ITEM *xResult = nullptr;
 
   // Check if we have a cached pBlock
