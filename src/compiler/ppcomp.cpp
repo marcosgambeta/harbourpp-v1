@@ -368,10 +368,6 @@ static void hb_pp_fileIncluded(void *cargo, const char *szFileName)
 
 void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compInitPP()"));
-#endif
-
   if (HB_COMP_PARAM->pLex->pPP) {
     hb_pp_init(HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->fQuiet, HB_COMP_PARAM->fGauge, HB_COMP_PARAM->iMaxTransCycles,
                HB_COMP_PARAM, pOpenFunc, nullptr, hb_pp_ErrorGen, hb_pp_Disp, hb_pp_PragmaDump,

@@ -45,10 +45,6 @@ static bool hb_compRegisterFunc(HB_COMP_DECL, HB_HFUNC *pFunc, bool fError);
 int32_t hb_compMainExt(int32_t argc, const char *const argv[], uint8_t **pBufPtr, HB_SIZE *pnSize, const char *szSource,
                    int32_t iStartLine, void *cargo, PHB_PP_OPEN_FUNC pOpenFunc, PHB_PP_MSG_FUNC pMsgFunc)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compMain()"));
-#endif
-
   HB_COMP_DECL;
   int32_t iStatus = EXIT_SUCCESS, iFileCount = 0;
 
@@ -121,9 +117,6 @@ int32_t hb_compMainExt(int32_t argc, const char *const argv[], uint8_t **pBufPtr
   } else {
     // Process all files passed via the command-line.
     for (auto i = 1; i < argc && !HB_COMP_PARAM->fExit; i++) {
-#if 0
-         HB_TRACE(HB_TR_DEBUG, ("main LOOP(%i,%s)", i, argv[i]));
-#endif
       if (!HB_ISOPTSEP(argv[i][0])) {
         iFileCount++;
         iStatus = hb_compCompile(HB_COMP_PARAM, argv[i], nullptr, 0);
@@ -3510,10 +3503,6 @@ static void hb_compInitVars(HB_COMP_DECL)
 
 static void hb_compGenOutput(HB_COMP_DECL, int32_t iLanguage)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compGenOutput()"));
-#endif
-
   switch (iLanguage) {
   case HB_LANG_C:
     hb_compGenCCode(HB_COMP_PARAM, HB_COMP_PARAM->pFileName);
@@ -3550,10 +3539,6 @@ static void hb_compPpoFile(HB_COMP_DECL, const char *szPrg, const char *szExt, c
 
 static void hb_compOutputFile(HB_COMP_DECL)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compOutputFile()"));
-#endif
-
   HB_COMP_PARAM->pFileName->szPath = nullptr;
   HB_COMP_PARAM->pFileName->szExtension = nullptr;
 
@@ -3585,10 +3570,6 @@ static void hb_compAddInitFunc(HB_COMP_DECL, HB_HFUNC *pFunc)
 
 void hb_compModuleAdd(HB_COMP_DECL, const char *szModuleName, HB_BOOL fForce)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compModuleAdd(%s,%d)", szModuleName, fForce));
-#endif
-
   if (!HB_COMP_PARAM->fSingleModule || fForce) {
     HB_MODULE **pModule = &HB_COMP_PARAM->modules;
 
@@ -3821,10 +3802,6 @@ static void hb_compRestoreSwitches(HB_COMP_DECL, PHB_COMP_SWITCHES pSwitches)
 
 static int32_t hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer, int32_t iStartLine)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compCompile(%s,%p,%d)", szPrg, static_cast<const void*>(szBuffer), iStartLine));
-#endif
-
   char buffer[HB_PATH_MAX * 2 + 80];
   HB_FNAME *pFileName = nullptr;
   auto fGenCode = true;
