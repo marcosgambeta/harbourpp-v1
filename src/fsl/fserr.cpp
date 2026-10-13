@@ -147,50 +147,30 @@ static HB_ERRCODE hb_WinToDosError(DWORD dwError)
 // return FError() code
 HB_ERRCODE hb_fsGetFError(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsGetFError()"));
-#endif
-
   return hb_stackIOErrors()->uiFError;
 }
 
 // return DOS error code of last operation
 HB_ERRCODE hb_fsError(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsError()"));
-#endif
-
   return hb_stackIOErrors()->uiErrorLast;
 }
 
 // return real error code of last operation
 HB_ERRCODE hb_fsOsError(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsOsError()"));
-#endif
-
   return hb_stackIOErrors()->uiOsErrorLast;
 }
 
 // set FError() code
 void hb_fsSetFError(HB_ERRCODE uiError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetFError(%u)", uiError));
-#endif
-
   hb_stackIOErrors()->uiFError = uiError;
 }
 
 // set DOS error code for last operation
 void hb_fsSetError(HB_ERRCODE uiError)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetError(%u)", uiError));
-#endif
-
   PHB_IOERRORS pIOErrors;
   pIOErrors = hb_stackIOErrors();
   // TODO: untranslate uiError into errno
@@ -219,12 +199,6 @@ void hb_fsSetIOError(HB_BOOL fResult, uint16_t uiOperation)
     uiErrorLast = hb_errnoToDosError(iErrCode);
 #endif
   }
-
-  // HB_TRACE() message is intentionally here to not overwrite
-  // OS error code processed above.
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetIOError(%d,%hu)", fResult, uiOperation));
-#endif
 
   pIOErrors = hb_stackIOErrors();
   pIOErrors->uiOsErrorLast = uiOsErrorLast;

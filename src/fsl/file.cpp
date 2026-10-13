@@ -50,10 +50,6 @@
 
 HB_BOOL hb_fsFile(const char *pszFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsFile(%s)", pszFileName));
-#endif
-
   PHB_FFIND ffind;
 
   if ((ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL)) != nullptr) {
@@ -66,10 +62,6 @@ HB_BOOL hb_fsFile(const char *pszFileName)
 
 HB_BOOL hb_fsIsDirectory(const char *pszFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDirectory(%s)", pszFileName));
-#endif
-
   auto bResult = false;
   char *pszFree = nullptr;
 
