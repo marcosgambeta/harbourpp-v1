@@ -57,10 +57,6 @@ HB_EXTERN_END
 
 int32_t main(int32_t argc, char *argv[])
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("main(%d, %p)", argc, static_cast<void*>(argv)));
-#endif
-
   hb_cmdargInit(argc, argv);
   hb_vmInit(true);
   return hb_vmQuit();

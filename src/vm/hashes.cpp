@@ -507,10 +507,6 @@ static void hb_hashDelPair(PHB_BASEHASH pBaseHash, HB_SIZE nPos)
 
 HB_ITEM *hb_hashNew(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashNew(%p)", static_cast<void*>(pItem)));
-#endif
-
   if (pItem == nullptr) {
     pItem = hb_itemNew(nullptr);
   } else if (pItem->isComplex()) {
@@ -533,10 +529,6 @@ HB_ITEM *hb_hashNew(HB_ITEM *pItem)
 
 HB_SIZE hb_hashLen(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashLen(%p)", static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     return pHash->hashValue()->nLen;
   } else {
@@ -546,10 +538,6 @@ HB_SIZE hb_hashLen(HB_ITEM *pHash)
 
 void hb_hashPreallocate(HB_ITEM *pHash, HB_SIZE nNewSize)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashPreallocate(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nNewSize));
-#endif
-
   if (pHash->isHash()) {
     hb_hashResize(pHash->hashValue(), nNewSize);
   }
@@ -557,10 +545,6 @@ void hb_hashPreallocate(HB_ITEM *pHash, HB_SIZE nNewSize)
 
 HB_BOOL hb_hashAllocNewPair(HB_ITEM *pHash, HB_ITEM **pKeyPtr, HB_ITEM **pValPtr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashAllocNewPair(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKeyPtr), static_cast<void*>(pValPtr)));
-#endif
-
   if (pHash->isHash()) {
     hb_hashNewPair(pHash->hashValue(), pKeyPtr, pValPtr);
     return true;
@@ -571,10 +555,6 @@ HB_BOOL hb_hashAllocNewPair(HB_ITEM *pHash, HB_ITEM **pKeyPtr, HB_ITEM **pValPtr
 
 void hb_hashSort(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashSort(%p)", static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     PHB_BASEHASH pBaseHash = pHash->hashValue();
 
@@ -590,10 +570,6 @@ void hb_hashSort(HB_ITEM *pHash)
 
 HB_ITEM *hb_hashGetItemPtr(HB_ITEM *pHash, HB_ITEM *pKey, int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetItemPtr(%p,%p,%d)", static_cast<void*>(pHash), static_cast<void*>(pKey), iFlags));
-#endif
-
   if (pHash->isHash() && pKey->isHashKey()) {
     HB_ITEM *pDest =
         hb_hashValuePtr(pHash->hashValue(), pKey, iFlags && (pHash->hashValue()->iFlags & iFlags) == iFlags);
@@ -607,10 +583,6 @@ HB_ITEM *hb_hashGetItemPtr(HB_ITEM *pHash, HB_ITEM *pKey, int32_t iFlags)
 
 HB_ITEM *hb_hashGetCItemPtr(HB_ITEM *pHash, const char *pszKey)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetCItemPtr(%p,%s)", static_cast<void*>(pHash), pszKey));
-#endif
-
   if (pHash->isHash()) {
     HB_STACK_TLS_PRELOAD
     // we will not make any copy of pKey (autoadd is disabled) so it's
@@ -628,10 +600,6 @@ HB_ITEM *hb_hashGetCItemPtr(HB_ITEM *pHash, const char *pszKey)
 
 HB_SIZE hb_hashGetCItemPos(HB_ITEM *pHash, const char *pszKey)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetCItemPos(%p,%s)", static_cast<void*>(pHash), pszKey));
-#endif
-
   HB_SIZE nPos = 0;
 
   if (pHash->isHash()) {
@@ -653,10 +621,6 @@ HB_SIZE hb_hashGetCItemPos(HB_ITEM *pHash, const char *pszKey)
 
 HB_ITEM *hb_hashGetItemRefPtr(HB_ITEM *pHash, HB_ITEM *pKey)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetItemRefPtr(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey)));
-#endif
-
   if (pHash->isHash() && pKey->isHashKey()) {
     HB_ITEM *pDest =
         hb_hashValuePtr(pHash->hashValue(), pKey,
@@ -674,10 +638,6 @@ HB_ITEM *hb_hashGetItemRefPtr(HB_ITEM *pHash, HB_ITEM *pKey)
 
 HB_BOOL hb_hashScan(HB_ITEM *pHash, HB_ITEM *pKey, HB_SIZE *pnPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashScan(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pnPos)));
-#endif
-
   if (pHash->isHash()) {
     HB_SIZE nPos;
     if (pKey->isHashKey()) {
@@ -709,10 +669,6 @@ HB_BOOL hb_hashScan(HB_ITEM *pHash, HB_ITEM *pKey, HB_SIZE *pnPos)
 
 HB_BOOL hb_hashScanSoft(HB_ITEM *pHash, HB_ITEM *pKey, HB_SIZE *pnPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashScanSoft(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pnPos)));
-#endif
-
   if (pHash->isHash() && pKey->isHashKey()) {
     HB_SIZE nPos;
     if (hb_hashFind(pHash->hashValue(), pKey, &nPos)) {
@@ -738,10 +694,6 @@ HB_BOOL hb_hashScanSoft(HB_ITEM *pHash, HB_ITEM *pKey, HB_SIZE *pnPos)
 
 HB_BOOL hb_hashClear(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashClear(%p)", static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     if (pHash->hashValue()->nSize) {
       while (pHash->hashValue()->nLen) {
@@ -773,10 +725,6 @@ HB_BOOL hb_hashClear(HB_ITEM *pHash)
 
 HB_BOOL hb_hashDel(HB_ITEM *pHash, HB_ITEM *pKey)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashDel(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey)));
-#endif
-
   if (pHash->isHash() && pKey->isHashKey()) {
     PHB_BASEHASH pBaseHash = pHash->hashValue();
     HB_SIZE nPos;
@@ -792,10 +740,6 @@ HB_BOOL hb_hashDel(HB_ITEM *pHash, HB_ITEM *pKey)
 
 HB_BOOL hb_hashRemove(HB_ITEM *pHash, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashRemove(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pItem)));
-#endif
-
   if (pHash->isHash()) {
     if (pItem->isHashKey()) {
       hb_hashDel(pHash, pItem);
@@ -824,10 +768,6 @@ HB_BOOL hb_hashRemove(HB_ITEM *pHash, HB_ITEM *pItem)
 
 HB_BOOL hb_hashAdd(HB_ITEM *pHash, HB_ITEM *pKey, HB_ITEM *pValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashAdd(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pValue)));
-#endif
-
   if (pHash->isHash() && pKey->isHashKey()) {
     HB_ITEM *pDest = hb_hashValuePtr(pHash->hashValue(), pKey, true);
     if (pDest) {
@@ -848,10 +788,6 @@ HB_BOOL hb_hashAdd(HB_ITEM *pHash, HB_ITEM *pKey, HB_ITEM *pValue)
 
 HB_BOOL hb_hashAddNew(HB_ITEM *pHash, HB_ITEM *pKey, HB_ITEM *pValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashAddNew(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pValue)));
-#endif
-
   if (pHash->isHash() && pKey->isHashKey()) {
     return hb_hashNewValue(pHash->hashValue(), pKey, pValue);
   } else {
@@ -861,10 +797,6 @@ HB_BOOL hb_hashAddNew(HB_ITEM *pHash, HB_ITEM *pKey, HB_ITEM *pValue)
 
 HB_ITEM *hb_hashGetKeyAt(HB_ITEM *pHash, HB_SIZE nPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetKeyAt(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nPos));
-#endif
-
   if (pHash->isHash() && nPos > 0 && nPos <= pHash->hashValue()->nLen) {
     return &pHash->hashValue()->pPairs[nPos - 1].key;
   } else {
@@ -874,10 +806,6 @@ HB_ITEM *hb_hashGetKeyAt(HB_ITEM *pHash, HB_SIZE nPos)
 
 HB_ITEM *hb_hashGetValueAt(HB_ITEM *pHash, HB_SIZE nPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetValueAt(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nPos));
-#endif
-
   if (pHash->isHash() && nPos > 0 && nPos <= pHash->hashValue()->nLen) {
     HB_ITEM *pValue = &pHash->hashValue()->pPairs[nPos - 1].value;
     return pValue->isByRef() ? hb_itemUnRef(pValue) : pValue;
@@ -888,10 +816,6 @@ HB_ITEM *hb_hashGetValueAt(HB_ITEM *pHash, HB_SIZE nPos)
 
 HB_BOOL hb_hashDelAt(HB_ITEM *pHash, HB_SIZE nPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashDelAt(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nPos));
-#endif
-
   if (pHash->isHash() && nPos > 0 && nPos <= pHash->hashValue()->nLen) {
     hb_hashDelPair(pHash->hashValue(), nPos - 1);
     return true;
@@ -903,10 +827,6 @@ HB_BOOL hb_hashDelAt(HB_ITEM *pHash, HB_SIZE nPos)
 // retrieves the hash unique ID
 void *hb_hashId(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashId(%p)", static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     return static_cast<void *>(pHash->hashValue());
   } else {
@@ -926,10 +846,6 @@ HB_COUNTER hb_hashRefs(HB_ITEM *pHash)
 
 void hb_hashCloneBody(HB_ITEM *pDest, HB_ITEM *pHash, PHB_NESTED_CLONED pClonedList)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashCloneBody(%p,%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pHash), static_cast<void*>(pClonedList)));
-#endif
-
   hb_hashNew(pDest);
   pDest->hashValue()->iFlags = pHash->hashValue()->iFlags;
   hb_hashResize(pDest->hashValue(), pHash->hashValue()->nLen);
@@ -953,10 +869,6 @@ void hb_hashCloneBody(HB_ITEM *pDest, HB_ITEM *pHash, PHB_NESTED_CLONED pClonedL
 
 HB_ITEM *hb_hashCloneTo(HB_ITEM *pDest, HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashCloneTo(%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     HB_NESTED_CLONED clonedList;
 
@@ -970,19 +882,11 @@ HB_ITEM *hb_hashCloneTo(HB_ITEM *pDest, HB_ITEM *pHash)
 
 HB_ITEM *hb_hashClone(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashClone(%p)", static_cast<void*>(pHash)));
-#endif
-
   return hb_hashCloneTo(hb_itemNew(nullptr), pHash);
 }
 
 void hb_hashJoin(HB_ITEM *pDest, HB_ITEM *pSource, int32_t iType)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashJoin(%p,%p,%d)", static_cast<void*>(pDest), static_cast<void*>(pSource), iType));
-#endif
-
   if (pDest->isHash() && pSource->isHash()) {
     PHB_BASEHASH pBaseHash;
     HB_SIZE nPos;
@@ -1053,10 +957,6 @@ void hb_hashJoin(HB_ITEM *pDest, HB_ITEM *pSource, int32_t iType)
 
 HB_ITEM *hb_hashGetKeys(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetKeys(%p)", static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     auto pKeys = hb_itemArrayNew(hb_hashLen(pHash));
     HB_ITEM *pKey;
@@ -1077,10 +977,6 @@ HB_ITEM *hb_hashGetKeys(HB_ITEM *pHash)
 
 HB_ITEM *hb_hashGetValues(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetValues(%p)", static_cast<void*>(pHash)));
-#endif
-
   if (pHash->isHash()) {
     auto pValues = hb_itemArrayNew(hb_hashLen(pHash));
     HB_ITEM *pVal;
@@ -1101,10 +997,6 @@ HB_ITEM *hb_hashGetValues(HB_ITEM *pHash)
 
 void hb_hashSetDefault(HB_ITEM *pHash, HB_ITEM *pValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashSetDefault(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pValue)));
-#endif
-
   if (pHash->isHash()) {
     if (pHash->hashValue()->pDefault) {
       hb_itemRelease(pHash->hashValue()->pDefault);
@@ -1119,19 +1011,11 @@ void hb_hashSetDefault(HB_ITEM *pHash, HB_ITEM *pValue)
 
 HB_ITEM *hb_hashGetDefault(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetDefault(%p)", static_cast<void*>(pHash)));
-#endif
-
   return pHash->isHash() ? pHash->hashValue()->pDefault : nullptr;
 }
 
 void hb_hashSetFlags(HB_ITEM *pHash, int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashSetFlags(%p,%d)", static_cast<void*>(pHash), iFlags));
-#endif
-
   if (pHash->isHash()) {
     pHash->hashValue()->iFlags |= iFlags;
     if (pHash->hashValue()->pnPos == nullptr && pHash->hashValue()->nSize &&
@@ -1149,10 +1033,6 @@ void hb_hashSetFlags(HB_ITEM *pHash, int32_t iFlags)
 
 void hb_hashClearFlags(HB_ITEM *pHash, int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashClearFlags(%p,%d)", static_cast<void*>(pHash), iFlags));
-#endif
-
   if (pHash->isHash()) {
     pHash->hashValue()->iFlags &= ~iFlags;
     if (pHash->hashValue()->pnPos != nullptr && (pHash->hashValue()->iFlags & HB_HASH_KEEPORDER) == 0) {
@@ -1165,9 +1045,5 @@ void hb_hashClearFlags(HB_ITEM *pHash, int32_t iFlags)
 
 int32_t hb_hashGetFlags(HB_ITEM *pHash)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hashGetFlags(%p)", static_cast<void*>(pHash)));
-#endif
-
   return pHash->isHash() ? pHash->hashValue()->iFlags : 0;
 }

@@ -82,10 +82,6 @@ using PHB_SET_LISTENER_LST = HB_SET_LISTENER_LST *;
 
 static char set_char(HB_ITEM *pItem, char oldChar)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("set_char(%p, %c)", static_cast<void*>(pItem), oldChar));
-#endif
-
   char newChar = oldChar;
 
   if (pItem->isString()) {
@@ -102,10 +98,6 @@ static char set_char(HB_ITEM *pItem, char oldChar)
 // either "ON" or "OFF" (regardless of case)
 static bool set_logical(HB_ITEM *pItem, bool bDefault)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("set_logical(%p)", static_cast<void*>(pItem)));
-#endif
-
   bool bLogical = bDefault;
 
   if (pItem != nullptr) {
@@ -132,19 +124,11 @@ static bool set_logical(HB_ITEM *pItem, bool bDefault)
 
 static int32_t set_number(HB_ITEM *pItem, int32_t iOldValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("set_number(%p, %d)", static_cast<void*>(pItem), iOldValue));
-#endif
-
   return pItem->isNumeric() ? pItem->getNI32() : iOldValue;
 }
 
 static char *set_string(HB_ITEM *pItem, char *szOldString)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("set_string(%p, %s)", static_cast<void*>(pItem), szOldString));
-#endif
-
   char *szString;
 
   if (pItem->isString() || pItem->isNil()) {
@@ -162,10 +146,6 @@ static char *set_string(HB_ITEM *pItem, char *szOldString)
 
 static void close_handle(PHB_SET_STRUCT pSet, HB_set_enum set_specifier)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("close_handle(%p, %d)", static_cast<void*>(pSet), static_cast<int32_t>(set_specifier)));
-#endif
-
   PHB_FILE *handle_ptr;
 
   switch (set_specifier) {
@@ -255,10 +235,6 @@ static const char *is_devicename(const char *szFileName)
 
 static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend, HB_set_enum set_specifier)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("open_handle(%p, %s, %d, %d)", static_cast<void*>(pSet), file_name, static_cast<int32_t>(fAppend), static_cast<int32_t>(set_specifier)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pError = nullptr;
   PHB_FILE handle;
@@ -1092,10 +1068,6 @@ HB_FUNC(SET)
 
 void hb_setInitialize(PHB_SET_STRUCT pSet)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_setInitialize(%p)", static_cast<void*>(pSet)));
-#endif
-
   pSet->HB_SET_ALTERNATE = false;
   pSet->HB_SET_ALTFILE = nullptr;
   pSet->hb_set_althan = nullptr;
@@ -1191,10 +1163,6 @@ void hb_setInitialize(PHB_SET_STRUCT pSet)
 
 void hb_setRelease(PHB_SET_STRUCT pSet)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_setRelease()"));
-#endif
-
   close_handle(pSet, HB_SET_ALTFILE);
   close_handle(pSet, HB_SET_EXTRAFILE);
   close_handle(pSet, HB_SET_PRINTFILE);

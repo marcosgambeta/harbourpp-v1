@@ -428,10 +428,6 @@ static HB_SYMCNT hb_clsBucketPos(HB_DYNS *pMsg, HB_SYMCNT uiMask)
 // Realloc (widen) class
 static bool hb_clsDictRealloc(PCLASS pClass)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsDictRealloc(%p)", static_cast<void*>(pClass)));
-#endif
-
   HB_SIZE n;
 
 #ifdef HB_MSG_POOL
@@ -516,10 +512,6 @@ static bool hb_clsDictRealloc(PCLASS pClass)
 
 static void hb_clsDictInit(PCLASS pClass, HB_SYMCNT uiHashKey)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsDictInit(%p,%u)", static_cast<void*>(pClass), uiHashKey));
-#endif
-
   pClass->uiHashKey = uiHashKey;
 #ifdef HB_MSG_POOL
   HB_SIZE nSize = ((static_cast<HB_SIZE>(uiHashKey) + 1) << BUCKETBITS) * sizeof(HB_SYMCNT);
@@ -535,10 +527,6 @@ static void hb_clsDictInit(PCLASS pClass, HB_SYMCNT uiHashKey)
 
 static PMETHOD hb_clsFindMsg(PCLASS pClass, HB_DYNS *pMsg)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsFindMsg(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pMsg)));
-#endif
-
 #ifdef HB_MSG_POOL
 
   HB_SYMCNT *puiMsgIdx = pClass->puiMsgIdx + hb_clsBucketPos(pMsg, pClass->uiHashKey);
@@ -572,10 +560,6 @@ static PMETHOD hb_clsFindMsg(PCLASS pClass, HB_DYNS *pMsg)
 
 static PMETHOD hb_clsAllocMsg(PCLASS pClass, HB_DYNS *pMsg)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsAllocMsg(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pMsg)));
-#endif
-
   do {
 
 #ifdef HB_MSG_POOL
@@ -634,10 +618,6 @@ static bool hb_clsCanClearMethod(PMETHOD pMethod, bool fError)
 
 static void hb_clsFreeMsg(PCLASS pClass, HB_DYNS *pMsg)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsFreeMsg(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pMsg)));
-#endif
-
 #ifdef HB_MSG_POOL
 
   HB_SYMCNT *puiMsgIdx = pClass->puiMsgIdx + hb_clsBucketPos(pMsg, pClass->uiHashKey);
@@ -740,10 +720,6 @@ static uint16_t hb_clsParentInstanceOffset(PCLASS pClass, uint16_t uiParentCls)
 static uint16_t hb_clsAddInitValue(PCLASS pClass, HB_ITEM *pItem, uint16_t uiType, uint16_t uiData,
                                     uint16_t uiOffset, uint16_t uiSprClass)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsAddInitValue(%p,%p,%hu,%hu,%hu,%hu)", static_cast<void*>(pClass), static_cast<void*>(pItem), uiType, uiData, uiOffset, uiSprClass));
-#endif
-
   PINITDATA pInitData;
 
   if (!pItem || pItem->isNil()) {
@@ -782,10 +758,6 @@ static uint16_t hb_clsAddInitValue(PCLASS pClass, HB_ITEM *pItem, uint16_t uiTyp
 
 static uint16_t hb_clsFindRealClassDataOffset(PMETHOD pMethod)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsFindRealClassDataOffset(%p)", static_cast<void*>(pMethod)));
-#endif
-
   PMETHOD pRealMth = hb_clsFindMsg(s_pClasses[pMethod->uiSprClass], pMethod->pMessage);
   if (pRealMth && pRealMth->uiSprClass == pMethod->uiSprClass &&
       (pRealMth->pFuncSym == &s___msgSetClsData || pRealMth->pFuncSym == &s___msgGetClsData)) {
@@ -796,10 +768,6 @@ static uint16_t hb_clsFindRealClassDataOffset(PMETHOD pMethod)
 
 static uint16_t hb_clsFindClassDataOffset(PCLASS pClass, PMETHOD pNewMethod)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsFindClassDataOffset(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pNewMethod)));
-#endif
-
   uint16_t uiData = hb_clsFindRealClassDataOffset(pNewMethod);
   if (uiData) {
     HB_SIZE nLimit = hb_clsMthNum(pClass);
@@ -819,10 +787,6 @@ static uint16_t hb_clsFindClassDataOffset(PCLASS pClass, PMETHOD pNewMethod)
 
 static bool hb_clsUpdateHiddenMessages(PMETHOD pSrcMethod, PMETHOD pDstMethod, PCLASS pDstClass)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsUpdateHiddenMessages(%p,%p,%p)", static_cast<void*>(pSrcMethod), static_cast<void*>(pDstMethod), static_cast<void*>(pDstClass)));
-#endif
-
   PMETHOD pNewMethod = pSrcMethod;
 
   if (!pDstMethod->pMessage ||
@@ -875,10 +839,6 @@ static bool hb_clsUpdateHiddenMessages(PMETHOD pSrcMethod, PMETHOD pDstMethod, P
 
 static void hb_clsAddSuperClass(PCLASS pClass, uint16_t uiSuperCls, uint16_t uiOffset)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsAddSuperClass(%p,%hu,%hu)", static_cast<void*>(pClass), uiSuperCls, uiOffset));
-#endif
-
   pClass->pSuperClasses =
       static_cast<PHB_CLSCAST>(hb_xrealloc(pClass->pSuperClasses, (pClass->uiSuperClasses + 1) * sizeof(HB_CLSCAST)));
   pClass->pSuperClasses[pClass->uiSuperClasses].uiClass = uiSuperCls;
@@ -887,10 +847,6 @@ static void hb_clsAddSuperClass(PCLASS pClass, uint16_t uiSuperCls, uint16_t uiO
 
 static void hb_clsDefineSuperClass(PCLASS pClass, uint16_t uiSuperCls, bool fNew)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsDefineSuperClass(%p,%hu,%d)", static_cast<void*>(pClass), uiSuperCls, fNew));
-#endif
-
   PCLASS pSprCls = s_pClasses[uiSuperCls];
 
   if (!hb_clsHasParentClass(pClass, uiSuperCls)) {
@@ -925,10 +881,6 @@ static void hb_clsDefineSuperClass(PCLASS pClass, uint16_t uiSuperCls, bool fNew
 
 static void hb_clsCopyClass(PCLASS pClsDst, PCLASS pClsSrc)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsCopyClass(%p,%p)", static_cast<void*>(pClsDst), static_cast<void*>(pClsSrc)));
-#endif
-
   hb_clsDictInit(pClsDst, pClsSrc->uiHashKey);
   pClsDst->fHasOnError = pClsSrc->fHasOnError;
   pClsDst->fHasDestructor = pClsSrc->fHasDestructor;
@@ -995,10 +947,6 @@ static void hb_clsCopyClass(PCLASS pClsDst, PCLASS pClsSrc)
 
 static bool hb_clsIsFriendSymbol(PCLASS pClass, HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsIsFriendSymbol(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pSym)));
-#endif
-
   if (pClass->pFriendModule && pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule) {
     return true;
   }
@@ -1014,10 +962,6 @@ static bool hb_clsIsFriendSymbol(PCLASS pClass, HB_SYMB *pSym)
 
 static void hb_clsAddFriendSymbol(PCLASS pClass, HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsAddFriendSymbol(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pSym)));
-#endif
-
   if (!hb_clsIsFriendSymbol(pClass, pSym)) {
     if (pClass->uiFriendSyms == 0) {
       pClass->pFriendSyms = static_cast<HB_SYMB **>(hb_xgrab(sizeof(HB_SYMB *)));
@@ -1034,10 +978,6 @@ static void hb_clsAddFriendSymbol(PCLASS pClass, HB_SYMB *pSym)
 // initialize Classy/OO system at HVM startup
 void hb_clsInit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsInit()"));
-#endif
-
   HB_SYMB *pOpSym;
   uint16_t uiOperator;
 
@@ -1084,10 +1024,6 @@ void hb_clsInit(void)
 // initialize Classy/OO system .prg functions
 void hb_clsDoInit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsDoInit()"));
-#endif
-
   static const char *s_pszFuncNames[] = {"HBARRAY",   "HBBLOCK", "HBCHARACTER", "HBDATE",   "HBTIMESTAMP", "HBHASH",
                                          "HBLOGICAL", "HBNIL",   "HBNUMERIC",   "HBSYMBOL", "HBPOINTER",   "HBOBJECT"};
   static uint16_t *s_puiHandles[] = {&s_uiArrayClass,     &s_uiBlockClass,  &s_uiCharacterClass, &s_uiDateClass,
@@ -1116,10 +1052,6 @@ void hb_clsDoInit(void)
 // Release a class from memory
 static void hb_clsRelease(PCLASS pClass)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsRelease(%p)", static_cast<void*>(pClass)));
-#endif
-
   if (pClass->uiInitDatas) {
     uint16_t ui = pClass->uiInitDatas;
     PINITDATA pInitData = pClass->pInitData;
@@ -1166,10 +1098,6 @@ static void hb_clsRelease(PCLASS pClass)
 // Release all classes
 void hb_clsReleaseAll(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsReleaseAll()"));
-#endif
-
   if (s_uiClasses) {
     uint16_t uiClass = s_uiClasses;
 
@@ -1197,10 +1125,6 @@ void hb_clsReleaseAll(void)
 // garbage collector
 void hb_clsIsClassRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsIsClassRef()"));
-#endif
-
   // All internal items are allocated with hb_itemNew()
   // GC knows them and scan itself so it's not necessary
   // to repeat scanning here [druzus].
@@ -1281,10 +1205,6 @@ uint16_t hb_objSetClass(HB_ITEM *pItem, const char *szClass, const char *szFunc)
 // Get the class handle
 static uint16_t hb_objGetClassH(HB_ITEM *pObject)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objGetClassH(%p)", static_cast<void*>(pObject)));
-#endif
-
   if (pObject->isArray()) {
     if (pObject->arrayValue()->uiClass != 0) {
       return pObject->arrayValue()->uiClass;
@@ -1320,10 +1240,6 @@ static uint16_t hb_objGetClassH(HB_ITEM *pObject)
 // Get the class name of an object
 const char *hb_objGetClsName(HB_ITEM *pObject)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objGetClsName(%p)", static_cast<void*>(pObject)));
-#endif
-
   if (pObject->isArray()) {
     if (pObject->arrayValue()->uiClass != 0) {
       return s_pClasses[pObject->arrayValue()->uiClass]->szName;
@@ -1478,10 +1394,6 @@ HB_SYMB *hb_clsMethodSym(HB_ITEM *pBaseSymbol)
 // of inheritance.
 const char *hb_objGetRealClsName(HB_ITEM *pObject, const char *szName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objGetrealClsName(%p,%s)", static_cast<void*>(pObject), szName));
-#endif
-
   uint16_t uiClass = hb_objGetClassH(pObject);
   if (uiClass && uiClass <= s_uiClasses) {
     auto pMsg = hb_dynsymFindName(szName);
@@ -1655,10 +1567,6 @@ static HB_SYMB *hb_clsScalarMethod(PCLASS pClass, HB_DYNS *pMsg, HB_STACK_STATE 
 
 static void hb_clsMakeSuperObject(HB_ITEM *pDest, HB_ITEM *pObject, uint16_t uiSuperClass)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsMakeSuperObject(%p, %p, %hu)", static_cast<void*>(pDest), static_cast<void*>(pObject), uiSuperClass));
-#endif
-
   // create a fake object array
   hb_arrayNew(pDest, 1);
   // Now save the Self object as the 1st elem.
@@ -1675,10 +1583,6 @@ static void hb_clsMakeSuperObject(HB_ITEM *pDest, HB_ITEM *pObject, uint16_t uiS
 // Internal function to the function pointer of a message of an object
 HB_SYMB *hb_objGetMethod(HB_ITEM *pObject, HB_SYMB *pMessage, HB_STACK_STATE *pStack)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objGetMethod(%p, %p, %p)", static_cast<void*>(pObject), static_cast<void*>(pMessage), static_cast<void*>(pStack)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   PCLASS pClass = nullptr;
 
@@ -2170,10 +2074,6 @@ void hb_objDestructorCall(HB_ITEM *pObject)
 // Check if object has a given operator
 HB_BOOL hb_objHasOperator(HB_ITEM *pObject, uint16_t uiOperator)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objHasOperator(%p,%hu)", static_cast<void*>(pObject), uiOperator));
-#endif
-
   uint16_t uiClass = hb_objGetClassH(pObject);
   if (uiClass && uiClass <= s_uiClasses) {
     return (s_pClasses[uiClass]->nOpFlags & (1 << uiOperator)) != 0;
@@ -2188,10 +2088,6 @@ HB_BOOL hb_objHasOperator(HB_ITEM *pObject, uint16_t uiOperator)
 HB_BOOL hb_objOperatorCall(uint16_t uiOperator, HB_ITEM *pResult, HB_ITEM *pObject, HB_ITEM *pMsgArg1,
                            HB_ITEM *pMsgArg2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objOperatorCall(%hu,%p,%p,%p,%p)", uiOperator, static_cast<void*>(pResult), static_cast<void*>(pObject), static_cast<void*>(pMsgArg1), static_cast<void*>(pMsgArg2)));
-#endif
-
   if (hb_objHasOperator(pObject, uiOperator)) {
     HB_STACK_TLS_PRELOAD
     hb_vmPushSymbol(s_opSymbols + uiOperator);
@@ -2229,10 +2125,6 @@ HB_BOOL hb_objHasMessage(HB_ITEM *pObject, HB_DYNS *pMessage)
 // <uPtr> should be read as a boolean
 HB_BOOL hb_objHasMsg(HB_ITEM *pObject, const char *szString)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objHasMsg(%p, %s)", static_cast<void*>(pObject), szString));
-#endif
-
   auto pDynSym = hb_dynsymFindName(szString);
   if (pDynSym) {
     return hb_objGetMethod(pObject, pDynSym->pSymbol, nullptr) != nullptr;
@@ -2463,10 +2355,6 @@ static HB_SYMB *hb_objGetFuncSym(HB_ITEM *pItem)
 // clone object if user defined clone method or copy it
 void hb_objCloneBody(HB_ITEM *pDest, HB_ITEM *pObject, PHB_NESTED_CLONED pClonedList)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objCloneBody(%p,%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pObject), static_cast<void*>(pClonedList)));
-#endif
-
   HB_SYMBOL_UNUSED(pClonedList);
 
   // TODO: add support for user defined clone operation
@@ -2477,10 +2365,6 @@ void hb_objCloneBody(HB_ITEM *pDest, HB_ITEM *pObject, PHB_NESTED_CLONED pCloned
 // clone object if user defined clone method or copy it
 HB_ITEM *hb_objCloneTo(HB_ITEM *pDest, HB_ITEM *pObject)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_objCloneTo(%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pObject)));
-#endif
-
   hb_objCloneBody(pDest, pObject, nullptr);
 
   return pDest;

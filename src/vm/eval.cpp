@@ -56,10 +56,6 @@
 
 HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
-#endif
-
   if (pEvalInfo) {
     memset(pEvalInfo, 0, sizeof(HB_EVALINFO));
     pEvalInfo->pItems[0] = pItem;
@@ -86,10 +82,6 @@ HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, HB_ITEM *pItem)
 
 HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_evalPutParam(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
-#endif
-
   if (pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_) {
     pEvalInfo->pItems[++pEvalInfo->paramCount] = pItem;
     return true;
@@ -100,10 +92,6 @@ HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, HB_ITEM *pItem)
 
 HB_ITEM *hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo)));
-#endif
-
   HB_ITEM *pResult = nullptr;
 
   if (pEvalInfo) {
@@ -154,10 +142,6 @@ HB_ITEM *hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 
 HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_evalRelease(%p)", static_cast<void*>(pEvalInfo)));
-#endif
-
   if (pEvalInfo) {
     for (uint16_t uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++) {
       hb_itemRelease(pEvalInfo->pItems[uiParam]);
@@ -181,10 +165,6 @@ HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
 
 HB_ITEM *hb_itemDo(HB_ITEM *pItem, HB_ULONG ulPCount, ...)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_itemDo(%p, %lu, ...)", static_cast<void*>(pItem), ulPCount));
-#endif
-
   HB_ITEM *pResult = nullptr;
 
   if (pItem != nullptr) {
@@ -244,10 +224,6 @@ HB_ITEM *hb_itemDo(HB_ITEM *pItem, HB_ULONG ulPCount, ...)
 
 HB_ITEM *hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount));
-#endif
-
   HB_ITEM *pResult = nullptr;
 
   if (szFunc != nullptr) {

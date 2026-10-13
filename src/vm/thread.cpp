@@ -232,10 +232,6 @@ void hb_threadExit(void)
 
 void hb_threadReleaseCPU(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_threadReleaseCPU()"));
-#endif
-
   // The following code is modified:
   //       hb_ReleaseCPU()
   // originally created by:

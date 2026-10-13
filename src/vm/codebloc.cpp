@@ -61,10 +61,6 @@ static const uint8_t s_pCode[2] = {HB_P_PUSHNIL, HB_P_ENDBLOCK};
 // Release all allocated memory when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGarbageDelete(%p)", Cargo));
-#endif
-
   auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
 
   // free space allocated for pcodes - if it was a macro-compiled codeblock
@@ -89,10 +85,6 @@ static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
 
 static HB_GARBAGE_FUNC(hb_codeblockGarbageMark)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGarbageMark(%p)", Cargo));
-#endif
-
   auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
 
   if (pCBlock->uiLocals) {
@@ -121,10 +113,6 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs = {
 PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable,
                               HB_SYMB *pSymbols, HB_SIZE nLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), uiLocals, static_cast<const void*>(pLocalPosTable), static_cast<void*>(pSymbols), nLen));
-#endif
-
   HB_STACK_TLS_PRELOAD
   const uint8_t *pCode;
 
@@ -212,10 +200,6 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
 
 PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), nLen));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // The codeblock pcode is stored in dynamically allocated memory that
@@ -249,10 +233,6 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 // Get local variable referenced in a codeblock
 HB_ITEM *hb_codeblockGetVar(HB_ITEM *pItem, int32_t iItemPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos));
-#endif
-
   PHB_CODEBLOCK pCBlock = pItem->blockValue();
 
   // local variables accessed in a codeblock are always stored as reference
@@ -262,10 +242,6 @@ HB_ITEM *hb_codeblockGetVar(HB_ITEM *pItem, int32_t iItemPos)
 // Get local variable passed by reference
 HB_ITEM *hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetRef(%p, %d)", static_cast<void*>(pCBlock), iItemPos));
-#endif
-
   return pCBlock->pLocals - iItemPos;
 }
 

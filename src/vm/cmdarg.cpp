@@ -267,10 +267,6 @@ HB_BOOL hb_winmainArgGet(void *phInstance, void *phPrevInstance, int32_t *piCmdS
 
 void hb_cmdargInit(int32_t argc, char *argv[])
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargInit(%d, %p)", argc, static_cast<void*>(argv)));
-#endif
-
 #if defined(HB_OS_WIN)
   if (s_lpArgV) {
     return;
@@ -315,10 +311,6 @@ static char *hb_cmdargDup(int32_t argc)
 
 void hb_cmdargUpdate(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargUpdate()"));
-#endif
-
 #if !defined(HB_OS_WIN)
   if (s_argc > 0) {
     // NOTE: try to create absolute path from s_argv[0] if necessary
@@ -414,10 +406,6 @@ int32_t hb_cmdargPushArgs(void)
 
 HB_BOOL hb_cmdargIsInternal(const char *szArg, int32_t *piLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargIsInternal(%s, %p)", szArg, static_cast<void*>(piLen)));
-#endif
-
   // NOTE: Not checking for '--' here, as it would filter out
   //       valid command-line options used by applications. [vszakats]
 
@@ -440,10 +428,6 @@ HB_BOOL hb_cmdargIsInternal(const char *szArg, int32_t *piLen)
 
 static char *hb_cmdargGet(const char *pszName, bool bRetValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargGet(%s, %d)", pszName, static_cast<int32_t>(bRetValue)));
-#endif
-
   int32_t iPrefixLen;
 
   // Check the command-line first
@@ -565,10 +549,6 @@ char *hb_cmdargString(const char *pszName)
 
 int32_t hb_cmdargNum(const char *pszName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargNum(%s)", pszName));
-#endif
-
   char *pszValue = hb_cmdargGet(pszName, true);
   if (pszValue) {
     int32_t iValue = atoi(pszValue);

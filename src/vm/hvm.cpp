@@ -837,10 +837,6 @@ void hb_vmWaitForThreads(void)
 
 void *hb_vmThreadState(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadState()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   return hb_stackId() ? hb_stackList() : nullptr;
@@ -848,10 +844,6 @@ void *hb_vmThreadState(void)
 
 HB_BOOL hb_vmThreadIsMain(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadIsMain(%p)", Cargo));
-#endif
-
   if (!s_fHVMActive || s_main_thread == nullptr) {
     return false;
   } else if (Cargo) {
@@ -864,10 +856,6 @@ HB_BOOL hb_vmThreadIsMain(void *Cargo)
 
 static void hb_vmStackAdd(PHB_THREADSTATE pState)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmStackAdd(%p)", static_cast<void*>(pState)));
-#endif
-
   if (!pState->pPrev) {
     if (s_vmStackLst) {
       pState->pNext = s_vmStackLst;
@@ -886,10 +874,6 @@ static void hb_vmStackAdd(PHB_THREADSTATE pState)
 
 static HB_ITEM *hb_vmStackDel(PHB_THREADSTATE pState, HB_BOOL fCounter)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmStackDel(%p,%d)", static_cast<void*>(pState), static_cast<int32_t>(fCounter)));
-#endif
-
   pState->fActive = false;
   pState->pStackId = nullptr;
   pState->fFinished = true;
@@ -920,10 +904,6 @@ static HB_ITEM *hb_vmStackDel(PHB_THREADSTATE pState, HB_BOOL fCounter)
 
 static void hb_vmStackInit(PHB_THREADSTATE pState)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmStackInit(%p)", static_cast<void*>(pState)));
-#endif
-
   hb_stackInit(); // initialize HVM thread stack
 
   HB_VM_LOCK();
@@ -940,10 +920,6 @@ static void hb_vmStackInit(PHB_THREADSTATE pState)
 
 static void hb_vmStackRelease()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmStackRelease()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_VM_LOCK();
   bool fLocked = hb_stackUnlock() == 1;
@@ -973,10 +949,6 @@ static void hb_vmStackRelease()
 
 HB_BOOL hb_vmThreadRegister(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadRegister(%p)", Cargo));
-#endif
-
   HB_VM_LOCK();
   hb_vmStackAdd(static_cast<PHB_THREADSTATE>(Cargo));
   HB_VM_UNLOCK();
@@ -985,10 +957,6 @@ HB_BOOL hb_vmThreadRegister(void *Cargo)
 
 void hb_vmThreadRelease(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadRelease(%p)", Cargo));
-#endif
-
   HB_VM_LOCK();
   HB_ITEM *pThItm = hb_vmStackDel(static_cast<PHB_THREADSTATE>(Cargo), true);
   hb_threadCondBroadcast(&s_vmCond);
@@ -1002,10 +970,6 @@ void hb_vmThreadRelease(void *Cargo)
 // thread entry point
 void hb_vmThreadInit(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadInit(%p)", Cargo));
-#endif
-
   auto pState = static_cast<PHB_THREADSTATE>(Cargo);
   if (!pState) {
     pState = hb_threadStateNew();
@@ -1054,10 +1018,6 @@ void hb_vmThreadInit(void *Cargo)
 // thread leave point
 void hb_vmThreadQuit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadQuit()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   hb_stackSetQuitState(true);
@@ -1095,10 +1055,6 @@ void hb_vmThreadQuit(void)
 // send QUIT request to given thread
 void hb_vmThreadQuitRequest(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadQuitRequest(%p)", Cargo));
-#endif
-
   auto pState = static_cast<PHB_THREADSTATE>(Cargo);
 
   HB_VM_LOCK();
@@ -1114,10 +1070,6 @@ void hb_vmThreadQuitRequest(void *Cargo)
 
 HB_ITEM *hb_vmThreadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void *cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadStart(%lu,%p,%p)", ulAttr, reinterpret_cast<void*>(pFunc), cargo));
-#endif
-
 #if defined(HB_MT_VM)
   return hb_threadStart(ulAttr, pFunc, cargo);
 #else
@@ -1178,10 +1130,6 @@ void hb_vmSetDynFunc(HB_DYNS *pDynSym)
 
 void hb_vmInit(HB_BOOL bStartMainProc)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmInit()"));
-#endif
-
 #if defined(HB_OS_WIN)
   hb_winmainArgVBuild();
 #endif
@@ -1340,10 +1288,6 @@ void hb_vmInit(HB_BOOL bStartMainProc)
 
 int32_t hb_vmQuit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmQuit()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
 #if defined(HB_MT_VM)
@@ -1435,10 +1379,6 @@ int32_t hb_vmQuit(void)
 
 void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmExecute(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto bCanRecover = false;
   bool bDynCode = pSymbols == nullptr || (pSymbols->scope.value & HB_FS_DYNCODE) != 0;
@@ -2387,9 +2327,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
     }
 
     case HB_P_PUSHLONG: {
-#if 0
-            HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHLONG)"));
-#endif
 #if HB_VMINT_MAX >= INT32_MAX
       hb_vmPushIntegerConst(static_cast<int32_t>(HB_PCODE_MKINT32(&pCode[1])));
 #else
@@ -2400,9 +2337,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
     }
 
     case HB_P_PUSHLONGLONG: {
-#if 0
-            HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHLONGLONG)"));
-#endif
 #if !defined(HB_LONG_LONG_OFF)
       hb_vmPushLongLongConst(HB_PCODE_MKINT64(&pCode[1]));
 #else
@@ -2461,9 +2395,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
     }
 
     case HB_P_PUSHDATE: {
-#if 0
-            HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHDATE)"));
-#endif
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::DATE);
       pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKINT32(&pCode[1])));
@@ -2473,9 +2404,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
     }
 
     case HB_P_PUSHTIMESTAMP: {
-#if 0
-            HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHTIMESTAMP)"));
-#endif
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::TIMESTAMP);
       pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKINT32(&pCode[1])));
@@ -3028,10 +2956,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
 
     case HB_P_LOCALNEARADDINT: {
       int32_t iLocal = pCode[1];
-#if 0
-            HB_TRACE(HB_TR_DEBUG, ("HB_P_LOCALNEARADDINT"));
-#endif
-
       hb_vmAddInt(hb_stackLocalVariable(iLocal), HB_PCODE_MKINT16(&pCode[2]));
       pCode += 4;
       break;
@@ -3039,10 +2963,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
 
     case HB_P_LOCALADDINT: {
       int32_t iLocal = HB_PCODE_MKUINT16(&pCode[1]);
-#if 0
-            HB_TRACE(HB_TR_DEBUG, ("HB_P_LOCALADDINT"));
-#endif
-
       hb_vmAddInt(hb_stackLocalVariable(iLocal), HB_PCODE_MKINT16(&pCode[3]));
       pCode += 5;
       break;
@@ -3230,10 +3150,6 @@ void hb_vmExecute(const uint8_t *pCode, HB_SYMB *pSymbols)
 
 static void hb_vmAddInt(HB_ITEM *pResult, HB_LONG lAdd)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmAddInt(%p,%ld)", static_cast<void*>(pResult), lAdd));
-#endif
-
   if (pResult->isByRef()) {
     pResult = hb_itemUnRef(pResult);
   }
@@ -3280,10 +3196,6 @@ static void hb_vmAddInt(HB_ITEM *pResult, HB_LONG lAdd)
 
 static void hb_vmNegate()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmNegate()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -3341,10 +3253,6 @@ static void hb_vmNegate()
 
 static void hb_vmTimeStampPut(HB_ITEM *pItem, long lJulian, long lMilliSec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmTimeStampPut(%p,%ld,%ld)", static_cast<void*>(pItem), lJulian, lMilliSec));
-#endif
-
   // timestamp normalization
   if (lJulian < 0) {
     if (lMilliSec <= -HB_MILLISECS_PER_DAY) {
@@ -3377,10 +3285,6 @@ static void hb_vmTimeStampPut(HB_ITEM *pItem, long lJulian, long lMilliSec)
 
 static void hb_vmTimeStampAdd(HB_ITEM *pResult, HB_ITEM *pItem, double dValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmTimeStampAdd(%p,%p,%lf)", static_cast<void*>(pResult), static_cast<void*>(pItem), dValue));
-#endif
-
   long lJulian, lMilliSec;
   hb_timeStampUnpackDT(dValue, &lJulian, &lMilliSec);
 
@@ -3392,10 +3296,6 @@ static void hb_vmTimeStampAdd(HB_ITEM *pResult, HB_ITEM *pItem, double dValue)
 
 static void hb_vmPlus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPlus(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
-#endif
-
   if (pItem1->isNumInt() && pItem2->isNumInt()) {
     HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW(pItem1);
     HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW(pItem2);
@@ -3485,10 +3385,6 @@ static void hb_vmPlus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static void hb_vmMinus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMinus(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
-#endif
-
   if (pItem1->isNumInt() && pItem2->isNumInt()) {
     HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW(pItem1);
     HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW(pItem2);
@@ -3573,10 +3469,6 @@ static void hb_vmMinus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static void hb_vmMult(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMult(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
-#endif
-
 #if - (HB_VMLONG_MAX / HB_VMINT_MIN) >= HB_VMINT_MAX && 1
   if (pItem1->isInteger() && pItem2->isInteger()) {
     HB_MAXINT nResult = static_cast<HB_MAXINT>(pItem1->integerValue()) * static_cast<HB_MAXINT>(pItem2->integerValue());
@@ -3604,10 +3496,6 @@ static void hb_vmMult(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static void hb_vmDivide(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDivide(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
-#endif
-
   if (pItem1->isNumInt() && pItem2->isNumInt()) {
     HB_MAXINT nDivisor = HB_ITEM_GET_NUMINTRAW(pItem2);
 
@@ -3653,10 +3541,6 @@ static void hb_vmDivide(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static void hb_vmModulus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmModulus(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
-#endif
-
   if (pItem1->isNumInt() && pItem2->isNumInt()) {
     HB_MAXINT nDivisor = HB_ITEM_GET_NUMINTRAW(pItem2);
 
@@ -3697,10 +3581,6 @@ static void hb_vmModulus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static void hb_vmPower(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPower(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
-#endif
-
   if (pItem1->isNumeric() && pItem2->isNumeric()) {
     // NOTE: Clipper always returns the result of power with the SET number of decimal places.
     hb_itemPutND(pResult, pow(pItem1->getND(), pItem2->getND()));
@@ -3716,10 +3596,6 @@ static void hb_vmPower(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
 static void hb_vmInc(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmInc(%p)", static_cast<void*>(pItem)));
-#endif
-
   if (pItem->isNumInt()) {
     if (pItem->isInteger()) {
       if (pItem->integerValue() < HB_VMINT_MAX) {
@@ -3767,10 +3643,6 @@ static void hb_vmInc(HB_ITEM *pItem)
 
 static void hb_vmDec(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDec(%p)", static_cast<void*>(pItem)));
-#endif
-
   if (pItem->isNumInt()) {
     if (pItem->isInteger()) {
       if (pItem->integerValue() > HB_VMINT_MIN) {
@@ -3818,10 +3690,6 @@ static void hb_vmDec(HB_ITEM *pItem)
 
 static void hb_vmFuncPtr() // pushes a function address pointer. Removes the symbol from the stack
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmFuncPtr()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -3843,10 +3711,6 @@ static void hb_vmFuncPtr() // pushes a function address pointer. Removes the sym
 
 static void hb_vmExactlyEqual()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmExactlyEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -3936,10 +3800,6 @@ static void hb_vmExactlyEqual()
 
 static void hb_vmEqual()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4013,10 +3873,6 @@ static void hb_vmEqual()
 
 static void hb_vmNotEqual()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmNotEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4091,10 +3947,6 @@ static void hb_vmNotEqual()
 
 static void hb_vmLess()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmLess()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4142,10 +3994,6 @@ static void hb_vmLess()
 
 static void hb_vmLessEqual()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmLessEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4193,10 +4041,6 @@ static void hb_vmLessEqual()
 
 static void hb_vmGreater()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmGreater()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4244,10 +4088,6 @@ static void hb_vmGreater()
 
 static void hb_vmGreaterEqual()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmGreaterEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4295,10 +4135,6 @@ static void hb_vmGreaterEqual()
 
 static void hb_vmInstring()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmInstring()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem1 = hb_stackItemFromTop(-2);
@@ -4338,10 +4174,6 @@ static void hb_vmInstring()
 // -1 -> <step value>
 static void hb_vmForTest() // Test to check the end point of the FOR
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmForTest()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto fBack = false;
 
@@ -4387,10 +4219,6 @@ static const HB_GC_FUNCS s_gcSeqBlockFuncs = {hb_SeqBlockDestructor, hb_gcGripMa
 
 static void hb_vmSeqBlock()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmSeqBlock()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -4418,10 +4246,6 @@ static const HB_GC_FUNCS s_gcWithObjectFuncs = {hb_withObjectDestructor, hb_gcDu
 
 static void hb_vmWithObjectStart()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmWithObjectStart()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackAllocItem();
@@ -4439,10 +4263,6 @@ static void hb_vmWithObjectStart()
 // Release enumerator items - called from hb_itemClear()
 void hb_vmEnumRelease(HB_ITEM *pBase, HB_ITEM *pValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEnumRelease(%p,%p)", static_cast<void*>(pBase), static_cast<void*>(pValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (pValue) {
@@ -4515,10 +4335,6 @@ static void hb_vmEnumRefMark(void *value)
 // create extended reference for enumerator destructor
 static void hb_vmEnumReference(HB_ITEM *pBase)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEnumReference(%p)", static_cast<void*>(pBase)));
-#endif
-
   static const HB_EXTREF s_EnumExtRef = {hb_vmEnumRefRead, hb_vmEnumRefWrite, hb_vmEnumRefCopy, hb_vmEnumRefClear,
                                          hb_vmEnumRefMark};
 
@@ -4853,10 +4669,6 @@ static const uint8_t *hb_vmSwitch(const uint8_t *pCode, uint16_t casesCnt)
 
 static void hb_vmNot()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmNot()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -4876,10 +4688,6 @@ static void hb_vmNot()
 
 static void hb_vmAnd()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmAnd()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4904,10 +4712,6 @@ static void hb_vmAnd()
 
 static void hb_vmOr()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmOr()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem2 = hb_stackItemFromTop(-1);
@@ -4936,10 +4740,6 @@ static void hb_vmOr()
 
 static void hb_vmArrayPush()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayPush()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_SIZE nIndex;
 
@@ -5007,10 +4807,6 @@ static void hb_vmArrayPush()
 
 static void hb_vmArrayPushRef()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayPushRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_SIZE nIndex;
 
@@ -5090,10 +4886,6 @@ static void hb_vmArrayPushRef()
 
 static void hb_vmArrayPop()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_SIZE nIndex;
 
@@ -5175,10 +4967,6 @@ static void hb_vmArrayPop()
 
 static void hb_vmArrayGen(HB_SIZE nElements) // generates an nElements Array and fills it from the stack values
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayGen(%" HB_PFS "u)", nElements));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // create new array on HVM stack
@@ -5204,10 +4992,6 @@ static void hb_vmArrayGen(HB_SIZE nElements) // generates an nElements Array and
 // to retrieve the number of elements from the stack
 static HB_BOOL hb_vmArrayNew(HB_ITEM *pArray, uint16_t uiDimension)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayNew(%p, %hu)", static_cast<void*>(pArray), uiDimension));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ISIZ nElements;
 
@@ -5249,10 +5033,6 @@ static HB_BOOL hb_vmArrayNew(HB_ITEM *pArray, uint16_t uiDimension)
 static void hb_vmArrayDim(
     uint16_t uiDimensions) // generates an uiDimensions Array and initialize those dimensions from the stack values
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayDim(%hu)", uiDimensions));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (uiDimensions) {
@@ -5269,10 +5049,6 @@ static void hb_vmArrayDim(
 
 static void hb_vmHashGen(HB_SIZE nElements) // generates an nElements Hash and fills it from the stack values
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmHashGen(%" HB_PFS "u)", nElements));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // create new hash item
@@ -5301,10 +5077,6 @@ static void hb_vmHashGen(HB_SIZE nElements) // generates an nElements Hash and f
 
 static void hb_vmMacroPushIndex()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMacroPushIndex()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // Now the top most element on the stack points to number of
@@ -5377,10 +5149,6 @@ static HB_LONG hb_vmArgsJoin(HB_LONG lLevel, uint16_t uiArgSets)
 
 static void hb_vmMacroDo(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMacroDo(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_LONG lArgs = hb_vmArgsJoin(-1, uiArgSets);
   hb_stackDecrease(uiArgSets);
@@ -5389,10 +5157,6 @@ static void hb_vmMacroDo(uint16_t uiArgSets)
 
 static void hb_vmMacroFunc(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMacroFunc(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_LONG lArgs = hb_vmArgsJoin(-1, uiArgSets);
   hb_stackDecrease(uiArgSets);
@@ -5403,10 +5167,6 @@ static void hb_vmMacroFunc(uint16_t uiArgSets)
 
 static void hb_vmMacroSend(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMacroSend(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_LONG lArgs = hb_vmArgsJoin(-1, uiArgSets);
   hb_stackDecrease(uiArgSets);
@@ -5417,10 +5177,6 @@ static void hb_vmMacroSend(uint16_t uiArgSets)
 
 static void hb_vmMacroArrayGen(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMacroArrayGen(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_LONG lArgs = hb_vmArgsJoin(-1, uiArgSets);
   hb_stackDecrease(uiArgSets);
@@ -5429,10 +5185,6 @@ static void hb_vmMacroArrayGen(uint16_t uiArgSets)
 
 static void hb_vmPushVParams()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushVParams()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   int32_t i = 0;
 
@@ -5448,10 +5200,6 @@ static void hb_vmPushVParams()
 
 static void hb_vmPushAParams()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushAParams()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_stackItemFromTop(-1);
@@ -5480,10 +5228,6 @@ static void hb_vmPushAParams()
 
 static HB_ERRCODE hb_vmSelectWorkarea(HB_ITEM *pAlias, HB_SYMB *pField)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmSelectWorkArea(%p,%p)", static_cast<void*>(pAlias), static_cast<void*>(pField)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ERRCODE errCode;
   auto fRepeat = false;
@@ -5571,10 +5315,6 @@ static HB_ERRCODE hb_vmSelectWorkarea(HB_ITEM *pAlias, HB_SYMB *pField)
 // is popped as current workarea number
 static void hb_vmSwapAlias()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmSwapAlias()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
   HB_ITEM *pWorkArea = hb_stackItemFromTop(-2);
@@ -5589,10 +5329,6 @@ static void hb_vmSwapAlias()
 
 void hb_vmProc(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmProc(%hu)", uiParams));
-#endif
-
   HB_STACK_STATE sStackState;
 
 #ifndef HB_NO_PROFILER
@@ -5654,10 +5390,6 @@ void hb_vmProc(uint16_t uiParams)
 
 void hb_vmDo(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDo(%hu)", uiParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
 #ifndef HB_NO_PROFILER
@@ -5744,10 +5476,6 @@ void hb_vmDo(uint16_t uiParams)
 
 void hb_vmSend(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmSend(%hu)", uiParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
 #ifndef HB_NO_PROFILER
@@ -5805,10 +5533,6 @@ void hb_vmSend(uint16_t uiParams)
 
 static void hb_vmPushObjectVarRef()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushObjectVarRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_STACK_STATE sStackState;
   HB_ITEM *pItem = hb_stackNewFrame(&sStackState, 0); // procedure name
@@ -5823,10 +5547,6 @@ static void hb_vmPushObjectVarRef()
 
 void hb_vmEval(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEval(%hu)", uiParams));
-#endif
-
 #ifndef HB_NO_PROFILER
   HB_ULONG ulClock = 0;
   bool bProfiler = hb_bProfiler; // because profiler state may change
@@ -5862,10 +5582,6 @@ void hb_vmEval(uint16_t uiParams)
 
 static HARBOUR hb_vmDoBlock()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDoBlock()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pBlock = hb_stackSelfItem();
@@ -5896,10 +5612,6 @@ static HARBOUR hb_vmDoBlock()
 // Evaluates a passed codeblock item with no arguments passed to a codeblock
 HB_ITEM *hb_vmEvalBlock(HB_ITEM *pBlock)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEvalBlock(%p)", static_cast<void*>(pBlock)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmPushEvalSym();
   hb_vmPush(pBlock);
@@ -5916,10 +5628,6 @@ HB_ITEM *hb_vmEvalBlock(HB_ITEM *pBlock)
 //  retVal = hb_vmEvalBlockV(pBlock, 2, pParam1, pParam2);
 HB_ITEM *hb_vmEvalBlockV(HB_ITEM *pBlock, HB_ULONG ulArgCount, ...)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEvalBlockV(%p, %lu, ...)", static_cast<void*>(pBlock), ulArgCount));
-#endif
-
   HB_STACK_TLS_PRELOAD
   va_list va;
 
@@ -5942,10 +5650,6 @@ HB_ITEM *hb_vmEvalBlockV(HB_ITEM *pBlock, HB_ULONG ulArgCount, ...)
 // Evaluates a passed codeblock item or macro pointer item
 HB_ITEM *hb_vmEvalBlockOrMacro(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmEvalBlockOrMacro(%p)", static_cast<void*>(pItem)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (pItem->isBlock()) {
@@ -5967,10 +5671,6 @@ HB_ITEM *hb_vmEvalBlockOrMacro(HB_ITEM *pItem)
 // destroy codeblock or macro in given item
 void hb_vmDestroyBlockOrMacro(HB_ITEM *pItem)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_vmDestroyBlockOrMacro(%p)", static_cast<void*>(pItem)));
-#endif
-
   if (pItem->isPointer()) {
     auto pMacro = static_cast<PHB_MACRO>(pItem->getPtr());
     if (pMacro) {
@@ -5983,10 +5683,6 @@ void hb_vmDestroyBlockOrMacro(HB_ITEM *pItem)
 // compile given expression and return macro pointer item or NULL
 HB_ITEM *hb_vmCompileMacro(const char *szExpr, HB_ITEM *pDest)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_vmCompileMacro(%s,%p)", szExpr, pDest));
-#endif
-
   if (szExpr != nullptr) {
     PHB_MACRO pMacro = hb_macroCompile(szExpr);
     if (pMacro) {
@@ -6001,10 +5697,6 @@ HB_ITEM *hb_vmCompileMacro(const char *szExpr, HB_ITEM *pDest)
 
 void hb_vmFunction(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmFunction(%hu)", uiParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemSetNil(hb_stackReturnItem());
   hb_vmDo(uiParams);
@@ -6013,10 +5705,6 @@ void hb_vmFunction(uint16_t uiParams)
 #ifndef HB_NO_DEBUG
 static void hb_vmDebugEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nIndex, HB_ITEM *pFrame)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDebugEntry"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   switch (nMode) {
@@ -6084,10 +5772,6 @@ static void hb_vmDebugEntry(int32_t nMode, int32_t nLine, const char *szName, in
 
 static void hb_vmDummyDebugEntry(int32_t nMode, int32_t nLine, const char *szName, int32_t nIndex, HB_ITEM *pFrame)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDummyDebugEntry"));
-#endif
-
   HB_SYMBOL_UNUSED(nMode);
   HB_SYMBOL_UNUSED(nLine);
   HB_SYMBOL_UNUSED(szName);
@@ -6097,10 +5781,6 @@ static void hb_vmDummyDebugEntry(int32_t nMode, int32_t nLine, const char *szNam
 
 static void hb_vmDebuggerExit(HB_BOOL fRemove)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDebuggerExit(%d)", fRemove));
-#endif
-
   // is debugger linked ?
   if (s_pFunDbgEntry) {
     // inform debugger that we are quitting now
@@ -6115,29 +5795,17 @@ static void hb_vmDebuggerExit(HB_BOOL fRemove)
 
 static void hb_vmDebuggerEndProc()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDebuggerEndProc()"));
-#endif
-
   s_pFunDbgEntry(HB_DBG_ENDPROC, 0, nullptr, 0, nullptr);
 }
 
 static void hb_vmDebuggerShowLine(uint16_t uiLine) // makes the debugger shows a specific source code line
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDebuggerShowLine(%hu)", uiLine));
-#endif
-
   s_pFunDbgEntry(HB_DBG_SHOWLINE, uiLine, nullptr, 0, nullptr);
 }
 
 static void hb_vmLocalName(uint16_t uiLocal,
                            const char *szLocalName) // locals and parameters index and name information for the debugger
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmLocalName(%hu, %s)", uiLocal, szLocalName));
-#endif
-
   HB_STACK_TLS_PRELOAD
   if (hb_stackBaseItem()->symbolStackState()->fDebugging) {
     s_pFunDbgEntry(HB_DBG_LOCALNAME, 0, szLocalName, uiLocal, nullptr);
@@ -6147,10 +5815,6 @@ static void hb_vmLocalName(uint16_t uiLocal,
 static void hb_vmStaticName(uint8_t bIsGlobal, uint16_t uiStatic,
                             const char *szStaticName) // statics vars information for the debugger
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmStaticName(%hu, %s)", uiStatic, szStaticName));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_SYMBOL_UNUSED(bIsGlobal);
   if (hb_stackBaseItem()->symbolStackState()->fDebugging) {
@@ -6160,10 +5824,6 @@ static void hb_vmStaticName(uint8_t bIsGlobal, uint16_t uiStatic,
 
 static void hb_vmModuleName(const char *szModuleName) // PRG and function name information for the debugger
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmModuleName(%s)", szModuleName));
-#endif
-
   if (s_pFunDbgEntry) {
     HB_STACK_TLS_PRELOAD
     s_pFunDbgEntry(HB_DBG_MODULENAME, 0, szModuleName, 0, nullptr);
@@ -6174,10 +5834,6 @@ static void hb_vmModuleName(const char *szModuleName) // PRG and function name i
 
 static void hb_vmFrame(uint16_t usLocals, unsigned char ucParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmFrame(%d, %d)", static_cast<int32_t>(usLocals), static_cast<int32_t>(ucParams)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   int32_t iTotal;
 
@@ -6218,10 +5874,6 @@ static void hb_vmFrame(uint16_t usLocals, unsigned char ucParams)
 
 static void hb_vmVFrame(uint16_t usLocals, unsigned char ucParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmVFrame(%d, %d)", static_cast<int32_t>(usLocals), static_cast<int32_t>(ucParams)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pBase = hb_stackBaseItem();
@@ -6241,10 +5893,6 @@ static void hb_vmVFrame(uint16_t usLocals, unsigned char ucParams)
 
 static void hb_vmSFrame(HB_SYMB *pSym) // sets the statics frame for a function
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmSFrame(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // _INITSTATICS is now the statics frame. Statics() changed it!
@@ -6254,10 +5902,6 @@ static void hb_vmSFrame(HB_SYMB *pSym) // sets the statics frame for a function
 static void hb_vmStatics(HB_SYMB *pSym,
                          uint16_t uiStatics) // initializes the global aStatics array or redimensions it
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmStatics(%p, %hu)", static_cast<void*>(pSym), uiStatics));
-#endif
-
   // statics frame for this PRG
   pSym->value.pStaticsBase = static_cast<void *>(hb_itemArrayNew(uiStatics));
   pSym->scope.value |= HB_FS_FRAME;
@@ -6333,10 +5977,6 @@ static void hb_vmTSVarClean(void *pThreadItem)
 // create extended thread static variable reference
 static void hb_vmTSVReference(HB_ITEM *pStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmTSVReference(%p)", static_cast<void*>(pStatic)));
-#endif
-
   static const HB_EXTREF s_TSVExtRef = {hb_vmTSVRefRead, hb_vmTSVRefWrite, hb_vmTSVRefCopy, hb_vmTSVRefClear,
                                         hb_vmTSVRefMark};
 
@@ -6362,10 +6002,6 @@ static void hb_vmTSVReference(HB_ITEM *pStatic)
 
 static void hb_vmInitThreadStatics(uint16_t uiCount, const uint8_t *pCode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmInitThreadStatics(%hu,%p)", uiCount, static_cast<const void*>(pCode)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   while (uiCount--) {
@@ -6378,10 +6014,6 @@ static void hb_vmInitThreadStatics(uint16_t uiCount, const uint8_t *pCode)
 #else
 static void hb_vmInitThreadStatics(uint16_t uiCount, const uint8_t *pCode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmInitThreadStatics(%hu,%p)", uiCount, static_cast<const void*>(pCode)));
-#endif
-
   // single thread VM - do nothing, use normal static variables
 
   HB_SYMBOL_UNUSED(uiCount);
@@ -6395,30 +6027,18 @@ static void hb_vmInitThreadStatics(uint16_t uiCount, const uint8_t *pCode)
 
 void hb_vmPush(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPush(%p)", static_cast<void*>(pItem)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemCopy(hb_stackAllocItem(), pItem);
 }
 
 void hb_vmPushNil(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushNil()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_stackAllocItem()->setType(Harbour::Item::NIL);
 }
 
 void hb_vmPushLogical(HB_BOOL bValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLogical(%d)", static_cast<int32_t>(bValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LOGICAL);
@@ -6428,10 +6048,6 @@ void hb_vmPushLogical(HB_BOOL bValue)
 // not used by HVM code
 void hb_vmPushNumber(double dNumber, int32_t iDec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushNumber(%lf, %d)", dNumber, iDec));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (iDec) {
@@ -6463,10 +6079,6 @@ static uint16_t hb_vmCalcIntWidth(HB_MAXINT nNumber)
 
 void hb_vmPushInteger(int32_t iNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushInteger(%d)", iNumber));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
@@ -6477,10 +6089,6 @@ void hb_vmPushInteger(int32_t iNumber)
 #if HB_VMINT_MAX >= INT32_MAX
 static void hb_vmPushIntegerConst(int32_t iNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushIntegerConst(%d)", iNumber));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
@@ -6490,10 +6098,6 @@ static void hb_vmPushIntegerConst(int32_t iNumber)
 #else
 static void hb_vmPushLongConst(long lNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLongConst(%ld)", lNumber));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LONG);
@@ -6504,10 +6108,6 @@ static void hb_vmPushLongConst(long lNumber)
 
 void hb_vmPushLong(long lNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLong(%ld)", lNumber));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   HB_ITEM_PUT_LONGRAW(pItem, lNumber);
@@ -6528,10 +6128,6 @@ void hb_vmPushSize(HB_ISIZ nNumber)
 
 static void hb_vmPushHBLong(HB_MAXINT nNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushHBLong(%" PFHL "d)", nNumber));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LONG);
@@ -6542,10 +6138,6 @@ static void hb_vmPushHBLong(HB_MAXINT nNumber)
 #if !defined(HB_LONG_LONG_OFF)
 static void hb_vmPushLongLongConst(int64_t llNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLongLongConst(%" PFLL "d)", llNumber));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LONG);
@@ -6565,10 +6157,6 @@ void hb_vmPushNumInt(HB_MAXINT nNumber)
 
 void hb_vmPushDouble(double dNumber, int32_t iDec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushDouble(%lf, %d)", dNumber, iDec));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::DOUBLE);
@@ -6583,10 +6171,6 @@ void hb_vmPushDouble(double dNumber, int32_t iDec)
 
 static void hb_vmPushDoubleConst(double dNumber, int32_t iWidth, int32_t iDec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushDoubleConst(%lf, %d, %d)", dNumber, iWidth, iDec));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::DOUBLE);
@@ -6607,10 +6191,6 @@ static void hb_vmPushDoubleConst(double dNumber, int32_t iWidth, int32_t iDec)
 
 void hb_vmPushDate(long lDate)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushDate(%ld)", lDate));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::DATE);
@@ -6620,10 +6200,6 @@ void hb_vmPushDate(long lDate)
 
 void hb_vmPushTimeStamp(long lJulian, long lMilliSec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushTimeStamp(%ld, %ld)", lJulian, lMilliSec));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::TIMESTAMP);
@@ -6633,10 +6209,6 @@ void hb_vmPushTimeStamp(long lJulian, long lMilliSec)
 
 void hb_vmPushPointer(void *pPointer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushPointer(%p)", static_cast<void*>(pPointer)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::POINTER);
@@ -6647,10 +6219,6 @@ void hb_vmPushPointer(void *pPointer)
 
 void hb_vmPushPointerGC(void *pPointer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushPointerGC(%p)", static_cast<void*>(pPointer)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::POINTER);
@@ -6662,20 +6230,12 @@ void hb_vmPushPointerGC(void *pPointer)
 
 void hb_vmPushString(const char *szText, HB_SIZE nLength)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushString(%s, %" HB_PFS "u)", szText, nLength));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemPutCL(hb_stackAllocItem(), szText, nLength);
 }
 
 void hb_vmPushStringPcode(const char *szText, HB_SIZE nLength)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushStringPcode(%s, %" HB_PFS "u)", szText, nLength));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::STRING);
@@ -6687,10 +6247,6 @@ void hb_vmPushStringPcode(const char *szText, HB_SIZE nLength)
 
 void hb_vmPushSymbol(HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushSymbol(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
@@ -6700,10 +6256,6 @@ void hb_vmPushSymbol(HB_SYMB *pSym)
 
 void hb_vmPushDynSym(HB_DYNS *pDynSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushDynSym(%p)", static_cast<void*>(pDynSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
@@ -6713,10 +6265,6 @@ void hb_vmPushDynSym(HB_DYNS *pDynSym)
 
 void hb_vmPushEvalSym(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushEvalSym()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
@@ -6733,10 +6281,6 @@ void hb_vmPushEvalSym(void)
 // NOTE: pCode points to static memory
 static void hb_vmPushBlock(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushBlock(%p,%p,%" HB_PFS "u)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols), nLen));
-#endif
-
   HB_STACK_TLS_PRELOAD
   uint16_t uiLocals = HB_PCODE_MKUINT16(&pCode[2]);
 
@@ -6767,10 +6311,6 @@ static void hb_vmPushBlock(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen
 // NOTE: pCode points to static memory
 static void hb_vmPushBlockShort(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE nLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushBlockShort(%p,%p,%" HB_PFS "u)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols), nLen));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
 
@@ -6797,10 +6337,6 @@ static void hb_vmPushBlockShort(const uint8_t *pCode, HB_SYMB *pSymbols, HB_SIZE
 // NOTE: pCode points to dynamically allocated memory
 static void hb_vmPushMacroBlock(const uint8_t *pCode, HB_SIZE nSize, uint16_t usParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushMacroBlock(%p,%" HB_PFS "u,%hu)", static_cast<const void*>(pCode), nSize, usParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setBlockValue(hb_codeblockMacroNew(pCode, nSize));
@@ -6816,10 +6352,6 @@ static void hb_vmPushMacroBlock(const uint8_t *pCode, HB_SIZE nSize, uint16_t us
 // pushes current workarea number on the eval stack
 static void hb_vmPushAlias()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushAlias()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
@@ -6832,10 +6364,6 @@ static void hb_vmPushAlias()
 // (for performance reason it replaces alias value with field value)
 static void hb_vmPushAliasedField(HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushAliasedField(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
   auto pAlias = hb_stackItemFromTop(-1);
@@ -6855,10 +6383,6 @@ static void hb_vmPushAliasedField(HB_SYMB *pSym)
 // (any_alias)->variable
 static void hb_vmPushAliasedVar(HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushAliasedVar(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pAlias = hb_stackItemFromTop(-1);
 
@@ -6885,10 +6409,6 @@ static void hb_vmPushAliasedVar(HB_SYMB *pSym)
 
 static void hb_vmPushLocal(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLocal(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pLocal;
 
@@ -6906,10 +6426,6 @@ static void hb_vmPushLocal(int32_t iLocal)
 
 static void hb_vmPushLocalByRef(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushLocalByRef(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pTop = hb_stackAllocItem();
@@ -6934,10 +6450,6 @@ static void hb_vmPushLocalByRef(int32_t iLocal)
 
 static void hb_vmPushStatic(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushStatic(%hu)", uiStatic));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pStatic = (static_cast<HB_ITEM *>(hb_stackGetStaticsBase()))->arrayItems() + uiStatic - 1;
   hb_itemCopy(hb_stackAllocItem(), pStatic->isByRef() ? hb_itemUnRef(pStatic) : pStatic);
@@ -6945,10 +6457,6 @@ static void hb_vmPushStatic(uint16_t uiStatic)
 
 static void hb_vmPushStaticByRef(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushStaticByRef(%hu)", uiStatic));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pTop = hb_stackAllocItem();
@@ -6996,10 +6504,6 @@ static void hb_vmPushVariable(HB_SYMB *pVarSymb)
 
 static void hb_vmDuplicate()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDuplicate()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
   hb_itemCopy(hb_stackAllocItem(), pItem);
@@ -7007,10 +6511,6 @@ static void hb_vmDuplicate()
 
 static void hb_vmDuplUnRef()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDuplUnRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
   hb_itemCopy(hb_stackAllocItem(), pItem);
@@ -7021,10 +6521,6 @@ static void hb_vmDuplUnRef()
 
 static void hb_vmPushUnRef()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushUnRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
   hb_itemCopy(hb_stackAllocItem(), pItem->isByRef() ? hb_itemUnRef(pItem) : pItem);
@@ -7032,10 +6528,6 @@ static void hb_vmPushUnRef()
 
 static void hb_vmSwap(int32_t iCount)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmSwap(%d)", iCount));
-#endif
-
   HB_STACK_TLS_PRELOAD
   int32_t i = -1;
 
@@ -7051,10 +6543,6 @@ static void hb_vmSwap(int32_t iCount)
 
 static HB_BOOL hb_vmPopLogical()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPopLogical()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (hb_stackItemFromTop(-1)->isLogical()) {
@@ -7071,10 +6559,6 @@ static HB_BOOL hb_vmPopLogical()
 // workarea
 static void hb_vmPopAlias()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPopAlias()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmSelectWorkarea(hb_stackItemFromTop(-1), nullptr); // it clears the passed item
   hb_stackDec();
@@ -7084,10 +6568,6 @@ static void hb_vmPopAlias()
 // into a given field
 static void hb_vmPopAliasedField(HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPopAliasedField(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
@@ -7106,10 +6586,6 @@ static void hb_vmPopAliasedField(HB_SYMB *pSym)
 // (any_alias)->variable
 static void hb_vmPopAliasedVar(HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPopAliasedVar(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pAlias = hb_stackItemFromTop(-1);
 
@@ -7141,10 +6617,6 @@ static void hb_vmPopAliasedVar(HB_SYMB *pSym)
 
 static void hb_vmPopLocal(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPopLocal(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pVal = hb_stackItemFromTop(-1);
@@ -7169,10 +6641,6 @@ static void hb_vmPopLocal(int32_t iLocal)
 
 static void hb_vmPopStatic(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPopStatic(%hu)", uiStatic));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pVal = hb_stackItemFromTop(-1);
   // Remove MEMOFLAG if exists (assignment from field).
@@ -7381,10 +6849,6 @@ static HB_ITEM *hb_vmStaticsArray()
 
 static PHB_SYMBOLS hb_vmFindFreeModule(HB_SYMB *pSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmFindFreeModule(%p,%hu,%s,%lu)", static_cast<void*>(pSymbols), uiSymbols, szModuleName, ulID));
-#endif
-
   if (s_ulFreeSymbols) {
     PHB_SYMBOLS pLastSymbols = s_pSymbols;
 
@@ -7416,10 +6880,6 @@ static PHB_SYMBOLS hb_vmFindFreeModule(HB_SYMB *pSymbols, uint16_t uiSymbols, co
 
 void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmFreeSymbols(%p)", static_cast<void*>(pSymbols)));
-#endif
-
   if (pSymbols->fActive && hb_vmLockModuleSymbols()) {
     if (pSymbols->fActive) {
       for (uint16_t ui = 0; ui < pSymbols->uiModuleSymbols; ++ui) {
@@ -7444,20 +6904,12 @@ void hb_vmFreeSymbols(PHB_SYMBOLS pSymbols)
 
 void hb_vmBeginSymbolGroup(void *hDynLib, HB_BOOL fClone)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmBeginSymbolGroup(%p,%d)", hDynLib, static_cast<int32_t>(fClone)));
-#endif
-
   s_hDynLibID = hDynLib;
   s_fCloneSym = fClone;
 }
 
 void hb_vmInitSymbolGroup(void *hNewDynLib, int32_t argc, const char *argv[])
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmInitSymbolGroup(%p,%d,%p)", hNewDynLib, argc, static_cast<const void*>(argv)));
-#endif
-
   s_fCloneSym = false;
 
   if (s_hDynLibID) {
@@ -7536,10 +6988,6 @@ void hb_vmInitSymbolGroup(void *hNewDynLib, int32_t argc, const char *argv[])
 
 void hb_vmExitSymbolGroup(void *hDynLib)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmExitSymbolGroup(%p)", hDynLib));
-#endif
-
   if (hDynLib) {
     PHB_SYMBOLS pLastSymbols = s_pSymbols;
     auto fFound = false;
@@ -7580,10 +7028,6 @@ void hb_vmExitSymbolGroup(void *hDynLib)
 PHB_SYMBOLS hb_vmRegisterSymbols(HB_SYMB *pModuleSymbols, uint16_t uiSymbols, const char *szModuleName, HB_ULONG ulID,
                                  HB_BOOL fDynLib, HB_BOOL fClone, HB_BOOL fOverLoad)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRegisterSymbols(%p,%hu,%s,%lu,%d,%d,%d)", static_cast<void*>(pModuleSymbols), uiSymbols, szModuleName, ulID, static_cast<int32_t>(fDynLib), static_cast<int32_t>(fClone), static_cast<int32_t>(fOverLoad)));
-#endif
-
   auto fRecycled = false;
   auto fInitStatics = false;
   uint16_t ui;
@@ -7723,10 +7167,6 @@ PHB_SYMBOLS hb_vmRegisterSymbols(HB_SYMB *pModuleSymbols, uint16_t uiSymbols, co
 
 static void hb_vmVerifySymbols(HB_ITEM *pArray)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmVerifySymbols(%p)", static_cast<void*>(pArray)));
-#endif
-
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
   HB_ITEM *pItem = nullptr;
 
@@ -7774,10 +7214,6 @@ static void hb_vmVerifyPCodeVersion(const char *szModuleName, uint16_t uiPCodeVe
 HB_SYMB *hb_vmProcessSymbols(HB_SYMB *pSymbols, uint16_t uiModuleSymbols, const char *szModuleName, HB_ULONG ulID,
                              uint16_t uiPCodeVer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmProcessSymbols(%p,%hu,%s,%lu,%hu)", static_cast<void*>(pSymbols), uiModuleSymbols, szModuleName, ulID, uiPCodeVer));
-#endif
-
   hb_vmVerifyPCodeVersion(szModuleName, uiPCodeVer);
   return hb_vmRegisterSymbols(pSymbols, uiModuleSymbols, szModuleName, ulID, s_fCloneSym, s_fCloneSym, false)
       ->pModuleSymbols;
@@ -7786,20 +7222,12 @@ HB_SYMB *hb_vmProcessSymbols(HB_SYMB *pSymbols, uint16_t uiModuleSymbols, const 
 HB_SYMB *hb_vmProcessDynLibSymbols(HB_SYMB *pSymbols, uint16_t uiModuleSymbols, const char *szModuleName,
                                    HB_ULONG ulID, uint16_t uiPCodeVer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmProcessDynLibSymbols(%p,%hu,%s,%lu,%hu)", static_cast<void*>(pSymbols), uiModuleSymbols, szModuleName, ulID, uiPCodeVer));
-#endif
-
   hb_vmVerifyPCodeVersion(szModuleName, uiPCodeVer);
   return hb_vmRegisterSymbols(pSymbols, uiModuleSymbols, szModuleName, ulID, true, true, false)->pModuleSymbols;
 }
 
 static void hb_vmReleaseLocalSymbols()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmReleaseLocalSymbols()"));
-#endif
-
   while (s_pSymbols) {
     PHB_SYMBOLS pDestroy = s_pSymbols;
     s_pSymbols = s_pSymbols->pNext;
@@ -7819,10 +7247,6 @@ static void hb_vmReleaseLocalSymbols()
 // time for normal user defined functions.
 static void hb_vmDoInitStatics()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDoInitStatics()"));
-#endif
-
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
 
   while (pLastSymbols) {
@@ -7844,10 +7268,6 @@ static void hb_vmDoInitStatics()
 
 static void hb_vmDoInitFunctions(HB_BOOL fClipInit)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDoInitFunctions(%d)", fClipInit));
-#endif
-
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
 
   while (pLastSymbols && hb_vmRequestQuery() == 0) {
@@ -7875,10 +7295,6 @@ static void hb_vmDoInitFunctions(HB_BOOL fClipInit)
 
 static void hb_vmDoExitFunctions()
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmDoExitFunctions()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   PHB_SYMBOLS pLastSymbols = s_pSymbols;
 
@@ -8001,10 +7417,6 @@ static void hb_vmItemRefMark(void *value)
 // push extended item reference
 void hb_vmPushItemRef(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmPushItemRef(%p)", static_cast<void*>(pItem)));
-#endif
-
   static const HB_EXTREF s_ItmExtRef = {hb_vmItemRefRead, hb_vmItemRefWrite, hb_vmItemRefCopy, hb_vmItemRefClear,
                                         hb_vmItemRefMark};
 
@@ -8148,10 +7560,6 @@ static void hb_vmMsgRefMark(void *value)
 // create extended message reference
 HB_BOOL hb_vmMsgReference(HB_ITEM *pObject, HB_DYNS *pMessage, HB_DYNS *pAccMsg)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMsgReference(%p,%p,%p)", static_cast<void*>(pObject), static_cast<void*>(pMessage), static_cast<void*>(pAccMsg)));
-#endif
-
   static const HB_EXTREF s_MsgExtRef = {hb_vmMsgRefRead, hb_vmMsgRefWrite, hb_vmMsgRefCopy, hb_vmMsgRefClear,
                                         hb_vmMsgRefMark};
 
@@ -8289,10 +7697,6 @@ static void hb_vmMsgIdxRefMark(void *value)
 // create extended message reference
 static void hb_vmMsgIndexReference(HB_ITEM *pRefer, HB_ITEM *pObject, HB_ITEM *pIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmMsgIndexReference(%p,%p,%p)", static_cast<void*>(pRefer), static_cast<void*>(pObject), static_cast<void*>(pIndex)));
-#endif
-
   static const HB_EXTREF s_MsgIdxExtRef = {hb_vmMsgIdxRefRead, hb_vmMsgIdxRefWrite, hb_vmMsgIdxRefCopy,
                                            hb_vmMsgIdxRefClear, hb_vmMsgIdxRefMark};
 
@@ -8315,10 +7719,6 @@ static void hb_vmMsgIndexReference(HB_ITEM *pRefer, HB_ITEM *pObject, HB_ITEM *p
 
 void hb_vmRequestQuit(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestQuit()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // In MT mode EXIT functions are executed only from hb_vmQuit()
@@ -8331,20 +7731,12 @@ void hb_vmRequestQuit(void)
 
 void hb_vmRequestEndProc(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestEndProc()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_stackSetActionRequest(HB_ENDPROC_REQUESTED);
 }
 
 void hb_vmRequestBreak(HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestBreak(%p)", static_cast<void*>(pItem)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   HB_ISIZ nRecoverBase = hb_stackGetRecoverBase();
@@ -8392,10 +7784,6 @@ void hb_vmRequestBreak(HB_ITEM *pItem)
 
 void hb_vmRequestCancel(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestCancel()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (hb_stackSetStruct()->HB_SET_CANCEL) {
@@ -8438,10 +7826,6 @@ uint16_t hb_vmRequestQuery(void)
 
 HB_BOOL hb_vmRequestReenter(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestReenter()"));
-#endif
-
   if (s_fHVMActive) {
     HB_STACK_TLS_PRELOAD
     int32_t iLocks = 0;
@@ -8475,10 +7859,6 @@ HB_BOOL hb_vmRequestReenter(void)
 
 void hb_vmRequestRestore(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestRestore()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->type != Harbour::Item::RECOVER) {
@@ -8517,10 +7897,6 @@ void hb_vmRequestRestore(void)
 
 HB_BOOL hb_vmRequestReenterExt(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestReenterExt()"));
-#endif
-
   if (s_fHVMActive) {
     uint16_t uiAction = 0;
     int32_t iLocks = 0;
@@ -8577,10 +7953,6 @@ HB_BOOL hb_vmRequestReenterExt(void)
 
 HB_BOOL hb_vmTryEval(HB_ITEM **pResult, HB_ITEM *pItem, HB_ULONG ulPCount, ...)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmTryEval(%p, %p, %lu)", static_cast<void*>(pResult), static_cast<void*>(pItem), ulPCount));
-#endif
-
   auto fResult = false;
   *pResult = nullptr;
   if (s_fHVMActive) {
@@ -8647,19 +8019,11 @@ HB_BOOL hb_vmTryEval(HB_ITEM **pResult, HB_ITEM *pItem, HB_ULONG ulPCount, ...)
 
 HB_BOOL hb_vmIsActive(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmIsActive()"));
-#endif
-
   return s_fHVMActive;
 }
 
 HB_BOOL hb_vmIsReady(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmIsReady()"));
-#endif
-
 #if defined(HB_MT_VM)
   if (s_fHVMActive) {
     HB_STACK_TLS_PRELOAD
@@ -8876,10 +8240,6 @@ HB_BOOL hb_xvmSeqRecover(void)
 
 void hb_xvmSeqAlways(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSeqAlways()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // Create the SEQUENCE ALWAYS envelope
@@ -8905,10 +8265,6 @@ void hb_xvmSeqAlways(void)
 
 HB_BOOL hb_xvmAlwaysBegin(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmAlwaysBegin()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // remove all items placed on the stack after BEGIN code
@@ -8931,10 +8287,6 @@ HB_BOOL hb_xvmAlwaysBegin(void)
 
 HB_BOOL hb_xvmAlwaysEnd(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmAlwaysEnd()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   // remove all items placed on the stack after ALWAYSBEGIN code
@@ -8973,10 +8325,6 @@ HB_BOOL hb_xvmAlwaysEnd(void)
 
 HB_BOOL hb_xvmSeqBlock(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSeqBlock()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmSeqBlock();
   HB_XVM_RETURN
@@ -8984,10 +8332,6 @@ HB_BOOL hb_xvmSeqBlock(void)
 
 HB_BOOL hb_xvmEnumStart(int32_t nVars, int32_t nDescend)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEnumStart(%d,%d)", nVars, nDescend));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmEnumStart(nVars, nDescend);
   HB_XVM_RETURN
@@ -8995,10 +8339,6 @@ HB_BOOL hb_xvmEnumStart(int32_t nVars, int32_t nDescend)
 
 HB_BOOL hb_xvmEnumNext(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEnumNext()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmEnumNext();
   HB_XVM_RETURN
@@ -9006,10 +8346,6 @@ HB_BOOL hb_xvmEnumNext(void)
 
 HB_BOOL hb_xvmEnumPrev(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEnumPrev()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmEnumPrev();
   HB_XVM_RETURN
@@ -9017,19 +8353,11 @@ HB_BOOL hb_xvmEnumPrev(void)
 
 void hb_xvmEnumEnd(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEnumEnd()"));
-#endif
-
   hb_vmEnumEnd();
 }
 
 HB_BOOL hb_xvmSwitchGet(HB_ITEM **pSwitchPtr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSwitchGet(%p)", static_cast<void*>(pSwitchPtr)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   *pSwitchPtr = hb_vmSwitchGet();
   HB_XVM_RETURN
@@ -9037,10 +8365,6 @@ HB_BOOL hb_xvmSwitchGet(HB_ITEM **pSwitchPtr)
 
 void hb_xvmSetLine(uint16_t uiLine)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSetLine(%hu)", uiLine));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   hb_stackBaseItem()->symbolStackState()->uiLineNo = uiLine;
@@ -9053,37 +8377,21 @@ void hb_xvmSetLine(uint16_t uiLine)
 
 void hb_xvmFrame(int32_t iLocals, int32_t iParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmFrame(%d, %d)", iLocals, iParams));
-#endif
-
   hb_vmFrame(static_cast<uint16_t>(iLocals), static_cast<unsigned char>(iParams));
 }
 
 void hb_xvmVFrame(int32_t iLocals, int32_t iParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmVFrame(%d, %d)", iLocals, iParams));
-#endif
-
   hb_vmVFrame(static_cast<uint16_t>(iLocals), static_cast<unsigned char>(iParams));
 }
 
 void hb_xvmSFrame(HB_SYMB *pSymbol)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSFrame(%p)", static_cast<void*>(pSymbol)));
-#endif
-
   hb_vmSFrame(pSymbol);
 }
 
 HB_BOOL hb_xvmDo(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDo(%hu)", uiParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmProc(uiParams);
   HB_XVM_RETURN
@@ -9091,10 +8399,6 @@ HB_BOOL hb_xvmDo(uint16_t uiParams)
 
 HB_BOOL hb_xvmFunction(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmFunction(%hu)", uiParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemSetNil(hb_stackReturnItem());
   hb_vmProc(uiParams);
@@ -9104,10 +8408,6 @@ HB_BOOL hb_xvmFunction(uint16_t uiParams)
 
 HB_BOOL hb_xvmSend(uint16_t uiParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSend(%hu)", uiParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemSetNil(hb_stackReturnItem());
   hb_vmSend(uiParams);
@@ -9117,10 +8417,6 @@ HB_BOOL hb_xvmSend(uint16_t uiParams)
 
 HB_BOOL hb_xvmPushObjectVarRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushObjectVarRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmPushObjectVarRef();
   HB_XVM_RETURN
@@ -9128,10 +8424,6 @@ HB_BOOL hb_xvmPushObjectVarRef(void)
 
 void hb_xvmRetValue(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmRetValue()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_stackPopReturn();
   hb_stackReturnItem()->type &= ~Harbour::Item::MEMOFLAG;
@@ -9139,85 +8431,49 @@ void hb_xvmRetValue(void)
 
 void hb_xvmRetNil(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmRetNil()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemSetNil(hb_stackReturnItem());
 }
 
 void hb_xvmRetInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmRetInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_itemPutNL(hb_stackReturnItem(), lValue);
 }
 
 void hb_xvmStatics(HB_SYMB *pSymbol, uint16_t uiStatics)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmStatics(%p,%hu)", static_cast<void*>(pSymbol), uiStatics));
-#endif
-
   hb_vmStatics(pSymbol, uiStatics);
 }
 
 void hb_xvmThreadStatics(uint16_t uiStatics, const uint8_t *statics)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmThreadStatics(%hu,%p)", uiStatics, static_cast<const void*>(statics)));
-#endif
-
   hb_vmInitThreadStatics(uiStatics, statics);
 }
 
 void hb_xvmParameter(HB_SYMB *pSymbol, int32_t iParams)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmParameter(%p,%d)", static_cast<void*>(pSymbol), iParams));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_memvarNewParameter(pSymbol, hb_stackItemFromBase(iParams));
 }
 
 void hb_xvmPushLocal(int16_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLocal(%hd)", iLocal));
-#endif
-
   hb_vmPushLocal(iLocal);
 }
 
 void hb_xvmPushLocalByRef(int16_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLocalByRef(%hd)", iLocal));
-#endif
-
   hb_vmPushLocalByRef(iLocal);
 }
 
 void hb_xvmPopLocal(int16_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPopLocal(%hd)", iLocal));
-#endif
-
   hb_vmPopLocal(iLocal);
 }
 
 static HB_ITEM *hb_xvmLocalPtr(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalPtr(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (iLocal >= 0) {
@@ -9232,38 +8488,22 @@ static HB_ITEM *hb_xvmLocalPtr(int32_t iLocal)
 
 void hb_xvmCopyLocals(int32_t iDest, int32_t iSource)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmCopyLocals(%d,%d)", iDest, iSource));
-#endif
-
   HB_ITEM *pDest = hb_xvmLocalPtr(iDest);
   hb_itemCopyToRef(hb_xvmLocalPtr(iSource), pDest->isByRef() ? hb_itemUnRef(pDest) : pDest);
 }
 
 void hb_xvmPushStatic(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushStatic(%hu)", uiStatic));
-#endif
-
   hb_vmPushStatic(uiStatic);
 }
 
 void hb_xvmPushStaticByRef(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushStaticByRef(%hu)", uiStatic));
-#endif
-
   hb_vmPushStaticByRef(uiStatic);
 }
 
 void hb_xvmPopStatic(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPopStatic(%hu)", uiStatic));
-#endif
-
   hb_vmPopStatic(uiStatic);
 }
 
@@ -9298,38 +8538,22 @@ HB_BOOL hb_xvmPopVariable(HB_SYMB *pSymbol)
 
 void hb_xvmPushBlockShort(const uint8_t *pCode, HB_SYMB *pSymbols)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushBlockShort(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols)));
-#endif
-
   hb_vmPushBlockShort(pCode, pSymbols, false);
 }
 
 void hb_xvmPushBlock(const uint8_t *pCode, HB_SYMB *pSymbols)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushBlock(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols)));
-#endif
-
   hb_vmPushBlock(pCode, pSymbols, false);
 }
 
 void hb_xvmPushSelf(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushSelf()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmPush(hb_stackSelfItem());
 }
 
 void hb_xvmPushFuncSymbol(HB_SYMB *pSym)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushFuncSymbol(%p)", static_cast<void*>(pSym)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
@@ -9340,10 +8564,6 @@ void hb_xvmPushFuncSymbol(HB_SYMB *pSym)
 
 HB_BOOL hb_xvmPopLogical(HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPopLogical(%p)", static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
   *pfValue = hb_vmPopLogical();
   HB_XVM_RETURN
@@ -9351,10 +8571,6 @@ HB_BOOL hb_xvmPopLogical(HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmPopAlias(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPopAlias()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmSelectWorkarea(hb_stackItemFromTop(-1), nullptr); // it clears the passed item
   hb_stackDec();
@@ -9363,10 +8579,6 @@ HB_BOOL hb_xvmPopAlias(void)
 
 HB_BOOL hb_xvmSwapAlias(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSwapAlias()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmSwapAlias();
   HB_XVM_RETURN
@@ -9385,10 +8597,6 @@ HB_BOOL hb_xvmPushField(HB_SYMB *pSymbol)
 
 HB_BOOL hb_xvmPushAlias(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushAlias()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmPushAlias();
   HB_XVM_RETURN
@@ -9517,10 +8725,6 @@ HB_BOOL hb_xvmPopAliasedVar(HB_SYMB *pSymbol)
 
 void hb_xvmLocalSetInt(int32_t iLocal, HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalSetInt(%d, %ld)", iLocal, lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pLocal;
 
@@ -9547,10 +8751,6 @@ void hb_xvmLocalSetInt(int32_t iLocal, HB_LONG lValue)
 
 HB_BOOL hb_xvmLocalAddInt(int32_t iLocal, HB_LONG lAdd)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalAddInt(%d,%ld)", iLocal, lAdd));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmAddInt(hb_stackLocalVariable(iLocal), lAdd);
   HB_XVM_RETURN
@@ -9558,10 +8758,6 @@ HB_BOOL hb_xvmLocalAddInt(int32_t iLocal, HB_LONG lAdd)
 
 HB_BOOL hb_xvmLocalInc(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalInc(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pLocal = hb_stackLocalVariable(iLocal);
   hb_vmInc(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
@@ -9570,10 +8766,6 @@ HB_BOOL hb_xvmLocalInc(int32_t iLocal)
 
 HB_BOOL hb_xvmLocalDec(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalDec(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pLocal = hb_stackLocalVariable(iLocal);
   hb_vmDec(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
@@ -9582,10 +8774,6 @@ HB_BOOL hb_xvmLocalDec(int32_t iLocal)
 
 HB_BOOL hb_xvmLocalIncPush(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalInc(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pLocal = hb_stackLocalVariable(iLocal);
   if (pLocal->isByRef()) {
@@ -9598,10 +8786,6 @@ HB_BOOL hb_xvmLocalIncPush(int32_t iLocal)
 
 HB_BOOL hb_xvmLocalAdd(int32_t iLocal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalAdd(%d)", iLocal));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pLocal = hb_stackLocalVariable(iLocal);
   if (pLocal->isByRef()) {
@@ -9615,10 +8799,6 @@ HB_BOOL hb_xvmLocalAdd(int32_t iLocal)
 
 HB_BOOL hb_xvmStaticAdd(uint16_t uiStatic)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmStaticAdd(%hu)", uiStatic));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pStatic = (static_cast<HB_ITEM *>(hb_stackGetStaticsBase()))->arrayItems() + uiStatic - 1;
   if (pStatic->isByRef()) {
@@ -9657,10 +8837,6 @@ HB_BOOL hb_xvmMemvarAdd(HB_SYMB *pSymbol)
 
 HB_BOOL hb_xvmAnd(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmAnd()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmAnd();
   HB_XVM_RETURN
@@ -9668,10 +8844,6 @@ HB_BOOL hb_xvmAnd(void)
 
 HB_BOOL hb_xvmOr(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmOr()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmOr();
   HB_XVM_RETURN
@@ -9679,10 +8851,6 @@ HB_BOOL hb_xvmOr(void)
 
 HB_BOOL hb_xvmNot(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmNot()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmNot();
   HB_XVM_RETURN
@@ -9690,10 +8858,6 @@ HB_BOOL hb_xvmNot(void)
 
 HB_BOOL hb_xvmNegate(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmNegate()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmNegate();
   HB_XVM_RETURN
@@ -9701,46 +8865,26 @@ HB_BOOL hb_xvmNegate(void)
 
 void hb_xvmDuplicate(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDuplicate()"));
-#endif
-
   hb_vmDuplicate();
 }
 
 void hb_xvmDuplUnRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDuplUnRef()"));
-#endif
-
   hb_vmDuplUnRef();
 }
 
 void hb_xvmPushUnRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushUnRef()"));
-#endif
-
   hb_vmPushUnRef();
 }
 
 void hb_xvmSwap(int32_t iCount)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmSwap(%d)", iCount));
-#endif
-
   hb_vmSwap(iCount);
 }
 
 HB_BOOL hb_xvmForTest(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmForTest()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmForTest();
   HB_XVM_RETURN
@@ -9748,19 +8892,11 @@ HB_BOOL hb_xvmForTest(void)
 
 void hb_xvmFuncPtr(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmFuncPtr()"));
-#endif
-
   hb_vmFuncPtr();
 }
 
 HB_BOOL hb_xvmEqual(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmEqual();
   HB_XVM_RETURN
@@ -9768,10 +8904,6 @@ HB_BOOL hb_xvmEqual(void)
 
 HB_BOOL hb_xvmExactlyEqual(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmExactlyEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmExactlyEqual();
   HB_XVM_RETURN
@@ -9779,10 +8911,6 @@ HB_BOOL hb_xvmExactlyEqual(void)
 
 HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEqualInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -9822,10 +8950,6 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmEqualIntIs(%ld,%p)", lValue, static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -9867,10 +8991,6 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmNotEqual(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmNotEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmNotEqual();
   HB_XVM_RETURN
@@ -9878,10 +8998,6 @@ HB_BOOL hb_xvmNotEqual(void)
 
 HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmNotEqualInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -9921,10 +9037,6 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmNotEqualIntIs(%ld,%p)", lValue, static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -9966,10 +9078,6 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmLess(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLess()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmLess();
   HB_XVM_RETURN
@@ -9977,10 +9085,6 @@ HB_BOOL hb_xvmLess(void)
 
 HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLessThenInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10017,10 +9121,6 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLessThenIntIs(%ld,%p)", lValue, static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10059,10 +9159,6 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmLessEqual(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLessEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmLessEqual();
   HB_XVM_RETURN
@@ -10070,10 +9166,6 @@ HB_BOOL hb_xvmLessEqual(void)
 
 HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLessEqualThenInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10110,10 +9202,6 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLessEqualThenIntIs(%ld,%p)", lValue, static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10152,10 +9240,6 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmGreater(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmGreater()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmGreater();
   HB_XVM_RETURN
@@ -10163,10 +9247,6 @@ HB_BOOL hb_xvmGreater(void)
 
 HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmGreaterThenInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10203,10 +9283,6 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmGreaterThenIntIs(%ld,%p)", lValue, static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10245,10 +9321,6 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmGreaterEqual(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmGreaterEqual()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmGreaterEqual();
   HB_XVM_RETURN
@@ -10256,10 +9328,6 @@ HB_BOOL hb_xvmGreaterEqual(void)
 
 HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmGreaterEqualThenInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10296,10 +9364,6 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmGreaterEqualThenIntIs(%ld,%p)", lValue, static_cast<void*>(pfValue)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
@@ -10338,10 +9402,6 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
 
 HB_BOOL hb_xvmInstring(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmInstring()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmInstring();
   HB_XVM_RETURN
@@ -10349,10 +9409,6 @@ HB_BOOL hb_xvmInstring(void)
 
 HB_BOOL hb_xvmAddInt(HB_LONG lAdd)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmAddInt(%ld)", lAdd));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmAddInt(hb_stackItemFromTop(-1), lAdd);
   HB_XVM_RETURN
@@ -10360,10 +9416,6 @@ HB_BOOL hb_xvmAddInt(HB_LONG lAdd)
 
 HB_BOOL hb_xvmPlus(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPlus()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmPlus(hb_stackItemFromTop(-2), hb_stackItemFromTop(-2), hb_stackItemFromTop(-1));
   hb_stackPop();
@@ -10372,10 +9424,6 @@ HB_BOOL hb_xvmPlus(void)
 
 HB_BOOL hb_xvmPlusEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPlusEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   auto pValue = hb_stackItemFromTop(-1);
@@ -10388,10 +9436,6 @@ HB_BOOL hb_xvmPlusEq(void)
 
 HB_BOOL hb_xvmPlusEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPlusEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   hb_vmPlus(pResult, pResult, hb_stackItemFromTop(-1));
@@ -10402,10 +9446,6 @@ HB_BOOL hb_xvmPlusEqPop(void)
 
 HB_BOOL hb_xvmMinus(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMinus()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMinus(hb_stackItemFromTop(-2), hb_stackItemFromTop(-2), hb_stackItemFromTop(-1));
   hb_stackPop();
@@ -10414,10 +9454,6 @@ HB_BOOL hb_xvmMinus(void)
 
 HB_BOOL hb_xvmMinusEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMinusEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   auto pValue = hb_stackItemFromTop(-1);
@@ -10430,10 +9466,6 @@ HB_BOOL hb_xvmMinusEq(void)
 
 HB_BOOL hb_xvmMinusEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMinusEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   hb_vmMinus(pResult, pResult, hb_stackItemFromTop(-1));
@@ -10444,10 +9476,6 @@ HB_BOOL hb_xvmMinusEqPop(void)
 
 HB_BOOL hb_xvmMultByInt(HB_LONG lValue)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMultByInt(%ld)", lValue));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-1);
@@ -10474,10 +9502,6 @@ HB_BOOL hb_xvmMultByInt(HB_LONG lValue)
 
 HB_BOOL hb_xvmMult(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMult()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMult(hb_stackItemFromTop(-2), hb_stackItemFromTop(-2), hb_stackItemFromTop(-1));
   hb_stackPop();
@@ -10486,10 +9510,6 @@ HB_BOOL hb_xvmMult(void)
 
 HB_BOOL hb_xvmMultEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMultEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   auto pValue = hb_stackItemFromTop(-1);
@@ -10502,10 +9522,6 @@ HB_BOOL hb_xvmMultEq(void)
 
 HB_BOOL hb_xvmMultEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMultEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   hb_vmMult(pResult, pResult, hb_stackItemFromTop(-1));
@@ -10516,10 +9532,6 @@ HB_BOOL hb_xvmMultEqPop(void)
 
 HB_BOOL hb_xvmDivideByInt(HB_LONG lDivisor)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDivideByInt(%ld)", lDivisor));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-1);
@@ -10554,10 +9566,6 @@ HB_BOOL hb_xvmDivideByInt(HB_LONG lDivisor)
 
 HB_BOOL hb_xvmModulusByInt(HB_LONG lDivisor)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmModulusByInt(%ld)", lDivisor));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-1);
@@ -10594,10 +9602,6 @@ HB_BOOL hb_xvmModulusByInt(HB_LONG lDivisor)
 
 HB_BOOL hb_xvmDivide(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDivide()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmDivide(hb_stackItemFromTop(-2), hb_stackItemFromTop(-2), hb_stackItemFromTop(-1));
   hb_stackPop();
@@ -10606,10 +9610,6 @@ HB_BOOL hb_xvmDivide(void)
 
 HB_BOOL hb_xvmDivEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDivEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   auto pValue = hb_stackItemFromTop(-1);
@@ -10622,10 +9622,6 @@ HB_BOOL hb_xvmDivEq(void)
 
 HB_BOOL hb_xvmDivEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDivEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   hb_vmDivide(pResult, pResult, hb_stackItemFromTop(-1));
@@ -10636,10 +9632,6 @@ HB_BOOL hb_xvmDivEqPop(void)
 
 HB_BOOL hb_xvmModulus(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmModulus()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmModulus(hb_stackItemFromTop(-2), hb_stackItemFromTop(-2), hb_stackItemFromTop(-1));
   hb_stackPop();
@@ -10648,10 +9640,6 @@ HB_BOOL hb_xvmModulus(void)
 
 HB_BOOL hb_xvmModEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmModEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   auto pValue = hb_stackItemFromTop(-1);
@@ -10664,10 +9652,6 @@ HB_BOOL hb_xvmModEq(void)
 
 HB_BOOL hb_xvmModEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmModEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   hb_vmModulus(pResult, pResult, hb_stackItemFromTop(-1));
@@ -10678,10 +9662,6 @@ HB_BOOL hb_xvmModEqPop(void)
 
 HB_BOOL hb_xvmPower(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPower()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmPower(hb_stackItemFromTop(-2), hb_stackItemFromTop(-2), hb_stackItemFromTop(-1));
   hb_stackPop();
@@ -10690,10 +9670,6 @@ HB_BOOL hb_xvmPower(void)
 
 HB_BOOL hb_xvmExpEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmExpEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   auto pValue = hb_stackItemFromTop(-1);
@@ -10706,10 +9682,6 @@ HB_BOOL hb_xvmExpEq(void)
 
 HB_BOOL hb_xvmExpEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmExpEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
   hb_vmPower(pResult, pResult, hb_stackItemFromTop(-1));
@@ -10720,10 +9692,6 @@ HB_BOOL hb_xvmExpEqPop(void)
 
 HB_BOOL hb_xvmInc(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmInc()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmInc(hb_stackItemFromTop(-1));
   HB_XVM_RETURN
@@ -10731,10 +9699,6 @@ HB_BOOL hb_xvmInc(void)
 
 HB_BOOL hb_xvmIncEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmIncEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_stackItemFromTop(-1);
   auto pValue = hb_itemUnRef(pResult);
@@ -10748,10 +9712,6 @@ HB_BOOL hb_xvmIncEq(void)
 
 HB_BOOL hb_xvmIncEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmIncEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmInc(hb_itemUnRef(hb_stackItemFromTop(-1)));
   hb_stackPop();
@@ -10760,10 +9720,6 @@ HB_BOOL hb_xvmIncEqPop(void)
 
 HB_BOOL hb_xvmDec(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDec()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmDec(hb_stackItemFromTop(-1));
   HB_XVM_RETURN
@@ -10771,10 +9727,6 @@ HB_BOOL hb_xvmDec(void)
 
 HB_BOOL hb_xvmDecEq(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDecEq()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   auto pResult = hb_stackItemFromTop(-1);
   auto pValue = hb_itemUnRef(pResult);
@@ -10788,10 +9740,6 @@ HB_BOOL hb_xvmDecEq(void)
 
 HB_BOOL hb_xvmDecEqPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmDecEqPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmDec(hb_itemUnRef(hb_stackItemFromTop(-1)));
   hb_stackPop();
@@ -10800,37 +9748,21 @@ HB_BOOL hb_xvmDecEqPop(void)
 
 void hb_xvmArrayDim(uint16_t uiDimensions)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayDim(%hu)", uiDimensions));
-#endif
-
   hb_vmArrayDim(uiDimensions);
 }
 
 void hb_xvmArrayGen(HB_SIZE nElements)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayGen(%" HB_PFS "u)", nElements));
-#endif
-
   hb_vmArrayGen(nElements);
 }
 
 void hb_xvmHashGen(HB_SIZE nElements)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmHashGen(%" HB_PFS "u)", nElements));
-#endif
-
   hb_vmHashGen(nElements);
 }
 
 static void hb_vmArrayItemPush(HB_SIZE nIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayItemPush(%" HB_PFS "u)", nIndex));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_stackItemFromTop(-1);
@@ -10887,10 +9819,6 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
 
 static void hb_vmArrayItemPop(HB_SIZE nIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmArrayItemPop(%" HB_PFS "u)", nIndex));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-2);
@@ -10961,10 +9889,6 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
 
 HB_BOOL hb_xvmArrayPush(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayPush()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmArrayPush();
   HB_XVM_RETURN
@@ -10972,10 +9896,6 @@ HB_BOOL hb_xvmArrayPush(void)
 
 HB_BOOL hb_xvmArrayPushRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayPushRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmArrayPushRef();
   HB_XVM_RETURN
@@ -10983,10 +9903,6 @@ HB_BOOL hb_xvmArrayPushRef(void)
 
 HB_BOOL hb_xvmArrayItemPush(HB_SIZE nIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayItemPush(%" HB_PFS "u)", nIndex));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmArrayItemPush(nIndex);
   HB_XVM_RETURN
@@ -10994,10 +9910,6 @@ HB_BOOL hb_xvmArrayItemPush(HB_SIZE nIndex)
 
 HB_BOOL hb_xvmArrayPop(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayPop()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmArrayPop();
   HB_XVM_RETURN
@@ -11005,10 +9917,6 @@ HB_BOOL hb_xvmArrayPop(void)
 
 HB_BOOL hb_xvmArrayItemPop(HB_SIZE nIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmArrayItemPop(%" HB_PFS "u)", nIndex));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmArrayItemPop(nIndex);
   HB_XVM_RETURN
@@ -11016,39 +9924,23 @@ HB_BOOL hb_xvmArrayItemPop(HB_SIZE nIndex)
 
 void hb_xvmPushDouble(double dNumber, int32_t iWidth, int32_t iDec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushDouble(%lf, %d, %d)", dNumber, iWidth, iDec));
-#endif
-
   hb_vmPushDoubleConst(dNumber, iWidth, iDec);
 }
 
 #ifdef HB_LONG_LONG_OFF
 void hb_xvmPushLongLong(double dNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLongLong(%l.0f)", dNumber));
-#endif
-
   hb_vmPushDoubleConst(dNumber, HB_DEFAULT_WIDTH, 0);
 }
 #else
 void hb_xvmPushLongLong(int64_t llNumber)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushLongLong(%" PFLL "i)", llNumber));
-#endif
-
   hb_vmPushLongLongConst(llNumber);
 }
 #endif
 
 void hb_xvmPushStringHidden(int32_t iMethod, const char *szText, HB_SIZE nSize)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushStringHidden(%d, %s, %" HB_PFS "u)", iMethod, szText, nSize));
-#endif
-
   HB_STACK_TLS_PRELOAD
   char *szString = hb_compDecodeString(iMethod, szText, &nSize);
   hb_itemPutCLPtr(hb_stackAllocItem(), szString, nSize);
@@ -11056,10 +9948,6 @@ void hb_xvmPushStringHidden(int32_t iMethod, const char *szText, HB_SIZE nSize)
 
 void hb_xvmLocalName(uint16_t uiLocal, const char *szLocalName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmLocalName(%hu, %s)", uiLocal, szLocalName));
-#endif
-
 #ifndef HB_NO_DEBUG
   hb_vmLocalName(uiLocal, szLocalName);
 #else
@@ -11070,10 +9958,6 @@ void hb_xvmLocalName(uint16_t uiLocal, const char *szLocalName)
 
 void hb_xvmStaticName(uint8_t bIsGlobal, uint16_t uiStatic, const char *szStaticName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmStaticName(%d, %hu, %s)", static_cast<int32_t>(bIsGlobal), uiStatic, szStaticName));
-#endif
-
 #ifndef HB_NO_DEBUG
   hb_vmStaticName(bIsGlobal, uiStatic, szStaticName);
 #else
@@ -11085,10 +9969,6 @@ void hb_xvmStaticName(uint8_t bIsGlobal, uint16_t uiStatic, const char *szStatic
 
 void hb_xvmModuleName(const char *szModuleName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmModuleName(%s)", szModuleName));
-#endif
-
 #ifndef HB_NO_DEBUG
   hb_vmModuleName(szModuleName);
 #else
@@ -11098,10 +9978,6 @@ void hb_xvmModuleName(const char *szModuleName)
 
 HB_BOOL hb_xvmMacroArrayGen(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroArrayGen(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMacroArrayGen(uiArgSets);
   HB_XVM_RETURN
@@ -11109,10 +9985,6 @@ HB_BOOL hb_xvmMacroArrayGen(uint16_t uiArgSets)
 
 HB_BOOL hb_xvmMacroDo(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroDo(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMacroDo(uiArgSets);
   HB_XVM_RETURN
@@ -11120,10 +9992,6 @@ HB_BOOL hb_xvmMacroDo(uint16_t uiArgSets)
 
 HB_BOOL hb_xvmMacroFunc(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroFunc(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMacroFunc(uiArgSets);
   HB_XVM_RETURN
@@ -11131,10 +9999,6 @@ HB_BOOL hb_xvmMacroFunc(uint16_t uiArgSets)
 
 HB_BOOL hb_xvmMacroSend(uint16_t uiArgSets)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroSend(%hu)", uiArgSets));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMacroSend(uiArgSets);
   HB_XVM_RETURN
@@ -11142,10 +10006,6 @@ HB_BOOL hb_xvmMacroSend(uint16_t uiArgSets)
 
 HB_BOOL hb_xvmMacroPush(int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPush(%d)", iFlags));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroGetValue(hb_stackItemFromTop(-1), 0, iFlags);
   HB_XVM_RETURN
@@ -11153,10 +10013,6 @@ HB_BOOL hb_xvmMacroPush(int32_t iFlags)
 
 HB_BOOL hb_xvmMacroPushRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPushRef()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   HB_ITEM *pMacro = hb_stackItemFromTop(-1);
   hb_macroPushReference(pMacro);
@@ -11165,10 +10021,6 @@ HB_BOOL hb_xvmMacroPushRef(void)
 
 HB_BOOL hb_xvmMacroPushIndex(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPushIndex()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_vmMacroPushIndex();
   HB_XVM_RETURN
@@ -11176,10 +10028,6 @@ HB_BOOL hb_xvmMacroPushIndex(void)
 
 HB_BOOL hb_xvmMacroPushList(int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPushList(%d)", iFlags));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroGetValue(hb_stackItemFromTop(-1), HB_P_MACROPUSHLIST, iFlags);
   HB_XVM_RETURN
@@ -11187,10 +10035,6 @@ HB_BOOL hb_xvmMacroPushList(int32_t iFlags)
 
 HB_BOOL hb_xvmMacroPushPare(int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPushPare(%d)", iFlags));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroGetValue(hb_stackItemFromTop(-1), HB_P_MACROPUSHPARE, iFlags);
   HB_XVM_RETURN
@@ -11198,10 +10042,6 @@ HB_BOOL hb_xvmMacroPushPare(int32_t iFlags)
 
 HB_BOOL hb_xvmMacroPushAliased(int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPushAliased(%d)", iFlags));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroPushAliasedValue(hb_stackItemFromTop(-2), hb_stackItemFromTop(-1), iFlags);
   HB_XVM_RETURN
@@ -11209,10 +10049,6 @@ HB_BOOL hb_xvmMacroPushAliased(int32_t iFlags)
 
 HB_BOOL hb_xvmMacroPop(int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPop(%d)", iFlags));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroSetValue(hb_stackItemFromTop(-1), iFlags);
   HB_XVM_RETURN
@@ -11220,10 +10056,6 @@ HB_BOOL hb_xvmMacroPop(int32_t iFlags)
 
 HB_BOOL hb_xvmMacroPopAliased(int32_t iFlags)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroPopAliased(%d)", iFlags));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroPopAliasedValue(hb_stackItemFromTop(-2), hb_stackItemFromTop(-1), iFlags);
   HB_XVM_RETURN
@@ -11231,10 +10063,6 @@ HB_BOOL hb_xvmMacroPopAliased(int32_t iFlags)
 
 HB_BOOL hb_xvmMacroSymbol(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroSymbol()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroPushSymbol(hb_stackItemFromTop(-1));
   HB_XVM_RETURN
@@ -11242,10 +10070,6 @@ HB_BOOL hb_xvmMacroSymbol(void)
 
 HB_BOOL hb_xvmMacroText(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmMacroText()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_macroTextValue(hb_stackItemFromTop(-1));
   HB_XVM_RETURN
@@ -11253,37 +10077,21 @@ HB_BOOL hb_xvmMacroText(void)
 
 void hb_xvmPushVParams(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushVParams()"));
-#endif
-
   hb_vmPushVParams();
 }
 
 void hb_xvmPushAParams(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmPushAParams()"));
-#endif
-
   hb_vmPushAParams();
 }
 
 void hb_xvmWithObjectStart(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmWithObjectStart()"));
-#endif
-
   hb_vmWithObjectStart();
 }
 
 void hb_xvmWithObjectEnd(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmWithObjectEnd()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   hb_stackPop(); // remove with object envelope
   hb_stackPop(); // remove implicit object
@@ -11291,10 +10099,6 @@ void hb_xvmWithObjectEnd(void)
 
 void hb_xvmWithObjectMessage(HB_SYMB *pSymbol)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xvmWithObjectMessage(%p)", static_cast<void*>(pSymbol)));
-#endif
-
   HB_STACK_TLS_PRELOAD
 
   if (pSymbol) {
@@ -11316,10 +10120,6 @@ void hb_xvmWithObjectMessage(HB_SYMB *pSymbol)
 void hb_vmRequestDebug(void)
 {
 #ifndef HB_NO_DEBUG
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmRequestDebug()"));
-#endif
-
   HB_STACK_TLS_PRELOAD
   *(hb_stackDebugRequest()) = true;
 #endif
@@ -11341,10 +10141,6 @@ HB_BOOL hb_dbg_InvokeDebug(HB_BOOL bInvoke)
 
 HB_DBGENTRY_FUNC hb_dbg_SetEntry(HB_DBGENTRY_FUNC pFunDbgEntry)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbg_SetEntry(%p)", reinterpret_cast<void*>(pFunDbgEntry)));
-#endif
-
   HB_DBGENTRY_FUNC pPrevFunc;
 
 #ifndef HB_NO_DEBUG
@@ -11514,20 +10310,12 @@ HB_FUNC(__DBGVMVARGSET)
 // garbage collector
 void hb_vmIsStaticRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmIsStaticRef()"));
-#endif
-
-  // statics are stored as an item of arrays allocated by hb_itemNew() so
+ // statics are stored as an item of arrays allocated by hb_itemNew() so
   // they do not need any special GC support
 }
 
 void hb_vmIsStackRef(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmIsStackRef()"));
-#endif
-
 #if defined(HB_MT_VM)
   if (s_vmStackLst) {
     PHB_THREADSTATE pStack = s_vmStackLst;
@@ -11546,10 +10334,6 @@ void hb_vmIsStackRef(void)
 
 void hb_vmUpdateAllocator(PHB_ALLOCUPDT_FUNC pFunc, int32_t iCount)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmUpdateAllocator(%p, %d)", reinterpret_cast<void*>(pFunc), iCount));
-#endif
-
 #if defined(HB_MT_VM)
   if (s_vmStackLst) {
     PHB_THREADSTATE pStack = s_vmStackLst;
@@ -11804,10 +10588,6 @@ HB_FUNC(ERRORLEVEL)
 extern void hb_vmForceLink(void);
 void hb_vmForceLink(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_vmForceLink()"));
-#endif
-
   HB_FUNC_EXEC(SYSINIT);
 }
 

@@ -315,10 +315,6 @@ static void hb_arraySortStart(HB_BASEARRAY *pBaseArray, HB_ITEM *pBlock, HB_SIZE
 
 HB_BOOL hb_arraySort(HB_ITEM *pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_ITEM *pBlock)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_arraySort(%p, %p, %p, %p)", static_cast<void*>(pArray), static_cast<void*>(pnStart), static_cast<void*>(pnCount), static_cast<void*>(pBlock)));
-#endif
-
   if (pArray->isArray()) {
     HB_BASEARRAY *pBaseArray = pArray->arrayValue();
     HB_SIZE nLen = pBaseArray->nLen;

@@ -97,10 +97,6 @@ static HB_SIZE hb_hrbCheckSig(const char *szBody, HB_SIZE nBodySize)
 
 static int32_t hb_hrbReadHead(const char *szBody, HB_SIZE nBodySize, HB_SIZE *pnBodyOffset)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_hrbReadHead(%p,%" HB_PFS "u,%p)", static_cast<const void*>(szBody), nBodySize, static_cast<void*>(pnBodyOffset)));
-#endif
-
   HB_SIZE nSigSize = hb_hrbCheckSig(szBody, nBodySize);
 
   if (nSigSize == 0 || nBodySize - nSigSize < 2) {

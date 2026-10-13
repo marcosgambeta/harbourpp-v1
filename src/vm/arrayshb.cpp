@@ -55,10 +55,6 @@
 // to retrieve the number of elements from the parameter list.
 static void hb_arrayNewRagged(HB_ITEM *pArray, int32_t iDimension)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_arrayNewRagged(%p, %d)", pArray, iDimension));
-#endif
-
   HB_SIZE nElements = hb_parns(iDimension);
 
   // create an array

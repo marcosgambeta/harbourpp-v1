@@ -1023,10 +1023,6 @@ void *hb_xRefResize(void *pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE *pnAllocat
 
 HB_SIZE hb_xsize(void *pMem) // returns the size of an allocated memory block
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xsize(%p)", pMem));
-#endif
-
 #ifdef HB_FM_STATISTICS
   return HB_FM_BLOCKSIZE(pMem);
 #else
@@ -1041,10 +1037,6 @@ HB_SIZE hb_xsize(void *pMem) // returns the size of an allocated memory block
 
 const char *hb_xinfo(void *pMem, uint16_t *puiLine)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xinfo(%p,%p)", pMem, puiLine));
-#endif
-
 #ifdef HB_FM_STATISTICS
   {
     PHB_MEMINFO pMemBlock = HB_FM_PTR(pMem);
@@ -1069,10 +1061,6 @@ const char *hb_xinfo(void *pMem, uint16_t *puiLine)
 
 void hb_xinit(void) // Initialize fixed memory subsystem
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xinit()"));
-#endif
-
 #ifdef HB_FM_NEED_INIT
   if (!s_fInitedFM) {
     s_fInitedFM = true;
@@ -1146,10 +1134,6 @@ static char *hb_mem2str(char *membuffer, void *pMem, HB_SIZE nSize)
 #define HB_MAX_MEM2STR_BLOCK 256
 void hb_xexit(void) // Deinitialize fixed memory subsystem
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xexit()"));
-#endif
-
   if (s_nMemoryBlocks || hb_cmdargCheck("INFO")) {
     char membuffer[HB_MAX_MEM2STR_BLOCK * 2 + 1]; // multiplied by 2 to allow hex format
     PHB_MEMINFO pMemBlock;
@@ -1236,10 +1220,6 @@ void hb_xexit(void) // Deinitialize fixed memory subsystem
 
 void hb_xexit(void) // Deinitialize fixed memory subsystem
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xexit()"));
-#endif
-
 #if defined(HB_FM_DL_ALLOC)
 #if defined(HB_FM_DLMT_ALLOC)
   hb_mspace_cleanup();
@@ -1255,10 +1235,6 @@ void hb_xexit(void) // Deinitialize fixed memory subsystem
 
 HB_SIZE hb_xquery(int32_t iMode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_xquery(%d)", iMode));
-#endif
-
   HB_SIZE nResult;
 
   // TODO: Return the correct values instead of 9999 [vszakats]
