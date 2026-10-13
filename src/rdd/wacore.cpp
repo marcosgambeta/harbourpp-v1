@@ -154,10 +154,6 @@ static void hb_waNodeDelete(PHB_STACKRDD pRddInfo)
 // Return the next free WorkArea for later use.
 HB_ERRCODE hb_rddSelectFirstAvailable(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectFirstAvailable()"));
-#endif
-
   PHB_STACKRDD pRddInfo;
   uint16_t uiArea;
 
@@ -180,10 +176,6 @@ HB_ERRCODE hb_rddSelectFirstAvailable(void)
 // Create and insert the new WorkArea node
 uint16_t hb_rddInsertAreaNode(const char *szDriver)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddInsertAreaNode(%s)", szDriver));
-#endif
-
   PHB_STACKRDD pRddInfo;
   LPRDDNODE pRddNode;
   uint16_t uiRddID;
@@ -218,10 +210,6 @@ uint16_t hb_rddInsertAreaNode(const char *szDriver)
 // to be used with a new database.
 void hb_rddReleaseCurrentArea(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddReleaseCurrentArea()"));
-#endif
-
   PHB_STACKRDD pRddInfo;
 
   pRddInfo = hb_stackRDD();
@@ -242,10 +230,6 @@ void hb_rddReleaseCurrentArea(void)
 // Closes all WorkAreas.
 void hb_rddCloseAll(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddCloseAll()"));
-#endif
-
   PHB_STACKRDD pRddInfo;
 
   pRddInfo = hb_stackRDD();
@@ -311,10 +295,6 @@ void hb_rddUnLockAll(void)
 // call a pCallBack function with all open workareas ###
 HB_ERRCODE hb_rddIterateWorkAreas(WACALLBACK pCallBack, void *cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddIterateWorkAreas(%p, %p)", static_cast<void*>(pCallBack), cargo));
-#endif
-
   PHB_STACKRDD pRddInfo;
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
@@ -345,10 +325,6 @@ void hb_rddSetNetErr(HB_BOOL fNetErr)
 // Get (/set) default RDD driver
 const char *hb_rddDefaultDrv(const char *szDriver)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddDefaultDrv(%s)", szDriver));
-#endif
-
   PHB_STACKRDD pRddInfo;
 
   pRddInfo = hb_stackRDD();
@@ -382,10 +358,6 @@ const char *hb_rddDefaultDrv(const char *szDriver)
 // Get default RDD driver respecting passed table/file name
 const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddFindDrv(%s, %s)", szDriver, szFileName));
-#endif
-
   LPRDDNODE pRddNode = nullptr;
 
   if (szDriver != nullptr && *szDriver) {
@@ -420,10 +392,6 @@ const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
 // Function for getting given workarea pointer
 void *hb_rddGetWorkAreaPointer(int32_t iArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddGetWorkAreaPointer(%d)", iArea));
-#endif
-
   PHB_STACKRDD pRddInfo;
 
   pRddInfo = hb_stackRDD();
@@ -440,29 +408,18 @@ void *hb_rddGetWorkAreaPointer(int32_t iArea)
 // Function for getting current workarea pointer
 void *hb_rddGetCurrentWorkAreaPointer(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddGetCurrentWorkAreaPointer()"));
-#endif
-
   return hb_stackRDD()->pCurrArea;
 }
 
 // Return the current WorkArea number.
 int32_t hb_rddGetCurrentWorkAreaNumber(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddGetCurrentWorkAreaNumber()"));
-#endif
-
   return hb_stackRDD()->uiCurrArea;
 }
 
 // Select a WorkArea by the number.
 HB_ERRCODE hb_rddSelectWorkAreaNumber(int32_t iArea)
 {
-#if 0
-  HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaNumber(%d)", iArea));
-#endif
   PHB_STACKRDD pRddInfo = hb_stackRDD();
 
   if (iArea >= 1 && iArea <= HB_RDD_MAX_AREA_NUM) {
@@ -525,10 +482,6 @@ void hb_rddCloseDetachedAreas(void)
 
 HB_ERRCODE hb_rddDetachArea(AREAP pArea, HB_ITEM *pCargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddDetachArea(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pCargo)));
-#endif
-
   AREAP *pHolder;
   HB_SIZE nPos;
 
@@ -681,10 +634,6 @@ AREAP hb_rddRequestArea(const char *szAlias, HB_ITEM *pCargo, HB_BOOL fNewArea, 
 
 HB_ITEM *hb_rddDetachedList(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddDetachedList()"));
-#endif
-
   auto pArray = hb_itemArrayNew(0);
   // protect by critical section access to s_pDetachedAreas array
   hb_threadEnterCriticalSectionGC(&s_waMtx);

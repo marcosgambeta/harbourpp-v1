@@ -516,10 +516,6 @@ static void hb_dbfClearNullFlag(uint8_t *pRecord, uint16_t uiNullOffset, uint16_
 // Executes user trigger function
 static bool hb_dbfTriggerDo(DBFAREAP pArea, int32_t iEvent, int32_t iField, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfTriggerDo(%p,%d,%d,%p)", static_cast<void*>(pArea), iEvent, iField, pItem));
-#endif
-
   auto fResult = true;
 
   if (hb_vmRequestQuery() == 0) {
@@ -557,10 +553,6 @@ static bool hb_dbfTriggerDo(DBFAREAP pArea, int32_t iEvent, int32_t iField, HB_I
 // Set user trigger function
 static void hb_dbfTriggerSet(DBFAREAP pArea, HB_ITEM *pTrigger)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfTriggerSet(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pTrigger)));
-#endif
-
   auto szName = hb_itemGetCPtr(pTrigger);
   pArea->pTriggerSym = *szName ? hb_dynsymFindName(szName) : nullptr;
   if (pArea->pTriggerSym && !hb_dynsymIsFunction(pArea->pTriggerSym)) {
@@ -572,10 +564,6 @@ static void hb_dbfTriggerSet(DBFAREAP pArea, HB_ITEM *pTrigger)
 // Return the total number of records.
 static HB_ULONG hb_dbfCalcRecCount(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfCalcRecCount(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (!pArea->pDataFile) {
     return 0;
   } else {
@@ -586,10 +574,6 @@ static HB_ULONG hb_dbfCalcRecCount(DBFAREAP pArea)
 // Read current record from file.
 static bool hb_dbfReadRecord(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfReadRecord(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (!pArea->pRecord) {
     return false;
   }
@@ -633,10 +617,6 @@ static bool hb_dbfReadRecord(DBFAREAP pArea)
 // Write current record to file.
 static bool hb_dbfWriteRecord(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfWriteRecord(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (SELF_PUTREC(&pArea->area, nullptr) == Harbour::FAILURE) {
     return false;
   }
@@ -649,10 +629,6 @@ static bool hb_dbfWriteRecord(DBFAREAP pArea)
 // Set encryption password
 static bool hb_dbfPasswordSet(DBFAREAP pArea, HB_ITEM *pPasswd, bool fRaw)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPasswordSet(%p,%p,%d)", static_cast<void*>(pArea), static_cast<void*>(pPasswd), fRaw));
-#endif
-
   char pKeyBuffer[8];
   auto fKeySet = false;
   auto fSet = false;
@@ -711,10 +687,6 @@ static bool hb_dbfPasswordSet(DBFAREAP pArea, HB_ITEM *pPasswd, bool fRaw)
 // Encrypt/Decrypt table
 static void hb_dbfTableCrypt(DBFAREAP pArea, HB_ITEM *pPasswd, bool fEncrypt)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfTableCrypt(%p,%p,%d)", static_cast<void*>(pArea), static_cast<void*>(pPasswd), fEncrypt));
-#endif
-
   if (!pArea->fReadonly && !pArea->fShared && fEncrypt ? !pArea->fTableEncrypted && !pArea->fHasMemo
                                                        : pArea->fTableEncrypted) {
     HB_ULONG ulRecords;
@@ -781,10 +753,6 @@ static void hb_dbfTableCrypt(DBFAREAP pArea, HB_ITEM *pPasswd, bool fEncrypt)
 // Unlock all records.
 static HB_ERRCODE hb_dbfUnlockAllRecords(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfUnlockAllRecords(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   if (pArea->pLocksPos) {
@@ -802,10 +770,6 @@ static HB_ERRCODE hb_dbfUnlockAllRecords(DBFAREAP pArea)
 // Unlock a records.
 static HB_ERRCODE hb_dbfUnlockRecord(DBFAREAP pArea, HB_ULONG ulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfUnlockRecord(%p, %lu)", static_cast<void*>(pArea), ulRecNo));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
   HB_ULONG ulCount;
 
@@ -834,10 +798,6 @@ static HB_ERRCODE hb_dbfUnlockRecord(DBFAREAP pArea, HB_ULONG ulRecNo)
 // Lock a record.
 static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, uint16_t *pResult, bool bExclusive)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfLockRecord(%p, %lu, %p, %i)", static_cast<void*>(pArea), ulRecNo, static_cast<void*>(pResult), static_cast<int32_t>(bExclusive)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -894,10 +854,6 @@ static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, uint16_t *p
 // Lock a file.
 static HB_ERRCODE hb_dbfLockFile(DBFAREAP pArea, uint16_t *pResult)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfLockFile(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pResult)));
-#endif
-
   if (!pArea->fFLocked) {
     if (pArea->lpdbPendingRel) {
       if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
@@ -926,10 +882,6 @@ static HB_ERRCODE hb_dbfLockFile(DBFAREAP pArea, uint16_t *pResult)
 // Unlock a file.
 static HB_ERRCODE hb_dbfUnlockFile(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfUnlockFile(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   if (pArea->fFLocked) {
@@ -942,10 +894,6 @@ static HB_ERRCODE hb_dbfUnlockFile(DBFAREAP pArea)
 // Test if a record is locked.
 static bool hb_dbfIsLocked(DBFAREAP pArea, HB_ULONG ulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfIsLocked(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ULONG ulCount;
 
   ulCount = pArea->ulNumLocksPos;
@@ -962,10 +910,6 @@ static bool hb_dbfIsLocked(DBFAREAP pArea, HB_ULONG ulRecNo)
 // Return an array filled all locked records.
 static void hb_dbfGetLockArray(DBFAREAP pArea, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetLockArray(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
-#endif
-
   hb_arrayNew(pItem, pArea->ulNumLocksPos);
   for (HB_ULONG ulCount = 0; ulCount < pArea->ulNumLocksPos; ulCount++) {
     hb_arraySetNInt(pItem, ulCount + 1, pArea->pLocksPos[ulCount]);
@@ -977,10 +921,6 @@ static void hb_dbfGetLockArray(DBFAREAP pArea, HB_ITEM *pItem)
 // so I don't make it static
 HB_ERRCODE hb_dbfGetEGcode(HB_ERRCODE errCode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetEGcode(%u)", errCode));
-#endif
-
   HB_ERRCODE errEGcode;
 
   switch (errCode) {
@@ -1034,10 +974,6 @@ HB_ERRCODE hb_dbfGetEGcode(HB_ERRCODE errCode)
 // so I left it in DBF.
 HB_ULONG hb_dbfGetMemoBlock(DBFAREAP pArea, uint16_t uiIndex)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetMemoBlock(%p, %hu)", static_cast<void*>(pArea), uiIndex));
-#endif
-
   HB_ULONG ulBlock = 0;
 
   if (pArea->area.lpFields[uiIndex].uiLen == 4) {
@@ -1059,10 +995,6 @@ HB_ULONG hb_dbfGetMemoBlock(DBFAREAP pArea, uint16_t uiIndex)
 // so I left it in DBF.
 void hb_dbfPutMemoBlock(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG ulBlock)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPutMemoBlock(%p, %hu, %lu)", static_cast<void*>(pArea), uiIndex, ulBlock));
-#endif
-
   if (pArea->area.lpFields[uiIndex].uiLen == 4) {
     HB_PUT_LE_UINT32(&pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock);
   } else {
@@ -1083,10 +1015,6 @@ void hb_dbfPutMemoBlock(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG ulBlock)
 HB_ERRCODE hb_dbfGetMemoData(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG *pulBlock, HB_ULONG *pulSize,
                              HB_ULONG *pulType)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetMemoData(%p, %hu, %p, %p, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pulBlock), static_cast<void*>(pulSize), static_cast<void*>(pulType)));
-#endif
-
   *pulBlock = *pulSize = *pulType = 0;
 
   if (uiIndex >= pArea->area.uiFieldCount || (pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::MEMO &&
@@ -1139,10 +1067,6 @@ HB_ERRCODE hb_dbfGetMemoData(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG *pulBloc
 // so I left it in DBF.
 HB_ERRCODE hb_dbfSetMemoData(DBFAREAP pArea, uint16_t uiIndex, HB_ULONG ulBlock, HB_ULONG ulSize, HB_ULONG ulType)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSetMemoData(%p, %hu, %lu, %lu, %lu)", static_cast<void*>(pArea), uiIndex, ulBlock, ulSize, ulType));
-#endif
-
   if (uiIndex >= pArea->area.uiFieldCount || (pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::MEMO &&
                                               pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::IMAGE &&
                                               pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::BLOB &&
@@ -1391,10 +1315,6 @@ static HB_ERRCODE hb_dbfLockData(DBFAREAP pArea, HB_FOFFSET *pnPos, HB_FOFFSET *
 
 static int32_t hb_dbfLockTest(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfLockTest(%p, %hu, %lu)", static_cast<void*>(pArea), uiAction, ulRecNo));
-#endif
-
   int32_t iResult = -1;
 
   if (!pArea->fShared || pArea->fFLocked || (uiAction == REC_LOCK && hb_dbfIsLocked(pArea, ulRecNo))) {
@@ -1437,10 +1357,6 @@ static int32_t hb_dbfLockTest(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRecN
 // Determine logical beginning of file.
 static HB_ERRCODE hb_dbfBof(DBFAREAP pArea, HB_BOOL *pBof)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfBof(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBof)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -1454,10 +1370,6 @@ static HB_ERRCODE hb_dbfBof(DBFAREAP pArea, HB_BOOL *pBof)
 // Determine logical end of file.
 static HB_ERRCODE hb_dbfEof(DBFAREAP pArea, HB_BOOL *pEof)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfEof(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pEof)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -1471,10 +1383,6 @@ static HB_ERRCODE hb_dbfEof(DBFAREAP pArea, HB_BOOL *pEof)
 // Determine outcome of the last search operation.
 static HB_ERRCODE hb_dbfFound(DBFAREAP pArea, HB_BOOL *pFound)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfFound(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFound)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -1488,10 +1396,6 @@ static HB_ERRCODE hb_dbfFound(DBFAREAP pArea, HB_BOOL *pFound)
 // Position cursor at the last record.
 static HB_ERRCODE hb_dbfGoBottom(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoBottom(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (SELF_GOCOLD(&pArea->area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -1513,10 +1417,6 @@ static HB_ERRCODE hb_dbfGoBottom(DBFAREAP pArea)
 // Position cursor at a specific physical record.
 static HB_ERRCODE hb_dbfGoTo(DBFAREAP pArea, HB_ULONG ulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoTo(%p, %lu)", static_cast<void*>(pArea), ulRecNo));
-#endif
-
   if (SELF_GOCOLD(&pArea->area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -1561,10 +1461,6 @@ static HB_ERRCODE hb_dbfGoTo(DBFAREAP pArea, HB_ULONG ulRecNo)
 // Position the cursor to a specific, physical identity.
 static HB_ERRCODE hb_dbfGoToId(DBFAREAP pArea, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
-#endif
-
   if (pItem->isNumeric()) {
     return SELF_GOTO(&pArea->area, pItem->getNL());
   } else {
@@ -1576,10 +1472,6 @@ static HB_ERRCODE hb_dbfGoToId(DBFAREAP pArea, HB_ITEM *pItem)
 // Position cursor at the first record.
 static HB_ERRCODE hb_dbfGoTop(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoTop(%p)", static_cast<void*>(pArea)));
-#endif
-
   pArea->area.fTop = true;
   pArea->area.fBottom = false;
 
@@ -1595,10 +1487,6 @@ static HB_ERRCODE hb_dbfGoTop(DBFAREAP pArea)
 // Reposition cursor relative to current position.
 static HB_ERRCODE hb_dbfSkip(DBFAREAP pArea, HB_LONG lToSkip)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSkip(%p, %ld)", static_cast<void*>(pArea), lToSkip));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -1638,10 +1526,6 @@ static HB_ERRCODE hb_dbfSkip(DBFAREAP pArea, HB_LONG lToSkip)
 // Reposition cursor, regardless of filter.
 static HB_ERRCODE hb_dbfSkipRaw(DBFAREAP pArea, HB_LONG lToSkip)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSkipRaw(%p, %ld)", static_cast<void*>(pArea), lToSkip));
-#endif
-
   HB_ERRCODE errCode;
 
   if (pArea->lpdbPendingRel) {
@@ -1676,10 +1560,6 @@ static HB_ERRCODE hb_dbfSkipRaw(DBFAREAP pArea, HB_LONG lToSkip)
 // Add a field to the WorkArea.
 static HB_ERRCODE hb_dbfAddField(DBFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfAddField(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo)));
-#endif
-
   switch (pFieldInfo->uiType) {
   case Harbour::DB::Field::IMAGE:
   case Harbour::DB::Field::BLOB:
@@ -1713,10 +1593,6 @@ static HB_ERRCODE hb_dbfAddField(DBFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 // Append a record to the WorkArea.
 static HB_ERRCODE hb_dbfAppend(DBFAREAP pArea, HB_BOOL bUnLockAll)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfAppend(%p, %d)", static_cast<void*>(pArea), static_cast<int32_t>(bUnLockAll)));
-#endif
-
   uint16_t fLocked;
 
   if (SELF_GOCOLD(&pArea->area) == Harbour::FAILURE) {
@@ -1790,10 +1666,6 @@ static HB_ERRCODE hb_dbfAppend(DBFAREAP pArea, HB_BOOL bUnLockAll)
 // Delete a record.
 static HB_ERRCODE hb_dbfDeleteRec(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfDeleteRec(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fTrigger) {
     if (!hb_dbfTriggerDo(pArea, EVENT_DELETE, 0, nullptr)) {
       return Harbour::FAILURE;
@@ -1828,10 +1700,6 @@ static HB_ERRCODE hb_dbfDeleteRec(DBFAREAP pArea)
 // Determine deleted status for a record.
 static HB_ERRCODE hb_dbfDeleted(DBFAREAP pArea, HB_BOOL *pDeleted)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfDeleted(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pDeleted)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -1854,10 +1722,6 @@ static HB_ERRCODE hb_dbfDeleted(DBFAREAP pArea, HB_BOOL *pDeleted)
 // Write data buffer to the data store.
 static HB_ERRCODE hb_dbfFlush(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfFlush(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->area);
   if (errCode == Harbour::SUCCESS) {
     if (pArea->fUpdateHeader && (pArea->uiSetHeader & DB_SETHEADER_COMMIT) != 0) {
@@ -1882,10 +1746,6 @@ static HB_ERRCODE hb_dbfFlush(DBFAREAP pArea)
 // Retrieve current record buffer
 static HB_ERRCODE hb_dbfGetRec(DBFAREAP pArea, uint8_t **pBuffer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetRec(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
-#endif
-
   if (pBuffer != nullptr) {
     // Read record
     if (!pArea->fValidBuffer && !hb_dbfReadRecord(pArea)) {
@@ -1911,10 +1771,6 @@ static HB_ERRCODE hb_dbfGetRec(DBFAREAP pArea, uint8_t **pBuffer)
 // Obtain the current value of a field.
 static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
-#endif
-
   LPFIELD pField;
   auto fError = false;
   char *pszVal;
@@ -2175,10 +2031,6 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
 // Obtain the length of a field value.
 static HB_ERRCODE hb_dbfGetVarLen(DBFAREAP pArea, uint16_t uiIndex, HB_SIZE *pLength)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetVarLen(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pLength)));
-#endif
-
   *pLength = pArea->area.lpFields[uiIndex - 1].uiLen;
 
   return Harbour::SUCCESS;
@@ -2187,10 +2039,6 @@ static HB_ERRCODE hb_dbfGetVarLen(DBFAREAP pArea, uint16_t uiIndex, HB_SIZE *pLe
 // Perform a write of WorkArea memory to the data store.
 static HB_ERRCODE hb_dbfGoCold(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoCold(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   if (pArea->fRecordChanged) {
@@ -2229,10 +2077,6 @@ static HB_ERRCODE hb_dbfGoCold(DBFAREAP pArea)
 // Mark the WorkArea data buffer as hot.
 static HB_ERRCODE hb_dbfGoHot(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoHot(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fReadonly) {
     hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
     return Harbour::FAILURE;
@@ -2248,10 +2092,6 @@ static HB_ERRCODE hb_dbfGoHot(DBFAREAP pArea)
 // Replace the current record.
 static HB_ERRCODE hb_dbfPutRec(DBFAREAP pArea, const uint8_t *pBuffer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPutRec(%p, %p)", static_cast<void*>(pArea), static_cast<const void*>(pBuffer)));
-#endif
-
   if (pBuffer != nullptr) {
     if (pArea->lpdbPendingRel) {
       if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
@@ -2319,10 +2159,6 @@ static HB_ERRCODE hb_dbfPutRec(DBFAREAP pArea, const uint8_t *pBuffer)
 // Assign a value to a field.
 static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPutValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
-#endif
-
   LPFIELD pField;
   // this buffer is for varlength, date and number conversions,
   // dBase documentation defines maximum numeric field size as 20
@@ -2572,10 +2408,6 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
 // Undelete the current record.
 static HB_ERRCODE hb_dbfRecall(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRecall(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fTrigger) {
     if (!hb_dbfTriggerDo(pArea, EVENT_RECALL, 0, nullptr)) {
       return Harbour::FAILURE;
@@ -2610,10 +2442,6 @@ static HB_ERRCODE hb_dbfRecall(DBFAREAP pArea)
 // Obtain number of records in WorkArea.
 static HB_ERRCODE hb_dbfRecCount(DBFAREAP pArea, HB_ULONG *pRecCount)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRecCount(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecCount)));
-#endif
-
   // Update record count
   if (pArea->fShared) {
     pArea->ulRecCount = hb_dbfCalcRecCount(pArea);
@@ -2626,10 +2454,6 @@ static HB_ERRCODE hb_dbfRecCount(DBFAREAP pArea, HB_ULONG *pRecCount)
 // Obtain physical row number at current WorkArea cursor position.
 static HB_ERRCODE hb_dbfRecNo(DBFAREAP pArea, HB_ULONG *pulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRecNo(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pulRecNo)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     if (SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS) {
       return Harbour::FAILURE;
@@ -2643,10 +2467,6 @@ static HB_ERRCODE hb_dbfRecNo(DBFAREAP pArea, HB_ULONG *pulRecNo)
 // Obtain physical row ID at current WorkArea cursor position.
 static HB_ERRCODE hb_dbfRecId(DBFAREAP pArea, HB_ITEM *pRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRecId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
-#endif
-
   HB_ULONG ulRecNo = 0;
 
   HB_ERRCODE errCode = SELF_RECNO(&pArea->area, &ulRecNo);
@@ -2668,10 +2488,6 @@ static HB_ERRCODE hb_dbfRecId(DBFAREAP pArea, HB_ITEM *pRecNo)
 // Establish the extent of the array of fields for a WorkArea.
 static HB_ERRCODE hb_dbfSetFieldExtent(DBFAREAP pArea, uint16_t uiFieldExtent)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSetFieldExtent(%p, %hu)", static_cast<void*>(pArea), uiFieldExtent));
-#endif
-
   if (SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -2689,10 +2505,6 @@ static HB_ERRCODE hb_dbfSetFieldExtent(DBFAREAP pArea, uint16_t uiFieldExtent)
 // Close the table in the WorkArea.
 static HB_ERRCODE hb_dbfClose(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfClose(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fTrigger) {
     if (!hb_dbfTriggerDo(pArea, EVENT_PRECLOSE, 0, nullptr)) {
       return Harbour::FAILURE;
@@ -2792,10 +2604,6 @@ static HB_ERRCODE hb_dbfClose(DBFAREAP pArea)
 // Create a data store in the specified WorkArea.
 static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfCreate(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS, errSubCode = 0;
   HB_SIZE nSize;
   uint16_t uiCount, uiLen;
@@ -3278,10 +3086,6 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 // Retrieve information about the current driver.
 static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   switch (uiIndex) {
@@ -3531,10 +3335,6 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 
 static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, uint16_t uiIndex, uint16_t uiType, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfFieldInfo(%p, %hu, %hu, %p)", static_cast<void*>(pArea), uiIndex, uiType, static_cast<void*>(pItem)));
-#endif
-
   LPFIELD pField;
   auto fLck = false;
 
@@ -3603,10 +3403,6 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, uint16_t uiIndex, uint16_t uiT
 // Retrieve information about a raw
 static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, HB_ITEM *pRecID, uint16_t uiInfoType, HB_ITEM *pInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRecInfo(%p, %p, %hu, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecID), uiInfoType, static_cast<void*>(pInfo)));
-#endif
-
   HB_ULONG ulRecNo = hb_itemGetNL(pRecID), ulPrevRec = 0;
   HB_ERRCODE errResult = Harbour::SUCCESS;
   HB_BOOL bDeleted;
@@ -3727,10 +3523,6 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, HB_ITEM *pRecID, uint16_t uiInfo
 // Clear the WorkArea for use.
 static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfNewArea(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (SUPER_NEW(&pArea->area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -3765,10 +3557,6 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
 // Open a data store in the WorkArea.
 static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfOpen(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
-#endif
-
   HB_ERRCODE errCode;
   uint16_t uiFields, uiCount, uiSkip, uiDecimals, uiLen, uiFlags, uiFlagsMask;
   auto fRawBlob = false;
@@ -4347,9 +4135,6 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 // Retrieve the size of the WorkArea structure.
 static HB_ERRCODE hb_dbfStructSize(DBFAREAP pArea, uint16_t *uiSize)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfStrucSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
-#endif
   HB_SYMBOL_UNUSED(pArea);
 
   *uiSize = sizeof(DBFAREA);
@@ -4362,10 +4147,6 @@ static HB_ERRCODE hb_dbfStructSize(DBFAREAP pArea, uint16_t *uiSize)
 // Pack helper function called for each packed record
 static HB_ERRCODE hb_dbfPackRec(DBFAREAP pArea, HB_ULONG ulRecNo, HB_BOOL *fWritten)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPackRec(%p, %lu, %p)", static_cast<void*>(pArea), ulRecNo, static_cast<void*>(fWritten)));
-#endif
-
   HB_SYMBOL_UNUSED(ulRecNo);
 
   *fWritten = !pArea->fDeleted;
@@ -4376,10 +4157,6 @@ static HB_ERRCODE hb_dbfPackRec(DBFAREAP pArea, HB_ULONG ulRecNo, HB_BOOL *fWrit
 // Remove records marked for deletion from a database.
 static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPack(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ULONG ulRecIn, ulRecOut, ulEvery, ulUserEvery;
   HB_ITEM *pBlock;
   HB_BOOL fWritten;
@@ -4492,10 +4269,6 @@ static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
 
 static HB_ERRCODE hb_dbfTransCond(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfTransCond(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo)));
-#endif
-
   if (pTransInfo->uiFlags & DBTF_MATCH) {
     if (pArea->fHasMemo || pArea->area.cdPage != pTransInfo->lpaDest->cdPage) {
       pTransInfo->uiFlags &= ~DBTF_PUTREC;
@@ -4575,10 +4348,6 @@ using LPDBSORTREC = DBSORTREC *;
 
 static HB_ERRCODE hb_dbfSortInit(LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSortInit(%p, %p)", static_cast<void*>(pSortInfo), static_cast<void*>(pSortRec)));
-#endif
-
   uint16_t uiCount, uiDest;
 
   memset(pSortRec, 0, sizeof(*pSortRec));
@@ -4659,10 +4428,6 @@ static HB_ERRCODE hb_dbfSortInit(LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo)
 
 static void hb_dbfSortFree(LPDBSORTREC pSortRec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSortFree(%p)", static_cast<void*>(pSortRec)));
-#endif
-
   if (pSortRec->pTempFile != nullptr) {
     hb_fileClose(pSortRec->pTempFile);
   }
@@ -4935,10 +4700,6 @@ static HB_ERRCODE hb_dbfSortGetRec(LPDBSORTREC pSortRec, HB_DBRECNO *pnRecNo)
 
 static HB_ERRCODE hb_dbfSortFinish(LPDBSORTREC pSortRec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSortFinish(%p)", static_cast<void*>(pSortRec)));
-#endif
-
   AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
 
   if (pSortRec->nCount > 0) {
@@ -5022,10 +4783,6 @@ static HB_ERRCODE hb_dbfSortFinish(LPDBSORTREC pSortRec)
 
 static HB_ERRCODE hb_dbfSortAdd(LPDBSORTREC pSortRec)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSortAdd(%p)", static_cast<void*>(pSortRec)));
-#endif
-
   AREAP pArea;
   HB_ULONG ulRecNo;
 
@@ -5069,10 +4826,6 @@ static HB_ERRCODE hb_dbfSortAdd(LPDBSORTREC pSortRec)
 // Export sorted records
 static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSort(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pSortInfo)));
-#endif
-
   DBSORTREC dbSortRec;
   HB_BOOL fEof;
   auto fFor = false;
@@ -5150,10 +4903,6 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
 // Copy one or more records from one WorkArea to another.
 static HB_ERRCODE hb_dbfTrans(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfTrans(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo)));
-#endif
-
   if (hb_dbfTransCond(pArea, pTransInfo) != Harbour::SUCCESS) {
     return Harbour::FAILURE;
   } else {
@@ -5166,10 +4915,6 @@ static HB_ERRCODE hb_dbfTrans(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
 // Physically remove all records from data store.
 static HB_ERRCODE hb_dbfZap(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfZap(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fReadonly) {
     hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
     return Harbour::FAILURE;
@@ -5220,10 +4965,6 @@ static HB_ERRCODE hb_dbfZap(DBFAREAP pArea)
 // Report end of relation.
 static HB_ERRCODE hb_dbfChildEnd(DBFAREAP pArea, LPDBRELINFO pRelInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfChildEnd(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo)));
-#endif
-
   HB_ERRCODE errCode;
 
   if (pArea->lpdbPendingRel == pRelInfo) {
@@ -5238,10 +4979,6 @@ static HB_ERRCODE hb_dbfChildEnd(DBFAREAP pArea, LPDBRELINFO pRelInfo)
 // Report initialization of a relation.
 static HB_ERRCODE hb_dbfChildStart(DBFAREAP pArea, LPDBRELINFO pRelInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfChildStart(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo)));
-#endif
-
   if (SELF_CHILDSYNC(&pArea->area, pRelInfo) != Harbour::SUCCESS) {
     return Harbour::FAILURE;
   }
@@ -5251,10 +4988,6 @@ static HB_ERRCODE hb_dbfChildStart(DBFAREAP pArea, LPDBRELINFO pRelInfo)
 // Post a pending relational movement.
 static HB_ERRCODE hb_dbfChildSync(DBFAREAP pArea, LPDBRELINFO pRelInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfChildSync(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo)));
-#endif
-
   // !!! The side effect of calling GOCOLD() inside CHILDSYNC() is
   // evaluation of index expressions (index KEY and FOR condition)
   // when the pArea is not the current one - it means that the
@@ -5293,10 +5026,6 @@ static HB_ERRCODE hb_dbfChildSync(DBFAREAP pArea, LPDBRELINFO pRelInfo)
 // Force relational seeks in the specified WorkArea.
 static HB_ERRCODE hb_dbfForceRel(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfForceRel(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     LPDBRELINFO lpdbPendingRel;
 
@@ -5332,10 +5061,6 @@ static HB_ERRCODE hb_dbfForceRel(DBFAREAP pArea)
 // Clear the filter condition for the specified WorkArea.
 static HB_ERRCODE hb_dbfClearFilter(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfClearFilter(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     SELF_FORCEREL(&pArea->area);
   }
@@ -5352,10 +5077,6 @@ static HB_ERRCODE hb_dbfClearFilter(DBFAREAP pArea)
 // Set the filter condition for the specified WorkArea.
 static HB_ERRCODE hb_dbfSetFilter(DBFAREAP pArea, LPDBFILTERINFO pFilterInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfSetFilter(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFilterInfo)));
-#endif
-
   if (pArea->lpdbPendingRel) {
     SELF_FORCEREL(&pArea->area);
   }
@@ -5375,10 +5096,6 @@ static HB_ERRCODE hb_dbfSetFilter(DBFAREAP pArea, LPDBFILTERINFO pFilterInfo)
 // Perform a network low-level lock in the specified WorkArea.
 static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRawLock(%p, %hu, %lu)", static_cast<void*>(pArea), uiAction, ulRecNo));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   if (pArea->fShared) {
@@ -5494,10 +5211,6 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, uint16_t uiAction, HB_ULONG ulRe
 // Perform a network lock in the specified WorkArea.
 static HB_ERRCODE hb_dbfLock(DBFAREAP pArea, LPDBLOCKINFO pLockInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfLock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pLockInfo)));
-#endif
-
   if (pArea->fShared) {
     switch (pLockInfo->uiMethod) {
     case DBLM_EXCLUSIVE:
@@ -5522,10 +5235,6 @@ static HB_ERRCODE hb_dbfLock(DBFAREAP pArea, LPDBLOCKINFO pLockInfo)
 // Release network locks in the specified WorkArea.
 static HB_ERRCODE hb_dbfUnLock(DBFAREAP pArea, HB_ITEM *pRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("dbfUnLock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
 
   if (pArea->fShared) {
@@ -5550,10 +5259,6 @@ static HB_ERRCODE hb_dbfUnLock(DBFAREAP pArea, HB_ITEM *pRecNo)
 // Create a memo file in the WorkArea.
 static HB_ERRCODE hb_dbfCreateMemFile(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfCreateMemFile(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
-#endif
-
   if (pCreateInfo) {
     hb_dbfErrorRT(pArea, EG_CREATE, EDBF_DATATYPE, pCreateInfo->abName, 0, 0, nullptr);
   }
@@ -5566,10 +5271,6 @@ static HB_ERRCODE hb_dbfCreateMemFile(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 // BLOB2FILE - retrieve memo contents into file
 static HB_ERRCODE hb_dbfGetValueFile(DBFAREAP pArea, uint16_t uiIndex, const char *szFile, uint16_t uiMode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetValueFile(%p, %hu, %s, %hu)", static_cast<void*>(pArea), uiIndex, szFile, uiMode));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
   LPFIELD pField;
 
@@ -5621,10 +5322,6 @@ static HB_ERRCODE hb_dbfGetValueFile(DBFAREAP pArea, uint16_t uiIndex, const cha
 // Open a memo file in the specified WorkArea.
 static HB_ERRCODE hb_dbfOpenMemFile(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfOpenMemFile(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
-#endif
-
   hb_dbfErrorRT(pArea, EG_OPEN, EDBF_OPEN_DBF, pOpenInfo->abName, 0, 0, nullptr);
 
   return Harbour::FAILURE;
@@ -5633,10 +5330,6 @@ static HB_ERRCODE hb_dbfOpenMemFile(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 // FILE2BLOB - store file contents in MEMO
 static HB_ERRCODE hb_dbfPutValueFile(DBFAREAP pArea, uint16_t uiIndex, const char *szFile, uint16_t uiMode)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfPutValueFile(%p, %hu, %s, %hu)", static_cast<void*>(pArea), uiIndex, szFile, uiMode));
-#endif
-
   HB_ERRCODE errCode = Harbour::SUCCESS;
   LPFIELD pField;
 
@@ -5697,10 +5390,6 @@ static HB_ERRCODE hb_dbfPutValueFile(DBFAREAP pArea, uint16_t uiIndex, const cha
 // Read the database file header record in the WorkArea.
 static HB_ERRCODE hb_dbfReadDBHeader(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfReadDBHeader(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode;
   HB_ITEM *pError;
 
@@ -5805,10 +5494,6 @@ static HB_ERRCODE hb_dbfReadDBHeader(DBFAREAP pArea)
 // Write the database file header record in the WorkArea.
 static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfWriteDBHeader(%p)", static_cast<void*>(pArea)));
-#endif
-
   int32_t iYear, iMonth, iDay;
   auto fLck = false;
   HB_ERRCODE errCode;
@@ -5893,10 +5578,6 @@ static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
 
 static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItemIndex, HB_ULONG ulConnect)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfDrop(%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), ulConnect));
-#endif
-
   char szFileName[HB_PATH_MAX];
   const char *szExt;
   HB_ITEM *pFileExt = nullptr;
@@ -5968,10 +5649,6 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItem
 
 static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItemIndex, HB_ULONG ulConnect)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfExists(%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), ulConnect));
-#endif
-
   char szFileName[HB_PATH_MAX];
   HB_ITEM *pFileExt = nullptr;
   auto fTable = false;
@@ -6006,10 +5683,6 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pIt
 static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pItemIndex, HB_ITEM *pItemNew,
                                HB_ULONG ulConnect)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRename(%p,%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), static_cast<void*>(pItemNew), ulConnect));
-#endif
-
   char szFileName[HB_PATH_MAX];
   const char *szExt;
   HB_ITEM *pFileExt = nullptr;
@@ -6103,10 +5776,6 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, HB_ITEM *pItemTable, HB_ITEM *pIt
 
 static void hb_dbfInitTSD(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfInitTSD(%p)", Cargo));
-#endif
-
   (static_cast<LPDBFDATA>(Cargo))->bTableType = DB_DBF_STD;
   (static_cast<LPDBFDATA>(Cargo))->bCryptType = DB_CRYPT_NONE;
   (static_cast<LPDBFDATA>(Cargo))->uiDirtyRead = HB_IDXREAD_CLEANMASK;
@@ -6115,10 +5784,6 @@ static void hb_dbfInitTSD(void *Cargo)
 
 static void hb_dbfDestroyTSD(void *Cargo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfDestroyTSD(%p)", Cargo));
-#endif
-
   LPDBFDATA pData;
 
   pData = static_cast<LPDBFDATA>(Cargo);
@@ -6139,10 +5804,6 @@ static void hb_dbfDestroyTSD(void *Cargo)
 
 static HB_ERRCODE hb_dbfInit(LPRDDNODE pRDD)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfInit(%p)", static_cast<void*>(pRDD)));
-#endif
-
   auto pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
   HB_TSD_INIT(pTSD, sizeof(DBFDATA), hb_dbfInitTSD, hb_dbfDestroyTSD);
   pRDD->lpvCargo = static_cast<void *>(pTSD);
@@ -6156,10 +5817,6 @@ static HB_ERRCODE hb_dbfInit(LPRDDNODE pRDD)
 
 static HB_ERRCODE hb_dbfExit(LPRDDNODE pRDD)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfExit(%p)", static_cast<void*>(pRDD)));
-#endif
-
   if (pRDD->lpvCargo) {
     hb_stackReleaseTSD(static_cast<PHB_TSD>(pRDD->lpvCargo));
     hb_xfree(pRDD->lpvCargo);
@@ -6176,10 +5833,6 @@ static HB_ERRCODE hb_dbfExit(LPRDDNODE pRDD)
 
 static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_dbfRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, pItem));
-#endif
-
   LPDBFDATA pData;
 
   pData = DBFNODE_DATA(pRDD);
@@ -6464,10 +6117,6 @@ HB_FUNC_STATIC(DBF_GETFUNCTABLE)
   auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
   auto uiRddId = static_cast<uint16_t>(hb_parni32(4));
-
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("DBF_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));
-#endif
 
   if (pTable) {
     if (puiCount) {

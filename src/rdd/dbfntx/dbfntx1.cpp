@@ -3903,10 +3903,6 @@ static bool hb_ntxOrdSkipUnique(LPTAGINFO pTag, HB_LONG lToSkip)
  */
 static bool hb_ntxOrdSkipEval(LPTAGINFO pTag, bool fForward, HB_ITEM *pEval)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrdSkipEval(%p, %d, %p)", static_cast<void*>(pTag), fForward, static_cast<void*>(pEval)));
-#endif
-
   NTXAREAP pArea = pTag->pIndex->pArea;
   auto fFound = false;
 
@@ -3981,10 +3977,6 @@ static bool hb_ntxOrdSkipEval(LPTAGINFO pTag, bool fForward, HB_ITEM *pEval)
  */
 static bool hb_ntxOrdSkipWild(LPTAGINFO pTag, bool fForward, HB_ITEM *pWildItm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrdSkipWild(%p, %d, %p)", static_cast<void*>(pTag), fForward, static_cast<void*>(pWildItm)));
-#endif
-
   NTXAREAP pArea = pTag->pIndex->pArea;
   char *szFree = nullptr;
   auto fFound = false;
@@ -4111,10 +4103,6 @@ static bool hb_ntxRegexMatch(LPTAGINFO pTag, PHB_REGEX pRegEx, const char *szKey
  */
 static bool hb_ntxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, HB_ITEM *pRegExItm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrdSkipRegEx(%p, %d, %p)", static_cast<void*>(pTag), fForward, static_cast<void*>(pRegExItm)));
-#endif
-
   NTXAREAP pArea = pTag->pIndex->pArea;
   auto fFound = false;
   PHB_REGEX pRegEx;
@@ -5261,10 +5249,6 @@ static HB_ERRCODE hb_ntxReIndex(LPNTXINDEX pIndex)
 
 static HB_ERRCODE hb_ntxGoBottom(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxGoBottom(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE retval;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
@@ -5307,10 +5291,6 @@ static HB_ERRCODE hb_ntxGoBottom(NTXAREAP pArea)
 
 static HB_ERRCODE hb_ntxGoTop(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxGoTop(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE retval;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
@@ -5350,10 +5330,6 @@ static HB_ERRCODE hb_ntxGoTop(NTXAREAP pArea)
 
 static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, HB_ITEM *pItem, HB_BOOL fFindLast)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxSeek(%p, %d, %p, %d)", static_cast<void*>(pArea), fSoftSeek, static_cast<void*>(pItem), fFindLast));
-#endif
-
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -5437,10 +5413,6 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, HB_ITEM *pItem, 
 
 static HB_ERRCODE hb_ntxSkipRaw(NTXAREAP pArea, HB_LONG lToSkip)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxSkipRaw(%p, %ld)", static_cast<void*>(pArea), lToSkip));
-#endif
-
   HB_ERRCODE retval;
   auto fOut = false;
   auto fForward = false;
@@ -5514,10 +5486,6 @@ static HB_ERRCODE hb_ntxSkipRaw(NTXAREAP pArea, HB_LONG lToSkip)
  */
 static HB_ERRCODE hb_ntxFlush(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxFlush(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
   if (errCode == Harbour::SUCCESS) {
     errCode = SUPER_FLUSH(&pArea->dbfarea.area);
@@ -5546,10 +5514,6 @@ static HB_ERRCODE hb_ntxFlush(NTXAREAP pArea)
  */
 static HB_ERRCODE hb_ntxGoCold(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxGoCold(%p)", static_cast<void*>(pArea)));
-#endif
-
   bool fRecordChanged = pArea->dbfarea.fRecordChanged;
   bool fAppend = pArea->dbfarea.fAppend;
 
@@ -5660,10 +5624,6 @@ static HB_ERRCODE hb_ntxGoCold(NTXAREAP pArea)
  */
 static HB_ERRCODE hb_ntxGoHot(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxGoHot(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = SUPER_GOHOT(&pArea->dbfarea.area);
   if (errCode == Harbour::SUCCESS) {
     if (!pArea->fNtxAppend) {
@@ -5703,10 +5663,6 @@ static HB_ERRCODE hb_ntxGoHot(NTXAREAP pArea)
  */
 static HB_ERRCODE hb_ntxClose(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxClose(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -5746,9 +5702,6 @@ static HB_ERRCODE hb_ntxClose(NTXAREAP pArea)
  */
 static HB_ERRCODE hb_ntxStructSize(NTXAREAP pArea, uint16_t *uiSize)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxStructSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
-#endif
   HB_SYMBOL_UNUSED(pArea);
 
   *uiSize = sizeof(NTXAREA);
@@ -5760,10 +5713,6 @@ static HB_ERRCODE hb_ntxStructSize(NTXAREAP pArea, uint16_t *uiSize)
  */
 static HB_ERRCODE hb_ntxOpen(NTXAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOpen(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
-#endif
-
   HB_ERRCODE errCode = SUPER_OPEN(&pArea->dbfarea.area, pOpenInfo);
 
   if (errCode == Harbour::SUCCESS && DBFAREA_DATA(&pArea->dbfarea)->fStruct &&
@@ -5807,10 +5756,6 @@ static HB_ERRCODE hb_ntxOpen(NTXAREAP pArea, LPDBOPENINFO pOpenInfo)
 
 static HB_ERRCODE hb_ntxPack(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxPack(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = SUPER_PACK(&pArea->dbfarea.area);
   if (errCode == Harbour::SUCCESS) {
     return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
@@ -5826,10 +5771,6 @@ static HB_ERRCODE hb_ntxPack(NTXAREAP pArea)
 
 static HB_ERRCODE hb_ntxZap(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxZap(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = SUPER_ZAP(&pArea->dbfarea.area);
   if (errCode == Harbour::SUCCESS) {
     return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
@@ -5853,10 +5794,6 @@ static HB_ERRCODE hb_ntxZap(NTXAREAP pArea)
 
 static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderCreate(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
-#endif
-
   HB_ITEM *pResult, *pKeyExp, *pForExp = nullptr;
   int32_t iLen, iDec, iTag, i;
   char szFileName[HB_PATH_MAX], szTagName[NTX_MAX_TAGNAME + 1];
@@ -6261,10 +6198,6 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
 static HB_ERRCODE hb_ntxOrderDestroy(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderDestroy(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
-#endif
-
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
   if (errCode != Harbour::SUCCESS) {
     return errCode;
@@ -6323,10 +6256,6 @@ static HB_ERRCODE hb_ntxOrderDestroy(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 
 static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINFO pInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pInfo)));
-#endif
-
   LPTAGINFO pTag;
 
   switch (uiIndex) {
@@ -6937,10 +6866,6 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, uint16_t uiIndex, LPDBORDERINF
 
 static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderListAdd(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
-#endif
-
   PHB_FILE pFile;
   char szFileName[HB_PATH_MAX], szTagName[NTX_MAX_TAGNAME + 1];
   LPNTXINDEX pIndex;
@@ -7031,10 +6956,6 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 
 static HB_ERRCODE hb_ntxOrderListClear(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderListClear(%p)", static_cast<void*>(pArea)));
-#endif
-
   LPNTXINDEX *pIndexPtr, pIndex;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE) {
@@ -7058,10 +6979,6 @@ static HB_ERRCODE hb_ntxOrderListClear(NTXAREAP pArea)
 
 static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderListDelete(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
-#endif
-
   char szTagName[NTX_MAX_TAGNAME + 1];
   char szFileName[HB_PATH_MAX];
   LPNTXINDEX pIndex;
@@ -7091,10 +7008,6 @@ static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo
 
 static HB_ERRCODE hb_ntxOrderListFocus(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderListFocus(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
-#endif
-
   pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pArea->lpCurTag ? pArea->lpCurTag->TagName : nullptr);
 
   if (pOrderInfo->itmOrder) {
@@ -7116,10 +7029,6 @@ static HB_ERRCODE hb_ntxOrderListFocus(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 
 static HB_ERRCODE hb_ntxOrderListRebuild(NTXAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderListRebuild(%p)", static_cast<void*>(pArea)));
-#endif
-
   LPTAGINFO pCurrTag;
   LPNTXINDEX pIndex;
 
@@ -7163,10 +7072,6 @@ static HB_ERRCODE hb_ntxOrderListRebuild(NTXAREAP pArea)
 
 static HB_ERRCODE hb_ntxCountScope(NTXAREAP pArea, void *pPtr, HB_LONG *plRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxCountScope(%p, %p, %p)", static_cast<void*>(pArea), pPtr, static_cast<void*>(plRecNo)));
-#endif
-
   if (pPtr == nullptr) {
     return Harbour::SUCCESS;
   }
@@ -7202,10 +7107,6 @@ static HB_ERRCODE hb_ntxCountScope(NTXAREAP pArea, void *pPtr, HB_LONG *plRecNo)
 
 static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_ntxRddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
-#endif
-
   LPDBFDATA pData;
 
   pData = DBFNODE_DATA(pRDD);

@@ -106,10 +106,6 @@ static void hb_sdfClearRecordBuffer(SDFAREAP pArea)
 
 static HB_ERRCODE hb_sdfReadRecord(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfReadRecord(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_SIZE nRead;
 
   pArea->area.fEof = true;
@@ -176,10 +172,6 @@ static HB_ERRCODE hb_sdfReadRecord(SDFAREAP pArea)
 
 static HB_ERRCODE hb_sdfNextRecord(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfNextRecord(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fPositioned) {
     pArea->ulRecNo++;
     return hb_sdfReadRecord(pArea);
@@ -192,10 +184,6 @@ static HB_ERRCODE hb_sdfNextRecord(SDFAREAP pArea)
 // Position cursor at a specific physical record.
 static HB_ERRCODE hb_sdfGoTo(SDFAREAP pArea, HB_ULONG ulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGoTo(%p, %lu)", static_cast<void*>(pArea), ulRecNo));
-#endif
-
 #ifndef HB_CLP_STRICT
   if (pArea->fReadonly && ulRecNo >= pArea->ulRecNo) {
     while (pArea->ulRecNo < ulRecNo && pArea->fPositioned) {
@@ -213,10 +201,6 @@ static HB_ERRCODE hb_sdfGoTo(SDFAREAP pArea, HB_ULONG ulRecNo)
 // Position the cursor to a specific, physical identity.
 static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
-#endif
-
 #ifndef HB_CLP_STRICT
   if (pItem->isNumeric()) {
     return SELF_GOTO(&pArea->area, pItem->getNL());
@@ -229,10 +213,6 @@ static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, HB_ITEM *pItem)
 // Position cursor at the first record.
 static HB_ERRCODE hb_sdfGoTop(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGoTop(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS) {
     return Harbour::FAILURE;
   }
@@ -258,10 +238,6 @@ static HB_ERRCODE hb_sdfGoTop(SDFAREAP pArea)
 // Reposition cursor, regardless of filter.
 static HB_ERRCODE hb_sdfSkipRaw(SDFAREAP pArea, HB_LONG lToSkip)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfSkipRaw(%p,%ld)", static_cast<void*>(pArea), lToSkip));
-#endif
-
   if (SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS) {
     return Harbour::FAILURE;
   }
@@ -277,10 +253,6 @@ static HB_ERRCODE hb_sdfSkipRaw(SDFAREAP pArea, HB_LONG lToSkip)
 // Determine deleted status for a record.
 static HB_ERRCODE hb_sdfDeleted(SDFAREAP pArea, HB_BOOL *pDeleted)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfDeleted(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pDeleted)));
-#endif
-
   HB_SYMBOL_UNUSED(pArea);
 
   *pDeleted = HB_FALSE;
@@ -291,10 +263,6 @@ static HB_ERRCODE hb_sdfDeleted(SDFAREAP pArea, HB_BOOL *pDeleted)
 // Obtain number of records in WorkArea.
 static HB_ERRCODE hb_sdfRecCount(SDFAREAP pArea, HB_ULONG *pRecCount)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfRecCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecCount)));
-#endif
-
   *pRecCount = pArea->ulRecCount;
 
   return Harbour::SUCCESS;
@@ -303,10 +271,6 @@ static HB_ERRCODE hb_sdfRecCount(SDFAREAP pArea, HB_ULONG *pRecCount)
 // Obtain physical row number at current WorkArea cursor position.
 static HB_ERRCODE hb_sdfRecNo(SDFAREAP pArea, HB_ULONG *pulRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfRecNo(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecNo)));
-#endif
-
   *pulRecNo = pArea->ulRecNo;
 
   return Harbour::SUCCESS;
@@ -315,10 +279,6 @@ static HB_ERRCODE hb_sdfRecNo(SDFAREAP pArea, HB_ULONG *pulRecNo)
 // Obtain physical row ID at current WorkArea cursor position.
 static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, HB_ITEM *pRecNo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
-#endif
-
   HB_ULONG ulRecNo;
 
   HB_ERRCODE errCode = SELF_RECNO(&pArea->area, &ulRecNo);
@@ -340,10 +300,6 @@ static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, HB_ITEM *pRecNo)
 // Append a record to the WorkArea.
 static HB_ERRCODE hb_sdfAppend(SDFAREAP pArea, HB_BOOL fUnLockAll)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfAppend(%p,%d)", static_cast<void*>(pArea), static_cast<int32_t>(fUnLockAll)));
-#endif
-
   HB_SYMBOL_UNUSED(fUnLockAll);
 
   if (SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS) {
@@ -365,10 +321,6 @@ static HB_ERRCODE hb_sdfAppend(SDFAREAP pArea, HB_BOOL fUnLockAll)
 // Delete a record.
 static HB_ERRCODE hb_sdfDeleteRec(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfDeleteRec(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_SYMBOL_UNUSED(pArea);
 
   // It's not Cl*pper compatible so I had to disable it [druzus]
@@ -387,10 +339,6 @@ static HB_ERRCODE hb_sdfDeleteRec(SDFAREAP pArea)
 // Undelete the current record.
 static HB_ERRCODE hb_sdfRecall(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfRecall(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_SYMBOL_UNUSED(pArea);
 
   return Harbour::SUCCESS;
@@ -399,10 +347,6 @@ static HB_ERRCODE hb_sdfRecall(SDFAREAP pArea)
 // Obtain the current value of a field.
 static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
-#endif
-
   LPFIELD pField;
 
   if (--uiIndex >= pArea->area.uiFieldCount) {
@@ -497,10 +441,6 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
 // Assign a value to a field.
 static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
-#endif
-
   LPFIELD pField;
   HB_SIZE nSize;
 
@@ -599,10 +539,6 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pIte
 // Replace the current record.
 static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, uint8_t *pBuffer)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
-#endif
-
   if (!pArea->fPositioned) {
     return Harbour::SUCCESS;
   }
@@ -620,10 +556,6 @@ static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, uint8_t *pBuffer)
 // Retrieve current record buffer
 static HB_ERRCODE hb_sdfGetRec(SDFAREAP pArea, uint8_t **pBufferPtr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBufferPtr)));
-#endif
-
   *pBufferPtr = pArea->pRecord - 1;
 
   return Harbour::SUCCESS;
@@ -632,10 +564,6 @@ static HB_ERRCODE hb_sdfGetRec(SDFAREAP pArea, uint8_t **pBufferPtr)
 // Copy one or more records from one WorkArea to another.
 static HB_ERRCODE hb_sdfTrans(SDFAREAP pArea, LPDBTRANSINFO pTransInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfTrans(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo)));
-#endif
-
   if (pTransInfo->uiFlags & DBTF_MATCH) {
     if (!pArea->fTransRec || pArea->area.cdPage != pTransInfo->lpaDest->cdPage) {
       pTransInfo->uiFlags &= ~DBTF_PUTREC;
@@ -661,10 +589,6 @@ static HB_ERRCODE hb_sdfTrans(SDFAREAP pArea, LPDBTRANSINFO pTransInfo)
 // Perform a write of WorkArea memory to the data store.
 static HB_ERRCODE hb_sdfGoCold(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGoCold(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fRecordChanged) {
     HB_SIZE nSize = pArea->uiRecordLen + pArea->uiEolLen;
 
@@ -689,10 +613,6 @@ static HB_ERRCODE hb_sdfGoCold(SDFAREAP pArea)
 // Mark the WorkArea data buffer as hot.
 static HB_ERRCODE hb_sdfGoHot(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfGoHot(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (pArea->fReadonly) {
     auto pError = hb_errNew();
     hb_errPutGenCode(pError, EG_READONLY);
@@ -709,10 +629,6 @@ static HB_ERRCODE hb_sdfGoHot(SDFAREAP pArea)
 // Write data buffer to the data store.
 static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfFlush(%p)", static_cast<void*>(pArea)));
-#endif
-
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->area);
 
   if (pArea->fFlush && hb_setGetHardCommit()) {
@@ -726,10 +642,6 @@ static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
 // Retrieve information about the current table/driver.
 static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
-#endif
-
   switch (uiIndex) {
   case DBI_CANPUTREC:
     hb_itemPutL(pItem, pArea->fTransRec);
@@ -785,10 +697,6 @@ static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
 // Add a field to the WorkArea.
 static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfAddField(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo)));
-#endif
-
   switch (pFieldInfo->uiType) {
   case Harbour::DB::Field::MEMO:
   case Harbour::DB::Field::IMAGE:
@@ -891,10 +799,6 @@ static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 // Establish the extent of the array of fields for a WorkArea.
 static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, uint16_t uiFieldExtent)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent));
-#endif
-
   if (SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -910,10 +814,6 @@ static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, uint16_t uiFieldExtent)
 // Clear the WorkArea for use.
 static HB_ERRCODE hb_sdfNewArea(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfNewArea(%p)", static_cast<void*>(pArea)));
-#endif
-
   if (SUPER_NEW(&pArea->area) == Harbour::FAILURE) {
     return Harbour::FAILURE;
   }
@@ -929,9 +829,6 @@ static HB_ERRCODE hb_sdfNewArea(SDFAREAP pArea)
 // Retrieve the size of the WorkArea structure.
 static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, uint16_t *uiSize)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfStrucSize(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
-#endif
   HB_SYMBOL_UNUSED(pArea);
 
   *uiSize = sizeof(SDFAREA);
@@ -941,10 +838,6 @@ static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, uint16_t *uiSize)
 // Close the table in the WorkArea.
 static HB_ERRCODE hb_sdfClose(SDFAREAP pArea)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfClose(%p)", static_cast<void*>(pArea)));
-#endif
-
   // Update record and unlock records
   if (pArea->pFile) {
     SELF_GOCOLD(&pArea->area);
@@ -987,10 +880,6 @@ static HB_ERRCODE hb_sdfClose(SDFAREAP pArea)
 // Create a data store in the specified WorkArea.
 static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
-#endif
-
   HB_ITEM *pError = nullptr;
   auto fRetry = false;
   char szFileName[HB_PATH_MAX];
@@ -1067,10 +956,6 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 // Open a data store in the WorkArea.
 static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
-#endif
-
   HB_ITEM *pError = nullptr;
   uint16_t uiFlags;
   auto fRetry = false;
@@ -1160,10 +1045,6 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 // Retrieve information about the current driver.
 static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnect, HB_ITEM *pItem)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sdfRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
-#endif
-
   switch (uiIndex) {
   case RDDI_CANPUTREC:
   case RDDI_LOCAL:
@@ -1293,10 +1174,6 @@ HB_FUNC_STATIC(SDF_GETFUNCTABLE)
 {
   auto puiCount = static_cast<uint16_t *>(hb_parptr(1));
   auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
-
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("SDF_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));
-#endif
 
   if (pTable) {
     if (puiCount) {
