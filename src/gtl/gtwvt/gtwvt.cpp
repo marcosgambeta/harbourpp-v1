@@ -1592,10 +1592,6 @@ static int32_t hb_gt_wvt_key_ansi_to_oem(int32_t c)
 
 static void hb_gt_wvt_FitRows(HB_GTWVT *pWVT)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_FitRows()"));
-#endif
-
   pWVT->bMaximized = IsZoomed(pWVT->hWnd);
 
   RECT ci;
@@ -1613,10 +1609,6 @@ static void hb_gt_wvt_FitRows(HB_GTWVT *pWVT)
 
 static void hb_gt_wvt_FitSize(HB_GTWVT *pWVT)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_FitSize()"));
-#endif
-
   pWVT->bMaximized = IsZoomed(pWVT->hWnd);
 
   RECT ci;
@@ -1766,10 +1758,6 @@ static void hb_gt_wvt_FitSize(HB_GTWVT *pWVT)
 
 static void hb_gt_wvt_ResetWindowSize(HB_GTWVT *pWVT, HFONT hFont)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_ResetWindowSize(%p,%p)", static_cast<void *>(pWVT), static_cast<void *>(hFont)));
-#endif
-
   if (!pWVT->hFont || hFont) {
     if (!hFont) {
       hFont = hb_gt_wvt_GetFont(pWVT->fontFace, pWVT->fontHeight, pWVT->fontWidth, pWVT->fontWeight, pWVT->fontQuality,
@@ -2786,10 +2774,6 @@ static void hb_gt_wvt_PaintText(HB_GTWVT *pWVT)
 
 static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_WndProc(%p,%u)", static_cast<void *>(hWnd), message));
-#endif
-
   HB_GTWVT *pWVT = hb_gt_wvt_Find(hWnd);
 
   if (pWVT == nullptr) {
@@ -2934,10 +2918,6 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
 static WPARAM hb_gt_wvt_ProcessMessages(void)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_ProcessMessages()"));
-#endif
-
   MSG msg;
   while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
     TranslateMessage(&msg);
@@ -3124,10 +3104,6 @@ static bool hb_gt_wvt_FullScreen(HB_GT *pGT)
 
 static void hb_gt_wvt_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Init(%p,%p,%p,%p)", static_cast<void *>(pGT), reinterpret_cast<void *>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void *>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void *>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   HINSTANCE hInstance;
   int32_t iCmdShow;
 
@@ -3158,10 +3134,6 @@ static void hb_gt_wvt_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_wvt_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Exit(%p)", static_cast<void *>(pGT)));
-#endif
-
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
   HB_GTSUPER_EXIT(pGT);
 
@@ -3174,10 +3146,6 @@ static void hb_gt_wvt_Exit(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_wvt_SetMode(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_SetMode(%p,%d,%d)", static_cast<void *>(pGT), iRow, iCol));
-#endif
-
   auto fResult = false;
 
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
@@ -3216,10 +3184,6 @@ static HB_BOOL hb_gt_wvt_SetMode(HB_GT *pGT, int32_t iRow, int32_t iCol) // Func
 
 static const char *hb_gt_wvt_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Version(%p,%d)", static_cast<void *>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -3233,10 +3197,6 @@ static const char *hb_gt_wvt_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static int32_t hb_gt_wvt_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_ReadKey(%p,%d)", static_cast<void *>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(iEventMask); // we ignore the eventmask!
 
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
@@ -3255,10 +3215,6 @@ static int32_t hb_gt_wvt_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 // dDuration is in 'Ticks' (18.2 per second)
 static void hb_gt_wvt_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Tone(%p,%lf,%lf)", static_cast<void *>(pGT), dFrequency, dDuration));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   hb_gt_BaseUnlock(pGT);
   hb_gt_winapi_tone(dFrequency, dDuration);
@@ -3269,20 +3225,12 @@ static void hb_gt_wvt_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static HB_BOOL hb_gt_wvt_mouse_IsPresent(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_mouse_IsPresent(%p)", static_cast<void *>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return true;
 }
 
 static void hb_gt_wvt_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_mouse_GetPos(%p,%p,%p)", static_cast<void *>(pGT), static_cast<void *>(piRow), static_cast<void *>(piCol)));
-#endif
-
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
   *piRow = pWVT->MousePos.y;
   *piCol = pWVT->MousePos.x;
@@ -3290,19 +3238,11 @@ static void hb_gt_wvt_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) /
 
 static void hb_gt_wvt_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_mouse_SetPos(%p,%i,%i)", static_cast<void *>(pGT), iRow, iCol));
-#endif
-
   hb_gt_wvt_SetMousePos(HB_GTWVT_GET(pGT), iRow, iCol);
 }
 
 static HB_BOOL hb_gt_wvt_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_mouse_ButtonState(%p,%i)", static_cast<void *>(pGT), iButton));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   switch (iButton) {
@@ -3318,10 +3258,6 @@ static HB_BOOL hb_gt_wvt_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncT
 
 static int32_t hb_gt_wvt_mouse_CountButton(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_mouse_CountButton(%p)", static_cast<void *>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return GetSystemMetrics(SM_CMOUSEBUTTONS);
 }
@@ -3330,10 +3266,6 @@ static int32_t hb_gt_wvt_mouse_CountButton(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Info(%p,%d,%p)", static_cast<void *>(pGT), iType, static_cast<void *>(pInfo)));
-#endif
-
   int32_t iVal;
 
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
@@ -4076,10 +4008,6 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 static int32_t hb_gt_wvt_gfx_Primitive(HB_GT *pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight,
                                    int32_t iColor) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", static_cast<void *>(pGT), iType, iTop, iLeft, iBottom, iRight, iColor));
-#endif
-
   RECT r;
   int32_t iRet = 0;
 
@@ -4188,10 +4116,6 @@ static void hb_gt_wvt_gfx_Text(HB_GT *pGT, int32_t iTop, int32_t iLeft, const ch
 
 static void hb_gt_wvt_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Redraw(%p,%d,%d,%d)", static_cast<void *>(pGT), iRow, iCol, iSize));
-#endif
-
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
   if (pWVT != nullptr) {
     if (pWVT->hWnd) {
@@ -4214,10 +4138,6 @@ static void hb_gt_wvt_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_wvt_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Refresh(%p)", static_cast<void *>(pGT)));
-#endif
-
   HB_GTSUPER_REFRESH(pGT);
 
   HB_GTWVT *pWVT = HB_GTWVT_GET(pGT);
@@ -4237,10 +4157,6 @@ static void hb_gt_wvt_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void *>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_wvt_Init;
   pFuncTable->Exit = hb_gt_wvt_Exit;
   pFuncTable->SetMode = hb_gt_wvt_SetMode;

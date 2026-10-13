@@ -209,10 +209,6 @@ static void hb_gt_pca_termOut(const char *szStr, int32_t iLen)
 
 static void hb_gt_pca_AnsiSetAutoMargin(int32_t iAM)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetAutoMargin(%d)", iAM));
-#endif
-
   if (iAM != s_iAM) {
     // disabled until I'll find good PC-ANSI terminal documentation with
     // detail Auto Margin and Auto Line Wrapping description, [druzus]
@@ -229,10 +225,6 @@ static void hb_gt_pca_AnsiSetAutoMargin(int32_t iAM)
 
 static void hb_gt_pca_AnsiGetCurPos(int32_t *iRow, int32_t *iCol)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiGetCurPos(%p, %p)", static_cast<void*>(iRow), static_cast<void*>(iCol)));
-#endif
-
   static auto s_fIsAnswer = true;
 
   if (s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole) {
@@ -314,10 +306,6 @@ static void hb_gt_pca_AnsiGetCurPos(int32_t *iRow, int32_t *iCol)
 
 static void hb_gt_pca_AnsiSetCursorPos(int32_t iRow, int32_t iCol)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetCursorPos(%d, %d)", iRow, iCol));
-#endif
-
   if (s_iRow != iRow || s_iCol != iCol) {
     char buff[16];
     hb_snprintf(buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1);
@@ -329,10 +317,6 @@ static void hb_gt_pca_AnsiSetCursorPos(int32_t iRow, int32_t iCol)
 
 static void hb_gt_pca_AnsiSetCursorStyle(int32_t iStyle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetCursorStyle(%d)", iStyle));
-#endif
-
   if (s_iCursorStyle != iStyle) {
     hb_gt_pca_termOut((iStyle == SC_NONE ? "\x1B[?25l" : "\x1B[?25h"), 6);
     s_iCursorStyle = iStyle;
@@ -341,10 +325,6 @@ static void hb_gt_pca_AnsiSetCursorStyle(int32_t iStyle)
 
 static void hb_gt_pca_AnsiSetAttributes(int32_t iAttr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiSetAttributes(%d)", iAttr));
-#endif
-
   if (s_iCurrentSGR != iAttr) {
     int32_t i, bg, fg, bold, blink;
     char buff[16];
@@ -424,10 +404,6 @@ static void hb_gt_pca_AnsiInit(void)
 
 static void hb_gt_pca_AnsiPutStr(int32_t iRow, int32_t iCol, int32_t iColor, const char *szStr, int32_t iLen)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiPutStr(%d,%d,%d,%p,%d)", iRow, iCol, iColor, static_cast<const void*>(szStr), iLen));
-#endif
-
   hb_gt_pca_AnsiSetAttributes(static_cast<uint8_t>(iColor));
   hb_gt_pca_AnsiSetCursorPos(iRow, iCol);
   hb_gt_pca_AnsiSetAutoMargin(0);
@@ -438,10 +414,6 @@ static void hb_gt_pca_AnsiPutStr(int32_t iRow, int32_t iCol, int32_t iColor, con
 static void hb_gt_pca_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   int32_t iRows = 25, iCols = 80;
 
   s_hFilenoStdin = hFilenoStdin;
@@ -538,10 +510,6 @@ static void hb_gt_pca_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_pca_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_GTSELF_REFRESH(pGT);
   // set default color
   hb_gt_pca_AnsiSetAttributes(0x07);
@@ -573,10 +541,6 @@ static void hb_gt_pca_Exit(HB_GT *pGT) // FuncTable
 
 static int32_t hb_gt_pca_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   HB_SYMBOL_UNUSED(iEventMask);
 
@@ -635,10 +599,6 @@ static int32_t hb_gt_pca_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 
 static void hb_gt_pca_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Tone(%p, %lf, %lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
   HB_SYMBOL_UNUSED(dFrequency);
 
   static double s_dLastSeconds = 0;
@@ -661,10 +621,6 @@ static void hb_gt_pca_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static void hb_gt_pca_Bell(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Bell(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   hb_gt_pca_termOut(s_szBell, 1);
   hb_gt_pca_termFlush();
@@ -672,10 +628,6 @@ static void hb_gt_pca_Bell(HB_GT *pGT) // FuncTable
 
 static const char *hb_gt_pca_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Version(%p,%d)", static_cast<void*>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -687,10 +639,6 @@ static const char *hb_gt_pca_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static HB_BOOL hb_gt_pca_Suspend(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Suspend(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 #if defined(HB_HAS_TERMIOS)
   if (s_fRestTTY) {
@@ -704,10 +652,6 @@ static HB_BOOL hb_gt_pca_Suspend(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_pca_Resume(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Resume(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 #if defined(HB_HAS_TERMIOS)
   if (s_fRestTTY) {
@@ -722,10 +666,6 @@ static HB_BOOL hb_gt_pca_Resume(HB_GT *pGT) // FuncTable
 static HB_BOOL hb_gt_pca_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int32_t>(fBox)));
-#endif
-
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
     s_cdpTerm = HB_GTSELF_TERMCP(pGT);
     s_cdpHost = HB_GTSELF_HOSTCP(pGT);
@@ -737,10 +677,6 @@ static HB_BOOL hb_gt_pca_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const cha
 
 static void hb_gt_pca_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   int32_t iColor;
   uint8_t bAttr;
   uint16_t usChar;
@@ -786,10 +722,6 @@ static void hb_gt_pca_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_pca_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   int32_t iWidth, iHeight, iRow, iCol, iStyle;
 
   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
@@ -818,10 +750,6 @@ static void hb_gt_pca_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_pca_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   switch (iType) {
   case HB_GTI_ISSCREENPOS:
   case HB_GTI_KBDSUPPORT:
@@ -837,10 +765,6 @@ static HB_BOOL hb_gt_pca_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_pca_Init;
   pFuncTable->Exit = hb_gt_pca_Exit;
   pFuncTable->Redraw = hb_gt_pca_Redraw;

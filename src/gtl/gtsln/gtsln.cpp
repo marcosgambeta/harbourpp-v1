@@ -470,10 +470,6 @@ static void hb_sln_setKeyTrans(HB_GT *pGT)
 
 static void hb_sln_SetCursorStyle(int32_t iStyle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sln_SetCursorStyle(%d)", iStyle));
-#endif
-
   if (s_iCursorStyle == SC_UNAVAIL) {
     return;
   }
@@ -588,10 +584,6 @@ static int32_t hb_sln_isUTF8(int32_t iStdOut, int32_t iStdIn)
 static void hb_gt_sln_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   auto gt_Inited = false;
 
   // stdin && stdout && stderr
@@ -728,10 +720,6 @@ static void hb_gt_sln_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_sln_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   // restore a standard bell frequency and duration
   if (hb_sln_UnderLinuxConsole) {
     SLtt_write_string(const_cast<char *>("\033[10]"));
@@ -757,10 +745,6 @@ static void hb_gt_sln_Exit(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_sln_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   HB_SYMBOL_UNUSED(iRows);
   HB_SYMBOL_UNUSED(iCols);
@@ -773,10 +757,6 @@ static HB_BOOL hb_gt_sln_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // Fu
 
 static HB_BOOL hb_gt_sln_IsColor(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_IsColor(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return SLtt_Use_Ansi_Colors;
 }
@@ -785,10 +765,6 @@ static HB_BOOL hb_gt_sln_IsColor(HB_GT *pGT) // FuncTable
 
 static void hb_gt_sln_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
-#endif
-
   // We cannot switch remote terminal between blinking and highlight mode
   // for server side using standard termcap/terminfo codes - few rather
   // exotic terminals have such capabilities but this are non standard
@@ -808,10 +784,6 @@ static void hb_gt_sln_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 
 static void hb_gt_sln_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
   // TODO: Implement this for other consoles than linux ?
 
   if (hb_sln_UnderLinuxConsole) {
@@ -839,10 +811,6 @@ static void hb_gt_sln_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static const char *hb_gt_sln_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Version(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -915,10 +883,6 @@ static HB_BOOL hb_gt_sln_PostExt(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_sln_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   switch (iType) {
   case HB_GTI_ISSCREENPOS:
   case HB_GTI_KBDSUPPORT:
@@ -974,10 +938,6 @@ static HB_BOOL hb_gt_sln_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char
 
 static void hb_gt_sln_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   if (s_fActive) {
     SLsmg_Char_Type SLchar;
     int32_t iColor;
@@ -1020,10 +980,6 @@ static void hb_gt_sln_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_sln_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_GTSUPER_REFRESH(pGT);
   if (s_fActive) {
     int32_t iRow, iCol, iStyle;
@@ -1042,10 +998,6 @@ static void hb_gt_sln_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_sln_Init;
   pFuncTable->Exit = hb_gt_sln_Exit;
   pFuncTable->IsColor = hb_gt_sln_IsColor;

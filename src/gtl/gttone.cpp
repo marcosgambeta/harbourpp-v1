@@ -72,10 +72,6 @@
 
 static int32_t hb_Inp9x(uint16_t usPort)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_Inp9x(%hu)", usPort));
-#endif
-
   uint16_t usVal;
 
 #if (defined(__BORLANDC__) && !defined(__clang__))
@@ -109,10 +105,6 @@ static int32_t hb_Inp9x(uint16_t usPort)
 
 static int32_t hb_Outp9x(uint16_t usPort, uint16_t usVal)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_Outp9x(%hu, %hu)", usPort, usVal));
-#endif
-
 #if (defined(__BORLANDC__) && !defined(__clang__))
 
   _DX = usPort;
@@ -143,10 +135,6 @@ static int32_t hb_Outp9x(uint16_t usPort, uint16_t usVal)
 // dDurat is in seconds
 static void hb_gt_w9xTone(double dFreq, double dDurat)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_w9xtone(%lf, %lf)", dFreq, dDurat));
-#endif
-
   int32_t uLSB, uMSB;
   unsigned long lAdjFreq;
 
@@ -204,10 +192,6 @@ static void hb_gt_w9xTone(double dFreq, double dDurat)
 // dDurat is in seconds
 static void hb_gt_wNtTone(double dFreq, double dDurat)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_wNtTone(%lf, %lf)", dFreq, dDurat));
-#endif
-
   // Clipper ignores Tone() requests (but delays anyway) if Frequency is
   // less than < 20 hz.  Windows NT minimum is 37...
 
@@ -221,10 +205,6 @@ static void hb_gt_wNtTone(double dFreq, double dDurat)
 // dDuration is in 'Ticks' (18.2 per second)
 void hb_gt_winapi_tone(double dFrequency, double dDuration)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_winapi_tone(%lf, %lf)", dFrequency, dDuration));
-#endif
-
   // According to the Clipper NG, the duration in 'ticks' is truncated to the
   // integer portion  ... Depending on the platform, Harbour allows a finer
   // resolution, but the minimum is 1 tick (for compatibility)

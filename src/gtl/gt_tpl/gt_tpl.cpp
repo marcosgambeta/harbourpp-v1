@@ -59,10 +59,6 @@ static HB_GT_FUNCS SuperTable;
 static void hb_gt_tpl_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   // TODO:
 
   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
@@ -70,10 +66,6 @@ static void hb_gt_tpl_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_tpl_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_GTSUPER_EXIT(pGT);
 
   // TODO:
@@ -81,10 +73,6 @@ static void hb_gt_tpl_Exit(HB_GT *pGT) // FuncTable
 
 static int32_t hb_gt_tpl_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   HB_SYMBOL_UNUSED(iEventMask);
 
@@ -96,10 +84,6 @@ static int32_t hb_gt_tpl_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 
 static const char *hb_gt_tpl_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Version(%p,%d)", static_cast<void*>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0)
@@ -110,10 +94,6 @@ static const char *hb_gt_tpl_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static HB_BOOL hb_gt_tpl_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   HB_SYMBOL_UNUSED(iRows);
   HB_SYMBOL_UNUSED(iCols);
@@ -125,10 +105,6 @@ static HB_BOOL hb_gt_tpl_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // Fu
 
 static void hb_gt_tpl_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   int32_t iColor;
   uint8_t bAttr;
   uint16_t usChar;
@@ -143,10 +119,6 @@ static void hb_gt_tpl_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_tpl_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   int32_t iRow, iCol, iStyle;
 
   HB_GTSUPER_REFRESH(pGT);
@@ -159,10 +131,6 @@ static void hb_gt_tpl_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_tpl_Init;
   pFuncTable->Exit = hb_gt_tpl_Exit;
   pFuncTable->ReadKey = hb_gt_tpl_ReadKey;

@@ -2244,10 +2244,6 @@ void HB_GT_FUNC(gt_CatchSignal(int32_t iSig))
 static void hb_gt_crs_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   if (!s_ioBase) {
     InOutBase *ioBase;
 
@@ -2283,10 +2279,6 @@ static void hb_gt_crs_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_crs_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_GTSUPER_EXIT(pGT);
   del_all_ioBase();
 }
@@ -2295,10 +2287,6 @@ static void hb_gt_crs_Exit(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_crs_IsColor(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_IsColor(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return s_ioBase->is_color;
 }
@@ -2307,10 +2295,6 @@ static HB_BOOL hb_gt_crs_IsColor(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_crs_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
-#endif
-
   if (gt_setsize(s_ioBase, iRows, iCols) == 0) {
     HB_GTSELF_RESIZE(pGT, iRows, iCols);
     return true;
@@ -2323,10 +2307,6 @@ static HB_BOOL hb_gt_crs_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // Fu
 
 static void hb_gt_crs_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetBlink(%p, %d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
-#endif
-
   if (fBlink) {
     s_ioBase->attr_mask |= A_BLINK;
   } else {
@@ -2340,10 +2320,6 @@ static void hb_gt_crs_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 
 static void hb_gt_crs_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
   gt_tone(s_ioBase, dFrequency, dDuration);
 
   if (s_ioBase->terminal_type == TERM_LINUX) {
@@ -2356,10 +2332,6 @@ static void hb_gt_crs_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static const char *hb_gt_crs_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Version(%p,%d)", static_cast<void*>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -2373,10 +2345,6 @@ static const char *hb_gt_crs_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static void hb_gt_crs_OutStd(HB_GT *pGT, const char *szStr, HB_SIZE nLen) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_OutStd(%p,%s,%lu)", static_cast<void*>(pGT), szStr, nLen));
-#endif
-
   if (s_ioBase) {
     if (s_ioBase->stdoutfd == -1) {
       HB_GTSELF_WRITECON(pGT, szStr, nLen);
@@ -2392,9 +2360,6 @@ static void hb_gt_crs_OutStd(HB_GT *pGT, const char *szStr, HB_SIZE nLen) // Fun
 
 static void hb_gt_crs_OutErr(HB_GT *pGT, const char *szStr, HB_SIZE nLen) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_OutErr(%p,%s,%lu)", static_cast<void*>(pGT), szStr, nLen));
-#endif
   if (s_ioBase) {
     if (s_ioBase->stderrfd == -1) {
       HB_GTSELF_WRITECON(pGT, szStr, nLen);
@@ -2410,10 +2375,6 @@ static void hb_gt_crs_OutErr(HB_GT *pGT, const char *szStr, HB_SIZE nLen) // Fun
 
 static HB_BOOL hb_gt_crs_Suspend(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Suspend(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (s_ioBase) {
@@ -2429,10 +2390,6 @@ static HB_BOOL hb_gt_crs_Suspend(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_crs_Resume(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Resume(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (s_ioBase) {
@@ -2452,10 +2409,6 @@ static HB_BOOL hb_gt_crs_Resume(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_crs_PreExt(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_PreExt(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (s_ioBase) {
@@ -2469,10 +2422,6 @@ static HB_BOOL hb_gt_crs_PreExt(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_crs_PostExt(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_PostExt(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return true;
 }
@@ -2481,10 +2430,6 @@ static HB_BOOL hb_gt_crs_PostExt(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_crs_mouse_IsPresent(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_IsPresent(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return s_ioBase->mouse_type != MOUSE_NONE;
 }
@@ -2493,10 +2438,6 @@ static HB_BOOL hb_gt_crs_mouse_IsPresent(HB_GT *pGT) // FuncTable
 
 static void hb_gt_crs_mouse_Show(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_Show(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
 #if defined(HB_HAS_GPM)
@@ -2511,10 +2452,6 @@ static void hb_gt_crs_mouse_Show(HB_GT *pGT) // FuncTable
 
 static void hb_gt_crs_mouse_Hide(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_Hide(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
 #if defined(HB_HAS_GPM)
@@ -2528,10 +2465,6 @@ static void hb_gt_crs_mouse_Hide(HB_GT *pGT) // FuncTable
 
 static void hb_gt_crs_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_Col(%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(piRow), static_cast<void*>(piCol)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   *piRow = s_ioBase->mLastEvt.row;
@@ -2542,10 +2475,6 @@ static void hb_gt_crs_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) /
 
 static void hb_gt_crs_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_SetPos(%p,%i,%i)", static_cast<void*>(pGT), iRow, iCol));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   // it does really nothing
@@ -2558,10 +2487,6 @@ static void hb_gt_crs_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // Fu
 
 static HB_BOOL hb_gt_crs_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_ButtonState(%p,%i)", static_cast<void*>(pGT), iButton));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   auto ret = false;
@@ -2589,20 +2514,12 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncT
 
 static int32_t hb_gt_crs_mouse_CountButton(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_CountButton(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return s_ioBase->mButtons;
 }
 
 static void hb_gt_crs_mouse_SetDoubleClickSpeed(HB_GT *pGT, int32_t iSpeed) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_SetDoubleClickSpeed(%p,%d)", static_cast<void*>(pGT), iSpeed));
-#endif
-
   HB_GTSUPER_MOUSESETDOUBLECLICKSPEED(pGT, iSpeed);
   s_ioBase->mLastEvt.click_delay = iSpeed;
 }
@@ -2611,10 +2528,6 @@ static void hb_gt_crs_mouse_SetDoubleClickSpeed(HB_GT *pGT, int32_t iSpeed) // F
 
 static int32_t hb_gt_crs_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(iEventMask);
 
   int32_t iKey = wait_key(s_ioBase, 0);
@@ -2633,10 +2546,6 @@ static int32_t hb_gt_crs_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 static HB_BOOL hb_gt_crs_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int32_t>(fBox)));
-#endif
-
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
     setDispTrans(s_ioBase, HB_GTSELF_HOSTCP(pGT), HB_GTSELF_TERMCP(pGT), fBox ? 1 : 0);
     return true;
@@ -2648,10 +2557,6 @@ static HB_BOOL hb_gt_crs_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const cha
 
 static HB_BOOL hb_gt_crs_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_SetKeyCP(%p,%s,%s)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP));
-#endif
-
   if (HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP)) {
     setKeyTrans(s_ioBase, HB_GTSELF_INCP(pGT), HB_GTSELF_HOSTCP(pGT));
     return true;
@@ -2663,10 +2568,6 @@ static HB_BOOL hb_gt_crs_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char
 
 static HB_BOOL hb_gt_crs_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   if (s_ioBase) {
     switch (iType) {
     case HB_GTI_ISSCREENPOS:
@@ -2693,10 +2594,6 @@ static HB_BOOL hb_gt_crs_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
 static void hb_gt_crs_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   if (s_ioBase) {
     int32_t iColor;
     uint8_t bAttr;
@@ -2719,10 +2616,6 @@ static void hb_gt_crs_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_crs_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_GTSUPER_REFRESH(pGT);
   if (s_ioBase) {
     int32_t iRow, iCol, iShape;
@@ -2739,10 +2632,6 @@ static void hb_gt_crs_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_crs_Init;
   pFuncTable->Exit = hb_gt_crs_Exit;
   pFuncTable->IsColor = hb_gt_crs_IsColor;

@@ -220,10 +220,6 @@ static int32_t hb_gt_gui_Alert(HB_GT *pGT, HB_ITEM *pMessage, HB_ITEM *pOptions,
 
 static const char *hb_gt_gui_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -237,10 +233,6 @@ static const char *hb_gt_gui_Version(HB_GT *pGT, int32_t iType) // FuncTable
 // dDuration is in 'Ticks' (18.2 per second)
 static void hb_gt_gui_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
 #if defined(HB_OS_WIN)
   hb_gt_BaseUnlock(pGT);
   hb_gt_winapi_tone(dFrequency, dDuration);
@@ -254,10 +246,6 @@ static void hb_gt_gui_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static HB_BOOL hb_gt_gui_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   switch (iType) {
 #if defined(HB_OS_WIN)
   case HB_GTI_CLIPBOARDDATA:
@@ -297,10 +285,6 @@ static HB_BOOL hb_gt_gui_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Version = hb_gt_gui_Version;
   pFuncTable->Tone = hb_gt_gui_Tone;
   pFuncTable->Info = hb_gt_gui_Info;

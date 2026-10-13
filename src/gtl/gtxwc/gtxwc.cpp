@@ -4676,10 +4676,6 @@ static void hb_gt_xwc_LateRefresh(PXWND_DEF wnd)
 static void hb_gt_xwc_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   PXWND_DEF wnd;
 
 #ifdef HB_XWC_USE_LOCALE
@@ -4725,10 +4721,6 @@ static void hb_gt_xwc_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_xwc_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   PXWND_DEF wnd;
 
   wnd = HB_GTXWC_GET(pGT);
@@ -4745,10 +4737,6 @@ static void hb_gt_xwc_Exit(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_xwc_SetMode(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRow, iCol));
-#endif
-
   auto fResult = false;
 
   if (iCol >= XWC_MIN_COLS && iRow >= XWC_MIN_ROWS && iCol <= XWC_MAX_COLS && iRow <= XWC_MAX_ROWS) {
@@ -4816,10 +4804,6 @@ static HB_BOOL hb_gt_xwc_SetMode(HB_GT *pGT, int32_t iRow, int32_t iCol) // Func
 
 static HB_BOOL hb_gt_xwc_GetBlink(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_GetBlink(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return false;
 }
@@ -4841,10 +4825,6 @@ static const char *hb_gt_xwc_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static int32_t hb_gt_xwc_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(iEventMask);
 
   PXWND_DEF wnd;
@@ -4867,10 +4847,6 @@ static int32_t hb_gt_xwc_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 
 static void hb_gt_xwc_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
   PXWND_DEF wnd;
 
   // The conversion from Clipper (DOS) timer tick units to
@@ -4897,10 +4873,6 @@ static void hb_gt_xwc_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static HB_BOOL hb_gt_xwc_mouse_IsPresent(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_mouse_IsPresent(%p)", static_cast<void*>(pGT)));
-#endif
-
   PXWND_DEF wnd;
   wnd = HB_GTXWC_GET(pGT);
   hb_gt_xwc_ConnectX(wnd, true);
@@ -4911,10 +4883,6 @@ static HB_BOOL hb_gt_xwc_mouse_IsPresent(HB_GT *pGT) // FuncTable
 
 static void hb_gt_xwc_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_mouse_GetPos(%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(piRow), static_cast<void*>(piCol)));
-#endif
-
   PXWND_DEF wnd;
   wnd = HB_GTXWC_GET(pGT);
   if (wnd) {
@@ -4928,10 +4896,6 @@ static void hb_gt_xwc_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) /
 
 static void hb_gt_xwc_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_mouse_SetPos(%p,%d,%d)", static_cast<void*>(pGT), iRow, iCol));
-#endif
-
   PXWND_DEF wnd;
   wnd = HB_GTXWC_GET(pGT);
   wnd->mouseGotoRow = iRow;
@@ -4943,10 +4907,6 @@ static void hb_gt_xwc_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // Fu
 
 static HB_BOOL hb_gt_xwc_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_mouse_ButtonState(%p,%i)", static_cast<void*>(pGT), iButton));
-#endif
-
   PXWND_DEF wnd;
   wnd = HB_GTXWC_GET(pGT);
   hb_gt_xwc_ConnectX(wnd, true);
@@ -4961,10 +4921,6 @@ static HB_BOOL hb_gt_xwc_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncT
 
 static int32_t hb_gt_xwc_mouse_CountButton(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_mouse_CountButton(%p)", static_cast<void*>(pGT)));
-#endif
-
   PXWND_DEF wnd;
   wnd = HB_GTXWC_GET(pGT);
   hb_gt_xwc_ConnectX(wnd, true);
@@ -4992,10 +4948,6 @@ static int32_t hb_gt_xwc_getKbdState(PXWND_DEF wnd)
 
 static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   PXWND_DEF wnd;
   int32_t iVal;
 
@@ -5605,10 +5557,6 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 static int32_t hb_gt_xwc_gfx_Primitive(HB_GT *pGT, int32_t iType, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight,
                                    int32_t iColor) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iType, iTop, iLeft, iBottom, iRight, iColor));
-#endif
-
   PXWND_DEF wnd;
   int32_t iRet = 1, iTmp;
   XColor color;
@@ -5785,10 +5733,6 @@ static int32_t hb_gt_xwc_gfx_Primitive(HB_GT *pGT, int32_t iType, int32_t iTop, 
 
 static void hb_gt_xwc_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   PXWND_DEF wnd;
 
   wnd = HB_GTXWC_GET(pGT);
@@ -5832,10 +5776,6 @@ static void hb_gt_xwc_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_xwc_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   PXWND_DEF wnd;
 
   wnd = HB_GTXWC_GET(pGT);
@@ -5854,10 +5794,6 @@ static void hb_gt_xwc_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_xwc_Init;
   pFuncTable->Exit = hb_gt_xwc_Exit;
   pFuncTable->SetMode = hb_gt_xwc_SetMode;

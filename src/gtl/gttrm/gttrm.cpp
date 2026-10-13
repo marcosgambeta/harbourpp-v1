@@ -1381,10 +1381,6 @@ again:
 
 static void hb_gt_trm_LinuxSetTermMode(PHB_GTTRM pTerm, int32_t iAM)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_LinuxSetTermMode(%p,%d)", static_cast<void*>(pTerm), iAM));
-#endif
-
   if (iAM != pTerm->iAM) {
     if (iAM == 0) {
       hb_gt_trm_termOut(pTerm, "\x1B[m", 3);
@@ -1397,10 +1393,6 @@ static void hb_gt_trm_LinuxSetTermMode(PHB_GTTRM pTerm, int32_t iAM)
 
 static void hb_gt_trm_LinuxTone(PHB_GTTRM pTerm, double dFrequency, double dDuration)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_LinuxTone(%p,%lf,%lf)", static_cast<void*>(pTerm), dFrequency, dDuration));
-#endif
-
   char escseq[64];
 
   if (pTerm->iACSC) {
@@ -1418,10 +1410,6 @@ static void hb_gt_trm_LinuxTone(PHB_GTTRM pTerm, double dFrequency, double dDura
 
 static void hb_gt_trm_LinuxSetCursorStyle(PHB_GTTRM pTerm, int32_t iStyle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_LinuxSetCursorStyle(%p,%d)", static_cast<void*>(pTerm), iStyle));
-#endif
-
   if (pTerm->iCursorStyle != iStyle) {
     int32_t lcurs = -1;
 
@@ -1456,10 +1444,6 @@ static void hb_gt_trm_LinuxSetCursorStyle(PHB_GTTRM pTerm, int32_t iStyle)
 
 static void hb_gt_trm_LinuxSetPalette(PHB_GTTRM pTerm, int32_t iIndexFrom, int32_t iIndexTo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_LinuxSetPalette(%p,%d,%d)", static_cast<void*>(pTerm), iIndexFrom, iIndexTo));
-#endif
-
   if (iIndexFrom < 0) {
     iIndexFrom = 0;
   }
@@ -1490,10 +1474,6 @@ static void hb_gt_trm_LinuxSetPalette(PHB_GTTRM pTerm, int32_t iIndexFrom, int32
 
 static void hb_gt_trm_LinuxResetPalette(PHB_GTTRM pTerm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_LinuxResetPalette(%p)", static_cast<void*>(pTerm)));
-#endif
-
   hb_gt_trm_termOut(pTerm, "\033]R", 3);
 }
 
@@ -1501,10 +1481,6 @@ static void hb_gt_trm_LinuxResetPalette(PHB_GTTRM pTerm)
 
 static HB_BOOL hb_gt_trm_XtermSetMode(PHB_GTTRM pTerm, int32_t *piRows, int32_t *piCols)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_XtermSetMode(%p,%d,%d)", static_cast<void*>(pTerm), *piRows, *piCols));
-#endif
-
   int32_t iHeight, iWidth;
   char escseq[64];
 
@@ -1530,10 +1506,6 @@ static HB_BOOL hb_gt_trm_XtermSetMode(PHB_GTTRM pTerm, int32_t *piRows, int32_t 
 
 static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int32_t iAttr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_XtermSetAttributes(%p,%d)", static_cast<void*>(pTerm), iAttr));
-#endif
-
   if (pTerm->iCurrentSGR != iAttr) {
     int32_t bg, fg, bold, blink, rgb;
 
@@ -1755,10 +1727,6 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int32_t iAttr)
 
 static void hb_gt_trm_XtermSetTitle(PHB_GTTRM pTerm, const char *szTitle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_XtermSetTitle(%p,%s)", static_cast<void*>(pTerm), szTitle));
-#endif
-
   hb_gt_trm_termOut(pTerm, "\033]0;", 4);
   if (szTitle != nullptr) {
     hb_gt_trm_termOut(pTerm, szTitle, strlen(szTitle));
@@ -1770,10 +1738,6 @@ static void hb_gt_trm_XtermSetTitle(PHB_GTTRM pTerm, const char *szTitle)
 
 static HB_BOOL hb_gt_trm_BsdGetCursorPos(PHB_GTTRM pTerm, int32_t *iRow, int32_t *iCol, const char *szPost)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_BsdGetCursorPos(%p,%p,%p,%s)", static_cast<void*>(pTerm), static_cast<void*>(iRow), static_cast<void*>(iCol), szPost));
-#endif
-
   HB_SYMBOL_UNUSED(szPost);
 
   if (pTerm->fPosAnswer) {
@@ -1786,10 +1750,6 @@ static HB_BOOL hb_gt_trm_BsdGetCursorPos(PHB_GTTRM pTerm, int32_t *iRow, int32_t
 
 static void hb_gt_trm_BsdSetCursorStyle(PHB_GTTRM pTerm, int32_t iStyle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_BsdSetCursorStyle(%p,%d)", static_cast<void*>(pTerm), iStyle));
-#endif
-
   if (pTerm->iCursorStyle != iStyle) {
     const char *escseq = nullptr;
 
@@ -1820,10 +1780,6 @@ static void hb_gt_trm_BsdSetCursorStyle(PHB_GTTRM pTerm, int32_t iStyle)
 
 static void hb_gt_trm_BsdTone(PHB_GTTRM pTerm, double dFrequency, double dDuration)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_BsdTone(%p,%lf,%lf)", static_cast<void*>(pTerm), dFrequency, dDuration));
-#endif
-
   char escseq[64];
 
   hb_snprintf(escseq, sizeof(escseq), "\033[=%d;%dB\007", static_cast<int32_t>(dFrequency),
@@ -1839,10 +1795,6 @@ static void hb_gt_trm_BsdTone(PHB_GTTRM pTerm, double dFrequency, double dDurati
 
 static void hb_gt_trm_AnsiSetTermMode(PHB_GTTRM pTerm, int32_t iAM)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiSetTermMode(%p,%d)", static_cast<void*>(pTerm), iAM));
-#endif
-
   if (iAM != pTerm->iAM) {
     if (iAM == 0) {
       hb_gt_trm_termOut(pTerm, "\x1B[0m", 4);
@@ -1858,10 +1810,6 @@ static void hb_gt_trm_AnsiSetTermMode(PHB_GTTRM pTerm, int32_t iAM)
 
 static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int32_t *iRow, int32_t *iCol, const char *szPost)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiGetCursorPos(%p,%p,%p,%s)", static_cast<void*>(pTerm), static_cast<void*>(iRow), static_cast<void*>(iCol), szPost));
-#endif
-
   if (pTerm->fPosAnswer) {
     char rdbuf[64];
     int32_t i, j, n, d, y, x;
@@ -1953,10 +1901,6 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int32_t *iRow, int32_
 
 static void hb_gt_trm_AnsiSetCursorPos(PHB_GTTRM pTerm, int32_t iRow, int32_t iCol)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiSetCursorPos(%p,%d,%d)", static_cast<void*>(pTerm), iRow, iCol));
-#endif
-
   if (pTerm->iRow != iRow || pTerm->iCol != iCol) {
     char buff[16];
     hb_snprintf(buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1);
@@ -1968,10 +1912,6 @@ static void hb_gt_trm_AnsiSetCursorPos(PHB_GTTRM pTerm, int32_t iRow, int32_t iC
 
 static void hb_gt_trm_AnsiSetCursorStyle(PHB_GTTRM pTerm, int32_t iStyle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiSetCursorStyle(%p,%d)", static_cast<void*>(pTerm), iStyle));
-#endif
-
   if (pTerm->iCursorStyle != iStyle) {
     hb_gt_trm_termOut(pTerm, iStyle == SC_NONE ? "\x1B[?25l" : "\x1B[?25h", 6);
     pTerm->iCursorStyle = iStyle;
@@ -1980,10 +1920,6 @@ static void hb_gt_trm_AnsiSetCursorStyle(PHB_GTTRM pTerm, int32_t iStyle)
 
 static void hb_gt_trm_AnsiSetAttributes(PHB_GTTRM pTerm, int32_t iAttr)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiSetAttributes(%p,%d)", static_cast<void*>(pTerm), iAttr));
-#endif
-
   if (pTerm->iCurrentSGR != iAttr) {
     int32_t i = 2;
     char buff[32];
@@ -2069,10 +2005,6 @@ static void hb_gt_trm_AnsiSetAttributes(PHB_GTTRM pTerm, int32_t iAttr)
 
 static int32_t hb_gt_trm_AnsiGetAcsc(PHB_GTTRM pTerm, unsigned char c)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiGetAcsc(%p,%d)", static_cast<void*>(pTerm), c));
-#endif
-
   for (auto ptr = reinterpret_cast<const unsigned char *>(pTerm->szAcsc); *ptr && *(ptr + 1); ptr += 2) {
     if (*ptr == c) {
       return *(ptr + 1) | HB_GTTRM_ATTR_ACSC;
@@ -2100,10 +2032,6 @@ static int32_t hb_gt_trm_AnsiGetAcsc(PHB_GTTRM pTerm, unsigned char c)
 
 static HB_BOOL hb_gt_trm_AnsiSetMode(PHB_GTTRM pTerm, int32_t *piRows, int32_t *piCols)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiSetMode(%p,%d,%d)", static_cast<void*>(pTerm), *piRows, *piCols));
-#endif
-
   if (pTerm->terminal_ext & TERM_PUTTY) {
     return hb_gt_trm_XtermSetMode(pTerm, piRows, piCols);
   }
@@ -2113,20 +2041,12 @@ static HB_BOOL hb_gt_trm_AnsiSetMode(PHB_GTTRM pTerm, int32_t *piRows, int32_t *
 
 static void hb_gt_trm_AnsiBell(PHB_GTTRM pTerm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiBell(%p)", static_cast<void*>(pTerm)));
-#endif
-
   hb_gt_trm_termOut(pTerm, s_szBell, 1);
   hb_gt_trm_termFlush(pTerm);
 }
 
 static void hb_gt_trm_AnsiTone(PHB_GTTRM pTerm, double dFrequency, double dDuration)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiTone(%p,%lf,%lf)", static_cast<void*>(pTerm), dFrequency, dDuration));
-#endif
-
   HB_SYMBOL_UNUSED(dFrequency);
 
   // Output an ASCII BEL character to cause a sound
@@ -2146,19 +2066,11 @@ static void hb_gt_trm_AnsiTone(PHB_GTTRM pTerm, double dFrequency, double dDurat
 
 static void hb_gt_trm_AnsiInit(PHB_GTTRM pTerm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiInit(%p)", static_cast<void*>(pTerm)));
-#endif
-
   pTerm->iCurrentSGR = pTerm->iRow = pTerm->iCol = pTerm->iCursorStyle = pTerm->iACSC = pTerm->iAM = -1;
 }
 
 static void hb_gt_trm_AnsiExit(PHB_GTTRM pTerm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiExit(%p)", static_cast<void*>(pTerm)));
-#endif
-
   // set default color
   pTerm->SetAttributes(pTerm, 0x07 & pTerm->iAttrMask);
   pTerm->SetCursorStyle(pTerm, SC_NORMAL);
@@ -2236,10 +2148,6 @@ static bool hb_trm_isUTF8(PHB_GTTRM pTerm)
 
 static void hb_gt_trm_PutStr(PHB_GTTRM pTerm, int32_t iRow, int32_t iCol, int32_t iAttr, const char *pStr, int32_t iLen, int32_t iChars)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_PutStr(%p,%d,%d,%d,%p,%d,%d)", static_cast<void*>(pTerm), iRow, iCol, iAttr, static_cast<const void*>(pStr), iLen, iChars));
-#endif
-
   if (pTerm->iOutBufSize) {
     pTerm->SetCursorPos(pTerm, iRow, iCol);
     pTerm->SetAttributes(pTerm, iAttr & pTerm->iAttrMask);
@@ -2255,10 +2163,6 @@ static void hb_gt_trm_PutStr(PHB_GTTRM pTerm, int32_t iRow, int32_t iCol, int32_
 
 static void hb_gt_trm_SetPalette(PHB_GTTRM pTerm, int32_t iIndexFrom, int32_t iIndexTo)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetPalette(%p,%d,%d)", static_cast<void*>(pTerm), iIndexFrom, iIndexTo));
-#endif
-
   if (pTerm->terminal_type == TERM_LINUX || (pTerm->terminal_ext & TERM_PUTTY)) {
     hb_gt_trm_LinuxSetPalette(pTerm, iIndexFrom, iIndexTo);
   }
@@ -2266,10 +2170,6 @@ static void hb_gt_trm_SetPalette(PHB_GTTRM pTerm, int32_t iIndexFrom, int32_t iI
 
 static void hb_gt_trm_ResetPalette(PHB_GTTRM pTerm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_ResetPalette(%p)", static_cast<void*>(pTerm)));
-#endif
-
   if (pTerm->terminal_type == TERM_LINUX || (pTerm->terminal_ext & TERM_PUTTY)) {
     hb_gt_trm_LinuxResetPalette(pTerm);
   }
@@ -2277,10 +2177,6 @@ static void hb_gt_trm_ResetPalette(PHB_GTTRM pTerm)
 
 static void hb_gt_trm_SetTitle(PHB_GTTRM pTerm, const char *szTitle)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetTitle(%p,%s)", static_cast<void*>(pTerm), szTitle));
-#endif
-
   if (pTerm->terminal_type == TERM_XTERM || (pTerm->terminal_ext & TERM_PUTTY)) {
     hb_gt_trm_XtermSetTitle(pTerm, szTitle);
   }
@@ -2290,10 +2186,6 @@ static void hb_gt_trm_SetTitle(PHB_GTTRM pTerm, const char *szTitle)
 static void hb_gt_trm_SetKeyTrans(PHB_GTTRM pTerm)
 {
   HB_CODEPAGE *cdpTerm = HB_GTSELF_INCP(pTerm->pGT), cdpHost = HB_GTSELF_HOSTCP(pTerm->pGT);
-
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetKeyTrans(%p,%p,%p)", static_cast<void*>(pTerm), static_cast<void*>(cdpTerm), static_cast<void*>(cdpHost)));
-#endif
 
   for (auto i = 0; i < 256; ++i) {
     pTerm->keyTransTbl[i] = static_cast<unsigned char>(hb_cdpTranslateChar(i, cdpTerm, cdpHost));
@@ -2991,10 +2883,6 @@ static void init_keys(PHB_GTTRM pTerm)
 
 static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetTerm(%p)", static_cast<void*>(pTerm)));
-#endif
-
   static const char *szAcsc = "``aaffggiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~";
   static const char *szExtAcsc = "+\020,\021-\030.\0310\333`\004a\261f\370g\361h\260i\316j\331k\277l\332m\300n\305o~"
                                  "p\304q\304r\304s_t\303u\264v\301w\302x\263y\363z\362{\343|\330}\234~\376";
@@ -3186,10 +3074,6 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
 static void hb_gt_trm_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   int32_t iRows = 24, iCols = 80;
   PHB_GTTRM pTerm;
 
@@ -3293,10 +3177,6 @@ static void hb_gt_trm_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_trm_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_GTSELF_REFRESH(pGT);
 
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
@@ -3335,19 +3215,11 @@ static void hb_gt_trm_Exit(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_trm_mouse_IsPresent(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_IsPresent(%p)", static_cast<void*>(pGT)));
-#endif
-
   return HB_GTTRM_GET(pGT)->mouse_type != MOUSE_NONE;
 }
 
 static void hb_gt_trm_mouse_Show(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_Show(%p)", static_cast<void*>(pGT)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
 #if defined(HB_HAS_GPM)
   if (pTerm->mouse_type & MOUSE_GPM) {
@@ -3359,10 +3231,6 @@ static void hb_gt_trm_mouse_Show(HB_GT *pGT) // FuncTable
 
 static void hb_gt_trm_mouse_Hide(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_Hide(%p)", static_cast<void*>(pGT)));
-#endif
-
 #if defined(HB_HAS_GPM)
   if (HB_GTTRM_GET(pGT)->mouse_type & MOUSE_GPM) {
     gpm_visiblepointer = 0;
@@ -3374,10 +3242,6 @@ static void hb_gt_trm_mouse_Hide(HB_GT *pGT) // FuncTable
 
 static void hb_gt_trm_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_Col(%p,%p,%p)", static_cast<void*>(pGT), static_cast<void*>(piRow), static_cast<void*>(piCol)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
   *piRow = pTerm->mLastEvt.row;
   *piCol = pTerm->mLastEvt.col;
@@ -3385,10 +3249,6 @@ static void hb_gt_trm_mouse_GetPos(HB_GT *pGT, int32_t *piRow, int32_t *piCol) /
 
 static void hb_gt_trm_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_SetPos(%p,%i,%i)", static_cast<void*>(pGT), iRow, iCol));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
   // it does really nothing
   pTerm->mLastEvt.col = iCol;
@@ -3398,10 +3258,6 @@ static void hb_gt_trm_mouse_SetPos(HB_GT *pGT, int32_t iRow, int32_t iCol) // Fu
 
 static HB_BOOL hb_gt_trm_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_ButtonState(%p,%i)", static_cast<void*>(pGT), iButton));
-#endif
-
   auto ret = false;
 
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
@@ -3426,19 +3282,11 @@ static HB_BOOL hb_gt_trm_mouse_ButtonState(HB_GT *pGT, int32_t iButton) // FuncT
 
 static int32_t hb_gt_trm_mouse_CountButton(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_CountButton(%p)", static_cast<void*>(pGT)));
-#endif
-
   return HB_GTTRM_GET(pGT)->mButtons;
 }
 
 static int32_t hb_gt_trm_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(iEventMask);
 
   int32_t iKey = wait_key(HB_GTTRM_GET(pGT), 0);
@@ -3459,30 +3307,18 @@ static int32_t hb_gt_trm_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 
 static void hb_gt_trm_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
   pTerm->Tone(pTerm, dFrequency, dDuration);
 }
 
 static void hb_gt_trm_Bell(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Bell(%p)", static_cast<void*>(pGT)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
   pTerm->Bell(pTerm);
 }
 
 static const char *hb_gt_trm_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Version(%p,%d)", static_cast<void*>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -3494,10 +3330,6 @@ static const char *hb_gt_trm_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static HB_BOOL hb_gt_trm_Suspend(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Suspend(%p)", static_cast<void*>(pGT)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
   if (pTerm->mouse_type & MOUSE_XTERM) {
     hb_gt_trm_termOut(pTerm, s_szMouseOff, strlen(s_szMouseOff));
@@ -3514,10 +3346,6 @@ static HB_BOOL hb_gt_trm_Suspend(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_trm_Resume(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Resume(%p)", static_cast<void*>(pGT)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
 #if defined(HB_OS_UNIX)
   if (pTerm->fRestTTY) {
@@ -3542,10 +3370,6 @@ static HB_BOOL hb_gt_trm_Resume(HB_GT *pGT) // FuncTable
 static void hb_gt_trm_Scroll(HB_GT *pGT, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor, uint16_t usChar,
                              int32_t iRows, int32_t iCols) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols));
-#endif
-
   // Provide some basic scroll support for full screen
   if (iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0) {
     PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
@@ -3572,10 +3396,6 @@ static void hb_gt_trm_Scroll(HB_GT *pGT, int32_t iTop, int32_t iLeft, int32_t iB
 
 static HB_BOOL hb_gt_trm_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
-#endif
-
   if (iRows > 0 && iCols > 0) {
     PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
     if (pTerm->SetMode(pTerm, &iRows, &iCols)) {
@@ -3588,10 +3408,6 @@ static HB_BOOL hb_gt_trm_SetMode(HB_GT *pGT, int32_t iRows, int32_t iCols) // Fu
 
 static void hb_gt_trm_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int32_t>(fBlink)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
 
 #if 0
@@ -3621,10 +3437,6 @@ static void hb_gt_trm_SetBlink(HB_GT *pGT, HB_BOOL fBlink) // FuncTable
 static HB_BOOL hb_gt_trm_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int32_t>(fBox)));
-#endif
-
   if (HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox)) {
     if (!HB_GTTRM_GET(pGT)->fUTF8) {
       hb_gt_trm_SetDispTrans(HB_GTTRM_GET(pGT), fBox ? 1 : 0);
@@ -3637,10 +3449,6 @@ static HB_BOOL hb_gt_trm_SetDispCP(HB_GT *pGT, const char *pszTermCDP, const cha
 #ifndef HB_GT_UNICODE_BUF
 static HB_BOOL hb_gt_trm_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetKeyCP(%p,%s,%s)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP));
-#endif
-
   if (HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP)) {
     if (!HB_GTTRM_GET(pGT)->fUTF8) {
       hb_gt_trm_SetKeyTrans(HB_GTTRM_GET(pGT));
@@ -3653,10 +3461,6 @@ static HB_BOOL hb_gt_trm_SetKeyCP(HB_GT *pGT, const char *pszTermCDP, const char
 
 static void hb_gt_trm_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   uint8_t bAttr;
   uint16_t usChar;
   int32_t iLen = 0;
@@ -3747,10 +3551,6 @@ static void hb_gt_trm_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_trm_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
 
   HB_GTSELF_GETSIZE(pGT, &pTerm->iHeight, &pTerm->iWidth);
@@ -3783,10 +3583,6 @@ static void hb_gt_trm_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   const char *szVal;
   void *hVal;
   int32_t iVal;
@@ -3932,10 +3728,6 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_trm_Init;
   pFuncTable->Exit = hb_gt_trm_Exit;
   pFuncTable->Redraw = hb_gt_trm_Redraw;

@@ -197,10 +197,6 @@ static void hb_gt_std_newLine(PHB_GTSTD pGTSTD)
 static void hb_gt_std_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<uintptr_t>(hFilenoStderr))));
-#endif
-
   PHB_GTSTD pGTSTD;
 
   HB_GTLOCAL(pGT) = pGTSTD = new HB_GTSTD();
@@ -288,10 +284,6 @@ static void hb_gt_std_Init(HB_GT *pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 static void hb_gt_std_Exit(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Exit(%p)", static_cast<void*>(pGT)));
-#endif
-
   int32_t iRow, iCol;
 
   HB_GTSELF_REFRESH(pGT);
@@ -332,10 +324,6 @@ static void hb_gt_std_Exit(HB_GT *pGT) // FuncTable
 
 static int32_t hb_gt_std_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
-#endif
-
   HB_SYMBOL_UNUSED(iEventMask);
 
   int32_t ch = 0;
@@ -415,20 +403,12 @@ static int32_t hb_gt_std_ReadKey(HB_GT *pGT, int32_t iEventMask) // FuncTable
 
 static HB_BOOL hb_gt_std_IsColor(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_IsColor(%p)", static_cast<void*>(pGT)));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
   return false;
 }
 
 static void hb_gt_std_Tone(HB_GT *pGT, double dFrequency, double dDuration) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
-#endif
-
   HB_SYMBOL_UNUSED(dFrequency);
 
   PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
@@ -450,19 +430,11 @@ static void hb_gt_std_Tone(HB_GT *pGT, double dFrequency, double dDuration) // F
 
 static void hb_gt_std_Bell(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Bell(%p)", static_cast<void*>(pGT)));
-#endif
-
   hb_gt_std_termOut(HB_GTSTD_GET(pGT), s_szBell, 1);
 }
 
 static const char *hb_gt_std_Version(HB_GT *pGT, int32_t iType) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Version(%p,%d)", static_cast<void*>(pGT), iType));
-#endif
-
   HB_SYMBOL_UNUSED(pGT);
 
   if (iType == 0) {
@@ -474,10 +446,6 @@ static const char *hb_gt_std_Version(HB_GT *pGT, int32_t iType) // FuncTable
 
 static HB_BOOL hb_gt_std_Suspend(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Suspend(%p)", static_cast<void*>(pGT)));
-#endif
-
 #if defined(HB_HAS_TERMIOS)
   {
     PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
@@ -492,10 +460,6 @@ static HB_BOOL hb_gt_std_Suspend(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_std_Resume(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Resume(%p)", static_cast<void*>(pGT)));
-#endif
-
 #if defined(HB_HAS_TERMIOS)
   {
     PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
@@ -510,10 +474,6 @@ static HB_BOOL hb_gt_std_Resume(HB_GT *pGT) // FuncTable
 static void hb_gt_std_Scroll(HB_GT *pGT, int32_t iTop, int32_t iLeft, int32_t iBottom, int32_t iRight, int32_t iColor, uint16_t usChar,
                              int32_t iRows, int32_t iCols) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols));
-#endif
-
   int32_t iHeight, iWidth;
 
   // Provide some basic scroll support for full screen
@@ -576,10 +536,6 @@ static void hb_gt_std_DispLine(HB_GT *pGT, int32_t iRow, int32_t iFrom, int32_t 
 
 static void hb_gt_std_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSize) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
-#endif
-
   int32_t iColor;
   uint8_t bAttr;
   uint16_t usChar;
@@ -647,10 +603,6 @@ static void hb_gt_std_Redraw(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t iSi
 
 static void hb_gt_std_Refresh(HB_GT *pGT) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Refresh(%p)", static_cast<void*>(pGT)));
-#endif
-
   int32_t iHeight, iSize;
 
   PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
@@ -674,10 +626,6 @@ static void hb_gt_std_Refresh(HB_GT *pGT) // FuncTable
 
 static HB_BOOL hb_gt_std_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // FuncTable
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_std_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
-#endif
-
   switch (iType) {
   case HB_GTI_ISSCREENPOS:
   case HB_GTI_KBDSUPPORT:
@@ -693,10 +641,6 @@ static HB_BOOL hb_gt_std_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
 static HB_BOOL hb_gt_FuncInit(HB_GT_FUNCS *pFuncTable)
 {
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
-#endif
-
   pFuncTable->Init = hb_gt_std_Init;
   pFuncTable->Exit = hb_gt_std_Exit;
   pFuncTable->IsColor = hb_gt_std_IsColor;
