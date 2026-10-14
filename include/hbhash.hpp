@@ -60,11 +60,11 @@ typedef struct HB_HASH_ITEM_
    const void * KeyPtr;
    HB_SIZE key;
    struct HB_HASH_ITEM_ *next;
-} HB_HASH_ITEM, * PHB_HASH_ITEM;
+} HB_HASH_ITEM, * PHB_HASH_ITEM; // NOTE: PHB_HASH_ITEM is deprecated in Harbour++ source code
 
 typedef struct HB_HASH_TABLE_
 {
-   PHB_HASH_ITEM * pItems;        /* pointer to items */
+   HB_HASH_ITEM ** pItems;        /* pointer to items */
    HB_SIZE nTableSize;            /* the table size - number of slots */
    HB_SIZE nCount;                /* number of items stored in the table */
    HB_SIZE nUsed;                 /* number of used slots */
