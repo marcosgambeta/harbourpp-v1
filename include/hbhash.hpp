@@ -71,19 +71,19 @@ typedef struct HB_HASH_TABLE_
    PHB_HASH_FUNC pKeyFunc;        /* pointer to func that returns key value */
    PHB_HASH_FUNC pDeleteItemFunc; /* ptr to func that deletes value stored in the table */
    PHB_HASH_FUNC pCompFunc;       /* ptr to func that compares two items */
-} HB_HASH_TABLE, * PHB_HASH_TABLE;
+} HB_HASH_TABLE, * PHB_HASH_TABLE; // NOTE: PHB_HASH_TABLE is deprecated in Harbour++ source code
 
 
-extern HB_EXPORT_INT PHB_HASH_TABLE hb_hashTableCreate( HB_SIZE nSize,
+extern HB_EXPORT_INT HB_HASH_TABLE *hb_hashTableCreate( HB_SIZE nSize,
                                                         PHB_HASH_FUNC pHashFunc,
                                                         PHB_HASH_FUNC pDelete,
                                                         PHB_HASH_FUNC pComp );
-extern HB_EXPORT_INT void hb_hashTableKill( PHB_HASH_TABLE pTable ); /* release all items and the hash table */
-extern HB_EXPORT_INT HB_BOOL hb_hashTableAdd( PHB_HASH_TABLE pTable, const void * pKey, const void * pValue ); /* add a new item into the table */
-extern HB_EXPORT_INT HB_BOOL hb_hashTableDel( PHB_HASH_TABLE pTable, const void * pKey ); /* delete an item from the table */
-extern HB_EXPORT_INT const void * hb_hashTableFind( PHB_HASH_TABLE pTable, const void * pKey ); /* return the pointer to item's value or NULL if not found */
-extern HB_EXPORT_INT PHB_HASH_TABLE hb_hashTableResize( PHB_HASH_TABLE pTable, HB_SIZE nNewSize ); /* resize the hash table */
-extern HB_EXPORT_INT HB_SIZE hb_hashTableSize( PHB_HASH_TABLE pTable ); /* return the hash table size */
+extern HB_EXPORT_INT void hb_hashTableKill( HB_HASH_TABLE *pTable ); /* release all items and the hash table */
+extern HB_EXPORT_INT HB_BOOL hb_hashTableAdd( HB_HASH_TABLE *pTable, const void * pKey, const void * pValue ); /* add a new item into the table */
+extern HB_EXPORT_INT HB_BOOL hb_hashTableDel( HB_HASH_TABLE *pTable, const void * pKey ); /* delete an item from the table */
+extern HB_EXPORT_INT const void * hb_hashTableFind( HB_HASH_TABLE *pTable, const void * pKey ); /* return the pointer to item's value or NULL if not found */
+extern HB_EXPORT_INT HB_HASH_TABLE *hb_hashTableResize( HB_HASH_TABLE *pTable, HB_SIZE nNewSize ); /* resize the hash table */
+extern HB_EXPORT_INT HB_SIZE hb_hashTableSize( HB_HASH_TABLE *pTable ); /* return the hash table size */
 
 HB_EXTERN_END
 

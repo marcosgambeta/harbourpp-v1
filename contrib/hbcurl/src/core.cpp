@@ -127,7 +127,7 @@ typedef struct _HB_CURL
   HB_ITEM *pWriteFunctionCallback;
 
 #ifdef HB_CURL_HASH_STRINGS
-  PHB_HASH_TABLE pHash;
+  HB_HASH_TABLE *pHash;
 #endif
 
 } HB_CURL, *PHB_CURL;

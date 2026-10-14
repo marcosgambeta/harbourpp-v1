@@ -1230,7 +1230,7 @@ extern void *hb_xRefResize(void *pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE *pn
 #  define HB_CODEBLOCK_PTR    HB_CODEBLOCK*
 #  define HB_MACRO_PTR        PHB_MACRO
 #  define HB_ERROR_INFO_PTR   PHB_ERROR_INFO
-#  define HB_HASH_TABLE_PTR   PHB_HASH_TABLE
+#  define HB_HASH_TABLE_PTR   HB_HASH_TABLE*
 #  define HB_GARBAGE_FUNC_PTR PHB_GARBAGE_FUNC
 #endif
 

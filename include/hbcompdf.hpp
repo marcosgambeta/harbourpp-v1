@@ -985,7 +985,7 @@ struct _HB_COMP
    HB_COMP_LEX *     pLex;
    HB_EXPRLST *      pExprLst;
 
-   PHB_HASH_TABLE    pIdentifiers;
+   HB_HASH_TABLE *   pIdentifiers;
    HB_HFUNCTION_LIST functions;
    // HB_HSYMBOL_LIST   symbols; (changed to std::vector)
    std::vector<HB_HSYMBOL *> symbols;
@@ -1092,7 +1092,7 @@ typedef struct _HB_COMP
    HB_COMP_LEX *     pLex;
    HB_EXPRLST *      pExprLst;
 
-   PHB_HASH_TABLE    pIdentifiers;
+   HB_HASH_TABLE *   pIdentifiers;
    HB_HFUNCTION_LIST functions;
    // HB_HSYMBOL_LIST   symbols; (changed to std::vector)
    std::vector<HB_HSYMBOL *> symbols;

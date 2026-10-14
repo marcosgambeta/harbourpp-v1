@@ -59,7 +59,7 @@ static HB_HASH_ITEM *hb_hashItemNew(HB_SIZE nKey, const void *pKey, const void *
   return pItem;
 }
 
-static void hb_hashItemDelete(PHB_HASH_TABLE pTable, HB_HASH_ITEM *pItem)
+static void hb_hashItemDelete(HB_HASH_TABLE *pTable, HB_HASH_ITEM *pItem)
 {
   if (pTable->pDeleteItemFunc) {
     (pTable->pDeleteItemFunc)(pTable, pItem->KeyPtr, pItem->ValPtr);
@@ -76,9 +76,9 @@ static void hb_hashItemDelete(PHB_HASH_TABLE pTable, HB_HASH_ITEM *pItem)
 // pComp = a function for comparing a values
 //       (first and second are values to compare, function have to return
 //        zero if values match or nonzero if they don't match)
-PHB_HASH_TABLE hb_hashTableCreate(HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HASH_FUNC pDelete, PHB_HASH_FUNC pComp)
+HB_HASH_TABLE *hb_hashTableCreate(HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HASH_FUNC pDelete, PHB_HASH_FUNC pComp)
 {
-  auto pTable = static_cast<PHB_HASH_TABLE>(hb_xgrab(sizeof(HB_HASH_TABLE)));
+  auto pTable = static_cast<HB_HASH_TABLE *>(hb_xgrab(sizeof(HB_HASH_TABLE)));
 
   pTable->nTableSize = nSize;
   pTable->pKeyFunc = pHashFunc;
@@ -92,7 +92,7 @@ PHB_HASH_TABLE hb_hashTableCreate(HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HA
 }
 
 // Delete all items in the hash table and next delete the table
-void hb_hashTableKill(PHB_HASH_TABLE pTable)
+void hb_hashTableKill(HB_HASH_TABLE *pTable)
 {
   HB_SIZE nSize = 0;
 
@@ -112,9 +112,9 @@ void hb_hashTableKill(PHB_HASH_TABLE pTable)
 }
 
 // resize table
-PHB_HASH_TABLE hb_hashTableResize(PHB_HASH_TABLE pTable, HB_SIZE nNewSize)
+HB_HASH_TABLE *hb_hashTableResize(HB_HASH_TABLE *pTable, HB_SIZE nNewSize)
 {
-  PHB_HASH_TABLE pNew;
+  HB_HASH_TABLE *pNew;
   HB_SIZE nSize = 0;
 
   if (nNewSize == 0) {
@@ -157,7 +157,7 @@ PHB_HASH_TABLE hb_hashTableResize(PHB_HASH_TABLE pTable, HB_SIZE nNewSize)
 }
 
 // add a new value into the hash table
-HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void *pKey, const void *pValue)
+HB_BOOL hb_hashTableAdd(HB_HASH_TABLE *pTable, const void *pKey, const void *pValue)
 {
   HB_SIZE nKey;
   HB_HASH_ITEM *pItem;
@@ -179,7 +179,7 @@ HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void *pKey, const void *pVa
 }
 
 // return the pointer to item's value or nullptr if not found
-const void *hb_hashTableFind(PHB_HASH_TABLE pTable, const void *pKey)
+const void *hb_hashTableFind(HB_HASH_TABLE *pTable, const void *pKey)
 {
   HB_SIZE nKey;
   HB_HASH_ITEM *pItem;
@@ -203,7 +203,7 @@ const void *hb_hashTableFind(PHB_HASH_TABLE pTable, const void *pKey)
 // Delete an item from the table
 // Returns HB_TRUE if item was found and returns HB_FALSE when passed item
 // is not stored in the table
-HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void *pKey)
+HB_BOOL hb_hashTableDel(HB_HASH_TABLE *pTable, const void *pKey)
 {
   HB_SIZE nKey;
   HB_HASH_ITEM *pItem;
@@ -240,7 +240,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void *pKey)
 }
 
 // return the hash table size
-HB_SIZE hb_hashTableSize(PHB_HASH_TABLE pTable)
+HB_SIZE hb_hashTableSize(HB_HASH_TABLE *pTable)
 {
   return pTable->nTableSize;
 }
