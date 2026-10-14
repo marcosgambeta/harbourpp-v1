@@ -74,8 +74,6 @@ struct HB_FFIND_INFO
   bool fLabelDone;
 };
 
-using PHB_FFIND_INFO = HB_FFIND_INFO *;
-
 #define _HB_WIN_MASKATTR (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM)
 #define _HB_WIN_MATCH()                                                                                                \
   (((info->pFindFileData.dwFileAttributes & _HB_WIN_MASKATTR) == 0) ||                                                 \
@@ -97,12 +95,9 @@ struct HB_FFIND_INFO
   char path[HB_PATH_MAX];
 };
 
-using PHB_FFIND_INFO = HB_FFIND_INFO *;
-
 #else
 
 using HB_FFIND_INFO = void;
-using PHB_FFIND_INFO = void *;
 
 #endif
 
@@ -418,7 +413,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 #if defined(HB_OS_WIN)
 
   {
-    auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
+    auto info = static_cast<HB_FFIND_INFO *>(ffind->info);
 
     bFound = false;
 
@@ -518,7 +513,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 #elif defined(HB_OS_UNIX)
 
   {
-    auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
+    auto info = static_cast<HB_FFIND_INFO *>(ffind->info);
 
     char dirname[HB_PATH_MAX];
 
@@ -749,7 +744,7 @@ void hb_fsFindClose(PHB_FFIND ffind)
     // Do platform dependent cleanup
 
     if (ffind->info) {
-      auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
+      auto info = static_cast<HB_FFIND_INFO *>(ffind->info);
 
       if (!ffind->bFirst) {
         hb_vmUnlock();
