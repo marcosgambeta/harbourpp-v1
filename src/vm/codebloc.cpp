@@ -61,7 +61,7 @@ static const uint8_t s_pCode[2] = {HB_P_PUSHNIL, HB_P_ENDBLOCK};
 // Release all allocated memory when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
 {
-  auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
+  auto pCBlock = static_cast<HB_CODEBLOCK *>(Cargo);
 
   // free space allocated for pcodes - if it was a macro-compiled codeblock
   if (pCBlock->pCode && pCBlock->dynBuffer) {
@@ -85,7 +85,7 @@ static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
 
 static HB_GARBAGE_FUNC(hb_codeblockGarbageMark)
 {
-  auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
+  auto pCBlock = static_cast<HB_CODEBLOCK *>(Cargo);
 
   if (pCBlock->uiLocals) {
     HB_ITEM *pLocals = pCBlock->pLocals;
@@ -110,7 +110,7 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs = {
 // pSymbols    -> a pointer to the module symbol table
 //
 // Note: pLocalPosTable cannot be used if uiLocals is ZERO
-PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable,
+HB_CODEBLOCK *hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable,
                               HB_SYMB *pSymbols, HB_SIZE nLen)
 {
   HB_STACK_TLS_PRELOAD
@@ -168,7 +168,7 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
     // created during creation of the outermost codeblock
     auto pLocal = hb_stackSelfItem();
     if (pLocal->isBlock()) {
-      PHB_CODEBLOCK pOwner = pLocal->blockValue();
+      HB_CODEBLOCK *pOwner = pLocal->blockValue();
 
       uiLocals = pOwner->uiLocals;
       pLocals = pOwner->pLocals;
@@ -181,7 +181,7 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
   }
 
   auto pBase = hb_stackBaseItem();
-  auto pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
+  auto pCBlock = static_cast<HB_CODEBLOCK *>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
 
   pCBlock->pCode = pCode;
   pCBlock->dynBuffer = nLen != 0;
@@ -198,7 +198,7 @@ PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const u
   return pCBlock;
 }
 
-PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
+HB_CODEBLOCK *hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 {
   HB_STACK_TLS_PRELOAD
 
@@ -212,7 +212,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 
   auto pCode = static_cast<uint8_t *>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
 
-  auto pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
+  auto pCBlock = static_cast<HB_CODEBLOCK *>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
   auto pBase = hb_stackBaseItem();
   // Store the number of referenced local variables
   pCBlock->pCode = pCode;
@@ -233,14 +233,14 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen)
 // Get local variable referenced in a codeblock
 HB_ITEM *hb_codeblockGetVar(HB_ITEM *pItem, int32_t iItemPos)
 {
-  PHB_CODEBLOCK pCBlock = pItem->blockValue();
+  HB_CODEBLOCK *pCBlock = pItem->blockValue();
 
   // local variables accessed in a codeblock are always stored as reference
   return hb_itemUnRef(pCBlock->pLocals - iItemPos);
 }
 
 // Get local variable passed by reference
-HB_ITEM *hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos)
+HB_ITEM *hb_codeblockGetRef(HB_CODEBLOCK *pCBlock, int32_t iItemPos)
 {
   return pCBlock->pLocals - iItemPos;
 }

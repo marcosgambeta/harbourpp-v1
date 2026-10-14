@@ -171,6 +171,7 @@ struct _HB_SYMB;
    typedef void *  PHB_ITEM;
    typedef void    HB_ITEM;
    typedef void *  PHB_CODEBLOCK;
+   typedef void    HB_CODEBLOCK;
    typedef void *  PHB_PCODEFUNC;
 
    typedef void    HB_STACK;

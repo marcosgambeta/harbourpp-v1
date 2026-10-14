@@ -1112,7 +1112,7 @@ typedef struct _HB_CODEBLOCK
   void *      pStatics;     // STATICs base frame
   uint16_t   uiLocals;     // number of referenced local variables
   HB_SHORT    dynBuffer;    // is pcode buffer allocated dynamically, SHORT used instead of HB_BOOL intentionally to force optimal alignment
-} HB_CODEBLOCK, * PHB_CODEBLOCK;
+} HB_CODEBLOCK, * PHB_CODEBLOCK; // NOTE: PHB_CODEBLOCK is deprecated in Harbour++ source code
 
 typedef void     (*HB_EXTREF_FUNC0)(void *);
 typedef HB_ITEM *(*HB_EXTREF_FUNC1)(HB_ITEM *);
@@ -1227,7 +1227,7 @@ extern void *hb_xRefResize(void *pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE *pn
 #if defined(HB_LEGACY_LEVEL4)
 #  define HB_ITEM_PTR         PHB_ITEM
 #  define HB_BASEARRAY_PTR    HB_BASEARRAY*
-#  define HB_CODEBLOCK_PTR    PHB_CODEBLOCK
+#  define HB_CODEBLOCK_PTR    HB_CODEBLOCK*
 #  define HB_MACRO_PTR        PHB_MACRO
 #  define HB_ERROR_INFO_PTR   PHB_ERROR_INFO
 #  define HB_HASH_TABLE_PTR   PHB_HASH_TABLE
@@ -2054,12 +2054,12 @@ extern HB_EXPORT void *hb_codeblockId(HB_ITEM *pItem);
 // retrieves numer of references to the codeblock
 extern HB_EXPORT HB_COUNTER hb_codeblockRefs(HB_ITEM *pItem);
 // create a code-block
-extern PHB_CODEBLOCK hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable, HB_SYMB *pSymbols, HB_SIZE nLen);
-extern PHB_CODEBLOCK hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen);
+extern HB_CODEBLOCK *hb_codeblockNew(const uint8_t *pBuffer, uint16_t uiLocals, const uint8_t *pLocalPosTable, HB_SYMB *pSymbols, HB_SIZE nLen);
+extern HB_CODEBLOCK *hb_codeblockMacroNew(const uint8_t *pBuffer, HB_SIZE nLen);
 // get local variable referenced in a codeblock
 extern HB_ITEM *hb_codeblockGetVar(HB_ITEM *pItem, int32_t iItemPos);
 // get local variable passed by reference
-extern HB_ITEM *hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int32_t iItemPos);
+extern HB_ITEM *hb_codeblockGetRef(HB_CODEBLOCK *pCBlock, int32_t iItemPos);
 
 // memvars subsystem
 // clear all PUBLIC and PRIVATE variables optionally without GetList PUBLIC variable
