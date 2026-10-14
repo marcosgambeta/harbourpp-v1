@@ -159,7 +159,7 @@ typedef struct HB_CBVAR_
    uint8_t bType;
    HB_BOOL bUsed;
    struct HB_CBVAR_ * pNext;
-} HB_CBVAR, * PHB_CBVAR;
+} HB_CBVAR, * PHB_CBVAR; // NOTE: PHB_CBVAR is deprecated in Harbour++ source code
 
 #if defined(__cplusplus)
 struct _HB_VARTYPE
@@ -456,7 +456,7 @@ typedef struct HB_EXPR_
       struct
       {
          struct HB_EXPR_ * pExprList;  // list elements
-         PHB_CBVAR pLocals;            // list of local variables
+         HB_CBVAR *pLocals;            // list of local variables
          char * string;                // source code of a codeblock
          uint16_t flags;              // HB_BLOCK_*
       } asCodeblock;
@@ -842,7 +842,7 @@ typedef struct HB_PCODE_INFO_ // compiled pcode container for macro compiler
    HB_SIZE nPCodeSize;     // total memory size for pcode
    HB_SIZE nPCodePos;      // actual pcode offset
    HB_BOOL fVParams;       // function/codeblock with variable parameters
-   PHB_CBVAR pLocals;
+   HB_CBVAR *pLocals;
    struct HB_PCODE_INFO_ * pPrev;
 } HB_PCODE_INFO, * PHB_PCODE_INFO;
 

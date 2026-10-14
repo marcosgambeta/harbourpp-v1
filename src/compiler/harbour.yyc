@@ -5357,7 +5357,7 @@ yyreduce:
   case 375:
 #line 1031 "harbour.y" /* yacc.c:1646  */
     {  /* 3 */
-               PHB_CBVAR pVar;
+               HB_CBVAR *pVar;
                (yyval.sNumber) = HB_COMP_PARAM->functions.pLast->nPCodePos;
                (yyvsp[0].sNumber) = HB_COMP_PARAM->lastLine;
                hb_compCodeBlockStart( HB_COMP_PARAM, 0 );

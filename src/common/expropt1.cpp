@@ -1167,9 +1167,9 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, HB_EXPR *pExpr)
 }
 
 // Create a new declaration for codeblock local variable
-static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, uint8_t bType)
+static HB_CBVAR *hb_compExprCBVarNew(const char *szVarName, uint8_t bType)
 {
-  auto pVar = static_cast<PHB_CBVAR>(hb_xgrab(sizeof(HB_CBVAR)));
+  auto pVar = static_cast<HB_CBVAR *>(hb_xgrab(sizeof(HB_CBVAR)));
   pVar->szName = szVarName;
   pVar->bType = bType;
   pVar->pNext = nullptr;
@@ -1180,7 +1180,7 @@ static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, uint8_t bType)
 // Add a new local variable declaration
 HB_EXPR *hb_compExprCBVarAdd(HB_EXPR *pCB, const char *szVarName, uint8_t bType, HB_COMP_DECL)
 {
-  PHB_CBVAR pVar;
+  HB_CBVAR *pVar;
 
   if (pCB->value.asCodeblock.pLocals) {
     // add it to the end of the list
@@ -1205,10 +1205,10 @@ HB_EXPR *hb_compExprCBVarAdd(HB_EXPR *pCB, const char *szVarName, uint8_t bType,
 }
 
 // NOTE: This deletes all linked variables
-void hb_compExprCBVarDel(PHB_CBVAR pVars)
+void hb_compExprCBVarDel(HB_CBVAR *pVars)
 {
   while (pVars) {
-    PHB_CBVAR pDel = pVars;
+    HB_CBVAR *pDel = pVars;
     pVars = pVars->pNext;
     hb_xfree(pDel);
   }

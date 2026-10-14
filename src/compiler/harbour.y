@@ -1029,7 +1029,7 @@ CodeBlock   : BlockHead
               '}'
             | BlockHead Crlf
             {  /* 3 */
-               PHB_CBVAR pVar;
+               HB_CBVAR *pVar;
                $<sNumber>$ = HB_COMP_PARAM->functions.pLast->nPCodePos;
                $<sNumber>2 = HB_COMP_PARAM->lastLine;
                hb_compCodeBlockStart( HB_COMP_PARAM, 0 );

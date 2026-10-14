@@ -1054,7 +1054,7 @@ HB_FUNC(HB_SETMACRO)
 int32_t hb_macroLocalVarGetPos(const char *szVarName, HB_COMP_DECL)
 {
   int32_t iVar = 1;
-  PHB_CBVAR pVars = HB_PCODE_DATA->pLocals;
+  HB_CBVAR *pVars = HB_PCODE_DATA->pLocals;
 
   while (pVars) {
     if (pVars->szName && !strcmp(pVars->szName, szVarName)) {
@@ -1559,7 +1559,7 @@ void hb_macroCodeBlockEnd(HB_COMP_DECL)
   // a number of expected parameters
 
   // Count the number of codeblock parameters
-  PHB_CBVAR pVar = pCodeblock->pLocals;
+  HB_CBVAR *pVar = pCodeblock->pLocals;
   uint16_t usParms = 0; // number of codeblock parameters
   while (pVar) {
     pVar = pVar->pNext;

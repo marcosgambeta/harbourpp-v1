@@ -128,7 +128,7 @@ extern HB_EXPORT_INT HB_EXPR *hb_compExprNewHash( HB_EXPR *, HB_COMP_DECL );
 extern HB_EXPORT_INT HB_EXPR *hb_compExprNewArrayAt( HB_EXPR *, HB_EXPR *, HB_COMP_DECL );
 extern HB_EXPORT_INT HB_EXPR *hb_compExprAddListExpr( HB_EXPR *, HB_EXPR *);
 extern HB_EXPORT_INT HB_EXPR *hb_compExprCBVarAdd( HB_EXPR *, const char * szVarName, uint8_t bType, HB_COMP_DECL );
-extern HB_EXPORT_INT void hb_compExprCBVarDel( PHB_CBVAR );
+extern HB_EXPORT_INT void hb_compExprCBVarDel( HB_CBVAR * );
 extern HB_EXPORT_INT HB_EXPR *hb_compExprAddCodeblockExpr( HB_EXPR *, HB_EXPR * );
 extern HB_EXPORT_INT HB_EXPR *hb_compExprSetCodeblockBody( HB_EXPR *pExpr, uint8_t * pCode, HB_SIZE nLen );
 extern HB_EXPORT_INT HB_EXPR *hb_compExprNewIIF( HB_EXPR * );
