@@ -241,7 +241,7 @@ HB_FUNC(FILESTATS)
 
   /* Generic algorithm based on find-first */
   {
-    PHB_FFIND findinfo = hb_fsFindFirst(hb_parc(1), HB_FA_ALL);
+    HB_FFIND *findinfo = hb_fsFindFirst(hb_parc(1), HB_FA_ALL);
 
     if (findinfo) {
       hb_fsAttrDecode(findinfo->attr, szAttr);

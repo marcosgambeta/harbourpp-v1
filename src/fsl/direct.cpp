@@ -99,7 +99,7 @@ HB_ITEM *hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BO
 {
   auto pDir = hb_itemArrayNew(0);
   char *pszFree = nullptr;
-  PHB_FFIND ffind;
+  HB_FFIND *ffind;
   HB_FATTR ulMask;
 
   // Get the passed attributes and convert them to Harbour Flags

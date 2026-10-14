@@ -385,7 +385,7 @@ char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
 // each call. Does low-level (platform dependent
 // filtering if needed.
 
-static bool hb_fsFindNextLow(PHB_FFIND ffind)
+static bool hb_fsFindNextLow(HB_FFIND *ffind)
 {
   auto bFound = false;
 
@@ -685,9 +685,9 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
   return bFound;
 }
 
-PHB_FFIND hb_fsFindFirst(const char *pszFileMask, HB_FATTR attrmask)
+HB_FFIND *hb_fsFindFirst(const char *pszFileMask, HB_FATTR attrmask)
 {
-  auto ffind = static_cast<PHB_FFIND>(hb_xgrabz(sizeof(HB_FFIND)));
+  auto ffind = static_cast<HB_FFIND *>(hb_xgrabz(sizeof(HB_FFIND)));
 
   // Allocate platform dependent file find info storage
   ffind->info = static_cast<void *>(hb_xgrabz(sizeof(HB_FFIND_INFO)));
@@ -718,7 +718,7 @@ PHB_FFIND hb_fsFindFirst(const char *pszFileMask, HB_FATTR attrmask)
 // Finds next matching file, and applies a filter which makes
 // searching CA-Cl*pper/MS-DOS compatible.
 
-HB_BOOL hb_fsFindNext(PHB_FFIND ffind)
+HB_BOOL hb_fsFindNext(HB_FFIND *ffind)
 {
   while (hb_fsFindNextLow(ffind)) {
     // Filter the result to stay MS-DOS and CA-Cl*pper compatible.
@@ -734,7 +734,7 @@ HB_BOOL hb_fsFindNext(PHB_FFIND ffind)
   return false;
 }
 
-void hb_fsFindClose(PHB_FFIND ffind)
+void hb_fsFindClose(HB_FFIND *ffind)
 {
   if (ffind) {
     if (ffind->pszFree) {

@@ -375,7 +375,7 @@ static int32_t hb_pp_generateVerInfo(char *szVerFile, HB_MAXINT nRevID, char *sz
 
 static char *hb_fsFileFind(const char *pszFileMask)
 {
-  PHB_FFIND ffind;
+  HB_FFIND *ffind;
 
   if ((ffind = hb_fsFindFirst(pszFileMask, HB_FA_ALL)) != nullptr) {
     char pszFileName[HB_PATH_MAX];

@@ -69,7 +69,7 @@
 
 struct HB_FFDATA
 {
-  PHB_FFIND ffind;
+  HB_FFIND *ffind;
   HB_FATTR ulAttr;
 };
 
@@ -91,7 +91,7 @@ static HB_TSD_NEW(s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease);
 // limit attributes to DOS ones for code portability
 #define HB_FF_ATTR(ff) ((ff)->attr & 0xFF)
 
-static PHB_FFIND _hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
+static HB_FFIND *_hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
 {
   PHB_FFDATA pFFData = HB_GET_FFDATA();
 
@@ -129,35 +129,35 @@ static PHB_FFIND _hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
 
 HB_FUNC(FILESEEK)
 {
-  PHB_FFIND ffind = _hb_fileStart(true, false);
+  HB_FFIND *ffind = _hb_fileStart(true, false);
 
   hb_retc(ffind ? ffind->szName : nullptr);
 }
 
 HB_FUNC(FILEATTR)
 {
-  PHB_FFIND ffind = _hb_fileStart(false, true);
+  HB_FFIND *ffind = _hb_fileStart(false, true);
 
   hb_retni(ffind ? HB_FF_ATTR(ffind) : 0);
 }
 
 HB_FUNC(FILESIZE)
 {
-  PHB_FFIND ffind = _hb_fileStart(false, false);
+  HB_FFIND *ffind = _hb_fileStart(false, false);
 
   hb_retnint(ffind ? ffind->size : -1);
 }
 
 HB_FUNC(FILEDATE)
 {
-  PHB_FFIND ffind = _hb_fileStart(false, false);
+  HB_FFIND *ffind = _hb_fileStart(false, false);
 
   hb_retdl(ffind ? ffind->lDate : 0);
 }
 
 HB_FUNC(FILETIME)
 {
-  PHB_FFIND ffind = _hb_fileStart(false, false);
+  HB_FFIND *ffind = _hb_fileStart(false, false);
 
   hb_retc(ffind ? ffind->szTime : nullptr);
 }
@@ -217,7 +217,7 @@ HB_FUNC(FILEDELETE)
 
   if (pszDirSpec) {
     HB_FATTR nAttr = hb_parnldef(2, HB_FA_ALL);
-    PHB_FFIND ffind;
+    HB_FFIND *ffind;
 
     // In CT3 this function does not remove directories
     nAttr &= ~HB_FA_DIRECTORY;

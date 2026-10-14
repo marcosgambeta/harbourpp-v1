@@ -56,7 +56,7 @@ HB_FUNC(ISDIRECTORY)
   bRetVal = hb_fsDirExists(hb_parcx(1));
 #else
   {
-    PHB_FFIND ffind = hb_fsFindFirst(hb_parcx(1), HB_FA_DIRECTORY);
+    HB_FFIND *ffind = hb_fsFindFirst(hb_parcx(1), HB_FA_DIRECTORY);
 
     if (ffind) {
       bRetVal = (ffind->attr & HB_FA_DIRECTORY);

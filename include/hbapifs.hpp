@@ -311,12 +311,12 @@ typedef struct
 
    void * info; /* Pointer to the platform specific find info */
 #endif
-} HB_FFIND, * PHB_FFIND;
+} HB_FFIND, * PHB_FFIND; // NOTE: PHB_FFIND is deprecated in Harbour++ source code
 
 /* File Find API functions */
-extern HB_EXPORT PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask );
-extern HB_EXPORT HB_BOOL   hb_fsFindNext( PHB_FFIND ffind );
-extern HB_EXPORT void      hb_fsFindClose( PHB_FFIND ffind );
+extern HB_EXPORT HB_FFIND *hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask );
+extern HB_EXPORT HB_BOOL   hb_fsFindNext( HB_FFIND *ffind );
+extern HB_EXPORT void      hb_fsFindClose( HB_FFIND *ffind );
 
 /* functions to create, wait and terminate processes */
 extern HB_EXPORT HB_FHANDLE hb_fsProcessOpen( const char * pszFileName,

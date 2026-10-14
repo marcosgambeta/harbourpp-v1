@@ -50,7 +50,7 @@
 
 HB_BOOL hb_fsFile(const char *pszFileName)
 {
-  PHB_FFIND ffind;
+  HB_FFIND *ffind;
 
   if ((ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL)) != nullptr) {
     hb_fsFindClose(ffind);
@@ -75,7 +75,7 @@ HB_BOOL hb_fsIsDirectory(const char *pszFileName)
   }
 
   if (iLen && iLen <= (HB_PATH_MAX - 1)) {
-    PHB_FFIND ffind;
+    HB_FFIND *ffind;
     if ((ffind = hb_fsFindFirst(pszFileName, HB_FA_DIRECTORY)) != nullptr) {
       do {
         if ((ffind->attr & HB_FA_DIRECTORY) == HB_FA_DIRECTORY) {

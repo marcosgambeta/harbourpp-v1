@@ -56,7 +56,7 @@ static HB_GARBAGE_FUNC(PHB_FFIND_release)
    if( ph && *ph )
    {
       /* Destroy the object */
-      hb_fsFindClose(static_cast<PHB_FFIND>(*ph));
+      hb_fsFindClose(static_cast<HB_FFIND *>(*ph));
 
       /* set pointer to nullptr just in case */
       *ph = nullptr;
@@ -69,11 +69,11 @@ static const HB_GC_FUNCS s_gcPHB_FFIND_funcs =
    hb_gcDummyMark
 };
 
-static PHB_FFIND PHB_FFIND_par( int iParam )
+static HB_FFIND *PHB_FFIND_par( int iParam )
 {
    auto ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_FFIND_funcs, iParam));
 
-   return ph ? static_cast<PHB_FFIND>(*ph) : nullptr;
+   return ph ? static_cast<HB_FFIND *>(*ph) : nullptr;
 }
 
 HB_FUNC(FILEFINDFIRST)
@@ -82,9 +82,9 @@ HB_FUNC(FILEFINDFIRST)
 
    if( pszFileName && HB_ISBYREF(2) )
    {
-      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_FFIND), &s_gcPHB_FFIND_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(HB_FFIND *), &s_gcPHB_FFIND_funcs));
 
-      PHB_FFIND ffind = hb_fsFindFirst(pszFileName, hb_parnldef(3, HB_FA_ALL));
+      HB_FFIND *ffind = hb_fsFindFirst(pszFileName, hb_parnldef(3, HB_FA_ALL));
 
       *ph = static_cast<void*>(ffind);
 
@@ -98,42 +98,42 @@ HB_FUNC(FILEFINDFIRST)
 
 HB_FUNC(FILEFINDNEXT)
 {
-   PHB_FFIND ffind = PHB_FFIND_par(1);
+   HB_FFIND *ffind = PHB_FFIND_par(1);
 
    hb_retl(ffind && hb_fsFindNext(ffind));
 }
 
 HB_FUNC(FILEFINDNAME)
 {
-   PHB_FFIND ffind = PHB_FFIND_par(1);
+   HB_FFIND *ffind = PHB_FFIND_par(1);
 
    hb_retc(ffind ? ffind->szName : nullptr);
 }
 
 HB_FUNC(FILEFINDATTR)
 {
-   PHB_FFIND ffind = PHB_FFIND_par(1);
+   HB_FFIND *ffind = PHB_FFIND_par(1);
 
    hb_retnl(ffind ? ffind->attr : 0);
 }
 
 HB_FUNC(FILEFINDSIZE)
 {
-   PHB_FFIND ffind = PHB_FFIND_par(1);
+   HB_FFIND *ffind = PHB_FFIND_par(1);
 
    hb_retnint(ffind ? ffind->size : 0);
 }
 
 HB_FUNC(FILEFINDDATE)
 {
-   PHB_FFIND ffind = PHB_FFIND_par(1);
+   HB_FFIND *ffind = PHB_FFIND_par(1);
 
    hb_retds(ffind ? ffind->szDate : nullptr);
 }
 
 HB_FUNC(FILEFINDTIME)
 {
-   PHB_FFIND ffind = PHB_FFIND_par(1);
+   HB_FFIND *ffind = PHB_FFIND_par(1);
 
    hb_retc(ffind ? ffind->szTime : nullptr);
 }
