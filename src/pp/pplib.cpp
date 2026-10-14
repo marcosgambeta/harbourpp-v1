@@ -91,7 +91,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int32_t *
 /* PP destructor */
 static HB_GARBAGE_FUNC(hb_pp_Destructor)
 {
-  PHB_PP_STATE *pStatePtr = static_cast<PHB_PP_STATE *>(Cargo);
+  HB_PP_STATE **pStatePtr = static_cast<HB_PP_STATE **>(Cargo);
 
   if (*pStatePtr) {
     hb_pp_free(*pStatePtr);
@@ -121,9 +121,9 @@ static void hb_pp_StdRules(HB_ITEM *ppItem)
   }
 }
 
-PHB_PP_STATE hb_pp_Param(int32_t iParam)
+HB_PP_STATE *hb_pp_Param(int32_t iParam)
 {
-  PHB_PP_STATE *pStatePtr = static_cast<PHB_PP_STATE *>(hb_parptrGC(&s_gcPPFuncs, iParam));
+  HB_PP_STATE **pStatePtr = static_cast<HB_PP_STATE **>(hb_parptrGC(&s_gcPPFuncs, iParam));
 
   if (pStatePtr) {
     return *pStatePtr;
@@ -140,15 +140,15 @@ PHB_PP_STATE hb_pp_Param(int32_t iParam)
  */
 HB_FUNC(__PP_INIT)
 {
-  PHB_PP_STATE pState = hb_pp_new();
+  HB_PP_STATE *pState = hb_pp_new();
 
   if (pState) {
-    PHB_PP_STATE *pStatePtr;
+    HB_PP_STATE **pStatePtr;
     auto szPath = hb_parc(1);
     auto szStdCh = hb_parc(2);
     bool fArchDefs = hb_parldef(3, true);
 
-    pStatePtr = static_cast<PHB_PP_STATE *>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
+    pStatePtr = static_cast<HB_PP_STATE **>(hb_gcAllocate(sizeof(HB_PP_STATE *), &s_gcPPFuncs));
     *pStatePtr = pState;
     auto ppItem = hb_itemPutPtrGC(nullptr, static_cast<void *>(pStatePtr));
 
@@ -180,7 +180,7 @@ HB_FUNC(__PP_INIT)
  */
 HB_FUNC(__PP_PATH)
 {
-  PHB_PP_STATE pState = hb_pp_Param(1);
+  HB_PP_STATE *pState = hb_pp_Param(1);
 
   if (pState) {
     hb_pp_addSearchPath(pState, hb_parc(2), hb_parl(3));
@@ -193,7 +193,7 @@ HB_FUNC(__PP_PATH)
  */
 HB_FUNC(__PP_RESET)
 {
-  PHB_PP_STATE pState = hb_pp_Param(1);
+  HB_PP_STATE *pState = hb_pp_Param(1);
 
   if (pState) {
     hb_pp_reset(pState);
@@ -206,7 +206,7 @@ HB_FUNC(__PP_RESET)
  */
 HB_FUNC(__PP_ADDRULE)
 {
-  PHB_PP_STATE pState = hb_pp_Param(1);
+  HB_PP_STATE *pState = hb_pp_Param(1);
 
   if (pState) {
     auto szText = hb_parc(2);
@@ -243,7 +243,7 @@ HB_FUNC(__PP_ADDRULE)
  */
 HB_FUNC(__PP_PROCESS)
 {
-  PHB_PP_STATE pState = hb_pp_Param(1);
+  HB_PP_STATE *pState = hb_pp_Param(1);
 
   if (pState) {
     auto nLen = hb_parclen(2);

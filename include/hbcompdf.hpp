@@ -939,7 +939,7 @@ typedef struct _HB_I18NTABLE
 #if defined(__cplusplus)
 struct _HB_COMP_LEX
 {
-   PHB_PP_STATE   pPP;
+   HB_PP_STATE *  pPP;
    int32_t            iState;
    int32_t            iClose;
    int32_t            iScope;
@@ -951,7 +951,7 @@ using PHB_COMP_LEX = HB_COMP_LEX *; // deprecated in core code
 #else
 typedef struct _HB_COMP_LEX
 {
-   PHB_PP_STATE   pPP;
+   HB_PP_STATE *  pPP;
    int32_t            iState;
    int32_t            iClose;
    int32_t            iScope;

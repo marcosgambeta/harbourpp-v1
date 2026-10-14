@@ -205,7 +205,7 @@ static const HB_COMP_FUNCS s_comp_funcs = {
 HB_COMP *hb_comp_new(void)
 {
   HB_COMP *pComp = nullptr;
-  PHB_PP_STATE pPP = hb_pp_new();
+  HB_PP_STATE *pPP = hb_pp_new();
 
   if (pPP) {
     pComp = static_cast<HB_COMP *>(hb_xgrabz(sizeof(HB_COMP)));

@@ -3177,14 +3177,14 @@ void hb_macroLexDelete( PHB_MACRO pMacro )
 {
    if( pMacro->pLex )
    {
-      hb_pp_free( ( PHB_PP_STATE ) pMacro->pLex );
+      hb_pp_free( ( HB_PP_STATE * ) pMacro->pLex );
       pMacro->pLex = NULL;
    }
 }
 
 int32_t hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 {
-   HB_PP_TOKEN *pToken = hb_pp_lexGet( ( PHB_PP_STATE ) pMacro->pLex );
+   HB_PP_TOKEN *pToken = hb_pp_lexGet( ( HB_PP_STATE * ) pMacro->pLex );
 
    if( ! pToken )
       return 0;

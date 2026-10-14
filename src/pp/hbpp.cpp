@@ -181,7 +181,7 @@ static void hb_pp_generateInitFunc(FILE *fout, int32_t iRules, const char *szVar
   }
 }
 
-static void hb_pp_generateRules(FILE *fout, PHB_PP_STATE pState, const char *szPPRuleFuncName)
+static void hb_pp_generateRules(FILE *fout, HB_PP_STATE *pState, const char *szPPRuleFuncName)
 {
   int32_t iDefs = 0, iTrans = 0, iCmds = 0;
 
@@ -204,14 +204,14 @@ static void hb_pp_generateRules(FILE *fout, PHB_PP_STATE pState, const char *szP
     iCmds = hb_pp_writeRules(fout, pState->pCommands, "cmd");
   }
 
-  fprintf(fout, "\nvoid %s( PHB_PP_STATE pState )\n{\n", szPPRuleFuncName ? szPPRuleFuncName : "hb_pp_setStdRules");
+  fprintf(fout, "\nvoid %s( HB_PP_STATE *pState )\n{\n", szPPRuleFuncName ? szPPRuleFuncName : "hb_pp_setStdRules");
   hb_pp_generateInitFunc(fout, iDefs, "Definitions", "def");
   hb_pp_generateInitFunc(fout, iTrans, "Translations", "trs");
   hb_pp_generateInitFunc(fout, iCmds, "Commands", "cmd");
   fprintf(fout, "}\n");
 }
 
-static void hb_pp_undefCompilerRules(PHB_PP_STATE pState)
+static void hb_pp_undefCompilerRules(HB_PP_STATE *pState)
 {
   int32_t i;
   PHB_PP_RULE *pRulePtr, pRule;
@@ -236,7 +236,7 @@ static void hb_pp_undefCompilerRules(PHB_PP_STATE pState)
   }
 }
 
-static int32_t hb_pp_preprocesfile(PHB_PP_STATE pState, const char *szRuleFile, const char *szPPRuleFuncName)
+static int32_t hb_pp_preprocesfile(HB_PP_STATE *pState, const char *szRuleFile, const char *szPPRuleFuncName)
 {
   int32_t iResult = 0;
   HB_SIZE nLen;
@@ -390,7 +390,7 @@ static char *hb_fsFileFind(const char *pszFileMask)
   return nullptr;
 }
 
-static int32_t hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, int32_t iQuiet, HB_MAXINT *pnRevID,
+static int32_t hb_pp_parseChangelog(HB_PP_STATE *pState, const char *pszFileName, int32_t iQuiet, HB_MAXINT *pnRevID,
                                 char **pszChangeLogID, char **pszLastEntry)
 {
   char *pszFree = nullptr;
@@ -591,7 +591,7 @@ int32_t main(int32_t argc, char *argv[])
   int32_t iResult = 0, iQuiet = 0, i;
   HB_MAXINT nRevID = 0;
   char *szPPRuleFuncName = nullptr;
-  PHB_PP_STATE pState;
+  HB_PP_STATE *pState;
 
   pState = hb_pp_new();
 
