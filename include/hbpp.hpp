@@ -501,7 +501,7 @@ typedef struct
    uint16_t matches;
    HB_PP_RESULT * pResult;
 }
-HB_PP_MARKER, * PHB_PP_MARKER;
+HB_PP_MARKER, * PHB_PP_MARKER; // NOTE: PHB_PP_MARKER is deprecated in Harbour++ source code
 
 typedef struct _HB_PP_RULE
 {
@@ -511,7 +511,7 @@ typedef struct _HB_PP_RULE
    uint16_t      mode;             // comparison mode HB_PP_CMP_*
    uint16_t      markers;          // number of markers in marker table
    // filled when pattern matches for substitution, cleared after
-   PHB_PP_MARKER  pMarkers;         // marker table
+   HB_PP_MARKER * pMarkers;         // marker table
    HB_PP_TOKEN *  pNextExpr;        // next expression after match pattern
 }
 HB_PP_RULE, * PHB_PP_RULE; // NOTE: PHB_PP_RULE is deprecated in Harbour++ source code

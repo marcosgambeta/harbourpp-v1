@@ -1526,7 +1526,7 @@ static bool hb_pp_tokenEqual(HB_PP_TOKEN *pToken, HB_PP_TOKEN *pMatch, uint16_t 
 
 static void hb_pp_patternClearResults(HB_PP_RULE *pRule)
 {
-  PHB_PP_MARKER pMarker = pRule->pMarkers;
+  HB_PP_MARKER *pMarker = pRule->pMarkers;
   int32_t i = pRule->markers;
 
   while (--i >= 0) {
@@ -1543,7 +1543,7 @@ static void hb_pp_patternClearResults(HB_PP_RULE *pRule)
 
 static bool hb_pp_patternAddResult(HB_PP_RULE *pRule, uint16_t marker, HB_PP_TOKEN *pFirst, HB_PP_TOKEN *pNext)
 {
-  PHB_PP_MARKER pMarker = &pRule->pMarkers[marker - 1];
+  HB_PP_MARKER *pMarker = &pRule->pMarkers[marker - 1];
 
   if (pMarker->matches == 0 || pMarker->canrepeat) {
     HB_PP_RESULT **pResultPtr;
@@ -1564,7 +1564,7 @@ static bool hb_pp_patternAddResult(HB_PP_RULE *pRule, uint16_t marker, HB_PP_TOK
 }
 
 static HB_PP_RULE *hb_pp_ruleNew(HB_PP_TOKEN *pMatch, HB_PP_TOKEN *pResult, uint16_t mode, uint16_t markers,
-                                 PHB_PP_MARKER pMarkers)
+                                 HB_PP_MARKER *pMarkers)
 {
   auto pRule = static_cast<HB_PP_RULE *>(hb_xgrab(sizeof(HB_PP_RULE)));
 
@@ -1661,7 +1661,7 @@ static HB_PP_RULE *hb_pp_defineFind(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
   return pRule;
 }
 
-static void hb_pp_defineAdd(HB_PP_STATE *pState, uint16_t mode, uint16_t markers, PHB_PP_MARKER pMarkers,
+static void hb_pp_defineAdd(HB_PP_STATE *pState, uint16_t mode, uint16_t markers, HB_PP_MARKER *pMarkers,
                             HB_PP_TOKEN *pMatch, HB_PP_TOKEN *pResult)
 {
   HB_PP_RULE *pRule = hb_pp_defineFind(pState, pMatch);
@@ -2496,7 +2496,7 @@ static void hb_pp_defineNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, HB_BOOL fD
     hb_pp_error(pState, 'E', HB_PP_ERR_DEFINE_SYNTAX, nullptr);
   } else {
     HB_PP_TOKEN *pResult, *pLast = pMatch->pNext, *pParam;
-    PHB_PP_MARKER pMarkers = nullptr;
+    HB_PP_MARKER *pMarkers = nullptr;
     uint16_t usPCount = 0, usParam;
 
     // pseudo function?
@@ -2562,7 +2562,7 @@ static void hb_pp_defineNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, HB_BOOL fD
       }
       if (usPCount) {
         // create regular match and result markers from parameters
-        pMarkers = static_cast<PHB_PP_MARKER>(hb_xgrabz(usPCount * sizeof(HB_PP_MARKER)));
+        pMarkers = static_cast<HB_PP_MARKER *>(hb_xgrabz(usPCount * sizeof(HB_PP_MARKER)));
       }
     }
     hb_pp_defineAdd(pState, HB_PP_CMP_CASE, usPCount, pMarkers, pMatch, pResult);
@@ -2946,7 +2946,7 @@ static bool hb_pp_patternCompare(HB_PP_TOKEN *pToken1, HB_PP_TOKEN *pToken2)
   return !pToken1 && !pToken2;
 }
 
-static void hb_pp_directiveDel(HB_PP_STATE *pState, HB_PP_TOKEN *pMatch, uint16_t markers, PHB_PP_MARKER pMarkers,
+static void hb_pp_directiveDel(HB_PP_STATE *pState, HB_PP_TOKEN *pMatch, uint16_t markers, HB_PP_MARKER *pMarkers,
                                uint16_t mode, HB_BOOL fCommand)
 {
   HB_PP_RULE *pRule, **pRulePtr = fCommand ? &pState->pCommands : &pState->pTranslations;
@@ -3022,7 +3022,7 @@ static void hb_pp_directiveNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, uint16_
   } else if (pMatch) { // isn't dummy directive?
     PHB_PP_MARKERLST pMarkerList = nullptr, pMrkLst;
     PHB_PP_MARKERPTR pMrkPtr;
-    PHB_PP_MARKER pMarkers = nullptr;
+    HB_PP_MARKER *pMarkers = nullptr;
     uint16_t usPCount = 0;
 
     fValid = hb_pp_matchPatternNew(pState, &pMatch, &pMarkerList, nullptr);
@@ -3103,7 +3103,7 @@ static void hb_pp_directiveNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, uint16_
 
     if (fValid && usPCount) {
       // create regular match and result markers from parameters
-      pMarkers = static_cast<PHB_PP_MARKER>(hb_xgrabz(usPCount * sizeof(HB_PP_MARKER)));
+      pMarkers = static_cast<HB_PP_MARKER *>(hb_xgrabz(usPCount * sizeof(HB_PP_MARKER)));
     }
 
     // free marker index list
@@ -3521,7 +3521,7 @@ static bool hb_pp_patternCmp(HB_PP_RULE *pRule, HB_PP_TOKEN *pToken, HB_BOOL fCo
 
 static HB_PP_RESULT *hb_pp_matchResultGet(HB_PP_RULE *pRule, uint16_t usMatch, uint16_t usIndex)
 {
-  PHB_PP_MARKER pMarker = &pRule->pMarkers[usIndex - 1];
+  HB_PP_MARKER *pMarker = &pRule->pMarkers[usIndex - 1];
   HB_PP_RESULT *pMarkerResult;
 
   // Clipper PP does not check status of match marker but only how many
@@ -4673,7 +4673,7 @@ static void hb_pp_preprocessToken(HB_PP_STATE *pState)
 // internal function to initialize predefined PP rules
 void hb_pp_initRules(HB_PP_RULE **pRulesPtr, int32_t *piRules, const HB_PP_DEFRULE pDefRules[], int32_t iDefRules)
 {
-  PHB_PP_MARKER pMarkers;
+  HB_PP_MARKER *pMarkers;
   HB_PP_RULE *pRule;
 
   hb_pp_ruleListFree(pRulesPtr);
@@ -4685,7 +4685,7 @@ void hb_pp_initRules(HB_PP_RULE **pRulesPtr, int32_t *piRules, const HB_PP_DEFRU
       uint16_t marker;
       HB_ULONG ulBit;
 
-      pMarkers = static_cast<PHB_PP_MARKER>(hb_xgrabz(pDefRule->markers * sizeof(HB_PP_MARKER)));
+      pMarkers = static_cast<HB_PP_MARKER *>(hb_xgrabz(pDefRule->markers * sizeof(HB_PP_MARKER)));
       for (marker = 0, ulBit = 1; marker < pDefRule->markers; ++marker, ulBit <<= 1) {
         if (pDefRule->repeatbits & ulBit) {
           pMarkers[marker].canrepeat = true;
