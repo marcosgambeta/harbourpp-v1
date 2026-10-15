@@ -1277,7 +1277,7 @@ void hb_stackUpdateAllocator(void *pStackId, PHB_ALLOCUPDT_FUNC pFunc, int32_t i
 #endif
 }
 
-PHB_TRACEINFO hb_traceinfo(void)
+HB_TRACEINFO *hb_traceinfo(void)
 {
 #if defined(HB_MT_VM)
   if (hb_stack_ready()) {
@@ -1290,7 +1290,7 @@ PHB_TRACEINFO hb_traceinfo(void)
 
 void hb_traceset(int32_t level, const char *file, int32_t line, const char *proc)
 {
-  PHB_TRACEINFO pTrace = hb_traceinfo();
+  HB_TRACEINFO *pTrace = hb_traceinfo();
 
   pTrace->level = level;
   pTrace->file = file;

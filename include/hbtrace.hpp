@@ -208,7 +208,7 @@ typedef struct
    int32_t          line;
    int32_t          level;
 }
-HB_TRACEINFO, * PHB_TRACEINFO;
+HB_TRACEINFO, * PHB_TRACEINFO; // NOTE: PHB_TRACEINFO is deprecated in Harbour++ source code
 
 extern HB_EXPORT int32_t           hb_tracestate( int32_t new_state );
 extern HB_EXPORT int32_t           hb_tracelevel( int32_t new_level );
@@ -220,7 +220,7 @@ extern HB_EXPORT HB_BOOL       hb_tracefile( const char * szFile );
 extern HB_EXPORT void          hb_tracelog( int32_t level, const char * file, int32_t line, const char * proc, const char * fmt, ... ) HB_PRINTF_FORMAT( 5, 6 );
 
 extern HB_EXPORT void          hb_traceset( int32_t level, const char * file, int32_t line, const char * proc );
-extern HB_EXPORT PHB_TRACEINFO hb_traceinfo( void );
+extern HB_EXPORT HB_TRACEINFO *hb_traceinfo( void );
 
 extern HB_EXPORT int32_t           hb_tr_level( void );
 extern HB_EXPORT void          hb_tr_trace( const char * fmt, ... ) HB_PRINTF_FORMAT( 1, 2 );

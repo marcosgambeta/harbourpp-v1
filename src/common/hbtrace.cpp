@@ -338,7 +338,7 @@ void hb_tr_trace(const char *fmt, ...)
 {
   // If tracing is disabled, do nothing.
   if (s_enabled) {
-    PHB_TRACEINFO pTrace = hb_traceinfo();
+    HB_TRACEINFO *pTrace = hb_traceinfo();
 
     va_list ap;
     va_start(ap, fmt);
@@ -360,7 +360,7 @@ void hb_tr_trace(const char *fmt, ...)
 void hb_tr_stealth(const char *fmt, ...)
 {
   if (s_enabled) {
-    PHB_TRACEINFO pTrace = hb_traceinfo();
+    HB_TRACEINFO *pTrace = hb_traceinfo();
 
     va_list ap;
     va_start(ap, fmt);

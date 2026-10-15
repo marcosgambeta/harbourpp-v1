@@ -489,7 +489,7 @@ void hb_traceset(int32_t level, const char *file, int32_t line, const char *proc
   s_traceInfo.proc = proc;
 }
 
-PHB_TRACEINFO hb_traceinfo(void)
+HB_TRACEINFO *hb_traceinfo(void)
 {
   return &s_traceInfo;
 }

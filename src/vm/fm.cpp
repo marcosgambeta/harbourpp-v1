@@ -573,7 +573,7 @@ void *hb_xalloc(HB_SIZE nSize) // allocates fixed memory, returns nullptr on fai
 #ifdef HB_FM_STATISTICS
 
   if (s_fStatistic) {
-    PHB_TRACEINFO pTrace = hb_traceinfo();
+    HB_TRACEINFO *pTrace = hb_traceinfo();
 
     if (hb_tr_level() >= HB_TR_DEBUG || pTrace->level == HB_TR_FM) {
       // NOTE: PRG line number/procname is not very useful during hunting
@@ -660,7 +660,7 @@ void *hb_xgrab(HB_SIZE nSize) // allocates fixed memory, exits on failure
 #ifdef HB_FM_STATISTICS
 
   if (s_fStatistic) {
-    PHB_TRACEINFO pTrace = hb_traceinfo();
+    HB_TRACEINFO *pTrace = hb_traceinfo();
 
     if (hb_tr_level() >= HB_TR_DEBUG || pTrace->level == HB_TR_FM) {
       // NOTE: PRG line number/procname is not very useful during hunting
