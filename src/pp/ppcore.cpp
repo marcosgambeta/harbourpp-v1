@@ -2598,7 +2598,7 @@ static bool hb_pp_tokenUnQuotedGet(HB_PP_TOKEN ***pTokenPtr, bool *pfQuoted, boo
   return pToken != nullptr;
 }
 
-static bool hb_pp_matchMarkerNew(HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr)
+static bool hb_pp_matchMarkerNew(HB_PP_TOKEN **pTokenPtr, HB_PP_MARKERLST **pMarkerListPtr)
 {
   uint16_t type = HB_PP_TOKEN_NUL;
   HB_PP_TOKEN *pMarkerId = nullptr, *pMTokens = nullptr;
@@ -2686,7 +2686,7 @@ static bool hb_pp_matchMarkerNew(HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMar
   }
 
   if (type != HB_PP_TOKEN_NUL) {
-    PHB_PP_MARKERLST pMrkLst = *pMarkerListPtr, pMrkPrev = nullptr;
+    HB_PP_MARKERLST *pMrkLst = *pMarkerListPtr, *pMrkPrev = nullptr;
     HB_PP_MARKERPTR *pMrkPtr;
 
     while (pMrkLst && !hb_pp_tokenEqual(pMrkLst->pMatchMarkers->pToken, pMarkerId, HB_PP_CMP_CASE)) {
@@ -2694,7 +2694,7 @@ static bool hb_pp_matchMarkerNew(HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMar
       pMrkLst = pMrkLst->pNext;
     }
     if (!pMrkLst) {
-      pMrkLst = static_cast<PHB_PP_MARKERLST>(hb_xgrab(sizeof(HB_PP_MARKERLST)));
+      pMrkLst = static_cast<HB_PP_MARKERLST *>(hb_xgrab(sizeof(HB_PP_MARKERLST)));
       if (pMrkPrev) {
         pMrkPrev->pNext = pMrkLst;
       } else {
@@ -2736,7 +2736,7 @@ static bool hb_pp_matchHasKeywords(HB_PP_TOKEN *pToken)
   return pToken != nullptr;
 }
 
-static bool hb_pp_matchPatternNew(HB_PP_STATE *pState, HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr,
+static bool hb_pp_matchPatternNew(HB_PP_STATE *pState, HB_PP_TOKEN **pTokenPtr, HB_PP_MARKERLST **pMarkerListPtr,
                                   HB_PP_TOKEN ***pOptional)
 {
   HB_PP_TOKEN **pLastPtr = nullptr;
@@ -2814,7 +2814,7 @@ static bool hb_pp_matchPatternNew(HB_PP_STATE *pState, HB_PP_TOKEN **pTokenPtr, 
   return true;
 }
 
-static bool hb_pp_resultMarkerNew(HB_PP_STATE *pState, HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMarkerListPtr,
+static bool hb_pp_resultMarkerNew(HB_PP_STATE *pState, HB_PP_TOKEN **pTokenPtr, HB_PP_MARKERLST **pMarkerListPtr,
                                   HB_BOOL fDump, HB_BOOL fOptional, uint16_t *pusPCount, HB_SIZE spaces)
 {
   uint16_t type = HB_PP_TOKEN_NUL, rtype;
@@ -2899,7 +2899,7 @@ static bool hb_pp_resultMarkerNew(HB_PP_STATE *pState, HB_PP_TOKEN **pTokenPtr, 
     HB_PP_TOKEN_SETTYPE(*pTokenPtr, type);
     return true;
   } else {
-    PHB_PP_MARKERLST pMrkLst = *pMarkerListPtr;
+    HB_PP_MARKERLST *pMrkLst = *pMarkerListPtr;
 
     while (pMrkLst && !hb_pp_tokenEqual(pMrkLst->pMatchMarkers->pToken, pMarkerId, HB_PP_CMP_CASE)) {
       pMrkLst = pMrkLst->pNext;
@@ -3020,7 +3020,7 @@ static void hb_pp_directiveNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, uint16_
   if (!fValid) {
     hb_pp_error(pState, 'E', HB_PP_ERR_MISSING_PATTERN_SEP, nullptr);
   } else if (pMatch) { // isn't dummy directive?
-    PHB_PP_MARKERLST pMarkerList = nullptr, pMrkLst;
+    HB_PP_MARKERLST *pMarkerList = nullptr, *pMrkLst;
     HB_PP_MARKERPTR *pMrkPtr;
     HB_PP_MARKER *pMarkers = nullptr;
     uint16_t usPCount = 0;

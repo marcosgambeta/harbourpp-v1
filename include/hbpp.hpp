@@ -492,7 +492,7 @@ typedef struct _HB_PP_MARKERLST
    uint16_t         canrepeat;
    uint16_t         index;
 }
-HB_PP_MARKERLST, * PHB_PP_MARKERLST;
+HB_PP_MARKERLST, * PHB_PP_MARKERLST; // NOTE: PHB_PP_MARKERLST is deprecated in Harbour++ source code
 
 typedef struct
 {
