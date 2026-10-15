@@ -474,7 +474,7 @@ typedef struct _HB_PP_RESULT
    HB_PP_TOKEN *  pFirstToken;
    HB_PP_TOKEN *  pNextExpr;
 }
-HB_PP_RESULT, * PHB_PP_RESULT;
+HB_PP_RESULT, * PHB_PP_RESULT; // NOTE: PHB_PP_RESULT is deprecated in Harbour++ source code
 
 typedef struct _HB_PP_MARKERPTR
 {
@@ -499,7 +499,7 @@ typedef struct
    uint16_t canrepeat;
    // filled when pattern matches for substitution, cleared after
    uint16_t matches;
-   PHB_PP_RESULT  pResult;
+   HB_PP_RESULT * pResult;
 }
 HB_PP_MARKER, * PHB_PP_MARKER;
 

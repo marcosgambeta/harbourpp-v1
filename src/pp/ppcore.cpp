@@ -1532,7 +1532,7 @@ static void hb_pp_patternClearResults(HB_PP_RULE *pRule)
   while (--i >= 0) {
     pMarker->matches = 0;
     while (pMarker->pResult) {
-      PHB_PP_RESULT pResult = pMarker->pResult;
+      HB_PP_RESULT *pResult = pMarker->pResult;
       pMarker->pResult = pResult->pNext;
       hb_xfree(pResult);
     }
@@ -1546,8 +1546,8 @@ static bool hb_pp_patternAddResult(HB_PP_RULE *pRule, uint16_t marker, HB_PP_TOK
   PHB_PP_MARKER pMarker = &pRule->pMarkers[marker - 1];
 
   if (pMarker->matches == 0 || pMarker->canrepeat) {
-    PHB_PP_RESULT *pResultPtr;
-    auto pResult = static_cast<PHB_PP_RESULT>(hb_xgrab(sizeof(HB_PP_RESULT)));
+    HB_PP_RESULT **pResultPtr;
+    auto pResult = static_cast<HB_PP_RESULT *>(hb_xgrab(sizeof(HB_PP_RESULT)));
     pMarker->matches++;
     pResult->pFirstToken = pFirst;
     pResult->pNextExpr = pNext;
@@ -3519,10 +3519,10 @@ static bool hb_pp_patternCmp(HB_PP_RULE *pRule, HB_PP_TOKEN *pToken, HB_BOOL fCo
   return false;
 }
 
-static PHB_PP_RESULT hb_pp_matchResultGet(HB_PP_RULE *pRule, uint16_t usMatch, uint16_t usIndex)
+static HB_PP_RESULT *hb_pp_matchResultGet(HB_PP_RULE *pRule, uint16_t usMatch, uint16_t usIndex)
 {
   PHB_PP_MARKER pMarker = &pRule->pMarkers[usIndex - 1];
-  PHB_PP_RESULT pMarkerResult;
+  HB_PP_RESULT *pMarkerResult;
 
   // Clipper PP does not check status of match marker but only how many
   // different values were assigned to match pattern
@@ -3650,7 +3650,7 @@ static HB_PP_TOKEN **hb_pp_matchResultLstAdd(HB_PP_STATE *pState, HB_SIZE spaces
 static HB_PP_TOKEN **hb_pp_matchResultAdd(HB_PP_STATE *pState, HB_PP_RULE *pRule, HB_PP_TOKEN **pResultPtr,
                                           HB_PP_TOKEN *pMatch, uint16_t usMatch)
 {
-  PHB_PP_RESULT pMarkerResult = hb_pp_matchResultGet(pRule, usMatch, pMatch->index);
+  HB_PP_RESULT *pMarkerResult = hb_pp_matchResultGet(pRule, usMatch, pMatch->index);
   HB_PP_TOKEN *pToken, *pStop;
 
   if (HB_PP_TOKEN_TYPE(pMatch->type) == HB_PP_RMARKER_REGULAR) {
