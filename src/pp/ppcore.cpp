@@ -242,9 +242,9 @@ static void hb_pp_error(HB_PP_STATE *pState, char type, int32_t iError, const ch
   }
 }
 
-static void hb_pp_operatorsFree(PHB_PP_OPERATOR pOperators, int32_t iOperators)
+static void hb_pp_operatorsFree(HB_PP_OPERATOR *pOperators, int32_t iOperators)
 {
-  PHB_PP_OPERATOR pOperator = pOperators;
+  HB_PP_OPERATOR *pOperator = pOperators;
 
   while (--iOperators >= 0) {
     hb_xfree(const_cast<char *>(pOperator->name));
@@ -2105,7 +2105,7 @@ static bool hb_pp_pragmaOperatorNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
       } while (!HB_PP_TOKEN_ISEOC(pToken) && pToken->spaces == 0);
     }
     if (HB_PP_TOKEN_ISEOC(pToken) && nLen > 0) {
-      PHB_PP_OPERATOR pOperator;
+      HB_PP_OPERATOR *pOperator;
       char *pBuffer = hb_membufPtr(pState->pBuffer), *pDstBuffer;
       HB_SIZE nDstLen = hb_membufLen(pState->pBuffer) - nLen;
 
@@ -2116,10 +2116,10 @@ static bool hb_pp_pragmaOperatorNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
         nDstLen = nLen;
       }
       if (pState->iOperators) {
-        pState->pOperators = static_cast<PHB_PP_OPERATOR>(
+        pState->pOperators = static_cast<HB_PP_OPERATOR *>(
             hb_xrealloc(pState->pOperators, sizeof(HB_PP_OPERATOR) * (pState->iOperators + 1)));
       } else {
-        pState->pOperators = static_cast<PHB_PP_OPERATOR>(hb_xgrab(sizeof(HB_PP_OPERATOR) * (pState->iOperators + 1)));
+        pState->pOperators = static_cast<HB_PP_OPERATOR *>(hb_xgrab(sizeof(HB_PP_OPERATOR) * (pState->iOperators + 1)));
       }
       pOperator = &pState->pOperators[pState->iOperators++];
       pOperator->name = hb_strndup(pBuffer, nLen);

@@ -533,7 +533,7 @@ typedef struct
    const char *   value;      // output name
    uint16_t      type;       // HB_PP_TOKEN_*
 }
-HB_PP_OPERATOR, * PHB_PP_OPERATOR;
+HB_PP_OPERATOR, * PHB_PP_OPERATOR; // NOTE: PHB_PP_OPERATOR is deprecated in Harbour++ source code
 
 typedef struct
 {
@@ -566,7 +566,7 @@ HB_PP_FILE, * PHB_PP_FILE; // NOTE: PHB_PP_FILE is deprecated in Harbour++ sourc
 typedef struct
 {
    // common for all included files
-   PHB_PP_OPERATOR pOperators;      // user defined operators
+   HB_PP_OPERATOR *pOperators;      // user defined operators
    HB_PP_RULE *   pDefinitions;     // #define table
    HB_PP_RULE *   pTranslations;    // #[x]translate table
    HB_PP_RULE *   pCommands;        // #[x]command table
