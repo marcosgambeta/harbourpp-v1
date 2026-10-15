@@ -1704,14 +1704,14 @@ static void hb_pp_defineDel(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
   }
 }
 
-static PHB_PP_FILE hb_pp_FileNew(HB_PP_STATE *pState, const char *szFileName, HB_BOOL fSysFile, HB_BOOL *pfNested,
+static HB_PP_FILE *hb_pp_FileNew(HB_PP_STATE *pState, const char *szFileName, HB_BOOL fSysFile, HB_BOOL *pfNested,
                                  FILE *file_in, HB_BOOL fSearchPath, PHB_PP_OPEN_FUNC pOpenFunc, HB_BOOL fBinary)
 {
   char szFileNameBuf[HB_PATH_MAX];
   const char *pLineBuf = nullptr;
   HB_SIZE nLineBufLen = 0;
   HB_BOOL fFree = false;
-  PHB_PP_FILE pFile;
+  HB_PP_FILE *pFile;
 
   if (!file_in) {
     int32_t iAction = HB_PP_OPEN_FILE;
@@ -1807,7 +1807,7 @@ static PHB_PP_FILE hb_pp_FileNew(HB_PP_STATE *pState, const char *szFileName, HB
     }
   }
 
-  pFile = static_cast<PHB_PP_FILE>(hb_xgrabz(sizeof(HB_PP_FILE)));
+  pFile = static_cast<HB_PP_FILE *>(hb_xgrabz(sizeof(HB_PP_FILE)));
 
   pFile->szFileName = hb_strdup(szFileName);
   pFile->file_in = file_in;
@@ -1819,9 +1819,9 @@ static PHB_PP_FILE hb_pp_FileNew(HB_PP_STATE *pState, const char *szFileName, HB
   return pFile;
 }
 
-static PHB_PP_FILE hb_pp_FileBufNew(const char *pLineBuf, HB_SIZE nLineBufLen)
+static HB_PP_FILE *hb_pp_FileBufNew(const char *pLineBuf, HB_SIZE nLineBufLen)
 {
-  auto pFile = static_cast<PHB_PP_FILE>(hb_xgrabz(sizeof(HB_PP_FILE)));
+  auto pFile = static_cast<HB_PP_FILE *>(hb_xgrabz(sizeof(HB_PP_FILE)));
 
   pFile->fFree = false;
   pFile->pLineBuf = pLineBuf;
@@ -1831,7 +1831,7 @@ static PHB_PP_FILE hb_pp_FileBufNew(const char *pLineBuf, HB_SIZE nLineBufLen)
   return pFile;
 }
 
-static void hb_pp_FileFree(HB_PP_STATE *pState, PHB_PP_FILE pFile, PHB_PP_CLOSE_FUNC pCloseFunc)
+static void hb_pp_FileFree(HB_PP_STATE *pState, HB_PP_FILE *pFile, PHB_PP_CLOSE_FUNC pCloseFunc)
 {
   if (pFile->file_in) {
     if (pCloseFunc) {
@@ -1856,7 +1856,7 @@ static void hb_pp_FileFree(HB_PP_STATE *pState, PHB_PP_FILE pFile, PHB_PP_CLOSE_
 static void hb_pp_InFileFree(HB_PP_STATE *pState)
 {
   while (pState->pFile) {
-    PHB_PP_FILE pFile = pState->pFile;
+    HB_PP_FILE *pFile = pState->pFile;
     pState->pFile = pFile->pPrev;
     hb_pp_FileFree(pState, pFile, pState->pCloseFunc);
   }
@@ -1993,7 +1993,7 @@ constexpr HB_SIZE MAX_STREAM_SIZE = 0x1000000; // #define MAX_STREAM_SIZE 0x1000
 
 static void hb_pp_pragmaStreamFile(HB_PP_STATE *pState, const char *szFileName)
 {
-  PHB_PP_FILE pFile = hb_pp_FileNew(pState, szFileName, false, nullptr, nullptr, true, pState->pOpenFunc,
+  HB_PP_FILE *pFile = hb_pp_FileNew(pState, szFileName, false, nullptr, nullptr, true, pState->pOpenFunc,
                                     pState->iStreamDump == HB_PP_STREAM_BINARY);
 
   if (pFile) {
@@ -4416,7 +4416,7 @@ static void hb_pp_includeFile(HB_PP_STATE *pState, const char *szFileName, HB_BO
     hb_pp_error(pState, 'F', HB_PP_ERR_NESTED_INCLUDES, nullptr);
   } else {
     HB_BOOL fNested = false;
-    PHB_PP_FILE pFile = hb_pp_FileNew(pState, szFileName, fSysFile, &fNested, nullptr, true, pState->pOpenFunc, false);
+    HB_PP_FILE *pFile = hb_pp_FileNew(pState, szFileName, fSysFile, &fNested, nullptr, true, pState->pOpenFunc, false);
     if (pFile) {
 #if defined(HB_PP_STRICT_LINEINFO_TOKEN)
       pState->pNextTokenPtr = &pState->pTokenOut;
@@ -4442,7 +4442,7 @@ static void hb_pp_includeFile(HB_PP_STATE *pState, const char *szFileName, HB_BO
 
 static void hb_pp_includeClose(HB_PP_STATE *pState)
 {
-  PHB_PP_FILE pFile = pState->pFile;
+  HB_PP_FILE *pFile = pState->pFile;
 
   pState->pFile = pFile->pPrev;
   pState->iFiles--;
@@ -4923,7 +4923,7 @@ void hb_pp_initDynDefines(HB_PP_STATE *pState, HB_BOOL fArchDefs)
 void hb_pp_readRules(HB_PP_STATE *pState, const char *szRulesFile)
 {
   char szFileName[HB_PATH_MAX];
-  PHB_PP_FILE pFile = pState->pFile;
+  HB_PP_FILE *pFile = pState->pFile;
 
   auto pFileName = hb_fsFNameSplit(szRulesFile);
   if (!pFileName->szExtension) {
@@ -5099,7 +5099,7 @@ HB_BOOL hb_pp_eof(HB_PP_STATE *pState)
 void hb_pp_addDefine(HB_PP_STATE *pState, const char *szDefName, const char *szDefValue)
 {
   HB_PP_TOKEN *pMatch, *pResult, *pToken;
-  PHB_PP_FILE pFile;
+  HB_PP_FILE *pFile;
 
   pState->fError = false;
 
@@ -5233,7 +5233,7 @@ char *hb_pp_nextLine(HB_PP_STATE *pState, HB_SIZE *pnLen)
 char *hb_pp_parseLine(HB_PP_STATE *pState, const char *pLine, HB_SIZE *pnLen)
 {
   HB_PP_TOKEN *pToken;
-  PHB_PP_FILE pFile;
+  HB_PP_FILE *pFile;
   auto fError = false;
   uint16_t ltype;
   HB_SIZE nLen;

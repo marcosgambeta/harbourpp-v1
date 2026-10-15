@@ -561,7 +561,7 @@ typedef struct _HB_PP_FILE
 
    struct _HB_PP_FILE * pPrev;     // previous file, the one which included this file
 }
-HB_PP_FILE, * PHB_PP_FILE;
+HB_PP_FILE, * PHB_PP_FILE; // NOTE: PHB_PP_FILE is deprecated in Harbour++ source code
 
 typedef struct
 {
@@ -629,7 +629,7 @@ typedef struct
    int32_t       iNestedBlock;          // nested extended block counter
    int32_t       iBlockState;           // state of extended block declaration
 
-   PHB_PP_FILE pFile;               // currently preprocessed file structure
+   HB_PP_FILE *pFile;               // currently preprocessed file structure
    int32_t       iFiles;                // number of open files
 
    void *   cargo;                  // parameter passed to user functions
