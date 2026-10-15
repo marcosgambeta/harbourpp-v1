@@ -524,7 +524,7 @@ typedef struct _HB_PP_DEFRULE
    uint16_t      markers;
    HB_ULONG       repeatbits;
 }
-HB_PP_DEFRULE, * PHB_PP_DEFRULE;
+HB_PP_DEFRULE, * PHB_PP_DEFRULE; // NOTE: PHB_PP_DEFRULE is deprecated in Harbour++ source code
 
 typedef struct
 {
