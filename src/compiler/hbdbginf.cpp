@@ -47,9 +47,9 @@
 
 #include "hbcomp.hpp"
 
-PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
+HB_DEBUGINFO *hb_compGetDebugInfo(HB_COMP_DECL)
 {
-  PHB_DEBUGINFO pLineInfo = nullptr, pInfo = nullptr;
+  HB_DEBUGINFO *pLineInfo = nullptr, *pInfo = nullptr;
   HB_SIZE nPos, nSkip, nOffset;
   HB_ULONG ulLine;
   const char *pszModuleName = "", *ptr;
@@ -103,7 +103,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
               pInfo = pInfo->pNext;
             }
             if (!pInfo) {
-              pInfo = static_cast<PHB_DEBUGINFO>(hb_xgrab(sizeof(HB_DEBUGINFO)));
+              pInfo = static_cast<HB_DEBUGINFO *>(hb_xgrab(sizeof(HB_DEBUGINFO)));
               pInfo->pszModuleName = hb_strndup(pszModuleName, i);
               pInfo->ulFirstLine = pInfo->ulLastLine = ulLine;
               // allocate memory in 256 bytes chunks (for 2048 lines)

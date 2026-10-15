@@ -61,7 +61,7 @@ extern void hb_compPCodeEval(HB_HFUNC *, const PHB_PCODE_FUNC *, void *);
 extern void hb_compPCodeTrace(HB_HFUNC *, const PHB_PCODE_FUNC *, void *);
 
 extern void hb_compGenLabelTable(HB_HFUNC *pFunc, HB_LABEL_INFO *label_info);
-extern PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL);
+extern HB_DEBUGINFO *hb_compGetDebugInfo(HB_COMP_DECL);
 
 extern void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc);
 extern void hb_compCompileEnd(HB_COMP_DECL);

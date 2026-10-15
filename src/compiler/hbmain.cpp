@@ -3992,7 +3992,7 @@ static int32_t hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuf
     }
 
     if (HB_COMP_PARAM->fLineNumbers && HB_COMP_PARAM->fDebugInfo) {
-      PHB_DEBUGINFO pInfo = hb_compGetDebugInfo(HB_COMP_PARAM), pNext;
+      HB_DEBUGINFO *pInfo = hb_compGetDebugInfo(HB_COMP_PARAM), *pNext;
       if (pInfo) {
         int32_t iModules = 0;
         hb_compLineNumberDefStart(HB_COMP_PARAM);

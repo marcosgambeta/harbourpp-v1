@@ -799,7 +799,7 @@ typedef struct _HB_DEBUGINFO
    HB_ULONG  ulAllocated;
    uint8_t * pLineMap;
    struct _HB_DEBUGINFO * pNext;
-} HB_DEBUGINFO, * PHB_DEBUGINFO;
+} HB_DEBUGINFO, * PHB_DEBUGINFO; // NOTE: PHB_DEBUGINFO is deprecated in Harbour++ source code
 
 typedef struct _HB_LABEL_INFO
 {
