@@ -78,7 +78,6 @@ struct _HB_MEMINFO
 };
 
 using HB_MEMINFO = _HB_MEMINFO;
-using PHB_MEMINFO = HB_MEMINFO *;
 
 #ifdef HB_ALLOC_ALIGNMENT
 #define HB_MEMINFO_SIZE                                                                                                \
@@ -87,7 +86,7 @@ using PHB_MEMINFO = HB_MEMINFO *;
 #define HB_MEMINFO_SIZE sizeof(HB_MEMINFO)
 #endif
 
-static PHB_MEMINFO s_pMemBlocks = nullptr;
+static HB_MEMINFO *s_pMemBlocks = nullptr;
 static HB_ISIZ s_nMemoryBlocks = 0;      /* memory blocks used */
 static HB_ISIZ s_nMemoryMaxBlocks = 0;   /* maximum number of used memory blocks */
 static HB_ISIZ s_nMemoryMaxConsumed = 0; /* memory size consumed */
@@ -107,13 +106,13 @@ void *hb_xgrab(HB_SIZE nSize) /* allocates fixed memory, exits on failure */
   pMem = malloc(nSize + HB_MEMINFO_SIZE + sizeof(uint32_t));
   if (pMem) {
     if (s_pMemBlocks) {
-      s_pMemBlocks->pPrevBlock = static_cast<PHB_MEMINFO>(pMem);
+      s_pMemBlocks->pPrevBlock = static_cast<HB_MEMINFO *>(pMem);
     }
-    (static_cast<PHB_MEMINFO>(pMem))->pNextBlock = s_pMemBlocks;
-    (static_cast<PHB_MEMINFO>(pMem))->pPrevBlock = nullptr;
-    s_pMemBlocks = static_cast<PHB_MEMINFO>(pMem);
-    (static_cast<PHB_MEMINFO>(pMem))->nSize = nSize;
-    (static_cast<PHB_MEMINFO>(pMem))->Signature = HB_MEMINFO_SIGNATURE;
+    (static_cast<HB_MEMINFO *>(pMem))->pNextBlock = s_pMemBlocks;
+    (static_cast<HB_MEMINFO *>(pMem))->pPrevBlock = nullptr;
+    s_pMemBlocks = static_cast<HB_MEMINFO *>(pMem);
+    (static_cast<HB_MEMINFO *>(pMem))->nSize = nSize;
+    (static_cast<HB_MEMINFO *>(pMem))->Signature = HB_MEMINFO_SIGNATURE;
     HB_PUT_LE_UINT32((static_cast<uint8_t *>(pMem)) + HB_MEMINFO_SIZE + nSize, HB_MEMINFO_SIGNATURE);
 
     s_nMemoryConsumed += nSize;
@@ -140,7 +139,7 @@ void *hb_xgrab(HB_SIZE nSize) /* allocates fixed memory, exits on failure */
 void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
 {
 #ifdef HB_FM_STATISTICS
-  PHB_MEMINFO pMemBlock;
+  HB_MEMINFO *pMemBlock;
   HB_SIZE nMemSize;
   void *pResult;
 
@@ -153,7 +152,7 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
     return hb_xgrab(nSize);
   }
 
-  pMemBlock = static_cast<PHB_MEMINFO>((static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE));
+  pMemBlock = static_cast<HB_MEMINFO *>((static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE));
   nMemSize = pMemBlock->nSize;
 
   if (pMemBlock->Signature != HB_MEMINFO_SIGNATURE) {
@@ -169,13 +168,13 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
   pResult = realloc(pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(uint32_t));
   if (pResult) {
     if (s_pMemBlocks == pMemBlock) {
-      s_pMemBlocks = static_cast<PHB_MEMINFO>(pResult);
+      s_pMemBlocks = static_cast<HB_MEMINFO *>(pResult);
     } else {
-      (static_cast<PHB_MEMINFO>(pResult))->pPrevBlock->pNextBlock = static_cast<PHB_MEMINFO>(pResult);
+      (static_cast<HB_MEMINFO *>(pResult))->pPrevBlock->pNextBlock = static_cast<HB_MEMINFO *>(pResult);
     }
 
-    if ((static_cast<PHB_MEMINFO>(pResult))->pNextBlock) {
-      (static_cast<PHB_MEMINFO>(pResult))->pNextBlock->pPrevBlock = static_cast<PHB_MEMINFO>(pResult);
+    if ((static_cast<HB_MEMINFO *>(pResult))->pNextBlock) {
+      (static_cast<HB_MEMINFO *>(pResult))->pNextBlock->pPrevBlock = static_cast<HB_MEMINFO *>(pResult);
     }
     s_nMemoryConsumed += (nSize - nMemSize);
 
@@ -183,7 +182,7 @@ void *hb_xrealloc(void *pMem, HB_SIZE nSize) /* reallocates memory */
       s_nMemoryMaxConsumed = s_nMemoryConsumed;
     }
 
-    (static_cast<PHB_MEMINFO>(pResult))->nSize = nSize; /* size of the memory block */
+    (static_cast<HB_MEMINFO *>(pResult))->nSize = nSize; /* size of the memory block */
     HB_PUT_LE_UINT32((static_cast<uint8_t *>(pResult)) + nSize + HB_MEMINFO_SIZE, HB_MEMINFO_SIGNATURE);
     pResult = static_cast<uint8_t *>(pResult) + HB_MEMINFO_SIZE;
   }
@@ -202,7 +201,7 @@ void hb_xfree(void *pMem) /* frees fixed memory */
 {
   if (pMem) {
 #ifdef HB_FM_STATISTICS
-    PHB_MEMINFO pMemBlock = static_cast<PHB_MEMINFO>((static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE));
+    HB_MEMINFO *pMemBlock = static_cast<HB_MEMINFO *>((static_cast<uint8_t *>(pMem) - HB_MEMINFO_SIZE));
 
     if (pMemBlock->Signature != HB_MEMINFO_SIGNATURE) {
       hb_errInternal(HB_EI_XFREEINV, "hb_xfree called with an invalid pointer", nullptr, nullptr);
@@ -307,7 +306,7 @@ void hb_xexit(void)
 #ifdef HB_FM_STATISTICS
   if (s_nMemoryBlocks /* || hb_cmdargCheck("INFO") */) {
     char szBuffer[HB_MAX(3 * HB_MEMSTR_BLOCK_MAX + 1, 100)];
-    PHB_MEMINFO pMemBlock;
+    HB_MEMINFO *pMemBlock;
 
     hb_conOutErr(hb_conNewLine(), 0);
     hb_conOutErr("----------------------------------------", 0);
