@@ -116,11 +116,11 @@ static void hb_pp_writeTokenList(FILE *fout, HB_PP_TOKEN *pTokenLst, const char 
   }
 }
 
-static int32_t hb_pp_writeRules(FILE *fout, PHB_PP_RULE pFirst, const char *szName)
+static int32_t hb_pp_writeRules(FILE *fout, HB_PP_RULE *pFirst, const char *szName)
 {
   char szMatch[16], szResult[16];
   HB_ULONG ulRepeatBits, ulBit;
-  PHB_PP_RULE pRule;
+  HB_PP_RULE *pRule;
   int32_t iRule;
   uint16_t u;
 
@@ -214,7 +214,7 @@ static void hb_pp_generateRules(FILE *fout, HB_PP_STATE *pState, const char *szP
 static void hb_pp_undefCompilerRules(HB_PP_STATE *pState)
 {
   int32_t i;
-  PHB_PP_RULE *pRulePtr, pRule;
+  HB_PP_RULE **pRulePtr, *pRule;
   const char *szRules[] = {"__HARBOUR__",    "__DATE__",       "__TIME__",      "__FILE__",      "__LINE__",
                            "__HB_MAIN__",    "__ARCH16BIT__",  "__ARCH32BIT__", "__ARCH64BIT__", "__LITTLE_ENDIAN__",
                            "__BIG_ENDIAN__", "__PDP_ENDIAN__", nullptr};

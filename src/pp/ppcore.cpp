@@ -1524,7 +1524,7 @@ static bool hb_pp_tokenEqual(HB_PP_TOKEN *pToken, HB_PP_TOKEN *pMatch, uint16_t 
           hb_pp_tokenValueCmp(pToken, pMatch->value, mode));
 }
 
-static void hb_pp_patternClearResults(PHB_PP_RULE pRule)
+static void hb_pp_patternClearResults(HB_PP_RULE *pRule)
 {
   PHB_PP_MARKER pMarker = pRule->pMarkers;
   int32_t i = pRule->markers;
@@ -1541,7 +1541,7 @@ static void hb_pp_patternClearResults(PHB_PP_RULE pRule)
   pRule->pNextExpr = nullptr;
 }
 
-static bool hb_pp_patternAddResult(PHB_PP_RULE pRule, uint16_t marker, HB_PP_TOKEN *pFirst, HB_PP_TOKEN *pNext)
+static bool hb_pp_patternAddResult(HB_PP_RULE *pRule, uint16_t marker, HB_PP_TOKEN *pFirst, HB_PP_TOKEN *pNext)
 {
   PHB_PP_MARKER pMarker = &pRule->pMarkers[marker - 1];
 
@@ -1563,10 +1563,10 @@ static bool hb_pp_patternAddResult(PHB_PP_RULE pRule, uint16_t marker, HB_PP_TOK
   return false;
 }
 
-static PHB_PP_RULE hb_pp_ruleNew(HB_PP_TOKEN *pMatch, HB_PP_TOKEN *pResult, uint16_t mode, uint16_t markers,
+static HB_PP_RULE *hb_pp_ruleNew(HB_PP_TOKEN *pMatch, HB_PP_TOKEN *pResult, uint16_t mode, uint16_t markers,
                                  PHB_PP_MARKER pMarkers)
 {
-  auto pRule = static_cast<PHB_PP_RULE>(hb_xgrab(sizeof(HB_PP_RULE)));
+  auto pRule = static_cast<HB_PP_RULE *>(hb_xgrab(sizeof(HB_PP_RULE)));
 
   pRule->pPrev = nullptr;
   pRule->mode = mode;
@@ -1579,7 +1579,7 @@ static PHB_PP_RULE hb_pp_ruleNew(HB_PP_TOKEN *pMatch, HB_PP_TOKEN *pResult, uint
   return pRule;
 }
 
-static void hb_pp_ruleFree(PHB_PP_RULE pRule)
+static void hb_pp_ruleFree(HB_PP_RULE *pRule)
 {
   hb_pp_tokenListFree(&pRule->pMatch);
   hb_pp_tokenListFree(&pRule->pResult);
@@ -1590,9 +1590,9 @@ static void hb_pp_ruleFree(PHB_PP_RULE pRule)
   hb_xfree(pRule);
 }
 
-static void hb_pp_ruleListFree(PHB_PP_RULE *pRulePtr)
+static void hb_pp_ruleListFree(HB_PP_RULE **pRulePtr)
 {
-  PHB_PP_RULE pRule;
+  HB_PP_RULE *pRule;
 
   while (*pRulePtr) {
     pRule = *pRulePtr;
@@ -1601,9 +1601,9 @@ static void hb_pp_ruleListFree(PHB_PP_RULE *pRulePtr)
   }
 }
 
-static void hb_pp_ruleListNonStdFree(PHB_PP_RULE *pRulePtr)
+static void hb_pp_ruleListNonStdFree(HB_PP_RULE **pRulePtr)
 {
-  PHB_PP_RULE pRule;
+  HB_PP_RULE *pRule;
 
   while (*pRulePtr) {
     pRule = *pRulePtr;
@@ -1616,7 +1616,7 @@ static void hb_pp_ruleListNonStdFree(PHB_PP_RULE *pRulePtr)
   }
 }
 
-static void hb_pp_ruleListSetStd(PHB_PP_RULE pRule)
+static void hb_pp_ruleListSetStd(HB_PP_RULE *pRule)
 {
   while (pRule) {
     pRule->mode |= HB_PP_STD_RULE;
@@ -1635,7 +1635,7 @@ static void hb_pp_ruleSetId(HB_PP_STATE *pState, HB_PP_TOKEN *pMatch, uint8_t id
   }
 }
 
-static void hb_pp_ruleListSetId(HB_PP_STATE *pState, PHB_PP_RULE pRule, uint8_t id)
+static void hb_pp_ruleListSetId(HB_PP_STATE *pState, HB_PP_RULE *pRule, uint8_t id)
 {
   while (pRule) {
     hb_pp_ruleSetId(pState, pRule->pMatch, id);
@@ -1646,9 +1646,9 @@ static void hb_pp_ruleListSetId(HB_PP_STATE *pState, PHB_PP_RULE pRule, uint8_t 
   }
 }
 
-static PHB_PP_RULE hb_pp_defineFind(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
+static HB_PP_RULE *hb_pp_defineFind(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
 {
-  PHB_PP_RULE pRule = pState->pDefinitions;
+  HB_PP_RULE *pRule = pState->pDefinitions;
 
   // TODO% create binary tree or hash table - the #define keyword token has
   //       to be unique so it's not necessary to keep the stack list,
@@ -1664,7 +1664,7 @@ static PHB_PP_RULE hb_pp_defineFind(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
 static void hb_pp_defineAdd(HB_PP_STATE *pState, uint16_t mode, uint16_t markers, PHB_PP_MARKER pMarkers,
                             HB_PP_TOKEN *pMatch, HB_PP_TOKEN *pResult)
 {
-  PHB_PP_RULE pRule = hb_pp_defineFind(pState, pMatch);
+  HB_PP_RULE *pRule = hb_pp_defineFind(pState, pMatch);
 
   if (pRule) {
     hb_pp_tokenListFree(&pRule->pMatch);
@@ -1690,7 +1690,7 @@ static void hb_pp_defineAdd(HB_PP_STATE *pState, uint16_t mode, uint16_t markers
 
 static void hb_pp_defineDel(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
 {
-  PHB_PP_RULE *pRulePtr = &pState->pDefinitions, pRule;
+  HB_PP_RULE **pRulePtr = &pState->pDefinitions, *pRule;
 
   while (*pRulePtr) {
     pRule = *pRulePtr;
@@ -2949,7 +2949,7 @@ static bool hb_pp_patternCompare(HB_PP_TOKEN *pToken1, HB_PP_TOKEN *pToken2)
 static void hb_pp_directiveDel(HB_PP_STATE *pState, HB_PP_TOKEN *pMatch, uint16_t markers, PHB_PP_MARKER pMarkers,
                                uint16_t mode, HB_BOOL fCommand)
 {
-  PHB_PP_RULE pRule, *pRulePtr = fCommand ? &pState->pCommands : &pState->pTranslations;
+  HB_PP_RULE *pRule, **pRulePtr = fCommand ? &pState->pCommands : &pState->pTranslations;
 
   while (*pRulePtr) {
     pRule = *pRulePtr;
@@ -3132,7 +3132,7 @@ static void hb_pp_directiveNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, uint16_
           hb_xfree(pMarkers);
         }
       } else {
-        PHB_PP_RULE pRule;
+        HB_PP_RULE *pRule;
         pRule = hb_pp_ruleNew(pMatch, pResult, mode, usPCount, pMarkers);
         if (fCommand) {
           pRule->pPrev = pState->pCommands;
@@ -3443,7 +3443,7 @@ static bool hb_pp_tokenMatch(HB_PP_TOKEN *pMatch, HB_PP_TOKEN **pTokenPtr, HB_PP
 }
 
 static bool hb_pp_patternMatch(HB_PP_TOKEN *pMatch, HB_PP_TOKEN **pTokenPtr, HB_PP_TOKEN *pStop, uint16_t mode,
-                               PHB_PP_RULE pRule)
+                               HB_PP_RULE *pRule)
 {
   HB_PP_TOKEN *pToken = *pTokenPtr;
   HB_PP_TOKEN *pFirst;
@@ -3503,7 +3503,7 @@ static bool hb_pp_patternMatch(HB_PP_TOKEN *pMatch, HB_PP_TOKEN **pTokenPtr, HB_
   return false;
 }
 
-static bool hb_pp_patternCmp(PHB_PP_RULE pRule, HB_PP_TOKEN *pToken, HB_BOOL fCommand)
+static bool hb_pp_patternCmp(HB_PP_RULE *pRule, HB_PP_TOKEN *pToken, HB_BOOL fCommand)
 {
   HB_PP_TOKEN *pFirst = pToken;
 
@@ -3519,7 +3519,7 @@ static bool hb_pp_patternCmp(PHB_PP_RULE pRule, HB_PP_TOKEN *pToken, HB_BOOL fCo
   return false;
 }
 
-static PHB_PP_RESULT hb_pp_matchResultGet(PHB_PP_RULE pRule, uint16_t usMatch, uint16_t usIndex)
+static PHB_PP_RESULT hb_pp_matchResultGet(HB_PP_RULE *pRule, uint16_t usMatch, uint16_t usIndex)
 {
   PHB_PP_MARKER pMarker = &pRule->pMarkers[usIndex - 1];
   PHB_PP_RESULT pMarkerResult;
@@ -3647,7 +3647,7 @@ static HB_PP_TOKEN **hb_pp_matchResultLstAdd(HB_PP_STATE *pState, HB_SIZE spaces
   return pResultPtr;
 }
 
-static HB_PP_TOKEN **hb_pp_matchResultAdd(HB_PP_STATE *pState, PHB_PP_RULE pRule, HB_PP_TOKEN **pResultPtr,
+static HB_PP_TOKEN **hb_pp_matchResultAdd(HB_PP_STATE *pState, HB_PP_RULE *pRule, HB_PP_TOKEN **pResultPtr,
                                           HB_PP_TOKEN *pMatch, uint16_t usMatch)
 {
   PHB_PP_RESULT pMarkerResult = hb_pp_matchResultGet(pRule, usMatch, pMatch->index);
@@ -3712,7 +3712,7 @@ static HB_PP_TOKEN **hb_pp_matchResultAdd(HB_PP_STATE *pState, PHB_PP_RULE pRule
   return pResultPtr;
 }
 
-static HB_PP_TOKEN **hb_pp_patternStuff(HB_PP_STATE *pState, PHB_PP_RULE pRule, uint16_t usMatch,
+static HB_PP_TOKEN **hb_pp_patternStuff(HB_PP_STATE *pState, HB_PP_RULE *pRule, uint16_t usMatch,
                                         HB_PP_TOKEN *pResultPattern, HB_PP_TOKEN **pResultPtr)
 {
   while (pResultPattern) {
@@ -3782,7 +3782,7 @@ static char *hb_pp_tokenListStr(HB_PP_TOKEN *pToken, HB_PP_TOKEN *pStop, HB_BOOL
   return hb_membufPtr(pBuffer);
 }
 
-static void hb_pp_patternReplace(HB_PP_STATE *pState, PHB_PP_RULE pRule, HB_PP_TOKEN **pTokenPtr, const char *szType)
+static void hb_pp_patternReplace(HB_PP_STATE *pState, HB_PP_RULE *pRule, HB_PP_TOKEN **pTokenPtr, const char *szType)
 {
   HB_PP_TOKEN *pFinalResult = nullptr, **pResultPtr, *pSource;
 
@@ -3902,7 +3902,7 @@ static bool hb_pp_processDefine(HB_PP_STATE *pState, HB_PP_TOKEN **pFirstPtr)
     while (!HB_PP_TOKEN_ISEOS(*pFirstPtr)) {
       if (HB_PP_TOKEN_TYPE((*pFirstPtr)->type) == HB_PP_TOKEN_KEYWORD &&
           (pState->pMap[HB_PP_HASHID(*pFirstPtr)] & HB_PP_DEFINE)) {
-        PHB_PP_RULE pRule = hb_pp_defineFind(pState, *pFirstPtr);
+        HB_PP_RULE *pRule = hb_pp_defineFind(pState, *pFirstPtr);
         if (pRule) {
           if (hb_pp_patternCmp(pRule, *pFirstPtr, false)) {
             hb_pp_patternReplace(pState, pRule, pFirstPtr, "define");
@@ -3939,7 +3939,7 @@ static bool hb_pp_processTranslate(HB_PP_STATE *pState, HB_PP_TOKEN **pFirstPtr)
     fRepeat = false;
     while (!HB_PP_TOKEN_ISEOS(*pTokenPtr)) {
       if (pState->pMap[HB_PP_HASHID(*pTokenPtr)] & HB_PP_TRANSLATE) {
-        PHB_PP_RULE pRule = pState->pTranslations;
+        HB_PP_RULE *pRule = pState->pTranslations;
         while (pRule) {
           if (hb_pp_patternCmp(pRule, *pTokenPtr, false)) {
             hb_pp_patternReplace(pState, pRule, pTokenPtr, "translate");
@@ -3965,7 +3965,7 @@ static bool hb_pp_processTranslate(HB_PP_STATE *pState, HB_PP_TOKEN **pFirstPtr)
 
 static bool hb_pp_processCommand(HB_PP_STATE *pState, HB_PP_TOKEN **pFirstPtr)
 {
-  PHB_PP_RULE pRule;
+  HB_PP_RULE *pRule;
   auto fSubst = false;
   auto fRepeat = true;
   int32_t iCycle = 0;
@@ -4671,10 +4671,10 @@ static void hb_pp_preprocessToken(HB_PP_STATE *pState)
 // exported functions
 
 // internal function to initialize predefined PP rules
-void hb_pp_initRules(PHB_PP_RULE *pRulesPtr, int32_t *piRules, const HB_PP_DEFRULE pDefRules[], int32_t iDefRules)
+void hb_pp_initRules(HB_PP_RULE **pRulesPtr, int32_t *piRules, const HB_PP_DEFRULE pDefRules[], int32_t iDefRules)
 {
   PHB_PP_MARKER pMarkers;
-  PHB_PP_RULE pRule;
+  HB_PP_RULE *pRule;
 
   hb_pp_ruleListFree(pRulesPtr);
   *piRules = iDefRules;

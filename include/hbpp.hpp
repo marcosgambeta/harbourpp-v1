@@ -514,7 +514,7 @@ typedef struct _HB_PP_RULE
    PHB_PP_MARKER  pMarkers;         // marker table
    HB_PP_TOKEN *  pNextExpr;        // next expression after match pattern
 }
-HB_PP_RULE, * PHB_PP_RULE;
+HB_PP_RULE, * PHB_PP_RULE; // NOTE: PHB_PP_RULE is deprecated in Harbour++ source code
 
 typedef struct _HB_PP_DEFRULE
 {
@@ -567,9 +567,9 @@ typedef struct
 {
    // common for all included files
    PHB_PP_OPERATOR pOperators;      // user defined operators
-   PHB_PP_RULE    pDefinitions;     // #define table
-   PHB_PP_RULE    pTranslations;    // #[x]translate table
-   PHB_PP_RULE    pCommands;        // #[x]command table
+   HB_PP_RULE *   pDefinitions;     // #define table
+   HB_PP_RULE *   pTranslations;    // #[x]translate table
+   HB_PP_RULE *   pCommands;        // #[x]command table
    int32_t            iOperators;       // number of user defined operators
    int32_t            iDefinitions;     // number of rules in pDefinitions
    int32_t            iTranslations;    // number of rules in pTranslations
@@ -644,7 +644,7 @@ typedef struct
 }
 HB_PP_STATE, * PHB_PP_STATE; // NOTE: PHB_PP_STATE is deprecated in Harbour++ source code
 
-extern void hb_pp_initRules( PHB_PP_RULE * pRulesPtr, int32_t * piRules,
+extern void hb_pp_initRules( HB_PP_RULE ** pRulesPtr, int32_t * piRules,
                              const HB_PP_DEFRULE pDefRules[], int32_t iDefRules );
 
 
