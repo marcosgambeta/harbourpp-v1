@@ -2687,7 +2687,7 @@ static bool hb_pp_matchMarkerNew(HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMar
 
   if (type != HB_PP_TOKEN_NUL) {
     PHB_PP_MARKERLST pMrkLst = *pMarkerListPtr, pMrkPrev = nullptr;
-    PHB_PP_MARKERPTR pMrkPtr;
+    HB_PP_MARKERPTR *pMrkPtr;
 
     while (pMrkLst && !hb_pp_tokenEqual(pMrkLst->pMatchMarkers->pToken, pMarkerId, HB_PP_CMP_CASE)) {
       pMrkPrev = pMrkLst;
@@ -2705,7 +2705,7 @@ static bool hb_pp_matchMarkerNew(HB_PP_TOKEN **pTokenPtr, PHB_PP_MARKERLST *pMar
       pMrkLst->canrepeat = true;
       pMrkLst->index = 0;
     }
-    pMrkPtr = static_cast<PHB_PP_MARKERPTR>(hb_xgrab(sizeof(HB_PP_MARKERPTR)));
+    pMrkPtr = static_cast<HB_PP_MARKERPTR *>(hb_xgrab(sizeof(HB_PP_MARKERPTR)));
     pMrkPtr->pNext = pMrkLst->pMatchMarkers;
     pMrkLst->pMatchMarkers = pMrkPtr;
     pMrkPtr->pToken = pMarkerId;
@@ -3021,7 +3021,7 @@ static void hb_pp_directiveNew(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, uint16_
     hb_pp_error(pState, 'E', HB_PP_ERR_MISSING_PATTERN_SEP, nullptr);
   } else if (pMatch) { // isn't dummy directive?
     PHB_PP_MARKERLST pMarkerList = nullptr, pMrkLst;
-    PHB_PP_MARKERPTR pMrkPtr;
+    HB_PP_MARKERPTR *pMrkPtr;
     HB_PP_MARKER *pMarkers = nullptr;
     uint16_t usPCount = 0;
 

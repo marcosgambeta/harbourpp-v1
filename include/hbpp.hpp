@@ -483,12 +483,12 @@ typedef struct _HB_PP_MARKERPTR
    HB_PP_TOKEN *  pMTokens;
    uint16_t      type;
 }
-HB_PP_MARKERPTR, * PHB_PP_MARKERPTR;
+HB_PP_MARKERPTR, * PHB_PP_MARKERPTR; // NOTE: PHB_PP_MARKERPTR is deprecated in Harbour++ source code
 
 typedef struct _HB_PP_MARKERLST
 {
    struct _HB_PP_MARKERLST * pNext;
-   PHB_PP_MARKERPTR  pMatchMarkers;
+   HB_PP_MARKERPTR * pMatchMarkers;
    uint16_t         canrepeat;
    uint16_t         index;
 }
