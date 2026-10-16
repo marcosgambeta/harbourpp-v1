@@ -51,9 +51,9 @@
 
 static char s_szUndefineMarker[1] = "";
 
-static HB_SIZE hb_compChkOptionLen(const char *szSwitch, bool fEnv)
+static size_t hb_compChkOptionLen(const char *szSwitch, bool fEnv)
 {
-  HB_SIZE nLen;
+  size_t nLen;
 
   if (fEnv) {
     nLen = 0;
@@ -70,7 +70,7 @@ static HB_SIZE hb_compChkOptionLen(const char *szSwitch, bool fEnv)
 static const char *hb_compChkAddDefine(HB_COMP_DECL, const char *szSwitch, bool fAdd, bool fEnv)
 {
   const char *szSwPtr = szSwitch;
-  HB_SIZE nValue = 0;
+  size_t nValue = 0;
 
   while (*szSwPtr && *szSwPtr != ' ' && !HB_ISOPTSEP(*szSwPtr)) {
     if (*szSwPtr == '=') {
@@ -124,7 +124,7 @@ static char *hb_compChkOptionDup(const char *szSwitch)
 
 static const char *hb_compChkOptionGet(const char *szSwitch, char **pszResult, bool fEnv)
 {
-  HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
+  size_t nLen = hb_compChkOptionLen(szSwitch, fEnv);
 
   if (pszResult) {
     *pszResult = hb_strndup(szSwitch, nLen);
@@ -135,7 +135,7 @@ static const char *hb_compChkOptionGet(const char *szSwitch, char **pszResult, b
 
 static const char *hb_compChkOptionFName(const char *szSwitch, HB_FNAME **pResult, bool fEnv)
 {
-  HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
+  size_t nLen = hb_compChkOptionLen(szSwitch, fEnv);
 
   if (nLen > 0) {
     if (*pResult) {
@@ -154,7 +154,7 @@ static const char *hb_compChkOptionFName(const char *szSwitch, HB_FNAME **pResul
 
 static const char *hb_compChkOptionAddPath(HB_COMP_DECL, const char *szSwitch, bool fEnv)
 {
-  HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
+  size_t nLen = hb_compChkOptionLen(szSwitch, fEnv);
 
   if (nLen > 0) {
     if (szSwitch[nLen] != '\0') {
