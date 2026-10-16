@@ -288,9 +288,9 @@ static const HB_PP_OPERATOR *hb_pp_operatorFind(HB_PP_STATE *pState, char *buffe
 
 constexpr HB_SIZE HB_MEMBUF_DEFAULT_SIZE = 256; // #define HB_MEMBUF_DEFAULT_SIZE 256
 
-static PHB_MEM_BUFFER hb_membufNew(void)
+static HB_MEM_BUFFER *hb_membufNew(void)
 {
-  auto pBuffer = static_cast<PHB_MEM_BUFFER>(hb_xgrab(sizeof(HB_MEM_BUFFER)));
+  auto pBuffer = static_cast<HB_MEM_BUFFER *>(hb_xgrab(sizeof(HB_MEM_BUFFER)));
 
   pBuffer->nLen = 0;
   pBuffer->nAllocated = HB_MEMBUF_DEFAULT_SIZE;
@@ -299,35 +299,35 @@ static PHB_MEM_BUFFER hb_membufNew(void)
   return pBuffer;
 }
 
-static void hb_membufFree(PHB_MEM_BUFFER pBuffer)
+static void hb_membufFree(HB_MEM_BUFFER *pBuffer)
 {
   hb_xfree(pBuffer->pBufPtr);
   hb_xfree(pBuffer);
 }
 
-static void hb_membufFlush(PHB_MEM_BUFFER pBuffer)
+static void hb_membufFlush(HB_MEM_BUFFER *pBuffer)
 {
   pBuffer->nLen = 0;
 }
 
-static void hb_membufRemove(PHB_MEM_BUFFER pBuffer, HB_SIZE nLeft)
+static void hb_membufRemove(HB_MEM_BUFFER *pBuffer, HB_SIZE nLeft)
 {
   if (nLeft < pBuffer->nLen) {
     pBuffer->nLen = nLeft;
   }
 }
 
-static HB_SIZE hb_membufLen(const PHB_MEM_BUFFER pBuffer)
+static HB_SIZE hb_membufLen(const HB_MEM_BUFFER *pBuffer)
 {
   return pBuffer->nLen;
 }
 
-static char *hb_membufPtr(const PHB_MEM_BUFFER pBuffer)
+static char *hb_membufPtr(const HB_MEM_BUFFER *pBuffer)
 {
   return pBuffer->pBufPtr;
 }
 
-static void hb_membufAddCh(PHB_MEM_BUFFER pBuffer, char ch)
+static void hb_membufAddCh(HB_MEM_BUFFER *pBuffer, char ch)
 {
   if (pBuffer->nLen == pBuffer->nAllocated) {
     pBuffer->nAllocated <<= 1;
@@ -336,7 +336,7 @@ static void hb_membufAddCh(PHB_MEM_BUFFER pBuffer, char ch)
   pBuffer->pBufPtr[pBuffer->nLen++] = ch;
 }
 
-static void hb_membufAddData(PHB_MEM_BUFFER pBuffer, const char *data, HB_SIZE nLen)
+static void hb_membufAddData(HB_MEM_BUFFER *pBuffer, const char *data, HB_SIZE nLen)
 {
   if (pBuffer->nLen + nLen > pBuffer->nAllocated) {
     do {
@@ -349,7 +349,7 @@ static void hb_membufAddData(PHB_MEM_BUFFER pBuffer, const char *data, HB_SIZE n
   pBuffer->nLen += nLen;
 }
 
-static void hb_membufAddStr(PHB_MEM_BUFFER pBuffer, const char *szText)
+static void hb_membufAddStr(HB_MEM_BUFFER *pBuffer, const char *szText)
 {
   hb_membufAddData(pBuffer, szText, strlen(szText));
 }
@@ -1370,7 +1370,7 @@ static void hb_pp_getLine(HB_PP_STATE *pState)
   pState->pFile->iCurrentLine -= iLines;
 }
 
-static int32_t hb_pp_tokenStr(HB_PP_TOKEN *pToken, PHB_MEM_BUFFER pBuffer, bool fSpaces, bool fQuote, uint16_t ltype)
+static int32_t hb_pp_tokenStr(HB_PP_TOKEN *pToken, HB_MEM_BUFFER *pBuffer, bool fSpaces, bool fQuote, uint16_t ltype)
 {
   int32_t iLines = 0;
   HB_ISIZ nSpace = fSpaces ? pToken->spaces : 0;
@@ -3761,7 +3761,7 @@ static HB_PP_TOKEN **hb_pp_patternStuff(HB_PP_STATE *pState, HB_PP_RULE *pRule, 
   return pResultPtr;
 }
 
-static char *hb_pp_tokenListStr(HB_PP_TOKEN *pToken, HB_PP_TOKEN *pStop, HB_BOOL fStop, PHB_MEM_BUFFER pBuffer,
+static char *hb_pp_tokenListStr(HB_PP_TOKEN *pToken, HB_PP_TOKEN *pStop, HB_BOOL fStop, HB_MEM_BUFFER *pBuffer,
                                 HB_BOOL fQuote, HB_BOOL fEol)
 {
   uint16_t ltype = HB_PP_TOKEN_NUL;

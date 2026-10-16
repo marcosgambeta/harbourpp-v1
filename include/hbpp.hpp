@@ -541,7 +541,7 @@ typedef struct
    HB_SIZE  nLen;
    HB_SIZE  nAllocated;
 }
-HB_MEM_BUFFER, * PHB_MEM_BUFFER;
+HB_MEM_BUFFER, * PHB_MEM_BUFFER; // NOTE: PHB_MEM_BUFFER is deprecated in Harbour++ source code
 
 typedef struct _HB_PP_FILE
 {
@@ -579,8 +579,8 @@ typedef struct
    HB_PP_TOKEN *  pTokenOut;        // preprocessed tokens
    HB_PP_TOKEN ** pNextTokenPtr;    // pointer to the last NULL pointer in token list
 
-   PHB_MEM_BUFFER pDumpBuffer;      // buffer for dump output
-   PHB_MEM_BUFFER pOutputBuffer;    // buffer for preprocessed line
+   HB_MEM_BUFFER *pDumpBuffer;      // buffer for dump output
+   HB_MEM_BUFFER *pOutputBuffer;    // buffer for preprocessed line
 
    int32_t      iLineTot;               // total number of parsed lines
    int32_t      iCycle;                 // translation counter
@@ -610,7 +610,7 @@ typedef struct
    int32_t *     pCondStack;            // conditional compilation stack
 
    // used to divide line per tokens and tokens manipulations
-   PHB_MEM_BUFFER pBuffer;          // buffer for input and output line
+   HB_MEM_BUFFER *pBuffer;          // buffer for input and output line
    HB_SIZE   nSpaces;               // leading spaces for next token
    HB_SIZE   nSpacesNL;             // leading spaces ';' token (fCanNextLine) if it will not be line concatenator
    HB_SIZE   nSpacesMin;            // minimal number of leading spaces for next token
@@ -620,7 +620,7 @@ typedef struct
    HB_BOOL   fNewStatement;         // set to HB_TRUE at line beginning or after each ';' token
    HB_PP_TOKEN *  pFuncOut;         // function used for each line in HB_PP_STREAM_* dumping
    HB_PP_TOKEN *  pFuncEnd;         // end function for HB_PP_STREAM_* dumping
-   PHB_MEM_BUFFER pStreamBuffer;    // buffer for stream output
+   HB_MEM_BUFFER *pStreamBuffer;    // buffer for stream output
    int32_t       iStreamDump;           // stream output, see HB_PP_STREAM_*
    int32_t       iDumpLine;             // line where current dump output begins
    int32_t       iInLineCount;          // number of hb_inLine() functions
