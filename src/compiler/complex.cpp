@@ -83,8 +83,8 @@ constexpr int32_t DECLARE_TYPE = -10; // #define DECLARE_TYPE -10
 struct HB_LEX_KEY
 {
   const char *value; // keyword name
-  HB_SIZE minlen;    // minimal length
-  HB_SIZE maxlen;    // maximal length
+  size_t minlen;    // minimal length
+  size_t maxlen;    // maximal length
   int32_t type;          // terminal symbol code
 };
 

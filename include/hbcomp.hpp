@@ -56,7 +56,7 @@
 
 HB_EXTERN_BEGIN
 
-extern HB_ISIZ hb_compPCodeSize(HB_HFUNC *, HB_SIZE);
+extern HB_ISIZ hb_compPCodeSize(HB_HFUNC *, size_t);
 extern void hb_compPCodeEval(HB_HFUNC *, const PHB_PCODE_FUNC *, void *);
 extern void hb_compPCodeTrace(HB_HFUNC *, const PHB_PCODE_FUNC *, void *);
 
@@ -155,11 +155,11 @@ extern void hb_compLoopKill(HB_HFUNC *);
 extern void hb_compGenError(HB_COMP_DECL, const char * const szErrors[], char cPrefix, int32_t iError, const char * szError1, const char * szError2); // generic parsing error management function
 extern void hb_compGenWarning(HB_COMP_DECL, const char * const szWarnings[], char cPrefix, int32_t iWarning, const char * szWarning1, const char * szWarning2); // generic parsing warning management function
 
-extern HB_SIZE hb_compGenJump(HB_ISIZ nOffset, HB_COMP_DECL); // generates the pcode to jump to a specific offset
-extern HB_SIZE hb_compGenJumpFalse(HB_ISIZ nOffset, HB_COMP_DECL); // generates the pcode to jump if false
-extern HB_SIZE hb_compGenJumpTrue(HB_ISIZ nOffset, HB_COMP_DECL); // generates the pcode to jump if true
-extern void hb_compGenJumpHere(HB_SIZE nOffset, HB_COMP_DECL); // returns the pcode pos where to set a jump offset
-extern void hb_compGenJumpThere(HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL); // sets a jump offset
+extern size_t hb_compGenJump(HB_ISIZ nOffset, HB_COMP_DECL); // generates the pcode to jump to a specific offset
+extern size_t hb_compGenJumpFalse(HB_ISIZ nOffset, HB_COMP_DECL); // generates the pcode to jump if false
+extern size_t hb_compGenJumpTrue(HB_ISIZ nOffset, HB_COMP_DECL); // generates the pcode to jump if true
+extern void hb_compGenJumpHere(size_t nOffset, HB_COMP_DECL); // returns the pcode pos where to set a jump offset
+extern void hb_compGenJumpThere(size_t nFrom, size_t nTo, HB_COMP_DECL); // sets a jump offset
 
 extern void hb_compGenModuleName(HB_COMP_DECL, const char * szFunName); // generates the pcode with the currently compiled module and function name
 extern void hb_compLinePush(HB_COMP_DECL); // generates the pcode with the currently compiled source code line
@@ -184,7 +184,7 @@ extern void hb_compGenPushLong(HB_MAXINT nNumber, HB_COMP_DECL); // Pushes a lon
 extern void hb_compGenPushDate(long lDate, HB_COMP_DECL); // Pushes a date constant on the virtual machine stack
 extern void hb_compGenPushTimeStamp(long lDate, long lTime, HB_COMP_DECL); // Pushes a timestamp constant on the virtual machine stack
 extern void hb_compGenPushNil(HB_COMP_DECL); // Pushes nil on the virtual machine stack
-extern void hb_compGenPushString(const char * szText, HB_SIZE nLen, HB_COMP_DECL); // Pushes a string on the virtual machine stack
+extern void hb_compGenPushString(const char * szText, size_t nLen, HB_COMP_DECL); // Pushes a string on the virtual machine stack
 extern void hb_compGenPushSymbol(const char * szSymbolName, HB_BOOL bFunction, HB_COMP_DECL); // Pushes a symbol on to the Virtual machine stack
 extern void hb_compGenPushAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, const char * szAlias, HB_MAXINT nWorkarea, HB_COMP_DECL);
 extern void hb_compGenPopAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, const char * szAlias, HB_MAXINT nWorkarea, HB_COMP_DECL);
@@ -192,12 +192,12 @@ extern void hb_compGenPCode1(uint8_t, HB_COMP_DECL); // generates 1 byte of pcod
 extern void hb_compGenPCode2(uint8_t, uint8_t, HB_COMP_DECL); // generates 2 bytes of pcode + flag for optional StrongType().
 extern void hb_compGenPCode3(uint8_t, uint8_t, uint8_t, HB_COMP_DECL); // generates 3 bytes of pcode + flag for optional StrongType()
 extern void hb_compGenPCode4(uint8_t, uint8_t, uint8_t, uint8_t, HB_COMP_DECL); // generates 4 bytes of pcode + flag for optional StrongType()
-extern void hb_compGenPCodeN(const uint8_t * pBuffer, HB_SIZE nSize, HB_COMP_DECL); // copy bytes to a pcode buffer + flag for optional StrongType()
+extern void hb_compGenPCodeN(const uint8_t * pBuffer, size_t nSize, HB_COMP_DECL); // copy bytes to a pcode buffer + flag for optional StrongType()
 
-extern HB_SIZE hb_compSequenceBegin(HB_COMP_DECL);
-extern HB_SIZE hb_compSequenceEnd(HB_COMP_DECL);
-extern HB_SIZE hb_compSequenceAlways(HB_COMP_DECL);
-extern void hb_compSequenceFinish(HB_COMP_DECL, HB_SIZE nStartPos, HB_SIZE nEndPos, HB_SIZE nAlways, HB_BOOL fUsualStmts, HB_BOOL fRecover, HB_BOOL fCanMove);
+extern size_t hb_compSequenceBegin(HB_COMP_DECL);
+extern size_t hb_compSequenceEnd(HB_COMP_DECL);
+extern size_t hb_compSequenceAlways(HB_COMP_DECL);
+extern void hb_compSequenceFinish(HB_COMP_DECL, size_t nStartPos, size_t nEndPos, size_t nAlways, HB_BOOL fUsualStmts, HB_BOOL fRecover, HB_BOOL fCanMove);
 
 // support for FIELD declaration
 extern void hb_compFieldSetAlias(HB_COMP_DECL, const char * szAlias, int32_t iField);
@@ -241,7 +241,7 @@ extern HB_BOOL hb_compCheckUnclosedStru(HB_COMP_DECL, HB_HFUNC *);
 #define HB_GEN_FUNC4(func, p1, p2, p3, p4) hb_compGen##func(p1, p2, p3, p4, HB_COMP_PARAM)
 
 extern int32_t hb_compMain(int32_t argc, const char * const argv[]);
-extern int32_t hb_compMainExt(int32_t argc, const char * const argv[], uint8_t ** pBufPtr, HB_SIZE * pnSize, const char * szSource, int32_t iStartLine, void * cargo, PHB_PP_OPEN_FUNC pOpenFunc, PHB_PP_MSG_FUNC pMsgFunc);
+extern int32_t hb_compMainExt(int32_t argc, const char * const argv[], uint8_t ** pBufPtr, size_t * pnSize, const char * szSource, int32_t iStartLine, void * cargo, PHB_PP_OPEN_FUNC pOpenFunc, PHB_PP_MSG_FUNC pMsgFunc);
 extern void hb_compOutStd(HB_COMP_DECL, const char * szMessage);
 extern void hb_compOutErr(HB_COMP_DECL, const char * szMessage);
 
@@ -264,7 +264,7 @@ extern void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName);
 extern void hb_compErrorCodeblockWith(HB_COMP_DECL, const char * szMessage);
 
 extern void hb_compPushMacroVar(HB_COMP_DECL, const char * szText);
-extern void hb_compPushMacroText(HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_BOOL fMacro);
+extern void hb_compPushMacroText(HB_COMP_DECL, const char * szText, size_t nLen, HB_BOOL fMacro);
 
 // Codeblocks
 extern void hb_compCodeBlockStart(HB_COMP_DECL, int32_t iEarlyEvalPass); // starts a codeblock creation
@@ -274,8 +274,8 @@ extern void hb_compCodeBlockRewind(HB_COMP_DECL); // restart of fake codeblock
 
 #endif // HB_MACRO_SUPPORT
 
-extern HB_SIZE hb_compExprListEval(HB_COMP_DECL, HB_EXPR *pExpr, PHB_COMP_CARGO_FUNC pEval);
-extern HB_SIZE hb_compExprListEval2(HB_COMP_DECL, HB_EXPR *pExpr1, HB_EXPR *pExpr2, PHB_COMP_CARGO2_FUNC pEval);
+extern size_t hb_compExprListEval(HB_COMP_DECL, HB_EXPR *pExpr, PHB_COMP_CARGO_FUNC pEval);
+extern size_t hb_compExprListEval2(HB_COMP_DECL, HB_EXPR *pExpr1, HB_EXPR *pExpr2, PHB_COMP_CARGO2_FUNC pEval);
 
 extern void hb_compChkCommandLine(HB_COMP_DECL, int32_t argc, const char * const argv[]);
 extern void hb_compChkEnvironment(HB_COMP_DECL);
@@ -288,8 +288,8 @@ extern void hb_compPrintLogo(HB_COMP_DECL);
 extern void hb_compPrintModes(HB_COMP_DECL);
 
 // Misc functions defined in harbour.c
-extern void hb_compNOOPfill(HB_HFUNC *pFunc, HB_SIZE nFrom, HB_ISIZ nCount, HB_BOOL fPop, HB_BOOL fCheck);
-extern HB_BOOL hb_compHasJump(HB_HFUNC *pFunc, HB_SIZE nPos);
+extern void hb_compNOOPfill(HB_HFUNC *pFunc, size_t nFrom, HB_ISIZ nCount, HB_BOOL fPop, HB_BOOL fCheck);
+extern HB_BOOL hb_compHasJump(HB_HFUNC *pFunc, size_t nPos);
 
 // Misc functions defined in hbfix.cpp
 extern void hb_compFixFuncPCode(HB_COMP_DECL, HB_HFUNC *pFunc);
@@ -305,10 +305,10 @@ extern void hb_compStripFuncLines(HB_COMP_DECL, HB_HFUNC *pFunc);
 extern void hb_compGenCCode(HB_COMP_DECL, HB_FNAME *); // generates the C++ language output
 extern void hb_compGenPortObj(HB_COMP_DECL, HB_FNAME *); // generates the portable objects
 
-extern void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t ** pBufPtr, HB_SIZE * pnSize); // generates the portable objects to memory buffer
+extern void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t ** pBufPtr, size_t * pnSize); // generates the portable objects to memory buffer
 
 extern void hb_compGenCRealCode(HB_COMP_DECL, HB_HFUNC *pFunc, FILE * yyc);
-extern void hb_compGenCString(FILE * yyc, const uint8_t * pText, HB_SIZE nLen);
+extern void hb_compGenCString(FILE * yyc, const uint8_t * pText, size_t nLen);
 
 // hbident.cpp
 extern const char * hb_compIdentifierNew(HB_COMP_DECL, const char * szName, int32_t iType); // create the reusable identifier

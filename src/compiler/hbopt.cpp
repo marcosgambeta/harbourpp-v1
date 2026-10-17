@@ -274,7 +274,7 @@ static HB_OPT_FUNC(hb_p_duplicate)
     if (pFunc->pCode[nPCodePos + 5] == HB_P_POP) {
       uint8_t *pAddr = &pFunc->pCode[nPCodePos + 2];
       HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr), nLastOffset = 0;
-      HB_SIZE nNewPos = nPCodePos + 1 + nOffset;
+      size_t nNewPos = nPCodePos + 1 + nOffset;
       auto fNot = false;
       auto fOK = true;
       auto fRepeat = true;
@@ -416,7 +416,7 @@ static HB_OPT_FUNC(hb_p_jumpfar)
 {
   uint8_t *pAddr = &pFunc->pCode[nPCodePos + 1];
   HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
-  HB_SIZE nNewPos = nPCodePos + nOffset;
+  size_t nNewPos = nPCodePos + nOffset;
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -465,7 +465,7 @@ static HB_OPT_FUNC(hb_p_jumpfalsefar)
 {
   uint8_t *pAddr = &pFunc->pCode[nPCodePos + 1];
   HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
-  HB_SIZE nNewPos = nPCodePos + nOffset;
+  size_t nNewPos = nPCodePos + nOffset;
   auto fLine = false;
 
   HB_SYMBOL_UNUSED(cargo);
@@ -499,7 +499,7 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
 {
   uint8_t *pAddr = &pFunc->pCode[nPCodePos + 1];
   HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
-  HB_SIZE nNewPos = nPCodePos + nOffset;
+  size_t nNewPos = nPCodePos + nOffset;
   auto fLine = false;
 
   HB_SYMBOL_UNUSED(cargo);
@@ -532,7 +532,7 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
 static HB_OPT_FUNC(hb_p_switch)
 {
   uint16_t usCases = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   HB_SYMBOL_UNUSED(cargo);
 
@@ -944,7 +944,7 @@ static HB_ISIZ hb_compJumpGetOffset(uint8_t *pCode)
 
 static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
-  HB_SIZE nPos = 0, nLastPos = 0;
+  size_t nPos = 0, nLastPos = 0;
   int16_t isVar = 0;
   auto fWasJump = false;
 
@@ -998,7 +998,7 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 
     case HB_P_PUSHLOCALREF:
       if (isVar > 0) {
-        HB_SIZE nPosNext = nPos + hb_compPCodeSize(pFunc, nPos);
+        size_t nPosNext = nPos + hb_compPCodeSize(pFunc, nPos);
         uint8_t bCodeNext = pFunc->pCode[nPosNext];
         uint8_t bCodeNext2 = pFunc->pCode[nPosNext + hb_compPCodeSize(pFunc, nPosNext)];
 
@@ -1070,7 +1070,7 @@ static void hb_compPCodeEnumScanLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 
 static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, int16_t isLocal)
 {
-  HB_SIZE nPos = 0, nLastPos = 0;
+  size_t nPos = 0, nLastPos = 0;
 
   while (nPos < pFunc->nPCodePos) {
     switch (pFunc->pCode[nPos]) {
@@ -1111,7 +1111,7 @@ static void hb_compPCodeEnumSelfifyLocal(HB_HFUNC *pFunc, int16_t isLocal)
   }
 }
 
-static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, uint8_t *pMap, int16_t isLocal,
+static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, size_t nPos, uint8_t *pMap, int16_t isLocal,
                                            bool fCanBreak)
 {
   for (;;) {
@@ -1161,7 +1161,7 @@ static int32_t hb_compPCodeTraceAssignedUnused(HB_HFUNC *pFunc, HB_SIZE nPos, ui
     // structure. [Mindaugas]
 
     if (hb_compIsJump(pFunc->pCode[nPos])) {
-      HB_SIZE nPos2 = nPos + hb_compJumpGetOffset(&pFunc->pCode[nPos]);
+      size_t nPos2 = nPos + hb_compJumpGetOffset(&pFunc->pCode[nPos]);
 
       if (hb_compIsUncondJump(pFunc->pCode[nPos])) {
         nPos = nPos2;
@@ -1201,7 +1201,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
 
   auto pMap = static_cast<uint8_t *>(hb_xgrab(pFunc->nPCodePos));
 
-  HB_SIZE nPos = 0, nLastPos = 0;
+  size_t nPos = 0, nLastPos = 0;
 
   while (nPos < pFunc->nPCodePos) {
     int16_t isLocal;
@@ -1216,7 +1216,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
                pFunc->pCode[nPos] == HB_P_LOCALADDINT || pFunc->pCode[nPos] == HB_P_LOCALNEARADDINT) {
       iCheck = 1;
     } else if (pFunc->pCode[nPos] == HB_P_PUSHLOCALREF) {
-      HB_SIZE nPosNext = nPos + hb_compPCodeSize(pFunc, nPos);
+      size_t nPosNext = nPos + hb_compPCodeSize(pFunc, nPos);
 
       switch (pFunc->pCode[nPosNext]) {
       case HB_P_PUSHTIMESTAMP:
@@ -1315,7 +1315,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, HB_HFUNC *pFunc, PHB_OP
 
 static void hb_compPCodeEnumRenumberLocals(HB_HFUNC *pFunc, PHB_OPT_LOCAL pLocals)
 {
-  HB_SIZE nPos = 0;
+  size_t nPos = 0;
 
   while (nPos < pFunc->nPCodePos) {
     switch (pFunc->pCode[nPos]) {
@@ -1417,7 +1417,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
   // FIXME: Support for PARAMETER sentence is not implemented.
   //        The temporary solution is to disable optimization at all if PARAMETER is used.
   {
-    HB_SIZE nPos = 0;
+    size_t nPos = 0;
 
     while (nPos < pFunc->nPCodePos) {
       if (pFunc->pCode[nPos] == HB_P_PARAMETER) {

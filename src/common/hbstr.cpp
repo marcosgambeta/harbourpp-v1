@@ -1082,14 +1082,14 @@ char *hb_strRemEscSeq(char *str, HB_SIZE *pnLen)
   return str;
 }
 
-char *hb_compEncodeString(int32_t iMethod, const char *szText, HB_SIZE *pnLen)
+char *hb_compEncodeString(int32_t iMethod, const char *szText, size_t *pnLen)
 {
   auto pBuffer = static_cast<char *>(hb_xgrab(*pnLen + 1));
 
   memcpy(pBuffer, szText, *pnLen);
   pBuffer[*pnLen] = '\0';
   if (iMethod == 1) {
-    for (HB_SIZE nPos = 0; nPos < *pnLen; nPos++) {
+    for (size_t nPos = 0; nPos < *pnLen; nPos++) {
       pBuffer[nPos] ^= 0xF3;
     }
   }

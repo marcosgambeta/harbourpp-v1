@@ -167,7 +167,7 @@ union YYSTYPE
 
    const char * string; /* to hold a string returned by lex */
    int32_t     iNumber;     /* to hold a temporary integer number */
-   HB_SIZE sNumber;     /* to hold a temporary HB_SIZE values */
+   size_t sNumber;     /* to hold a temporary size_t values */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    HB_BOOL bTrue;
    HB_EXPR *asExpr;
@@ -191,13 +191,13 @@ union YYSTYPE
    struct
    {
       char *   string;
-      HB_SIZE  length;
+      size_t  length;
       HB_BOOL  dealloc;
    } valChar;
    struct
    {
       char *   string;
-      HB_SIZE  length;
+      size_t  length;
       int32_t      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
    HB_VARTYPE *asVarType;

@@ -72,7 +72,7 @@ static void hb_pp_Disp(void *cargo, const char *szMessage)
   hb_compOutStd(HB_COMP_PARAM, szMessage);
 }
 
-static void hb_pp_PragmaDump(void *cargo, char *pBuffer, HB_SIZE nSize, int32_t iLine)
+static void hb_pp_PragmaDump(void *cargo, char *pBuffer, size_t nSize, int32_t iLine)
 {
   HB_HINLINE *pInline = hb_compInlineAdd(static_cast<HB_COMP *>(cargo), nullptr, iLine);
   pInline->pCode = static_cast<uint8_t *>(hb_xgrab(nSize + 1));
@@ -81,7 +81,7 @@ static void hb_pp_PragmaDump(void *cargo, char *pBuffer, HB_SIZE nSize, int32_t 
   pInline->nPCodeSize = nSize;
 }
 
-static void hb_pp_hb_inLine(void *cargo, char *szFunc, char *pBuffer, HB_SIZE nSize, int32_t iLine)
+static void hb_pp_hb_inLine(void *cargo, char *szFunc, char *pBuffer, size_t nSize, int32_t iLine)
 {
   HB_COMP_DECL = static_cast<HB_COMP *>(cargo);
 

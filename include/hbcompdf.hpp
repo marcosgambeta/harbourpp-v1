@@ -485,7 +485,7 @@ typedef struct HB_EXPR_
       } asOperator;
       struct HB_EXPR_ * asReference;
    } value;
-   HB_SIZE     nLength;
+   size_t     nLength;
    HB_EXPRTYPE ExprType;      // internal expression type
    uint16_t ValType;       // language level value type
    struct HB_EXPR_ * pNext;   // next expression in the list of expressions
@@ -512,7 +512,7 @@ typedef struct HB_ENUMERATOR_
 // support structure for else if pcode fixups
 typedef struct HB_ELSEIF_
 {
-   HB_SIZE  nOffset;
+   size_t  nOffset;
    struct   HB_ELSEIF_ * pElseif;   // next ELSEIF in the current IF statement
    struct   HB_ELSEIF_ * pPrev;     // previous IF statement
 } HB_ELSEIF, * PHB_ELSEIF;
@@ -520,7 +520,7 @@ typedef struct HB_ELSEIF_
 // support structure for EXIT and LOOP statements
 typedef struct HB_LOOPEXIT_
 {
-   HB_SIZE   nOffset;
+   size_t   nOffset;
    HB_BOOL   fCanLoop;
    uint16_t wSeqCounter;
    uint16_t wAlwaysCounter;
@@ -533,18 +533,18 @@ typedef struct HB_LOOPEXIT_
 // support structure for SWITCH statement
 typedef struct HB_SWITCHCASE_
 {
-   HB_SIZE nOffset;
+   size_t nOffset;
    HB_EXPR *pExpr;
    struct HB_SWITCHCASE_ * pNext;
 } HB_SWITCHCASE, * PHB_SWITCHCASE;
 
 typedef struct HB_SWITCHCMD_
 {
-   HB_SIZE nOffset;
+   size_t nOffset;
    PHB_SWITCHCASE pCases;
    PHB_SWITCHCASE pLast;
    HB_EXPR *pExpr;
-   HB_SIZE nDefault;
+   size_t nDefault;
    struct HB_SWITCHCMD_ * pPrev;
 } HB_SWITCHCMD, * PHB_SWITCHCMD;
 
@@ -573,12 +573,12 @@ struct _HB_HFUNC
    HB_HVAR *    pDetached;                // pointer to detached local variables list
    HB_HVAR *    pPrivates;                // pointer to private variables list
    uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
-   HB_SIZE      nPCodeSize;               // total memory size for pcode
-   HB_SIZE      nPCodePos;                // actual pcode offset
-   HB_SIZE *    pNOOPs;                   // pointer to the NOOP array
-   HB_SIZE *    pJumps;                   // pointer to the Jumps array
-   HB_SIZE      nNOOPs;                   // NOOPs Counter
-   HB_SIZE      nJumps;                   // Jumps Counter
+   size_t      nPCodeSize;               // total memory size for pcode
+   size_t      nPCodePos;                // actual pcode offset
+   size_t *    pNOOPs;                   // pointer to the NOOP array
+   size_t *    pJumps;                   // pointer to the Jumps array
+   size_t      nNOOPs;                   // NOOPs Counter
+   size_t      nJumps;                   // Jumps Counter
    int32_t          iStaticsBase;             // base for this function statics
    int32_t          iFuncSuffix;              // function suffix for multiple static functions with the same name
    int32_t          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited
@@ -619,12 +619,12 @@ typedef struct _HB_HFUNC
    HB_HVAR *    pDetached;                // pointer to detached local variables list
    HB_HVAR *    pPrivates;                // pointer to private variables list
    uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
-   HB_SIZE      nPCodeSize;               // total memory size for pcode
-   HB_SIZE      nPCodePos;                // actual pcode offset
-   HB_SIZE *    pNOOPs;                   // pointer to the NOOP array
-   HB_SIZE *    pJumps;                   // pointer to the Jumps array
-   HB_SIZE      nNOOPs;                   // NOOPs Counter
-   HB_SIZE      nJumps;                   // Jumps Counter
+   size_t      nPCodeSize;               // total memory size for pcode
+   size_t      nPCodePos;                // actual pcode offset
+   size_t *    pNOOPs;                   // pointer to the NOOP array
+   size_t *    pJumps;                   // pointer to the Jumps array
+   size_t      nNOOPs;                   // NOOPs Counter
+   size_t      nJumps;                   // Jumps Counter
    int32_t          iStaticsBase;             // base for this function statics
    int32_t          iFuncSuffix;              // function suffix for multiple static functions with the same name
    int32_t          iEarlyEvalPass;           // !=0 if early evaluated block is compiled - accessing of declared (compile time) variables is limited
@@ -675,7 +675,7 @@ struct _HB_HINLINE
 {
    const char * szName;                   // name of a inline function
    uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
-   HB_SIZE      nPCodeSize;               // total memory size for pcode
+   size_t      nPCodeSize;               // total memory size for pcode
    const char * szFileName;               // Source file name
    int32_t          iLine;                    // Source line number
    //struct _HB_HINLINE * pNext;               // pointer to the next defined inline (deprecated)
@@ -687,7 +687,7 @@ typedef struct _HB_HINLINE
 {
    const char * szName;                   // name of a inline function
    uint8_t *    pCode;                    // pointer to a memory block where pcode is stored
-   HB_SIZE      nPCodeSize;               // total memory size for pcode
+   size_t      nPCodeSize;               // total memory size for pcode
    const char * szFileName;               // Source file name
    int32_t          iLine;                    // Source line number
    struct _HB_HINLINE * pNext;               // pointer to the next defined inline
@@ -788,7 +788,7 @@ typedef struct _HB_MODULE
 
 // definitions for hb_compPCodeEval() support
 typedef void * PHB_VOID;
-#define HB_PCODE_FUNC( func, type ) HB_SIZE func( HB_HFUNC *pFunc, HB_SIZE nPCodePos, type cargo )
+#define HB_PCODE_FUNC( func, type ) size_t func( HB_HFUNC *pFunc, size_t nPCodePos, type cargo )
 typedef HB_PCODE_FUNC( ( * PHB_PCODE_FUNC ), PHB_VOID );
 
 typedef struct _HB_DEBUGINFO
@@ -809,7 +809,7 @@ typedef struct _HB_LABEL_INFO
    HB_BOOL   fCondJump;
    HB_BOOL   fEndRequest;
    int32_t       iNestedBlock;
-   HB_SIZE * pnLabels;
+   size_t * pnLabels;
    const PHB_PCODE_FUNC * pFuncTable;
 } HB_LABEL_INFO;
 
@@ -839,8 +839,8 @@ typedef struct _HB_COMMON
 typedef struct HB_PCODE_INFO_ // compiled pcode container for macro compiler
 {
    uint8_t * pCode;        // pointer to a memory block where pcode is stored
-   HB_SIZE nPCodeSize;     // total memory size for pcode
-   HB_SIZE nPCodePos;      // actual pcode offset
+   size_t nPCodeSize;     // total memory size for pcode
+   size_t nPCodePos;      // actual pcode offset
    HB_BOOL fVParams;       // function/codeblock with variable parameters
    HB_CBVAR *pLocals;
    struct HB_PCODE_INFO_ * pPrev;
@@ -855,7 +855,7 @@ typedef struct HB_MACRO_      // a macro compiled pcode container
 
    // macro compiler only members
    const char * string;       // compiled string
-   HB_SIZE  length;           // length of the string
+   size_t  length;           // length of the string
    int32_t      Flags;            // some flags we may need
    int32_t      status;           // status of compilation
    HB_ITEM *pError;           // error object returned from the parser
@@ -1019,7 +1019,7 @@ struct _HB_COMP
    PHB_PP_MSG_FUNC   outMsgFunc;
    void *            cargo;
 
-   HB_SIZE           nOutBufSize;         // memory output buffer size
+   size_t           nOutBufSize;         // memory output buffer size
    uint8_t *         pOutBuf;             // memory output buffer address
 
    int32_t               lastLine;            // last generated in PCODE line number
@@ -1126,7 +1126,7 @@ typedef struct _HB_COMP
    PHB_PP_MSG_FUNC   outMsgFunc;
    void *            cargo;
 
-   HB_SIZE           nOutBufSize;         // memory output buffer size
+   size_t           nOutBufSize;         // memory output buffer size
    uint8_t *         pOutBuf;             // memory output buffer address
 
    int32_t               lastLine;            // last generated in PCODE line number

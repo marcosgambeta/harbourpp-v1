@@ -32,12 +32,12 @@ constexpr uint8_t SYM_FUNC = 1;     // #define SYM_FUNC 1 // function defined in
 constexpr uint8_t SYM_EXTERN = 2;   // #define SYM_EXTERN 2 // function defined in other module
 constexpr uint8_t SYM_DEFERRED = 3; // #define SYM_DEFERRED 3 // lately bound function
 
-static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
+static size_t hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulFunctions)
 {
   *pulSymbols = *pulFunctions = 0;
 
   // count total size
-  HB_SIZE nSize = 10; // signature[4] + version[2] + symbols_number[4]
+  size_t nSize = 10; // signature[4] + version[2] + symbols_number[4]
   for (auto pSym : HB_COMP_PARAM->symbols) {
     (*pulSymbols)++;
     nSize += strlen(pSym->szName) + 3; // \0 + symscope[1] + symtype[1]
@@ -56,7 +56,7 @@ static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG *pulSymbols, HB_ULONG *pulF
   return nSize;
 }
 
-void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t **pBufPtr, HB_SIZE *pnSize)
+void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t **pBufPtr, size_t *pnSize)
 {
   HB_ULONG ulSymbols, ulFunctions;
   *pnSize = hb_compHrbSize(HB_COMP_PARAM, &ulSymbols, &ulFunctions);
@@ -75,7 +75,7 @@ void hb_compGenBufPortObj(HB_COMP_DECL, uint8_t **pBufPtr, HB_SIZE *pnSize)
   HB_PUT_LE_UINT32(ptr, ulSymbols); // number of symbols
   ptr += 4;
   // generate the symbol table
-  HB_SIZE nLen;
+  size_t nLen;
   for (auto pSym : HB_COMP_PARAM->symbols) {
     nLen = strlen(pSym->szName) + 1;
     memcpy(ptr, pSym->szName, nLen);
@@ -140,7 +140,7 @@ void hb_compGenPortObj(HB_COMP_DECL, HB_FNAME *pFileName)
   }
 
   uint8_t *pHrbBody;
-  HB_SIZE nSize;
+  size_t nSize;
   hb_compGenBufPortObj(HB_COMP_PARAM, &pHrbBody, &nSize);
 
   if (fwrite(pHrbBody, nSize, 1, yyc) != 1) {

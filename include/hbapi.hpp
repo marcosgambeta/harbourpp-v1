@@ -2079,7 +2079,7 @@ extern void hb_memvarSetPrivatesBase(HB_SIZE nBase);
 // Update PRIVATE base offset so they will not be removed when function return
 extern void hb_memvarUpdatePrivatesBase(void);
 extern void hb_memvarNewParameter(HB_SYMB *pSymbol, HB_ITEM *pValue);
-extern char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen);
+extern char *hb_memvarGetStrValuePtr(char *szVarName, size_t *pnLen);
 extern void hb_memvarCreateFromItem(HB_ITEM *pMemvar, int32_t iScope, HB_ITEM *pValue);
 // retrieve scope of a dynamic variable symbol
 extern int32_t hb_memvarScope(const char *szVarName, HB_SIZE nLength);
@@ -2120,7 +2120,7 @@ extern HB_EXPORT int32_t hb_conSetCursor(HB_BOOL bSetCursor, int32_t iNewCursor)
 extern HB_EXPORT const char *hb_conSetColor(const char *szColor);
 
 // compiler and macro compiler
-extern HB_EXPORT_INT char *hb_compEncodeString(int32_t iMethod, const char *szText, HB_SIZE *pnLen);
+extern HB_EXPORT_INT char *hb_compEncodeString(int32_t iMethod, const char *szText, size_t *pnLen);
 extern char *hb_compDecodeString(int32_t iMethod, const char *szText, HB_SIZE *pnLen);
 
 // misc
@@ -2152,9 +2152,9 @@ extern PHB_MACRO hb_macroCompile(const char *szString);
 // release all memory allocated for macro evaluation
 extern void hb_macroDelete(PHB_MACRO pMacro);
 // substitute macro variables occurrences within a given string and check if result is a valid function or variable name
-extern char *hb_macroTextSymbol(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewString);
+extern char *hb_macroTextSymbol(const char *szString, size_t nLength, HB_BOOL *pfNewString);
 // expands valid '&' operator
-extern char *hb_macroExpandString(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewString);
+extern char *hb_macroExpandString(const char *szString, size_t nLength, HB_BOOL *pfNewString);
 // compiles and evaluates an aliased macro expression
 extern void hb_macroPopAliasedValue(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t flags);
 // compiles and evaluates an aliased macro expression

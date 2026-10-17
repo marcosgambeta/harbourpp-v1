@@ -53,9 +53,9 @@ const char *hb_compIdentifierNew(HB_COMP_DECL, const char *szName, int32_t iType
 }
 
 // returns a hash key
-static HB_HASH_FUNC(hb_comp_IdentKey) // HB_SIZE func (void *Value, void *Cargo)
+static HB_HASH_FUNC(hb_comp_IdentKey) // size_t func (void *Value, void *Cargo)
 {
-  HB_SIZE nSum = 0;
+  size_t nSum = 0;
   auto szName = static_cast<const char *>(Value);
 
   while (*szName) {

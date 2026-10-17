@@ -57,7 +57,7 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
 #define HB_GENC_LABEL()                                                                                                \
   do {                                                                                                                 \
-    HB_SIZE nLab = HB_GENC_GETLABEL(nPCodePos);                                                                        \
+    size_t nLab = HB_GENC_GETLABEL(nPCodePos);                                                                        \
     if (nLab != 0) {                                                                                                   \
       fprintf(cargo->yyc, "lab%05" HB_PFS "u: ;\n", nLab);                                                             \
     }                                                                                                                  \
@@ -68,10 +68,10 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
     fprintf(cargo->yyc, "\t#error: \"" s "\"\n");                                                                      \
   } while (false)
 
-void hb_compGenCString(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
+void hb_compGenCString(FILE *yyc, const uint8_t *pText, size_t nLen)
 {
   fputc('"', yyc);
-  for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
+  for (size_t nPos = 0; nPos < nLen; nPos++) {
     auto uchr = static_cast<uint8_t>(pText[nPos]);
     // NOTE: After optimization some Chr(n) can be converted
     //       into a string containing non-printable characters.
@@ -96,7 +96,7 @@ void hb_compGenCString(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
   fputc('"', yyc);
 }
 
-static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, int32_t iMethod)
+static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, size_t nLen, int32_t iMethod)
 {
 #ifdef __HB_CSTRING_SIZE_MAX
 #if __HB_CSTRING_SIZE_MAX - 0 < 1
@@ -105,7 +105,7 @@ static void hb_compGenCStrData(FILE *yyc, const uint8_t *pText, HB_SIZE nLen, in
 #endif
   if (nLen > __HB_CSTRING_SIZE_MAX) {
     fprintf(yyc, "\t{\tconst unsigned char str[%" HB_PFS "u] = {", nLen + 1);
-    for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
+    for (size_t nPos = 0; nPos < nLen; nPos++) {
       if ((nPos & 0x0F) == 0) {
         fprintf(yyc, "\n\t\t");
       }
@@ -139,7 +139,7 @@ static void hb_gencc_copyLocals(FILE *yyc, int32_t iLocal1, int32_t iLocal2)
   }
 }
 
-static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, HB_LABEL_INFO *cargo,
+static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, size_t nPCodePos, HB_LABEL_INFO *cargo,
                                        const char *szFunc)
 {
   if (HB_GENC_GETLABEL(nPCodePos + 1) == 0) {
@@ -193,7 +193,7 @@ static int32_t hb_gencc_checkJumpCondAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_S
   return 1;
 }
 
-static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE nPCodePos, HB_LABEL_INFO *cargo)
+static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, size_t nPCodePos, HB_LABEL_INFO *cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -276,7 +276,7 @@ static int32_t hb_gencc_checkNumAhead(HB_LONG lValue, HB_HFUNC *pFunc, HB_SIZE n
   return 0;
 }
 
-static int32_t hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, HB_SIZE nPCodePos, HB_LABEL_INFO *cargo)
+static int32_t hb_gencc_checkPlusAhead(HB_HFUNC *pFunc, size_t nPCodePos, HB_LABEL_INFO *cargo)
 {
   if (HB_GENC_GETLABEL(nPCodePos) == 0) {
     switch (pFunc->pCode[nPCodePos]) {
@@ -975,12 +975,12 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
 {
   HB_GENC_LABEL();
 
-  HB_SIZE nSize = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]) - 4;
+  size_t nSize = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]) - 4;
   nPCodePos += 4;
 
   fprintf(cargo->yyc, "\t{\n\t\tstatic const uint8_t codeblock[%" HB_PFS "u] = {", nSize);
 
-  for (HB_SIZE ul = 0; ul < nSize; ++ul) {
+  for (size_t ul = 0; ul < nSize; ++ul) {
     if ((ul & 0x0f) == 0) {
       fprintf(cargo->yyc, "\n\t\t\t");
     }
@@ -1234,7 +1234,7 @@ static HB_GENC_FUNC(hb_p_pushstrshort)
 
 static HB_GENC_FUNC(hb_p_pushstr)
 {
-  HB_SIZE nLen = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]) - 1;
+  size_t nLen = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]) - 1;
   HB_GENC_LABEL();
   hb_compGenCStrData(cargo->yyc, &pFunc->pCode[nPCodePos + 3], nLen, -1);
   return 4 + nLen;
@@ -1242,7 +1242,7 @@ static HB_GENC_FUNC(hb_p_pushstr)
 
 static HB_GENC_FUNC(hb_p_pushstrlarge)
 {
-  HB_SIZE nLen = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]) - 1;
+  size_t nLen = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]) - 1;
   HB_GENC_LABEL();
   hb_compGenCStrData(cargo->yyc, &pFunc->pCode[nPCodePos + 4], nLen, -1);
   return 5 + nLen;
@@ -1250,7 +1250,7 @@ static HB_GENC_FUNC(hb_p_pushstrlarge)
 
 static HB_GENC_FUNC(hb_p_pushstrhidden)
 {
-  HB_SIZE nLen = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 2]);
+  size_t nLen = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 2]);
   HB_GENC_LABEL();
   hb_compGenCStrData(cargo->yyc, &pFunc->pCode[nPCodePos + 4], nLen, pFunc->pCode[nPCodePos + 1]);
   return 4 + nLen;
@@ -1455,11 +1455,11 @@ static HB_GENC_FUNC(hb_p_threadstatics)
   HB_GENC_LABEL();
 
   uint16_t w = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
-  HB_SIZE nSize = static_cast<HB_SIZE>(w) << 1;
+  size_t nSize = static_cast<size_t>(w) << 1;
 
   fprintf(cargo->yyc, "\t{\n\t\tstatic const uint8_t statics[%" HB_PFS "u] = {", nSize);
 
-  for (HB_SIZE ul = 0; ul < nSize; ++ul) {
+  for (size_t ul = 0; ul < nSize; ++ul) {
     if ((ul & 0x0f) == 0) {
       fprintf(cargo->yyc, "\n\t\t\t");
     }
@@ -1554,8 +1554,8 @@ static HB_GENC_FUNC(hb_p_enumend)
 static HB_GENC_FUNC(hb_p_switch)
 {
   uint16_t usCases = HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1]);
-  HB_SIZE nStart = nPCodePos;
-  HB_SIZE nNewPos;
+  size_t nStart = nPCodePos;
+  size_t nNewPos;
   auto fNum = false;
   auto fStr = false;
   auto fDefault = false;
@@ -1599,7 +1599,7 @@ static HB_GENC_FUNC(hb_p_switch)
   if (fStr || fNum) {
     fprintf(cargo->yyc, "\t{\n\t\tHB_ITEM *pSwitch;\n\t\tHB_TYPE type;\n");
     if (fStr) {
-      fprintf(cargo->yyc, "\t\tconst char * pszText;\n\t\tHB_SIZE nLen;\n");
+      fprintf(cargo->yyc, "\t\tconst char * pszText;\n\t\tsize_t nLen;\n");
     }
     if (fNum) {
       fprintf(cargo->yyc, "\t\tlong lVal;\n");
@@ -2116,7 +2116,7 @@ void hb_compGenCRealCode(HB_COMP_DECL, HB_HFUNC *pFunc, FILE *yyc)
   if (pFunc->nPCodePos == 0) {
     label_info.pnLabels = nullptr;
   } else {
-    label_info.pnLabels = static_cast<HB_SIZE *>(hb_xgrabz(pFunc->nPCodePos * sizeof(HB_SIZE)));
+    label_info.pnLabels = static_cast<size_t *>(hb_xgrabz(pFunc->nPCodePos * sizeof(size_t)));
     hb_compGenLabelTable(pFunc, &label_info);
   }
 

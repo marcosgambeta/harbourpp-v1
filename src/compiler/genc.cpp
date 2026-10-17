@@ -38,7 +38,7 @@ struct HB_GENC_INFO
   HB_COMP_DECL;
   FILE *yyc;
   bool bVerbose;
-  HB_SIZE nEndBlockPos;
+  size_t nEndBlockPos;
 };
 
 #define HB_GENC_FUNC(func) HB_PCODE_FUNC(func, HB_GENC_INFO *)
@@ -434,9 +434,9 @@ static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, b
   }
 }
 
-static void hb_compGenCByteStr(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
+static void hb_compGenCByteStr(FILE *yyc, const uint8_t *pText, size_t nLen)
 {
-  for (HB_SIZE nPos = 0; nPos < nLen; nPos++) {
+  for (size_t nPos = 0; nPos < nLen; nPos++) {
     auto uchr = static_cast<uint8_t>(pText[nPos]);
     // NOTE: After optimization some Chr(n) can be converted
     //    into a string containing non-printable characters.
@@ -448,7 +448,7 @@ static void hb_compGenCByteStr(FILE *yyc, const uint8_t *pText, HB_SIZE nLen)
   }
 }
 
-static void hb_compGenCLocalName(HB_HFUNC *pFunc, int32_t iLocal, HB_SIZE nPCodePos, HB_GENC_INFO *cargo)
+static void hb_compGenCLocalName(HB_HFUNC *pFunc, int32_t iLocal, size_t nPCodePos, HB_GENC_INFO *cargo)
 {
   // Variable with negative order are local variables
   // referenced in a codeblock -handle it with care
@@ -852,7 +852,7 @@ static HB_GENC_FUNC(hb_p_line)
 
 static HB_GENC_FUNC(hb_p_localname)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   fprintf(cargo->yyc, "\tHB_P_LOCALNAME, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
@@ -1006,7 +1006,7 @@ static HB_GENC_FUNC(hb_p_minus)
 
 static HB_GENC_FUNC(hb_p_modulename)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   fprintf(cargo->yyc, "\tHB_P_MODULENAME,");
   if (cargo->bVerbose) {
@@ -1272,7 +1272,7 @@ static HB_GENC_FUNC(hb_p_pushblockshort)
 
 static HB_GENC_FUNC(hb_p_pushblock)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   fprintf(cargo->yyc, "\tHB_P_PUSHBLOCK, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
   if (cargo->bVerbose) {
@@ -1320,7 +1320,7 @@ static HB_GENC_FUNC(hb_p_pushblock)
 
 static HB_GENC_FUNC(hb_p_pushblocklarge)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   fprintf(cargo->yyc, "\tHB_P_PUSHBLOCKLARGE, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3]);
@@ -1576,7 +1576,7 @@ static HB_GENC_FUNC(hb_p_pushstr)
 
 static HB_GENC_FUNC(hb_p_pushstrlarge)
 {
-  HB_SIZE nLen = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);
+  size_t nLen = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);
 
   fprintf(cargo->yyc, "\tHB_P_PUSHSTRLARGE, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3]);
@@ -1797,7 +1797,7 @@ static HB_GENC_FUNC(hb_p_statics)
 
 static HB_GENC_FUNC(hb_p_staticname)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   fprintf(cargo->yyc, "\tHB_P_STATICNAME, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2],
           pFunc->pCode[nPCodePos + 3]);
@@ -1840,7 +1840,7 @@ static HB_GENC_FUNC(hb_p_threadstatics)
     nPCodePos += 2;
   }
 
-  return (static_cast<HB_SIZE>(w) << 1) + 3;
+  return (static_cast<size_t>(w) << 1) + 3;
 }
 
 static HB_GENC_FUNC(hb_p_swapalias)
@@ -2468,7 +2468,7 @@ static void hb_compGenCCompact(HB_HFUNC *pFunc, FILE *yyc)
 {
   fprintf(yyc, "{\n\tstatic const uint8_t pcode[] =\n\t{\n\t\t");
 
-  HB_SIZE nPCodePos = 0;
+  size_t nPCodePos = 0;
   int32_t nChar = 0;
   while (nPCodePos < pFunc->nPCodePos) {
     ++nChar;

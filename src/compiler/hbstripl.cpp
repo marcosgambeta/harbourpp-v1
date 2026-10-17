@@ -69,7 +69,7 @@ static HB_STRIP_FUNC(hb_p_line)
     break;
   default:
     if (!(static_cast<HB_COMP *>(cargo))->fDebugInfo) {
-      HB_SIZE nNewPos = nPCodePos;
+      size_t nNewPos = nPCodePos;
       switch (pFunc->pCode[nPCodePos + 3]) {
       case HB_P_JUMPNEAR:
         nNewPos += 3 + static_cast<signed char>(pFunc->pCode[nPCodePos + 4]);

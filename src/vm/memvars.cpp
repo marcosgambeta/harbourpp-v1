@@ -460,7 +460,7 @@ static HB_DYNS *hb_memvarGetSymbol(HB_ITEM *pItem)
   return pDynSym;
 }
 
-char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen)
+char *hb_memvarGetStrValuePtr(char *szVarName, size_t *pnLen)
 {
   char *szValue = nullptr;
 

@@ -1709,7 +1709,7 @@ static HB_PP_FILE *hb_pp_FileNew(HB_PP_STATE *pState, const char *szFileName, HB
 {
   char szFileNameBuf[HB_PATH_MAX];
   const char *pLineBuf = nullptr;
-  HB_SIZE nLineBufLen = 0;
+  size_t nLineBufLen = 0;
   HB_BOOL fFree = false;
   HB_PP_FILE *pFile;
 
@@ -5435,7 +5435,7 @@ void hb_pp_tokenToString(HB_PP_STATE *pState, HB_PP_TOKEN *pToken)
   }
 }
 
-char *hb_pp_tokenBlockString(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, int32_t *piType, HB_SIZE *pnLen)
+char *hb_pp_tokenBlockString(HB_PP_STATE *pState, HB_PP_TOKEN *pToken, int32_t *piType, size_t *pnLen)
 {
   *piType = 0;
   hb_membufFlush(pState->pBuffer);

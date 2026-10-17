@@ -72,7 +72,7 @@ static HB_PSIZE_FUNC(hb_p_pushblocklarge)
 
 static HB_PSIZE_FUNC(hb_p_localname)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   HB_SYMBOL_UNUSED(cargo);
   nPCodePos += 3;
@@ -85,7 +85,7 @@ static HB_PSIZE_FUNC(hb_p_localname)
 
 static HB_PSIZE_FUNC(hb_p_modulename)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   HB_SYMBOL_UNUSED(cargo);
   nPCodePos++;
@@ -98,7 +98,7 @@ static HB_PSIZE_FUNC(hb_p_modulename)
 
 static HB_PSIZE_FUNC(hb_p_staticname)
 {
-  HB_SIZE nStart = nPCodePos;
+  size_t nStart = nPCodePos;
 
   HB_SYMBOL_UNUSED(cargo);
   nPCodePos += 4;
@@ -112,7 +112,7 @@ static HB_PSIZE_FUNC(hb_p_staticname)
 static HB_PSIZE_FUNC(hb_p_threadstatics)
 {
   HB_SYMBOL_UNUSED(cargo);
-  return 3 + (static_cast<HB_SIZE>(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])) << 1);
+  return 3 + (static_cast<size_t>(HB_PCODE_MKUINT16(&pFunc->pCode[nPCodePos + 1])) << 1);
 }
 
 // clang-format off
@@ -497,7 +497,7 @@ static PHB_PCODE_FUNC s_psize_table[] =
 };
 // clang-format on
 
-HB_ISIZ hb_compPCodeSize(HB_HFUNC *pFunc, HB_SIZE nOffset)
+HB_ISIZ hb_compPCodeSize(HB_HFUNC *pFunc, size_t nOffset)
 {
   HB_ISIZ nSize = 0;
   uint8_t opcode = pFunc->pCode[nOffset];
@@ -518,8 +518,8 @@ HB_ISIZ hb_compPCodeSize(HB_HFUNC *pFunc, HB_SIZE nOffset)
 
 void hb_compPCodeEval(HB_HFUNC *pFunc, const PHB_PCODE_FUNC *pFunctions, void *cargo)
 {
-  HB_SIZE nPos = 0;
-  HB_SIZE nSkip;
+  size_t nPos = 0;
+  size_t nSkip;
 
   // Make sure that table is correct
   assert(sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE);
@@ -569,7 +569,7 @@ void hb_compPCodeEval(HB_HFUNC *pFunc, const PHB_PCODE_FUNC *pFunctions, void *c
 
 void hb_compPCodeTrace(HB_HFUNC *pFunc, const PHB_PCODE_FUNC *pFunctions, void *cargo)
 {
-  HB_SIZE nPos = 0;
+  size_t nPos = 0;
 
   // Make sure that table is correct
   assert(sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE);
@@ -658,7 +658,7 @@ void hb_compGenPCode4(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4
   pFunc->pCode[pFunc->nPCodePos++] = byte4;
 }
 
-void hb_compGenPCodeN(const uint8_t *pBuffer, HB_SIZE nSize, HB_COMP_DECL)
+void hb_compGenPCodeN(const uint8_t *pBuffer, size_t nSize, HB_COMP_DECL)
 {
   HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast; // get the currently defined Clipper function
 

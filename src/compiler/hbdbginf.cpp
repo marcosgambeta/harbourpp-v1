@@ -50,7 +50,7 @@
 HB_DEBUGINFO *hb_compGetDebugInfo(HB_COMP_DECL)
 {
   HB_DEBUGINFO *pLineInfo = nullptr, *pInfo = nullptr;
-  HB_SIZE nPos, nSkip, nOffset;
+  size_t nPos, nSkip, nOffset;
   HB_ULONG ulLine;
   const char *pszModuleName = "", *ptr;
 

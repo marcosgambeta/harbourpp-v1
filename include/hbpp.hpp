@@ -81,7 +81,7 @@ HB_EXTERN_BEGIN
 #define HB_PP_OPEN_ERROR      2
 
 // function to open included files
-#define HB_PP_OPEN_FUNC_( func ) int32_t func( void *, char *, HB_BOOL, HB_BOOL, HB_BOOL, HB_PATHNAMES *, HB_BOOL *, FILE **, const char **, HB_SIZE *, HB_BOOL * )
+#define HB_PP_OPEN_FUNC_( func ) int32_t func( void *, char *, HB_BOOL, HB_BOOL, HB_BOOL, HB_PATHNAMES *, HB_BOOL *, FILE **, const char **, size_t *, HB_BOOL * )
 typedef HB_PP_OPEN_FUNC_( ( * PHB_PP_OPEN_FUNC ) );
 
 // function to close included files
@@ -97,11 +97,11 @@ typedef HB_PP_ERROR_FUNC_( ( * PHB_PP_ERROR_FUNC ) );
 typedef HB_PP_DISP_FUNC_( ( * PHB_PP_DISP_FUNC ) );
 
 // function for catching #pragma dump data
-#define HB_PP_DUMP_FUNC_( func ) void func( void *, char *, HB_SIZE, int32_t )
+#define HB_PP_DUMP_FUNC_( func ) void func( void *, char *, size_t, int32_t )
 typedef HB_PP_DUMP_FUNC_( ( * PHB_PP_DUMP_FUNC ) );
 
 // function for catching HB_INLINE(...){...} data
-#define HB_PP_INLINE_FUNC_( func ) void func( void *, char *, char *, HB_SIZE, int32_t )
+#define HB_PP_INLINE_FUNC_( func ) void func( void *, char *, char *, size_t, int32_t )
 typedef HB_PP_INLINE_FUNC_( ( * PHB_PP_INLINE_FUNC ) );
 
 // function for catching #pragma dump data
@@ -691,7 +691,7 @@ extern HB_EXPORT int32_t     hb_pp_errorCount( HB_PP_STATE *pState );
 
 extern HB_EXPORT void    hb_pp_tokenUpper( HB_PP_TOKEN *pToken );
 extern HB_EXPORT void    hb_pp_tokenToString( HB_PP_STATE *pState, HB_PP_TOKEN *pToken );
-extern HB_EXPORT char *  hb_pp_tokenBlockString( HB_PP_STATE *pState, HB_PP_TOKEN *pToken, int32_t * piType, HB_SIZE * pnLen );
+extern HB_EXPORT char *  hb_pp_tokenBlockString( HB_PP_STATE *pState, HB_PP_TOKEN *pToken, int32_t * piType, size_t * pnLen );
 extern HB_EXPORT HB_PP_STATE *hb_pp_lexNew( const char * pString, HB_SIZE nLen );
 extern HB_EXPORT HB_PP_TOKEN *hb_pp_lexGet( HB_PP_STATE *pState );
 extern HB_EXPORT HB_PP_TOKEN *hb_pp_tokenGet( HB_PP_STATE *pState );

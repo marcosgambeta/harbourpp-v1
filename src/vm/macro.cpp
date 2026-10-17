@@ -231,11 +231,11 @@ static void hb_macroSyntaxError(PHB_MACRO pMacro)
 //
 //    PRIVATE a:=0, b:='b', ab:='c'
 //    PRIVATE &a&b   //this will cause syntax error '&'
-static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
+static char *hb_macroTextSubst(const char *szString, size_t *pnStringLen)
 {
-  HB_SIZE nResStrLen;
-  HB_SIZE nResBufLen;
-  HB_SIZE nCharsLeft;
+  size_t nResStrLen;
+  size_t nResBufLen;
+  size_t nCharsLeft;
 
   auto pHead = static_cast<char *>(const_cast<void *>(memchr(szString, '&', *pnStringLen)));
   if (pHead == nullptr) {
@@ -266,7 +266,7 @@ static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
       // NOTE: the extracted name can be longer then supported maximal
       // length of identifiers (HB_SYMBOL_NAME_LEN) - only the max allowed
       // are used for name lookup however the whole string is replaced
-      HB_SIZE nNameLen = 1;
+      size_t nNameLen = 1;
       char *pName = pHead;
 
       while (*++pHead && (*pHead == '_' || (*pHead >= 'A' && *pHead <= 'Z') || (*pHead >= 'a' && *pHead <= 'z') ||
@@ -279,7 +279,7 @@ static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
       if (nNameLen > 1 || *pName != '_') {
         // this is not the "&_" string
         char *szValPtr;
-        HB_SIZE nValLen;
+        size_t nValLen;
 
         // Get a pointer to the string value stored in this variable
         // or nullptr if variable doesn't exist or doesn't contain a string
@@ -307,8 +307,8 @@ static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
           if (nValLen > nNameLen) {
             nResStrLen += (nValLen - nNameLen);
             if (nResStrLen > nResBufLen) {
-              HB_SIZE nHead = pHead - szResult;
-              HB_SIZE nTail = pTail - szResult;
+              size_t nHead = pHead - szResult;
+              size_t nTail = pTail - szResult;
               nResBufLen = nResStrLen;
               szResult = static_cast<char *>(hb_xrealloc(szResult, nResBufLen + 1));
               pHead = szResult + nHead;
@@ -590,7 +590,7 @@ void hb_macroPushAliasedValue(HB_ITEM *pAlias, HB_ITEM *pVar, int32_t flags)
 // Returns: the passed string if there is no '&' operator (pbNewString := FALSE)
 // new string if a valid macro text substitution was found (and sets
 // pbNewString to TRUE)
-char *hb_macroExpandString(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewString)
+char *hb_macroExpandString(const char *szString, size_t nLength, HB_BOOL *pfNewString)
 {
   char *szResultString;
 
@@ -603,12 +603,12 @@ char *hb_macroExpandString(const char *szString, HB_SIZE nLength, HB_BOOL *pfNew
   return szResultString;
 }
 
-char *hb_macroTextSymbol(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewString)
+char *hb_macroTextSymbol(const char *szString, size_t nLength, HB_BOOL *pfNewString)
 {
   char *szResult = nullptr;
 
   if (szString != nullptr) {
-    HB_SIZE nLen = 0;
+    size_t nLen = 0;
 
     szResult = hb_macroTextSubst(szString, &nLength);
 
@@ -906,7 +906,7 @@ void hb_macroPushSymbol(HB_ITEM *pItem)
 void hb_macroTextValue(HB_ITEM *pItem)
 {
   if (hb_macroCheckParam(pItem)) {
-    HB_SIZE nLength = pItem->stringLength();
+    size_t nLength = pItem->stringLength();
 
     char *szString = hb_macroTextSubst(pItem->stringValue(), &nLength);
 

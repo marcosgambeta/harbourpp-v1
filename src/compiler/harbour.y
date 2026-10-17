@@ -83,7 +83,7 @@ static void hb_compLoopExit( HB_COMP_DECL );
 static void hb_compLoopHere( HB_COMP_DECL );
 static long hb_compLoopCount( HB_COMP_DECL );
 
-static void * hb_compElseIfGen( HB_COMP_DECL, void * pFirstElseIf, HB_SIZE nOffset ); /* generates a support structure for ELSEIFs pcode fixups */
+static void * hb_compElseIfGen( HB_COMP_DECL, void * pFirstElseIf, size_t nOffset ); /* generates a support structure for ELSEIFs pcode fixups */
 static void hb_compElseIfFix( HB_COMP_DECL, void * pIfElseIfs ); /* implements the ELSEIFs pcode fixups */
 
 static void hb_compRTVariableAdd( HB_COMP_DECL, HB_EXPR *, HB_BOOL );
@@ -125,7 +125,7 @@ static void hb_compDebugStart( void ) { }
 {
    const char * string; /* to hold a string returned by lex */
    int32_t     iNumber;     /* to hold a temporary integer number */
-   HB_SIZE sNumber;     /* to hold a temporary HB_SIZE values */
+   size_t sNumber;     /* to hold a temporary size_t values */
    HB_MAXINT lNumber;   /* to hold a temporary long number */
    HB_BOOL bTrue;
    HB_EXPR *asExpr;
@@ -149,13 +149,13 @@ static void hb_compDebugStart( void ) { }
    struct
    {
       char *   string;
-      HB_SIZE  length;
+      size_t  length;
       HB_BOOL  dealloc;
    } valChar;
    struct
    {
       char *   string;
-      HB_SIZE  length;
+      size_t  length;
       int32_t      flags;   /* Flag for early {|| &macro} (1) or late {|| &(macro)} (2) binding */
    } asCodeblock;
    HB_VARTYPE *asVarType;
@@ -2297,7 +2297,7 @@ void hb_compLoopKill( HB_HFUNC *pFunc )
    }
 }
 
-static void * hb_compElseIfGen( HB_COMP_DECL, void * pFirst, HB_SIZE nOffset )
+static void * hb_compElseIfGen( HB_COMP_DECL, void * pFirst, size_t nOffset )
 {
    PHB_ELSEIF pElseIf = static_cast<PHB_ELSEIF>(hb_xgrab(sizeof(HB_ELSEIF))), pLast;
    HB_HFUNC *pFunc = HB_COMP_PARAM->functions.pLast;
@@ -2587,7 +2587,7 @@ static HB_COMP_CARGO2_FUNC( hb_compEnumEvalStart )
 
 static void hb_compEnumStart( HB_COMP_DECL, HB_EXPR *pVars, HB_EXPR *pExprs, int32_t descend )
 {
-   HB_SIZE nLen;
+   size_t nLen;
 
    if( hb_compExprListLen( pVars ) != hb_compExprListLen( pExprs ) )
    {
@@ -2725,7 +2725,7 @@ static void hb_compSwitchEnd( HB_COMP_DECL )
    PHB_SWITCHCMD pSwitch = pFunc->pSwitch;
    HB_EXPR *pExpr = pSwitch->pExpr;
    PHB_SWITCHCASE pCase, pTmp;
-   HB_SIZE nExitPos, nCountPos;
+   size_t nExitPos, nCountPos;
    int32_t iCount = 0;
 
    /* skip switch pcode if there was no EXIT in the last CASE

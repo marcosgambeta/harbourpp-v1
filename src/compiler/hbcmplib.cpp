@@ -72,7 +72,7 @@ static void s_pp_msg(void *cargo, int32_t iErrorFmt, int32_t iLine, const char *
 
 static int32_t s_pp_openFile(void *cargo, char *szFileName, HB_BOOL fBefore, HB_BOOL fSysFile, HB_BOOL fBinary,
                          HB_PATHNAMES *pIncludePaths, HB_BOOL *pfNested, FILE **file_ptr, const char **pBufPtr,
-                         HB_SIZE *pnLen, HB_BOOL *pfFree)
+                         size_t *pnLen, HB_BOOL *pfFree)
 {
   HB_SYMBOL_UNUSED(fSysFile);
   HB_SYMBOL_UNUSED(fBinary);
@@ -191,7 +191,7 @@ HB_FUNC(HB_COMPILEBUF)
   PHB_PP_MSG_FUNC pMsgFunc;
   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
   uint8_t *pBuffer;
-  HB_SIZE nLen;
+  size_t nLen;
   int32_t iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc);
   hb_xfree(static_cast<void *>(argv));
 
@@ -212,7 +212,7 @@ HB_FUNC(HB_COMPILEFROMBUF)
     PHB_PP_MSG_FUNC pMsgFunc;
     hb_compGenArgList(2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
     uint8_t *pBuffer;
-    HB_SIZE nLen;
+    size_t nLen;
     int32_t iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc);
     hb_xfree(static_cast<void *>(argv));
 

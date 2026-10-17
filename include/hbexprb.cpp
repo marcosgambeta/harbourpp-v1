@@ -917,7 +917,7 @@ static HB_EXPR_FUNC(hb_compExprUseIIF)
     HB_EXPR_USE(pSelf, HB_EA_PUSH_PCODE);
     HB_GEN_FUNC1(PCode1, HB_P_POP); /* remove a value if used in statement */
 #else
-    HB_SIZE nPosFalse, nPosEnd;
+    size_t nPosFalse, nPosEnd;
     HB_EXPR *pExpr = pSelf->value.asList.pExprList;
 
     HB_EXPR_USE(pExpr, HB_EA_PUSH_PCODE);
@@ -1242,7 +1242,7 @@ static HB_EXPR_FUNC(hb_compExprUseArrayAt)
 
       if (pExpr->ExprType == HB_ET_ARRAY) /* is it a literal array */
       {
-        HB_SIZE nSize = hb_compExprParamListCheck(HB_COMP_PARAM, pExpr);
+        size_t nSize = hb_compExprParamListCheck(HB_COMP_PARAM, pExpr);
 
         if (pExpr->ExprType == HB_ET_MACROARGLIST)
           /* restore original expression type */
@@ -5373,7 +5373,7 @@ static HB_EXPR *hb_compExprReduceAliasString(HB_EXPR *pExpr, HB_EXPR *pAlias, HB
 
   if (HB_ISFIRSTIDCHAR(*szAlias))
   {
-    HB_SIZE nLen = pAlias->nLength;
+    size_t nLen = pAlias->nLength;
     if (nLen <= HB_SYMBOL_NAME_LEN)
     {
       HB_BOOL fLower = HB_FALSE;
