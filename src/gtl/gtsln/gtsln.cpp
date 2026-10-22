@@ -436,7 +436,7 @@ static void hb_sln_setCharTrans(HB_GT *pGT, bool fBox)
 // ***********************************************************************
 static void hb_sln_setKeyTrans(HB_GT *pGT)
 {
-  HB_CODEPAGE *cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
+  HB_CODEPAGE *cdpTerm = HB_GTSELF_INCP(pGT), *cdpHost = HB_GTSELF_HOSTCP(pGT);
   const char *p;
 
   for (auto i = 0; i < 256; i++) {
