@@ -2074,7 +2074,7 @@ static HB_BOOL hb_ctw_gt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     hb_ctw_SelectWindow(pCTW, 0, true);
     fResult = HB_GTSUPER_INFO(pGT, iType, pInfo);
     if (fResult && hb_arrayLen(pInfo->pNewVal) >= 7) {
-      hb_ctw_SelectWindow(pCTW, hb_arrayGetNI(pInfo->pNewVal, 7), true);
+      hb_ctw_SelectWindow(pCTW, hb_arrayGetNI32(pInfo->pNewVal, 7), true);
     }
     return fResult;
   }

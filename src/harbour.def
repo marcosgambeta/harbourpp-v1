@@ -2043,6 +2043,7 @@ hb_arrayGetItemRef
 hb_arrayGetL
 hb_arrayGetND
 hb_arrayGetNI
+hb_arrayGetNI32
 hb_arrayGetNInt
 hb_arrayGetNL
 hb_arrayGetNLL

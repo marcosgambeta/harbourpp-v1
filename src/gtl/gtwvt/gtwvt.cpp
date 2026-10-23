@@ -3719,8 +3719,8 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
     hb_arraySetNI(pInfo->pResult, 1, pWVT->PTEXTSIZE.x * pWVT->COLS);
 
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) && hb_arrayLen(pInfo->pNewVal) == 2) {
-      int32_t iY = hb_arrayGetNI(pInfo->pNewVal, 2);
-      int32_t iX = hb_arrayGetNI(pInfo->pNewVal, 1);
+      int32_t iY = hb_arrayGetNI32(pInfo->pNewVal, 2);
+      int32_t iX = hb_arrayGetNI32(pInfo->pNewVal, 1);
 
       if (iY > 0 && iX > 0 && !pWVT->bMaximized && !pWVT->bFullScreen &&
           pWVT->hWnd) { // Don't allow if Maximized or FullScreen
@@ -3946,8 +3946,8 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       x = pInfo->pNewVal->getNI32();
       y = pInfo->pNewVal2->getNI32();
     } else if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) && hb_arrayLen(pInfo->pNewVal) == 2) {
-      x = hb_arrayGetNI(pInfo->pNewVal, 1);
-      y = hb_arrayGetNI(pInfo->pNewVal, 2);
+      x = hb_arrayGetNI32(pInfo->pNewVal, 1);
+      y = hb_arrayGetNI32(pInfo->pNewVal, 2);
     } else {
       break;
     }

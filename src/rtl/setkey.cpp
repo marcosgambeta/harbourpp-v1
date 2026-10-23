@@ -251,7 +251,7 @@ HB_FUNC(HB_SETKEYARRAY)
     HB_SIZE nPos;
 
     for (nPos = 1; nPos <= nLen; nPos++) {
-      sk_add(&sk_data->sk_list, false, hb_arrayGetNI(pKeyCodeArray, nPos), pAction, pIsActive);
+      sk_add(&sk_data->sk_list, false, hb_arrayGetNI32(pKeyCodeArray, nPos), pAction, pIsActive);
     }
   }
 }
@@ -315,7 +315,7 @@ HB_FUNC(HB_SETKEYSAVE)
       for (nItem = 1; nItem <= nItemCount; nItem++) {
         auto itmKeyElements = hb_arrayGetItemPtr(pParam, nItem);
 
-        sk_add(&sk_data->sk_list, false, hb_arrayGetNI(itmKeyElements, 1), hb_arrayGetItemPtr(itmKeyElements, 2),
+        sk_add(&sk_data->sk_list, false, hb_arrayGetNI32(itmKeyElements, 1), hb_arrayGetItemPtr(itmKeyElements, 2),
                hb_arrayGetItemPtr(itmKeyElements, 3));
       }
     }

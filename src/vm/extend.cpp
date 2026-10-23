@@ -1105,7 +1105,7 @@ int32_t hb_parvni(int32_t iParam, ...)
       nArrayIndex = va_arg(va, HB_SIZE);
       va_end(va);
 
-      return hb_arrayGetNI(pItem, nArrayIndex);
+      return hb_arrayGetNI32(pItem, nArrayIndex);
     }
   }
 

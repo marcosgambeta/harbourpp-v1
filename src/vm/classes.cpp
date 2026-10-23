@@ -3084,7 +3084,7 @@ static uint16_t hb_clsNew(const char *szClassName, uint16_t uiDatas, HB_ITEM *pS
   }
 
   for (uint16_t ui = 1; ui <= uiSuper; ++ui) {
-    uiSuperCls = static_cast<uint16_t>(hb_arrayGetNI(pSuperArray, ui));
+    uiSuperCls = static_cast<uint16_t>(hb_arrayGetNI32(pSuperArray, ui));
     if (uiSuperCls && uiSuperCls < pNewCls->uiClass) {
       PCLASS pSprCls;
 

@@ -3631,7 +3631,7 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
 
   case HB_GTI_ADDKEYMAP:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
-      iVal = hb_arrayGetNI(pInfo->pNewVal, 1);
+      iVal = hb_arrayGetNI32(pInfo->pNewVal, 1);
       szVal = hb_arrayGetCPtr(pInfo->pNewVal, 2);
       if (iVal && szVal && *szVal) {
         addKeyMap(pTerm, HB_INKEY_ISEXT(iVal) ? iVal : SET_CLIPKEY(iVal), szVal);
@@ -3711,7 +3711,7 @@ static HB_BOOL hb_gt_trm_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       }
       if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY && hb_arrayLen(pInfo->pNewVal) == 16) {
         for (iVal = 0; iVal < 16; iVal++) {
-          pTerm->colors[iVal] = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
+          pTerm->colors[iVal] = hb_arrayGetNI32(pInfo->pNewVal, iVal + 1);
         }
         hb_gt_trm_SetPalette(pTerm, 0, 15);
         hb_gt_trm_termFlush(pTerm);

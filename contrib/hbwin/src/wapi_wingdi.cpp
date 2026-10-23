@@ -193,14 +193,14 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int32_t iParam, HB_BOOL bMandatory)
     p->lfEscapement = static_cast<LONG>(hb_arrayGetNL(pStru, 3));
     p->lfOrientation = static_cast<LONG>(hb_arrayGetNL(pStru, 4));
     p->lfWeight = static_cast<LONG>(hb_arrayGetNL(pStru, 5));
-    p->lfItalic = static_cast<BYTE>(hb_arrayGetNI(pStru, 6));
-    p->lfUnderline = static_cast<BYTE>(hb_arrayGetNI(pStru, 7));
-    p->lfStrikeOut = static_cast<BYTE>(hb_arrayGetNI(pStru, 8));
-    p->lfCharSet = static_cast<BYTE>(hb_arrayGetNI(pStru, 9));
-    p->lfOutPrecision = static_cast<BYTE>(hb_arrayGetNI(pStru, 10));
-    p->lfClipPrecision = static_cast<BYTE>(hb_arrayGetNI(pStru, 11));
-    p->lfQuality = static_cast<BYTE>(hb_arrayGetNI(pStru, 12));
-    p->lfPitchAndFamily = static_cast<BYTE>(hb_arrayGetNI(pStru, 13));
+    p->lfItalic = static_cast<BYTE>(hb_arrayGetNI32(pStru, 6));
+    p->lfUnderline = static_cast<BYTE>(hb_arrayGetNI32(pStru, 7));
+    p->lfStrikeOut = static_cast<BYTE>(hb_arrayGetNI32(pStru, 8));
+    p->lfCharSet = static_cast<BYTE>(hb_arrayGetNI32(pStru, 9));
+    p->lfOutPrecision = static_cast<BYTE>(hb_arrayGetNI32(pStru, 10));
+    p->lfClipPrecision = static_cast<BYTE>(hb_arrayGetNI32(pStru, 11));
+    p->lfQuality = static_cast<BYTE>(hb_arrayGetNI32(pStru, 12));
+    p->lfPitchAndFamily = static_cast<BYTE>(hb_arrayGetNI32(pStru, 13));
 
     pfFaceName = HB_ARRAYGETSTR(pStru, 14, &hfFaceName, &nLen);
 
@@ -573,7 +573,7 @@ HB_FUNC(WAPI_EXTTEXTOUT)
       for (HB_SIZE tmp = 0; tmp < nDataLen; ++tmp) {
         // Pad width array with last known value if passed array was smaller than length of the string.
         if (tmp < nFontWidthsLen) {
-          iWidth = static_cast<INT>(hb_arrayGetNI(pFontWidths, tmp + 1));
+          iWidth = static_cast<INT>(hb_arrayGetNI32(pFontWidths, tmp + 1));
         }
 
         lpFontWidths[tmp] = iWidth;

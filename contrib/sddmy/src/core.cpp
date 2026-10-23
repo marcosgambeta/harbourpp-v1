@@ -158,9 +158,9 @@ static HB_ERRCODE mysqlConnect(SQLDDCONNECTION *pConnection, HB_ITEM *pItem)
   MYSQL *pMySql = mysql_init(nullptr);
   if (!mysql_real_connect(pMySql, hb_arrayGetCPtr(pItem, 2) /* host */, hb_arrayGetCPtr(pItem, 3) /* user */,
                           hb_arrayGetCPtr(pItem, 4) /* password */, hb_arrayGetCPtr(pItem, 5) /* db */,
-                          hb_arrayGetNI(pItem, 6) /* port */,
+                          hb_arrayGetNI32(pItem, 6) /* port */,
                           pItemUnixSocket && pItemUnixSocket->isString() ? hb_itemGetCPtr(pItemUnixSocket) : nullptr,
-                          hb_arrayGetNI(pItem, 8) /* flags*/)) {
+                          hb_arrayGetNI32(pItem, 8) /* flags*/)) {
     hb_rddsqlSetError(mysql_errno(pMySql), mysql_error(pMySql), nullptr, nullptr, 0);
     mysql_close(pMySql);
     return Harbour::FAILURE;

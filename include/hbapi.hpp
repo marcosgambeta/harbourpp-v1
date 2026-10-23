@@ -1671,6 +1671,7 @@ extern HB_EXPORT HB_SYMB *hb_arrayGetSymbol(HB_ITEM *pArray, HB_SIZE nIndex);
 extern HB_EXPORT HB_BOOL hb_arrayGetL(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the int value contained on an array element
 extern HB_EXPORT int32_t hb_arrayGetNI(HB_ITEM *pArray, HB_SIZE nIndex);
+extern HB_EXPORT int32_t hb_arrayGetNI32(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the long numeric value contained on an array element
 extern HB_EXPORT long hb_arrayGetNL(HB_ITEM *pArray, HB_SIZE nIndex);
 // retrieves the HB_SIZE value contained on an array element

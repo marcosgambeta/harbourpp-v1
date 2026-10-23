@@ -1549,7 +1549,7 @@ HB_FUNC(AMF3_FROMWA)
             {
               SELF_GETVALUE(pArea,
                             static_cast<uint16_t>(
-                                hb_itemGetNI32(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI(pFields, uiIter) */,
+                                hb_itemGetNI32(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI32(pFields, uiIter) */,
                             pItem);
               amf3_encode(context, pItem);
             }

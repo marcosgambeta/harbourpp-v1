@@ -4068,7 +4068,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, uint16_t uiIndex, HB_ITEM *pItem)
       auto szFile = hb_arrayGetCPtr(pItem, 2);
 
       if (ulBlock && szFile && *szFile) {
-        errCode = hb_fptGetVarFile(pArea, ulBlock, szFile, static_cast<uint16_t>(hb_arrayGetNI(pItem, 3)),
+        errCode = hb_fptGetVarFile(pArea, ulBlock, szFile, static_cast<uint16_t>(hb_arrayGetNI32(pItem, 3)),
                                    FPT_DIRECT_TRANS(pArea));
       }
     }

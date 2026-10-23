@@ -305,7 +305,7 @@ HB_FUNC(WACREATEPOLYPOLYGONRGN)
   if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
+      vec2.push_back(static_cast<INT>(hb_arrayGetNI32(pArray2, i + 1)));
     }
   }
   wa_ret_HRGN(CreatePolyPolygonRgn(vec1.data(), vec2.data(), wa_par_int(3), wa_par_int(4)));
@@ -1250,7 +1250,7 @@ HB_FUNC(WAPOLYPOLYGON)
   if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
+      vec2.push_back(static_cast<INT>(hb_arrayGetNI32(pArray2, i + 1)));
     }
   }
   wa_ret_BOOL(PolyPolygon(wa_par_HDC(1), vec1.data(), vec2.data(), wa_par_int(4)));
@@ -2058,7 +2058,7 @@ HB_FUNC(WAPOLYDRAW)
   if (pArray2 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray2);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec2.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray2, i + 1)));
+      vec2.push_back(static_cast<BYTE>(hb_arrayGetNI32(pArray2, i + 1)));
     }
   }
   wa_ret_BOOL(PolyDraw(wa_par_HDC(1), vec1.data(), vec2.data(), wa_par_int(4)));

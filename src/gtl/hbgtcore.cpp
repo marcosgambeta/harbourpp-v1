@@ -1810,12 +1810,12 @@ static HB_BOOL hb_gt_def_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       HB_GTSELF_DISPBEGIN(pGT);
       if (hb_arrayGetCLen(pInfo->pNewVal, 6) > 0) {
         int32_t iFlag = HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, 0);
-        HB_GTSELF_REST(pGT, 0, 0, hb_arrayGetNI(pInfo->pNewVal, 4), hb_arrayGetNI(pInfo->pNewVal, 5),
+        HB_GTSELF_REST(pGT, 0, 0, hb_arrayGetNI32(pInfo->pNewVal, 4), hb_arrayGetNI32(pInfo->pNewVal, 5),
                        hb_arrayGetCPtr(pInfo->pNewVal, 6));
         HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, iFlag);
       }
-      HB_GTSELF_SETPOS(pGT, hb_arrayGetNI(pInfo->pNewVal, 1), hb_arrayGetNI(pInfo->pNewVal, 2));
-      HB_GTSELF_SETCURSORSTYLE(pGT, hb_arrayGetNI(pInfo->pNewVal, 3));
+      HB_GTSELF_SETPOS(pGT, hb_arrayGetNI32(pInfo->pNewVal, 1), hb_arrayGetNI32(pInfo->pNewVal, 2));
+      HB_GTSELF_SETCURSORSTYLE(pGT, hb_arrayGetNI32(pInfo->pNewVal, 3));
       HB_GTSELF_DISPEND(pGT);
       HB_GTSELF_FLUSH(pGT);
     }

@@ -746,10 +746,10 @@ HB_FUNC(WVW_TOOLBARADDBUTTONS)
       for (auto nCount = 0; nCount < iButtons; ++nCount) {
         auto pTemp = hb_arrayGetItemPtr(pArray, nCount + 1);
 
-        tb[nCount].idCommand = hb_arrayGetNI(pTemp, 2);
-        tb[nCount].fsState = static_cast<BYTE>(hb_arrayGetNI(pTemp, 3));
-        tb[nCount].fsStyle = static_cast<BYTE>(hb_arrayGetNI(pTemp, 4));
-        tb[nCount].dwData = hb_arrayGetNI(pTemp, 5);
+        tb[nCount].idCommand = hb_arrayGetNI32(pTemp, 2);
+        tb[nCount].fsState = static_cast<BYTE>(hb_arrayGetNI32(pTemp, 3));
+        tb[nCount].fsStyle = static_cast<BYTE>(hb_arrayGetNI32(pTemp, 4));
+        tb[nCount].dwData = hb_arrayGetNI32(pTemp, 5);
         tb[nCount].iString = reinterpret_cast<INT_PTR>(HB_ARRAYGETSTR(pTemp, 6, &hStr[nCount], nullptr));
       }
 

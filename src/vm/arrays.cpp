@@ -450,6 +450,11 @@ int32_t hb_arrayGetNI(HB_ITEM *pArray, HB_SIZE nIndex)
   return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getNI32() : 0;
 }
 
+int32_t hb_arrayGetNI32(HB_ITEM *pArray, HB_SIZE nIndex)
+{
+  return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getNI32() : 0;
+}
+
 long hb_arrayGetNL(HB_ITEM *pArray, HB_SIZE nIndex)
 {
   return pArray->isArray() && pArray->isValidIndex(nIndex) ? (pArray->arrayItem(nIndex))->getNL() : 0;

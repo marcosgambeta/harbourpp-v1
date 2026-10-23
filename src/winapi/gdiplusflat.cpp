@@ -4733,7 +4733,7 @@ static std::vector<BYTE> BYTEArrayToVector(const HB_ITEM *pArray)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(const_cast<HB_ITEM *>(pArray));
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<BYTE>(hb_arrayGetNI(const_cast<HB_ITEM *>(pArray), i + 1)));
+      vec.push_back(static_cast<BYTE>(hb_arrayGetNI32(const_cast<HB_ITEM *>(pArray), i + 1)));
     }
   }
   return vec;

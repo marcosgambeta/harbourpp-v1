@@ -116,7 +116,7 @@ uint32_t hb_errGetProcLine(HB_ITEM *pError)
     s_xhbErrorResize(pError);
   }
 
-  return static_cast<uint16_t>(hb_arrayGetNI(pError, s_nErrProcLine));
+  return static_cast<uint16_t>(hb_arrayGetNI32(pError, s_nErrProcLine));
 }
 
 HB_ITEM *hb_errPutProcLine(HB_ITEM *pError, uint32_t uiProcLine)

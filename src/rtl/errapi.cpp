@@ -724,7 +724,7 @@ HB_ITEM *hb_errPutFileName(HB_ITEM *pError, const char *szFileName)
 
 HB_ERRCODE hb_errGetGenCode(HB_ITEM *pError)
 {
-  return static_cast<HB_ERRCODE>(hb_arrayGetNI(pError, HB_TERROR_GENCODE));
+  return static_cast<HB_ERRCODE>(hb_arrayGetNI32(pError, HB_TERROR_GENCODE));
 }
 
 HB_ITEM *hb_errPutGenCode(HB_ITEM *pError, HB_ERRCODE errGenCode)
@@ -753,7 +753,7 @@ HB_ITEM *hb_errPutOperation(HB_ITEM *pError, const char *szOperation)
 
 HB_ERRCODE hb_errGetOsCode(HB_ITEM *pError)
 {
-  return static_cast<HB_ERRCODE>(hb_arrayGetNI(pError, HB_TERROR_OSCODE));
+  return static_cast<HB_ERRCODE>(hb_arrayGetNI32(pError, HB_TERROR_OSCODE));
 }
 
 HB_ITEM *hb_errPutOsCode(HB_ITEM *pError, HB_ERRCODE errOsCode)
@@ -764,7 +764,7 @@ HB_ITEM *hb_errPutOsCode(HB_ITEM *pError, HB_ERRCODE errOsCode)
 
 uint16_t hb_errGetSeverity(HB_ITEM *pError)
 {
-  return static_cast<uint16_t>(hb_arrayGetNI(pError, HB_TERROR_SEVERITY));
+  return static_cast<uint16_t>(hb_arrayGetNI32(pError, HB_TERROR_SEVERITY));
 }
 
 HB_ITEM *hb_errPutSeverity(HB_ITEM *pError, uint16_t uiSeverity)
@@ -775,7 +775,7 @@ HB_ITEM *hb_errPutSeverity(HB_ITEM *pError, uint16_t uiSeverity)
 
 HB_ERRCODE hb_errGetSubCode(HB_ITEM *pError)
 {
-  return static_cast<HB_ERRCODE>(hb_arrayGetNI(pError, HB_TERROR_SUBCODE));
+  return static_cast<HB_ERRCODE>(hb_arrayGetNI32(pError, HB_TERROR_SUBCODE));
 }
 
 HB_ITEM *hb_errPutSubCode(HB_ITEM *pError, HB_ERRCODE errSubCode)
@@ -797,7 +797,7 @@ HB_ITEM *hb_errPutSubSystem(HB_ITEM *pError, const char *szSubSystem)
 
 uint16_t hb_errGetTries(HB_ITEM *pError)
 {
-  return static_cast<uint16_t>(hb_arrayGetNI(pError, HB_TERROR_TRIES));
+  return static_cast<uint16_t>(hb_arrayGetNI32(pError, HB_TERROR_TRIES));
 }
 
 HB_ITEM *hb_errPutTries(HB_ITEM *pError, uint16_t uiTries)
@@ -808,7 +808,7 @@ HB_ITEM *hb_errPutTries(HB_ITEM *pError, uint16_t uiTries)
 
 uint16_t hb_errGetFlags(HB_ITEM *pError)
 {
-  return static_cast<uint16_t>(hb_arrayGetNI(pError, HB_TERROR_FLAGS));
+  return static_cast<uint16_t>(hb_arrayGetNI32(pError, HB_TERROR_FLAGS));
 }
 
 HB_ITEM *hb_errPutFlags(HB_ITEM *pError, uint16_t uiFlags)

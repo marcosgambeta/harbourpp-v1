@@ -672,9 +672,9 @@ HB_FUNC(WAPI_CREATEACCELERATORTABLE)
     for (auto i = 0; i < iEntries; ++i) {
       auto pAccItem = hb_arrayGetItemPtr(pArray, i + 1);
 
-      lpAccel[i].fVirt = static_cast<BYTE>(hb_arrayGetNI(pAccItem, 1));
-      lpAccel[i].key = static_cast<WORD>(hb_arrayGetNI(pAccItem, 2));
-      lpAccel[i].cmd = static_cast<WORD>(hb_arrayGetNI(pAccItem, 3));
+      lpAccel[i].fVirt = static_cast<BYTE>(hb_arrayGetNI32(pAccItem, 1));
+      lpAccel[i].key = static_cast<WORD>(hb_arrayGetNI32(pAccItem, 2));
+      lpAccel[i].cmd = static_cast<WORD>(hb_arrayGetNI32(pAccItem, 3));
     }
     hAccel = CreateAcceleratorTable(lpAccel, iEntries);
     hbwapi_SetLastError(GetLastError());

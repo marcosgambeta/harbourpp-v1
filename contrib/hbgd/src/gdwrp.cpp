@@ -648,8 +648,8 @@ HB_FUNC(
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
       if (pPoint->isArray())
       {
-        points[i].x = hb_arrayGetNI(pPoint, 1);
-        points[i].y = hb_arrayGetNI(pPoint, 2);
+        points[i].x = hb_arrayGetNI32(pPoint, 1);
+        points[i].y = hb_arrayGetNI32(pPoint, 2);
       }
       else
       {
@@ -689,8 +689,8 @@ HB_FUNC(GDIMAGEOPENPOLYGON) /* original: void gdImageOpenPolygon(gdImagePtr im, 
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
       if (pPoint->isArray())
       {
-        points[i].x = hb_arrayGetNI(pPoint, 1);
-        points[i].y = hb_arrayGetNI(pPoint, 2);
+        points[i].x = hb_arrayGetNI32(pPoint, 1);
+        points[i].y = hb_arrayGetNI32(pPoint, 2);
       }
       else
       {
@@ -750,8 +750,8 @@ HB_FUNC(GDIMAGEFILLEDPOLYGON) /* original: void gdImageFilledPolygon(gdImagePtr 
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
       if (pPoint->isArray())
       {
-        points[i].x = hb_arrayGetNI(pPoint, 1);
-        points[i].y = hb_arrayGetNI(pPoint, 2);
+        points[i].x = hb_arrayGetNI32(pPoint, 1);
+        points[i].y = hb_arrayGetNI32(pPoint, 2);
       }
       else
       {
@@ -1000,7 +1000,7 @@ HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *s
 
     for (auto i = 0; i < styleLength; i++)
     {
-      styles[i] = hb_arrayGetNI(pStyles, i + 1);
+      styles[i] = hb_arrayGetNI32(pStyles, i + 1);
     }
 
     /* Set style */
@@ -1476,7 +1476,7 @@ HB_FUNC(GDIMAGESTRINGFTEX)
     /* Retrieve rectangle array */
     for (auto i = 0; i < 8; i++)
     {
-      aRect[i] = hb_arrayGetNI(pRect, i + 1);
+      aRect[i] = hb_arrayGetNI32(pRect, i + 1);
     }
 
     /* Retrieve line spacing */

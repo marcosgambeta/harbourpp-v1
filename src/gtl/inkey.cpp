@@ -121,7 +121,7 @@ HB_FUNC(HB_KEYPUT)
       HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
       if (type & Harbour::Item::NUMERIC) {
-        hb_inkeyPut(hb_arrayGetNI(pArray, nIndex));
+        hb_inkeyPut(hb_arrayGetNI32(pArray, nIndex));
       } else if (type & Harbour::Item::STRING) {
         hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false);
       }
@@ -143,7 +143,7 @@ HB_FUNC(HB_KEYINS)
       HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
       if (type & Harbour::Item::NUMERIC) {
-        hb_inkeyIns(hb_arrayGetNI(pArray, nIndex));
+        hb_inkeyIns(hb_arrayGetNI32(pArray, nIndex));
       } else if (type & Harbour::Item::STRING) {
         hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true);
       }

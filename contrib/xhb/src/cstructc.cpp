@@ -1373,5 +1373,5 @@ HB_FUNC(__CSTR_COPYTO)
   hb_vmPush(pStructure);
   hb_vmSend(0);
 
-  memcpy(pPointer, hb_parc(-1), hb_arrayGetNI(pStructure, hb_arrayLen(pStructure) - 2));
+  memcpy(pPointer, hb_parc(-1), hb_arrayGetNI32(pStructure, hb_arrayLen(pStructure) - 2));
 }

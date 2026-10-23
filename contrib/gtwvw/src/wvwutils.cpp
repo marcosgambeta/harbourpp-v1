@@ -1099,7 +1099,7 @@ HB_FUNC(TOOLBARADDBUTTONS)
   for (ULONG ulCount = 0; (ulCount < hb_arrayLen(pArray)); ulCount++) {
     pTemp = hb_arrayGetItemPtr(pArray, ulCount + 1);
 #if 0
-      ulID  = hb_arrayGetNI(pTemp, 1);
+      ulID  = hb_arrayGetNI32(pTemp, 1);
 #endif
     /* bSystem = hb_arrayGetL(pTemp, 9); */
 
@@ -1112,10 +1112,10 @@ HB_FUNC(TOOLBARADDBUTTONS)
          }
       }
 #endif
-    tb[ulCount].idCommand = hb_arrayGetNI(pTemp, 2);
-    tb[ulCount].fsState = static_cast<BYTE>(hb_arrayGetNI(pTemp, 3));
-    tb[ulCount].fsStyle = static_cast<BYTE>(hb_arrayGetNI(pTemp, 4));
-    tb[ulCount].dwData = hb_arrayGetNI(pTemp, 5);
+    tb[ulCount].idCommand = hb_arrayGetNI32(pTemp, 2);
+    tb[ulCount].fsState = static_cast<BYTE>(hb_arrayGetNI32(pTemp, 3));
+    tb[ulCount].fsStyle = static_cast<BYTE>(hb_arrayGetNI32(pTemp, 4));
+    tb[ulCount].dwData = hb_arrayGetNI32(pTemp, 5);
     tb[ulCount].iString = hb_arrayGetCLen(pTemp, 6) > 0 ? reinterpret_cast<int32_t>(hb_arrayGetCPtr(pTemp, 6)) : 0;
   }
 

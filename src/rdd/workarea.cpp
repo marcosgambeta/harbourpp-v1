@@ -254,12 +254,12 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, HB_ITEM *pStruct)
     dbFieldInfo.uiTypeExtended = 0;
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
     dbFieldInfo.atomName = hb_arrayGetCPtr(pFieldDesc, DBS_NAME);
-    iData = hb_arrayGetNI(pFieldDesc, DBS_LEN);
+    iData = hb_arrayGetNI32(pFieldDesc, DBS_LEN);
     if (iData < 0) {
       iData = 0;
     }
     uiLen = dbFieldInfo.uiLen = static_cast<uint16_t>(iData);
-    iData = hb_arrayGetNI(pFieldDesc, DBS_DEC);
+    iData = hb_arrayGetNI32(pFieldDesc, DBS_DEC);
     if (iData < 0) {
       iData = 0;
     }
@@ -268,7 +268,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, HB_ITEM *pStruct)
     auto szType = hb_arrayGetCPtr(pFieldDesc, DBS_TYPE);
     iData = HB_TOUPPER(*szType);
 #ifdef DBS_FLAG
-    dbFieldInfo.uiFlags = hb_arrayGetNI(pFieldDesc, DBS_FLAG);
+    dbFieldInfo.uiFlags = hb_arrayGetNI32(pFieldDesc, DBS_FLAG);
 #else
     dbFieldInfo.uiFlags = 0;
     while (*++szType) {

@@ -2070,12 +2070,12 @@ HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, HB_ITEM *pAddr
 
   if (pAddrItm && pAddrItm->isArray()) {
     if (hb_arrayLen(pAddrItm) >= 2 && (hb_arrayGetType(pAddrItm, 1) & Harbour::Item::NUMERIC) != 0) {
-      switch (hb_arrayGetNI(pAddrItm, 1)) {
+      switch (hb_arrayGetNI32(pAddrItm, 1)) {
       case HB_SOCKET_AF_INET:
-        fOK = hb_socketInetAddr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI(pAddrItm, 3));
+        fOK = hb_socketInetAddr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI32(pAddrItm, 3));
         break;
       case HB_SOCKET_AF_INET6:
-        fOK = hb_socketInet6Addr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI(pAddrItm, 3));
+        fOK = hb_socketInet6Addr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI32(pAddrItm, 3));
         break;
       case HB_SOCKET_AF_LOCAL:
         fOK = hb_socketLocalAddr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2));

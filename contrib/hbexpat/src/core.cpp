@@ -377,7 +377,7 @@ static int32_t XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const X
 
             for( nPos = 0; nPos < HB_SIZEOFARRAY(info->map); ++nPos )
             {
-               info->map[nPos] = hb_arrayGetNI(pPar2, nPos + 1);
+               info->map[nPos] = hb_arrayGetNI32(pPar2, nPos + 1);
             }
 
             /* NOTE: Not supported by wrapper layer yet. */

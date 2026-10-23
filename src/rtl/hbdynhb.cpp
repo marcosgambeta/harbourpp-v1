@@ -89,7 +89,7 @@ HB_FUNC(HB_DYNCALL)
 
         // Function flags
         if (nBasePos <= nLen) {
-          iFuncFlags = hb_arrayGetNI(pParam, nBasePos);
+          iFuncFlags = hb_arrayGetNI32(pParam, nBasePos);
         }
 
         ++nBasePos;
@@ -102,7 +102,7 @@ HB_FUNC(HB_DYNCALL)
 
           for (HB_SIZE nPos = 0; nPos < nArgCount; ++nPos) {
             piArgFlags[nPos] = ((nPos + nBasePos) <= nLen && hb_arrayGetItemPtr(pParam, nPos + nBasePos)->isNumeric())
-                                   ? hb_arrayGetNI(pParam, nPos + nBasePos)
+                                   ? hb_arrayGetNI32(pParam, nPos + nBasePos)
                                    : HB_DYN_CTYPE_DEFAULT;
           }
         }

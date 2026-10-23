@@ -683,13 +683,13 @@ HB_FUNC(WVG_FONTCREATE)
     lf.lfItalic = (BYTE)hb_arrayGetL(aFont, 5);
     lf.lfUnderline = (BYTE)hb_arrayGetL(aFont, 6);
     lf.lfStrikeOut = (BYTE)hb_arrayGetL(aFont, 7);
-    lf.lfCharSet = (BYTE)hb_arrayGetNI(aFont, 8);
-    lf.lfEscapement = (BYTE)hb_arrayGetNI(aFont, 9);
-    lf.lfOrientation = (BYTE)hb_arrayGetNI(aFont, 10);
-    lf.lfOutPrecision = (BYTE)hb_arrayGetNI(aFont, 11);
-    lf.lfClipPrecision = (BYTE)hb_arrayGetNI(aFont, 12);
-    lf.lfQuality = (BYTE)hb_arrayGetNI(aFont, 13);
-    lf.lfPitchAndFamily = (BYTE)hb_arrayGetNI(aFont, 14);
+    lf.lfCharSet = (BYTE)hb_arrayGetNI32(aFont, 8);
+    lf.lfEscapement = (BYTE)hb_arrayGetNI32(aFont, 9);
+    lf.lfOrientation = (BYTE)hb_arrayGetNI32(aFont, 10);
+    lf.lfOutPrecision = (BYTE)hb_arrayGetNI32(aFont, 11);
+    lf.lfClipPrecision = (BYTE)hb_arrayGetNI32(aFont, 12);
+    lf.lfQuality = (BYTE)hb_arrayGetNI32(aFont, 13);
+    lf.lfPitchAndFamily = (BYTE)hb_arrayGetNI32(aFont, 14);
   }
 
   hFont = CreateFontIndirect(&lf);

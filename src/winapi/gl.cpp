@@ -227,7 +227,7 @@ HB_FUNC(WAGLCOLOR3BV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLbyte>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLbyte>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor3bv(vec.data());
@@ -287,7 +287,7 @@ HB_FUNC(WAGLCOLOR3IV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLint>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLint>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor3iv(vec.data());
@@ -307,7 +307,7 @@ HB_FUNC(WAGLCOLOR3SV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLshort>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLshort>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor3sv(vec.data());
@@ -327,7 +327,7 @@ HB_FUNC(WAGLCOLOR3UBV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLubyte>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLubyte>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor3ubv(vec.data());
@@ -347,7 +347,7 @@ HB_FUNC(WAGLCOLOR3UIV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLuint>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLuint>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor3uiv(vec.data());
@@ -367,7 +367,7 @@ HB_FUNC(WAGLCOLOR3USV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLushort>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLushort>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor3usv(vec.data());
@@ -387,7 +387,7 @@ HB_FUNC(WAGLCOLOR4BV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLbyte>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLbyte>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor4bv(vec.data());
@@ -447,7 +447,7 @@ HB_FUNC(WAGLCOLOR4IV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLint>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLint>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor4iv(vec.data());
@@ -467,7 +467,7 @@ HB_FUNC(WAGLCOLOR4SV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLshort>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLshort>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor4sv(vec.data());
@@ -487,7 +487,7 @@ HB_FUNC(WAGLCOLOR4UBV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLubyte>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLubyte>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor4ubv(vec.data());
@@ -507,7 +507,7 @@ HB_FUNC(WAGLCOLOR4UIV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLuint>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLuint>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor4uiv(vec.data());
@@ -527,7 +527,7 @@ HB_FUNC(WAGLCOLOR4USV)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<GLushort>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<GLushort>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   glColor4usv(vec.data());

@@ -5347,8 +5347,8 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       x = pInfo->pNewVal->getNI32();
       y = pInfo->pNewVal2->getNI32();
     } else if (pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 2) {
-      x = hb_arrayGetNI(pInfo->pNewVal, 1);
-      y = hb_arrayGetNI(pInfo->pNewVal, 2);
+      x = hb_arrayGetNI32(pInfo->pNewVal, 1);
+      y = hb_arrayGetNI32(pInfo->pNewVal, 2);
     } else {
       break;
     }
@@ -5398,7 +5398,7 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       }
       if (pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 16) {
         for (iVal = 0; iVal < 16; iVal++) {
-          int32_t iColor = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
+          int32_t iColor = hb_arrayGetNI32(pInfo->pNewVal, iVal + 1);
           if (iColor != wnd->colors[iVal].value) {
             wnd->colors[iVal].value = iColor;
             wnd->colors[iVal].set = false;
@@ -5429,9 +5429,9 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
           (hb_arrayGetType(pInfo->pNewVal, 2) & Harbour::Item::NUMERIC) &&
           (hb_arrayGetType(pInfo->pNewVal, 3) & Harbour::Item::NUMERIC)) {
         HB_SIZE nSize = hb_arrayGetCLen(pInfo->pNewVal, 1);
-        int32_t iWidth = hb_arrayGetNI(pInfo->pNewVal, 2);
-        int32_t iHeight = hb_arrayGetNI(pInfo->pNewVal, 3);
-        int32_t iDepth = hb_arrayGetNI(pInfo->pNewVal, 4);
+        int32_t iWidth = hb_arrayGetNI32(pInfo->pNewVal, 2);
+        int32_t iHeight = hb_arrayGetNI32(pInfo->pNewVal, 3);
+        int32_t iDepth = hb_arrayGetNI32(pInfo->pNewVal, 4);
         int32_t iPad = 32;
         const char *pFreeImage = nullptr;
 
@@ -5473,18 +5473,18 @@ static HB_BOOL hb_gt_xwc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo) // F
       if (pInfo->pNewVal2 && pInfo->pNewVal2->isArray()) {
         switch (hb_arrayLen(pInfo->pNewVal2)) {
         case 2:
-          rx.left = hb_arrayGetNI(pInfo->pNewVal2, 1);
-          rx.top = hb_arrayGetNI(pInfo->pNewVal2, 2);
+          rx.left = hb_arrayGetNI32(pInfo->pNewVal2, 1);
+          rx.top = hb_arrayGetNI32(pInfo->pNewVal2, 2);
           if (xImage) {
             rx.right += rx.left;
             rx.bottom += rx.top;
           }
           break;
         case 4:
-          rx.left = hb_arrayGetNI(pInfo->pNewVal2, 1);
-          rx.top = hb_arrayGetNI(pInfo->pNewVal2, 2);
-          rx.right = hb_arrayGetNI(pInfo->pNewVal2, 3);
-          rx.bottom = hb_arrayGetNI(pInfo->pNewVal2, 4);
+          rx.left = hb_arrayGetNI32(pInfo->pNewVal2, 1);
+          rx.top = hb_arrayGetNI32(pInfo->pNewVal2, 2);
+          rx.right = hb_arrayGetNI32(pInfo->pNewVal2, 3);
+          rx.bottom = hb_arrayGetNI32(pInfo->pNewVal2, 4);
           if (xImage) {
             if (rx.right >= rx.left + xImage->width) {
               rx.right = rx.left + xImage->width - 1;

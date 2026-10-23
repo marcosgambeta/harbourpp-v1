@@ -2577,7 +2577,7 @@ HB_FUNC(WATABBEDTEXTOUTA)
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   wa_ret_LONG(TabbedTextOutA(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_LPCSTR(4), wa_par_int(5), wa_par_int(6), vec.data(), wa_par_int(8)));
@@ -2596,7 +2596,7 @@ HB_FUNC(WATABBEDTEXTOUTW)
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   wa_ret_LONG(TabbedTextOutW(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_LPCWSTR(4), wa_par_int(5), wa_par_int(6), vec.data(), wa_par_int(8)));
@@ -2610,7 +2610,7 @@ HB_FUNC(WATABBEDTEXTOUT)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   void *str{};
@@ -2631,7 +2631,7 @@ HB_FUNC(WAGETTABBEDTEXTEXTENTA)
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   wa_ret_DWORD(GetTabbedTextExtentA(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_int(3), wa_par_int(4), vec.data()));
@@ -2650,7 +2650,7 @@ HB_FUNC(WAGETTABBEDTEXTEXTENTW)
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++)
     {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   wa_ret_DWORD(GetTabbedTextExtentW(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_int(3), wa_par_int(4), vec.data()));
@@ -2664,7 +2664,7 @@ HB_FUNC(WAGETTABBEDTEXTEXTENT)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   void *str{};
@@ -3331,7 +3331,7 @@ HB_FUNC(WASETSYSCOLORS)
   if (pArray1 != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray1);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec1.push_back(static_cast<INT>(hb_arrayGetNI(pArray1, i + 1)));
+      vec1.push_back(static_cast<INT>(hb_arrayGetNI32(pArray1, i + 1)));
     }
   }
   std::vector<COLORREF> vec2{};

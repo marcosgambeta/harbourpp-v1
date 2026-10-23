@@ -558,22 +558,22 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *p
     switch (vt) {
     case VT_I1:
       V_I1(&v) = pStr ? static_cast<HB_I8>(static_cast<signed char>(pStr[uiPos - 1]))
-                      : static_cast<HB_I8>(hb_arrayGetNI(pItem, uiPos));
+                      : static_cast<HB_I8>(hb_arrayGetNI32(pItem, uiPos));
       ptr = &V_I1(&v);
       break;
     case VT_UI1:
       V_UI1(&v) = pStr ? static_cast<uint8_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                       : static_cast<uint8_t>(hb_arrayGetNI(pItem, uiPos));
+                       : static_cast<uint8_t>(hb_arrayGetNI32(pItem, uiPos));
       ptr = &V_UI1(&v);
       break;
     case VT_I2:
       V_I2(&v) = pStr ? static_cast<int16_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                      : static_cast<int16_t>(hb_arrayGetNI(pItem, uiPos));
+                      : static_cast<int16_t>(hb_arrayGetNI32(pItem, uiPos));
       ptr = &V_I2(&v);
       break;
     case VT_UI2:
       V_UI2(&v) = pStr ? static_cast<uint16_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                       : static_cast<uint16_t>(hb_arrayGetNI(pItem, uiPos));
+                       : static_cast<uint16_t>(hb_arrayGetNI32(pItem, uiPos));
       ptr = &V_UI2(&v);
       break;
     case VT_I4:
@@ -614,12 +614,12 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, HB_ITEM *p
 #endif
     case VT_INT:
       V_INT(&v) = pStr ? static_cast<HB_INT>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                       : static_cast<HB_INT>(hb_arrayGetNI(pItem, uiPos));
+                       : static_cast<HB_INT>(hb_arrayGetNI32(pItem, uiPos));
       ptr = &V_INT(&v);
       break;
     case VT_UINT:
       V_UINT(&v) = pStr ? static_cast<uint32_t>(static_cast<unsigned char>(pStr[uiPos - 1]))
-                        : static_cast<uint32_t>(hb_arrayGetNI(pItem, uiPos));
+                        : static_cast<uint32_t>(hb_arrayGetNI32(pItem, uiPos));
       ptr = &V_UINT(&v);
       break;
     case VT_ERROR:

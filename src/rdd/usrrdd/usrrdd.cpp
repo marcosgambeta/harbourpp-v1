@@ -204,10 +204,10 @@ static bool hb_usrItemToFieldInfo(HB_ITEM *pItem, LPDBFIELDINFO pFieldInfo)
 {
   if (pItem && hb_arrayLen(pItem) == UR_FI_SIZE) {
     pFieldInfo->atomName = hb_usrArrayGetCPtr(pItem, UR_FI_NAME);
-    pFieldInfo->uiType = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_FI_TYPE));
-    pFieldInfo->uiTypeExtended = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_FI_TYPEEXT));
-    pFieldInfo->uiLen = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_FI_LEN));
-    pFieldInfo->uiDec = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_FI_DEC));
+    pFieldInfo->uiType = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_FI_TYPE));
+    pFieldInfo->uiTypeExtended = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_FI_TYPEEXT));
+    pFieldInfo->uiLen = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_FI_LEN));
+    pFieldInfo->uiDec = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_FI_DEC));
     return true;
   }
   return false;
@@ -239,7 +239,7 @@ static HB_ITEM *hb_usrOpenInfoToItem(LPDBOPENINFO pOpenInfo)
 static bool hb_usrItemToOpenInfo(HB_ITEM *pItem, LPDBOPENINFO pOpenInfo)
 {
   if (pItem && hb_arrayLen(pItem) == UR_OI_SIZE) {
-    pOpenInfo->uiArea = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_OI_AREA));
+    pOpenInfo->uiArea = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_OI_AREA));
     pOpenInfo->abName = hb_usrArrayGetCPtr(pItem, UR_OI_NAME);
     pOpenInfo->atomAlias = hb_usrArrayGetCPtr(pItem, UR_OI_ALIAS);
     pOpenInfo->fShared = hb_arrayGetL(pItem, UR_OI_SHARED);
@@ -306,8 +306,8 @@ static bool hb_usrItemToRelInfo(HB_ITEM *pItem, LPDBRELINFO pRelInfo)
     pRelInfo->abKey = hb_usrArrayGet(pItem, UR_RI_CEXPR, Harbour::Item::ANY);
     pRelInfo->isScoped = hb_arrayGetL(pItem, UR_RI_SCOPED);
     pRelInfo->isOptimized = hb_arrayGetL(pItem, UR_RI_OPTIMIZED);
-    pRelInfo->lpaParent = hb_usrGetAreaPointer(hb_arrayGetNI(pItem, UR_RI_PARENT));
-    pRelInfo->lpaChild = hb_usrGetAreaPointer(hb_arrayGetNI(pItem, UR_RI_CHILD));
+    pRelInfo->lpaParent = hb_usrGetAreaPointer(hb_arrayGetNI32(pItem, UR_RI_PARENT));
+    pRelInfo->lpaChild = hb_usrGetAreaPointer(hb_arrayGetNI32(pItem, UR_RI_CHILD));
     pRelInfo->lpdbriNext = static_cast<LPDBRELINFO>(hb_arrayGetPtr(pItem, UR_RI_NEXT));
     return true;
   }
@@ -330,7 +330,7 @@ static bool hb_usrItemToLockInfo(HB_ITEM *pItem, LPDBLOCKINFO pLockInfo)
 {
   if (pItem && hb_arrayLen(pItem) == UR_LI_SIZE) {
     pLockInfo->itmRecID = hb_usrArrayGet(pItem, UR_LI_RECORD, Harbour::Item::ANY);
-    pLockInfo->uiMethod = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_LI_METHOD));
+    pLockInfo->uiMethod = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_LI_METHOD));
     pLockInfo->fResult = static_cast<uint16_t>(hb_arrayGetL(pItem, UR_LI_RESULT));
     return true;
   }
@@ -451,14 +451,14 @@ static HB_ITEM *hb_usrTransInfoToItem(LPDBTRANSINFO pTransInfo)
 static bool hb_usrItemToTransInfo(HB_ITEM *pItem, LPDBTRANSINFO pTransInfo)
 {
   if (pItem && hb_arrayLen(pItem) == UR_TI_SIZE) {
-    uint16_t uiItemCount = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_TI_ITEMCOUNT));
+    uint16_t uiItemCount = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_TI_ITEMCOUNT));
     auto pItems = hb_arrayGetItemPtr(pItem, UR_TI_ITEMS);
 
     if (hb_arrayLen(pItems) == static_cast<HB_SIZE>(uiItemCount) &&
         hb_usrItemToScopeInfo(hb_arrayGetItemPtr(pItem, UR_TI_SCOPE), &pTransInfo->dbsci)) {
-      pTransInfo->lpaSource = hb_usrGetAreaPointer(hb_arrayGetNI(pItem, UR_TI_SRCAREA));
-      pTransInfo->lpaDest = hb_usrGetAreaPointer(hb_arrayGetNI(pItem, UR_TI_DSTAREA));
-      pTransInfo->uiFlags = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_TI_FLAGS));
+      pTransInfo->lpaSource = hb_usrGetAreaPointer(hb_arrayGetNI32(pItem, UR_TI_SRCAREA));
+      pTransInfo->lpaDest = hb_usrGetAreaPointer(hb_arrayGetNI32(pItem, UR_TI_DSTAREA));
+      pTransInfo->uiFlags = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_TI_FLAGS));
       pTransInfo->uiItemCount = uiItemCount;
       if (uiItemCount) {
         LPDBTRANSITEM pTransItem;
@@ -467,8 +467,8 @@ static bool hb_usrItemToTransInfo(HB_ITEM *pItem, LPDBTRANSINFO pTransInfo)
 
         for (uint16_t uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem) {
           auto pItm = hb_arrayGetItemPtr(pItems, uiCount);
-          pTransItem->uiSource = static_cast<uint16_t>(hb_arrayGetNI(pItm, UR_TITEM_SOURCE));
-          pTransItem->uiDest = static_cast<uint16_t>(hb_arrayGetNI(pItm, UR_TITEM_DESTIN));
+          pTransItem->uiSource = static_cast<uint16_t>(hb_arrayGetNI32(pItm, UR_TITEM_SOURCE));
+          pTransItem->uiDest = static_cast<uint16_t>(hb_arrayGetNI32(pItm, UR_TITEM_DESTIN));
         }
       } else {
         pTransInfo->lpTransItems = nullptr;
@@ -514,7 +514,7 @@ static HB_ITEM *hb_usrSortInfoToItem(LPDBSORTINFO pSortInfo)
 static bool hb_usrItemToSortInfo(HB_ITEM *pItem, LPDBSORTINFO pSortInfo)
 {
   if (pItem && hb_arrayLen(pItem) == UR_SRI_SIZE) {
-    uint16_t uiItemCount = static_cast<uint16_t>(hb_arrayGetNI(pItem, UR_SRI_ITEMCOUNT));
+    uint16_t uiItemCount = static_cast<uint16_t>(hb_arrayGetNI32(pItem, UR_SRI_ITEMCOUNT));
     auto pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
 
     if (hb_arrayLen(pItems) == static_cast<HB_SIZE>(uiItemCount) &&
@@ -527,8 +527,8 @@ static bool hb_usrItemToSortInfo(HB_ITEM *pItem, LPDBSORTINFO pSortInfo)
 
         for (uint16_t uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem) {
           auto pItm = hb_arrayGetItemPtr(pItems, uiCount);
-          pSortItem->uiField = static_cast<uint16_t>(hb_arrayGetNI(pItm, UR_SITEM_FIELD));
-          pSortItem->uiFlags = static_cast<uint16_t>(hb_arrayGetNI(pItm, UR_SITEM_FLAGS));
+          pSortItem->uiField = static_cast<uint16_t>(hb_arrayGetNI32(pItm, UR_SITEM_FIELD));
+          pSortItem->uiFlags = static_cast<uint16_t>(hb_arrayGetNI32(pItm, UR_SITEM_FLAGS));
         }
       } else {
         pSortInfo->lpdbsItem = nullptr;

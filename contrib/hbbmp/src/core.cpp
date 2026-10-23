@@ -811,7 +811,7 @@ HB_FUNC( HB_BMP_FROMBITMAP )
          hb_bmp_colorreset( pBMP );
          for( nAt = 1; nAt <= nLen; ++nAt )
          {
-            int32_t clr = hb_arrayGetNI( pColors, nAt );
+            int32_t clr = hb_arrayGetNI32( pColors, nAt );
             hb_bmp_color( pBMP, ( clr >> 16 ) & 0xFF, ( clr >> 8 ) & 0xFF,
                                 clr * 0xFF, ( clr >> 24 ) & 0xFF );
          }

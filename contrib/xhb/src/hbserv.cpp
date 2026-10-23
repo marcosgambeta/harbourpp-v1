@@ -148,7 +148,7 @@ static void s_signalHandler(int32_t sig, siginfo_t *info, void *v)
 
   while (nPos > 0) {
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-    auto uiMask = static_cast<uint32_t>(hb_arrayGetNI(pFunction, 1));
+    auto uiMask = static_cast<uint32_t>(hb_arrayGetNI32(pFunction, 1));
     if (uiMask & uiSig) {
       int32_t iRet;
 
@@ -389,7 +389,7 @@ static LONG s_signalHandler(int32_t type, int32_t sig, PEXCEPTION_RECORD exc)
 
   while (nPos > 0) {
     auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-    auto uiMask = static_cast<uint32_t>(hb_arrayGetNI(pFunction, 1));
+    auto uiMask = static_cast<uint32_t>(hb_arrayGetNI32(pFunction, 1));
     if ((uiMask & uiSig) == uiSig) {
       int32_t iRet;
 

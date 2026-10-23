@@ -366,7 +366,7 @@ HB_FUNC(WAMENUHELP)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<UINT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<UINT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   MenuHelp(wa_par_UINT(1), wa_par_WPARAM(2), wa_par_LPARAM(3), wa_par_HMENU(4), wa_par_HINSTANCE(5), wa_par_HWND(6),
@@ -381,7 +381,7 @@ HB_FUNC(WASHOWHIDEMENUCTL)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   wa_ret_BOOL(ShowHideMenuCtl(wa_par_HWND(1), wa_par_UINT_PTR(2), vec.data()));
@@ -395,7 +395,7 @@ HB_FUNC(WAGETEFFECTIVECLIENTRECT)
   if (pArray != nullptr) {
     const std::size_t nLen = hb_arrayLen(pArray);
     for (std::size_t i = 0; i < nLen; i++) {
-      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+      vec.push_back(static_cast<INT>(hb_arrayGetNI32(pArray, i + 1)));
     }
   }
   GetEffectiveClientRect(wa_par_HWND(1), wa_par_RECT(2), vec.data());

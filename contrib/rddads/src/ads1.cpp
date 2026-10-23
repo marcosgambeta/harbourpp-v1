@@ -1468,12 +1468,12 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, HB_ITEM *pStruct)
     dbFieldInfo.uiTypeExtended = 0;
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
     dbFieldInfo.atomName = hb_arrayGetCPtr(pFieldDesc, DBS_NAME);
-    iData = hb_arrayGetNI(pFieldDesc, DBS_LEN);
+    iData = hb_arrayGetNI32(pFieldDesc, DBS_LEN);
     if (iData < 0) {
       iData = 0;
     }
     uiLen = dbFieldInfo.uiLen = static_cast<uint16_t>(iData);
-    iData = hb_arrayGetNI(pFieldDesc, DBS_DEC);
+    iData = hb_arrayGetNI32(pFieldDesc, DBS_DEC);
     if (iData < 0) {
       iData = 0;
     }
@@ -1483,7 +1483,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, HB_ITEM *pStruct)
     auto iNameLen = static_cast<int32_t>(strlen(szFieldType));
     iData = HB_TOUPPER(szFieldType[0]);
 #ifdef DBS_FLAG
-    dbFieldInfo.uiFlags = hb_arrayGetNI(pFieldDesc, DBS_FLAG);
+    dbFieldInfo.uiFlags = hb_arrayGetNI32(pFieldDesc, DBS_FLAG);
 #else
     dbFieldInfo.uiFlags = 0;
     while (*++szType) {
@@ -5178,7 +5178,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, uint16_t uiIndex, HB_ULONG ulConnec
     if (pItem->isArray()) {
 #if ADS_LIB_VERSION >= 600
       u32RetVal = AdsConnect60(static_cast<UNSIGNED8 *>(HB_UNCONST(hb_arrayGetCPtr(pItem, 1))) /* pucServerPath */,
-                               static_cast<UNSIGNED16>(hb_arrayGetNI(pItem, 2)) /* usServerTypes */,
+                               static_cast<UNSIGNED16>(hb_arrayGetNI32(pItem, 2)) /* usServerTypes */,
                                static_cast<UNSIGNED8 *>(HB_UNCONST(hb_arrayGetCPtr(pItem, 3))) /* pucUserName */,
                                static_cast<UNSIGNED8 *>(HB_UNCONST(hb_arrayGetCPtr(pItem, 4))) /* pucPassword */,
                                static_cast<UNSIGNED32>(hb_arrayGetNL(pItem, 5)) /* ulOptions */, &hConnect);

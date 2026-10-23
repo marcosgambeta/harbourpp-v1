@@ -2462,8 +2462,8 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       x = hb_itemGetNI32(pInfo->pNewVal);
       y = hb_itemGetNI32(pInfo->pNewVal2);
     } else if (pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 2) {
-      x = hb_arrayGetNI(pInfo->pNewVal, 1);
-      y = hb_arrayGetNI(pInfo->pNewVal, 2);
+      x = hb_arrayGetNI32(pInfo->pNewVal, 1);
+      y = hb_arrayGetNI32(pInfo->pNewVal, 2);
     } else {
       break;
     }
@@ -2507,7 +2507,7 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       }
       if (pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 16) {
         for (iVal = 0; iVal < 16; iVal++) {
-          int32_t iColor = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
+          int32_t iColor = hb_arrayGetNI32(pInfo->pNewVal, iVal + 1);
           QRgb rgb = QTC_NUM2RGB(iColor);
           if (rgb != pQTC->colors[iVal]) {
             pQTC->colors[iVal] = rgb;
@@ -2542,9 +2542,9 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
                  (hb_arrayGetType(pInfo->pNewVal, 2) & HB_IT_NUMERIC) &&
                  (hb_arrayGetType(pInfo->pNewVal, 3) & HB_IT_NUMERIC)) {
         HB_SIZE nSize = hb_arrayGetCLen(pInfo->pNewVal, 1);
-        int32_t iWidth = hb_arrayGetNI(pInfo->pNewVal, 2);
-        int32_t iHeight = hb_arrayGetNI(pInfo->pNewVal, 3);
-        int32_t iDepth = hb_arrayGetNI(pInfo->pNewVal, 4);
+        int32_t iWidth = hb_arrayGetNI32(pInfo->pNewVal, 2);
+        int32_t iHeight = hb_arrayGetNI32(pInfo->pNewVal, 3);
+        int32_t iDepth = hb_arrayGetNI32(pInfo->pNewVal, 4);
         int32_t iPitch = 0;
         const uchar *data = nullptr;
         QImage::Format format;
@@ -2596,15 +2596,15 @@ static HB_BOOL hb_gt_qtc_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       if (pInfo->pNewVal2 && HB_IS_ARRAY(pInfo->pNewVal2)) {
         switch (hb_arrayLen(pInfo->pNewVal2)) {
         case 2:
-          rx.setLeft(hb_arrayGetNI(pInfo->pNewVal2, 1));
-          rx.setTop(hb_arrayGetNI(pInfo->pNewVal2, 2));
+          rx.setLeft(hb_arrayGetNI32(pInfo->pNewVal2, 1));
+          rx.setTop(hb_arrayGetNI32(pInfo->pNewVal2, 2));
           if (!qImg.isNull()) {
             rx.setSize(qImg.size());
           }
           break;
         case 4:
-          rx.setCoords(hb_arrayGetNI(pInfo->pNewVal2, 1), hb_arrayGetNI(pInfo->pNewVal2, 2),
-                       hb_arrayGetNI(pInfo->pNewVal2, 3), hb_arrayGetNI(pInfo->pNewVal2, 4));
+          rx.setCoords(hb_arrayGetNI32(pInfo->pNewVal2, 1), hb_arrayGetNI32(pInfo->pNewVal2, 2),
+                       hb_arrayGetNI32(pInfo->pNewVal2, 3), hb_arrayGetNI32(pInfo->pNewVal2, 4));
         }
       } else if (!qImg.isNull() && hb_itemGetL(pInfo->pNewVal2)) {
         iVal = qImg.height() * rx.width() / qImg.width();

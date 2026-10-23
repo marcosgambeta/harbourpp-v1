@@ -2880,9 +2880,9 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
       void *hText;
       HFONT hFont =
-          hb_gt_wvt_GetFont(HB_ARRAYGETSTR(pInfo->pNewVal, 1, &hText, nullptr), hb_arrayGetNI(pInfo->pNewVal, 2),
-                            hb_arrayGetNI(pInfo->pNewVal, 3), hb_arrayGetNI(pInfo->pNewVal, 4),
-                            hb_arrayGetNI(pInfo->pNewVal, 5), pWVT->CodePage);
+          hb_gt_wvt_GetFont(HB_ARRAYGETSTR(pInfo->pNewVal, 1, &hText, nullptr), hb_arrayGetNI32(pInfo->pNewVal, 2),
+                            hb_arrayGetNI32(pInfo->pNewVal, 3), hb_arrayGetNI32(pInfo->pNewVal, 4),
+                            hb_arrayGetNI32(pInfo->pNewVal, 5), pWVT->CodePage);
       hb_strfree(hText);
 
       if (hFont) {
@@ -2891,20 +2891,20 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
         HB_STRNCPY(pWVT->fontFace, HB_ARRAYGETSTR(pInfo->pNewVal, 1, &hText, nullptr),
                    HB_SIZEOFARRAY(pWVT->fontFace) - 1);
         hb_strfree(hText);
-        pWVT->fontHeight = hb_arrayGetNI(pInfo->pNewVal, 2);
-        pWVT->fontWidth = hb_arrayGetNI(pInfo->pNewVal, 3);
-        pWVT->fontWeight = hb_arrayGetNI(pInfo->pNewVal, 4);
-        pWVT->fontQuality = hb_arrayGetNI(pInfo->pNewVal, 5);
+        pWVT->fontHeight = hb_arrayGetNI32(pInfo->pNewVal, 2);
+        pWVT->fontWidth = hb_arrayGetNI32(pInfo->pNewVal, 3);
+        pWVT->fontWeight = hb_arrayGetNI32(pInfo->pNewVal, 4);
+        pWVT->fontQuality = hb_arrayGetNI32(pInfo->pNewVal, 5);
 
-        if (hb_gt_wvt_ValidWindowSize(pWVT->hWnd, pWVT->ROWS, pWVT->COLS, hFont, hb_arrayGetNI(pInfo->pNewVal, 3))) {
+        if (hb_gt_wvt_ValidWindowSize(pWVT->hWnd, pWVT->ROWS, pWVT->COLS, hFont, hb_arrayGetNI32(pInfo->pNewVal, 3))) {
 #if 0
                   pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
 
                   hb_strncpy(pWVT->fontFace, hb_arrayGetCPtr(pInfo->pNewVal, 1), sizeof(pWVT->fontFace) - 1);
-                  pWVT->fontHeight  = hb_arrayGetNI(pInfo->pNewVal, 2);
-                  pWVT->fontWidth   = hb_arrayGetNI(pInfo->pNewVal, 3);
-                  pWVT->fontWeight  = hb_arrayGetNI(pInfo->pNewVal, 4);
-                  pWVT->fontQuality = hb_arrayGetNI(pInfo->pNewVal, 5);
+                  pWVT->fontHeight  = hb_arrayGetNI32(pInfo->pNewVal, 2);
+                  pWVT->fontWidth   = hb_arrayGetNI32(pInfo->pNewVal, 3);
+                  pWVT->fontWeight  = hb_arrayGetNI32(pInfo->pNewVal, 4);
+                  pWVT->fontQuality = hb_arrayGetNI32(pInfo->pNewVal, 5);
 #endif
           if (pWVT->hWnd) {
             hb_gt_wvt_ResetWindowSize(pWVT);
@@ -3262,8 +3262,8 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     hb_arraySetNI(pInfo->pResult, 1, pWVT->PTEXTSIZE.x * pWVT->COLS);
 
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) && hb_arrayLen(pInfo->pNewVal) == 2) {
-      int32_t iY = hb_arrayGetNI(pInfo->pNewVal, 2);
-      int32_t iX = hb_arrayGetNI(pInfo->pNewVal, 1);
+      int32_t iY = hb_arrayGetNI32(pInfo->pNewVal, 2);
+      int32_t iX = hb_arrayGetNI32(pInfo->pNewVal, 1);
 
       if (iY > 0) {
         HB_BOOL bOldCentre = pWVT->CentreWindow;
@@ -3292,11 +3292,11 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
         (hb_itemType(pInfo->pNewVal2) & Harbour::Item::ARRAY) && hb_arrayLen(pInfo->pNewVal2) == 2) {
       int32_t iX, iY, iW, iH;
 
-      iX = hb_arrayGetNI(pInfo->pNewVal, 1);
-      iY = hb_arrayGetNI(pInfo->pNewVal, 2);
+      iX = hb_arrayGetNI32(pInfo->pNewVal, 1);
+      iY = hb_arrayGetNI32(pInfo->pNewVal, 2);
 
-      iW = hb_arrayGetNI(pInfo->pNewVal2, 1);
-      iH = hb_arrayGetNI(pInfo->pNewVal2, 2);
+      iW = hb_arrayGetNI32(pInfo->pNewVal2, 1);
+      iH = hb_arrayGetNI32(pInfo->pNewVal2, 2);
 
       SetWindowPos(pWVT->hWnd, nullptr, iX, iY, iW, iH, SWP_NOACTIVATE | SWP_DRAWFRAME | SWP_NOZORDER);
 
@@ -3500,8 +3500,8 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
         i1 = hb_itemGetNI32(pInfo->pNewVal);
         i2 = hb_itemGetNI32(pInfo->pNewVal2);
       } else if (hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) {
-        i1 = hb_arrayGetNI(pInfo->pNewVal, 1);
-        i2 = hb_arrayGetNI(pInfo->pNewVal, 2);
+        i1 = hb_arrayGetNI32(pInfo->pNewVal, 1);
+        i2 = hb_arrayGetNI32(pInfo->pNewVal, 2);
       } else {
         break;
       }
@@ -3566,7 +3566,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
 
     case HB_GTS_SETTIMER:
       if (hb_itemType(pInfo->pNewVal2) & Harbour::Item::ARRAY) {
-        SetTimer(pWVT->hWnd, hb_arrayGetNI(pInfo->pNewVal2, 1), hb_arrayGetNI(pInfo->pNewVal2, 2), nullptr);
+        SetTimer(pWVT->hWnd, hb_arrayGetNI32(pInfo->pNewVal2, 1), hb_arrayGetNI32(pInfo->pNewVal2, 2), nullptr);
       }
       break;
 
@@ -3588,7 +3588,7 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
       hb_arraySetNI(pInfo->pResult, 2, rect.top);
 
       if (pWVT->hWnd && (hb_itemType(pInfo->pNewVal2) & Harbour::Item::ARRAY)) {
-        hb_retl(SetWindowPos(pWVT->hWnd, nullptr, hb_arrayGetNI(pInfo->pNewVal2, 1), hb_arrayGetNI(pInfo->pNewVal2, 2),
+        hb_retl(SetWindowPos(pWVT->hWnd, nullptr, hb_arrayGetNI32(pInfo->pNewVal2, 1), hb_arrayGetNI32(pInfo->pNewVal2, 2),
                              rect.right - rect.left, rect.bottom - rect.top, SWP_NOSIZE + SWP_NOZORDER));
       }
       break;
@@ -3610,8 +3610,8 @@ static HB_BOOL hb_gt_wvt_Info(HB_GT *pGT, int32_t iType, HB_GT_INFO *pInfo)
     case HB_GTS_SYSTRAYICON:
 
       if (pWVT->hWnd && (hb_itemType(pInfo->pNewVal2) & Harbour::Item::ARRAY)) {
-        int32_t mode = hb_arrayGetNI(pInfo->pNewVal2, 1);
-        int32_t iIconType = hb_arrayGetNI(pInfo->pNewVal2, 2);
+        int32_t mode = hb_arrayGetNI32(pInfo->pNewVal2, 1);
+        int32_t iIconType = hb_arrayGetNI32(pInfo->pNewVal2, 2);
         HICON hIcon = 0;
         NOTIFYICONDATA tnid;
         void *hIconName;

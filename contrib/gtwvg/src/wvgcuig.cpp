@@ -1504,8 +1504,8 @@ static void hb_wvg_GridVert(HB_GTWVT *pWVT, HB_ITEM *pArray, RECT *uRect)
   HB_ISIZ iTabs = hb_arrayLen(pCols);
 
   if (iTabs > 0) {
-    int32_t iTop = hb_arrayGetNI(pArray, 1) * (int32_t)pWVT->PTEXTSIZE.y;
-    int32_t iBottom = ((hb_arrayGetNI(pArray, 2) + 1) * (int32_t)pWVT->PTEXTSIZE.y) - 1;
+    int32_t iTop = hb_arrayGetNI32(pArray, 1) * (int32_t)pWVT->PTEXTSIZE.y;
+    int32_t iBottom = ((hb_arrayGetNI32(pArray, 2) + 1) * (int32_t)pWVT->PTEXTSIZE.y) - 1;
 
     if ((iTop >= uRect->top && iTop <= uRect->bottom) || (iBottom >= uRect->top && iBottom <= uRect->bottom)) {
       int32_t x;
@@ -1514,7 +1514,7 @@ static void hb_wvg_GridVert(HB_GTWVT *pWVT, HB_ITEM *pArray, RECT *uRect)
 
       SelectObject(hdc, pWVT->currentPen);
       for (i = 1; i <= iTabs; ++i) {
-        x = hb_arrayGetNI(pCols, i) * pWVT->PTEXTSIZE.x;
+        x = hb_arrayGetNI32(pCols, i) * pWVT->PTEXTSIZE.x;
         MoveToEx(hdc, x, iTop, nullptr);
         LineTo(hdc, x, iBottom);
       }
@@ -1525,7 +1525,7 @@ static void hb_wvg_GridVert(HB_GTWVT *pWVT, HB_ITEM *pArray, RECT *uRect)
       hdc = pWVT->hdc;
       SelectObject(hdc, pWVT->currentPen);
       for (i = 1; i <= iTabs; ++i) {
-        x = hb_arrayGetNI(pCols, i) * pWVT->PTEXTSIZE.x;
+        x = hb_arrayGetNI32(pCols, i) * pWVT->PTEXTSIZE.x;
         MoveToEx(hdc, x, iTop, nullptr);
         LineTo(hdc, x, iBottom);
       }
@@ -1535,13 +1535,13 @@ static void hb_wvg_GridVert(HB_GTWVT *pWVT, HB_ITEM *pArray, RECT *uRect)
 
 static void hb_wvg_GridHorz(HB_GTWVT *pWVT, HB_ITEM *pArray, RECT *uRect)
 {
-  int32_t iAtRow = hb_arrayGetNI(pArray, 1);
-  int32_t iRows = hb_arrayGetNI(pArray, 4);
+  int32_t iAtRow = hb_arrayGetNI32(pArray, 1);
+  int32_t iRows = hb_arrayGetNI32(pArray, 4);
   int32_t i, y;
   HDC hdc;
 
-  int32_t iLeft = hb_arrayGetNI(pArray, 2) * pWVT->PTEXTSIZE.x;
-  int32_t iRight = ((hb_arrayGetNI(pArray, 3) + 1) * pWVT->PTEXTSIZE.x) - 1;
+  int32_t iLeft = hb_arrayGetNI32(pArray, 2) * pWVT->PTEXTSIZE.x;
+  int32_t iRight = ((hb_arrayGetNI32(pArray, 3) + 1) * pWVT->PTEXTSIZE.x) - 1;
   int32_t iTop = iAtRow * pWVT->PTEXTSIZE.y;
   int32_t iBottom = (iAtRow + iRows) * pWVT->PTEXTSIZE.y; // do not add 1
 
@@ -1591,17 +1591,17 @@ void hb_gt_wvt_PaintGObjects(HB_GTWVT *pWVT, RECT *uRect)
             iObjType = gObj->iData;
 
             if (iObjType == GOBJ_OBJTYPE_GRIDVERT) {
-              if (hb_arrayGetNI(pArray, 4) > 0) {
+              if (hb_arrayGetNI32(pArray, 4) > 0) {
                 hb_wvg_GridVert(pWVT, pArray, uRect);
               }
             } else if (iObjType == GOBJ_OBJTYPE_GRIDHORZ) {
               hb_wvg_GridHorz(pWVT, pArray, uRect);
             } else {
               // Take care of offsets 5th element
-              iTop = pWVT->PTEXTSIZE.y * hb_arrayGetNI(pArray, 1);
-              iLeft = pWVT->PTEXTSIZE.x * hb_arrayGetNI(pArray, 2);
-              iBottom = (pWVT->PTEXTSIZE.y * (hb_arrayGetNI(pArray, 3) + 1)) - 1;
-              iRight = (pWVT->PTEXTSIZE.x * (hb_arrayGetNI(pArray, 4) + 1)) - 1;
+              iTop = pWVT->PTEXTSIZE.y * hb_arrayGetNI32(pArray, 1);
+              iLeft = pWVT->PTEXTSIZE.x * hb_arrayGetNI32(pArray, 2);
+              iBottom = (pWVT->PTEXTSIZE.y * (hb_arrayGetNI32(pArray, 3) + 1)) - 1;
+              iRight = (pWVT->PTEXTSIZE.x * (hb_arrayGetNI32(pArray, 4) + 1)) - 1;
             }
           } else {
             iObjType = 0;
