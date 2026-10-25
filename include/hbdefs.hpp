@@ -191,19 +191,19 @@ typedef unsigned int        HB_UINT;
 
 /* Harbour size type */
 #if defined(HB_OS_WIN_64)
-#  if defined(HB_SIZE_SIGNED)
-      typedef int64_t         HB_SIZE;
-#  else
+//#  if defined(HB_SIZE_SIGNED) // NOTE: HB_SIZE_SIGNED is deprecated in Harbour++
+//      typedef int64_t         HB_SIZE;
+//#  else
       typedef uint64_t        HB_SIZE;        /* TODO: Currently 'unsigned', to be changed 'signed' */
-#  endif
+//#  endif
    typedef int64_t         HB_ISIZ;           /* TODO: Change to HB_SIZE, after HB_SIZE has been converted to signed type. TEMPORARY type. */
    typedef uint64_t        HB_USIZ;           /* TEMPORARY type. Do not use it. */
 #else
-#  if defined(HB_SIZE_SIGNED)
-      typedef HB_LONG             HB_SIZE;
-#  else
+//#  if defined(HB_SIZE_SIGNED)
+//      typedef HB_LONG             HB_SIZE;
+//#  else
       typedef HB_ULONG            HB_SIZE;        /* TODO: Currently 'unsigned', to be changed 'signed' */
-#  endif
+//#  endif
    typedef HB_LONG             HB_ISIZ;           /* TODO: Change to HB_SIZE, after HB_SIZE has been converted to signed type. TEMPORARY type. */
    typedef HB_ULONG            HB_USIZ;           /* TEMPORARY type. Do not use it. */
 #endif
@@ -593,17 +593,17 @@ typedef uint32_t HB_FATTR;
 
 /* maximum index size */
 #if defined(HB_OS_WIN_64)
-#  if defined(HB_SIZE_SIGNED)
-#     define HB_SIZE_MAX    LONGLONG_MAX
-#  else
+//#  if defined(HB_SIZE_SIGNED) // NOTE: HB_SIZE_SIGNED is deprecated in Harbour++
+//#     define HB_SIZE_MAX    LONGLONG_MAX
+//#  else
 #     define HB_SIZE_MAX    ULONGLONG_MAX
-#  endif
+//#  endif
 #else
-#  if defined(HB_SIZE_SIGNED)
-#     define HB_SIZE_MAX    LONG_MAX
-#  else
+//#  if defined(HB_SIZE_SIGNED)
+//#     define HB_SIZE_MAX    LONG_MAX
+//#  else
 #     define HB_SIZE_MAX    ULONG_MAX
-#  endif
+//#  endif
 #endif
 
 #if defined(HB_OS_WIN) // || defined(HB_OS_DOS) || defined(HB_OS_OS2)
