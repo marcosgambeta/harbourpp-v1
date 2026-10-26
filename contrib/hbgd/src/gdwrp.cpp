@@ -97,8 +97,7 @@ static HB_GARBAGE_FUNC(hb_gdImage_Destructor)
   auto ptr = static_cast<gdImagePtr *>(Cargo);
 
   /* Check if pointer is not nullptr to avoid multiple freeing */
-  if (*ptr)
-  {
+  if (*ptr) {
     /* Destroy the image */
     gdImageDestroy(*ptr);
 
@@ -154,8 +153,7 @@ static HB_GARBAGE_FUNC(hb_gdFont_Destructor)
   auto ptr = static_cast<gdFontPtr *>(Cargo);
 
   /* Check if pointer is not nullptr to avoid multiple freeing */
-  if (*ptr)
-  {
+  if (*ptr) {
     /* Destroy the Font */
 #if 0
       /* Do nothing, GD handles it directly and gdFontDestroy() not exists */
@@ -219,8 +217,7 @@ static void *LoadImageFromFile(const char *szFile, int32_t *sz)
   void *iptr;
   HB_FHANDLE fhandle;
 
-  if ((fhandle = hb_fsOpen(szFile, FO_READ)) != FS_ERROR)
-  {
+  if ((fhandle = hb_fsOpen(szFile, FO_READ)) != FS_ERROR) {
     /* get lenght */
     *sz = static_cast<int32_t>(hb_fsSeek(fhandle, 0, FS_END));
     /* rewind */
@@ -231,9 +228,7 @@ static void *LoadImageFromFile(const char *szFile, int32_t *sz)
     hb_fsReadLarge(fhandle, iptr, static_cast<HB_SIZE>(*sz));
 
     hb_fsClose(fhandle);
-  }
-  else
-  {
+  } else {
     /* File error */
     iptr = nullptr;
     *sz = 0;
@@ -251,8 +246,7 @@ static void SaveImageToFile(const char *szFile, const void *iptr, int32_t sz)
 {
   HB_FHANDLE fhandle;
 
-  if ((fhandle = hb_fsCreate(szFile, FC_NORMAL)) != FS_ERROR)
-  {
+  if ((fhandle = hb_fsCreate(szFile, FC_NORMAL)) != FS_ERROR) {
     /* Write Image */
     SaveImageToHandle(fhandle, iptr, sz);
 
@@ -266,38 +260,29 @@ static void GDImageCreateFrom(int32_t nType)
   int32_t sz;
   void *iptr;
 
-  if (HB_ISCHAR(1))
-  {
+  if (HB_ISCHAR(1)) {
     /* Retrieve image from file name */
     iptr = LoadImageFromFile(hb_parc(1), &sz);
-  }
-  else if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  } else if (hb_isGdImage(1) && HB_ISNUM(2)) {
     /* Retrieve image size */
     sz = hb_parni32(2);
 
     /* Retrieve image pointer + size */
     iptr = hb_parGdImage(1);
-  }
-  else if (HB_ISNUM(1) && HB_ISNUM(2))
-  {
+  } else if (HB_ISNUM(1) && HB_ISNUM(2)) {
     /* Retrieve image size */
     sz = hb_parni32(2);
 
     /* retrieve image from handle */
     iptr = LoadImageFromHandle(hb_numToHandle(hb_parnintdef(1, 0 /* std input */)), sz);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     return;
   }
 
-  if (iptr && sz)
-  {
+  if (iptr && sz) {
     /* Create Image */
-    switch (nType)
-    {
+    switch (nType) {
     case IMAGE_JPEG:
       im = gdImageCreateFromJpegPtr(sz, iptr);
       break;
@@ -325,8 +310,7 @@ static void GDImageCreateFrom(int32_t nType)
 
 static void GDImageSaveTo(int32_t nType)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     gdImagePtr im = hb_parGdImage(1);
 
     int32_t sz = 0;
@@ -334,8 +318,7 @@ static void GDImageSaveTo(int32_t nType)
     int32_t level = 0, fg = 0;
 
     /* Get file name or an output handler or NIL it I want a return string */
-    if (!(HB_ISNIL(2) || HB_ISCHAR(2) || HB_ISNUM(2)))
-    {
+    if (!(HB_ISNIL(2) || HB_ISCHAR(2) || HB_ISNUM(2))) {
       hb_errRT_BASE_SubstR(EG_ARG, 0, "Second argument must be NIL or numeric or a string.", HB_ERR_FUNCNAME, 2,
                            hb_paramError(2));
       return;
@@ -343,46 +326,36 @@ static void GDImageSaveTo(int32_t nType)
 
     /* Retrieve compression level */
     /* check if is numeric */
-    if (!(HB_ISNIL(3) || HB_ISNUM(3)))
-    {
+    if (!(HB_ISNIL(3) || HB_ISNUM(3))) {
       hb_errRT_BASE_SubstR(EG_ARG, 0, "Third argument must be NIL or numeric.", HB_ERR_FUNCNAME, 1, hb_paramError(3));
       return;
     }
 
-    if (nType == IMAGE_JPEG)
-    {
+    if (nType == IMAGE_JPEG) {
       /* check range */
       level = hb_parnidef(3, -1);
-      if (!(level >= -1 && level <= 95))
-      {
+      if (!(level >= -1 && level <= 95)) {
         hb_errRT_BASE_SubstR(EG_ARG, 0, "Compression level must be -1 (default) or a value between 0 and 95.",
                              HB_ERR_FUNCNAME, 1, hb_paramError(3));
         return;
       }
-    }
-    else if (nType == IMAGE_PNG)
-    {
+    } else if (nType == IMAGE_PNG) {
       /* check range */
       level = hb_parnidef(3, -1);
-      if (!(level >= -1 && level <= 9))
-      {
+      if (!(level >= -1 && level <= 9)) {
         hb_errRT_BASE_SubstR(EG_ARG, 0, "Compression level must be -1 (default) or a value between 0 and 9.",
                              HB_ERR_FUNCNAME, 1, hb_paramError(3));
         return;
       }
-    }
-    else if (nType == IMAGE_WBMP)
-    {
-      if (!HB_ISNUM(3))
-      {
+    } else if (nType == IMAGE_WBMP) {
+      if (!HB_ISNUM(3)) {
         hb_errRT_BASE_SubstR(EG_ARG, 0, "Foreground color nedeed", HB_ERR_FUNCNAME, 1, hb_paramError(3));
         return;
       }
       fg = hb_parni32(3);
     }
 
-    switch (nType)
-    {
+    switch (nType) {
     case IMAGE_JPEG:
       /* Get image Ptr */
       iptr = gdImageJpegPtr(im, &sz, level);
@@ -406,19 +379,16 @@ static void GDImageSaveTo(int32_t nType)
     }
 
     /* If i get a file name */
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       SaveImageToFile(hb_parc(2), iptr, sz);
     }
 
     /* Write to file handle */
-    else if (HB_ISNUM(2))
-    {
+    else if (HB_ISNUM(2)) {
       /* Write to std output or to a passed file */
       HB_FHANDLE fhandle = hb_numToHandle(hb_parnint(2));
 
-      if (fhandle == FS_ERROR || fhandle == 0)
-      {
+      if (fhandle == FS_ERROR || fhandle == 0) {
         fhandle = 1; /* std output */
       }
 
@@ -426,17 +396,14 @@ static void GDImageSaveTo(int32_t nType)
       SaveImageToHandle(fhandle, iptr, sz);
     }
     /* Return image as string) */
-    else
-    {
+    else {
       /* Return as string */
       hb_retclen(static_cast<const char *>(iptr), static_cast<HB_SIZE>(sz));
     }
 
     /* Free memory */
     gdFree(iptr);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -476,17 +443,15 @@ HB_FUNC(GDVERSIONNUMBER)
 
 /* IMAGE CREATION, DESTRUCTION, LOADING AND SAVING */
 
-HB_FUNC(GDIMAGECREATE) /* gdImagePtr gdImageCreate(sx, sy) */
+/* gdImagePtr gdImageCreate(sx, sy) */
+HB_FUNC(GDIMAGECREATE)
 {
-  if (HB_ISNUM(1) && HB_ISNUM(2))
-  {
+  if (HB_ISNUM(1) && HB_ISNUM(2)) {
     auto sx = hb_parni32(1);
     auto sy = hb_parni32(2);
 
     hb_retGdImage(gdImageCreate(sx, sy));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -494,68 +459,86 @@ HB_FUNC(GDIMAGECREATE) /* gdImagePtr gdImageCreate(sx, sy) */
 /* Alias of GDCreate() */
 HB_FUNC_TRANSLATE(GDIMAGECREATEPALETTE, GDIMAGECREATE) /* gdImagePtr gdImageCreatePalette(sx, sy) */
 
-HB_FUNC(GDIMAGECREATETRUECOLOR) /* gdImageCreateTrueColor(sx, sy) */
+/* gdImageCreateTrueColor(sx, sy) */
+HB_FUNC(GDIMAGECREATETRUECOLOR)
 {
-  if (HB_ISNUM(1) && HB_ISNUM(2))
-  {
+  if (HB_ISNUM(1) && HB_ISNUM(2)) {
     auto sx = hb_parni32(1);
     auto sy = hb_parni32(2);
 
     hb_retGdImage(gdImageCreateTrueColor(sx, sy));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECREATEFROMJPEG) /* gdImageCreateFromJpegPtr(int size, void *data) */
-{                              /* implementation: gdImagePtr gdImageCreateFromJpeg( char *szFile ) */
+/* gdImageCreateFromJpegPtr(int size, void *data) */
+/* implementation: gdImagePtr gdImageCreateFromJpeg( char *szFile ) */
+HB_FUNC(GDIMAGECREATEFROMJPEG)
+{
   GDImageCreateFrom(IMAGE_JPEG);
 }
 
-HB_FUNC(GDIMAGECREATEFROMGIF) /* gdImageCreateFromGifPtr(int size, void *data) */
-{                             /* implementation: gdImagePtr gdImageCreateFromGif( char *szFile ) */
+/* gdImageCreateFromGifPtr(int size, void *data) */
+/* implementation: gdImagePtr gdImageCreateFromGif( char *szFile ) */
+HB_FUNC(GDIMAGECREATEFROMGIF)
+{
   GDImageCreateFrom(IMAGE_GIF);
 }
 
-HB_FUNC(GDIMAGECREATEFROMPNG) /* gdImageCreateFromPngPtr(int size, void *data) */
-{                             /* implementation: gdImagePtr gdImageCreateFromPng( char *szFile ) */
+/* gdImageCreateFromPngPtr(int size, void *data) */
+/* implementation: gdImagePtr gdImageCreateFromPng( char *szFile ) */
+HB_FUNC(GDIMAGECREATEFROMPNG)
+{
   GDImageCreateFrom(IMAGE_PNG);
 }
 
-HB_FUNC(GDIMAGECREATEFROMWBMP) /* gdImagePtr gdImageCreateFromWBMPPtr (int size, void *data) */
-{                              /* implementation: gdImagePtr gdImageCreateFromWBMP ( char *szFile ) */
+/* gdImagePtr gdImageCreateFromWBMPPtr (int size, void *data) */
+/* implementation: gdImagePtr gdImageCreateFromWBMP ( char *szFile ) */
+HB_FUNC(GDIMAGECREATEFROMWBMP)
+{
   GDImageCreateFrom(IMAGE_WBMP);
 }
 
-HB_FUNC(GDIMAGECREATEFROMGD) /* gdImagePtr gdImageCreateFromGdPtr (int size, void *data) */
-{                            /* implementation: gdImagePtr gdImageCreateFromGd ( char *szFile ) */
+/* gdImagePtr gdImageCreateFromGdPtr (int size, void *data) */
+/* implementation: gdImagePtr gdImageCreateFromGd ( char *szFile ) */
+HB_FUNC(GDIMAGECREATEFROMGD)
+{
   GDImageCreateFrom(IMAGE_GD);
 }
 
-HB_FUNC(GDIMAGEJPEG) /* original: void gdImageJpeg(gdImagePtr im, FILE *out) */
-{                    /* implementation: void gdImageJpeg(gdImagePtr im, char *szFile) */
+/* original: void gdImageJpeg(gdImagePtr im, FILE *out) */
+/* implementation: void gdImageJpeg(gdImagePtr im, char *szFile) */
+HB_FUNC(GDIMAGEJPEG)
+{
   GDImageSaveTo(IMAGE_JPEG);
 }
 
-HB_FUNC(GDIMAGEGIF) /* original: void gdImageGif(gdImagePtr im, FILE *out) */
-{                   /* implementation: void gdImageGif(gdImagePtr im, char *szFile) */
+/* original: void gdImageGif(gdImagePtr im, FILE *out) */
+/* implementation: void gdImageGif(gdImagePtr im, char *szFile) */
+HB_FUNC(GDIMAGEGIF)
+{
   GDImageSaveTo(IMAGE_GIF);
 }
 
-HB_FUNC(GDIMAGEPNG) /* original: void gdImagePngEx(gdImagePtr im, FILE *out, int level) */
-{                   /* implementation: void gdImagePng(gdImagePtr im, char *szFile [, int level] ) */
+/* original: void gdImagePngEx(gdImagePtr im, FILE *out, int level) */
+/* implementation: void gdImagePng(gdImagePtr im, char *szFile [, int level] ) */
+HB_FUNC(GDIMAGEPNG)
+{
   GDImageSaveTo(IMAGE_PNG);
 }
 
-HB_FUNC(GDIMAGEWBMP) /* original: void gdImageWBmp(gdImagePtr im, FILE *out) */
-{                    /* implementation: void gdImageWBmp(gdImagePtr im, char *szFile, int fg) */
+/* original: void gdImageWBmp(gdImagePtr im, FILE *out) */
+/* implementation: void gdImageWBmp(gdImagePtr im, char *szFile, int fg) */
+HB_FUNC(GDIMAGEWBMP)
+{
   GDImageSaveTo(IMAGE_WBMP);
 }
 
-HB_FUNC(GDIMAGEGD) /* original: void gdImageGD(gdImagePtr im, FILE *out) */
-{                  /* implementation: void gdImageGD(gdImagePtr im, char *szFile) */
+/* original: void gdImageGD(gdImagePtr im, FILE *out) */
+/* implementation: void gdImageGD(gdImagePtr im, char *szFile) */
+HB_FUNC(GDIMAGEGD)
+{
   GDImageSaveTo(IMAGE_GD);
 }
 
@@ -563,7 +546,8 @@ HB_FUNC(GDIMAGEGD) /* original: void gdImageGD(gdImagePtr im, FILE *out) */
 
 /* After Przemek changes on hb_*ptr() functions, this is a void function held only
    for compatibility with GD library. */
-HB_FUNC(GDIMAGEDESTROY) /* gdImageDestroy(gdImagePtr im) */
+/* gdImageDestroy(gdImagePtr im) */
+HB_FUNC(GDIMAGEDESTROY)
 {
 }
 
@@ -571,10 +555,10 @@ HB_FUNC(GDIMAGEDESTROY) /* gdImageDestroy(gdImagePtr im) */
 
 /* DRAWING FUNCTIONS */
 
-HB_FUNC(GDIMAGESETPIXEL) /* void gdImageSetPixel(gdImagePtr im, int x, int y, int color) */
+/* void gdImageSetPixel(gdImagePtr im, int x, int y, int color) */
+HB_FUNC(GDIMAGESETPIXEL)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -582,17 +566,15 @@ HB_FUNC(GDIMAGESETPIXEL) /* void gdImageSetPixel(gdImagePtr im, int x, int y, in
     auto color = hb_parni32(4);
 
     gdImageSetPixel(im, x, y, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGELINE) /* void gdImageLine(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+/* void gdImageLine(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+HB_FUNC(GDIMAGELINE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x1 = hb_parni32(2);
@@ -602,17 +584,15 @@ HB_FUNC(GDIMAGELINE) /* void gdImageLine(gdImagePtr im, int x1, int y1, int x2, 
     auto color = hb_parni32(6);
 
     gdImageLine(im, x1, y1, x2, y2, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEDASHEDLINE) /* void gdImageDashedLine(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+/* void gdImageDashedLine(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+HB_FUNC(GDIMAGEDASHEDLINE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x1 = hb_parni32(2);
@@ -622,18 +602,16 @@ HB_FUNC(GDIMAGEDASHEDLINE) /* void gdImageDashedLine(gdImagePtr im, int x1, int 
     auto color = hb_parni32(6);
 
     gdImageDashedLine(im, x1, y1, x2, y2, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(
-    GDIMAGEPOLYGON) /* original: void gdImagePolygon(gdImagePtr im, gdPointPtr points, int pointsTotal, int color) */
-{                   /* implementation: void gdImagePolygon(gdImagePtr im, gdPointPtr points, int color) */
-  if (hb_isGdImage(1) && HB_ISARRAY(2) && HB_ISNUM(3))
-  {
+/* original: void gdImagePolygon(gdImagePtr im, gdPointPtr points, int pointsTotal, int color) */
+/* implementation: void gdImagePolygon(gdImagePtr im, gdPointPtr points, int color) */
+HB_FUNC(GDIMAGEPOLYGON)
+{
+  if (hb_isGdImage(1) && HB_ISARRAY(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto pPoints = hb_param(2, Harbour::Item::ARRAY);
@@ -643,16 +621,12 @@ HB_FUNC(
     /* Max Points of polygon */
     auto points = static_cast<gdPoint *>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
-    for (auto i = 0; i < pointsTotal; i++)
-    {
+    for (auto i = 0; i < pointsTotal; i++) {
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
-      if (pPoint->isArray())
-      {
+      if (pPoint->isArray()) {
         points[i].x = hb_arrayGetNI32(pPoint, 1);
         points[i].y = hb_arrayGetNI32(pPoint, 2);
-      }
-      else
-      {
+      } else {
         points[i].x = 0;
         points[i].y = 0;
       }
@@ -662,19 +636,17 @@ HB_FUNC(
     gdImagePolygon(im, static_cast<gdPointPtr>(points), pointsTotal, color);
 
     hb_xfree(points);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEOPENPOLYGON) /* original: void gdImageOpenPolygon(gdImagePtr im, gdPointPtr points, int pointsTotal, int
-                               color) */
-{                           /* implementation: void gdImageOpenPolygon(gdImagePtr im, gdPointPtr points, int color) */
+/* original: void gdImageOpenPolygon(gdImagePtr im, gdPointPtr points, int pointsTotal, int color) */
+/* implementation: void gdImageOpenPolygon(gdImagePtr im, gdPointPtr points, int color) */
+HB_FUNC(GDIMAGEOPENPOLYGON)
+{
 #if HB_GD_VERS(2, 0, 33)
-  if (hb_isGdImage(1) && HB_ISARRAY(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISARRAY(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto pPoints = hb_param(2, Harbour::Item::ARRAY);
@@ -684,16 +656,12 @@ HB_FUNC(GDIMAGEOPENPOLYGON) /* original: void gdImageOpenPolygon(gdImagePtr im, 
     /* Max Points of polygon */
     auto points = static_cast<gdPoint *>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
-    for (auto i = 0; i < pointsTotal; i++)
-    {
+    for (auto i = 0; i < pointsTotal; i++) {
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
-      if (pPoint->isArray())
-      {
+      if (pPoint->isArray()) {
         points[i].x = hb_arrayGetNI32(pPoint, 1);
         points[i].y = hb_arrayGetNI32(pPoint, 2);
-      }
-      else
-      {
+      } else {
         points[i].x = 0;
         points[i].y = 0;
       }
@@ -703,18 +671,16 @@ HB_FUNC(GDIMAGEOPENPOLYGON) /* original: void gdImageOpenPolygon(gdImagePtr im, 
     gdImageOpenPolygon(im, static_cast<gdPointPtr>(points), pointsTotal, color);
 
     hb_xfree(points);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #endif
 }
 
-HB_FUNC(GDIMAGERECTANGLE) /* void gdImageRectangle(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+/* void gdImageRectangle(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+HB_FUNC(GDIMAGERECTANGLE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x1 = hb_parni32(2);
@@ -724,18 +690,16 @@ HB_FUNC(GDIMAGERECTANGLE) /* void gdImageRectangle(gdImagePtr im, int x1, int y1
     auto color = hb_parni32(6);
 
     gdImageRectangle(im, x1, y1, x2, y2, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEFILLEDPOLYGON) /* original: void gdImageFilledPolygon(gdImagePtr im, gdPointPtr points, int pointsTotal,
-                                 int color) */
-{ /* implementation: void gdImageFilledPolygon(gdImagePtr im, gdPointPtr points, int color) */
-  if (hb_isGdImage(1) && HB_ISARRAY(2) && HB_ISNUM(3))
-  {
+/* original: void gdImageFilledPolygon(gdImagePtr im, gdPointPtr points, int pointsTotal, int color) */
+/* implementation: void gdImageFilledPolygon(gdImagePtr im, gdPointPtr points, int color) */
+HB_FUNC(GDIMAGEFILLEDPOLYGON)
+{
+  if (hb_isGdImage(1) && HB_ISARRAY(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto pPoints = hb_param(2, Harbour::Item::ARRAY);
@@ -745,16 +709,12 @@ HB_FUNC(GDIMAGEFILLEDPOLYGON) /* original: void gdImageFilledPolygon(gdImagePtr 
     /* Max Points of polygon */
     auto points = static_cast<gdPoint *>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
-    for (auto i = 0; i < pointsTotal; i++)
-    {
+    for (auto i = 0; i < pointsTotal; i++) {
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
-      if (pPoint->isArray())
-      {
+      if (pPoint->isArray()) {
         points[i].x = hb_arrayGetNI32(pPoint, 1);
         points[i].y = hb_arrayGetNI32(pPoint, 2);
-      }
-      else
-      {
+      } else {
         points[i].x = 0;
         points[i].y = 0;
       }
@@ -764,18 +724,15 @@ HB_FUNC(GDIMAGEFILLEDPOLYGON) /* original: void gdImageFilledPolygon(gdImagePtr 
     gdImageFilledPolygon(im, static_cast<gdPointPtr>(points), pointsTotal, color);
 
     hb_xfree(points);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(
-    GDIMAGEFILLEDRECTANGLE) /* void gdImageFilledRectangle(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+/* void gdImageFilledRectangle(gdImagePtr im, int x1, int y1, int x2, int y2, int color) */
+HB_FUNC(GDIMAGEFILLEDRECTANGLE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x1 = hb_parni32(2);
@@ -785,18 +742,16 @@ HB_FUNC(
     auto color = hb_parni32(6);
 
     gdImageFilledRectangle(im, x1, y1, x2, y2, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEARC) /* void gdImageArc(gdImagePtr im, int cx, int cy, int w, int h, int s, int e, int color) */
+/* void gdImageArc(gdImagePtr im, int cx, int cy, int w, int h, int s, int e, int color) */
+HB_FUNC(GDIMAGEARC)
 {
   if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8))
-  {
+      HB_ISNUM(8)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto cx = hb_parni32(2);
@@ -808,19 +763,16 @@ HB_FUNC(GDIMAGEARC) /* void gdImageArc(gdImagePtr im, int cx, int cy, int w, int
     auto color = hb_parni32(8);
 
     gdImageArc(im, cx, cy, w, h, s, e, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEFILLEDARC) /* void gdImageFilledArc(gdImagePtr im, int cx, int cy, int w, int h, int s, int e, int
-                             color[, int style]) */
+/* void gdImageFilledArc(gdImagePtr im, int cx, int cy, int w, int h, int s, int e, int color[, int style]) */
+HB_FUNC(GDIMAGEFILLEDARC)
 {
   if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8))
-  {
+      HB_ISNUM(8)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto cx = hb_parni32(2);
@@ -833,17 +785,15 @@ HB_FUNC(GDIMAGEFILLEDARC) /* void gdImageFilledArc(gdImagePtr im, int cx, int cy
     auto style = hb_parnidef(9, gdNoFill);
 
     gdImageFilledArc(im, cx, cy, w, h, s, e, color, style);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEFILLEDELLIPSE) /* void gdImageFilledEllipse(gdImagePtr im, int cx, int cy, int w, int h, int color) */
+/* void gdImageFilledEllipse(gdImagePtr im, int cx, int cy, int w, int h, int color) */
+HB_FUNC(GDIMAGEFILLEDELLIPSE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto cx = hb_parni32(2);
@@ -853,17 +803,15 @@ HB_FUNC(GDIMAGEFILLEDELLIPSE) /* void gdImageFilledEllipse(gdImagePtr im, int cx
     auto color = hb_parni32(6);
 
     gdImageFilledEllipse(im, cx, cy, w, h, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEFILLTOBORDER) /* void gdImageFillToBorder(gdImagePtr im, int x, int y, int border, int color) */
+/* void gdImageFillToBorder(gdImagePtr im, int x, int y, int border, int color) */
+HB_FUNC(GDIMAGEFILLTOBORDER)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -872,9 +820,7 @@ HB_FUNC(GDIMAGEFILLTOBORDER) /* void gdImageFillToBorder(gdImagePtr im, int x, i
     auto color = hb_parni32(5);
 
     gdImageFillToBorder(im, x, y, border, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -882,7 +828,8 @@ HB_FUNC(GDIMAGEFILLTOBORDER) /* void gdImageFillToBorder(gdImagePtr im, int x, i
 /* Disabled, because there is a .prg implementation which
    works with all gd lib versions. [vszakats] */
 #if 0
-HB_FUNC(GDIMAGEELLIPSE) /* void gdImageEllipse(gdImagePtr im, int cx, int cy, int w, int h, int color) */
+/* void gdImageEllipse(gdImagePtr im, int cx, int cy, int w, int h, int color) */
+HB_FUNC(GDIMAGEELLIPSE)
 {
 #if HB_GD_VERS(2, 0, 35)
    if( hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) )
@@ -905,10 +852,10 @@ HB_FUNC(GDIMAGEELLIPSE) /* void gdImageEllipse(gdImagePtr im, int cx, int cy, in
 }
 #endif
 
-HB_FUNC(GDIMAGEFILL) /* void gdImageFill(gdImagePtr im, int x, int y, int color) */
+/* void gdImageFill(gdImagePtr im, int x, int y, int color) */
+HB_FUNC(GDIMAGEFILL)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -916,80 +863,71 @@ HB_FUNC(GDIMAGEFILL) /* void gdImageFill(gdImagePtr im, int x, int y, int color)
     auto color = hb_parni32(4);
 
     gdImageFill(im, x, y, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETANTIALIASED) /* void gdImageSetAntiAliased(gdImagePtr im, int color) */
+/* void gdImageSetAntiAliased(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGESETANTIALIASED)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     gdImageSetAntiAliased(im, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETANTIALIASEDDONTBLEND) /* void gdImageSetAntiAliasedDontBlend(gdImagePtr im, int c, int dont_blend) */
+/* void gdImageSetAntiAliasedDontBlend(gdImagePtr im, int c, int dont_blend) */
+HB_FUNC(GDIMAGESETANTIALIASEDDONTBLEND)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
     auto dont_blend = hb_parni32(3);
 
     gdImageSetAntiAliasedDontBlend(im, color, dont_blend);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETBRUSH) /* void gdImageSetBrush(gdImagePtr im, gdImagePtr brush) */
+/* void gdImageSetBrush(gdImagePtr im, gdImagePtr brush) */
+HB_FUNC(GDIMAGESETBRUSH)
 {
-  if (hb_isGdImage(1) && hb_isGdImage(2))
-  {
+  if (hb_isGdImage(1) && hb_isGdImage(2)) {
     gdImagePtr im = hb_parGdImage(1);
     gdImagePtr brush = hb_parGdImage(2);
 
     gdImageSetBrush(im, brush);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETTILE) /* void gdImageSetTile(gdImagePtr im, gdImagePtr tile) */
+/* void gdImageSetTile(gdImagePtr im, gdImagePtr tile) */
+HB_FUNC(GDIMAGESETTILE)
 {
-  if (hb_isGdImage(1) && hb_isGdImage(2))
-  {
+  if (hb_isGdImage(1) && hb_isGdImage(2)) {
     gdImagePtr im = hb_parGdImage(1);
     gdImagePtr tile = hb_parGdImage(2);
 
     gdImageSetTile(im, tile);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *style, int styleLength) */
-{                        /* implementation: void gdImageSetStyle(gdImagePtr im, int *style) */
-  if (hb_isGdImage(1) && HB_ISARRAY(2))
-  {
+/* original: void gdImageSetStyle(gdImagePtr im, int *style, int styleLength) */
+/* implementation: void gdImageSetStyle(gdImagePtr im, int *style) */
+HB_FUNC(GDIMAGESETSTYLE)
+{
+  if (hb_isGdImage(1) && HB_ISARRAY(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto pStyles = hb_param(2, Harbour::Item::ARRAY);
@@ -998,8 +936,7 @@ HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *s
     /* Max numbery of Styles */
     auto styles = static_cast<int32_t *>(hb_xgrab(sizeof(int32_t) * styleLength));
 
-    for (auto i = 0; i < styleLength; i++)
-    {
+    for (auto i = 0; i < styleLength; i++) {
       styles[i] = hb_arrayGetNI32(pStyles, i + 1);
     }
 
@@ -1007,17 +944,15 @@ HB_FUNC(GDIMAGESETSTYLE) /* original: void gdImageSetStyle(gdImagePtr im, int *s
     gdImageSetStyle(im, static_cast<int32_t *>(styles), styleLength);
 
     hb_xfree(styles);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETTHICKNESS) /* void gdImageSetThickness(gdImagePtr im, int thickness) */
+/* void gdImageSetThickness(gdImagePtr im, int thickness) */
+HB_FUNC(GDIMAGESETTHICKNESS)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto thickness = hb_parni32(2);
@@ -1026,49 +961,43 @@ HB_FUNC(GDIMAGESETTHICKNESS) /* void gdImageSetThickness(gdImagePtr im, int thic
     hb_retni(im->thick);
 
     gdImageSetThickness(im, thickness);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEALPHABLENDING) /* void gdImageAlphaBlending(gdImagePtr im, int blending) */
+/* void gdImageAlphaBlending(gdImagePtr im, int blending) */
+HB_FUNC(GDIMAGEALPHABLENDING)
 {
-  if (hb_isGdImage(1) && HB_ISLOG(2))
-  {
+  if (hb_isGdImage(1) && HB_ISLOG(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     int32_t blending = hb_parl(2) ? 1 : 0;
 
     gdImageAlphaBlending(im, blending);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESAVEALPHA) /* void gdImageSaveAlpha(gdImagePtr im, int saveFlag) */
+/* void gdImageSaveAlpha(gdImagePtr im, int saveFlag) */
+HB_FUNC(GDIMAGESAVEALPHA)
 {
-  if (hb_isGdImage(1) && HB_ISLOG(2))
-  {
+  if (hb_isGdImage(1) && HB_ISLOG(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     int32_t saveFlag = hb_parl(2) ? 1 : 0;
 
     gdImageSaveAlpha(im, saveFlag);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESETCLIP) /* void gdImageSetClip(gdImagePtr im, int x1, int y1, int x2, int y2) */
+/* void gdImageSetClip(gdImagePtr im, int x1, int y1, int x2, int y2) */
+HB_FUNC(GDIMAGESETCLIP)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x1 = hb_parni32(2);
@@ -1077,17 +1006,16 @@ HB_FUNC(GDIMAGESETCLIP) /* void gdImageSetClip(gdImagePtr im, int x1, int y1, in
     auto y2 = hb_parni32(5);
 
     gdImageSetClip(im, x1, y1, x2, y2);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEGETCLIP) /* original: void gdImageGetClip(gdImagePtr im, int *x1P, int *y1P, int *x2P, int *y2P) */
-{                       /* implementation: array gdImageGetClip(gdImagePtr im) */
-  if (hb_isGdImage(1))
-  {
+/* original: void gdImageGetClip(gdImagePtr im, int *x1P, int *y1P, int *x2P, int *y2P) */
+/* implementation: array gdImageGetClip(gdImagePtr im) */
+HB_FUNC(GDIMAGEGETCLIP)
+{
+  if (hb_isGdImage(1)) {
     int32_t x1, y1, x2, y2;
 
     /* Get clipping rectangle */
@@ -1102,121 +1030,105 @@ HB_FUNC(GDIMAGEGETCLIP) /* original: void gdImageGetClip(gdImagePtr im, int *x1P
 
     /* return array */
     hb_itemReturnRelease(pClipArray);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 /* QUERY FUNCTIONS */
 
-HB_FUNC(GDIMAGECOLORSTOTAL) /* int gdImageColorsTotal(gdImagePtr im) */
+/* int gdImageColorsTotal(gdImagePtr im) */
+HB_FUNC(GDIMAGECOLORSTOTAL)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     hb_retni(gdImageColorsTotal(hb_parGdImage(1)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEALPHA) /* int gdImageAlpha(gdImagePtr im, int color) */
+/* int gdImageAlpha(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGEALPHA)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     hb_retni(gdImageAlpha(im, color));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGERED) /* int gdImageRed(gdImagePtr im, int color) */
+/* int gdImageRed(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGERED)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     hb_retni(gdImageRed(im, color));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEGREEN) /* int gdImageGreen(gdImagePtr im, int color) */
+/* int gdImageGreen(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGEGREEN)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     hb_retni(gdImageGreen(im, color));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEBLUE) /* int gdImageBlue(gdImagePtr im, int color) */
+/* int gdImageBlue(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGEBLUE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     hb_retni(gdImageBlue(im, color));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESX) /* int gdImageSX(gdImagePtr im) */
+/* int gdImageSX(gdImagePtr im) */
+HB_FUNC(GDIMAGESX)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     /* Get Image Width in pixels */
     hb_retni(gdImageSX(hb_parGdImage(1)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESY) /* int gdImageSX(gdImagePtr im) */
+/* int gdImageSX(gdImagePtr im) */
+HB_FUNC(GDIMAGESY)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     /* Get Image Height in pixels */
     hb_retni(gdImageSY(hb_parGdImage(1)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEGETPIXEL) /* int gdImageGetPixel(gdImagePtr im, int x, int y) */
+/* int gdImageGetPixel(gdImagePtr im, int x, int y) */
+HB_FUNC(GDIMAGEGETPIXEL)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -1224,17 +1136,15 @@ HB_FUNC(GDIMAGEGETPIXEL) /* int gdImageGetPixel(gdImagePtr im, int x, int y) */
 
     /* Get Color of a pixel */
     hb_retni(gdImageGetPixel(im, x, y));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEBOUNDSSAFE) /* int gdImageBoundsSafe(gdImagePtr im, int x, int y) */
+/* int gdImageBoundsSafe(gdImagePtr im, int x, int y) */
+HB_FUNC(GDIMAGEBOUNDSSAFE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -1242,54 +1152,45 @@ HB_FUNC(GDIMAGEBOUNDSSAFE) /* int gdImageBoundsSafe(gdImagePtr im, int x, int y)
 
     /* Get if pixel in Clipping region */
     hb_retl(gdImageBoundsSafe(im, x, y) != 0);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEGETINTERLACED) /* int gdImageGetInterlaced(gdImagePtr im) */
+/* int gdImageGetInterlaced(gdImagePtr im) */
+HB_FUNC(GDIMAGEGETINTERLACED)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     hb_retl(gdImageGetInterlaced(hb_parGdImage(1)) != 0);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEGETTRANSPARENT) /* int gdImageGetTransparent(gdImagePtr im) */
+/* int gdImageGetTransparent(gdImagePtr im) */
+HB_FUNC(GDIMAGEGETTRANSPARENT)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     hb_retl(gdImageGetTransparent(hb_parGdImage(1)) != 0);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGETRUECOLOR) /* int gdImageTrueColor(gdImagePtr im) */
+/* int gdImageTrueColor(gdImagePtr im) */
+HB_FUNC(GDIMAGETRUECOLOR)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     hb_retl(gdImageTrueColor(hb_parGdImage(1)) != 0);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(
-    GDIMAGETRUECOLORTOPALETTE) /* void gdImageTrueColorToPalette (gdImagePtr im, int ditherFlag, int colorsWanted) */
+/* void gdImageTrueColorToPalette (gdImagePtr im, int ditherFlag, int colorsWanted) */
+HB_FUNC(GDIMAGETRUECOLORTOPALETTE)
 {
-  if (hb_isGdImage(1) && HB_ISLOG(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISLOG(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     int32_t ditherFlag = hb_parl(2) ? 1 : 0;
@@ -1297,18 +1198,15 @@ HB_FUNC(
 
     /* Converts a truecolor image to a palette-based image */
     gdImageTrueColorToPalette(im, ditherFlag, colorsWanted);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECREATEPALETTEFROMTRUECOLOR) /* gdImagePtr gdImageCreatePaletteFromTrueColor(gdImagePtr im, int
-                                              ditherFlag, int colorsWanted) */
+/* gdImagePtr gdImageCreatePaletteFromTrueColor(gdImagePtr im, int ditherFlag, int colorsWanted) */
+HB_FUNC(GDIMAGECREATEPALETTEFROMTRUECOLOR)
 {
-  if (hb_isGdImage(1) && HB_ISLOG(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISLOG(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     int32_t ditherFlag = hb_parl(2) ? 1 : 0;
@@ -1316,17 +1214,15 @@ HB_FUNC(GDIMAGECREATEPALETTEFROMTRUECOLOR) /* gdImagePtr gdImageCreatePaletteFro
 
     /* Converts a truecolor image to a palette-based image and return the image */
     hb_retGdImage(gdImageCreatePaletteFromTrueColor(im, ditherFlag, colorsWanted));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEPALETTEPIXEL) /* int gdImagePalettePixel(gdImagePtr im, int x, int y) */
+/* int gdImagePalettePixel(gdImagePtr im, int x, int y) */
+HB_FUNC(GDIMAGEPALETTEPIXEL)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -1334,17 +1230,15 @@ HB_FUNC(GDIMAGEPALETTEPIXEL) /* int gdImagePalettePixel(gdImagePtr im, int x, in
 
     /* Get Color of a pixel */
     hb_retni(gdImagePalettePixel(im, x, y));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGETRUECOLORPIXEL) /* int gdImageTrueColorPixel(gdImagePtr im, int x, int y) */
+/* int gdImageTrueColorPixel(gdImagePtr im, int x, int y) */
+HB_FUNC(GDIMAGETRUECOLORPIXEL)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto x = hb_parni32(2);
@@ -1352,56 +1246,58 @@ HB_FUNC(GDIMAGETRUECOLORPIXEL) /* int gdImageTrueColorPixel(gdImagePtr im, int x
 
     /* Get Color of a pixel */
     hb_retni(gdImageTrueColorPixel(im, x, y));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEGETTHICKNESS) /* void gdImageGetThickness(gdImagePtr im) */
+/* void gdImageGetThickness(gdImagePtr im) */
+HB_FUNC(GDIMAGEGETTHICKNESS)
 {
-  if (hb_isGdImage(1))
-  {
+  if (hb_isGdImage(1)) {
     hb_retni(hb_parGdImage(1)->thick);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 /* FONTS AND TEXT-HANDLING FUNCTIONS */
 
-HB_FUNC(GDFONTGETSMALL) /* gdFontPtr gdFontGetSmall(void) */
+/* gdFontPtr gdFontGetSmall(void) */
+HB_FUNC(GDFONTGETSMALL)
 {
   hb_retGdFont(gdFontGetSmall());
 }
 
-HB_FUNC(GDFONTGETLARGE) /* gdFontPtr gdFontGetLarge(void) */
+/* gdFontPtr gdFontGetLarge(void) */
+HB_FUNC(GDFONTGETLARGE)
 {
   hb_retGdFont(gdFontGetLarge());
 }
 
-HB_FUNC(GDFONTGETMEDIUMBOLD) /* gdFontPtr gdFontGetMediumBold(void) */
+/* gdFontPtr gdFontGetMediumBold(void) */
+HB_FUNC(GDFONTGETMEDIUMBOLD)
 {
   hb_retGdFont(gdFontGetMediumBold());
 }
 
-HB_FUNC(GDFONTGETGIANT) /* gdFontPtr gdFontGetGiant(void) */
+/* gdFontPtr gdFontGetGiant(void) */
+HB_FUNC(GDFONTGETGIANT)
 {
   hb_retGdFont(gdFontGetGiant());
 }
 
-HB_FUNC(GDFONTGETTINY) /* gdFontPtr gdFontGetTiny(void) */
+/* gdFontPtr gdFontGetTiny(void) */
+HB_FUNC(GDFONTGETTINY)
 {
   hb_retGdFont(gdFontGetTiny());
 }
 
-HB_FUNC(GDIMAGESTRING) /* void gdImageChar(gdImagePtr im, gdFontPtr font, int x, int y, int c, int color) */
-{ /* void gdImageString(gdImagePtr im, gdFontPtr font, int x, int y, unsigned char *s, int color) */
-  if (hb_isGdImage(1) && hb_isGdFont(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISCHAR(5) && HB_ISNUM(6))
-  {
+/* void gdImageChar(gdImagePtr im, gdFontPtr font, int x, int y, int c, int color) */
+/* void gdImageString(gdImagePtr im, gdFontPtr font, int x, int y, unsigned char *s, int color) */
+HB_FUNC(GDIMAGESTRING)
+{
+  if (hb_isGdImage(1) && hb_isGdFont(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISCHAR(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
     gdFontPtr font = hb_parGdFont(2);
 
@@ -1411,19 +1307,18 @@ HB_FUNC(GDIMAGESTRING) /* void gdImageChar(gdImagePtr im, gdFontPtr font, int x,
 
     /* Write string */
     gdImageString(im, font, x, y, reinterpret_cast<unsigned char *>(const_cast<char *>(hb_parc(5))), color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC_TRANSLATE(GDIMAGECHAR, GDIMAGESTRING)
 
-HB_FUNC(GDIMAGESTRINGUP) /* void gdImageCharUp(gdImagePtr im, gdFontPtr font, int x, int y, int c, int color) */
-{ /* void gdImageStringUp(gdImagePtr im, gdFontPtr font, int x, int y, unsigned char *s, int color) */
-  if (hb_isGdImage(1) && hb_isGdFont(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISCHAR(5) && HB_ISNUM(6))
-  {
+/* void gdImageCharUp(gdImagePtr im, gdFontPtr font, int x, int y, int c, int color) */
+/* void gdImageStringUp(gdImagePtr im, gdFontPtr font, int x, int y, unsigned char *s, int color) */
+HB_FUNC(GDIMAGESTRINGUP)
+{
+  if (hb_isGdImage(1) && hb_isGdFont(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISCHAR(5) && HB_ISNUM(6)) {
     gdImagePtr im = hb_parGdImage(1);
     gdFontPtr font = hb_parGdFont(2);
 
@@ -1433,9 +1328,7 @@ HB_FUNC(GDIMAGESTRINGUP) /* void gdImageCharUp(gdImagePtr im, gdFontPtr font, in
 
     /* Write string */
     gdImageStringUp(im, font, x, y, reinterpret_cast<unsigned char *>(const_cast<char *>(hb_parc(5))), color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -1449,8 +1342,7 @@ HB_FUNC_TRANSLATE(GDIMAGECHARUP, GDIMAGESTRINGUP)
 HB_FUNC(GDIMAGESTRINGFTEX)
 {
   if ((HB_ISNIL(1) || hb_isGdImage(1)) && HB_ISARRAY(2) && HB_ISNUM(3) && HB_ISCHAR(4) && HB_ISNUM(5) && HB_ISNUM(6) &&
-      HB_ISNUM(7) && HB_ISNUM(8) && HB_ISCHAR(9))
-  {
+      HB_ISNUM(7) && HB_ISNUM(8) && HB_ISCHAR(9)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto pRect = hb_param(2, Harbour::Item::ARRAY);
@@ -1474,34 +1366,29 @@ HB_FUNC(GDIMAGESTRINGFTEX)
     char *err;
 
     /* Retrieve rectangle array */
-    for (auto i = 0; i < 8; i++)
-    {
+    for (auto i = 0; i < 8; i++) {
       aRect[i] = hb_arrayGetNI32(pRect, i + 1);
     }
 
     /* Retrieve line spacing */
-    if (HB_ISNUM(10))
-    {
+    if (HB_ISNUM(10)) {
       linespacing = hb_parnd(10);
       flags |= gdFTEX_LINESPACE;
     }
 
     /* Retrieve charmap */
-    if (HB_ISNUM(11))
-    {
+    if (HB_ISNUM(11)) {
       charmap = hb_parni32(11);
       flags |= gdFTEX_CHARMAP;
     }
 
     /* Retrieve resolution */
-    if (HB_ISNUM(12))
-    {
+    if (HB_ISNUM(12)) {
       resolution = hb_parni32(12);
       flags |= gdFTEX_RESOLUTION;
     }
 
-    if (flags != 0)
-    {
+    if (flags != 0) {
       extra.flags = flags;
       extra.linespacing = (flags & gdFTEX_LINESPACE ? linespacing : 1.05);
       extra.charmap = (flags & gdFTEX_CHARMAP ? charmap : gdFTEX_Unicode);
@@ -1512,32 +1399,27 @@ HB_FUNC(GDIMAGESTRINGFTEX)
     /* Write string */
     err = gdImageStringFTEx(im, &aRect[0], fgcolor, const_cast<char *>(fontname), ptsize, angle, x, y,
                             const_cast<char *>(string), (flags != 0 ? &extra : nullptr));
-    if (!err)
-    {
+    if (!err) {
       /* Save in array the correct text rectangle dimensions */
       auto pArray = hb_itemArrayNew(8);
-      for (auto i = 0; i < 8; i++)
-      {
+      for (auto i = 0; i < 8; i++) {
         hb_itemPutNI32(hb_arrayGetItemPtr(pArray, i + 1), aRect[i]);
       }
       hb_itemCopy(pRect, pArray);
       hb_itemRelease(pArray);
     }
     hb_retc(err);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESTRINGFTCIRCLE) /* char *gdImageStringFTCircle(gdImagePtr im, int cx, int cy, double radius, double
-                                  textRadius, double fillPortion, char *font, double points, char *top, char *bottom,
-                                  int fgcolor) */
+/* char *gdImageStringFTCircle(gdImagePtr im, int cx, int cy, double radius, double textRadius, double fillPortion, char
+ * *font, double points, char *top, char *bottom, int fgcolor) */
+HB_FUNC(GDIMAGESTRINGFTCIRCLE)
 {
   if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISCHAR(7) &&
-      HB_ISNUM(8) && (HB_ISNIL(9) || HB_ISCHAR(9)) && (HB_ISNIL(10) || HB_ISCHAR(10)) && HB_ISNUM(11))
-  {
+      HB_ISNUM(8) && (HB_ISNIL(9) || HB_ISCHAR(9)) && (HB_ISNIL(10) || HB_ISCHAR(10)) && HB_ISNUM(11)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto cx = hb_parni32(2);
@@ -1554,20 +1436,20 @@ HB_FUNC(GDIMAGESTRINGFTCIRCLE) /* char *gdImageStringFTCircle(gdImagePtr im, int
     /* Write string */
     hb_retc(gdImageStringFTCircle(im, cx, cy, radius, textRadius, fillPortion, const_cast<char *>(fontname), points,
                                   const_cast<char *>(top), const_cast<char *>(bottom), fgcolor));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDFONTCACHESETUP) /* int gdFontCacheSetup (void) */
+/* int gdFontCacheSetup (void) */
+HB_FUNC(GDFONTCACHESETUP)
 {
   /* This function initializes the font cache for freetype text output functions */
   hb_retl(gdFontCacheSetup() != 0);
 }
 
-HB_FUNC(GDFONTCACHESHUTDOWN) /* void gdFontCacheShutdown (void) */
+/* void gdFontCacheShutdown (void) */
+HB_FUNC(GDFONTCACHESHUTDOWN)
 {
   /* This function initializes the font cache for freetype text output functions */
   gdFontCacheShutdown();
@@ -1575,34 +1457,28 @@ HB_FUNC(GDFONTCACHESHUTDOWN) /* void gdFontCacheShutdown (void) */
 
 HB_FUNC(GDFONTGETWIDTH)
 {
-  if (hb_isGdFont(1))
-  {
+  if (hb_isGdFont(1)) {
     hb_retni(hb_parGdFont(1)->w);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 HB_FUNC(GDFONTGETHEIGHT)
 {
-  if (hb_isGdFont(1))
-  {
+  if (hb_isGdFont(1)) {
     hb_retni(hb_parGdFont(1)->h);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 /* COLOR HANDLING FUNCTIONS */
 
-HB_FUNC(GDIMAGECOLORALLOCATE) /* int gdImageColorAllocate(gdImagePtr im, int r, int g, int b) */
+/* int gdImageColorAllocate(gdImagePtr im, int r, int g, int b) */
+HB_FUNC(GDIMAGECOLORALLOCATE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1611,33 +1487,29 @@ HB_FUNC(GDIMAGECOLORALLOCATE) /* int gdImageColorAllocate(gdImagePtr im, int r, 
 
     /* return color */
     hb_retni(gdImageColorAllocate(im, r, g, b));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORDEALLOCATE) /* void gdImageColorDeallocate(gdImagePtr im, int color) */
+/* void gdImageColorDeallocate(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGECOLORDEALLOCATE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     gdImageColorDeallocate(im, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORALLOCATEALPHA) /* int gdImageColorAllocateAlpha(gdImagePtr im, int r, int g, int b, int a) */
+/* int gdImageColorAllocateAlpha(gdImagePtr im, int r, int g, int b, int a) */
+HB_FUNC(GDIMAGECOLORALLOCATEALPHA)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1647,17 +1519,15 @@ HB_FUNC(GDIMAGECOLORALLOCATEALPHA) /* int gdImageColorAllocateAlpha(gdImagePtr i
 
     /* return color */
     hb_retni(gdImageColorAllocateAlpha(im, r, g, b, a));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORCLOSEST) /* int gdImageColorClosest(gdImagePtr im, int r, int g, int b) */
+/* int gdImageColorClosest(gdImagePtr im, int r, int g, int b) */
+HB_FUNC(GDIMAGECOLORCLOSEST)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1666,17 +1536,15 @@ HB_FUNC(GDIMAGECOLORCLOSEST) /* int gdImageColorClosest(gdImagePtr im, int r, in
 
     /* return color */
     hb_retni(gdImageColorClosest(im, r, g, b));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORCLOSESTALPHA) /* int gdImageColorClosestAlpha(gdImagePtr im, int r, int g, int b, int a) */
+/* int gdImageColorClosestAlpha(gdImagePtr im, int r, int g, int b, int a) */
+HB_FUNC(GDIMAGECOLORCLOSESTALPHA)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1686,17 +1554,15 @@ HB_FUNC(GDIMAGECOLORCLOSESTALPHA) /* int gdImageColorClosestAlpha(gdImagePtr im,
 
     /* return color */
     hb_retni(gdImageColorClosestAlpha(im, r, g, b, a));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORCLOSESTHWB) /* gdImageColorClosestHWB(gdImagePtr im, int r, int g, int b) */
+/* gdImageColorClosestHWB(gdImagePtr im, int r, int g, int b) */
+HB_FUNC(GDIMAGECOLORCLOSESTHWB)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1705,17 +1571,15 @@ HB_FUNC(GDIMAGECOLORCLOSESTHWB) /* gdImageColorClosestHWB(gdImagePtr im, int r, 
 
     /* return color */
     hb_retni(gdImageColorClosestHWB(im, r, g, b));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLOREXACT) /* int gdImageColorExact(gdImagePtr im, int r, int g, int b) */
+/* int gdImageColorExact(gdImagePtr im, int r, int g, int b) */
+HB_FUNC(GDIMAGECOLOREXACT)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1724,17 +1588,15 @@ HB_FUNC(GDIMAGECOLOREXACT) /* int gdImageColorExact(gdImagePtr im, int r, int g,
 
     /* return color */
     hb_retni(gdImageColorExact(im, r, g, b));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORRESOLVE) /* int gdImageColorResolve(gdImagePtr im, int r, int g, int b) */
+/* int gdImageColorResolve(gdImagePtr im, int r, int g, int b) */
+HB_FUNC(GDIMAGECOLORRESOLVE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1743,17 +1605,15 @@ HB_FUNC(GDIMAGECOLORRESOLVE) /* int gdImageColorResolve(gdImagePtr im, int r, in
 
     /* return color */
     hb_retni(gdImageColorResolve(im, r, g, b));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORRESOLVEALPHA) /* int gdImageColorResolveAlpha(gdImagePtr im, int r, int g, int b, int a) */
+/* int gdImageColorResolveAlpha(gdImagePtr im, int r, int g, int b, int a) */
+HB_FUNC(GDIMAGECOLORRESOLVEALPHA)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto r = hb_parni32(2); /* RGB */
@@ -1763,51 +1623,45 @@ HB_FUNC(GDIMAGECOLORRESOLVEALPHA) /* int gdImageColorResolveAlpha(gdImagePtr im,
 
     /* return color */
     hb_retni(gdImageColorResolveAlpha(im, r, g, b, a));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOLORTRANSPARENT) /* void gdImageColorTransparent(gdImagePtr im, int color) */
+/* void gdImageColorTransparent(gdImagePtr im, int color) */
+HB_FUNC(GDIMAGECOLORTRANSPARENT)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto color = hb_parni32(2);
 
     /* Set transparent color (to define no transparent color set -1) */
     gdImageColorTransparent(im, color);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDTRUECOLOR) /* int gdTrueColor(int red, int green, int blue) */
+/* int gdTrueColor(int red, int green, int blue) */
+HB_FUNC(GDTRUECOLOR)
 {
-  if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3))
-  {
+  if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3)) {
     auto r = hb_parni32(1); /* RGB */
     auto g = hb_parni32(2);
     auto b = hb_parni32(3);
 
     /* return color */
     hb_retni(gdTrueColor(r, g, b));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDTRUECOLORALPHA) /* int gdTrueColorAlpha(int red, int green, int blue, int alpha) */
+/* int gdTrueColorAlpha(int red, int green, int blue, int alpha) */
+HB_FUNC(GDTRUECOLORALPHA)
 {
-  if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4)) {
     auto r = hb_parni32(1); /* RGB */
     auto g = hb_parni32(2);
     auto b = hb_parni32(3);
@@ -1815,21 +1669,18 @@ HB_FUNC(GDTRUECOLORALPHA) /* int gdTrueColorAlpha(int red, int green, int blue, 
 
     /* return color */
     hb_retni(gdTrueColorAlpha(r, g, b, a));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 /* COPY AND RESIZING FUNCTIONS */
 
-HB_FUNC(GDIMAGECOPY) /* void gdImageCopy(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int srcY, int w,
-                        int h) */
+/* void gdImageCopy(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int srcY, int w, int h) */
+HB_FUNC(GDIMAGECOPY)
 {
   if (hb_isGdImage(1) && hb_isGdImage(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8))
-  {
+      HB_ISNUM(8)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
@@ -1841,19 +1692,17 @@ HB_FUNC(GDIMAGECOPY) /* void gdImageCopy(gdImagePtr dst, gdImagePtr src, int dst
     auto h = hb_parni32(8);
 
     gdImageCopy(dst, src, dstX, dstY, srcX, srcY, w, h);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOPYRESIZED) /* void gdImageCopyResized(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int
-                               srcY, int dstW, int dstH, int srcW, int srcH) */
+/* void gdImageCopyResized(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int srcY, int dstW, int dstH,
+ * int srcW, int srcH) */
+HB_FUNC(GDIMAGECOPYRESIZED)
 {
   if (hb_isGdImage(1) && hb_isGdImage(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8) && HB_ISNUM(9) && HB_ISNUM(10))
-  {
+      HB_ISNUM(8) && HB_ISNUM(9) && HB_ISNUM(10)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
@@ -1867,19 +1716,17 @@ HB_FUNC(GDIMAGECOPYRESIZED) /* void gdImageCopyResized(gdImagePtr dst, gdImagePt
     auto srcH = hb_parni32(10);
 
     gdImageCopyResized(dst, src, dstX, dstY, srcX, srcY, dstW, dstH, srcW, srcH);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOPYRESAMPLED) /* void gdImageCopyResampled(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX,
-                                 int srcY, int dstW, int dstH, int srcW, int srcH) */
+/* void gdImageCopyResampled(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int srcY, int dstW, int dstH,
+ * int srcW, int srcH) */
+HB_FUNC(GDIMAGECOPYRESAMPLED)
 {
   if (hb_isGdImage(1) && hb_isGdImage(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8) && HB_ISNUM(9) && HB_ISNUM(10))
-  {
+      HB_ISNUM(8) && HB_ISNUM(9) && HB_ISNUM(10)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
@@ -1893,19 +1740,17 @@ HB_FUNC(GDIMAGECOPYRESAMPLED) /* void gdImageCopyResampled(gdImagePtr dst, gdIma
     auto srcH = hb_parni32(10);
 
     gdImageCopyResampled(dst, src, dstX, dstY, srcX, srcY, dstW, dstH, srcW, srcH);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOPYROTATED) /* void gdImageCopyRotated(gdImagePtr dst, gdImagePtr src, double dstX, double dstY, int
-                               srcX, int srcY, int srcW, int srcH, int angle) */
+/* void gdImageCopyRotated(gdImagePtr dst, gdImagePtr src, double dstX, double dstY, int srcX, int srcY, int srcW, int
+ * srcH, int angle) */
+HB_FUNC(GDIMAGECOPYROTATED)
 {
   if (hb_isGdImage(1) && hb_isGdImage(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8) && HB_ISNUM(9))
-  {
+      HB_ISNUM(8) && HB_ISNUM(9)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
@@ -1919,19 +1764,17 @@ HB_FUNC(GDIMAGECOPYROTATED) /* void gdImageCopyRotated(gdImagePtr dst, gdImagePt
 
     /* Perform rotation */
     gdImageCopyRotated(dst, src, dstX, dstY, srcX, srcY, srcW, srcH, angle);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOPYMERGE) /* void gdImageCopyMerge(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int
-                             srcY, int w, int h, int pct) */
+/* void gdImageCopyMerge(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int srcY, int w, int h, int pct)
+ */
+HB_FUNC(GDIMAGECOPYMERGE)
 {
   if (hb_isGdImage(1) && hb_isGdImage(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8) && HB_ISNUM(9))
-  {
+      HB_ISNUM(8) && HB_ISNUM(9)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
@@ -1944,19 +1787,17 @@ HB_FUNC(GDIMAGECOPYMERGE) /* void gdImageCopyMerge(gdImagePtr dst, gdImagePtr sr
     auto pct = hb_parni32(9);
 
     gdImageCopyMerge(dst, src, dstX, dstY, srcX, srcY, w, h, pct);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGECOPYMERGEGRAY) /* void gdImageCopyMergeGray(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX,
-                                 int srcY, int w, int h, int pct) */
+/* void gdImageCopyMergeGray(gdImagePtr dst, gdImagePtr src, int dstX, int dstY, int srcX, int srcY, int w, int h, int
+ * pct) */
+HB_FUNC(GDIMAGECOPYMERGEGRAY)
 {
   if (hb_isGdImage(1) && hb_isGdImage(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) &&
-      HB_ISNUM(8) && HB_ISNUM(9))
-  {
+      HB_ISNUM(8) && HB_ISNUM(9)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
@@ -1969,87 +1810,75 @@ HB_FUNC(GDIMAGECOPYMERGEGRAY) /* void gdImageCopyMergeGray(gdImagePtr dst, gdIma
     auto pct = hb_parni32(9);
 
     gdImageCopyMergeGray(dst, src, dstX, dstY, srcX, srcY, w, h, pct);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEPALETTECOPY) /* void gdImagePaletteCopy(gdImagePtr dst, gdImagePtr src) */
+/* void gdImagePaletteCopy(gdImagePtr dst, gdImagePtr src) */
+HB_FUNC(GDIMAGEPALETTECOPY)
 {
-  if (hb_isGdImage(1) && hb_isGdImage(2))
-  {
+  if (hb_isGdImage(1) && hb_isGdImage(2)) {
     gdImagePtr dst = hb_parGdImage(1);
     gdImagePtr src = hb_parGdImage(2);
 
     gdImagePaletteCopy(dst, src);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESQUARETOCIRCLE) /* void gdImageSquareToCircle(gdImagePtr im, int radius) */
+/* void gdImageSquareToCircle(gdImagePtr im, int radius) */
+HB_FUNC(GDIMAGESQUARETOCIRCLE)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto radius = hb_parni32(2);
 
     hb_retGdImage(gdImageSquareToCircle(im, radius));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGESHARPEN) /* void gdImageSharpen(gdImagePtr im, int pct) */
+/* void gdImageSharpen(gdImagePtr im, int pct) */
+HB_FUNC(GDIMAGESHARPEN)
 {
-  if (hb_isGdImage(1) && HB_ISNUM(2))
-  {
+  if (hb_isGdImage(1) && HB_ISNUM(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto pct = hb_parni32(2);
 
     gdImageSharpen(im, pct);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
 /* MISCELLANEOUS FUNCTIONS */
 
-HB_FUNC(GDIMAGECOMPARE) /* int gdImageCompare(gdImagePtr im1, gdImagePtr im2) */
+/* int gdImageCompare(gdImagePtr im1, gdImagePtr im2) */
+HB_FUNC(GDIMAGECOMPARE)
 {
-  if (hb_isGdImage(1) && hb_isGdImage(2))
-  {
+  if (hb_isGdImage(1) && hb_isGdImage(2)) {
     /* Compare images - if return != 0 check value for infos */
     hb_retni(gdImageCompare(hb_parGdImage(1), hb_parGdImage(2)));
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 
-HB_FUNC(GDIMAGEINTERLACE) /* void gdImageInterlace(gdImagePtr im, int interlace) */
+/* void gdImageInterlace(gdImagePtr im, int interlace) */
+HB_FUNC(GDIMAGEINTERLACE)
 {
-  if (hb_isGdImage(1) && HB_ISLOG(2))
-  {
+  if (hb_isGdImage(1) && HB_ISLOG(2)) {
     gdImagePtr im = hb_parGdImage(1);
 
     int32_t interlace = hb_parl(2) ? 1 : 0;
 
     gdImageInterlace(im, interlace);
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
@@ -2060,8 +1889,7 @@ static void AddImageToFile(const char *szFile, const void *iptr, int sz)
 {
   HB_FHANDLE fhandle;
 
-  if ((fhandle = hb_fsOpen(szFile, FO_READWRITE)) != FS_ERROR)
-  {
+  if ((fhandle = hb_fsOpen(szFile, FO_READWRITE)) != FS_ERROR) {
     /* move to end of file */
     hb_fsSeek(fhandle, 0, FS_END);
 
@@ -2079,8 +1907,7 @@ static void AddImageToFile(const char *szFile, const void *iptr, int sz)
 HB_FUNC(GDIMAGEGIFANIMBEGIN)
 {
 #if HB_GD_VERS(2, 0, 33)
-  if (hb_isGdImage(1) && (HB_ISCHAR(2) || HB_ISNUM(2) || HB_ISNIL(2)) && HB_ISNUM(3) && HB_ISNUM(4))
-  {
+  if (hb_isGdImage(1) && (HB_ISCHAR(2) || HB_ISNUM(2) || HB_ISNIL(2)) && HB_ISNUM(3) && HB_ISNUM(4)) {
     gdImagePtr im = hb_parGdImage(1);
 
     auto GlobalCM = hb_parni32(3); /* global color map */
@@ -2090,17 +1917,12 @@ HB_FUNC(GDIMAGEGIFANIMBEGIN)
     void *iptr = gdImageGifAnimBeginPtr(im, &size, GlobalCM, Loops);
 
     /* Check if parameter is a file name or a handle */
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       SaveImageToFile(hb_parc(2), iptr, size);
-    }
-    else
-    {
+    } else {
       SaveImageToHandle(hb_numToHandle(hb_parnintdef(2, 1 /* std output */)), iptr, size);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #endif
@@ -2114,8 +1936,7 @@ HB_FUNC(GDIMAGEGIFANIMADD)
 {
 #if HB_GD_VERS(2, 0, 33)
   if (hb_isGdImage(1) && (HB_ISCHAR(2) || HB_ISNUM(2) || HB_ISNIL(2)) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) &&
-      HB_ISNUM(6) && HB_ISNUM(7) && (hb_isGdImage(8) || HB_ISNIL(8)))
-  {
+      HB_ISNUM(6) && HB_ISNUM(7) && (hb_isGdImage(8) || HB_ISNIL(8))) {
     gdImagePtr im = hb_parGdImage(1);
     gdImagePtr previm = hb_parGdImage(8);
 
@@ -2129,17 +1950,12 @@ HB_FUNC(GDIMAGEGIFANIMADD)
     void *iptr = gdImageGifAnimAddPtr(im, &size, LocalCM, LeftOfs, TopOfs, Delay, Disposal, previm);
 
     /* Check if parameter is a file name or a handle */
-    if (HB_ISCHAR(2))
-    {
+    if (HB_ISCHAR(2)) {
       AddImageToFile(hb_parc(2), iptr, size);
-    }
-    else
-    {
+    } else {
       SaveImageToHandle(hb_numToHandle(hb_parnintdef(2, 1 /* std output */)), iptr, size);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #endif
@@ -2150,23 +1966,17 @@ HB_FUNC(GDIMAGEGIFANIMADD)
 HB_FUNC(GDIMAGEGIFANIMEND)
 {
 #if HB_GD_VERS(2, 0, 33)
-  if (HB_ISCHAR(1) || HB_ISNUM(1) || HB_ISNIL(1))
-  {
+  if (HB_ISCHAR(1) || HB_ISNUM(1) || HB_ISNIL(1)) {
     int32_t size;
     void *iptr = gdImageGifAnimEndPtr(&size);
 
     /* Check if 1st parameter is a file name or a handle */
-    if (HB_ISCHAR(1))
-    {
+    if (HB_ISCHAR(1)) {
       AddImageToFile(hb_parc(1), iptr, size);
-    }
-    else
-    {
+    } else {
       SaveImageToHandle(hb_numToHandle(hb_parnintdef(1, 1 /* std output */)), iptr, size);
     }
-  }
-  else
-  {
+  } else {
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #endif
