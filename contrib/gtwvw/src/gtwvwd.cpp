@@ -760,7 +760,7 @@ static int32_t hb_gt_wvw_DispCount(HB_GT *pGT)
   return hb_gt_wvw_usDispCount(s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows - 1]);
 }
 
-static void hb_gt_wvw_Replicate(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t bColor, BYTE bAttr, uint16_t usChar, ULONG ulLen)
+static void hb_gt_wvw_Replicate(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t bColor, BYTE bAttr, uint16_t usChar, size_t ulLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvw_Replicate( %hu, %hu, %hu, %i, %lu )", iRow, iCol, bColor, bAttr, usChar, ulLen));
@@ -780,7 +780,7 @@ static void hb_gt_wvw_Replicate(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t 
 }
 
 // static void hb_gt_wvw_PutText(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t bColor, const char * pText, ULONG ulLen)
-static int32_t hb_gt_wvw_PutText(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t bColor, const char *pText, ULONG ulLen)
+static int32_t hb_gt_wvw_PutText(HB_GT *pGT, int32_t iRow, int32_t iCol, int32_t bColor, const char *pText, size_t ulLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvw_PutText(%hu, %hu, %p, %lu, %hu)", iRow, iCol, pText, ulLen, bColor));
@@ -965,7 +965,7 @@ static BOOL hb_gt_wvw_SetMode(HB_GT *pGT, int32_t iRow, int32_t iCol)
                             static_cast<uint16_t>(iCol));
 }
 
-static void hb_gt_wvw_WriteAt(HB_GT *pGT, int32_t iRow, int32_t iCol, const char *pText, ULONG ulLength)
+static void hb_gt_wvw_WriteAt(HB_GT *pGT, int32_t iRow, int32_t iCol, const char *pText, size_t ulLength)
 {
   HB_GTSELF_PUTTEXT(pGT, iRow, iCol, static_cast<BYTE>(HB_GTSELF_GETCOLOR(pGT)), pText, ulLength);
 
