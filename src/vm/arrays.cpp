@@ -275,7 +275,7 @@ HB_BOOL hb_arrayAdd(HB_ITEM *pArray, HB_ITEM *pValue)
   if (pArray->isArray()) {
     auto pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
 
-    if (pBaseArray->nLen < HB_SIZE_MAX) {
+    if (pBaseArray->nLen < SIZE_MAX) {
       hb_arraySize(pArray, pBaseArray->nLen + 1);
       pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
       hb_itemCopy(pBaseArray->pItems + (pBaseArray->nLen - 1), pValue);
@@ -292,7 +292,7 @@ HB_BOOL hb_arrayAddForward(HB_ITEM *pArray, HB_ITEM *pValue)
   if (pArray->isArray()) {
     auto pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
 
-    if (pBaseArray->nLen < HB_SIZE_MAX) {
+    if (pBaseArray->nLen < SIZE_MAX) {
       hb_arraySize(pArray, pBaseArray->nLen + 1);
       pBaseArray = static_cast<HB_BASEARRAY *>(pArray->arrayValue());
       hb_itemMove(pBaseArray->pItems + (pBaseArray->nLen - 1), pValue);

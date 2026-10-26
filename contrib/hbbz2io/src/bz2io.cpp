@@ -436,7 +436,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXIN
          }
       }
       if( pFile->bz2.total_out_lo32 != 0 || pFile->bz2.total_out_hi32 != 0 ) {
-#if HB_SIZE_MAX <= UINT_MAX
+#if SIZE_MAX <= UINT_MAX
          nResult = static_cast<HB_SIZE>(pFile->bz2.total_out_lo32);
 #else
          nResult = (static_cast<HB_SIZE>(pFile->bz2.total_out_hi32) << 32) | static_cast<HB_SIZE>(pFile->bz2.total_out_lo32);

@@ -140,7 +140,7 @@ static void do_token1(int32_t iSwitch)
 
     if (iSwitch == DO_TOKEN1_NUMTOKEN) {
       // token counter
-      nTokenCounter = HB_SIZE_MAX;
+      nTokenCounter = SIZE_MAX;
       // skip width
       nSkip = hb_parns(3);
     } else {
@@ -151,10 +151,10 @@ static void do_token1(int32_t iSwitch)
     }
 
     if (nTokenCounter == 0) {
-      nTokenCounter = HB_SIZE_MAX;
+      nTokenCounter = SIZE_MAX;
     }
     if (nSkip == 0) {
-      nSkip = HB_SIZE_MAX;
+      nSkip = SIZE_MAX;
     }
 
     // prepare return value for TokenUpper()/TokenLower()
@@ -276,8 +276,8 @@ static void do_token1(int32_t iSwitch)
       // should we find the last token, but string ends with tokenizer, i.e.
       // pc points to the last character at the moment ?
       // -> break here !
-      if (nTokenCounter == HB_SIZE_MAX) {
-        if (nSkip == HB_SIZE_MAX) {
+      if (nTokenCounter == SIZE_MAX) {
+        if (nSkip == SIZE_MAX) {
           HB_BOOL bLast = true;
 
           for (const char *t = pc + 1; t < pcString + sStrLen; t++) {
@@ -299,7 +299,7 @@ static void do_token1(int32_t iSwitch)
     case DO_TOKEN1_TOKEN: {
       char cRet;
 
-      if (nTokenCounter == HB_SIZE_MAX || nToken == nTokenCounter) {
+      if (nTokenCounter == SIZE_MAX || nToken == nTokenCounter) {
         hb_retclen(pcSubStr, pc - pcSubStr);
       } else {
         hb_retc_null();
@@ -320,7 +320,7 @@ static void do_token1(int32_t iSwitch)
       break;
 
     case DO_TOKEN1_ATTOKEN:
-      if (nTokenCounter == HB_SIZE_MAX || nToken == nTokenCounter) {
+      if (nTokenCounter == SIZE_MAX || nToken == nTokenCounter) {
         hb_retns(pcSubStr - pcString + 1);
       } else {
         hb_retns(0);

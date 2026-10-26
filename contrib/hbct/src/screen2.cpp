@@ -309,7 +309,7 @@ HB_FUNC(SCREENSTR) // TODO: Unicode support
 {
   int32_t iRow, iCol, iMaxRow, iMaxCol;
   char *pBuffer;
-  HB_SIZE nCount = HB_SIZE_MAX;
+  HB_SIZE nCount = SIZE_MAX;
 
   hb_gtGetPos(&iRow, &iCol);
   if (HB_ISNUM(1)) {

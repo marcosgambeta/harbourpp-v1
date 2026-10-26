@@ -55,7 +55,7 @@ HB_FUNC(HB_HMAC_SHA224)
   hmac_sha224_ctx ctx;
 
   hb_hmac_sha224_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
@@ -97,7 +97,7 @@ HB_FUNC(HB_HMAC_SHA256)
   hmac_sha256_ctx ctx;
 
   hb_hmac_sha256_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
@@ -139,7 +139,7 @@ HB_FUNC(HB_HMAC_SHA384)
   hmac_sha384_ctx ctx;
 
   hb_hmac_sha384_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
@@ -181,7 +181,7 @@ HB_FUNC(HB_HMAC_SHA512)
   hmac_sha512_ctx ctx;
 
   hb_hmac_sha512_init(&ctx, hb_parcx(2), static_cast<uint32_t>(hb_parclen(2)));
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);

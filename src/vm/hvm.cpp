@@ -3326,7 +3326,7 @@ static void hb_vmPlus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
 
     if (nLen2) {
       if (nLen1) {
-        if (nLen1 < HB_SIZE_MAX - nLen2) {
+        if (nLen1 < SIZE_MAX - nLen2) {
           if (pResult != pItem1) {
             hb_itemMove(pResult, pItem1);
             pItem1 = pResult;
@@ -3443,7 +3443,7 @@ static void hb_vmMinus(HB_ITEM *pResult, HB_ITEM *pItem1, HB_ITEM *pItem2)
         hb_itemCopy(pResult, pItem1);
       }
       pResult->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-    } else if (nLen1 < HB_SIZE_MAX - nLen2) {
+    } else if (nLen1 < SIZE_MAX - nLen2) {
       if (pResult != pItem1) {
         hb_itemMove(pResult, pItem1);
         pItem1 = pResult;
@@ -6115,7 +6115,7 @@ void hb_vmPushLong(long lNumber)
 
 void hb_vmPushSize(HB_ISIZ nNumber)
 {
-#if HB_SIZE_MAX <= HB_VMUINT_MAX
+#if SIZE_MAX <= HB_VMUINT_MAX
   hb_vmPushInteger(static_cast<int32_t>(nNumber));
 #else
   if (HB_LIM_INT(nNumber)) {

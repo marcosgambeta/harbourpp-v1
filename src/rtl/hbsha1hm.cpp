@@ -55,7 +55,7 @@ HB_FUNC(HB_HMAC_SHA1)
   HMAC_SHA1_CTX ctx;
 
   hb_HMAC_SHA1_Init(&ctx);
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(2);
     auto nCount = hb_parclen(2);
@@ -83,7 +83,7 @@ HB_FUNC(HB_HMAC_SHA1)
   hb_HMAC_SHA1_EndKey(&ctx);
 
   hb_HMAC_SHA1_StartMessage(&ctx);
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);

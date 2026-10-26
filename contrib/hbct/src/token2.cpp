@@ -297,10 +297,10 @@ HB_FUNC(TOKENINIT)
     if (HB_ISNUM(3)) {
       nSkip = hb_parns(3);
     } else {
-      nSkip = HB_SIZE_MAX;
+      nSkip = SIZE_MAX;
     }
     if (nSkip == 0) {
-      nSkip = HB_SIZE_MAX;
+      nSkip = SIZE_MAX;
     }
 
     // allocate new token environment

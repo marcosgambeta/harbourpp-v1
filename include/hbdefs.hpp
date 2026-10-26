@@ -592,7 +592,7 @@ typedef uint32_t HB_FATTR;
 #endif
 
 /* maximum index size */
-#if defined(HB_OS_WIN_64)
+#if defined(HB_OS_WIN_64) // NOTE: HB_SIZE_MAX is deprecated in Harbour++
 //#  if defined(HB_SIZE_SIGNED) // NOTE: HB_SIZE_SIGNED is deprecated in Harbour++
 //#     define HB_SIZE_MAX    LONGLONG_MAX
 //#  else

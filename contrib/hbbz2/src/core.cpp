@@ -74,7 +74,7 @@ static HB_SIZE hb_bz2CompressBound(HB_SIZE nLen)
 {
    HB_SIZE nSize = nLen + nLen / 100 + 600;
 
-   return nSize < nLen ? HB_SIZE_MAX - 1 : nSize;
+   return nSize < nLen ? SIZE_MAX - 1 : nSize;
 }
 
 static int32_t hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst, int32_t iBlockSize)
@@ -103,7 +103,7 @@ static int32_t hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB
       } while( iResult == BZ_FINISH_OK );
 
       if( iResult == BZ_STREAM_END ) {
-#if HB_SIZE_MAX <= UINT_MAX
+#if SIZE_MAX <= UINT_MAX
          *pnDst = static_cast<HB_SIZE>(stream.total_out_lo32);
 #else
          *pnDst = (static_cast<HB_SIZE>(stream.total_out_hi32) << 32) | stream.total_out_lo32;
@@ -144,7 +144,7 @@ static HB_SIZE hb_bz2UncompressedSize(const char * szSrc, HB_SIZE nLen, int32_t 
 
       if( *piResult == BZ_STREAM_END ) {
          *piResult = BZ_OK;
-#if HB_SIZE_MAX <= UINT_MAX
+#if SIZE_MAX <= UINT_MAX
          if( stream.total_out_hi32 != 0 ) {
             *piResult = BZ_MEM_ERROR;
          } else {
@@ -186,7 +186,7 @@ static int32_t hb_bz2Uncompress(const char * szSrc, HB_SIZE nSrc, char * szDst, 
       } while( iResult == BZ_OK );
 
       if( iResult == BZ_STREAM_END ) {
-#if HB_SIZE_MAX <= UINT_MAX
+#if SIZE_MAX <= UINT_MAX
          *pnDst = static_cast<HB_SIZE>(stream.total_out_lo32);
 #else
          *pnDst = (static_cast<HB_SIZE>(stream.total_out_hi32) << 32) | stream.total_out_lo32;

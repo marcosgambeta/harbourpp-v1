@@ -95,7 +95,7 @@ HB_FUNC(ATREPL)
 
     // little trick:
     if (iReplaceMode == 0 && nCounter == 0) {
-      nCounter = HB_SIZE_MAX;
+      nCounter = SIZE_MAX;
     }
 
     if (nCounter != 0) {

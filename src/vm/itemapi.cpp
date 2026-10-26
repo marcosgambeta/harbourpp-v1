@@ -1224,7 +1224,7 @@ HB_ITEM *hb_itemPutNS(HB_ITEM *pItem, HB_ISIZ nNumber)
     pItem = hb_itemNew(nullptr);
   }
 
-#if HB_SIZE_MAX <= HB_VMUINT_MAX
+#if SIZE_MAX <= HB_VMUINT_MAX
   pItem->setType(Harbour::Item::INTEGER);
   pItem->setIntegerValue(nNumber);
   // EXP limit used intentionally

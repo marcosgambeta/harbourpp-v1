@@ -55,7 +55,7 @@ HB_FUNC(HB_SHA224)
   sha224_ctx ctx;
 
   hb_sha224_init(&ctx);
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
@@ -97,7 +97,7 @@ HB_FUNC(HB_SHA256)
   sha256_ctx ctx;
 
   hb_sha256_init(&ctx);
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
@@ -139,7 +139,7 @@ HB_FUNC(HB_SHA384)
   sha384_ctx ctx;
 
   hb_sha384_init(&ctx);
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
@@ -181,7 +181,7 @@ HB_FUNC(HB_SHA512)
   sha512_ctx ctx;
 
   hb_sha512_init(&ctx);
-#if HB_SIZE_MAX > UINT_MAX
+#if SIZE_MAX > UINT_MAX
   {
     auto buffer = hb_parcx(1);
     auto nCount = hb_parclen(1);
